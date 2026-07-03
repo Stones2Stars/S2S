@@ -1760,11 +1760,14 @@ namespace
 						pe["cascFlat"] = picojson::value((double)CascadeProperty::citySourceFlat(iWbP, pCity, wbec));
 						pe["cascDecayPct"] = picojson::value((double)CascadeProperty::cityDecayPercent(iWbP));
 						pe["engineValue"] = picojson::value((double)pCity->getProperties()->getValueByProperty((PropertyTypes)iWbP));
-						int iWbEngRe = 0;
+						// the engine-side PART recompute: cascFlat should equal Σ(these parts) -- each gap names its class
+						int iWbEngRe = 0, iWbEngBag = 0, iWbEngUnit = 0, iWbEngProp = 0;
 						foreach_(const BuildingTypes eWbBt, pCity->getHasBuildings())
 						{
 							if (pCity->isReligiouslyLimitedBuilding(eWbBt) || pCity->isDisabledBuilding(eWbBt)) continue;
-							const CvPropertyManipulators* pWbMan = GC.getBuildingInfo(eWbBt).getPropertyManipulators();
+							const CvBuildingInfo& kWbBI = GC.getBuildingInfo(eWbBt);
+							iWbEngBag += kWbBI.getProperties()->getValueByProperty((PropertyTypes)iWbP);
+							const CvPropertyManipulators* pWbMan = kWbBI.getPropertyManipulators();
 							if (pWbMan == NULL) continue;
 							for (int iWbS = 0; iWbS < pWbMan->getNumSources(); ++iWbS)
 							{
@@ -1775,7 +1778,44 @@ namespace
 									->getAmountPerTurn(pCity->getGameObject());
 							}
 						}
+						// city-plot unit emissions (SAME_PLOT CONSTANT sources, e.g. a criminal's crime)
+						foreach_(const CvUnit* pWbU, pCity->plot()->units())
+						{
+							const CvPropertyManipulators* pWbMan = GC.getUnitInfo(pWbU->getUnitType()).getPropertyManipulators();
+							if (pWbMan == NULL) continue;
+							for (int iWbS = 0; iWbS < pWbMan->getNumSources(); ++iWbS)
+							{
+								const CvPropertySource* pWbSrc = pWbMan->getSource(iWbS);
+								if (pWbSrc->getProperty() != (PropertyTypes)iWbP
+									|| pWbSrc->getType() != PROPERTYSOURCE_CONSTANT) continue;
+								iWbEngUnit += static_cast<const CvPropertySourceConstant*>(pWbSrc)
+									->getAmountPerTurn(pCity->getGameObject());
+							}
+						}
+						// the property info's OWN city sources (the per-pop ATTRIBUTE class; decay excluded -- its own field)
+						{
+							const CvPropertyManipulators* pWbMan = GC.getPropertyInfo((PropertyTypes)iWbP).getPropertyManipulators();
+							if (pWbMan != NULL)
+								for (int iWbS = 0; iWbS < pWbMan->getNumSources(); ++iWbS)
+								{
+									const CvPropertySource* pWbSrc = pWbMan->getSource(iWbS);
+									if (pWbSrc->getProperty() != (PropertyTypes)iWbP) continue;
+									if (pWbSrc->getType() == PROPERTYSOURCE_ATTRIBUTE_CONSTANT)
+									{
+										const CvPropertySourceAttributeConstant* pWbA =
+											static_cast<const CvPropertySourceAttributeConstant*>(pWbSrc);
+										if (pWbA->getAttribute() == ATTRIBUTE_POPULATION)
+											iWbEngProp += pWbA->getAmountPerTurn() * pCity->getPopulation();
+									}
+									else if (pWbSrc->getType() == PROPERTYSOURCE_CONSTANT && pWbSrc->getObjectType() == GAMEOBJECT_CITY)
+										iWbEngProp += static_cast<const CvPropertySourceConstant*>(pWbSrc)
+											->getAmountPerTurn(pCity->getGameObject());
+								}
+						}
 						pe["engineConstantRecompute"] = picojson::value((double)iWbEngRe);
+						pe["engineBagRecompute"] = picojson::value((double)iWbEngBag);
+						pe["engineUnitRecompute"] = picojson::value((double)iWbEngUnit);
+						pe["enginePropOwnRecompute"] = picojson::value((double)iWbEngProp);
 						props[GC.getPropertyInfo((PropertyTypes)iWbP).getType()] = picojson::value(pe);
 					}
 					o["properties"] = picojson::value(props);
