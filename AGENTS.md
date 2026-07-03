@@ -72,7 +72,13 @@ add a subdir/files:
    bare (MSVC searches the including file's own dir first). The shared layers `Infos`/`Cascade` are
    on `/I` so their headers are included bare; PCH glue (`CvGameCoreDLL.h`, etc.) stays at root.
 2. (IDE display only) regenerate the project with `python Tools/regen_project.py` (rebuilds
-   `S2S.vcxproj` + `S2S.vcxproj.filters` from disk), or add the entries by hand.
+   `S2S.vcxproj` + `S2S.vcxproj.filters` from disk), or add the entries by hand. **⚠ CURRENTLY BROKEN
+   (found 2026-07-03):** the script was the one-time C2C→S2S rename migration — it reads the deleted
+   `C2C (VS2019).vcxproj` as input and only re-paths EXISTING items (it never adds new files), and no
+   `python` runner is installed on the dev box. The `S2S.vcxproj` listing is wholesale-stale (lists the
+   purged `CvScopedAccumulator`; none of the current `Cascade/` files). Since the files are DEAD for
+   build purposes this blocks nothing — a working regen (read the S2S files as input, add-from-disk) is
+   a parked standalone fix; don't piecemeal-patch entries into the stale listing.
 3. With recursive globbing, an `LNK2001: unresolved external symbol` now means a genuinely
    missing definition (not a missing `UnityInputPath` entry). `Sources/Engine/`, `Sources/AI/` etc.
    are reference examples of the flat bucket layout.
