@@ -13723,9 +13723,11 @@ void CvPlayer::changeBuildingCount(BuildingTypes eIndex, int iChange)
 	// counter the tally will replace. DOMAIN = synced state change (tally-eligible). No-op until consumers register.
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DOMAIN, CASCADE_EVT_BUILDING_COUNT, (int)eIndex, getBuildingCount(eIndex), iChange, (int)getID()));
 
-	// #430 accumulator: the EMPIRE building count feeds empire-scope deposits in EVERY sibling city (the
-	// owner-named "live next-build evaluation" staleness) -> bump THIS player's epoch, nobody else's
-	CascadeAccumulator::bumpPlayerEpoch(getID());
+	// #430 accumulator: NO epoch bump here (measured 2026-07-03: building completions are the highest-frequency
+	// player event; bumping per completion 5x'd the turn -- pctStack 6.5k->38.5k calls/208s). The sibling-city
+	// empire-scope staleness this leaves (tiny, decision-reads only; realized output computes at slice start on
+	// fresh slots) is the accepted interim -- it dissolves in the turn-end unified rebuild
+	// (state-repositories.md end-state), where completion-driven freshness is batched, not per-event.
 
 	clearCanConstructCache(eIndex, true);
 }
