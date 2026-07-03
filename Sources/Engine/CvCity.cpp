@@ -8451,7 +8451,9 @@ void CvCity::changeMilitaryHappinessUnits(int iChange)
 		FASSERT_NOT_NEGATIVE(getMilitaryHappinessUnits());
 
 		AI_setAssignWorkDirty(true);
-		CascadeAccumulator::dirtyCity(this, ACCD_WB);   // #430: the military count feeds the wellbeing perMilitaryUnit term
+		// #430: deliberately NO ACCD_WB dirty here (owner ruling 2026-07-03: unit-driven happiness is calced at
+		// END TURN only) -- the turn-roll markAllDirty IS that cadence; per-move dirtying made unit automation
+		// pay wellbeing recomputes and is banned.
 	}
 }
 

@@ -104,6 +104,19 @@ public:
 		}
 	}
 
+	// The MASKED pull: refresh only the WANTED dirty components; the rest STAY dirty for their own readers.
+	// Decouples read paths with disjoint components (a hot rate read must never pay a cold component's
+	// recompute -- the ACCD_WB lesson: unit moves dirtied WB and every yield read paid the wellbeing walk).
+	void ensure(int iWantMask) const
+	{
+		const int iMask = m_iDirty & iWantMask;
+		if (iMask != 0 && m_pOwner != NULL)
+		{
+			m_iDirty &= ~iMask;   // clear FIRST (only the refreshed bits)
+			(m_pOwner->*m_pfnRefresh)(iMask);
+		}
+	}
+
 private:
 	CvDerivedCacheSet(const CvDerivedCacheSet&);              // noncopyable (see CvDerivedCache)
 	CvDerivedCacheSet& operator=(const CvDerivedCacheSet&);

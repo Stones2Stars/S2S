@@ -72,7 +72,7 @@ static long acc_combine(const CascadeRateSlots& st, const CvCity* pCity, YieldTy
 // Epoch/turn pre-check + the Set's pull: the turn roll is the §3 re-check cadence (and the self-heal for
 // unhooked mutations); the epoch reaches every city of an affected player. The Set's ensure() then refreshes
 // exactly the dirty components via CvCity::cascadeRefreshRates -> refreshComponents below.
-static void acc_ensure(const CvCity* pCity)
+static void acc_ensure(const CvCity* pCity, int iWantMask)
 {
 	CascadeRateSlots& st = pCity->m_cascadeRateSlots;
 	const int iTurn = GC.getGame().getGameTurn();
@@ -83,7 +83,10 @@ static void acc_ensure(const CvCity* pCity)
 		st.iTurn = iTurn;
 		st.set.markAllDirty();
 	}
-	st.set.ensure();
+	// MASKED: a rate read never pays the wellbeing walk (unit moves dirty ACCD_WB constantly -- the
+	// unmasked form made every post-move yield read recompute wellbeing; measured as a massive
+	// unit-automation regression). Each read path ensures only its own components.
+	st.set.ensure(iWantMask);
 }
 
 void CascadeAccumulator::refreshComponents(const CvCity* pCity, int iMask)
@@ -132,21 +135,21 @@ void CascadeAccumulator::refreshComponents(const CvCity* pCity, int iMask)
 long CascadeAccumulator::yieldRate100(const CvCity* pCity, YieldTypes eY)
 {
 	if (pCity == NULL || eY < 0 || eY >= NUM_YIELD_TYPES) return 0;
-	acc_ensure(pCity);
+	acc_ensure(pCity, ACCD_ALL & ~ACCD_WB);
 	return acc_combine(pCity->m_cascadeRateSlots, pCity, eY);
 }
 
 int CascadeAccumulator::wellbeing(const CvCity* pCity, int iVerdict)
 {
 	if (pCity == NULL || iVerdict < 0 || iVerdict > 3) return 0;
-	acc_ensure(pCity);
+	acc_ensure(pCity, ACCD_WB);
 	return pCity->m_cascadeRateSlots.aWb[iVerdict];
 }
 
 long CascadeAccumulator::commerceRate100(const CvCity* pCity, CommerceTypes eC)
 {
 	if (pCity == NULL || eC < 0 || eC >= NUM_COMMERCE_TYPES) return 0;
-	acc_ensure(pCity);
+	acc_ensure(pCity, ACCD_ALL & ~ACCD_WB);
 	const CascadeRateSlots& st = pCity->m_cascadeRateSlots;
 	// the §2 CombineSplit kernel (single-sourced in CommerceCalc) over the plugin numbers: the commerce YIELD
 	// comes fresh from the yield slots; slider + disorder are read live inside the kernel.

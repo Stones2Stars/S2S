@@ -182,6 +182,12 @@ clamp(unhappy − happy, 0, pop)`. The channel oracle is **`/computed/cities/wel
 `badHealth` adds `min(0, extraBuildingBadHealth)` **twice** (once inside `totalBadBuildingHealth`, once
 directly); and the anger percents scale by `pop/PERCENT_ANGER_DIVISOR` with truncating integer division.
 
+**UNIT-driven wellbeing is END-TURN cadence (owner ruling 2026-07-03).** The military/unit-count happiness
+term recomputes **once per turn** (the substrate's turn-roll), NEVER per unit move — a per-move dirty hook made
+every post-move rate read pay the wellbeing walk (a measured unit-automation collapse) and is banned. The
+within-turn lag this leaves on the wellbeing slots (a handful of cities whose garrison changed mid-turn) is the
+RULED cadence, not a freshness hole; the getter flip proceeds with it.
+
 **The STORED-ACCUMULATOR DRIFT class (owner ruling 2026-07-03 + measured).** The legacy wellbeing terms are
 INCREMENTAL SERIALIZED accumulators (`m_iBonusGood/BadHappiness`, `m_iBuildingGood/BadHappiness`,
 `m_paiStateReligionHappiness`, `m_iExtraBuilding*FromTech`, …) — event-sourced numbers that carry decades of
