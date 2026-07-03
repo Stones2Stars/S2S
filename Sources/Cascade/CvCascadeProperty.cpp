@@ -32,7 +32,8 @@ int CascadeProperty::citySourceFlat(int eProp, const CvCity* pCity, const CvCasc
 	const int unitFlat = DepositIndex::lookupSegment("flat");
 	int iSum = 0;
 
-	// -- ACTIVE buildings' city flats (constant per-turn sources + the curator-folded construction bag) --
+	// -- ACTIVE buildings' city flats (constant per-turn sources + the curator-folded construction bag);
+	// -- per-scaled entries (the legacy attribute-expression Mult(pop x C) sources) multiply by population --
 	const int nB = GC.getNumBuildingInfos();
 	for (int b = 0; b < nB; ++b)
 	{
@@ -43,7 +44,10 @@ int CascadeProperty::citySourceFlat(int eProp, const CvCity* pCity, const CvCasc
 		{
 			const CvCascadeDeposit& dep = d->deposits[i];
 			if (dep.seg[0] != famId || dep.seg[1] != scopeCity || dep.nSeg != 2 || dep.unitId != unitFlat) continue;
-			if (MMKernel::applies(dep.enabled, dep.disabled, ec)) iSum += dep.value100 / 100;
+			if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
+			int v = dep.value100 / 100;
+			if (dep.hasPer) v *= pCity->getPopulation();   // per:{POPULATION} is the only authored building form today
+			iSum += v;
 		}
 	}
 
@@ -74,9 +78,12 @@ int CascadeProperty::cityUnitFlat(int eProp, const CvCity* pCity, const CvCascad
 	const int famId = prop_famId(eProp);
 	if (famId < 0 || pCity == NULL) return 0;
 	const int scopeCity = DepositIndex::lookupSegment("city");
+	const int scopePlot = DepositIndex::lookupSegment("plot");
 	const int unitFlat = DepositIndex::lookupSegment("flat");
 	int iSum = 0;
-	// the SAME_PLOT emission (a criminal's crime lands on the city it stands in) -- LIVE, on top, never cached
+	// the SAME_PLOT emission (a criminal's crime lands on the city it stands in) -- LIVE, on top, never cached.
+	// BOTH the city-scope AND plot-scope halves count: the city plot DIFFUSES to the city (the legacy
+	// getTotalUnitSourcedProperty reads GAMEOBJECT_CITY and GAMEOBJECT_PLOT sources alike).
 	foreach_(const CvUnit* pUnit, pCity->plot()->units())
 	{
 		const CvJsonInfo* d = InfoRepo<CvUnitInfo>::get().get(pUnit->getUnitType());
@@ -84,7 +91,8 @@ int CascadeProperty::cityUnitFlat(int eProp, const CvCity* pCity, const CvCascad
 		for (size_t i = 0; i < d->deposits.size(); ++i)
 		{
 			const CvCascadeDeposit& dep = d->deposits[i];
-			if (dep.seg[0] != famId || dep.seg[1] != scopeCity || dep.nSeg != 2 || dep.unitId != unitFlat) continue;
+			if (dep.seg[0] != famId || (dep.seg[1] != scopeCity && dep.seg[1] != scopePlot)
+				|| dep.nSeg != 2 || dep.unitId != unitFlat) continue;
 			if (MMKernel::applies(dep.enabled, dep.disabled, ec)) iSum += dep.value100 / 100;
 		}
 	}

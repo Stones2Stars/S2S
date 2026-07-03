@@ -568,10 +568,21 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, capabili
             if res:
                 prop, pscope, unit, value = res
                 node = fams.setdefault(prop, OrderedDict()).setdefault(pscope, OrderedDict())
-                if unit in node and isinstance(node[unit], int) and isinstance(value, int):
+                if unit not in node:
+                    node[unit] = value
+                elif isinstance(node[unit], int) and isinstance(value, int):
                     node[unit] += value
                 else:
-                    node[unit] = value
+                    # MULTI-SOURCE same property/unit with mixed shapes (a plain value + a conditioned/per
+                    # entry, or several entries): a LIST of entries (json §3.9) -- the old overwrite LOST the
+                    # prior value (ANCIENT_CUSTOMS' +1 vanished under its -1@TECH_LITERATURE; found by the
+                    # property-channel parity probe 2026-07-03).
+                    if not isinstance(node[unit], list):
+                        node[unit] = [node[unit]]
+                    if isinstance(value, list):
+                        node[unit].extend(value)
+                    else:
+                        node[unit].append(value)
     # --- repeatable grants (modifier-spec §4.1): PropertySpawn + the per-turn heal generalization ---
     sp_prop = _txt(rec, "PropertySpawnProperty")
     sp_unit = _txt(rec, "PropertySpawnUnit")
