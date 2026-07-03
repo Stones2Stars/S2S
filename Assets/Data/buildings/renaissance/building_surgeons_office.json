@@ -73,9 +73,7 @@
  "health": {
   "city": {
    "flat": 3,
-   "perPopulation": {
-    "percent": 20
-   }
+   "perPopulation": 20
   }
  },
  "maintenance": {

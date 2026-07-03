@@ -38,9 +38,7 @@
      }
     }
    ],
-   "perPopulation": {
-    "percent": -30
-   }
+   "perPopulation": -30
   }
  },
  "health": {

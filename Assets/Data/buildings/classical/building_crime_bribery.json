@@ -29,9 +29,7 @@
  "happiness": {
   "city": {
    "flat": -2,
-   "perPopulation": {
-    "percent": -30
-   }
+   "perPopulation": -30
   }
  },
  "experience": {

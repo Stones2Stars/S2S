@@ -39,9 +39,7 @@
  "happiness": {
   "city": {
    "flat": -5,
-   "perPopulation": {
-    "percent": -40
-   }
+   "perPopulation": -40
   }
  },
  "health": {

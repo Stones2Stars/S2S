@@ -22,9 +22,7 @@
  },
  "health": {
   "city": {
-   "perPopulation": {
-    "percent": 10
-   }
+   "perPopulation": 10
   }
  },
  "foodKept": {

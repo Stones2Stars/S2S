@@ -59,9 +59,7 @@
      "enabled": "TECH_MODERN_SANITATION"
     }
    ],
-   "perPopulation": {
-    "percent": -40
-   }
+   "perPopulation": -40
   }
  },
  "PROPERTY_TOURISM": {

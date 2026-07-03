@@ -33,9 +33,7 @@
  },
  "happiness": {
   "city": {
-   "perPopulation": {
-    "percent": -15
-   }
+   "perPopulation": -15
   }
  },
  "revolution": {

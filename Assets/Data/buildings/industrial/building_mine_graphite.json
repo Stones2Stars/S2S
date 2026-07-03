@@ -57,9 +57,7 @@
  "health": {
   "city": {
    "flat": -1,
-   "perPopulation": {
-    "percent": -20
-   }
+   "perPopulation": -20
   }
  },
  "hurryCost": {

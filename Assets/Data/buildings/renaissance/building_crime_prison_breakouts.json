@@ -32,16 +32,12 @@
  "happiness": {
   "city": {
    "flat": -3,
-   "perPopulation": {
-    "percent": -10
-   }
+   "perPopulation": -10
   }
  },
  "health": {
   "city": {
-   "perPopulation": {
-    "percent": -10
-   }
+   "perPopulation": -10
   }
  },
  "experience": {

@@ -45,9 +45,7 @@
    "flat": 2
   },
   "city": {
-   "perPopulation": {
-    "percent": 20
-   }
+   "perPopulation": 20
   }
  },
  "greatPeopleRate": {

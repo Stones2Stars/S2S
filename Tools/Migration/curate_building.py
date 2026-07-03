@@ -50,11 +50,14 @@ SCALAR_FAMILIES = {
     "iHealth": ("health", "city", None, "flat"),
     "iAreaHealth": ("health", "area", None, "flat"),
     "iGlobalHealth": ("health", "empire", None, "flat"),
-    "iHealthPercentPerPopulation": ("health", "city", "perPopulation", "percent"),
+    # perPopulation is UNIT-form (a raw percent-of-pop; the consumer does ×pop÷100, the engine's exact math) --
+    # the earlier member-form {perPopulation:{percent:N}} collided with the reserved unit word and parsed to a
+    # LOST 0-magnitude in BOTH readers (wellbeing parity find 2026-07-03).
+    "iHealthPercentPerPopulation": ("health", "city", None, "perPopulation"),
     "iHappiness": ("happiness", "city", None, "flat"),
     "iAreaHappiness": ("happiness", "area", None, "flat"),
     "iGlobalHappiness": ("happiness", "empire", None, "flat"),
-    "iHappinessPercentPerPopulation": ("happiness", "city", "perPopulation", "percent"),
+    "iHappinessPercentPerPopulation": ("happiness", "city", None, "perPopulation"),   # unit-form, see health above
     "iHealRateChange": ("healing", "city", None, "flat"),
     "iFoodKept": ("foodKept", "city", None, "percent"),
     # great people / great general
@@ -509,10 +512,17 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, capabili
         srb = OrderedDict((member, v) for member, v in engine.named_array(src, engine.COMMERCES).items() if v)
         if srb:
             identity["stateReligionCommerce"] = srb
-    # --- iStateReligionHappiness: happiness while the city follows the state religion ---
+    # --- iStateReligionHappiness: happiness while THIS BUILDING'S religion IS the player's state religion. The
+    # engine keys the apply by the building's ReligionType (changeStateReligionHappiness(kBuilding.getReligionType(),
+    # ...), CvCity.cpp:4692) and getCurrentStateReligionHappiness reads the STATE religion's slot -- so the gate is
+    # the parameterized {STATE_RELIGION: <building religion>} (json S3.5), NOT the bare HAS_STATE_RELIGION ("has ANY
+    # state religion"), which wrongly paid a Jewish Masada's bonus to a Confucian empire (wellbeing parity find
+    # 2026-07-03). A carrier without a ReligionType keeps the bare form (no key to gate on). ---
     srh = _int(rec, "iStateReligionHappiness")
     if srh:
-        _inject_cond(fams, "happiness", "city", "flat", srh, "HAS_STATE_RELIGION")
+        srh_rel = rec.findtext("ReligionType")
+        _inject_cond(fams, "happiness", "city", "flat", srh,
+                     OrderedDict([("STATE_RELIGION", srh_rel)]) if srh_rel and srh_rel != "NONE" else "HAS_STATE_RELIGION")
     # --- CommerceChangeDoubleTimes: the engine DOUBLES the building's WHOLE per-building commerce (base + shrine +
     # corpHQ + event + stateRel) once it has existed >= N game-years (getBuildingCommerceByBuilding iCommerce*=2,
     # CvCity.cpp:12284-12290). A +base-only second flat UNDER-doubles a building that is also a shrine/corp-HQ, so emit

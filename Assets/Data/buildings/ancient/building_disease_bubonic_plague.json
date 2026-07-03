@@ -55,9 +55,7 @@
  "health": {
   "city": {
    "flat": -10,
-   "perPopulation": {
-    "percent": -100
-   }
+   "perPopulation": -100
   }
  },
  "PROPERTY_TOURISM": {

@@ -38,9 +38,7 @@
  "health": {
   "city": {
    "flat": -1,
-   "perPopulation": {
-    "percent": -5
-   }
+   "perPopulation": -5
   }
  },
  "attributes": {

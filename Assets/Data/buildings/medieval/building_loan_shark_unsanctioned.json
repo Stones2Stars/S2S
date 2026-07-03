@@ -38,9 +38,7 @@
  },
  "happiness": {
   "city": {
-   "perPopulation": {
-    "percent": -20
-   }
+   "perPopulation": -20
   }
  },
  "copsAndRobbers": {

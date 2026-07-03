@@ -43,7 +43,9 @@
     1,
     {
      "value": 2,
-     "enabled": "HAS_STATE_RELIGION"
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_DRUIDIC_TRADITIONS"
+     }
     }
    ]
   }
@@ -51,9 +53,7 @@
  "health": {
   "city": {
    "flat": 1,
-   "perPopulation": {
-    "percent": 5
-   }
+   "perPopulation": 5
   }
  },
  "hurryCost": {

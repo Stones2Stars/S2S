@@ -24,17 +24,13 @@
  "happiness": {
   "city": {
    "flat": -2,
-   "perPopulation": {
-    "percent": -10
-   }
+   "perPopulation": -10
   }
  },
  "health": {
   "city": {
    "flat": -1,
-   "perPopulation": {
-    "percent": -10
-   }
+   "perPopulation": -10
   }
  },
  "experience": {

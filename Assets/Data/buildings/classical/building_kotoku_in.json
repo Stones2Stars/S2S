@@ -46,9 +46,7 @@
    "flat": 2
   },
   "city": {
-   "perPopulation": {
-    "percent": 5
-   }
+   "perPopulation": 5
   }
  },
  "maintenance": {

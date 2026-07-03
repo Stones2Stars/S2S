@@ -49,9 +49,7 @@
  },
  "happiness": {
   "city": {
-   "perPopulation": {
-    "percent": 50
-   }
+   "perPopulation": 50
   }
  },
  "maintenance": {

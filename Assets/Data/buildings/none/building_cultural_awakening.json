@@ -27,9 +27,7 @@
  },
  "happiness": {
   "city": {
-   "perPopulation": {
-    "percent": 10
-   }
+   "perPopulation": 10
   }
  },
  "greatPeopleRate": {

@@ -69,7 +69,9 @@
     },
     {
      "value": 2,
-     "enabled": "HAS_STATE_RELIGION"
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_CHRISTIANITY"
+     }
     }
    ]
   }

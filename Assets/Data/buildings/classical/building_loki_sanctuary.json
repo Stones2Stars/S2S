@@ -71,7 +71,9 @@
    "flat": [
     {
      "value": 1,
-     "enabled": "HAS_STATE_RELIGION"
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_ASATRU"
+     }
     }
    ]
   }
