@@ -203,4 +203,8 @@ A modifier that TRAVELS with a unit (unit-sourced happiness, anger, property emi
 value) is NEVER part of a cached cascade computation: computed LIVE at read, added ON TOP as a FLAT term, after
 and outside every percentage modification. Unit movement therefore never dirties any cache, and the traveling
 value never enters a percent stack. (Owner "executive decision" 2026-07-03, made after per-move cache
-invalidation measurably collapsed unit automation.) **Home:** [modifier.md](../specs/modifier.md) §2b.
+invalidation measurably collapsed unit automation.) **Scope tightened same day ("full stop"): unit movement
+cannot invalidate ANY cache -- including the LEGACY ones.** The three legacy per-move storms were cut on the
+ruling: the garrison-change governor re-optimization (changeMilitaryHappinessUnits AI_setAssignWorkDirty),
+the per-move m_unitSourcedPropertyCache clear (noteUnitMoved -> no-op; end-turn refresh in doTurn), and the
+siege-blockade governor invalidation on enemy unit steps. **Home:** [modifier.md](../specs/modifier.md) §2b.
