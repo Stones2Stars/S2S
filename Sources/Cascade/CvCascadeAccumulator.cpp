@@ -9,6 +9,7 @@
 #include "CvCascadeYieldBasePackages.h"
 #include "CvCascadeBuildingPackage.h"
 #include "CvCascadePercentStack.h"
+#include "CvCascadeCommerceCalc.h"    // the §2 assembler -- the C_RATE component's recompute fn
 #include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx
 #include "CvCascadeEnablerKernel.h"   // computeCityBuildingFacts (memoized; evicted by the building hook)
 #include "Defines/CvGlobals.h"
@@ -28,10 +29,12 @@ struct AccCityState
 	long aSpec[NUM_YIELD_TYPES];      // specialist totals (human units; own sub-stack inside)
 	long aExtra100[NUM_YIELD_TYPES];  // building flats + perPop (×100)
 	long aEmpFlat[NUM_YIELD_TYPES];   // free-city + golden-age trait flats (human units)
+	long aCRate[NUM_COMMERCE_TYPES];  // the assembled §2 commerce rates (×100; slider folded at recompute)
 	int iDirty; int iEpoch;
 	AccCityState() : iDirty(ACCD_ALL), iEpoch(-1)
 	{
 		for (int i = 0; i < NUM_YIELD_TYPES; ++i) { aPct[i] = 100; aPlots[i] = 0; aSpec[i] = 0; aExtra100[i] = 0; aEmpFlat[i] = 0; }
+		for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) aCRate[c] = 0;
 	}
 };
 static std::map<int, AccCityState> s_city;   // cid -> standing components
@@ -42,8 +45,18 @@ static int acc_cid(const CvCity* pCity) { return ((int)pCity->getOwner()) * 1000
 void CascadeAccumulator::dirtyCity(const CvCity* pCity, int iMask)
 {
 	if (pCity == NULL) return;
+	// commerce RIDES the yield components (§2 splits the modified commerce yield) -- the dependency lives HERE
+	if (iMask & (ACCD_PCT | ACCD_PLOTS | ACCD_SPEC | ACCD_EXTRA | ACCD_EMPFLAT)) iMask |= ACCD_CRATE;
 	const std::map<int, AccCityState>::iterator it = s_city.find(acc_cid(pCity));
 	if (it != s_city.end()) it->second.iDirty |= iMask;   // absent = first read computes everything anyway
+}
+
+void CascadeAccumulator::dirtyPlayerCommerce(PlayerTypes ePlayer)
+{
+	// the slider folds into C_RATE at ITS recompute -- a slider move stales only that player's commerce slots
+	const int lo = ((int)ePlayer) * 100000, hi = lo + 100000;
+	for (std::map<int, AccCityState>::iterator it = s_city.lower_bound(lo); it != s_city.end() && it->first < hi; ++it)
+		it->second.iDirty |= ACCD_CRATE;
 }
 
 void CascadeAccumulator::bumpEpoch()
@@ -55,6 +68,18 @@ static const char* acc_channel(int y)
 {
 	static const char* a[NUM_YIELD_TYPES] = { "food", "production", "commerce" };
 	return a[y];
+}
+
+// The §2a combine over the standing components + the ONE live INPUT (the trade-route yield) -- EXACTLY
+// YieldRate::yieldRate100's expression. The yield components must be clean (acc_refresh ran) before calling.
+static long acc_combine(const AccCityState& st, const CvCity* pCity, YieldTypes eY)
+{
+	const int trade = YieldBasePackages::tradeRoute(eY, pCity);
+	long combine = (st.aPlots[eY] + trade + st.aEmpFlat[eY] + st.aSpec[eY]) * st.aPct[eY]
+	             + 100L * (st.aExtra100[eY] / 100);
+	if (combine < 100) combine = 100;
+	if (combine > CITY_MAX_YIELD_RATE) combine = CITY_MAX_YIELD_RATE;
+	return combine;
 }
 
 // Recompute the DIRTY components only (the calculator packages are the single-source recompute functions).
@@ -91,6 +116,15 @@ static void acc_refresh(const CvCity* pCity, AccCityState& st)
 		if (st.iDirty & ACCD_EMPFLAT) st.aEmpFlat[y] = YieldBasePackages::freeCity(ch, player, ec)
 		                                             + YieldBasePackages::goldenAge(ch, player, ec);
 	}
+	// C_RATE LAST -- it rides the (now clean) yield components (§2 splits the modified commerce yield);
+	// the slider folds in HERE (the setCommercePercent hook stales it).
+	if (st.iDirty & ACCD_CRATE)
+	{
+		const long yc100 = acc_combine(st, pCity, YIELD_COMMERCE);
+		const long prate = acc_combine(st, pCity, YIELD_PRODUCTION) / 100;
+		for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
+			st.aCRate[c] = CommerceCalc::commerceRate100(CommerceCalc::channel(c), (CommerceTypes)c, pCity, ec, yc100, prate);
+	}
 	st.iDirty = 0;
 }
 
@@ -99,12 +133,13 @@ long CascadeAccumulator::yieldRate100(const CvCity* pCity, YieldTypes eY)
 	if (pCity == NULL || eY < 0 || eY >= NUM_YIELD_TYPES) return 0;
 	AccCityState& st = s_city[acc_cid(pCity)];
 	acc_refresh(pCity, st);
-	// the ONE live INPUT (never stored -- modifier.md §2a: the calc folds it in, never derives it)
-	const int trade = YieldBasePackages::tradeRoute(eY, pCity);
-	// the §2a combine -- EXACTLY YieldRate::yieldRate100's expression, over the stored components
-	long combine = (st.aPlots[eY] + trade + st.aEmpFlat[eY] + st.aSpec[eY]) * st.aPct[eY]
-	             + 100L * (st.aExtra100[eY] / 100);
-	if (combine < 100) combine = 100;
-	if (combine > CITY_MAX_YIELD_RATE) combine = CITY_MAX_YIELD_RATE;
-	return combine;
+	return acc_combine(st, pCity, eY);
+}
+
+long CascadeAccumulator::commerceRate100(const CvCity* pCity, CommerceTypes eC)
+{
+	if (pCity == NULL || eC < 0 || eC >= NUM_COMMERCE_TYPES) return 0;
+	AccCityState& st = s_city[acc_cid(pCity)];
+	acc_refresh(pCity, st);
+	return st.aCRate[eC];
 }

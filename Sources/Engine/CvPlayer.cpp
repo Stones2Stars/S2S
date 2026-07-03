@@ -12974,6 +12974,8 @@ void CvPlayer::setCommercePercent(CommerceTypes eIndex, int iNewValue)
 
 	if (iOldValue != m_aiCommercePercent[eIndex])
 	{
+		CascadeAccumulator::dirtyPlayerCommerce(getID());   // #430 accumulator: the slider folds into C_RATE at recompute
+
 		int iTotalCommercePercent = 0;
 
 		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)

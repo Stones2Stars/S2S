@@ -318,8 +318,6 @@ void cvCascadeModifierShadow()
 		.addI(MDF_CHECKED, iChecked).addI(MDF_DIVERGING, iDiverging));
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_RATE, 1)
 		.addI(MDF_CHECKED, iChecked).addI(MDF_DIVERGING, iRateDiverging));
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_SLOT, 1)
-		.addI(MDF_CHECKED, iSlotChecked).addI(MDF_DIVERGING, iSlotDiverging));
 
 	// §2 COMMERCE rate shadow: the assembled per-type commerce rate vs legacy getCommerceRateTimes100 (gold/research/
 	// culture/espionage; channel = the commerce-type string). Separate loop -- the §2 packages ride §1. ⚠ PERF: each call
@@ -348,6 +346,22 @@ void cvCascadeModifierShadow()
 				const CommerceTypes eC = (CommerceTypes)cc;
 				const long cascC = CommerceCalc::commerceRate100(CommerceCalc::channel(cc), eC, pCity, cec, yc100, prate);
 				const int legC = pCity->getCommerceRateTimes100(eC);
+				// [SLOT] commerce leg -- the accumulator's C_RATE vs the fresh calculator (its oracle)
+				{
+					++iSlotChecked;
+					const long slotC = CascadeAccumulator::commerceRate100(pCity, eC);
+					if (slotC != cascC)
+					{
+						++iSlotDiverging;
+						if (iSlotShown < 40)
+						{
+							eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_SLOT, 1)
+								.addWStr(MDF_WHO, pCity->getName().GetCString()).addStr(MDF_CHANNEL, CommerceCalc::channel(cc))
+								.addI(MDF_RATEC, (int)slotC).addI(MDF_RATEL, (int)cascC));
+							++iSlotShown;
+						}
+					}
+				}
 				if (cascC != (long)legC)
 				{
 					++iCDiverging;
@@ -364,6 +378,9 @@ void cvCascadeModifierShadow()
 	}
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_RATE, 1)
 		.addI(MDF_CHECKED, iCChecked).addI(MDF_DIVERGING, iCDiverging));
+	// the [SLOT] summary covers BOTH legs (yield + commerce) -- emitted once, after both loops
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_SLOT, 1)
+		.addI(MDF_CHECKED, iSlotChecked).addI(MDF_DIVERGING, iSlotDiverging));
 
 	// [MODIFIER/perf] -- the repeat-calc hunt (owner 2026-07-02: chase the needless repeat calcs BEFORE parity).
 	// Whole-turn call counts + our stopwatch accumulators (PerfAccumTimer; ms x10 as ints -- the spine carries ints).

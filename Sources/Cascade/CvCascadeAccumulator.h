@@ -29,7 +29,8 @@ enum AccDirty
 	ACCD_SPEC    = 4,    // specialist totals
 	ACCD_EXTRA   = 8,    // building flats + perPopulation
 	ACCD_EMPFLAT = 16,   // free-city + golden-age trait flats (epoch-volatile only; no city hook)
-	ACCD_ALL     = 31
+	ACCD_CRATE   = 32,   // the §2 commerce rates (auto-ORed by dirtyCity: commerce RIDES the yield components)
+	ACCD_ALL     = 63
 };
 
 class CascadeAccumulator
@@ -37,11 +38,16 @@ class CascadeAccumulator
 public:
 	// The §2a combine from standing components -- O(1) when clean; recomputes only dirty components.
 	static long yieldRate100(const CvCity* pCity, YieldTypes eY);
+	// The §2 commerce rate from the standing C_RATE component (slider folded at ITS recompute -- see the slider hook).
+	static long commerceRate100(const CvCity* pCity, CommerceTypes eC);
 
 	// DOMAIN dirty hooks (modifier-substrate.md): a mutation in THIS city marks the affected components.
+	// The yields->commerce dependency is encoded HERE (any yield-feeding bit auto-ORs ACCD_CRATE), never at hook sites.
 	static void dirtyCity(const CvCity* pCity, int iMask);
 	// Player/team-level events (tech / civic / trait / golden-age / project): everything re-checks on next read.
 	static void bumpEpoch();
+	// The slider moved: the player's cities' C_RATE components are stale (the slider folds at recompute).
+	static void dirtyPlayerCommerce(PlayerTypes ePlayer);
 };
 
 #endif // CV_CASCADE_ACCUMULATOR_H
