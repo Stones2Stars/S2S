@@ -147,6 +147,16 @@ attributable diff lines (never silent).
   (happyLevel/unhappyLevel/goodHealth/badHealth return the slots, legacy in-body as the net); the residue's
   per-term drift attribution rides the oracle's `*Recomputed` twins.
 
+- **E — the city SCALAR channels (GP-rate / defense / maintenance) — ✅ OPENED + FULLY ATTRIBUTED (2026-07-03).**
+  `Cascade/CvCascadeScalarChannels.{h,cpp}` + the `scalars` block on `/computed/cities/wellbeing`. Measured:
+  **gpBase + gpMod EXACT on every probe** (the empire-scope building deposits walk the whole player — the
+  player-accumulator semantic); **defense EXACT vs the engine's own current-state recompute** (the stored
+  `m_iBuildingDefense` carries +60 phantom at one probe — the DRIFT class, 4th family); **maintenance EXACT on
+  every data-backed part** (the stored AREA accumulator is pure phantom — ZERO buildings author area
+  maintenance in the whole XML). The PROPERTY channel (increment same-day): 4/7 exact, unit emissions split
+  per [DEC-unit-modifiers-on-top]. **Queued:** slot storage + flips for these channels; the property
+  CRIME/DISEASE/EDUCATION probes; buildRate/tradeRoutes; the unit plane (needs the `unitInput` endpoint).
+
 ## Explicitly NOT this build
 
 - The tally stays a read-only accessor (NOT a spine consumer) — unchanged.
