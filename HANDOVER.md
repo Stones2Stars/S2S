@@ -59,7 +59,15 @@
    the CUT. First live read: save loads whole, gate verdicts sane (FORGE alreadyBuilt=false, 12 researchable).
    **NEXT: the owner's verification turns** (the [ENABLER/shadow] per-gate diverging counts at their sealed
    baselines: construct/train/research/civics/promotion/hurry/foundRel ≈ 0, canBuild 36-accepted class).
-6. The standing gates before ANY demolition: the final adversarial StoneBase sweep + the self-containment
+6. **PERF-OUTLIER HUNT + THE DERIVEDCACHE ALIGNMENT (owner direction 2026-07-04 late-late):** (a) collect
+   per-turn perf data (the [MODIFIER/perf] census rows via /events captures; the StoneBase perf store) and
+   hunt OUTLIERS — the flip-era hot spots to attribute, never tune by feel; (b) **align the remaining
+   caches onto the ONE CvDerivedCache protocol** (the scope-packages §3b census): `CascadeCapabilities`'s
+   hand-rolled per-team union → the Set protocol (the named follow-up); the specialist getters + the
+   player building-commerce ledger (await the vector variant); the enabler-flip statics (the promotion
+   memo/verdict cache — a Set-protocol home when the unit plane lands); the legacy CvCity hand-rolled
+   caches stay §4 demolition fodder (never polish). One component, one philosophy, one freshness surface.
+7. The standing gates before ANY demolition: the final adversarial StoneBase sweep + the self-containment
    audit (per-row state in code-cut-map PREREQ + the review doc). Owner-played verification window over
    the flipped plane precedes any deletion.
 
