@@ -204,10 +204,12 @@ public:
 	int getMaxNumNationalWonders() const;
 
 	bool canTrain(UnitTypes eUnit, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreUpgrades = false, bool bPropertySpawn = false) const;
+	bool canTrainLegacy(UnitTypes eUnit, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreUpgrades = false, bool bPropertySpawn = false) const;   // the intact pre-flip composite -- the net oracle (#430)
 	bool canTrainInternal(UnitTypes eUnit, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreUpgrades = false) const;
 	bool canTrain(UnitCombatTypes eUnitCombat) const;
 
 	bool canConstruct(BuildingTypes eType, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreAmount = false, bool bIgnoreBuildings = false, TechTypes eIgnoreTechReq = NO_TECH, int* probabilityEverConstructable = NULL, bool bExposed = false) const;
+	bool canConstructLegacy(BuildingTypes eType, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreAmount = false, bool bIgnoreBuildings = false, TechTypes eIgnoreTechReq = NO_TECH, int* probabilityEverConstructable = NULL, bool bExposed = false) const;   // the intact pre-flip path incl. the cache -- the net oracle (#430)
 
 	//	KOSHLING - cache can build results
 	void FlushCanConstructCache(BuildingTypes eType = NO_BUILDING);
@@ -215,7 +217,9 @@ public:
 	void NoteBuildingNoLongerConstructable(BuildingTypes eType) const;
 
 	bool canCreate(ProjectTypes eProject, bool bContinue = false, bool bTestVisible = false) const;
+	bool canCreateLegacy(ProjectTypes eProject, bool bContinue = false, bool bTestVisible = false) const;   // the net oracle (#430)
 	bool canMaintain(ProcessTypes eProcess) const;
+	bool canMaintainLegacy(ProcessTypes eProcess) const;   // the net oracle (#430; carries the Python veto)
 
 	int getFoodTurnsLeft() const;
 	bool isProduction() const;

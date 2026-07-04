@@ -1334,6 +1334,7 @@ public:
 	//TB Combat Mods end
 	bool canAcquirePromotionAny() const;
 	bool isPromotionValid(PromotionTypes ePromotion, bool bFree = false, bool bKeepCheck = false) const;
+	bool isPromotionValidLegacy(PromotionTypes ePromotion, bool bFree = false, bool bKeepCheck = false) const;   // the intact pre-flip body -- the net oracle + the composite's bespoke half (#430)
 	bool isHealsUnitCombat(UnitCombatTypes eIndex) const;
 	bool isHasUnitCombat(UnitCombatTypes eIndex) const;
 	void processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPromo = false);

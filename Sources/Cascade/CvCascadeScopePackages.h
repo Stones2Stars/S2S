@@ -83,8 +83,9 @@ enum CascadeCityPkg
 	CPK_SCPCT   = 256,   // scalar percent packages: gpMod city, defense amount, maintenance city
 	CPK_SCSPEC  = 512,   // the gpBase specialist flat package (governor churn touches ONLY this)
 	CPK_BR      = 1024,  // the buildRate city ledgers + city member percents
+	CPK_FRONTIER = 2048, // the ENABLER frontier sets (buildable/trainable/creatable/maintainable) -- the flip's serving cache
 	CPK_RATES   = CPK_YPCT | CPK_YSPEC | CPK_YEXTRA | CPK_CSPEC | CPK_CPCT | CPK_CBASE,   // = 63
-	CPK_ALL     = 2047
+	CPK_ALL     = 4095
 };
 
 struct CascadeCityPackages
@@ -120,6 +121,10 @@ struct CascadeCityPackages
 	// -- buildRate: the city keyed LEDGER (key = (memberSeg<<20)|keySeg, both compiled ints) + city members --
 	std::map<long, int> brCityKeyed;
 	int brCityMilitary, brCitySpace;     // buildRate.city.{military|space} percents
+	// -- the ENABLER frontier (#430 THE FLIP, owner 2026-07-04): the harness-proven availability sets,
+	// served by the flipped can* gates via ensure-on-read (the FACTS idiom, deliberately NOT the rates'
+	// bare fetch: gate reads are decision-time and legacy chains builds within a turn) --
+	std::set<int> enBuildable, enTrainable, enCreatable, enMaintainable;
 
 	CvDerivedCacheSet<CvCity> set;       // the ONE dirty protocol (bind in CvCity's ctor)
 
@@ -148,7 +153,8 @@ enum CascadePlayerPkg
 	PSC_WB     = 4,    // the wellbeing area/empire building fold maps
 	PSC_SC     = 8,    // the scalar player-building sums (gp/maint/conn/area maps/trade empire+coastal+world)
 	PSC_BR     = 16,   // the buildRate empire building ledgers + building member pcts
-	PSC_ALL    = 31
+	PSC_FRONTIER = 32, // the ENABLER player frontier (researchable/civics/hurries + the canBuild rem-set + promo tech halves)
+	PSC_ALL    = 63
 };
 
 struct CascadePlayerScope
@@ -178,6 +184,11 @@ struct CascadePlayerScope
 	// -- buildRate (building-sourced halves only) --
 	std::map<long, int> brEmpKeyed;      // (memberSeg<<20)|keySeg -> Σ pcts (all cities' active buildings)
 	int brEmpMilitary, brEmpSpace;       // empire member pcts (buildings)
+	// -- the ENABLER player frontier (#430 THE FLIP): researchable/civics/hurries sets (the harness-proven
+	// bare-player-ctx fills), the canBuild UNLOCK rem-set (obsoletes.builds over held techs), and the
+	// promotion frontier's player-wide tech halves (the per-unit composite folds these + the unit's own) --
+	std::set<int> enResearchable, enCivicsOk, enHurryOk, enBuildRem;
+	std::set<int> enPromoTechCand, enPromoTechRem;
 
 	CvDerivedCacheSet<CvPlayer> set;     // bind in CvPlayer's ctor
 

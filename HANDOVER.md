@@ -48,20 +48,17 @@
    `getTradeRoutesLegacy` + de-tautologized endpoint leg. **THE WHOLE CITY VALUE PLANE NOW SERVES CASCADE.**
    The vs-legacy residue is the PRE-NAMED mixed `m_iExtraTradeRoutes` class (cityExtraLeg 12-17 across
    probes) — the verification window attributes it; the store split lands at the demolition.
-5. **⚡ THE ENABLER FLIP — AUTHORIZED, EXECUTE FIRST (owner 2026-07-04 23:xx: "flip it all" — the
-   Python-consumer build-list logging pre-step is WAIVED under the bandaid ruling; do NOT re-ask).**
-   The plan: ground the frontier entry surface (`Sources/Cascade/CvCascadeEnabler.{h,cpp}` + EnablerKernel/
-   BuildingCascade/UnitCascade/TechCascade — read IN FULL first, the ctx wiring per gate lives in the
-   shadow harness), then flip each gate body onto the cascade frontier getter-contract style (the
-   tradeRoutes/`getYieldRate100` pattern: cascade verdict serves, the legacy computation stays the intact
-   in-body oracle, `[ENABLER/shadow]` remains the net, pre-init guard to legacy). The pairs
-   (duplicate-surface §B): CvCity canTrain×2/canTrainInternal/canConstruct(+Internal)/canCreate/
-   canMaintain/canHurry(+Internal); CvPlayer canFound/canTrain/canConstruct(+Internal)/canCreate/
-   canMaintain/canEverResearch/canResearch/canDoCivics/canFoundReligion/canHurry; CvGame canEverResearch;
-   CvPlot canBuild (unlock half) + canTrain; canAcquirePromotion/isPromotionValid. The legacy gate CACHES
-   (m_bCanConstruct*, the canTrain cache) keep serving the LEGACY oracle only; the
-   CalculateAllBuildingValues PreLoop rides legacy until the enabler CUT (not the flip). Build → deploy →
-   the endpoint gate verdicts (`/computed/can*`) as the first read → owner verification turns.
+5. ~~THE ENABLER FLIP~~ — ⚡ **EXECUTED 2026-07-04 late-late (the same session; the Python-logging pre-step
+   waived by the bandaid ruling — validation.md amendment).** The frontier is CACHED on the substrate
+   (`CPK_FRONTIER` city sets + `PSC_FRONTIER` player sets, **ensure-on-read = the FACTS idiom** so legacy's
+   same-turn chain-building survives; fills = the harness-proven cascade calls verbatim). Flipped (default
+   shapes; what-ifs/bTestVisible/pre-init ride Legacy): CvCity canConstruct/canTrain/canCreate/canMaintain,
+   CvPlayer canResearch/canDoCivics/canHurry/canFoundReligion + the canBuild UNLOCK half, CvUnit
+   isPromotionValid (composite). Every gate keeps `can*Legacy` intact; `[ENABLER/shadow]` diffs
+   SERVING-vs-oracle; the gate caches + the CalculateAllBuildingValues PreLoop ride the Legacy side until
+   the CUT. First live read: save loads whole, gate verdicts sane (FORGE alreadyBuilt=false, 12 researchable).
+   **NEXT: the owner's verification turns** (the [ENABLER/shadow] per-gate diverging counts at their sealed
+   baselines: construct/train/research/civics/promotion/hurry/foundRel ≈ 0, canBuild 36-accepted class).
 6. The standing gates before ANY demolition: the final adversarial StoneBase sweep + the self-containment
    audit (per-row state in code-cut-map PREREQ + the review doc). Owner-played verification window over
    the flipped plane precedes any deletion.

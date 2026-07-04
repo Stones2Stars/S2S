@@ -6,6 +6,7 @@
 #include "CvGameCoreDLL.h"
 #include "AI/BetterBTSAI.h"
 #include "CvEventSpine.h" // #430: name-change DOMAIN event on setName (Cascade/ is on /I)
+#include "CvCascadeAccumulator.h" // #430 THE ENABLER FLIP: enPromotionValid (isPromotionValid serves the cascade composite)
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
 #include "CvCity.h"
@@ -17875,6 +17876,19 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 }
 
 bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepCheck) const
+{
+	// #430 THE ENABLER FLIP (owner 2026-07-04 "flip it all"): the default shape serves the cascade
+	// composite -- the frontier half (tech/enables unlock, player tech halves cached) over the bespoke
+	// unit-state half (which rides isPromotionValidLegacy(..., bFree=true) inside the accessor, exactly
+	// the harness-proven pairing). bFree/bKeepCheck callers + pre-init ride Legacy whole.
+	if (!bFree && !bKeepCheck && GC.getGame().isFinalInitialized())
+	{
+		return CascadeAccumulator::enPromotionValid(this, (int)ePromotion);
+	}
+	return isPromotionValidLegacy(ePromotion, bFree, bKeepCheck);
+}
+
+bool CvUnit::isPromotionValidLegacy(PromotionTypes ePromotion, bool bFree, bool bKeepCheck) const
 {
 	PROFILE_EXTRA_FUNC();
 	const CvPromotionInfo& promo = GC.getPromotionInfo(ePromotion);

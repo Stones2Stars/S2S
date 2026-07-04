@@ -7544,7 +7544,18 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestVisibl
 
 	const CvBuildInfo& kBuild = GC.getBuildInfo(eBuild);
 
-	if (kBuild.isDisabled()
+	// #430 THE ENABLER FLIP -- the UNLOCK half only (the scope ruling: plot-validity + the feature/terrain
+	// tech gates + gold STAY ENGINE below). The cascade unlock covers disabled/obsolete/techPrereq via the
+	// rem-set + requires.build (plot ctx); bTestVisible (the UI greyed list) + plotless calls ride Legacy.
+	const bool bCascadeUnlock = !bTestVisible && pPlot != NULL && GC.getGame().isFinalInitialized();
+	if (bCascadeUnlock)
+	{
+		if (!CascadeAccumulator::enBuildUnlocked(this, (int)eBuild, pPlot))
+		{
+			return false;
+		}
+	}
+	else if (kBuild.isDisabled()
 	||	kBuild.getObsoleteTech() != NO_TECH && GET_TEAM(getTeam()).isHasTech(kBuild.getObsoleteTech()))
 	{
 		return false;
@@ -7563,7 +7574,8 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestVisibl
 
 		if (!bTestVisible || eTechPrereq != NO_TECH && getCurrentEra() < GC.getTechInfo(eTechPrereq).getEra())
 		{
-			if (eTechPrereq != NO_TECH && !GET_TEAM(getTeam()).isHasTech(eTechPrereq))
+			// (the techPrereq check rides the cascade unlock above on the flipped path)
+			if (!bCascadeUnlock && eTechPrereq != NO_TECH && !GET_TEAM(getTeam()).isHasTech(eTechPrereq))
 			{
 				return false;
 			}
@@ -8312,6 +8324,18 @@ bool CvPlayer::canEverResearch(TechTypes eTech) const
 
 bool CvPlayer::canResearch(const TechTypes eTech, const bool bRightNow, const bool bSpecialRequirements) const
 {
+	// #430 THE ENABLER FLIP (owner 2026-07-04 "flip it all"): the default shape (researchable NOW, special
+	// requirements on -- the harness-proven pairing) serves the cascade frontier (TechCascade::available,
+	// cached on the player package, ensure-on-read). Other shapes + pre-init ride the Legacy oracle.
+	if (bRightNow && bSpecialRequirements && GC.getGame().isFinalInitialized())
+	{
+		return CascadeAccumulator::enResearch(this, (int)eTech);
+	}
+	return canResearchLegacy(eTech, bRightNow, bSpecialRequirements);
+}
+
+bool CvPlayer::canResearchLegacy(const TechTypes eTech, const bool bRightNow, const bool bSpecialRequirements) const
+{
 	PROFILE_EXTRA_FUNC();
 	if (GET_TEAM(getTeam()).isHasTech(eTech) || !canEverResearch(eTech))
 	{
@@ -8469,6 +8493,17 @@ bool CvPlayer::isCivic(CivicTypes eCivic) const
 
 
 bool CvPlayer::canDoCivics(CivicTypes eCivic) const
+{
+	// #430 THE ENABLER FLIP: serves the cascade frontier (generate->gateSet civics, bare player ctx).
+	// NO_CIVIC keeps its legacy true; pre-init rides the Legacy oracle.
+	if (eCivic != NO_CIVIC && GC.getGame().isFinalInitialized())
+	{
+		return CascadeAccumulator::enCivic(this, (int)eCivic);
+	}
+	return canDoCivicsLegacy(eCivic);
+}
+
+bool CvPlayer::canDoCivicsLegacy(CivicTypes eCivic) const
 {
 	PROFILE_FUNC();
 
@@ -10130,6 +10165,16 @@ void CvPlayer::changeUnitUpgradePriceModifier(int iChange)
 
 
 bool CvPlayer::canFoundReligion() const
+{
+	// #430 THE ENABLER FLIP: serves the cascade's player-state predicate (EnablerKernel::canFoundReligion)
+	if (GC.getGame().isFinalInitialized())
+	{
+		return CascadeAccumulator::enFoundReligion(this);
+	}
+	return canFoundReligionLegacy();
+}
+
+bool CvPlayer::canFoundReligionLegacy() const
 {
 	if( getNumCities() < 1 || isNPC()
 	|| (GC.getGame().isGameStart() && GC.getGame().getElapsedGameTurns() < 3) )
@@ -13901,6 +13946,16 @@ int CvPlayer::getHurryCount(HurryTypes eIndex) const
 
 
 bool CvPlayer::canHurry(HurryTypes eIndex) const
+{
+	// #430 THE ENABLER FLIP: serves the cascade frontier (generate->gateSet hurries)
+	if (GC.getGame().isFinalInitialized())
+	{
+		return CascadeAccumulator::enHurry(this, (int)eIndex);
+	}
+	return canHurryLegacy(eIndex);
+}
+
+bool CvPlayer::canHurryLegacy(HurryTypes eIndex) const
 {
 	return (getHurryCount(eIndex) > 0);
 }

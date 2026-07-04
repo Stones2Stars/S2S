@@ -19,6 +19,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeEnabler.h"
+#include "CvCascadeAccumulator.h"      // #430 THE FLIP: the SERVING frontier accessors (the net diffs serving-vs-oracle)
 #include "CvCascadeEnablerKernel.h"    // EnablerKernel -- the shared GENERATE->GATE primitive + gate helpers
 #include "CvCascadeTechCascade.h"      // TechCascade::available
 #include "CvCascadeBuildingCascade.h"  // BuildingCascade::buildable
@@ -127,36 +128,14 @@ struct EnGate { int chk, div, shown; EnGate() : chk(0), div(0), shown(0) {} };
 // Sample-capped. Same primitive as the frontier gates -- only the HAVE source + context object differ.
 static void en_shadowPromotions(const CvPlayer& kPlayer, const CvTeam& kTeam, int nPromo, EnGate& g, int& iUnits)
 {
+	// POST-FLIP (2026-07-04 "flip it all"): the composite moved to CascadeAccumulator::enPromotionValid (the
+	// SINGLE SOURCE the flipped isPromotionValid serves -- the PALACE lesson / event-injection mirror /
+	// bespoke-half ride all live there now); this net diffs the SERVING value vs the intact Legacy oracle.
+	(void)kTeam;
 	int iLoop;
 	for (const CvUnit* pUnit = kPlayer.firstUnit(&iLoop); pUnit != NULL && iUnits < 12; pUnit = kPlayer.nextUnit(&iLoop))
 	{
 		++iUnits;
-		EnBucketSets cand, rem;
-		for (int pr = 0; pr < nPromo; ++pr)
-			if (pUnit->isHasPromotion((PromotionTypes)pr)) EnablerKernel::accumHave(InfoRepo<CvPromotionInfo>::get().get(pr), cand, rem);
-		for (int t = 0; t < GC.getNumTechInfos(); ++t)
-			if (kTeam.isHasTech((TechTypes)t)) EnablerKernel::accumHave(InfoRepo<CvTechInfo>::get().get(t), cand, rem);
-		const UnitCombatTypes eUC = pUnit->getUnitCombatType();
-		if (eUC != NO_UNITCOMBAT) EnablerKernel::accumHave(InfoRepo<CvUnitCombatInfo>::get().get((int)eUC), cand, rem);
-
-		std::set<int>& promoCand = cand["promotions"];
-		const std::set<int>& promoRem = rem["promotions"];
-		for (std::set<int>::const_iterator it = promoRem.begin(); it != promoRem.end(); ++it) promoCand.erase(*it);
-		// THE PALACE LESSON for promotions (2026-07-02): most combat promos (COMBAT1-5, LEADER, …) have NO tech
-		// prereq, so no tech's enables.promotions ever generates them — the enables-frontier structurally
-		// under-offers them (the canAcquirePromotion refusal bulk). A promo rooted in NO tech edge anywhere is
-		// ALWAYS-unlocked; only enabler-rooted promos are tech-locked. Derived once from the static readJson data.
-		static std::set<int> s_enablerRooted;
-		static bool s_rootedBuilt = false;
-		if (!s_rootedBuilt)
-		{
-			for (int t = 0; t < GC.getNumTechInfos(); ++t)
-				EnablerKernel::addEdge(InfoRepo<CvTechInfo>::get().get(t), "enables.promotions", s_enablerRooted);
-			s_rootedBuilt = true;
-		}
-
-		CvCascadeEvalCtx ec;
-		ec.unit = pUnit; ec.player = &kPlayer; ec.team = &kTeam; ec.plot = pUnit->plot();
 		// HOLD the name: CvUnit::getName() returns a CvWString BY VALUE -- keeping only .GetCString() dangles into a
 		// destroyed temporary (the blank-who= emit bug, 2026-07-02; CvCity::getName() has the same shape below).
 		const CvWString sWho = pUnit->getName();
@@ -164,28 +143,8 @@ static void en_shadowPromotions(const CvPlayer& kPlayer, const CvTeam& kTeam, in
 		for (int pr = 0; pr < nPromo; ++pr)
 		{
 			++g.chk;
-			// ⛔ SCOPE (2026-07-02): the cascade owns the TECH/enables frontier half only. isPromotionValid's bespoke
-			// unit-state rules (qualified/disqualified unitcombat lists, game options, spy/pillage/commander/blend/
-			// intercept caps) are engine LOGIC that survives cutover (their DATA moves to JSON at Gate 3 — parked in
-			// identity.unitCombats today, unmodeled by the frontier). isPromotionValid(pr, bFree=true) applies exactly
-			// that bespoke half (bFree skips ONLY the tech + promotion-line tech gates, CvUnit.cpp:17947) — riding it
-			// on BOTH sides isolates the diff to the frontier half (the 4,729-diff noise was the unmodeled half).
-			const bool bUnlocked = promoCand.count(pr) != 0
-				|| (s_enablerRooted.count(pr) == 0 && promoRem.count(pr) == 0);   // no-enabler promo = always-unlocked (unless obsoleted)
-			// EVENT-INJECTION-ONLY mirror (2026-07-02): a promo with NO qualified-unitcombat list (and not
-			// forOffset/zeroesXP) is refused by legacy unless FREE (`bValid = bFree` -- CvUnit.cpp:17977: "no CC
-			// prereq = only assigned by event or special injection"). The bFree=true bespoke ride passes exactly
-			// that clause, so mirror it here (with legacy's free-promotion carve-out) -- the WINTERBORN/SAND_DEVIL
-			// affinity-promo over-offer tail.
-			const CvPromotionInfo& kPromo = GC.getPromotionInfo((PromotionTypes)pr);
-			const bool bEventOnly = kPromo.getNumQualifiedUnitCombatTypes() == 0
-				&& !kPromo.isForOffset() && !kPromo.isZeroesXP()
-				&& !pUnit->getUnitInfo().getFreePromotions(pr)
-				&& !kPlayer.isFreePromotion(pUnit->getUnitType(), (PromotionTypes)pr);
-			const bool bCasc = bUnlocked && !bEventOnly
-				&& EnablerKernel::requiresMet(InfoRepo<CvPromotionInfo>::get().get(pr), ec)
-				&& pUnit->isPromotionValid((PromotionTypes)pr, true);
-			const bool bLeg = pUnit->isPromotionValid((PromotionTypes)pr);
+			const bool bCasc = CascadeAccumulator::enPromotionValid(pUnit, pr);
+			const bool bLeg = pUnit->isPromotionValidLegacy((PromotionTypes)pr);
 			if (bCasc != bLeg) { ++g.div; en_emitDiff(szWho, "canAcquirePromotion", GC.getPromotionInfo((PromotionTypes)pr).getType(), bCasc, bLeg, g.shown); }
 		}
 	}
@@ -221,47 +180,33 @@ void cvCascadeEnablerShadow()
 		// was deleted in the Gate-3 capability cut, and the flipped getter now IS CascadeCapabilities, so the diff
 		// had become cascade-vs-cascade. The capability plane's live net is [CAPSHADOW] in CvCascadeCapabilities.)
 
-		// ---- PLAYER-scope gates (canResearch / canDoCivics): one GENERATE/GATE per player ----
+		// ---- PLAYER-scope gates: POST-FLIP the SERVING accessors (the cached player frontier) vs the Legacy oracles ----
 		if (iPlayers < 4)
 		{
 			++iPlayers;
-			EnBucketSets candP;
-			EnablerKernel::generate(kPlayer, NULL, candP);
-			CvCascadeEvalCtx pec;                          // PLAYER-scope eval ctx (no city/plot)
-			pec.player = &kPlayer; pec.team = &kTeam;
-			std::set<int> availT, availCv;
-			TechCascade::available(kPlayer, kTeam, availT);    // TechCascade port (all-techs frontier; replaces the enables-frontier)
-			EnablerKernel::gateSet("civics", candP, pec, kPlayer, kTeam, false, availCv);
 			const wchar_t* szWho = kPlayer.getName();
 			for (int t = 0; t < nT; ++t)
 			{
-				// Oracle = canResearch (researchable NOW): the all-techs+requires.build set is "prereqs held now", which is
-				// canResearch, NOT the broader canEverResearch (could-ever). The two MUST be paired (changed with the port).
-				++gResearch.chk; bool c = availT.count(t) != 0, l = kPlayer.canResearch((TechTypes)t);
+				// Oracle = canResearchLegacy (researchable NOW): the all-techs+requires.build set is "prereqs held now".
+				++gResearch.chk; bool c = CascadeAccumulator::enResearch(&kPlayer, t), l = kPlayer.canResearchLegacy((TechTypes)t);
 				if (c != l) { ++gResearch.div; en_emitDiff(szWho, "canResearch", GC.getTechInfo((TechTypes)t).getType(), c, l, gResearch.shown); }
 			}
 			for (int cv = 0; cv < nC; ++cv)
 			{
-				++gCivics.chk; bool c = availCv.count(cv) != 0, l = kPlayer.canDoCivics((CivicTypes)cv);
+				++gCivics.chk; bool c = CascadeAccumulator::enCivic(&kPlayer, cv), l = kPlayer.canDoCivicsLegacy((CivicTypes)cv);
 				if (c != l) { ++gCivics.div; en_emitDiff(szWho, "canDoCivics", GC.getCivicInfo((CivicTypes)cv).getType(), c, l, gCivics.shown); }
 			}
-			// canHurry: the player-level enablement = the hurry type is generated (enables.hurries, mostly civics) --
-			// the gate that lights the two Python hurry buttons / tells the AI it can hurry. (City-level gold/slavery
-			// AMOUNT checks are runtime, outside this frontier.) Shadowed vs CvPlayer::canHurry = getHurryCount>0.
-			std::set<int> availHur;
-			EnablerKernel::gateSet("hurries", candP, pec, kPlayer, kTeam, false, availHur);
 			for (int hu = 0; hu < nHur; ++hu)
 			{
 				++gHurry.chk;
-				const bool c = availHur.count(hu) != 0;
-				const bool l = kPlayer.canHurry((HurryTypes)hu);
+				const bool c = CascadeAccumulator::enHurry(&kPlayer, hu);
+				const bool l = kPlayer.canHurryLegacy((HurryTypes)hu);
 				if (c != l) { ++gHurry.div; en_emitDiff(szWho, "canHurry", GC.getHurryInfo((HurryTypes)hu).getType(), c, l, gHurry.shown); }
 			}
-			// canFoundReligion: a player-wide state predicate (one verdict/player), reproduced vs the engine.
 			{
 				++gFoundRel.chk;
-				const bool c = EnablerKernel::canFoundReligion(kPlayer);
-				const bool l = kPlayer.canFoundReligion();
+				const bool c = CascadeAccumulator::enFoundReligion(&kPlayer);
+				const bool l = kPlayer.canFoundReligionLegacy();
 				if (c != l) { ++gFoundRel.div; en_emitDiff(szWho, "canFoundReligion", "", c, l, gFoundRel.shown); }
 			}
 		}
@@ -269,70 +214,33 @@ void cvCascadeEnablerShadow()
 		// ---- UNIT-scope gate (canAcquirePromotion): per-unit GENERATE->GATE, sample-capped across players ----
 		en_shadowPromotions(kPlayer, kTeam, nPromo, gPromote, iUnits);
 
-		// ---- CITY-scope gates (canConstruct / canTrain / canCreate / canMaintain) ----
+		// ---- CITY-scope gates: POST-FLIP the SERVING accessors (the cached city frontier -- exactly what the
+		// flipped canConstruct/canTrain/canCreate/canMaintain return) vs the intact Legacy oracles ----
 		int iLoop;
 		for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL && iCities < 8; pCity = kPlayer.nextCity(&iLoop))
 		{
 			++iCities;
-			EnBucketSets candC;
-			EnablerKernel::generate(kPlayer, pCity, candC);
-			CvCascadeEvalCtx cec;                          // CITY-scope eval ctx
-			cec.city = pCity; cec.plot = pCity->plot(); cec.player = &kPlayer; cec.team = &kTeam;   // plot = the CITY plot (2026-07-02 fix: bare HAS_COAST / HAS_FRESHWATER take the plot branch; a NULL plot failed them all)
-			// The two per-city building facts (active set + in-vicinity `provides` supply, json §5a) for the projects/
-			// processes gateSet requires-eval -- computed from the cascade, not the engine (DEC-calc-zero-ride-in).
-			EnablerKernel::wireFacts(pCity, cec);
-			std::set<int> avB, avU, avPr, avProc;
-			BuildingCascade::buildable(pCity, kPlayer, kTeam, avB);   // BuildingCascade port (all-buildings frontier)
-			UnitCascade::trainable(pCity, kPlayer, kTeam, avU);       // UnitCascade port (generate-then-gate)
-			EnablerKernel::gateSet("projects",  candC, cec, kPlayer, kTeam, false, avPr);
-			EnablerKernel::gateSet("processes", candC, cec, kPlayer, kTeam, false, avProc);
-			// [ENABLER/procdiag] -- the canMaintain chain decomposition (map, don't guess): the frontier came out
-			// EMPTY while the tech JSONs verifiably carry enables.processes. One emit (first city) pins WHICH link
-			// breaks: wealthId<0 = FK resolve; curEdges=0 = the readJson map lost the edge; cand=0 = GENERATE;
-			// avail=0 with cand>0 = the gate. Remove once canMaintain reaches parity.
-			if (iCities == 1)
-			{
-				const int iWealthId = GC.getInfoTypeForString("PROCESS_WEALTH", true);
-				const int iCurrency = GC.getInfoTypeForString("TECH_CURRENCY", true);
-				int iCurEdges = -1;
-				if (iCurrency >= 0)
-				{
-					const CvJsonInfo* jt = InfoRepo<CvTechInfo>::get().get(iCurrency);
-					if (jt != NULL)
-					{
-						std::map<std::string, std::vector<int> >::const_iterator eit = jt->edges.find("enables.processes");
-						iCurEdges = (eit == jt->edges.end()) ? 0 : (int)eit->second.size();
-					}
-				}
-				EnBucketSets::const_iterator pcit = candC.find("processes");
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_ENABLER, ENE_PROCDIAG, 1)
-					.addI(ENF_CAND, pcit == candC.end() ? -1 : (int)pcit->second.size())
-					.addI(ENF_AVAIL, (int)avProc.size())
-					.addI(ENF_EDGES, iCurEdges)
-					.addI(ENF_RESOLVE, iWealthId)
-					.addI(ENF_HASTECH, iCurrency >= 0 && kTeam.isHasTech((TechTypes)iCurrency) ? 1 : 0));
-			}
 			// HOLD the name: CvCity::getName() returns a CvWString BY VALUE (the blank-who= emit bug -- see above).
 			const CvWString sWho = pCity->getName();
 			const wchar_t* szWho = sWho.GetCString();
 			for (int b = 0; b < nB; ++b)
 			{
-				++gConstruct.chk; bool c = avB.count(b) != 0, l = pCity->canConstruct((BuildingTypes)b, false, false, false);   // bIgnoreCost=FALSE (2026-07-02): true disabled the productionCost==-1 gate == the spawnOnly/notConstructible semantic the cascade models
+				++gConstruct.chk; bool c = CascadeAccumulator::enConstruct(pCity, b), l = pCity->canConstructLegacy((BuildingTypes)b, false, false, false);   // bIgnoreCost=FALSE (2026-07-02): true disabled the productionCost==-1 gate == the spawnOnly/notConstructible semantic the cascade models
 				if (c != l) { ++gConstruct.div; en_emitDiff(szWho, "canConstruct", GC.getBuildingInfo((BuildingTypes)b).getType(), c, l, gConstruct.shown); }
 			}
 			for (int u = 0; u < nU; ++u)
 			{
-				++gTrain.chk; bool c = avU.count(u) != 0, l = pCity->canTrain((UnitTypes)u, false, false, false);   // ditto -- the oracle must apply the real gate
+				++gTrain.chk; bool c = CascadeAccumulator::enTrain(pCity, u), l = pCity->canTrainLegacy((UnitTypes)u, false, false, false);   // ditto -- the oracle must apply the real gate
 				if (c != l) { ++gTrain.div; en_emitDiff(szWho, "canTrain", GC.getUnitInfo((UnitTypes)u).getType(), c, l, gTrain.shown); }
 			}
 			for (int pr = 0; pr < nP; ++pr)
 			{
-				++gCreate.chk; bool c = avPr.count(pr) != 0, l = pCity->canCreate((ProjectTypes)pr, false, false);
+				++gCreate.chk; bool c = CascadeAccumulator::enCreate(pCity, pr), l = pCity->canCreateLegacy((ProjectTypes)pr, false, false);
 				if (c != l) { ++gCreate.div; en_emitDiff(szWho, "canCreate", GC.getProjectInfo((ProjectTypes)pr).getType(), c, l, gCreate.shown); }
 			}
 			for (int pc = 0; pc < nProc; ++pc)
 			{
-				++gMaintain.chk; bool c = avProc.count(pc) != 0, l = pCity->canMaintain((ProcessTypes)pc);
+				++gMaintain.chk; bool c = CascadeAccumulator::enMaintain(pCity, pc), l = pCity->canMaintainLegacy((ProcessTypes)pc);
 				if (c != l) { ++gMaintain.div; en_emitDiff(szWho, "canMaintain", GC.getProcessInfo((ProcessTypes)pc).getType(), c, l, gMaintain.shown); }
 			}
 		}
@@ -351,34 +259,10 @@ void cvCascadeEnablerShadow()
 		++iPlots;
 		const CvPlayer& kOwner = GET_PLAYER(eOwner);
 		const CvTeam& kOTeam = GET_TEAM(kOwner.getTeam());
-		CvCascadeEvalCtx pec;                          // PLOT-scope eval ctx (the build's target plot)
-		pec.plot = pPlot; pec.player = &kOwner; pec.team = &kOTeam;
-		CvCascadeEvalFlags bflags; bflags.strictStateReligionForBuild = true;
-		// BuildCascade (StoneBase): the FRONTIER is ALL builds (not the enables-frontier), gated by requires.build.
-		// ⛔ SCOPE (2026-07-02): the cascade owns ONLY the UNLOCK half — the plot-validity half (CvPlot::canBuild:
-		// canHaveImprovement, feature removal, route placement, water) STAYS ENGINE at cutover (enabler.md: "builds
-		// stay the per-plot canBuild gate; the cascade subsumes the unlock set"). So the shadow diffs UNLOCK vs
-		// UNLOCK: the oracle mirrors CvPlayer::canBuild's unlock block (disabled + obsoleteTech + techPrereq;
-		// CvPlayer.cpp:7529-7551) — diffing against the FULL CvPlot::canBuild compared two different questions
-		// (the 2,083-diff noise: every not-yet-plot-valid build read as an over-offer). The plot-conditional
-		// feature/terrain TECH gates (getFeatureTech / TerrainStructs) live in produces.* data, not requires —
-		// they are Gate-3 wiring for the surviving engine gate, outside this frontier.
-		// Source-side obsolescence: a build's XML ObsoleteTech is store-inverted to the TECH's `obsoletes.builds`
-		// edge (curate_build) — collect the removal set over the owner's held techs (the whole-domain frontier
-		// bypasses generate(), so the rem subtraction must happen here; missing it over-offered the whole
-		// TRAIL/PATH/PAVED_ROAD obsolete-route class).
-		std::set<int> remBld;
-		for (int t = 0; t < GC.getNumTechInfos(); ++t)
-			if (kOTeam.isHasTech((TechTypes)t))
-				EnablerKernel::addEdge(InfoRepo<CvTechInfo>::get().get(t), "obsoletes.builds", remBld);
-		std::set<int> availBld;
-		for (int b = 0; b < nBld; ++b)
-		{
-			if (remBld.count(b) != 0) continue;
-			const CvJsonInfo* j = InfoRepo<CvBuildInfo>::get().get(b);
-			if (EnablerKernel::obsoletedByHeldTech(j, kOTeam)) continue;
-			if (j == NULL || j->requiresBuild == NULL || cascadeEvalCondition(j->requiresBuild, pec, bflags)) availBld.insert(b);
-		}
+		// POST-FLIP: the SERVING unlock accessor (CascadeAccumulator::enBuildUnlocked -- the rem-set +
+		// target-side obsolescence + requires.build vs the plot, exactly what CvPlayer::canBuild's flipped
+		// unlock half serves) vs the Legacy unlock triple. The plot-validity half stays engine (the scope
+		// ruling 2026-07-02); the feature/terrain tech gates are Gate-3 wiring outside this frontier.
 		const wchar_t* szWho = kOwner.getName();
 		for (int b = 0; b < nBld; ++b)
 		{
@@ -386,7 +270,7 @@ void cvCascadeEnablerShadow()
 			const bool l = !kBuild.isDisabled()
 				&& !(kBuild.getObsoleteTech() != NO_TECH && kOTeam.isHasTech(kBuild.getObsoleteTech()))
 				&& (kBuild.getTechPrereq() == NO_TECH || kOTeam.isHasTech((TechTypes)kBuild.getTechPrereq()));
-			++gBuild.chk; const bool c = availBld.count(b) != 0;
+			++gBuild.chk; const bool c = CascadeAccumulator::enBuildUnlocked(&kOwner, b, pPlot);
 			if (c != l) { ++gBuild.div; en_emitDiff(szWho, "canBuild", kBuild.getType(), c, l, gBuild.shown); }
 		}
 	}

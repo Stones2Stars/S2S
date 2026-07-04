@@ -23,6 +23,8 @@
 class CvCity;
 class CvPlayer;
 class CvGame;
+class CvPlot;
+class CvUnit;
 
 class CascadeAccumulator
 {
@@ -51,6 +53,20 @@ public:
 	// A player-level event (civic swap / golden-age flip / tech researched): marks the player scope + ALL
 	// the player's cities' packages + facts (conditions on city-scope deposits reference these).
 	static void markPlayerScopeAndCities(PlayerTypes ePlayer);
+
+	// ===== the ENABLER frontier reads (#430 THE FLIP -- ensure-on-read, the facts idiom) =====
+	static bool enConstruct(const CvCity* pCity, int eBuilding);
+	static bool enTrain(const CvCity* pCity, int eUnit);
+	static bool enCreate(const CvCity* pCity, int eProject);
+	static bool enMaintain(const CvCity* pCity, int eProcess);
+	static bool enResearch(const CvPlayer* pPlayer, int eTech);
+	static bool enCivic(const CvPlayer* pPlayer, int eCivic);
+	static bool enHurry(const CvPlayer* pPlayer, int eHurry);
+	static bool enFoundReligion(const CvPlayer* pPlayer);
+	// the canBuild UNLOCK half only (the plot-validity half stays engine -- the scope ruling)
+	static bool enBuildUnlocked(const CvPlayer* pPlayer, int eBuild, const CvPlot* pPlot);
+	// the promotion composite: the cascade frontier half over the bespoke legacy half (isPromotionValidLegacy(...,true))
+	static bool enPromotionValid(const CvUnit* pUnit, int ePromo);
 
 	// ===== the boundaries =====
 	// The slice-start rebuild ("Cascade.RebuildCache(myPlayerId)"): the self-heal re-mark for the unhooked

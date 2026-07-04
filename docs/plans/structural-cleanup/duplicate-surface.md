@@ -37,14 +37,21 @@ sibling reads the still-maintained legacy accumulators (fed by the untouched `pr
 |---|---|---|---|---|
 | 11 | building ACTIVE/dormant | `m_cascadeFacts` (the operate/provides fixpoint; every cascade fill reads it) | `setDisabledBuilding` event-state (still drives the engine's own processing; carries the accepted dropped-event staleness) | `[MODIFIER/dorm]` attribution lines |
 
-## B. The ENABLER plane — LEGACY SERVES, cascade shadows
+## B. The ENABLER plane — ⚡ FLIPPED 2026-07-04 ("flip it all"): CASCADE SERVES, legacy maintains as the oracle
 
-The engine gates run legacy; the cascade frontier (`Sources/Cascade/CvCascadeEnabler.{h,cpp}`, shadow-parity
-reached 2026-07-02) diffs beside them via `[ENABLER/shadow]`. Pairs: `canConstruct`/`canTrain` (+ their
-caches `m_bCanConstruct*`, the canTrain cache), `canResearch`, `canDoCivics`, `canCreate`, `canMaintain`,
-`canHurry`, `canFoundReligion`, `canAcquirePromotion`, `canBuild` (unlock half). The
-`CvCityAI::CalculateAllBuildingValues` PreLoop rides the legacy side. Dies at the enabler flip+cut
-([cutover.md](cutover.md) — in-body instrument + the Python-consumer logging step first).
+The gates serve the cascade frontier, CACHED on the package substrate (`CPK_FRONTIER` city sets:
+buildable/trainable/creatable/maintainable; `PSC_FRONTIER` player sets: researchable/civics/hurries + the
+canBuild rem-set + the promotion tech halves) — **ensure-on-read (the FACTS idiom, deliberately not the
+rates' bare fetch: gate reads are decision-time and legacy chains builds within a turn)**, filled by the
+harness-proven cascade calls (`BuildingCascade::buildable` / `UnitCascade::trainable` /
+`TechCascade::available` / the kernel gateSets). The flipped bodies (default shapes; what-if/visible params
++ pre-init ride Legacy): `CvCity::canConstruct/canTrain/canCreate/canMaintain`,
+`CvPlayer::canResearch/canDoCivics/canHurry/canFoundReligion` + the `canBuild` UNLOCK half,
+`CvUnit::isPromotionValid` (the composite: frontier half over the bespoke `isPromotionValidLegacy(...,true)`
+ride). Every gate keeps its intact `can*Legacy` oracle; `[ENABLER/shadow]` now diffs SERVING-vs-oracle. The
+legacy gate caches (`m_bCanConstruct*`, the canTrain cache) serve the Legacy path only; the
+`CvCityAI::CalculateAllBuildingValues` PreLoop rides legacy until the enabler CUT (the deletion still waits
+for the verification window + the standing gates).
 
 ## C. The THIRD surface — the oracle calculators (net-sampled only)
 

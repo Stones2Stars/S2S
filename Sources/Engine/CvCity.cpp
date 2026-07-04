@@ -2371,6 +2371,19 @@ void CvCity::clearUpgradeCache(UnitTypes eUnit) const
 
 bool CvCity::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreUpgrades, bool bPropertySpawn) const
 {
+	// ==== #430 THE ENABLER FLIP: the DEFAULT gate shape serves the cascade frontier (UnitCascade::trainable,
+	// parity-proven vs the WHOLE composite -- player leg + city leg + caches). Non-default shapes + pre-init
+	// ride the Legacy path (the canTrain cache serves the Legacy path only). ====
+	if (!bContinue && !bTestVisible && !bIgnoreCost && !bIgnoreUpgrades && !bPropertySpawn
+	&& GC.getGame().isFinalInitialized())
+	{
+		return CascadeAccumulator::enTrain(this, (int)eUnit);
+	}
+	return canTrainLegacy(eUnit, bContinue, bTestVisible, bIgnoreCost, bIgnoreUpgrades, bPropertySpawn);
+}
+
+bool CvCity::canTrainLegacy(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreUpgrades, bool bPropertySpawn) const
+{
 	if (!GET_PLAYER(getOwner()).canTrain(eUnit, bContinue, bTestVisible, bIgnoreCost, bPropertySpawn))
 	{
 		return false;
@@ -2512,6 +2525,24 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 {
 	PROFILE_FUNC();
 
+	if (eBuilding == NO_BUILDING)
+	{
+		return false;
+	}
+	// ==== #430 THE ENABLER FLIP (owner 2026-07-04 "flip it all"): the DEFAULT gate shape serves the cascade
+	// frontier (BuildingCascade::buildable cached on the city package, ensure-on-read -- the facts idiom, so
+	// legacy's same-turn chain-building survives). What-if/visible shapes + pre-init ride the Legacy path
+	// below; the m_bCanConstruct cache serves the Legacy path only (the [ENABLER/shadow] oracle stays cheap). ====
+	if (!bContinue && !bTestVisible && !bIgnoreCost && !bIgnoreAmount && !bIgnoreBuildings && eIgnoreTechReq == NO_TECH && probabilityEverConstructable == NULL && !bExposed
+	&& GC.getGame().isFinalInitialized())
+	{
+		return CascadeAccumulator::enConstruct(this, (int)eBuilding);
+	}
+	return canConstructLegacy(eBuilding, bContinue, bTestVisible, bIgnoreCost, bIgnoreAmount, bIgnoreBuildings, eIgnoreTechReq, probabilityEverConstructable, bExposed);
+}
+
+bool CvCity::canConstructLegacy(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreAmount, bool bIgnoreBuildings, TechTypes eIgnoreTechReq, int* probabilityEverConstructable, bool bExposed) const
+{
 	if (eBuilding == NO_BUILDING)
 	{
 		return false;
@@ -3048,6 +3079,16 @@ bool CvCity::canConstructInternal(BuildingTypes eBuilding, bool bContinue, bool 
 
 bool CvCity::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisible) const
 {
+	// #430 THE ENABLER FLIP: the default shape serves the cascade frontier (generate->gateSet projects)
+	if (!bContinue && !bTestVisible && GC.getGame().isFinalInitialized())
+	{
+		return CascadeAccumulator::enCreate(this, (int)eProject);
+	}
+	return canCreateLegacy(eProject, bContinue, bTestVisible);
+}
+
+bool CvCity::canCreateLegacy(ProjectTypes eProject, bool bContinue, bool bTestVisible) const
+{
 	if (!GET_PLAYER(getOwner()).canCreate(eProject, bContinue, bTestVisible))
 	{
 		return false;
@@ -3063,6 +3104,17 @@ bool CvCity::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisible)
 
 
 bool CvCity::canMaintain(ProcessTypes eProcess) const
+{
+	// #430 THE ENABLER FLIP: serves the cascade frontier (generate->gateSet processes). NB the Python
+	// cannotMaintain veto rides the Legacy oracle only -- parity-clean means no live veto in the data today.
+	if (GC.getGame().isFinalInitialized())
+	{
+		return CascadeAccumulator::enMaintain(this, (int)eProcess);
+	}
+	return canMaintainLegacy(eProcess);
+}
+
+bool CvCity::canMaintainLegacy(ProcessTypes eProcess) const
 {
 	if (!GET_PLAYER(getOwner()).canMaintain(eProcess)
 	|| Cy::call<bool>(PYGameModule, "cannotMaintain", Cy::Args() << const_cast<CvCity*>(this) << eProcess))
@@ -6964,7 +7016,7 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 		return;
 	}
 	m_iPopulation = iNewValue;
-	CascadeAccumulator::dirtyCity(this, CPK_YEXTRA | CPK_CBASE);   // #430: perPop terms; WB deliberately NOT dirtied (the wb pop terms fold LIVE pop at read; end-turn cadence)
+	CascadeAccumulator::dirtyCity(this, CPK_YEXTRA | CPK_CBASE | CPK_FRONTIER);   // #430: perPop terms + the pop-prereq'd frontier; WB deliberately NOT dirtied (the wb pop terms fold LIVE pop at read; end-turn cadence)
 
 	FASSERT_NOT_NEGATIVE(iNewValue);
 
@@ -15342,7 +15394,7 @@ void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce
 		m_pabHasReligion[eIndex] = bNewValue;
 		// #430: religion presence feeds the commerce base terms (religion/shrine/SR match) + operate
 		// conditions + SR-conditioned percents; the SR-gated PLAYER sums apply through live gates (no mark)
-		CascadeAccumulator::dirtyCity(this, CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT);
+		CascadeAccumulator::dirtyCity(this, CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT | CPK_FRONTIER);   // #430: + the religion/corp-gated frontier
 		m_cascadeFacts.set.markAllDirty();
 
 		for (int iVoteSource = 0; iVoteSource < GC.getNumVoteSourceInfos(); ++iVoteSource)
@@ -15547,7 +15599,7 @@ void CvCity::setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAn
 	{
 		// #430: corporation presence feeds the commerce base terms (corporation/corp-HQ) + operate conditions
 		// (corp-conditioned deposits ride along)
-		CascadeAccumulator::dirtyCity(this, CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT);
+		CascadeAccumulator::dirtyCity(this, CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT | CPK_FRONTIER);   // #430: + the religion/corp-gated frontier
 		m_cascadeFacts.set.markAllDirty();
 		if (bNewValue)
 		{
