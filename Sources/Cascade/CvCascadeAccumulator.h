@@ -65,6 +65,11 @@ public:
 	static bool enFoundReligion(const CvPlayer* pPlayer);
 	// the canBuild UNLOCK half only (the plot-validity half stays engine -- the scope ruling)
 	static bool enBuildUnlocked(const CvPlayer* pPlayer, int eBuild, const CvPlot* pPlot);
+	// the SERVING canBuild unlock (the worker hot path -- per (plot × build) at planning scale): rem-set +
+	// target-side obsolescence + the CONFIG techPrereq compare (static Info, the sanctioned class) --
+	// verdict-equivalent to the legacy triple by construction; the FULL requires.build eval stays the
+	// harness's net side (enBuildUnlocked, plot-sampled) proving the data equivalence continuously
+	static bool enBuildUnlockedFast(const CvPlayer* pPlayer, int eBuild);
 	// the promotion composite: the cascade frontier half over the bespoke legacy half (isPromotionValidLegacy(...,true))
 	static bool enPromotionValid(const CvUnit* pUnit, int ePromo);
 

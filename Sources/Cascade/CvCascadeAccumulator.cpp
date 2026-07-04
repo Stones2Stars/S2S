@@ -170,18 +170,29 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 	if (iMask & CPK_BR)
 		CascadeScalarChannels::fillBuildRateCity(pCity, ec, st.brCityKeyed, st.brCityMilitary, st.brCitySpace,
 			st.brSrUnitProd, st.brSrBuildingProd);
-	if (iMask & CPK_FRONTIER)
+	if (iMask & (CPK_FRONT_B | CPK_FRONT_U | CPK_FRONT_PP))
 	{
-		// the ENABLER frontier sets (#430 THE FLIP): the harness-proven calls VERBATIM at the city ctx
-		// (BuildingCascade/UnitCascade whole-domain frontiers + the generate->gateSet projects/processes)
+		// the ENABLER frontier sets (#430 THE FLIP): the harness-proven calls VERBATIM at the city ctx --
+		// SPLIT per domain (the perf surgery): a canConstruct read pays ONLY the BuildingCascade walk, etc.
 		const CvTeam& kTeam = GET_TEAM(player.getTeam());
-		EnBucketSets candC;
-		EnablerKernel::generate(player, pCity, candC);
-		st.enBuildable.clear(); st.enTrainable.clear(); st.enCreatable.clear(); st.enMaintainable.clear();
-		BuildingCascade::buildable(pCity, player, kTeam, st.enBuildable);
-		UnitCascade::trainable(pCity, player, kTeam, st.enTrainable);
-		EnablerKernel::gateSet("projects",  candC, ec, player, kTeam, false, st.enCreatable);
-		EnablerKernel::gateSet("processes", candC, ec, player, kTeam, false, st.enMaintainable);
+		if (iMask & CPK_FRONT_B)
+		{
+			st.enBuildable.clear();
+			BuildingCascade::buildable(pCity, player, kTeam, st.enBuildable);
+		}
+		if (iMask & CPK_FRONT_U)
+		{
+			st.enTrainable.clear();
+			UnitCascade::trainable(pCity, player, kTeam, st.enTrainable);
+		}
+		if (iMask & CPK_FRONT_PP)
+		{
+			EnBucketSets candC;
+			EnablerKernel::generate(player, pCity, candC);
+			st.enCreatable.clear(); st.enMaintainable.clear();
+			EnablerKernel::gateSet("projects",  candC, ec, player, kTeam, false, st.enCreatable);
+			EnablerKernel::gateSet("processes", candC, ec, player, kTeam, false, st.enMaintainable);
+		}
 	}
 }
 
@@ -227,7 +238,7 @@ void CascadeAccumulator::refreshPlayerScope(const CvPlayer* pPlayer, int iMask)
 		CascadeScalarChannels::fillPlayerScalars(*pPlayer, ps);
 	if (iMask & PSC_BR)
 		CascadeScalarChannels::fillBuildRatePlayer(*pPlayer, ps);
-	if (iMask & PSC_FRONTIER)
+	if (iMask & PSC_FRONT_P)
 	{
 		// the ENABLER player frontier (#430 THE FLIP): the harness-proven BARE player ctx (no city/plot --
 		// parity was proven with exactly this shape, never the capital ctx above)
@@ -245,15 +256,18 @@ void CascadeAccumulator::refreshPlayerScope(const CvPlayer* pPlayer, int iMask)
 		for (int t = 0; t < GC.getNumTechInfos(); ++t)
 			if (kTeam.isHasTech((TechTypes)t))
 				EnablerKernel::addEdge(InfoRepo<CvTechInfo>::get().get(t), "obsoletes.builds", ps.enBuildRem);
-		// the promotion frontier's PLAYER-WIDE tech halves (the per-unit composite folds these + the unit's own)
+	}
+	if (iMask & PSC_FRONT_PROMO)
+	{
+		// the promotion frontier's PLAYER-WIDE tech halves (a 700-tech accumHave walk -- its OWN bit so
+		// only promotion picks ever pay it; the per-unit composite folds these + the unit's own halves)
+		const CvTeam& kTeam = GET_TEAM(pPlayer->getTeam());
 		ps.enPromoTechCand.clear(); ps.enPromoTechRem.clear();
-		{
-			EnBucketSets pc, pr;
-			for (int t = 0; t < GC.getNumTechInfos(); ++t)
-				if (kTeam.isHasTech((TechTypes)t)) EnablerKernel::accumHave(InfoRepo<CvTechInfo>::get().get(t), pc, pr);
-			ps.enPromoTechCand = pc["promotions"];
-			ps.enPromoTechRem = pr["promotions"];
-		}
+		EnBucketSets pc, pr;
+		for (int t = 0; t < GC.getNumTechInfos(); ++t)
+			if (kTeam.isHasTech((TechTypes)t)) EnablerKernel::accumHave(InfoRepo<CvTechInfo>::get().get(t), pc, pr);
+		ps.enPromoTechCand.swap(pc["promotions"]);
+		ps.enPromoTechRem.swap(pr["promotions"]);
 	}
 }
 
@@ -391,49 +405,49 @@ int CascadeAccumulator::scTradeRoutes(const CvCity* pCity)
 bool CascadeAccumulator::enConstruct(const CvCity* pCity, int eBuilding)
 {
 	if (pCity == NULL || eBuilding < 0) return false;
-	pCity->m_cascadeCityPackages.set.ensure(CPK_FRONTIER);
+	pCity->m_cascadeCityPackages.set.ensure(CPK_FRONT_B);
 	return pCity->m_cascadeCityPackages.enBuildable.count(eBuilding) != 0;
 }
 
 bool CascadeAccumulator::enTrain(const CvCity* pCity, int eUnit)
 {
 	if (pCity == NULL || eUnit < 0) return false;
-	pCity->m_cascadeCityPackages.set.ensure(CPK_FRONTIER);
+	pCity->m_cascadeCityPackages.set.ensure(CPK_FRONT_U);
 	return pCity->m_cascadeCityPackages.enTrainable.count(eUnit) != 0;
 }
 
 bool CascadeAccumulator::enCreate(const CvCity* pCity, int eProject)
 {
 	if (pCity == NULL || eProject < 0) return false;
-	pCity->m_cascadeCityPackages.set.ensure(CPK_FRONTIER);
+	pCity->m_cascadeCityPackages.set.ensure(CPK_FRONT_PP);
 	return pCity->m_cascadeCityPackages.enCreatable.count(eProject) != 0;
 }
 
 bool CascadeAccumulator::enMaintain(const CvCity* pCity, int eProcess)
 {
 	if (pCity == NULL || eProcess < 0) return false;
-	pCity->m_cascadeCityPackages.set.ensure(CPK_FRONTIER);
+	pCity->m_cascadeCityPackages.set.ensure(CPK_FRONT_PP);
 	return pCity->m_cascadeCityPackages.enMaintainable.count(eProcess) != 0;
 }
 
 bool CascadeAccumulator::enResearch(const CvPlayer* pPlayer, int eTech)
 {
 	if (pPlayer == NULL || eTech < 0) return false;
-	pPlayer->m_cascadePlayerScope.set.ensure(PSC_FRONTIER);
+	pPlayer->m_cascadePlayerScope.set.ensure(PSC_FRONT_P);
 	return pPlayer->m_cascadePlayerScope.enResearchable.count(eTech) != 0;
 }
 
 bool CascadeAccumulator::enCivic(const CvPlayer* pPlayer, int eCivic)
 {
 	if (pPlayer == NULL || eCivic < 0) return false;
-	pPlayer->m_cascadePlayerScope.set.ensure(PSC_FRONTIER);
+	pPlayer->m_cascadePlayerScope.set.ensure(PSC_FRONT_P);
 	return pPlayer->m_cascadePlayerScope.enCivicsOk.count(eCivic) != 0;
 }
 
 bool CascadeAccumulator::enHurry(const CvPlayer* pPlayer, int eHurry)
 {
 	if (pPlayer == NULL || eHurry < 0) return false;
-	pPlayer->m_cascadePlayerScope.set.ensure(PSC_FRONTIER);
+	pPlayer->m_cascadePlayerScope.set.ensure(PSC_FRONT_P);
 	return pPlayer->m_cascadePlayerScope.enHurryOk.count(eHurry) != 0;
 }
 
@@ -449,7 +463,7 @@ bool CascadeAccumulator::enFoundReligion(const CvPlayer* pPlayer)
 bool CascadeAccumulator::enBuildUnlocked(const CvPlayer* pPlayer, int eBuild, const CvPlot* pPlot)
 {
 	if (pPlayer == NULL || eBuild < 0 || pPlot == NULL) return false;
-	pPlayer->m_cascadePlayerScope.set.ensure(PSC_FRONTIER);
+	pPlayer->m_cascadePlayerScope.set.ensure(PSC_FRONT_P);
 	const CascadePlayerScope& ps = pPlayer->m_cascadePlayerScope;
 	if (ps.enBuildRem.count(eBuild) != 0) return false;
 	const CvTeam& kTeam = GET_TEAM(pPlayer->getTeam());
@@ -462,6 +476,19 @@ bool CascadeAccumulator::enBuildUnlocked(const CvPlayer* pPlayer, int eBuild, co
 	return cascadeEvalCondition(j->requiresBuild, pec, bflags);
 }
 
+bool CascadeAccumulator::enBuildUnlockedFast(const CvPlayer* pPlayer, int eBuild)
+{
+	if (pPlayer == NULL || eBuild < 0) return false;
+	pPlayer->m_cascadePlayerScope.set.ensure(PSC_FRONT_P);
+	if (pPlayer->m_cascadePlayerScope.enBuildRem.count(eBuild) != 0) return false;
+	const CvTeam& kTeam = GET_TEAM(pPlayer->getTeam());
+	if (EnablerKernel::obsoletedByHeldTech(InfoRepo<CvBuildInfo>::get().get(eBuild), kTeam)) return false;
+	const CvBuildInfo& kBuild = GC.getBuildInfo((BuildTypes)eBuild);
+	if (kBuild.isDisabled()) return false;
+	const TechTypes eTechPrereq = (TechTypes)kBuild.getTechPrereq();
+	return eTechPrereq == NO_TECH || kTeam.isHasTech(eTechPrereq);
+}
+
 // The promotion COMPOSITE (the harness's cascade side verbatim, single source -- the harness now consumes
 // this): the frontier half (tech halves cached player-wide + the unit's held promos + its unitcombat) +
 // the event-injection-only mirror + requires, over the bespoke legacy half (isPromotionValidLegacy(...,
@@ -471,20 +498,19 @@ bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 	if (pUnit == NULL || ePromo < 0) return false;
 	const CvPlayer& kPlayer = GET_PLAYER(pUnit->getOwner());
 	const CvTeam& kTeam = GET_TEAM(kPlayer.getTeam());
-	kPlayer.m_cascadePlayerScope.set.ensure(PSC_FRONTIER);
+	kPlayer.m_cascadePlayerScope.set.ensure(PSC_FRONT_PROMO);
 	const CascadePlayerScope& ps = kPlayer.m_cascadePlayerScope;
 
+	// the unit's OWN halves only (held promos + the unitcombat -- small); the player tech halves are
+	// membership-tested DIRECTLY below (per-call set copies were the measured promo-loop grind)
 	EnBucketSets cand, rem;
-	cand["promotions"] = ps.enPromoTechCand;
-	rem["promotions"] = ps.enPromoTechRem;
 	for (int pr = 0; pr < GC.getNumPromotionInfos(); ++pr)
 		if (pUnit->isHasPromotion((PromotionTypes)pr)) EnablerKernel::accumHave(InfoRepo<CvPromotionInfo>::get().get(pr), cand, rem);
 	const UnitCombatTypes eUC = pUnit->getUnitCombatType();
 	if (eUC != NO_UNITCOMBAT) EnablerKernel::accumHave(InfoRepo<CvUnitCombatInfo>::get().get((int)eUC), cand, rem);
 
-	std::set<int>& promoCand = cand["promotions"];
-	const std::set<int>& promoRem = rem["promotions"];
-	for (std::set<int>::const_iterator it = promoRem.begin(); it != promoRem.end(); ++it) promoCand.erase(*it);
+	const std::set<int>& uCand = cand["promotions"];
+	const std::set<int>& uRem = rem["promotions"];
 	// a promo rooted in NO tech edge anywhere is ALWAYS-unlocked (the PALACE lesson for promotions)
 	static std::set<int> s_enablerRooted;
 	static bool s_rootedBuilt = false;
@@ -494,8 +520,11 @@ bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 			EnablerKernel::addEdge(InfoRepo<CvTechInfo>::get().get(t), "enables.promotions", s_enablerRooted);
 		s_rootedBuilt = true;
 	}
-	const bool bUnlocked = promoCand.count(ePromo) != 0
-		|| (s_enablerRooted.count(ePromo) == 0 && promoRem.count(ePromo) == 0);
+	// the original algebra, copy-free: promoCand = (techCand + unitCand) - (techRem + unitRem);
+	// bUnlocked = inCand&&!inRem || !rooted&&!inRem  ==  !inRem && (inCand || !rooted)
+	const bool bInRem = ps.enPromoTechRem.count(ePromo) != 0 || uRem.count(ePromo) != 0;
+	const bool bInCand = ps.enPromoTechCand.count(ePromo) != 0 || uCand.count(ePromo) != 0;
+	const bool bUnlocked = !bInRem && (bInCand || s_enablerRooted.count(ePromo) == 0);
 	// the event-injection-only mirror (no qualified-unitcombat list => legacy refuses unless FREE)
 	const CvPromotionInfo& kPromo = GC.getPromotionInfo((PromotionTypes)ePromo);
 	const bool bEventOnly = kPromo.getNumQualifiedUnitCombatTypes() == 0
@@ -745,14 +774,14 @@ void CascadeAccumulator::playerSliceRebuild(PlayerTypes ePlayer)
 	// narrowed CBASE|WB self-heal was an over-fix -- the original 222s cost lived in the all-infos walks +
 	// the string hot paths, both since fixed, NOT in the mark breadth).
 	kPlayer.m_cascadePlayerScope.set.markAllDirty();
-	kPlayer.m_cascadePlayerScope.set.ensure();
+	kPlayer.m_cascadePlayerScope.set.ensure(PSC_EAGER);   // the frontier stays LAZY (ensure-on-read; the eager rebuild was the measured turn-grind)
 	int iLoop;
 	for (const CvCity* pc = kPlayer.firstCity(&iLoop); pc != NULL; pc = kPlayer.nextCity(&iLoop))
 	{
 		pc->m_cascadeFacts.set.markAllDirty();
 		pc->m_cascadeFacts.set.ensure();      // facts first: the package fills read them
 		pc->m_cascadeCityPackages.set.markAllDirty();
-		pc->m_cascadeCityPackages.set.ensure();
+		pc->m_cascadeCityPackages.set.ensure(CPK_EAGER);   // ditto: a city with a standing build queue never pays a frontier walk
 	}
 }
 
@@ -769,6 +798,7 @@ void CascadeAccumulator::cityCreated(const CvCity* pCity)
 	if (!GC.getGame().isFinalInitialized()) return;
 	// Everything is dirty-from-reset (plus the founding buildings' marks); one eager ensure realizes the
 	// city's packages so the founding/capture turn reads real values, not the zero-initialized defaults.
+	// (The frontier stays lazy -- the first production-choice read fills it, still same-turn.)
 	pCity->m_cascadeFacts.set.ensure();      // facts first: the package fills read them
-	pCity->m_cascadeCityPackages.set.ensure();
+	pCity->m_cascadeCityPackages.set.ensure(CPK_EAGER);
 }

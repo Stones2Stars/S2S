@@ -7545,12 +7545,13 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestVisibl
 	const CvBuildInfo& kBuild = GC.getBuildInfo(eBuild);
 
 	// #430 THE ENABLER FLIP -- the UNLOCK half only (the scope ruling: plot-validity + the feature/terrain
-	// tech gates + gold STAY ENGINE below). The cascade unlock covers disabled/obsolete/techPrereq via the
-	// rem-set + requires.build (plot ctx); bTestVisible (the UI greyed list) + plotless calls ride Legacy.
-	const bool bCascadeUnlock = !bTestVisible && pPlot != NULL && GC.getGame().isFinalInitialized();
+	// tech gates + gold STAY ENGINE below). The serving path is the FAST unlock (rem-set + obsolescence +
+	// the config techPrereq compare -- this is a per-(plot × build) worker hot path; the full requires.build
+	// eval stays the harness's net side). bTestVisible (the UI greyed list) rides Legacy.
+	const bool bCascadeUnlock = !bTestVisible && GC.getGame().isFinalInitialized();
 	if (bCascadeUnlock)
 	{
-		if (!CascadeAccumulator::enBuildUnlocked(this, (int)eBuild, pPlot))
+		if (!CascadeAccumulator::enBuildUnlockedFast(this, (int)eBuild))
 		{
 			return false;
 		}

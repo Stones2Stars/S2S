@@ -83,9 +83,18 @@ enum CascadeCityPkg
 	CPK_SCPCT   = 256,   // scalar percent packages: gpMod city, defense amount, maintenance city
 	CPK_SCSPEC  = 512,   // the gpBase specialist flat package (governor churn touches ONLY this)
 	CPK_BR      = 1024,  // the buildRate city ledgers + city member percents
-	CPK_FRONTIER = 2048, // the ENABLER frontier sets (buildable/trainable/creatable/maintainable) -- the flip's serving cache
+	// the ENABLER frontier sets -- SPLIT per domain so a gate read rebuilds ONLY its own walk (the
+	// perf surgery 2026-07-04 late: one shared bit made canConstruct pay the UnitCascade walk and
+	// the boundary pay everything for every city)
+	CPK_FRONT_B  = 2048,  // buildable (BuildingCascade)
+	CPK_FRONT_U  = 4096,  // trainable (UnitCascade)
+	CPK_FRONT_PP = 8192,  // creatable + maintainable (generate + the two gateSets)
+	CPK_FRONTIER = CPK_FRONT_B | CPK_FRONT_U | CPK_FRONT_PP,
 	CPK_RATES   = CPK_YPCT | CPK_YSPEC | CPK_YEXTRA | CPK_CSPEC | CPK_CPCT | CPK_CBASE,   // = 63
-	CPK_ALL     = 4095
+	CPK_ALL     = 16383,
+	// ⛔ the frontier is LAZY (ensure-on-read only): the boundaries mark it but must NEVER eagerly ensure
+	// it -- an eager whole-frontier rebuild per city per turn was the measured turn-grind (2026-07-04)
+	CPK_EAGER   = CPK_ALL & ~CPK_FRONTIER
 };
 
 struct CascadeCityPackages
@@ -153,8 +162,13 @@ enum CascadePlayerPkg
 	PSC_WB     = 4,    // the wellbeing area/empire building fold maps
 	PSC_SC     = 8,    // the scalar player-building sums (gp/maint/conn/area maps/trade empire+coastal+world)
 	PSC_BR     = 16,   // the buildRate empire building ledgers + building member pcts
-	PSC_FRONTIER = 32, // the ENABLER player frontier (researchable/civics/hurries + the canBuild rem-set + promo tech halves)
-	PSC_ALL    = 63
+	// the ENABLER player frontier -- SPLIT (the perf surgery): the promo tech halves are a 700-tech
+	// accumHave walk only promotion picks need; researchable/civics/hurries/buildRem fill together
+	PSC_FRONT_P     = 32,  // researchable + civics + hurries + the canBuild rem-set
+	PSC_FRONT_PROMO = 64,  // the promotion frontier's tech halves
+	PSC_FRONTIER = PSC_FRONT_P | PSC_FRONT_PROMO,
+	PSC_ALL    = 127,
+	PSC_EAGER  = PSC_ALL & ~PSC_FRONTIER   // the frontier is LAZY (ensure-on-read only)
 };
 
 struct CascadePlayerScope
