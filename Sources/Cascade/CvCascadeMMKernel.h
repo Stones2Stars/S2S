@@ -60,7 +60,11 @@ public:
 	// ---- ids (chanId = DepositIndex::lookupSegment(channel); scopeId likewise; impKeyIds via segIdForImprovement).
 	// ---- A negative id means "never authored anywhere" and sums 0 without touching a deposit.
 
-	// KeyedMember by compiled segments: Σ a source's flat at "<chan>.<scope>.<member>.<KEY>" (ModifierMath.KeyedMember).
+	// KeyedMember by compiled segments: Σ a source's <unit> at "<chan>.<scope>.<member>.<KEY>"
+	// (ModifierMath.KeyedMember). sumKeyed4U takes the unit SEGMENT id explicitly (percent for the keyed
+	// buildRate members -- they are percent-unit deposits); sumKeyed4F is the flat parameterization.
+	static int sumKeyed4U(const CvJsonInfo* d, int chanId, int scopeId, int memberId, int keyId, int unitId,
+		const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign = 0);
 	static int sumKeyed4F(const CvJsonInfo* d, int chanId, int scopeId, int memberId, int keyId,
 		const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign = 0);
 

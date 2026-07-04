@@ -160,12 +160,15 @@ attributable diff lines (never silent).
   mixed-accumulator treatment). **buildRate CLOSED EXACT (2026-07-04):** the P10 head-order ×2 probe was a
   NAMED port bug, not drift -- the keyed walk (`sc_buildRateKeyed`) matched deposits through the compiled
   `sumKeyed4F`, a FLAT-unit matcher, while every keyed buildRate deposit is PERCENT-unit, so domains/
-  unitCombats summed 0 (the "×2" was coincidence: the missing keyed half equalled the matched half). Fixed to
-  the string-addressed `sumUnit`/`sumTrait` walk (PURE-filtered via `sc_civicsTraits`) + the :3912
-  subs-only-with-main nesting mirrored; the wellbeing `scalars` emit now carries the full buildRate
-  attribution (order identity + cascade member parts + every legacy getter part incl. `brCombatByTypeLeg`).
-  Verified live: P10-C16394 170==170 with every part reconciling, sweep 14/14 EXACT across 5 players (unit
-  AND building orders). **Queued:** slot storage + flips for the attributed channels; the unit plane (needs
+  unitCombats summed 0 (the "×2" was coincidence: the missing keyed half equalled the matched half). Fixed ON
+  the compiled index: `MMKernel::sumKeyed4U` (the keyed matcher with an EXPLICIT unit segment; `sumKeyed4F`
+  is its flat parameterization) matches the percent unit, the trait leg threads the PURE_TRAITS sign exactly
+  as `sumTrait` derives it, and the :3912 subs-only-with-main nesting is mirrored. (An interim string-walk
+  version was reverted the same day — deposit matching RIDES the compiled index, the parser layer the
+  state-repositories event→cache routing derives from; string walks work against that grain.) The wellbeing
+  `scalars` emit carries the full buildRate attribution (order identity + cascade member parts + every legacy
+  getter part incl. `brCombatByTypeLeg`). Verified live on the compiled form: P10-C16394 170==170 with every
+  part reconciling, sweep 14/14 EXACT across 5 players (unit AND building orders). **Queued:** slot storage + flips for the attributed channels; the unit plane (needs
   the `unitInput` endpoint, calc-map §12).
 
 ## Explicitly NOT this build

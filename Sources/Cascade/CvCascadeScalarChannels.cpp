@@ -7,6 +7,7 @@
 #include "CvGameCoreDLL.h"
 #include "CvCascadeScalarChannels.h"
 #include "CvCascadeMMKernel.h"
+#include "CvCascadeDepositIndex.h"    // the compiled segment ids the keyed walks match on
 #include "CvCascadeEnablerKernel.h"   // cityFacts -- the player-wide maintenance walk
 #include "CvCascadeCityFacts.h"
 #include "CvJsonInfo.h"
@@ -172,17 +173,62 @@ int CascadeScalarChannels::tradeRouteCount(const CvCity* pCity, const CvCascadeE
 
 // Σ a KEYED buildRate member over this city's active buildings (city scope) + all the player's cities'
 // active buildings (empire scope) + civics + traits: buildRate.{city|empire}.{member}.{KEY}.percent.
-// ⚠ These keyed deposits are PERCENT-unit (buildRate is a signed-%% discount channel), so this walks the
-// string-addressed sumUnit/sumTrait path like every other scalar walk (sumTrait carries the PURE_TRAITS
-// filter) -- the compiled sumKeyed4F is a FLAT-unit matcher and reads 0 here (the P10 buildRate bug).
+// Rides the COMPILED deposit index (the parser layer -- the event->cache routing derives from these
+// segments, state-repositories.md): the keyed buildRate deposits are PERCENT-unit, so the walk matches
+// through sumKeyed4U with the percent segment (the flat-hardwired sumKeyed4F was the P10 buildRate bug).
+// The trait leg threads the PURE_TRAITS sign exactly as sumTrait does (a negative trait keeps only v<=0).
 static int sc_buildRateKeyed(const char* szMember, const char* szKey, const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
+	const int chanId = DepositIndex::lookupSegment("buildRate");
+	const int memberId = DepositIndex::lookupSegment(szMember);
+	const int keyId = DepositIndex::lookupSegment(szKey);
+	const int pctId = DepositIndex::lookupSegment("percent");
+	if (chanId < 0 || memberId < 0 || keyId < 0 || pctId < 0) return 0;   // never authored anywhere => 0
+	const int cityId = DepositIndex::lookupSegment("city");
+	const int empireId = DepositIndex::lookupSegment("empire");
 	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
-	const std::string cityAddr = std::string("buildRate.city.") + szMember + "." + szKey;
-	const std::string empAddr = std::string("buildRate.empire.") + szMember + "." + szKey;
-	int iSum = sc_buildings(cityAddr, "percent", pCity, ec);
-	iSum += sc_playerBuildings(empAddr, "percent", owner, ec.team);
-	iSum += sc_civicsTraits(empAddr, "percent", owner, ec);
+	int iSum = 0;
+	// this city's buildings: the CITY-scope keyed member
+	const int nB = GC.getNumBuildingInfos();
+	for (int b = 0; b < nB; ++b)
+	{
+		if (!cascadeIsBuildingActive(b, ec)) continue;
+		const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
+		if (d != NULL) iSum += MMKernel::sumKeyed4U(d, chanId, cityId, memberId, keyId, pctId, ec, false);
+	}
+	// the player-wide EMPIRE-scope keyed member (any city's building feeds the player accumulator)
+	{
+		int iLoop;
+		for (const CvCity* pc = owner.firstCity(&iLoop); pc != NULL; pc = owner.nextCity(&iLoop))
+		{
+			const CascadeCityFacts& facts = EnablerKernel::cityFacts(pc);
+			CvCascadeEvalCtx pec;
+			pec.city = pc; pec.plot = pc->plot(); pec.player = &owner; pec.team = ec.team;
+			pec.activeBuildings = &facts.active; pec.vicinityProvidedBonuses = &facts.provided;
+			for (std::set<int>::const_iterator it = facts.active.begin(); it != facts.active.end(); ++it)
+			{
+				const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
+				if (d != NULL) iSum += MMKernel::sumKeyed4U(d, chanId, empireId, memberId, keyId, pctId, pec, false);
+			}
+		}
+	}
+	// civics + traits (empire scope); traits carry the PURE_TRAITS alignment filter
+	for (int i = 0; i < GC.getNumCivicOptionInfos(); ++i)
+	{
+		const CivicTypes eCivic = owner.getCivics((CivicOptionTypes)i);
+		if (eCivic == NO_CIVIC) continue;
+		const CvJsonInfo* d = InfoRepo<CvCivicInfo>::get().get(eCivic);
+		if (d != NULL) iSum += MMKernel::sumKeyed4U(d, chanId, empireId, memberId, keyId, pctId, ec, false);
+	}
+	const bool bPure = GC.getGame().isOption(GAMEOPTION_LEADER_PURE_TRAITS);
+	for (int i = 0; i < GC.getNumTraitInfos(); ++i)
+	{
+		if (!owner.hasTrait((TraitTypes)i)) continue;
+		const CvJsonTraitInfo* d = MMKernel::traitData(i);
+		if (d == NULL) continue;
+		const int iPureSign = bPure ? (d->negativeTrait ? -1 : 1) : 0;
+		iSum += MMKernel::sumKeyed4U(d, chanId, empireId, memberId, keyId, pctId, ec, false, iPureSign);
+	}
 	return iSum;
 }
 

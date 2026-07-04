@@ -216,12 +216,20 @@ static int mmk_sumFlatSegs(const CvJsonInfo* d, int nSeg, int s0, int s1, int s2
 	return sum;
 }
 
-// KeyedMember by compiled segments: Σ a source's flat at "<chan>.<scope>.<member>.<KEY>" (ModifierMath.KeyedMember).
+// KeyedMember by compiled segments at an EXPLICIT unit: Σ a source's <unit> at "<chan>.<scope>.<member>.<KEY>"
+// (ModifierMath.KeyedMember). The keyed percent channels (buildRate) pass the percent segment; the flat form below.
+int MMKernel::sumKeyed4U(const CvJsonInfo* d, int chanId, int scopeId, int memberId, int keyId, int unitId,
+	const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign)
+{
+	if (d == NULL || chanId < 0 || scopeId < 0 || memberId < 0 || keyId < 0 || unitId < 0) return 0;   // never authored => 0
+	return mmk_sumFlatSegs(d, 4, chanId, scopeId, memberId, keyId, ec, bonusFromPlot, pureSign, unitId);
+}
+
+// The FLAT parameterization of the above (the plot/keyed-yield walks).
 int MMKernel::sumKeyed4F(const CvJsonInfo* d, int chanId, int scopeId, int memberId, int keyId,
 	const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign)
 {
-	if (d == NULL || chanId < 0 || scopeId < 0 || memberId < 0 || keyId < 0) return 0;   // never authored => 0
-	return mmk_sumFlatSegs(d, 4, chanId, scopeId, memberId, keyId, ec, bonusFromPlot, pureSign, mmk_seg("flat", s_segFlat));
+	return sumKeyed4U(d, chanId, scopeId, memberId, keyId, mmk_seg("flat", s_segFlat), ec, bonusFromPlot, pureSign);
 }
 
 // KeyedPlotYield: Σ a source's flat keyed by THIS plot's improvement(s)/terrain/feature/bonus at a scope (the engine's
