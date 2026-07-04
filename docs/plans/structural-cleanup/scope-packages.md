@@ -25,11 +25,41 @@ other shape exists at any scope.
 | scope object | member | holds (accumulated AT this scope) |
 |---|---|---|
 | `CvPlot` | `m_yieldCache` (exists, conforming) | the plot's own base package |
-| `CvCity` | `m_cascadeCityPackages` | deposits whose scope is **city/area-membership-agnostic city-local**: this city's ACTIVE buildings' `*.city.*` deposits (flats, percents, per-channel), specialist terms (counts × specialist deposits), the city-scope wellbeing terms |
+| `CvCity` | `m_cascadeCityPackages` | this city's `*.city.*` deposits, **as ISOLATED per-component packages** (below) |
 | `CvArea`* | (via the player package's per-area maps, v1) | `*.area.*` sums grouped by area — *promoted to a real `CvArea` member when a second channel needs it* |
 | `CvPlayer` | `m_cascadePlayerScope` | `*.empire.*` deposits from the player's active buildings anywhere + adopted civics + held traits (PURE-filtered) + team techs; SR-gated / coastal / connected sums kept as **separate fields** (their gates are per-city, applied at read) |
 | `CvTeam` | (none yet) | team-scope deposits when a channel first needs one |
 | `CvGame` | `m_cascadeWorldScope` | `*.world.*` sums across all living players |
+
+**⛔ WITHIN a scope, the packages stay ISOLATED per COMBINE POSITION — they never merge into one per-scope
+number.** Package identity is **(scope × combine-position component × channel)**. The reason is
+[modifier.md](../../specs/modifier.md) §2a's two-tier shape: **worked plots and specialists take the city
+percent modifier** (TIER 1 BASE — "specialist yields take the city modifier exactly like worked tiles",
+#317), **building flat yields do NOT** (TIER 2 EXTRA — "flat, added AFTER the percentages, NEVER
+multiplied"). Summing a city's specialist flats and building flats into one number would destroy the tier
+split. So the city's yield packages are, per channel:
+
+| city package | tier / combine position |
+|---|---|
+| specialist flat yields (counts × specialist deposits, own sub-stack inside) | BASE — multiplied by the percent stack |
+| building flat yields (+ perPopulation) | EXTRA — added after the percentages, truncated per §2a |
+| building percents | the percent stack (one additive stack with the player-scope percent packages) |
+
+(the plot base is the `CvPlot` package, pulled — also BASE tier; the player scope splits the same way:
+free-city/GA trait flats = BASE tier, civic/trait/empire-building percents = stack contributions. Every
+channel's combine defines its own positions — wellbeing's signed-split terms, the scalar stacks — and the
+packages of a scope follow that channel's positions, never a per-scope blob.)
+
+**The PROVIDER axis (the deliveryguy model, [modifier.md](../../specs/modifier.md) §4): PLOTS, SPECIALISTS,
+BUILDINGS, and TRADE ROUTES are the ONLY things that provide yields to the cascade.** They are what
+physically produces yield in-game; every other source kind (trait / civic / tech / religion / corporation)
+only MODIFIES or CONDITIONS a provider's output, so every yield deposit resolves onto a provider-kind
+package (a trait's specialist boost onto the specialist package, a civic's building-keyed percent onto the
+building percent stack, …). Trade-route yield stays the one live input (never derived).
+**⏳ OPEN QUESTION for the owner (asked, not assumed):** §2a lists the free-city + golden-age trait flats
+as BASE-tier city-wide terms with no physical provider among the four — their provider-home under this law
+(a city-level base package? re-homed onto a provider? a deliberate fifth city-base slot?) needs the
+owner's classification before the rate-channel migration step.
 
 **Every package on the ONE component** (`CvDerivedCacheSet<TOwner>`), living ON the object, never serialized,
 all-dirty from birth/reset, rebuilt at load (the eager warm-up), refreshed via the owner's thin delegate to the
@@ -49,11 +79,14 @@ that hurt"; a flat-only source never rebuilds a percent stack):
 | unit movement | **nothing, ever** ([DEC-unit-modifiers-on-top]; units may never author yield percentages) |
 | slice start (`CvPlayer::doTurn` top) | the self-heal re-check marks for the not-yet-proven hook classes + eager `ensure` of this player's packages ("Cascade.RebuildCache(myPlayerId)") |
 
-**Reads are BARE FETCHES + the ~5-package sum.** A realized getter adds the scope packages (plot pull + city +
-[area] + player + [team] + world as the channel needs) and applies the **per-city gates live**: SR-in-city,
-coastal, connected-to-capital, area membership, golden age, disorder, the slider, population, the live military
-count. No ensure on any read path — freshness is entirely write-side (event marks + boundary rebuilds). The only
-live calculation is the trivial addition.
+**Reads are BARE FETCHES composed by the channel's COMBINE FORMULA over the packages.** A realized getter
+fetches the scope packages (plot pull + city + [area] + player + [team] + world as the channel needs) and
+combines them **per the channel's spec'd positions** — for yields the §2a shape:
+`(Σ BASE-tier packages) × (100 + Σ percent packages)/100 + (EXTRA-tier packages, truncated)` — with the
+**per-city gates live**: SR-in-city, coastal, connected-to-capital, area membership, golden age, disorder,
+the slider, population, the live military count. No ensure on any read path — freshness is entirely
+write-side (event marks + boundary rebuilds). The only live calculation is this trivial position-aware
+arithmetic; nothing ever re-walks a source.
 
 **Full rebuild of every package happens at LOAD only** (the capstone). Post-load, every recompute is a marked
 package at a boundary.
