@@ -507,15 +507,20 @@ bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 	// accumHave folds run ONLY on signature change. Game-thread statics (the s_enablerRooted precedent).
 	static int s_uidOwner = -1, s_uidId = -1; static long s_sig = 0x7fffffff;
 	static std::set<int> s_uCand, s_uRem;
+	static std::map<int, bool> s_verdicts;   // the TURN-SCOPED per-(unit,promo) verdict cache -- a tree
+	                                         // render after the first sweep is pure map hits (the UI
+	                                         // re-sweeps candidates per frame; legacy recomputed each time)
 	const int nPromo = GC.getNumPromotionInfos();
 	long sig = 0;
 	for (int pr = 0; pr < nPromo; ++pr)
 		if (pUnit->isHasPromotion((PromotionTypes)pr)) sig += (pr + 1) * 3 + 1;
 	const UnitCombatTypes eUC = pUnit->getUnitCombatType();
 	sig = sig * 131 + (long)eUC * 7;
+	sig = sig * 1009 + GC.getGame().getGameTurn();   // turn-scoped: any slow-changing bespoke input self-expires
 	if ((int)pUnit->getOwner() != s_uidOwner || pUnit->getID() != s_uidId || sig != s_sig)
 	{
 		s_uidOwner = (int)pUnit->getOwner(); s_uidId = pUnit->getID(); s_sig = sig;
+		s_verdicts.clear();
 		EnBucketSets cand, rem;
 		for (int pr = 0; pr < nPromo; ++pr)
 			if (pUnit->isHasPromotion((PromotionTypes)pr)) EnablerKernel::accumHave(InfoRepo<CvPromotionInfo>::get().get(pr), cand, rem);
@@ -523,6 +528,10 @@ bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 		s_uCand.clear(); s_uRem.clear();
 		s_uCand.swap(cand["promotions"]);
 		s_uRem.swap(rem["promotions"]);
+	}
+	{
+		std::map<int, bool>::const_iterator vit = s_verdicts.find(ePromo);
+		if (vit != s_verdicts.end()) return vit->second;
 	}
 	const std::set<int>& uCand = s_uCand;
 	const std::set<int>& uRem = s_uRem;
@@ -549,9 +558,11 @@ bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 
 	CvCascadeEvalCtx ec;
 	ec.unit = pUnit; ec.player = &kPlayer; ec.team = &kTeam; ec.plot = pUnit->plot();
-	return bUnlocked && !bEventOnly
+	const bool bVerdict = bUnlocked && !bEventOnly
 		&& EnablerKernel::requiresMet(InfoRepo<CvPromotionInfo>::get().get(ePromo), ec)
 		&& pUnit->isPromotionValidLegacy((PromotionTypes)ePromo, true);
+	s_verdicts[ePromo] = bVerdict;
+	return bVerdict;
 }
 
 // ---- buildRate: ledger lookups keyed by the head item (+ the item's own bonus-gated self mods, live) ----
