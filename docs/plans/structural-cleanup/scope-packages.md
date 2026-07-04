@@ -11,14 +11,28 @@
 > protocol whose cost collapsed unit automation. The owner's 2026-07-04 statements were NOT new rulings but the
 > core spec restated against that drift. This document is the design stated once, whole, so the rebuild happens
 > once, properly ([DEC-proper-once]).
+>
+> **The governing validation ruling — [DEC-structure-before-shadow](../../architecture/decisions.md#dec-structure-before-shadow)
+> ([validation.md](../../specs/validation.md) §cadence):** *"an end turn does NOT confirm a STRUCTURE — a
+> per-change game shadow produces false confirmation even on a wrong structure … Structure is gated by fidelity
+> to the SPEC, not by a green shadow."* The drifted substrate shadowed green for increments; that green never
+> validated its structure. This rebuild stands the spec-faithful structure up FIRST; the nets then verify
+> behaviour through it.
 
 ---
 
 ## 1. The design (the spec, in implementation terms)
 
 **One uniform PACKAGE format.** A package is the §2 slot shape per channel: `Σflat` (×100 where the channel is
-fixed-point) and `Σpercent` — the compiled result of every deposit AT ONE SCOPE for one channel-component. No
-other shape exists at any scope.
+fixed-point), `Σpercent`, and `Πmultiplier` (×100, identity 100 — identity throughout the migration since no
+yield/commerce source authors one, but the format is the [json.md](../../specs/json.md) §6.3 slot, complete) —
+the compiled result of every deposit AT ONE SCOPE for one channel-component. **The combine mode is FAMILY
+METADATA, never per-package** (§2: `polarity: signed-split` for wellbeing, the `min` member floor for defense,
+`combine: max|min`) — the package stores the sums; the family's metadata wires how the read combines them. A
+package's INTERNAL composition also resolves in isolation before it joins the combine (the §2a specialist's own
+percent layer applied to its intrinsic before joining BASE; the §2 plot package fully resolved before any city
+stack) — "isolated and super simple in isolation" includes the internal composition. No other shape exists at
+any scope.
 
 **One package set per SCOPE OBJECT, holding ONLY its own scope's deposits.**
 
@@ -88,6 +102,13 @@ the slider, population, the live military count. No ensure on any read path — 
 write-side (event marks + boundary rebuilds). The only live calculation is this trivial position-aware
 arithmetic; nothing ever re-walks a source.
 
+**The percent handling is §2a's "ONE additive stack", verbatim:** every percent package is its own trivial
+standing number; at read they are **all summed together into the one modifier** ("purely additive — +30%
++20% −10% = +40%"), then **applied ONCE** to exactly the packages the spec puts inside the multiplication
+(plots + specialists — the BASE tier), and never to the EXTRA tier. Each isolated calculation is deliberately
+super simple in isolation — that simplicity IS the design; complexity anywhere in a package rebuild or a
+read composition is a sign the scope/position split was gotten wrong.
+
 **Full rebuild of every package happens at LOAD only** (the capstone). Post-load, every recompute is a marked
 package at a boundary.
 
@@ -133,6 +154,14 @@ calculators as oracles; the derived building mask concept; the bare-fetch read +
 
 Verification per step: the standing nets (slot-vs-oracle, casc-vs-legacy) + the census counters + the frozen-save
 protocol (end turn → automates → end turn), with the perf rows landing in the StoneBase store.
+
+**The binding flip lesson ([capabilities.md](../../specs/capabilities.md), the reverted first capability cut):
+for getters feeding DERIVED ENGINE STATE, offline parity is necessary but NOT SUFFICIENT** — the capability flip
+was 0-diverging offline and still broke the trade network on the first real turn. Every getter flip in steps
+1–3 therefore requires the IN-BODY instrument (the cascade-vs-legacy diff at the real call moment, through real
+played turns) clean BEFORE the flip — never an offline/endpoint parity alone. And per
+[DEC-structure-before-shadow]: the nets verify each step's *behaviour*; the *structure* is verified once, here,
+against this document and the specs it cites.
 
 ## 4. What this deletes at the end
 
