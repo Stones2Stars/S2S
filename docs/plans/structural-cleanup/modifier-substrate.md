@@ -171,6 +171,29 @@ attributable diff lines (never silent).
   part reconciling, sweep 14/14 EXACT across 5 players (unit AND building orders). **Queued:** slot storage + flips for the attributed channels; the unit plane (needs
   the `unitInput` endpoint, calc-map §12).
 
+- **F — the city SCALAR slots (2026-07-04) — slots + rollup + nets; flips gated on the played-turn proof.**
+  The increment-E attributed channels went onto the substrate: `ACCD_SCALAR` (gpBase-buildings / gpMod /
+  defense / maintMod / tradeRoutes -- building/religion/corp hooks + epoch + turn) + `ACCD_SCALARSPEC` (the
+  gpBase specialist half -- its own component on the specialist hook, the CSPEC analogy, so governor churn
+  never pays the building walks), named fields on `CascadeRateSlots`, refresh = the `CascadeScalarChannels`
+  calculators called WHOLE (the substrate law; `gpRateBase` split into two exposed component functions whose
+  sum IS the oracle). The rate reads' ensure mask is the explicit `ACCD_RATES` (a rate read never pays the
+  WB/scalar walks). The player-wide building walks are cached per (player, epoch, turn) on the shared
+  **`CvCascadePlayerStamp`** (state-repositories "one pattern everywhere" -- `WbPlayerRollup` converged onto
+  the same stamp): `ScPlayerRollup` caches CALLS to the existing `sc_playerBuildings` walk (never re-walks)
+  plus the maintenance area/otherArea split RELOCATED from `maintenanceModifier`; tech walks stay
+  in-calculator (their eval ctx stays the calling city's). The scalar slots joined the load-end warm-up.
+  Verification per validation.md's two shapes: the per-turn **`[MODIFIER/scalar]`** net in the doTurn harness
+  (RAW slot reads vs the fresh calculators -- the ensuring accessors would be the tautological-0 trap; capped
+  per-city samples carry the five S/C pairs) + the standing-slot twins (`gpBaseSlot`/`gpModSlot`/
+  `defenseSlot`/`maintModSlot`/`tradeRoutesSlot`) beside the fresh `*Casc` + legacy fields on
+  `/computed/cities/wellbeing`. **Verified at load: SLOT==CASC 5/5 across probed cities**; the legacy diffs
+  are the standing attributed classes only (defense drift / maintenance area phantom / tradeRoutes vote).
+  **Queued:** the `[MODIFIER/scalar]` freshness proof over real played turns (diverging=0 mod the ruled
+  cadence lag), THEN the getter flips (`getBaseGreatPeopleRate`+`getTotalGreatPeopleRateModifier`,
+  `getBuildingDefense`, `getEffectiveMaintenanceModifier`, `getTradeRoutes`) with `*Legacy` in-body oracles.
+  buildRate stays UN-slotted (item-keyed; its flip needs per-key rollup ledgers -- its own increment).
+
 ## Explicitly NOT this build
 
 - The tally stays a read-only accessor (NOT a spine consumer) — unchanged.

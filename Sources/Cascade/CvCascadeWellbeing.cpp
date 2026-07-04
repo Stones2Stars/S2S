@@ -179,11 +179,10 @@ static void wb_buildingsAll(int famHappy, int famHealth, int famCH, const CvCity
 // rebuilt once, shared by all the player's cities; mid-turn building completions self-heal next turn.
 struct WbPlayerRollup
 {
-	int iEpoch, iTurn;
+	CvCascadePlayerStamp stamp;   // the SHARED per-player rollup freshness stamp (CvCascadeAccumulator.h)
 	// famId -> (areaId -> area Split; empire Split) for the two wellbeing families
 	std::map<int, std::map<int, WbSplit> > areaByFam;
 	std::map<int, WbSplit> empireByFam;
-	WbPlayerRollup() : iEpoch(-1), iTurn(-1) {}
 };
 static WbPlayerRollup s_wbRollup[MAX_PLAYERS];
 
@@ -197,11 +196,8 @@ static void wb_playerBuildings(int famId, const CvCity* pCity, WbTerms& t)
 	if (eOwner >= 0 && eOwner < MAX_PLAYERS)
 	{
 		WbPlayerRollup& r = s_wbRollup[eOwner];
-		const int iEpoch = CascadeAccumulator::epochFor(eOwner);
-		const int iTurn = GC.getGame().getGameTurn();
-		if (r.iEpoch != iEpoch || r.iTurn != iTurn)
+		if (!r.stamp.freshen(eOwner))   // the shared stamp: stale => clear; the per-fam lazy rebuild below refills
 		{
-			r.iEpoch = iEpoch; r.iTurn = iTurn;
 			r.areaByFam.clear(); r.empireByFam.clear();
 		}
 		if (r.areaByFam.find(famId) == r.areaByFam.end())

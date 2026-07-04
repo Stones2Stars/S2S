@@ -33,7 +33,23 @@ enum AccDirty
 	ACCD_CBASE   = 64,   // commerce baseExtra (religion/corporation/goldenAge/building block/playerExtra)
 	ACCD_CPCT    = 128,  // commerce percent stacks
 	ACCD_WB      = 256,  // the §2b wellbeing verdicts (happy/unhappy/goodHealth/badHealth -- CascadeWellbeing)
-	ACCD_ALL     = 509
+	ACCD_SCALAR  = 512,  // the city SCALAR channels (increment F: gpBase-buildings/gpMod/defense/maintMod/tradeRoutes)
+	ACCD_SCALARSPEC = 1024, // the gpBase SPECIALIST term (hot: governor churn touches ONLY this scalar -- the CSPEC analogy)
+	ACCD_RATES   = 253,  // the yield+commerce rate components -- the flipped rate getters' read mask (never pays WB/scalar walks)
+	ACCD_ALL     = 2045
+};
+
+// The per-player (epoch, turn) freshness stamp the PLAYER-WIDE rollup caches share (WbPlayerRollup /
+// ScPlayerRollup -- state-repositories.md: recurring cache shapes converge on ONE mechanism, not hand-rolled
+// per cache). The payloads stay cache-side (heterogeneous, like CvDerivedCacheSet's owner-side components);
+// this owns only the freshness protocol: freshen() answers "is the stamped payload current?", stamping
+// current when stale so the caller rebuilds exactly once per (player, epoch, turn).
+struct CvCascadePlayerStamp
+{
+	int iEpoch, iTurn;
+	CvCascadePlayerStamp() : iEpoch(-1), iTurn(-1) {}
+	// true = payload current; false = it was STALE (the stamp is now current -- the caller rebuilds NOW)
+	bool freshen(PlayerTypes ePlayer);
 };
 
 // The per-city standing slots -- a MUTABLE CACHE member on CvCity (never serialized; rebuilt on load via the
@@ -49,6 +65,15 @@ struct CascadeRateSlots
 	long aCPct[NUM_COMMERCE_TYPES];     // commerce percent stacks (max(0, 100 + Σ))
 	int aWb[4];                         // the §2b wellbeing verdicts (MILITARY-FREE): happy / unhappy / goodHealth / badHealth
 	int iWbMilPerUnit;                  // the epoch-stable per-military-unit happiness VALUE (×live count at read -- rides on top, never invalidates)
+	// the city SCALAR channel slots (increment F -- calc-map §4/§5/§9.5; refresh = the CascadeScalarChannels
+	// calculators, called whole; the gpBase specialist half is its own component so governor churn never pays
+	// the building walks -- the CSPEC analogy). buildRate is NOT slotted (item-keyed; its own increment).
+	int iScGpBaseBld;                   // greatPeopleRate building flats (city) -- gpBaseBuildings
+	int iScGpBaseSpec;                  // greatPeopleRate specialist flats × counts -- gpBaseSpecialists (ACCD_SCALARSPEC)
+	int iScGpMod;                       // the GP percent stack (city+empire buildings, civics/traits, SR, GA) -- gpRateModifier
+	int iScDefense;                     // the building defense amount stack -- defenseAmount
+	int iScMaintMod;                    // the effective-maintenance modifier stack -- maintenanceModifier
+	int iScTradeRoutes;                 // the trade-route COUNT sources -- tradeRouteCount
 	int iEpoch;                         // combined global+owner epoch stamp
 	int iTurn;                          // the §3 turn-roll re-check stamp
 	CvDerivedCacheSet<CvCity> set;      // the dirty protocol (bind in CvCity's ctor)
@@ -58,6 +83,7 @@ struct CascadeRateSlots
 		for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) { aCSpec100[c] = 0; aCBase100[c] = 0; aCPct[c] = 100; }
 		for (int w = 0; w < 4; ++w) aWb[w] = 0;
 		iWbMilPerUnit = 0;
+		iScGpBaseBld = 0; iScGpBaseSpec = 0; iScGpMod = 100; iScDefense = 0; iScMaintMod = 0; iScTradeRoutes = 0;
 	}
 };
 
@@ -70,6 +96,12 @@ public:
 	static long commerceRate100(const CvCity* pCity, CommerceTypes eC);
 	// The §2b wellbeing verdict slot (0=happy 1=unhappy 2=goodHealth 3=badHealth) -- O(1) when clean.
 	static int wellbeing(const CvCity* pCity, int iVerdict);
+	// The city SCALAR slots (increment F) -- O(1) when clean; each read ensures ONLY its own bits.
+	static int scGpBase(const CvCity* pCity);          // gpBaseBuildings + gpBaseSpecialists (SCALAR + SCALARSPEC)
+	static int scGpModifier(const CvCity* pCity);
+	static int scDefense(const CvCity* pCity);
+	static int scMaintenanceModifier(const CvCity* pCity);
+	static int scTradeRoutes(const CvCity* pCity);
 
 	// DOMAIN dirty hooks (modifier-substrate.md): a mutation in THIS city marks the affected components.
 	static void dirtyCity(const CvCity* pCity, int iMask);

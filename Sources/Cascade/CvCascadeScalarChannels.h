@@ -20,6 +20,11 @@ public:
 	// greatPeopleRate: the city BASE (building + specialist flats; the player national rate is a live input)
 	// and the MODIFIER percent stack (city + empire percents incl. state-religion/golden-age-gated entries).
 	static int gpRateBase(const CvCity* pCity, const CvCascadeEvalCtx& ec);
+	// the increment-F component split of gpRateBase (gpRateBase == their sum -- single-source): the building
+	// half rides ACCD_SCALAR; the specialist half is its own ACCD_SCALARSPEC component so governor churn
+	// never pays the building walks (the CSPEC analogy).
+	static int gpBaseBuildings(const CvCity* pCity, const CvCascadeEvalCtx& ec);
+	static int gpBaseSpecialists(const CvCity* pCity, const CvCascadeEvalCtx& ec);
 	static int gpRateModifier(const CvCity* pCity, const CvCascadeEvalCtx& ec);
 	// the gpMod parts for attribution (building city+empire / civic+trait city+empire / the SR term)
 	static void gpModParts(const CvCity* pCity, const CvCascadeEvalCtx& ec, int& iBld, int& iCivTrait, int& iSr);

@@ -43,6 +43,7 @@
 #include "CvCascadeJsonParse.h"       // cascadeJsonUnresolvedIds -- re-surface the dark load-time FK misses
 #include "CvEventSpine.h"             // the #430 dispatch spine -- the shadow diff rides it (SD_MODIFIER), NOT direct gDLL->logMsg
 #include "CvCascadeWellbeing.h"       // the §2b wellbeing channel -- its shadow rides this harness's city loop
+#include "CvCascadeScalarChannels.h"  // the increment-F scalar channels -- their [MODIFIER/scalar] slot net rides the same loop
 #include <set>
 #include <string>
 
@@ -50,7 +51,7 @@
 // The percent-stack shadow's diff + summary emit EVENTKIND_DIAGNOSTIC events through the event spine (NOT direct
 // gDLL->logMsg) -- the CvCascadeLogConsumer renders the raw typed fields + tees to /events, gated by level.
 // Per-emitter domain (SD_MODIFIER), one file (Cascade.log).
-enum MdEvt { MDE_DIFF = 1, MDE_SHADOW, MDE_RATE, MDE_DORM, MDE_REPO, MDE_PERF, MDE_SLOT, MDE_PLOTDIFF, MDE_WELLBEING };
+enum MdEvt { MDE_DIFF = 1, MDE_SHADOW, MDE_RATE, MDE_DORM, MDE_REPO, MDE_PERF, MDE_SLOT, MDE_PLOTDIFF, MDE_WELLBEING, MDE_SCALAR };
 enum MdFld
 {
 	MDF_WHO = 1, MDF_CHANNEL, MDF_CASC, MDF_BC, MDF_BA, MDF_BE, MDF_CIV, MDF_TR,   // diff: cascade buckets
@@ -72,7 +73,9 @@ enum MdFld
 	MDF_ACC_P, MDF_ACC_T, MDF_ACC_C,                                                // [SLOT/plotdiff]: the engine's SERIALIZED improvement-yield accumulators (player/team/city) for the plot's improvement
 	MDF_HAP_C, MDF_HAP_L, MDF_UNH_C, MDF_UNH_L,                                     // [MODIFIER/wellbeing]: the four verdict pairs (cascade vs legacy)
 	MDF_GOOD_C, MDF_GOOD_L, MDF_BAD_C, MDF_BAD_L,
-	MDF_WBN, MDF_WBMS                                                               // perf: wellbeing computes + ms×10
+	MDF_WBN, MDF_WBMS,                                                              // perf: wellbeing computes + ms×10
+	MDF_GPB_S, MDF_GPB_C, MDF_GPM_S, MDF_GPM_C, MDF_DEF_S, MDF_DEF_C,              // [MODIFIER/scalar]: increment-F slot-vs-calc pairs
+	MDF_MNT_S, MDF_MNT_C, MDF_TRD_S, MDF_TRD_C
 };
 static const char* mm_prefix(int evt)
 {
@@ -87,6 +90,7 @@ static const char* mm_prefix(int evt)
 	case MDE_SLOT:   return "[MODIFIER/slot]";
 	case MDE_PLOTDIFF: return "[MODIFIER/plotdiff]";
 	case MDE_WELLBEING: return "[MODIFIER/wellbeing]";
+	case MDE_SCALAR: return "[MODIFIER/scalar]";
 	default:         return "[MODIFIER]";
 	}
 }
@@ -175,6 +179,16 @@ static const char* mm_field(int tag, SpineFieldType* peType)
 	case MDF_BAD_L:       return "badL";
 	case MDF_WBN:         return "wbN";
 	case MDF_WBMS:        return "wbMsX10";
+	case MDF_GPB_S:       return "gpBaseS";
+	case MDF_GPB_C:       return "gpBaseC";
+	case MDF_GPM_S:       return "gpModS";
+	case MDF_GPM_C:       return "gpModC";
+	case MDF_DEF_S:       return "defS";
+	case MDF_DEF_C:       return "defC";
+	case MDF_MNT_S:       return "maintS";
+	case MDF_MNT_C:       return "maintC";
+	case MDF_TRD_S:       return "tradeS";
+	case MDF_TRD_C:       return "tradeC";
 	default:            return NULL;
 	}
 }
@@ -434,6 +448,7 @@ void cvCascadeModifierShadow()
 	// recomputes the §1 commerce+production rate, so the cap is modest; memoize per city if the turn drags.
 	int iCChecked = 0, iCDiverging = 0, iCShown = 0;
 	int iWbChecked = 0, iWbDiverging = 0, iWbShown = 0, iWbSlotDiverging = 0;
+	int iScChecked = 0, iScSlotDiverging = 0, iScShown = 0;
 	for (int p = 0; p < MAX_PLAYERS; ++p)
 	{
 		const CvPlayer& player = GET_PLAYER((PlayerTypes)p);
@@ -539,6 +554,35 @@ void cvCascadeModifierShadow()
 					}
 				}
 			}
+			// [MODIFIER/scalar] -- the increment-F scalar slots vs their fresh calculators (the same wired ctx).
+			// RAW slot reads (never the ensuring accessors -- that would recompute next to its own oracle, the
+			// tautological-0 trap increment A caught): a diff = a dirty-mapping hole in the hooked components,
+			// modulo the ruled end-turn cadence lag. Must read diverging=0 (mod the lag) before any scalar flip.
+			{
+				++iScChecked;
+				const int cGpBase = CascadeScalarChannels::gpRateBase(pCity, cec);
+				const int cGpMod = CascadeScalarChannels::gpRateModifier(pCity, cec);
+				const int cDef = CascadeScalarChannels::defenseAmount(pCity, cec);
+				const int cMaint = CascadeScalarChannels::maintenanceModifier(pCity, cec);
+				const int cTrade = CascadeScalarChannels::tradeRouteCount(pCity, cec);
+				const CascadeRateSlots& sst = pCity->m_cascadeRateSlots;
+				if (sst.iScGpBaseBld + sst.iScGpBaseSpec != cGpBase || sst.iScGpMod != cGpMod
+					|| sst.iScDefense != cDef || sst.iScMaintMod != cMaint || sst.iScTradeRoutes != cTrade)
+				{
+					++iScSlotDiverging;
+					if (iScShown < 40)
+					{
+						eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_SCALAR, 1)
+							.addWStr(MDF_WHO, pCity->getName().GetCString())
+							.addI(MDF_GPB_S, sst.iScGpBaseBld + sst.iScGpBaseSpec).addI(MDF_GPB_C, cGpBase)
+							.addI(MDF_GPM_S, sst.iScGpMod).addI(MDF_GPM_C, cGpMod)
+							.addI(MDF_DEF_S, sst.iScDefense).addI(MDF_DEF_C, cDef)
+							.addI(MDF_MNT_S, sst.iScMaintMod).addI(MDF_MNT_C, cMaint)
+							.addI(MDF_TRD_S, sst.iScTradeRoutes).addI(MDF_TRD_C, cTrade));
+						++iScShown;
+					}
+				}
+			}
 		}
 	}
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_RATE, 1)
@@ -547,6 +591,10 @@ void cvCascadeModifierShadow()
 	// field) = the ACCD_WB slots vs the fresh calc (dirty-mapping holes -- must be 0 before the getter flip).
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_WELLBEING, 1)
 		.addI(MDF_CHECKED, iWbChecked).addI(MDF_DIVERGING, iWbDiverging).addI(MDF_RATEC, iWbSlotDiverging));
+	// the scalar summary: diverging = the increment-F slots vs their fresh calculators (dirty-mapping holes,
+	// modulo the ruled cadence lag -- must read 0 before any scalar getter flip)
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_SCALAR, 1)
+		.addI(MDF_CHECKED, iScChecked).addI(MDF_DIVERGING, iScSlotDiverging));
 	// the [SLOT] summary covers BOTH legs (yield + commerce) -- emitted once, after both loops
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_SLOT, 1)
 		.addI(MDF_CHECKED, iSlotChecked).addI(MDF_DIVERGING, iSlotDiverging));

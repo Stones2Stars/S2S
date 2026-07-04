@@ -11,6 +11,7 @@
 #include "CvCity.h"
 #include "UI/CvEventReporter.h"
 #include "CvEventSpine.h"
+#include "CvCascadeAccumulator.h"   // the scalar-slot warm-up read (increment F joins the load-end warm block)
 #include "CvCascadeModifierMath.h"
 #include "CvCascadeEnabler.h"
 #include "AI/CvGameAI.h"
@@ -645,6 +646,7 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 			{
 				for (int y = 0; y < NUM_YIELD_TYPES; ++y) pWarmCity->getYieldRate100((YieldTypes)y);
 				for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) pWarmCity->getCommerceRateTimes100((CommerceTypes)c);
+				CascadeAccumulator::scGpBase(pWarmCity);   // ensures ACCD_SCALAR + ACCD_SCALARSPEC -> fills all six scalar slots
 			}
 		}
 	}

@@ -14,6 +14,7 @@
 #include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx
 #include "CvCascadeEnablerKernel.h"   // EnablerKernel::wireFacts -- the standing per-city building-facts cache
 #include "CvCascadeWellbeing.h"       // the §2b wellbeing verdict component (ACCD_WB)
+#include "CvCascadeScalarChannels.h"  // the scalar-channel calculators -- the ACCD_SCALAR* recompute fns (increment F)
 #include "Defines/CvGlobals.h"
 #include "AI/CvGameAI.h"              // GC.getGame()
 #include "Engine/CvCity.h"            // CITY_MAX_YIELD_RATE + m_cascadeRateSlots
@@ -47,6 +48,16 @@ void CascadeAccumulator::bumpPlayerEpoch(PlayerTypes ePlayer)
 int CascadeAccumulator::epochFor(PlayerTypes ePlayer)
 {
 	return s_iEpoch + (ePlayer >= 0 && ePlayer < MAX_PLAYERS ? s_aiPlayerEpoch[ePlayer] : 0);   // both monotonic -- the sum never collides
+}
+
+bool CvCascadePlayerStamp::freshen(PlayerTypes ePlayer)
+{
+	const int e = CascadeAccumulator::epochFor(ePlayer);
+	const int t = GC.getGame().getGameTurn();
+	if (iEpoch == e && iTurn == t) return true;
+	iEpoch = e;
+	iTurn = t;
+	return false;
 }
 
 static const char* acc_channel(int y)
@@ -131,13 +142,63 @@ void CascadeAccumulator::refreshComponents(const CvCity* pCity, int iMask)
 			if (iMask & ACCD_CPCT)  { MMBreak bk; st.aCPct[c] = PercentStack::percentStack(ch, pCity, bk); }
 		}
 	}
+	// The city SCALAR channels (increment F) -- the CascadeScalarChannels calculators ARE the recompute
+	// functions, called whole (the substrate law: this layer only decides WHEN they run); their player-wide
+	// building walks are rollup-cached per (player, epoch, turn) inside the calculators.
+	if (iMask & ACCD_SCALAR)
+	{
+		st.iScGpBaseBld = CascadeScalarChannels::gpBaseBuildings(pCity, ec);
+		st.iScGpMod = CascadeScalarChannels::gpRateModifier(pCity, ec);
+		st.iScDefense = CascadeScalarChannels::defenseAmount(pCity, ec);
+		st.iScMaintMod = CascadeScalarChannels::maintenanceModifier(pCity, ec);
+		st.iScTradeRoutes = CascadeScalarChannels::tradeRouteCount(pCity, ec);
+	}
+	if (iMask & ACCD_SCALARSPEC)
+		st.iScGpBaseSpec = CascadeScalarChannels::gpBaseSpecialists(pCity, ec);
 }
 
 long CascadeAccumulator::yieldRate100(const CvCity* pCity, YieldTypes eY)
 {
 	if (pCity == NULL || eY < 0 || eY >= NUM_YIELD_TYPES) return 0;
-	acc_ensure(pCity, ACCD_ALL & ~ACCD_WB);
+	acc_ensure(pCity, ACCD_RATES);   // NEVER the ALL mask: a rate read must not pay the WB/scalar walks
 	return acc_combine(pCity->m_cascadeRateSlots, pCity, eY);
+}
+
+// ---- the city SCALAR channel reads (increment F): each pays only its own components ----
+int CascadeAccumulator::scGpBase(const CvCity* pCity)
+{
+	if (pCity == NULL) return 0;
+	acc_ensure(pCity, ACCD_SCALAR | ACCD_SCALARSPEC);
+	const CascadeRateSlots& st = pCity->m_cascadeRateSlots;
+	return st.iScGpBaseBld + st.iScGpBaseSpec;
+}
+
+int CascadeAccumulator::scGpModifier(const CvCity* pCity)
+{
+	if (pCity == NULL) return 100;
+	acc_ensure(pCity, ACCD_SCALAR);
+	return pCity->m_cascadeRateSlots.iScGpMod;
+}
+
+int CascadeAccumulator::scDefense(const CvCity* pCity)
+{
+	if (pCity == NULL) return 0;
+	acc_ensure(pCity, ACCD_SCALAR);
+	return pCity->m_cascadeRateSlots.iScDefense;
+}
+
+int CascadeAccumulator::scMaintenanceModifier(const CvCity* pCity)
+{
+	if (pCity == NULL) return 0;
+	acc_ensure(pCity, ACCD_SCALAR);
+	return pCity->m_cascadeRateSlots.iScMaintMod;
+}
+
+int CascadeAccumulator::scTradeRoutes(const CvCity* pCity)
+{
+	if (pCity == NULL) return 0;
+	acc_ensure(pCity, ACCD_SCALAR);
+	return pCity->m_cascadeRateSlots.iScTradeRoutes;
 }
 
 int CascadeAccumulator::wellbeing(const CvCity* pCity, int iVerdict)
@@ -157,7 +218,7 @@ int CascadeAccumulator::wellbeing(const CvCity* pCity, int iVerdict)
 long CascadeAccumulator::commerceRate100(const CvCity* pCity, CommerceTypes eC)
 {
 	if (pCity == NULL || eC < 0 || eC >= NUM_COMMERCE_TYPES) return 0;
-	acc_ensure(pCity, ACCD_ALL & ~ACCD_WB);
+	acc_ensure(pCity, ACCD_RATES);   // NEVER the ALL mask: a rate read must not pay the WB/scalar walks
 	const CascadeRateSlots& st = pCity->m_cascadeRateSlots;
 	// the §2 CombineSplit kernel (single-sourced in CommerceCalc) over the plugin numbers: the commerce YIELD
 	// comes fresh from the yield slots; slider + disorder are read live inside the kernel.

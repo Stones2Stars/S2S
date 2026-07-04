@@ -8,6 +8,7 @@
 #include "CvCascadeScalarChannels.h"
 #include "CvCascadeMMKernel.h"
 #include "CvCascadeDepositIndex.h"    // the compiled segment ids the keyed walks match on
+#include "CvCascadeAccumulator.h"     // CvCascadePlayerStamp -- the shared per-player rollup freshness stamp
 #include "CvCascadeEnablerKernel.h"   // cityFacts -- the player-wide maintenance walk
 #include "CvCascadeCityFacts.h"
 #include "CvJsonInfo.h"
@@ -24,6 +25,7 @@
 #include "Infos/CvUnitInfo.h"
 #include "Infos/CvUnitCombatInfo.h"
 #include "Infos/CvProjectInfo.h"
+#include <map>
 
 // Σ a unit over the city's ACTIVE buildings at an address (the shared building-source walk).
 static int sc_buildings(const std::string& addr, const char* unit, const CvCity* pCity, const CvCascadeEvalCtx& ec)
@@ -79,10 +81,80 @@ static int sc_civicsTraits(const std::string& addr, const char* unit, const CvPl
 	return iSum;
 }
 
-int CascadeScalarChannels::gpRateBase(const CvCity* pCity, const CvCascadeEvalCtx& ec)
+// ===================== the per-player SCALAR ROLLUP (increment F) =====================
+// The player-wide building walks (gp empire percent, maintenance empire/area/connected, tradeRoutes
+// empire/coastal/world flats) are IDENTICAL for every city of the player, so they are CACHED per player on
+// the shared CvCascadePlayerStamp (the WbPlayerRollup mechanism, converged per state-repositories.md "one
+// pattern everywhere"). The simple sums are cached CALLS to the existing sc_playerBuildings walk (the rollup
+// caches results, it never re-implements the walk); only the maintenance AREA split -- which needs per-city
+// area grouping sc_playerBuildings cannot express -- walks itself (RELOCATED from maintenanceModifier).
+// Tech sums stay in-calculator (cheap, and their eval ctx stays the calling city's).
+struct ScPlayerRollup
 {
-	// building flats + specialist flats × count (the player national rate is a live input at the combine)
-	int iSum = sc_buildings("greatPeopleRate.city", "flat", pCity, ec);
+	CvCascadePlayerStamp stamp;
+	int iGpEmpirePct;                     // greatPeopleRate.empire percent (player buildings)
+	int iTradeEmpireFlat;                 // tradeRoutes.empire flat (player buildings)
+	int iTradeCoastalFlat;                // tradeRoutes.empire.coastal flat (player buildings)
+	int iTradeWorldFlat;                  // tradeRoutes.world flat (THIS player's buildings; the world term sums the living players')
+	int iMaintEmpirePct;                  // maintenance.empire percent (player buildings)
+	int iMaintConnPct;                    // maintenance.empire.connectedCity percent (player buildings)
+	std::map<int, int> maintAreaPct;      // areaId -> Σ maintenance.area from cities IN that area
+	std::map<int, int> maintOtherAreaPct; // areaId -> Σ maintenance.area.otherArea from cities IN that area
+	int iMaintOtherAreaTotal;
+	ScPlayerRollup() : iGpEmpirePct(0), iTradeEmpireFlat(0), iTradeCoastalFlat(0), iTradeWorldFlat(0),
+		iMaintEmpirePct(0), iMaintConnPct(0), iMaintOtherAreaTotal(0) {}
+};
+static ScPlayerRollup s_scRollup[MAX_PLAYERS];
+
+static const ScPlayerRollup& sc_rollup(const CvPlayer& owner, const CvTeam* pTeam)
+{
+	static ScPlayerRollup emptyRollup;   // out-of-range owners read zeros
+	const PlayerTypes ePlayer = owner.getID();
+	if (ePlayer < 0 || ePlayer >= MAX_PLAYERS) return emptyRollup;
+	ScPlayerRollup& r = s_scRollup[ePlayer];
+	if (r.stamp.freshen(ePlayer)) return r;   // payload current for this (player, epoch, turn)
+	// STALE -- rebuild the payload (the stamp is already current; a reentrant read sees the fresh sums build)
+	r.iGpEmpirePct = sc_playerBuildings("greatPeopleRate.empire", "percent", owner, pTeam);
+	r.iTradeEmpireFlat = sc_playerBuildings("tradeRoutes.empire", "flat", owner, pTeam);
+	r.iTradeCoastalFlat = sc_playerBuildings("tradeRoutes.empire.coastal", "flat", owner, pTeam);
+	r.iTradeWorldFlat = sc_playerBuildings("tradeRoutes.world", "flat", owner, pTeam);
+	r.iMaintEmpirePct = sc_playerBuildings("maintenance.empire", "percent", owner, pTeam);
+	r.iMaintConnPct = sc_playerBuildings("maintenance.empire.connectedCity", "percent", owner, pTeam);
+	// the AREA split (relocated from maintenanceModifier): per-city area grouping of the area/otherArea sums
+	r.maintAreaPct.clear();
+	r.maintOtherAreaPct.clear();
+	r.iMaintOtherAreaTotal = 0;
+	{
+		int iLoop;
+		for (const CvCity* pc = owner.firstCity(&iLoop); pc != NULL; pc = owner.nextCity(&iLoop))
+		{
+			const CascadeCityFacts& facts = EnablerKernel::cityFacts(pc);
+			CvCascadeEvalCtx pec;
+			pec.city = pc; pec.plot = pc->plot(); pec.player = &owner; pec.team = pTeam;
+			pec.activeBuildings = &facts.active; pec.vicinityProvidedBonuses = &facts.provided;
+			const int iArea = pc->area()->getID();
+			for (std::set<int>::const_iterator it = facts.active.begin(); it != facts.active.end(); ++it)
+			{
+				const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
+				if (d == NULL) continue;
+				r.maintAreaPct[iArea] += MMKernel::sumUnit(d, "maintenance.area", "percent", pec);
+				const int iOther = MMKernel::sumUnit(d, "maintenance.area.otherArea", "percent", pec);
+				if (iOther != 0) { r.maintOtherAreaPct[iArea] += iOther; r.iMaintOtherAreaTotal += iOther; }
+			}
+		}
+	}
+	return r;
+}
+
+int CascadeScalarChannels::gpBaseBuildings(const CvCity* pCity, const CvCascadeEvalCtx& ec)
+{
+	// building flats (the player national rate is a live input at the combine)
+	return sc_buildings("greatPeopleRate.city", "flat", pCity, ec);
+}
+
+int CascadeScalarChannels::gpBaseSpecialists(const CvCity* pCity, const CvCascadeEvalCtx& ec)
+{
+	int iSum = 0;
 	for (int i = 0; i < GC.getNumSpecialistInfos(); ++i)
 	{
 		const int iCount = pCity->getSpecialistCount((SpecialistTypes)i) + pCity->getFreeSpecialistCount((SpecialistTypes)i);
@@ -93,13 +165,19 @@ int CascadeScalarChannels::gpRateBase(const CvCity* pCity, const CvCascadeEvalCt
 	return iSum;
 }
 
+int CascadeScalarChannels::gpRateBase(const CvCity* pCity, const CvCascadeEvalCtx& ec)
+{
+	// the two increment-F components, summed (single-source: this IS their only combine)
+	return gpBaseBuildings(pCity, ec) + gpBaseSpecialists(pCity, ec);
+}
+
 int CascadeScalarChannels::gpRateModifier(const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
 	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
 	// the §9.5 / :7153 stack: 100 + city + player percents...
 	int iMod = 100;
 	iMod += sc_buildings("greatPeopleRate.city", "percent", pCity, ec);
-	iMod += sc_playerBuildings("greatPeopleRate.empire", "percent", owner, ec.team);   // GLOBAL GP mods feed the player from ANY city
+	iMod += sc_rollup(owner, ec.team).iGpEmpirePct;   // GLOBAL GP mods feed the player from ANY city (rollup-cached)
 	iMod += sc_civicsTraits("greatPeopleRate.city", "percent", owner, ec);
 	iMod += sc_civicsTraits("greatPeopleRate.empire", "percent", owner, ec);
 	// ...+ the STATE-RELIGION grouped family (civic stateReligion.empire.greatPeopleRate) while the state
@@ -119,7 +197,7 @@ void CascadeScalarChannels::gpModParts(const CvCity* pCity, const CvCascadeEvalC
 {
 	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
 	iBld = sc_buildings("greatPeopleRate.city", "percent", pCity, ec);
-	iCivTrait = sc_playerBuildings("greatPeopleRate.empire", "percent", owner, ec.team);   // seeded with the player-wide building half
+	iCivTrait = sc_rollup(owner, ec.team).iGpEmpirePct;   // seeded with the player-wide building half (rollup-cached)
 	iCivTrait += sc_civicsTraits("greatPeopleRate.city", "percent", owner, ec)
 	           + sc_civicsTraits("greatPeopleRate.empire", "percent", owner, ec);
 	iSr = 0;
@@ -141,8 +219,8 @@ int CascadeScalarChannels::tradeRouteCount(const CvCity* pCity, const CvCascadeE
 	int iCount = 0;
 	// this city's extra routes (building city flats)
 	iCount += sc_buildings("tradeRoutes.city", "flat", pCity, ec);
-	// the player-wide global routes (any city's buildings' empire flats + civics/traits)
-	iCount += sc_playerBuildings("tradeRoutes.empire", "flat", owner, ec.team);
+	// the player-wide global routes (any city's buildings' empire flats [rollup-cached] + civics/traits)
+	iCount += sc_rollup(owner, ec.team).iTradeEmpireFlat;
 	iCount += sc_civicsTraits("tradeRoutes.empire", "flat", owner, ec);
 	// TECHS feed the player routes too (processTech :30911)
 	{
@@ -155,17 +233,17 @@ int CascadeScalarChannels::tradeRouteCount(const CvCity* pCity, const CvCascadeE
 		}
 	}
 	// WORLD routes: ANY player's active world-wonder grants EVERY player (:7410) -- tradeRoutes.world flats
-	// summed over all living players' active sets
+	// summed over all living players' active sets (each player's own rollup)
 	for (int p = 0; p < MAX_PC_PLAYERS; ++p)
 	{
 		const CvPlayer& kP = GET_PLAYER((PlayerTypes)p);
 		if (!kP.isAlive()) continue;
-		iCount += sc_playerBuildings("tradeRoutes.world", "flat", kP, &GET_TEAM(kP.getTeam()));
+		iCount += sc_rollup(kP, &GET_TEAM(kP.getTeam())).iTradeWorldFlat;
 	}
 	// the coastal half pays only in coastal cities
 	if (pCity->isCoastal(GC.getWorldInfo(GC.getMap().getWorldSize()).getOceanMinAreaSize()))
 	{
-		iCount += sc_playerBuildings("tradeRoutes.empire.coastal", "flat", owner, ec.team);
+		iCount += sc_rollup(owner, ec.team).iTradeCoastalFlat;
 		iCount += sc_civicsTraits("tradeRoutes.empire.coastal", "flat", owner, ec);
 	}
 	return iCount;
@@ -320,26 +398,18 @@ int CascadeScalarChannels::maintenanceModifier(const CvCity* pCity, const CvCasc
 			if (d != NULL) iMod += MMKernel::sumUnit(d, "maintenance.empire", "percent", ec);
 		}
 	}
+	// the player-wide building halves, rollup-cached (the walk RELOCATED into sc_rollup): the empire percent;
+	// the AREA split -- a city in area A collects A's own area sums + every OTHER area's otherArea sums; and
+	// the connected-to-capital percent when this city is connected (and not the capital)
 	{
-		const bool bConnected = pCity->isConnectedToCapital() && !pCity->isCapital();
-		int iLoop;
-		for (const CvCity* pc = owner.firstCity(&iLoop); pc != NULL; pc = owner.nextCity(&iLoop))
-		{
-			const CascadeCityFacts& facts = EnablerKernel::cityFacts(pc);
-			CvCascadeEvalCtx pec;
-			pec.city = pc; pec.plot = pc->plot(); pec.player = &owner; pec.team = ec.team;
-			pec.activeBuildings = &facts.active; pec.vicinityProvidedBonuses = &facts.provided;
-			const bool bSameArea = pc->area() == pCity->area();
-			for (std::set<int>::const_iterator it = facts.active.begin(); it != facts.active.end(); ++it)
-			{
-				const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
-				if (d == NULL) continue;
-				iMod += MMKernel::sumUnit(d, "maintenance.empire", "percent", pec);
-				if (bSameArea) iMod += MMKernel::sumUnit(d, "maintenance.area", "percent", pec);
-				else iMod += MMKernel::sumUnit(d, "maintenance.area.otherArea", "percent", pec);
-				if (bConnected) iMod += MMKernel::sumUnit(d, "maintenance.empire.connectedCity", "percent", pec);
-			}
-		}
+		const ScPlayerRollup& r = sc_rollup(owner, ec.team);
+		iMod += r.iMaintEmpirePct;
+		const int iArea = pCity->area()->getID();
+		std::map<int, int>::const_iterator ait = r.maintAreaPct.find(iArea);
+		if (ait != r.maintAreaPct.end()) iMod += ait->second;
+		std::map<int, int>::const_iterator oit = r.maintOtherAreaPct.find(iArea);
+		iMod += r.iMaintOtherAreaTotal - (oit != r.maintOtherAreaPct.end() ? oit->second : 0);
+		if (pCity->isConnectedToCapital() && !pCity->isCapital()) iMod += r.iMaintConnPct;
 	}
 	return iMod;
 }

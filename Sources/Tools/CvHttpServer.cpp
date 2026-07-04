@@ -5,6 +5,7 @@
 #include "Engine/CvPropertyManipulators.h" // the property CONSTANT-source recompute (the property channel's net)
 #include "Cascade/CvCascadeProperty.h"     // the §430 property channel's per-city sourced numbers
 #include "Cascade/CvCascadeScalarChannels.h" // the city scalar channels' nets (GP-rate/defense/maintenance)
+#include "Cascade/CvCascadeAccumulator.h"    // CascadeRateSlots -- the increment-F standing slot twins on the wellbeing action
 #include "CvBonusInfo.h" // bonus-name resolution in the /diagnostic/whyNot trace
 #include "CvImprovementInfo.h" // cityInput loadout: worked-plot improvement type
 #include "CvTraitInfo.h" // cityInput loadout: player trait list
@@ -1829,6 +1830,16 @@ namespace
 				// cascade sums vs the legacy accumulators, the open-the-net step of each channel ----
 				{
 					picojson::object sc;
+					// the increment-F STANDING slot values (raw reads -- the hook-maintained state as it stands;
+					// the *Casc fields below are the FRESH calculators, so slot-vs-Casc shows staleness on demand)
+					{
+						const CascadeRateSlots& scSt = pCity->m_cascadeRateSlots;
+						sc["gpBaseSlot"] = picojson::value((double)(scSt.iScGpBaseBld + scSt.iScGpBaseSpec));
+						sc["gpModSlot"] = picojson::value((double)scSt.iScGpMod);
+						sc["defenseSlot"] = picojson::value((double)scSt.iScDefense);
+						sc["maintModSlot"] = picojson::value((double)scSt.iScMaintMod);
+						sc["tradeRoutesSlot"] = picojson::value((double)scSt.iScTradeRoutes);
+					}
 					sc["gpBaseCasc"] = picojson::value((double)CascadeScalarChannels::gpRateBase(pCity, wbec));
 					sc["gpBaseLeg"] = picojson::value((double)(pCity->getBaseGreatPeopleRate() - kWbOwner.getNationalGreatPeopleRate()));
 					sc["gpModCasc"] = picojson::value((double)CascadeScalarChannels::gpRateModifier(pCity, wbec));
