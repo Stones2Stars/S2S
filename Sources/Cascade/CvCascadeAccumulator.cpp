@@ -52,6 +52,16 @@ static const char* acc_channel(int y)
 	return a[y];
 }
 
+// The per-unit promotion-availability memo entry (file scope: VC7.1 forbids local types as template
+// arguments). One entry per unit, turn-scoped table -- see enPromotionValid.
+struct AccEnPromoMemo
+{
+	long sig; bool built;
+	std::set<int> uCand, uRem;
+	std::map<int, bool> verdicts;
+	AccEnPromoMemo() : sig(0), built(false) {}
+};
+
 // The map-read that never inserts (the packages are const at read).
 static long acc_mapGet(const std::map<int, long>& m, int key)
 {
@@ -505,36 +515,45 @@ bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 	// rebuilding the held-promo folds per candidate was the measured UI sluggishness, owner 2026-07-04).
 	// Signature = owner+id + held-set checksum + the unitcombat, refreshed by one cheap bool sweep; the
 	// accumHave folds run ONLY on signature change. Game-thread statics (the s_enablerRooted precedent).
-	static int s_uidOwner = -1, s_uidId = -1; static long s_sig = 0x7fffffff;
-	static std::set<int> s_uCand, s_uRem;
-	static std::map<int, bool> s_verdicts;   // the TURN-SCOPED per-(unit,promo) verdict cache -- a tree
-	                                         // render after the first sweep is pure map hits (the UI
-	                                         // re-sweeps candidates per frame; legacy recomputed each time)
+	// The per-UNIT availability memo, MULTI-SLOT (owner scope ruling 2026-07-04: "the scope of the cascade
+	// ends when we have determined what promotions are available; the rest is existing infrastructure").
+	// Multi-slot because the pick-refresh sweeps the SELECTION GROUP with units alternating under each
+	// promotion action -- a single-slot memo THRASHED (stack × promos rebuilds = the measured 0.2s pick
+	// hitch). One entry per unit, turn-scoped (the whole table clears on turn change); a group sweep pays
+	// one fold-rebuild per unit total, everything after is map hits.
+	static std::map<long, AccEnPromoMemo> s_memo;
+	static int s_memoTurn = -1;
+	const int iTurnNow = GC.getGame().getGameTurn();
+	if (iTurnNow != s_memoTurn) { s_memoTurn = iTurnNow; s_memo.clear(); }
+
 	const int nPromo = GC.getNumPromotionInfos();
 	long sig = 0;
 	for (int pr = 0; pr < nPromo; ++pr)
 		if (pUnit->isHasPromotion((PromotionTypes)pr)) sig += (pr + 1) * 3 + 1;
 	const UnitCombatTypes eUC = pUnit->getUnitCombatType();
 	sig = sig * 131 + (long)eUC * 7;
-	sig = sig * 1009 + GC.getGame().getGameTurn();   // turn-scoped: any slow-changing bespoke input self-expires
-	if ((int)pUnit->getOwner() != s_uidOwner || pUnit->getID() != s_uidId || sig != s_sig)
+
+	const long lKey = ((long)pUnit->getOwner() << 24) ^ (long)pUnit->getID();
+	AccEnPromoMemo& memo = s_memo[lKey];
+	if (!memo.built || memo.sig != sig)
 	{
-		s_uidOwner = (int)pUnit->getOwner(); s_uidId = pUnit->getID(); s_sig = sig;
-		s_verdicts.clear();
+		memo.built = true;
+		memo.sig = sig;
+		memo.verdicts.clear();
 		EnBucketSets cand, rem;
 		for (int pr = 0; pr < nPromo; ++pr)
 			if (pUnit->isHasPromotion((PromotionTypes)pr)) EnablerKernel::accumHave(InfoRepo<CvPromotionInfo>::get().get(pr), cand, rem);
 		if (eUC != NO_UNITCOMBAT) EnablerKernel::accumHave(InfoRepo<CvUnitCombatInfo>::get().get((int)eUC), cand, rem);
-		s_uCand.clear(); s_uRem.clear();
-		s_uCand.swap(cand["promotions"]);
-		s_uRem.swap(rem["promotions"]);
+		memo.uCand.clear(); memo.uRem.clear();
+		memo.uCand.swap(cand["promotions"]);
+		memo.uRem.swap(rem["promotions"]);
 	}
 	{
-		std::map<int, bool>::const_iterator vit = s_verdicts.find(ePromo);
-		if (vit != s_verdicts.end()) return vit->second;
+		std::map<int, bool>::const_iterator vit = memo.verdicts.find(ePromo);
+		if (vit != memo.verdicts.end()) return vit->second;
 	}
-	const std::set<int>& uCand = s_uCand;
-	const std::set<int>& uRem = s_uRem;
+	const std::set<int>& uCand = memo.uCand;
+	const std::set<int>& uRem = memo.uRem;
 	// a promo rooted in NO tech edge anywhere is ALWAYS-unlocked (the PALACE lesson for promotions)
 	static std::set<int> s_enablerRooted;
 	static bool s_rootedBuilt = false;
@@ -561,7 +580,7 @@ bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 	const bool bVerdict = bUnlocked && !bEventOnly
 		&& EnablerKernel::requiresMet(InfoRepo<CvPromotionInfo>::get().get(ePromo), ec)
 		&& pUnit->isPromotionValidLegacy((PromotionTypes)ePromo, true);
-	s_verdicts[ePromo] = bVerdict;
+	memo.verdicts[ePromo] = bVerdict;
 	return bVerdict;
 }
 
