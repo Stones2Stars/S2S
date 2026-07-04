@@ -4341,6 +4341,9 @@ void CvTeam::processProjectChange(ProjectTypes eIndex, int iChange, int iOldProj
 				player.changeTradeRoutes(kProject.getWorldTradeRoutes());
 			}
 		}
+		// #430: a completed project's world-scope deposits (tradeRoutes.world -- the Internet class) enter
+		// the cascade via the world package; mark it (rebuilt at the CvGame::doTurn boundary)
+		GC.getGame().m_cascadeWorldScope.set.markAllDirty();
 	}
 }
 

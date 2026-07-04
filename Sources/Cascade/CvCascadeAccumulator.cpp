@@ -220,6 +220,8 @@ void CascadeAccumulator::refreshWorldScope(const CvGame* pGame, int iMask)
 		kP.m_cascadePlayerScope.set.ensure(PSC_SC);   // the upward chain: world sums fresh player packages
 		ws.tradeWorldFlat += kP.m_cascadePlayerScope.tradeWorldMine;
 	}
+	// the PROJECT world grants (the Internet class) -- raw team counts × compiled deposits
+	ws.tradeWorldFlat += CascadeScalarChannels::tradeRoutesWorldProjects();
 }
 
 // ===================== the COMBINES (bare fetches + the channel formula + live gates) =====================
@@ -328,6 +330,7 @@ int CascadeAccumulator::scTradeRoutes(const CvCity* pCity)
 	int iCount = st.scTradeCity + ps.tradeEmpireAll + GC.getGame().m_cascadeWorldScope.tradeWorldFlat;
 	if (pCity->isCoastal(GC.getWorldInfo(GC.getMap().getWorldSize()).getOceanMinAreaSize()))
 		iCount += ps.tradeCoastalAll + st.scTradeCoastalCiv;                             // the coastal gate, live
+	iCount += CascadeScalarChannels::tradeRouteLiveInputs(pCity);   // vote/WB store + INITIAL define, live
 	return iCount;
 }
 

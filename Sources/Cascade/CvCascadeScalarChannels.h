@@ -52,8 +52,15 @@ public:
 	// maintenance: the effective modifier percent stack (city + empire + area scopes; building/civic/trait).
 	static int maintenanceModifier(const CvCity* pCity, const CvCascadeEvalCtx& ec);
 	// tradeRoutes: the COUNT sources (§9.5) -- this city's extra + the player-wide global + the coastal
-	// half (× this city being coastal). The game base + the max clamp are live config at the combine.
+	// half (× this city being coastal) + the project world grants + the live raw inputs (below). The max
+	// clamp stays at the getter (the legacy contract).
 	static int tradeRouteCount(const CvCity* pCity, const CvCascadeEvalCtx& ec);
+	// the LIVE raw-input folds (the game vote/WB store + the INITIAL define) -- ONE source shared by the
+	// fresh oracle and the slot combine, so the net stays honest
+	static int tradeRouteLiveInputs(const CvCity* pCity);
+	// PROJECT world routes (the Internet class): raw team project counts × compiled world flats -- shared
+	// by the fresh oracle and the world-scope package fill
+	static int tradeRoutesWorldProjects();
 	// buildRate (§9.5): the summed signed-% production modifier for the city's HEAD ORDER item (unit/building/
 	// project) -- the target's own bonus-gated buildRate.self + the keyed source mods (units/unitCombats/
 	// domains/buildings members, city + empire scopes) + military/space members + the SR grouped family.

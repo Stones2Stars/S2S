@@ -220,6 +220,43 @@ int CascadeScalarChannels::tradeRouteCount(const CvCity* pCity, const CvCascadeE
 		iCount += sc_playerBuildings("tradeRoutes.empire.coastal", "flat", owner, ec.team);
 		iCount += sc_civicsTraits("tradeRoutes.empire.coastal", "flat", owner, ec);
 	}
+	// the precipice-review completions (2026-07-04): the project world grants + the live raw inputs
+	iCount += tradeRoutesWorldProjects();
+	iCount += tradeRouteLiveInputs(pCity);
+	return iCount;
+}
+
+// The LIVE raw inputs of the trade-route count (never packaged): the GAME-scope store (vote resolutions
+// CvGame:7980 + WorldBuilder -- a clean persisted store, the E-class ride-in ruling 2026-07-04) and the
+// INITIAL_TRADE_ROUTES config define (CvPlayer:391/:28722). The CITY WB-poke residue (m_iExtraTradeRoutes
+// minus its building feed) stays a NAMED divergence until the demolition's store split -- attributed via
+// the endpoint's tradeRoutesCityExtraLeg field, never silently folded (a MIXED accumulator today).
+int CascadeScalarChannels::tradeRouteLiveInputs(const CvCity* /*pCity*/)
+{
+	return GC.getGame().getTradeRoutes() + GC.getINITIAL_TRADE_ROUTES();
+}
+
+// PROJECT world routes (the precipice-review Internet-class find): CvProjectInfo world flats granted to
+// EVERY player on completion (CvTeam::processProjectChange:4341; PROJECT_THE_INTERNET authors
+// tradeRoutes.world.flat:1). Derived from the RAW team project counts × the compiled deposits -- the
+// recompute also pays late-born players (the drift-repair class, cascade-right). The live data authors
+// these UNCONDITIONED (a conditioned world deposit would need a ctx home -- extend then, not now).
+int CascadeScalarChannels::tradeRoutesWorldProjects()
+{
+	int iCount = 0;
+	CvCascadeEvalCtx ec;
+	for (int t = 0; t < MAX_TEAMS; ++t)
+	{
+		const CvTeam& kT = GET_TEAM((TeamTypes)t);
+		if (!kT.isAlive()) continue;
+		for (int p = 0; p < GC.getNumProjectInfos(); ++p)
+		{
+			const int n = kT.getProjectCount((ProjectTypes)p);
+			if (n <= 0) continue;
+			const CvJsonInfo* d = InfoRepo<CvProjectInfo>::get().get(p);
+			if (d != NULL) iCount += n * MMKernel::sumUnit(d, "tradeRoutes.world", "flat", ec);
+		}
+	}
 	return iCount;
 }
 

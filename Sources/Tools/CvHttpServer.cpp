@@ -1990,7 +1990,7 @@ namespace
 					}
 					// tradeRoutes: the cascade COUNT sources vs the legacy realized count (game base + max are config)
 					sc["tradeRoutesCasc"] = picojson::value((double)CascadeScalarChannels::tradeRouteCount(pCity, wbec));
-					sc["tradeRoutesLeg"] = picojson::value((double)pCity->getTradeRoutes());
+					sc["tradeRoutesLeg"] = picojson::value((double)pCity->getTradeRoutesLegacy());   // the TRUE oracle (the getter is FLIPPED)
 					sc["tradeRoutesGameBase"] = picojson::value((double)GC.getGame().getTradeRoutes());
 					sc["tradeRoutesInitial"] = picojson::value((double)GC.getINITIAL_TRADE_ROUTES());   // the :28712 config put-back
 					// the legacy PARTS (attribute, don't guess)

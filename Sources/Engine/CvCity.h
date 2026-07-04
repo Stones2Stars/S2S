@@ -1147,6 +1147,7 @@ public:
 
 	CvCity* getTradeCity(int iIndex) const;
 	int getTradeRoutes() const;
+	int getTradeRoutesLegacy() const;   // the intact pre-flip body -- the net oracle (#430)
 	void clearTradeRoutes();
 	void updateTradeRoutes();
 

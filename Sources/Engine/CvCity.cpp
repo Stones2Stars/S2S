@@ -15663,7 +15663,18 @@ CvCity* CvCity::getTradeCity(int iIndex) const
 }
 
 
+// ==== #430 THE FLIP (owner 2026-07-04, "rip the bandaid"): the LAST city-plane getter onto the cascade.
+// The count is the package combine (city walk + player/world packages + live vote-store/INITIAL folds +
+// the project world grants); the legacy clamp contract stays at the getter. The Legacy sibling remains
+// the intact net oracle. KNOWN NAMED residue vs legacy: the city WB-poke part of m_iExtraTradeRoutes
+// (a mixed accumulator -- its store split lands at the demolition; attributed via the endpoint). ====
 int CvCity::getTradeRoutes() const
+{
+	if (!GC.getGame().isFinalInitialized()) return getTradeRoutesLegacy();   // pre-init: packages unwarmed
+	return std::max(0, std::min(CascadeAccumulator::scTradeRoutes(this), getMaxTradeRoutes()));
+}
+
+int CvCity::getTradeRoutesLegacy() const
 {
 	int iTradeRoutes = GC.getGame().getTradeRoutes();
 	iTradeRoutes += GET_PLAYER(getOwner()).getTradeRoutes();
