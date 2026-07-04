@@ -157,8 +157,16 @@ attributable diff lines (never silent).
   diffusion + per-scaled building sources + a REAL curator data-loss fix: the multi-source same-property merge
   overwrote plain values -- restored via entry lists + regen). **tradeRoutes** opened + attributed: cityExtra
   EXACT; the player remainder is the VOTE class (:7971 -- un-derivable game state, the extraHappiness
-  mixed-accumulator treatment). **Queued:** slot storage + flips for the attributed channels; buildRate (the
-  one unopened city channel -- item-keyed); the unit plane (needs the `unitInput` endpoint, calc-map §12).
+  mixed-accumulator treatment). **buildRate CLOSED EXACT (2026-07-04):** the P10 head-order ×2 probe was a
+  NAMED port bug, not drift -- the keyed walk (`sc_buildRateKeyed`) matched deposits through the compiled
+  `sumKeyed4F`, a FLAT-unit matcher, while every keyed buildRate deposit is PERCENT-unit, so domains/
+  unitCombats summed 0 (the "×2" was coincidence: the missing keyed half equalled the matched half). Fixed to
+  the string-addressed `sumUnit`/`sumTrait` walk (PURE-filtered via `sc_civicsTraits`) + the :3912
+  subs-only-with-main nesting mirrored; the wellbeing `scalars` emit now carries the full buildRate
+  attribution (order identity + cascade member parts + every legacy getter part incl. `brCombatByTypeLeg`).
+  Verified live: P10-C16394 170==170 with every part reconciling, sweep 14/14 EXACT across 5 players (unit
+  AND building orders). **Queued:** slot storage + flips for the attributed channels; the unit plane (needs
+  the `unitInput` endpoint, calc-map §12).
 
 ## Explicitly NOT this build
 

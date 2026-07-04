@@ -34,7 +34,20 @@ public:
 	// project) -- the target's own bonus-gated buildRate.self + the keyed source mods (units/unitCombats/
 	// domains/buildings members, city + empire scopes) + military/space members + the SR grouped family.
 	// Returns 0 with no order (bHasOrder=false).
-	static int productionModifier(const CvCity* pCity, const CvCascadeEvalCtx& ec, bool& bHasOrder);
+	// The parts split for attribution (the gpModParts pattern) -- the net IS the sum of these.
+	struct BuildRateParts
+	{
+		int iSelf;          // buildRate.self on the target (bonus-gated own mods)
+		int iKeyed;         // units.{U} / buildings.{B} keyed source mods
+		int iDomain;        // domains.{D} keyed
+		int iCombatMain;    // unitCombats.{main combat}
+		int iCombatSubs;    // Σ unitCombats.{each sub combat}
+		int iMember;        // the military | space flat member
+		int iStateReligion; // stateReligion.empire.{unit|building}Production
+		BuildRateParts() : iSelf(0), iKeyed(0), iDomain(0), iCombatMain(0), iCombatSubs(0), iMember(0), iStateReligion(0) {}
+		int total() const { return iSelf + iKeyed + iDomain + iCombatMain + iCombatSubs + iMember + iStateReligion; }
+	};
+	static int productionModifier(const CvCity* pCity, const CvCascadeEvalCtx& ec, bool& bHasOrder, BuildRateParts* pParts = NULL);
 };
 
 #endif // CV_CASCADE_SCALAR_CHANNELS_H

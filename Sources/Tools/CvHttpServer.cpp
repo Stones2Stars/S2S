@@ -1866,11 +1866,107 @@ namespace
 					// buildRate: the HEAD-ORDER item's production modifier, cascade vs legacy (skip orderless cities)
 					{
 						bool bWbHasOrder = false;
-						const int iWbBr = CascadeScalarChannels::productionModifier(pCity, wbec, bWbHasOrder);
+						CascadeScalarChannels::BuildRateParts wbBrParts;
+						const int iWbBr = CascadeScalarChannels::productionModifier(pCity, wbec, bWbHasOrder, &wbBrParts);
 						if (bWbHasOrder)
 						{
 							sc["buildRateCasc"] = picojson::value((double)iWbBr);
 							sc["buildRateLeg"] = picojson::value((double)pCity->getProductionModifier());
+							// the cascade PARTS (the productionModifier member split -- attribute, don't guess)
+							sc["brSelfCasc"] = picojson::value((double)wbBrParts.iSelf);
+							sc["brKeyedCasc"] = picojson::value((double)wbBrParts.iKeyed);
+							sc["brDomainCasc"] = picojson::value((double)wbBrParts.iDomain);
+							sc["brCombatMainCasc"] = picojson::value((double)wbBrParts.iCombatMain);
+							sc["brCombatSubsCasc"] = picojson::value((double)wbBrParts.iCombatSubs);
+							sc["brMemberCasc"] = picojson::value((double)wbBrParts.iMember);
+							sc["brSrCasc"] = picojson::value((double)wbBrParts.iStateReligion);
+							// the head-order identity + the legacy PARTS (each named getter of the
+							// CvCity::getProductionModifier overloads -- calc-map §9.5)
+							const UnitTypes eWbBrU = pCity->getProductionUnit();
+							const BuildingTypes eWbBrB = pCity->getProductionBuilding();
+							const ProjectTypes eWbBrPr = pCity->getProductionProject();
+							const bool bWbBrSr = kWbOwner.getStateReligion() != NO_RELIGION && pCity->isHasReligion(kWbOwner.getStateReligion());
+							if (eWbBrU != NO_UNIT)
+							{
+								const CvUnitInfo& kWbBrUnit = GC.getUnitInfo(eWbBrU);
+								sc["buildRateOrder"] = picojson::value(std::string(kWbBrUnit.getType()));
+								// player-generic = trait unit/special-unit keyed + (military) the player military mod
+								sc["brPlayerGenericLeg"] = picojson::value((double)kWbOwner.getProductionModifier(eWbBrU));
+								sc["brPlayerMilitaryLeg"] = picojson::value((double)((!kWbBrUnit.isNoNonTypeProdMods() && kWbBrUnit.isMilitaryProduction()) ? kWbOwner.getMilitaryProductionModifier() : 0));
+								sc["brCityUnitLeg"] = picojson::value((double)pCity->getUnitProductionModifier(eWbBrU));
+								sc["brPlayerUnitLeg"] = picojson::value((double)kWbOwner.getUnitProductionModifier(eWbBrU));
+								if (!kWbBrUnit.isNoNonTypeProdMods())
+								{
+									sc["brCityDomainLeg"] = picojson::value((double)pCity->getDomainProductionModifier(kWbBrUnit.getDomainType()));
+									// the stored unitCombat maps, main + subs, city/player split (the DRIFT-class suspects)
+									int iWbBrCombCity = 0, iWbBrCombPlayer = 0;
+									picojson::object wbBrByCombat;
+									if (kWbBrUnit.getUnitCombatType() != NO_UNITCOMBAT)
+									{
+										const UnitCombatTypes eWbBrMain = (UnitCombatTypes)kWbBrUnit.getUnitCombatType();
+										const int iWbC = pCity->getUnitCombatProductionModifier(eWbBrMain);
+										const int iWbP = kWbOwner.getUnitCombatProductionModifier(eWbBrMain);
+										iWbBrCombCity += iWbC; iWbBrCombPlayer += iWbP;
+										if (iWbC != 0 || iWbP != 0)
+										{
+											picojson::object cp;
+											cp["city"] = picojson::value((double)iWbC);
+											cp["player"] = picojson::value((double)iWbP);
+											wbBrByCombat[GC.getUnitCombatInfo(eWbBrMain).getType()] = picojson::value(cp);
+										}
+										foreach_(const UnitCombatTypes eWbBrSub, kWbBrUnit.getSubCombatTypes())
+										{
+											const int iWbCs = pCity->getUnitCombatProductionModifier(eWbBrSub);
+											const int iWbPs = kWbOwner.getUnitCombatProductionModifier(eWbBrSub);
+											iWbBrCombCity += iWbCs; iWbBrCombPlayer += iWbPs;
+											if (iWbCs != 0 || iWbPs != 0)
+											{
+												picojson::object cp;
+												cp["city"] = picojson::value((double)iWbCs);
+												cp["player"] = picojson::value((double)iWbPs);
+												wbBrByCombat[GC.getUnitCombatInfo(eWbBrSub).getType()] = picojson::value(cp);
+											}
+										}
+									}
+									sc["brCombatCityLeg"] = picojson::value((double)iWbBrCombCity);
+									sc["brCombatPlayerLeg"] = picojson::value((double)iWbBrCombPlayer);
+									sc["brCombatByTypeLeg"] = picojson::value(wbBrByCombat);
+									sc["brCityMilitaryLeg"] = picojson::value((double)(kWbBrUnit.isMilitaryProduction() ? pCity->getMilitaryProductionModifier() : 0));
+									sc["brSrLeg"] = picojson::value((double)(bWbBrSr ? kWbOwner.getStateReligionUnitProductionModifier() : 0));
+								}
+								int iWbBrBonus = 0;
+								for (int iWbBn = 0; iWbBn < GC.getNumBonusInfos(); iWbBn++)
+									if (pCity->hasBonus((BonusTypes)iWbBn))
+										iWbBrBonus += kWbBrUnit.getBonusProductionModifier(iWbBn);
+								sc["brBonusLeg"] = picojson::value((double)iWbBrBonus);
+							}
+							else if (eWbBrB != NO_BUILDING)
+							{
+								const CvBuildingInfo& kWbBrBld = GC.getBuildingInfo(eWbBrB);
+								sc["buildRateOrder"] = picojson::value(std::string(kWbBrBld.getType()));
+								// player-generic = trait building/special-building keyed + the wonder max-mods
+								sc["brPlayerGenericLeg"] = picojson::value((double)kWbOwner.getProductionModifier(eWbBrB));
+								sc["brCityBuildingLeg"] = picojson::value((double)pCity->getBuildingProductionModifier(eWbBrB));
+								sc["brPlayerBuildingLeg"] = picojson::value((double)kWbOwner.getBuildingProductionModifier(eWbBrB));
+								sc["brSrLeg"] = picojson::value((double)(bWbBrSr ? kWbOwner.getStateReligionBuildingProductionModifier() : 0));
+								int iWbBrBonus = 0;
+								for (int iWbBn = 0; iWbBn < GC.getNumBonusInfos(); iWbBn++)
+									if (pCity->hasBonus((BonusTypes)iWbBn))
+										iWbBrBonus += kWbBrBld.getBonusProductionModifier(iWbBn);
+								sc["brBonusLeg"] = picojson::value((double)iWbBrBonus);
+							}
+							else if (eWbBrPr != NO_PROJECT)
+							{
+								const CvProjectInfo& kWbBrPrj = GC.getProjectInfo(eWbBrPr);
+								sc["buildRateOrder"] = picojson::value(std::string(kWbBrPrj.getType()));
+								sc["brPlayerGenericLeg"] = picojson::value((double)kWbOwner.getProductionModifier(eWbBrPr));
+								sc["brCitySpaceLeg"] = picojson::value((double)(kWbBrPrj.isSpaceship() ? pCity->getSpaceProductionModifier() : 0));
+								int iWbBrBonus = 0;
+								for (int iWbBn = 0; iWbBn < GC.getNumBonusInfos(); iWbBn++)
+									if (pCity->hasBonus((BonusTypes)iWbBn))
+										iWbBrBonus += kWbBrPrj.getBonusProductionModifier(iWbBn);
+								sc["brBonusLeg"] = picojson::value((double)iWbBrBonus);
+							}
 						}
 					}
 					// tradeRoutes: the cascade COUNT sources vs the legacy realized count (game base + max are config)
