@@ -193,10 +193,17 @@ attributable diff lines (never silent).
   self-heal-off gate ran the scalar bits on pure hook+epoch-maintained state (turn-roll skipped for
   ACCD_SCALAR*, the net reading via the ENSURING accessors -- non-tautological) through two owner-played
   turns: `[MODIFIER/scalar] checked=22 diverging=0` BOTH turns, zero holes. The gate is removed (the net
-  back on raw reads; self-heal restored). **Queued:** the getter flips (`getBaseGreatPeopleRate`+
-  `getTotalGreatPeopleRateModifier`, `getBuildingDefense`, `getEffectiveMaintenanceModifier`,
-  `getTradeRoutes`) with `*Legacy` in-body oracles. buildRate stays UN-slotted (item-keyed; its flip needs
-  per-key rollup ledgers -- its own increment).
+  back on raw reads; self-heal restored). **✅ FOUR FLIPS LANDED (2026-07-04, same day):** `getBaseGreatPeopleRate` (slot city-base +
+  live national), `getTotalGreatPeopleRateModifier`, `getBuildingDefense`, `getEffectiveMaintenanceModifier`
+  return the cascade slots; the legacy bodies live on as `*Legacy` siblings (the net oracles; the endpoint's
+  `*Leg` fields + the `/computed` decomposition surfaces read them so aggregates keep equaling their legacy
+  parts). Verified live: Slot==Casc on every probe; the `*Legacy` oracles carry exactly the two accepted
+  classes, now REPAIRED in play by construction -- the defense stored-drift (+60 at the P10 probe) and the
+  maintenance AREA phantom (+22..+39 every city -- cities got cheaper; the ruled drift-repair, not a
+  regression). **Deferred, each its own increment:** `getTradeRoutes` (legacy mixes un-derivable VOTE-granted
+  routes into the player accumulator -- needs the mixed-accumulator split, the persisted-events-store
+  precedent, before its flip can be lossless); buildRate stays UN-slotted (item-keyed; its flip needs
+  per-key rollup ledgers).
 
 ## Explicitly NOT this build
 

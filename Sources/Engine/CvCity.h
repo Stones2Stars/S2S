@@ -483,12 +483,14 @@ public:
 	int getNumGreatPeople() const;
 	void changeNumGreatPeople(int iChange);
 
-	int getBaseGreatPeopleRate() const;
+	int getBaseGreatPeopleRate() const;          // FLIPPED (#430, 2026-07-04): returns the cascade scalar slot
+	int getBaseGreatPeopleRateLegacy() const;    // the legacy accumulator body -- the in-DLL net oracle until the cut
 	// raw member (m_iBaseGreatPeopleRate), pre-max(0,·) and pre-national -- exposed so the dump can reconstruct
 	// the base when it is negative (owner ruling 2026-06-20: visibility never justifies dropping a calc source).
 	int getBaseGreatPeopleRateRaw() const { return m_iBaseGreatPeopleRate; }
 	int getGreatPeopleRate() const;
-	int getTotalGreatPeopleRateModifier() const;
+	int getTotalGreatPeopleRateModifier() const;         // FLIPPED (#430, 2026-07-04)
+	int getTotalGreatPeopleRateModifierLegacy() const;   // the legacy stack -- the net oracle until the cut
 	void changeBaseGreatPeopleRate(int iChange);
 
 	int getGreatPeopleRateModifier() const;
@@ -527,7 +529,8 @@ public:
 
 	int getMaintenance() const;
 	int getMaintenanceTimes100() const;
-	int getEffectiveMaintenanceModifier() const;
+	int getEffectiveMaintenanceModifier() const;         // FLIPPED (#430, 2026-07-04): returns the cascade scalar slot
+	int getEffectiveMaintenanceModifierLegacy() const;   // the legacy triple-sum -- the net oracle until the cut
 	void updateMaintenance() const;
 	void setMaintenanceDirty(const bool bDirty, const bool bPlayer = true) const;
 	int calculateDistanceMaintenance() const;
@@ -713,7 +716,8 @@ public:
 	int getForeignTradeRouteModifier() const;
 	void changeForeignTradeRouteModifier(int iChange);
 
-	int getBuildingDefense() const;
+	int getBuildingDefense() const;          // FLIPPED (#430, 2026-07-04): returns the cascade scalar slot (repairs the stored drift)
+	int getBuildingDefenseLegacy() const;    // the stored m_iBuildingDefense -- the net oracle until the cut
 	void changeBuildingDefense(int iChange);
 
 	int getBuildingBombardDefense() const;

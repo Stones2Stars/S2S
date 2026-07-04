@@ -1844,9 +1844,9 @@ namespace
 						sc["tradeRoutesSlot"] = picojson::value((double)scSt.iScTradeRoutes);
 					}
 					sc["gpBaseCasc"] = picojson::value((double)CascadeScalarChannels::gpRateBase(pCity, wbec));
-					sc["gpBaseLeg"] = picojson::value((double)(pCity->getBaseGreatPeopleRate() - kWbOwner.getNationalGreatPeopleRate()));
+					sc["gpBaseLeg"] = picojson::value((double)(pCity->getBaseGreatPeopleRateLegacy() - kWbOwner.getNationalGreatPeopleRate()));
 					sc["gpModCasc"] = picojson::value((double)CascadeScalarChannels::gpRateModifier(pCity, wbec));
-					sc["gpModLeg"] = picojson::value((double)pCity->getTotalGreatPeopleRateModifier());
+					sc["gpModLeg"] = picojson::value((double)pCity->getTotalGreatPeopleRateModifierLegacy());
 					// the gpMod legacy PARTS + the cascade-side split (attribute, don't guess)
 					sc["gpModCityLeg"] = picojson::value((double)pCity->getGreatPeopleRateModifier());
 					sc["gpModPlayerLeg"] = picojson::value((double)kWbOwner.getGreatPeopleRateModifier());
@@ -1858,7 +1858,7 @@ namespace
 						sc["gpModSrCasc"] = picojson::value((double)iWbGpSr);
 					}
 					sc["defenseCasc"] = picojson::value((double)CascadeScalarChannels::defenseAmount(pCity, wbec));
-					sc["defenseLeg"] = picojson::value((double)pCity->getBuildingDefense());
+					sc["defenseLeg"] = picojson::value((double)pCity->getBuildingDefenseLegacy());
 					// the defense DRIFT meter: the stored m_iBuildingDefense vs a current-state recompute
 					{
 						int iWbDefRe = 0;
@@ -1870,7 +1870,7 @@ namespace
 						sc["defenseLegRecompute"] = picojson::value((double)iWbDefRe);
 					}
 					sc["maintModCasc"] = picojson::value((double)CascadeScalarChannels::maintenanceModifier(pCity, wbec));
-					sc["maintModLeg"] = picojson::value((double)pCity->getEffectiveMaintenanceModifier());
+					sc["maintModLeg"] = picojson::value((double)pCity->getEffectiveMaintenanceModifierLegacy());
 					// the legacy PARTS (the getEffectiveMaintenanceModifier decomposition -- attribute, don't guess)
 					sc["maintCityLeg"] = picojson::value((double)pCity->getMaintenanceModifier());
 					sc["maintPlayerLeg"] = picojson::value((double)const_cast<CvPlayer&>(kWbOwner).getMaintenanceModifier());
@@ -2967,7 +2967,7 @@ namespace
 				picojson::value::object d;
 				d["totalDefense"]              = picojson::value((double)pCity->getTotalDefense(false));
 				d["defenseModifier"]           = picojson::value((double)pCity->getDefenseModifier(false)); // realized
-				d["buildingDefense"]           = picojson::value((double)pCity->getBuildingDefense());
+				d["buildingDefense"]           = picojson::value((double)pCity->getBuildingDefenseLegacy());   // the LEGACY decomposition surface (the flipped getter returns the cascade)
 				d["naturalDefense"]            = picojson::value((double)pCity->getNaturalDefense());
 				d["playerCityDefenseModifier"] = picojson::value((double)kPlayer.getCityDefenseModifier()); // aggregate (split below)
 				d["playerExtraCityDefense"]    = picojson::value((double)kPlayer.getExtraCityDefense());      // leaf of getCityDefenseModifier
@@ -3005,7 +3005,7 @@ namespace
 				m["numCitiesMaint100"]   = picojson::value((double)pCity->calculateNumCitiesMaintenanceTimes100());
 				m["colonyMaint100"]      = picojson::value((double)pCity->calculateColonyMaintenanceTimes100());
 				m["corporationMaint100"] = picojson::value((double)pCity->calculateCorporationMaintenanceTimes100());
-				m["effectiveModifier"]   = picojson::value((double)pCity->getEffectiveMaintenanceModifier()); // aggregate (split below)
+				m["effectiveModifier"]   = picojson::value((double)pCity->getEffectiveMaintenanceModifierLegacy()); // aggregate (split below; LEGACY -- must equal the sum of its legacy parts)
 				// effectiveModifier split (getEffectiveMaintenanceModifier, CvCity.cpp:7590): city + player + area + connected:
 				m["maintModCity"]      = picojson::value((double)pCity->getMaintenanceModifier());
 				m["maintModPlayer"]    = picojson::value((double)kPlayer.getMaintenanceModifier());
@@ -3331,8 +3331,8 @@ namespace
 			{
 				picojson::value::object gp;
 				gp["greatPeopleRate"]     = picojson::value((double)pCity->getGreatPeopleRate()); // realized
-				gp["baseGreatPeopleRate"] = picojson::value((double)pCity->getBaseGreatPeopleRate()); // aggregate (city base + national)
-				gp["totalGPRateModifier"] = picojson::value((double)pCity->getTotalGreatPeopleRateModifier()); // aggregate (split below)
+				gp["baseGreatPeopleRate"] = picojson::value((double)pCity->getBaseGreatPeopleRateLegacy()); // aggregate (city base + national; LEGACY -- the decomposition surface)
+				gp["totalGPRateModifier"] = picojson::value((double)pCity->getTotalGreatPeopleRateModifierLegacy()); // aggregate (split below; LEGACY)
 				gp["greatPeopleProgress"] = picojson::value((double)pCity->getGreatPeopleProgress());
 				gp["threshold"]           = picojson::value((double)kPlayer.greatPeopleThresholdNonMilitary());
 				// base split (getBaseGreatPeopleRate, CvCity.cpp): max(0,m_iBaseGreatPeopleRate) + national; city base = base - national.

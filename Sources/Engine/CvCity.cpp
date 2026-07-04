@@ -7195,6 +7195,13 @@ void CvCity::changeNumGreatPeople(int iChange)
 
 int CvCity::getBaseGreatPeopleRate() const
 {
+	// FLIPPED (#430, 2026-07-04, hook map proven): the cascade scalar slot IS the city base; the national
+	// rate stays a live input at the combine, mirroring the legacy composition exactly.
+	return std::max(0, CascadeAccumulator::scGpBase(this)) + GET_PLAYER(getOwner()).getNationalGreatPeopleRate();
+}
+
+int CvCity::getBaseGreatPeopleRateLegacy() const
+{
 	return std::max(0, m_iBaseGreatPeopleRate) + GET_PLAYER(getOwner()).getNationalGreatPeopleRate();
 }
 
@@ -7210,6 +7217,13 @@ int CvCity::getGreatPeopleRate() const
 
 
 int CvCity::getTotalGreatPeopleRateModifier() const
+{
+	// FLIPPED (#430, 2026-07-04): the slot carries the whole stack (100 + city/empire percents + SR + GA,
+	// max(0,·) applied by the calculator).
+	return CascadeAccumulator::scGpModifier(this);
+}
+
+int CvCity::getTotalGreatPeopleRateModifierLegacy() const
 {
 	const CvPlayer& owner = GET_PLAYER(getOwner());
 
@@ -7635,6 +7649,13 @@ int CvCity::getMaintenanceTimes100() const
 }
 
 int CvCity::getEffectiveMaintenanceModifier() const
+{
+	// FLIPPED (#430, 2026-07-04): the slot carries the whole stack (city + player + area + connected).
+	// This repairs the AREA phantom by construction (the stored area accumulator has ZERO data sources).
+	return CascadeAccumulator::scMaintenanceModifier(this);
+}
+
+int CvCity::getEffectiveMaintenanceModifierLegacy() const
 {
 	int iModifier = getMaintenanceModifier() + GET_PLAYER(getOwner()).getMaintenanceModifier() + area()->getTotalAreaMaintenanceModifier(getOwner());
 
@@ -9986,6 +10007,13 @@ void CvCity::changeForeignTradeRouteModifier(int iChange)
 
 
 int CvCity::getBuildingDefense() const
+{
+	// FLIPPED (#430, 2026-07-04): the slot recomputes from data -- repairs the stored accumulator's drift
+	// (the +60 phantom class) by construction.
+	return CascadeAccumulator::scDefense(this);
+}
+
+int CvCity::getBuildingDefenseLegacy() const
 {
 	return m_iBuildingDefense;
 }
