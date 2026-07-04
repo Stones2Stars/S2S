@@ -146,6 +146,13 @@ the false-confirmation trap below:
   rates — are **shadowed in the AI's real per-turn calls** (end-turn so the AI calls them). **Before the enabler is
   swapped over, its new build lists are LOGGED at the PYTHON consumer layer** (the AI/UI's view of buildability), so the
   cutover is proven against what the actual consumers see — not just the C++ shadow.
+  **⚖ AMENDED (owner 2026-07-04, the bandaid ruling "flip it all"):** under the getter-contract flip
+  (cutover.md ruling 5 — the gate BODIES flip, consumers never rewire) the Python layer reads the SAME
+  contracts (`CyCity::canConstruct` → the flipped body), so its view is identical by construction — the
+  dedicated pre-flip logging step is WAIVED as a flip gate ("it should be easy to trace what python gets
+  and sees": one gated Cy-boundary log line, or the `/computed/can*` endpoints, whenever wanted). The
+  enabler flip proceeds directly; the DELETION step still waits for the verification window + the standing
+  gates like every cut.
 - **⛔ An end turn does NOT confirm a STRUCTURE.** A per-change game shadow produces **false confirmation even on a
   wrong structure** — the gameobject side-table shadowed green (`TALLY diverging=0`, building tier bit-exact) yet was on
   the wrong structural path. So **stand up the proper, spec-faithful structure FIRST**; the shadows then verify

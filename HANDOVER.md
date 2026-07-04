@@ -48,11 +48,20 @@
    `getTradeRoutesLegacy` + de-tautologized endpoint leg. **THE WHOLE CITY VALUE PLANE NOW SERVES CASCADE.**
    The vs-legacy residue is the PRE-NAMED mixed `m_iExtraTradeRoutes` class (cityExtraLeg 12-17 across
    probes) — the verification window attributes it; the store split lands at the demolition.
-5. **THE REMAINING SERVING FLIP: the ENABLER plane** (the second half of "flip it all") — gates run legacy,
-   frontier shadows at parity since 2026-07-02. cutover.md ruling 5's prescribed pre-step still OPEN: the
-   Python-consumer build-list logging step (the owner may waive it under the bandaid ruling — ASK, do not
-   assume). Then: flip the gate bodies onto the frontier, legacy in-body as oracle, `[ENABLER/shadow]`
-   stays the net; the CalculateAllBuildingValues PreLoop rides until the enabler cut.
+5. **⚡ THE ENABLER FLIP — AUTHORIZED, EXECUTE FIRST (owner 2026-07-04 23:xx: "flip it all" — the
+   Python-consumer build-list logging pre-step is WAIVED under the bandaid ruling; do NOT re-ask).**
+   The plan: ground the frontier entry surface (`Sources/Cascade/CvCascadeEnabler.{h,cpp}` + EnablerKernel/
+   BuildingCascade/UnitCascade/TechCascade — read IN FULL first, the ctx wiring per gate lives in the
+   shadow harness), then flip each gate body onto the cascade frontier getter-contract style (the
+   tradeRoutes/`getYieldRate100` pattern: cascade verdict serves, the legacy computation stays the intact
+   in-body oracle, `[ENABLER/shadow]` remains the net, pre-init guard to legacy). The pairs
+   (duplicate-surface §B): CvCity canTrain×2/canTrainInternal/canConstruct(+Internal)/canCreate/
+   canMaintain/canHurry(+Internal); CvPlayer canFound/canTrain/canConstruct(+Internal)/canCreate/
+   canMaintain/canEverResearch/canResearch/canDoCivics/canFoundReligion/canHurry; CvGame canEverResearch;
+   CvPlot canBuild (unlock half) + canTrain; canAcquirePromotion/isPromotionValid. The legacy gate CACHES
+   (m_bCanConstruct*, the canTrain cache) keep serving the LEGACY oracle only; the
+   CalculateAllBuildingValues PreLoop rides legacy until the enabler CUT (not the flip). Build → deploy →
+   the endpoint gate verdicts (`/computed/can*`) as the first read → owner verification turns.
 6. The standing gates before ANY demolition: the final adversarial StoneBase sweep + the self-containment
    audit (per-row state in code-cut-map PREREQ + the review doc). Owner-played verification window over
    the flipped plane precedes any deletion.
