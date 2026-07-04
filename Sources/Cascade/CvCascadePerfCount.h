@@ -19,6 +19,14 @@ struct CascadePerf
 	static int condEval;      // cascadeEvalCondition leaf evaluations
 	static int accRefresh;    // CascadeAccumulator component-refresh passes (dirty-triggered recomputes)
 	static int wbCompute;     // CascadeWellbeing::compute runs (the §2b channel -- automation-cost attribution)
+	// the flipped scalar getters (2026-07-04): read counts + refresh counts -- the unit-automation
+	// slowdown attribution (reads say how hot each getter is; refreshes say how often the slots re-dirty)
+	static int scGpBaseReads;
+	static int scGpModReads;
+	static int scDefReads;
+	static int scMaintReads;
+	static int scRefresh;     // ACCD_SCALAR refresh passes (the five-calculator recompute)
+	static int scSpecRefresh; // ACCD_SCALARSPEC refresh passes (the gpBase specialist term)
 
 	static double factsMs;        // stopwatch accumulators (PerfAccumTimer targets)
 	static double yieldRateMs;
@@ -31,6 +39,7 @@ struct CascadePerf
 	// wbComputeMs vs legacyWbMs).
 	static double legacyRateMs;
 	static double legacyWbMs;
+	static double scRefreshMs;    // the scalar refresh passes' wall clock (both bits)
 
 	static void reset();
 };

@@ -7195,9 +7195,10 @@ void CvCity::changeNumGreatPeople(int iChange)
 
 int CvCity::getBaseGreatPeopleRate() const
 {
-	// FLIPPED (#430, 2026-07-04, hook map proven): the cascade scalar slot IS the city base; the national
-	// rate stays a live input at the combine, mirroring the legacy composition exactly.
-	return std::max(0, CascadeAccumulator::scGpBase(this)) + GET_PLAYER(getOwner()).getNationalGreatPeopleRate();
+	// FLIP REVERTED (2026-07-04, same day): the ensure-protocol read on AI-hot paths ground unit automation
+	// (measured: getBuildingDefense alone 1.28M reads/turn) -- the re-flip needs the RAW-read + event-eager
+	// refresh shape (the turn-end-rebuild doctrine) first. The slots/nets/proof all stand.
+	return getBaseGreatPeopleRateLegacy();
 }
 
 int CvCity::getBaseGreatPeopleRateLegacy() const
@@ -7218,9 +7219,8 @@ int CvCity::getGreatPeopleRate() const
 
 int CvCity::getTotalGreatPeopleRateModifier() const
 {
-	// FLIPPED (#430, 2026-07-04): the slot carries the whole stack (100 + city/empire percents + SR + GA,
-	// max(0,·) applied by the calculator).
-	return CascadeAccumulator::scGpModifier(this);
+	// FLIP REVERTED (2026-07-04) -- see getBaseGreatPeopleRate.
+	return getTotalGreatPeopleRateModifierLegacy();
 }
 
 int CvCity::getTotalGreatPeopleRateModifierLegacy() const
@@ -7650,9 +7650,8 @@ int CvCity::getMaintenanceTimes100() const
 
 int CvCity::getEffectiveMaintenanceModifier() const
 {
-	// FLIPPED (#430, 2026-07-04): the slot carries the whole stack (city + player + area + connected).
-	// This repairs the AREA phantom by construction (the stored area accumulator has ZERO data sources).
-	return CascadeAccumulator::scMaintenanceModifier(this);
+	// FLIP REVERTED (2026-07-04) -- see getBaseGreatPeopleRate.
+	return getEffectiveMaintenanceModifierLegacy();
 }
 
 int CvCity::getEffectiveMaintenanceModifierLegacy() const
@@ -10008,9 +10007,8 @@ void CvCity::changeForeignTradeRouteModifier(int iChange)
 
 int CvCity::getBuildingDefense() const
 {
-	// FLIPPED (#430, 2026-07-04): the slot recomputes from data -- repairs the stored accumulator's drift
-	// (the +60 phantom class) by construction.
-	return CascadeAccumulator::scDefense(this);
+	// FLIP REVERTED (2026-07-04) -- see getBaseGreatPeopleRate. (The hottest path: 1.28M reads/turn measured.)
+	return getBuildingDefenseLegacy();
 }
 
 int CvCity::getBuildingDefenseLegacy() const

@@ -77,7 +77,9 @@ enum MdFld
 	MDF_GPB_S, MDF_GPB_C, MDF_GPM_S, MDF_GPM_C, MDF_DEF_S, MDF_DEF_C,              // [MODIFIER/scalar]: increment-F slot-vs-calc pairs
 	MDF_MNT_S, MDF_MNT_C, MDF_TRD_S, MDF_TRD_C,
 	MDF_TURNNO, MDF_TURNMS,                                                         // perf: game turn + flush-to-flush WALL time (the headline turn-time number, DEC-turn-time-is-king)
-	MDF_LRMS, MDF_LWBMS                                                             // perf: the LEGACY-side pair ms (vs yieldRateMs+commerceRateMs / wbComputeMs -- the pre-cut comparison)
+	MDF_LRMS, MDF_LWBMS,                                                            // perf: the LEGACY-side pair ms (vs yieldRateMs+commerceRateMs / wbComputeMs -- the pre-cut comparison)
+	MDF_SCGPB, MDF_SCGPM, MDF_SCDEF, MDF_SCMNT,                                     // perf: flipped scalar getter READ counts
+	MDF_SCREF, MDF_SCSREF, MDF_SCMS                                                 // perf: scalar refresh counts (SCALAR / SCALARSPEC) + refresh ms×10
 };
 static const char* mm_prefix(int evt)
 {
@@ -185,6 +187,13 @@ static const char* mm_field(int tag, SpineFieldType* peType)
 	case MDF_TURNMS:      return "turnMsX10";
 	case MDF_LRMS:        return "legacyRateMsX10";
 	case MDF_LWBMS:       return "legacyWbMsX10";
+	case MDF_SCGPB:       return "scGpBaseReads";
+	case MDF_SCGPM:       return "scGpModReads";
+	case MDF_SCDEF:       return "scDefReads";
+	case MDF_SCMNT:       return "scMaintReads";
+	case MDF_SCREF:       return "scRefresh";
+	case MDF_SCSREF:      return "scSpecRefresh";
+	case MDF_SCMS:        return "scRefreshMsX10";
 	case MDF_GPB_S:       return "gpBaseS";
 	case MDF_GPB_C:       return "gpBaseC";
 	case MDF_GPM_S:       return "gpModS";
@@ -644,6 +653,10 @@ void cvCascadeModifierShadow()
 	// time (the DEC-turn-time-is-king headline) + the legacy-side pair ms (the pre-cut comparison numbers)
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_PERF, 1)
 		.addI(MDF_TURNNO, GC.getGame().getGameTurn()).addI(MDF_TURNMS, iTurnMsX10)
-		.addI(MDF_LRMS, (int)(CascadePerf::legacyRateMs * 10.0)).addI(MDF_LWBMS, (int)(CascadePerf::legacyWbMs * 10.0)));
+		.addI(MDF_LRMS, (int)(CascadePerf::legacyRateMs * 10.0)).addI(MDF_LWBMS, (int)(CascadePerf::legacyWbMs * 10.0))
+		.addI(MDF_SCGPB, CascadePerf::scGpBaseReads).addI(MDF_SCGPM, CascadePerf::scGpModReads)
+		.addI(MDF_SCDEF, CascadePerf::scDefReads).addI(MDF_SCMNT, CascadePerf::scMaintReads)
+		.addI(MDF_SCREF, CascadePerf::scRefresh).addI(MDF_SCSREF, CascadePerf::scSpecRefresh)
+		.addI(MDF_SCMS, (int)(CascadePerf::scRefreshMs * 10.0)));
 	CascadePerf::reset();
 }

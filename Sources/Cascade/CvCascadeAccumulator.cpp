@@ -7,6 +7,7 @@
 #include "CvGameCoreDLL.h"
 #include "CvCascadeAccumulator.h"
 #include "CvCascadePerfCount.h"       // per-turn call counters (the [MODIFIER/perf] census)
+#include "AI/BetterBTSAI.h"           // PerfAccumTimer -- the scalar refresh stopwatch
 #include "CvCascadeYieldBasePackages.h"
 #include "CvCascadeBuildingPackage.h"
 #include "CvCascadePercentStack.h"
@@ -149,6 +150,8 @@ void CascadeAccumulator::refreshComponents(const CvCity* pCity, int iMask)
 	// building walks are rollup-cached per (player, epoch, turn) inside the calculators.
 	if (iMask & ACCD_SCALAR)
 	{
+		++CascadePerf::scRefresh;
+		PerfAccumTimer perfSc(CascadePerf::scRefreshMs);
 		st.iScGpBaseBld = CascadeScalarChannels::gpBaseBuildings(pCity, ec);
 		st.iScGpMod = CascadeScalarChannels::gpRateModifier(pCity, ec);
 		st.iScDefense = CascadeScalarChannels::defenseAmount(pCity, ec);
@@ -156,7 +159,11 @@ void CascadeAccumulator::refreshComponents(const CvCity* pCity, int iMask)
 		st.iScTradeRoutes = CascadeScalarChannels::tradeRouteCount(pCity, ec);
 	}
 	if (iMask & ACCD_SCALARSPEC)
+	{
+		++CascadePerf::scSpecRefresh;
+		PerfAccumTimer perfSc(CascadePerf::scRefreshMs);
 		st.iScGpBaseSpec = CascadeScalarChannels::gpBaseSpecialists(pCity, ec);
+	}
 }
 
 long CascadeAccumulator::yieldRate100(const CvCity* pCity, YieldTypes eY)
@@ -170,6 +177,7 @@ long CascadeAccumulator::yieldRate100(const CvCity* pCity, YieldTypes eY)
 int CascadeAccumulator::scGpBase(const CvCity* pCity)
 {
 	if (pCity == NULL) return 0;
+	++CascadePerf::scGpBaseReads;
 	acc_ensure(pCity, ACCD_SCALAR | ACCD_SCALARSPEC);
 	const CascadeRateSlots& st = pCity->m_cascadeRateSlots;
 	return st.iScGpBaseBld + st.iScGpBaseSpec;
@@ -178,6 +186,7 @@ int CascadeAccumulator::scGpBase(const CvCity* pCity)
 int CascadeAccumulator::scGpModifier(const CvCity* pCity)
 {
 	if (pCity == NULL) return 100;
+	++CascadePerf::scGpModReads;
 	acc_ensure(pCity, ACCD_SCALAR);
 	return pCity->m_cascadeRateSlots.iScGpMod;
 }
@@ -185,6 +194,7 @@ int CascadeAccumulator::scGpModifier(const CvCity* pCity)
 int CascadeAccumulator::scDefense(const CvCity* pCity)
 {
 	if (pCity == NULL) return 0;
+	++CascadePerf::scDefReads;
 	acc_ensure(pCity, ACCD_SCALAR);
 	return pCity->m_cascadeRateSlots.iScDefense;
 }
@@ -192,6 +202,7 @@ int CascadeAccumulator::scDefense(const CvCity* pCity)
 int CascadeAccumulator::scMaintenanceModifier(const CvCity* pCity)
 {
 	if (pCity == NULL) return 0;
+	++CascadePerf::scMaintReads;
 	acc_ensure(pCity, ACCD_SCALAR);
 	return pCity->m_cascadeRateSlots.iScMaintMod;
 }
