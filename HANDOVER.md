@@ -42,13 +42,20 @@
 3. The remaining review-doc dispositions: live-data suspects (L2 process→commerce stub, L6-L12), the
    **defense wiring** (ruled: all additive percents + the min floor — "so cities don't lose defense on
    flip"), NonStateReligionCommerce as the POLICY read, E4-E6 mixed-accumulator extractions.
-4. **Then Cut 1 step 1** (tradeRoutes): fold the CvGame vote store + city WB residue + INITIAL_TRADE_ROUTES
-   + the PROJECT_THE_INTERNET world walk (curated `tradeRoutes.world.flat:1`, cascade walks buildings only
-   — a confirmed miss); flip with `getTradeRoutesLegacy` oracle. The census-corrected shape: the vote class
-   lives on CvGame (already a clean persisted store); CvPlayer's accumulator is fully derivable; CvCity
-   extra = building feed + WB pokes.
-5. The standing gates before ANY demolition: the final adversarial StoneBase sweep + the self-containment
-   audit (per-row state in code-cut-map PREREQ + the review doc).
+4. ~~Cut 1 step 1 (tradeRoutes)~~ — ✅ **FLIPPED 2026-07-04 late (commit `f3dd883f9`; the owner's "rip the
+   bandaid, flip it all")**: the composition gained the vote-store/INITIAL live folds + the project world
+   grants (shared helpers feed the fresh oracle AND the packages — slot==oracle 6/6 live); flipped with
+   `getTradeRoutesLegacy` + de-tautologized endpoint leg. **THE WHOLE CITY VALUE PLANE NOW SERVES CASCADE.**
+   The vs-legacy residue is the PRE-NAMED mixed `m_iExtraTradeRoutes` class (cityExtraLeg 12-17 across
+   probes) — the verification window attributes it; the store split lands at the demolition.
+5. **THE REMAINING SERVING FLIP: the ENABLER plane** (the second half of "flip it all") — gates run legacy,
+   frontier shadows at parity since 2026-07-02. cutover.md ruling 5's prescribed pre-step still OPEN: the
+   Python-consumer build-list logging step (the owner may waive it under the bandaid ruling — ASK, do not
+   assume). Then: flip the gate bodies onto the frontier, legacy in-body as oracle, `[ENABLER/shadow]`
+   stays the net; the CalculateAllBuildingValues PreLoop rides until the enabler cut.
+6. The standing gates before ANY demolition: the final adversarial StoneBase sweep + the self-containment
+   audit (per-row state in code-cut-map PREREQ + the review doc). Owner-played verification window over
+   the flipped plane precedes any deletion.
 
 ## Operational gotchas (today's additions)
 

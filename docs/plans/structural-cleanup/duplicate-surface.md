@@ -25,11 +25,11 @@ sibling reads the still-maintained legacy accumulators (fed by the untouched `pr
 | 8 | maintenance mod | `getEffectiveMaintenanceModifier` | `getEffectiveMaintenanceModifierLegacy` | the city/player/area maintenance accumulators (the area one is pure phantom) | same |
 | 9 | buildRate ×3 | `getProductionModifier(Unit/Building/Project)` | `getProductionModifierLegacy` ×3 | the city+player unit/building/combat/domain/military/space production-modifier accumulators | the endpoint `buildRateCasc/Leg` + parts |
 
-**The one REVERSED pair on this plane:**
+**Row 10 FLIPPED 2026-07-04 ("rip the bandaid") — the plane is now WHOLLY cascade-serving:**
 
-| # | value | serving getter (LEGACY) | cascade shadow | blocker |
-|---|---|---|---|---|
-| 10 | trade routes | `getTradeRoutes` (`m_iTradeRoutes`/extra accumulators — mixes VOTE-granted routes) | `CascadeAccumulator::scTradeRoutes` + the endpoint twins | the vote-class mixed-accumulator split (the persisted-store precedent) — then it flips like the rest |
+| # | value | serving getter (cascade) | legacy oracle | legacy state behind it | net |
+|---|---|---|---|---|---|
+| 10 | trade routes | `getTradeRoutes` (`scTradeRoutes` + the live vote-store/INITIAL folds + the project world grants; legacy clamp at the getter) | `getTradeRoutesLegacy` | `CvGame::m_iTradeRoutes` (clean vote/WB store — folds as a raw input), `CvPlayer::m_iTradeRoutes` (fully derivable), `CvCity::m_iExtraTradeRoutes` (MIXED building+WB — its store split lands at the demolition; the NAMED residue class) | `[MODIFIER/scalar]` + the endpoint `tradeRoutesCasc/Leg/Slot` twins |
 
 **Dual state under the plane:**
 
