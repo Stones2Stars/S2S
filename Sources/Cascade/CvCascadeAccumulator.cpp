@@ -501,16 +501,31 @@ bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 	kPlayer.m_cascadePlayerScope.set.ensure(PSC_FRONT_PROMO);
 	const CascadePlayerScope& ps = kPlayer.m_cascadePlayerScope;
 
-	// the unit's OWN halves only (held promos + the unitcombat -- small); the player tech halves are
-	// membership-tested DIRECTLY below (per-call set copies were the measured promo-loop grind)
-	EnBucketSets cand, rem;
-	for (int pr = 0; pr < GC.getNumPromotionInfos(); ++pr)
-		if (pUnit->isHasPromotion((PromotionTypes)pr)) EnablerKernel::accumHave(InfoRepo<CvPromotionInfo>::get().get(pr), cand, rem);
+	// the per-UNIT halves MEMO (the promotion-TREE pattern: one unit × ~600 candidate promos per render;
+	// rebuilding the held-promo folds per candidate was the measured UI sluggishness, owner 2026-07-04).
+	// Signature = owner+id + held-set checksum + the unitcombat, refreshed by one cheap bool sweep; the
+	// accumHave folds run ONLY on signature change. Game-thread statics (the s_enablerRooted precedent).
+	static int s_uidOwner = -1, s_uidId = -1; static long s_sig = 0x7fffffff;
+	static std::set<int> s_uCand, s_uRem;
+	const int nPromo = GC.getNumPromotionInfos();
+	long sig = 0;
+	for (int pr = 0; pr < nPromo; ++pr)
+		if (pUnit->isHasPromotion((PromotionTypes)pr)) sig += (pr + 1) * 3 + 1;
 	const UnitCombatTypes eUC = pUnit->getUnitCombatType();
-	if (eUC != NO_UNITCOMBAT) EnablerKernel::accumHave(InfoRepo<CvUnitCombatInfo>::get().get((int)eUC), cand, rem);
-
-	const std::set<int>& uCand = cand["promotions"];
-	const std::set<int>& uRem = rem["promotions"];
+	sig = sig * 131 + (long)eUC * 7;
+	if ((int)pUnit->getOwner() != s_uidOwner || pUnit->getID() != s_uidId || sig != s_sig)
+	{
+		s_uidOwner = (int)pUnit->getOwner(); s_uidId = pUnit->getID(); s_sig = sig;
+		EnBucketSets cand, rem;
+		for (int pr = 0; pr < nPromo; ++pr)
+			if (pUnit->isHasPromotion((PromotionTypes)pr)) EnablerKernel::accumHave(InfoRepo<CvPromotionInfo>::get().get(pr), cand, rem);
+		if (eUC != NO_UNITCOMBAT) EnablerKernel::accumHave(InfoRepo<CvUnitCombatInfo>::get().get((int)eUC), cand, rem);
+		s_uCand.clear(); s_uRem.clear();
+		s_uCand.swap(cand["promotions"]);
+		s_uRem.swap(rem["promotions"]);
+	}
+	const std::set<int>& uCand = s_uCand;
+	const std::set<int>& uRem = s_uRem;
 	// a promo rooted in NO tech edge anywhere is ALWAYS-unlocked (the PALACE lesson for promotions)
 	static std::set<int> s_enablerRooted;
 	static bool s_rootedBuilt = false;
