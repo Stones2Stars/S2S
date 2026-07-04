@@ -189,10 +189,14 @@ attributable diff lines (never silent).
   `defenseSlot`/`maintModSlot`/`tradeRoutesSlot`) beside the fresh `*Casc` + legacy fields on
   `/computed/cities/wellbeing`. **Verified at load: SLOT==CASC 5/5 across probed cities**; the legacy diffs
   are the standing attributed classes only (defense drift / maintenance area phantom / tradeRoutes vote).
-  **Queued:** the `[MODIFIER/scalar]` freshness proof over real played turns (diverging=0 mod the ruled
-  cadence lag), THEN the getter flips (`getBaseGreatPeopleRate`+`getTotalGreatPeopleRateModifier`,
-  `getBuildingDefense`, `getEffectiveMaintenanceModifier`, `getTradeRoutes`) with `*Legacy` in-body oracles.
-  buildRate stays UN-slotted (item-keyed; its flip needs per-key rollup ledgers -- its own increment).
+  **✅ THE HOOK MAP IS PROVEN (2026-07-04, the increment-A method by owner ruling):** a transient
+  self-heal-off gate ran the scalar bits on pure hook+epoch-maintained state (turn-roll skipped for
+  ACCD_SCALAR*, the net reading via the ENSURING accessors -- non-tautological) through two owner-played
+  turns: `[MODIFIER/scalar] checked=22 diverging=0` BOTH turns, zero holes. The gate is removed (the net
+  back on raw reads; self-heal restored). **Queued:** the getter flips (`getBaseGreatPeopleRate`+
+  `getTotalGreatPeopleRateModifier`, `getBuildingDefense`, `getEffectiveMaintenanceModifier`,
+  `getTradeRoutes`) with `*Legacy` in-body oracles. buildRate stays UN-slotted (item-keyed; its flip needs
+  per-key rollup ledgers -- its own increment).
 
 ## Explicitly NOT this build
 

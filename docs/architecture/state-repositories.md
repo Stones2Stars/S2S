@@ -229,3 +229,8 @@ public:
   default** — the realized site is `CvGame::onFinalInitialized`'s cache warm-up block (every plot's yield cache
   — worker AI relies on them — + every city's accumulator slots); new derived caches join that block. No design
   ever serializes a derived value to save load time.
+  **⚖ GENERALIZED to the perf LAW (owner ruling 2026-07-04): "the name of any game in this town will always be
+  TURN TIMES — if game load takes 50% longer it matters nothing if we can shave 5-10-15% on turn time, because
+  there is only 1 game load, but many many many turns."** Turn time is the objective EVERY perf decision
+  optimizes; load time is the currency that pays for it. Ledgered as
+  [DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king).

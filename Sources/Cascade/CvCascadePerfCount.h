@@ -25,6 +25,12 @@ struct CascadePerf
 	static double pctStackMs;
 	static double commerceRateMs;
 	static double wbComputeMs;
+	// the LEGACY-side pair accumulators (owner 2026-07-04: capture what legacy is faster at BEFORE its cut --
+	// the comparison window closes when the legacy body is deleted): the *Legacy oracle calls in the shadow
+	// nets, timed beside the cascade-side numbers above (yieldRateMs+commerceRateMs vs legacyRateMs;
+	// wbComputeMs vs legacyWbMs).
+	static double legacyRateMs;
+	static double legacyWbMs;
 
 	static void reset();
 };

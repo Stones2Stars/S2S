@@ -28,7 +28,7 @@
 	<!-- Start paging out if memory exceeds this amount (in KB) -->
 	<Define>
 		<DefineName>MAX_DESIRED_MEMORY_USED</DefineName>
-		<iDefineIntVal>2000000</iDefineIntVal>
+		<iDefineIntVal>3500000</iDefineIntVal>
 	</Define>
 	<!-- Proactively page graphics out once this many plots are resident, instead of waiting
 		for MAX_DESIRED_MEMORY_USED. Lower = leaner memory, higher = bigger cache. Only ever

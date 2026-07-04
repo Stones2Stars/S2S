@@ -197,6 +197,12 @@ deferred data item forces downstream consumers to ASSUME its eventual shape (the
 complement of [DEC-mirror-then-redesign](#dec-mirror-then-redesign) (defer redesign, never data). **Home:**
 [validation.md](../specs/validation.md).
 
+### DEC-turn-time-is-king
+
+Turn time is the objective every performance decision optimizes; load time is the currency that pays for it
+("there is only 1 game load, but many many many turns" — a 50% longer load is nothing against 5-15% off turn
+time). **Home:** [state-repositories.md](state-repositories.md) §Refinements (the eager-warm-up bullet).
+
 ### DEC-unit-modifiers-on-top
 
 A modifier that TRAVELS with a unit (unit-sourced happiness, anger, property emission, any unit-carried channel

@@ -75,7 +75,9 @@ enum MdFld
 	MDF_GOOD_C, MDF_GOOD_L, MDF_BAD_C, MDF_BAD_L,
 	MDF_WBN, MDF_WBMS,                                                              // perf: wellbeing computes + ms×10
 	MDF_GPB_S, MDF_GPB_C, MDF_GPM_S, MDF_GPM_C, MDF_DEF_S, MDF_DEF_C,              // [MODIFIER/scalar]: increment-F slot-vs-calc pairs
-	MDF_MNT_S, MDF_MNT_C, MDF_TRD_S, MDF_TRD_C
+	MDF_MNT_S, MDF_MNT_C, MDF_TRD_S, MDF_TRD_C,
+	MDF_TURNNO, MDF_TURNMS,                                                         // perf: game turn + flush-to-flush WALL time (the headline turn-time number, DEC-turn-time-is-king)
+	MDF_LRMS, MDF_LWBMS                                                             // perf: the LEGACY-side pair ms (vs yieldRateMs+commerceRateMs / wbComputeMs -- the pre-cut comparison)
 };
 static const char* mm_prefix(int evt)
 {
@@ -179,6 +181,10 @@ static const char* mm_field(int tag, SpineFieldType* peType)
 	case MDF_BAD_L:       return "badL";
 	case MDF_WBN:         return "wbN";
 	case MDF_WBMS:        return "wbMsX10";
+	case MDF_TURNNO:      return "turn";
+	case MDF_TURNMS:      return "turnMsX10";
+	case MDF_LRMS:        return "legacyRateMsX10";
+	case MDF_LWBMS:       return "legacyWbMsX10";
 	case MDF_GPB_S:       return "gpBaseS";
 	case MDF_GPB_C:       return "gpBaseC";
 	case MDF_GPM_S:       return "gpModS";
@@ -340,7 +346,11 @@ void cvCascadeModifierShadow()
 						.addStr(MDF_SAMPLE, sSample.c_str()));
 				}
 				const long cascRate = YieldRate::yieldRate100(aszChannel[y], eY, pCity, rec);
-				const int legRate = pCity->getYieldRate100Legacy(eY);   // post-flip: the getter returns the SLOT; the Legacy sibling is the oracle
+				int legRate;
+				{
+					PerfAccumTimer perfLeg(CascadePerf::legacyRateMs);   // the cascade-vs-legacy pair timing (pre-cut window)
+					legRate = pCity->getYieldRate100Legacy(eY);   // post-flip: the getter returns the SLOT; the Legacy sibling is the oracle
+				}
 				// [SLOT] -- the ACCUMULATOR (modifier-substrate.md) vs the fresh CALCULATOR (its oracle): a
 				// divergence names a dirty-mapping hole (an event the coarse hooks missed this turn).
 				{
@@ -469,7 +479,11 @@ void cvCascadeModifierShadow()
 				++iCChecked;
 				const CommerceTypes eC = (CommerceTypes)cc;
 				const long cascC = CommerceCalc::commerceRate100(CommerceCalc::channel(cc), eC, pCity, cec, yc100, prate);
-				const int legC = pCity->getCommerceRateTimes100Legacy(eC);   // post-flip: the Legacy sibling is the oracle (see the yield leg)
+				int legC;
+				{
+					PerfAccumTimer perfLeg(CascadePerf::legacyRateMs);   // the pair timing (see the yield leg)
+					legC = pCity->getCommerceRateTimes100Legacy(eC);   // post-flip: the Legacy sibling is the oracle (see the yield leg)
+				}
 				// [SLOT] commerce leg -- the accumulator's C_RATE vs the fresh calculator (its oracle)
 				{
 					++iSlotChecked;
@@ -535,10 +549,14 @@ void cvCascadeModifierShadow()
 				// vs the LEGACY siblings (post-flip the plain getters ARE the cascade; Legacy is the net oracle)
 				const int iCascHappy = CascadeAccumulator::wellbeing(pCity, 0);
 				const int iCascUnhappy = CascadeAccumulator::wellbeing(pCity, 1);
-				const int iLegHappy = pCity->happyLevelLegacy();
-				const int iLegUnhappy = pCity->unhappyLevelLegacy();
-				const int iLegGood = pCity->goodHealthLegacy();
-				const int iLegBad = pCity->badHealthLegacy();
+				int iLegHappy, iLegUnhappy, iLegGood, iLegBad;
+				{
+					PerfAccumTimer perfLeg(CascadePerf::legacyWbMs);   // the wb pair timing (vs wbComputeMs -- pre-cut window)
+					iLegHappy = pCity->happyLevelLegacy();
+					iLegUnhappy = pCity->unhappyLevelLegacy();
+					iLegGood = pCity->goodHealthLegacy();
+					iLegBad = pCity->badHealthLegacy();
+				}
 				if (iCascHappy != iLegHappy || iCascUnhappy != iLegUnhappy || wv.iGood != iLegGood || wv.iBad != iLegBad)
 				{
 					++iWbDiverging;
@@ -555,9 +573,9 @@ void cvCascadeModifierShadow()
 				}
 			}
 			// [MODIFIER/scalar] -- the increment-F scalar slots vs their fresh calculators (the same wired ctx).
-			// RAW slot reads (never the ensuring accessors -- that would recompute next to its own oracle, the
-			// tautological-0 trap increment A caught): a diff = a dirty-mapping hole in the hooked components,
-			// modulo the ruled end-turn cadence lag. Must read diverging=0 (mod the lag) before any scalar flip.
+			// RAW slot reads (the ensuring read next to the turn-stamp would be the tautological-0 trap
+			// increment A caught): the number measures within-turn staleness. The HOOK MAP itself was PROVEN
+			// 2026-07-04 (a transient self-heal-off gate + ensured reads over owner-played turns: diverging=0).
 			{
 				++iScChecked;
 				const int cGpBase = CascadeScalarChannels::gpRateBase(pCity, cec);
@@ -602,6 +620,18 @@ void cvCascadeModifierShadow()
 	// [MODIFIER/perf] -- the repeat-calc hunt (owner 2026-07-02: chase the needless repeat calcs BEFORE parity).
 	// Whole-turn call counts + our stopwatch accumulators (PerfAccumTimer; ms x10 as ints -- the spine carries ints).
 	// Counts cover EVERYTHING since the last flush (the full turn incl. the enabler sweep + getter instrument).
+	// turnMsX10 = the flush-to-flush WALL time -- the whole previous turn incl. AI/engine/UI between the doTurn
+	// tops: THE headline number (DEC-turn-time-is-king). 0 on the first flush after load (no prior flush).
+	int iTurnMsX10 = 0;
+	{
+		static LARGE_INTEGER s_lastPerfFlush = { 0 };
+		LARGE_INTEGER now, freq;
+		QueryPerformanceCounter(&now);
+		QueryPerformanceFrequency(&freq);
+		if (s_lastPerfFlush.QuadPart != 0 && freq.QuadPart != 0)
+			iTurnMsX10 = (int)((now.QuadPart - s_lastPerfFlush.QuadPart) * 10000 / freq.QuadPart);
+		s_lastPerfFlush = now;
+	}
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_PERF, 1)
 		.addI(MDF_FACTS, CascadePerf::facts).addI(MDF_FACTSHIT, CascadePerf::factsMemoHit)
 		.addI(MDF_YRN, CascadePerf::yieldRate).addI(MDF_PSN, CascadePerf::pctStack)
@@ -610,5 +640,10 @@ void cvCascadeModifierShadow()
 		.addI(MDF_FACTSMS, (int)(CascadePerf::factsMs * 10.0)).addI(MDF_YRMS, (int)(CascadePerf::yieldRateMs * 10.0))
 		.addI(MDF_PSMS, (int)(CascadePerf::pctStackMs * 10.0)).addI(MDF_CRMS, (int)(CascadePerf::commerceRateMs * 10.0))
 		.addI(MDF_WBN, CascadePerf::wbCompute).addI(MDF_WBMS, (int)(CascadePerf::wbComputeMs * 10.0)));
+	// the second perf line (the spine caps an event at 16 fields): the game turn + the flush-to-flush WALL
+	// time (the DEC-turn-time-is-king headline) + the legacy-side pair ms (the pre-cut comparison numbers)
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_PERF, 1)
+		.addI(MDF_TURNNO, GC.getGame().getGameTurn()).addI(MDF_TURNMS, iTurnMsX10)
+		.addI(MDF_LRMS, (int)(CascadePerf::legacyRateMs * 10.0)).addI(MDF_LWBMS, (int)(CascadePerf::legacyWbMs * 10.0)));
 	CascadePerf::reset();
 }

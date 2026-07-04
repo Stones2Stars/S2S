@@ -90,6 +90,8 @@ static void acc_ensure(const CvCity* pCity, int iWantMask)
 	const int iEpoch = CascadeAccumulator::epochFor(pCity->getOwner());
 	if (st.iEpoch != iEpoch || st.iTurn != iTurn)
 	{
+		// (The scalar hook map was PROVEN 2026-07-04 by the increment-A method -- a transient gate ran the
+		// scalar bits on pure hook+epoch state, ensured reads, through owner-played turns: diverging=0.)
 		st.iEpoch = iEpoch;
 		st.iTurn = iTurn;
 		st.set.markAllDirty();

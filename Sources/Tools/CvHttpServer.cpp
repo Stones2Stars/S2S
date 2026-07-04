@@ -1646,6 +1646,9 @@ namespace
 		{
 			CvGame& kG = GC.getGame(); // getGameTurn() is non-const
 			o["turn"] = picojson::value((double)kG.getGameTurn());
+			// the run key any external recorder needs (CvGame::getGameId, stamped at game creation -- the
+			// GameTracker/StoneBase per-game data-folder convention; was lost with the retired /players endpoint)
+			o["gameId"] = picojson::value(std::string(kG.getGameId().GetCString()));
 			o["elapsedTurns"] = picojson::value((double)kG.getElapsedGameTurns());
 			o["maxTurns"] = picojson::value((double)kG.getMaxTurns());
 			o["gameState"] = picojson::value((double)(int)kG.getGameState()); // 0 ON, 1 OVER, 2 EXTENDED
