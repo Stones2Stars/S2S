@@ -42,8 +42,9 @@ public:
 	// (curate_trait YieldChanges). x1. (Active set option-gated + PURE_TRAITS via sumTrait/traitData.)
 	static int freeCity(const std::string& channel, const CvPlayer& player, const CvCascadeEvalCtx& ec);
 
-	// BASE: golden-age yield/commerce (GoldenAgePackage) -- the trait goldenAge member ({ch}.empire.goldenAge.flat) on the
-	// active trait set while in a golden age, clamped at 0. x1. (Active set option-gated + PURE_TRAITS via sumTrait/traitData.)
+	// BASE: the golden-age trait member, UNGATED (the scope-package fill; the isGoldenAge gate is live at read).
+	static int goldenAgeUngated(const std::string& channel, const CvPlayer& player, const CvCascadeEvalCtx& ec);
+	// BASE: golden-age yield/commerce (GoldenAgePackage) -- the gated realization (ungated × live gate, max(0,·)).
 	static int goldenAge(const std::string& channel, const CvPlayer& player, const CvCascadeEvalCtx& ec);
 
 	// BASE: specialist yields (SpecialistPackage / calc-map §1.5) -- Σ over the city's assigned+typed-free specialists of

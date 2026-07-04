@@ -36,17 +36,15 @@
   }
  },
  "happiness": {
-  "city": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": "BUILDING_ART_GALLERY"
+  "empire": {
+   "buildings": {
+    "BUILDING_ART_GALLERY": {
+     "flat": 1
     },
-    {
-     "value": 1,
-     "enabled": "BUILDING_ART_PATRONAGE"
+    "BUILDING_ART_PATRONAGE": {
+     "flat": 1
     }
-   ]
+   }
   }
  },
  "greatPeopleRate": {

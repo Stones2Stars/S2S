@@ -46,13 +46,12 @@
   }
  },
  "happiness": {
-  "city": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": "BUILDING_OPERA_HOUSE"
+  "empire": {
+   "buildings": {
+    "BUILDING_OPERA_HOUSE": {
+     "flat": 1
     }
-   ]
+   }
   }
  },
  "greatPeopleRate": {

@@ -48,17 +48,15 @@
   }
  },
  "happiness": {
-  "city": {
-   "flat": [
-    {
-     "value": 2,
-     "enabled": "BUILDING_RAILROAD_STATION"
+  "empire": {
+   "buildings": {
+    "BUILDING_RAILROAD_STATION": {
+     "flat": 2
     },
-    {
-     "value": 2,
-     "enabled": "BUILDING_TELEPORT_BOOTH"
+    "BUILDING_TELEPORT_BOOTH": {
+     "flat": 2
     }
-   ]
+   }
   }
  },
  "greatPeopleRate": {

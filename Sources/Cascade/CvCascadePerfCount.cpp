@@ -29,6 +29,8 @@ int CascadePerf::scDefReads = 0;
 int CascadePerf::scMaintReads = 0;
 int CascadePerf::scRefresh = 0;
 int CascadePerf::scSpecRefresh = 0;
+int CascadePerf::autoMissions = 0;
+double CascadePerf::autoMissionMs = 0.0;
 
 void CascadePerf::reset()
 {
@@ -39,4 +41,5 @@ void CascadePerf::reset()
 	wbComputeMs = 0.0;
 	legacyRateMs = 0.0; legacyWbMs = 0.0;
 	scRefreshMs = 0.0;
+	autoMissions = 0; autoMissionMs = 0.0;
 }

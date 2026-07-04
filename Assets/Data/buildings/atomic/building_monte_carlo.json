@@ -80,13 +80,12 @@
   }
  },
  "happiness": {
-  "city": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": "BUILDING_CASINO"
+  "empire": {
+   "buildings": {
+    "BUILDING_CASINO": {
+     "flat": 1
     }
-   ]
+   }
   }
  },
  "greatPeopleRate": {

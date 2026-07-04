@@ -205,7 +205,31 @@ attributable diff lines (never silent).
   precedent, before its flip can be lossless); buildRate stays UN-slotted (item-keyed; its flip needs
   per-key rollup ledgers).
 
-- **H — the SCOPE-PRINCIPLE rebuild (2026-07-04, IN FLIGHT — owner rulings, the cascade's founding shape).**
+- **I — the SCOPE-PACKAGES landing (2026-07-04): the WHOLE structure in ONE landing (no increments — the
+  owner's build law: increments on a scope/yield chase parity without a critical element).** The full
+  [scope-packages.md](scope-packages.md) design landed at once: `CascadeCityPackages` (city-only sums, one
+  package per field, flat/percent separate) + `CascadePlayerScope` on CvPlayer + `CascadeWorldScope` on
+  CvGame, all on `CvDerivedCacheSet`; the fills ride single-source component splits added to the Calc
+  modules (`PercentStack::cityPercent/empirePercent/areaPercentByArea`, `YieldBasePackages::goldenAgeUngated`,
+  `CommerceCalc::baseOwn100/stateReligionPool/stateReligionMatch/buildingKeyedLedger`,
+  `CascadeWellbeing::gatherCityTerms/playerAreaEmpire/assemble` [ONE verdict assembly, pure over inputs],
+  `CascadeScalarChannels::gpModifierCity/maintenanceModifierCity/tradeRoutesCity/fillPlayerScalars/
+  fillBuildRate{City,Player}`); reads are bare fetches + the channel combine with LIVE gates (SR/coastal/
+  conn/GA/slider/disorder/military); the epochs + `CvCascadePlayerStamp` + the facts/slot stamps + the
+  read-side ensure protocol + `s_wbRollup`/`ScPlayerRollup` are DELETED; events mark
+  (`buildingProcessed` = conservative city + DERIVED cross-scope masks; `markPlayerScopeAndCities` at the
+  three player-event sites); the boundaries are `playerSliceRebuild` (doTurn top) + `worldRebuild`
+  (CvGame::doTurn) + the load warm-up (the same ensure run eagerly). FLIPPED in the landing: gpBase/gpMod/
+  defense/maintenance re-flips + ALL THREE `getProductionModifier` overloads (buildRate, per-key ledgers on
+  compiled ints) — each with its `*Legacy` net oracle; tradeRoutes' getter alone stays legacy (the vote
+  split, its own item). **Verified on load (Assert + Release clean first compile; save loads whole through
+  the full warm-up):** scalar packages EXACT vs the fresh oracles (0/52×5), buildRate totals casc==leg
+  (52/52; a reader part-sum overlap briefly masqueraded as 5 diffs — brPlayerGenericLeg contains the
+  military part), wellbeing casc-vs-leg = the two documented accepted classes at increment-D magnitudes.
+  **Queued: the owner-played turn proof** (nets + census + the automation feel).
+
+- **H — the SCOPE-PRINCIPLE rebuild (2026-07-04, SUPERSEDED by increment I before landing — the partial
+  surgery was reset; the owner ruled the design be stated whole first, then built whole).**
   The rulings, all same-day: a `CvDerivedCache` on EVERY scoped item, LIVING ON the object it caches for;
   ONE freshness philosophy (events mark, the cache knows — the epochs + `CvCascadePlayerStamp` polling
   DELETE); every scope holds ONLY its own scope's sums in ONE uniform package format; **the only live

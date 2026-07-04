@@ -255,11 +255,10 @@ int YieldBasePackages::freeCity(const std::string& channel, const CvPlayer& play
 	return sum;
 }
 
-// BASE: golden-age yield/commerce (GoldenAgePackage) -- the trait goldenAge member ({ch}.empire.goldenAge.flat) on the
-// active trait set while in a golden age, clamped at 0. x1. (Active set option-gated + PURE_TRAITS via sumTrait/traitData.)
-int YieldBasePackages::goldenAge(const std::string& channel, const CvPlayer& player, const CvCascadeEvalCtx& ec)
+// BASE: the golden-age trait member ({ch}.empire.goldenAge.flat), UNGATED -- the scope-package fill stores
+// this and the isGoldenAge gate applies LIVE at read (a GA flip invalidates nothing flat-side). x1.
+int YieldBasePackages::goldenAgeUngated(const std::string& channel, const CvPlayer& player, const CvCascadeEvalCtx& ec)
 {
-	if (!player.isGoldenAge()) return 0;
 	const std::string wantGA = channel + ".empire.goldenAge";
 	int sum = 0;
 	for (int t = 0; t < GC.getNumTraitInfos(); ++t)
@@ -267,7 +266,15 @@ int YieldBasePackages::goldenAge(const std::string& channel, const CvPlayer& pla
 		if (!player.hasTrait((TraitTypes)t)) continue;
 		sum += MMKernel::sumTrait(MMKernel::traitData(t), wantGA, "flat", ec);
 	}
-	return std::max(0, sum);
+	return sum;
+}
+
+// BASE: golden-age yield/commerce (GoldenAgePackage) -- the gated realization (the oracle/calculator shape):
+// the ungated member sum × the live gate, clamped at 0.
+int YieldBasePackages::goldenAge(const std::string& channel, const CvPlayer& player, const CvCascadeEvalCtx& ec)
+{
+	if (!player.isGoldenAge()) return 0;
+	return std::max(0, goldenAgeUngated(channel, player, ec));
 }
 
 // BASE: specialist yields (SpecialistPackage / calc-map §1.5) -- Σ over the city's assigned+typed-free specialists of

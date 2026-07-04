@@ -55,29 +55,24 @@
   }
  },
  "happiness": {
-  "city": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": "BUILDING_BROADCAST_TOWER"
+  "empire": {
+   "buildings": {
+    "BUILDING_BROADCAST_TOWER": {
+     "flat": 1
     },
-    {
-     "value": 1,
-     "enabled": "BUILDING_COMMUNICATION_TOWER"
+    "BUILDING_COMMUNICATION_TOWER": {
+     "flat": 1
     },
-    {
-     "value": 1,
-     "enabled": "BUILDING_NETWORK_NODE"
+    "BUILDING_NETWORK_NODE": {
+     "flat": 1
     },
-    {
-     "value": 1,
-     "enabled": "BUILDING_HOCKEY_RINK"
+    "BUILDING_HOCKEY_RINK": {
+     "flat": 1
     },
-    {
-     "value": 1,
-     "enabled": "BUILDING_ATHLETIC_MEGACOMPLEX"
+    "BUILDING_ATHLETIC_MEGACOMPLEX": {
+     "flat": 1
     }
-   ]
+   }
   }
  },
  "greatPeopleRate": {

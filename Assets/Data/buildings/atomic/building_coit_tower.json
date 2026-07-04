@@ -55,25 +55,21 @@
   }
  },
  "happiness": {
-  "city": {
-   "flat": [
-    {
-     "value": 1,
-     "enabled": "BUILDING_FIRE_BRIGADE"
+  "empire": {
+   "buildings": {
+    "BUILDING_FIRE_BRIGADE": {
+     "flat": 1
     },
-    {
-     "value": 1,
-     "enabled": "BUILDING_FIRE_STATION"
+    "BUILDING_FIRE_STATION": {
+     "flat": 1
     },
-    {
-     "value": 1,
-     "enabled": "BUILDING_FIRE_HANGAR"
+    "BUILDING_FIRE_HANGAR": {
+     "flat": 1
     },
-    {
-     "value": 1,
-     "enabled": "BUILDING_FIRE_DOCK"
+    "BUILDING_FIRE_DOCK": {
+     "flat": 1
     }
-   ]
+   }
   }
  },
  "greatPeopleRate": {

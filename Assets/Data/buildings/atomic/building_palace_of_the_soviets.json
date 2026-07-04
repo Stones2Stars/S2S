@@ -35,25 +35,21 @@
   }
  },
  "happiness": {
-  "city": {
-   "flat": [
-    {
-     "value": 2,
-     "enabled": "BUILDING_SOCIAL_JUSTICE_ORGANIZATION"
+  "empire": {
+   "buildings": {
+    "BUILDING_SOCIAL_JUSTICE_ORGANIZATION": {
+     "flat": 2
     },
-    {
-     "value": 1,
-     "enabled": "BUILDING_WELFARE_OFFICE"
+    "BUILDING_WELFARE_OFFICE": {
+     "flat": 1
     },
-    {
-     "value": 1,
-     "enabled": "BUILDING_PLANNING_OFFICE"
+    "BUILDING_PLANNING_OFFICE": {
+     "flat": 1
     },
-    {
-     "value": 1,
-     "enabled": "BUILDING_CHURCH_OF_THE_STATE"
+    "BUILDING_CHURCH_OF_THE_STATE": {
+     "flat": 1
     }
-   ]
+   }
   }
  },
  "maintenance": {

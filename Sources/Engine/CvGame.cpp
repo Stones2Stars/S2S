@@ -629,9 +629,9 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	// static data is populated once, at the same load point as the XML, regardless of logging (validation.md cadence).
 	cascadeRegisterConsumers();
 
-	// #430 EAGER CACHE WARM-UP (owner ruling 2026-07-03: "hide that cost in game load" -- a longer load for
-	// better perceived turn time is an easy trade). Build every plot's yield cache NOW (worker AI relies on
-	// them) + every city's accumulator slots, so turn 1 runs warm instead of paying the lazy first-fill.
+	// #430 EAGER CACHE WARM-UP (the load boundary IS the same ensure run eagerly -- scope-packages.md; a
+	// longer load for better turn time is an easy trade). Every plot cache + every scope's packages build
+	// NOW, so turn 1 runs warm instead of paying the lazy first-fill.
 	{
 		PROFILE("CvGame::onFinalInitialized.cacheWarmup");
 		for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
@@ -640,15 +640,9 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		}
 		for (int iI = 0; iI < MAX_PLAYERS; iI++)
 		{
-			CvPlayer& kWarmP = GET_PLAYER((PlayerTypes)iI);
-			if (!kWarmP.isAlive()) continue;
-			foreach_(CvCity* pWarmCity, kWarmP.cities())
-			{
-				for (int y = 0; y < NUM_YIELD_TYPES; ++y) pWarmCity->getYieldRate100((YieldTypes)y);
-				for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) pWarmCity->getCommerceRateTimes100((CommerceTypes)c);
-				CascadeAccumulator::scGpBase(pWarmCity);   // ensures ACCD_SCALAR + ACCD_SCALARSPEC -> fills all six scalar slots
-			}
+			CascadeAccumulator::playerSliceRebuild((PlayerTypes)iI);   // facts + city + player packages, ensured
 		}
+		CascadeAccumulator::worldRebuild();
 	}
 
 	OutputDebugString("onFinalInitialized: End\n");
@@ -917,11 +911,20 @@ CvString create_game_id()
 }
 
 
+// #430: the CacheSet's refresh delegate -- the package math lives module-side (CascadeAccumulator).
+void CvGame::cascadeRefreshWorldScope(int iMask) const
+{
+	CascadeAccumulator::refreshWorldScope(this, iMask);
+}
+
 // Initializes data members that are serialized.
 void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 {
 	PROFILE_EXTRA_FUNC();
 	m_dataRepository.reset();
+	// #430: (re)bind + stale-mark the world packages (bind is idempotent; reset runs from the ctor path too)
+	m_cascadeWorldScope.set.bind(this, &CvGame::cascadeRefreshWorldScope);
+	m_cascadeWorldScope.set.markAllDirty();
 	CvPlotPaging::ResetPaging();
 
 	// Toffer - bStartingGameSession is true when starting any new game or when loading any save,
@@ -5844,6 +5847,10 @@ void CvGame::addGreatPersonBornName(const CvWString& szName)
 void CvGame::doTurn()
 {
 	PROFILE_BEGIN("CvGame::doTurn()",DOTURN1);
+
+	// #430 the WORLD boundary: re-mark + ensure the world packages once per game turn (the self-heal for the
+	// world-scope sums; the building-derived marks cover the in-turn changes).
+	CascadeAccumulator::worldRebuild();
 
 	// #430 shadow cascade (self-test / readJson slice / placement / dormancy / modifier / state-log) REMOVED --
 	// it was the initial prototype, built on the botched AND-of-ORs predicates; pure shadow over the live engine,

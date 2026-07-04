@@ -6,6 +6,7 @@
 #define CIV4_GAME_H
 
 #include "CvDeal.h"
+#include "Cascade/CvCascadeScopePackages.h"   // CascadeWorldScope -- the #430 world scope packages (m_cascadeWorldScope)
 #include "Tools/CvRandom.h"
 #include "CvGameObject.h"
 #include "CvProperties.h"
@@ -40,6 +41,11 @@ public:
 	DllExport void reset(HandicapTypes eHandicap, bool bConstructorCall = false);
 
 	CvGameObjectGame* getGameObject() {return &m_GameObject;};
+
+	// #430: the WORLD scope packages (scope-packages.md) -- a MUTABLE derived cache holding the world-scope
+	// sums (never serialized; all-dirty from birth). The CascadeAccumulator module is the query surface.
+	mutable CascadeWorldScope m_cascadeWorldScope;
+	void cascadeRefreshWorldScope(int iMask) const;   // the CacheSet's refresh delegate -> CascadeAccumulator::refreshWorldScope
 
 	//	Game-level derived-data repository (see CvDerivedData.h). Game-state-derived data; empty for now.
 	CvGameDataRepository&       dataRepository()       { return m_dataRepository; }

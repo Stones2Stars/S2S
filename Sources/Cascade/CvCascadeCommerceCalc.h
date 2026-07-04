@@ -18,6 +18,7 @@
 
 #include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx -- the eval target for deposit conditions
 #include <string>
+#include <map>
 
 class CvCity;
 class CvPlayer;
@@ -68,6 +69,18 @@ public:
 	// building-commerce block/playerExtra) as ONE plugin number (owner 2026-07-03: isolate the packages; the
 	// accumulator stores this standing, the assembler below derives it fresh).
 	static long baseExtra100(const std::string& channel, const CvCity* pCity, const CvCascadeEvalCtx& ec);
+
+	// ===== the SCOPED HALVES (the scope-package fills ride these) =====
+	// The CITY-ONLY base terms ×100: religion + corporation + building-own + shrine + corpHQ + doubleTime
+	// (baseExtra100 MINUS the player-scope goldenAge/playerExtra and the keyed realization).
+	static long baseOwn100(const std::string& channel, const CvCity* pCity, const CvCascadeEvalCtx& ec);
+	// The state-religion POOL (player-scope: Σ owned building TYPES' count × config) -- × the city match at read.
+	static long stateReligionPool(const std::string& channel, const CvPlayer& player);
+	// The city's SR MATCH count (active buildings whose religion == the state religion).
+	static int stateReligionMatch(const CvCity* pCity, const CvCascadeEvalCtx& ec);
+	// The buildingKeyed GRANTOR LEDGER (player-scope): targetFk -> Σ count(G) × G's {ch}.empire.buildings.{B}.flat (×100).
+	static void buildingKeyedLedger(const std::string& channel, const CvPlayer& player, const CvCascadeEvalCtx& ec,
+		std::map<int, long>& out);
 
 	// The CombineSplit KERNEL (CvCity:11969-11996, bit-exact): slider split of the commerce yield + the capped
 	// baseExtra, × the commerce percent stack, + Process (0, TODO), clamps/sentinels; disorder -> 0. The slider

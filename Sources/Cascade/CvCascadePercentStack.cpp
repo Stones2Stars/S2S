@@ -21,7 +21,9 @@
 #include "AI/CvTeamAI.h"              // GET_TEAM
 #include "CvCascadeConditionEval.h"    // CvCascadeEvalCtx + cascadeIsBuildingActive
 #include "CvCascadeEnablerKernel.h"    // EnablerKernel::wireFacts (the standing cascade active set + vicinity provides)
+#include "CvCascadeCityFacts.h"        // CascadeCityFacts -- the areaPercentByArea player-city walk
 #include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (the candidate prefilter)
+#include "Engine/CvArea.h"             // area()->getID() -- the area-map grouping
 #include <map>
 #include <vector>
 
@@ -55,6 +57,14 @@ static const std::vector<int>& ps_channelCands(int chanId, int segCity, int segA
 		it = s_cands.insert(std::make_pair(chanId, cands)).first;
 	}
 	return it->second;
+}
+
+// The CITY-REALIZED whole stack (see the header): the percentStack walk, returned as the raw Σ (the bucket
+// sum -- percentStack's return is max(0, 100 + this)). ONE walk, two entry points.
+long PercentStack::cityRealizedPercent(const std::string& channel, const CvCity* pCity, MMBreak& bk)
+{
+	percentStack(channel, pCity, bk);
+	return (long)bk.bCity + bk.bArea + bk.bEmpire + bk.civic + bk.trait;
 }
 
 // The percent stack for one channel at one city: max(0, 100 + Σ percent) over active city buildings (city+area),

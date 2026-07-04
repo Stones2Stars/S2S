@@ -1,0 +1,81 @@
+# The duplicate surface — every legacy↔cascade pair running today (#430)
+
+> **What this is:** the verified INDEX of the shadow-phase duplication — every value currently computed by
+> BOTH the legacy engine and the cascade, which side SERVES the game, the net that diffs them, and where each
+> pair dies ([code-cut-map.md](code-cut-map.md) owns the cut rows). The duplication is the ONE sanctioned
+> double ([patterns.md](../../architecture/patterns.md) rule 7) with a defined death at each plane's cut.
+> Line numbers drift — confirm the named function/member, not the integer.
+> Swept from the live tree 2026-07-04 (post the scope-packages landing).
+
+## A. The CITY MODIFIER plane — CASCADE SERVES, legacy maintains itself as the oracle
+
+Every getter below returns the package composition (`CascadeAccumulator`, `Sources/Cascade/`); its `*Legacy`
+sibling reads the still-maintained legacy accumulators (fed by the untouched `process*` apply-loops in
+`CvCity.cpp`/`CvPlayer.cpp`/`CvTeam.cpp`); the nets diff them per turn. All in `Sources/Engine/CvCity.{h,cpp}`.
+
+| # | value | serving getter (cascade) | legacy oracle | legacy state behind it | net |
+|---|---|---|---|---|---|
+| 1 | yield rates | `getYieldRate100` | `getYieldRate100Legacy` | `m_aiYieldRateModifier`, `m_aiExtraYield`, `getBaseYieldRate` chain | `[GETTER]` + `[MODIFIER/rate]` + `[MODIFIER/slot]` |
+| 2 | commerce rates | `getCommerceRateTimes100` | `getCommerceRateTimes100Legacy` | `m_aiCommerceRate`, `m_aiCommerceRateModifier`, the building-commerce chain (incl. the recompute-from-source `m_ppiBuildingCommerceChange` + the persisted `m_aBuildingCommerceChangeEvents`) | same |
+| 3 | happiness ×2 | `happyLevel` / `unhappyLevel` | `happyLevelLegacy` / `unhappyLevelLegacy` | the stored wb accumulators (`m_iBonusGood/BadHappiness`, `m_iBuildingGood/BadHappiness`, `m_paiStateReligionHappiness`, …) | `[MODIFIER/wellbeing]` |
+| 4 | health ×2 | `goodHealth` / `badHealth` | `goodHealthLegacy` / `badHealthLegacy` | the health twins of #3 | same |
+| 5 | GP base | `getBaseGreatPeopleRate` | `getBaseGreatPeopleRateLegacy` | `m_iBaseGreatPeopleRate` | `[MODIFIER/scalar]` + the endpoint slot twins |
+| 6 | GP modifier | `getTotalGreatPeopleRateModifier` | `getTotalGreatPeopleRateModifierLegacy` | `m_iGreatPeopleRateModifier` + the player twin | same |
+| 7 | building defense | `getBuildingDefense` | `getBuildingDefenseLegacy` | `m_iBuildingDefense` (carries the documented drift) | same |
+| 8 | maintenance mod | `getEffectiveMaintenanceModifier` | `getEffectiveMaintenanceModifierLegacy` | the city/player/area maintenance accumulators (the area one is pure phantom) | same |
+| 9 | buildRate ×3 | `getProductionModifier(Unit/Building/Project)` | `getProductionModifierLegacy` ×3 | the city+player unit/building/combat/domain/military/space production-modifier accumulators | the endpoint `buildRateCasc/Leg` + parts |
+
+**The one REVERSED pair on this plane:**
+
+| # | value | serving getter (LEGACY) | cascade shadow | blocker |
+|---|---|---|---|---|
+| 10 | trade routes | `getTradeRoutes` (`m_iTradeRoutes`/extra accumulators — mixes VOTE-granted routes) | `CascadeAccumulator::scTradeRoutes` + the endpoint twins | the vote-class mixed-accumulator split (the persisted-store precedent) — then it flips like the rest |
+
+**Dual state under the plane:**
+
+| # | state | cascade side | legacy side | net |
+|---|---|---|---|---|
+| 11 | building ACTIVE/dormant | `m_cascadeFacts` (the operate/provides fixpoint; every cascade fill reads it) | `setDisabledBuilding` event-state (still drives the engine's own processing; carries the accepted dropped-event staleness) | `[MODIFIER/dorm]` attribution lines |
+
+## B. The ENABLER plane — LEGACY SERVES, cascade shadows
+
+The engine gates run legacy; the cascade frontier (`Sources/Cascade/CvCascadeEnabler.{h,cpp}`, shadow-parity
+reached 2026-07-02) diffs beside them via `[ENABLER/shadow]`. Pairs: `canConstruct`/`canTrain` (+ their
+caches `m_bCanConstruct*`, the canTrain cache), `canResearch`, `canDoCivics`, `canCreate`, `canMaintain`,
+`canHurry`, `canFoundReligion`, `canAcquirePromotion`, `canBuild` (unlock half). The
+`CvCityAI::CalculateAllBuildingValues` PreLoop rides the legacy side. Dies at the enabler flip+cut
+([cutover.md](cutover.md) — in-body instrument + the Python-consumer logging step first).
+
+## C. The THIRD surface — the oracle calculators (net-sampled only)
+
+`YieldRate` / `CommerceCalc` / `CascadeWellbeing::compute` / `CascadeScalarChannels` (`Sources/Cascade/`):
+from-scratch derivations the `[SLOT]`-class nets sample (capped per turn). Not game-serving; they die with the
+shadow at the cut (the one-generic-assembler consolidation is the parked end-state, scope-packages.md).
+
+## D. NOT duplicated (already single-surface)
+
+- **Capabilities** — CUT (the 22 `CvTeam` getters run `CascadeCapabilities`; 21 counters deleted; sliders +
+  `hasLanguage` cut in wave 2). Convergence of its hand-rolled cache onto the Set protocol is a follow-up.
+- **Plot yields** — the `CvPlot` cache IS the one source (both the cascade combine and legacy pull it; the
+  push-maintained `m_aiBaseYieldRate` member is dead).
+- **The tally** — a read-only accessor over object-owned counts by design (a duplicate would be tautological).
+- **readJson/InfoRepo static data** — parallel to the XML infos by design until the final data flip (the XML
+  stays authoritative for the EXE-bound accessor surface; the atomic last step).
+
+## E. The UNIT plane — LEGACY ONLY (no duplication yet)
+
+The unit stat stack (the ~91 `CvUnit::changeExtra*` setters) has no cascade side yet — it needs the
+`unitInput` endpoint + the unit families on the one engine, then its own shadow window and cut.
+
+## F. The save surface during the window
+
+The legacy accumulators still SERIALIZE (saves unchanged; the packages never serialize). At each cut, every
+deleted serialized member retires two-stage: drop the write + a named `WRAPPER_SKIP_ELEMENT` on the read +
+the `savemigration.txt` ledger entry ([engine.md](../../reference/engine.md) §Save/load — the capabilities
+lesson: a deleted read DESYNCS old saves).
+
+## The cost of the window (measured)
+
+Both bookkeepings run per mutation (legacy incremental pushes + cascade marks); memory holds both states
+(~2.5GB on the reference save, with headroom); the oracles cost only net samples; saves are unchanged. The
+window closes plane-by-plane per [cutover.md](cutover.md), executed from [code-cut-map.md](code-cut-map.md).

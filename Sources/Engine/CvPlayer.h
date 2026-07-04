@@ -6,6 +6,7 @@
 #define CIV4_PLAYER_H
 
 #include "Tools/copy_iterator.h"
+#include "Cascade/CvCascadeScopePackages.h"   // CascadePlayerScope -- the #430 player scope packages (m_cascadePlayerScope)
 #include "UI/CvBuildLists.h"
 #include "AI/CvCityAI.h"
 #include "AI/CvContractBroker.h"
@@ -77,6 +78,12 @@ public:
 
 	CvGameObjectPlayer* getGameObject() { return &m_GameObject; };
 	const CvGameObjectPlayer* getGameObject() const { return &m_GameObject; };
+
+	// #430: the PLAYER scope packages (scope-packages.md) -- a MUTABLE derived cache holding ONLY this
+	// player's own-scope sums (never serialized; all-dirty from birth). The CascadeAccumulator module is
+	// the query surface; the cache lives ON the object it caches for.
+	mutable CascadePlayerScope m_cascadePlayerScope;
+	void cascadeRefreshPlayerScope(int iMask) const;   // the CacheSet's refresh delegate -> CascadeAccumulator::refreshPlayerScope
 
 	void setIdleCity(const int iCityID, const bool bNewValue);
 	bool hasIdleCity() const;

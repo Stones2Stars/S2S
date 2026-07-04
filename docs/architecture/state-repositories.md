@@ -195,24 +195,24 @@ public:
   its event feeds — the realized exemplar is `CascadeAccumulator`'s `AccDirty` bits over the §2a packages
   ([modifier-substrate.md](../plans/structural-cleanup/modifier-substrate.md)). When `CvDerivedCache` is built,
   it grows this per-component form (the single-flag form stays for leaf caches like the plot yield).
-- **⚖ THE CAPSTONE RULE (owner 2026-07-04): the ONLY time the entire cascade is rebuilt — all packages,
+- **⚖ THE CAPSTONE RULE: the ONLY time the entire cascade is rebuilt — all packages,
   all yields — is ON LOAD.** Post-load, every recompute is marked-component-only at a boundary (the
   slice-start rebuild; eventually the unified turn-end pass below); a full rebuild mid-game is a design
   violation. Today's remaining BLANKETS are named interims graded against this rule: the EPOCH bump
   (tech/civic/GA marks ALL bits for the player's cities) and the RATE components' turn-roll self-heal —
   each retires the way the scalar carve-out did (a proven hook map + a data-derived per-source mask:
-  building masks landed 2026-07-04; tech/civic/trait masks are the successors), until load is the only
-  full pass. Sibling rulings the same day: reads are BARE NUMBER FETCHES during the turn (the ensure-per-
+  building masks landed; tech/civic/trait masks are the successors), until load is the only
+  full pass. Siblings of the rule: reads are BARE NUMBER FETCHES during the turn (the ensure-per-
   read protocol on AI-hot paths measurably ground unit automation — 1.28M defense reads in one turn);
   recomputes happen at the START OF EACH PLAYER'S SLICE (`CascadeAccumulator::playerSliceRebuild`); and
   "it's the percentage recalcs that hurt" — the mask derivation splits percent-vs-flat so flat-only events
   never rebuild a percent stack, most changes being plain arithmetic through the already-compiled block.
-  **The granularity TARGET (owner, same day): per-(package × CHANNEL)** — "most of the time we will know
+  **The granularity TARGET: per-(package × CHANNEL)** — "most of the time we will know
   exactly which package (flat or percentage, and for what yield) was touched, and only rebuild those." The
   compiled deposits carry the channel, so the AccDirty bits split per yield/commerce channel (today's bits
   are per-component across all channels — a production-only percent touch still rebuilds the food+commerce
   stacks); the bit-layout split is the increment after the bare-fetch shape verifies.
-- **⚠ NAMED DEBT (2026-07-04): a SECOND invalidation philosophy rides beside the component — a DEPARTURE
+- **⚠ NAMED DEBT: a SECOND invalidation philosophy rides beside the component — a DEPARTURE
   from this doc's own model, not a design alternative.** The slots/facts Sets are event-MARKED (the
   documented way), but two POLLING primitives
   accreted around them: the epoch counters (+ the `iEpoch`/`iTurn` stamp fields on `CascadeRateSlots` beside
@@ -224,10 +224,9 @@ public:
   philosophy. Sequenced after the bare-fetch increment verifies (behavior-neutral consolidation on a proven
   baseline).
 - **⚖ THE PER-SCOPE PACKAGE MODEL — the cascade's FOUNDING DESIGN ([modifier.md](../specs/modifier.md) §1),
-  stated as cache architecture. Made explicit 2026-07-04 after implementations drifted to store-at-target —
-  NOT a new ruling.** A `CvDerivedCache` lives ON EVERY SCOPED ITEM, every level (world → team → player →
-  area → city → plot); the cascade loads **yield packages in ONE UNIFORM FORMAT** (the §2 slot shape:
-  Σflat / Σpercent per channel) into each scope's cache; each cache knows its own staleness from events at
+  stated as cache architecture.** A `CvDerivedCache` lives ON EVERY SCOPED ITEM, every level (world → team → player →
+  area → city → plot); the cascade loads **yield packages in ONE UNIFORM FORMAT** (the §2 slots — Σflat and
+  Σpercent each their OWN package per channel; the unit is part of the slot key) into each scope's cache; each cache knows its own staleness from events at
   its OWN scope (a world change rebuilds the world package while every other level stands). **The only live
   calculation is adding the ~5 packages together at read** — trivial arithmetic through the already-compiled
   percentage block; "isolated parts, summed, with zero need for complex on-the-fly calculations anywhere."
@@ -260,6 +259,11 @@ public:
   mid-turn dirty-hook web shrinks to the realized-output paths (which already run at each player's slice start,
   on fresh slots). **Until then the hooks stay** — today's AI still reads mid-turn, and the flipped getters must
   match what legacy's always-fresh accumulators would have answered (parity discipline).
+  **⚖ SUPERSEDED IN PART (owner 2026-07-04, the precipice review):** the read-freshness half of that parity
+  line is superseded — the scope-packages landing runs the per-player-slice SNAPSHOT now (owner: *"getting a
+  yield event in the middle of a turn is not retroactive; start of next turn is what is expected"*), with the
+  city-creation eager ensure (`CascadeAccumulator::cityCreated`) the one ruled exception. Full ruling +
+  consequences: [scope-packages.md](../plans/structural-cleanup/scope-packages.md) §1.
 - **LOAD-TIME RECOMPUTE IS AN EASY TRADE — EAGER WARM-UP IS THE GENERAL POLICY.** *"I don't mind having longer
   initial save-load time, and have every cache recalculated on save load — it's turn times that people notice;
   trading longer save-load for shorter turn times is an easy trade"*; strengthened same day: *"I am happy to
@@ -268,7 +272,7 @@ public:
   default** — the realized site is `CvGame::onFinalInitialized`'s cache warm-up block (every plot's yield cache
   — worker AI relies on them — + every city's accumulator slots); new derived caches join that block. No design
   ever serializes a derived value to save load time.
-  **⚖ GENERALIZED to the perf LAW (owner ruling 2026-07-04): "the name of any game in this town will always be
+  **⚖ GENERALIZED to the perf LAW: "the name of any game in this town will always be
   TURN TIMES — if game load takes 50% longer it matters nothing if we can shave 5-10-15% on turn time, because
   there is only 1 game load, but many many many turns."** Turn time is the objective EVERY perf decision
   optimizes; load time is the currency that pays for it. Ledgered as

@@ -12,7 +12,7 @@
 #include "UI/CvBuildingList.h"
 #include "UI/CvUnitList.h"
 #include "CvDerivedData.h"
-#include "Cascade/CvCascadeAccumulator.h"   // CascadeRateSlots -- the #430 modifier-substrate city cache (m_cascadeRateSlots)
+#include "Cascade/CvCascadeAccumulator.h"   // CascadeCityPackages -- the #430 city scope packages (m_cascadeCityPackages)
 #include "Cascade/CvCascadeCityFacts.h"     // CascadeCityFacts -- the standing cascade building-facts cache (m_cascadeFacts)
 #include "UI/CityOutputHistory.h"
 #include "CvGameObject.h"
@@ -274,6 +274,10 @@ public:
 	int getProductionModifier(UnitTypes eUnit) const;
 	int getProductionModifier(BuildingTypes eType) const;
 	int getProductionModifier(ProjectTypes eProject) const;
+	// the pre-flip legacy walks -- the #430 buildRate net oracles (the getYieldRate100Legacy pattern)
+	int getProductionModifierLegacy(UnitTypes eUnit) const;
+	int getProductionModifierLegacy(BuildingTypes eType) const;
+	int getProductionModifierLegacy(ProjectTypes eProject) const;
 
 	int getProductionPerTurn(ProductionCalc::flags flags) const;
 
@@ -1838,13 +1842,13 @@ protected:
 	CvUnitList m_UnitList;
 
 public:
-	// #430 modifier-substrate: the standing rate slots -- a MUTABLE derived cache (never serialized; the same
-	// idiom as the CvPlot yield cache), CvDerivedCacheSet-driven. Public by the shadow-phase convention; the
-	// CascadeAccumulator module is the query surface.
-	mutable CascadeRateSlots m_cascadeRateSlots;
-	void cascadeRefreshRates(int iMask) const;   // the CacheSet's refresh delegate -> CascadeAccumulator::refreshComponents
+	// #430: the CITY scope packages (scope-packages.md) -- a MUTABLE derived cache holding ONLY this city's
+	// own-scope sums, one package per field (never serialized; the CvPlot yield-cache idiom). Public by the
+	// shadow-phase convention; the CascadeAccumulator module is the query surface.
+	mutable CascadeCityPackages m_cascadeCityPackages;
+	void cascadeRefreshPackages(int iMask) const;   // the CacheSet's refresh delegate -> CascadeAccumulator::refreshCityPackages
 	// #430: the standing cascade building FACTS (active set + vicinity provides) -- same derived-cache idiom
-	// (never serialized; event-invalidated; epoch/turn self-heal). Query via EnablerKernel::cityFacts/wireFacts.
+	// (never serialized; event-marked; the slice boundary is the self-heal). Query via EnablerKernel::cityFacts/wireFacts.
 	mutable CascadeCityFacts m_cascadeFacts;
 	void cascadeRefreshFacts(int iMask) const;   // the CacheSet's refresh delegate -> EnablerKernel::recomputeCityFactsInto
 protected:

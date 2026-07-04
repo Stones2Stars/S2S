@@ -79,7 +79,8 @@ enum MdFld
 	MDF_TURNNO, MDF_TURNMS,                                                         // perf: game turn + flush-to-flush WALL time (the headline turn-time number, DEC-turn-time-is-king)
 	MDF_LRMS, MDF_LWBMS,                                                            // perf: the LEGACY-side pair ms (vs yieldRateMs+commerceRateMs / wbComputeMs -- the pre-cut comparison)
 	MDF_SCGPB, MDF_SCGPM, MDF_SCDEF, MDF_SCMNT,                                     // perf: flipped scalar getter READ counts
-	MDF_SCREF, MDF_SCSREF, MDF_SCMS                                                 // perf: scalar refresh counts (SCALAR / SCALARSPEC) + refresh ms×10
+	MDF_SCREF, MDF_SCSREF, MDF_SCMS,                                                // perf: scalar refresh counts (SCALAR / SCALARSPEC) + refresh ms×10
+	MDF_AUTON, MDF_AUTOMS                                                           // perf: the AUTOMATION window (autoMission calls + accumulated ms×10)
 };
 static const char* mm_prefix(int evt)
 {
@@ -194,6 +195,8 @@ static const char* mm_field(int tag, SpineFieldType* peType)
 	case MDF_SCREF:       return "scRefresh";
 	case MDF_SCSREF:      return "scSpecRefresh";
 	case MDF_SCMS:        return "scRefreshMsX10";
+	case MDF_AUTON:       return "autoMissions";
+	case MDF_AUTOMS:      return "autoMissionMsX10";
 	case MDF_GPB_S:       return "gpBaseS";
 	case MDF_GPB_C:       return "gpBaseC";
 	case MDF_GPM_S:       return "gpModS";
@@ -375,7 +378,8 @@ void cvCascadeModifierShadow()
 							// (a stale slot = a dirty-mapping hole in that component's hooks). Slot side = the standing
 							// state acc_ensure just served; calc side = the fresh package. plots is the live CvPlot-cache
 							// pull vs the basePlot package -- the one term the two sides source differently by design.
-							const CascadeRateSlots& st = pCity->m_cascadeRateSlots;
+							const CascadeCityPackages& st = pCity->m_cascadeCityPackages;
+							const CascadePlayerScope& psn = player.m_cascadePlayerScope;
 							MMBreak bkS;
 							const int plotS = pCity->getPlotYield(eY);
 							const int plotC = (int)YieldBasePackages::basePlot(aszChannel[y], eY, pCity, rec);
@@ -383,13 +387,13 @@ void cvCascadeModifierShadow()
 								.addWStr(MDF_WHO, pCity->getName().GetCString()).addStr(MDF_CHANNEL, aszChannel[y])
 								.addI(MDF_RATEC, (int)slotRate).addI(MDF_RATEL, (int)cascRate)
 								.addI(MDF_PLOT_S, plotS).addI(MDF_PLOT_C, plotC)
-								.addI(MDF_EMP_S, (int)st.aEmpFlat[y])
+								.addI(MDF_EMP_S, (int)(psn.yFlatFreeCity[y] + (player.isGoldenAge() ? std::max(0L, psn.yFlatGoldenAge[y]) : 0)))
 								.addI(MDF_EMP_C, YieldBasePackages::freeCity(aszChannel[y], player, rec) + YieldBasePackages::goldenAge(aszChannel[y], player, rec))
-								.addI(MDF_SPEC_S, (int)st.aSpec[y])
+								.addI(MDF_SPEC_S, (int)st.ySpec[y])
 								.addI(MDF_SPEC_C, YieldBasePackages::specialist(aszChannel[y], pCity, rec))
-								.addI(MDF_EXTRA_S, (int)st.aExtra100[y])
+								.addI(MDF_EXTRA_S, (int)st.yExtra100[y])
 								.addI(MDF_EXTRA_C, (int)BuildingPackage::buildingFlat(aszChannel[y], pCity, rec))
-								.addI(MDF_PCT_S, (int)st.aPct[y])
+								.addI(MDF_PCT_S, (int)std::max(0L, 100 + st.yPctCity[y]))
 								.addI(MDF_PCT_C, PercentStack::percentStack(aszChannel[y], pCity, bkS)));
 							++iSlotShown;
 
@@ -507,18 +511,22 @@ void cvCascadeModifierShadow()
 							// accumulator's splitter consumed; ycC = the fresh calculator's -- a ycS/ycC diff means
 							// the divergence lives in the YIELD slots, not the commerce plugins). Slider/disorder
 							// are read live on both sides, so they can never be the diverging term.
-							const CascadeRateSlots& st = pCity->m_cascadeRateSlots;
+							const CascadeCityPackages& st = pCity->m_cascadeCityPackages;
+							const CascadePlayerScope& psn = player.m_cascadePlayerScope;
 							MMBreak bkS;
+							const long gaC = player.isGoldenAge() ? std::max(0L, psn.cGoldenAge[cc]) : 0;
+							const long baseS = st.cBaseOwn100[cc] + st.cKeyed100[cc] + psn.cPlayerExtra100[cc]
+								+ 100L * gaC + 100L * psn.cSrPool[cc] * st.iCSrMatch;
 							eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_SLOT, 1)
 								.addWStr(MDF_WHO, pCity->getName().GetCString()).addStr(MDF_CHANNEL, CommerceCalc::channel(cc))
 								.addI(MDF_RATEC, (int)slotC).addI(MDF_RATEL, (int)cascC)
 								.addI(MDF_YC_S, (int)CascadeAccumulator::yieldRate100(pCity, YIELD_COMMERCE))
 								.addI(MDF_YC_C, (int)yc100)
-								.addI(MDF_CSPEC_S, (int)st.aCSpec100[cc])
+								.addI(MDF_CSPEC_S, (int)st.cSpec100[cc])
 								.addI(MDF_CSPEC_C, (int)(100L * YieldBasePackages::specialist(CommerceCalc::channel(cc), pCity, cec)))
-								.addI(MDF_CBASE_S, (int)st.aCBase100[cc])
+								.addI(MDF_CBASE_S, (int)baseS)
 								.addI(MDF_CBASE_C, (int)CommerceCalc::baseExtra100(CommerceCalc::channel(cc), pCity, cec))
-								.addI(MDF_CPCT_S, (int)st.aCPct[cc])
+								.addI(MDF_CPCT_S, (int)std::max(0L, 100 + st.cPct[cc]))
 								.addI(MDF_CPCT_C, PercentStack::percentStack(CommerceCalc::channel(cc), pCity, bkS)));
 							++iSlotShown;
 						}
@@ -542,14 +550,16 @@ void cvCascadeModifierShadow()
 			{
 				++iWbChecked;
 				const CascadeWellbeingVerdicts wv = CascadeWellbeing::compute(pCity, cec);
-				// [SLOT]-style net: the standing ACCD_WB slots vs this fresh compute (their oracle) -- MILITARY-FREE
-				// on both sides (the military term rides alone on top, owner ruling 2026-07-03; a slot diff is a
-				// dirty-mapping hole in the hooked components only).
+				// [SLOT]-style net: the PACKAGE-composed verdicts (what the flipped getters return) vs this fresh
+				// compute realized the same way -- a diff is a dirty-mapping hole in the packaged terms.
 				{
-					const CascadeRateSlots& wbst = pCity->m_cascadeRateSlots;
-					if (wbst.aWb[0] != wv.iHappy || wbst.aWb[1] != wv.iUnhappy
-						|| wbst.aWb[2] != wv.iGood || wbst.aWb[3] != wv.iBad
-						|| wbst.iWbMilPerUnit != wv.iMilPerUnit)
+					const int iMilLive = wv.iMilPerUnit * pCity->getMilitaryHappinessUnits();
+					const int iFreshHappy = std::max(0, wv.iHappy + std::max(0, iMilLive));
+					const int iFreshUnhappy = std::max(0, wv.iUnhappy - std::min(0, iMilLive));
+					if (CascadeAccumulator::wellbeing(pCity, 0) != iFreshHappy
+						|| CascadeAccumulator::wellbeing(pCity, 1) != iFreshUnhappy
+						|| CascadeAccumulator::wellbeing(pCity, 2) != wv.iGood
+						|| CascadeAccumulator::wellbeing(pCity, 3) != wv.iBad)
 					{
 						++iWbSlotDiverging;
 					}
@@ -592,20 +602,23 @@ void cvCascadeModifierShadow()
 				const int cDef = CascadeScalarChannels::defenseAmount(pCity, cec);
 				const int cMaint = CascadeScalarChannels::maintenanceModifier(pCity, cec);
 				const int cTrade = CascadeScalarChannels::tradeRouteCount(pCity, cec);
-				const CascadeRateSlots& sst = pCity->m_cascadeRateSlots;
-				if (sst.iScGpBaseBld + sst.iScGpBaseSpec != cGpBase || sst.iScGpMod != cGpMod
-					|| sst.iScDefense != cDef || sst.iScMaintMod != cMaint || sst.iScTradeRoutes != cTrade)
+				const int sGpBase = CascadeAccumulator::scGpBase(pCity);
+				const int sGpMod = CascadeAccumulator::scGpModifier(pCity);
+				const int sDef = CascadeAccumulator::scDefense(pCity);
+				const int sMaint = CascadeAccumulator::scMaintenanceModifier(pCity);
+				const int sTrade = CascadeAccumulator::scTradeRoutes(pCity);
+				if (sGpBase != cGpBase || sGpMod != cGpMod || sDef != cDef || sMaint != cMaint || sTrade != cTrade)
 				{
 					++iScSlotDiverging;
 					if (iScShown < 40)
 					{
 						eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_SCALAR, 1)
 							.addWStr(MDF_WHO, pCity->getName().GetCString())
-							.addI(MDF_GPB_S, sst.iScGpBaseBld + sst.iScGpBaseSpec).addI(MDF_GPB_C, cGpBase)
-							.addI(MDF_GPM_S, sst.iScGpMod).addI(MDF_GPM_C, cGpMod)
-							.addI(MDF_DEF_S, sst.iScDefense).addI(MDF_DEF_C, cDef)
-							.addI(MDF_MNT_S, sst.iScMaintMod).addI(MDF_MNT_C, cMaint)
-							.addI(MDF_TRD_S, sst.iScTradeRoutes).addI(MDF_TRD_C, cTrade));
+							.addI(MDF_GPB_S, sGpBase).addI(MDF_GPB_C, cGpBase)
+							.addI(MDF_GPM_S, sGpMod).addI(MDF_GPM_C, cGpMod)
+							.addI(MDF_DEF_S, sDef).addI(MDF_DEF_C, cDef)
+							.addI(MDF_MNT_S, sMaint).addI(MDF_MNT_C, cMaint)
+							.addI(MDF_TRD_S, sTrade).addI(MDF_TRD_C, cTrade));
 						++iScShown;
 					}
 				}
@@ -657,6 +670,7 @@ void cvCascadeModifierShadow()
 		.addI(MDF_SCGPB, CascadePerf::scGpBaseReads).addI(MDF_SCGPM, CascadePerf::scGpModReads)
 		.addI(MDF_SCDEF, CascadePerf::scDefReads).addI(MDF_SCMNT, CascadePerf::scMaintReads)
 		.addI(MDF_SCREF, CascadePerf::scRefresh).addI(MDF_SCSREF, CascadePerf::scSpecRefresh)
-		.addI(MDF_SCMS, (int)(CascadePerf::scRefreshMs * 10.0)));
+		.addI(MDF_SCMS, (int)(CascadePerf::scRefreshMs * 10.0))
+		.addI(MDF_AUTON, CascadePerf::autoMissions).addI(MDF_AUTOMS, (int)(CascadePerf::autoMissionMs * 10.0)));
 	CascadePerf::reset();
 }

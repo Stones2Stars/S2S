@@ -63,21 +63,20 @@
  },
  "happiness": {
   "city": {
-   "flat": [
-    1,
-    {
-     "value": 1,
-     "enabled": "BUILDING_PALACE"
+   "flat": 1
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_PALACE": {
+     "flat": 1
     },
-    {
-     "value": 1,
-     "enabled": "BUILDING_FORBIDDEN_PALACE"
+    "BUILDING_FORBIDDEN_PALACE": {
+     "flat": 1
     },
-    {
-     "value": 1,
-     "enabled": "BUILDING_VERSAILLES"
+    "BUILDING_VERSAILLES": {
+     "flat": 1
     }
-   ]
+   }
   }
  },
  "greatPeopleRate": {

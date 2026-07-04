@@ -17,7 +17,7 @@
 #include "CvCascadeMMKernel.h"
 #include "CvCascadeDepositIndex.h"
 #include "CvCascadeEnablerKernel.h"
-#include "CvCascadeAccumulator.h"   // epochFor -- the per-player rollup cache stamp
+#include "CvCascadeAccumulator.h"   // the scope-package types ride its ScopePackages include
 #include "CvCascadePerfCount.h"      // the wbCompute counter/timer (automation-cost attribution)
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "CvCascadeCondition.h"
@@ -42,39 +42,9 @@
 #include "Infos/CvSpecialistInfo.h"
 #include "Infos/CvFeatureInfo.h"
 
-// ===================== the signed-split pair (StoneBase Split) =====================
-// Good = Σ max(0, instance), Bad = Σ min(0, instance) -- the §2b per-source-instance sign split.
-struct WbSplit
-{
-	int iGood, iBad;
-	WbSplit() : iGood(0), iBad(0) {}
-	void fold(int v) { if (v >= 0) iGood += v; else iBad += v; }
-};
-
-// The per-family term set one compute pass gathers (happiness and health run the same walks).
-struct WbTerms
-{
-	WbSplit bld;          // building city base (per-building NET fold) + the event ledger
-	WbSplit areaBld;      // player buildings' area-scope deposits (this area)
-	WbSplit empBld;       // player buildings' empire-scope deposits
-	WbSplit bonus;        // bonus own empire flats + building/civic/trait BONUS-gated entries (per-contribution)
-	WbSplit extraB;       // civic/trait buildings.{B} keyed (per-entry fold)
-	WbSplit featMember;   // civic/trait features.{F} keyed × radius feature count
-	WbSplit featSubstrate;// feature-info plot.percent per radius feature, per-feature /100 fold (health only in data)
-	WbSplit corp;         // corporation city flats (per-corp fold)
-	WbSplit project;      // project empire + world flats (per-project fold)
-	WbSplit spec;         // specialist city flats ×count (×100 pool folded /100 per type)
-	int iCivicNet;        // civic plain empire flats, NET (the engine's getCivicHappiness/CivicHealth term shape)
-	int iTraitNet;        // trait plain empire flats, NET (feeds extra [happiness] / civilization [health])
-	int iTechNet;         // tech empire flats, NET (feeds extra)
-	int iSrNet;           // building {STATE_RELIGION:X}-gated, NET across buildings (m_paiStateReligionHappiness)
-	int iTechGatedNet;    // building {TECH_X}-gated, NET (m_iExtraBuilding*FromTech)
-	int iMilitary;        // civic/trait perMilitaryUnit × military units, NET term
-	int iLargest;         // civic/trait ranked `cities` member (rank <= target), NET term
-	int iPpPct;           // perPopulation percent pool (raw percent-of-pop; ×pop/100 at use)
-	WbTerms() : iCivicNet(0), iTraitNet(0), iTechNet(0), iSrNet(0), iTechGatedNet(0),
-		iMilitary(0), iLargest(0), iPpPct(0) {}
-};
+// (WbSplit + CascadeWbTerms -- the shared §2b term types -- live in CvCascadeScopePackages.h: the same
+// structs ARE the city wb packages; this calculator fills fresh instances, the accumulator fills standing
+// ones. The area/empire building splits are PLAYER-scope and thread through as assembly parameters.)
 
 // ===================== the condition-shape classifier (the classified fold) =====================
 // Each curated entry folds at ITS legacy accumulator's granularity: BONUS-gated -> the bonus accumulators
@@ -114,7 +84,7 @@ static bool wb_pureKeep(bool bPure, bool bNegativeTrait, int v)
 // 5202-info loops -- the wbCompute attribution's biggest cut): per ACTIVE building, per deposit, dispatch on
 // the family segment. Classified flat folds + the perPopulation pools + the event ledgers + commerce pers.
 static void wb_buildingsAll(int famHappy, int famHealth, int famCH, const CvCity* pCity,
-	const CvCascadeEvalCtx& ec, WbTerms& tHap, WbTerms& tHea, int aiCommercePer[NUM_COMMERCE_TYPES])
+	const CvCascadeEvalCtx& ec, CascadeWbTerms& tHap, CascadeWbTerms& tHea, int aiCommercePer[NUM_COMMERCE_TYPES])
 {
 	const int scopeCity = DepositIndex::lookupSegment("city");
 	const int unitFlat = DepositIndex::lookupSegment("flat");
@@ -124,10 +94,10 @@ static void wb_buildingsAll(int famHappy, int famHealth, int famCH, const CvCity
 		static const char* aszC[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
 		for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) aiChSeg[c] = DepositIndex::lookupSegment(aszC[c]);
 	}
-	const int nB = GC.getNumBuildingInfos();
-	for (int b = 0; b < nB; ++b)
+	if (ec.activeBuildings == NULL) return;   // the standing active set IS the walk domain (never all infos)
+	for (std::set<int>::const_iterator abIt = ec.activeBuildings->begin(); abIt != ec.activeBuildings->end(); ++abIt)
 	{
-		if (!cascadeIsBuildingActive(b, ec)) continue;
+		const int b = *abIt;
 		const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
 		if (d == NULL) continue;
 		int iBaseNetHap = 0, iBaseNetHea = 0;
@@ -145,7 +115,7 @@ static void wb_buildingsAll(int famHappy, int famHealth, int famCH, const CvCity
 			}
 			const bool bHap = dep.seg[0] == famHappy;
 			if ((!bHap && dep.seg[0] != famHealth) || dep.nSeg != 2) continue;
-			WbTerms& t = bHap ? tHap : tHea;
+			CascadeWbTerms& t = bHap ? tHap : tHea;
 			if (dep.unitId == unitPerPop)
 			{
 				if (MMKernel::applies(dep.enabled, dep.disabled, ec)) t.iPpPct += dep.value100 / 100;
@@ -172,63 +142,31 @@ static void wb_buildingsAll(int famHappy, int famHealth, int famCH, const CvCity
 	}
 }
 
-// ===================== the per-player AREA/EMPIRE rollup cache =====================
-// The player-wide building rollup is IDENTICAL for every city of the player (per area) -- computing it per
-// city made the WB compute O(player-cities × buildings) per call (the measured automation collapse). It is
-// cached PER PLAYER at the END-TURN cadence (the owner's wellbeing ruling): stamped by (epoch, turn),
-// rebuilt once, shared by all the player's cities; mid-turn building completions self-heal next turn.
-struct WbPlayerRollup
+// ===================== the player-wide AREA/EMPIRE building walk =====================
+// The player-wide building fold maps, BOTH families in one player-city walk: area-scope deposits land on
+// same-area cities, empire-scope everywhere (the engine's area()/player getBuildingHappiness/Health
+// accumulators). This IS the CvPlayer wb package fill; the calculator's compute() calls it fresh.
+void CascadeWellbeing::playerAreaEmpire(const CvPlayer& player,
+	std::map<int, std::map<int, WbSplit> >& areaByFam, std::map<int, WbSplit>& empireByFam,
+	std::map<int, std::map<int, int> >& keyedByFam)
 {
-	CvCascadePlayerStamp stamp;   // the SHARED per-player rollup freshness stamp (CvCascadeAccumulator.h)
-	// famId -> (areaId -> area Split; empire Split) for the two wellbeing families
-	std::map<int, std::map<int, WbSplit> > areaByFam;
-	std::map<int, WbSplit> empireByFam;
-};
-static WbPlayerRollup s_wbRollup[MAX_PLAYERS];
-
-static void wb_rollupRebuild(int famId, PlayerTypes ePlayer, WbPlayerRollup& r);
-
-// The player-wide building walk, CACHED: area-scope deposits land on same-area cities, empire-scope everywhere
-// (the engine's area()/player getBuildingHappiness/Health accumulators). Per-building split fold.
-static void wb_playerBuildings(int famId, const CvCity* pCity, WbTerms& t)
-{
-	const PlayerTypes eOwner = pCity->getOwner();
-	if (eOwner >= 0 && eOwner < MAX_PLAYERS)
-	{
-		WbPlayerRollup& r = s_wbRollup[eOwner];
-		if (!r.stamp.freshen(eOwner))   // the shared stamp: stale => clear; the per-fam lazy rebuild below refills
-		{
-			r.areaByFam.clear(); r.empireByFam.clear();
-		}
-		if (r.areaByFam.find(famId) == r.areaByFam.end())
-			wb_rollupRebuild(famId, eOwner, r);
-		const std::map<int, WbSplit>& areas = r.areaByFam[famId];
-		std::map<int, WbSplit>::const_iterator ait = areas.find(pCity->area()->getID());
-		if (ait != areas.end()) { t.areaBld.iGood += ait->second.iGood; t.areaBld.iBad += ait->second.iBad; }
-		const WbSplit& emp = r.empireByFam[famId];
-		t.empBld.iGood += emp.iGood; t.empBld.iBad += emp.iBad;
-		return;
-	}
-	// (no valid owner -- nothing to fold)
-}
-
-// One rebuild: loop the player's cities ONCE, folding each active building's area/empire deposits.
-static void wb_rollupRebuild(int famId, PlayerTypes ePlayer, WbPlayerRollup& r)
-{
+	areaByFam.clear();
+	empireByFam.clear();
+	keyedByFam.clear();
+	const int famHappy = DepositIndex::lookupSegment("happiness");
+	const int famHealth = DepositIndex::lookupSegment("health");
 	const int scopeArea = DepositIndex::lookupSegment("area");
 	const int scopeEmpire = DepositIndex::lookupSegment("empire");
 	const int unitFlat = DepositIndex::lookupSegment("flat");
-	const CvPlayer& owner = GET_PLAYER(ePlayer);
-	std::map<int, WbSplit>& areas = r.areaByFam[famId];   // creates the fam entry (the rebuilt marker)
-	WbSplit& emp = r.empireByFam[famId];
+	const int segBuildings = DepositIndex::lookupSegment("buildings");
 	int iLoop;
-	for (const CvCity* pc = owner.firstCity(&iLoop); pc != NULL; pc = owner.nextCity(&iLoop))
+	for (const CvCity* pc = player.firstCity(&iLoop); pc != NULL; pc = player.nextCity(&iLoop))
 	{
 		const CascadeCityFacts& facts = EnablerKernel::cityFacts(pc);
 		CvCascadeEvalCtx pec;
-		pec.city = pc; pec.plot = pc->plot(); pec.player = &owner; pec.team = &GET_TEAM(owner.getTeam());
+		pec.city = pc; pec.plot = pc->plot(); pec.player = &player; pec.team = &GET_TEAM(player.getTeam());
 		pec.activeBuildings = &facts.active; pec.vicinityProvidedBonuses = &facts.provided;
-		WbSplit& area = areas[pc->area()->getID()];
+		const int iArea = pc->area()->getID();
 		for (std::set<int>::const_iterator it = facts.active.begin(); it != facts.active.end(); ++it)
 		{
 			const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
@@ -236,16 +174,42 @@ static void wb_rollupRebuild(int famId, PlayerTypes ePlayer, WbPlayerRollup& r)
 			for (size_t i = 0; i < d->deposits.size(); ++i)
 			{
 				const CvCascadeDeposit& dep = d->deposits[i];
-				if (dep.seg[0] != famId || dep.nSeg != 2 || dep.unitId != unitFlat) continue;
+				if ((dep.seg[0] != famHappy && dep.seg[0] != famHealth) || dep.unitId != unitFlat) continue;
+				if (dep.nSeg == 4 && dep.seg[1] == scopeEmpire && dep.seg[2] == segBuildings)
+				{
+					// keyed by BUILDING (the Royal-Tomb class): +N onto EVERY city holding the keyed
+					// building -- ledgered here in the GRANTOR's ctx (the commerce-twin precedent),
+					// realized per city by foldBuildingKeyed
+					if (dep.targetFk >= 0 && MMKernel::applies(dep.enabled, dep.disabled, pec))
+						keyedByFam[dep.seg[0]][dep.targetFk] += dep.value100 / 100;
+					continue;
+				}
+				if (dep.nSeg != 2) continue;
 				if (dep.seg[1] == scopeEmpire)
 				{
-					if (MMKernel::applies(dep.enabled, dep.disabled, pec)) emp.fold(dep.value100 / 100);
+					if (MMKernel::applies(dep.enabled, dep.disabled, pec)) empireByFam[dep.seg[0]].fold(dep.value100 / 100);
 				}
 				else if (dep.seg[1] == scopeArea)
 				{
-					if (MMKernel::applies(dep.enabled, dep.disabled, pec)) area.fold(dep.value100 / 100);
+					if (MMKernel::applies(dep.enabled, dep.disabled, pec)) areaByFam[dep.seg[0]][iArea].fold(dep.value100 / 100);
 				}
 			}
+		}
+	}
+}
+
+void CascadeWellbeing::foldBuildingKeyed(const std::map<int, std::map<int, int> >& keyedByFam,
+	const CvCascadeEvalCtx& ec, CascadeWbTerms& hap, CascadeWbTerms& hea)
+{
+	const int famHappy = DepositIndex::lookupSegment("happiness");
+	const int famHealth = DepositIndex::lookupSegment("health");
+	for (std::map<int, std::map<int, int> >::const_iterator fit = keyedByFam.begin(); fit != keyedByFam.end(); ++fit)
+	{
+		if (fit->first != famHappy && fit->first != famHealth) continue;
+		CascadeWbTerms& t = (fit->first == famHappy) ? hap : hea;
+		for (std::map<int, int>::const_iterator it = fit->second.begin(); it != fit->second.end(); ++it)
+		{
+			if (cascadeIsBuildingActive(it->first, ec)) t.extraB.fold(it->second);
 		}
 	}
 }
@@ -254,7 +218,7 @@ static void wb_rollupRebuild(int famId, PlayerTypes ePlayer, WbPlayerRollup& r)
 // features.{F} + perMilitaryUnit + the ranked `cities` member. Trait sources carry the PURE_TRAITS filter.
 static void wb_memberSource(int famId, const CvJsonInfo* d, bool bTrait, bool bPure, bool bNegative,
 	const CvCity* pCity, const CvCascadeEvalCtx& ec, const std::map<int, int>& featureCounts,
-	bool bInTopCities, WbTerms& t)
+	bool bInTopCities, CascadeWbTerms& t)
 {
 	const int scopeEmpire = DepositIndex::lookupSegment("empire");
 	const int unitFlat = DepositIndex::lookupSegment("flat");
@@ -314,7 +278,7 @@ static void wb_entity(const CvJsonInfo* d, const std::string& addr, const CvCasc
 
 // ===================== the per-family gather =====================
 
-static void wb_gather(const char* szFam, const CvCity* pCity, const CvCascadeEvalCtx& ec, WbTerms& t)
+static void wb_gather(const char* szFam, const CvCity* pCity, const CvCascadeEvalCtx& ec, CascadeWbTerms& t)
 {
 	const int famId = DepositIndex::lookupSegment(szFam);
 	if (famId < 0) return;   // family never authored
@@ -322,9 +286,8 @@ static void wb_gather(const char* szFam, const CvCity* pCity, const CvCascadeEva
 	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
 	const CvTeam& team = GET_TEAM(owner.getTeam());
 
-	// -- the player-wide area/empire rollups (the CITY building pass runs ONCE for both families in
-	// -- compute() via wb_buildingsAll -- not here) --
-	wb_playerBuildings(famId, pCity, t);
+	// (the player-wide area/empire building splits are PLAYER-scope -- playerAreaEmpire; threaded into the
+	// verdict assembly as parameters, never gathered here)
 
 	// -- the shared member-walk inputs --
 	std::map<int, int> featureCounts;
@@ -427,24 +390,37 @@ static void wb_extraParts(const CvPlayer& owner, int& iTraitHappy, int& iTechHap
 		}
 }
 
-// ===================== the verdict assembly (the four engine bodies, term-substituted) =====================
+// ===================== the city gather (the scope-package fill + the calculator's city half) =====================
 
-CascadeWellbeingVerdicts CascadeWellbeing::compute(const CvCity* pCity, const CvCascadeEvalCtx& ec)
+void CascadeWellbeing::gatherCityTerms(const CvCity* pCity, const CvCascadeEvalCtx& ec,
+	CascadeWbTerms& hap, CascadeWbTerms& hea, int aiCommercePer[])
 {
-	PROFILE_FUNC();
-	++CascadePerf::wbCompute;
-	PerfAccumTimer perfT(CascadePerf::wbComputeMs);
-	CascadeWellbeingVerdicts out;
-	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
-	const int iPop = pCity->getPopulation();
-
-	WbTerms hap, hea;
-	int aiCommercePer[NUM_COMMERCE_TYPES] = { 0, 0, 0, 0 };
+	hap.reset();
+	hea.reset();
+	// The per-commerce pool SEEDS at the CommerceInfo iInitialHappiness constant ("the base we start from",
+	// owner 2026-07-04) -- the culture-slider happiness base (culture=10 -> +1 happy per 10% slider; legacy
+	// CvCity::init seeds m_aiCommerceHappinessPer with it). Static system-Info config, not legacy state
+	// (the sanctioned config-read class); the building commerceHappiness deposits then add on top.
+	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
+		aiCommercePer[c] = GC.getCommerceInfo((CommerceTypes)c).getInitialHappiness();
 	// ONE building pass serves both families + the commerce-happiness pools (the wbCompute cost cut)
 	wb_buildingsAll(DepositIndex::lookupSegment("happiness"), DepositIndex::lookupSegment("health"),
 		DepositIndex::lookupSegment("commerceHappiness"), pCity, ec, hap, hea, aiCommercePer);
 	wb_gather("happiness", pCity, ec, hap);
 	wb_gather("health", pCity, ec, hea);
+}
+
+// ===================== the verdict assembly (the four engine bodies, term-substituted) =====================
+// PURE over its inputs + the live raw-state reads -- ONE implementation (patterns.md): the package combine
+// feeds standing terms, compute() feeds fresh ones.
+
+CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
+	const CascadeWbTerms& hap, const CascadeWbTerms& hea, const int aiCommercePer[],
+	const WbSplit& hapArea, const WbSplit& hapEmp, const WbSplit& heaArea, const WbSplit& heaEmp)
+{
+	CascadeWellbeingVerdicts out;
+	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
+	const int iPop = pCity->getPopulation();
 
 	int iTraitHappyPart, iTechHappyPart, iTechHealthPart;
 	wb_extraParts(owner, iTraitHappyPart, iTechHappyPart, iTechHealthPart);
@@ -486,8 +462,8 @@ CascadeWellbeingVerdicts CascadeWellbeing::compute(const CvCity* pCity, const Cv
 		iH += hap.bonus.iGood;
 		iH += religion.iGood;
 		iH += std::max(0, iCommerceHappy);
-		iH += hap.areaBld.iGood;
-		iH += hap.empBld.iGood;
+		iH += hapArea.iGood;
+		iH += hapEmp.iGood;
 		iH += std::max(0, iExtraHappy);
 		iH += std::max(0, GC.getHandicapInfo(pCity->getHandicapType()).getHappyBonus());
 		iH += std::max(0, pCity->getVassalHappiness());
@@ -534,8 +510,8 @@ CascadeWellbeingVerdicts CascadeWellbeing::compute(const CvCity* pCity, const Cv
 		iU -= hap.bonus.iBad;
 		iU -= religion.iBad;
 		iU -= std::min(0, iCommerceHappy);
-		iU -= hap.areaBld.iBad;
-		iU -= hap.empBld.iBad;
+		iU -= hapArea.iBad;
+		iU -= hapEmp.iBad;
 		iU -= std::min(0, iExtraHappy);
 		iU -= std::min(0, GC.getHandicapInfo(pCity->getHandicapType()).getHappyBonus());
 		iU += std::max(0, pCity->getVassalUnhappiness());
@@ -574,10 +550,10 @@ CascadeWellbeingVerdicts CascadeWellbeing::compute(const CvCity* pCity, const Cv
 	const int iAngry = range((out.iUnhappy - std::min(0, iMilLive)) - (out.iHappy + std::max(0, iMilLive)), 0, iPop);
 
 	// -- the building-health composites (totalGood/BadBuildingHealth :5827/:5837) --
-	const int iTotalGoodBld = hea.bld.iGood + hea.areaBld.iGood + hea.empBld.iGood
+	const int iTotalGoodBld = hea.bld.iGood + heaArea.iGood + heaEmp.iGood
 		+ hea.extraB.iGood + std::max(0, iPopHealth);
 	const int iTotalBadBld = pCity->isBuildingOnlyHealthy() ? 0
-		: hea.bld.iBad + hea.areaBld.iBad + hea.empBld.iBad + hea.extraB.iBad + std::min(0, iPopHealth);
+		: hea.bld.iBad + heaArea.iBad + heaEmp.iBad + hea.extraB.iBad + std::min(0, iPopHealth);
 
 	// ---------------- goodHealth (:5851), term-substituted ----------------
 	{
@@ -620,6 +596,28 @@ CascadeWellbeingVerdicts CascadeWellbeing::compute(const CvCity* pCity, const Cv
 		out.iBad = iUnhealthyPop - iT;
 	}
 	return out;
+}
+
+// The calculator/oracle shape: fresh city gather + fresh player area/empire walk + the ONE assembly.
+CascadeWellbeingVerdicts CascadeWellbeing::compute(const CvCity* pCity, const CvCascadeEvalCtx& ec)
+{
+	PROFILE_FUNC();
+	++CascadePerf::wbCompute;
+	PerfAccumTimer perfT(CascadePerf::wbComputeMs);
+	CascadeWbTerms hap, hea;
+	int aiCommercePer[NUM_COMMERCE_TYPES];
+	gatherCityTerms(pCity, ec, hap, hea, aiCommercePer);
+	std::map<int, std::map<int, WbSplit> > areaByFam;
+	std::map<int, WbSplit> empireByFam;
+	std::map<int, std::map<int, int> > keyedByFam;
+	playerAreaEmpire(GET_PLAYER(pCity->getOwner()), areaByFam, empireByFam, keyedByFam);
+	foldBuildingKeyed(keyedByFam, ec, hap, hea);
+	const int famHappy = DepositIndex::lookupSegment("happiness");
+	const int famHealth = DepositIndex::lookupSegment("health");
+	const int iArea = pCity->area()->getID();
+	WbSplit hapArea = areaByFam[famHappy][iArea], hapEmp = empireByFam[famHappy];
+	WbSplit heaArea = areaByFam[famHealth][iArea], heaEmp = empireByFam[famHealth];
+	return assemble(pCity, hap, hea, aiCommercePer, hapArea, hapEmp, heaArea, heaEmp);
 }
 
 // The [MODIFIER/wellbeing] shadow lives in CvCascadeModifierMath.cpp (the shadow harness) -- it rides the

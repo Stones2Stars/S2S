@@ -58,19 +58,18 @@
  },
  "happiness": {
   "city": {
-   "flat": [
-    4,
-    {
-     "value": 2,
-     "enabled": "BUILDING_PALEONTOLOGY_LAB"
-    }
-   ]
+   "flat": 4
   },
   "area": {
    "flat": 4
   },
   "empire": {
-   "flat": 4
+   "flat": 4,
+   "buildings": {
+    "BUILDING_PALEONTOLOGY_LAB": {
+     "flat": 2
+    }
+   }
   }
  },
  "greatPeopleRate": {

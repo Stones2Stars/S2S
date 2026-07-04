@@ -1,15 +1,15 @@
 # Scope packages — the substrate rebuilt to the founding design (#430)
 
-> **Status:** DESIGN FOR OWNER REVIEW — no code until blessed. · **Authority:** [modifier.md](../../specs/modifier.md)
+> **Status:** LANDED whole (one landing, owner-blessed; modifier-substrate.md increment I) — under live
+> verification (the played-turn proof). · **Authority:** [modifier.md](../../specs/modifier.md)
 > §1 (deposit DOWN, accumulate, read O(1) — **the founding design of this migration**) +
 > [state-repositories.md](../../architecture/state-repositories.md) (the `CvDerivedCache` component, the
 > event→cache routing, the load-only-full-rebuild capstone).
 >
-> **Why this document exists (2026-07-04, the honest record):** the implemented substrate (increment C→G,
-> `CascadeRateSlots` + epochs + rollups) drifted from the founding design — it stores UPPER-scope sums per city
-> (store-at-target), which forced version-polling (epochs/stamps), fan-out invalidation, and the read-side ensure
-> protocol whose cost collapsed unit automation. The owner's 2026-07-04 statements were NOT new rulings but the
-> core spec restated against that drift. This document is the design stated once, whole, so the rebuild happens
+> **Why this document exists:** the implemented substrate (increment C→G, `CascadeRateSlots` + epochs +
+> rollups) drifted from the founding design — it stores UPPER-scope sums per city (store-at-target), which
+> forced version-polling (epochs/stamps), fan-out invalidation, and the read-side ensure protocol whose cost
+> collapsed unit automation. This document is the spec's design stated once, whole, so the rebuild happens
 > once, properly ([DEC-proper-once]).
 >
 > **The governing validation ruling — [DEC-structure-before-shadow](../../architecture/decisions.md#dec-structure-before-shadow)
@@ -23,16 +23,18 @@
 
 ## 1. The design (the spec, in implementation terms)
 
-**One uniform PACKAGE format.** A package is the §2 slot shape per channel: `Σflat` (×100 where the channel is
-fixed-point), `Σpercent`, and `Πmultiplier` (×100, identity 100 — identity throughout the migration since no
-yield/commerce source authors one, but the format is the [json.md](../../specs/json.md) §6.3 slot, complete) —
-the compiled result of every deposit AT ONE SCOPE for one channel-component. **The combine mode is FAMILY
-METADATA, never per-package** (§2: `polarity: signed-split` for wellbeing, the `min` member floor for defense,
-`combine: max|min`) — the package stores the sums; the family's metadata wires how the read combines them. A
-package's INTERNAL composition also resolves in isolation before it joins the combine (the §2a specialist's own
-percent layer applied to its intrinsic before joining BASE; the §2 plot package fully resolved before any city
-stack) — "isolated and super simple in isolation" includes the internal composition. No other shape exists at
-any scope.
+**One uniform PACKAGE format — a package is ONE standing summed number.** Package identity is
+**(scope × component × channel × UNIT-KIND)**: a **flat package** (Σflat, ×100 where fixed-point) and a
+**percent package** (Σpercent) are always SEPARATE packages — never two fields of one struct (percentages and
+hard yields never live in the same package; the unit is part of the slot key, [modifier.md](../../specs/modifier.md) §2). The separation is
+load-bearing for invalidation: "it's the percentage recalcs that hurt," so a flat-only event must leave every
+percent package structurally untouched — package-level separation makes that free, not mask bookkeeping.
+(`Πmultiplier` would be a third package kind — identity throughout the migration, no yield/commerce source
+authors one.) **The combine mode is FAMILY METADATA, never per-package** (§2: `polarity: signed-split` for
+wellbeing, the `min` member floor for defense, `combine: max|min`) — packages store the sums; the family's
+metadata wires how the read combines them. A package's INTERNAL composition resolves in isolation before it
+joins the combine (the §2a specialist's own percent layer applied to its intrinsic before joining BASE; the
+§2 plot package fully resolved before any city stack). No other shape exists at any scope.
 
 **One package set per SCOPE OBJECT, holding ONLY its own scope's deposits.**
 
@@ -41,7 +43,7 @@ any scope.
 | `CvPlot` | `m_yieldCache` (exists, conforming) | the plot's own base package |
 | `CvCity` | `m_cascadeCityPackages` | this city's `*.city.*` deposits, **as ISOLATED per-component packages** (below) |
 | `CvArea`* | (via the player package's per-area maps, v1) | `*.area.*` sums grouped by area — *promoted to a real `CvArea` member when a second channel needs it* |
-| `CvPlayer` | `m_cascadePlayerScope` | `*.empire.*` deposits from the player's active buildings anywhere + adopted civics + held traits (PURE-filtered) + team techs; SR-gated / coastal / connected sums kept as **separate fields** (their gates are per-city, applied at read) |
+| `CvPlayer` | `m_cascadePlayerScope` | the CITY-AGNOSTIC sums only (the city-realization law below): per-source-city building walks (empire percents/flats, each source evaluated in its OWN city's ctx), trait/heritage flats (free-city / GA ungated / playerExtra), the SR pools, the grantor ledgers, the wb area/empire fold maps; gated sums as separate fields (pure city-boolean gates applied at read) |
 | `CvTeam` | (none yet) | team-scope deposits when a channel first needs one |
 | `CvGame` | `m_cascadeWorldScope` | `*.world.*` sums across all living players |
 
@@ -57,7 +59,16 @@ split. So the city's yield packages are, per channel:
 |---|---|
 | specialist flat yields (counts × specialist deposits, own sub-stack inside) | BASE — multiplied by the percent stack |
 | building flat yields (+ perPopulation) | EXTRA — added after the percentages, truncated per §2a |
-| building percents | the percent stack (one additive stack with the player-scope percent packages) |
+| **the WHOLE percent stack, CITY-REALIZED** (city+area+empire buildings + civics + traits + projects + civic-keyed, THIS city's ctx) | the percent stack |
+
+**⚖ THE CITY-REALIZATION LAW (the measured Burdigala class):** a deposit whose CONDITION references the city
+(SR-in-city, city building presence, any city predicate) is a **city-realized join** regardless of its authored
+scope — evaluating it once at player scope (against any single city's ctx) mis-serves every other city, as the
+live nets proved (+18..+27 persistent pct deltas on non-capital cities). Therefore ALL conditioned percent
+stacks and civic/trait/tech sums realize per city, in the city package, with that city's ctx; the player scope
+holds only the genuinely city-agnostic sums — the per-source-city building walks (each source evaluated in its
+OWN city's ctx), the trait/heritage flats, the pools, the grantor ledgers, and the gated fields whose gates are
+pure city booleans applied at read.
 
 (the plot base is the `CvPlot` package, pulled — also BASE tier; the player scope splits the same way:
 free-city/GA trait flats = BASE tier, civic/trait/empire-building percents = stack contributions. Every
@@ -70,10 +81,15 @@ physically produces yield in-game; every other source kind (trait / civic / tech
 only MODIFIES or CONDITIONS a provider's output, so every yield deposit resolves onto a provider-kind
 package (a trait's specialist boost onto the specialist package, a civic's building-keyed percent onto the
 building percent stack, …). Trade-route yield stays the one live input (never derived).
-**⏳ OPEN QUESTION for the owner (asked, not assumed):** §2a lists the free-city + golden-age trait flats
-as BASE-tier city-wide terms with no physical provider among the four — their provider-home under this law
-(a city-level base package? re-homed onto a provider? a deliberate fifth city-base slot?) needs the
-owner's classification before the rate-channel migration step.
+**⚖ RULED (owner 2026-07-04): the golden-age trait flats are FLAT BONUSES that ride the flat yield
+packages "outside" the normal provider chain — use the existing mechanism, keep it simple (golden age is an
+extremely core engine mechanic).** No provider-home is needed: the four-provider law describes what
+physically produces base yield; these are plain player-scope flat packages joining BASE at the combine
+(`flatGoldenAge`, gate live at read; the trait "free-city" yield flats — `flatFreeCity`, the
+`m_aiFreeCityYield` class — ride identically), exactly the landed shape. A later remodel that fully aligns
+golden age (the member-mirror → predicate extraction, [modifier.md](../../specs/modifier.md) §3's
+golden-age carve-out) stays a possible post-migration item. ⚠ "free-city" = the trait accumulator, NOT the
+WLTKD celebration (sole effect: zero city maintenance — [economy.md](../../reference/economy.md)).
 
 **Every package on the ONE component** (`CvDerivedCacheSet<TOwner>`), living ON the object, never serialized,
 all-dirty from birth/reset, rebuilt at load (the eager warm-up), refreshed via the owner's thin delegate to the
@@ -91,7 +107,25 @@ that hurt"; a flat-only source never rebuilds a percent stack):
 | specialist count change | the city package's specialist components only |
 | civic swap / GA flip / tech researched | the player package + the player's cities' packages (**legitimate fan-out: conditions on city-scope deposits reference these** — `enabled:{TECH_X}`) + facts |
 | unit movement | **nothing, ever** ([DEC-unit-modifiers-on-top]; units may never author yield percentages) |
-| slice start (`CvPlayer::doTurn` top) | the self-heal re-check marks for the not-yet-proven hook classes + eager `ensure` of this player's packages ("Cascade.RebuildCache(myPlayerId)") |
+| slice start (`CvPlayer::doTurn` top) | the FULL per-player rebuild ("Cascade.RebuildCache(myPlayerId)"): mark-all + eager ensure of the player scope + every city's facts + packages. ⛔ NEVER narrow this to "the unhooked classes" — an unhooked mutation (power flips, bonus-network shifts, timers) otherwise stales a package FOREVER (the measured frozen-package class); the boundary's breadth IS the self-heal, and its cost is bounded by active-set fills + compiled ids, not by mark width |
+| city founded / acquired (`CvPlayer::found` + `acquireCity` setup tails) | the creation-time **EAGER ENSURE** (`CascadeAccumulator::cityCreated`: facts, then packages) — the ONE ruled exception to boundary-only rebuilds (below) |
+
+> **⚖ RULED (owner 2026-07-04, the precipice review): the freshness contract is the PER-PLAYER-SLICE
+> SNAPSHOT — *"start of next turn is what is expected; getting a yield event in the middle of a turn is not
+> retroactive."*** A package marked mid-slice rebuilds at its owner's NEXT slice boundary; mid-turn reads
+> serve the turn-start snapshot (the event marks carry the dirt to the boundary — they trigger no mid-turn
+> rebuild). Consequences, all ruled/known: (1) end-turn PROCESSING is always boundary-fresh (the slice
+> rebuild runs before the cities process), so gameplay magnitudes are right; (2) the human's mid-turn
+> DISPLAY (city screen during specialist juggling, after a mid-turn action) shows turn-start values until
+> the next turn — watch in play; the surgical remedy if it feels wrong is a UI-only eager refresh hook,
+> never a return of read-side ensures; (3) a getter-net divergence sampled mid-turn against always-fresh
+> legacy is an ACCEPTED class under this ruling (attributed to the snapshot, never chased); (4) the ONE
+> exception is CITY CREATION — owner, same day: *"when a new city is founded, its natural that the initial
+> yields and caches are immediately set up, so that we can see time to build"* → `cityCreated` runs at the
+> end of the founding/acquisition setups. This supersedes — for the shadow window too — the
+> [state-repositories.md](../../architecture/state-repositories.md) "flipped getters must match legacy's
+> always-fresh answers" parity-discipline line: the snapshot semantics are in force NOW, not deferred to
+> the AI build-queue-parity rework.
 
 **Reads are BARE FETCHES composed by the channel's COMBINE FORMULA over the packages.** A realized getter
 fetches the scope packages (plot pull + city + [area] + player + [team] + world as the channel needs) and
@@ -109,12 +143,58 @@ standing number; at read they are **all summed together into the one modifier** 
 super simple in isolation — that simplicity IS the design; complexity anywhere in a package rebuild or a
 read composition is a sign the scope/position split was gotten wrong.
 
-**Full rebuild of every package happens at LOAD only** (the capstone). Post-load, every recompute is a marked
-package at a boundary.
+**There is only ONE rebuild mechanism — dirty → ensured at the boundary; load is not a second kind.** Every
+package is stale-from-birth, so correctness needs nothing special at load — the first boundary ensure would
+build it regardless. The load-end warm-up is purely a PERF POLICY (turn-time-is-king: prepay the cost in
+load), invoking the same ensure eagerly. The capstone ("full rebuild at load only") is thereby a CONSEQUENCE,
+not a rule to enforce: post-load, marks are always partial by construction, so a full rebuild can never occur
+again — load is "full" only because everything starts dirty.
 
-**The calculators stay, as ORACLES only.** The existing from-scratch calculators (`YieldRate`, `CommerceCalc`,
-`CascadeWellbeing`, `CascadeScalarChannels`) never feed the packages' read path — they are what the per-turn nets
-diff the package sums against. An oracle that read a package could not catch a package bug.
+**⚖ THE LAW — ONE calculation path for EVERYTHING; a family is METADATA, never a code path
+([json.md](../../specs/json.md) §6.3: "the combine mode is family metadata, never the per-value unit";
+[modifier.md](../../specs/modifier.md) §2: "declared as FAMILY metadata, never per-deposit"; the one-substrate
+principle, cascade-engine-430 §1).** ALL yields work the same way. ALL properties work the same way. Happiness = Σ providers − Σ anger
+(negative ⇒ angry); health identically. Every channel — every yield, every commerce, GP-rate, defense,
+maintenance, both wellbeing families, tradeRoutes, buildRate, every `PROPERTY_*` — is the identical model:
+isolated packages summed per (scope × position), one trivial family-parameterized combine at read, live
+inputs folded on top. **There are ZERO special channels.** Properties are the spec'd case of the same split
+([json.md](../../specs/json.md) §5/§6 + modifier.md §1 rule (c), data-vs-machinery): each `PROPERTY_*` is an
+ordinary family whose deposits the cascade sums — that summed per-turn feed is the CASCADE'S job — while the
+**property EVALUATION (the equilibrium engine deciding which way the property moves) sits OUTSIDE the
+cascade**, machinery consuming the feed. What differs per family is pure parameterization: the combine
+metadata (which positions exist, `polarity: signed-split`, the `min` floor, the §2a EXTRA truncation), the
+live-input folds at read (slider, disorder, trade yield, military count, the per-city gates), and — for
+buildRate — target-keyed package selection. **Family metadata's home is settled by the spec itself**
+([json.md](../../specs/json.md) §6.3 "you author the values; the ENGINE combines them" + modifier.md §1
+rule (c) data-vs-machinery): a **static engine-side table**, one row per family (positions / polarity /
+floor member / truncation), plain compiled constants keyed by family id — never authored in JSON, zero
+runtime lookup cost. So the engine is **one generic package-combine** (packages in,
+family metadata drives the combine, live inputs fold at read); migrating a channel = wiring its packages +
+metadata onto it, never writing a channel-specific path. The four per-channel calculator modules exist only as
+migration scaffolding (per-channel attribution needed independent walkers). The two spec'd exclusions:
+movement/range (modifier.md §6 — a per-edge resolver, not the deposit shape) and the tally (counts roll up).
+
+**There is NO performance case for per-channel paths — perf argues FOR the one path.** The performance lives
+in the PACKAGE layer (standing pre-summed numbers, bare-fetch reads), indifferent to path count; a
+metadata-driven combine is the same integer adds + one multiply as a hand-rolled function, and one hot path
+beats four for the instruction cache and for having one place to optimize. The one perf-real rule the generic
+engine obeys — a constraint, never a license for duplicates: **GENERIC CODE, STATIC STORAGE.** Family metadata
+compiles to ints/flags at load (the deposit-index precedent); the packages stay flat named/indexed fields
+(compile-time channel indices on the scope structs); runtime never touches a string, a map lookup, or a
+dynamic dispatch on the read path. Per-channel code buys nothing but duplication and special-case risk.
+
+**ONE oracle too — the law extends to the verification layer, with the [patterns.md](../../architecture/patterns.md)
+single-source precision:** the `Calc/*` **position packages** (`PercentStack`, `YieldBasePackages`,
+`BuildingPackage` — StoneBase-mirrored 1:1, already generic over channels) **STAY** — they are the single-source
+per-position functions. What consolidates is the per-channel **ASSEMBLERS** (`YieldRate`, `CommerceCalc`,
+`CascadeWellbeing`, `CascadeScalarChannels` + their bespoke parts structs) and the per-channel endpoint emits —
+that is where the sprawl lives; every channel can use the exact same assembler. The end-state: **one generic
+deposit-walker assembler** (walk family F's deposits through the position packages, combine by family metadata)
+and **one generic family-parameterized endpoint decomposition** — the axes are identical for every family.
+Migration path: the generic assembler is proven ORACLE-VS-ORACLE (diffed offline against each per-channel
+assembler); each retires as the generic one reproduces it. The one deliberate end-state duplication: the ORACLE
+re-walks sources; the PACKAGES stand pre-summed — independent by construction, so the nets can catch a package
+bug.
 
 ## 2. The gap map — what today's code holds vs where it belongs
 
@@ -137,23 +217,122 @@ compiled `DepositIndex`; `m_cascadeFacts` (city-scope facts, event-marked — lo
 calculators as oracles; the derived building mask concept; the bare-fetch read + slice-start boundary +
 `gameId`/perf census pieces of increments F/G.
 
-## 3. Migration order (each step compiles + nets before the next)
+## 2b. The TOUCH MAP — every site the rebuild lands on (the code-cut-map discipline)
 
-1. **The package structs + scope members** (`CvCity`/`CvPlayer`/`CvGame` + delegates + load warm-up + reset
-   marks), epochs/stamps deleted, `markPlayerScopeAndCities` as the player-event mark. The SCALAR channels move
-   first (smallest surface, hooks proven): city halves per city, player/world parts per their packages, getters
-   = the package adds. The `[MODIFIER/scalar]` net diffs the composition vs the oracles.
-2. **The rate channels** (`aPct`/`aEmpFlat`/`aCBase100` split per the gap map) — the `[SLOT]`/`[GETTER]` nets
-   re-verify each split; the flipped yield/commerce getters become package adds (their read cost DROPS —
-   today's `acc_ensure` per read disappears).
-3. **The wellbeing channel** (the verdict realization moves to read; the parts live per scope) — the
-   `[MODIFIER/wellbeing]` net re-verifies; the ruled end-turn cadence is preserved by the slice-start marks.
-4. **The per-channel mask granularity** (AccDirty bits split per channel — "we know exactly which package, for
-   what yield") + the tech/civic/trait derived masks (the building mask's successors).
-5. The area/team scope members when a channel first genuinely needs them (maintenance area is the candidate).
+> Mechanically swept from the live tree at `d35efd21b`+docs (grep: `CascadeAccumulator::`,
+> `m_cascadeRateSlots.`, the epoch/stamp primitives, the module statics, the slot-field readers). Line numbers
+> drift — re-verify the named function, not the integer. **⛔ This is a PASS-1 mechanical sweep; per
+> [DEC-all-means-all] it gets an ADVERSARIAL second pass (assume incompleteness, hunt the miss) BEFORE phase 1
+> starts — a self-certified map is not a map.**
+
+| # | site | what it is | phase action |
+|---|---|---|---|
+| 1 | `Cascade/CvCascadeAccumulator.h` (`CascadeRateSlots`, `AccDirty`, `CvCascadePlayerStamp`) | the store-at-target struct + bits + the stamp primitive | ph1 rebuild in place: city-only package fields (flat/percent separate, per-package bits); stamp DELETES ph5 |
+| 2 | `Cascade/CvCascadeAccumulator.cpp:28-60` (`s_iEpoch`/`s_aiPlayerEpoch`, `bumpEpoch`/`bumpPlayerEpoch`/`epochFor`, `freshen`) | the polling machinery | ph5 DELETE (marks replace) |
+| 3 | `CvCascadeAccumulator.cpp:87-103` (`acc_ensure`) + every accessor's ensure call (`:172,181,190,198,206,213,220,234`) | the read-side ensure protocol | ph2–4 accessors recompose to package combines; ensure dies ph5 (reads = bare fetches) |
+| 4 | `CvCascadeAccumulator.cpp:106-167` (`refreshComponents`) | the masked recompute dispatch | ph1+ splits: city-half walks per city package; player/world halves to their scopes' delegates |
+| 5 | `CvCity.cpp:59` bind · `:482-489` reset (incl. the stamp lines + facts stamps) · `CvCity.h:1845` delegate | the city cache lifecycle | ph1 extends (new package member); stamp lines DELETE ph5 |
+| 6 | `CvCity.cpp` dirty hooks ×5 — `:4548` building, `:6944` pop, `:14171` specialist, `:15318`/`:15523` religion/corp | the event marks | ph1 masks re-derive per package bits (building = the derived-mask precedent); semantics keep the ruled cadences (WB end-turn) |
+| 7 | `CvCity.cpp:11312`/`:12049` (`getYieldRate100`/`getCommerceRate`, flipped) | the live rate getters | ph3 recompose internals to the §2a package combine (under the standing `[GETTER]` net) |
+| 8 | `CvCity.cpp:5637-5651` (wellbeing verdict getters ×4, flipped) | the live wb getters | ph4 recompose: verdicts realized at read from good/bad packages |
+| 9 | `CvCity.cpp:7196+` (the four scalar getters, REVERTED to legacy; `*Legacy` siblings) | the scalar getters | ph2 recompose + flip (in-body net through real turns first) |
+| 10 | `CvPlayer.cpp:9414` GA · `:14296` civics · `CvTeam.cpp:4952` tech (`bumpPlayerEpoch` ×3) | the player-event sites | ph1 `markPlayerScopeAndCities` lands beside; ph5 replaces alone; + `CvPlayer` gains member/bind/delegate ph1 |
+| 11 | `CvGame.cpp:649` (warm-up: `scGpBase` ensure; the block warms plots + city slots) | the load warm-up | ph1 extends to ALL packages, all scopes (the capstone's realized site) + `CvGame` gains the world member |
+| 12 | `Cascade/CvCascadeCityFacts.h:28-31` + `EnablerKernel::cityFacts` (`:255-274`, `epochFor` stamp block, include `:22`) | the facts' polling half | ph5 stamps DELETE (pure Set; slice-start covers the unhooked classes) |
+| 13 | `Cascade/CvCascadeWellbeing.cpp:180-216` (`WbPlayerRollup`, `s_wbRollup[MAX_PLAYERS]`, the local `WbSplit`) | player wb sums off-object | ph4 → the `CvPlayer` package (fold maps); statics DELETE |
+| 14 | `Cascade/CvCascadeScalarChannels.cpp:87+` (`ScPlayerRollup` on the shared stamp) | player scalar sums off-object | ph2 → the `CvPlayer` package; static DELETES |
+| 15 | `Cascade/CvCascadeModifierMath.cpp` — rate/wb net reads (`:367,:499,:515,:559`) + the `[MODIFIER/scalar]` net (`:584-604`, raw `sst.iSc*` reads) + the `MDF_*` field registry | the verification harness | rate/wb nets unchanged (oracle side); the scalar net's slot side recomposes with ph2 (raw package reads — the non-tautological form) |
+| 16 | `Tools/CvHttpServer.cpp:1754-57` (casc wb) + `:1840-44` (slot twins `scSt.iSc*`) | the endpoint emits | ph2/ph4 recompose to package reads; field names stay (StoneBase parser unaffected) |
+| 17 | the `[MODIFIER/perf]` census + StoneBase `PerfLineParser`/`perf_fields` | the perf pipeline | UNTOUCHED (names stable); the ph2 read-cost proof consumes it |
+| 18 | `CvGame`/`CvPlayer` `doTurn` tops | the slice-start boundary | ph1 adds the player-slice ensure (the interim boundary; the turn-end unified pass is the post-plan trajectory) |
+| 19 | `Cascade/CvCascadePerfCount.{h,cpp}` (the census counters — `scRefresh`/read counters increment inside the refresh/ensure paths) | the perf census internals | counters re-home to the package refresh/read sites as each flip lands; EMITTED names stay stable (StoneBase parser) — *adversarial-pass find* |
+
+**Not touched by this rebuild (verified out of scope):** the enabler gates + facts *content* (only the stamps
+go), the tally, capabilities (already cut), the plot cache, the DepositIndex, grants (unbuilt), StoneBase's
+tracker/perf surfaces, and every legacy accumulator the cutover's own map owns (`code-cut-map.md` — this map
+covers the SUBSTRATE rebuild only, not the legacy cut).
+
+## 3. The implementation plan — ONE LANDING, then incremental CHECKING
+
+**⛔ THE BUILD LAW: no increments in the BUILD.** Incrementing on a specific scope or yield means chasing
+parity without a critical element (a missing scope's term reads as a divergence → a patch → special-case
+fuckery). The whole structure goes up in ONE landing — all yields, all channels, all scopes, the packages,
+the engines, the marks, the deletions — and only THEN is the data **checked** in increments (nets, probes,
+owner-played turns), against a structure that is complete. The oracles + *Legacy getter siblings provide the
+verification safety; coexistence half-states do not exist.
+
+**Phase 1 — the package substrate (no behaviour change).**
+New `Sources/Cascade/CvCascadeScopePackages.h` (+ `.cpp` math in the accumulator module): the three scope
+structs, every field ONE package (one summed number, flat/percent always separate), each struct on one
+`CvDerivedCacheSet` with one dirty bit per package(-group):
+- `CascadeCityPackages` on `CvCity` — per yield channel: `pctBuildings` / `flatSpecialists` (BASE) /
+  `flatBuildings100` (EXTRA, incl. perPop); per commerce: `cSpec100` / `cFlatCity100` (religion/corp city
+  terms) / `cPct`; the wellbeing city-scope split terms; the scalar city halves (gpBaseBld, gpBaseSpec,
+  gpModCity, defense, maintModCity, tradeCity).
+- `CascadePlayerScope` on `CvPlayer` — per yield channel: `pctEmpire` (empire buildings + civics + traits +
+  projects) / `flatFreeCity` / `flatGoldenAge` (gate live at read); commerce twins; the wellbeing area/empire
+  fold maps; the scalar player parts (gpModPlayer + SR-gated field, maintPlayerAll + area maps + conn-gated,
+  tradeEmpire + coastal-gated); every gated sum its own field.
+- `CascadeWorldScope` on `CvGame` — the world flats (tradeRoutes first tenant).
+Wiring: ctor binds + reset marks + thin refresh delegates (math module-side); the slice-start rebuild
+(`doTurn` top ensures the player's packages + his cities'); the load warm-up ensures ALL packages (the
+capstone); the mark sites — `markPlayerScopeAndCities` beside (not yet replacing) `bumpPlayerEpoch`.
+Phase 1 also stands up **the two generic engines** (the one-path law): the **package-combine engine** (packages
+in, family metadata drives the combine, live inputs fold at read) and the **generic deposit-walker oracle**,
+the latter proven ORACLE-VS-ORACLE offline against each existing per-channel calculator before it serves any
+net. Phases 2–4 are then pure family migrations onto these engines — no new channel code paths, and each
+per-channel calculator + bespoke endpoint retires as its family lands.
+*Verify:* Assert build; endpoint twins emit package values beside the old slots; zero getter changes.
+
+**Phase 2 — the FLIP LIST (not channel projects — the channels dissolved into the one engine).**
+There is no per-channel build work: the generic fill walks the compiled deposit index ("sum scope S's deposits
+of family F at position P"), so every term — including the free-city flats, the golden-age flats, and
+freeSpecialists — arrives as an ordinary keyed/conditioned flat deposit the walker picks up (GA = a flat with
+its gate live at read; freeSpecialists = the spec'd count-family; **no special provider-home exists or is
+needed** — the four-provider law describes what physically produces base yield; a trait's flat is just a
+deposit at its scope and §2a position). What remains per channel is exactly three small items: its **metadata
+row** (positions / `signed-split` / `min`-floor / truncation), its **live-input folds** (slider, disorder,
+anger raw-state, military count, the per-city gates), and its **getter flip proof**. The flip list, in
+dependency/risk order, each entry = recompose the getter to the generic combine + in-body net + real played
+turns clean + flip (the capabilities lesson: offline parity alone is insufficient; frozen-save protocol,
+perf census rows to the StoneBase store — the 1.28M-reads class must go flat):
+1. the five scalar getters (smallest surface, hooks proven; module statics delete onto the player package);
+2. `getYieldRate100`/`getCommerceRate` (already flipped — internals recompose under the standing `[GETTER]`
+   net; `aPct`/`aEmpFlat`/`aCBase100` content splits per the gap map);
+3. the four wellbeing verdicts (§2b verbatim: Σ providers − Σ anger, negative ⇒ angry; health identically —
+   two flat packages per scope, verdicts realized at read; `s_wbRollup` deletes; military live-on-top; the
+   ruled end-turn cadence rides the slice-start marks);
+4. buildRate — the same engine, keyed selection: its packages are PER-KEY LEDGERS (key = the compiled index's
+   interned target id: unit/building/domain/unitCombat/category), one per scope, filled by the same generic
+   walk; the read for the head item sums the entries matching the item's keys + its bonus-gated `self` mods.
+   Its historic "deferral" was an artifact of the flat-int slot storage, not the model — the channel is
+   already the best-attributed of all (the keyed walk reconciles exactly through `sumKeyed4U`). Ledger storage
+   obeys generic-code-static-storage: interned-int keys in a compiled fixed table.
+
+**Phase 3 — the ONE-PHILOSOPHY atomic cut.**
+With every channel package-served and netted clean: delete the epochs (`bumpEpoch`/`bumpPlayerEpoch`/
+`epochFor`), `CvCascadePlayerStamp`, the slots' + facts' `iEpoch`/`iTurn` stamps, the turn-roll blanket, and
+the read-side ensure protocol — events mark, boundaries rebuild, reads fetch. The three player-event sites run
+`markPlayerScopeAndCities` alone. The derived masks refine: percent-vs-flat per source kind (building landed;
+tech/civic/trait next), then per-channel bits ("which package, for what yield").
+
+**Phase 6 — the queue on the finished substrate** (each its own work item): the tradeRoutes vote-class split,
+property-engine wiring, the unitInput endpoint, grants, area/team scope members when a channel first needs
+them (maintenance-area the candidate).
+
+**The trajectory beyond this plan** ([state-repositories.md](../../architecture/state-repositories.md)
+end-state): the slice-start rebuild is the INTERIM boundary; the written end-state is **one unified TURN-END
+rebuild pass in dependency order** (plot → city → player), landing WITH the parked AI build-queue-parity
+rework. Until that rework, the event marks + slice-start stand (today's AI still reads mid-turn — parity
+discipline). Phase 5's mask refinement is designed to survive that transition unchanged (the marks stay; only
+the rebuild boundary moves).
 
 Verification per step: the standing nets (slot-vs-oracle, casc-vs-legacy) + the census counters + the frozen-save
 protocol (end turn → automates → end turn), with the perf rows landing in the StoneBase store.
+**The owner's play-report semantics:** the mark-1 eyeball is never a metric EXCEPT for extreme outliers — and
+**game unresponsiveness IS the owner's trigger warning**: any "it hung / went unresponsive" report is a hard
+signal to instrument + attribute immediately (both such reports during this landing were true positives — real
+hot-path defects). Magnitude judgments ("felt slower") route to the instruments, never to tuning by feel.
 
 **The binding flip lesson ([capabilities.md](../../specs/capabilities.md), the reverted first capability cut):
 for getters feeding DERIVED ENGINE STATE, offline parity is necessary but NOT SUFFICIENT** — the capability flip
@@ -162,6 +341,20 @@ was 0-diverging offline and still broke the trade network on the first real turn
 played turns) clean BEFORE the flip — never an offline/endpoint parity alone. And per
 [DEC-structure-before-shadow]: the nets verify each step's *behaviour*; the *structure* is verified once, here,
 against this document and the specs it cites.
+
+> The full legacy↔cascade DUPLICATE-SURFACE index (every pair running in the shadow window, who serves, the
+> nets, the cut homes) is its own document: [duplicate-surface.md](duplicate-surface.md).
+
+## 3b. The caching-surface census (one surface, enforced)
+
+Post-landing, the cascade plane has ONE caching surface — the `CvDerivedCache` component (flag form for
+homogeneous leaves: the plot yields; Set form for the package structs: city/player/world/facts — owner-side
+storage, the component owns the dirty protocol). The residuals, each with its disposition: the **legacy
+accumulators** behind the `*Legacy` oracles are the sanctioned shadow-phase doubles (die at the atomic cut,
+patterns.md rule 7); **`CascadeCapabilities`'s hand-rolled per-team union → CONVERGE onto the Set protocol**
+(the one real follow-up; state-repositories.md mandates the ONE pattern); the **load-time compiled statics**
+(DepositIndex, candidate lists) are static-data artifacts with no freshness surface; the **AI heuristic
+caches** are out of scope (superseded-ideas.md — the AI rework's plane).
 
 ## 4. What this deletes at the end
 

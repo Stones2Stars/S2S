@@ -160,6 +160,7 @@ m_cachedBonusCount(NULL)
 {
 	PROFILE_EXTRA_FUNC();
 	m_dataRepository.init(this);
+	m_cascadePlayerScope.set.bind(this, &CvPlayer::cascadeRefreshPlayerScope);   // #430: the player scope packages (all-dirty from birth)
 	m_aiSeaPlotYield = new int[NUM_YIELD_TYPES];
 	m_aiYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiCapitalYieldRateModifier = new int[NUM_YIELD_TYPES];
@@ -759,6 +760,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	int iI, iJ;
 
 	m_dataRepository.reset();
+	m_cascadePlayerScope.set.markAllDirty();   // #430: a reused player object starts with stale packages
 
 	//--------------------------------
 	// Uninit class
@@ -2747,6 +2749,11 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 		pNewCity->checkBuildings(false);
 		pNewCity->updateEspionageVisibility(false);
 
+		// #430: the acquisition setup is complete (buildings/religions/corps/timers applied, dormancy
+		// checked) -- realize the new owner's city packages NOW, before the keep/raze evaluation reads
+		// the city (owner ruling 2026-07-04: a new city's yields/caches stand immediately).
+		CascadeAccumulator::cityCreated(pNewCity);
+
 		// Don't bother with plot group calculations if they are immediately to be superseded by an auto raze
 		if (bUpdatePlotGroups)
 		{
@@ -3684,10 +3691,19 @@ const char* CvPlayer::getUnitButton(UnitTypes eUnit) const
 	return pUnitArtInfo ? pUnitArtInfo->getButton() : GC.getUnitInfo(eUnit).getArtInfo(0, getCurrentEra(), NO_UNIT_ARTSTYLE)->getButton();
 }
 
+// #430: the CacheSet's refresh delegate -- the package math lives module-side (CascadeAccumulator).
+void CvPlayer::cascadeRefreshPlayerScope(int iMask) const
+{
+	CascadeAccumulator::refreshPlayerScope(this, iMask);
+}
+
 void CvPlayer::doTurn()
 {
 	PROFILE_FUNC();
 	PERF_SCOPE("CvPlayer::doTurn", getID());
+	// #430 the SLICE-START rebuild ("Cascade.RebuildCache(myPlayerId)"): the self-heal re-mark + the eager
+	// ensure of this player's packages and his cities' -- reads are bare fetches for the rest of the slice.
+	CascadeAccumulator::playerSliceRebuild(getID());
 
 	// Only decrement the GA counter at the end of this function if GA started before this point, i.e last turn.
 	const bool bWasGoldenAgeLastTurn = getGoldenAgeTurns() > 0; 
@@ -6362,6 +6378,10 @@ void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 	}
 
 	pCity->doAutobuild();
+
+	// #430: the founding setup is complete -- realize the new city's cascade packages NOW (owner ruling
+	// 2026-07-04: initial yields/caches stand immediately, so time-to-build etc is visible at founding).
+	CascadeAccumulator::cityCreated(pCity);
 
 	if (!isHumanPlayer() || getAdvancedStartPoints() > -1)
 	{
@@ -9411,7 +9431,7 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 
 		if (bWasGoldenAge != isGoldenAge())
 		{
-			CascadeAccumulator::bumpPlayerEpoch(getID());   // #430 accumulator: golden age is an empire-flat input + a condition
+			CascadeAccumulator::markPlayerScopeAndCities(getID());   // #430: GA flip -- the flats gate LIVE; this mark covers IS_GOLDEN_AGE-conditioned deposits
 			if (!bWasGoldenAge)
 			{
 				changeAnarchyTurns(-getAnarchyTurns());
@@ -14293,7 +14313,7 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 	if (eOldCivic != eNewValue)
 	{
 		m_paeCivics[eIndex] = eNewValue;
-		CascadeAccumulator::bumpPlayerEpoch(getID());   // #430 accumulator: civic deposits/conditions -> this player's cities re-check
+		CascadeAccumulator::markPlayerScopeAndCities(getID());   // #430: a civic swap marks the player packages + the cities' (conditions reference civics)
 		if (isNPC()) return;
 
 		if (eOldCivic != NO_CIVIC)

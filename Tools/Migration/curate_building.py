@@ -290,7 +290,6 @@ COND_KEYED = {
     "BonusCommercePercentChanges": (None, "city", engine.COMMERCES, "flat", "bonus"),   # FLAT x100 (getBonusCommercePercentChanges -> getBaseCommerceRate100, CvCity.cpp:12135) -- NOT a percent (the "Percent" XML name is a misnomer, like TechCommerceChanges); de-scaled via PER100_TAGS
     "BonusProductionModifiers":    ("buildRate", "self", None, "percent", "bonus"),
     "VicinityBonusYieldChanges":   (None, "city", engine.YIELDS, "flat", "vicinityBonus"),
-    "BuildingHappinessChanges":    ("happiness", "city", None, "flat", "building"),
     "GlobalBuildingCostModifiers": ("costs", "empire", None, "percent", "building"),
 }
 # TARGET-keyed deposits (the effect lands ON the keyed entity): tag -> (family|None, scope, targetType|None, valuekeys|None, unit).
@@ -302,6 +301,13 @@ TARGET_KEYED = {
     # PlotYieldChanges -> a PLOTS-TARGET fold (owner 2026-06-22): per-plot-TYPE map folds into the `plots` target
     # filtered by a plot predicate (IS_WATER/IS_LAND/HAS_HILLS/HAS_PEAK). Handled in pass2 (_inject_plots), NOT plotTypes.
     "GlobalBuildingExtraCommerces":  (None, "empire", "buildings", engine.COMMERCES, "flat"),
+    # BuildingHappinessChanges: +N happiness to EVERY city holding the keyed building (legacy PLAYER-scope
+    # extraBuildingHappiness, CvPlayer::processBuilding:7490 -> per-city realization over its own buildings).
+    # The Royal Tomb class: +1 keyed to Palace/Forbidden Palace/Versailles SPECIFICALLY (owner 2026-07-04 --
+    # the named targets, never the generic gov-center predicate). Was mis-homed in COND_KEYED as a city-scope
+    # co-location gate (fired only when target+source shared a city -- silently dead almost everywhere; the
+    # precipice-review L3 find). The exact happiness twin of GlobalBuildingExtraCommerces above.
+    "BuildingHappinessChanges":      ("happiness", "empire", "buildings", None, "flat"),
     # Specialist{Yield,Commerce}Changes + Local* -> NOT here: a building boosting a specialist is the SPECIALIST's
     # OWN output conditioned by the building's presence (own-output home, modifier.md §6.5, owner 2026-06-20), so it
     # lives ON THE SPECIALIST -- emitted by curate_specialist's SPECIALIST_BOOSTS, dropped at the building.

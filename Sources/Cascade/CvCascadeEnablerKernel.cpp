@@ -254,20 +254,10 @@ void EnablerKernel::recomputeCityFactsInto(const CvCity* pCity, std::set<int>& a
 
 const CascadeCityFacts& EnablerKernel::cityFacts(const CvCity* pCity)
 {
-	// The standing per-city facts: freshness = the event dirty marks (building/religion/corp flips in CvCity)
-	// + the SHARED accumulator epoch (tech/civic/GA -- the same player-level events that re-check the rate
-	// slots also re-check the facts, since operate conditions read them) + the turn-roll self-heal (the
-	// unhooked classes: bonus-network/trade flips affecting operate conditions surface here, same cadence as
-	// the slots). Mirrors acc_ensure.
+	// The standing per-city facts, PURE Set protocol (scope-packages.md): events mark the Set directly
+	// (building/religion/corp flips in CvCity; tech/civic/GA via markPlayerScopeAndCities -- operate
+	// conditions read those; the slice boundary is the self-heal for the unhooked classes) -- no polling.
 	CascadeCityFacts& f = pCity->m_cascadeFacts;
-	const int iTurn = GC.getGame().getGameTurn();
-	const int iEpoch = CascadeAccumulator::epochFor(pCity->getOwner());
-	if (f.iEpoch != iEpoch || f.iTurn != iTurn)
-	{
-		f.iEpoch = iEpoch;
-		f.iTurn = iTurn;
-		f.set.markAllDirty();
-	}
 	f.set.ensure();
 	++CascadePerf::factsMemoHit;   // a standing-cache read (the census' "served without a recompute" counter)
 	return f;

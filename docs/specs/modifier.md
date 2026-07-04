@@ -24,9 +24,7 @@ Magnitudes flow **DOWN** the scope spine (`world → … → city → plot | uni
 rolls down to each of the player's cities; a city-scope deposit lands locally; a `plots`-target deposit lands on
 each matching worked plot (§5). The target reads a combined value — it never re-walks the sources.
 
-> **⚖ STORAGE SEMANTICS — the SCOPE PRINCIPLE. This IS §1's design — the founding shape of the migration —
-> made explicit here (2026-07-04) after implementations drifted to store-at-target; it was never a new
-> ruling.** Deposits accumulate in a package **AT THEIR OWN SCOPE** — one uniform package
+> **⚖ STORAGE SEMANTICS — the SCOPE PRINCIPLE.** Deposits accumulate in a package **AT THEIR OWN SCOPE** — one uniform package
 > format (Σflat / Σpercent per channel, §2) cached on each scope object (world / team / empire / area /
 > city / plot), each package event-invalidated at its own scope only. The downward "roll" is realized **AT
 > READ TIME**: the realized value is the trivial sum of the ~5 scope packages, with per-city gates
@@ -55,8 +53,11 @@ Per `(family, member, unit, target)`, the slot composes the three value units ([
 > **`effective = (base + Σflat) × (100 + Σpercent)/100 × Π(multiplier/100)`**
 
 `flat`s sum into the base; `percent`s (additive deltas) sum then apply once; `multiplier`s compose by product.
-The slot carries `Σflat`, `Σpercent`, and `Πmultiplier` (stored ×100, identity 100) — one `deposit(unit, value)`
-folds a value in, `effective(base)` reads it out.
+`Σflat`, `Σpercent`, and `Πmultiplier` (stored ×100, identity 100) are each their own accumulated number —
+**the `unit` is part of the slot KEY (per `(family, member, unit, target)`), so a flat sum and a percent sum
+are SEPARATE slots, never fields of one mixed struct** — the separation is what lets invalidation split
+percent-vs-flat (§1). One `deposit(unit, value)` folds a value into its unit's slot; `effective(base)`
+combines them at read.
 
 **All integer, ×100 fixed-point, no float** — Civ4 multiplayer is deterministic lockstep, and CPU-dependent
 float math desyncs. The single human→×100 conversion happened once in `readJson` ([json](json.md) §3.6); the
@@ -105,7 +106,7 @@ order is load-bearing (it decides what the percent stack scales and what it does
 |---|---|---|
 | **worked-plot yields** (`basePlotYield`) | Σ over the city's worked plots of each plot's ONE isolated base package (§2 plot-as-base): `max(0, terrain+feature+bonus)` nature + improvement (floored at −nature) + route + keyed building/civic/trait `plot`-flats + `plots`-target + city-centre constant + threshold/golden-age per-plot | **computed** from the curated plot substrate + `/state/plots` |
 | **trade-route yield** (`tradeYield`) | `/state` input | **input** — out-of-scope (the trade network); the calc *folds it in*, never derives it. The ONE live-yield input (see [http-endpoints](http-endpoints.md)) |
-| **free-city yield** (`freeCityYield`) | Σ the player's active traits' `YieldChanges` (`{ch}.empire.flat`) | **computed** (was a `/state` read; now derived — [http-endpoints](http-endpoints.md)) |
+| **free-city yield** (`freeCityYield`) | Σ the player's active traits' `YieldChanges` (`{ch}.empire.flat`) | **computed** (was a `/state` read; now derived — [http-endpoints](http-endpoints.md)). ⚠ NAMING (owner clarification 2026-07-04): "free-city" here = the legacy trait accumulator (`CvPlayer::m_aiFreeCityYield`, free yield granted in every city) — **NOT** the WLTKD celebration ("We Love the King/Emperor Day"), whose sole gameplay effect is zero city maintenance ([economy.md](../reference/economy.md)) |
 | **golden-age yield** | trait `goldenAge` member (`{ch}.empire.goldenAge.flat`) while in golden age | **computed** (`empire.goldenAge` member-mirror, §3 golden-age carve-out) |
 | **specialist yields** (`specialist`) | per assigned specialist: `intrinsic × (100 + specialist-%)⁄100` + building-local (gated `city.flat`) + per-type (`empire.flat`) + perAll + trait governing-deliverer | **computed**. NOTE the specialist carries its **own** percent layer (its intrinsic ×`(100+specialist-%)`) *before* it joins BASE and takes the city `modifier` — two distinct percent stacks |
 
@@ -201,7 +202,7 @@ never dirties any cache — the cached sums are unit-free by construction; (2) t
 flat addition to the realized number, never an input to a percent stack. The implementation shape: the cache
 stores the unit-free number (+ any epoch-stable per-unit multiplier, e.g. the civic perMilitaryUnit VALUE);
 the read folds `perUnit × liveCount` / the live unit walk on top (an O(1)-ish live engine read).
-**The AUTHORING BAN that keeps this coherent (owner ruling 2026-07-04): no unit gives — or can ever be
+**The AUTHORING BAN that keeps this coherent: no unit gives — or can ever be
 ALLOWED to give — PERCENTAGES to yields of any kind.** A unit-carried value is always a raw flat number on
 top; a unit-authored percent would force units back inside the cached percent stacks and break the whole
 on-top model. Enforceable at the curator/validation layer: a `units/**` JSON authoring a yield/commerce

@@ -1833,15 +1833,14 @@ namespace
 				// cascade sums vs the legacy accumulators, the open-the-net step of each channel ----
 				{
 					picojson::object sc;
-					// the increment-F STANDING slot values (raw reads -- the hook-maintained state as it stands;
+					// the STANDING package-composed values (bare fetches -- what the flipped getters return;
 					// the *Casc fields below are the FRESH calculators, so slot-vs-Casc shows staleness on demand)
 					{
-						const CascadeRateSlots& scSt = pCity->m_cascadeRateSlots;
-						sc["gpBaseSlot"] = picojson::value((double)(scSt.iScGpBaseBld + scSt.iScGpBaseSpec));
-						sc["gpModSlot"] = picojson::value((double)scSt.iScGpMod);
-						sc["defenseSlot"] = picojson::value((double)scSt.iScDefense);
-						sc["maintModSlot"] = picojson::value((double)scSt.iScMaintMod);
-						sc["tradeRoutesSlot"] = picojson::value((double)scSt.iScTradeRoutes);
+						sc["gpBaseSlot"] = picojson::value((double)CascadeAccumulator::scGpBase(pCity));
+						sc["gpModSlot"] = picojson::value((double)CascadeAccumulator::scGpModifier(pCity));
+						sc["defenseSlot"] = picojson::value((double)CascadeAccumulator::scDefense(pCity));
+						sc["maintModSlot"] = picojson::value((double)CascadeAccumulator::scMaintenanceModifier(pCity));
+						sc["tradeRoutesSlot"] = picojson::value((double)CascadeAccumulator::scTradeRoutes(pCity));
 					}
 					sc["gpBaseCasc"] = picojson::value((double)CascadeScalarChannels::gpRateBase(pCity, wbec));
 					sc["gpBaseLeg"] = picojson::value((double)(pCity->getBaseGreatPeopleRateLegacy() - kWbOwner.getNationalGreatPeopleRate()));
@@ -1884,8 +1883,17 @@ namespace
 						const int iWbBr = CascadeScalarChannels::productionModifier(pCity, wbec, bWbHasOrder, &wbBrParts);
 						if (bWbHasOrder)
 						{
+							const UnitTypes eWbBrU = pCity->getProductionUnit();
+							const BuildingTypes eWbBrB = pCity->getProductionBuilding();
+							const ProjectTypes eWbBrPr = pCity->getProductionProject();
+							// the TRUE legacy oracle: the head-order *Legacy overload. The no-arg dispatcher is
+							// FLIPPED, so it would net cascade-vs-cascade (the precipice-review tautology fix).
+							int iWbBrLeg = 0;
+							if (eWbBrU != NO_UNIT) iWbBrLeg = pCity->getProductionModifierLegacy(eWbBrU);
+							else if (eWbBrB != NO_BUILDING) iWbBrLeg = pCity->getProductionModifierLegacy(eWbBrB);
+							else if (eWbBrPr != NO_PROJECT) iWbBrLeg = pCity->getProductionModifierLegacy(eWbBrPr);
 							sc["buildRateCasc"] = picojson::value((double)iWbBr);
-							sc["buildRateLeg"] = picojson::value((double)pCity->getProductionModifier());
+							sc["buildRateLeg"] = picojson::value((double)iWbBrLeg);
 							// the cascade PARTS (the productionModifier member split -- attribute, don't guess)
 							sc["brSelfCasc"] = picojson::value((double)wbBrParts.iSelf);
 							sc["brKeyedCasc"] = picojson::value((double)wbBrParts.iKeyed);
@@ -1896,9 +1904,6 @@ namespace
 							sc["brSrCasc"] = picojson::value((double)wbBrParts.iStateReligion);
 							// the head-order identity + the legacy PARTS (each named getter of the
 							// CvCity::getProductionModifier overloads -- calc-map §9.5)
-							const UnitTypes eWbBrU = pCity->getProductionUnit();
-							const BuildingTypes eWbBrB = pCity->getProductionBuilding();
-							const ProjectTypes eWbBrPr = pCity->getProductionProject();
 							const bool bWbBrSr = kWbOwner.getStateReligion() != NO_RELIGION && pCity->isHasReligion(kWbOwner.getStateReligion());
 							if (eWbBrU != NO_UNIT)
 							{

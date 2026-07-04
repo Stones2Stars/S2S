@@ -25,10 +25,9 @@ struct CascadeCityFacts
 {
 	std::set<int> active;      // the cascade-computed ACTIVE (non-dormant) building set (fixpoint w/ provides)
 	std::set<int> provided;    // the in-vicinity provided bonuses (json §5a) at the same fixpoint
-	int iEpoch;                // the combined global+owner accumulator epoch stamp (CascadeAccumulator::epochFor)
-	int iTurn;                 // the turn-roll self-heal stamp
+	// ONE freshness philosophy (scope-packages.md): events mark the Set directly (building/religion/corp
+	// flips; tech/civic/GA via markPlayerScopeAndCities; the slice boundary is the self-heal) -- no stamps.
 	CvDerivedCacheSet<CvCity> set;   // the dirty protocol (bind in CvCity's ctor); noncopyable via this member
-	CascadeCityFacts() : iEpoch(-1), iTurn(-1) {}
 };
 
 #endif // CV_CASCADE_CITY_FACTS_H

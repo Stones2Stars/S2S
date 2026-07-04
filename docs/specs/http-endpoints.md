@@ -51,6 +51,15 @@ The split is **not** "raw vs. computed" — it is **"does drycalc compute this?"
 >   They land *inside* the yield base — a drycalc target — so folding live data there is the exact cheat the hard rule
 >   forbids. The cascade computes the derivable part; cities touched by those events **diverge honestly**, and the
 >   `/state` value is read ONLY at the audit/comparison boundary to attribute that diff — never fed back into the calc.
+>   **⚖ SUPERSEDED IN PART for the CLEAN persisted stores (owner ruling 2026-07-04):** *"this raw saved state needs
+>   to ride in now — we are past looking for parity, we now have to ensure we got everything."* A store that is
+>   event/vote-granted state **by construction** — `m_aBuildingCommerceChangeEvents`, the per-building
+>   `m_aBuildingYieldChange` — is RAW SAVED STATE (the occupation-timer class, not a computed ride-in) and the
+>   in-DLL cascade **folds it** (`BuildingPackage::buildingFlat`, active-gated, ×100 at the legacy tiers); a store
+>   the cascade skips would be silently LOST at the cut (the EVENT_FULLERENES_1 Oxford specimen: +10 research on the
+>   Chemistry Lab, live-attributed). The honest-divergence stance still holds for the MIXED/dead stores
+>   (`m_aiExtraYield` — dead-on-read legacy-side too) and for the offline drycalc leg (StoneBase keeps the
+>   comparison-boundary rule; this ruling is about the in-DLL composition's COMPLETENESS).
 > - **⚠ `getBuildingCommerceChange` / `m_aiBuildingCommerceChange` is MIXED, not wholesale-underivable (corrected
 >   2026-06-29).** Reading the *live aggregate* was rightly reverted — but only because it conflates a **DERIVABLE bulk**
 >   (`GlobalBuildingExtraCommerces`: a building granting commerce to OTHER building types empire-wide, static JSON —

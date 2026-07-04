@@ -15,8 +15,11 @@
 //
 
 #include "CvCascadeConditionEval.h"
+#include "CvCascadeScopePackages.h"   // CascadeWbTerms + WbSplit -- the shared §2b term types
+#include <map>
 
 class CvCity;
+class CvPlayer;
 
 struct CascadeWellbeingVerdicts
 {
@@ -34,9 +37,34 @@ struct CascadeWellbeingVerdicts
 class CascadeWellbeing
 {
 public:
-	// The four verdicts from CURRENT state: deposit-computed terms (buildings/civics/traits/bonuses/corps/techs/
-	// projects/specialists via the compiled deposit index) + raw-state inputs (anger percents, timers, gate
-	// flags, the extra/religion accumulators) folded exactly where the engine folds them.
+	// The CITY-scope §2b gather (both families + the commerce-happiness pools) -- the scope-package fill AND
+	// the calculator's city half (single-source, patterns.md). No area/empire building terms (player-scope).
+	static void gatherCityTerms(const CvCity* pCity, const CvCascadeEvalCtx& ec,
+		CascadeWbTerms& hap, CascadeWbTerms& hea, int aiCommercePer[/*NUM_COMMERCE_TYPES*/]);
+
+	// The PLAYER-scope area/empire building fold maps (famSeg -> areaId -> split; famSeg -> empire split)
+	// + the building-KEYED ledger (famSeg -> targetFk -> Σ flats: the Royal-Tomb class, a BUILDING granting
+	// happiness/health to every city holding the KEYED building -- legacy player extraBuilding* accumulators),
+	// both families in one player-city walk -- the CvPlayer package fill AND the calculator's fresh walk.
+	static void playerAreaEmpire(const CvPlayer& player,
+		std::map<int, std::map<int, WbSplit> >& areaByFam, std::map<int, WbSplit>& empireByFam,
+		std::map<int, std::map<int, int> >& keyedByFam);
+
+	// The per-city realization of the building-keyed ledger: an entry pays where its KEYED building is
+	// ACTIVE, folded into the same extraB term the civic/trait keyed leg uses (ONE term, one attribution).
+	static void foldBuildingKeyed(const std::map<int, std::map<int, int> >& keyedByFam,
+		const CvCascadeEvalCtx& ec, CascadeWbTerms& hap, CascadeWbTerms& hea);
+
+	// The VERDICT ASSEMBLY -- the four engine bodies (happyLevel/unhappyLevel/goodHealth/badHealth),
+	// term-substituted, PURE over its inputs + the live raw-state reads (anger percents, timers, gate flags).
+	// ONE implementation fed its inputs (patterns.md): the package combine feeds packaged terms; compute()
+	// feeds fresh ones.
+	static CascadeWellbeingVerdicts assemble(const CvCity* pCity,
+		const CascadeWbTerms& hap, const CascadeWbTerms& hea, const int aiCommercePer[],
+		const WbSplit& hapArea, const WbSplit& hapEmp, const WbSplit& heaArea, const WbSplit& heaEmp);
+
+	// The four verdicts from CURRENT state (the calculator/oracle shape): fresh city gather + fresh player
+	// area/empire walk + the assembly.
 	static CascadeWellbeingVerdicts compute(const CvCity* pCity, const CvCascadeEvalCtx& ec);
 };
 // The per-turn [MODIFIER/wellbeing] shadow lives in the modifier shadow harness (CvCascadeModifierMath.cpp,

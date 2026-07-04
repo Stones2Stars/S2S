@@ -56,7 +56,7 @@ CvCity::CvCity()
 	m_outputHistory()
 {
 	m_dataRepository.init(this);
-	m_cascadeRateSlots.set.bind(this, &CvCity::cascadeRefreshRates);   // #430: the rate-slot cache (all-dirty from birth)
+	m_cascadeCityPackages.set.bind(this, &CvCity::cascadeRefreshPackages);   // #430: the city scope packages (all-dirty from birth)
 	m_cascadeFacts.set.bind(this, &CvCity::cascadeRefreshFacts);       // #430: the standing building-facts cache (ditto)
 	m_aiRiverPlotYield = new int[NUM_YIELD_TYPES];
 	m_aiBaseYieldRate = new int[NUM_YIELD_TYPES];
@@ -478,15 +478,12 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 {
 	PROFILE_EXTRA_FUNC();
 	m_dataRepository.reset();
-	// #430: a reused city object starts with stale cascade caches (fresh identity -> full recompute on first read)
-	m_cascadeRateSlots.set.markAllDirty();
-	m_cascadeRateSlots.iEpoch = -1;
-	m_cascadeRateSlots.iTurn = -1;
+	// #430: a reused city object starts with stale cascade caches (fresh identity -> full recompute on first
+	// read). Pure Set protocol -- the marks ARE the staleness (no version stamps exist).
+	m_cascadeCityPackages.set.markAllDirty();
 	m_cascadeFacts.set.markAllDirty();
 	m_cascadeFacts.active.clear();
 	m_cascadeFacts.provided.clear();
-	m_cascadeFacts.iEpoch = -1;
-	m_cascadeFacts.iTurn = -1;
 
 	//--------------------------------
 	// Uninit class
@@ -3900,6 +3897,14 @@ int CvCity::getProductionModifier() const
 
 int CvCity::getProductionModifier(UnitTypes eUnit) const
 {
+	// #430 FLIP (scope-packages): buildRate ledger lookups + the item's own bonus-gated self mods (live);
+	// the legacy walk below is the net oracle (its parts reconciled 14/14 EXACT through the compiled index).
+	if (GC.getGame().isFinalInitialized()) return CascadeAccumulator::buildRateUnit(this, eUnit);
+	return getProductionModifierLegacy(eUnit);
+}
+
+int CvCity::getProductionModifierLegacy(UnitTypes eUnit) const
+{
 	PROFILE_EXTRA_FUNC();
 	const CvUnitInfo& unit = GC.getUnitInfo(eUnit);
 	int iMultiplier = GET_PLAYER(getOwner()).getProductionModifier(eUnit);
@@ -3944,6 +3949,13 @@ int CvCity::getProductionModifier(UnitTypes eUnit) const
 
 int CvCity::getProductionModifier(BuildingTypes eBuilding) const
 {
+	// #430 FLIP (scope-packages) -- see the unit overload.
+	if (GC.getGame().isFinalInitialized()) return CascadeAccumulator::buildRateBuilding(this, eBuilding);
+	return getProductionModifierLegacy(eBuilding);
+}
+
+int CvCity::getProductionModifierLegacy(BuildingTypes eBuilding) const
+{
 	PROFILE_EXTRA_FUNC();
 	int iMultiplier = GET_PLAYER(getOwner()).getProductionModifier(eBuilding);
 
@@ -3972,6 +3984,13 @@ int CvCity::getProductionModifier(BuildingTypes eBuilding) const
 
 
 int CvCity::getProductionModifier(ProjectTypes eProject) const
+{
+	// #430 FLIP (scope-packages) -- see the unit overload.
+	if (GC.getGame().isFinalInitialized()) return CascadeAccumulator::buildRateProject(this, eProject);
+	return getProductionModifierLegacy(eProject);
+}
+
+int CvCity::getProductionModifierLegacy(ProjectTypes eProject) const
 {
 	PROFILE_EXTRA_FUNC();
 	int iMultiplier = GET_PLAYER(getOwner()).getProductionModifier(eProject);
@@ -4544,9 +4563,9 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 {
 	PROFILE_FUNC();
 	FAssert(iChange == 1 || iChange == -1);
-	// #430 accumulator freshness: the building set changed -> every deposit-bearing plugin + this city's facts are stale
-	CascadeAccumulator::dirtyCity(this, ACCD_PCT | ACCD_SPEC | ACCD_EXTRA | ACCD_CSPEC | ACCD_CBASE | ACCD_CPCT | ACCD_WB | ACCD_SCALAR | ACCD_SCALARSPEC);
-	m_cascadeFacts.set.markAllDirty();
+	// #430: the building event -- conservative city mask (the operate/provides fixpoint can flip OTHER
+	// buildings' active state) + the DERIVED cross-scope masks from this building's compiled deposits + facts
+	CascadeAccumulator::buildingProcessed(this, eBuilding);
 
 	// Toffer - Sanity control
 	if (iChange == -1)
@@ -5634,20 +5653,24 @@ int CvCity::getCelebrityHappiness() const
 // stay legacy -- the slot holds the default-call verdicts only. ====
 int CvCity::happyLevel() const
 {
+	if (!GC.getGame().isFinalInitialized()) return happyLevelLegacy();   // the sibling-flip pre-init guard
 	return CascadeAccumulator::wellbeing(this, 0);
 }
 int CvCity::unhappyLevel(int iExtra) const
 {
 	if (iExtra != 0) return unhappyLevelLegacy(iExtra);   // what-if evaluation -- not slotted
+	if (!GC.getGame().isFinalInitialized()) return unhappyLevelLegacy();
 	return CascadeAccumulator::wellbeing(this, 1);
 }
 int CvCity::goodHealth() const
 {
+	if (!GC.getGame().isFinalInitialized()) return goodHealthLegacy();
 	return CascadeAccumulator::wellbeing(this, 2);
 }
 int CvCity::badHealth(bool bNoAngry, int iExtra) const
 {
 	if (bNoAngry || iExtra != 0) return badHealthLegacy(bNoAngry, iExtra);   // what-if -- not slotted
+	if (!GC.getGame().isFinalInitialized()) return badHealthLegacy();
 	return CascadeAccumulator::wellbeing(this, 3);
 }
 
@@ -6941,7 +6964,7 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 		return;
 	}
 	m_iPopulation = iNewValue;
-	CascadeAccumulator::dirtyCity(this, ACCD_EXTRA | ACCD_CBASE);   // #430: perPop terms; WB deliberately NOT dirtied (end-turn cadence -- pop churn is automation-frequency)
+	CascadeAccumulator::dirtyCity(this, CPK_YEXTRA | CPK_CBASE);   // #430: perPop terms; WB deliberately NOT dirtied (the wb pop terms fold LIVE pop at read; end-turn cadence)
 
 	FASSERT_NOT_NEGATIVE(iNewValue);
 
@@ -7195,10 +7218,10 @@ void CvCity::changeNumGreatPeople(int iChange)
 
 int CvCity::getBaseGreatPeopleRate() const
 {
-	// FLIP REVERTED (2026-07-04, same day): the ensure-protocol read on AI-hot paths ground unit automation
-	// (measured: getBuildingDefense alone 1.28M reads/turn) -- the re-flip needs the RAW-read + event-eager
-	// refresh shape (the turn-end-rebuild doctrine) first. The slots/nets/proof all stand.
-	return getBaseGreatPeopleRateLegacy();
+	// #430 FLIP (scope-packages): a BARE package fetch + the live national input; the legacy body below is
+	// the net oracle. The LOAD path stays legacy (the warm-up arms the packages at final-init).
+	if (!GC.getGame().isFinalInitialized()) return getBaseGreatPeopleRateLegacy();
+	return std::max(0, CascadeAccumulator::scGpBase(this)) + GET_PLAYER(getOwner()).getNationalGreatPeopleRate();
 }
 
 int CvCity::getBaseGreatPeopleRateLegacy() const
@@ -7219,8 +7242,9 @@ int CvCity::getGreatPeopleRate() const
 
 int CvCity::getTotalGreatPeopleRateModifier() const
 {
-	// FLIP REVERTED (2026-07-04) -- see getBaseGreatPeopleRate.
-	return getTotalGreatPeopleRateModifierLegacy();
+	// #430 FLIP (scope-packages): city + player percent packages + the live SR/GA gates; legacy = the net oracle.
+	if (!GC.getGame().isFinalInitialized()) return getTotalGreatPeopleRateModifierLegacy();
+	return CascadeAccumulator::scGpModifier(this);
 }
 
 int CvCity::getTotalGreatPeopleRateModifierLegacy() const
@@ -7650,8 +7674,9 @@ int CvCity::getMaintenanceTimes100() const
 
 int CvCity::getEffectiveMaintenanceModifier() const
 {
-	// FLIP REVERTED (2026-07-04) -- see getBaseGreatPeopleRate.
-	return getEffectiveMaintenanceModifierLegacy();
+	// #430 FLIP (scope-packages): city + player packages + the area pick + the live conn gate; legacy = the net oracle.
+	if (!GC.getGame().isFinalInitialized()) return getEffectiveMaintenanceModifierLegacy();
+	return CascadeAccumulator::scMaintenanceModifier(this);
 }
 
 int CvCity::getEffectiveMaintenanceModifierLegacy() const
@@ -10007,8 +10032,10 @@ void CvCity::changeForeignTradeRouteModifier(int iChange)
 
 int CvCity::getBuildingDefense() const
 {
-	// FLIP REVERTED (2026-07-04) -- see getBaseGreatPeopleRate. (The hottest path: 1.28M reads/turn measured.)
-	return getBuildingDefenseLegacy();
+	// #430 FLIP (scope-packages): a BARE package fetch (the hottest path -- 1.28M reads/turn measured; the
+	// package read is a member load). Legacy (the stored accumulator, incl. its known drift) = the net oracle.
+	if (!GC.getGame().isFinalInitialized()) return getBuildingDefenseLegacy();
+	return CascadeAccumulator::scDefense(this);
 }
 
 int CvCity::getBuildingDefenseLegacy() const
@@ -11277,9 +11304,9 @@ int CvCity::getYieldRate(const YieldTypes eYield) const
 }
 
 // The CvDerivedCacheSet refresh delegate: the cascade math stays module-side; the city carries only the state.
-void CvCity::cascadeRefreshRates(int iMask) const
+void CvCity::cascadeRefreshPackages(int iMask) const
 {
-	CascadeAccumulator::refreshComponents(this, iMask);
+	CascadeAccumulator::refreshCityPackages(this, iMask);
 }
 
 void CvCity::cascadeRefreshFacts(int) const
@@ -14168,7 +14195,7 @@ void CvCity::setSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 	{
 		m_paiSpecialistCount[eIndex] = iNewValue;
 		FASSERT_NOT_NEGATIVE(getSpecialistCount(eIndex));
-		CascadeAccumulator::dirtyCity(this, ACCD_SPEC | ACCD_CSPEC | ACCD_SCALARSPEC);   // #430: specialist plugins (incl. the gpBase specialist scalar); WB deliberately NOT dirtied (end-turn cadence -- governor churn is automation-frequency)
+		CascadeAccumulator::dirtyCity(this, CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC);   // #430: specialist packages (incl. the gpBase specialist scalar); WB deliberately NOT dirtied (end-turn cadence -- governor churn is automation-frequency)
 
 		changeSpecialistPopulation(iNewValue - iOldValue);
 		processSpecialist(eIndex, (iNewValue - iOldValue));
@@ -15313,9 +15340,9 @@ void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce
 		}
 
 		m_pabHasReligion[eIndex] = bNewValue;
-		// #430 accumulator: religion presence feeds the commerce baseExtra (religion/shrine/state-religion terms)
-		// + operate conditions + the scalar SR terms (gpMod) -> the deposit-bearing plugins + this city's facts are stale
-		CascadeAccumulator::dirtyCity(this, ACCD_PCT | ACCD_CBASE | ACCD_CPCT | ACCD_WB | ACCD_SCALAR);
+		// #430: religion presence feeds the commerce base terms (religion/shrine/SR match) + operate
+		// conditions + SR-conditioned percents; the SR-gated PLAYER sums apply through live gates (no mark)
+		CascadeAccumulator::dirtyCity(this, CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT);
 		m_cascadeFacts.set.markAllDirty();
 
 		for (int iVoteSource = 0; iVoteSource < GC.getNumVoteSourceInfos(); ++iVoteSource)
@@ -15518,9 +15545,9 @@ void CvCity::setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAn
 
 	if (isHasCorporation(eIndex) != bNewValue)
 	{
-		// #430 accumulator: corporation presence feeds the commerce baseExtra (corporation/corp-HQ terms)
-		// + operate conditions (corp-conditioned scalar deposits ride along) -> the deposit-bearing plugins + this city's facts are stale
-		CascadeAccumulator::dirtyCity(this, ACCD_PCT | ACCD_CBASE | ACCD_CPCT | ACCD_WB | ACCD_SCALAR);
+		// #430: corporation presence feeds the commerce base terms (corporation/corp-HQ) + operate conditions
+		// (corp-conditioned deposits ride along)
+		CascadeAccumulator::dirtyCity(this, CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT);
 		m_cascadeFacts.set.markAllDirty();
 		if (bNewValue)
 		{

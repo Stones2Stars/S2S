@@ -54,13 +54,14 @@
  },
  "happiness": {
   "city": {
-   "flat": [
-    2,
-    {
-     "value": 1,
-     "enabled": "BUILDING_ANIMAL_RACE_TRACK"
+   "flat": 2
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_ANIMAL_RACE_TRACK": {
+     "flat": 1
     }
-   ]
+   }
   }
  },
  "greatPeopleRate": {

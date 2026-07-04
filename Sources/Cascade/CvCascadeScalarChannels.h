@@ -11,12 +11,31 @@
 //
 
 #include "CvCascadeConditionEval.h"
+#include <map>
 
 class CvCity;
+class CvPlayer;
+struct CascadePlayerScope;
 
 class CascadeScalarChannels
 {
 public:
+	// ===== the SCOPED HALVES (the scope-package fills ride these) =====
+	// CITY-REALIZED sums (buildings + civics + traits + techs, THIS city's ctx -- conditioned sums are
+	// city-realized joins; only the per-source-city building walks stay player-side).
+	static int gpModifierCity(const CvCity* pCity, const CvCascadeEvalCtx& ec);          // gp pcts: bldgs + civic/trait
+	static int gpModifierSrCity(const CvCity* pCity, const CvCascadeEvalCtx& ec);        // the SR grouped family (gate live)
+	static int maintenanceModifierCity(const CvCity* pCity, const CvCascadeEvalCtx& ec); // maint pcts: bldgs + civic + techs
+	static int tradeRoutesCity(const CvCity* pCity, const CvCascadeEvalCtx& ec);         // trade flats: bldgs + civic + techs
+	static int tradeRoutesCoastalCivCity(const CvCity* pCity, const CvCascadeEvalCtx& ec); // civic coastal flats (gate live)
+	// The PLAYER scalar fill: the player-BUILDING sums only (per-source-city ctx).
+	static void fillPlayerScalars(const CvPlayer& player, CascadePlayerScope& out);
+	// The buildRate LEDGER fills: (memberSeg<<20)|keySeg -> Σ percents. City = this city's active buildings +
+	// civics/traits (city ctx) + members + the SR fields; player = all cities' active buildings only.
+	static void fillBuildRateCity(const CvCity* pCity, const CvCascadeEvalCtx& ec,
+		std::map<long, int>& outKeyed, int& outMilitary, int& outSpace, int& outSrUnit, int& outSrBuilding);
+	static void fillBuildRatePlayer(const CvPlayer& player, CascadePlayerScope& out);
+
 	// greatPeopleRate: the city BASE (building + specialist flats; the player national rate is a live input)
 	// and the MODIFIER percent stack (city + empire percents incl. state-religion/golden-age-gated entries).
 	static int gpRateBase(const CvCity* pCity, const CvCascadeEvalCtx& ec);

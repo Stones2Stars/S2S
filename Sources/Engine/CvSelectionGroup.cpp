@@ -20,6 +20,8 @@
 #include "CvPopupInfo.h"
 #include "CvSelectionGroup.h"
 #include "CvUnitCombatInfo.h"
+#include "Cascade/CvCascadePerfCount.h"   // the automation-window census counters
+#include "AI/BetterBTSAI.h"               // PerfAccumTimer
 #include "AI/CvSelectionGroupAI.h"
 #include "AI/CvTeamAI.h"
 #include "CvUnit.h"
@@ -638,6 +640,10 @@ void CvSelectionGroup::popMission()
 void CvSelectionGroup::autoMission()
 {
 	PROFILE_FUNC();
+	// #430 the AUTOMATION-window instrument (the between-turns play was unmeasured): counted + timed,
+	// flushed with the [MODIFIER/perf] census at the next turn boundary.
+	++CascadePerf::autoMissions;
+	PerfAccumTimer perfAuto(CascadePerf::autoMissionMs);
 
 	FAssert(getOwner() != NO_PLAYER);
 

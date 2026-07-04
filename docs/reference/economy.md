@@ -44,8 +44,15 @@ supply + corporate maintenance.
   handicap, vassal, espionage, specialists, world, tax, corp, event, foreign, landmark, over-limit.
 - **Health** = `min(0, goodHealth − badHealth)` (always ≤ 0); `unhealthyPopulation = max(0, pop − angryPop)` (unless
   `isNoUnhealthyPopulation`). `foodConsumption = consumed − angryPop − healthRate` (sick cities eat more).
-- **WLTK** cleared on occupation / anger / sickness; else stochastic (`pop-rand < WE_LOVE_THE_KING_RAND`). It waives
-  distance + numCities maintenance AND doubles GPP.
+- **WLTK ("We Love the King/Emperor Day", civic-named text)** — cleared on occupation / anger / sickness; else
+  stochastic (pop ≥ min, `pop-rand < WE_LOVE_THE_KING_RAND`); a random event may set it via the Python setter.
+  **Sole gameplay effect = maintenance: `updateMaintenance` (`CvCity.cpp:7704`) accrues 0 while celebrating** — the
+  city sends no maintenance to the central ledger (ALL components, not just distance+numCities; the
+  saved-maintenance-by-civic/building helpers read 0 during it too). The "no anger" half of the folklore is the
+  TRIGGER condition, not an effect; everything else is cosmetic (fireworks, celebrate text). *(A prior claim here
+  that it "doubles GPP" was FALSE — the exhaustive consumer sweep finds no such site; verified + owner-confirmed
+  2026-07-04. Distinct from the trait-fed "free-city yield" accumulator `m_aiFreeCityYield` —
+  [modifier.md §2a](../specs/modifier.md).)*
 - **Decaying timers** (−1/turn): hurry, conscript, defy, happiness, rev-request, rev-success, landmark; the WW city
   timer −20/turn; event anger −1 per `10·speedPct/100` turns; espionage counters −1/turn.
 

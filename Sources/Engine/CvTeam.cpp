@@ -4944,12 +4944,13 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 
 	m_pabHasTech[eTech] = bNewValue;
 	CascadeCapabilities::invalidate(getID());   // the derived capability union is f(held techs) -- the ONE mutation point
-	// #430 accumulator: tech deposits/conditions -- re-check for THIS team's players only (per-player epochs)
+	// #430: a researched tech marks THIS team's players' packages + their cities' directly (conditions on
+	// city-scope deposits reference techs -- the fan-out is the event's real footprint)
 	for (int iAccP = 0; iAccP < MAX_PLAYERS; iAccP++)
 	{
 		if (GET_PLAYER((PlayerTypes)iAccP).isAliveAndTeam(getID()))
 		{
-			CascadeAccumulator::bumpPlayerEpoch((PlayerTypes)iAccP);
+			CascadeAccumulator::markPlayerScopeAndCities((PlayerTypes)iAccP);
 		}
 	}
 

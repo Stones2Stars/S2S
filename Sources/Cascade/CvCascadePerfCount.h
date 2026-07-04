@@ -40,6 +40,11 @@ struct CascadePerf
 	static double legacyRateMs;
 	static double legacyWbMs;
 	static double scRefreshMs;    // the scalar refresh passes' wall clock (both bits)
+	// the AUTOMATION window (owner 2026-07-04: "automation felt twice as long" had NO instrument -- the
+	// between-turns play was unmeasured): every CvSelectionGroup::autoMission call, counted + timed, flushed
+	// with the census at the next turn boundary.
+	static int autoMissions;
+	static double autoMissionMs;
 
 	static void reset();
 };

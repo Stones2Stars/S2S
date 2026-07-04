@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python .claude/hooks/docs-gate.py",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.claude/hooks/docs-gate.py\"",
             "timeout": 15,
             "statusMessage": "docs gate"
           }
