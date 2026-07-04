@@ -205,6 +205,41 @@ attributable diff lines (never silent).
   precedent, before its flip can be lossless); buildRate stays UN-slotted (item-keyed; its flip needs
   per-key rollup ledgers).
 
+- **H — the SCOPE-PRINCIPLE rebuild (2026-07-04, IN FLIGHT — owner rulings, the cascade's founding shape).**
+  The rulings, all same-day: a `CvDerivedCache` on EVERY scoped item, LIVING ON the object it caches for;
+  ONE freshness philosophy (events mark, the cache knows — the epochs + `CvCascadePlayerStamp` polling
+  DELETE); every scope holds ONLY its own scope's sums in ONE uniform package format; **the only live
+  calculation is adding the ~5 scope packages at read** (per-city gates — SR-in-city/coastal/connected/area
+  — applied live); a scope event invalidates ITS package only (no fan-out); full rebuild = LOAD ONLY; reads
+  are bare fetches; recalc at each player's slice start (`playerSliceRebuild`); the derived building mask
+  splits percent-vs-flat; NO unit may ever author yield percentages. **Structure that contradicts this is
+  REBUILT, never shoehorned.**
+  **DONE so far:** header (`CascadePlayerScope` on CvPlayer w/ PSC_SCALAR|PSC_WB bits + `CascadeWorldScope`
+  for CvGame + city scalar slots redefined CITY-ONLY: iScGpBaseBld/Spec, iScGpModCity, iScDefense,
+  iScMaintModCity, iScTradeCity); accumulator core (epochs/stamps/freshen deleted; acc_ensure = pure Set;
+  `markPlayerScopeAndCities`; slice rebuild = marks + eager scalar ensure; `refreshPlayerScope` dispatch;
+  `buildingDirtyMask` percent/flat-derived); scalar module (`rebuildPlayerScalar(owner, scope)` +
+  ensure-then-fetch sc_rollup) — ⚠ its field names still the OLD package names, must match the new header.
+  **REMAINING (the exact worklist):** (1) rebuildPlayerScalar fills the NEW fields (iGpModPlayer incl.
+  civics/traits city+empire, iGpModSr, iTradeEmpireAll incl. civics+techs, iTradeCoastalAll incl. civics,
+  iTradeWorldFlat, iMaintPlayerAll incl. civics city/empire/area + techs, iMaintConnPct, area maps) — the
+  civic/trait sums move INTO the package (evaluated player-ctx; city-conditioned civic deposits would show
+  in the net, watched); (2) refreshComponents' scalar branch → the CITY-half walks only; (3) the sc*
+  accessors → the package ADDS (gpMod = max(0,100+city+player+SRgate+GAgate); maint = city+playerAll+
+  areaPick+connGate; trade = city+empireAll+coastalGate+world); (4) CvGame::m_cascadeWorldScope (member+
+  bind+delegate; refresh = Σ living players' ensured packages; marked by world-deposit buildings — extend
+  the building-mask path); (5) CvPlayer::m_cascadePlayerScope member+bind+reset+delegate; (6) mark sites:
+  setCivics/GA (CvPlayer) + setHasTech (CvTeam) → markPlayerScopeAndCities (city loop masks ALL&~SCALARS —
+  scalars need NO fan-out by construction); (7) CvCity reset drops the iEpoch/iTurn lines; facts
+  (CvCascadeCityFacts.h + EnablerKernel::cityFacts) drop the epoch/turn stamps (slice-start markAll is the
+  cadence); (8) wellbeing: WbSplit def moved to the accumulator header (delete the local), s_wbRollup →
+  the member maps via ensure(PSC_WB); (9) the [MODIFIER/scalar] net + endpoint slot emits recompose to the
+  getter-body adds; the flipped getter bodies (already raw) recompose likewise; (10) build → cycle → owner
+  re-test (automation feel + the net + the census counters).
+  **NOT yet scope-conforming (their own per-channel rebuilds follow, NOT shoehorned):** the rate EMPFLAT
+  (player-scope trait flats stored per city), the WB verdict slots (area/empire parts baked per city — its
+  freshness is the ruled end-turn cadence meanwhile), and the rates' fan-out marks on player events.
+
 ## Explicitly NOT this build
 
 - The tally stays a read-only accessor (NOT a spine consumer) — unchanged.

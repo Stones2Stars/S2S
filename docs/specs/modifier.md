@@ -22,8 +22,19 @@ picture; order doesn't matter (sums are commutative).
 
 Magnitudes flow **DOWN** the scope spine (`world → … → city → plot | unit`). An empire-scope deposit on a civic
 rolls down to each of the player's cities; a city-scope deposit lands locally; a `plots`-target deposit lands on
-each matching worked plot (§5). The target holds one **accumulator slot** per `(family, member, unit)` and reads
-its combined value — it never re-walks the sources.
+each matching worked plot (§5). The target reads a combined value — it never re-walks the sources.
+
+> **⚖ STORAGE SEMANTICS — the SCOPE PRINCIPLE. This IS §1's design — the founding shape of the migration —
+> made explicit here (2026-07-04) after implementations drifted to store-at-target; it was never a new
+> ruling.** Deposits accumulate in a package **AT THEIR OWN SCOPE** — one uniform package
+> format (Σflat / Σpercent per channel, §2) cached on each scope object (world / team / empire / area /
+> city / plot), each package event-invalidated at its own scope only. The downward "roll" is realized **AT
+> READ TIME**: the realized value is the trivial sum of the ~5 scope packages, with per-city gates
+> (state-religion-in-city, coastal, connected, area membership) applied live at the combine. **A lower
+> scope never STORES an upper scope's sums** — that would force downward invalidation fan-out and "break
+> the principle of the cascade in the first place." The only full rebuild of every package is at LOAD.
+> (Cache mechanics: [state-repositories.md](../architecture/state-repositories.md) — the per-scope package
+> model + the CvDerivedCache component.)
 
 This is purely top-down: a condition *inside* a deposit (`enabled`/`per`) is a forward **read** of state, never
 an upward cascade-walk. The reverse view ("who modifies me") is derived once at load for the pedia, never on the
@@ -190,6 +201,11 @@ never dirties any cache — the cached sums are unit-free by construction; (2) t
 flat addition to the realized number, never an input to a percent stack. The implementation shape: the cache
 stores the unit-free number (+ any epoch-stable per-unit multiplier, e.g. the civic perMilitaryUnit VALUE);
 the read folds `perUnit × liveCount` / the live unit walk on top (an O(1)-ish live engine read).
+**The AUTHORING BAN that keeps this coherent (owner ruling 2026-07-04): no unit gives — or can ever be
+ALLOWED to give — PERCENTAGES to yields of any kind.** A unit-carried value is always a raw flat number on
+top; a unit-authored percent would force units back inside the cached percent stacks and break the whole
+on-top model. Enforceable at the curator/validation layer: a `units/**` JSON authoring a yield/commerce
+`percent` deposit is a data error.
 Ledgered as [DEC-unit-modifiers-on-top](../architecture/decisions.md#dec-unit-modifiers-on-top).
 
 **UNIT-driven wellbeing is END-TURN cadence (owner ruling 2026-07-03).** The military/unit-count happiness

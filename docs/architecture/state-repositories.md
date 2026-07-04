@@ -195,6 +195,45 @@ public:
   its event feeds — the realized exemplar is `CascadeAccumulator`'s `AccDirty` bits over the §2a packages
   ([modifier-substrate.md](../plans/structural-cleanup/modifier-substrate.md)). When `CvDerivedCache` is built,
   it grows this per-component form (the single-flag form stays for leaf caches like the plot yield).
+- **⚖ THE CAPSTONE RULE (owner 2026-07-04): the ONLY time the entire cascade is rebuilt — all packages,
+  all yields — is ON LOAD.** Post-load, every recompute is marked-component-only at a boundary (the
+  slice-start rebuild; eventually the unified turn-end pass below); a full rebuild mid-game is a design
+  violation. Today's remaining BLANKETS are named interims graded against this rule: the EPOCH bump
+  (tech/civic/GA marks ALL bits for the player's cities) and the RATE components' turn-roll self-heal —
+  each retires the way the scalar carve-out did (a proven hook map + a data-derived per-source mask:
+  building masks landed 2026-07-04; tech/civic/trait masks are the successors), until load is the only
+  full pass. Sibling rulings the same day: reads are BARE NUMBER FETCHES during the turn (the ensure-per-
+  read protocol on AI-hot paths measurably ground unit automation — 1.28M defense reads in one turn);
+  recomputes happen at the START OF EACH PLAYER'S SLICE (`CascadeAccumulator::playerSliceRebuild`); and
+  "it's the percentage recalcs that hurt" — the mask derivation splits percent-vs-flat so flat-only events
+  never rebuild a percent stack, most changes being plain arithmetic through the already-compiled block.
+  **The granularity TARGET (owner, same day): per-(package × CHANNEL)** — "most of the time we will know
+  exactly which package (flat or percentage, and for what yield) was touched, and only rebuild those." The
+  compiled deposits carry the channel, so the AccDirty bits split per yield/commerce channel (today's bits
+  are per-component across all channels — a production-only percent touch still rebuilds the food+commerce
+  stacks); the bit-layout split is the increment after the bare-fetch shape verifies.
+- **⚠ NAMED DEBT (2026-07-04): a SECOND invalidation philosophy rides beside the component — a DEPARTURE
+  from this doc's own model, not a design alternative.** The slots/facts Sets are event-MARKED (the
+  documented way), but two POLLING primitives
+  accreted around them: the epoch counters (+ the `iEpoch`/`iTurn` stamp fields on `CascadeRateSlots` beside
+  its Set) and `CvCascadePlayerStamp` (the wellbeing/scalar per-player rollups, not on the component at all).
+  They exist because player-scope events fan out to N cities' Sets and the routing wasn't built yet — the
+  interim polls versions instead. Dissolution = this doc's own end-state: player-scope events mark the
+  affected Sets directly via data-derived per-source masks (the building-mask pattern), the rollups become
+  `CvDerivedCache` instances bound to `CvPlayer`, and the epochs + stamps DELETE. One component, one
+  philosophy. Sequenced after the bare-fetch increment verifies (behavior-neutral consolidation on a proven
+  baseline).
+- **⚖ THE PER-SCOPE PACKAGE MODEL — the cascade's FOUNDING DESIGN ([modifier.md](../specs/modifier.md) §1),
+  stated as cache architecture. Made explicit 2026-07-04 after implementations drifted to store-at-target —
+  NOT a new ruling.** A `CvDerivedCache` lives ON EVERY SCOPED ITEM, every level (world → team → player →
+  area → city → plot); the cascade loads **yield packages in ONE UNIFORM FORMAT** (the §2 slot shape:
+  Σflat / Σpercent per channel) into each scope's cache; each cache knows its own staleness from events at
+  its OWN scope (a world change rebuilds the world package while every other level stands). **The only live
+  calculation is adding the ~5 packages together at read** — trivial arithmetic through the already-compiled
+  percentage block; "isolated parts, summed, with zero need for complex on-the-fly calculations anywhere."
+  The plot and city levels already live this way; the player level lands with the freshness consolidation
+  (the `CascadePlayerScope` member); area/team/world follow per channel (the tradeRoutes world term is the
+  first world-scope tenant). Full rebuild of everything = LOAD ONLY (the capstone above).
 - **THE TARGET END-STATE — flags all turn, ONE unified rebuild at turn end (owner 2026-07-03).** The whole
   model in one line: *"if things have not changed, cache is not stale; if it has, rebuild."* Mechanism: *"we can
   set a 'things changed for me' flag on every cache based on events, then we unify all cache rebuild at the end
