@@ -5,20 +5,6 @@
    "BUILDING_ULTIMATE_SOLDIERS_TRAINER"
   ]
  },
- "production": {
-  "city": {
-   "military": {
-    "percent": [
-     {
-      "value": 15,
-      "enabled": {
-       "HAS_CORPORATION": "CORPORATION_ULTSOLDIER"
-      }
-     }
-    ]
-   }
-  }
- },
  "gold": {
   "empire": {
    "headquarters": {
@@ -88,6 +74,20 @@
         "BONUS_RUBBER"
        ],
        "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "buildRate": {
+  "city": {
+   "military": {
+    "percent": [
+     {
+      "value": 15,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_ULTSOLDIER"
       }
      }
     ]

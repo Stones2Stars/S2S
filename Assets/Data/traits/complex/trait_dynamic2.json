@@ -181,13 +181,6 @@
    "flat": -1
   }
  },
- "combat": {
-  "empire": {
-   "cityDefense": {
-    "percent": -5
-   }
-  }
- },
  "upkeep": {
   "empire": {
    "freeCivilian": {
@@ -234,6 +227,13 @@
   "empire": {
    "warWeariness": {
     "percent": 10
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -5
    }
   }
  },

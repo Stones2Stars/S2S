@@ -81,9 +81,6 @@
  },
  "combat": {
   "empire": {
-   "cityDefense": {
-    "percent": -20
-   },
    "espionageDefense": {
     "percent": -20
    }
@@ -127,6 +124,13 @@
    },
    "attitude": {
     "flat": 1
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -20
    }
   }
  },

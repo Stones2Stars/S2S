@@ -55,13 +55,6 @@
    "flat": -10
   }
  },
- "combat": {
-  "empire": {
-   "cityDefense": {
-    "percent": -20
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "corporation": {
@@ -87,6 +80,13 @@
     "BUILD_SUBURBS": {
      "percent": 30
     }
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -20
    }
   }
  },

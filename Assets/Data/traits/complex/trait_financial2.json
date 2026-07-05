@@ -223,9 +223,6 @@
  },
  "combat": {
   "empire": {
-   "cityDefense": {
-    "percent": -5
-   },
    "espionageDefense": {
     "percent": -5
    },
@@ -269,6 +266,13 @@
   "empire": {
    "civicAnarchy": {
     "percent": 5
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -5
    }
   }
  },

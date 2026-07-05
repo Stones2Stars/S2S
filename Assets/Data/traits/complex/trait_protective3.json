@@ -226,9 +226,6 @@
  },
  "combat": {
   "empire": {
-   "cityDefense": {
-    "percent": 20
-   },
    "espionageDefense": {
     "percent": 20
    },
@@ -263,6 +260,13 @@
   "empire": {
    "warWeariness": {
     "percent": 5
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": 20
    }
   }
  },

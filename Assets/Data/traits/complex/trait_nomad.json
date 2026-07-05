@@ -1184,13 +1184,6 @@
    }
   }
  },
- "combat": {
-  "empire": {
-   "cityDefense": {
-    "percent": -20
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -1275,6 +1268,13 @@
     "IMPROVEMENT_HUNTING_PRESERVE": {
      "percent": 100
     }
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -20
    }
   }
  },

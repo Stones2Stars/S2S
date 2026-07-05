@@ -160,9 +160,6 @@
    },
    "captureResistance": {
     "percent": -5
-   },
-   "cityDefense": {
-    "percent": 20
    }
   }
  },
@@ -262,6 +259,13 @@
     "BUILDING_IMPERIAL_FORTRESS": {
      "percent": 20
     }
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": 20
    }
   }
  },

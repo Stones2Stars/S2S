@@ -49,13 +49,6 @@
    }
   }
  },
- "combat": {
-  "empire": {
-   "cityDefense": {
-    "percent": 5
-   }
-  }
- },
  "upkeep": {
   "empire": {
    "freeMilitary": {
@@ -77,6 +70,13 @@
    },
    "national": {
     "flat": -1
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": 5
    }
   }
  },

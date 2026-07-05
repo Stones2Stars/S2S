@@ -83,13 +83,6 @@
    }
   }
  },
- "combat": {
-  "empire": {
-   "cityDefense": {
-    "percent": -20
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -147,6 +140,13 @@
     "IMPROVEMENT_SEED_CAMP": {
      "percent": -40
     }
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -20
    }
   }
  },

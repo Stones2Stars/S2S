@@ -60,13 +60,6 @@
    "flat": -2
   }
  },
- "combat": {
-  "empire": {
-   "cityDefense": {
-    "percent": -10
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "distance": {
@@ -83,6 +76,13 @@
  "upkeep": {
   "empire": {
    "civic": {
+    "percent": -10
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
     "percent": -10
    }
   }

@@ -41,13 +41,6 @@
    "flat": -1
   }
  },
- "combat": {
-  "empire": {
-   "cityDefense": {
-    "percent": -10
-   }
-  }
- },
  "revolution": {
   "empire": {
    "local": {
@@ -55,6 +48,13 @@
    },
    "national": {
     "flat": 1
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -10
    }
   }
  },

@@ -102,13 +102,6 @@
    }
   }
  },
- "combat": {
-  "empire": {
-   "cityDefense": {
-    "percent": -15
-   }
-  }
- },
  "maintenance": {
   "empire": {
    "numCities": {
@@ -151,6 +144,13 @@
     }
    },
    "percent": 20
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -15
+   }
   }
  },
  "succession": {

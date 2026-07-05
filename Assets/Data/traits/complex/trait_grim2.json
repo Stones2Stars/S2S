@@ -79,9 +79,6 @@
  },
  "combat": {
   "empire": {
-   "cityDefense": {
-    "percent": 10
-   },
    "captureProbability": {
     "percent": -5
    },
@@ -115,6 +112,13 @@
  "diplomacy": {
   "empire": {
    "warWeariness": {
+    "percent": 10
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
     "percent": 10
    }
   }
