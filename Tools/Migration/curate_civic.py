@@ -66,7 +66,9 @@ SCALAR = {
     "iImprovementUpgradeRateModifier": ("improvementUpgradeRate", "empire", "", "percent"),
     # military / great-people
     "iMilitaryProductionModifier":     ("buildRate", "empire", "military", "percent"),
-    "iExtraCityDefense":               ("combat", "empire", "cityDefense",        "percent"),
+    # L13 re-home (2026-07-05): the spec'd DEFENSE family (modifier.md §6: `amount` = the additive defense %),
+    # matching the buildings' defense.empire.amount -- the old combat.empire.cityDefense had NO reader.
+    "iExtraCityDefense":               ("defense", "empire", "amount",             "percent"),
     "iNationalCaptureProbabilityModifier": ("combat", "empire", "captureProbability", "percent"),
     "iNationalCaptureResistanceModifier":  ("combat", "empire", "captureResistance",  "percent"),
     "iFreeExperience":                 ("experience", "empire", "",        "flat"),

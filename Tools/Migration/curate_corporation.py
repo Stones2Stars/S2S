@@ -15,7 +15,9 @@ FOUR distinct commerce/yield families that must NOT merge (the first-pass mappin
 
 Other modifiers (all city scope unless noted): iMaintenance -> maintenance.city.corporation.perBonus (per-owned
 -bonus maintenance rate); iHealth/iHappiness -> health/happiness flat; iFreeXP -> experience flat;
-iMilitaryProductionModifier -> production.city.military.percent.
+iMilitaryProductionModifier -> buildRate.city.military.percent (the L10 census fix 2026-07-05: an item-COST
+discount for military units — the buildRate category, per modifier.md's production-vs-buildRate split; the
+earlier production.city.military address was the named "Versailles bug" class and no reader consumed it).
 
 Spread mechanic (owner ruling 2026-07-01 — propensity-name ALIGNMENT with religion + a misnomer FIX):
 - iSpread -> identity.spreadFactor: the "how readily I spread" scalar, the concept-parallel of religion's
@@ -63,7 +65,7 @@ FAMILIES = {
     "iHealth":                    ("health",      "city",   None,           "flat",    None,             False),
     "iHappiness":                 ("happiness",   "city",   None,           "flat",    None,             False),
     "iFreeXP":                    ("experience",  "city",   None,           "flat",    None,             False),
-    "iMilitaryProductionModifier":("production",  "city",   "military",     "percent", None,             False),
+    "iMilitaryProductionModifier":("buildRate",   "city",   "military",     "percent", None,             False),
     "iMaintenance":               ("maintenance", "city",   "corporation",  "flat",    None,             True),
     "CommerceChanges":            (None,          "city",   None,           "flat",    engine.COMMERCES, False),
     "YieldChanges":               (None,          "city",   None,           "flat",    engine.YIELDS,    False),

@@ -126,7 +126,9 @@ SCALAR = {
     "iLevelExperienceModifier":        ("experience", "empire", "levelModifier", "percent"),
     "iExpInBorderModifier":            ("experience", "empire", "inBorder", "percent"),
     # combat / defense
-    "iCityDefenseBonus":               ("combat", "empire", "cityDefense", "percent"),
+    # L13 re-home (2026-07-05): the spec'd DEFENSE family (modifier.md §6), matching buildings'
+    # defense.empire.amount -- the old combat.empire.cityDefense had NO reader.
+    "iCityDefenseBonus":               ("defense", "empire", "amount", "percent"),
     "iBombardDefense":                 ("combat", "empire", "bombardDefense", "percent"),
     "iEspionageDefense":               ("combat", "empire", "espionageDefense", "percent"),
     "iNationalCaptureProbabilityModifier": ("combat", "empire", "captureProbability", "percent"),
