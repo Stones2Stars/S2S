@@ -85,6 +85,7 @@ UNIT_FAMILIES = {
     "iInsidiousness": ("espionage", "insidiousness", "flat"),
     "iInvestigation": ("espionage", "investigation", "flat"),
     "iNumHealSupport": ("heal", "support", "flat"),
+    "iSelfHealModifier": ("heal", "selfModifier", "percent"),   # mirror curate_promotion FAMILIES (unit self-heal %)
     "iDropRange": ("movement", "dropRange", "flat"),
     "iCultureGarrison": ("culture", "garrison", "flat"),
     # iCargo is NOT a plain family entry — it combines with DomainCargo into cargo.space.{unit, flat} (see pass2).
@@ -108,7 +109,7 @@ CAP_BOOL = {
     "bUpgradeAnywhere": "upgradeAnywhere", "bWorkerTrade": "workerTrade", "bAttackOnlyCities": "attackOnlyCities",
     "bIgnoreNoEntryLevel": "ignoreNoEntryLevel", "bFliesToMove": "fliesToMove", "bFreeDrop": "freeDrop",
     "bDCMFighterEngage": "dcmFighterEngage", "bRenderBelowWater": "renderBelowWater",
-    "bMilitaryTrade": "militaryTrade",
+    "bMilitaryTrade": "militaryTrade", "bNoSelfHeal": "noSelfHeal",   # mirror curate_promotion CAP_BOOL (unit no-self-heal skill)
 }
 # count-int capabilities (>0 -> has it)
 CAP_COUNT = {"iAnimalIgnoresBorders": "animalIgnoresBorders"}
