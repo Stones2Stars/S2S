@@ -330,9 +330,6 @@
  },
  "combat": {
   "empire": {
-   "bombardDefense": {
-    "percent": 5
-   },
    "flightRange": {
     "flat": 1
    },
@@ -399,6 +396,13 @@
   "empire": {
    "airUnitCapacity": {
     "flat": 1
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "bombardDefense": {
+    "percent": 5
    }
   }
  },

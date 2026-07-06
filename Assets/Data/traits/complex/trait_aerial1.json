@@ -297,9 +297,6 @@
  },
  "combat": {
   "empire": {
-   "bombardDefense": {
-    "percent": 5
-   },
    "captureResistance": {
     "percent": -20
    }
@@ -338,6 +335,13 @@
  "improvementUpgradeRate": {
   "empire": {
    "percent": -25
+  }
+ },
+ "defense": {
+  "empire": {
+   "bombardDefense": {
+    "percent": 5
+   }
   }
  },
  "PROPERTY_AIR_POLLUTION": {

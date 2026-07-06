@@ -281,15 +281,6 @@
    "percent": 5
   }
  },
- "greatPeopleRate": {
-  "empire": {
-   "units": {
-    "UNIT_DOCTOR": {
-     "flat": -2
-    }
-   }
-  }
- },
  "experience": {
   "empire": {
    "unitCombats": {

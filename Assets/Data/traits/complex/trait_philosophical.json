@@ -122,7 +122,8 @@
  },
  "greatPeopleRate": {
   "empire": {
-   "percent": 50
+   "percent": 50,
+   "flat": 2
   }
  },
  "freeSpecialists": {

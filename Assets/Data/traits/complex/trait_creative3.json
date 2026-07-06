@@ -222,9 +222,6 @@
  },
  "combat": {
   "empire": {
-   "bombardDefense": {
-    "percent": -5
-   },
    "captureResistance": {
     "percent": -10
    }
@@ -256,6 +253,13 @@
    },
    "enemyWarWeariness": {
     "percent": -10
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "bombardDefense": {
+    "percent": -5
    }
   }
  },

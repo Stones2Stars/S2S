@@ -95,15 +95,6 @@
    "flat": -1
   }
  },
- "greatPeopleRate": {
-  "empire": {
-   "units": {
-    "UNIT_GREAT_STATESMAN": {
-     "flat": -2
-    }
-   }
-  }
- },
  "conscript": {
   "empire": {
    "flat": 2

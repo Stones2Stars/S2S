@@ -269,12 +269,7 @@
  },
  "greatPeopleRate": {
   "empire": {
-   "percent": -20,
-   "units": {
-    "UNIT_SCIENTIST": {
-     "flat": -6
-    }
-   }
+   "percent": -20
   }
  },
  "freeSpecialists": {

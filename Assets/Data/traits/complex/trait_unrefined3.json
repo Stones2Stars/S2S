@@ -146,12 +146,7 @@
  },
  "greatPeopleRate": {
   "empire": {
-   "percent": -10,
-   "units": {
-    "UNIT_ARTIST": {
-     "flat": -6
-    }
-   }
+   "percent": -10
   }
  },
  "experience": {

@@ -162,12 +162,7 @@
  },
  "greatPeopleRate": {
   "empire": {
-   "percent": -10,
-   "units": {
-    "UNIT_MERCHANT": {
-     "flat": -6
-    }
-   }
+   "percent": -10
   }
  },
  "conscript": {

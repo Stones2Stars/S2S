@@ -149,15 +149,6 @@
    "flat": 1
   }
  },
- "greatPeopleRate": {
-  "empire": {
-   "units": {
-    "UNIT_GREAT_SPY": {
-     "flat": -4
-    }
-   }
-  }
- },
  "experience": {
   "empire": {
    "unitCombats": {

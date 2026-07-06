@@ -258,15 +258,6 @@
    "flat": 1
   }
  },
- "greatPeopleRate": {
-  "empire": {
-   "units": {
-    "UNIT_GREAT_ENGINEER": {
-     "flat": -2
-    }
-   }
-  }
- },
  "workRate": {
   "empire": {
    "builds": {

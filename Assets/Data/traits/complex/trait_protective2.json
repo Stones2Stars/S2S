@@ -271,9 +271,6 @@
   "empire": {
    "espionageDefense": {
     "percent": 15
-   },
-   "bombardDefense": {
-    "percent": 15
    }
   }
  },
@@ -309,6 +306,9 @@
  "defense": {
   "empire": {
    "amount": {
+    "percent": 15
+   },
+   "bombardDefense": {
     "percent": 15
    }
   }

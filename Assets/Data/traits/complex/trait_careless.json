@@ -311,12 +311,7 @@
  },
  "greatPeopleRate": {
   "empire": {
-   "percent": 10,
-   "units": {
-    "UNIT_GREAT_GENERAL": {
-     "flat": -2
-    }
-   }
+   "percent": 10
   }
  },
  "greatGeneralRate": {
