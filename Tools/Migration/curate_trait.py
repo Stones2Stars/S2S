@@ -129,7 +129,10 @@ SCALAR = {
     # L13 re-home (2026-07-05): the spec'd DEFENSE family (modifier.md §6), matching buildings'
     # defense.empire.amount -- the old combat.empire.cityDefense had NO reader.
     "iCityDefenseBonus":               ("defense", "empire", "amount", "percent"),
-    "iBombardDefense":                 ("combat", "empire", "bombardDefense", "percent"),
+    # L13 re-home (2026-07-05): trait iBombardDefense feeds m_iNationalBombardDefenseModifier
+    # (processTrait, CvPlayer.cpp:28613) -> the DEFENSE family's bombardDefense member; the old
+    # combat.empire.bombardDefense had NO reader (the getBuildingBombardDefense national leg was dropped).
+    "iBombardDefense":                 ("defense", "empire", "bombardDefense", "percent"),
     "iEspionageDefense":               ("combat", "empire", "espionageDefense", "percent"),
     "iNationalCaptureProbabilityModifier": ("combat", "empire", "captureProbability", "percent"),
     "iNationalCaptureResistanceModifier":  ("combat", "empire", "captureResistance", "percent"),
@@ -533,10 +536,17 @@ def curate(typ, rec, store):
                 leftover.append(tag)
                 identity[engine.FIELD_RENAME.get(tag, de_i(tag))] = engine.generic(c)
 
-    # GP-rate change folds onto the GP unit (CvPlayer.cpp:28606-28610; only meaningful with a unit + >0)
-    if gp_unit and gp_change and gp_change != 0:
-        (fam.setdefault("greatPeopleRate", {}).setdefault("empire", {})
-         .setdefault("units", {}).setdefault(gp_unit, {}))["flat"] = gp_change
+    # GP-rate change (CvPlayer.cpp:~28698, legacy gate `if (iGPRateChange > 0)`): a type-specified change keys
+    # by its GP unit; a NO_UNIT change is the UNTYPED national rate -- the legacy NO_UNIT path still adds it and
+    # the GP engine assigns it to a pool (owner 2026-07-05: "not-type-specified GP rate must go through, the GP
+    # engine deals with placement"). Emit unkeyed `greatPeopleRate.empire.flat` so the cascade national fold
+    # picks it up -- was being DROPPED (the `if gp_unit` gate), the L6 residual.
+    if gp_change and gp_change > 0:
+        gpr = fam.setdefault("greatPeopleRate", {}).setdefault("empire", {})
+        if gp_unit:
+            gpr.setdefault("units", {}).setdefault(gp_unit, {})["flat"] = gp_change
+        else:
+            gpr["flat"] = gpr.get("flat", 0) + gp_change   # NO_UNIT -> the untyped national pool
 
     # BonusHappinessChanges -> conditional happiness deposits on the TRAIT (modifier-spec §6 keep-on-source).
     # Deposit = `happiness.empire.flat` (scope is the MODIFIER's: the trait benefits the player's own cities).
