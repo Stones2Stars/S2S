@@ -1,12 +1,26 @@
 {
  "type": "BUILDING_EDINBURGH_CASTLE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_RELIC_EDINBURGH_CASTLE"
-  ],
   "techs": [
    "TECH_ECONOMICS"
   ]
+ },
+ "whenObsolete": {
+  "culture": {
+   "city": {
+    "flat": 8
+   }
+  },
+  "greatPeopleRate": {
+   "city": {
+    "flat": 2
+   }
+  },
+  "PROPERTY_TOURISM": {
+   "city": {
+    "flat": 6
+   }
+  }
  },
  "requires": {
   "build": {

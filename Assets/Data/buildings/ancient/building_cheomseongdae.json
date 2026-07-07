@@ -1,12 +1,31 @@
 {
  "type": "BUILDING_CHEOMSEONGDAE",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_RELIC_CHEOMSEONGDAE"
-  ],
   "techs": [
    "TECH_SATELLITES"
   ]
+ },
+ "whenObsolete": {
+  "culture": {
+   "city": {
+    "flat": 8
+   }
+  },
+  "greatPeopleRate": {
+   "city": {
+    "flat": 2
+   }
+  },
+  "PROPERTY_EDUCATION": {
+   "city": {
+    "flat": 2
+   }
+  },
+  "PROPERTY_TOURISM": {
+   "city": {
+    "flat": 5
+   }
+  }
  },
  "requires": {
   "build": {

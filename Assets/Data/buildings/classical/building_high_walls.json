@@ -11,12 +11,21 @@
   ]
  },
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_RELIC_OLD_CITY_WALLS"
-  ],
   "techs": [
    "TECH_RIFLING"
   ]
+ },
+ "whenObsolete": {
+  "culture": {
+   "city": {
+    "flat": 2
+   }
+  },
+  "PROPERTY_TOURISM": {
+   "city": {
+    "flat": 2
+   }
+  }
  },
  "requires": {
   "build": {

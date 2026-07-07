@@ -1,12 +1,26 @@
 {
  "type": "BUILDING_ALHAMBRA",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_RELIC_ALHAMBRA"
-  ],
   "techs": [
    "TECH_IMPERIALISM"
   ]
+ },
+ "whenObsolete": {
+  "culture": {
+   "city": {
+    "flat": 8
+   }
+  },
+  "greatPeopleRate": {
+   "city": {
+    "flat": 1
+   }
+  },
+  "PROPERTY_TOURISM": {
+   "city": {
+    "flat": 5
+   }
+  }
  },
  "requires": {
   "build": {

@@ -1,12 +1,26 @@
 {
  "type": "BUILDING_CHICHEN_ITZA",
  "obsoletedBy": {
-  "buildings": [
-   "BUILDING_RELIC_CHICHEN_ITZA"
-  ],
   "techs": [
    "TECH_DIVINE_RIGHT"
   ]
+ },
+ "whenObsolete": {
+  "culture": {
+   "city": {
+    "flat": 12
+   }
+  },
+  "greatPeopleRate": {
+   "city": {
+    "flat": 2
+   }
+  },
+  "PROPERTY_TOURISM": {
+   "city": {
+    "flat": 8
+   }
+  }
  },
  "requires": {
   "build": {
