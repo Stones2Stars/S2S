@@ -243,17 +243,16 @@ void CascadeWellbeing::foldBuildingKeyed(const std::map<int, std::map<int, int> 
 }
 
 // One civic/trait source's empire members (the MemberSources walk): classified plain flats + buildings.{B} +
-// features.{F} + perMilitaryUnit + the ranked `cities` member. Trait sources carry the PURE_TRAITS filter.
+// features.{F} + the `unit: IS_MILITARY`-qualified `cities` entries (json §3.7 -- the retired perMilitaryUnit
+// member's spec form) + the ranked `cities` member. Trait sources carry the PURE_TRAITS filter.
 static void wb_memberSource(int famId, const CvJsonInfo* d, bool bTrait, bool bPure, bool bNegative,
 	const CvCity* pCity, const CvCascadeEvalCtx& ec, const std::map<int, int>& featureCounts,
 	bool bInTopCities, CascadeWbTerms& t)
 {
 	const int scopeEmpire = DepositIndex::lookupSegment("empire");
 	const int unitFlat = DepositIndex::lookupSegment("flat");
-	const int unitPerMil = DepositIndex::lookupSegment("perMilitaryUnit");
 	const int segBuildings = DepositIndex::lookupSegment("buildings");
 	const int segFeatures = DepositIndex::lookupSegment("features");
-	const int segPerMil = DepositIndex::lookupSegment("perMilitaryUnit");
 	const int segCities = DepositIndex::lookupSegment("cities");
 	int iFlatNet = 0;
 	const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
@@ -283,15 +282,15 @@ static void wb_memberSource(int famId, const CvJsonInfo* d, bool bTrait, bool bP
 			if (fit != featureCounts.end() && MMKernel::applies(dep.enabled, dep.disabled, ec))
 				t.featMember.fold(fit->second * v);
 		}
-		else if (dep.seg[2] == segPerMil || dep.unitId == unitPerMil)
+		else if (dep.nSeg == 3 && dep.seg[2] == segCities && dep.unitId == unitFlat && dep.unitQual != NULL)
 		{
-			// authored doubly nested (happiness.empire.perMilitaryUnit, unit perMilitaryUnit) -- the per-unit
-			// VALUE only (owner ruling: the ×count fold happens LIVE at read, outside every cache)
+			// the `unit: IS_MILITARY`-qualified `cities` entry (json §3.7): the per-unit VALUE only -- the ×count
+			// fold happens LIVE at read, outside every cache ([DEC-unit-modifiers-on-top])
 			if (MMKernel::applies(dep.enabled, dep.disabled, ec)) t.iMilitary += v;
 		}
 		else if (dep.nSeg == 3 && dep.seg[2] == segCities && dep.unitId == unitFlat)
 		{
-			// the ranked `cities` scaler: pays while this city ranks <= the target city count
+			// the ranked `cities` scaler (unqualified): pays while this city ranks <= the target city count
 			if (bInTopCities && MMKernel::applies(dep.enabled, dep.disabled, ec)) t.iLargest += v;
 		}
 	}

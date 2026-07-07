@@ -53,43 +53,48 @@ static void parse_per(CvJsonModEntry* e, const picojson::value& v)
 	}
 }
 
-// One `{value, per?, enabled?, disabled?}` entry object (§3.9).
+// One `{value, unit?, per?, enabled?, disabled?}` entry object (§3.9; `unit:` = the §3.7 predicate qualifier).
 static CvJsonModEntry* parse_entry(const picojson::object& o, CvCascUnit unit, CvCascScope scope)
 {
 	picojson::object::const_iterator ve = o.find("value");
 	if (ve == o.end() || !ve->second.is<double>()) return NULL;   // not an entry object
 	CvJsonModEntry* e = mk(x100(ve->second.get<double>()), unit, scope);
 	picojson::object::const_iterator it;
+	if ((it = o.find("unit")) != o.end())      e->unitQual = cascadeParseCondition(it->second);
 	if ((it = o.find("per")) != o.end())       parse_per(e, it->second);
 	if ((it = o.find("enabled")) != o.end())   e->enabled  = cascadeParseCondition(it->second);
 	if ((it = o.find("disabled")) != o.end())  e->disabled = cascadeParseCondition(it->second);
 	return e;
 }
 
-void CvJsonModFamily::parseLeaf(const picojson::value& leaf, CvCascUnit unit, CvCascScope scope)
+void CvJsonModFamily::parseLeaf(const picojson::value& leaf, CvCascUnit unit, CvCascScope scope, const picojson::value* nodeQual)
 {
+	const size_t iFirst = entries.size();
 	if (leaf.is<double>())   // a bare, always-on value
-	{
 		entries.push_back(mk(x100(leaf.get<double>()), unit, scope));
-		return;
-	}
-	if (leaf.is<picojson::object>())   // a single `{value, per?, enabled?, disabled?}` entry (§3.9 single-entry form)
+	else if (leaf.is<picojson::object>())   // a single `{value, unit?, per?, enabled?, disabled?}` entry (§3.9)
 	{
 		CvJsonModEntry* e = parse_entry(leaf.get<picojson::object>(), unit, scope);
 		if (e != NULL) entries.push_back(e);
-		return;
 	}
-	if (!leaf.is<picojson::array>()) return;
-	const picojson::array& a = leaf.get<picojson::array>();
-	for (size_t i = 0; i < a.size(); ++i)
+	else if (leaf.is<picojson::array>())
 	{
-		if (a[i].is<double>())   // a bare number in a list = an always-on entry
+		const picojson::array& a = leaf.get<picojson::array>();
+		for (size_t i = 0; i < a.size(); ++i)
 		{
-			entries.push_back(mk(x100(a[i].get<double>()), unit, scope));
-			continue;
+			if (a[i].is<double>())   // a bare number in a list = an always-on entry
+			{
+				entries.push_back(mk(x100(a[i].get<double>()), unit, scope));
+				continue;
+			}
+			if (!a[i].is<picojson::object>()) continue;
+			CvJsonModEntry* e = parse_entry(a[i].get<picojson::object>(), unit, scope);
+			if (e != NULL) entries.push_back(e);
 		}
-		if (!a[i].is<picojson::object>()) continue;
-		CvJsonModEntry* e = parse_entry(a[i].get<picojson::object>(), unit, scope);
-		if (e != NULL) entries.push_back(e);
 	}
+	// the NODE-form `unit:` qualifier (json §3.7 -- a sibling of the magnitude leaves, e.g. cargo.space.{unit:
+	// IS_AIR, flat: N}): applies to every entry this leaf produced that carries no entry-form qualifier of its own.
+	if (nodeQual != NULL)
+		for (size_t i = iFirst; i < entries.size(); ++i)
+			if (entries[i]->unitQual == NULL) entries[i]->unitQual = cascadeParseCondition(*nodeQual);
 }

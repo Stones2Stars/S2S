@@ -132,6 +132,7 @@ static void di_pushFamilies(const CvJsonModifiers* mods, std::vector<CascadeDepo
 			d.value100 = e->value100;
 			d.enabled = e->enabled;
 			d.disabled = e->disabled;
+			d.unitQual = e->unitQual;
 			d.hasPer = e->hasPer;
 			d.perTypeId = e->perTypeId;
 			d.perEach = e->perEach;

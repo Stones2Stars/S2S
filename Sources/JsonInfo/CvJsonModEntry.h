@@ -43,6 +43,10 @@ public:
 	CvCascScope scope;
 	CvJsonCondition* enabled;     // NULL = always-on
 	CvJsonCondition* disabled;    // NULL = never-suppressed
+	// --- the §3.7 `unit:` predicate qualifier (cargo.space.{unit: IS_AIR}; happiness.empire.cities.{unit:
+	// IS_MILITARY}) -- evaluated at the CONSUMER against each candidate unit (live-on-top per
+	// [DEC-unit-modifiers-on-top]); NULL = unqualified. Owned. ---
+	CvJsonCondition* unitQual;
 	// --- the §3.7 `per` count-scaler (value × count(type)/each) ---
 	bool hasPer;                  // the entry carries a per
 	std::string perType;          // the per's type/token string (POPULATION / PROPERTY_X / ...)
@@ -50,8 +54,8 @@ public:
 	int perEach;                  // the quantum ("per 5 population" -> 5); default 1
 	std::vector<int> perAnyOf;    // per.anyOf summed-count FK ids (json §3.7)
 	CvJsonModEntry() : value100(0), unit(CASC_UNIT_FLAT), scope(CASC_SCOPE_CITY), enabled(NULL), disabled(NULL),
-		hasPer(false), perTypeId(-1), perEach(1) {}
-	~CvJsonModEntry() { delete enabled; delete disabled; }
+		unitQual(NULL), hasPer(false), perTypeId(-1), perEach(1) {}
+	~CvJsonModEntry() { delete enabled; delete disabled; delete unitQual; }
 private:
 	CvJsonModEntry(const CvJsonModEntry&);            // noncopyable -- owns the condition trees
 	CvJsonModEntry& operator=(const CvJsonModEntry&);
@@ -66,10 +70,11 @@ public:
 	CvJsonModFamily() {}
 	~CvJsonModFamily() { for (size_t i = 0; i < entries.size(); ++i) delete entries[i]; }
 
-	// Parse a JSON leaf (a bare number, or a LIST of `{ value, enabled?, disabled? }` entries) into `entries`,
-	// ×100'ing each value and reusing cascadeParseCondition for enabled/disabled. `unit`/`scope` come from the
-	// family address (the key path above the leaf).
-	void parseLeaf(const picojson::value& leaf, CvCascUnit unit, CvCascScope scope);
+	// Parse a JSON leaf (a bare number, a single entry object, or a LIST of `{ value, unit?, per?, enabled?,
+	// disabled? }` entries) into `entries`, ×100'ing each value and reusing cascadeParseCondition for the
+	// conditions. `unit`/`scope` come from the family address; `nodeQual` is the NODE-form `unit:` qualifier
+	// (a sibling key of the magnitude leaves -- json §3.7), applied to entries that carry none of their own.
+	void parseLeaf(const picojson::value& leaf, CvCascUnit unit, CvCascScope scope, const picojson::value* nodeQual = 0);
 
 	bool empty() const { return entries.empty(); }
 	int size() const { return (int)entries.size(); }

@@ -54,14 +54,19 @@ void CvJsonModifiers::walk(const std::string& addr, const picojson::value& node)
 {
 	if (!node.is<picojson::object>()) return;   // a family/segment node is always object-valued (json §1/§6)
 	const picojson::object& o = node.get<picojson::object>();
+	// the NODE-form `unit:` predicate qualifier (json §3.7 -- a sibling of the magnitude leaves: cargo.space.
+	// {unit: IS_AIR, flat: N}); consumed here, applied to this node's leaves, never an address segment.
+	picojson::object::const_iterator uq = o.find("unit");
+	const picojson::value* nodeQual = (uq != o.end() && uq->second.is<std::string>()) ? &uq->second : NULL;
 	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
 	{
+		if (nodeQual != NULL && it == uq) continue;   // the qualifier key itself
 		const CvCascUnit unit = cascadeUnitFromString(it->first);
 		if (unit != CASC_UNIT_UNKNOWN)   // a unit keyword ends the address -- this is a magnitude LEAF
 		{
 			CvJsonModFamily*& fam = m_families[addr];
 			if (fam == NULL) fam = new CvJsonModFamily();
-			fam->parseLeaf(it->second, unit, mod_scopeOf(addr));
+			fam->parseLeaf(it->second, unit, mod_scopeOf(addr), nodeQual);
 		}
 		else if (it->second.is<double>() || it->second.is<picojson::array>())
 		{
@@ -69,7 +74,7 @@ void CvJsonModifiers::walk(const std::string& addr, const picojson::value& node)
 			// and the value the count) -- the one sanctioned non-unit leaf; synthesized unit COUNT, key in the address.
 			CvJsonModFamily*& fam = m_families[addr + "." + it->first];
 			if (fam == NULL) fam = new CvJsonModFamily();
-			fam->parseLeaf(it->second, CASC_UNIT_COUNT, mod_scopeOf(addr));
+			fam->parseLeaf(it->second, CASC_UNIT_COUNT, mod_scopeOf(addr), nodeQual);
 		}
 		else
 			walk(addr + "." + it->first, it->second);   // a scope/target/member segment -- one level deeper

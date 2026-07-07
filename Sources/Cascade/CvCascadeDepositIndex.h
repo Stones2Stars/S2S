@@ -47,6 +47,8 @@ struct CascadeDeposit
 	int value100;                      // x100 fixed-point magnitude (CvJsonModEntry::value100)
 	const CvJsonCondition* enabled;    // NULL = always-on (borrowed, never owned)
 	const CvJsonCondition* disabled;   // NULL = never-suppressed (borrowed, never owned)
+	const CvJsonCondition* unitQual;   // the §3.7 `unit:` predicate qualifier (borrowed; NULL = unqualified) --
+	                                   // evaluated at the CONSUMER per candidate unit; plain sums must filter it
 	bool hasPer;                       // the §3.7 per count-scaler rides the entry (borrowed detail below)
 	int perTypeId;                     // per type FK; -1 = a catch-all token (POPULATION/...)
 	int perEach;                       // the per quantum (default 1)
@@ -58,7 +60,7 @@ struct CascadeDeposit
 	int targetFk;                      // FK-resolved engine id of an INFOTYPE tail segment, -1 = not a key
 
 	CascadeDeposit()
-		: value100(0), enabled(NULL), disabled(NULL), hasPer(false), perTypeId(-1), perEach(1), perAnyOf(NULL),
+		: value100(0), enabled(NULL), disabled(NULL), unitQual(NULL), hasPer(false), perTypeId(-1), perEach(1), perAnyOf(NULL),
 		  addressId(-1), unitId(-1), nSeg(0), targetFk(-1)
 	{ for (int i = 0; i < CASC_DEP_SEGS; ++i) seg[i] = -1; }
 };

@@ -30,7 +30,7 @@ struct CascadeWellbeingVerdicts
 	int iUnhappy;    // unhappyLevel WITHOUT the military term
 	int iGood;       // goodHealth (no military term exists)
 	int iBad;        // badHealth (no military term exists)
-	int iMilPerUnit; // Σ civic/trait perMilitaryUnit values (× the live count at read)
+	int iMilPerUnit; // Σ civic/trait `unit: IS_MILITARY`-qualified cities values (× the live count at read, json §3.7)
 	CascadeWellbeingVerdicts() : iHappy(0), iUnhappy(0), iGood(0), iBad(0), iMilPerUnit(0) {}
 };
 
