@@ -18,7 +18,15 @@ completeness sweeps for hidden/lost data:
 - **Whitelist silent-drop sweep** (the 9 no-report, no-catch-all curators, where an unread field vanishes without
   trace): **2 real losses found** (culturelevel, property — below); the other 7 drop nothing.
 
-So the "hidden data" question is closed: the only un-migrated data is the enumerated list below.
+So the "hidden data" question is closed **for the XML/curator surface**: the only un-migrated *XML* data is the
+enumerated list below.
+
+> **⚠ SCOPE LIMIT of this attestation (found 2026-07-06) — it covers XML-sourced data ONLY.** All three sweeps
+> above run over the `Assets/XML` → curator → `Assets/Data` JSON pipeline. They cannot see gameplay that lives in
+> **Python event-handler logic and reads no XML field** — a hardcoded per-turn effect keyed only on live
+> game-object state (wonder presence, revolution state) is invisible to a field-census. The `-Trading`/`canTradeOn`
+> class of miss (Tier 0) was still an XML field the sweep *should* have caught; the Python-hardcoded class below is
+> a different, out-of-scope quadrant. See **Tier 0b**.
 
 > **STATUS — the DECISION-NEEDED (🔴) tier is CLEARED (owner rulings, 2026-07-01).** Every parked/dropped field across
 > every entity has been ruled and migrated (buildings, leaderhead, corp/route/tech, property-pulses, improvement,
@@ -86,6 +94,153 @@ triple and building sliders are zero-data today, mapping-migrated). Kept for the
   (`TechInfo.json`'s bare `commerceFlexible` mapping is stale vs the ruling.) Building-side keys are emitted but
   unparsed/unqueried — that half is the `CvJsonBuildingInfo` parse + `en_empireHasCapability` HAVE-widening
   (code work, capabilities.md ruling 2026-07-02), not a curator item.
+
+## Tier 0b — SCOPE BOUNDARY: purely-Python, never-XML effects are OUT OF #430 SCOPE (owner ruling 2026-07-06)
+
+> **⚖ RULING (owner 2026-07-06):** *the hardcoded wonder effects in Python are outside of scope, because they are
+> not dealt with in XML — they are purely Python.* **#430 migrates the XML-dealt-with surface** (XML data + the DLL
+> machinery that reads it → the cascade). Gameplay that lives **only** in Python and reads **no** XML field is a
+> separate surface the cascade does not touch, so it is **out of migration scope** — not a data gap, not a curator
+> item, not a cutover exposure.
+
+An apply-site sweep for **repeatable grants** (per-turn spawn / heal / promotion / property) confirmed the *core*
+building-repeatable machinery is DLL, in `CvCity::doTurn`, all XML-fed and in scope (`doHeal` :21999/:1355 ← building
+`iNumUnitFullHeal`; `doPromotion`→`assignPromotionsFromBuildingChecked` :20915/:1345 ← `getFreePromoTypes`;
+`doPropertyUnitSpawn` :24077/:1400 ← building `PropertySpawn*` + property state). It also surfaced a **purely-Python
+wonder island** (grep-confirmed absent from `docs/`), which the ruling above places **out of scope**:
+
+- **Per-turn wonder SPAWNS, hardcoded in `CvEventManager.onCityDoTurn`** — `UNIT_CRUSADER` from CRUSADE
+  (`CvEventManager.py:2734-2740`), a random `UNIT_SUBDUED*` animal from BIODOME (`:2754-2763`). Wonder-presence-keyed
+  (`aWonderTuple` :673), hardcoded unit literal / name-substring scan — **no XML grant field**.
+- **Per-turn wonder GOLD/XP grants, hardcoded in Python** — WORLD_BANK/CYRUS_CYLINDER/TOPKAPI (`onBeginPlayerTurn`
+  :805/:817/:824), WEMBLEY (`onEndPlayerTurn` :842). Same purely-Python, no-XML class.
+- **Structurally INEXPRESSIBLE Python effects (owner example 2026-07-06: ALAMO → culture burst on dead units).** A
+  reactive, event-triggered effect (culture pulse *when a unit dies*) has **no home in the `grants`/modifier/enabler
+  vocabulary** — the new model declares provisions on standard triggers (build/create/per-turn/tech/religion/civic),
+  not arbitrary event reactions. These are **doubly** out of scope: Python-only AND not representable. They stay
+  Python by necessity, and are never a migration or cutover concern.
+
+**Why they never appeared in the cut plan — and why that is CORRECT, not a miss:** the completeness bar is an XML-field
+census + a DLL apply-site map; a purely-Python effect that reads no XML field is, by the ruling, **not in the surface
+the migration owns**, so its absence from the inventory is the scope boundary working as intended, not a gap.
+
+**Consequence — no exposure, by construction:** the cascade grants machine only ever applies what is in the
+XML-derived JSON; these effects were never in XML, so they never enter the JSON, so the cascade never applies them →
+**no double-up, no silent loss.** They stay Python, untouched, across the XML drop (they read live game-object state,
+not XML) and across the grants cutover (which cuts only the in-scope DLL appliers). Any future rework of them is its
+own separate initiative, never a #430 concern.
+
+*(Contrast: the Revolution/RevDCM rebel spawns ARE in the cut plan — code-cut-map rows 54/59/68 — but only because the
+civic `revolution` grant touches an XML **data** field (`getRevIdxSwitchTo`), which put the civic-side hook in scope;
+the broader revolution mechanic is itself a deferred ground-up rework, not migrated. These wonder effects have no such
+XML data hook, so they are wholly out.)*
+
+## ⚖ Tier 0c — the HEAL channel is KEEP-LEGACY through #430; the cascade heal family is a POST-MIGRATION rework (owner ruling 2026-07-06)
+
+> **RULING (owner 2026-07-06, refined):** *healing is done by units (healers) or buildings (hospitals, healers'
+> hut, …). I do not want to touch it much right now — as long as units and buildings still heal units, I'm happy;
+> it needs a broader rework to make sense anyway.* So the cascade **does NOT build a `heal` modifier family in
+> #430**; the legacy heal machinery **stays intact** and keeps applying, and the proper heal model is deferred to a
+> **post-migration broader rework** (siblings: `isPower` KEEP, the missions/CvOutcome ground-up rework).
+>
+> **⚖ ACCEPTANCE BAR — heal is BEHAVIORAL-LOOSE, NOT parity (owner 2026-07-06):** *"how healing has worked has
+> always been slightly diffuse; as long as healing isn't lost, or isn't wildly overpowered, I am happy… I care
+> far less about the diff and more that it works properly."* So heal is EXEMPT from the usual exact-parity /
+> `diverging=0` discipline. The test is the two failure modes only — **(1) heal LOST** (a unit's heal rate
+> collapses toward 0) and **(2) heal WILDLY OVERPOWERED** (heal rate far too high, e.g. a ×100 or double-count
+> bug). Both are directly visible per-unit on the **`/computed/units/heal`** endpoint (the real `healRate()` +
+> decomposition). The `[READJSON/healdiff]` shadow is downgraded to a **coarse net** (a huge `diverging` count or
+> a heal collapse is the signal), NOT a 0-target gate — do not chase heal parity.
+>
+> **⚖ THE POST-MIGRATION HEAL REDESIGN IS A COUPLED CLUSTER (owner 2026-07-06):** *"healing overall needs to be
+> thought out and redesigned so it makes more sense, but that ties into the dismantling of the unitcombat fiesta
+> that currently exists, and we need to flesh out tags properly."* The heal redesign is **NOT standalone** — it
+> depends on (1) **dismantling the current unit-combat complexity** (the heavy per-UnitCombat heal-as-type
+> dimension — `getHealRateAsType` / `HealUnitCombat` lists — is a symptom of that "fiesta") and (2) the **tags**
+> system being fleshed out properly (the deferred unitcombat→`tags` pass, [tags.md](../../specs/tags.md) §Tech/
+> equipment class + Tier 3 below). Do the heal redesign only AS PART OF that cluster, post-migration — designing it
+> before the unitcombat/tags cleanup would just re-encode the current mess. This is the WHY behind KEEP-legacy-now:
+> a dependency order, not a punt.
+
+**Verified state (2026-07-06, heal-inventory sweep) — data-CARRIED, logic-ABSENT.** The heal DATA is largely in the
+JSON, but **nothing in the cascade consumes it** — no `DepositIndex::lookupSegment("heal")` or `("healing")` exists
+anywhere in `Sources/`, and the unit cascade reads only the enabler fields (no `deposits`). So every heal field is
+either PARSED-but-unconsumed or RESOLVED-but-not-applied. The data homes are **fragmented across three shapes** for
+one mechanic:
+- **promotion + unit-combat heal** → a proper **`heal` modifier family** (`heal.enemy/neutral/friendly/sameTile/`
+  `adjacentTile/selfModifier/support/victory/victoryAdjacent/victoryStack`, `heal.unit.unitCombat.{UC}`) — parsed
+  into `CvJsonInfo::deposits` (generic family walker), **zero readers**. `alwaysHeal`/`noSelfHeal`/`healsAs` → skills.
+- **building `iHealRateChange`** → a **`healing`** family (`healing.city.flat`) — also parsed-but-unconsumed.
+- **building `iNumUnitFullHeal` + `HealUnitCombatTypes`** → **`grants.repeatable`** — resolved to a `[GRANTS]`
+  diagnostic COUNT only, never applied.
+- **dropped (unit-level):** `iSelfHealModifier`, `bNoSelfHeal`, `HealAsTypes` are absent from `curate_unit`'s tables —
+  but verified UNPOPULATED on today's unit records (`U_Land`), so no live loss; ⚠ not exhaustively checked across
+  `U_Sea`/`U_Neanderthals` — a coverage-verify if any unit ever sets them.
+
+("health" in `Sources/Cascade/` is the separate WELLBEING sickness channel — built + consumed by `CvCascadeWellbeing`
+— NOT unit healing.) The whole thing matches the plan's "unit plane lands last" ([modifier.md](../../specs/modifier.md)
+§6) but is **under-tracked** (not in cutover.md ruling-1's channel list, not a Gate-1 item, never modelled by
+StoneBase). Legacy apply (KEEP): `CvUnit::doHeal` (CvUnit.cpp:6467) → `changeDamage(-healRate())` / per-UnitCombat
+`changeHealAsDamage`; building full-heal via `CvCity::doHeal` (:21999); city heal-pool `getHealRate()` fed by building
+`iHealRateChange` via `processBuilding`.
+
+**⛔ THE CUT-SAFETY GATE (owner's primary concern, 2026-07-06) — legacy heal reads XML-backed Info getters, so an
+XML cut BREAKS it unless the JSON serves those getters.** Verified: `CvUnit::doHeal`/`healRate` and `CvCity::doHeal`
+get their values *through* the engine Info getters — `CvBuildingInfo::getHealRateChange` returns `m_iHealRateChange`,
+populated ONLY by the XML read (`.add(m_iHealRateChange,…)` CvBuildingInfo.cpp:1807; `getNumUnitFullHeal` :1848);
+`CvBuildingInfo.cpp` has ZERO `InfoRepo`/`CvJsonInfo`/cascade references. `CvCity`'s heal pool + `CvUnit`'s heal
+accumulators are fed by `processBuilding`/`processPromotion`/`processUnitCombat` reading those getters. So **cutting
+the XML now → the heal Info members reset to 0 → `doHeal` loses every contribution → healing stops.** The JSON heal
+data sits in `CvJsonInfo` (parsed, unconsumed) and **never reaches `CvUnit`/`CvCity`**.
+- **THE REQUIRED BRIDGE (owner's bar: "if the json data gets properly read into CvUnit and CvCity, I'm happy for
+  now"):** serve the heal Info getters from the JSON — `getHealRateChange` / `getNumUnitFullHeal` /
+  `getSelfHealModifier` / the promotion + unit-combat heal getters return the `CvJsonInfo` value instead of the XML
+  member. Then the existing `processBuilding`/`processPromotion`/`processUnitCombat` apply path feeds `CvCity`/`CvUnit`
+  unchanged and `doHeal` runs off cascade-sourced data — no heal family, no logic rework, identical behaviour. This is
+  the readjson.md §3 "fresh structures serve the EXE accessor surface" step, extended to the type-specific heal
+  getters (it currently only covers the `CvInfoBase` base getters). **This bridge is the concrete gate that makes
+  KEEP-legacy heal survive the XML cut — it is NOT built.** ⚠ Requires the building `iNumUnitFullHeal`/
+  `HealUnitCombatTypes` heal data to be reachable as its Info-getter shape, i.e. re-home it OUT of `grants.repeatable`
+  (the getter can't read a repeatable entry) OR emit it in a getter-serveable form — so the double-up cleanup and the
+  cut-safety bridge are the SAME fix.
+- **KEEP all heal XML fields + the legacy heal machinery** — mark them KEEP-rows; they are **NOT retired** at the
+  #430 cutover, so units + buildings keep healing units off the surviving legacy path. (Confirmed via the heal-inventory
+  sweep: no heal field is on an active cut list; the risk is only the wholesale XML-read deletion, gated by the bridge above.)
+
+> **⚖ GENERALIZES — the bridge is the same for EVERY KEEP-legacy DLL per-turn apply that reads XML-backed Info data
+> (owner ruling 2026-07-06: "build json-based heal + repeatable-grant read-in now; the cascade apply-loop is
+> post-cut").** The verified DLL per-turn surfaces that read XML Info members and would break at the XML cut are
+> **FOUR**, not the heal pair: **(1) heal** (`doHeal` ← building `getHealRateChange`/`getNumUnitFullHeal`/
+> `HealUnitCombatTypes` + unit/promotion/unitcombat heal getters); **(2) building free-promotions**
+> (`doPromotion`→`assignPromotionsFromBuildingChecked` ← `getFreePromoTypes`/`isApplyFreePromotionOnMove`,
+> CvBuildingInfo.cpp:2461/:1747); **(3) property/criminal spawn** (`doPropertyUnitSpawn` ← `getPropertySpawnUnit`/
+> `Property` :3056 + property state); **(4) property pulses** (the property solver ← `m_PropertyManipulators` :1680 —
+> ⚠ solver read per-turn assumed from the XML-backed data, trace to confirm). The **Python** per-turn spawns
+> (CRUSADE/BIODOME/Revolution, Tier 0b) are the "rest is Python-driven" and stay out of scope.
+>
+> **THE PLAN (owner 2026-07-06):** build the JSON→Info-getter read-in for these four NOW so the existing legacy DLL
+> apply keeps working after the XML cut; **DEFER the cascade grants apply-loop** ([grants-machine.md](grants-machine.md)
+> increment 5) to POST-cut. This is *simpler* than increment 5 (no new per-turn apply machine + no atomic
+> legacy-retirement) and it satisfies the cut-safety gate. Once the read-in works, nothing DLL-side is left needing
+> the apply-loop pre-cut. **Recommended mechanism:** `readJson` populates the KEEP-legacy engine `CvXInfo` members
+> from the parsed JSON (a bounded, deliberate exception to "CvJsonInfo never duplicates engine fields", sanctioned as
+> the readjson.md §3 "fresh structures serve the accessor surface" step for these specific getters) — getters +
+> `processBuilding`/`processUnit`/solver stay unchanged. Consequence: the building heal/spawn/pulse data must be
+> reachable in getter-shape — so re-homing it OUT of `grants.repeatable` (§ double-up guardrail) and the cut-safety
+> read-in are the SAME fix.
+- **⛔ THE ONE GUARDRAIL — the grants apply-loop (increment 5) must NOT apply the heal repeatables.** The building
+  heal is currently **mis-homed** to `grants.repeatable` (`curate_building.py:598-600` `iNumUnitFullHeal` →
+  `{heal:"full",count,interval}`, the `heal:"full"` string an unflagged agent invention; `:601-612`
+  `HealUnitCombatTypes`). It is inert today (nothing consumes `grantRepeatables`), but if the apply-loop ever applies
+  it **while legacy `doHeal` also applies it → double-heal.** Since heal is KEEP-legacy, the apply-loop excludes the
+  heal repeatables; cleanest is to **stop emitting them** (revert the curator emit — the building heal simply isn't in
+  the cascade JSON, legacy applies it from XML). Low-touch; do it at/with increment 5, not urgently (inert until then).
+- The proper heal model (ONE `heal` modifier family: unit/promotion/unitcombat/building sources deposit into a
+  cascade `healRate()`, applied via the surviving `changeDamage`; the per-UnitCombat heal-as-type dimension;
+  unifying the three fragmented homes above into one channel) is the **post-migration broader rework**, not #430.
+  ⚠ The `mapping/*.json` files are **dead/unconsumed metadata** — the heal curators use hardcoded tables, NOT the
+  mapping (`curate_building.py:47`: "the mapping's were often wrong"), so their `unitFullHeal`/`healRate`/`identity`
+  heal listings mislead; ignore them and reconcile channel naming from the curator code when the rework runs.
 
 ## Tier 1 — DONE (committed)
 

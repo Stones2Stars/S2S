@@ -189,6 +189,17 @@ file-`static`-hidden calc is a DRY hazard: the next consumer can't reach it, so 
 "N-evaluators-of-one-thing" disease. The legacy shadow is the ONLY sanctioned duplication (scheduled to die at the
 atomic cutover). **Home:** [patterns.md § DRY](patterns.md).
 
+### DEC-json-not-cascade
+
+`CvJsonInfo` is the JSON-info BASE (`CvInfoBase` + the availability model — `requires`/`enables`/`obsoletes`/`replaces`/
+`disables`/`allowed`/`grants` + the info-owned typed `CvJsonCondition` — ONLY, ZERO cascade runtime). The per-type
+modifier DATA lives as **real typed members on the `CvJson<X>Info` subclasses** (the human-legible `CvXInfo`-replacement
+surface the engine reads normally). The cascade RUNTIME (deposit index, evaluator, accumulator packages, frontier) is
+built by the cascade's OWN setup **reading those pocos** — never stored on / mixed into the JSON info. *Cascade and JSON
+are not the same*; a generic `deposits` vector on `CvJsonInfo` was the cascade bleeding into the data, and is retired
+(owner ruling 2026-07-07, superseding the generic `CvJsonInfo.deposits` model). **Home:**
+[cascade-engine-430.md §3](../plans/structural-cleanup/cascade-engine-430.md).
+
 ### DEC-data-first
 
 Data migration (curators + JSON) is NEVER deferred: any known un-migrated field / reclassification / still-emitted
@@ -196,6 +207,16 @@ legacy shape is the #1 priority, handled BEFORE any downstream cascade / shadow 
 deferred data item forces downstream consumers to ASSUME its eventual shape (the kraken's shortcut). The strict
 complement of [DEC-mirror-then-redesign](#dec-mirror-then-redesign) (defer redesign, never data). **Home:**
 [validation.md](../specs/validation.md).
+
+### DEC-recurate-on-decision
+
+**Always recurate when a decision lands (owner ruling 2026-07-05):** any ruling that changes what the data model
+carries (a new grantor kind, a re-homed field, a widened block) triggers the curator update + regen IN THE SAME
+work item — never "the curator catches up later." A landed decision with un-recurated curators is exactly how
+data-gap misses accrete (the instance: building-grantor capabilities were ruled 2026-07-02 and no building curator
+emit followed, leaving the union's building half blind until re-found 2026-07-05). The per-decision twin of
+[DEC-data-first](#dec-data-first) (that rules the backlog; this rules the moment a decision lands). **Home:**
+[AGENTS.md](../../AGENTS.md) Conventions.
 
 ### DEC-turn-time-is-king
 
@@ -214,3 +235,15 @@ cannot invalidate ANY cache -- including the LEGACY ones.** The three legacy per
 ruling: the garrison-change governor re-optimization (changeMilitaryHappinessUnits AI_setAssignWorkDirty),
 the per-move m_unitSourcedPropertyCache clear (noteUnitMoved -> no-op; end-turn refresh in doTurn), and the
 siege-blockade governor invalidation on enemy unit steps. **Home:** [modifier.md](../specs/modifier.md) §2b.
+
+### DEC-entity-gate
+
+A whole-entity game-option gate authors as the ENTITY-LEVEL `enabled`/`disabled` condition pair (`"enabled":
+"GAMEOPTION_X"`), evaluated live — never a bespoke section (`loadPrune` is the retired counter-example) and never
+smuggled into `requires` (which holds only genuine needs). **Home:** [json.md §2/§9](../specs/json.md).
+
+### DEC-red-ratchet
+
+The tree deliberately does NOT compile: the XML `CvXInfo` classes are archived (`SourceArchive/Infos/`) as a
+fallback-proof ratchet — never restore them, never re-add a `CvXInfo`; green is reached ONLY by finishing the
+JsonInfo structure + the full getter/consumer wiring. **Home:** [AGENTS.md](../../AGENTS.md) Build And Test.

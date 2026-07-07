@@ -1,5 +1,18 @@
 # `readJson` — the data-feed reader (build plan)
 
+> **⛔ SUPERSEDED — THE XML SEAM IS GONE (owner ruling 2026-07-08).** Every line below saying the XML path
+> "stays authoritative until the atomic cutover" predates the ratchet: the XML info classes are ARCHIVED
+> (`SourceArchive/Infos/`), HEAD deliberately does not compile, and the JsonInfos + getter wiring are the only
+> road to green (root `AGENTS.md` Build And Test ⛔). Never restore the archive.
+>
+> **⛔ SUPERSEDED IN PART — JSON-vs-CASCADE SEPARATION ([DEC-json-not-cascade](../../architecture/decisions.md#dec-json-not-cascade), owner ruling 2026-07-07).** Below, `readJson`
+> is described as mapping into a `CvJsonInfo` that holds the **deposit tree** + the `CvCascadeCondition`. The 2026-07-07
+> split changed both homes: `CvJsonInfo` (relocated `Cascade/` → `Sources/JsonInfo/`) is the JSON-info BASE holding ONLY
+> the availability model + the (renamed) info-owned typed **`CvJsonCondition`** — the modifier DATA is now **real typed
+> members on the `CvJson<X>Info` subclasses**, NOT a generic `deposits` vector on `CvJsonInfo`. readJson populates the
+> subclass typed members (virtual `mapFrom`); the cascade builds the DepositIndex/packages by reading those pocos in its
+> own setup. Read "CvJsonInfo carries the deposit tree" below with that split.
+
 > ⛔ **SUPERSEDED FRAMING — the conditionals are a PORT of StoneBase's typed `Condition` model, NOT `BoolExpr` (owner
 > ruling 2026-06-30; see [cascade-engine-430.md §2b](cascade-engine-430.md)).** This doc was written "BoolExpr-routed";
 > that was a DETOUR. The condition vocabulary + predicate evaluation are a faithful C++ port of StoneBase's

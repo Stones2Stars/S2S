@@ -35,13 +35,13 @@ sibling reads the still-maintained legacy accumulators (fed by the untouched `pr
 
 | # | state | cascade side | legacy side | net |
 |---|---|---|---|---|
-| 11 | building ACTIVE/dormant | `m_cascadeFacts` (the operate/provides fixpoint; every cascade fill reads it) | `setDisabledBuilding` event-state (still drives the engine's own processing; carries the accepted dropped-event staleness) | `[MODIFIER/dorm]` attribution lines |
+| 11 | building ACTIVE/dormant | `m_operatingBuildings` (the operate/provides fixpoint; every cascade fill reads it) | `setDisabledBuilding` event-state (still drives the engine's own processing; carries the accepted dropped-event staleness) | `[MODIFIER/dorm]` attribution lines |
 
 ## B. The ENABLER plane — ⚡ FLIPPED 2026-07-04 ("flip it all"): CASCADE SERVES, legacy maintains as the oracle
 
 The gates serve the cascade frontier, CACHED on the package substrate (`CPK_FRONTIER` city sets:
 buildable/trainable/creatable/maintainable; `PSC_FRONTIER` player sets: researchable/civics/hurries + the
-canBuild rem-set + the promotion tech halves) — **ensure-on-read (the FACTS idiom, deliberately not the
+canBuild rem-set + the promotion tech halves) — **ensure-on-read (the operating buildings idiom, deliberately not the
 rates' bare fetch: gate reads are decision-time and legacy chains builds within a turn)**, filled by the
 harness-proven cascade calls (`BuildingCascade::buildable` / `UnitCascade::trainable` /
 `TechCascade::available` / the kernel gateSets). The flipped bodies (default shapes; what-if/visible params
@@ -62,7 +62,8 @@ shadow at the cut (the one-generic-assembler consolidation is the parked end-sta
 ## D. NOT duplicated (already single-surface)
 
 - **Capabilities** — CUT (the 22 `CvTeam` getters run `CascadeCapabilities`; 21 counters deleted; sliders +
-  `hasLanguage` cut in wave 2). Convergence of its hand-rolled cache onto the Set protocol is a follow-up.
+  `hasLanguage` cut in wave 2). ✅ Its cache converged onto the Set protocol 2026-07-05 (`CascadeTeamCaps`
+  owner-side on `CvTeam`, the scope-packages §3b census row).
 - **Plot yields** — the `CvPlot` cache IS the one source (both the cascade combine and legacy pull it; the
   push-maintained `m_aiBaseYieldRate` member is dead).
 - **The tally** — a read-only accessor over object-owned counts by design (a duplicate would be tautological).

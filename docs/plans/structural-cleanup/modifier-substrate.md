@@ -41,14 +41,14 @@ golden-age, project) + a **turn stamp** — every component recomputes at least 
 "re-evaluated every recompute" dormancy cadence AND the self-heal for any unhooked mutation). Conditioned
 deposits are thereby re-checked whenever their component recomputes — §3 holds by construction.
 
-**Facts ride along:** `PCT`/`EXTRA` recomputes consume `EnablerKernel::computeCityBuildingFacts` (memoized;
+**Operating buildings ride along:** `PCT`/`EXTRA` recomputes consume `EnablerKernel::recomputeOperatingBuildingsInto` (memoized;
 evicted ONLY on building events — juggling/specialist churn never evicts the fixpoint).
 
 ## Event → dirty mapping (the DOMAIN hooks)
 
 | hook site | effect |
 |---|---|
-| `CvCity::processBuilding` | city: PCT+SPEC+EXTRA(+C_*) dirty + facts evict |
+| `CvCity::processBuilding` | city: PCT+SPEC+EXTRA(+C_*) dirty + operating buildings evict |
 | `CvCity::setPopulation` | city: EXTRA dirty (perPop) |
 | `CvCity::setSpecialistCount` | city: SPEC dirty |
 | `CvCity::setWorkingPlot` | city: PLOTS dirty |
@@ -215,7 +215,7 @@ attributable diff lines (never silent).
   `CascadeWellbeing::gatherCityTerms/playerAreaEmpire/assemble` [ONE verdict assembly, pure over inputs],
   `CascadeScalarChannels::gpModifierCity/maintenanceModifierCity/tradeRoutesCity/fillPlayerScalars/
   fillBuildRate{City,Player}`); reads are bare fetches + the channel combine with LIVE gates (SR/coastal/
-  conn/GA/slider/disorder/military); the epochs + `CvCascadePlayerStamp` + the facts/slot stamps + the
+  conn/GA/slider/disorder/military); the epochs + `CvCascadePlayerStamp` + the operating buildings/slot stamps + the
   read-side ensure protocol + `s_wbRollup`/`ScPlayerRollup` are DELETED; events mark
   (`buildingProcessed` = conservative city + DERIVED cross-scope masks; `markPlayerScopeAndCities` at the
   three player-event sites); the boundaries are `playerSliceRebuild` (doTurn top) + `worldRebuild`
@@ -254,8 +254,8 @@ attributable diff lines (never silent).
   bind+delegate; refresh = Σ living players' ensured packages; marked by world-deposit buildings — extend
   the building-mask path); (5) CvPlayer::m_cascadePlayerScope member+bind+reset+delegate; (6) mark sites:
   setCivics/GA (CvPlayer) + setHasTech (CvTeam) → markPlayerScopeAndCities (city loop masks ALL&~SCALARS —
-  scalars need NO fan-out by construction); (7) CvCity reset drops the iEpoch/iTurn lines; facts
-  (CvCascadeCityFacts.h + EnablerKernel::cityFacts) drop the epoch/turn stamps (slice-start markAll is the
+  scalars need NO fan-out by construction); (7) CvCity reset drops the iEpoch/iTurn lines; operating buildings
+  (CvCascadeOperatingBuildings.h + EnablerKernel::operatingBuildings) drop the epoch/turn stamps (slice-start markAll is the
   cadence); (8) wellbeing: WbSplit def moved to the accumulator header (delete the local), s_wbRollup →
   the member maps via ensure(PSC_WB); (9) the [MODIFIER/scalar] net + endpoint slot emits recompose to the
   getter-body adds; the flipped getter bodies (already raw) recompose likewise; (10) build → cycle → owner

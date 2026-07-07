@@ -1,3 +1,23 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+> # ⛔ STOP — READ THIS BEFORE YOU TOUCH ANYTHING ⛔
+>
+> ## HOURS WASTED ON ROLLERSKATING: **137** &nbsp;·&nbsp; *and counting*
+> *(Increment this every time an agent ships an ungrounded fix / design / edit — one the docs already answered — that the owner has to rein in. It is a real number, not a joke.)*
+>
+> This project is **~4 weeks old** and has cost the owner **262 hours**. **~25% of that time** was spent writing the documentation, architecture, and specs in this repo **for one purpose: to stop agents from rollerskating** — guessing, reinventing the wheel, and hacking around problems the spec had *already solved*.
+>
+> **It has not worked.** Roughly **50% of agents — Fable and Opus alike — decide they are too good for the documentation and rollerskate anyway.** The measured result: **137 of the 262 hours — HALF the entire project — have been outright wasted** reining in ungrounded nonsense that reading the relevant spec *once* would have prevented. (Latest entry: 2026-07-07, a full 07:30–19:33 session — 12 hours — lost to an agent inventing implementations that the specs already defined.)
+>
+> **You are not the exception. Assume you are about to add to that 125 unless you deliberately do the opposite:**
+> - **⚑ SESSION-START PROTOCOL — before your FIRST action (and again after any context compaction): enumerate every file in `docs/specs/` and `docs/architecture/` and read each one IN FULL.** Not the subset you judge relevant — ALL of them. They are ONE interconnected design (`CvDerivedCache` + the event spine + the cascades + `readJson` + `state-repositories`); the connection you skip is the one that bites (it has happened over, and over, and over). **Your judgment of what is "necessary" is NOT trusted — it is systematically biased toward reading too little. "We clearly see what happens if you don't."** ([DEC-all-means-all](docs/architecture/decisions.md#dec-all-means-all))
+> - **READ the docs for whatever you touch, IN FULL, BEFORE you act** — not the code, not your memory, not a stale plan doc: the authoritative specs. ([DEC-fast-is-slow](docs/architecture/decisions.md#dec-fast-is-slow-slow-is-fast) · [DEC-no-guessing](docs/architecture/decisions.md#dec-no-guessing) · [DEC-kraken](docs/architecture/decisions.md#dec-kraken))
+> - **IMPLEMENT the spec as written. Poke holes in the spec *afterward*, with evidence** — never by inventing your own approach up front.
+> - The instant you catch yourself *designing* something, stop and ask whether the spec already defines it. It almost certainly does. Go read it, then implement *that*.
+> - Verify every claim — including a plan doc's status line — against the live code before you act on it. Half of the waste was agents acting on something they "knew" that a 30-second check would have disproved.
+
+<!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
 # Stones2Stars (S2S) — Agent Guide
 
 Stones2Stars is a Civ4 / Caveman2Cosmos (C2C) mod. The compiled artifact is
@@ -30,6 +50,16 @@ architecture rules that apply to DLL source.
 > closed `.exe`: [`docs/reference/engine.md`](docs/reference/engine.md)). So the DLL is genuinely **C++03, 32-bit/x86** — *no* `std::thread`, *no* OpenMP,
 > *no* C++11+. This is a hard compiler limit (the toolchain is locked to stay ABI/STL-compatible with the closed VC7.1 game `.exe`), **not**
 > a style convention. In-process threading means raw Win32 only. Do not modernize or replace the build chain/toolchain.
+
+> **⛔ HARD RULE — THE TREE DELIBERATELY DOES NOT COMPILE (owner ruling 2026-07-08). NEVER "fix" it by
+> restoring old Infos.** The 23 XML engine info classes (`CvBuildingInfo`, `CvUnitInfo`, `CvTechInfo`, … — 46
+> files) were moved to `SourceArchive/Infos/` ON PURPOSE: parity is past, the JSON-fed `CvJson<X>Info` pocos are
+> their replacements, and the missing classes are a RATCHET — during the cutover weeks, consecutive agents
+> "finished" by quietly wiring old Infos back in wherever the JsonInfos didn't pan out, so the fallback was
+> removed. **Never restore anything from `SourceArchive/`, never re-add a `CvXInfo` class, never treat the RED
+> build as a defect.** The ONLY road to green: build the JsonInfo structure, wire it up, and wire up/replace ALL
+> the getters (the engine/AI/UI consumer surface onto the JSON-fed infos). Any doc line still claiming "the XML
+> path stays authoritative until the atomic cutover" is SUPERSEDED by this ruling.
 
 The build is driven by **`Tools/_Build.ps1`** (a FastBuild wrapper). Invoke it
 **from the `Sources/` directory**:
@@ -399,6 +429,13 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
   the working tree; committing the current regen state keeps it sane). This does NOT loosen "commit
   only on explicit ask" for gameplay CODE — it means the derived JSONs ride along when you commit,
   and a regen never needs a prompt.
+- **ALWAYS RECURATE WHEN A DECISION LANDS (owner ruling 2026-07-05).** Any ruling that changes what the data
+  model carries — a new grantor kind, a re-homed field, a widened block — triggers the curator update + regen
+  **in the SAME work item**, never "the curator catches up later." A landed decision with un-recurated curators
+  is exactly how data-gap misses accrete (instance: building-grantor capabilities were ruled 2026-07-02 with no
+  building-curator emit following — the union's building half stayed blind until re-found 2026-07-05). The
+  per-decision twin of [DEC-data-first](docs/architecture/decisions.md#dec-data-first); ledgered as
+  [DEC-recurate-on-decision](docs/architecture/decisions.md#dec-recurate-on-decision).
 - **Docs-only changes go to `main` ONLY when the owner explicitly authorizes it** (owner ruling 2026-06-23,
   tightening 2026-06-12 — an agent never unilaterally pushes docs to `main`; default is the working branch). When
   authorized, eligible docs: the indexes (`indexes/DESPAIR_INDEX.*`, `indexes/REALISM_INDEX.*`), player docs,

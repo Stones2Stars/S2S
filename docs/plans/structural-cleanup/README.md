@@ -23,6 +23,9 @@
   build-wholesale ruling. (Status table rebuilt 2026-06-29 to post-purge truth.)
 - **readjson.md** — the `readJson` BoolExpr-routed reader build plan (the first #430 build item; the data-feed
   prerequisite for the modifier + enabler).
+- **perf-profile-wiring.md** — the ACTIVE perf-wiring surface (the `[MODIFIER/perf]` census; unparked 2026-07-06).
+  The internal `PROFILE_*` profiler is permanently dead (never reinstated); the pre-cut cascade-vs-legacy pair
+  timing closes at each legacy cut.
 
 *(Lifted intact — transient bulldozer docs, not condensed. Their internal links still point at pre-move paths;
 part of the reference-sweep follow-up. The build-wholesale ruling inside `cascade-engine-430.md` should also get a

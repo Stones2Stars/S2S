@@ -40,8 +40,12 @@ rate100 = min(CAP, max(100, (Σ BASE + specialist) × max(0, modifier) + 100·�
 
 ## 2. The input — mapped data + the ENABLER's active state (NOT the live engine)
 
-- **Per-source effect data:** the entity's `CvJsonInfo` via `InfoRepo<CvXInfo>::get().get(id)` — its `deposits`
-  (`address` = dotted `family.scope[.target][.member]`, `unit`, `value100`, `enabled`/`disabled` BoolExpr, `hasPer`).
+- **Per-source effect data:** the entity's mapped info via `InfoRepo<CvXInfo>::get().get(id)`. ⛔ **Since the 2026-07-07
+  JSON-vs-CASCADE split ([DEC-json-not-cascade](../../architecture/decisions.md#dec-json-not-cascade)) this is a TYPED `CvJson<X>Info` subclass with real members** (e.g.
+  `getYieldChange`), NOT a generic `deposits` vector on `CvJsonInfo` (retired — `CvJsonInfo` is the availability-only
+  base). The cascade's setup reads the typed members and builds its own DepositIndex/packages; the `deposits`
+  (`address`/`unit`/`value100`/`enabled`/`disabled`/`hasPer`) framing below describes that cascade-built runtime, no
+  longer a member of the info.
 - **⛔ The ACTIVE-SOURCE state comes from the cascade ENABLER, NOT the live engine (owner ruling 2026-06-30).** What
   is *active* — which buildings are non-dormant, which bonuses are connected/available, which civics/traits hold — and
   the `enabled`/`disabled`/`connection` condition evaluation must read the **cascade enabler's** HAVE/active model, so
@@ -67,7 +71,7 @@ rate100 = min(CAP, max(100, (Σ BASE + specialist) × max(0, modifier) + 100·�
     — we don't model roads/connected cities, so "connected" is a raw input, not derived). Both correct as-is.
   - **✅ (a) DONE (2026-07-01) — building-`provides` supply is computed.** Rule (owner): an ACTIVE building that
     `provides` a bonus in the same city ⇒ that bonus is IN-VICINITY (json §5a — a herd/tamed-animal building supplies
-    e.g. HORSE; horse units gate on it). `EnablerKernel::computeCityBuildingFacts` fills `activeBuildings` +
+    e.g. HORSE; horse units gate on it). `EnablerKernel::recomputeOperatingBuildingsInto` fills `activeBuildings` +
     `vicinityProvidedBonuses` in ONE per-city pass (the union of active buildings' `provides.bonuses` edge), wired into
     BOTH machines' eval ctxs — the modifier calc AND the enabler's `BuildingCascade`/`UnitCascade`/city-gate ctxs, which
     ALSO closed the pre-existing gap that `activeBuildings` was only in the modifier path. `ev_vicinityHas` reads the

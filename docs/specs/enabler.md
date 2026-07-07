@@ -67,8 +67,9 @@ So **`CAN GET = union(enables) − (disables ∪ obsoletes ∪ replaces)`**, all
 
 **`obsoletes` vs `disables` kept SEPARATE for clear semantics** (progress-supersedes vs policy-forbids) + the
 pedia line ("Obsoleted by [tech]"). `disables` = a hard "be gone" (the source commands; the target gets no say);
-`obsoletes` = a soft signal — the instance's fate is authored on the TARGET via `whenObsolete` (wonders/walls
-lose their bonus but REMAIN as culture/tourism).
+`obsoletes` = a soft signal — the instance's fate is authored on the TARGET via `whenObsolete`, a **separate full
+modifier tree** applied while obsolete ([json](json.md) §4.2): empty ⇒ the building is fully gone; non-empty ⇒ its
+normal families stop and this tree applies instead (wonders/walls keep culture/tourism, most buildings vanish).
 
 **The fixed run order — `replaces` → `disables` → `enables` → `obsoletes`.** The *membership* of CAN GET is
 order-independent (set-difference is commutative); the fixed order matters only for two **propagation** effects:
@@ -149,8 +150,9 @@ relationships are **distinct gates, mirroring the engine** (`build`/`operate` sh
   of the long-reserved `replaces` family.
 
 Other gates fold into `requires.build` as **declarative conditions** (no engine special-case, modder-extensible):
-**game options** → a bare `GAMEOPTION_X` ref in `build.all`/`build.noneOf` (e.g. the inquisitor's
-`GAMEOPTION_RELIGION_INQUISITIONS`), evaluated against the active options — NOT `loadPrune`; a **unit** corp prereq →
+**game options** → the **ENTITY-LEVEL `enabled`/`disabled` gate** (owner ruling 2026-07-08, superseding the
+earlier `build.all`/`build.noneOf` routing — e.g. the inquisitor's `"enabled": "GAMEOPTION_RELIGION_INQUISITIONS"`),
+evaluated live against the active options; `requires` holds only genuine needs; a **unit** corp prereq →
 `{HAS_CORPORATION: X}` = **active** (`isActiveCorporation`), distinct from a building's bare `CORPORATION_` = present.
 No `canTrain` gate logic is re-mirrored from the engine — every divergence is a missing input mapped to its named source.
 
@@ -177,6 +179,35 @@ Every `requires` resolves the same way, so it's cacheable as a pure function of 
    predicate is **ignored**, never false (json §3.5) — so retiring a system never spuriously disables data.
    **Tally-bucket routing is by TYPE PREFIX** (`BUILDING_`/`UNIT_`/`BONUS_`/…), no separate `kind` field; author
    resource presence as `min(BONUS_X,1)` (the N=1 case) — volumetric-ready.
+
+### 3.2 The operating-building set — what the modifier reads
+
+As a byproduct of the dormancy gate, the enabler maintains, per city, the **operating-building set**: the
+buildings that are present **and operating** (`requires.operate` holds ∧ no dormant-trigger successor present),
+plus the **bonuses those operating buildings supply in-vicinity** (`provides.bonuses`, [json](json.md) §5a). The
+two form one **least-fixpoint** — an operating building's `operate` can consume a bonus another operating building
+provides, so an operating/dormant flip ripples.
+
+This set is the enabler's output the **[modifier](modifier.md) reads to decide which buildings deposit**: an
+operating building contributes its modifiers, a dormant one contributes nothing. It is the built-instance
+counterpart of the frontier (§2 — the frontier is "what can I build"; this is "of what I've built, what is
+operating right now").
+
+It is **maintained by targeted propagation, never a blanket recompute**: computed once at load, then each
+HAVE-change ripples only the affected buildings into the authoritative set in place (via an operate reverse-index)
+— see [state-repositories](../architecture/state-repositories.md) and
+[enabler-frontier-perf](../plans/structural-cleanup/enabler-frontier-perf.md) Stage 2. In code it is
+`CvCity::m_operatingBuildings` (type **`OperatingBuildings`** — its `active` + `provided` + `obsolete` sets), read via
+`EnablerKernel::operatingBuildings` / `wireOperatingBuildings`; the full recompute
+`recomputeOperatingBuildingsInto` is the load seed and the validation oracle. *(Historical note: this was the
+undefined internal name "facts"; it is the operating-building set.)*
+
+**Obsolescence is the THIRD outcome of this same pass.** A present building whose `obsoletedBy` tech is held is
+neither active nor dormant — it goes into the `obsolete` set (excluded from `active`, provides nothing), and the
+[modifier](modifier.md) reads its **`whenObsolete`** tree (§2 / [json](json.md) §4.2) in place of its normal
+families. It is maintained by the same targeted propagation (an `obsoletedBy.techs` reverse-index re-checked on a
+tech change), read via `cascadeIsBuildingObsolete`. Inert while legacy still swaps an obsolete building out of the
+city; live at the swap cut, when an obsolete building STAYS present.
 
 ---
 
@@ -238,9 +269,11 @@ disproving "buildings-only" state-retraction), nuke, and `doAutobuild` add/remov
 **Gather order — "right-then-down".** Pass 1 gathers in dependency order: sticky top (techs/civics) first, then
 volatile bottom (resources/bonuses/buildings), so derived have-entries resolve against what's already gathered.
 
-**Load-time gate — `loadPrune` (a separate axis).** LOAD-STABLE gates (`loadPrune`, the `CvInfoReplacements`
-swap, WorldBuilder/BUG, a per-civ research ban) resolve at load and never materialize if false; DYNAMIC gates
-(tech/civic/bonus presence) flip in play → matched each recompute.
+**Game-option gates are the ENTITY-LEVEL `enabled`/`disabled` pair, evaluated LIVE (owner ruling 2026-07-08).**
+The retired `loadPrune` section's "resolve at load, never materialize" framing was a reinterpretation — the legacy
+engine checks the option tags at USE time, and the gate mirrors that: an entity whose `enabled` fails (or `disabled`
+holds) is simply never offered/valid while the option state says so. LOAD-STABLE machinery that genuinely resolves at
+load (the `CvInfoReplacements` swap, WorldBuilder/BUG, a per-civ research ban) is engine-side, not entity data.
 
 ---
 

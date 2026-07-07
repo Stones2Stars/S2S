@@ -47,7 +47,8 @@ of them.
 | **Effects** | every **modifier family** key (`food`, `production`, `happiness`, …, one per `PROPERTY_*`) | per-turn magnitudes this deposits onto targets |
 | **Intrinsic** ("what am I") | `identity` (incl. all TEXT) · `cost` · `ui` · `world` · `sound` · `ai` | empire-agnostic self-description, art, audio, AI metadata |
 | **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `state` (UNIT, transient) · `attributes` (BUILDING, held city-scope intrinsics) · `capabilities` (TEAM, grantor-provided) | §8 — the classification model; scope carried by the section name |
-| **Auxiliary / bespoke** | `loadPrune` · `policies` · `succession` · `excludes` · `produces` · `condition` · `effect` · `vision` · `outcomes` · `mapGeneration` · `replacedBy` · `promotionLine` · `buildUp` · `shrine` · `headquarters` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` · `unitCapability` · `canTrade` (tech → the trade-table/deal system: tradeable items + agreements — `techs`/`openBorders`/`rightOfPassage`/`embassy`/`bonuses`/…, owner 2026-07-02) · `canTradeOn` (tech → trade-route system; terrain refs, owner 2026-07-02) · `canWorkOn` (tech → the city `canWork` gate; workable plot classes — `water`/`peaks`/…, owner 2026-07-02) — all three [capabilities.md](capabilities.md) | data read by their own systems, not the cascade |
+| **Applicability** | entity-level `enabled` · `disabled` | the whole entity applies only while `enabled` holds and `disabled` does not (the §3.9 pair at entity level) — the canonical whole-entity game-option gate: `"enabled": "GAMEOPTION_X"` |
+| **Auxiliary / bespoke** | `policies` · `succession` · `excludes` · `produces` · `condition` · `effect` · `vision` · `outcomes` · `mapGeneration` · `replacedBy` · `promotionLine` · `buildUp` · `shrine` · `headquarters` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` · `unitCapability` · `canTrade` (tech → the trade-table/deal system: tradeable items + agreements — `techs`/`openBorders`/`rightOfPassage`/`embassy`/`bonuses`/…, owner 2026-07-02) · `canTradeOn` (tech → trade-route system; terrain refs, owner 2026-07-02) · `canWorkOn` (tech → the city `canWork` gate; workable plot classes — `water`/`peaks`/…, owner 2026-07-02) — all three [capabilities.md](capabilities.md) | data read by their own systems, not the cascade |
 
 `type` (the entity's own id, e.g. `"BUILDING_FORGE"`) and the TEXT fields are present where relevant.
 
@@ -348,6 +349,14 @@ routes · votes · hurries · traits · specialists`. **Tech unlocks live here**
 Same per-kind bucket shape as `enables`.
 
 - **`obsoletes`** — supersession: new builds barred; **existing instances persist** (an obsolete unit stays on the map).
+- **`whenObsolete`** — the built instance's **fate once obsolete** (its `obsoletedBy` tech is held), authored
+  **target-side** as a **full modifier tree in the §6 grammar** (channels · scopes · units · `enabled`/`disabled`
+  predicates — a *separate* tree, not a gate on the normal families). When the building is obsolete its **normal
+  modifier families stop and this tree applies instead**; the surviving output is authored directly here and may
+  differ from the working values. **Absent/empty ⇒ the obsolete building contributes nothing — fully gone** (the
+  default, matching the engine's remove-on-obsolete). The canonical use is a wonder keeping culture/tourism while it
+  loses its working bonus: `"whenObsolete": { "culture": { "city": { "flat": 5 } } }`. *(The engine's clunky
+  `getObsoletesToBuilding` culture-shell swap is what the curator reads to emit this tree.)*
 - **`replaces`** — succession removal: a successor takes the predecessor's slot, removing it from the buildable set
   once the successor is itself buildable. Authored **target-side** as **`replacedBy.{kind}`** (the entities that
   hard-replace this one, e.g. `replacedBy.units`), mirroring `obsoletedBy`. The §9 `replacedBy` (whole-entity Info-swap
@@ -446,8 +455,13 @@ One-shot or recurring things an entity hands out (not per-turn modifiers).
 }
 ```
 
-- **lists** — `buildings · units · techs · civics · specialists · promotions · traits · bonuses · freePromotions ·
-  foundBuildings`.
+- **lists** — `buildings · units · techs · civics · promotions · traits · bonuses · freePromotions ·
+  foundBuildings`. ⛔ **`specialists` is PURGED from the grants vocabulary (owner ruling 2026-07-05,
+  reaffirming 2026-07-02):** free specialists NEVER fit the grants model — they are the `freeSpecialists`
+  MODIFIER family ([modifier.md §6](modifier.md), alive-with-source + the two-part amount/placement seam).
+  Verified: ZERO `grants.specialists` authorings exist in the curated data. *If anything is ever found that
+  genuinely GRANTS permanent free specialists — surviving the destruction of its wonder/building/source —
+  we deal with it then* (owner); no machinery is built for the hypothetical.
 - **`freePromotions`** (a building) — promotions granted at **END-TURN to every unit present in the city** (owner
   ruling 2026-07-01). One mechanism, no on-move flag: a unit trained there is present at end-turn, and a unit that
   walks in and stays is covered the **same** way — there is no separate mid-turn/on-move trigger.
@@ -657,7 +671,11 @@ Full glossaries: [skills.md](skills.md) · [tags.md](tags.md) · [state.md](stat
 
 Data read by a specific system, not the cascade. Use only when the entity needs it:
 
-- **`loadPrune`** — `{ onGameOptions, notOnGameOptions }`: drop this entity at load under given game options.
+- ~~`loadPrune`~~ — **RETIRED (owner ruling 2026-07-08; [superseded-ideas](../architecture/superseded-ideas.md))**: a
+  curator-era invention that re-encoded the legacy game-option validity tags backwards. A whole-entity game-option
+  gate authors as the **entity-level `enabled`/`disabled`** pair (the Applicability row, §2): `"enabled":
+  "GAMEOPTION_X"` = exists only while X is ON; `"disabled": "GAMEOPTION_X"` = suppressed while X is ON — evaluated
+  live like every other condition, exactly as the legacy engine checked them (use-time, `isPromotionValid` et al.).
 - **`policies`** — **pure empire STATES** an entity enacts: named declarative on/off conditions of the whole
   civilization (`noForeignTrade`, `noCorporations`, `allReligionsBanned`, `fixedBorders`, `noNonStateReligionSpread`,
   …). Granted by a **civic** (adopted — active while the civic is in force) or a **trait** (permanent while the trait

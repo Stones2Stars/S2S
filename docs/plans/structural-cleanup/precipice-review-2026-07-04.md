@@ -21,8 +21,8 @@ Findings 1/6/8/10 (+9) of the review converge on ONE verified code fact: **the l
 per-player-slice SNAPSHOT.** Combines are bare fetches (`acc_yieldCombine` reads raw package fields, no
 ensure); event sites are MARKS-ONLY (`buildingProcessed`, `markPlayerScopeAndCities` — no ensure); the only
 ensures are the boundaries (`playerSliceRebuild` = markAll+ensure at each player's `doTurn` top,
-`worldRebuild`, the load warm-up) and internal fill pulls. The facts Set alone self-ensures on read
-(`EnablerKernel::cityFacts`). Two consequences, both invisible to the per-turn nets (they sample at
+`worldRebuild`, the load warm-up) and internal fill pulls. The operating buildings Set alone self-ensures on read
+(`EnablerKernel::operatingBuildings`). Two consequences, both invisible to the per-turn nets (they sample at
 boundary-fresh moments):
 
 - **Any mid-slice mutation serves PRE-EVENT values for the rest of the turn cycle**: a building completing
@@ -62,6 +62,35 @@ remedy if play-feel objects is a UI-only refresh hook.
    guard** every sibling flip carries — pre-init reads returned zeroed packages; they now route to the
    `*Legacy` bodies pre-init.
 
+## 2b. The enabler-shadow residues — ATTRIBUTED 2026-07-05 (NOT "accepted"; the label was wrong)
+
+The per-turn enabler shadow shows two non-zero classes. Both were carried as "canBuild 36 accepted" (a stale
+proof-turn LABEL with NO owner disposition — the exact wave-through the parity discipline forbids). Traced +
+attributed to named causes 2026-07-05:
+
+- **`canBuild` (3 distinct BUILDs × ~12 instances = "36"): `BUILD_GEOGLYPH` / `BUILD_MACHU_PICCHU` /
+  `BUILD_MOAI_STATUES`, cascade=0 / legacy=1.** These are **specific-worker-behind-wonder gated** (owner
+  2026-07-05): a culture bonus (`BONUS_RAPA_NUI`) + tech unlock the ONE worker that can perform them
+  (`unit_rapanuiworker`, `requires.build: RAPA_NUI + TECH_MEGALITH_CONSTRUCTION`); Geoglyph additionally needs
+  `BONUS_GEOGLYPH_PLANS` (provided by the `building_nazca_lines` wonder). The diverging player (Pachacuti) holds
+  **NONE** of the chain (no tech, no culture/plans bonus, no wonder, hence no worker). So **cascade=0 is CORRECT**
+  (he cannot build them); **legacy=1 is engine-permissive** (its player-level `canBuild` doesn't gate the full
+  chain) and **INERT** (no unit exists to execute the build — the unit-level gate stops it regardless). Class:
+  engine-permissive / cascade-correct. Safe at cut (the cascade is the stricter, correct gate; nuking removes no
+  real capability).
+- **`canConstruct` (4 buildings: HIGHWAY / FAIRGROUNDS / FACTORY_LEATHER / DIVE_BAR, cascade=1 / legacy=0) — ✅
+  FIXED 2026-07-05, now `diverging=0`.** Ruled out dormancy/replacement (neither the buildings nor their successors
+  present). Root cause = the cascade buildable-frontier box did not reflect an item **committed to the production
+  queue mid-slice** (legacy `canConstruct` excludes queued items always-fresh; `DIVE_BAR`'s legacy verdict flipping
+  `leg=0`→`leg=1` proved it transient/queue-driven). ⚖ **Owner design (2026-07-05): the frontier is an ISOLATED
+  BOX with a TARGETED removal — "only whatever has been committed leaves the box, not the whole frontier."**
+  `CvCity::pushOrder` now does a single `m_cascadeCityPackages.en{Buildable,Trainable,Creatable,Maintainable}
+  .erase(iData1)` per order (O(log n)); the item leaves the box the moment it is queued, so the AI never re-picks
+  it (the `CvCity.cpp:17035` "cycles forever" loop). ⚠ **The FIRST attempt was a whole-frontier `dirtyCity` mark on
+  every push/pop → a full rebuild at order-churn frequency (100s/turn) → the modifier-recalc storm + a MAF; REVERTED
+  in favour of the O(1) targeted erase.** Lesson: frontier freshness is a targeted box update, NEVER a full recompute
+  at order frequency (the modifier caches are the ones that must never mid-round recompute — the "mid-round buffs" rule).
+
 ## 3. The confirmed census misses (33 — survived independent refutation; disposition pending per row)
 
 Census coverage (rows / covered / accepted): yields 21/13/3 · commerce 39/26/4 · happiness 35/20/10 ·
@@ -72,19 +101,19 @@ tradeRoutes 14/8/4.
 
 | # | channel | missing source | legacy site |
 |---|---|---|---|
-| L1 | commerce | trait `NonStateReligionCommerce` (collect ALL religions' commerce; live non-zero complex-trait data) | `CvPlayer.cpp:28458` processTrait → OR-gate `CvCity.cpp:~12xxx` |
-| L2 | commerce | Process production→commerce conversion (`processProcess`; the cascade carries a TODO stub hardcoded 0) | `CvCity.cpp:5192` → `getProductionToCommerceModifier` |
+| L1 | commerce | ✅ **FOLDED 2026-07-05 (the ruled POLICY read):** the lenient `{STATE_RELIGION:X}` predicate's pre-named deferred hook now consults `ev_playerHasPolicy("nonStateReligionCommerce")` — the derived-on-query union over adopted civics' + active traits' §9 `policies` blocks (sole data grantors: the complex bigot/progressive/spiritual traits; civic half = free headroom) — never the legacy `m_iNonStateReligionCommerceCount`. Mirrors `getReligionCommerceByReligion`'s OR-gate exactly | `CvPlayer.cpp:28499` processTrait → OR-gate `CvCity.cpp:12850-12852` |
+| L2 | commerce | ✅ **FOLDED 2026-07-05:** Process production→commerce conversion — LIVE at combine in `combineSplit` (the slider class: head order = volatile raw state via `getProductionProcess`, value = the process JSON's `{ch}.city.percent`; zero invalidation; sole legacy feeder processProcess per the writer census; never the `m_aiProductionToCommerceModifier` accumulator) | `CvCity.cpp:5192` → `getProductionToCommerceModifier` |
 | L3 | happiness | building-authored building-keyed happiness (`BuildingHappinessChanges`, Royal Tomb → Palace class, ~11 wonders; curator gated the deposit on the SOURCE-city side instead of the target building) | `CvPlayer.cpp:7490` processBuilding → `changeExtraBuildingHappiness` |
 | L4 | happiness | specialist TECH-gated happiness (`m_iExtraTechSpecialistHappiness` = Σ count × `getTechHappiness`) | `CvCity.cpp:23468` updateExtraTechSpecialistHappiness |
 | L5 | happiness | `CommerceInfo.iInitialHappiness` (city-founding constant — every city, every game) | `CvCity.cpp:363` init → `changeCommerceHappinessPer` |
-| L6 | gp-rate | trait `iGreatPeopleRateChange` → `m_iNationalGreatPeopleRate` (player scalar) | `CvPlayer.cpp:28654` processTrait |
-| L7 | maintenance | tech `iMaintenanceModifier` (empire percent) | `CvPlayer.cpp:30927` processTech |
-| L8 | maintenance | civic `iHomeAreaMaintenanceModifier` / `iOtherAreaMaintenanceModifier` (area overlays) | `CvPlayer.cpp:18043/18044` processCivics |
-| L9 | maintenance | project `iGlobalMaintenanceModifier` + `iConnectedCityMaintenanceModifier` | `CvTeam.cpp:4329/4332` processProjectChange |
-| L10 | buildRate | corporation `getMilitaryProductionModifier` (city, active-in-city) | `CvCity.cpp:15504` applyCorporationModifiers |
-| L11 | buildRate | trait LIVE walks: `SpecialBuildingProductionModifiers` + maxGlobal/maxTeam/maxPlayer wonder-category modifiers | `CvPlayer.cpp:7274-7302` getProductionModifier(Building) |
+| L6 | gp-rate | ✅ **FOLDED + LIVE-VERIFIED Casc==Leg==16 (2026-07-05):** `CascadePlayerScope::gpNationalFlat`; flipped `getBaseGreatPeopleRate` reads `scGpNational`. **The live turn found a −2 residual → root-caused to a CURATOR MISS + fixed data-first:** a trait's `iGreatPeopleRateChange` with `GreatPeopleUnitType=NO_UNIT` (PHILOSOPHICAL1, +2) goes to the UNTYPED national pool legacy-side (the GP engine assigns placement) but `curate_trait` DROPPED it (the `if gp_unit` gate keyed strictly by unit). Fixes: curator now emits the NO_UNIT rate as unkeyed `greatPeopleRate.empire.flat` (391 traits regen'd); the fold sums both the unit-keyed (nSeg 4) and untyped (nSeg 2, `greatPeopleRate.empire` + unit `flat`) forms + the legacy `v>0` gate. Owner ruling 2026-07-05: *"not-type-specified GP rate must go through; the GP engine deals with placement."* | `CvPlayer.cpp:~28698` processTrait |
+| L7 | maintenance | ✅ **CLOSED 2026-07-05 (covered + data-dead):** the city fill's tech walk already sums `maintenance.empire.percent` over held techs, AND the tech XML has ZERO `iMaintenanceModifier` authorings (schema-only) — nothing to fold, guarded by the existing walk if ever authored | `CvPlayer.cpp:30927` processTech |
+| L8 | maintenance | ✅ **FOLDED 2026-07-05:** the civic home/other-area overlays — curated `maintenance.empire.{homeArea\|otherArea}.percent`; CITY-REALIZED in `maintenanceModifierCity` with the live `isHomeArea` gate (the legacy semantic: the player-scalar half of `CvArea::getTotalAreaMaintenanceModifier`). NB the fill's old `maintenance.area` civic walk was a never-authored address | `CvPlayer.cpp` processCivics (changeHome/OtherAreaMaintenanceModifier) |
+| L9 | maintenance | ✅ **FOLDED 2026-07-05:** project maintenance — curated `maintenance.empire.{all\|connectedCity}.percent`, walked per team project count into `maintPlayerAll`/`maintConnPct` (legacy `processProjectChange` → the player maintenance/connectedCity changers; the distance/numCities members feed the OTHER maintenance pipelines — their own rows) | `CvTeam.cpp:4343/4346` processProjectChange |
+| L10 | buildRate | ✅ **FOLDED 2026-07-05 (a TWO-SIDED fix):** the curator had the field at the mis-family `production.city.military` (the "Versailles bug" class — no reader consumed it) → fixed to `buildRate.city.military.percent` + regenerated (sole live authoring: CORPORATION_ULTSOLDIER +15, 9 zeros); the buildRate city fill gained the corp walk (`HAS_CORPORATION` gate = the active semantic); the corp-presence mark gained `CPK_BR` | `CvCity.cpp:15582` applyCorporationModifiers |
+| L11 | buildRate | ✅ **FOLDED 2026-07-05:** the trait walks — `specialBuildings` keyed (10 curated traits) rides a NEW dense-ledger kind read via the building's specialBuilding id; the wonder-category members (curated worldWonder 77 / teamWonder 53 / nationalWonder 82, trait-only in data) fill as city-realized civic/trait walks (`brCityWorldWonder/TeamWonder/NationalWonder`) gated at read on `::is{World\|Team\|National}Wonder`; the trait per-BUILDING keys were already riding the keyed ledger | `CvPlayer.cpp` getProductionModifier(Building) trait walks + max* accumulators |
 | L12 | tradeRoutes | PROJECT `iWorldTradeRoutes` (PROJECT_THE_INTERNET, curated `tradeRoutes.world.flat:1`; cascade world walk covers buildings only) | `CvTeam.cpp:4341` |
-| L13 | defense | the channel breadth (9 rows, 1 covered): building `iBombardDefense`+`iMinDefense`, cultureLevel `iCityDefenseModifier` (naturalDefense), building `iAllCityDefense` (empire), civic `iExtraCityDefense`, trait `iCityDefenseBonus`+`iBombardDefense` — ⚠ several feed getters OUTSIDE the flipped `getBuildingDefense`; per-row check whether each is in this cut's demolition list at all | `CvCity.cpp:5142/4840/10290`, `CvPlayer.cpp:7446/18130/28562/28572` |
+| L13 | defense | ✅ **WIRED + RECONCILED 2026-07-05 (defMin, defPlayer, defBombard all Casc==Leg):** `defMin` (← `m_iExtraMinDefense`) and `defPlayer` (empire pcts buildings+civics+traits, curated `defense.empire.amount` after the re-home from reader-less `combat.empire.cityDefense`) reconcile ✓. `defBombard` NOW reconciles (`defBombardCasc=75==Leg=75`, `defBombardBuildingCasc=100` = the raw building leg): the earlier divergence was NOT a mismapped field (XML `iBombardDefense` **is** `getBombardDefenseModifier`/`m_iBombardDefenseModifier`, `CvBuildingInfo.cpp:1827` `.add(...,L"iBombardDefense")` — same field), it was the **getter's composition** — `getBuildingBombardDefense` = `min(MAX_BOMBARD_DEFENSE, Σbuilding + national)`. Fixes: (a) a **CURATOR MISS** — trait `iBombardDefense` (→ `m_iNationalBombardDefenseModifier`, processTrait `CvPlayer.cpp:28613`) was curated to the reader-less `combat.empire.bombardDefense`, **re-homed** to `defense.empire.bombardDefense.percent` (391 traits regen'd) so the national leg is gathered; (b) the composed accessor `CascadeAccumulator::scBuildingBombardDefense` = `min(cap, scDefBombard + defPlayerBombard)` — the flipped getter body; the CAP stays engine-side (the capabilities game-option-fold precedent). Other residuals: cultureLevel naturalDefense = a LIVE static-info read. | `getTotalDefense` = max(bldg, natural) + player + bonusDefense |
 
 **⚖ Owner dispositions received (2026-07-04) on the live-data rows:**
 - **L1 `NonStateReligionCommerce`** — *"in essence a civic-instated POLICY that allows a civ to get
@@ -141,6 +170,10 @@ site; live proof case: EVENT_FULLERENES_1 (+10 research on Oxford's Chemistry La
 StoneBase leg keep the boundary rule). STILL OPEN in this class (the mixed-accumulator members, need the
 extraction treatment, not a fold): E4 event commerce-rate PERCENT modifiers (city+player), E5 event
 spaceProduction, E6 WB stateReligion production pokes, E7 tradeRoutes stores (its own Cut-1 step).
+**⚖ DISPOSITION (2026-07-05): E4-E6 are DEMOLITION-STEP surgery, not flip-window folds** — each is a
+persisted-store SPLIT (the `m_aBuildingCommerceChangeEvents` precedent: the event share moves to its own
+serialized store as the mixed accumulator's derivable applies die), landing WITH its channel's cut row
+exactly as E7 does. Until then the mixed residues are the named honest-divergence legs.
 
 | # | channel | source |
 |---|---|---|
@@ -173,8 +206,10 @@ authoring into an unwalked family.
 
 - **No generic family-metadata combine engine exists** — nine hand-written per-channel combines, vs the
   scope-packages Phase-1 commitment (the one-path law). Each further channel migration compounds it.
-- **buildRate read path does `std::map::find` tree lookups** (`acc_brLookup`) — violates the
-  generic-code-static-storage law on a documented hot path (correct values, latent perf).
+- ✅ **buildRate read path `std::map::find` tree lookups — FIXED (2026-07-05):** the keyed ledgers are now
+  DENSE per-kind tables (`CascadeBrLedger`: vectors by UnitTypes/BuildingTypes/DomainTypes/UnitCombatTypes,
+  filled by member-kind + `targetFk` routing — match-equivalent to the segment keys); `acc_brLookup` is one
+  array index per scope by the game enum id, and the enum→segment converter caches deleted.
 - **`refreshPlayerScope` evaluates player-scope fills in the capital's ctx** — a latent Burdigala instance
   if a city-conditioned deposit is ever authored at player scope (none today; the guard belongs in the
   validator).

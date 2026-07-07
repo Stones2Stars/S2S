@@ -134,7 +134,7 @@ Sibling of skills.md.
 | `hasRiverTrade` | `riverTrade` | `bRiverTrade` | a river acts as a trade ROAD (conduit — ruling above) |
 | `canRebaseAnywhere` | `rebaseAnywhere` | tech flag | air units may rebase to any friendly plot |
 | `canSeeFurtherFromWater` | `extraWaterSeeFrom` | `bExtraWaterSeeFrom` | see FROM water plots one level higher (`CvPlot::seeFromLevel`) |
-| `hasCenteredMap` | `mapCentering` | `bMapCentering` (tech + buildings) | minimap centered on your civ + round-globe view; arrive-and-stay latch (ruling above) |
+| `hasCenteredMap` | `mapCentering` | `bMapCentering` (TECH_GEOMETRY — the SOLE authoring; the building-side tag is schema-only, data-dead, verified 2026-07-05) | minimap centered on your civ + round-globe view; arrive-and-stay latch ≡ derived (tech-only grantor) |
 | `hasWholeMapRevealed` | `mapVisible` | `bMapVisible` | reveals the ENTIRE map on acquire (`setRevealedPlots`, `CvTeam.cpp:5292`) |
 | `hasLanguage` | `language` | `bLanguage` (TECH_LANGUAGE) | civ has developed language — gates `needLanguage` heritages (`CvPlayer.cpp:30970`) |
 | `canSetScienceRate` | `setScienceRate` | commerce-flexible (TECH_GAME_START) | the science slider |
@@ -159,8 +159,9 @@ Sibling of skills.md.
   owner is deliberately NOT minting a special grant for a thing like this — do not reclassify. *(Pre-named future
   path, owner 2026-07-02: if it ever shows we need to grant a player ONE-TIME EFFECTS, mapCentering lands cleanly
   in that grant type — until then it stays here.)* Pure presentation, no map reveal: minimap renders centered on your civ
-  (`CvGameInterface.cpp:2907`) + globe view goes round-with-stars (`CvGame.cpp:2760`). Granted by one tech +
-  `bMapCentering` buildings.
+  (`CvGameInterface.cpp:2907`) + globe view goes round-with-stars (`CvGame.cpp:2760`). ⚠ Grantor claim
+  corrected 2026-07-05: authored by TECH_GEOMETRY ONLY — the building-side `bMapCentering` tag is
+  schema-only, data-dead (whole-XML sweep).
 - **`dcmAirBomb1`/`dcmAirBomb2`** — DCM air-bombing target tiers: consumers `CvUnit::airBomb2At`/`airBomb4At`
   (`CvUnit.cpp:22493/22684`) do an O(all-techs) held-tech rescan per strike (the rewire collapses it to the
   capability query). ⚠ The parent toggle `DCM_AIR_BOMBING` is a **split-brain pseudo-option**: a GlobalDefine
@@ -221,8 +222,8 @@ machinery stays as the net for the pending flips (`isMapCentering`, the commerce
    fully explains the first flip's breakage). Audit EVERY deleted function's body for side effects, not just the
    apply sites.
 
-The `[CAPSHADOW]` machinery stays as the net for the pending flips (`isMapCentering`, the commerce sliders,
-building attributes, `hasLanguage`).
+The `[CAPSHADOW]` machinery stays as the net for the pending flips (building attributes; the sliders,
+`hasLanguage`, and `isMapCentering` have since flipped — waves 2/3 below).
 
 ## 🔄 Flip wave #2 — the commerce sliders + hasLanguage FLIPPED-WITH-NET (2026-07-02; stage B pending)
 
@@ -250,14 +251,27 @@ building attributes, `hasLanguage`).
   it — grant the tech instead). `/computed/teamFlags` `hasLanguage` now reads the cascade flag.
 - ✅ **Stage-B proof turn recorded (2026-07-02):** the save loads WHOLE through the three new named skips
   (26 cities, full building inventories, all flags healthy), and a full turn ran with every enabler gate at
-  its sealed baseline (canResearch/canDoCivics/canAcquirePromotion/canHurry/canFoundReligion 0; canBuild 36
-  accepted) and the modifier stack at its accepted 9. **No `CascadeCapabilities::shadow()` callers remain** —
+  its sealed baseline (canResearch/canDoCivics/canAcquirePromotion/canHurry/canFoundReligion 0; canBuild/
+  canConstruct at their ATTRIBUTED residues — see the note below, NOT "accepted") and the modifier stack at
+  its accepted 9. **No `CascadeCapabilities::shadow()` callers remain** —
   the whole capability plane is `flag()`-direct; the `[CAPSHADOW]` machinery is dormant-but-kept as the net
-  for the remaining flips (`isMapCentering`, building attributes).
-- **`isMapCentering` stays PARKED** — it needs the building-grantor half of the union (no curated building
-  emits capabilities yet) and has a real latch-vs-derived divergence when a granting building is LOST (legacy
-  latches; a derived union would lapse). It flips when the building-HAVE union is built — likely alongside the
-  building `attributes` lane, which needs the same active-buildings query.
+  for the remaining flips (building attributes; `isMapCentering` re-armed it 2026-07-05 — its flip-with-net above).
+- **`isMapCentering` — UNPARKED (owner rulings + the data-dead find, 2026-07-05).** The parking premise was
+  FALSE: a whole-XML sweep shows `bMapCentering` is authored by **exactly ONE source — `TECH_GEOMETRY`**; the
+  building side exists only in the SCHEMA, never an authoring (this doc's earlier "tech + buildings" claim was
+  wrong — corrected below). Consequences: the building-grantor half of the union is NOT needed for this key;
+  and the owner-ruled semantic — *"when we encounter anything that has mapCentering (the building, or the
+  tech) we flip the bool"* (a flip-on-encounter LATCH) — is **equivalent to the derived union for all live
+  data**, because the sole grantor is a tech and techs are never lost. So the flip proceeds in the wave-2
+  idiom (flip-with-net; the legacy `m_bMapCentering` latch stays as the `[CAPSHADOW]` oracle until a clean
+  net, then the two-stage latch cut). ✅ **THE FLIP LANDED same day (2026-07-05, Assert-clean):**
+  `CCF_HAS_CENTERED_MAP` + the `hasCenteredMap` key row; `CvTeam::isMapCentering` returns
+  `CascadeCapabilities::shadow(...)` with the latch as the oracle; the net-clean turn then gates the
+  two-stage latch cut (`m_bMapCentering` + setMapCentering sites + the WB dead-poke doc, the hasLanguage
+  treatment). **The pre-named shape IF a building-conditioned centering is ever
+  wanted (owner 2026-07-05):** *"give palace a feature that on the specific tech, it centers map"* — a
+  tech-conditioned entry on the always-present palace, riding the ordinary condition vocabulary; latch
+  behaviour falls out for free (permanent source + monotonic condition). Not needed today.
 
 ## ⚠ THE FIRST FLIP ATTEMPT — REVERTED; the wiring lesson (2026-07-02)
 

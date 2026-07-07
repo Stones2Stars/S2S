@@ -1,5 +1,11 @@
 # Cascade engine (#430) — implementation plan
 
+> ## ⛔ THE XML SEAM IS GONE (owner ruling 2026-07-08) — read this before ANY §3 seam line below.
+> The XML info classes are ARCHIVED (`SourceArchive/Infos/`, deliberately removed as a fallback-proof ratchet);
+> HEAD does not compile BY DESIGN until the JsonInfo structure + the full getter wiring land. Every §3/§2 line
+> saying "the XML load stays authoritative until the atomic cutover" is SUPERSEDED — never restore the archive,
+> never re-add a `CvXInfo` (root `AGENTS.md` Build And Test ⛔).
+>
 > ## ⛔ RESUMING AFTER A CONTEXT COMPACTION? RE-READ EVERYTHING FIRST.
 >
 > If your context was just compacted mid-session, do NOT act from the summary. Re-read the full spec set (the machine
@@ -20,30 +26,33 @@ status record of built cascade code (there is almost none — see the table).
 
 ---
 
-## ⓘ IMPLEMENTATION STATUS — re-verified against `Sources/` on 2026-06-29 (post-purge)
+## Implementation status (verified against the live code)
 
-> The HONEST ground truth. The previous status table self-certified a 2026-06-19 sweep and described a prototype that
-> has since been PURGED; it paraded retired/banned machinery as built. This table is the post-purge reality from an
-> adversarial docs-vs-code sweep (2026-06-29, fanned out, every claim ground-tested). The machine specs describe the
-> TARGET shape; almost none of it is built in the engine yet.
+The three machines are **built and authoritative** for the flipped surface — the engine getters/gates return the
+cascade value in a running game, legacy demoted to `*Legacy` oracles.
 
-| Component | Status | Reality (current `file:line`) |
-|---|---|---|
-| **Event spine** | ✅ **BUILT (spine + logging only)** | `Sources/Cascade/CvEventSpine.{h,cpp}`: `IEventConsumer` (`CvEventSpine.h:197`), `CvEventSpine` (`:208`), `eventSpine()` (`:224`), `cascadeRegisterConsumers()` (`:229`) registers ONLY the log consumer (`CvEventSpine.cpp:300`). KINDs `DOMAIN`/`DIAGNOSTIC`/`TRACE` (`:28`). **The only DOMAIN (counted) events** = `CASCADE_EVT_BUILDING_COUNT`/`UNIT_COUNT`/`NAME_CHANGE` (`:171`), emitted at `Engine/CvPlayer.cpp:13737` / `:13642` and `Engine/CvCity.cpp:13391`. The `[TAG]` logging domains (`SpineDomainTag`, `:73`) are mostly pre-allocated; only AI-trace domains (hunter/worker/war/…) self-register today. |
-| **Scoped accumulator** | ❌ **NOT BUILT (purged)** | The prototype's `CvScopedAccumulator` was removed; no such file exists. Design = the additive scope-accumulator substrate (§1.0). |
-| **Tally** | ✅ **BUILT (read-only accessor, buildings + units)** | `Sources/Cascade/CvCascadeTally.{h,cpp}`: a stateless standardized aggregate-count surface — `buildingCount`/`unitCount(iEntity, type, scope)` READ the object-owned counts (`CvPlayer::getBuildingCount`/`getUnitCount`) and roll UP the spine (empire / team / world). **NOT** a store/consumer: no `IEventConsumer`, no `rebuild`/`onEvent`/`shadowDiff` (all removed — a count shadow would be tautological). Reading a raw count is a raw INPUT, not pollution. Building/unit domains; others read from their object owner when added (`tally.md` §5). |
-| **Modifier** | ✅ **BUILT + PORTED (2026-07-01)** | The full StoneBase `Calc` port — `MMKernel`/`PercentStack`/`YieldBasePackages`/`BuildingPackage`/`YieldRate`/`CommerceCalc` (`Sources/Cascade/`): all §1 BASE tiers + the assembler + the §2 commerce stage. Port-completeness-audited vs StoneBase → faithful (the last gaps — civic building-keyed percent, projects, the minPosThreshold MIN — now closed). The holistic shadow (`cvCascadeModifierShadow`) diffs `yieldRate100`/`commerceRate100` vs legacy, un-run (parity deferred to the end). **Computes ON-DEMAND per city — the scope-accumulator substrate is a post-shadow cutover optimization, NOT a blocker.** Legacy accumulators untouched (§4). |
-| **Enabler** | ✅ **BUILT + PORTED (2026-07-01)** | Generate→gate over the mapped `CvJsonInfo`: `EnablerKernel` + `TechCascade`/`BuildingCascade`/`UnitCascade` (`Sources/Cascade/`); the frontier gates + dormancy/reachability. Port-completeness-audited vs StoneBase → faithful + self-contained (reads its own JSON flags, not the live engine). Deferred (NOT port gaps): CultureLevel category caps (StoneBase lacks them), `MAPCATEGORY_` (XML-only, §7.4), SpecialBuilding team/world caps (data-benign, no group index). Legacy `can*` gates untouched (§4); the `#195` `ConstructRequirement` reverse-index survives as the `enables` seed. |
-| **Grants** | ❌ **ABSENT** | No grants consumer (never built). |
-| **readJson** | ✅ **BUILT — PARSE + MAP (full json.md coverage), runs at LOAD** | `Sources/Cascade/CvCascadeReadJson.{h,cpp}`: a one-shot gated probe (`cascadeReadJsonProbe`, at **`onFinalInitialized`** — load-time) that parses EVERY `Assets/Data` entity through BoolExpr — `rj_translate` (conditions, incl. `IntExpr` value/tally-count bands + the `dormant` clause); `rj_walkModNode` (×100 modifier-family deposits); `rj_walkEnableEdge` (enables/obsoletes/replaces/disables/obsoletedBy/provides); `rj_walkAllowed`; `rj_walkGrants` (generic by shape) — FK-resolving all ids. **Verified live: 0 `UNCLASSIFIED` top-level keys, all resolved bar 3 by-design.** ✅ It **MAPS** each entity to a **`CvJsonInfo`** (deposits/requires/edges/allowed/grants) held in the entity's per-type **`InfoRepo<CvXInfo>`** (`Repos/InfoRepo.h`) — a parallel layer, NOT on the info objects; the side-table is **RETIRED** (§3). readJson is **static-data-only** (no `CvGameObject`). The modifier/enabler read it via `InfoRepo<…>::get().get(id)`. Standalone `Tools/ReadJson/readjson.cpp` harness is FROZEN. |
+- **Modifier** — authoritative for every CITY channel: yields, commerce, wellbeing (happy/unhappy/good/badHealth),
+  the five scalars (GP-base / GP-mod / defense / maintenance / tradeRoutes), buildRate. **Unbuilt:** the unit plane
+  (unit-stat modifiers). **Properties:** built but shadow-only (`CascadeProperty`, HTTP-diffed, not authoritative).
+- **Enabler** — authoritative for all 10 gates. The per-city **active-building set** (`m_operatingBuildings` — which
+  buildings are active/non-dormant + the in-vicinity `provides` they supply, the output the modifier reads) is
+  **blanket-recomputed**: `CvCity::refreshOperatingBuildings` ignores its mask and rebuilds the whole fixpoint, and six
+  sites `markAllDirty` it on every event, while the buildable/trainable frontier is maintained targeted off the
+  `s_bc*`/`s_uc*` reverse-index. That gap is the outstanding perf inversion (the "burn the library" cost).
+- **Scope-package accumulator** — built (epochs/stamps deleted).
+- **Tally** — built (read-only accessor over the object-owned counts).
+- **Grants** — resolution built (`CvCascadeGrants`, an `IEventConsumer` resolve-only over six DOMAIN events); the
+  apply-loop is unbuilt (legacy still applies).
+- **Classification consumption (Gate 3):** capabilities wired (legacy counters cut); `skills` / `tags` / building
+  `attributes` / `policies` mapped but unwired.
+- **Phase:** shadow / flipped-getter — legacy retained as dead-code oracles; not post-cutover.
 
 **The honest #430 roadmap.** Build the cascade FRESH per the specs, porting from the parity-proven StoneBase reference,
 in spec build order: **`readJson` (typed-condition port) + the scope-accumulator substrate → tally → modifier → enabler →
 grants** (§1). Each is interface-bounded and wired at the composition root (§2b). Validation has **two distinct legs,
 never mixed** (§2): the **external StoneBase dry-calc** (offline PARITY oracle — done for yields/commerce) and, per
 machine, an **in-engine SHADOW** (the cascade computed alongside legacy, diffed per-turn via spine `[TAG]` lines — NOT
-a `/shadow/*` endpoint; those were a rollerskating conflation of the two legs and are retired). Nothing below "event
-spine" exists yet.
+a `/shadow/*` endpoint; those were a rollerskating conflation of the two legs and are retired).
 
 ---
 
@@ -185,6 +194,27 @@ surface is retired, `CvHttpServer.cpp:26`):
 
 ## 3. EXE BOUNDARY — the only fixed constraint (re-verified 2026-06-29)
 
+> **⛔ SUPERSEDED IN PART — the JSON-vs-CASCADE SEPARATION ([DEC-json-not-cascade](../../architecture/decisions.md#dec-json-not-cascade), owner ruling 2026-07-07).** The
+> §3 model below describes `readJson` mapping into a `CvJsonInfo` that HOLDS **deposit lists** (a generic `deposits`
+> vector the cascade then indexes/compiles). That let the cascade RUNTIME bleed into the JSON data — and **cascade and
+> JSON are not the same.** The corrected split, in force since 2026-07-07:
+> - **`CvJsonInfo` (`Sources/JsonInfo/`, relocated out of `Cascade/`) is the JSON-info BASE** — `CvInfoBase` + the
+>   availability model (`requires`/`enables`/`obsoletes`/`replaces`/`disables`/`allowed`/`grants` + the info-owned
+>   typed `CvJsonCondition`) **ONLY, with ZERO cascade runtime** (no `deposits` vector, no DepositIndex, no evaluator).
+> - The per-type modifier DATA lives as **real typed members on the `CvJson<X>Info` subclasses** (`CvJsonTerrainInfo`/
+>   `CvJsonBuildingInfo`/… — the human-legible `CvXInfo`-replacement surface: `getYieldChange`, real flags/FKs, mapped
+>   from the curator's exact shapes, carrying ONLY live-caller getters). `InfoRepo<CvXInfo>` creates
+>   `JsonPayload<CvXInfo>::type` (the subclass); readJson calls `mapFrom` (virtual — the base parses the shared cascade
+>   sections, the subclass adds its typed members). **Every cascade info type has its OWN `CvJson<X>Info` subclass +
+>   `JsonPayload` specialization, even when it carries no typed members yet** (uniformity — `CvJsonCivicOptionInfo` is
+>   the empty exemplar, owner ruling 2026-07-07); a type never falls back to the bare base.
+> - The cascade builds its RUNTIME (the DepositIndex, the packages, the frontier) by its OWN setup **reading those
+>   pocos** — never off a vector on the info object.
+> - **In-flight (RED build BY DESIGN):** the pocos are being generated (the plot-substrate set done); the cascade side
+>   (`CvCascadeReadJson` census, `DepositIndex`, `MMKernel`, `PercentStack`) still references the removed
+>   `CvJsonInfo.deposits`, so it does not compile — rewiring it to read typed poco members is the pending cascade-side
+>   rework. Read every "`CvJsonInfo` holds deposits / a flat deposit vector" phrasing below with this split applied.
+
 - **`readJson` will be a FRESH reader** (picojson → fresh runtime structures), NOT a reuse of `CvInfoUtil`/`CvXMLLoadUtility`/
   the old `read()` path. It runs IN ADDITION to the XML load during shadow; at cutover the XML path (`SetGlobalClassInfo`
   → `read()`, `Infrastructure/CvXMLLoadUtilitySet.cpp:1588`) is deleted. (`read()` is NOT DllExport — `Infos/CvInfoBase.h:78/85/133/154`.)
@@ -238,9 +268,9 @@ surface is retired, `CvHttpServer.cpp:26`):
     info classes inheriting `CvInfoBase` have been added without trouble). So the earlier "mid-class crash / append-only
     / append-test" caution was **over-drawn** — that crash was a DLL-internal / stale-build artifact, not an EXE-offset
     constraint. (The InfoRepo was chosen over an on-`CvInfoBase` member for the SEPARATION reasons above, not for ABI.)
-  - **⏳ NEXT (refinement, within the InfoRepo home):** `CvJsonInfo` is still a flat deposit vector internally; indexing
-    it (`modifiers` keyed by family/scope/unit, `enables` by bucket — StoneBase's typed `ModifierFamily` shape) so the
-    machine asks the struct and gets the value without a per-access list walk is a follow-up.
+  - **✅ SUPERSEDED — done differently (the 2026-07-07 split, [DEC-json-not-cascade](../../architecture/decisions.md#dec-json-not-cascade)):** the "ask the struct, get the
+    value without a per-access list walk" shape IS the **typed `CvJson<X>Info` subclass** (real typed members read
+    directly), NOT an indexed deposit vector on `CvJsonInfo` — which no longer holds `deposits` at all.
   - **★ TWO HOMES — definitions in the InfoRepo, ACCUMULATED STATE on instances (owner ruling 2026-06-30).** The static
     **definitions** (the `CvJsonInfo` from JSON) live in the **per-type InfoRepo** (above). The runtime **accumulated
     state** — the cascade modifier accumulators (a city's summed per-`(family,scope)` totals) — lives on the **game
@@ -380,21 +410,21 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    json.md §8 — `capabilities` **IS** mapped, see the enabler item below) — currently recognized + skipped. See the
    classification-wiring item below. ⏳ **NEXT (refinement) + THE SHADOW-PERF HUNT (owner 2026-07-02 "chase the needless repeat calcs BEFORE parity").**
    The [MODIFIER/perf] census (counters + PerfAccumTimer stopwatches, flushed per turn) drove this so far:
-   yieldRate100 was 444 calls × ~164ms ≈ 73s/turn; the turn-scoped memos (facts: 91% hit; rate: halved to ~37s)
+   yieldRate100 was 444 calls × ~164ms ≈ 73s/turn; the turn-scoped memos (operating buildings: 91% hit; rate: halved to ~37s)
    bought back the REPEAT calls. The residual is the PER-CALL ~164ms, and the sub-costs measured so far bound it:
    percentStack ≈ 6ms and commerceRate ≈ 7ms per call, so the bulk sits in the BASE packages — **`basePlot` was CONVICTED and fixed**: it
    walked ALL ~5202 buildings PER WORKED PLOT (×3 keyed-deposit walks) — the per-channel building-CANDIDATE cache
    (which buildings carry any deposit for a channel is static readJson data) cut the per-call cost ~164ms → ~50ms
    (turn total 73s → ~12s, with the memos). **ANTI-MEMO-SKEW**: the doTurn shadow clears the turn memos at its top
-   (`YieldRate::memoClear` + `EnablerKernel::factsMemoClear`) — memo values frozen from early-turn calls vs
+   (`YieldRate::memoClear` + `EnablerKernel::operatingBuildingsMemoClear`) — memo values frozen from early-turn calls vs
    end-of-turn legacy read as false divergences until it did. Next perf levers if wanted: the per-plot civic/trait
    loops + the substrate walks (same candidate-cache pattern). ✅ **The deposit index (§3) LANDED 2026-07-03** as
    the COMPILED DEPOSIT INDEX (`Cascade/CvCascadeDepositIndex.{h,cpp}`: push-time strings→ints interning, compiled
    segments + FK-resolved target id per deposit, int matchers in MMKernel, per-channel candidate prefilters; the
    flat vector stays, the per-access string walk is gone — measured modifier calc ~25s → <1s/turn on a bit-identical
-   same-turn replay; modifier-substrate.md). ⚠ Memo status (2026-07-03): the FACTS memo is GONE — replaced by the standing event-invalidated
-   `CvCity::m_cascadeFacts` cache (state-repositories.md; the "event-invalidate before any consumer cut"
-   prerequisite is CLOSED for the facts). The YieldRate turn memo remains and is ORACLE-ONLY (the calculator
+   same-turn replay; modifier-substrate.md). ⚠ Memo status (2026-07-03): the operating buildings memo is GONE — replaced by the standing event-invalidated
+   `CvCity::m_operatingBuildings` cache (state-repositories.md; the "event-invalidate before any consumer cut"
+   prerequisite is CLOSED for the operating buildings). The YieldRate turn memo remains and is ORACLE-ONLY (the calculator
    is the [SLOT]/[GETTER] verification oracle, never a consumer — it dies with the shadow at the cut).
 2. **Tally** ✅ **DONE — reworked to a READ-ONLY accessor (owner ruling 2026-06-30)** (buildings + units). It READS the
    object-owned counts (`CvPlayer::getBuildingCount`/`getUnitCount`) and rolls UP the spine (empire/team/world) — no
@@ -415,7 +445,7 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    unit skills especially.** The classification blocks are currently parsed-but-skipped (not mapped) — this is the wiring.
 4. **Enabler** (generate-then-gate, on the validated tally) + **grants**.
    ✅ **StoneBase CascadingEnabler PORTED for tech/building/unit (2026-06-30)** — `en_techAvailable` (TechCascade),
-   `en_buildingBuildable` (BuildingCascade + the AugmentState facts, which the live evaluator reads directly via
+   `en_buildingBuildable` (BuildingCascade + the AugmentState operating buildings, which the live evaluator reads directly via
    `hasVicinityBonus`/`isGovernmentCenter`), and `en_unitTrainable` (UnitCascade: GATE-availability → GENERATE-frontier
    minus `replaces` → GATE not-dormant via the reachable upgrade closure) **REPLACE the first-cut enables-frontier for
    their domains.** Per StoneBase: the FRONTIER is the **WHOLE domain** (all techs / all buildings / all units) gated by
@@ -481,7 +511,7 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    enabling techs (NPC pollution ruled out — counts identical after the NPC skip) — OWNER SEMANTIC (2026-07-02): processes convert hammers to commerce-type yields and only the LATEST version of each family is choosable -- legacy enforces only-latest IN CODE (no data-side supersession edges exist: process JSONs verified edge-free; currency->WEALTH, trade->WEALTH_LESSER enables verified clean). TWO chases: (1) the only-latest rule needs a data model (the ReplacementBuildings->dormant pattern on processes, or the gate mirrors legacy) + (2) trace where GENERATE loses
    `enables.processes` (data verified present on 12 techs) or the gate drops them; NB PROCESS_IDLE has NO tech
    enabler, so the generic enables-frontier structurally under-offers it (the PALACE lesson — processes may need
-   the whole-domain frontier like the ported cascades). **(d)** verify the multi-queue exclude matches the legacy oracle flag semantics on canConstruct (owner 2026-07-02: queue-driven variation otherwise reads as noise). **(e)** the city-scope ctx.plot fix (2026-07-02) cleared the coastal/freshwater refusal class; the canConstruct/canTrain bulk remaining is per-type chase work. **(f)** THE FACTS FIXPOINT (2026-07-02): the modifier percent-stack divergence attributed to `computeCityBuildingFacts` evaluating operate conditions against an incomplete vicinity supply — the active set and the `provides` supply are MUTUALLY dependent (a per-building dry-calc proved data+eval exact on the engine-active set), so the facts now iterate a bounded LEAST fixpoint (empty supply → grow until stable). StoneBase never faced this: its AugmentState reads the ENGINE dormant set (the "StoneBase cheated on dormancy" owner call) — the self-contained cascade must solve the fixpoint itself. **(f2)** ⚖ STALE ENGINE EVENT-STATE — ACCEPTED, MONITOR (owner ruling 2026-07-02): the surviving stack/dorm
+   the whole-domain frontier like the ported cascades). **(d)** verify the multi-queue exclude matches the legacy oracle flag semantics on canConstruct (owner 2026-07-02: queue-driven variation otherwise reads as noise). **(e)** the city-scope ctx.plot fix (2026-07-02) cleared the coastal/freshwater refusal class; the canConstruct/canTrain bulk remaining is per-type chase work. **(f)** THE operating buildings FIXPOINT (2026-07-02): the modifier percent-stack divergence attributed to `recomputeOperatingBuildingsInto` evaluating operate conditions against an incomplete vicinity supply — the active set and the `provides` supply are MUTUALLY dependent (a per-building dry-calc proved data+eval exact on the engine-active set), so the operating buildings now iterate a bounded LEAST fixpoint (empty supply → grow until stable). StoneBase never faced this: its AugmentState reads the ENGINE dormant set (the "StoneBase cheated on dormancy" owner call) — the self-contained cascade must solve the fixpoint itself. **(f2)** ⚖ STALE ENGINE EVENT-STATE — ACCEPTED, MONITOR (owner ruling 2026-07-02): the surviving stack/dorm
    disagreements attributed to the engine's event-driven building-disabled state violating its own rules (corp
    outlets enabled with the corp absent; bonus-loss dorms never re-enabled on trade re-gain) are a KNOWN
    consequence — *"we dropped some event states, because we had to fix caching (event yields were only written

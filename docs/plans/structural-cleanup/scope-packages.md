@@ -102,13 +102,13 @@ that hurt"; a flat-only source never rebuilds a percent stack):
 
 | event | marks |
 |---|---|
-| building completed/lost (`processBuilding`) | the CITY package (derived mask) + the OWNER package iff the building carries empire-scope deposits + the WORLD package iff world-scope deposits + facts (always — operate conditions) |
-| religion/corp spread | the city package (SR/corp-conditioned components) + facts |
+| building completed/lost (`processBuilding`) | the CITY package (derived mask) + the OWNER package iff the building carries empire-scope deposits + the WORLD package iff world-scope deposits + operating buildings (always — operate conditions) |
+| religion/corp spread | the city package (SR/corp-conditioned components) + operating buildings |
 | specialist count change | the city package's specialist components only |
-| civic swap / GA flip / tech researched | the player package + the player's cities' packages (**legitimate fan-out: conditions on city-scope deposits reference these** — `enabled:{TECH_X}`) + facts |
+| civic swap / GA flip / tech researched | the player package + the player's cities' packages (**legitimate fan-out: conditions on city-scope deposits reference these** — `enabled:{TECH_X}`) + operating buildings |
 | unit movement | **nothing, ever** ([DEC-unit-modifiers-on-top]; units may never author yield percentages) |
-| slice start (`CvPlayer::doTurn` top) | the FULL per-player rebuild ("Cascade.RebuildCache(myPlayerId)"): mark-all + eager ensure of the player scope + every city's facts + packages. ⛔ NEVER narrow this to "the unhooked classes" — an unhooked mutation (power flips, bonus-network shifts, timers) otherwise stales a package FOREVER (the measured frozen-package class); the boundary's breadth IS the self-heal, and its cost is bounded by active-set fills + compiled ids, not by mark width |
-| city founded / acquired (`CvPlayer::found` + `acquireCity` setup tails) | the creation-time **EAGER ENSURE** (`CascadeAccumulator::cityCreated`: facts, then packages) — the ONE ruled exception to boundary-only rebuilds (below) |
+| slice start (`CvPlayer::doTurn` top) | the FULL per-player rebuild ("Cascade.RebuildCache(myPlayerId)"): mark-all + eager ensure of the player scope + every city's operating buildings + packages. ⛔ NEVER narrow this to "the unhooked classes" — an unhooked mutation (power flips, bonus-network shifts, timers) otherwise stales a package FOREVER (the measured frozen-package class); the boundary's breadth IS the self-heal, and its cost is bounded by active-set fills + compiled ids, not by mark width |
+| city founded / acquired (`CvPlayer::found` + `acquireCity` setup tails) | the creation-time **EAGER ENSURE** (`CascadeAccumulator::cityCreated`: operating buildings, then packages) — the ONE ruled exception to boundary-only rebuilds (below) |
 
 > **⚖ RULED (owner 2026-07-04, the precipice review): the freshness contract is the PER-PLAYER-SLICE
 > SNAPSHOT — *"start of next turn is what is expected; getting a yield event in the middle of a turn is not
@@ -213,7 +213,7 @@ bug.
 | module-side rollups (`s_wbRollup`, `ScPlayerRollup`) | player-scope sums off-object | the `CvPlayer` package |
 
 **Conforming already (survives untouched):** the `CvPlot` yield cache + the city's plots-PULL at combine; the
-compiled `DepositIndex`; `m_cascadeFacts` (city-scope facts, event-marked — loses only its stamp fields); the
+compiled `DepositIndex`; `m_operatingBuildings` (city-scope operating buildings, event-marked — loses only its stamp fields); the
 calculators as oracles; the derived building mask concept; the bare-fetch read + slice-start boundary +
 `gameId`/perf census pieces of increments F/G.
 
@@ -231,14 +231,14 @@ calculators as oracles; the derived building mask concept; the bare-fetch read +
 | 2 | `Cascade/CvCascadeAccumulator.cpp:28-60` (`s_iEpoch`/`s_aiPlayerEpoch`, `bumpEpoch`/`bumpPlayerEpoch`/`epochFor`, `freshen`) | the polling machinery | ph5 DELETE (marks replace) |
 | 3 | `CvCascadeAccumulator.cpp:87-103` (`acc_ensure`) + every accessor's ensure call (`:172,181,190,198,206,213,220,234`) | the read-side ensure protocol | ph2–4 accessors recompose to package combines; ensure dies ph5 (reads = bare fetches) |
 | 4 | `CvCascadeAccumulator.cpp:106-167` (`refreshComponents`) | the masked recompute dispatch | ph1+ splits: city-half walks per city package; player/world halves to their scopes' delegates |
-| 5 | `CvCity.cpp:59` bind · `:482-489` reset (incl. the stamp lines + facts stamps) · `CvCity.h:1845` delegate | the city cache lifecycle | ph1 extends (new package member); stamp lines DELETE ph5 |
+| 5 | `CvCity.cpp:59` bind · `:482-489` reset (incl. the stamp lines + operating buildings stamps) · `CvCity.h:1845` delegate | the city cache lifecycle | ph1 extends (new package member); stamp lines DELETE ph5 |
 | 6 | `CvCity.cpp` dirty hooks ×5 — `:4548` building, `:6944` pop, `:14171` specialist, `:15318`/`:15523` religion/corp | the event marks | ph1 masks re-derive per package bits (building = the derived-mask precedent); semantics keep the ruled cadences (WB end-turn) |
 | 7 | `CvCity.cpp:11312`/`:12049` (`getYieldRate100`/`getCommerceRate`, flipped) | the live rate getters | ph3 recompose internals to the §2a package combine (under the standing `[GETTER]` net) |
 | 8 | `CvCity.cpp:5637-5651` (wellbeing verdict getters ×4, flipped) | the live wb getters | ph4 recompose: verdicts realized at read from good/bad packages |
 | 9 | `CvCity.cpp:7196+` (the four scalar getters, REVERTED to legacy; `*Legacy` siblings) | the scalar getters | ph2 recompose + flip (in-body net through real turns first) |
 | 10 | `CvPlayer.cpp:9414` GA · `:14296` civics · `CvTeam.cpp:4952` tech (`bumpPlayerEpoch` ×3) | the player-event sites | ph1 `markPlayerScopeAndCities` lands beside; ph5 replaces alone; + `CvPlayer` gains member/bind/delegate ph1 |
 | 11 | `CvGame.cpp:649` (warm-up: `scGpBase` ensure; the block warms plots + city slots) | the load warm-up | ph1 extends to ALL packages, all scopes (the capstone's realized site) + `CvGame` gains the world member |
-| 12 | `Cascade/CvCascadeCityFacts.h:28-31` + `EnablerKernel::cityFacts` (`:255-274`, `epochFor` stamp block, include `:22`) | the facts' polling half | ph5 stamps DELETE (pure Set; slice-start covers the unhooked classes) |
+| 12 | `Cascade/CvCascadeOperatingBuildings.h:28-31` + `EnablerKernel::operatingBuildings` (`:255-274`, `epochFor` stamp block, include `:22`) | the operating buildings' polling half | ph5 stamps DELETE (pure Set; slice-start covers the unhooked classes) |
 | 13 | `Cascade/CvCascadeWellbeing.cpp:180-216` (`WbPlayerRollup`, `s_wbRollup[MAX_PLAYERS]`, the local `WbSplit`) | player wb sums off-object | ph4 → the `CvPlayer` package (fold maps); statics DELETE |
 | 14 | `Cascade/CvCascadeScalarChannels.cpp:87+` (`ScPlayerRollup` on the shared stamp) | player scalar sums off-object | ph2 → the `CvPlayer` package; static DELETES |
 | 15 | `Cascade/CvCascadeModifierMath.cpp` — rate/wb net reads (`:367,:499,:515,:559`) + the `[MODIFIER/scalar]` net (`:584-604`, raw `sst.iSc*` reads) + the `MDF_*` field registry | the verification harness | rate/wb nets unchanged (oracle side); the scalar net's slot side recomposes with ph2 (raw package reads — the non-tautological form) |
@@ -247,7 +247,7 @@ calculators as oracles; the derived building mask concept; the bare-fetch read +
 | 18 | `CvGame`/`CvPlayer` `doTurn` tops | the slice-start boundary | ph1 adds the player-slice ensure (the interim boundary; the turn-end unified pass is the post-plan trajectory) |
 | 19 | `Cascade/CvCascadePerfCount.{h,cpp}` (the census counters — `scRefresh`/read counters increment inside the refresh/ensure paths) | the perf census internals | counters re-home to the package refresh/read sites as each flip lands; EMITTED names stay stable (StoneBase parser) — *adversarial-pass find* |
 
-**Not touched by this rebuild (verified out of scope):** the enabler gates + facts *content* (only the stamps
+**Not touched by this rebuild (verified out of scope):** the enabler gates + operating buildings *content* (only the stamps
 go), the tally, capabilities (already cut), the plot cache, the DepositIndex, grants (unbuilt), StoneBase's
 tracker/perf surfaces, and every legacy accumulator the cutover's own map owns (`code-cut-map.md` — this map
 covers the SUBSTRATE rebuild only, not the legacy cut).
@@ -307,11 +307,12 @@ perf census rows to the StoneBase store — the 1.28M-reads class must go flat):
    walk; the read for the head item sums the entries matching the item's keys + its bonus-gated `self` mods.
    Its historic "deferral" was an artifact of the flat-int slot storage, not the model — the channel is
    already the best-attributed of all (the keyed walk reconciles exactly through `sumKeyed4U`). Ledger storage
-   obeys generic-code-static-storage: interned-int keys in a compiled fixed table.
+   obeys generic-code-static-storage — ✅ since 2026-07-05 in the DENSE form (`CascadeBrLedger` per-kind
+   vectors indexed by game enum id; reads are one array index, the tree-map form retired).
 
 **Phase 3 — the ONE-PHILOSOPHY atomic cut.**
 With every channel package-served and netted clean: delete the epochs (`bumpEpoch`/`bumpPlayerEpoch`/
-`epochFor`), `CvCascadePlayerStamp`, the slots' + facts' `iEpoch`/`iTurn` stamps, the turn-roll blanket, and
+`epochFor`), `CvCascadePlayerStamp`, the slots' + operating buildings' `iEpoch`/`iTurn` stamps, the turn-roll blanket, and
 the read-side ensure protocol — events mark, boundaries rebuild, reads fetch. The three player-event sites run
 `markPlayerScopeAndCities` alone. The derived masks refine: percent-vs-flat per source kind (building landed;
 tech/civic/trait next), then per-channel bits ("which package, for what yield").
@@ -348,11 +349,12 @@ against this document and the specs it cites.
 ## 3b. The caching-surface census (one surface, enforced)
 
 Post-landing, the cascade plane has ONE caching surface — the `CvDerivedCache` component (flag form for
-homogeneous leaves: the plot yields; Set form for the package structs: city/player/world/facts — owner-side
+homogeneous leaves: the plot yields; Set form for the package structs: city/player/world/operating buildings — owner-side
 storage, the component owns the dirty protocol). The residuals, each with its disposition: the **legacy
 accumulators** behind the `*Legacy` oracles are the sanctioned shadow-phase doubles (die at the atomic cut,
-patterns.md rule 7); **`CascadeCapabilities`'s hand-rolled per-team union → CONVERGE onto the Set protocol**
-(the one real follow-up; state-repositories.md mandates the ONE pattern); the **load-time compiled statics**
+patterns.md rule 7); ✅ **`CascadeCapabilities`'s hand-rolled per-team union CONVERGED onto the Set protocol
+(2026-07-05)** — `CascadeTeamCaps` is an owner-side `CvTeam::m_cascadeTeamCaps` member on `CvDerivedCacheSet`
+(setHasTech/reset mark, queries ensure; the module statics + `bValid` + the `invalidate` API deleted); the **load-time compiled statics**
 (DepositIndex, candidate lists) are static-data artifacts with no freshness surface; the **AI heuristic
 caches** are out of scope (superseded-ideas.md — the AI rework's plane).
 

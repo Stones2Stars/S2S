@@ -215,10 +215,27 @@ the external dry-calc + logging, not here).
   unitcombat folded) — the skills-parity oracle. The cascade side of both is derived OFFLINE from `/state` + the
   `Assets/Data` JSONs (the validation.md external-dry-calc leg); the composition rules a deriver must fold are in
   [skills.md](skills.md) §3b and [capabilities.md](capabilities.md).
+- **unit heal** — `/computed/units/heal?player=N&unit=M`: a PINPOINTED unit's per-turn `healRate` at its current
+  plot **with the FULL per-source decomposition the engine folds** — so healing can be verified to the point
+  instead of by watching random in-game heals. The `?player=N&unit=M` selector keys on the (player, unit) tuple
+  (a unit id is unique only WITHIN a player, exactly like the city `(owner,id)` tuple). Fields: `healRate` (the
+  authoritative engine total = what `doHeal` would apply), `healTurns`, `damage`/`maxHitPoints`/`currHitPoints`/
+  `isHurt`, plot `(x,y)`, an `eligibility` block (friendly/enemy territory, isCityPlot, animal/NPC,
+  hasNoSelfHeal, battlefield-medicine — the flags that can gate `healRate` to 0), a `sources` block of the NAMED
+  additive terms of the non-heal-as path (`selfHealModifier`, territory base `cityHealRate`/`friendlyHealRate`/
+  `neutralHealRate`/`enemyHealRate` + the matching `extra*Heal`, the city `cityContribution` = `pCity->getHealRate()`,
+  the best same-tile/adjacent `supportTileHeal` + `supportHealerUnitId`), and — for heal-as-combat units
+  (`numHealAsTypes`>0, where the total comes from the SLOWEST-healing type) — a `healAsTypes` array of per-unit-combat
+  `healRateAsType`/`healAsDamage`/`cityUnitCombatHeal` (`getHealUnitCombatTypeTotal`). ⛔ **READ-ONLY**: computes what
+  `doHeal` WOULD heal via the const `CvUnit::healRate`/`getHealRateAsType`/`healTurns` (all called `bHealCheck=false`,
+  so even the support-heal scan performs no `changeHealSupportUsed`/`changeExperience100`); `doHeal`/`changeDamage`/
+  `setDamage` are never called — the unit's HP is untouched. Mirrors `/computed/cities/yields` so a heal divergence
+  localises to one named term. Source of truth: `CvUnit::healRate` (`CvUnit.cpp`:6021), `getHealRateAsType` (:6212),
+  `doHeal` (:6467).
 
-> Unit combat/movement decomposition is **deliberately not exposed yet** — those channels aren't in drycalc's
-> current focus (yields/modifiers + buildability). Raw unit membership lives on `/state/units`; the computed
-> combat/movement surfaces are added when those channels are worked (don't ship a lone half-channel).
+> Unit combat/movement decomposition (beyond heal, above) is **deliberately not exposed yet** — those channels
+> aren't in drycalc's current focus (yields/modifiers + buildability). Raw unit membership lives on `/state/units`;
+> the computed combat/movement surfaces are added when those channels are worked (don't ship a lone half-channel).
 
 ---
 

@@ -179,7 +179,9 @@ clamp(unhappy − happy, 0, pop)`. The channel oracle is **`/computed/cities/wel
 - **RAW-STATE INPUTS (folded, never derived)** — the runtime timers/counters no deposit produces: the **anger
   percents** (overcrowding = f(pop), noMilitary, foreign-culture, enemy-religion, hurry/conscript/defy/
   revRequest timers, war-weariness, revIndex, civic anger%), the **espionage counters**, **event anger**
-  (one-shot event state), **tax-rate unhappiness**, **foreign-culture anger**, **landmark anger** (option-gated),
+  (one-shot event state), **tax-rate unhappiness**, **foreign-culture anger**, **landmark anger** (option-gated —
+  ⚖ RULED KEEP through the migration, owner 2026-07-05: the existing engine implementation stays, *"straight up
+  state derived from the plot in question"*; the landmark data pass is POST-migration, ticket #448),
   **city-over-limit**, and **vassal** terms. These are saved/derived-from-saved state (legitimate inputs per the
   [http-endpoints](http-endpoints.md) hard rule) — the calc folds them at the level combine exactly where the
   engine does.
@@ -307,8 +309,9 @@ authored shape.
 > `DefaultTraits`) *or* its complex/Thunderbrd set (`traits/complex/`, the `DefaultComplexTraits`), chosen at runtime
 > by **`GAMEOPTION_LEADER_COMPLEX_TRAITS`**. The curator emits both as **two cleanly-separated, self-complete folders**
 > (`traits/simple/` + `traits/complex/`); a consumer **loads the one active folder** by the live game option — this is
-> NOT a `loadPrune` and NOT a mid-game swap (loadPrune is a load-time entity-DROP under an option, [json](json.md) §9 —
-> never reach for it to select a set's values; any WorldBuilder mid-game trait swap is a post-migration concern). The two
+> NOT an entity-level option gate and NOT a mid-game swap (`loadPrune`, the invention that restated this split per
+> trait entry, is RETIRED — owner 2026-07-08, [superseded-ideas](../architecture/superseded-ideas.md); any
+> WorldBuilder mid-game trait swap is a post-migration concern). The two
 > sets share **~64 colliding type ids**, so a consumer reading a trait's modifier families MUST select the active set
 > from the **live game option (asserted via `/state`)** — NEVER infer it from a trait id's spelling (a `…1`-suffixed id
 > is not "simple") nor from file load-order. Using the wrong file silently yields wrong magnitudes — this was the exact
@@ -425,6 +428,19 @@ No bespoke host↔cargo family is needed. The full unit-stat family vocabulary
   long as its source is** — building present / civic adopted / trait active — the continuous-deposit shape, not a
   handed-out provision. Every legacy `changeFreeSpecialistCount` apply (civic/trait/building) classifies to THIS
   family; none belongs to the grants machine.
+- **⚖ THE TWO-PART SEAM (owner ruling 2026-07-05 — the promotion-SPA seam pattern applied to specialists).**
+  Free specialists split cascade-vs-engine in two parts: **(1) the AMOUNT** of free specialists is the
+  CASCADE's — the summed `freeSpecialists` deposits (per type + the `any` bucket) from live sources;
+  **(2) the PLACEMENT** — the engine decides how to place them within the parameters it has (typed entries
+  auto-assign; the `any` bucket + citizen assignment ride the existing, reliable engine infrastructure);
+  **(3)** consumers then *"simply deal with the OUTPUT of that"* — the realized per-type counts
+  (`getSpecialistCount + getFreeSpecialistCount`) are a **sanctioned output-seam read**, never a
+  self-containment ride-in. Demolition consequence: the cut replaces WHO MAINTAINS THE AMOUNTS (the cascade's
+  summed deposits replace the `changeFreeSpecialistCount` process-applies feeding the placement); the
+  placement machinery and its output reads stay. **The grants classing is PERMANENTLY PURGED** (owner
+  2026-07-05): free specialists do not fit the grants model as it stands — `specialists` is removed from the
+  json.md §5 grants vocabulary (zero authorings existed); *if anything is ever found that genuinely grants
+  PERMANENT free specialists (surviving source destruction), we deal with it then* — no hypothetical machinery.
 
 ---
 

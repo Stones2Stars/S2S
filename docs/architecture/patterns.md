@@ -42,7 +42,7 @@ needs a fact FEEDS it to the one function, it never re-derives it.
 1. **One evaluator for conditions/predicates.** `cascadeEvalCondition` is the **sole** place a condition/predicate is
    evaluated. The enabler and the modifier **delegate** to it (`en_requiresMet`, `mm_applies` are thin wrappers) — they
    never re-read a predicate. A machine that needs a fact the evaluator uses (`hasVicinityBonus`/`isGovernmentCenter`/
-   active-building) **supplies it through the eval context** (the AugmentState facts), never evaluates it itself.
+   active-building) **supplies it through the eval context** (the precomputed operating-building set), never evaluates it itself.
    *(State: ✅ holds today — one evaluator, both machines delegate; the old `BoolExpr` duplicate was deleted.)*
 2. **One function per calculation**, mirroring StoneBase's `src/Application/Features/Calc/*` packages **1:1**:
    `PercentStack` · `YieldBasePackages` · `YieldRate` · `YieldSplit` · `CommerceSplit` · `CommercePackages` ·
@@ -67,11 +67,12 @@ needs a fact FEEDS it to the one function, it never re-derives it.
 6. **Single source of "active".** "Is X active / available / connected / non-dormant" is computed **once, by the
    enabler**; the modifier **reads** it — it never recomputes from the live engine, and above all never reads the
    engine's *dormancy verdict* (the camouflaged ride-in, [DEC-calc-zero-ride-in](decisions.md#dec-calc-zero-ride-in)).
-   *(State: ✅ building active/dormant DONE (2026-07-01) — `EnablerKernel::computeActiveBuildings` derives it from
-   `requires.operate` + dormant triggers into `CvCascadeEvalCtx::activeBuildings` (the precomputed-fact pattern, twin of
-   `waivedPrereqBuildings`); the modifier + evaluator read `cascadeIsBuildingActive`, never `isActiveBuilding`. ✅ And
-   vicinity-`provides` (an active building providing a bonus ⇒ in-vicinity, json §5a) is likewise computed —
-   `vicinityProvidedBonuses`, filled with `activeBuildings` in one `computeCityBuildingFacts` pass feeding both machines.
+   *(State: ✅ building active/dormant DONE (2026-07-01) — `EnablerKernel::recomputeOperatingBuildingsInto` derives it from
+   `requires.operate` + dormant triggers into `CvCascadeEvalCtx::activeBuildings` (the precomputed operating-building
+   set, twin of `waivedPrereqBuildings`); the modifier + evaluator read `cascadeIsBuildingActive`, never
+   `isActiveBuilding`. ✅ And vicinity-`provides` (an active building providing a bonus ⇒ in-vicinity, json §5a) is
+   likewise computed — `vicinityProvidedBonuses`, filled with `activeBuildings` in one
+   `recomputeOperatingBuildingsInto` pass feeding both machines.
    Only the route/trade `CONNECTED` "obtained" case stays raw state — the network we don't model.)*
 7. **The legacy shadow is the ONE sanctioned duplication.** During migration the cascade runs *alongside* legacy and is
    diffed — a deliberate, temporary double with a **defined death** (deleted at the atomic cutover, [DEC-map-before-delete](decisions.md#dec-map-before-delete)).

@@ -147,17 +147,22 @@ bypass — the fresh sum runs only on recompute (change-then-read), never per re
 > the same day**: `CascadeRateSlots` is a mutable `CvCity` member (`m_cascadeRateSlots`, bound in the ctor,
 > stale-marked in `reset()`; the side map + per-read lookup deleted; the cascade math stays module-side behind
 > the one `cascadeRefreshRates` delegate — the pattern every remaining modifier channel now reuses).
-> **✅ The FACTS converged the same day (2026-07-03):** the per-city cascade building facts (active set +
-> vicinity provides, the operate/provides fixpoint) are a standing `CvCity::m_cascadeFacts` member on the same
+> **✅ The operating buildings converged the same day (2026-07-03):** the per-city cascade operating buildings (active set +
+> vicinity provides, the operate/provides fixpoint) are a standing `CvCity::m_operatingBuildings` member on the same
 > `CvDerivedCacheSet` idiom — event-invalidated (building/religion/corp flips), stamped with the SHARED
-> accumulator epoch (tech/civic/GA re-check both), turn-roll self-heal — replacing the turn-scoped facts memo
+> accumulator epoch (tech/civic/GA re-check both), turn-roll self-heal — replacing the turn-scoped operating buildings memo
 > whose "shadow-phase-only, must be event-invalidated before any consumer cut" caveat is thereby CLOSED. All
-> consumers read the standing sets via `EnablerKernel::cityFacts`/`wireFacts` (no per-call set copies; the
+> consumers read the standing sets via `EnablerKernel::operatingBuildings`/`wireOperatingBuildings` (no per-call set copies; the
 > shrine/state-religion private fixpoint rebuilds gone). Deliberately NOT converged: the legacy CvCity
 > hand-rolled dirty caches (`m_aiCommerceRate`, `m_aiBuildingCommerce100`, squirrelBanana) — they are §4
-> demolition fodder at the modifier cut; polishing them is backwards investment. Remaining live follow-ups:
-> the specialist getters + the player building-commerce ledger (awaits the vector variant / the ONE
-> invalidation mechanism at the turn-end rebuild).
+> demolition fodder at the modifier cut; polishing them is backwards investment.
+> **✅ The VECTOR VARIANT was built + the player building-commerce ledger CONVERGED (2026-07-05):**
+> `CvDerivedCacheVec<TOwner,T>` (contract rule 5's named form — the recompute receives the vector and fully
+> sizes+defines it) landed in `CvDerivedCache.h`; `m_ppiBuildingCommerceChange` + its hand-rolled dirty bool
+> became `CvPlayer::m_buildingCommerceChange` on the component (flat [building × commerce] index; the
+> `WRAPPER_SKIP` read tags stay verbatim — stringify-only). The one remaining live follow-up: the
+> **specialist getters**, which await the ONE invalidation mechanism at the turn-end unified rebuild (the
+> parked AI build-queue-parity rework) — not the vector variant.
 
 **Chosen mechanism — a templated value-holder with the recompute injected as a member-function-pointer** (the one part
 that genuinely needs owner state stays owner-side; everything else — storage, dirty flag, pull-on-read, trigger — is the
@@ -213,7 +218,7 @@ public:
   are per-component across all channels — a production-only percent touch still rebuilds the food+commerce
   stacks); the bit-layout split is the increment after the bare-fetch shape verifies.
 - **⚠ NAMED DEBT: a SECOND invalidation philosophy rides beside the component — a DEPARTURE
-  from this doc's own model, not a design alternative.** The slots/facts Sets are event-MARKED (the
+  from this doc's own model, not a design alternative.** The slots/operating buildings Sets are event-MARKED (the
   documented way), but two POLLING primitives
   accreted around them: the epoch counters (+ the `iEpoch`/`iTurn` stamp fields on `CascadeRateSlots` beside
   its Set) and `CvCascadePlayerStamp` (the wellbeing/scalar per-player rollups, not on the component at all).
@@ -233,6 +238,22 @@ public:
   The plot and city levels already live this way; the player level lands with the freshness consolidation
   (the `CascadePlayerScope` member); area/team/world follow per channel (the tradeRoutes world term is the
   first world-scope tenant). Full rebuild of everything = LOAD ONLY (the capstone above).
+- **⚖ A CASCADE IS A CACHE — BUT NOT AN INPUT/OUTPUT CACHE (owner rulings 2026-07-06).** Two distinct cache kinds;
+  do not conflate them:
+  - **The yield + percent packages are an INPUT/OUTPUT (value) cache** — memoize the computed number, dirty-invalidate
+    on a source event, recompute from inputs on next read. This is what the `CvDerivedCache` / scope-package design is
+    FOR (*"yields are the cached inputs"*).
+  - **The ENABLER cascades (the frontier + the active-operating buildings) are a CASCADE** — themselves a cache of derived
+    state, but maintained by **TARGETED PROPAGATION**: computed once (the walk-down), then each HAVE-change is
+    propagated through the **affected subset only** (re-check the affected candidates / ripple the fixpoint), updating
+    the authoritative dataset **in place** (the reverse-index, [enabler.md](../specs/enabler.md) §7). A cascade is
+    NEVER blanket-invalidated-and-recomputed, and NEVER a parallel shadow-delta.
+  ⛔ Blanket-recomputing the whole operating buildings fixpoint for every city on every event (the current `m_operatingBuildings`
+  `markAllDirty` path) runs a cascade AS an input/output cache — **"burning down the library of Alexandria"
+  (DESPAIR_INDEX #2)**. The fix is targeted propagation into the authoritative operating buildings, the shape the frontier ALREADY
+  uses (`onBuildingChanged` / `recheckHave` off the reverse-index). It is likewise **not a given** the yield-package
+  shape fits any OTHER non-package channel (the unit plane, properties); each is decided per-channel, and only AFTER
+  the spec is fully in place so the WHAT-to-cache set beyond yields is known.
 - **THE TARGET END-STATE — flags all turn, ONE unified rebuild at turn end (owner 2026-07-03).** The whole
   model in one line: *"if things have not changed, cache is not stale; if it has, rebuild."* Mechanism: *"we can
   set a 'things changed for me' flag on every cache based on events, then we unify all cache rebuild at the end

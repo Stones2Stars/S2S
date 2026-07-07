@@ -54,9 +54,19 @@ mapping: [`code-cut-map.md`](code-cut-map.md) §Rulings addendum):
 3. **Capabilities (grantor breadth + parameterized grants)** — ⏳ a **dedicated walkthrough, pending** (owner:
    gaps here were expected). Until ruled, the capability rows stay BLOCKED; nothing cuts.
 4. **Self-containment classifications** (hasTrait / isGoldenAge / isDisorder / isPower / isGovernmentCenter /
-   isActiveCorporation / corporationRevenueModifier) — ⏳ a **dedicated walkthrough, pending**. No read is
-   reclassified until then (the corporationRevenue derive-from-tech fix stands regardless — it is a
-   StoneBase-fidelity item, not a classification call).
+   isActiveCorporation / corporationRevenueModifier) — ✅ **RESOLVED (audit pass-1 2026-07-05 + owner rulings
+   same day).** Empirically settled by the audit: hasTrait CLEAN (persisted membership), isActiveCorporation
+   CLEAN (raw presence + policy + tech), isGoldenAge/isDisorder covered by ruling 5.3 (raw saved timers),
+   corporationRevenueModifier FIXED (derived from held techs). The two remaining, **owner-ruled 2026-07-05**:
+   - **`isPower` → KEEP the current power machinery.** *"A city either has power or does not have power"* —
+     the cascade reads `CvCity::isPower()` as a raw boolean input; the maintainers (`m_iPowerCount` +
+     `changePowerCount` applies + the area clean-power counters) are KEEP rows, NOT in this cutover's
+     demolition. **Power mechanics get revisited in a later pass** (the Hoover-Dam area-scope machinery,
+     the precipice §4 note) — the cascade power model lands there, never mid-demolition.
+   - **`isGovernmentCenter` → a building ATTRIBUTE** (json.md §8 `attributes.governmentCenter` — already the
+     model). The counter (`m_iGovernmentCenterCount`) rows are KEEP until the Gate-3 building-attributes lane
+     wires; the `IS_GOVERNMENT_CENTER` predicate flips to the cascade operating buildings (active buildings carrying the
+     attribute) WITH that lane, not before.
 5. **⚖ THE GETTER-CONTRACT CUT STRATEGY (owner ruling 2026-07-02)** — resolves BOTH the entry-point question and
    the self-containment classification wholesale. **The getters are fine — they are the stable CONTRACTS.** The
    cut goes *through* the getters, one by one:
@@ -170,9 +180,72 @@ large, breadth-first rewiring ("a lot of places") and can proceed **in parallel*
 ## Prerequisites feeding the cuts
 
 - **Self-containment audit ([DEC-calc-zero-ride-in](../../architecture/decisions.md#dec-calc-zero-ride-in)).** The
-  cascade must compute ALL its active state itself and never read a legacy **computed** output. Known-open:
-  `enables.traits` → the empire active-trait HAVE. Before any cut, **audit** for other legacy-computed reads — the
+  cascade must compute ALL its active state itself and never read a legacy **computed** output — the
   cascade breaks the moment a legacy field is deleted if one remains.
+  **PASS-1 SWEEP DONE (2026-07-05, all 37 Cascade files + the flipped getter bodies; per [DEC-all-means-all]
+  an ADVERSARIAL second pass is still owed before any cut).** The former known-open `enables.traits` is
+  **CLEAN** (`hasTrait` reads the persisted membership array `m_pabHasTrait`, never a computed output);
+  `isActiveCorporation` CLEAN (resolves from raw presence + policy flags); dormancy self-containment CLEAN
+  (the operating buildings fixpoint computes it; the only `isActiveBuilding` read is a diagnostic comparison). The
+  **confirmed legacy-computed ride-ins that gate cuts** (each must gain its cascade home before its
+  channel's demolition):
+  1. **Wellbeing (5 reads → 2 EXTRACTED + 3 CUT-COUPLED, 2026-07-05):**
+     ✅ the SR pair (`getStateReligionHappiness`/`getNonStateReligionHappiness`) is DERIVED in the verdict
+     assembly — INITIAL define-seeds + Σ adopted civics' `stateReligion.empire.happiness` /
+     `happiness.empire.nonStateReligion` flats (writer census: init + processCivics + the recalc re-seed;
+     no other feeder) — the accumulators ride only the Legacy oracles.
+     ⚖ the `getExtraHappiness`/`getExtraHealth` trio (city+player) is **CUT-COUPLED, no pre-cut surgery**:
+     the cascade already nets out the recomputed derivable trait/tech parts (`wb_extraParts`) and re-adds
+     its own nets, so at the demolition — when the derivable process-applies die — the accumulators become
+     PURE event/Python stores by construction and ride in under the E-class clean-store ruling. The
+     pre-cut requirement (the derivable parts recomputed cascade-side) is already met.
+  2. ✅ **`getCorporationRevenueModifier` — FIXED (2026-07-05):** the commerce corporation term now reads
+     `CascadeCapabilities::corporationRevenueModifier` (Σ held techs' Info constant, cached on
+     `CascadeTeamCaps`, setHasTech-invalidated; one authoring: TECH_STOCK_BROKERING +15). Interim
+     static-Info read (the L5-seed class); durable home = the JSON plug at the corp-system rework.
+  3. ✅ **`getNationalGreatPeopleRate` — FOLDED (2026-07-05, the L6 class):** `CascadePlayerScope::gpNationalFlat`
+     (Σ active traits' `greatPeopleRate.empire.units.*.flat`, PURE-gated; sole legacy feeder processTrait per
+     the writer census) serves the flipped `getBaseGreatPeopleRate` via `scGpNational`; the accumulator rides
+     only the `*Legacy` oracle. Attribution pair `gpNationalCasc/Leg` on the wellbeing scalars emit.
+  4. ✅ **`isPower` + `isGovernmentCenter` — RULED same day (see Rulings #4 above):** power machinery KEEP
+     wholesale (revisit at the later power pass); the government-center counter KEEP until the Gate-3
+     attributes lane wires. Both predicate reads are sanctioned (cited at the eval sites); neither gates
+     this cutover's demolition.
+  Confirm-coverage riders (structurally raw, not named in an explicit ruling): `m_aiTradeYield` (the
+  sanctioned live trade input) and the `m_aBuildingHappy/HealthChange` E-class stores.
+  **THE ADVERSARIAL SECOND PASS RAN (2026-07-05, same day — six angles, none re-deriving pass-1's grep;
+  the discriminator validated by a live contrast pair). It found what pass-1 missed:**
+  5. **`getFreeSpecialistCount` (4 cascade sites) — ⚖ RULED SANCTIONED as the OUTPUT SEAM (owner
+     2026-07-05, the two-part split now in [modifier.md §6](../../specs/modifier.md)):** free specialists
+     are (1) AMOUNTS — the cascade's summed `freeSpecialists` deposits (curated: 200 buildings / 12
+     civics / 36 traits) → (2) engine PLACEMENT within its parameters (existing infrastructure) → (3)
+     consumers deal with the placement's OUTPUT — so the four count reads are the sanctioned seam, the
+     promotion-SPA pattern. ⚠ **The AMOUNT computer WIRED 2026-07-05, but the live turn found the `any`-bucket
+     COMPOSITION WRONG (not yet flip-ready):** `fsAmountAny` sums city + empire (civics+traits) + area, but
+     legacy `getFreeSpecialist()`/`m_iFreeSpecialist` (the `any` total) is fed by **BUILDINGS ONLY**
+     (`processBuilding` `changeFreeSpecialist`, `CvCity.cpp:4744`) — civic/trait free specialists feed the
+     **TYPED** counts (`m_paiFreeSpecialistCount`), NOT the `any` bucket. So `fsAny` Casc ≈ 2× Leg (the
+     civic/trait over-count). ⛔ Fix: the cascade `any` bucket must mirror legacy's split — buildings' untyped
+     free specs → `any`; civic/trait grants → their typed/assigned counts per the engine placement. Wired-only
+     today (no live effect). `fsType*`/`fsAny` endpoint pairs stand for the re-verify. The placement-FEED swap
+     lands AT the demolition row once the composition matches.
+  6. **`getLandmarkHappiness` — ⚖ RULED KEEP (owner 2026-07-05): *"we just leave the existing
+     implementation in the game — it is just straight up state derived from the plot in question."***
+     Landmarks are diffuse; the mechanic keeps its engine implementation (the civic-fed amount × the plot
+     landmark state), the cascade read is SANCTIONED, and modifier.md §2b's raw-input classing STANDS. The
+     test save has no landmarks, so it is not integral to the flip; the data modelling of landmarks is a
+     POST-MIGRATION pass (**ticket #448**). NOT a wellbeing extraction member — the class stays at five.
+  7. **⏳ The civic-parameter unhappiness cluster** — `getForeignUnhappyPercent` / `getCityOverLimitUnhappy` /
+     `getCityLimit`: processCivics-fed accumulators consumed as unhappiness FORMULA PARAMETERS (not flat
+     happiness). Which lane demolishes them (the happiness-channel cut vs a civic-policy lane) is an
+     **owner classification, pending**. (The validating contrast: `getCivicPercentAnger` computes on-read
+     from raw adoption — LEGITIMATE-RAW.)
+  8. Enumerated-for-transparency (SANCTIONED, owner-ruled scope boundary): the flipped promotion gate's
+     `isPromotionValidLegacy(...,true)` conjunct — the ruled cascade seam ("the scope of the cascade ends
+     when we have determined what promotions are available"); the ridden legacy reads raw options/flags only.
+  All six pass-2 angles otherwise clean (header-inline 0 reads; flipped gates raw-only; area/game/plot
+  indirect raw; EvalCtx wiring raw + the three DEC-cited cascade sets; HTTP boundary honest; leaf functions
+  fully classified).
 - **The grants apply-loop** ([grants-machine.md](grants-machine.md) increment 5). The grants machine *resolves* +
   *shadows* today; before the grants cut it must **apply** — the per-turn recurring (spawn / heal / freePromotions) +
   the trigger grants — replacing legacy's application.
