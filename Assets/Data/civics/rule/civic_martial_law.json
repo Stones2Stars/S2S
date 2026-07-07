@@ -46,9 +46,6 @@
  },
  "happiness": {
   "empire": {
-   "perMilitaryUnit": {
-    "perMilitaryUnit": 1
-   },
    "cities": {
     "flat": -1,
     "max": "TARGET_NUM_CITIES",

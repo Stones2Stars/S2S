@@ -2,8 +2,13 @@
  "type": "CIVIC_SURVIVAL",
  "happiness": {
   "empire": {
-   "perMilitaryUnit": {
-    "perMilitaryUnit": 1
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "unit": "IS_MILITARY"
+     }
+    ]
    },
    "buildings": {
     "BUILDING_SACRIFICIAL_ALTAR": {

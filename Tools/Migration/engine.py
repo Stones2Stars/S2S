@@ -43,8 +43,6 @@ def unit_of(tag):
     t = tag.lower()
     if "perpop" in t or "perpopulation" in t:
         return "perPopulation"
-    if "permilitary" in t:
-        return "perMilitaryUnit"
     if "percent" in t or "modifier" in t:
         return "percent"
     return "flat"

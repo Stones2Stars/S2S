@@ -86,7 +86,6 @@ SCALAR = {
     "iForeignerUnhappyPercent":        ("happiness", "empire", "foreignerUnhappy","percent"),
     "iTaxRateUnhappiness":             ("happiness", "empire", "taxRate",      "percent"),
     "iCivicPercentAnger":              ("happiness", "empire", "civicAnger",   "percent"),
-    "iHappyPerMilitaryUnit":           ("happiness", "empire", "perMilitaryUnit", "perMilitaryUnit"),
     "iExtraHealth":                    ("health", "empire", "", "flat"),
     "iPopulationgrowthratepercentage": ("growth", "empire", "", "percent"),
     "iWarWearinessModifier":           ("diplomacy", "empire", "warWeariness", "percent"),
@@ -306,6 +305,13 @@ def curate(typ, rec, store):
             if v not in (None, 0, 0.0):   # happiness in the empire's LARGEST cities -> ranked `cities` target (top-N by
                 node = fam.setdefault("happiness", {}).setdefault("empire", {}).setdefault("cities", {})  # population),
                 node["flat"] = v; node["max"] = "TARGET_NUM_CITIES"; node["orderedByDescending"] = "CITY_SIZE"  # json §3.3, retires the bespoke `largestCity` member ([DEC-conditions-are-predicates])
+        elif tag == "iHappyPerMilitaryUnit":
+            v = _num(t)
+            if v not in (None, 0, 0.0):   # per stationed MILITARY unit -> the SPEC form: a `unit: IS_MILITARY`-
+                node = fam.setdefault("happiness", {}).setdefault("empire", {}).setdefault("cities", {})  # qualified
+                entry = OrderedDict([("value", v), ("unit", "IS_MILITARY")])   # entry on the `cities` target (json
+                cur = node.get("flat")                                         # §3.7; retires the BANNED perMilitaryUnit
+                node["flat"] = [entry] if cur is None else (cur + [entry] if isinstance(cur, list) else [cur, entry])  # member, DEC-conditions-are-predicates)
         elif tag in SCALAR_COND:
             v = _num(t)
             if v not in (None, 0, 0.0):

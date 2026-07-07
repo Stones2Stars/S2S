@@ -243,8 +243,13 @@
      "flat": 1
     }
    },
-   "perMilitaryUnit": {
-    "perMilitaryUnit": 1
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "unit": "IS_MILITARY"
+     }
+    ]
    }
   }
  },
