@@ -30,8 +30,10 @@ parsed into per-PROPERTY_* families). OWNER RULINGS (2026-06-14) drive the struc
     store into `enables.traits` on the prereq trait / tech (registered in store.PREREQ_FIELDS) -> DROPPED here.
   * DisallowedTraitTypes -> a same-tier `excludes` set (author one end; the symmetric reverse is derived into
     the cold-path reverse index). NOT the #429 SPATIAL sideways — a structural mutual-exclusion.
-  * OnGameOptions / NotOnGameOptions -> a `loadPrune` gate (the reader prunes at load; bulk are
-    GAMEOPTION_LEADER_COMPLEX_TRAITS — "this trait only exists when complex traits are on").
+  * OnGameOptions / NotOnGameOptions -> DROPPED (owner ruling 2026-07-08): every authoring was
+    GAMEOPTION_LEADER_COMPLEX_TRAITS restating the simple/complex FOLDER split, which IS the selection
+    mechanism (traits/simple/ vs traits/complex/, option-selected at the composition root). The `loadPrune`
+    section it fed was a curator-era invention, retired whole (superseded-ideas.md).
   * PromotionLine + LinePriority -> a `succession` block (the developing-leaders line ordering); the line's own
     PrereqTech is a DERIVED tech enabler owned by PromotionLineInfo (store), not re-authored here.
   * Categories -> DROP (dead: zero C++ readers; not authored in either trait XML; civic drops it too).
@@ -401,7 +403,7 @@ def is_complex(typ, rec, complex_ids):
 
 def curate(typ, rec, store):
     text, fam, props, policies, grants, art_blocks, identity, ai = {}, {}, {}, {}, {}, {}, {}, {}
-    excludes, load_on, load_not, succession = [], [], [], {}
+    excludes, succession = [], {}
     gp_unit, gp_change = None, None
     bonus_happy = OrderedDict()
     free_spec_wonder = []            # FreeSpecialistPer* -> freeSpecialists.empire.any per-wonder deposits (below)
@@ -485,10 +487,8 @@ def curate(typ, rec, store):
                 identity[IDENTITY_FLAGS[tag]] = True
         elif tag == "DisallowedTraitTypes":
             excludes = _type_list(c)
-        elif tag == "OnGameOptions":
-            load_on = _type_list(c)
-        elif tag == "NotOnGameOptions":
-            load_not = _type_list(c)
+        elif tag in ("OnGameOptions", "NotOnGameOptions"):
+            pass   # DROPPED (owner 2026-07-08): restates the simple/complex folder split -- see the docstring
         elif tag == "PromotionLine":
             if t and t != "NONE":
                 succession["promotionLine"] = t
@@ -601,13 +601,6 @@ def curate(typ, rec, store):
         out["grants"] = grants
     if succession:
         out["succession"] = succession
-    if load_on or load_not:
-        lp = OrderedDict()
-        if load_on:
-            lp["onGameOptions"] = sorted(load_on)
-        if load_not:
-            lp["notOnGameOptions"] = sorted(load_not)
-        out["loadPrune"] = lp
     if ai:
         out["ai"] = ai
     cc.emit_art(out, art_blocks)
@@ -636,11 +629,11 @@ def main():
     nc = sum(1 for f in folders.values() if f == "complex")
     print("TraitInfo curated: %d  (simple=%d, complex=%d)" % (len(results), len(results) - nc, nc))
     STRUCT = {"type", "description", "civilopedia", "help", "strategy", "enables", "replacedBy", "excludes",
-              "policies", "grants", "succession", "loadPrune", "ai", "ui", "world", "sound", "identity"}
+              "policies", "grants", "succession", "ai", "ui", "world", "sound", "identity"}
     fams = sorted({k for o in results.values() for k in o if k not in STRUCT and not k.startswith("PROPERTY_")})
     has = lambda k: sum(1 for o in results.values() if k in o)
     print("  families seen: %s" % ", ".join(fams))
-    for k in ("enables", "replacedBy", "excludes", "succession", "loadPrune", "grants", "policies", "ai"):
+    for k in ("enables", "replacedBy", "excludes", "succession", "grants", "policies", "ai"):
         print("  with %-11s: %d" % (k, has(k)))
     if all_leftover:
         print("  !! leftover-to-identity (review): %s" % ", ".join(sorted(all_leftover)))

@@ -4,12 +4,12 @@
   "build": {
    "all": [
     "BUILDING_MIND_CONTROL_CENTER",
-    "TECH_MIND_UPLOADING",
-    "GAMEOPTION_ADVANCED_NUKES"
+    "TECH_MIND_UPLOADING"
    ],
    "disabled": "NO_NUKES"
   }
  },
+ "enabled": "GAMEOPTION_ADVANCED_NUKES",
  "allowed": {
   "empire": 5
  },

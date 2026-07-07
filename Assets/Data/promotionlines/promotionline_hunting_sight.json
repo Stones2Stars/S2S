@@ -1,7 +1,7 @@
 {
  "type": "PROMOTIONLINE_HUNTING_SIGHT",
- "loadPrune": {
-  "onGameOptions": [
+ "enabled": {
+  "all": [
    "GAMEOPTION_COMBAT_HIDE_SEEK",
    "GAMEOPTION_COMBAT_SIZE_MATTERS"
   ]

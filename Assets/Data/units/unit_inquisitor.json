@@ -5,11 +5,11 @@
    "all": [
     "STATE_RELIGION_IN_CITY",
     "TECH_FUNDAMENTALISM",
-    "GAMEOPTION_RELIGION_INQUISITIONS",
     "CIVIC_INQUISITORIAL"
    ]
   }
  },
+ "enabled": "GAMEOPTION_RELIGION_INQUISITIONS",
  "costs": {
   "empire": {
    "perInstance": {

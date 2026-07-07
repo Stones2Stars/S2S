@@ -18,11 +18,7 @@
  "promotionLine": {
   "PROMOTIONLINE_TRANSPORT_TROOPS": 1
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_SIZE_MATTERS"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/TransportTroops1.dds"

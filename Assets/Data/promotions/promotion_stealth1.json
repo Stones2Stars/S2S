@@ -13,11 +13,7 @@
  "promotionLine": {
   "PROMOTIONLINE_STEALTH": 1
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_WITHOUT_WARNING"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_WITHOUT_WARNING",
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/roadwar1.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,4,11"

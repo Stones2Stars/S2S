@@ -1,10 +1,6 @@
 {
  "type": "PROMOTIONLINE_KEEN_EARS",
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_HIDE_SEEK"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/KeenEars1Promotion.dds"

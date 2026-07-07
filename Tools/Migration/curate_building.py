@@ -40,7 +40,7 @@ from collections import OrderedDict
 
 import engine
 import boolexpr
-from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, descale100, fold_text_to_identity
+from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, descale100, fold_text_to_identity, gate_entity
 from store import Store, REPO
 
 # ---- scalar/percent modifier families: tag -> (family, scope, member|None, unit). Corrected scopes from the
@@ -1098,7 +1098,6 @@ def requires_building(rec, store):
         if op_dormant:
             operate["dormant"] = op_dormant   # dormant while ANY listed is present (the reversible-disable mirror)
         out["operate"] = operate
-    # loadPrune (game options) lives in its own section, but author it here for now under requires for visibility.
     return out or None
 
 
@@ -1159,17 +1158,12 @@ def _amount_buildings(rec):
     return out
 
 
-def loadprune_building(rec):
-    out = OrderedDict()
+def gate_building(rec):
+    """The entity-level enabled/disabled option gate (owner 2026-07-08; zero buildings author the legacy tags
+    today -- kept so a future authoring lands in the canonical form, never a bespoke section)."""
     on = _typelist(rec, "PrereqGameOption") or ([_txt(rec, "PrereqGameOption")] if _txt(rec, "PrereqGameOption") else [])
     noton = _typelist(rec, "NotGameOption") or ([_txt(rec, "NotGameOption")] if _txt(rec, "NotGameOption") else [])
-    on = [x for x in on if x]
-    noton = [x for x in noton if x]
-    if on:
-        out["onGameOptions"] = on
-    if noton:
-        out["notOnGameOptions"] = noton
-    return out or None
+    return [x for x in on if x], [x for x in noton if x]
 
 
 def _set_fam(fams, family, scope, member, unit, value):
@@ -1214,6 +1208,24 @@ def _gold_cost_to_maintenance(fams):
     if not gold:
         del fams["gold"]
     _set_fam(fams, "maintenance", "city", None, "flat", cost)
+
+
+# Reserved (non-family) top-level sections; everything else a curated building carries is a modifier family
+# (json.md §1). Used to lift a relic shell's modifier tree into a source building's `whenObsolete`.
+_RESERVED_TOPLEVEL = frozenset((
+    "type", "identity", "cost", "ui", "world", "sound", "ai",
+    "enables", "obsoletes", "obsoletedBy", "replaces", "disables",
+    "requires", "allowed", "grants", "provides",
+    "skills", "tags", "state", "attributes", "capabilities",
+    "shrine", "headquarters", "enabled", "disabled", "whenObsolete",
+    "description", "help", "civilopedia", "strategy", "adjective",
+    "shortDescription", "quote", "message",
+))
+
+
+def _families_of(building_json):
+    # the modifier-family sections of a curated building (reserved sections dropped) -- json.md §1.
+    return OrderedDict((k, v) for k, v in building_json.items() if k not in _RESERVED_TOPLEVEL)
 
 
 def curate(typ, rec, store):
@@ -1262,8 +1274,18 @@ def curate(typ, rec, store):
     if _ot:
         obsoleted_by["techs"] = [_ot]
     _otb = _txt(rec, "ObsoletesToBuilding")
+    when_obsolete = None
     if _otb:
-        obsoleted_by["buildings"] = [_otb]
+        _otb_rec = store.table("BuildingInfo").get(_otb)
+        # A NON-CONSTRUCTIBLE ObsoletesToBuilding target is a RELIC SHELL (the 6 wonder relics; owner 2026-07-07):
+        # the source keeps a REDUCED output once obsolete, so the relic's OWN modifier tree becomes the source's
+        # `whenObsolete` (a separate full modifier tree, json §4.2 / enabler §2) -- NOT `obsoletedBy.buildings`
+        # (a relic is not a buildable superseder). A CONSTRUCTIBLE target is a real upgrade tier and stays the
+        # obsoletedBy supersession edge. (Non-constructible == the curator's iCost -1/absent gate, line ~1318.)
+        if _otb_rec is not None and _int(_otb_rec, "iCost") in (None, -1):
+            when_obsolete = _families_of(curate(_otb, _otb_rec, store)) or None
+        else:
+            obsoleted_by["buildings"] = [_otb]
     # SpecialBuilding GROUP obsoletion inherited onto the MEMBER, target-side (owner 2026-06-22: put the group's
     # ObsoleteTech on the monastery itself; double-representation with the store's source-side _inherit_group_obsoletes
     # is fine). The target-side cascade reads the member's obsoletedBy, not the tech's obsoletes, so author it here —
@@ -1286,7 +1308,7 @@ def curate(typ, rec, store):
         provides["bonuses"] = _pb
     requires = requires_building(rec, store)
     allowed = allowed_building(rec)
-    loadprune = loadprune_building(rec)
+    gate_on, gate_off = gate_building(rec)
     # EnabledCivilizationTypes -> identity whitelist (NPC-only gate; dry-calc ignores it; remodel post-rework).
     _civs = _typelist_struct(rec, "EnabledCivilizationTypes", "CivilizationType")
     if _civs:
@@ -1363,6 +1385,8 @@ def curate(typ, rec, store):
         out["enables"] = OrderedDict((k, enables[k]) for k in sorted(enables))
     if obsoleted_by:
         out["obsoletedBy"] = OrderedDict((k, obsoleted_by[k]) for k in sorted(obsoleted_by))
+    if when_obsolete:
+        out["whenObsolete"] = when_obsolete   # the relic shell's modifier tree (json §4.2) -- fires for the 6 wonder relics
     if requires:
         out["requires"] = requires
     if allowed:
@@ -1381,8 +1405,7 @@ def curate(typ, rec, store):
         out["cost"] = cost
     if ai:
         out["ai"] = ai
-    if loadprune:
-        out["loadPrune"] = loadprune
+    gate_entity(out, gate_on, gate_off)
     if attributes:
         out["attributes"] = attributes           # BUILDING held city-scope intrinsics (json §8)
     if capabilities:
@@ -1467,7 +1490,7 @@ HANDLED = (set(SCALAR_FAMILIES) | set(YIELD_FAMILIES) | set(CAP_ATTRIBUTES) | se
 PROPERTY_INFOS_XML = os.path.join(REPO, "Assets", "XML", "GameInfo", "CIV4PropertyInfos.xml")
 # top-level reserved (non-family) keys -- everything else on a band object is a modifier family to increment.
 RESERVED_NONFAMILY = {"type", "description", "civilopedia", "help", "enables", "obsoletedBy", "replacedBy", "requires",
-                      "allowed", "provides", "grants", "cost", "ai", "loadPrune", "ui", "world", "sound", "identity",
+                      "allowed", "provides", "grants", "cost", "ai", "enabled", "disabled", "ui", "world", "sound", "identity",
                       "attributes", "capabilities", "shrine", "headquarters"}
 
 
@@ -1619,11 +1642,11 @@ def main():
 
     has = lambda k: sum(1 for o in results.values() if k in o)
     STRUCT = {"type", "description", "civilopedia", "help", "enables", "obsoletes", "replaces", "requires",
-              "allowed", "provides", "cost", "ai", "loadPrune", "ui", "world", "sound", "identity",
+              "allowed", "provides", "cost", "ai", "enabled", "disabled", "ui", "world", "sound", "identity",
               "attributes", "capabilities", "shrine", "headquarters", "grants", "obsoletedBy"}
     seen = sorted({f for o in results.values() for f in o if f not in STRUCT})
     print("BuildingInfo curated: %d" % n)
-    for k in ("enables", "obsoletes", "replaces", "requires", "allowed", "cost", "ai", "loadPrune", "identity"):
+    for k in ("enables", "obsoletes", "replaces", "requires", "allowed", "cost", "ai", "identity"):
         print("  with %-9s: %d" % (k, has(k)))
     print("  families seen: %s" % ", ".join(seen))
     print("SpecialBuildingInfo curated: %d  (with cap: %d)"

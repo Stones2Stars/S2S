@@ -1,10 +1,6 @@
 {
  "type": "UNITCOMBAT_SIZE_MEDIUM",
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_SIZE_MATTERS"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/size_medium.dds"

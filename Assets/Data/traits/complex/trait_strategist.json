@@ -370,11 +370,6 @@
  "succession": {
   "promotionLine": "PROMOTIONLINE_STRATEGIST"
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
-  ]
- },
  "ai": {
   "flavours": [
    {

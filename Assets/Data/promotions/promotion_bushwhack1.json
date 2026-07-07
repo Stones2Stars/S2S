@@ -13,11 +13,7 @@
  "promotionLine": {
   "PROMOTIONLINE_BUSHWHACK": 1
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_WITHOUT_WARNING"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_WITHOUT_WARNING",
  "ui": {
   "art": {
    "icon": ",Art/Buttons/Promotions/Bushwhack1Promotion.dds"

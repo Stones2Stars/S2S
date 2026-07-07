@@ -22,6 +22,21 @@ from store import Store, REPO
 MAPDIR = os.path.join(os.path.dirname(__file__), "mapping")
 
 
+def gate_entity(out, on_options, off_options):
+    """The ENTITY-LEVEL `enabled`/`disabled` applicability gate (json.md §3.9 applied at entity level; owner ruling
+    2026-07-08: `enabled: GAMEOPTION_X` "is literally what it is supposed to be" -- the retired `loadPrune`
+    invention's replacement, superseded-ideas.md). One shared emitter so every curator authors the same shape:
+      on_options  -- legacy OnGameOptions / PrereqGameOption: ALL listed options must be ON  -> `enabled`
+      off_options -- legacy NotOnGameOptions / NotGameOption: ANY listed option ON suppresses -> `disabled`
+    A single option authors as the bare condition string; several as the {all}/{anyOf} tree (json.md §3.4)."""
+    on_options = [x for x in (on_options or []) if x and x != "NONE"]
+    off_options = [x for x in (off_options or []) if x and x != "NONE"]
+    if on_options:
+        out["enabled"] = on_options[0] if len(on_options) == 1 else OrderedDict([("all", list(on_options))])
+    if off_options:
+        out["disabled"] = off_options[0] if len(off_options) == 1 else OrderedDict([("anyOf", list(off_options))])
+
+
 def descale100(v):
     """The curator's ONE-TIME x100 -> HUMAN-READABLE de-scale (cascade-fixed-point.md §0/§1.1, owner-LOCKED).
     A legacy XML value stored x100 (a `get...100()` accessor / a `Centi*` or `*100` field that flows into a x100

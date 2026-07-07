@@ -8,11 +8,7 @@
  "promotionLine": {
   "PROMOTIONLINE_BUILD_UP_TERRITORIAL_VIGILANCE": 5
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_HIDE_SEEK"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/TerritorialVigilance3BuildUp.dds"

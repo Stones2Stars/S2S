@@ -10,11 +10,7 @@
  "promotionLine": {
   "PROMOTIONLINE_STING": 4
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_SIZE_MATTERS"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/Sting4Promotion.dds"

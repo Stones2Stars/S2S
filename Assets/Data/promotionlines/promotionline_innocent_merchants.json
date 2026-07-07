@@ -1,10 +1,6 @@
 {
  "type": "PROMOTIONLINE_INNOCENT_MERCHANTS",
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_HIDE_SEEK"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/InnocentMerchants1Promotion.dds"

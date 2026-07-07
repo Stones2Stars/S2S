@@ -4,7 +4,6 @@
   "build": {
    "all": [
     "TECH_FUSION",
-    "GAMEOPTION_ADVANCED_NUKES",
     {
      "any": [
       "BUILDING_D_T_FUSION_POWER_PLANT",
@@ -18,6 +17,7 @@
    "disabled": "NO_NUKES"
   }
  },
+ "enabled": "GAMEOPTION_ADVANCED_NUKES",
  "allowed": {
   "empire": 15
  },

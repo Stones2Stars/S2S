@@ -504,11 +504,6 @@
   "promotionLine": "PROMOTIONLINE_LAWFUL",
   "priority": 1
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
-  ]
- },
  "ai": {
   "flavours": [
    {

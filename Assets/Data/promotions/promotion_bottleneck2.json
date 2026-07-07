@@ -10,11 +10,7 @@
  "promotionLine": {
   "PROMOTIONLINE_BOTTLENECK": 2
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_SIZE_MATTERS"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/Bottleneck2Promotion.dds"

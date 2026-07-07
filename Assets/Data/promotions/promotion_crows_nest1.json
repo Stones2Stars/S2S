@@ -9,11 +9,7 @@
  "promotionLine": {
   "PROMOTIONLINE_CROWS_NEST": 1
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_HIDE_SEEK"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/CrowsNest1Promotion.dds"

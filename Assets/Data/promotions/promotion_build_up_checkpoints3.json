@@ -8,11 +8,7 @@
  "promotionLine": {
   "PROMOTIONLINE_BUILD_UP_CHECKPOINTS": 5
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_HIDE_SEEK"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/Checkpoints3BuildUp.dds"

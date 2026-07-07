@@ -16,11 +16,7 @@
  "promotionLine": {
   "PROMOTIONLINE_BUILD_UP_LIE_IN_WAIT": 1
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_WITHOUT_WARNING"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_WITHOUT_WARNING",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/LieInWait1Buildup.dds"

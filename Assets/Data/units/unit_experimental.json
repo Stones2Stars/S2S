@@ -8,12 +8,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_SUPERSTRONG_ALLOYS",
-    "GAMEOPTION_ADVANCED_NUKES"
+    "TECH_SUPERSTRONG_ALLOYS"
    ],
    "disabled": "NO_NUKES"
   }
  },
+ "enabled": "GAMEOPTION_ADVANCED_NUKES",
  "allowed": {
   "empire": 1
  },

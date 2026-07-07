@@ -90,11 +90,6 @@
   "promotionLine": "PROMOTIONLINE_PROLIFIC",
   "priority": 2
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
-  ]
- },
  "ai": {
   "flavours": [
    {

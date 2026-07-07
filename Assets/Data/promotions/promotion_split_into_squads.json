@@ -15,11 +15,7 @@
    "UNITCOMBAT_GROUP_COMPANY"
   ]
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_SIZE_MATTERS"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
  "ui": {
   "art": {
    "icon": "art/Buttons/UnitCombatClasses/Group3UnitCombat.fw.dds"

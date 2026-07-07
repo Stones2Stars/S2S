@@ -15,11 +15,7 @@
    "UNITCOMBAT_QUALITY_INFERIOR"
   ]
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_SIZE_MATTERS"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
  "ui": {
   "art": {
    "icon": "art/Buttons/UnitCombatClasses/Quality3UnitCombat.fw.dds"

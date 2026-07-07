@@ -1,10 +1,6 @@
 {
  "type": "PROMOTION_BARBARIAN_HUNTER",
- "loadPrune": {
-  "notOnGameOptions": [
-   "GAMEOPTION_UNIT_INFINITE_XP"
-  ]
- },
+ "disabled": "GAMEOPTION_UNIT_INFINITE_XP",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Promotions/powerattack.dds"

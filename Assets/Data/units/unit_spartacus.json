@@ -1,12 +1,6 @@
 {
  "type": "UNIT_SPARTACUS",
- "requires": {
-  "build": {
-   "noneOf": [
-    "GAMEOPTION_NO_EVENTS"
-   ]
-  }
- },
+ "disabled": "GAMEOPTION_NO_EVENTS",
  "allowed": {
   "world": 1
  },

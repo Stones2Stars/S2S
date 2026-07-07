@@ -18,11 +18,7 @@
  "promotionLine": {
   "PROMOTIONLINE_TRANSPORT_FIGHTERS": 2
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_SIZE_MATTERS"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
  "ui": {
   "art": {
    "icon": "art/Buttons/Promotions/TransportFighters2.dds"

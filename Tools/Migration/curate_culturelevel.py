@@ -13,7 +13,7 @@ light-four-classification.json) shows:
 - everything else is NON-ADDITIVE per-level intrinsic -> `identity` (section 3: caps/overrides are not cascade
   families): `iCityRadius` (REPLACE/override workable radius), the 4 wonder CAPS (max world/team/national[/OCC]).
 - `PrereqGameOption` -> a load-stable per-game availability gate (also computes the runtime active level,
-  CvGlobals.cpp:3587) -> `loadPrune.onGameOptions` (the enabler-spec §6/§12 auxiliary section — named as its own
+  CvGlobals.cpp:3587) -> the entity-level `enabled` gate (owner ruling 2026-07-08 — named as its own
   section, NOT parked in identity; 2026-06-15 retrofit).
 - `m_iLevel` is RUNTIME-derived (no XML tag) -> not emitted. `ReplacementID`/`ReplacementCondition` are the
   CvInfoReplacements conditional-whole-Info edge (handled by store): the base CULTURELEVEL_POOR carries
@@ -39,7 +39,7 @@ import os
 from collections import OrderedDict
 
 import engine
-from curate_common import fold_text_to_identity
+from curate_common import fold_text_to_identity, gate_entity
 from store import Store, REPO
 
 # The per-speed culture scale IS GameSpeed.iSpeedPercent (verified identical to the XML SpeedThresholds, and the
@@ -126,8 +126,8 @@ def curate(typ, rec, store):
         # (the floor clamp some buildings raise above 0, e.g. >=25%) is authored at the Building pass (iMinDefense).
         out["defense"] = {"city": {"amount": {"percent": int(cdm)}}}
     pgo = engine.text(rec.find("PrereqGameOption"))
-    if pgo and pgo != "NONE":                                # load-stable game-option gate -> loadPrune (§6/§12)
-        out["loadPrune"] = OrderedDict([("onGameOptions", [pgo])])
+    if pgo and pgo != "NONE":                                # entity-level enabled gate (owner 2026-07-08)
+        gate_entity(out, [pgo], None)
     rb = _replaced_by(typ, store)
     if rb:
         out["replacedBy"] = rb

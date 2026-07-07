@@ -100,11 +100,6 @@
  "succession": {
   "promotionLine": "PROMOTIONLINE_MINIMALIST"
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
-  ]
- },
  "ai": {
   "flavours": [
    {

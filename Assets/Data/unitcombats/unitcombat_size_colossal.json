@@ -19,11 +19,7 @@
    "INVISIBLE_SIZE": 5
   }
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_SIZE_MATTERS"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/size_colossal.dds"

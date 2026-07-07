@@ -4,12 +4,12 @@
   "build": {
    "all": [
     "BUILDING_BIOLOGICAL_WARFARE_LAB",
-    "TECH_GENE_MANIPULATION",
-    "GAMEOPTION_ADVANCED_NUKES"
+    "TECH_GENE_MANIPULATION"
    ],
    "disabled": "NO_NUKES"
   }
  },
+ "enabled": "GAMEOPTION_ADVANCED_NUKES",
  "range": {
   "unit": {
    "flat": -1

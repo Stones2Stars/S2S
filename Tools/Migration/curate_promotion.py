@@ -24,7 +24,8 @@ PromotionLine+iLinePriority -> so PromotionPrereq is DROPPED (line+priority+tech
 applicability/plot/state gates (UnitCombats/NotOnDomain/NotOnUnitCombat, Prereq{Terrain,Feature,Improvement,
 PlotBonus,LocalBuilding}, StateReligion/Era/Level, cargo/rBombard/normInvisible prereqs) are PARKED in identity,
 deferred to the unit-plane enabling pass (as PromotionLine #27 parked its gates — the broader enabling picture
-is still being shaped, owner). OnGameOptions/NotOnGameOptions -> loadPrune.
+is still being shaped, owner). OnGameOptions/NotOnGameOptions -> the ENTITY-LEVEL `enabled`/`disabled` gate
+(owner ruling 2026-07-08 -- `enabled: GAMEOPTION_X`; the retired `loadPrune` invention's replacement).
 
 grants: SubCombatChangeTypes (confers a unitcombat), RemovesUnitCombatTypes, FreetoUnitCombats, AddsBuildTypes,
 setSpecialUnit -> things the promotion confers on the unit.
@@ -49,7 +50,7 @@ import os
 from collections import OrderedDict
 
 import engine
-from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, descale100, fold_text_to_identity
+from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, descale100, fold_text_to_identity, gate_entity
 from store import Store, REPO
 
 # ---- scalar deposits: tag -> (family, member|None, unit). All at `unit` scope (self-accumulator, §5). ----
@@ -293,7 +294,7 @@ def curate(typ, rec, store):
     caps = OrderedDict()          # capabilities group
     vision = OrderedDict()        # vision block (range + LOS resolver)
     grants = OrderedDict()
-    loadprune = OrderedDict()
+    gate_on, gate_off = [], []   # entity-level enabled/disabled (owner 2026-07-08)
     identity = OrderedDict()
     art_blocks = OrderedDict()
 
@@ -451,13 +452,11 @@ def curate(typ, rec, store):
         if weights:
             ai["unitCombatWeights"] = weights
 
-    # --- loadPrune (game options) ---
-    for tag, key in (("OnGameOptions", "onGameOptions"), ("NotOnGameOptions", "notOnGameOptions")):
+    # --- entity-level enabled/disabled gate (game options; owner ruling 2026-07-08) ---
+    for tag, dst in (("OnGameOptions", gate_on), ("NotOnGameOptions", gate_off)):
         node = rec.find(tag)
         if node is not None:
-            lst = _simple_list(node)
-            if lst:
-                loadprune[key] = lst
+            dst.extend(_simple_list(node) or [])
 
     # --- promotionLine: line membership as a {LINE: rank} OBJECT (owner 2026-06-16). iLinePriority is a RANK
     # within the line (COMBAT1=1, COMBAT2=2, ...), not a priority. The OBJECT (keyed by line) is accumulator-
@@ -499,7 +498,7 @@ def curate(typ, rec, store):
     put_art(art_blocks, "Button", engine.text(rec.find("Button")))
     put_art(art_blocks, "Sound", engine.text(rec.find("Sound")))
 
-    # --- assemble (reserved order: type/text, requires-less, families, capabilities, vision, grants, loadPrune, art, identity) ---
+    # --- assemble (reserved order: type/text, requires-less, families, capabilities, vision, grants, enabled/disabled, art, identity) ---
     obsoletes = store.obsoletes_of(typ)
     if obsoletes:
         out["obsoletes"] = OrderedDict((k, obsoletes[k]) for k in sorted(obsoletes))
@@ -516,8 +515,7 @@ def curate(typ, rec, store):
         out["grants"] = grants
     if ai:
         out["ai"] = ai
-    if loadprune:
-        out["loadPrune"] = loadprune
+    gate_entity(out, gate_on, gate_off)
     emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
@@ -554,10 +552,10 @@ def main():
         print("COVERAGE: all XML tags handled.")
     has = lambda k: sum(1 for o in results.values() if k in o)
     STRUCT = {"type", "description", "help", "obsoletes", "skills", "vision", "promotionLine",
-              "grants", "ai", "loadPrune", "ui", "world", "sound", "identity"}
+              "grants", "ai", "enabled", "disabled", "ui", "world", "sound", "identity"}
     seen_fams = sorted({f for o in results.values() for f in o if f not in STRUCT})
     print("PromotionInfo curated: %d" % n)
-    for k in ("obsoletes", "skills", "vision", "grants", "loadPrune", "identity"):
+    for k in ("obsoletes", "skills", "vision", "grants", "identity"):
         print("  with %-12s: %d" % (k, has(k)))
     print("  families seen: %s" % ", ".join(seen_fams))
     if args.sample is not None:

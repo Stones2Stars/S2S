@@ -17,11 +17,7 @@
    }
   }
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_CULTURE_REALISTIC_SPREAD"
-  ]
- },
+ "enabled": "GAMEOPTION_CULTURE_REALISTIC_SPREAD",
  "identity": {
   "description": "TXT_KEY_CULTURELEVEL_ELEGANT",
   "cityRadius": 2,

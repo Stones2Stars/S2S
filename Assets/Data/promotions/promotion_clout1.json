@@ -15,11 +15,7 @@
  "promotionLine": {
   "PROMOTIONLINE_CLOUT": 1
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_HIDE_SEEK"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/Clout1Promotion.dds"

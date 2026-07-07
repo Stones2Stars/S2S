@@ -1,10 +1,6 @@
 {
  "type": "PROMOTIONLINE_BUILD_UP_CONCEALMENT",
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_HIDE_SEEK"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
  "buildUp": {
   "active": true
  },

@@ -4,11 +4,7 @@
   "animalIgnoresBorders": false,
   "defenseOnly": false
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_ANIMAL_RECKLESS"
-  ]
- },
+ "enabled": "GAMEOPTION_ANIMAL_RECKLESS",
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/nature_pounce.dds"

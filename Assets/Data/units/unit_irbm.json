@@ -8,12 +8,12 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
-    "TECH_GUIDED_WEAPONS",
-    "GAMEOPTION_ADVANCED_NUKES"
+    "TECH_GUIDED_WEAPONS"
    ],
    "disabled": "NO_NUKES"
   }
  },
+ "enabled": "GAMEOPTION_ADVANCED_NUKES",
  "range": {
   "unit": {
    "flat": 16

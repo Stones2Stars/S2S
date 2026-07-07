@@ -22,9 +22,9 @@ a module's object IS its on/off signal — active iff the object EXISTS and is N
   is enriched with the built-up aspect at the Promotion pass (#28); `active` is the interim marker until then
   (it then becomes redundant under the presence convention and can be dropped). Buildups have NO property (owner).
 
-loadPrune.onGameOptions <- OnGameOptions (load-stable game-option gate; WB toggling enable/disable is the
+entity-level `enabled` <- OnGameOptions (game-option gate, owner ruling 2026-07-08; WB toggling enable/disable is the
 mechanism, engine removes disabled promotions, owner — enabler-spec §6/§10; CultureLevel/Trait precedent).
-NotOnGameOptions -> loadPrune.notOnGameOptions (0 populated).
+NotOnGameOptions -> the entity-level `disabled` (0 populated).
 
 DROPPED ENTITY (owner 2026-06-16): PROMOTIONLINE_AFFLICTION_DISEASE_COMMON_COLD — a STONE-DEAD vestige of the
 purged Outbreaks-and-Afflictions mod (orphaned: 0 promotions/buildings/traits reference it; only its GameText
@@ -48,7 +48,7 @@ import os
 from collections import OrderedDict
 
 import engine
-from curate_common import put_art, emit_art, fold_text_to_identity
+from curate_common import put_art, emit_art, fold_text_to_identity, gate_entity
 from store import Store, REPO
 
 
@@ -84,16 +84,8 @@ def curate(typ, rec):
         t = _txt(rec, tag)
         if t:
             out[key] = t
-    # loadPrune — load-stable game-option availability gate (WB toggle enable/disable).
-    lp = OrderedDict()
-    on = _list(rec, "OnGameOptions")
-    if on:
-        lp["onGameOptions"] = on
-    noton = _list(rec, "NotOnGameOptions")
-    if noton:
-        lp["notOnGameOptions"] = noton
-    if lp:
-        out["loadPrune"] = lp
+    # entity-level enabled/disabled gate (game options; owner ruling 2026-07-08 -- the loadPrune replacement).
+    gate_entity(out, _list(rec, "OnGameOptions"), _list(rec, "NotOnGameOptions"))
     # buildUp — dedicated object module (presence+non-empty = active; absent/empty = false). Only ever {active:true}
     # at this pass (the built-up aspect comes from the promotions, added at the Promotion pass). No property/poison
     # (the sole carrier, the affliction line, is dropped below).
@@ -127,7 +119,7 @@ def main():
     n = len(results)
     has = lambda k: sum(1 for o in results.values() if k in o)
     print("PromotionLineInfo curated: %d" % n)
-    for k in ("loadPrune", "buildUp", "ui", "identity"):
+    for k in ("enabled", "disabled", "buildUp", "ui", "identity"):
         print("  with %-9s: %d" % (k, has(k)))
     if args.sample is not None:
         for nm in (args.sample or list(results)[:1]):

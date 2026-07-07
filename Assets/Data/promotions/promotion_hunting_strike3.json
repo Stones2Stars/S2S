@@ -13,11 +13,7 @@
  "promotionLine": {
   "PROMOTIONLINE_HUNTING_STRIKE": 3
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_WITHOUT_WARNING"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_WITHOUT_WARNING",
  "ui": {
   "art": {
    "icon": ",Art/Buttons/Promotions/HuntingStrike3Promotion.dds"

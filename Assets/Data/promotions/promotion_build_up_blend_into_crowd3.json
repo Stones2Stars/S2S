@@ -37,11 +37,7 @@
  "promotionLine": {
   "PROMOTIONLINE_BUILD_UP_BLEND_INTO_CROWD": 5
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_HIDE_SEEK"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/BlendIntoCrowd3BuildUp.dds"

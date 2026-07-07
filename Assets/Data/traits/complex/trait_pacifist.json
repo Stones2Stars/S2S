@@ -73,11 +73,6 @@
  "succession": {
   "promotionLine": "PROMOTIONLINE_PACIFIST"
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
-  ]
- },
  "ai": {
   "flavours": [
    {

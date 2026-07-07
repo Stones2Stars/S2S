@@ -426,11 +426,6 @@
  "succession": {
   "promotionLine": "PROMOTIONLINE_NEGLIGENT"
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
-  ]
- },
  "ai": {
   "flavours": [
    {

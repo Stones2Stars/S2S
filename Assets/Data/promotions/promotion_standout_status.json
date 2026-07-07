@@ -6,11 +6,7 @@
  "promotionLine": {
   "PROMOTIONLINE_STANDOUT": 2
  },
- "loadPrune": {
-  "notOnGameOptions": [
-   "GAMEOPTION_COMBAT_HIDE_SEEK"
-  ]
- },
+ "disabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/StandOutStatus.dds"

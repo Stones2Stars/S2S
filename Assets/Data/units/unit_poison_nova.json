@@ -4,12 +4,12 @@
   "build": {
    "all": [
     "BUILDING_BIOLOGICAL_WARFARE_LAB",
-    "TECH_DNA_COMPUTING",
-    "GAMEOPTION_ADVANCED_NUKES"
+    "TECH_DNA_COMPUTING"
    ],
    "disabled": "NO_NUKES"
   }
  },
+ "enabled": "GAMEOPTION_ADVANCED_NUKES",
  "allowed": {
   "empire": 5
  },

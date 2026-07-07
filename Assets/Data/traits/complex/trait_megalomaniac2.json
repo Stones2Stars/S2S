@@ -114,11 +114,6 @@
   "promotionLine": "PROMOTIONLINE_MEGALOMANIAC",
   "priority": -2
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
-  ]
- },
  "ai": {
   "flavours": [
    {

@@ -1,12 +1,6 @@
 {
  "type": "UNIT_TREASURE",
- "requires": {
-  "build": {
-   "noneOf": [
-    "GAMEOPTION_NO_EVENTS"
-   ]
-  }
- },
+ "disabled": "GAMEOPTION_NO_EVENTS",
  "skills": {
   "rivalTerritory": true
  },

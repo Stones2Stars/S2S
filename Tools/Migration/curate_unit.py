@@ -33,7 +33,7 @@ from collections import OrderedDict
 
 import engine
 import boolexpr
-from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity
+from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity, gate_entity
 from store import Store, REPO
 
 # ---- identity.base: the create-unit FOUNDATION (§0.6) ----
@@ -328,17 +328,10 @@ def requires_unit(rec, store):
         allc.append(_atom(t, "team"))
     for x in _typelist_struct(rec, "TechTypes", "PrereqTech"):
         allc.append(_atom(x, "team"))
-    # GAME-OPTION gates as DECLARATIVE requires.build conditions (owner ruling 2026-06-25), NOT loadPrune: a bare
-    # GAMEOPTION_X reference the cascade evaluates against the active options. This states the dependency clearly IN
-    # THE UNIT JSON (e.g. an inquisitor's GAMEOPTION_RELIGION_INQUISITIONS) so a modder's new option-gated unit needs
-    # NO engine special-case. PrereqGameOption (engine canEverTrain:6449 -- option must be ON) -> build.all;
-    # NotGameOption (:6454 -- option must be OFF) -> build.noneOf.
-    for x in (_typelist(rec, "PrereqGameOption") or ([_txt(rec, "PrereqGameOption")] if _txt(rec, "PrereqGameOption") else [])):
-        if x and x != "NONE":
-            allc.append(x)
-    for x in (_typelist(rec, "NotGameOption") or ([_txt(rec, "NotGameOption")] if _txt(rec, "NotGameOption") else [])):
-        if x and x != "NONE":
-            none.append(x)
+    # GAME-OPTION gates -> the ENTITY-LEVEL enabled/disabled gate (owner ruling 2026-07-08, superseding the
+    # 2026-06-25 requires.build routing): a whole-entity option gate authors as the top-level `enabled`/`disabled`
+    # condition (`enabled: GAMEOPTION_X`), the ONE canonical form across every type -- `requires` holds only genuine
+    # needs (resources/civics/counts). Collected in curate() via gate_unit() below.
     # EnabledCivilizationTypes is NOT a train gate: CvCity::canTrain applies it ONLY to an isStronglyRestricted()
     # NPC civ (the Neanderthal whitelist, same mechanism as buildings, CvCity.cpp:2218). Real civs SKIP it. So it is
     # an identity whitelist (identity.enabledCivilizations, emitted in curate()), IGNORED by the dry-calc; remodel
@@ -725,9 +718,7 @@ def curate(typ, rec, store):
     w = _int(rec, "iAIWeight")
     if w:
         ai.setdefault("behaviour", OrderedDict())["weight"] = w
-    # --- game options: DECLARATIVE requires.build conditions (GAMEOPTION_X in build.all / build.noneOf), authored in
-    # requires_unit() above -- NOT loadPrune. States the option dependency clearly on the unit and lets the cascade
-    # evaluate it (modder-extensible, no engine special-case). So units emit NO loadPrune block at all. ---
+    # --- game options: the ENTITY-LEVEL enabled/disabled gate (owner 2026-07-08) -- emitted beside requires. ---
     # --- art ---
     for tag in ART:
         put_art(art_blocks, tag, engine.text(rec.find(tag)))
@@ -773,6 +764,11 @@ def curate(typ, rec, store):
         requires.setdefault("build", OrderedDict())["dormant"] = OrderedDict([("all", [_atom(u, "city") for u in ups_imm])])
     if requires:
         out["requires"] = requires
+    # entity-level enabled/disabled gate (game options; owner ruling 2026-07-08 -- the one canonical form):
+    # PrereqGameOption (engine canEverTrain -- option must be ON) -> enabled; NotGameOption (must be OFF) -> disabled.
+    gate_entity(out,
+                _typelist(rec, "PrereqGameOption") or ([_txt(rec, "PrereqGameOption")] if _txt(rec, "PrereqGameOption") else []),
+                _typelist(rec, "NotGameOption") or ([_txt(rec, "NotGameOption")] if _txt(rec, "NotGameOption") else []))
     # EnabledCivilizationTypes -> identity whitelist (NPC-only train gate; dry-calc ignores it; remodel post-rework).
     _civs = _typelist_struct(rec, "EnabledCivilizationTypes", "CivilizationType")
     if _civs:
@@ -860,7 +856,7 @@ def main():
 
     has = lambda k: sum(1 for o in results.values() if k in o)
     STRUCT = {"type", "description", "civilopedia", "help", "enables", "obsoletes", "requires", "allowed", "skills", "tags",
-              "vision", "outcomes", "grants", "succession", "cost", "ai", "loadPrune", "ui", "world", "sound", "identity"}
+              "vision", "outcomes", "grants", "succession", "cost", "ai", "enabled", "disabled", "ui", "world", "sound", "identity"}
     seen = sorted({f for o in results.values() for f in o if f not in STRUCT})
     print("UnitInfo curated: %d  | SpecialUnitInfo: %d" % (n, len(su_results)))
     for k in ("enables", "obsoletes", "requires", "allowed", "skills", "tags", "grants", "succession", "cost", "identity"):

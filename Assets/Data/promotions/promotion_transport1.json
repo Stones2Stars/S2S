@@ -15,11 +15,7 @@
  "promotionLine": {
   "PROMOTIONLINE_TRANSPORT": 1
  },
- "loadPrune": {
-  "notOnGameOptions": [
-   "GAMEOPTION_COMBAT_SIZE_MATTERS"
-  ]
- },
+ "disabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
  "ui": {
   "art": {
    "icon": ",Art/Interface/Buttons/Promotions/transport.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,3,13"

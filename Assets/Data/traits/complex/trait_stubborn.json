@@ -450,11 +450,6 @@
  "succession": {
   "promotionLine": "PROMOTIONLINE_STUBBORN"
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
-  ]
- },
  "ai": {
   "flavours": [
    {

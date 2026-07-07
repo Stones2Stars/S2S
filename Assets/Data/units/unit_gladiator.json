@@ -2,9 +2,6 @@
  "type": "UNIT_GLADIATOR",
  "requires": {
   "build": {
-   "noneOf": [
-    "GAMEOPTION_NO_EVENTS"
-   ],
    "dormant": {
     "all": [
      "UNIT_MACEMAN"
@@ -12,6 +9,7 @@
    }
   }
  },
+ "disabled": "GAMEOPTION_NO_EVENTS",
  "costs": {
   "empire": {
    "perInstance": {

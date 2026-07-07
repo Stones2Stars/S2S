@@ -259,11 +259,6 @@
   "promotionLine": "PROMOTIONLINE_MEDICAL",
   "priority": 2
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_LEADER_COMPLEX_TRAITS"
-  ]
- },
  "ai": {
   "flavours": [
    {

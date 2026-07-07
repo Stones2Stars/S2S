@@ -1,10 +1,6 @@
 {
  "type": "PROMOTIONLINE_MIGHT",
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_SIZE_MATTERS"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/Might1Promotion.dds"

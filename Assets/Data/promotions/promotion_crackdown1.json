@@ -10,11 +10,7 @@
  "promotionLine": {
   "PROMOTIONLINE_CRACKDOWN": 1
  },
- "loadPrune": {
-  "onGameOptions": [
-   "GAMEOPTION_COMBAT_WITHOUT_WARNING"
-  ]
- },
+ "enabled": "GAMEOPTION_COMBAT_WITHOUT_WARNING",
  "ui": {
   "art": {
    "icon": ",Art/Buttons/Promotions/Crackdown1Promotion.dds"

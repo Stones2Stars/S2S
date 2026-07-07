@@ -8,7 +8,7 @@ SAME as Promotion (imported): the `*Change` stat fields -> the same families (st
 air/collateral/heal/movement/experience/workRate/cargo/upkeep/vision/capture/poison/espionage/trap/...), the
 CAPABILITIES boolean group, the vision/LOS resolver, properties -> scoped deposits (property_source_v3), the
 vs-keyed combat modifiers (under DIFFERENT XML container names: TerrainAttackChangeModifiers vs Promotion's
-TerrainAttacks — same {Type,value} shape). loadPrune from OnGameOptions.
+TerrainAttacks — same {Type,value} shape). OnGameOptions/NotOnGameOptions -> the entity-level enabled/disabled gate (owner 2026-07-08).
 
 UnitCombat-SPECIFIC:
 - The `*Base` ranks (iQualityBase/iGroupBase/iSizeBase [-10 sentinel] + iRBombardDamage/DCMBomb *Base) are the
@@ -37,7 +37,7 @@ from collections import OrderedDict
 
 import engine
 from store import Store, REPO
-from curate_common import FAMILY_ORDER, put_art, emit_art, descale100, fold_text_to_identity
+from curate_common import FAMILY_ORDER, put_art, emit_art, descale100, fold_text_to_identity, gate_entity
 # REUSE the Promotion unit-stat vocabulary (the shared §5 definition) + helpers.
 from curate_promotion import (STRENGTH, FAMILIES, CAP_BOOL, CAP_PAIR, CAP_COUNT, VISION_PAIRS,
                               VISION_STRUCTS, _txt, _int, _simple_list, _pairs)
@@ -56,7 +56,7 @@ VS_KEYED = {
     "FeatureDefenseChangeModifiers":  ("strength", "feature", "defense", "percent"),
     "UnitCombatChangeModifiers":      ("strength", "unitCombat", None, "percent"),
     "DomainMods":                     ("strength", "domain", None, "percent"),
-    "FlankingStrengthbyUnitCombatTypeChange": ("strength", "flanking", None, "percent"),
+    "FlankingStrengthbyUnitCombatTypesChanges": ("strength", "flanking", None, "percent"),  # true XML container (CvUnitCombatInfo.cpp:1804 reader); child iModifier keyed by UnitCombat. Zero authorings today.
     "TerrainWorkChangeModifiers":     ("workRate", "terrain", None, "percent"),
     "FeatureWorkChangeModifiers":     ("workRate", "feature", None, "percent"),
     "BuildWorkChangeModifiers":       ("workRate", "build", None, "percent"),
@@ -76,7 +76,9 @@ ID_LIST = {"GGptsforUnitTypes": "ggPointsForUnits", "DefaultStatusTypes": "defau
 # DROP: dead/handled-elsewhere. FeatureAttacks/FeatureDefenses (2 recs) + iWithdrawalProb (1) are WRONG-TAG
 # entries the engine ignores (it reads FeatureAttackChangeModifiers / iWithdrawalChange) -> dead in-game (the
 # Promotion iStealthCombatModifier-typo pattern). Button handled via put_art.
-DROP = {"Type", "Description", "Help", "Categories", "FeatureAttacks", "FeatureDefenses", "iWithdrawalProb"}
+# bSpy: spy is a TAG ONLY (owner 2026-06-23) -- not a skill; the `spy` tag derives at the UNIT level (curate_unit,
+# from UNITAI_SPY) and the legacy bSpy CAP is dropped there too. So DROP it here as well (curate_unit already does).
+DROP = {"Type", "Description", "Help", "Categories", "FeatureAttacks", "FeatureDefenses", "iWithdrawalProb", "bSpy"}
 
 
 def curate(typ, rec, store):
@@ -191,14 +193,12 @@ def curate(typ, rec, store):
         if node is not None and list(node):
             outcomes[key] = engine.generic(node)
 
-    # --- loadPrune ---
-    loadprune = OrderedDict()
-    for tag, key in (("OnGameOptions", "onGameOptions"), ("NotOnGameOptions", "notOnGameOptions")):
+    # --- entity-level enabled/disabled gate (game options; owner 2026-07-08) ---
+    gate_on, gate_off = [], []   # entity-level enabled/disabled (owner 2026-07-08)
+    for tag, dst in (("OnGameOptions", gate_on), ("NotOnGameOptions", gate_off)):
         node = rec.find(tag)
         if node is not None:
-            lst = _simple_list(node)
-            if lst:
-                loadprune[key] = lst
+            dst.extend(_simple_list(node) or [])
 
     # --- identity: *Base create-unit data (§0.6) + refs + AI tags + parked lists ---
     base = OrderedDict()
@@ -243,8 +243,7 @@ def curate(typ, rec, store):
         out["vision"] = vision
     if outcomes:
         out["outcomes"] = outcomes
-    if loadprune:
-        out["loadPrune"] = loadprune
+    gate_entity(out, gate_on, gate_off)
     emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
@@ -279,10 +278,10 @@ def main():
           "UNHANDLED tags (count): %s" % ", ".join("%s=%d" % (t, c) for t, c in leftover.most_common()))
     has = lambda k: sum(1 for o in results.values() if k in o)
     STRUCT = {"type", "description", "help", "obsoletes", "skills", "vision", "outcomes",
-              "loadPrune", "identity"}
+              "enabled", "disabled", "identity"}
     seen = sorted({f for o in results.values() for f in o if f not in STRUCT})
     print("UnitCombatInfo curated: %d" % n)
-    for k in ("obsoletes", "skills", "vision", "outcomes", "loadPrune", "identity"):
+    for k in ("obsoletes", "skills", "vision", "outcomes", "identity"):
         print("  with %-12s: %d" % (k, has(k)))
     print("  families seen: %s" % ", ".join(seen))
     if args.sample is not None:
