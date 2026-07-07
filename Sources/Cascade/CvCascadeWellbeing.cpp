@@ -20,7 +20,7 @@
 #include "CvCascadeAccumulator.h"   // the scope-package types ride its ScopePackages include
 #include "CvCascadePerfCount.h"      // the wbCompute counter/timer (automation-cost attribution)
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer
-#include "CvCascadeCondition.h"
+#include "CvJsonCondition.h"
 #include "CvJsonInfo.h"
 #include "CvJsonTraitInfo.h"
 #include "Repos/InfoRepo.h"
@@ -52,7 +52,7 @@
 // state-religion accumulator (term net); everything else -> the source's own bucket.
 enum WbEntryClass { WB_BASE, WB_BONUS_GATED, WB_TECH_GATED, WB_STATE_RELIGION };
 
-static WbEntryClass wb_classify(const CvCascadeCondition* c)
+static WbEntryClass wb_classify(const CvJsonCondition* c)
 {
 	if (c == NULL) return WB_BASE;
 	switch (c->kind)
@@ -80,9 +80,52 @@ static bool wb_pureKeep(bool bPure, bool bNegativeTrait, int v)
 
 // ===================== the walks =====================
 
+// ONE building's compiled-record vector folded into both wb families + the commerce-happiness pools (the shared
+// inner body): per deposit, dispatch on the family segment. Classified flat folds + the perPopulation pools +
+// commerce pers. active buildings pass DepositIndex::depositsFor; obsolete buildings pass whenObsoleteFor
+// (json §4.2, part-1 delivery) -- IDENTICAL classification, into the SAME terms.
+static void wb_foldBuildingDeposits(const std::vector<CascadeDeposit>& deps,
+	int famHappy, int famHealth, int famCH, int scopeCity, int unitFlat, int unitPerPop,
+	const int aiChSeg[NUM_COMMERCE_TYPES], const CvCascadeEvalCtx& ec,
+	CascadeWbTerms& tHap, CascadeWbTerms& tHea, int aiCommercePer[NUM_COMMERCE_TYPES],
+	int& iBaseNetHap, int& iBaseNetHea)
+{
+	for (size_t i = 0; i < deps.size(); ++i)
+	{
+		const CascadeDeposit& dep = deps[i];
+		if (dep.seg[1] != scopeCity) continue;
+		// commerce-happiness: "commerceHappiness.city.<channel>" flat -> the per-channel pool
+		if (dep.seg[0] == famCH && dep.nSeg == 3 && dep.unitId == unitFlat)
+		{
+			for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
+				if (dep.seg[2] == aiChSeg[c] && MMKernel::applies(dep.enabled, dep.disabled, ec))
+					{ aiCommercePer[c] += dep.value100 / 100; break; }
+			continue;
+		}
+		const bool bHap = dep.seg[0] == famHappy;
+		if ((!bHap && dep.seg[0] != famHealth) || dep.nSeg != 2) continue;
+		CascadeWbTerms& t = bHap ? tHap : tHea;
+		if (dep.unitId == unitPerPop)
+		{
+			if (MMKernel::applies(dep.enabled, dep.disabled, ec)) t.iPpPct += dep.value100 / 100;
+			continue;
+		}
+		if (dep.unitId != unitFlat) continue;
+		if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
+		const int v = dep.value100 / 100;
+		switch (wb_classify(dep.enabled))
+		{
+		case WB_BONUS_GATED:    t.bonus.fold(v); break;
+		case WB_TECH_GATED:     t.iTechGatedNet += v; break;
+		case WB_STATE_RELIGION: t.iSrNet += v; break;
+		default:                (bHap ? iBaseNetHap : iBaseNetHea) += v; break;
+		}
+	}
+}
+
 // ONE building pass for BOTH wellbeing families + the commerce-happiness pools (was three separate
-// 5202-info loops -- the wbCompute attribution's biggest cut): per ACTIVE building, per deposit, dispatch on
-// the family segment. Classified flat folds + the perPopulation pools + the event ledgers + commerce pers.
+// 5202-info loops -- the wbCompute attribution's biggest cut). Active buildings deliver `deposits`; obsolete
+// buildings deliver `whenObsolete` (json §4.2) into the SAME terms -- part-1 delivery, the verdict combine unchanged.
 static void wb_buildingsAll(int famHappy, int famHealth, int famCH, const CvCity* pCity,
 	const CvCascadeEvalCtx& ec, CascadeWbTerms& tHap, CascadeWbTerms& tHea, int aiCommercePer[NUM_COMMERCE_TYPES])
 {
@@ -101,37 +144,8 @@ static void wb_buildingsAll(int famHappy, int famHealth, int famCH, const CvCity
 		const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
 		if (d == NULL) continue;
 		int iBaseNetHap = 0, iBaseNetHea = 0;
-		for (size_t i = 0; i < d->deposits.size(); ++i)
-		{
-			const CvCascadeDeposit& dep = d->deposits[i];
-			if (dep.seg[1] != scopeCity) continue;
-			// commerce-happiness: "commerceHappiness.city.<channel>" flat -> the per-channel pool
-			if (dep.seg[0] == famCH && dep.nSeg == 3 && dep.unitId == unitFlat)
-			{
-				for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
-					if (dep.seg[2] == aiChSeg[c] && MMKernel::applies(dep.enabled, dep.disabled, ec))
-						{ aiCommercePer[c] += dep.value100 / 100; break; }
-				continue;
-			}
-			const bool bHap = dep.seg[0] == famHappy;
-			if ((!bHap && dep.seg[0] != famHealth) || dep.nSeg != 2) continue;
-			CascadeWbTerms& t = bHap ? tHap : tHea;
-			if (dep.unitId == unitPerPop)
-			{
-				if (MMKernel::applies(dep.enabled, dep.disabled, ec)) t.iPpPct += dep.value100 / 100;
-				continue;
-			}
-			if (dep.unitId != unitFlat) continue;
-			if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
-			const int v = dep.value100 / 100;
-			switch (wb_classify(dep.enabled))
-			{
-			case WB_BONUS_GATED:    t.bonus.fold(v); break;
-			case WB_TECH_GATED:     t.iTechGatedNet += v; break;
-			case WB_STATE_RELIGION: t.iSrNet += v; break;
-			default:                (bHap ? iBaseNetHap : iBaseNetHea) += v; break;
-			}
-		}
+		wb_foldBuildingDeposits(DepositIndex::depositsFor(d), famHappy, famHealth, famCH, scopeCity, unitFlat, unitPerPop,
+			aiChSeg, ec, tHap, tHea, aiCommercePer, iBaseNetHap, iBaseNetHea);
 		tHap.bld.fold(iBaseNetHap);
 		tHea.bld.fold(iBaseNetHea);
 		// the EVENT-granted per-building ledgers ride the same accumulators (measured zero save-wide)
@@ -140,6 +154,19 @@ static void wb_buildingsAll(int famHappy, int famHealth, int famCH, const CvCity
 		const int iLedgerHea = pCity->getBuildingHealthChange((BuildingTypes)b);
 		if (iLedgerHea != 0) tHea.bld.fold(iLedgerHea);
 	}
+	// obsolete buildings deliver their whenObsolete wb numbers into the SAME terms (json §4.2). No event ledgers --
+	// an obsolete building's whenObsolete tree IS its cascade contribution. Inert until the swap cut.
+	if (ec.obsoleteBuildings != NULL)
+		for (std::set<int>::const_iterator obIt = ec.obsoleteBuildings->begin(); obIt != ec.obsoleteBuildings->end(); ++obIt)
+		{
+			const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(*obIt);
+			if (d == NULL) continue;
+			int iBaseNetHap = 0, iBaseNetHea = 0;
+			wb_foldBuildingDeposits(DepositIndex::whenObsoleteFor(d), famHappy, famHealth, famCH, scopeCity, unitFlat, unitPerPop,
+				aiChSeg, ec, tHap, tHea, aiCommercePer, iBaseNetHap, iBaseNetHea);
+			tHap.bld.fold(iBaseNetHap);
+			tHea.bld.fold(iBaseNetHea);
+		}
 }
 
 // ===================== the player-wide AREA/EMPIRE building walk =====================
@@ -162,18 +189,19 @@ void CascadeWellbeing::playerAreaEmpire(const CvPlayer& player,
 	int iLoop;
 	for (const CvCity* pc = player.firstCity(&iLoop); pc != NULL; pc = player.nextCity(&iLoop))
 	{
-		const CascadeCityFacts& facts = EnablerKernel::cityFacts(pc);
+		const OperatingBuildings& operatingBuildings = EnablerKernel::operatingBuildings(pc);
 		CvCascadeEvalCtx pec;
 		pec.city = pc; pec.plot = pc->plot(); pec.player = &player; pec.team = &GET_TEAM(player.getTeam());
-		pec.activeBuildings = &facts.active; pec.vicinityProvidedBonuses = &facts.provided;
+		pec.activeBuildings = &operatingBuildings.active; pec.vicinityProvidedBonuses = &operatingBuildings.provided;
 		const int iArea = pc->area()->getID();
-		for (std::set<int>::const_iterator it = facts.active.begin(); it != facts.active.end(); ++it)
+		for (std::set<int>::const_iterator it = operatingBuildings.active.begin(); it != operatingBuildings.active.end(); ++it)
 		{
 			const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
 			if (d == NULL) continue;
-			for (size_t i = 0; i < d->deposits.size(); ++i)
+			const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+			for (size_t i = 0; i < deps.size(); ++i)
 			{
-				const CvCascadeDeposit& dep = d->deposits[i];
+				const CascadeDeposit& dep = deps[i];
 				if ((dep.seg[0] != famHappy && dep.seg[0] != famHealth) || dep.unitId != unitFlat) continue;
 				if (dep.nSeg == 4 && dep.seg[1] == scopeEmpire && dep.seg[2] == segBuildings)
 				{
@@ -228,9 +256,10 @@ static void wb_memberSource(int famId, const CvJsonInfo* d, bool bTrait, bool bP
 	const int segPerMil = DepositIndex::lookupSegment("perMilitaryUnit");
 	const int segCities = DepositIndex::lookupSegment("cities");
 	int iFlatNet = 0;
-	for (size_t i = 0; i < d->deposits.size(); ++i)
+	const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+	for (size_t i = 0; i < deps.size(); ++i)
 	{
-		const CvCascadeDeposit& dep = d->deposits[i];
+		const CascadeDeposit& dep = deps[i];
 		if (dep.seg[0] != famId || dep.seg[1] != scopeEmpire) continue;
 		const int v = dep.value100 / 100;
 		if (!wb_pureKeep(bPure, bNegative, v)) continue;
@@ -428,13 +457,27 @@ CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
 	// -- shared derived terms --
 	const int iPopExtraHappy = iPop * hap.iPpPct / 100;   // truncating (calculatePopulationHappiness)
 	const int iPopHealth = iPop * hea.iPpPct / 100;       // truncating (calculatePopulationHealth)
-	// RELIGION happiness: per present religion the player's state/non-state accumulator (INPUTS -- the
-	// mixed-accumulator precedent), sign-split per religion (updateReligionHappiness)
+	// RELIGION happiness: per present religion the state/non-state per-religion value, DERIVED (the
+	// self-containment extraction 2026-07-05): the legacy player accumulators are exactly INITIAL define +
+	// Σ adopted civics' values (writer census: init CvPlayer:391-392 + processCivics :18282-83 + the
+	// recalc re-seed :28764; no other feeder) -- never the m_i{State,NonState}ReligionHappiness
+	// accumulators, which live on in the Legacy oracles only. Sign-split per religion (updateReligionHappiness).
 	WbSplit religion;
 	{
 		const ReligionTypes eState = owner.getStateReligion();
-		const int iStateAcc = owner.getStateReligionHappiness();
-		const int iNonStateAcc = owner.getNonStateReligionHappiness();
+		int iStateAcc = GC.getINITIAL_STATE_RELIGION_HAPPINESS();
+		int iNonStateAcc = GC.getINITIAL_NON_STATE_RELIGION_HAPPINESS();
+		CvCascadeEvalCtx rec;   // the civic deposits are unconditioned flats; assemble is pure over inputs
+		rec.city = pCity; rec.plot = pCity->plot(); rec.player = &owner; rec.team = &GET_TEAM(owner.getTeam());
+		for (int i = 0; i < GC.getNumCivicOptionInfos(); ++i)
+		{
+			const CivicTypes eCivic = owner.getCivics((CivicOptionTypes)i);
+			if (eCivic == NO_CIVIC) continue;
+			const CvJsonInfo* d = InfoRepo<CvCivicInfo>::get().get(eCivic);
+			if (d == NULL) continue;
+			iStateAcc += MMKernel::sumUnit(d, "stateReligion.empire.happiness", "flat", rec);
+			iNonStateAcc += MMKernel::sumUnit(d, "happiness.empire.nonStateReligion", "flat", rec);
+		}
 		for (int i = 0; i < GC.getNumReligionInfos(); ++i)
 			if (pCity->isHasReligion((ReligionTypes)i))
 				religion.fold((ReligionTypes)i == eState ? iStateAcc : iNonStateAcc);
@@ -604,6 +647,7 @@ CascadeWellbeingVerdicts CascadeWellbeing::compute(const CvCity* pCity, const Cv
 	PROFILE_FUNC();
 	++CascadePerf::wbCompute;
 	PerfAccumTimer perfT(CascadePerf::wbComputeMs);
+	CascadeCondScope ccs(CC_WB);   // the condEval caller split
 	CascadeWbTerms hap, hea;
 	int aiCommercePer[NUM_COMMERCE_TYPES];
 	gatherCityTerms(pCity, ec, hap, hea, aiCommercePer);

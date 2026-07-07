@@ -1,14 +1,14 @@
 //
 //	CvCascadeGrants -- the #430 GRANTS machine consumer + the [GRANTS] spine domain. See the header + grants-machine.md.
 //	Slice-1: on a building-built / unit-created DOMAIN event, resolve the source entity's GENUINE grants off its mapped
-//	CvJsonInfo (grantLists/grantPulses in the InfoRepo, minus the deferred mission-keys) and emit a [GRANTS] diagnostic.
-//	Resolution only -- it does NOT apply (legacy applies); un-run parity (owner: no live parity until everything is in).
+//	CvJson<X>Info (the composed CvJsonGrants unit in the InfoRepo, minus the deferred mission-keys) and emit a [GRANTS]
+//	diagnostic. Resolution only -- it does NOT apply (legacy applies); un-run parity (owner: no live parity until everything is in).
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella
 #include "CvCascadeGrants.h"
 #include "CvEventSpine.h"
-#include "CvJsonInfo.h"             // CvJsonInfo::grantLists / grantPulses
+#include "CvJsonInfo.h"             // CvJsonInfo::grantList / grantPulse100 / grantFlag (the CvJsonGrants unit's read-throughs)
 #include "Repos/InfoRepo.h"        // InfoRepo<CvXInfo>::get().get(id) -> the mapped CvJsonInfo*
 #include "CvBuildingInfo.h"        // InfoRepo<CvBuildingInfo>
 #include "CvUnitInfo.h"            // InfoRepo<CvUnitInfo>
@@ -90,32 +90,28 @@ static void gr_registerDomain()
 // `greatPeople`/`greatPersonAction`/`goldenAge`) are simply not read here (they migrate in the missions pass).
 static int gr_listCount(const CvJsonInfo* j, const char* szBucket)
 {
-	std::map<std::string, std::vector<int> >::const_iterator it = j->grantLists.find(szBucket);
-	return (it != j->grantLists.end()) ? (int)it->second.size() : 0;
+	const std::vector<int>* l = j->grantList(szBucket);
+	return (l != NULL) ? (int)l->size() : 0;
 }
 static int gr_pulse(const CvJsonInfo* j, const char* szChannel)   // pulses are stored ×100 -> /100 to the human count/amount
 {
-	std::map<std::string, int>::const_iterator it = j->grantPulses.find(szChannel);
-	return (it != j->grantPulses.end()) ? it->second / 100 : 0;
+	return j->grantPulse100(szChannel) / 100;
 }
 static int gr_flag(const CvJsonInfo* j, const char* szFlag)   // a bool grant present? (goldenAge)
 {
-	return j->grantFlags.count(szFlag) ? 1 : 0;
+	return j->grantFlag(szFlag) ? 1 : 0;
 }
 static int gr_scopedPulseSum(const CvJsonInfo* j, const char* szChannel)   // sum a scoped pulse over its scopes (×100 -> /100)
 {
-	std::map<std::string, std::map<std::string, int> >::const_iterator it = j->grantScopedPulses.find(szChannel);
-	if (it == j->grantScopedPulses.end()) return 0;
-	int iSum = 0;
-	for (std::map<std::string, int>::const_iterator si = it->second.begin(); si != it->second.end(); ++si) iSum += si->second;
-	return iSum / 100;
+	const CvJsonGrants* g = j->getGrants();
+	return g ? g->scopedPulseSumAllScopes100(szChannel) / 100 : 0;
 }
 
 static void gr_resolveBuilding(int iBuilding, int iPlayer)
 {
 	const CvJsonInfo* j = InfoRepo<CvBuildingInfo>::get().get(iBuilding);
 	if (j == NULL) return;
-	const int nRepeat    = (int)j->grantRepeatables.size();    // per-turn spawn/heal (recurring) -- the structured set (2b)
+	const int nRepeat    = (j->getGrants() != NULL) ? (int)j->getGrants()->repeatables().size() : 0;   // per-turn spawn/heal (recurring) -- the structured set (2b)
 	const int nFreePromo = gr_listCount(j, "freePromotions");   // end-turn promotions to units in the city (recurring)
 	const int nFreeTech  = gr_pulse(j, "freeTechs");            // one-shot on first build
 	const int nGoldenAge = gr_flag(j, "goldenAge");            // one-shot golden age (bool grant, increment 2)
@@ -141,8 +137,7 @@ static void gr_resolveUnit(int iUnit, int iPlayer)
 
 static int gr_firstId(const CvJsonInfo* j, const char* szBucket)   // a single-id grant bucket's id (-1 if absent)
 {
-	std::map<std::string, std::vector<int> >::const_iterator it = j->grantLists.find(szBucket);
-	return (it != j->grantLists.end() && !it->second.empty()) ? it->second[0] : -1;
+	return (j->getGrants() != NULL) ? j->getGrants()->firstListId(szBucket) : -1;
 }
 
 static void gr_resolveTech(int iTech, int iPlayer)

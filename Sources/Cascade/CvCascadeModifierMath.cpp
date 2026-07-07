@@ -27,7 +27,7 @@
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM -- the eval ctx's team
 #include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx
-#include "CvCascadeEnablerKernel.h"   // EnablerKernel::wireFacts -- the standing cascade building-facts cache
+#include "CvCascadeEnablerKernel.h"   // EnablerKernel::wireOperatingBuildings -- the standing cascade operating-buildings cache
 #include "CvCascadeCapabilities.h"    // CascadeCapabilities::shadowFlush -- the in-body capability-getter shadow
 #include "CvJsonInfo.h"               // the mapped info (requiresOperate/dormantTriggers) -- the dorm-attribution diagnostic
 #include "Repos/InfoRepo.h"           // InfoRepo<CvBuildingInfo> -- ditto
@@ -40,7 +40,7 @@
 #include "Infos/CvBonusInfo.h"
 #include "CvCascadePerfCount.h"       // CascadePerf -- the [MODIFIER/perf] census (ditto)
 #include "CvCascadeReadJson.h"        // cascadeReadJsonStats -- re-surface the dark load-time probe stats
-#include "CvCascadeJsonParse.h"       // cascadeJsonUnresolvedIds -- re-surface the dark load-time FK misses
+#include "CvJsonParse.h"              // jsonUnresolvedIds -- re-surface the dark load-time FK misses
 #include "CvEventSpine.h"             // the #430 dispatch spine -- the shadow diff rides it (SD_MODIFIER), NOT direct gDLL->logMsg
 #include "CvCascadeWellbeing.h"       // the §2b wellbeing channel -- its shadow rides this harness's city loop
 #include "CvCascadeScalarChannels.h"  // the increment-F scalar channels -- their [MODIFIER/scalar] slot net rides the same loop
@@ -62,8 +62,8 @@ enum MdFld
 	MDF_TOTAL, MDF_MAPPED, MDF_WDEPOSITS, MDF_WOPERATE, MDF_WTRIGGERS,              // repo census (MDE_REPO)
 	MDF_FILES2, MDF_ENTITIES2,                                                      // the stashed load-probe stats
 	MDF_SPECC, MDF_SPECL,                                                           // specialist sub-terms (rate diff)
-	MDF_FACTS, MDF_FACTSHIT, MDF_YRN, MDF_PSN, MDF_CRN, MDF_CEN, MDF_ACCN,          // perf: call counts (+accumulator refreshes)
-	MDF_FACTSMS, MDF_YRMS, MDF_PSMS, MDF_CRMS,                                      // perf: stopwatch ms (x10 int)
+	MDF_OPERATING_BUILDINGS_RECOMPUTED, MDF_OPERATING_BUILDINGS_CACHE_HITS, MDF_YRN, MDF_PSN, MDF_CRN, MDF_CEN, MDF_ACCN,          // perf: call counts (+accumulator refreshes)
+	MDF_OPERATING_BUILDINGS_RECOMPUTE_MS, MDF_YRMS, MDF_PSMS, MDF_CRMS,                                      // perf: stopwatch ms (x10 int)
 	MDF_UNRES, MDF_UNRESIDS,                                                        // load-time FK misses, re-surfaced live
 	MDF_PLOT_S, MDF_PLOT_C, MDF_EMP_S, MDF_EMP_C, MDF_SPEC_S, MDF_SPEC_C,          // [SLOT] yield-leg component pairs (slot vs fresh calc)
 	MDF_EXTRA_S, MDF_EXTRA_C, MDF_PCT_S, MDF_PCT_C,
@@ -80,7 +80,12 @@ enum MdFld
 	MDF_LRMS, MDF_LWBMS,                                                            // perf: the LEGACY-side pair ms (vs yieldRateMs+commerceRateMs / wbComputeMs -- the pre-cut comparison)
 	MDF_SCGPB, MDF_SCGPM, MDF_SCDEF, MDF_SCMNT,                                     // perf: flipped scalar getter READ counts
 	MDF_SCREF, MDF_SCSREF, MDF_SCMS,                                                // perf: scalar refresh counts (SCALAR / SCALARSPEC) + refresh ms×10
-	MDF_AUTON, MDF_AUTOMS                                                           // perf: the AUTOMATION window (autoMission calls + accumulated ms×10)
+	MDF_AUTON, MDF_AUTOMS,                                                          // perf: the AUTOMATION window (autoMission calls + accumulated ms×10)
+	MDF_CE_OTHER, MDF_CE_RATES, MDF_CE_WB, MDF_CE_SC, MDF_CE_OPERATING_BUILDINGS,                 // perf: the condEval CALLER split (the 6.8M-outlier attribution)
+	MDF_CE_FRB, MDF_CE_FRU, MDF_CE_FRPP, MDF_CE_FRP, MDF_CE_CANB, MDF_CE_PROMO,
+	MDF_FRB_N, MDF_FRB_MS, MDF_FRU_N, MDF_FRU_MS, MDF_FRPP_N, MDF_FRPP_MS,          // perf: the frontier fill counts + ms×10 (the flip-era no-ms-bucket hole)
+	MDF_FRP_N, MDF_FRP_MS, MDF_PRM_N, MDF_PRM_MS,
+	MDF_HEALCHECKED, MDF_HEALDIVERGING                                             // stashed [READJSON/healdiff] shadow counts, re-surfaced live
 };
 static const char* mm_prefix(int evt)
 {
@@ -138,14 +143,14 @@ static const char* mm_field(int tag, SpineFieldType* peType)
 	case MDF_ENTITIES2:   return "probeEntities";
 	case MDF_SPECC:       return "specCasc";
 	case MDF_SPECL:       return "specLeg";
-	case MDF_FACTS:       return "facts";
-	case MDF_FACTSHIT:    return "factsMemoHit";
+	case MDF_OPERATING_BUILDINGS_RECOMPUTED:       return "operatingBuildingsRecomputed";
+	case MDF_OPERATING_BUILDINGS_CACHE_HITS:    return "operatingBuildingsCacheHits";
 	case MDF_YRN:         return "yieldRate";
 	case MDF_PSN:         return "pctStack";
 	case MDF_CRN:         return "commerceRate";
 	case MDF_CEN:         return "condEval";
 	case MDF_ACCN:        return "accRefresh";
-	case MDF_FACTSMS:     return "factsMsX10";
+	case MDF_OPERATING_BUILDINGS_RECOMPUTE_MS:     return "operatingBuildingsRecomputeMsX10";
 	case MDF_YRMS:        return "yieldRateMsX10";
 	case MDF_PSMS:        return "pctStackMsX10";
 	case MDF_CRMS:        return "commerceRateMsX10";
@@ -207,6 +212,29 @@ static const char* mm_field(int tag, SpineFieldType* peType)
 	case MDF_MNT_C:       return "maintC";
 	case MDF_TRD_S:       return "tradeS";
 	case MDF_TRD_C:       return "tradeC";
+	case MDF_CE_OTHER:    return "ceOther";
+	case MDF_CE_RATES:    return "ceRates";
+	case MDF_CE_WB:       return "ceWb";
+	case MDF_CE_SC:       return "ceScalars";
+	case MDF_CE_OPERATING_BUILDINGS:    return "ceOperatingBuildings";
+	case MDF_CE_FRB:      return "ceFrontB";
+	case MDF_CE_FRU:      return "ceFrontU";
+	case MDF_CE_FRPP:     return "ceFrontPP";
+	case MDF_CE_FRP:      return "ceFrontP";
+	case MDF_CE_CANB:     return "ceCanBuild";
+	case MDF_CE_PROMO:    return "cePromo";
+	case MDF_FRB_N:       return "frontBFills";
+	case MDF_FRB_MS:      return "frontBMsX10";
+	case MDF_FRU_N:       return "frontUFills";
+	case MDF_FRU_MS:      return "frontUMsX10";
+	case MDF_FRPP_N:      return "frontPPFills";
+	case MDF_FRPP_MS:     return "frontPPMsX10";
+	case MDF_FRP_N:       return "frontPFills";
+	case MDF_FRP_MS:      return "frontPMsX10";
+	case MDF_PRM_N:       return "promoFills";
+	case MDF_PRM_MS:      return "promoMsX10";
+	case MDF_HEALCHECKED:   return "healDiffChecked";
+	case MDF_HEALDIVERGING: return "healDiffDiverging";
 	default:            return NULL;
 	}
 }
@@ -225,7 +253,7 @@ void cvCascadeModifierShadow()
 	// ANTI-MEMO-SKEW (2026-07-02): the turn memos may hold values frozen from EARLY-turn calls (the getter
 	// instrument); comparing those against END-of-turn legacy showed as false divergences. Recompute fresh for
 	// the shadow sweep -- still memoized WITHIN the sweep.
-	YieldRate::memoClear();   // the calculator-oracle's turn memo only -- the FACTS are a standing event-correct cache now (no anti-skew reset needed)
+	YieldRate::memoClear();   // the calculator-oracle's turn memo only -- the operating buildings are a standing event-correct cache now (no anti-skew reset needed)
 	CascadeCapabilities::shadowFlush();   // #430 wiring step 1: flush the in-body capability-getter shadow (per turn)
 
 	// [MODIFIER/repo] -- BUILDING REPO CENSUS (2026-07-02, the Orwell bar): decisive on the one-cause hypothesis
@@ -239,9 +267,9 @@ void cvCascadeModifierShadow()
 			const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
 			if (d == NULL) continue;
 			++nMapped;
-			if (!d->deposits.empty()) ++nDep;
-			if (d->requiresOperate != NULL) ++nOp;
-			if (!d->dormantTriggers.empty()) ++nTrig;
+			if (d->getModifiers() != NULL && !d->getModifiers()->empty()) ++nDep;
+			if (d->requiresOperate() != NULL) ++nOp;
+			if (!d->dormantTriggers().empty()) ++nTrig;
 		}
 		// + the stashed probe stats: what the dark load-time [READJSON] burst saw (files found / entities parsed /
 		// the dataDir). files>0 with mapped=0 convicts a post-map clear or a duplicate-singleton read; files<=0
@@ -252,7 +280,7 @@ void cvCascadeModifierShadow()
 		// exactly how the pre-menu-map bug hid: every PROCESS_ edge silently dropped with the misses visible only
 		// in the window nobody can read). unresolvedFks>0 after a clean load is ALWAYS a bug: a data typo or a
 		// map-before-registration ordering hole.
-		const std::set<std::string>& unres = cascadeJsonUnresolvedIds();
+		const std::set<std::string>& unres = jsonUnresolvedIds();
 		std::string sUnres;
 		for (std::set<std::string>::const_iterator uit = unres.begin(); uit != unres.end() && sUnres.size() < 96; ++uit)
 		{
@@ -317,7 +345,7 @@ void cvCascadeModifierShadow()
 				// real verification, modifier-machine §0: judged after the WHOLE calc is in, port-fidelity vs StoneBase).
 				CvCascadeEvalCtx rec;
 				rec.city = pCity; rec.plot = pCity->plot(); rec.player = &player; rec.team = &GET_TEAM(player.getTeam());
-				EnablerKernel::wireFacts(pCity, rec);   // the STANDING cascade facts (active set + vicinity provides)
+				EnablerKernel::wireOperatingBuildings(pCity, rec);   // the STANDING cascade operating buildings (active set + vicinity provides)
 
 				// [MODIFIER/dorm] -- DORMANCY ATTRIBUTION (2026-07-02, the Orwell bar: emit before hypothesising).
 				// Re-derives each present building's cascade dorm verdict WITH its cause (operate-failed vs
@@ -325,7 +353,7 @@ void cvCascadeModifierShadow()
 				// One line per sampled city (y==0 only, so once not thrice); samples list DISAGREEING buildings.
 				if (y == 0)
 				{
-					CvCascadeEvalCtx recOp = rec; recOp.activeBuildings = NULL;   // mirror recomputeCityFactsInto's operate ctx
+					CvCascadeEvalCtx recOp = rec; recOp.activeBuildings = NULL;   // mirror recomputeOperatingBuildingsInto's operate ctx
 					CvCascadeEvalFlags dormFlags;
 					int nPresent = 0, nDormOp = 0, nDormTrig = 0, nEngDisabled = 0;
 					std::string sSample;
@@ -334,11 +362,14 @@ void cvCascadeModifierShadow()
 						if (!pCity->hasBuilding((BuildingTypes)b)) continue;
 						++nPresent;
 						const CvJsonInfo* jb = InfoRepo<CvBuildingInfo>::get().get(b);
-						bool bDormOp = (jb != NULL && jb->requiresOperate != NULL && !cascadeEvalCondition(jb->requiresOperate, recOp, dormFlags));
+						bool bDormOp = (jb != NULL && jb->requiresOperate() != NULL && !cascadeEvalCondition(jb->requiresOperate(), recOp, dormFlags));
 						bool bDormTrig = false;
 						if (!bDormOp && jb != NULL)
-							for (size_t i = 0; i < jb->dormantTriggers.size(); ++i)
-								if (pCity->hasBuilding((BuildingTypes)jb->dormantTriggers[i])) { bDormTrig = true; break; }
+						{
+							const std::vector<int>& dorm = jb->dormantTriggers();
+							for (size_t i = 0; i < dorm.size(); ++i)
+								if (pCity->hasBuilding((BuildingTypes)dorm[i])) { bDormTrig = true; break; }
+						}
 						if (bDormOp) ++nDormOp;
 						if (bDormTrig) ++nDormTrig;
 						const bool bEngActive = pCity->isActiveBuilding((BuildingTypes)b);
@@ -482,7 +513,7 @@ void cvCascadeModifierShadow()
 			++iCityN;
 			CvCascadeEvalCtx cec;
 			cec.city = pCity; cec.plot = pCity->plot(); cec.player = &player; cec.team = &GET_TEAM(player.getTeam());
-			EnablerKernel::wireFacts(pCity, cec);   // the STANDING cascade facts -- alive for the whole city's calc
+			EnablerKernel::wireOperatingBuildings(pCity, cec);   // the STANDING cascade operating buildings -- alive for the whole city's calc
 			// Precompute the §1 commerce-yield + production-rate ONCE per city (the 4 commerce types share them) -- this is
 			// the big perf fix (was 8 redundant full §1 rate computes per city; now 2).
 			const long yc100 = YieldRate::yieldRate100("commerce", YIELD_COMMERCE, pCity, cec);
@@ -639,11 +670,18 @@ void cvCascadeModifierShadow()
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_SLOT, 1)
 		.addI(MDF_CHECKED, iSlotChecked).addI(MDF_DIVERGING, iSlotDiverging));
 
-	// [MODIFIER/perf] -- the repeat-calc hunt (owner 2026-07-02: chase the needless repeat calcs BEFORE parity).
-	// Whole-turn call counts + our stopwatch accumulators (PerfAccumTimer; ms x10 as ints -- the spine carries ints).
-	// Counts cover EVERYTHING since the last flush (the full turn incl. the enabler sweep + getter instrument).
-	// turnMsX10 = the flush-to-flush WALL time -- the whole previous turn incl. AI/engine/UI between the doTurn
-	// tops: THE headline number (DEC-turn-time-is-king). 0 on the first flush after load (no prior flush).
+	// [MODIFIER/perf] census -- EXTRACTED (owner 2026-07-05) so it survives the shadow DISCONNECT: the perf
+	// surface is ruled load-bearing, so it emits EVERY turn independent of the legacy diff above (disconnected).
+	cvCascadeModifierPerfCensus();
+}
+
+// The [MODIFIER/perf] census + reset -- the RULED perf surface (perf-profile-wiring.md). NO legacy calls; it
+// reports the whole-turn CascadePerf counts/ms + the flush-to-flush turnMs (DEC-turn-time-is-king) + the condEval
+// caller split + the frontier fills, then resets. Runs EVERY turn from doTurn -- the modifier shadow diff (which
+// re-walked legacy) is disconnected, so these counts now reflect PURE gameplay cost, not the shadow's extra reads.
+void cvCascadeModifierPerfCensus()
+{
+	mm_registerDomain();   // #430: the SD_MODIFIER domain registration moved here from the disconnected shadow
 	int iTurnMsX10 = 0;
 	{
 		static LARGE_INTEGER s_lastPerfFlush = { 0 };
@@ -655,11 +693,11 @@ void cvCascadeModifierShadow()
 		s_lastPerfFlush = now;
 	}
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_PERF, 1)
-		.addI(MDF_FACTS, CascadePerf::facts).addI(MDF_FACTSHIT, CascadePerf::factsMemoHit)
+		.addI(MDF_OPERATING_BUILDINGS_RECOMPUTED, CascadePerf::operatingBuildingsRecomputed).addI(MDF_OPERATING_BUILDINGS_CACHE_HITS, CascadePerf::operatingBuildingsCacheHits)
 		.addI(MDF_YRN, CascadePerf::yieldRate).addI(MDF_PSN, CascadePerf::pctStack)
 		.addI(MDF_CRN, CascadePerf::commerceRate).addI(MDF_CEN, CascadePerf::condEval)
 		.addI(MDF_ACCN, CascadePerf::accRefresh)
-		.addI(MDF_FACTSMS, (int)(CascadePerf::factsMs * 10.0)).addI(MDF_YRMS, (int)(CascadePerf::yieldRateMs * 10.0))
+		.addI(MDF_OPERATING_BUILDINGS_RECOMPUTE_MS, (int)(CascadePerf::operatingBuildingsRecomputeMs * 10.0)).addI(MDF_YRMS, (int)(CascadePerf::yieldRateMs * 10.0))
 		.addI(MDF_PSMS, (int)(CascadePerf::pctStackMs * 10.0)).addI(MDF_CRMS, (int)(CascadePerf::commerceRateMs * 10.0))
 		.addI(MDF_WBN, CascadePerf::wbCompute).addI(MDF_WBMS, (int)(CascadePerf::wbComputeMs * 10.0)));
 	// the second perf line (the spine caps an event at 16 fields): the game turn + the flush-to-flush WALL
@@ -672,5 +710,37 @@ void cvCascadeModifierShadow()
 		.addI(MDF_SCREF, CascadePerf::scRefresh).addI(MDF_SCSREF, CascadePerf::scSpecRefresh)
 		.addI(MDF_SCMS, (int)(CascadePerf::scRefreshMs * 10.0))
 		.addI(MDF_AUTON, CascadePerf::autoMissions).addI(MDF_AUTOMS, (int)(CascadePerf::autoMissionMs * 10.0)));
+	// the third perf line: the condEval CALLER split (the 6.8M-outlier attribution -- who initiated the
+	// eval chains; ceOther is the honest residual: a big OTHER names the next tag to place)
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_PERF, 1)
+		.addI(MDF_CE_OTHER, CascadePerf::condEvalBy[CC_OTHER]).addI(MDF_CE_RATES, CascadePerf::condEvalBy[CC_RATES])
+		.addI(MDF_CE_WB, CascadePerf::condEvalBy[CC_WB]).addI(MDF_CE_SC, CascadePerf::condEvalBy[CC_SCALARS])
+		.addI(MDF_CE_OPERATING_BUILDINGS, CascadePerf::condEvalBy[CC_OPERATING_BUILDINGS]).addI(MDF_CE_FRB, CascadePerf::condEvalBy[CC_FRONT_B])
+		.addI(MDF_CE_FRU, CascadePerf::condEvalBy[CC_FRONT_U]).addI(MDF_CE_FRPP, CascadePerf::condEvalBy[CC_FRONT_PP])
+		.addI(MDF_CE_FRP, CascadePerf::condEvalBy[CC_FRONT_P]).addI(MDF_CE_CANB, CascadePerf::condEvalBy[CC_CANBUILD])
+		.addI(MDF_CE_PROMO, CascadePerf::condEvalBy[CC_PROMO]));
+	// the fourth perf line: the frontier fill counts + wall clock (the flip-era surfaces the census had
+	// NO ms bucket for -- how often each frontier rebuilds and what a rebuild costs)
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_PERF, 1)
+		.addI(MDF_FRB_N, CascadePerf::frontBFills).addI(MDF_FRB_MS, (int)(CascadePerf::frontBMs * 10.0))
+		.addI(MDF_FRU_N, CascadePerf::frontUFills).addI(MDF_FRU_MS, (int)(CascadePerf::frontUMs * 10.0))
+		.addI(MDF_FRPP_N, CascadePerf::frontPPFills).addI(MDF_FRPP_MS, (int)(CascadePerf::frontPPMs * 10.0))
+		.addI(MDF_FRP_N, CascadePerf::frontPFills).addI(MDF_FRP_MS, (int)(CascadePerf::frontPMs * 10.0))
+		.addI(MDF_PRM_N, CascadePerf::promoFills).addI(MDF_PRM_MS, (int)(CascadePerf::promoMs * 10.0)));
+	// the fifth perf line: the dark LOAD-TIME [READJSON] stats, re-surfaced LIVE here (the load burst is dark --
+	// gPlayerLogLevel 0 during doPostLoadCaching -- and the old [MODIFIER/repo] home is on the DISCONNECTED shadow
+	// sweep, so it never fires this session). healDiffDiverging is the headline the owner drives to 0 before the
+	// XML-read cut; probeFiles/probeEntities + unresolvedFks are the load-probe/FK counts that rode the same dead line.
+	// Numeric-only (the 16-field cap; the long dataDir/unresIds strings stay on the [MODIFIER/repo] line). -1 = never ran.
+	int iHealChecked = 0, iHealDiverging = 0, iProbeFiles = 0, iProbeEnt = 0;
+	cascadeReadJsonHealDiffStats(false, iHealChecked, iHealDiverging);
+	cascadeReadJsonStats(false, iProbeFiles, iProbeEnt, std::string());
+	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_PERF, 1)
+		.addI(MDF_HEALCHECKED, iHealChecked).addI(MDF_HEALDIVERGING, iHealDiverging)
+		.addI(MDF_FILES2, iProbeFiles).addI(MDF_ENTITIES2, iProbeEnt)
+		.addI(MDF_UNRES, (int)jsonUnresolvedIds().size()));
+	// (the internal-profiler [PERF/turn] sink was removed 2026-07-05 -- owner ruling: never use the internal
+	// profiler; the census/[MODIFIER/perf] gated logging IS the perf surface. See perf-profile-wiring.md + the
+	// PROFILE_FUNC removal ticket.)
 	CascadePerf::reset();
 }

@@ -410,6 +410,11 @@ re-sweep, try another) is the anti-pattern this rule kills: build the complete m
     classes (`CvCityAI`/`CvUnitAI`/…), NEVER widen an EXE-bound base** (`CvCity`/`CvUnit` — the closed `.exe` binds their
     vtable/layout; adding bases there risks the ABI). The derived side is the safe lane and the lever for the
     shrink-the-god-classes goal.
+- **⛔ CODE COMMITS ONLY AFTER THE OWNER HAS SEEN THE DIFF (owner ruling 2026-07-08: "pretty hard for me to
+  see actual changes when you insta commit").** C++/Python/gameplay-code changes stay in the WORKING TREE until
+  the owner has reviewed them (or explicitly says commit) — the working-tree diff IS the owner's review surface;
+  an agent committing its own code work the moment it lands takes that away. The derived-JSON regen convention
+  below (curator + regenerated data commit together, freely) is the standing exception and is unchanged.
 - **Only automatically branch / commit / PR when the work is tied to an active GitHub
   issue.** For anything else (experiments, behaviour tuning, undocumented fixes we are
   still iterating on), **edit the working tree only** — do not commit, create or switch

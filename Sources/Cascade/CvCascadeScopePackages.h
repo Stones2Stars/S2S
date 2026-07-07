@@ -28,10 +28,28 @@
 #include "Defines/CvEnums.h"
 #include "Infrastructure/CvDerivedCache.h"
 #include <map>
+#include <vector>
 
 class CvCity;
 class CvPlayer;
 class CvGame;
+
+// ===== the keyed buildRate LEDGER, DENSE (the precipice-§5 hot-path fix) =====
+// The AI's production scoring reads this per (item × city); the former std::map<long,int> paid two
+// red-black-tree finds per read PLUS an enum→segment conversion. The dense form obeys generic-code-
+// static-storage: ONE array index by the GAME ENUM id per scope, nothing else. The fill routes each
+// keyed deposit by its member kind (units/buildings/domains/unitCombats) + its FK-resolved targetFk
+// (match-equivalent to the segment matching: both derive from the same INFOTYPE string). Vectors are
+// sized to the live info counts at each fill (assign zero-fills -- contract rule 2).
+struct CascadeBrLedger
+{
+	std::vector<int> units;            // by UnitTypes
+	std::vector<int> buildings;        // by BuildingTypes
+	std::vector<int> domains;          // by DomainTypes
+	std::vector<int> unitCombats;      // by UnitCombatTypes
+	std::vector<int> specialBuildings; // by SpecialBuildingTypes (the L11 trait keyed leg, 2026-07-05)
+	static int at(const std::vector<int>& v, int i) { return (i >= 0 && i < (int)v.size()) ? v[i] : 0; }
+};
 
 // ===== the signed-split pair (modifier.md §2b; StoneBase Split) =====
 struct WbSplit
@@ -123,15 +141,27 @@ struct CascadeCityPackages
 	int scGpModCity;                     // gp percents: city buildings + civic/trait city+empire (city ctx)
 	int scGpModSr;                       // the SR grouped family (civics, city ctx; × SR-in-city gate at read)
 	int scDefense;                       // defense.city.amount percents (buildings)
+	// the L13 defense wiring (owner-ruled shape, 2026-07-05): the additive bombard percents + the min FLOOR
+	int scDefBombard;                    // defense.city.bombardDefense percents (buildings; legacy m_iBuildingBombardDefense)
+	int scDefMin;                        // defense.city.min flats (buildings; legacy m_iExtraMinDefense)
 	int scMaintModCity;                  // maintenance percents: city buildings + civic city/empire/area + techs (city ctx)
 	int scTradeCity;                     // tradeRoutes flats: city buildings + civic empire + techs (city ctx)
 	int scTradeCoastalCiv;               // civic coastal flats (city ctx; × the coastal gate at read)
 	int brSrUnitProd, brSrBuildingProd;  // stateReligion.empire.{unit|building}Production (civics, city ctx; SR gate live)
-	// -- buildRate: the city keyed LEDGER (key = (memberSeg<<20)|keySeg, both compiled ints) + city members --
-	std::map<long, int> brCityKeyed;
+	// -- buildRate: the city keyed LEDGER (dense per-kind tables, read by game enum id) + city members --
+	CascadeBrLedger brCityKeyed;
 	int brCityMilitary, brCitySpace;     // buildRate.city.{military|space} percents
+	// the WONDER-CATEGORY members (the L11 trait walks, 2026-07-05: trait-authored only in data; civic/trait
+	// city-realized walks -- the legacy maxGlobal/maxTeam/maxPlayer accumulators' class)
+	int brCityWorldWonder, brCityTeamWonder, brCityNationalWonder;
+	// -- the freeSpecialists AMOUNT halves (the ruled two-part seam, 2026-07-05: the cascade owns the
+	// AMOUNTS -- summed alive-with-source deposits; the engine owns PLACEMENT; consumers read the
+	// placement OUTPUT). City-scope: this city's active buildings' freeSpecialists.city.* counts --
+	int fsCityAny;                       // freeSpecialists.city.any counts
+	std::vector<int> fsCityByType;       // freeSpecialists.city.{SPECIALIST_X} counts, by SpecialistTypes
+
 	// -- the ENABLER frontier (#430 THE FLIP, owner 2026-07-04): the harness-proven availability sets,
-	// served by the flipped can* gates via ensure-on-read (the FACTS idiom, deliberately NOT the rates'
+	// served by the flipped can* gates via ensure-on-read (the operating buildings idiom, deliberately NOT the rates'
 	// bare fetch: gate reads are decision-time and legacy chains builds within a turn) --
 	std::set<int> enBuildable, enTrainable, enCreatable, enMaintainable;
 
@@ -145,9 +175,12 @@ struct CascadeCityPackages
 		iCSrMatch = 0;
 		for (int w = 0; w < 4; ++w) aWbVerdict[w] = 0;
 		scGpBaseBld = 0; scGpBaseSpec = 0; scGpModCity = 0; scGpModSr = 0; scDefense = 0;
+		scDefBombard = 0; scDefMin = 0;
 		scMaintModCity = 0; scTradeCity = 0; scTradeCoastalCiv = 0;
 		brSrUnitProd = 0; brSrBuildingProd = 0;
 		brCityMilitary = 0; brCitySpace = 0;
+		brCityWorldWonder = 0; brCityTeamWonder = 0; brCityNationalWonder = 0;
+		fsCityAny = 0;
 	}
 };
 
@@ -187,6 +220,12 @@ struct CascadePlayerScope
 	std::map<int, std::map<int, int> > wbBuildingKeyedByFam; // famSeg -> targetFk -> Σ flats (the Royal-Tomb class)
 	// -- the scalar player-BUILDING sums (each walked per source city with that city's own ctx) --
 	int gpModPlayer;                     // greatPeopleRate.empire building pcts
+	int gpNationalFlat;                  // trait national GP flats (greatPeopleRate.empire.units.{GP}.flat, Σ all
+	                                     // keys -- the m_iNationalGreatPeopleRate class; the L6 census fold 2026-07-05)
+	int defPlayerAll;                    // defense.empire.amount percents: buildings + civics + traits (the L13
+	                                     // wiring -- the legacy getCityDefenseModifier three-accumulator class)
+	int defPlayerBombard;                // defense.empire.bombardDefense percents (traits) -- legacy
+	                                     // m_iNationalBombardDefenseModifier; composes into getBuildingBombardDefense
 	int maintPlayerAll;                  // maintenance.empire building pcts
 	int maintConnPct;                    // connectedCity pcts (× connected-and-not-capital gate at read)
 	std::map<int, int> maintAreaPct;     // areaId -> own-area pcts
@@ -195,8 +234,13 @@ struct CascadePlayerScope
 	int tradeEmpireAll;                  // building empire flats
 	int tradeCoastalAll;                 // building coastal flats (× coastal gate at read)
 	int tradeWorldMine;                  // THIS player's world-scope flats (the world package sums these)
+	// -- the freeSpecialists AMOUNT empire/area halves (the ruled seam; civics + traits + empire buildings;
+	// the area.any buildings fold per SOURCE-city area, the maintAreaPct precedent) --
+	int fsEmpireAny;
+	std::vector<int> fsEmpireByType;     // by SpecialistTypes
+	std::map<int, int> fsAreaAny;        // areaId -> any counts (2 authorings; area BY-TYPE has none -- census guard)
 	// -- buildRate (building-sourced halves only) --
-	std::map<long, int> brEmpKeyed;      // (memberSeg<<20)|keySeg -> Σ pcts (all cities' active buildings)
+	CascadeBrLedger brEmpKeyed;          // dense per-kind tables -> Σ pcts (all cities' active buildings)
 	int brEmpMilitary, brEmpSpace;       // empire member pcts (buildings)
 	// -- the ENABLER player frontier (#430 THE FLIP): researchable/civics/hurries sets (the harness-proven
 	// bare-player-ctx fills), the canBuild UNLOCK rem-set (obsoletes.builds over held techs), and the
@@ -211,8 +255,9 @@ struct CascadePlayerScope
 		for (int y = 0; y < NUM_YIELD_TYPES; ++y) { yFlatFreeCity[y] = 0; yFlatGoldenAge[y] = 0; }
 		for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
 			{ cPlayerExtra100[c] = 0; cGoldenAge[c] = 0; cSrPool[c] = 0; }
-		gpModPlayer = 0; maintPlayerAll = 0; maintConnPct = 0; maintOtherAreaTotal = 0;
+		gpModPlayer = 0; gpNationalFlat = 0; defPlayerAll = 0; defPlayerBombard = 0; maintPlayerAll = 0; maintConnPct = 0; maintOtherAreaTotal = 0;
 		tradeEmpireAll = 0; tradeCoastalAll = 0; tradeWorldMine = 0;
+		fsEmpireAny = 0;
 		brEmpMilitary = 0; brEmpSpace = 0;
 	}
 };

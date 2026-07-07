@@ -1,0 +1,95 @@
+//
+//	CvJsonModFamily::parseLeaf -- parse a §3.9 modifier-family leaf into owned CvJsonModEntry list, ×100'ing values
+//	and reusing the spec-defined condition parser for enabled/disabled. See the header.
+//
+
+#include "CvGameCoreDLL.h"          // PCH umbrella -- picojson
+#include "CvJsonModEntry.h"
+#include "CvJsonConditionParse.h"   // cascadeParseCondition -- the ONE human->condition boundary (spec-defined predicates)
+#include "CvJsonParse.h"            // jsonResolveId -- the per count-scaler type FK
+
+// the single human->×100 conversion (round half away from zero), json §3.6 / fixed-point-and-scales §1.
+static int x100(double v) { return (int)(v >= 0 ? v * 100.0 + 0.5 : v * 100.0 - 0.5); }
+
+CvCascUnit cascadeUnitFromString(const std::string& s)
+{
+	if (s == "flat")                return CASC_UNIT_FLAT;
+	if (s == "percent")             return CASC_UNIT_PERCENT;
+	if (s == "multiplier")          return CASC_UNIT_MULTIPLIER;
+	if (s == "postMultiplier")      return CASC_UNIT_POST_MULTIPLIER;
+	if (s == "rawPercent")          return CASC_UNIT_RAW_PERCENT;
+	if (s == "perPopulation")       return CASC_UNIT_PER_POPULATION;
+	if (s == "perSpecialist")       return CASC_UNIT_PER_SPECIALIST;
+	if (s == "perCorporationLevel") return CASC_UNIT_PER_CORPORATION_LEVEL;
+	return CASC_UNIT_UNKNOWN;
+}
+
+static CvJsonModEntry* mk(int value100, CvCascUnit unit, CvCascScope scope)
+{
+	CvJsonModEntry* e = new CvJsonModEntry();
+	e->value100 = value100; e->unit = unit; e->scope = scope;
+	return e;
+}
+
+// The §3.7 `per` count-scaler on a conditioned entry: {type|anyOf, each?, scope?} or a bare type string.
+static void parse_per(CvJsonModEntry* e, const picojson::value& v)
+{
+	e->hasPer = true;
+	if (v.is<std::string>()) { e->perType = v.get<std::string>(); e->perTypeId = jsonResolveId(e->perType); return; }
+	if (!v.is<picojson::object>()) return;
+	const picojson::object& o = v.get<picojson::object>();
+	picojson::object::const_iterator it;
+	if ((it = o.find("type")) != o.end() && it->second.is<std::string>())
+	{
+		e->perType = it->second.get<std::string>();
+		e->perTypeId = jsonResolveId(e->perType);
+	}
+	if ((it = o.find("each")) != o.end() && it->second.is<double>()) e->perEach = (int)it->second.get<double>();
+	if ((it = o.find("anyOf")) != o.end() && it->second.is<picojson::array>())
+	{
+		const picojson::array& a = it->second.get<picojson::array>();
+		for (size_t i = 0; i < a.size(); ++i)
+			if (a[i].is<std::string>()) { const int id = jsonResolveId(a[i].get<std::string>()); if (id >= 0) e->perAnyOf.push_back(id); }
+	}
+}
+
+// One `{value, per?, enabled?, disabled?}` entry object (§3.9).
+static CvJsonModEntry* parse_entry(const picojson::object& o, CvCascUnit unit, CvCascScope scope)
+{
+	picojson::object::const_iterator ve = o.find("value");
+	if (ve == o.end() || !ve->second.is<double>()) return NULL;   // not an entry object
+	CvJsonModEntry* e = mk(x100(ve->second.get<double>()), unit, scope);
+	picojson::object::const_iterator it;
+	if ((it = o.find("per")) != o.end())       parse_per(e, it->second);
+	if ((it = o.find("enabled")) != o.end())   e->enabled  = cascadeParseCondition(it->second);
+	if ((it = o.find("disabled")) != o.end())  e->disabled = cascadeParseCondition(it->second);
+	return e;
+}
+
+void CvJsonModFamily::parseLeaf(const picojson::value& leaf, CvCascUnit unit, CvCascScope scope)
+{
+	if (leaf.is<double>())   // a bare, always-on value
+	{
+		entries.push_back(mk(x100(leaf.get<double>()), unit, scope));
+		return;
+	}
+	if (leaf.is<picojson::object>())   // a single `{value, per?, enabled?, disabled?}` entry (§3.9 single-entry form)
+	{
+		CvJsonModEntry* e = parse_entry(leaf.get<picojson::object>(), unit, scope);
+		if (e != NULL) entries.push_back(e);
+		return;
+	}
+	if (!leaf.is<picojson::array>()) return;
+	const picojson::array& a = leaf.get<picojson::array>();
+	for (size_t i = 0; i < a.size(); ++i)
+	{
+		if (a[i].is<double>())   // a bare number in a list = an always-on entry
+		{
+			entries.push_back(mk(x100(a[i].get<double>()), unit, scope));
+			continue;
+		}
+		if (!a[i].is<picojson::object>()) continue;
+		CvJsonModEntry* e = parse_entry(a[i].get<picojson::object>(), unit, scope);
+		if (e != NULL) entries.push_back(e);
+	}
+}

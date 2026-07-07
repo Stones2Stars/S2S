@@ -7,7 +7,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeMMKernel.h"
-#include "CvJsonInfo.h"                // CvJsonInfo + CvCascadeDeposit
+#include "CvJsonInfo.h"                // CvJsonInfo (the spec model the DepositIndex compiled from)
 #include "Repos/InfoRepo.h"            // InfoRepo<CvXInfo>::get().get(id) -- the JSON info home
 #include "Defines/CvGlobals.h"
 #include "Engine/CvPlot.h"
@@ -24,6 +24,8 @@
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "CvCascadeConditionEval.h"    // cascadeEvalCondition
 #include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (hot paths match ints)
+#include "CvCascadeEnablerKernel.h"    // EnablerKernel::obsoletedByHeldTech -- the obsolescence verdict (isBuildingObsolete)
+#include "Engine/CvTeam.h"             // *ec.team for obsoletedByHeldTech
 #include <map>
 
 // Query-side cached segment ids. A hit (>=0) is cached forever; a miss RE-LOOKS-UP each call -- the interner is
@@ -40,7 +42,7 @@ static int s_segFlat = -1, s_segPercent = -1, s_segEmpire = -1, s_segBuildings =
 // A deposit applies iff enabled holds (or is absent) AND disabled does NOT hold (json.md §3.9), evaluated through the
 // typed-condition evaluator against the live engine ctx. MODIFIER context = the lenient flags (default): a
 // {STATE_RELIGION:X} compound matches loosely (the strict-match form is the enabler's requires.build only).
-bool MMKernel::applies(const CvCascadeCondition* enabled, const CvCascadeCondition* disabled, const CvCascadeEvalCtx& ec)
+bool MMKernel::applies(const CvJsonCondition* enabled, const CvJsonCondition* disabled, const CvCascadeEvalCtx& ec)
 {
 	static const CvCascadeEvalFlags kFlags;   // default: strictStateReligionForBuild=false (the modifier reading)
 	if (enabled != NULL && !cascadeEvalCondition(enabled, ec, kFlags)) return false;
@@ -55,9 +57,10 @@ int MMKernel::sumPercent(const CvJsonInfo* d, const std::string& wantAddress, co
 	if (wantId < 0) return 0;   // never authored anywhere
 	const int unitId = mmk_seg("percent", s_segPercent);
 	int sum = 0;
-	for (size_t i = 0; i < d->deposits.size(); ++i)
+	const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+	for (size_t i = 0; i < deps.size(); ++i)
 	{
-		const CvCascadeDeposit& dep = d->deposits[i];
+		const CascadeDeposit& dep = deps[i];
 		if (dep.unitId != unitId || dep.addressId != wantId) continue;
 		if (!applies(dep.enabled, dep.disabled, ec)) continue;
 		sum += dep.value100 / 100;
@@ -66,23 +69,31 @@ int MMKernel::sumPercent(const CvJsonInfo* d, const std::string& wantAddress, co
 }
 
 // ===================== StoneBase Calc PORT -- leaf helpers (ModifierMath.cs over the flat-deposit model) =====================
-// The C++ flat-deposit model: each CvCascadeDeposit's `address` IS the dotted "<channel>.<scope>[.<member>[.<KEY>]]" path
-// (readJson built it), `unit` the leaf kind, `value100` the ×100 magnitude. So a StoneBase tree-walk
-// (fam.Root.Children[scope]...Magnitudes) is an address-string match here. These mirror ModifierMath.cs.
+// The C++ flat-deposit model: each compiled CascadeDeposit's `address` IS the dotted "<channel>.<scope>[.<member>[.<KEY>]]"
+// path (the CvJsonModifiers family key, compiled by the DepositIndex push), `unit` the leaf kind, `value100` the ×100
+// magnitude. So a StoneBase tree-walk (fam.Root.Children[scope]...Magnitudes) is an address match here. These mirror ModifierMath.cs.
 // The active trait set IS option-gated (traitData() picks the SIMPLE vs COMPLEX repo by GAMEOPTION_LEADER_COMPLEX_TRAITS,
 // StoneBase ActiveTraitSet) and PURE_TRAITS IS applied (sumTrait/sumTrait100 drop off-alignment values, StoneBase PureFilter).
 
 // Σ a unit at a scope-wide address as a HUMAN int (value100/100; StoneBase SumUnitAtScope = Σ (int)m.Value), gated.
 int MMKernel::sumUnit(const CvJsonInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec)
 {
+	return sumUnitFrom(DepositIndex::depositsFor(d), wantAddress, unit, ec);
+}
+
+// The vector-taking core of sumUnit: identical match, over whichever compiled-record vector is passed -- so a channel
+// summer folds an obsolete building's `whenObsolete` tree (DepositIndex::whenObsoleteFor(d)) with the SAME gated sum
+// as its normal records (json §4.2). Human int (value100/100).
+int MMKernel::sumUnitFrom(const std::vector<CascadeDeposit>& deps, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec)
+{
 	const int wantId = DepositIndex::lookupAddress(wantAddress);
 	if (wantId < 0) return 0;
 	const int unitId = DepositIndex::lookupSegment(std::string(unit));
 	if (unitId < 0) return 0;
 	int sum = 0;
-	for (size_t i = 0; i < d->deposits.size(); ++i)
+	for (size_t i = 0; i < deps.size(); ++i)
 	{
-		const CvCascadeDeposit& dep = d->deposits[i];
+		const CascadeDeposit& dep = deps[i];
 		if (dep.unitId != unitId || dep.addressId != wantId) continue;
 		if (!applies(dep.enabled, dep.disabled, ec)) continue;
 		sum += dep.value100 / 100;
@@ -94,14 +105,21 @@ int MMKernel::sumUnit(const CvJsonInfo* d, const std::string& wantAddress, const
 // gated -- the OOS-correct sum for FRACTIONAL flats (a commerce −0.6 stays −60, not truncated to 0). modifier.md §2.
 long MMKernel::sumUnit100(const CvJsonInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec)
 {
+	return sumUnit100From(DepositIndex::depositsFor(d), wantAddress, unit, ec);
+}
+
+// The vector-taking core: identical match, over whichever compiled-record vector is passed -- so a channel folds a
+// building's `whenObsolete` tree (DepositIndex::whenObsoleteFor(d)) with the SAME gated sum as its normal records (json §4.2).
+long MMKernel::sumUnit100From(const std::vector<CascadeDeposit>& deps, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec)
+{
 	const int wantId = DepositIndex::lookupAddress(wantAddress);
 	if (wantId < 0) return 0;
 	const int unitId = DepositIndex::lookupSegment(std::string(unit));
 	if (unitId < 0) return 0;
 	long sum = 0;
-	for (size_t i = 0; i < d->deposits.size(); ++i)
+	for (size_t i = 0; i < deps.size(); ++i)
 	{
-		const CvCascadeDeposit& dep = d->deposits[i];
+		const CascadeDeposit& dep = deps[i];
 		if (dep.unitId != unitId || dep.addressId != wantId) continue;
 		if (!applies(dep.enabled, dep.disabled, ec)) continue;
 		sum += dep.value100;
@@ -118,9 +136,10 @@ int MMKernel::sumUnconditioned(const CvJsonInfo* d, const std::string& wantAddre
 	const int unitId = DepositIndex::lookupSegment(std::string(unit));
 	if (unitId < 0) return 0;
 	int sum = 0;
-	for (size_t i = 0; i < d->deposits.size(); ++i)
+	const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+	for (size_t i = 0; i < deps.size(); ++i)
 	{
-		const CvCascadeDeposit& dep = d->deposits[i];
+		const CascadeDeposit& dep = deps[i];
 		if (dep.unitId != unitId || dep.addressId != wantId) continue;
 		if (dep.enabled != NULL || dep.disabled != NULL) continue;
 		sum += dep.value100 / 100;
@@ -155,9 +174,10 @@ int MMKernel::sumTrait(const CvJsonTraitInfo* d, const std::string& wantAddress,
 	if (unitId < 0) return 0;
 	const bool bPure = GC.getGame().isOption(GAMEOPTION_LEADER_PURE_TRAITS);
 	int sum = 0;
-	for (size_t i = 0; i < d->deposits.size(); ++i)
+	const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+	for (size_t i = 0; i < deps.size(); ++i)
 	{
-		const CvCascadeDeposit& dep = d->deposits[i];
+		const CascadeDeposit& dep = deps[i];
 		if (dep.unitId != unitId || dep.addressId != wantId) continue;
 		if (!applies(dep.enabled, dep.disabled, ec)) continue;
 		if (bPure && (d->negativeTrait ? dep.value100 > 0 : dep.value100 < 0)) continue;
@@ -174,9 +194,10 @@ long MMKernel::sumTrait100(const CvJsonTraitInfo* d, const std::string& wantAddr
 	if (unitId < 0) return 0;
 	const bool bPure = GC.getGame().isOption(GAMEOPTION_LEADER_PURE_TRAITS);
 	long sum = 0;
-	for (size_t i = 0; i < d->deposits.size(); ++i)
+	const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+	for (size_t i = 0; i < deps.size(); ++i)
 	{
-		const CvCascadeDeposit& dep = d->deposits[i];
+		const CascadeDeposit& dep = deps[i];
 		if (dep.unitId != unitId || dep.addressId != wantId) continue;
 		if (!applies(dep.enabled, dep.disabled, ec)) continue;
 		if (bPure && (d->negativeTrait ? dep.value100 > 0 : dep.value100 < 0)) continue;
@@ -200,9 +221,10 @@ static int mmk_sumFlatSegs(const CvJsonInfo* d, int nSeg, int s0, int s1, int s2
 	CvCascadeEvalFlags f;
 	f.bonusFromPlot = bonusFromPlot;
 	int sum = 0;
-	for (size_t i = 0; i < d->deposits.size(); ++i)
+	const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+	for (size_t i = 0; i < deps.size(); ++i)
 	{
-		const CvCascadeDeposit& dep = d->deposits[i];
+		const CascadeDeposit& dep = deps[i];
 		if (dep.unitId != unitFlat || dep.nSeg != nSeg) continue;
 		if (dep.seg[0] != s0 || dep.seg[1] != s1) continue;
 		if (nSeg >= 3 && dep.seg[2] != s2) continue;
@@ -314,9 +336,10 @@ int MMKernel::minPosThreshold(const char* thresholdFamily, const std::string& ch
 			if (bLess && !d->negativeTrait) continue;   // a downside threshold is removed from a non-negative trait
 			if (bExtra && d->negativeTrait) continue;    // an upside threshold is removed from a negative trait
 		}
-		for (size_t i = 0; i < d->deposits.size(); ++i)   // per-DEPOSIT MIN over the family's magnitudes (StoneBase)
+		const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+		for (size_t i = 0; i < deps.size(); ++i)   // per-DEPOSIT MIN over the family's magnitudes (StoneBase)
 		{
-			const CvCascadeDeposit& dep = d->deposits[i];
+			const CascadeDeposit& dep = deps[i];
 			if (dep.unitId != unitFlat || dep.addressId != wantId) continue;
 			if (!applies(dep.enabled, dep.disabled, ec)) continue;
 			const int v = dep.value100 / 100;
@@ -329,9 +352,10 @@ int MMKernel::minPosThreshold(const char* thresholdFamily, const std::string& ch
 		if (c == NO_CIVIC) continue;
 		const CvJsonInfo* d = InfoRepo<CvCivicInfo>::get().get((int)c);
 		if (d == NULL) continue;
-		for (size_t i = 0; i < d->deposits.size(); ++i)   // civics: no alignment, no pure filter
+		const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+		for (size_t i = 0; i < deps.size(); ++i)   // civics: no alignment, no pure filter
 		{
-			const CvCascadeDeposit& dep = d->deposits[i];
+			const CascadeDeposit& dep = deps[i];
 			if (dep.unitId != unitFlat || dep.addressId != wantId) continue;
 			if (!applies(dep.enabled, dep.disabled, ec)) continue;
 			const int v = dep.value100 / 100;
@@ -362,9 +386,10 @@ int MMKernel::buildingKeyedSourcePercent(const std::string& channel, const CvCit
 		if (c == NO_CIVIC) continue;
 		const CvJsonInfo* d = InfoRepo<CvCivicInfo>::get().get((int)c);
 		if (d == NULL) continue;
-		for (size_t i = 0; i < d->deposits.size(); ++i)
+		const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+		for (size_t i = 0; i < deps.size(); ++i)
 		{
-			const CvCascadeDeposit& dep = d->deposits[i];
+			const CascadeDeposit& dep = deps[i];
 			if (dep.unitId != unitPct || dep.nSeg != 4) continue;
 			if (dep.seg[0] != chanId || dep.seg[1] != sEmpire || dep.seg[2] != mBuildings) continue;
 			if (dep.targetFk < 0) continue;

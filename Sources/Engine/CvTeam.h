@@ -8,6 +8,7 @@
 #include "CvGameObject.h"
 #include "CvProperties.h"
 #include "CvDerivedData.h"
+#include "CvCascadeCapabilities.h"   // #430: CascadeTeamCaps -- the owner-side capability-union storage
 
 class CvArea;
 
@@ -26,6 +27,12 @@ public:
 	//	Team-level derived-data repository (see CvDerivedData.h). Tech/war-shared facts; empty for now.
 	CvTeamDataRepository&       dataRepository()       { return m_dataRepository; }
 	const CvTeamDataRepository& dataRepository() const { return m_dataRepository; }
+
+	// #430: the TEAM capability union (capabilities.md) -- the derived-on-query HAVE union, on the ONE
+	// CvDerivedCacheSet protocol (scope-packages.md §3b: owner-side storage, never serialized; setHasTech/
+	// reset MARK, queries ENSURE). Public by the shadow-phase convention; CascadeCapabilities is the query surface.
+	mutable CascadeTeamCaps m_cascadeTeamCaps;
+	void cascadeRefreshCaps(int iMask) const;   // the CacheSet's refresh delegate -> CascadeCapabilities::refreshInto
 
 protected:
 	CvGameObjectTeam m_GameObject;

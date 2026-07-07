@@ -12,6 +12,7 @@
 //	One-shot, gated (gPlayerLogLevel) per-turn shadow: for a sample of cities × {food,production,commerce}, diff the
 //	cascade percent stack vs legacy getBaseYieldRateModifier and emit [MODIFIER/shadow] + [MODIFIER/diff] lines. Hooked
 //	at CvGame::doTurn; reads the JSON info mapped at LOAD (onFinalInitialized).
-void cvCascadeModifierShadow();
+void cvCascadeModifierShadow();          // #430 DISCONNECTED -- the legacy diff; re-enable only to re-verify vs legacy
+void cvCascadeModifierPerfCensus();      // the [MODIFIER/perf] census (ruled perf surface) -- called every turn
 
 #endif // CV_CASCADE_MODIFIER_MATH_H

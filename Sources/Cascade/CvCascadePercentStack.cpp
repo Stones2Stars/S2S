@@ -9,7 +9,7 @@
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "CvCascadePercentStack.h"
 #include "CvCascadeMMKernel.h"
-#include "CvJsonInfo.h"                // CvJsonInfo + CvCascadeDeposit
+#include "CvJsonInfo.h"                // CvJsonInfo (the spec model the DepositIndex compiled from)
 #include "Repos/InfoRepo.h"            // InfoRepo<CvXInfo>::get().get(id)
 #include "Defines/CvGlobals.h"
 #include "Engine/CvCity.h"
@@ -20,8 +20,8 @@
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM
 #include "CvCascadeConditionEval.h"    // CvCascadeEvalCtx + cascadeIsBuildingActive
-#include "CvCascadeEnablerKernel.h"    // EnablerKernel::wireFacts (the standing cascade active set + vicinity provides)
-#include "CvCascadeCityFacts.h"        // CascadeCityFacts -- the areaPercentByArea player-city walk
+#include "CvCascadeEnablerKernel.h"    // EnablerKernel::wireOperatingBuildings (the standing cascade active set + vicinity provides)
+#include "CvCascadeOperatingBuildings.h"        // OperatingBuildings -- the areaPercentByArea player-city walk
 #include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (the candidate prefilter)
 #include "Engine/CvArea.h"             // area()->getID() -- the area-map grouping
 #include <map>
@@ -45,9 +45,10 @@ static const std::vector<int>& ps_channelCands(int chanId, int segCity, int segA
 			{
 				const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
 				if (d == NULL) continue;
-				for (size_t i = 0; i < d->deposits.size(); ++i)
+				const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+				for (size_t i = 0; i < deps.size(); ++i)
 				{
-					const CvCascadeDeposit& dep = d->deposits[i];
+					const CascadeDeposit& dep = deps[i];
 					if (dep.unitId != segPercent || dep.nSeg != 2 || dep.seg[0] != chanId) continue;
 					if (dep.seg[1] != segCity && dep.seg[1] != segArea && dep.seg[1] != segEmpire) continue;
 					cands.push_back(b);
@@ -73,10 +74,11 @@ int PercentStack::percentStack(const std::string& channel, const CvCity* pCity, 
 {
 	++CascadePerf::pctStack;
 	PerfAccumTimer perfT(CascadePerf::pctStackMs);
+	CascadeCondScope ccs(CC_RATES);   // the condEval caller split
 	const CvPlayer& player = GET_PLAYER(pCity->getOwner());
 	CvCascadeEvalCtx ec;                               // the live-engine eval target for the deposit conditions
 	ec.city = pCity; ec.plot = pCity->plot(); ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
-	EnablerKernel::wireFacts(pCity, ec);               // the STANDING cascade facts (active set + vicinity provides)
+	EnablerKernel::wireOperatingBuildings(pCity, ec);               // the STANDING cascade operating buildings (active set + vicinity provides)
 	const std::string wantCity = channel + ".city";
 	const std::string wantArea = channel + ".area";
 	const std::string wantEmpire = channel + ".empire";

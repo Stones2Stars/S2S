@@ -3,10 +3,12 @@
 #define CV_CASCADE_DEPOSIT_INDEX_H
 
 //
-//	DepositIndex -- the #430 COMPILED DEPOSIT INDEX: the load-time strings->ints compile over the CvJsonInfo
-//	deposits (modifier-substrate.md "the compiled deposit index"; cutover.md flip lesson: "the JSON stays
-//	HUMAN-shaped ... and the LOAD step programmatically compiles it into the top-down routing"). Every deposit's
-//	address + unit is interned ONCE when readJson pushes it; the hot-path matchers (MMKernel et al.) then compare
+//	DepositIndex -- the #430 COMPILED DEPOSIT INDEX: the load-time strings->ints compile over the JsonInfo modifier
+//	families (modifier-substrate.md "the compiled deposit index"; cutover.md flip lesson: "the JSON stays
+//	HUMAN-shaped ... and the LOAD step programmatically compiles it into the top-down routing"). The INPUT SOURCE is
+//	the spec model ([DEC-json-not-cascade]): readJson's push walks each mapped info's CvJsonModifiers families
+//	(`j->getModifiers()` / `j->getWhenObsolete()`) -- per (address, CvJsonModEntry) pair, the address + the entry's
+//	unit are interned ONCE into a cascade-side compiled record; the hot-path matchers (MMKernel et al.) then compare
 //	INTS, and a query address that was never authored anywhere answers 0 without touching a single deposit.
 //
 //	The compiled SEGMENTS (family / scope / member / target + the FK-resolved target id) are ALSO the generator of
@@ -16,13 +18,50 @@
 //
 //	Purely-organizational static-methods class: NO data members, never instantiated (patterns.md static-class law).
 //	Game-thread only. The interner is APPEND-ONLY -- ids stay valid across a readJson re-map (rj_clearAllRepos +
-//	re-map re-interns the same strings to the SAME ids). Query-side caches therefore may cache a hit forever but
-//	must RE-LOOKUP while negative (a miss can turn into a hit after a re-map introduces new data).
+//	re-map re-interns the same strings to the SAME ids; the compiled-record registry alone is dropped and refilled,
+//	its keys being the freed infos). Query-side caches therefore may cache a hit forever but must RE-LOOKUP while
+//	negative (a miss can turn into a hit after a re-map introduces new data).
 //
 
+#include "CvJsonModEntry.h"   // CvCascUnit -- the entry's unit enum (the unit segment the push interns)
 #include <string>
+#include <vector>
 
-struct CvCascadeDeposit;
+class CvJsonInfo;
+class CvJsonCondition;
+
+//
+//	The COMPILED DEPOSIT RECORD -- cascade-side ONLY ([DEC-json-not-cascade]: the retired info-side generic vector
+//	and its struct are gone; this equivalent record lives in the cascade's own index and is populated from the spec
+//	model's (address, CvJsonModEntry) pairs at push time). The matchers read: addressId/unitId (whole-address +
+//	unit-segment ids), nSeg + seg[] (the compiled dotted segments), targetFk (the FK-resolved INFOTYPE tail),
+//	value100, enabled/disabled (borrowed pointers into the info-owned condition trees -- the InfoRepo-owned info
+//	outlives the registry entry; clearCompiled() runs before any repo clear). The address/unit strings stay for
+//	rendering/diagnostics only -- matching is ids-only.
+//
+struct CascadeDeposit
+{
+	enum { CASC_DEP_SEGS = 4 };
+	std::string address;               // dotted address MINUS the unit (the CvJsonModifiers family key)
+	std::string unit;                  // the unit segment string (the entry's unit, spelled)
+	int value100;                      // x100 fixed-point magnitude (CvJsonModEntry::value100)
+	const CvJsonCondition* enabled;    // NULL = always-on (borrowed, never owned)
+	const CvJsonCondition* disabled;   // NULL = never-suppressed (borrowed, never owned)
+	bool hasPer;                       // the §3.7 per count-scaler rides the entry (borrowed detail below)
+	int perTypeId;                     // per type FK; -1 = a catch-all token (POPULATION/...)
+	int perEach;                       // the per quantum (default 1)
+	const std::vector<int>* perAnyOf;  // per.anyOf FK ids (borrowed; NULL = none)
+	int addressId;                     // interned whole-address id
+	int unitId;                        // interned unit-segment id
+	int nSeg;                          // dotted segment count (may exceed CASC_DEP_SEGS; extras uncompiled)
+	int seg[CASC_DEP_SEGS];            // interned segment ids (family / scope / member / target), -1 = none
+	int targetFk;                      // FK-resolved engine id of an INFOTYPE tail segment, -1 = not a key
+
+	CascadeDeposit()
+		: value100(0), enabled(NULL), disabled(NULL), hasPer(false), perTypeId(-1), perEach(1), perAnyOf(NULL),
+		  addressId(-1), unitId(-1), nSeg(0), targetFk(-1)
+	{ for (int i = 0; i < CASC_DEP_SEGS; ++i) seg[i] = -1; }
+};
 
 class DepositIndex
 {
@@ -34,10 +73,28 @@ public:
 	static int lookupSegment(const std::string& s);
 	static int lookupAddress(const std::string& s);
 
-	// Fill a deposit's compiled fields from its address/unit strings (readJson push-time; the strings stay for
+	// THE PUSH (readJson load, once per mapped info): walk j->getModifiers()->all() (+ j->getWhenObsolete()) and
+	// compile every (address, entry) pair into this index's registry -- the spec-model input seam of the compiled
+	// index (the runtime shape below it is unchanged). NULL / family-less infos no-op.
+	static void pushInfo(const CvJsonInfo* j);
+
+	// Re-map safety (rj_clearAllRepos): drop the compiled registry -- its keys are the about-to-be-freed infos.
+	// The interner is NOT cleared (append-only law; ids survive the re-map).
+	static void clearCompiled();
+
+	// The compiled records of one source info -- the matchers' iteration surface (a shared empty vector when the
+	// info authored none / is NULL). whenObsoleteFor = the building's obsolete-state tree (json #4.2).
+	static const std::vector<CascadeDeposit>& depositsFor(const CvJsonInfo* j);
+	static const std::vector<CascadeDeposit>& whenObsoleteFor(const CvJsonInfo* j);
+
+	// Fill a record's compiled fields from its address/unit strings (push-time; the strings stay for
 	// rendering/diagnostics). Splits the dotted address, interns each segment (the first CASC_DEP_SEGS kept),
 	// interns the whole address, and FK-resolves the LAST segment to an engine info id when it is an INFOTYPE key.
-	static void compile(CvCascadeDeposit& d);
+	static void compile(CascadeDeposit& d);
+
+	// The unit enum's segment spelling (the exact reverse of cascadeUnitFromString; "" for UNKNOWN) -- the push's
+	// unit-segment source, shared with the [READJSON] census sample lines.
+	static const char* unitSegment(CvCascUnit u);
 
 	// Lazily-cached SEGMENT ids for per-info-type key strings (TYPE string -> segment id) -- kills all string
 	// handling in the per-plot keyed walks. -1 = that TYPE was never authored as a deposit key (nothing matches).

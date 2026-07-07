@@ -8,6 +8,7 @@
 #include "CvCascadePerfCount.h"   // per-turn call counters + stopwatches (owner 2026-07-02: repeat-calc hunt)
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "CvCascadeConditionEval.h"
+#include "CvJsonGate.h"              // cascadeGateOk -- the entity-level enabled/disabled pair
 #include "CvCascadeTally.h"
 #include "AI/CvPlayerAI.h"          // GET_PLAYER
 #include "AI/CvTeamAI.h"           // GET_TEAM
@@ -19,7 +20,14 @@
 #include "Engine/CvGame.h"
 #include "Engine/CvArea.h"
 #include "Engine/CvProperties.h"
+#include "CvCascadeMMKernel.h"        // traitData -- the active-set trait resolver (the L1 policy read)
+#include "CvJsonCivicInfo.h"          // the civic §9 policies block (the L1 policy read)
+#include "CvJsonTraitInfo.h"          // the trait §9 policies block
+#include "Repos/InfoRepo.h"
+#include "Infos/CvCivicInfo.h"
 #include <string>
+
+static bool ev_playerHasPolicy(const CvPlayer* pPlayer, const char* szKey);   // defined below (the L1 policy read)
 
 static bool en_starts(const std::string& s, const char* pfx) { return s.compare(0, strlen(pfx), pfx) == 0; }
 
@@ -41,8 +49,8 @@ static bool ev_hasActiveBuilding(const CvCascadeEvalCtx& ctx, int eBuilding)
 }
 
 // VICINITY scan helper: walk the city's workable plots and test `pred`. (Mirrors StoneBase PlotHas over s.Plots.)
-typedef bool (*EvPlotPred)(const CvPlot*, const CvCascadeCondition*, const CvCity*);
-static bool ev_cityPlotHas(const CvCity* c, EvPlotPred pred, const CvCascadeCondition* a)
+typedef bool (*EvPlotPred)(const CvPlot*, const CvJsonCondition*, const CvCity*);
+static bool ev_cityPlotHas(const CvCity* c, EvPlotPred pred, const CvJsonCondition* a)
 {
 	if (c == NULL) return false;
 	for (int i = 0; i < NUM_CITY_PLOTS; ++i)
@@ -55,31 +63,31 @@ static bool ev_cityPlotHas(const CvCity* c, EvPlotPred pred, const CvCascadeCond
 
 // the workable-plot predicates used by Present (terrain/feature/improvement/route prereqs -- OWNED vicinity; a FEATURE
 // also accepts a NEUTRAL tile unless EXP_STRICT_VICINITY).
-static bool evp_feature(const CvPlot* pl, const CvCascadeCondition* a, const CvCity* c)
+static bool evp_feature(const CvPlot* pl, const CvJsonCondition* a, const CvCity* c)
 {
 	if ((int)pl->getFeatureType() != a->id) return false;
 	const bool bOwned = pl->getOwner() == c->getOwner();
 	const bool bNeutral = pl->getOwner() == NO_PLAYER;
 	return bOwned || (bNeutral && !GC.getGame().isOption((GameOptionTypes)GC.getInfoTypeForString("GAMEOPTION_EXP_STRICT_VICINITY")));
 }
-static bool evp_peak(const CvPlot* pl, const CvCascadeCondition*, const CvCity* c)
+static bool evp_peak(const CvPlot* pl, const CvJsonCondition*, const CvCity* c)
 { return pl->getOwner() == c->getOwner() && pl->isPeak(); }
-static bool evp_hill(const CvPlot* pl, const CvCascadeCondition*, const CvCity* c)
+static bool evp_hill(const CvPlot* pl, const CvJsonCondition*, const CvCity* c)
 { return pl->getOwner() == c->getOwner() && pl->isHills(); }
-static bool evp_terrain(const CvPlot* pl, const CvCascadeCondition* a, const CvCity* c)
+static bool evp_terrain(const CvPlot* pl, const CvJsonCondition* a, const CvCity* c)
 { return pl->getOwner() == c->getOwner() && (int)pl->getTerrainType() == a->id; }
-static bool evp_improvement(const CvPlot* pl, const CvCascadeCondition* a, const CvCity* c)
+static bool evp_improvement(const CvPlot* pl, const CvJsonCondition* a, const CvCity* c)
 { return pl->getOwner() == c->getOwner() && (int)pl->getImprovementType() == a->id; }
-static bool evp_route(const CvPlot* pl, const CvCascadeCondition* a, const CvCity* c)
+static bool evp_route(const CvPlot* pl, const CvJsonCondition* a, const CvCity* c)
 { return pl->getOwner() == c->getOwner() && (int)pl->getRouteType() == a->id; }
 // worked-tile GOM predicates ({HAS_TERRAIN|FEATURE|IMPROVEMENT:X})
-static bool evp_workedTerrain(const CvPlot* pl, const CvCascadeCondition* a, const CvCity*)
+static bool evp_workedTerrain(const CvPlot* pl, const CvJsonCondition* a, const CvCity*)
 { return pl->isBeingWorked() && (int)pl->getTerrainType() == a->id; }
-static bool evp_workedFeatureAny(const CvPlot* pl, const CvCascadeCondition*, const CvCity*)
+static bool evp_workedFeatureAny(const CvPlot* pl, const CvJsonCondition*, const CvCity*)
 { return pl->isBeingWorked() && pl->getFeatureType() != NO_FEATURE; }
-static bool evp_workedFeature(const CvPlot* pl, const CvCascadeCondition* a, const CvCity*)
+static bool evp_workedFeature(const CvPlot* pl, const CvJsonCondition* a, const CvCity*)
 { return pl->isBeingWorked() && (int)pl->getFeatureType() == a->id; }
-static bool evp_workedImprovement(const CvPlot* pl, const CvCascadeCondition* a, const CvCity*)
+static bool evp_workedImprovement(const CvPlot* pl, const CvJsonCondition* a, const CvCity*)
 { return pl->isBeingWorked() && (int)pl->getImprovementType() == a->id; }
 
 // ---- BonusPresent / VicinityHas (StoneBase) ---------------------------------------------------------------------
@@ -131,7 +139,7 @@ static bool ev_bonusPresent(const CvCascadeEvalCtx& ctx, int eBonus, CvCascConne
 
 // ---- Present (StoneBase) -- bare presence by type prefix --------------------------------------------------------
 
-static bool ev_present(const CvCascadeEvalCtx& ctx, const CvCascadeCondition* a)
+static bool ev_present(const CvCascadeEvalCtx& ctx, const CvJsonCondition* a)
 {
 	const std::string& t = a->type;
 	const int id = a->id;
@@ -159,7 +167,7 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvCascadeCondition* a)
 
 // ---- CountOf (StoneBase) ---------------------------------------------------------------------------------------
 
-static int ev_countOf(const CvCascadeEvalCtx& ctx, const CvCascadeCondition* a)
+static int ev_countOf(const CvCascadeEvalCtx& ctx, const CvJsonCondition* a)
 {
 	const std::string& t = a->type;
 	if (en_starts(t, "PROPERTY_"))
@@ -185,7 +193,7 @@ static int ev_countOf(const CvCascadeEvalCtx& ctx, const CvCascadeCondition* a)
 
 // ---- EvalPresence (StoneBase) ----------------------------------------------------------------------------------
 
-static bool ev_evalPresence(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& f, const CvCascadeCondition* a)
+static bool ev_evalPresence(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& f, const CvJsonCondition* a)
 {
 	if (f.ignorePlotScope && a->scope == CASC_SCOPE_PLOT) return true;
 	const std::string& t = a->type;
@@ -214,7 +222,7 @@ static bool ev_evalPresence(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlag
 
 // ---- EvalPredicate (StoneBase) ---------------------------------------------------------------------------------
 
-static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& f, const CvCascadeCondition* pr)
+static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& f, const CvJsonCondition* pr)
 {
 	const CvPlot* p = ctx.plot;
 	switch (pr->predKind)
@@ -235,6 +243,11 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	                                                   : ev_cityPlotHas(ctx.city, evp_workedFeature, pr);
 	case CASC_PRED_HAS_IMPROVEMENT: return ev_cityPlotHas(ctx.city, evp_workedImprovement, pr);
 	case CASC_PRED_IS_CAPITAL:            return ctx.city != NULL && ctx.city->isCapital();
+	// The two engine-counter reads below are OWNER-RULED SANCTIONED (2026-07-05, cutover.md Rulings #4):
+	// isGovernmentCenter -> the counter is KEEP until the Gate-3 building-attributes lane wires (then this
+	// predicate derives from the cascade operating buildings); isPower -> the power machinery is KEEP wholesale ("a city
+	// either has power or does not"), revisited at the later power pass. Neither is a self-containment
+	// violation to re-flag.
 	case CASC_PRED_IS_GOVERNMENT_CENTER:  return ctx.city != NULL && ctx.city->isGovernmentCenter();
 	case CASC_PRED_HAS_POWER:             return ctx.city != NULL && ctx.city->isPower();
 	case CASC_PRED_IS_GOLDEN_AGE:         return ctx.player != NULL && ctx.player->isGoldenAge();
@@ -254,7 +267,12 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	{
 		const ReligionTypes sr = ctx.player != NULL ? ctx.player->getStateReligion() : NO_RELIGION;
 		if (f.strictStateReligionForBuild) return (int)sr == pr->id;
-		return (int)sr == pr->id || sr == NO_RELIGION;   // lenient (modifier); NonStateReligionCommerce deferred (modifier-side)
+		// lenient (modifier) + the L1 POLICY read (2026-07-05, the ruled Free-Church shape): a present
+		// religion's SR-gated commerce pays under the nonStateReligionCommerce POLICY -- the legacy
+		// getReligionCommerceByReligion OR-gate, derived from the civic/trait grantors' §9 policies
+		// blocks, NEVER the legacy m_iNonStateReligionCommerceCount counter
+		return (int)sr == pr->id || sr == NO_RELIGION
+		    || ev_playerHasPolicy(ctx.player, "nonStateReligionCommerce");
 	}
 	case CASC_PRED_LATITUDE:
 	{
@@ -275,10 +293,63 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 // EvalState.ObsoleteBuildings ∪ PrereqWaivedBuildings: a prereq obsoleted by a held tech, OR one whose SpecialBuilding
 // group is civic-not-required). The set is built by AugmentState (en_augmentWaived) and pointed-to in the ctx; the
 // evaluator just reads it (decoupled -- no InfoRepo / civic walk here). NULL set -> no waivers.
-static bool ev_isWaivedPrereq(const CvCascadeEvalCtx& ctx, const CvCascadeCondition* c)
+static bool ev_isWaivedPrereq(const CvCascadeEvalCtx& ctx, const CvJsonCondition* c)
 {
 	if (c == NULL || c->kind != CASC_COND_PRESENCE || !en_starts(c->type, "BUILDING_") || c->id < 0) return false;
 	return ctx.waivedPrereqBuildings != NULL && ctx.waivedPrereqBuildings->count(c->id) != 0;
+}
+
+// The §9 POLICY read (derived-on-query over the LIVE grantors -- adopted civics + active traits; the L1
+// ruling: the SR-commerce waiver "is in essence a civic-instated POLICY"). Reads the CvJson*Info policies
+// sets, never a legacy counter (DEC-calc-zero-ride-in). Sole data grantors today: complex traits
+// (bigot/progressive/spiritual); the civic half is model headroom the walk carries for free.
+// ⛔ MEMOIZED PER PLAYER (the 2026-07-05 grind fix, mapped by the condEval caller split): the naive walk
+// (~1200 traits × a std::string construction + set lookup EACH) ran per {STATE_RELIGION:X} LEAF -- the
+// operating buildings fixpoint + frontier fills evaluate those lenient leaves millions of times per turn (ceFacts 2.58M +
+// ceFrontB 2.15M), which ground the first verification turn to a crawl. The verdict changes only on
+// civic/trait events, so it memoizes on a version bumped by cascadePolicyStateChanged (wired into
+// markPlayerScopeAndCities, the civic/trait/tech event fan-in; a tech bump is a harmless extra recompute).
+// Game-thread statics (the established census/memo idiom).
+static int s_policyVer[MAX_PLAYERS];        // bumped on civic/trait/tech events (0 = pristine)
+static int s_policyMemoVer[MAX_PLAYERS];    // the memoized verdict's version (-1 = never computed)
+static bool s_policyMemoNSRC[MAX_PLAYERS];  // the nonStateReligionCommerce verdict
+static bool s_policyInit = false;
+
+void cascadePolicyStateChanged(int ePlayer)
+{
+	if (!s_policyInit) return;   // pristine arrays -- the first read initializes
+	if (ePlayer >= 0 && ePlayer < MAX_PLAYERS) ++s_policyVer[ePlayer];
+}
+
+static bool ev_playerHasPolicy(const CvPlayer* pPlayer, const char* szKey)
+{
+	if (pPlayer == NULL) return false;
+	if (!s_policyInit)
+	{
+		for (int i = 0; i < MAX_PLAYERS; ++i) { s_policyVer[i] = 0; s_policyMemoVer[i] = -1; s_policyMemoNSRC[i] = false; }
+		s_policyInit = true;
+	}
+	const int p = (int)pPlayer->getID();
+	if (p < 0 || p >= MAX_PLAYERS) return false;
+	if (s_policyMemoVer[p] == s_policyVer[p]) return s_policyMemoNSRC[p];   // the O(1) hot path
+
+	bool bHas = false;
+	for (int i = 0; i < GC.getNumCivicOptionInfos() && !bHas; ++i)
+	{
+		const CivicTypes eCivic = pPlayer->getCivics((CivicOptionTypes)i);
+		if (eCivic == NO_CIVIC) continue;
+		const CvJsonCivicInfo* d = static_cast<const CvJsonCivicInfo*>(InfoRepo<CvCivicInfo>::get().get(eCivic));
+		if (d != NULL && d->getPolicies() != NULL && d->getPolicies()->has(szKey)) bHas = true;
+	}
+	for (int t = 0; t < GC.getNumTraitInfos() && !bHas; ++t)
+	{
+		if (!pPlayer->hasTrait((TraitTypes)t)) continue;
+		const CvJsonTraitInfo* d = MMKernel::traitData(t);
+		if (d != NULL && d->getPolicies() != NULL && d->getPolicies()->has(szKey)) bHas = true;
+	}
+	s_policyMemoNSRC[p] = bHas;
+	s_policyMemoVer[p] = s_policyVer[p];
+	return bHas;
 }
 
 // Reads the cascade-computed ACTIVE set, or -- absent it -- falls back to raw PRESENCE (hasBuilding, a raw
@@ -289,9 +360,18 @@ bool cascadeIsBuildingActive(int eBuilding, const CvCascadeEvalCtx& ec)
 	                                  : (ec.city != NULL && eBuilding >= 0 && ec.city->hasBuilding((BuildingTypes)eBuilding));
 }
 
-bool cascadeEvalCondition(const CvCascadeCondition* c, const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& flags)
+// The obsolete set the SAME obsoletion process maintains (present ∧ obsoleted-by-held-tech, json §4.2): an obsolete
+// building deposits its `whenObsolete` tree in place of its normal families. NULL set = none (no raw-presence fallback:
+// obsolescence needs the team's held techs, computed cascade-side, never read from the engine).
+bool cascadeIsBuildingObsolete(int eBuilding, const CvCascadeEvalCtx& ec)
+{
+	return ec.obsoleteBuildings != NULL && eBuilding >= 0 && ec.obsoleteBuildings->count(eBuilding) != 0;
+}
+
+bool cascadeEvalCondition(const CvJsonCondition* c, const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& flags)
 {
 	++CascadePerf::condEval;
+	++CascadePerf::condEvalBy[CascadePerf::condCaller];   // the caller-domain split (CascadeCondScope sets the tag)
 	if (c == NULL) return true;                                  // vacuously true
 	if (c->kind == CASC_COND_PRESENCE) return ev_evalPresence(ctx, flags, c);
 	if (c->kind == CASC_COND_PREDICATE) return ev_evalPredicate(ctx, flags, c);
@@ -314,5 +394,16 @@ bool cascadeEvalCondition(const CvCascadeCondition* c, const CvCascadeEvalCtx& c
 		if (cascadeEvalCondition(c->noneOf[i], ctx, flags)) return false;
 	if (c->enabled != NULL && !cascadeEvalCondition(c->enabled, ctx, flags)) return false;
 	if (!flags.ignoreDisabled && c->disabled != NULL && cascadeEvalCondition(c->disabled, ctx, flags)) return false;
+	return true;
+}
+
+// The ENTITY-LEVEL applicability gate (json.md §2 Applicability; owner 2026-07-08 -- the loadPrune replacement):
+// the entity applies only while `enabled` holds (NULL = always-on) and `disabled` does not (§3.9 order: enabled
+// first, disabled overrides). Same evaluator as every other condition -- a GAMEOPTION_X leaf reads the live options.
+bool cascadeGateOk(const CvJsonGate* pGate, const CvCascadeEvalCtx& ec, const CvCascadeEvalFlags& flags)
+{
+	if (pGate == NULL) return true;
+	if (pGate->enabled != NULL && !cascadeEvalCondition(pGate->enabled, ec, flags)) return false;
+	if (pGate->disabled != NULL && cascadeEvalCondition(pGate->disabled, ec, flags)) return false;
 	return true;
 }

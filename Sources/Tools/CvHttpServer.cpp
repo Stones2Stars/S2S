@@ -28,7 +28,7 @@
 #include "CvUnitCombatInfo.h" // /computed/cities/yields heal-per-unitcombat decomposition (getUnitCombatInfo().getType())
 #include "Cascade/CvCascadeCapabilities.h" // /computed/teamFlags hasLanguage (the legacy latch is cut, #430)
 #include "Cascade/CvCascadeWellbeing.h"    // the §2b wellbeing port's verdicts on /computed/cities/wellbeing
-#include "Cascade/CvCascadeEnablerKernel.h" // wireFacts for the wellbeing eval ctx
+#include "Cascade/CvCascadeEnablerKernel.h" // wireOperatingBuildings for the wellbeing eval ctx
 // NB no Cascade headers: this surface serves RAW state (/state) and the ENGINE's own answers (/computed)
 // only -- the cascade-vs-legacy shadow comparison was retired (the cutover is validated by the external
 // dry-calc + logging). See docs/specs/http-endpoints.md.
@@ -123,6 +123,7 @@ namespace
 	char g_evalType[96]   = { 0 };     // e.g. BUILDING_FORGE
 	int  g_evalPlayer     = -1;        // -1 == use the active player (resolved game-side)
 	int  g_evalCity       = -1;        // -1 == the player's capital (resolved game-side); else a city id
+	int  g_evalUnit       = -1;        // -1 == no unit selected; else a unit id (per-player-unique; /computed/units/heal)
 	CvString g_evalResult;             // the rendered JSON answer            (game -> server), guarded by g_evalLock
 
 	bst::shared_ptr<const GameSnapshot> grabSnapshot()
@@ -560,7 +561,7 @@ namespace
 
 		// VICINITY bonuses (hasVicinityBonus) -- physically in the city's workable radius, DISTINCT from the
 		// trade-connected `bonuses` (hasBonus). The cascade's connection:vicinity atoms read THIS set
-		// (CvCascadeCondition.cpp:114 CONN_VICINITY -> hasVicinityBonus); without it the calc cannot tell a
+		// (CvJsonCondition.cpp:114 CONN_VICINITY -> hasVicinityBonus); without it the calc cannot tell a
 		// vicinity bonus from a trade-connected one (the gatherer requires.operate bonus gate -- the 964-miss bug).
 		picojson::value::array vicinityBonuses;
 		for (int b = 0; b < GC.getNumBonusInfos(); ++b)
@@ -1561,6 +1562,15 @@ namespace
 				e["traits"] = picojson::value(traits);
 				const ReligionTypes eState = kPlayer.getStateReligion();
 				if (eState != NO_RELIGION) e["stateReligion"] = picojson::value(std::string(GC.getReligionInfo(eState).getType()));
+				// the commerce SLIDERS (raw player state the calculator folds -- doc'd on this slice; was
+				// only on /computed/players until 2026-07-05, the wellbeing-instrument batch item)
+				{
+					picojson::value::object sliders;
+					for (int cs = 0; cs < NUM_COMMERCE_TYPES; ++cs)
+						sliders[GC.getCommerceInfo((CommerceTypes)cs).getType()] =
+							picojson::value((double)kPlayer.getCommercePercent((CommerceTypes)cs));
+					e["commercePercent"] = picojson::value(sliders);
+				}
 				arr.push_back(picojson::value(e));
 			}
 			else if (strcmp(szAction, "stateUnits") == 0)
@@ -1603,7 +1613,7 @@ namespace
 		return CvString(picojson::value(root).serialize().c_str());
 	}
 
-	CvString evaluateGate(const char* szAction, const char* szType, int iPlayer, int iCityReq)
+	CvString evaluateGate(const char* szAction, const char* szType, int iPlayer, int iCityReq, int iUnitReq)
 	{
 		// /state/all -- the entire raw game-state in one document; iPlayer < 0 == ALL players (runs before the
 		// single-player resolution below, so the "all players" walk is reachable).
@@ -1749,7 +1759,7 @@ namespace
 				CvCascadeEvalCtx wbec;
 				wbec.city = pCity; wbec.plot = pCity->plot(); wbec.player = &kWbOwner;
 				wbec.team = &GET_TEAM(kWbOwner.getTeam());
-				EnablerKernel::wireFacts(pCity, wbec);
+				EnablerKernel::wireOperatingBuildings(pCity, wbec);
 				// the REALIZED cascade verdicts (slot + the live military-on-top fold = the flipped getters' values)
 				o["cascHappy"] = picojson::value((double)CascadeAccumulator::wellbeing(pCity, 0));
 				o["cascUnhappy"] = picojson::value((double)CascadeAccumulator::wellbeing(pCity, 1));
@@ -1844,6 +1854,10 @@ namespace
 					}
 					sc["gpBaseCasc"] = picojson::value((double)CascadeScalarChannels::gpRateBase(pCity, wbec));
 					sc["gpBaseLeg"] = picojson::value((double)(pCity->getBaseGreatPeopleRateLegacy() - kWbOwner.getNationalGreatPeopleRate()));
+					// the NATIONAL leg pair (the L6 fold 2026-07-05): the cascade-derived trait sum the flipped
+					// getter now adds vs the legacy accumulator -- a divergence names the drift/PURE class here
+					sc["gpNationalCasc"] = picojson::value((double)CascadeAccumulator::scGpNational(&kWbOwner));
+					sc["gpNationalLeg"] = picojson::value((double)kWbOwner.getNationalGreatPeopleRate());
 					sc["gpModCasc"] = picojson::value((double)CascadeScalarChannels::gpRateModifier(pCity, wbec));
 					sc["gpModLeg"] = picojson::value((double)pCity->getTotalGreatPeopleRateModifierLegacy());
 					// the gpMod legacy PARTS + the cascade-side split (attribute, don't guess)
@@ -1858,6 +1872,33 @@ namespace
 					}
 					sc["defenseCasc"] = picojson::value((double)CascadeScalarChannels::defenseAmount(pCity, wbec));
 					sc["defenseLeg"] = picojson::value((double)pCity->getBuildingDefenseLegacy());
+					// the L13 wired members (2026-07-05): each pair = the cascade member vs its legacy
+					// accumulator -- the pre-flip attribution for the bombard/min/player defense getters
+					sc["defBombardCasc"] = picojson::value((double)CascadeAccumulator::scBuildingBombardDefense(pCity));
+					sc["defBombardLeg"] = picojson::value((double)pCity->getBuildingBombardDefense());
+					sc["defBombardBuildingCasc"] = picojson::value((double)CascadeAccumulator::scDefenseBombard(pCity));  // the raw building leg (pre national+cap)
+					sc["defMinCasc"] = picojson::value((double)CascadeAccumulator::scDefenseMin(pCity));
+					sc["defMinLeg"] = picojson::value((double)pCity->getExtraMinDefense());
+					sc["defPlayerCasc"] = picojson::value((double)CascadeAccumulator::scDefensePlayer(&kWbOwner));
+					sc["defPlayerLeg"] = picojson::value((double)kWbOwner.getCityDefenseModifier());
+					// the freeSpecialists AMOUNT pairs (the ruled two-part seam): the cascade's derivable sums
+					// vs the legacy accumulators -- the legacy side ALSO holds the non-derivable classes
+					// (events / settled GPs / era-advance pulses), so a delta attributes to those by name
+					sc["fsAnyCasc"] = picojson::value((double)CascadeAccumulator::fsAmountAny(pCity));
+					sc["fsAnyLeg"] = picojson::value((double)pCity->getFreeSpecialist());
+					{
+						int iFsTypeDiv = 0, iFsCascTot = 0, iFsLegTot = 0;
+						for (int iFs = 0; iFs < GC.getNumSpecialistInfos(); ++iFs)
+						{
+							const int iC = CascadeAccumulator::fsAmountByType(pCity, iFs);
+							const int iL = pCity->getFreeSpecialistCount((SpecialistTypes)iFs);
+							iFsCascTot += iC; iFsLegTot += iL;
+							if (iC != iL) ++iFsTypeDiv;
+						}
+						sc["fsTypeCascTotal"] = picojson::value((double)iFsCascTot);
+						sc["fsTypeLegTotal"] = picojson::value((double)iFsLegTot);
+						sc["fsTypeDiverging"] = picojson::value((double)iFsTypeDiv);
+					}
 					// the defense DRIFT meter: the stored m_iBuildingDefense vs a current-state recompute
 					{
 						int iWbDefRe = 0;
@@ -2039,6 +2080,24 @@ namespace
 				h["buildingBad"] = picojson::value((double)pCity->getBuildingBadHappiness());       // unhappy-only
 				h["extraBuildingGood"] = picojson::value((double)pCity->getExtraBuildingGoodHappiness());
 				h["extraBuildingBad"] = picojson::value((double)pCity->getExtraBuildingBadHappiness());
+				// the L3 attribution instrument (2026-07-05): the cascade's building-keyed extraB term + the
+				// PLAYER keyed tables (nonzero rows) -- names the open legacy-side mystery (the happy verdict
+				// provably not paying the keyed amounts while HEALTH extraBuildingGood equals the authored
+				// keyed HAPPY sums) with numbers on both sides
+				h["extraBCascGood"] = picojson::value((double)pCity->m_cascadeCityPackages.wbHap.extraB.iGood);
+				h["extraBCascBad"] = picojson::value((double)pCity->m_cascadeCityPackages.wbHap.extraB.iBad);
+				{
+					picojson::object tblHap, tblHea;
+					for (int iEb = 0; iEb < GC.getNumBuildingInfos(); ++iEb)
+					{
+						const int vH = kWbOwner.getExtraBuildingHappiness((BuildingTypes)iEb);
+						const int vG = kWbOwner.getExtraBuildingHealth((BuildingTypes)iEb);
+						if (vH != 0) tblHap[GC.getBuildingInfo((BuildingTypes)iEb).getType()] = picojson::value((double)vH);
+						if (vG != 0) tblHea[GC.getBuildingInfo((BuildingTypes)iEb).getType()] = picojson::value((double)vG);
+					}
+					h["extraBuildingHappinessTable"] = picojson::value(tblHap);
+					h["extraBuildingHealthTable"] = picojson::value(tblHea);
+				}
 				h["featureGood"] = picojson::value((double)pCity->getFeatureGoodHappiness());
 				h["featureBad"] = picojson::value((double)pCity->getFeatureBadHappiness());
 				h["bonusGood"] = picojson::value((double)pCity->getBonusGoodHappiness());
@@ -3749,6 +3808,176 @@ namespace
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
+		// ---- /computed/units/heal -- a pinpointed unit's per-turn HEAL rate + the per-source decomposition doHeal
+		// folds, computed READ-ONLY: CvUnit::healRate/getHealRateAsType/healTurns are const and called with
+		// bHealCheck=false, so the support-heal scan performs NO changeHealSupportUsed/changeExperience100 mutation;
+		// doHeal/changeDamage/setDamage are NEVER called -- the unit's HP is untouched. Selector ?player=N&unit=M
+		// (unit id is unique WITHIN a player, like the city (owner,id) tuple). Mirrors /computed/cities/yields: every
+		// additive source is a NAMED field so a heal divergence localises to one term (THE NO-GUESSING RULE). Reads
+		// live plot/city state, so it runs on the game thread (this mailbox). Source of truth: CvUnit::healRate
+		// (CvUnit.cpp:6021), getHealRateAsType (:6212), doHeal (:6467).
+		if (strcmp(szAction, "unitHeal") == 0)
+		{
+			o["unit"] = picojson::value((double)iUnitReq);
+			CvUnit* pU = (iUnitReq >= 0) ? kPlayer.getUnit(iUnitReq) : NULL;
+			if (pU == NULL)
+			{
+				o["error"] = picojson::value(std::string("unit not found for this player"));
+				return CvString(picojson::value(o).serialize().c_str());
+			}
+			const CvPlot* pPlot = pU->plot();
+			const TeamTypes eUTeam = pU->getTeam();
+			const UnitTypes eUT = pU->getUnitType();
+			const CvUnitInfo& kUInfo = GC.getUnitInfo(eUT);
+
+			// identity + HP state
+			o["owner"]    = picojson::value((double)(int)pU->getOwner());
+			o["globalId"] = picojson::value(std::string(CvString::format("%02d-%d", (int)pU->getOwner(), pU->getID()).GetCString()));
+			o["type"]     = picojson::value(std::string(eUT != NO_UNIT ? kUInfo.getType() : "NO_UNIT"));
+			o["x"] = picojson::value((double)pU->getX());
+			o["y"] = picojson::value((double)pU->getY());
+			o["damage"]        = picojson::value((double)pU->getDamage());
+			o["maxHitPoints"]  = picojson::value((double)pU->maxHitPoints());
+			o["currHitPoints"] = picojson::value((double)(pU->maxHitPoints() - pU->getDamage())); // no currHitPoints() getter; = max - damage
+			o["isHurt"]        = picojson::value(pU->isHurt());
+
+			// AUTHORITATIVE engine answers (const, read-only) -- the ground truth the decomposition reconciles to.
+			o["healRate"]  = picojson::value((double)pU->healRate(pPlot, false)); // what doHeal would apply per turn
+			o["healTurns"] = picojson::value((double)pU->healTurns(pPlot));
+
+			// -- ELIGIBILITY context: healRate returns 0 for a unit OUTSIDE friendly territory that lacks a self-heal/
+			//    self-repair promotion, has no TECH_BATTLEFIELD_MEDICINE, and no same-tile/adjacent healer
+			//    (CvUnit.cpp:6027-6088). Flags only; the returned healRate already reflects this gate. --
+			const bool bFriendlyTerr = GET_TEAM(eUTeam).isFriendlyTerritory(pPlot->getTeam());
+			const bool bEnemyTerr    = pU->isEnemy(pPlot->getTeam(), pPlot);
+			const bool bCityPlot     = pPlot->isCity(true, eUTeam);
+			const bool bNoSelfHeal   = pU->hasNoSelfHeal();
+			// bCanHealOutside: a SELF_HEAL/SELF_REPAIR promotion-line promotion lets a unit heal outside friendly
+			// territory (CvUnit.cpp:6031-6045) -- the one gate operand not otherwise derivable from the emitted fields.
+			bool bCanHealOutside = false;
+			{
+				const int iSelfHealLine   = GC.getInfoTypeForString("PROMOTIONLINE_SELF_HEAL");
+				const int iSelfRepairLine = GC.getInfoTypeForString("PROMOTIONLINE_SELF_REPAIR");
+				for (int iPromotion = 0; iPromotion < GC.getNumPromotionInfos() && !bCanHealOutside; ++iPromotion)
+				{
+					if (!pU->isHasPromotion((PromotionTypes)iPromotion)) continue;
+					const int eLine = (int)GC.getPromotionInfo((PromotionTypes)iPromotion).getPromotionLine();
+					if (eLine == iSelfHealLine || eLine == iSelfRepairLine) bCanHealOutside = true;
+				}
+			}
+			{
+				picojson::value::object elig;
+				elig["friendlyTerritory"] = picojson::value(bFriendlyTerr);
+				elig["enemyTerritory"]    = picojson::value(bEnemyTerr);
+				elig["isCityPlot"]        = picojson::value(bCityPlot);
+				elig["isAnimal"]          = picojson::value(pU->isAnimal());
+				elig["isNPC"]             = picojson::value(pU->isNPC());
+				elig["hasNoSelfHeal"]     = picojson::value(bNoSelfHeal);
+				elig["canHealOutsideFriendly"] = picojson::value(bCanHealOutside);
+				const int iBM = GC.getInfoTypeForString("TECH_BATTLEFIELD_MEDICINE");
+				elig["hasBattlefieldMedicine"] = picojson::value(iBM >= 0 && GET_TEAM(eUTeam).isHasTech((TechTypes)iBM));
+				o["eligibility"] = picojson::value(elig);
+			}
+
+			// -- SUPPORT HEAL: best same-tile getSameTileHeal() / adjacent getAdjacentTileHeal() among own-team units
+			//    with heal-support remaining (CvUnit.cpp:6167-6197). Read-only scan (no bHealCheck mutation). The
+			//    additive term is the single MAX across both scans + the contributing healer unit id. --
+			int iSupportHeal = 0;
+			int iHealerUnitId = -1;
+			foreach_(const CvUnit* pLoopUnit, pPlot->units())
+			{
+				if (pLoopUnit->getTeam() == eUTeam && pLoopUnit->hasHealSupportRemaining())
+				{
+					const int iHeal = pLoopUnit->getSameTileHeal();
+					if (iHeal > iSupportHeal) { iSupportHeal = iHeal; iHealerUnitId = pLoopUnit->getID(); }
+				}
+			}
+			for (int d = 0; d < NUM_DIRECTION_TYPES; ++d)
+			{
+				const CvPlot* pAdj = plotDirection(pPlot->getX(), pPlot->getY(), (DirectionTypes)d);
+				if (pAdj == NULL || pAdj->area() != pPlot->area()) continue; // healRate filters adjacent to same area
+				foreach_(const CvUnit* pLoopUnit, pAdj->units())
+				{
+					if (pLoopUnit->getTeam() == eUTeam && pLoopUnit->hasHealSupportRemaining())
+					{
+						const int iHeal = pLoopUnit->getAdjacentTileHeal();
+						if (iHeal > iSupportHeal) { iSupportHeal = iHeal; iHealerUnitId = pLoopUnit->getID(); }
+					}
+				}
+			}
+
+			// -- NAMED additive SOURCES of the NON-healAs path (CvUnit.cpp:6126-6197); these sum (then clamped
+			//    max(1,.) unless hasNoSelfHeal) to healRate for a unit with getNumHealAsTypes()==0. --
+			{
+				picojson::value::object src;
+				const int iSelfHealMod = pU->getSelfHealModifierTotal();
+				if (!bNoSelfHeal || iSelfHealMod < 0)
+					src["selfHealModifier"] = picojson::value((double)iSelfHealMod);
+				if (bCityPlot)
+				{
+					src["cityHealRate"] = picojson::value((double)GC.getCITY_HEAL_RATE());
+					src[bFriendlyTerr ? "extraFriendlyHeal" : "extraNeutralHeal"] =
+						picojson::value((double)(bFriendlyTerr ? pU->getExtraFriendlyHeal() : pU->getExtraNeutralHeal()));
+					const CvCity* pPlotCity = pPlot->getPlotCity();
+					if (pPlotCity != NULL && !pPlotCity->isOccupation())
+						src["cityContribution"] = picojson::value((double)pPlotCity->getHealRate()); // pCity->getHealRate() (CvUnit.cpp:6141)
+				}
+				else if (!bNoSelfHeal)
+				{
+					if (!bFriendlyTerr)
+					{
+						if (bEnemyTerr)
+						{
+							src["enemyHealRate"]  = picojson::value((double)GC.getENEMY_HEAL_RATE());
+							src["extraEnemyHeal"] = picojson::value((double)pU->getExtraEnemyHeal());
+						}
+						else
+						{
+							src["neutralHealRate"]  = picojson::value((double)GC.getNEUTRAL_HEAL_RATE());
+							src["extraNeutralHeal"] = picojson::value((double)pU->getExtraNeutralHeal());
+						}
+					}
+					else
+					{
+						src["friendlyHealRate"]  = picojson::value((double)GC.getFRIENDLY_HEAL_RATE());
+						src["extraFriendlyHeal"] = picojson::value((double)pU->getExtraFriendlyHeal());
+					}
+				}
+				if (iSupportHeal > 0)
+				{
+					src["supportTileHeal"]     = picojson::value((double)iSupportHeal);
+					src["supportHealerUnitId"] = picojson::value((double)iHealerUnitId);
+				}
+				o["sources"] = picojson::value(src);
+			}
+
+			// -- HEAL-AS-COMBAT path (CvUnit.cpp:6091-6124): when getNumHealAsTypes()>0 the total instead comes from
+			//    getHealRateAsType per heal-as unit-combat, and healRate returns the SLOWEST-healing type's rate. Emit
+			//    each type's read-only getHealRateAsType + the city unit-combat heal it folds (getHealUnitCombatTypeTotal). --
+			const int iNumHealAs = kUInfo.getNumHealAsTypes();
+			o["numHealAsTypes"] = picojson::value((double)iNumHealAs);
+			if (iNumHealAs > 0)
+			{
+				picojson::value::array healAs;
+				const CvCity* pPlotCity2 = pPlot->getPlotCity();
+				for (int iI = 0; iI < iNumHealAs; ++iI)
+				{
+					const UnitCombatTypes eHA = (UnitCombatTypes)kUInfo.getHealAsType(iI);
+					picojson::value::object h;
+					h["unitCombat"]     = picojson::value(std::string(eHA != NO_UNITCOMBAT ? GC.getUnitCombatInfo(eHA).getType() : "NO_UNITCOMBAT"));
+					h["healAsDamage"]   = picojson::value((double)pU->getHealAsDamage(eHA));
+					h["healRateAsType"] = picojson::value((double)pU->getHealRateAsType(pPlot, false, eHA));
+					if (bCityPlot && pPlotCity2 != NULL && !pPlotCity2->isOccupation())
+						h["cityUnitCombatHeal"] = picojson::value((double)pPlotCity2->getHealUnitCombatTypeTotal(eHA));
+					healAs.push_back(picojson::value(h));
+				}
+				o["healAsTypes"] = picojson::value(healAs);
+			}
+
+			o["notes"] = picojson::value(std::string("read-only (healRate/getHealRateAsType/healTurns const, bHealCheck=false; no doHeal/changeDamage). healRate=engine total; sources=named additive terms (non-healAs path); healAsTypes=per-unitcombat rates (healAs path uses the slowest)."));
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
 		const int iIdx = GC.getInfoTypeForString(szType, true);
 		if (iIdx < 0)
 		{
@@ -3877,16 +4106,17 @@ namespace
 		{
 			return; // fast idle peek -- no lock taken when nothing is pending
 		}
-		char szAction[40]; char szType[96]; int iPlayer; int iCity;
+		char szAction[40]; char szType[96]; int iPlayer; int iCity; int iUnit;
 		EnterCriticalSection(&g_evalLock);
 		if (g_evalState != EVAL_PENDING) { LeaveCriticalSection(&g_evalLock); return; }
 		strncpy(szAction, g_evalAction, sizeof(szAction)); szAction[sizeof(szAction) - 1] = '\0';
 		strncpy(szType, g_evalType, sizeof(szType)); szType[sizeof(szType) - 1] = '\0';
 		iPlayer = g_evalPlayer;
 		iCity = g_evalCity;
+		iUnit = g_evalUnit;
 		LeaveCriticalSection(&g_evalLock);
 
-		const CvString szResult = evaluateGate(szAction, szType, iPlayer, iCity); // safe: game thread
+		const CvString szResult = evaluateGate(szAction, szType, iPlayer, iCity, iUnit); // safe: game thread
 
 		EnterCriticalSection(&g_evalLock);
 		g_evalResult = szResult;
@@ -3895,7 +4125,7 @@ namespace
 	}
 
 	// SERVER THREAD: enqueue a request, then wait (bounded) for the game thread to render the answer.
-	bool evalRequestBlocking(const char* szAction, const char* szType, int iPlayer, int iCity, CvString& szAnswerOut)
+	bool evalRequestBlocking(const char* szAction, const char* szType, int iPlayer, int iCity, int iUnit, CvString& szAnswerOut)
 	{
 		if (!g_bLockInitialized)
 		{
@@ -3907,6 +4137,7 @@ namespace
 		strncpy(g_evalType, szType, sizeof(g_evalType)); g_evalType[sizeof(g_evalType) - 1] = '\0';
 		g_evalPlayer = iPlayer;
 		g_evalCity = iCity;
+		g_evalUnit = iUnit;
 		g_evalState = EVAL_PENDING;
 		LeaveCriticalSection(&g_evalLock);
 
@@ -3985,6 +4216,7 @@ namespace
 			{ "/computed/whyNot",          "whyNot",         "canTrain decision inputs (type=UNIT_X)" },
 			{ "/computed/teamFlags",       "teamFlags",      "engine capability flags by canonical name (+canTrade/canTradeOn/canWorkOn) — the capabilities-parity oracle" },
 			{ "/computed/unitSkills",      "unitSkills",     "per-unit EFFECTIVE skill booleans (unit+promotion composite getters) — the skills-parity oracle" },
+			{ "/computed/units/heal",      "unitHeal",       "a pinpointed unit's per-turn healRate + per-source decomposition (player=N&unit=M) — read-only, no doHeal" },
 			{ "/computed/game",            "game",           "turn / game-over / winner / victory countdowns" },
 		};
 		const int iNumRoutes = (int)(sizeof(ROUTES) / sizeof(ROUTES[0]));
@@ -4040,6 +4272,7 @@ namespace
 			char szType[96]; szType[0] = '\0';
 			int iPlayer = -1; // -1 == active player (/computed) or ALL players (/state), resolved game-side
 			int iCity = -1;   // -1 == the player's capital (/computed) or no city filter (/state)
+			int iUnit = -1;   // -1 == no unit selected (/computed/units/heal keys on ?player=N&unit=M)
 			char* szTok = szQuery;
 			while (szTok != NULL && *szTok != '\0')
 			{
@@ -4048,6 +4281,7 @@ namespace
 				if (strncmp(szTok, "type=", 5) == 0) { strncpy(szType, szTok + 5, sizeof(szType)); szType[sizeof(szType) - 1] = '\0'; }
 				else if (strncmp(szTok, "player=", 7) == 0) iPlayer = atoi(szTok + 7);
 				else if (strncmp(szTok, "city=", 5) == 0) iCity = atoi(szTok + 5);
+				else if (strncmp(szTok, "unit=", 5) == 0) iUnit = atoi(szTok + 5);
 				else if (strncmp(szTok, "globalId=", 9) == 0)
 				{
 					// the "<PP>-<id>" snowflake selector -> (player, city). atoi stops at '-' (leading zeros fine);
@@ -4060,7 +4294,7 @@ namespace
 			}
 
 			CvString szAnswer;
-			if (evalRequestBlocking(ROUTES[i].szAction, szType, iPlayer, iCity, szAnswer))
+			if (evalRequestBlocking(ROUTES[i].szAction, szType, iPlayer, iCity, iUnit, szAnswer))
 				sendResponse(sock, "200 OK", "application/json", szAnswer, snapshotTurn());
 			else
 				sendResponse(sock, "503 Service Unavailable", "application/json",

@@ -4,13 +4,13 @@
 
 //
 //	CvCascadeConditionEval -- the PORT of StoneBase `CascadingEnabler/ConditionEvaluator.cs`. Walks a typed
-//	[CvCascadeCondition] tree and returns whether it holds, reading the LIVE engine (`CvCity`/`CvPlayer`/`CvPlot`/
+//	[CvJsonCondition] tree and returns whether it holds, reading the LIVE engine (`CvCity`/`CvPlayer`/`CvPlot`/
 //	`CvTeam`) wherever the C# reads its `EvalState`/`PlotContext` snapshot. The LOGIC is a faithful transcription
 //	(StoneBase is the validated reference; owner ruling 2026-06-30) -- only the state reads differ. A NULL condition
 //	is vacuously true; an UNKNOWN predicate is IGNORED (true), never false (json §3.5).
 //
 
-#include "CvCascadeCondition.h"
+#include "CvJsonCondition.h"
 #include <set>
 
 class CvCity;
@@ -35,16 +35,21 @@ struct CvCascadeEvalCtx
 	// the cascade's AugmentState and pointed-to here; NULL = no waivers (the evaluator stays decoupled from InfoRepo).
 	const std::set<int>* waivedPrereqBuildings;
 	// The cascade-COMPUTED ACTIVE (present ∧ operate-holds ∧ ¬dormant-trigger) building ids for `city`; filled by
-	// EnablerKernel::recomputeCityFactsInto (the standing cityFacts cache). The evaluator READS it (stays decoupled from InfoRepo). Dormancy is 100%
+	// EnablerKernel::recomputeOperatingBuildingsInto (the standing operatingBuildings cache). The evaluator READS it (stays decoupled from InfoRepo). Dormancy is 100%
 	// governed by operate enablers -- DERIVED here, NEVER read from the engine active-building/`/state` (DEC-calc-zero-ride-in).
 	// NULL = fall back to raw presence (hasBuilding).
 	const std::set<int>* activeBuildings;
+	// The cascade-COMPUTED OBSOLETE (present ∧ obsoleted-by-held-tech) building ids for `city`; filled by the SAME
+	// obsoletion process (recomputeOperatingBuildingsInto / the ripple) that fills activeBuildings. An obsolete building's
+	// modifier reads its `whenObsolete` tree (json §4.2) in place of its normal deposits; read via cascadeIsBuildingObsolete.
+	// NULL = none (obsolescence needs the team's held techs -- computed cascade-side, no raw-presence fallback).
+	const std::set<int>* obsoleteBuildings;
 	// The BONUS ids supplied IN-VICINITY by this city's ACTIVE buildings' `provides.bonuses` (json §5a): an active
 	// building that provides X (e.g. a tamed-animal building supplying HORSE) ⇒ X is in vicinity. Filled by the enabler
-	// (EnablerKernel::recomputeCityFactsInto, in the SAME pass as activeBuildings -- the standing cityFacts cache); the evaluator READS it (stays
+	// (EnablerKernel::recomputeOperatingBuildingsInto, in the SAME pass as activeBuildings -- the standing operatingBuildings cache); the evaluator READS it (stays
 	// decoupled from InfoRepo). Computed from JSON, NEVER read from the engine's hasVicinityBonus. NULL = none.
 	const std::set<int>* vicinityProvidedBonuses;
-	CvCascadeEvalCtx() : city(NULL), player(NULL), team(NULL), plot(NULL), unit(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL), vicinityProvidedBonuses(NULL) {}
+	CvCascadeEvalCtx() : city(NULL), player(NULL), team(NULL), plot(NULL), unit(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL), obsoleteBuildings(NULL), vicinityProvidedBonuses(NULL) {}
 };
 
 // Evaluator flags (StoneBase's init-only props). For a `requires.build` gate set strictStateReligionForBuild=true.
@@ -63,7 +68,21 @@ struct CvCascadeEvalFlags
 // the engine active-building state). The shared read helper for every modifier calc + the evaluator (single source).
 bool cascadeIsBuildingActive(int eBuilding, const CvCascadeEvalCtx& ec);
 
+// Is a building OBSOLETE for `ec.city`? Reads the cascade-computed `ec.obsoleteBuildings` set (present ∧
+// obsoleted-by-held-tech, json §4.2) -- an obsolete building deposits its `whenObsolete` tree in place of its normal
+// families and provides nothing. Maintained in the SAME obsoletion process as the active set; NULL set = none.
+bool cascadeIsBuildingObsolete(int eBuilding, const CvCascadeEvalCtx& ec);
+
+// The §9 policy memo's invalidation hook (the 2026-07-05 grind fix): call on civic/trait state changes
+// (wired into markPlayerScopeAndCities -- the event fan-in); the per-player policy verdict recomputes lazily.
+void cascadePolicyStateChanged(int ePlayer);
+
 // Evaluate the condition tree against the live engine. `c == NULL` -> true (vacuous).
-bool cascadeEvalCondition(const CvCascadeCondition* c, const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& flags);
+bool cascadeEvalCondition(const CvJsonCondition* c, const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& flags);
+
+// The ENTITY-LEVEL applicability gate (json.md §2 Applicability; owner 2026-07-08): the entity applies only
+// while `enabled` holds (NULL = always) and `disabled` does not (NULL = never). Same evaluator, §3.9 order.
+class CvJsonGate;
+bool cascadeGateOk(const CvJsonGate* pGate, const CvCascadeEvalCtx& ec, const CvCascadeEvalFlags& flags);
 
 #endif // CV_CASCADE_CONDITION_EVAL_H

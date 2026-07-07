@@ -37,12 +37,17 @@ int CascadeProperty::citySourceFlat(int eProp, const CvCity* pCity, const CvCasc
 	const int nB = GC.getNumBuildingInfos();
 	for (int b = 0; b < nB; ++b)
 	{
-		if (!cascadeIsBuildingActive(b, ec)) continue;
 		const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
 		if (d == NULL) continue;
-		for (size_t i = 0; i < d->deposits.size(); ++i)
+		// active -> its normal `deposits`; obsolete -> its `whenObsolete` tree (json §4.2; part-1 delivery into the
+		// SAME property number the solver consumes -- no combine/solver change). Neither -> dormant, contributes 0.
+		const bool bActive = cascadeIsBuildingActive(b, ec);
+		const bool bObsolete = !bActive && cascadeIsBuildingObsolete(b, ec);
+		if (!bActive && !bObsolete) continue;
+		const std::vector<CascadeDeposit>& deps = bObsolete ? DepositIndex::whenObsoleteFor(d) : DepositIndex::depositsFor(d);
+		for (size_t i = 0; i < deps.size(); ++i)
 		{
-			const CvCascadeDeposit& dep = d->deposits[i];
+			const CascadeDeposit& dep = deps[i];
 			if (dep.seg[0] != famId || dep.seg[1] != scopeCity || dep.nSeg != 2 || dep.unitId != unitFlat) continue;
 			if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
 			int v = dep.value100 / 100;
@@ -58,9 +63,10 @@ int CascadeProperty::citySourceFlat(int eProp, const CvCity* pCity, const CvCasc
 		const CvJsonInfo* d = InfoRepo<CvPropertyInfo>::get().get(eProp);
 		if (d != NULL)
 		{
-			for (size_t i = 0; i < d->deposits.size(); ++i)
+			const std::vector<CascadeDeposit>& pdeps = DepositIndex::depositsFor(d);
+			for (size_t i = 0; i < pdeps.size(); ++i)
 			{
-				const CvCascadeDeposit& dep = d->deposits[i];
+				const CascadeDeposit& dep = pdeps[i];
 				if (dep.seg[0] != famId || dep.seg[1] != scopeCity || dep.nSeg != 2 || dep.unitId != unitFlat) continue;
 				if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
 				int v = dep.value100 / 100;
@@ -88,9 +94,10 @@ int CascadeProperty::cityUnitFlat(int eProp, const CvCity* pCity, const CvCascad
 	{
 		const CvJsonInfo* d = InfoRepo<CvUnitInfo>::get().get(pUnit->getUnitType());
 		if (d == NULL) continue;
-		for (size_t i = 0; i < d->deposits.size(); ++i)
+		const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+		for (size_t i = 0; i < deps.size(); ++i)
 		{
-			const CvCascadeDeposit& dep = d->deposits[i];
+			const CascadeDeposit& dep = deps[i];
 			if (dep.seg[0] != famId || (dep.seg[1] != scopeCity && dep.seg[1] != scopePlot)
 				|| dep.nSeg != 2 || dep.unitId != unitFlat) continue;
 			if (MMKernel::applies(dep.enabled, dep.disabled, ec)) iSum += dep.value100 / 100;

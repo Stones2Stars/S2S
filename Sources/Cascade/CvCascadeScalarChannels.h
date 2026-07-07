@@ -4,7 +4,7 @@
 
 //
 //	CascadeScalarChannels -- the #430 city SCALAR channels (legacy-value-calc-map §4/§5/§9.5): greatPeopleRate,
-//	defense, maintenance -- each computed from the curated deposits (buildings via the facts cache + civics +
+//	defense, maintenance -- each computed from the curated deposits (buildings via the operating buildings cache + civics +
 //	traits), netted against the legacy accumulators on /computed/cities/wellbeing (the wellbeing/property
 //	pattern: open the net, reconcile the classes, then slot + flip). DEC-unit-modifiers-on-top holds: nothing
 //	unit-sourced enters these (no unit-carried deposits exist in these families).
@@ -16,6 +16,7 @@
 class CvCity;
 class CvPlayer;
 struct CascadePlayerScope;
+struct CascadeBrLedger;
 
 class CascadeScalarChannels
 {
@@ -26,14 +27,21 @@ public:
 	static int gpModifierCity(const CvCity* pCity, const CvCascadeEvalCtx& ec);          // gp pcts: bldgs + civic/trait
 	static int gpModifierSrCity(const CvCity* pCity, const CvCascadeEvalCtx& ec);        // the SR grouped family (gate live)
 	static int maintenanceModifierCity(const CvCity* pCity, const CvCascadeEvalCtx& ec); // maint pcts: bldgs + civic + techs
+	static int defenseBombardCity(const CvCity* pCity, const CvCascadeEvalCtx& ec);      // L13: bombard pcts (bldgs)
+	static int defenseMinCity(const CvCity* pCity, const CvCascadeEvalCtx& ec);          // L13: the min FLOOR flats (bldgs)
+	// the freeSpecialists AMOUNT city half (the ruled two-part seam): this city's active buildings' counts
+	static void fillFreeSpecialistsCity(const CvCity* pCity, const CvCascadeEvalCtx& ec,
+		int& outAny, std::vector<int>& outByType);
 	static int tradeRoutesCity(const CvCity* pCity, const CvCascadeEvalCtx& ec);         // trade flats: bldgs + civic + techs
 	static int tradeRoutesCoastalCivCity(const CvCity* pCity, const CvCascadeEvalCtx& ec); // civic coastal flats (gate live)
 	// The PLAYER scalar fill: the player-BUILDING sums only (per-source-city ctx).
 	static void fillPlayerScalars(const CvPlayer& player, CascadePlayerScope& out);
-	// The buildRate LEDGER fills: (memberSeg<<20)|keySeg -> Σ percents. City = this city's active buildings +
-	// civics/traits (city ctx) + members + the SR fields; player = all cities' active buildings only.
+	// The buildRate LEDGER fills: DENSE per-kind tables indexed by targetFk -> Σ percents (scope-packages
+	// CascadeBrLedger). City = this city's active buildings + civics/traits (city ctx) + members + the SR
+	// fields; player = all cities' active buildings only.
 	static void fillBuildRateCity(const CvCity* pCity, const CvCascadeEvalCtx& ec,
-		std::map<long, int>& outKeyed, int& outMilitary, int& outSpace, int& outSrUnit, int& outSrBuilding);
+		CascadeBrLedger& outKeyed, int& outMilitary, int& outSpace, int& outSrUnit, int& outSrBuilding,
+		int& outWorldWonder, int& outTeamWonder, int& outNationalWonder);
 	static void fillBuildRatePlayer(const CvPlayer& player, CascadePlayerScope& out);
 
 	// greatPeopleRate: the city BASE (building + specialist flats; the player national rate is a live input)

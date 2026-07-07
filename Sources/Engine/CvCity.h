@@ -13,7 +13,7 @@
 #include "UI/CvUnitList.h"
 #include "CvDerivedData.h"
 #include "Cascade/CvCascadeAccumulator.h"   // CascadeCityPackages -- the #430 city scope packages (m_cascadeCityPackages)
-#include "Cascade/CvCascadeCityFacts.h"     // CascadeCityFacts -- the standing cascade building-facts cache (m_cascadeFacts)
+#include "Cascade/CvCascadeOperatingBuildings.h"     // OperatingBuildings -- the standing cascade operating-buildings cache (m_operatingBuildings)
 #include "UI/CityOutputHistory.h"
 #include "CvGameObject.h"
 
@@ -729,6 +729,7 @@ public:
 	void changeBuildingDefense(int iChange);
 
 	int getBuildingBombardDefense() const;
+	int getBuildingBombardDefenseLegacy() const;   // #430 net oracle until the delete step
 	void changeBuildingBombardDefense(int iChange);
 	int getAdditionalBombardDefenseByBuilding(BuildingTypes eType) const;
 
@@ -1852,10 +1853,10 @@ public:
 	// shadow-phase convention; the CascadeAccumulator module is the query surface.
 	mutable CascadeCityPackages m_cascadeCityPackages;
 	void cascadeRefreshPackages(int iMask) const;   // the CacheSet's refresh delegate -> CascadeAccumulator::refreshCityPackages
-	// #430: the standing cascade building FACTS (active set + vicinity provides) -- same derived-cache idiom
-	// (never serialized; event-marked; the slice boundary is the self-heal). Query via EnablerKernel::cityFacts/wireFacts.
-	mutable CascadeCityFacts m_cascadeFacts;
-	void cascadeRefreshFacts(int iMask) const;   // the CacheSet's refresh delegate -> EnablerKernel::recomputeCityFactsInto
+	// #430: the standing cascade operating buildings (active set + vicinity provides) -- same derived-cache idiom
+	// (never serialized; event-marked; the slice boundary is the self-heal). Query via EnablerKernel::operatingBuildings/wireOperatingBuildings.
+	mutable OperatingBuildings m_operatingBuildings;
+	void refreshOperatingBuildings(int iMask) const;   // the CacheSet's refresh delegate -> EnablerKernel::recomputeOperatingBuildingsInto
 protected:
 
 	std::vector<IDInfo> m_paTradeCities;
@@ -1997,6 +1998,7 @@ public:
 	void changeExtraRiverDefensePenalty(int iChange);
 
 	int getExtraMinDefense() const;
+	int getExtraMinDefenseLegacy() const;   // #430 net oracle until the delete step
 	void setExtraMinDefense(int iValue);
 	void changeExtraMinDefense(int iChange);
 

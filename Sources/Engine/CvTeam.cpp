@@ -37,6 +37,7 @@ CvTeam::CvTeam() : m_GameObject(this),
 m_Properties(this)
 {
 	m_dataRepository.init(this);
+	m_cascadeTeamCaps.set.bind(this, &CvTeam::cascadeRefreshCaps);   // #430: the capability union on the ONE CacheSet protocol
 	m_aiStolenVisibilityTimer = new int[MAX_TEAMS];
 	m_aiWarWearinessTimes100 = new int[MAX_TEAMS];
 	m_aiTechShareCount = new int[MAX_TEAMS];
@@ -81,6 +82,13 @@ m_Properties(this)
 	m_paiFreeSpecialistCount = NULL;
 
 	reset((TeamTypes)0, true);
+}
+
+// #430: the CacheSet's refresh delegate -- the thin owner-side hop to the module math (the CvCity
+// cascadeRefreshPackages idiom). The union has one component, so the mask is ignored.
+void CvTeam::cascadeRefreshCaps(int /*iMask*/) const
+{
+	CascadeCapabilities::refreshInto(*this, m_cascadeTeamCaps);
 }
 
 
@@ -187,7 +195,7 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	int iI, iJ;
 
 	m_dataRepository.reset();
-	CascadeCapabilities::invalidate(eID);   // fresh team identity -> drop the cached capability union
+	m_cascadeTeamCaps.set.markAllDirty();   // fresh team identity -> the capability union rebuilds on next query
 
 	//--------------------------------
 	// Uninit class
@@ -3222,7 +3230,13 @@ void CvTeam::changeEnemyWarWearinessModifier(int iChange)
 
 bool CvTeam::isMapCentering() const
 {
-	return m_bMapCentering;
+	// #430 FLIP-WITH-NET (the wave-2 idiom; owner rulings 2026-07-05 + the data-dead find): the cascade
+	// union serves -- the SOLE live grantor is TECH_GEOMETRY's `hasCenteredMap`, so the flip-on-encounter
+	// latch the owner ruled and the derived union answer identically (techs are never lost; the building-
+	// side bMapCentering tag is schema-only, data-dead). The legacy m_bMapCentering latch stays the
+	// [CAPSHADOW] oracle until the net runs clean, then cuts two-stage; the Python/WB setMapCentering poke
+	// keeps setting the latch meanwhile (a poke shows as a named divergence -- the hasLanguage dead-poke class).
+	return CascadeCapabilities::shadow(getID(), CCF_HAS_CENTERED_MAP, m_bMapCentering);
 }
 
 void CvTeam::setMapCentering(bool bNewValue)
@@ -4449,43 +4463,14 @@ void CvTeam::changeObsoleteBuildingCount(BuildingTypes eIndex, int iChange)
 
 	if (iChange != 0)
 	{
-		const bool bWasObsolete = m_paiObsoleteBuildingCount[eIndex] > 0;
-
+		// #430 obsoletion FLIP (owner 2026-07-07: "legacy obsoletion should only be background"). Keep the team
+		// obsolete FLAG (isObsoleteBuilding still answers -- the prereq consumers + the background record), but legacy
+		// no longer DRIVES obsoletion: the obsolete building STAYS PRESENT so the cascade operating-buildings obsolete
+		// set picks it up and delivers its `whenObsolete` tree (json §4.2) -- which also subsumes the
+		// getObsoletesToBuilding successor swap (the curator folded the successor's families into whenObsolete).
+		// The remove-building + add-successor city loop that lived here is CUT.
 		m_paiObsoleteBuildingCount[eIndex] += iChange;
 		FASSERT_NOT_NEGATIVE(getObsoleteBuildingCount(eIndex));
-
-		if (!bWasObsolete && iChange > 0)
-		{
-			BuildingTypes eObsoletesToBuilding = GC.getBuildingInfo(eIndex).getObsoletesToBuilding();
-
-			while (eObsoletesToBuilding > NO_BUILDING)
-			{
-				if (GC.getBuildingInfo(eObsoletesToBuilding).getObsoleteTech() < 0
-				|| !isHasTech(GC.getBuildingInfo(eObsoletesToBuilding).getObsoleteTech()))
-				{
-					break;
-				}
-				eObsoletesToBuilding = GC.getBuildingInfo(eObsoletesToBuilding).getObsoletesToBuilding();
-			}
-			for (int iI = 0; iI < MAX_PLAYERS; iI++)
-			{
-				if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
-				{
-					foreach_(CvCity * cityX, GET_PLAYER((PlayerTypes)iI).cities())
-					{
-						if (cityX->hasBuilding(eIndex))
-						{
-							cityX->changeHasBuilding(eIndex, false);
-
-							if (eObsoletesToBuilding != NO_BUILDING && !cityX->hasBuilding(eObsoletesToBuilding))
-							{
-								cityX->changeHasBuilding(eObsoletesToBuilding, true);
-							}
-						}
-					}
-				}
-			}
-		}
 	}
 }
 
@@ -4946,7 +4931,7 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 	}
 
 	m_pabHasTech[eTech] = bNewValue;
-	CascadeCapabilities::invalidate(getID());   // the derived capability union is f(held techs) -- the ONE mutation point
+	m_cascadeTeamCaps.set.markAllDirty();   // the derived capability union is f(held techs) -- the ONE mutation point
 	// #430: a researched tech marks THIS team's players' packages + their cities' directly (conditions on
 	// city-scope deposits reference techs -- the fan-out is the event's real footprint)
 	for (int iAccP = 0; iAccP < MAX_PLAYERS; iAccP++)

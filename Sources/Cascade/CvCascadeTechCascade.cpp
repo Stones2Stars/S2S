@@ -29,15 +29,15 @@ void TechCascade::available(const CvPlayer& kPlayer, const CvTeam& kTeam, std::s
 		const CvJsonInfo* j = InfoRepo<CvTechInfo>::get().get(t);
 		if (j != NULL)
 		{
-			std::map<std::string, int>::const_iterator w = j->allowed.find("world");
-			if (w != j->allowed.end())                                 // world cap (rare: a globally-unique tech)
+			const int wcap = j->allowedCap("world");
+			if (wcap >= 0)                                             // world cap (rare: a globally-unique tech)
 			{
 				int held = 0;
 				for (int tm = 0; tm < MAX_TEAMS; ++tm)
 					if (GET_TEAM((TeamTypes)tm).isAlive() && GET_TEAM((TeamTypes)tm).isHasTech((TechTypes)t)) ++held;
-				if (held >= w->second) continue;
+				if (held >= wcap) continue;
 			}
-			if (j->requiresBuild != NULL && !cascadeEvalCondition(j->requiresBuild, ec, flags)) continue;
+			if (j->requiresBuild() != NULL && !cascadeEvalCondition(j->requiresBuild(), ec, flags)) continue;
 		}
 		avail.insert(t);
 	}

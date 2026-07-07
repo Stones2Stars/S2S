@@ -13,10 +13,11 @@
 //
 
 #include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx / CvCascadeEvalFlags -- the eval target for requires conditions
-#include "CvCascadeCityFacts.h"       // CascadeCityFacts -- the standing per-city building-facts cache
+#include "CvCascadeOperatingBuildings.h"       // OperatingBuildings -- the standing per-city operating-buildings cache
 #include <map>
 #include <set>
 #include <string>
+#include <vector>
 
 class CvJsonInfo;
 class CvPlayer;
@@ -59,22 +60,36 @@ public:
 	static void gateSet(const std::string& bucket, const EnBucketSets& cand, const CvCascadeEvalCtx& ec,
 		const CvPlayer& kPlayer, const CvTeam& kTeam, bool bUnit, std::set<int>& avail);
 
-	// The PURE facts recompute: the two per-city building facts in ONE fixpoint pass. `activeOut` = the ACTIVE
+	// The PURE operating buildings recompute: the two per-city operating buildings in ONE fixpoint pass. `activeOut` = the ACTIVE
 	// (present ∧ operate-holds ∧ ¬dormant-trigger) building ids for pCity. DORMANCY is DERIVED from
 	// `requires.operate` + its dormant triggers (the successor buildings whose presence dorms this) -- never the
 	// engine active-building/`/state` (DEC-calc-zero-ride-in; dormancy is 100% governed by operate enablers).
 	// `providedOut` = the union of every ACTIVE building's `provides.bonuses` -- the BONUS ids building supply
-	// makes present IN-VICINITY (json §5a). This is CvCity::cascadeRefreshFacts' recompute target -- consumers
-	// never call it directly; they read the STANDING cache via cityFacts()/wireFacts() below.
-	static void recomputeCityFactsInto(const CvCity* pCity, std::set<int>& activeOut, std::set<int>& providedOut);
+	// makes present IN-VICINITY (json §5a). `obsoleteOut` = the PRESENT ∧ obsoleted-by-held-tech buildings (json §4.2):
+	// a THIRD outcome collected in the SAME pass -- excluded from active/provides, it deposits its `whenObsolete` tree.
+	// This is CvCity::refreshOperatingBuildings' recompute target -- consumers never call it directly; they read the
+	// STANDING cache via operatingBuildings()/wireOperatingBuildings() below.
+	static void recomputeOperatingBuildingsInto(const CvCity* pCity, std::set<int>& activeOut, std::set<int>& providedOut, std::set<int>& obsoleteOut);
 
-	// The STANDING per-city facts (CvCity::m_cascadeFacts, CvCascadeCityFacts.h) -- ensures freshness (event
+	// --- ACTIVE-SET targeted maintenance (state-repositories.md: the active-building set is a CASCADE kept by
+	// targeted PROPAGATION, not blanket-recomputed). buildActiveIndex() inverts every building's `requires.operate`
+	// into an operate-only reverse index at LOAD; the on*Active hooks ripple ONLY the affected buildings into the
+	// AUTHORITATIVE m_operatingBuildings (active/provided/providedCount) in place -- the recompute above stays the load
+	// SEED + the validation oracle. Mirrors the frontier's s_bc*/recheckHave, extended to the operate/provides fixpoint.
+	static void buildActiveIndex();
+	static void onBuildingChangedActive(const CvCity* pCity, int eBuilding);   // a building built/lost in pCity
+	static void onHaveChangedActive(const CvCity* pCity, int eHaveKind);       // pop/religion/corp/power (CASC_HAVE_*)
+	static void onPlayerScopeChangedActive(const CvCity* pCity);              // tech/civic/golden-age (player scope)
+	static void onSliceRebuildActive(const CvCity* pCity);                    // the bounded per-turn dynamic re-check
+	static void seedOperatingBuildings(const CvCity* pCity);                          // the LOAD seed: full recompute + the provider ref-count
+
+	// The STANDING per-city operating buildings (CvCity::m_operatingBuildings, CvCascadeOperatingBuildings.h) -- ensures freshness (event
 	// dirty + the shared accumulator epoch + the turn-roll self-heal) and returns the cache. Replaces the
-	// turn-scoped memo: the facts are EVENT-CORRECT, so the old "shadow-phase-only" caveat is closed.
-	static const CascadeCityFacts& cityFacts(const CvCity* pCity);
+	// turn-scoped memo: the operating buildings are EVENT-CORRECT, so the old "shadow-phase-only" caveat is closed.
+	static const OperatingBuildings& operatingBuildings(const CvCity* pCity);
 	// Convenience: ensure + point ec.activeBuildings / ec.vicinityProvidedBonuses at the standing sets
 	// (feeds cascadeIsBuildingActive + ev_vicinityHas; no per-call set copies).
-	static void wireFacts(const CvCity* pCity, CvCascadeEvalCtx& ec);
+	static void wireOperatingBuildings(const CvCity* pCity, CvCascadeEvalCtx& ec);
 };
 
 #endif // CV_CASCADE_ENABLER_KERNEL_H

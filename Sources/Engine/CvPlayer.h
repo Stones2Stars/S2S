@@ -567,6 +567,7 @@ public:
 	void changeSpaceProductionModifier(int iChange);
 
 	int getCityDefenseModifier() const;
+	int getCityDefenseModifierLegacy() const;   // #430 net oracle until the delete step
 	void changeCityDefenseModifier(int iChange);
 
 	bool isNonStateReligionCommerce() const;
@@ -1473,7 +1474,7 @@ public:
 
 	int getBuildingCommerceChange(BuildingTypes building, CommerceTypes CommerceType) const;
 	void changeBuildingCommerceChange(BuildingTypes building, CommerceTypes CommerceType, int iChange);
-	void recomputeBuildingCommerceChange() const;   // recompute-from-source empire ledger (state-repositories pattern, hand-rolled)
+	void recomputeBuildingCommerceChange(std::vector<int>& aOut) const;   // the CvDerivedCacheVec recompute (flat [building × commerce])
 
 	int getBonusCommerceModifier(BonusTypes eBonus, CommerceTypes eIndex) const;
 	void changeBonusCommerceModifier(BonusTypes eBonus, CommerceTypes eIndex, int iChange);
@@ -1585,8 +1586,10 @@ protected:
 	int** m_ppiSpecialistCommercePercentChanges;
 	int** m_ppaaiTerrainYieldChange;
 	int** m_ppiBuildingCommerceModifier;
-	int** m_ppiBuildingCommerceChange;
-	mutable bool m_bBuildingCommerceChangeDirty;   // recompute-only: dirty on construct/load (never serialized) -> recompute-from-source on first read
+	// the empire per-building commerce-change ledger on the ONE component (CvDerivedCacheVec -- converged
+	// 2026-07-05 from the hand-rolled int** + dirty-bool pair; flat index = building*NUM_COMMERCE_TYPES + commerce;
+	// never serialized, dirty-on-construct, recompute-from-source)
+	mutable CvDerivedCacheVec<CvPlayer, int> m_buildingCommerceChange;
 	int** m_ppiBonusCommerceModifier;
 	bool* m_pabAutomatedCanBuild;
 	int* m_paiResourceConsumption;

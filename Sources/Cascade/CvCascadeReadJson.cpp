@@ -6,9 +6,9 @@
 //	  (2) resolves the entity's type id + selects its per-type InfoRepo (prefix dispatch, RJ_REPO_TYPES),
 //	  (3) calls `data->mapFrom(v)` -- VIRTUAL dispatch: the info "loads itself" (the base parses the common cascade
 //	      sections; each per-type CvJson*Info subclass adds its ONE extension block -- skills/tags/capabilities/policies/
-//	      identity), drawing shared primitives from CvCascadeJsonParse,
-//	  (4) runs a SEPARATE generic CENSUS that classifies every top-level key (cascadeJsonClassifyKey) to prove 0
-//	      UNCLASSIFIED, surfaces every unresolved FK id (cascadeJsonUnresolvedIds), and reads the mapped data back for
+//	      identity), drawing shared primitives from JsonInfo/CvJsonParse,
+//	  (4) runs a SEPARATE generic CENSUS that classifies every top-level key (jsonClassifyKey) to prove 0
+//	      UNCLASSIFIED, surfaces every unresolved FK id (jsonUnresolvedIds), and reads the mapped data back for
 //	      the survey counts. The per-type parsing that used to live here (rj_walk{Capabilities,Policies,Identity,Shrine,
 //	      Mod,EnableEdge,...} + s_rjData) has MOVED onto the types -- the reader no longer re-hand-rolls it.
 //
@@ -17,8 +17,9 @@
 #include "CvCascadeReadJson.h"
 #include "Defines/CvGlobals.h"         // GC.getInfoTypeForString -- the type registry (entity id resolution)
 #include "CvEventSpine.h"              // the #430 dispatch spine -- the [READJSON] census rides it as a CONSUMER
-#include "CvCascadeJsonParse.h"        // cascadeJsonClassifyKey / cascadeJsonUnresolvedIds -- shared vocabulary + FK diag
+#include "CvJsonParse.h"               // jsonClassifyKey / jsonUnresolvedIds -- shared vocabulary + FK diag
 #include "CvJsonInfo.h"                // CvJsonInfo (+ cascadeStartNode) -- the mapped info data + the TECH_GAME_START root
+#include "CvCascadeDepositIndex.h"     // DepositIndex::pushInfo/clearCompiled -- the compiled deposit index (push-time interning)
 #include "CvJsonTechInfo.h"            // CvJsonTechInfo -- for the capabilities read-back survey
 #include "Repos/InfoRepo.h"            // the per-info-type home (InfoRepo<CvXInfo>) -- readJson edit()s, mapFrom populates
 // The cascade info classes = the InfoRepo<CvXInfo> tags for the RJ_REPO_TYPES prefix dispatch (specific headers, not the umbrella).
@@ -51,13 +52,14 @@
 #include <set>
 #include <map>
 #include <string>
+#include <cstdlib>   // getenv -- the BTS Logs dir for the heal-diff file dump
 
 // ===================== [READJSON] spine domain (logging.md §4: logging is a spine CONSUMER) =====================
 enum RjEvt
 {
 	RJE_UNRESOLVED = 1, RJE_MOD, RJE_EDGE, RJE_GRANT, RJE_DIR, RJE_PROBE, RJE_COND_SURVEY, RJE_MOD_SURVEY,
 	RJE_EDGE_SURVEY, RJE_EDGE_UNRES, RJE_GRANT_SURVEY, RJE_GRANT_UNRES, RJE_KEY, RJE_MAP, RJE_CAP_SURVEY,
-	RJE_CAP, RJE_MAP_SUMMARY
+	RJE_CAP, RJE_MAP_SUMMARY, RJE_HEALDIFF, RJE_HEALDIFF_SUMMARY
 };
 
 // DOMAIN-LOCAL field tags, shared by name across lines where a field recurs.
@@ -69,7 +71,8 @@ enum RjFld
 	RJF_PERSCALED, RJF_BAREVALUES, RJF_EDGES, RJF_BUCKETENTRIES, RJF_BUCKETKINDS, RJF_ALLOWEDCLAUSES, RJF_CAPKINDS,
 	RJF_LISTENTRIES, RJF_LISTKINDS, RJF_PULSES, RJF_PULSECHANNELS, RJF_FLAGS, RJF_ENTRYARRAYS, RJF_OBJECTS,
 	RJF_KEY, RJF_COUNT, RJF_CLASS, RJF_DEPOSITS, RJF_REQBUILD, RJF_REQOPERATE, RJF_ALLOWED, RJF_GRANTLISTS,
-	RJF_GRANTPULSES, RJF_GRANTING, RJF_CAPGRANTS, RJF_DISTINCTNAMES, RJF_NAME, RJF_WITHDATA
+	RJF_GRANTPULSES, RJF_GRANTING, RJF_CAPGRANTS, RJF_DISTINCTNAMES, RJF_NAME, RJF_WITHDATA,
+	RJF_FIELD, RJF_ENGINEVAL, RJF_JSONVAL, RJF_CHECKED, RJF_DIVERGING
 };
 
 static const char* rj_prefix(int evt)
@@ -93,6 +96,8 @@ static const char* rj_prefix(int evt)
 	case RJE_CAP_SURVEY:   return "[READJSON/cap-survey]";
 	case RJE_CAP:          return "[READJSON/cap]";
 	case RJE_MAP_SUMMARY:  return "[READJSON/map-summary]";
+	case RJE_HEALDIFF:         return "[READJSON/healdiff]";
+	case RJE_HEALDIFF_SUMMARY: return "[READJSON/healdiff-summary]";
 	default:               return "[READJSON]";
 	}
 }
@@ -146,7 +151,7 @@ static const char* rj_field(int tag, SpineFieldType* peType)
 	case RJF_KEY:           *peType = SFT_STR; return "key";
 	case RJF_COUNT:         return "count";
 	case RJF_CLASS:         *peType = SFT_STR; return "class";
-	case RJF_DEPOSITS:      return "deposits";
+	case RJF_DEPOSITS:      return "modFamilies";   // was "deposits" -- the retired generic vector; now the §6 family count
 	case RJF_REQBUILD:      return "reqBuild";
 	case RJF_REQOPERATE:    return "reqOperate";
 	case RJF_ALLOWED:       return "allowed";
@@ -157,6 +162,11 @@ static const char* rj_field(int tag, SpineFieldType* peType)
 	case RJF_DISTINCTNAMES: return "distinctNames";
 	case RJF_NAME:          *peType = SFT_STR; return "name";
 	case RJF_WITHDATA:      return "entitiesWithCascadeData";
+	case RJF_FIELD:         *peType = SFT_STR; return "field";
+	case RJF_ENGINEVAL:     return "engineVal";
+	case RJF_JSONVAL:       return "jsonVal";
+	case RJF_CHECKED:       return "checked";
+	case RJF_DIVERGING:     return "diverging";
 	default:                return NULL;
 	}
 }
@@ -239,23 +249,37 @@ static CvJsonInfo* rj_jsonEdit(const std::string& t, int id)
 	return NULL;
 }
 
+// PASS-1 ENUM OWNER (XML archived -> readJson mints the id space): assign & register a PER-CATEGORY id in LOAD ORDER
+// for a JSON type, reusing an existing registration (the simple+complex TRAIT_X pair shares ONE id). -1 = not a cascade
+// category (RJ_REPO_TYPES). Id order is SESSION-LOCAL -- the name-tagged save remaps names->ids on load
+// (engine.md Save/load) -- so plain load order needs no deterministic sort / lockstep guarantee.
+static int rj_registerId(const std::string& t, std::map<std::string, int>& catNext)
+{
+	const int existing = GC.getInfoTypeForString(t.c_str(), true);
+	if (existing >= 0) return existing;
+#define X(PFX, T) if (rj_starts(t, PFX)) { const int id = catNext[PFX]++; GC.setInfoTypeFromString(t.c_str(), id); return id; }
+	RJ_REPO_TYPES(X)
+#undef X
+	return -1;
+}
+
 // Clear every cascade InfoRepo (free all CvJsonInfo) BEFORE (re)mapping, so a re-run can't DOUBLE the deposit vectors
 // (cascade-engine-430.md §3 care-point (a)). No-op on the one-shot first run; makes the map re-run-safe at cutover.
 static void rj_clearAllRepos()
 {
+	DepositIndex::clearCompiled();                // the compiled registry keys the about-to-be-freed infos -- drop it
+	                                              // FIRST (the interner stays, append-only: ids survive the re-map)
 #define X(PFX, T) InfoRepo<T>::get().clear();
 	RJ_REPO_TYPES(X)
 #undef X
 	InfoRepo<CvComplexTraitTag>::get().clear();   // the complex trait set's own repo (off the RJ_REPO_TYPES dispatch)
-	cascadeStartNode().clear();                   // the synthetic TECH_GAME_START root lives off the InfoRepo
-	// The start node IS a CvJsonTechInfo (crash fix 2026-07-02) and base clear() is non-virtual -- clear the
-	// tech-side extension too so a re-probe never carries stale capabilities.
-	static_cast<CvJsonTechInfo&>(cascadeStartNode()).capabilities.clear();
+	cascadeStartNodeReset();                      // the synthetic TECH_GAME_START root lives off the InfoRepo --
+	                                              // reset-RECREATE (write-once discipline; a re-map gets a fresh node)
 }
 
 // One walked entity: its type string, engine id, and the CvJsonInfo it mapped into (a stable pointer -- the InfoRepo /
 // start node / complex repo own it and outlive this call -- so the census reads it straight back).
-struct RjEntity { std::string type; int typeId; CvJsonInfo* data; };
+struct RjEntity { std::string type; int typeId; CvJsonInfo* data; picojson::value value; std::string path; };   // value+path stashed in PASS 1 for the PASS-2 map
 
 // Probe-stat stash (set=true stores; set=false reads). Lets a post-load emitter surface what the DARK load-time
 // burst saw: how many files the dataDir scan found + how many entities parsed, and the dataDir string itself.
@@ -266,6 +290,15 @@ const std::string& cascadeReadJsonStats(bool bSet, int& iFiles, int& iEntities, 
 	if (bSet) { s_files = iFiles; s_entities = iEntities; s_dir = sDir; }
 	else { iFiles = s_files; iEntities = s_entities; }
 	return s_dir;
+}
+
+// Sibling stash for the heal/spawn/free-promo shadow-diff summary (see the header). The dark load-time
+// [READJSON/healdiff-summary] is re-surfaced per turn by the [MODIFIER/repo] census where logging is live.
+void cascadeReadJsonHealDiffStats(bool bSet, int& iChecked, int& iDiverging)
+{
+	static int s_checked = -1, s_diverging = -1;   // -1 = the shadow-diff never ran
+	if (bSet) { s_checked = iChecked; s_diverging = iDiverging; }
+	else { iChecked = s_checked; iDiverging = s_diverging; }
 }
 
 void cascadeLoadJson()
@@ -281,7 +314,7 @@ void cascadeLoadJson()
 	cascadeRegisterConsumers();   // register the spine's logging CONSUMER (idempotent) before the census emits
 	rj_registerDomain();
 	rj_clearAllRepos();           // care-point (a): re-map-safe (no-op first run)
-	cascadeJsonResetDiag();       // reset the FK-unresolved accumulator (surfaced below)
+	jsonResetDiag();              // reset the FK-unresolved accumulator (surfaced below)
 
 	std::string base = gDLL->getModName(true);
 	if (!base.empty() && base[base.size() - 1] != '\\' && base[base.size() - 1] != '/') base += "\\";
@@ -293,9 +326,17 @@ void cascadeLoadJson()
 	int iFailed = 0, iEntities = 0, iResolved = 0, iUnresolved = 0, iShownUnres = 0;
 	std::set<std::string> familyKinds, flagKinds;
 	std::map<std::string, int> topKeys;                       // FULL-COVERAGE census: every top-level key kind -> count
-	std::map<std::string, CascJsonKeyClass> keyClass;         // key -> its class (for the RJE_KEY completeness line)
+	std::map<std::string, JsonKeyClass> keyClass;             // key -> its class (for the RJE_KEY completeness line)
 	std::vector<RjEntity> store;
 
+	// ===== PASS 1 -- REGISTER: readJson OWNS the enum now (XML archived). Assign each entity a PER-CATEGORY id in
+	// LOAD ORDER + register type->id; the registry must be COMPLETE before ANY mapFrom, else a FORWARD FK reference
+	// would drop. Parse ONCE -- the parsed value + path are stashed on the RjEntity for PASS 2. TECH_GAME_START is the
+	// synthetic no-engine-id root (id -1, off the InfoRepo).
+	std::map<std::string, int> catNext;   // per-category (RJ_REPO_TYPES prefix) next-id counter
+	int complexNext = 0;                  // the SEPARATE complex-trait enum (owner 2026-07-07): simple + complex share
+	                                      // the exact type string (TRAIT_AGGRESSIVE in both folders), so they must NOT
+	                                      // share an id -- complex gets its OWN id space (into InfoRepo<CvComplexTraitTag>)
 	for (size_t i = 0; i < files.size(); ++i)
 	{
 		std::string text;
@@ -304,33 +345,47 @@ void cascadeLoadJson()
 		const std::string err = picojson::parse(v, text);
 		if (!err.empty() || !v.is<picojson::object>()) { ++iFailed; continue; }
 		const picojson::object& o = v.get<picojson::object>();
-
 		picojson::object::const_iterator t = o.find("type");
 		if (t == o.end() || !t->second.is<std::string>()) continue;
 		++iEntities;
 		const std::string type = t->second.get<std::string>();
-		const int typeId = GC.getInfoTypeForString(type.c_str(), true);   // entity id (separate from the FK diag)
+		// COMPLEX traits (the `\complex\` folder) get their OWN enum -- a separate 0..N id space, never registered into
+		// m_infosMap under the shared TRAIT_ string (that stays the SIMPLE set's). The string->complex-id lookup the
+		// active-set selection needs is the later "cleanly use the 2 separate sets" step; here we only mint the id space.
+		const bool bComplex = rj_starts(type, "TRAIT_") && files[i].find("\\complex\\") != std::string::npos;
+		const int typeId = (type == "TECH_GAME_START") ? -1
+			: bComplex ? complexNext++
+			: rj_registerId(type, catNext);
 		if (typeId >= 0) ++iResolved;
 		else { ++iUnresolved; if (iShownUnres < 16) { eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_UNRESOLVED, 1).addStr(RJF_TYPE, type.c_str())); ++iShownUnres; } }
-
-		// SELECT the per-type InfoRepo + MAP: the info loads itself (virtual mapFrom). TECH_GAME_START is the synthetic
-		// no-prereq root (XML-less -> id -1) homed off the InfoRepo in cascadeStartNode(); complex traits collide on the
-		// engine id with the simple set -> their OWN repo (folder path `\complex\` is the discriminator).
-		const bool bComplexTrait = typeId >= 0 && rj_starts(type, "TRAIT_") && files[i].find("\\complex\\") != std::string::npos;
-		CvJsonInfo* data = (type == "TECH_GAME_START") ? &cascadeStartNode()
-			: bComplexTrait ? InfoRepo<CvComplexTraitTag>::get().editPtr(typeId)
-			: rj_jsonEdit(type, typeId);
-		if (data != NULL) data->mapFrom(v);
-
-		RjEntity rec; rec.type = type; rec.typeId = typeId; rec.data = data;
+		RjEntity rec; rec.type = type; rec.typeId = typeId; rec.data = NULL; rec.value = v; rec.path = files[i];
 		store.push_back(rec);
+	}
 
-		// CENSUS: classify every top-level key (the SAME cascadeJsonClassifyKey the base mapFrom dispatches on) -> the
-		// 0-UNCLASSIFIED completeness proof, independent of the per-type parsing.
+	// ===== PASS 2 -- MAP: registry complete -> each entity loads itself (mapFrom resolves its FKs against the FULL id
+	// space). Complex traits collide on the engine id with the simple set -> their OWN repo (`\complex\` path is the
+	// discriminator). The 0-UNCLASSIFIED census rides here. (The XML shadow-diff is GONE -- the legacy poco is archived;
+	// readJson no longer proves against it.)
+	for (size_t s = 0; s < store.size(); ++s)
+	{
+		RjEntity& rec = store[s];
+		if (!rec.value.is<picojson::object>()) continue;
+		const picojson::object& o = rec.value.get<picojson::object>();
+		const bool bComplexTrait = rec.typeId >= 0 && rj_starts(rec.type, "TRAIT_") && rec.path.find("\\complex\\") != std::string::npos;
+		CvJsonInfo* data = (rec.type == "TECH_GAME_START") ? &cascadeStartNode()
+			: bComplexTrait ? InfoRepo<CvComplexTraitTag>::get().editPtr(rec.typeId)
+			: rj_jsonEdit(rec.type, rec.typeId);
+		rec.data = data;
+		if (data != NULL)
+		{
+			data->mapFrom(rec.value);
+			DepositIndex::pushInfo(data);   // the compiled deposit index PUSH: the info's §6 families (+ whenObsolete)
+			                                // intern + compile HERE, at readJson push-time (modifier-substrate.md)
+		}
 		for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
 		{
 			++topKeys[it->first];
-			const CascJsonKeyClass c = cascadeJsonClassifyKey(it->first, it->second.is<picojson::object>());
+			const JsonKeyClass c = jsonClassifyKey(it->first, it->second.is<picojson::object>());
 			keyClass[it->first] = c;
 			if (c == CJK_FAMILY) familyKinds.insert(it->first);
 			else if (c == CJK_FLAG) flagKinds.insert(it->first);
@@ -349,13 +404,14 @@ void cascadeLoadJson()
 		.addI(RJF_FAMILYKINDS, (int)familyKinds.size()).addI(RJF_FLAGKINDS, (int)flagKinds.size()));
 
 	// FK diagnostics (Orwell bar): every distinct unresolved REFERENCED id (edges/grants/atoms/dormant) collected by
-	// cascadeJsonResolveId during the maps -- surfaced so a data typo never hides.
-	const std::set<std::string>& unres = cascadeJsonUnresolvedIds();
+	// jsonResolveId during the maps -- surfaced so a data typo never hides.
+	const std::set<std::string>& unres = jsonUnresolvedIds();
 	for (std::set<std::string>::const_iterator it = unres.begin(); it != unres.end(); ++it)
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_EDGE_UNRES, 1).addStr(RJF_ID, it->c_str()));
 
-	// READ-BACK survey: reconstruct the modifier-deposit stats + per-entity structure counts from the MAPPED data (the
-	// home), proving the map round-trips (deposits ×100'd, requires/edges/allowed/grants populated).
+	// READ-BACK survey: reconstruct the modifier stats + per-entity structure counts from the MAPPED data (the
+	// home) -- the §6 families on getModifiers(), the spec model ([DEC-json-not-cascade]; the retired generic
+	// vector is gone) -- proving the map round-trips (values ×100'd, requires/edges/allowed/grants populated).
 	int iAttached = 0, iMapSample = 0, iModSample = 0;
 	int mMag = 0, mFlat = 0, mPercent = 0, mMult = 0, mOther = 0, mCond = 0, mPer = 0;
 	for (size_t s = 0; s < store.size(); ++s)
@@ -363,29 +419,42 @@ void cascadeLoadJson()
 		const CvJsonInfo* cd = store[s].data;
 		if (cd == NULL) continue;
 		++iAttached;
-		for (size_t d = 0; d < cd->deposits.size(); ++d)
+		const CvJsonModifiers* mods = cd->getModifiers();
+		if (mods != NULL)
 		{
-			const CvCascadeDeposit& dep = cd->deposits[d];
-			++mMag;
-			if (dep.unit == "flat") ++mFlat; else if (dep.unit == "percent") ++mPercent;
-			else if (dep.unit == "multiplier") ++mMult; else ++mOther;
-			if (dep.enabled || dep.disabled) ++mCond;
-			if (dep.hasPer) ++mPer;
-			if (iModSample < 10)   // concrete value samples -- proves the single human->×100 conversion at the leaf
+			const std::map<std::string, CvJsonModFamily*>& fams = mods->all();
+			for (std::map<std::string, CvJsonModFamily*>::const_iterator fit = fams.begin(); fit != fams.end(); ++fit)
 			{
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MOD, 1)
-					.addStr(RJF_TYPE, store[s].type.c_str()).addStr(RJF_ADDR, dep.address.c_str())
-					.addStr(RJF_UNIT, dep.unit.c_str()).addI(RJF_VAL, dep.value100));
-				++iModSample;
+				if (fit->second == NULL) continue;
+				const std::vector<CvJsonModEntry*>& entries = fit->second->entries;
+				for (size_t e = 0; e < entries.size(); ++e)
+				{
+					const CvJsonModEntry* en = entries[e];
+					if (en == NULL) continue;
+					++mMag;
+					if (en->unit == CASC_UNIT_FLAT) ++mFlat; else if (en->unit == CASC_UNIT_PERCENT) ++mPercent;
+					else if (en->unit == CASC_UNIT_MULTIPLIER) ++mMult; else ++mOther;
+					if (en->enabled != NULL || en->disabled != NULL) ++mCond;
+					if (en->hasPer) ++mPer;   // the §3.7 per count-scaler (represented since 2026-07-08)
+					if (iModSample < 10)   // concrete value samples -- proves the single human->×100 conversion at the leaf
+					{
+						eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MOD, 1)
+							.addStr(RJF_TYPE, store[s].type.c_str()).addStr(RJF_ADDR, fit->first.c_str())
+							.addStr(RJF_UNIT, DepositIndex::unitSegment(en->unit)).addI(RJF_VAL, en->value100));
+						++iModSample;
+					}
+				}
 			}
 		}
 		if (iMapSample < 8)
 		{
 			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MAP, 1)
-				.addStr(RJF_TYPE, store[s].type.c_str()).addI(RJF_DEPOSITS, (int)cd->deposits.size())
-				.addI(RJF_REQBUILD, cd->requiresBuild ? 1 : 0).addI(RJF_REQOPERATE, cd->requiresOperate ? 1 : 0)
-				.addI(RJF_EDGES, (int)cd->edges.size()).addI(RJF_ALLOWED, (int)cd->allowed.size())
-				.addI(RJF_GRANTLISTS, (int)cd->grantLists.size()).addI(RJF_GRANTPULSES, (int)cd->grantPulses.size()));
+				.addStr(RJF_TYPE, store[s].type.c_str()).addI(RJF_DEPOSITS, cd->getModifiers() ? (int)cd->getModifiers()->all().size() : 0)
+				.addI(RJF_REQBUILD, cd->requiresBuild() ? 1 : 0).addI(RJF_REQOPERATE, cd->requiresOperate() ? 1 : 0)
+				.addI(RJF_EDGES, cd->getEdges() ? (int)cd->getEdges()->all().size() : 0)
+				.addI(RJF_ALLOWED, cd->getAllowed() ? (int)cd->getAllowed()->all().size() : 0)
+				.addI(RJF_GRANTLISTS, cd->getGrants() ? (int)cd->getGrants()->lists().size() : 0)
+				.addI(RJF_GRANTPULSES, cd->getGrants() ? cd->getGrants()->pulseCount() : 0));
 			++iMapSample;
 		}
 	}
@@ -400,9 +469,10 @@ void cascadeLoadJson()
 	{
 		if (store[s].data == NULL || !rj_starts(store[s].type, "TECH_")) continue;
 		const CvJsonTechInfo* tech = static_cast<const CvJsonTechInfo*>(store[s].data);
-		if (tech->capabilities.empty()) continue;
+		const CvJsonBoolBlock* caps = tech->getCapabilities();
+		if (caps == NULL || caps->isEmpty()) continue;
 		++capEntities;
-		for (std::set<std::string>::const_iterator it = tech->capabilities.begin(); it != tech->capabilities.end(); ++it)
+		for (std::set<std::string>::const_iterator it = caps->all().begin(); it != caps->all().end(); ++it)
 		{ ++capGrants; capNames.insert(*it); }
 	}
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_CAP_SURVEY, 1)
@@ -415,7 +485,13 @@ void cascadeLoadJson()
 	for (std::map<std::string, int>::const_iterator it = topKeys.begin(); it != topKeys.end(); ++it)
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_KEY, 1)
 			.addStr(RJF_KEY, it->first.c_str()).addI(RJF_COUNT, it->second)
-			.addStr(RJF_CLASS, cascadeJsonKeyClassName(keyClass[it->first])));
+			.addStr(RJF_CLASS, jsonKeyClassName(keyClass[it->first])));
+
+	// The heal/spawn/free-promo shadow-diff is RETIRED with its XML oracle (the archived CvXInfos --
+	// DEC-red-ratchet): the JSON is the only representation now; the heal surface is served at the getter wiring.
+	// The stats stash stays as never-ran (-1) so the per-turn census read keeps working.
+
+
 
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MAP_SUMMARY, 1).addI(RJF_WITHDATA, iAttached));
 }

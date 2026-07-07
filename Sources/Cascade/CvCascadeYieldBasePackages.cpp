@@ -7,7 +7,7 @@
 #include "CvGameCoreDLL.h"
 #include "CvCascadeYieldBasePackages.h"
 #include "CvCascadeMMKernel.h"
-#include "CvJsonInfo.h"                // CvJsonInfo + CvCascadeDeposit
+#include "CvJsonInfo.h"                // CvJsonInfo (the spec model the DepositIndex compiled from)
 #include "Repos/InfoRepo.h"            // InfoRepo<CvXInfo>::get().get(id)
 #include "Defines/CvGlobals.h"
 #include "Engine/CvCity.h"
@@ -57,8 +57,9 @@ static const std::vector<int>& bp_channelCands(int chanId)
 			{
 				const CvJsonInfo* db = InfoRepo<CvBuildingInfo>::get().get(b);
 				if (db == NULL) continue;
-				for (size_t di = 0; di < db->deposits.size(); ++di)
-					if (db->deposits[di].seg[0] == chanId) { cands.push_back(b); break; }
+				const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(db);
+				for (size_t di = 0; di < deps.size(); ++di)
+					if (deps[di].seg[0] == chanId) { cands.push_back(b); break; }
 			}
 		ccIt = s_chanCands.insert(std::make_pair(chanId, cands)).first;
 	}

@@ -14,10 +14,10 @@
 #include "CvCascadePercentStack.h"
 #include "CvCascadeCommerceCalc.h"    // baseOwn100 + the CombineSplit kernel + the pools/ledgers
 #include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx
-#include "CvCascadeEnablerKernel.h"   // EnablerKernel::wireFacts / cityFacts -- the standing facts cache
+#include "CvCascadeEnablerKernel.h"   // EnablerKernel::wireOperatingBuildings / operatingBuildings -- the standing operating buildings cache
 #include "CvCascadeWellbeing.h"       // the §2b gather + the ONE verdict assembly
 #include "CvCascadeScalarChannels.h"  // the scalar city halves + the player fill + the buildRate ledgers
-#include "CvCascadeCityFacts.h"
+#include "CvCascadeOperatingBuildings.h"
 #include "CvCascadeDepositIndex.h"    // the compiled segments -- the derived event masks + the ledger keys
 #include "CvCascadeMMKernel.h"        // sumUnit (the per-item buildRate.self read)
 #include "CvJsonInfo.h"
@@ -80,13 +80,14 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 {
 	if (pCity == NULL || iMask == 0) return;
 	++CascadePerf::accRefresh;
+	CascadeCondScope ccsRates(CC_RATES);   // the condEval split default for this fill; the WB/scalar/frontier branches re-tag
 	CascadeCityPackages& st = pCity->m_cascadeCityPackages;
 
-	// ONE ctx serves every dirty package; the facts are the STANDING per-city cache.
+	// ONE ctx serves every dirty package; the operating buildings are the STANDING per-city cache.
 	const CvPlayer& player = GET_PLAYER(pCity->getOwner());
 	CvCascadeEvalCtx ec;
 	ec.city = pCity; ec.plot = pCity->plot(); ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
-	EnablerKernel::wireFacts(pCity, ec);
+	EnablerKernel::wireOperatingBuildings(pCity, ec);
 
 	for (int y = 0; y < NUM_YIELD_TYPES; ++y)
 	{
@@ -111,8 +112,8 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 				const CascadePlayerScope& ps = player.m_cascadePlayerScope;
 				player.m_cascadePlayerScope.set.ensure(PSC_CFLAT);
 				long keyed = 0;
-				const CascadeCityFacts& facts = EnablerKernel::cityFacts(pCity);
-				for (std::set<int>::const_iterator it = facts.active.begin(); it != facts.active.end(); ++it)
+				const OperatingBuildings& operatingBuildings = EnablerKernel::operatingBuildings(pCity);
+				for (std::set<int>::const_iterator it = operatingBuildings.active.begin(); it != operatingBuildings.active.end(); ++it)
 					keyed += acc_mapGet(ps.cKeyedLedger[c], *it);
 				st.cKeyed100[c] = keyed;
 			}
@@ -121,6 +122,7 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 	}
 	if (iMask & CPK_WB)
 	{
+		CascadeCondScope ccsWb(CC_WB);
 		CascadeWellbeing::gatherCityTerms(pCity, ec, st.wbHap, st.wbHea, st.aiWbCommercePer);
 		// assemble the four verdicts AT FILL (the ruled end-turn cadence) -- reads are bare fetches. The
 		// player fold maps are PULLED fresh (the upward chain).
@@ -156,10 +158,13 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 	{
 		++CascadePerf::scRefresh;
 		PerfAccumTimer perfSc(CascadePerf::scRefreshMs);
+		CascadeCondScope ccsSc(CC_SCALARS);
 		if (iMask & CPK_SCFLAT)
 		{
 			st.scGpBaseBld = CascadeScalarChannels::gpBaseBuildings(pCity, ec);
 			st.scTradeCity = CascadeScalarChannels::tradeRoutesCity(pCity, ec);
+			// the freeSpecialists AMOUNT city half (the ruled seam; building events ride this bit)
+			CascadeScalarChannels::fillFreeSpecialistsCity(pCity, ec, st.fsCityAny, st.fsCityByType);
 		}
 		if (iMask & CPK_SCFLAT)
 			st.scTradeCoastalCiv = CascadeScalarChannels::tradeRoutesCoastalCivCity(pCity, ec);
@@ -168,6 +173,8 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 			st.scGpModCity = CascadeScalarChannels::gpModifierCity(pCity, ec);
 			st.scGpModSr = CascadeScalarChannels::gpModifierSrCity(pCity, ec);
 			st.scDefense = CascadeScalarChannels::defenseAmount(pCity, ec);
+			st.scDefBombard = CascadeScalarChannels::defenseBombardCity(pCity, ec);   // L13
+			st.scDefMin = CascadeScalarChannels::defenseMinCity(pCity, ec);           // L13
 			st.scMaintModCity = CascadeScalarChannels::maintenanceModifierCity(pCity, ec);
 		}
 	}
@@ -175,11 +182,15 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 	{
 		++CascadePerf::scSpecRefresh;
 		PerfAccumTimer perfSc(CascadePerf::scRefreshMs);
+		CascadeCondScope ccsSc(CC_SCALARS);
 		st.scGpBaseSpec = CascadeScalarChannels::gpBaseSpecialists(pCity, ec);
 	}
 	if (iMask & CPK_BR)
+	{
+		CascadeCondScope ccsSc(CC_SCALARS);
 		CascadeScalarChannels::fillBuildRateCity(pCity, ec, st.brCityKeyed, st.brCityMilitary, st.brCitySpace,
-			st.brSrUnitProd, st.brSrBuildingProd);
+			st.brSrUnitProd, st.brSrBuildingProd, st.brCityWorldWonder, st.brCityTeamWonder, st.brCityNationalWonder);
+	}
 	if (iMask & (CPK_FRONT_B | CPK_FRONT_U | CPK_FRONT_PP))
 	{
 		// the ENABLER frontier sets (#430 THE FLIP): the harness-proven calls VERBATIM at the city ctx --
@@ -187,16 +198,25 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 		const CvTeam& kTeam = GET_TEAM(player.getTeam());
 		if (iMask & CPK_FRONT_B)
 		{
+			++CascadePerf::frontBFills;
+			PerfAccumTimer perfFr(CascadePerf::frontBMs);
+			CascadeCondScope ccsFr(CC_FRONT_B);
 			st.enBuildable.clear();
 			BuildingCascade::buildable(pCity, player, kTeam, st.enBuildable);
 		}
 		if (iMask & CPK_FRONT_U)
 		{
+			++CascadePerf::frontUFills;
+			PerfAccumTimer perfFr(CascadePerf::frontUMs);
+			CascadeCondScope ccsFr(CC_FRONT_U);
 			st.enTrainable.clear();
 			UnitCascade::trainable(pCity, player, kTeam, st.enTrainable);
 		}
 		if (iMask & CPK_FRONT_PP)
 		{
+			++CascadePerf::frontPPFills;
+			PerfAccumTimer perfFr(CascadePerf::frontPPMs);
+			CascadeCondScope ccsFr(CC_FRONT_PP);
 			EnBucketSets candC;
 			EnablerKernel::generate(player, pCity, candC);
 			st.enCreatable.clear(); st.enMaintainable.clear();
@@ -209,6 +229,7 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 void CascadeAccumulator::refreshPlayerScope(const CvPlayer* pPlayer, int iMask)
 {
 	if (pPlayer == NULL || iMask == 0) return;
+	CascadeCondScope ccsRates(CC_RATES);   // the split default (YFLAT/CFLAT); the WB/scalar/frontier branches re-tag
 	CascadePlayerScope& ps = pPlayer->m_cascadePlayerScope;
 
 	// the player-ctx (capital) for the empire walks; a cityless player gets fully-zeroed packages
@@ -219,7 +240,7 @@ void CascadeAccumulator::refreshPlayerScope(const CvPlayer* pPlayer, int iMask)
 	if (bHasCtx)
 	{
 		ec.city = pCap; ec.plot = pCap->plot(); ec.player = pPlayer; ec.team = &GET_TEAM(pPlayer->getTeam());
-		EnablerKernel::wireFacts(pCap, ec);
+		EnablerKernel::wireOperatingBuildings(pCap, ec);
 	}
 
 	if (iMask & PSC_YFLAT)
@@ -243,15 +264,27 @@ void CascadeAccumulator::refreshPlayerScope(const CvPlayer* pPlayer, int iMask)
 		}
 	}
 	if (iMask & PSC_WB)
+	{
+		CascadeCondScope ccsWb(CC_WB);
 		CascadeWellbeing::playerAreaEmpire(*pPlayer, ps.wbAreaByFam, ps.wbEmpireByFam, ps.wbBuildingKeyedByFam);
+	}
 	if (iMask & PSC_SC)
+	{
+		CascadeCondScope ccsSc(CC_SCALARS);
 		CascadeScalarChannels::fillPlayerScalars(*pPlayer, ps);
+	}
 	if (iMask & PSC_BR)
+	{
+		CascadeCondScope ccsSc(CC_SCALARS);
 		CascadeScalarChannels::fillBuildRatePlayer(*pPlayer, ps);
+	}
 	if (iMask & PSC_FRONT_P)
 	{
 		// the ENABLER player frontier (#430 THE FLIP): the harness-proven BARE player ctx (no city/plot --
 		// parity was proven with exactly this shape, never the capital ctx above)
+		++CascadePerf::frontPFills;
+		PerfAccumTimer perfFr(CascadePerf::frontPMs);
+		CascadeCondScope ccsFr(CC_FRONT_P);
 		const CvTeam& kTeam = GET_TEAM(pPlayer->getTeam());
 		CvCascadeEvalCtx fec;
 		fec.player = pPlayer; fec.team = &kTeam;
@@ -271,6 +304,9 @@ void CascadeAccumulator::refreshPlayerScope(const CvPlayer* pPlayer, int iMask)
 	{
 		// the promotion frontier's PLAYER-WIDE tech halves (a 700-tech accumHave walk -- its OWN bit so
 		// only promotion picks ever pay it; the per-unit composite folds these + the unit's own halves)
+		++CascadePerf::promoFills;
+		PerfAccumTimer perfFr(CascadePerf::promoMs);
+		CascadeCondScope ccsFr(CC_PROMO);
 		const CvTeam& kTeam = GET_TEAM(pPlayer->getTeam());
 		ps.enPromoTechCand.clear(); ps.enPromoTechRem.clear();
 		EnBucketSets pc, pr;
@@ -381,6 +417,57 @@ int CascadeAccumulator::scDefense(const CvCity* pCity)
 	return pCity->m_cascadeCityPackages.scDefense;
 }
 
+// The freeSpecialists AMOUNTS (the ruled two-part seam, 2026-07-05): city + empire + this-area sums --
+// the values that FEED the engine placement at the demolition; the attribution pairs read them meanwhile.
+int CascadeAccumulator::fsAmountAny(const CvCity* pCity)
+{
+	if (pCity == NULL) return 0;
+	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
+	owner.m_cascadePlayerScope.set.ensure(PSC_SC);
+	const CascadePlayerScope& ps = owner.m_cascadePlayerScope;
+	int iCount = pCity->m_cascadeCityPackages.fsCityAny + ps.fsEmpireAny;
+	iCount += acc_mapGetI(ps.fsAreaAny, pCity->area()->getID());
+	return iCount;
+}
+int CascadeAccumulator::fsAmountByType(const CvCity* pCity, int eSpecialist)
+{
+	if (pCity == NULL || eSpecialist < 0) return 0;
+	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
+	owner.m_cascadePlayerScope.set.ensure(PSC_SC);
+	const std::vector<int>& c = pCity->m_cascadeCityPackages.fsCityByType;
+	const std::vector<int>& p = owner.m_cascadePlayerScope.fsEmpireByType;
+	return (eSpecialist < (int)c.size() ? c[eSpecialist] : 0) + (eSpecialist < (int)p.size() ? p[eSpecialist] : 0);
+}
+
+// The L13 defense wiring (2026-07-05): the wired members, ready for their getters' flips (each getter
+// flips at its own row with the standing scalar-net pattern; these serve the attribution pairs meanwhile).
+int CascadeAccumulator::scDefenseBombard(const CvCity* pCity)
+{
+	return pCity != NULL ? pCity->m_cascadeCityPackages.scDefBombard : 0;
+}
+int CascadeAccumulator::scDefenseMin(const CvCity* pCity)
+{
+	return pCity != NULL ? pCity->m_cascadeCityPackages.scDefMin : 0;
+}
+int CascadeAccumulator::scDefensePlayer(const CvPlayer* pPlayer)
+{
+	if (pPlayer == NULL) return 0;
+	pPlayer->m_cascadePlayerScope.set.ensure(PSC_SC);
+	return pPlayer->m_cascadePlayerScope.defPlayerAll;
+}
+// The COMPOSED bombard defense -- mirrors the getter getBuildingBombardDefense (CvCity.cpp:10114):
+// min(MAX_BOMBARD_DEFENSE, Σbuilding bombard + national trait bombard). The additive parts are the cascade
+// folds (scDefBombard city + defPlayerBombard player); the game-option CAP stays an engine-side composition
+// at the getter (the capabilities game-option-fold precedent). This IS the flipped getter's body.
+int CascadeAccumulator::scBuildingBombardDefense(const CvCity* pCity)
+{
+	if (pCity == NULL) return 0;
+	const CvPlayer* pOwner = &GET_PLAYER(pCity->getOwner());
+	pOwner->m_cascadePlayerScope.set.ensure(PSC_SC);
+	const int iSum = pCity->m_cascadeCityPackages.scDefBombard + pOwner->m_cascadePlayerScope.defPlayerBombard;
+	return std::min(GC.getGame().getModderGameOption(MODDERGAMEOPTION_MAX_BOMBARD_DEFENSE), iSum);
+}
+
 int CascadeAccumulator::scMaintenanceModifier(const CvCity* pCity)
 {
 	if (pCity == NULL) return 0;
@@ -408,7 +495,7 @@ int CascadeAccumulator::scTradeRoutes(const CvCity* pCity)
 }
 
 // ===================== the ENABLER frontier reads (#430 THE FLIP, owner 2026-07-04 "flip it all") =====================
-// ENSURE-ON-READ (the FACTS idiom, deliberately NOT the rates' bare fetch): gate reads are decision-time,
+// ENSURE-ON-READ (the operating buildings idiom, deliberately NOT the rates' bare fetch): gate reads are decision-time,
 // and legacy chains builds within a turn (complete A -> queue B the same slice), so a marked frontier
 // rebuilds at the read -- a clean bit costs one branch. The sets fill via the harness-proven cascade calls.
 
@@ -438,6 +525,16 @@ bool CascadeAccumulator::enMaintain(const CvCity* pCity, int eProcess)
 	if (pCity == NULL || eProcess < 0) return false;
 	pCity->m_cascadeCityPackages.set.ensure(CPK_FRONT_PP);
 	return pCity->m_cascadeCityPackages.enMaintainable.count(eProcess) != 0;
+}
+
+// The L6 fold's read: the derived trait national GP flat (replaces the m_iNationalGreatPeopleRate ride-in
+// in the flipped getBaseGreatPeopleRate; the legacy accumulator lives on inside *Legacy as the net oracle).
+// The max(0,·) clamp mirrors the legacy getter exactly.
+int CascadeAccumulator::scGpNational(const CvPlayer* pPlayer)
+{
+	if (pPlayer == NULL) return 0;
+	pPlayer->m_cascadePlayerScope.set.ensure(PSC_SC);
+	return std::max(0, pPlayer->m_cascadePlayerScope.gpNationalFlat);
 }
 
 bool CascadeAccumulator::enResearch(const CvPlayer* pPlayer, int eTech)
@@ -479,11 +576,12 @@ bool CascadeAccumulator::enBuildUnlocked(const CvPlayer* pPlayer, int eBuild, co
 	const CvTeam& kTeam = GET_TEAM(pPlayer->getTeam());
 	const CvJsonInfo* j = InfoRepo<CvBuildInfo>::get().get(eBuild);
 	if (EnablerKernel::obsoletedByHeldTech(j, kTeam)) return false;
-	if (j == NULL || j->requiresBuild == NULL) return true;
+	if (j == NULL || j->requiresBuild() == NULL) return true;
+	CascadeCondScope ccs(CC_CANBUILD);   // per-(build,plot) worker-AI reads -- their own census bucket
 	CvCascadeEvalCtx pec;
 	pec.plot = pPlot; pec.player = pPlayer; pec.team = &kTeam;
 	CvCascadeEvalFlags bflags; bflags.strictStateReligionForBuild = true;
-	return cascadeEvalCondition(j->requiresBuild, pec, bflags);
+	return cascadeEvalCondition(j->requiresBuild(), pec, bflags);
 }
 
 bool CascadeAccumulator::enBuildUnlockedFast(const CvPlayer* pPlayer, int eBuild)
@@ -506,6 +604,7 @@ bool CascadeAccumulator::enBuildUnlockedFast(const CvPlayer* pPlayer, int eBuild
 bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 {
 	if (pUnit == NULL || ePromo < 0) return false;
+	CascadeCondScope ccs(CC_PROMO);   // the composite's own evals (the frontier-half fill re-tags itself)
 	const CvPlayer& kPlayer = GET_PLAYER(pUnit->getOwner());
 	const CvTeam& kTeam = GET_TEAM(kPlayer.getTeam());
 	kPlayer.m_cascadePlayerScope.set.ensure(PSC_FRONT_PROMO);
@@ -591,16 +690,12 @@ bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 
 struct AccBrSegs
 {
-	int chan, self, percent, units, buildings, domains, unitCombats;
+	int chan, self, percent;
 	AccBrSegs()
 	{
 		chan = DepositIndex::lookupSegment("buildRate");
 		self = DepositIndex::lookupSegment("self");
 		percent = DepositIndex::lookupSegment("percent");
-		units = DepositIndex::lookupSegment("units");
-		buildings = DepositIndex::lookupSegment("buildings");
-		domains = DepositIndex::lookupSegment("domains");
-		unitCombats = DepositIndex::lookupSegment("unitCombats");
 	}
 };
 static const AccBrSegs& acc_brSegs()
@@ -609,47 +704,13 @@ static const AccBrSegs& acc_brSegs()
 	return s;
 }
 
-// The per-type key-segment caches: type id -> compiled segment id (-1 = never authored as a key).
-static int acc_typeSeg(std::vector<int>& cache, int n, int i, const char* szType)
+// The DENSE ledger read (the precipice-§5 fix): one array index per scope by the GAME ENUM id --
+// no tree lookup and no enum->segment conversion (the former per-type key-segment caches deleted).
+static int acc_brLookup(const CvCity* pCity, const std::vector<int> CascadeBrLedger::*mKind, int iId)
 {
-	if ((int)cache.size() != n) cache.assign(n, -2);
-	if (i < 0 || i >= n) return -1;
-	if (cache[i] == -2) cache[i] = DepositIndex::lookupSegment(szType);
-	return cache[i];
-}
-static int acc_unitSeg(UnitTypes e)
-{
-	static std::vector<int> c;
-	return acc_typeSeg(c, GC.getNumUnitInfos(), (int)e, e == NO_UNIT ? "" : GC.getUnitInfo(e).getType());
-}
-static int acc_buildingSeg(BuildingTypes e)
-{
-	static std::vector<int> c;
-	return acc_typeSeg(c, GC.getNumBuildingInfos(), (int)e, e == NO_BUILDING ? "" : GC.getBuildingInfo(e).getType());
-}
-static int acc_domainSeg(DomainTypes e)
-{
-	static std::vector<int> c;
-	return acc_typeSeg(c, NUM_DOMAIN_TYPES, (int)e, e == NO_DOMAIN ? "" : GC.getDomainInfo(e).getType());
-}
-static int acc_combatSeg(UnitCombatTypes e)
-{
-	static std::vector<int> c;
-	return acc_typeSeg(c, GC.getNumUnitCombatInfos(), (int)e, e == NO_UNITCOMBAT ? "" : GC.getUnitCombatInfo(e).getType());
-}
-
-static int acc_brLookup(const CvCity* pCity, int memberSeg, int keySeg)
-{
-	if (memberSeg < 0 || keySeg < 0) return 0;
-	const long key = ((long)memberSeg << 20) | keySeg;
-	const CascadeCityPackages& st = pCity->m_cascadeCityPackages;
-	const CascadePlayerScope& ps = GET_PLAYER(pCity->getOwner()).m_cascadePlayerScope;
-	int v = 0;
-	std::map<long, int>::const_iterator it = st.brCityKeyed.find(key);
-	if (it != st.brCityKeyed.end()) v += it->second;
-	it = ps.brEmpKeyed.find(key);
-	if (it != ps.brEmpKeyed.end()) v += it->second;
-	return v;
+	if (iId < 0) return 0;
+	return CascadeBrLedger::at(pCity->m_cascadeCityPackages.brCityKeyed.*mKind, iId)
+	     + CascadeBrLedger::at(GET_PLAYER(pCity->getOwner()).m_cascadePlayerScope.brEmpKeyed.*mKind, iId);
 }
 
 static int acc_brSelf(const CvJsonInfo* d, const CvCity* pCity)
@@ -661,15 +722,16 @@ static int acc_brSelf(const CvJsonInfo* d, const CvCity* pCity)
 	int iSum = 0;
 	bool bCtx = false;
 	CvCascadeEvalCtx ec;
-	for (size_t i = 0; i < d->deposits.size(); ++i)
+	const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+	for (size_t i = 0; i < deps.size(); ++i)
 	{
-		const CvCascadeDeposit& dep = d->deposits[i];
+		const CascadeDeposit& dep = deps[i];
 		if (dep.nSeg != 2 || dep.unitId != sg.percent || dep.seg[0] != sg.chan || dep.seg[1] != sg.self) continue;
 		if (!bCtx)   // build the eval ctx lazily -- most items carry no self mods at all
 		{
 			const CvPlayer& player = GET_PLAYER(pCity->getOwner());
 			ec.city = pCity; ec.plot = pCity->plot(); ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
-			EnablerKernel::wireFacts(pCity, ec);
+			EnablerKernel::wireOperatingBuildings(pCity, ec);
 			bCtx = true;
 		}
 		if (MMKernel::applies(dep.enabled, dep.disabled, ec)) iSum += dep.value100 / 100;
@@ -683,17 +745,16 @@ int CascadeAccumulator::buildRateUnit(const CvCity* pCity, UnitTypes eUnit)
 	const CvUnitInfo& unit = GC.getUnitInfo(eUnit);
 	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
 	const CascadePlayerScope& ps = owner.m_cascadePlayerScope;
-	const AccBrSegs& sg = acc_brSegs();
 	int iMod = acc_brSelf(InfoRepo<CvUnitInfo>::get().get((int)eUnit), pCity)
-	         + acc_brLookup(pCity, sg.units, acc_unitSeg(eUnit));
+	         + acc_brLookup(pCity, &CascadeBrLedger::units, (int)eUnit);
 	if (!unit.isNoNonTypeProdMods())
 	{
-		iMod += acc_brLookup(pCity, sg.domains, acc_domainSeg(unit.getDomainType()));
+		iMod += acc_brLookup(pCity, &CascadeBrLedger::domains, (int)unit.getDomainType());
 		if (unit.getUnitCombatType() != NO_UNITCOMBAT)   // subs count only with a main combat
 		{
-			iMod += acc_brLookup(pCity, sg.unitCombats, acc_combatSeg((UnitCombatTypes)unit.getUnitCombatType()));
+			iMod += acc_brLookup(pCity, &CascadeBrLedger::unitCombats, unit.getUnitCombatType());
 			foreach_(const UnitCombatTypes eSub, unit.getSubCombatTypes())
-				iMod += acc_brLookup(pCity, sg.unitCombats, acc_combatSeg(eSub));
+				iMod += acc_brLookup(pCity, &CascadeBrLedger::unitCombats, (int)eSub);
 		}
 		if (unit.isMilitaryProduction())
 			iMod += pCity->m_cascadeCityPackages.brCityMilitary + ps.brEmpMilitary;
@@ -709,7 +770,14 @@ int CascadeAccumulator::buildRateBuilding(const CvCity* pCity, BuildingTypes eBu
 	if (pCity == NULL || eBuilding == NO_BUILDING) return 0;
 	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
 	int iMod = acc_brSelf(InfoRepo<CvBuildingInfo>::get().get((int)eBuilding), pCity)
-	         + acc_brLookup(pCity, acc_brSegs().buildings, acc_buildingSeg(eBuilding));
+	         + acc_brLookup(pCity, &CascadeBrLedger::buildings, (int)eBuilding);
+	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	// the L11 folds (2026-07-05): the trait specialBuilding keyed leg + the wonder-category members
+	// (the legacy CvPlayer::getProductionModifier(Building) trait walks + max* accumulators)
+	iMod += acc_brLookup(pCity, &CascadeBrLedger::specialBuildings, (int)kBuilding.getSpecialBuilding());
+	if (::isWorldWonder(eBuilding))    iMod += pCity->m_cascadeCityPackages.brCityWorldWonder;
+	if (::isTeamWonder(eBuilding))     iMod += pCity->m_cascadeCityPackages.brCityTeamWonder;
+	if (::isNationalWonder(eBuilding)) iMod += pCity->m_cascadeCityPackages.brCityNationalWonder;
 	const ReligionTypes eState = owner.getStateReligion();
 	if (eState != NO_RELIGION && pCity->isHasReligion(eState))
 		iMod += pCity->m_cascadeCityPackages.brSrBuildingProd;   // the SR gate, live (city-realized field)
@@ -741,8 +809,19 @@ void CascadeAccumulator::dirtyCity(const CvCity* pCity, int iMask)
 void CascadeAccumulator::buildingProcessed(const CvCity* pCity, BuildingTypes eBuilding)
 {
 	if (pCity == NULL) return;
-	pCity->m_cascadeCityPackages.set.markDirty(CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC));
-	pCity->m_cascadeFacts.set.markAllDirty();
+	// #430 THE PER-TURN FRONTIER CACHE (owner 2026-07-05 + enabler-frontier-perf.md 2026-07-06): a building change
+	// does NOT rebuild the buildable OR the trainable frontier -- CPK_FRONT_B **and CPK_FRONT_U** are EXCLUDED from
+	// this mark. Instead both boxes are maintained INCREMENTALLY: onBuildingChanged (buildings whose requires
+	// reference the changed one) + onBuildingChangedUnits (units the changed building's provides.bonuses / enables /
+	// building-prereq reference). This kills the every-completion ~3340-unit re-walk that was 1.4M condEval/turn.
+	// CPK_FRONT_PP (projects/processes) is KEPT broad: a completed building CAN enable a project (enables.projects
+	// feeds the generate set), there is no per-project incremental primitive, and PP fills are cheap (~42/turn) --
+	// so keeping it correct-by-rebuild is the safe floor (rule 3). The full frontier rebuild otherwise stays only
+	// for CAN-GET GROWTH (mid-turn tech/civic via markPlayerScopeAndCities).
+	pCity->m_cascadeCityPackages.set.markDirty(CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC | CPK_FRONT_B | CPK_FRONT_U));
+	EnablerKernel::onBuildingChangedActive(pCity, (int)eBuilding);   // operating buildings: targeted ripple into the authoritative active set (was blanket markAllDirty)
+	BuildingCascade::onBuildingChanged(pCity, (int)eBuilding);       // CPK_FRONT_B: targeted (reads the fresh operating buildings)
+	UnitCascade::onBuildingChangedUnits(pCity, (int)eBuilding);      // CPK_FRONT_U: targeted (reads the fresh operating buildings)
 
 	const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get((int)eBuilding);
 	if (d == NULL) return;
@@ -757,9 +836,10 @@ void CascadeAccumulator::buildingProcessed(const CvCity* pCity, BuildingTypes eB
 	}
 	int iPlayerMask = 0, iSiblingMask = 0;
 	bool bWorld = false;
-	for (size_t i = 0; i < d->deposits.size(); ++i)
+	const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+	for (size_t i = 0; i < deps.size(); ++i)
 	{
-		const CvCascadeDeposit& dep = d->deposits[i];
+		const CascadeDeposit& dep = deps[i];
 		if (dep.seg[1] == segWorld) { bWorld = true; iPlayerMask |= PSC_SC; continue; }
 		if (dep.seg[1] != segEmpire && dep.seg[1] != segArea) continue;
 		if (dep.unitId == segPercent)
@@ -794,16 +874,46 @@ void CascadeAccumulator::buildingProcessed(const CvCity* pCity, BuildingTypes eB
 void CascadeAccumulator::markPlayerScopeAndCities(PlayerTypes ePlayer)
 {
 	if (ePlayer < 0 || ePlayer >= MAX_PLAYERS) return;
+	cascadePolicyStateChanged((int)ePlayer);   // the §9 policy memo re-arms (civic/trait/tech fan-in; the grind fix)
 	const CvPlayer& kPlayer = GET_PLAYER(ePlayer);
 	kPlayer.m_cascadePlayerScope.set.markAllDirty();
 	int iLoop;
 	for (const CvCity* pc = kPlayer.firstCity(&iLoop); pc != NULL; pc = kPlayer.nextCity(&iLoop))
 	{
 		// conditions on city-scope deposits reference techs/civics/GA -- the fan-out is the event's real
-		// footprint (spec conditions), so the city packages + facts re-check
+		// footprint (spec conditions), so the city packages + operating buildings re-check
 		pc->m_cascadeCityPackages.set.markAllDirty();
-		pc->m_cascadeFacts.set.markAllDirty();
+		EnablerKernel::onPlayerScopeChangedActive(pc);   // operating buildings: targeted ripple for tech/civic/GA-referencing operate (was blanket markAllDirty)
 	}
+}
+
+// ===================== the TARGETED frontier updates (enabler-frontier-perf.md) =====================
+
+// Part A: the load-end warm-up builds BOTH reverse indices (idempotent), so turn 1's targeted re-checks stand
+// on a ready index instead of paying the lazy first-build.
+void CascadeAccumulator::buildFrontierIndices()
+{
+	BuildingCascade::buildIndices();
+	UnitCascade::buildIndices();
+	EnablerKernel::buildActiveIndex();   // the operate reverse-index for the targeted active-set maintenance
+}
+
+// Part C: a city-local HAVE atom flipped -> re-check ONLY the frontier entities that reference it, for BOTH
+// domains (buildable + trainable), in place. Each cascade skips its box if a full rebuild is already pending.
+void CascadeAccumulator::cityHaveChanged(const CvCity* pCity, int eHaveKind)
+{
+	if (pCity == NULL) return;
+	const CvPlayer& kPlayer = GET_PLAYER(pCity->getOwner());
+	const CvTeam& kTeam = GET_TEAM(kPlayer.getTeam());
+	BuildingCascade::recheckHave(pCity, kPlayer, kTeam, eHaveKind);
+	UnitCascade::recheckHave(pCity, kPlayer, kTeam, eHaveKind);
+	EnablerKernel::onHaveChangedActive(pCity, eHaveKind);   // operating buildings: targeted ripple for the HAVE-referencing operate
+}
+
+// Part B: a unit's empire count changed -> the trainable re-check across the player's cities (empire-scoped caps).
+void CascadeAccumulator::unitCountChanged(const CvPlayer& kPlayer, int eUnit)
+{
+	UnitCascade::onUnitChanged(kPlayer, eUnit);
 }
 
 // ===================== the BOUNDARIES =====================
@@ -823,8 +933,8 @@ void CascadeAccumulator::playerSliceRebuild(PlayerTypes ePlayer)
 	int iLoop;
 	for (const CvCity* pc = kPlayer.firstCity(&iLoop); pc != NULL; pc = kPlayer.nextCity(&iLoop))
 	{
-		pc->m_cascadeFacts.set.markAllDirty();
-		pc->m_cascadeFacts.set.ensure();      // facts first: the package fills read them
+		pc->m_operatingBuildings.set.ensure();      // SEED on first visit (dirty from reset/load); no-op after -- the package fills read operating buildings
+		EnablerKernel::onSliceRebuildActive(pc);   // the bounded per-turn dynamic re-check (replaces the whole-city operating buildings recompute)
 		pc->m_cascadeCityPackages.set.markAllDirty();
 		pc->m_cascadeCityPackages.set.ensure(CPK_EAGER);   // ditto: a city with a standing build queue never pays a frontier walk
 	}
@@ -844,6 +954,6 @@ void CascadeAccumulator::cityCreated(const CvCity* pCity)
 	// Everything is dirty-from-reset (plus the founding buildings' marks); one eager ensure realizes the
 	// city's packages so the founding/capture turn reads real values, not the zero-initialized defaults.
 	// (The frontier stays lazy -- the first production-choice read fills it, still same-turn.)
-	pCity->m_cascadeFacts.set.ensure();      // facts first: the package fills read them
+	pCity->m_operatingBuildings.set.ensure();      // operating buildings first: the package fills read them
 	pCity->m_cascadeCityPackages.set.ensure(CPK_EAGER);
 }

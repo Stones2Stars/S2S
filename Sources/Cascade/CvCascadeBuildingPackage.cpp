@@ -7,6 +7,7 @@
 #include "CvGameCoreDLL.h"
 #include "CvCascadeBuildingPackage.h"
 #include "CvCascadeMMKernel.h"
+#include "CvCascadeDepositIndex.h"     // DepositIndex::whenObsoleteFor -- the obsolete tree's compiled records
 #include "CvJsonInfo.h"                // CvJsonInfo
 #include "Repos/InfoRepo.h"            // InfoRepo<CvBuildingInfo>::get().get(id)
 #include "Defines/CvGlobals.h"
@@ -49,15 +50,22 @@ long BuildingPackage::buildingFlat(const std::string& channel, const CvCity* pCi
 	long sum = 0;
 	for (int b = 0; b < nB; ++b)
 	{
-		if (!cascadeIsBuildingActive(b, ec)) continue;   // present + non-dormant in THIS city (cascade-computed)
 		const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
-		if (d != NULL)
+		if (cascadeIsBuildingActive(b, ec))   // present + non-dormant in THIS city (cascade-computed)
 		{
-			sum += MMKernel::sumUnit100(d, wantCity, "flat", ec);
-			sum += MMKernel::sumUnit100(d, wantCity, "perPopulation", ec) * pop;
+			if (d != NULL)
+			{
+				sum += MMKernel::sumUnit100(d, wantCity, "flat", ec);
+				sum += MMKernel::sumUnit100(d, wantCity, "perPopulation", ec) * pop;
+			}
+			if (eStoreY != NO_YIELD) sum += 100L * pCity->getBuildingYieldChange((BuildingTypes)b, eStoreY);
+			else if (eStoreC != NO_COMMERCE) sum += 100L * pCity->getBuildingCommerceChangeEvents((BuildingTypes)b, eStoreC);
 		}
-		if (eStoreY != NO_YIELD) sum += 100L * pCity->getBuildingYieldChange((BuildingTypes)b, eStoreY);
-		else if (eStoreC != NO_COMMERCE) sum += 100L * pCity->getBuildingCommerceChangeEvents((BuildingTypes)b, eStoreC);
+		else if (d != NULL && cascadeIsBuildingObsolete(b, ec))   // obsolete -> the whenObsolete tree (json §4.2), read from the obsoletion-process set
+		{
+			sum += MMKernel::sumUnit100From(DepositIndex::whenObsoleteFor(d), wantCity, "flat", ec);
+			sum += MMKernel::sumUnit100From(DepositIndex::whenObsoleteFor(d), wantCity, "perPopulation", ec) * pop;
+		}
 	}
 	return sum;
 }

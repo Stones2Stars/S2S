@@ -213,8 +213,7 @@ m_cachedBonusCount(NULL)
 	m_paiResourceConsumption = NULL;
 	m_paiFreeSpecialistCount = NULL;
 	m_ppiBuildingCommerceModifier = NULL;
-	m_ppiBuildingCommerceChange = NULL;
-	m_bBuildingCommerceChangeDirty = true;   // recompute-from-source on first read (never serialized)
+	m_buildingCommerceChange.bind(this, &CvPlayer::recomputeBuildingCommerceChange);   // dirty-on-construct; recompute-from-source on first read
 	m_ppiSpecialistCommercePercentChanges = NULL;
 	m_ppiSpecialistYieldPercentChanges = NULL;
 	m_ppiBonusCommerceModifier = NULL;
@@ -694,7 +693,6 @@ void CvPlayer::uninit()
 	SAFE_DELETE_ARRAY2(m_ppaaiSpecialistExtraCommerce, GC.getNumSpecialistInfos());
 	SAFE_DELETE_ARRAY2(m_ppaaiTerrainYieldChange, GC.getNumTerrainInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBuildingCommerceModifier, GC.getNumBuildingInfos());
-	SAFE_DELETE_ARRAY2(m_ppiBuildingCommerceChange, GC.getNumBuildingInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBonusCommerceModifier, GC.getNumBonusInfos());
 	SAFE_DELETE_ARRAY2(m_ppiSpecialistCommercePercentChanges, GC.getNumSpecialistInfos());
 	SAFE_DELETE_ARRAY2(m_ppiSpecialistYieldPercentChanges, GC.getNumSpecialistInfos());
@@ -1380,16 +1378,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 				m_ppiBuildingCommerceModifier[iI][iJ] = 0;
 			}
 		}
-		FAssertMsg(m_ppiBuildingCommerceChange==NULL, "about to leak memory, CvPlayer::m_ppiBuildingCommerceChange");
-		m_ppiBuildingCommerceChange = new int*[GC.getNumBuildingInfos()];
-		for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-		{
-			m_ppiBuildingCommerceChange[iI] = new int[NUM_COMMERCE_TYPES];
-			for (iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-			{
-				m_ppiBuildingCommerceChange[iI][iJ] = 0;
-			}
-		}
+		// (m_buildingCommerceChange needs no init-time allocation -- the CvDerivedCacheVec recompute sizes it)
 
 		FAssertMsg(m_ppiBonusCommerceModifier==NULL, "about to leak memory, CvPlayer::m_ppiBonusCommerceModifier");
 		m_ppiBonusCommerceModifier = new int*[GC.getNumBonusInfos()];
@@ -9971,6 +9960,15 @@ void CvPlayer::changeSpaceProductionModifier(int iChange)
 
 int CvPlayer::getCityDefenseModifier() const
 {
+	// #430 FLIP (L13 defense, owner 2026-07-05 "everything over to cascade"): the cascade empire defense pcts
+	// (scDefensePlayer = building allCityDefense + civic extraCityDefense + trait cityDefense, curated
+	// defense.empire.amount, reconciled Casc==Leg). LOAD stays legacy (substrate not warm pre-init).
+	if (!GC.getGame().isFinalInitialized()) return getCityDefenseModifierLegacy();
+	return CascadeAccumulator::scDefensePlayer(this);
+}
+
+int CvPlayer::getCityDefenseModifierLegacy() const
+{
 	return m_iCityDefenseModifier + getExtraCityDefense() + getTraitExtraCityDefense();
 }
 
@@ -13693,6 +13691,16 @@ void CvPlayer::changeUnitCount(const UnitTypes eUnit, const int iChange)
 	GET_TEAM(getTeam()).changeUnitCount(eUnit, iChange);
 	// #430 cascade DOMAIN emit (mirror of changeBuildingCount): real per-player unit-count change -> the tally.
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DOMAIN, CASCADE_EVT_UNIT_COUNT, (int)eUnit, getUnitCount(eUnit), iChange, (int)getID()));
+	// enabler-frontier-perf.md Part B: the UNIT incremental path (the analogue of buildingProcessed's onBuildingChanged).
+	// A trained/lost unit re-checks its trainability box across this player's cities -- but ONLY when the unit is
+	// instance-capped or referenced by another unit's requires (unit caps are the sole count-driven availability
+	// input), so uncapped combat births/deaths are a cheap no-op. Load-time unit creation is skipped: the boxes are
+	// still all-dirty pre-warm, so onUnitChanged's per-city dirty guard already no-ops it, but the isFinalInitialized
+	// gate makes that explicit and matches the other play-only cascade hooks.
+	if (GC.getGame().isFinalInitialized())
+	{
+		CascadeAccumulator::unitCountChanged(*this, (int)eUnit);
+	}
 }
 
 int CvPlayer::getUnitCount(const UnitTypes eUnit) const
@@ -27532,8 +27540,7 @@ int CvPlayer::getBuildingCommerceChange(BuildingTypes eType, CommerceTypes Comme
 {
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eType);
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, CommerceType);
-	if (m_bBuildingCommerceChangeDirty) recomputeBuildingCommerceChange();
-	return m_ppiBuildingCommerceChange[eType][CommerceType];
+	return m_buildingCommerceChange.get((int)eType * NUM_COMMERCE_TYPES + (int)CommerceType);
 }
 
 void CvPlayer::changeBuildingCommerceChange(BuildingTypes eType, CommerceTypes CommerceType, int iChange)
@@ -27542,13 +27549,13 @@ void CvPlayer::changeBuildingCommerceChange(BuildingTypes eType, CommerceTypes C
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eType);
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, CommerceType);
 
-	// TRIGGER ONLY (new-spec recompute-from-source, hand-rolled "old way" until shadow/CvDerivedCache): a granter
-	// building change just dirties the empire ledger (recomputed fresh in getBuildingCommerceChange) and the cities'
-	// commerce caches, which PULL it. The old incremental accumulate + per-city push was the build-order double-count
-	// (it replayed onto the serialized accumulator on load/recalc -- DEC-derived-never-trusted).
+	// TRIGGER ONLY (on the ONE component since 2026-07-05): a granter building change just marks the empire
+	// ledger (recomputed fresh on next read) and the cities' commerce caches, which PULL it. The old
+	// incremental accumulate + per-city push was the build-order double-count (it replayed onto the
+	// serialized accumulator on load/recalc -- DEC-derived-never-trusted).
 	if (iChange != 0)
 	{
-		m_bBuildingCommerceChangeDirty = true;
+		m_buildingCommerceChange.markDirty();
 		setCommerceDirty();
 	}
 }
@@ -27557,16 +27564,10 @@ void CvPlayer::changeBuildingCommerceChange(BuildingTypes eType, CommerceTypes C
 // GlobalBuildingExtraCommerces) -- build-order-INDEPENDENT, the deterministic value the cascade computes. Runs lazily
 // from getBuildingCommerceChange when dirty (dirty on construct/load => never stale/doubled-from-save). const: writes
 // only the recompute-only ledger + the flag.
-void CvPlayer::recomputeBuildingCommerceChange() const
+void CvPlayer::recomputeBuildingCommerceChange(std::vector<int>& aOut) const
 {
 	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-	{
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			m_ppiBuildingCommerceChange[iI][iJ] = 0;
-		}
-	}
+	aOut.assign(GC.getNumBuildingInfos() * NUM_COMMERCE_TYPES, 0);   // rule 2: fully size + define, every call
 	foreach_(const CvCity* cityX, cities())
 	{
 		foreach_(const BuildingTypes eG, cityX->getHasBuildings())
@@ -27575,14 +27576,13 @@ void CvPlayer::recomputeBuildingCommerceChange() const
 			{
 				for (int i = 0; i < NUM_COMMERCE_TYPES; i++)
 				{
-					m_ppiBuildingCommerceChange[kChange.first][i] += kChange.second[i];
+					aOut[kChange.first * NUM_COMMERCE_TYPES + i] += kChange.second[i];
 				}
 			}
 		}
 	}
 	// (Civic BuildingCommerceChanges are inert in current data -- no civic uses the tag; if one ever does, sum its
 	//  getBuildingCommerceChange over the player's active civics here, mirroring CvPlayer processing :18154.)
-	m_bBuildingCommerceChangeDirty = false;
 }
 
 int CvPlayer::getBuildingCommerceModifier(BuildingTypes eType, CommerceTypes eCommerce) const
@@ -28420,13 +28420,8 @@ void CvPlayer::clearModifierTotals()
 	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
 		m_paiBuildingCount[iI] = 0;
-
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			m_ppiBuildingCommerceChange[iI][iJ] = 0;
-		}
 	}
-	m_bBuildingCommerceChangeDirty = true;   // recompute-from-source on first read (never serialized; dirty on construct/load)
+	m_buildingCommerceChange.markDirty();   // recompute-from-source on next read (never serialized; dirty on construct/load)
 
 	for (int iI = 0; iI < GC.getNumSpecialBuildingInfos(); iI++)
 	{

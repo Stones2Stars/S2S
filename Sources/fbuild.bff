@@ -51,6 +51,7 @@ Settings
                     + ' /I"$SOURCE_DIR$"'
                     + ' /I"$SOURCE_DIR$/Infos"'
                     + ' /I"$SOURCE_DIR$/Cascade"'
+                    + ' /I"$SOURCE_DIR$/JsonInfo"'
 
 .INCS               = '$PROJECT_INCS$ $GLOBAL_INCS$'
 
@@ -92,6 +93,7 @@ Settings
 
     .LDOptions      = ' /OUT:"%2"'                  // Output
                     + ' "%1"'                       // Input
+                    + ' /MAP'                       // linker map beside the DLL -- minidump offset->symbol resolution (2026-07-05)
                     + ' /LTCG'                      // Link time code generation enabled, only operative on FinalRelease
                     + ' /DLL'
                     + ' /NOLOGO'
@@ -142,10 +144,16 @@ Settings
     .LDOptions      + ' msvcprt.lib'
 ]
 
-.ConfigRelease = 
+.ConfigRelease =
 [
     Using(.ConfigNonDebugCommon)
     .ConfigName     = 'Release'
+
+    // ⛔ NEVER compile the internal profiler into Release, doing so made the 3
+    // ungated PROFILE_BEGIN sites (CvGame::update per-FRAME, doTurn, CvPlotGroup) run IFPBeginSample +
+    // a critical-section per call -> a memory-allocation-failure crash on end-turn. The census /
+    // [MODIFIER/perf] gated logging IS the perf surface; the PROFILE_* system is kraken bait, ticketed for
+    // removal in #449. Release stays profiler-free.
 ]
 
 .ConfigAssert =

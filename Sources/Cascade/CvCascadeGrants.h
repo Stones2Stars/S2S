@@ -6,8 +6,8 @@
 
 //
 //	CvCascadeGrants -- the #430 GRANTS machine (the "provisions" consumer). An IEventConsumer on the event spine: on a
-//	DOMAIN state-change it resolves the SOURCE entity's GENUINE grants (the grantLists/grantPulses mapped onto its
-//	CvJsonInfo in the InfoRepo, minus the deferred mission-keys) and emits a [GRANTS] shadow diagnostic of what it
+//	DOMAIN state-change it resolves the SOURCE entity's GENUINE grants (the CvJsonGrants unit composed on its
+//	CvJson<X>Info in the InfoRepo, minus the deferred mission-keys) and emits a [GRANTS] shadow diagnostic of what it
 //	WOULD hand out. It does NOT apply -- legacy still applies; this is the resolution + observability surface.
 //
 //	⏳ Slice-1 scope: the DOMAIN events the spine emits today -- building-built (CASCADE_EVT_BUILDING_COUNT, delta>0)

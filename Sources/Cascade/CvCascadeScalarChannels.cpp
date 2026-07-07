@@ -1,6 +1,6 @@
 //
 //	CascadeScalarChannels -- the #430 city scalar channels (see the header). Per channel: Σ the curated
-//	deposits over the live source sets (ACTIVE buildings via the facts cache; adopted civics; held traits with
+//	deposits over the live source sets (ACTIVE buildings via the operating buildings cache; adopted civics; held traits with
 //	the PURE_TRAITS filter), conditions evaluated against the live ctx.
 //
 
@@ -8,13 +8,15 @@
 #include "CvCascadeScalarChannels.h"
 #include "CvCascadeMMKernel.h"
 #include "CvCascadeDepositIndex.h"    // the compiled segment ids the keyed walks match on
-#include "CvCascadeAccumulator.h"     // CvCascadePlayerStamp -- the shared per-player rollup freshness stamp
-#include "CvCascadeEnablerKernel.h"   // cityFacts -- the player-wide maintenance walk
-#include "CvCascadeCityFacts.h"
+#include "CvCascadeAccumulator.h"     // the accumulator package surface (the stamps are DELETED -- scope-packages.md phase 3)
+#include "CvCascadeEnablerKernel.h"   // operatingBuildings -- the player-wide maintenance walk
+#include "CvCascadeOperatingBuildings.h"
 #include "CvJsonInfo.h"
 #include "CvJsonTraitInfo.h"
 #include "Repos/InfoRepo.h"
 #include "Defines/CvGlobals.h"
+#include "AI/CvPlayerAI.h"            // GET_PLAYER (was riding a preceding unity-batch file -- self-sufficient now)
+#include "AI/CvTeamAI.h"             // GET_TEAM (ditto)
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
 #include "Engine/CvCity.h"
@@ -24,6 +26,9 @@
 #include "Infos/CvSpecialistInfo.h"
 #include "Infos/CvUnitInfo.h"
 #include "Infos/CvUnitCombatInfo.h"
+#include "Infos/CvProjectInfo.h"      // InfoRepo<CvProjectInfo> -- the L9 project maintenance fold
+#include "Infos/CvCorporationInfo.h"  // InfoRepo<CvCorporationInfo> -- the L10 corp military buildRate fold
+#include "Engine/CvArea.h"            // isHomeArea -- the L8 civic home/other-area overlay gate
 #include "Infos/CvProjectInfo.h"
 #include <map>
 
@@ -40,14 +45,23 @@ static int sc_buildings(const std::string& addr, const char* unit, const CvCity*
 			const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
 			if (d != NULL) iSum += MMKernel::sumUnit(d, addr, unit, ec);
 		}
+		// obsolete buildings deliver their whenObsolete numbers into the SAME sum (json §4.2; part-1 delivery, no
+		// combine change). 0 for any address the whenObsolete tree doesn't author -- inert until the swap cut.
+		if (ec.obsoleteBuildings != NULL)
+			for (std::set<int>::const_iterator it = ec.obsoleteBuildings->begin(); it != ec.obsoleteBuildings->end(); ++it)
+			{
+				const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
+				if (d != NULL) iSum += MMKernel::sumUnitFrom(DepositIndex::whenObsoleteFor(d), addr, unit, ec);
+			}
 		return iSum;
 	}
 	const int nB = GC.getNumBuildingInfos();   // unwired-ctx fallback (correctness identical)
 	for (int b = 0; b < nB; ++b)
 	{
-		if (!cascadeIsBuildingActive(b, ec)) continue;
 		const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
-		if (d != NULL) iSum += MMKernel::sumUnit(d, addr, unit, ec);
+		if (d == NULL) continue;
+		if (cascadeIsBuildingActive(b, ec)) iSum += MMKernel::sumUnit(d, addr, unit, ec);
+		else if (cascadeIsBuildingObsolete(b, ec)) iSum += MMKernel::sumUnitFrom(DepositIndex::whenObsoleteFor(d), addr, unit, ec);
 	}
 	return iSum;
 }
@@ -59,11 +73,11 @@ static int sc_playerBuildings(const std::string& addr, const char* unit, const C
 	int iSum = 0, iLoop;
 	for (const CvCity* pc = owner.firstCity(&iLoop); pc != NULL; pc = owner.nextCity(&iLoop))
 	{
-		const CascadeCityFacts& facts = EnablerKernel::cityFacts(pc);
+		const OperatingBuildings& operatingBuildings = EnablerKernel::operatingBuildings(pc);
 		CvCascadeEvalCtx pec;
 		pec.city = pc; pec.plot = pc->plot(); pec.player = &owner; pec.team = pTeam;
-		pec.activeBuildings = &facts.active; pec.vicinityProvidedBonuses = &facts.provided;
-		for (std::set<int>::const_iterator it = facts.active.begin(); it != facts.active.end(); ++it)
+		pec.activeBuildings = &operatingBuildings.active; pec.vicinityProvidedBonuses = &operatingBuildings.provided;
+		for (std::set<int>::const_iterator it = operatingBuildings.active.begin(); it != operatingBuildings.active.end(); ++it)
 		{
 			const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
 			if (d != NULL) iSum += MMKernel::sumUnit(d, addr, unit, pec);
@@ -104,12 +118,12 @@ static void sc_maintAreaSplit(const CvPlayer& owner, const CvTeam* pTeam,
 	int iLoop;
 	for (const CvCity* pc = owner.firstCity(&iLoop); pc != NULL; pc = owner.nextCity(&iLoop))
 	{
-		const CascadeCityFacts& facts = EnablerKernel::cityFacts(pc);
+		const OperatingBuildings& operatingBuildings = EnablerKernel::operatingBuildings(pc);
 		CvCascadeEvalCtx pec;
 		pec.city = pc; pec.plot = pc->plot(); pec.player = &owner; pec.team = pTeam;
-		pec.activeBuildings = &facts.active; pec.vicinityProvidedBonuses = &facts.provided;
+		pec.activeBuildings = &operatingBuildings.active; pec.vicinityProvidedBonuses = &operatingBuildings.provided;
 		const int iArea = pc->area()->getID();
-		for (std::set<int>::const_iterator it = facts.active.begin(); it != facts.active.end(); ++it)
+		for (std::set<int>::const_iterator it = operatingBuildings.active.begin(); it != operatingBuildings.active.end(); ++it)
 		{
 			const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
 			if (d == NULL) continue;
@@ -185,6 +199,66 @@ int CascadeScalarChannels::defenseAmount(const CvCity* pCity, const CvCascadeEva
 	// the building city defense stack (legacy m_iBuildingDefense; natural/bonus/player defense are their
 	// own legacy terms at the combine -- netted separately)
 	return sc_buildings("defense.city.amount", "percent", pCity, ec);
+}
+
+// The L13 defense wiring (owner-ruled shape 2026-07-05: "all additive percentages, or things that raise
+// the FLOOR of defense -- wire it properly so cities don't lose defense on flip"):
+// ===== the freeSpecialists AMOUNT computer (the ruled two-part seam, 2026-07-05) =====
+// The cascade owns the AMOUNTS (summed alive-with-source freeSpecialists deposits: `any` + count-by-type,
+// parsed as unit-"count" deposits with resolved targetFk); the engine owns PLACEMENT; consumers read the
+// placement OUTPUT. These sums FEED the engine placement at the demolition (replacing the
+// changeFreeSpecialist(Count) process-applies); until then they serve the attribution pairs. The
+// NON-derivable legacy remainders (events, settled GPs, era-advance pulses) are engine state by class.
+struct ScFsSegs { int fs, city, empire, area, any, count; };
+static const ScFsSegs& sc_fsSegs()
+{
+	static ScFsSegs s = { -1, -1, -1, -1, -1, -1 };
+	if (s.fs < 0) s.fs = DepositIndex::lookupSegment("freeSpecialists");
+	if (s.city < 0) s.city = DepositIndex::lookupSegment("city");
+	if (s.empire < 0) s.empire = DepositIndex::lookupSegment("empire");
+	if (s.area < 0) s.area = DepositIndex::lookupSegment("area");
+	if (s.any < 0) s.any = DepositIndex::lookupSegment("any");
+	if (s.count < 0) s.count = DepositIndex::lookupSegment("count");
+	return s;
+}
+static void sc_fsFold(const CvJsonInfo* d, int scopeId, const CvCascadeEvalCtx& ec, int iPureSign,
+	int& outAny, std::vector<int>* pByType)
+{
+	if (d == NULL) return;
+	const ScFsSegs& sg = sc_fsSegs();
+	const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+	for (size_t i = 0; i < deps.size(); ++i)
+	{
+		const CascadeDeposit& dep = deps[i];
+		if (dep.nSeg != 3 || dep.unitId != sg.count) continue;
+		if (dep.seg[0] != sg.fs || dep.seg[1] != scopeId) continue;
+		const int v = dep.value100 / 100;
+		if (iPureSign > 0 && v < 0) continue;
+		if (iPureSign < 0 && v > 0) continue;
+		if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
+		if (dep.seg[2] == sg.any) outAny += v;
+		else if (pByType != NULL && dep.targetFk >= 0 && dep.targetFk < (int)pByType->size())
+			(*pByType)[dep.targetFk] += v;
+	}
+}
+
+void CascadeScalarChannels::fillFreeSpecialistsCity(const CvCity* pCity, const CvCascadeEvalCtx& ec,
+	int& outAny, std::vector<int>& outByType)
+{
+	outAny = 0;
+	outByType.assign(GC.getNumSpecialistInfos(), 0);
+	const OperatingBuildings& operatingBuildings = EnablerKernel::operatingBuildings(pCity);
+	for (std::set<int>::const_iterator it = operatingBuildings.active.begin(); it != operatingBuildings.active.end(); ++it)
+		sc_fsFold(InfoRepo<CvBuildingInfo>::get().get(*it), sc_fsSegs().city, ec, 0, outAny, &outByType);
+}
+
+int CascadeScalarChannels::defenseBombardCity(const CvCity* pCity, const CvCascadeEvalCtx& ec)
+{
+	return sc_buildings("defense.city.bombardDefense", "percent", pCity, ec);   // legacy m_iBuildingBombardDefense
+}
+int CascadeScalarChannels::defenseMinCity(const CvCity* pCity, const CvCascadeEvalCtx& ec)
+{
+	return sc_buildings("defense.city.min", "flat", pCity, ec);                 // legacy m_iExtraMinDefense (additive floor)
 }
 
 int CascadeScalarChannels::tradeRouteCount(const CvCity* pCity, const CvCascadeEvalCtx& ec)
@@ -290,11 +364,11 @@ static int sc_buildRateKeyed(const char* szMember, const char* szKey, const CvCi
 		int iLoop;
 		for (const CvCity* pc = owner.firstCity(&iLoop); pc != NULL; pc = owner.nextCity(&iLoop))
 		{
-			const CascadeCityFacts& facts = EnablerKernel::cityFacts(pc);
+			const OperatingBuildings& operatingBuildings = EnablerKernel::operatingBuildings(pc);
 			CvCascadeEvalCtx pec;
 			pec.city = pc; pec.plot = pc->plot(); pec.player = &owner; pec.team = ec.team;
-			pec.activeBuildings = &facts.active; pec.vicinityProvidedBonuses = &facts.provided;
-			for (std::set<int>::const_iterator it = facts.active.begin(); it != facts.active.end(); ++it)
+			pec.activeBuildings = &operatingBuildings.active; pec.vicinityProvidedBonuses = &operatingBuildings.provided;
+			for (std::set<int>::const_iterator it = operatingBuildings.active.begin(); it != operatingBuildings.active.end(); ++it)
 			{
 				const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
 				if (d != NULL) iSum += MMKernel::sumKeyed4U(d, chanId, empireId, memberId, keyId, pctId, pec, false);
@@ -453,6 +527,12 @@ int CascadeScalarChannels::maintenanceModifierCity(const CvCity* pCity, const Cv
 	         + sc_civicsTraits("maintenance.city", "percent", owner, ec)
 	         + sc_civicsTraits("maintenance.empire", "percent", owner, ec)
 	         + sc_civicsTraits("maintenance.area", "percent", owner, ec);
+	// The L8 census fold (2026-07-05): the civic HOME/OTHER-AREA maintenance overlays -- curated
+	// maintenance.empire.{homeArea|otherArea}.percent (legacy: the player scalar half of
+	// CvArea::getTotalAreaMaintenanceModifier, picked by isHomeArea). CITY-REALIZED: the home-area gate is
+	// a city fact, so the matching member folds here with the city's own area.
+	iMod += sc_civicsTraits(pCity->area()->isHomeArea(owner.getID()) ? "maintenance.empire.homeArea"
+	                                                                 : "maintenance.empire.otherArea", "percent", owner, ec);
 	const CvTeam& team = GET_TEAM(owner.getTeam());
 	for (int i = 0; i < GC.getNumTechInfos(); ++i)
 	{
@@ -498,30 +578,187 @@ void CascadeScalarChannels::fillPlayerScalars(const CvPlayer& player, CascadePla
 	out.tradeEmpireAll = sc_playerBuildings("tradeRoutes.empire", "flat", player, pTeam);
 	out.tradeCoastalAll = sc_playerBuildings("tradeRoutes.empire.coastal", "flat", player, pTeam);
 	out.tradeWorldMine = sc_playerBuildings("tradeRoutes.world", "flat", player, pTeam);
+
+	// The L13 defense wiring (2026-07-05): the PLAYER defense percents -- the legacy getCityDefenseModifier
+	// three-accumulator class (building allCityDefense + civic extraCityDefense + trait cityDefenseBonus,
+	// all curated defense.empire.amount.percent after the same-day re-home from the reader-less
+	// combat.empire.cityDefense address). Bare player ctx (unconditioned percents).
+	out.defPlayerAll = sc_playerBuildings("defense.empire.amount", "percent", player, pTeam);
+	{
+		CvCascadeEvalCtx pec;
+		pec.player = &player; pec.team = pTeam;
+		out.defPlayerAll += sc_civicsTraits("defense.empire.amount", "percent", player, pec);
+		// L13 national BOMBARD modifier (2026-07-05): legacy m_iNationalBombardDefenseModifier -- sole feeder
+		// is processTrait (CvPlayer.cpp:28613, trait iBombardDefense), curated defense.empire.bombardDefense
+		// .percent (the same-day re-home from the reader-less combat.empire.bombardDefense). Civics author none,
+		// so the civicsTraits fold == the trait sum. Composes into getBuildingBombardDefense at the flip.
+		out.defPlayerBombard = sc_civicsTraits("defense.empire.bombardDefense", "percent", player, pec);
+	}
+
+	// The L9 census fold (2026-07-05): PROJECT maintenance -- curated maintenance.empire.{all|connectedCity}
+	// .percent (legacy CvTeam::processProjectChange -> player.changeMaintenanceModifier /
+	// changeConnectedCityMaintenanceModifier, count-scaled by construction; the distance/numCities members
+	// feed the OTHER maintenance pipelines -- their own rows, not this getter). Bare player ctx.
+	{
+		CvCascadeEvalCtx pec;
+		pec.player = &player; pec.team = pTeam;
+		for (int i = 0; i < GC.getNumProjectInfos(); ++i)
+		{
+			const int n = pTeam->getProjectCount((ProjectTypes)i);
+			if (n <= 0) continue;
+			const CvJsonInfo* d = InfoRepo<CvProjectInfo>::get().get(i);
+			if (d == NULL) continue;
+			out.maintPlayerAll += n * MMKernel::sumUnit(d, "maintenance.empire.all", "percent", pec);
+			out.maintConnPct += n * MMKernel::sumUnit(d, "maintenance.empire.connectedCity", "percent", pec);
+		}
+	}
+
+	// The freeSpecialists AMOUNT empire/area halves (the ruled seam, 2026-07-05): civics + traits (PURE) +
+	// empire-scope buildings; the area.any buildings fold per SOURCE-city area (the maintAreaPct precedent).
+	out.fsEmpireAny = 0;
+	out.fsEmpireByType.assign(GC.getNumSpecialistInfos(), 0);
+	out.fsAreaAny.clear();
+	{
+		CvCascadeEvalCtx fsec;
+		fsec.player = &player; fsec.team = pTeam;
+		for (int i = 0; i < GC.getNumCivicOptionInfos(); ++i)
+		{
+			const CivicTypes eCivic = player.getCivics((CivicOptionTypes)i);
+			if (eCivic == NO_CIVIC) continue;
+			sc_fsFold(InfoRepo<CvCivicInfo>::get().get(eCivic), sc_fsSegs().empire, fsec, 0,
+				out.fsEmpireAny, &out.fsEmpireByType);
+		}
+		const bool bPure = GC.getGame().isOption(GAMEOPTION_LEADER_PURE_TRAITS);
+		for (int t = 0; t < GC.getNumTraitInfos(); ++t)
+		{
+			if (!player.hasTrait((TraitTypes)t)) continue;
+			const CvJsonTraitInfo* d = MMKernel::traitData(t);
+			if (d == NULL) continue;
+			sc_fsFold(d, sc_fsSegs().empire, fsec, bPure ? (d->negativeTrait ? -1 : 1) : 0,
+				out.fsEmpireAny, &out.fsEmpireByType);
+		}
+		// empire + area buildings: each source city's active buildings, that city's own ctx
+		int iLoop;
+		for (const CvCity* pc = player.firstCity(&iLoop); pc != NULL; pc = player.nextCity(&iLoop))
+		{
+			const OperatingBuildings& operatingBuildings = EnablerKernel::operatingBuildings(pc);
+			CvCascadeEvalCtx pec;
+			pec.city = pc; pec.plot = pc->plot(); pec.player = &player; pec.team = pTeam;
+			pec.activeBuildings = &operatingBuildings.active; pec.vicinityProvidedBonuses = &operatingBuildings.provided;
+			int iAreaAny = 0;
+			for (std::set<int>::const_iterator it = operatingBuildings.active.begin(); it != operatingBuildings.active.end(); ++it)
+			{
+				const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
+				sc_fsFold(d, sc_fsSegs().empire, pec, 0, out.fsEmpireAny, &out.fsEmpireByType);
+				sc_fsFold(d, sc_fsSegs().area, pec, 0, iAreaAny, NULL);   // area BY-TYPE has no authorings (census guard)
+			}
+			if (iAreaAny != 0) out.fsAreaAny[pc->area()->getID()] += iAreaAny;
+		}
+	}
+
+	// The L6 census fold (2026-07-05): the trait NATIONAL GP flats -- greatPeopleRate.empire.units.{GP}.flat,
+	// summed across ALL unit keys (the key only routes which GP pool; the national scalar adds whole). The
+	// m_iNationalGreatPeopleRate class: sole legacy feeder is processTrait (writer census 2026-07-05), so the
+	// derived sum replaces the accumulator ride-in in the flipped getBaseGreatPeopleRate. City-agnostic ->
+	// player scope; bare player ctx; PURE_TRAITS-gated exactly like every trait leg.
+	out.gpNationalFlat = 0;
+	{
+		const int chanId = DepositIndex::lookupSegment("greatPeopleRate");
+		const int empireId = DepositIndex::lookupSegment("empire");
+		const int unitsId = DepositIndex::lookupSegment("units");
+		const int flatId = DepositIndex::lookupSegment("flat");
+		if (chanId >= 0 && empireId >= 0 && unitsId >= 0 && flatId >= 0)
+		{
+			CvCascadeEvalCtx pec;
+			pec.player = &player; pec.team = pTeam;
+			const bool bPure = GC.getGame().isOption(GAMEOPTION_LEADER_PURE_TRAITS);
+			for (int t = 0; t < GC.getNumTraitInfos(); ++t)
+			{
+				if (!player.hasTrait((TraitTypes)t)) continue;
+				const CvJsonTraitInfo* d = MMKernel::traitData(t);
+				if (d == NULL) continue;
+				const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+				for (size_t i = 0; i < deps.size(); ++i)
+				{
+					const CascadeDeposit& dep = deps[i];
+					if (dep.unitId != flatId) continue;
+					if (dep.seg[0] != chanId || dep.seg[1] != empireId) continue;
+					// the national rate = trait GP-rate changes: the UNIT-KEYED form
+					// (greatPeopleRate.empire.units.{U}.flat, nSeg==4) + the UNTYPED NO_UNIT form
+					// (greatPeopleRate.empire.flat, nSeg==3 -- the GP engine pools it; owner 2026-07-05)
+					const bool bUnitKeyed = (dep.nSeg == 4 && dep.seg[2] == unitsId);
+					const bool bUntyped   = (dep.nSeg == 2);   // address="greatPeopleRate.empire" (unit=flat is separate) -- the NO_UNIT national pool
+					if (!bUnitKeyed && !bUntyped) continue;
+					const int v = dep.value100 / 100;
+					if (v <= 0) continue;   // legacy mirror: the national rate adds ONLY positive GP-rate changes
+					if (bPure && (d->negativeTrait ? v > 0 : v < 0)) continue;   // the PureFilter sign rule
+					if (!MMKernel::applies(dep.enabled, dep.disabled, pec)) continue;
+					out.gpNationalFlat += v;
+				}
+			}
+		}
+	}
 }
 
-// The keyed buildRate LEDGER accumulate over one source's deposits at one scope: (memberSeg<<20)|keySeg -> Σ.
+// The member-kind segment ids for the ledger routing (append-only interner: a miss re-looks-up; a hit never changes).
+struct ScBrMemberSegs { int units, buildings, domains, unitCombats, specialBuildings; };
+static const ScBrMemberSegs& sc_brMemberSegs()
+{
+	static ScBrMemberSegs s = { -1, -1, -1, -1, -1 };
+	if (s.units < 0) s.units = DepositIndex::lookupSegment("units");
+	if (s.buildings < 0) s.buildings = DepositIndex::lookupSegment("buildings");
+	if (s.domains < 0) s.domains = DepositIndex::lookupSegment("domains");
+	if (s.unitCombats < 0) s.unitCombats = DepositIndex::lookupSegment("unitCombats");
+	if (s.specialBuildings < 0) s.specialBuildings = DepositIndex::lookupSegment("specialBuildings");
+	return s;
+}
+
+// Size the dense ledger to the live info counts + zero-fill (contract rule 2: fully define every fill).
+static void sc_brLedgerReset(CascadeBrLedger& out)
+{
+	out.units.assign(GC.getNumUnitInfos(), 0);
+	out.buildings.assign(GC.getNumBuildingInfos(), 0);
+	out.domains.assign(NUM_DOMAIN_TYPES, 0);
+	out.unitCombats.assign(GC.getNumUnitCombatInfos(), 0);
+	out.specialBuildings.assign(GC.getNumSpecialBuildingInfos(), 0);
+}
+
+// The keyed buildRate LEDGER accumulate over one source's deposits at one scope: routed by member kind
+// (seg[2]) into the dense per-kind table, indexed by the FK-resolved target id (match-equivalent to the
+// former (memberSeg<<20)|keySeg map key -- both derive from the same INFOTYPE string; the precipice-§5
+// dense-form fix, generic-code-static-storage on the read path).
 static void sc_brLedgerFold(const CvJsonInfo* d, int chanId, int scopeId, int pctId,
-	const CvCascadeEvalCtx& ec, int iPureSign, std::map<long, int>& out)
+	const CvCascadeEvalCtx& ec, int iPureSign, CascadeBrLedger& out)
 {
 	if (d == NULL) return;
-	for (size_t i = 0; i < d->deposits.size(); ++i)
+	const ScBrMemberSegs& ms = sc_brMemberSegs();
+	const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+	for (size_t i = 0; i < deps.size(); ++i)
 	{
-		const CvCascadeDeposit& dep = d->deposits[i];
+		const CascadeDeposit& dep = deps[i];
 		if (dep.nSeg != 4 || dep.unitId != pctId) continue;
 		if (dep.seg[0] != chanId || dep.seg[1] != scopeId) continue;
 		const int v = dep.value100 / 100;
 		if (iPureSign > 0 && v < 0) continue;   // PURE_TRAITS: a positive trait keeps only v>=0
 		if (iPureSign < 0 && v > 0) continue;   //              a negative trait keeps only v<=0
+		if (dep.targetFk < 0) continue;         // a non-resolvable key can never match a live enum's type
+		std::vector<int>* pv = NULL;
+		if      (dep.seg[2] == ms.units)            pv = &out.units;
+		else if (dep.seg[2] == ms.buildings)        pv = &out.buildings;
+		else if (dep.seg[2] == ms.domains)          pv = &out.domains;
+		else if (dep.seg[2] == ms.unitCombats)      pv = &out.unitCombats;
+		else if (dep.seg[2] == ms.specialBuildings) pv = &out.specialBuildings;   // the L11 trait keyed leg
+		else continue;
 		if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
-		out[((long)dep.seg[2] << 20) | dep.seg[3]] += v;
+		if (dep.targetFk < (int)pv->size()) (*pv)[dep.targetFk] += v;
 	}
 }
 
 void CascadeScalarChannels::fillBuildRateCity(const CvCity* pCity, const CvCascadeEvalCtx& ec,
-	std::map<long, int>& outKeyed, int& outMilitary, int& outSpace, int& outSrUnit, int& outSrBuilding)
+	CascadeBrLedger& outKeyed, int& outMilitary, int& outSpace, int& outSrUnit, int& outSrBuilding,
+	int& outWorldWonder, int& outTeamWonder, int& outNationalWonder)
 {
-	outKeyed.clear();
+	sc_brLedgerReset(outKeyed);
 	const int chanId = DepositIndex::lookupSegment("buildRate");
 	const int cityId = DepositIndex::lookupSegment("city");
 	const int pctId = DepositIndex::lookupSegment("percent");
@@ -552,17 +789,32 @@ void CascadeScalarChannels::fillBuildRateCity(const CvCity* pCity, const CvCasca
 	}
 	outMilitary = sc_buildings("buildRate.city.military", "percent", pCity, ec)
 	            + sc_civicsTraits("buildRate.empire.military", "percent", *ec.player, ec);
+	// The L10 census fold (2026-07-05): CORPORATION military production -- buildRate.city.military.percent
+	// on the corp (own-output; the HAS_CORPORATION gate carries the ACTIVE-in-city semantic, matching the
+	// legacy applyCorporationModifiers apply; the curator's production.city.military mis-address -- the
+	// "Versailles bug" class, consumed by no reader -- was fixed + regenerated the same day).
+	for (int c = 0; c < GC.getNumCorporationInfos(); ++c)
+	{
+		const CvJsonInfo* d = InfoRepo<CvCorporationInfo>::get().get(c);
+		if (d != NULL) outMilitary += MMKernel::sumUnit(d, "buildRate.city.military", "percent", ec);
+	}
 	outSpace = sc_buildings("buildRate.city.space", "percent", pCity, ec)
 	         + sc_civicsTraits("buildRate.empire.space", "percent", *ec.player, ec);
 	outSrUnit = sc_civicsTraits("stateReligion.empire.unitProduction", "percent", *ec.player, ec);
 	outSrBuilding = sc_civicsTraits("stateReligion.empire.buildingProduction", "percent", *ec.player, ec);
+	// The L11 census fold (2026-07-05): the WONDER-CATEGORY members (trait-authored only in data --
+	// worldWonder 77 / teamWonder 53 / nationalWonder 82 curated entries; the legacy maxGlobal/maxTeam/
+	// maxPlayer accumulator class). Civic/trait city-realized walks, the military/space idiom.
+	outWorldWonder = sc_civicsTraits("buildRate.empire.worldWonder", "percent", *ec.player, ec);
+	outTeamWonder = sc_civicsTraits("buildRate.empire.teamWonder", "percent", *ec.player, ec);
+	outNationalWonder = sc_civicsTraits("buildRate.empire.nationalWonder", "percent", *ec.player, ec);
 }
 
 void CascadeScalarChannels::fillBuildRatePlayer(const CvPlayer& player, CascadePlayerScope& out)
 {
 	// BUILDING-sourced halves only (walked per SOURCE city with that city's own ctx); the civic/trait keyed
 	// folds + members + the SR fields are CITY-REALIZED (fillBuildRateCity / the city package).
-	out.brEmpKeyed.clear();
+	sc_brLedgerReset(out.brEmpKeyed);
 	out.brEmpMilitary = 0; out.brEmpSpace = 0;
 	const CvTeam* pTeam = &GET_TEAM(player.getTeam());
 	const int chanId = DepositIndex::lookupSegment("buildRate");
@@ -574,11 +826,11 @@ void CascadeScalarChannels::fillBuildRatePlayer(const CvPlayer& player, CascadeP
 		int iLoop;
 		for (const CvCity* pc = player.firstCity(&iLoop); pc != NULL; pc = player.nextCity(&iLoop))
 		{
-			const CascadeCityFacts& facts = EnablerKernel::cityFacts(pc);
+			const OperatingBuildings& operatingBuildings = EnablerKernel::operatingBuildings(pc);
 			CvCascadeEvalCtx pec;
 			pec.city = pc; pec.plot = pc->plot(); pec.player = &player; pec.team = pTeam;
-			pec.activeBuildings = &facts.active; pec.vicinityProvidedBonuses = &facts.provided;
-			for (std::set<int>::const_iterator it = facts.active.begin(); it != facts.active.end(); ++it)
+			pec.activeBuildings = &operatingBuildings.active; pec.vicinityProvidedBonuses = &operatingBuildings.provided;
+			for (std::set<int>::const_iterator it = operatingBuildings.active.begin(); it != operatingBuildings.active.end(); ++it)
 				sc_brLedgerFold(InfoRepo<CvBuildingInfo>::get().get(*it), chanId, empireId, pctId, pec, 0, out.brEmpKeyed);
 		}
 	}

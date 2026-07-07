@@ -16,21 +16,22 @@
 #include <vector>
 
 class CvJsonInfo;
+struct CascadeDeposit;   // the compiled deposit record (sumUnit100From takes a vector of these) -- full def in CvCascadeDepositIndex.h
 class CvJsonTraitInfo;
 class CvPlot;
 class CvPlayer;
 class CvCity;
 
-// The C++ flat-deposit model: each CvCascadeDeposit's `address` IS the dotted "<channel>.<scope>[.<member>[.<KEY>]]" path
-// (readJson built it), `unit` the leaf kind, `value100` the ×100 magnitude. So a StoneBase tree-walk
-// (fam.Root.Children[scope]...Magnitudes) is an address-string match here. These mirror ModifierMath.cs.
+// The C++ flat-deposit model: each compiled CascadeDeposit's `address` IS the dotted "<channel>.<scope>[.<member>[.<KEY>]]"
+// path (the CvJsonModifiers family key, compiled by the DepositIndex push), `unit` the leaf kind, `value100` the ×100
+// magnitude. So a StoneBase tree-walk (fam.Root.Children[scope]...Magnitudes) is an address match here. These mirror ModifierMath.cs.
 class MMKernel
 {
 public:
 	// A deposit applies iff enabled holds (or is absent) AND disabled does NOT hold (json.md §3.9), evaluated through the
 	// typed-condition evaluator against the live engine ctx. MODIFIER context = the lenient flags (default): a
 	// {STATE_RELIGION:X} compound matches loosely (the strict-match form is the enabler's requires.build only).
-	static bool applies(const CvCascadeCondition* enabled, const CvCascadeCondition* disabled, const CvCascadeEvalCtx& ec);
+	static bool applies(const CvJsonCondition* enabled, const CvJsonCondition* disabled, const CvCascadeEvalCtx& ec);
 
 	// Sum a channel's SCOPE-WIDE percent deposits (address == "<family>.<scope>", unit "percent"), gated, as HUMAN percent.
 	static int sumPercent(const CvJsonInfo* d, const std::string& wantAddress, const CvCascadeEvalCtx& ec);
@@ -38,9 +39,19 @@ public:
 	// Σ a unit at a scope-wide address as a HUMAN int (value100/100; StoneBase SumUnitAtScope = Σ (int)m.Value), gated.
 	static int sumUnit(const CvJsonInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec);
 
+	// Vector-taking core of sumUnit (the int twin of sumUnit100From): sum a compiled-record vector directly, so a channel
+	// summer folds an obsolete building's `whenObsolete` tree (DepositIndex::whenObsoleteFor(d)) into the SAME per-position
+	// sum with the SAME gated match as its normal records (json §4.2). sumUnit delegates here.
+	static int sumUnitFrom(const std::vector<CascadeDeposit>& deps, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec);
+
 	// Σ a unit at a scope-wide address in ×100 FIXED-POINT (value100 direct; StoneBase SumUnit100 = Σ round(human×100)),
 	// gated -- the OOS-correct sum for FRACTIONAL flats (a commerce −0.6 stays −60, not truncated to 0). modifier.md §2.
 	static long sumUnit100(const CvJsonInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec);
+
+	// Vector-taking core of sumUnit100: sum a compiled-record vector directly -- so a channel folds a building's
+	// `whenObsolete` tree (DepositIndex::whenObsoleteFor(d), json §4.2) with the SAME gated match as its normal records.
+	// sumUnit100 delegates here.
+	static long sumUnit100From(const std::vector<CascadeDeposit>& deps, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec);
 
 	// Σ a unit's UNCONDITIONED magnitudes at a scope-wide address (no enabled/disabled) -- the entity's INTRINSIC base
 	// (a specialist's own getYield/CommerceChange). StoneBase SumUnitUnconditioned. Human int (value100/100).

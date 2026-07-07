@@ -1,9 +1,9 @@
 #pragma once
-#ifndef CV_CASCADE_CONDITION_H
-#define CV_CASCADE_CONDITION_H
+#ifndef CV_JSON_CONDITION_H
+#define CV_JSON_CONDITION_H
 
 //
-//	CvCascadeCondition -- the PORT of StoneBase `Domain/Conditions/Condition.cs`: the typed condition tree (json
+//	CvJsonCondition -- the PORT of StoneBase `Domain/Conditions/Condition.cs`: the typed condition tree (json
 //	§3.4/§3.5), the parity-proven shared boolean vocabulary that the `enabled`/`disabled` clauses and
 //	`requires.build`/`requires.operate` resolve through. StoneBase is the validated pseudo-code; this is a FAITHFUL
 //	transcription (owner ruling 2026-06-30: "the logic works because of StoneBase, we just port the C# code").
@@ -60,17 +60,17 @@ enum CvCascCondKind { CASC_COND_GROUP, CASC_COND_PRESENCE, CASC_COND_PREDICATE }
 //	live: GROUP uses all/anyOf/noneOf/enabled/disabled; PRESENCE uses type/scope/min/max/connection/vicinity;
 //	PREDICATE uses predKind/param/min/max. `min`/`max` of -1 mean "unset" (StoneBase's nullable int).
 //
-class CvCascadeCondition
+class CvJsonCondition
 {
 public:
 	CvCascCondKind kind;
 
 	// --- GROUP (ConditionGroup, json §3.4) ---
-	std::vector<CvCascadeCondition*> all;       // AND -- every child must hold
-	std::vector<CvCascadeCondition*> anyOf;     // OR  -- at least one (plain OR over direct children)
-	std::vector<CvCascadeCondition*> noneOf;    // NONE -- no child may hold
-	CvCascadeCondition* enabled;                // applies only while this holds (NULL = always)
-	CvCascadeCondition* disabled;               // suppressed while this holds (NULL = never)
+	std::vector<CvJsonCondition*> all;       // AND -- every child must hold
+	std::vector<CvJsonCondition*> anyOf;     // OR  -- at least one (plain OR over direct children)
+	std::vector<CvJsonCondition*> noneOf;    // NONE -- no child may hold
+	CvJsonCondition* enabled;                // applies only while this holds (NULL = always)
+	CvJsonCondition* disabled;               // suppressed while this holds (NULL = never)
 
 	// --- PRESENCE (PresenceAtom, json §3.4) ---
 	std::string type;                           // an INFOTYPE id: TECH_*/BUILDING_*/BONUS_*/CIVIC_*/... (or a token)
@@ -88,14 +88,14 @@ public:
 	// string sets; the C++ evaluator reads id-keyed engine accessors). -1 = unresolved / not an infotype (a token).
 	int id;
 
-	CvCascadeCondition()
+	CvJsonCondition()
 		: kind(CASC_COND_GROUP), enabled(NULL), disabled(NULL), scope(CASC_SCOPE_CITY), min(-1), max(-1),
 		  connection(CASC_CONN_NONE), vicinity(CASC_VIC_NONE), predKind(CASC_PRED_UNKNOWN), id(-1) {}
-	~CvCascadeCondition();
+	~CvJsonCondition();
 
 private:
-	CvCascadeCondition(const CvCascadeCondition&);            // noncopyable -- owns its child nodes
-	CvCascadeCondition& operator=(const CvCascadeCondition&);
+	CvJsonCondition(const CvJsonCondition&);            // noncopyable -- owns its child nodes
+	CvJsonCondition& operator=(const CvJsonCondition&);
 };
 
-#endif // CV_CASCADE_CONDITION_H
+#endif // CV_JSON_CONDITION_H

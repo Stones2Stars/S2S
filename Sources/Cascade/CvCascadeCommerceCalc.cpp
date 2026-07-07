@@ -12,7 +12,8 @@
 #include "CvCascadePercentStack.h"     // MMBreak + PercentStack
 #include "CvCascadeYieldBasePackages.h"  // specialist / goldenAge (reused §1 packages)
 #include "CvCascadeBuildingPackage.h"    // buildingFlat (reused §1 package)
-#include "CvJsonInfo.h"                // CvJsonInfo + CvCascadeDeposit + the cascade Json* identity structs
+#include "CvJsonInfo.h"                // CvJsonInfo + the cascade Json* identity structs
+#include "CvJsonCorporationInfo.h"     // the corp typed members (change/produced/prereqBonuses -- the collapsed corp families)
 #include "Repos/InfoRepo.h"            // InfoRepo<CvXInfo>::get().get(id)
 #include "Defines/CvGlobals.h"
 #include "Engine/CvCity.h"
@@ -24,9 +25,11 @@
 #include "Infos/CvCorporationInfo.h"  // getHeadquarterCommerce (the §2 corp-HQ package)
 #include "Infos/CvHeritageInfo.h"     // InfoRepo<CvHeritageInfo> (the §2 player-extra heritage commerce)
 #include "Infos/CvWorldInfo.h"        // getCorporationMaintenancePercent (the §2 corporation package)
+#include "Infos/CvProcessInfo.h"      // InfoRepo<CvProcessInfo> -- the L2 process production->commerce fold
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM
-#include "CvCascadeEnablerKernel.h"    // EnablerKernel::wireFacts (shrine/stateReligion build their own ctx over the standing facts)
+#include "CvCascadeCapabilities.h"     // corporationRevenueModifier -- the derived-from-tech read (never the legacy accumulator)
+#include "CvCascadeEnablerKernel.h"    // EnablerKernel::wireOperatingBuildings (shrine/stateReligion build their own ctx over the standing operating buildings)
 #include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (buildingKeyed matches ints)
 #include <map>
 #include <set>
@@ -92,9 +95,10 @@ void CommerceCalc::buildingKeyedLedger(const std::string& channel, const CvPlaye
 		if (cnt <= 0) continue;
 		const CvJsonInfo* dg = InfoRepo<CvBuildingInfo>::get().get(g);
 		if (dg == NULL) continue;
-		for (size_t i = 0; i < dg->deposits.size(); ++i)
+		const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(dg);
+		for (size_t i = 0; i < deps.size(); ++i)
 		{
-			const CvCascadeDeposit& dep = dg->deposits[i];
+			const CascadeDeposit& dep = deps[i];
 			if (dep.unitId != segFlat || dep.nSeg != 4) continue;
 			if (dep.seg[0] != chanId || dep.seg[1] != segEmpire || dep.seg[2] != segBuildings) continue;
 			if (dep.targetFk < 0) continue;
@@ -121,9 +125,9 @@ long CommerceCalc::buildingKeyed(const std::string& channel, const CvCity* pCity
 // `shrine` + building `identity.shrine` intrinsic blocks (a cleanliness follow-up, not a correctness gap).
 long CommerceCalc::shrine(const std::string& channel, const CvCity* pCity)
 {
-	CvCascadeEvalCtx ec;   // local eval ctx (this package takes no ec) -- the standing facts serve the presence test
+	CvCascadeEvalCtx ec;   // local eval ctx (this package takes no ec) -- the standing operating buildings serve the presence test
 	ec.city = pCity; ec.plot = pCity->plot(); ec.player = &GET_PLAYER(pCity->getOwner()); ec.team = &GET_TEAM(GET_PLAYER(pCity->getOwner()).getTeam());
-	EnablerKernel::wireFacts(pCity, ec);
+	EnablerKernel::wireOperatingBuildings(pCity, ec);
 	long sum = 0;
 	if (ec.activeBuildings == NULL) return 0;   // the standing active set IS the walk domain (never all infos)
 	for (std::set<int>::const_iterator abIt = ec.activeBuildings->begin(); abIt != ec.activeBuildings->end(); ++abIt)
@@ -200,9 +204,9 @@ long CommerceCalc::stateReligion(const std::string& channel, const CvCity* pCity
 {
 	const CvPlayer& player = GET_PLAYER(pCity->getOwner());
 	if (player.getStateReligion() == NO_RELIGION) return 0;
-	CvCascadeEvalCtx ec;   // local eval ctx (this package takes no ec) -- the standing facts serve the match test
+	CvCascadeEvalCtx ec;   // local eval ctx (this package takes no ec) -- the standing operating buildings serve the match test
 	ec.city = pCity; ec.plot = pCity->plot(); ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
-	EnablerKernel::wireFacts(pCity, ec);
+	EnablerKernel::wireOperatingBuildings(pCity, ec);
 	const long pool = stateReligionPool(channel, player);
 	if (pool == 0) return 0;
 	return 100L * pool * stateReligionMatch(pCity, ec);
@@ -258,31 +262,37 @@ int CommerceCalc::corporation(const std::string& channel, const CvCity* pCity, c
 {
 	if (pCity->isDisorder()) return 0;
 	const CvPlayer& player = *ec.player;
-	const int revenueMod = GET_TEAM(player.getTeam()).getCorporationRevenueModifier();   // team tech accumulator (raw state)
+	// DERIVED from held techs (the ruled self-containment fix, cutover.md Rulings #4) -- the legacy team
+	// ACCUMULATOR is a computed output and dies at the cut; the derived sum rides CascadeTeamCaps' freshness.
+	const int revenueMod = CascadeCapabilities::corporationRevenueModifier(player.getTeam());
 	const int maintPct = GC.getWorldInfo(GC.getMap().getWorldSize()).getCorporationMaintenancePercent();   // world config
-	const std::string wantCity = channel + ".city";
+	// channel -> the CommerceTypes index (the collapsed corp members are commerce-enum-keyed)
+	int eC = -1;
+	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i)
+		if (channel == CMC_CHANNELS[i]) { eC = i; break; }
+	if (eC < 0) return 0;
 	int total = 0;
 	const int nC = GC.getNumCorporationInfos();
 	for (int c = 0; c < nC; ++c)
 	{
 		if (!pCity->isActiveCorporation((CorporationTypes)c)) continue;
-		const CvJsonInfo* cd = InfoRepo<CvCorporationInfo>::get().get(c);   // the corp's cascade deposits (self-contained, no engine config)
+		const CvJsonInfo* cd = InfoRepo<CvCorporationInfo>::get().get(c);   // the corp's cascade data (self-contained, no engine config)
 		if (cd == NULL) continue;
-		int iC100 = 0;
-		for (size_t i = 0; i < cd->deposits.size(); ++i)
+		// The corp families are COLLAPSED to typed members (CvJsonCorporationInfo: the uniform HAS_CORPORATION gate --
+		// carried by the isActiveCorporation walk above -- + the ONE shared per:{anyOf} prereq set; CvJsonModEntry.h:
+		// "do NOT wrap those"): CHANGE = the un-per'd flat (×1, so ×100 here = the old entry's value100);
+		// PRODUCED = the per-scaled base (already ×100), applied per prereq-bonus × city count × maintPct --
+		// the identical (value, bonus) terms as the retired per-deposit walk.
+		const CvJsonCorporationInfo* corp = static_cast<const CvJsonCorporationInfo*>(cd);
+		int iC100 = 100 * corp->getCommerceChange(eC);
+		const int produced = corp->getCommerceProduced(eC);
+		if (produced != 0)
 		{
-			const CvCascadeDeposit& dep = cd->deposits[i];
-			if (dep.unit != "flat" || dep.address != wantCity) continue;
-			if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
-			if (!dep.perAnyOf.empty())   // CommercesProduced: scaled per prereq-bonus × maintPct (the mapped per:{anyOf} list)
+			for (int b = 0; b < corp->getNumPrereqBonuses(); ++b)
 			{
-				for (size_t b = 0; b < dep.perAnyOf.size(); ++b)
-				{
-					const int n = pCity->getNumBonuses((BonusTypes)dep.perAnyOf[b]);
-					if (n > 0) iC100 += dep.value100 * n * maintPct / 100;
-				}
+				const int n = pCity->getNumBonuses((BonusTypes)corp->getPrereqBonus(b));
+				if (n > 0) iC100 += produced * n * maintPct / 100;
 			}
-			else iC100 += dep.value100;   // getCommerceChange (unscaled flat, already ×100)
 		}
 		total += (MMKernel::modifiedInt(iC100, revenueMod) + 99) / 100;   // revenue mod + engine ceil ÷100, per corp
 	}
@@ -328,7 +338,26 @@ long CommerceCalc::combineSplit(CommerceTypes eC, const CvCity* pCity, long yiel
 	if (pCity->isDisorder()) return 0;   // civil disorder forces realized commerce to 0 before any combine
 	const int slider = GET_PLAYER(pCity->getOwner()).getCommercePercent(eC);
 	const long splitBase = std::min(CAP100, yieldCommerce100) * slider / 100;
-	const int prodToCommerce = 0;        // Process (the lone AFTER) -- pluggable static slot (TODO)
+	// The L2 census fold (2026-07-05): the PROCESS production->commerce conversion, LIVE at combine (the
+	// slider class -- the head order is volatile raw state, the value is static process config; zero
+	// invalidation; NEVER the legacy m_aiProductionToCommerceModifier accumulator, whose sole feeder is
+	// processProcess on head-order changes). Curated shape: {ch}.city.percent ON the process entity --
+	// only this process-aware read consumes process deposits (the percent stack never walks processes).
+	int prodToCommerce = 0;
+	{
+		const ProcessTypes eProcess = pCity->getProductionProcess();
+		if (eProcess != NO_PROCESS)
+		{
+			const CvJsonInfo* pd = InfoRepo<CvProcessInfo>::get().get((int)eProcess);
+			if (pd != NULL)
+			{
+				const CvPlayer& kOwner = GET_PLAYER(pCity->getOwner());
+				CvCascadeEvalCtx pec;
+				pec.city = pCity; pec.plot = pCity->plot(); pec.player = &kOwner; pec.team = &GET_TEAM(kOwner.getTeam());
+				prodToCommerce = MMKernel::sumUnit(pd, std::string(CommerceCalc::channel(eC)) + ".city", "percent", pec);
+			}
+		}
+	}
 	long iRate = splitBase + std::min(CAP100, lBaseExtra100);
 	if (iRate < CAP)
 	{
@@ -346,6 +375,7 @@ long CommerceCalc::commerceRate100(const std::string& channel, CommerceTypes eC,
 {
 	++CascadePerf::commerceRate;
 	PerfAccumTimer perfT(CascadePerf::commerceRateMs);
+	CascadeCondScope ccs(CC_RATES);   // the condEval caller split
 	const long lBaseExtra = 100L * YieldBasePackages::specialist(channel, pCity, ec)
 	                      + CommerceCalc::baseExtra100(channel, pCity, ec);
 	MMBreak bk;

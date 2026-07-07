@@ -57,5 +57,13 @@ CASCADE_INFOREPO_DEFINE(CvCivilizationInfo)
 CASCADE_INFOREPO_DEFINE(CvEraInfo)
 CASCADE_INFOREPO_DEFINE(CvHandicapInfo)
 CASCADE_INFOREPO_DEFINE(CvSpecialBuildingInfo)
+// ... + the uniformity set's remaining tags (owner ruling: every type gets its own CvJson<X>Info subclass).
+CASCADE_INFOREPO_DEFINE(CvGameSpeedInfo)
+CASCADE_INFOREPO_DEFINE(CvLeaderHeadInfo)
+CASCADE_INFOREPO_DEFINE(CvSpecialUnitInfo)
+CASCADE_INFOREPO_DEFINE(CvVictoryInfo)
+CASCADE_INFOREPO_DEFINE(CvVoteInfo)
+CASCADE_INFOREPO_DEFINE(CvHurryInfo)
+CASCADE_INFOREPO_DEFINE(CvBonusClassInfo)
 
 #undef CASCADE_INFOREPO_DEFINE

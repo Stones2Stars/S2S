@@ -18,22 +18,12 @@
 #include <string>
 #include <vector>
 
-// The per-team cached union of every live HAVE source's ability blocks. Rebuilt lazily on the first query after an
-// invalidate (setHasTech / reset). Sources today: held techs + the universal TECH_GAME_START start node (techs are
-// the only grantor kind in data; capabilities.md keeps civic/building grantors as model headroom -- when data
-// authors them, union them here AND invalidate on their change events).
-struct CascadeCapCache
-{
-	bool bValid;
-	std::set<std::string> caps;
-	std::set<std::string> trade;
-	std::set<int> tradeTerrains;
-	std::set<std::string> work;
-	bool aFlag[CCF_COUNT];               // precomputed hot-path flags (O(1) reads; no strings after rebuild)
-	std::vector<bool> terrainTrade;      // per-terrain bit vector (indexed by TerrainTypes; the pather-adjacent read)
-	CascadeCapCache() : bValid(false) { for (int i = 0; i < CCF_COUNT; ++i) aFlag[i] = false; }
-};
-static CascadeCapCache s_cache[MAX_TEAMS];
+// The per-team cached union of every live HAVE source's ability blocks -- storage is the OWNER-SIDE
+// CvTeam::m_cascadeTeamCaps member (the Set protocol, scope-packages.md §3b); this module is the query surface
+// + the refresh math. Marked by CvTeam::setHasTech/reset; ensured on read. Sources today: held techs + the
+// universal TECH_GAME_START start node (techs are the only grantor kind in data; capabilities.md keeps
+// civic/building grantors as model headroom -- when data authors them, union them here AND mark on their
+// change events).
 
 // flag id -> (which set, which key): resolved ONCE per rebuild, never on the query path.
 struct CcapKeyRow { CascadeCapFlag eFlag; int iSet; const char* szKey; };   // iSet: 0=caps 1=trade 2=work
@@ -52,45 +42,53 @@ static const CcapKeyRow CCAP_KEYS[] =
 	{ CCF_SET_SCIENCE_RATE, 0, "canSetScienceRate" }, { CCF_SET_CULTURE_RATE, 0, "canSetCultureRate" },
 	{ CCF_SET_ESPIONAGE_RATE, 0, "canSetEspionageRate" },
 	{ CCF_HAS_LANGUAGE, 0, "hasLanguage" },
+	{ CCF_HAS_CENTERED_MAP, 0, "hasCenteredMap" },
 };
 
-static void ccap_union(const CvJsonTechInfo* j, CascadeCapCache& c)
+static void ccap_union(const CvJsonTechInfo* j, CascadeTeamCaps& c)
 {
 	if (j == NULL) return;
-	c.caps.insert(j->capabilities.begin(), j->capabilities.end());
+	const CvJsonBoolBlock* caps = j->getCapabilities();
+	if (caps != NULL) c.caps.insert(caps->all().begin(), caps->all().end());
 	c.trade.insert(j->canTrade.begin(), j->canTrade.end());
 	c.tradeTerrains.insert(j->canTradeOnTerrains.begin(), j->canTradeOnTerrains.end());
 	c.work.insert(j->canWorkOn.begin(), j->canWorkOn.end());
 }
 
-static const CascadeCapCache& ccap_get(TeamTypes eTeam)
+void CascadeCapabilities::refreshInto(const CvTeam& kTeam, CascadeTeamCaps& c)
 {
-	CascadeCapCache& c = s_cache[eTeam];
-	if (!c.bValid)
-	{
-		c.caps.clear(); c.trade.clear(); c.tradeTerrains.clear(); c.work.clear();
-		// The universal start node: every civ holds TECH_GAME_START (the no-prereq root), so its blocks are
-		// universally active (the canSetScienceRate/canSetEspionageRate/base-tradable-terrain defaults live there).
-		ccap_union(static_cast<const CvJsonTechInfo*>(&cascadeStartNode()), c);
-		const CvTeam& kTeam = GET_TEAM(eTeam);
-		for (int t = 0; t < GC.getNumTechInfos(); ++t)
-			if (kTeam.isHasTech((TechTypes)t))
-				ccap_union(static_cast<const CvJsonTechInfo*>(InfoRepo<CvTechInfo>::get().get(t)), c);
-		// Precompute the HOT-PATH reads: the named flags + the per-terrain bit vector. All string/set work
-		// happens HERE, once per (team, tech-change) -- the queries below are plain array reads (the pathfinder
-		// rides isCanPassPeaks; a per-call string construction 4x'd the turn, 2026-07-02).
-		for (int i = 0; i < (int)(sizeof(CCAP_KEYS) / sizeof(CCAP_KEYS[0])); ++i)
+	// Contract rule 2 (CvDerivedCache.h): fully define every field, every call.
+	c.caps.clear(); c.trade.clear(); c.tradeTerrains.clear(); c.work.clear();
+	c.corpRevenueMod = 0;
+	// The universal start node: every civ holds TECH_GAME_START (the no-prereq root), so its blocks are
+	// universally active (the canSetScienceRate/canSetEspionageRate/base-tradable-terrain defaults live there).
+	ccap_union(static_cast<const CvJsonTechInfo*>(&cascadeStartNode()), c);
+	for (int t = 0; t < GC.getNumTechInfos(); ++t)
+		if (kTeam.isHasTech((TechTypes)t))
 		{
-			const CcapKeyRow& r = CCAP_KEYS[i];
-			const std::set<std::string>& s = (r.iSet == 0) ? c.caps : (r.iSet == 1) ? c.trade : c.work;
-			c.aFlag[r.eFlag] = s.count(r.szKey) != 0;
+			ccap_union(static_cast<const CvJsonTechInfo*>(InfoRepo<CvTechInfo>::get().get(t)), c);
+			// the derived corp revenue modifier (the header note: interim static-Info read, JSON plug later)
+			c.corpRevenueMod += GC.getTechInfo((TechTypes)t).getCorporationRevenueModifier();
 		}
-		c.terrainTrade.assign(GC.getNumTerrainInfos(), false);
-		for (std::set<int>::const_iterator it = c.tradeTerrains.begin(); it != c.tradeTerrains.end(); ++it)
-			if (*it >= 0 && *it < (int)c.terrainTrade.size()) c.terrainTrade[*it] = true;
-		c.bValid = true;
+	// Precompute the HOT-PATH reads: the named flags + the per-terrain bit vector. All string/set work
+	// happens HERE, once per (team, tech-change) -- the queries below are plain array reads (the pathfinder
+	// rides isCanPassPeaks; a per-call string construction 4x'd the turn, 2026-07-02).
+	for (int i = 0; i < (int)(sizeof(CCAP_KEYS) / sizeof(CCAP_KEYS[0])); ++i)
+	{
+		const CcapKeyRow& r = CCAP_KEYS[i];
+		const std::set<std::string>& s = (r.iSet == 0) ? c.caps : (r.iSet == 1) ? c.trade : c.work;
+		c.aFlag[r.eFlag] = s.count(r.szKey) != 0;
 	}
-	return c;
+	c.terrainTrade.assign(GC.getNumTerrainInfos(), false);
+	for (std::set<int>::const_iterator it = c.tradeTerrains.begin(); it != c.tradeTerrains.end(); ++it)
+		if (*it >= 0 && *it < (int)c.terrainTrade.size()) c.terrainTrade[*it] = true;
+}
+
+static const CascadeTeamCaps& ccap_get(TeamTypes eTeam)
+{
+	const CvTeam& kTeam = GET_TEAM(eTeam);
+	kTeam.m_cascadeTeamCaps.set.ensure();   // clean path: one int test (the retired bValid, on the ONE protocol)
+	return kTeam.m_cascadeTeamCaps;
 }
 
 bool CascadeCapabilities::flag(TeamTypes eTeam, CascadeCapFlag eFlag)
@@ -114,7 +112,7 @@ bool CascadeCapabilities::canTradeItem(TeamTypes eTeam, const char* szKey)
 bool CascadeCapabilities::canTradeOnTerrain(TeamTypes eTeam, TerrainTypes eT)
 {
 	if (eTeam < 0 || eTeam >= MAX_TEAMS || eT < 0) return false;
-	const CascadeCapCache& c = ccap_get(eTeam);
+	const CascadeTeamCaps& c = ccap_get(eTeam);
 	return (int)eT < (int)c.terrainTrade.size() && c.terrainTrade[eT];
 }
 
@@ -124,14 +122,10 @@ bool CascadeCapabilities::canWorkOn(TeamTypes eTeam, const char* szKey)
 	return ccap_get(eTeam).work.count(szKey) != 0;
 }
 
-void CascadeCapabilities::invalidate(TeamTypes eTeam)
+int CascadeCapabilities::corporationRevenueModifier(TeamTypes eTeam)
 {
-	if (eTeam >= 0 && eTeam < MAX_TEAMS) s_cache[eTeam].bValid = false;
-}
-
-void CascadeCapabilities::invalidateAll()
-{
-	for (int i = 0; i < MAX_TEAMS; ++i) s_cache[i].bValid = false;
+	if (eTeam < 0 || eTeam >= MAX_TEAMS) return 0;
+	return ccap_get(eTeam).corpRevenueMod;
 }
 
 // ===================== the IN-BODY getter shadow (see the header) =====================

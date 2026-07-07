@@ -1,11 +1,11 @@
 //
-//	CvJsonUnitInfo::mapFrom -- common sections (base) + the unit §8 blocks (`skills`, `tags`) + the top-level SpawnOnly /
-//	UnlimitedException flags. See the header.
+//	CvJsonUnitInfo::mapFrom -- common sections (base dispatch fills the composed units, incl. the §8 `skills`/`tags`
+//	bool blocks) + the top-level `builds` repertoire + the SpawnOnly / UnlimitedException flags. See the header.
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson
 #include "CvJsonUnitInfo.h"
-#include "CvCascadeJsonParse.h"     // cascadeJsonBoolSet
+#include "CvJsonParse.h"            // jsonResolveId
 
 void CvJsonUnitInfo::mapFrom(const picojson::value& entity)
 {
@@ -13,8 +13,6 @@ void CvJsonUnitInfo::mapFrom(const picojson::value& entity)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
 	picojson::object::const_iterator it;
-	if ((it = o.find("skills")) != o.end()) cascadeJsonBoolSet(it->second, skills);
-	if ((it = o.find("tags")) != o.end())   cascadeJsonBoolSet(it->second, tags);
 	// top-level `builds` (the unit type's build REPERTOIRE): a flat array of BUILD_* strings -> resolved ids. The base
 	// classifier tags this CJK_INTRINSIC (skips it), so the unit subclass owns the parse. (NOT `enables.builds`.)
 	if ((it = o.find("builds")) != o.end() && it->second.is<picojson::array>())
@@ -23,7 +21,7 @@ void CvJsonUnitInfo::mapFrom(const picojson::value& entity)
 		for (size_t i = 0; i < a.size(); ++i)
 		{
 			if (!a[i].is<std::string>()) continue;
-			const int bid = cascadeJsonResolveId(a[i].get<std::string>());
+			const int bid = jsonResolveId(a[i].get<std::string>());
 			if (bid >= 0) builds.push_back(bid);
 		}
 	}

@@ -634,13 +634,17 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	// NOW, so turn 1 runs warm instead of paying the lazy first-fill.
 	{
 		PROFILE("CvGame::onFinalInitialized.cacheWarmup");
+		// enabler-frontier-perf.md Part A: build the building + unit frontier reverse indices HERE (off the lazy
+		// first-onBuildingChanged trigger) so the load-end warm-up + turn 1's targeted re-checks stand on a ready
+		// index. Idempotent -- safe to call once at the load boundary.
+		CascadeAccumulator::buildFrontierIndices();
 		for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
 		{
 			GC.getMap().plotByIndex(iI)->getYield(YIELD_FOOD);   // ONE read builds the whole per-plot cache
 		}
 		for (int iI = 0; iI < MAX_PLAYERS; iI++)
 		{
-			CascadeAccumulator::playerSliceRebuild((PlayerTypes)iI);   // facts + city + player packages, ensured
+			CascadeAccumulator::playerSliceRebuild((PlayerTypes)iI);   // operating buildings + city + player packages, ensured
 		}
 		CascadeAccumulator::worldRebuild();
 	}
@@ -5861,17 +5865,14 @@ void CvGame::doTurn()
 	// cascade-vs-legacy count diff would be tautological (owner ruling 2026-06-30, tally.md). readJson now MAPS the
 	// static info data at LOAD (onFinalInitialized), not here -- loading a save verifies it (validation.md cadence).
 	//
-	// #430 MODIFIER machine increment 1 -- the percent stack shadow: diff the cascade's per-channel max(0,100+Σ%)
-	// (read off the mapped CvJsonInfo in the InfoRepo) vs legacy getBaseYieldRateModifier. A LIVE shadow of a
-	// to-be-replaced part, so it stays here (an end turn drives it). Gated by gPlayerLogLevel, emits EVERY turn (for
-	// iterative validation); no behaviour change.
-	cvCascadeModifierShadow();
-
-	// #430 ENABLER machine -- the "can I?" gate, StoneBase CascadingEnabler ported (tech/building/unit per-domain
-	// cascades; civics/projects/processes/promotions/builds/hurries on the generic gate): GATE each verdict vs the live
-	// engine. A LIVE shadow of the to-be-replaced gates, in the AI's per-turn path. Gated by gPlayerLogLevel, emits
-	// EVERY turn (for iterative validation); no behaviour change.
-	cvCascadeEnablerShadow();
+	// #430 DISCONNECT (owner 2026-07-05, "fully disconnect; delete step-after"): the per-turn MODIFIER + ENABLER
+	// shadow DIFF drivers (which recomputed the LEGACY verdicts every turn to diff against the cascade) are NO
+	// LONGER CALLED -- the cascade is the sole authority and its parity is proven. The driver bodies + every
+	// *Legacy oracle they invoked stay as dead code for the delete step-after. (This also removes a large per-turn
+	// cost: the full legacy re-walk of every gate/rate for the diff.)
+	// cvCascadeModifierShadow();   // DISCONNECTED 2026-07-05 -- the legacy DIFF; re-enable only to re-verify vs legacy
+	// cvCascadeEnablerShadow();    // DISCONNECTED again 2026-07-05 -- the incremental frontier box VERIFIED (canConstruct diverging=0)
+	cvCascadeModifierPerfCensus();  // the [MODIFIER/perf] census (ruled perf surface) STAYS -- no legacy, emits every turn
 
 	//	Turn-boundary accounting for the frame-driven span the doTurn tree does not cover:
 	//	turn.wall is the true wall-clock between consecutive turn boundaries (what a player's

@@ -26,13 +26,19 @@
 //	 5. Fixed compile-time N -- a runtime-sized domain (NumBuildingInfos...) needs a vector variant when first
 //	    needed, same contract.
 //
-//	TWO FORMS:
-//	 - CvDerivedCache<TOwner,T,N>   -- the single-flag leaf cache (the plot-yield shape).
+//	THREE FORMS:
+//	 - CvDerivedCache<TOwner,T,N>   -- the single-flag leaf cache, compile-time N (the plot-yield shape).
+//	 - CvDerivedCacheVec<TOwner,T>  -- the single-flag RUNTIME-SIZED form (contract rule 5's named variant,
+//	   built 2026-07-05 at first need): the recompute receives the vector and must fully (re)size + define it
+//	   (rule 2 falls out naturally -- an assign(n,0) then fill). Exemplar: the player building-commerce ledger
+//	   (NumBuildingInfos x NUM_COMMERCE_TYPES, flat-indexed).
 //	 - CvDerivedCacheSet<TOwner>    -- the PARTIAL-DIRTY form (owner ruling 2026-07-03): a value composed of
 //	   several isolated "plugin number" components carries a dirty BITMASK, one bit per component, and ONE
 //	   shared refresh pass receives the mask (component storage stays owner-side -- the components are
 //	   heterogeneous; this class owns only the dirty protocol). Exemplar: the modifier scope accumulator.
 //
+
+#include <vector>
 
 template <class TOwner, class T, int N>
 class CvDerivedCache
@@ -75,6 +81,49 @@ private:
 	mutable bool m_bDirty;
 };
 
+template <class TOwner, class T>
+class CvDerivedCacheVec
+{
+public:
+	CvDerivedCacheVec() : m_pOwner(NULL), m_pfnRecompute(NULL), m_bDirty(true) {}
+
+	// Wire the owner + its recompute. The recompute FULLY (re)sizes and defines the vector from CURRENT
+	// state (assign-then-fill) -- sizing is owner-side because the domain count (GC.getNum*Infos) is not
+	// known at construction time. Dirty from the start.
+	void bind(const TOwner* pOwner, void (TOwner::*pfnRecompute)(std::vector<T>&) const)
+	{
+		m_pOwner = pOwner;
+		m_pfnRecompute = pfnRecompute;
+		m_bDirty = true;
+	}
+
+	// The TRIGGER -- call at every input-change site. No eager recompute, no push.
+	void markDirty() const { m_bDirty = true; }
+
+	// Bounds-safe read: an index outside the recomputed domain answers T() (the never-authored answer).
+	T get(int i) const
+	{
+		ensure();
+		return (i >= 0 && i < (int)m_aData.size()) ? m_aData[i] : T();
+	}
+
+private:
+	void ensure() const
+	{
+		if (m_bDirty && m_pOwner != NULL)
+		{
+			m_bDirty = false;   // clear FIRST (rule 1)
+			(m_pOwner->*m_pfnRecompute)(m_aData);
+		}
+	}
+	CvDerivedCacheVec(const CvDerivedCacheVec&);              // noncopyable (see CvDerivedCache)
+	CvDerivedCacheVec& operator=(const CvDerivedCacheVec&);
+	const TOwner* m_pOwner;
+	void (TOwner::*m_pfnRecompute)(std::vector<T>&) const;
+	mutable std::vector<T> m_aData;
+	mutable bool m_bDirty;
+};
+
 template <class TOwner>
 class CvDerivedCacheSet
 {
@@ -92,6 +141,9 @@ public:
 	// The TRIGGER -- mark only the components this event feeds ("the rest of the pipe stays the same").
 	void markDirty(int iMask) const { m_iDirty |= iMask; }
 	void markAllDirty() const { m_iDirty = ~0; }
+	// Is any component in `iMask` dirty (pending rebuild)? Lets a caller do a TARGETED incremental update only on
+	// a currently-BUILT component (a dirty one gets its full rebuild on next ensure, so skip the targeted work).
+	bool isDirty(int iMask) const { return (m_iDirty & iMask) != 0; }
 
 	// Pull-on-read: refresh the dirty components once, then reads are pure arithmetic owner-side.
 	void ensure() const

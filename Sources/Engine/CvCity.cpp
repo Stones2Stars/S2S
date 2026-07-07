@@ -31,7 +31,7 @@
 #include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the spine (shadow, CvCity side)
 #include "Cascade/CvCascadeGetterShadow.h" // #430 getter-contract instrumentation (cutover.md rulings 2026-07-02)
 #include "Cascade/CvCascadeAccumulator.h"  // #430 the modifier scope accumulator -- DOMAIN dirty hooks (modifier-substrate.md)
-#include "Cascade/CvCascadeEnablerKernel.h" // EnablerKernel::recomputeCityFactsInto -- the facts cache's refresh delegate target
+#include "Cascade/CvCascadeEnablerKernel.h" // EnablerKernel::recomputeOperatingBuildingsInto -- the operating buildings cache's refresh delegate target
 #include "AI/CvCityLogTags.h" // [CIT] tag enums (shared with CvCityAI.cpp -- defined once, see header)
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "CvTraitInfo.h"
@@ -57,7 +57,7 @@ CvCity::CvCity()
 {
 	m_dataRepository.init(this);
 	m_cascadeCityPackages.set.bind(this, &CvCity::cascadeRefreshPackages);   // #430: the city scope packages (all-dirty from birth)
-	m_cascadeFacts.set.bind(this, &CvCity::cascadeRefreshFacts);       // #430: the standing building-facts cache (ditto)
+	m_operatingBuildings.set.bind(this, &CvCity::refreshOperatingBuildings);       // #430: the standing operating-buildings cache (ditto)
 	m_aiRiverPlotYield = new int[NUM_YIELD_TYPES];
 	m_aiBaseYieldRate = new int[NUM_YIELD_TYPES];
 	m_aiExtraYield = new int[NUM_YIELD_TYPES];
@@ -481,9 +481,11 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	// #430: a reused city object starts with stale cascade caches (fresh identity -> full recompute on first
 	// read). Pure Set protocol -- the marks ARE the staleness (no version stamps exist).
 	m_cascadeCityPackages.set.markAllDirty();
-	m_cascadeFacts.set.markAllDirty();
-	m_cascadeFacts.active.clear();
-	m_cascadeFacts.provided.clear();
+	m_operatingBuildings.set.markAllDirty();
+	m_operatingBuildings.active.clear();
+	m_operatingBuildings.obsolete.clear();
+	m_operatingBuildings.provided.clear();
+	m_operatingBuildings.providedCount.clear();
 
 	//--------------------------------
 	// Uninit class
@@ -2530,7 +2532,7 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 		return false;
 	}
 	// ==== #430 THE ENABLER FLIP (owner 2026-07-04 "flip it all"): the DEFAULT gate shape serves the cascade
-	// frontier (BuildingCascade::buildable cached on the city package, ensure-on-read -- the facts idiom, so
+	// frontier (BuildingCascade::buildable cached on the city package, ensure-on-read -- the operating buildings idiom, so
 	// legacy's same-turn chain-building survives). What-if/visible shapes + pre-init ride the Legacy path
 	// below; the m_bCanConstruct cache serves the Legacy path only (the [ENABLER/shadow] oracle stays cheap). ====
 	if (!bContinue && !bTestVisible && !bIgnoreCost && !bIgnoreAmount && !bIgnoreBuildings && eIgnoreTechReq == NO_TECH && probabilityEverConstructable == NULL && !bExposed
@@ -4616,7 +4618,7 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	PROFILE_FUNC();
 	FAssert(iChange == 1 || iChange == -1);
 	// #430: the building event -- conservative city mask (the operate/provides fixpoint can flip OTHER
-	// buildings' active state) + the DERIVED cross-scope masks from this building's compiled deposits + facts
+	// buildings' active state) + the DERIVED cross-scope masks from this building's compiled deposits + operating buildings
 	CascadeAccumulator::buildingProcessed(this, eBuilding);
 
 	// Toffer - Sanity control
@@ -7016,7 +7018,12 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 		return;
 	}
 	m_iPopulation = iNewValue;
-	CascadeAccumulator::dirtyCity(this, CPK_YEXTRA | CPK_CBASE | CPK_FRONTIER);   // #430: perPop terms + the pop-prereq'd frontier; WB deliberately NOT dirtied (the wb pop terms fold LIVE pop at read; end-turn cadence)
+	// #430 + enabler-frontier-perf.md Part C: perPop terms + the pop-prereq'd frontier. The frontier is now TARGETED
+	// (only pop-referencing buildings/units re-checked) instead of a blanket CPK_FRONTIER re-walk; CPK_FRONT_PP is
+	// kept broad (no per-project incremental primitive; projects can be pop-gated -- rule 3). WB deliberately NOT
+	// dirtied (the wb pop terms fold LIVE pop at read; end-turn cadence).
+	CascadeAccumulator::dirtyCity(this, CPK_YEXTRA | CPK_CBASE | CPK_FRONT_PP);
+	CascadeAccumulator::cityHaveChanged(this, CascadeAccumulator::CASC_HAVE_POP);
 
 	FASSERT_NOT_NEGATIVE(iNewValue);
 
@@ -7270,10 +7277,12 @@ void CvCity::changeNumGreatPeople(int iChange)
 
 int CvCity::getBaseGreatPeopleRate() const
 {
-	// #430 FLIP (scope-packages): a BARE package fetch + the live national input; the legacy body below is
-	// the net oracle. The LOAD path stays legacy (the warm-up arms the packages at final-init).
+	// #430 FLIP (scope-packages): a BARE package fetch; the legacy body below is the net oracle. The LOAD
+	// path stays legacy (the warm-up arms the packages at final-init). The national leg reads the CASCADE-
+	// derived trait sum since 2026-07-05 (the L6 fold) -- never the legacy m_iNationalGreatPeopleRate
+	// accumulator, which lives on in the Legacy oracle only.
 	if (!GC.getGame().isFinalInitialized()) return getBaseGreatPeopleRateLegacy();
-	return std::max(0, CascadeAccumulator::scGpBase(this)) + GET_PLAYER(getOwner()).getNationalGreatPeopleRate();
+	return std::max(0, CascadeAccumulator::scGpBase(this)) + CascadeAccumulator::scGpNational(&GET_PLAYER(getOwner()));
 }
 
 int CvCity::getBaseGreatPeopleRateLegacy() const
@@ -10111,6 +10120,15 @@ void CvCity::changeBuildingDefense(int iChange)
 
 int CvCity::getBuildingBombardDefense() const
 {
+	// #430 FLIP (L13 defense, owner 2026-07-05 "everything over to cascade"): the composed cascade value
+	// (scBuildingBombardDefense = min(MAX_BOMBARD_DEFENSE, Σbuilding bombard + national trait bombard),
+	// reconciled Casc==Leg). LOAD stays legacy (substrate not warm pre-init).
+	if (!GC.getGame().isFinalInitialized()) return getBuildingBombardDefenseLegacy();
+	return CascadeAccumulator::scBuildingBombardDefense(this);
+}
+
+int CvCity::getBuildingBombardDefenseLegacy() const
+{
 	int iBombardDefenseTotal = m_iBuildingBombardDefense;
 	iBombardDefenseTotal += GET_PLAYER(getOwner()).getNationalBombardDefenseModifier();
 	return std::min(GC.getGame().getModderGameOption(MODDERGAMEOPTION_MAX_BOMBARD_DEFENSE), iBombardDefenseTotal);
@@ -10270,6 +10288,12 @@ void CvCity::changePowerCount(int iChange)
 		// cppcheck-suppress knownConditionTrueFalse
 		if (wasPower != isPower())
 		{
+			// enabler-frontier-perf.md Part C: a power flip re-checks ONLY the power-gated frontier entities (units/
+			// buildings whose requires carries a HAS_POWER predicate), in place. HAS_POWER is a LIVE predicate
+			// (ctx.city->isPower()), so the re-check needs no operating buildings dirty. This was previously UNHOOKED (frontier
+			// stale until the slice net) -- consuming the s_bcPower/s_ucPower buckets makes it event-correct.
+			CascadeAccumulator::cityHaveChanged(this, CascadeAccumulator::CASC_HAVE_POWER);
+
 			GET_PLAYER(getOwner()).invalidateYieldRankCache();
 
 			setCommerceDirty();
@@ -11361,9 +11385,9 @@ void CvCity::cascadeRefreshPackages(int iMask) const
 	CascadeAccumulator::refreshCityPackages(this, iMask);
 }
 
-void CvCity::cascadeRefreshFacts(int) const
+void CvCity::refreshOperatingBuildings(int) const
 {
-	EnablerKernel::recomputeCityFactsInto(this, m_cascadeFacts.active, m_cascadeFacts.provided);
+	EnablerKernel::seedOperatingBuildings(this);   // full recompute (the LOAD seed) + the provider ref-count; the targeted ripple maintains it thereafter
 }
 
 int CvCity::getYieldRate100Legacy(const YieldTypes eYield) const
@@ -11379,18 +11403,16 @@ int CvCity::getYieldRate100Legacy(const YieldTypes eYield) const
 int CvCity::getYieldRate100(const YieldTypes eYield) const
 {
 	PROFILE_FUNC();
-	const int iLegacy = getYieldRate100Legacy(eYield);
-	// #430 FLIP (increment C, modifier-substrate.md): in a running game the ACCUMULATOR is authoritative --
-	// standing §2a component slots, event-driven freshness, O(1) clean reads (the machine as specced, proven
-	// [SLOT] 154/0 on purely hook-maintained state). The legacy expression above stays as the [GETTER] net
-	// oracle + the one-commit rollback; the LOAD path stays legacy (the flip arms at final-init).
+	// #430 DISCONNECT (owner 2026-07-05, "fully disconnect; delete step-after"): the cascade ACCUMULATOR is the
+	// SOLE authority in a running game -- the legacy oracle (getYieldRate100Legacy) + the [GETTER] shadow are NO
+	// LONGER CALLED (the *Legacy body stays as dead code for the delete step). This also DROPS the per-call
+	// legacy recompute (~25ms) that the shadow forced -- a real hot-path perf win. LOAD path stays legacy (the
+	// cascade substrate isn't warm pre-init; that is the ONE remaining legacy read and it is load-time, not play).
 	if (!GC.getGame().isFinalInitialized())
 	{
-		return iLegacy;
+		return getYieldRate100Legacy(eYield);
 	}
-	const long lSlot = CascadeAccumulator::yieldRate100(this, eYield);
-	cascadeGetterShadowYield(this, eYield, iLegacy, (int)lSlot);
-	return (int)lSlot;
+	return (int)CascadeAccumulator::yieldRate100(this, eYield);
 }
 
 int CvCity::getPlotYield(YieldTypes eIndex)	const
@@ -12119,15 +12141,13 @@ int CvCity::getCommerceRateTimes100(CommerceTypes eIndex) const
 {
 	PROFILE_FUNC();
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	const int iLegacy = getCommerceRateTimes100Legacy(eIndex);
-	// #430 FLIP (increment C, modifier-substrate.md) -- see getYieldRate100.
+	// #430 DISCONNECT (owner 2026-07-05) -- see getYieldRate100: cascade is sole authority, legacy oracle +
+	// [GETTER] shadow no longer called (dead code kept for the delete step); pre-init stays legacy.
 	if (!GC.getGame().isFinalInitialized())
 	{
-		return iLegacy;
+		return getCommerceRateTimes100Legacy(eIndex);
 	}
-	const long lSlot = CascadeAccumulator::commerceRate100(this, eIndex);
-	cascadeGetterShadowCommerce(this, eIndex, iLegacy, (int)lSlot);
-	return (int)lSlot;
+	return (int)CascadeAccumulator::commerceRate100(this, eIndex);
 }
 
 
@@ -15394,8 +15414,11 @@ void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce
 		m_pabHasReligion[eIndex] = bNewValue;
 		// #430: religion presence feeds the commerce base terms (religion/shrine/SR match) + operate
 		// conditions + SR-conditioned percents; the SR-gated PLAYER sums apply through live gates (no mark)
-		CascadeAccumulator::dirtyCity(this, CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT | CPK_FRONTIER);   // #430: + the religion/corp-gated frontier
-		m_cascadeFacts.set.markAllDirty();
+		// #430 + enabler-frontier-perf.md Part C: the religion-gated frontier is now TARGETED (only religion-
+		// referencing buildings/units re-checked, reading the FRESH operating buildings marked below) instead of blanket
+		// CPK_FRONTIER; CPK_FRONT_PP kept broad (rule 3, as setPopulation).
+		CascadeAccumulator::dirtyCity(this, CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT | CPK_FRONT_PP);
+		CascadeAccumulator::cityHaveChanged(this, CascadeAccumulator::CASC_HAVE_RELIGION);   // operating buildings: the targeted active-set ripple rides here (onHaveChangedActive)
 
 		for (int iVoteSource = 0; iVoteSource < GC.getNumVoteSourceInfos(); ++iVoteSource)
 		{
@@ -15598,9 +15621,15 @@ void CvCity::setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAn
 	if (isHasCorporation(eIndex) != bNewValue)
 	{
 		// #430: corporation presence feeds the commerce base terms (corporation/corp-HQ) + operate conditions
-		// (corp-conditioned deposits ride along)
-		CascadeAccumulator::dirtyCity(this, CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT | CPK_FRONTIER);   // #430: + the religion/corp-gated frontier
-		m_cascadeFacts.set.markAllDirty();
+		// (corp-conditioned deposits ride along) + the buildRate military member (the L10 corp fold 2026-07-05)
+		// enabler-frontier-perf.md Part C -- CORP KEPT BROAD (rule 3, deliberate): the corp presence bit
+		// (m_pabHasCorporation) is committed LATE (below, after the competing-HQ replacement logic + an early
+		// return whose corp-commit path routes through replaceCorporation), so there is no guaranteed point here to
+		// run a SYNCHRONOUS targeted re-check against COMMITTED corp state. A deferred blanket CPK_FRONTIER dirty is
+		// order-independent (rebuilt correct on next read), so it stays the safe floor; corp spread is infrequent, so
+		// the cost of the broad rebuild is minor. (pop/religion/power commit their state before the re-check -> targeted.)
+		CascadeAccumulator::dirtyCity(this, CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT | CPK_BR | CPK_FRONTIER);
+		m_operatingBuildings.set.markAllDirty();
 		if (bNewValue)
 		{
 			bool bReplacedHeadquarters = false;
@@ -16093,6 +16122,21 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 	{
 		stopHeadOrder();
 		m_orderQueue.insert(m_orderQueue.begin(), order);
+	}
+
+	// #430 ISOLATED FRONTIER BOX — targeted removal (owner 2026-07-05): the just-committed item leaves the
+	// buildable/trainable box so the AI never re-picks what it queued this turn (the :17035 "cycles forever"
+	// loop). This is a single O(log n) set.erase on the isolated box -- NOT the whole-frontier rebuild that,
+	// at order-churn frequency (100s/turn), triggered the modifier-recalc storm + MAF. "Only whatever has been
+	// built [committed] needs updating, not the entire frontier." A dirty/absent box self-corrects on its next
+	// full fill (the queue-exclusion at CvCascadeBuildingCascade:138); completion's broad refresh is unchanged.
+	switch (eOrder)
+	{
+	case ORDER_CONSTRUCT: m_cascadeCityPackages.enBuildable.erase(iData1); break;
+	case ORDER_TRAIN:     m_cascadeCityPackages.enTrainable.erase(iData1); break;
+	case ORDER_CREATE:    m_cascadeCityPackages.enCreatable.erase(iData1); break;
+	case ORDER_MAINTAIN:  m_cascadeCityPackages.enMaintainable.erase(iData1); break;
+	default: break;
 	}
 
 	if (!bAppend || getOrderQueueLength() == 1)
@@ -22920,42 +22964,17 @@ void CvCity::recalculateModifiers()
 		}
 	}
 	{
-		std::vector<BuildingTypes> newBuildings;
-
 		foreach_(const BuildingTypes eTypeX, getHasBuildings())
 		{
 			const CvBuildingInfo& info = GC.getBuildingInfo(eTypeX);
 
-			// Toffer - Xml changes may have invalidated a building the city have; hence bValid.
-			const bool bObsolete = info.getObsoleteTech() < 0 ? false : GET_TEAM(getTeam()).isHasTech(info.getObsoleteTech());
-			bool bValid =
-			(
-				!bObsolete
-				&& // Do we have the building that this may be an extention of?
-				(info.getExtendsBuilding() == -1 || hasBuilding(info.getExtendsBuilding()))
-			);
+			// #430 obsoletion FLIP (owner 2026-07-07): an obsolete building STAYS -- the cascade delivers its
+			// `whenObsolete` tree (json §4.2), replacing the legacy remove + getObsoletesToBuilding successor swap.
+			// The only invalidation left here is the extends-building check (an XML change orphaning an extension).
+			bool bValid = (info.getExtendsBuilding() == -1 || hasBuilding(info.getExtendsBuilding()));
 			if (!bValid) // Forget it.
 			{
 				alterBuildingLedger(eTypeX, false);
-
-				if (bObsolete)
-				{
-					BuildingTypes eObsoletesToBuilding = info.getObsoletesToBuilding();
-					while (eObsoletesToBuilding > NO_BUILDING)
-					{
-						if (hasBuilding(eObsoletesToBuilding))
-						{
-							break;
-						}
-						const CvBuildingInfo& newBuilding = GC.getBuildingInfo(eObsoletesToBuilding);
-						if (newBuilding.getObsoleteTech() < 0 || !GET_TEAM(getTeam()).isHasTech(newBuilding.getObsoleteTech()))
-						{
-							newBuildings.push_back(eObsoletesToBuilding);
-							break;
-						}
-						eObsoletesToBuilding = newBuilding.getObsoletesToBuilding();
-					}
-				}
 			}
 			else
 			{
@@ -22975,10 +22994,6 @@ void CvCity::recalculateModifiers()
 					processBuilding(eTypeX, 1, false, true);
 				}
 			}
-		}
-		foreach_(const BuildingTypes eTypeX, newBuildings)
-		{
-			changeHasBuilding(eTypeX, true);
 		}
 	}
 
@@ -23437,6 +23452,14 @@ void CvCity::changeExtraRiverDefensePenalty(int iChange)
 }
 
 int CvCity::getExtraMinDefense() const
+{
+	// #430 FLIP (L13 defense, owner 2026-07-05 "everything over to cascade"): the cascade min-floor
+	// (scDefenseMin = Σ building defense.city.min, reconciled Casc==Leg). LOAD stays legacy.
+	if (!GC.getGame().isFinalInitialized()) return getExtraMinDefenseLegacy();
+	return CascadeAccumulator::scDefenseMin(this);
+}
+
+int CvCity::getExtraMinDefenseLegacy() const
 {
 	return m_iExtraMinDefense;
 }

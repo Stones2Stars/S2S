@@ -29,9 +29,10 @@ long YieldRate::yieldRate100(const std::string& channel, YieldTypes eY, const Cv
 {
 	++CascadePerf::yieldRate;
 	PerfAccumTimer perfT(CascadePerf::yieldRateMs);
+	CascadeCondScope ccs(CC_RATES);   // the condEval caller split
 	// TURN-SCOPED MEMO (perf census 2026-07-02: 444 calls x ~164ms = 73s/turn, mostly RE-computes of the same
 	// (city, channel) -- the getter instrument re-derives what the shadow already computed; every commerce check
-	// re-derives the same commerce/production rates per city). Same shadow-phase-only caveat as the facts memo:
+	// re-derives the same commerce/production rates per city). Same shadow-phase-only caveat as the operating buildings memo:
 	// a mid-turn building change goes stale until the next turn -- fine while legacy stays authoritative; MUST be
 	// event-invalidated before any consumer cut. Keyed (city, eY): the channel<->eY mapping is 1:1 on this plane.
 	int iKey = -1;

@@ -13,6 +13,31 @@
 #include "CvJsonPromotionInfo.h"
 #include "CvJsonUnitCombatInfo.h"
 #include "CvJsonCivicInfo.h"
+#include "CvJsonTerrainInfo.h"        // plot-substrate + small/mid per-type payload subclasses (JsonPayload below)
+#include "CvJsonFeatureInfo.h"
+#include "CvJsonRouteInfo.h"
+#include "CvJsonBuildInfo.h"
+#include "CvJsonImprovementInfo.h"
+#include "CvJsonBonusInfo.h"
+#include "CvJsonSpecialistInfo.h"
+#include "CvJsonProcessInfo.h"
+#include "CvJsonCivicOptionInfo.h"
+#include "CvJsonCultureLevelInfo.h"
+#include "CvJsonProjectInfo.h"
+#include "CvJsonHeritageInfo.h"
+#include "CvJsonPromotionLineInfo.h"
+#include "CvJsonCivilizationInfo.h"   // the uniformity set (owner ruling: every type gets its own subclass)
+#include "CvJsonEraInfo.h"
+#include "CvJsonHandicapInfo.h"
+#include "CvJsonGameSpeedInfo.h"
+#include "CvJsonSpecialBuildingInfo.h"
+#include "CvJsonPropertyInfo.h"
+#include "CvJsonLeaderHeadInfo.h"
+#include "CvJsonSpecialUnitInfo.h"
+#include "CvJsonVictoryInfo.h"
+#include "CvJsonVoteInfo.h"
+#include "CvJsonHurryInfo.h"
+#include "CvJsonBonusClassInfo.h"
 #include <vector>
 
 //
@@ -37,6 +62,12 @@
 // The engine info TAGS (phantom per-type discriminators) -- forward-declared for the JsonPayload map below.
 class CvTraitInfo; class CvBuildingInfo; class CvReligionInfo; class CvCorporationInfo; class CvUnitInfo;
 class CvTechInfo; class CvPromotionInfo; class CvUnitCombatInfo; class CvCivicInfo;
+class CvTerrainInfo; class CvFeatureInfo; class CvRouteInfo; class CvBuildInfo; class CvImprovementInfo;
+class CvBonusInfo; class CvSpecialistInfo; class CvProcessInfo; class CvCivicOptionInfo; class CvCultureLevelInfo;
+class CvProjectInfo; class CvHeritageInfo; class CvPromotionLineInfo;
+class CvCivilizationInfo; class CvEraInfo; class CvHandicapInfo; class CvGameSpeedInfo; class CvSpecialBuildingInfo;
+class CvPropertyInfo; class CvLeaderHeadInfo; class CvSpecialUnitInfo; class CvVictoryInfo; class CvVoteInfo;
+class CvHurryInfo; class CvBonusClassInfo;
 
 // JsonPayload<TTag> -- the type-specific CvJson*Info subclass each repo creates (owner ruling 2026-06-30, mirroring
 // StoneBase's per-type Domain/Infos). Default = the generic CvJsonInfo; specialized for the types carrying type-specific
@@ -53,6 +84,31 @@ template <> struct JsonPayload<CvTechInfo>         { typedef CvJsonTechInfo     
 template <> struct JsonPayload<CvPromotionInfo>    { typedef CvJsonPromotionInfo    type; };
 template <> struct JsonPayload<CvUnitCombatInfo>   { typedef CvJsonUnitCombatInfo   type; };
 template <> struct JsonPayload<CvCivicInfo>        { typedef CvJsonCivicInfo        type; };
+template <> struct JsonPayload<CvTerrainInfo>      { typedef CvJsonTerrainInfo      type; };
+template <> struct JsonPayload<CvFeatureInfo>      { typedef CvJsonFeatureInfo      type; };
+template <> struct JsonPayload<CvRouteInfo>        { typedef CvJsonRouteInfo        type; };
+template <> struct JsonPayload<CvBuildInfo>        { typedef CvJsonBuildInfo        type; };
+template <> struct JsonPayload<CvImprovementInfo>  { typedef CvJsonImprovementInfo  type; };
+template <> struct JsonPayload<CvBonusInfo>        { typedef CvJsonBonusInfo        type; };
+template <> struct JsonPayload<CvSpecialistInfo>   { typedef CvJsonSpecialistInfo   type; };
+template <> struct JsonPayload<CvProcessInfo>      { typedef CvJsonProcessInfo      type; };
+template <> struct JsonPayload<CvCivicOptionInfo>  { typedef CvJsonCivicOptionInfo  type; };
+template <> struct JsonPayload<CvCultureLevelInfo> { typedef CvJsonCultureLevelInfo type; };
+template <> struct JsonPayload<CvProjectInfo>      { typedef CvJsonProjectInfo      type; };
+template <> struct JsonPayload<CvHeritageInfo>     { typedef CvJsonHeritageInfo     type; };
+template <> struct JsonPayload<CvPromotionLineInfo>{ typedef CvJsonPromotionLineInfo type; };
+template <> struct JsonPayload<CvCivilizationInfo> { typedef CvJsonCivilizationInfo type; };
+template <> struct JsonPayload<CvEraInfo>          { typedef CvJsonEraInfo          type; };
+template <> struct JsonPayload<CvHandicapInfo>     { typedef CvJsonHandicapInfo     type; };
+template <> struct JsonPayload<CvGameSpeedInfo>    { typedef CvJsonGameSpeedInfo    type; };
+template <> struct JsonPayload<CvSpecialBuildingInfo> { typedef CvJsonSpecialBuildingInfo type; };
+template <> struct JsonPayload<CvPropertyInfo>     { typedef CvJsonPropertyInfo     type; };
+template <> struct JsonPayload<CvLeaderHeadInfo>   { typedef CvJsonLeaderHeadInfo   type; };
+template <> struct JsonPayload<CvSpecialUnitInfo>  { typedef CvJsonSpecialUnitInfo  type; };
+template <> struct JsonPayload<CvVictoryInfo>      { typedef CvJsonVictoryInfo      type; };
+template <> struct JsonPayload<CvVoteInfo>         { typedef CvJsonVoteInfo         type; };
+template <> struct JsonPayload<CvHurryInfo>        { typedef CvJsonHurryInfo        type; };
+template <> struct JsonPayload<CvBonusClassInfo>   { typedef CvJsonBonusClassInfo   type; };
 
 template <class TTag>
 class InfoRepo
