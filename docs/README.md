@@ -1,7 +1,8 @@
 # Stones2Stars — docs
 
-The condensed spec surface (rebuilt 2026-06-23). **Read the spec for whatever you touch BEFORE working** — these
-exist so an agent ends up with a correct model of the system, not a reverse-engineered guess.
+The condensed spec surface. **Session-start protocol (AGENTS.md banner): read ALL of `specs/`, `architecture/`,
+and `reference/` in full before any work** — these exist so an agent ends up with a correct model of the system,
+not a reverse-engineered guess.
 
 > Rules & conventions for agents/contributors live in the root **[AGENTS.md](../AGENTS.md)** (the one rule home),
 > never here. This is the *knowledge* map.
@@ -15,10 +16,10 @@ exist so an agent ends up with a correct model of the system, not a reverse-engi
 - **[specs/tally.md](specs/tally.md)** — the **"how many?"** machine (counts roll up, serializes nothing).
 - **[specs/event-spine.md](specs/event-spine.md)** — the one dispatch primitive consumers draw events from (the KIND firewall).
 - **[specs/logging.md](specs/logging.md)** — **what to log** (the Orwell observability bar, hook shapes, the coverage scale).
-- **[specs/validation.md](specs/validation.md)** — the dry-calc test + the live shadow + the **parity** bar.
-- **[specs/http-endpoints.md](specs/http-endpoints.md)** — the endpoint catalogue (`/state`, `/extractor`, `/shadow`, …).
+- **[specs/validation.md](specs/validation.md)** — the dry-calc test + the **parity** bar (the shadow phase has ended).
+- **[specs/http-endpoints.md](specs/http-endpoints.md)** — the endpoint catalogue (`/state`, `/computed`, `/events`).
 - Unit classification — **[skills](specs/skills.md)** (mutable abilities) · **[tags](specs/tags.md)** (immutable
-  membership) · **[state](specs/state.md)** (transient) · **[capabilities](specs/capabilities.md)** (empire/tech).
+  membership) · **[state](specs/state.md)** (transient) · **[capabilities](specs/capabilities.md)** (empire).
 - **[specs/curators/](specs/curators/README.md)** — the migration conversion spec (**transient**; the old→new field
   map lives in the curator *code*). Dropped when the migration completes.
 
@@ -29,6 +30,7 @@ exist so an agent ends up with a correct model of the system, not a reverse-engi
 - **[reference/golden-age.md](reference/golden-age.md)** — the complete golden-age reference: its 3 base-yield additions (incl. the per-plot **pre-improvement** threshold), faster growth & great people, zero-anarchy civic swaps, all triggers/duration. (So we stop re-deriving it from the engine.)
 - **[reference/culture-religion-research.md](reference/culture-religion-research.md)** — culture, religion, research/tech, heritage, corporations.
 - **[reference/special-systems.md](reference/special-systems.md)** — espionage, great people, promotions/XP, vision, trade, diplomacy, victory.
+- **[reference/mission-outcome-system.md](reference/mission-outcome-system.md)** — the `CvOutcome` mission/outcome system (feeds the json.md §8 `missions` block).
 - **[reference/observability.md](reference/observability.md)** — the operational tag registry / gate knobs / live server / field census / PlotSnapshot.
 - **[reference/external-tools-and-workflows.md](reference/external-tools-and-workflows.md)** — crash-dump symbolization, FpkBuilder.
 
@@ -36,7 +38,8 @@ exist so an agent ends up with a correct model of the system, not a reverse-engi
 - **[architecture/decisions.md](architecture/decisions.md)** — the **DECISIONS LEDGER** (the `DEC-*` index — grep it before adding any ruling).
 - **[architecture/north-star.md](architecture/north-star.md)** — the structural compass (data side vs AI side; the three machines; Clean Architecture in C++03).
 - **[architecture/superseded-ideas.md](architecture/superseded-ideas.md)** — the don't-revive registry.
-- **[architecture/patterns.md](architecture/patterns.md)** — interface contracts in C++03 (poor-man's DI).
+- **[architecture/patterns.md](architecture/patterns.md)** — interface contracts in C++03 (poor-man's DI) + the DRY single-implementation law.
+- **[architecture/state-repositories.md](architecture/state-repositories.md)** — recompute-only derived-state caches (`CvDerivedCache`).
 
 ## `plans/`
 - **[plans/structural-cleanup/](plans/structural-cleanup/README.md)** — the bulldozer reference (what gets deleted at the cascade cutover).

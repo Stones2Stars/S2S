@@ -3,9 +3,15 @@
 > **Project-specific & temporary (owner).** Validation is the migration's **unit / integration / end-to-end
 > tests**: it proves the new cascade reproduces the legacy engine so the legacy C++ maintainers can be deleted
 > (**map-before-delete**). When the migration is done, validation in this form is **stone dead** and gets removed —
-> *that deletion is the finish line*. We need it **now**. (Specs aren't permanent; they exist so agents don't get
+> *that deletion is the finish line*. (Specs aren't permanent; they exist so agents don't get
 > yoinked — this one rides with the project and dies with it. It lives in the **one** specs surface, never a
 > siloed project folder — that concept failed catastrophically.)
+>
+> **⚑ STATUS — THE SHADOW PHASE HAS ENDED (owner).** Parity is past: the legacy XML Info classes are archived as
+> the red ratchet ([DEC-red-ratchet]), so there is no legacy oracle left to shadow against on the cut surfaces.
+> The in-DLL shadow leg below is CONCLUDED — no shadow gates any remaining work. What remains of validation:
+> StoneBase as the spec-compliance validator, and the observability surface as the ground truth for the getter/
+> consumer wiring that finishes the migration ([cutover.md](../plans/structural-cleanup/cutover.md)).
 
 ## What it is
 
@@ -17,14 +23,14 @@ engine's actual output**. Our calculator is the test; the engine is the oracle.
   (raw inputs only, no computed outputs).
 - **Oracle** — the engine's actual values from [`/computed/*`](http-endpoints.md): the per-source yield/commerce
   decomposition (`/computed/cities/yields`) + the `/computed/can*` gate verdicts.
-- **Bar — PARITY, full stop (owner ruling 2026-06-23).** Per entity/instance, **0 in-scope mismatches** — *exact*,
+- **Bar — PARITY, full stop.** Per entity/instance, **0 in-scope mismatches** — *exact*,
   not "close / same ballpark." There is **no tolerance band and no agent grading of acceptability** — that framing
-  (and the retired six-rung "care scale") was constantly abused to wave a mismatch through as good-enough. No bug has
+  is always abused to wave a mismatch through as good-enough. No bug has
   surfaced in any actual legacy *calculation*, so the math matches; **a divergence is therefore a data-collection
   gap** — a source the cascade didn't gather — never a formula difference. Map it to the named source and close it.
   Out-of-scope (depends on a lower, not-yet-validated layer — e.g. a tech needing a `BUILDING_` prereq) is
   **deferred: shown, never silently dropped**.
-- **⛔ PARITY = full ATTRIBUTION + a showable diff, NOT bit-exact (owner clarification 2026-06-30).** "Parity" does
+- **⛔ PARITY = full ATTRIBUTION + a showable diff, NOT bit-exact.** "Parity" does
   **not** mean the cascade reproduces the legacy number to the bit. It means **every source is ATTRIBUTED** — we can
   name where each value comes from on both sides — and **any diff is SHOWABLE** (total-observability). **Bit-exact is
   impossible by design** where the model deliberately diverges: e.g. building free-specialists were **moved into the
@@ -39,14 +45,14 @@ engine's actual output**. Our calculator is the test; the engine is the oracle.
 > behaviour exactly. Behavioural redesign — *should this behave this way at all?* (e.g. should blackened-skies dorm
 > an observatory) — is deferred to **post-migration**, never done during it.
 >
-> **Why parity is non-negotiable *now* (owner 2026-06-25).** The pedantry exists so the initial port introduces
+> **Why parity is non-negotiable *now*.** The pedantry exists so the initial port introduces
 > **zero side-effects** — the new cascade must do exactly what C2C did, no surprises. Once the migration is over the
 > ground truth FLIPS: the **JSON spec** (not the legacy engine) becomes authoritative, and *that* is when we — and
 > modders — deliberately **diverge from C2C**, with StoneBase guarding spec-compliance. So: mirror the engine to get
 > here; thereafter the spec leads.
 >
-> **⛔ Data migration is NEVER deferred — un-migrated data is the #1 priority (owner ruling 2026-07-01,
-> `DEC-data-first`).** The strict complement of mirror-then-redesign: you defer *redesign*, you **never** defer *data
+> **⛔ Data migration is NEVER deferred — un-migrated data is the #1 priority
+> (`DEC-data-first`).** The strict complement of mirror-then-redesign: you defer *redesign*, you **never** defer *data
 > migration*. ANY known curator/JSON item that is not yet updated — a legacy field not converted, a reclassification
 > not applied, a legacy shape still emitted — is the single highest-priority task, handled **BEFORE** any downstream
 > cascade / shadow / observability / parity work. **Why:** a deferred data item forces every downstream consumer to
@@ -56,22 +62,20 @@ engine's actual output**. Our calculator is the test; the engine is the oracle.
 > curator-pending item outranks any machine/shadow task in the queue. Ledgered as
 > [`DEC-data-first`](../architecture/decisions.md#dec-data-first).
 >
-> **Parity is the COMPLETENESS test (owner 2026-06-28) — which RAISES the bar, it does not lower it.** *"The true
+> **Parity is the COMPLETENESS test — which RAISES the bar, it does not lower it.** *"The true
 > reason for parity matching is to make sure that cascade evaluates everything legacy does, and parity overall is the
 > best way to ensure that."* Parity is the *instrument* that proves the cascade gathers every source the legacy engine
 > does. **So a divergence is your signal that you have NOT yet found a source the engine uses — the job is to FIND it
 > (map it to a named legacy source with numbers on both sides), exactly per [`DEC-parity`](#) above.** "It doesn't
 > reconcile, so I'll change the legacy/curator/numbers instead" is the **banned shortcut** — the kraken's bait — and
-> 99% of the time the value DOES reconcile once the missing source is found (the path here was a string of *wrong*
-> "it's stale / it's a bug" guesses that each dissolved when the next source was mapped — `CvPlayer:27896` was the
-> real source, found only by reading ALL the writers).
+> 99% of the time the value DOES reconcile once the missing source is found by reading ALL the writers.
 >
 > **⛔ Touching legacy is a LAST RESORT, never an agent's judgement call.** Only after the source is FULLY mapped —
 > every writer read, the value reproduced offline and shown to be **genuinely non-deterministic** (history/order-
 > dependent: a stale incremental cache that survives a recalc, demonstrated across MANY instances, with the engine
 > code proving why) — may "streamline the legacy to be deterministic, then parity, then balance" even be *proposed*.
-> It then requires **explicit owner authorization for that specific case** (as given 2026-06-28 for the
-> specialist-commerce percent stale cache). It is NOT a general licence to change numbers, and the existence of this
+> It then requires **explicit owner authorization for that specific case**. It is NOT a general licence to change
+> numbers, and the existence of this
 > exception must never be cited to skip the mapping work. (The one sanctioned instance + its full evidence:
 > [legacy-value-calc-map §1.5](../plans/structural-cleanup/legacy-value-calc-map.md).)
 
@@ -80,9 +84,9 @@ engine's actual output**. Our calculator is the test; the engine is the oracle.
 The dry-calc is implemented as **StoneBase** (the `Sources`-mirroring .NET cascade at `http://localhost:8229`): it
 loads the curated `Assets/Data/**` JSON + the live `/state`, rebuilds the cascade with a typed, layered model
 (Domain `Condition` → `IConditionEvaluator` → `BuildingCascade`), and diffs its verdict against the engine oracle
-(`/computed/canConstruct`, `/computed/cities/yields`). **StoneBase is THE — and only — validator** (owner ruling 2026-06-25).
+(`/computed/canConstruct`, `/computed/cities/yields`). **StoneBase is THE — and only — validator.**
 
-> **⛔ StoneBase FOLLOWS the spec — the authority chain is strictly ONE-WAY (owner ruling 2026-06-25).** The flow is
+> **⛔ StoneBase FOLLOWS the spec — the authority chain is strictly ONE-WAY.** The flow is
 > **SPEC → StoneBase → engine-oracle**, never reversed. The spec leads; StoneBase *implements* it (it is the
 > pseudo-code blueprint for the C++ port); the engine is only the **result-oracle** — it confirms that *StoneBase +
 > curated data* reproduce the engine's TRUE-set during the mirror phase ([`DEC-mirror-then-redesign`](../architecture/decisions.md#dec-mirror-then-redesign)).
@@ -131,7 +135,7 @@ dedicated endpoint.)* The legacy stays authoritative until its shadow is **clean
 numbers on both sides — if the data to attribute it isn't emitted, the first step is to emit it (the
 [logging](logging.md) observability bar is the prerequisite).
 
-## Validation cadence — what LOAD verifies vs what END TURN verifies (owner ruling 2026-06-30)
+## Validation cadence — what LOAD verifies vs what END TURN verifies
 
 The static/live split — **readJson = static info data**; the **game object = live state** (the cascade runtime: tally,
 event spine, accumulators, all condition *evaluation*) — dictates *when* each thing is verified, and it is the cure for
@@ -143,23 +147,19 @@ the false-confirmation trap below:
   confirm readJson did its job and the cascade's static/initial state is correct + inspectable. **No turn needed.**
 - **END TURN verifies LIVE integration — and ONLY that.** Two cases: **(1)** the engine parts we will **not** replace
   can **see** the new cascade data; **(2)** the parts we **will** replace — `canTrain`/`canConstruct` and the modifier
-  rates — are **shadowed in the AI's real per-turn calls** (end-turn so the AI calls them). **Before the enabler is
-  swapped over, its new build lists are LOGGED at the PYTHON consumer layer** (the AI/UI's view of buildability), so the
-  cutover is proven against what the actual consumers see — not just the C++ shadow.
-  **⚖ AMENDED (owner 2026-07-04, the bandaid ruling "flip it all"):** under the getter-contract flip
-  (cutover.md ruling 5 — the gate BODIES flip, consumers never rewire) the Python layer reads the SAME
-  contracts (`CyCity::canConstruct` → the flipped body), so its view is identical by construction — the
-  dedicated pre-flip logging step is WAIVED as a flip gate ("it should be easy to trace what python gets
-  and sees": one gated Cy-boundary log line, or the `/computed/can*` endpoints, whenever wanted). The
-  enabler flip proceeds directly; the DELETION step still waits for the verification window + the standing
-  gates like every cut.
+  rates — are **shadowed in the AI's real per-turn calls** (end-turn so the AI calls them). Under the
+  getter-contract flip ([cutover.md](../plans/structural-cleanup/cutover.md) — the gate BODIES flip, consumers never
+  rewire) the Python layer reads the SAME contracts (`CyCity::canConstruct` → the flipped body), so its view is
+  identical by construction — no dedicated pre-flip Python-layer logging gates a flip (one gated Cy-boundary log
+  line, or the `/computed/can*` endpoints, whenever wanted). The DELETION step still waits for the verification
+  window + the standing gates like every cut.
 - **⛔ An end turn does NOT confirm a STRUCTURE.** A per-change game shadow produces **false confirmation even on a
   wrong structure** — the gameobject side-table shadowed green (`TALLY diverging=0`, building tier bit-exact) yet was on
   the wrong structural path. So **stand up the proper, spec-faithful structure FIRST**; the shadows then verify
   *behaviour through the surviving/replaced engine*, never *structure*. Structure is gated by **fidelity to the spec**,
   not by a green shadow. Ledgered as [DEC-structure-before-shadow](../architecture/decisions.md#dec-structure-before-shadow).
 
-## ⛔ Parity-pass results stay OUT of the docs (owner ruling 2026-06-23)
+## ⛔ Parity-pass results stay OUT of the docs
 Divergence counts, parity checklists, per-pass pilot numbers — **none of it belongs in the durable docs.** Stale
 results **poison contexts**: an agent fixates on a number and misdiagnoses (a ~1100-building enable diff was
 repeatedly misattributed to a band-model change it had nothing to do with). The spec says what the model **is**; the
@@ -180,7 +180,7 @@ Clean-Architecture layering: the cascade domain physically **cannot reference th
 composition root reads the snapshot (translating it into events + the player→team map). The no-rollerskating rule
 is the **project graph**, not discipline.
 
-> **⛔ In the in-DLL shadow it is DISCIPLINE, not the graph — so be SUPER-PEDANTIC (owner ruling 2026-06-30).** The
+> **⛔ In the in-DLL shadow it is DISCIPLINE, not the graph — so be SUPER-PEDANTIC.** The
 > in-engine cascade has **direct access** to every live object + computed getter; the structural wall StoneBase enjoys
 > **does not exist** here, so nothing *stops* it reading a legacy COMPUTED output as an input. Therefore the in-DLL
 > shadow must follow **StoneBase's exact input rules + implementation**, enforced by **manual pedantry**: only the

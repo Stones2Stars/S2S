@@ -22,7 +22,7 @@ resolves dynamically by name.
 - **Adding** a field is SOFT (old save, new code): the new read mismatches the stream's next element, no-ops, and
   keeps its default — `Expect()` returns false and leaves the stream untouched
   (`Sources/Infrastructure/CvTaggedSaveFormatWrapper.cpp:3830`).
-- **⛔ Removing a field's read is NOT soft — there is NO automatic drain of a stale tag (proven live 2026-07-02).**
+- **⛔ Removing a field's read is NOT soft — there is NO automatic drain of a stale tag (proven live).**
   `Expect()` treats *any* mismatch as "the code is ahead of the stream" and never consumes the unexpected element,
   so an orphaned tag in an old save makes **every subsequent read in that object** mismatch against it and silently
   default — the load guts wholesale (the live failure: empty tech lists, buildingless cities). Retirement is
@@ -38,6 +38,11 @@ resolves dynamically by name.
   change under a reused name; (5) a deleted field read without its named `WRAPPER_SKIP_ELEMENT` (the stale-tag
   desync above). *Hardening path:* flip a Type's read site to `_ALLOW_MISSING`, then delete.
 - **Derived data serializes nothing** — `reset()` + mark-dirty-on-load is the pattern; the cascade [tally](../specs/tally.md) never serializes.
+- **⛔ When deleting a legacy changer/apply function, audit its whole BODY for side effects — an apply-site audit
+  alone misses them.** Legacy changers carry non-obvious riders (`changeTerrainTradeCount`/`changeRiverTradeCount`
+  call `updatePlotGroups()` — the trade-network recompute — per team player; `changeBridgeBuildingCount` marks
+  bridges dirty; others fire UI dirty bits). Post-cut, the surviving trigger site (e.g. `setHasTech`/`processTech`)
+  must still fire those effects, or derived engine state goes progressively stale.
 
 ## Pathfinding — two systems
 
@@ -52,6 +57,11 @@ resolves dynamically by name.
   cross impassable tiles). Finders are per-`MapTypes` (multimap).
 
 ## Properties — the generic attribute bag + its legacy auto-placement
+
+> **⚖ The property engine is SELF-CONTAINED BY DESIGN** — what happens inside the property engine stays inside
+> the property engine. Its internal semantics (e.g. the cascade property channel's own per-handling,
+> `CvCascadeProperty`) are not unified with the generic modifier machinery, and the generic per-count resolver
+> serves the ordinary modifier channels, never threads into the property engine.
 
 - **`CvProperties`** is a generic `(PropertyTypes, int)` bag (values + per-turn rates) attachable to any object
   (game…plot). The mutating *rules* are **not** on it — they live in **`CvPropertyManipulators`** on info objects

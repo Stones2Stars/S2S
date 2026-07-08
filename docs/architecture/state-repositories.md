@@ -1,42 +1,26 @@
 # State repositories — recompute-only caches with a dirty trigger
 
-**Status:** landed for the plot-yield cache (2026-06-27) and extended to the **specialist** commerce/yield getters and
-the **building** commerce + yield (squirrelBanana) caches (2026-06-28), and the **per-building empire commerce-change
-ledger** (`getBuildingCommerceChange`/`m_ppiBuildingCommerceChange`, 2026-06-29 — recompute-from-source replacing a
-**build-order-double-counting** serialized accumulator; live-parity-clean, see below) — all verified live-parity-clean. The pattern is
-the cure for a whole class of "stale cache" bugs; the plot cache is the proof, and the model the rest of the engine's
-derived state should follow. The reusable [`CvDerivedCache`](#the-standardized-cvderivedcache-component-formalized-2026-06-28-built-at-shadow--final-migration-time)
-component (below) formalizes the hand-rolled instances; building it + migrating them onto it is deferred to shadow/final-migration time.
+The pattern for **derived engine state**: how a domain object's derived data (yields, commerce, health, …) is
+computed and kept coherent. `CvPlot` and `CvCity` are **domain objects** — the in-game data entities — and they
+**stay**. This is not about dissolving them (that's `CvCityAI`'s eventual job); it is about the derived layer.
 
-`CvPlot` and `CvCity` are **domain objects** — the in-game data entities — and they **stay**. This is not about
-dissolving them (that's `CvCityAI`'s eventual job, the AI/behaviour tangle riding on top). It is about how their
-**derived data** (yields, and later commerce/health/…) is computed and kept coherent.
+Realized on: the plot-yield cache (`CvPlot::m_yieldCache`, the exemplar), the specialist commerce/yield getters,
+the building commerce + yield caches, the per-building empire commerce-change ledger
+(`CvPlayer::m_buildingCommerceChange`), the cascade rate slots (`CvCity::m_cascadeRateSlots`), and the
+operating-building set (`CvCity::m_operatingBuildings`).
 
 ## The problem: no unified `dataChanged` trigger
 
-Every derived value in the engine is a **hand-maintained cache with ad-hoc, gappy invalidation**. There is no single
-"the source changed, refresh me" primitive, so caches drift out of sync with the data they derive from. The
-2026-06-25→27 parity work hit this repeatedly — every instance was the *same* disease, not independent bugs:
-
-- `getImprovementYieldChange` (a city cache) kept a **dormant building's** improvement-yield because the dormancy path
-  never decremented it, and "recalculate modifiers" never rebuilds that per-improvement cache.
-- A building value change (`MODERN_GRANARY` 1→2) left the cache on the old value.
-- `doVicinityBonus` only stamps on a bonus **transition**, so a building built *after* the bonus connected never
-  refreshed; the tech yield only enters on **research**, so build-after-tech never refreshed.
-- `/state/all` and `/computed` could report **different** worked-plot yields for the same city at the same time,
-  because they refresh on different schedules.
-
-The tell is **squirrelBanana** (`CvCity::getBuildingExtraYield100`) and the reverted `getImprovementYieldChange`
-bypass: both **recompute every read**. That is not a design choice — it is a *workaround for a cache nobody can trust*
-because there is no reliable refresh. Correct, but it pays the full cost on the hot path.
-
-> **Live-proven per-plot (2026-07-03):** the `[MODIFIER/plotdiff]` probe (modifier-substrate.md Verification §1)
-> emits the three serialized improvement-yield accumulators (`accPlayer`/`accTeam`/`accCity`) per diverging worked
-> plot and reconciles them against the full writer census — `accCity` (this doc's broken city cache) AND
-> occasionally `accPlayer` hold values **no live data source can produce** (phantom yields from unreachable
-> history), per-plot, bit-exact. The disease is not city-cache-only; the player-level incremental accumulator
-> shares it. Recompute-from-source is the cure for both (the cascade's derivation already computes the correct
-> value — the cutover repairs these leaks).
+Every derived value in the legacy engine is a **hand-maintained cache with ad-hoc, gappy invalidation**. There is no
+single "the source changed, refresh me" primitive, so caches drift out of sync with the data they derive from — one
+disease, many instances: a dormant building's improvement-yield never decremented; a building value change leaving
+the cache on the old value; transition-only stamps (`doVicinityBonus`) missing build-after-connect orders; two
+surfaces reporting different worked-plot yields for the same city at the same moment. The legacy incremental
+serialized accumulators additionally carry **history pollution** — values no live data source can produce (the
+improvement-yield accumulators hold phantom yields, per-plot, bit-exact; the wellbeing accumulators the same class —
+[modifier.md §2b](../specs/modifier.md)). Recompute-from-source is the cure; recompute-every-read getters
+(the squirrelBanana class) were the workaround for a cache nobody could trust — correct, but paying full cost on
+the hot path.
 
 ## The model
 
@@ -49,124 +33,41 @@ A derived cache in this model is:
    expensive recompute runs **once per change-then-read**, never per change and never per read.
 2. **Recompute-only, NOT serialized** — the [DEC-derived-never-trusted](decisions.md#dec-derived-never-trusted) rule,
    applied per-field. Neither the value nor the flag is saved; on load the flag is dirty by default, so the first read
-   recomputes from current state — **never stale-from-save**, the bug class above killed at the root. Drop serialization
-   via `WRAPPER_SKIP_ELEMENT` (the soft-remove of [DEC-save-remove-is-soft](decisions.md#dec-save-remove-is-soft)): it
-   consumes a removed field's bytes from an *old* save by name so nothing after it shifts, and is a no-op on a new save
-   that never wrote it. *Just deleting the read/write breaks the save layout.*
+   recomputes from current state — **never stale-from-save**. Drop serialization
+   via `WRAPPER_SKIP_ELEMENT` (the soft-remove of [DEC-save-remove-is-soft](decisions.md#dec-save-remove-is-soft)):
+   it consumes a removed field's bytes from an *old* save by name so nothing after it shifts, and is a no-op on a new
+   save that never wrote it. *Just deleting the read/write breaks the save layout.*
 3. **The single source — PULL, not push.** Things up the chain (the city, the diagnostics, the cascade oracle) **read**
    the value; the source does not **push** deltas into them. Push + a parallel cache double-count and drift; pull from
    one authoritative value cannot.
 
-## First instance: the plot-yield cache (`CvPlot`)
+**Worked shape (the plot-yield cache):** `getYield()` = `if (dirty) recompute; return cached` — O(1) when clean;
+`updateYield()` is the **trigger only** (flips dirty, fires the downstream dirties the old push carried — no eager
+recompute, no push); `CvCity::getPlotYield()` **pulls** Σ over worked plots (the push-maintained `m_aiBaseYieldRate`
+is dead). The engine's actual base yield thereby equals the build-order-independent value the cascade computes —
+stale-cache divergences resolved **at the source**, behaviour-preserving
+([DEC-parity](decisions.md#dec-parity), [DEC-mirror-then-redesign](decisions.md#dec-mirror-then-redesign)).
 
-- `m_aiYield` (the cached per-yield value) + `mutable bool m_bYieldDirty` — **neither serialized** (`m_aiYield` via
-  `WRAPPER_SKIP_ELEMENT(... SAVE_VALUE_TYPE_SHORT_ARRAY)`, no write; `m_bYieldDirty` true on construct).
-- `getYield()` — `if (m_bYieldDirty) recomputeYield(); return m_aiYield[i];`. O(1) when clean.
-- `recomputeYield() const` — sums the plot's yield, with the **building→improvement keyed buff summed FRESH** over the
-  working city's *active* (non-disabled) buildings rather than read from the stale `getImprovementYieldChange` cache
-  (the "buildings buff a yield on an improvement" feature the legacy cache doesn't carry). Clears the flag.
-- `updateYield()` — now the **trigger only**: flips `m_bYieldDirty`, fires `AI_setAssignWorkDirty` + `onYieldChange`
-  (the downstream commerce/UI dirty the old push carried). No eager recompute, **no push**.
-- `CvCity::getPlotYield()` — **pulls** `Σ` over worked plots of `getYield`, replacing the push-maintained
-  `m_aiBaseYieldRate` (`changePlotYield` and the `processWorkingPlot` push are gone; `m_aiBaseYieldRate` is dead).
+**Incremental-accumulate ledgers convert to recompute-from-source.** The serialized player ledger
+`m_ppiBuildingCommerceChange` double-counted by build order (the accumulator replayed onto the loaded value); it is
+now a recompute-from-source cache (Σ over the player's buildings' `GlobalBuildingExtraCommerces` on dirty), the
+changer is trigger-only, and the cities PULL it.
 
-## Why this is the right fix, not a patch
+**Event/vote grants are NOT cached — they are a SEPARATELY PERSISTED store.** A per-building commerce change has
+two sources of fundamentally different nature: the **empire** grant (`GlobalBuildingExtraCommerces`, civics) is
+DERIVABLE → the recompute-from-source cache; the **event/vote** grant (fires ONCE) is **genuine one-shot state, NOT
+derivable** — *"having events just be stored in the cache is lunacy"* (a recompute cache would wipe them). They live
+in their own serialized field (`CvCity::m_aBuildingCommerceChangeEvents`), outside the recompute path; the reader
+sums `player-recompute (empire) + city event/vote (persisted)`.
 
-The engine's *actual* base yield (`getPlotYield`) now equals the build-order-independent value the cascade has always
-computed, because both sum the live data the same way — the stale-cache divergences are resolved **at the source**, not
-papered over in the cascade. This is mirror-phase, behaviour-preserving ([DEC-parity](decisions.md#dec-parity),
-[DEC-mirror-then-redesign](decisions.md#dec-mirror-then-redesign)). It also dissolves the perf objection to the per-read
-bypass — the fresh sum runs only on recompute (change-then-read), never per read.
+## The standardized `CvDerivedCache` component
 
-(Per [DEC-no-parity-results-in-docs](decisions.md#dec-no-parity-results-in-docs), the pass numbers themselves stay out of here.)
-
-## The direction
-
-- **Build out the trigger.** Today `updateYield`'s many call sites are the de-facto trigger; the destination is a
-  unified `dataChanged`/dirty propagation (plot dirty → city dirty → commerce dirty) so every derived layer is a thin
-  recompute-only cache over the one below.
-- **The trigger IS the event spine — ALL caches must use the ONE pattern (owner ruling 2026-06-29).** When the cascade
-  is wired through the [event spine](../specs/event-spine.md), cache invalidation rides its triggers: a `DOMAIN` event
-  (building built, civic adopted, …) marks the affected derived caches dirty, uniformly. This only works if **every**
-  derived cache is the same `CvDerivedCache` shape — so the currently-MIXED patterns must converge:
-  recompute-on-read (specialist commerce/yield), the hand-rolled dirty cache (plot-yield squirrelBanana), **and the
-  incremental-accumulate-and-propagate ledgers** — e.g. `getBuildingCommerceChange`/`m_ppiBuildingCommerceChange` (a
-  player ledger that `CvPlayer::changeBuildingCommerceChange` pushed to every city at change-time, serialized).
-- **`getBuildingCommerceChange` — the incremental-accumulate ledger was BUILD-ORDER-DOUBLE-COUNTING; converted to
-  recompute-from-source 2026-06-29.** The "third bespoke pattern" above was *not* "fresh" as first assumed: the
-  serialized player accumulator (`m_ppiBuildingCommerceChange`, fed by `GlobalBuildingExtraCommerces` at `CvCity:5054`)
-  plus the per-receiver snapshot (`CvCity:4708`) **replayed onto the loaded value on load/recalc**, so a guild's `+5`
-  grant landed as `+10` on receivers built after the guild (e.g. P6/C8192 gold ledger 13700 vs the correct 8900;
-  CARPENTER 1000 vs 500). Fixed the **established way** (`CvPlot`/specialist precedent, hand-rolled until the
-  shadow-phase `CvDerivedCache`): `m_ppiBuildingCommerceChange` is now a **recompute-from-source** cache —
-  `recomputeBuildingCommerceChange()` sums Σ over the player's `getHasBuildings → getGlobalBuildingCommerceChanges` when
-  a dedicated `m_bBuildingCommerceChangeDirty` is set (dirty on construct/load, **never serialized**;
-  `WRAPPER_SKIP_ELEMENT` on read, write dropped); `changeBuildingCommerceChange` is **trigger-only** (no accumulate, no
-  per-city push); the cities **PULL** it (`getBuildingCommerceByBuilding` = `kOwner.getBuildingCommerceChange + city event/vote`).
-- **Event/vote grants are NOT cached — they are a SEPARATELY PERSISTED store (owner ruling 2026-06-29).** The
-  per-building commerce change has TWO sources of fundamentally different nature: the **empire** grant
-  (`GlobalBuildingExtraCommerces`, civics) is DERIVABLE → the recompute-from-source cache above; the **event/vote**
-  grant (`applyEvent` `getBuildingCommerceChanges` fires ONCE; vote-source on activation toggle) is **genuine one-shot
-  state, NOT derivable** — *"having events just be stored in the cache is lunacy"* (a recompute/consume cache would wipe
-  them). So they live in their own serialized field `CvCity::m_aBuildingCommerceChangeEvents`, written by 15338/19223/22161,
-  **outside the recompute path**, read normally. The reader sums `player-recompute (empire) + city event/vote (persisted)`.
-- **`@SAVEBREAK`:** `m_ppiBuildingCommerceChange` is no longer serialized (`WRAPPER_SKIP` + write dropped); the old
-  `CvCity::m_aBuildingCommerceChange` is **retired** (consume-don't-keep on load — drops the old empire-polluted
-  accumulator; its event/vote part migrates to the new uniquely-tagged `m_aBuildingCommerceChangeEvents`, which an old
-  save lacks → reads empty, so old-save event/vote grants are lost **ONCE** on migration). Result: engine == cascade
-  (8900), P6/C8192 gold commerce parity CLEAN; commerce sweep 722/740 clean (the guild double-count gone, no regression).
-  This is the new spec applied the old way — both fields still collapse onto the eventspine-dirty `CvDerivedCache` (cache)
-  + a clean persisted store (events) at shadow/migration, with ONE invalidation mechanism.
-- **City layer pulls plots.** `getPlotYield` is the first pull; the city's other derived caches (commerce, health) get
-  the same treatment, pulling through the plot/city repository contract.
-- **Retire the workarounds.** squirrelBanana and any remaining recompute-every-read getters collapse to a trustworthy
-  cache + read once the trigger is real.
-- This is the Clean-Architecture north-star applied to engine state: the repository **is** the contract, and it is the
-  lever for thinning the `Cv*` god-classes without touching the closed-EXE-bound `CvPlot`/`CvCity` layout. See
-  [north-star](north-star.md).
-
-## The standardized `CvDerivedCache` component (formalized 2026-06-28; BUILT at shadow / final-migration time)
-
-> **Decision (owner 2026-06-28):** the pattern above gets **formalized into ONE reusable C++03 component** rather than
-> hand-rolled per cache (the plot-yield cache's `m_aiYield`+`mutable m_bYieldDirty`+`recomputeYield`, and the interim
-> recompute-on-read getters for specialist commerce/yield, are each the same shape written by hand). **It is NOT built
-> now** — it is captured here so it is ready when we **build the shadow and do the final migration**; the current
-> recompute-on-read getters stand in until then (correct, just the per-read-cost workaround §"Why this is the right fix").
->
-> **✅ BUILT (2026-07-03, the substrate/final-migration moment this spec named):**
-> `Sources/Infrastructure/CvDerivedCache.h` — BOTH forms (the single-flag `CvDerivedCache<TOwner,T,N>` below +
-> the partial-dirty `CvDerivedCacheSet<TOwner>` per the 2026-07-03 ruling). The **plot-yield cache is migrated
-> onto it** (the exemplar — `CvPlot::m_yieldCache`, `recomputeYield()`→`recomputeYieldInto(short*)`). Spec holes
-> found at build time and PLUGGED (owner: "find holes and plug them"), now contract rules in the header:
-> **(1) clear-dirty BEFORE recompute** (the spec's clear-after recursed on read-back and lost mid-recompute
-> dirties); **(2) the recompute must fully define its output every call** (zero-fill on can't-compute — the
-> plot's `!area()` early-return used to leave stale values behind a clean flag); **(3) NONCOPYABLE** (a copied
-> cache keeps the ORIGINAL owner's pointer — dangling-owner footgun); **(4) `data()` pointers stay valid but
-> values mutate — never cache across state changes; game-thread only; (5) fixed compile-time N** (a
-> runtime-sized domain needs a vector variant when first needed). **The accumulator converged onto the Set form
-> the same day**: `CascadeRateSlots` is a mutable `CvCity` member (`m_cascadeRateSlots`, bound in the ctor,
-> stale-marked in `reset()`; the side map + per-read lookup deleted; the cascade math stays module-side behind
-> the one `cascadeRefreshRates` delegate — the pattern every remaining modifier channel now reuses).
-> **✅ The operating buildings converged the same day (2026-07-03):** the per-city cascade operating buildings (active set +
-> vicinity provides, the operate/provides fixpoint) are a standing `CvCity::m_operatingBuildings` member on the same
-> `CvDerivedCacheSet` idiom — event-invalidated (building/religion/corp flips), stamped with the SHARED
-> accumulator epoch (tech/civic/GA re-check both), turn-roll self-heal — replacing the turn-scoped operating buildings memo
-> whose "shadow-phase-only, must be event-invalidated before any consumer cut" caveat is thereby CLOSED. All
-> consumers read the standing sets via `EnablerKernel::operatingBuildings`/`wireOperatingBuildings` (no per-call set copies; the
-> shrine/state-religion private fixpoint rebuilds gone). Deliberately NOT converged: the legacy CvCity
-> hand-rolled dirty caches (`m_aiCommerceRate`, `m_aiBuildingCommerce100`, squirrelBanana) — they are §4
-> demolition fodder at the modifier cut; polishing them is backwards investment.
-> **✅ The VECTOR VARIANT was built + the player building-commerce ledger CONVERGED (2026-07-05):**
-> `CvDerivedCacheVec<TOwner,T>` (contract rule 5's named form — the recompute receives the vector and fully
-> sizes+defines it) landed in `CvDerivedCache.h`; `m_ppiBuildingCommerceChange` + its hand-rolled dirty bool
-> became `CvPlayer::m_buildingCommerceChange` on the component (flat [building × commerce] index; the
-> `WRAPPER_SKIP` read tags stay verbatim — stringify-only). The one remaining live follow-up: the
-> **specialist getters**, which await the ONE invalidation mechanism at the turn-end unified rebuild (the
-> parked AI build-queue-parity rework) — not the vector variant.
-
-**Chosen mechanism — a templated value-holder with the recompute injected as a member-function-pointer** (the one part
-that genuinely needs owner state stays owner-side; everything else — storage, dirty flag, pull-on-read, trigger — is the
-reusable contract). Poor-man's-DI-adjacent ([patterns](patterns.md)): the recompute is the injected dependency.
+**One reusable C++03 component** (`Sources/Infrastructure/CvDerivedCache.h`) rather than hand-rolled per cache — a
+templated value-holder with the recompute injected as a member-function-pointer (poor-man's-DI-adjacent,
+[patterns](patterns.md)). Three forms: the single-flag **`CvDerivedCache<TOwner,T,N>`** (leaf caches — the plot
+yield), the partial-dirty **`CvDerivedCacheSet<TOwner>`** (component-granular, see Refinements), and the
+runtime-sized **`CvDerivedCacheVec<TOwner,T>`** (the recompute receives the vector and fully sizes+defines it — the
+player building-commerce ledger).
 
 ```cpp
 template <class TOwner, class T, int N>
@@ -180,121 +81,103 @@ public:
     void markDirty() { m_dirty = true; }     // the trigger — call at every input-change site (no eager recompute, no push)
     T    get(int i) const { if (m_dirty) { (m_owner->*m_recompute)(m_data); m_dirty = false; } return m_data[i]; }
 };
-// e.g. int CvCity::getSpecialistCommerce(CommerceTypes e) const { return m_specCommerceCache.get(e) / 100; }
 ```
 
-- **It is a DATA MEMBER** on `CvCity`/`CvPlot` — fine: data members are added routinely (`m_bYieldDirty` was just added
-  to `CvPlot`); the [patterns](patterns.md) guardrail bars adding vtable *bases* to EXE-bound classes, **not** data members.
-- **Never serialized.** The owner's `read()` does `WRAPPER_SKIP_ELEMENT` for the legacy field (the
-  [DEC-save-remove-is-soft](decisions.md#dec-save-remove-is-soft) soft-remove); the cache is dirty-on-construct, so a
-  loaded game recomputes on first read — never stale-from-save.
-- **Apply to** (at build time): migrate the hand-rolled **plot-yield** cache onto it; convert the **specialist-commerce**
-  and **specialist-yield** recompute-on-read getters onto it; then the future **commerce / health** city caches — one
-  pattern everywhere. This is the concrete form of the unified `dataChanged` trigger named in "The direction" above.
+**Contract rules (in the header; each plugged a real hole):**
+1. **Clear-dirty BEFORE recompute** — clear-after recurses on read-back and loses mid-recompute dirties.
+2. **The recompute must fully define its output every call** — zero-fill on can't-compute; an early-return that
+   leaves stale values behind a clean flag is the bug class this kills.
+3. **NONCOPYABLE** — a copied cache keeps the ORIGINAL owner's pointer (dangling-owner footgun).
+4. `data()` pointers stay valid but values mutate — never cache across state changes; game-thread only.
+5. Fixed compile-time N in the array form; a runtime-sized domain uses the Vec form.
 
-## ⚖ Refinements (owner rulings 2026-07-03, from the modifier-substrate build)
+- **It is a DATA MEMBER** on `CvCity`/`CvPlot` — fine: the [patterns](patterns.md) guardrail bars adding vtable
+  *bases* to EXE-bound classes, **not** data members.
+- **Never serialized.** The owner's `read()` does `WRAPPER_SKIP_ELEMENT` for the legacy field; dirty-on-construct
+  means a loaded game recomputes on first read.
+- **Converged onto the component:** the plot-yield cache; `CascadeRateSlots` (a mutable `CvCity` member, the cascade
+  math module-side behind the one `cascadeRefreshRates` delegate — the pattern every modifier channel reuses); the
+  operating-building set (event-invalidated, epoch-stamped, turn-roll self-heal); the player building-commerce
+  ledger (Vec form). **Deliberately NOT converged:** the legacy CvCity hand-rolled dirty caches (`m_aiCommerceRate`,
+  `m_aiBuildingCommerce100`, squirrelBanana) — demolition fodder at the modifier cut; polishing them is backwards
+  investment. **Remaining live follow-up:** the specialist getters await the ONE invalidation mechanism at the
+  turn-end unified rebuild (with the parked AI build-queue-parity rework), not the Vec form.
 
-- **PARTIAL DIRTYING.** The one-flag `CvDerivedCache` shape needs a component-granular variant: a cache whose
-  value composes from several isolated **plugin numbers** (each package a standing value; "the rest of the pipe
-  stays the same") carries a **dirty BITMASK, one bit per component**, and a trigger marks only the components
-  its event feeds — the realized exemplar is `CascadeAccumulator`'s `AccDirty` bits over the §2a packages
-  ([modifier-substrate.md](../plans/structural-cleanup/modifier-substrate.md)). When `CvDerivedCache` is built,
-  it grows this per-component form (the single-flag form stays for leaf caches like the plot yield).
-- **⚖ THE CAPSTONE RULE: the ONLY time the entire cascade is rebuilt — all packages,
-  all yields — is ON LOAD.** Post-load, every recompute is marked-component-only at a boundary (the
-  slice-start rebuild; eventually the unified turn-end pass below); a full rebuild mid-game is a design
-  violation. Today's remaining BLANKETS are named interims graded against this rule: the EPOCH bump
-  (tech/civic/GA marks ALL bits for the player's cities) and the RATE components' turn-roll self-heal —
-  each retires the way the scalar carve-out did (a proven hook map + a data-derived per-source mask:
-  building masks landed; tech/civic/trait masks are the successors), until load is the only
-  full pass. Siblings of the rule: reads are BARE NUMBER FETCHES during the turn (the ensure-per-
-  read protocol on AI-hot paths measurably ground unit automation — 1.28M defense reads in one turn);
-  recomputes happen at the START OF EACH PLAYER'S SLICE (`CascadeAccumulator::playerSliceRebuild`); and
-  "it's the percentage recalcs that hurt" — the mask derivation splits percent-vs-flat so flat-only events
-  never rebuild a percent stack, most changes being plain arithmetic through the already-compiled block.
-  **The granularity TARGET: per-(package × CHANNEL)** — "most of the time we will know
-  exactly which package (flat or percentage, and for what yield) was touched, and only rebuild those." The
-  compiled deposits carry the channel, so the AccDirty bits split per yield/commerce channel (today's bits
-  are per-component across all channels — a production-only percent touch still rebuilds the food+commerce
-  stacks); the bit-layout split is the increment after the bare-fetch shape verifies.
-- **⚠ NAMED DEBT: a SECOND invalidation philosophy rides beside the component — a DEPARTURE
-  from this doc's own model, not a design alternative.** The slots/operating buildings Sets are event-MARKED (the
-  documented way), but two POLLING primitives
-  accreted around them: the epoch counters (+ the `iEpoch`/`iTurn` stamp fields on `CascadeRateSlots` beside
-  its Set) and `CvCascadePlayerStamp` (the wellbeing/scalar per-player rollups, not on the component at all).
-  They exist because player-scope events fan out to N cities' Sets and the routing wasn't built yet — the
-  interim polls versions instead. Dissolution = this doc's own end-state: player-scope events mark the
-  affected Sets directly via data-derived per-source masks (the building-mask pattern), the rollups become
-  `CvDerivedCache` instances bound to `CvPlayer`, and the epochs + stamps DELETE. One component, one
-  philosophy. Sequenced after the bare-fetch increment verifies (behavior-neutral consolidation on a proven
-  baseline).
-- **⚖ THE PER-SCOPE PACKAGE MODEL — the cascade's FOUNDING DESIGN ([modifier.md](../specs/modifier.md) §1),
-  stated as cache architecture.** A `CvDerivedCache` lives ON EVERY SCOPED ITEM, every level (world → team → player →
-  area → city → plot); the cascade loads **yield packages in ONE UNIFORM FORMAT** (the §2 slots — Σflat and
-  Σpercent each their OWN package per channel; the unit is part of the slot key) into each scope's cache; each cache knows its own staleness from events at
-  its OWN scope (a world change rebuilds the world package while every other level stands). **The only live
-  calculation is adding the ~5 packages together at read** — trivial arithmetic through the already-compiled
-  percentage block; "isolated parts, summed, with zero need for complex on-the-fly calculations anywhere."
-  The plot and city levels already live this way; the player level lands with the freshness consolidation
-  (the `CascadePlayerScope` member); area/team/world follow per channel (the tradeRoutes world term is the
-  first world-scope tenant). Full rebuild of everything = LOAD ONLY (the capstone above).
-- **⚖ A CASCADE IS A CACHE — BUT NOT AN INPUT/OUTPUT CACHE (owner rulings 2026-07-06).** Two distinct cache kinds;
-  do not conflate them:
-  - **The yield + percent packages are an INPUT/OUTPUT (value) cache** — memoize the computed number, dirty-invalidate
-    on a source event, recompute from inputs on next read. This is what the `CvDerivedCache` / scope-package design is
-    FOR (*"yields are the cached inputs"*).
-  - **The ENABLER cascades (the frontier + the active-operating buildings) are a CASCADE** — themselves a cache of derived
-    state, but maintained by **TARGETED PROPAGATION**: computed once (the walk-down), then each HAVE-change is
-    propagated through the **affected subset only** (re-check the affected candidates / ripple the fixpoint), updating
-    the authoritative dataset **in place** (the reverse-index, [enabler.md](../specs/enabler.md) §7). A cascade is
+## ⚖ Refinements
+
+- **PARTIAL DIRTYING.** A cache whose value composes from several isolated **plugin numbers** (each package a
+  standing value; "the rest of the pipe stays the same") carries a **dirty BITMASK, one bit per component**, and a
+  trigger marks only the components its event feeds — the `CvDerivedCacheSet` form; the realized exemplar is
+  `CascadeAccumulator`'s `AccDirty` bits over the modifier packages
+  ([modifier-substrate.md](../plans/structural-cleanup/modifier-substrate.md)). The single-flag form stays for leaf
+  caches.
+- **⚖ THE CAPSTONE RULE: the ONLY time the entire cascade is rebuilt — all packages, all yields — is ON LOAD.**
+  Post-load, every recompute is marked-component-only at a boundary (the slice-start rebuild; eventually the unified
+  turn-end pass below); a full rebuild mid-game is a design violation. The remaining BLANKETS are named interims
+  graded against this rule — the EPOCH bump (tech/civic/GA marks ALL bits for the player's cities) and the RATE
+  components' turn-roll self-heal — each retires via a proven hook map + a data-derived per-source mask (building
+  masks landed; tech/civic/trait masks are the successors), until load is the only full pass. Siblings of the rule:
+  reads are BARE NUMBER FETCHES during the turn (an ensure-per-read protocol on AI-hot paths measurably ground unit
+  automation); recomputes happen at the START OF EACH PLAYER'S SLICE (`CascadeAccumulator::playerSliceRebuild`); and
+  "it's the percentage recalcs that hurt" — the mask derivation splits percent-vs-flat so flat-only events never
+  rebuild a percent stack. **The granularity TARGET: per-(package × CHANNEL)** — the compiled deposits carry the
+  channel, so the dirty bits split per yield/commerce channel; the bit-layout split is the increment after the
+  bare-fetch shape verifies.
+- **⚠ NAMED DEBT: a SECOND invalidation philosophy rides beside the component — a DEPARTURE from this doc's own
+  model, not a design alternative.** The slots/operating-building Sets are event-MARKED (the documented way), but two
+  POLLING primitives accreted around them: the epoch counters (+ the `iEpoch`/`iTurn` stamp fields on
+  `CascadeRateSlots`) and `CvCascadePlayerStamp` (the wellbeing/scalar per-player rollups, not on the component at
+  all). They exist because player-scope events fan out to N cities' Sets and the routing wasn't built yet — the
+  interim polls versions instead. Dissolution = this doc's own end-state: player-scope events mark the affected Sets
+  directly via data-derived per-source masks, the rollups become `CvDerivedCache` instances bound to `CvPlayer`, and
+  the epochs + stamps DELETE. One component, one philosophy — sequenced after the bare-fetch increment verifies.
+- **⚖ THE PER-SCOPE PACKAGE MODEL — the cascade's FOUNDING DESIGN ([modifier.md](../specs/modifier.md) §1), stated
+  as cache architecture.** A `CvDerivedCache` lives ON EVERY SCOPED ITEM, every level (world → team → player → area
+  → city → plot); the cascade loads **yield packages in ONE UNIFORM FORMAT** (Σflat and Σpercent each their OWN
+  package per channel; the unit is part of the slot key) into each scope's cache; each cache knows its own staleness
+  from events at its OWN scope (a world change rebuilds the world package while every other level stands). **The
+  only live calculation is adding the ~5 packages together at read.** The plot and city levels live this way; the
+  player level lands with the freshness consolidation (`CascadePlayerScope`); area/team/world follow per channel
+  (the tradeRoutes world term is the first world-scope tenant). Full rebuild of everything = LOAD ONLY.
+- **⚖ A CASCADE IS A CACHE — BUT NOT AN INPUT/OUTPUT CACHE.** Two distinct cache kinds; do not conflate them:
+  - **The yield + percent packages are an INPUT/OUTPUT (value) cache** — memoize the computed number,
+    dirty-invalidate on a source event, recompute from inputs on next read. This is what `CvDerivedCache` is FOR.
+  - **The ENABLER cascades (the frontier + the operating-building set) are a CASCADE** — themselves derived state,
+    but maintained by **TARGETED PROPAGATION**: computed once (the walk-down), then each HAVE-change propagates
+    through the **affected subset only** (re-check the affected candidates / ripple the fixpoint), updating the
+    authoritative dataset **in place** via the reverse-index ([enabler.md](../specs/enabler.md) §7). A cascade is
     NEVER blanket-invalidated-and-recomputed, and NEVER a parallel shadow-delta.
-  ⛔ Blanket-recomputing the whole operating buildings fixpoint for every city on every event (the current `m_operatingBuildings`
-  `markAllDirty` path) runs a cascade AS an input/output cache — **"burning down the library of Alexandria"
-  (DESPAIR_INDEX #2)**. The fix is targeted propagation into the authoritative operating buildings, the shape the frontier ALREADY
-  uses (`onBuildingChanged` / `recheckHave` off the reverse-index). It is likewise **not a given** the yield-package
-  shape fits any OTHER non-package channel (the unit plane, properties); each is decided per-channel, and only AFTER
-  the spec is fully in place so the WHAT-to-cache set beyond yields is known.
-- **THE TARGET END-STATE — flags all turn, ONE unified rebuild at turn end (owner 2026-07-03).** The whole
-  model in one line: *"if things have not changed, cache is not stale; if it has, rebuild."* Mechanism: *"we can
-  set a 'things changed for me' flag on every cache based on events, then we unify all cache rebuild at the end
-  of any turn."* Events are pure flag-sets (the DOMAIN-event → markDirty pattern, no mid-turn recompute); reads
-  serve the standing snapshot all turn; ONE batched rebuild pass at turn end sweeps every flagged cache **in
-  dependency order** (plot caches → city components → player aggregates), priming the next cycle. Consequences:
-  no lazy-refresh reentrancy, no mid-turn freshness questions, rebuild cost becomes one measurable phase, and
-  save-safety rides the eager load-end build (below). Pairs with the
-  [AI build-queue-parity model](../plans/parked/ai-build-queue-parity.md) — the snapshot IS the fairness
-  mechanism; this end-state lands WITH that rework (today's lazy-refresh + hooks stay until then, parity).
-  **The event→cache routing is DERIVED FROM THE DATA, never hand-wired (owner):** *"we define in the events
-  what cache it impacts — we already know this, because we specify scopes and targets, and what yields or
-  modifiers they hit, on everything."* A DOMAIN event carries its SOURCE; the source's compiled deposits
-  (the load-time strings→ints index, [modifier-substrate.md](../plans/structural-cleanup/modifier-substrate.md))
-  name exactly the channels × scopes × targets it touches — the dirty flags fall out of the deposit addresses.
-  Today's hand-coded hook masks are the interim shape of that derivation. **The index EXISTS as of 2026-07-03**
-  (`Cascade/CvCascadeDepositIndex.{h,cpp}`: per-deposit interned segments — family/scope/member/target — plus a
-  FK-resolved target id, compiled at readJson push-time); deriving the routing masks from it is the remaining
-  half, landing with the turn-end unified rebuild.
-- **THE TURN-BOUNDARY PRINCIPLE WILL SIMPLIFY CACHING (owner 2026-07-03).** The
-  [AI build-queue-parity intent](../plans/parked/ai-build-queue-parity.md) rules that decision INPUTS are
-  turn-boundary state — *"this principle should also help us simplify caching for us now."* Consequence: once
-  that rework lands, the turn-roll refresh IS the complete freshness contract for decision reads, and the
-  mid-turn dirty-hook web shrinks to the realized-output paths (which already run at each player's slice start,
-  on fresh slots). **Until then the hooks stay** — today's AI still reads mid-turn, and the flipped getters must
-  match what legacy's always-fresh accumulators would have answered (parity discipline).
-  **⚖ SUPERSEDED IN PART (owner 2026-07-04, the precipice review):** the read-freshness half of that parity
-  line is superseded — the scope-packages landing runs the per-player-slice SNAPSHOT now (owner: *"getting a
-  yield event in the middle of a turn is not retroactive; start of next turn is what is expected"*), with the
-  city-creation eager ensure (`CascadeAccumulator::cityCreated`) the one ruled exception. Full ruling +
-  consequences: [scope-packages.md](../plans/structural-cleanup/scope-packages.md) §1.
-- **LOAD-TIME RECOMPUTE IS AN EASY TRADE — EAGER WARM-UP IS THE GENERAL POLICY.** *"I don't mind having longer
-  initial save-load time, and have every cache recalculated on save load — it's turn times that people notice;
-  trading longer save-load for shorter turn times is an easy trade"*; strengthened same day: *"I am happy to
-  add even MINUTES to load time in order to have caches eagerly built on load in general."* So: every derived
-  cache recomputes on load (dirty-on-construct gives correctness), **and gets eagerly WARMED at load-end as the
-  default** — the realized site is `CvGame::onFinalInitialized`'s cache warm-up block (every plot's yield cache
-  — worker AI relies on them — + every city's accumulator slots); new derived caches join that block. No design
-  ever serializes a derived value to save load time.
-  **⚖ GENERALIZED to the perf LAW: "the name of any game in this town will always be
-  TURN TIMES — if game load takes 50% longer it matters nothing if we can shave 5-10-15% on turn time, because
-  there is only 1 game load, but many many many turns."** Turn time is the objective EVERY perf decision
-  optimizes; load time is the currency that pays for it. Ledgered as
+  ⛔ Blanket-recomputing the whole operating-building fixpoint for every city on every event runs a cascade AS an
+  input/output cache — **"burning down the library of Alexandria" (DESPAIR_INDEX #2)**. The fix is targeted
+  propagation, the shape the frontier ALREADY uses (`onBuildingChanged` / `recheckHave` off the reverse-index). It
+  is likewise **not a given** the yield-package shape fits any OTHER non-package channel (the unit plane,
+  properties); each is decided per-channel, only AFTER the spec is fully in place.
+- **THE TARGET END-STATE — flags all turn, ONE unified rebuild at turn end.** The whole model in one line: *"if
+  things have not changed, cache is not stale; if it has, rebuild."* Events are pure flag-sets (the DOMAIN-event →
+  markDirty pattern, no mid-turn recompute); reads serve the standing snapshot all turn; ONE batched rebuild pass at
+  turn end sweeps every flagged cache **in dependency order** (plot caches → city components → player aggregates),
+  priming the next cycle. Consequences: no lazy-refresh reentrancy, no mid-turn freshness questions, rebuild cost is
+  one measurable phase. Pairs with the [AI build-queue-parity model](../plans/parked/ai-build-queue-parity.md) — the
+  snapshot IS the fairness mechanism; this end-state lands WITH that rework. **The event→cache routing is DERIVED
+  FROM THE DATA, never hand-wired:** a DOMAIN event carries its SOURCE; the source's compiled deposits (the
+  load-time strings→ints index, `Cascade/CvCascadeDepositIndex.{h,cpp}` — per-deposit interned segments +
+  FK-resolved target id, compiled at readJson push-time) name exactly the channels × scopes × targets it touches —
+  the dirty flags fall out of the deposit addresses. Today's hand-coded hook masks are the interim shape of that
+  derivation; deriving the routing masks from the index lands with the turn-end unified rebuild.
+- **Mid-turn read freshness:** the scope-packages model runs the per-player-slice SNAPSHOT (*"getting a yield event
+  in the middle of a turn is not retroactive; start of next turn is what is expected"*), with the city-creation
+  eager ensure (`CascadeAccumulator::cityCreated`) the one ruled exception. Full consequences:
+  [scope-packages.md](../plans/structural-cleanup/scope-packages.md) §1.
+- **LOAD-TIME RECOMPUTE IS AN EASY TRADE — EAGER WARM-UP IS THE GENERAL POLICY.** *"I am happy to add even MINUTES
+  to load time in order to have caches eagerly built on load in general."* Every derived cache recomputes on load
+  (dirty-on-construct gives correctness) **and gets eagerly WARMED at load-end as the default** — the realized site
+  is `CvGame::onFinalInitialized`'s cache warm-up block (every plot's yield cache + every city's accumulator slots);
+  new derived caches join that block. No design ever serializes a derived value to save load time. **The perf LAW:
+  "the name of any game in this town will always be TURN TIMES — if game load takes 50% longer it matters nothing if
+  we can shave 5-10-15% on turn time, because there is only 1 game load, but many many many turns."** Turn time is
+  the objective EVERY perf decision optimizes; load time is the currency that pays for it. Ledgered as
   [DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king).
+
+This is the Clean-Architecture north-star applied to engine state: the repository **is** the contract, and it is the
+lever for thinning the `Cv*` god-classes without touching the closed-EXE-bound `CvPlot`/`CvCity` layout. See
+[north-star](north-star.md).

@@ -68,11 +68,11 @@ The two reliable live reads:
 
 - **`/state/*` + `/computed/*` endpoints** — an on-demand snapshot via the game-thread mailbox; depends on no log file and
   no gate. The most reliable read — when in doubt about a value, hit the endpoint.
-- **`/events` SSE stream** — the gated `[TAG]` lines, live. The per-turn shadow lines burst at the **top of
+- **`/events` SSE stream** — the gated `[TAG]` lines, live. The per-turn lines burst at the **top of
   `doTurn`**, so you must **connect *before* the turn ticks** (connect-then-end-turn).
-  - **⚠ Capture with an AUTO-RECONNECT loop, not a fixed-window curl (2026-07-02).** `CvGame::doTurn` fires at the
+  - **⚠ Capture with an AUTO-RECONNECT loop, not a fixed-window curl.** `CvGame::doTurn` fires at the
     END of the inter-turn processing, which on a logged late-game turn can run **many minutes** — a fixed
-    `curl -m 600` dies before the burst and the reconnect gap loses it (this dropped two verification turns).
+    `curl -m 600` dies before the burst and the reconnect gap loses it.
     Capture with `while true; do curl -sN -m 3600 …/events >> capture.log; sleep 1; done` and grep the growing file.
   - **A force-killed game may lose the tail** — `taskkill /F` can drop OS-buffered log/burst lines written moments
     earlier. Post-mortem `Cascade.log` reads (legitimate once the process is dead) are only trustworthy for data
@@ -88,7 +88,7 @@ The two reliable live reads:
 ## See also
 - [event-spine.md](event-spine.md) — the event source logging consumes. [validation.md](validation.md) — the shadow
   + parity bar that *uses* this observability to prove a maintainer before it's cut.
-- [http-endpoints.md](http-endpoints.md) — the clean endpoint catalogue (`/state`, `/extractor`, `/shadow`,
-  `/decompose`, `/events`) this surface publishes through.
+- [http-endpoints.md](http-endpoints.md) — the clean endpoint catalogue (`/state`, `/computed`, `/events`) this
+  surface publishes through.
 - [tally.md](tally.md) — the read-only count accessor (reads the object-owned counts; NOT a spine consumer). The KIND
   firewall (`DOMAIN` vs `DIAGNOSTIC`/`TRACE`) is still load-bearing for the synced-vs-unsynced split that logging + the offline replay ride.

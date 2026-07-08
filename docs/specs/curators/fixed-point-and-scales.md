@@ -1,14 +1,13 @@
 # Fixed-point & the scale registry — the ONE place scales live
 
 > **Status:** reference (canonical scale registry) · **Verified against:** `Sources/Engine/CvCity.cpp`,
-> `Sources/Infos/*.h` — 2026-06-19.
+> `Sources/Infos/*.h`.
 > **Grounding:** every scale below was figured from the math in the cited accessor, not from the field
 > name. Line numbers drift — confirm the named function, not the integer.
 >
 > This is the **single source of truth for value scales** in S2S. If you need to know whether a quantity
 > is human-readable, ×100 fixed-point, a percent, or a multiplier — it is here. Do not re-derive a scale
 > in another doc; link this one. Ruling: [DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100),
-> [DEC-per100-closed-set](../../architecture/decisions.md#dec-per100-closed-set),
 > [DEC-curator-owns-descale](../../architecture/decisions.md#dec-curator-owns-descale).
 
 ---
@@ -79,18 +78,17 @@ accessors across all Info headers. That set IS the de-scale list:
 ### 4c. The ×100-space ADDENDS that LACK a `…100()` getter — the heuristic's blind spot
 The "`*100` getters mark the scaled fields" rule is INCOMPLETE: some fields are added in ×100 space
 *without* a `…100()` getter. These must be mapped at the consumption site, not by name. Verified against
-`CvCity.cpp` 2026-06-19:
+`CvCity.cpp`:
 
 | field | scale | evidence | curator action |
 |---|---|---|---|
 | `BonusCommercePercentChanges` (Building) | **×100, and FLAT** | added raw beside `100 * getBuildingCommerce` inside `getBuildingCommerce100` (`CvCity.cpp:12132`); the *rate* modifier is the separate `m_aiBonusCommerceRateModifier` | ÷100 de-scale **+ relabel `percent`→`flat`** (the name's "Percent" is a misnomer) |
 | `YieldPerPopChange` / `CommercePerPopChange` (per-pop) | **×1 human, NOT ×100** | added raw into the ×100-space `getExtraYield100` / `getBuildingCommerce100` (`CvCity.cpp:11323` / `:12132`) — the legacy "latent /100 weakening" | **emit as-is; do NOT de-scale** (÷100 here corrupts `1/pop` → `0.01/pop`) |
-| `YieldsProduced` / `CommercesProduced` (Corporation) | **×100** | `getCorporationYieldByCorporation` (`CvCity.cpp:12594-12602`): `produced × Σ getNumBonuses(prereqBonus) × worldCorpMaintPct / 100`, then the corp result `/100` — so `produced=75` ⇒ 0.75/bonus. NOT the genuinely-×1 `*Changes` twin (`getYieldChange × 100` in-formula) | ÷100 de-scale → human (`curate_corporation`, fixed 2026-06-21). **TODO (corp rework):** `iMaintenance` is likely ×100 too (`calculateCorporationMaintenanceTimes100`) — verify + de-scale in the dedicated corp pass |
-| `iHealthPercent` / `iHappinessPercent` (Specialist) | **×100, and FLAT** | `processSpecialist` STORES them raw (`CvCity.cpp:5184/5192`, `change*Health/*Happiness(field × count)`) — the misleading part — but the REALIZED `goodHealth()`/`badHealth()`/`happyLevel()`/`unhappyLevel()` read them `/100` (`CvCity.cpp:5848/5876/5714/5654`). The `/100` is NOT AI-only weighting; it is the actual realized level. | ÷100 de-scale → human (FLAT; the "Percent" is a misnomer). `curate_specialist`, fixed 2026-06-27. ⚠ Map at the CONSUMER, not the store — the raw `change*` store site is the trap that produced a wrong "it's FLAT ×1" correction |
+| `YieldsProduced` / `CommercesProduced` (Corporation) | **×100** | `getCorporationYieldByCorporation` (`CvCity.cpp:12594-12602`): `produced × Σ getNumBonuses(prereqBonus) × worldCorpMaintPct / 100`, then the corp result `/100` — so `produced=75` ⇒ 0.75/bonus. NOT the genuinely-×1 `*Changes` twin (`getYieldChange × 100` in-formula) | ÷100 de-scale → human (`curate_corporation`). **TODO (corp rework):** `iMaintenance` is likely ×100 too (`calculateCorporationMaintenanceTimes100`) — verify + de-scale in the dedicated corp pass |
+| `iHealthPercent` / `iHappinessPercent` (Specialist) | **×100, and FLAT** | `processSpecialist` STORES them raw (`CvCity.cpp:5184/5192`, `change*Health/*Happiness(field × count)`) — the misleading part — but the REALIZED `goodHealth()`/`badHealth()`/`happyLevel()`/`unhappyLevel()` read them `/100` (`CvCity.cpp:5848/5876/5714/5654`). The `/100` is NOT AI-only weighting; it is the actual realized level. | ÷100 de-scale → human (FLAT; the "Percent" is a misnomer). `curate_specialist`. ⚠ Map at the CONSUMER, not the store — the raw `change*` store site is the trap that produces a wrong "it's FLAT ×1" correction |
 
-> The per-pop finding retires an earlier tentative "de-scale perPopulation" plan — it was wrong. This is
-> exactly the [DEC-no-guessing](../../architecture/decisions.md#dec-no-guessing) case: the scale was *mapped* at the
-> consumption site, not guessed from the field name.
+> The per-pop row is the [DEC-no-guessing](../../architecture/decisions.md#dec-no-guessing) case in miniature:
+> the scale was *mapped* at the consumption site, never guessed from the field name.
 
 ## 5. Verification — the math proves the scales, not manual JSON review
 
@@ -100,7 +98,8 @@ legacy `getYieldRate100`. **Residual divergence localises the next mis-scaled fi
 regenerate → re-run. Exact parity is the bar — 0 in-scope mismatches; a residual divergence is a data-collection gap (a still-mis-scaled field), never a formula difference ([DEC-parity](../../architecture/decisions.md#dec-parity)).
 
 ## See also
-- [decisions ledger](../../architecture/decisions.md) — `DEC-fixedpoint-x100`, `DEC-per100-closed-set`,
-  `DEC-curator-owns-descale` index this doc as their home.
-- `legacy-value-calc-map.md` *(pending rebuild)* — the full per-calc DESTROY-pass map this scale work feeds.
-- the modifier cascade spec *(pending rebuild)* — §2 arithmetic that consumes ×100 values.
+- [decisions ledger](../../architecture/decisions.md) — `DEC-fixedpoint-x100`, `DEC-curator-owns-descale` index
+  this doc as their home.
+- [legacy-value-calc-map.md](../../plans/structural-cleanup/legacy-value-calc-map.md) — the full per-calc
+  DESTROY-pass map this scale work feeds.
+- [modifier.md](../modifier.md) — the §2 arithmetic that consumes ×100 values.

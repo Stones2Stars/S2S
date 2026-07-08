@@ -63,7 +63,7 @@ combines them at read.
 float math desyncs. The single human→×100 conversion happened once in `readJson` ([json](json.md) §3.6); the
 slot does pure integer math and never sees the human boundary.
 
-> **A plot's yield is ONE base package, resolved in isolation BEFORE the city modifiers (owner ruling 2026-06-27).**
+> **A plot's yield is ONE base package, resolved in isolation BEFORE the city modifiers.**
 > All output from a single plot is computed in **complete isolation** as one base-yield package — `CvPlot::calculateYield`
 > per plot ([calc-map](../plans/structural-cleanup/legacy-value-calc-map.md) §10.1: `calculateNatureYield`(`getBaseYield`=
 > terrain+feature+river+hills/peak + bonus) + improvement (floored at `-nature`) + route + the keyed/plots flats,
@@ -75,12 +75,9 @@ slot does pure integer math and never sees the human boundary.
 > which only ever scales the already-summed base. Consequence: a `basePlotYield` divergence is *necessarily* a per-plot
 > **flat** miscount (missing or double-counted), because no city-level percentage exists that could move a single plot.
 
-> **Parity is the bar (owner ruling 2026-06-23).** The cascade reproduces the legacy engine **exactly** — parity is
-> the only goal, and it is achievable: no bug has surfaced in any actual *calculation*, so the math matches. Any
-> mismatch is a **data-collection gap** (a source the cascade didn't gather), never a formula difference — so there
-> is no "close / same ballpark," no tolerance, no agent grading. While a channel is shadow-proven, multiplier
-> deposits are treated as identity so the cascade is additive — exactly matching legacy — and the work is completing
-> the gathered data until the diff is **0**. See [validation](validation.md).
+> **Parity is the bar ([DEC-parity]).** Multiplier deposits are treated as identity on the yield/commerce channels —
+> no source authors one, so the cascade is additive, exactly matching legacy. Full parity discipline (the shadow
+> phase itself has ended): [validation](validation.md).
 
 **Three non-additive combine modes, declared as FAMILY metadata (never per-deposit):** a `min` member that floors
 the combined total (e.g. `defense`); `combine: max|min` for worst/best-across-sources (anarchy turns,
@@ -106,7 +103,7 @@ order is load-bearing (it decides what the percent stack scales and what it does
 |---|---|---|
 | **worked-plot yields** (`basePlotYield`) | Σ over the city's worked plots of each plot's ONE isolated base package (§2 plot-as-base): `max(0, terrain+feature+bonus)` nature + improvement (floored at −nature) + route + keyed building/civic/trait `plot`-flats + `plots`-target + city-centre constant + threshold/golden-age per-plot | **computed** from the curated plot substrate + `/state/plots` |
 | **trade-route yield** (`tradeYield`) | `/state` input | **input** — out-of-scope (the trade network); the calc *folds it in*, never derives it. The ONE live-yield input (see [http-endpoints](http-endpoints.md)) |
-| **free-city yield** (`freeCityYield`) | Σ the player's active traits' `YieldChanges` (`{ch}.empire.flat`) | **computed** (was a `/state` read; now derived — [http-endpoints](http-endpoints.md)). ⚠ NAMING (owner clarification 2026-07-04): "free-city" here = the legacy trait accumulator (`CvPlayer::m_aiFreeCityYield`, free yield granted in every city) — **NOT** the WLTKD celebration ("We Love the King/Emperor Day"), whose sole gameplay effect is zero city maintenance ([economy.md](../reference/economy.md)) |
+| **free-city yield** (`freeCityYield`) | Σ the player's active traits' `YieldChanges` (`{ch}.empire.flat`) | **computed** (derived, never a `/state` read — [http-endpoints](http-endpoints.md)). ⚠ NAMING: "free-city" here = the legacy trait accumulator (`CvPlayer::m_aiFreeCityYield`, free yield granted in every city) — **NOT** the WLTKD celebration ("We Love the King/Emperor Day"), whose sole gameplay effect is zero city maintenance ([economy.md](../reference/economy.md)) |
 | **golden-age yield** | trait `goldenAge` member (`{ch}.empire.goldenAge.flat`) while in golden age | **computed** (`empire.goldenAge` member-mirror, §3 golden-age carve-out) |
 | **specialist yields** (`specialist`) | per assigned specialist: `intrinsic × (100 + specialist-%)⁄100` + building-local (gated `city.flat`) + per-type (`empire.flat`) + perAll + trait governing-deliverer | **computed**. NOTE the specialist carries its **own** percent layer (its intrinsic ×`(100+specialist-%)`) *before* it joins BASE and takes the city `modifier` — two distinct percent stacks |
 
@@ -162,7 +159,8 @@ clamp(unhappy − happy, 0, pop)`. The channel oracle is **`/computed/cities/wel
 - **DEPOSIT-COMPUTED (the cascade's targets)** — everything a live source's `health`/`happiness` family deposits
   produce: **buildings** (city `flat`/`perPopulation` + the area/empire-scope rollups + conditioned entries incl.
   `HAS_STATE_RELIGION`-gated), **civics** (empire flats + the keyed/heterogeneous members: `buildings.{B}`,
-  `features.{F}`, `nonStateReligion`, `perMilitaryUnit`, the ranked `cities` scaler), **traits** (same member
+  `features.{F}`, `nonStateReligion`, the `cities.{unit: IS_MILITARY}` per-unit scaler, the ranked `cities`
+  scaler), **traits** (same member
   vocabulary), **features** (`health.plot.percent` — summed over radius plots, ÷100 — the fallout class),
   **bonuses** (empire flats, presence-gated), **specialists** (city flats; the fractional values are the
   curator's ÷100 de-scale of the legacy latent-×100 — the engine `…/100` at use), **corporations**
@@ -180,8 +178,8 @@ clamp(unhappy − happy, 0, pop)`. The channel oracle is **`/computed/cities/wel
   percents** (overcrowding = f(pop), noMilitary, foreign-culture, enemy-religion, hurry/conscript/defy/
   revRequest timers, war-weariness, revIndex, civic anger%), the **espionage counters**, **event anger**
   (one-shot event state), **tax-rate unhappiness**, **foreign-culture anger**, **landmark anger** (option-gated —
-  ⚖ RULED KEEP through the migration, owner 2026-07-05: the existing engine implementation stays, *"straight up
-  state derived from the plot in question"*; the landmark data pass is POST-migration, ticket #448),
+  ⚖ KEEP through the migration: the existing engine implementation stays, *"straight up state derived from the
+  plot in question"*; the landmark data pass is POST-migration, ticket #448),
   **city-over-limit**, and **vassal** terms. These are saved/derived-from-saved state (legitimate inputs per the
   [http-endpoints](http-endpoints.md) hard rule) — the calc folds them at the level combine exactly where the
   engine does.
@@ -196,13 +194,13 @@ clamp(unhappy − happy, 0, pop)`. The channel oracle is **`/computed/cities/wel
 `badHealth` adds `min(0, extraBuildingBadHealth)` **twice** (once inside `totalBadBuildingHealth`, once
 directly); and the anger percents scale by `pop/PERCENT_ANGER_DIVISOR` with truncating integer division.
 
-**⛔ TRAVELING UNIT MODIFIERS RIDE ON TOP (owner ruling 2026-07-03, GENERAL — all channels).** A modifier that
+**⛔ TRAVELING UNIT MODIFIERS RIDE ON TOP (GENERAL — all channels).** A modifier that
 TRAVELS with a unit (unit-sourced happiness, anger, property emission, and any future unit-carried channel
 value) is **never part of a cached cascade computation**: it is computed LIVE at read and **added on top as a
 FLAT term, after and outside every percentage modification**. Two structural consequences: (1) unit movement
 never dirties any cache — the cached sums are unit-free by construction; (2) the traveling value is a plain
 flat addition to the realized number, never an input to a percent stack. The implementation shape: the cache
-stores the unit-free number (+ any epoch-stable per-unit multiplier, e.g. the civic perMilitaryUnit VALUE);
+stores the unit-free number (+ any epoch-stable per-unit multiplier, e.g. a civic's per-military-unit VALUE);
 the read folds `perUnit × liveCount` / the live unit walk on top (an O(1)-ish live engine read).
 **The AUTHORING BAN that keeps this coherent: no unit gives — or can ever be
 ALLOWED to give — PERCENTAGES to yields of any kind.** A unit-carried value is always a raw flat number on
@@ -211,26 +209,23 @@ on-top model. Enforceable at the curator/validation layer: a `units/**` JSON aut
 `percent` deposit is a data error.
 Ledgered as [DEC-unit-modifiers-on-top](../architecture/decisions.md#dec-unit-modifiers-on-top).
 
-**UNIT-driven wellbeing is END-TURN cadence (owner ruling 2026-07-03).** The military/unit-count happiness
+**UNIT-driven wellbeing is END-TURN cadence.** The military/unit-count happiness
 term recomputes **once per turn** (the substrate's turn-roll), NEVER per unit move — a per-move dirty hook made
 every post-move rate read pay the wellbeing walk (a measured unit-automation collapse) and is banned. The
 within-turn lag this leaves on the wellbeing slots (a handful of cities whose garrison changed mid-turn) is the
 RULED cadence, not a freshness hole; the getter flip proceeds with it.
 
-**The STORED-ACCUMULATOR DRIFT class (owner ruling 2026-07-03 + measured).** The legacy wellbeing terms are
+**The STORED-ACCUMULATOR DRIFT class.** The legacy wellbeing terms are
 INCREMENTAL SERIALIZED accumulators (`m_iBonusGood/BadHappiness`, `m_iBuildingGood/BadHappiness`,
 `m_paiStateReligionHappiness`, `m_iExtraBuilding*FromTech`, …) — event-sourced numbers that carry decades of
 save history. **The old cache model folded event-type grants DIRECTLY into these caches** (there is no separate
-event-yield data — the per-building `m_aBuildingHappy/HealthChange` ledgers measure ZERO on the reference
-save), so a stored value that disagrees with its current-state recompute is **DRIFT (history pollution), never
+event-yield data — the per-building `m_aBuildingHappy/HealthChange` ledgers carry nothing on real saves), so a
+stored value that disagrees with its current-state recompute is **DRIFT (history pollution), never
 event state to preserve**. The oracle emits a `*Recomputed` twin beside each incremental accumulator
 (bonus/building/stateReligion, happiness + health; the `extraBuilding`/`feature`/`religion` city accumulators
 self-heal via the engine's `update*()` rebuilders and need no twin). Parity discipline: a verdict diff equal to
 `Σ(stored − recomputed)` is **engine-wrong / cascade-right** — attributed-accepted (the same class as the
-improvement-yield phantoms), repaired wholesale at the cutover when the slots recompute from data. Measured on
-the reference save: the stored `bonusGoodHappiness` carries +1..+7 phantom drift in 61 of 185 diverging cities
-(the cascade matches the engine's own recompute in all 185); drift+balance-cut adjustment reconciles
-`badHealth` to 104/182 exact zeros (median 0) and `goodHealth` to median 1.
+improvement-yield phantoms), repaired wholesale at the cutover when the slots recompute from data.
 
 ---
 
@@ -242,8 +237,8 @@ predicates — so a conditioned deposit is, in essence, **a `requires`-shaped ga
 enabler resolves that shape to *availability* ("can I?"), the modifier resolves the *same* shape to a *magnitude*
 ("how much?").
 
-> **⛔ A condition is a PREDICATE, never a bespoke sub-scope MEMBER ([DEC-conditions-are-predicates], owner ruling
-> 2026-06-28).** A deposit that applies only under some game state — only in the capital, only during a golden age,
+> **⛔ A condition is a PREDICATE, never a bespoke sub-scope MEMBER ([DEC-conditions-are-predicates]).**
+> A deposit that applies only under some game state — only in the capital, only during a golden age,
 > per military unit — carries that state as a **predicate** in its `enabled`/`disabled` (or a `per`/`unit:` scaler,
 > §[json](json.md) §3.7), at the deposit's normal scope: `{family}.empire.percent` + `enabled:"IS_CAPITAL"`, NOT a
 > bespoke `{family}.empire.capital.percent` member. **The predicate registry is EXTENSIBLE** — if the condition has
@@ -252,7 +247,7 @@ enabler resolves that shape to *availability* ("can I?"), the modifier resolves 
 > structure* — the kraken way, and the exact shape (`byEra`, `empire.capital`, `perMilitaryUnit`) agents keep
 > re-inventing. Retire any such member to a predicate-gated deposit.
 >
-> **⏳ Exception — golden age (owner ruling 2026-06-28).** Golden-age yield/commerce is applied by the **core
+> **⏳ Exception — golden age.** Golden-age yield/commerce is applied by the **core
 > engine** and is **not defined as data anywhere** — modelling it via `IS_GOLDEN_AGE` would mean authoring it
 > virtually everywhere it fires. So `empire.goldenAge` **stays a member-mirror for now**, a deferred special case
 > (NOT a retire-now invention). The `IS_GOLDEN_AGE` predicate exists ([json](json.md) §3.5) and is **reserved for
@@ -304,21 +299,20 @@ reversible — it can be lost).
 both ways at parse so the machine reads top-down. Any "land it on the target" is a **parse transform**, never an
 authored shape.
 
-> **⛔ Trait modifier sources — pick the active set by the OPTION, never the id (kraken-resilience, owner 2026-06-25).**
+> **⛔ Trait modifier sources — pick the active set by the OPTION, never the id (kraken-resilience).**
 > A leader's traits resolve to ONE `CvTraitInfo` table from *either* its simple set (`traits/simple/`, the
 > `DefaultTraits`) *or* its complex/Thunderbrd set (`traits/complex/`, the `DefaultComplexTraits`), chosen at runtime
 > by **`GAMEOPTION_LEADER_COMPLEX_TRAITS`**. The curator emits both as **two cleanly-separated, self-complete folders**
 > (`traits/simple/` + `traits/complex/`); a consumer **loads the one active folder** by the live game option — this is
-> NOT an entity-level option gate and NOT a mid-game swap (`loadPrune`, the invention that restated this split per
-> trait entry, is RETIRED — owner 2026-07-08, [superseded-ideas](../architecture/superseded-ideas.md); any
-> WorldBuilder mid-game trait swap is a post-migration concern). The two
+> NOT an entity-level option gate and NOT a mid-game swap (any WorldBuilder mid-game trait swap is a post-migration
+> concern). The two
 > sets share **~64 colliding type ids**, so a consumer reading a trait's modifier families MUST select the active set
 > from the **live game option (asserted via `/state`)** — NEVER infer it from a trait id's spelling (a `…1`-suffixed id
-> is not "simple") nor from file load-order. Using the wrong file silently yields wrong magnitudes — this was the exact
-> `modPlayer` yield divergence that proved the rule. (The enabler is unaffected: it reads trait *presence*, which
+> is not "simple") nor from file load-order. Using the wrong file silently yields wrong magnitudes. (The enabler is
+> unaffected: it reads trait *presence*, which
 > `/state` already resolves to the active set; only the modifier cascade reads trait *family values*.)
 
-> **⛔ Inverted-onto-a-SHARED-entity boosts stay on the TRAIT, per set — the own-output carve-out (owner ruling 2026-06-25).**
+> **⛔ Inverted-onto-a-SHARED-entity boosts stay on the TRAIT, per set — the own-output carve-out.**
 > The [deliveryguy rule](#4-ownership--the-deliveryguy-rule) normally puts a trait's boost of *another* entity's output
 > ON that entity as **own-output** (a trait boosting a Merchant's commerce → on the **specialist**, `enabled:{trait}`).
 > But a **specialist is ONE shared file**, while a split trait's `SpecialistYield/CommerceChange` has **different values
@@ -327,13 +321,13 @@ authored shape.
 > value), the deposit takes the **governing-deliverer** shape instead: it lives **on the trait, keyed by the target** —
 > `yield.empire.specialists.{SPECIALIST_X}.flat` (and `commerce.…`) — authored in **each set's folder** (simple = the
 > base value; complex = the **replacement's** value — a **whole-Info swap, NO base-fill** per the engine's
-> `CvInfoReplacements`, owner ruling 2026-06-25 superseding the 2026-06-21 fill-from-base: a field the replacement
-> omits is **0/absent** in the complex, never inherited from base — the base SPIRITUAL→PRIEST yield the complex drops
-> proved it). The cascade reads it from the **active** trait set and applies it × the city's count of that specialist. *(Building/civic specialist boosts have no
+> `CvInfoReplacements`: a field the replacement
+> omits is **0/absent** in the complex, never inherited from base). The cascade reads it from the **active** trait
+> set and applies it × the city's count of that specialist. *(Building/civic specialist boosts have no
 > simple/complex split, so they keep the ordinary own-output inversion onto the specialist.)*
 
 > **⛔ Trait option resolution — the curator translates the CRAZY → sensible; the cascade applies only CLEAN gates
-> (owner ruling 2026-06-25; this is the volcano every agent rollerskates into — read it before touching trait values).**
+> (this is the volcano every agent rollerskates into — read it before touching trait values).**
 > Several `GAMEOPTION_LEADER_*` options can be live at once (complex, developing, pure, no-negative, …) and each
 > mutates a trait's *effective* values. The TB implementation is a runtime hack (`CvInfoReplacements`: a base trait
 > carries an inline `ReplacementID` + `ReplacementCondition` `BoolExpr`; `GC.updateReplacements()` swaps the WHOLE
@@ -345,14 +339,12 @@ authored shape.
 >   - **Simple/complex split** by `COMPLEX_TRAITS` — the two `DefaultTraits`/`DefaultComplexTraits` sets become
 >     `traits/simple/` + `traits/complex/`, each self-complete (base overwritten by its `Has(COMPLEX_TRAITS)`-gated
 >     replacement, blanks filled from base). The active set is chosen by the live option (callout above).
->   - **Developing line — do NOT auto-develop (verified 2026-06-25).** A `PromotionLine` is a chain of trait *levels*
+>   - **Developing line — do NOT auto-develop (engine-verified).** A `PromotionLine` is a chain of trait *levels*
 >     (`TRAIT_NOMAD1`→`TRAIT_NOMADIC2`→`…`, ordered by `iLinePriority`, each with a `PrereqTech`+`TraitPrereq`), but
->     **researching a level's `PrereqTech` does NOT advance the held trait** — proven by dump: a leader holding
->     `TRAIT_INDUSTRIOUS1` reads `extraYieldThreshold=7` (level 1) despite holding `TECH_RENAISSANCE_LIFESTYLE`
->     (the level-2 prereq, which would give 6). The **held trait `/state` reports IS the authoritative level**; the
->     cascade uses its payload as-is. ⚠️ A tech-gated "collapse" that folds higher levels into the entry is the WRONG
->     model (it re-levels traits the engine leaves alone) — it was tried and reverted. Levels advance by some other
->     gameplay progression, not by tech alone; until that's mapped, trust `/state`.
+>     **researching a level's `PrereqTech` does NOT advance the held trait**. The **held trait `/state` reports IS
+>     the authoritative level**; the cascade uses its payload as-is. ⚠️ A tech-gated "collapse" that folds higher
+>     levels into the entry is the WRONG model (it re-levels traits the engine leaves alone). Levels advance by some
+>     other gameplay progression, not by tech alone; until that's mapped, trust `/state`.
 >   - **Complete, not pre-filtered.** The JSON carries ALL values — positive AND negative — plus the `negativeTrait`
 >     flag, so the runtime gates below have the full data to act on. The curator never bakes in a pure/no-negative pass.
 > - **CLEAN gates → cascade, at eval (its ordinary condition-eval, NOT hack emulation).**
@@ -424,11 +416,13 @@ No bespoke host↔cargo family is needed. The full unit-stat family vocabulary
 - `free` lives ON TOP of `allowed` (independent). Normally a modifier leaf is `<scope>.<unit>` (e.g. a bare
   number or `.flat`); specialist counts instead use a **count-by-type** leaf (the `SPECIALIST_*` type — or `any`
   — IS the key, its value the count) — the one sanctioned exception, chosen for legibility.
-- **freeSpecialists are MODIFIERS, never grants (owner ruling 2026-07-02).** A free specialist is alive **only as
+- **freeSpecialists are MODIFIERS, never grants.** A free specialist is alive **only as
   long as its source is** — building present / civic adopted / trait active — the continuous-deposit shape, not a
   handed-out provision. Every legacy `changeFreeSpecialistCount` apply (civic/trait/building) classifies to THIS
-  family; none belongs to the grants machine.
-- **⚖ THE TWO-PART SEAM (owner ruling 2026-07-05 — the promotion-SPA seam pattern applied to specialists).**
+  family; none belongs to the grants machine (`specialists` is not in the json.md §5 grants vocabulary; *if
+  anything is ever found that genuinely grants PERMANENT free specialists — surviving source destruction — we deal
+  with it then*; no hypothetical machinery).
+- **⚖ THE TWO-PART SEAM (the promotion-SPA seam pattern applied to specialists).**
   Free specialists split cascade-vs-engine in two parts: **(1) the AMOUNT** of free specialists is the
   CASCADE's — the summed `freeSpecialists` deposits (per type + the `any` bucket) from live sources;
   **(2) the PLACEMENT** — the engine decides how to place them within the parameters it has (typed entries
@@ -437,10 +431,7 @@ No bespoke host↔cargo family is needed. The full unit-stat family vocabulary
   (`getSpecialistCount + getFreeSpecialistCount`) are a **sanctioned output-seam read**, never a
   self-containment ride-in. Demolition consequence: the cut replaces WHO MAINTAINS THE AMOUNTS (the cascade's
   summed deposits replace the `changeFreeSpecialistCount` process-applies feeding the placement); the
-  placement machinery and its output reads stay. **The grants classing is PERMANENTLY PURGED** (owner
-  2026-07-05): free specialists do not fit the grants model as it stands — `specialists` is removed from the
-  json.md §5 grants vocabulary (zero authorings existed); *if anything is ever found that genuinely grants
-  PERMANENT free specialists (surviving source destruction), we deal with it then* — no hypothetical machinery.
+  placement machinery and its output reads stay.
 
 ---
 

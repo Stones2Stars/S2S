@@ -22,7 +22,7 @@ knowledge. **Home:** [fixed-point-and-scales.md §1](../specs/curators/fixed-poi
 ### DEC-deliveryguy
 
 A cross-entity modifier lives on whoever DELIVERS it, keyed by the target ("who brings this to the table?"); the
-other entity is a referenced `enabled`/`requires` condition, never the home. **Home:** [modifier.md §6](../specs/modifier.md).
+other entity is a referenced `enabled`/`requires` condition, never the home. **Home:** [modifier.md §4](../specs/modifier.md).
 
 ### DEC-cascade-bidirectional
 
@@ -47,15 +47,9 @@ gold-commerce; `maintenance` is its own family. **Home:** [economy.md](../refere
 ### DEC-calc-zero-ride-in
 
 The dry-calc computes every value from JSON + game state with zero legacy-computed ride-in; engine-computed data
-enters only at the comparison boundary, never as a cascade input. **⚠ THE CAMOUFLAGED CASE (owner 2026-07-01):** a
-DERIVED value that MASQUERADES as a raw state input is the ride-in that slips every guard — above all a building's
-**ACTIVE / DORMANT** state, which is **100% a function of `requires.operate`** (the operate enablers + their dormant
-triggers). It **must be COMPUTED**, never read from the engine (`isActiveBuilding` / `isDisabledBuilding`) nor taken as
-a `/state` field (`dormantBuildings` — StoneBase's own oversight). Dormancy wears the costume of a stored flag, so it
-walks past a guard aimed only at computed RATE outputs (`getBaseYieldRateModifier`, …); the guard must name it. Root
-cause of the recurring pollution (owner): agents chasing "parity now" + "incremental deployment" — both **banned**; the
-cascade is a full REPLACEMENT (similar outcomes, different by design), so it reads only raw saved state and computes
-the rest. **Home:** [validation.md](../specs/validation.md).
+enters only at the comparison boundary, never as a cascade input. The trap is the CAMOUFLAGED case — a DERIVED value
+masquerading as raw state, above all a building's ACTIVE/DORMANT verdict, which is a pure function of
+`requires.operate` and must be COMPUTED, never read from the engine. **Home:** [validation.md](../specs/validation.md).
 
 ### DEC-kraken
 
@@ -68,12 +62,13 @@ Read each subsystem doc in full before acting; skimming is never the faster path
 
 ### DEC-map-before-delete
 
-A legacy maintainer is validated to parity (dry-calc now, live-shadow next) before it is cut — you cannot delete what
-you cannot fully observe. **Home:** [AGENTS.md](../../AGENTS.md).
+A legacy maintainer is validated to parity before it is cut — you cannot delete what you cannot fully observe.
+(The shadow phase that enforced this has ended — [validation.md](../specs/validation.md); the observability bar
+stands.) **Home:** [AGENTS.md](../../AGENTS.md).
 
 ### DEC-parity
 
-Parity is the only goal — exact match, no tolerance band  a divergence is a data-collection gap, never
+Parity is the only goal — exact match, no tolerance band; a divergence is a data-collection gap, never
 a formula difference. **Home:** [validation.md](../specs/validation.md).
 
 ### DEC-mirror-then-redesign
@@ -83,12 +78,10 @@ all?") is deferred to post-migration, never done during it. **Home:** [validatio
 
 ### DEC-stonebase-follows-spec
 
-The validation authority chain is ONE-WAY — SPEC → StoneBase → engine-oracle: StoneBase *implements* the spec (the
-blueprint for the C++ port), never reverse-engineers the engine's internal procedure; the engine fixes only the
-RESULT (mirror phase). A divergence is a curated-data gap mapped to a named source, or a deliberate spec-change-FIRST
-— never a creative StoneBase tweak. Same-result is necessary but NOT sufficient (a green sweep over a spec-divergent
-impl is the trap); if StoneBase drift were used to judge the spec, the loop self-corrupts (the "multikraken").
-**Home:** [validation.md](../specs/validation.md).
+The validation authority chain is ONE-WAY — SPEC → StoneBase → engine-oracle: StoneBase *implements* the spec, never
+reverse-engineers the engine's internal procedure; the engine fixes only the RESULT. A divergence is a curated-data
+gap mapped to a named source, or a deliberate spec-change-FIRST — never a creative StoneBase tweak. Same-result is
+necessary but NOT sufficient. **Home:** [validation.md](../specs/validation.md).
 
 ### DEC-no-parity-results-in-docs
 
@@ -97,12 +90,13 @@ Parity-pass results (divergence counts, checklists, pilot numbers) stay out of t
 ### DEC-tally-serializes-nothing
 
 The modifier scope accumulators serialize nothing — rebuilt from loaded state. The **tally** serializes AND stores
-nothing: it is a read-only accessor over the object-owned counts (`CvPlayer::getBuildingCount`, …) rolled up the spine
-— no duplicate store, no seed, no shadow (a count shadow would be tautological). **Home:** [tally.md](../specs/tally.md).
+nothing: it is a read-only accessor over the object-owned counts rolled up the spine — no duplicate store, no seed,
+no shadow. **Home:** [tally.md](../specs/tally.md).
 
 ### DEC-save-remove-is-soft
 
-Removing a serialized field/Type is soft in the name-keyed save format; only four cases are hard. **Home:** [engine.md](../reference/engine.md).
+Removing a serialized field/Type is soft in the name-keyed save format; only a handful of cases are hard, and a
+deleted field's read needs a named `WRAPPER_SKIP_ELEMENT`. **Home:** [engine.md](../reference/engine.md).
 
 ### DEC-derived-never-trusted
 
@@ -115,7 +109,7 @@ gated logs, never the screen. **Home:** [observability.md](../reference/observab
 
 ### DEC-obs-hook-shapes
 
-Three canonical observability hook shapes: a snapshot field, a gated `[TAG]` log tee, a mailbox `/diagnostic`
+Three canonical observability hook shapes: a snapshot field, a gated `[TAG]` log tee, a mailbox snapshot
 endpoint. **Home:** [observability.md](../reference/observability.md).
 
 ### DEC-interface-contracts
@@ -132,6 +126,12 @@ Build the proper structure once; reject transitional shims that only defer the r
 
 Retire a doc only if it is reconstructible-from-code-and-unneeded or an explicitly killed idea; un-killed forward
 intent is kept. **Home:** [AGENTS.md](../../AGENTS.md).
+
+### DEC-docs-current-truth
+
+Docs state CURRENT TRUTH only — no dated rulings, no supersession trails, no session logs, no parity numbers.
+Outdated content is DELETED, not annotated; git history is the archaeology; superseded-ideas.md is the only
+tombstone registry; status chronicles live in `docs/plans/`. **Home:** [AGENTS.md](../../AGENTS.md) Conventions §Docs.
 
 ### DEC-WF-rulings-to-repo
 
@@ -161,86 +161,62 @@ aggregate outputs. **Home:** [validation.md](../specs/validation.md).
 ### DEC-structure-before-shadow
 
 Stand up the proper, spec-faithful cascade STRUCTURE first; a per-change in-game shadow can FALSELY confirm a wrong
-structure (the gameobject side-table shadowed green yet was structurally wrong). LOAD verifies the static + initial
-setup (readJson mapped at load + the tally reading the object-owned counts — loading a save suffices); END TURN
-verifies only LIVE integration (surviving engine sees the data; the to-be-replaced gates `canTrain`/`canConstruct` +
-modifier rates shadowed in the AI's real calls, with the new build lists logged at the Python consumer layer before the
-enabler swap). Structure is gated by spec-fidelity, never by a green shadow. **Home:** [validation.md](../specs/validation.md).
+structure. LOAD verifies the static + initial setup; END TURN verifies only LIVE integration. Structure is gated by
+spec-fidelity, never by a green shadow. **Home:** [validation.md](../specs/validation.md).
 
 ### DEC-conditions-are-predicates
 
 A deposit's condition is expressed as a **PREDICATE** in `enabled`/`disabled`/`requires` (the predicate registry is
-**EXTENSIBLE — define new predicates freely** when one isn't named verbatim yet); it is **NEVER** encoded as a
-bespoke sub-scope **MEMBER** (`empire.capital`, `perMilitaryUnit`, …). Adding a predicate
-*extends* the model within the existing structure; inventing a condition-carrying member *changes the core
-structure* — the kraken way (owner ruling 2026-06-28). A condition-like member that crept in is an agent invention
-to retire (the `byEra` / `empire.capital` class), per [DEC-stonebase-follows-spec]. **Exception:** golden age
-(`empire.goldenAge`) stays a member-mirror, **deferred** — it is engine-core, not data-defined, so predicate-modelling
-it is post-migration work (see [modifier.md §3](../specs/modifier.md) / [golden-age.md](../reference/golden-age.md)).
+EXTENSIBLE — define new predicates freely); it is NEVER encoded as a bespoke sub-scope MEMBER. Adding a predicate
+*extends* the model; a condition-carrying member *changes the core structure*. **Exception:** golden age
+(`empire.goldenAge`) stays a member-mirror, deferred to post-migration — it is engine-core, not data-defined.
 **Home:** [modifier.md §3](../specs/modifier.md), [json.md §3.5](../specs/json.md).
 
 ### DEC-single-implementation
 
-Every cascade calculation/evaluation exists **exactly once**, as a **pure static function fed its inputs** and exposed
-as a **shared surface** (a purely-organizational **static-methods class** — no state, no instances, **never**
-file-`static`-hidden; NOT a namespace — namespaces risk VC7.1 / Boost / `boost::python` / EXE-ABI name-mangling). **ONE** evaluator (`cascadeEvalCondition`) evaluates all conditions/predicates — the enabler and
-modifier delegate to it and feed it facts, never re-evaluate. Calculators mirror StoneBase's `Calc/*` packages 1:1. A
-file-`static`-hidden calc is a DRY hazard: the next consumer can't reach it, so it reimplements it — the C2C
-"N-evaluators-of-one-thing" disease. The legacy shadow is the ONLY sanctioned duplication (scheduled to die at the
-atomic cutover). **Home:** [patterns.md § DRY](patterns.md).
+Every cascade calculation/evaluation exists **exactly once**, as a pure static function exposed on a shared surface —
+a purely-organizational static-methods class (never a namespace: VC7.1/Boost/EXE-ABI name-mangling risk; never
+file-`static`-hidden: the next consumer reimplements it). ONE evaluator (`cascadeEvalCondition`) evaluates all
+conditions/predicates. The legacy shadow is the only sanctioned duplication, scheduled to die at the atomic cutover.
+**Home:** [patterns.md § DRY](patterns.md).
 
 ### DEC-json-not-cascade
 
-`CvJsonInfo` is the JSON-info BASE (`CvInfoBase` + the availability model — `requires`/`enables`/`obsoletes`/`replaces`/
-`disables`/`allowed`/`grants` + the info-owned typed `CvJsonCondition` — ONLY, ZERO cascade runtime). The per-type
-modifier DATA lives as **real typed members on the `CvJson<X>Info` subclasses** (the human-legible `CvXInfo`-replacement
-surface the engine reads normally). The cascade RUNTIME (deposit index, evaluator, accumulator packages, frontier) is
-built by the cascade's OWN setup **reading those pocos** — never stored on / mixed into the JSON info. *Cascade and JSON
-are not the same*; a generic `deposits` vector on `CvJsonInfo` was the cascade bleeding into the data, and is retired
-(owner ruling 2026-07-07, superseding the generic `CvJsonInfo.deposits` model). **Home:**
+`CvJsonInfo` is the JSON-info BASE (availability model + info-owned typed condition ONLY, zero cascade runtime); the
+per-type modifier DATA lives as real typed members on the `CvJson<X>Info` subclasses; the cascade RUNTIME is built by
+the cascade's own setup reading those pocos — never stored on / mixed into the JSON info. **Home:**
 [cascade-engine-430.md §3](../plans/structural-cleanup/cascade-engine-430.md).
 
 ### DEC-data-first
 
 Data migration (curators + JSON) is NEVER deferred: any known un-migrated field / reclassification / still-emitted
-legacy shape is the #1 priority, handled BEFORE any downstream cascade / shadow / observability / parity work — a
-deferred data item forces downstream consumers to ASSUME its eventual shape (the kraken's shortcut). The strict
-complement of [DEC-mirror-then-redesign](#dec-mirror-then-redesign) (defer redesign, never data). **Home:**
+legacy shape is the #1 priority, handled BEFORE any downstream cascade / shadow / observability / parity work. The
+strict complement of [DEC-mirror-then-redesign](#dec-mirror-then-redesign) (defer redesign, never data). **Home:**
 [validation.md](../specs/validation.md).
 
 ### DEC-recurate-on-decision
 
-**Always recurate when a decision lands (owner ruling 2026-07-05):** any ruling that changes what the data model
-carries (a new grantor kind, a re-homed field, a widened block) triggers the curator update + regen IN THE SAME
-work item — never "the curator catches up later." A landed decision with un-recurated curators is exactly how
-data-gap misses accrete (the instance: building-grantor capabilities were ruled 2026-07-02 and no building curator
-emit followed, leaving the union's building half blind until re-found 2026-07-05). The per-decision twin of
-[DEC-data-first](#dec-data-first) (that rules the backlog; this rules the moment a decision lands). **Home:**
-[AGENTS.md](../../AGENTS.md) Conventions.
+Any ruling that changes what the data model carries (a new grantor kind, a re-homed field, a widened block) triggers
+the curator update + regen IN THE SAME work item — never "the curator catches up later." The per-decision twin of
+[DEC-data-first](#dec-data-first). **Home:** [AGENTS.md](../../AGENTS.md) Conventions.
 
 ### DEC-turn-time-is-king
 
 Turn time is the objective every performance decision optimizes; load time is the currency that pays for it
-("there is only 1 game load, but many many many turns" — a 50% longer load is nothing against 5-15% off turn
-time). **Home:** [state-repositories.md](state-repositories.md) §Refinements (the eager-warm-up bullet).
+("there is only 1 game load, but many many many turns"). **Home:** [state-repositories.md](state-repositories.md).
 
 ### DEC-unit-modifiers-on-top
 
 A modifier that TRAVELS with a unit (unit-sourced happiness, anger, property emission, any unit-carried channel
-value) is NEVER part of a cached cascade computation: computed LIVE at read, added ON TOP as a FLAT term, after
-and outside every percentage modification. Unit movement therefore never dirties any cache, and the traveling
-value never enters a percent stack. (Owner "executive decision" 2026-07-03, made after per-move cache
-invalidation measurably collapsed unit automation.) **Scope tightened same day ("full stop"): unit movement
-cannot invalidate ANY cache -- including the LEGACY ones.** The three legacy per-move storms were cut on the
-ruling: the garrison-change governor re-optimization (changeMilitaryHappinessUnits AI_setAssignWorkDirty),
-the per-move m_unitSourcedPropertyCache clear (noteUnitMoved -> no-op; end-turn refresh in doTurn), and the
-siege-blockade governor invalidation on enemy unit steps. **Home:** [modifier.md](../specs/modifier.md) §2b.
+value) is NEVER part of a cached cascade computation: computed LIVE at read, added ON TOP as a FLAT term, after and
+outside every percentage modification. Unit movement therefore never dirties ANY cache — including the legacy ones.
+**Home:** [modifier.md](../specs/modifier.md) §2b.
 
 ### DEC-entity-gate
 
 A whole-entity game-option gate authors as the ENTITY-LEVEL `enabled`/`disabled` condition pair (`"enabled":
-"GAMEOPTION_X"`), evaluated live — never a bespoke section (`loadPrune` is the retired counter-example) and never
-smuggled into `requires` (which holds only genuine needs). **Home:** [json.md §2/§9](../specs/json.md).
+"GAMEOPTION_X"`), evaluated live — never a bespoke section and never smuggled into `requires` (which holds only
+genuine needs). **Home:** [json.md §2](../specs/json.md) (the Applicability row) + [enabler.md §7](../specs/enabler.md).
 
 ### DEC-red-ratchet
 

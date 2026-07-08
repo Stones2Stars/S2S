@@ -37,7 +37,7 @@ The split is **not** "raw vs. computed" — it is **"does drycalc compute this?"
   as inputs.
 
 > ⛔ **The hard rule: `/state` must never contain a drycalc TARGET, and the calc must never CONSUME live yield/commerce
-> except trade-route yield (owner ruling 2026-06-28).** That — not "any engine-derived value" — is where the
+> except trade-route yield.** That — not "any engine-derived value" — is where the
 > calculator (or an agent) "cheats" by reading the answer instead of deriving it. `/computed` may freely carry raw
 > state too; the asymmetry is one-directional.
 >
@@ -47,28 +47,21 @@ The split is **not** "raw vs. computed" — it is **"does drycalc compute this?"
 > would land inside a drycalc TARGET:
 > - **Derivable values are TARGETS — compute them, never read them.** `freeCityYield` (= Σ trait `getYieldChange`) is
 >   derivable from trait JSON; consuming the live value means the trait→yield derivation is *not validated*. Compute it.
-> - **Un-derivable event/effect-granted values (`m_aiExtraYield` city/plot extra) must NOT be folded into a target.**
->   They land *inside* the yield base — a drycalc target — so folding live data there is the exact cheat the hard rule
->   forbids. The cascade computes the derivable part; cities touched by those events **diverge honestly**, and the
->   `/state` value is read ONLY at the audit/comparison boundary to attribute that diff — never fed back into the calc.
->   **⚖ SUPERSEDED IN PART for the CLEAN persisted stores (owner ruling 2026-07-04):** *"this raw saved state needs
->   to ride in now — we are past looking for parity, we now have to ensure we got everything."* A store that is
->   event/vote-granted state **by construction** — `m_aBuildingCommerceChangeEvents`, the per-building
->   `m_aBuildingYieldChange` — is RAW SAVED STATE (the occupation-timer class, not a computed ride-in) and the
->   in-DLL cascade **folds it** (`BuildingPackage::buildingFlat`, active-gated, ×100 at the legacy tiers); a store
->   the cascade skips would be silently LOST at the cut (the EVENT_FULLERENES_1 Oxford specimen: +10 research on the
->   Chemistry Lab, live-attributed). The honest-divergence stance still holds for the MIXED/dead stores
->   (`m_aiExtraYield` — dead-on-read legacy-side too) and for the offline drycalc leg (StoneBase keeps the
->   comparison-boundary rule; this ruling is about the in-DLL composition's COMPLETENESS).
-> - **⚠ `getBuildingCommerceChange` / `m_aiBuildingCommerceChange` is MIXED, not wholesale-underivable (corrected
->   2026-06-29).** Reading the *live aggregate* was rightly reverted — but only because it conflates a **DERIVABLE bulk**
+> - **CLEAN persisted event/vote stores RIDE IN.** A store that is event/vote-granted state **by construction** —
+>   `m_aBuildingCommerceChangeEvents`, the per-building `m_aBuildingYieldChange` — is RAW SAVED STATE (the
+>   occupation-timer class, not a computed ride-in), and the in-DLL cascade **folds it**
+>   (`BuildingPackage::buildingFlat`, active-gated, ×100 at the legacy tiers); a store the cascade skips would be
+>   silently LOST at the cut. The honest-divergence stance holds for the MIXED/dead stores (`m_aiExtraYield` —
+>   dead-on-read legacy-side too, folded into no target; its `/state` value is read ONLY at the audit/comparison
+>   boundary) and for the offline drycalc leg (StoneBase keeps the comparison-boundary rule; the ride-in is about
+>   the in-DLL composition's COMPLETENESS).
+> - **⚠ `getBuildingCommerceChange` / `m_aiBuildingCommerceChange` is MIXED, not wholesale-underivable.** It
+>   conflates a **DERIVABLE bulk**
 >   (`GlobalBuildingExtraCommerces`: a building granting commerce to OTHER building types empire-wide, static JSON —
 >   engine `CvCity.cpp:5050`→`4708`) with an **un-derivable remainder** (game-event grants `:19221` + vote-source
->   resolution grants `:15336`). The fix is to **reproduce the derivable `GlobalBuildingExtraCommerces` from the curated
->   `{c}.empire.buildings.{B}.flat`** (`BuildingKeyedEmpireCommerce100`), never to read the live value; only the
->   event/vote remainder diverges honestly. The earlier blanket "un-derivable, out of scope" was a **mis-map** — the
->   source's feeders were never traced (it accounted for the entire gold `buildingCommerce100` divergence, e.g. P6/C8192
->   −137 gold = exactly its `GlobalBuildingExtraCommerces`).
+>   resolution grants `:15336`). **Reproduce the derivable `GlobalBuildingExtraCommerces` from the curated
+>   `{c}.empire.buildings.{B}.flat`** (`BuildingKeyedEmpireCommerce100`), never read the live value; only the
+>   event/vote remainder diverges honestly.
 > - **If we pull live yield into the cascade calc, we are not validating the cascade at all.**
 
 > **`/state` is held to API standards.** It is a real, stable, legible API with two consumers — the **validator**
@@ -117,7 +110,7 @@ city **names** can collide too (renames; same name across civs). So:
 ## `/` · `/events`
 
 - **`/`** — liveness (`hello world`).
-- **`/events`** — the gated `[TAG]` SSE stream, live. The per-turn shadow lines burst at the **top of `doTurn`**,
+- **`/events`** — the gated `[TAG]` SSE stream, live. The per-turn lines burst at the **top of `doTurn`**,
   so **connect before the turn ticks** (connect-then-end-turn). See [logging](logging.md) §5.
 
 ## `/state/*` — raw inputs (no yields, no oracles)
@@ -133,8 +126,8 @@ Shape: **`/state/<slice>`** for game-wide lists, **`/state/<entity>/...`** for e
     *computed* economy — gold/science/upkeep/inflation — is verified separately on `/computed/players`; the raw
     state lives here so the calculator has its inputs without reading the engine's answer.)
   - world facts (active game options, era ordering, per-team diplomacy, raw game-define scalars) live in the
-    `world` section of **`/state/all`** — ⚠ there is NO standalone `/state/world` route (doc/impl drift corrected
-    2026-07-02; a dedicated slice can be added if a consumer wants it without the full dump)
+    `world` section of **`/state/all`** — ⚠ there is NO standalone `/state/world` route (a dedicated slice can be
+    added if a consumer wants it without the full dump)
 - **city scope** (`{owner,id,name,x,y}` on every city; see *City identity* above)
   - `/state/cities` · `/state/cities?player=N` — every city's raw substrate + out-of-scope inputs:
     - **buildings** present (+ the dormant subset), production queue, building ages/time-built
@@ -195,8 +188,7 @@ the external dry-calc + logging, not here).
   hurry/conscript/defyResolution/warWeariness/revRequest/revIndex/Σcivic), every shared signed happiness source
   (emitted RAW once — the happy side takes `max(0,·)`, the unhappy side `−min(0,·)`), every health source (the
   `…100` fields are ÷100 at use), and the gate flags (`isNoUnhappiness`/`isNoUnhealthyPopulation`/
-  `isBuildingOnlyHealthy`/…). Closes the calc-map §12 happiness emit gaps — the health/happiness channel's
-  parity ground-truth.
+  `isBuildingOnlyHealthy`/…) — the health/happiness channel's parity ground-truth.
 - **economy** — `/computed/players[?player=N]`: the empire-scope engine calc whole — gold/science per turn,
   upkeep/inflation/maintenance decomposition, demographics, wellbeing (kept intact with its named inputs; the raw
   player facts are independently on `/state/players`).
@@ -208,7 +200,7 @@ the external dry-calc + logging, not here).
 - **counts** — `/computed/tally?type=BUILDING_X|UNIT_X&player=N`: the engine count at world/team/empire scope.
 - **diagnostics** — `/computed/whyNot?type=UNIT_X&player=N[&city=M]` (the canTrain decision inputs) ·
   `/computed/game` (turn / game-over / winner / victory countdowns — the autoplay terminal signal).
-- **classification-parity oracles (2026-07-02, owner: "test parity via the http server, call them directly")** —
+- **classification-parity oracles** —
   `/computed/teamFlags?player=N`: the engine team/player capability flags by CANONICAL name (+ the
   `canTrade`/`canTradeOn`/`canWorkOn` blocks) — the capabilities-parity oracle; ·
   `/computed/unitSkills?player=N`: per-unit EFFECTIVE skill booleans (the composite getters, unit+promotion+

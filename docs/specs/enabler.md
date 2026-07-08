@@ -54,7 +54,7 @@ the other three **remove** from it.
 
 So **`CAN GET = union(enables) − (disables ∪ obsoletes ∪ replaces)`**, all over HAVE (with `replaces` empty today).
 
-> **`replaces` is the UNIT succession edge; building "replacement" is dormancy (owner 2026-06-23/25, engine-verified).**
+> **`replaces` is the UNIT succession edge; building "replacement" is dormancy (engine-verified).**
 > A unit's `SupersedingUnits` ARE genuine removal-on-succession (the engine's `isSupersedingUnitAvailable` drops the
 > predecessor once a superseder is buildable) → modeled as the unit's `replacedBy.units` replace edge (§ units, below).
 > The legacy *building* `ReplacementBuildings` (A lists the buildings that supersede it) *looks* like removal, but the engine only
@@ -99,7 +99,7 @@ via `enables` (the space line), doctrine bans via `disables` + empire modifiers 
 autobuild clunk (~345 uses) with one empire-scope building. (INTERIM — a later issue; the per-city machinery
 still works.)
 
-> **The two fates are two mechanisms — nothing to declare (owner 2026-06-23).** `disables` = **destroy** (a law/ban
+> **The two fates are two mechanisms — nothing to declare.** `disables` = **destroy** (a law/ban
 > removes it; rebuilt on repeal); the target's `requires.operate.dormant` = **dormant** (it stays put,
 > inactive while the condition holds — §3). There is no flag on `disables`: the choice of *mechanism* IS the fate.
 
@@ -133,7 +133,7 @@ pollution) compound, every in-band band active. Bands are **bidirectional** — 
 it stays on the map; the structure supports it, but it is not modelled now — **units carry `build` only** (a trained
 unit never goes dormant on resource loss, and on-map behaviour is out of the cascade's `canTrain` scope).
 
-**Units reuse this whole machine — only the inputs differ (owner ruling 2026-06-25; verified to full `canTrain`
+**Units reuse this whole machine — only the inputs differ (verified to full `canTrain`
 parity).** `canTrain` is the same generate-then-gate over unit inputs: frontier (every unit) → prune
 `obsoletedBy.techs` (the target-side obsoleting tech, mirroring buildings; an obsolete unit leaves the buildable set
 but persists on the map, upgradeable) → exclude `identity.spawnOnly` (never-trainable; building/farm-improvement/
@@ -150,8 +150,8 @@ relationships are **distinct gates, mirroring the engine** (`build`/`operate` sh
   of the long-reserved `replaces` family.
 
 Other gates fold into `requires.build` as **declarative conditions** (no engine special-case, modder-extensible):
-**game options** → the **ENTITY-LEVEL `enabled`/`disabled` gate** (owner ruling 2026-07-08, superseding the
-earlier `build.all`/`build.noneOf` routing — e.g. the inquisitor's `"enabled": "GAMEOPTION_RELIGION_INQUISITIONS"`),
+**game options** → the **ENTITY-LEVEL `enabled`/`disabled` gate** ([DEC-entity-gate] — e.g. the inquisitor's
+`"enabled": "GAMEOPTION_RELIGION_INQUISITIONS"`),
 evaluated live against the active options; `requires` holds only genuine needs; a **unit** corp prereq →
 `{HAS_CORPORATION: X}` = **active** (`isActiveCorporation`), distinct from a building's bare `CORPORATION_` = present.
 No `canTrain` gate logic is re-mirrored from the engine — every divergence is a missing input mapped to its named source.
@@ -163,7 +163,6 @@ NOT fixed; a plot can lie in two overlapping cities' vicinity (counts for both).
 level — `isValidTerrainForBuildings` requires an **owned** plot for terrain/improvement/peak/hill (= `WORKABLE`;
 a FEATURE prereq also accepts a neutral plot unless `EXP_STRICT_VICINITY`), and `hasVicinityBonus` requires the
 bonus **owned + valid + connected** (the obtained semantic) or supplied by an active building.
-*(The earlier "deliberately MORE permissive / no ownership filter" model is **DEAD** — owner ruling 2026-06-24.)*
 
 ### 3.1 The cache-friendly two-stage evaluation
 
@@ -171,9 +170,10 @@ Every `requires` resolves the same way, so it's cacheable as a pure function of 
 
 1. **combinator** — the `all`/`any`/`noneOf` structure ([json](json.md) §3.4): **`all` = AND** (`&&`), **`any` = OR**
    (`||`), **`noneOf` = NONE**, each over its **direct children** (a leaf, or a nested `all`/`any`/`noneOf` node — a
-   recursive boolean tree). This maps 1:1 onto the engine's `BoolExpr` (`Sources/Infrastructure/BoolExpr`: And/Or/Not);
-   proper JSON predicate parsing routes through `BoolExpr` — never reinvent and/or (the retired AND-of-ORs `any:[[…]]`
-   shape, and the temporary `CvCascadeReadJson`'s hand-rolled `vector<vector<leaf>>`, were exactly that mistake).
+   recursive boolean tree). Parsing routes through the ONE typed-condition parser (`cascadeParseCondition` →
+   `CvJsonCondition`, the StoneBase `ConditionParser` port) and evaluation through the ONE evaluator
+   (`cascadeEvalCondition`) — never reinvent and/or ([superseded-ideas](../architecture/superseded-ideas.md) #5:
+   the AND-of-ORs `any:[[…]]` shape and hand-rolled `vector<vector<leaf>>` were exactly that mistake).
 2. **conditions** — each leaf: a presence/count **atom** (`min`/`max` at a scope) or a **predicate**. A count at
    `city`/`plot` reads the live object; at `empire`/`team`/`world` it reads the [tally](tally.md). A missing
    predicate is **ignored**, never false (json §3.5) — so retiring a system never spuriously disables data.
@@ -269,11 +269,11 @@ disproving "buildings-only" state-retraction), nuke, and `doAutobuild` add/remov
 **Gather order — "right-then-down".** Pass 1 gathers in dependency order: sticky top (techs/civics) first, then
 volatile bottom (resources/bonuses/buildings), so derived have-entries resolve against what's already gathered.
 
-**Game-option gates are the ENTITY-LEVEL `enabled`/`disabled` pair, evaluated LIVE (owner ruling 2026-07-08).**
-The retired `loadPrune` section's "resolve at load, never materialize" framing was a reinterpretation — the legacy
-engine checks the option tags at USE time, and the gate mirrors that: an entity whose `enabled` fails (or `disabled`
-holds) is simply never offered/valid while the option state says so. LOAD-STABLE machinery that genuinely resolves at
-load (the `CvInfoReplacements` swap, WorldBuilder/BUG, a per-civ research ban) is engine-side, not entity data.
+**Game-option gates are the ENTITY-LEVEL `enabled`/`disabled` pair, evaluated LIVE ([DEC-entity-gate]).**
+The legacy engine checks the option tags at USE time, and the gate mirrors that: an entity whose `enabled` fails (or
+`disabled` holds) is simply never offered/valid while the option state says so. LOAD-STABLE machinery that genuinely
+resolves at load (the `CvInfoReplacements` swap, WorldBuilder/BUG, a per-civ research ban) is engine-side, not
+entity data.
 
 ---
 

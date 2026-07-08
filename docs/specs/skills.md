@@ -22,13 +22,12 @@ The catalogue of a unit's **innate boolean abilities** — the `blitz`/`amphibio
 > The **empire** counterpart to unit `skills` is **`capabilities`**. This file is the `skills` glossary only;
 > `state`, `tags`, and `capabilities` get their own sibling glossaries (json.md §8 = the model).
 
-> **`capabilities` = empire, `skills` = unit — the rule, and the curator fold is DONE (verified 2026-06-29).** The
+> **`capabilities` = empire, `skills` = unit — the rule.** The
 > unit-level ability block is **`skills`**; the empire-level block is **`capabilities`**
-> ([capabilities.md](capabilities.md)). The curators already emit accordingly — `curate_unit.py` / `curate_promotion.py`
+> ([capabilities.md](capabilities.md)). The curators emit accordingly — `curate_unit.py` / `curate_promotion.py`
 > / `curate_unitcombat.py` each write `out["skills"] = caps` (the internal `CAP_*` table names are legacy XML-bool
-> spellings, not the output key) — and the data confirms it: **every unit / promotion / unit-combat ability block is
-> `skills`, with ZERO `capabilities` blocks anywhere in `Assets/Data`** (`capabilities` is reserved for the empire
-> block, which is not yet curated). Do **not** re-muddy the rule with migration history — there is no pending rename.
+> spellings, not the output key): **every unit / promotion / unit-combat ability block is
+> `skills`** (`capabilities` is reserved for the empire block). There is no pending rename.
 
 **Grounding:** entries come from the curator capability tables (`CAP_BOOL`/`CAP_PAIR`/`CAP_COUNT`/`CAP_LIST` in
 `curate_promotion.py`/`curate_unit.py`/`curate_unitcombat.py`) and owner rulings. Meanings are **not** asserted
@@ -55,7 +54,7 @@ Owner-ruled or curator-grounded with a clear meaning.
 | `canLeadThroughPeaks` | can lead a stack through peak tiles |
 | `canMoveAllTerrain` | can move through any terrain |
 | `canMoveImpassable` | can move through impassable terrain |
-| `canPassPeaks` | can move through peak tiles (renamed from legacy `bCanMovePeaks` / prior `canMovePeaks` — owner ruling 2026-07-02: **dual-plane, same name as the empire capability**; a promotion grants the unit skill, `TECH_MOUNTAINEERING` grants it empire-wide as `capabilities.canPassPeaks`; effective check = skill ∪ capability, see [capabilities.md](capabilities.md)) |
+| `canPassPeaks` | can move through peak tiles (**dual-plane, same name as the empire capability**: a promotion grants the unit skill, `TECH_MOUNTAINEERING` grants it empire-wide as `capabilities.canPassPeaks`; effective check = skill ∪ capability, see [capabilities.md](capabilities.md)) |
 | `cannotMergeSplit` | cannot merge with / split from other units |
 | `enemyRoute` | can use enemy (rival) roads |
 | `excile` | an investigation / criminal **ability** (legacy spelling, from `iExcileChange`) — distinct from the `exile` *unit* in the criminal-type tags ([tags.md](tags.md)) |
@@ -66,7 +65,7 @@ Owner-ruled or curator-grounded with a clear meaning.
 | `freeDrop` | a free paradrop (paratrooper drop) action |
 | `goldenAge` | can trigger a golden age |
 | `greatGeneral` | is a great general |
-| `hiddenNationality` | hides its owning civilization — a **skill** (mutable, promotion-grantable: `PROMOTION_PROUD_PIRATE` grants it via `iHiddenNationalityChange`), **not** the gate for the criminal-type `outlaw` [tag](tags.md) (owner 2026-06-23) |
+| `hiddenNationality` | hides its owning civilization — a **skill** (mutable, promotion-grantable: `PROMOTION_PROUD_PIRATE` grants it via `iHiddenNationalityChange`), **not** the gate for the criminal-type `outlaw` [tag](tags.md) |
 | `hillsDoubleMove` | double movement on hills |
 | `ignoreBuildingDefense` | ignores building-based city defense |
 | `ignoreNoEntryLevel` | ignores no-entry-level restrictions (grant/revoke, §4) |
@@ -114,10 +113,10 @@ Owner-ruled or curator-grounded with a clear meaning.
 
 ---
 
-## 2. Validated from engine (grounded this pass)
+## 2. Validated from engine
 
-Every previously-`⚠` skill was traced to its engine consumption — **all LIVE, none dead, none unclear**. Meanings
-are grounded in the consuming code (high confidence unless noted), not general knowledge.
+Each skill below is traced to its engine consumption — **all LIVE unless marked**. Meanings are grounded in the
+consuming code (high confidence unless noted), not general knowledge.
 
 | skill | what it does |
 |---|---|
@@ -145,12 +144,9 @@ are grounded in the consuming code (high confidence unless noted), not general k
 | `stealthDefense` | stealth ambusher — first-strike vs attackers, suppresses their move cost (option-gated, `COMBAT_WITHOUT_WARNING`) |
 | `triggerBeforeAttack` | ❌ **DEAD** — traps are a removed mechanic (owner); drop |
 
-> **Curator-gap claim — verified FALSE.** The minion flagged `bOnslaught`/`bGatherHerd`/`bTriggerBeforeAttack` as
-> silently dropped by `curate_unit.py`, but grepping `Assets/XML` shows they appear only in the *schema* and
-> `CIV4PromotionInfos.xml` — **never in a unit record** (and the curator's COVERAGE check is clean). No unit
-> authors them; the promotion delta variants (in `curate_promotion.py`) are the only authoring, and those are
-> handled. So there is **no gap** — "CvUnitInfo has the member" ≠ "units author it." (Traps are also dead — the
-> trap family drops regardless.)
+> **No curator gap for `bOnslaught`/`bGatherHerd`/`bTriggerBeforeAttack`:** they appear only in the *schema* and
+> `CIV4PromotionInfos.xml` — never in a unit record — so the promotion delta variants (`curate_promotion.py`) are
+> the only authoring, and those are handled. "CvUnitInfo has the member" ≠ "units author it."
 
 ---
 
@@ -187,14 +183,11 @@ change, expected to show in the shadow, not a bug.)
 
 ---
 
-## 3b. ✅ VERIFIED — the effective-skill parity run (2026-07-02) + the composition rules
+## 3b. The effective-skill composition rules
 
-Owner method: **direct HTTP parity** — `/computed/unitSkills` (the engine's per-unit COMPOSITE getters —
-`isBlitz()` etc., unit-info + promotion + unitcombat counts folded) diffed against the offline derivation
-(unit JSON `skills` ∪ combat-class JSON `skills` ∪ held promotions' JSON `skills`). **365,474 effective-skill
-facts → 5 residual, all attributed** (3 = the kamikaze composition below on units holding FIRE_SHIP-class promos;
-2 = a SERIALIZED stale ability count whose source promo/class is gone — the accepted dropped-event-state class).
-Static sweeps: building `attributes` 2,266 XML facts EXACT; unit/promotion/unitcombat skill blocks **0 LOST**.
+A unit's EFFECTIVE skills are the engine's per-unit COMPOSITE getters (`isBlitz()` etc., unit-info + promotion +
+unitcombat counts folded) — `/computed/unitSkills` is the oracle; the offline derivation is
+unit JSON `skills` ∪ combat-class JSON `skills` ∪ held promotions' JSON `skills`.
 
 **The derivation rules a consumer must know (engine compositions that survive as CODE, not data):**
 - a unit's combat classes = **`identity.base.combatClass` (the PRIMARY — XML `Combat`) + `identity.combatClasses`

@@ -48,7 +48,7 @@ of them.
 | **Intrinsic** ("what am I") | `identity` (incl. all TEXT) · `cost` · `ui` · `world` · `sound` · `ai` | empire-agnostic self-description, art, audio, AI metadata |
 | **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `state` (UNIT, transient) · `attributes` (BUILDING, held city-scope intrinsics) · `capabilities` (TEAM, grantor-provided) | §8 — the classification model; scope carried by the section name |
 | **Applicability** | entity-level `enabled` · `disabled` | the whole entity applies only while `enabled` holds and `disabled` does not (the §3.9 pair at entity level) — the canonical whole-entity game-option gate: `"enabled": "GAMEOPTION_X"` |
-| **Auxiliary / bespoke** | `policies` · `succession` · `excludes` · `produces` · `condition` · `effect` · `vision` · `outcomes` · `mapGeneration` · `replacedBy` · `promotionLine` · `buildUp` · `shrine` · `headquarters` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` · `unitCapability` · `canTrade` (tech → the trade-table/deal system: tradeable items + agreements — `techs`/`openBorders`/`rightOfPassage`/`embassy`/`bonuses`/…, owner 2026-07-02) · `canTradeOn` (tech → trade-route system; terrain refs, owner 2026-07-02) · `canWorkOn` (tech → the city `canWork` gate; workable plot classes — `water`/`peaks`/…, owner 2026-07-02) — all three [capabilities.md](capabilities.md) | data read by their own systems, not the cascade |
+| **Auxiliary / bespoke** | `policies` · `succession` · `excludes` · `produces` · `condition` · `effect` · `vision` · `outcomes` · `mapGeneration` · `replacedBy` · `promotionLine` · `buildUp` · `shrine` · `headquarters` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` · `unitCapability` · `canTrade` (tech → the trade-table/deal system: tradeable items + agreements — `techs`/`openBorders`/`rightOfPassage`/`embassy`/`bonuses`/…) · `canTradeOn` (tech → trade-route system; terrain refs) · `canWorkOn` (tech → the city `canWork` gate; workable plot classes — `water`/`peaks`/…) — all three [capabilities.md](capabilities.md) | data read by their own systems, not the cascade |
 
 `type` (the entity's own id, e.g. `"BUILDING_FORGE"`) and the TEXT fields are present where relevant.
 
@@ -96,7 +96,7 @@ that kind in the scope**, filtered by an optional predicate. So `empire` (singul
 and `plots`/`units` (plural) the *receivers*, even when a root is shared. A deposit with **no** plural target
 lands on the scope object itself (the city — the common case). Full deposit syntax: §6.
 
-> **Ranked subset — `orderedBy` / `orderedByDescending` + `max:` (owner ruling 2026-06-28).** A plural target may be
+> **Ranked subset — `orderedBy` / `orderedByDescending` + `max:`.** A plural target may be
 > narrowed to the **top-N (or bottom-N) by a metric** via an ordering qualifier plus the existing `max:` count:
 > `cities.{ max: 5, orderedByDescending: CITY_SIZE }` = the **5 largest cities** (by population). `orderedBy` =
 > ascending, `orderedByDescending` = descending (the standardized LINQ-style spelling); `max: N` caps the selection
@@ -112,8 +112,7 @@ lands on the scope object itself (the city — the common case). Full deposit sy
 
 ### 3.4 Conditions — `all` / `any` / `noneOf`
 
-A **recursive boolean tree** (owner ruling 2026-06-24 — the long-standing AND/OR mutilation, fixed here for good),
-identical wherever a condition is needed (`requires`, and a deposit's `enabled`/`disabled`). Three combinators;
+A **recursive boolean tree**, identical wherever a condition is needed (`requires`, and a deposit's `enabled`/`disabled`). Three combinators;
 each holds a list of **children**, and a child is **either a leaf** (a count/presence atom or a predicate, §3.5)
 **or another combinator node** — nesting is allowed to any depth:
 
@@ -121,7 +120,7 @@ each holds a list of **children**, and a child is **either a leaf** (a count/pre
 - **`any`** = **OR** (`||`) — at least one child must hold. A plain OR over its **direct children** — *not*
   "OR-groups AND-ed together".
 - **`noneOf`** = **NONE** — no child may hold.
-- **`!` prefix** = **NOT** on a single leaf-string (owner ruling 2026-06-28) — `"!IS_STATE_RELIGION"` negates the
+- **`!` prefix** = **NOT** on a single leaf-string — `"!IS_STATE_RELIGION"` negates the
   predicate inline, so `all: ["IS_HOLY_CITY", "!IS_STATE_RELIGION"]` reads naturally ("a holy city that is NOT the
   state religion"). It is pure **shorthand for `noneOf:[X]`** on one leaf (the parser rewrites `"!X"` → `noneOf:[X]`),
   reusing the boolean tree — for negating a *group*, use `noneOf` with a nested node. (Less obvious at a glance than
@@ -138,9 +137,8 @@ So `any` is exactly `||` on what is directly below it:
 - `any: [ {all:[STONE,IRON]}, {any:[COPPER,WOOD]} ]` = `(stone && iron) || (copper || wood)`.
 
 To require BOTH "(copper or iron)" AND "(forge or foundry)", **nest two `any` nodes under an `all`** —
-`all: [ {any:[COPPER,IRON]}, {any:[FORGE,FOUNDRY]} ]`. The old `any:[[…],[…]]` "AND-of-ORs" shape is **RETIRED**:
-`any` never means AND — it is a plain recursive boolean tree (`all`/`any`/`noneOf`, nestable to any depth). The
-retired `any:[[…]]` "AND-of-ORs" shape is gone; for "(A or B) AND (C or D)", nest two `any` nodes under an `all`.
+`all: [ {any:[COPPER,IRON]}, {any:[FORGE,FOUNDRY]} ]`. `any` never means AND — it is a plain recursive boolean
+tree (`all`/`any`/`noneOf`, nestable to any depth).
 Each leaf is **either** a count/presence **atom** or a **predicate** (§3.5):
 
 ```jsonc
@@ -161,17 +159,17 @@ scope. **Forcing a redundant `{type, scope}` only invites authoring bugs.** *(Pl
 - **count thresholds** — `min: N` (≥ N) and/or `max: N` (≤ N), both inclusive. Exact-N = `min` and `max` together.
 - `connection` (resources only) ∈ `"trade"` | `"vicinity"` | `"trade|vicinity"`. `trade` = the city has the bonus via
   the trade network. `vicinity` = the bonus is on a tile in the city's radius.
-- **`vicinity` DISCRIMINATOR** (owner ruling 2026-06-24; ownership tiers 2026-06-26) — `connection:"vicinity"` scopes a
+- **`vicinity` DISCRIMINATOR** — `connection:"vicinity"` scopes a
   bonus to the city's workable radius; the optional sibling `vicinity:` field selects WHICH tiles count. A radius tile's
   ownership is one of three — and the distinction is load-bearing: **owned** (the city's team), **neutral** (unowned,
   `NO_TEAM`), or **foreign** (another team). The ownership selectors nest `owned ⊂ owned+neutral ⊂ owned+neutral+foreign`:
-  - **absent** = **owned + neutral** — the **DEFAULT** (owner 2026-06-26): the city's own tiles plus unclaimed land,
+  - **absent** = **owned + neutral** — the **DEFAULT**: the city's own tiles plus unclaimed land,
     but NOT another team's. This mirrors the engine's vicinity (feature prereqs count neutral tiles too — `neutral`
     flag, `CvHttpServer.cpp`; terrain/improvement/peak/hill are `owned`-only via the next selector).
   - `"owned"` = **owned only** — strictly the city's own tiles (centre or owned radius tile; **no** connection or
     improvement needed), excluding even neutral. A raw owned-presence.
   - `"crossBorder"` = owned + neutral + **foreign** (any ownership) — the opt-in that ADDS foreign tiles, counting
-    beyond the city's borders. **No current use-case, kept for completeness** (owner 2026-06-26). Name avoids the
+    beyond the city's borders. **No current use-case, kept for completeness.** Name avoids the
     `all`/`any`/`noneOf` combinators (§3.4). A foreign tile's bonus is revealed per its OWN team, so it can read
     differently per asking city — exactly why foreign is gated behind this explicit opt-in rather than the default.
   - `"worked"` = a tile a citizen **works** this turn (implies owned).
@@ -197,14 +195,14 @@ context: `IS_WATER` on `plots` = a water tile, on `units` = a sea unit. An **unk
 IGNORED**, never treated as false — retiring a system never spuriously disables unrelated data.
 
 > **The predicate registry is EXTENSIBLE — and a condition is ALWAYS a predicate, never a bespoke member
-> ([DEC-conditions-are-predicates], owner 2026-06-28).** When a deposit's condition has no predicate named verbatim
+> ([DEC-conditions-are-predicates]).** When a deposit's condition has no predicate named verbatim
 > below yet, **define a new predicate** (add it here, wire it in the evaluator, and emit the `/state` fact it reads).
 > Adding a predicate *extends* the model within the structure. What you must NOT do is encode the condition as a new
 > sub-scope **member** (`{family}.empire.capital.percent`, `perMilitaryUnit`) — that changes the core structure (the
 > kraken way; see [modifier.md §3](modifier.md), which also notes the **golden-age exception**: `empire.goldenAge`
 > stays a member-mirror, deferred to post-migration, because golden age is engine-core and not data-defined).
 
-> **`IS_*` vs `HAS_*` — literal English (owner 2026-06-23).** Plain English picks the prefix: `IS_*` = whether the
+> **`IS_*` vs `HAS_*` — literal English.** Plain English picks the prefix: `IS_*` = whether the
 > target **is** something (a plot `IS_WATER`, a city `IS_CAPITAL`); `HAS_*` = whether it **has** something (a plot
 > `HAS_RIVER`, `HAS_PEAK`, `HAS_COAST`). These semantics span **every target group**, not just plots — a *unit*
 > `IS_MILITARY` (defined by the `military` [tag](tags.md)), a *city* `IS_CAPITAL` — so a **tag-backed predicate
@@ -219,7 +217,7 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
 - **bare** (parameter-free string), four groups:
   - **environment / domain** `IS_<where>` (target-relative): `IS_WATER` · `IS_LAND` · `IS_AIR` · `IS_SPACE` · `IS_LUNAR` · `IS_MARS`
     (extensible).
-  - **relief form** `IS_FLATLANDS` (owner 2026-06-26, canonized): a plot with **no relief** — neither hills nor peak.
+  - **relief form** `IS_FLATLANDS`: a plot with **no relief** — neither hills nor peak.
     It is relief-only (water is also relief-free), so **flat land** composes it with the domain: `{all:["IS_LAND","IS_FLATLANDS"]}`.
     The engine's per-plot-TYPE `PLOT_LAND` accumulator maps to exactly that pair.
   - **plot attributes** `HAS_<attr>` (relief & adjacency a plot carries, orthogonal to environment so they
@@ -233,7 +231,7 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
     building the Manhattan Project). A nuke-enabling building (Manhattan) carries `requires.build.disabled: "NO_NUKES"`
     — it can't be built while nukes are forbidden.
   - **city / player:** `IS_CAPITAL` · `IS_GOVERNMENT_CENTER` · `HAS_POWER` · `HAS_STATE_RELIGION` · `STATE_RELIGION_IN_CITY` ·
-    `IS_GOLDEN_AGE` (the player is in a golden age — owner 2026-06-26, canonized from the cascade evaluator) ·
+    `IS_GOLDEN_AGE` (the player is in a golden age) ·
     **`IS_HOLY_CITY`** (the *bare* form = the city is a holy city of **any** religion — `CvCity::isHolyCity()`; the
     parameterized `{IS_HOLY_CITY: RELIGION_X}` below keys a specific religion) · **`IS_STATE_RELIGION_HOLY_CITY`** (the
     city is the holy city **of the player's state religion** — `isHolyCity(stateReligion)`; distinct from
@@ -244,8 +242,7 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
     on `requires.build.disabled: "IS_GOVERNMENT_CENTER"` (one can't be built where a government center already exists —
     a gov-center test, not an `IS_CAPITAL` one).
 - **parameterized** `{ PREDICATE: param }`: `{HAS_FEATURE: FEATURE_X}` · `{HAS_TERRAIN: TERRAIN_X}` ·
-  `{HAS_IMPROVEMENT: IMPROVEMENT_X}` (the plot carries that improvement — the plots-filter twin of terrain/feature; owner
-  2026-06-26, canonized from the cascade evaluator) ·
+  `{HAS_IMPROVEMENT: IMPROVEMENT_X}` (the plot carries that improvement — the plots-filter twin of terrain/feature) ·
   `{HAS_BONUS: BONUS_X}` · `{HAS_RELIGION: RELIGION_X}` · `{STATE_RELIGION: RELIGION_X}` · `{IS_HOLY_CITY: RELIGION_X}` ·
   `{HAS_CORPORATION: CORPORATION_X}` · `{latitude:{min,max}}` · `{existedFor:{min:N}}` (turns since built) ·
   `{HAS_COAST:{minArea:N}}` (the city is adjacent to a water body of **≥ N tiles**; a bare `HAS_COAST` is coastal at
@@ -286,10 +283,9 @@ scope; cross-city scopes (empire/team/world) resolve via the [tally](tally.md), 
 **`unit: <predicate>`** qualifies a deposit by a **unit predicate** — the *same* `unit:` qualifier cargo uses
 (`cargo.space.{unit: IS_AIR, …}`, [modifier](modifier.md) §6). On a count-scaling family it reads **per unit
 matching**: `happiness.empire.cities.{unit: IS_MILITARY, flat: N}` = "N happiness per *military unit* stationed" —
-the unit-presence effect lives on the civic/trait that grants it, targeting each city. (Supersedes the earlier
-`perUnit:` spelling, unifying with cargo's `unit:`.)
+the unit-presence effect lives on the civic/trait that grants it, targeting each city.
 
-> **Predicates vs tags (owner).** `IS_*` predicates are **independent queries**, *not* tag-membership: `IS_LAND`
+> **Predicates vs tags.** `IS_*` predicates are **independent queries**, *not* tag-membership: `IS_LAND`
 > (used by cargo above) matches an intrinsic *domain*, not a `tag`. But a predicate **may be defined to encompass
 > tags** (e.g. `IS_MILITARY` set up to match the `military` tag + similar) — predicates have **definitions**.
 > **Post-migration:** make predicates **definable as JSON objects** and support **predicate groups** (compose
@@ -433,16 +429,15 @@ declare the number. Enforcement reads the [tally](tally.md) count.
 
 One-shot or recurring things an entity hands out (not per-turn modifiers).
 
-> **Classification pass (owner 2026-07-01) — `grants` was a grab-bag; the survey found 34 keys, ~half off-grammar.**
-> `grants` is now ONLY genuine provisions handed out on a trigger. **Re-homed OUT:** unit `buildings` (MISSION_CONSTRUCT) /
-> `greatPersonAction` / `goldenAge` → **`missions`** (§8, deferred); `builds` → the **`builds`** block (§8); `greatPeople`
-> → `tags`/mission (settled in the missions pass); promotion `unitCombats`/`removesUnitCombats` → **`skills`**; project
-> `grantsSpecialBuilding` → **`enables.specialBuildings`** (flips SpecialBuildingValid — unlocks, hands out nothing); corp
-> `bonusProduced` → **`provides.bonuses`** (continuous supply, §5a); building `holyCity` → **`requires.build`** (a
-> read-only "only in RELIGION_X's holy city" gate — `canConstruct`, `CvCity.cpp:2728`; the holy city is set by religion
-> FOUNDING, never a building); building `traits` → **`enables.traits`** (held-trait, §8). **`freePromotions`** (building-
-> list + trait-dict) folds into **`repeatable`**. And a **mission carries its `grants`** as its outcome (§8), so `grants`
-> is both an entity-level handout and a mission's outcome payload.
+> **`grants` is ONLY genuine provisions handed out on a trigger.** What does NOT belong here (and where it lives
+> instead): unit `buildings` (MISSION_CONSTRUCT) / `greatPersonAction` / `goldenAge` → **`missions`** (§8, deferred);
+> `builds` → the **`builds`** block (§8); promotion `unitCombats`/`removesUnitCombats` → **`skills`**; project
+> `grantsSpecialBuilding` → **`enables.specialBuildings`** (flips SpecialBuildingValid — unlocks, hands out nothing);
+> corp `bonusProduced` → **`provides.bonuses`** (continuous supply, §5a); building `holyCity` → **`requires.build`**
+> (a read-only "only in RELIGION_X's holy city" gate — `canConstruct`, `CvCity.cpp:2728`; the holy city is set by
+> religion FOUNDING, never a building); building `traits` → **`enables.traits`** (held-trait, §8).
+> **`freePromotions`** (building-list + trait-dict) folds into **`repeatable`**. And a **mission carries its
+> `grants`** as its outcome (§8), so `grants` is both an entity-level handout and a mission's outcome payload.
 
 ```jsonc
 "grants": {
@@ -456,22 +451,20 @@ One-shot or recurring things an entity hands out (not per-turn modifiers).
 ```
 
 - **lists** — `buildings · units · techs · civics · promotions · traits · bonuses · freePromotions ·
-  foundBuildings`. ⛔ **`specialists` is PURGED from the grants vocabulary (owner ruling 2026-07-05,
-  reaffirming 2026-07-02):** free specialists NEVER fit the grants model — they are the `freeSpecialists`
-  MODIFIER family ([modifier.md §6](modifier.md), alive-with-source + the two-part amount/placement seam).
-  Verified: ZERO `grants.specialists` authorings exist in the curated data. *If anything is ever found that
-  genuinely GRANTS permanent free specialists — surviving the destruction of its wonder/building/source —
-  we deal with it then* (owner); no machinery is built for the hypothetical.
-- **`freePromotions`** (a building) — promotions granted at **END-TURN to every unit present in the city** (owner
-  ruling 2026-07-01). One mechanism, no on-move flag: a unit trained there is present at end-turn, and a unit that
+  foundBuildings`. ⛔ **`specialists` is NOT in the grants vocabulary:** free specialists never fit the grants
+  model — they are the `freeSpecialists` MODIFIER family ([modifier.md §6](modifier.md), alive-with-source + the
+  two-part amount/placement seam). *If anything is ever found that genuinely GRANTS permanent free specialists —
+  surviving the destruction of its wonder/building/source — we deal with it then*; no machinery is built for the
+  hypothetical.
+- **`freePromotions`** (a building) — promotions granted at **END-TURN to every unit present in the city**.
+  One mechanism, no on-move flag: a unit trained there is present at end-turn, and a unit that
   walks in and stays is covered the **same** way — there is no separate mid-turn/on-move trigger.
 - **numeric pulses** — `grants.<channel>: value` (`grants.revolution: -100`, `grants.goldenAge`).
 - **`foundBuildings`** — entry shape `{ "building": BUILDING_X, "enabled"?: <condition> }` (absent `enabled` =
-  always placed). Lives on the **settler-type unit** (the founder), NOT on the civ. ⚠ **Owner note (2026-06-30):**
-  `foundBuildings` is technically an **agent invention** — plain `grants.buildings` on the settler would suffice (the
-  engine iterates the founder's buildings at settle-time); the owner *tolerates* the clean `foundBuildings` form, but
-  it is not load-bearing. **Curator follow-up:** `BUILDING_PALACE` (+ the other founder buildings) is currently *also*
-  in ~48 **civilizations'** `grants.buildings` — the **wrong/redundant** placement; the settler's `foundBuildings`
+  always placed). Lives on the **settler-type unit** (the founder), NOT on the civ. ⚠ Tolerated sugar, not
+  load-bearing — plain `grants.buildings` on the settler would suffice (the engine iterates the founder's buildings
+  at settle-time). **Curator follow-up:** `BUILDING_PALACE` (+ the other founder buildings) is currently *also* in
+  ~48 **civilizations'** `grants.buildings` — the **wrong/redundant** placement; the settler's `foundBuildings`
   already carries it, so the civ-grant duplicate should be dropped. (Does NOT affect the enabler: the engine realizes
   the palace into the capital regardless, so the cascade's HAVE sees it either way.)
 - **`repeatable`** — `[ { <payload>, interval, chance?, enabled? } ]`: fires each interval (a spawned unit, a
@@ -536,13 +529,12 @@ The full address of a deposit:
   every build); **`buildRate`** only speeds up *building a specific target*: `buildRate.self` (build **this**
   entity faster — the off-spine `self` scope), or keyed by what's built (`buildRate.<scope>.buildings.{BUILDING}`,
   or a category like `military`).
-- **Era-dependent values use the `ERA` COUNTER, not a bespoke key (owner ruling 2026-06-28).** Era is a plain
+- **Era-dependent values use the `ERA` COUNTER, not a bespoke key.** Era is a plain
   counter (1…X, §3.1) like `POPULATION`/`TURN`; a value that changes with era is authored as ordinary conditioned
   deposits gated on an `ERA` count-threshold — `flat: [ {value, enabled:{type:ERA, min:N}}, … ]` — so the bands
   **accumulate for free** through normal deposit summation (every entry whose `min` ≤ the current era applies). No
-  special resolver, no `world.eras` lookup. *(The earlier agent-invented `byEra.{C2C_ERA_*}` value-table key is
-  **RETIRED** — it did not fit the counter/condition vocabulary every other quantity uses; the curator converts a
-  legacy `EraCommerceChanges` band-table into era-threshold flats, mapping each era Type to its counter index.)*
+  special resolver, no `world.eras` lookup. (The curator converts a legacy `EraCommerceChanges` band-table into
+  era-threshold flats, mapping each era Type to its counter index.)
 
 ### 6.1 Two ways a deposit picks WHAT it lands on
 
@@ -594,7 +586,7 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   and `autoBuild` (auto-placed in every city where `requires.build` holds); `autoBuild ⊂ notConstructible`.
   **Civilization selectability** lives here too: `playable` / `aiPlayable` (can a human / the AI pick this civ) —
   **load-only metadata, no gameplay relevance** (animals/barbarians/neanderthals are technically civilizations), so
-  it is intrinsic self-description, not a `policy` (owner ruling 2026-07-01).
+  it is intrinsic self-description, not a `policy`.
 - **`cost`** — what it costs to make (`production`, and cost sub-fields).
 - **`ui`** — interface art/sound (icons, buttons, movies) · **`world`** — on-map 3D art · **`sound`** — audio assets.
 - **`ai`** — AI-only metadata (flavours, weights, personality); never affects rules, only AI behaviour.
@@ -622,11 +614,10 @@ and the commerce sliders `setScienceRate`/`setCultureRate`/`setEspionageRate`). 
 grantor-PROVIDED** — a **tech**, a **civic**, or a **building** *provides* one, and the empire then *holds* it. A
 grantor **provides**, never **holds**; a capability appears in a grantor's `capabilities` block to mean "I hand this
 to the empire." (This is exactly parallel to a tech granting an ability — the same block, three grantor kinds.) The
-**section name carries the scope**, so the engine never guesses. **Behaviourally nothing is *granted* (owner ruling
-2026-07-02):** the empire's active set is **derived on query** — an enabler-style union over the currently-live
-sources (the enabler's HAVE axis); "provides" is the data direction, not an apply event, so a capability lapses with
-its last live source — headroom only: in practice no capability is ever disabled today (owner 2026-07-02). See
-[capabilities.md](capabilities.md).
+**section name carries the scope**, so the engine never guesses. **Behaviourally nothing is *granted*:** the
+empire's active set is **derived on query** — an enabler-style union over the currently-live sources (the enabler's
+HAVE axis); "provides" is the data direction, not an apply event, so a capability lapses with its last live source —
+headroom only: in practice no capability is ever disabled today. See [capabilities.md](capabilities.md).
 
 A **building** additionally has its own **`attributes`** block — the building's **HELD**, immutable, **city-scope**
 intrinsic capabilities: `nukeImmune`, `zoneOfControl`, `governmentCenter`, `providesFreshWater`, `borderObstacle`, …
@@ -636,7 +627,7 @@ its `capabilities` are what it *hands to the empire* (provided) — the opposite
 `nukeImmune` is an `attribute` (the building holds it), but its `setCultureRate` is a `capability` (the building
 provides the slider to the empire).
 
-**Two further unit blocks (owner 2026-07-01, the grants-classification pass §5):**
+**Two further unit blocks:**
 - **`builds`** — the unit's per-type **`BUILD_*` repertoire** (which worker-builds it can perform), owned **per unit-type**
   (tech gates *which builds are unlocked* — via `enables.builds` / the BUILD's own prereq; `builds` is *which THIS unit
   can do*; NOT "all workers, tech-gated"), promotion-augmentable. Wired as an **intrinsic key** (the readJson base skips
@@ -671,16 +662,11 @@ Full glossaries: [skills.md](skills.md) · [tags.md](tags.md) · [state.md](stat
 
 Data read by a specific system, not the cascade. Use only when the entity needs it:
 
-- ~~`loadPrune`~~ — **RETIRED (owner ruling 2026-07-08; [superseded-ideas](../architecture/superseded-ideas.md))**: a
-  curator-era invention that re-encoded the legacy game-option validity tags backwards. A whole-entity game-option
-  gate authors as the **entity-level `enabled`/`disabled`** pair (the Applicability row, §2): `"enabled":
-  "GAMEOPTION_X"` = exists only while X is ON; `"disabled": "GAMEOPTION_X"` = suppressed while X is ON — evaluated
-  live like every other condition, exactly as the legacy engine checked them (use-time, `isPromotionValid` et al.).
 - **`policies`** — **pure empire STATES** an entity enacts: named declarative on/off conditions of the whole
   civilization (`noForeignTrade`, `noCorporations`, `allReligionsBanned`, `fixedBorders`, `noNonStateReligionSpread`,
   …). Granted by a **civic** (adopted — active while the civic is in force) or a **trait** (permanent while the trait
   is held) — one meaning, two grantors, exactly parallel to a tech granting a [capability](capabilities.md). **A policy
-  is a PURE STATE, never a parameterized/targeted rule (owner ruling 2026-07-01):** `allReligionsBanned` ✓;
+  is a PURE STATE, never a parameterized/targeted rule:** `allReligionsBanned` ✓;
   `onlyAllowedToBuildReligion: X` ✗ — a *targeted* restriction that carries a WHAT is an [enabler](enabler.md) concern
   (`enables`/`disables`/`requires`), not a policy. This is the group-unambiguity discipline (each group name = exactly
   one meaning; cf. empire `capabilities` vs unit `skills` vs `tags`). *(NOT here: civilization selectability

@@ -33,10 +33,10 @@ root `AGENTS.md`.
   run, so to verify anything in a FinalRelease run use the gated logging system (`[PERF]` via
   `gPerfLogLevel`/`Autolog__LogLevelPerf`, or a `log<Domain>AI` helper), which ships in every DLL —
   see `docs/reference/observability.md`.
-- `fbuild.bff` is the source-of-truth for compiled directories (the `.vcxproj` is IDE-only). **As of 2026-06-19
-  fbuild RECURSIVELY globs** every `.cpp` under `$SOURCE_DIR$`, so a new `Sources/<Dir>/` is compiled
-  **automatically — no `.UnityInputPath` edit needed** (regen the `.vcxproj`(+`.filters`) for IDE display only).
-  With recursive globbing an `LNK2001` now means a genuinely **missing definition**, not a missing `.UnityInputPath` entry.
+- `fbuild.bff` is the source-of-truth for compiled directories (the `.vcxproj` is IDE-only). **fbuild RECURSIVELY
+  globs** every `.cpp` under `$SOURCE_DIR$`, so a new `Sources/<Dir>/` is compiled **automatically — no
+  `.UnityInputPath` edit needed** (regen the `.vcxproj`(+`.filters`) for IDE display only).
+  With recursive globbing an `LNK2001` means a genuinely **missing definition**, not a missing `.UnityInputPath` entry.
 - Full dev bootstrap: `DevSetup.bat`. XML validation: `Tools/XmlValidator.exe -a`.
   Python callbacks: `Tools/XMLTools/verify-python-callbacks.py`.
 - See the root `AGENTS.md` for full build details.
@@ -44,10 +44,10 @@ root `AGENTS.md`.
 ## Conventions
 
 - Prefer minimal, local changes in large core files. **"Minimal, local" bounds the SIZE of an edit, NOT the
-  SCOPE of the work (owner clarification 2026-06-20):** a targeted fix inside a tightly-coupled core file stays
-  minimal — don't sprawl it or gratuitously refactor around it — but this is **no brake** on deliberate
-  structural rework (the #428/#430 cascade, the docs rebuild, dissolving the `Cv*AI` god-classes), which is
-  large by design and answers to [DEC-proper-once](../docs/architecture/decisions.md#dec-proper-once).
+  SCOPE of the work:** a targeted fix inside a tightly-coupled core file stays minimal — don't sprawl it or
+  gratuitously refactor around it — but this is **no brake** on deliberate structural rework (the cascade, the
+  docs rebuild, dissolving the `Cv*AI` god-classes), which is large by design and answers to
+  [DEC-proper-once](../docs/architecture/decisions.md#dec-proper-once).
 - Preserve save compatibility by default; for intentional save breaks, coordinate and mark with `@SAVEBREAK` where relevant.
 - If C++ changes affect XML/Python interfaces, validate related XML and callback references.
 

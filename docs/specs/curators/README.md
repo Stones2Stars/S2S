@@ -1,6 +1,6 @@
 # Curators — the migration conversion spec (transient)
 
-> **Project-specific & temporary (owner ruling 2026-06-23).** The migration curators (`Tools/Migration/curate_*.py`)
+> **Project-specific & temporary.** The migration curators (`Tools/Migration/curate_*.py`)
 > convert the legacy Civ4 XML into the clean JSON shapes the cascade reads. This area specs **what the curators do** —
 > the per-entity conversion decisions and the de-scale registry. (The **old→new field map is NOT a doc** — it lives
 > in the curators themselves; see below.)
@@ -13,7 +13,7 @@
 > preserve-and-place beats a condensing investment. Their internal links still point at pre-move paths — part of the
 > global reference sweep follow-up.)*
 
-## The old→new map lives in the curators (owner ruling 2026-06-23)
+## The old→new map lives in the curators
 There is **no rename-trail / infotype-translation doc** — the old→new field map **is** the curator code, and that is
 where it stays (a doc copy poisons context and drifts). Each `curate_<entity>.py` **docstring annotates every new key
 to its legacy field, with the why**, and the code right below implements it. Canonical exemplar —

@@ -33,7 +33,7 @@ classes a unit gains/loses on upgrade (a swordsman → rifleman gains `gunpowder
 not the first cut.
 
 ### Criminal-type — `outlaw`
-Derived from the **criminal combat CLASS**, not a `DefaultUnitAI` role (owner 2026-06-23). A unit is criminal-type →
+Derived from the **criminal combat CLASS**, not a `DefaultUnitAI` role. A unit is criminal-type →
 tag **`outlaw`** iff its **primary `<Combat>` is `UNITCOMBAT_CRIMINAL`** *or* `UNITCOMBAT_CRIMINAL` appears in its
 **`<SubCombatTypes>`**. Curator: `combat_class == UNITCOMBAT_CRIMINAL or UNITCOMBAT_CRIMINAL in SubCombatTypes`
 (`curate_unit.py`).
@@ -52,8 +52,6 @@ covers **22** units, adding the ones INFILTRATOR missed — `OUTLAW` (primary `R
 > hidden-nationality skill are independent: most outlaws carry the skill, but the tag is defined by the combat class.
 
 ## Open
-- ✅ **Resolved (owner 2026-06-23):** the `outlaw` group is now the `UNITCOMBAT_CRIMINAL` primary-or-subcombat set
-  (22 units, see above), **not** the 13 `UNITAI_INFILTRATOR` units; `hiddenNationality` is a **skill**, not the gate.
 - `gunpowder`/`mechanized`/… from **unitcombats** (post-migration).
 - **Completeness** — most units untagged for now (fine).
 - The **bSpy skill → `spy` tag** reconciliation (the spy notion is mis-filed as a skill too — drop the skill).

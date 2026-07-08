@@ -16,8 +16,8 @@ architecture.
 
 The engine is **bidirectional**: modifiers down, tally counts + `require` callbacks up. A down-only mental model is wrong.
 
-**Orwellian logging** (total observability) is a landed prerequisite, not a nicety — it is what makes safe legacy
-deletion (shadow-until-clean) possible ([logging](../specs/logging.md)).
+**Orwellian logging** (total observability) is a landed prerequisite, not a nicety — it is what made safe legacy
+deletion possible and remains the verification ground truth ([logging](../specs/logging.md)).
 
 **The one unmovable constraint:** the closed Firaxis `.exe` ABI freezes the C++03/VC7.1 toolchain — it constrains
 **syntax, not architecture** ([engine](../reference/engine.md)). Clean Architecture **is** achievable here; "old

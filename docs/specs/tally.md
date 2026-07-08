@@ -14,7 +14,7 @@ It is **engine machinery, never authored in JSON**. The JSON only carries the cl
 
 ## 1. NOT a store — a standardized aggregate ACCESSOR over object-owned counts
 
-⛔ **The tally stores nothing and accumulates nothing (owner ruling 2026-06-30).** The game OBJECTS already own and
+⛔ **The tally stores nothing and accumulates nothing.** The game OBJECTS already own and
 maintain their own counts, O(1): `CvPlayer::getBuildingCount` is `m_paiBuildingCount[i]`, maintained incrementally by
 `changeBuildingCount` (which **already emits** the `DOMAIN` count event); `getUnitCount` likewise; techs on `CvTeam`.
 A second accumulator that re-summed `±1` per building would **duplicate authoritative state**, risk OOS drift, and
@@ -73,17 +73,15 @@ load-time seed, no incremental maintenance, no rebuild, and no shadow**:
 - **Derived, not source.** The count already lives in the saved object (`m_paiBuildingCount`, unit counts, …). The
   tally is a pure read + roll-up; duplicating it would only risk drift.
 - **OOS-safe by construction.** With no separate store there is nothing that *can* diverge — the tally IS the
-  object's count. (The old player-leaf accumulator was that duplicate; it is **retired**.)
+  object's count. (A tally-owned duplicate store is a retired idea — [superseded-ideas](../architecture/superseded-ideas.md).)
 - **No save surface, no rebuild, no shadow** — nothing to version, `@SAVEBREAK`, seed, or shadow-verify.
 
-> **The standardized event EMITTERS stay; the in-engine tally just doesn't consume them (owner ruling 2026-06-30).**
+> **The standardized event EMITTERS stay; the in-engine tally just doesn't consume them.**
 > The objects emit `DOMAIN` count events on change (already wired: `CvPlayer::changeBuildingCount` / unit-count →
-> `eventSpine().emit`). Those serve **observability** (the Orwell bar), **cache-invalidation** (the future
+> `eventSpine().emit`). Those serve **observability** (the Orwell bar), **cache-invalidation** (the
 > modifier/enabler dirty triggers), and the **out-of-process replay** — **StoneBase** has no engine objects, so *it*
 > rebuilds its model from the event stream + `/state`. The **in-engine** tally needs none of it: it reads the live
-> objects. *(Earlier this doc had the in-engine tally **rebuild** from a load-time event replay — that was the
-> duplicate-store model, now retired. The events flow for the consumers above, not to maintain a tally copy; "let an
-> object care about itself, and standardize the accessors + event emitters.")* **Genuine historical counters** (e.g.
+> objects ("let an object care about itself, and standardize the accessors + event emitters"). **Genuine historical counters** (e.g.
 > "units of type X ever created") are *not* the tally's — they live on their owning object and are saved there; the
 > tally only reads/rolls them up.
 
@@ -104,7 +102,7 @@ just: the object-side accessor it reads + its type-prefix routing + the roll-up*
 maintenance, rebuild scan, or shadow id (those were the duplicate-store model's burden). Where an object lacks the
 aggregate, give the object the accessor (it "cares about itself"). City/plot reads go direct to the live object regardless.
 
-**No new domain just to replace a same-shaped engine count (owner ruling 2026-07-02).** The engine objects already
+**No new domain just to replace a same-shaped engine count.** The engine objects already
 carried most of the tally functionality, and the deliberate design is to READ those object-owned counts, never rip
 them up to replace with the same thing. Concretely: `CvPlayer::countNumBuildings` (the cities-having, ≤1/city
 semantic) and `CvTeam::getHasReligionCount`/`getHasCorporationCount` are **KEEP** — engine-owned; a tally accessor

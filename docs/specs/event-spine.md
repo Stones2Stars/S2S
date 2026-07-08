@@ -45,7 +45,8 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
 - **Name-change event** (`CASCADE_EVT_NAME_CHANGE`): the four set-name choke points emit `(NameChangeKind, owner,
   entity_id)` — **string-free** (carry the ID, let the consumer resolve the name); logging resolves it live.
 - **Build status:** spine = DONE; logging = registered first; the **tally** = a read-only accessor (buildings + units),
-  NOT a spine consumer (`Cascade/CvCascadeTally.{h,cpp}`); grants = NOT BUILT.
+  NOT a spine consumer (`Cascade/CvCascadeTally.{h,cpp}`); grants = resolver built, the apply-loop pending
+  ([grants-machine.md](../plans/structural-cleanup/grants-machine.md)).
 
 ## See also
 - [logging.md](logging.md) — the broad consumer (what to log). [tally.md](tally.md) — the read-only count accessor
