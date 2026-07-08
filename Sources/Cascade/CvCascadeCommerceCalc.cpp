@@ -5,12 +5,8 @@
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvCascadePerfCount.h"   // per-turn call counters + stopwatches (owner 2026-07-02: repeat-calc hunt)
-#include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "CvCascadeCommerceCalc.h"
 #include "CvCascadeMMKernel.h"
-#include "CvCascadePercentStack.h"     // MMBreak + PercentStack
-#include "CvCascadeYieldBasePackages.h"  // specialist / goldenAge (reused §1 packages)
 #include "CvCascadeBuildingPackage.h"    // buildingFlat (reused §1 package)
 #include "CvJsonInfo.h"                // CvJsonInfo + the cascade Json* identity structs
 #include "CvJsonCorporationInfo.h"     // the corp typed members (change/produced/prereqBonuses -- the collapsed corp families)
@@ -74,8 +70,9 @@ long CommerceCalc::playerExtra(const std::string& channel, const CvPlayer& playe
 }
 
 // §2 BASE: building-keyed commerce ×100 (GlobalBuildingExtraCommerces, BuildingKeyedCommercePackage) -- a building G
-// grants commerce to OTHER building TYPES B empire-wide: Σ over the city's ACTIVE buildings B of (Σ over granting
-// buildings G of count(G) × G's {ch}.empire.buildings.{B}.flat). Pure deposits (no readJson gap). ×100.
+// grants commerce to OTHER building TYPES B empire-wide. This is the GRANTOR LEDGER (player-scope): targetFk -> Σ over
+// granting buildings G of count(G) × G's {ch}.empire.buildings.{B}.flat (×100); the accumulator realizes it against the
+// city's ACTIVE targets at read. Pure deposits (no readJson gap).
 void CommerceCalc::buildingKeyedLedger(const std::string& channel, const CvPlayer& player, const CvCascadeEvalCtx& ec,
 	std::map<int, long>& out)
 {
@@ -103,20 +100,12 @@ void CommerceCalc::buildingKeyedLedger(const std::string& channel, const CvPlaye
 			if (dep.seg[0] != chanId || dep.seg[1] != segEmpire || dep.seg[2] != segBuildings) continue;
 			if (dep.targetFk < 0) continue;
 			if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
-			out[dep.targetFk] += (long)cnt * dep.value100;
+			// §3.7 per (identity when hasPer==false), resolved at FILL: the realization (the accumulator's
+			// CBASE keyed sum) folds plain ledgered longs -- no deposit exists there -- and this player-scope
+			// fill's ctx is the SAME one the enabled/disabled gates already evaluate against.
+			out[dep.targetFk] += (long)cnt * MMKernel::perScale(dep, ec, dep.value100);
 		}
 	}
-}
-
-long CommerceCalc::buildingKeyed(const std::string& channel, const CvCity* pCity, const CvCascadeEvalCtx& ec)
-{
-	// The realization: the player grantor ledger × this city's ACTIVE targets (the calculator/oracle shape).
-	std::map<int, long> ledger;
-	buildingKeyedLedger(channel, *ec.player, ec, ledger);
-	long sum = 0;
-	for (std::map<int, long>::const_iterator it = ledger.begin(); it != ledger.end(); ++it)
-		if (cascadeIsBuildingActive(it->first, ec)) sum += it->second;
-	return sum;
 }
 
 // §2 BASE: shrine commerce ×100 -- Σ active SHRINE buildings (getGlobalReligionCommerce FK) of religion.shrine.{c} ×
@@ -300,8 +289,8 @@ int CommerceCalc::corporation(const std::string& channel, const CvCity* pCity, c
 }
 
 // The CITY-ONLY base terms ×100 (the scope-package fill): religion + corporation + building-own + shrine +
-// corpHQ + doubleTime -- everything of baseExtra100 that is THIS city's own scope (the player-scope
-// goldenAge/playerExtra and the keyed/SR realizations are separate packages).
+// corpHQ + doubleTime -- everything of the HALF-2 base-extra sum that is THIS city's own scope (the
+// player-scope goldenAge/playerExtra and the keyed/SR realizations are separate scope packages).
 long CommerceCalc::baseOwn100(const std::string& channel, const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
 	const int religion = CommerceCalc::religion(channel, pCity, ec);
@@ -311,21 +300,6 @@ long CommerceCalc::baseOwn100(const std::string& channel, const CvCity* pCity, c
 	const long double100 = CommerceCalc::doubleExtra(channel, pCity, ec);
 	const int corporation = CommerceCalc::corporation(channel, pCity, ec);   // separate base bucket (its own ceil ÷100, ×100 here)
 	return 100L * religion + 100L * corporation + buildingOwn100 + shrine100 + corpHQ100 + double100;
-}
-
-// The §2 HALF-2 baseExtra100 SUM (owner 2026-07-03: isolate the packages -- ONE plugin number). The reused §1
-// packages are channel-agnostic (called with the commerce-type channel string). The calculator/oracle shape:
-// the city-own terms + the player-scope terms + the keyed/SR realizations, all derived fresh.
-long CommerceCalc::baseExtra100(const std::string& channel, const CvCity* pCity, const CvCascadeEvalCtx& ec)
-{
-	// NB: the SPECIALIST term is NOT in here -- it is its own plugin number (specialist churn is hot; the
-	// callers compose 100×specialist + this). Owner 2026-07-03: isolate the packages.
-	const CvPlayer& player = *ec.player;
-	const int goldenAge = YieldBasePackages::goldenAge(channel, player, ec);
-	const long playerExtra100 = CommerceCalc::playerExtra(channel, player, ec);
-	const long buildingKeyed100 = CommerceCalc::buildingKeyed(channel, pCity, ec);
-	const long stateRel100 = CommerceCalc::stateReligion(channel, pCity);
-	return baseOwn100(channel, pCity, ec) + 100L * goldenAge + playerExtra100 + buildingKeyed100 + stateRel100;
 }
 
 // The CombineSplit KERNEL (CvCity:11969-11996), bit-exact integer math. Slider + disorder read LIVE -- they
@@ -367,18 +341,4 @@ long CommerceCalc::combineSplit(CommerceTypes eC, const CvCity* pCity, long yiel
 	if (iRate < 0 && (eC == COMMERCE_CULTURE || eC == COMMERCE_RESEARCH)) return 0;
 	if (iRate < MIN_TOL_FALSE_ACCUMULATE) return CAP;   // the very-negative sentinel (CvPlayer.h:49)
 	return std::min(CAP, iRate);
-}
-
-// The §2 COMMERCE-SPLIT ASSEMBLER (CommerceSplit.cs) = the kernel over FRESH packages (the calculator/oracle path).
-long CommerceCalc::commerceRate100(const std::string& channel, CommerceTypes eC, const CvCity* pCity, const CvCascadeEvalCtx& ec,
-	long yieldCommerce100, long prodRate)
-{
-	++CascadePerf::commerceRate;
-	PerfAccumTimer perfT(CascadePerf::commerceRateMs);
-	CascadeCondScope ccs(CC_RATES);   // the condEval caller split
-	const long lBaseExtra = 100L * YieldBasePackages::specialist(channel, pCity, ec)
-	                      + CommerceCalc::baseExtra100(channel, pCity, ec);
-	MMBreak bk;
-	const int totalModifier = PercentStack::percentStack(channel, pCity, bk);   // the commerce percent stack (getTotalCommerceRateModifier)
-	return combineSplit(eC, pCity, yieldCommerce100, prodRate, lBaseExtra, totalModifier);
 }

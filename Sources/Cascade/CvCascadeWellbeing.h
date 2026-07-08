@@ -9,9 +9,9 @@
 //	remaining legacy divergence classes are the improvement BALANCE-CUT and the STORED-ACCUMULATOR DRIFT, both
 //	documented in modifier.md §2b as engine-wrong/attributed-accepted).
 //
-//	Calculator-first (the substrate discipline): compute() is the fresh full recompute; the [MODIFIER/wellbeing]
-//	shadow (cvCascadeWellbeingShadow, hooked beside the modifier shadow) diffs it against the legacy verdicts
-//	each turn. Slot storage + the getter flip follow once the shadow's residue is the two accepted classes only.
+//	The wellbeing slots are LIVE in the accumulator (CvCascadeAccumulator's standing scope packages feed the
+//	engine getters); compute() is the fresh full recompute serving the /computed/cities/wellbeing decomposition
+//	endpoint (the attribution surface).
 //
 
 #include "CvCascadeConditionEval.h"
@@ -25,7 +25,7 @@ struct CascadeWellbeingVerdicts
 {
 	// ⚠ MILITARY-FREE verdicts (owner ruling 2026-07-03): the unit-count happiness NEVER enters the cached
 	// computation -- it rides ALONE on top at read time (perUnit × the live O(1) engine counter), so unit
-	// moves invalidate nothing. iMilPerUnit is the epoch-stable civic/trait per-military-unit VALUE.
+	// moves invalidate nothing. iMilPerUnit is the refresh-stable civic/trait per-military-unit VALUE.
 	int iHappy;      // happyLevel WITHOUT the military term
 	int iUnhappy;    // unhappyLevel WITHOUT the military term
 	int iGood;       // goodHealth (no military term exists)
@@ -63,11 +63,11 @@ public:
 		const CascadeWbTerms& hap, const CascadeWbTerms& hea, const int aiCommercePer[],
 		const WbSplit& hapArea, const WbSplit& hapEmp, const WbSplit& heaArea, const WbSplit& heaEmp);
 
-	// The four verdicts from CURRENT state (the calculator/oracle shape): fresh city gather + fresh player
-	// area/empire walk + the assembly.
+	// The four verdicts from CURRENT state (the /computed decomposition recompute): fresh city gather + fresh
+	// player area/empire walk + the assembly.
 	static CascadeWellbeingVerdicts compute(const CvCity* pCity, const CvCascadeEvalCtx& ec);
 };
-// The per-turn [MODIFIER/wellbeing] shadow lives in the modifier shadow harness (CvCascadeModifierMath.cpp,
-// inside cvCascadeModifierShadow's city loop) -- it rides the registered [MODIFIER] spine domain.
+// compute() is the /computed/cities/wellbeing decomposition path -- the fresh recompute the endpoint emits so a
+// wellbeing value attributes to NAMED terms (the live reads ride the accumulator's standing packages).
 
 #endif // CV_CASCADE_WELLBEING_H

@@ -5,7 +5,8 @@
 //
 //	PercentStack -- StoneBase PercentStack.cs over ModifierMath.SumUnitAtScope: the single additive
 //	`modifier = max(0, 100 + Σ {channel}.<scope>.percent)` over every active source (city/area/empire buildings,
-//	adopted civics, active traits). Shadowed vs the legacy getBaseYieldRateModifier. See patterns.md (single-source law)
+//	adopted civics, active traits). The LIVE percent source for the accumulator's packages (cityRealizedPercent
+//	fills the city percent stacks). See patterns.md (single-source law)
 //	+ docs/plans/structural-cleanup/modifier-machine.md.
 //
 //	Purely-organizational static-methods class: NO data members, never instantiated, no per-instance state.
@@ -33,7 +34,7 @@ public:
 	// active/owned buildings + civics + traits + projects + the civic building-keyed realization, every
 	// condition evaluated against THIS city's ctx. Percent deposits are city-REALIZED joins (their conditions
 	// reference the city -- a capital-ctx player package mis-serves every other city, the measured Burdigala
-	// class), so the stack lives whole in the CITY package. percentStack (the oracle shape) IS
+	// class), so the stack lives whole in the CITY package. percentStack (the clamped form) IS
 	// max(0, 100 + this) -- one walk, two entry points.
 	static long cityRealizedPercent(const std::string& channel, const CvCity* pCity, MMBreak& bk);
 };

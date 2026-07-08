@@ -52,6 +52,94 @@ void jsonCommerceMap(const picojson::value& v, std::map<std::string, int>& out)
 		if (it->second.is<double>()) out[it->first] = (int)it->second.get<double>();
 }
 
+// ===================== the shared JSON walkers -- the ONE canonical copy (see the header) =====================
+
+const picojson::object* jsonChildObj(const picojson::object& o, const char* key)
+{
+	picojson::object::const_iterator it = o.find(key);
+	return (it != o.end() && it->second.is<picojson::object>()) ? &it->second.get<picojson::object>() : NULL;
+}
+
+double jsonFamDbl(const picojson::object& o, const char* family, const char* scope, const char* unit)
+{
+	const picojson::object* fo = jsonChildObj(o, family);  if (!fo) return 0.0;
+	const picojson::object* so = jsonChildObj(*fo, scope); if (!so) return 0.0;
+	picojson::object::const_iterator u = so->find(unit);
+	return (u != so->end() && u->second.is<double>()) ? u->second.get<double>() : 0.0;
+}
+
+int jsonFamVal(const picojson::object& o, const char* family, const char* scope, const char* unit)
+{ return (int)jsonFamDbl(o, family, scope, unit); }
+
+int jsonFamMemberVal(const picojson::object& o, const char* family, const char* scope, const char* member, const char* unit)
+{
+	const picojson::object* fo = jsonChildObj(o, family);   if (!fo) return 0;
+	const picojson::object* so = jsonChildObj(*fo, scope);  if (!so) return 0;
+	const picojson::object* mo = jsonChildObj(*so, member); if (!mo) return 0;
+	picojson::object::const_iterator u = mo->find(unit);
+	return (u != mo->end() && u->second.is<double>()) ? (int)u->second.get<double>() : 0;
+}
+
+int jsonIdInt(const picojson::object& io, const char* key)
+{
+	picojson::object::const_iterator it = io.find(key);
+	return (it != io.end() && it->second.is<double>()) ? (int)it->second.get<double>() : 0;
+}
+
+bool jsonIdBool(const picojson::object& io, const char* key)
+{
+	picojson::object::const_iterator it = io.find(key);
+	return (it != io.end() && it->second.is<bool>()) ? it->second.get<bool>() : false;
+}
+
+int jsonIdFk(const picojson::object& io, const char* key)
+{
+	picojson::object::const_iterator it = io.find(key);
+	return (it != io.end() && it->second.is<std::string>()) ? jsonResolveId(it->second.get<std::string>()) : -1;
+}
+
+bool jsonIdStr(const picojson::object& io, const char* key, std::string& out)
+{
+	picojson::object::const_iterator it = io.find(key);
+	if (it == io.end() || !it->second.is<std::string>()) return false;
+	out = it->second.get<std::string>(); return true;
+}
+
+void jsonReadFkMap(const picojson::object& parent, const char* key, std::map<int, int>& out)
+{
+	picojson::object::const_iterator it = parent.find(key);
+	if (it == parent.end() || !it->second.is<picojson::object>()) return;
+	const picojson::object& m = it->second.get<picojson::object>();
+	for (picojson::object::const_iterator e = m.begin(); e != m.end(); ++e)
+		if (e->second.is<double>()) { const int id = jsonResolveId(e->first); if (id >= 0) out[id] = (int)e->second.get<double>(); }
+}
+
+void jsonReadFlavours(const picojson::object& aiObj, std::map<int, int>& out)
+{
+	picojson::object::const_iterator fv = aiObj.find("flavours");
+	if (fv == aiObj.end() || !fv->second.is<picojson::array>()) return;
+	const picojson::array& a = fv->second.get<picojson::array>();
+	for (size_t i = 0; i < a.size(); ++i)
+		if (a[i].is<picojson::object>())
+		{
+			const picojson::object& fo = a[i].get<picojson::object>();
+			for (picojson::object::const_iterator e = fo.begin(); e != fo.end(); ++e)
+				if (e->second.is<double>()) { const int id = jsonResolveId(e->first); if (id >= 0) out[id] = (int)e->second.get<double>(); }
+		}
+}
+
+CvCascScope jsonParseScope(const std::string& s, CvCascScope defaultScope)
+{
+	if (s == "world") return CASC_SCOPE_WORLD;   if (s == "team") return CASC_SCOPE_TEAM;
+	if (s == "empire") return CASC_SCOPE_EMPIRE; if (s == "area") return CASC_SCOPE_AREA;
+	if (s == "city") return CASC_SCOPE_CITY;     if (s == "plot") return CASC_SCOPE_PLOT;
+	if (s == "improvement") return CASC_SCOPE_IMPROVEMENT; if (s == "feature") return CASC_SCOPE_FEATURE;
+	if (s == "terrain") return CASC_SCOPE_TERRAIN; if (s == "route") return CASC_SCOPE_ROUTE;
+	if (s == "building") return CASC_SCOPE_BUILDING; if (s == "specialist") return CASC_SCOPE_SPECIALIST;
+	if (s == "unit") return CASC_SCOPE_UNIT;     if (s == "self") return CASC_SCOPE_SELF;
+	return defaultScope;
+}
+
 // ===================== top-level key classification (json.md §1) -- the ONE vocabulary home =====================
 // The enables-family source + target-side edges (§4.1/§4.2). `provides` (§5a) is a sibling edge dispatched separately.
 static const char* CJK_EDGES[] = { "enables", "obsoletes", "replaces", "disables", "obsoletedBy", 0 };

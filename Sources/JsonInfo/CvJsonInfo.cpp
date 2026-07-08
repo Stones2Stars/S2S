@@ -8,7 +8,7 @@
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson, CvString/CvWString
 #include "CvJsonInfo.h"
-#include "CvJsonParse.h"            // jsonClassifyKey / jsonNoteUnconsumed -- the shared vocabulary + diagnostics
+#include "CvJsonParse.h"            // jsonClassifyKey / jsonNoteUnconsumed + the shared walkers (jsonChildObj/jsonIdStr)
 
 CvJsonInfo::CvJsonInfo() {}
 CvJsonInfo::~CvJsonInfo() {}
@@ -20,19 +20,6 @@ const std::vector<int>& CvJsonInfo::dormantTriggers() const
 	return r ? r->dormantTriggers : s_empty;
 }
 
-// --- local JSON helpers ---
-static const picojson::object* child_obj(const picojson::object& o, const char* key)
-{
-	picojson::object::const_iterator it = o.find(key);
-	return (it != o.end() && it->second.is<picojson::object>()) ? &it->second.get<picojson::object>() : NULL;
-}
-static bool json_str(const picojson::object& o, const char* key, std::string& out)
-{
-	picojson::object::const_iterator it = o.find(key);
-	if (it == o.end() || !it->second.is<std::string>()) return false;
-	out = it->second.get<std::string>(); return true;
-}
-
 void CvJsonInfo::mapFrom(const picojson::value& entity)
 {
 	if (!entity.is<picojson::object>()) return;
@@ -40,17 +27,17 @@ void CvJsonInfo::mapFrom(const picojson::value& entity)
 	std::string s;
 
 	// --- core reading: the shared CvInfoBase fields (type FIRST -- the diagnostics key on it) ---
-	if (json_str(o, "type", s)) m_szType = s.c_str();
-	if (const picojson::object* io = child_obj(o, "identity"))
+	if (jsonIdStr(o, "type", s)) m_szType = s.c_str();
+	if (const picojson::object* io = jsonChildObj(o, "identity"))
 	{
-		if (json_str(*io, "description", s)) m_szTextKey        = CvWString(s.c_str());
-		if (json_str(*io, "civilopedia", s)) m_szCivilopediaKey = CvWString(s.c_str());
-		if (json_str(*io, "help", s))        m_szHelpKey        = CvWString(s.c_str());
-		if (json_str(*io, "strategy", s))    m_szStrategyKey    = CvWString(s.c_str());
+		if (jsonIdStr(*io, "description", s)) m_szTextKey        = CvWString(s.c_str());
+		if (jsonIdStr(*io, "civilopedia", s)) m_szCivilopediaKey = CvWString(s.c_str());
+		if (jsonIdStr(*io, "help", s))        m_szHelpKey        = CvWString(s.c_str());
+		if (jsonIdStr(*io, "strategy", s))    m_szStrategyKey    = CvWString(s.c_str());
 	}
-	if (const picojson::object* ui = child_obj(o, "ui"))
-		if (const picojson::object* art = child_obj(*ui, "art"))
-			if (json_str(*art, "icon", s)) m_szButton = s.c_str();
+	if (const picojson::object* ui = jsonChildObj(o, "ui"))
+		if (const picojson::object* art = jsonChildObj(*ui, "art"))
+			if (jsonIdStr(*art, "icon", s)) m_szButton = s.c_str();
 
 	// --- the ONE section dispatch: route each authored section to the type's composed unit (or record the gap) ---
 	bool bHasFamilyKeys = false;

@@ -50,9 +50,15 @@ struct CascadeDeposit
 	const CvJsonCondition* unitQual;   // the §3.7 `unit:` predicate qualifier (borrowed; NULL = unqualified) --
 	                                   // evaluated at the CONSUMER per candidate unit; plain sums must filter it
 	bool hasPer;                       // the §3.7 per count-scaler rides the entry (borrowed detail below)
+	std::string perType;               // the per's type/token string (kept like address/unit; a SELF token is
+	                                   // collapsed to the SOURCE info's own type at push; "" = none)
 	int perTypeId;                     // per type FK; -1 = a catch-all token (POPULATION/...)
+	int perTokenSeg;                   // interned segment id of a CATCH-ALL token (perTypeId<0); -1 = typed/none --
+	                                   // the resolver's string-free guard (an unresolved SELF skips the multiply)
 	int perEach;                       // the per quantum (default 1)
+	int perScope;                      // the per's scope, RESOLVED at push (authored, else the deposit's own scope -- json §3.7)
 	const std::vector<int>* perAnyOf;  // per.anyOf FK ids (borrowed; NULL = none)
+	const std::vector<std::string>* perAnyOfTypes;   // per.anyOf type strings, parallel to perAnyOf (borrowed; NULL = none)
 	int addressId;                     // interned whole-address id
 	int unitId;                        // interned unit-segment id
 	int nSeg;                          // dotted segment count (may exceed CASC_DEP_SEGS; extras uncompiled)
@@ -60,7 +66,8 @@ struct CascadeDeposit
 	int targetFk;                      // FK-resolved engine id of an INFOTYPE tail segment, -1 = not a key
 
 	CascadeDeposit()
-		: value100(0), enabled(NULL), disabled(NULL), unitQual(NULL), hasPer(false), perTypeId(-1), perEach(1), perAnyOf(NULL),
+		: value100(0), enabled(NULL), disabled(NULL), unitQual(NULL), hasPer(false), perTypeId(-1), perTokenSeg(-1),
+		  perEach(1), perScope(-1), perAnyOf(NULL), perAnyOfTypes(NULL),
 		  addressId(-1), unitId(-1), nSeg(0), targetFk(-1)
 	{ for (int i = 0; i < CASC_DEP_SEGS; ++i) seg[i] = -1; }
 };

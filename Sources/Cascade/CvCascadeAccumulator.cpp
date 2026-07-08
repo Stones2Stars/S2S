@@ -19,7 +19,7 @@
 #include "CvCascadeScalarChannels.h"  // the scalar city halves + the player fill + the buildRate ledgers
 #include "CvCascadeOperatingBuildings.h"
 #include "CvCascadeDepositIndex.h"    // the compiled segments -- the derived event masks + the ledger keys
-#include "CvCascadeMMKernel.h"        // sumUnit (the per-item buildRate.self read)
+#include "CvCascadeMMKernel.h"        // MMKernel::applies -- the deposit condition gate (acc_brSelf's buildRate.self read)
 #include "CvJsonInfo.h"
 #include "Repos/InfoRepo.h"
 #include "Defines/CvGlobals.h"
@@ -418,7 +418,7 @@ int CascadeAccumulator::scDefense(const CvCity* pCity)
 }
 
 // The freeSpecialists AMOUNTS (the ruled two-part seam, 2026-07-05): city + empire + this-area sums --
-// the values that FEED the engine placement at the demolition; the attribution pairs read them meanwhile.
+// the values that FEED the engine placement at the demolition; the /computed decomposition reads them meanwhile.
 int CascadeAccumulator::fsAmountAny(const CvCity* pCity)
 {
 	if (pCity == NULL) return 0;
@@ -439,8 +439,8 @@ int CascadeAccumulator::fsAmountByType(const CvCity* pCity, int eSpecialist)
 	return (eSpecialist < (int)c.size() ? c[eSpecialist] : 0) + (eSpecialist < (int)p.size() ? p[eSpecialist] : 0);
 }
 
-// The L13 defense wiring (2026-07-05): the wired members, ready for their getters' flips (each getter
-// flips at its own row with the standing scalar-net pattern; these serve the attribution pairs meanwhile).
+// The L13 defense wiring (2026-07-05): the wired members behind the flipped defense getters; the /computed
+// decomposition reads them for attribution.
 int CascadeAccumulator::scDefenseBombard(const CvCity* pCity)
 {
 	return pCity != NULL ? pCity->m_cascadeCityPackages.scDefBombard : 0;
@@ -528,7 +528,7 @@ bool CascadeAccumulator::enMaintain(const CvCity* pCity, int eProcess)
 }
 
 // The L6 fold's read: the derived trait national GP flat (replaces the m_iNationalGreatPeopleRate ride-in
-// in the flipped getBaseGreatPeopleRate; the legacy accumulator lives on inside *Legacy as the net oracle).
+// in the flipped getBaseGreatPeopleRate; the *Legacy bodies are demolition fodder, unread by the cascade).
 // The max(0,·) clamp mirrors the legacy getter exactly.
 int CascadeAccumulator::scGpNational(const CvPlayer* pPlayer)
 {
@@ -734,7 +734,8 @@ static int acc_brSelf(const CvJsonInfo* d, const CvCity* pCity)
 			EnablerKernel::wireOperatingBuildings(pCity, ec);
 			bCtx = true;
 		}
-		if (MMKernel::applies(dep.enabled, dep.disabled, ec)) iSum += dep.value100 / 100;
+		if (MMKernel::applies(dep.enabled, dep.disabled, ec))
+			iSum += (int)(MMKernel::perScale(dep, ec, dep.value100) / 100);   // §3.7 per (identity when hasPer==false)
 	}
 	return iSum;
 }

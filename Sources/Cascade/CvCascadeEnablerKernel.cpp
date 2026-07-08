@@ -1,8 +1,8 @@
 //
 //	EnablerKernel -- the shared GENERATE->GATE primitive + gate helpers (see the header). Ported VERBATIM from
-//	CvCascadeEnabler.cpp's file-static en_* helpers; promoted to a declared surface so every cascade + the shadow
-//	harness reach the ONE implementation (the single-source law, patterns.md). LOGIC unchanged: only the signatures +
-//	internal call sites were rewritten.
+//	CvCascadeEnabler.cpp's file-static en_* helpers; promoted to a declared surface so every cascade reaches the ONE
+//	implementation (the single-source law, patterns.md). LOGIC unchanged: only the signatures + internal call sites
+//	were rewritten.
 //
 
 #include "CvGameCoreDLL.h"
@@ -19,7 +19,7 @@
 #include "Engine/CvCity.h"
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
-#include "CvCascadeConditionEval.h"   // cascadeEvalCondition -- the StoneBase-ported typed-condition evaluator (was BoolExpr)
+#include "CvCascadeConditionEval.h"   // cascadeEvalCondition -- the StoneBase-ported typed-condition evaluator
 #include "CvJsonCondition.h"       // CvJsonCondition tree (CASC_COND_*/CASC_PRED_*) -- scanned for the operate reverse-index
 #include "CvCascadeAccumulator.h"     // the accumulator package surface (the epochs are DELETED -- scope-packages.md phase 3)
 #include "Infos/CvBuildingInfo.h"
@@ -175,7 +175,7 @@ bool EnablerKernel::allowedOk(const CvJsonInfo* j, int iId, const CvPlayer& kPla
 // canFoundReligion -- a PLAYER-WIDE state predicate (CvPlayer::canFoundReligion): NOT a JSON frontier, reproduced from
 // game state so the cascade owns the gate (it is what enables/AI-reads the religion-founding action). >=1 city, not
 // NPC, not the first 3 turns; under RELIGION_LIMITED a holy-city owner cannot found another (minus the rebel /
-// LIMITED_RELIGIONS_EXCEPTIONS carve-out). Reads raw state only -- a faithful mirror, shadowed vs the engine.
+// LIMITED_RELIGIONS_EXCEPTIONS carve-out). Reads raw state only -- a faithful mirror of the engine predicate.
 bool EnablerKernel::canFoundReligion(const CvPlayer& kPlayer)
 {
 	if (kPlayer.getNumCities() < 1 || kPlayer.isNPC()
@@ -201,6 +201,46 @@ void EnablerKernel::gateSet(const std::string& bucket, const EnBucketSets& cand,
 		if (requiresMet(j, ec) && allowedOk(j, *it, kPlayer, bUnit, bucket)) avail.insert(*it);
 	}
 }
+
+// ============================ the ONE per-building verdict ================================================
+namespace {
+
+// The per-building outcomes of the operate pass for a PRESENT building (enabler.md §3.2).
+enum EkBuildingVerdict
+{
+	EK_ACTIVE,           // operating: not obsolete ∧ operate holds ∧ no dormant-trigger successor present
+	EK_OBSOLETE,         // obsoletedBy tech held -- the THIRD outcome: neither active nor dormant, provides nothing (json §4.2)
+	EK_DORMANT_OPERATE,  // requires.operate fails under the current vicinity supply
+	EK_DORMANT_TRIGGER   // a dormant-trigger successor building is present
+};
+
+// b's `provides.bonuses` (json §5a), or NULL.
+static const std::vector<int>* ek_provides(int b)
+{
+	const CvJsonInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
+	if (j == NULL) return NULL;
+	const CvJsonProvides* pv = j->getProvides();
+	return (pv != NULL && !pv->bonuses.empty()) ? &pv->bonuses : NULL;
+}
+
+// The ONE per-building classification for a PRESENT building b, under the supply `ecOp.vicinityProvidedBonuses`
+// points at -- shared by the full seed recompute (recomputeOperatingBuildingsInto) and the targeted ripple
+// (ek_recheckActiveSet), so the two can never diverge in per-building logic. ORDER (enabler.md §3.2: obsolete is
+// the third outcome, checked before operate): obsolescence is INDEPENDENT of operate/dormancy -- a present
+// building whose obsoletedBy tech is held is obsolete regardless of operate, so it is checked FIRST.
+static EkBuildingVerdict ek_classifyBuilding(int b, const CvCity* pCity, CvCascadeEvalCtx& ecOp, const CvCascadeEvalFlags& flags)
+{
+	const CvJsonInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
+	if (j == NULL) return EK_ACTIVE;
+	if (ecOp.team != NULL && EnablerKernel::obsoletedByHeldTech(j, *ecOp.team)) return EK_OBSOLETE;
+	if (j->requiresOperate() != NULL && !cascadeEvalCondition(j->requiresOperate(), ecOp, flags)) return EK_DORMANT_OPERATE;
+	const std::vector<int>& dorm = j->dormantTriggers();
+	for (size_t i = 0; i < dorm.size(); ++i)
+		if (pCity->hasBuilding((BuildingTypes)dorm[i])) return EK_DORMANT_TRIGGER;
+	return EK_ACTIVE;
+}
+
+} // namespace
 
 // COMPUTE the two per-city operating buildings in ONE pass. `activeOut` = the ACTIVE buildings for pCity (present ∧
 // operate-holds ∧ ¬dormant-trigger). DORMANCY is DERIVED from `requires.operate` + its dormant triggers (the successor
@@ -252,30 +292,20 @@ void EnablerKernel::recomputeOperatingBuildingsInto(const CvCity* pCity, std::se
 		for (size_t iB = 0; iB < aHas.size(); ++iB)
 		{
 			const int b = (int)aHas[iB];   // a PRESENT building (raw input -- the un-dormancy-gated presence)
-			const CvJsonInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
-			// operate fails -> dormant.
-			if (j != NULL && j->requiresOperate() != NULL && !cascadeEvalCondition(j->requiresOperate(), ecOp, flags)) continue;
-			// a dormant-trigger successor is present -> dormant.
-			bool dormant = false;
-			if (j != NULL)
-			{
-				const std::vector<int>& dorm = j->dormantTriggers();
-				for (size_t i = 0; i < dorm.size(); ++i)
-					if (pCity->hasBuilding((BuildingTypes)dorm[i])) { dormant = true; break; }
-			}
-			if (dormant) continue;
-			// obsolete-by-held-tech -> the normal families STOP (json §4.2 whenObsolete): the whenObsolete tree
-			// deposits instead (modifier-side). A no-op while legacy still swaps an obsolete building out of the
-			// city; live at the swap cut, when an obsolete building STAYS present.
-			if (j != NULL && ecOp.team != NULL && EnablerKernel::obsoletedByHeldTech(j, *ecOp.team)) { obsoleteOut.insert(b); continue; }   // -> the parallel obsolete set (json §4.2)
+			// The ONE shared verdict (ek_classifyBuilding) -- the SAME classification the targeted ripple applies,
+			// so the seed and the ripple can never diverge. Obsolescence is checked FIRST (enabler.md §3.2: obsolete
+			// is the THIRD outcome, checked before operate -- a present building whose obsoletedBy tech is held is
+			// neither active nor dormant regardless of operate; excluded from active, provides nothing). The #430
+			// obsoletion flip landed: an obsolete building STAYS present, and its whenObsolete tree deposits off
+			// this set (json §4.2, modifier-side).
+			const EkBuildingVerdict v = ek_classifyBuilding(b, pCity, ecOp, flags);
+			if (v == EK_OBSOLETE) { obsoleteOut.insert(b); continue; }   // -> the parallel obsolete set (json §4.2)
+			if (v != EK_ACTIVE) continue;                                // dormant (operate fails / trigger present)
 			activeOut.insert(b);   // active (under the CURRENT supply estimate)
 			// This ACTIVE building's `provides.bonuses` supply those bonuses IN-VICINITY (json §5a).
-			if (j != NULL)
-			{
-				const CvJsonProvides* pv = j->getProvides();
-				if (pv != NULL)
-					for (size_t i = 0; i < pv->bonuses.size(); ++i) provNext.insert(pv->bonuses[i]);
-			}
+			const std::vector<int>* pv = ek_provides(b);
+			if (pv != NULL)
+				for (size_t i = 0; i < pv->size(); ++i) provNext.insert((*pv)[i]);
 		}
 		if (provNext == prov) break;   // supply stable -> the active set is the fixpoint
 		prov.swap(provNext);
@@ -289,86 +319,6 @@ void EnablerKernel::recomputeOperatingBuildingsInto(const CvCity* pCity, std::se
 // AUTHORITATIVE set (the recompute above stays the LOAD seed + the validation oracle). Mirrors the frontier's
 // s_bc*/recheckHave (CvCascadeBuildingCascade.cpp), extended to the operate<->provides fixpoint. enabler.md §7.
 namespace {
-
-// The shared per-building ACTIVE verdict under the supply `ecOp.vicinityProvidedBonuses` points at. Assumes b is
-// PRESENT. active = operate holds ∧ no dormant-trigger successor present. (Same test as the recompute's inner
-// loop; the validation oracle catches any drift.)
-static bool ek_activeVerdict(int b, const CvCity* pCity, CvCascadeEvalCtx& ecOp, const CvCascadeEvalFlags& flags)
-{
-	const CvJsonInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
-	if (j == NULL) return true;
-	if (j->requiresOperate() != NULL && !cascadeEvalCondition(j->requiresOperate(), ecOp, flags)) return false;
-	if (ecOp.team != NULL && EnablerKernel::obsoletedByHeldTech(j, *ecOp.team)) return false;   // obsolete -> not active (json §4.2 whenObsolete)
-	const std::vector<int>& dorm = j->dormantTriggers();
-	for (size_t i = 0; i < dorm.size(); ++i)
-		if (pCity->hasBuilding((BuildingTypes)dorm[i])) return false;
-	return true;
-}
-
-// b's `provides.bonuses` (json §5a), or NULL.
-static const std::vector<int>* ek_provides(int b)
-{
-	const CvJsonInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
-	if (j == NULL) return NULL;
-	const CvJsonProvides* pv = j->getProvides();
-	return (pv != NULL && !pv->bonuses.empty()) ? &pv->bonuses : NULL;
-}
-
-// The operate-dependency signature: which HAVE-classes gate a building's OPERATE (== its active state).
-struct OpDeps
-{
-	bool pop, power, religion, corp, goldenAge, stateReligion, civicAny, dynamic;
-	std::set<int> techs, bonuses, buildings;
-	OpDeps() : pop(false), power(false), religion(false), corp(false), goldenAge(false),
-		stateReligion(false), civicAny(false), dynamic(false) {}
-};
-
-// Classify a requires.operate condition into OpDeps (recursing GROUP children + enabled/disabled). Anything not a
-// tracked HAVE-atom marks DYNAMIC -> the building rides the bounded per-turn re-check. Over-inclusion is safe.
-static void ek_scanOp(const CvJsonCondition* c, OpDeps& d)
-{
-	if (c == NULL) return;
-	if (c->kind == CASC_COND_GROUP)
-	{
-		for (size_t i = 0; i < c->all.size(); ++i)    ek_scanOp(c->all[i], d);
-		for (size_t i = 0; i < c->anyOf.size(); ++i)  ek_scanOp(c->anyOf[i], d);
-		for (size_t i = 0; i < c->noneOf.size(); ++i) ek_scanOp(c->noneOf[i], d);
-		ek_scanOp(c->enabled, d);
-		ek_scanOp(c->disabled, d);
-		return;
-	}
-	if (c->kind == CASC_COND_PRESENCE)
-	{
-		const std::string& t = c->type;
-		if (t == "POPULATION") d.pop = true;
-		else if (t.compare(0, 5, "TECH_") == 0)  { if (c->id >= 0) d.techs.insert(c->id); }
-		else if (t.compare(0, 6, "BONUS_") == 0) { if (c->id >= 0) d.bonuses.insert(c->id); d.dynamic = true; }  // trade/map/vicinity shifts aren't a discrete operating buildings-event
-		else if (t.compare(0, 6, "CIVIC_") == 0) d.civicAny = true;
-		else if (t.compare(0, 9, "RELIGION_") == 0) d.religion = true;
-		else if (t.compare(0, 12, "CORPORATION_") == 0) d.corp = true;
-		else if (t.compare(0, 9, "BUILDING_") == 0) { if (c->id >= 0) d.buildings.insert(c->id); }
-		else d.dynamic = true;
-		return;
-	}
-	if (c->kind == CASC_COND_PREDICATE)
-	{
-		switch (c->predKind)
-		{
-		case CASC_PRED_HAS_POWER:               d.power = true; break;
-		case CASC_PRED_IS_GOLDEN_AGE:           d.goldenAge = true; break;
-		case CASC_PRED_HAS_CORPORATION:         d.corp = true; break;
-		case CASC_PRED_HAS_RELIGION:
-		case CASC_PRED_IS_HOLY_CITY:            d.religion = true; break;
-		case CASC_PRED_HAS_STATE_RELIGION:
-		case CASC_PRED_STATE_RELIGION_IN_CITY:
-		case CASC_PRED_STATE_RELIGION:
-		case CASC_PRED_IS_STATE_RELIGION_HOLY_CITY: d.stateReligion = true; break;
-		case CASC_PRED_HAS_BONUS:               if (c->id >= 0) d.bonuses.insert(c->id); d.dynamic = true; break;
-		default:                                d.dynamic = true; break;   // IS_CAPITAL / counts / plot / connection
-		}
-		return;
-	}
-}
 
 static bool s_opIdxBuilt = false;
 static std::vector<int> s_opPop, s_opPower, s_opReligion, s_opCorp, s_opGolden, s_opStateRel, s_opCivic, s_opTechAny, s_opDynamic;
@@ -398,15 +348,20 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 	{
 		if (--cap < 0) break;
 		const int b = work.back(); work.pop_back();
-		// obsolete-set maintenance (json §4.2): present ∧ obsoleted-by-held-tech keeps the building in the parallel
-		// obsolete set (the whenObsolete tree). Independent of the active flip below -- ek_activeVerdict already
-		// returns false when obsolete, so an active->obsolete move is an active DROP that runs the provides-ripple.
+		// The ONE shared verdict (ek_classifyBuilding) drives BOTH memberships. Obsolete-set maintenance (json
+		// §4.2): present ∧ obsoleted-by-held-tech keeps the building in the parallel obsolete set (the whenObsolete
+		// tree). An obsolete building classifies neither active nor dormant (checked FIRST, enabler.md §3.2), so an
+		// active->obsolete move is an active DROP that runs the provides-ripple below.
 		const bool wasObs = (f.obsolete.count(b) != 0);
-		const bool nowObs = pCity->hasBuilding((BuildingTypes)b) && ecOp.team != NULL
-			&& EnablerKernel::obsoletedByHeldTech(InfoRepo<CvBuildingInfo>::get().get(b), *ecOp.team);
-		if (nowObs != wasObs) { if (nowObs) f.obsolete.insert(b); else f.obsolete.erase(b); }
 		const bool was = (f.active.count(b) != 0);
-		const bool now = pCity->hasBuilding((BuildingTypes)b) && ek_activeVerdict(b, pCity, ecOp, flags);
+		bool nowObs = false, now = false;
+		if (pCity->hasBuilding((BuildingTypes)b))
+		{
+			const EkBuildingVerdict v = ek_classifyBuilding(b, pCity, ecOp, flags);
+			nowObs = (v == EK_OBSOLETE);
+			now = (v == EK_ACTIVE);
+		}
+		if (nowObs != wasObs) { if (nowObs) f.obsolete.insert(b); else f.obsolete.erase(b); }
 		if (now == was) continue;
 		const std::vector<int>* prov = ek_provides(b);
 		if (now)
@@ -448,6 +403,54 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 
 } // namespace
 
+// The ONE requires-tree HAVE-atom scanner (see the header) -- was three near-identical file-static copies
+// (bc_scanCond / uc_scanCond / ek_scanOp); the legs that differed are the two flags.
+void EnablerKernel::scanCondDeps(const CvJsonCondition* c, CascadeCondDeps& d, bool bTrackUnits, bool bMarkDynamic)
+{
+	if (c == NULL) return;
+	if (c->kind == CASC_COND_GROUP)
+	{
+		for (size_t i = 0; i < c->all.size(); ++i)    scanCondDeps(c->all[i], d, bTrackUnits, bMarkDynamic);
+		for (size_t i = 0; i < c->anyOf.size(); ++i)  scanCondDeps(c->anyOf[i], d, bTrackUnits, bMarkDynamic);
+		for (size_t i = 0; i < c->noneOf.size(); ++i) scanCondDeps(c->noneOf[i], d, bTrackUnits, bMarkDynamic);
+		scanCondDeps(c->enabled, d, bTrackUnits, bMarkDynamic);
+		scanCondDeps(c->disabled, d, bTrackUnits, bMarkDynamic);
+		return;
+	}
+	if (c->kind == CASC_COND_PRESENCE)
+	{
+		const std::string& t = c->type;
+		if (t == "POPULATION") d.pop = true;
+		else if (t.compare(0, 5, "TECH_") == 0)  { if (c->id >= 0) d.techs.insert(c->id); }
+		else if (t.compare(0, 6, "BONUS_") == 0) { if (c->id >= 0) d.bonuses.insert(c->id); if (bMarkDynamic) d.dynamic = true; }  // trade/map/vicinity shifts aren't a discrete event
+		else if (t.compare(0, 6, "CIVIC_") == 0) d.civicAny = true;
+		else if (t.compare(0, 9, "RELIGION_") == 0) d.religion = true;
+		else if (t.compare(0, 12, "CORPORATION_") == 0) d.corp = true;
+		else if (t.compare(0, 9, "BUILDING_") == 0) { if (c->id >= 0) d.buildings.insert(c->id); }
+		else if (bTrackUnits && t.compare(0, 5, "UNIT_") == 0) { if (c->id >= 0) d.units.insert(c->id); }
+		else if (bMarkDynamic) d.dynamic = true;
+		return;
+	}
+	if (c->kind == CASC_COND_PREDICATE)
+	{
+		switch (c->predKind)
+		{
+		case CASC_PRED_HAS_POWER:               d.power = true; break;
+		case CASC_PRED_IS_GOLDEN_AGE:           d.goldenAge = true; break;
+		case CASC_PRED_HAS_CORPORATION:         d.corp = true; break;
+		case CASC_PRED_HAS_RELIGION:
+		case CASC_PRED_IS_HOLY_CITY:            d.religion = true; break;
+		case CASC_PRED_HAS_STATE_RELIGION:
+		case CASC_PRED_STATE_RELIGION_IN_CITY:
+		case CASC_PRED_STATE_RELIGION:
+		case CASC_PRED_IS_STATE_RELIGION_HOLY_CITY: d.stateReligion = true; break;
+		case CASC_PRED_HAS_BONUS:               if (c->id >= 0) d.bonuses.insert(c->id); if (bMarkDynamic) d.dynamic = true; break;
+		default:                                if (bMarkDynamic) d.dynamic = true; break;   // IS_CAPITAL / counts / plot / connection -- read LIVE at eval
+		}
+		return;
+	}
+}
+
 void EnablerKernel::buildActiveIndex()
 {
 	if (s_opIdxBuilt) return;
@@ -457,8 +460,9 @@ void EnablerKernel::buildActiveIndex()
 	{
 		const CvJsonInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
 		if (j == NULL) continue;
-		OpDeps d;
-		ek_scanOp(j->requiresOperate(), d);   // OPERATE only -- active/dormant is governed by requires.operate
+		CascadeCondDeps d;
+		// OPERATE only -- active/dormant is governed by requires.operate; DYNAMIC marked (the per-turn re-check bucket).
+		scanCondDeps(j->requiresOperate(), d, /*bTrackUnits*/ false, /*bMarkDynamic*/ true);
 		if (d.pop)            s_opPop.push_back(b);
 		if (d.power)          s_opPower.push_back(b);
 		if (d.religion)       s_opReligion.push_back(b);

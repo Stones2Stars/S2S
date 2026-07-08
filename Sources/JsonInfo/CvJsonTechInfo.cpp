@@ -7,8 +7,7 @@
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson
 #include "CvJsonTechInfo.h"
-#include "CvJsonParse.h"            // jsonBoolSet + jsonResolveId
-#include "Defines/CvGlobals.h"      // GC.getInfoTypeForString (FK)
+#include "CvJsonParse.h"            // jsonBoolSet + jsonResolveId + the shared walkers (jsonChildObj/jsonFamVal/...)
 
 CvJsonTechInfo::CvJsonTechInfo()
 	: m_iResearchCost(0), m_iEra(-1), m_iAdvisorType(-1), m_iTradeRoutes(0),
@@ -19,33 +18,9 @@ CvJsonTechInfo::CvJsonTechInfo()
 	  m_bRepeat(false), m_bTrade(false), m_bDisable(false), m_bGoodyTech(false)
 {}
 
-static const picojson::object* child_obj(const picojson::object& o, const char* key)
-{ picojson::object::const_iterator it = o.find(key); return (it != o.end() && it->second.is<picojson::object>()) ? &it->second.get<picojson::object>() : NULL; }
-static int fam_val(const picojson::object& o, const char* f, const char* s, const char* u)
-{ const picojson::object* fo = child_obj(o, f); if (!fo) return 0; const picojson::object* so = child_obj(*fo, s); if (!so) return 0;
-  picojson::object::const_iterator it = so->find(u); return (it != so->end() && it->second.is<double>()) ? (int)it->second.get<double>() : 0; }
-static int id_int(const picojson::object& io, const char* k)
-{ picojson::object::const_iterator it = io.find(k); return (it != io.end() && it->second.is<double>()) ? (int)it->second.get<double>() : 0; }
+// identity double (the ×100-re-applied worth fields read a fractional human value).
 static double id_dbl(const picojson::object& io, const char* k)
 { picojson::object::const_iterator it = io.find(k); return (it != io.end() && it->second.is<double>()) ? it->second.get<double>() : 0.0; }
-static bool id_bool(const picojson::object& io, const char* k)
-{ picojson::object::const_iterator it = io.find(k); return (it != io.end() && it->second.is<bool>()) ? it->second.get<bool>() : false; }
-static int id_fk(const picojson::object& io, const char* k)
-{ picojson::object::const_iterator it = io.find(k); return (it != io.end() && it->second.is<std::string>()) ? GC.getInfoTypeForString(it->second.get<std::string>().c_str(), true) : -1; }
-static void id_str(const picojson::object& io, const char* k, std::string& out)
-{ picojson::object::const_iterator it = io.find(k); if (it != io.end() && it->second.is<std::string>()) out = it->second.get<std::string>(); }
-// re-apply the latent ×100 (round half away from zero): JSON carries the ÷100 human value, the getter returns ×100.
-static int x100(double v) { return (int)(v >= 0 ? v * 100.0 + 0.5 : v * 100.0 - 0.5); }
-// FK-keyed int map: {"FLAVOR_X"/"SPECIALIST_X": n} -> map[id] = n.
-static void read_fk_int_map(const picojson::object* parent, const char* key, std::map<int, int>& out)
-{
-	if (!parent) return;
-	picojson::object::const_iterator it = parent->find(key);
-	if (it == parent->end() || !it->second.is<picojson::object>()) return;
-	const picojson::object& m = it->second.get<picojson::object>();
-	for (picojson::object::const_iterator e = m.begin(); e != m.end(); ++e)
-		if (e->second.is<double>()) { const int id = GC.getInfoTypeForString(e->first.c_str(), true); if (id >= 0) out[id] = (int)e->second.get<double>(); }
-}
 
 void CvJsonTechInfo::mapFrom(const picojson::value& entity)
 {
@@ -70,67 +45,56 @@ void CvJsonTechInfo::mapFrom(const picojson::value& entity)
 	}
 
 	// (2) the tech's own typed values -- empire-scope modifier families (×1 human)
-	if (const picojson::object* co = child_obj(o, "cost")) m_iResearchCost = id_int(*co, "research");
-	m_iTradeRoutes                     = fam_val(o, "tradeRoutes", "city", "flat");
-	m_iFeatureProductionModifier       = fam_val(o, "featureProduction", "empire", "percent");
-	m_iWorkerSpeedModifier             = fam_val(o, "workRate", "empire", "percent");
-	m_iHealth                          = fam_val(o, "health", "empire", "flat");
-	m_iHappiness                       = fam_val(o, "happiness", "empire", "flat");
-	m_iGlobalTradeModifier             = fam_val(o, "tradeRouteYield", "empire", "percent");
-	m_iGlobalForeignTradeModifier      = fam_val(o, "foreignTradeRouteYield", "empire", "percent");
-	m_iTradeMissionModifier            = fam_val(o, "tradeMission", "empire", "percent");
-	m_iCorporationRevenueModifier      = fam_val(o, "corporationRevenue", "empire", "percent");
-	m_iCorporationMaintenanceModifier  = fam_val(o, "corporationMaintenance", "empire", "percent");
+	if (const picojson::object* co = jsonChildObj(o, "cost")) m_iResearchCost = jsonIdInt(*co, "research");
+	m_iTradeRoutes                     = jsonFamVal(o, "tradeRoutes", "city", "flat");
+	m_iFeatureProductionModifier       = jsonFamVal(o, "featureProduction", "empire", "percent");
+	m_iWorkerSpeedModifier             = jsonFamVal(o, "workRate", "empire", "percent");
+	m_iHealth                          = jsonFamVal(o, "health", "empire", "flat");
+	m_iHappiness                       = jsonFamVal(o, "happiness", "empire", "flat");
+	m_iGlobalTradeModifier             = jsonFamVal(o, "tradeRouteYield", "empire", "percent");
+	m_iGlobalForeignTradeModifier      = jsonFamVal(o, "foreignTradeRouteYield", "empire", "percent");
+	m_iTradeMissionModifier            = jsonFamVal(o, "tradeMission", "empire", "percent");
+	m_iCorporationRevenueModifier      = jsonFamVal(o, "corporationRevenue", "empire", "percent");
+	m_iCorporationMaintenanceModifier  = jsonFamVal(o, "corporationMaintenance", "empire", "percent");
 
 	// identity: scalars / flags / FK / the ×100-re-applied worth fields / the quote key
-	if (const picojson::object* io = child_obj(o, "identity"))
+	if (const picojson::object* io = jsonChildObj(o, "identity"))
 	{
-		m_iEra        = id_fk(*io, "era");
-		m_iGridX      = id_int(*io, "gridX");
-		m_iGridY      = id_int(*io, "gridY");
-		m_iAssetValue = x100(id_dbl(*io, "worth"));           // legacy getAssetValue returns ×100; JSON worth is human
-		m_iPowerValue = x100(id_dbl(*io, "militaryWorth"));   // legacy getPowerValue returns ×100
-		m_bRepeat     = id_bool(*io, "repeat");
-		m_bTrade      = id_bool(*io, "tradeable");
-		m_bDisable    = id_bool(*io, "disable");
-		m_bGoodyTech  = id_bool(*io, "goodyTech");
-		std::string q; id_str(*io, "quote", q); if (!q.empty()) m_szQuoteKey = CvWString(q.c_str());
+		m_iEra        = jsonIdFk(*io, "era");
+		m_iGridX      = jsonIdInt(*io, "gridX");
+		m_iGridY      = jsonIdInt(*io, "gridY");
+		m_iAssetValue = jsonX100(id_dbl(*io, "worth"));           // legacy getAssetValue returns ×100; JSON worth is human
+		m_iPowerValue = jsonX100(id_dbl(*io, "militaryWorth"));   // legacy getPowerValue returns ×100
+		m_bRepeat     = jsonIdBool(*io, "repeat");
+		m_bTrade      = jsonIdBool(*io, "tradeable");
+		m_bDisable    = jsonIdBool(*io, "disable");
+		m_bGoodyTech  = jsonIdBool(*io, "goodyTech");
+		std::string q; jsonIdStr(*io, "quote", q); if (!q.empty()) m_szQuoteKey = CvWString(q.c_str());
 	}
 
 	// ui.art.advisor (FK) -- NB under ui.art, not identity
-	if (const picojson::object* ui = child_obj(o, "ui"))
-		if (const picojson::object* art = child_obj(*ui, "art"))
-			m_iAdvisorType = id_fk(*art, "advisor");
+	if (const picojson::object* ui = jsonChildObj(o, "ui"))
+		if (const picojson::object* art = jsonChildObj(*ui, "art"))
+			m_iAdvisorType = jsonIdFk(*art, "advisor");
 
 	// sound.soundMP
-	if (const picojson::object* so = child_obj(o, "sound")) id_str(*so, "soundMP", m_szSoundMP);
+	if (const picojson::object* so = jsonChildObj(o, "sound")) jsonIdStr(*so, "soundMP", m_szSoundMP);
 
 	// ai.behaviour.{weight,tradeModifier} + ai.flavours {FLAVOR:int}
-	if (const picojson::object* ai = child_obj(o, "ai"))
+	if (const picojson::object* ai = jsonChildObj(o, "ai"))
 	{
-		if (const picojson::object* be = child_obj(*ai, "behaviour"))
+		if (const picojson::object* be = jsonChildObj(*ai, "behaviour"))
 		{
-			m_iAIWeight        = id_int(*be, "weight");
-			m_iAITradeModifier = id_int(*be, "tradeModifier");
+			m_iAIWeight        = jsonIdInt(*be, "weight");
+			m_iAITradeModifier = jsonIdInt(*be, "tradeModifier");
 		}
 		// ai.flavours -- an ARRAY of single-key { FLAVOR_X: n } objects (NOT a map, unlike freeSpecialists.team)
-		picojson::object::const_iterator fv = ai->find("flavours");
-		if (fv != ai->end() && fv->second.is<picojson::array>())
-		{
-			const picojson::array& fa = fv->second.get<picojson::array>();
-			for (size_t i = 0; i < fa.size(); ++i)
-				if (fa[i].is<picojson::object>())
-				{
-					const picojson::object& fo2 = fa[i].get<picojson::object>();
-					for (picojson::object::const_iterator e = fo2.begin(); e != fo2.end(); ++e)
-						if (e->second.is<double>()) { const int id = GC.getInfoTypeForString(e->first.c_str(), true); if (id >= 0) m_flavours[id] = (int)e->second.get<double>(); }
-				}
-		}
+		jsonReadFlavours(*ai, m_flavours);
 	}
 
 	// freeSpecialists.team.{SPECIALIST} (inert -- no tech write-path today; carried faithfully)
-	if (const picojson::object* fs = child_obj(o, "freeSpecialists"))
-		read_fk_int_map(fs, "team", m_freeSpecialists);
+	if (const picojson::object* fs = jsonChildObj(o, "freeSpecialists"))
+		jsonReadFkMap(*fs, "team", m_freeSpecialists);
 }
 
 // --- the synthetic TECH_GAME_START root (readjson.md §5.1) ---

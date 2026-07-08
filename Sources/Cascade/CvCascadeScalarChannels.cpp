@@ -106,9 +106,10 @@ static int sc_civicsTraits(const std::string& addr, const char* unit, const CvPl
 	return iSum;
 }
 
-// ===================== the maintenance AREA split (one walk, fill + oracle) =====================
+// ===================== the maintenance AREA split (one walk, fill + decomposition) =====================
 // Per-city area grouping of the area/otherArea building percents (the one player-wide sum
-// sc_playerBuildings cannot express). Single-source: the CvPlayer package fill AND the oracle both call it.
+// sc_playerBuildings cannot express). Single-source: the CvPlayer package fill AND the /computed
+// decomposition recompute both call it.
 static void sc_maintAreaSplit(const CvPlayer& owner, const CvTeam* pTeam,
 	std::map<int, int>& areaPct, std::map<int, int>& otherAreaPct, int& iOtherTotal)
 {
@@ -197,7 +198,7 @@ void CascadeScalarChannels::gpModParts(const CvCity* pCity, const CvCascadeEvalC
 int CascadeScalarChannels::defenseAmount(const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
 	// the building city defense stack (legacy m_iBuildingDefense; natural/bonus/player defense are their
-	// own legacy terms at the combine -- netted separately)
+	// own terms at the combine -- decomposed separately)
 	return sc_buildings("defense.city.amount", "percent", pCity, ec);
 }
 
@@ -207,7 +208,7 @@ int CascadeScalarChannels::defenseAmount(const CvCity* pCity, const CvCascadeEva
 // The cascade owns the AMOUNTS (summed alive-with-source freeSpecialists deposits: `any` + count-by-type,
 // parsed as unit-"count" deposits with resolved targetFk); the engine owns PLACEMENT; consumers read the
 // placement OUTPUT. These sums FEED the engine placement at the demolition (replacing the
-// changeFreeSpecialist(Count) process-applies); until then they serve the attribution pairs. The
+// changeFreeSpecialist(Count) process-applies); until then they serve the /computed decomposition. The
 // NON-derivable legacy remainders (events, settled GPs, era-advance pulses) are engine state by class.
 struct ScFsSegs { int fs, city, empire, area, any, count; };
 static const ScFsSegs& sc_fsSegs()
@@ -232,13 +233,14 @@ static void sc_fsFold(const CvJsonInfo* d, int scopeId, const CvCascadeEvalCtx& 
 		const CascadeDeposit& dep = deps[i];
 		if (dep.nSeg != 3 || dep.unitId != sg.count) continue;
 		if (dep.seg[0] != sg.fs || dep.seg[1] != scopeId) continue;
-		const int v = dep.value100 / 100;
+		const int v = dep.value100 / 100;   // the AUTHORED value (the pure filter's sign gate)
 		if (iPureSign > 0 && v < 0) continue;
 		if (iPureSign < 0 && v > 0) continue;
 		if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
-		if (dep.seg[2] == sg.any) outAny += v;
+		const int vs = (int)(MMKernel::perScale(dep, ec, dep.value100) / 100);   // §3.7 per (identity when hasPer==false)
+		if (dep.seg[2] == sg.any) outAny += vs;
 		else if (pByType != NULL && dep.targetFk >= 0 && dep.targetFk < (int)pByType->size())
-			(*pByType)[dep.targetFk] += v;
+			(*pByType)[dep.targetFk] += vs;
 	}
 }
 
@@ -591,7 +593,7 @@ void CascadeScalarChannels::fillPlayerScalars(const CvPlayer& player, CascadePla
 		// L13 national BOMBARD modifier (2026-07-05): legacy m_iNationalBombardDefenseModifier -- sole feeder
 		// is processTrait (CvPlayer.cpp:28613, trait iBombardDefense), curated defense.empire.bombardDefense
 		// .percent (the same-day re-home from the reader-less combat.empire.bombardDefense). Civics author none,
-		// so the civicsTraits fold == the trait sum. Composes into getBuildingBombardDefense at the flip.
+		// so the civicsTraits fold == the trait sum. Composes into the flipped getBuildingBombardDefense.
 		out.defPlayerBombard = sc_civicsTraits("defense.empire.bombardDefense", "percent", player, pec);
 	}
 
@@ -693,7 +695,7 @@ void CascadeScalarChannels::fillPlayerScalars(const CvPlayer& player, CascadePla
 					if (v <= 0) continue;   // legacy mirror: the national rate adds ONLY positive GP-rate changes
 					if (bPure && (d->negativeTrait ? v > 0 : v < 0)) continue;   // the PureFilter sign rule
 					if (!MMKernel::applies(dep.enabled, dep.disabled, pec)) continue;
-					out.gpNationalFlat += v;
+					out.gpNationalFlat += (int)(MMKernel::perScale(dep, pec, dep.value100) / 100);   // §3.7 per (identity when hasPer==false)
 				}
 			}
 		}
@@ -750,7 +752,8 @@ static void sc_brLedgerFold(const CvJsonInfo* d, int chanId, int scopeId, int pc
 		else if (dep.seg[2] == ms.specialBuildings) pv = &out.specialBuildings;   // the L11 trait keyed leg
 		else continue;
 		if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
-		if (dep.targetFk < (int)pv->size()) (*pv)[dep.targetFk] += v;
+		if (dep.targetFk < (int)pv->size())
+			(*pv)[dep.targetFk] += (int)(MMKernel::perScale(dep, ec, dep.value100) / 100);   // §3.7 per (identity when hasPer==false)
 	}
 }
 

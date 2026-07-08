@@ -9,13 +9,14 @@
 //	                [{"unitCombat": UC, "interval": "perTurn", "heal": 5}]
 //	                [{"heal": "full", "count": 1, "interval": "perTurn"}]
 //	                [{"PROPERTY_X": -3, "interval": "perTurn", "on": "plot", "relation": "near", "distance": 1}]
-//	No §5 key shape is "unknown" -- an unrecognized entry key surfaces via the FK diagnostics, never silently drops.
+//	No §5 key shape is "unknown" -- an unrecognized entry key surfaces via the unconsumed census, never silently drops.
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson
 #include "CvJsonGrants.h"
 #include "CvJsonConditionParse.h"   // cascadeParseCondition -- the ONE condition boundary
-#include "CvJsonParse.h"            // jsonResolveId / jsonX100
+#include "CvJsonModEntry.h"         // jsonParsePer -- the ONE §3.7 `per` parser (chance.per)
+#include "CvJsonParse.h"            // jsonResolveId / jsonX100 / jsonNoteUnconsumed
 
 CvJsonGrants::~CvJsonGrants()
 {
@@ -84,15 +85,14 @@ void CvJsonGrants::parseRepeatable(const picojson::value& v)
 					picojson::object::const_iterator per = co.find("per");
 					if (per != co.end())
 					{
-						if (per->second.is<std::string>()) r->chancePerId = jsonResolveId(per->second.get<std::string>());
-						else if (per->second.is<picojson::object>())   // {type, each?, scope?} (json §3.7)
-						{
-							const picojson::object& po = per->second.get<picojson::object>();
-							picojson::object::const_iterator ty = po.find("type");
-							if (ty != po.end() && ty->second.is<std::string>()) r->chancePerId = jsonResolveId(ty->second.get<std::string>());
-							picojson::object::const_iterator ea = po.find("each");
-							if (ea != po.end() && ea->second.is<double>()) r->chancePerEach = (int)ea->second.get<double>();
-						}
+						// the ONE §3.7 `per` parser (shared with the modifier entries) -- anyOf no longer drops
+						CvJsonModEntry perEntry;
+						jsonParsePer(&perEntry, per->second);
+						r->chancePerId    = perEntry.perTypeId;
+						if (perEntry.perTypeId < 0) r->chancePerToken = perEntry.perType;   // a catch-all token survives (carry-only)
+						r->chancePerEach  = perEntry.perEach;
+						r->chancePerScope = perEntry.perScope;
+						r->chancePerAnyOf = perEntry.perAnyOf;
 					}
 				}
 			}
@@ -105,7 +105,7 @@ void CvJsonGrants::parseRepeatable(const picojson::value& v)
 				r->propertyId = jsonResolveId(k);
 				r->amount100 = jsonX100(val.get<double>());
 			}
-			else jsonResolveId(k);   // unrecognized entry key -> surfaces in the FK diagnostics, never silent
+			else jsonNoteUnconsumed("grants.repeatable", k);   // unrecognized entry key -> the unconsumed census, never silent
 		}
 		m_repeatables.push_back(r);
 	}

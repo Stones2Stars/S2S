@@ -1,6 +1,6 @@
 //
 //	YieldBasePackages -- StoneBase YieldBasePackages.cs (see the header). Ported VERBATIM from CvCascadeModifierMath.cpp's
-//	file-static cvModifierBasePlot/TradeRoute/FreeCity/GoldenAge/Specialist; promoted to a declared surface (the
+//	file-static cvModifierTradeRoute/FreeCity/GoldenAge/Specialist; promoted to a declared surface (the
 //	single-source law, patterns.md). LOGIC unchanged: only the signatures + the MMKernel-qualified call sites were rewritten.
 //
 
@@ -12,228 +12,11 @@
 #include "Defines/CvGlobals.h"
 #include "Engine/CvCity.h"
 #include "Engine/CvPlayer.h"
-#include "Engine/CvPlot.h"
-#include "Engine/CvGame.h"            // GC.getGame().isOption (PURE_TRAITS sign)
-#include "Infos/CvYieldInfo.h"        // the per-yield config constants (peak/hills/city/pop/goldenAge/minCity changes)
-#include "Infos/CvTerrainInfo.h"
-#include "Infos/CvFeatureInfo.h"
-#include "Infos/CvBonusInfo.h"
-#include "Infos/CvImprovementInfo.h"  // + getImprovementUpgrade (the keyed-yield upgrade-ancestor chain)
-#include "Infos/CvRouteInfo.h"
 #include "Infos/CvBuildingInfo.h"
 #include "Infos/CvCivicInfo.h"
 #include "Infos/CvTraitInfo.h"
 #include "Infos/CvSpecialistInfo.h"   // InfoRepo<CvSpecialistInfo> + GC.getSpecialistInfo (the §1 specialist package)
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
-#include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (segment ids for the keyed walks)
-
-// The per-CITY precomputed constants for the per-plot package -- shared by basePlot's sum and the basePlotOne
-// diagnostic probe (single-source law: ONE per-plot body, two entry points).
-struct BpCityCtx
-{
-	int peakChange, hillsChange, cityChange, popDivisor, gaYield, gaThreshold, minCity, extraYield, pop;
-	int extraThreshold, lessThreshold;
-	bool bGolden;
-	int chanId, scopeCity, scopeEmpire;   // compiled deposit-index ids (DepositIndex; -1 = never authored)
-	const std::vector<int>* chanCands;
-};
-
-// PER-CHANNEL BUILDING-CANDIDATE CACHE (perf 2026-07-02, the plotcalc hunt): the per-plot loop below used to
-// walk ALL ~5202 buildings PER WORKED PLOT (x3 keyed-deposit walks each) -- the measured ~164ms per rate
-// compute and ~430k condition evals per turn. Which buildings carry ANY deposit for this channel is STATIC
-// data (readJson-mapped once per process), so the candidate list is computed once per channel and the plot
-// loop walks candidates only. Over-approximate on purpose (any deposit whose FIRST compiled segment is the
-// channel qualifies) -- correctness-identical, since non-matching deposits contribute 0 through the keyed walks.
-static const std::vector<int>& bp_channelCands(int chanId)
-{
-	static std::map<int, std::vector<int> > s_chanCands;   // function-local static in a .cpp (NOT header-inline)
-	std::map<int, std::vector<int> >::iterator ccIt = s_chanCands.find(chanId);
-	if (ccIt == s_chanCands.end())
-	{
-		std::vector<int> cands;
-		const int nB = GC.getNumBuildingInfos();
-		if (chanId >= 0)
-			for (int b = 0; b < nB; ++b)
-			{
-				const CvJsonInfo* db = InfoRepo<CvBuildingInfo>::get().get(b);
-				if (db == NULL) continue;
-				const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(db);
-				for (size_t di = 0; di < deps.size(); ++di)
-					if (deps[di].seg[0] == chanId) { cands.push_back(b); break; }
-			}
-		ccIt = s_chanCands.insert(std::make_pair(chanId, cands)).first;
-	}
-	return ccIt->second;
-}
-
-static BpCityCtx bp_cityCtx(const std::string& channel, YieldTypes eY, const CvCity* pCity, const CvCascadeEvalCtx& ec)
-{
-	const CvPlayer& player = *ec.player;
-	const CvYieldInfo& yi = GC.getYieldInfo(eY);
-	BpCityCtx cx;
-	cx.peakChange = yi.getPeakChange(); cx.hillsChange = yi.getHillsChange();
-	cx.cityChange = yi.getCityChange(); cx.popDivisor = yi.getPopulationChangeDivisor();
-	cx.gaYield = yi.getGoldenAgeYield(); cx.gaThreshold = yi.getGoldenAgeYieldThreshold();
-	cx.minCity = yi.getMinCity();
-	cx.extraYield = GC.getDefineINT("EXTRA_YIELD");
-	cx.bGolden = player.isGoldenAge();
-	cx.pop = pCity->getPopulation();
-	cx.extraThreshold = MMKernel::minPosThreshold("extraYieldThreshold", channel, player, ec);
-	cx.lessThreshold  = MMKernel::minPosThreshold("lessYieldThreshold", channel, player, ec);
-	cx.chanId = DepositIndex::lookupSegment(channel);
-	cx.scopeCity = DepositIndex::lookupSegment("city");
-	cx.scopeEmpire = DepositIndex::lookupSegment("empire");
-	cx.chanCands = &bp_channelCands(cx.chanId);
-	return cx;
-}
-
-// ONE worked plot's isolated base package (the loop body of basePlot -- extracted verbatim so the [SLOT]
-// per-plot attribution probe reads the SAME code path, never a re-derivation).
-static int bp_plotTotal(const BpCityCtx& cx, const std::string& channel, const CvCity* pCity, const CvPlot* p, CvCascadeEvalCtx& ec)
-{
-	const CvPlayer& player = *ec.player;
-	const TeamTypes eTeam = player.getTeam();
-	const std::vector<int>& chanCands = *cx.chanCands;
-	{
-		ec.plot = p;
-		const bool isCenter = (p == pCity->plot());
-
-		// directImp = just the plot's improvement; buildingImp = + its upgrade-ancestors (a yield keyed to LUMBERMILL
-		// also lands on a worked TREEFARM -- a BUILDING source walks the chain; civic/trait/substrate read direct only).
-		// Keys are compiled deposit-index SEGMENT ids (a -1 = that improvement was never authored as a key -> skip).
-		std::vector<int> directImp, buildingImp;
-		if (p->getImprovementType() != NO_IMPROVEMENT)
-		{
-			const int imp0 = DepositIndex::segIdForImprovement(p->getImprovementType());
-			if (imp0 >= 0) { directImp.push_back(imp0); buildingImp.push_back(imp0); }
-			ImprovementTypes up = GC.getImprovementInfo(p->getImprovementType()).getImprovementUpgrade();
-			int guard = 0;
-			while (up != NO_IMPROVEMENT && guard++ < 32)
-			{
-				const int upSeg = DepositIndex::segIdForImprovement(up);
-				if (upSeg >= 0) buildingImp.push_back(upSeg);
-				up = GC.getImprovementInfo(up).getImprovementUpgrade();
-			}
-		}
-
-		// nature = max(0, relief + terrain + feature + bonus own-plot yields), re-derived from the substrate JSON.
-		const PlotTypes ePlot = p->getPlotType();
-		const int plotTypeBase = (ePlot == PLOT_PEAK) ? cx.peakChange : (ePlot == PLOT_HILLS) ? cx.hillsChange : 0;
-		int natureRaw = plotTypeBase;
-		if (p->getTerrainType() != NO_TERRAIN) natureRaw += MMKernel::substratePlotYield(cx.chanId, InfoRepo<CvTerrainInfo>::get().get(p->getTerrainType()), p, eTeam, directImp, ec);
-		if (p->getFeatureType() != NO_FEATURE) natureRaw += MMKernel::substratePlotYield(cx.chanId, InfoRepo<CvFeatureInfo>::get().get(p->getFeatureType()), p, eTeam, directImp, ec);
-		if (p->getBonusType(eTeam) != NO_BONUS) natureRaw += MMKernel::substratePlotYield(cx.chanId, InfoRepo<CvBonusInfo>::get().get(p->getBonusType(eTeam)), p, eTeam, directImp, ec);
-		const int nature = std::max(0, natureRaw);
-
-		const int improvementYield = (p->getImprovementType() != NO_IMPROVEMENT)
-			? MMKernel::substratePlotYield(cx.chanId, InfoRepo<CvImprovementInfo>::get().get(p->getImprovementType()), p, eTeam, directImp, ec) : 0;
-		// route: own plot.flat (stays OUTSIDE the floor) + improvement-keyed (moves INSIDE the floor). Split per StoneBase.
-		int routeYield = 0, routeImpKeyed = 0;
-		if (p->getRouteType() != NO_ROUTE)
-		{
-			const CvJsonInfo* dr = InfoRepo<CvRouteInfo>::get().get(p->getRouteType());
-			if (dr != NULL)
-			{
-				const int scopePlot = DepositIndex::lookupSegment("plot");
-				routeYield = MMKernel::substratePlotYield(cx.chanId, dr, p, eTeam, directImp, ec);
-				routeImpKeyed = MMKernel::keyedImprovementOnly(cx.chanId, dr, scopePlot, directImp, ec, true);
-			}
-		}
-		const int routeOwnFlat = routeYield - routeImpKeyed;
-
-		// keyed building/civic/trait deposits, split by engine application stage (CITY-scope keyed lands in the running
-		// pre-improvement yield; EMPIRE-scope rolls down; the improvement-keyed empire part moves inside the floor).
-		int keyedCity = 0, keyedEmpire = 0, improvementKeyedEmpire = 0, plotsTarget = 0;
-		for (size_t ci = 0; ci < chanCands.size(); ++ci)   // channel-relevant buildings only (see the candidate cache above)
-		{
-			const int b = chanCands[ci];
-			const BuildingTypes eB = (BuildingTypes)b;
-			const bool active = cascadeIsBuildingActive((int)eB, ec);
-			const bool owned = player.getBuildingCount(eB) > 0;
-			if (!active && !owned) continue;
-			const CvJsonInfo* db = InfoRepo<CvBuildingInfo>::get().get(b);
-			if (db == NULL) continue;
-			if (active)
-			{
-				keyedCity   += MMKernel::keyedPlotYield(cx.chanId, db, cx.scopeCity, p, eTeam, buildingImp, ec, false);
-				plotsTarget += MMKernel::plotsTargetYield(cx.chanId, db, cx.scopeCity, ec);
-			}
-			if (owned)
-			{
-				keyedEmpire            += MMKernel::keyedPlotYield(cx.chanId, db, cx.scopeEmpire, p, eTeam, buildingImp, ec, false);
-				improvementKeyedEmpire += MMKernel::keyedImprovementOnly(cx.chanId, db, cx.scopeEmpire, buildingImp, ec, false);
-				plotsTarget            += MMKernel::plotsTargetYield(cx.chanId, db, cx.scopeEmpire, ec);
-			}
-		}
-		for (int co = 0; co < GC.getNumCivicOptionInfos(); ++co)
-		{
-			const CivicTypes c = player.getCivics((CivicOptionTypes)co);
-			if (c == NO_CIVIC) continue;
-			const CvJsonInfo* dc = InfoRepo<CvCivicInfo>::get().get((int)c);
-			if (dc == NULL) continue;
-			keyedEmpire            += MMKernel::keyedPlotYield(cx.chanId, dc, cx.scopeEmpire, p, eTeam, directImp, ec, false);
-			improvementKeyedEmpire += MMKernel::keyedImprovementOnly(cx.chanId, dc, cx.scopeEmpire, directImp, ec, false);
-			plotsTarget            += MMKernel::plotsTargetYield(cx.chanId, dc, cx.scopeEmpire, ec);
-		}
-		for (int t = 0; t < GC.getNumTraitInfos(); ++t)
-		{
-			if (!player.hasTrait((TraitTypes)t)) continue;
-			const CvJsonTraitInfo* dt = MMKernel::traitData(t);
-			if (dt == NULL) continue;
-			const int sgn = GC.getGame().isOption(GAMEOPTION_LEADER_PURE_TRAITS) ? (dt->negativeTrait ? -1 : 1) : 0;   // PURE_TRAITS sign for this trait's keyed deposits
-			keyedEmpire            += MMKernel::keyedPlotYield(cx.chanId, dt, cx.scopeEmpire, p, eTeam, directImp, ec, false, sgn);
-			improvementKeyedEmpire += MMKernel::keyedImprovementOnly(cx.chanId, dt, cx.scopeEmpire, directImp, ec, false, sgn);
-			plotsTarget            += MMKernel::plotsTargetYield(cx.chanId, dt, cx.scopeEmpire, ec, sgn);
-		}
-
-		int centre = 0;
-		if (isCenter)
-		{
-			centre += cx.cityChange;
-			if (cx.popDivisor != 0) centre += cx.pop / cx.popDivisor;
-		}
-
-		const int running = nature + centre + plotsTarget + keyedCity;   // m_aExtraYield (event-granted) -> 0
-		int threshold = 0;
-		if (cx.extraThreshold > 0 && running >= cx.extraThreshold) threshold += cx.extraYield;
-		if (cx.lessThreshold  > 0 && running >= cx.lessThreshold)  threshold -= cx.extraYield;
-		const int goldenAge = (cx.bGolden && (running + threshold) >= cx.gaThreshold) ? cx.gaYield : 0;
-
-		const int improvementAddend = std::max(-nature, improvementYield + improvementKeyedEmpire + routeImpKeyed);
-		const int keyedEmpireRest = keyedEmpire - improvementKeyedEmpire;
-		int plotTotal = std::max(0, running + keyedEmpireRest + threshold + goldenAge + improvementAddend + routeOwnFlat);
-		if (isCenter) plotTotal = std::max(plotTotal, cx.minCity);
-		return plotTotal;
-	}
-}
-
-// BASE: worked-plot yields (PlotPackage / calc-map §10.1) -- Σ over the city's WORKED plots of each plot's ONE isolated
-// base package, RE-DERIVED from the substrate JSON + keyed building/civic/trait deposits (NOT the engine's computed
-// getPlotYield -- the cascade computes it). Mirrors CvPlot::calculateYield order (Explore-verified 2026-06-30): nature
-// (max0 of relief+terrain+feature+bonus) + centre + plots-target + keyed-CITY = the pre-improvement running yield; the
-// extra/less + golden-age thresholds test on it; then the improvement addend (floored at -nature) + route-own-flat,
-// max(0,·); a CITY-CENTRE plot gets the min-city floor instead of improvement/route. (Traits use the option-gated active
-// set + PURE_TRAITS sign filter; the per-plot m_aExtraYield is event-granted, not derivable -> 0, audit-only per calc-map.)
-int YieldBasePackages::basePlot(const std::string& channel, YieldTypes eY, const CvCity* pCity, CvCascadeEvalCtx ec)
-{
-	const BpCityCtx cx = bp_cityCtx(channel, eY, pCity, ec);
-	int total = 0;
-	for (int iI = 0; iI < NUM_CITY_PLOTS; ++iI)
-	{
-		const CvPlot* p = pCity->getCityIndexPlot(iI);
-		if (p == NULL || !pCity->isWorkingPlot(p)) continue;
-		total += bp_plotTotal(cx, channel, pCity, p, ec);
-	}
-	return total;
-}
-
-// The [SLOT] per-plot attribution probe: ONE plot's package through the SAME bp_plotTotal body basePlot sums
-// (never a re-derivation). Diagnostic-only -- the per-city ctx is rebuilt per call, so keep it off hot paths.
-int YieldBasePackages::basePlotOne(const std::string& channel, YieldTypes eY, const CvCity* pCity, const CvPlot* p, CvCascadeEvalCtx ec)
-{
-	const BpCityCtx cx = bp_cityCtx(channel, eY, pCity, ec);
-	return bp_plotTotal(cx, channel, pCity, p, ec);
-}
 
 // BASE: trade-route yield (TradeRoutePackage) -- the ONE allowed live-yield INPUT (the cascade folds it in, never
 // derives it; owner ruling 2026-06-28). Read from the live engine, x1.
@@ -268,14 +51,6 @@ int YieldBasePackages::goldenAgeUngated(const std::string& channel, const CvPlay
 		sum += MMKernel::sumTrait(MMKernel::traitData(t), wantGA, "flat", ec);
 	}
 	return sum;
-}
-
-// BASE: golden-age yield/commerce (GoldenAgePackage) -- the gated realization (the oracle/calculator shape):
-// the ungated member sum × the live gate, clamped at 0.
-int YieldBasePackages::goldenAge(const std::string& channel, const CvPlayer& player, const CvCascadeEvalCtx& ec)
-{
-	if (!player.isGoldenAge()) return 0;
-	return std::max(0, goldenAgeUngated(channel, player, ec));
 }
 
 // BASE: specialist yields (SpecialistPackage / calc-map §1.5) -- Σ over the city's assigned+typed-free specialists of

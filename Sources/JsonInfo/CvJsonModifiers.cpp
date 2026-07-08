@@ -5,14 +5,12 @@
 //	other key recurses one segment deeper. The address is stored MINUS the unit (each entry carries its own unit);
 //	the scope is read from the address's second segment (json §3.2, default city).
 //
-//	⚠ This implementation did not exist before 2026-07-08 -- the class was declared and composed but never written
-//	(one of the "never properly set up to spec" gaps behind the old-Info fallbacks). Written fresh against
-//	json.md §6 + the header's contract; no prior behaviour to preserve.
+//	Implemented directly against json.md §6 + the header's contract.
 //
 
 #include "CvGameCoreDLL.h"   // PCH umbrella -- picojson
 #include "CvJsonModifiers.h"
-#include "CvJsonParse.h"     // jsonClassifyKey -- the ONE reserved-key vocabulary (never re-hand-rolled here)
+#include "CvJsonParse.h"     // jsonClassifyKey + jsonParseScope -- the ONE reserved-key/scope-token vocabulary (never re-hand-rolled here)
 
 CvJsonModifiers::~CvJsonModifiers()
 {
@@ -26,28 +24,15 @@ const CvJsonModFamily* CvJsonModifiers::find(const std::string& address) const
 	return (it != m_families.end()) ? it->second : NULL;
 }
 
-// The scope segment of a deposit address (json §3.2 -- the segment after the family; default city).
+// The scope segment of a deposit address (json §3.2 -- the segment after the family; default city). The token
+// vocabulary is the shared jsonParseScope; only the address slicing lives here.
 static CvCascScope mod_scopeOf(const std::string& addr)
 {
 	const size_t dot = addr.find('.');
 	if (dot == std::string::npos) return CASC_SCOPE_CITY;
 	const size_t end = addr.find('.', dot + 1);
 	const std::string s = addr.substr(dot + 1, (end == std::string::npos ? addr.size() : end) - dot - 1);
-	if (s == "world")       return CASC_SCOPE_WORLD;
-	if (s == "team")        return CASC_SCOPE_TEAM;
-	if (s == "empire")      return CASC_SCOPE_EMPIRE;
-	if (s == "area")        return CASC_SCOPE_AREA;
-	if (s == "city")        return CASC_SCOPE_CITY;
-	if (s == "plot")        return CASC_SCOPE_PLOT;
-	if (s == "improvement") return CASC_SCOPE_IMPROVEMENT;
-	if (s == "feature")     return CASC_SCOPE_FEATURE;
-	if (s == "terrain")     return CASC_SCOPE_TERRAIN;
-	if (s == "route")       return CASC_SCOPE_ROUTE;
-	if (s == "building")    return CASC_SCOPE_BUILDING;
-	if (s == "specialist")  return CASC_SCOPE_SPECIALIST;
-	if (s == "unit")        return CASC_SCOPE_UNIT;
-	if (s == "self")        return CASC_SCOPE_SELF;
-	return CASC_SCOPE_CITY;
+	return jsonParseScope(s, CASC_SCOPE_CITY);
 }
 
 void CvJsonModifiers::walk(const std::string& addr, const picojson::value& node)

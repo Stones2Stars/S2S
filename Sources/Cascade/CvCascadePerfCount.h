@@ -5,9 +5,9 @@
 //	CvCascadePerfCount -- per-turn CALL COUNTERS + our own STOPWATCH accumulators for the cascade's hot compute
 //	surfaces (owner 2026-07-02: chase the needless repeat calcs BEFORE parity). Counts reveal the repeat-calc
 //	multipliers; the accumulated wall-clock (PerfAccumTimer, gPerfLogLevel-gated -- free when perf logging is off)
-//	shows where the milliseconds actually go. Flushed + reset once per turn by the modifier shadow as
-//	[MODIFIER/perf]. ⛔ DEFINED in CvCascadePerfCount.cpp -- never header-inline statics (the InfoRepo VC7.1
-//	inline-static duplication lesson, same day).
+//	shows where the milliseconds actually go. Flushed + reset once per turn by the [MODIFIER/perf] census
+//	(cvCascadeModifierPerfCensus). ⛔ DEFINED in CvCascadePerfCount.cpp -- never header-inline statics (the
+//	InfoRepo VC7.1 inline-static duplication lesson).
 
 // The condEval CALLER-DOMAIN split (the flip-era census: condEval 6.8M/turn is THE outlier; the per-caller
 // split lands BEFORE any tuning). A scoped tag set at the outermost compute entries attributes every eval to
@@ -16,7 +16,7 @@
 enum CascadeCondCaller
 {
 	CC_OTHER = 0,   // untagged chains (the completeness check)
-	CC_RATES,       // yieldRate/pctStack/commerceRate + their deposit walks
+	CC_RATES,       // the rate slots' pctStack + deposit walks
 	CC_WB,          // wellbeing computes/gathers (city terms + player fold maps + the oracle)
 	CC_SCALARS,     // the scalar channel fills (gp/defense/maint/trade/buildRate, city + player)
 	CC_OPERATING_BUILDINGS,       // the operating buildings fixpoint (recomputeOperatingBuildingsInto)
@@ -33,9 +33,7 @@ struct CascadePerf
 {
 	static int operatingBuildingsRecomputed;  // operating-buildings RECOMPUTES (recomputeOperatingBuildingsInto runs)
 	static int operatingBuildingsCacheHits;  // operating buildings READS served by the standing cache (operatingBuildings calls)
-	static int yieldRate;     // YieldRate::yieldRate100 computes
 	static int pctStack;      // PercentStack::percentStack computes
-	static int commerceRate;  // CommerceCalc::commerceRate100 computes
 	static int condEval;      // cascadeEvalCondition leaf evaluations
 	static int condEvalBy[CC_COUNT];   // the same evaluations, split by initiating caller domain
 	static int condCaller;             // the live scope tag (CascadeCondScope sets/restores it)
@@ -54,16 +52,8 @@ struct CascadePerf
 	static int scSpecRefresh; // ACCD_SCALARSPEC refresh passes (the gpBase specialist term)
 
 	static double operatingBuildingsRecomputeMs;        // stopwatch accumulators (PerfAccumTimer targets)
-	static double yieldRateMs;
 	static double pctStackMs;
-	static double commerceRateMs;
 	static double wbComputeMs;
-	// the LEGACY-side pair accumulators (owner 2026-07-04: capture what legacy is faster at BEFORE its cut --
-	// the comparison window closes when the legacy body is deleted): the *Legacy oracle calls in the shadow
-	// nets, timed beside the cascade-side numbers above (yieldRateMs+commerceRateMs vs legacyRateMs;
-	// wbComputeMs vs legacyWbMs).
-	static double legacyRateMs;
-	static double legacyWbMs;
 	static double scRefreshMs;    // the scalar refresh passes' wall clock (both bits)
 	// the frontier-fill stopwatches (PerfAccumTimer targets; gPerfLogLevel-gated like every ms bucket)
 	static double frontBMs, frontUMs, frontPPMs, frontPMs, promoMs;

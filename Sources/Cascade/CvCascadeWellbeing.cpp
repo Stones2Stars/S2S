@@ -7,7 +7,7 @@
 //	raw-state inputs (anger percents, timers, gate flags, the extra/religion accumulators) stay the same live
 //	engine reads the legacy bodies make.
 //
-//	KNOWN legacy-divergence classes the shadow shows and never chases (modifier.md §2b): the improvement health
+//	KNOWN legacy-divergence classes, documented and never chased (modifier.md §2b): the improvement health
 //	BALANCE-CUT (the cascade term is deliberately 0) and the STORED-ACCUMULATOR DRIFT (the legacy side's
 //	serialized accumulators carry history pollution; the cascade recompute is the correct side).
 //
@@ -99,7 +99,7 @@ static void wb_foldBuildingDeposits(const std::vector<CascadeDeposit>& deps,
 		{
 			for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
 				if (dep.seg[2] == aiChSeg[c] && MMKernel::applies(dep.enabled, dep.disabled, ec))
-					{ aiCommercePer[c] += dep.value100 / 100; break; }
+					{ aiCommercePer[c] += (int)(MMKernel::perScale(dep, ec, dep.value100) / 100); break; }   // §3.7 per (identity when hasPer==false)
 			continue;
 		}
 		const bool bHap = dep.seg[0] == famHappy;
@@ -107,12 +107,12 @@ static void wb_foldBuildingDeposits(const std::vector<CascadeDeposit>& deps,
 		CascadeWbTerms& t = bHap ? tHap : tHea;
 		if (dep.unitId == unitPerPop)
 		{
-			if (MMKernel::applies(dep.enabled, dep.disabled, ec)) t.iPpPct += dep.value100 / 100;
+			if (MMKernel::applies(dep.enabled, dep.disabled, ec)) t.iPpPct += (int)(MMKernel::perScale(dep, ec, dep.value100) / 100);   // §3.7 per (identity when hasPer==false)
 			continue;
 		}
 		if (dep.unitId != unitFlat) continue;
 		if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
-		const int v = dep.value100 / 100;
+		const int v = (int)(MMKernel::perScale(dep, ec, dep.value100) / 100);   // §3.7 per (identity when hasPer==false)
 		switch (wb_classify(dep.enabled))
 		{
 		case WB_BONUS_GATED:    t.bonus.fold(v); break;
@@ -209,17 +209,17 @@ void CascadeWellbeing::playerAreaEmpire(const CvPlayer& player,
 					// building -- ledgered here in the GRANTOR's ctx (the commerce-twin precedent),
 					// realized per city by foldBuildingKeyed
 					if (dep.targetFk >= 0 && MMKernel::applies(dep.enabled, dep.disabled, pec))
-						keyedByFam[dep.seg[0]][dep.targetFk] += dep.value100 / 100;
+						keyedByFam[dep.seg[0]][dep.targetFk] += (int)(MMKernel::perScale(dep, pec, dep.value100) / 100);   // §3.7 per, resolved at the GRANTOR's ctx (the ledger realization folds plain ints)
 					continue;
 				}
 				if (dep.nSeg != 2) continue;
 				if (dep.seg[1] == scopeEmpire)
 				{
-					if (MMKernel::applies(dep.enabled, dep.disabled, pec)) empireByFam[dep.seg[0]].fold(dep.value100 / 100);
+					if (MMKernel::applies(dep.enabled, dep.disabled, pec)) empireByFam[dep.seg[0]].fold((int)(MMKernel::perScale(dep, pec, dep.value100) / 100));   // §3.7 per (identity when hasPer==false)
 				}
 				else if (dep.seg[1] == scopeArea)
 				{
-					if (MMKernel::applies(dep.enabled, dep.disabled, pec)) areaByFam[dep.seg[0]][iArea].fold(dep.value100 / 100);
+					if (MMKernel::applies(dep.enabled, dep.disabled, pec)) areaByFam[dep.seg[0]][iArea].fold((int)(MMKernel::perScale(dep, pec, dep.value100) / 100));   // §3.7 per (identity when hasPer==false)
 				}
 			}
 		}
@@ -260,13 +260,14 @@ static void wb_memberSource(int famId, const CvJsonInfo* d, bool bTrait, bool bP
 	{
 		const CascadeDeposit& dep = deps[i];
 		if (dep.seg[0] != famId || dep.seg[1] != scopeEmpire) continue;
-		const int v = dep.value100 / 100;
+		const int v = dep.value100 / 100;   // the AUTHORED value: the pure filter (sign) + the military per-unit fold read it raw
 		if (!wb_pureKeep(bPure, bNegative, v)) continue;
 		if (dep.nSeg == 2 && dep.unitId == unitFlat)
 		{
 			if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
-			if (wb_classify(dep.enabled) == WB_BONUS_GATED) t.bonus.fold(v);
-			else iFlatNet += v;
+			const int vs = (int)(MMKernel::perScale(dep, ec, dep.value100) / 100);   // §3.7 per (identity when hasPer==false)
+			if (wb_classify(dep.enabled) == WB_BONUS_GATED) t.bonus.fold(vs);
+			else iFlatNet += vs;
 		}
 		else if (dep.nSeg == 4 && dep.seg[2] == segBuildings)
 		{
@@ -274,13 +275,13 @@ static void wb_memberSource(int famId, const CvJsonInfo* d, bool bTrait, bool bP
 			// player extraBuildingHappiness/Health per-building accumulators)
 			if (dep.targetFk >= 0 && cascadeIsBuildingActive(dep.targetFk, ec)
 				&& MMKernel::applies(dep.enabled, dep.disabled, ec))
-				t.extraB.fold(v);
+				t.extraB.fold((int)(MMKernel::perScale(dep, ec, dep.value100) / 100));   // §3.7 per (identity when hasPer==false)
 		}
 		else if (dep.nSeg == 4 && dep.seg[2] == segFeatures)
 		{
 			std::map<int, int>::const_iterator fit = dep.targetFk >= 0 ? featureCounts.find(dep.targetFk) : featureCounts.end();
 			if (fit != featureCounts.end() && MMKernel::applies(dep.enabled, dep.disabled, ec))
-				t.featMember.fold(fit->second * v);
+				t.featMember.fold(fit->second * (int)(MMKernel::perScale(dep, ec, dep.value100) / 100));   // §3.7 per (identity when hasPer==false)
 		}
 		else if (dep.nSeg == 3 && dep.seg[2] == segCities && dep.unitId == unitFlat && dep.unitQual != NULL)
 		{
@@ -291,7 +292,8 @@ static void wb_memberSource(int famId, const CvJsonInfo* d, bool bTrait, bool bP
 		else if (dep.nSeg == 3 && dep.seg[2] == segCities && dep.unitId == unitFlat)
 		{
 			// the ranked `cities` scaler (unqualified): pays while this city ranks <= the target city count
-			if (bInTopCities && MMKernel::applies(dep.enabled, dep.disabled, ec)) t.iLargest += v;
+			if (bInTopCities && MMKernel::applies(dep.enabled, dep.disabled, ec))
+				t.iLargest += (int)(MMKernel::perScale(dep, ec, dep.value100) / 100);   // §3.7 per (identity when hasPer==false)
 		}
 	}
 	if (bTrait) t.iTraitNet += iFlatNet; else t.iCivicNet += iFlatNet;
@@ -460,7 +462,7 @@ CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
 	// self-containment extraction 2026-07-05): the legacy player accumulators are exactly INITIAL define +
 	// Σ adopted civics' values (writer census: init CvPlayer:391-392 + processCivics :18282-83 + the
 	// recalc re-seed :28764; no other feeder) -- never the m_i{State,NonState}ReligionHappiness
-	// accumulators, which live on in the Legacy oracles only. Sign-split per religion (updateReligionHappiness).
+	// accumulators, which are demolition fodder, unread by the cascade. Sign-split per religion (updateReligionHappiness).
 	WbSplit religion;
 	{
 		const ReligionTypes eState = owner.getStateReligion();
@@ -640,7 +642,7 @@ CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
 	return out;
 }
 
-// The calculator/oracle shape: fresh city gather + fresh player area/empire walk + the ONE assembly.
+// The /computed decomposition recompute: fresh city gather + fresh player area/empire walk + the ONE assembly.
 CascadeWellbeingVerdicts CascadeWellbeing::compute(const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
 	PROFILE_FUNC();
@@ -663,5 +665,5 @@ CascadeWellbeingVerdicts CascadeWellbeing::compute(const CvCity* pCity, const Cv
 	return assemble(pCity, hap, hea, aiCommercePer, hapArea, hapEmp, heaArea, heaEmp);
 }
 
-// The [MODIFIER/wellbeing] shadow lives in CvCascadeModifierMath.cpp (the shadow harness) -- it rides the
-// registered [MODIFIER] spine domain and the harness's per-city wired eval ctx.
+// compute() is the /computed/cities/wellbeing decomposition path -- the fresh recompute the endpoint emits so a
+// wellbeing value attributes to NAMED terms (the live reads ride the accumulator's standing packages).

@@ -167,28 +167,68 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvJsonCondition* a)
 
 // ---- CountOf (StoneBase) ---------------------------------------------------------------------------------------
 
+// THE countable core -- ONE implementation (DEC-single-implementation), shared by the condition count-atoms
+// (ev_countOf below) and the §3.7 `per` resolver (cascadeCountOf -> MMKernel::perScale). Fills iOut with the
+// count of TYPE/token at SCOPE and returns true; false = the type names no countable domain (the callers fall
+// back to presence 0/1). A bool-protocol, NOT a sentinel: a PROPERTY_* "count" is the city's property VALUE and
+// can be legitimately NEGATIVE. Cross-city scopes resolve via the tally (tally.md §2); WORLD rides the same
+// tally roll-up, EXCEPT a unit's world count = the engine's LIFETIME-CREATED counter (json §4.4 / tally.md §4 --
+// the UnitCascade world-cap read: "born once, still consumes its slot").
+static bool ev_countCore(const CvCascadeEvalCtx& ctx, const std::string& t, int id, CvCascScope eScope, int& iOut)
+{
+	if (en_starts(t, "PROPERTY_"))
+	{
+		iOut = (ctx.city != NULL && id >= 0) ? ctx.city->getPropertiesConst()->getValueByProperty((PropertyTypes)id) : 0;
+		return true;
+	}
+	if (t == "POPULATION") { iOut = ctx.city != NULL ? ctx.city->getPopulation() : 0; return true; }
+	if (t == "CITY")       { iOut = ctx.player != NULL ? ctx.player->getNumCities() : 0; return true; }
+	if (t == "TEAM")       { iOut = ctx.team != NULL ? ctx.team->getNumMembers() : 0; return true; }
+	if (t == "AREA_SIZE")  { iOut = (ctx.city != NULL && ctx.city->area() != NULL) ? ctx.city->area()->getNumTiles() : 0; return true; }
+	if (t == "ERA")        { iOut = ctx.player != NULL ? (int)ctx.player->getCurrentEra() + 1 : 0; return true; }   // 1..X counter
+	// cross-scope RELIGION_X reads the world religion-level count; a CITY-scope RELIGION_X is a PRESENCE check (Present).
+	if (en_starts(t, "RELIGION_") && eScope != CASC_SCOPE_CITY && id >= 0)
+	{
+		iOut = GC.getGame().countReligionLevels((ReligionTypes)id);
+		return true;
+	}
+	if (eScope == CASC_SCOPE_EMPIRE || eScope == CASC_SCOPE_TEAM || eScope == CASC_SCOPE_WORLD)
+	{
+		const CascadeCountScope sc = (eScope == CASC_SCOPE_TEAM) ? CASCADE_COUNT_TEAM
+		                           : (eScope == CASC_SCOPE_WORLD) ? CASCADE_COUNT_WORLD : CASCADE_COUNT_EMPIRE;
+		const int ent = (eScope == CASC_SCOPE_TEAM) ? (ctx.team ? (int)ctx.team->getID() : 0)
+		                                            : (ctx.player ? (int)ctx.player->getID() : 0);
+		if (en_starts(t, "BUILDING_") && id >= 0) { iOut = cascadeTally().buildingCount(ent, id, sc); return true; }
+		if (en_starts(t, "UNIT_") && id >= 0)
+		{
+			iOut = (sc == CASCADE_COUNT_WORLD) ? GC.getGame().getUnitCreatedCount((UnitTypes)id)
+			                                   : cascadeTally().unitCount(ent, id, sc);
+			return true;
+		}
+	}
+	return false;   // not a countable domain -> the caller's presence fallback
+}
+
 static int ev_countOf(const CvCascadeEvalCtx& ctx, const CvJsonCondition* a)
 {
-	const std::string& t = a->type;
-	if (en_starts(t, "PROPERTY_"))
-		return (ctx.city != NULL && a->id >= 0) ? ctx.city->getPropertiesConst()->getValueByProperty((PropertyTypes)a->id) : 0;
-	if (t == "POPULATION") return ctx.city != NULL ? ctx.city->getPopulation() : 0;
-	if (t == "CITY")       return ctx.player != NULL ? ctx.player->getNumCities() : 0;
-	if (t == "TEAM")       return ctx.team != NULL ? ctx.team->getNumMembers() : 0;
-	if (t == "AREA_SIZE")  return (ctx.city != NULL && ctx.city->area() != NULL) ? ctx.city->area()->getNumTiles() : 0;
-	if (t == "ERA")        return ctx.player != NULL ? (int)ctx.player->getCurrentEra() + 1 : 0;   // 1..X counter
-	// cross-scope RELIGION_X reads the world religion-level count; a CITY-scope RELIGION_X is a PRESENCE check (Present).
-	if (en_starts(t, "RELIGION_") && a->scope != CASC_SCOPE_CITY && a->id >= 0)
-		return GC.getGame().countReligionLevels((ReligionTypes)a->id);
-	if (a->scope == CASC_SCOPE_EMPIRE || a->scope == CASC_SCOPE_TEAM)
-	{
-		CascadeCountScope sc = (a->scope == CASC_SCOPE_TEAM) ? CASCADE_COUNT_TEAM : CASCADE_COUNT_EMPIRE;
-		const int ent = (a->scope == CASC_SCOPE_TEAM) ? (ctx.team ? (int)ctx.team->getID() : 0)
-		                                              : (ctx.player ? (int)ctx.player->getID() : 0);
-		if (en_starts(t, "BUILDING_") && a->id >= 0) return cascadeTally().buildingCount(ent, a->id, sc);
-		if (en_starts(t, "UNIT_") && a->id >= 0)     return cascadeTally().unitCount(ent, a->id, sc);
-	}
-	return ev_present(ctx, a) ? 1 : 0;
+	int n = 0;
+	if (ev_countCore(ctx, a->type, a->id, a->scope, n)) return n;
+	return ev_present(ctx, a) ? 1 : 0;   // full-atom presence (connection/vicinity intact)
+}
+
+// The exposed count surface for the §3.7 `per` resolver -- a thin caller of the SAME core as ev_countOf (never a
+// parallel count path). The presence fallback builds a bare default atom (the per grammar carries no
+// connection/min/max), so e.g. a BONUS_X per counts the city's presence 0/1 exactly as a count-atom would.
+int cascadeCountOf(int iTypeId, const std::string& sType, CvCascScope eScope, const CvCascadeEvalCtx& ec)
+{
+	int n = 0;
+	if (ev_countCore(ec, sType, iTypeId, eScope, n)) return n;
+	CvJsonCondition a;   // stack presence atom -- no children, trivially freed
+	a.kind = CASC_COND_PRESENCE;
+	a.type = sType;
+	a.scope = eScope;
+	a.id = iTypeId;
+	return ev_present(ec, &a) ? 1 : 0;
 }
 
 // ---- EvalPresence (StoneBase) ----------------------------------------------------------------------------------

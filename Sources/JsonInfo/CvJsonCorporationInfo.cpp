@@ -7,7 +7,7 @@
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson
 #include "CvJsonCorporationInfo.h"
-#include "Defines/CvGlobals.h"      // GC.getInfoTypeForString
+#include "CvJsonParse.h"            // jsonResolveId + jsonX100 + the shared walkers (jsonChildObj/jsonIdInt/...)
 #include <set>
 
 static const char* YIELD_NAME[NUM_YIELD_TYPES]  = { "food", "production", "commerce" };
@@ -24,21 +24,13 @@ CvJsonCorporationInfo::CvJsonCorporationInfo()
 int CvJsonCorporationInfo::getBonusProduced() const
 { return !m_provides.bonuses.empty() ? m_provides.bonuses[0] : -1; }
 
-static const picojson::object* child_obj(const picojson::object& o, const char* key)
-{ picojson::object::const_iterator it = o.find(key); return (it != o.end() && it->second.is<picojson::object>()) ? &it->second.get<picojson::object>() : NULL; }
-static int id_int(const picojson::object& io, const char* k)
-{ picojson::object::const_iterator it = io.find(k); return (it != io.end() && it->second.is<double>()) ? (int)it->second.get<double>() : 0; }
-static void id_str(const picojson::object& io, const char* k, std::string& out)
-{ picojson::object::const_iterator it = io.find(k); if (it != io.end() && it->second.is<std::string>()) out = it->second.get<std::string>(); }
-static int x100(double v) { return (int)(v >= 0 ? v * 100.0 + 0.5 : v * 100.0 - 0.5); }
-
 // navigate o -> family -> scope [-> member] -> "flat" ; returns the flat value (array or number), or NULL.
 static const picojson::value* flat_leaf(const picojson::object& o, const char* family, const char* scope, const char* member)
 {
-	const picojson::object* fo = child_obj(o, family);  if (!fo) return NULL;
-	const picojson::object* so = child_obj(*fo, scope); if (!so) return NULL;
+	const picojson::object* fo = jsonChildObj(o, family);  if (!fo) return NULL;
+	const picojson::object* so = jsonChildObj(*fo, scope); if (!so) return NULL;
 	const picojson::object* leaf = so;
-	if (member) { leaf = child_obj(*so, member); if (!leaf) return NULL; }
+	if (member) { leaf = jsonChildObj(*so, member); if (!leaf) return NULL; }
 	picojson::object::const_iterator it = leaf->find("flat");
 	return (it != leaf->end()) ? &it->second : NULL;
 }
@@ -58,16 +50,16 @@ static void demux(const picojson::value* flat, int& change, int& produced, std::
 		picojson::object::const_iterator ve = e.find("value");
 		if (ve == e.end() || !ve->second.is<double>()) continue;
 		const double v = ve->second.get<double>();
-		const picojson::object* per = child_obj(e, "per");
+		const picojson::object* per = jsonChildObj(e, "per");
 		if (per)
 		{
-			produced += x100(v);   // per-scaled -> the ÷100-descaled fractional base, ×100 re-applied
+			produced += jsonX100(v);   // per-scaled -> the ÷100-descaled fractional base, ×100 re-applied
 			picojson::object::const_iterator any = per->find("anyOf");
 			if (any != per->end() && any->second.is<picojson::array>())
 			{
 				const picojson::array& ba = any->second.get<picojson::array>();
 				for (size_t b = 0; b < ba.size(); ++b)
-					if (ba[b].is<std::string>()) { const int id = GC.getInfoTypeForString(ba[b].get<std::string>().c_str(), true); if (id >= 0 && seen.insert(id).second) prereq.push_back(id); }
+					if (ba[b].is<std::string>()) { const int id = jsonResolveId(ba[b].get<std::string>()); if (id >= 0 && seen.insert(id).second) prereq.push_back(id); }
 			}
 		}
 		else change += (int)v;
@@ -109,23 +101,23 @@ void CvJsonCorporationInfo::mapFrom(const picojson::value& entity)
 	m_iFreeXP  = sumFlatAsIs(flat_leaf(o, "experience", "city", NULL));
 
 	// buildRate.city.military.percent
-	if (const picojson::object* br = child_obj(o, "buildRate"))
-		if (const picojson::object* bc = child_obj(*br, "city"))
-			if (const picojson::object* mil = child_obj(*bc, "military"))
-				m_iMilitaryProductionModifier = id_int(*mil, "percent");
+	if (const picojson::object* br = jsonChildObj(o, "buildRate"))
+		if (const picojson::object* bc = jsonChildObj(*br, "city"))
+			if (const picojson::object* mil = jsonChildObj(*bc, "military"))
+				m_iMilitaryProductionModifier = jsonIdInt(*mil, "percent");
 
 	// {c}.empire.headquarters.perCorporationLevel
 	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
-		if (const picojson::object* fo = child_obj(o, COMM_NAME[c]))
-			if (const picojson::object* emp = child_obj(*fo, "empire"))
-				if (const picojson::object* hq = child_obj(*emp, "headquarters"))
-					m_aiHeadquarterCommerce[c] = id_int(*hq, "perCorporationLevel");
+		if (const picojson::object* fo = jsonChildObj(o, COMM_NAME[c]))
+			if (const picojson::object* emp = jsonChildObj(*fo, "empire"))
+				if (const picojson::object* hq = jsonChildObj(*emp, "headquarters"))
+					m_aiHeadquarterCommerce[c] = jsonIdInt(*hq, "perCorporationLevel");
 
-	if (const picojson::object* co = child_obj(o, "cost")) m_iSpreadCost = id_int(*co, "spread");
-	if (const picojson::object* io = child_obj(o, "identity"))
+	if (const picojson::object* co = jsonChildObj(o, "cost")) m_iSpreadCost = jsonIdInt(*co, "spread");
+	if (const picojson::object* io = jsonChildObj(o, "identity"))
 	{
-		m_iSpread                     = id_int(*io, "spreadFactor");
-		m_iCompetingSpreadCostPercent = id_int(*io, "competingSpreadCostPercent");
+		m_iSpread                     = jsonIdInt(*io, "spreadFactor");
+		m_iCompetingSpreadCostPercent = jsonIdInt(*io, "competingSpreadCostPercent");
 	}
-	if (const picojson::object* so = child_obj(o, "sound")) id_str(*so, "sound", m_szSound);
+	if (const picojson::object* so = jsonChildObj(o, "sound")) jsonIdStr(*so, "sound", m_szSound);
 }

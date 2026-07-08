@@ -29,17 +29,17 @@
 #include "Engine/CvGame.h"
 
 // AugmentState's prereq-WAIVER set (StoneBase BuildingCascade.AugmentState: ObsoleteBuildings ∪ PrereqWaivedBuildings):
-// a BUILDING is a waived prereq iff its OBSOLETE tech is held by the team, OR its SpecialBuilding group is made
+// a BUILDING is a waived prereq iff its obsoleting tech is held by the team (the JSON `obsoletedBy.techs` edge --
+// EnablerKernel::obsoletedByHeldTech, the ONE tech-obsolescence authority), OR its SpecialBuilding group is made
 // not-required by an adopted civic (enables.specialBuildingsWaived). Shared by the building + unit cascades (both gate
 // requires.build through the SAME evaluator). The vicinity-supply + gov-center AugmentState operating buildings are read LIVE by the
 // evaluator (hasVicinityBonus / isGovernmentCenter), so only the waived set is materialized here.
 void BuildingCascade::augmentWaived(const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& waived)
 {
 	const int nB = GC.getNumBuildingInfos();
-	for (int b = 0; b < nB; ++b)   // obsolete-by-held-tech
+	for (int b = 0; b < nB; ++b)   // obsolete-by-held-tech (obsoletedBy.techs)
 	{
-		const TechTypes obs = GC.getBuildingInfo((BuildingTypes)b).getObsoleteTech();
-		if (obs != NO_TECH && kTeam.isHasTech(obs)) waived.insert(b);
+		if (EnablerKernel::obsoletedByHeldTech(InfoRepo<CvBuildingInfo>::get().get(b), kTeam)) waived.insert(b);
 	}
 	std::set<int> waivedSpecials;   // the SpecialBuilding groups the player's adopted civics make not-required
 	for (int co = 0; co < GC.getNumCivicOptionInfos(); ++co)
@@ -62,7 +62,7 @@ void BuildingCascade::augmentWaived(const CvPlayer& kPlayer, const CvTeam& kTeam
 
 // Instance cap (StoneBase Capped): the entity is maxed at some scope -- current tally count + in-production making >=
 // allowed. Reads the cascade's own allowed (CvJsonInfo) + tally + the live making, NOT the engine's isBuildingMaxedOut
-// (that would be tautological vs canConstruct -- the shadow must validate the cascade's OWN count).
+// (tautological vs canConstruct -- the cascade owns its OWN count).
 bool BuildingCascade::capped(const CvJsonInfo* j, int eB, const CvPlayer& kPlayer)
 {
 	if (j == NULL) return false;
@@ -104,62 +104,6 @@ int BuildingCascade::scaledPrereq(int baseN, int wsMod, bool selfLimited, bool p
 // ===========================================================================================================
 namespace {
 
-// The whole-building dependency signature (which HAVE-classes gate this building at all).
-struct BcDeps
-{
-	bool pop, religion, corp, power, goldenAge, stateReligion, civicAny;
-	std::set<int> techs;      // specific TECH_ ids referenced
-	std::set<int> bonuses;    // specific BONUS_ ids referenced
-	std::set<int> buildings;  // specific BUILDING_ ids referenced in requires (prereqs) -- for the completion re-check
-	BcDeps() : pop(false), religion(false), corp(false), power(false), goldenAge(false), stateReligion(false), civicAny(false) {}
-};
-
-// Recursively collect the HAVE-atoms a condition (build or operate) references into `d`. Walks the GROUP children
-// (all/anyOf/noneOf) + enabled/disabled; classifies PRESENCE by type prefix/token and PREDICATE by predKind.
-static void bc_scanCond(const CvJsonCondition* c, BcDeps& d)
-{
-	if (c == NULL) return;
-	if (c->kind == CASC_COND_GROUP)
-	{
-		for (size_t i = 0; i < c->all.size(); ++i)    bc_scanCond(c->all[i], d);
-		for (size_t i = 0; i < c->anyOf.size(); ++i)  bc_scanCond(c->anyOf[i], d);
-		for (size_t i = 0; i < c->noneOf.size(); ++i) bc_scanCond(c->noneOf[i], d);
-		bc_scanCond(c->enabled, d);
-		bc_scanCond(c->disabled, d);
-		return;
-	}
-	if (c->kind == CASC_COND_PRESENCE)
-	{
-		const std::string& t = c->type;
-		if (t == "POPULATION") d.pop = true;
-		else if (t.compare(0, 5, "TECH_") == 0)  { if (c->id >= 0) d.techs.insert(c->id); }
-		else if (t.compare(0, 6, "BONUS_") == 0) { if (c->id >= 0) d.bonuses.insert(c->id); }
-		else if (t.compare(0, 6, "CIVIC_") == 0) d.civicAny = true;
-		else if (t.compare(0, 9, "RELIGION_") == 0) d.religion = true;
-		else if (t.compare(0, 12, "CORPORATION_") == 0) d.corp = true;
-		else if (t.compare(0, 9, "BUILDING_") == 0) { if (c->id >= 0) d.buildings.insert(c->id); }
-		return;
-	}
-	if (c->kind == CASC_COND_PREDICATE)
-	{
-		switch (c->predKind)
-		{
-		case CASC_PRED_HAS_POWER:               d.power = true; break;
-		case CASC_PRED_IS_GOLDEN_AGE:           d.goldenAge = true; break;
-		case CASC_PRED_HAS_CORPORATION:         d.corp = true; break;
-		case CASC_PRED_HAS_RELIGION:
-		case CASC_PRED_IS_HOLY_CITY:            d.religion = true; break;
-		case CASC_PRED_HAS_STATE_RELIGION:
-		case CASC_PRED_STATE_RELIGION_IN_CITY:
-		case CASC_PRED_STATE_RELIGION:
-		case CASC_PRED_IS_STATE_RELIGION_HOLY_CITY: d.stateReligion = true; break;
-		case CASC_PRED_HAS_BONUS:               if (c->id >= 0) d.bonuses.insert(c->id); break;
-		default: break;   // plot/domain predicates don't gate a building's city-scope buildability re-check here
-		}
-		return;
-	}
-}
-
 // The buckets (building-id lists), built once. Over-inclusive is fine; a missed class self-heals at the boundary.
 static bool s_bcIdxBuilt = false;
 static std::vector<int> s_bcPop, s_bcReligion, s_bcCorp, s_bcPower, s_bcGolden, s_bcStateRel, s_bcCivic;
@@ -175,9 +119,11 @@ static void bc_buildIndices()
 	{
 		const CvJsonInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
 		if (j == NULL) continue;
-		BcDeps d;
-		bc_scanCond(j->requiresBuild(), d);
-		bc_scanCond(j->requiresOperate(), d);
+		CascadeCondDeps d;
+		// The ONE shared HAVE-atom scanner (EnablerKernel::scanCondDeps) over build + operate; no UNIT_ leg, no
+		// DYNAMIC marking (plot/domain predicates don't gate a building's city-scope buildability re-check here).
+		EnablerKernel::scanCondDeps(j->requiresBuild(), d, /*bTrackUnits*/ false, /*bMarkDynamic*/ false);
+		EnablerKernel::scanCondDeps(j->requiresOperate(), d, /*bTrackUnits*/ false, /*bMarkDynamic*/ false);
 		// the amount-prereq buildings (getPrereqNumOfBuildings) also make `b` depend on those buildings' counts
 		const IDValueMap<BuildingTypes, int>& amtPrereqs = GC.getBuildingInfo((BuildingTypes)b).getPrereqNumOfBuildings();
 		for (IDValueMap<BuildingTypes, int>::const_iterator it = amtPrereqs.begin(); it != amtPrereqs.end(); ++it)

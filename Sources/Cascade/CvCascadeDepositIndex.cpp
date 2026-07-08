@@ -110,8 +110,8 @@ void DepositIndex::compile(CascadeDeposit& d)
 // One CvJsonModifiers unit's families -> compiled records: per (address, entry), the record carries the entry's
 // payload (value100 / enabled / disabled, borrowed) + the entry's unit spelled as the unit segment; compile()
 // interns + FK-resolves. Family map order (std::map, address-sorted) is the record order -- every consumer sums
-// commutatively, so order carries no semantics.
-static void di_pushFamilies(const CvJsonModifiers* mods, std::vector<CascadeDeposit>& out)
+// commutatively, so order carries no semantics. `j` = the SOURCE info (the SELF per token collapses onto it).
+static void di_pushFamilies(const CvJsonInfo* j, const CvJsonModifiers* mods, std::vector<CascadeDeposit>& out)
 {
 	if (mods == NULL || mods->empty()) return;
 	const std::map<std::string, CvJsonModFamily*>& fams = mods->all();
@@ -134,9 +134,27 @@ static void di_pushFamilies(const CvJsonModifiers* mods, std::vector<CascadeDepo
 			d.disabled = e->disabled;
 			d.unitQual = e->unitQual;
 			d.hasPer = e->hasPer;
+			d.perType = e->perType;
 			d.perTypeId = e->perTypeId;
 			d.perEach = e->perEach;
+			// resolve the §3.7 scope DEFAULT at push: the authored per scope, else the deposit's OWN scope --
+			// the resolver (MMKernel::perScale) then never needs the record's own scope back.
+			d.perScope = (e->perScope >= 0) ? e->perScope : (int)e->scope;
 			d.perAnyOf = e->perAnyOf.empty() ? NULL : &e->perAnyOf;
+			d.perAnyOfTypes = e->perAnyOfTypes.empty() ? NULL : &e->perAnyOfTypes;
+			// SELF ("per how many of me exist", json §3.1) collapses at PUSH time onto the SOURCE info's own
+			// type -- the resolver then counts it like any typed per (a unit's world count = lifetime-created,
+			// empire = live, via cascadeCountOf). Unresolvable stays "SELF": the resolver SKIPS the multiply
+			// (a bogus 0 count would zero the contribution).
+			if (d.hasPer && d.perType == "SELF")
+			{
+				const int iSelf = GC.getInfoTypeForString(j->getType(), true);
+				if (iSelf >= 0) { d.perType = j->getType(); d.perTypeId = iSelf; }
+			}
+			// intern a CATCH-ALL token (perTypeId stayed -1: POPULATION/TURN/SELF/...) -- the hot-path guard
+			// compares ints, never strings (append-only interner; ids survive a re-map).
+			if (d.hasPer && d.perTypeId < 0 && !d.perType.empty())
+				d.perTokenSeg = DepositIndex::internSegment(d.perType);
 			DepositIndex::compile(d);
 		}
 	}
@@ -151,8 +169,8 @@ void DepositIndex::pushInfo(const CvJsonInfo* j)
 	DiCompiledSet& set = s_compiled[j];
 	set.main.clear();          // re-push-safe: a re-mapped info compiles fresh, never doubles
 	set.whenObsolete.clear();
-	di_pushFamilies(mods, set.main);
-	di_pushFamilies(obs, set.whenObsolete);
+	di_pushFamilies(j, mods, set.main);
+	di_pushFamilies(j, obs, set.whenObsolete);
 }
 
 void DepositIndex::clearCompiled()

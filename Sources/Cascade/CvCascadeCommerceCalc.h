@@ -4,9 +4,10 @@
 
 //
 //	CommerceCalc -- StoneBase CommerceSplit.cs + CommercePackages.cs: the §2 commerce stage. Commerce is the §1
-//	commerce-YIELD split (CommerceSplit RIDES YieldRate("commerce")): each commerce TYPE = its slider share of the modified
-//	commerce yield (HALF 1) + the baseExtra free-additions ×100 (HALF 2), × the commerce percent stack + Process(=0),
-//	clamped; civil disorder forces the realized rate to 0. See patterns.md (single-source law) +
+//	commerce-YIELD split: each commerce TYPE = its slider share of the modified commerce yield (HALF 1) + the
+//	base-extra free-additions ×100 (HALF 2), × the commerce percent stack + Process(=0), clamped; civil disorder
+//	forces the realized rate to 0. The LIVE path is CvCascadeAccumulator's standing scope packages combined at
+//	read time through combineSplit below. See patterns.md (single-source law) +
 //	docs/plans/structural-cleanup/modifier-machine.md.
 //
 //	Purely-organizational static-methods class: NO data members, never instantiated, no per-instance state.
@@ -37,11 +38,6 @@ public:
 	// PURE_TRAITS via sumTrait100/traitData.)
 	static long playerExtra(const std::string& channel, const CvPlayer& player, const CvCascadeEvalCtx& ec);
 
-	// §2 BASE: building-keyed commerce ×100 (GlobalBuildingExtraCommerces, BuildingKeyedCommercePackage) -- a building G
-	// grants commerce to OTHER building TYPES B empire-wide: Σ over the city's ACTIVE buildings B of (Σ over granting
-	// buildings G of count(G) × G's {ch}.empire.buildings.{B}.flat). Pure deposits (no readJson gap). ×100.
-	static long buildingKeyed(const std::string& channel, const CvCity* pCity, const CvCascadeEvalCtx& ec);
-
 	// §2 BASE: shrine commerce ×100 -- Σ active SHRINE buildings (getGlobalReligionCommerce FK) of religion.shrine.{c} ×
 	// world religion-levels (ShrinePackage; engine CvCity:12278). ⏳ INTERIM config read.
 	static long shrine(const std::string& channel, const CvCity* pCity);
@@ -65,14 +61,10 @@ public:
 	// team-revenue-modified, ceil(÷100). Returns human (the §2 bucket ×100s it). ⏳ INTERIM config read.
 	static int corporation(const std::string& channel, const CvCity* pCity, const CvCascadeEvalCtx& ec);
 
-	// The §2 HALF-2 baseExtra100 SUM -- every BASE package (specialist/religion/corporation/goldenAge/
-	// building-commerce block/playerExtra) as ONE plugin number (owner 2026-07-03: isolate the packages; the
-	// accumulator stores this standing, the assembler below derives it fresh).
-	static long baseExtra100(const std::string& channel, const CvCity* pCity, const CvCascadeEvalCtx& ec);
-
 	// ===== the SCOPED HALVES (the scope-package fills ride these) =====
 	// The CITY-ONLY base terms ×100: religion + corporation + building-own + shrine + corpHQ + doubleTime
-	// (baseExtra100 MINUS the player-scope goldenAge/playerExtra and the keyed realization).
+	// (the HALF-2 base-extra sum MINUS the player-scope goldenAge/playerExtra and the keyed/SR realizations,
+	// which are separate scope packages).
 	static long baseOwn100(const std::string& channel, const CvCity* pCity, const CvCascadeEvalCtx& ec);
 	// The state-religion POOL (player-scope: Σ owned building TYPES' count × config) -- × the city match at read.
 	static long stateReligionPool(const std::string& channel, const CvPlayer& player);
@@ -83,15 +75,11 @@ public:
 		std::map<int, long>& out);
 
 	// The CombineSplit KERNEL (CvCity:11969-11996, bit-exact): slider split of the commerce yield + the capped
-	// baseExtra, × the commerce percent stack, + Process (0, TODO), clamps/sentinels; disorder -> 0. The slider
-	// + disorder are read LIVE here -- they need no invalidation anywhere. Single-sourced: the calculator's
-	// assembler AND the accumulator's read-time combine both call THIS.
+	// base-extra, × the commerce percent stack, + Process (0, TODO), clamps/sentinels; disorder -> 0. The slider
+	// + disorder are read LIVE here -- they need no invalidation anywhere. Single-sourced: the accumulator's
+	// read-time combine calls THIS.
 	static long combineSplit(CommerceTypes eC, const CvCity* pCity, long yieldCommerce100, long prodRate,
 		long lBaseExtra100, int iTotalModifier);
-
-	// The §2 COMMERCE-SPLIT ASSEMBLER (CommerceSplit.cs) = combineSplit over fresh baseExtra100 + percentStack.
-	static long commerceRate100(const std::string& channel, CommerceTypes eC, const CvCity* pCity, const CvCascadeEvalCtx& ec,
-		long yieldCommerce100, long prodRate);
 };
 
 #endif // CV_CASCADE_COMMERCE_CALC_H

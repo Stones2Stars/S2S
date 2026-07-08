@@ -13,8 +13,9 @@
 //	applied at read. No epochs, no stamps, no version polling, no read-side ensure protocol.
 //
 //	The generic combine lives in the accessors below (channel-parameterized, family positions realized as
-//	the package layout); the CALCULATORS (YieldRate/CommerceCalc/CascadeWellbeing/CascadeScalarChannels)
-//	stay as the from-scratch verification ORACLES the nets diff against -- they never read a package.
+//	the package layout); the CALCULATORS (CommerceCalc/CascadeWellbeing/CascadeScalarChannels) serve the
+//	/computed decomposition endpoints (from-scratch recomputes attributed to NAMED terms) -- they never
+//	read a package.
 //
 
 #include "Defines/CvEnums.h"
@@ -91,8 +92,8 @@ public:
 	static bool enBuildUnlocked(const CvPlayer* pPlayer, int eBuild, const CvPlot* pPlot);
 	// the SERVING canBuild unlock (the worker hot path -- per (plot × build) at planning scale): rem-set +
 	// target-side obsolescence + the CONFIG techPrereq compare (static Info, the sanctioned class) --
-	// verdict-equivalent to the legacy triple by construction; the FULL requires.build eval stays the
-	// harness's net side (enBuildUnlocked, plot-sampled) proving the data equivalence continuously
+	// verdict-equivalent to the legacy triple by construction; enBuildUnlocked above is the FULL
+	// requires.build eval (the plot-aware form)
 	static bool enBuildUnlockedFast(const CvPlayer* pPlayer, int eBuild);
 	// the promotion composite: the cascade frontier half over the bespoke legacy half (isPromotionValidLegacy(...,true))
 	static bool enPromotionValid(const CvUnit* pUnit, int ePromo);

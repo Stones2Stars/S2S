@@ -7,6 +7,7 @@
 
 #include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
 #include "CvJsonHeritageInfo.h"
+#include "CvJsonParse.h"          // the shared walkers (jsonChildObj/jsonIdBool)
 
 int CvJsonHeritageInfo::getEraCommerceChange(int iCommerce, int iEra) const
 {
@@ -17,14 +18,6 @@ int CvJsonHeritageInfo::getEraCommerceChange(int iCommerce, int iEra) const
 		if (bands[i].eraMin <= iEra) iTotal += bands[i].value;
 	return iTotal;
 }
-
-static const picojson::object* child_obj(const picojson::object& o, const char* key)
-{
-	picojson::object::const_iterator it = o.find(key);
-	return (it != o.end() && it->second.is<picojson::object>()) ? &it->second.get<picojson::object>() : NULL;
-}
-static bool id_bool(const picojson::object& io, const char* key)
-{ picojson::object::const_iterator it = io.find(key); return (it != io.end() && it->second.is<bool>()) ? it->second.get<bool>() : false; }
 
 void CvJsonHeritageInfo::mapFrom(const picojson::value& entity)
 {
@@ -37,8 +30,8 @@ void CvJsonHeritageInfo::mapFrom(const picojson::value& entity)
 	static const char* fam[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };   // COMMERCE_* order
 	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
 	{
-		const picojson::object* fo = child_obj(o, fam[c]);          if (!fo) continue;
-		const picojson::object* so = child_obj(*fo, "empire");      if (!so) continue;
+		const picojson::object* fo = jsonChildObj(o, fam[c]);       if (!fo) continue;
+		const picojson::object* so = jsonChildObj(*fo, "empire");   if (!so) continue;
 		picojson::object::const_iterator fl = so->find("flat");     if (fl == so->end()) continue;
 		if (fl->second.is<double>())
 		{
@@ -57,13 +50,13 @@ void CvJsonHeritageInfo::mapFrom(const picojson::value& entity)
 				picojson::object::const_iterator ve = e.find("value");
 				if (ve == e.end() || !ve->second.is<double>()) continue;
 				b.value = (int)ve->second.get<double>();
-				const picojson::object* en = child_obj(e, "enabled");
+				const picojson::object* en = jsonChildObj(e, "enabled");
 				if (en) { picojson::object::const_iterator mn = en->find("min"); if (mn != en->end() && mn->second.is<double>()) b.eraMin = (int)mn->second.get<double>(); }
 				m_aEraCommerce[c].push_back(b);
 			}
 		}
 	}
 
-	if (const picojson::object* io = child_obj(o, "identity"))
-		m_bNeedsLanguage = id_bool(*io, "needsLanguage");
+	if (const picojson::object* io = jsonChildObj(o, "identity"))
+		m_bNeedsLanguage = jsonIdBool(*io, "needsLanguage");
 }

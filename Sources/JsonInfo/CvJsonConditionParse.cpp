@@ -7,7 +7,7 @@
 #include "CvGameCoreDLL.h"
 #include "CvJsonConditionParse.h"
 #include "CvJsonCondition.h"
-#include "Defines/CvGlobals.h"
+#include "CvJsonParse.h"   // jsonResolveId (FK diagnostics) + jsonParseScope (the ONE scope-token vocabulary)
 #include <string>
 
 // ---- the closed string->typed maps (the ONE place a name/scope/connection is recognized) -----------------------
@@ -41,18 +41,6 @@ static CvCascScope cp_impliedScope(const std::string& t)
 	return CASC_SCOPE_CITY;
 }
 
-static CvCascScope cp_parseScope(const std::string& s)
-{
-	if (s == "world") return CASC_SCOPE_WORLD;   if (s == "team") return CASC_SCOPE_TEAM;
-	if (s == "empire") return CASC_SCOPE_EMPIRE; if (s == "area") return CASC_SCOPE_AREA;
-	if (s == "city") return CASC_SCOPE_CITY;     if (s == "plot") return CASC_SCOPE_PLOT;
-	if (s == "improvement") return CASC_SCOPE_IMPROVEMENT; if (s == "feature") return CASC_SCOPE_FEATURE;
-	if (s == "terrain") return CASC_SCOPE_TERRAIN; if (s == "route") return CASC_SCOPE_ROUTE;
-	if (s == "building") return CASC_SCOPE_BUILDING; if (s == "specialist") return CASC_SCOPE_SPECIALIST;
-	if (s == "unit") return CASC_SCOPE_UNIT;     if (s == "self") return CASC_SCOPE_SELF;
-	return CASC_SCOPE_EMPIRE;
-}
-
 static CvCascConnection cp_parseConnection(const std::string& c)
 {
 	if (c == "trade") return CASC_CONN_TRADE;
@@ -77,24 +65,21 @@ static bool cp_isTypeRef(const std::string& n)
 	    || cp_starts(n, "GAMEOPTION_") || cp_starts(n, "PROPERTY_");
 }
 
-// FK-resolve a type/param string to its engine id (-1 = not an infotype / a token like POPULATION).
-static int cp_resolveId(const std::string& s) { return GC.getInfoTypeForString(s.c_str(), true); }
-
-// ---- node builders ---------------------------------------------------------------------------------------------
+// ---- node builders (FK resolution via jsonResolveId -- unresolved ids land in the load-time diagnostics) --------
 
 static CvJsonCondition* cp_presence(const std::string& type, CvCascScope scope, int min, int max,
                                        CvCascConnection conn, CvCascVicinity vic)
 {
 	CvJsonCondition* c = new CvJsonCondition();
 	c->kind = CASC_COND_PRESENCE; c->type = type; c->scope = scope; c->min = min; c->max = max;
-	c->connection = conn; c->vicinity = vic; c->id = cp_resolveId(type);
+	c->connection = conn; c->vicinity = vic; c->id = jsonResolveId(type);
 	return c;
 }
 static CvJsonCondition* cp_predicate(CvCascPredKind k, const std::string& param, int min, int max)
 {
 	CvJsonCondition* c = new CvJsonCondition();
 	c->kind = CASC_COND_PREDICATE; c->predKind = k; c->param = param; c->min = min; c->max = max;
-	if (!param.empty()) c->id = cp_resolveId(param);
+	if (!param.empty()) c->id = jsonResolveId(param);
 	return c;
 }
 static CvJsonCondition* cp_group() { CvJsonCondition* c = new CvJsonCondition(); c->kind = CASC_COND_GROUP; return c; }
@@ -142,7 +127,7 @@ static CvJsonCondition* cp_parseObject(const picojson::object& o)
 		{
 			const std::string type = ty->get<std::string>();
 			const std::string sc = po_str(o, "scope");
-			return cp_presence(type, sc.empty() ? cp_impliedScope(type) : cp_parseScope(sc),
+			return cp_presence(type, sc.empty() ? cp_impliedScope(type) : jsonParseScope(sc, CASC_SCOPE_EMPIRE),
 			                   po_int(o, "min", -1), po_int(o, "max", -1),
 			                   cp_parseConnection(po_str(o, "connection")), cp_parseVicinity(po_str(o, "vicinity")));
 		}

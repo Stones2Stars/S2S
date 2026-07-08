@@ -16,10 +16,9 @@
 //	   canWorkOn     -- which coarse plot classes citizens may work (water/ocean/peaks/space)
 //
 //	This is the GATE-3 WIRING surface: the legacy CvTeam capability getters FLIP their bodies to these queries
-//	(the getter-contract cut, cutover.md ruling 5) and their event-maintained counters + processTech applies are
-//	deleted. Parity was proven pre-flip via /computed/teamFlags vs the offline dry-calc (0 diverging, all players).
+//	(the getter-contract cut, cutover.md) and their event-maintained counters + processTech applies are deleted.
 //	⚠ Engine-side compositions stay in the GETTERS, never here: permanentAlliance/vassals fold their game options
-//	in CvTeam (capabilities.md), and mapCentering (a latch with building grantors) is NOT flipped yet.
+//	in CvTeam (capabilities.md).
 //
 //	PERF: queries are hot (isTerrainTrade rides pathing/trade-network loops), so the union is CACHED per team --
 //	on the ONE CvDerivedCacheSet protocol (scope-packages.md §3b: owner-side storage on CvTeam, the component owns
@@ -89,15 +88,6 @@ public:
 	// The CacheSet refresh target (CvTeam::cascadeRefreshCaps delegates here): rebuilds the union + the
 	// precomputed hot-path reads from CURRENT state, fully defining every field (contract rule 2).
 	static void refreshInto(const CvTeam& kTeam, CascadeTeamCaps& c);
-
-	// ---- the IN-BODY getter shadow, now FLIP-WITH-NET (2026-07-02; step 1 ran clean at 5.49M calls / 0
-	// diverging incl. the load path + a full turn). Each getter passes its LEGACY counter verdict in and returns
-	// the CASCADE verdict (authoritative post-flip); the diff net stays armed — per-(team,flag) diverging counts
-	// flush per turn as [CAPSHADOW] spine lines — until the counters are deleted the cycle after a clean net.
-	// Diff tallying is gPlayerLogLevel-gated; the cascade verdict is computed regardless (it IS the return).
-	static bool shadow(TeamTypes eTeam, CascadeCapFlag eFlag, bool bLegacy);
-	static bool shadowTerrain(TeamTypes eTeam, TerrainTypes eT, bool bLegacy);
-	static void shadowFlush();   // per-turn (called from the modifier shadow's doTurn site)
 };
 
 #endif

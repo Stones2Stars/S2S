@@ -21,45 +21,21 @@
 #include "CvJsonInfo.h"                // CvJsonInfo (+ cascadeStartNode) -- the mapped info data + the TECH_GAME_START root
 #include "CvCascadeDepositIndex.h"     // DepositIndex::pushInfo/clearCompiled -- the compiled deposit index (push-time interning)
 #include "CvJsonTechInfo.h"            // CvJsonTechInfo -- for the capabilities read-back survey
-#include "Repos/InfoRepo.h"            // the per-info-type home (InfoRepo<CvXInfo>) -- readJson edit()s, mapFrom populates
-// The cascade info classes = the InfoRepo<CvXInfo> tags for the RJ_REPO_TYPES prefix dispatch (specific headers, not the umbrella).
-#include "Infos/CvBuildingInfo.h"
-#include "Infos/CvUnitInfo.h"
-#include "Infos/CvTechInfo.h"
-#include "Infos/CvCivicInfo.h"
-#include "Infos/CvCivicOptionInfo.h"
-#include "Infos/CvTraitInfo.h"
-#include "Infos/CvSpecialistInfo.h"
-#include "Infos/CvBonusInfo.h"
-#include "Infos/CvReligionInfo.h"
-#include "Infos/CvCorporationInfo.h"
-#include "Infos/CvPromotionInfo.h"
-#include "Infos/CvPromotionLineInfo.h"
-#include "Infos/CvImprovementInfo.h"
-#include "Infos/CvFeatureInfo.h"
-#include "Infos/CvTerrainInfo.h"
-#include "Infos/CvRouteInfo.h"
-#include "Infos/CvProjectInfo.h"
-#include "Infos/CvProcessInfo.h"
-#include "Infos/CvHeritageInfo.h"
-#include "Infos/CvCultureLevelInfo.h"
-#include "Infos/CvUnitCombatInfo.h"
-#include "Infos/CvBuildInfo.h"
-#include "Infos/CvPropertyInfo.h"
+#include "Repos/InfoRepo.h"            // the per-info-type home (InfoRepo<CvXInfo>) -- readJson edit()s, mapFrom populates;
+                                       // the CvXInfo tag types for the RJ_REPO_TYPES prefix dispatch are forward-declared there
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <set>
 #include <map>
 #include <string>
-#include <cstdlib>   // getenv -- the BTS Logs dir for the heal-diff file dump
 
 // ===================== [READJSON] spine domain (logging.md §4: logging is a spine CONSUMER) =====================
 enum RjEvt
 {
 	RJE_UNRESOLVED = 1, RJE_MOD, RJE_EDGE, RJE_GRANT, RJE_DIR, RJE_PROBE, RJE_COND_SURVEY, RJE_MOD_SURVEY,
 	RJE_EDGE_SURVEY, RJE_EDGE_UNRES, RJE_GRANT_SURVEY, RJE_GRANT_UNRES, RJE_KEY, RJE_MAP, RJE_CAP_SURVEY,
-	RJE_CAP, RJE_MAP_SUMMARY, RJE_HEALDIFF, RJE_HEALDIFF_SUMMARY
+	RJE_CAP, RJE_MAP_SUMMARY
 };
 
 // DOMAIN-LOCAL field tags, shared by name across lines where a field recurs.
@@ -71,8 +47,7 @@ enum RjFld
 	RJF_PERSCALED, RJF_BAREVALUES, RJF_EDGES, RJF_BUCKETENTRIES, RJF_BUCKETKINDS, RJF_ALLOWEDCLAUSES, RJF_CAPKINDS,
 	RJF_LISTENTRIES, RJF_LISTKINDS, RJF_PULSES, RJF_PULSECHANNELS, RJF_FLAGS, RJF_ENTRYARRAYS, RJF_OBJECTS,
 	RJF_KEY, RJF_COUNT, RJF_CLASS, RJF_DEPOSITS, RJF_REQBUILD, RJF_REQOPERATE, RJF_ALLOWED, RJF_GRANTLISTS,
-	RJF_GRANTPULSES, RJF_GRANTING, RJF_CAPGRANTS, RJF_DISTINCTNAMES, RJF_NAME, RJF_WITHDATA,
-	RJF_FIELD, RJF_ENGINEVAL, RJF_JSONVAL, RJF_CHECKED, RJF_DIVERGING
+	RJF_GRANTPULSES, RJF_GRANTING, RJF_CAPGRANTS, RJF_DISTINCTNAMES, RJF_NAME, RJF_WITHDATA
 };
 
 static const char* rj_prefix(int evt)
@@ -96,8 +71,6 @@ static const char* rj_prefix(int evt)
 	case RJE_CAP_SURVEY:   return "[READJSON/cap-survey]";
 	case RJE_CAP:          return "[READJSON/cap]";
 	case RJE_MAP_SUMMARY:  return "[READJSON/map-summary]";
-	case RJE_HEALDIFF:         return "[READJSON/healdiff]";
-	case RJE_HEALDIFF_SUMMARY: return "[READJSON/healdiff-summary]";
 	default:               return "[READJSON]";
 	}
 }
@@ -162,11 +135,6 @@ static const char* rj_field(int tag, SpineFieldType* peType)
 	case RJF_DISTINCTNAMES: return "distinctNames";
 	case RJF_NAME:          *peType = SFT_STR; return "name";
 	case RJF_WITHDATA:      return "entitiesWithCascadeData";
-	case RJF_FIELD:         *peType = SFT_STR; return "field";
-	case RJF_ENGINEVAL:     return "engineVal";
-	case RJF_JSONVAL:       return "jsonVal";
-	case RJF_CHECKED:       return "checked";
-	case RJF_DIVERGING:     return "diverging";
 	default:                return NULL;
 	}
 }
@@ -290,15 +258,6 @@ const std::string& cascadeReadJsonStats(bool bSet, int& iFiles, int& iEntities, 
 	if (bSet) { s_files = iFiles; s_entities = iEntities; s_dir = sDir; }
 	else { iFiles = s_files; iEntities = s_entities; }
 	return s_dir;
-}
-
-// Sibling stash for the heal/spawn/free-promo shadow-diff summary (see the header). The dark load-time
-// [READJSON/healdiff-summary] is re-surfaced per turn by the [MODIFIER/repo] census where logging is live.
-void cascadeReadJsonHealDiffStats(bool bSet, int& iChecked, int& iDiverging)
-{
-	static int s_checked = -1, s_diverging = -1;   // -1 = the shadow-diff never ran
-	if (bSet) { s_checked = iChecked; s_diverging = iDiverging; }
-	else { iChecked = s_checked; iDiverging = s_diverging; }
 }
 
 void cascadeLoadJson()
@@ -486,12 +445,6 @@ void cascadeLoadJson()
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_KEY, 1)
 			.addStr(RJF_KEY, it->first.c_str()).addI(RJF_COUNT, it->second)
 			.addStr(RJF_CLASS, jsonKeyClassName(keyClass[it->first])));
-
-	// The heal/spawn/free-promo shadow-diff is RETIRED with its XML oracle (the archived CvXInfos --
-	// DEC-red-ratchet): the JSON is the only representation now; the heal surface is served at the getter wiring.
-	// The stats stash stays as never-ran (-1) so the per-turn census read keeps working.
-
-
 
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MAP_SUMMARY, 1).addI(RJF_WITHDATA, iAttached));
 }

@@ -73,6 +73,12 @@ bool cascadeIsBuildingActive(int eBuilding, const CvCascadeEvalCtx& ec);
 // families and provides nothing. Maintained in the SAME obsoletion process as the active set; NULL set = none.
 bool cascadeIsBuildingObsolete(int eBuilding, const CvCascadeEvalCtx& ec);
 
+// THE count implementation ("how many of TYPE/token at SCOPE?") -- the ONE countable core shared by the
+// condition count-atoms (ev_countOf) and the §3.7 `per` resolver (MMKernel::perScale); never a parallel count
+// path (DEC-single-implementation). Routes by type prefix / catch-all token, tally-resolved at the cross-city
+// scopes (tally.md); a type naming no countable domain falls back to presence 0/1.
+int cascadeCountOf(int iTypeId, const std::string& sType, CvCascScope eScope, const CvCascadeEvalCtx& ec);
+
 // The §9 policy memo's invalidation hook (the 2026-07-05 grind fix): call on civic/trait state changes
 // (wired into markPlayerScopeAndCities -- the event fan-in); the per-player policy verdict recomputes lazily.
 void cascadePolicyStateChanged(int ePlayer);

@@ -45,177 +45,16 @@ bool UnitCascade::capped(const CvJsonInfo* j, int eU, const CvPlayer& kPlayer, b
 	return false;
 }
 
-// reachable(v) (StoneBase UnitCascade.Reachable): v is itself available OR some DIRECT upgrade of v (its dormant
-// triggers = requires.build.dormant.all) is reachable. Cycle-guarded (a cycle resolves to the self-available terminal).
-bool UnitCascade::reachable(int v, const std::set<int>& available, std::map<int, bool>& cache, std::set<int>& inProgress)
-{
-	std::map<int, bool>::const_iterator c = cache.find(v);
-	if (c != cache.end()) return c->second;
-	if (!inProgress.insert(v).second) return available.count(v) != 0;   // cycle -> self-available terminal
-	bool r = available.count(v) != 0;
-	if (!r)
-	{
-		const CvJsonInfo* j = InfoRepo<CvUnitInfo>::get().get(v);
-		if (j != NULL)
-		{
-			const std::vector<int>& dorm = j->dormantTriggers();
-			for (size_t i = 0; i < dorm.size() && !r; ++i)
-				r = reachable(dorm[i], available, cache, inProgress);
-		}
-	}
-	inProgress.erase(v);
-	cache[v] = r;
-	return r;
-}
-
-// --- UnitCascade.cs: the city's TRAINABLE set (the engine canTrain TRUE-set), GENERATE-then-GATE. Units REUSE the
-// building machinery -- only the inputs differ. (1) GATE availability: all units minus spawnOnly (identity.spawnOnly, the
-// cascade's OWN flag -- never player-trained; self-containment, StoneBase u.SpawnOnly) / tech-obsoleted / instance-capped,
-// then requires.build (STRICT). (2) GENERATE frontier: all units
-// minus spawnOnly/obsoleted/replaced-when-the-replacer-is-available (the `replaces` edge -- source-side, inverted;
-// inert today, enabler.md §2). (3) GATE the frontier: LISTED = available AND not dormant (requires.build.dormant.all =
-// the direct-upgrade closure: a unit hides only when EVERY direct upgrade is reachable-trainable; one dead branch keeps
-// it buildable). AugmentState vicinity/gov-center operating buildings are read LIVE by the evaluator.
-void UnitCascade::trainable(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& result)
-{
-	std::set<int> waived;
-	BuildingCascade::augmentWaived(kPlayer, kTeam, waived);   // SAME AugmentState waiver the building cascade uses (shared evaluator)
-	CvCascadeEvalCtx ec; ec.city = pCity; ec.plot = pCity->plot(); ec.player = &kPlayer; ec.team = &kTeam; ec.waivedPrereqBuildings = &waived;
-	// The two per-city operating buildings (active set + in-vicinity `provides` supply, json §5a): a herd/tamed-animal
-	// building that provides e.g. HORSE ⇒ HORSE in-vicinity, so a horse unit's `requires` {BONUS, connection:vicinity}
-	// trains. Computed from the cascade, NOT the engine's hasVicinityBonus (DEC-calc-zero-ride-in).
-	EnablerKernel::wireOperatingBuildings(pCity, ec);
-	CvCascadeEvalFlags flags; flags.strictStateReligionForBuild = true;
-	const bool noNationalLimit = GC.getGame().isOption(GAMEOPTION_NO_NATIONAL_UNIT_LIMIT);
-	const int nU = GC.getNumUnitInfos();
-
-	// (1) GATE availability.
-	std::set<int> available;
-	for (int u = 0; u < nU; ++u)
-	{
-		const CvJsonInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
-		// spawnOnly: never player-trained (StoneBase u.SpawnOnly = identity.spawnOnly). Read the cascade's OWN flag, NOT
-		// the engine productionCost<0 marker (self-containment, DEC-calc-zero-ride-in). Value-equivalent on current data.
-		if (j != NULL && ((const CvJsonUnitInfo*)j)->spawnOnly) continue;
-		if (EnablerKernel::obsoletedByHeldTech(j, kTeam)) continue;
-		if (capped(j, u, kPlayer, noNationalLimit)) continue;
-		if (j != NULL && !cascadeGateOk(j->getGate(), ec, flags)) continue;   // entity-level enabled/disabled (owner 2026-07-08)
-		if (j != NULL && j->requiresBuild() != NULL && !cascadeEvalCondition(j->requiresBuild(), ec, flags)) continue;
-		available.insert(u);
-	}
-
-	// The replaced set: a unit is HIDDEN if any AVAILABLE unit's `replaces.units` names it (source-side edge inverted;
-	// no target-side replacedBy is curated -- inert today). Computed BEFORE its own requires is weighed (a GENERATE removal).
-	std::set<int> replacedUnits;
-	for (std::set<int>::const_iterator a = available.begin(); a != available.end(); ++a)
-	{
-		const CvJsonInfo* ja = InfoRepo<CvUnitInfo>::get().get(*a);
-		if (ja == NULL) continue;
-		const std::vector<int>* re = ja->edge("replaces.units");
-		if (re != NULL)
-			for (size_t i = 0; i < re->size(); ++i) replacedUnits.insert((*re)[i]);
-	}
-
-	// (2) GENERATE frontier: all units minus spawnOnly / obsoleted / replaced.
-	std::set<int> frontier;
-	for (int u = 0; u < nU; ++u)
-	{
-		const CvJsonInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
-		if (j != NULL && ((const CvJsonUnitInfo*)j)->spawnOnly) continue;   // spawnOnly (cascade's own flag; self-containment)
-		if (EnablerKernel::obsoletedByHeldTech(j, kTeam)) continue;
-		if (replacedUnits.count(u) != 0) continue;
-		frontier.insert(u);
-	}
-
-	// (3) GATE the frontier: LISTED = in CAN GET ∧ available ∧ not dormant.
-	std::map<int, bool> cache; std::set<int> inProgress;
-	for (std::set<int>::const_iterator it = frontier.begin(); it != frontier.end(); ++it)
-	{
-		const int u = *it;
-		if (available.count(u) == 0) continue;   // in CAN GET but requires.build unmet => GREYED, not LISTED
-		const CvJsonInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
-		bool dormant = false;
-		if (j != NULL && !j->dormantTriggers().empty())
-		{
-			const std::vector<int>& dorm = j->dormantTriggers();
-			dormant = true;
-			for (size_t i = 0; i < dorm.size() && dormant; ++i)
-				if (!reachable(dorm[i], available, cache, inProgress)) dormant = false;
-		}
-		if (!dormant) result.insert(u);
-	}
-}
-
 // ===========================================================================================================
 // The isolated-box REVERSE INDEX for UNITS (enabler-frontier-perf.md Part A) -- the UNIT analogue of the proven
 // s_bc* building index (CvCascadeBuildingCascade.cpp). At LOAD we invert every unit's requires.build tree into
 // "HAVE-atom kind -> {unit ids that reference it}", so a HAVE-change (pop / religion / corp / power / a specific
 // tech or bonus, or a building the unit requires) re-checks ONLY its bucket via the shared uc_isTrainable,
-// instead of the ~3340-unit full re-walk. trainable() gates ONLY on requires.build (NOT operate), so the scan
-// mirrors bc_scanCond but over requires.build alone. SAFE-BY-DESIGN: over-inclusion only costs a few extra
-// re-checks; the slice-boundary full rebuild remains the net.
+// instead of the ~3340-unit full re-walk. trainable() gates ONLY on requires.build (NOT operate), so the shared
+// scanner (EnablerKernel::scanCondDeps, with the UNIT_ leg on) runs over requires.build alone. SAFE-BY-DESIGN:
+// over-inclusion only costs a few extra re-checks; the slice-boundary full rebuild remains the net.
 // ===========================================================================================================
 namespace {
-
-// The unit dependency signature -- which HAVE-classes gate this unit's trainability (mirror of BcDeps; adds the
-// UNIT_ leg because a unit's requires may reference another unit's count). techs/civic/golden/stateReligion are
-// captured to fully mirror the building index (built-for-future; the wired consumers today are pop/religion/corp/
-// power + the building-driven bonus/building legs).
-struct UcDeps
-{
-	bool pop, religion, corp, power, goldenAge, stateReligion, civicAny;
-	std::set<int> techs;      // specific TECH_ ids referenced in requires.build
-	std::set<int> bonuses;    // specific BONUS_ ids referenced (presence or HAS_BONUS predicate)
-	std::set<int> buildings;  // specific BUILDING_ ids referenced (a unit requiring a building's presence)
-	std::set<int> units;      // specific UNIT_ ids referenced (a unit requiring another unit's count)
-	UcDeps() : pop(false), religion(false), corp(false), power(false), goldenAge(false), stateReligion(false), civicAny(false) {}
-};
-
-// Recursively collect the HAVE-atoms a condition references into `d` (mirror of bc_scanCond, + the UNIT_ leg).
-static void uc_scanCond(const CvJsonCondition* c, UcDeps& d)
-{
-	if (c == NULL) return;
-	if (c->kind == CASC_COND_GROUP)
-	{
-		for (size_t i = 0; i < c->all.size(); ++i)    uc_scanCond(c->all[i], d);
-		for (size_t i = 0; i < c->anyOf.size(); ++i)  uc_scanCond(c->anyOf[i], d);
-		for (size_t i = 0; i < c->noneOf.size(); ++i) uc_scanCond(c->noneOf[i], d);
-		uc_scanCond(c->enabled, d);
-		uc_scanCond(c->disabled, d);
-		return;
-	}
-	if (c->kind == CASC_COND_PRESENCE)
-	{
-		const std::string& t = c->type;
-		if (t == "POPULATION") d.pop = true;
-		else if (t.compare(0, 5, "TECH_") == 0)  { if (c->id >= 0) d.techs.insert(c->id); }
-		else if (t.compare(0, 6, "BONUS_") == 0) { if (c->id >= 0) d.bonuses.insert(c->id); }
-		else if (t.compare(0, 6, "CIVIC_") == 0) d.civicAny = true;
-		else if (t.compare(0, 9, "RELIGION_") == 0) d.religion = true;
-		else if (t.compare(0, 12, "CORPORATION_") == 0) d.corp = true;
-		else if (t.compare(0, 9, "BUILDING_") == 0) { if (c->id >= 0) d.buildings.insert(c->id); }
-		else if (t.compare(0, 5, "UNIT_") == 0) { if (c->id >= 0) d.units.insert(c->id); }
-		return;
-	}
-	if (c->kind == CASC_COND_PREDICATE)
-	{
-		switch (c->predKind)
-		{
-		case CASC_PRED_HAS_POWER:               d.power = true; break;
-		case CASC_PRED_IS_GOLDEN_AGE:           d.goldenAge = true; break;
-		case CASC_PRED_HAS_CORPORATION:         d.corp = true; break;
-		case CASC_PRED_HAS_RELIGION:
-		case CASC_PRED_IS_HOLY_CITY:            d.religion = true; break;
-		case CASC_PRED_HAS_STATE_RELIGION:
-		case CASC_PRED_STATE_RELIGION_IN_CITY:
-		case CASC_PRED_STATE_RELIGION:
-		case CASC_PRED_IS_STATE_RELIGION_HOLY_CITY: d.stateReligion = true; break;
-		case CASC_PRED_HAS_BONUS:               if (c->id >= 0) d.bonuses.insert(c->id); break;
-		default: break;   // plot/domain predicates are read LIVE at eval; they don't bucket a HAVE-change re-check
-		}
-		return;
-	}
-}
 
 // The buckets (unit-id lists), built once. Over-inclusive is fine; a missed class self-heals at the boundary.
 static bool s_ucIdxBuilt = false;
@@ -233,8 +72,11 @@ static void uc_buildIndices()
 	{
 		const CvJsonInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
 		if (j == NULL) continue;
-		UcDeps d;
-		uc_scanCond(j->requiresBuild(), d);   // trainable() gates on requires.build ONLY (not operate)
+		CascadeCondDeps d;
+		// The ONE shared HAVE-atom scanner: requires.build ONLY (trainable() does not gate on operate), UNIT_ leg on
+		// (a unit's requires may reference another unit's count), no DYNAMIC marking (plot/domain predicates are
+		// read LIVE at eval; they don't bucket a HAVE-change re-check).
+		EnablerKernel::scanCondDeps(j->requiresBuild(), d, /*bTrackUnits*/ true, /*bMarkDynamic*/ false);
 		// a unit's dormant-triggers are its DIRECT UPGRADES: this unit's dormancy depends on their reachability,
 		// so a count change to an upgrade that flips its availability must re-check this predecessor.
 		const std::vector<int>& dorm = j->dormantTriggers();
@@ -269,8 +111,9 @@ struct UcRecheckCtx
 	std::set<int> inProgress;         // reachable() cycle guard (always fully unwound between roots)
 };
 
-// The availability gate (the EXACT (1) leg of trainable(): spawnOnly / tech-obsolete / instance-cap /
-// requires.build STRICT). Self-contained (tally + ctx reads); no dependency on other units' verdicts.
+// The ONE availability gate (trainable()'s (1) leg AND the targeted re-checks' -- the bc_isBuildable idiom, one
+// primitive, N consumers): spawnOnly / tech-obsolete / instance-cap / entity gate / requires.build STRICT.
+// Self-contained (tally + ctx reads); no dependency on other units' verdicts.
 static bool uc_isAvailable(int u, UcRecheckCtx& x)
 {
 	const CvJsonInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
@@ -291,9 +134,10 @@ static bool uc_availMemo(int u, UcRecheckCtx& x)
 	return r;
 }
 
-// reachable(v) (the EXACT UnitCascade::reachable, driven by the availability PREDICATE instead of a precomputed
-// set so a targeted recheck reproduces the full walk's dormancy verdict without materializing `available`):
-// v is itself available OR some DIRECT upgrade of v is reachable. Cycle-guarded (a cycle -> self-available).
+// reachable(v) (StoneBase UnitCascade.Reachable) -- the ONE upgrade-reachability closure, driven by the memoized
+// availability PREDICATE (uc_availMemo, the more general form: a precomputed set is just this predicate frozen),
+// so the full fill and a targeted recheck share one implementation: v is itself available OR some DIRECT upgrade
+// of v (its dormant triggers = requires.build.dormant.all) is reachable. Cycle-guarded (a cycle -> self-available).
 static bool uc_reachable(int v, UcRecheckCtx& x)
 {
 	std::map<int, bool>::const_iterator c = x.reachCache.find(v);
@@ -315,8 +159,8 @@ static bool uc_reachable(int v, UcRecheckCtx& x)
 	return r;
 }
 
-// The per-unit TRAINABLE verdict (the EXACT (3) leg of trainable(): LISTED = available ∧ ¬dormant, dormant =
-// EVERY direct upgrade reachable-trainable). NB the (2) GENERATE `replaces.units` removal is inert on current
+// The ONE per-unit TRAINABLE verdict (trainable()'s (3) leg AND the targeted re-checks': LISTED = available ∧
+// ¬dormant, dormant = EVERY direct upgrade reachable-trainable). NB the (2) GENERATE `replaces.units` removal is inert on current
 // data ("no target-side replacedBy is curated" -- trainable()'s own note); the incremental path treats it inert
 // and the slice-net covers any future curation of that edge.
 static bool uc_isTrainable(int u, UcRecheckCtx& x)
@@ -370,6 +214,65 @@ static void uc_appendMapBucket(const std::map<int, std::vector<int> >& m, int ke
 }
 
 } // namespace
+
+// --- UnitCascade.cs: the city's TRAINABLE set (the engine canTrain TRUE-set), GENERATE-then-GATE. Units REUSE the
+// building machinery -- only the inputs differ. Built on the ONE primitive pair (the bc_isBuildable idiom: one
+// primitive, two consumers -- the full fill here and the targeted box re-checks can never diverge in per-unit logic):
+// (1) GATE availability: uc_isAvailable, memoized -- all units minus spawnOnly (identity.spawnOnly, the cascade's OWN
+// flag -- never player-trained; self-containment, StoneBase u.SpawnOnly) / tech-obsoleted / instance-capped /
+// entity-gate-failed, then requires.build (STRICT). (2) GENERATE frontier: all units
+// minus spawnOnly/obsoleted/replaced-when-the-replacer-is-available (the `replaces` edge -- source-side, inverted;
+// inert today, enabler.md §2). (3) GATE the frontier: uc_isTrainable -- LISTED = available AND not dormant (a
+// non-available frontier member is GREYED, not LISTED; requires.build.dormant.all = the direct-upgrade closure:
+// a unit hides only when EVERY direct upgrade is reachable-trainable; one dead branch keeps it buildable).
+// AugmentState vicinity/gov-center operating buildings are read LIVE by the evaluator.
+void UnitCascade::trainable(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& result)
+{
+	std::set<int> waived;
+	BuildingCascade::augmentWaived(kPlayer, kTeam, waived);   // SAME AugmentState waiver the building cascade uses (shared evaluator)
+	CvCascadeEvalCtx ec; ec.city = pCity; ec.plot = pCity->plot(); ec.player = &kPlayer; ec.team = &kTeam; ec.waivedPrereqBuildings = &waived;
+	// The two per-city operating buildings (active set + in-vicinity `provides` supply, json §5a): a herd/tamed-animal
+	// building that provides e.g. HORSE ⇒ HORSE in-vicinity, so a horse unit's `requires` {BONUS, connection:vicinity}
+	// trains. Computed from the cascade, NOT the engine's hasVicinityBonus (DEC-calc-zero-ride-in).
+	EnablerKernel::wireOperatingBuildings(pCity, ec);
+	CvCascadeEvalFlags flags; flags.strictStateReligionForBuild = true;
+	UcRecheckCtx x;
+	x.city = pCity; x.player = &kPlayer; x.team = &kTeam; x.ec = &ec; x.flags = &flags;
+	x.noNationalLimit = GC.getGame().isOption(GAMEOPTION_NO_NATIONAL_UNIT_LIMIT);
+	const int nU = GC.getNumUnitInfos();
+
+	// (1) GATE availability (uc_isAvailable, memoized -- the memo also feeds the (3) dormancy reachability walk).
+	std::set<int> available;
+	for (int u = 0; u < nU; ++u)
+		if (uc_availMemo(u, x)) available.insert(u);
+
+	// The replaced set: a unit is HIDDEN if any AVAILABLE unit's `replaces.units` names it (source-side edge inverted;
+	// no target-side replacedBy is curated -- inert today). Computed BEFORE its own requires is weighed (a GENERATE removal).
+	std::set<int> replacedUnits;
+	for (std::set<int>::const_iterator a = available.begin(); a != available.end(); ++a)
+	{
+		const CvJsonInfo* ja = InfoRepo<CvUnitInfo>::get().get(*a);
+		if (ja == NULL) continue;
+		const std::vector<int>* re = ja->edge("replaces.units");
+		if (re != NULL)
+			for (size_t i = 0; i < re->size(); ++i) replacedUnits.insert((*re)[i]);
+	}
+
+	// (2) GENERATE frontier: all units minus spawnOnly / obsoleted / replaced.
+	std::set<int> frontier;
+	for (int u = 0; u < nU; ++u)
+	{
+		const CvJsonInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
+		if (j != NULL && ((const CvJsonUnitInfo*)j)->spawnOnly) continue;   // spawnOnly (cascade's own flag; self-containment)
+		if (EnablerKernel::obsoletedByHeldTech(j, kTeam)) continue;
+		if (replacedUnits.count(u) != 0) continue;
+		frontier.insert(u);
+	}
+
+	// (3) GATE the frontier: LISTED = in CAN GET ∧ available ∧ not dormant (uc_isTrainable).
+	for (std::set<int>::const_iterator it = frontier.begin(); it != frontier.end(); ++it)
+		if (uc_isTrainable(*it, x)) result.insert(*it);
+}
 
 void UnitCascade::buildIndices()
 {

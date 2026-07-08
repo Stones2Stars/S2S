@@ -3,9 +3,9 @@
 #define CV_CASCADE_YIELD_BASE_PACKAGES_H
 
 //
-//	YieldBasePackages -- StoneBase YieldBasePackages.cs: the §1 BASE yield packages (PlotPackage / TradeRoutePackage /
-//	FreeCityPackage / GoldenAgePackage / SpecialistPackage) the YieldRate assembler sums. See patterns.md
-//	(single-source law) + docs/plans/structural-cleanup/modifier-machine.md.
+//	YieldBasePackages -- StoneBase YieldBasePackages.cs: the §1 BASE yield packages (TradeRoutePackage /
+//	FreeCityPackage / GoldenAgePackage / SpecialistPackage) the CvCascadeAccumulator's scope-package fills
+//	consume. See patterns.md (single-source law) + docs/plans/structural-cleanup/modifier-machine.md.
 //
 //	Purely-organizational static-methods class: NO data members, never instantiated, no per-instance state.
 //
@@ -15,25 +15,10 @@
 
 class CvCity;
 class CvPlayer;
-class CvPlot;
 
 class YieldBasePackages
 {
 public:
-	// BASE: worked-plot yields (PlotPackage / calc-map §10.1) -- Σ over the city's WORKED plots of each plot's ONE isolated
-	// base package, RE-DERIVED from the substrate JSON + keyed building/civic/trait deposits (NOT the engine's computed
-	// getPlotYield -- the cascade computes it). Mirrors CvPlot::calculateYield order (Explore-verified 2026-06-30): nature
-	// (max0 of relief+terrain+feature+bonus) + centre + plots-target + keyed-CITY = the pre-improvement running yield; the
-	// extra/less + golden-age thresholds test on it; then the improvement addend (floored at -nature) + route-own-flat,
-	// max(0,·); a CITY-CENTRE plot gets the min-city floor instead of improvement/route. (Traits use the option-gated active
-	// set + PURE_TRAITS sign filter; the per-plot m_aExtraYield is event-granted, not derivable -> 0, audit-only per calc-map.)
-	static int basePlot(const std::string& channel, YieldTypes eY, const CvCity* pCity, CvCascadeEvalCtx ec);
-
-	// The [SLOT] per-plot attribution probe: ONE worked plot's isolated base package through the SAME body
-	// basePlot sums (single-source law -- never a re-derivation). Diagnostic-only: the per-city ctx is rebuilt
-	// per call, so keep it off hot paths (capped shadow emits only).
-	static int basePlotOne(const std::string& channel, YieldTypes eY, const CvCity* pCity, const CvPlot* p, CvCascadeEvalCtx ec);
-
 	// BASE: trade-route yield (TradeRoutePackage) -- the ONE allowed live-yield INPUT (the cascade folds it in, never
 	// derives it; owner ruling 2026-06-28). Read from the live engine, x1.
 	static int tradeRoute(YieldTypes eY, const CvCity* pCity);
@@ -44,8 +29,6 @@ public:
 
 	// BASE: the golden-age trait member, UNGATED (the scope-package fill; the isGoldenAge gate is live at read).
 	static int goldenAgeUngated(const std::string& channel, const CvPlayer& player, const CvCascadeEvalCtx& ec);
-	// BASE: golden-age yield/commerce (GoldenAgePackage) -- the gated realization (ungated × live gate, max(0,·)).
-	static int goldenAge(const std::string& channel, const CvPlayer& player, const CvCascadeEvalCtx& ec);
 
 	// BASE: specialist yields (SpecialistPackage / calc-map §1.5) -- Σ over the city's assigned+typed-free specialists of
 	// count × the engine terms: intrinsic × (100+pct)/100 (the percent MULTIPLIES the intrinsic only, ÷100 ONCE) +

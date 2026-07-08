@@ -3,9 +3,9 @@
 //	values + map-gen placement. FK resolution via the kept type registry. ⏳-flagged shapes to confirm. See header.
 //
 
-#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson, GC
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
 #include "CvJsonBonusInfo.h"
-#include "Defines/CvGlobals.h"    // GC.getInfoTypeForString
+#include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonFamVal/...)
 
 CvJsonBonusInfo::CvJsonBonusInfo()
 	: m_iBonusClassType(-1), m_iHealth(0), m_iHappiness(0),
@@ -17,65 +17,46 @@ CvJsonBonusInfo::CvJsonBonusInfo()
 	for (int i = 0; i < NUM_YIELD_TYPES; ++i) m_aiYieldChange[i] = 0;
 }
 
-static const picojson::object* child_obj(const picojson::object& o, const char* key)
-{
-	picojson::object::const_iterator it = o.find(key);
-	return (it != o.end() && it->second.is<picojson::object>()) ? &it->second.get<picojson::object>() : NULL;
-}
-static int fam_val(const picojson::object& o, const char* family, const char* scope, const char* unit)
-{
-	const picojson::object* fo = child_obj(o, family);  if (!fo) return 0;
-	const picojson::object* so = child_obj(*fo, scope); if (!so) return 0;
-	picojson::object::const_iterator u = so->find(unit);
-	return (u != so->end() && u->second.is<double>()) ? (int)u->second.get<double>() : 0;
-}
-static int  id_int (const picojson::object& io, const char* key)
-{ picojson::object::const_iterator it = io.find(key); return (it != io.end() && it->second.is<double>()) ? (int)it->second.get<double>() : 0; }
-static bool id_bool(const picojson::object& io, const char* key)
-{ picojson::object::const_iterator it = io.find(key); return (it != io.end() && it->second.is<bool>()) ? it->second.get<bool>() : false; }
-static int id_fk(const picojson::object& io, const char* key)
-{ picojson::object::const_iterator it = io.find(key); return (it != io.end() && it->second.is<std::string>()) ? GC.getInfoTypeForString(it->second.get<std::string>().c_str(), true) : -1; }
-
 void CvJsonBonusInfo::mapFrom(const picojson::value& entity)
 {
 	CvJsonInfo::mapFrom(entity);   // core reading + availability (enables.units/buildings)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
 
-	m_aiYieldChange[YIELD_FOOD]       = fam_val(o, "food", "plot", "flat");
-	m_aiYieldChange[YIELD_PRODUCTION] = fam_val(o, "production", "plot", "flat");
-	m_aiYieldChange[YIELD_COMMERCE]   = fam_val(o, "commerce", "plot", "flat");
-	m_iHealth    = fam_val(o, "health", "empire", "flat");     // ⏳ scope to confirm (bonus presence-gated)
-	m_iHappiness = fam_val(o, "happiness", "empire", "flat");  // ⏳
+	m_aiYieldChange[YIELD_FOOD]       = jsonFamVal(o, "food", "plot", "flat");
+	m_aiYieldChange[YIELD_PRODUCTION] = jsonFamVal(o, "production", "plot", "flat");
+	m_aiYieldChange[YIELD_COMMERCE]   = jsonFamVal(o, "commerce", "plot", "flat");
+	m_iHealth    = jsonFamVal(o, "health", "empire", "flat");     // ⏳ scope to confirm (bonus presence-gated)
+	m_iHappiness = jsonFamVal(o, "happiness", "empire", "flat");  // ⏳
 
-	if (const picojson::object* mg = child_obj(o, "mapGeneration"))
+	if (const picojson::object* mg = jsonChildObj(o, "mapGeneration"))
 	{
-		m_iMinAreaSize     = id_int(*mg, "minAreaSize");
-		m_iMinLatitude     = id_int(*mg, "minLatitude");
-		m_iMaxLatitude     = id_int(*mg, "maxLatitude");
-		m_iPlacementOrder  = id_int(*mg, "placementOrder");
-		m_iTilesPer        = id_int(*mg, "tilesPer");
-		m_iUniqueRange     = id_int(*mg, "uniqueRange");
-		m_iGroupRange      = id_int(*mg, "groupRange");
-		m_iGroupRand       = id_int(*mg, "groupRand");
-		m_bOneArea         = id_bool(*mg, "area");              // curate_bonus BONUS_MAP_GEN: bArea -> area
-		m_bHills           = id_bool(*mg, "hills");
-		m_bPeaks           = id_bool(*mg, "peaks");
-		m_bFlatlands       = id_bool(*mg, "flatlands");
-		m_bBonusCoastalOnly= id_bool(*mg, "bonusCoastalOnly");  // bBonusCoastalOnly -> bonusCoastalOnly
-		m_bNoRiverSide     = id_bool(*mg, "noRiverSide");
-		m_bNormalize       = id_bool(*mg, "normalize");
+		m_iMinAreaSize     = jsonIdInt(*mg, "minAreaSize");
+		m_iMinLatitude     = jsonIdInt(*mg, "minLatitude");
+		m_iMaxLatitude     = jsonIdInt(*mg, "maxLatitude");
+		m_iPlacementOrder  = jsonIdInt(*mg, "placementOrder");
+		m_iTilesPer        = jsonIdInt(*mg, "tilesPer");
+		m_iUniqueRange     = jsonIdInt(*mg, "uniqueRange");
+		m_iGroupRange      = jsonIdInt(*mg, "groupRange");
+		m_iGroupRand       = jsonIdInt(*mg, "groupRand");
+		m_bOneArea         = jsonIdBool(*mg, "area");              // curate_bonus BONUS_MAP_GEN: bArea -> area
+		m_bHills           = jsonIdBool(*mg, "hills");
+		m_bPeaks           = jsonIdBool(*mg, "peaks");
+		m_bFlatlands       = jsonIdBool(*mg, "flatlands");
+		m_bBonusCoastalOnly= jsonIdBool(*mg, "bonusCoastalOnly");  // bBonusCoastalOnly -> bonusCoastalOnly
+		m_bNoRiverSide     = jsonIdBool(*mg, "noRiverSide");
+		m_bNormalize       = jsonIdBool(*mg, "normalize");
 	}
 
-	if (const picojson::object* io = child_obj(o, "identity"))
+	if (const picojson::object* io = jsonChildObj(o, "identity"))
 	{
-		m_iBonusClassType = id_fk(*io, "bonusClassType");
+		m_iBonusClassType = jsonIdFk(*io, "bonusClassType");
 		picojson::object::const_iterator mc = io->find("mapCategories");
 		if (mc != io->end() && mc->second.is<picojson::array>())
 		{
 			const picojson::array& a = mc->second.get<picojson::array>();
 			for (size_t i = 0; i < a.size(); ++i)
-				if (a[i].is<std::string>()) { const int id = GC.getInfoTypeForString(a[i].get<std::string>().c_str(), true); if (id >= 0) m_aeMapCategories.push_back((MapCategoryTypes)id); }
+				if (a[i].is<std::string>()) { const int id = jsonResolveId(a[i].get<std::string>()); if (id >= 0) m_aeMapCategories.push_back((MapCategoryTypes)id); }
 		}
 	}
 }

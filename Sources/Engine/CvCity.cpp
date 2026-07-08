@@ -28,8 +28,7 @@
 #include "CvUnitSelectionCriteria.h"
 #include "UI/CvViewport.h"
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"
-#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the spine (shadow, CvCity side)
-#include "Cascade/CvCascadeGetterShadow.h" // #430 getter-contract instrumentation (cutover.md rulings 2026-07-02)
+#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the spine (CvCity side)
 #include "Cascade/CvCascadeAccumulator.h"  // #430 the modifier scope accumulator -- DOMAIN dirty hooks (modifier-substrate.md)
 #include "Cascade/CvCascadeEnablerKernel.h" // EnablerKernel::recomputeOperatingBuildingsInto -- the operating buildings cache's refresh delegate target
 #include "AI/CvCityLogTags.h" // [CIT] tag enums (shared with CvCityAI.cpp -- defined once, see header)
@@ -11403,11 +11402,8 @@ int CvCity::getYieldRate100Legacy(const YieldTypes eYield) const
 int CvCity::getYieldRate100(const YieldTypes eYield) const
 {
 	PROFILE_FUNC();
-	// #430 DISCONNECT (owner 2026-07-05, "fully disconnect; delete step-after"): the cascade ACCUMULATOR is the
-	// SOLE authority in a running game -- the legacy oracle (getYieldRate100Legacy) + the [GETTER] shadow are NO
-	// LONGER CALLED (the *Legacy body stays as dead code for the delete step). This also DROPS the per-call
-	// legacy recompute (~25ms) that the shadow forced -- a real hot-path perf win. LOAD path stays legacy (the
-	// cascade substrate isn't warm pre-init; that is the ONE remaining legacy read and it is load-time, not play).
+	// The cascade ACCUMULATOR is the SOLE authority in a running game. LOAD path stays legacy (the cascade
+	// substrate isn't warm pre-init; that is the ONE remaining legacy read and it is load-time, not play).
 	if (!GC.getGame().isFinalInitialized())
 	{
 		return getYieldRate100Legacy(eYield);
@@ -12129,11 +12125,9 @@ int CvCity::getCommerceRate(CommerceTypes eIndex) const
 int CvCity::getCommerceRateTimes100Legacy(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	// RECOMPUTE-ON-READ from the CURRENT slider (deterministic; owner ruling 2026-06-28 caching pattern):
-	// getCommerceRateAtSliderPercent handles isDisorder, runs the full combine, AND refreshes m_aiCommerceRate
-	// on its own dirty path. ⚠ Post-flip this ORACLE chain reads the FLIPPED yield getter
-	// (getCommerceFromPercent -> getYieldRate100), so the commerce [GETTER] net isolates the COMMERCE-stage
-	// divergence only -- the yield stage nets on its own leg.
+	// RECOMPUTE-ON-READ from the CURRENT slider (deterministic): getCommerceRateAtSliderPercent handles
+	// isDisorder, runs the full combine, AND refreshes m_aiCommerceRate on its own dirty path. ⚠ This legacy
+	// chain reads the FLIPPED yield getter (getCommerceFromPercent -> getYieldRate100).
 	return getCommerceRateAtSliderPercent(eIndex, GET_PLAYER(getOwner()).getCommercePercent(eIndex));
 }
 
@@ -12141,8 +12135,7 @@ int CvCity::getCommerceRateTimes100(CommerceTypes eIndex) const
 {
 	PROFILE_FUNC();
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	// #430 DISCONNECT (owner 2026-07-05) -- see getYieldRate100: cascade is sole authority, legacy oracle +
-	// [GETTER] shadow no longer called (dead code kept for the delete step); pre-init stays legacy.
+	// See getYieldRate100: the cascade is the sole authority; pre-init stays legacy.
 	if (!GC.getGame().isFinalInitialized())
 	{
 		return getCommerceRateTimes100Legacy(eIndex);

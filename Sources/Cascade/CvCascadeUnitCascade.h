@@ -26,10 +26,9 @@ public:
 	// EMPIRE = live count + making >= ERA-SCALED allowed.empire (waived by NO_NATIONAL_UNIT_LIMIT unless unlimitedException).
 	static bool capped(const CvJsonInfo* j, int eU, const CvPlayer& kPlayer, bool noNationalLimit);
 
-	// reachable(v) (StoneBase UnitCascade.Reachable): v is itself available OR some DIRECT upgrade of v is reachable.
-	static bool reachable(int v, const std::set<int>& available, std::map<int, bool>& cache, std::set<int>& inProgress);
-
-	// The city's TRAINABLE set (the engine canTrain TRUE-set), GENERATE-then-GATE.
+	// The city's TRAINABLE set (the engine canTrain TRUE-set), GENERATE-then-GATE. Built on the ONE per-unit
+	// availability/trainable primitive pair (file-static uc_isAvailable/uc_isTrainable, incl. the uc_reachable
+	// upgrade-reachability closure) shared with the targeted box re-checks -- the bc_isBuildable idiom.
 	static void trainable(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& result);
 
 	// ===== #430 the isolated-box TARGETED updates (enabler-frontier-perf.md; the UNIT analogue of the proven

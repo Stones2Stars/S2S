@@ -36,7 +36,8 @@
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "Repos/BuildsRepo.h"
 #include "Infrastructure/FAStarNode.h"
-#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [ENG] lines through the event spine (shadow)
+#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [ENG] lines through the event spine
+#include "Cascade/CvCascadeEnablerKernel.h" // EnablerKernel::operatingBuildings -- the cascade active-building verdict (recomputeYieldInto)
 
 // #430 logging: [ENG] engine-integrity -> event spine (CvPlot). Self-registers its prefix provider + Engine.log file;
 // the spine stays domain-agnostic (never names ENG). Shadow discipline: emits run ALONGSIDE the legacy logEngine calls.
@@ -8189,9 +8190,14 @@ void CvPlot::recomputeYieldInto(short* aiOut) const
 	for (int j = 0; j < NUM_YIELD_TYPES; ++j) aiFreshImp[j] = 0;
 	if (bKeyed)
 	{
+		// ACTIVE per the CASCADE operating-building set (present ∧ non-dormant ∧ non-obsolete) -- the single source
+		// of the dormancy verdict ([DEC-calc-zero-ride-in]: the engine's isDisabledBuilding verdict is the
+		// camouflaged ride-in this replaces; where the two disagree, the cascade's rule-derived verdict is the
+		// ruled-correct one -- the stale-event-state class the cutover repairs).
+		const OperatingBuildings& kOps = EnablerKernel::operatingBuildings(pWC);
 		foreach_(const BuildingTypes eB, pWC->getHasBuildings())
 		{
-			if (pWC->isDisabledBuilding(eB)) continue;
+			if (kOps.active.find((int)eB) == kOps.active.end()) continue;
 			foreach_(const ImprovementArray& pr, GC.getBuildingInfo(eB).getImprovementYieldChanges())
 				if ((ImprovementTypes)pr.first == eImp)
 				{

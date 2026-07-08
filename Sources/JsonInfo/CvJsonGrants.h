@@ -6,9 +6,8 @@
 //	CvJsonGrants -- the `grants` section as ONE composable unit (json.md §5, the WHOLE post-classification shape):
 //	id-list buckets, numeric pulses, bool flags, scoped pulses, the settler `foundBuildings` seeds, and the
 //	STRUCTURED `repeatable` provisions (per-turn unit spawn / unitCombat heal / full-heal / property pulse with its
-//	#429 spatial intent) -- RESTORED here after being lost in the relocation (grants-machine.md increment 2b built
-//	it precisely because the id-only capture missed the 149 heal + 49 property entries). Composed BY VALUE on the
-//	derived infos that author grants (the data-grounded table). WRITE-ONCE AT LOAD. Owns its entries/conditions.
+//	#429 spatial intent). Composed BY VALUE on the derived infos that author grants (the data-grounded table).
+//	WRITE-ONCE AT LOAD. Owns its entries/conditions.
 //
 //	Scale: numeric pulse values are ×100 at parse (the one human->fixed-point boundary); readers take
 //	pulse100()/100 for the human count -- the shape the grants machine's ÷100 reads were written against.
@@ -49,11 +48,14 @@ public:
 	int count;                   //   its "count": N (raw -- a unit count, not a magnitude)
 	int propertyId;              // {"PROPERTY_X": N}                    -- property pulse target
 	int amount100;               //   its per-turn amount (×100, signed)
-	// recurrence + chance (json §3.8 / §3.7)
+	// recurrence + chance (json §3.8 / §3.7 -- the per parses via the shared jsonParsePer)
 	int intervalPerTurn;         // "perTurn" = 1; {"perTurn": N} = N
 	int chanceValue100;          // "chance": N (flat, ×100); 0 = none
 	int chancePerId;             // "chance": {"per": TYPE} -- the count-scaler type FK (-1 = none)
+	std::string chancePerToken;  //   the raw CATCH-ALL token when the type is no FK (POPULATION/...; "" = typed/none) -- carry-only
 	int chancePerEach;           //   its "each" quantum (default 1)
+	int chancePerScope;          //   its AUTHORED scope (CvCascScope; -1 = absent -> the deposit's own scope, json §3.7)
+	std::vector<int> chancePerAnyOf;   //   its per.anyOf summed-count FK ids (json §3.7)
 	// spatial intent (the #429 distribution's target -- json §5 property pulses)
 	std::string on;              // "plot" / "" (the emitting object)
 	std::string relation;        // "near" / "same" / ""
@@ -62,7 +64,7 @@ public:
 
 	CvJsonGrantRepeatable()
 		: unitId(-1), unitCombatId(-1), heal100(0), healFull(false), count(0), propertyId(-1), amount100(0),
-		  intervalPerTurn(1), chanceValue100(0), chancePerId(-1), chancePerEach(1), distance(0), enabled(NULL) {}
+		  intervalPerTurn(1), chanceValue100(0), chancePerId(-1), chancePerEach(1), chancePerScope(-1), distance(0), enabled(NULL) {}
 	~CvJsonGrantRepeatable() { delete enabled; }
 private:
 	CvJsonGrantRepeatable(const CvJsonGrantRepeatable&);            // noncopyable -- owns the condition

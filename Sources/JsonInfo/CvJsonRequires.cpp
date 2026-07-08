@@ -8,7 +8,7 @@
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson
 #include "CvJsonRequires.h"
 #include "CvJsonConditionParse.h"   // cascadeParseCondition -- curated JSON -> the typed condition tree
-#include "CvJsonParse.h"            // jsonResolveId
+#include "CvJsonParse.h"            // jsonResolveId + jsonNoteUnconsumed
 
 CvJsonRequires::~CvJsonRequires()
 {
@@ -25,7 +25,8 @@ void CvJsonRequires::parse(const picojson::value& v)
 		CvJsonCondition* c = cascadeParseCondition(sub->second);
 		if (sub->first == "build")        { delete build;   build = c; }
 		else if (sub->first == "operate") { delete operate; operate = c; }
-		else delete c;
+		else { jsonNoteUnconsumed("requires", sub->first); delete c; }   // unknown sub-section -> the census, never silent
+		                                                                 // (the owning entity's type id is not reachable here)
 		// dormant triggers: building operate.dormant = [BUILDING_…]; unit build.dormant = {all:[UNIT_…]}.
 		if (!sub->second.is<picojson::object>()) continue;
 		const picojson::object& clause = sub->second.get<picojson::object>();

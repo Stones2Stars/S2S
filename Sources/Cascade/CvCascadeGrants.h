@@ -14,7 +14,7 @@
 //	and unit-created (CASCADE_EVT_UNIT_COUNT, delta>0) -> the on-build / on-create grants. Un-run parity (owner: no
 //	live parity until everything is in). Follow-on increments (grants-machine.md): the remaining triggers
 //	(per-turn recurring, tech first-discover, civ/religion/civic/game-start -- each needs a new DOMAIN event), the
-//	richer grant mapping (rj_walkGrants skips bool/dict grants + drops the repeatable interval/chance), and the true
+//	richer grant mapping (the per-type mapFrom / CvJsonGrants unit skips bool/dict grants + drops the repeatable interval/chance), and the true
 //	diff-vs-legacy shadow. Registered at the composition root (cascadeRegisterConsumers -> cascadeRegisterGrants).
 //
 class CvCascadeGrants : public IEventConsumer

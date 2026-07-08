@@ -30,8 +30,8 @@
 // PER-CHANNEL PERCENT-CANDIDATE CACHE (the compiled-deposit-index increment): which building ids carry ANY
 // scope-wide percent deposit for this channel at city/area/empire is STATIC readJson data -- computed once per
 // channel by ONE scan of the building repo (compiled-int matches), so the stack walks candidates instead of all
-// ~5202 building infos per call (the modifier-substrate.md "deep perf lever"). Same one-shot-readJson caveat as
-// the basePlot candidate cache.
+// ~5202 building infos per call (the modifier-substrate.md "deep perf lever"). One-shot per process: readJson
+// maps once, so the cache never invalidates.
 static const std::vector<int>& ps_channelCands(int chanId, int segCity, int segArea, int segEmpire, int segPercent)
 {
 	static std::map<int, std::vector<int> > s_cands;

@@ -16,11 +16,11 @@
 //	[READJSON] survey instead of vanishing silently.
 //
 
+#include "picojson.h"          // picojson::value/object -- the walker signatures below take objects
+#include "CvJsonCondition.h"   // CvCascScope -- the shared scope-token vocabulary (jsonParseScope)
 #include <string>
 #include <set>
 #include <map>
-
-namespace picojson { class value; }
 
 // The single human -> ×100 fixed-point conversion (round half away from zero). 7 -> 700, 1.5 -> 150, -10 -> -1000.
 // The ONE place the human->int×100 conversion happens (determinism; DEC-fixedpoint-x100). The reader has ZERO
@@ -41,6 +41,27 @@ void jsonCommerceMap(const picojson::value& v, std::map<std::string, int>& out);
 
 // Is `key` in the NULL-terminated `list`? (the shared "in this vocabulary?" test; external so callers pass a LOCAL table.)
 bool jsonInList(const char** list, const std::string& key);
+
+// --- the shared JSON walkers -- the ONE canonical copy every mapFrom draws (never re-hand-rolled per type) ---
+// o[key] as an object child, or NULL.
+const picojson::object* jsonChildObj(const picojson::object& o, const char* key);
+// entity[family][scope][unit] as a human value (0 if any hop is missing); the int form truncates the double form.
+double jsonFamDbl(const picojson::object& o, const char* family, const char* scope, const char* unit);
+int jsonFamVal(const picojson::object& o, const char* family, const char* scope, const char* unit);
+// entity[family][scope][member][unit] (the grouped-family case, e.g. defense.plot.amount.percent).
+int jsonFamMemberVal(const picojson::object& o, const char* family, const char* scope, const char* member, const char* unit);
+// identity-block scalar reads: int (0 if absent), bool (false if absent), FK (-1 if absent; via jsonResolveId),
+// string (out untouched if absent; returns whether the key was present as a string).
+int jsonIdInt(const picojson::object& io, const char* key);
+bool jsonIdBool(const picojson::object& io, const char* key);
+int jsonIdFk(const picojson::object& io, const char* key);
+bool jsonIdStr(const picojson::object& io, const char* key, std::string& out);
+// FK-keyed int map: parent[key] = {"SPECIALIST_X"/"VICTORY_X": n} -> out[id] = n (unresolved keys surface via jsonResolveId).
+void jsonReadFkMap(const picojson::object& parent, const char* key, std::map<int, int>& out);
+// ai.flavours -- an ARRAY of single-key { FLAVOR_X: n } objects (NOT a map) -> out[flavorId] = n.
+void jsonReadFlavours(const picojson::object& aiObj, std::map<int, int>& out);
+// The §3.2 scope-token vocabulary -> CvCascScope; an unknown token falls back to the CALLER's default.
+CvCascScope jsonParseScope(const std::string& s, CvCascScope defaultScope);
 
 // --- top-level key classification (json.md §1) -- the ONE home for the reserved/intrinsic vocabulary ---
 // Shared by the base CvJsonInfo::mapFrom (dispatch the section units / skip the rest) and the reader's completeness

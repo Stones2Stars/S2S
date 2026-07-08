@@ -33,6 +33,14 @@ public:
 	// {STATE_RELIGION:X} compound matches loosely (the strict-match form is the enabler's requires.build only).
 	static bool applies(const CvJsonCondition* enabled, const CvJsonCondition* disabled, const CvCascadeEvalCtx& ec);
 
+	// THE generic §3.7 `per` count-scaler resolver (json.md §3.7; owner semantics: resolved value =
+	// value × (count / each), the count INTEGER-divided by `each` FIRST -- deterministic integer math only).
+	// Count = Σ over per.anyOf, else cascadeCountOf(perType) -- the ONE count implementation (never a parallel
+	// path) -- at the compiled perScope (authored, else push-resolved to the deposit's own scope). hasPer==false
+	// (and an unresolved SELF token) returns value100 untouched. Applied at every MMKernel fold of a deposit's
+	// value; ⛔ NOT in the property engine (self-contained by design, engine.md §Properties).
+	static long perScale(const CascadeDeposit& dep, const CvCascadeEvalCtx& ec, long value100);
+
 	// Sum a channel's SCOPE-WIDE percent deposits (address == "<family>.<scope>", unit "percent"), gated, as HUMAN percent.
 	static int sumPercent(const CvJsonInfo* d, const std::string& wantAddress, const CvCascadeEvalCtx& ec);
 

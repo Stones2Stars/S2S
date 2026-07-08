@@ -5,9 +5,9 @@
 //
 //	CascadeScalarChannels -- the #430 city SCALAR channels (legacy-value-calc-map §4/§5/§9.5): greatPeopleRate,
 //	defense, maintenance -- each computed from the curated deposits (buildings via the operating buildings cache + civics +
-//	traits), netted against the legacy accumulators on /computed/cities/wellbeing (the wellbeing/property
-//	pattern: open the net, reconcile the classes, then slot + flip). DEC-unit-modifiers-on-top holds: nothing
-//	unit-sourced enters these (no unit-carried deposits exist in these families).
+//	traits). The slots are FLIPPED (the accumulator's packages feed the engine getters); these calculators serve
+//	the /computed decomposition endpoints (fresh recomputes attributed to NAMED terms). DEC-unit-modifiers-on-top
+//	holds: nothing unit-sourced enters these (no unit-carried deposits exist in these families).
 //
 
 #include "CvCascadeConditionEval.h"
@@ -64,16 +64,16 @@ public:
 	// clamp stays at the getter (the legacy contract).
 	static int tradeRouteCount(const CvCity* pCity, const CvCascadeEvalCtx& ec);
 	// the LIVE raw-input folds (the game vote/WB store + the INITIAL define) -- ONE source shared by the
-	// fresh oracle and the slot combine, so the net stays honest
+	// /computed decomposition recompute and the slot combine, so the two never diverge by construction
 	static int tradeRouteLiveInputs(const CvCity* pCity);
 	// PROJECT world routes (the Internet class): raw team project counts × compiled world flats -- shared
-	// by the fresh oracle and the world-scope package fill
+	// by the /computed decomposition recompute and the world-scope package fill
 	static int tradeRoutesWorldProjects();
 	// buildRate (§9.5): the summed signed-% production modifier for the city's HEAD ORDER item (unit/building/
 	// project) -- the target's own bonus-gated buildRate.self + the keyed source mods (units/unitCombats/
 	// domains/buildings members, city + empire scopes) + military/space members + the SR grouped family.
 	// Returns 0 with no order (bHasOrder=false).
-	// The parts split for attribution (the gpModParts pattern) -- the net IS the sum of these.
+	// The parts split for attribution (the gpModParts pattern) -- the modifier IS the sum of these.
 	struct BuildRateParts
 	{
 		int iSelf;          // buildRate.self on the target (bonus-gated own mods)

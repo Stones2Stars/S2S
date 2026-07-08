@@ -37,7 +37,7 @@ static int mmk_seg(const char* s, int& cache)
 }
 static int s_segFlat = -1, s_segPercent = -1, s_segEmpire = -1, s_segBuildings = -1,
            s_segImprovements = -1, s_segTerrains = -1, s_segFeatures = -1, s_segBonusKey = -1,
-           s_segPlots = -1, s_segPlot = -1;
+           s_segPlots = -1, s_segPlot = -1, s_segSelf = -1;
 
 // A deposit applies iff enabled holds (or is absent) AND disabled does NOT hold (json.md §3.9), evaluated through the
 // typed-condition evaluator against the live engine ctx. MODIFIER context = the lenient flags (default): a
@@ -48,6 +48,31 @@ bool MMKernel::applies(const CvJsonCondition* enabled, const CvJsonCondition* di
 	if (enabled != NULL && !cascadeEvalCondition(enabled, ec, kFlags)) return false;
 	if (disabled != NULL && cascadeEvalCondition(disabled, ec, kFlags)) return false;
 	return true;
+}
+
+// THE generic §3.7 `per` count-scaler resolver (json.md §3.7; owner semantics: resolved value = value × (count /
+// each) -- count whatever per.type names at the per's scope, INTEGER-divide by `each` FIRST, multiply the deposit's
+// value; deterministic integer math only). The count resolves through cascadeCountOf -- the SAME core as the
+// condition count-atoms (DEC-single-implementation, never a parallel count path). A deposit without a per is
+// returned byte-identical; an UNRESOLVED SELF token (json §3.1 -- the push could not resolve the owning entity)
+// SKIPS the multiply entirely (counting it 0 would wrongly zero the contribution).
+long MMKernel::perScale(const CascadeDeposit& dep, const CvCascadeEvalCtx& ec, long value100)
+{
+	if (!dep.hasPer) return value100;
+	if (dep.perTokenSeg >= 0 && dep.perTokenSeg == mmk_seg("SELF", s_segSelf)) return value100;   // unresolved SELF
+	const CvCascScope eScope = (CvCascScope)dep.perScope;   // push-resolved: authored, else the deposit's own scope
+	long iCount = 0;
+	if (dep.perAnyOf != NULL && dep.perAnyOfTypes != NULL)   // per.anyOf: the SUMMED count of every listed type (json §3.7)
+	{
+		for (size_t i = 0; i < dep.perAnyOf->size() && i < dep.perAnyOfTypes->size(); ++i)
+			iCount += cascadeCountOf((*dep.perAnyOf)[i], (*dep.perAnyOfTypes)[i], eScope, ec);
+	}
+	else if (!dep.perType.empty())
+		iCount = cascadeCountOf(dep.perTypeId, dep.perType, eScope, ec);
+	else
+		return value100;   // a per with nothing to count (malformed authoring) -- never zero silently
+	const int iEach = dep.perEach > 0 ? dep.perEach : 1;
+	return value100 * (iCount / iEach);
 }
 
 // Sum a channel's SCOPE-WIDE percent deposits (address == "<family>.<scope>", unit "percent"), gated, as HUMAN percent.
@@ -63,7 +88,7 @@ int MMKernel::sumPercent(const CvJsonInfo* d, const std::string& wantAddress, co
 		const CascadeDeposit& dep = deps[i];
 		if (dep.unitId != unitId || dep.addressId != wantId) continue;
 		if (!applies(dep.enabled, dep.disabled, ec)) continue;
-		sum += dep.value100 / 100;
+		sum += (int)(perScale(dep, ec, dep.value100) / 100);   // §3.7 per (identity when hasPer==false)
 	}
 	return sum;
 }
@@ -96,7 +121,7 @@ int MMKernel::sumUnitFrom(const std::vector<CascadeDeposit>& deps, const std::st
 		const CascadeDeposit& dep = deps[i];
 		if (dep.unitId != unitId || dep.addressId != wantId) continue;
 		if (!applies(dep.enabled, dep.disabled, ec)) continue;
-		sum += dep.value100 / 100;
+		sum += (int)(perScale(dep, ec, dep.value100) / 100);   // §3.7 per (identity when hasPer==false)
 	}
 	return sum;
 }
@@ -122,7 +147,7 @@ long MMKernel::sumUnit100From(const std::vector<CascadeDeposit>& deps, const std
 		const CascadeDeposit& dep = deps[i];
 		if (dep.unitId != unitId || dep.addressId != wantId) continue;
 		if (!applies(dep.enabled, dep.disabled, ec)) continue;
-		sum += dep.value100;
+		sum += perScale(dep, ec, dep.value100);   // §3.7 per (identity when hasPer==false)
 	}
 	return sum;
 }
@@ -142,6 +167,8 @@ int MMKernel::sumUnconditioned(const CvJsonInfo* d, const std::string& wantAddre
 		const CascadeDeposit& dep = deps[i];
 		if (dep.unitId != unitId || dep.addressId != wantId) continue;
 		if (dep.enabled != NULL || dep.disabled != NULL) continue;
+		// NO perScale here: this ctx-less intrinsic read cannot resolve a count -- a per'd deposit stays unscaled
+		// (the pre-resolver behavior; no intrinsic-base family authors a per today).
 		sum += dep.value100 / 100;
 	}
 	return sum;
@@ -180,8 +207,8 @@ int MMKernel::sumTrait(const CvJsonTraitInfo* d, const std::string& wantAddress,
 		const CascadeDeposit& dep = deps[i];
 		if (dep.unitId != unitId || dep.addressId != wantId) continue;
 		if (!applies(dep.enabled, dep.disabled, ec)) continue;
-		if (bPure && (d->negativeTrait ? dep.value100 > 0 : dep.value100 < 0)) continue;
-		sum += dep.value100 / 100;
+		if (bPure && (d->negativeTrait ? dep.value100 > 0 : dep.value100 < 0)) continue;   // pure filter on the AUTHORED sign
+		sum += (int)(perScale(dep, ec, dep.value100) / 100);   // §3.7 per (identity when hasPer==false)
 	}
 	return sum;
 }
@@ -200,8 +227,8 @@ long MMKernel::sumTrait100(const CvJsonTraitInfo* d, const std::string& wantAddr
 		const CascadeDeposit& dep = deps[i];
 		if (dep.unitId != unitId || dep.addressId != wantId) continue;
 		if (!applies(dep.enabled, dep.disabled, ec)) continue;
-		if (bPure && (d->negativeTrait ? dep.value100 > 0 : dep.value100 < 0)) continue;
-		sum += dep.value100;
+		if (bPure && (d->negativeTrait ? dep.value100 > 0 : dep.value100 < 0)) continue;   // pure filter on the AUTHORED sign
+		sum += perScale(dep, ec, dep.value100);   // §3.7 per (identity when hasPer==false)
 	}
 	return sum;
 }
@@ -231,9 +258,9 @@ static int mmk_sumFlatSegs(const CvJsonInfo* d, int nSeg, int s0, int s1, int s2
 		if (nSeg >= 4 && dep.seg[3] != s3) continue;
 		if (dep.enabled != NULL && !cascadeEvalCondition(dep.enabled, ec, f)) continue;
 		if (dep.disabled != NULL && cascadeEvalCondition(dep.disabled, ec, f)) continue;
-		if (pureSign > 0 && dep.value100 < 0) continue;
+		if (pureSign > 0 && dep.value100 < 0) continue;   // pure filter on the AUTHORED sign
 		if (pureSign < 0 && dep.value100 > 0) continue;
-		sum += dep.value100 / 100;
+		sum += (int)(MMKernel::perScale(dep, ec, dep.value100) / 100);   // §3.7 per (identity when hasPer==false)
 	}
 	return sum;
 }
@@ -316,7 +343,8 @@ int MMKernel::substratePlotYield(int chanId, const CvJsonInfo* d, const CvPlot* 
 // MinPositiveThreshold: `if (v>0 && (best==0 || v<best)) best=v` over INDIVIDUAL magnitudes, NOT a per-source sum). 0 ->
 // no threshold. PURE_TRAITS gate (StoneBase): a source-level filter by threshold FAMILY -- a lessYieldThreshold is a
 // DOWNSIDE (dropped from a non-negative trait), an extraYieldThreshold is an UPSIDE (dropped from a negative trait);
-// civics carry no alignment (never filtered).
+// civics carry no alignment (never filtered). (§3.7 per: deliberately NOT applied here -- a threshold is a
+// MIN-selected PARAMETER, not a summed deposit magnitude; count-scaling a threshold has no meaning.)
 int MMKernel::minPosThreshold(const char* thresholdFamily, const std::string& channel, const CvPlayer& player, const CvCascadeEvalCtx& ec)
 {
 	const int wantId = DepositIndex::lookupAddress(std::string(thresholdFamily) + ".empire." + channel);
@@ -394,7 +422,7 @@ int MMKernel::buildingKeyedSourcePercent(const std::string& channel, const CvCit
 			if (dep.seg[0] != chanId || dep.seg[1] != sEmpire || dep.seg[2] != mBuildings) continue;
 			if (dep.targetFk < 0) continue;
 			if (!applies(dep.enabled, dep.disabled, ec)) continue;
-			ledger[dep.targetFk] += dep.value100 / 100;
+			ledger[dep.targetFk] += (int)(perScale(dep, ec, dep.value100) / 100);   // §3.7 per (identity when hasPer==false)
 		}
 	}
 	int sum = 0;

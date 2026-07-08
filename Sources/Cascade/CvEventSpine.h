@@ -5,35 +5,34 @@
 #include <vector>
 
 //
-//	CvEventSpine -- the #430 cascade's FRONT DOOR (design: docs/dev/plans/event-spine-spec.md).
+//	CvEventSpine -- the #430 cascade's FRONT DOOR (design: docs/specs/event-spine.md).
 //
-//	Callers emit(KIND, type, payload) to the spine; consumers read the event KINDS they care about. The TALLY
-//	(authoritative state counts), `grants`, and LOGGING are all consumers of this one dispatch spine. The spine
-//	sits IN FRONT OF the tally -- the tally never reaches into game state, the events come to it.
+//	Callers emit(KIND, type, payload) to the spine; consumers read the event KINDS they care about. The registered
+//	consumers are LOGGING and `grants`. The TALLY is NOT a spine consumer -- it READS the object-owned counts on
+//	demand (tally.md); the DOMAIN count events serve observability + the out-of-process replay, never a tally feed.
 //
 //	KIND is the OOS FIREWALL axis, declared at the call site (never inferred):
-//	  - DOMAIN     : game STATE changed (building built, unit created). SYNCED/deterministic -> the tally counts it,
-//	                 gate-eligible. The only kind that may feed the authoritative tally.
+//	  - DOMAIN     : game STATE changed (building built, unit created). SYNCED/deterministic -> gate-eligible;
+//	                 drives the grants consumer.
 //	  - DIAGNOSTIC : code RAN (a function entered, a decision re-evaluated N times). UNSYNCED execution trace ->
-//	                 logging only; NEVER gates, NEVER counted into the authoritative tally.
-//	  - TRACE      : fine-grained "show me every step" -> logging only; the tally ignores it entirely.
+//	                 logging only; NEVER gates.
+//	  - TRACE      : fine-grained "show me every step" -> logging only.
 //
 //	Two consumer appetites, one front door: LOGGING is BROAD (sees everything, outputs per the existing log gates);
-//	the TALLY is SELECTIVE (takes only the DOMAIN kinds it counts). Payload is RAW (never a pre-formatted string) so
+//	GRANTS is SELECTIVE (takes only the DOMAIN kinds it resolves). Payload is RAW (never a pre-formatted string) so
 //	the costly index->text formatting defers to the gated logging consumer.
 //
-//	C++03 / VC7.1: virtual interface, no lambdas, no Boost (event-spine-spec section 6). The substrate accumulator
-//	(CvScopedAccumulator) is the count primitive the tally instantiates; this spine is the dispatch primitive.
+//	C++03 / VC7.1: virtual interface, no lambdas, no Boost (event-spine.md §6). This spine is the dispatch primitive.
 //
 enum EventKind
 {
-	EVENTKIND_DOMAIN = 0,   // synced state change -> tally + grants + logging; gate-eligible
+	EVENTKIND_DOMAIN = 0,   // synced state change -> grants + logging; gate-eligible
 	EVENTKIND_DIAGNOSTIC,   // unsynced execution trace -> logging only
-	EVENTKIND_TRACE,        // fine-grained step trace -> logging only; tally ignores
+	EVENTKIND_TRACE,        // fine-grained step trace -> logging only
 	NUM_EVENT_KINDS
 };
 
-//	======================= the RAW field payload (event-spine-spec section 3, RESOLVED 2026-06-18) =======================
+//	======================= the RAW field payload (event-spine.md §3, RESOLVED 2026-06-18) =======================
 //	A logging-only (DIAGNOSTIC/TRACE) event carries its line as RAW FIELDS, never a formatted string -- the gated logging
 //	consumer renders them. Chosen shape (from the Stage-0 field catalog, logging-field-catalog.md): a generic typed-slot
 //	array (median 5-6 fields, <=16 operational). The line = a constant PREFIX (the [TAG] + any constant text, keyed by
@@ -48,7 +47,7 @@ enum SpineFieldType
 	SFT_INT = 0, SFT_FLOAT, SFT_BOOL,
 	// String POINTER kinds: the field carries a POINTER to an EXISTING string (no copy, no call-site concat) -- the
 	// consumer renders it. For genuinely free-text data (a szReason already built for other logic) that has no id/type to
-	// resolve. NOT call-site composition (owner 2026-06-19, event-spine-spec section 3): the line is still assembled in the
+	// resolve. NOT call-site composition (owner 2026-06-19, event-spine.md §3): the line is still assembled in the
 	// consumer; the call site just hands over the pointer. Lifetime: the pointee must outlive the SYNCHRONOUS emit (render
 	// happens then, on the game thread) -- a literal, a member, or a still-in-scope local. SFT_STR = narrow, SFT_WSTR = wide.
 	SFT_STR, SFT_WSTR,
@@ -89,14 +88,12 @@ enum SpineDomainTag
 	SD_CONTRACT,   // [CTB] contract broker (CvContractBroker)
 	SD_ENGINE,     // [ENG] engine integrity (CvPlot)
 	// #430 cascade diagnostic domains (per-emitter, one file -- all tee to Cascade.log). Each self-registers in its
-	// own .cpp (spineRegisterDomain); the [TAG] sub-area lives in the per-domain prefix fn ([READJSON/*], [ENABLER/*],
-	// [MODIFIER/*]). Diagnostic lines (EVENTKIND_DIAGNOSTIC) -- the shadow/survey trace, never the synced tally.
-	SD_READJSON,   // [READJSON] the JSON->InfoRepo load survey (CvCascadeReadJson)
-	SD_ENABLER,    // [ENABLER] the "can I?" gate shadow (CvCascadeEnabler)
-	SD_MODIFIER,   // [MODIFIER] the "how much?" percent-stack shadow (CvCascadeModifierMath)
+	// own .cpp (spineRegisterDomain); the [TAG] sub-area lives in the per-domain prefix fn ([READJSON/*],
+	// [MODIFIER/*]). Diagnostic lines (EVENTKIND_DIAGNOSTIC) -- census/diagnostic traces, logging only.
+	SD_READJSON,   // [READJSON] the JSON->InfoRepo load census (CvCascadeReadJson)
+	SD_ENABLER,    // [ENABLER] reserved (historical tag; no live registrant)
+	SD_MODIFIER,   // [MODIFIER] the perf + repo census (CvCascadeModifierMath)
 	SD_GRANTS,     // [GRANTS] the "provisions" consumer (CvCascadeGrants) -- resolves an entity's genuine grants on a DOMAIN event
-	SD_GETTER,     // [GETTER] the getter-contract instrumentation (CvCascadeGetterShadow) -- in-body cascadeValue diff at the real call moment
-	SD_CAPSHADOW,  // [CAPSHADOW] the capability getter shadow (CvCascadeCapabilities) -- legacy-counter vs cascade-union diff at the real call moment
 	NUM_SPINE_DOMAINS
 };
 
@@ -176,7 +173,7 @@ void cascadeRenderEventLine(char* szBuf, int iBufSize, const CvCascadeEvent& kEv
 
 //	Real (non-test) DOMAIN event ids -- WHAT changed in synced game state. Distinct namespace from the temporary
 //	DIAGNOSTIC ids in CvCascadeSelfTest (the KIND prefix in the log disambiguates). This is the production side: real
-//	gameplay state-changes emit these, so the spine (and next the tally) is driven by genuine input, not a recompute.
+//	gameplay state-changes emit these, so the spine's consumers are driven by genuine input, not a recompute.
 enum CascadeDomainEvent
 {
 	CASCADE_EVT_BUILDING_COUNT = 1,  // iType = BuildingTypes, iA = new empire count, iB = delta, iC = PlayerTypes -- a counted-domain event
@@ -191,7 +188,7 @@ enum CascadeDomainEvent
 //	Which entity's display name changed (the iType of a CASCADE_EVT_NAME_CHANGE event). The logging consumer resolves the
 //	NEW name LIVE (synchronous game-thread render -> exact), so the payload stays string-free; an out-of-process consumer
 //	(StoneBase / an agent) rebuilds its id->name table from the emitted lines -- REQUIRED for the total-observability
-//	("Orwell") bar (event-spine-spec.md section 8). CIV = the empire name (the civic-name-on-civic-change bug lever).
+//	("Orwell") bar (event-spine.md §8). CIV = the empire name (the civic-name-on-civic-change bug lever).
 enum NameChangeKind
 {
 	NAMECHANGE_PLAYER = 0,   // leader/player name (CvPlayer::getName)
@@ -217,7 +214,7 @@ public:
 
 //	The front door. Consumers register once at startup; emit() dispatches to interested consumers and SKIPS ENTIRELY
 //	when no registered consumer wants the event's kind (the cheap interest-guard -- so a dormant DIAGNOSTIC/TRACE
-//	firehose costs ~nothing, while DOMAIN always flows because the tally is listening). One instance: eventSpine().
+//	firehose costs ~nothing, while DOMAIN always flows because the grants consumer is listening). One instance: eventSpine().
 class CvEventSpine
 {
 public:
@@ -236,8 +233,8 @@ private:
 //	The single engine-wide spine.
 CvEventSpine& eventSpine();
 
-//	Register the built-in cascade consumers -- the broad logging consumer AND the selective tally (registered + seeded
-//	from current state via rebuild(); maintained incrementally by DOMAIN events thereafter, §9). Idempotent; call once
+//	Register the built-in cascade consumers -- the broad logging consumer AND the selective grants consumer. The tally
+//	is NOT a consumer (it reads the object-owned counts on demand, tally.md). Idempotent; call once
 //	(CvGame::doTurn guards it).
 void cascadeRegisterConsumers();
 

@@ -3,16 +3,11 @@
 #define CV_CASCADE_MODIFIER_MATH_H
 
 //
-//	The #430 MODIFIER machine -- INCREMENT 1: the percent stack (modifier.md §2a "how the percentages smash together").
-//	Reads the mapped CvJsonInfo (the deposits readJson mapped into the per-type InfoRepo) + the live active-source sets,
-//	and SHADOWS the cascade's per-channel `modifier = max(0, 100 + Σ percent)` against the legacy
-//	`CvCity::getBaseYieldRateModifier`. Build plan: docs/plans/structural-cleanup/modifier-machine.md.
+//	The [MODIFIER] spine domain + the per-turn census. The modifier machine itself lives in the calc classes
+//	(MMKernel/PercentStack/YieldBasePackages/BuildingPackage/CommerceCalc) consumed by CvCascadeAccumulator; the
+//	shadow harness that once lived here died with the shadow phase (validation.md).
 //
 
-//	One-shot, gated (gPlayerLogLevel) per-turn shadow: for a sample of cities × {food,production,commerce}, diff the
-//	cascade percent stack vs legacy getBaseYieldRateModifier and emit [MODIFIER/shadow] + [MODIFIER/diff] lines. Hooked
-//	at CvGame::doTurn; reads the JSON info mapped at LOAD (onFinalInitialized).
-void cvCascadeModifierShadow();          // #430 DISCONNECTED -- the legacy diff; re-enable only to re-verify vs legacy
-void cvCascadeModifierPerfCensus();      // the [MODIFIER/perf] census (ruled perf surface) -- called every turn
+void cvCascadeModifierPerfCensus();      // the [MODIFIER/perf] + [MODIFIER/repo] census (ruled perf/observability surface) -- called every turn
 
 #endif // CV_CASCADE_MODIFIER_MATH_H

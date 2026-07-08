@@ -34,6 +34,11 @@ enum CvCascUnit
 // The unit string (json key above a leaf) -> the enum. CASC_UNIT_UNKNOWN = not a unit key (an address segment).
 CvCascUnit cascadeUnitFromString(const std::string& s);
 
+class CvJsonModEntry;
+// The ONE §3.7 `per` count-scaler parser ({type|anyOf, each?} or a bare type string) -> the entry's per fields.
+// Shared: the modifier entries AND the grants repeatable `chance.per` both parse through it.
+void jsonParsePer(CvJsonModEntry* e, const picojson::value& v);
+
 // One §3.9 conditioned modifier entry. Owns its enabled/disabled condition trees. Noncopyable.
 class CvJsonModEntry
 {
@@ -49,12 +54,17 @@ public:
 	CvJsonCondition* unitQual;
 	// --- the §3.7 `per` count-scaler (value × count(type)/each) ---
 	bool hasPer;                  // the entry carries a per
-	std::string perType;          // the per's type/token string (POPULATION / PROPERTY_X / ...)
+	std::string perType;          // the per's type/token string (POPULATION / PROPERTY_X / ...) -- a catch-all
+	                              // token survives HERE (perTypeId stays -1); the DepositIndex push carries it on
+	std::vector<std::string> perAnyOfTypes;   // per.anyOf type strings, PARALLEL to perAnyOf -- the resolver's
+	                              // prefix routing (cascadeCountOf) needs the kind, an id alone is ambiguous
 	int perTypeId;                // FK-resolved engine id; -1 = a catch-all token (POPULATION/TURN/...)
 	int perEach;                  // the quantum ("per 5 population" -> 5); default 1
+	int perScope;                 // the AUTHORED per scope (a CvCascScope value); -1 = absent -> the deposit's
+	                              // own scope (json §3.7: cross-city scopes resolve via the tally, city/plot local)
 	std::vector<int> perAnyOf;    // per.anyOf summed-count FK ids (json §3.7)
 	CvJsonModEntry() : value100(0), unit(CASC_UNIT_FLAT), scope(CASC_SCOPE_CITY), enabled(NULL), disabled(NULL),
-		unitQual(NULL), hasPer(false), perTypeId(-1), perEach(1) {}
+		unitQual(NULL), hasPer(false), perTypeId(-1), perEach(1), perScope(-1) {}
 	~CvJsonModEntry() { delete enabled; delete disabled; delete unitQual; }
 private:
 	CvJsonModEntry(const CvJsonModEntry&);            // noncopyable -- owns the condition trees

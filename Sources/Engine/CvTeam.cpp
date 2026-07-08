@@ -3128,8 +3128,8 @@ bool CvTeam::isExtraWaterSeeFrom() const
 
 bool CvTeam::isMapTrading()	const
 {
-	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
-	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	// #430 FLIPPED: the CASCADE verdict is authoritative; the legacy counter is demolition fodder,
+	// unread by the cascade.
 	return CascadeCapabilities::flag(getID(), CCF_TRADE_MAPS);
 }
 
@@ -3167,8 +3167,8 @@ bool CvTeam::isVassalStateTrading() const
 
 bool CvTeam::isBridgeBuilding()	const
 {
-	// #430 FLIP-WITH-NET (2026-07-02): the CASCADE verdict is authoritative; the legacy counter stays
-	// maintained one more cycle as the in-body [CAPSHADOW] diff net, then it is deleted.
+	// #430 FLIPPED: the CASCADE verdict is authoritative; the legacy counter is demolition fodder,
+	// unread by the cascade.
 	return CascadeCapabilities::flag(getID(), CCF_BRIDGE_BUILDING);
 }
 
@@ -3230,13 +3230,11 @@ void CvTeam::changeEnemyWarWearinessModifier(int iChange)
 
 bool CvTeam::isMapCentering() const
 {
-	// #430 FLIP-WITH-NET (the wave-2 idiom; owner rulings 2026-07-05 + the data-dead find): the cascade
-	// union serves -- the SOLE live grantor is TECH_GEOMETRY's `hasCenteredMap`, so the flip-on-encounter
-	// latch the owner ruled and the derived union answer identically (techs are never lost; the building-
-	// side bMapCentering tag is schema-only, data-dead). The legacy m_bMapCentering latch stays the
-	// [CAPSHADOW] oracle until the net runs clean, then cuts two-stage; the Python/WB setMapCentering poke
-	// keeps setting the latch meanwhile (a poke shows as a named divergence -- the hasLanguage dead-poke class).
-	return CascadeCapabilities::shadow(getID(), CCF_HAS_CENTERED_MAP, m_bMapCentering);
+	// The cascade union serves -- the SOLE live grantor is TECH_GEOMETRY's `hasCenteredMap`, so the
+	// flip-on-encounter latch the owner ruled and the derived union answer identically (techs are never lost;
+	// the building-side bMapCentering tag is schema-only, data-dead). The legacy m_bMapCentering latch awaits
+	// its two-stage save retirement; the Python/WB setMapCentering poke is a dead poke (the hasLanguage class).
+	return CascadeCapabilities::flag(getID(), CCF_HAS_CENTERED_MAP);
 }
 
 void CvTeam::setMapCentering(bool bNewValue)

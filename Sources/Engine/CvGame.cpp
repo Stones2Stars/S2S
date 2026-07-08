@@ -12,8 +12,7 @@
 #include "UI/CvEventReporter.h"
 #include "CvEventSpine.h"
 #include "CvCascadeAccumulator.h"   // the scalar-slot warm-up read (increment F joins the load-end warm block)
-#include "CvCascadeModifierMath.h"
-#include "CvCascadeEnabler.h"
+#include "CvCascadeModifierMath.h"  // cvCascadeModifierPerfCensus -- the per-turn [MODIFIER/perf]+[MODIFIER/repo] census
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "Tools/CvHttpServer.h"
@@ -625,8 +624,8 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 
 	// #430 cascade LOAD-TIME setup. Register the spine consumers (logging) at the poor-man's-DI composition root; the
 	// tally is NOT seeded -- it READS the object-owned counts on demand (CvCascadeTally.h). The JSON->InfoRepo map is
-	// NOT here -- it runs WITH the XML at cvInternalGlobals::doPostLoadCaching (cascadeLoadJson), so the cascade's
-	// static data is populated once, at the same load point as the XML, regardless of logging (validation.md cadence).
+	// NOT here -- it runs at the end of LoadPostMenuGlobals (the LAST XML stage, CvXMLLoadUtilitySet.cpp), so the
+	// cascade's static data is populated once, after every FK target registers, regardless of logging.
 	cascadeRegisterConsumers();
 
 	// #430 EAGER CACHE WARM-UP (the load boundary IS the same ensure run eagerly -- scope-packages.md; a
@@ -5861,18 +5860,11 @@ void CvGame::doTurn()
 	// so removing it reverts to engine behaviour. To be redesigned properly (JSON parsed through BoolExpr) after
 	// the dry-calc (StoneBase) validation is done. Spine logging stays (registered above).
 	//
-	// #430 NOTE: the TALLY no longer shadows here -- it READS the object-owned counts (no duplicate store), so a
-	// cascade-vs-legacy count diff would be tautological (owner ruling 2026-06-30, tally.md). readJson now MAPS the
-	// static info data at LOAD (onFinalInitialized), not here -- loading a save verifies it (validation.md cadence).
-	//
-	// #430 DISCONNECT (owner 2026-07-05, "fully disconnect; delete step-after"): the per-turn MODIFIER + ENABLER
-	// shadow DIFF drivers (which recomputed the LEGACY verdicts every turn to diff against the cascade) are NO
-	// LONGER CALLED -- the cascade is the sole authority and its parity is proven. The driver bodies + every
-	// *Legacy oracle they invoked stay as dead code for the delete step-after. (This also removes a large per-turn
-	// cost: the full legacy re-walk of every gate/rate for the diff.)
-	// cvCascadeModifierShadow();   // DISCONNECTED 2026-07-05 -- the legacy DIFF; re-enable only to re-verify vs legacy
-	// cvCascadeEnablerShadow();    // DISCONNECTED again 2026-07-05 -- the incremental frontier box VERIFIED (canConstruct diverging=0)
-	cvCascadeModifierPerfCensus();  // the [MODIFIER/perf] census (ruled perf surface) STAYS -- no legacy, emits every turn
+	// #430 NOTE: the TALLY does not shadow here -- it READS the object-owned counts (no duplicate store), so a
+	// cascade-vs-legacy count diff would be tautological (tally.md). readJson MAPS the static info data at LOAD
+	// (the end of LoadPostMenuGlobals), not here -- loading a save verifies it (validation.md cadence). The
+	// per-turn MODIFIER + ENABLER shadow-diff drivers that used to run here died with the shadow phase.
+	cvCascadeModifierPerfCensus();  // the [MODIFIER/perf]+[MODIFIER/repo] census (ruled perf/observability surface) -- no legacy, emits every turn
 
 	//	Turn-boundary accounting for the frame-driven span the doTurn tree does not cover:
 	//	turn.wall is the true wall-clock between consecutive turn boundaries (what a player's

@@ -20,13 +20,29 @@
 #include <vector>
 
 class CvJsonInfo;
+class CvJsonCondition;
 class CvPlayer;
 class CvCity;
 class CvTeam;
 
 // The buckets keyed on the JSON `enables`/`obsoletes`/`replaces`/`disables` edge families -- one HAVE traversal fills
-// them all. Shared by the kernel + the per-domain cascades + the shadow harness (promotions).
+// them all. Shared by the kernel + the per-domain cascades + the accumulator's frontier fills (promotions included).
 typedef std::map<std::string, std::set<int> > EnBucketSets;
+
+// The requires-tree HAVE-atom dependency signature: which HAVE-classes gate an entity's requires. The ONE shape the
+// three reverse-index builders (the building/unit frontier boxes + the kernel's operate index) collect into via
+// EnablerKernel::scanCondDeps below; each consumer reads only the fields its buckets need.
+struct CascadeCondDeps
+{
+	bool pop, power, religion, corp, goldenAge, stateReligion, civicAny;
+	bool dynamic;             // a non-HAVE atom (live state no event carries) -- only set under bMarkDynamic
+	std::set<int> techs;      // specific TECH_ ids referenced
+	std::set<int> bonuses;    // specific BONUS_ ids referenced (presence or HAS_BONUS predicate)
+	std::set<int> buildings;  // specific BUILDING_ ids referenced
+	std::set<int> units;      // specific UNIT_ ids referenced -- only collected under bTrackUnits
+	CascadeCondDeps() : pop(false), power(false), religion(false), corp(false), goldenAge(false),
+		stateReligion(false), civicAny(false), dynamic(false) {}
+};
 
 class EnablerKernel
 {
@@ -59,6 +75,14 @@ public:
 	// GATE: candidates[bucket] -> the available set (requires + allowed + obsoletedBy).
 	static void gateSet(const std::string& bucket, const EnBucketSets& cand, const CvCascadeEvalCtx& ec,
 		const CvPlayer& kPlayer, const CvTeam& kTeam, bool bUnit, std::set<int>& avail);
+
+	// The ONE requires-tree HAVE-atom scanner (recursing GROUP children + enabled/disabled): classifies PRESENCE
+	// atoms by type prefix/token and PREDICATEs by predKind into `d`. The two legs that differ between the three
+	// reverse-index builders are parameters: bTrackUnits collects UNIT_ presence atoms (the unit index's
+	// requires-another-unit's-count leg); bMarkDynamic marks every untracked atom -- plus every BONUS_ reference
+	// (trade/map/vicinity shifts aren't a discrete event) -- DYNAMIC, routing its entity to the bounded per-turn
+	// re-check (the operate index). Over-inclusion is safe (a few extra re-checks).
+	static void scanCondDeps(const CvJsonCondition* c, CascadeCondDeps& d, bool bTrackUnits, bool bMarkDynamic);
 
 	// The PURE operating buildings recompute: the two per-city operating buildings in ONE fixpoint pass. `activeOut` = the ACTIVE
 	// (present ∧ operate-holds ∧ ¬dormant-trigger) building ids for pCity. DORMANCY is DERIVED from

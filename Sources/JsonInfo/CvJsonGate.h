@@ -26,7 +26,7 @@ public:
 	~CvJsonGate();
 
 	// The unit's load-time writers: parse the entity's top-level "enabled" / "disabled" value (a condition --
-	// bare GAMEOPTION_X string, atom, or all/anyOf/noneOf tree) through the ONE condition boundary.
+	// bare GAMEOPTION_X string, atom, or all/any/noneOf tree) through the ONE condition boundary.
 	void parseEnabled(const picojson::value& v);
 	void parseDisabled(const picojson::value& v);
 
