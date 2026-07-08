@@ -13,10 +13,10 @@
 //
 
 #include "CvJsonModEntry.h"
+#include "picojson.h"   // picojson::value + object -- parseEntity takes a picojson::object (object is a TYPEDEF, not
+                        // a class: forward-declaring it as `class object;` collided with the real typedef and ICE'd VC7.1)
 #include <map>
 #include <string>
-
-namespace picojson { class value; class object; }
 
 class CvJsonModifiers
 {
