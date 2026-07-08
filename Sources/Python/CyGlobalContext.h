@@ -53,7 +53,7 @@ public:
 	const CvSpecialUnitInfo* getSpecialUnitInfo(int i) const;
 	const CvYieldInfo* getYieldInfo(int i) const;
 	const CvCommerceInfo* getCommerceInfo(int i) const;
-	const CvRouteInfo* getRouteInfo(int i) const;
+	const CvJsonRouteInfo* getRouteInfo(int i) const;
 	const CvImprovementInfo* getImprovementInfo(int i) const;
 	const CvGoodyInfo* getGoodyInfo(int i) const;
 	const CvBuildInfo* getBuildInfo(int i) const;

@@ -75,7 +75,7 @@ class CvSpecialUnitInfo;
 class CvInfoBase;
 class CvYieldInfo;
 class CvCommerceInfo;
-class CvRouteInfo;
+class CvJsonRouteInfo;
 class CvImprovementInfo;
 class CvGoodyInfo;
 class CvBuildInfo;
@@ -552,7 +552,7 @@ public:
 	CvCommerceInfo& getCommerceInfo(CommerceTypes eCommerceNum) const;
 
 	int getNumRouteInfos() const;
-	CvRouteInfo& getRouteInfo(RouteTypes eRouteNum) const;
+	CvJsonRouteInfo& getRouteInfo(RouteTypes eRouteNum) const;
 
 	int getNumImprovementInfos() const;
 	CvImprovementInfo& getImprovementInfo(ImprovementTypes eImprovementNum) const;
@@ -964,8 +964,8 @@ protected:
 	std::vector<CvSeaLevelInfo*> m_paSeaLevelInfo;
 	std::vector<CvYieldInfo*> m_paYieldInfo;
 	std::vector<CvCommerceInfo*> m_paCommerceInfo;
-	std::vector<CvRouteInfo*> m_paRouteInfo;
-	CvInfoReplacements<CvRouteInfo> m_RouteInfoReplacements;
+	std::vector<CvJsonRouteInfo*> m_paRouteInfo;
+	CvInfoReplacements<CvJsonRouteInfo> m_RouteInfoReplacements;
 	std::vector<CvFeatureInfo*> m_paFeatureInfo;
 	CvInfoReplacements<CvFeatureInfo> m_FeatureInfoReplacements;
 	std::vector<CvBonusClassInfo*> m_paBonusClassInfo;

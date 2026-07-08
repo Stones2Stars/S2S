@@ -128,17 +128,17 @@ void CyInfoPythonInterface2()
 		.def("getSound", &CvGoodyInfo::getSound, "string ()")
 	;
 
-	python::class_<CvRouteInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvRouteInfo", python::no_init)
+	python::class_<CvJsonRouteInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvJsonRouteInfo", python::no_init)
 
-		.def("getValue", &CvRouteInfo::getValue, "int ()")
-		.def("getMovementCost", &CvRouteInfo::getMovementCost, "int ()")
-		.def("getFlatMovementCost", &CvRouteInfo::getFlatMovementCost, "int ()")
-		.def("getPrereqBonus", &CvRouteInfo::getPrereqBonus, "int ()")
+		.def("getValue", &CvJsonRouteInfo::getValue, "int ()")
+		.def("getMovementCost", &CvJsonRouteInfo::getMovementCost, "int ()")
+		.def("getFlatMovementCost", &CvJsonRouteInfo::getFlatMovementCost, "int ()")
+		.def("getPrereqBonus", &CvJsonRouteInfo::getPrereqBonus, "int ()")
 
 		// Arrays
-		.def("getYieldChange", &CvRouteInfo::getYieldChange, "int (int i)")
-		.def("getTechMovementChange", &CvRouteInfo::getTechMovementChange, "int (int i)")
-		.def("getPrereqOrBonuses", &CvRouteInfo::getPrereqOrBonuses, python::return_value_policy<python::reference_existing_object>())
+		.def("getYieldChange", &CvJsonRouteInfo::getYieldChange, "int (int i)")
+		.def("getTechMovementChange", &CvJsonRouteInfo::getTechMovementChange, "int (int i)")
+		.def("getPrereqOrBonuses", &CvJsonRouteInfo::getPrereqOrBonuses, python::return_value_policy<python::reference_existing_object>())
 	;
 
 	python::class_<CvImprovementBonusInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvImprovementBonusInfo", python::no_init)

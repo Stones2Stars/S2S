@@ -36,7 +36,7 @@
 #include "CvTurnTimerInfo.h"
 #include "CvBuildInfo.h"
 #include "CvGoodyInfo.h"
-#include "CvRouteInfo.h"
+#include "CvJsonRouteInfo.h"
 #include "CvImprovementBonusInfo.h"
 #include "CvBonusClassInfo.h"
 #include "CvFeatureInfo.h"

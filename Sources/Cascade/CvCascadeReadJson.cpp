@@ -199,7 +199,7 @@ static void rj_find(const std::string& dir, std::vector<std::string>& out)
 	X("IMPROVEMENT_",   CvImprovementInfo)    \
 	X("FEATURE_",       CvFeatureInfo)        \
 	X("TERRAIN_",       CvTerrainInfo)        \
-	X("ROUTE_",         CvRouteInfo)          \
+	X("ROUTE_",         CvJsonRouteInfo)          \
 	X("PROJECT_",       CvProjectInfo)        \
 	X("PROCESS_",       CvProcessInfo)        \
 	X("HERITAGE_",      CvHeritageInfo)       \
@@ -445,6 +445,24 @@ void cascadeLoadJson()
 		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_KEY, 1)
 			.addStr(RJF_KEY, it->first.c_str()).addI(RJF_COUNT, it->second)
 			.addStr(RJF_CLASS, jsonKeyClassName(keyClass[it->first])));
+
+	// Route<-bonus prereq REVERSE INDEX. curate_route.py inverts a route's PrereqOrBonuses to the bonus's
+	// `enables.routes` (the enabler GENERATE edge), so no route JSON carries the relationship. The getRouteInfo(...)
+	// callers (CvPlot route validity, CvPlayerAI, CvDLLWidgetData) still ask the route "which bonuses do I need?",
+	// so reconstruct each route's OR-list here, once, after every entity is mapped. (getPrereqBonus -- the legacy
+	// single AND-prereq -- is authored by NO route, so it stays a NO_BONUS constant on the poco.)
+	{
+		const int nBonus = GC.getNumBonusInfos();
+		for (int b = 0; b < nBonus; ++b)
+		{
+			const CvJsonInfo* jb = InfoRepo<CvBonusInfo>::get().get(b);
+			if (jb == NULL || jb->getEdges() == NULL) continue;
+			const std::vector<int>* routes = jb->getEdges()->find("enables.routes");
+			if (routes == NULL) continue;
+			for (size_t r = 0; r < routes->size(); ++r)
+				static_cast<CvJsonRouteInfo*>(InfoRepo<CvJsonRouteInfo>::get().editPtr((*routes)[r]))->addPrereqOrBonus((BonusTypes)b);
+		}
+	}
 
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MAP_SUMMARY, 1).addI(RJF_WITHDATA, iAttached));
 }

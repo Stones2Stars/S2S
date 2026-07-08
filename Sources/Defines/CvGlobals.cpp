@@ -1908,10 +1908,12 @@ int cvInternalGlobals::getNumRouteInfos() const
 	return (int)m_paRouteInfo.size();
 }
 
-CvRouteInfo& cvInternalGlobals::getRouteInfo(RouteTypes eRouteNum) const
+CvJsonRouteInfo& cvInternalGlobals::getRouteInfo(RouteTypes eRouteNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumRouteInfos(), eRouteNum);
-	return *(m_paRouteInfo[eRouteNum]);
+	// #430: the JSON poco from the per-type InfoRepo (the payload IS a CvJsonRouteInfo); the XML m_paRouteInfo
+	// load is demolition fodder cut at the atomic cutover (cascade-engine-430.md §3).
+	return *static_cast<CvJsonRouteInfo*>(InfoRepo<CvJsonRouteInfo>::get().editPtr(eRouteNum));
 }
 
 int cvInternalGlobals::getNumImprovementInfos() const

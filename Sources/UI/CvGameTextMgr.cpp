@@ -5005,7 +5005,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 		if (pPlot->getRevealedRouteType(eActiveTeam, true) != NO_ROUTE)
 		{
 			const RouteTypes eRouteType = pPlot->getRevealedRouteType(eActiveTeam, true);
-			const CvRouteInfo& eRoute = GC.getRouteInfo(eRouteType);
+			const CvJsonRouteInfo& eRoute = GC.getRouteInfo(eRouteType);
 			const int iRouteCost = eRoute.getMovementCost() + GET_TEAM(eActiveTeam).getRouteChange(eRouteType);
 
 			szTempBuffer.clear();
@@ -23929,7 +23929,7 @@ void CvGameTextMgr::setRouteHelp(CvWStringBuffer &szBuffer, RouteTypes eRoute, b
 
 	const int iMoveDenominator = GC.getMOVE_DENOMINATOR();
 
-	const CvRouteInfo& info = GC.getRouteInfo(eRoute);
+	const CvJsonRouteInfo& info = GC.getRouteInfo(eRoute);
 	if (!bCivilopediaText)
 	{
 		szTempBuffer.Format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), info.getDescription());
@@ -29470,7 +29470,7 @@ void CvGameTextMgr::getRouteDataForWB(std::vector<CvWBData>& mapRouteData) const
 	CvWStringBuffer szBuffer;
 	for (int i=0; i < GC.getNumRouteInfos(); i++)
 	{
-		const CvRouteInfo& kInfo = GC.getRouteInfo((RouteTypes) i);
+		const CvJsonRouteInfo& kInfo = GC.getRouteInfo((RouteTypes) i);
 		if (!kInfo.isGraphicalOnly())
 		{
 			szBuffer.clear();

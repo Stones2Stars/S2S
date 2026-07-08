@@ -217,7 +217,7 @@ const CvCommerceInfo* CyGlobalContext::getCommerceInfo(int i) const
 }
 
 
-const CvRouteInfo* CyGlobalContext::getRouteInfo(int i) const
+const CvJsonRouteInfo* CyGlobalContext::getRouteInfo(int i) const
 {
 	return (i>=0 && i<GC.getNumRouteInfos()) ? &GC.getRouteInfo((RouteTypes) i) : NULL;
 }

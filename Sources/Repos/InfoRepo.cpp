@@ -16,7 +16,7 @@
 
 // Phantom tag types not already declared by InfoRepo.h (never dereferenced -- per-type discriminators only).
 class CvCivicOptionInfo; class CvPromotionLineInfo; class CvCultureLevelInfo; class CvSpecialistInfo;
-class CvBonusInfo; class CvImprovementInfo; class CvFeatureInfo; class CvTerrainInfo; class CvRouteInfo;
+class CvBonusInfo; class CvImprovementInfo; class CvFeatureInfo; class CvTerrainInfo; class CvJsonRouteInfo;
 class CvProjectInfo; class CvProcessInfo; class CvHeritageInfo; class CvBuildInfo; class CvCivilizationInfo;
 class CvEraInfo; class CvHandicapInfo; class CvSpecialBuildingInfo; class CvPropertyInfo;
 
@@ -44,7 +44,7 @@ CASCADE_INFOREPO_DEFINE(CvPromotionInfo)
 CASCADE_INFOREPO_DEFINE(CvImprovementInfo)
 CASCADE_INFOREPO_DEFINE(CvFeatureInfo)
 CASCADE_INFOREPO_DEFINE(CvTerrainInfo)
-CASCADE_INFOREPO_DEFINE(CvRouteInfo)
+CASCADE_INFOREPO_DEFINE(CvJsonRouteInfo)
 CASCADE_INFOREPO_DEFINE(CvProjectInfo)
 CASCADE_INFOREPO_DEFINE(CvProcessInfo)
 CASCADE_INFOREPO_DEFINE(CvHeritageInfo)

@@ -26,7 +26,7 @@
 	MACRO_FUNC(CvCivicOptionInfo, CIVIC_OPTION_INFO, CivicOptionTypes) \
 	MACRO_FUNC(CvBuildInfo, BUILD_INFO, BuildTypes) \
 	MACRO_FUNC(CvTerrainInfo, TERRAIN_INFO, TerrainTypes) \
-	MACRO_FUNC(CvRouteInfo, ROUTE_INFO, RouteTypes) \
+	MACRO_FUNC(CvJsonRouteInfo, ROUTE_INFO, RouteTypes) \
 	MACRO_FUNC(CvVictoryInfo, VICTORY_INFO, VictoryTypes) \
 	MACRO_FUNC(CvLeaderHeadInfo, LEADERHEAD_INFO, LeaderHeadTypes) \
 	MACRO_FUNC(CvCivilizationInfo, CIVILIZATION_INFO, CivilizationTypes) \

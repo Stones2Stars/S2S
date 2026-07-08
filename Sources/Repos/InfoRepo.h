@@ -69,7 +69,7 @@
 // The engine info TAGS (phantom per-type discriminators) -- forward-declared for the JsonPayload map below.
 class CvTraitInfo; class CvBuildingInfo; class CvReligionInfo; class CvCorporationInfo; class CvUnitInfo;
 class CvTechInfo; class CvPromotionInfo; class CvUnitCombatInfo; class CvCivicInfo;
-class CvTerrainInfo; class CvFeatureInfo; class CvRouteInfo; class CvBuildInfo; class CvImprovementInfo;
+class CvTerrainInfo; class CvFeatureInfo; class CvJsonRouteInfo; class CvBuildInfo; class CvImprovementInfo;
 class CvBonusInfo; class CvSpecialistInfo; class CvProcessInfo; class CvCivicOptionInfo; class CvCultureLevelInfo;
 class CvProjectInfo; class CvHeritageInfo; class CvPromotionLineInfo;
 class CvCivilizationInfo; class CvEraInfo; class CvHandicapInfo; class CvGameSpeedInfo; class CvSpecialBuildingInfo;
@@ -94,7 +94,7 @@ template <> struct JsonPayload<CvCivicInfo>        { typedef CvJsonCivicInfo    
 // The five EXE-bound types: the payload IS the shim leaf (Cv<X>Info : public CvJson<X>Info) so getBonusInfo/… return it.
 template <> struct JsonPayload<CvTerrainInfo>      { typedef CvTerrainInfo          type; };
 template <> struct JsonPayload<CvFeatureInfo>      { typedef CvFeatureInfo          type; };
-template <> struct JsonPayload<CvRouteInfo>        { typedef CvJsonRouteInfo        type; };
+template <> struct JsonPayload<CvJsonRouteInfo>        { typedef CvJsonRouteInfo        type; };
 template <> struct JsonPayload<CvBuildInfo>        { typedef CvBuildInfo            type; };
 template <> struct JsonPayload<CvImprovementInfo>  { typedef CvImprovementInfo      type; };
 template <> struct JsonPayload<CvBonusInfo>        { typedef CvBonusInfo            type; };
