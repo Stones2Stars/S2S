@@ -189,7 +189,11 @@ def requires_improvement(rec, store):
 
 CFG = cc.EntityConfig("ImprovementInfo", families=IMP_FAMILIES, id_rename=ID_RENAME,
                       to_identity={"iAdvancedStartCost": "advancedStart.cost"},
-                      map_gen=["iUniqueRange", "iGoodyRange", "iTilesPerGoody", "bGoody"],
+                      # bRequiresRiverSide is ALSO converted to a HAS_RIVER requires.build predicate (requires_improvement);
+                      # it is retained here as mapGeneration.requiresRiverSide too, because isRequiresRiverSide() is an
+                      # EXE-bound DllExport read (the CvBonusInfo-style map-gen shim leaf, cascade-engine-430.md #3) with
+                      # live DLL/Python/UI callers -- the flag and the predicate are not exclusive.
+                      map_gen=["iUniqueRange", "iGoodyRange", "iTilesPerGoody", "bGoody", "bRequiresRiverSide"],
                       extra_drop=EXTRA_DROP, requires_fn=requires_improvement)
 
 # Inbound boosts: Building/Civic ImprovementYieldChanges stay KEEP-ON-SOURCE (the cascade gathers those keyed from the

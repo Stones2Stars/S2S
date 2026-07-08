@@ -56,6 +56,9 @@ void CvJsonTerrainInfo::mapFrom(const picojson::value& entity)
 		}
 	}
 
+	// world.art.icon -- the ART_DEF_* tag (EXE map-gen art lookup, via the CvTerrainInfo shim's getArtDefineTag)
+	if (const picojson::object* art = jsonWorldArt(o)) jsonIdStr(*art, "icon", m_szArtDefineTag);
+
 	// ⏳ m_iZobristValue: CvPlot reads getZobristValue() for the map hash -- it needs the EXACT legacy zobrist
 	// computation (OOS-load-bearing), not a stand-in. Left 0 pending that port; flagged, not silently faked.
 }

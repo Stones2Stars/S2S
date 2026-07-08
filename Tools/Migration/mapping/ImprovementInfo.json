@@ -22,7 +22,6 @@
     "bRequiresFeature",
     "bRequiresFlatlands",
     "bRequiresIrrigation",
-    "bRequiresRiverSide",
     "bFreshWaterMakesValid",
     "bHillsMakesValid",
     "bPeakMakesValid",

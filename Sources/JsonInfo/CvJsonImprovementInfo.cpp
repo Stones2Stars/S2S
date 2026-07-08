@@ -15,7 +15,7 @@ CvJsonImprovementInfo::CvJsonImprovementInfo()
 	  m_eImprovementUpgrade(NO_IMPROVEMENT), m_eImprovementPillage(NO_IMPROVEMENT), m_eBonusChange(NO_BONUS),
 	  m_bActsAsCity(false), m_bMilitaryStructure(false), m_bCarriesIrrigation(false),
 	  m_bOutsideBorders(false), m_bBombardable(false), m_bZOCSource(false), m_bExtraterrestrial(false),
-	  m_bUniversalBonusTrade(false)
+	  m_bUniversalBonusTrade(false), m_bGoody(false), m_bRequiresRiverSide(false)
 {
 	for (int i = 0; i < NUM_YIELD_TYPES; ++i) m_aiYieldChange[i] = 0;
 }
@@ -71,5 +71,14 @@ void CvJsonImprovementInfo::mapFrom(const picojson::value& entity)
 			for (size_t i = 0; i < a.size(); ++i)
 				if (a[i].is<std::string>()) { const int id = jsonResolveId(a[i].get<std::string>()); if (id >= 0) m_aeMapCategories.push_back((MapCategoryTypes)id); }
 		}
+	}
+
+	// world.art.icon -- the ART_DEF_* tag (EXE map-gen art lookup, via the CvImprovementInfo shim's getArtInfo)
+	if (const picojson::object* art = jsonWorldArt(o)) jsonIdStr(*art, "icon", m_szArtDefineTag);
+	// mapGeneration.goody / .requiresRiverSide -- the EXE-bound isGoody() / isRequiresRiverSide()
+	if (const picojson::object* mg = jsonChildObj(o, "mapGeneration"))
+	{
+		m_bGoody            = jsonIdBool(*mg, "goody");
+		m_bRequiresRiverSide = jsonIdBool(*mg, "requiresRiverSide");
 	}
 }

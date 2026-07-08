@@ -8,7 +8,8 @@
 #include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonIdInt/...)
 
 CvJsonBuildInfo::CvJsonBuildInfo()
-	: m_eImprovement(NO_IMPROVEMENT), m_eRoute(NO_ROUTE), m_iTime(0), m_iCost(0), m_bKill(false)
+	: m_eImprovement(NO_IMPROVEMENT), m_eRoute(NO_ROUTE), m_iTime(0), m_iCost(0),
+	  m_iEntityEvent(ENTITY_EVENT_NONE), m_iMissionType(NO_MISSION), m_bKill(false)
 {}
 
 bool CvJsonBuildInfo::isFeatureRemove(int iFeature) const
@@ -49,4 +50,12 @@ void CvJsonBuildInfo::mapFrom(const picojson::value& entity)
 	// identity: does it consume the worker?
 	if (const picojson::object* io = jsonChildObj(o, "identity"))
 		m_bKill = jsonIdBool(*io, "consumesUnit");
+
+	// world.art.entityEvent -- the on-map worker animation (EXE-bound getEntityEvent, an ENTITY_EVENT_* id).
+	// getMissionType() is runtime-assigned (setMissionType at load), NOT read here.
+	if (const picojson::object* art = jsonWorldArt(o))
+	{
+		std::string s;
+		if (jsonIdStr(*art, "entityEvent", s)) m_iEntityEvent = jsonResolveId(s);
+	}
 }

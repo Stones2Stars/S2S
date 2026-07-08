@@ -27,6 +27,10 @@ public:
 	int getCost() const { return m_iCost; }
 	bool isKill() const { return m_bKill; }                 // consumes the worker
 	bool isFeatureRemove(int iFeature) const;               // clears feature iFeature
+	// EXE-bound surface (mapscript/EXE map gen -- served by the CvBuildInfo shim leaf, cascade-engine-430.md §3)
+	int getEntityEvent() const { return m_iEntityEvent; }   // world.art.entityEvent (the on-map worker animation)
+	int getMissionType() const { return m_iMissionType; }   // RUNTIME-assigned (setMissionType at load, CvXMLLoadUtilitySet), NOT JSON
+	void setMissionType(int iNewType) { m_iMissionType = iNewType; }
 
 	virtual void mapFrom(const picojson::value& entity);
 
@@ -42,6 +46,8 @@ private:
 	RouteTypes m_eRoute;               // produces.route
 	int m_iTime;                       // cost.time
 	int m_iCost;                       // cost.gold
+	int m_iEntityEvent;                // world.art.entityEvent (ENTITY_EVENT_* id; default ENTITY_EVENT_NONE)
+	int m_iMissionType;                // RUNTIME-assigned via setMissionType (default NO_MISSION), never serialized/JSON
 	bool m_bKill;                      // identity.consumesUnit
 	std::vector<FeatureTypes> m_aeFeatureRemove;   // produces.featureRemove (features this build clears)
 	// ⏳ NOT yet mapped (need the curator's per-feature `produces` shape confirmed): getFeatureTime /

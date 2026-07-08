@@ -24,6 +24,8 @@ public:
 	int getBonusClassType() const { return m_iBonusClassType; }
 	int getHealth() const { return m_iHealth; }
 	int getHappiness() const { return m_iHappiness; }
+	// EXE-bound art surface (mapscript/EXE map gen -- served by the CvBonusInfo shim leaf, cascade-engine-430.md §3)
+	const char* getArtDefineTag() const { return m_szArtDefineTag.c_str(); }
 	// NB techReveal/techCityTrade/techObsolete are NOT here: they are the TECH's edges (curate_bonus.py:26-27 stores
 	// them as tech.enables.bonuses / tech.obsoletes.bonuses) -- availability the cascade reads off the tech.
 
@@ -63,6 +65,7 @@ private:
 	int m_iBonusClassType;                 // identity.bonusClassType (BONUSCLASS_ id)
 	int m_iHealth;                         // health.empire.flat (connected-resource benefit, curate_bonus.py:64)
 	int m_iHappiness;                      // happiness.empire.flat
+	std::string m_szArtDefineTag;          // world.art.icon (ART_DEF_* tag; the EXE map-gen art lookup key)
 	int m_iMinAreaSize, m_iMinLatitude, m_iMaxLatitude, m_iPlacementOrder, m_iTilesPer;
 	int m_iUniqueRange, m_iGroupRange, m_iGroupRand;   // mapGeneration.*
 	bool m_bOneArea, m_bHills, m_bPeaks, m_bFlatlands, m_bBonusCoastalOnly, m_bNoRiverSide, m_bNormalize;

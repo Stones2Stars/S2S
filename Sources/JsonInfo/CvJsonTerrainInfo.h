@@ -37,6 +37,8 @@ public:
 
 	const std::vector<MapCategoryTypes>& getMapCategories() const { return m_aeMapCategories; }
 	int getZobristValue() const { return m_iZobristValue; }
+	// EXE-bound art surface (mapscript/EXE map gen -- served by the CvTerrainInfo shim leaf, cascade-engine-430.md §3)
+	const char* getArtDefineTag() const { return m_szArtDefineTag.c_str(); }
 
 	virtual void mapFrom(const picojson::value& entity);
 
@@ -57,6 +59,7 @@ private:
 	int m_iZobristValue;               // ⏳ map-hash: needs the exact legacy zobrist computation (OOS-load-bearing)
 	bool m_bFreshWaterTerrain;         // identity.freshWaterTerrain
 	ClimateZoneTypes m_eClimate;       // identity.climate (CLIMATE_ZONE_*)
+	std::string m_szArtDefineTag;      // world.art.icon (ART_DEF_* tag; the EXE map-gen art lookup key)
 	std::vector<MapCategoryTypes> m_aeMapCategories;   // identity.mapCategories (MAPCATEGORY_*)
 };
 

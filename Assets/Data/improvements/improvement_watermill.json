@@ -74,6 +74,9 @@
    "icon": "ART_DEF_IMPROVEMENT_WATERMILL"
   }
  },
+ "mapGeneration": {
+  "requiresRiverSide": true
+ },
  "identity": {
   "description": "TXT_KEY_IMPROVEMENT_WATERMILL",
   "civilopedia": "TXT_KEY_IMPROVEMENT_WATERMILL_PEDIA",

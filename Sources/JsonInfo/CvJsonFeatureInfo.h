@@ -44,6 +44,8 @@ public:
 	const std::vector<TerrainTypes>& getValidTerrains() const { return m_aeValidTerrains; }
 	const std::vector<MapCategoryTypes>& getMapCategories() const { return m_aeMapCategories; }
 	int getZobristValue() const { return m_iZobristValue; }
+	// EXE-bound art surface (mapscript/EXE map gen -- served by the CvFeatureInfo shim leaf, cascade-engine-430.md §3)
+	const char* getArtDefineTag() const { return m_szArtDefineTag.c_str(); }
 
 	virtual void mapFrom(const picojson::value& entity);
 
@@ -68,6 +70,7 @@ private:
 	int m_iZobristValue;                   // ⏳ map-hash: needs the exact legacy zobrist computation (OOS)
 	bool m_bImpassable, m_bNoCity, m_bNoImprovement, m_bNoBonus, m_bCountsAsPeak;   // identity placement flags
 	bool m_bRequiresFlatlands, m_bAddsFreshWater, m_bNukeImmune;                    // identity placement flags
+	std::string m_szArtDefineTag;          // world.art.icon (ART_DEF_* tag; the EXE map-gen art lookup key)
 	std::vector<TerrainTypes> m_aeValidTerrains;   // identity.validTerrains (resolved TERRAIN_ ids)
 	std::vector<MapCategoryTypes> m_aeMapCategories;
 	// ⏳ NOT yet mapped (need their curator JSON source confirmed before adding -- not silently defaulted):

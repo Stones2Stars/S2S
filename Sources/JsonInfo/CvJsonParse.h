@@ -45,6 +45,8 @@ bool jsonInList(const char** list, const std::string& key);
 // --- the shared JSON walkers -- the ONE canonical copy every mapFrom draws (never re-hand-rolled per type) ---
 // o[key] as an object child, or NULL.
 const picojson::object* jsonChildObj(const picojson::object& o, const char* key);
+// the o[world][art] sub-object, or NULL -- the EXE-bound map-gen art block (icon = ART_DEF_* tag; entityEvent).
+const picojson::object* jsonWorldArt(const picojson::object& o);
 // entity[family][scope][unit] as a human value (0 if any hop is missing); the int form truncates the double form.
 double jsonFamDbl(const picojson::object& o, const char* family, const char* scope, const char* unit);
 int jsonFamVal(const picojson::object& o, const char* family, const char* scope, const char* unit);

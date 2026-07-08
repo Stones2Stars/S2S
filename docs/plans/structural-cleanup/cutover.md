@@ -220,15 +220,12 @@ large, breadth-first rewiring ("a lot of places") and can proceed **in parallel*
      are (1) AMOUNTS — the cascade's summed `freeSpecialists` deposits (curated: 200 buildings / 12
      civics / 36 traits) → (2) engine PLACEMENT within its parameters (existing infrastructure) → (3)
      consumers deal with the placement's OUTPUT — so the four count reads are the sanctioned seam, the
-     promotion-SPA pattern. ⚠ **The AMOUNT computer WIRED 2026-07-05, but the live turn found the `any`-bucket
-     COMPOSITION WRONG (not yet flip-ready):** `fsAmountAny` sums city + empire (civics+traits) + area, but
-     legacy `getFreeSpecialist()`/`m_iFreeSpecialist` (the `any` total) is fed by **BUILDINGS ONLY**
-     (`processBuilding` `changeFreeSpecialist`, `CvCity.cpp:4744`) — civic/trait free specialists feed the
-     **TYPED** counts (`m_paiFreeSpecialistCount`), NOT the `any` bucket. So `fsAny` Casc ≈ 2× Leg (the
-     civic/trait over-count). ⛔ Fix: the cascade `any` bucket must mirror legacy's split — buildings' untyped
-     free specs → `any`; civic/trait grants → their typed/assigned counts per the engine placement. Wired-only
-     today (no live effect). `fsType*`/`fsAny` endpoint pairs stand for the re-verify. The placement-FEED swap
-     lands AT the demolition row once the composition matches.
+     promotion-SPA pattern. ✅ **The AMOUNT computer is WIRED and the `any`-bucket COMPOSITION MATCHES legacy's
+     split** (`CvCascadeScalarChannels`: `fillFreeSpecialistsCity` folds ONLY the operating buildings' city-scope
+     deposits into `any`+typed — legacy `m_iFreeSpecialist` is buildings-fed; the civic/trait folds fill the
+     SEPARATE empire buckets `fsEmpireAny`/`fsEmpireByType`, mirroring the typed counts). ⚠ This is SOLVED — do
+     not re-open it as a find. Remaining rows only: the live re-verify via the `fsType*`/`fsAny` endpoint pairs
+     once the tree loads, and the placement-FEED swap AT the demolition row.
   6. **`getLandmarkHappiness` — ⚖ RULED KEEP (owner 2026-07-05): *"we just leave the existing
      implementation in the game — it is just straight up state derived from the plot in question."***
      Landmarks are diffuse; the mechanic keeps its engine implementation (the civic-fed amount × the plot

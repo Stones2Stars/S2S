@@ -59,4 +59,7 @@ void CvJsonBonusInfo::mapFrom(const picojson::value& entity)
 				if (a[i].is<std::string>()) { const int id = jsonResolveId(a[i].get<std::string>()); if (id >= 0) m_aeMapCategories.push_back((MapCategoryTypes)id); }
 		}
 	}
+
+	// world.art.icon -- the ART_DEF_* tag the EXE map-gen art lookup keys on (via the CvBonusInfo shim's getArtInfo)
+	if (const picojson::object* art = jsonWorldArt(o)) jsonIdStr(*art, "icon", m_szArtDefineTag);
 }

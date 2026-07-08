@@ -73,11 +73,10 @@ anarchy** while in a golden age — the canonical "switch civics for free" windo
 
 ## How to OBSERVE it (no fishing)
 
-- `/diagnostic` — `isGoldenAge` per player.
-- `/diagnostic/config` — per-yield `yieldGoldenAgeYield` + `yieldGoldenAgeThreshold` arrays.
+- `/state/players` — `isGoldenAge` per player (a raw player fact); the per-yield `getGoldenAgeYield` /
+  `getGoldenAgeYieldThreshold` config is static `CvYieldInfo` data (Assets/Data + `/state/all` world config).
 - `/computed/cities/yields` — the per-plot golden-age addend (worked-plot decomposition); city-level
   `baseGoldenAgeYield` + `goldenAgeCommerce`.
-- growth / great-people endpoints — the golden-age flag + the modifiers it gates.
 
 ## Where the NUMBERS live (data fields)
 

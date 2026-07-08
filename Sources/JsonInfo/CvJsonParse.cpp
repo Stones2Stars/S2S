@@ -60,6 +60,12 @@ const picojson::object* jsonChildObj(const picojson::object& o, const char* key)
 	return (it != o.end() && it->second.is<picojson::object>()) ? &it->second.get<picojson::object>() : NULL;
 }
 
+const picojson::object* jsonWorldArt(const picojson::object& o)
+{
+	const picojson::object* w = jsonChildObj(o, "world");
+	return w ? jsonChildObj(*w, "art") : NULL;
+}
+
 double jsonFamDbl(const picojson::object& o, const char* family, const char* scope, const char* unit)
 {
 	const picojson::object* fo = jsonChildObj(o, family);  if (!fo) return 0.0;

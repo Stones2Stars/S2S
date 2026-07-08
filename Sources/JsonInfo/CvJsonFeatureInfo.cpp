@@ -67,5 +67,8 @@ void CvJsonFeatureInfo::mapFrom(const picojson::value& entity)
 				if (a[i].is<std::string>()) { const int id = jsonResolveId(a[i].get<std::string>()); if (id >= 0) m_aeMapCategories.push_back((MapCategoryTypes)id); }
 		}
 	}
+	// world.art.icon -- the ART_DEF_* tag (EXE map-gen art lookup, via the CvFeatureInfo shim's getArtInfo)
+	if (const picojson::object* art = jsonWorldArt(o)) jsonIdStr(*art, "icon", m_szArtDefineTag);
+
 	// ⏳ m_iZobristValue left 0 (needs the exact legacy zobrist map-hash, OOS) -- flagged not faked.
 }

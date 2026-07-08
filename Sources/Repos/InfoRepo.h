@@ -38,6 +38,13 @@
 #include "CvJsonVoteInfo.h"
 #include "CvJsonHurryInfo.h"
 #include "CvJsonBonusClassInfo.h"
+// The FIVE EXE-bound shim leaves (cascade-engine-430.md §3): the payload IS the shim so the engine getters return
+// it directly. The shim headers are thin (just their CvJson<X>Info poco, already included above + the art-info fwd decl).
+#include "Infos/CvBonusInfo.h"
+#include "Infos/CvImprovementInfo.h"
+#include "Infos/CvTerrainInfo.h"
+#include "Infos/CvFeatureInfo.h"
+#include "Infos/CvBuildInfo.h"
 #include <vector>
 
 //
@@ -84,12 +91,13 @@ template <> struct JsonPayload<CvTechInfo>         { typedef CvJsonTechInfo     
 template <> struct JsonPayload<CvPromotionInfo>    { typedef CvJsonPromotionInfo    type; };
 template <> struct JsonPayload<CvUnitCombatInfo>   { typedef CvJsonUnitCombatInfo   type; };
 template <> struct JsonPayload<CvCivicInfo>        { typedef CvJsonCivicInfo        type; };
-template <> struct JsonPayload<CvTerrainInfo>      { typedef CvJsonTerrainInfo      type; };
-template <> struct JsonPayload<CvFeatureInfo>      { typedef CvJsonFeatureInfo      type; };
+// The five EXE-bound types: the payload IS the shim leaf (Cv<X>Info : public CvJson<X>Info) so getBonusInfo/… return it.
+template <> struct JsonPayload<CvTerrainInfo>      { typedef CvTerrainInfo          type; };
+template <> struct JsonPayload<CvFeatureInfo>      { typedef CvFeatureInfo          type; };
 template <> struct JsonPayload<CvRouteInfo>        { typedef CvJsonRouteInfo        type; };
-template <> struct JsonPayload<CvBuildInfo>        { typedef CvJsonBuildInfo        type; };
-template <> struct JsonPayload<CvImprovementInfo>  { typedef CvJsonImprovementInfo  type; };
-template <> struct JsonPayload<CvBonusInfo>        { typedef CvJsonBonusInfo        type; };
+template <> struct JsonPayload<CvBuildInfo>        { typedef CvBuildInfo            type; };
+template <> struct JsonPayload<CvImprovementInfo>  { typedef CvImprovementInfo      type; };
+template <> struct JsonPayload<CvBonusInfo>        { typedef CvBonusInfo            type; };
 template <> struct JsonPayload<CvSpecialistInfo>   { typedef CvJsonSpecialistInfo   type; };
 template <> struct JsonPayload<CvProcessInfo>      { typedef CvJsonProcessInfo      type; };
 template <> struct JsonPayload<CvCivicOptionInfo>  { typedef CvJsonCivicOptionInfo  type; };

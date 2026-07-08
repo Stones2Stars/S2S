@@ -34,6 +34,7 @@
 #include "UI/CityOutputHistory.h"
 #include "Repos/BuildingsRepo.h"
 #include "Repos/BuildsRepo.h"
+#include "Repos/InfoRepo.h"   // #430: the 5 EXE-bound getters return the JSON-mapped shim from the per-type InfoRepo
 #include "CvCascadeReadJson.h"   // #430: map the curated JSON -> InfoRepo at load (doPostLoadCaching, with the XML)
 #include <time.h>
 #include <sstream>
@@ -993,7 +994,9 @@ int cvInternalGlobals::getNumTerrainInfos() const
 CvTerrainInfo& cvInternalGlobals::getTerrainInfo(TerrainTypes eTerrainNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumTerrainInfos(), eTerrainNum);
-	return *(m_paTerrainInfo[eTerrainNum]);
+	// #430: the JSON-mapped shim leaf (the payload IS a CvTerrainInfo); the XML m_paTerrainInfo load is demolition
+	// fodder cut at the atomic cutover (cascade-engine-430.md §3).
+	return *static_cast<CvTerrainInfo*>(InfoRepo<CvTerrainInfo>::get().editPtr(eTerrainNum));
 }
 
 int cvInternalGlobals::getNumBonusClassInfos() const
@@ -1021,7 +1024,7 @@ const std::vector<CvBonusInfo*>& cvInternalGlobals::getBonusInfos() const
 CvBonusInfo& cvInternalGlobals::getBonusInfo(BonusTypes eBonusNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eBonusNum);
-	return *(m_paBonusInfo[eBonusNum]);
+	return *static_cast<CvBonusInfo*>(InfoRepo<CvBonusInfo>::get().editPtr(eBonusNum));   // #430: JSON shim leaf (see getTerrainInfo)
 }
 
 int cvInternalGlobals::getNumMapBonuses() const
@@ -1053,7 +1056,7 @@ int cvInternalGlobals::getNumFeatureInfos() const
 CvFeatureInfo& cvInternalGlobals::getFeatureInfo(FeatureTypes eFeatureNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumFeatureInfos(), eFeatureNum);
-	return *(m_paFeatureInfo[eFeatureNum]);
+	return *static_cast<CvFeatureInfo*>(InfoRepo<CvFeatureInfo>::get().editPtr(eFeatureNum));   // #430: JSON shim leaf (see getTerrainInfo)
 }
 
 int& cvInternalGlobals::getNumPlayableCivilizationInfos()
@@ -1919,7 +1922,7 @@ int cvInternalGlobals::getNumImprovementInfos() const
 CvImprovementInfo& cvInternalGlobals::getImprovementInfo(ImprovementTypes eImprovementNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumImprovementInfos(), eImprovementNum);
-	return *(m_paImprovementInfo[eImprovementNum]);
+	return *static_cast<CvImprovementInfo*>(InfoRepo<CvImprovementInfo>::get().editPtr(eImprovementNum));   // #430: JSON shim leaf (see getTerrainInfo)
 }
 
 int cvInternalGlobals::getNumGoodyInfos() const
@@ -1941,7 +1944,7 @@ int cvInternalGlobals::getNumBuildInfos() const
 CvBuildInfo& cvInternalGlobals::getBuildInfo(BuildTypes eBuildNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumBuildInfos(), eBuildNum);
-	return m_buildTable.get(eBuildNum);
+	return *static_cast<CvBuildInfo*>(InfoRepo<CvBuildInfo>::get().editPtr(eBuildNum));   // #430: JSON shim leaf (see getTerrainInfo); m_buildTable is demolition fodder
 }
 
 void cvInternalGlobals::linkAllInfos()

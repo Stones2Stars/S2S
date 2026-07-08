@@ -194,6 +194,19 @@ surface is retired, `CvHttpServer.cpp:26`):
 
 ## 3. EXE BOUNDARY — the only fixed constraint (re-verified 2026-06-29)
 
+> **⚖ THE DllExport GETTER MECHANISM (owner ruling 2026-07-08 — the road-to-green shape).** The inheritance chain
+> is **`CvInfoBase → CvJsonInfo → CvJson<X>Info`** (the JsonInfo base MUST inherit CvInfoBase — that alone serves
+> the EXE-bound text surface `getType`/`getDescription`/…). Of the 23 archived classes only **FIVE** have
+> EXE-bound getters — `getBonusInfo` / `getImprovementInfo` / `getTerrainInfo` / `getFeatureInfo` /
+> `getBuildInfo` — **because MAPSCRIPTS are launched by the EXE**, which reads those infos (art + a handful of
+> flags) around map generation. Their EXE-called method surface is exactly EIGHT methods: `getArtInfo` ×4
+> (Bonus/Improvement/Feature + Terrain's `getArtDefineTag`), `isGoody`, `isRequiresRiverSide`, `getEntityEvent`,
+> `getMissionType`. The mechanism: those five old class names return as **thin leaves on the same chain**
+> (`CvJson<X>Info → Cv<X>Info`) carrying only the DllExport methods (the EXE import binds on decorated
+> class-name + signature, never layout — infos are not EXE-ABI-sensitive), backed by the JsonInfo data + the
+> art-define FKs. The other EIGHTEEN types never come back: their getters are NOT DllExport, so consumers rewire
+> straight onto the `CvJson<X>Info` surface.
+
 > **⛔ SUPERSEDED IN PART — the JSON-vs-CASCADE SEPARATION ([DEC-json-not-cascade](../../architecture/decisions.md#dec-json-not-cascade), owner ruling 2026-07-07).** The
 > §3 model below describes `readJson` mapping into a `CvJsonInfo` that HOLDS **deposit lists** (a generic `deposits`
 > vector the cascade then indexes/compiles). That let the cascade RUNTIME bleed into the JSON data — and **cascade and

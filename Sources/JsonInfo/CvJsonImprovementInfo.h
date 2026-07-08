@@ -33,6 +33,10 @@ public:
 	int getCultureRange() const { return m_iCultureRange; }
 	int getFeatureGrowthProbability() const { return m_iFeatureGrowthProbability; }
 	int getUpgradeTime() const { return m_iUpgradeTime; }
+	// EXE-bound surface (mapscript/EXE map gen -- served by the CvImprovementInfo shim leaf, cascade-engine-430.md §3)
+	const char* getArtDefineTag() const { return m_szArtDefineTag.c_str(); }
+	bool isGoody() const { return m_bGoody; }
+	bool isRequiresRiverSide() const { return m_bRequiresRiverSide; }
 
 	ImprovementTypes getImprovementUpgrade() const { return m_eImprovementUpgrade; }
 	ImprovementTypes getImprovementPillage() const { return m_eImprovementPillage; }
@@ -84,6 +88,9 @@ private:
 	BonusTypes m_eBonusChange;             // identity.bonusChange (FK)
 	bool m_bActsAsCity, m_bMilitaryStructure, m_bCarriesIrrigation;
 	bool m_bOutsideBorders, m_bBombardable, m_bZOCSource, m_bExtraterrestrial, m_bUniversalBonusTrade;
+	bool m_bGoody;                         // mapGeneration.goody (EXE-bound isGoody)
+	bool m_bRequiresRiverSide;             // mapGeneration.requiresRiverSide (EXE-bound isRequiresRiverSide; also a HAS_RIVER requires.build predicate)
+	std::string m_szArtDefineTag;          // world.art.icon (ART_DEF_* tag; the EXE map-gen art lookup key)
 	std::vector<MapCategoryTypes> m_aeMapCategories;
 	// ⏳ NOT yet mapped (their keyed curator shapes): getRiverSideYieldChange / getIrrigatedYieldChange (HAS_RIVER/
 	//    HAS_IRRIGATION-gated conditioned deposits) / getTechYieldChanges (tech-gated own yields) / per-bonus yields /
