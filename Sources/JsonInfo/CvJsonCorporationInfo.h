@@ -33,7 +33,7 @@ public:
 	int getYieldProduced(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiYieldProduced[i] : 0; }      // {y}.city.flat with per (×100 re-applied)
 	int getCommerceChange(int i) const { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_aiCommerceChange[i] : 0; }
 	int getCommerceProduced(int i) const { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_aiCommerceProduced[i] : 0; }
-	int getHeadquarterCommerce(int i) const { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_aiHeadquarterCommerce[i] : 0; }  // {c}.empire.headquarters.perCorporationLevel (⏳ HQ pass)
+	int getHeadquarterCommerce(int i) const { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_aiHeadquarterCommerce[i] : 0; }  // {c}.empire.headquarters.perCorporationLevel (STUB HQ pass)
 	const int* getHeadquarterCommerceArray() const { return m_aiHeadquarterCommerce; }
 
 	int getMaintenance() const { return m_iMaintenance; }   // maintenance.city.corporation.flat (⚠ raw ×100, curator not descaled)
@@ -52,8 +52,39 @@ public:
 	const char* getSound() const { return m_szSound.c_str(); }               // sound.sound
 
 	// RUNTIME (set post-load, NOT JSON)
-	int getHeadquarterChar() const { return m_iHeadquarterChar; }  void setHeadquarterChar(int i) { m_iHeadquarterChar = i; }
+	int getHeadquarterChar() const { return m_iHeadquarterChar; }  void setHeadquarterChar(int i);   // TGA-derived slot (.cpp)
 	int getMissionType() const { return m_iMissionType; }          void setMissionType(int i) { m_iMissionType = i; }
+
+	// --- mirrored legacy CvCorporationInfo getters (consumer surface; hotkey/action inherited from CvHotkeyInfo) ---
+	int getChar() const { return m_iChar; }               // corp display glyph -- runtime-assigned by the CvGameTextMgr symbol pass via setChar (non-XML runtime value, stored not discarded)
+	int getTGAIndex() const { return m_iTGAIndex; }       // ui.art.tgaIndex
+	const char* getMovieFile() const { return m_szMovieFile.c_str(); }   // ui.art.movie.file
+	const char* getMovieSound() const { return m_szMovieSound.c_str(); } // ui.art.movie.sound
+	// store-inverted onto the tech (tech.enables.corporations / tech.obsoletes.corporations); reconstructed at LOAD by
+	// the cascadeLoadJson tech-FK reverse-index pass (the Route<-bonus pattern), which calls the setters below.
+	TechTypes getTechPrereq() const { return m_eTechPrereq; }
+	TechTypes getObsoleteTech() const { return m_eObsoleteTech; }
+	void setTechPrereq(TechTypes e) { m_eTechPrereq = e; }       // load-time reverse-index writers (cascadeLoadJson)
+	void setObsoleteTech(TechTypes e) { m_eObsoleteTech = e; }
+	// curator-gap (curate_corporation.py DROP={TechPrereq,PrereqBonuses,PrereqBuildings}): PrereqBuildings is
+	// store-inverted onto the BUILDING (building.enables.corporations, from BuildingInfo.PrereqCorporation) at the
+	// Building pass -- NOT emitted on the corp, and (unlike getTechPrereq) NO reverse-index setter reconstructs it here.
+	int getPrereqBuilding(int /*i*/) const { return -1; }
+	// curator-gap: no PrereqGameOption in the base corp XML and none in curate_corporation.py's tag tables; corps
+	// author NO entity-level enabled/disabled gate (the HAS_CORPORATION predicate rides each per-city family entry,
+	// not a whole-entity gate), so there is no GAMEOPTION_ atom to walk (contrast CvJsonPromotionInfo getOnGameOption).
+	int getPrereqGameOption() const { return NO_GAMEOPTION; }
+	// top-level `excludes` (curate_corporation.py EXCLUDES: CompetingCorporations -> json sec9 same-tier corp<->corp
+	// exclusion). Emitted address; empty in ALL shipped base XML (no corp authors CompetingCorporations today) -> reads
+	// an empty set until data lands. `excludes` classifies CJK_INTRINSIC, so the base skips it for this subclass to parse.
+	bool isCompetingCorporation(int i) const { for (int j = 0; j < (int)m_aeExcludes.size(); ++j) if (m_aeExcludes[j] == i) return true; return false; }
+	int getFreeUnit() const { return m_grants.firstListId("freeUnit"); }   // grants.freeUnit (as CvJsonReligionInfo)
+	int* getYieldChangeArray() const { return const_cast<int*>(m_aiYieldChange); }          // real (the ×1 change array)
+	int* getCommerceChangeArray() const { return const_cast<int*>(m_aiCommerceChange); }    // real
+	void setChar(int i);                                              // TGA-derived GameFont slot (defined in .cpp; needs GC)
+	const std::vector<BonusTypes>& getPrereqBonuses() const   // the per-scaler bonus set, as a BonusTypes view of m_aePrereqBonuses
+	{ return reinterpret_cast<const std::vector<BonusTypes>&>(m_aePrereqBonuses); }
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }  // property engine (self-contained; XML-era manip data deferred)
 
 	virtual void mapFrom(const picojson::value& entity);
 
@@ -61,16 +92,19 @@ public:
 	virtual const CvJsonEdges*     getEdges()     const { return &m_edges; }
 	virtual const CvJsonProvides*  getProvides()  const { return &m_provides; }
 	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvJsonGrants*    getGrants()    const { return &m_grants; }   // grants.freeUnit (getFreeUnit)
 
 protected:
 	virtual CvJsonEdges*     mutEdges()     { return &m_edges; }
 	virtual CvJsonProvides*  mutProvides()  { return &m_provides; }
 	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvJsonGrants*    mutGrants()    { return &m_grants; }
 
 private:
 	CvJsonEdges     m_edges;
 	CvJsonProvides  m_provides;
 	CvJsonModifiers m_modifiers;
+	CvJsonGrants    m_grants;
 	int m_aiYieldChange[NUM_YIELD_TYPES];
 	int m_aiYieldProduced[NUM_YIELD_TYPES];
 	int m_aiCommerceChange[NUM_COMMERCE_TYPES];
@@ -79,8 +113,12 @@ private:
 	int m_iMaintenance, m_iHealth, m_iHappiness, m_iFreeXP, m_iMilitaryProductionModifier;
 	std::vector<int> m_aePrereqBonuses;
 	int m_iSpreadCost, m_iSpread, m_iCompetingSpreadCostPercent;
-	std::string m_szSound;
-	int m_iHeadquarterChar, m_iMissionType;   // runtime
+	std::string m_szSound, m_szMovieFile, m_szMovieSound;   // sound.sound / ui.art.movie.file / ui.art.movie.sound
+	int m_iTGAIndex;                          // ui.art.tgaIndex
+	std::vector<int> m_aeExcludes;            // top-level `excludes` -- CompetingCorporations FKs (isCompetingCorporation)
+	int m_iHeadquarterChar, m_iMissionType, m_iChar;   // runtime (m_iChar: display glyph assigned by the symbol pass via setChar)
+	TechTypes m_eTechPrereq, m_eObsoleteTech; // store-inverted tech FKs, reconstructed at load (cascadeLoadJson)
+	CvPropertyManipulators m_PropertyManipulators;   // STUB empty -- property engine, XML-era manipulator data deferred
 };
 
 #endif // CV_JSON_CORPORATION_INFO_H

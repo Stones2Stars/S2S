@@ -10,11 +10,11 @@
 #include "CvEventSpine.h"
 #include "CvJsonInfo.h"             // CvJsonInfo::grantList / grantPulse100 / grantFlag (the CvJsonGrants unit's read-throughs)
 #include "Repos/InfoRepo.h"        // InfoRepo<CvXInfo>::get().get(id) -> the mapped CvJsonInfo*
-#include "CvBuildingInfo.h"        // InfoRepo<CvBuildingInfo>
-#include "CvUnitInfo.h"            // InfoRepo<CvUnitInfo>
-#include "CvTechInfo.h"           // InfoRepo<CvTechInfo> (tech first-discover grants)
-#include "Infos/CvReligionInfo.h" // InfoRepo<CvReligionInfo> (religion founder grants)
-#include "Infos/CvCivicInfo.h"    // InfoRepo<CvCivicInfo> (civic revolution grant)
+#include "CvJsonBuildingInfo.h"        // InfoRepo<CvJsonBuildingInfo>
+#include "CvJsonUnitInfo.h"            // InfoRepo<CvJsonUnitInfo>
+#include "CvJsonTechInfo.h"           // InfoRepo<CvJsonTechInfo> (tech first-discover grants)
+#include "CvJsonReligionInfo.h" // InfoRepo<CvJsonReligionInfo> (religion founder grants)
+#include "CvJsonCivicInfo.h"    // InfoRepo<CvJsonCivicInfo> (civic revolution grant)
 #include "Infos/CvCivilizationInfo.h" // InfoRepo<CvCivilizationInfo> (game-start civ grants)
 #include "Infos/CvEraInfo.h"      // InfoRepo<CvEraInfo> (game-start era grants)
 #include "Infos/CvHandicapInfo.h" // InfoRepo<CvHandicapInfo> (game-start handicap grants)
@@ -109,7 +109,7 @@ static int gr_scopedPulseSum(const CvJsonInfo* j, const char* szChannel)   // su
 
 static void gr_resolveBuilding(int iBuilding, int iPlayer)
 {
-	const CvJsonInfo* j = InfoRepo<CvBuildingInfo>::get().get(iBuilding);
+	const CvJsonInfo* j = InfoRepo<CvJsonBuildingInfo>::get().get(iBuilding);
 	if (j == NULL) return;
 	const int nRepeat    = (j->getGrants() != NULL) ? (int)j->getGrants()->repeatables().size() : 0;   // per-turn spawn/heal (recurring) -- the structured set (2b)
 	const int nFreePromo = gr_listCount(j, "freePromotions");   // end-turn promotions to units in the city (recurring)
@@ -125,7 +125,7 @@ static void gr_resolveBuilding(int iBuilding, int iPlayer)
 
 static void gr_resolveUnit(int iUnit, int iPlayer)
 {
-	const CvJsonInfo* j = InfoRepo<CvUnitInfo>::get().get(iUnit);
+	const CvJsonInfo* j = InfoRepo<CvJsonUnitInfo>::get().get(iUnit);
 	if (j == NULL) return;
 	const int nPromos = gr_listCount(j, "promotions");        // free promotions on creation
 	const int nFound  = gr_listCount(j, "foundBuildings");    // settle-time building seeds (settler)
@@ -142,7 +142,7 @@ static int gr_firstId(const CvJsonInfo* j, const char* szBucket)   // a single-i
 
 static void gr_resolveTech(int iTech, int iPlayer)
 {
-	const CvJsonInfo* j = InfoRepo<CvTechInfo>::get().get(iTech);
+	const CvJsonInfo* j = InfoRepo<CvJsonTechInfo>::get().get(iTech);
 	if (j == NULL) return;
 	const int iFirstUnit    = gr_firstId(j, "firstFreeUnit");     // first-discover free unit id (-1 none)
 	const int iFirstProphet = gr_firstId(j, "firstFreeProphet");  // first-discover free prophet id (option-gated)
@@ -155,7 +155,7 @@ static void gr_resolveTech(int iTech, int iPlayer)
 
 static void gr_resolveReligion(int iReligion, int iPlayer)
 {
-	const CvJsonInfo* j = InfoRepo<CvReligionInfo>::get().get(iReligion);
+	const CvJsonInfo* j = InfoRepo<CvJsonReligionInfo>::get().get(iReligion);
 	if (j == NULL) return;
 	const int nNumFree  = gr_pulse(j, "numFreeUnits");   // count of founder units
 	const int iFreeUnit = gr_firstId(j, "freeUnit");      // the founder unit type
@@ -167,7 +167,7 @@ static void gr_resolveReligion(int iReligion, int iPlayer)
 
 static void gr_resolveCivic(int iCivic, int iPlayer)
 {
-	const CvJsonInfo* j = InfoRepo<CvCivicInfo>::get().get(iCivic);
+	const CvJsonInfo* j = InfoRepo<CvJsonCivicInfo>::get().get(iCivic);
 	if (j == NULL) return;
 	const int nRev = gr_pulse(j, "revolution");   // rev-index pulse on adopt (signed; Python-applied in legacy)
 	if (nRev == 0) return;

@@ -21,7 +21,7 @@ class CvPlot;
 class CvReplayMessage;
 class CvReplayInfo;
 class CvUnit;
-class CvUnitCombatInfo;
+class CvJsonUnitCombatInfo;
 
 //	Max number of barbarian units in existence for a spawn of a new one to be allowed
 //	This allows a 'space' for 'real' barbarians to be built before we use up the entire
@@ -889,7 +889,7 @@ public:
 	CvProperties* getProperties();
 	const CvProperties* getPropertiesConst() const;
 
-	bool isValidByGameOption(const CvUnitCombatInfo& info) const;
+	bool isValidByGameOption(const CvJsonUnitCombatInfo& info) const;
 
 	void enforceOptionCompatibility(GameOptionTypes eOption);
 

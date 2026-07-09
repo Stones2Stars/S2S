@@ -12,21 +12,21 @@
                                       // SFT_PLAYER consumer render (line ~202) -- imported DIRECTLY (was a latent
                                       // missing include masked by a unity batch-mate until readJson stopped pulling
                                       // CvPlayer.h; unity builds hide missing includes -- structural-cleanup.md §2)
-#include "CvBuildingInfo.h"
-#include "CvUnitInfo.h"
+#include "CvJsonBuildingInfo.h"
+#include "CvJsonUnitInfo.h"
 #include "CvCascadeGrants.h"   // the #430 GRANTS consumer -- registered at the composition root below
 // typeIndex name-resolution in the consumer: the Info headers for each SFT_ kind (so GC.getXInfo(i).getType() compiles).
 // Imported DIRECTLY (no CvInfos.h umbrella -- owner 2026-06-18: that umbrella should be retired, import directly).
 #include "CvBonusInfo.h"
 #include "CvImprovementInfo.h"
-#include "Infos/CvPromotionInfo.h"
-#include "Infos/CvReligionInfo.h"
-#include "Infos/CvCorporationInfo.h"
+#include "CvJsonPromotionInfo.h"
+#include "CvJsonReligionInfo.h"
+#include "CvJsonCorporationInfo.h"
 #include "Infos/CvFeatureInfo.h"
 #include "Infos/CvTerrainInfo.h"
-#include "Infos/CvCivicInfo.h"
-#include "Infos/CvProjectInfo.h"
-#include "Infos/CvSpecialistInfo.h"
+#include "CvJsonCivicInfo.h"
+#include "CvJsonProjectInfo.h"
+#include "CvJsonSpecialistInfo.h"
 
 // ===================== the spine =====================
 

@@ -20,7 +20,7 @@ void CvJsonCultureLevelInfo::mapFrom(const picojson::value& entity)
 	{
 		m_iCityRadius = jsonIdInt(*io, "cityRadius");
 		// cultureThreshold: a bare scalar, OR (if a game speed breaks the geometric ratio) a {base, overrides} object --
-		// read the base; the per-speed overrides are ⏳ deferred (the consumer derives per-speed by ×gamespeed%).
+		// read the base; the per-speed overrides are STUB deferred (the consumer derives per-speed by ×gamespeed%).
 		picojson::object::const_iterator ct = io->find("cultureThreshold");
 		if (ct != io->end())
 		{

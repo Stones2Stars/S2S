@@ -12,3 +12,11 @@ const CvArtInfoBonus* CvBonusInfo::getArtInfo() const
 {
 	return ARTFILEMGR.getBonusArtInfo(getArtDefineTag());
 }
+
+// The button lives in the art define (CIV4ArtDefines_Bonus.xml), not the bonus JSON -- reproduce legacy so the UI
+// icon resolves (CvInfoBase::getButton would return the empty m_szButton). Mirrors archived CvBonusInfo::getButton.
+const char* CvBonusInfo::getButton() const
+{
+	const CvArtInfoBonus* p = getArtInfo();
+	return p != NULL ? p->getButton() : "";
+}

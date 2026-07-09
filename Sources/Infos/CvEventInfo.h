@@ -115,7 +115,7 @@ public:
 	//         pCity->changeBuildingYieldChange(yc.eBuilding, yc.eYield, yc.iChange);
 	//
 	// This is the structural counterpart to the lazy sparse cache in
-	// CvCivicInfo: there, the dense storage stays canonical and a sparse view
+	// CvJsonCivicInfo: there, the dense storage stays canonical and a sparse view
 	// is derived. Here, the storage is already sparse so no caching is needed
 	// — only public exposure of the existing vectors.
 	// ---------------------------------------------------------------------

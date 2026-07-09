@@ -588,7 +588,12 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   **load-only metadata, no gameplay relevance** (animals/barbarians/neanderthals are technically civilizations), so
   it is intrinsic self-description, not a `policy`.
 - **`cost`** — what it costs to make (`production`, and cost sub-fields).
-- **`ui`** — interface art/sound (icons, buttons, movies) · **`world`** — on-map 3D art · **`sound`** — audio assets.
+- **`ui`** — interface art/sound (icons, buttons, movies) · **`world`** — **on-map 3D art**: the `world.art` block
+  carries the on-map art **tag ids** — the `ART_DEF_*` **art-define tag** plus the model / texture references it
+  spans (art is more than the icon — models and textures too). **Only the tag ids live in JSON**; the art
+  *definitions* stay in the ART XML (`CIV4ArtDefines_*`), resolved by `ARTFILEMGR` from the id (a `BUILDING_`/`UNIT_`
+  entity keeps `getArtInfo()` = `ARTFILEMGR.get<X>ArtInfo(<the id>)`). `ART_`/`EFFECT_` ids are XML-only Types
+  ([naming.md](naming.md)), *referenced* from here. · **`sound`** — audio assets.
 - **`ai`** — AI-only metadata (flavours, weights, personality); never affects rules, only AI behaviour.
 
 ---
@@ -689,6 +694,29 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
 - **`headquarters`** — the corp-HQ analog of `shrine`: the building is a corporation's HEADQUARTERS,
   `headquarters: CORPORATION_X` (the corporation FK). The per-commerce values live on the **corporation**, scaled
   per corporation presence. Same FK-relationship shape as `shrine`, one for religion and one for corporation.
+- **`sizeMatters`** — the data the **Size-Matters** combat system needs (gated by `GAMEOPTION_COMBAT_SIZE_MATTERS`),
+  a dedicated block per the own-block rule below. It is **cross-entity** — "size matters is mostly governed in
+  unitcombat" — so the **base ranks are authored on UnitCombat** (the source) and summed onto the unit at load, while
+  **Promotion** carries the runtime deltas:
+  The block's keys are the same across entity kinds; the **base-vs-delta semantic is carried by the entity**, not a
+  key suffix. Members: base ranks `qualityBase`/`groupBase`/`sizeBase` (UnitCombat only); the scalars `quality`,
+  `group`, `sizeModifier`, `maxHP`; `combatModifier: { perSizeMore, perSizeLess, perVolumeMore, perVolumeLess }`;
+  `cargo: { smSpace, volume, volumeModifier }`.
+  - **UnitCombat** (the intrinsic **base ranks** + SM combat data): carries `qualityBase`/`groupBase`/`sizeBase` plus
+    `maxHP`/`combatModifier`/`cargo`. A base equal to the legacy `−10` "unset" sentinel is emitted **absent** (never
+    `0` — `0` is a real rank).
+  - **Unit** (its own SM fields): `combatModifier` (its per-rank combat mods), plus `groupSize`/`baseCargoVolume`
+    where authored. The unit's quality/group/size **RANK is DERIVED at load, never stored**: `Σ` over the unit's
+    combat classes (primary `combatClass` + the `combatClasses` subs) of each `*Base` where `> −10` — reproducing the
+    engine post-load pass (`CvUnitInfo`: `m_iBaseGroupRank += getGroupBase()`). The group rank feeds `getUnitCountSM`
+    (`count ⁄ 3^(groupRank−1)`), so a stubbed `0` divides by zero — the getter MUST return the real derived value.
+  - **Promotion** (the SM **deltas** a promotion applies): `quality`/`group`/`sizeModifier`/`maxHP` +
+    `combatModifier`/`cargo` — same keys, applied as changes when the promotion is gained.
+
+  Effective runtime rank = the derived info base + `Σ` held-promotion changes + the engine merge/split accumulators
+  (`getExtraQuality`/`Group`/`Size` — live engine state, **never** data). Block absent ⇒ the entity carries no SM
+  data. *(This is the pattern for every game-option-specific system — each gets its own block, e.g. `hideAndSeek`
+  when `GAMEOPTION_COMBAT_HIDE_AND_SEEK` returns.)*
 - **bespoke** object-sections, each read by its own system: `promotionLine` · `buildUp` · `shrine` · `headquarters` ·
   `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` ·
   `unitCapability`.

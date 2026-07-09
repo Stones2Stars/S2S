@@ -11,7 +11,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvArea.h"
-#include "CvBuildingInfo.h"
+#include "CvJsonBuildingInfo.h"
 #include "CvCity.h"
 #include "Tools/CvFractal.h"
 #include "AI/CvGameAI.h"

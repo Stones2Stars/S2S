@@ -67,6 +67,24 @@ mapping: [`code-cut-map.md`](code-cut-map.md) §Rulings addendum):
      model). The counter (`m_iGovernmentCenterCount`) rows are KEEP until the Gate-3 building-attributes lane
      wires; the `IS_GOVERNMENT_CENTER` predicate flips to the cascade operating buildings (active buildings carrying the
      attribute) WITH that lane, not before.
+4b. **⚖ NON-XML VALUES REPRODUCE LEGACY EXACTLY — never a guessed default (owner ruling 2026-07-08).** A poco getter
+   whose value is **not** curated JSON (a runtime-drawn / engine-resolved / runtime-assigned value) must return the
+   **same value legacy produced**, by reproducing legacy's mechanism — it must NOT return a stand-in default an agent
+   picked (0 / -1 / empty). This is the strict complement of the curator-gap rule: a *curated* field the curator drops
+   is a faithful default; a *non-XML* value the engine still computes is NOT — defaulting it silently changes behaviour.
+   Three shapes, all reproduce-not-default: (a) **RNG-drawn** (`getZobristValue` → `GC.getGame().getSorenRand().getInt()`
+   in the ctor, mirroring the archive — OOS-load-bearing: the synced RNG must be drawn at the same deterministic
+   pre-game point so every client agrees); (b) **engine-resolved at load** (audio-tag indices →
+   `gDLL->getAudioTagIndex(tag)`, resolved from the curated string tag, as legacy did — not deferred to a phantom
+   "operational pass"); (c) **runtime-assigned via a setter the engine still calls** (`setChar` from the
+   `CvGameTextMgr` symbol pass, `setMissionType` from the load pass) — the poco's setter MUST store it (a no-op
+   `setChar(){}` with `getChar(){return 0;}` discards the glyph the engine assigned — a violation). Home: this doc.
+   **⛔ The reproduce mechanism is NEVER "read the source-Info XML" (owner ruling 2026-07-08):** the ART-specific
+   XMLs (`CIV4ArtDefines_*`, via `ARTFILEMGR`) are fine to use, but the per-entity `UnitInfo`/`BuildingInfo`/… XML is
+   NOT read at runtime — the tags defined there (the `ART_DEF_*` id in `world.art`, the Size-Matters ranks in the
+   `sizeMatters` block, [json.md §9](../../specs/json.md)) belong in the curated JSON. A poco getter returning a
+   stubbed `0`/empty for such a tag is a **curator gap to close** (regen the data), not an in-`read()` XML re-read.
+
 5. **⚖ THE GETTER-CONTRACT CUT STRATEGY (owner ruling 2026-07-02)** — resolves BOTH the entry-point question and
    the self-containment classification wholesale. **The getters are fine — they are the stable CONTRACTS.** The
    cut goes *through* the getters, one by one:

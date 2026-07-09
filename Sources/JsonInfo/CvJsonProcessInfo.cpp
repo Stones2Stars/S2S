@@ -9,6 +9,7 @@
 #include "CvJsonParse.h"          // the shared walkers (jsonFamVal)
 
 CvJsonProcessInfo::CvJsonProcessInfo()
+	: m_eTechPrereq(NO_TECH)
 {
 	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i) m_aiProductionToCommerce[i] = 0;
 }

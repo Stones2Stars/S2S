@@ -12,10 +12,14 @@
 
 #include "CvJsonTerrainInfo.h"
 
+class CvArtInfoTerrain;
+
 class CvTerrainInfo : public CvJsonTerrainInfo
 {
 public:
 	DllExport const char* getArtDefineTag() const;
+	DllExport const CvArtInfoTerrain* getArtInfo() const;
+	const char* getButton() const;   // art-define button (mirrors archived CvTerrainInfo::getButton)
 };
 
 #endif // CV_TERRAININFO_H

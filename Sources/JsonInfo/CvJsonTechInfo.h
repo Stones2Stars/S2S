@@ -14,8 +14,11 @@
 //
 
 #include "CvJsonInfo.h"
+#include "Defines/CvEnums.h"   // COMMERCE_* / TechTypes
+#include "Defines/CvStructs.h" // PrereqBuilding (the STUB empty prereq-building struct)
 #include <set>
 #include <map>
+#include <vector>
 
 class CvJsonTechInfo : public CvJsonInfo
 {
@@ -55,18 +58,75 @@ public:
 	int getFlavorValue(int i) const { return mapGet(m_flavours, i); }                // ai.flavours {FLAVOR:int}
 	int getFreeSpecialistCount(int i) const { return mapGet(m_freeSpecialists, i); } // freeSpecialists.team.{SPECIALIST} (INERT -- no write-path today)
 	const char* getSoundMP() const { return m_szSoundMP.c_str(); }                   // sound.soundMP
-	const CvWString& getQuote() const { return m_szQuoteKey; }                       // identity.quote (CvInfoBase has no quote key)
+	CvWString getQuote() const { return m_szQuoteKey; }                              // identity.quote (by value -- matches archived std::wstring getQuote(); the Python bind needs no return_value_policy)
 
-	// ⏳ DATA-GAP (DEC-data-first): DomainExtraMoves is authored by 12 techs but curate_tech DROPS it (its channel lacks
+	// STUB DATA-GAP (DEC-data-first): DomainExtraMoves is authored by 12 techs but curate_tech DROPS it (its channel lacks
 	//    valueKeys/targetType), so it emits nothing -- getter reads 0 until the curator emits domainMoves.player.flat keyed by domain.
 	int getDomainExtraMoves(int /*iDomain*/) const { return 0; }
-	// ⏳ ALWAYS-0 leftovers -- live callers exist but ZERO techs author these + no channel maps them (return 0; owner call
+	// STUB ALWAYS-0 leftovers -- live callers exist but ZERO techs author these + no channel maps them (return 0; owner call
 	//    whether to keep the getter or cut the caller at cutover).
 	int getMaintenanceModifier() const { return 0; }
 	int getDistanceMaintenanceModifier() const { return 0; }
 	int getNumCitiesMaintenanceModifier() const { return 0; }
 	int getCoastalDistanceMaintenanceModifier() const { return 0; }
 	int getCommerceModifier(int /*i*/) const { return 0; }
+
+	// --- mirrored legacy CvTechInfo getters (consumer surface; operational side deferred, owner ruling 2026-07-08) ---
+	// Capability/trading flags: mirror the composed capability blocks (capabilities.md key mapping) -- real data.
+	bool isTechTrading() const              { return canTrade.count("techs") != 0; }
+	bool isGoldTrading() const              { return canTrade.count("gold") != 0; }
+	bool isMapTrading() const               { return canTrade.count("maps") != 0; }
+	bool isOpenBordersTrading() const       { return canTrade.count("openBorders") != 0; }
+	bool isDefensivePactTrading() const     { return canTrade.count("defensivePact") != 0; }
+	bool isPermanentAllianceTrading() const { return canTrade.count("permanentAlliance") != 0; }
+	bool isVassalStateTrading() const       { return canTrade.count("vassals") != 0; }
+	bool isWaterWork() const                { return canWorkOn.count("water") != 0; }
+	bool isBridgeBuilding() const           { return m_capabilities.has("canBuildBridges"); }
+	bool isIrrigation() const               { return m_capabilities.has("canSpreadIrrigation"); }
+	bool isIgnoreIrrigation() const         { return m_capabilities.has("canIgnoreIrrigation"); }
+	bool isRiverTrade() const               { return m_capabilities.has("hasRiverTrade"); }
+	bool isExtraWaterSeeFrom() const        { return m_capabilities.has("canSeeFurtherFromWater"); }
+	bool isMapCentering() const             { return m_capabilities.has("hasCenteredMap"); }
+	bool isMapVisible() const               { return m_capabilities.has("hasWholeMapRevealed"); }
+	bool isCanPassPeaks() const             { return m_capabilities.has("canPassPeaks"); }
+	bool isMoveFastPeaks() const            { return m_capabilities.has("canMoveFastOnPeaks"); }
+	bool isCanFoundOnPeaks() const          { return m_capabilities.has("canFoundOnPeaks"); }
+	bool isRebaseAnywhere() const           { return m_capabilities.has("canRebaseAnywhere"); }
+	bool isEnablesDesertFarming() const     { return m_capabilities.has("canFarmDesert"); }
+	bool isLanguage() const                 { return m_capabilities.has("hasLanguage"); }
+	bool isEmbassyTrading() const           { return canTrade.count("embassy") != 0; }
+	bool getDCMAirBombTech1() const { return false; }   // STUB DCM air-bomb tier (DCM system slated for removal, capabilities.md)
+	bool getDCMAirBombTech2() const { return false; }   // STUB
+	int getFirstFreeProphet() const { return m_grants.firstListId("firstFreeProphet"); }   // grants.firstFreeProphet (UNIT_ FK)
+	int getInflationModifier() const { return 0; }        // STUB
+	int* getCommerceModifierArray() const { static int s[NUM_COMMERCE_TYPES] = {0}; return s; }   // STUB zero array (paired with getCommerceModifierSTUB)
+	const PrereqBuilding& getPrereqBuilding(int /*i*/) const { return m_emptyPrereqBuilding; }    // STUB empty (getNumPrereqBuildings()==0 guards it)
+	const PrereqBuilding& getPrereqOrBuilding(int i) const { return m_aPrereqOrBuildings[i]; }    // requires.build.all[].any[] BUILDING_ OR-group (empire, min)
+	bool isTerrainTrade(int iTerrain) const { return canTradeOnTerrains.count(iTerrain) != 0; }
+	bool isCommerceFlexible(int i) const    // canSet{Science|Culture|Espionage}Rate; gold has no slider (capabilities.md)
+	{ return (i == COMMERCE_RESEARCH  && m_capabilities.has("canSetScienceRate"))
+	      || (i == COMMERCE_CULTURE   && m_capabilities.has("canSetCultureRate"))
+	      || (i == COMMERCE_ESPIONAGE && m_capabilities.has("canSetEspionageRate")); }
+
+	// Relationship getters reconstructed from the composed availability units (requires/grants/allowed). The
+	// multi-parent prereqs are walked out of requires.build.all/.any in mapFrom; firstFree*/global read grants/allowed.
+	// leadsTo remains a STUB reverse index (operational deferred).
+	bool isGlobal() const { return m_allowed.cap("world") == 1; }              // legacy bGlobal -> allowed.world:1 (religion-uniqueness cap)
+	int getFirstFreeUnit() const { return m_grants.firstListId("firstFreeUnit"); }   // grants.firstFreeUnit (UNIT_ FK)
+	int getFirstFreeTechs() const { return m_grants.pulse100("freeTechs") / 100; }   // grants.freeTechs (int; stored x100 at parse)
+	int getNumLeadsToTechs() const { return 0; }
+	int getLeadsToTech(int /*iCount*/) const { return -1; }
+	const std::set<TechTypes>& getLeadsToTechs() const { return m_leadsTo; }   // STUB empty reverse index (operational deferred)
+	int getPrereqGameOption() const { return NO_GAMEOPTION; }                  // STUB entity-level game-option gate (DEC-entity-gate)
+	int getNumPrereqBuildings() const { return 0; }
+	int getPrereqBuildingType(int /*iIndex*/) const { return -1; }
+	int getPrereqBuildingMinimumRequired(int /*iIndex*/) const { return 0; }
+	int getNumPrereqOrBuildings() const { return (int)m_aPrereqOrBuildings.size(); }
+	int getPrereqOrBuildingType(int iIndex) const { return (int)m_aPrereqOrBuildings[iIndex].eBuilding; }
+	int getPrereqOrBuildingMinimumRequired(int iIndex) const { return m_aPrereqOrBuildings[iIndex].iMinimumRequired; }
+	const char* getSound() const { return m_szSound.c_str(); }                 // sound.sound (distinct from soundMP)
+	const std::vector<TechTypes>& getPrereqOrTechs() const { return m_aePrereqOrTechs; }
+	const std::vector<TechTypes>& getPrereqAndTechs() const { return m_aePrereqAndTechs; }
 
 	virtual void mapFrom(const picojson::value& entity);
 
@@ -104,7 +164,13 @@ private:
 	std::map<int, int> m_flavours;        // FlavorTypes -> weight
 	std::map<int, int> m_freeSpecialists; // SpecialistTypes -> count (inert today)
 	std::string m_szSoundMP;
+	std::string m_szSound;                      // sound.sound (the tech-completed jingle; distinct from soundMP)
 	CvWString m_szQuoteKey;
+	std::vector<TechTypes> m_aePrereqOrTechs;   // FIRST multi-member TECH any-group under requires.build.all (mirrors legacy single Or-list)
+	std::vector<TechTypes> m_aePrereqAndTechs;  // team-scope TECH_ atoms in requires.build.all (AND prereqs, incl. folded 1-member ORs)
+	std::vector<PrereqBuilding> m_aPrereqOrBuildings;  // the requires.build.all[].any[] BUILDING_ OR-group ((building, min) pairs)
+	std::set<TechTypes> m_leadsTo;              // STUB empty reverse index (which techs this leads to)
+	PrereqBuilding m_emptyPrereqBuilding;       // STUB empty -- returned by getPrereqBuilding (AND-building count is 0: no data today)
 };
 
 // The synthetic TECH_GAME_START root (no engine id -- lives OFF the InfoRepo; readjson.md §5.1): the universal

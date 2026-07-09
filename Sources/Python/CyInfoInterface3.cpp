@@ -1,7 +1,7 @@
 #include "CvGameCoreDLL.h"
 #include "CvInfos.h"
-#include "CvTraitInfo.h"
-#include "CvHeritageInfo.h"
+#include "CvJsonTraitInfo.h"
+#include "CvJsonHeritageInfo.h"
 #include "Defines/CvDiplomacyClasses.h"
 
 //
@@ -73,11 +73,11 @@ void CyInfoPythonInterface3()
 	;
 
 	// CvProcessInfos
-	python::class_<CvProcessInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvProcessInfo", python::no_init)
+	python::class_<CvJsonProcessInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvProcessInfo", python::no_init)
 
-		.def("getTechPrereq", &CvProcessInfo::getTechPrereq, "int ()")
+		.def("getTechPrereq", &CvJsonProcessInfo::getTechPrereq, "int ()")
 		// Arrays
-		.def("getProductionToCommerceModifier", &CvProcessInfo::getProductionToCommerceModifier, "int (int i)")
+		.def("getProductionToCommerceModifier", &CvJsonProcessInfo::getProductionToCommerceModifier, "int (int i)")
 	;
 
 
@@ -96,97 +96,97 @@ void CyInfoPythonInterface3()
 	;
 
 
-	python::class_<CvProjectInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvProjectInfo", python::no_init)
+	python::class_<CvJsonProjectInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvProjectInfo", python::no_init)
 
-		.def("getVictoryPrereq", &CvProjectInfo::getVictoryPrereq, "int ()")
-		.def("getTechPrereq", &CvProjectInfo::getTechPrereq, "int ()")
-		.def("getMaxGlobalInstances", &CvProjectInfo::getMaxGlobalInstances, "int ()")
-		.def("getMaxTeamInstances", &CvProjectInfo::getMaxTeamInstances, "int ()")
-		.def("getProductionCost", &CvProjectInfo::getProductionCost, "int ()")
-		.def("getNukeInterception", &CvProjectInfo::getNukeInterception, "int ()")
+		.def("getVictoryPrereq", &CvJsonProjectInfo::getVictoryPrereq, "int ()")
+		.def("getTechPrereq", &CvJsonProjectInfo::getTechPrereq, "int ()")
+		.def("getMaxGlobalInstances", &CvJsonProjectInfo::getMaxGlobalInstances, "int ()")
+		.def("getMaxTeamInstances", &CvJsonProjectInfo::getMaxTeamInstances, "int ()")
+		.def("getProductionCost", &CvJsonProjectInfo::getProductionCost, "int ()")
+		.def("getNukeInterception", &CvJsonProjectInfo::getNukeInterception, "int ()")
 
-		.def("isSpaceship", &CvProjectInfo::isSpaceship, "bool ()")
-		.def("isAllowsNukes", &CvProjectInfo::isAllowsNukes, "bool ()")
+		.def("isSpaceship", &CvJsonProjectInfo::isSpaceship, "bool ()")
+		.def("isAllowsNukes", &CvJsonProjectInfo::isAllowsNukes, "bool ()")
 
-		.def("getMovieArtDef", &CvProjectInfo::getMovieArtDef, "string ()")
-		.def("getCreateSound", &CvProjectInfo::getCreateSound, "string ()")
-
-		// Arrays
-		.def("getBonusProductionModifier", &CvProjectInfo::getBonusProductionModifier, "int (int i)")
-		.def("getVictoryThreshold", &CvProjectInfo::getVictoryThreshold, "int (int i)")
-		.def("getVictoryMinThreshold", &CvProjectInfo::getVictoryMinThreshold, "int (int i)")
-		.def("getVictoryDelayPercent", &CvProjectInfo::getVictoryDelayPercent, "int ()")
-		.def("getProjectsNeeded", &CvProjectInfo::getProjectsNeeded, "int (int i)")
-	;
-
-
-	python::class_<CvReligionInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvReligionInfo", python::no_init)
-
-		.def("getChar", &CvReligionInfo::getChar, "int ()")
-		.def("getHolyCityChar", &CvReligionInfo::getHolyCityChar, "int ()")
-		.def("getTechPrereq", &CvReligionInfo::getTechPrereq, "int ()")
-		.def("getMissionType", &CvReligionInfo::getMissionType, "int ()")
-
-		.def("getTechButton", &CvReligionInfo::getTechButton, "string ()")
-		.def("getGenericTechButton", &CvReligionInfo::getGenericTechButton, "string ()")
-		.def("getMovieFile", &CvReligionInfo::getMovieFile, "string ()")
-		.def("getMovieSound", &CvReligionInfo::getMovieSound, "string ()")
-		.def("getSound", &CvReligionInfo::getSound, "string ()")
-		.def("getButtonDisabled", &CvReligionInfo::getButtonDisabled, "string ()")
-		.def("getAdjectiveKey", &CvReligionInfo::pyGetAdjectiveKey, "wstring ()")
-		// Arrays
-		.def("getGlobalReligionCommerce", &CvReligionInfo::getGlobalReligionCommerce, "int (int i)")
-		.def("getFlavorValue", &CvReligionInfo::getFlavorValue, "int (int i)")
-	;
-
-	python::class_<CvHeritageInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvHeritageInfo", python::no_init)
-	;
-
-	python::class_<CvCorporationInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvCorporationInfo", python::no_init)
-
-		.def("getChar", &CvCorporationInfo::getChar, "int ()")
-		.def("getHeadquarterChar", &CvCorporationInfo::getHeadquarterChar, "int ()")
-		.def("getTechPrereq", &CvCorporationInfo::getTechPrereq, "int ()")
-		.def("getObsoleteTech", &CvCorporationInfo::getObsoleteTech, "int ()")
-
-		.def("getMaintenance", &CvCorporationInfo::getMaintenance, "int ()")
-		.def("getMissionType", &CvCorporationInfo::getMissionType, "int ()")
-
-		.def("getMovieFile", &CvCorporationInfo::getMovieFile, "string ()")
-		.def("getMovieSound", &CvCorporationInfo::getMovieSound, "string ()")
-		.def("getSound", &CvCorporationInfo::getSound, "string ()")
+		.def("getMovieArtDef", &CvJsonProjectInfo::getMovieArtDef, "string ()")
+		.def("getCreateSound", &CvJsonProjectInfo::getCreateSound, "string ()")
 
 		// Arrays
-		.def("getPrereqBonuses", &CvCorporationInfo::getPrereqBonuses, python::return_value_policy<python::reference_existing_object>())
-		.def("getCommerceProduced", &CvCorporationInfo::getCommerceProduced, "int (int i)")
-		.def("getYieldProduced", &CvCorporationInfo::getYieldProduced, "int (int i)")
+		.def("getBonusProductionModifier", &CvJsonProjectInfo::getBonusProductionModifier, "int (int i)")
+		.def("getVictoryThreshold", &CvJsonProjectInfo::getVictoryThreshold, "int (int i)")
+		.def("getVictoryMinThreshold", &CvJsonProjectInfo::getVictoryMinThreshold, "int (int i)")
+		.def("getVictoryDelayPercent", &CvJsonProjectInfo::getVictoryDelayPercent, "int ()")
+		.def("getProjectsNeeded", &CvJsonProjectInfo::getProjectsNeeded, "int (int i)")
 	;
 
 
-	python::class_<CvTraitInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvTraitInfo", python::no_init)
+	python::class_<CvJsonReligionInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvReligionInfo", python::no_init)
 
-		.def("getHealth", &CvTraitInfo::getHealth, "int ()")
-		.def("getHappiness", &CvTraitInfo::getHappiness, "int ()")
-		.def("getLevelExperienceModifier", &CvTraitInfo::getLevelExperienceModifier, "int ()")
-		.def("getGreatPeopleRateModifier", &CvTraitInfo::getGreatPeopleRateModifier, "int ()")
-		.def("getGreatGeneralRateModifier", &CvTraitInfo::getGreatGeneralRateModifier, "int ()")
-		.def("getNumBuildingProductionModifiers", &CvTraitInfo::getNumBuildingProductionModifiers, "int ()")
+		.def("getChar", &CvJsonReligionInfo::getChar, "int ()")
+		.def("getHolyCityChar", &CvJsonReligionInfo::getHolyCityChar, "int ()")
+		.def("getTechPrereq", &CvJsonReligionInfo::getTechPrereq, "int ()")
+		.def("getMissionType", &CvJsonReligionInfo::getMissionType, "int ()")
 
-		.def("getRevIdxLocal", &CvTraitInfo::getRevIdxLocal, "int ()")
-		.def("getRevIdxNational", &CvTraitInfo::getRevIdxNational, "int ()")
-		.def("getRevIdxHolyCityGood", &CvTraitInfo::getRevIdxHolyCityGood, "int ()")
-		.def("getRevIdxHolyCityBad", &CvTraitInfo::getRevIdxHolyCityBad, "int ()")
-		.def("getRevIdxNationalityMod", &CvTraitInfo::getRevIdxNationalityMod, "float ()")
-		.def("getRevIdxBadReligionMod", &CvTraitInfo::getRevIdxBadReligionMod, "float ()")
-		.def("getRevIdxGoodReligionMod", &CvTraitInfo::getRevIdxGoodReligionMod, "float ()")
+		.def("getTechButton", &CvJsonReligionInfo::getTechButton, "string ()")
+		.def("getGenericTechButton", &CvJsonReligionInfo::getGenericTechButton, "string ()")
+		.def("getMovieFile", &CvJsonReligionInfo::getMovieFile, "string ()")
+		.def("getMovieSound", &CvJsonReligionInfo::getMovieSound, "string ()")
+		.def("getSound", &CvJsonReligionInfo::getSound, "string ()")
+		.def("getButtonDisabled", &CvJsonReligionInfo::getButtonDisabled, "string ()")
+		.def("getAdjectiveKey", &CvJsonReligionInfo::pyGetAdjectiveKey, "wstring ()")
+		// Arrays
+		.def("getGlobalReligionCommerce", &CvJsonReligionInfo::getGlobalReligionCommerce, "int (int i)")
+		.def("getFlavorValue", &CvJsonReligionInfo::getFlavorValue, "int (int i)")
+	;
 
-		.def("getShortDescription", &CvTraitInfo::getShortDescription, "int (int i)")
-		.def("getCommerceChange", &CvTraitInfo::getCommerceChange, "int (int i)")
-		.def("getCommerceModifier", &CvTraitInfo::getCommerceModifier, "int (int i)")
-		.def("getBuildingProductionModifier", &CvTraitInfo::getBuildingProductionModifier)
-		.def("getBuildingHappinessModifiers", &CvTraitInfo::getBuildingHappinessModifiers, python::return_value_policy<python::reference_existing_object>())
+	python::class_<CvJsonHeritageInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvHeritageInfo", python::no_init)
+	;
 
-		.def("getImprovementYieldChange", &CvTraitInfo::getImprovementYieldChange, "int (int i, int j)")
+	python::class_<CvJsonCorporationInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvCorporationInfo", python::no_init)
+
+		.def("getChar", &CvJsonCorporationInfo::getChar, "int ()")
+		.def("getHeadquarterChar", &CvJsonCorporationInfo::getHeadquarterChar, "int ()")
+		.def("getTechPrereq", &CvJsonCorporationInfo::getTechPrereq, "int ()")
+		.def("getObsoleteTech", &CvJsonCorporationInfo::getObsoleteTech, "int ()")
+
+		.def("getMaintenance", &CvJsonCorporationInfo::getMaintenance, "int ()")
+		.def("getMissionType", &CvJsonCorporationInfo::getMissionType, "int ()")
+
+		.def("getMovieFile", &CvJsonCorporationInfo::getMovieFile, "string ()")
+		.def("getMovieSound", &CvJsonCorporationInfo::getMovieSound, "string ()")
+		.def("getSound", &CvJsonCorporationInfo::getSound, "string ()")
+
+		// Arrays
+		.def("getPrereqBonuses", &CvJsonCorporationInfo::getPrereqBonuses, python::return_value_policy<python::reference_existing_object>())
+		.def("getCommerceProduced", &CvJsonCorporationInfo::getCommerceProduced, "int (int i)")
+		.def("getYieldProduced", &CvJsonCorporationInfo::getYieldProduced, "int (int i)")
+	;
+
+
+	python::class_<CvJsonTraitInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvTraitInfo", python::no_init)
+
+		.def("getHealth", &CvJsonTraitInfo::getHealth, "int ()")
+		.def("getHappiness", &CvJsonTraitInfo::getHappiness, "int ()")
+		.def("getLevelExperienceModifier", &CvJsonTraitInfo::getLevelExperienceModifier, "int ()")
+		.def("getGreatPeopleRateModifier", &CvJsonTraitInfo::getGreatPeopleRateModifier, "int ()")
+		.def("getGreatGeneralRateModifier", &CvJsonTraitInfo::getGreatGeneralRateModifier, "int ()")
+		.def("getNumBuildingProductionModifiers", &CvJsonTraitInfo::getNumBuildingProductionModifiers, "int ()")
+
+		.def("getRevIdxLocal", &CvJsonTraitInfo::getRevIdxLocal, "int ()")
+		.def("getRevIdxNational", &CvJsonTraitInfo::getRevIdxNational, "int ()")
+		.def("getRevIdxHolyCityGood", &CvJsonTraitInfo::getRevIdxHolyCityGood, "int ()")
+		.def("getRevIdxHolyCityBad", &CvJsonTraitInfo::getRevIdxHolyCityBad, "int ()")
+		.def("getRevIdxNationalityMod", &CvJsonTraitInfo::getRevIdxNationalityMod, "float ()")
+		.def("getRevIdxBadReligionMod", &CvJsonTraitInfo::getRevIdxBadReligionMod, "float ()")
+		.def("getRevIdxGoodReligionMod", &CvJsonTraitInfo::getRevIdxGoodReligionMod, "float ()")
+
+		.def("getShortDescription", &CvJsonTraitInfo::getShortDescription, "int (int i)")
+		.def("getCommerceChange", &CvJsonTraitInfo::getCommerceChange, "int (int i)")
+		.def("getCommerceModifier", &CvJsonTraitInfo::getCommerceModifier, "int (int i)")
+		.def("getBuildingProductionModifier", &CvJsonTraitInfo::getBuildingProductionModifier)
+		.def("getBuildingHappinessModifiers", &CvJsonTraitInfo::getBuildingHappinessModifiers, python::return_value_policy<python::reference_existing_object>())
+
+		.def("getImprovementYieldChange", &CvJsonTraitInfo::getImprovementYieldChange, "int (int i, int j)")
 	;
 
 	python::class_<CvWorldInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvWorldInfo", python::no_init)
@@ -286,9 +286,9 @@ void CyInfoPythonInterface3()
 	python::class_<CvUpkeepInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvUpkeepInfo", python::no_init)
 	;
 
-	python::class_<CvCultureLevelInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvCultureLevelInfo", python::no_init)
-		.def("getSpeedThreshold", &CvCultureLevelInfo::getSpeedThreshold, "int ()")
-		.def("getLevel", &CvCultureLevelInfo::getLevel, "int ()")
+	python::class_<CvJsonCultureLevelInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvCultureLevelInfo", python::no_init)
+		.def("getSpeedThreshold", &CvJsonCultureLevelInfo::getSpeedThreshold, "int ()")
+		.def("getLevel", &CvJsonCultureLevelInfo::getLevel, "int ()")
 	;
 
 	python::class_<CvEraInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvEraInfo", python::no_init)

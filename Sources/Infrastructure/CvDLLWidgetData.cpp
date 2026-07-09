@@ -3,7 +3,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "Engine/CvArea.h"
-#include "CvBuildingInfo.h"
+#include "CvJsonBuildingInfo.h"
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "Engine/CvCity.h"
@@ -24,7 +24,7 @@
 #include "CvDLLEngineIFaceBase.h"
 #include "CvDLLInterfaceIFaceBase.h"
 #include "CvDLLUtilityIFaceBase.h"
-#include "CvUnitCombatInfo.h"
+#include "CvJsonUnitCombatInfo.h"
 
 CvDLLWidgetData* CvDLLWidgetData::m_pInst = NULL;
 
@@ -1157,7 +1157,7 @@ void CvDLLWidgetData::doTrain(CvWidgetDataStruct &widgetDataStruct)
 		eUnit = (UnitTypes)widgetDataStruct.m_iData1;
 		// Train Units Forever
 		bool bAlt;
-		const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+		const CvJsonUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
 		if (kUnit.getCombat() || kUnit.getAirCombat())
 		{
@@ -2390,7 +2390,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 							szBuffer.append(gDLL->getText("TXT_KEY_ACTION_CORPORATION_NO_RESOURCES", pMissionCity->getNameKey(), szBonusList.getCString()));
 						}
 
-						const CvCorporationInfo& kCorporation = GC.getCorporationInfo(eCorporation);
+						const CvJsonCorporationInfo& kCorporation = GC.getCorporationInfo(eCorporation);
 						for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 						{
 							if (kCorporation.getPrereqBuilding(iI) > 0)

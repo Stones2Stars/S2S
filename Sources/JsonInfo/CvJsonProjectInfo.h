@@ -19,6 +19,7 @@
 #include "Defines/CvEnums.h"   // NUM_COMMERCE_TYPES / COMMERCE_* / MapCategoryTypes
 #include <vector>
 #include <map>
+#include <set>
 
 class CvJsonProjectInfo : public CvJsonInfo
 {
@@ -26,8 +27,8 @@ public:
 	CvJsonProjectInfo();
 
 	int getProductionCost() const { return m_iProductionCost; }                              // cost.create (hammers)
-	int getNukeInterception() const { return m_iNukeInterception; }                          // combat.team.nukeInterception.percent (⏳ PROVISIONAL family)
-	int getTechShare() const { return m_iTechShare; }                                        // diplomacy.team.techShare.flat        (⏳ PROVISIONAL family)
+	int getNukeInterception() const { return m_iNukeInterception; }                          // combat.team.nukeInterception.percent (family name PROVISIONAL)
+	int getTechShare() const { return m_iTechShare; }                                        // diplomacy.team.techShare.flat        (family name PROVISIONAL)
 	int getGlobalMaintenanceModifier() const { return m_iGlobalMaintenanceModifier; }        // maintenance.empire.all.percent
 	int getDistanceMaintenanceModifier() const { return m_iDistanceMaintenanceModifier; }    // maintenance.empire.distance.percent
 	int getNumCitiesMaintenanceModifier() const { return m_iNumCitiesMaintenanceModifier; }  // maintenance.empire.numCities.percent
@@ -49,13 +50,28 @@ public:
 	int getVictoryPrereq() const { return m_eLaunchesVictory; }                              // identity.launchesVictory (VICTORY_* completion LAUNCHES; -1 none)
 
 	// build-this-project-faster while a bonus is present (kept on source; the enabled-gate is cascade-side)
-	int getBonusProductionModifier(int iBonus) const { return mapGet(m_bonusProduction, iBonus); }      // buildRate.self.percent (bonus-keyed) ⏳
+	int getBonusProductionModifier(int iBonus) const { return mapGet(m_bonusProduction, iBonus); }      // buildRate.self.percent (bonus-keyed)
 
 	bool isSpaceship() const { return m_bSpaceship; }        // identity.spaceship
 	bool isAllowsNukes() const { return m_bAllowsNukes; }    // identity.allowsNukes
 
 	const std::vector<MapCategoryTypes>& getMapCategories() const { return m_aeMapCategories; }
 	const char* getCreateSound() const { return m_szCreateSound.c_str(); }                   // sound.onCompletion
+
+	// --- mirrored legacy CvProjectInfo getters (consumer surface) ---
+	int getAnyoneProjectPrereq() const { return m_iAnyoneProjectPrereq; }   // requires.build{type,scope:world} (no current project authors it -> NO_PROJECT)
+	int getEveryoneSpecialUnit() const { return m_iEveryoneSpecialUnit; }   // grants.grantsSpecialUnit (no current project authors it -> NO_SPECIALUNIT)
+	const char* getMovieArtDef() const { return m_szMovieArtDef.c_str(); }  // ui.art.movie.defineTag
+	int getEveryoneSpecialBuilding() const                                 // enables.specialBuildings (first; legacy carried one) -> NO_SPECIALBUILDING when absent
+	{ const std::vector<int>* v = edge("enables.specialBuildings"); return (v && !v->empty()) ? (*v)[0] : -1; }
+	// TechPrereq and PrereqProjects are store-INVERTED onto the OTHER entity (tech.enables.projects / the prerequisite
+	// project's enables.projects, set-based -- the per-edge iNeeded count is dropped, all 1 today, curate_project.py:27).
+	// The project's own JSON carries NO back-reference, so they are reconstructed at LOAD by the cascadeLoadJson tech-FK
+	// reverse-index pass (the Route<-bonus pattern), which calls the setters below.
+	TechTypes getTechPrereq() const { return m_eTechPrereq; }
+	int getProjectsNeeded(int i) const { return m_projectsNeeded.count(i) ? 1 : 0; }   // 1 if project i is a prereq (count dropped)
+	void setTechPrereq(TechTypes e) { m_eTechPrereq = e; }               // load-time reverse-index writers (cascadeLoadJson)
+	void addProjectNeeded(int iProject) { m_projectsNeeded.insert(iProject); }
 
 	// instance caps -- the base allowedCap read-through over the composed `allowed` unit; -1 = unlimited (absent,
 	// per the legacy convention -- the base helper's own convention).
@@ -93,6 +109,11 @@ private:
 	bool m_bSpaceship, m_bAllowsNukes;
 	std::vector<MapCategoryTypes> m_aeMapCategories;
 	std::string m_szCreateSound;
+	std::string m_szMovieArtDef;      // ui.art.movie.defineTag
+	int m_iEveryoneSpecialUnit;       // grants.grantsSpecialUnit (NO_SPECIALUNIT default)
+	int m_iAnyoneProjectPrereq;       // requires.build{type,scope:world} (NO_PROJECT default)
+	TechTypes m_eTechPrereq;          // store-inverted tech.enables.projects, reconstructed at load (cascadeLoadJson)
+	std::set<int> m_projectsNeeded;   // store-inverted PrereqProjects (prereq project's enables.projects), reconstructed at load
 };
 
 #endif // CV_JSON_PROJECT_INFO_H

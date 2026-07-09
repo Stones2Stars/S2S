@@ -6,12 +6,12 @@
 #include "Tools/FProfiler.h"
 #include "Engine/CvArea.h"
 #include "CvBonusInfo.h"
-#include "CvBuildingInfo.h"
+#include "CvJsonBuildingInfo.h"
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "CvInfos.h"
-#include "CvUnitCombatInfo.h"
-#include "CvTraitInfo.h"
+#include "CvJsonUnitCombatInfo.h"
+#include "CvJsonTraitInfo.h"
 #include "CvCityAI.h"
 #include <string>
 #include "CvContractBroker.h"
@@ -907,7 +907,7 @@ int CvCityAI::AI_specialistValue(SpecialistTypes eSpecialist, bool bAvoidGrowth,
 			const UnitTypes eGreatPeopleUnit = (UnitTypes)GC.getSpecialistInfo(eSpecialist).getGreatPeopleUnitType();
 			if (eGreatPeopleUnit != NO_UNIT)
 			{
-				const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eGreatPeopleUnit);
+				const CvJsonUnitInfo& kUnitInfo = GC.getUnitInfo(eGreatPeopleUnit);
 				if (kUnitInfo.getGreatWorkCulture() > 0)
 				{
 					iTempValue += kUnitInfo.getGreatWorkCulture() / ((GET_PLAYER(getOwner()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3)) ? 200 : 350);
@@ -4413,7 +4413,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, int& iBestValue, bool bAs
 		{
 			continue;
 		}
-		const CvUnitInfo& unit = GC.getUnitInfo(eUnitX);
+		const CvJsonUnitInfo& unit = GC.getUnitInfo(eUnitX);
 
 		if (unit.getNotUnitAIType(eUnitAI)
 		|| tempCriteria.m_eIgnoreAdvisor != NO_ADVISOR
@@ -4573,7 +4573,7 @@ const std::vector<CvCity::ScoredBuilding> CvCityAI::AI_bestBuildingsThreshold(in
 	return scoredBuildings;
 }
 
-bool AI_buildingInfluencesProperty(const CvCity* city, const CvBuildingInfo& buildingInfo, PropertyTypes eProperty)
+bool AI_buildingInfluencesProperty(const CvCity* city, const CvJsonBuildingInfo& buildingInfo, PropertyTypes eProperty)
 {
 	PROFILE_EXTRA_FUNC();
 	bool bFoundValidation = false;
@@ -4625,7 +4625,7 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 	{
 		FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
 
-		const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
+		const CvJsonBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
 
 		if (
 			!hasBuilding(eBuilding)
@@ -5060,7 +5060,7 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, bool bF
 		if (iValue > 0 && !isHuman())
 		{
 			const CvPlayerAI& kOwner = GET_PLAYER(getOwner());
-			const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+			const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 			const int numFlavors = GC.getNumFlavorTypes();
 			for (int i = 0; i < numFlavors; ++i)
 			{
@@ -5077,7 +5077,7 @@ int CvCityAI::AI_buildingValue(BuildingTypes eBuilding, int iFocusFlags, bool bF
 	if (iValue > 0 && !isHuman())
 	{
 		const CvPlayerAI& kOwner = GET_PLAYER(getOwner());
-		const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+		const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 		const int numFlavors = GC.getNumFlavorTypes();
 		int iFlavorTotal = 0;
 		for (int i = 0; i < numFlavors; ++i)
@@ -5201,7 +5201,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 	const CvPlayerAI& kOwner = GET_PLAYER(getOwner());
 	const CvTeamAI& kTeam = GET_TEAM(getTeam());
 
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 	int iLimitedWonderLimit = limitedWonderLimit(eBuilding);
 	bool bIsLimitedWonder = (iLimitedWonderLimit >= 0);
 
@@ -5343,7 +5343,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 		{
 			const SpecialistTypes eNewSpecialist = getBestSpecialist(iI);
 			if (eNewSpecialist == NO_SPECIALIST) break;
-			const CvSpecialistInfo& kSpecialist = GC.getSpecialistInfo(eNewSpecialist);
+			const CvJsonSpecialistInfo& kSpecialist = GC.getSpecialistInfo(eNewSpecialist);
 			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 			{
 				aiFreeSpecialistYield[iJ] += kOwner.specialistYield(eNewSpecialist, (YieldTypes)iJ);
@@ -5750,7 +5750,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					// so the value result is identical (verified: zero [PERF/cabvset] UNIT-MISMATCH).
 					foreach_(const UnitTypes eEnabledUnit, GC.getUnitsEnabledBy(eBuilding))
 					{
-						const CvUnitInfo& kUnit = GC.getUnitInfo(eEnabledUnit);
+						const CvJsonUnitInfo& kUnit = GC.getUnitInfo(eEnabledUnit);
 						bool bUnitIsEnabler = kUnit.isPrereqAndBuilding((int)eBuilding);
 						bool bUnitIsOtherwiseEnabled = false;
 
@@ -5916,7 +5916,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 				{
-					const CvUnitInfo& kUnitInfo = GC.getUnitInfo((UnitTypes)iI);
+					const CvJsonUnitInfo& kUnitInfo = GC.getUnitInfo((UnitTypes)iI);
 					UnitCombatTypes eCombatType = (UnitCombatTypes)kUnitInfo.getUnitCombatType();
 
 					if (eCombatType != NO_UNITCOMBAT
@@ -6730,7 +6730,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 	return std::max(0, iValue);
 }
 
-int CvCityAI::AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, const CvBuildingInfo& kBuilding, bool bForeignTrade, int iFreeSpecialistYield) const
+int CvCityAI::AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, const CvJsonBuildingInfo& kBuilding, bool bForeignTrade, int iFreeSpecialistYield) const
 {
 	PROFILE_EXTRA_FUNC();
 	int iValue = tradeRouteValue(kBuilding, eYield, bForeignTrade);
@@ -6905,7 +6905,7 @@ int CvCityAI::AI_projectValue(ProjectTypes eProject) const
 {
 	PROFILE_EXTRA_FUNC();
 	int iValue = 0;
-	const CvProjectInfo& project = GC.getProjectInfo(eProject);
+	const CvJsonProjectInfo& project = GC.getProjectInfo(eProject);
 
 	if (project.getNukeInterception() > 0 && GC.getGame().canTrainNukes())
 	{
@@ -9176,7 +9176,7 @@ bool CvCityAI::AI_bestSpreadUnit(bool bMissionary, bool bExecutive, int iBaseCha
 					{
 						for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 						{
-							const CvUnitInfo& kUnitInfo = GC.getUnitInfo((UnitTypes)iI);
+							const CvJsonUnitInfo& kUnitInfo = GC.getUnitInfo((UnitTypes)iI);
 							if (kUnitInfo.getCorporationSpreads(eCorporation) > 0 && canTrain((UnitTypes)iI))
 							{
 								int iValue = iCorporationValue / kUnitInfo.getProductionCost();
@@ -12298,7 +12298,7 @@ int CvCityAI::AI_getPromotionValue(PromotionTypes ePromotion) const
 	int iValue = 0;
 	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 	{
-		const CvUnitInfo& kUnit = GC.getUnitInfo((UnitTypes)iI);
+		const CvJsonUnitInfo& kUnit = GC.getUnitInfo((UnitTypes)iI);
 
 		if (kUnit.getUnitCombatType() != NO_UNITCOMBAT)
 		{
@@ -12512,7 +12512,7 @@ int CvCityAI::AI_getNavalMilitaryProductionRateRank() const
 
 static bool buildingHasTradeRouteValue(BuildingTypes eBuilding)
 {
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	return (kBuilding.getTradeRoutes() > 0 ||
 		kBuilding.getCoastalTradeRoutes() > 0 ||
@@ -12525,7 +12525,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 {
 	PROFILE_FUNC();
 
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	if (kBuilding.isAutoBuild() || kBuilding.getProductionCost() <= 0)
 	{
@@ -13029,7 +13029,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 			PROFILE("CvCityAI::CalculateAllBuildingValues.building");
 			PERF_ACCUM(dBuilding);
 
-			const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+			const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 			if (kBuilding.isCapital()) continue; // Perhaps the palace should have value...
 
@@ -13113,7 +13113,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 				{
 					aiFreeSpecialistCommerce[iJ] += kOwner.specialistCommerce(eNewSpecialist, (CommerceTypes)iJ);
 				}
-				const CvSpecialistInfo& kSpecialist = GC.getSpecialistInfo(eNewSpecialist);
+				const CvJsonSpecialistInfo& kSpecialist = GC.getSpecialistInfo(eNewSpecialist);
 				iSpecialistGreatPeopleRate += kSpecialist.getGreatPeopleRateChange();
 				iSpecialistExtraHealth += kSpecialist.getHealthPercent();
 				iSpecialistExtraHappy += kSpecialist.getHappinessPercent();
@@ -13458,7 +13458,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 					// so the value result is identical (verified: zero [PERF/cabvset] UNIT-MISMATCH).
 					foreach_(const UnitTypes eEnabledUnit, GC.getUnitsEnabledBy(eBuilding))
 					{
-						const CvUnitInfo& kUnit = GC.getUnitInfo(eEnabledUnit);
+						const CvJsonUnitInfo& kUnit = GC.getUnitInfo(eEnabledUnit);
 						bool bUnitIsEnabler = kUnit.isPrereqAndBuilding((int)eBuilding);
 						bool bUnitIsOtherwiseEnabled = false;
 
@@ -13627,7 +13627,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 
 				for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 				{
-					const CvUnitInfo& kUnitInfo = GC.getUnitInfo((UnitTypes)iI);
+					const CvJsonUnitInfo& kUnitInfo = GC.getUnitInfo((UnitTypes)iI);
 					UnitCombatTypes eCombatType = (UnitCombatTypes)kUnitInfo.getUnitCombatType();
 
 					if (eCombatType != NO_UNITCOMBAT && kUnitInfo.getDomainType() == DOMAIN_SEA && canTrain((UnitTypes)iI))
@@ -14340,7 +14340,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiFreeSpecialistYield, int* aiFreeSpecialistCommerce, int* aiBaseCommerceRate, int* aiPlayerCommerceRate) const
 {
 	PROFILE_EXTRA_FUNC();
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 	const CvPlayerAI& kOwner = GET_PLAYER(getOwner());
 	int iLimitedWonderLimit = limitedWonderLimit(eBuilding);
 	bool bCulturalVictory1 = kOwner.AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1);
@@ -14641,7 +14641,7 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 }
 
 
-int CvCityAI::tradeRouteValue(const CvBuildingInfo& kBuilding, YieldTypes eYield, bool bForeignTrade) const
+int CvCityAI::tradeRouteValue(const CvJsonBuildingInfo& kBuilding, YieldTypes eYield, bool bForeignTrade) const
 {
 	PROFILE_FUNC();
 
@@ -14717,7 +14717,7 @@ int CvCityAI::tradeRouteValue(const CvBuildingInfo& kBuilding, YieldTypes eYield
 }
 
 // Evaluate a building we are considering building here in terms of its effect on properties
-int CvCityAI::buildingPropertiesValue(const CvBuildingInfo& kBuilding) const
+int CvCityAI::buildingPropertiesValue(const CvJsonBuildingInfo& kBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
 	//	Evaluate building properties
@@ -14785,7 +14785,7 @@ int CvCityAI::getPropertySourceValue(PropertyTypes eProperty, int iSourceValue) 
 {
 	if (iSourceValue == 0) return 0;
 
-	const CvPropertyInfo& kProperty = GC.getPropertyInfo(eProperty);
+	const CvJsonPropertyInfo& kProperty = GC.getPropertyInfo(eProperty);
 	const int iOperationalLow = kProperty.getOperationalRangeMin();
 	const int iOperationalHigh = kProperty.getOperationalRangeMax();
 	const int iOperationalRange = (iOperationalHigh - iOperationalLow);
@@ -15546,7 +15546,7 @@ bool CvCityAI::AI_meetsUnitSelectionCriteria(UnitTypes eUnit, const CvUnitSelect
 		//See Invisible type match
 		if (criteria->m_eUnitAI == UNITAI_SEE_INVISIBLE || criteria->m_eUnitAI == UNITAI_SEE_INVISIBLE_SEA)
 		{
-			const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
+			const CvJsonUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 
 			if (kUnitInfo.isFound())
 			{
@@ -15582,7 +15582,7 @@ bool CvCityAI::AI_meetsUnitSelectionCriteria(UnitTypes eUnit, const CvUnitSelect
 
 int CvCityAI::AI_getBuildingYieldValue
 (
-	BuildingTypes eBuilding, const CvBuildingInfo& kBuilding, bool bIsLimitedWonder, bool bForeignTrade, bool bFinancialTrouble,
+	BuildingTypes eBuilding, const CvJsonBuildingInfo& kBuilding, bool bIsLimitedWonder, bool bForeignTrade, bool bFinancialTrouble,
 	int* aiFreeSpecialistYield, int* aiYieldRank, int iLimitedWonderLimit, const CvArea* pArea, int iTotalPopulation, int iFoodDifference
 )
 const {
@@ -15661,7 +15661,7 @@ const {
 
 int CvCityAI::AI_getBuildingProductionValue
 (
-	BuildingTypes eBuilding, const CvBuildingInfo& kBuilding, bool bIsLimitedWonder,
+	BuildingTypes eBuilding, const CvJsonBuildingInfo& kBuilding, bool bIsLimitedWonder,
 	bool bForeignTrade, int iFreeSpecialistYield, int iYieldRank, int iLimitedWonderLimit
 )
 const {
@@ -15697,7 +15697,7 @@ const {
 
 int CvCityAI::AI_getBuildingCommerceValue
 (
-	BuildingTypes eBuilding, const CvBuildingInfo& kBuilding, bool bIsLimitedWonder, bool bFinancialTrouble, bool bCulturalVictory1,
+	BuildingTypes eBuilding, const CvJsonBuildingInfo& kBuilding, bool bIsLimitedWonder, bool bFinancialTrouble, bool bCulturalVictory1,
 	int* aiFreeSpecialistYield, int* aiFreeSpecialistCommerce, int* aiBaseCommerceRate, int* aiPlayerCommerceRate, int* aiCommerceRank,
 	int iLimitedWonderLimit, int iTotalPopulation
 )

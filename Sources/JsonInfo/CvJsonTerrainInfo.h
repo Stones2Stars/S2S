@@ -35,10 +35,29 @@ public:
 	bool isFreshWaterTerrain() const { return m_bFreshWaterTerrain; }
 	ClimateZoneTypes getClimate() const { return m_eClimate; }
 
+	bool isImpassable() const { return m_bImpassable; }               // identity.impassable
+	bool isFound() const { return m_bFound; }                         // identity.found (city-foundability gate)
+	bool isFoundCoast() const { return m_bFoundCoast; }               // identity.foundCoast (coastal found gate)
+	bool isFoundFreshWater() const { return m_bFoundFreshWater; }     // identity.foundFreshWater (fresh-water found gate)
+
 	const std::vector<MapCategoryTypes>& getMapCategories() const { return m_aeMapCategories; }
 	int getZobristValue() const { return m_iZobristValue; }
 	// EXE-bound art surface (mapscript/EXE map gen -- served by the CvTerrainInfo shim leaf, cascade-engine-430.md §3)
 	const char* getArtDefineTag() const { return m_szArtDefineTag.c_str(); }
+
+	// On-map AUDIO -- resolved to the runtime audio-manager index at info-load (mapFrom), EXACTLY as the archived
+	// CvTerrainInfo::read did: gDLL->getAudioTagIndex. The curator ships the source string tags (sound.soundscape;
+	// sound.footsteps[{FOOTSTEP_AUDIO_*: AS3D_*}]); mapFrom resolves each and stores the index (see the .cpp).
+	int getWorldSoundscapeScriptId() const { return m_iWorldSoundscapeScriptId; }   // sound.soundscape -> gDLL->getAudioTagIndex(tag, AUDIOTAG_SOUNDSCAPE)
+	int get3DAudioScriptFootstepIndex(int i) const                                  // sound.footsteps[footstepType] -> gDLL->getAudioTagIndex(scriptTag)
+	{
+		// Byte-faithful to the archived CvTerrainInfo::get3DAudioScriptFootstepIndex: NULL array (no footsteps
+		// authored) -> 0; else the per-footstep-type slot, defaulting -1 for a type this terrain does not author.
+		if (m_ai3DAudioScriptFootstepIndex.empty()) return 0;
+		return (i >= 0 && i < (int)m_ai3DAudioScriptFootstepIndex.size()) ? m_ai3DAudioScriptFootstepIndex[i] : -1;
+	}
+
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }  // property engine (STUB empty -- 0/42 authored, deferred to properties-first-class pass)
 
 	virtual void mapFrom(const picojson::value& entity);
 
@@ -56,11 +75,18 @@ private:
 	int m_iDefenseModifier;            // defense.plot.amount.percent
 	int m_iCultureDistance;            // cultureDistance.plot.flat
 	int m_iDistanceToLand;             // identity.distanceToLand (0 = land; 1/2/… = coast/ocean tiers)
-	int m_iZobristValue;               // ⏳ map-hash: needs the exact legacy zobrist computation (OOS-load-bearing)
+	int m_iZobristValue;               // STUB map-hash: needs the exact legacy zobrist computation (OOS-load-bearing)
+	int m_iWorldSoundscapeScriptId;    // sound.soundscape -> audio-manager index (AUDIOTAG_SOUNDSCAPE); -1 when absent (legacy read default)
+	std::vector<int> m_ai3DAudioScriptFootstepIndex;   // sound.footsteps: FootstepAudioType index -> AS3D_ script index (empty = none authored)
 	bool m_bFreshWaterTerrain;         // identity.freshWaterTerrain
+	bool m_bImpassable;                // identity.impassable
+	bool m_bFound;                     // identity.found (city-foundability gate)
+	bool m_bFoundCoast;                // identity.foundCoast (coastal found gate)
+	bool m_bFoundFreshWater;           // identity.foundFreshWater (fresh-water found gate)
 	ClimateZoneTypes m_eClimate;       // identity.climate (CLIMATE_ZONE_*)
 	std::string m_szArtDefineTag;      // world.art.icon (ART_DEF_* tag; the EXE map-gen art lookup key)
 	std::vector<MapCategoryTypes> m_aeMapCategories;   // identity.mapCategories (MAPCATEGORY_*)
+	CvPropertyManipulators m_PropertyManipulators;     // STUB empty -- property engine, XML-era manipulator data deferred (0/42 authored)
 };
 
 #endif // CV_JSON_TERRAIN_INFO_H

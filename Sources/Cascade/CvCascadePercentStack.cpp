@@ -14,9 +14,9 @@
 #include "Defines/CvGlobals.h"
 #include "Engine/CvCity.h"
 #include "Engine/CvPlayer.h"
-#include "Infos/CvBuildingInfo.h"
-#include "Infos/CvCivicInfo.h"
-#include "Infos/CvProjectInfo.h"      // InfoRepo<CvProjectInfo> tag + ProjectTypes (the projects empire.percent loop)
+#include "CvJsonBuildingInfo.h"
+#include "CvJsonCivicInfo.h"
+#include "CvJsonProjectInfo.h"      // InfoRepo<CvJsonProjectInfo> tag + ProjectTypes (the projects empire.percent loop)
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM
 #include "CvCascadeConditionEval.h"    // CvCascadeEvalCtx + cascadeIsBuildingActive
@@ -43,7 +43,7 @@ static const std::vector<int>& ps_channelCands(int chanId, int segCity, int segA
 		if (chanId >= 0)
 			for (int b = 0; b < nB; ++b)
 			{
-				const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
+				const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get(b);
 				if (d == NULL) continue;
 				const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
 				for (size_t i = 0; i < deps.size(); ++i)
@@ -93,7 +93,7 @@ int PercentStack::percentStack(const std::string& channel, const CvCity* pCity, 
 		const bool active = cascadeIsBuildingActive((int)eB, ec); // non-dormant, in this city (cascade-computed)
 		const bool owned = player.getBuildingCount(eB) > 0;       // anywhere in the empire
 		if (!active && !owned) continue;
-		const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get((int)eB);
+		const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get((int)eB);
 		if (d == NULL) continue;
 		if (active) { bk.bCity += MMKernel::sumPercent(d, wantCity, ec); bk.bArea += MMKernel::sumPercent(d, wantArea, ec); }
 		if (owned) bk.bEmpire += MMKernel::sumPercent(d, wantEmpire, ec);
@@ -102,7 +102,7 @@ int PercentStack::percentStack(const std::string& channel, const CvCity* pCity, 
 	{
 		const CivicTypes c = player.getCivics((CivicOptionTypes)co);
 		if (c == NO_CIVIC) continue;
-		const CvJsonInfo* d = InfoRepo<CvCivicInfo>::get().get((int)c);
+		const CvJsonInfo* d = InfoRepo<CvJsonCivicInfo>::get().get((int)c);
 		if (d != NULL) bk.civic += MMKernel::sumPercent(d, wantEmpire, ec);
 	}
 	for (int t = 0; t < GC.getNumTraitInfos(); ++t)
@@ -115,12 +115,12 @@ int PercentStack::percentStack(const std::string& channel, const CvCity* pCity, 
 	bk.bCity += MMKernel::buildingKeyedSourcePercent(channel, pCity, ec);
 	// PROJECT empire-scope percent (StoneBase projectEmpire; the engine's project modifier accumulator, empire-scope rolls
 	// down to every city). Projects are TEAM-owned in the engine -> read the team's project count. Yield channels find none
-	// (commerce-impacting only). Projects are mapped into InfoRepo<CvProjectInfo> (generic CvJsonInfo deposits) by readJson.
+	// (commerce-impacting only). Projects are mapped into InfoRepo<CvJsonProjectInfo> (generic CvJsonInfo deposits) by readJson.
 	const CvTeam& team = GET_TEAM(player.getTeam());
 	for (int pj = 0; pj < GC.getNumProjectInfos(); ++pj)
 	{
 		if (team.getProjectCount((ProjectTypes)pj) <= 0) continue;
-		const CvJsonInfo* d = InfoRepo<CvProjectInfo>::get().get(pj);
+		const CvJsonInfo* d = InfoRepo<CvJsonProjectInfo>::get().get(pj);
 		if (d != NULL) bk.bEmpire += MMKernel::sumPercent(d, wantEmpire, ec);
 	}
 	return std::max(0, 100 + bk.bCity + bk.bArea + bk.bEmpire + bk.civic + bk.trait);

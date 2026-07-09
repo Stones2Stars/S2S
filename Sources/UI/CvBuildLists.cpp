@@ -10,7 +10,9 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "CvBuildingInfo.h"
+#include "CvJsonUnitInfo.h"
+#include "CvJsonProjectInfo.h"
+#include "CvJsonBuildingInfo.h"
 #include "CvBuildLists.h"
 #include "Infrastructure/CvInitCore.h"
 #include "Defines/CvGlobals.h"

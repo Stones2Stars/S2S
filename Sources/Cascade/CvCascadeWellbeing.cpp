@@ -13,6 +13,8 @@
 //
 
 #include "CvGameCoreDLL.h"
+#include "Infos/CvWorldInfo.h"
+#include "Infos/CvCommerceInfo.h"
 #include "CvCascadeWellbeing.h"
 #include "CvCascadeMMKernel.h"
 #include "CvCascadeDepositIndex.h"
@@ -33,13 +35,13 @@
 #include "Engine/CvTeam.h"
 #include "Engine/CvGameCoreUtils.h"   // plotCity / range / PUF_canDefend
 #include "Infos/CvHandicapInfo.h"
-#include "Infos/CvTraitInfo.h"
-#include "Infos/CvTechInfo.h"
-#include "Infos/CvBuildingInfo.h"
+#include "CvJsonTraitInfo.h"
+#include "CvJsonTechInfo.h"
+#include "CvJsonBuildingInfo.h"
 #include "Infos/CvBonusInfo.h"
-#include "Infos/CvCorporationInfo.h"
-#include "Infos/CvProjectInfo.h"
-#include "Infos/CvSpecialistInfo.h"
+#include "CvJsonCorporationInfo.h"
+#include "CvJsonProjectInfo.h"
+#include "CvJsonSpecialistInfo.h"
 #include "Infos/CvFeatureInfo.h"
 
 // (WbSplit + CascadeWbTerms -- the shared §2b term types -- live in CvCascadeScopePackages.h: the same
@@ -141,7 +143,7 @@ static void wb_buildingsAll(int famHappy, int famHealth, int famCH, const CvCity
 	for (std::set<int>::const_iterator abIt = ec.activeBuildings->begin(); abIt != ec.activeBuildings->end(); ++abIt)
 	{
 		const int b = *abIt;
-		const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
+		const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get(b);
 		if (d == NULL) continue;
 		int iBaseNetHap = 0, iBaseNetHea = 0;
 		wb_foldBuildingDeposits(DepositIndex::depositsFor(d), famHappy, famHealth, famCH, scopeCity, unitFlat, unitPerPop,
@@ -159,7 +161,7 @@ static void wb_buildingsAll(int famHappy, int famHealth, int famCH, const CvCity
 	if (ec.obsoleteBuildings != NULL)
 		for (std::set<int>::const_iterator obIt = ec.obsoleteBuildings->begin(); obIt != ec.obsoleteBuildings->end(); ++obIt)
 		{
-			const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(*obIt);
+			const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get(*obIt);
 			if (d == NULL) continue;
 			int iBaseNetHap = 0, iBaseNetHea = 0;
 			wb_foldBuildingDeposits(DepositIndex::whenObsoleteFor(d), famHappy, famHealth, famCH, scopeCity, unitFlat, unitPerPop,
@@ -196,7 +198,7 @@ void CascadeWellbeing::playerAreaEmpire(const CvPlayer& player,
 		const int iArea = pc->area()->getID();
 		for (std::set<int>::const_iterator it = operatingBuildings.active.begin(); it != operatingBuildings.active.end(); ++it)
 		{
-			const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
+			const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get(*it);
 			if (d == NULL) continue;
 			const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
 			for (size_t i = 0; i < deps.size(); ++i)
@@ -338,10 +340,10 @@ static void wb_gather(const char* szFam, const CvCity* pCity, const CvCascadeEva
 	{
 		const CivicTypes eCivic = owner.getCivics((CivicOptionTypes)i);
 		if (eCivic == NO_CIVIC) continue;
-		const CvJsonInfo* d = InfoRepo<CvCivicInfo>::get().get(eCivic);
+		const CvJsonInfo* d = InfoRepo<CvJsonCivicInfo>::get().get(eCivic);
 		if (d != NULL) wb_memberSource(famId, d, false, false, false, pCity, ec, featureCounts, bInTopCities, t);
 	}
-	// -- traits (the option-selected curated set + the PURE_TRAITS filter; NEVER the engine CvTraitInfo) --
+	// -- traits (the option-selected curated set + the PURE_TRAITS filter; NEVER the engine CvJsonTraitInfo) --
 	for (int i = 0; i < GC.getNumTraitInfos(); ++i)
 	{
 		if (!owner.hasTrait((TraitTypes)i)) continue;
@@ -357,12 +359,12 @@ static void wb_gather(const char* szFam, const CvCity* pCity, const CvCascadeEva
 	const std::string cityAddr = fam + ".city";
 	for (int i = 0; i < GC.getNumCorporationInfos(); ++i)
 		if (pCity->isHasCorporation((CorporationTypes)i))
-			wb_entity(InfoRepo<CvCorporationInfo>::get().get(i), cityAddr, ec, t.corp);
+			wb_entity(InfoRepo<CvJsonCorporationInfo>::get().get(i), cityAddr, ec, t.corp);
 	// -- techs (team-held empire flats, NET -- they feed the engine's player EXTRA accumulator) --
 	for (int i = 0; i < GC.getNumTechInfos(); ++i)
 	{
 		if (!team.isHasTech((TechTypes)i)) continue;
-		const CvJsonInfo* d = InfoRepo<CvTechInfo>::get().get(i);
+		const CvJsonInfo* d = InfoRepo<CvJsonTechInfo>::get().get(i);
 		if (d != NULL) t.iTechNet += MMKernel::sumUnit(d, empAddr, "flat", ec);
 	}
 	// -- projects (empire per completed count ×1 presence + the lone world scope) --
@@ -370,16 +372,16 @@ static void wb_gather(const char* szFam, const CvCity* pCity, const CvCascadeEva
 	for (int i = 0; i < GC.getNumProjectInfos(); ++i)
 	{
 		if (team.getProjectCount((ProjectTypes)i) > 0)
-			wb_entity(InfoRepo<CvProjectInfo>::get().get(i), empAddr, ec, t.project);
+			wb_entity(InfoRepo<CvJsonProjectInfo>::get().get(i), empAddr, ec, t.project);
 		if (GC.getGame().getProjectCreatedCount((ProjectTypes)i) > 0)
-			wb_entity(InfoRepo<CvProjectInfo>::get().get(i), worldAddr, ec, t.project);
+			wb_entity(InfoRepo<CvJsonProjectInfo>::get().get(i), worldAddr, ec, t.project);
 	}
 	// -- specialists (city flats ×count, ×100 pools folded /100 per type -- the engine's /100-at-use) --
 	for (int i = 0; i < GC.getNumSpecialistInfos(); ++i)
 	{
 		const int iCount = pCity->getSpecialistCount((SpecialistTypes)i) + pCity->getFreeSpecialistCount((SpecialistTypes)i);
 		if (iCount == 0) continue;
-		const CvJsonInfo* d = InfoRepo<CvSpecialistInfo>::get().get(i);
+		const CvJsonInfo* d = InfoRepo<CvJsonSpecialistInfo>::get().get(i);
 		if (d == NULL) continue;
 		const long v100 = MMKernel::sumUnit100(d, cityAddr, "flat", ec) * iCount;
 		if (v100 >= 0) t.spec.iGood += (int)(v100 / 100); else t.spec.iBad -= (int)(-v100 / 100);
@@ -474,7 +476,7 @@ CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
 		{
 			const CivicTypes eCivic = owner.getCivics((CivicOptionTypes)i);
 			if (eCivic == NO_CIVIC) continue;
-			const CvJsonInfo* d = InfoRepo<CvCivicInfo>::get().get(eCivic);
+			const CvJsonInfo* d = InfoRepo<CvJsonCivicInfo>::get().get(eCivic);
 			if (d == NULL) continue;
 			iStateAcc += MMKernel::sumUnit(d, "stateReligion.empire.happiness", "flat", rec);
 			iNonStateAcc += MMKernel::sumUnit(d, "happiness.empire.nonStateReligion", "flat", rec);

@@ -71,7 +71,7 @@ public:
 	int getEnemyPower() const;
 	int getNumNukeUnits() const;
 
-	bool isUnitBonusEnabledByTech(const CvUnitInfo& unit, const bool bNoWorldBonuses=false) const;
+	bool isUnitBonusEnabledByTech(const CvJsonUnitInfo& unit, const bool bNoWorldBonuses=false) const;
 
 	int64_t getTotalVictoryScore() const;
 

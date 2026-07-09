@@ -19,6 +19,7 @@ class CvBonusInfo : public CvJsonBonusInfo
 {
 public:
 	DllExport const CvArtInfoBonus* getArtInfo() const;
+	const char* getButton() const;   // art-define button (mirrors archived CvBonusInfo::getButton -> getArtInfo()->getButton())
 };
 
 #endif // CV_BONUSINFO_H

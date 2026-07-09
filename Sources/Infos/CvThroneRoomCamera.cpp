@@ -3,8 +3,8 @@
 //------------------------------------------------------------------------------------------------
 #include "CvGameCoreDLL.h"
 #include "UI/CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
+#include "CvJsonBuildingInfo.h"
+#include "CvJsonHeritageInfo.h"
 #include "AI/CvGameAI.h"
 #include "UI/CvGameTextMgr.h"
 #include "Defines/CvGlobals.h"

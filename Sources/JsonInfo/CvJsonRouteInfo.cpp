@@ -8,12 +8,16 @@
 #include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
 #include "CvJsonRouteInfo.h"
 #include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonFamVal/...)
+#include "AI/CvGameAI.h"          // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 
 CvJsonRouteInfo::CvJsonRouteInfo()
 	: m_iValue(0), m_iAdvancedStartCost(0), m_iMovementCost(0), m_iFlatMovementCost(0), m_iZobristValue(0),
 	  m_bSeaTunnel(false)
 {
 	for (int i = 0; i < NUM_YIELD_TYPES; ++i) m_aiYieldChange[i] = 0;
+	// Non-XML runtime map-hash value, drawn from the synced RNG at info construction EXACTLY as the archived
+	// CvRouteInfo ctor did (SourceArchive/Infos/CvRouteInfo.cpp:41). CvPlot XORs it into m_movementCharacteristicsHash.
+	m_iZobristValue = GC.getGame().getSorenRand().getInt();
 }
 
 int CvJsonRouteInfo::getTechMovementChange(int iTech) const
@@ -70,5 +74,5 @@ void CvJsonRouteInfo::mapFrom(const picojson::value& entity)
 
 	// (the route's bonus prerequisite is NOT read here -- it is modelled as the BONUS's enables.routes availability
 	//  relationship, read off the bonus info by the cascade GENERATE pass; see the header.)
-	// ⏳ m_iZobristValue: needs the exact legacy zobrist map-hash (OOS) -- left 0, flagged not faked.
+	// (m_iZobristValue is drawn in the ctor -- non-XML runtime value, see there.)
 }

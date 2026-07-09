@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------------------------
 #include "CvGameCoreDLL.h"
 #include "BuildingsRepo.h"
-#include "CvBuildingInfo.h"
+#include "CvJsonBuildingInfo.h"
 #include "Defines/CvGlobals.h"
 
 BuildingsRepo& BuildingsRepo::get()
@@ -35,7 +35,7 @@ void BuildingsRepo::rebuild()
 
 	for (int iI = 0; iI < iNumBuildings; ++iI)
 	{
-		const CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iI);
+		const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iI);
 
 		const int iReligion = kBuilding.getReligionType();
 		if (iReligion >= 0 && iReligion < iNumReligions)

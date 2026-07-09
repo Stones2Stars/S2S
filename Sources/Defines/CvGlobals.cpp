@@ -3,7 +3,7 @@
 //
 #include "CvGameCoreDLL.h"
 #include "Infrastructure/BoolExpr.h"
-#include "CvBuildingInfo.h"
+#include "CvJsonBuildingInfo.h"
 #include "AI/CvGameAI.h"
 #include "CvGlobals.h"
 #include "Tools/CvHttpServer.h"
@@ -12,7 +12,7 @@
 #include "CvInfos.h"
 #include "CvInfoUtil.h"
 #include "CvDiplomacyClasses.h"
-#include "CvUnitCombatInfo.h"
+#include "CvJsonUnitCombatInfo.h"
 #include "CvPlayerOptionInfo.h"
 #include "CvInfoWater.h"
 #include "Infrastructure/CvInitCore.h"
@@ -198,6 +198,23 @@ cvInternalGlobals::~cvInternalGlobals()
 #include <dbghelp.h>
 #pragma comment (lib, "dbghelp.lib")
 
+// delayimp.h is ABSENT from the vendored VC7.1 SDK, so declare the minimal delay-load surface by hand (layout
+// verified against a live dump: szDll @ +0x0c, dlp.fImportByName @ +0x10, dlp.szProcName @ +0x14). Lets the crash
+// filter name the missing DLL/proc on a delay-load exception (c06d007e/f) without the header.
+#ifndef FACILITY_VISUALCPP
+#define FACILITY_VISUALCPP  ((DWORD)0x6d)
+#endif
+#define VcppException(sev, err)  ((sev) | (FACILITY_VISUALCPP << 16) | (err))
+#ifndef ERROR_MOD_NOT_FOUND
+#define ERROR_MOD_NOT_FOUND  126L
+#endif
+#ifndef ERROR_PROC_NOT_FOUND
+#define ERROR_PROC_NOT_FOUND 127L
+#endif
+struct S2SDelayLoadProc { BOOL fImportByName; union { LPCSTR szProcName; DWORD dwOrdinal; }; };
+struct S2SDelayLoadInfo { DWORD cb; const void* pidd; void** ppfn; LPCSTR szDll; S2SDelayLoadProc dlp;
+                          HMODULE hmodCur; void* pfnCur; DWORD dwLastError; };
+
 
 std::string getPyTrace()
 {
@@ -213,6 +230,56 @@ std::string getPyTrace()
 	}
 
 	return buffer.str();
+}
+
+// Render an SEH exception record as ONE string-parseable line -- `[EXCEPTION] key=value ...` -- so a crash NAMES its
+// own cause in the log (grep-able), instead of needing offline dump analysis. The delay-load cases (PROC/MOD not found,
+// c06d007e/f) decode the DelayLoadInfo and DEMANGLE the proc via UnDecorateSymbolName (dbghelp, already linked) -- this
+// is exactly what would have printed `CvArtInfoImprovement::getShaderNIF` straight into the log. Safe in the crash
+// filter: pure formatting, no allocation through the event spine (the process is unstable here -- file log only).
+std::string describeException(EXCEPTION_POINTERS* pep)
+{
+	if (pep == NULL || pep->ExceptionRecord == NULL) return "";
+	const EXCEPTION_RECORD* er = pep->ExceptionRecord;
+	const DWORD code = er->ExceptionCode;
+	const char* kind = "UNKNOWN";
+	switch (code)
+	{
+	case EXCEPTION_ACCESS_VIOLATION:    kind = "ACCESS_VIOLATION"; break;
+	case EXCEPTION_INT_DIVIDE_BY_ZERO:  kind = "INT_DIVIDE_BY_ZERO"; break;
+	case EXCEPTION_FLT_DIVIDE_BY_ZERO:  kind = "FLT_DIVIDE_BY_ZERO"; break;
+	case EXCEPTION_STACK_OVERFLOW:      kind = "STACK_OVERFLOW"; break;
+	case EXCEPTION_ILLEGAL_INSTRUCTION: kind = "ILLEGAL_INSTRUCTION"; break;
+	case EXCEPTION_PRIV_INSTRUCTION:    kind = "PRIV_INSTRUCTION"; break;
+	case 0xE06D7363:                    kind = "CPP_EXCEPTION"; break;
+	case VcppException(ERROR_SEVERITY_ERROR, ERROR_MOD_NOT_FOUND):  kind = "DELAY_LOAD_MOD_NOT_FOUND"; break;
+	case VcppException(ERROR_SEVERITY_ERROR, ERROR_PROC_NOT_FOUND): kind = "DELAY_LOAD_PROC_NOT_FOUND"; break;
+	}
+	std::stringstream ss;
+	ss << CvString::format("[EXCEPTION] code=0x%08X kind=%s addr=0x%08X", code, kind, (unsigned)(size_t)er->ExceptionAddress);
+	if (code == EXCEPTION_ACCESS_VIOLATION && er->NumberParameters >= 2)
+		ss << CvString::format(" access=%s faultAddr=0x%08X",
+			er->ExceptionInformation[0] == 1 ? "write" : (er->ExceptionInformation[0] == 8 ? "execute" : "read"),
+			(unsigned)er->ExceptionInformation[1]);
+	if ((code == VcppException(ERROR_SEVERITY_ERROR, ERROR_MOD_NOT_FOUND) ||
+	     code == VcppException(ERROR_SEVERITY_ERROR, ERROR_PROC_NOT_FOUND)) && er->NumberParameters >= 1)
+	{
+		const S2SDelayLoadInfo* dli = (const S2SDelayLoadInfo*)er->ExceptionInformation[0];
+		if (dli != NULL)
+		{
+			ss << CvString::format(" dll=%s", dli->szDll ? dli->szDll : "?");
+			if (dli->dlp.fImportByName && dli->dlp.szProcName != NULL)
+			{
+				char undec[512];
+				if (UnDecorateSymbolName(dli->dlp.szProcName, undec, sizeof(undec), UNDNAME_COMPLETE) != 0)
+					ss << CvString::format(" proc=%s", undec);
+				else
+					ss << CvString::format(" proc=%s", dli->dlp.szProcName);
+			}
+			else ss << CvString::format(" proc=ordinal#%u", dli->dlp.dwOrdinal);
+		}
+	}
+	return ss.str();
 }
 
 void CreateMiniDump(EXCEPTION_POINTERS *pep)
@@ -260,9 +327,19 @@ void CreateMiniDump(EXCEPTION_POINTERS *pep)
 
 	/* Close the file. */
 	CloseHandle(hFile);
+
+	// String-parseable exception log: one `[EXCEPTION] ...` headline naming the cause (grep it to find the issue),
+	// with the dump filename + the Python callstack under it. Co-located in Exceptions.log so a crash is diagnosable
+	// straight from the logs (the delay-load proc name, the AV read/write addr, ...) without offline dump analysis.
+	std::string exc = describeException(pep);
+	if (!exc.empty())
+	{
+		gDLL->logMsg("Exceptions.log", CvString::format("%s dump=%s", exc.c_str(), filename).c_str(), true, false);
+	}
 	std::string pyTrace = getPyTrace();
 	if(!pyTrace.empty())
 	{
+		gDLL->logMsg("Exceptions.log", CvString::format("[EXCEPTION.pyTrace]\r\n%s", pyTrace.c_str()).c_str(), true, false);
 		gDLL->logMsg("PythonCallstack.log", pyTrace.c_str(), true, false);
 	}
 }
@@ -271,6 +348,34 @@ LONG WINAPI CustomFilter(EXCEPTION_POINTERS *ExceptionInfo)
 {
 	CreateMiniDump(ExceptionInfo);
 	return EXCEPTION_EXECUTE_HANDLER;
+}
+
+// A VECTORED handler fires for EVERY exception BEFORE the SEH/C++ search -- so it logs even the ones that get CAUGHT
+// (e.g. a delay-load PROC_NOT_FOUND or an access violation that boost.python turns into "unidentifiable C++ exception").
+// That is exactly the class the unhandled-filter above misses. We only log the two interesting kinds (missing-export
+// delay-load + access violation), name them via describeException, then CONTINUE_SEARCH so normal handling is untouched.
+// Capped so a per-frame throw can't flood the log; dedup on the identical line so one culprit prints once per burst.
+LONG WINAPI S2SVectoredHandler(EXCEPTION_POINTERS* pep)
+{
+	static int s_logged = 0;
+	static std::string s_last;
+	if (pep != NULL && pep->ExceptionRecord != NULL && gDLL != NULL && s_logged < 200)
+	{
+		const DWORD code = pep->ExceptionRecord->ExceptionCode;
+		if (code == VcppException(ERROR_SEVERITY_ERROR, ERROR_PROC_NOT_FOUND) ||
+			code == VcppException(ERROR_SEVERITY_ERROR, ERROR_MOD_NOT_FOUND) ||
+			code == EXCEPTION_ACCESS_VIOLATION)
+		{
+			const std::string exc = describeException(pep);
+			if (!exc.empty() && exc != s_last)
+			{
+				s_last = exc;
+				++s_logged;
+				gDLL->logMsg("Exceptions.log", CvString::format("[EXCEPTION.caught] %s", exc.c_str()).c_str(), true, false);
+			}
+		}
+	}
+	return EXCEPTION_CONTINUE_SEARCH;
 }
 
 #endif
@@ -289,6 +394,8 @@ void cvInternalGlobals::init()
 #ifdef MINIDUMP
 	/* Enable our custom exception that will write the minidump for us. */
 	SetUnhandledExceptionFilter(CustomFilter);
+	/* Also name CAUGHT delay-load/AV exceptions in Exceptions.log (the boost.python "unidentifiable C++ exception"). */
+	AddVectoredExceptionHandler(1, S2SVectoredHandler);
 #endif
 
 	//
@@ -1098,10 +1205,17 @@ int cvInternalGlobals::getNumTraitInfos() const
 	return (int)m_paTraitInfo.size();
 }
 
-CvTraitInfo& cvInternalGlobals::getTraitInfo(TraitTypes eTraitNum) const
+CvJsonTraitInfo& cvInternalGlobals::getTraitInfo(TraitTypes eTraitNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumTraitInfos(), eTraitNum);
-	return *(m_paTraitInfo[eTraitNum]);
+	// #430: the ACTIVE trait set -- COMPLEX when GAMEOPTION_LEADER_COMPLEX_TRAITS is on AND the id exists in the
+	// complex repo, else the SIMPLE set (mirrors MMKernel::traitData; the two sets collide on the engine id so they
+	// live in separate repos -- cascade-engine-430.md §6). The engine CvInfoReplacements trait swap is demolition fodder.
+	if (getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS) && InfoRepo<CvComplexTraitTag>::get().get(eTraitNum) != NULL)
+	{
+		return *static_cast<CvJsonComplexTraitInfo*>(InfoRepo<CvComplexTraitTag>::get().editPtr(eTraitNum));
+	}
+	return *static_cast<CvJsonSimpleTraitInfo*>(InfoRepo<CvJsonTraitInfo>::get().editPtr(eTraitNum));
 }
 
 
@@ -1198,10 +1312,10 @@ int cvInternalGlobals::getNumUnitInfos() const
 	return (int)m_paUnitInfo.size();
 }
 
-CvUnitInfo& cvInternalGlobals::getUnitInfo(UnitTypes eUnitNum) const
+CvJsonUnitInfo& cvInternalGlobals::getUnitInfo(UnitTypes eUnitNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eUnitNum);
-	return *(m_paUnitInfo[eUnitNum]);
+	return *static_cast<CvJsonUnitInfo*>(InfoRepo<CvJsonUnitInfo>::get().editPtr(eUnitNum));
 }
 
 int cvInternalGlobals::getNumSpawnInfos() const
@@ -1339,10 +1453,10 @@ int cvInternalGlobals::getNumHeritageInfos() const
 	return (int)m_heritageInfo.size();
 }
 
-CvHeritageInfo& cvInternalGlobals::getHeritageInfo(HeritageTypes e) const
+CvJsonHeritageInfo& cvInternalGlobals::getHeritageInfo(HeritageTypes e) const
 {
 	FASSERT_BOUNDS(0, GC.getNumHeritageInfos(), e);
-	return *(m_heritageInfo[e]);
+	return *static_cast<CvJsonHeritageInfo*>(InfoRepo<CvJsonHeritageInfo>::get().editPtr(e));
 }
 
 
@@ -1363,10 +1477,10 @@ int cvInternalGlobals::getNumUnitCombatInfos() const
 	return (int)m_paUnitCombatInfo.size();
 }
 
-CvUnitCombatInfo& cvInternalGlobals::getUnitCombatInfo(UnitCombatTypes e) const
+CvJsonUnitCombatInfo& cvInternalGlobals::getUnitCombatInfo(UnitCombatTypes e) const
 {
 	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), e);
-	return *(m_paUnitCombatInfo[e]);
+	return *static_cast<CvJsonUnitCombatInfo*>(InfoRepo<CvJsonUnitCombatInfo>::get().editPtr(e));
 }
 
 
@@ -1381,10 +1495,10 @@ int cvInternalGlobals::getNumPromotionLineInfos() const
 	return (int)m_paPromotionLineInfo.size();
 }
 
-CvPromotionLineInfo& cvInternalGlobals::getPromotionLineInfo(PromotionLineTypes e) const
+CvJsonPromotionLineInfo& cvInternalGlobals::getPromotionLineInfo(PromotionLineTypes e) const
 {
 	FASSERT_BOUNDS(0, GC.getNumPromotionLineInfos(), e);
-	return *(m_paPromotionLineInfo[e]);
+	return *static_cast<CvJsonPromotionLineInfo*>(InfoRepo<CvJsonPromotionLineInfo>::get().editPtr(e));
 }
 
 int cvInternalGlobals::getNumMapCategoryInfos() const
@@ -2003,10 +2117,10 @@ int cvInternalGlobals::getNumProcessInfos() const
 	return (int)m_paProcessInfo.size();
 }
 
-CvProcessInfo& cvInternalGlobals::getProcessInfo(ProcessTypes e) const
+CvJsonProcessInfo& cvInternalGlobals::getProcessInfo(ProcessTypes e) const
 {
 	FASSERT_BOUNDS(0, GC.getNumProcessInfos(), e);
-	return *(m_paProcessInfo[e]);
+	return *static_cast<CvJsonProcessInfo*>(InfoRepo<CvJsonProcessInfo>::get().editPtr(e));
 }
 
 int cvInternalGlobals::getNumVoteInfos() const
@@ -2025,10 +2139,10 @@ int cvInternalGlobals::getNumProjectInfos() const
 	return (int)m_paProjectInfo.size();
 }
 
-CvProjectInfo& cvInternalGlobals::getProjectInfo(ProjectTypes e) const
+CvJsonProjectInfo& cvInternalGlobals::getProjectInfo(ProjectTypes e) const
 {
 	FASSERT_BOUNDS(0, GC.getNumProjectInfos(), e);
-	return *(m_paProjectInfo[e]);
+	return *static_cast<CvJsonProjectInfo*>(InfoRepo<CvJsonProjectInfo>::get().editPtr(e));
 }
 
 int cvInternalGlobals::getNumBuildingInfos() const
@@ -2036,10 +2150,10 @@ int cvInternalGlobals::getNumBuildingInfos() const
 	return (int)m_paBuildingInfo.size();
 }
 
-CvBuildingInfo& cvInternalGlobals::getBuildingInfo(BuildingTypes eBuildingNum) const
+CvJsonBuildingInfo& cvInternalGlobals::getBuildingInfo(BuildingTypes eBuildingNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuildingNum);
-	return *(m_paBuildingInfo[eBuildingNum]);
+	return *static_cast<CvJsonBuildingInfo*>(InfoRepo<CvJsonBuildingInfo>::get().editPtr(eBuildingNum));
 }
 
 int cvInternalGlobals::getNumSpecialBuildingInfos() const
@@ -2099,10 +2213,10 @@ int cvInternalGlobals::getNumPromotionInfos() const
 	return (int)m_paPromotionInfo.size();
 }
 
-CvPromotionInfo& cvInternalGlobals::getPromotionInfo(PromotionTypes ePromotionNum) const
+CvJsonPromotionInfo& cvInternalGlobals::getPromotionInfo(PromotionTypes ePromotionNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumPromotionInfos(), ePromotionNum);
-	return *(m_paPromotionInfo[ePromotionNum]);
+	return *static_cast<CvJsonPromotionInfo*>(InfoRepo<CvJsonPromotionInfo>::get().editPtr(ePromotionNum));
 }
 
 PromotionTypes cvInternalGlobals::findPromotion(PromotionPredicateFn predicateFn) const
@@ -2123,10 +2237,10 @@ int cvInternalGlobals::getNumTechInfos() const
 	return (int)m_paTechInfo.size();
 }
 
-CvTechInfo& cvInternalGlobals::getTechInfo(TechTypes eTechNum) const
+CvJsonTechInfo& cvInternalGlobals::getTechInfo(TechTypes eTechNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumTechInfos(), eTechNum);
-	return *(m_paTechInfo[eTechNum]);
+	return *static_cast<CvJsonTechInfo*>(InfoRepo<CvJsonTechInfo>::get().editPtr(eTechNum));
 }
 
 int cvInternalGlobals::getNumReligionInfos() const
@@ -2134,10 +2248,10 @@ int cvInternalGlobals::getNumReligionInfos() const
 	return (int)m_paReligionInfo.size();
 }
 
-CvReligionInfo& cvInternalGlobals::getReligionInfo(ReligionTypes eReligionNum) const
+CvJsonReligionInfo& cvInternalGlobals::getReligionInfo(ReligionTypes eReligionNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumReligionInfos(), eReligionNum);
-	return *(m_paReligionInfo[eReligionNum]);
+	return *static_cast<CvJsonReligionInfo*>(InfoRepo<CvJsonReligionInfo>::get().editPtr(eReligionNum));
 }
 
 int cvInternalGlobals::getNumCorporationInfos() const
@@ -2145,10 +2259,10 @@ int cvInternalGlobals::getNumCorporationInfos() const
 	return (int)m_paCorporationInfo.size();
 }
 
-CvCorporationInfo& cvInternalGlobals::getCorporationInfo(CorporationTypes eCorporationNum) const
+CvJsonCorporationInfo& cvInternalGlobals::getCorporationInfo(CorporationTypes eCorporationNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumCorporationInfos(), eCorporationNum);
-	return *(m_paCorporationInfo[eCorporationNum]);
+	return *static_cast<CvJsonCorporationInfo*>(InfoRepo<CvJsonCorporationInfo>::get().editPtr(eCorporationNum));
 }
 
 int cvInternalGlobals::getNumSpecialistInfos() const
@@ -2156,10 +2270,10 @@ int cvInternalGlobals::getNumSpecialistInfos() const
 	return (int)m_paSpecialistInfo.size();
 }
 
-CvSpecialistInfo& cvInternalGlobals::getSpecialistInfo(SpecialistTypes eSpecialistNum) const
+CvJsonSpecialistInfo& cvInternalGlobals::getSpecialistInfo(SpecialistTypes eSpecialistNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eSpecialistNum);
-	return *(m_paSpecialistInfo[eSpecialistNum]);
+	return *static_cast<CvJsonSpecialistInfo*>(InfoRepo<CvJsonSpecialistInfo>::get().editPtr(eSpecialistNum));
 }
 
 int cvInternalGlobals::getNumCivicOptionInfos() const
@@ -2167,10 +2281,10 @@ int cvInternalGlobals::getNumCivicOptionInfos() const
 	return (int)m_paCivicOptionInfo.size();
 }
 
-CvCivicOptionInfo& cvInternalGlobals::getCivicOptionInfo(CivicOptionTypes eCivicOptionNum) const
+CvJsonCivicOptionInfo& cvInternalGlobals::getCivicOptionInfo(CivicOptionTypes eCivicOptionNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumCivicOptionInfos(), eCivicOptionNum);
-	return *(m_paCivicOptionInfo[eCivicOptionNum]);
+	return *static_cast<CvJsonCivicOptionInfo*>(InfoRepo<CvJsonCivicOptionInfo>::get().editPtr(eCivicOptionNum));
 }
 
 int cvInternalGlobals::getNumCivicInfos() const
@@ -2178,10 +2292,10 @@ int cvInternalGlobals::getNumCivicInfos() const
 	return (int)m_paCivicInfo.size();
 }
 
-CvCivicInfo& cvInternalGlobals::getCivicInfo(CivicTypes eCivicNum) const
+CvJsonCivicInfo& cvInternalGlobals::getCivicInfo(CivicTypes eCivicNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumCivicInfos(), eCivicNum);
-	return *(m_paCivicInfo[eCivicNum]);
+	return *static_cast<CvJsonCivicInfo*>(InfoRepo<CvJsonCivicInfo>::get().editPtr(eCivicNum));
 }
 
 int cvInternalGlobals::getNumDiplomacyInfos() const
@@ -2244,10 +2358,10 @@ int cvInternalGlobals::getNumCultureLevelInfos() const
 	return (int)m_paCultureLevelInfo.size();
 }
 
-CvCultureLevelInfo& cvInternalGlobals::getCultureLevelInfo(CultureLevelTypes eCultureLevelNum) const
+CvJsonCultureLevelInfo& cvInternalGlobals::getCultureLevelInfo(CultureLevelTypes eCultureLevelNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumCultureLevelInfos(), eCultureLevelNum);
-	return *(m_paCultureLevelInfo[eCultureLevelNum]);
+	return *static_cast<CvJsonCultureLevelInfo*>(InfoRepo<CvJsonCultureLevelInfo>::get().editPtr(eCultureLevelNum));
 }
 
 int cvInternalGlobals::getNumVictoryInfos() const
@@ -2429,10 +2543,10 @@ int cvInternalGlobals::getNumPropertyInfos() const
 	return (int)m_paPropertyInfo.size();
 }
 
-CvPropertyInfo& cvInternalGlobals::getPropertyInfo(PropertyTypes ePropertyNum) const
+CvJsonPropertyInfo& cvInternalGlobals::getPropertyInfo(PropertyTypes ePropertyNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumPropertyInfos(), ePropertyNum);
-	return *(m_paPropertyInfo[ePropertyNum]);
+	return *static_cast<CvJsonPropertyInfo*>(InfoRepo<CvJsonPropertyInfo>::get().editPtr(ePropertyNum));
 }
 
 int cvInternalGlobals::getNumOutcomeInfos() const
@@ -3278,7 +3392,7 @@ void cvInternalGlobals::buildInvisibleSeerIndex()
 
 	for (int iI = 0; iI < getNumUnitInfos(); iI++)
 	{
-		const CvUnitInfo& kUnit = getUnitInfo(static_cast<UnitTypes>(iI));
+		const CvJsonUnitInfo& kUnit = getUnitInfo(static_cast<UnitTypes>(iI));
 
 		if (kUnit.getProductionCost() < 0 || !kUnit.getUnitAIType(UNITAI_SEE_INVISIBLE))
 		{
@@ -3315,7 +3429,7 @@ void cvInternalGlobals::buildConstructibilityEnablerIndex()
 	std::vector< std::vector<BuildingTypes> > aBonusFreeGivers(iNumBonuses);
 	for (int iB = 0; iB < iNumBuildings; iB++)
 	{
-		const CvBuildingInfo& kB = getBuildingInfo(static_cast<BuildingTypes>(iB));
+		const CvJsonBuildingInfo& kB = getBuildingInfo(static_cast<BuildingTypes>(iB));
 		foreach_(const BonusModifier& kFree, kB.getFreeBonuses())
 		{
 			if (kFree.first >= 0 && kFree.first < iNumBonuses)
@@ -3328,7 +3442,7 @@ void cvInternalGlobals::buildConstructibilityEnablerIndex()
 	for (int iC = 0; iC < iNumBuildings; iC++)
 	{
 		const BuildingTypes eC = static_cast<BuildingTypes>(iC);
-		const CvBuildingInfo& kC = getBuildingInfo(eC);
+		const CvJsonBuildingInfo& kC = getBuildingInfo(eC);
 		std::set<BuildingTypes> aEnablers;
 
 		// Direct building prerequisites, read through the #195 Phase 2 unified requirement
@@ -3400,7 +3514,7 @@ void cvInternalGlobals::buildConstructibilityEnablerIndex()
 	for (int iU = 0; iU < iNumUnits; iU++)
 	{
 		const UnitTypes eU = static_cast<UnitTypes>(iU);
-		const CvUnitInfo& kU = getUnitInfo(eU);
+		const CvJsonUnitInfo& kU = getUnitInfo(eU);
 		std::set<BuildingTypes> aEnablers;
 
 		// Direct building prereqs, read through the #195 Phase 2 requirement model. Only
@@ -3487,7 +3601,7 @@ void cvInternalGlobals::logConstructRequirementFidelity() const
 
 	for (int iC = 0, nC = getNumBuildingInfos(); iC < nC; iC++)
 	{
-		const CvBuildingInfo& kC = getBuildingInfo(static_cast<BuildingTypes>(iC));
+		const CvJsonBuildingInfo& kC = getBuildingInfo(static_cast<BuildingTypes>(iC));
 		std::set<BuildingTypes> aTyped;
 		std::set<BuildingTypes> aModel;
 		for (int i = 0, n = kC.getNumPrereqInCityBuildings(); i < n; i++)
@@ -3515,7 +3629,7 @@ void cvInternalGlobals::logConstructRequirementFidelity() const
 
 	for (int iU = 0, nU = getNumUnitInfos(); iU < nU; iU++)
 	{
-		const CvUnitInfo& kU = getUnitInfo(static_cast<UnitTypes>(iU));
+		const CvJsonUnitInfo& kU = getUnitInfo(static_cast<UnitTypes>(iU));
 		std::set<BuildingTypes> aTypedBld;
 		std::set<BuildingTypes> aModelBld;
 		std::set<BonusTypes> aTypedBonus;
@@ -3594,7 +3708,7 @@ void cvInternalGlobals::cacheGameSpecificValues()
 	PROFILE_EXTRA_FUNC();
 	int iLevel = 0;
 
-	foreach_(CvCultureLevelInfo* info, m_paCultureLevelInfo)
+	foreach_(CvJsonCultureLevelInfo* info, m_paCultureLevelInfo)
 	{
 		if (info->getPrereqGameOption() == NO_GAMEOPTION || getGame().isOption((GameOptionTypes)info->getPrereqGameOption()))
 		{

@@ -3,7 +3,7 @@
 #ifndef BUILDINGS_REPO_H
 #define BUILDINGS_REPO_H
 
-// Named lookups over the global CvBuildingInfo array.
+// Named lookups over the global CvJsonBuildingInfo array.
 //
 // Replaces inline `for (i < getNumBuildingInfos()) if (kBuilding.isX())` loops
 // with named methods. Each method returns a sorted std::vector<BuildingTypes>
@@ -20,7 +20,7 @@ public:
 	// Call after all Info arrays are loaded (or reloaded).
 	void rebuild();
 
-	// Buildings whose CvBuildingInfo::getReligionType() == eReligion.
+	// Buildings whose CvJsonBuildingInfo::getReligionType() == eReligion.
 	// Returns an empty vector for NO_RELIGION or out-of-range eReligion.
 	const std::vector<BuildingTypes>& byReligion(ReligionTypes eReligion) const;
 

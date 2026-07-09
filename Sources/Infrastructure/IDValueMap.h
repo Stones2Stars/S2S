@@ -224,6 +224,16 @@ struct IDValueMap
 		m_map.push_back(std::make_pair(id, value));
 	}
 
+	// Set (insert-or-overwrite) the scalar value for `id`. The code-side writer the JSON loader needs -- the read*()
+	// methods above all take a pXML, so there was no way to populate this map from readJson (#430). Idempotent per id
+	// (re-map-safe, mirroring rj_clearAllRepos). Scalar Value_; the array form uses addArrayValue.
+	void setValue(ID_ id, const Value_& value)
+	{
+		for (iterator it = m_map.begin(), itEnd = m_map.end(); it != itEnd; ++it)
+			if (it->first == id) { it->second = value; return; }
+		m_map.push_back(std::make_pair(id, value));
+	}
+
 	bool empty() const
 	{
 		return m_map.empty();

@@ -10,7 +10,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "CvBuildingInfo.h"
+#include "CvJsonBuildingInfo.h"
 #include "Engine/CvCity.h"
 #include "Defines/CvGlobals.h"
 #include "Engine/CvPlayer.h"
@@ -85,7 +85,7 @@ int BuildingSortCommerce::getBuildingValue(const CvPlayer* pPlayer, CvCity* pCit
 	}
 	else
 	{
-		const CvBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
+		const CvJsonBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
 		int iYieldCommerce = kInfo.getYieldChange(YIELD_COMMERCE) + kInfo.getYieldPerPopChange(YIELD_COMMERCE) + kInfo.getYieldModifier(YIELD_COMMERCE) / 5;
 		int iCommerce = kInfo.getCommerceChange(m_eCommerce) + kInfo.getCommercePerPopChange(m_eCommerce) + kInfo.getCommerceModifier(m_eCommerce) / 5;
 		iCommerce += iYieldCommerce * pPlayer->getCommercePercent(m_eCommerce);
@@ -106,7 +106,7 @@ int BuildingSortYield::getBuildingValue(const CvPlayer* pPlayer, CvCity* pCity, 
 	}
 	else
 	{
-		const CvBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
+		const CvJsonBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
 		return kInfo.getYieldChange(m_eYield) + kInfo.getYieldPerPopChange(m_eYield) + kInfo.getYieldModifier(m_eYield) / 5;
 	}
 }
@@ -119,7 +119,7 @@ int BuildingSortHappiness::getBuildingValue(const CvPlayer* pPlayer, CvCity* pCi
 	}
 	else
 	{
-		const CvBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
+		const CvJsonBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
 		return kInfo.getHappiness() + kInfo.getAreaHappiness() + kInfo.getGlobalHappiness();
 	}
 }
@@ -132,7 +132,7 @@ int BuildingSortHealth::getBuildingValue(const CvPlayer* pPlayer, CvCity* pCity,
 	}
 	else
 	{
-		const CvBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
+		const CvJsonBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
 		return kInfo.getHealth() + kInfo.getAreaHealth() + kInfo.getGlobalHealth();
 	}
 }
@@ -151,7 +151,7 @@ int BuildingSortCost::getBuildingValue(const CvPlayer* pPlayer, CvCity* pCity, B
 
 int BuildingSortName::getBuildingValue(const CvPlayer* pPlayer, CvCity* pCity, BuildingTypes eBuilding) const
 {
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 	// Get the localized name/description of the building
 	CvWString szName = kBuilding.getDescription();
 
@@ -183,7 +183,7 @@ bool BuildingSortName::isLesserBuilding(const CvPlayer* pPlayer, CvCity* pCity, 
 int BuildingSortProperty::getBuildingValue(const CvPlayer* pPlayer, CvCity* pCity, BuildingTypes eBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
-	const CvBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
 	int iSum = kInfo.getProperties()->getValueByProperty(m_eProperty) + kInfo.getPropertiesAllCities()->getValueByProperty(m_eProperty);
 
 	foreach_(const CvPropertySource* pSource, kInfo.getPropertyManipulators()->getSources())

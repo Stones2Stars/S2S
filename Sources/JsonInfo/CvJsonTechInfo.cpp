@@ -77,8 +77,12 @@ void CvJsonTechInfo::mapFrom(const picojson::value& entity)
 		if (const picojson::object* art = jsonChildObj(*ui, "art"))
 			m_iAdvisorType = jsonIdFk(*art, "advisor");
 
-	// sound.soundMP
-	if (const picojson::object* so = jsonChildObj(o, "sound")) jsonIdStr(*so, "soundMP", m_szSoundMP);
+	// sound.{sound,soundMP} -- sound is the tech-completed jingle; soundMP the MP variant (distinct keys)
+	if (const picojson::object* so = jsonChildObj(o, "sound"))
+	{
+		jsonIdStr(*so, "sound", m_szSound);
+		jsonIdStr(*so, "soundMP", m_szSoundMP);
+	}
 
 	// ai.behaviour.{weight,tradeModifier} + ai.flavours {FLAVOR:int}
 	if (const picojson::object* ai = jsonChildObj(o, "ai"))
@@ -95,6 +99,61 @@ void CvJsonTechInfo::mapFrom(const picojson::value& entity)
 	// freeSpecialists.team.{SPECIALIST} (inert -- no tech write-path today; carried faithfully)
 	if (const picojson::object* fs = jsonChildObj(o, "freeSpecialists"))
 		jsonReadFkMap(*fs, "team", m_freeSpecialists);
+
+	// --- requires-tree prereqs: walk the composed requires.build the base just parsed (mirrors CvJsonUnitInfo /
+	// CvJsonBuildInfo). curate_tech.requires_fn builds ONE `all` list holding: team-scope TECH_ presence atoms
+	// (AND prereqs -- AndPreReqs + folded 1-member OrPreReqs), empire-scope BUILDING_ AND atoms (no tech data today),
+	// and nested {any} OR-groups (each homogeneous: a multi-member tech OR-group, or the building OR-group with min).
+	const CvJsonRequires* r = getRequires();
+	if (r != NULL && r->build != NULL)
+	{
+		const CvJsonCondition* b = r->build;
+		for (size_t i = 0; i < b->all.size(); ++i)
+		{
+			const CvJsonCondition* c = b->all[i];
+			if (c == NULL) continue;
+			if (c->kind == CASC_COND_PRESENCE)
+			{
+				if (c->id >= 0 && c->type.compare(0, 5, "TECH_") == 0)
+					m_aePrereqAndTechs.push_back((TechTypes)c->id);   // AND tech prereq (incl. folded 1-member OR)
+			}
+			else if (c->kind == CASC_COND_GROUP && !c->anyOf.empty())
+			{
+				const CvJsonCondition* first = c->anyOf[0];
+				if (first == NULL || first->kind != CASC_COND_PRESENCE) continue;
+				const bool bTech     = first->type.compare(0, 5, "TECH_") == 0;
+				const bool bBuilding = first->type.compare(0, 9, "BUILDING_") == 0;
+				if (c->anyOf.size() == 1)   // a single-member OR is logically a hard AND (defensive: curator pre-folds these)
+				{
+					if (bTech && first->id >= 0) m_aePrereqAndTechs.push_back((TechTypes)first->id);
+					continue;
+				}
+				if (bTech && m_aePrereqOrTechs.empty())        // FIRST multi-member TECH OR-group (mirrors legacy single Or-list)
+				{
+					for (size_t j = 0; j < c->anyOf.size(); ++j)
+					{
+						const CvJsonCondition* m = c->anyOf[j];
+						if (m != NULL && m->kind == CASC_COND_PRESENCE && m->id >= 0 && m->type.compare(0, 5, "TECH_") == 0)
+							m_aePrereqOrTechs.push_back((TechTypes)m->id);
+					}
+				}
+				else if (bBuilding && m_aPrereqOrBuildings.empty())   // the BUILDING_ OR-group ((building, min) count atoms)
+				{
+					for (size_t j = 0; j < c->anyOf.size(); ++j)
+					{
+						const CvJsonCondition* m = c->anyOf[j];
+						if (m != NULL && m->kind == CASC_COND_PRESENCE && m->id >= 0 && m->type.compare(0, 9, "BUILDING_") == 0)
+						{
+							PrereqBuilding pb;
+							pb.eBuilding = (BuildingTypes)m->id;
+							pb.iMinimumRequired = (m->min > 0) ? m->min : 1;
+							m_aPrereqOrBuildings.push_back(pb);
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 // --- the synthetic TECH_GAME_START root (readjson.md §5.1) ---

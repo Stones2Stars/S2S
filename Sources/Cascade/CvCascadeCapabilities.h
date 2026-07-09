@@ -66,7 +66,7 @@ struct CascadeTeamCaps
 	std::vector<bool> terrainTrade;      // per-terrain bit vector (indexed by TerrainTypes; the pather-adjacent read)
 	// the DERIVED-from-tech corp revenue modifier (the ruled self-containment fix, cutover.md Rulings #4:
 	// never the legacy team accumulator). ⏳ INTERIM static-Info read (the L5-seed class) -- Σ held techs'
-	// CvTechInfo::getCorporationRevenueModifier (one authoring: TECH_STOCK_BROKERING +15); the durable home
+	// CvJsonTechInfo::getCorporationRevenueModifier (one authoring: TECH_STOCK_BROKERING +15); the durable home
 	// is the curated JSON plug when the corp-system rework ports its data.
 	int corpRevenueMod;
 

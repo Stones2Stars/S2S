@@ -81,7 +81,10 @@ ART_BLOCK = {
     "HotKey": "ui.hotkey", "bAltDown": "ui.altDown", "bCtrlDown": "ui.ctrlDown",
     "bShiftDown": "ui.shiftDown", "iHotKeyPriority": "ui.hotKeyPriority",
     # --- world.art (on-map / 3D graphics, styles) ---
-    "ArtDefineTag": "world.art.icon",
+    # ArtDefineTag -> world.art.DEFINE (not "icon"): the ART_DEF_* tag is the link to the FULL on-map model setup
+    # (NIF model + KFM animation + textures via ARTFILEMGR), NOT a 2D icon (that is ui.art.icon = Button). Only the
+    # tag id lives in JSON; the definition stays in CIV4ArtDefines_* (json.md §7).
+    "ArtDefineTag": "world.art.define",
     "EffectType": "world.art.effect.type", "iEffectProbability": "world.art.effect.probability",  # cosmetic bird-scatter (async RNG, active-player-only) + its trigger chance — grouped (verified CvUnit.cpp:4996)
     "ArtStyleType": "world.art.style", "UnitArtStyleType": "world.art.unitStyle",
     "DefaultPlayerColor": "world.art.playerColor",  # civ render colour (EXE-bound int FK), beside the civ's world art
@@ -161,6 +164,48 @@ def emit_art(out, art_blocks):
     for blk in ("ui", "world", "sound"):
         if art_blocks.get(blk):
             out[blk] = art_blocks[blk]
+
+
+# Size Matters (GAMEOPTION_COMBAT_SIZE_MATTERS) -> the dedicated `sizeMatters` block (json.md §9 own-block rule),
+# NOT the strength/cargo modifier families or identity.base. The tag SETS differ by entity: promotion + unitcombat
+# carry the *Change deltas (shared), the unit carries the base values -- each curator passes its own set below.
+SM_FLAT_CHANGE     = {"iStrengthModifier": "sizeModifier", "iMaxHPChange": "maxHP",
+                      "iQualityChange": "quality", "iGroupChange": "group"}
+SM_COMBATMOD_CHANGE = {"iCombatModifierPerSizeMoreChange": "perSizeMore", "iCombatModifierPerSizeLessChange": "perSizeLess",
+                       "iCombatModifierPerVolumeMoreChange": "perVolumeMore", "iCombatModifierPerVolumeLessChange": "perVolumeLess"}
+SM_CARGO_CHANGE    = {"iSMCargoChange": "smSpace", "iSMCargoVolumeChange": "volume", "iSMCargoVolumeModifierChange": "volumeModifier"}
+SM_COMBATMOD_UNIT  = {"iCombatModifierPerSizeMore": "perSizeMore", "iCombatModifierPerSizeLess": "perSizeLess",
+                      "iCombatModifierPerVolumeMore": "perVolumeMore", "iCombatModifierPerVolumeLess": "perVolumeLess"}
+
+
+def emit_sizematters(out, get_int, flat=None, combatmod=None, cargo=None, base_ranks=None):
+    """Build the `sizeMatters` block and place it on `out` (no-op if empty). `get_int(tag)` -> int|None (pass the
+    curator-local `lambda t: _int(rec, t)`). `flat`/`combatmod`/`cargo` are tag->key dicts (0/None dropped -- these are
+    deltas/mods where 0 = none); `base_ranks` is a preset {qualityBase/groupBase/sizeBase: v} dict the CALLER builds
+    (base ranks keep a -10 "unset" sentinel, so 0 is a real value the caller must NOT drop -- filter -10 there)."""
+    sm = OrderedDict()
+    if base_ranks:
+        sm.update(base_ranks)
+    for tag, key in (flat or {}).items():
+        v = get_int(tag)
+        if v:
+            sm[key] = v
+    cm = OrderedDict()
+    for tag, key in (combatmod or {}).items():
+        v = get_int(tag)
+        if v:
+            cm[key] = v
+    if cm:
+        sm["combatModifier"] = cm
+    cg = OrderedDict()
+    for tag, key in (cargo or {}).items():
+        v = get_int(tag)
+        if v:
+            cg[key] = v
+    if cg:
+        sm["cargo"] = cg
+    if sm:
+        out["sizeMatters"] = sm
 
 
 # TEXT belongs INSIDE `identity` (json.md §7: "identity — all TEXT"); only `type` (the ID) stays at root, front-and-

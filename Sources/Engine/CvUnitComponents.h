@@ -10,7 +10,7 @@ class UnitCompCommander
 {
 public:
 	UnitCompCommander(const CvUnit* unit, short iCP, short iCPL, short iCR);
-	UnitCompCommander(const CvUnit* unit, CvUnitInfo* unitInfo);
+	UnitCompCommander(const CvUnit* unit, CvJsonUnitInfo* unitInfo);
 	~UnitCompCommander();
 
 	void changeControlPoints(const int iChange);
@@ -39,7 +39,7 @@ class UnitCompCommodore
 {
 public:
 	UnitCompCommodore(const CvUnit* unit, short iCP, short iCPL, short iCR);
-	UnitCompCommodore(const CvUnit* unit, CvUnitInfo* unitInfo);
+	UnitCompCommodore(const CvUnit* unit, CvJsonUnitInfo* unitInfo);
 	~UnitCompCommodore();
 
 	void changeControlPoints(const int iChange);
@@ -69,7 +69,7 @@ class UnitCompWorker
 public:
 	UnitCompWorker();
 	~UnitCompWorker();
-	UnitCompWorker(CvUnitInfo* unitInfo);
+	UnitCompWorker(CvJsonUnitInfo* unitInfo);
 
 	void changeWorkModifier(const int iChange);
 	void changeHillsWorkModifier(const int iChange);

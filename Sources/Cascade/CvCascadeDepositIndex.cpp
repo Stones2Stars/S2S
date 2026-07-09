@@ -12,7 +12,7 @@
 #include "Infos/CvFeatureInfo.h"
 #include "Infos/CvBonusInfo.h"
 #include "Infos/CvImprovementInfo.h"
-#include "Infos/CvBuildingInfo.h"
+#include "CvJsonBuildingInfo.h"
 #include <map>
 #include <vector>
 

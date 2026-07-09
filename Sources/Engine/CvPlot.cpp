@@ -8,7 +8,7 @@
 #include "CvArea.h"
 #include "UI/CvArtFileMgr.h"
 #include "CvBonusInfo.h"
-#include "CvBuildingInfo.h"
+#include "CvJsonBuildingInfo.h"
 #include "CvCity.h"
 #include "UI/CvEventReporter.h"
 #include "AI/CvGameAI.h"
@@ -11053,7 +11053,7 @@ void CvPlot::processArea(CvArea* pArea, int iChange)
 			{
 				continue;
 			}
-			const CvBuildingInfo& building = GC.getBuildingInfo(eTypeX);
+			const CvJsonBuildingInfo& building = GC.getBuildingInfo(eTypeX);
 
 			pArea->changePower(eOwner, building.getPowerValue() * iChange);
 
@@ -12150,7 +12150,7 @@ int CvPlot::calculateMaxYield(YieldTypes eYield) const
 		int iBuildingYield = 0;
 		for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
 		{
-			const CvBuildingInfo& building = GC.getBuildingInfo((BuildingTypes)iBuilding);
+			const CvJsonBuildingInfo& building = GC.getBuildingInfo((BuildingTypes)iBuilding);
 			iBuildingYield = std::max(building.getGlobalSeaPlotYieldChange(eYield), iBuildingYield);
 		}
 		iMaxYield += iBuildingYield;
@@ -12161,7 +12161,7 @@ int CvPlot::calculateMaxYield(YieldTypes eYield) const
 		int iBuildingYield = 0;
 		for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); iBuilding++)
 		{
-			const CvBuildingInfo& building = GC.getBuildingInfo((BuildingTypes)iBuilding);
+			const CvJsonBuildingInfo& building = GC.getBuildingInfo((BuildingTypes)iBuilding);
 			iBuildingYield = std::max(building.getRiverPlotYieldChange(eYield), iBuildingYield);
 		}
 		iMaxYield += iBuildingYield;
@@ -12170,7 +12170,7 @@ int CvPlot::calculateMaxYield(YieldTypes eYield) const
 	int iExtraYieldThreshold = 0;
 	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); iTrait++)
 	{
-		const CvTraitInfo& trait = GC.getTraitInfo((TraitTypes)iTrait);
+		const CvJsonTraitInfo& trait = GC.getTraitInfo((TraitTypes)iTrait);
 		iExtraYieldThreshold  = std::max(trait.getExtraYieldThreshold(eYield), iExtraYieldThreshold);
 	}
 	if (iExtraYieldThreshold > 0 && iMaxYield > iExtraYieldThreshold)
@@ -12534,7 +12534,7 @@ bool CvPlot::canTrain(UnitTypes eUnit, bool bTestVisible) const
 {
 	PROFILE_FUNC();
 
-	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+	const CvJsonUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
 	if (isCity())
 	{

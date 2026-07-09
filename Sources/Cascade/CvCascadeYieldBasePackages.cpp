@@ -12,10 +12,10 @@
 #include "Defines/CvGlobals.h"
 #include "Engine/CvCity.h"
 #include "Engine/CvPlayer.h"
-#include "Infos/CvBuildingInfo.h"
-#include "Infos/CvCivicInfo.h"
-#include "Infos/CvTraitInfo.h"
-#include "Infos/CvSpecialistInfo.h"   // InfoRepo<CvSpecialistInfo> + GC.getSpecialistInfo (the §1 specialist package)
+#include "CvJsonBuildingInfo.h"
+#include "CvJsonCivicInfo.h"
+#include "CvJsonTraitInfo.h"
+#include "CvJsonSpecialistInfo.h"   // InfoRepo<CvJsonSpecialistInfo> + GC.getSpecialistInfo (the §1 specialist package)
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 
 // BASE: trade-route yield (TradeRoutePackage) -- the ONE allowed live-yield INPUT (the cascade folds it in, never
@@ -75,7 +75,7 @@ int YieldBasePackages::specialist(const std::string& channel, const CvCity* pCit
 		const int count = pCity->getSpecialistCount((SpecialistTypes)s) + pCity->getFreeSpecialistCount((SpecialistTypes)s);
 		if (count == 0) continue;
 		totalSpecialists += count;
-		const CvJsonInfo* d = InfoRepo<CvSpecialistInfo>::get().get(s);
+		const CvJsonInfo* d = InfoRepo<CvJsonSpecialistInfo>::get().get(s);
 		if (d == NULL) continue;
 		const int intrinsic  = MMKernel::sumUnconditioned(d, wantCity, "flat");           // own ungated getYield/CommerceChange
 		const int local      = MMKernel::sumUnit(d, wantCity, "flat", ec) - intrinsic;    // building-local (gated) -- no percent
@@ -109,14 +109,14 @@ int YieldBasePackages::specialist(const std::string& channel, const CvCity* pCit
 	for (int b = 0; b < nB; ++b)
 	{
 		if (player.getBuildingCount((BuildingTypes)b) <= 0) continue;
-		const CvJsonInfo* db = InfoRepo<CvBuildingInfo>::get().get(b);
+		const CvJsonInfo* db = InfoRepo<CvJsonBuildingInfo>::get().get(b);
 		if (db != NULL) perAll += MMKernel::sumUnit(db, wantPerAll, "perSpecialist", ec);
 	}
 	for (int co = 0; co < GC.getNumCivicOptionInfos(); ++co)
 	{
 		const CivicTypes c = player.getCivics((CivicOptionTypes)co);
 		if (c == NO_CIVIC) continue;
-		const CvJsonInfo* dc = InfoRepo<CvCivicInfo>::get().get((int)c);
+		const CvJsonInfo* dc = InfoRepo<CvJsonCivicInfo>::get().get((int)c);
 		if (dc != NULL) perAll += MMKernel::sumUnit(dc, wantPerAll, "perSpecialist", ec);
 	}
 	for (int t = 0; t < GC.getNumTraitInfos(); ++t)

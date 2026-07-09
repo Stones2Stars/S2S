@@ -15,10 +15,24 @@ static const char* COMM_NAME[NUM_COMMERCE_TYPES] = { "gold", "research", "cultur
 
 CvJsonCorporationInfo::CvJsonCorporationInfo()
 	: m_iMaintenance(0), m_iHealth(0), m_iHappiness(0), m_iFreeXP(0), m_iMilitaryProductionModifier(0),
-	  m_iSpreadCost(0), m_iSpread(0), m_iCompetingSpreadCostPercent(0), m_iHeadquarterChar(-1), m_iMissionType(-1)
+	  m_iSpreadCost(0), m_iSpread(0), m_iCompetingSpreadCostPercent(0), m_iTGAIndex(-1), m_iHeadquarterChar(-1), m_iMissionType(-1), m_iChar(0),   // TGAIndex -1 = TGA-filler sentinel (RemoveTGAFiller)
+	  m_eTechPrereq(NO_TECH), m_eObsoleteTech(NO_TECH)
 {
 	for (int i = 0; i < NUM_YIELD_TYPES; ++i) { m_aiYieldChange[i] = 0; m_aiYieldProduced[i] = 0; }
 	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i) { m_aiCommerceChange[i] = 0; m_aiCommerceProduced[i] = 0; m_aiHeadquarterCommerce[i] = 0; }
+}
+
+// GameFont glyph: DERIVED from the TGA index, offset PAST the religion block (corps follow religions in GameFont) --
+// reproduce the archived CvCorporationInfo::setChar exactly (SourceArchive/Infos/CvCorporationInfo.cpp:83), else the
+// corp icon lands on the wrong/empty slot. The symbol pass's sequential id arg is ignored (as legacy did).
+void CvJsonCorporationInfo::setChar(int /*i*/)
+{
+	m_iChar = 8550 + (GC.getGAMEFONT_TGA_RELIGIONS() + m_iTGAIndex) * 2;
+}
+
+void CvJsonCorporationInfo::setHeadquarterChar(int /*i*/)
+{
+	m_iHeadquarterChar = 8551 + (GC.getGAMEFONT_TGA_RELIGIONS() + m_iTGAIndex) * 2;
 }
 
 int CvJsonCorporationInfo::getBonusProduced() const
@@ -95,7 +109,7 @@ void CvJsonCorporationInfo::mapFrom(const picojson::value& entity)
 
 	// maintenance.city.corporation.flat -- summed AS-IS (raw ×100, curator not descaled; see header)
 	m_iMaintenance = sumFlatAsIs(flat_leaf(o, "maintenance", "city", "corporation"));
-	// ungated scalar families (×1). ⏳ if any corp ever per-scales these, demux instead (none in current data).
+	// ungated scalar families (×1). STUB if any corp ever per-scales these, demux instead (none in current data).
 	m_iHealth  = sumFlatAsIs(flat_leaf(o, "health", "city", NULL));
 	m_iHappiness = sumFlatAsIs(flat_leaf(o, "happiness", "city", NULL));
 	m_iFreeXP  = sumFlatAsIs(flat_leaf(o, "experience", "city", NULL));
@@ -120,4 +134,27 @@ void CvJsonCorporationInfo::mapFrom(const picojson::value& entity)
 		m_iCompetingSpreadCostPercent = jsonIdInt(*io, "competingSpreadCostPercent");
 	}
 	if (const picojson::object* so = jsonChildObj(o, "sound")) jsonIdStr(*so, "sound", m_szSound);
+
+	// ui.art: tgaIndex + movie.file/movie.sound (mirrors CvJsonReligionInfo; grants.freeUnit rides the composed m_grants)
+	if (const picojson::object* ui = jsonChildObj(o, "ui"))
+		if (const picojson::object* art = jsonChildObj(*ui, "art"))
+		{
+			m_iTGAIndex = jsonIdInt(*art, "tgaIndex");
+			if (const picojson::object* mov = jsonChildObj(*art, "movie"))
+			{
+				jsonIdStr(*mov, "file", m_szMovieFile);
+				jsonIdStr(*mov, "sound", m_szMovieSound);
+			}
+		}
+
+	// top-level `excludes` -- CompetingCorporations (curate_corporation.py EXCLUDES; json sec9 same-tier corp<->corp
+	// exclusion). Empty in all shipped base XML, so this stays empty until data lands. `excludes` is CJK_INTRINSIC
+	// (base skips it), so the subclass owns the parse; resolve each CORPORATION_ FK inline (as the Promotion FK lists).
+	picojson::object::const_iterator ex = o.find("excludes");
+	if (ex != o.end() && ex->second.is<picojson::array>())
+	{
+		const picojson::array& a = ex->second.get<picojson::array>();
+		for (size_t i = 0; i < a.size(); ++i)
+			if (a[i].is<std::string>()) { const int id = jsonResolveId(a[i].get<std::string>()); if (id >= 0) m_aeExcludes.push_back(id); }
+	}
 }

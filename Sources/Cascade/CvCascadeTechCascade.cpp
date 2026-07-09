@@ -13,7 +13,7 @@
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
 #include "CvCascadeConditionEval.h"   // cascadeEvalCondition
-#include "Infos/CvTechInfo.h"
+#include "CvJsonTechInfo.h"
 
 // --- TechCascade.cs: a tech is available iff not disabled, not held, under allowed.world, requires.build holds.
 // (Default flags -- TechCascade uses `new ConditionEvaluator()`.) The all-techs+requires set is "researchable now".
@@ -26,7 +26,7 @@ void TechCascade::available(const CvPlayer& kPlayer, const CvTeam& kTeam, std::s
 	{
 		if (GC.getTechInfo((TechTypes)t).isDisable()) continue;        // IsDisabled
 		if (kTeam.isHasTech((TechTypes)t)) continue;                   // held
-		const CvJsonInfo* j = InfoRepo<CvTechInfo>::get().get(t);
+		const CvJsonInfo* j = InfoRepo<CvJsonTechInfo>::get().get(t);
 		if (j != NULL)
 		{
 			const int wcap = j->allowedCap("world");

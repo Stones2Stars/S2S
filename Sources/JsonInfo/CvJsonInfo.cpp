@@ -9,9 +9,21 @@
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson, CvString/CvWString
 #include "CvJsonInfo.h"
 #include "CvJsonParse.h"            // jsonClassifyKey / jsonNoteUnconsumed + the shared walkers (jsonChildObj/jsonIdStr)
+#include "Cascade/CvCascadeReadJson.h"   // cascadeJsonForType -- this entity's curated JSON, looked up by type
 
 CvJsonInfo::CvJsonInfo() {}
 CvJsonInfo::~CvJsonInfo() {}
+
+// #430 collapse: SetGlobalClassInfo calls read() per entity. Take the base XML read (CvHotkeyInfo -> CvInfoBase: type +
+// hotkey/action/text/button), which also registers the type + drives the premenu/postmenu phasing + delayed FK
+// resolution; THEN mapFrom this entity's curated JSON for the cascade data. One object holds both -- no InfoRepo.
+bool CvJsonInfo::read(CvXMLLoadUtility* pXML)
+{
+	if (!CvHotkeyInfo::read(pXML)) return false;
+	const picojson::value* v = cascadeJsonForType(getType());
+	if (v != NULL) mapFrom(*v);
+	return true;
+}
 
 const std::vector<int>& CvJsonInfo::dormantTriggers() const
 {

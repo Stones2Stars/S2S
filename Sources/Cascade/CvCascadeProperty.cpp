@@ -13,9 +13,9 @@
 #include "Engine/CvCity.h"
 #include "Engine/CvPlot.h"
 #include "Engine/CvUnit.h"
-#include "Infos/CvBuildingInfo.h"
-#include "Infos/CvUnitInfo.h"
-#include "Infos/CvPropertyInfo.h"
+#include "CvJsonBuildingInfo.h"
+#include "CvJsonUnitInfo.h"
+#include "CvJsonPropertyInfo.h"
 
 // The interned family segment for a property type (the family IS the PROPERTY_* string), or -1 (never authored).
 static int prop_famId(int eProp)
@@ -37,7 +37,7 @@ int CascadeProperty::citySourceFlat(int eProp, const CvCity* pCity, const CvCasc
 	const int nB = GC.getNumBuildingInfos();
 	for (int b = 0; b < nB; ++b)
 	{
-		const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
+		const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get(b);
 		if (d == NULL) continue;
 		// active -> its normal `deposits`; obsolete -> its `whenObsolete` tree (json §4.2; part-1 delivery into the
 		// SAME property number the solver consumes -- no combine/solver change). Neither -> dormant, contributes 0.
@@ -60,7 +60,7 @@ int CascadeProperty::citySourceFlat(int eProp, const CvCity* pCity, const CvCasc
 
 	// -- the property's OWN self-deposits (the ATTRIBUTE source: flat per POPULATION etc.) --
 	{
-		const CvJsonInfo* d = InfoRepo<CvPropertyInfo>::get().get(eProp);
+		const CvJsonInfo* d = InfoRepo<CvJsonPropertyInfo>::get().get(eProp);
 		if (d != NULL)
 		{
 			const std::vector<CascadeDeposit>& pdeps = DepositIndex::depositsFor(d);
@@ -92,7 +92,7 @@ int CascadeProperty::cityUnitFlat(int eProp, const CvCity* pCity, const CvCascad
 	// getTotalUnitSourcedProperty reads GAMEOBJECT_CITY and GAMEOBJECT_PLOT sources alike).
 	foreach_(const CvUnit* pUnit, pCity->plot()->units())
 	{
-		const CvJsonInfo* d = InfoRepo<CvUnitInfo>::get().get(pUnit->getUnitType());
+		const CvJsonInfo* d = InfoRepo<CvJsonUnitInfo>::get().get(pUnit->getUnitType());
 		if (d == NULL) continue;
 		const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
 		for (size_t i = 0; i < deps.size(); ++i)
@@ -110,7 +110,7 @@ int CascadeProperty::cityDecayPercent(int eProp)
 {
 	const int famId = prop_famId(eProp);
 	if (famId < 0) return 0;
-	const CvJsonInfo* d = InfoRepo<CvPropertyInfo>::get().get(eProp);
+	const CvJsonInfo* d = InfoRepo<CvJsonPropertyInfo>::get().get(eProp);
 	if (d == NULL) return 0;
 	return MMKernel::sumUnconditioned(d, std::string(GC.getPropertyInfo((PropertyTypes)eProp).getType()) + ".city", "percent");
 }

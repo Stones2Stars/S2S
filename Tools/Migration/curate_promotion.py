@@ -50,7 +50,8 @@ import os
 from collections import OrderedDict
 
 import engine
-from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, descale100, fold_text_to_identity, gate_entity
+from curate_common import (put_art, emit_art, FAMILY_ORDER, de_i, descale100, fold_text_to_identity, gate_entity,
+                           emit_sizematters, SM_FLAT_CHANGE, SM_COMBATMOD_CHANGE, SM_CARGO_CHANGE)
 from store import Store, REPO
 
 # ---- scalar deposits: tag -> (family, member|None, unit). All at `unit` scope (self-accumulator, §5). ----
@@ -58,14 +59,12 @@ from store import Store, REPO
 STRENGTH = {
     "iCombatPercent":               (None, "percent"),        # general combat strength %
     "iStrengthChange":              (None, "flat"),           # flat strength points
-    "iStrengthModifier":            ("sizeModifier", "percent"),   # Size Matters
     "iAttackCombatModifierChange":  ("attack", "percent"),
     "iDefenseCombatModifierChange": ("defense", "percent"),
     "iVSBarbsChange":               ("vsBarbs", "percent"),
     "iReligiousCombatModifierChange": ("religious", "percent"),
     "iStealthCombatModifierChange": ("stealth", "percent"),
     "iDamageModifierChange":        ("damageModifier", "percent"),
-    "iMaxHPChange":                 ("maxHP", "flat"),         # post-migration review (owner)
     "iEnduranceChange":             ("endurance", "flat"),
     "iTauntChange":                 ("taunt", "flat"),
     "iBreakdownChanceChange":       ("breakdownChance", "flat"),
@@ -74,10 +73,6 @@ STRENGTH = {
     "iEncloseChange":               ("enclose", "percent"),    # S&D
     "iLungeChange":                 ("lunge", "percent"),      # S&D
     "iDynamicDefenseChange":        ("dynamicDefense", "percent"),  # S&D
-    "iCombatModifierPerSizeMoreChange":   ("perSizeMore", "percent"),    # Size Matters
-    "iCombatModifierPerSizeLessChange":   ("perSizeLess", "percent"),
-    "iCombatModifierPerVolumeMoreChange": ("perVolumeMore", "percent"),
-    "iCombatModifierPerVolumeLessChange": ("perVolumeLess", "percent"),
     "iCityAttack":                  ("cityAttack", "percent"),
     "iCityDefense":                 ("cityDefense", "percent"),
     "iHillsAttack":                 ("hillsAttack", "percent"),
@@ -85,8 +80,6 @@ STRENGTH = {
     "iKamikazePercent":             ("kamikaze", "percent"),
     "iCombatLimitChange":           ("combatLimit", "flat"),
     "iStealthStrikesChange":        ("stealthStrikes", "flat"),
-    "iQualityChange":               ("quality", "flat"),   # Size Matters (changeExtraQuality)
-    "iGroupChange":                 ("group", "flat"),     # Size Matters (changeExtraGroup)
 }
 # other families: tag -> (family, member|None, unit)
 FAMILIES = {
@@ -125,9 +118,6 @@ FAMILIES = {
     "iHillsWorkModifier":           ("workRate", "hills", "percent"),
     "iPeaksWorkModifier":           ("workRate", "peaks", "percent"),
     "iCargoChange":                 ("cargo", "space", "flat"),
-    "iSMCargoChange":               ("cargo", "smSpace", "flat"),
-    "iSMCargoVolumeChange":         ("cargo", "volume", "flat"),
-    "iSMCargoVolumeModifierChange": ("cargo", "volumeModifier", "percent"),
     "iUpkeepModifier":              ("upkeep", "modifier", "percent"),
     "iExtraUpkeep100":              ("upkeep", "extra", "flat"),       # x100 legacy (calcUpkeep100) -> de-scaled to human in the applier (tag endswith 100); member renamed off the 100 (cold-modder)
     "iUpgradeDiscount":             ("upkeep", "upgradeDiscount", "percent"),
@@ -519,6 +509,7 @@ def curate(typ, rec, store):
     emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity
+    emit_sizematters(out, lambda t: _int(rec, t), flat=SM_FLAT_CHANGE, combatmod=SM_COMBATMOD_CHANGE, cargo=SM_CARGO_CHANGE)
     fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
     return out
 

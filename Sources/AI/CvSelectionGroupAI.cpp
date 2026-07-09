@@ -4,6 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "CvJsonUnitInfo.h"
 #include "BetterBTSAI.h"
 #include "Engine/CvCity.h"
 #include "Defines/CvGlobals.h"
@@ -732,8 +733,8 @@ static bool isClearlySuperior(CvUnit* pUnit, CvUnit* pOtherUnit, const CvPlot* p
 	int	iOtherTotalCombatMods = 0;
 
 	//	Unit combat modifiers
-	const CvUnitInfo& kUnit = pUnit->getUnitInfo();
-	const CvUnitInfo& kOtherUnit = pOtherUnit->getUnitInfo();
+	const CvJsonUnitInfo& kUnit = pUnit->getUnitInfo();
+	const CvJsonUnitInfo& kOtherUnit = pOtherUnit->getUnitInfo();
 
 	for (int i = GC.getNumUnitCombatInfos() - 1; i > -1; i--)
 	{

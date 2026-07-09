@@ -10,7 +10,7 @@
 #include "Defines/CvGlobals.h"
 #include "Engine/CvTeam.h"
 #include "AI/CvTeamAI.h"      // GET_TEAM
-#include "Infos/CvTechInfo.h"
+#include "CvJsonTechInfo.h"
 #include <set>
 #include <string>
 #include <vector>
@@ -63,7 +63,7 @@ void CascadeCapabilities::refreshInto(const CvTeam& kTeam, CascadeTeamCaps& c)
 	for (int t = 0; t < GC.getNumTechInfos(); ++t)
 		if (kTeam.isHasTech((TechTypes)t))
 		{
-			ccap_union(static_cast<const CvJsonTechInfo*>(InfoRepo<CvTechInfo>::get().get(t)), c);
+			ccap_union(static_cast<const CvJsonTechInfo*>(InfoRepo<CvJsonTechInfo>::get().get(t)), c);
 			// the derived corp revenue modifier (the header note: interim static-Info read, JSON plug later)
 			c.corpRevenueMod += GC.getTechInfo((TechTypes)t).getCorporationRevenueModifier();
 		}

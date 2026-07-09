@@ -4,7 +4,7 @@
 #include "CvDllTranslator.h"
 #include "Defines/CvGlobals.h"
 #include "AI/CvPlayerAI.h"
-#include "CvInfos.h"   // CvCommerceInfo/CvYieldInfo/CvColorInfo/CvInvisibleInfo/CvPropertyInfo defs (was transitive via unity batch order; the Cascade/ removal reshuffled the unity, so include directly)
+#include "CvInfos.h"   // CvCommerceInfo/CvYieldInfo/CvColorInfo/CvInvisibleInfo/CvJsonPropertyInfo defs (was transitive via unity batch order; the Cascade/ removal reshuffled the unity, so include directly)
 
 void CvDllTranslator::initializeTags(CvWString& szTagStartIcon, CvWString& szTagStartOur, CvWString& szTagStartCT, CvWString& szTagStartColor, CvWString& szTagStartLink, CvWString& szTagEndLink, CvWString& szEndLinkReplacement, std::map<std::wstring, CvWString>& aIconMap, std::map<std::wstring, CvWString>& aColorMap)
 {

@@ -30,6 +30,11 @@ public:
 	bool isSeaTunnel() const { return m_bSeaTunnel; }
 	int getZobristValue() const { return m_iZobristValue; }
 
+	int* getYieldChangeArray() const { return const_cast<int*>(m_aiYieldChange); }   // real (food/production/commerce .plot.flat)
+
+	// property engine (self-contained, #429); XML-era manipulator data deferred -- empty for now.
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
+
 	// Route<-bonus prerequisite (compat surface for the getRouteInfo(...) callers -- CvPlot route validity,
 	// CvPlayerAI/CvDLLWidgetData). The relationship is stored INVERTED as the bonus's `enables.routes`
 	// (curate_route.py), so it is reconstructed here at load into a reverse index (cascadeLoadJson).
@@ -56,11 +61,12 @@ private:
 	int m_iAdvancedStartCost;            // identity.advancedStart.cost
 	int m_iMovementCost;                 // identity.movementCost
 	int m_iFlatMovementCost;             // identity.flatMovementCost
-	int m_iZobristValue;                 // ⏳ map-hash: needs the exact legacy zobrist computation (OOS)
+	int m_iZobristValue;                 // STUB map-hash: needs the exact legacy zobrist computation (OOS)
 	int m_aiYieldChange[NUM_YIELD_TYPES];// food/production/commerce .plot.flat
 	bool m_bSeaTunnel;                   // identity.seaTunnel
 	std::map<int, int> m_techMovementChange;   // techId -> move-cost delta (movement.plot.flat enabled:{tech})
 	std::vector<BonusTypes> m_aePrereqOrBonuses;   // reverse index from the bonuses' enables.routes (built at load)
+	CvPropertyManipulators m_PropertyManipulators;   // STUB empty -- property engine, XML-era manipulator data deferred
 };
 
 #endif // CV_JSON_ROUTE_INFO_H

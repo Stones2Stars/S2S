@@ -37,11 +37,23 @@
 
 namespace picojson { class value; }   // mapFrom's input -- full definition via the PCH umbrella in the .cpp
 
-class CvJsonInfo : public CvInfoBase
+// Base = CvHotkeyInfo (owner ruling 2026-07-08: "A is fine, we dont care if everything can have a hotkey"). CvHotkeyInfo
+// : CvInfoBase, so every poco is still a CvInfoBase (getType/getDescription/...); the 8 action types (Building/Corporation/
+// Heritage/Promotion/Religion/Specialist/Unit/Build -- the classes that inherited CvHotkeyInfo in the XML era) use the
+// hotkey/action surface (read from XML, operational side deferred), the other 15 carry the unused fields harmlessly. This
+// puts the shared CvHotkeyInfo base ON CvJsonInfo (single inheritance chain, no CvInfoBase diamond -- the per-type
+// alternative would need risky virtual-CvInfoBase inheritance across CvHotkeyInfo's many EXE-adjacent descendants).
+class CvJsonInfo : public CvHotkeyInfo
 {
 public:
 	CvJsonInfo();
 	virtual ~CvJsonInfo();
+
+	// #430 collapse: the ONE load hook. SetGlobalClassInfo calls read() per entity -- we take the base XML read
+	// (CvHotkeyInfo: type + hotkey/action/base surface), then mapFrom this entity's curated JSON for the cascade data.
+	// So a single object (in GC.m_pa<X>Info, what getXInfo returns) carries BOTH the XML hotkey/base AND the JSON data,
+	// on the normal load flow (registry / premenu-postmenu phasing / delayed FK resolution) -- no separate InfoRepo.
+	virtual bool read(CvXMLLoadUtility* pXML);
 
 	// Core JSON reading: the shared CvInfoBase fields + the ONE section dispatch. A per-type subclass overrides
 	// this, calls CvJsonInfo::mapFrom(entity) FIRST, then parses its own typed members (keyed skills, FKs, flags).

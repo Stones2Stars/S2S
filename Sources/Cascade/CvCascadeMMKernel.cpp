@@ -13,14 +13,14 @@
 #include "Engine/CvPlot.h"
 #include "Engine/CvPlayer.h"
 #include "Engine/CvCity.h"             // building-keyed percent iterates the city's active buildings
-#include "Infos/CvBuildingInfo.h"      // GC.getBuildingInfo(b).getType() -- the address key for building-keyed deposits
+#include "CvJsonBuildingInfo.h"      // GC.getBuildingInfo(b).getType() -- the address key for building-keyed deposits
 #include "Engine/CvGame.h"             // GC.getGame().isOption (the trait-set option gate)
 #include "Infos/CvTerrainInfo.h"
 #include "Infos/CvFeatureInfo.h"
 #include "Infos/CvBonusInfo.h"
 #include "Infos/CvImprovementInfo.h"
-#include "Infos/CvTraitInfo.h"
-#include "Infos/CvCivicInfo.h"
+#include "CvJsonTraitInfo.h"
+#include "CvJsonCivicInfo.h"
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "CvCascadeConditionEval.h"    // cascadeEvalCondition
 #include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (hot paths match ints)
@@ -174,11 +174,11 @@ int MMKernel::sumUnconditioned(const CvJsonInfo* d, const std::string& wantAddre
 	return sum;
 }
 
-// ---- the active-trait-set + PURE_TRAITS helpers (StoneBase ActiveTraitSet + PureFilter; NEVER the engine CvTraitInfo) ----
+// ---- the active-trait-set + PURE_TRAITS helpers (StoneBase ActiveTraitSet + PureFilter; NEVER the engine CvJsonTraitInfo) ----
 
 // The active trait set's CvJsonTraitInfo for trait t -- COMPLEX if GAMEOPTION_LEADER_COMPLEX_TRAITS, else SIMPLE
 // (StoneBase ActiveTraitSet). The two sets collide on the engine id, so they live in separate repos; this picks by the
-// live option (asserted from /state in StoneBase). NEVER the engine CvTraitInfo (its CvInfoReplacements swap is the catastrophe).
+// live option (asserted from /state in StoneBase). NEVER the engine CvJsonTraitInfo (its CvInfoReplacements swap is the catastrophe).
 const CvJsonTraitInfo* MMKernel::traitData(int t)
 {
 	if (GC.getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS))
@@ -186,7 +186,7 @@ const CvJsonTraitInfo* MMKernel::traitData(int t)
 		const CvJsonInfo* d = InfoRepo<CvComplexTraitTag>::get().get(t);
 		if (d != NULL) return static_cast<const CvJsonTraitInfo*>(d);
 	}
-	const CvJsonInfo* d = InfoRepo<CvTraitInfo>::get().get(t);   // the SIMPLE set (engine CvTraitInfo tag = the simple repo)
+	const CvJsonInfo* d = InfoRepo<CvJsonTraitInfo>::get().get(t);   // the SIMPLE set (engine CvJsonTraitInfo tag = the simple repo)
 	return d != NULL ? static_cast<const CvJsonTraitInfo*>(d) : NULL;
 }
 
@@ -378,7 +378,7 @@ int MMKernel::minPosThreshold(const char* thresholdFamily, const std::string& ch
 	{
 		const CivicTypes c = player.getCivics((CivicOptionTypes)co);
 		if (c == NO_CIVIC) continue;
-		const CvJsonInfo* d = InfoRepo<CvCivicInfo>::get().get((int)c);
+		const CvJsonInfo* d = InfoRepo<CvJsonCivicInfo>::get().get((int)c);
 		if (d == NULL) continue;
 		const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
 		for (size_t i = 0; i < deps.size(); ++i)   // civics: no alignment, no pure filter
@@ -412,7 +412,7 @@ int MMKernel::buildingKeyedSourcePercent(const std::string& channel, const CvCit
 	{
 		const CivicTypes c = player.getCivics((CivicOptionTypes)co);
 		if (c == NO_CIVIC) continue;
-		const CvJsonInfo* d = InfoRepo<CvCivicInfo>::get().get((int)c);
+		const CvJsonInfo* d = InfoRepo<CvJsonCivicInfo>::get().get((int)c);
 		if (d == NULL) continue;
 		const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
 		for (size_t i = 0; i < deps.size(); ++i)

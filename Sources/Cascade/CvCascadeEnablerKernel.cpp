@@ -22,13 +22,13 @@
 #include "CvCascadeConditionEval.h"   // cascadeEvalCondition -- the StoneBase-ported typed-condition evaluator
 #include "CvJsonCondition.h"       // CvJsonCondition tree (CASC_COND_*/CASC_PRED_*) -- scanned for the operate reverse-index
 #include "CvCascadeAccumulator.h"     // the accumulator package surface (the epochs are DELETED -- scope-packages.md phase 3)
-#include "Infos/CvBuildingInfo.h"
-#include "Infos/CvUnitInfo.h"
-#include "Infos/CvTechInfo.h"
-#include "Infos/CvCivicInfo.h"
-#include "Infos/CvProjectInfo.h"
-#include "Infos/CvProcessInfo.h"
-#include "Infos/CvPromotionInfo.h"
+#include "CvJsonBuildingInfo.h"
+#include "CvJsonUnitInfo.h"
+#include "CvJsonTechInfo.h"
+#include "CvJsonCivicInfo.h"
+#include "CvJsonProjectInfo.h"
+#include "CvJsonProcessInfo.h"
+#include "CvJsonPromotionInfo.h"
 #include "Infos/CvBuildInfo.h"
 #include "Engine/CvGame.h"
 
@@ -38,13 +38,13 @@ static const char* EN_BUCKETS[] = { "buildings", "units", "projects", "processes
 // The per-(bucket) InfoRepo dispatch -- the entity's CvJsonInfo by bucket name + id.
 const CvJsonInfo* EnablerKernel::jsonFor(const std::string& b, int id)
 {
-	if (b == "buildings") return InfoRepo<CvBuildingInfo>::get().get(id);
-	if (b == "units")     return InfoRepo<CvUnitInfo>::get().get(id);
-	if (b == "projects")  return InfoRepo<CvProjectInfo>::get().get(id);
-	if (b == "processes") return InfoRepo<CvProcessInfo>::get().get(id);
-	if (b == "techs")     return InfoRepo<CvTechInfo>::get().get(id);
-	if (b == "civics")    return InfoRepo<CvCivicInfo>::get().get(id);
-	if (b == "promotions") return InfoRepo<CvPromotionInfo>::get().get(id);
+	if (b == "buildings") return InfoRepo<CvJsonBuildingInfo>::get().get(id);
+	if (b == "units")     return InfoRepo<CvJsonUnitInfo>::get().get(id);
+	if (b == "projects")  return InfoRepo<CvJsonProjectInfo>::get().get(id);
+	if (b == "processes") return InfoRepo<CvJsonProcessInfo>::get().get(id);
+	if (b == "techs")     return InfoRepo<CvJsonTechInfo>::get().get(id);
+	if (b == "civics")    return InfoRepo<CvJsonCivicInfo>::get().get(id);
+	if (b == "promotions") return InfoRepo<CvJsonPromotionInfo>::get().get(id);
 	if (b == "builds")    return InfoRepo<CvBuildInfo>::get().get(id);
 	// "hurries" has no InfoRepo (HURRY_ not in RJ_REPO_TYPES) -> NULL; canHurry needs only the enables.hurries edges
 	// (on the civics/techs), and a NULL json passes requires/allowed -> the gate IS "the hurry type is generated".
@@ -83,18 +83,18 @@ void EnablerKernel::generate(const CvPlayer& kPlayer, const CvCity* pCity, EnBuc
 	// no-tech-prereq starting set: CAVE_DWELLING/NOMADISM/LANGUAGE, UNIT_BRUTE, …) into GENERATE for every player.
 	accumHave(&cascadeStartNode(), cand, rem);
 	for (int iT = 0; iT < GC.getNumTechInfos(); ++iT)
-		if (kTeam.isHasTech((TechTypes)iT)) accumHave(InfoRepo<CvTechInfo>::get().get(iT), cand, rem);
+		if (kTeam.isHasTech((TechTypes)iT)) accumHave(InfoRepo<CvJsonTechInfo>::get().get(iT), cand, rem);
 	for (int iCO = 0; iCO < GC.getNumCivicOptionInfos(); ++iCO)
 	{
 		const CivicTypes eCivic = kPlayer.getCivics((CivicOptionTypes)iCO);
-		if (eCivic != NO_CIVIC) accumHave(InfoRepo<CvCivicInfo>::get().get((int)eCivic), cand, rem);
+		if (eCivic != NO_CIVIC) accumHave(InfoRepo<CvJsonCivicInfo>::get().get((int)eCivic), cand, rem);
 	}
 	if (pCity != NULL)
 	{
 		const std::vector<BuildingTypes> aHas = pCity->getHasBuildings();
 		for (size_t i = 0; i < aHas.size(); ++i)
 		{
-			const CvJsonInfo* jb = InfoRepo<CvBuildingInfo>::get().get((int)aHas[i]);
+			const CvJsonInfo* jb = InfoRepo<CvJsonBuildingInfo>::get().get((int)aHas[i]);
 			// #430 obsoletion FLIP (owner 2026-07-07): a now-present obsolete building no longer UNLOCKS -- its
 			// `enables` are SUPERSEDED (the same frontier outcome as the pre-flip world where legacy removed it),
 			// so it is skipped from GENERATE. This keeps the frontier input INVARIANT to the flip -- the enabler
@@ -217,7 +217,7 @@ enum EkBuildingVerdict
 // b's `provides.bonuses` (json §5a), or NULL.
 static const std::vector<int>* ek_provides(int b)
 {
-	const CvJsonInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
+	const CvJsonInfo* j = InfoRepo<CvJsonBuildingInfo>::get().get(b);
 	if (j == NULL) return NULL;
 	const CvJsonProvides* pv = j->getProvides();
 	return (pv != NULL && !pv->bonuses.empty()) ? &pv->bonuses : NULL;
@@ -230,7 +230,7 @@ static const std::vector<int>* ek_provides(int b)
 // building whose obsoletedBy tech is held is obsolete regardless of operate, so it is checked FIRST.
 static EkBuildingVerdict ek_classifyBuilding(int b, const CvCity* pCity, CvCascadeEvalCtx& ecOp, const CvCascadeEvalFlags& flags)
 {
-	const CvJsonInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
+	const CvJsonInfo* j = InfoRepo<CvJsonBuildingInfo>::get().get(b);
 	if (j == NULL) return EK_ACTIVE;
 	if (ecOp.team != NULL && EnablerKernel::obsoletedByHeldTech(j, *ecOp.team)) return EK_OBSOLETE;
 	if (j->requiresOperate() != NULL && !cascadeEvalCondition(j->requiresOperate(), ecOp, flags)) return EK_DORMANT_OPERATE;
@@ -458,7 +458,7 @@ void EnablerKernel::buildActiveIndex()
 	const int nB = GC.getNumBuildingInfos();
 	for (int b = 0; b < nB; ++b)
 	{
-		const CvJsonInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
+		const CvJsonInfo* j = InfoRepo<CvJsonBuildingInfo>::get().get(b);
 		if (j == NULL) continue;
 		CascadeCondDeps d;
 		// OPERATE only -- active/dormant is governed by requires.operate; DYNAMIC marked (the per-turn re-check bucket).

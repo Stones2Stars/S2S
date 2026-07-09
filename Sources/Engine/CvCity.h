@@ -420,7 +420,7 @@ public:
 
 
 
-	void assignPromotionsFromBuildingChecked(const CvBuildingInfo& kBuilding, CvUnit* pLoopUnit) const;
+	void assignPromotionsFromBuildingChecked(const CvJsonBuildingInfo& kBuilding, CvUnit* pLoopUnit) const;
 
 	//TB Combat Mods (Buildings) end
 	//TB Traits begin
@@ -1124,7 +1124,7 @@ public:
 	bool hasBuilding(const BuildingTypes eType) const;
 	void changeHasBuilding(const BuildingTypes eType, const bool bNewValue);
 	void setHasBuilding(const BuildingTypes eType, const bool bNewValue, const PlayerTypes eOriginalOwner, const int iOriginalTime, const bool bFirst = true);
-	void setupBuilding(const CvBuildingInfo& kBuilding, const BuildingTypes eType, const bool bNewValue, const bool bFirst);
+	void setupBuilding(const CvJsonBuildingInfo& kBuilding, const BuildingTypes eType, const bool bNewValue, const bool bFirst);
 	void handleBuildingCounts(const BuildingTypes eType, const int iChange, const bool bWonder);
 
 	void alterBuildingLedger(const BuildingTypes eType, const bool bAdd, const PlayerTypes eOwner = NO_PLAYER, const int iTime = MIN_INT);

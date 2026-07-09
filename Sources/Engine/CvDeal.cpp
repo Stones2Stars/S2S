@@ -5,7 +5,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "AI/BetterBTSAI.h"
-#include "CvBuildingInfo.h"
+#include "CvJsonBuildingInfo.h"
 #include "CvBonusInfo.h"
 #include "CvDeal.h"
 #include "UI/CvEventReporter.h"

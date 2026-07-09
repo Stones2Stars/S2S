@@ -3,8 +3,8 @@
 //------------------------------------------------------------------------------------------------
 #include "CvGameCoreDLL.h"
 #include "UI/CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
+#include "CvJsonBuildingInfo.h"
+#include "CvJsonHeritageInfo.h"
 #include "AI/CvGameAI.h"
 #include "UI/CvGameTextMgr.h"
 #include "Defines/CvGlobals.h"
@@ -54,5 +54,19 @@ void CvArtInfoImprovement::getDataMembers(CvInfoUtil& util)
 void CvArtInfoImprovement::copyNonDefaults(const CvArtInfoImprovement* pClassInfo)
 {
 	// Empty, for Art files we stick to FULL XML defintions
+}
+
+
+// DllExport -- the EXE delay-loads this at improvement-shader render time; declared in the header but the definition
+// was missing, so the DLL never exported it and the EXE's delay-load threw ERROR_PROC_NOT_FOUND (c06d007f). Mirrors
+// CvArtInfoBonus/CvArtInfoUnit::getShaderNIF.
+const char* CvArtInfoImprovement::getShaderNIF() const
+{
+	return m_szShaderNIF;
+}
+
+void CvArtInfoImprovement::setShaderNIF(const char* szDesc)
+{
+	m_szShaderNIF = szDesc;
 }
 

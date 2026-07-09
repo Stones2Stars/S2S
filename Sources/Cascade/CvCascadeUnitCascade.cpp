@@ -22,8 +22,8 @@
 #include "CvCascadeConditionEval.h"   // cascadeEvalCondition
 #include "CvJsonCondition.h"       // the condition tree (reverse-index scan)
 #include "CvCascadeAccumulator.h"     // CascadeAccumulator::CascadeHaveKind (recheckHave dispatch) + CPK_FRONT_U
-#include "Infos/CvUnitInfo.h"
-#include "Infos/CvBuildingInfo.h"     // InfoRepo<CvBuildingInfo> (a changed building's provides.bonuses / enables.units)
+#include "CvJsonUnitInfo.h"
+#include "CvJsonBuildingInfo.h"     // InfoRepo<CvJsonBuildingInfo> (a changed building's provides.bonuses / enables.units)
 #include "Engine/CvGame.h"
 
 // Unit instance cap (StoneBase UnitCascade.Capped): WORLD = lifetime-created (getUnitCreatedCount) + making >=
@@ -70,7 +70,7 @@ static void uc_buildIndices()
 	const int nU = GC.getNumUnitInfos();
 	for (int u = 0; u < nU; ++u)
 	{
-		const CvJsonInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
+		const CvJsonInfo* j = InfoRepo<CvJsonUnitInfo>::get().get(u);
 		if (j == NULL) continue;
 		CascadeCondDeps d;
 		// The ONE shared HAVE-atom scanner: requires.build ONLY (trainable() does not gate on operate), UNIT_ leg on
@@ -116,7 +116,7 @@ struct UcRecheckCtx
 // Self-contained (tally + ctx reads); no dependency on other units' verdicts.
 static bool uc_isAvailable(int u, UcRecheckCtx& x)
 {
-	const CvJsonInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
+	const CvJsonInfo* j = InfoRepo<CvJsonUnitInfo>::get().get(u);
 	if (j != NULL && ((const CvJsonUnitInfo*)j)->spawnOnly) return false;
 	if (EnablerKernel::obsoletedByHeldTech(j, *x.team)) return false;
 	if (UnitCascade::capped(j, u, *x.player, x.noNationalLimit)) return false;
@@ -146,7 +146,7 @@ static bool uc_reachable(int v, UcRecheckCtx& x)
 	bool r = uc_availMemo(v, x);
 	if (!r)
 	{
-		const CvJsonInfo* j = InfoRepo<CvUnitInfo>::get().get(v);
+		const CvJsonInfo* j = InfoRepo<CvJsonUnitInfo>::get().get(v);
 		if (j != NULL)
 		{
 			const std::vector<int>& dorm = j->dormantTriggers();
@@ -166,7 +166,7 @@ static bool uc_reachable(int v, UcRecheckCtx& x)
 static bool uc_isTrainable(int u, UcRecheckCtx& x)
 {
 	if (!uc_availMemo(u, x)) return false;
-	const CvJsonInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
+	const CvJsonInfo* j = InfoRepo<CvJsonUnitInfo>::get().get(u);
 	if (j != NULL && !j->dormantTriggers().empty())
 	{
 		const std::vector<int>& dorm = j->dormantTriggers();
@@ -251,7 +251,7 @@ void UnitCascade::trainable(const CvCity* pCity, const CvPlayer& kPlayer, const 
 	std::set<int> replacedUnits;
 	for (std::set<int>::const_iterator a = available.begin(); a != available.end(); ++a)
 	{
-		const CvJsonInfo* ja = InfoRepo<CvUnitInfo>::get().get(*a);
+		const CvJsonInfo* ja = InfoRepo<CvJsonUnitInfo>::get().get(*a);
 		if (ja == NULL) continue;
 		const std::vector<int>* re = ja->edge("replaces.units");
 		if (re != NULL)
@@ -262,7 +262,7 @@ void UnitCascade::trainable(const CvCity* pCity, const CvPlayer& kPlayer, const 
 	std::set<int> frontier;
 	for (int u = 0; u < nU; ++u)
 	{
-		const CvJsonInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
+		const CvJsonInfo* j = InfoRepo<CvJsonUnitInfo>::get().get(u);
 		if (j != NULL && ((const CvJsonUnitInfo*)j)->spawnOnly) continue;   // spawnOnly (cascade's own flag; self-containment)
 		if (EnablerKernel::obsoletedByHeldTech(j, kTeam)) continue;
 		if (replacedUnits.count(u) != 0) continue;
@@ -307,7 +307,7 @@ void UnitCascade::onUnitChanged(const CvPlayer& kPlayer, int eUnit)
 	// reads availability, which for an uncapped unit never moves on count) -- UNLESS some other unit's requires
 	// references this unit's count (s_ucUnitDeps). So skip entirely in the common (uncapped, unreferenced) case;
 	// this keeps combat unit births/deaths free.
-	const CvJsonInfo* jU = InfoRepo<CvUnitInfo>::get().get(eUnit);
+	const CvJsonInfo* jU = InfoRepo<CvJsonUnitInfo>::get().get(eUnit);
 	const bool bCapped = (jU != NULL && jU->getAllowed() != NULL && !jU->getAllowed()->isEmpty());
 	const bool bReferenced = (s_ucUnitDeps.find(eUnit) != s_ucUnitDeps.end());
 	if (!bCapped && !bReferenced) return;
@@ -340,7 +340,7 @@ void UnitCascade::onBuildingChangedUnits(const CvCity* pCity, int eBuilding)
 	// fixpoint -- are NOT chased here; that class self-heals at the slice, matching the building path's own scope.)
 	std::vector<int> affected;
 	uc_appendMapBucket(s_ucBuilding, eBuilding, affected);
-	const CvJsonInfo* jb = InfoRepo<CvBuildingInfo>::get().get(eBuilding);
+	const CvJsonInfo* jb = InfoRepo<CvJsonBuildingInfo>::get().get(eBuilding);
 	if (jb != NULL)
 	{
 		const CvJsonProvides* pv = jb->getProvides();

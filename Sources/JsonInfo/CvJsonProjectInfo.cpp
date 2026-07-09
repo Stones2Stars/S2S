@@ -1,7 +1,7 @@
 //
 //	CvJsonProjectInfo::mapFrom -- base core reading + availability (tech/prereq-project/world-scope/specialBuilding
 //	edges ride the base), then the project's team/empire/world values + the bespoke `victory` block + placement. FK
-//	resolution via the kept type registry. HUMAN-native. ⏳-flagged shapes are curator-PROVISIONAL. See header.
+//	resolution via the kept type registry. HUMAN-native. PROVISIONAL-flagged families are curator-tentative names. See header.
 //
 
 #include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
@@ -13,7 +13,9 @@ CvJsonProjectInfo::CvJsonProjectInfo()
 	  m_iGlobalMaintenanceModifier(0), m_iDistanceMaintenanceModifier(0), m_iNumCitiesMaintenanceModifier(0),
 	  m_iConnectedCityMaintenanceModifier(0), m_iInflationModifier(0),
 	  m_iGlobalHappiness(0), m_iGlobalHealth(0), m_iWorldHappiness(0), m_iWorldHealth(0), m_iWorldTradeRoutes(0),
-	  m_iVictoryDelayPercent(0), m_iSuccessRate(0), m_eLaunchesVictory(-1), m_bSpaceship(false), m_bAllowsNukes(false)
+	  m_iVictoryDelayPercent(0), m_iSuccessRate(0), m_eLaunchesVictory(-1), m_bSpaceship(false), m_bAllowsNukes(false),
+	  m_iEveryoneSpecialUnit(-1), m_iAnyoneProjectPrereq(-1),   // NO_SPECIALUNIT / NO_PROJECT
+	  m_eTechPrereq(NO_TECH)
 {
 	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i) m_aiCommerceModifier[i] = 0;
 }
@@ -26,8 +28,8 @@ void CvJsonProjectInfo::mapFrom(const picojson::value& entity)
 
 	if (const picojson::object* co = jsonChildObj(o, "cost")) m_iProductionCost = jsonIdInt(*co, "create");
 
-	m_iNukeInterception  = jsonFamMemberVal(o, "combat", "team", "nukeInterception", "percent");   // ⏳ PROVISIONAL
-	m_iTechShare         = jsonFamMemberVal(o, "diplomacy", "team", "techShare", "flat");            // ⏳ PROVISIONAL
+	m_iNukeInterception  = jsonFamMemberVal(o, "combat", "team", "nukeInterception", "percent");   // family name PROVISIONAL
+	m_iTechShare         = jsonFamMemberVal(o, "diplomacy", "team", "techShare", "flat");            // family name PROVISIONAL
 	m_iGlobalMaintenanceModifier        = jsonFamMemberVal(o, "maintenance", "empire", "all", "percent");
 	m_iDistanceMaintenanceModifier      = jsonFamMemberVal(o, "maintenance", "empire", "distance", "percent");
 	m_iNumCitiesMaintenanceModifier     = jsonFamMemberVal(o, "maintenance", "empire", "numCities", "percent");
@@ -52,7 +54,7 @@ void CvJsonProjectInfo::mapFrom(const picojson::value& entity)
 		m_iSuccessRate         = jsonIdInt(*vo, "successRate");
 	}
 
-	// buildRate.self.percent -- a list of { value, enabled:{type:BONUS_X, ...} } => bonus-keyed production modifier ⏳
+	// buildRate.self.percent -- a list of { value, enabled:{type:BONUS_X, ...} } => bonus-keyed production modifier
 	if (const picojson::object* br = jsonChildObj(o, "buildRate"))
 		if (const picojson::object* self = jsonChildObj(*br, "self"))
 		{
@@ -88,4 +90,20 @@ void CvJsonProjectInfo::mapFrom(const picojson::value& entity)
 	}
 
 	if (const picojson::object* so = jsonChildObj(o, "sound")) jsonIdStr(*so, "onCompletion", m_szCreateSound);
+
+	// ui.art.movie.defineTag -- the completion movie art tag (MovieDefineTag)
+	if (const picojson::object* uo = jsonChildObj(o, "ui"))
+		if (const picojson::object* ao = jsonChildObj(*uo, "art"))
+			if (const picojson::object* mo = jsonChildObj(*ao, "movie"))
+				jsonIdStr(*mo, "defineTag", m_szMovieArtDef);
+
+	// grants.grantsSpecialUnit -- completion makes a SPECIALUNIT game-wide valid (EveryoneSpecialUnit). FK, -1 if absent.
+	if (const picojson::object* go = jsonChildObj(o, "grants"))
+		m_iEveryoneSpecialUnit = jsonIdFk(*go, "grantsSpecialUnit");
+
+	// requires.build{type,scope:world} -- the single "anyone built one" project gate (AnyonePrereqProject). FK, -1 if absent.
+	// (enables.specialBuildings rides the composed m_edges; EveryoneSpecialBuilding reads it via edge() in the header.)
+	if (const picojson::object* ro = jsonChildObj(o, "requires"))
+		if (const picojson::object* bo = jsonChildObj(*ro, "build"))
+			m_iAnyoneProjectPrereq = jsonIdFk(*bo, "type");
 }

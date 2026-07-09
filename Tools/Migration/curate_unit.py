@@ -33,7 +33,8 @@ from collections import OrderedDict
 
 import engine
 import boolexpr
-from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity, gate_entity
+from curate_common import (put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity, gate_entity,
+                           emit_sizematters, SM_COMBATMOD_UNIT)
 from store import Store, REPO
 
 # ---- identity.base: the create-unit FOUNDATION (§0.6) ----
@@ -51,10 +52,6 @@ UNIT_FAMILIES = {
     "iVSBarbs": ("strength", "vsBarbs", "percent"),
     "iAttackCombatModifier": ("strength", "attack", "percent"),
     "iDefenseCombatModifier": ("strength", "defense", "percent"),
-    "iCombatModifierPerSizeMore": ("strength", "perSizeMore", "percent"),
-    "iCombatModifierPerSizeLess": ("strength", "perSizeLess", "percent"),
-    "iCombatModifierPerVolumeMore": ("strength", "perVolumeMore", "percent"),
-    "iCombatModifierPerVolumeLess": ("strength", "perVolumeLess", "percent"),
     "iLunge": ("strength", "lunge", "percent"),
     "iEnclose": ("strength", "enclose", "percent"),
     "iUnnerve": ("strength", "unnerve", "percent"),
@@ -722,6 +719,18 @@ def curate(typ, rec, store):
     # --- art ---
     for tag in ART:
         put_art(art_blocks, tag, engine.text(rec.find(tag)))
+    # world.art.define -- the on-map 3D art. A unit's art lives in <UnitMeshGroups> as per-era art-define tags; the
+    # ART_DEF_* id (resolved to the NIF model + textures by ARTFILEMGR) is the PRIMARY mesh group's first non-empty
+    # era band (Early first, matching the engine getArtInfo fall-through default). Only the tag id goes to JSON
+    # (json.md §7); the definition stays in CIV4ArtDefines_Unit.xml. Fixes the createUnitEntity NULL-artinfo crash.
+    mg = rec.find("UnitMeshGroups/UnitMeshGroup")
+    if mg is not None:
+        for band in ("EarlyArtDefineTag", "ClassicalArtDefineTag", "MiddleArtDefineTag", "RennArtDefineTag",
+                     "IndustrialArtDefineTag", "LateArtDefineTag", "FutureArtDefineTag"):
+            tagv = engine.text(mg.find(band))
+            if tagv:
+                put_art(art_blocks, "ArtDefineTag", tagv)
+                break
 
     # --- PASS 2: vs-keyed combat, vision/LOS, outcomes, GP-action grants, properties, BonusProd, cargo ---
     pass2(typ, rec, store, fams, caps, grants, vision, identity)
@@ -797,6 +806,7 @@ def curate(typ, rec, store):
         out["cost"] = cost
     if ai:
         out["ai"] = ai
+    emit_sizematters(out, lambda t: _int(rec, t), combatmod=SM_COMBATMOD_UNIT)   # unit's own SM per-rank combat mods
     emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity

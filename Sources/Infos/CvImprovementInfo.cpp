@@ -21,3 +21,9 @@ const CvArtInfoImprovement* CvImprovementInfo::getArtInfo() const
 {
 	return ARTFILEMGR.getImprovementArtInfo(getArtDefineTag());
 }
+
+const char* CvImprovementInfo::getButton() const   // art-define button (mirrors archived CvImprovementInfo::getButton)
+{
+	const CvArtInfoImprovement* p = getArtInfo();
+	return p != NULL ? p->getButton() : "";
+}

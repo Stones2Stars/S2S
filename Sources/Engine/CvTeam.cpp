@@ -8,7 +8,7 @@
 #include "CvCascadeCapabilities.h"   // #430 Gate-3 wiring step 1: the in-body capability shadow + cache invalidation
 #include "CvCascadeAccumulator.h"    // #430 the modifier scope accumulator -- setHasTech bumps the global epoch
 #include "CvArea.h"
-#include "CvBuildingInfo.h"
+#include "CvJsonBuildingInfo.h"
 #include "CvBonusInfo.h"
 #include "CvCity.h"
 #include "CvDeal.h"
@@ -1954,7 +1954,7 @@ int CvTeam::getNumNukeUnits() const
 // Toffer - Used by barbarian unit spawning "CvGame::createBarbarianUnits()",
 //		and for the new game starting units "CvPlayer::addStartUnitAI(...)".
 // Barbs don't need the bonus req for units, but they must have the tech that enables it.
-bool CvTeam::isUnitBonusEnabledByTech(const CvUnitInfo& unit, const bool bNoWorldBonuses) const
+bool CvTeam::isUnitBonusEnabledByTech(const CvJsonUnitInfo& unit, const bool bNoWorldBonuses) const
 {
 	PROFILE_EXTRA_FUNC();
 	if (unit.getPrereqAndBonus() != NO_BONUS)
@@ -4260,7 +4260,7 @@ void CvTeam::changeProjectCount(ProjectTypes eIndex, int iChange)
 
 		if (iChange > 0 && GC.getGame().isFinalInitialized() && !gDLL->GetWorldBuilderMode())
 		{
-			const CvProjectInfo& kProject = GC.getProjectInfo(eIndex);
+			const CvJsonProjectInfo& kProject = GC.getProjectInfo(eIndex);
 
 			GC.getGame().addReplayMessage(
 				REPLAY_MESSAGE_MAJOR_EVENT, getLeaderID(),
@@ -4287,7 +4287,7 @@ void CvTeam::changeProjectCount(ProjectTypes eIndex, int iChange)
 void CvTeam::processProjectChange(ProjectTypes eIndex, int iChange, int iOldProjectCount)
 {
 	PROFILE_EXTRA_FUNC();
-	const CvProjectInfo& kProject = GC.getProjectInfo(eIndex);
+	const CvJsonProjectInfo& kProject = GC.getProjectInfo(eIndex);
 
 	changeNukeInterception(kProject.getNukeInterception() * iChange);
 
@@ -4624,7 +4624,7 @@ int CvTeam::getVictoryDelay(VictoryTypes eVictory) const
 	int iExtraDelayPercent = 0;
 	for (int iProject = 0; iProject < GC.getNumProjectInfos(); ++iProject)
 	{
-		const CvProjectInfo& kProject = GC.getProjectInfo((ProjectTypes)iProject);
+		const CvJsonProjectInfo& kProject = GC.getProjectInfo((ProjectTypes)iProject);
 
 		const int iMinThreshold = kProject.getVictoryMinThreshold(eVictory);
 		if (iMinThreshold < 1) continue;
@@ -4659,7 +4659,7 @@ int CvTeam::getLaunchSuccessRate(VictoryTypes eVictory) const
 	int iSuccessRate = 100;
 	for (int iProject = 0; iProject < GC.getNumProjectInfos(); ++iProject)
 	{
-		const CvProjectInfo& kProject = GC.getProjectInfo((ProjectTypes)iProject);
+		const CvJsonProjectInfo& kProject = GC.getProjectInfo((ProjectTypes)iProject);
 		const int iCount = getProjectCount((ProjectTypes)iProject);
 
 		if (iCount < kProject.getVictoryMinThreshold(eVictory))
@@ -4771,7 +4771,7 @@ bool CvTeam::isInvisibleSeerUnlocked(InvisibleTypes eInvisible) const
 	PROFILE_EXTRA_FUNC();
 	foreach_(const UnitTypes eSeer, GC.getUnitsSeeingInvisible(eInvisible))
 	{
-		const CvUnitInfo& kSeer = GC.getUnitInfo(eSeer);
+		const CvJsonUnitInfo& kSeer = GC.getUnitInfo(eSeer);
 
 		if (!isHasTech((TechTypes)kSeer.getPrereqAndTech()))
 		{
@@ -4876,7 +4876,7 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 	FASSERT_BOUNDS(0, GC.getNumTechInfos(), eTech);
 	FASSERT_BOUNDS(0, MAX_PLAYERS, ePlayer);
 
-	const CvTechInfo& kTech = GC.getTechInfo(eTech);
+	const CvJsonTechInfo& kTech = GC.getTechInfo(eTech);
 
 	if (isHasTech(eTech) == bNewValue && (!kTech.isRepeat() || m_paiTechCount[eTech] < 1))
 	{
@@ -5639,7 +5639,7 @@ void CvTeam::setCircumnavigated(bool bNewValue)
 void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 {
 	PROFILE_FUNC();
-	const CvTechInfo& tech = GC.getTechInfo(eTech);
+	const CvJsonTechInfo& tech = GC.getTechInfo(eTech);
 
 	if (iChange > 0 && tech.isMapCentering())
 	{

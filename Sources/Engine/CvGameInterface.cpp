@@ -2,7 +2,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "CvBuildingInfo.h"
+#include "CvJsonBuildingInfo.h"
 #include "Infrastructure/CvBugOptions.h"
 #include "CvCity.h"
 #include "CvGame.h"
@@ -2629,7 +2629,7 @@ void CvGame::cheatSpaceship() const
 	for (int i = 0; i < GC.getNumProjectInfos(); i++)
 	{
 		const ProjectTypes eProject = (ProjectTypes) i;
-		const CvProjectInfo& kProject = GC.getProjectInfo(eProject);
+		const CvJsonProjectInfo& kProject = GC.getProjectInfo(eProject);
 		if (kProject.isSpaceship())
 		{
 			//cheat required projects

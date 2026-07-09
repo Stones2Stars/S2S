@@ -3,8 +3,8 @@
 //------------------------------------------------------------------------------------------------
 #include "CvGameCoreDLL.h"
 #include "UI/CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
+#include "CvJsonBuildingInfo.h"
+#include "CvJsonHeritageInfo.h"
 #include "AI/CvGameAI.h"
 #include "UI/CvGameTextMgr.h"
 #include "Defines/CvGlobals.h"
@@ -86,12 +86,10 @@ const char* CvInfoBase::getType() const
 
 const char* CvInfoBase::getButton() const
 {
-	if (m_szButton.empty())
-	{
-		return NULL;
-	}
-
-	return m_szButton;
+	// Return "" for an empty button, NEVER NULL: the button flows to Python (boost.python's const char*->str converter
+	// does strlen() on it) and to the EXE UI -- a NULL deref'd there is an ACCESS_VIOLATION reading 0x0 (e.g. the city
+	// screen's getReligionInfo(i).getButton() on a blank/padding-filler religion). "" is the vanilla behaviour.
+	return m_szButton.empty() ? "" : m_szButton.GetCString();
 }
 
 
@@ -224,7 +222,7 @@ void CvInfoBase::copyNonDefaults(const CvInfoBase* pClassInfo)
 		m_szStrategyKey = pClassInfo->getStrategyKey();
 	}
 
-	if ( getButton() == NULL || getButton() == cDefault)
+	if ( m_szButton.empty() || getButton() == cDefault)   // getButton() no longer returns NULL (empty -> "")
 	{
 		m_szButton = pClassInfo->getButton();
 	}

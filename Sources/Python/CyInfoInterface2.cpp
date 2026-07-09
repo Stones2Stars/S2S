@@ -128,7 +128,7 @@ void CyInfoPythonInterface2()
 		.def("getSound", &CvGoodyInfo::getSound, "string ()")
 	;
 
-	python::class_<CvJsonRouteInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvJsonRouteInfo", python::no_init)
+	python::class_<CvJsonRouteInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvRouteInfo", python::no_init)
 
 		.def("getValue", &CvJsonRouteInfo::getValue, "int ()")
 		.def("getMovementCost", &CvJsonRouteInfo::getMovementCost, "int ()")

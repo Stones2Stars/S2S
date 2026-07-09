@@ -7,7 +7,7 @@
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
 #include "UI/CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
+#include "CvJsonBuildingInfo.h"
 #include "CvBonusInfo.h"
 #include "CvCity.h"
 #include "AI/CvCityAI.h"
@@ -23,7 +23,7 @@
 #include "Defines/CvGlobals.h"
 #include "Tools/CvHttpServer.h"
 #include "CvImprovementInfo.h"
-#include "CvHeritageInfo.h"
+#include "CvJsonHeritageInfo.h"
 #include "CvInfos.h"
 #include "Infrastructure/CvInitCore.h"
 #include "CvMap.h"
@@ -43,7 +43,7 @@
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "Repos/BuildingsRepo.h"
-#include "CvTraitInfo.h"
+#include "CvJsonTraitInfo.h"
 #include <boost/scoped_ptr.hpp>
 
 //	Koshling - save flag indicating this player has no data in the save as they have never been alive
@@ -101,7 +101,7 @@ private:
 		for(int iUnit = 0; iUnit < GC.getNumUnitInfos(); iUnit++)
 		{
 			const UnitTypes unitType = static_cast<UnitTypes>(iUnit);
-			const CvUnitInfo& unitInfo = GC.getUnitInfo(unitType);
+			const CvJsonUnitInfo& unitInfo = GC.getUnitInfo(unitType);
 			for(int i = 0; i < unitInfo.getNumUnitUpgrades(); i++)
 			{
 				const UnitTypes eUpgradeType = static_cast<UnitTypes>(unitInfo.getUnitUpgrade(i));
@@ -1956,7 +1956,7 @@ bool CvPlayer::addStartUnitAI(const UnitAITypes eUnitAI, const int iCount)
 		{
 			continue;
 		}
-		const CvUnitInfo& kUnit = GC.getUnitInfo((UnitTypes) iI);
+		const CvJsonUnitInfo& kUnit = GC.getUnitInfo((UnitTypes) iI);
 
 		if (!GET_TEAM(getTeam()).isUnitBonusEnabledByTech(kUnit, true))
 		{
@@ -6395,7 +6395,7 @@ bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool
 	{
 		return false;
 	}
-	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+	const CvJsonUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
 	if (!bIgnoreCost && kUnit.getProductionCost() == -1)
 	{
@@ -6584,7 +6584,7 @@ bool CvPlayer::canConstructInternal(BuildingTypes eBuilding, bool bContinue, boo
 	PROFILE_FUNC();
 
 	const CvTeamAI& currentTeam = GET_TEAM(getTeam());
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	if ( probabilityEverConstructable )
 	{
@@ -6819,7 +6819,7 @@ bool CvPlayer::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisibl
 		return false;
 	}
 
-	const CvProjectInfo& kProject = GC.getProjectInfo(eProject);
+	const CvJsonProjectInfo& kProject = GC.getProjectInfo(eProject);
 	if (kProject.getProductionCost() == -1)
 	{
 		return false;
@@ -7225,7 +7225,7 @@ int CvPlayer::getProductionModifier(UnitTypes eUnit) const
 	{
 		if (hasTrait((TraitTypes)iI))
 		{
-			const CvTraitInfo& kTrait = GC.getTraitInfo((TraitTypes)iI);
+			const CvJsonTraitInfo& kTrait = GC.getTraitInfo((TraitTypes)iI);
 
 			for (int j = 0; j < kTrait.getNumUnitProductionModifiers(); j++)
 			{
@@ -7260,7 +7260,7 @@ int CvPlayer::getProductionModifier(BuildingTypes eBuilding) const
 		const TraitTypes eTrait = ((TraitTypes)iI);
 		if (hasTrait(eTrait))
 		{
-			const CvTraitInfo& kTrait = GC.getTraitInfo(eTrait);
+			const CvJsonTraitInfo& kTrait = GC.getTraitInfo(eTrait);
 
 			for (int j = 0; j < kTrait.getNumBuildingProductionModifiers(); j++)
 			{
@@ -7315,7 +7315,7 @@ int CvPlayer::getProductionModifier(ProjectTypes eProject) const
 
 int CvPlayer::getBuildingPrereqBuilding(BuildingTypes eBuilding, BuildingTypes ePrereqBuilding, int iExtra) const
 {
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	int iPrereqs = kBuilding.getPrereqNumOfBuildings().getValue(ePrereqBuilding);
 
@@ -7366,7 +7366,7 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	PROFILE_EXTRA_FUNC();
 	FAssert(iChange == 1 || iChange == -1);
 
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	if (!bReligiouslyDisabling)
 	{
@@ -8287,7 +8287,7 @@ bool CvPlayer::canEverResearch(TechTypes eTech) const
 	if (eTech < 0 || eTech >= GC.getNumTechInfos()) {
 		return false; // ID de tech invalide
 	}
-	CvTechInfo& kTechInfo = GC.getTechInfo(eTech);
+	CvJsonTechInfo& kTechInfo = GC.getTechInfo(eTech);
 	if (kTechInfo.isDisable()
 	|| GC.getCivilizationInfo(getCivilizationType()).isCivilizationDisableTechs(eTech)
 	|| !GC.getGame().canEverResearch(eTech)
@@ -8300,8 +8300,9 @@ bool CvPlayer::canEverResearch(TechTypes eTech) const
 	// Religion techs are global and can thus only be invented once by one player in a game.
 	if (GC.getGame().isOption(GAMEOPTION_RELIGION_LIMITED) && !canFoundReligion())
 	{
-		foreach_(const CvReligionInfo* info, GC.getReligionInfos())
+		for (int iRI = 0; iRI < GC.getNumReligionInfos(); ++iRI)
 		{
+			const CvJsonReligionInfo* info = &GC.getReligionInfo((ReligionTypes)iRI);
 			if (info->getTechPrereq() == eTech)
 			{
 				return false;
@@ -8809,8 +8810,9 @@ void CvPlayer::foundReligion(ReligionTypes eReligion, ReligionTypes eSlotReligio
 	// AI always clear their entire tech queue when a religion is founded in CvTeam::setHasTech
 	if (GC.getGame().isOption(GAMEOPTION_RELIGION_LIMITED))
 	{
-		foreach_(const CvReligionInfo* info, GC.getReligionInfos())
+		for (int iRI = 0; iRI < GC.getNumReligionInfos(); ++iRI)
 		{
+			const CvJsonReligionInfo* info = &GC.getReligionInfo((ReligionTypes)iRI);
 			if (isResearchingTech(info->getTechPrereq()))
 			{
 				popResearch(info->getTechPrereq());
@@ -14400,8 +14402,8 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 		bool bUpdateHappiness = false;
 		if (eNewValue != NO_CIVIC && eOldCivic != NO_CIVIC)
 		{
-			const CvCivicInfo& kCivic = GC.getCivicInfo(getCivics(eIndex));
-			const CvCivicInfo& kOldCivic = GC.getCivicInfo(eOldCivic);
+			const CvJsonCivicInfo& kCivic = GC.getCivicInfo(getCivics(eIndex));
+			const CvJsonCivicInfo& kOldCivic = GC.getCivicInfo(eOldCivic);
 			for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
 			{
 				if (kCivic.getImprovementHealthPercentChanges(iI) != kOldCivic.getImprovementHealthPercentChanges(iI))
@@ -17671,7 +17673,7 @@ int CvPlayer::getAdvancedStartBuildingCost(BuildingTypes eBuilding, bool bAdd, c
 			// Check other buildings in this city and make sure none of them require this one
 			foreach_(const BuildingTypes eType, pCity->getHasBuildings())
 			{
-				const CvBuildingInfo& building = GC.getBuildingInfo(eType);
+				const CvJsonBuildingInfo& building = GC.getBuildingInfo(eType);
 				for (int iI = building.getNumPrereqInCityBuildings() - 1; iI > -1; iI--)
 				{
 					if (eBuilding == building.getPrereqInCityBuilding(iI))
@@ -18079,7 +18081,7 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 
 	if (isNPC()) return;
 
-	const CvCivicInfo& kCivic = GC.getCivicInfo(eCivic);
+	const CvJsonCivicInfo& kCivic = GC.getCivicInfo(eCivic);
 
 	//Speed Optimizations
 	if (bLimited)
@@ -21423,7 +21425,7 @@ bool CvPlayer::canDoEvent(EventTypes eEvent, const EventTriggeredData& kTriggere
 		bool bValid = false;
 		for (int iProject = 0; iProject < GC.getNumProjectInfos(); ++iProject)
 		{
-			const CvProjectInfo& kProject = GC.getProjectInfo((ProjectTypes)iProject);
+			const CvJsonProjectInfo& kProject = GC.getProjectInfo((ProjectTypes)iProject);
 			if (kProject.isSpaceship())
 			{
 				if (kProject.getVictoryPrereq() != NO_VICTORY)
@@ -24411,7 +24413,7 @@ bool CvPlayer::canSpyDestroyBuilding(PlayerTypes eTarget, BuildingTypes eBuildin
 
 bool CvPlayer::canSpyDestroyProject(PlayerTypes eTarget, ProjectTypes eProject) const
 {
-	const CvProjectInfo& kProject = GC.getProjectInfo(eProject);
+	const CvJsonProjectInfo& kProject = GC.getProjectInfo(eProject);
 	if (kProject.getProductionCost() <= 0)
 	{
 		return false;
@@ -27084,7 +27086,7 @@ void CvPlayer::recalculateResourceConsumption(BonusTypes eBonus)
 
 		if (prodBuilding != NO_BUILDING)
 		{
-			const CvBuildingInfo& kBuilding = GC.getBuildingInfo(prodBuilding);
+			const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(prodBuilding);
 
 			if (kBuilding.getPrereqAndBonus() == eBonus
 			|| kBuilding.getPrereqVicinityBonus() == eBonus
@@ -27102,7 +27104,7 @@ void CvPlayer::recalculateResourceConsumption(BonusTypes eBonus)
 		}
 		else if (prodUnit != NO_UNIT)
 		{
-			const CvUnitInfo& kUnit = GC.getUnitInfo(prodUnit);
+			const CvJsonUnitInfo& kUnit = GC.getUnitInfo(prodUnit);
 
 			if (kUnit.getPrereqAndBonus() == eBonus
 			|| kUnit.getPrereqVicinityBonus() == eBonus
@@ -27142,7 +27144,7 @@ void CvPlayer::recalculateResourceConsumption(BonusTypes eBonus)
 			if (cityX->isDisabledBuilding(eTypeX))
 				continue;
 
-			const CvBuildingInfo& buildingX = GC.getBuildingInfo(eTypeX);
+			const CvJsonBuildingInfo& buildingX = GC.getBuildingInfo(eTypeX);
 			iConsumption += (
 					buildingX.getBonusHappinessChanges().getValue(eBonus) * 12
 				+	buildingX.getBonusHealthChanges().getValue(eBonus) * 8
@@ -27203,7 +27205,7 @@ namespace {
 
 //	Inverted iteration of recalculateResourceConsumption over ALL bonuses: one pass over
 //	each city visiting only the bonuses its current production item and built buildings
-//	actually touch (load-derived CvBuildingInfo::getConsumptionRelevantBonuses), instead of
+//	actually touch (load-derived CvJsonBuildingInfo::getConsumptionRelevantBonuses), instead of
 //	rescanning every city's every building once per bonus type. Every individual term keeps
 //	the legacy integer arithmetic and int addition commutes, so the results are
 //	byte-identical -- REQUIRED, because this is synced game state (it feeds bonus-depletion
@@ -27235,7 +27237,7 @@ void CvPlayer::recalculateAllResourceConsumption()
 
 		if (prodBuilding != NO_BUILDING)
 		{
-			const CvBuildingInfo& kBuilding = GC.getBuildingInfo(prodBuilding);
+			const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(prodBuilding);
 
 			addUniqueBonus(prereqBonuses, kBuilding.getPrereqAndBonus());
 			addUniqueBonus(prereqBonuses, kBuilding.getPrereqVicinityBonus());
@@ -27258,7 +27260,7 @@ void CvPlayer::recalculateAllResourceConsumption()
 		}
 		else if (prodUnit != NO_UNIT)
 		{
-			const CvUnitInfo& kUnit = GC.getUnitInfo(prodUnit);
+			const CvJsonUnitInfo& kUnit = GC.getUnitInfo(prodUnit);
 
 			addUniqueBonus(prereqBonuses, kUnit.getPrereqAndBonus());
 			addUniqueBonus(prereqBonuses, kUnit.getPrereqVicinityBonus());
@@ -27281,7 +27283,7 @@ void CvPlayer::recalculateAllResourceConsumption()
 		}
 		else if (prodProject != NO_PROJECT)
 		{
-			const CvProjectInfo& kProject = GC.getProjectInfo(prodProject);
+			const CvJsonProjectInfo& kProject = GC.getProjectInfo(prodProject);
 			for (int iI = 0; iI < iNumBonuses; iI++)
 			{
 				const int iMod = kProject.getBonusProductionModifier((BonusTypes)iI);
@@ -27319,7 +27321,7 @@ void CvPlayer::recalculateAllResourceConsumption()
 			if (cityX->isDisabledBuilding(eTypeX))
 				continue;
 
-			const CvBuildingInfo& buildingX = GC.getBuildingInfo(eTypeX);
+			const CvJsonBuildingInfo& buildingX = GC.getBuildingInfo(eTypeX);
 
 			foreach_(const BonusTypes eBonus, buildingX.getConsumptionRelevantBonuses())
 			{
@@ -27679,7 +27681,7 @@ int CvPlayer::getBuildingCountWithUpgrades(BuildingTypes eBuilding) const
 		return 0;
 	}
 	int iCount = getBuildingCount(eBuilding);
-	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& building = GC.getBuildingInfo(eBuilding);
 	for (int iI = 0; iI < building.getNumReplacementBuilding(); ++iI)
 	{
 		iCount += getBuildingCount((BuildingTypes)building.getReplacementBuilding(iI));
@@ -29482,7 +29484,7 @@ bool CvPlayer::canLearnTrait(TraitTypes eIndex, bool isSelectingNegative) const
 		return false;
 	}
 
-	const CvTraitInfo& kTrait = GC.getTraitInfo(eIndex);
+	const CvJsonTraitInfo& kTrait = GC.getTraitInfo(eIndex);
 
 	if (kTrait.getLinePriority() == 0 || !kTrait.isValidTrait()) return false;
 
@@ -30975,7 +30977,7 @@ void CvPlayer::setCommodoreFieldPlot(bool bNewValue, CvPlot* aPlot)
 void CvPlayer::processTech(const TechTypes eTech, const int iChange)
 {
 	PROFILE_EXTRA_FUNC();
-	const CvTechInfo& tech = GC.getTechInfo(eTech);
+	const CvJsonTechInfo& tech = GC.getTechInfo(eTech);
 
 	changeFeatureProductionModifier(tech.getFeatureProductionModifier() * iChange);
 	changeWorkerSpeedModifier(tech.getWorkerSpeedModifier() * iChange);
@@ -31014,7 +31016,7 @@ bool CvPlayer::canAddHeritage(const HeritageTypes eType, const bool bTestVisible
 	{
 		return false;
 	}
-	const CvHeritageInfo& heritage = GC.getHeritageInfo(eType);
+	const CvJsonHeritageInfo& heritage = GC.getHeritageInfo(eType);
 
 	// CUT (#430 Gate-3, capabilities.md flip wave #2): hasLanguage is the cascade capability (TECH_LANGUAGE's
 	// `capabilities.hasLanguage`); the legacy per-player latch was retired (savemigration.txt).
@@ -31081,7 +31083,7 @@ void CvPlayer::processHeritage(const HeritageTypes eType, const int iChange)
 {
 	PROFILE_EXTRA_FUNC();
 
-	const CvHeritageInfo& heritage = GC.getHeritageInfo(eType);
+	const CvJsonHeritageInfo& heritage = GC.getHeritageInfo(eType);
 	const EraTypes eEra = getCurrentEra();
 
 	const IDValueMap<EraTypes, CommerceArray>& kEraChanges = heritage.getEraCommerceChanges100();

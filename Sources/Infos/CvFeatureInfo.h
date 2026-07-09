@@ -18,6 +18,7 @@ class CvFeatureInfo : public CvJsonFeatureInfo
 {
 public:
 	DllExport const CvArtInfoFeature* getArtInfo() const;
+	const char* getButton() const;   // art-define button (else CvInfoBase's empty m_szButton -> missing icon)
 };
 
 #endif // CV_FEATUREINFO_H

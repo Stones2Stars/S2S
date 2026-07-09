@@ -37,7 +37,8 @@ from collections import OrderedDict
 
 import engine
 from store import Store, REPO
-from curate_common import FAMILY_ORDER, put_art, emit_art, descale100, fold_text_to_identity, gate_entity
+from curate_common import (FAMILY_ORDER, put_art, emit_art, descale100, fold_text_to_identity, gate_entity,
+                           emit_sizematters, SM_FLAT_CHANGE, SM_COMBATMOD_CHANGE, SM_CARGO_CHANGE)
 # REUSE the Promotion unit-stat vocabulary (the shared §5 definition) + helpers.
 from curate_promotion import (STRENGTH, FAMILIES, CAP_BOOL, CAP_PAIR, CAP_COUNT, VISION_PAIRS,
                               VISION_STRUCTS, _txt, _int, _simple_list, _pairs)
@@ -66,7 +67,8 @@ CAP_LIST = {"TerrainDoubleMoveChangeTypes": "terrainDoubleMove",
             "FeatureDoubleMoveChangeTypes": "featureDoubleMove",
             "TrapImmunityUnitCombatTypes": "trapImmunity"}
 # *Base -> identity.base (§0.6 create-unit base data). quality/group/size use a -10 "unset" sentinel.
-BASE_SENTINEL10 = {"iQualityBase": "quality", "iGroupBase": "group", "iSizeBase": "size"}
+# *Base ranks -> the sizeMatters block (json.md §9), NOT identity.base. -10 = "unset" sentinel (0 is a real rank).
+BASE_SENTINEL10 = {"iQualityBase": "qualityBase", "iGroupBase": "groupBase", "iSizeBase": "sizeBase"}
 BASE_PLAIN = {"iRBombardDamageBase": "rangedBombardDamage", "iRBombardDamageLimitBase": "rangedBombardLimit",
               "iRBombardDamageMaxUnitsBase": "rangedBombardMaxUnits", "iDCMBombRangeBase": "dcmRange",
               "iDCMBombAccuracyBase": "dcmAccuracy"}
@@ -201,11 +203,12 @@ def curate(typ, rec, store):
             dst.extend(_simple_list(node) or [])
 
     # --- identity: *Base create-unit data (§0.6) + refs + AI tags + parked lists ---
-    base = OrderedDict()
+    sm_base = OrderedDict()   # the *Base ranks -> sizeMatters (below), keeping the -10 "unset" sentinel out
     for tag, key in BASE_SENTINEL10.items():
         v = _int(rec, tag)
         if v is not None and v != -10:
-            base[key] = v
+            sm_base[key] = v
+    base = OrderedDict()      # BASE_PLAIN (rangedBombard/dcm create-unit stats) stays in identity.base
     for tag, key in BASE_PLAIN.items():
         v = _int(rec, tag)
         if v:
@@ -244,6 +247,8 @@ def curate(typ, rec, store):
     if outcomes:
         out["outcomes"] = outcomes
     gate_entity(out, gate_on, gate_off)
+    emit_sizematters(out, lambda t: _int(rec, t), flat=SM_FLAT_CHANGE, combatmod=SM_COMBATMOD_CHANGE,
+                     cargo=SM_CARGO_CHANGE, base_ranks=sm_base)
     emit_art(out, art_blocks)
     if identity:
         out["identity"] = identity

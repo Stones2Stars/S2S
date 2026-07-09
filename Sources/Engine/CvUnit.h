@@ -17,7 +17,7 @@ class CvCity;
 class CvPlot;
 class CvSelectionGroup;
 class CvArtInfoUnit;
-class CvUnitInfo;
+class CvJsonUnitInfo;
 class CvUnitSelectionCriteria;
 #ifdef USE_OLD_PATH_GENERATOR
 class FAStarNode;
@@ -1276,7 +1276,7 @@ public:
 	CvUnit* getCapturingUnit() const;
 	void setCapturingUnit(const CvUnit* pCapturingUnit);
 
-	const CvUnitInfo& getUnitInfo() const;
+	const CvJsonUnitInfo& getUnitInfo() const;
 
 	void setLeaderUnitType(UnitTypes leaderUnitType);
 
@@ -1730,7 +1730,7 @@ protected:
 	UnitTypes m_eUnitType;
 	UnitTypes m_eLeaderUnitType;
 	UnitTypes m_eGGExperienceEarnedTowardsType;
-	CvUnitInfo *m_pUnitInfo;
+	CvJsonUnitInfo *m_pUnitInfo;
 	ReligionTypes m_eReligionType;
 
 	IDInfo m_combatUnit;
@@ -2453,7 +2453,7 @@ public:
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, int, getArea);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, const CvArea*, area);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, const CvPlot*, plot);
-		DECLARE_MAP_FUNCTOR_CONST(CvUnit, const CvUnitInfo&, getUnitInfo);
+		DECLARE_MAP_FUNCTOR_CONST(CvUnit, const CvJsonUnitInfo&, getUnitInfo);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, const CvUnit*, getTransportUnit);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, BuildTypes, getBuildType);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, ImprovementTypes, getBuildTypeImprovement);

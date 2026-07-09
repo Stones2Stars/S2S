@@ -7,7 +7,7 @@
 #include "CvGameCoreDLL.h"
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
-#include "CvBuildingInfo.h"
+#include "CvJsonBuildingInfo.h"
 #include "CvCity.h"
 #include "UI/CvEventReporter.h"
 #include "CvEventSpine.h"
@@ -18,7 +18,7 @@
 #include "Tools/CvHttpServer.h"
 #include "Infrastructure/CvInitCore.h"
 #include "CvInfos.h"
-#include "CvUnitCombatInfo.h"
+#include "CvJsonUnitCombatInfo.h"
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "CvMap.h"
@@ -309,8 +309,9 @@ void CvGame::init(HandicapTypes eHandicap)
 
 	if (!isOption(GAMEOPTION_UNIT_GREAT_COMMANDERS))
 	{
-		foreach_(CvUnitInfo* info, GC.getUnitInfos())
+		for (int iUI = 0; iUI < GC.getNumUnitInfos(); ++iUI)
 		{
+			CvJsonUnitInfo* info = &GC.getUnitInfo((UnitTypes)iUI);
 			if (info->isGreatGeneral())
 			{
 				info->setPowerValue(info->getPowerValue() / 10);
@@ -1245,7 +1246,7 @@ void CvGame::initFreeState()
 
 	for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
 	{
-		const CvTechInfo& tech = GC.getTechInfo((TechTypes)iI);
+		const CvJsonTechInfo& tech = GC.getTechInfo((TechTypes)iI);
 
 		for (int iJ = 0; iJ < MAX_TEAMS; iJ++)
 		{
@@ -5405,8 +5406,9 @@ int CvGame::countNumReligionTechsDiscovered() const
 {
 	PROFILE_EXTRA_FUNC();
 	int iCount = 0;
-	foreach_(const CvReligionInfo* info, GC.getReligionInfos())
+	for (int iRI = 0; iRI < GC.getNumReligionInfos(); ++iRI)
 	{
+		const CvJsonReligionInfo* info = &GC.getReligionInfo((ReligionTypes)iRI);
 		if (countKnownTechNumTeams(info->getTechPrereq()) > 0)
 		{
 			iCount++;
@@ -6213,7 +6215,7 @@ void enumSpawnPlots(const CvSpawnInfo& spawnInfo, std::vector<CvPlot*>* plots)
 			return;
 		}
 	}
-	const CvUnitInfo& unitInfo = GC.getUnitInfo(spawnInfo.getUnitType());
+	const CvJsonUnitInfo& unitInfo = GC.getUnitInfo(spawnInfo.getUnitType());
 
 	const bool bNoTerrainFeatureBonus = spawnInfo.getTerrain().empty() && spawnInfo.getFeatures().empty() && spawnInfo.getBonuses().empty() && !spawnInfo.getPeaks();
 	const bool bHills = spawnInfo.getHills();
@@ -6528,7 +6530,7 @@ void CvGame::doSpawns(PlayerTypes ePlayer)
 				&& localUnitTypeCount * 100 / localAreaSize < iMaxLocalDensity * 100 / TotalLocalArea)
 				{
 					// Spawn a new unit
-					CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+					CvJsonUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
 					CvUnit* pUnit = GET_PLAYER(ePlayer).initUnit(eUnit, pPlot->getX(), pPlot->getY(), kUnit.getDefaultUnitAIType(), NO_DIRECTION, getSorenRandNum(10000, "AI Unit Birthmark"));
 					if (pUnit == NULL)
@@ -6884,7 +6886,7 @@ void CvGame::doHeadquarters()
 
 	for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
 	{
-		const CvCorporationInfo& kCorporation = GC.getCorporationInfo((CorporationTypes)iI);
+		const CvJsonCorporationInfo& kCorporation = GC.getCorporationInfo((CorporationTypes)iI);
 		if (!isCorporationFounded((CorporationTypes)iI))
 		{
 			const TechTypes eTechPrereq = kCorporation.getTechPrereq();
@@ -7151,7 +7153,7 @@ void CvGame::createBarbarianCities(bool bNeanderthal)
 }
 
 namespace {
-	bool isValidBarbarianSpawnUnit(const CvArea* area, const CvUnitInfo& unitInfo, const UnitTypes unitType)
+	bool isValidBarbarianSpawnUnit(const CvArea* area, const CvJsonUnitInfo& unitInfo, const UnitTypes unitType)
 	{
 		return unitInfo.getCombat() > 0 && !unitInfo.isOnlyDefensive()
 			// Make sure its the correct unit type for the area type (land or water)
@@ -7251,7 +7253,7 @@ void CvGame::createBarbarianUnits()
 
 			for (int iJ = 0; iJ < GC.getNumUnitInfos(); iJ++)
 			{
-				const CvUnitInfo& kUnit = GC.getUnitInfo((UnitTypes) iJ);
+				const CvJsonUnitInfo& kUnit = GC.getUnitInfo((UnitTypes) iJ);
 
 				if (isValidBarbarianSpawnUnit(pLoopArea, kUnit, (UnitTypes) iJ))
 				{
@@ -8630,7 +8632,7 @@ void CvGame::read(FDataStreamBase* pStream)
 
 			if (bReligionIsNew)
 			{
-				const CvReligionInfo& newReligion = GC.getReligionInfo((ReligionTypes)iI);
+				const CvJsonReligionInfo& newReligion = GC.getReligionInfo((ReligionTypes)iI);
 				const TechTypes eFoundingTech = newReligion.getTechPrereq();
 
 				setTechCanFoundReligion(eFoundingTech, false);
@@ -11419,7 +11421,7 @@ bool CvGame::canEverConstruct(BuildingTypes eBuilding) const
 	{
 		return false;
 	}
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	if (kBuilding.getPrereqGameOption() != NO_GAMEOPTION && !isOption((GameOptionTypes)kBuilding.getPrereqGameOption()))
 	{
@@ -11486,7 +11488,7 @@ bool CvGame::canEverTrain(UnitTypes eUnit) const
 	{
 		return false;
 	}
-	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+	const CvJsonUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
 	if (kUnit.getPrereqGameOption() != NO_GAMEOPTION && !isOption((GameOptionTypes)kUnit.getPrereqGameOption()))
 	{
@@ -11528,7 +11530,7 @@ bool CvGame::canEverSpread(CorporationTypes eCorporation) const
 }
 
 namespace {
-	bool validBarbarianShipUnit(const CvUnitInfo& unitInfo, const UnitTypes unitType)
+	bool validBarbarianShipUnit(const CvJsonUnitInfo& unitInfo, const UnitTypes unitType)
 	{
 		return unitInfo.getCombat() > 0 && !unitInfo.isOnlyDefensive()
 			&& unitInfo.getDomainType() == DOMAIN_LAND
@@ -11551,7 +11553,7 @@ void CvGame::loadPirateShip(CvUnit* pUnit)
 		int iBestValue = 0;
 		for (int iJ = 0; iJ < GC.getNumUnitInfos(); iJ++)
 		{
-			const CvUnitInfo& unitInfo = GC.getUnitInfo((UnitTypes) iJ);
+			const CvJsonUnitInfo& unitInfo = GC.getUnitInfo((UnitTypes) iJ);
 
 			if (validBarbarianShipUnit(unitInfo, (UnitTypes) iJ) && (!bSM || pUnit->cargoSpaceAvailable((SpecialUnitTypes)unitInfo.getSpecialUnitType(), unitInfo.getDomainType()) > 0))
 			{
@@ -11587,11 +11589,19 @@ void CvGame::loadPirateShip(CvUnit* pUnit)
 }
 
 
+// Phase-timed load logging: a slow recalc/load should SHOW where the time goes (grep `[RECALC] phase=`), so
+// "stuck vs just slow" is answerable from the log instead of a stack sample. Delta ms per phase + running total.
+#define S2S_LOAD_PHASE(nm) do { const DWORD _n = GetTickCount(); \
+	gDLL->logMsg("Loading.log", CvString::format("[RECALC] phase=%-24s ms=%u total=%u", nm, (unsigned)(_n - s2sTp), (unsigned)(_n - s2sT0)).c_str(), true, false); \
+	s2sTp = _n; } while (0)
+
 void CvGame::recalculateModifiers()
 {
 	OutputDebugString("Start profiling(false) for modifier recalc\n");
 	startProfilingDLL(false);
 	PROFILE_FUNC();
+	const DWORD s2sT0 = GetTickCount(); DWORD s2sTp = s2sT0;
+	gDLL->logMsg("Loading.log", "[RECALC] BEGIN modifier recalculation", true, false);
 
 	m_bRecalculatingModifiers = true;
 
@@ -11651,6 +11661,7 @@ void CvGame::recalculateModifiers()
 		// Toffer - Yield cache - Maybe not the perfect spot for this, but it should be done early.
 		plotX->recalculateBaseYield();
 	}
+	S2S_LOAD_PHASE("plots(clear+baseYield)");
 
 	for (int iI = 0; iI < MAX_TEAMS; iI++)
 	{
@@ -11695,8 +11706,10 @@ void CvGame::recalculateModifiers()
 		}
 	}
 
+	S2S_LOAD_PHASE("teams+voteSource");
 	updatePlotGroups(true);
 	updateTradeRoutes();
+	S2S_LOAD_PHASE("plotGroups+tradeRoutes");
 
 	//	Recheck for disabled buildings everywhere (this has to be done after plot group establishment
 	//	or else resource dependencies will mean it gets the wrong answer, which will in turn force
@@ -11714,12 +11727,16 @@ void CvGame::recalculateModifiers()
 		}
 	}
 
+	S2S_LOAD_PHASE("vicinity+checkBuildings");
 	GC.getMap().updateSight(true, false);
+	S2S_LOAD_PHASE("updateSight");
 
 	gDLL->getEngineIFace()->RebuildAllPlots();
+	S2S_LOAD_PHASE("RebuildAllPlots");
 
 	GC.getMap().setupGraphical();
 	GC.getMap().updateVisibility();
+	S2S_LOAD_PHASE("setupGraphical+visibility");
 #ifdef ENABLE_FOGWAR_DECAY
 	GC.getMap().InitFogDecay(true);
 	if (GC.getGame().isModderGameOption(MODDERGAMEOPTION_FOGWAR_DECAY))
@@ -11747,9 +11764,12 @@ void CvGame::recalculateModifiers()
 		}
 	}
 
+	S2S_LOAD_PHASE("finalCommerce");
+	gDLL->logMsg("Loading.log", CvString::format("[RECALC] END total=%ums", (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 	stopProfilingDLL(false);
 	OutputDebugString("Stop profiling(false) after modifier recalc\n");
 }
+#undef S2S_LOAD_PHASE
 
 CvProperties* CvGame::getProperties()
 {
@@ -11902,7 +11922,7 @@ void CvGame::changeImprovementCount(ImprovementTypes eIndex, int iChange)
 	FASSERT_NOT_NEGATIVE(getImprovementCount(eIndex));
 }
 
-bool CvGame::isValidByGameOption(const CvUnitCombatInfo& info) const
+bool CvGame::isValidByGameOption(const CvJsonUnitCombatInfo& info) const
 {
 	PROFILE_EXTRA_FUNC();
 	for (int iI = 0; iI < info.getNumNotOnGameOptions(); iI++)

@@ -29,14 +29,14 @@
 #include "Engine/CvGame.h"            // m_cascadeWorldScope
 #include "Engine/CvArea.h"
 #include "Engine/CvMap.h"             // the coastal gate's ocean-min-size
-#include "Infos/CvBuildingInfo.h"
-#include "Infos/CvUnitInfo.h"
-#include "Infos/CvProjectInfo.h"
+#include "CvJsonBuildingInfo.h"
+#include "CvJsonUnitInfo.h"
+#include "CvJsonProjectInfo.h"
 #include "Infos/CvWorldInfo.h"
-#include "Infos/CvTechInfo.h"          // the frontier fills (obsoletes.builds rem-set + promo tech halves)
+#include "CvJsonTechInfo.h"          // the frontier fills (obsoletes.builds rem-set + promo tech halves)
 #include "Infos/CvBuildInfo.h"         // enBuildUnlocked
-#include "Infos/CvPromotionInfo.h"     // enPromotionValid
-#include "Infos/CvUnitCombatInfo.h"    // enPromotionValid (the unitcombat HAVE leg)
+#include "CvJsonPromotionInfo.h"     // enPromotionValid
+#include "CvJsonUnitCombatInfo.h"    // enPromotionValid (the unitcombat HAVE leg)
 #include "CvCascadeTechCascade.h"      // TechCascade::available -- the researchable frontier
 #include "CvCascadeBuildingCascade.h"  // BuildingCascade::buildable -- the constructible frontier
 #include "CvCascadeUnitCascade.h"      // UnitCascade::trainable -- the trainable frontier
@@ -298,7 +298,7 @@ void CascadeAccumulator::refreshPlayerScope(const CvPlayer* pPlayer, int iMask)
 		ps.enBuildRem.clear();
 		for (int t = 0; t < GC.getNumTechInfos(); ++t)
 			if (kTeam.isHasTech((TechTypes)t))
-				EnablerKernel::addEdge(InfoRepo<CvTechInfo>::get().get(t), "obsoletes.builds", ps.enBuildRem);
+				EnablerKernel::addEdge(InfoRepo<CvJsonTechInfo>::get().get(t), "obsoletes.builds", ps.enBuildRem);
 	}
 	if (iMask & PSC_FRONT_PROMO)
 	{
@@ -311,7 +311,7 @@ void CascadeAccumulator::refreshPlayerScope(const CvPlayer* pPlayer, int iMask)
 		ps.enPromoTechCand.clear(); ps.enPromoTechRem.clear();
 		EnBucketSets pc, pr;
 		for (int t = 0; t < GC.getNumTechInfos(); ++t)
-			if (kTeam.isHasTech((TechTypes)t)) EnablerKernel::accumHave(InfoRepo<CvTechInfo>::get().get(t), pc, pr);
+			if (kTeam.isHasTech((TechTypes)t)) EnablerKernel::accumHave(InfoRepo<CvJsonTechInfo>::get().get(t), pc, pr);
 		ps.enPromoTechCand.swap(pc["promotions"]);
 		ps.enPromoTechRem.swap(pr["promotions"]);
 	}
@@ -641,8 +641,8 @@ bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 		memo.verdicts.clear();
 		EnBucketSets cand, rem;
 		for (int pr = 0; pr < nPromo; ++pr)
-			if (pUnit->isHasPromotion((PromotionTypes)pr)) EnablerKernel::accumHave(InfoRepo<CvPromotionInfo>::get().get(pr), cand, rem);
-		if (eUC != NO_UNITCOMBAT) EnablerKernel::accumHave(InfoRepo<CvUnitCombatInfo>::get().get((int)eUC), cand, rem);
+			if (pUnit->isHasPromotion((PromotionTypes)pr)) EnablerKernel::accumHave(InfoRepo<CvJsonPromotionInfo>::get().get(pr), cand, rem);
+		if (eUC != NO_UNITCOMBAT) EnablerKernel::accumHave(InfoRepo<CvJsonUnitCombatInfo>::get().get((int)eUC), cand, rem);
 		memo.uCand.clear(); memo.uRem.clear();
 		memo.uCand.swap(cand["promotions"]);
 		memo.uRem.swap(rem["promotions"]);
@@ -659,7 +659,7 @@ bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 	if (!s_rootedBuilt)
 	{
 		for (int t = 0; t < GC.getNumTechInfos(); ++t)
-			EnablerKernel::addEdge(InfoRepo<CvTechInfo>::get().get(t), "enables.promotions", s_enablerRooted);
+			EnablerKernel::addEdge(InfoRepo<CvJsonTechInfo>::get().get(t), "enables.promotions", s_enablerRooted);
 		s_rootedBuilt = true;
 	}
 	// the original algebra, copy-free: promoCand = (techCand + unitCand) - (techRem + unitRem);
@@ -668,7 +668,7 @@ bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 	const bool bInCand = ps.enPromoTechCand.count(ePromo) != 0 || uCand.count(ePromo) != 0;
 	const bool bUnlocked = !bInRem && (bInCand || s_enablerRooted.count(ePromo) == 0);
 	// the event-injection-only mirror (no qualified-unitcombat list => legacy refuses unless FREE)
-	const CvPromotionInfo& kPromo = GC.getPromotionInfo((PromotionTypes)ePromo);
+	const CvJsonPromotionInfo& kPromo = GC.getPromotionInfo((PromotionTypes)ePromo);
 	const bool bEventOnly = kPromo.getNumQualifiedUnitCombatTypes() == 0
 		&& !kPromo.isForOffset() && !kPromo.isZeroesXP()
 		&& !pUnit->getUnitInfo().getFreePromotions(ePromo)
@@ -677,7 +677,7 @@ bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 	CvCascadeEvalCtx ec;
 	ec.unit = pUnit; ec.player = &kPlayer; ec.team = &kTeam; ec.plot = pUnit->plot();
 	const bool bVerdict = bUnlocked && !bEventOnly
-		&& EnablerKernel::requiresMet(InfoRepo<CvPromotionInfo>::get().get(ePromo), ec)
+		&& EnablerKernel::requiresMet(InfoRepo<CvJsonPromotionInfo>::get().get(ePromo), ec)
 		&& pUnit->isPromotionValidLegacy((PromotionTypes)ePromo, true);
 	memo.verdicts[ePromo] = bVerdict;
 	return bVerdict;
@@ -743,10 +743,10 @@ static int acc_brSelf(const CvJsonInfo* d, const CvCity* pCity)
 int CascadeAccumulator::buildRateUnit(const CvCity* pCity, UnitTypes eUnit)
 {
 	if (pCity == NULL || eUnit == NO_UNIT) return 0;
-	const CvUnitInfo& unit = GC.getUnitInfo(eUnit);
+	const CvJsonUnitInfo& unit = GC.getUnitInfo(eUnit);
 	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
 	const CascadePlayerScope& ps = owner.m_cascadePlayerScope;
-	int iMod = acc_brSelf(InfoRepo<CvUnitInfo>::get().get((int)eUnit), pCity)
+	int iMod = acc_brSelf(InfoRepo<CvJsonUnitInfo>::get().get((int)eUnit), pCity)
 	         + acc_brLookup(pCity, &CascadeBrLedger::units, (int)eUnit);
 	if (!unit.isNoNonTypeProdMods())
 	{
@@ -770,9 +770,9 @@ int CascadeAccumulator::buildRateBuilding(const CvCity* pCity, BuildingTypes eBu
 {
 	if (pCity == NULL || eBuilding == NO_BUILDING) return 0;
 	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
-	int iMod = acc_brSelf(InfoRepo<CvBuildingInfo>::get().get((int)eBuilding), pCity)
+	int iMod = acc_brSelf(InfoRepo<CvJsonBuildingInfo>::get().get((int)eBuilding), pCity)
 	         + acc_brLookup(pCity, &CascadeBrLedger::buildings, (int)eBuilding);
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 	// the L11 folds (2026-07-05): the trait specialBuilding keyed leg + the wonder-category members
 	// (the legacy CvPlayer::getProductionModifier(Building) trait walks + max* accumulators)
 	iMod += acc_brLookup(pCity, &CascadeBrLedger::specialBuildings, (int)kBuilding.getSpecialBuilding());
@@ -788,7 +788,7 @@ int CascadeAccumulator::buildRateBuilding(const CvCity* pCity, BuildingTypes eBu
 int CascadeAccumulator::buildRateProject(const CvCity* pCity, ProjectTypes eProject)
 {
 	if (pCity == NULL || eProject == NO_PROJECT) return 0;
-	int iMod = acc_brSelf(InfoRepo<CvProjectInfo>::get().get((int)eProject), pCity);
+	int iMod = acc_brSelf(InfoRepo<CvJsonProjectInfo>::get().get((int)eProject), pCity);
 	if (GC.getProjectInfo(eProject).isSpaceship())
 		iMod += pCity->m_cascadeCityPackages.brCitySpace + GET_PLAYER(pCity->getOwner()).m_cascadePlayerScope.brEmpSpace;
 	return iMod;
@@ -824,7 +824,7 @@ void CascadeAccumulator::buildingProcessed(const CvCity* pCity, BuildingTypes eB
 	BuildingCascade::onBuildingChanged(pCity, (int)eBuilding);       // CPK_FRONT_B: targeted (reads the fresh operating buildings)
 	UnitCascade::onBuildingChangedUnits(pCity, (int)eBuilding);      // CPK_FRONT_U: targeted (reads the fresh operating buildings)
 
-	const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get((int)eBuilding);
+	const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get((int)eBuilding);
 	if (d == NULL) return;
 	static int segArea = -2, segEmpire = -2, segWorld = -2, segPercent = -2, segBuildings = -2;
 	if (segArea == -2)

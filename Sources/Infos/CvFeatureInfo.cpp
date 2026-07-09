@@ -12,3 +12,9 @@ const CvArtInfoFeature* CvFeatureInfo::getArtInfo() const
 {
 	return ARTFILEMGR.getFeatureArtInfo(getArtDefineTag());
 }
+
+const char* CvFeatureInfo::getButton() const   // art-define button (mirrors archived CvFeatureInfo::getButton)
+{
+	const CvArtInfoFeature* p = getArtInfo();
+	return p != NULL ? p->getButton() : "";
+}

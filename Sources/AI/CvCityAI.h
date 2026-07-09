@@ -710,7 +710,7 @@ protected:
 	bool AI_potentialPlot(short* piYields) const;
 	bool AI_foodAvailable(int iExtra = 0) const;
 
-	int AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, const CvBuildingInfo& kBuilding, bool bForeignTrade, int iFreeSpecialistYield) const;
+	int AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, const CvJsonBuildingInfo& kBuilding, bool bForeignTrade, int iFreeSpecialistYield) const;
 
 	void AI_getBestPlotValue(OutputRatios& ratios, int iPlotCounter, const CvPlot* plot, std::vector<plotInfo>& optimalYieldList) const;
 
@@ -743,7 +743,7 @@ protected:
 	int AI_getImprovementValue(const CvPlot* pPlot, ImprovementTypes eImprovement, int iFoodPriority, int iProductionPriority, int iCommercePriority, int iFoodChange) const;
 	void AI_getYieldMultipliers(int &iFoodMultiplier, int &iProductionMultiplier, int &iCommerceMultiplier, int &iDesiredFoodChange) const;
 
-	int tradeRouteValue(const CvBuildingInfo& kBuilding, YieldTypes eYield, bool bForeignTrade) const;
+	int tradeRouteValue(const CvJsonBuildingInfo& kBuilding, YieldTypes eYield, bool bForeignTrade) const;
 
 	void AI_buildGovernorChooseProduction();
 
@@ -804,21 +804,21 @@ private:
 
 	int AI_getBuildingYieldValue
 	(
-		BuildingTypes eBuilding, const CvBuildingInfo& kBuilding, bool bIsLimitedWonder, bool bForeignTrade, bool bFinancialTrouble,
+		BuildingTypes eBuilding, const CvJsonBuildingInfo& kBuilding, bool bIsLimitedWonder, bool bForeignTrade, bool bFinancialTrouble,
 		int* aiFreeSpecialistYield, int* aiYieldRank, int iLimitedWonderLimit, const CvArea* pArea, int iTotalPopulation, int iFoodDifference
 	)
 	const;
 
 	int AI_getBuildingProductionValue
 	(
-		BuildingTypes eBuilding, const CvBuildingInfo& kBuilding, bool bIsLimitedWonder,
+		BuildingTypes eBuilding, const CvJsonBuildingInfo& kBuilding, bool bIsLimitedWonder,
 		bool bForeignTrade, int iFreeSpecialistYield, int iYieldRank, int iLimitedWonderLimit
 	)
 	const;
 
 	int AI_getBuildingCommerceValue
 	(
-		BuildingTypes eBuilding, const CvBuildingInfo& kBuilding, bool bIsLimitedWonder, bool bFinancialTrouble, bool bCulturalVictory1,
+		BuildingTypes eBuilding, const CvJsonBuildingInfo& kBuilding, bool bIsLimitedWonder, bool bFinancialTrouble, bool bCulturalVictory1,
 		int* aiFreeSpecialistYield, int* aiFreeSpecialistCommerce, int* aiBaseCommerceRate, int* aiPlayerCommerceRate, int* aiCommerceRank,
 		int iLimitedWonderLimit, int iTotalPopulation
 	)
@@ -831,7 +831,7 @@ private:
 	int worstWorkedPlotValue() const;
 	//	Evaluate a building we are considering building here in terms of its
 	//	effect on properties
-	int buildingPropertiesValue(const CvBuildingInfo& kBuilding) const;
+	int buildingPropertiesValue(const CvJsonBuildingInfo& kBuilding) const;
 
 	bool AI_establishSeeInvisibleCoverage();
 	bool AI_establishInvestigatorCoverage();

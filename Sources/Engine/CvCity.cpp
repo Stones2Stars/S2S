@@ -5,7 +5,7 @@
 #include "AI/BetterBTSAI.h" // logCityAI ([CIT/produced] / [CIT/waste] production-pipeline logging)
 #include "CvArea.h"
 #include "UI/CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
+#include "CvJsonBuildingInfo.h"
 #include "CvCity.h"
 #include "AI/CvContractBroker.h"
 #include "Infrastructure/CvDLLEntity.h"
@@ -33,7 +33,7 @@
 #include "Cascade/CvCascadeEnablerKernel.h" // EnablerKernel::recomputeOperatingBuildingsInto -- the operating buildings cache's refresh delegate target
 #include "AI/CvCityLogTags.h" // [CIT] tag enums (shared with CvCityAI.cpp -- defined once, see header)
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
-#include "CvTraitInfo.h"
+#include "CvJsonTraitInfo.h"
 #include "Repos/BuildingsRepo.h"
 #ifdef THE_GREAT_WALL
 #include "Infrastructure/CvDLLEngineIFaceBase.h"
@@ -1501,7 +1501,7 @@ void CvCity::doAutobuild()
 	// Auto-build any auto-build buildings we can
 	foreach_(const BuildingTypes eBuilding, BuildingsRepo::get().autoBuildings())
 	{
-		const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+		const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 		if (!hasBuilding(eBuilding))
 		{
 			if (canConstruct(eBuilding, false, false, true))
@@ -1961,7 +1961,7 @@ bool CvCity::isPlotTrainable(UnitTypes eUnit, bool bTestVisible) const
 
 	if (!bTestVisible)
 	{
-		const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+		const CvJsonUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 		const CvPlayer& pPlayer = GET_PLAYER(getOwner());
 
 		if (kUnit.isStateReligion() && pPlayer.getStateReligion() != NO_RELIGION && !isHasReligion(pPlayer.getStateReligion()))
@@ -2071,7 +2071,7 @@ UnitTypes CvCity::allUpgradesAvailable(UnitTypes eUnit, int iUpgradeCount) const
 
 		if (iUpgradeCount <= iNumUnitInfos)
 		{
-			const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+			const CvJsonUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
 			UnitTypes eUpgradeUnit = NO_UNIT;
 
@@ -2209,7 +2209,7 @@ bool CvCity::canTrainInternal(UnitTypes eUnit, bool bContinue, bool bTestVisible
 	{
 		return false;
 	}
-	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+	const CvJsonUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
 	if (kUnit.getPrereqReligion() != NO_RELIGION && !isHasReligion((ReligionTypes)kUnit.getPrereqReligion()))
 	{
@@ -2615,7 +2615,7 @@ bool CvCity::canConstructInternal(BuildingTypes eBuilding, bool bContinue, bool 
 		return false;
 	}
 
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	if (GC.getCivilizationInfo(getCivilizationType()).isStronglyRestricted() && isNPC())
 	{
@@ -3272,7 +3272,7 @@ int CvCity::getProductionExperience(UnitTypes eUnit) const
 
 	if (eUnit != NO_UNIT)
 	{
-		const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+		const CvJsonUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
 		if (kUnit.isSpy() && !GC.isSS_ENABLED())
 		{
@@ -3900,7 +3900,7 @@ void CvCity::changeProduction(int iChange)
 	}
 	else if (isProductionProcess())
 	{
-		const CvProcessInfo& kProcess = GC.getProcessInfo(getProductionProcess());
+		const CvJsonProcessInfo& kProcess = GC.getProcessInfo(getProductionProcess());
 
 		//	Add gold and espionage directly to player totals
 		GET_PLAYER(getOwner()).changeGold((kProcess.getProductionToCommerceModifier(COMMERCE_GOLD) * iChange) / 100);
@@ -3959,7 +3959,7 @@ int CvCity::getProductionModifier(UnitTypes eUnit) const
 int CvCity::getProductionModifierLegacy(UnitTypes eUnit) const
 {
 	PROFILE_EXTRA_FUNC();
-	const CvUnitInfo& unit = GC.getUnitInfo(eUnit);
+	const CvJsonUnitInfo& unit = GC.getUnitInfo(eUnit);
 	int iMultiplier = GET_PLAYER(getOwner()).getProductionModifier(eUnit);
 
 	iMultiplier += getUnitProductionModifier(eUnit);
@@ -4660,7 +4660,7 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	CvPlayer& owner = GET_PLAYER(getOwner());
 
 	// Process the building
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	if (!bReligiously && kBuilding.isOrbitalInfrastructure())
 	{
@@ -7391,7 +7391,7 @@ int CvCity::getAdditionalGreatPeopleRateByBuilding(BuildingTypes eBuilding) cons
 		-
 		iRate * iModifier / 100
 	);
-	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& building = GC.getBuildingInfo(eBuilding);
 
 	for (int iI = 0; iI < building.getNumReplacedBuilding(); iI++)
 	{
@@ -7415,7 +7415,7 @@ int CvCity::getAdditionalBaseGreatPeopleRateByBuilding(BuildingTypes eBuilding) 
 	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
 
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 	int iExtraRate = kBuilding.getGreatPeopleRateChange();
 
 	// Specialists
@@ -7461,7 +7461,7 @@ int CvCity::getAdditionalGreatPeopleRateModifierByBuilding(BuildingTypes eBuildi
 {
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
 
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	return kBuilding.getGreatPeopleRateModifier() + kBuilding.getGlobalGreatPeopleRateModifier();
 }
@@ -7591,7 +7591,7 @@ int CvCity::getSavedMaintenanceTimes100ByBuilding(BuildingTypes eBuilding) const
 	{
 		return 0;
 	}
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	const int iModifier =
 	(
@@ -8607,7 +8607,7 @@ int CvCity::getBuildingBadHappiness() const
 int CvCity::getBuildingHappiness(BuildingTypes eBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
-	const CvBuildingInfo& info = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& info = GC.getBuildingInfo(eBuilding);
 	int iHappiness =
 	(
 		info.getHappiness()
@@ -8731,7 +8731,7 @@ int CvCity::getAdditionalHappinessByCivic(CivicTypes eCivic, bool bDifferenceToC
 		return 0;
 	}
 
-	const CvCivicInfo& kCivic = GC.getCivicInfo(eCivic);
+	const CvJsonCivicInfo& kCivic = GC.getCivicInfo(eCivic);
 	const CvPlayer& kOwner = GET_PLAYER(getOwner());
 	if (eStateReligion == NO_RELIGION)
 	{
@@ -8908,7 +8908,7 @@ int CvCity::getAdditionalHealthByCivic(CivicTypes eCivic, int& iGood, int& iBad,
 		return 0;
 	}
 
-	const CvCivicInfo& kCivic = GC.getCivicInfo(eCivic);
+	const CvJsonCivicInfo& kCivic = GC.getCivicInfo(eCivic);
 	CvPlayer& kOwner = GET_PLAYER(getOwner());
 
 	if (!bCivicOptionVacuum)
@@ -9058,7 +9058,7 @@ int CvCity::getAdditionalHappinessByBuilding(BuildingTypes eBuilding, int& iGood
 
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
 
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	int iStarting = iGood - iBad;
 	int iStartingBad = iBad;
@@ -9233,7 +9233,7 @@ int CvCity::getAdditionalHealthByBuilding(BuildingTypes eBuilding, int& iGood, i
 
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
 
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	const int iStarting = iGood - iBad;
 	const int iStartingBad = iBad;
@@ -10713,7 +10713,7 @@ int CvCity::getCultureThreshold() const
 
 	for (int i = 0; i < iNumCultureLevels; i++)
 	{
-		const CvCultureLevelInfo& info = GC.getCultureLevelInfo(static_cast<CultureLevelTypes>(i));
+		const CvJsonCultureLevelInfo& info = GC.getCultureLevelInfo(static_cast<CultureLevelTypes>(i));
 
 		if (info.getLevel() > -1 && iCulture < info.getSpeedThreshold(eSpeed))
 		{
@@ -10824,7 +10824,7 @@ void CvCity::updateCultureLevel(bool bUpdatePlotGroups)
 		// Will set culture level to that indexed by xml, but only if matches option of current game
 		for (int iI = GC.getNumCultureLevelInfos() - 1; iI > 0; iI--)
 		{
-			const CvCultureLevelInfo& info = GC.getCultureLevelInfo(static_cast<CultureLevelTypes>(iI));
+			const CvJsonCultureLevelInfo& info = GC.getCultureLevelInfo(static_cast<CultureLevelTypes>(iI));
 
 			if (info.getLevel() > -1 && iCulture >= info.getSpeedThreshold(eSpeed))
 			{
@@ -11063,7 +11063,7 @@ int CvCity::getYieldChangeAt(const CvPlot* pPlot, const YieldTypes eYield) const
 // Toffer - Base yield directly produced by building, not indirectly through trade, plots, specialists, modifiers, etc.
 int CvCity::getBaseYieldRateFromBuilding100(const YieldTypes eYield, const BuildingTypes eBuilding) const
 {
-	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& building = GC.getBuildingInfo(eBuilding);
 	return (
 		building.getYieldChange(eYield) * 100
 		+
@@ -11083,7 +11083,7 @@ int CvCity::getBaseYieldRateFromBuilding100(const YieldTypes eYield, const Build
 int CvCity::getAdditionalYieldByBuilding(YieldTypes eIndex, BuildingTypes eBuilding, bool bFilter) const
 {
 	PROFILE_EXTRA_FUNC();
-	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& building = GC.getBuildingInfo(eBuilding);
 
 	const int iBase = getBaseYieldRate(eIndex);
 	const int iMod = getBaseYieldRateModifier(eIndex);
@@ -11126,7 +11126,7 @@ int CvCity::getAdditionalBaseYieldByBuilding(YieldTypes eIndex, BuildingTypes eB
 
 	int iBaseYield = 0;
 
-	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& building = GC.getBuildingInfo(eBuilding);
 
 	if (building.getRiverPlotYieldChange(eIndex) != 0)
 	{
@@ -11145,7 +11145,7 @@ int CvCity::getAdditionalBaseYieldByBuilding(YieldTypes eIndex, BuildingTypes eB
 int CvCity::getAdditionalExtraYieldByBuilding(YieldTypes eIndex, BuildingTypes eBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
-	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& building = GC.getBuildingInfo(eBuilding);
 
 	int iExtraYield = getBaseYieldRateFromBuilding100(eIndex, eBuilding) / 100;
 
@@ -11286,7 +11286,7 @@ int CvCity::getAdditionalBaseYieldModifierByBuilding(YieldTypes eYield, Building
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eYield);
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
 
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	int iYieldMod = kBuilding.getYieldModifier(eYield);
 
@@ -11508,7 +11508,7 @@ int CvCity::getBuildingExtraYield100(YieldTypes eYield) const
 	foreach_(const BuildingTypes eB, getHasBuildings())
 	{
 		if (!hasFullyActiveBuilding(eB)) continue;
-		const CvBuildingInfo& kB = GC.getBuildingInfo(eB);
+		const CvJsonBuildingInfo& kB = GC.getBuildingInfo(eB);
 		// static (getYieldChange ×100) + tech (getBuildingYieldTechChange, already ×100), per building -- exactly what
 		// m_buildingExtraYield100 SHOULD hold. The per-city DYNAMIC (getBuildingYieldChange, event/bonus-set) is NOT
 		// here: it lives in m_aiExtraYield (the cascade reads it as CityExtraYield) -- adding it would double-count.
@@ -12436,7 +12436,7 @@ int CvCity::getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eB
 	if (!isActiveBuilding(eBuilding) && !bTestVisible)
 		return 0;
 
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 	const CvPlayer& kOwner = GET_PLAYER(getOwner());
 	const CvTeam& kTeam = GET_TEAM(getTeam());
 
@@ -12543,7 +12543,7 @@ int CvCity::getAdditionalCommerceTimes100ByBuilding(CommerceTypes eIndex, Buildi
 	);
 	int iExtraTimes100 = iCommerceWithBuilding - iCommerceWithoutBuilding;
 
-	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& building = GC.getBuildingInfo(eBuilding);
 
 	for (int iI = 0; iI < building.getNumReplacedBuilding(); iI++)
 	{
@@ -12568,7 +12568,7 @@ int CvCity::getBaseCommerceRateFromBuilding100(CommerceTypes eIndex, BuildingTyp
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuilding);
 
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	int iExtraRate100 = 100 * kBuilding.getCommerceChange(eIndex);
 	if (iExtraRate100 < 0 && eIndex == COMMERCE_GOLD && GC.getTREAT_NEGATIVE_GOLD_AS_MAINTENANCE())
@@ -12679,7 +12679,7 @@ int CvCity::getAdditionalCommerceRateModifierByBuilding(CommerceTypes eIndex, Bu
 	{
 		return 0;
 	}
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	int iMod = kBuilding.getCommerceModifier(eIndex) + kBuilding.getGlobalCommerceModifier(eIndex);
 
@@ -13241,7 +13241,7 @@ int CvCity::getBuildingCommerceModifier(CommerceTypes eIndex) const
 	{
 		const BuildingTypes eB = (BuildingTypes)iB;
 		if (!isActiveBuilding(eB)) continue;
-		const CvBuildingInfo& kB = GC.getBuildingInfo(eB);
+		const CvJsonBuildingInfo& kB = GC.getBuildingInfo(eB);
 		iMod += kB.getCommerceModifier(eIndex) + kOwner.getBuildingCommerceModifier(eB, eIndex);
 		foreach_(const TechCommerceArray& pair, kB.getTechCommerceModifiers())
 			if (kTeam.isHasTech(pair.first))
@@ -14777,7 +14777,7 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 
 	if (bNewValue != hasBuilding(eType))
 	{
-		const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eType);
+		const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eType);
 
 		// Changing the buildings in a city invaldiates lots of cached data so flush the caches
 		if (kBuilding.EnablesOtherBuildings())
@@ -14846,7 +14846,7 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 				else
 				{
 					bool bEnableBuilding = true;
-					const CvBuildingInfo& replaced = GC.getBuildingInfo(eReplaced);
+					const CvJsonBuildingInfo& replaced = GC.getBuildingInfo(eReplaced);
 					for (int iJ = 0; iJ < replaced.getNumReplacementBuilding(); ++iJ)
 					{
 						if (hasBuilding((BuildingTypes)replaced.getReplacementBuilding(iJ)))
@@ -14892,7 +14892,7 @@ void CvCity::handleBuildingCounts(const BuildingTypes eBuilding, const int iChan
 
 
 // Toffer - Function added only for readability reasons.
-void CvCity::setupBuilding(const CvBuildingInfo& kBuilding, const BuildingTypes eType, const bool bNewValue, const bool bFirst)
+void CvCity::setupBuilding(const CvJsonBuildingInfo& kBuilding, const BuildingTypes eType, const bool bNewValue, const bool bFirst)
 {
 	PROFILE_EXTRA_FUNC();
 	const int iChange = bNewValue ? 1 : -1;
@@ -15330,7 +15330,7 @@ void CvCity::checkReligiousDisabling(const BuildingTypes eBuilding, const CvPlay
 	{
 		return;
 	}
-	const CvBuildingInfo& building = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& building = GC.getBuildingInfo(eBuilding);
 
 	const ReligionTypes eReligion = (ReligionTypes)building.getReligionType();
 	const ReligionTypes eReligionReq = (ReligionTypes)building.getPrereqReligion();
@@ -18740,7 +18740,7 @@ void CvCity::getVisibleBuildings(std::list<BuildingTypes>& kChosenVisible, int& 
 	foreach_(const BuildingTypes eType, getHasBuildings())
 	{
 		bool bValid = false;
-		const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eType);
+		const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eType);
 
 		if (kBuilding.getNotShowInCity()) continue;
 
@@ -19031,7 +19031,7 @@ bool CvCity::isValidBuildingLocation(BuildingTypes eBuilding) const
 {
 	PROFILE_FUNC();
 
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 	// if both the river and water flags are set, we require one of the two conditions, not both
 	if (kBuilding.isWater())
 	{
@@ -20663,7 +20663,7 @@ int CvCity::getBonusCommercePercentChanges(CommerceTypes eIndex, BuildingTypes e
 	{
 		return 0;
 	}
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 	int iPercentCommerce = 0;
 	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 	{
@@ -20943,7 +20943,7 @@ void CvCity::doPromotion()
 		{
 			continue;
 		}
-		const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+		const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 		if (kBuilding.isApplyFreePromotionOnMove() && !kBuilding.getFreePromoTypes().empty())
 		{
@@ -20966,7 +20966,7 @@ bool CvCity::isValidTerrainForBuildings(BuildingTypes eBuilding) const
 	const int iTerrainPeak = (int)GC.getTERRAIN_PEAK();
 	const int iTerrainHill = (int)GC.getTERRAIN_HILL();
 
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	// Terrain checks requires owned tile
 	bool bRequiresTerrain = false;
@@ -21154,7 +21154,7 @@ int CvCity::getAdditionalDefenseByBuilding(BuildingTypes eBuilding) const
 	int iExtraRate = 0;
 	int iExtraBuildingRate = 0;
 
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	if (kBuilding.getDefenseModifier() != 0)
 	{
@@ -21181,7 +21181,7 @@ int CvCity::getAdditionalDefenseByBuilding(BuildingTypes eBuilding) const
 
 		if (isActiveBuilding(eBuildingX))
 		{
-			const CvBuildingInfo& info = GC.getBuildingInfo(eBuildingX);
+			const CvJsonBuildingInfo& info = GC.getBuildingInfo(eBuildingX);
 
 			iExtraBuildingRate -= info.getDefenseModifier();
 			for (int iJ = 0; iJ < GC.getNumBonusInfos(); iJ++)
@@ -21230,7 +21230,7 @@ void CvCity::checkBuildings(bool bAlertOwner)
 		bool bPopulationTooHigh = false;
 		bool bReligionBanned = false;
 
-		const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eType);
+		const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eType);
 
 		while (true) // This loop will never actually loop.
 		{
@@ -21581,8 +21581,9 @@ static bool bonusAvailableFromBuildings(BonusTypes eBonus)
 
 		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 		{
-			foreach_(const CvBuildingInfo* pBuilding, GC.getBuildingInfos())
+			for (int iBI = 0; iBI < GC.getNumBuildingInfos(); ++iBI)
 			{
+				const CvJsonBuildingInfo* pBuilding = &GC.getBuildingInfo((BuildingTypes)iBI);
 				if (pBuilding->getFreeBonuses().hasValue((BonusTypes)iI))
 				{
 					bBonusAvailability[iI] = true;
@@ -21739,7 +21740,7 @@ bool CvCity::hasRawVicinityBonus(BonusTypes eBonus) const
 	{
 		for (int iI = 0; iI < numBuildingInfos; ++iI)
 		{
-			const CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iI);
+			const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iI);
 			if (kBuilding.getFreeBonuses().hasValue(eBonus) && isActiveBuilding((BuildingTypes)iI))
 			{
 				if (!GC.getGame().isMPOption(MPOPTION_SIMULTANEOUS_TURNS))
@@ -21797,7 +21798,7 @@ void CvCity::doVicinityBonus()
 		{
 			for (int iJ = 0; iJ < GC.getNumBuildingInfos(); iJ++)
 			{
-				const CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iJ);
+				const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iJ);
 
 				if (kBuilding.getVicinityBonusYieldChanges(NO_BONUS, NO_YIELD) != 0 && isActiveBuilding((BuildingTypes)iJ))
 				{
@@ -22588,7 +22589,7 @@ void CvCity::removeWorstCitizenActualEffects(int iNumCitizens, int& iGreatPeople
 	{
 		if (paeRemovedSpecailists[iI] != NO_SPECIALIST)
 		{
-			const CvSpecialistInfo& kSpecialist = GC.getSpecialistInfo(paeRemovedSpecailists[iI]);
+			const CvJsonSpecialistInfo& kSpecialist = GC.getSpecialistInfo(paeRemovedSpecailists[iI]);
 			iHappiness -= kSpecialist.getHappinessPercent();
 			iHealthiness -= kSpecialist.getHealthPercent();
 			iGreatPeopleRate -= kSpecialist.getGreatPeopleRateChange();
@@ -22959,7 +22960,7 @@ void CvCity::recalculateModifiers()
 	{
 		foreach_(const BuildingTypes eTypeX, getHasBuildings())
 		{
-			const CvBuildingInfo& info = GC.getBuildingInfo(eTypeX);
+			const CvJsonBuildingInfo& info = GC.getBuildingInfo(eTypeX);
 
 			// #430 obsoletion FLIP (owner 2026-07-07): an obsolete building STAYS -- the cascade delivers its
 			// `whenObsolete` tree (json §4.2), replacing the legacy remove + getObsoletesToBuilding successor swap.
@@ -23353,7 +23354,7 @@ void CvCity::changeUnitCombatDefenseAgainstModifierTotal(UnitCombatTypes eIndex,
 }
 
 
-void CvCity::assignPromotionsFromBuildingChecked(const CvBuildingInfo& building, CvUnit* unit) const
+void CvCity::assignPromotionsFromBuildingChecked(const CvJsonBuildingInfo& building, CvUnit* unit) const
 {
 	PROFILE_EXTRA_FUNC();
 	foreach_(const FreePromoTypes& freePromoType, building.getFreePromoTypes())

@@ -5,9 +5,59 @@
 //	See header.
 //
 
-#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson, GC
 #include "CvJsonHeritageInfo.h"
+#include "CvJsonTechInfo.h"       // getPrereqTech reverse scan reads GC.getTechInfo(i).getEdges() -- needs the full type (C2027)
 #include "CvJsonParse.h"          // the shared walkers (jsonChildObj/jsonIdBool)
+
+// Reverse-scan the FORWARD enables.heritages edges the curator store-inverts the two acquisition prereqs onto
+// (curate_heritage.py DROP + store inversion): the tech that lists THIS heritage in enables.heritages is its
+// PrereqTech (legacy single); every OTHER heritage that lists THIS heritage in enables.heritages is one of its
+// PrereqOrHeritage predecessors (the folklore->taxon succession). Lazy + memoized -- the scan needs every tech/
+// heritage poco loaded, which holds at every runtime/UI caller (canAddHeritage, CvGameTextMgr) but not during load.
+void CvJsonHeritageInfo::resolvePrereqs() const
+{
+	if (m_bPrereqsResolved) return;
+	m_bPrereqsResolved = true;
+
+	const int iThis = GC.getInfoTypeForString(getType(), true);   // this heritage's own registered id
+	if (iThis < 0) return;
+
+	// PrereqTech: the (single, legacy) tech whose enables.heritages includes this heritage.
+	for (int t = 0; t < GC.getNumTechInfos() && m_iPrereqTech == NO_TECH; ++t)
+	{
+		const CvJsonEdges* pEdges = GC.getTechInfo((TechTypes)t).getEdges();
+		if (pEdges == NULL) continue;
+		const std::vector<int>* pList = pEdges->find("enables.heritages");
+		if (pList == NULL) continue;
+		for (size_t k = 0; k < pList->size(); ++k)
+			if ((*pList)[k] == iThis) { m_iPrereqTech = t; break; }
+	}
+
+	// PrereqOrHeritage: every heritage whose enables.heritages includes this heritage (its predecessor succession).
+	for (int h = 0; h < GC.getNumHeritageInfos(); ++h)
+	{
+		if (h == iThis) continue;
+		const CvJsonEdges* pEdges = GC.getHeritageInfo((HeritageTypes)h).getEdges();
+		if (pEdges == NULL) continue;
+		const std::vector<int>* pList = pEdges->find("enables.heritages");
+		if (pList == NULL) continue;
+		for (size_t k = 0; k < pList->size(); ++k)
+			if ((*pList)[k] == iThis) { m_prereqOrHeritage.push_back((HeritageTypes)h); break; }
+	}
+}
+
+int CvJsonHeritageInfo::getPrereqTech() const
+{
+	resolvePrereqs();
+	return m_iPrereqTech;
+}
+
+const std::vector<HeritageTypes>& CvJsonHeritageInfo::getPrereqOrHeritage() const
+{
+	resolvePrereqs();
+	return m_prereqOrHeritage;
+}
 
 int CvJsonHeritageInfo::getEraCommerceChange(int iCommerce, int iEra) const
 {
@@ -59,4 +109,19 @@ void CvJsonHeritageInfo::mapFrom(const picojson::value& entity)
 
 	if (const picojson::object* io = jsonChildObj(o, "identity"))
 		m_bNeedsLanguage = jsonIdBool(*io, "needsLanguage");
+
+	// archived getEraCommerceChanges100 reconstruction -- REAL: same bands just parsed above, ×100 (CentiCommerce),
+	// keyed by the actual EraTypes (ordinal-1; see header comment). eraMin==0 is the "always-on" sentinel (bare/
+	// unconditioned flat entries above) -> era 0, which an `>=`/`==` era-threshold consumer treats correctly.
+	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
+	{
+		const std::vector<EraBand>& bands = m_aEraCommerce[c];
+		for (size_t i = 0; i < bands.size(); ++i)
+		{
+			const EraTypes eEra = (bands[i].eraMin > 0) ? (EraTypes)(bands[i].eraMin - 1) : (EraTypes)0;
+			CommerceArray kArr; kArr.fill(0);
+			kArr[c] = bands[i].value * 100;
+			m_eraCommerceChanges100.addArrayValue(eEra, kArr);
+		}
+	}
 }

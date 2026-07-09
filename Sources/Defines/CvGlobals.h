@@ -60,7 +60,7 @@ class CvBonusInfo;
 class CvFeatureInfo;
 class CvCivilizationInfo;
 class CvLeaderHeadInfo;
-class CvTraitInfo;
+class CvJsonTraitInfo;
 class CvCursorInfo;
 class CvThroneRoomCamera;
 class CvThroneRoomInfo;
@@ -69,7 +69,7 @@ class CvSlideShowInfo;
 class CvSlideShowRandomInfo;
 class CvWorldPickerInfo;
 class CvSpaceShipInfo;
-class CvUnitInfo;
+class CvJsonUnitInfo;
 class CvSpawnInfo;
 class CvSpecialUnitInfo;
 class CvInfoBase;
@@ -82,29 +82,29 @@ class CvBuildInfo;
 class CvHandicapInfo;
 class CvGameSpeedInfo;
 class CvTurnTimerInfo;
-class CvProcessInfo;
+class CvJsonProcessInfo;
 class CvVoteInfo;
-class CvProjectInfo;
-class CvBuildingInfo;
+class CvJsonProjectInfo;
+class CvJsonBuildingInfo;
 class CvSpecialBuildingInfo;
 class CvActionInfo;
 class CvMissionInfo;
 class CvControlInfo;
 class CvCommandInfo;
 class CvAutomateInfo;
-class CvPromotionInfo;
-class CvTechInfo;
-class CvReligionInfo;
-class CvCorporationInfo;
-class CvSpecialistInfo;
-class CvCivicOptionInfo;
-class CvCivicInfo;
+class CvJsonPromotionInfo;
+class CvJsonTechInfo;
+class CvJsonReligionInfo;
+class CvJsonCorporationInfo;
+class CvJsonSpecialistInfo;
+class CvJsonCivicOptionInfo;
+class CvJsonCivicInfo;
 class CvDiplomacyInfo;
 class CvEraInfo;
 class CvHurryInfo;
 class CvEmphasizeInfo;
 class CvUpkeepInfo;
-class CvCultureLevelInfo;
+class CvJsonCultureLevelInfo;
 class CvVictoryInfo;
 class CvGameOptionInfo;
 class CvMPOptionInfo;
@@ -117,16 +117,16 @@ class CvEspionageMissionInfo;
 class CvUnitArtStyleTypeInfo;
 class CvVoteSourceInfo;
 class CvMainMenuInfo;
-class CvPropertyInfo;
+class CvJsonPropertyInfo;
 class CvOutcomeInfo;
-class CvUnitCombatInfo;
-class CvPromotionLineInfo;
+class CvJsonUnitCombatInfo;
+class CvJsonPromotionLineInfo;
 class CvMapCategoryInfo;
 class CvIdeaClassInfo;
 class CvIdeaInfo;
 class CvInvisibleInfo;
 class CvCategoryInfo;
-class CvHeritageInfo;
+class CvJsonHeritageInfo;
 //class CvTraitOptionEditsInfo;
 class CvModLoadControlInfo;
 class CvMapInfo;
@@ -150,6 +150,7 @@ class cvInternalGlobals
 	: private bst::noncopyable
 {
 	friend class CvXMLLoadUtility;
+	template <class TTag> friend class InfoRepo;   // #430: InfoRepo aliases the m_pa<X>Info arrays (option B)
 public:
 
 	// singleton accessor
@@ -406,8 +407,8 @@ public:
 	CvLeaderHeadInfo& getLeaderHeadInfo(LeaderHeadTypes eLeaderHeadNum) const;
 
 	int getNumTraitInfos() const;
-	CvTraitInfo& getTraitInfo(TraitTypes eTraitNum) const;
-	const std::vector<CvTraitInfo*>& getTraitInfos() const { return m_paTraitInfo; }
+	CvJsonTraitInfo& getTraitInfo(TraitTypes eTraitNum) const;
+	const std::vector<CvJsonTraitInfo*>& getTraitInfos() const { return m_paTraitInfo; }
 
 	int getNumCursorInfos() const;
 	CvCursorInfo& getCursorInfo(CursorTypes eCursorNum) const;
@@ -434,8 +435,8 @@ public:
 	CvSpaceShipInfo& getSpaceShipInfo(int iIndex) const;
 
 	int getNumUnitInfos() const;
-	CvUnitInfo& getUnitInfo(UnitTypes eUnitNum) const;
-	const std::vector<CvUnitInfo*>& getUnitInfos() const { return m_paUnitInfo; }
+	CvJsonUnitInfo& getUnitInfo(UnitTypes eUnitNum) const;
+	const std::vector<CvJsonUnitInfo*>& getUnitInfos() const { return m_paUnitInfo; }
 
 	int getNumSpawnInfos() const;
 	CvSpawnInfo& getSpawnInfo(SpawnTypes eSpawnNum) const;
@@ -450,7 +451,7 @@ public:
 	CvInfoBase& getNewConceptInfo(NewConceptTypes e) const;
 
 	int getNumPropertyInfos() const;
-	CvPropertyInfo& getPropertyInfo(PropertyTypes ePropertyNum) const;
+	CvJsonPropertyInfo& getPropertyInfo(PropertyTypes ePropertyNum) const;
 
 	int getNumOutcomeInfos() const;
 	CvOutcomeInfo& getOutcomeInfo(OutcomeTypes eOutcomeNum) const;
@@ -482,18 +483,18 @@ public:
 	CvCategoryInfo& getCategoryInfo(CategoryTypes e) const;
 
 	int getNumHeritageInfos() const;
-	CvHeritageInfo& getHeritageInfo(HeritageTypes e) const;
+	CvJsonHeritageInfo& getHeritageInfo(HeritageTypes e) const;
 
 	int getNumVoteSourceInfos() const;
 	CvVoteSourceInfo& getVoteSourceInfo(VoteSourceTypes e) const;
 
 	int getNumUnitCombatInfos() const;
-	CvUnitCombatInfo& getUnitCombatInfo(UnitCombatTypes e) const;
+	CvJsonUnitCombatInfo& getUnitCombatInfo(UnitCombatTypes e) const;
 
 	CvInfoBase& getDomainInfo(DomainTypes e) const;
 
 	int getNumPromotionLineInfos() const;
-	CvPromotionLineInfo& getPromotionLineInfo(PromotionLineTypes e) const;
+	CvJsonPromotionLineInfo& getPromotionLineInfo(PromotionLineTypes e) const;
 
 	int getNumMapCategoryInfos() const;
 	CvMapCategoryInfo& getMapCategoryInfo(MapCategoryTypes e) const;
@@ -578,17 +579,17 @@ public:
 	CvTurnTimerInfo& getTurnTimerInfo(TurnTimerTypes eTurnTimerNum) const;
 
 	int getNumProcessInfos() const;
-	CvProcessInfo& getProcessInfo(ProcessTypes e) const;
+	CvJsonProcessInfo& getProcessInfo(ProcessTypes e) const;
 
 	int getNumVoteInfos() const;
 	CvVoteInfo& getVoteInfo(VoteTypes e) const;
 
 	int getNumProjectInfos() const;
-	CvProjectInfo& getProjectInfo(ProjectTypes e) const;
+	CvJsonProjectInfo& getProjectInfo(ProjectTypes e) const;
 
 	int getNumBuildingInfos() const;
-	CvBuildingInfo& getBuildingInfo(BuildingTypes eBuildingNum) const;
-	const std::vector<CvBuildingInfo*>& getBuildingInfos() const { return m_paBuildingInfo; }
+	CvJsonBuildingInfo& getBuildingInfo(BuildingTypes eBuildingNum) const;
+	const std::vector<CvJsonBuildingInfo*>& getBuildingInfos() const { return m_paBuildingInfo; }
 
 	// Static constructibility enabler reverse-index (#195): for enabler building B,
 	// the list of buildings whose constructibility B (or a free bonus B grants) can
@@ -628,28 +629,28 @@ public:
 	CvAutomateInfo& getAutomateInfo(int iAutomateNum) const;
 
 	int getNumPromotionInfos() const;
-	CvPromotionInfo& getPromotionInfo(PromotionTypes ePromotionNum) const;
-	typedef bst::function<bool(const CvPromotionInfo*, PromotionTypes)> PromotionPredicateFn;
+	CvJsonPromotionInfo& getPromotionInfo(PromotionTypes ePromotionNum) const;
+	typedef bst::function<bool(const CvJsonPromotionInfo*, PromotionTypes)> PromotionPredicateFn;
 	PromotionTypes findPromotion(PromotionPredicateFn predicateFn) const;
 
 	int getNumTechInfos() const;
-	CvTechInfo& getTechInfo(TechTypes eTechNum) const;
+	CvJsonTechInfo& getTechInfo(TechTypes eTechNum) const;
 
 	int getNumReligionInfos() const;
-	CvReligionInfo& getReligionInfo(ReligionTypes eReligionNum) const;
-	const std::vector<CvReligionInfo*>& getReligionInfos() const { return m_paReligionInfo; }
+	CvJsonReligionInfo& getReligionInfo(ReligionTypes eReligionNum) const;
+	const std::vector<CvJsonReligionInfo*>& getReligionInfos() const { return m_paReligionInfo; }
 
 	int getNumCorporationInfos() const;
-	CvCorporationInfo& getCorporationInfo(CorporationTypes eCorporationNum) const;
+	CvJsonCorporationInfo& getCorporationInfo(CorporationTypes eCorporationNum) const;
 
 	int getNumSpecialistInfos() const;
-	CvSpecialistInfo& getSpecialistInfo(SpecialistTypes eSpecialistNum) const;
+	CvJsonSpecialistInfo& getSpecialistInfo(SpecialistTypes eSpecialistNum) const;
 
 	int getNumCivicOptionInfos() const;
-	CvCivicOptionInfo& getCivicOptionInfo(CivicOptionTypes eCivicOptionNum) const;
+	CvJsonCivicOptionInfo& getCivicOptionInfo(CivicOptionTypes eCivicOptionNum) const;
 
 	int getNumCivicInfos() const;
-	CvCivicInfo& getCivicInfo(CivicTypes eCivicNum) const;
+	CvJsonCivicInfo& getCivicInfo(CivicTypes eCivicNum) const;
 
 	int getNumDiplomacyInfos() const;
 	CvDiplomacyInfo& getDiplomacyInfo(int iDiplomacyNum) const;
@@ -667,8 +668,8 @@ public:
 	CvUpkeepInfo& getUpkeepInfo(UpkeepTypes eUpkeepNum) const;
 
 	int getNumCultureLevelInfos() const;
-	CvCultureLevelInfo& getCultureLevelInfo(CultureLevelTypes eCultureLevelNum) const;
-	const std::vector<CvCultureLevelInfo*>& getCultureLevelInfos() const { return m_paCultureLevelInfo; }
+	CvJsonCultureLevelInfo& getCultureLevelInfo(CultureLevelTypes eCultureLevelNum) const;
+	const std::vector<CvJsonCultureLevelInfo*>& getCultureLevelInfos() const { return m_paCultureLevelInfo; }
 
 	int getNumVictoryInfos() const;
 	CvVictoryInfo& getVictoryInfo(VictoryTypes eVictoryNum) const;
@@ -988,8 +989,8 @@ protected:
 	int m_iNumAIPlayableCivilizationInfos;
 	std::vector<CvLeaderHeadInfo*> m_paLeaderHeadInfo;
 	CvInfoReplacements<CvLeaderHeadInfo> m_LeaderHeadInfoReplacements;
-	std::vector<CvTraitInfo*> m_paTraitInfo;
-	CvInfoReplacements<CvTraitInfo> m_TraitInfoReplacements;
+	std::vector<CvJsonTraitInfo*> m_paTraitInfo;
+	CvInfoReplacements<CvJsonTraitInfo> m_TraitInfoReplacements;
 	std::vector<CvCursorInfo*> m_paCursorInfo;
 	std::vector<CvThroneRoomCamera*> m_paThroneRoomCamera;
 	std::vector<CvThroneRoomInfo*> m_paThroneRoomInfo;
@@ -998,21 +999,21 @@ protected:
 	std::vector<CvSlideShowRandomInfo*> m_paSlideShowRandomInfo;
 	std::vector<CvWorldPickerInfo*> m_paWorldPickerInfo;
 	std::vector<CvSpaceShipInfo*> m_paSpaceShipInfo;
-	std::vector<CvProcessInfo*> m_paProcessInfo;
-	CvInfoReplacements<CvProcessInfo> m_ProcessInfoReplacements;
+	std::vector<CvJsonProcessInfo*> m_paProcessInfo;
+	CvInfoReplacements<CvJsonProcessInfo> m_ProcessInfoReplacements;
 	std::vector<CvVoteInfo*> m_paVoteInfo;
-	std::vector<CvProjectInfo*> m_paProjectInfo;
-	CvInfoReplacements<CvProjectInfo> m_ProjectInfoReplacements;
-	std::vector<CvBuildingInfo*> m_paBuildingInfo;
-	CvInfoReplacements<CvBuildingInfo> m_BuildingInfoReplacements;
+	std::vector<CvJsonProjectInfo*> m_paProjectInfo;
+	CvInfoReplacements<CvJsonProjectInfo> m_ProjectInfoReplacements;
+	std::vector<CvJsonBuildingInfo*> m_paBuildingInfo;
+	CvInfoReplacements<CvJsonBuildingInfo> m_BuildingInfoReplacements;
 	// #195 constructibility enabler reverse-indices, indexed by enabler BuildingTypes.
 	std::vector< std::vector<BuildingTypes> > m_buildingEnablerIndex;
 	std::vector< std::vector<UnitTypes> > m_buildingToUnitsEnabledIndex;
 	std::vector< std::vector<UnitTypes> > m_invisibleSeerUnits;
 	std::vector<CvSpecialBuildingInfo*> m_paSpecialBuildingInfo;
 	CvInfoReplacements<CvSpecialBuildingInfo> m_SpecialBuildingInfoReplacements;
-	std::vector<CvUnitInfo*> m_paUnitInfo;
-	CvInfoReplacements<CvUnitInfo> m_UnitInfoReplacements;
+	std::vector<CvJsonUnitInfo*> m_paUnitInfo;
+	CvInfoReplacements<CvJsonUnitInfo> m_UnitInfoReplacements;
 	std::vector<CvSpawnInfo*> m_paSpawnInfo;
 	CvInfoReplacements<CvSpawnInfo> m_SpawnInfoReplacements;
 	std::vector<CvSpecialUnitInfo*> m_paSpecialUnitInfo;
@@ -1025,10 +1026,10 @@ protected:
 	std::vector<CvInfoBase*> m_paDenialInfo;
 	std::vector<CvInvisibleInfo*> m_paInvisibleInfo;
 	std::vector<CvCategoryInfo*> m_paCategoryInfo;
-	std::vector<CvHeritageInfo*> m_heritageInfo;
+	std::vector<CvJsonHeritageInfo*> m_heritageInfo;
 	std::vector<CvVoteSourceInfo*> m_paVoteSourceInfo;
-	std::vector<CvUnitCombatInfo*> m_paUnitCombatInfo;
-	std::vector<CvPromotionLineInfo*> m_paPromotionLineInfo;
+	std::vector<CvJsonUnitCombatInfo*> m_paUnitCombatInfo;
+	std::vector<CvJsonPromotionLineInfo*> m_paPromotionLineInfo;
 	std::vector<CvMapCategoryInfo*> m_paMapCategoryInfo;
 	std::vector<CvIdeaClassInfo*> m_paIdeaClassInfo;
 	std::vector<CvIdeaInfo*> m_paIdeaInfo;
@@ -1042,28 +1043,28 @@ protected:
 	std::vector<CvForceControlInfo*> m_paForceControlInfos;
 	std::vector<CvPlayerOptionInfo*> m_paPlayerOptionInfos;
 	std::vector<CvGraphicOptionInfo*> m_paGraphicOptionInfos;
-	std::vector<CvSpecialistInfo*> m_paSpecialistInfo;
-	CvInfoReplacements<CvSpecialistInfo> m_SpecialistInfoReplacements;
+	std::vector<CvJsonSpecialistInfo*> m_paSpecialistInfo;
+	CvInfoReplacements<CvJsonSpecialistInfo> m_SpecialistInfoReplacements;
 	std::vector<CvEmphasizeInfo*> m_paEmphasizeInfo;
 	std::vector<CvUpkeepInfo*> m_paUpkeepInfo;
-	std::vector<CvCultureLevelInfo*> m_paCultureLevelInfo;
-	CvInfoReplacements<CvCultureLevelInfo> m_CultureLevelInfoReplacements;
-	std::vector<CvReligionInfo*> m_paReligionInfo;
-	CvInfoReplacements<CvReligionInfo> m_ReligionInfoReplacements;
-	std::vector<CvCorporationInfo*> m_paCorporationInfo;
-	CvInfoReplacements<CvCorporationInfo> m_CorporationInfoReplacements;
+	std::vector<CvJsonCultureLevelInfo*> m_paCultureLevelInfo;
+	CvInfoReplacements<CvJsonCultureLevelInfo> m_CultureLevelInfoReplacements;
+	std::vector<CvJsonReligionInfo*> m_paReligionInfo;
+	CvInfoReplacements<CvJsonReligionInfo> m_ReligionInfoReplacements;
+	std::vector<CvJsonCorporationInfo*> m_paCorporationInfo;
+	CvInfoReplacements<CvJsonCorporationInfo> m_CorporationInfoReplacements;
 	std::vector<CvActionInfo*> m_paActionInfo;
 	std::vector<CvMissionInfo*> m_paMissionInfo;
 	std::vector<CvControlInfo*> m_paControlInfo;
 	std::vector<CvCommandInfo*> m_paCommandInfo;
 	std::vector<CvAutomateInfo*> m_paAutomateInfo;
-	std::vector<CvPromotionInfo*> m_paPromotionInfo;
-	CvInfoReplacements<CvPromotionInfo> m_PromotionInfoReplacements;
-	std::vector<CvTechInfo*> m_paTechInfo;
-	CvInfoReplacements<CvTechInfo> m_TechInfoReplacements;
-	std::vector<CvCivicOptionInfo*> m_paCivicOptionInfo;
-	std::vector<CvCivicInfo*> m_paCivicInfo;
-	CvInfoReplacements<CvCivicInfo> m_CivicInfoReplacements;
+	std::vector<CvJsonPromotionInfo*> m_paPromotionInfo;
+	CvInfoReplacements<CvJsonPromotionInfo> m_PromotionInfoReplacements;
+	std::vector<CvJsonTechInfo*> m_paTechInfo;
+	CvInfoReplacements<CvJsonTechInfo> m_TechInfoReplacements;
+	std::vector<CvJsonCivicOptionInfo*> m_paCivicOptionInfo;
+	std::vector<CvJsonCivicInfo*> m_paCivicInfo;
+	CvInfoReplacements<CvJsonCivicInfo> m_CivicInfoReplacements;
 	std::vector<CvDiplomacyInfo*> m_paDiplomacyInfo;
 	std::vector<CvEraInfo*> m_aEraInfo;	// [NUM_ERA_TYPES];
 	CvInfoReplacements<CvEraInfo> m_EraInfoReplacements;
@@ -1086,7 +1087,7 @@ protected:
 	CvInfoReplacements<CvEventInfo> m_EventInfoReplacements;
 	std::vector<CvEspionageMissionInfo*> m_paEspionageMissionInfo;
 	std::vector<CvUnitArtStyleTypeInfo*> m_paUnitArtStyleTypeInfo;
-	std::vector<CvPropertyInfo*> m_paPropertyInfo;
+	std::vector<CvJsonPropertyInfo*> m_paPropertyInfo;
 	std::vector<CvOutcomeInfo*> m_paOutcomeInfo;
 	std::vector<CvMapInfo*> m_paMapInfo;
 

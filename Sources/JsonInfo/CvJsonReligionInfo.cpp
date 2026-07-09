@@ -11,16 +11,30 @@
 static const char* COMMERCE_NAME[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
 
 CvJsonReligionInfo::CvJsonReligionInfo()
-	: m_iSpreadFactor(0), m_iMissionType(-1), m_iChar(-1), m_iHolyCityChar(-1)
+	: m_iSpreadFactor(0), m_iTGAIndex(-1), m_iMissionType(-1), m_iChar(-1), m_iHolyCityChar(-1),   // TGAIndex -1 = the TGA-filler sentinel (RemoveTGAFiller erases fillers whose index stayed -1; real religions override from JSON)
+	  m_eTechPrereq(NO_TECH)
 {
-	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i) { m_aiStateReligionCommerce[i] = 0; m_aiHolyCityCommerce[i] = 0; }
+	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i) { m_aiStateReligionCommerce[i] = 0; m_aiHolyCityCommerce[i] = 0; m_aiGlobalReligionCommerce[i] = 0; }
 }
 
 int CvJsonReligionInfo::getGlobalReligionCommerce(int i) const
+{ return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_aiGlobalReligionCommerce[i] : 0; }
+
+const char* CvJsonReligionInfo::getButtonDisabled() const
 {
-	if (i < 0 || i >= NUM_COMMERCE_TYPES) return 0;
-	std::map<std::string, int>::const_iterator it = shrineCommerce.find(COMMERCE_NAME[i]);
-	return it != shrineCommerce.end() ? it->second : 0;
+	// Mirror the legacy derivation (SourceArchive/Infos/CvReligionInfo.cpp): the base button (ui.art.icon) with its
+	// ".dds" extension replaced by the "_D.dds" disabled variant. Empty base button -> empty disabled path.
+	static char szDisabled[512];
+	szDisabled[0] = '\0';
+	const char* szButton = getButton();
+	const size_t iLen = szButton ? strlen(szButton) : 0;
+	if (iLen > 4 && iLen + 3 <= sizeof(szDisabled))   // result is (iLen-4)+"_D.dds"+NUL = iLen+3 bytes
+	{
+		strncpy(szDisabled, szButton, iLen - 4);
+		szDisabled[iLen - 4] = '\0';
+		strcat(szDisabled, "_D.dds");
+	}
+	return szDisabled;
 }
 int CvJsonReligionInfo::getFlavorValue(int i) const
 { std::map<int, int>::const_iterator it = m_flavours.find(i); return it != m_flavours.end() ? it->second : 0; }
@@ -37,6 +51,11 @@ void CvJsonReligionInfo::mapFrom(const picojson::value& entity)
 
 	picojson::object::const_iterator sh = o.find("shrine");
 	if (sh != o.end()) jsonCommerceMap(sh->second, shrineCommerce);
+	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)   // materialize the int-indexed shrine array from the by-name map
+	{
+		std::map<std::string, int>::const_iterator gi = shrineCommerce.find(COMMERCE_NAME[c]);
+		m_aiGlobalReligionCommerce[c] = (gi != shrineCommerce.end()) ? gi->second : 0;
+	}
 
 	// STATE-religion / HOLY-city commerce: {commerce}.city.flat is a LIST of { value, enabled:{PRED:self} } -- demux by PRED.
 	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
@@ -69,6 +88,12 @@ void CvJsonReligionInfo::mapFrom(const picojson::value& entity)
 		{
 			jsonIdStr(*art, "techButton", m_szTechButton);
 			jsonIdStr(*art, "genericTechButton", m_szGenericTechButton);
+			m_iTGAIndex = jsonIdInt(*art, "tgaIndex");
+			if (const picojson::object* mov = jsonChildObj(*art, "movie"))
+			{
+				jsonIdStr(*mov, "file", m_szMovieFile);
+				jsonIdStr(*mov, "sound", m_szMovieSound);
+			}
 		}
 
 	if (const picojson::object* so2 = jsonChildObj(o, "sound")) jsonIdStr(*so2, "sound", m_szSound);

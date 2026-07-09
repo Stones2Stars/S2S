@@ -25,6 +25,11 @@ public:
 	int getProductionToCommerceModifier(int i) const
 	{ return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_aiProductionToCommerce[i] : 0; }
 
+	// store-inverted onto the tech (tech.enables.processes); reconstructed at LOAD by the cascadeLoadJson tech-FK
+	// reverse-index pass (the Route<-bonus pattern), which calls setTechPrereq.
+	TechTypes getTechPrereq() const { return m_eTechPrereq; }
+	void setTechPrereq(TechTypes e) { m_eTechPrereq = e; }   // load-time reverse-index writer (cascadeLoadJson)
+
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
@@ -39,6 +44,7 @@ private:
 	CvJsonEdges     m_edges;
 	CvJsonModifiers m_modifiers;
 	int m_aiProductionToCommerce[NUM_COMMERCE_TYPES];   // gold/research/culture/espionage .city.percent (natural %, ×1)
+	TechTypes m_eTechPrereq;   // store-inverted tech.enables.processes, reconstructed at load (cascadeLoadJson)
 };
 
 #endif // CV_JSON_PROCESS_INFO_H

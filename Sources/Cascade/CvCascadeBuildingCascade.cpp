@@ -21,10 +21,10 @@
 #include "CvCascadeConditionEval.h"   // cascadeEvalCondition
 #include "CvJsonCondition.h"       // the condition tree (reverse-index scan)
 #include "CvCascadeAccumulator.h"     // CascadeAccumulator::CascadeHaveKind (recheckHave dispatch)
-#include "Infos/CvBuildingInfo.h"
+#include "CvJsonBuildingInfo.h"
 #include "Infos/CvSpecialBuildingInfo.h"   // getMaxPlayerInstances (special-building group cap)
 #include "Infos/CvWorldInfo.h"             // getBuildingPrereqModifier (the raw world scalar for ScaledPrereq)
-#include "Infos/CvCivicInfo.h"
+#include "CvJsonCivicInfo.h"
 #include "Engine/CvMap.h"
 #include "Engine/CvGame.h"
 
@@ -39,14 +39,14 @@ void BuildingCascade::augmentWaived(const CvPlayer& kPlayer, const CvTeam& kTeam
 	const int nB = GC.getNumBuildingInfos();
 	for (int b = 0; b < nB; ++b)   // obsolete-by-held-tech (obsoletedBy.techs)
 	{
-		if (EnablerKernel::obsoletedByHeldTech(InfoRepo<CvBuildingInfo>::get().get(b), kTeam)) waived.insert(b);
+		if (EnablerKernel::obsoletedByHeldTech(InfoRepo<CvJsonBuildingInfo>::get().get(b), kTeam)) waived.insert(b);
 	}
 	std::set<int> waivedSpecials;   // the SpecialBuilding groups the player's adopted civics make not-required
 	for (int co = 0; co < GC.getNumCivicOptionInfos(); ++co)
 	{
 		const CivicTypes c = kPlayer.getCivics((CivicOptionTypes)co);
 		if (c == NO_CIVIC) continue;
-		const CvJsonInfo* j = InfoRepo<CvCivicInfo>::get().get((int)c);
+		const CvJsonInfo* j = InfoRepo<CvJsonCivicInfo>::get().get((int)c);
 		if (j == NULL) continue;
 		const std::vector<int>* p = j->edge("enables.specialBuildingsWaived");
 		if (p != NULL)
@@ -117,7 +117,7 @@ static void bc_buildIndices()
 	const int nB = GC.getNumBuildingInfos();
 	for (int b = 0; b < nB; ++b)
 	{
-		const CvJsonInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
+		const CvJsonInfo* j = InfoRepo<CvJsonBuildingInfo>::get().get(b);
 		if (j == NULL) continue;
 		CascadeCondDeps d;
 		// The ONE shared HAVE-atom scanner (EnablerKernel::scanCondDeps) over build + operate; no UNIT_ leg, no
@@ -153,8 +153,8 @@ static bool bc_isBuildable(int b, const CvCity* pCity, const CvPlayer& kPlayer, 
 	const std::set<int>& queued, const std::map<int, int>& specialCount, int wsMod)
 {
 	const BuildingTypes eB = (BuildingTypes)b;
-	const CvBuildingInfo& bi = GC.getBuildingInfo(eB);
-	const CvJsonInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
+	const CvJsonBuildingInfo& bi = GC.getBuildingInfo(eB);
+	const CvJsonInfo* j = InfoRepo<CvJsonBuildingInfo>::get().get(b);
 	if (EnablerKernel::obsoletedByHeldTech(j, kTeam)) return false;      // PRUNE: tech-obsolescence (obsoletedBy.techs)
 	if (pCity->hasBuilding(eB)) return false;                           // EXCLUDE: already built in this city
 	if (queued.count(b) != 0) return false;                            // EXCLUDE: already in this city's production queue
@@ -185,7 +185,7 @@ static bool bc_isBuildable(int b, const CvCity* pCity, const CvPlayer& kPlayer, 
 	const IDValueMap<BuildingTypes, int>& prereqs = bi.getPrereqNumOfBuildings();
 	for (IDValueMap<BuildingTypes, int>::const_iterator it = prereqs.begin(); it != prereqs.end(); ++it)
 	{
-		const CvJsonInfo* pj = InfoRepo<CvBuildingInfo>::get().get((int)it->first);
+		const CvJsonInfo* pj = InfoRepo<CvJsonBuildingInfo>::get().get((int)it->first);
 		const bool prereqLimited = (pj != NULL && pj->getAllowed() != NULL && !pj->getAllowed()->isEmpty());
 		const int required = BuildingCascade::scaledPrereq(it->second, wsMod, selfLimited, prereqLimited, selfNoScale, selfCount);
 		if (cascadeTally().buildingCount((int)kPlayer.getID(), (int)it->first, CASCADE_COUNT_EMPIRE) < required) return false;  // PREREQ-AMOUNT

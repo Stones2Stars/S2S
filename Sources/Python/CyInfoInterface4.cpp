@@ -110,7 +110,7 @@ void CyInfoPythonInterface4()
 	python::class_<CvMainMenuInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvMainMenuInfo", python::no_init)
 		;
 
-	python::class_<CvPropertyInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvPropertyInfo", python::no_init)
-		.def("getChar", &CvPropertyInfo::getChar, "int ()")
+	python::class_<CvJsonPropertyInfo, python::bases<CvInfoBase>, boost::noncopyable>("CvPropertyInfo", python::no_init)
+		.def("getChar", &CvJsonPropertyInfo::getChar, "int ()")
 		;
 }

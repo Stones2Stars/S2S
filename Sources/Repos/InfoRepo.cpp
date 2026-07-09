@@ -15,55 +15,65 @@
 #include "InfoRepo.h"
 
 // Phantom tag types not already declared by InfoRepo.h (never dereferenced -- per-type discriminators only).
-class CvCivicOptionInfo; class CvPromotionLineInfo; class CvCultureLevelInfo; class CvSpecialistInfo;
+class CvJsonCivicOptionInfo; class CvJsonPromotionLineInfo; class CvJsonCultureLevelInfo; class CvJsonSpecialistInfo;
 class CvBonusInfo; class CvImprovementInfo; class CvFeatureInfo; class CvTerrainInfo; class CvJsonRouteInfo;
-class CvProjectInfo; class CvProcessInfo; class CvHeritageInfo; class CvBuildInfo; class CvCivilizationInfo;
-class CvEraInfo; class CvHandicapInfo; class CvSpecialBuildingInfo; class CvPropertyInfo;
+class CvJsonProjectInfo; class CvJsonProcessInfo; class CvJsonHeritageInfo; class CvBuildInfo; class CvCivilizationInfo;
+class CvEraInfo; class CvHandicapInfo; class CvSpecialBuildingInfo; class CvJsonPropertyInfo;
 
-#define CASCADE_INFOREPO_DEFINE(TAG) \
+// #430 option B: ALIAS the tag's singleton to the engine's GC.m_pa<X>Info array -- the repo becomes a VIEW over the
+// read()+mapFrom'd objects getXInfo returns (one object, no separate store). The reinterpret is layout-safe: both are
+// std::vector<pointer>, and CvJson<X>Info / the Cv<X>Info shims derive from CvJsonInfo (element upcast is trivial).
+#define CASCADE_INFOREPO_ALIAS(TAG, ARR) \
+	template <> InfoRepo<TAG>& InfoRepo<TAG>::get() \
+	{ \
+		static InfoRepo<TAG> s_instance; \
+		if (!s_instance.isAliased()) s_instance.bind(reinterpret_cast<std::vector<CvJsonInfo*>*>(&GC.ARR)); \
+		return s_instance; \
+	}
+// OWNED: JSON-only tags with no XML shell array (Heritage/Build/complex-traits) + the uniformity set (consumed via
+// their legacy arrays, not this repo). The repo owns its m_data; cascadeLoadJson maps the JSON-only ones into it.
+#define CASCADE_INFOREPO_OWNED(TAG) \
 	template <> InfoRepo<TAG>& InfoRepo<TAG>::get() \
 	{ \
 		static InfoRepo<TAG> s_instance; \
 		return s_instance; \
 	}
 
-// The RJ_REPO_TYPES set (CvCascadeReadJson.cpp) ...
-CASCADE_INFOREPO_DEFINE(CvBuildingInfo)
-CASCADE_INFOREPO_DEFINE(CvUnitCombatInfo)
-CASCADE_INFOREPO_DEFINE(CvUnitInfo)
-CASCADE_INFOREPO_DEFINE(CvTechInfo)
-CASCADE_INFOREPO_DEFINE(CvCivicOptionInfo)
-CASCADE_INFOREPO_DEFINE(CvCivicInfo)
-CASCADE_INFOREPO_DEFINE(CvTraitInfo)
-CASCADE_INFOREPO_DEFINE(CvSpecialistInfo)
-CASCADE_INFOREPO_DEFINE(CvBonusInfo)
-CASCADE_INFOREPO_DEFINE(CvReligionInfo)
-CASCADE_INFOREPO_DEFINE(CvCorporationInfo)
-CASCADE_INFOREPO_DEFINE(CvPromotionLineInfo)
-CASCADE_INFOREPO_DEFINE(CvPromotionInfo)
-CASCADE_INFOREPO_DEFINE(CvImprovementInfo)
-CASCADE_INFOREPO_DEFINE(CvFeatureInfo)
-CASCADE_INFOREPO_DEFINE(CvTerrainInfo)
-CASCADE_INFOREPO_DEFINE(CvJsonRouteInfo)
-CASCADE_INFOREPO_DEFINE(CvProjectInfo)
-CASCADE_INFOREPO_DEFINE(CvProcessInfo)
-CASCADE_INFOREPO_DEFINE(CvHeritageInfo)
-CASCADE_INFOREPO_DEFINE(CvCultureLevelInfo)
-CASCADE_INFOREPO_DEFINE(CvBuildInfo)
-CASCADE_INFOREPO_DEFINE(CvPropertyInfo)
-// ... + the off-table repos (complex traits + the grep-found extras).
-CASCADE_INFOREPO_DEFINE(CvComplexTraitTag)
-CASCADE_INFOREPO_DEFINE(CvCivilizationInfo)
-CASCADE_INFOREPO_DEFINE(CvEraInfo)
-CASCADE_INFOREPO_DEFINE(CvHandicapInfo)
-CASCADE_INFOREPO_DEFINE(CvSpecialBuildingInfo)
-// ... + the uniformity set's remaining tags (owner ruling: every type gets its own CvJson<X>Info subclass).
-CASCADE_INFOREPO_DEFINE(CvGameSpeedInfo)
-CASCADE_INFOREPO_DEFINE(CvLeaderHeadInfo)
-CASCADE_INFOREPO_DEFINE(CvSpecialUnitInfo)
-CASCADE_INFOREPO_DEFINE(CvVictoryInfo)
-CASCADE_INFOREPO_DEFINE(CvVoteInfo)
-CASCADE_INFOREPO_DEFINE(CvHurryInfo)
-CASCADE_INFOREPO_DEFINE(CvBonusClassInfo)
+CASCADE_INFOREPO_ALIAS(CvJsonBuildingInfo,      m_paBuildingInfo)
+CASCADE_INFOREPO_ALIAS(CvJsonUnitCombatInfo,    m_paUnitCombatInfo)
+CASCADE_INFOREPO_ALIAS(CvJsonUnitInfo,          m_paUnitInfo)
+CASCADE_INFOREPO_ALIAS(CvJsonTechInfo,          m_paTechInfo)
+CASCADE_INFOREPO_ALIAS(CvJsonCivicOptionInfo,   m_paCivicOptionInfo)
+CASCADE_INFOREPO_ALIAS(CvJsonCivicInfo,         m_paCivicInfo)
+CASCADE_INFOREPO_ALIAS(CvJsonTraitInfo,         m_paTraitInfo)
+CASCADE_INFOREPO_ALIAS(CvJsonSpecialistInfo,    m_paSpecialistInfo)
+CASCADE_INFOREPO_ALIAS(CvBonusInfo,             m_paBonusInfo)
+CASCADE_INFOREPO_ALIAS(CvJsonReligionInfo,      m_paReligionInfo)
+CASCADE_INFOREPO_ALIAS(CvJsonCorporationInfo,   m_paCorporationInfo)
+CASCADE_INFOREPO_ALIAS(CvJsonPromotionLineInfo, m_paPromotionLineInfo)
+CASCADE_INFOREPO_ALIAS(CvJsonPromotionInfo,     m_paPromotionInfo)
+CASCADE_INFOREPO_ALIAS(CvImprovementInfo,       m_paImprovementInfo)
+CASCADE_INFOREPO_ALIAS(CvFeatureInfo,           m_paFeatureInfo)
+CASCADE_INFOREPO_ALIAS(CvTerrainInfo,           m_paTerrainInfo)
+CASCADE_INFOREPO_ALIAS(CvJsonRouteInfo,         m_paRouteInfo)
+CASCADE_INFOREPO_ALIAS(CvJsonProjectInfo,       m_paProjectInfo)
+CASCADE_INFOREPO_ALIAS(CvJsonProcessInfo,       m_paProcessInfo)
+CASCADE_INFOREPO_ALIAS(CvJsonCultureLevelInfo,  m_paCultureLevelInfo)
+CASCADE_INFOREPO_ALIAS(CvJsonPropertyInfo,      m_paPropertyInfo)
+CASCADE_INFOREPO_OWNED(CvJsonHeritageInfo)   // no m_paHeritageInfo -- JSON-only (cascadeLoadJson -> m_data)
+CASCADE_INFOREPO_OWNED(CvBuildInfo)          // no m_paBuildInfo    -- JSON-only
+CASCADE_INFOREPO_OWNED(CvComplexTraitTag)    // the complex-trait set -- JSON-only, no XML shell
+CASCADE_INFOREPO_OWNED(CvCivilizationInfo)
+CASCADE_INFOREPO_OWNED(CvEraInfo)
+CASCADE_INFOREPO_OWNED(CvHandicapInfo)
+CASCADE_INFOREPO_OWNED(CvSpecialBuildingInfo)
+CASCADE_INFOREPO_OWNED(CvGameSpeedInfo)
+CASCADE_INFOREPO_OWNED(CvLeaderHeadInfo)
+CASCADE_INFOREPO_OWNED(CvSpecialUnitInfo)
+CASCADE_INFOREPO_OWNED(CvVictoryInfo)
+CASCADE_INFOREPO_OWNED(CvVoteInfo)
+CASCADE_INFOREPO_OWNED(CvHurryInfo)
+CASCADE_INFOREPO_OWNED(CvBonusClassInfo)
 
-#undef CASCADE_INFOREPO_DEFINE
+#undef CASCADE_INFOREPO_ALIAS
+#undef CASCADE_INFOREPO_OWNED

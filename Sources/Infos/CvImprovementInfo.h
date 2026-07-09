@@ -21,6 +21,7 @@ public:
 	DllExport bool isGoody() const;
 	DllExport bool isRequiresRiverSide() const;
 	DllExport const CvArtInfoImprovement* getArtInfo() const;
+	const char* getButton() const;   // art-define button (else CvInfoBase's empty m_szButton -> missing icon)
 };
 
 #endif // CV_IMPROVEMENTINFO_H

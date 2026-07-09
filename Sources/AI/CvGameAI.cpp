@@ -83,7 +83,7 @@ void CvGameAI::AI_updateAssignWork()
 int CvGameAI::AI_combatValue(const UnitTypes eUnit) const
 {
 	int iValue = 100;
-	const CvUnitInfo& unit = GC.getUnitInfo(eUnit);
+	const CvJsonUnitInfo& unit = GC.getUnitInfo(eUnit);
 
 	if (unit.getDomainType() == DOMAIN_AIR)
 	{

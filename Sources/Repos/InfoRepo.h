@@ -53,7 +53,7 @@
 //	It establishes the proper repository pattern the codebase has lacked (the existing "repos" were early experiments;
 //	the reality everywhere is bare arrays looped over). One template definition, instantiated per info type as a `get()`
 //	singleton (the `TTag` is a phantom type that distinguishes the singletons -- use the engine info class, e.g.
-//	`InfoRepo<CvBuildingInfo>::get()`). Each holds a `std::vector<CvJsonInfo*>` held PARALLEL to the engine's
+//	`InfoRepo<CvJsonBuildingInfo>::get()`). Each holds a `std::vector<CvJsonInfo*>` held PARALLEL to the engine's
 //	`GC.m_pa<X>Info`, indexed by the SAME id -> O(1) access.
 //
 //	Why a separate parallel layer (not on the info objects): it keeps the migration boundary clean (the engine's XML
@@ -67,30 +67,30 @@
 //	C++03 / VC7.1: a header-only template; the per-`TTag` `static` in `get()` gives one instance per info type.
 //
 // The engine info TAGS (phantom per-type discriminators) -- forward-declared for the JsonPayload map below.
-class CvTraitInfo; class CvBuildingInfo; class CvReligionInfo; class CvCorporationInfo; class CvUnitInfo;
-class CvTechInfo; class CvPromotionInfo; class CvUnitCombatInfo; class CvCivicInfo;
+class CvJsonTraitInfo; class CvJsonBuildingInfo; class CvJsonReligionInfo; class CvJsonCorporationInfo; class CvJsonUnitInfo;
+class CvJsonTechInfo; class CvJsonPromotionInfo; class CvJsonUnitCombatInfo; class CvJsonCivicInfo;
 class CvTerrainInfo; class CvFeatureInfo; class CvJsonRouteInfo; class CvBuildInfo; class CvImprovementInfo;
-class CvBonusInfo; class CvSpecialistInfo; class CvProcessInfo; class CvCivicOptionInfo; class CvCultureLevelInfo;
-class CvProjectInfo; class CvHeritageInfo; class CvPromotionLineInfo;
+class CvBonusInfo; class CvJsonSpecialistInfo; class CvJsonProcessInfo; class CvJsonCivicOptionInfo; class CvJsonCultureLevelInfo;
+class CvJsonProjectInfo; class CvJsonHeritageInfo; class CvJsonPromotionLineInfo;
 class CvCivilizationInfo; class CvEraInfo; class CvHandicapInfo; class CvGameSpeedInfo; class CvSpecialBuildingInfo;
-class CvPropertyInfo; class CvLeaderHeadInfo; class CvSpecialUnitInfo; class CvVictoryInfo; class CvVoteInfo;
+class CvJsonPropertyInfo; class CvLeaderHeadInfo; class CvSpecialUnitInfo; class CvVictoryInfo; class CvVoteInfo;
 class CvHurryInfo; class CvBonusClassInfo;
 
 // JsonPayload<TTag> -- the type-specific CvJson*Info subclass each repo creates (owner ruling 2026-06-30, mirroring
 // StoneBase's per-type Domain/Infos). Default = the generic CvJsonInfo; specialized for the types carrying type-specific
-// data. Keeps creation CONSISTENT: InfoRepo<CvTraitInfo> ALWAYS makes a CvJsonSimpleTraitInfo regardless of the caller,
+// data. Keeps creation CONSISTENT: InfoRepo<CvJsonTraitInfo> ALWAYS makes a CvJsonSimpleTraitInfo regardless of the caller,
 // so readJson + the machines never disagree about the concrete type they delete/read.
 template <class TTag> struct JsonPayload { typedef CvJsonInfo type; };
-template <> struct JsonPayload<CvTraitInfo>       { typedef CvJsonSimpleTraitInfo  type; };
+template <> struct JsonPayload<CvJsonTraitInfo>       { typedef CvJsonSimpleTraitInfo  type; };
 template <> struct JsonPayload<CvComplexTraitTag> { typedef CvJsonComplexTraitInfo type; };
-template <> struct JsonPayload<CvBuildingInfo>    { typedef CvJsonBuildingInfo     type; };
-template <> struct JsonPayload<CvReligionInfo>    { typedef CvJsonReligionInfo     type; };
-template <> struct JsonPayload<CvCorporationInfo> { typedef CvJsonCorporationInfo  type; };
-template <> struct JsonPayload<CvUnitInfo>         { typedef CvJsonUnitInfo         type; };
-template <> struct JsonPayload<CvTechInfo>         { typedef CvJsonTechInfo         type; };
-template <> struct JsonPayload<CvPromotionInfo>    { typedef CvJsonPromotionInfo    type; };
-template <> struct JsonPayload<CvUnitCombatInfo>   { typedef CvJsonUnitCombatInfo   type; };
-template <> struct JsonPayload<CvCivicInfo>        { typedef CvJsonCivicInfo        type; };
+template <> struct JsonPayload<CvJsonBuildingInfo>    { typedef CvJsonBuildingInfo     type; };
+template <> struct JsonPayload<CvJsonReligionInfo>    { typedef CvJsonReligionInfo     type; };
+template <> struct JsonPayload<CvJsonCorporationInfo> { typedef CvJsonCorporationInfo  type; };
+template <> struct JsonPayload<CvJsonUnitInfo>         { typedef CvJsonUnitInfo         type; };
+template <> struct JsonPayload<CvJsonTechInfo>         { typedef CvJsonTechInfo         type; };
+template <> struct JsonPayload<CvJsonPromotionInfo>    { typedef CvJsonPromotionInfo    type; };
+template <> struct JsonPayload<CvJsonUnitCombatInfo>   { typedef CvJsonUnitCombatInfo   type; };
+template <> struct JsonPayload<CvJsonCivicInfo>        { typedef CvJsonCivicInfo        type; };
 // The five EXE-bound types: the payload IS the shim leaf (Cv<X>Info : public CvJson<X>Info) so getBonusInfo/… return it.
 template <> struct JsonPayload<CvTerrainInfo>      { typedef CvTerrainInfo          type; };
 template <> struct JsonPayload<CvFeatureInfo>      { typedef CvFeatureInfo          type; };
@@ -98,19 +98,19 @@ template <> struct JsonPayload<CvJsonRouteInfo>        { typedef CvJsonRouteInfo
 template <> struct JsonPayload<CvBuildInfo>        { typedef CvBuildInfo            type; };
 template <> struct JsonPayload<CvImprovementInfo>  { typedef CvImprovementInfo      type; };
 template <> struct JsonPayload<CvBonusInfo>        { typedef CvBonusInfo            type; };
-template <> struct JsonPayload<CvSpecialistInfo>   { typedef CvJsonSpecialistInfo   type; };
-template <> struct JsonPayload<CvProcessInfo>      { typedef CvJsonProcessInfo      type; };
-template <> struct JsonPayload<CvCivicOptionInfo>  { typedef CvJsonCivicOptionInfo  type; };
-template <> struct JsonPayload<CvCultureLevelInfo> { typedef CvJsonCultureLevelInfo type; };
-template <> struct JsonPayload<CvProjectInfo>      { typedef CvJsonProjectInfo      type; };
-template <> struct JsonPayload<CvHeritageInfo>     { typedef CvJsonHeritageInfo     type; };
-template <> struct JsonPayload<CvPromotionLineInfo>{ typedef CvJsonPromotionLineInfo type; };
+template <> struct JsonPayload<CvJsonSpecialistInfo>   { typedef CvJsonSpecialistInfo   type; };
+template <> struct JsonPayload<CvJsonProcessInfo>      { typedef CvJsonProcessInfo      type; };
+template <> struct JsonPayload<CvJsonCivicOptionInfo>  { typedef CvJsonCivicOptionInfo  type; };
+template <> struct JsonPayload<CvJsonCultureLevelInfo> { typedef CvJsonCultureLevelInfo type; };
+template <> struct JsonPayload<CvJsonProjectInfo>      { typedef CvJsonProjectInfo      type; };
+template <> struct JsonPayload<CvJsonHeritageInfo>     { typedef CvJsonHeritageInfo     type; };
+template <> struct JsonPayload<CvJsonPromotionLineInfo>{ typedef CvJsonPromotionLineInfo type; };
 template <> struct JsonPayload<CvCivilizationInfo> { typedef CvJsonCivilizationInfo type; };
 template <> struct JsonPayload<CvEraInfo>          { typedef CvJsonEraInfo          type; };
 template <> struct JsonPayload<CvHandicapInfo>     { typedef CvJsonHandicapInfo     type; };
 template <> struct JsonPayload<CvGameSpeedInfo>    { typedef CvJsonGameSpeedInfo    type; };
 template <> struct JsonPayload<CvSpecialBuildingInfo> { typedef CvJsonSpecialBuildingInfo type; };
-template <> struct JsonPayload<CvPropertyInfo>     { typedef CvJsonPropertyInfo     type; };
+template <> struct JsonPayload<CvJsonPropertyInfo>     { typedef CvJsonPropertyInfo     type; };
 template <> struct JsonPayload<CvLeaderHeadInfo>   { typedef CvJsonLeaderHeadInfo   type; };
 template <> struct JsonPayload<CvSpecialUnitInfo>  { typedef CvJsonSpecialUnitInfo  type; };
 template <> struct JsonPayload<CvVictoryInfo>      { typedef CvJsonVictoryInfo      type; };
@@ -130,18 +130,28 @@ public:
 	// instance per tag; a NEW tag use without an InfoRepo.cpp entry fails at LINK (add it there -- one line).
 	static InfoRepo& get();
 
-	// get-or-create the JSON info at id (readJson populates it). Grows the mirrored array to fit the id.
+	// #430 collapse (owner ruling 2026-07-08, option B): ALIAS the engine's GC.m_pa<X>Info array. When bound, this repo
+	// is a thin VIEW over that array -- the SAME objects SetGlobalClassInfo->read() loads (XML hotkey/base) and read()'s
+	// mapFrom populates (JSON data). So getXInfo + every cascade consumer read ONE object, no separate InfoRepo store,
+	// no seam. bind() is called once per tag from InfoRepo.cpp's CASCADE_INFOREPO_ALIAS rows. Unbound tags (the JSON-only
+	// handful with no XML shell -- Heritage/Build/complex-traits) keep the owned m_data home below.
+	void bind(std::vector<CvJsonInfo*>* pEngineArray) { m_pBacking = pEngineArray; }
+	bool isAliased() const { return m_pBacking != NULL; }
+
+	// get-or-create the JSON info at id. Grows the (aliased or owned) array to fit; aliased slots are normally already
+	// created by SetGlobalClassInfo (read()), so the create is only a fallback.
 	CvJsonInfo& edit(int iId)
 	{
-		if (iId >= (int)m_data.size())
+		std::vector<CvJsonInfo*>& vec = m_pBacking ? *m_pBacking : m_data;
+		if (iId >= (int)vec.size())
 		{
-			m_data.resize(iId + 1, (CvJsonInfo*)NULL);
+			vec.resize(iId + 1, (CvJsonInfo*)NULL);
 		}
-		if (m_data[iId] == NULL)
+		if (vec[iId] == NULL)
 		{
-			m_data[iId] = new typename JsonPayload<TTag>::type();   // the per-type subclass (StoneBase-mirrored), upcast to base
+			vec[iId] = new typename JsonPayload<TTag>::type();   // the per-type subclass (StoneBase-mirrored), upcast to base
 		}
-		return *m_data[iId];
+		return *vec[iId];
 	}
 
 	// pointer form of edit() (uniform with get() for prefix dispatch); never NULL.
@@ -150,12 +160,15 @@ public:
 	// the JSON info at id, or NULL if none mapped (consumers read this).
 	const CvJsonInfo* get(int iId) const
 	{
-		return (iId >= 0 && iId < (int)m_data.size()) ? m_data[iId] : NULL;
+		const std::vector<CvJsonInfo*>& vec = m_pBacking ? *m_pBacking : m_data;
+		return (iId >= 0 && iId < (int)vec.size()) ? vec[iId] : NULL;
 	}
 
-	// free every entry (before a re-map / at shutdown).
+	// free every OWNED entry (before a re-map / at shutdown). When aliased, the engine (GC.m_pa<X>Info) owns the
+	// objects -- do NOT free them here (double-free); only the owned m_data is freed.
 	void clear()
 	{
+		if (m_pBacking) return;
 		for (size_t i = 0; i < m_data.size(); ++i)
 		{
 			delete m_data[i];
@@ -164,12 +177,13 @@ public:
 	}
 
 private:
-	InfoRepo() {}
+	InfoRepo() : m_pBacking(NULL) {}
 	~InfoRepo() { clear(); }
 	InfoRepo(const InfoRepo&);
 	InfoRepo& operator=(const InfoRepo&);
 
-	std::vector<CvJsonInfo*> m_data;   // [id] -> owned CvJsonInfo* (NULL if none); mirrors the engine info array
+	std::vector<CvJsonInfo*>* m_pBacking;   // #430: when set, ALIAS the engine array (view, not owner); else use m_data
+	std::vector<CvJsonInfo*> m_data;        // [id] -> owned CvJsonInfo* (NULL if none); the JSON-only (unbound) home
 };
 
 #endif // INFO_REPO_H

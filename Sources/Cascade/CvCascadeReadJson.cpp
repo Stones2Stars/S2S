@@ -178,34 +178,67 @@ static void rj_find(const std::string& dir, std::vector<std::string>& out)
 	FindClose(h);
 }
 
+// Lazily-built type->JSON index (ONE Assets/Data scan per process). CvJsonInfo::read() looks its entity up here and
+// mapFrom's it -- the #430 collapse: the JSON load rides the normal SetGlobalClassInfo->read() per-entity flow (registry,
+// premenu/postmenu phasing, delayed FK resolution) instead of a separate InfoRepo pass. Complex-trait files are skipped
+// (their TRAIT_ ids collide with the simple set; the simple JSON is what a TRAIT_ read() wants -- complex is its own
+// option-selected set, loaded separately). Returns NULL for a type with no JSON (e.g. XML-only support infos).
+const picojson::value* cascadeJsonForType(const char* szType)
+{
+	static std::map<std::string, picojson::value> s_index;
+	static bool s_built = false;
+	if (!s_built)
+	{
+		s_built = true;
+		std::string base = gDLL->getModName(true);
+		if (!base.empty() && base[base.size() - 1] != '\\' && base[base.size() - 1] != '/') base += "\\";
+		std::vector<std::string> files;
+		rj_find(base + "Assets\\Data", files);
+		for (size_t i = 0; i < files.size(); ++i)
+		{
+			if (files[i].find("\\complex\\") != std::string::npos) continue;   // simple-set JSON wins the shared TRAIT_ id
+			std::string text;
+			if (!rj_readFile(files[i], text)) continue;
+			picojson::value v;
+			if (!picojson::parse(v, text).empty() || !v.is<picojson::object>()) continue;
+			const picojson::object& o = v.get<picojson::object>();
+			picojson::object::const_iterator t = o.find("type");
+			if (t != o.end() && t->second.is<std::string>()) s_index[t->second.get<std::string>()] = v;
+		}
+	}
+	if (szType == NULL || *szType == '\0') return NULL;
+	std::map<std::string, picojson::value>::const_iterator it = s_index.find(szType);
+	return it != s_index.end() ? &it->second : NULL;
+}
+
 // The cascade info-type table (X-macro): (type-prefix, CvXInfo class) -- ONE source of truth for the per-type InfoRepo
 // selection (edit + clear-all), so a new cascade info type is added in exactly ONE place (cascade-engine-430.md §3
 // care-point (d)). Order MATTERS: longer/more-specific prefixes FIRST (UNITCOMBAT_ before UNIT_, CIVICOPTION_ before
 // CIVIC_, PROMOTIONLINE_ before PROMOTION_; TRAIT_ covers TRAIT_COMPLEX_). Unlisted types -> NULL (no cascade home).
 #define RJ_REPO_TYPES(X)                     \
-	X("BUILDING_",      CvBuildingInfo)       \
-	X("UNITCOMBAT_",    CvUnitCombatInfo)     \
-	X("UNIT_",          CvUnitInfo)           \
-	X("TECH_",          CvTechInfo)           \
-	X("CIVICOPTION_",   CvCivicOptionInfo)    \
-	X("CIVIC_",         CvCivicInfo)          \
-	X("TRAIT_",         CvTraitInfo)          \
-	X("SPECIALIST_",    CvSpecialistInfo)     \
+	X("BUILDING_",      CvJsonBuildingInfo)       \
+	X("UNITCOMBAT_",    CvJsonUnitCombatInfo)     \
+	X("UNIT_",          CvJsonUnitInfo)           \
+	X("TECH_",          CvJsonTechInfo)           \
+	X("CIVICOPTION_",   CvJsonCivicOptionInfo)    \
+	X("CIVIC_",         CvJsonCivicInfo)          \
+	X("TRAIT_",         CvJsonTraitInfo)          \
+	X("SPECIALIST_",    CvJsonSpecialistInfo)     \
 	X("BONUS_",         CvBonusInfo)          \
-	X("RELIGION_",      CvReligionInfo)       \
-	X("CORPORATION_",   CvCorporationInfo)    \
-	X("PROMOTIONLINE_", CvPromotionLineInfo)  \
-	X("PROMOTION_",     CvPromotionInfo)      \
+	X("RELIGION_",      CvJsonReligionInfo)       \
+	X("CORPORATION_",   CvJsonCorporationInfo)    \
+	X("PROMOTIONLINE_", CvJsonPromotionLineInfo)  \
+	X("PROMOTION_",     CvJsonPromotionInfo)      \
 	X("IMPROVEMENT_",   CvImprovementInfo)    \
 	X("FEATURE_",       CvFeatureInfo)        \
 	X("TERRAIN_",       CvTerrainInfo)        \
 	X("ROUTE_",         CvJsonRouteInfo)          \
-	X("PROJECT_",       CvProjectInfo)        \
-	X("PROCESS_",       CvProcessInfo)        \
-	X("HERITAGE_",      CvHeritageInfo)       \
-	X("CULTURELEVEL_",  CvCultureLevelInfo)   \
+	X("PROJECT_",       CvJsonProjectInfo)        \
+	X("PROCESS_",       CvJsonProcessInfo)        \
+	X("HERITAGE_",      CvJsonHeritageInfo)       \
+	X("CULTURELEVEL_",  CvJsonCultureLevelInfo)   \
 	X("BUILD_",         CvBuildInfo)          \
-	X("PROPERTY_",      CvPropertyInfo)
+	X("PROPERTY_",      CvJsonPropertyInfo)
 
 // get-or-create the entity's CvJsonInfo (the reader calls mapFrom on it); NULL for non-cascade types.
 static CvJsonInfo* rj_jsonEdit(const std::string& t, int id)
@@ -217,18 +250,28 @@ static CvJsonInfo* rj_jsonEdit(const std::string& t, int id)
 	return NULL;
 }
 
-// PASS-1 ENUM OWNER (XML archived -> readJson mints the id space): assign & register a PER-CATEGORY id in LOAD ORDER
-// for a JSON type, reusing an existing registration (the simple+complex TRAIT_X pair shares ONE id). -1 = not a cascade
-// category (RJ_REPO_TYPES). Id order is SESSION-LOCAL -- the name-tagged save remaps names->ids on load
-// (engine.md Save/load) -- so plain load order needs no deterministic sort / lockstep guarantee.
-static int rj_registerId(const std::string& t, std::map<std::string, int>& catNext)
+// #430 collapse: is this type's repo ALIASED over GC.m_pa<X>Info? An aliased type's JSON is loaded by CvJsonInfo::read()
+// (per entity, at its SetGlobalClassInfo moment) straight into the GC object this repo views -- so cascadeLoadJson must
+// NOT mapFrom it a second time (mapFrom accumulates edges/deposits; a re-map would double-count). The JSON-only OWNED
+// types (Heritage/Build/complex) have no XML shell / no read(), so they stay cascadeLoadJson's to map.
+static bool rj_isAliased(const std::string& t)
 {
-	const int existing = GC.getInfoTypeForString(t.c_str(), true);
-	if (existing >= 0) return existing;
-#define X(PFX, T) if (rj_starts(t, PFX)) { const int id = catNext[PFX]++; GC.setInfoTypeFromString(t.c_str(), id); return id; }
+#define X(PFX, T) if (rj_starts(t, PFX)) return InfoRepo<T>::get().isAliased();
 	RJ_REPO_TYPES(X)
 #undef X
-	return -1;
+	return false;
+}
+
+// PASS-1 id lookup -- REUSE-ONLY (owner ruling 2026-07-08). readJson mirrors the XML's premenu/postmenu load PHASING:
+// a type is mapped only AFTER its XML shell has registered its id (the 63 premenu types at the LoadPreMenuGlobals
+// map; the 18 postmenu process/vote/espionage/spawn types at the LoadPostMenuGlobals re-map). readJson must NOT mint
+// an id for a type whose XML shell has not loaded yet -- that pre-registered a postmenu type before its XML array
+// existed, so SetGlobalClassInfo saw it as "already loaded" and deref'd the empty array (aInfos[id], the load crash).
+// So: return the XML-registered id if present, else -1 = DEFER (skipped this pass, mapped on the re-run once its XML
+// phase has loaded). The only JSON-owned id space is the complex-trait set, minted separately (complexNext, below).
+static int rj_registerId(const std::string& t)
+{
+	return GC.getInfoTypeForString(t.c_str(), true);   // >=0 reuse the XML shell's id; -1 defer to the phase that loads it
 }
 
 // Clear every cascade InfoRepo (free all CvJsonInfo) BEFORE (re)mapping, so a re-run can't DOUBLE the deposit vectors
@@ -262,18 +305,24 @@ const std::string& cascadeReadJsonStats(bool bSet, int& iFiles, int& iEntities, 
 
 void cascadeLoadJson()
 {
-	// ONE-SHOT per process: the static JSON->InfoRepo map is built ONCE, at the END of LoadPostMenuGlobals -- the
-	// LAST XML load stage, so EVERY info type is in the registry. ⛔ NOT doPostLoadCaching (the previous home): that
-	// fires pre-menu, BEFORE processes/votes/espionage-missions/spawns register, so their FK edges silently dropped
-	// (the canMaintain empty-frontier bug, 2026-07-02). UNCONDITIONAL: it must NOT depend on gPlayerLogLevel (cold
-	// this early) -- the [READJSON/*] census rides the event spine (SD_READJSON; the log consumer gates per level).
-	static bool s_done = false;
-	if (s_done) return;
-	s_done = true;
+	// TWO-PHASE, mirroring the XML's premenu/postmenu load phasing + DELAYED READ (owner ruling 2026-07-08). readJson
+	// runs at the END of BOTH LoadPreMenuGlobals and LoadPostMenuGlobals. rj_registerId is REUSE-ONLY, so each pass maps
+	// exactly the types whose XML shell has registered by then: the premenu pass maps the premenu-XML set (all the
+	// terrain/plot/mapscript infos + the other premenu types); the postmenu pass -- once processes/votes/espionage/
+	// spawns are XML-registered too -- rj_clearAllRepos-frees the premenu pass and re-maps EVERYTHING with FULL FK
+	// resolution (readJson's equivalent of the XML delayed read: FKs resolve only when every target is loaded; a
+	// premenu-only map drops the edges to not-yet-loaded types -- the canMaintain empty-frontier bug). NOT one-shot: the
+	// postmenu re-run is what completes the FK edges. UNCONDITIONAL: no gPlayerLogLevel dependency (cold this early) --
+	// the [READJSON/*] census rides the event spine (SD_READJSON; the log consumer gates per level).
 	cascadeRegisterConsumers();   // register the spine's logging CONSUMER (idempotent) before the census emits
 	rj_registerDomain();
 	rj_clearAllRepos();           // care-point (a): re-map-safe (no-op first run)
 	jsonResetDiag();              // reset the FK-unresolved accumulator (surfaced below)
+
+	// Always-on load timing (the spine census above is DARK at load -- gPlayerLogLevel 0). Grep `[READJSON]` in
+	// Loading.log to SEE the JSON read progress + per-phase ms, so a slow/stuck load is diagnosable from the log.
+	const DWORD s2sT0 = GetTickCount();
+	gDLL->logMsg("Loading.log", "[READJSON] BEGIN cascadeLoadJson", true, false);
 
 	std::string base = gDLL->getModName(true);
 	if (!base.empty() && base[base.size() - 1] != '\\' && base[base.size() - 1] != '/') base += "\\";
@@ -281,6 +330,7 @@ void cascadeLoadJson()
 
 	std::vector<std::string> files;
 	rj_find(dataDir, files);
+	gDLL->logMsg("Loading.log", CvString::format("[READJSON] scan dir=%s files=%u ms=%u", dataDir.c_str(), (unsigned)files.size(), (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 
 	int iFailed = 0, iEntities = 0, iResolved = 0, iUnresolved = 0, iShownUnres = 0;
 	std::set<std::string> familyKinds, flagKinds;
@@ -292,7 +342,6 @@ void cascadeLoadJson()
 	// LOAD ORDER + register type->id; the registry must be COMPLETE before ANY mapFrom, else a FORWARD FK reference
 	// would drop. Parse ONCE -- the parsed value + path are stashed on the RjEntity for PASS 2. TECH_GAME_START is the
 	// synthetic no-engine-id root (id -1, off the InfoRepo).
-	std::map<std::string, int> catNext;   // per-category (RJ_REPO_TYPES prefix) next-id counter
 	int complexNext = 0;                  // the SEPARATE complex-trait enum (owner 2026-07-07): simple + complex share
 	                                      // the exact type string (TRAIT_AGGRESSIVE in both folders), so they must NOT
 	                                      // share an id -- complex gets its OWN id space (into InfoRepo<CvComplexTraitTag>)
@@ -314,12 +363,14 @@ void cascadeLoadJson()
 		const bool bComplex = rj_starts(type, "TRAIT_") && files[i].find("\\complex\\") != std::string::npos;
 		const int typeId = (type == "TECH_GAME_START") ? -1
 			: bComplex ? complexNext++
-			: rj_registerId(type, catNext);
+			: rj_registerId(type);   // reuse-only: the XML shell's id, or -1 = DEFER to the phase that loads it
 		if (typeId >= 0) ++iResolved;
 		else { ++iUnresolved; if (iShownUnres < 16) { eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_UNRESOLVED, 1).addStr(RJF_TYPE, type.c_str())); ++iShownUnres; } }
 		RjEntity rec; rec.type = type; rec.typeId = typeId; rec.data = NULL; rec.value = v; rec.path = files[i];
 		store.push_back(rec);
 	}
+	gDLL->logMsg("Loading.log", CvString::format("[READJSON] PASS1-register parsed=%d entities=%d resolved=%d deferred=%d failed=%d ms=%u",
+		(int)files.size() - iFailed, iEntities, iResolved, iUnresolved, iFailed, (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 
 	// ===== PASS 2 -- MAP: registry complete -> each entity loads itself (mapFrom resolves its FKs against the FULL id
 	// space). Complex traits collide on the engine id with the simple set -> their OWN repo (`\complex\` path is the
@@ -331,13 +382,21 @@ void cascadeLoadJson()
 		if (!rec.value.is<picojson::object>()) continue;
 		const picojson::object& o = rec.value.get<picojson::object>();
 		const bool bComplexTrait = rec.typeId >= 0 && rj_starts(rec.type, "TRAIT_") && rec.path.find("\\complex\\") != std::string::npos;
-		CvJsonInfo* data = (rec.type == "TECH_GAME_START") ? &cascadeStartNode()
+		const bool bStartNode = (rec.type == "TECH_GAME_START");
+		CvJsonInfo* data = bStartNode ? &cascadeStartNode()
 			: bComplexTrait ? InfoRepo<CvComplexTraitTag>::get().editPtr(rec.typeId)
 			: rj_jsonEdit(rec.type, rec.typeId);
 		rec.data = data;
 		if (data != NULL)
 		{
-			data->mapFrom(rec.value);
+			// The truly-ALIASED types (rj_jsonEdit -> GC.m_pa<X>Info) were already mapFrom'd by CvJsonInfo::read() --
+			// do NOT re-map (mapFrom accumulates; a second pass double-counts). The OWNED objects have NO read() and
+			// MUST be mapped here: the synthetic start node (cascadeStartNode) and the complex-trait set (CvComplexTraitTag)
+			// -- both match an aliased type PREFIX (TECH_/TRAIT_) so rj_isAliased(type) is true for them, but they are NOT
+			// the aliased GC objects, so guard on the actual owned-vs-aliased path, not the prefix. (Fixes the empty
+			// TECH_GAME_START -> missing canSetScienceRate/canSetEspionageRate sliders + empty complex traits.)
+			const bool bAliased = !bStartNode && !bComplexTrait && rj_isAliased(rec.type);
+			if (!bAliased) data->mapFrom(rec.value);
 			DepositIndex::pushInfo(data);   // the compiled deposit index PUSH: the info's §6 families (+ whenObsolete)
 			                                // intern + compile HERE, at readJson push-time (modifier-substrate.md)
 		}
@@ -350,6 +409,7 @@ void cascadeLoadJson()
 			else if (c == CJK_FLAG) flagKinds.insert(it->first);
 		}
 	}
+	gDLL->logMsg("Loading.log", CvString::format("[READJSON] PASS2-map (mapFrom+DepositIndex) ms=%u", (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 
 	// STASH the probe stats for post-load re-emission (the load-time burst is dark: gPlayerLogLevel is 0 here, so
 	// the log consumer drops these lines -- the [MODIFIER/repo] census re-emits them per turn where logging is live).
@@ -464,5 +524,73 @@ void cascadeLoadJson()
 		}
 	}
 
+	// STORE-INVERTED TECH-FK REVERSE INDEX -- the Route<-bonus pattern above, generalized. curate_*.py DROP each
+	// entity's tech prereq/obsolete FK and store-invert it onto the TECH's enables/obsoletes buckets (bonus reveal +
+	// cityTrade both -> enables.bonuses, deliberately merged/indistinguishable; corp/project/religion/process/promotion
+	// -> enables.<bucket>; bonus/build/corp/promotion obsolete -> obsoletes.<bucket>). The getXInfo(...) compat getters
+	// still ask "which tech do I need?" -- a REVERSE lookup -- so reconstruct each target's FK here, once, after every
+	// entity is mapped. Forward reads only on the hot path (enabler.md §2); this cold reverse view is derived once at
+	// load (modifier.md §1). getProjectsNeeded is the project<-project variant (off the prereq project's enables.projects).
+	{
+		const int nTech = GC.getNumTechInfos();
+		for (int t = 0; t < nTech; ++t)
+		{
+			const CvJsonInfo* jt = InfoRepo<CvJsonTechInfo>::get().get(t);
+			if (jt == NULL || jt->getEdges() == NULL) continue;
+			const CvJsonEdges* e = jt->getEdges();
+			const TechTypes eTech = (TechTypes)t;
+			if (const std::vector<int>* v = e->find("enables.bonuses"))
+				for (size_t k = 0; k < v->size(); ++k)
+				{
+					CvJsonBonusInfo* p = static_cast<CvJsonBonusInfo*>(InfoRepo<CvBonusInfo>::get().editPtr((*v)[k]));
+					if (p->getTechReveal() == NO_TECH) { p->setTechReveal(eTech); p->setTechCityTrade(eTech); }   // first (lowest-id) tech wins -- merged/indistinguishable
+				}
+			if (const std::vector<int>* v = e->find("obsoletes.bonuses"))
+				for (size_t k = 0; k < v->size(); ++k)
+					static_cast<CvJsonBonusInfo*>(InfoRepo<CvBonusInfo>::get().editPtr((*v)[k]))->setTechObsolete(eTech);
+			if (const std::vector<int>* v = e->find("obsoletes.builds"))
+				for (size_t k = 0; k < v->size(); ++k)
+					static_cast<CvJsonBuildInfo*>(InfoRepo<CvBuildInfo>::get().editPtr((*v)[k]))->setObsoleteTech(eTech);
+			if (const std::vector<int>* v = e->find("enables.projects"))
+				for (size_t k = 0; k < v->size(); ++k)
+					static_cast<CvJsonProjectInfo*>(InfoRepo<CvJsonProjectInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
+			if (const std::vector<int>* v = e->find("enables.corporations"))
+				for (size_t k = 0; k < v->size(); ++k)
+					static_cast<CvJsonCorporationInfo*>(InfoRepo<CvJsonCorporationInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
+			if (const std::vector<int>* v = e->find("obsoletes.corporations"))
+				for (size_t k = 0; k < v->size(); ++k)
+					static_cast<CvJsonCorporationInfo*>(InfoRepo<CvJsonCorporationInfo>::get().editPtr((*v)[k]))->setObsoleteTech(eTech);
+			if (const std::vector<int>* v = e->find("enables.religions"))
+				for (size_t k = 0; k < v->size(); ++k)
+					static_cast<CvJsonReligionInfo*>(InfoRepo<CvJsonReligionInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
+			if (const std::vector<int>* v = e->find("enables.processes"))
+				for (size_t k = 0; k < v->size(); ++k)
+					static_cast<CvJsonProcessInfo*>(InfoRepo<CvJsonProcessInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
+			if (const std::vector<int>* v = e->find("enables.promotions"))
+				for (size_t k = 0; k < v->size(); ++k)
+					static_cast<CvJsonPromotionInfo*>(InfoRepo<CvJsonPromotionInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
+			if (const std::vector<int>* v = e->find("obsoletes.promotions"))
+				for (size_t k = 0; k < v->size(); ++k)
+					static_cast<CvJsonPromotionInfo*>(InfoRepo<CvJsonPromotionInfo>::get().editPtr((*v)[k]))->setObsoleteTech(eTech);
+			if (const std::vector<int>* v = e->find("enables.promotionLines"))
+				for (size_t k = 0; k < v->size(); ++k)
+					static_cast<CvJsonPromotionLineInfo*>(InfoRepo<CvJsonPromotionLineInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
+			if (const std::vector<int>* v = e->find("obsoletes.promotionLines"))
+				for (size_t k = 0; k < v->size(); ++k)
+					static_cast<CvJsonPromotionLineInfo*>(InfoRepo<CvJsonPromotionLineInfo>::get().editPtr((*v)[k]))->setObsoleteTech(eTech);
+		}
+		// project <- project: PrereqProjects store-inverted onto the prerequisite project's enables.projects.
+		const int nProj = GC.getNumProjectInfos();
+		for (int pr = 0; pr < nProj; ++pr)
+		{
+			const CvJsonInfo* jp = InfoRepo<CvJsonProjectInfo>::get().get(pr);
+			if (jp == NULL || jp->getEdges() == NULL) continue;
+			if (const std::vector<int>* v = jp->getEdges()->find("enables.projects"))
+				for (size_t k = 0; k < v->size(); ++k)
+					static_cast<CvJsonProjectInfo*>(InfoRepo<CvJsonProjectInfo>::get().editPtr((*v)[k]))->addProjectNeeded(pr);
+		}
+	}
+
 	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MAP_SUMMARY, 1).addI(RJF_WITHDATA, iAttached));
+	gDLL->logMsg("Loading.log", CvString::format("[READJSON] END withData=%d reverseIndex+survey done totalMs=%u", iAttached, (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 }

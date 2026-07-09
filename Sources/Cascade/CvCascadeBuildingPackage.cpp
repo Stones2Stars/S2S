@@ -9,10 +9,10 @@
 #include "CvCascadeMMKernel.h"
 #include "CvCascadeDepositIndex.h"     // DepositIndex::whenObsoleteFor -- the obsolete tree's compiled records
 #include "CvJsonInfo.h"                // CvJsonInfo
-#include "Repos/InfoRepo.h"            // InfoRepo<CvBuildingInfo>::get().get(id)
+#include "Repos/InfoRepo.h"            // InfoRepo<CvJsonBuildingInfo>::get().get(id)
 #include "Defines/CvGlobals.h"
 #include "Engine/CvCity.h"
-#include "Infos/CvBuildingInfo.h"
+#include "CvJsonBuildingInfo.h"
 
 // AFTER tier -- BuildingPackage (modifier.md §2a / calc-map §1.4): Σ ACTIVE buildings' {ch}.city.flat +
 // {ch}.city.perPopulation × population, ×100. The lone AFTER term in the §1 yield rate (added flat OUTSIDE the percent
@@ -50,7 +50,7 @@ long BuildingPackage::buildingFlat(const std::string& channel, const CvCity* pCi
 	long sum = 0;
 	for (int b = 0; b < nB; ++b)
 	{
-		const CvJsonInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
+		const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get(b);
 		if (cascadeIsBuildingActive(b, ec))   // present + non-dormant in THIS city (cascade-computed)
 		{
 			if (d != NULL)

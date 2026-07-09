@@ -24,7 +24,7 @@
 #include "CvJsonCivicInfo.h"          // the civic §9 policies block (the L1 policy read)
 #include "CvJsonTraitInfo.h"          // the trait §9 policies block
 #include "Repos/InfoRepo.h"
-#include "Infos/CvCivicInfo.h"
+#include "CvJsonCivicInfo.h"
 #include <string>
 
 static bool ev_playerHasPolicy(const CvPlayer* pPlayer, const char* szKey);   // defined below (the L1 policy read)
@@ -378,7 +378,7 @@ static bool ev_playerHasPolicy(const CvPlayer* pPlayer, const char* szKey)
 	{
 		const CivicTypes eCivic = pPlayer->getCivics((CivicOptionTypes)i);
 		if (eCivic == NO_CIVIC) continue;
-		const CvJsonCivicInfo* d = static_cast<const CvJsonCivicInfo*>(InfoRepo<CvCivicInfo>::get().get(eCivic));
+		const CvJsonCivicInfo* d = static_cast<const CvJsonCivicInfo*>(InfoRepo<CvJsonCivicInfo>::get().get(eCivic));
 		if (d != NULL && d->getPolicies() != NULL && d->getPolicies()->has(szKey)) bHas = true;
 	}
 	for (int t = 0; t < GC.getNumTraitInfos() && !bHas; ++t)

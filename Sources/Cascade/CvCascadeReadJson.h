@@ -17,6 +17,12 @@
 //	gated in the consumer). So loading the game with the XML always populates the cascade's static data-feed.
 void cascadeLoadJson();
 
+//	#430 collapse: the per-entity JSON lookup CvJsonInfo::read() uses. Lazily builds a type->JSON index (one
+//	Assets/Data scan) and returns this entity's parsed JSON (NULL if it has none). The JSON load thus rides the normal
+//	SetGlobalClassInfo->read() flow -- no separate InfoRepo pass.
+namespace picojson { class value; }
+const picojson::value* cascadeJsonForType(const char* szType);
+
 #include <string>
 //	The probe-stat stash (set=true stores at map time; set=false reads): what the DARK load-time [READJSON] burst
 //	saw -- file count found under dataDir, entities parsed, and the dataDir string (the return). gPlayerLogLevel is 0

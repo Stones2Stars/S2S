@@ -29,13 +29,16 @@ public:
 	int getMaxNationalWonders() const { return wonderCap("nationalWonders"); }
 	// NB getMaxNationalWondersOCC DROPPED (One-City-Challenge not feasible in this mod, owner 2026-07-01; curator drops it).
 
-	// ⏳ WRINKLE (curator COLLAPSE): the legacy per-GameSpeed threshold TABLE is dropped -- the poco carries the base
+	// STUB WRINKLE (curator COLLAPSE): the legacy per-GameSpeed threshold TABLE is dropped -- the poco carries the base
 	//    culture-point threshold, and the per-speed value is derived consumer-side (base × GameSpeed.speed.world.percent
 	//    /100). getSpeedThreshold keeps its signature but is speed-agnostic here (the scaling moved to the caller).
 	int getSpeedThreshold(int /*iSpeed*/) const { return m_iCultureThreshold; }   // identity.cultureThreshold (raw culture points, ×1)
 
 	int getLevel() const { return m_iLevel; }        // RUNTIME ordinal -- set at load, NOT JSON-mapped
 	void setLevel(int i) { m_iLevel = i; }
+
+	int getPrereqGameOption() const { return NO_GAMEOPTION; }   // STUB entity-level game-option gate (DEC-entity-gate)
+	int getMaxNationalWondersOCC() const { return 0; }          // STUB One-City-Challenge cap (curator drops it; OCC infeasible)
 
 	virtual void mapFrom(const picojson::value& entity);
 
