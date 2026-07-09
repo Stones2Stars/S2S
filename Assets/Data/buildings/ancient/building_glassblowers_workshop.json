@@ -130,7 +130,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GLASSBLOWERS_WORKSHOP"
+   "define": "ART_DEF_BUILDING_GLASSBLOWERS_WORKSHOP"
   }
  },
  "sound": {

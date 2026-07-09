@@ -43,6 +43,11 @@
   "production": 715,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TRENCH_INFANTRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TRENCH_INFANTRY",
   "civilopedia": "TXT_KEY_UNIT_TRENCH_INFANTRY_PEDIA",

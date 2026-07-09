@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_SATELLITE_STATION"
+   "define": "ART_DEF_IMPROVEMENT_SATELLITE_STATION"
   }
  },
  "identity": {

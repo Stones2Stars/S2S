@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VIRTUAL_GOVERNANCE"
+   "define": "ART_DEF_BUILDING_VIRTUAL_GOVERNANCE"
   }
  },
  "identity": {

@@ -101,7 +101,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MALLWART_STORE"
+   "define": "ART_DEF_BUILDING_MALLWART_STORE"
   }
  },
  "sound": {

@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_COBBLER"
+   "define": "ART_DEF_BUILDING_COBBLER"
   }
  },
  "identity": {

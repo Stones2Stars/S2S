@@ -68,7 +68,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_HYDROPONICS_COMPLEX"
+   "define": "ART_DEF_BUILDING_MARTIAN_HYDROPONICS_COMPLEX"
   }
  },
  "identity": {

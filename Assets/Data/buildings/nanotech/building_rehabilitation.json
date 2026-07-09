@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_REHABILITATION"
+   "define": "ART_DEF_BUILDING_REHABILITATION"
   }
  },
  "identity": {

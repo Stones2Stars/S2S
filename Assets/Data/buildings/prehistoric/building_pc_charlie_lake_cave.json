@@ -67,7 +67,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PC_CHARLIE_LAKE_CAVE"
+   "define": "ART_DEF_BUILDING_PC_CHARLIE_LAKE_CAVE"
   }
  },
  "identity": {

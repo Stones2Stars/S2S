@@ -30,6 +30,11 @@
   "production": 5250,
   "upkeep": 11
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SUPER_SOLDIER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FERAL",
   "civilopedia": "TXT_KEY_UNIT_FERAL_PEDIA",

@@ -56,7 +56,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LIFE_LIQUID_NITROGEN"
+   "define": "ART_DEF_BUILDING_LIFE_LIQUID_NITROGEN"
   }
  },
  "identity": {

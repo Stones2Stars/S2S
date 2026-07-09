@@ -83,7 +83,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PALM_WEEVIL_GATHERER"
+   "define": "ART_DEF_BUILDING_PALM_WEEVIL_GATHERER"
   }
  },
  "identity": {

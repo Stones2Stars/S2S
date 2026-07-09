@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_ABANDONED_CIVILIZATION"
+   "define": "ART_DEF_BONUS_ABANDONED_CIVILIZATION"
   }
  },
  "mapGeneration": {

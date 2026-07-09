@@ -56,7 +56,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SMART_DUST_WALLS"
+   "define": "ART_DEF_BUILDING_SMART_DUST_WALLS"
   }
  },
  "sound": {

@@ -45,6 +45,11 @@
    "BUILDING_DANCE_FOX"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ARCTICFOX"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_ARCTICFOX",
   "civilopedia": "TXT_KEY_UNIT_ARCTICFOX_PEDIA",

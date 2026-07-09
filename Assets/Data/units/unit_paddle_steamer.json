@@ -49,6 +49,11 @@
   "production": 570,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PADDLE_STEAMER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PADDLE_STEAMER",
   "civilopedia": "TXT_KEY_UNIT_PADDLE_STEAMER_PEDIA",

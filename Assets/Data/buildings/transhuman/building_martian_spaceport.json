@@ -37,7 +37,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_SPACEPORT"
+   "define": "ART_DEF_BUILDING_MARTIAN_SPACEPORT"
   }
  },
  "identity": {

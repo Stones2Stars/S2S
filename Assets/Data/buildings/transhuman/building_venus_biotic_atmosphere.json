@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VENUS_BIOTIC_ATMOSPHERE"
+   "define": "ART_DEF_BUILDING_VENUS_BIOTIC_ATMOSPHERE"
   }
  },
  "identity": {

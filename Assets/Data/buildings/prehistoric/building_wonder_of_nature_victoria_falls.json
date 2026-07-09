@@ -116,7 +116,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WONDER_OF_NATURE_VICTORIA_FALLS"
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_VICTORIA_FALLS"
   }
  },
  "identity": {

@@ -83,7 +83,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MAJOR_LEAGUE_STADIUM"
+   "define": "ART_DEF_BUILDING_MAJOR_LEAGUE_STADIUM"
   }
  },
  "identity": {

@@ -34,7 +34,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SMART_CONTRACTS"
+   "define": "ART_DEF_BUILDING_SMART_CONTRACTS"
   }
  },
  "identity": {

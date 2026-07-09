@@ -88,6 +88,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_REEF_SHARK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_REEF_SHARK",
   "civilopedia": "TXT_KEY_UNIT_REEF_SHARK_PEDIA",

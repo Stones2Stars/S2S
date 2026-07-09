@@ -37,6 +37,11 @@
    "BUILDING_CRAB_NETS"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CRAB"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_CRAB",
   "civilopedia": "TXT_KEY_UNIT_CRAB_PEDIA",

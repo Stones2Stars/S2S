@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MERCANTILISM_BONUS_GOLD"
+   "define": "ART_DEF_BUILDING_MERCANTILISM_BONUS_GOLD"
   }
  },
  "identity": {

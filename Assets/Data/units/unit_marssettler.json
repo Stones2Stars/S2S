@@ -105,6 +105,11 @@
   "upkeep": 11,
   "hurryCostModifier": 10000
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MARS_SETTLER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MARSSETTLER",
   "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",

@@ -33,7 +33,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRADITION_HUNTER"
+   "define": "ART_DEF_BUILDING_TRADITION_HUNTER"
   }
  },
  "identity": {

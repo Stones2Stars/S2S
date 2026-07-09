@@ -79,6 +79,11 @@
   "production": 1300,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BATTLESHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WW2_BATTLESHIP",
   "civilopedia": "TXT_KEY_UNIT_WW2_BATTLESHIP_PEDIA",

@@ -127,7 +127,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SHIPWRIGHT"
+   "define": "ART_DEF_BUILDING_SHIPWRIGHT"
   }
  },
  "identity": {

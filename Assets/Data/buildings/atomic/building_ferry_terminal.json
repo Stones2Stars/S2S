@@ -89,7 +89,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FERRY_TERMINAL"
+   "define": "ART_DEF_BUILDING_FERRY_TERMINAL"
   }
  },
  "sound": {

@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_HELIOFORMED_BROWN_DWARF"
+   "define": "ART_DEF_IMPROVEMENT_HELIOFORMED_BROWN_DWARF"
   }
  },
  "identity": {

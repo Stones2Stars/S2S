@@ -158,6 +158,11 @@
   "production": 787,
   "upkeep": 6
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NAVAJO_RIFLEMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NAVAJO_RIFLEMAN",
   "civilopedia": "TXT_KEY_UNIT_NAVAJO_RIFLEMAN_PEDIA",

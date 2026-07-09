@@ -2,7 +2,7 @@
  "type": "BONUS_MASCAGNITE",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_MASCAGNITE"
+   "define": "ART_DEF_BONUS_MASCAGNITE"
   }
  },
  "identity": {

@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_FORTIFIED_CAVE"
+   "define": "ART_DEF_IMPROVEMENT_FORTIFIED_CAVE"
   }
  },
  "mapGeneration": {

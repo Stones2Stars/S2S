@@ -93,6 +93,11 @@
  "cost": {
   "production": 130
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TRAINED_NEANDERTHAL_MAMMOTH"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NEANDERTHAL_MAMMOTH_RIDER",
   "civilopedia": "TXT_KEY_UNIT_TRAINED_MAMMOTH_PEDIA",

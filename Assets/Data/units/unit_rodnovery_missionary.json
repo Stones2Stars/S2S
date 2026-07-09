@@ -15,6 +15,11 @@
  "cost": {
   "production": 110
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RODNOVERY_MISSIONARY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_RODNOVERY_MISSIONARY",
   "civilopedia": "TXT_KEY_TECH_RODNOVERA_PEDIA",

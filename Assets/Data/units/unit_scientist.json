@@ -71,6 +71,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SCIENTIST"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SCIENTIST",
   "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",

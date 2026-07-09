@@ -148,6 +148,11 @@
   "production": 125,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_YAGHAN_HUNTERS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_YAGHAN_HUNTERS",
   "civilopedia": "TXT_KEY_UNIT_YAGHAN_HUNTERS_PEDIA",

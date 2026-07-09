@@ -133,7 +133,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_JET_ENGINES"
+   "define": "ART_DEF_BUILDING_FACTORY_JET_ENGINES"
   }
  },
  "identity": {

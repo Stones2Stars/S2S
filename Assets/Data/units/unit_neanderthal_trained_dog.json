@@ -73,6 +73,11 @@
   "production": 70,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NEANDERTHAL_TRAINED_DOG"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NEANDERTHAL_TRAINED_DOG",
   "civilopedia": "TXT_KEY_UNIT_WARDOG_PEDIA",

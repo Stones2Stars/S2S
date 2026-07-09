@@ -99,6 +99,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PROPHET"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PROPHET",
   "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",

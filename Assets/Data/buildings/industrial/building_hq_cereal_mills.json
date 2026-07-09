@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CORPORATION_1"
+   "define": "ART_DEF_BUILDING_CORPORATION_1"
   }
  },
  "sound": {

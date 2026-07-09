@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ZURICH_ORBITAL"
+   "define": "ART_DEF_BUILDING_ZURICH_ORBITAL"
   }
  },
  "identity": {

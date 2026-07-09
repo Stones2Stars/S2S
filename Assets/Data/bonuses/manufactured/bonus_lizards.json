@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_LIZARDS"
+   "define": "ART_DEF_BONUS_LIZARDS"
   }
  },
  "identity": {

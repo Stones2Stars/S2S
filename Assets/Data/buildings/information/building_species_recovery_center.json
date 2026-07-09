@@ -70,7 +70,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SPECIES_RECOVERY_CENTER"
+   "define": "ART_DEF_BUILDING_SPECIES_RECOVERY_CENTER"
   }
  },
  "identity": {

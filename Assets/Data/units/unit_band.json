@@ -119,6 +119,11 @@
    "UNIT_TRIBE"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BAND_MALE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BAND",
   "civilopedia": "TXT_KEY_UNIT_BAND_PEDIA",

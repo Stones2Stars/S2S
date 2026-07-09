@@ -64,6 +64,11 @@
   "production": 864,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TUOBA_LIWEI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TUOBA_LIWEI",
   "civilopedia": "TXT_KEY_UNIT_TUOBA_LIWEI_PEDIA",

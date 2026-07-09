@@ -92,6 +92,11 @@
   "production": 72,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DENE_SLED_DOGS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DENE_SLED_DOGS",
   "civilopedia": "TXT_KEY_UNIT_DENE_SLED_DOGS_PEDIA",

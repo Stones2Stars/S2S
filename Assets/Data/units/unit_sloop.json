@@ -105,6 +105,11 @@
   "production": 450,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SLOOP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SLOOP",
   "civilopedia": "TXT_KEY_UNIT_CARAVEL_PEDIA",

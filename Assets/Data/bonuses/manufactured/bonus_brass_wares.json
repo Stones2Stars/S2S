@@ -10,7 +10,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_BRASS_WARES"
+   "define": "ART_DEF_BONUS_BRASS_WARES"
   }
  },
  "identity": {

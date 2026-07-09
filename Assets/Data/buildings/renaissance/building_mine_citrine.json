@@ -68,7 +68,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MINE_CITRINE"
+   "define": "ART_DEF_BUILDING_MINE_CITRINE"
   }
  },
  "identity": {

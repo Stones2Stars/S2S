@@ -2,7 +2,7 @@
  "type": "BONUS_PORCELAIN",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_PORCELAIN"
+   "define": "ART_DEF_BONUS_PORCELAIN"
   }
  },
  "identity": {

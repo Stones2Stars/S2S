@@ -63,7 +63,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR"
+   "define": "ART_DEF_BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR"
   }
  },
  "sound": {

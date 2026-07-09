@@ -86,7 +86,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LARGE_SUSPENSION_BRIDGE"
+   "define": "ART_DEF_BUILDING_LARGE_SUSPENSION_BRIDGE"
   }
  },
  "identity": {

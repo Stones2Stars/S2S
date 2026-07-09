@@ -238,7 +238,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_IRON_WARES"
+   "define": "ART_DEF_BONUS_IRON_WARES"
   }
  },
  "identity": {

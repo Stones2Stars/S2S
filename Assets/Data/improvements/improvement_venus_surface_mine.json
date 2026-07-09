@@ -46,7 +46,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_VENUS_SURFACE_MINE"
+   "define": "ART_DEF_IMPROVEMENT_VENUS_SURFACE_MINE"
   }
  },
  "identity": {

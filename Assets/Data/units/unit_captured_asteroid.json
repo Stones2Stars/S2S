@@ -39,6 +39,11 @@
   "upkeep": 1,
   "hurryCostModifier": 10000
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CAPTURED_ASTEROID"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CAPTURED_ASTEROID",
   "civilopedia": "TXT_KEY_UNIT_CAPTURED_ASTEROID_PEDIA",

@@ -130,7 +130,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EU_MONTPELLIER_UNIVERSITY"
+   "define": "ART_DEF_BUILDING_EU_MONTPELLIER_UNIVERSITY"
   }
  },
  "identity": {

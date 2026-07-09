@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SILK"
+   "define": "ART_DEF_BONUS_SILK"
   }
  },
  "mapGeneration": {

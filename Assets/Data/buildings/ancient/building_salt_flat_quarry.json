@@ -57,7 +57,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SALT_FLAT_QUARRY"
+   "define": "ART_DEF_BUILDING_SALT_FLAT_QUARRY"
   }
  },
  "identity": {

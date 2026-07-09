@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_AUTOMATED_DEFENSES"
+   "define": "ART_DEF_BUILDING_AUTOMATED_DEFENSES"
   }
  },
  "sound": {

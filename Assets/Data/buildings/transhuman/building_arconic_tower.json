@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ARCONIC_TOWER"
+   "define": "ART_DEF_BUILDING_ARCONIC_TOWER"
   }
  },
  "identity": {

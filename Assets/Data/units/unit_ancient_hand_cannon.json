@@ -77,6 +77,11 @@
   "production": 280,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ANCIENT_HAND_CANNON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ANCIENT_HAND_CANNON",
   "civilopedia": "TXT_KEY_UNIT_ANCIENT_HAND_CANNON_PEDIA",

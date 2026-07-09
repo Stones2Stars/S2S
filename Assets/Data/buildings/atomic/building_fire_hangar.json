@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FIRE_HANGAR"
+   "define": "ART_DEF_BUILDING_FIRE_HANGAR"
   }
  },
  "identity": {

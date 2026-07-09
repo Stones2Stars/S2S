@@ -174,7 +174,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOLOGRAPHIC_SCHOOL"
+   "define": "ART_DEF_BUILDING_HOLOGRAPHIC_SCHOOL"
   }
  },
  "identity": {

@@ -34,7 +34,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_DUNES"
+   "define": "ART_DEF_TERRAIN_DUNES"
   }
  },
  "sound": {

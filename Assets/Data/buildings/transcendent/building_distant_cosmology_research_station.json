@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DISTANT_COSMOLOGY_RESEARCH_STATION"
+   "define": "ART_DEF_BUILDING_DISTANT_COSMOLOGY_RESEARCH_STATION"
   }
  },
  "identity": {

@@ -2,7 +2,7 @@
  "type": "BONUS_POTASH",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_POTASH"
+   "define": "ART_DEF_BONUS_POTASH"
   }
  },
  "identity": {

@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_NEWSPAPERS"
+   "define": "ART_DEF_BUILDING_FACTORY_NEWSPAPERS"
   }
  },
  "identity": {

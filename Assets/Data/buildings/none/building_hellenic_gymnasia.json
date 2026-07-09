@@ -110,7 +110,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HELLENIC_GYMNASIA"
+   "define": "ART_DEF_BUILDING_HELLENIC_GYMNASIA"
   }
  },
  "sound": {

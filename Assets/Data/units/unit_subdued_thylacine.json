@@ -47,6 +47,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_THYLACINE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_THYLACINE",
   "civilopedia": "TXT_KEY_UNIT_THYLACINE_PEDIA",

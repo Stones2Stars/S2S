@@ -130,7 +130,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_APIARY"
+   "define": "ART_DEF_BUILDING_APIARY"
   }
  },
  "identity": {

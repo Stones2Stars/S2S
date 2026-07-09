@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRANSTELLAR_HIVEMIND"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_HIVEMIND"
   }
  },
  "identity": {

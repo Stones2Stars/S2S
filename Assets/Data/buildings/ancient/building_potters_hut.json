@@ -149,7 +149,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_POTTERS_HUT"
+   "define": "ART_DEF_BUILDING_POTTERS_HUT"
   }
  },
  "identity": {

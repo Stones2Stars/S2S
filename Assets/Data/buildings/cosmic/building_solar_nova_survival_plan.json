@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SOLAR_NOVA_SURVIVAL_PLAN"
+   "define": "ART_DEF_BUILDING_SOLAR_NOVA_SURVIVAL_PLAN"
   }
  },
  "identity": {

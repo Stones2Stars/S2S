@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_DYSON_SPHERE"
+   "define": "ART_DEF_IMPROVEMENT_DYSON_SPHERE"
   }
  },
  "identity": {

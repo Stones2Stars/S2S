@@ -125,7 +125,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_HYDROCARBON_WELL"
+   "define": "ART_DEF_IMPROVEMENT_HYDROCARBON_WELL"
   }
  },
  "identity": {

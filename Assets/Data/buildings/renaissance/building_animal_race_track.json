@@ -184,7 +184,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANIMAL_RACE_TRACK"
+   "define": "ART_DEF_BUILDING_ANIMAL_RACE_TRACK"
   }
  },
  "sound": {

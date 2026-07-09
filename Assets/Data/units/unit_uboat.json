@@ -83,6 +83,11 @@
   "production": 1230,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_UBOAT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_UBOAT",
   "civilopedia": "TXT_KEY_UNIT_UBOAT_PEDIA",

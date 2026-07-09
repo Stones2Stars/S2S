@@ -2,7 +2,7 @@
  "type": "BONUS_TAPESTRIES",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_TAPESTRIES"
+   "define": "ART_DEF_BONUS_TAPESTRIES"
   }
  },
  "identity": {

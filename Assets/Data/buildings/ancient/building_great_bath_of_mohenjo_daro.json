@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GREAT_BATH_OF_MOHENJO_DARO"
+   "define": "ART_DEF_BUILDING_GREAT_BATH_OF_MOHENJO_DARO"
   }
  },
  "identity": {

@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BATTLEBOT_ARENA"
+   "define": "ART_DEF_BUILDING_BATTLEBOT_ARENA"
   }
  },
  "identity": {

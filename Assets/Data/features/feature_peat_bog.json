@@ -45,7 +45,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_PEAT_BOG"
+   "define": "ART_DEF_FEATURE_PEAT_BOG"
   }
  },
  "sound": {

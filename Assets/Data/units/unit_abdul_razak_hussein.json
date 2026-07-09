@@ -48,6 +48,11 @@
   "production": 3800,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ABDUL_RAZAK_HUSSEIN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ABDUL_RAZAK_HUSSEIN",
   "civilopedia": "TXT_KEY_UNIT_ABDUL_RAZAK_HUSSEIN_PEDIA",

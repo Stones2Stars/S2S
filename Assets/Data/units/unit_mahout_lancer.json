@@ -91,6 +91,11 @@
   "production": 375,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MAHOUT_LANCER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MAHOUT_LANCER",
   "civilopedia": "TXT_KEY_UNIT_MAHOUT_LANCER_PEDIA",

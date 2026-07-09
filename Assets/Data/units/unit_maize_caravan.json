@@ -90,6 +90,11 @@
    "weight": 10
   }
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MAIZE_CARAVAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MAIZE_CARAVAN",
   "civilopedia": "TXT_KEY_UNIT_MAIZE_CARAVAN_PEDIA",

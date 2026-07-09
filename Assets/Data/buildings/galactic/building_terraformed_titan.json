@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TERRAFORMED_TITAN"
+   "define": "ART_DEF_BUILDING_TERRAFORMED_TITAN"
   }
  },
  "identity": {

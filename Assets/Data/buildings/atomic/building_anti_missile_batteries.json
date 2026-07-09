@@ -72,7 +72,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANTI_MISSILE_BATTERIES"
+   "define": "ART_DEF_BUILDING_ANTI_MISSILE_BATTERIES"
   }
  },
  "identity": {

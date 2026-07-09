@@ -38,7 +38,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_UNIVERSAL_AC"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_UNIVERSAL_AC"
   }
  },
  "identity": {

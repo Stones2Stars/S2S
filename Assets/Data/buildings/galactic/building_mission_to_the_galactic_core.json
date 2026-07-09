@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MISSION_TO_THE_GALACTIC_CORE"
+   "define": "ART_DEF_BUILDING_MISSION_TO_THE_GALACTIC_CORE"
   }
  },
  "identity": {

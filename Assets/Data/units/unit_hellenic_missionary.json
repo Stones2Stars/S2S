@@ -16,6 +16,11 @@
   "production": 110,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MISSIONARY_HELLENISM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HELLENIC_MISSIONARY",
   "civilopedia": "TXT_KEY_UNIT_HELLENIC_MISSIONARY_PEDIA",

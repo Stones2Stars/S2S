@@ -73,7 +73,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HELSINKI_CATHEDRAL"
+   "define": "ART_DEF_BUILDING_HELSINKI_CATHEDRAL"
   }
  },
  "identity": {

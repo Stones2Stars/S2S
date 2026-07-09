@@ -22,7 +22,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EFFECT_LUNA_RING"
+   "define": "ART_DEF_BUILDING_EFFECT_LUNA_RING"
   }
  },
  "identity": {

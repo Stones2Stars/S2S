@@ -2,7 +2,7 @@
  "type": "BONUS_RAINBOW_SERPENT",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_RAINBOW_SERPENT"
+   "define": "ART_DEF_BONUS_RAINBOW_SERPENT"
   }
  },
  "identity": {

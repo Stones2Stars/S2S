@@ -129,6 +129,11 @@
   "production": 150,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TOWN_WATCHMEN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TOWN_WATCHMEN",
   "civilopedia": "TXT_KEY_UNIT_TOWN_WATCHMEN_PEDIA",

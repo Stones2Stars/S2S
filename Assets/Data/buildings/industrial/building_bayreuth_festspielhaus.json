@@ -84,7 +84,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BAYREUTH_FESTSPIELHAUS"
+   "define": "ART_DEF_BUILDING_BAYREUTH_FESTSPIELHAUS"
   }
  },
  "identity": {

@@ -25,7 +25,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_MUREX"
+   "define": "ART_DEF_BONUS_MUREX"
   }
  },
  "mapGeneration": {

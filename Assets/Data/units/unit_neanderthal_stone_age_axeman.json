@@ -73,6 +73,11 @@
   "production": 70,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NEANDERTHAL_STONE_AGE_AXEMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NEANDERTHAL_STONE_AGE_AXEMAN",
   "civilopedia": "TXT_KEY_UNIT_STONE_AXEMAN_PEDIA",

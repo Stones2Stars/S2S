@@ -2,7 +2,7 @@
  "type": "BONUS_MOON_ROCKS",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_MOON_ROCKS"
+   "define": "ART_DEF_BONUS_MOON_ROCKS"
   }
  },
  "identity": {

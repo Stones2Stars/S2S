@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CRYSTAL_PALACE"
+   "define": "ART_DEF_BUILDING_CRYSTAL_PALACE"
   }
  },
  "identity": {

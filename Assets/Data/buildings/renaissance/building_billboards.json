@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BILLBOARDS"
+   "define": "ART_DEF_BUILDING_BILLBOARDS"
   }
  },
  "identity": {

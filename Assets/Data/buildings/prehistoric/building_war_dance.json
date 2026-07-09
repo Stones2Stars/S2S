@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WAR_DANCE"
+   "define": "ART_DEF_BUILDING_WAR_DANCE"
   }
  },
  "identity": {

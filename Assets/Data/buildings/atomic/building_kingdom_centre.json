@@ -103,7 +103,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_KINGDOM_CENTRE"
+   "define": "ART_DEF_BUILDING_KINGDOM_CENTRE"
   }
  },
  "identity": {

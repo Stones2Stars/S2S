@@ -96,7 +96,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LASER_BATTERY"
+   "define": "ART_DEF_BUILDING_LASER_BATTERY"
   }
  },
  "sound": {

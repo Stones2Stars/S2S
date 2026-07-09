@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_UBIQUITOUS_SUBDIMENSIONAL_UNIVERSE"
+   "define": "ART_DEF_BUILDING_UBIQUITOUS_SUBDIMENSIONAL_UNIVERSE"
   }
  },
  "identity": {

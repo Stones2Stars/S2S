@@ -101,7 +101,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SNAKE_OIL_SALES"
+   "define": "ART_DEF_BUILDING_SNAKE_OIL_SALES"
   }
  },
  "sound": {

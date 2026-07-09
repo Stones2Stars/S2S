@@ -95,7 +95,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PALACE_OF_THE_SOVIETS"
+   "define": "ART_DEF_BUILDING_PALACE_OF_THE_SOVIETS"
   }
  },
  "identity": {

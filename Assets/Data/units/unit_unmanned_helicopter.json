@@ -75,6 +75,11 @@
   "production": 2865,
   "upkeep": 5
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_UNMANNED_HELICOPTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_UNMANNED_HELICOPTER",
   "civilopedia": "TXT_KEY_UNIT_UNMANNED_HELICOPTER_PEDIA",

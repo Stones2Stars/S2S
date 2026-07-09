@@ -132,7 +132,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THE_BRIHADEESWARAR_TEMPLE"
+   "define": "ART_DEF_BUILDING_THE_BRIHADEESWARAR_TEMPLE"
   }
  },
  "sound": {

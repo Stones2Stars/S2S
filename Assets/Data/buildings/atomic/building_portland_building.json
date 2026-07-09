@@ -44,7 +44,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PORTLAND_BUILDING"
+   "define": "ART_DEF_BUILDING_PORTLAND_BUILDING"
   }
  },
  "identity": {

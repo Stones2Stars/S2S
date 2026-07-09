@@ -149,6 +149,11 @@
   "production": 630,
   "upkeep": 11
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VWARLORD_INDUSTRIAL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WARLORDIV",
   "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",

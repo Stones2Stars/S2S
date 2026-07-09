@@ -69,6 +69,11 @@
   "production": 200,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BALAMOB_SLINGER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BALAMOB_SLINGER",
   "civilopedia": "TXT_KEY_UNIT_BALAMOB_SLINGER_PEDIA",

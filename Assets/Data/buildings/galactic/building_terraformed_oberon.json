@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TERRAFORMED_OBERON"
+   "define": "ART_DEF_BUILDING_TERRAFORMED_OBERON"
   }
  },
  "identity": {

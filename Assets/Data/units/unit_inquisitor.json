@@ -33,6 +33,11 @@
   "production": 233,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_INQUISITOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_INQUISITOR",
   "civilopedia": "TXT_KEY_UNIT_INQUISITOR_PEDIA",

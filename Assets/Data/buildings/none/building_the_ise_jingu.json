@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THE_ISE_JINGU"
+   "define": "ART_DEF_BUILDING_THE_ISE_JINGU"
   }
  },
  "sound": {

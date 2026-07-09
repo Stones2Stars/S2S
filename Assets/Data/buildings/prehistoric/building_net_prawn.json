@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NET_PRAWN"
+   "define": "ART_DEF_BUILDING_NET_PRAWN"
   }
  },
  "identity": {

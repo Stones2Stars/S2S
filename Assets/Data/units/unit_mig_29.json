@@ -110,6 +110,11 @@
   "production": 1605,
   "upkeep": 5
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MIG_29"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MIG_29",
   "civilopedia": "TXT_KEY_UNIT_MIG_29_PEDIA",

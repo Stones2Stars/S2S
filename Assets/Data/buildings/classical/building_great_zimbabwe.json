@@ -83,7 +83,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GREAT_ZIMBABWE"
+   "define": "ART_DEF_BUILDING_GREAT_ZIMBABWE"
   }
  },
  "identity": {

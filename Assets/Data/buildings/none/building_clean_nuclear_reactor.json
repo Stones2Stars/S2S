@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CLEAN_NUCLEAR_REACTOR"
+   "define": "ART_DEF_BUILDING_CLEAN_NUCLEAR_REACTOR"
   }
  },
  "identity": {

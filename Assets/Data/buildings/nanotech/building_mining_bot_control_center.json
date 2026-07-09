@@ -274,7 +274,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MINING_BOT_CONTROL_CENTER"
+   "define": "ART_DEF_BUILDING_MINING_BOT_CONTROL_CENTER"
   }
  },
  "identity": {

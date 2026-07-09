@@ -82,7 +82,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTELLIGENCE_AGENCY"
+   "define": "ART_DEF_BUILDING_INTELLIGENCE_AGENCY"
   }
  },
  "sound": {

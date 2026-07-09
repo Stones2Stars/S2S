@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SEASTEAD"
+   "define": "ART_DEF_BUILDING_SEASTEAD"
   }
  },
  "identity": {

@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_ZERO_POINT_FACTORIES"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_ZERO_POINT_FACTORIES"
   }
  },
  "identity": {

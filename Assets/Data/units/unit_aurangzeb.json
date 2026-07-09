@@ -48,6 +48,11 @@
   "production": 2520,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AURANGZEB"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AURANGZEB",
   "civilopedia": "TXT_KEY_UNIT_AURANGZEB_PEDIA",

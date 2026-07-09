@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PLANTATION_PAPAYAS"
+   "define": "ART_DEF_BUILDING_PLANTATION_PAPAYAS"
   }
  },
  "identity": {

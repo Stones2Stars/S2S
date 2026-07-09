@@ -90,7 +90,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BREEDING_PROGRAM_ELEPHANT_SEAL"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_ELEPHANT_SEAL"
   }
  },
  "identity": {

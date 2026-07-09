@@ -118,7 +118,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CEMENT"
+   "define": "ART_DEF_BONUS_CEMENT"
   }
  },
  "identity": {

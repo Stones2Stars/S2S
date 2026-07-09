@@ -69,7 +69,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HIPPOCRATIC_OATH"
+   "define": "ART_DEF_BUILDING_HIPPOCRATIC_OATH"
   }
  },
  "sound": {

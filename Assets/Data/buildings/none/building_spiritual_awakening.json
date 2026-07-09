@@ -33,7 +33,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_SPIRITUAL_AWAKENING"
+   "define": "ART_DEF_SPIRITUAL_AWAKENING"
   }
  },
  "identity": {

@@ -141,6 +141,11 @@
    "BUILDING_FLOCKS_OF_TURKEY"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TURKEY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_TURKEY",
   "civilopedia": "TXT_KEY_UNIT_TURKEY_PEDIA",

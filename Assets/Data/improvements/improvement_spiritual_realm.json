@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_SPIRITUAL_REALM"
+   "define": "ART_DEF_IMPROVEMENT_SPIRITUAL_REALM"
   }
  },
  "mapGeneration": {

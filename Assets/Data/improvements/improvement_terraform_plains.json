@@ -28,7 +28,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_TERRAFORM_PLAINS"
+   "define": "ART_DEF_IMPROVEMENT_TERRAFORM_PLAINS"
   }
  },
  "identity": {

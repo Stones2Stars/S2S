@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TAVERN"
+   "define": "ART_DEF_BUILDING_TAVERN"
   }
  },
  "identity": {

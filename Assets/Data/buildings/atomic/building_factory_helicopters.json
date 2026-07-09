@@ -118,7 +118,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_HELICOPTERS"
+   "define": "ART_DEF_BUILDING_FACTORY_HELICOPTERS"
   }
  },
  "identity": {

@@ -290,7 +290,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_ORCHARD"
+   "define": "ART_DEF_IMPROVEMENT_ORCHARD"
   }
  },
  "identity": {

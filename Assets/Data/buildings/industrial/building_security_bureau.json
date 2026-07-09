@@ -70,7 +70,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SECURITY_BUREAU"
+   "define": "ART_DEF_BUILDING_SECURITY_BUREAU"
   }
  },
  "sound": {

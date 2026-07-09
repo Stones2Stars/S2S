@@ -110,6 +110,11 @@
   "production": 240,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TAHITIAN_RIDERS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TAHITIAN_RIDERS",
   "civilopedia": "TXT_KEY_UNIT_TAHITIAN_RIDERS_PEDIA",

@@ -70,7 +70,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CYBERNETIC_ORGAN_LAB"
+   "define": "ART_DEF_BUILDING_CYBERNETIC_ORGAN_LAB"
   }
  },
  "identity": {

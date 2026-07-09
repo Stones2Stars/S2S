@@ -22,7 +22,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SAFETY_ALCATRAZ"
+   "define": "ART_DEF_BUILDING_SAFETY_ALCATRAZ"
   }
  },
  "identity": {

@@ -44,7 +44,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER"
   }
  },
  "identity": {

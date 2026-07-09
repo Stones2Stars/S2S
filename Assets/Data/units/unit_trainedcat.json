@@ -101,6 +101,11 @@
   "production": 132,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TRAINED_CAT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TRAINEDCAT",
   "civilopedia": "TXT_KEY_UNIT_WARCAT_PEDIA",

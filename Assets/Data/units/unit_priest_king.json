@@ -49,6 +49,11 @@
   "production": 672,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PRIEST_KING"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PRIEST_KING",
   "civilopedia": "TXT_KEY_UNIT_PRIEST_KING_PEDIA",

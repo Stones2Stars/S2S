@@ -36,7 +36,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_MARTIAN_FARM"
+   "define": "ART_DEF_IMPROVEMENT_MARTIAN_FARM"
   }
  },
  "identity": {

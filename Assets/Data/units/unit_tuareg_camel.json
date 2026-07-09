@@ -116,6 +116,11 @@
   "production": 180,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TUAREG_CAMEL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TUAREG_CAMEL",
   "civilopedia": "TXT_KEY_UNIT_TUAREG_CAMEL_PEDIA",

@@ -35,6 +35,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HORNEDOWL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_HORNEDOWL",
   "civilopedia": "TXT_KEY_UNIT_HORNEDOWL_PEDIA",

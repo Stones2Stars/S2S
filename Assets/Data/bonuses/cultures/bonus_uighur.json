@@ -9,7 +9,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_UIGHUR"
+   "define": "ART_DEF_BONUS_UIGHUR"
   }
  },
  "identity": {

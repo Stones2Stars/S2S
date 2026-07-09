@@ -9,9 +9,6 @@
   "unit": {
    "space": {
     "flat": 1
-   },
-   "smSpace": {
-    "flat": 100
    }
   }
  },
@@ -26,6 +23,11 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "cargo": {
+   "smSpace": 100
+  }
  },
  "identity": {
   "description": "TXT_KEY_PROMOTION_TRANSPORT_TROOPS1"

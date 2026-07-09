@@ -80,6 +80,11 @@
   "production": 205,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SWAZI_TRACKER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SWAZI_TRACKER",
   "civilopedia": "TXT_KEY_UNIT_SWAZI_TRACKER_PEDIA",

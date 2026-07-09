@@ -107,6 +107,11 @@
   "production": 120,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CHARIOTARCHER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CHARIOTARCHER",
   "civilopedia": "TXT_KEY_UNIT_CHARIOTARCHER_PEDIA",

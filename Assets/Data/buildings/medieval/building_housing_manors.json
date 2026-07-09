@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOUSING_MANORS"
+   "define": "ART_DEF_BUILDING_HOUSING_MANORS"
   }
  },
  "identity": {

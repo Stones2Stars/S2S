@@ -24,7 +24,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_TERRAFORM_GRASS"
+   "define": "ART_DEF_IMPROVEMENT_TERRAFORM_GRASS"
   }
  },
  "identity": {

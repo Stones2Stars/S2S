@@ -69,7 +69,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_HURON"
+   "define": "ART_DEF_BUILDING_CULTURE_HURON"
   }
  },
  "identity": {

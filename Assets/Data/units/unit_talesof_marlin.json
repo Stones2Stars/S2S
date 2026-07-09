@@ -17,6 +17,11 @@
    "BUILDING_FOLKLORE_MARLIN"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TALESOF_MARLIN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TALESOF_MARLIN",
   "civilopedia": "TXT_KEY_UNIT_MARLIN_PEDIA",

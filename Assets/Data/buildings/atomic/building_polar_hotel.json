@@ -96,7 +96,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_POLAR_HOTEL"
+   "define": "ART_DEF_BUILDING_POLAR_HOTEL"
   }
  },
  "identity": {

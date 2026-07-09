@@ -35,7 +35,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOSTEL"
+   "define": "ART_DEF_BUILDING_HOSTEL"
   }
  },
  "identity": {

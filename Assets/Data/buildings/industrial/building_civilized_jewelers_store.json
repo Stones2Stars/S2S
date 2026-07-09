@@ -104,7 +104,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CIVILIZED_JEWELERS_STORE"
+   "define": "ART_DEF_BUILDING_CIVILIZED_JEWELERS_STORE"
   }
  },
  "sound": {

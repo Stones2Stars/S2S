@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DISTANT_MULTIVERSE_MINE"
+   "define": "ART_DEF_BUILDING_DISTANT_MULTIVERSE_MINE"
   }
  },
  "identity": {

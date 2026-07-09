@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_MARTIAN_BLUEBERRIES"
+   "define": "ART_DEF_BONUS_MARTIAN_BLUEBERRIES"
   }
  },
  "mapGeneration": {

@@ -34,7 +34,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR"
+   "define": "ART_DEF_BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR"
   }
  },
  "identity": {

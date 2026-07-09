@@ -55,6 +55,11 @@
   "production": 4720,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MANDAWUY_YUNUPINGU"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MANDAWUY_YUNUPINGU",
   "civilopedia": "TXT_KEY_UNIT_MANDAWUY_YUNUPINGU_PEDIA",

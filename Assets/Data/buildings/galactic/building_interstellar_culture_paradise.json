@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_CULTURE_PARADISE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CULTURE_PARADISE"
   }
  },
  "identity": {

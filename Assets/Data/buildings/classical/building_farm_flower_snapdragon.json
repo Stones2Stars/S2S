@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FARM_FLOWER_SNAPDRAGON"
+   "define": "ART_DEF_BUILDING_FARM_FLOWER_SNAPDRAGON"
   }
  },
  "identity": {

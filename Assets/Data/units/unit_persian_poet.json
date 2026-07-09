@@ -104,6 +104,11 @@
   "production": 151,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PERSIAN_POET"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PERSIAN_POET",
   "civilopedia": "TXT_KEY_UNIT_PERSIAN_POET_PEDIA",

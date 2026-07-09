@@ -171,6 +171,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ROGUE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ROGUE",
   "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",

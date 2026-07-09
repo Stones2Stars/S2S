@@ -299,7 +299,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRADING_POST"
+   "define": "ART_DEF_BUILDING_TRADING_POST"
   }
  },
  "sound": {

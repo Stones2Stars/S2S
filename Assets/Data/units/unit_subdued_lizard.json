@@ -47,6 +47,11 @@
    "BUILDING_ZOO"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LIZARD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_LIZARD",
   "civilopedia": "TXT_KEY_UNIT_LIZARD_PEDIA",

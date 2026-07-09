@@ -99,6 +99,11 @@
  "cost": {
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_EARLY_CARRIER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MASTER_SAILOR_EARLY_CARRIER",
   "civilopedia": "TXT_KEY_UNIT_CARRIER_PEDIA",

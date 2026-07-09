@@ -100,7 +100,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOLKLORE_T_RAY"
+   "define": "ART_DEF_BUILDING_FOLKLORE_T_RAY"
   }
  },
  "identity": {

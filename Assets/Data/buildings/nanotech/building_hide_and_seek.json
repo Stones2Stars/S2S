@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HIDE_AND_SEEK"
+   "define": "ART_DEF_BUILDING_HIDE_AND_SEEK"
   }
  },
  "identity": {

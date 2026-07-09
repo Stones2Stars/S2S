@@ -16,6 +16,11 @@
  "cost": {
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MILITIA_MODERN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MILITIA_MODERN",
   "civilopedia": "TXT_KEY_UNIT_MILITIA_INDUSTRIAL_PEDIA",

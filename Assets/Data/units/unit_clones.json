@@ -81,6 +81,11 @@
   "production": 2800,
   "upkeep": 6
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CLONEWORKER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CLONES",
   "civilopedia": "TXT_KEY_UNIT_CLONES_PEDIA",

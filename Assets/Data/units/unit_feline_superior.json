@@ -131,6 +131,11 @@
   "production": 5300,
   "upkeep": 8
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FELIS_SUPERIOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FELINE_SUPERIOR",
   "civilopedia": "TXT_KEY_UNIT_WARCAT_PEDIA",

@@ -103,7 +103,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_MANUFACTURING_COMPLEX"
+   "define": "ART_DEF_IMPROVEMENT_MANUFACTURING_COMPLEX"
   }
  },
  "identity": {

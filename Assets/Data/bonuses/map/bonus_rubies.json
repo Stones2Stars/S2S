@@ -21,7 +21,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_RUBIES"
+   "define": "ART_DEF_BONUS_RUBIES"
   }
  },
  "mapGeneration": {

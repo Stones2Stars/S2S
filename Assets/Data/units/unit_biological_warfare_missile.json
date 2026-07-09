@@ -48,6 +48,11 @@
   "production": 1765,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BIOLOGICAL_WARFARE_MISSILE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BIOLOGICAL_WARFARE_MISSILE",
   "civilopedia": "TXT_KEY_UNIT_BIOLOGICAL_WARFARE_MISSILE_PEDIA",

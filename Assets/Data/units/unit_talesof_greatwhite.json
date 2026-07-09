@@ -18,6 +18,11 @@
    "BUILDING_FOLKLORE_T_SHARKS"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TALESOF_GREATWHITE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TALESOF_GREATWHITE",
   "civilopedia": "TXT_KEY_CONCEPT_TALESOF_SEA_ANIMALS_PEDIA",

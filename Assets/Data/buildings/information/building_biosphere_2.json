@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BIOSPHERE_2"
+   "define": "ART_DEF_BUILDING_BIOSPHERE_2"
   }
  },
  "identity": {

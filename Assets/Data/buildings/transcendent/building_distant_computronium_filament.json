@@ -38,7 +38,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DISTANT_COMPUTRONIUM_FILAMENT"
+   "define": "ART_DEF_BUILDING_DISTANT_COMPUTRONIUM_FILAMENT"
   }
  },
  "identity": {

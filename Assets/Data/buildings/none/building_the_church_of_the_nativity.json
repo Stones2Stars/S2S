@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THE_CHURCH_OF_THE_NATIVITY"
+   "define": "ART_DEF_BUILDING_THE_CHURCH_OF_THE_NATIVITY"
   }
  },
  "sound": {

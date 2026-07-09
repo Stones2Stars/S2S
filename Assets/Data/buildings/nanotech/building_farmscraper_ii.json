@@ -203,7 +203,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FARMSCRAPER_II"
+   "define": "ART_DEF_BUILDING_FARMSCRAPER_II"
   }
  },
  "sound": {

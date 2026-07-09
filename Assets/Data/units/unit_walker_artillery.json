@@ -76,6 +76,11 @@
   "production": 5000,
   "upkeep": 11
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WALKER_ARTILLERY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WALKER_ARTILLERY",
   "civilopedia": "TXT_KEY_UNIT_WALKER_ARTILLERY_PEDIA",

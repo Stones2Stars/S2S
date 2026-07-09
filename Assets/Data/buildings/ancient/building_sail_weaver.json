@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SAIL_WEAVER"
+   "define": "ART_DEF_BUILDING_SAIL_WEAVER"
   }
  },
  "identity": {

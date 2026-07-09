@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PROJECT_PERSEPHONE"
+   "define": "ART_DEF_BUILDING_PROJECT_PERSEPHONE"
   }
  },
  "identity": {

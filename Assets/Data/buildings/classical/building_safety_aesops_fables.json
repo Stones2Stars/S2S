@@ -22,7 +22,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SAFETY_AESOPS_FABLES"
+   "define": "ART_DEF_BUILDING_SAFETY_AESOPS_FABLES"
   }
  },
  "identity": {

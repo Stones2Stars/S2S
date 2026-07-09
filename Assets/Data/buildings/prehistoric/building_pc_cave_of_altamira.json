@@ -63,7 +63,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PC_CAVE_OF_ALTAMIRA"
+   "define": "ART_DEF_BUILDING_PC_CAVE_OF_ALTAMIRA"
   }
  },
  "identity": {

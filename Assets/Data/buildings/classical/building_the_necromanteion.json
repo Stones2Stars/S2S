@@ -110,7 +110,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THE_NECROMANTEION"
+   "define": "ART_DEF_BUILDING_THE_NECROMANTEION"
   }
  },
  "sound": {

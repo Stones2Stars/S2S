@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANIMAL_TRAINER_DONKEY"
+   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_DONKEY"
   }
  },
  "sound": {

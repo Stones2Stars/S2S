@@ -57,6 +57,11 @@
   "production": 704,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MAUI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MAUI",
   "civilopedia": "TXT_KEY_UNIT_MAUI_PEDIA",

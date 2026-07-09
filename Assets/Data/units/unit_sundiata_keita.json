@@ -59,6 +59,11 @@
   "production": 1120,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SUNDIATA_KEITA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUNDIATA_KEITA",
   "civilopedia": "TXT_KEY_UNIT_SUNDIATA_KEITA_PEDIA",

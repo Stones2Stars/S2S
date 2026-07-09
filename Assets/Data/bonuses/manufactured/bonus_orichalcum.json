@@ -2,7 +2,7 @@
  "type": "BONUS_ORICHALCUM",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_ORICHALCUM"
+   "define": "ART_DEF_BONUS_ORICHALCUM"
   }
  },
  "identity": {

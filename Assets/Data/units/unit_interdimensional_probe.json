@@ -60,6 +60,11 @@
   "production": 5000,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_INTERDIMENSIONAL_PROBE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_INTERDIMENSIONAL_PROBE",
   "civilopedia": "TXT_KEY_UNIT_INTERDIMENSIONAL_PROBE_PEDIA",

@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SPACE_COLONY_DEEP_SPACE"
+   "define": "ART_DEF_BUILDING_SPACE_COLONY_DEEP_SPACE"
   }
  },
  "identity": {

@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GREAT_TEMPLE_TAY_NINH"
+   "define": "ART_DEF_BUILDING_GREAT_TEMPLE_TAY_NINH"
   }
  },
  "identity": {

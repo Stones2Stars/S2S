@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_REMAINS_THYLACINE"
+   "define": "ART_DEF_BUILDING_REMAINS_THYLACINE"
   }
  },
  "identity": {

@@ -70,7 +70,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CAO_DAI_TEMPLE"
+   "define": "ART_DEF_BUILDING_CAO_DAI_TEMPLE"
   }
  },
  "identity": {

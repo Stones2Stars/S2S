@@ -98,7 +98,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOLKLORE_E_METAL"
+   "define": "ART_DEF_BUILDING_FOLKLORE_E_METAL"
   }
  },
  "identity": {

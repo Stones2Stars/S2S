@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ELECTROWEAK_FORGE"
+   "define": "ART_DEF_BUILDING_ELECTROWEAK_FORGE"
   }
  },
  "identity": {

@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MINE_URANIUM"
+   "define": "ART_DEF_BUILDING_MINE_URANIUM"
   }
  },
  "identity": {

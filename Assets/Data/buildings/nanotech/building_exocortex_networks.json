@@ -73,7 +73,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EXOCORTEX_NETWORKS"
+   "define": "ART_DEF_BUILDING_EXOCORTEX_NETWORKS"
   }
  },
  "identity": {

@@ -75,7 +75,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOLKLORE_PARROT"
+   "define": "ART_DEF_BUILDING_FOLKLORE_PARROT"
   }
  },
  "identity": {

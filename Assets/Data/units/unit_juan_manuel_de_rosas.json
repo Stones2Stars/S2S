@@ -59,6 +59,11 @@
   "production": 2520,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JUAN_MANUEL_DE_ROSAS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_JUAN_MANUEL_DE_ROSAS",
   "civilopedia": "TXT_KEY_UNIT_JUAN_MANUEL_DE_ROSAS_PEDIA",

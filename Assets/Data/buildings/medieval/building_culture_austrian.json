@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_AUSTRIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_AUSTRIAN"
   }
  },
  "identity": {

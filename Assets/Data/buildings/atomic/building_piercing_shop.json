@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PIERCING_SHOP"
+   "define": "ART_DEF_BUILDING_PIERCING_SHOP"
   }
  },
  "identity": {

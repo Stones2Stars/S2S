@@ -63,7 +63,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MICROBIOLOGY_ARTIST"
+   "define": "ART_DEF_BUILDING_MICROBIOLOGY_ARTIST"
   }
  },
  "identity": {

@@ -115,6 +115,11 @@
   "production": 2985,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LITTORAL_COMBAT_SHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LITTORAL_COMBAT_SHIP",
   "civilopedia": "TXT_KEY_UNIT_LITTORAL_COMBAT_SHIP_PEDIA",

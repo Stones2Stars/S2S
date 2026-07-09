@@ -43,7 +43,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL"
+   "define": "ART_DEF_BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL"
   }
  },
  "identity": {

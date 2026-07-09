@@ -70,7 +70,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VACATION_RESORT"
+   "define": "ART_DEF_BUILDING_VACATION_RESORT"
   }
  },
  "sound": {

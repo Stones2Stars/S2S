@@ -83,6 +83,11 @@
   "production": 2865,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HITECH_APC"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FUTURE_APC",
   "civilopedia": "TXT_KEY_UNIT_FUTURE_APC_PEDIA",

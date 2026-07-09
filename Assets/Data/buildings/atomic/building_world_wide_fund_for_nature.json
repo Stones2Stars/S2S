@@ -83,7 +83,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WORLD_WIDE_FUND_FOR_NATURE"
+   "define": "ART_DEF_BUILDING_WORLD_WIDE_FUND_FOR_NATURE"
   }
  },
  "identity": {

@@ -47,6 +47,11 @@
   "production": 1820,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MATAPANG"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MATAPANG",
   "civilopedia": "TXT_KEY_UNIT_MATAPANG_PEDIA",

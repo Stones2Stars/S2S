@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CATCHER_QUETZAL"
+   "define": "ART_DEF_BUILDING_CATCHER_QUETZAL"
   }
  },
  "identity": {

@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TOMB_OF_CYRUS"
+   "define": "ART_DEF_BUILDING_TOMB_OF_CYRUS"
   }
  },
  "identity": {

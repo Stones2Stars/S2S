@@ -63,7 +63,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LEAN_LINEAR_CITY"
+   "define": "ART_DEF_BUILDING_LEAN_LINEAR_CITY"
   }
  },
  "identity": {

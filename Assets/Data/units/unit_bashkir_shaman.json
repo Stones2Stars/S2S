@@ -99,6 +99,11 @@
   "production": 151,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BASHKIR_SHAMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BASHKIR_SHAMAN",
   "civilopedia": "TXT_KEY_UNIT_BASHKIR_SHAMAN_PEDIA",

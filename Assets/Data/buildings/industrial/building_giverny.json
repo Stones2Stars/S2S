@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GIVERNY"
+   "define": "ART_DEF_BUILDING_GIVERNY"
   }
  },
  "identity": {

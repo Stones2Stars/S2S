@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRAP_CHINCHILLA"
+   "define": "ART_DEF_BUILDING_TRAP_CHINCHILLA"
   }
  },
  "identity": {

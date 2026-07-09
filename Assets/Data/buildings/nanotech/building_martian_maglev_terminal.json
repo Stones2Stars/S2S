@@ -36,7 +36,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_MAGLEV_TERMINAL"
+   "define": "ART_DEF_BUILDING_MARTIAN_MAGLEV_TERMINAL"
   }
  },
  "identity": {

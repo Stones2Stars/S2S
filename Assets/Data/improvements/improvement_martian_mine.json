@@ -78,7 +78,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_MARTIAN_MINE"
+   "define": "ART_DEF_IMPROVEMENT_MARTIAN_MINE"
   }
  },
  "identity": {

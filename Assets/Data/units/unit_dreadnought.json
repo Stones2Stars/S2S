@@ -75,6 +75,11 @@
   "production": 6400,
   "upkeep": 151
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DREADNOUGHT_ARMOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DREADNOUGHT",
   "civilopedia": "TXT_KEY_UNIT_DREADNOUGHT_PEDIA",

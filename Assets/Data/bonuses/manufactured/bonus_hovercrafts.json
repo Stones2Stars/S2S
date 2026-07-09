@@ -2,7 +2,7 @@
  "type": "BONUS_HOVERCRAFTS",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HOVERCRAFTS"
+   "define": "ART_DEF_BONUS_HOVERCRAFTS"
   }
  },
  "identity": {

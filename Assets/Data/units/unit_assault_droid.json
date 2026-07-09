@@ -78,6 +78,11 @@
   "production": 4800,
   "upkeep": 11
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ASSAULT_DROID"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ASSAULT_DROID",
   "civilopedia": "TXT_KEY_UNIT_ASSAULT_DROID_PEDIA",

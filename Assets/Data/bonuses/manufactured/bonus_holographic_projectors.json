@@ -16,7 +16,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HOLOGRAPHIC_PROJECTORS"
+   "define": "ART_DEF_BONUS_HOLOGRAPHIC_PROJECTORS"
   }
  },
  "identity": {

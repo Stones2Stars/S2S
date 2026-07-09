@@ -37,7 +37,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CISLUNAR_PHASED_ARRAY_OPTICS"
+   "define": "ART_DEF_BUILDING_CISLUNAR_PHASED_ARRAY_OPTICS"
   }
  },
  "identity": {

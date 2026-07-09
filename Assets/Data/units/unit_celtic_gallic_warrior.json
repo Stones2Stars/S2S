@@ -85,6 +85,11 @@
   "production": 185,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CELTIC_BARBARIAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CELTIC_GALLIC_WARRIOR",
   "civilopedia": "TXT_KEY_UNIT_CELTIC_WARRIOR_PEDIA",

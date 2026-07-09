@@ -75,6 +75,11 @@
   "production": 195,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DOB_DOB"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TIBETIAN_DOB_DOB",
   "civilopedia": "TXT_KEY_UNIT_DOB_DOB_PEDIA",

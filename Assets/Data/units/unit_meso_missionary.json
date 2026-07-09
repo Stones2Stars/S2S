@@ -15,6 +15,11 @@
  "cost": {
   "production": 110
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MESO_MISSIONARY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MESO_MISSIONARY",
   "civilopedia": "TXT_KEY_UNIT_MESO_MISSIONARY_PEDIA",

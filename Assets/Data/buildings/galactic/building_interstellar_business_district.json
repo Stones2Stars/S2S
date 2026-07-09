@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_BUSINESS_DISTRICT"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BUSINESS_DISTRICT"
   }
  },
  "identity": {

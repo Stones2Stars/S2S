@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ROBOTIC_PET_SHOP"
+   "define": "ART_DEF_BUILDING_ROBOTIC_PET_SHOP"
   }
  },
  "identity": {

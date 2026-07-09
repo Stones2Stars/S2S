@@ -47,6 +47,11 @@
   "production": 2320,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TUGAY_BEY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TUGAY_BEY",
   "civilopedia": "TXT_KEY_UNIT_TUGAY_BEY_PEDIA",

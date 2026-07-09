@@ -87,7 +87,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FIELD_HOSPITAL"
+   "define": "ART_DEF_BUILDING_FIELD_HOSPITAL"
   }
  },
  "identity": {

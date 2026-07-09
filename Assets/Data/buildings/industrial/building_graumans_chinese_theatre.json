@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GRAUMANS_CHINESE_THEATRE"
+   "define": "ART_DEF_BUILDING_GRAUMANS_CHINESE_THEATRE"
   }
  },
  "identity": {

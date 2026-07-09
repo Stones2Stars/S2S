@@ -108,7 +108,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SUPERSTRONG_ALLOY_FOUNDRY"
+   "define": "ART_DEF_BUILDING_SUPERSTRONG_ALLOY_FOUNDRY"
   }
  },
  "identity": {

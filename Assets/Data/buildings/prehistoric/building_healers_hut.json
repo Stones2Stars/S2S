@@ -109,7 +109,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HEALERS_HUT"
+   "define": "ART_DEF_BUILDING_HEALERS_HUT"
   }
  },
  "sound": {

@@ -59,7 +59,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_ELECTRONICS_FACTORY"
+   "define": "ART_DEF_BUILDING_MARTIAN_ELECTRONICS_FACTORY"
   }
  },
  "identity": {

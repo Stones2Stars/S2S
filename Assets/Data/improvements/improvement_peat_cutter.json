@@ -28,7 +28,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_PEAT_CUTTER"
+   "define": "ART_DEF_IMPROVEMENT_PEAT_CUTTER"
   }
  },
  "identity": {

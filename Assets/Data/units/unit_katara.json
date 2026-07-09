@@ -75,6 +75,11 @@
   "production": 270,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KATARA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KATARA",
   "civilopedia": "TXT_KEY_UNIT_KATARA_PEDIA",

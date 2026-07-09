@@ -38,7 +38,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_KUIPER_BELT_FUSION_PLANT"
+   "define": "ART_DEF_BUILDING_KUIPER_BELT_FUSION_PLANT"
   }
  },
  "identity": {

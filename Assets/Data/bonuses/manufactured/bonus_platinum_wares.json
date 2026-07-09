@@ -9,7 +9,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_PLATINUM_WARES"
+   "define": "ART_DEF_BONUS_PLATINUM_WARES"
   }
  },
  "identity": {

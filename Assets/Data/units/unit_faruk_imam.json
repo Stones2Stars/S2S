@@ -38,6 +38,11 @@
   "production": 3800,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FARUK_IMAM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FARUK_IMAM",
   "civilopedia": "TXT_KEY_UNIT_FARUK_IMAM_PEDIA",

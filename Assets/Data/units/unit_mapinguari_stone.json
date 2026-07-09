@@ -65,6 +65,11 @@
   "production": 76,
   "upkeep": 8
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MAPINGUARI_STONE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MAPINGUARI_STONE",
   "civilopedia": "TXT_KEY_UNIT_MAPINGUARI_PEDIA",

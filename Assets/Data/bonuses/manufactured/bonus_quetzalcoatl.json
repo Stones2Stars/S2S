@@ -2,7 +2,7 @@
  "type": "BONUS_QUETZALCOATL",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_QUETZALCOATL"
+   "define": "ART_DEF_BONUS_QUETZALCOATL"
   }
  },
  "identity": {

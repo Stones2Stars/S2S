@@ -93,6 +93,11 @@
   "production": 1410,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_B52_BOMBER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_B52_BOMBER",
   "civilopedia": "TXT_KEY_UNIT_B52_BOMBER_PEDIA",

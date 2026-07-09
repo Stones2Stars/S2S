@@ -114,6 +114,11 @@
   "production": 355,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DAI_CHUI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DAI_CHUI",
   "civilopedia": "TXT_KEY_UNIT_DAI_CHUI_PEDIA",

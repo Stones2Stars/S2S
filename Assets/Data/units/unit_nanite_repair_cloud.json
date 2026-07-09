@@ -123,6 +123,11 @@
   "upkeep": 17,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NANITE_REPAIR_CLOUD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NANITE_REPAIR_CLOUD",
   "civilopedia": "TXT_KEY_UNIT_NANITE_REPAIR_CLOUD_PEDIA",

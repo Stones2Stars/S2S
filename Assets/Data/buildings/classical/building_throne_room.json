@@ -163,7 +163,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THRONE_ROOM"
+   "define": "ART_DEF_BUILDING_THRONE_ROOM"
   }
  },
  "identity": {

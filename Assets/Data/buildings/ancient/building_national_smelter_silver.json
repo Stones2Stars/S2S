@@ -82,7 +82,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NATIONAL_SMELTER_SILVER"
+   "define": "ART_DEF_BUILDING_NATIONAL_SMELTER_SILVER"
   }
  },
  "identity": {

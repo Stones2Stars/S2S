@@ -76,6 +76,11 @@
   "production": 3665,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ORGANIC_INFANTRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ORGANIC_INFANTRY",
   "civilopedia": "TXT_KEY_UNIT_ORGANIC_INFANTRY_PEDIA",

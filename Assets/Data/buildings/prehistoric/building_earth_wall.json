@@ -98,7 +98,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EARTH_WALL"
+   "define": "ART_DEF_BUILDING_EARTH_WALL"
   }
  },
  "sound": {

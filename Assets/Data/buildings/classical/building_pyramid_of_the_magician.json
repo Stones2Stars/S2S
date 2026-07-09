@@ -118,7 +118,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_STEP_PYRAMID"
+   "define": "ART_DEF_BUILDING_STEP_PYRAMID"
   }
  },
  "sound": {

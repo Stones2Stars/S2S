@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRANS_STELLAR_QUARK_FUSION_POWER_PLANT"
+   "define": "ART_DEF_BUILDING_TRANS_STELLAR_QUARK_FUSION_POWER_PLANT"
   }
  },
  "identity": {

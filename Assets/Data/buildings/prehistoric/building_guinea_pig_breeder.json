@@ -88,7 +88,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GUINEA_PIG_BREEDER"
+   "define": "ART_DEF_BUILDING_GUINEA_PIG_BREEDER"
   }
  },
  "identity": {

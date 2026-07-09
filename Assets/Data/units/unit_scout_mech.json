@@ -55,6 +55,11 @@
   "production": 2985,
   "upkeep": 6
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SCOUT_DROID"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SCOUT_MECH",
   "civilopedia": "TXT_KEY_UNIT_SCOUT_MECH_PEDIA",

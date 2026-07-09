@@ -45,15 +45,6 @@
    "cityAttack": {
     "percent": 15
    },
-   "perSizeMore": {
-    "percent": 15
-   },
-   "perVolumeMore": {
-    "percent": -15
-   },
-   "perVolumeLess": {
-    "percent": 15
-   },
    "lunge": {
     "percent": 18
    },
@@ -170,6 +161,18 @@
     "FLAVOR_MILITARY": 1
    }
   ]
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perSizeMore": 15,
+   "perVolumeMore": -15,
+   "perVolumeLess": 15
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MODERN_SNIPER"
+  }
  },
  "identity": {
   "description": "TXT_KEY_UNIT_MSNIPER",

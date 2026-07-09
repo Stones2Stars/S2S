@@ -81,6 +81,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MAMMOTH"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MAMMOTH",
   "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",

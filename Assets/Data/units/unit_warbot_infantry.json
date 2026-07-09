@@ -67,6 +67,11 @@
   "production": 3600,
   "upkeep": 11
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WARBOT_INFANTRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WARBOT_INFANTRY",
   "civilopedia": "TXT_KEY_UNIT_WARBOT_INFANTRY_PEDIA",

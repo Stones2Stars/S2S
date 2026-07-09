@@ -108,7 +108,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LDS_MEETINGHOUSE"
+   "define": "ART_DEF_BUILDING_LDS_MEETINGHOUSE"
   }
  },
  "sound": {

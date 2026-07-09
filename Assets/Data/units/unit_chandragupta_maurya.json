@@ -56,6 +56,11 @@
   "production": 1044,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CHANDRAGUPTA_MAURYA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CHANDRAGUPTA_MAURYA",
   "civilopedia": "TXT_KEY_UNIT_CHANDRAGUPTA_MAURYA_PEDIA",

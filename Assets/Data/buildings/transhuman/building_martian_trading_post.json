@@ -28,7 +28,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_TRADING_POST"
+   "define": "ART_DEF_BUILDING_MARTIAN_TRADING_POST"
   }
  },
  "identity": {

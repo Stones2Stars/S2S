@@ -83,6 +83,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NARWHAL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NARWHAL",
   "civilopedia": "TXT_KEY_UNIT_NARWHAL_PEDIA",

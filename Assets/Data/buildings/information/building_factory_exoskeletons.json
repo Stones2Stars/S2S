@@ -83,7 +83,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_EXOSKELETONS"
+   "define": "ART_DEF_BUILDING_FACTORY_EXOSKELETONS"
   }
  },
  "identity": {

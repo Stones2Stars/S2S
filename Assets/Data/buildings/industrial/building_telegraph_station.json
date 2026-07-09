@@ -77,7 +77,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TELEGRAPH_STATION"
+   "define": "ART_DEF_BUILDING_TELEGRAPH_STATION"
   }
  },
  "identity": {

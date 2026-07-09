@@ -34,7 +34,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_TABLETS"
+   "define": "ART_DEF_BONUS_TABLETS"
   }
  },
  "identity": {

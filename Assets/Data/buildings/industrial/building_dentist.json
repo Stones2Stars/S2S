@@ -108,7 +108,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DENTIST"
+   "define": "ART_DEF_BUILDING_DENTIST"
   }
  },
  "identity": {

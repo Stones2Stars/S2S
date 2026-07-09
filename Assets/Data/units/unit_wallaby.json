@@ -48,6 +48,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WALLABY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WALLABY",
   "civilopedia": "TXT_KEY_UNIT_WALLABY_PEDIA",

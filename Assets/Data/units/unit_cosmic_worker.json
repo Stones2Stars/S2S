@@ -74,6 +74,11 @@
   "upkeep": 1,
   "hurryCostModifier": 10000
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_COSMIC_WORKER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_COSMIC_WORKER",
   "civilopedia": "TXT_KEY_UNIT_COSMIC_WORKER_PEDIA",

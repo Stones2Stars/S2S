@@ -116,7 +116,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PETRA"
+   "define": "ART_DEF_BUILDING_PETRA"
   }
  },
  "sound": {

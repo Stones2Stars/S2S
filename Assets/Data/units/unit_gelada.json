@@ -48,6 +48,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GELADA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GELADA",
   "civilopedia": "TXT_KEY_UNIT_GELADA_PEDIA",

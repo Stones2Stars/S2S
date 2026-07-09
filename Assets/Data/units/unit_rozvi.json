@@ -74,6 +74,11 @@
   "production": 255,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ROZVI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ROZVI",
   "civilopedia": "TXT_KEY_UNIT_ROZVI_PEDIA",

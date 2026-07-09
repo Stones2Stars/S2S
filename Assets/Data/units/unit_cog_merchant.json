@@ -75,6 +75,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_COG_MERCHANT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_COG_MERCHANT",
   "civilopedia": "TXT_KEY_UNIT_COG_MERCHANT_PEDIA",

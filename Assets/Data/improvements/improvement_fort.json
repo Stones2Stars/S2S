@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_FORT"
+   "define": "ART_DEF_IMPROVEMENT_FORT"
   }
  },
  "mapGeneration": {

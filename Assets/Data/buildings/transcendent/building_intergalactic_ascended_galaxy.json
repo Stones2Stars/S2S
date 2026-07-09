@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_ASCENDED_GALAXY"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_ASCENDED_GALAXY"
   }
  },
  "identity": {

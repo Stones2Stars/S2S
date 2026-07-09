@@ -75,7 +75,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HILL_OF_TARA"
+   "define": "ART_DEF_BUILDING_HILL_OF_TARA"
   }
  },
  "identity": {

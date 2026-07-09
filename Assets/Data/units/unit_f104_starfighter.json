@@ -80,6 +80,11 @@
   "production": 1150,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_F104_STARFIGHTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_F104_STARFIGHTER",
   "civilopedia": "TXT_KEY_UNIT_F104_STARFIGHTER_PEDIA",

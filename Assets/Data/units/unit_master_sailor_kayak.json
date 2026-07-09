@@ -71,6 +71,11 @@
  "cost": {
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KAYAK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MASTER_SAILOR_KAYAK",
   "civilopedia": "TXT_KEY_UNIT_KAYAK_PEDIA",

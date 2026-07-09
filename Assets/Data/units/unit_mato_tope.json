@@ -63,6 +63,11 @@
   "production": 3320,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MATO_TOPE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MATO_TOPE",
   "civilopedia": "TXT_KEY_UNIT_MATO_TOPE_PEDIA",

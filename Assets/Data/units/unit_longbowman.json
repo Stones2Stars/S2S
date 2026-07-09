@@ -49,6 +49,11 @@
   "production": 250,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LONGBOWMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LONGBOWMAN",
   "civilopedia": "TXT_KEY_UNIT_LONGBOWMAN_PEDIA",

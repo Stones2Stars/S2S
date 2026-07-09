@@ -47,6 +47,11 @@
   "production": 1000,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BARRAGE_BALLOON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BARRAGE_BALLOON",
   "civilopedia": "TXT_KEY_UNIT_BALLOON_PEDIA",

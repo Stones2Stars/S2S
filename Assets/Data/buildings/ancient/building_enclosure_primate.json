@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ENCLOSURE_PRIMATE"
+   "define": "ART_DEF_BUILDING_ENCLOSURE_PRIMATE"
   }
  },
  "identity": {

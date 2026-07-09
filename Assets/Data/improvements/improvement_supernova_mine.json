@@ -43,7 +43,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_SUPERNOVA_MINE"
+   "define": "ART_DEF_IMPROVEMENT_SUPERNOVA_MINE"
   }
  },
  "identity": {

@@ -136,7 +136,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WONDER_OF_NATURE_AUYANTEPUI"
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_AUYANTEPUI"
   }
  },
  "identity": {

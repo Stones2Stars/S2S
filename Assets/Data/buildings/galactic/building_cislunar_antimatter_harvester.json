@@ -45,7 +45,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CISLUNAR_ANTIMATTER_HARVESTER"
+   "define": "ART_DEF_BUILDING_CISLUNAR_ANTIMATTER_HARVESTER"
   }
  },
  "identity": {

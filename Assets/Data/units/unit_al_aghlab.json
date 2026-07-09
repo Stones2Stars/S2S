@@ -62,6 +62,11 @@
   "production": 1200,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AL_AGHLAB"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AL_AGHLAB",
   "civilopedia": "TXT_KEY_UNIT_AL_AGHLAB_PEDIA",

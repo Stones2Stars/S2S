@@ -186,7 +186,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CITY_BISTRO"
+   "define": "ART_DEF_BUILDING_CITY_BISTRO"
   }
  },
  "identity": {

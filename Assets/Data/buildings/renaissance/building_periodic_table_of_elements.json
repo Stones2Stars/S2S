@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PERIODIC_TABLE_OF_ELEMENTS"
+   "define": "ART_DEF_BUILDING_PERIODIC_TABLE_OF_ELEMENTS"
   }
  },
  "identity": {

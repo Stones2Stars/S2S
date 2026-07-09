@@ -71,6 +71,11 @@
   "production": 4756,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MAGSAIL_SHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MAGSAIL_WORKER",
   "civilopedia": "TXT_KEY_UNIT_MAGSAIL_WORKER_PEDIA",

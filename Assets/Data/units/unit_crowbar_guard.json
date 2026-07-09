@@ -48,6 +48,11 @@
   "production": 773,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CROWBAR_GUARD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CROWBAR_GUARD",
   "civilopedia": "TXT_KEY_UNIT_APOCALYPSE_URBAN_CROSSBOWMAN_PEDIA",

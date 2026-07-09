@@ -175,6 +175,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ASSASSIN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ASSASSIN",
   "civilopedia": "TXT_KEY_UNIT_ASSASSIN_PEDIA",

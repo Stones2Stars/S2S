@@ -35,7 +35,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_ARTIFICIAL_PLANET"
+   "define": "ART_DEF_IMPROVEMENT_ARTIFICIAL_PLANET"
   }
  },
  "identity": {

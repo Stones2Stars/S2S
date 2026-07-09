@@ -56,6 +56,11 @@
   "production": 2320,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BENAZIR_BHUTTO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BENAZIR_BHUTTO",
   "civilopedia": "TXT_KEY_UNIT_BENAZIR_BHUTTO_PEDIA",

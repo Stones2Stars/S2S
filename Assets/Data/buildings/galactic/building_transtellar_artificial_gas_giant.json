@@ -43,7 +43,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRANSTELLAR_ARTIFICIAL_GAS_GIANT"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_ARTIFICIAL_GAS_GIANT"
   }
  },
  "identity": {

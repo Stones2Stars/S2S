@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_POTATOES"
+   "define": "ART_DEF_BONUS_POTATOES"
   }
  },
  "mapGeneration": {

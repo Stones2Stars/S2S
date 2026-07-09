@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DARK_MATTER_DETECTOR"
+   "define": "ART_DEF_BUILDING_DARK_MATTER_DETECTOR"
   }
  },
  "identity": {

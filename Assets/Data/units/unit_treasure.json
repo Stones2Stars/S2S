@@ -32,6 +32,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TREASURE_UNIT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TREASURE",
   "civilopedia": "TXT_KEY_UNIT_TREASURE_PEDIA",

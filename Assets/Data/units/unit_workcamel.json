@@ -110,6 +110,11 @@
   "production": 140,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WORK_CAMEL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WORKCAMEL",
   "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",

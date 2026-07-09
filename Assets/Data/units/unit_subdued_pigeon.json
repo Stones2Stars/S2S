@@ -36,6 +36,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PIGEON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_PIGEON",
   "civilopedia": "TXT_KEY_UNIT_PIGEON_PEDIA",

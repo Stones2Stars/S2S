@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FORMAL_REASONING_CENTER"
+   "define": "ART_DEF_BUILDING_FORMAL_REASONING_CENTER"
   }
  },
  "identity": {

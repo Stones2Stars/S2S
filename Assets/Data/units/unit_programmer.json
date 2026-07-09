@@ -67,6 +67,11 @@
   "upkeep": 8,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PROGRAMMER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PROGRAMMER",
   "civilopedia": "TXT_KEY_UNIT_PROGRAMMER_PEDIA",

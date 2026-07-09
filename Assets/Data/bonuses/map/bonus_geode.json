@@ -17,7 +17,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_GEODE"
+   "define": "ART_DEF_BONUS_GEODE"
   }
  },
  "mapGeneration": {

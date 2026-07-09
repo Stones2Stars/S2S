@@ -123,6 +123,11 @@
   "production": 275,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KHAGAN_CAVALRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KHAGAN_CAVALRY",
   "civilopedia": "TXT_KEY_UNIT_KHAGAN_CAVALRY_PEDIA",

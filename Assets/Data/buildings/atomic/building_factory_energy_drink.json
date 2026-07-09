@@ -173,7 +173,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_ENERGY_DRINK"
+   "define": "ART_DEF_BUILDING_FACTORY_ENERGY_DRINK"
   }
  },
  "identity": {

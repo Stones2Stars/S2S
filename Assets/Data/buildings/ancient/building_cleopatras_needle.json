@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CLEOPATRAS_NEEDLE"
+   "define": "ART_DEF_BUILDING_CLEOPATRAS_NEEDLE"
   }
  },
  "identity": {

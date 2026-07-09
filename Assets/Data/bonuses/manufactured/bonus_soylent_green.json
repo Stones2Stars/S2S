@@ -2,7 +2,7 @@
  "type": "BONUS_SOYLENT_GREEN",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SOYLENT_GREEN"
+   "define": "ART_DEF_BONUS_SOYLENT_GREEN"
   }
  },
  "identity": {

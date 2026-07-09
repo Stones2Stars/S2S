@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MAGITEK_COMBAT_ARENA"
+   "define": "ART_DEF_BUILDING_MAGITEK_COMBAT_ARENA"
   }
  },
  "identity": {

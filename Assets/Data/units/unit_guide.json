@@ -32,6 +32,11 @@
   "production": 105,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GUIDE_EUROPEAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GUIDE",
   "civilopedia": "TXT_KEY_UNIT_GUIDE_PEDIA",

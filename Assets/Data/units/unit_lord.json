@@ -32,6 +32,11 @@
   "production": 350,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LORD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LORD",
   "civilopedia": "TXT_KEY_UNIT_LORD_PEDIA",

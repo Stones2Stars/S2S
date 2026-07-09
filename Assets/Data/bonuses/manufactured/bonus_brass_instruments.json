@@ -2,7 +2,7 @@
  "type": "BONUS_BRASS_INSTRUMENTS",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_BRASS_INSTRUMENTS"
+   "define": "ART_DEF_BONUS_BRASS_INSTRUMENTS"
   }
  },
  "identity": {

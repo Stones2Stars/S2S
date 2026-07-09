@@ -80,6 +80,11 @@
   "production": 250,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ENTERTAINER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ENTERTAINER",
   "civilopedia": "TXT_KEY_CONCEPT_ENTERTAINER_PEDIA",

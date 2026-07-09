@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_PLAGUED_SMOG"
+   "define": "ART_DEF_FEATURE_PLAGUED_SMOG"
   }
  },
  "identity": {

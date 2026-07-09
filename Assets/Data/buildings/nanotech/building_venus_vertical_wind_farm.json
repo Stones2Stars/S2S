@@ -33,7 +33,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VENUS_VERTICAL_WIND_FARM"
+   "define": "ART_DEF_BUILDING_VENUS_VERTICAL_WIND_FARM"
   }
  },
  "identity": {

@@ -93,7 +93,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SHOOTING_CLUB"
+   "define": "ART_DEF_BUILDING_SHOOTING_CLUB"
   }
  },
  "sound": {

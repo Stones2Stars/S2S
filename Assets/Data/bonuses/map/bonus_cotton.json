@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_COTTON"
+   "define": "ART_DEF_BONUS_COTTON"
   }
  },
  "mapGeneration": {

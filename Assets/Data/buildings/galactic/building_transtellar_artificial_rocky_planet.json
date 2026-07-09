@@ -38,7 +38,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRANSTELLAR_ARTIFICIAL_ROCKY_PLANET"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_ARTIFICIAL_ROCKY_PLANET"
   }
  },
  "identity": {

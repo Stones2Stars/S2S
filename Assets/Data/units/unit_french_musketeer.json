@@ -83,6 +83,11 @@
   "production": 405,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FRENCH_MUSKETEER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FRENCH_MUSKETEER",
   "civilopedia": "TXT_KEY_UNIT_FRENCH_MUSKETEER_PEDIA",

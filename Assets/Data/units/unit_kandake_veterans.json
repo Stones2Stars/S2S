@@ -111,6 +111,11 @@
   "production": 115,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KANDAKE_VETERANS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KANDAKE_VETERANS",
   "civilopedia": "TXT_KEY_UNIT_KANDAKE_VETERANS_PEDIA",

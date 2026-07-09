@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_PARALLEL_UNIVERSE"
+   "define": "ART_DEF_IMPROVEMENT_PARALLEL_UNIVERSE"
   }
  },
  "identity": {

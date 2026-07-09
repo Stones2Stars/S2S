@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_TOWN"
+   "define": "ART_DEF_IMPROVEMENT_TOWN"
   }
  },
  "identity": {

@@ -86,6 +86,11 @@
   "production": 830,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LIGHT_ARTILLERY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LIGHT_ARTILLERY",
   "civilopedia": "TXT_KEY_UNIT_LIGHT_ARTILLERY_PEDIA",

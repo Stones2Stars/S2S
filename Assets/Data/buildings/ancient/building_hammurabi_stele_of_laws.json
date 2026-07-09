@@ -96,7 +96,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HAMMURABI_STELE_OF_LAWS"
+   "define": "ART_DEF_BUILDING_HAMMURABI_STELE_OF_LAWS"
   }
  },
  "sound": {

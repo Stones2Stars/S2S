@@ -234,7 +234,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_OCEAN_ADMINISTRATION"
+   "define": "ART_DEF_BUILDING_OCEAN_ADMINISTRATION"
   }
  },
  "identity": {

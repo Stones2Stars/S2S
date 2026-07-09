@@ -63,7 +63,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MORTUARY"
+   "define": "ART_DEF_BUILDING_MORTUARY"
   }
  },
  "identity": {

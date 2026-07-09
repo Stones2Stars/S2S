@@ -9,7 +9,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_FLAX_FIBERS"
+   "define": "ART_DEF_BONUS_FLAX_FIBERS"
   }
  },
  "identity": {

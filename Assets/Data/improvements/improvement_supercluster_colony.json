@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_SUPERCLUSTER_COLONY"
+   "define": "ART_DEF_IMPROVEMENT_SUPERCLUSTER_COLONY"
   }
  },
  "identity": {

@@ -118,6 +118,11 @@
   "production": 140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SPIRIT_WALKER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SPIRIT_WALKER",
   "civilopedia": "TXT_KEY_UNIT_SPIRIT_WALKER_PEDIA",

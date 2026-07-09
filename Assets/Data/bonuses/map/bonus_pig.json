@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_PIG"
+   "define": "ART_DEF_BONUS_PIG"
   }
  },
  "mapGeneration": {

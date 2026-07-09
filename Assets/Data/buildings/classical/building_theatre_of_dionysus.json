@@ -92,7 +92,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THEATRE_OF_DIONYSUS"
+   "define": "ART_DEF_BUILDING_THEATRE_OF_DIONYSUS"
   }
  },
  "identity": {

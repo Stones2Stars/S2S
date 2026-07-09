@@ -111,6 +111,11 @@
   "production": 110,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TARUMA_WARRIOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TARUMA_WARRIOR",
   "civilopedia": "TXT_KEY_UNIT_TARUMA_WARRIOR_PEDIA",

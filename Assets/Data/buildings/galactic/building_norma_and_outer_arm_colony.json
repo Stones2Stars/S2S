@@ -59,7 +59,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NORMA_AND_OUTER_ARM_COLONY"
+   "define": "ART_DEF_BUILDING_NORMA_AND_OUTER_ARM_COLONY"
   }
  },
  "identity": {

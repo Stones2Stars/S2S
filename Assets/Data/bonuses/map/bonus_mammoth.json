@@ -43,7 +43,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_MAMMOTH"
+   "define": "ART_DEF_BONUS_MAMMOTH"
   }
  },
  "mapGeneration": {

@@ -46,7 +46,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_FOSSIL_DIG_SITE"
+   "define": "ART_DEF_IMPROVEMENT_FOSSIL_DIG_SITE"
   }
  },
  "identity": {

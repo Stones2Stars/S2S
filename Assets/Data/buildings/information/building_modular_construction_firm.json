@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MODULAR_CONSTRUCTION_FIRM"
+   "define": "ART_DEF_BUILDING_MODULAR_CONSTRUCTION_FIRM"
   }
  },
  "identity": {

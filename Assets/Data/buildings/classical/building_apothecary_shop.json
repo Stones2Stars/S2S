@@ -131,7 +131,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_APOTHECARY_SHOP"
+   "define": "ART_DEF_BUILDING_APOTHECARY_SHOP"
   }
  },
  "sound": {

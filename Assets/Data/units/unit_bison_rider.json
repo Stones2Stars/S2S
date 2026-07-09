@@ -123,6 +123,11 @@
  "cost": {
   "production": 169
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BISON_RIDER_M"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BISON_RIDER",
   "civilopedia": "TXT_KEY_UNIT_BISON_RIDER_PEDIA",

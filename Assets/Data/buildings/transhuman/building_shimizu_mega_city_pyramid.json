@@ -70,7 +70,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SHIMIZU_MEGA_CITY_PYRAMID"
+   "define": "ART_DEF_BUILDING_SHIMIZU_MEGA_CITY_PYRAMID"
   }
  },
  "identity": {

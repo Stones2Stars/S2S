@@ -72,7 +72,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_MATERIAL_SUPPLY"
+   "define": "ART_DEF_BUILDING_MARTIAN_MATERIAL_SUPPLY"
   }
  },
  "identity": {

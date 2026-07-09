@@ -1,12 +1,5 @@
 {
  "type": "PROMOTION_SWARM4",
- "strength": {
-  "unit": {
-   "perVolumeLess": {
-    "percent": 25
-   }
-  }
- },
  "promotionLine": {
   "PROMOTIONLINE_SWARM": 4
  },
@@ -18,6 +11,11 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perVolumeLess": 25
+  }
  },
  "identity": {
   "description": "TXT_KEY_PROMOTION_SWARM4"

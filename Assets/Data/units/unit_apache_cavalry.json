@@ -143,6 +143,11 @@
   "production": 580,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_APACHE_COCHISE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_APACHE_CAVALRY",
   "civilopedia": "TXT_KEY_UNIT_APACHE_CAVALRY_PEDIA",

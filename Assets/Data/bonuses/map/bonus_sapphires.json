@@ -23,7 +23,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SAPPHIRES"
+   "define": "ART_DEF_BONUS_SAPPHIRES"
   }
  },
  "mapGeneration": {

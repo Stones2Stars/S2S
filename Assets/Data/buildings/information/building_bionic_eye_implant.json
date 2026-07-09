@@ -59,7 +59,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BIONIC_EYE_IMPLANT"
+   "define": "ART_DEF_BUILDING_BIONIC_EYE_IMPLANT"
   }
  },
  "identity": {

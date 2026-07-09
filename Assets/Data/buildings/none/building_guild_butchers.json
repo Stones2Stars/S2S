@@ -89,7 +89,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GUILD_BUTCHERS"
+   "define": "ART_DEF_BUILDING_GUILD_BUTCHERS"
   }
  },
  "identity": {

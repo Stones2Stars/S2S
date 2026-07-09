@@ -49,7 +49,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WILKINSON_MICROWAVE_ANISOTROPY_PROBE"
+   "define": "ART_DEF_BUILDING_WILKINSON_MICROWAVE_ANISOTROPY_PROBE"
   }
  },
  "identity": {

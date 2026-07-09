@@ -72,7 +72,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_AUTOMOBILE_DEALERSHIP"
+   "define": "ART_DEF_BUILDING_AUTOMOBILE_DEALERSHIP"
   }
  },
  "identity": {

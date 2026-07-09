@@ -111,6 +111,11 @@
   "production": 720,
   "upkeep": 8
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RIOTPOLICE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_RIOTPOLICE",
   "civilopedia": "TXT_KEY_UNIT_RIOTPOLICE_PEDIA",

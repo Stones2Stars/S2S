@@ -169,7 +169,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TAR_REFINERY"
+   "define": "ART_DEF_BUILDING_TAR_REFINERY"
   }
  },
  "identity": {

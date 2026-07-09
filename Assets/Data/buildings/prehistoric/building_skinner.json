@@ -100,7 +100,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SKINNER"
+   "define": "ART_DEF_BUILDING_SKINNER"
   }
  },
  "identity": {

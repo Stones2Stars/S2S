@@ -87,6 +87,11 @@
   "production": 190,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SKIRMISHER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SKIRMISHER",
   "civilopedia": "TXT_KEY_UNIT_SKIRMISHER_PEDIA",

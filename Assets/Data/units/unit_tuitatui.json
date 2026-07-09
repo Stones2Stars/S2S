@@ -39,6 +39,11 @@
   "production": 1328,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TUITATUI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TUITATUI",
   "civilopedia": "TXT_KEY_UNIT_TUITATUI_PEDIA",

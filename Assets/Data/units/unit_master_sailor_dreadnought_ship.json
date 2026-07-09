@@ -65,6 +65,11 @@
  "cost": {
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DREADNOUGHT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MASTER_SAILOR_DREADNOUGHT_SHIP",
   "civilopedia": "TXT_KEY_UNIT_DREADNOUGHT_SHIP_PEDIA",

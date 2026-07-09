@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GROVE_ALMOND"
+   "define": "ART_DEF_BUILDING_GROVE_ALMOND"
   }
  },
  "identity": {

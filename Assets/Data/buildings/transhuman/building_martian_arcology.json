@@ -82,7 +82,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_ARCOLOGY"
+   "define": "ART_DEF_BUILDING_MARTIAN_ARCOLOGY"
   }
  },
  "identity": {

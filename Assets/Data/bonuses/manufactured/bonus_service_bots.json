@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SERVICE_BOTS"
+   "define": "ART_DEF_BONUS_SERVICE_BOTS"
   }
  },
  "identity": {

@@ -125,6 +125,11 @@
   "production": 42,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TOMAHAWK_THROWER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TOMAHAWK_THROWER",
   "civilopedia": "TXT_KEY_UNIT_TOMAHAWK_THROWER_PEDIA",

@@ -86,7 +86,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOUSING_YURTS"
+   "define": "ART_DEF_BUILDING_HOUSING_YURTS"
   }
  },
  "identity": {

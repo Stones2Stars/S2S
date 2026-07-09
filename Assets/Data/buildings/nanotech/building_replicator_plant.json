@@ -84,7 +84,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_REPLICATOR_PLANT"
+   "define": "ART_DEF_BUILDING_REPLICATOR_PLANT"
   }
  },
  "sound": {

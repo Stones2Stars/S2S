@@ -43,6 +43,11 @@
   "production": 4000,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_EXTRACTION_FACILITY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_EXTRACTION_FACILITY",
   "civilopedia": "TXT_KEY_UNIT_EXTRACTION_FACILITY_PEDIA",

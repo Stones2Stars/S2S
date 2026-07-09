@@ -78,6 +78,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MINKIE_WHALE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MINKIE_WHALE",
   "civilopedia": "TXT_KEY_UNIT_MINKIE_WHALE_PEDIA",

@@ -56,7 +56,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RESOURCES_PELTS"
+   "define": "ART_DEF_BUILDING_RESOURCES_PELTS"
   }
  },
  "identity": {

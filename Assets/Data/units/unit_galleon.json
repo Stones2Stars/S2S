@@ -67,6 +67,11 @@
   "production": 400,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GALLEON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GALLEON",
   "civilopedia": "TXT_KEY_UNIT_GALLEON_PEDIA",

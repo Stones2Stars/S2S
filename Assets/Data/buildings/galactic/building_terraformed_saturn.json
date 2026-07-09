@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TERRAFORMED_SATURN"
+   "define": "ART_DEF_BUILDING_TERRAFORMED_SATURN"
   }
  },
  "identity": {

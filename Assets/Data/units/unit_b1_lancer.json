@@ -97,6 +97,11 @@
   "production": 1850,
   "upkeep": 7
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_B1_LANCER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_B1_LANCER",
   "civilopedia": "TXT_KEY_UNIT_B1_LANCER_PEDIA",

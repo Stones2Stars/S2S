@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_COAL"
+   "define": "ART_DEF_BONUS_COAL"
   }
  },
  "mapGeneration": {

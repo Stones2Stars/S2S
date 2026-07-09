@@ -67,6 +67,11 @@
   "upkeep": 16,
   "hurryCostModifier": 50
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WALKER_MECH"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WALKER_MECH",
   "civilopedia": "TXT_KEY_UNIT_WALKER_MECH_PEDIA",

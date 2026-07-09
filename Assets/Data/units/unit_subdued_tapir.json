@@ -46,6 +46,11 @@
    "BUILDING_ZOO"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TAPIR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_TAPIR",
   "civilopedia": "TXT_KEY_UNIT_TAPIR_PEDIA",

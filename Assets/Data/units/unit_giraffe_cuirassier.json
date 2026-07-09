@@ -155,6 +155,11 @@
  "cost": {
   "production": 425
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GIRAFFE_CUIRASSIER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GIRAFFE_CUIRASSIER",
   "civilopedia": "TXT_KEY_UNIT_GIRAFFE_ARCHER_PEDIA",

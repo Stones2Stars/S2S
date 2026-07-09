@@ -118,6 +118,11 @@
   "production": 455,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_OILAT_KESHIK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_OILAT_KESHIK",
   "civilopedia": "TXT_KEY_UNIT_OILAT_KESHIK_PEDIA",

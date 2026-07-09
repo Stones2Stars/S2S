@@ -22,7 +22,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_SEA"
+   "define": "ART_DEF_TERRAIN_SEA"
   }
  },
  "sound": {

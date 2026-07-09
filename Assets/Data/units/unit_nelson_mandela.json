@@ -55,6 +55,11 @@
   "production": 4720,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NELSON_MANDELA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NELSON_MANDELA",
   "civilopedia": "TXT_KEY_UNIT_NELSON_MANDELA_PEDIA",

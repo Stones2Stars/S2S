@@ -105,6 +105,11 @@
   "production": 1700,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_F18_HORNET"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_F18_HORNET",
   "civilopedia": "TXT_KEY_UNIT_F18_HORNET_PEDIA",

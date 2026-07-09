@@ -49,6 +49,11 @@
   "production": 1760,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MINDAUGAS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MINDAUGAS",
   "civilopedia": "TXT_KEY_UNIT_MINDAUGAS_PEDIA",

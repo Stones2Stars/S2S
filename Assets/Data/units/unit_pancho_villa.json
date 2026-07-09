@@ -48,6 +48,11 @@
   "production": 2140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PANCHO_VILLA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PANCHO_VILLA",
   "civilopedia": "TXT_KEY_UNIT_PANCHO_VILLA_PEDIA",

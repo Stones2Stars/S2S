@@ -37,6 +37,11 @@
   "production": 1350,
   "upkeep": 6
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_A_BOMB"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ATOMIC",
   "civilopedia": "TXT_KEY_UNIT_TACTICAL_NUKE_PEDIA",

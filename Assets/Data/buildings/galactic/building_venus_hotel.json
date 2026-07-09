@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VENUS_HOTEL"
+   "define": "ART_DEF_BUILDING_VENUS_HOTEL"
   }
  },
  "identity": {

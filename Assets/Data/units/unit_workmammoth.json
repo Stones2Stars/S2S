@@ -113,6 +113,11 @@
   "production": 170,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WORK_MAMMOTH"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WORKMAMMOTH",
   "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",

@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_PSYCHOHISTORY_STUDIO"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_PSYCHOHISTORY_STUDIO"
   }
  },
  "identity": {

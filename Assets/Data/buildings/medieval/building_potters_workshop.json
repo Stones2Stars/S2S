@@ -125,7 +125,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_POTTERS_WORKSHOP"
+   "define": "ART_DEF_BUILDING_POTTERS_WORKSHOP"
   }
  },
  "identity": {

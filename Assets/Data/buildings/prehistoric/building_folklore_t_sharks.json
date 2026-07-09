@@ -104,7 +104,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOLKLORE_T_SHARKS"
+   "define": "ART_DEF_BUILDING_FOLKLORE_T_SHARKS"
   }
  },
  "identity": {

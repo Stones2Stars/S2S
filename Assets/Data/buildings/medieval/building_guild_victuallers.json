@@ -95,7 +95,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GUILD_VICTUALLERS"
+   "define": "ART_DEF_BUILDING_GUILD_VICTUALLERS"
   }
  },
  "identity": {

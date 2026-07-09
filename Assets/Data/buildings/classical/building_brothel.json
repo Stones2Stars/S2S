@@ -133,7 +133,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BROTHEL"
+   "define": "ART_DEF_BUILDING_BROTHEL"
   }
  },
  "sound": {

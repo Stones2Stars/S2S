@@ -148,6 +148,11 @@
    "BUILDING_ZOO"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SPECTACLEDBEAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_SPECTACLEDBEAR",
   "civilopedia": "TXT_KEY_UNIT_SPECTACLEDBEAR_PEDIA",

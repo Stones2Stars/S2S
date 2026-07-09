@@ -14,7 +14,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_CAVES"
+   "define": "ART_DEF_FEATURE_CAVES"
   }
  },
  "sound": {

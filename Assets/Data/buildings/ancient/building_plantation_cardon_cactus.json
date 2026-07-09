@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PLANTATION_CARDON_CACTUS"
+   "define": "ART_DEF_BUILDING_PLANTATION_CARDON_CACTUS"
   }
  },
  "identity": {

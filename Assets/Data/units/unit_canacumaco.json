@@ -63,6 +63,11 @@
   "production": 1280,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CANACUMACO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CANACUMACO",
   "civilopedia": "TXT_KEY_UNIT_CANACUMACO_PEDIA",

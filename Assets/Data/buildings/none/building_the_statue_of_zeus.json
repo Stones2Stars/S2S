@@ -56,7 +56,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THE_STATUE_OF_ZEUS"
+   "define": "ART_DEF_BUILDING_THE_STATUE_OF_ZEUS"
   }
  },
  "identity": {

@@ -46,7 +46,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WEATHER_STATION"
+   "define": "ART_DEF_BUILDING_WEATHER_STATION"
   }
  },
  "identity": {

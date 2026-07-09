@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ORCHARD_PLUM"
+   "define": "ART_DEF_BUILDING_ORCHARD_PLUM"
   }
  },
  "identity": {

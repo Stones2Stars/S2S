@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOUNDATION"
+   "define": "ART_DEF_BUILDING_FOUNDATION"
   }
  },
  "sound": {

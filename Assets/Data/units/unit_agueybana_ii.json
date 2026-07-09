@@ -49,6 +49,11 @@
   "production": 472,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AGUEYBANA_II"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AGUEYBANA_II",
   "civilopedia": "TXT_KEY_UNIT_AGUEYBANA_II_PEDIA",

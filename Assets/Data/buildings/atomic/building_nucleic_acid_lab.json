@@ -136,7 +136,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NUCLEIC_ACID_LAB"
+   "define": "ART_DEF_BUILDING_NUCLEIC_ACID_LAB"
   }
  },
  "identity": {

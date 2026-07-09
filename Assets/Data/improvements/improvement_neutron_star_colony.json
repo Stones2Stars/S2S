@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_NEUTRON_STAR_COLONY"
+   "define": "ART_DEF_IMPROVEMENT_NEUTRON_STAR_COLONY"
   }
  },
  "identity": {

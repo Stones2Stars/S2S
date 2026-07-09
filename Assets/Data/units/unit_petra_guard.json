@@ -153,6 +153,11 @@
   "production": 370,
   "upkeep": 6
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PETRA_GUARD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PETRA_GUARD",
   "civilopedia": "TXT_KEY_UNIT_PETRA_GUARD_PEDIA",

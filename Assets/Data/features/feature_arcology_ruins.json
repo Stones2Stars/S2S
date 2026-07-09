@@ -9,7 +9,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_ARCOLOGY_RUINS"
+   "define": "ART_DEF_FEATURE_ARCOLOGY_RUINS"
   }
  },
  "sound": {

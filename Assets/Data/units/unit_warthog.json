@@ -73,6 +73,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WARTHOG"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WARTHOG",
   "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",

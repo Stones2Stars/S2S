@@ -58,15 +58,6 @@
    "cityAttack": {
     "percent": 15
    },
-   "perSizeMore": {
-    "percent": 5
-   },
-   "perVolumeMore": {
-    "percent": -5
-   },
-   "perVolumeLess": {
-    "percent": 5
-   },
    "lunge": {
     "percent": 12
    },
@@ -180,6 +171,18 @@
     "FLAVOR_MILITARY": 1
    }
   ]
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perSizeMore": 5,
+   "perVolumeMore": -5,
+   "perVolumeLess": 5
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SHARPSHOOTER"
+  }
  },
  "identity": {
   "description": "TXT_KEY_UNIT_SHARPSHOOTER",

@@ -35,7 +35,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SILVER_ORE"
+   "define": "ART_DEF_BONUS_SILVER_ORE"
   }
  },
  "mapGeneration": {

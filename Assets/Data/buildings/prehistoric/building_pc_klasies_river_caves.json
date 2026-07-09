@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PC_KLASIES_RIVER_CAVES"
+   "define": "ART_DEF_BUILDING_PC_KLASIES_RIVER_CAVES"
   }
  },
  "identity": {

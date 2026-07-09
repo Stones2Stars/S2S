@@ -25,15 +25,6 @@
    "cityAttack": {
     "percent": 15
    },
-   "perSizeMore": {
-    "percent": 20
-   },
-   "perVolumeMore": {
-    "percent": -20
-   },
-   "perVolumeLess": {
-    "percent": 20
-   },
    "lunge": {
     "percent": 20
    },
@@ -147,6 +138,18 @@
     "FLAVOR_MILITARY": 1
    }
   ]
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perSizeMore": 20,
+   "perVolumeMore": -20,
+   "perVolumeLess": 20
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HITECH_SNIPER"
+  }
  },
  "identity": {
   "description": "TXT_KEY_UNIT_HTSNIPER",

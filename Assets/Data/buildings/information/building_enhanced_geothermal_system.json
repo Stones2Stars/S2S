@@ -68,7 +68,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ENHANCED_GEOTHERMAL_SYSTEM"
+   "define": "ART_DEF_BUILDING_ENHANCED_GEOTHERMAL_SYSTEM"
   }
  },
  "identity": {

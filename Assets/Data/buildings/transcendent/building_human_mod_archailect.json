@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HUMAN_MOD_ARCHAILECT"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_ARCHAILECT"
   }
  },
  "identity": {

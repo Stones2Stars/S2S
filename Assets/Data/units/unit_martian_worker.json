@@ -33,6 +33,11 @@
   "upkeep": 1,
   "hurryCostModifier": 10000
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MARS_WORKER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MARTIAN_WORKER",
   "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",

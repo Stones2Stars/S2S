@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HUMAN_MOD_PURE_ENERGY"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_PURE_ENERGY"
   }
  },
  "identity": {

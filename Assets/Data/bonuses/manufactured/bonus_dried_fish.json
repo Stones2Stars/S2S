@@ -2,7 +2,7 @@
  "type": "BONUS_DRIED_FISH",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_DRIED_FISH"
+   "define": "ART_DEF_BONUS_DRIED_FISH"
   }
  },
  "identity": {

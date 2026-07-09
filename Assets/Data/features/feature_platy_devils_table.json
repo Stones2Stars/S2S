@@ -16,7 +16,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_DEVILS_TABLE"
+   "define": "ART_DEF_FEATURE_DEVILS_TABLE"
   }
  },
  "sound": {

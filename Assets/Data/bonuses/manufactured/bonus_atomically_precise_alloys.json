@@ -8,7 +8,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_ATOMICALLY_PRECISE_ALLOYS"
+   "define": "ART_DEF_BONUS_ATOMICALLY_PRECISE_ALLOYS"
   }
  },
  "identity": {

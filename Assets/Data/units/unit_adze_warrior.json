@@ -111,6 +111,11 @@
   "production": 155,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ADZE_WARRIOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ADZE_WARRIOR",
   "civilopedia": "TXT_KEY_UNIT_ADZE_WARRIOR_PEDIA",

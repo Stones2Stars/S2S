@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE"
+   "define": "ART_DEF_BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE"
   }
  },
  "identity": {

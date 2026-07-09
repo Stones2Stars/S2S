@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SUPERHERO_GUILD"
+   "define": "ART_DEF_BUILDING_SUPERHERO_GUILD"
   }
  },
  "identity": {

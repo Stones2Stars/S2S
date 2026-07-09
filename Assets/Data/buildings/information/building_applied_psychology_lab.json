@@ -89,7 +89,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_APPLIED_PSYCHOLOGY_LAB"
+   "define": "ART_DEF_BUILDING_APPLIED_PSYCHOLOGY_LAB"
   }
  },
  "identity": {

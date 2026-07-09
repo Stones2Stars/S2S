@@ -86,7 +86,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GUILD_HOSTLERS"
+   "define": "ART_DEF_BUILDING_GUILD_HOSTLERS"
   }
  },
  "identity": {

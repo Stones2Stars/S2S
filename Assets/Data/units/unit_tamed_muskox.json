@@ -55,6 +55,11 @@
  "cost": {
   "production": 140
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TAMED_MUSKOX"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TAMED_MUSKOX",
   "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",

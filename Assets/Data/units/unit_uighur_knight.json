@@ -114,6 +114,11 @@
   "production": 355,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_UIGHUR_KNIGHT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_UIGHUR_KNIGHT",
   "civilopedia": "TXT_KEY_UNIT_UIGHUR_KNIGHT_PEDIA",

@@ -37,7 +37,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYPERSPACE_TIME_TRAP"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_TIME_TRAP"
   }
  },
  "identity": {

@@ -100,7 +100,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TEMPLE_OF_KI"
+   "define": "ART_DEF_BUILDING_TEMPLE_OF_KI"
   }
  },
  "sound": {

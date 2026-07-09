@@ -49,6 +49,11 @@
   "production": 800,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VIRACOCHA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_VIRACOCHA",
   "civilopedia": "TXT_KEY_UNIT_VIRACOCHA_PEDIA",

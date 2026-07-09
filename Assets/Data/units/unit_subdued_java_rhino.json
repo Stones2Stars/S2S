@@ -149,6 +149,11 @@
    "BUILDING_ZOO"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JAVA_RHINO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_JAVA_RHINO",
   "civilopedia": "TXT_KEY_UNIT_JAVA_RHINO_PEDIA",

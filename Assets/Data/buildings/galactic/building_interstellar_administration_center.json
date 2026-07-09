@@ -92,7 +92,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_ADMINISTRATION_CENTER"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_ADMINISTRATION_CENTER"
   }
  },
  "identity": {

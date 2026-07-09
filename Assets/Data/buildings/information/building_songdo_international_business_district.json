@@ -44,7 +44,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SONGDO_INTERNATIONAL_BUSINESS_DISTRICT"
+   "define": "ART_DEF_BUILDING_SONGDO_INTERNATIONAL_BUSINESS_DISTRICT"
   }
  },
  "identity": {

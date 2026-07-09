@@ -58,6 +58,11 @@
   "production": 280,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_COG"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_COG",
   "civilopedia": "TXT_KEY_UNIT_COG_PEDIA",

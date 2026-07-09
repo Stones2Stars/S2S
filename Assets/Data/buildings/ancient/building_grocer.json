@@ -130,7 +130,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GROCER"
+   "define": "ART_DEF_BUILDING_GROCER"
   }
  },
  "sound": {

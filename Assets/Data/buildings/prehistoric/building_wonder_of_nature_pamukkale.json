@@ -110,7 +110,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WONDER_OF_NATURE_PAMUKKALE"
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_PAMUKKALE"
   }
  },
  "identity": {

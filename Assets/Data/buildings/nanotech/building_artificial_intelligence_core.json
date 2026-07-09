@@ -102,7 +102,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ARTIFICIAL_INTELLIGENCE_CORE"
+   "define": "ART_DEF_BUILDING_ARTIFICIAL_INTELLIGENCE_CORE"
   }
  },
  "identity": {

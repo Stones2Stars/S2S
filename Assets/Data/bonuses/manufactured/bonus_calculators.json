@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CALCULATORS"
+   "define": "ART_DEF_BONUS_CALCULATORS"
   }
  },
  "identity": {

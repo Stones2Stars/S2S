@@ -75,7 +75,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOLKLORE_CAPE_BUFFALO"
+   "define": "ART_DEF_BUILDING_FOLKLORE_CAPE_BUFFALO"
   }
  },
  "identity": {

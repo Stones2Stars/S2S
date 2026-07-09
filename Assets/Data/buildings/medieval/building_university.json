@@ -247,7 +247,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_UNIVERSITY"
+   "define": "ART_DEF_BUILDING_UNIVERSITY"
   }
  },
  "sound": {

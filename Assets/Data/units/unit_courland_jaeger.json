@@ -85,6 +85,11 @@
   "production": 385,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_COURLAND_JAEGER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_COURLAND_JAEGER",
   "civilopedia": "TXT_KEY_UNIT_COURLAND_JAEGER_PEDIA",

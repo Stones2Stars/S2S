@@ -46,6 +46,11 @@
   "production": 285,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ADVENTURER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ADVENTURER",
   "civilopedia": "TXT_KEY_UNIT_ADVENTURER_PEDIA",

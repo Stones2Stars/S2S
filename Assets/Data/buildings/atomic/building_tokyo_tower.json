@@ -78,7 +78,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TOKYO_TOWER"
+   "define": "ART_DEF_BUILDING_TOKYO_TOWER"
   }
  },
  "identity": {

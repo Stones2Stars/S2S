@@ -160,6 +160,11 @@
   "production": 225,
   "upkeep": 5
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BANDIT_RIDER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BANDIT_RIDER",
   "civilopedia": "TXT_KEY_UNIT_BANDIT_RIDER_PEDIA",

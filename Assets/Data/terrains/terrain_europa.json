@@ -17,7 +17,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_EUROPA"
+   "define": "ART_DEF_TERRAIN_EUROPA"
   }
  },
  "identity": {

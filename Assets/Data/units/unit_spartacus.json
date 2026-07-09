@@ -31,6 +31,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SPARTACUS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SPARTACUS",
   "civilopedia": "TXT_KEY_UNIT_SPARTACUS_PEDIA",

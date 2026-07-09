@@ -152,6 +152,11 @@
   "production": 235,
   "upkeep": 5
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TREASURE_GUARD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TREASURE_GUARD",
   "civilopedia": "TXT_KEY_UNIT_TREASURE_GUARD_PEDIA",

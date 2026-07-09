@@ -64,6 +64,11 @@
   "production": 864,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BATRADZ"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BATRADZ",
   "civilopedia": "TXT_KEY_UNIT_BATRADZ_PEDIA",

@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_XENOARCHEOLOGIST"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_XENOARCHEOLOGIST"
   }
  },
  "identity": {

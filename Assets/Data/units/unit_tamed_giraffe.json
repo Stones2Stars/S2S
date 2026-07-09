@@ -52,6 +52,11 @@
  "cost": {
   "production": 140
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TAMED_GIRAFFE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TAMED_GIRAFFE",
   "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",

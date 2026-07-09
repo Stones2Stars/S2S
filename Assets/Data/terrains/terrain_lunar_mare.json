@@ -24,7 +24,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_LUNAR_MARE"
+   "define": "ART_DEF_TERRAIN_LUNAR_MARE"
   }
  },
  "sound": {

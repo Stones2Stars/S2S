@@ -135,6 +135,11 @@
   "production": 235,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SCYTHIAN_HORSE_ARCHER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SCYTHIAN_HORSE_ARCHER",
   "civilopedia": "TXT_KEY_UNIT_SCYTHIAN_HORSE_ARCHER_PEDIA",

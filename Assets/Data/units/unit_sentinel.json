@@ -146,6 +146,11 @@
   "production": 7000,
   "upkeep": 16
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SENTINEL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SENTINEL",
   "civilopedia": "TXT_KEY_UNIT_SENTINEL_PEDIA",

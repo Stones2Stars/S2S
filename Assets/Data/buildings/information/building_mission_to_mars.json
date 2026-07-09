@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MISSION_TO_MARS"
+   "define": "ART_DEF_BUILDING_MISSION_TO_MARS"
   }
  },
  "identity": {

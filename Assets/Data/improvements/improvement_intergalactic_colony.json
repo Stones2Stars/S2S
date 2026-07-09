@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_INTERGALACTIC_COLONY"
+   "define": "ART_DEF_IMPROVEMENT_INTERGALACTIC_COLONY"
   }
  },
  "identity": {

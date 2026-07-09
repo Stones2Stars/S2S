@@ -16,7 +16,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_DWARF_GALAXY"
+   "define": "ART_DEF_FEATURE_DWARF_GALAXY"
   }
  },
  "sound": {

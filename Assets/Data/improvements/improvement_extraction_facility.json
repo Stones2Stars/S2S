@@ -152,7 +152,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_EXTRACTION_FACILITY"
+   "define": "ART_DEF_IMPROVEMENT_EXTRACTION_FACILITY"
   }
  },
  "identity": {

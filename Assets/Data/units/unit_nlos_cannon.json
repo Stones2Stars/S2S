@@ -74,6 +74,11 @@
   "production": 3294,
   "upkeep": 6
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NLOS_CANNON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NLOS_CANNON",
   "civilopedia": "TXT_KEY_UNIT_NLOS_CANNON_PEDIA",

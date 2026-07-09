@@ -149,6 +149,11 @@
   "production": 128,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_REINDEER_RIDER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_REINDEER_RIDER",
   "civilopedia": "TXT_KEY_UNIT_REINDEER_RIDER_PEDIA",

@@ -19,7 +19,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_REEF_BEACON"
+   "define": "ART_DEF_FEATURE_REEF_BEACON"
   }
  },
  "sound": {

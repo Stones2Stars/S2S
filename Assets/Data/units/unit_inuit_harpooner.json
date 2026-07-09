@@ -101,6 +101,11 @@
   "production": 75,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_INUIT_HARPOONER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_INUIT_HARPOONER",
   "civilopedia": "TXT_KEY_UNIT_INUIT_HARPOONER_PEDIA",

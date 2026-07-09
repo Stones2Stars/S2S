@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DISTANT_LAYERED_REALITY"
+   "define": "ART_DEF_BUILDING_DISTANT_LAYERED_REALITY"
   }
  },
  "identity": {

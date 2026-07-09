@@ -29,6 +29,11 @@
   "production": 1000,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_OFFSHORE_PLATFORM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_OFFSHORE_PLATFORM",
   "civilopedia": "TXT_KEY_UNIT_OFFSHORE_PLATFORM_PEDIA",

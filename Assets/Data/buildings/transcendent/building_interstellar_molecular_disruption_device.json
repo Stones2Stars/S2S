@@ -38,7 +38,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_MOLECULAR_DISRUPTION_DEVICE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_MOLECULAR_DISRUPTION_DEVICE"
   }
  },
  "identity": {

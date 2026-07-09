@@ -25,6 +25,11 @@
   "production": 1700,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BULLDOZER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LUNAR_BULLDOZER",
   "civilopedia": "TXT_KEY_UNIT_LUNAR_BULLDOZER_PEDIA",

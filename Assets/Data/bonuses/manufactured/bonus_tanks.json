@@ -20,7 +20,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_TANKS"
+   "define": "ART_DEF_BONUS_TANKS"
   }
  },
  "identity": {

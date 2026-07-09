@@ -196,7 +196,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CANDY_SHOP"
+   "define": "ART_DEF_BUILDING_CANDY_SHOP"
   }
  },
  "identity": {

@@ -8,7 +8,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CHILEAN"
+   "define": "ART_DEF_BONUS_CHILEAN"
   }
  },
  "identity": {

@@ -73,6 +73,11 @@
   "production": 105,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PLUMED_ARCHER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PLUMED_ARCHER",
   "civilopedia": "TXT_KEY_UNIT_PLUMED_ARCHER_PEDIA",

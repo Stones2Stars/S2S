@@ -39,7 +39,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DEEP_SPACE_ADVANCED_RECYCLING"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_ADVANCED_RECYCLING"
   }
  },
  "identity": {

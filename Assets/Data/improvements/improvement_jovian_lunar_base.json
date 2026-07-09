@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_JOVIAN_LUNAR_BASE"
+   "define": "ART_DEF_IMPROVEMENT_JOVIAN_LUNAR_BASE"
   }
  },
  "mapGeneration": {

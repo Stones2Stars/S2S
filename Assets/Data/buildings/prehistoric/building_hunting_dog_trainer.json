@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HUNTING_DOG_TRAINER"
+   "define": "ART_DEF_BUILDING_HUNTING_DOG_TRAINER"
   }
  },
  "identity": {

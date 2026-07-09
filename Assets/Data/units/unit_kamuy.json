@@ -49,6 +49,11 @@
   "production": 180,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KAMUY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KAMUY",
   "civilopedia": "TXT_KEY_UNIT_KAMUY_PEDIA",

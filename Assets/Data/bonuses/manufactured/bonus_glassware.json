@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_GLASSWARE"
+   "define": "ART_DEF_BONUS_GLASSWARE"
   }
  },
  "identity": {

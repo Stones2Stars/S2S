@@ -58,6 +58,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HAMMERHEAD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_HAMMERHEAD",
   "civilopedia": "TXT_KEY_UNIT_HAMMERHEAD_SHARK_PEDIA",

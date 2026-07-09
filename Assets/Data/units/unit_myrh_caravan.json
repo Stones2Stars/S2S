@@ -102,6 +102,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MYRH_CARAVAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MYRH_CARAVAN",
   "civilopedia": "TXT_KEY_UNIT_MYRH_CARAVAN_PEDIA",

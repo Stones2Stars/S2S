@@ -74,7 +74,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CIGAR_ROLLERS_SHOP"
+   "define": "ART_DEF_BUILDING_CIGAR_ROLLERS_SHOP"
   }
  },
  "identity": {

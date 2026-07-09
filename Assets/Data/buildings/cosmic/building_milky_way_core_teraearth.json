@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MILKY_WAY_CORE_TERAEARTH"
+   "define": "ART_DEF_BUILDING_MILKY_WAY_CORE_TERAEARTH"
   }
  },
  "identity": {

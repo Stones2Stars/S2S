@@ -20,6 +20,11 @@
    "icon": "Art/sikh_miss.dds"
   }
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SIKHISM_MISSIONARY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SIKH_MISSIONARY",
   "civilopedia": "TXT_KEY_UNIT_SIKH_MISSIONARY_PEDIA",

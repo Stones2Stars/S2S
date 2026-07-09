@@ -92,7 +92,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ALCATRAZ"
+   "define": "ART_DEF_BUILDING_ALCATRAZ"
   }
  },
  "sound": {

@@ -36,7 +36,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EUROPA_SF6_GENERATOR"
+   "define": "ART_DEF_BUILDING_EUROPA_SF6_GENERATOR"
   }
  },
  "identity": {

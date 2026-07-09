@@ -121,6 +121,11 @@
  "cost": {
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TRIBE_MALE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TRIBE",
   "civilopedia": "TXT_KEY_UNIT_TRIBE_PEDIA",

@@ -700,7 +700,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_VERTICAL_FARM"
+   "define": "ART_DEF_IMPROVEMENT_VERTICAL_FARM"
   }
  },
  "mapGeneration": {

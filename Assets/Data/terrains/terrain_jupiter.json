@@ -22,7 +22,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_JUPITER"
+   "define": "ART_DEF_TERRAIN_JUPITER"
   }
  },
  "sound": {

@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HERD_CAMEL"
+   "define": "ART_DEF_BUILDING_HERD_CAMEL"
   }
  },
  "sound": {

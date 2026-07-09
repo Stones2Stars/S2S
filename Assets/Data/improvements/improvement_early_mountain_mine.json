@@ -168,7 +168,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_STONE_TOOLS_WORKSHOP"
+   "define": "ART_DEF_IMPROVEMENT_STONE_TOOLS_WORKSHOP"
   }
  },
  "identity": {

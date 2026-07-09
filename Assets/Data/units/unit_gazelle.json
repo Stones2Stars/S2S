@@ -48,6 +48,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GAZELLE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GAZELLE",
   "civilopedia": "TXT_KEY_UNIT_GAZELLE_PEDIA",

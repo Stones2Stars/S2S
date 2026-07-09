@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PROPERTYCRIME"
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME"
   }
  },
  "identity": {

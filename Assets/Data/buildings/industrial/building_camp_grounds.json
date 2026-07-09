@@ -74,7 +74,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CAMP_GROUNDS"
+   "define": "ART_DEF_BUILDING_CAMP_GROUNDS"
   }
  },
  "identity": {

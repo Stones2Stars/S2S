@@ -89,7 +89,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY_WONDER"
+   "define": "ART_DEF_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY_WONDER"
   }
  },
  "identity": {

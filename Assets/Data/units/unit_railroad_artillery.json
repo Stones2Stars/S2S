@@ -93,6 +93,11 @@
   "production": 1080,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RAILROAD_ARTILLERY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_RAILROAD_ARTILLERY",
   "civilopedia": "TXT_KEY_UNIT_RAILROAD_ARTILLERY_PEDIA",

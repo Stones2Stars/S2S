@@ -59,7 +59,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GREAT_CHINAMPA"
+   "define": "ART_DEF_BUILDING_GREAT_CHINAMPA"
   }
  },
  "identity": {

@@ -19,7 +19,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_SANITIZE_WATER"
+   "define": "ART_DEF_IMPROVEMENT_SANITIZE_WATER"
   }
  },
  "identity": {

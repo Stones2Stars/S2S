@@ -86,6 +86,11 @@
   "production": 440,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TREASURE_SHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TREASURE_SHIP",
   "civilopedia": "TXT_KEY_UNIT_TREASURE_SHIP_PEDIA",

@@ -95,6 +95,11 @@
   "production": 250,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KETABDAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KETABDAR",
   "civilopedia": "TXT_KEY_UNIT_KETABDAR_PEDIA",

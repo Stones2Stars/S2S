@@ -78,7 +78,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PARKING_LOT"
+   "define": "ART_DEF_BUILDING_PARKING_LOT"
   }
  },
  "identity": {

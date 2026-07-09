@@ -122,7 +122,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MONTREAL_BIODOME"
+   "define": "ART_DEF_BUILDING_MONTREAL_BIODOME"
   }
  },
  "identity": {

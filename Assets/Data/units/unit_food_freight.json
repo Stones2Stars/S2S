@@ -41,6 +41,11 @@
    "weight": 10
   }
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FOOD_FREIGHT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FOOD_FREIGHT",
   "civilopedia": "TXT_KEY_CONCEPT_FREIGHT_PEDIA",

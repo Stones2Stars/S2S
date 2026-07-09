@@ -45,7 +45,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_HYPERSPACE_BUNKER"
+   "define": "ART_DEF_IMPROVEMENT_HYPERSPACE_BUNKER"
   }
  },
  "mapGeneration": {

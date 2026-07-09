@@ -113,6 +113,11 @@
  "cost": {
   "upkeep": 8
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PIONEER_MALE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PIONEER",
   "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",

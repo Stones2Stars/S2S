@@ -38,6 +38,11 @@
   "upkeep": 1,
   "hurryCostModifier": 10000
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CHRONOFORM_SHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CHRONOFORM_SHIP",
   "civilopedia": "TXT_KEY_UNIT_CHRONOFORM_SHIP_PEDIA",

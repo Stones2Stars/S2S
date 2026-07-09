@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_CLOCKPUNK"
+   "define": "ART_DEF_BUILDING_CULTURE_CLOCKPUNK"
   }
  },
  "identity": {

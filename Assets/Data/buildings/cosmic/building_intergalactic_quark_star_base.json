@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_QUARK_STAR_BASE"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_QUARK_STAR_BASE"
   }
  },
  "identity": {

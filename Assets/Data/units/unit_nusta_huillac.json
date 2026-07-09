@@ -49,6 +49,11 @@
   "production": 2140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NUSTA_HUILLAC"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NUSTA_HUILLAC",
   "civilopedia": "TXT_KEY_UNIT_NUSTA_HUILLAC_PEDIA",

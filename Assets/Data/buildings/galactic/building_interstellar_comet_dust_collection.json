@@ -56,7 +56,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_COMET_DUST_COLLECTION"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_COMET_DUST_COLLECTION"
   }
  },
  "identity": {

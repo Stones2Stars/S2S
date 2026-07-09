@@ -23,7 +23,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_REPLICATORS"
+   "define": "ART_DEF_BONUS_REPLICATORS"
   }
  },
  "identity": {

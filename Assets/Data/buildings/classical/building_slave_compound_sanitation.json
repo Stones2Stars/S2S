@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SLAVE_COMPOUND_SANITATION"
+   "define": "ART_DEF_BUILDING_SLAVE_COMPOUND_SANITATION"
   }
  },
  "sound": {

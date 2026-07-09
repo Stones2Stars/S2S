@@ -29,6 +29,11 @@
   "production": 275,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CEO_5"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_EXECUTIVE_5",
   "civilopedia": "TXT_KEY_CONCEPT_CORPORATIONS_PEDIA",

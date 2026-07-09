@@ -109,6 +109,11 @@
   "production": 2305,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_STEALTH_SUBMARINE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_STEALTH_SUBMARINE",
   "civilopedia": "TXT_KEY_UNIT_STEALTH_SUBMARINE_PEDIA",

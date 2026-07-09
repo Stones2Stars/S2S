@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOLKLORE_BLACK_RHINOCEROS"
+   "define": "ART_DEF_BUILDING_FOLKLORE_BLACK_RHINOCEROS"
   }
  },
  "identity": {

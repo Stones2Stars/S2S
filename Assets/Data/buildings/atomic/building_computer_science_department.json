@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_COMPUTER_SCIENCE_DEPARTMENT"
+   "define": "ART_DEF_BUILDING_COMPUTER_SCIENCE_DEPARTMENT"
   }
  },
  "identity": {

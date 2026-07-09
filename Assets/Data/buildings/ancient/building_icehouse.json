@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ICEHOUSE"
+   "define": "ART_DEF_BUILDING_ICEHOUSE"
   }
  },
  "identity": {

@@ -107,7 +107,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ASSASSINS_DEN"
+   "define": "ART_DEF_BUILDING_ASSASSINS_DEN"
   }
  },
  "identity": {

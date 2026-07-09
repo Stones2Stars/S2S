@@ -104,6 +104,11 @@
   "production": 255,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TIGERCLAW"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TIGERCLAW",
   "civilopedia": "TXT_KEY_UNIT_TIGERCLAW_PEDIA",

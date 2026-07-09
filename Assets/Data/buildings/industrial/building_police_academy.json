@@ -108,7 +108,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_POLICE_ACADEMY"
+   "define": "ART_DEF_BUILDING_POLICE_ACADEMY"
   }
  },
  "sound": {

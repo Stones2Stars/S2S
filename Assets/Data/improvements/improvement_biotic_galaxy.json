@@ -75,7 +75,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_BIOTIC_GALAXY"
+   "define": "ART_DEF_IMPROVEMENT_BIOTIC_GALAXY"
   }
  },
  "identity": {

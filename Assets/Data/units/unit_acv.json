@@ -58,6 +58,11 @@
   "production": 2865,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ACV"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ACV",
   "civilopedia": "TXT_KEY_UNIT_ACV_PEDIA",

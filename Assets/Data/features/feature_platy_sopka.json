@@ -20,7 +20,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_SOPKA"
+   "define": "ART_DEF_FEATURE_SOPKA"
   }
  },
  "sound": {

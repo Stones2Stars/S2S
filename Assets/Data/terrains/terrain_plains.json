@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_PLAINS"
+   "define": "ART_DEF_TERRAIN_PLAINS"
   }
  },
  "sound": {

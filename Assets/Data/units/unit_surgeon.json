@@ -60,6 +60,11 @@
   "upkeep": 6,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SURGEON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SURGEON",
   "civilopedia": "TXT_KEY_UNIT_SURGEON_PEDIA",

@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BASKETBALL_COURT"
+   "define": "ART_DEF_BUILDING_BASKETBALL_COURT"
   }
  },
  "identity": {

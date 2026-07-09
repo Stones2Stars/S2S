@@ -60,6 +60,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CARRACK_MERCHANT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CARRACK_MERCHANT",
   "civilopedia": "TXT_KEY_UNIT_CARRACK_MERCHANT_PEDIA",

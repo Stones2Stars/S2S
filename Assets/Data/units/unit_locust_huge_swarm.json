@@ -4,6 +4,11 @@
   "pillage": true,
   "onlyDefensive": true
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LOCUST_HUGE_SWARM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LOCUST_HUGE_SWARM",
   "civilopedia": "TXT_KEY_UNIT_LOCUST_PEDIA",

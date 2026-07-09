@@ -217,7 +217,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_HUNTING_CAMP"
+   "define": "ART_DEF_IMPROVEMENT_HUNTING_CAMP"
   }
  },
  "identity": {

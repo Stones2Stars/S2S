@@ -24,7 +24,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_YOUNG_FOREST"
+   "define": "ART_DEF_IMPROVEMENT_YOUNG_FOREST"
   }
  },
  "identity": {

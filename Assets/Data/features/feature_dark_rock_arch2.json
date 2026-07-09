@@ -9,7 +9,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_DARK_ROCK_ARCH2"
+   "define": "ART_DEF_FEATURE_DARK_ROCK_ARCH2"
   }
  },
  "sound": {

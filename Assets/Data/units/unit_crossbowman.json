@@ -48,6 +48,11 @@
   "production": 240,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CROSSBOWMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CROSSBOWMAN",
   "civilopedia": "TXT_KEY_UNIT_CROSSBOWMAN_PEDIA",

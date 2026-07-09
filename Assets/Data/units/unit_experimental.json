@@ -42,6 +42,11 @@
   "production": 5181,
   "upkeep": 26
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PEACE_MAKER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_EXPERIMENTAL",
   "civilopedia": "TXT_KEY_UNIT_EXPERIMENTAL_PEDIA",

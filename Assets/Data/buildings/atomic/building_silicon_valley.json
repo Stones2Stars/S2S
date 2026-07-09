@@ -74,7 +74,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SILICON_VALLEY"
+   "define": "ART_DEF_BUILDING_SILICON_VALLEY"
   }
  },
  "sound": {

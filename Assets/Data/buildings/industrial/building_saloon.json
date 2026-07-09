@@ -155,7 +155,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SALOON"
+   "define": "ART_DEF_BUILDING_SALOON"
   }
  },
  "sound": {

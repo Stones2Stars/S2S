@@ -59,6 +59,11 @@
   "production": 2520,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AHMAD_SHAH_DURRANI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AHMAD_SHAH_DURRANI",
   "civilopedia": "TXT_KEY_UNIT_AHMAD_SHAH_DURRANI_PEDIA",

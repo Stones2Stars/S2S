@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_CONTROLLED_BREEDING"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CONTROLLED_BREEDING"
   }
  },
  "identity": {

@@ -101,6 +101,11 @@
  "cost": {
   "production": 169
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BEARRIDER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BEARRIDER",
   "civilopedia": "TXT_KEY_UNIT_BEARRIDER_PEDIA",

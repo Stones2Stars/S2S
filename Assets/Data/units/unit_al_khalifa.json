@@ -47,6 +47,11 @@
   "production": 4120,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AL_KHALIFA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AL_KHALIFA",
   "civilopedia": "TXT_KEY_UNIT_AL_KHALIFA_PEDIA",

@@ -96,7 +96,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CANAANITE_CATHEDRAL"
+   "define": "ART_DEF_BUILDING_CANAANITE_CATHEDRAL"
   }
  },
  "sound": {

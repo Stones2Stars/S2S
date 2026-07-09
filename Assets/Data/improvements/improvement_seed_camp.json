@@ -94,7 +94,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_SEED_CAMP"
+   "define": "ART_DEF_IMPROVEMENT_SEED_CAMP"
   }
  },
  "identity": {

@@ -36,7 +36,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RAIN_GARDEN"
+   "define": "ART_DEF_BUILDING_RAIN_GARDEN"
   }
  },
  "identity": {

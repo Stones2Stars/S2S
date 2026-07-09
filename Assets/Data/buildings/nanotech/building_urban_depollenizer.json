@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_URBAN_DEPOLLENIZER"
+   "define": "ART_DEF_BUILDING_URBAN_DEPOLLENIZER"
   }
  },
  "identity": {

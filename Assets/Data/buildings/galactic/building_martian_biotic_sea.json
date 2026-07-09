@@ -49,7 +49,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_BIOTIC_SEA"
+   "define": "ART_DEF_BUILDING_MARTIAN_BIOTIC_SEA"
   }
  },
  "identity": {

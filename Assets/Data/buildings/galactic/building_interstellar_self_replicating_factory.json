@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY"
   }
  },
  "identity": {

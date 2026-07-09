@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PRIDE_PARADE"
+   "define": "ART_DEF_BUILDING_PRIDE_PARADE"
   }
  },
  "identity": {

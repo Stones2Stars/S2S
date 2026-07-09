@@ -2,7 +2,7 @@
  "type": "BONUS_LSD",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_LSD"
+   "define": "ART_DEF_BONUS_LSD"
   }
  },
  "identity": {

@@ -59,7 +59,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+   "define": "ART_DEF_BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
   }
  },
  "sound": {

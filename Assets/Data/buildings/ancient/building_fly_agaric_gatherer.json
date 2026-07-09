@@ -69,7 +69,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FLY_AGARIC_GATHERER"
+   "define": "ART_DEF_BUILDING_FLY_AGARIC_GATHERER"
   }
  },
  "identity": {

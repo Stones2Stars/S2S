@@ -22,7 +22,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CIVIC_REPUBLIC"
+   "define": "ART_DEF_BUILDING_CIVIC_REPUBLIC"
   }
  },
  "identity": {

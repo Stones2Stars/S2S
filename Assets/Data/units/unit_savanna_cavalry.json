@@ -157,6 +157,11 @@
   "production": 275,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SAVANNA_CAVALRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SAVANNA_CAVALRY",
   "civilopedia": "TXT_KEY_UNIT_SAVANNA_CAVALRY_PEDIA",

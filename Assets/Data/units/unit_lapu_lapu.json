@@ -49,6 +49,11 @@
   "production": 1472,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LAPU_LAPU"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LAPU_LAPU",
   "civilopedia": "TXT_KEY_UNIT_LAPU_LAPU_PEDIA",

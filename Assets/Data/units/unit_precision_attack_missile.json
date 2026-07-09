@@ -61,6 +61,11 @@
   "production": 2865,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PRECISION_ATTACK_MISSILE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PRECISION_ATTACK_MISSILE",
   "civilopedia": "TXT_KEY_UNIT_PRECISION_ATTACK_MISSILE_PEDIA",

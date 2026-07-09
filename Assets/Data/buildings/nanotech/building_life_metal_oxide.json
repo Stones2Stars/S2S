@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LIFE_METAL_OXIDE"
+   "define": "ART_DEF_BUILDING_LIFE_METAL_OXIDE"
   }
  },
  "identity": {

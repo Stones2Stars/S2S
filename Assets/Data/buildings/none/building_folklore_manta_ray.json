@@ -77,7 +77,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOLKLORE_MANTA_RAY"
+   "define": "ART_DEF_BUILDING_FOLKLORE_MANTA_RAY"
   }
  },
  "identity": {

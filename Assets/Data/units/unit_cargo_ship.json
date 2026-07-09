@@ -55,6 +55,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CARGO_SHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CARGO_SHIP",
   "civilopedia": "TXT_KEY_UNIT_CARGO_SHIP_PEDIA",

@@ -64,6 +64,11 @@
   "production": 3600,
   "upkeep": 5
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SHOCKWAVE_APC"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SHOCKWAVE_APC",
   "civilopedia": "TXT_KEY_UNIT_SHOCKWAVE_APC_PEDIA",

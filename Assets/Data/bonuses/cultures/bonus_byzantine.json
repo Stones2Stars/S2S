@@ -9,7 +9,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_BYZANTINE"
+   "define": "ART_DEF_BONUS_BYZANTINE"
   }
  },
  "identity": {

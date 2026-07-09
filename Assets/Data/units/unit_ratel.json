@@ -50,6 +50,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RATEL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_RATEL",
   "civilopedia": "TXT_KEY_UNIT_RATEL_PEDIA",

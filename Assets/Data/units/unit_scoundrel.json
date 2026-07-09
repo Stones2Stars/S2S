@@ -186,6 +186,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SCOUNDREL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SCOUNDREL",
   "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",

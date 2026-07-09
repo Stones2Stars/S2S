@@ -106,7 +106,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_COMPUTERS"
+   "define": "ART_DEF_BONUS_COMPUTERS"
   }
  },
  "identity": {

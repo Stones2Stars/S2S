@@ -44,7 +44,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_SUPERNOVA_MINE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_SUPERNOVA_MINE"
   }
  },
  "identity": {

@@ -41,6 +41,11 @@
  "cost": {
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GALACTIC_CORE_REWARD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GALACTIC_CORE_REWARD",
   "civilopedia": "TXT_KEY_UNIT_GALACTIC_CORE_REWARD_PEDIA",

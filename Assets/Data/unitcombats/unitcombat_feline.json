@@ -20,12 +20,6 @@
    "dynamicDefense": {
     "percent": 5
    },
-   "perSizeMore": {
-    "percent": -5
-   },
-   "perSizeLess": {
-    "percent": 5
-   },
    "cityAttack": {
     "percent": -30
    },
@@ -63,6 +57,12 @@
   },
   "invisibilityIntensity": {
    "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perSizeMore": -5,
+   "perSizeLess": 5
   }
  },
  "ui": {

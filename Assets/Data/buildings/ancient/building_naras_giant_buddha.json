@@ -113,7 +113,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NARAS_GIANT_BUDDHA"
+   "define": "ART_DEF_BUILDING_NARAS_GIANT_BUDDHA"
   }
  },
  "sound": {

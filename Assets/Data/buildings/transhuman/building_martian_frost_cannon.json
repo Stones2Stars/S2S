@@ -40,7 +40,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_FROST_CANNON"
+   "define": "ART_DEF_BUILDING_MARTIAN_FROST_CANNON"
   }
  },
  "identity": {

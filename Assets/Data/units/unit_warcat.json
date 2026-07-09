@@ -135,6 +135,11 @@
   "production": 216,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WARCAT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WARCAT",
   "civilopedia": "TXT_KEY_UNIT_WARCAT_PEDIA",

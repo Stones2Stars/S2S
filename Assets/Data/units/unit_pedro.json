@@ -48,6 +48,11 @@
   "production": 1760,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PEDRO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PEDRO",
   "civilopedia": "TXT_KEY_UNIT_PEDRO_PEDIA",

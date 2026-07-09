@@ -64,6 +64,11 @@
   "production": 12,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GATHERER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GATHERER",
   "civilopedia": "TXT_KEY_UNIT_GATHERER_PEDIA",

@@ -38,7 +38,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_POWER_NUCLEAR"
+   "define": "ART_DEF_BUILDING_POWER_NUCLEAR"
   }
  },
  "identity": {

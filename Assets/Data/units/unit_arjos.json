@@ -94,6 +94,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ARJOS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ARJOS",
   "civilopedia": "TXT_KEY_UNIT_ARJOS_PEDIA",

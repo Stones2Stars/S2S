@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PURE_ORGANIC_CITY"
+   "define": "ART_DEF_BUILDING_PURE_ORGANIC_CITY"
   }
  },
  "identity": {

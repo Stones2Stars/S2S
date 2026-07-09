@@ -103,6 +103,11 @@
   "production": 1150,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_F4_PHANTOM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_F4_PHANTOM",
   "civilopedia": "TXT_KEY_UNIT_F4_PHANTOM_PEDIA",

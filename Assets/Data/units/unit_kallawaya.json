@@ -92,6 +92,11 @@
   "upkeep": 7,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KALLAWAYA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KALLAWAYA",
   "civilopedia": "TXT_KEY_UNIT_KALLAWAYA_PEDIA",

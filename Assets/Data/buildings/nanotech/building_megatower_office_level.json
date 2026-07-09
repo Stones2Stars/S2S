@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MEGATOWER_OFFICE_LEVEL"
+   "define": "ART_DEF_BUILDING_MEGATOWER_OFFICE_LEVEL"
   }
  },
  "identity": {

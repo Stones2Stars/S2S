@@ -101,7 +101,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THE_GREAT_PYRAMID"
+   "define": "ART_DEF_BUILDING_THE_GREAT_PYRAMID"
   }
  },
  "sound": {

@@ -48,6 +48,11 @@
  "cost": {
   "production": 133
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TAMED_POLARBEAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TAMED_POLARBEAR",
   "civilopedia": "TXT_KEY_UNIT_POLAR_BEAR_PEDIA",

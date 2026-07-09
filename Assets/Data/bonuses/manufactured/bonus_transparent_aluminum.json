@@ -2,7 +2,7 @@
  "type": "BONUS_TRANSPARENT_ALUMINUM",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_TRANSPARENT_ALUMINUM"
+   "define": "ART_DEF_BONUS_TRANSPARENT_ALUMINUM"
   }
  },
  "identity": {

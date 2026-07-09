@@ -36,7 +36,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SATURN_RING_HOTEL"
+   "define": "ART_DEF_BUILDING_SATURN_RING_HOTEL"
   }
  },
  "identity": {

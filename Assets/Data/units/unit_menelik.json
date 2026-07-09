@@ -39,6 +39,11 @@
   "production": 2620,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MENELIK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MENELIK",
   "civilopedia": "TXT_KEY_UNIT_MENELIK_PEDIA",

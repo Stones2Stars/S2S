@@ -44,6 +44,11 @@
   "production": 1640,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HERNAN_CORTES"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HERNAN_CORTES",
   "civilopedia": "TXT_KEY_UNIT_HERNAN_CORTES_PEDIA",

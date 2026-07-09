@@ -76,6 +76,11 @@
   "production": 3438,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_UNMANNED_MACHINE_GUN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_UNMANNED_MACHINE_GUN",
   "civilopedia": "TXT_KEY_UNIT_UNMANNED_MACHINE_GUN_PEDIA",

@@ -49,7 +49,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_GRAPE_PICKING_CAMP"
+   "define": "ART_DEF_IMPROVEMENT_GRAPE_PICKING_CAMP"
   }
  },
  "identity": {

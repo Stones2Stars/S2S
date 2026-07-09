@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SAGITTARIUS_DWARF_ELLIPTICAL_GALAXY_COLONY"
+   "define": "ART_DEF_BUILDING_SAGITTARIUS_DWARF_ELLIPTICAL_GALAXY_COLONY"
   }
  },
  "identity": {

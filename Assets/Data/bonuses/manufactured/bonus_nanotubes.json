@@ -67,7 +67,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_NANOTUBES"
+   "define": "ART_DEF_BONUS_NANOTUBES"
   }
  },
  "identity": {

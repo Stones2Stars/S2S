@@ -108,6 +108,11 @@
   "upkeep": 3,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SERENGETI_RANGER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SERENGETI_RANGER",
   "civilopedia": "TXT_KEY_UNIT_SERENGETI_RANGER_PEDIA",

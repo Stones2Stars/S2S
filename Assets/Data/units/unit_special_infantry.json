@@ -58,6 +58,11 @@
   "upkeep": 1,
   "hurryCostModifier": 50
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SPECIAL_INFANTRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SPECIAL_INFANTRY",
   "civilopedia": "TXT_KEY_UNIT_SPECIAL_INFANTRY_PEDIA",

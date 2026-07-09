@@ -17,7 +17,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_DISTANT_COSMOS"
+   "define": "ART_DEF_TERRAIN_DISTANT_COSMOS"
   }
  },
  "identity": {

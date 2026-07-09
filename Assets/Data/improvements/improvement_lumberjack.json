@@ -136,7 +136,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_LUMBERJACK"
+   "define": "ART_DEF_IMPROVEMENT_LUMBERJACK"
   }
  },
  "identity": {

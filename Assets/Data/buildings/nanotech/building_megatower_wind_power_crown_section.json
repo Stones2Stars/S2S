@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MEGATOWER_WIND_POWER_CROWN_SECTION"
+   "define": "ART_DEF_BUILDING_MEGATOWER_WIND_POWER_CROWN_SECTION"
   }
  },
  "identity": {

@@ -58,6 +58,11 @@
   "production": 240,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_POLYNESIAN_KOA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KOA",
   "civilopedia": "TXT_KEY_UNIT_KOA_PEDIA",

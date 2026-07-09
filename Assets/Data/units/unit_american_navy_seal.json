@@ -89,6 +89,11 @@
   "production": 1080,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AMERICAN_NAVY_SEAL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AMERICAN_NAVY_SEAL",
   "civilopedia": "TXT_KEY_UNIT_AMERICAN_NAVY_SEAL_PEDIA",

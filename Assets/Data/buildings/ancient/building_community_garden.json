@@ -100,7 +100,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_COMMUNITY_GARDEN"
+   "define": "ART_DEF_BUILDING_COMMUNITY_GARDEN"
   }
  },
  "sound": {

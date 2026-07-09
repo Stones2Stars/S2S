@@ -46,7 +46,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_INTERGALACTIC_BASE"
+   "define": "ART_DEF_IMPROVEMENT_INTERGALACTIC_BASE"
   }
  },
  "mapGeneration": {

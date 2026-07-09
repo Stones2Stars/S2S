@@ -46,7 +46,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_AUTOMATED_WASTE_COLLECTION_SYSTEM"
+   "define": "ART_DEF_BUILDING_AUTOMATED_WASTE_COLLECTION_SYSTEM"
   }
  },
  "identity": {

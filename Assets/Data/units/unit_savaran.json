@@ -109,6 +109,11 @@
   "production": 355,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SAVARAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SAVARAN",
   "civilopedia": "TXT_KEY_UNIT_SAVARAN_PEDIA",

@@ -1,12 +1,5 @@
 {
  "type": "PROMOTION_UNEARTHLY_ABILITY",
- "strength": {
-  "unit": {
-   "quality": {
-    "flat": 1
-   }
-  }
- },
  "skills": {
   "unitCombats": [
    "UNITCOMBAT_QUALITY_DIVINE"
@@ -33,5 +26,8 @@
    "UNITCOMBAT_ANIMAL"
   ],
   "zeroesXP": true
+ },
+ "sizeMatters": {
+  "quality": 1
  }
 }

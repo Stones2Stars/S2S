@@ -77,7 +77,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EDEN"
+   "define": "ART_DEF_BUILDING_EDEN"
   }
  },
  "identity": {

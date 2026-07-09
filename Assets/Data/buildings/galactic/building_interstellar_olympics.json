@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_OLYMPICS"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_OLYMPICS"
   }
  },
  "identity": {

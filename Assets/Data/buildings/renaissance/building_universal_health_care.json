@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_UNIVERSAL_HEALTH_CARE"
+   "define": "ART_DEF_BUILDING_UNIVERSAL_HEALTH_CARE"
   }
  },
  "identity": {

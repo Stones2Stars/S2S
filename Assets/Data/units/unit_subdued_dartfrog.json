@@ -33,6 +33,11 @@
    "BUILDING_ZOO"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DARTFROG"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_DARTFROG",
   "civilopedia": "TXT_KEY_UNIT_DARTFROG_PEDIA",

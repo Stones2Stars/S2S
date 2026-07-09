@@ -229,7 +229,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANCIENT_CUSTOMS"
+   "define": "ART_DEF_BUILDING_ANCIENT_CUSTOMS"
   }
  },
  "identity": {

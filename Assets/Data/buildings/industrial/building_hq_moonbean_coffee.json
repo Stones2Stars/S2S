@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HQ_MOONBEAN_COFFEE"
+   "define": "ART_DEF_BUILDING_HQ_MOONBEAN_COFFEE"
   }
  },
  "sound": {

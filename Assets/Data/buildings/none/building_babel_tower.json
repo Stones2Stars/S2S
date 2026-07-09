@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BABEL"
+   "define": "ART_DEF_BUILDING_BABEL"
   }
  },
  "sound": {

@@ -91,6 +91,11 @@
   "production": 900,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SEAPLANE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SEAPLANE",
   "civilopedia": "TXT_KEY_UNIT_SEAPLANE_PEDIA",

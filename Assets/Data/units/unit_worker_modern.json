@@ -105,6 +105,11 @@
   "production": 848,
   "upkeep": 5
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WORKER_FREIGHT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WORKER_MODERN",
   "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",

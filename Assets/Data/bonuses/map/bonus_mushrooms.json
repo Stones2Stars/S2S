@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_MUSHROOMS"
+   "define": "ART_DEF_BONUS_MUSHROOMS"
   }
  },
  "mapGeneration": {

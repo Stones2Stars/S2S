@@ -120,7 +120,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANIMATION_STUDIO"
+   "define": "ART_DEF_BUILDING_ANIMATION_STUDIO"
   }
  },
  "identity": {

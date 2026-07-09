@@ -59,7 +59,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WASTE_INCINERATOR_POWER_PLANT"
+   "define": "ART_DEF_BUILDING_WASTE_INCINERATOR_POWER_PLANT"
   }
  },
  "identity": {

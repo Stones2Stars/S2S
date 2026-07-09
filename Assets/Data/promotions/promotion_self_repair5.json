@@ -1,12 +1,5 @@
 {
  "type": "PROMOTION_SELF_REPAIR5",
- "strength": {
-  "unit": {
-   "maxHP": {
-    "flat": 5
-   }
-  }
- },
  "heal": {
   "unit": {
    "enemy": {
@@ -33,6 +26,9 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "maxHP": 5
  },
  "identity": {
   "description": "TXT_KEY_PROMOTION_SELF_REPAIR5"

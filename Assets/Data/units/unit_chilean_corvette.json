@@ -123,6 +123,11 @@
   "production": 570,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CHILEAN_CORVETTE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CHILEAN_CORVETTE",
   "civilopedia": "TXT_KEY_UNIT_CHILEAN_CORVETTE_PEDIA",

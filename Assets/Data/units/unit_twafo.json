@@ -128,6 +128,11 @@
   "production": 450,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TWAFO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TWAFO",
   "civilopedia": "TXT_KEY_UNIT_TWAFO_PEDIA",

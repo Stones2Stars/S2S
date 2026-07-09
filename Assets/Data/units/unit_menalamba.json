@@ -112,6 +112,11 @@
   "production": 215,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MENALAMBA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MENALAMBA",
   "civilopedia": "TXT_KEY_UNIT_MENALAMBA_PEDIA",

@@ -67,7 +67,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANATOMY_LAB"
+   "define": "ART_DEF_BUILDING_ANATOMY_LAB"
   }
  },
  "identity": {

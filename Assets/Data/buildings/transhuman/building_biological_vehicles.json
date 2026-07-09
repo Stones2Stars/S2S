@@ -57,7 +57,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BIOLOGICAL_VEHICLES"
+   "define": "ART_DEF_BUILDING_BIOLOGICAL_VEHICLES"
   }
  },
  "identity": {

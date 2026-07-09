@@ -94,6 +94,11 @@
   "production": 67,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_OLMEC_EAGLE_WARRIOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_OLMEC_EAGLE_WARRIOR",
   "civilopedia": "TXT_KEY_UNIT_CLUBMAN_PEDIA",

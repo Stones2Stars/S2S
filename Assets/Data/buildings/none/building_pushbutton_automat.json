@@ -470,7 +470,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PUSHBUTTON_AUTOMAT"
+   "define": "ART_DEF_BUILDING_PUSHBUTTON_AUTOMAT"
   }
  },
  "identity": {

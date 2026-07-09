@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_BRASS_INGOTS"
+   "define": "ART_DEF_BONUS_BRASS_INGOTS"
   }
  },
  "identity": {

@@ -44,7 +44,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ASTEROID_SHELL_SPACEPORT"
+   "define": "ART_DEF_BUILDING_ASTEROID_SHELL_SPACEPORT"
   }
  },
  "identity": {

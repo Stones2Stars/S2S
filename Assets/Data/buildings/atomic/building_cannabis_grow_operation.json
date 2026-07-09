@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CANNABIS_GROW_OPERATION"
+   "define": "ART_DEF_BUILDING_CANNABIS_GROW_OPERATION"
   }
  },
  "identity": {

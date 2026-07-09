@@ -40,7 +40,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_LEMONS"
+   "define": "ART_DEF_BONUS_LEMONS"
   }
  },
  "mapGeneration": {

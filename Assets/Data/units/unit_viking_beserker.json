@@ -112,6 +112,11 @@
   "production": 225,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VIKING_BESERKER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_VIKING_BESERKER",
   "civilopedia": "TXT_KEY_UNIT_VIKING_BESERKER_PEDIA",

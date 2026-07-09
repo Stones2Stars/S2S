@@ -2,7 +2,7 @@
  "type": "BONUS_CARPETS",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CARPETS"
+   "define": "ART_DEF_BONUS_CARPETS"
   }
  },
  "identity": {

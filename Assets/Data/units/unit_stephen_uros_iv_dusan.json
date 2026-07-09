@@ -55,6 +55,11 @@
   "production": 1120,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_STEPHEN_UROS_IV_DUSAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_STEPHEN_UROS_IV_DUSAN",
   "civilopedia": "TXT_KEY_UNIT_STEPHEN_UROS_IV_DUSAN_PEDIA",

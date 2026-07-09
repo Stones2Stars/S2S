@@ -49,6 +49,11 @@
   "production": 2140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SALAWAT_YULAYEV"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SALAWAT_YULAYEV",
   "civilopedia": "TXT_KEY_UNIT_SALAWAT_YULAYEV_PEDIA",

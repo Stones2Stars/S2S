@@ -25,7 +25,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_JOVIAN_SCOOP"
+   "define": "ART_DEF_IMPROVEMENT_JOVIAN_SCOOP"
   }
  },
  "mapGeneration": {

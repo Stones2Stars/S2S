@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GETTY_CENTER"
+   "define": "ART_DEF_BUILDING_GETTY_CENTER"
   }
  },
  "identity": {

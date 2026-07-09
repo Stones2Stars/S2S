@@ -152,6 +152,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_OSTRICH"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_OSTRICH",
   "civilopedia": "TXT_KEY_UNIT_OSTRICH_PEDIA",

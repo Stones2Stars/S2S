@@ -132,7 +132,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HARBOR"
+   "define": "ART_DEF_BUILDING_HARBOR"
   }
  },
  "sound": {

@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TIME_TOURIST_AGENCY"
+   "define": "ART_DEF_BUILDING_TIME_TOURIST_AGENCY"
   }
  },
  "identity": {

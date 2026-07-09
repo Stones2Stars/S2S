@@ -47,6 +47,11 @@
   "upkeep": 11,
   "hurryCostModifier": 10000
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SPACECRAFT_SETTLER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ONEILLSETTLER",
   "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",

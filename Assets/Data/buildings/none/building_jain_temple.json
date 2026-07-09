@@ -105,7 +105,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_JAIN_TEMPLE"
+   "define": "ART_DEF_BUILDING_JAIN_TEMPLE"
   }
  },
  "identity": {

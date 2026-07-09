@@ -63,6 +63,11 @@
   "upkeep": 4,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FIELD_VET"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FIELD_VET",
   "civilopedia": "TXT_KEY_UNIT_FIELD_VET_PEDIA",

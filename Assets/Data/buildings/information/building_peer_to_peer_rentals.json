@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PEER_TO_PEER_RENTALS"
+   "define": "ART_DEF_BUILDING_PEER_TO_PEER_RENTALS"
   }
  },
  "identity": {

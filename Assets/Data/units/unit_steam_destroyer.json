@@ -79,6 +79,11 @@
   "production": 900,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ADVANCED_IRONCLAD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_STEAM_DESTROYER",
   "civilopedia": "TXT_KEY_UNIT_DESTROYER_PEDIA",

@@ -2,7 +2,7 @@
  "type": "BONUS_CARBON_FIBER",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CARBON_FIBER"
+   "define": "ART_DEF_BONUS_CARBON_FIBER"
   }
  },
  "identity": {

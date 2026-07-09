@@ -49,6 +49,11 @@
   "production": 1200,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GAOZONG"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GAOZONG",
   "civilopedia": "TXT_KEY_UNIT_GAOZONG_PEDIA",

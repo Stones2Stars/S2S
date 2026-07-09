@@ -63,7 +63,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INVOCATION_HUT_DEER"
+   "define": "ART_DEF_BUILDING_INVOCATION_HUT_DEER"
   }
  },
  "sound": {

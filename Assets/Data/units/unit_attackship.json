@@ -49,6 +49,11 @@
   "upkeep": 11,
   "hurryCostModifier": 10000
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ATTACKSHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ATTACKSHIP",
   "civilopedia": "TXT_KEY_UNIT_ATTACKSHIP_PEDIA",

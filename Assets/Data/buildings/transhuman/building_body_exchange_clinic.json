@@ -45,7 +45,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BODY_EXCHANGE_CLINIC"
+   "define": "ART_DEF_BUILDING_BODY_EXCHANGE_CLINIC"
   }
  },
  "sound": {

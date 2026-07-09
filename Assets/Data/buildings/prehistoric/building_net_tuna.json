@@ -63,7 +63,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NET_TUNA"
+   "define": "ART_DEF_BUILDING_NET_TUNA"
   }
  },
  "identity": {

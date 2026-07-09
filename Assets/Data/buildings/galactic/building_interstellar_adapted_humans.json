@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_ADAPTED_HUMANS"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_ADAPTED_HUMANS"
   }
  },
  "identity": {

@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_HILL"
+   "define": "ART_DEF_TERRAIN_HILL"
   }
  },
  "identity": {

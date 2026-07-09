@@ -38,6 +38,11 @@
   "production": 3800,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PATTON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PATTON",
   "civilopedia": "TXT_KEY_UNIT_PATTON_PEDIA",

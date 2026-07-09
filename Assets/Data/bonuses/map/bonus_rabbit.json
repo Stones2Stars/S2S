@@ -39,7 +39,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_RABBIT"
+   "define": "ART_DEF_BONUS_RABBIT"
   }
  },
  "mapGeneration": {

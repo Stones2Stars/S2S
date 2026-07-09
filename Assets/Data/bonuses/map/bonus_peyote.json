@@ -29,7 +29,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_PEYOTE"
+   "define": "ART_DEF_BONUS_PEYOTE"
   }
  },
  "mapGeneration": {

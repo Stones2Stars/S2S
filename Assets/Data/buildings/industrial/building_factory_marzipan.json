@@ -130,7 +130,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_MARZIPAN"
+   "define": "ART_DEF_BUILDING_FACTORY_MARZIPAN"
   }
  },
  "identity": {

@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PING_PONG_ARENA"
+   "define": "ART_DEF_BUILDING_PING_PONG_ARENA"
   }
  },
  "identity": {

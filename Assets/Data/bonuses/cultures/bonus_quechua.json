@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_QUECHUA"
+   "define": "ART_DEF_BONUS_QUECHUA"
   }
  },
  "identity": {

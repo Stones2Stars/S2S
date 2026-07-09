@@ -65,6 +65,11 @@
   "production": 108,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NEANDERTHAL_CANOE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NEANDERTHAL_CANOE",
   "civilopedia": "TXT_KEY_UNIT_CANOE_PEDIA",

@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_AEROGEL_FACTORY"
+   "define": "ART_DEF_BUILDING_AEROGEL_FACTORY"
   }
  },
  "identity": {

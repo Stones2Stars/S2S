@@ -67,7 +67,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BOXING_RING"
+   "define": "ART_DEF_BUILDING_BOXING_RING"
   }
  },
  "identity": {

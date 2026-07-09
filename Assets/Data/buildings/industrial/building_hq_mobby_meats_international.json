@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL"
+   "define": "ART_DEF_BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL"
   }
  },
  "sound": {

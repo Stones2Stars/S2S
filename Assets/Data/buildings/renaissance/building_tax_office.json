@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TAX_OFFICE"
+   "define": "ART_DEF_BUILDING_TAX_OFFICE"
   }
  },
  "sound": {

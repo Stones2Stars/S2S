@@ -67,7 +67,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MINE_BAUXITE"
+   "define": "ART_DEF_BUILDING_MINE_BAUXITE"
   }
  },
  "identity": {

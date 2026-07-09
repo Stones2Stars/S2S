@@ -49,6 +49,11 @@
   "production": 800,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LUGALZAGESI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LUGALZAGESI",
   "civilopedia": "TXT_KEY_UNIT_LUGALZAGESI_PEDIA",

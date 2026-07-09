@@ -185,7 +185,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_SCAVENGING_CAMP"
+   "define": "ART_DEF_IMPROVEMENT_SCAVENGING_CAMP"
   }
  },
  "identity": {

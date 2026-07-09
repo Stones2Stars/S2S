@@ -49,6 +49,11 @@
   "production": 2140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SHER_ALI_KHAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SHER_ALI_KHAN",
   "civilopedia": "TXT_KEY_UNIT_SHER_ALI_KHAN_PEDIA",

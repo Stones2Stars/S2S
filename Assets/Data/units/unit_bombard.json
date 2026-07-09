@@ -74,6 +74,11 @@
   "production": 410,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BOMBARD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BOMBARD",
   "civilopedia": "TXT_KEY_UNIT_BOMBARD_PEDIA",

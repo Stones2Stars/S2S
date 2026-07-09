@@ -183,6 +183,11 @@
   "production": 2005,
   "upkeep": 15
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HACKER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HACKER",
   "civilopedia": "TXT_KEY_UNIT_HACKER_PEDIA",

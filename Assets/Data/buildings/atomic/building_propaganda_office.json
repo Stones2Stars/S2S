@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PROPAGANDA_OFFICE"
+   "define": "ART_DEF_BUILDING_PROPAGANDA_OFFICE"
   }
  },
  "identity": {

@@ -35,7 +35,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EFFECT_HERITAGE_BIG_CATS"
+   "define": "ART_DEF_BUILDING_EFFECT_HERITAGE_BIG_CATS"
   }
  },
  "sound": {

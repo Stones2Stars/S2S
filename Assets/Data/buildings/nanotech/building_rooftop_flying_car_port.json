@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ROOFTOP_FLYING_CAR_PORT"
+   "define": "ART_DEF_BUILDING_ROOFTOP_FLYING_CAR_PORT"
   }
  },
  "identity": {

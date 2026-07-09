@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DISTANT_PORTAL_TO_DIMENSION_X"
+   "define": "ART_DEF_BUILDING_DISTANT_PORTAL_TO_DIMENSION_X"
   }
  },
  "identity": {

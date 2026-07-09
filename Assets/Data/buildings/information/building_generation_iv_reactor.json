@@ -74,7 +74,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GENERATION_IV_REACTOR"
+   "define": "ART_DEF_BUILDING_GENERATION_IV_REACTOR"
   }
  },
  "identity": {

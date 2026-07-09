@@ -43,6 +43,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_REDPANDA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_REDPANDA",
   "civilopedia": "TXT_KEY_UNIT_REDPANDA_PEDIA",

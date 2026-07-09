@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ECOSYSTEM_SERVICES_MARKET"
+   "define": "ART_DEF_BUILDING_ECOSYSTEM_SERVICES_MARKET"
   }
  },
  "identity": {

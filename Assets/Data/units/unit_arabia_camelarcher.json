@@ -98,6 +98,11 @@
   "production": 355,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ARABIA_CAMELARCHER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ARABIA_CAMELARCHER",
   "civilopedia": "TXT_KEY_UNIT_ARABIA_CAMELARCHER_PEDIA",

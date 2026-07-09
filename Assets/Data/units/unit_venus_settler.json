@@ -105,6 +105,11 @@
   "upkeep": 11,
   "hurryCostModifier": 10000
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VENUS_SETTLER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_VENUS_SETTLER",
   "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",

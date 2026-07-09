@@ -57,7 +57,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DRYING_FRAME"
+   "define": "ART_DEF_BUILDING_DRYING_FRAME"
   }
  },
  "identity": {

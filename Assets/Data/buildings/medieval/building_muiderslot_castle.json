@@ -92,7 +92,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MUIDERSLOT_CASTLE"
+   "define": "ART_DEF_BUILDING_MUIDERSLOT_CASTLE"
   }
  },
  "identity": {

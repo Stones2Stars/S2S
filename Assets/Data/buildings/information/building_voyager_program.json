@@ -56,7 +56,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VOYAGER_PROGRAM"
+   "define": "ART_DEF_BUILDING_VOYAGER_PROGRAM"
   }
  },
  "identity": {

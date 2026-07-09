@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EXOTIC_PARTICLE_LAB"
+   "define": "ART_DEF_BUILDING_EXOTIC_PARTICLE_LAB"
   }
  },
  "identity": {

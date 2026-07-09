@@ -45,7 +45,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ORDINANCE_CARPOOL"
+   "define": "ART_DEF_BUILDING_ORDINANCE_CARPOOL"
   }
  },
  "identity": {

@@ -86,7 +86,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WONDER_OF_NATURE_DEVILS_TABLE"
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_DEVILS_TABLE"
   }
  },
  "identity": {

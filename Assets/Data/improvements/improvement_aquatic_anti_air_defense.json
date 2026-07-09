@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_AQUATIC_ANTI_AIR_DEFENSE"
+   "define": "ART_DEF_IMPROVEMENT_AQUATIC_ANTI_AIR_DEFENSE"
   }
  },
  "identity": {

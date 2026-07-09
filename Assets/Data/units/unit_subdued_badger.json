@@ -147,6 +147,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BADGER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_BADGER",
   "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",

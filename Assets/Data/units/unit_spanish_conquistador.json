@@ -157,6 +157,11 @@
   "production": 425,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SPANISH_CONQUISTADOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SPANISH_CONQUISTADOR",
   "civilopedia": "TXT_KEY_UNIT_SPANISH_CONQUISTADOR_PEDIA",

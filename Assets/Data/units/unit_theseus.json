@@ -48,6 +48,11 @@
   "production": 704,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_THESEUS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_THESEUS",
   "civilopedia": "TXT_KEY_UNIT_THESEUS_PEDIA",

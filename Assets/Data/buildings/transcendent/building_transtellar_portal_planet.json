@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRANSTELLAR_PORTAL_PLANET"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_PORTAL_PLANET"
   }
  },
  "identity": {

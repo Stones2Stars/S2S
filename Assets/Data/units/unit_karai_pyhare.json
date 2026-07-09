@@ -183,6 +183,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KARAI_PYHARE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KARAI_PYHARE",
   "civilopedia": "TXT_KEY_UNIT_KARAI_PYHARE_PEDIA",

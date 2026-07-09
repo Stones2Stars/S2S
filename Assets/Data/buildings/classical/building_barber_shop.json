@@ -100,7 +100,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BARBER_SHOP"
+   "define": "ART_DEF_BUILDING_BARBER_SHOP"
   }
  },
  "sound": {

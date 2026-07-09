@@ -26,12 +26,6 @@
    "dynamicDefense": {
     "percent": 5
    },
-   "perSizeMore": {
-    "percent": 10
-   },
-   "perVolumeLess": {
-    "percent": 15
-   },
    "cityAttack": {
     "percent": -20
    },
@@ -173,6 +167,12 @@
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perSizeMore": 10,
+   "perVolumeLess": 15
   }
  },
  "ui": {

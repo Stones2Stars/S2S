@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GROVE_HAZELNUT"
+   "define": "ART_DEF_BUILDING_GROVE_HAZELNUT"
   }
  },
  "identity": {

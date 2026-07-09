@@ -121,7 +121,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HIGH_TECH_CRANE"
+   "define": "ART_DEF_BUILDING_HIGH_TECH_CRANE"
   }
  },
  "sound": {

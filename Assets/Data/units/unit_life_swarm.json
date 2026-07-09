@@ -29,6 +29,11 @@
   "upkeep": 1,
   "hurryCostModifier": 10000
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LIFE_SWARM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LIFE_SWARM",
   "civilopedia": "TXT_KEY_UNIT_LIFE_SWARM_PEDIA",

@@ -46,7 +46,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SLAVE_COMPOUND_MILITARY"
+   "define": "ART_DEF_BUILDING_SLAVE_COMPOUND_MILITARY"
   }
  },
  "sound": {

@@ -49,6 +49,11 @@
    "BUILDING_ZOO"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GUANACO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_LLAMA",
   "civilopedia": "TXT_KEY_UNIT_LLAMA_PEDIA",

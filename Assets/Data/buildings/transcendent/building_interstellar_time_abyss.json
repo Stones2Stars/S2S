@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_TIME_ABYSS"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_TIME_ABYSS"
   }
  },
  "identity": {

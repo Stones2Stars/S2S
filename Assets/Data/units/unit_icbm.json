@@ -39,6 +39,11 @@
   "production": 1681,
   "upkeep": 6
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ICBM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ICBM",
   "civilopedia": "TXT_KEY_UNIT_ICBM_PEDIA",

@@ -93,6 +93,11 @@
   "production": 28,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PYGMY_WARRIOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PYGMY_WARRIOR",
   "civilopedia": "TXT_KEY_UNIT_PYGMY_WARRIOR_PEDIA",

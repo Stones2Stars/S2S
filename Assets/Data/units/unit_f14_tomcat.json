@@ -99,6 +99,11 @@
   "production": 1500,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_F14_TOMCAT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_F14_TOMCAT",
   "civilopedia": "TXT_KEY_UNIT_F14_TOMCAT_PEDIA",

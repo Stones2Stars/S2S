@@ -79,6 +79,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BOROBUDUR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BOROBUDUR",
   "civilopedia": "TXT_KEY_UNIT_BOROBUDUR_PEDIA",

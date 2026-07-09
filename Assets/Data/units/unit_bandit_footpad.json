@@ -135,6 +135,11 @@
   "production": 200,
   "upkeep": 5
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BANDIT_FOOTPAD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BANDIT_FOOTPAD",
   "civilopedia": "TXT_KEY_UNIT_BANDIT_FOOTPAD_PEDIA",

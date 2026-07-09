@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BLITZBALL_ARENA"
+   "define": "ART_DEF_BUILDING_BLITZBALL_ARENA"
   }
  },
  "identity": {

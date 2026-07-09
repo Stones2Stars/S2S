@@ -29,7 +29,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ROUTE_66_TERMINUS"
+   "define": "ART_DEF_BUILDING_ROUTE_66_TERMINUS"
   }
  },
  "identity": {

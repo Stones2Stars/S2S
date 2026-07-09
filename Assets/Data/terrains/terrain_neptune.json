@@ -22,7 +22,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_NEPTUNE"
+   "define": "ART_DEF_TERRAIN_NEPTUNE"
   }
  },
  "sound": {

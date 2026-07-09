@@ -152,6 +152,11 @@
   "production": 270,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MANDEKALU"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MANDEKALU",
   "civilopedia": "TXT_KEY_UNIT_MANDEKALU_PEDIA",

@@ -37,7 +37,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ZERO_POINT_MAKER"
+   "define": "ART_DEF_BUILDING_ZERO_POINT_MAKER"
   }
  },
  "identity": {

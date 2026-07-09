@@ -30,7 +30,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_FOSSIL_BEDS"
+   "define": "ART_DEF_BONUS_FOSSIL_BEDS"
   }
  },
  "mapGeneration": {

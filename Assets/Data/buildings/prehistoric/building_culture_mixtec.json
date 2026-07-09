@@ -49,7 +49,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_MIXTEC"
+   "define": "ART_DEF_BUILDING_CULTURE_MIXTEC"
   }
  },
  "identity": {

@@ -90,6 +90,11 @@
  "cost": {
   "production": 580
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ZEPHYR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ZEPHYR",
   "civilopedia": "TXT_KEY_UNIT_ZEPHYR_PEDIA",

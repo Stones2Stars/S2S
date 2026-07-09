@@ -97,6 +97,11 @@
   "production": 1100,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HOVERCRAFT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HOVERCRAFT",
   "civilopedia": "TXT_KEY_UNIT_HOVERCRAFT_PEDIA",

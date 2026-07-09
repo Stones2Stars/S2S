@@ -86,7 +86,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANDEAN_TEMPLE"
+   "define": "ART_DEF_BUILDING_ANDEAN_TEMPLE"
   }
  },
  "sound": {

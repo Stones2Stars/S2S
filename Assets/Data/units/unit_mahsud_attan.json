@@ -118,6 +118,11 @@
   "production": 455,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MAHSUD_ATTAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MAHSUD_ATTAN",
   "civilopedia": "TXT_KEY_UNIT_MAHSUD_ATTAN_PEDIA",

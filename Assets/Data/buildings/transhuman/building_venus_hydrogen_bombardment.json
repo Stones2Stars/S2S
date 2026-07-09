@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VENUS_HYDROGEN_BOMBARDMENT"
+   "define": "ART_DEF_BUILDING_VENUS_HYDROGEN_BOMBARDMENT"
   }
  },
  "identity": {

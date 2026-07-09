@@ -128,7 +128,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_WOOD"
+   "define": "ART_DEF_BONUS_WOOD"
   }
  },
  "identity": {

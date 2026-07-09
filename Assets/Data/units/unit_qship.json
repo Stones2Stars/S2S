@@ -56,6 +56,11 @@
   "production": 1130,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_QSHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_QSHIP",
   "civilopedia": "TXT_KEY_UNIT_QSHIP_PEDIA",

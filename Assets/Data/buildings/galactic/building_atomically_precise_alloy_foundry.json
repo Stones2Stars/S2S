@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ATOMICALLY_PRECISE_ALLOY_FOUNDRY"
+   "define": "ART_DEF_BUILDING_ATOMICALLY_PRECISE_ALLOY_FOUNDRY"
   }
  },
  "identity": {

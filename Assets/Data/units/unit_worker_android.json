@@ -83,6 +83,11 @@
   "production": 3500,
   "upkeep": 7
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WORKER_ANDROID"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WORKER_ANDROID",
   "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",

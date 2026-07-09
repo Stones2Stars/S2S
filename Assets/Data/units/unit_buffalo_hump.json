@@ -57,6 +57,11 @@
   "production": 2140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BUFFALO_HUMP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BUFFALO_HUMP",
   "civilopedia": "TXT_KEY_UNIT_BUFFALO_HUMP_PEDIA",

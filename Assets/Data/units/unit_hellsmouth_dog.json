@@ -25,9 +25,6 @@
  },
  "strength": {
   "unit": {
-   "perSizeLess": {
-    "percent": 15
-   },
    "lunge": {
     "percent": 20
    },
@@ -91,6 +88,16 @@
  "cost": {
   "production": 310,
   "upkeep": 4
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perSizeLess": 15
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HELLSMOUTH_DOG"
+  }
  },
  "identity": {
   "description": "TXT_KEY_UNIT_HELLSMOUTH_DOG",

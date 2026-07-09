@@ -60,6 +60,11 @@
   "production": 750,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TRANSPORT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TRANSPORT",
   "civilopedia": "TXT_KEY_UNIT_TRANSPORT_PEDIA",

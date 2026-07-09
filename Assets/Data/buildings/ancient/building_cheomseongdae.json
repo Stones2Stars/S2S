@@ -142,7 +142,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CHEOMSEONGDAE"
+   "define": "ART_DEF_BUILDING_CHEOMSEONGDAE"
   }
  },
  "sound": {

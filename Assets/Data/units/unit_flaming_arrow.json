@@ -59,6 +59,11 @@
   "production": 410,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FLAMING_ARROW"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FLAMING_ARROW",
   "civilopedia": "TXT_KEY_UNIT_FLAMING_ARROW_PEDIA",

@@ -42,6 +42,11 @@
  "cost": {
   "production": 133
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TAMED_LION"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TAMED_LION",
   "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",

@@ -1,12 +1,5 @@
 {
  "type": "PROMOTION_SPLIT_INTO_FORCES",
- "strength": {
-  "unit": {
-   "group": {
-    "flat": -1
-   }
-  }
- },
  "skills": {
   "unitCombats": [
    "UNITCOMBAT_GROUP_FORCES"
@@ -28,5 +21,8 @@
   "description": "TXT_KEY_PROMOTION_SPLIT_INTO_FORCES",
   "replacesUnitCombat": "UNITCOMBAT_GROUP_CLAN",
   "forOffset": true
+ },
+ "sizeMatters": {
+  "group": -1
  }
 }

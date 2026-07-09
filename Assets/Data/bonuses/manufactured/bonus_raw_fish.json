@@ -13,7 +13,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_RAW_FISH"
+   "define": "ART_DEF_BONUS_RAW_FISH"
   }
  },
  "identity": {

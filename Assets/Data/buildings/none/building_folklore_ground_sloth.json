@@ -75,7 +75,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOLKLORE_GROUND_SLOTH"
+   "define": "ART_DEF_BUILDING_FOLKLORE_GROUND_SLOTH"
   }
  },
  "identity": {

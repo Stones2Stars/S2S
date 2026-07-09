@@ -2,7 +2,7 @@
  "type": "BONUS_MARTIAN_VEGETABLES",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_MARTIAN_VEGETABLES"
+   "define": "ART_DEF_BONUS_MARTIAN_VEGETABLES"
   }
  },
  "identity": {

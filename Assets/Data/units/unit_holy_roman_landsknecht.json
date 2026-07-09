@@ -75,6 +75,11 @@
   "production": 200,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HOLY_ROMAN_LANDSKNECHT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HOLY_ROMAN_LANDSKNECHT",
   "civilopedia": "TXT_KEY_UNIT_HOLY_ROMAN_LANDSKNECHT_PEDIA",

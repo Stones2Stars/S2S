@@ -115,6 +115,11 @@
   "production": 580,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MAMELUK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MAMELUK",
   "civilopedia": "TXT_KEY_UNIT_MAMELUK_PEDIA",

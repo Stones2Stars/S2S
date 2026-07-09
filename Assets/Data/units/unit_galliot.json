@@ -79,6 +79,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GALLIOT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GALLIOT",
   "civilopedia": "TXT_KEY_UNIT_GALLIOT_PEDIA",

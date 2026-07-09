@@ -8,7 +8,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SABBATEAN"
+   "define": "ART_DEF_BONUS_SABBATEAN"
   }
  },
  "identity": {

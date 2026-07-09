@@ -105,6 +105,11 @@
   "production": 1030,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VIETCONG"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_VIETCONG",
   "civilopedia": "TXT_KEY_UNIT_VIETCONG_PEDIA",

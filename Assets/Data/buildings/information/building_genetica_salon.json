@@ -56,7 +56,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GENETICA_SALON"
+   "define": "ART_DEF_BUILDING_GENETICA_SALON"
   }
  },
  "identity": {

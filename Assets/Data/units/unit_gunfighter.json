@@ -199,6 +199,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GUNFIGHTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GUNFIGHTER",
   "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",

@@ -104,6 +104,11 @@
   "production": 110,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LIGHT_HOPLITE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LIGHT_HOPLITE",
   "civilopedia": "TXT_KEY_UNIT_LIGHT_HOPLITE_PEDIA",

@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_STATUE_OF_GOMATESHWARA"
+   "define": "ART_DEF_BUILDING_STATUE_OF_GOMATESHWARA"
   }
  },
  "identity": {

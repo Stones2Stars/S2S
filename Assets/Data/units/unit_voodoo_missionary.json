@@ -16,6 +16,11 @@
   "production": 110,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VOODOO_MISSIONARY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_VOODOO_MISSIONARY",
   "civilopedia": "TXT_KEY_UNIT_VOODOO_MISSIONARY_PEDIA",

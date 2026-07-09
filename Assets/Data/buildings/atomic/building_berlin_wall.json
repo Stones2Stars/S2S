@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BERLIN_WALL"
+   "define": "ART_DEF_BUILDING_BERLIN_WALL"
   }
  },
  "identity": {

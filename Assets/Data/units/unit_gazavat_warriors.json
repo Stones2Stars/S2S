@@ -86,6 +86,11 @@
   "production": 455,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GAZAVAT_WARRIORS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GAZAVAT_WARRIORS",
   "civilopedia": "TXT_KEY_UNIT_GAZAVAT_WARRIORS_PEDIA",

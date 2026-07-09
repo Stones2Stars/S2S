@@ -70,6 +70,11 @@
   "production": 99,
   "upkeep": 12
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MAPINGUARI_OBSIDIAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MAPINGUARI_OBSIDIAN",
   "civilopedia": "TXT_KEY_UNIT_MAPINGUARI_PEDIA",

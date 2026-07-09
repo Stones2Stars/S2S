@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CARVED_EMU_EGGS"
+   "define": "ART_DEF_BONUS_CARVED_EMU_EGGS"
   }
  },
  "identity": {

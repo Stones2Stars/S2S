@@ -184,7 +184,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ICE_CREAM_PARLOR"
+   "define": "ART_DEF_BUILDING_ICE_CREAM_PARLOR"
   }
  },
  "identity": {

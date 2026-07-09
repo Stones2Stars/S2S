@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_HAITIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_HAITIAN"
   }
  },
  "identity": {

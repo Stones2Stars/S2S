@@ -56,7 +56,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HQ_EAST_WEST_TRADERS"
+   "define": "ART_DEF_BUILDING_HQ_EAST_WEST_TRADERS"
   }
  },
  "sound": {

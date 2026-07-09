@@ -86,6 +86,11 @@
   "production": 55,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_IRONWOOD_CLUBMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_IRONWOOD_SPEARMAN",
   "civilopedia": "TXT_KEY_UNIT_IRONWOOD_SPEARMAN_PEDIA",

@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VOLLEYBALL_COURT"
+   "define": "ART_DEF_BUILDING_VOLLEYBALL_COURT"
   }
  },
  "identity": {

@@ -44,7 +44,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_STARPORT"
+   "define": "ART_DEF_BUILDING_MARTIAN_STARPORT"
   }
  },
  "identity": {

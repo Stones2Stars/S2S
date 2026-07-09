@@ -71,6 +71,11 @@
   "production": 425,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CULVERIN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CULVERIN",
   "civilopedia": "TXT_KEY_UNIT_CULVERIN_PEDIA",

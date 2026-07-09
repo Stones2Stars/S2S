@@ -63,7 +63,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_URBAN_PSYCHIC_INTEGRATION"
+   "define": "ART_DEF_BUILDING_URBAN_PSYCHIC_INTEGRATION"
   }
  },
  "identity": {

@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NGC_6811_COLONY"
+   "define": "ART_DEF_BUILDING_NGC_6811_COLONY"
   }
  },
  "identity": {

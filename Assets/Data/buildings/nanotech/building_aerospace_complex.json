@@ -148,7 +148,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_AEROSPACE_COMPLEX"
+   "define": "ART_DEF_BUILDING_AEROSPACE_COMPLEX"
   }
  },
  "sound": {

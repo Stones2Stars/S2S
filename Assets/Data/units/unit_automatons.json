@@ -40,6 +40,11 @@
   "production": 4000,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AUTOMATON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AUTOMATONS",
   "civilopedia": "TXT_KEY_UNIT_AUTOMATONS_PEDIA",

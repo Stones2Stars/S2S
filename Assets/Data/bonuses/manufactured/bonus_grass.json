@@ -15,7 +15,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_GRASS"
+   "define": "ART_DEF_BONUS_GRASS"
   }
  },
  "identity": {

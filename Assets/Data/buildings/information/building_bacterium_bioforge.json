@@ -93,7 +93,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BACTERIUM_BIOFORGE"
+   "define": "ART_DEF_BUILDING_BACTERIUM_BIOFORGE"
   }
  },
  "identity": {

@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GROVE_MAPLE"
+   "define": "ART_DEF_BUILDING_GROVE_MAPLE"
   }
  },
  "identity": {

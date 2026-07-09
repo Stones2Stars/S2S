@@ -117,7 +117,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_TANKS"
+   "define": "ART_DEF_BUILDING_FACTORY_TANKS"
   }
  },
  "identity": {

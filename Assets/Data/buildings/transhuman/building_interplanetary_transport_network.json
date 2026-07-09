@@ -46,7 +46,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERPLANETARY_TRANSPORT_NETWORK"
+   "define": "ART_DEF_BUILDING_INTERPLANETARY_TRANSPORT_NETWORK"
   }
  },
  "identity": {

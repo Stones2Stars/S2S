@@ -112,7 +112,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TROYES_TRADE_FAIR"
+   "define": "ART_DEF_BUILDING_TROYES_TRADE_FAIR"
   }
  },
  "identity": {

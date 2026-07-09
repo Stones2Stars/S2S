@@ -86,6 +86,11 @@
   "production": 360,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GALLEASS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GALLEASS",
   "civilopedia": "TXT_KEY_UNIT_GALLEASS_PEDIA",

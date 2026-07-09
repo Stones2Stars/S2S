@@ -72,6 +72,11 @@
   "production": 4000,
   "upkeep": 21
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ORBITAL_FIGHTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ORBITAL_FIGHTER",
   "civilopedia": "TXT_KEY_UNIT_ORBITAL_FIGHTER_PEDIA",

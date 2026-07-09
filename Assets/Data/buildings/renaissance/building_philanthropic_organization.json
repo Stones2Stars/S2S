@@ -77,7 +77,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PHILANTHROPIC_ORGANIZATION"
+   "define": "ART_DEF_BUILDING_PHILANTHROPIC_ORGANIZATION"
   }
  },
  "identity": {

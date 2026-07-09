@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CISLUNAR_BLACK_HOLE"
+   "define": "ART_DEF_BUILDING_CISLUNAR_BLACK_HOLE"
   }
  },
  "identity": {

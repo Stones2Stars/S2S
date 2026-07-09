@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CLAYTRONIC_ATOMS"
+   "define": "ART_DEF_BONUS_CLAYTRONIC_ATOMS"
   }
  },
  "identity": {

@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DEEP_SPACE_MICROVAC"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_MICROVAC"
   }
  },
  "identity": {

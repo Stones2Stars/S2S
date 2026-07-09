@@ -94,7 +94,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_ROPE"
+   "define": "ART_DEF_BUILDING_FACTORY_ROPE"
   }
  },
  "identity": {

@@ -107,7 +107,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SCARBOROUGH_FAIR"
+   "define": "ART_DEF_BUILDING_SCARBOROUGH_FAIR"
   }
  },
  "identity": {

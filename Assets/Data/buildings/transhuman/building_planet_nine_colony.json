@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PLANET_NINE_COLONY"
+   "define": "ART_DEF_BUILDING_PLANET_NINE_COLONY"
   }
  },
  "identity": {

@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_PARATERRAFORMED_ASTEROID"
+   "define": "ART_DEF_IMPROVEMENT_PARATERRAFORMED_ASTEROID"
   }
  },
  "mapGeneration": {

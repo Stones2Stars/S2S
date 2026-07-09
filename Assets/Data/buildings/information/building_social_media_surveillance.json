@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SOCIAL_MEDIA_SURVEILLANCE"
+   "define": "ART_DEF_BUILDING_SOCIAL_MEDIA_SURVEILLANCE"
   }
  },
  "identity": {

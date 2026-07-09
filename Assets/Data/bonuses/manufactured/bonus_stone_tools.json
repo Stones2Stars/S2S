@@ -2,7 +2,7 @@
  "type": "BONUS_STONE_TOOLS",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_STONE_TOOLS"
+   "define": "ART_DEF_BONUS_STONE_TOOLS"
   }
  },
  "identity": {

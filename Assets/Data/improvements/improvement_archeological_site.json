@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_ARCHEOLOGICAL_SITE"
+   "define": "ART_DEF_IMPROVEMENT_ARCHEOLOGICAL_SITE"
   }
  },
  "identity": {

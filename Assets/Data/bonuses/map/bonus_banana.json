@@ -46,7 +46,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_BANANA"
+   "define": "ART_DEF_BONUS_BANANA"
   }
  },
  "mapGeneration": {

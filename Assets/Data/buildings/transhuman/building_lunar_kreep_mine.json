@@ -59,7 +59,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LUNAR_KREEP_MINE"
+   "define": "ART_DEF_BUILDING_LUNAR_KREEP_MINE"
   }
  },
  "identity": {

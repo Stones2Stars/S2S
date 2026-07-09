@@ -2,7 +2,7 @@
  "type": "BONUS_HUMAN_MOD_IMMORTAL",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HUMAN_MOD_IMMORTAL"
+   "define": "ART_DEF_BONUS_HUMAN_MOD_IMMORTAL"
   }
  },
  "identity": {

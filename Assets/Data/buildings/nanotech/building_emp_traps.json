@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EMP_TRAPS"
+   "define": "ART_DEF_BUILDING_EMP_TRAPS"
   }
  },
  "sound": {

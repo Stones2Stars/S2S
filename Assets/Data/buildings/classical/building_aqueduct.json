@@ -118,7 +118,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_AQUEDUCT"
+   "define": "ART_DEF_BUILDING_AQUEDUCT"
   }
  },
  "sound": {

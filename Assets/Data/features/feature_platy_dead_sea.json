@@ -9,7 +9,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_DEAD_SEA"
+   "define": "ART_DEF_FEATURE_DEAD_SEA"
   }
  },
  "sound": {

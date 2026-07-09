@@ -331,7 +331,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SUPERMARKET"
+   "define": "ART_DEF_BUILDING_SUPERMARKET"
   }
  },
  "sound": {

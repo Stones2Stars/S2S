@@ -141,6 +141,11 @@
   "production": 780,
   "upkeep": 10
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_POLICE_CAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_POLICE_CAR",
   "civilopedia": "TXT_KEY_UNIT_POLICE_CAR_PEDIA",

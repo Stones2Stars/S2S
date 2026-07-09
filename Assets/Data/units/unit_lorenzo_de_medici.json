@@ -62,6 +62,11 @@
   "production": 1640,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LORENZO_DE_MEDICI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LORENZO_DE_MEDICI",
   "civilopedia": "TXT_KEY_UNIT_LORENZO_DE_MEDICI_PEDIA",

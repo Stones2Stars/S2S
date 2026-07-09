@@ -100,7 +100,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BICYCLE_SHOP"
+   "define": "ART_DEF_BUILDING_BICYCLE_SHOP"
   }
  },
  "identity": {

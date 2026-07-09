@@ -36,7 +36,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CALLISTO_FLOATING_CONTINENT"
+   "define": "ART_DEF_BUILDING_CALLISTO_FLOATING_CONTINENT"
   }
  },
  "identity": {

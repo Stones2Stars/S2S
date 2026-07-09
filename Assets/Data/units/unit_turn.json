@@ -39,6 +39,11 @@
   "production": 6200,
   "upkeep": 6
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_YAM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TURN",
   "civilopedia": "TXT_KEY_UNIT_TURN_PEDIA",

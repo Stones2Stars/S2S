@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SATURN_CLOUD_CITY"
+   "define": "ART_DEF_BUILDING_SATURN_CLOUD_CITY"
   }
  },
  "identity": {

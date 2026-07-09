@@ -46,6 +46,11 @@
   "production": 900,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BEOWULF"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BEOWULF",
   "civilopedia": "TXT_KEY_UNIT_BEOWULF_PEDIA",

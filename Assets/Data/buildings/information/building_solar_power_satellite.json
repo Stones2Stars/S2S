@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SOLAR_POWER_SATELLITE"
+   "define": "ART_DEF_BUILDING_SOLAR_POWER_SATELLITE"
   }
  },
  "sound": {

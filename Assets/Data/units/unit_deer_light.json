@@ -136,6 +136,11 @@
  "cost": {
   "production": 425
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DEER_LIGHT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DEER_LIGHT",
   "civilopedia": "TXT_KEY_UNIT_DEER_LIGHT_PEDIA",

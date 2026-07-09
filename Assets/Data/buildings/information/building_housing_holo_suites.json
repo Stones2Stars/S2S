@@ -70,7 +70,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOUSING_HOLO_SUITES"
+   "define": "ART_DEF_BUILDING_HOUSING_HOLO_SUITES"
   }
  },
  "identity": {

@@ -57,7 +57,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ORBITAL_RING"
+   "define": "ART_DEF_BUILDING_ORBITAL_RING"
   }
  },
  "identity": {

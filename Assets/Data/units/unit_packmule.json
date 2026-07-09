@@ -44,6 +44,11 @@
   "production": 115,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PACKMULE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PACKMULE",
   "civilopedia": "TXT_KEY_UNIT_PACK_LLAMA_PEDIA",

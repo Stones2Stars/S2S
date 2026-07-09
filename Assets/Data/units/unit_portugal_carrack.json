@@ -84,6 +84,11 @@
   "production": 340,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PORTUGAL_CARRACK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PORTUGAL_CARRACK",
   "civilopedia": "TXT_KEY_UNIT_PORTUGAL_CARRACK_PEDIA",

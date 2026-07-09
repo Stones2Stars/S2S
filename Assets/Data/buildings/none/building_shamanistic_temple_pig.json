@@ -57,7 +57,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SHAMANISTIC_TEMPLE_PIG"
+   "define": "ART_DEF_BUILDING_SHAMANISTIC_TEMPLE_PIG"
   }
  },
  "sound": {

@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LAS_MEDULAS"
+   "define": "ART_DEF_BUILDING_LAS_MEDULAS"
   }
  },
  "identity": {

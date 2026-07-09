@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_BASE_CARBON_PLANET"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BASE_CARBON_PLANET"
   }
  },
  "identity": {

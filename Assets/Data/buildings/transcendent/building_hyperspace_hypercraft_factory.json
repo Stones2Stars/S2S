@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYPERSPACE_HYPERCRAFT_FACTORY"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_HYPERCRAFT_FACTORY"
   }
  },
  "identity": {

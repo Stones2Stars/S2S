@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RESOURCES_VEGETABLES"
+   "define": "ART_DEF_BUILDING_RESOURCES_VEGETABLES"
   }
  },
  "identity": {

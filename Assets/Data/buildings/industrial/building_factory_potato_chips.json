@@ -161,7 +161,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_POTATO_CHIPS"
+   "define": "ART_DEF_BUILDING_FACTORY_POTATO_CHIPS"
   }
  },
  "identity": {

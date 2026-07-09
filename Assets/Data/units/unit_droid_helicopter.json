@@ -80,6 +80,11 @@
   "production": 4300,
   "upkeep": 6
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DROID_HELICOPTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DROID_HELICOPTER",
   "civilopedia": "TXT_KEY_UNIT_DROID_HELICOPTER_PEDIA",

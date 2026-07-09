@@ -128,6 +128,11 @@
   "production": 450,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JADID_GRENADIERS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_JADID_GRENADIERS",
   "civilopedia": "TXT_KEY_UNIT_JADID_GRENADIERS_PEDIA",

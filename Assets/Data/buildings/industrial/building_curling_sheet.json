@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CURLING_SHEET"
+   "define": "ART_DEF_BUILDING_CURLING_SHEET"
   }
  },
  "identity": {

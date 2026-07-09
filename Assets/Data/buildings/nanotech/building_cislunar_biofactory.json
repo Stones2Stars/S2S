@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CISLUNAR_BIOFACTORY"
+   "define": "ART_DEF_BUILDING_CISLUNAR_BIOFACTORY"
   }
  },
  "identity": {

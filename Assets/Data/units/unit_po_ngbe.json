@@ -63,6 +63,11 @@
   "production": 736,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PO_NGBE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PO_NGBE",
   "civilopedia": "TXT_KEY_UNIT_PO_NGBE_PEDIA",

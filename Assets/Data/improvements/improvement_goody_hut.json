@@ -39,7 +39,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_GOODY_HUT"
+   "define": "ART_DEF_IMPROVEMENT_GOODY_HUT"
   }
  },
  "sound": {

@@ -49,6 +49,11 @@
   "production": 3960,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KHANUNG"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KHANUNG",
   "civilopedia": "TXT_KEY_UNIT_KHANUNG_PEDIA",

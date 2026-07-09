@@ -78,6 +78,11 @@
   "upkeep": 9,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_REPLICATION_MECHANIC"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_REPLICATION_MECHANIC",
   "civilopedia": "TXT_KEY_UNIT_REPLICATION_MECHANIC_PEDIA",

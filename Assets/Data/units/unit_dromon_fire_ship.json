@@ -88,6 +88,11 @@
   "production": 300,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DROMON_FIRE_SHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DROMON_FIRE_SHIP",
   "civilopedia": "TXT_KEY_UNIT_DROMON_FIRE_SHIP_PEDIA",

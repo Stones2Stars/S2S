@@ -64,6 +64,11 @@
   "production": 864,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GESAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GESAR",
   "civilopedia": "TXT_KEY_UNIT_GESAR_PEDIA",

@@ -17,7 +17,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_LOCAL_GROUP"
+   "define": "ART_DEF_TERRAIN_LOCAL_GROUP"
   }
  },
  "identity": {

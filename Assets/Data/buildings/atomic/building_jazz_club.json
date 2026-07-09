@@ -146,7 +146,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_JAZZ_CLUB"
+   "define": "ART_DEF_BUILDING_JAZZ_CLUB"
   }
  },
  "identity": {

@@ -145,7 +145,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANIMATRONICS_WORKSHOP"
+   "define": "ART_DEF_BUILDING_ANIMATRONICS_WORKSHOP"
   }
  },
  "identity": {

@@ -112,7 +112,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NOVUS_REFINERY"
+   "define": "ART_DEF_BUILDING_NOVUS_REFINERY"
   }
  },
  "identity": {

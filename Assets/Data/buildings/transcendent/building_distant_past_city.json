@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DISTANT_PAST_CITY"
+   "define": "ART_DEF_BUILDING_DISTANT_PAST_CITY"
   }
  },
  "identity": {

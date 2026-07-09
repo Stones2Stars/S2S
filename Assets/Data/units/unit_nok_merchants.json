@@ -130,6 +130,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NOK_MERCHANTS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NOK_MERCHANTS",
   "civilopedia": "TXT_KEY_UNIT_NOK_MERCHANTS_PEDIA",

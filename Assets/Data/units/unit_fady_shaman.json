@@ -96,6 +96,11 @@
   "upkeep": 5,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FADY_SHAMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FADY_SHAMAN",
   "civilopedia": "TXT_KEY_UNIT_FADY_SHAMAN_PEDIA",

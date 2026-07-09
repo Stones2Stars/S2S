@@ -78,6 +78,11 @@
   "production": 42,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_STONE_AXEMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_STONE_AXEMAN",
   "civilopedia": "TXT_KEY_UNIT_STONE_AXEMAN_PEDIA",

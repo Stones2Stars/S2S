@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_DYE"
+   "define": "ART_DEF_BONUS_DYE"
   }
  },
  "identity": {

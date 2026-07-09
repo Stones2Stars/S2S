@@ -28,7 +28,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_PISTACHIO"
+   "define": "ART_DEF_BONUS_PISTACHIO"
   }
  },
  "mapGeneration": {

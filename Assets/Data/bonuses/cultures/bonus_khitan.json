@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_KHITAN"
+   "define": "ART_DEF_BONUS_KHITAN"
   }
  },
  "identity": {

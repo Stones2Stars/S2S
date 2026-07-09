@@ -48,6 +48,11 @@
   "production": 1328,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CASIMIR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CASIMIR",
   "civilopedia": "TXT_KEY_UNIT_CASIMIR_PEDIA",

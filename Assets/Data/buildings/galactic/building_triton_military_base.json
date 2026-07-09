@@ -59,7 +59,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRITON_MILITARY_BASE"
+   "define": "ART_DEF_BUILDING_TRITON_MILITARY_BASE"
   }
  },
  "identity": {

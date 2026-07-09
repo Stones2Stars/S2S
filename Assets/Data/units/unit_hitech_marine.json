@@ -72,6 +72,11 @@
   "production": 2745,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HITECH_MARINE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HITECH_MARINE",
   "civilopedia": "TXT_KEY_UNIT_HITECH_MARINE_PEDIA",

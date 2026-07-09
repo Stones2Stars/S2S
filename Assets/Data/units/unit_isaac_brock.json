@@ -47,6 +47,11 @@
   "production": 2140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ISAAC_BROCK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ISAAC_BROCK",
   "civilopedia": "TXT_KEY_UNIT_ISAAC_BROCK_PEDIA",

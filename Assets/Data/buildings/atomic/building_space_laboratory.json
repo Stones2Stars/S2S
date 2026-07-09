@@ -88,7 +88,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SPACE_LABORATORY"
+   "define": "ART_DEF_BUILDING_SPACE_LABORATORY"
   }
  },
  "sound": {

@@ -1,12 +1,5 @@
 {
  "type": "PROMOTION_SELF_REPAIR1",
- "strength": {
-  "unit": {
-   "maxHP": {
-    "flat": 1
-   }
-  }
- },
  "heal": {
   "unit": {
    "neutral": {
@@ -30,6 +23,9 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "maxHP": 1
  },
  "identity": {
   "description": "TXT_KEY_PROMOTION_SELF_REPAIR1"

@@ -56,6 +56,11 @@
  "cost": {
   "production": 330
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RA_FIST"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_RA_FIST",
   "civilopedia": "TXT_KEY_UNIT_RA_FIST_PEDIA",

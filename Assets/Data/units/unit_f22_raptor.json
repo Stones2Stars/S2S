@@ -79,6 +79,11 @@
   "production": 1894,
   "upkeep": 11
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_F22_RAPTOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_F22_RAPTOR",
   "civilopedia": "TXT_KEY_UNIT_F22_RAPTOR_PEDIA",

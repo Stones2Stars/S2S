@@ -48,6 +48,11 @@
   "upkeep": 11,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SYSTEMS_ANALYST"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SYSTEMS_ANALYST",
   "civilopedia": "TXT_KEY_UNIT_SYSTEMS_ANALYST_PEDIA",

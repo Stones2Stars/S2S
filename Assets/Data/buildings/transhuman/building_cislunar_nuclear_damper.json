@@ -30,7 +30,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CISLUNAR_NUCLEAR_DAMPER"
+   "define": "ART_DEF_BUILDING_CISLUNAR_NUCLEAR_DAMPER"
   }
  },
  "identity": {

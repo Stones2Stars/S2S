@@ -82,7 +82,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOLKLORE_HUMPBACK_WHALE"
+   "define": "ART_DEF_BUILDING_FOLKLORE_HUMPBACK_WHALE"
   }
  },
  "identity": {

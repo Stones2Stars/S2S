@@ -49,6 +49,11 @@
   "production": 1376,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MAHAQUE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MAHAQUE",
   "civilopedia": "TXT_KEY_UNIT_MAHAQUE_PEDIA",

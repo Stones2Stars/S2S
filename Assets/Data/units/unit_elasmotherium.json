@@ -55,6 +55,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ELASMOTHERIUM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ELASMOTHERIUM",
   "civilopedia": "TXT_KEY_UNIT_ELASMOTHERIUM_PEDIA",

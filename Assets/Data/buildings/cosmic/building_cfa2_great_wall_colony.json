@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CFA2_GREAT_WALL_COLONY"
+   "define": "ART_DEF_BUILDING_CFA2_GREAT_WALL_COLONY"
   }
  },
  "identity": {

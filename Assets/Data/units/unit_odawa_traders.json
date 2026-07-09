@@ -89,6 +89,11 @@
   "production": 270,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ODAWA_TRADERS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ODAWA_TRADERS",
   "civilopedia": "TXT_KEY_UNIT_ODAWA_TRADERS_PEDIA",

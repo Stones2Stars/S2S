@@ -101,7 +101,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CORMORANT_TRAINER"
+   "define": "ART_DEF_BUILDING_CORMORANT_TRAINER"
   }
  },
  "identity": {

@@ -49,6 +49,11 @@
   "production": 936,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PERICLES"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PERICLES",
   "civilopedia": "TXT_KEY_UNIT_PERICLES_PEDIA",

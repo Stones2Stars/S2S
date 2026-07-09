@@ -86,6 +86,11 @@
   "upkeep": 9,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SOFTWARE_DEVELOPER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SOFTWARE_DEVELOPER",
   "civilopedia": "TXT_KEY_UNIT_SOFTWARE_DEVELOPER_PEDIA",

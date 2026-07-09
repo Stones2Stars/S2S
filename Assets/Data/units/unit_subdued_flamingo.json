@@ -141,6 +141,11 @@
    "BUILDING_DANCE_BIRD"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FLAMINGO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_FLAMINGO",
   "civilopedia": "TXT_KEY_UNIT_FLAMINGO_PEDIA",

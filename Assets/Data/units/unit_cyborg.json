@@ -46,6 +46,11 @@
   "production": 4700,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CYBORG"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CYBORG",
   "civilopedia": "TXT_KEY_UNIT_CYBORG_PEDIA",

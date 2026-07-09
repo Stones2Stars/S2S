@@ -75,6 +75,11 @@
   "production": 1280,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GUNSHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GUNSHIP",
   "civilopedia": "TXT_KEY_UNIT_GUNSHIP_PEDIA",

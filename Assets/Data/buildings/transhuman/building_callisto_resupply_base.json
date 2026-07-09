@@ -46,7 +46,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CALLISTO_RESUPPLY_BASE"
+   "define": "ART_DEF_BUILDING_CALLISTO_RESUPPLY_BASE"
   }
  },
  "identity": {

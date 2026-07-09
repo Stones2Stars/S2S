@@ -67,7 +67,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BEAUTY_SALON"
+   "define": "ART_DEF_BUILDING_BEAUTY_SALON"
   }
  },
  "identity": {

@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TIDEPOOL_SCAVENGER"
+   "define": "ART_DEF_BUILDING_TIDEPOOL_SCAVENGER"
   }
  },
  "identity": {

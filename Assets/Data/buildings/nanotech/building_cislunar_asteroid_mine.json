@@ -40,7 +40,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CISLUNAR_ASTEROID_MINE"
+   "define": "ART_DEF_BUILDING_CISLUNAR_ASTEROID_MINE"
   }
  },
  "identity": {

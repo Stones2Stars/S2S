@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LED_INCAPACITATOR"
+   "define": "ART_DEF_BUILDING_LED_INCAPACITATOR"
   }
  },
  "identity": {

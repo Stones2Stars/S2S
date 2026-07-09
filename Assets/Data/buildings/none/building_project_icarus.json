@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PROJECT_ICARUS"
+   "define": "ART_DEF_BUILDING_PROJECT_ICARUS"
   }
  },
  "identity": {

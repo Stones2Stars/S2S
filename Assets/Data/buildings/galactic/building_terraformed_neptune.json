@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TERRAFORMED_NEPTUNE"
+   "define": "ART_DEF_BUILDING_TERRAFORMED_NEPTUNE"
   }
  },
  "identity": {

@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FREE_PORT"
+   "define": "ART_DEF_BUILDING_FREE_PORT"
   }
  },
  "sound": {

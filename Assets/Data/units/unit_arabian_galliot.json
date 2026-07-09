@@ -79,6 +79,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ARABIAN_GALLIOT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ARABIAN_GALLIOT",
   "civilopedia": "TXT_KEY_UNIT_ARABIAN_GALLIOT_PEDIA",

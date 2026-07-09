@@ -98,7 +98,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TVSTATION"
+   "define": "ART_DEF_BUILDING_TVSTATION"
   }
  },
  "sound": {

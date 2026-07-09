@@ -70,6 +70,11 @@
   "upkeep": 7,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FLIGHT_TECHNICIAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FLIGHT_TECHNICIAN",
   "civilopedia": "TXT_KEY_UNIT_FLIGHT_TECHNICIAN_PEDIA",

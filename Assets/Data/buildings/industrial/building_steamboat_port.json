@@ -90,7 +90,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_STEAMBOAT_PORT"
+   "define": "ART_DEF_BUILDING_STEAMBOAT_PORT"
   }
  },
  "sound": {

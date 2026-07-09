@@ -63,7 +63,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_AI_POLICE_FORCE"
+   "define": "ART_DEF_BUILDING_AI_POLICE_FORCE"
   }
  },
  "identity": {

@@ -109,7 +109,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LABYRINTH_OF_KNOSSOS"
+   "define": "ART_DEF_BUILDING_LABYRINTH_OF_KNOSSOS"
   }
  },
  "sound": {

@@ -28,7 +28,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYPERSPACE_S_E_P_FIELD"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_S_E_P_FIELD"
   }
  },
  "identity": {

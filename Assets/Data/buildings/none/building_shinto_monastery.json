@@ -103,7 +103,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SHINTO_MONASTERY"
+   "define": "ART_DEF_BUILDING_SHINTO_MONASTERY"
   }
  },
  "sound": {

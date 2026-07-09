@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTEGRATED_SCHOOLS"
+   "define": "ART_DEF_BUILDING_INTEGRATED_SCHOOLS"
   }
  },
  "identity": {

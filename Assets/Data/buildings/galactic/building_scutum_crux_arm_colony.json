@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SCUTUM_CRUX_ARM_COLONY"
+   "define": "ART_DEF_BUILDING_SCUTUM_CRUX_ARM_COLONY"
   }
  },
  "identity": {

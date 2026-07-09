@@ -122,6 +122,11 @@
   "upkeep": 14,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MEDEVAC_DROPSHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MEDEVAC_DROPSHIP",
   "civilopedia": "TXT_KEY_UNIT_MEDIC_PEDIA",

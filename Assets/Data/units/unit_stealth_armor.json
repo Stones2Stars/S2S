@@ -83,6 +83,11 @@
   "production": 3800,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_STEALTH_ARMOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_STEALTH_ARMOR",
   "civilopedia": "TXT_KEY_UNIT_STEALTH_ARMOR_PEDIA",

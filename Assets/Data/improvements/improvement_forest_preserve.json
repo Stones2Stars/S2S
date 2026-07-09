@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_FOREST_PRESERVE"
+   "define": "ART_DEF_IMPROVEMENT_FOREST_PRESERVE"
   }
  },
  "identity": {

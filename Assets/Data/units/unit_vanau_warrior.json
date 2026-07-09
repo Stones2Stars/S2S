@@ -111,6 +111,11 @@
   "production": 115,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VANAU_WARRIOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_VANAU_WARRIOR",
   "civilopedia": "TXT_KEY_UNIT_VANAU_WARRIOR_PEDIA",

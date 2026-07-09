@@ -80,6 +80,11 @@
   "production": 1080,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_UNITA_FORCES"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_UNITA_FORCES",
   "civilopedia": "TXT_KEY_UNIT_UNITA_FORCES_PEDIA",

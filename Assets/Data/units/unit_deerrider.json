@@ -142,6 +142,11 @@
  "cost": {
   "production": 155
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DEERRIDER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DEERRIDER",
   "civilopedia": "TXT_KEY_UNIT_DEERRIDER_PEDIA",

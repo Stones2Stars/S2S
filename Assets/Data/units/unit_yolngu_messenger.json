@@ -223,6 +223,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_YOLNGU_MESSENGER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_YOLNGU_MESSENGER",
   "civilopedia": "TXT_KEY_UNIT_YOLNGU_MESSENGER_PEDIA",

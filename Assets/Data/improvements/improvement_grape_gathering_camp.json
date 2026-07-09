@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_GRAPE_GATHERING_CAMP"
+   "define": "ART_DEF_IMPROVEMENT_GRAPE_GATHERING_CAMP"
   }
  },
  "identity": {

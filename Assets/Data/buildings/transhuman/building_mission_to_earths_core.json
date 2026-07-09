@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MISSION_TO_EARTHS_CORE"
+   "define": "ART_DEF_BUILDING_MISSION_TO_EARTHS_CORE"
   }
  },
  "identity": {

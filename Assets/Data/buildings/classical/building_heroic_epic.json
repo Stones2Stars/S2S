@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HEROIC_EPIC"
+   "define": "ART_DEF_BUILDING_HEROIC_EPIC"
   }
  },
  "identity": {

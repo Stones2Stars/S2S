@@ -48,6 +48,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MOUNTAIN_TAPIR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MOUNTAIN_TAPIR",
   "civilopedia": "TXT_KEY_UNIT_TAPIR_PEDIA",

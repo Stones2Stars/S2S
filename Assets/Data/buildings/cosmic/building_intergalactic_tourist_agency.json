@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_TOURIST_AGENCY"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_TOURIST_AGENCY"
   }
  },
  "identity": {

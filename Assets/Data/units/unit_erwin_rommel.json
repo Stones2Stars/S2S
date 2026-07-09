@@ -40,6 +40,11 @@
   "production": 3800,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ERWIN_ROMMEL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ERWIN_ROMMEL",
   "civilopedia": "TXT_KEY_UNIT_ERWIN_ROMMEL_PEDIA",

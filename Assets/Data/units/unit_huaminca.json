@@ -110,6 +110,11 @@
   "production": 115,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HUAMINCA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HUAMINCA",
   "civilopedia": "TXT_KEY_UNIT_HUAMINCA_PEDIA",

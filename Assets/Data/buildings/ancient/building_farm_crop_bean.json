@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FARM_CROP_BEAN"
+   "define": "ART_DEF_BUILDING_FARM_CROP_BEAN"
   }
  },
  "identity": {

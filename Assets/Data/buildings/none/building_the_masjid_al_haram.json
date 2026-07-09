@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THE_MASJID_AL_HARAM"
+   "define": "ART_DEF_BUILDING_THE_MASJID_AL_HARAM"
   }
  },
  "sound": {

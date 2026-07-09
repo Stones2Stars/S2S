@@ -148,6 +148,11 @@
   "production": 1825,
   "upkeep": 13
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SWAT_TEAM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SWAT_TEAM",
   "civilopedia": "TXT_KEY_UNIT_SWAT_TEAM_PEDIA",

@@ -60,6 +60,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CLIPPER_MERCHANT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CLIPPER_MERCHANT",
   "civilopedia": "TXT_KEY_UNIT_CLIPPER_MERCHANT_PEDIA",

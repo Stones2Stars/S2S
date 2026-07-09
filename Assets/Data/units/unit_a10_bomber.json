@@ -100,6 +100,11 @@
   "production": 1700,
   "upkeep": 5
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JET_TACTICAL_BOMBER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_A10_BOMBER",
   "civilopedia": "TXT_KEY_UNIT_A10_BOMBER_PEDIA",

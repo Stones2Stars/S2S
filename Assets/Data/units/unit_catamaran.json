@@ -81,6 +81,11 @@
   "production": 145,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CATAMARAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CATAMARAN",
   "civilopedia": "TXT_KEY_UNIT_CATAMARAN_PEDIA",

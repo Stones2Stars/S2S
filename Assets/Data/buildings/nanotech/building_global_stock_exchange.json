@@ -56,7 +56,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ENGLISH_STOCK_EXCHANGE"
+   "define": "ART_DEF_BUILDING_ENGLISH_STOCK_EXCHANGE"
   }
  },
  "sound": {

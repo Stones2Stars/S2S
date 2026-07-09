@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NATIONAL_SPORTS"
+   "define": "ART_DEF_BUILDING_NATIONAL_SPORTS"
   }
  },
  "sound": {

@@ -1,12 +1,5 @@
 {
  "type": "PROMOTION_JADED_DECADENCE",
- "strength": {
-  "unit": {
-   "quality": {
-    "flat": -1
-   }
-  }
- },
  "skills": {
   "unitCombats": [
    "UNITCOMBAT_QUALITY_POOR"
@@ -32,5 +25,8 @@
    "UNITCOMBAT_ANIMAL"
   ],
   "forOffset": true
+ },
+ "sizeMatters": {
+  "quality": -1
  }
 }

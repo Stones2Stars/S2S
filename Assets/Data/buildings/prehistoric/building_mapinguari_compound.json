@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MAPINGUARI_COMPOUND"
+   "define": "ART_DEF_BUILDING_MAPINGUARI_COMPOUND"
   }
  },
  "identity": {

@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TITAN_NITROGEN_EXPORTER"
+   "define": "ART_DEF_BUILDING_TITAN_NITROGEN_EXPORTER"
   }
  },
  "identity": {

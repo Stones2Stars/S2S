@@ -129,6 +129,11 @@
   "production": 975,
   "upkeep": 10
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_POLICE_APC"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_POLICE_APC",
   "civilopedia": "TXT_KEY_UNIT_POLICE_APC_PEDIA",

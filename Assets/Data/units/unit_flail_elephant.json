@@ -93,6 +93,11 @@
   "production": 375,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FLAIL_ELEPHANT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FLAIL_ELEPHANT",
   "civilopedia": "TXT_KEY_UNIT_FLAIL_ELEPHANT_PEDIA",

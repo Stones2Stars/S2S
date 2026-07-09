@@ -78,7 +78,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MINE_CINNABAR"
+   "define": "ART_DEF_BUILDING_MINE_CINNABAR"
   }
  },
  "identity": {

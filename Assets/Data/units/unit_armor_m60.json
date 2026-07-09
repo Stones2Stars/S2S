@@ -113,6 +113,11 @@
   "production": 1345,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ARMOR_M60"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ARMOR_M60",
   "civilopedia": "TXT_KEY_UNIT_MODERN_ARMOR_PEDIA",

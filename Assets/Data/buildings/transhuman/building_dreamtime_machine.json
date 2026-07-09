@@ -67,7 +67,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DREAMTIME_MACHINE"
+   "define": "ART_DEF_BUILDING_DREAMTIME_MACHINE"
   }
  },
  "identity": {

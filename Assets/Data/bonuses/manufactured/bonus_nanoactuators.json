@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_NANOACTUATORS"
+   "define": "ART_DEF_BONUS_NANOACTUATORS"
   }
  },
  "identity": {

@@ -99,7 +99,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VENETIAN_ARSENAL"
+   "define": "ART_DEF_BUILDING_VENETIAN_ARSENAL"
   }
  },
  "sound": {

@@ -10,7 +10,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_ORGANIC_PHOTONIC_CELLS"
+   "define": "ART_DEF_BONUS_ORGANIC_PHOTONIC_CELLS"
   }
  },
  "identity": {

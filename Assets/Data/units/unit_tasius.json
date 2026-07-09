@@ -49,6 +49,11 @@
   "production": 392,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TASIUS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TASIUS",
   "civilopedia": "TXT_KEY_UNIT_TASIUS_PEDIA",

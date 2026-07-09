@@ -33,6 +33,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GALAPAGOS_PENGUIN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GALAPAGOS_PENGUIN",
   "civilopedia": "TXT_KEY_UNIT_GALAPAGOS_PENGUIN_PEDIA",

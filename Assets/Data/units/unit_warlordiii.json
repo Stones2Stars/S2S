@@ -150,6 +150,11 @@
   "production": 425,
   "upkeep": 7
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VWARLORD_RENAISSANCE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WARLORDIII",
   "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",

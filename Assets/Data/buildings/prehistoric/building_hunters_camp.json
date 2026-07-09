@@ -96,7 +96,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HUNTERS_CAMP"
+   "define": "ART_DEF_BUILDING_HUNTERS_CAMP"
   }
  },
  "identity": {

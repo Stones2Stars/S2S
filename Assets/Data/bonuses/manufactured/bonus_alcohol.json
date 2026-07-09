@@ -31,7 +31,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_ALCOHOL"
+   "define": "ART_DEF_BONUS_ALCOHOL"
   }
  },
  "identity": {

@@ -58,6 +58,11 @@
    "weight": 10
   }
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FOOD_CARAVAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FOOD_CARAVAN",
   "civilopedia": "TXT_KEY_CONCEPT_FOOD_CARAVAN_PEDIA",

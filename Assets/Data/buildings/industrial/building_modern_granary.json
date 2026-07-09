@@ -186,7 +186,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MODERN_GRANARY"
+   "define": "ART_DEF_BUILDING_MODERN_GRANARY"
   }
  },
  "sound": {

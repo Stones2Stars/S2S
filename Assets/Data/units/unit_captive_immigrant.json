@@ -29,6 +29,11 @@
  "cost": {
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CAPTIVE_IMMIGRANT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CAPTIVE_IMMIGRANT",
   "civilopedia": "TXT_KEY_UNIT_IMMIGRANT_PEDIA",

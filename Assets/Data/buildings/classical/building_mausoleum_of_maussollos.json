@@ -110,7 +110,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MAUSOLEUM_OF_MAUSSOLLOS"
+   "define": "ART_DEF_BUILDING_MAUSOLEUM_OF_MAUSSOLLOS"
   }
  },
  "identity": {

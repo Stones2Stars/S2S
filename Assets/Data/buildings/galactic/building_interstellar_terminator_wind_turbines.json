@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_TERMINATOR_WIND_TURBINES"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_TERMINATOR_WIND_TURBINES"
   }
  },
  "identity": {

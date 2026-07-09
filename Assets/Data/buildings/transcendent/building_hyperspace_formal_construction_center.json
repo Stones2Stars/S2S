@@ -33,7 +33,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYPERSPACE_FORMAL_CONSTRUCTION_CENTER"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_FORMAL_CONSTRUCTION_CENTER"
   }
  },
  "identity": {

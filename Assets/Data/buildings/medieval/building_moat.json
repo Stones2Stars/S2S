@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MOAT"
+   "define": "ART_DEF_BUILDING_MOAT"
   }
  },
  "sound": {

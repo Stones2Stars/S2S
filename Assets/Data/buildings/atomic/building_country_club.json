@@ -95,7 +95,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_COUNTRY_CLUB"
+   "define": "ART_DEF_BUILDING_COUNTRY_CLUB"
   }
  },
  "identity": {

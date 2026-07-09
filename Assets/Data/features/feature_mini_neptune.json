@@ -16,7 +16,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_MINI_NEPTUNE"
+   "define": "ART_DEF_FEATURE_MINI_NEPTUNE"
   }
  },
  "sound": {

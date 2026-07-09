@@ -91,6 +91,11 @@
   "production": 920,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PLO_FIGHTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PLO_FIGHTER",
   "civilopedia": "TXT_KEY_UNIT_PLO_FIGHTER_PEDIA",

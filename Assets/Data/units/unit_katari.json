@@ -49,6 +49,11 @@
   "production": 2140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TUPAC_KATARI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TUPAC_KATARI",
   "civilopedia": "TXT_KEY_UNIT_TUPAC_KATARI_PEDIA",

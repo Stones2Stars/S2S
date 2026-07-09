@@ -143,6 +143,11 @@
   "production": 5000,
   "upkeep": 16
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TECHNARCHIST"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TECHNARCHIST",
   "civilopedia": "TXT_KEY_UNIT_TECHNARCHIST_PEDIA",

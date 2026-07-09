@@ -47,6 +47,11 @@
  "cost": {
   "production": 133
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TAMED_BLACKBEAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TAMED_BLACKBEAR",
   "civilopedia": "TXT_KEY_UNIT_BLACKBEAR_PEDIA",

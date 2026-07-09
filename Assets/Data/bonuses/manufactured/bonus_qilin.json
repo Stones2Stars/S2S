@@ -2,7 +2,7 @@
  "type": "BONUS_QILIN",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_QILIN"
+   "define": "ART_DEF_BONUS_QILIN"
   }
  },
  "identity": {

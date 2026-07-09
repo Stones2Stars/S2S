@@ -78,7 +78,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ADVANCED_SHIELDING"
+   "define": "ART_DEF_BUILDING_ADVANCED_SHIELDING"
   }
  },
  "sound": {

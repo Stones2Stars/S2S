@@ -52,6 +52,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HORNEDOWL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HORNEDOWL",
   "civilopedia": "TXT_KEY_UNIT_HORNEDOWL_PEDIA",

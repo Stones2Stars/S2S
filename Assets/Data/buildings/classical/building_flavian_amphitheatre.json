@@ -128,7 +128,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FLAVIAN_AMPHITHEATRE_AMPHITHEATRE"
+   "define": "ART_DEF_BUILDING_FLAVIAN_AMPHITHEATRE_AMPHITHEATRE"
   }
  },
  "sound": {

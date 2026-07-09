@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOUSING_HIGH_TECH_APARTMENTS"
+   "define": "ART_DEF_BUILDING_HOUSING_HIGH_TECH_APARTMENTS"
   }
  },
  "identity": {

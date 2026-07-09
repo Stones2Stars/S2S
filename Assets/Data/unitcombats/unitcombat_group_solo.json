@@ -24,15 +24,15 @@
   }
  },
  "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "sizeMatters": {
+  "groupBase": 1
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/group_solo.dds"
   }
  },
  "identity": {
-  "description": "TXT_KEY_UNITCOMBAT_GROUP_SOLO",
-  "base": {
-   "group": 1
-  }
+  "description": "TXT_KEY_UNITCOMBAT_GROUP_SOLO"
  }
 }

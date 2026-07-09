@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_WHEAT"
+   "define": "ART_DEF_BONUS_WHEAT"
   }
  },
  "mapGeneration": {

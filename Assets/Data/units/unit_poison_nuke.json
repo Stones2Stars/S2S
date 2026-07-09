@@ -35,6 +35,11 @@
   "production": 2030,
   "upkeep": 11
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BBM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_POISON_NUKE",
   "civilopedia": "TXT_KEY_UNIT_POISON_NUKE_PEDIA",

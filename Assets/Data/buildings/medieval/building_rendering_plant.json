@@ -141,7 +141,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RENDERING_PLANT"
+   "define": "ART_DEF_BUILDING_RENDERING_PLANT"
   }
  },
  "identity": {

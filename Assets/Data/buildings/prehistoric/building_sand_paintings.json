@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SAND_PAINTINGS"
+   "define": "ART_DEF_BUILDING_SAND_PAINTINGS"
   }
  },
  "identity": {

@@ -49,6 +49,11 @@
   "production": 1376,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ROLLO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ROLLO",
   "civilopedia": "TXT_KEY_UNIT_ROLLO_PEDIA",

@@ -62,6 +62,11 @@
   "production": 900,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SHEHE_MVITA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SHEHE_MVITA",
   "civilopedia": "TXT_KEY_UNIT_SHEHE_MVITA_PEDIA",

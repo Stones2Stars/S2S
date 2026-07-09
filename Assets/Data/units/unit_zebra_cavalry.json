@@ -160,6 +160,11 @@
  "cost": {
   "production": 630
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ZEBRA_CAVALRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ZEBRA_CAVALRY",
   "civilopedia": "TXT_KEY_UNIT_CAVALRY_PEDIA",

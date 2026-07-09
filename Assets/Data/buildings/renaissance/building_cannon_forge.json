@@ -97,7 +97,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CANNON_FORGE"
+   "define": "ART_DEF_BUILDING_CANNON_FORGE"
   }
  },
  "sound": {

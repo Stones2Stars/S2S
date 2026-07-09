@@ -28,6 +28,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TREESLOTH"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TREESLOTH",
   "civilopedia": "TXT_KEY_UNIT_TREESLOTH_PEDIA",

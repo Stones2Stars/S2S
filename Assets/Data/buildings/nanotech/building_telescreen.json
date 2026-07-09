@@ -40,7 +40,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TELESCREEN"
+   "define": "ART_DEF_BUILDING_TELESCREEN"
   }
  },
  "identity": {

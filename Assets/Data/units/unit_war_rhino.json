@@ -67,6 +67,11 @@
  "cost": {
   "production": 138
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WAR_RHINO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WAR_RHINO",
   "civilopedia": "TXT_KEY_UNIT_WAR_RHINO_PEDIA",

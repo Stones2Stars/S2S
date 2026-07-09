@@ -47,6 +47,11 @@
   "production": 864,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DIVICO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DIVICO",
   "civilopedia": "TXT_KEY_UNIT_DIVICO_PEDIA",

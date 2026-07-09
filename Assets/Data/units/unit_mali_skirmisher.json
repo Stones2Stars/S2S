@@ -153,6 +153,11 @@
   "production": 125,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MALI_SKIRMISHER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MALI_SKIRMISHER",
   "civilopedia": "TXT_KEY_UNIT_MALI_SKIRMISHER_PEDIA",

@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MONUMENT_OF_THE_DICTATOR"
+   "define": "ART_DEF_BUILDING_MONUMENT_OF_THE_DICTATOR"
   }
  },
  "sound": {

@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_OMEGA_ASSEMBLER"
+   "define": "ART_DEF_BUILDING_OMEGA_ASSEMBLER"
   }
  },
  "identity": {

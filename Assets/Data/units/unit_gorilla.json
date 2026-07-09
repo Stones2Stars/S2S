@@ -46,6 +46,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GORILLA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GORILLA",
   "civilopedia": "TXT_KEY_UNIT_GORILLA_PEDIA",

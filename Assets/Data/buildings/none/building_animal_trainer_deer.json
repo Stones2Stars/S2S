@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANIMAL_TRAINER_DEER"
+   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_DEER"
   }
  },
  "sound": {

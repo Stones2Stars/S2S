@@ -117,6 +117,11 @@
   "production": 455,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DE_SUCRE_DRAGOONS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DE_SUCRE_DRAGOONS",
   "civilopedia": "TXT_KEY_UNIT_DE_SUCRE_DRAGOONS_PEDIA",

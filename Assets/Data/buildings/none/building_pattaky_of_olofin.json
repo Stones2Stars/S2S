@@ -75,7 +75,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PATTAKY_OF_OLOFIN"
+   "define": "ART_DEF_BUILDING_PATTAKY_OF_OLOFIN"
   }
  },
  "sound": {

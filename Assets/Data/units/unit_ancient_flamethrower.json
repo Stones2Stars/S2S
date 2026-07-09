@@ -69,6 +69,11 @@
   "production": 290,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ANCIENT_FLAMETHROWER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ANCIENT_FLAMETHROWER",
   "civilopedia": "TXT_KEY_UNIT_ANCIENT_FLAMETHROWER_PEDIA",

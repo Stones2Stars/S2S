@@ -56,6 +56,11 @@
   "production": 2320,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DEDAN_KIMATHI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DEDAN_KIMATHI",
   "civilopedia": "TXT_KEY_UNIT_DEDAN_KIMATHI_PEDIA",

@@ -2,7 +2,7 @@
  "type": "BONUS_MAGNESIUM_ORE",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_MAGNESIUM_ORE"
+   "define": "ART_DEF_BONUS_MAGNESIUM_ORE"
   }
  },
  "identity": {

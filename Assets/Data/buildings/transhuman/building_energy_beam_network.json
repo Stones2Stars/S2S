@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ENERGY_BEAM_NETWORK"
+   "define": "ART_DEF_BUILDING_ENERGY_BEAM_NETWORK"
   }
  },
  "identity": {

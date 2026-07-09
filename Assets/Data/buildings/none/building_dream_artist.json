@@ -57,7 +57,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DREAM_ARTIST"
+   "define": "ART_DEF_BUILDING_DREAM_ARTIST"
   }
  },
  "identity": {

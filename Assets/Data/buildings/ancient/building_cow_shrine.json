@@ -45,7 +45,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_COW_SHRINE"
+   "define": "ART_DEF_BUILDING_COW_SHRINE"
   }
  },
  "identity": {

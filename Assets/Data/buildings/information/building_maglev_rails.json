@@ -57,7 +57,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MAGLEV_RAILS"
+   "define": "ART_DEF_BUILDING_MAGLEV_RAILS"
   }
  },
  "identity": {

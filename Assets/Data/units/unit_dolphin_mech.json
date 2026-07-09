@@ -90,6 +90,11 @@
   "upkeep": 6,
   "hurryCostModifier": 50
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DOLPHIN_MECH"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DOLPHIN_MECH",
   "civilopedia": "TXT_KEY_UNIT_DOLPHIN_MECH_PEDIA",

@@ -75,7 +75,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SAFARI_HOTEL"
+   "define": "ART_DEF_BUILDING_SAFARI_HOTEL"
   }
  },
  "identity": {

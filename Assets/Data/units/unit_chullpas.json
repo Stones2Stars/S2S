@@ -84,6 +84,11 @@
   "production": 360,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CHULLPAS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CHULLPAS",
   "civilopedia": "TXT_KEY_UNIT_CHULLPAS_PEDIA",

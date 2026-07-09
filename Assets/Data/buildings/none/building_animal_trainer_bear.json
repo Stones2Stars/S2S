@@ -69,7 +69,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANIMAL_TRAINER_BEAR"
+   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_BEAR"
   }
  },
  "sound": {

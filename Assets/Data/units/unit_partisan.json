@@ -144,6 +144,11 @@
   "production": 540,
   "upkeep": 7
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PARTISAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PARTISAN",
   "civilopedia": "TXT_KEY_UNIT_PARTISAN_PEDIA",

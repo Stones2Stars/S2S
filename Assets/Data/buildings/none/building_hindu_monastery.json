@@ -96,7 +96,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HINDU_MONASTERY"
+   "define": "ART_DEF_BUILDING_HINDU_MONASTERY"
   }
  },
  "sound": {

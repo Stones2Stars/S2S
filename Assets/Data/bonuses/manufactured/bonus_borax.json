@@ -2,7 +2,7 @@
  "type": "BONUS_BORAX",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_BORAX"
+   "define": "ART_DEF_BONUS_BORAX"
   }
  },
  "identity": {

@@ -84,6 +84,11 @@
   "production": 2308,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_UNMANNED_PIRATE_SKIFF"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_UNMANNED_PIRATE_SKIFF",
   "civilopedia": "TXT_KEY_UNIT_UNMANNED_PIRATE_SKIFF_PEDIA",

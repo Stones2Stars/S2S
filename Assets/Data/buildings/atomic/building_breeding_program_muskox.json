@@ -112,7 +112,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BREEDING_PROGRAM_MUSKOX"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_MUSKOX"
   }
  },
  "identity": {

@@ -87,6 +87,11 @@
   "production": 450,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BOMBARD_ELEPHANT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BOMBARD_ELEPHANT",
   "civilopedia": "TXT_KEY_UNIT_BOMBARD_ELEPHANT_PEDIA",

@@ -2,7 +2,7 @@
  "type": "BONUS_TUNGSTEN",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_TUNGSTEN"
+   "define": "ART_DEF_BONUS_TUNGSTEN"
   }
  },
  "identity": {

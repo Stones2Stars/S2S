@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CATACOMBS_OF_KOM_EL_SHOQAFA"
+   "define": "ART_DEF_BUILDING_CATACOMBS_OF_KOM_EL_SHOQAFA"
   }
  },
  "identity": {

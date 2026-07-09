@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_PROTON_DECAY_GENERATOR"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_PROTON_DECAY_GENERATOR"
   }
  },
  "identity": {

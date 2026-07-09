@@ -48,6 +48,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MOA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MOA",
   "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",

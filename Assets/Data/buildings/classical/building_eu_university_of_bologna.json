@@ -134,7 +134,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EU_UNIVERSITY_OF_BOLOGNA"
+   "define": "ART_DEF_BUILDING_EU_UNIVERSITY_OF_BOLOGNA"
   }
  },
  "identity": {

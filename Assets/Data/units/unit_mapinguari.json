@@ -84,6 +84,11 @@
   "production": 182,
   "upkeep": 18
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MAPINGUARI_SPEARMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MAPINGUARI",
   "civilopedia": "TXT_KEY_UNIT_MAPINGUARI_PEDIA",

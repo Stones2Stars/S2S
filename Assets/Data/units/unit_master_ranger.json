@@ -55,6 +55,11 @@
  "cost": {
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MASTER_RANGER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MASTER_RANGER",
   "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",

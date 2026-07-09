@@ -2,7 +2,7 @@
  "type": "FEATURE_PLATY_BARRINGER_CRATER",
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_BARRINGER_CRATER"
+   "define": "ART_DEF_FEATURE_BARRINGER_CRATER"
   }
  },
  "sound": {

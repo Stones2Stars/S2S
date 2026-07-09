@@ -2,7 +2,7 @@
  "type": "BONUS_ARTISAN_PLANETS",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_ARTISAN_PLANETS"
+   "define": "ART_DEF_BONUS_ARTISAN_PLANETS"
   }
  },
  "identity": {

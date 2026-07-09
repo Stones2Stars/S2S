@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_AUTOMATED_PORT"
+   "define": "ART_DEF_BUILDING_AUTOMATED_PORT"
   }
  },
  "identity": {

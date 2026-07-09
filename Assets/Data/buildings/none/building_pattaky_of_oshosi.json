@@ -127,7 +127,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PATTAKY_OF_OSHOSI"
+   "define": "ART_DEF_BUILDING_PATTAKY_OF_OSHOSI"
   }
  },
  "sound": {

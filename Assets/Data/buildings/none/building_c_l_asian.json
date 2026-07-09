@@ -167,7 +167,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_ASIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_ASIAN"
   }
  },
  "identity": {

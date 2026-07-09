@@ -58,6 +58,11 @@
   "production": 530,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BALLOON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BALLOON",
   "civilopedia": "TXT_KEY_UNIT_BALLOON_PEDIA",

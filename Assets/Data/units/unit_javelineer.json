@@ -123,6 +123,11 @@
   "production": 110,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JAVELINEER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_JAVELINEER",
   "civilopedia": "TXT_KEY_UNIT_JAVELINEER_PEDIA",

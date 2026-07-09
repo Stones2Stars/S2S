@@ -38,6 +38,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VIPER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_VIPER",
   "civilopedia": "TXT_KEY_UNIT_VIPER_PEDIA",

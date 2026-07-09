@@ -38,7 +38,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_LISTENING_NODE"
+   "define": "ART_DEF_IMPROVEMENT_LISTENING_NODE"
   }
  },
  "mapGeneration": {

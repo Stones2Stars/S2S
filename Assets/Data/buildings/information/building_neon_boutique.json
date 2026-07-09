@@ -99,7 +99,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NEON_BOUTIQUE"
+   "define": "ART_DEF_BUILDING_NEON_BOUTIQUE"
   }
  },
  "identity": {

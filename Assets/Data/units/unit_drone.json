@@ -65,6 +65,11 @@
   "production": 1635,
   "upkeep": 11
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RECON_DRONE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DRONE",
   "civilopedia": "TXT_KEY_UNIT_DRONE_PEDIA",

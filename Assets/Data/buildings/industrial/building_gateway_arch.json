@@ -83,7 +83,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GATEWAY_ARCH"
+   "define": "ART_DEF_BUILDING_GATEWAY_ARCH"
   }
  },
  "identity": {

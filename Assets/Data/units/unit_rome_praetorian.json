@@ -74,6 +74,11 @@
   "production": 195,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ROME_PRAETORIAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ROME_PRAETORIAN",
   "civilopedia": "TXT_KEY_UNIT_ROME_PRAETORIAN_PEDIA",

@@ -81,6 +81,11 @@
  "cost": {
   "production": 130
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ZEBRA_CHARIOT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ZEBRA_CHARIOT",
   "civilopedia": "TXT_KEY_UNIT_CHARIOT_PEDIA",

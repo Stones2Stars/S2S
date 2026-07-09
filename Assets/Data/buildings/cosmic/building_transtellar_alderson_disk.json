@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRANSTELLAR_ALDERSON_DISK"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_ALDERSON_DISK"
   }
  },
  "identity": {

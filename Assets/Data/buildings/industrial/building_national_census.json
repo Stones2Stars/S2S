@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NATIONAL_CENSUS"
+   "define": "ART_DEF_BUILDING_NATIONAL_CENSUS"
   }
  },
  "identity": {

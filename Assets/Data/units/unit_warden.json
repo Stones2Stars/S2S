@@ -51,6 +51,11 @@
   "production": 265,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WARDEN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WARDEN",
   "civilopedia": "TXT_KEY_UNIT_HUNTER_PEDIA",

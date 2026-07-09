@@ -56,7 +56,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VIRTUAL_WORLD_DATA_ANALYSIS"
+   "define": "ART_DEF_BUILDING_VIRTUAL_WORLD_DATA_ANALYSIS"
   }
  },
  "identity": {

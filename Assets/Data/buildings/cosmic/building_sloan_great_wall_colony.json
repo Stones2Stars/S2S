@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SLOAN_GREAT_WALL_COLONY"
+   "define": "ART_DEF_BUILDING_SLOAN_GREAT_WALL_COLONY"
   }
  },
  "identity": {

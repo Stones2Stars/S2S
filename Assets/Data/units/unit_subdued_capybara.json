@@ -47,6 +47,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CAPYBARA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_CAPYBARA",
   "civilopedia": "TXT_KEY_UNIT_CAPYBARA_PEDIA",

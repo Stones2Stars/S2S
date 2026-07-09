@@ -73,6 +73,11 @@
   "production": 455,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JAEGER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_JAEGER",
   "civilopedia": "TXT_KEY_UNIT_JAEGER_PEDIA",

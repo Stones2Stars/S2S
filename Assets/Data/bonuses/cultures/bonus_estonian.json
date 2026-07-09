@@ -8,7 +8,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_ESTONIAN"
+   "define": "ART_DEF_BONUS_ESTONIAN"
   }
  },
  "identity": {

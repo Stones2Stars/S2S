@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ORDINANCE_CLEAN_WATER_ACT"
+   "define": "ART_DEF_BUILDING_ORDINANCE_CLEAN_WATER_ACT"
   }
  },
  "identity": {

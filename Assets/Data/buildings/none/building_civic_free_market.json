@@ -22,7 +22,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CIVIC_FREE_MARKET"
+   "define": "ART_DEF_BUILDING_CIVIC_FREE_MARKET"
   }
  },
  "identity": {

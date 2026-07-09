@@ -36,7 +36,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WONDERS_OF_THE_DEEP"
+   "define": "ART_DEF_BUILDING_WONDERS_OF_THE_DEEP"
   }
  },
  "sound": {

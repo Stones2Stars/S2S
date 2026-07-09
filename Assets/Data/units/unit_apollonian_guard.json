@@ -120,6 +120,11 @@
   "production": 115,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_APOLLONIAN_GUARD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_APOLLONIAN_GUARD",
   "civilopedia": "TXT_KEY_UNIT_APOLLONIAN_GUARD_PEDIA",

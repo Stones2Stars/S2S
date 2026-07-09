@@ -129,7 +129,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GEMCUTTER"
+   "define": "ART_DEF_BUILDING_GEMCUTTER"
   }
  },
  "identity": {

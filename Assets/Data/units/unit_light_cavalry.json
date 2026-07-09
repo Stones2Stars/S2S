@@ -115,6 +115,11 @@
   "production": 250,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LIGHT_CAVALRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LIGHT_CAVALRY",
   "civilopedia": "TXT_KEY_UNIT_LIGHT_CAVALRY_PEDIA",

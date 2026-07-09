@@ -77,7 +77,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PARROT_AVIARY"
+   "define": "ART_DEF_BUILDING_PARROT_AVIARY"
   }
  },
  "sound": {

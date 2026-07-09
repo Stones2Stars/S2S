@@ -91,7 +91,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_AUGMENTED_SPORTS_ARENA"
+   "define": "ART_DEF_BUILDING_AUGMENTED_SPORTS_ARENA"
   }
  },
  "identity": {

@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_TAR_GATHERER"
+   "define": "ART_DEF_IMPROVEMENT_TAR_GATHERER"
   }
  },
  "identity": {

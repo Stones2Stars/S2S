@@ -82,6 +82,11 @@
   "production": 1660,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_STILETTO_BOAT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_STILETTO_BOAT",
   "civilopedia": "TXT_KEY_UNIT_STILETTO_BOAT_PEDIA",

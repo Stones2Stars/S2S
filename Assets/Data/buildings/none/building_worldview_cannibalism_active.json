@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE"
+   "define": "ART_DEF_BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE"
   }
  },
  "identity": {

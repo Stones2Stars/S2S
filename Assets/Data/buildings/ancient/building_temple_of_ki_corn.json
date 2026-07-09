@@ -67,7 +67,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TEMPLE_OF_KI_CORN"
+   "define": "ART_DEF_BUILDING_TEMPLE_OF_KI_CORN"
   }
  },
  "sound": {

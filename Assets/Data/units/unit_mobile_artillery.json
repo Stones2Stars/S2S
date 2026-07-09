@@ -75,6 +75,11 @@
   "production": 1180,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MOBILE_ARTILLERY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MOBILE_ARTILLERY",
   "civilopedia": "TXT_KEY_UNIT_MOBILE_ARTILLERY_PEDIA",

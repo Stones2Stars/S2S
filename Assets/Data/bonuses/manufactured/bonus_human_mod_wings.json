@@ -2,7 +2,7 @@
  "type": "BONUS_HUMAN_MOD_WINGS",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HUMAN_MOD_WINGS"
+   "define": "ART_DEF_BONUS_HUMAN_MOD_WINGS"
   }
  },
  "identity": {

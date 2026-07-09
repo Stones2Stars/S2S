@@ -78,7 +78,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WESTMINSTER_ABBEY"
+   "define": "ART_DEF_BUILDING_WESTMINSTER_ABBEY"
   }
  },
  "identity": {

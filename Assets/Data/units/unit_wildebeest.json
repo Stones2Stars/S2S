@@ -48,6 +48,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WILDEBEEST"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WILDEBEEST",
   "civilopedia": "TXT_KEY_UNIT_WILDEBEEST_PEDIA",

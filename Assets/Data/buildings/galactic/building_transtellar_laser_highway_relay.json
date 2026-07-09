@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRANSTELLAR_LASER_HIGHWAY_RELAY"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_LASER_HIGHWAY_RELAY"
   }
  },
  "identity": {

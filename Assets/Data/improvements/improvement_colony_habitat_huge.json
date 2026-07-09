@@ -98,7 +98,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_COLONY_HABITAT_HUGE"
+   "define": "ART_DEF_IMPROVEMENT_COLONY_HABITAT_HUGE"
   }
  },
  "identity": {

@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THE_KASHI_VISHWANATH"
+   "define": "ART_DEF_BUILDING_THE_KASHI_VISHWANATH"
   }
  },
  "sound": {

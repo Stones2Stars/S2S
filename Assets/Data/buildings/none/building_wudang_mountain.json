@@ -114,7 +114,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WUDANG_MOUNTAIN"
+   "define": "ART_DEF_BUILDING_WUDANG_MOUNTAIN"
   }
  },
  "sound": {

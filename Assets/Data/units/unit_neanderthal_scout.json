@@ -39,6 +39,11 @@
   "production": 21,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NEANDERTHAL_SCOUT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NEANDERTHAL_SCOUT",
   "civilopedia": "TXT_KEY_UNIT_SCOUT_PEDIA",

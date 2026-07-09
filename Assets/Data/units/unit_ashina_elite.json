@@ -65,6 +65,11 @@
   "production": 310,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ASHINA_ELITE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ASHINA_ELITE",
   "civilopedia": "TXT_KEY_UNIT_ASHINA_ELITE_PEDIA",

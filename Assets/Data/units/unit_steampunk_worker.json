@@ -185,6 +185,11 @@
   "production": 590,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_STEAMPUNK_WORKER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_STEAMPUNK_WORKER",
   "civilopedia": "TXT_KEY_UNIT_STEAMPUNK_WORKER_PEDIA",

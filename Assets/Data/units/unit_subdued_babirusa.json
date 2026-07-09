@@ -148,6 +148,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BABIRUSA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_BABIRUSA",
   "civilopedia": "TXT_KEY_UNIT_BABIRUSA_PEDIA",

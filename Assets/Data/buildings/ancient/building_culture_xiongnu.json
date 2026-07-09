@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_XIONGNU"
+   "define": "ART_DEF_BUILDING_CULTURE_XIONGNU"
   }
  },
  "identity": {

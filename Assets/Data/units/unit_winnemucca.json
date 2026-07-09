@@ -49,6 +49,11 @@
   "production": 2520,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WINNEMUCCA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WINNEMUCCA",
   "civilopedia": "TXT_KEY_UNIT_WINNEMUCCA_PEDIA",

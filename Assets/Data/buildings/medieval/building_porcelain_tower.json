@@ -94,7 +94,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PORCELAIN_TOWER"
+   "define": "ART_DEF_BUILDING_PORCELAIN_TOWER"
   }
  },
  "sound": {

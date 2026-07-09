@@ -58,6 +58,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GREATWHITE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_GREATWHITE",
   "civilopedia": "TXT_KEY_UNIT_GREATWHITE_SHARK_PEDIA",

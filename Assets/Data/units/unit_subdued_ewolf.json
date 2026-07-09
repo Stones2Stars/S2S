@@ -143,6 +143,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_EWOLF"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_EWOLF",
   "civilopedia": "TXT_KEY_UNIT_EWOLF_PEDIA",

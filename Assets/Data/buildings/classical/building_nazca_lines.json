@@ -68,7 +68,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NAZCA_LINES"
+   "define": "ART_DEF_BUILDING_NAZCA_LINES"
   }
  },
  "identity": {

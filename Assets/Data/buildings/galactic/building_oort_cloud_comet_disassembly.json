@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_OORT_CLOUD_COMET_DISASSEMBLY"
+   "define": "ART_DEF_BUILDING_OORT_CLOUD_COMET_DISASSEMBLY"
   }
  },
  "identity": {

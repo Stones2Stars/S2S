@@ -16,7 +16,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_HOT_JUPITER"
+   "define": "ART_DEF_FEATURE_HOT_JUPITER"
   }
  },
  "sound": {

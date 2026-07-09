@@ -12,7 +12,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_OMEGA_FATTY_ACID"
+   "define": "ART_DEF_BONUS_OMEGA_FATTY_ACID"
   }
  },
  "identity": {

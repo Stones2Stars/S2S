@@ -92,7 +92,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SMITH_COPPER"
+   "define": "ART_DEF_BUILDING_SMITH_COPPER"
   }
  },
  "identity": {

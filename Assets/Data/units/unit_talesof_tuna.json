@@ -17,6 +17,11 @@
    "BUILDING_FOLKLORE_TUNA"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TALESOF_TUNA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TALESOF_TUNA",
   "civilopedia": "TXT_KEY_UNIT_TUNA_PEDIA",

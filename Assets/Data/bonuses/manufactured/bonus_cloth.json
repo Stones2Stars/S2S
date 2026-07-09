@@ -24,7 +24,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CLOTH"
+   "define": "ART_DEF_BONUS_CLOTH"
   }
  },
  "identity": {

@@ -216,7 +216,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_OIL_REFINERY"
+   "define": "ART_DEF_BUILDING_OIL_REFINERY"
   }
  },
  "sound": {

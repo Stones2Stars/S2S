@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DESIGNED_ANIMAL_BATTLE_ARENA"
+   "define": "ART_DEF_BUILDING_DESIGNED_ANIMAL_BATTLE_ARENA"
   }
  },
  "identity": {

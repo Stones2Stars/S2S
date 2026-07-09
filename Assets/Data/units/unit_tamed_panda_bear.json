@@ -47,6 +47,11 @@
  "cost": {
   "production": 133
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TAMED_PANDA_BEAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TAMED_PANDA_BEAR",
   "civilopedia": "TXT_KEY_UNIT_PANDA_BEAR_PEDIA",

@@ -115,7 +115,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANGKOR_WAT"
+   "define": "ART_DEF_BUILDING_ANGKOR_WAT"
   }
  },
  "identity": {

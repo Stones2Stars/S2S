@@ -39,6 +39,11 @@
    "BUILDING_FOLKLORE_SEAGULL"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GULL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_GULL",
   "civilopedia": "TXT_KEY_UNIT_GULL_PEDIA",

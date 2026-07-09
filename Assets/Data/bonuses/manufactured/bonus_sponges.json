@@ -2,7 +2,7 @@
  "type": "BONUS_SPONGES",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SPONGES"
+   "define": "ART_DEF_BONUS_SPONGES"
   }
  },
  "identity": {

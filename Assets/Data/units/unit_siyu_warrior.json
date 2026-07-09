@@ -80,6 +80,11 @@
   "production": 455,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SIYU_WARRIOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SIYU_WARRIOR",
   "civilopedia": "TXT_KEY_UNIT_SIYU_WARRIOR_PEDIA",

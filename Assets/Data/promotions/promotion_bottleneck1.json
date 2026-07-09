@@ -1,12 +1,5 @@
 {
  "type": "PROMOTION_BOTTLENECK1",
- "strength": {
-  "unit": {
-   "perVolumeMore": {
-    "percent": 10
-   }
-  }
- },
  "promotionLine": {
   "PROMOTIONLINE_BOTTLENECK": 1
  },
@@ -18,6 +11,11 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perVolumeMore": 10
+  }
  },
  "identity": {
   "description": "TXT_KEY_PROMOTION_BOTTLENECK1"

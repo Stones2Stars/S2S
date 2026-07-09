@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CARNIVAL_DANCING_BEAR"
+   "define": "ART_DEF_BUILDING_CARNIVAL_DANCING_BEAR"
   }
  },
  "identity": {

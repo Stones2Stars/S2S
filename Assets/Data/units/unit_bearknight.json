@@ -66,6 +66,11 @@
  "cost": {
   "production": 375
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BEARKNIGHT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BEARKNIGHT",
   "civilopedia": "TXT_KEY_UNIT_BEARKNIGHT_PEDIA",

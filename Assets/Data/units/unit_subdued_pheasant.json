@@ -135,6 +135,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PHEASANT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_PHEASANT",
   "civilopedia": "TXT_KEY_UNIT_PHEASANT_PEDIA",

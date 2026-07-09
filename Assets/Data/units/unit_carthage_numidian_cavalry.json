@@ -132,6 +132,11 @@
   "production": 235,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CARTHAGE_NUMIDIAN_CAVALRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CARTHAGE_NUMIDIAN_CAVALRY",
   "civilopedia": "TXT_KEY_UNIT_CARTHAGE_NUMIDIAN_CAVALRY_PEDIA",

@@ -33,7 +33,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX"
   }
  },
  "identity": {

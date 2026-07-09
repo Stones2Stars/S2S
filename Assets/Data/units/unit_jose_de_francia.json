@@ -59,6 +59,11 @@
   "production": 2520,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JOSE_DE_FRANCIA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_JOSE_DE_FRANCIA",
   "civilopedia": "TXT_KEY_UNIT_JOSE_DE_FRANCIA_PEDIA",

@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_TIMEHOLE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_TIMEHOLE"
   }
  },
  "identity": {

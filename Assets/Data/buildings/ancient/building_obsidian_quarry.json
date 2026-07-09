@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_OBSIDIAN_QUARRY"
+   "define": "ART_DEF_BUILDING_OBSIDIAN_QUARRY"
   }
  },
  "identity": {

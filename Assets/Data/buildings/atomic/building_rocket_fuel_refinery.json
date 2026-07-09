@@ -95,7 +95,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ROCKET_FUEL_REFINERY"
+   "define": "ART_DEF_BUILDING_ROCKET_FUEL_REFINERY"
   }
  },
  "sound": {

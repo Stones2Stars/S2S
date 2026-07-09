@@ -87,7 +87,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PAWN_SHOP"
+   "define": "ART_DEF_BUILDING_PAWN_SHOP"
   }
  },
  "sound": {

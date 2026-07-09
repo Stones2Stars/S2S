@@ -63,7 +63,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WOLF_1061C_COLONY"
+   "define": "ART_DEF_BUILDING_WOLF_1061C_COLONY"
   }
  },
  "identity": {

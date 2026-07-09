@@ -46,7 +46,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MAGLEV_ELEVATORS"
+   "define": "ART_DEF_BUILDING_MAGLEV_ELEVATORS"
   }
  },
  "identity": {

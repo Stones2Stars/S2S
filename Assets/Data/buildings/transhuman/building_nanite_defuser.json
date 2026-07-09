@@ -87,7 +87,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NANITE_DEFUSER"
+   "define": "ART_DEF_BUILDING_NANITE_DEFUSER"
   }
  },
  "sound": {

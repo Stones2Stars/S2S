@@ -62,6 +62,11 @@
   "production": 125,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BATTERING_RAM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BATTERING_RAM",
   "civilopedia": "TXT_KEY_UNIT_BATTERING_RAM_PEDIA",

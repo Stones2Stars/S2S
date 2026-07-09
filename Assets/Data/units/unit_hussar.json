@@ -154,6 +154,11 @@
   "production": 630,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HUSSAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HUSSAR",
   "civilopedia": "TXT_KEY_UNIT_HUSSAR_PEDIA",

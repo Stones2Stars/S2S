@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRANSTELLAR_CUSTOMS_CENTER"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_CUSTOMS_CENTER"
   }
  },
  "identity": {

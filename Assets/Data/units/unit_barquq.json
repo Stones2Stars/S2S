@@ -40,6 +40,11 @@
   "production": 1472,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BARQUQ"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BARQUQ",
   "civilopedia": "TXT_KEY_UNIT_BARQUQ_PEDIA",

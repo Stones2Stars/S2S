@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_ARTIFICIAL_ELLIPTICAL_GALAXY"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_ARTIFICIAL_ELLIPTICAL_GALAXY"
   }
  },
  "identity": {

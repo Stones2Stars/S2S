@@ -85,6 +85,11 @@
   "production": 175,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SHANG_CHARIOT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SHANG_CHARIOT",
   "civilopedia": "TXT_KEY_UNIT_SHANG_CHARIOT_PEDIA",

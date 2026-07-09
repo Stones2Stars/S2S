@@ -102,7 +102,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PAVED_ROADS"
+   "define": "ART_DEF_BUILDING_PAVED_ROADS"
   }
  },
  "sound": {

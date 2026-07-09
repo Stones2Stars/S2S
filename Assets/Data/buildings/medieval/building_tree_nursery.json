@@ -104,7 +104,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TREE_NURSERY"
+   "define": "ART_DEF_BUILDING_TREE_NURSERY"
   }
  },
  "identity": {

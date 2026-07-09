@@ -111,7 +111,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SULTAN_QABOOS_GRAND_MOSQUE"
+   "define": "ART_DEF_BUILDING_SULTAN_QABOOS_GRAND_MOSQUE"
   }
  },
  "sound": {

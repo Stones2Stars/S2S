@@ -76,6 +76,11 @@
   "production": 495,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GREAT_BOMBARD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GREAT_BOMBARD",
   "civilopedia": "TXT_KEY_UNIT_GREAT_BOMBARD_PEDIA",

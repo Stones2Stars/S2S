@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MEGAVERSE_PORTAL"
+   "define": "ART_DEF_BUILDING_MEGAVERSE_PORTAL"
   }
  },
  "identity": {

@@ -102,6 +102,11 @@
   "production": 300,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BARUD_WARRIOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BARUD_WARRIOR",
   "civilopedia": "TXT_KEY_UNIT_BARUD_WARRIOR_PEDIA",

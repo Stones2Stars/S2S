@@ -122,6 +122,11 @@
   "production": 275,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AMAZON_RIDER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AMAZON_RIDER",
   "civilopedia": "TXT_KEY_UNIT_AMAZON_RIDER_PEDIA",

@@ -82,7 +82,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FENCING_ACADEMY"
+   "define": "ART_DEF_BUILDING_FENCING_ACADEMY"
   }
  },
  "sound": {

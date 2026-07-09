@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_SUN_SCOOP"
+   "define": "ART_DEF_IMPROVEMENT_SUN_SCOOP"
   }
  },
  "mapGeneration": {

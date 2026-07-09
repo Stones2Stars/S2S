@@ -65,6 +65,11 @@
   "upkeep": 1,
   "hurryCostModifier": 200
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LEONIDAS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LEONIDAS",
   "civilopedia": "TXT_KEY_UNIT_LEONIDAS_PEDIA",

@@ -17,6 +17,11 @@
    "BUILDING_FOLKLORE_COD"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TALESOF_COD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TALESOF_COD",
   "civilopedia": "TXT_KEY_UNIT_COD_PEDIA",

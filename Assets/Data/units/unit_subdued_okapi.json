@@ -148,6 +148,11 @@
    "BUILDING_FOLKLORE_OKAPI"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_OKAPI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_OKAPI",
   "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",

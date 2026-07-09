@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SPACE_COLONY_MARTIAN"
+   "define": "ART_DEF_BUILDING_SPACE_COLONY_MARTIAN"
   }
  },
  "identity": {

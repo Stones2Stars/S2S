@@ -35,7 +35,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VENUS_FUSION_PLANT"
+   "define": "ART_DEF_BUILDING_VENUS_FUSION_PLANT"
   }
  },
  "identity": {

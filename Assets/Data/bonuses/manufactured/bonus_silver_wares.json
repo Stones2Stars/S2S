@@ -11,7 +11,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SILVER_WARES"
+   "define": "ART_DEF_BONUS_SILVER_WARES"
   }
  },
  "identity": {

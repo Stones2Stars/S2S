@@ -130,7 +130,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EU_UNIVERSITY_OF_BARCELONA"
+   "define": "ART_DEF_BUILDING_EU_UNIVERSITY_OF_BARCELONA"
   }
  },
  "identity": {

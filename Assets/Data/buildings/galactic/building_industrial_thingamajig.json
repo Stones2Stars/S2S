@@ -49,7 +49,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INDUSTRIAL_THINGAMAJIG"
+   "define": "ART_DEF_BUILDING_INDUSTRIAL_THINGAMAJIG"
   }
  },
  "identity": {

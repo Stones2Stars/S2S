@@ -20,6 +20,11 @@
    "icon": ",Art/Interface/Buttons/Units/Missionary_Taoist.dds,Art/Interface/Buttons/Unit_Resource_Atlas.dds,7,3"
   }
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MISSIONARY_CAODAI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CAODAI_MISSIONARY",
   "civilopedia": "TXT_KEY_CONCEPT_RELIGION_PEDIA",

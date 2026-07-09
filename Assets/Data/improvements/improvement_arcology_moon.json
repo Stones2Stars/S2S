@@ -34,7 +34,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_ARCOLOGY_MOON"
+   "define": "ART_DEF_IMPROVEMENT_ARCOLOGY_MOON"
   }
  },
  "identity": {

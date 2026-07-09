@@ -103,6 +103,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HUMPBACK_WHALE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HUMPBACK_WHALE",
   "civilopedia": "TXT_KEY_UNIT_HUMPBACK_WHALE_PEDIA",

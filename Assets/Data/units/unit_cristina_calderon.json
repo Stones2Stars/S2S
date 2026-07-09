@@ -56,6 +56,11 @@
   "production": 3960,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CRISTINA_CALDERON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CRISTINA_CALDERON",
   "civilopedia": "TXT_KEY_UNIT_CRISTINA_CALDERON_PEDIA",

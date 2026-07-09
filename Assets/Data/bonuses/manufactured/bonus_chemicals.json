@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CHEMICALS"
+   "define": "ART_DEF_BONUS_CHEMICALS"
   }
  },
  "identity": {

@@ -108,6 +108,11 @@
   "production": 120,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DOGWORKER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WORKANIMAL",
   "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",

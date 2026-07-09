@@ -95,6 +95,11 @@
   "production": 2505,
   "upkeep": 11
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ELECTRIC_TANK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_THERMOBARIC_TANK",
   "civilopedia": "TXT_KEY_UNIT_THERMOBARIC_TANK_PEDIA",

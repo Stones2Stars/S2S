@@ -61,6 +61,11 @@
   "upkeep": 5,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DOCTOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DR",
   "civilopedia": "TXT_KEY_UNIT_DR_PEDIA",

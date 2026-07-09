@@ -111,6 +111,11 @@
   "production": 115,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DUGUNDIZ"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DUGUNDIZ",
   "civilopedia": "TXT_KEY_UNIT_DUGUNDIZ_PEDIA",

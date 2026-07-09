@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ASTEROID_INTERIOR_CITY"
+   "define": "ART_DEF_BUILDING_ASTEROID_INTERIOR_CITY"
   }
  },
  "identity": {

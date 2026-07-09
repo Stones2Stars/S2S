@@ -64,6 +64,11 @@
   "production": 805,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BRIGADE_PIRON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BRIGADE_PIRON",
   "civilopedia": "TXT_KEY_UNIT_BRIGADE_PIRON_PEDIA",

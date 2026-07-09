@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SOLAR_WEATHER_MONITOR"
+   "define": "ART_DEF_BUILDING_SOLAR_WEATHER_MONITOR"
   }
  },
  "identity": {

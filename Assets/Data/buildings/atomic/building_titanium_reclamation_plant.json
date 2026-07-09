@@ -90,7 +90,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TITANIUM_RECLAMATION_PLANT"
+   "define": "ART_DEF_BUILDING_TITANIUM_RECLAMATION_PLANT"
   }
  },
  "identity": {

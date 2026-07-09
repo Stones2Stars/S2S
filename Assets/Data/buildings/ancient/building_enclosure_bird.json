@@ -59,7 +59,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ENCLOSURE_BIRD"
+   "define": "ART_DEF_BUILDING_ENCLOSURE_BIRD"
   }
  },
  "identity": {

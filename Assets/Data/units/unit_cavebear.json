@@ -41,6 +41,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CAVEBEAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CAVE_BEAR",
   "civilopedia": "TXT_KEY_UNIT_CAVE_BEAR_PEDIA",

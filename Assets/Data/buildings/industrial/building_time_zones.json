@@ -57,7 +57,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TIME_ZONES"
+   "define": "ART_DEF_BUILDING_TIME_ZONES"
   }
  },
  "identity": {

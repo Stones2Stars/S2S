@@ -91,7 +91,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NEMOS_NAVAL_ACADEMY"
+   "define": "ART_DEF_BUILDING_NEMOS_NAVAL_ACADEMY"
   }
  },
  "sound": {

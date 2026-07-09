@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE"
+   "define": "ART_DEF_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE"
   }
  },
  "identity": {

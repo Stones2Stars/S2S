@@ -92,7 +92,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_BARRELS"
+   "define": "ART_DEF_BUILDING_FACTORY_BARRELS"
   }
  },
  "identity": {

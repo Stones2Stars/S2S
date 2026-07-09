@@ -111,6 +111,11 @@
   "production": 115,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MEDE_RETINUES"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MEDE_RETINUES",
   "civilopedia": "TXT_KEY_UNIT_MEDE_RETINUES_PEDIA",

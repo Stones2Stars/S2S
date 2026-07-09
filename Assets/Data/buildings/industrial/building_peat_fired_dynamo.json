@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PEAT_FIRED_DYNAMO"
+   "define": "ART_DEF_BUILDING_PEAT_FIRED_DYNAMO"
   }
  },
  "identity": {

@@ -62,6 +62,11 @@
   "production": 2220,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CHULALONGKORN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CHULALONGKORN",
   "civilopedia": "TXT_KEY_UNIT_CHULALONGKORN_PEDIA",

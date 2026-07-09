@@ -117,7 +117,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BROADCAST_TOWER"
+   "define": "ART_DEF_BUILDING_BROADCAST_TOWER"
   }
  },
  "sound": {

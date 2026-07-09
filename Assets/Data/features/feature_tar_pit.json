@@ -35,7 +35,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_TAR_PIT"
+   "define": "ART_DEF_FEATURE_TAR_PIT"
   }
  },
  "sound": {

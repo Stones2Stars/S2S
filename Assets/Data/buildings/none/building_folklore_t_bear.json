@@ -109,7 +109,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOLKLORE_T_BEAR"
+   "define": "ART_DEF_BUILDING_FOLKLORE_T_BEAR"
   }
  },
  "identity": {

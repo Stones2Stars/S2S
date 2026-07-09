@@ -103,7 +103,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BURJ_KHALIFA"
+   "define": "ART_DEF_BUILDING_BURJ_KHALIFA"
   }
  },
  "identity": {

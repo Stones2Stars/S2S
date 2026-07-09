@@ -65,6 +65,11 @@
   "production": 805,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_IWIA_BATTALION"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_IWIA_BATTALION",
   "civilopedia": "TXT_KEY_UNIT_IWIA_BATTALION_PEDIA",

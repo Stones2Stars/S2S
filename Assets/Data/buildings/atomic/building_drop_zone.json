@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DROP_ZONE"
+   "define": "ART_DEF_BUILDING_DROP_ZONE"
   }
  },
  "identity": {

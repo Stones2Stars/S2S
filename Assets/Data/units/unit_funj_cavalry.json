@@ -119,6 +119,11 @@
   "production": 345,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FUNJ_CAVALRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FUNJ_CAVALRY",
   "civilopedia": "TXT_KEY_UNIT_FUNJ_CAVALRY_PEDIA",

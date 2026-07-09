@@ -69,6 +69,11 @@
   "production": 315,
   "upkeep": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MAPINGUARI_PIKE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MAPINGUARI_PIKE",
   "civilopedia": "TXT_KEY_UNIT_MAPINGUARI_PEDIA",

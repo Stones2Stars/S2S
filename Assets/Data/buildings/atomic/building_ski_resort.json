@@ -96,7 +96,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SKI_RESORT"
+   "define": "ART_DEF_BUILDING_SKI_RESORT"
   }
  },
  "sound": {

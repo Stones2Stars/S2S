@@ -2,7 +2,7 @@
  "type": "BONUS_UNOBTAINIUM",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_UNOBTAINIUM"
+   "define": "ART_DEF_BONUS_UNOBTAINIUM"
   }
  },
  "identity": {

@@ -38,7 +38,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TOURISM_A"
+   "define": "ART_DEF_BUILDING_TOURISM_A"
   }
  },
  "identity": {

@@ -43,7 +43,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_UNIVERSAL_ECONOMY"
+   "define": "ART_DEF_BUILDING_UNIVERSAL_ECONOMY"
   }
  },
  "identity": {

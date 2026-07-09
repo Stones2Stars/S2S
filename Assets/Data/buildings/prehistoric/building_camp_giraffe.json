@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CAMP_GIRAFFE"
+   "define": "ART_DEF_BUILDING_CAMP_GIRAFFE"
   }
  },
  "identity": {

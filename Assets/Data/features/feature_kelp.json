@@ -28,7 +28,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_KELP"
+   "define": "ART_DEF_FEATURE_KELP"
   }
  },
  "sound": {

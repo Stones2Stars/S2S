@@ -43,6 +43,11 @@
   "production": 2292,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SUBMERGED_TOWN_PLATFORM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBMERGED_TOWN_PLATFORM",
   "civilopedia": "TXT_KEY_UNIT_SUBMERGED_TOWN_PLATFORM_PEDIA",

@@ -55,6 +55,11 @@
   "production": 4720,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JOHN_FRUM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_JOHN_FRUM",
   "civilopedia": "TXT_KEY_UNIT_JOHN_FRUM_PEDIA",

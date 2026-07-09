@@ -44,7 +44,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_OORT_CLOUD_DEUTERIUM_MINE"
+   "define": "ART_DEF_BUILDING_OORT_CLOUD_DEUTERIUM_MINE"
   }
  },
  "identity": {

@@ -48,6 +48,11 @@
   "production": 2140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MANUELITO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MANUELITO",
   "civilopedia": "TXT_KEY_UNIT_MANUELITO_PEDIA",

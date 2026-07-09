@@ -131,6 +131,11 @@
   "production": 1150,
   "upkeep": 16
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VWARLORD_MODERN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WARLORDV",
   "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",

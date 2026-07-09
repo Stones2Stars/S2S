@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EUROPA_COLONY"
+   "define": "ART_DEF_BUILDING_EUROPA_COLONY"
   }
  },
  "identity": {

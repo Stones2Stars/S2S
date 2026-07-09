@@ -163,7 +163,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANIMAL_TRAINER_HORSE"
+   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_HORSE"
   }
  },
  "sound": {

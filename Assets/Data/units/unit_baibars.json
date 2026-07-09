@@ -58,6 +58,11 @@
   "production": 1472,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BAIBARS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BAIBARS",
   "civilopedia": "TXT_KEY_UNIT_BAIBARS_PEDIA",

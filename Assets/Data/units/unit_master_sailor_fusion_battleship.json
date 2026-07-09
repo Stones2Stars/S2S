@@ -71,6 +71,11 @@
  "cost": {
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FUSION_BATTLESHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MASTER_SAILOR_FUSION_BATTLESHIP",
   "civilopedia": "TXT_KEY_UNIT_FUSION_BATTLESHIP_PEDIA",

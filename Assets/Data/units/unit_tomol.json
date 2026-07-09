@@ -68,6 +68,11 @@
   "production": 92,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TOMOL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TOMOL",
   "civilopedia": "TXT_KEY_UNIT_TOMOL_PEDIA",

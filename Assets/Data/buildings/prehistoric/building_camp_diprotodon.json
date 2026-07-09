@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CAMP_DIPROTODON"
+   "define": "ART_DEF_BUILDING_CAMP_DIPROTODON"
   }
  },
  "identity": {

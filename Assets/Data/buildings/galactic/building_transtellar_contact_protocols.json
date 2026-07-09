@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS"
   }
  },
  "identity": {

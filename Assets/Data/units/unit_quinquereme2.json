@@ -50,6 +50,11 @@
   "production": 240,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_QUINQUEREME"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_QUINQUEREME2",
   "civilopedia": "TXT_KEY_UNIT_QUINQUEREME2_PEDIA",

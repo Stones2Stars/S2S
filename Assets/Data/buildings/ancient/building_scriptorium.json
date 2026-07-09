@@ -90,7 +90,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SCRIPTORIUM"
+   "define": "ART_DEF_BUILDING_SCRIPTORIUM"
   }
  },
  "identity": {

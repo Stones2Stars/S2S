@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SMELTER_BRASS"
+   "define": "ART_DEF_BUILDING_SMELTER_BRASS"
   }
  },
  "identity": {

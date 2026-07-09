@@ -68,7 +68,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TLALOCS_ALTAR"
+   "define": "ART_DEF_BUILDING_TLALOCS_ALTAR"
   }
  },
  "sound": {

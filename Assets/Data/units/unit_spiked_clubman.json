@@ -72,6 +72,11 @@
   "production": 31,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SPIKED_CLUBMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SPIKED_CLUBMAN",
   "civilopedia": "TXT_KEY_UNIT_SPIKED_CLUBMAN_PEDIA",

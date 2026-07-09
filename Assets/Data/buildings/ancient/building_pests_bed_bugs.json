@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PESTS_BED_BUGS"
+   "define": "ART_DEF_BUILDING_PESTS_BED_BUGS"
   }
  },
  "identity": {

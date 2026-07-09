@@ -43,6 +43,11 @@
   "production": 387,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_EARLY_IMP_GUARD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_EARLY_IMP_GUARD",
   "civilopedia": "TXT_KEY_UNIT_EARLY_IMP_GUARD_PEDIA",

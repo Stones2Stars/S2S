@@ -152,7 +152,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ELECTRONICS_STORE"
+   "define": "ART_DEF_BUILDING_ELECTRONICS_STORE"
   }
  },
  "identity": {

@@ -46,6 +46,11 @@
   "production": 96,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NEANDERTHAL_WORKBOAT_ANCIENT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NEANDERTHAL_WORKBOAT",
   "civilopedia": "TXT_KEY_UNIT_WORKBOAT_PEDIA",

@@ -96,7 +96,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NUCLEAR_PLANT"
+   "define": "ART_DEF_BUILDING_NUCLEAR_PLANT"
   }
  },
  "sound": {

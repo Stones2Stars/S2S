@@ -72,6 +72,11 @@
   "production": 2006,
   "upkeep": 11
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LUNAR_ROVER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LUNAR_ROVER",
   "civilopedia": "TXT_KEY_UNIT_LUNAR_ROVER_PEDIA",

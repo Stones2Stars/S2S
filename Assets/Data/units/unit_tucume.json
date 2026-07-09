@@ -82,6 +82,11 @@
   "production": 255,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TUCUME"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TUCUME",
   "civilopedia": "TXT_KEY_UNIT_TUCUME_PEDIA",

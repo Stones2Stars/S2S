@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MAGINOT_LINE"
+   "define": "ART_DEF_BUILDING_MAGINOT_LINE"
   }
  },
  "identity": {

@@ -113,7 +113,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CHEMISTRY_LAB"
+   "define": "ART_DEF_BUILDING_CHEMISTRY_LAB"
   }
  },
  "identity": {

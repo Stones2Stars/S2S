@@ -9,7 +9,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_VICTORIA_FALLS"
+   "define": "ART_DEF_FEATURE_VICTORIA_FALLS"
   }
  },
  "sound": {

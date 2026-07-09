@@ -69,6 +69,11 @@
   "production": 290,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_YUMI_ARCHER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_YUMI_ARCHER",
   "civilopedia": "TXT_KEY_UNIT_YUMI_ARCHER_PEDIA",

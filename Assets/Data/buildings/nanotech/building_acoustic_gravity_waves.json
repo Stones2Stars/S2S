@@ -40,7 +40,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ACOUSTIC_GRAVITY_WAVES"
+   "define": "ART_DEF_BUILDING_ACOUSTIC_GRAVITY_WAVES"
   }
  },
  "identity": {

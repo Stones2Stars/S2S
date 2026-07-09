@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_AESTIVATION_CENTER"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_AESTIVATION_CENTER"
   }
  },
  "identity": {

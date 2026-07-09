@@ -308,7 +308,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GRAND_EARTH_FESTIVAL"
+   "define": "ART_DEF_BUILDING_GRAND_EARTH_FESTIVAL"
   }
  },
  "identity": {

@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BIG_BEN"
+   "define": "ART_DEF_BUILDING_BIG_BEN"
   }
  },
  "identity": {

@@ -43,6 +43,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WOMBAT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WOMBAT",
   "civilopedia": "TXT_KEY_UNIT_WOMBAT_PEDIA",

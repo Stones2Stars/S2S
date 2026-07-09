@@ -181,7 +181,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_PLANT_GATHERING_CAMP"
+   "define": "ART_DEF_IMPROVEMENT_PLANT_GATHERING_CAMP"
   }
  },
  "identity": {

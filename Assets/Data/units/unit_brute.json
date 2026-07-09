@@ -50,6 +50,11 @@
   "production": 3,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BRUTE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BRUTE",
   "civilopedia": "TXT_KEY_UNIT_BRUTE_PEDIA",

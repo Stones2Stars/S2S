@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PERSONAL_WEB_CHANNEL"
+   "define": "ART_DEF_BUILDING_PERSONAL_WEB_CHANNEL"
   }
  },
  "identity": {

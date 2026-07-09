@@ -22,7 +22,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WORLDVIEW_CANNIBALISM"
+   "define": "ART_DEF_BUILDING_WORLDVIEW_CANNIBALISM"
   }
  },
  "sound": {

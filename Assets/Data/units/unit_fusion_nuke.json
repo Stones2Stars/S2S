@@ -53,6 +53,11 @@
   "production": 4056,
   "upkeep": 21
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TACTICAL_FUSI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FUSION_NUKE",
   "civilopedia": "TXT_KEY_UNIT_FUSION_NUKE_PEDIA",

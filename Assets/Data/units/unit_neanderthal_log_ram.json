@@ -86,6 +86,11 @@
   "production": 111,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NEANDERTHAL_LOG_RAM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NEANDERTHAL_LOG_RAM",
   "civilopedia": "TXT_KEY_UNIT_LOG_RAM_PEDIA",

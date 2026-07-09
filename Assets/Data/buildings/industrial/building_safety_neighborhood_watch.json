@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SAFETY_NEIGHBORHOOD_WATCH"
+   "define": "ART_DEF_BUILDING_SAFETY_NEIGHBORHOOD_WATCH"
   }
  },
  "identity": {

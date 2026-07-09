@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PHILOSOPHERS_CASTLE"
+   "define": "ART_DEF_BUILDING_PHILOSOPHERS_CASTLE"
   }
  },
  "identity": {

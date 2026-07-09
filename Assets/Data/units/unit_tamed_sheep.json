@@ -87,6 +87,11 @@
  "cost": {
   "production": 175
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_IBEX"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TAMED_SHEEP",
   "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",

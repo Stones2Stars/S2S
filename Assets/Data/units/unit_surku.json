@@ -107,6 +107,11 @@
   "production": 105,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SURKU"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SURKU",
   "civilopedia": "TXT_KEY_UNIT_SURKU_PEDIA",

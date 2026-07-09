@@ -43,7 +43,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_FINE_CLAY"
+   "define": "ART_DEF_BONUS_FINE_CLAY"
   }
  },
  "mapGeneration": {

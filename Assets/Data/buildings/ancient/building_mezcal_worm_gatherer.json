@@ -83,7 +83,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MEZCAL_WORM_GATHERER"
+   "define": "ART_DEF_BUILDING_MEZCAL_WORM_GATHERER"
   }
  },
  "identity": {

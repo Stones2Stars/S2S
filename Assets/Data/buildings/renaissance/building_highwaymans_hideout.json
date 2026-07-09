@@ -129,7 +129,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HIGHWAYMANS_HIDEOUT"
+   "define": "ART_DEF_BUILDING_HIGHWAYMANS_HIDEOUT"
   }
  },
  "identity": {

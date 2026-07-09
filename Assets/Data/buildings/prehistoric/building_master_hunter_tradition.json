@@ -221,7 +221,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MASTER_HUNTER"
+   "define": "ART_DEF_BUILDING_MASTER_HUNTER"
   }
  },
  "identity": {

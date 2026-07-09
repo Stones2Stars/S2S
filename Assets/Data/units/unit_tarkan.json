@@ -131,6 +131,11 @@
   "production": 235,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TARKAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TARKAN",
   "civilopedia": "TXT_KEY_UNIT_TARKAN_PEDIA",

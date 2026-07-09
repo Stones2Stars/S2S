@@ -61,6 +61,11 @@
   "production": 105,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PAPUAN_CANNIBAL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PAPUAN_CANNIBAL",
   "civilopedia": "TXT_KEY_UNIT_PAPUAN_CANNIBAL_PEDIA",

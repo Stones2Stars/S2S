@@ -244,6 +244,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FIGURINE_POTTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FIGURINE_POTTER",
   "civilopedia": "TXT_KEY_UNIT_FIGURINE_POTTER_PEDIA",

@@ -105,6 +105,11 @@
   "production": 125,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SUMERIAN_VULTURE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUMERIAN_VULTURE",
   "civilopedia": "TXT_KEY_UNIT_SUMERIAN_VULTURE_PEDIA",

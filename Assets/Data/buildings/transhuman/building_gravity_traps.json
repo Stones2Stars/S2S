@@ -68,7 +68,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GRAVITY_TRAPS"
+   "define": "ART_DEF_BUILDING_GRAVITY_TRAPS"
   }
  },
  "sound": {

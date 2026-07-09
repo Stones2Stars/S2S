@@ -2,7 +2,7 @@
  "type": "BONUS_HUMAN_MOD_PURE_ENERGY",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HUMAN_MOD_PURE_ENERGY"
+   "define": "ART_DEF_BONUS_HUMAN_MOD_PURE_ENERGY"
   }
  },
  "identity": {

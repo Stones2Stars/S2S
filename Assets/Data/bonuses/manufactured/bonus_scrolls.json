@@ -43,7 +43,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SCROLLS"
+   "define": "ART_DEF_BONUS_SCROLLS"
   }
  },
  "identity": {

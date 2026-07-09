@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_BLACK_HOLE_INTERIOR_PLANET"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BLACK_HOLE_INTERIOR_PLANET"
   }
  },
  "identity": {

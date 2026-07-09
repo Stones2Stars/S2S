@@ -64,6 +64,11 @@
   "production": 864,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CHROCUS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CHROCUS",
   "civilopedia": "TXT_KEY_UNIT_CHROCUS_PEDIA",

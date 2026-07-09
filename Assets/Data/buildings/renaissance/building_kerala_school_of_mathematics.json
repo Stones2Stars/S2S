@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_KERALA_SCHOOL_OF_MATHEMATICS"
+   "define": "ART_DEF_BUILDING_KERALA_SCHOOL_OF_MATHEMATICS"
   }
  },
  "identity": {

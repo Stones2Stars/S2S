@@ -149,6 +149,11 @@
    "BUILDING_FOLKLORE_GEMSBOK"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GEMSBOK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_GEMSBOK",
   "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",

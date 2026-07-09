@@ -148,6 +148,11 @@
   "production": 125,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NUKULEKA_WARRIORS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NUKULEKA_WARRIORS",
   "civilopedia": "TXT_KEY_UNIT_NUKULEKA_WARRIORS_PEDIA",

@@ -49,6 +49,11 @@
   "production": 1240,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_INIGO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_INIGO",
   "civilopedia": "TXT_KEY_UNIT_INIGO_PEDIA",

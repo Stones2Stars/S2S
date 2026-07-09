@@ -85,6 +85,11 @@
   "production": 385,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GURKHA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GURKHA",
   "civilopedia": "TXT_KEY_UNIT_GURKHA_PEDIA",

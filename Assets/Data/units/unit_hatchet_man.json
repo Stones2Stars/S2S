@@ -36,6 +36,11 @@
   "production": 773,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HATCHET_MAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HATCHET_MAN",
   "civilopedia": "TXT_KEY_UNIT_APOCALYPSE_URBAN_CROSSBOWMAN_PEDIA",

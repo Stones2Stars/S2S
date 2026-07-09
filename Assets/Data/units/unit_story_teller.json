@@ -81,6 +81,11 @@
   "production": 16,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_STORY_TELLER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_STORY_TELLER",
   "civilopedia": "TXT_KEY_UNIT_STORY_TELLER_PEDIA",

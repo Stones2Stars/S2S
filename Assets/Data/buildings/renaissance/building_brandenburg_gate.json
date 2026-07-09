@@ -93,7 +93,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BRANDENBURG_GATE"
+   "define": "ART_DEF_BUILDING_BRANDENBURG_GATE"
   }
  },
  "sound": {

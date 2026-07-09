@@ -94,7 +94,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PERCUSSION_INSTRUMENT_MAKER"
+   "define": "ART_DEF_BUILDING_PERCUSSION_INSTRUMENT_MAKER"
   }
  },
  "identity": {

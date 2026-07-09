@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TITAN_FERTILIZER_PLANT"
+   "define": "ART_DEF_BUILDING_TITAN_FERTILIZER_PLANT"
   }
  },
  "identity": {

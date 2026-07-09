@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MUREX_DIVER"
+   "define": "ART_DEF_BUILDING_MUREX_DIVER"
   }
  },
  "identity": {

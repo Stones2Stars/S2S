@@ -1,13 +1,9 @@
 {
  "type": "UNITCOMBAT_ANIMAL_COMBAT_PACK_HUNTER",
- "strength": {
-  "unit": {
-   "perSizeMore": {
-    "percent": 10
-   },
-   "perVolumeLess": {
-    "percent": 10
-   }
+ "sizeMatters": {
+  "combatModifier": {
+   "perSizeMore": 10,
+   "perVolumeLess": 10
   }
  },
  "ui": {

@@ -60,6 +60,11 @@
   "production": 1180,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LANDING_SHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LANDING_SHIP",
   "civilopedia": "TXT_KEY_UNIT_LANDING_SHIP_PEDIA",

@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THE_KREMLIN"
+   "define": "ART_DEF_BUILDING_THE_KREMLIN"
   }
  },
  "identity": {

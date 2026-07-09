@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_TRUE_VACUUM"
+   "define": "ART_DEF_IMPROVEMENT_TRUE_VACUUM"
   }
  },
  "identity": {

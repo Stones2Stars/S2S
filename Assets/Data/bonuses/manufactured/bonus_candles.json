@@ -2,7 +2,7 @@
  "type": "BONUS_CANDLES",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CANDLES"
+   "define": "ART_DEF_BONUS_CANDLES"
   }
  },
  "identity": {

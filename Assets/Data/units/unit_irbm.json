@@ -42,6 +42,11 @@
   "production": 2006,
   "upkeep": 6
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_IRBM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_IRBM",
   "civilopedia": "TXT_KEY_UNIT_TACTICAL_NUKE_PEDIA",

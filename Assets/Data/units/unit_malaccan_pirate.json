@@ -78,6 +78,11 @@
   "production": 1150,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MALACCAN_PIRATE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MALACCAN_PIRATE",
   "civilopedia": "TXT_KEY_UNIT_MALACCAN_PIRATE_PEDIA",

@@ -99,7 +99,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOLKLORE_T_FLIGHTLESS_BIRDS"
+   "define": "ART_DEF_BUILDING_FOLKLORE_T_FLIGHTLESS_BIRDS"
   }
  },
  "identity": {

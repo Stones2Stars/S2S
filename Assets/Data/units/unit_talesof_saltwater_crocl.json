@@ -15,6 +15,11 @@
    "BUILDING_FOLKLORE_E_SEA"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TALESOF_CROCODILE_LARGE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TALESOF_SALTWATER_CROCL",
   "civilopedia": "TXT_KEY_CONCEPT_TALESOF_SEA_ANIMALS_PEDIA",

@@ -118,6 +118,11 @@
   "production": 370,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AZAWAD_CAVALRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AZAWAD_CAVALRY",
   "civilopedia": "TXT_KEY_UNIT_AZAWAD_CAVALRY_PEDIA",

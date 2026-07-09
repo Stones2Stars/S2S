@@ -2,7 +2,7 @@
  "type": "BONUS_LITHIUM",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_LITHIUM"
+   "define": "ART_DEF_BONUS_LITHIUM"
   }
  },
  "identity": {

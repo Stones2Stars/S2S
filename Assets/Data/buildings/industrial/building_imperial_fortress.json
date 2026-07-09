@@ -241,7 +241,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_IMPERIAL_FORTRESS"
+   "define": "ART_DEF_BUILDING_IMPERIAL_FORTRESS"
   }
  },
  "identity": {

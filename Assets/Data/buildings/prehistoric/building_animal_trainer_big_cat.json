@@ -72,7 +72,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANIMAL_TRAINER_BIG_CAT"
+   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_BIG_CAT"
   }
  },
  "sound": {

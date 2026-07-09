@@ -74,6 +74,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SALTCROC_LARGE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SALTWATER_CROC_LARGE",
   "civilopedia": "TXT_KEY_CONCEPT_SALTWATER_CROC_PEDIA",

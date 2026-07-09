@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MEGATOWER_FIRE_STATION_LEVEL"
+   "define": "ART_DEF_BUILDING_MEGATOWER_FIRE_STATION_LEVEL"
   }
  },
  "identity": {

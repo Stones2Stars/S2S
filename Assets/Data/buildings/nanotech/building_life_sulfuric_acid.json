@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LIFE_SULFURIC_ACID"
+   "define": "ART_DEF_BUILDING_LIFE_SULFURIC_ACID"
   }
  },
  "identity": {

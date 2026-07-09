@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ACHIEVEMENT_ENVIRONMENTAL_EFFECT"
+   "define": "ART_DEF_BUILDING_ACHIEVEMENT_ENVIRONMENTAL_EFFECT"
   }
  },
  "identity": {

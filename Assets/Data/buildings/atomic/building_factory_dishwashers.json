@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_DISHWASHERS"
+   "define": "ART_DEF_BUILDING_FACTORY_DISHWASHERS"
   }
  },
  "identity": {

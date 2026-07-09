@@ -94,7 +94,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_STONE_BRIDGE"
+   "define": "ART_DEF_BUILDING_STONE_BRIDGE"
   }
  },
  "identity": {

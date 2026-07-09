@@ -43,6 +43,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BLACKBEAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BLACKBEAR",
   "civilopedia": "TXT_KEY_UNIT_BLACKBEAR_PEDIA",

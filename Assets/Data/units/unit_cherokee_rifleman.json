@@ -107,6 +107,11 @@
   "production": 455,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CHEROKEE_RIFLEMAN_OSTENACO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CHEROKEE_RIFLEMAN",
   "civilopedia": "TXT_KEY_UNIT_CHEROKEE_RIFLEMAN_PEDIA",

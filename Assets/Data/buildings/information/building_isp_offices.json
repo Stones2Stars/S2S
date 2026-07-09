@@ -77,7 +77,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ISP_OFFICES"
+   "define": "ART_DEF_BUILDING_ISP_OFFICES"
   }
  },
  "identity": {

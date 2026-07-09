@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_BIOTIC_NEUTRON_STAR"
+   "define": "ART_DEF_IMPROVEMENT_BIOTIC_NEUTRON_STAR"
   }
  },
  "identity": {

@@ -57,7 +57,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NATURE_ALTAR_BARLEY_GOD"
+   "define": "ART_DEF_BUILDING_NATURE_ALTAR_BARLEY_GOD"
   }
  },
  "sound": {

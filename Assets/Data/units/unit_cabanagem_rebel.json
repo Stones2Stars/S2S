@@ -128,6 +128,11 @@
   "production": 450,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CABANAGEM_REBEL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CABANAGEM_REBEL",
   "civilopedia": "TXT_KEY_UNIT_CABANAGEM_REBEL_PEDIA",

@@ -47,6 +47,11 @@
   "production": 2220,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_QABOOS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_QABOOS",
   "civilopedia": "TXT_KEY_UNIT_QABOOS_PEDIA",

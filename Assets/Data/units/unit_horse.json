@@ -73,6 +73,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WILD_HORSE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HORSE",
   "civilopedia": "TXT_KEY_UNIT_HORSE_PEDIA",

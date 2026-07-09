@@ -87,7 +87,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MEDICAL_DIAGNOSTAT"
+   "define": "ART_DEF_BUILDING_MEDICAL_DIAGNOSTAT"
   }
  },
  "identity": {

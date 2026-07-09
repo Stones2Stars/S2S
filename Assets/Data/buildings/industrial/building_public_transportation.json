@@ -90,7 +90,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PUBLIC_TRANSPORTATION"
+   "define": "ART_DEF_BUILDING_PUBLIC_TRANSPORTATION"
   }
  },
  "sound": {

@@ -79,6 +79,11 @@
   "production": 1500,
   "upkeep": 5
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JET_FIGHTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_JET_FIGHTER",
   "civilopedia": "TXT_KEY_UNIT_JET_FIGHTER_PEDIA",

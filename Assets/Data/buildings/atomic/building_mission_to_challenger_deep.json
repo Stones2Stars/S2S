@@ -86,7 +86,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MISSION_TO_CHALLENGER_DEEP"
+   "define": "ART_DEF_BUILDING_MISSION_TO_CHALLENGER_DEEP"
   }
  },
  "identity": {

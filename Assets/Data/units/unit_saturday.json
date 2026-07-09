@@ -49,6 +49,11 @@
   "production": 2520,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SATURDAY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WINDRADYNE",
   "civilopedia": "TXT_KEY_UNIT_WINDRADYNE_PEDIA",

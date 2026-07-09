@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FORTUNE_TELLER"
+   "define": "ART_DEF_BUILDING_FORTUNE_TELLER"
   }
  },
  "identity": {

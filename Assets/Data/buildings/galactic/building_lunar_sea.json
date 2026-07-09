@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LUNAR_SEA"
+   "define": "ART_DEF_BUILDING_LUNAR_SEA"
   }
  },
  "identity": {

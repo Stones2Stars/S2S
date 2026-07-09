@@ -230,7 +230,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MOTORCYCLE_CLUB"
+   "define": "ART_DEF_BUILDING_MOTORCYCLE_CLUB"
   }
  },
  "sound": {

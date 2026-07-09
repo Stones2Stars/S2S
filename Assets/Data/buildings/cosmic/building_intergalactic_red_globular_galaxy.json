@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_RED_GLOBULAR_GALAXY"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_RED_GLOBULAR_GALAXY"
   }
  },
  "identity": {

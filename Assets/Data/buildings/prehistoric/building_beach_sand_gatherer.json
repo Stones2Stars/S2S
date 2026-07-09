@@ -49,7 +49,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BEACH_SAND_GATHERER"
+   "define": "ART_DEF_BUILDING_BEACH_SAND_GATHERER"
   }
  },
  "identity": {

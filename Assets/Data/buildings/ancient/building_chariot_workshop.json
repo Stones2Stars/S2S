@@ -72,7 +72,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CHARIOT_WORKSHOP"
+   "define": "ART_DEF_BUILDING_CHARIOT_WORKSHOP"
   }
  },
  "sound": {

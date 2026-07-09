@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HEALTH_SPA"
+   "define": "ART_DEF_BUILDING_HEALTH_SPA"
   }
  },
  "sound": {

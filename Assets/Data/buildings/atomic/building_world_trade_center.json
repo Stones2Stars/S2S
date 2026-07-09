@@ -78,7 +78,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WORLD_TRADE_CENTER"
+   "define": "ART_DEF_BUILDING_WORLD_TRADE_CENTER"
   }
  },
  "sound": {

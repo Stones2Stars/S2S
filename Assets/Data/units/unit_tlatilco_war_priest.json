@@ -109,6 +109,11 @@
   "production": 67,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TLATILCO_WAR_PRIEST"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TLATILCO_WAR_PRIEST",
   "civilopedia": "TXT_KEY_UNIT_TLATILCO_WAR_PRIEST_PEDIA",

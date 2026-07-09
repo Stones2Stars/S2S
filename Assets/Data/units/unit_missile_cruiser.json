@@ -99,6 +99,11 @@
   "production": 1845,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MISSILE_CRUISER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MISSILE_CRUISER",
   "civilopedia": "TXT_KEY_UNIT_MISSILE_CRUISER_PEDIA",

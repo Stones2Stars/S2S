@@ -36,6 +36,11 @@
   "production": 455,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BIG_GAME_HUNTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BIG_GAME_HUNTER",
   "civilopedia": "TXT_KEY_UNIT_HUNTER_PEDIA",

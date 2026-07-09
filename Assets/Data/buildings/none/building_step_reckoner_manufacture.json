@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_STEP_RECKONER_MANUFACTURE"
+   "define": "ART_DEF_BUILDING_STEP_RECKONER_MANUFACTURE"
   }
  },
  "identity": {

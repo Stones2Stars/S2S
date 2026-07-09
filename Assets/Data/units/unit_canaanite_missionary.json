@@ -25,6 +25,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CANAANITE_MISSIONARY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CANAANITE_MISSIONARY",
   "civilopedia": "TXT_KEY_UNIT_CANAANITE_MISSIONARY_PEDIA",

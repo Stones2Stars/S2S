@@ -9,9 +9,6 @@
   "unit": {
    "space": {
     "flat": 1
-   },
-   "smSpace": {
-    "flat": 30
    }
   }
  },
@@ -47,5 +44,10 @@
    "UNITCOMBAT_PROMOTED_TRANSPORT_FIGHTERS",
    "UNITCOMBAT_PROMOTED_TRANSPORT_CAPTIVES"
   ]
+ },
+ "sizeMatters": {
+  "cargo": {
+   "smSpace": 30
+  }
  }
 }

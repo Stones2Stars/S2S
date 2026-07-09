@@ -157,6 +157,11 @@
  "cost": {
   "production": 580
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GIRAFFE_CAVALRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GIRAFFE_CAVALRY",
   "civilopedia": "TXT_KEY_UNIT_GIRAFFE_ARCHER_PEDIA",

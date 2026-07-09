@@ -67,6 +67,11 @@
  "cost": {
   "production": 385
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_REPEATING_CROSSBOWMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_REPEATING_CROSSBOWMAN",
   "civilopedia": "TXT_KEY_UNIT_REPEATING_CROSSBOWMAN_PEDIA",

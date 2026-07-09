@@ -86,7 +86,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EGYPTIAN_MYTH_TEMPLE"
+   "define": "ART_DEF_BUILDING_EGYPTIAN_MYTH_TEMPLE"
   }
  },
  "sound": {

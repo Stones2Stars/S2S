@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WALKABOUT"
+   "define": "ART_DEF_BUILDING_WALKABOUT"
   }
  },
  "identity": {

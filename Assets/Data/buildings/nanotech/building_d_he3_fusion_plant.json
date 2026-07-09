@@ -68,7 +68,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_D_HE3_FUSION_PLANT"
+   "define": "ART_DEF_BUILDING_D_HE3_FUSION_PLANT"
   }
  },
  "identity": {

@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CISLUNAR_TURBOLIFTS"
+   "define": "ART_DEF_BUILDING_CISLUNAR_TURBOLIFTS"
   }
  },
  "identity": {

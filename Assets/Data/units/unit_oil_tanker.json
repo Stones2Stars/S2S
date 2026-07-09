@@ -74,6 +74,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_OIL_TANKER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_OIL_TANKER",
   "civilopedia": "TXT_KEY_UNIT_OIL_TANKER_PEDIA",

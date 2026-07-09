@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_COTTAGE"
+   "define": "ART_DEF_IMPROVEMENT_COTTAGE"
   }
  },
  "identity": {

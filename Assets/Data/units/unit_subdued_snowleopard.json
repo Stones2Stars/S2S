@@ -145,6 +145,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SNOWLEOPARD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_SNOWLEOPARD",
   "civilopedia": "TXT_KEY_UNIT_SNOWLEOPARD_PEDIA",

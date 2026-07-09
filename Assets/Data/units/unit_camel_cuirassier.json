@@ -109,6 +109,11 @@
   "production": 380,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CAMEL_CUIRASSIER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CAMEL_CUIRASSIER",
   "civilopedia": "TXT_KEY_UNIT_CAMEL_CUIRASSIER_PEDIA",

@@ -74,6 +74,11 @@
   "production": 1140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SAM_INFANTRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SAM_INFANTRY",
   "civilopedia": "TXT_KEY_UNIT_SAM_INFANTRY_PEDIA",

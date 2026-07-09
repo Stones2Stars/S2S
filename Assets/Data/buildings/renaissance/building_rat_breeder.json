@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RAT_BREEDER"
+   "define": "ART_DEF_BUILDING_RAT_BREEDER"
   }
  },
  "identity": {

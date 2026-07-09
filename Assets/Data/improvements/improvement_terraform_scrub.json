@@ -25,7 +25,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_TERRAFORM_TUNDRA"
+   "define": "ART_DEF_IMPROVEMENT_TERRAFORM_TUNDRA"
   }
  },
  "identity": {

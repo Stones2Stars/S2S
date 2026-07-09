@@ -2,7 +2,7 @@
  "type": "BONUS_SAUSAGE",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SAUSAGE"
+   "define": "ART_DEF_BONUS_SAUSAGE"
   }
  },
  "identity": {

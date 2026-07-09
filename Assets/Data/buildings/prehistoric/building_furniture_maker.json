@@ -122,7 +122,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FURNITURE_MAKER"
+   "define": "ART_DEF_BUILDING_FURNITURE_MAKER"
   }
  },
  "identity": {

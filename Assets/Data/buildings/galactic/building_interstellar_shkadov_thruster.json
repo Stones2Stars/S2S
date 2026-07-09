@@ -44,7 +44,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_SHKADOV_THRUSTER"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_SHKADOV_THRUSTER"
   }
  },
  "identity": {

@@ -95,7 +95,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_CELLULASE_CAPSULES"
+   "define": "ART_DEF_BUILDING_FACTORY_CELLULASE_CAPSULES"
   }
  },
  "identity": {

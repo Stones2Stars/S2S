@@ -19,7 +19,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_LIGHTHOUSE"
+   "define": "ART_DEF_IMPROVEMENT_LIGHTHOUSE"
   }
  },
  "identity": {

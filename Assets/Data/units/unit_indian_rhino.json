@@ -42,6 +42,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_INDIAN_RHINO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_INDIAN_RHINO",
   "civilopedia": "TXT_KEY_UNIT_INDIAN_RHINO_PEDIA",

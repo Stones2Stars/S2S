@@ -97,6 +97,11 @@
   "production": 1475,
   "upkeep": 5
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MODERN_HOVERCRAFT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MODERN_HOVERCRAFT",
   "civilopedia": "TXT_KEY_UNIT_MODERN_HOVERCRAFT_PEDIA",

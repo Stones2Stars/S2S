@@ -44,7 +44,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_BISON"
+   "define": "ART_DEF_BONUS_BISON"
   }
  },
  "mapGeneration": {

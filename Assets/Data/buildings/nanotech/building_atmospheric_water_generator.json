@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ATMOSPHERIC_WATER_GENERATOR"
+   "define": "ART_DEF_BUILDING_ATMOSPHERIC_WATER_GENERATOR"
   }
  },
  "identity": {

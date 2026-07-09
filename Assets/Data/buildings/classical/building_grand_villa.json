@@ -67,7 +67,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GRAND_VILLA"
+   "define": "ART_DEF_BUILDING_GRAND_VILLA"
   }
  },
  "sound": {

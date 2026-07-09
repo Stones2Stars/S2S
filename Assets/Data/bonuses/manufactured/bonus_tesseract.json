@@ -2,7 +2,7 @@
  "type": "BONUS_TESSERACT",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_TESSERACT"
+   "define": "ART_DEF_BONUS_TESSERACT"
   }
  },
  "identity": {

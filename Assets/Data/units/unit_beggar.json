@@ -157,6 +157,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BEGGAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BEGGAR",
   "civilopedia": "TXT_KEY_UNIT_BEGGAR_PEDIA",

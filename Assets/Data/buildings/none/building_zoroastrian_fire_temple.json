@@ -84,7 +84,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ZOROASTRIAN_FIRE_TEMPLE"
+   "define": "ART_DEF_BUILDING_ZOROASTRIAN_FIRE_TEMPLE"
   }
  },
  "sound": {

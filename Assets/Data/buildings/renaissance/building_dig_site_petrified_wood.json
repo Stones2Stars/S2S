@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DIG_SITE_PETRIFIED_WOOD"
+   "define": "ART_DEF_BUILDING_DIG_SITE_PETRIFIED_WOOD"
   }
  },
  "identity": {

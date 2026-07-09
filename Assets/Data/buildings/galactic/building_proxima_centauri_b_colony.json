@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PROXIMA_CENTAURI_B_COLONY"
+   "define": "ART_DEF_BUILDING_PROXIMA_CENTAURI_B_COLONY"
   }
  },
  "identity": {

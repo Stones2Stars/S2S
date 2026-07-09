@@ -49,6 +49,11 @@
   "production": 936,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KRUM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KRUM",
   "civilopedia": "TXT_KEY_UNIT_KRUM_PEDIA",

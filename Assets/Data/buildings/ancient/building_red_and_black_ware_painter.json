@@ -89,7 +89,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RED_AND_BLACK_WARE_PAINTER"
+   "define": "ART_DEF_BUILDING_RED_AND_BLACK_WARE_PAINTER"
   }
  },
  "identity": {

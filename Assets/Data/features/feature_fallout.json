@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_FALLOUT"
+   "define": "ART_DEF_FEATURE_FALLOUT"
   }
  },
  "identity": {

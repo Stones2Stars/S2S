@@ -51,6 +51,11 @@
   "production": 190,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PIKEMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PIKEMAN",
   "civilopedia": "TXT_KEY_UNIT_PIKEMAN_PEDIA",

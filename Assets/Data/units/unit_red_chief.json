@@ -55,6 +55,11 @@
   "production": 1044,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RED_CHIEF"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_RED_CHIEF",
   "civilopedia": "TXT_KEY_UNIT_RED_CHIEF_PEDIA",

@@ -77,6 +77,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MOUFLON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_MOUFLON",
   "civilopedia": "TXT_KEY_UNIT_MOUFLON_PEDIA",

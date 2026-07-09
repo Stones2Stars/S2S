@@ -145,7 +145,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PICOTECH_COMPLEX"
+   "define": "ART_DEF_BUILDING_PICOTECH_COMPLEX"
   }
  },
  "identity": {

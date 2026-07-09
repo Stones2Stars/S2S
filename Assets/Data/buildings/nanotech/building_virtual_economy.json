@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VIRTUAL_ECONOMY"
+   "define": "ART_DEF_BUILDING_VIRTUAL_ECONOMY"
   }
  },
  "identity": {

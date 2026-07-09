@@ -48,6 +48,11 @@
   "production": 1640,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BARBAROSSA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BARBAROSSA",
   "civilopedia": "TXT_KEY_UNIT_BARBAROSSA_PEDIA",

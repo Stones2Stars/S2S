@@ -121,7 +121,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MONTE_CARLO"
+   "define": "ART_DEF_BUILDING_MONTE_CARLO"
   }
  },
  "identity": {

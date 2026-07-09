@@ -33,7 +33,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_INCENSE"
+   "define": "ART_DEF_BONUS_INCENSE"
   }
  },
  "mapGeneration": {

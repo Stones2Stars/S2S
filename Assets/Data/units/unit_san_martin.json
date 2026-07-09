@@ -49,6 +49,11 @@
   "production": 2140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SAN_MARTIN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SAN_MARTIN",
   "civilopedia": "TXT_KEY_UNIT_SAN_MARTIN_PEDIA",

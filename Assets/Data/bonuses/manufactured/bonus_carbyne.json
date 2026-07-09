@@ -2,7 +2,7 @@
  "type": "BONUS_CARBYNE",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CARBYNE"
+   "define": "ART_DEF_BONUS_CARBYNE"
   }
  },
  "identity": {

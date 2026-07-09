@@ -89,7 +89,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BUS_STATION"
+   "define": "ART_DEF_BUILDING_BUS_STATION"
   }
  },
  "identity": {

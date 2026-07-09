@@ -101,6 +101,11 @@
   "upkeep": 3,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FOREST_GUARDIANS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FOREST_GUARDIANS",
   "civilopedia": "TXT_KEY_UNIT_FOREST_GUARDIANS_PEDIA",

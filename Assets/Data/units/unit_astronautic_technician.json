@@ -82,6 +82,11 @@
   "upkeep": 9,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ASTRONAUTIC_TECHNICIAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ASTRONAUTIC_TECHNICIAN",
   "civilopedia": "TXT_KEY_UNIT_ASTRONAUTIC_TECHNICIAN_PEDIA",

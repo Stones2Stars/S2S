@@ -92,7 +92,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_SOLAR_PANELS"
+   "define": "ART_DEF_IMPROVEMENT_SOLAR_PANELS"
   }
  },
  "identity": {

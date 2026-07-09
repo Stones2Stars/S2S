@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ASTROLOGICAL_INFLUENCE_OF_GEMINI"
+   "define": "ART_DEF_BUILDING_ASTROLOGICAL_INFLUENCE_OF_GEMINI"
   }
  },
  "identity": {

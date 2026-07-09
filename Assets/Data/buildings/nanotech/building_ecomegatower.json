@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ECOMEGATOWER"
+   "define": "ART_DEF_BUILDING_ECOMEGATOWER"
   }
  },
  "identity": {

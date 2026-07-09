@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYPERSPACE_TOURISM_AGENCY"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_TOURISM_AGENCY"
   }
  },
  "identity": {

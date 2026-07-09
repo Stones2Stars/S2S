@@ -156,7 +156,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BAZAAR"
+   "define": "ART_DEF_BUILDING_BAZAAR"
   }
  },
  "sound": {

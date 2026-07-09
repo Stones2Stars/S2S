@@ -149,6 +149,11 @@
    "BUILDING_FOLKLORE_MANDRILL"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MANDRILL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_MANDRILL",
   "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",

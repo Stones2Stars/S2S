@@ -90,6 +90,11 @@
  "cost": {
   "production": 550
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SEIGE_MAMMOTH_EUROPEAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BOMBARD_MAMMOTH",
   "civilopedia": "TXT_KEY_UNIT_BALLISTA_MAMMOTH_PEDIA",

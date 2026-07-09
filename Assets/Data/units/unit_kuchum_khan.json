@@ -47,6 +47,11 @@
   "production": 2320,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KUCHUM_KHAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KUCHUM_KHAN",
   "civilopedia": "TXT_KEY_UNIT_KUCHUM_KHAN_PEDIA",

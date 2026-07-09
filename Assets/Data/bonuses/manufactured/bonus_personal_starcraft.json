@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_PERSONAL_STARCRAFT"
+   "define": "ART_DEF_BONUS_PERSONAL_STARCRAFT"
   }
  },
  "identity": {

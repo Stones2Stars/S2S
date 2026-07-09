@@ -96,7 +96,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VIRTUAL_REALITY_THEATER"
+   "define": "ART_DEF_BUILDING_VIRTUAL_REALITY_THEATER"
   }
  },
  "sound": {

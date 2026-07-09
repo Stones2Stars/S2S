@@ -39,7 +39,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOUSING_ANIMAL_BURROW"
+   "define": "ART_DEF_BUILDING_HOUSING_ANIMAL_BURROW"
   }
  },
  "identity": {

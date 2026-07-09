@@ -98,7 +98,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MING_VASE_WORKSHOP"
+   "define": "ART_DEF_BUILDING_MING_VASE_WORKSHOP"
   }
  },
  "sound": {

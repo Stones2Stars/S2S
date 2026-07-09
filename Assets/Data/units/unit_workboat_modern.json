@@ -46,6 +46,11 @@
   "production": 492,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WORKBOAT_MODERN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WORKBOAT_MODERN",
   "civilopedia": "TXT_KEY_UNIT_WORKBOAT_PEDIA",

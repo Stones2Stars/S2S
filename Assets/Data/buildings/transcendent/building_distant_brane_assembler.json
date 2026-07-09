@@ -43,7 +43,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DISTANT_BRANE_ASSEMBLER"
+   "define": "ART_DEF_BUILDING_DISTANT_BRANE_ASSEMBLER"
   }
  },
  "identity": {

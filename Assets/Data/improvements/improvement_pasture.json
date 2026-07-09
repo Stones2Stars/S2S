@@ -198,7 +198,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_PASTURE"
+   "define": "ART_DEF_IMPROVEMENT_PASTURE"
   }
  },
  "identity": {

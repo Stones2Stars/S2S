@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MEGATOWER_BIODOME_PARK_CROWN_SECTION"
+   "define": "ART_DEF_BUILDING_MEGATOWER_BIODOME_PARK_CROWN_SECTION"
   }
  },
  "identity": {

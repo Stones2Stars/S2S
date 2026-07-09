@@ -63,6 +63,11 @@
   "production": 704,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DAEDALUS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DAEDALUS",
   "civilopedia": "TXT_KEY_UNIT_DAEDALUS_PEDIA",

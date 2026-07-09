@@ -56,6 +56,11 @@
   "production": 2320,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DOS_SANTOS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DOS_SANTOS",
   "civilopedia": "TXT_KEY_UNIT_DOS_SANTOS_PEDIA",

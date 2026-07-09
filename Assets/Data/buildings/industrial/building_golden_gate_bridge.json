@@ -111,7 +111,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GOLDEN_GATE_BRIDGE"
+   "define": "ART_DEF_BUILDING_GOLDEN_GATE_BRIDGE"
   }
  },
  "identity": {

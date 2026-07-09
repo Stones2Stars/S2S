@@ -22,7 +22,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RELIC_OLD_CITY_WALLS"
+   "define": "ART_DEF_BUILDING_RELIC_OLD_CITY_WALLS"
   }
  },
  "identity": {

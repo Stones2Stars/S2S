@@ -91,6 +91,11 @@
   "production": 600,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_IRON_FRIGATE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_IRON_FRIGATE",
   "civilopedia": "TXT_KEY_UNIT_IRON_FRIGATE_PEDIA",

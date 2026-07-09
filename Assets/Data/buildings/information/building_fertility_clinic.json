@@ -86,7 +86,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FERTILITY_CLINIC"
+   "define": "ART_DEF_BUILDING_FERTILITY_CLINIC"
   }
  },
  "identity": {

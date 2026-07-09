@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MT_RUSHMORE"
+   "define": "ART_DEF_BUILDING_MT_RUSHMORE"
   }
  },
  "identity": {

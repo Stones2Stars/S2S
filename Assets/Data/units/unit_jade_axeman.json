@@ -97,6 +97,11 @@
   "production": 42,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JADE_AXEMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_JADE_AXEMAN",
   "civilopedia": "TXT_KEY_UNIT_JADE_AXEMAN_PEDIA",

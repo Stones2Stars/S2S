@@ -996,7 +996,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYPERMARKET"
+   "define": "ART_DEF_BUILDING_HYPERMARKET"
   }
  },
  "sound": {

@@ -26,7 +26,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_NEANDERTHAL"
+   "define": "ART_DEF_BUILDING_CULTURE_NEANDERTHAL"
   }
  },
  "identity": {

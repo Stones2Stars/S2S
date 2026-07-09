@@ -63,7 +63,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BOSTON_ARCOLOGY"
+   "define": "ART_DEF_BUILDING_BOSTON_ARCOLOGY"
   }
  },
  "identity": {

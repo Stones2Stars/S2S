@@ -113,7 +113,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BOMBARD_TOWER"
+   "define": "ART_DEF_BUILDING_BOMBARD_TOWER"
   }
  },
  "sound": {

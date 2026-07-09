@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CHEYENNE"
+   "define": "ART_DEF_BONUS_CHEYENNE"
   }
  },
  "identity": {

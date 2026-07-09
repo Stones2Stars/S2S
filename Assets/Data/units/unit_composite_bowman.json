@@ -95,6 +95,11 @@
   "production": 145,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_COMPOSITE_BOWMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_COMPOSITE_BOWMAN",
   "civilopedia": "TXT_KEY_UNIT_ARCHER_PEDIA",

@@ -2,7 +2,7 @@
  "type": "BONUS_AEROGEL",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_AEROGEL"
+   "define": "ART_DEF_BONUS_AEROGEL"
   }
  },
  "identity": {

@@ -44,6 +44,11 @@
    "BUILDING_FOLKLORE_BARBARY_MACAQUE"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BARBARYAPE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_BARBARYAPE",
   "civilopedia": "TXT_KEY_UNIT_BARBARYAPE_PEDIA",

@@ -80,6 +80,11 @@
  "cost": {
   "production": 225
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RHINO_SWORDSMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_RHINO_SWORDSMAN",
   "civilopedia": "TXT_KEY_UNIT_RHINO_SWORDSMAN_PEDIA",

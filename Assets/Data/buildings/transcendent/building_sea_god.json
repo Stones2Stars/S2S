@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SEA_GOD"
+   "define": "ART_DEF_BUILDING_SEA_GOD"
   }
  },
  "identity": {

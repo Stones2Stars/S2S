@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NGAI_NAROK_BLESS_PIG"
+   "define": "ART_DEF_BUILDING_NGAI_NAROK_BLESS_PIG"
   }
  },
  "sound": {

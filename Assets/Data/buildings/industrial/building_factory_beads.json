@@ -175,7 +175,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_BEADS"
+   "define": "ART_DEF_BUILDING_FACTORY_BEADS"
   }
  },
  "sound": {

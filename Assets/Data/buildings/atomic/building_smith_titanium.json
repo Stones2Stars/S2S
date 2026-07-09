@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SMITH_TITANIUM"
+   "define": "ART_DEF_BUILDING_SMITH_TITANIUM"
   }
  },
  "identity": {

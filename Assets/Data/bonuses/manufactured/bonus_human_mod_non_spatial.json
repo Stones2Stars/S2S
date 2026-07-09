@@ -2,7 +2,7 @@
  "type": "BONUS_HUMAN_MOD_NON_SPATIAL",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HUMAN_MOD_NON_SPATIAL"
+   "define": "ART_DEF_BONUS_HUMAN_MOD_NON_SPATIAL"
   }
  },
  "identity": {

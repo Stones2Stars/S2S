@@ -2,7 +2,7 @@
  "type": "BONUS_GRAVITY_GENERATORS",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_GRAVITY_GENERATORS"
+   "define": "ART_DEF_BONUS_GRAVITY_GENERATORS"
   }
  },
  "identity": {

@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_AIR_SHIPPING_WAREHOUSE"
+   "define": "ART_DEF_BUILDING_AIR_SHIPPING_WAREHOUSE"
   }
  },
  "identity": {

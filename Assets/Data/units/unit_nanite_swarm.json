@@ -66,6 +66,11 @@
   "production": 4968,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NANITE_SWARM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NANITE_SWARM",
   "civilopedia": "TXT_KEY_UNIT_NANITE_CLOUD_PEDIA",

@@ -40,7 +40,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_DESIGNER_CASTE_MISSION_CONTROL"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_DESIGNER_CASTE_MISSION_CONTROL"
   }
  },
  "identity": {

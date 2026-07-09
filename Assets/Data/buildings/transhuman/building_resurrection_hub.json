@@ -93,7 +93,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RESURRECTION_HUB"
+   "define": "ART_DEF_BUILDING_RESURRECTION_HUB"
   }
  },
  "identity": {

@@ -77,6 +77,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RAY_EAGLE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_RAY_EAGLE",
   "civilopedia": "TXT_KEY_UNIT_RAY_EAGLE_PEDIA",

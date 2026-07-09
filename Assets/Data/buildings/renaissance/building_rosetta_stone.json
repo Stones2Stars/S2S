@@ -87,7 +87,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ROSETTA_STONE"
+   "define": "ART_DEF_BUILDING_ROSETTA_STONE"
   }
  },
  "identity": {

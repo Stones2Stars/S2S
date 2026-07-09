@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TYRANNOSAURUS_REX_BREEDER"
+   "define": "ART_DEF_BUILDING_TYRANNOSAURUS_REX_BREEDER"
   }
  },
  "identity": {

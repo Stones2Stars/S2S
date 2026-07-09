@@ -155,6 +155,11 @@
   "production": 128,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DAREN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DAREN",
   "civilopedia": "TXT_KEY_UNIT_DAREN_PEDIA",

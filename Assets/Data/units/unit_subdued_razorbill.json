@@ -36,6 +36,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RAZORBILL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_RAZORBILL",
   "civilopedia": "TXT_KEY_UNIT_RAZORBILL_PEDIA",

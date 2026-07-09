@@ -68,7 +68,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS"
+   "define": "ART_DEF_BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS"
   }
  },
  "identity": {

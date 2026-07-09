@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_UBIQUITOUS_SENSORS"
+   "define": "ART_DEF_BUILDING_UBIQUITOUS_SENSORS"
   }
  },
  "identity": {

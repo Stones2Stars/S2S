@@ -63,6 +63,11 @@
   "production": 1120,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BAYAJIDDA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BAYAJIDDA",
   "civilopedia": "TXT_KEY_UNIT_BAYAJIDDA_PEDIA",

@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BREEDING_PROGRAM_FOX"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_FOX"
   }
  },
  "identity": {

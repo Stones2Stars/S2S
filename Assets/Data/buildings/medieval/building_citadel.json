@@ -102,7 +102,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CITADEL"
+   "define": "ART_DEF_BUILDING_CITADEL"
   }
  },
  "sound": {

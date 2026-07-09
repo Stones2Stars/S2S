@@ -33,6 +33,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LEMUR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LEMUR",
   "civilopedia": "TXT_KEY_UNIT_LEMUR_PEDIA",

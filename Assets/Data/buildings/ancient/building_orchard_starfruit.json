@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ORCHARD_STARFRUIT"
+   "define": "ART_DEF_BUILDING_ORCHARD_STARFRUIT"
   }
  },
  "identity": {

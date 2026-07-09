@@ -74,6 +74,11 @@
   "production": 1353,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BOMBER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BOMBER",
   "civilopedia": "TXT_KEY_UNIT_BOMBER_PEDIA",

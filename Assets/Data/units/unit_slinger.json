@@ -94,6 +94,11 @@
   "production": 23,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SLINGER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SLINGER",
   "civilopedia": "TXT_KEY_UNIT_SLINGER_PEDIA",

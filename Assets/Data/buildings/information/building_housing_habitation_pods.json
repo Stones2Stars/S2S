@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOUSING_HABITATION_PODS"
+   "define": "ART_DEF_BUILDING_HOUSING_HABITATION_PODS"
   }
  },
  "identity": {

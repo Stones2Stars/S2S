@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_BLACK_HOLE_ERA_SURVIVAL_PLAN"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_BLACK_HOLE_ERA_SURVIVAL_PLAN"
   }
  },
  "identity": {

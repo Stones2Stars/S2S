@@ -58,6 +58,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BELUGA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_BELUGA",
   "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_SEA_ANIMALS_PEDIA",

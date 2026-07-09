@@ -907,7 +907,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ENHANCED_SPECIES"
+   "define": "ART_DEF_BUILDING_ENHANCED_SPECIES"
   }
  },
  "identity": {

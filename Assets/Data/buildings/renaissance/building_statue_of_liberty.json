@@ -101,7 +101,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_STATUE_OF_LIBERTY"
+   "define": "ART_DEF_BUILDING_STATUE_OF_LIBERTY"
   }
  },
  "identity": {

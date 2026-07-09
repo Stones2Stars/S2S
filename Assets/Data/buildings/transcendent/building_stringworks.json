@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_STRINGWORKS"
+   "define": "ART_DEF_BUILDING_STRINGWORKS"
   }
  },
  "identity": {

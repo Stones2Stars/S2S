@@ -20,7 +20,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_PAPYRUS"
+   "define": "ART_DEF_BONUS_PAPYRUS"
   }
  },
  "mapGeneration": {

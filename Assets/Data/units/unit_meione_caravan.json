@@ -94,6 +94,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MEIONE_CARAVAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MEIONE_CARAVAN",
   "civilopedia": "TXT_KEY_UNIT_MEIONE_CARAVAN_PEDIA",

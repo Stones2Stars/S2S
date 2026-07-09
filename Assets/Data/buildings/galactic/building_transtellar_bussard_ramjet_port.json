@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRANSTELLAR_BUSSARD_RAMJET_PORT"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_BUSSARD_RAMJET_PORT"
   }
  },
  "identity": {

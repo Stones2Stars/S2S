@@ -94,6 +94,11 @@
   "production": 110,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SPEARMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SPEARMAN",
   "civilopedia": "TXT_KEY_UNIT_SPEARMAN_PEDIA",

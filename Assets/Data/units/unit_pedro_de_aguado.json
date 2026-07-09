@@ -62,6 +62,11 @@
   "production": 2060,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PEDRO_DE_AGUADO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PEDRO_DE_AGUADO",
   "civilopedia": "TXT_KEY_UNIT_PEDRO_DE_AGUADO_PEDIA",

@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GLIESE_667CC_COLONY"
+   "define": "ART_DEF_BUILDING_GLIESE_667CC_COLONY"
   }
  },
  "identity": {

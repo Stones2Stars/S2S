@@ -117,7 +117,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_FIREARMS"
+   "define": "ART_DEF_BONUS_FIREARMS"
   }
  },
  "identity": {

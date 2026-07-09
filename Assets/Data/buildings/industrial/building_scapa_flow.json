@@ -107,7 +107,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SCAPA_FLOW"
+   "define": "ART_DEF_BUILDING_SCAPA_FLOW"
   }
  },
  "identity": {

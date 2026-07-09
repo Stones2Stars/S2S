@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_CARPETS"
+   "define": "ART_DEF_BUILDING_FACTORY_CARPETS"
   }
  },
  "identity": {

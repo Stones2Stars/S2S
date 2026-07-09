@@ -101,7 +101,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NATIONAL_NIGHT_OF_HOCKEY"
+   "define": "ART_DEF_BUILDING_NATIONAL_NIGHT_OF_HOCKEY"
   }
  },
  "identity": {

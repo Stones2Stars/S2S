@@ -1,12 +1,5 @@
 {
  "type": "PROMOTION_STING4",
- "strength": {
-  "unit": {
-   "perSizeMore": {
-    "percent": 25
-   }
-  }
- },
  "promotionLine": {
   "PROMOTIONLINE_STING": 4
  },
@@ -18,6 +11,11 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perSizeMore": 25
+  }
  },
  "identity": {
   "description": "TXT_KEY_PROMOTION_STING4"

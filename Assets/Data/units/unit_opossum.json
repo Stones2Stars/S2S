@@ -33,6 +33,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_OPOSSUM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_OPOSSUM",
   "civilopedia": "TXT_KEY_UNIT_OPOSSUM_PEDIA",

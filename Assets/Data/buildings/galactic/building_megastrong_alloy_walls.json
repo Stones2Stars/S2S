@@ -89,7 +89,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MEGASTRONG_ALLOY_WALLS"
+   "define": "ART_DEF_BUILDING_MEGASTRONG_ALLOY_WALLS"
   }
  },
  "sound": {

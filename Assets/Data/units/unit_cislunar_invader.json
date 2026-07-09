@@ -49,6 +49,11 @@
   "upkeep": 11,
   "hurryCostModifier": 10000
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ATTACKSHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CISLUNAR_INVADER",
   "civilopedia": "TXT_KEY_UNIT_CISLUNAR_INVADER_PEDIA",

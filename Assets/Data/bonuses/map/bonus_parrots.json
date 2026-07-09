@@ -37,7 +37,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_PARROTS"
+   "define": "ART_DEF_BONUS_PARROTS"
   }
  },
  "mapGeneration": {

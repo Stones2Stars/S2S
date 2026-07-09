@@ -126,6 +126,11 @@
   "production": 2008,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_THERMOBARIC_TANK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HEAVY_ARMOR",
   "civilopedia": "TXT_KEY_UNIT_MODERN_ARMOR_PEDIA",

@@ -157,7 +157,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BURGERWORLD_RESTAURANT"
+   "define": "ART_DEF_BUILDING_BURGERWORLD_RESTAURANT"
   }
  },
  "sound": {

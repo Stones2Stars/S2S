@@ -63,6 +63,11 @@
   "production": 2960,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HENDRIK_WITBOOI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HENDRIK_WITBOOI",
   "civilopedia": "TXT_KEY_UNIT_HENDRIK_WITBOOI_PEDIA",

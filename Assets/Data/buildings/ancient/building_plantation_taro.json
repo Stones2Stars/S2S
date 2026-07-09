@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PLANTATION_TARO"
+   "define": "ART_DEF_BUILDING_PLANTATION_TARO"
   }
  },
  "identity": {

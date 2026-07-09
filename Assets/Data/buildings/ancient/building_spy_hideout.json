@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SPY_HIDEOUT"
+   "define": "ART_DEF_BUILDING_SPY_HIDEOUT"
   }
  },
  "identity": {

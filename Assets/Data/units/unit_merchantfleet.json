@@ -26,6 +26,11 @@
  "cost": {
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MERCHANT_FLEET"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MERCHANT_FLEET",
   "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",

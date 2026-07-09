@@ -75,7 +75,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ALPHA_ASSEMBLER"
+   "define": "ART_DEF_BUILDING_ALPHA_ASSEMBLER"
   }
  },
  "identity": {

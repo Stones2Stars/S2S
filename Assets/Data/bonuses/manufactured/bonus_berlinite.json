@@ -2,7 +2,7 @@
  "type": "BONUS_BERLINITE",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_BERLINITE"
+   "define": "ART_DEF_BONUS_BERLINITE"
   }
  },
  "identity": {

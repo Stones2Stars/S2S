@@ -17,7 +17,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_RED_GIANT"
+   "define": "ART_DEF_TERRAIN_RED_GIANT"
   }
  },
  "identity": {

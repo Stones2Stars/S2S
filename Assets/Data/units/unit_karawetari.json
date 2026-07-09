@@ -75,6 +75,11 @@
   "production": 165,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KARAWETARI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KARAWETARI",
   "civilopedia": "TXT_KEY_UNIT_KARAWETARI_PEDIA",

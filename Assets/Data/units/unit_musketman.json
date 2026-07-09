@@ -59,6 +59,11 @@
   "production": 342,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MUSKETMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MUSKETMAN",
   "civilopedia": "TXT_KEY_UNIT_MUSKETMAN_PEDIA",

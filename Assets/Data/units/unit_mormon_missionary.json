@@ -22,6 +22,11 @@
  "cost": {
   "production": 110
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MORMON_MISSIONARY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MORMON_MISSIONARY",
   "civilopedia": "TXT_KEY_TECH_MORMON_PEDIA",

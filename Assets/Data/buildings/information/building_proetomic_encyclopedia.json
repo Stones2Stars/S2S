@@ -91,7 +91,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PROETOMIC_ENCYCLOPEDIA"
+   "define": "ART_DEF_BUILDING_PROETOMIC_ENCYCLOPEDIA"
   }
  },
  "identity": {

@@ -2,7 +2,7 @@
  "type": "BONUS_HUMAN_MOD_ALIEN_HYBRID",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HUMAN_MOD_ALIEN_HYBRID"
+   "define": "ART_DEF_BONUS_HUMAN_MOD_ALIEN_HYBRID"
   }
  },
  "identity": {

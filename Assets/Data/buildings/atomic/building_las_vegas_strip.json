@@ -97,7 +97,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LAS_VEGAS_STRIP"
+   "define": "ART_DEF_BUILDING_LAS_VEGAS_STRIP"
   }
  },
  "identity": {

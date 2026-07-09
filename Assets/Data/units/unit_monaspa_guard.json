@@ -118,6 +118,11 @@
   "production": 370,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MONASPA_GUARD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MONASPA_GUARD",
   "civilopedia": "TXT_KEY_UNIT_MONASPA_GUARD_PEDIA",

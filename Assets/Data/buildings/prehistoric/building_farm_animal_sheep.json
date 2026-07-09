@@ -113,7 +113,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FARM_ANIMAL_SHEEP"
+   "define": "ART_DEF_BUILDING_FARM_ANIMAL_SHEEP"
   }
  },
  "sound": {

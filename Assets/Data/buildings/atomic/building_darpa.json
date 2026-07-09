@@ -68,7 +68,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DARPA"
+   "define": "ART_DEF_BUILDING_DARPA"
   }
  },
  "identity": {

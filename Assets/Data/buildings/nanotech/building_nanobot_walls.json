@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NANOBOT_WALLS"
+   "define": "ART_DEF_BUILDING_NANOBOT_WALLS"
   }
  },
  "sound": {

@@ -46,6 +46,11 @@
   "upkeep": 3,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SIEGE_ENGINEER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SIEGE_ENGINEER",
   "civilopedia": "TXT_KEY_UNIT_SIEGE_ENGINEER_PEDIA",

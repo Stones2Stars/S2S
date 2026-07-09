@@ -93,6 +93,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LAWYER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LAWYER",
   "civilopedia": "TXT_KEY_CONCEPT_CORPORATIONS_PEDIA",

@@ -16,7 +16,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_OORT_CLOUD"
+   "define": "ART_DEF_FEATURE_OORT_CLOUD"
   }
  },
  "sound": {

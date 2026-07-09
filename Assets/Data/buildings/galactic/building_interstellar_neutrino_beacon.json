@@ -40,7 +40,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_NEUTRINO_BEACON"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_NEUTRINO_BEACON"
   }
  },
  "identity": {

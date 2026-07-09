@@ -88,7 +88,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SMALL_SUSPENSION_BRIDGE"
+   "define": "ART_DEF_BUILDING_SMALL_SUSPENSION_BRIDGE"
   }
  },
  "identity": {

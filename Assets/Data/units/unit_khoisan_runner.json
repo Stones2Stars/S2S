@@ -146,6 +146,11 @@
   "production": 125,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KHOISAN_RUNNER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KHOISAN_RUNNER",
   "civilopedia": "TXT_KEY_UNIT_KHOISAN_RUNNER_PEDIA",

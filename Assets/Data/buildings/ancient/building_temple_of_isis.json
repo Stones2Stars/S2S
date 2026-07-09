@@ -115,7 +115,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EGYPTIAN_MYTH_ISIS"
+   "define": "ART_DEF_BUILDING_EGYPTIAN_MYTH_ISIS"
   }
  },
  "sound": {

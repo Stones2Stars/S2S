@@ -95,7 +95,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_AIRFIELD"
+   "define": "ART_DEF_BUILDING_AIRFIELD"
   }
  },
  "sound": {

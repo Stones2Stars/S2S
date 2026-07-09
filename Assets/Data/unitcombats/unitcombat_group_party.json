@@ -21,15 +21,15 @@
   }
  },
  "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "sizeMatters": {
+  "groupBase": 2
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/group_party.dds"
   }
  },
  "identity": {
-  "description": "TXT_KEY_UNITCOMBAT_GROUP_PARTY",
-  "base": {
-   "group": 2
-  }
+  "description": "TXT_KEY_UNITCOMBAT_GROUP_PARTY"
  }
 }

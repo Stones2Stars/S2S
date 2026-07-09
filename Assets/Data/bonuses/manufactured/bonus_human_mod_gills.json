@@ -2,7 +2,7 @@
  "type": "BONUS_HUMAN_MOD_GILLS",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HUMAN_MOD_GILLS"
+   "define": "ART_DEF_BONUS_HUMAN_MOD_GILLS"
   }
  },
  "identity": {

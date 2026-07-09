@@ -35,7 +35,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE"
   }
  },
  "identity": {

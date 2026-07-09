@@ -90,6 +90,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MERCHANT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MERCHANT",
   "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",

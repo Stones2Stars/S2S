@@ -30,7 +30,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_POTTERY"
+   "define": "ART_DEF_BONUS_POTTERY"
   }
  },
  "identity": {

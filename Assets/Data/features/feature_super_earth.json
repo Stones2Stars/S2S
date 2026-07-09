@@ -16,7 +16,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_SUPER_EARTH"
+   "define": "ART_DEF_FEATURE_SUPER_EARTH"
   }
  },
  "sound": {

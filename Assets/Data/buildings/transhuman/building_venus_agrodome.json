@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VENUS_AGRODOME"
+   "define": "ART_DEF_BUILDING_VENUS_AGRODOME"
   }
  },
  "identity": {

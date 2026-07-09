@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_CISLUNAR_EXPANSION_MODULE"
+   "define": "ART_DEF_IMPROVEMENT_CISLUNAR_EXPANSION_MODULE"
   }
  },
  "identity": {

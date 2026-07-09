@@ -75,7 +75,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FARM_CROP_RHUBARB"
+   "define": "ART_DEF_BUILDING_FARM_CROP_RHUBARB"
   }
  },
  "identity": {

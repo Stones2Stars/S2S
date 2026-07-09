@@ -233,7 +233,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_JEWELER"
+   "define": "ART_DEF_BUILDING_JEWELER"
   }
  },
  "sound": {

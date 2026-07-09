@@ -59,6 +59,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WHALESHARK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_WHALESHARK",
   "civilopedia": "TXT_KEY_UNIT_WHALESHARK_PEDIA",

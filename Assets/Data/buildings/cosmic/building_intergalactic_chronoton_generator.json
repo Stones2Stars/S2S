@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_CHRONOTON_GENERATOR"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_CHRONOTON_GENERATOR"
   }
  },
  "identity": {

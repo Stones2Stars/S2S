@@ -110,6 +110,11 @@
   "production": 150,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WORK_LLAMA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WORKLLAMA",
   "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",

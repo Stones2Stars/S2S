@@ -73,6 +73,11 @@
   "production": 295,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SABLE_TRAPPER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SABLE_TRAPPER",
   "civilopedia": "TXT_KEY_UNIT_SABLE_TRAPPER_PEDIA",

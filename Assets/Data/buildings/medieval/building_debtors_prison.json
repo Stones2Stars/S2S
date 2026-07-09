@@ -82,7 +82,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DEBTORS_PRISON"
+   "define": "ART_DEF_BUILDING_DEBTORS_PRISON"
   }
  },
  "identity": {

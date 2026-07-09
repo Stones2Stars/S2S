@@ -94,7 +94,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DOWNDRAFT_TOWER"
+   "define": "ART_DEF_BUILDING_DOWNDRAFT_TOWER"
   }
  },
  "identity": {

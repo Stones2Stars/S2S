@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CRUCIFIXION_CROSSES"
+   "define": "ART_DEF_BUILDING_CRUCIFIXION_CROSSES"
   }
  },
  "identity": {

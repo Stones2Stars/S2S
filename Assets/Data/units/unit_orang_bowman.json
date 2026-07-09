@@ -75,6 +75,11 @@
   "production": 290,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ORANG_BOWMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ORANG_BOWMAN",
   "civilopedia": "TXT_KEY_UNIT_ORANG_BOWMAN_PEDIA",

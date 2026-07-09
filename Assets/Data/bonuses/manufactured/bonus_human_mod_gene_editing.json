@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HUMAN_MOD_GENE_EDITING"
+   "define": "ART_DEF_BONUS_HUMAN_MOD_GENE_EDITING"
   }
  },
  "identity": {

@@ -123,7 +123,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_AUTOMOBILES"
+   "define": "ART_DEF_BUILDING_FACTORY_AUTOMOBILES"
   }
  },
  "identity": {

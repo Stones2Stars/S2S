@@ -89,7 +89,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CYBERNETICA_APPAREL_SHOP"
+   "define": "ART_DEF_BUILDING_CYBERNETICA_APPAREL_SHOP"
   }
  },
  "identity": {

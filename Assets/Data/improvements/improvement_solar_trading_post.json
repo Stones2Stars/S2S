@@ -33,7 +33,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_SOLAR_TRADING_POST"
+   "define": "ART_DEF_IMPROVEMENT_SOLAR_TRADING_POST"
   }
  },
  "mapGeneration": {

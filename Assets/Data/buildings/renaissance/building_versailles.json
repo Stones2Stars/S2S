@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VERSAILLES"
+   "define": "ART_DEF_BUILDING_VERSAILLES"
   }
  },
  "identity": {

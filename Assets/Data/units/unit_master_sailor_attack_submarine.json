@@ -108,6 +108,11 @@
  "cost": {
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ATTACK_SUBMARINE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MASTER_SAILOR_ATTACK_SUBMARINE",
   "civilopedia": "TXT_KEY_UNIT_ATTACK_SUBMARINE_PEDIA",

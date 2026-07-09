@@ -47,6 +47,11 @@
   "production": 1008,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AGAPARO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AGAPARO",
   "civilopedia": "TXT_KEY_UNIT_AGAPARO_PEDIA",

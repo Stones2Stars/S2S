@@ -119,7 +119,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PETTING_ZOO"
+   "define": "ART_DEF_BUILDING_PETTING_ZOO"
   }
  },
  "sound": {

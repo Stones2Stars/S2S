@@ -104,6 +104,11 @@
   "production": 710,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TORPEDO_BOAT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TORPEDO_BOAT",
   "civilopedia": "TXT_KEY_UNIT_TORPEDO_BOAT_PEDIA",

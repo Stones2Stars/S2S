@@ -63,6 +63,11 @@
   "production": 1424,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HAYK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HAYK",
   "civilopedia": "TXT_KEY_UNIT_HAYK_PEDIA",

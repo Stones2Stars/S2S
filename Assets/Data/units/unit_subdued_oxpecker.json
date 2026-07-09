@@ -35,6 +35,11 @@
    "BUILDING_FOLKLORE_OXPECKER"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_OXPECKER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_OXPECKER",
   "civilopedia": "TXT_KEY_UNIT_OXPECKER_PEDIA",

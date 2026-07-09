@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CLAYTRONIC_TOWER"
+   "define": "ART_DEF_BUILDING_CLAYTRONIC_TOWER"
   }
  },
  "identity": {

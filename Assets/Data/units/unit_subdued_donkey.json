@@ -149,6 +149,11 @@
    "BUILDING_ZOO"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DONKEY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_DONKEY",
   "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",

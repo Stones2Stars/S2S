@@ -49,7 +49,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_DEER"
+   "define": "ART_DEF_BONUS_DEER"
   }
  },
  "mapGeneration": {

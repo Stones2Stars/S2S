@@ -63,6 +63,11 @@
  "cost": {
   "production": 370
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RA_KNIGHT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_RA_KNIGHT",
   "civilopedia": "TXT_KEY_UNIT_RA_FIST_PEDIA",

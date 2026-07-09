@@ -22,7 +22,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_VENUS_HIGHLANDS"
+   "define": "ART_DEF_TERRAIN_VENUS_HIGHLANDS"
   }
  },
  "sound": {

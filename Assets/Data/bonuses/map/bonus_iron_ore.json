@@ -39,7 +39,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_IRON_ORE"
+   "define": "ART_DEF_BONUS_IRON_ORE"
   }
  },
  "mapGeneration": {

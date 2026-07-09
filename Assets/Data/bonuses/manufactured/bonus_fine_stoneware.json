@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_FINE_STONEWARE"
+   "define": "ART_DEF_BONUS_FINE_STONEWARE"
   }
  },
  "identity": {

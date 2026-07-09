@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VIBRANIUM_MINE"
+   "define": "ART_DEF_BUILDING_VIBRANIUM_MINE"
   }
  },
  "identity": {

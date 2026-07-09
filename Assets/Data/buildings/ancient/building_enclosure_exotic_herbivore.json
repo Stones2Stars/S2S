@@ -82,7 +82,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ENCLOSURE_EXOTIC_HERBIVORE"
+   "define": "ART_DEF_BUILDING_ENCLOSURE_EXOTIC_HERBIVORE"
   }
  },
  "identity": {

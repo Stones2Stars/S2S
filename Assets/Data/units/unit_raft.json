@@ -102,6 +102,11 @@
   "production": 50,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RAFT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_RAFT",
   "civilopedia": "TXT_KEY_UNIT_RAFT_PEDIA",

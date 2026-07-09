@@ -124,6 +124,11 @@
   "production": 43,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BOOMERANG_THROWER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BOOMERANG_THROWER",
   "civilopedia": "TXT_KEY_UNIT_BOOMERANG_THROWER_PEDIA",

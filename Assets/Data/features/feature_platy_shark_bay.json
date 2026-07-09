@@ -16,7 +16,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_SHARK_BAY"
+   "define": "ART_DEF_FEATURE_SHARK_BAY"
   }
  },
  "sound": {

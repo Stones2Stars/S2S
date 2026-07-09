@@ -96,7 +96,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LACQUERWARE_WORKSHOP"
+   "define": "ART_DEF_BUILDING_LACQUERWARE_WORKSHOP"
   }
  },
  "identity": {

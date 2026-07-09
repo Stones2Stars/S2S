@@ -8,7 +8,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_ILOCANO"
+   "define": "ART_DEF_BONUS_ILOCANO"
   }
  },
  "identity": {

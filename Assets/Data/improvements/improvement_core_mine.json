@@ -373,7 +373,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_CORE_MINE"
+   "define": "ART_DEF_IMPROVEMENT_CORE_MINE"
   }
  },
  "identity": {

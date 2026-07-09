@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANCIENT_WAY_OF_THE_WOLF"
+   "define": "ART_DEF_BUILDING_ANCIENT_WAY_OF_THE_WOLF"
   }
  },
  "identity": {

@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SCULPTOR_GROUP_COLONY"
+   "define": "ART_DEF_BUILDING_SCULPTOR_GROUP_COLONY"
   }
  },
  "identity": {

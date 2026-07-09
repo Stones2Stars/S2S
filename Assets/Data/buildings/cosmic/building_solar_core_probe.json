@@ -57,7 +57,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SOLAR_CORE_PROBE"
+   "define": "ART_DEF_BUILDING_SOLAR_CORE_PROBE"
   }
  },
  "identity": {

@@ -91,6 +91,11 @@
   "upkeep": 5,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MIDEWIWIN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MIDEWIWIN",
   "civilopedia": "TXT_KEY_UNIT_MIDEWIWIN_PEDIA",

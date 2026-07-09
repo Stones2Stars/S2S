@@ -95,7 +95,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THE_HANGING_GARDENS"
+   "define": "ART_DEF_BUILDING_THE_HANGING_GARDENS"
   }
  },
  "identity": {

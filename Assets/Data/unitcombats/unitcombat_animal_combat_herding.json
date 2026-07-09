@@ -1,17 +1,13 @@
 {
  "type": "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
- "strength": {
-  "unit": {
-   "perVolumeMore": {
-    "percent": -15
-   },
-   "perVolumeLess": {
-    "percent": 15
-   }
-  }
- },
  "skills": {
   "gatherHerd": true
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perVolumeMore": -15,
+   "perVolumeLess": 15
+  }
  },
  "ui": {
   "art": {

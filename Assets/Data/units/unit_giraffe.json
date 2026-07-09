@@ -43,6 +43,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GIRAFFE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GIRAFFE",
   "civilopedia": "TXT_KEY_UNIT_GIRAFFE_PEDIA",

@@ -79,6 +79,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TRADE_JUNK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TRADE_JUNK",
   "civilopedia": "TXT_KEY_UNIT_TRADE_JUNK_PEDIA",

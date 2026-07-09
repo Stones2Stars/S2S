@@ -56,7 +56,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_STANDARD_MODEL"
+   "define": "ART_DEF_BUILDING_STANDARD_MODEL"
   }
  },
  "identity": {

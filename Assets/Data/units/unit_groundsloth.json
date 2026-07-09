@@ -43,6 +43,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GROUNDSLOTH"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GROUNDSLOTH",
   "civilopedia": "TXT_KEY_UNIT_GROUNDSLOTH_PEDIA",

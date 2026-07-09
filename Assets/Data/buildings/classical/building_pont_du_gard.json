@@ -73,7 +73,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PONT_DU_GARD"
+   "define": "ART_DEF_BUILDING_PONT_DU_GARD"
   }
  },
  "sound": {

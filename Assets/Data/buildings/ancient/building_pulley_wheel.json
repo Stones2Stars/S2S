@@ -93,7 +93,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PULLEY_WHEEL"
+   "define": "ART_DEF_BUILDING_PULLEY_WHEEL"
   }
  },
  "sound": {

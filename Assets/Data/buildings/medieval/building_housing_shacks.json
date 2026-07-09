@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOUSING_SHACKS"
+   "define": "ART_DEF_BUILDING_HOUSING_SHACKS"
   }
  },
  "identity": {

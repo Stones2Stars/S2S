@@ -170,6 +170,11 @@
  "cost": {
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CAPTIVE_MEDIEVAL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CAPTIVE_CIVILIAN",
   "civilopedia": "TXT_KEY_UNIT_CAPTIVE_CIVILIAN_PEDIA",

@@ -97,6 +97,11 @@
   "production": 525,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SHIP_OF_THE_LINE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SHIP_OF_THE_LINE",
   "civilopedia": "TXT_KEY_UNIT_SHIP_OF_THE_LINE_PEDIA",

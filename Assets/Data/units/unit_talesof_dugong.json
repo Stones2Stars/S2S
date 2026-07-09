@@ -16,6 +16,11 @@
    "BUILDING_FOLKLORE_DUGONG"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TALESOF_DUGONG"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TALESOF_DUGONG",
   "civilopedia": "TXT_KEY_CONCEPT_TALESOF_SEA_ANIMALS_PEDIA",

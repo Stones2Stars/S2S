@@ -93,6 +93,11 @@
   "production": 1365,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MOBILE_SAM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MOBILE_SAM",
   "civilopedia": "TXT_KEY_UNIT_MOBILE_SAM_PEDIA",

@@ -56,7 +56,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SPACE_COLONY_TRANSTELLAR"
+   "define": "ART_DEF_BUILDING_SPACE_COLONY_TRANSTELLAR"
   }
  },
  "identity": {

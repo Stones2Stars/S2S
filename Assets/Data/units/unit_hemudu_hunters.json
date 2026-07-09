@@ -77,6 +77,11 @@
   "production": 105,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HEMUDU_HUNTERS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HEMUDU_HUNTERS",
   "civilopedia": "TXT_KEY_UNIT_HEMUDU_HUNTERS_PEDIA",

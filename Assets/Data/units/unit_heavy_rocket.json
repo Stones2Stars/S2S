@@ -86,6 +86,11 @@
   "production": 3006,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HEAVY_ROCKET"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HEAVY_ROCKET",
   "civilopedia": "TXT_KEY_UNIT_HEAVY_ROCKET_PEDIA",

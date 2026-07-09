@@ -78,7 +78,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BURIAL_GROUND"
+   "define": "ART_DEF_BUILDING_BURIAL_GROUND"
   }
  },
  "sound": {

@@ -39,6 +39,11 @@
   "production": 2620,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BADI_VII"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BADI_VII",
   "civilopedia": "TXT_KEY_UNIT_BADI_VII_PEDIA",

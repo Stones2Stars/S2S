@@ -75,6 +75,11 @@
   "production": 165,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RED_FOX_ARCHER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_RED_FOX_ARCHER",
   "civilopedia": "TXT_KEY_UNIT_RED_FOX_ARCHER_PEDIA",

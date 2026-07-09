@@ -82,6 +82,11 @@
   "production": 3000,
   "upkeep": 16
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HYPERSONIC_FIGHTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SCRAMJET",
   "civilopedia": "TXT_KEY_UNIT_SCRAMJET_PEDIA",

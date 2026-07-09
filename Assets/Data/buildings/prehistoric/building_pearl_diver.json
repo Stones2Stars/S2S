@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PEARL_DIVER"
+   "define": "ART_DEF_BUILDING_PEARL_DIVER"
   }
  },
  "identity": {

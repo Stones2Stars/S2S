@@ -97,6 +97,11 @@
   "production": 69,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NEANDERTHAL_ENFORCER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NEANDERTHAL_ENFORCER",
   "civilopedia": "TXT_KEY_UNIT_ENFORCERS_PEDIA",

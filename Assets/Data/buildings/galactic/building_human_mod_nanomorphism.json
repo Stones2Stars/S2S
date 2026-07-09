@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HUMAN_MOD_NANOMORPHISM"
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_NANOMORPHISM"
   }
  },
  "identity": {

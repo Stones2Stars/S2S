@@ -65,6 +65,11 @@
  "cost": {
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FRIGATE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MASTER_SAILOR_FRIGATE",
   "civilopedia": "TXT_KEY_UNIT_FRIGATE_PEDIA",

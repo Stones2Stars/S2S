@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_ROASTED_COFFEE"
+   "define": "ART_DEF_BUILDING_FACTORY_ROASTED_COFFEE"
   }
  },
  "identity": {

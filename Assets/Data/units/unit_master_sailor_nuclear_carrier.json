@@ -111,6 +111,11 @@
  "cost": {
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NUCLEAR_CARRIER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MASTER_SAILOR_NUCLEAR_CARRIER",
   "civilopedia": "TXT_KEY_UNIT_NUCLEAR_CARRIER_PEDIA",

@@ -84,7 +84,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BOWLING_ALLEY"
+   "define": "ART_DEF_BUILDING_BOWLING_ALLEY"
   }
  },
  "identity": {

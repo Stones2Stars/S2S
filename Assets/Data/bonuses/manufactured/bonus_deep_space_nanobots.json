@@ -2,7 +2,7 @@
  "type": "BONUS_DEEP_SPACE_NANOBOTS",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_DEEP_SPACE_NANOBOTS"
+   "define": "ART_DEF_BONUS_DEEP_SPACE_NANOBOTS"
   }
  },
  "identity": {

@@ -84,6 +84,11 @@
   "production": 1150,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DESTROYER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WW1_DESTROYER",
   "civilopedia": "TXT_KEY_UNIT_WW1_DESTROYER_PEDIA",

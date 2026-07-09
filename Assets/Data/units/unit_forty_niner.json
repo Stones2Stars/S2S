@@ -126,6 +126,11 @@
   "production": 665,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FORTY_NINER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FORTY_NINER",
   "civilopedia": "TXT_KEY_UNIT_FORTY_NINER_PEDIA",

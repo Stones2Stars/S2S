@@ -74,7 +74,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_RIVER_ADMINISTRATION"
+   "define": "ART_DEF_RIVER_ADMINISTRATION"
   }
  },
  "identity": {

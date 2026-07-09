@@ -160,6 +160,11 @@
   "production": 580,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GAUCHO_CAVALRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GAUCHO_CAVALRY",
   "civilopedia": "TXT_KEY_UNIT_GAUCHO_CAVALRY_PEDIA",

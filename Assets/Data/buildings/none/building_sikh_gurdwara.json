@@ -133,7 +133,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SIKH_GURDWARA"
+   "define": "ART_DEF_BUILDING_SIKH_GURDWARA"
   }
  },
  "identity": {

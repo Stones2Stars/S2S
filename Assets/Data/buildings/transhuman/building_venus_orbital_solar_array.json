@@ -37,7 +37,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VENUS_ORBITAL_SOLAR_ARRAY"
+   "define": "ART_DEF_BUILDING_VENUS_ORBITAL_SOLAR_ARRAY"
   }
  },
  "identity": {

@@ -113,6 +113,11 @@
  "cost": {
   "upkeep": 6
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_COLONIST_MALE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_COLONIST",
   "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",

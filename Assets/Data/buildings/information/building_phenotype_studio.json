@@ -72,7 +72,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PHENOTYPE_STUDIO"
+   "define": "ART_DEF_BUILDING_PHENOTYPE_STUDIO"
   }
  },
  "identity": {

@@ -51,6 +51,11 @@
   "production": 250,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DECAREME"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DECAREME",
   "civilopedia": "TXT_KEY_UNIT_DECAREME_PEDIA",

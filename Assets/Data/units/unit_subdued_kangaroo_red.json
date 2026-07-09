@@ -149,6 +149,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KANGAROO_RED"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_KANGAROO_RED",
   "civilopedia": "TXT_KEY_UNIT_KANGAROO_RED_PEDIA",

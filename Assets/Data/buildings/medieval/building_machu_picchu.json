@@ -158,7 +158,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MACHU_PICCHU"
+   "define": "ART_DEF_BUILDING_MACHU_PICCHU"
   }
  },
  "sound": {

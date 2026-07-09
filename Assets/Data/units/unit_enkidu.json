@@ -55,6 +55,11 @@
   "production": 704,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ENKIDU"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ENKIDU",
   "civilopedia": "TXT_KEY_UNIT_ENKIDU_PEDIA",

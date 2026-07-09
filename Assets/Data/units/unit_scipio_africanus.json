@@ -47,6 +47,11 @@
   "production": 800,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SCIPIO_AFRICANUS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SCIPIO_AFRICANUS",
   "civilopedia": "TXT_KEY_UNIT_SCIPIO_AFRICANUS_PEDIA",

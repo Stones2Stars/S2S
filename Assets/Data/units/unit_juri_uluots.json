@@ -55,6 +55,11 @@
   "production": 4720,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JURI_ULUOTS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_JURI_ULUOTS",
   "civilopedia": "TXT_KEY_UNIT_JURI_ULUOTS_PEDIA",

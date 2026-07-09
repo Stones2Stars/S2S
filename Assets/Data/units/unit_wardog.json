@@ -87,6 +87,11 @@
   "production": 163,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WARDOG"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WARDOG",
   "civilopedia": "TXT_KEY_UNIT_WARDOG_PEDIA",

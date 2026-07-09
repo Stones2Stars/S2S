@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_LA_PLATAN"
+   "define": "ART_DEF_BUILDING_CULTURE_LA_PLATAN"
   }
  },
  "identity": {

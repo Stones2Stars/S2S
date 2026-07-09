@@ -87,7 +87,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FIRE_HYDRANTS"
+   "define": "ART_DEF_BUILDING_FIRE_HYDRANTS"
   }
  },
  "identity": {

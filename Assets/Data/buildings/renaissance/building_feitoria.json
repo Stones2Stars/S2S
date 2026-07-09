@@ -90,7 +90,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FEITORIA"
+   "define": "ART_DEF_BUILDING_FEITORIA"
   }
  },
  "sound": {

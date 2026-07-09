@@ -131,7 +131,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THE_ERECHTHEUM"
+   "define": "ART_DEF_BUILDING_THE_ERECHTHEUM"
   }
  },
  "sound": {

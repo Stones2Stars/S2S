@@ -82,6 +82,11 @@
   "production": 245,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SCORPION"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SCORPION",
   "civilopedia": "TXT_KEY_UNIT_BALLISTA_PEDIA",

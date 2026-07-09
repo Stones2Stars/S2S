@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ADVERTISING_AGENCY"
+   "define": "ART_DEF_BUILDING_ADVERTISING_AGENCY"
   }
  },
  "identity": {

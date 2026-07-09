@@ -55,6 +55,11 @@
   "production": 4720,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KWAME_NKRUMAH"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KWAME_NKRUMAH",
   "civilopedia": "TXT_KEY_UNIT_KWAME_NKRUMAH_PEDIA",

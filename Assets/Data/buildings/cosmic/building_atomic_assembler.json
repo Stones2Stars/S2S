@@ -98,7 +98,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ATOMIC_ASSEMBLER"
+   "define": "ART_DEF_BUILDING_ATOMIC_ASSEMBLER"
   }
  },
  "identity": {

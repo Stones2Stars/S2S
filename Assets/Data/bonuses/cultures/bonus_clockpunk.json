@@ -18,7 +18,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CLOCKPUNK"
+   "define": "ART_DEF_BONUS_CLOCKPUNK"
   }
  },
  "identity": {

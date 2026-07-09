@@ -117,7 +117,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HATTER"
+   "define": "ART_DEF_BUILDING_HATTER"
   }
  },
  "identity": {

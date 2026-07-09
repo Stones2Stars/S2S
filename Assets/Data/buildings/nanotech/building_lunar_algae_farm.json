@@ -74,7 +74,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LUNAR_ALGAE_FARM"
+   "define": "ART_DEF_BUILDING_LUNAR_ALGAE_FARM"
   }
  },
  "identity": {

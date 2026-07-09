@@ -87,6 +87,11 @@
   "production": 440,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NETHERLANDS_OOSTINDIEVAARDER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NETHERLANDS_OOSTINDIEVAARDER",
   "civilopedia": "TXT_KEY_UNIT_NETHERLANDS_OOSTINDIEVAARDER_PEDIA",

@@ -86,7 +86,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PIT_TRAPS"
+   "define": "ART_DEF_BUILDING_PIT_TRAPS"
   }
  },
  "sound": {

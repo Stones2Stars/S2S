@@ -106,7 +106,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MILITARY_SURPLUS_STORE"
+   "define": "ART_DEF_BUILDING_MILITARY_SURPLUS_STORE"
   }
  },
  "identity": {

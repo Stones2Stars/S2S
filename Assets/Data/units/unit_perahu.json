@@ -46,6 +46,11 @@
   "production": 704,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PERAHU"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PERAHU",
   "civilopedia": "TXT_KEY_UNIT_PERAHU_PEDIA",

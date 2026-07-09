@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LIFE_SUPERCRITICAL_CO2"
+   "define": "ART_DEF_BUILDING_LIFE_SUPERCRITICAL_CO2"
   }
  },
  "identity": {

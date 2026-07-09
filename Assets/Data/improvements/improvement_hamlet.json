@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_HAMLET"
+   "define": "ART_DEF_IMPROVEMENT_HAMLET"
   }
  },
  "identity": {

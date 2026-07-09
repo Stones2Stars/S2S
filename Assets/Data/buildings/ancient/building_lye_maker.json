@@ -102,7 +102,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LYE_MAKER"
+   "define": "ART_DEF_BUILDING_LYE_MAKER"
   }
  },
  "identity": {

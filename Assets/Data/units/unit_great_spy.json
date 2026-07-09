@@ -67,6 +67,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ANCIENT_GREAT_SPY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GREAT_SPY",
   "civilopedia": "TXT_KEY_CONCEPT_GREAT_SPY_PEDIA",

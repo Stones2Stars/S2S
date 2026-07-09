@@ -108,7 +108,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_OLED"
+   "define": "ART_DEF_BUILDING_FACTORY_OLED"
   }
  },
  "identity": {

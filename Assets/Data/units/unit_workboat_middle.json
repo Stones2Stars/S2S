@@ -43,6 +43,11 @@
   "production": 233,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WORKBOAT_MIDDLE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WORKBOAT_MIDDLE",
   "civilopedia": "TXT_KEY_UNIT_WORKBOAT_PEDIA",

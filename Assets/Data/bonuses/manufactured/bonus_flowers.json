@@ -11,7 +11,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_FLOWERS"
+   "define": "ART_DEF_BONUS_FLOWERS"
   }
  },
  "identity": {

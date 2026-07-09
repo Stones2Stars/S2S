@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_MOCHE"
+   "define": "ART_DEF_BUILDING_CULTURE_MOCHE"
   }
  },
  "identity": {

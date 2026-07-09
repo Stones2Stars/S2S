@@ -69,6 +69,11 @@
   "production": 770,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GATLING_GUN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GATLING_GUN",
   "civilopedia": "TXT_KEY_UNIT_GATLING_GUN_PEDIA",

@@ -85,6 +85,11 @@
   "production": 1475,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ROYAL_SPECIAL_FORCES"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ROYAL_SPECIAL_FORCES",
   "civilopedia": "TXT_KEY_UNIT_ROYAL_SPECIAL_FORCES_PEDIA",

@@ -226,6 +226,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TRADE_CARAVAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TRADE_CARAVAN",
   "civilopedia": "TXT_KEY_CONCEPT_TRADE_CARAVAN_PEDIA",

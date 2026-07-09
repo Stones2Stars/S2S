@@ -103,6 +103,11 @@
   "production": 450,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SAMBUK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SAMBUK",
   "civilopedia": "TXT_KEY_UNIT_SAMBUK_PEDIA",

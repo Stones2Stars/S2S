@@ -40,6 +40,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_EAGLE_BALD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_EAGLE_BALD",
   "civilopedia": "TXT_KEY_UNIT_EAGLE_BALD_PEDIA",

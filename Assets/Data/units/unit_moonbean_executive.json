@@ -29,6 +29,11 @@
   "production": 275,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CEO_MOONBEAN_EXECUTIVE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MOONBEAN_EXECUTIVE",
   "civilopedia": "TXT_KEY_CONCEPT_CORPORATIONS_PEDIA",

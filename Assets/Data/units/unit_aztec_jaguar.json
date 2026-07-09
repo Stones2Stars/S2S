@@ -127,6 +127,11 @@
   "production": 67,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AZTEC_JAGUAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AZTEC_JAGUAR",
   "civilopedia": "TXT_KEY_UNIT_AZTEC_JAGUAR_PEDIA",

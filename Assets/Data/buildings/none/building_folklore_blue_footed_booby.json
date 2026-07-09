@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOLKLORE_BLUE_FOOTED_BOOBY"
+   "define": "ART_DEF_BUILDING_FOLKLORE_BLUE_FOOTED_BOOBY"
   }
  },
  "identity": {

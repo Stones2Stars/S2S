@@ -77,6 +77,11 @@
   "production": 270,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DOUJIAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DOUJIAN",
   "civilopedia": "TXT_KEY_UNIT_DOUJIAN_PEDIA",

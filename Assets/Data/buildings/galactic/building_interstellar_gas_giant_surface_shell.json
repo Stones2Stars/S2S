@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_GAS_GIANT_SURFACE_SHELL"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_GAS_GIANT_SURFACE_SHELL"
   }
  },
  "identity": {

@@ -36,7 +36,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_SAVANNA",
+   "define": "ART_DEF_FEATURE_SAVANNA",
    "effect": {
     "type": "EFFECT_BIRDSCATTER",
     "probability": 15

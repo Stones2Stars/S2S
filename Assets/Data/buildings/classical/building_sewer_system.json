@@ -131,7 +131,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SEWER"
+   "define": "ART_DEF_BUILDING_SEWER"
   }
  },
  "sound": {

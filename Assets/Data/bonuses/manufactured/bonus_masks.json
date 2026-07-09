@@ -2,7 +2,7 @@
  "type": "BONUS_MASKS",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_MASKS"
+   "define": "ART_DEF_BONUS_MASKS"
   }
  },
  "identity": {

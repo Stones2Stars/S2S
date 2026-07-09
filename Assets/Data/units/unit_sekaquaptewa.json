@@ -47,6 +47,11 @@
   "production": 2220,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SEKAQUAPTEWA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SEKAQUAPTEWA",
   "civilopedia": "TXT_KEY_UNIT_SEKAQUAPTEWA_PEDIA",

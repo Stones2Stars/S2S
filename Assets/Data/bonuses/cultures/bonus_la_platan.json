@@ -8,7 +8,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_LA_PLATAN"
+   "define": "ART_DEF_BONUS_LA_PLATAN"
   }
  },
  "identity": {

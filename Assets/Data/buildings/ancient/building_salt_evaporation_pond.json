@@ -57,7 +57,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SALT_EVAPORATION_POND"
+   "define": "ART_DEF_BUILDING_SALT_EVAPORATION_POND"
   }
  },
  "identity": {

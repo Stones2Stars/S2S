@@ -52,6 +52,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SABRETOOTH"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SABRETOOTH",
   "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",

@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SUPERCONDUCTING_GRID"
+   "define": "ART_DEF_BUILDING_SUPERCONDUCTING_GRID"
   }
  },
  "identity": {

@@ -113,7 +113,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_3D_PRINTING_MILL"
+   "define": "ART_DEF_BUILDING_3D_PRINTING_MILL"
   }
  },
  "sound": {

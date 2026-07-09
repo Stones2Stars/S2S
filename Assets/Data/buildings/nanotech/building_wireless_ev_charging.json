@@ -49,7 +49,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WIRELESS_EV_CHARGING"
+   "define": "ART_DEF_BUILDING_WIRELESS_EV_CHARGING"
   }
  },
  "identity": {

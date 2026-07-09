@@ -23,7 +23,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WORLDVIEW_HUMAN_SACRIFICE"
+   "define": "ART_DEF_BUILDING_WORLDVIEW_HUMAN_SACRIFICE"
   }
  },
  "sound": {

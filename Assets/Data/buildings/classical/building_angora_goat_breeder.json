@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANGORA_GOAT_BREEDER"
+   "define": "ART_DEF_BUILDING_ANGORA_GOAT_BREEDER"
   }
  },
  "sound": {

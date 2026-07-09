@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_4D_PRINTING_STUDIO"
+   "define": "ART_DEF_BUILDING_4D_PRINTING_STUDIO"
   }
  },
  "identity": {

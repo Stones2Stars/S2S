@@ -46,6 +46,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DHOLE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DHOLE",
   "civilopedia": "TXT_KEY_UNIT_DHOLE_PEDIA",

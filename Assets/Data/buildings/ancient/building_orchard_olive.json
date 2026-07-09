@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ORCHARD_OLIVE"
+   "define": "ART_DEF_BUILDING_ORCHARD_OLIVE"
   }
  },
  "identity": {

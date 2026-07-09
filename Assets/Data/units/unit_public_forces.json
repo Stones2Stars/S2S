@@ -177,6 +177,11 @@
   "production": 1925,
   "upkeep": 9
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PUBLIC_FORCES"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PUBLIC_FORCES",
   "civilopedia": "TXT_KEY_UNIT_PUBLIC_FORCES_PEDIA",

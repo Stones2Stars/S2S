@@ -111,7 +111,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PORCELAIN_WORKSHOP"
+   "define": "ART_DEF_BUILDING_PORCELAIN_WORKSHOP"
   }
  },
  "identity": {

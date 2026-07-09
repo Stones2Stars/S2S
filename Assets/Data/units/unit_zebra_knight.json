@@ -118,6 +118,11 @@
  "cost": {
   "production": 355
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ZEBRA_KNIGHT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ZEBRA_KNIGHT",
   "civilopedia": "TXT_KEY_UNIT_KNIGHT_PEDIA",

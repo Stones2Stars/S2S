@@ -108,7 +108,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CONFUCIAN_TEMPLE"
+   "define": "ART_DEF_BUILDING_CONFUCIAN_TEMPLE"
   }
  },
  "sound": {

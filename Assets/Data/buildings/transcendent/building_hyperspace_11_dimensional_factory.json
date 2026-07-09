@@ -39,7 +39,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY"
   }
  },
  "identity": {

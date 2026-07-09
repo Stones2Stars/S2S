@@ -168,7 +168,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CAFE"
+   "define": "ART_DEF_BUILDING_CAFE"
   }
  },
  "identity": {

@@ -55,6 +55,11 @@
   "production": 1120,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JAYAVARMAN_II"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_JAYAVARMAN_II",
   "civilopedia": "TXT_KEY_UNIT_JAYAVARMAN_II_PEDIA",

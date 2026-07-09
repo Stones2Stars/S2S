@@ -10,7 +10,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CHINESE"
+   "define": "ART_DEF_BONUS_CHINESE"
   }
  },
  "identity": {

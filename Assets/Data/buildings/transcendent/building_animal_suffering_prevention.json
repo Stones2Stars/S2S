@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANIMAL_SUFFERING_PREVENTION"
+   "define": "ART_DEF_BUILDING_ANIMAL_SUFFERING_PREVENTION"
   }
  },
  "identity": {

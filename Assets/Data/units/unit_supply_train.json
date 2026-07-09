@@ -70,6 +70,11 @@
   "production": 240,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SUPPLY_TRAIN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUPPLY_TRAIN",
   "civilopedia": "TXT_KEY_CONCEPT_TRADE_CARAVAN_PEDIA",

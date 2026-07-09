@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BREEDING_PROGRAM_HIPPO"
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_HIPPO"
   }
  },
  "identity": {

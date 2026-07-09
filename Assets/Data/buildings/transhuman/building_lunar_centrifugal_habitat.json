@@ -43,7 +43,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LUNAR_CENTRIFUGAL_HABITAT"
+   "define": "ART_DEF_BUILDING_LUNAR_CENTRIFUGAL_HABITAT"
   }
  },
  "identity": {

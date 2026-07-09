@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CISLUNAR_PARTICLE_ACCELERATOR"
+   "define": "ART_DEF_BUILDING_CISLUNAR_PARTICLE_ACCELERATOR"
   }
  },
  "identity": {

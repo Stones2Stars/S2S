@@ -89,7 +89,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NEUROSCIENCE_CENTER"
+   "define": "ART_DEF_BUILDING_NEUROSCIENCE_CENTER"
   }
  },
  "identity": {

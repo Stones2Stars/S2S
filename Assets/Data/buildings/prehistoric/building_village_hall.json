@@ -86,7 +86,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VILLAGE_HALL"
+   "define": "ART_DEF_BUILDING_VILLAGE_HALL"
   }
  },
  "sound": {

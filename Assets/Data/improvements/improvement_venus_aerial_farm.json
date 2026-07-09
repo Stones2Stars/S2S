@@ -24,7 +24,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_VENUS_AERIAL_FARM"
+   "define": "ART_DEF_IMPROVEMENT_VENUS_AERIAL_FARM"
   }
  },
  "identity": {

@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NATURE_CIRCLE_OLIVES"
+   "define": "ART_DEF_BUILDING_NATURE_CIRCLE_OLIVES"
   }
  },
  "sound": {

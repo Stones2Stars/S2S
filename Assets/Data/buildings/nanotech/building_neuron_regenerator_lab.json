@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NEURON_REGENERATOR_LAB"
+   "define": "ART_DEF_BUILDING_NEURON_REGENERATOR_LAB"
   }
  },
  "identity": {

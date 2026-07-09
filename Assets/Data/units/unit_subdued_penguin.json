@@ -52,6 +52,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PENGUIN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_PENGUIN",
   "civilopedia": "TXT_KEY_UNIT_EMPEROR_PENGUIN_PEDIA",

@@ -79,6 +79,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BANYAN_XEBEC"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BANYAN_XEBEC",
   "civilopedia": "TXT_KEY_UNIT_BANYAN_XEBEC_PEDIA",

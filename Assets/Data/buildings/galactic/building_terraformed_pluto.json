@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TERRAFORMED_PLUTO"
+   "define": "ART_DEF_BUILDING_TERRAFORMED_PLUTO"
   }
  },
  "identity": {

@@ -102,7 +102,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_COMPUTER_CENTER"
+   "define": "ART_DEF_BUILDING_COMPUTER_CENTER"
   }
  },
  "sound": {

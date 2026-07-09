@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CHAMBER_OF_COMMERCE"
+   "define": "ART_DEF_BUILDING_CHAMBER_OF_COMMERCE"
   }
  },
  "sound": {

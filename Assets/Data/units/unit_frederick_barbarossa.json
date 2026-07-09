@@ -60,6 +60,11 @@
   "production": 2220,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FREDERICK_BARBAROSSA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FREDERICK_BARBAROSSA",
   "civilopedia": "TXT_KEY_UNIT_FREDERICK_BARBAROSSA_PEDIA",

@@ -93,7 +93,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_KINGS_CRUSADE"
+   "define": "ART_DEF_BUILDING_KINGS_CRUSADE"
   }
  },
  "identity": {

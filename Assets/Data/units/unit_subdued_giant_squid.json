@@ -57,6 +57,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KRAKEN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_GIANT_SQUID",
   "civilopedia": "TXT_KEY_UNIT_GIANT_SQUID_PEDIA",

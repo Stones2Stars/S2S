@@ -98,7 +98,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ARC_DE_TRIOMPHE"
+   "define": "ART_DEF_BUILDING_ARC_DE_TRIOMPHE"
   }
  },
  "identity": {

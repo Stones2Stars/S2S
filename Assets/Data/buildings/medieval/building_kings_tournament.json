@@ -131,7 +131,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_KINGS_TOURNAMENT"
+   "define": "ART_DEF_BUILDING_KINGS_TOURNAMENT"
   }
  },
  "sound": {

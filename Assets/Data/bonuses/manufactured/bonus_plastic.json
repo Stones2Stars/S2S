@@ -38,7 +38,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_PLASTIC"
+   "define": "ART_DEF_BONUS_PLASTIC"
   }
  },
  "identity": {

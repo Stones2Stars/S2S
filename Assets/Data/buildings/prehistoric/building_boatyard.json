@@ -82,7 +82,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BOATYARD"
+   "define": "ART_DEF_BUILDING_BOATYARD"
   }
  },
  "sound": {

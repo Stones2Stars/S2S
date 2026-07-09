@@ -52,6 +52,11 @@
   "production": 900,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MANCO_CAPAC"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MANCO_CAPAC",
   "civilopedia": "TXT_KEY_UNIT_MANCO_CAPAC_PEDIA",

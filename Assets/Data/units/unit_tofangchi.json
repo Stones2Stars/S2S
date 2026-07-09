@@ -85,6 +85,11 @@
   "production": 385,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TOFANGCHI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TOFANGCHI",
   "civilopedia": "TXT_KEY_UNIT_TOFANGCHI_PEDIA",

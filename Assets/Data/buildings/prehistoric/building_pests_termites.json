@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PESTS_TERMITES"
+   "define": "ART_DEF_BUILDING_PESTS_TERMITES"
   }
  },
  "identity": {

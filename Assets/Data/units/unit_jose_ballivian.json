@@ -49,6 +49,11 @@
   "production": 2140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JOSE_BALLIVIAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_JOSE_BALLIVIAN",
   "civilopedia": "TXT_KEY_UNIT_JOSE_BALLIVIAN_PEDIA",

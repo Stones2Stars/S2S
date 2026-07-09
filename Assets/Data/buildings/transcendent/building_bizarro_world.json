@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BIZARRO_WORLD"
+   "define": "ART_DEF_BUILDING_BIZARRO_WORLD"
   }
  },
  "identity": {

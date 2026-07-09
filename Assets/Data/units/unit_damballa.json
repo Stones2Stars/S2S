@@ -62,6 +62,11 @@
   "production": 1200,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DAMBALLA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DAMBALLA",
   "civilopedia": "TXT_KEY_UNIT_DAMBALLA_PEDIA",

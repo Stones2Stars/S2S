@@ -49,7 +49,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_VENEZUELAN"
+   "define": "ART_DEF_BUILDING_CULTURE_VENEZUELAN"
   }
  },
  "identity": {

@@ -43,6 +43,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SKUNK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_SKUNK",
   "civilopedia": "TXT_KEY_UNIT_SKUNK_PEDIA",

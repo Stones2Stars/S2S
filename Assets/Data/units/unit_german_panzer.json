@@ -109,6 +109,11 @@
   "production": 1200,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GERMAN_PANZER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GERMAN_PANZER",
   "civilopedia": "TXT_KEY_UNIT_GERMAN_PANZER_PEDIA",

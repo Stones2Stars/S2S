@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_E_BANK"
+   "define": "ART_DEF_BUILDING_E_BANK"
   }
  },
  "sound": {

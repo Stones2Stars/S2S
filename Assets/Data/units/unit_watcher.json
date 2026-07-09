@@ -94,6 +94,11 @@
   "production": 14,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WATCHER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WATCHER",
   "civilopedia": "TXT_KEY_UNIT_WATCHER_PEDIA",

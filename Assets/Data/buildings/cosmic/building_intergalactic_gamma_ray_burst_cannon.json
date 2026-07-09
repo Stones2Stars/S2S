@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON"
   }
  },
  "identity": {

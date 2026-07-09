@@ -101,7 +101,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BULLSEYE_STORE"
+   "define": "ART_DEF_BUILDING_BULLSEYE_STORE"
   }
  },
  "sound": {

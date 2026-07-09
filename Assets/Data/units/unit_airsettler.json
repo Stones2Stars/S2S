@@ -119,6 +119,11 @@
  "cost": {
   "upkeep": 10
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AIRCRAFT_SETTLER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AIRSETTLER",
   "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",

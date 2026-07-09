@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DEEP_SEA_MINE"
+   "define": "ART_DEF_BUILDING_DEEP_SEA_MINE"
   }
  },
  "identity": {

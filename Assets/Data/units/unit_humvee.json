@@ -89,6 +89,11 @@
   "production": 1700,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HUMVEE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HUMVEE",
   "civilopedia": "TXT_KEY_UNIT_HUMVEE_PEDIA",

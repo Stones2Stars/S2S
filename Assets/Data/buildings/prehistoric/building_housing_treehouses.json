@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOUSING_TREEHOUSES"
+   "define": "ART_DEF_BUILDING_HOUSING_TREEHOUSES"
   }
  },
  "identity": {

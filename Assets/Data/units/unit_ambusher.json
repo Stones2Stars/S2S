@@ -144,6 +144,11 @@
   "production": 97,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AMBUSHER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AMBUSHER",
   "civilopedia": "TXT_KEY_UNIT_AMBUSHER_PEDIA",

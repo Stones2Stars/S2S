@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_BOOKS"
+   "define": "ART_DEF_BONUS_BOOKS"
   }
  },
  "identity": {

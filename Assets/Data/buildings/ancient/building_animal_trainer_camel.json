@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANIMAL_TRAINER_CAMEL"
+   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_CAMEL"
   }
  },
  "sound": {

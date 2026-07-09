@@ -151,6 +151,11 @@
   "production": 200,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KHMER_PHAKAK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KHMER_PHAKAK",
   "civilopedia": "TXT_KEY_UNIT_KHMER_PHAKAK_PEDIA",

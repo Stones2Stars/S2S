@@ -104,7 +104,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DUTCH_DIKE"
+   "define": "ART_DEF_BUILDING_DUTCH_DIKE"
   }
  },
  "sound": {

@@ -99,6 +99,11 @@
   "production": 1025,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ARMORED_CAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ARMORED_CAR",
   "civilopedia": "TXT_KEY_UNIT_ARMORED_CAR_PEDIA",

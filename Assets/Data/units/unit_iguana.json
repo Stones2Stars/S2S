@@ -38,6 +38,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_IGUANA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_IGUANA",
   "civilopedia": "TXT_KEY_UNIT_IGUANA_PEDIA",

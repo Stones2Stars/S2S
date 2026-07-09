@@ -55,6 +55,11 @@
   "production": 4720,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GEORGE_CADLE_PRICE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GEORGE_CADLE_PRICE",
   "civilopedia": "TXT_KEY_UNIT_GEORGE_CADLE_PRICE_PEDIA",

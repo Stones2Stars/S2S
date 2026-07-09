@@ -33,7 +33,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PREDICTION_MARKET"
+   "define": "ART_DEF_BUILDING_PREDICTION_MARKET"
   }
  },
  "identity": {

@@ -37,7 +37,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NEPTUNE_WIND_TURBINE"
+   "define": "ART_DEF_BUILDING_NEPTUNE_WIND_TURBINE"
   }
  },
  "identity": {

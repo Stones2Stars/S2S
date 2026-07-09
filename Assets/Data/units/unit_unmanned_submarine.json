@@ -108,6 +108,11 @@
   "production": 3730,
   "upkeep": 6
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_UNMANNED_SUBMARINE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_UNMANNED_SUBMARINE",
   "civilopedia": "TXT_KEY_UNIT_UNMANNED_SUBMARINE_PEDIA",

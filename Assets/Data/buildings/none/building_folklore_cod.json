@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOLKLORE_COD"
+   "define": "ART_DEF_BUILDING_FOLKLORE_COD"
   }
  },
  "identity": {

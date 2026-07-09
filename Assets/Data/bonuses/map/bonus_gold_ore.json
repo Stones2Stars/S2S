@@ -37,7 +37,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_GOLD_ORE"
+   "define": "ART_DEF_BONUS_GOLD_ORE"
   }
  },
  "mapGeneration": {

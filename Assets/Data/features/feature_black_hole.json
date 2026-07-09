@@ -2,7 +2,7 @@
  "type": "FEATURE_BLACK_HOLE",
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_BLACK_HOLE"
+   "define": "ART_DEF_FEATURE_BLACK_HOLE"
   }
  },
  "sound": {

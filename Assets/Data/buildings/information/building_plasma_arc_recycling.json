@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PLASMA_ARC_RECYCLING"
+   "define": "ART_DEF_BUILDING_PLASMA_ARC_RECYCLING"
   }
  },
  "identity": {

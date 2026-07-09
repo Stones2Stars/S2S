@@ -59,6 +59,11 @@
   "production": 2520,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_EGUSHAWA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_EGUSHAWA",
   "civilopedia": "TXT_KEY_UNIT_EGUSHAWA_PEDIA",

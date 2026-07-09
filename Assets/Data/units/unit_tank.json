@@ -86,6 +86,11 @@
   "production": 1200,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TANK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TANK",
   "civilopedia": "TXT_KEY_UNIT_TANK_PEDIA",

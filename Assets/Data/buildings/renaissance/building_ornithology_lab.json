@@ -106,7 +106,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ORNITHOLOGY_LAB"
+   "define": "ART_DEF_BUILDING_ORNITHOLOGY_LAB"
   }
  },
  "identity": {

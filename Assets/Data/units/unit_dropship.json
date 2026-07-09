@@ -90,6 +90,11 @@
   "production": 4300,
   "upkeep": 14
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DROPSHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DROPSHIP",
   "civilopedia": "TXT_KEY_UNIT_DROPSHIP_PEDIA",

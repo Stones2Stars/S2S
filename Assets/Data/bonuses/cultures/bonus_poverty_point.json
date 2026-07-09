@@ -8,7 +8,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_POVERTY_POINT"
+   "define": "ART_DEF_BONUS_POVERTY_POINT"
   }
  },
  "identity": {

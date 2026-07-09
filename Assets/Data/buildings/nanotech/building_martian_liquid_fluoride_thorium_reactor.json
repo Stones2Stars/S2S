@@ -33,7 +33,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_LIQUID_FLUORIDE_THORIUM_REACTOR"
+   "define": "ART_DEF_BUILDING_MARTIAN_LIQUID_FLUORIDE_THORIUM_REACTOR"
   }
  },
  "identity": {

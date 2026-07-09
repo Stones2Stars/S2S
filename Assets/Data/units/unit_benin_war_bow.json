@@ -68,6 +68,11 @@
   "production": 290,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BENIN_WAR_BOW"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BENIN_WAR_BOW",
   "civilopedia": "TXT_KEY_UNIT_BENIN_WAR_BOW_PEDIA",

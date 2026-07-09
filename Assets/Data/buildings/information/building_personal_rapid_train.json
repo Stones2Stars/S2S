@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PERSONAL_RAPID_TRAIN"
+   "define": "ART_DEF_BUILDING_PERSONAL_RAPID_TRAIN"
   }
  },
  "sound": {

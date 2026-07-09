@@ -2,7 +2,7 @@
  "type": "BONUS_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS"
+   "define": "ART_DEF_BONUS_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS"
   }
  },
  "identity": {

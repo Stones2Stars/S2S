@@ -39,7 +39,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_MANGROVE"
+   "define": "ART_DEF_FEATURE_MANGROVE"
   }
  },
  "sound": {

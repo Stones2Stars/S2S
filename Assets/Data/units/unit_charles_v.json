@@ -62,6 +62,11 @@
   "production": 1760,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CHARLES_V"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CHARLES_V",
   "civilopedia": "TXT_KEY_UNIT_CHARLES_V_PEDIA",

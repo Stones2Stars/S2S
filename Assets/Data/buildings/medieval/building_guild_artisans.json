@@ -90,7 +90,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GUILD_ARTISANS"
+   "define": "ART_DEF_BUILDING_GUILD_ARTISANS"
   }
  },
  "identity": {

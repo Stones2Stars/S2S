@@ -151,7 +151,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_LUMBERMILL"
+   "define": "ART_DEF_IMPROVEMENT_LUMBERMILL"
   }
  },
  "identity": {

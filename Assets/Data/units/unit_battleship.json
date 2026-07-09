@@ -88,6 +88,11 @@
   "production": 1420,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MODERN_BATTLESHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BATTLESHIP",
   "civilopedia": "TXT_KEY_UNIT_BATTLESHIP_PEDIA",

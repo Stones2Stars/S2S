@@ -113,7 +113,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MADISON_AVENUE"
+   "define": "ART_DEF_BUILDING_MADISON_AVENUE"
   }
  },
  "identity": {

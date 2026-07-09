@@ -140,6 +140,11 @@
   "production": 800,
   "upkeep": 6
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_POLICE_CAT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_POLICE_CAT",
   "civilopedia": "TXT_KEY_UNIT_WARCAT_PEDIA",

@@ -2,7 +2,7 @@
  "type": "BONUS_VIBRANIUM",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_VIBRANIUM"
+   "define": "ART_DEF_BONUS_VIBRANIUM"
   }
  },
  "identity": {

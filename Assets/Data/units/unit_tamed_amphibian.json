@@ -50,6 +50,11 @@
  "cost": {
   "production": 387
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TAMED_AMPHIBIAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TAMED_AMPHIBIAN",
   "civilopedia": "TXT_KEY_UNIT_DARTFROG_PEDIA",

@@ -74,7 +74,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOUSING_SLUMS"
+   "define": "ART_DEF_BUILDING_HOUSING_SLUMS"
   }
  },
  "identity": {

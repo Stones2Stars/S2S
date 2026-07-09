@@ -108,6 +108,11 @@
   "production": 500,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SIEGE_ELEPHANT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SIEGE_ELEPHANT",
   "civilopedia": "TXT_KEY_UNIT_SIEGE_ELEPHANT_PEDIA",

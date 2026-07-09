@@ -65,6 +65,11 @@
   "production": 360,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SIEGE_WAGON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SIEGE_WAGON",
   "civilopedia": "TXT_KEY_UNIT_SIEGE_WAGON_PEDIA",

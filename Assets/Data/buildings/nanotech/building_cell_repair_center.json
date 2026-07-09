@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CELL_REPAIR_CENTER"
+   "define": "ART_DEF_BUILDING_CELL_REPAIR_CENTER"
   }
  },
  "identity": {

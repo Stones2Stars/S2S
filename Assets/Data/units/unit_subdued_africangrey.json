@@ -35,6 +35,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AFRICANGREY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_AFRICANGREY",
   "civilopedia": "TXT_KEY_UNIT_AFRICANGREY_PEDIA",

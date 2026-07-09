@@ -59,7 +59,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NATIONAL_ACADEMIC_DATABASE"
+   "define": "ART_DEF_BUILDING_NATIONAL_ACADEMIC_DATABASE"
   }
  },
  "identity": {

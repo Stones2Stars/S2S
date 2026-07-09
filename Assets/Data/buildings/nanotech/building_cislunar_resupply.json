@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CISLUNAR_RESUPPLY"
+   "define": "ART_DEF_BUILDING_CISLUNAR_RESUPPLY"
   }
  },
  "identity": {

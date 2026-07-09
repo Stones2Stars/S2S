@@ -97,7 +97,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FASHION_HOUSE_STORE"
+   "define": "ART_DEF_BUILDING_FASHION_HOUSE_STORE"
   }
  },
  "sound": {

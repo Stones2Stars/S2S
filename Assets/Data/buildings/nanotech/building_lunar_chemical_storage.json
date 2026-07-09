@@ -34,7 +34,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LUNAR_CHEMICAL_STORAGE"
+   "define": "ART_DEF_BUILDING_LUNAR_CHEMICAL_STORAGE"
   }
  },
  "identity": {

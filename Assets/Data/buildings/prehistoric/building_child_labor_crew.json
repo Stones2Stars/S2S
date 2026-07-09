@@ -127,7 +127,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CHILD_LABOR_CREW"
+   "define": "ART_DEF_BUILDING_CHILD_LABOR_CREW"
   }
  },
  "identity": {

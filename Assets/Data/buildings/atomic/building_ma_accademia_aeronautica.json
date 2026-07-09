@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MA_ACCADEMIA_AERONAUTICA"
+   "define": "ART_DEF_BUILDING_MA_ACCADEMIA_AERONAUTICA"
   }
  },
  "identity": {

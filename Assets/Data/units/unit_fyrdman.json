@@ -113,6 +113,11 @@
   "production": 215,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FYRDMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FYRDMAN",
   "civilopedia": "TXT_KEY_UNIT_FYRDMAN_PEDIA",

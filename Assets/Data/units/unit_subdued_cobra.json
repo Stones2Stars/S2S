@@ -39,6 +39,11 @@
    "BUILDING_ZOO"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_COBRA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_COBRA",
   "civilopedia": "TXT_KEY_UNIT_COBRA_PEDIA",

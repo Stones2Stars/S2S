@@ -99,7 +99,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TEMPLE_OF_ENLIL"
+   "define": "ART_DEF_BUILDING_TEMPLE_OF_ENLIL"
   }
  },
  "sound": {

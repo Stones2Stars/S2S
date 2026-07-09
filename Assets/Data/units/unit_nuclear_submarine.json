@@ -97,6 +97,11 @@
   "production": 1680,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NUCLEAR_SUBMARINE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NUCLEAR_SUBMARINE",
   "civilopedia": "TXT_KEY_UNIT_NUCLEAR_SUBMARINE_PEDIA",

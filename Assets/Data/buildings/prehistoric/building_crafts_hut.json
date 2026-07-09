@@ -162,7 +162,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CRAFTS_HUT"
+   "define": "ART_DEF_BUILDING_CRAFTS_HUT"
   }
  },
  "identity": {

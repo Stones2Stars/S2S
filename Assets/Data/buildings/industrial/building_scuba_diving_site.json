@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SCUBA_DIVING_SITE"
+   "define": "ART_DEF_BUILDING_SCUBA_DIVING_SITE"
   }
  },
  "identity": {

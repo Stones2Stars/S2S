@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LUNAR_WATER_EXTRACTION_FACILITY"
+   "define": "ART_DEF_BUILDING_LUNAR_WATER_EXTRACTION_FACILITY"
   }
  },
  "identity": {

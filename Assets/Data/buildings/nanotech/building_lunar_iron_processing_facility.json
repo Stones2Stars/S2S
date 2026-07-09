@@ -78,7 +78,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LUNAR_IRON_PROCESSING_FACILITY"
+   "define": "ART_DEF_BUILDING_LUNAR_IRON_PROCESSING_FACILITY"
   }
  },
  "identity": {

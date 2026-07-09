@@ -148,6 +148,11 @@
    "BUILDING_ZOO"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SUNBEAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_SUNBEAR",
   "civilopedia": "TXT_KEY_UNIT_SUNBEAR_PEDIA",

@@ -18,7 +18,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_STEAMPUNK"
+   "define": "ART_DEF_BONUS_STEAMPUNK"
   }
  },
  "identity": {

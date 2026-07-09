@@ -82,7 +82,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GATE_OF_THE_SUN"
+   "define": "ART_DEF_BUILDING_GATE_OF_THE_SUN"
   }
  },
  "identity": {

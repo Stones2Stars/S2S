@@ -76,6 +76,11 @@
   "production": 5000,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BRACEWELL_PROBE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BRACEWELL_PROBE",
   "civilopedia": "TXT_KEY_UNIT_BRACEWELL_PROBE_PEDIA",

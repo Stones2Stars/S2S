@@ -94,7 +94,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SHWEDAGON_PAYA"
+   "define": "ART_DEF_BUILDING_SHWEDAGON_PAYA"
   }
  },
  "identity": {

@@ -23,7 +23,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_GEOTHERMAL_ENERGY"
+   "define": "ART_DEF_BONUS_GEOTHERMAL_ENERGY"
   }
  },
  "mapGeneration": {

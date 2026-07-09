@@ -94,7 +94,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PLATOS_ACADEMY"
+   "define": "ART_DEF_BUILDING_PLATOS_ACADEMY"
   }
  },
  "identity": {

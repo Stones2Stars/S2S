@@ -79,6 +79,11 @@
   "production": 245,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CARROBALLISTA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CARROBALLISTA",
   "civilopedia": "TXT_KEY_UNIT_BALLISTA_PEDIA",

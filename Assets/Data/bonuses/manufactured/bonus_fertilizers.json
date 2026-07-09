@@ -19,7 +19,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_FERTILIZERS"
+   "define": "ART_DEF_BONUS_FERTILIZERS"
   }
  },
  "identity": {

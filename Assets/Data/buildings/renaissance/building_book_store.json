@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BOOK_STORE"
+   "define": "ART_DEF_BUILDING_BOOK_STORE"
   }
  },
  "identity": {

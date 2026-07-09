@@ -111,7 +111,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SCIENTOLOGY_CATHEDRAL"
+   "define": "ART_DEF_BUILDING_SCIENTOLOGY_CATHEDRAL"
   }
  },
  "sound": {

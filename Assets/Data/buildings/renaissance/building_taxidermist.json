@@ -285,7 +285,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TAXIDERMIST"
+   "define": "ART_DEF_BUILDING_TAXIDERMIST"
   }
  },
  "identity": {

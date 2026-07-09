@@ -82,6 +82,11 @@
   "production": 260,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TURTLE_SHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TURTLE_SHIP",
   "civilopedia": "TXT_KEY_UNIT_TURTLE_SHIP_PEDIA",

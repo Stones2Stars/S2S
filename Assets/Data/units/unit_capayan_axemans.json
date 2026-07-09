@@ -111,6 +111,11 @@
   "production": 155,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CAPAYAN_AXEMANS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CAPAYAN_AXEMANS",
   "civilopedia": "TXT_KEY_UNIT_CAPAYAN_AXEMANS_PEDIA",

@@ -96,7 +96,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PALEONTOLOGY_LAB"
+   "define": "ART_DEF_BUILDING_PALEONTOLOGY_LAB"
   }
  },
  "identity": {

@@ -39,7 +39,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FLOCKS_OF_TURKEY"
+   "define": "ART_DEF_BUILDING_FLOCKS_OF_TURKEY"
   }
  },
  "sound": {

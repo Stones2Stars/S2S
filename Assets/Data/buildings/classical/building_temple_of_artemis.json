@@ -95,7 +95,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TEMPLE_OF_ARTEMIS"
+   "define": "ART_DEF_BUILDING_TEMPLE_OF_ARTEMIS"
   }
  },
  "identity": {

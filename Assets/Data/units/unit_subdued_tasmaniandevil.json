@@ -141,6 +141,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TASMANIANDEVIL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_TASMANIANDEVIL",
   "civilopedia": "TXT_KEY_UNIT_TASMANIANDEVIL_PEDIA",

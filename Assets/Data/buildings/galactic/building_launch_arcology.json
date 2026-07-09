@@ -89,7 +89,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LAUNCH_ARCOLOGY"
+   "define": "ART_DEF_BUILDING_LAUNCH_ARCOLOGY"
   }
  },
  "identity": {

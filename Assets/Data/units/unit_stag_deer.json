@@ -73,6 +73,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_STAG_DEER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_STAG_DEER",
   "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",

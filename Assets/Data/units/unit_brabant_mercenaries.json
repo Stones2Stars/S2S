@@ -58,6 +58,11 @@
   "production": 310,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BRABANT_MERCENARIES"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BRABANT_MERCENARIES",
   "civilopedia": "TXT_KEY_UNIT_BRABANT_MERCENARIES_PEDIA",

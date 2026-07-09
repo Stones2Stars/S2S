@@ -82,7 +82,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NEO_PYRAMID"
+   "define": "ART_DEF_BUILDING_NEO_PYRAMID"
   }
  },
  "identity": {

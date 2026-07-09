@@ -104,6 +104,11 @@
   "production": 151,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MAGOS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MAGOS",
   "civilopedia": "TXT_KEY_UNIT_MAGOS_PEDIA",

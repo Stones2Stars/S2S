@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MULTIVERSE_STEERING"
+   "define": "ART_DEF_BUILDING_MULTIVERSE_STEERING"
   }
  },
  "identity": {

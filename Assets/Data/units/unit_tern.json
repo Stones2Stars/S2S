@@ -33,6 +33,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TERN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TERN",
   "civilopedia": "TXT_KEY_UNIT_TERN_PEDIA",

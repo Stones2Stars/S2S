@@ -8,7 +8,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_DARK_MATTER"
+   "define": "ART_DEF_BONUS_DARK_MATTER"
   }
  },
  "identity": {

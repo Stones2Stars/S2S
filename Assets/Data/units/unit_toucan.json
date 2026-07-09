@@ -33,6 +33,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TOUCAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TOUCAN",
   "civilopedia": "TXT_KEY_UNIT_TOUCAN_PEDIA",

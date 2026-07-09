@@ -91,7 +91,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MIND_CONTROL_CENTER"
+   "define": "ART_DEF_BUILDING_MIND_CONTROL_CENTER"
   }
  },
  "sound": {

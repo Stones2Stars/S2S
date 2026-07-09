@@ -183,6 +183,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BOSNEGERS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BOSNEGERS",
   "civilopedia": "TXT_KEY_UNIT_BOSNEGERS_PEDIA",

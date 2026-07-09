@@ -171,6 +171,11 @@
   "production": 1000,
   "upkeep": 12
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BIKER_GANG"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BIKER_GANG",
   "civilopedia": "TXT_KEY_UNIT_BIKER_GANG_PEDIA",

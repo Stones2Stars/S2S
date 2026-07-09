@@ -108,7 +108,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CAUSEWAY"
+   "define": "ART_DEF_BUILDING_CAUSEWAY"
   }
  },
  "identity": {

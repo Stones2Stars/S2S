@@ -75,6 +75,11 @@
   "production": 290,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CANARI_BOWMANS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CANARI_BOWMANS",
   "civilopedia": "TXT_KEY_UNIT_CANARI_BOWMANS_PEDIA",

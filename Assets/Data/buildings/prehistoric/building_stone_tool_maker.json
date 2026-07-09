@@ -200,7 +200,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_STONE_TOOL_MAKER"
+   "define": "ART_DEF_BUILDING_STONE_TOOL_MAKER"
   }
  },
  "identity": {

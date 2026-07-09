@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LIFE_SILICON_DIOXIDE"
+   "define": "ART_DEF_BUILDING_LIFE_SILICON_DIOXIDE"
   }
  },
  "identity": {

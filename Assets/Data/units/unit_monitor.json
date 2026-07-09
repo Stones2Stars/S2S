@@ -49,6 +49,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MONITOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MONITOR",
   "civilopedia": "TXT_KEY_UNIT_NILE_MONITOR_PEDIA",

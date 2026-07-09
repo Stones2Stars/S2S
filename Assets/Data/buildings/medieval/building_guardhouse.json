@@ -135,7 +135,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GUARDHOUSE"
+   "define": "ART_DEF_BUILDING_GUARDHOUSE"
   }
  },
  "identity": {

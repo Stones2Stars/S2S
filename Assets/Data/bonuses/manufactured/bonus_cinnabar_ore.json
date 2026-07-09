@@ -2,7 +2,7 @@
  "type": "BONUS_CINNABAR_ORE",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CINNABAR_ORE"
+   "define": "ART_DEF_BONUS_CINNABAR_ORE"
   }
  },
  "identity": {

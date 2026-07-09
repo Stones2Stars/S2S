@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HISTORY_REPAIR_CENTER"
+   "define": "ART_DEF_BUILDING_HISTORY_REPAIR_CENTER"
   }
  },
  "identity": {

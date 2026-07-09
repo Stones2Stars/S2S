@@ -99,6 +99,11 @@
   "production": 2580,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ACVSAM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ACVSAM",
   "civilopedia": "TXT_KEY_UNIT_ACVSAM_PEDIA",

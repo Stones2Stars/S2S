@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FAMEN_TEMPLE"
+   "define": "ART_DEF_BUILDING_FAMEN_TEMPLE"
   }
  },
  "identity": {

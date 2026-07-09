@@ -89,6 +89,11 @@
   "production": 270,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ZENU_GOLDSMITHS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ZENU_GOLDSMITHS",
   "civilopedia": "TXT_KEY_UNIT_ZENU_GOLDSMITHS_PEDIA",

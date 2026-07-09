@@ -46,6 +46,11 @@
   "production": 60,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TRIBAL_GUARDIAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TRIBAL_GUARDIAN",
   "civilopedia": "TXT_KEY_UNIT_TRIBAL_GUARDIAN_PEDIA",

@@ -120,7 +120,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_OFFSHORE_PLATFORM"
+   "define": "ART_DEF_IMPROVEMENT_OFFSHORE_PLATFORM"
   }
  },
  "identity": {

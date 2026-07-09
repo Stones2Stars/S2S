@@ -2,7 +2,7 @@
  "type": "BONUS_METAL_FOAM",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_METAL_FOAM"
+   "define": "ART_DEF_BONUS_METAL_FOAM"
   }
  },
  "identity": {

@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_GHEE_OIL"
+   "define": "ART_DEF_BUILDING_FACTORY_GHEE_OIL"
   }
  },
  "identity": {

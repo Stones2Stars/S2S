@@ -59,6 +59,11 @@
   "production": 936,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GWANGGAETO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GWANGGAETO",
   "civilopedia": "TXT_KEY_UNIT_GWANGGAETO_PEDIA",

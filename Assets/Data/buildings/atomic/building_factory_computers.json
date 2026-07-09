@@ -137,7 +137,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_COMPUTERS"
+   "define": "ART_DEF_BUILDING_FACTORY_COMPUTERS"
   }
  },
  "identity": {

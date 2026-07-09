@@ -63,6 +63,11 @@
   "production": 1280,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BADIS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BADIS",
   "civilopedia": "TXT_KEY_UNIT_BADIS_PEDIA",

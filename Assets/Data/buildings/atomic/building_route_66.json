@@ -78,7 +78,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ROUTE_66"
+   "define": "ART_DEF_BUILDING_ROUTE_66"
   }
  },
  "identity": {

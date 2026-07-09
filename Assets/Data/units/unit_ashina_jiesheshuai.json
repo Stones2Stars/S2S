@@ -49,6 +49,11 @@
   "production": 900,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ASHINA_JIESHESHUAI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ASHINA_JIESHESHUAI",
   "civilopedia": "TXT_KEY_UNIT_ASHINA_JIESHESHUAI_PEDIA",

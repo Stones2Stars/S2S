@@ -43,7 +43,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_WHITE_HOLE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_WHITE_HOLE"
   }
  },
  "identity": {

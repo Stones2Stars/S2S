@@ -103,7 +103,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EMPERORS_CLOTHING_STORE"
+   "define": "ART_DEF_BUILDING_EMPERORS_CLOTHING_STORE"
   }
  },
  "sound": {

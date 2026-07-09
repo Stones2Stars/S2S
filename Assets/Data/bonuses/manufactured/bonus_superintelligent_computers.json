@@ -2,7 +2,7 @@
  "type": "BONUS_SUPERINTELLIGENT_COMPUTERS",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SUPERINTELLIGENT_COMPUTERS"
+   "define": "ART_DEF_BONUS_SUPERINTELLIGENT_COMPUTERS"
   }
  },
  "identity": {

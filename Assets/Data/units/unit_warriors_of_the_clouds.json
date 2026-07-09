@@ -114,6 +114,11 @@
   "production": 155,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WARRIORS_OF_THE_CLOUDS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WARRIORS_OF_THE_CLOUDS",
   "civilopedia": "TXT_KEY_UNIT_WARRIORS_OF_THE_CLOUDS_PEDIA",

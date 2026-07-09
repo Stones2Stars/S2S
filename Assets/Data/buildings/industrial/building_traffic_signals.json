@@ -83,7 +83,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRAFFIC_SIGNALS"
+   "define": "ART_DEF_BUILDING_TRAFFIC_SIGNALS"
   }
  },
  "sound": {

@@ -91,6 +91,11 @@
   "production": 920,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RWENZURURU_SOLDIER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_RWENZURURU_SOLDIER",
   "civilopedia": "TXT_KEY_UNIT_RWENZURURU_SOLDIER_PEDIA",

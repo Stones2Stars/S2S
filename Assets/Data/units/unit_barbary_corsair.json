@@ -95,6 +95,11 @@
   "production": 410,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BARBARY_CORSAIR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BARBARY_CORSAIR",
   "civilopedia": "TXT_KEY_UNIT_BARBARY_CORSAIR_PEDIA",

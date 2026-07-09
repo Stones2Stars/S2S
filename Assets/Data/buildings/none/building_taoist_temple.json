@@ -111,7 +111,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TAOIST_TEMPLE"
+   "define": "ART_DEF_BUILDING_TAOIST_TEMPLE"
   }
  },
  "sound": {

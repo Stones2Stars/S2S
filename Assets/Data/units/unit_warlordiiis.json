@@ -36,6 +36,11 @@
  "cost": {
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RSVWARLORD_ANCIENT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WARLORDIIIS",
   "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",

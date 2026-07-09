@@ -47,6 +47,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ROCKHOPPER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_ROCKHOPPER",
   "civilopedia": "TXT_KEY_UNIT_ROCKHOPPER_PEDIA",

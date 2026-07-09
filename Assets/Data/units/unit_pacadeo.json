@@ -59,6 +59,11 @@
   "production": 936,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PACADEO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PACADEO",
   "civilopedia": "TXT_KEY_UNIT_PACADEO_PEDIA",

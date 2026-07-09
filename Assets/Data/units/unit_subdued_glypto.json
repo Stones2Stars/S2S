@@ -50,6 +50,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GLYPTO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_GLYPTO",
   "civilopedia": "TXT_KEY_UNIT_GLYPTO_PEDIA",

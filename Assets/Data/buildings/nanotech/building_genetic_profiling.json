@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GENETIC_PROFILING"
+   "define": "ART_DEF_BUILDING_GENETIC_PROFILING"
   }
  },
  "identity": {

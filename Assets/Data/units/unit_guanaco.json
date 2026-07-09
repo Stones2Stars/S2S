@@ -73,6 +73,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GUANACO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GUANACO",
   "civilopedia": "TXT_KEY_UNIT_GUANACO_PEDIA",

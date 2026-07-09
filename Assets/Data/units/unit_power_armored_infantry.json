@@ -76,6 +76,11 @@
   "production": 3250,
   "upkeep": 6
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_POWER_ARMOR_INFANTRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_POWER_ARMORED_INFANTRY",
   "civilopedia": "TXT_KEY_UNIT_POWER_ARMORED_INFANTRY_PEDIA",

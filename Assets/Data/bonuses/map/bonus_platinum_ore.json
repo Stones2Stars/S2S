@@ -21,7 +21,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_PLATINUM_ORE"
+   "define": "ART_DEF_BONUS_PLATINUM_ORE"
   }
  },
  "mapGeneration": {

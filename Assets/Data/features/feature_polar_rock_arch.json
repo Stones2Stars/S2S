@@ -9,7 +9,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_POLAR_ROCK_ARCH1"
+   "define": "ART_DEF_FEATURE_POLAR_ROCK_ARCH1"
   }
  },
  "sound": {

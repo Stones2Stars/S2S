@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NEANDERTHAL_CAVES"
+   "define": "ART_DEF_BUILDING_NEANDERTHAL_CAVES"
   }
  },
  "identity": {

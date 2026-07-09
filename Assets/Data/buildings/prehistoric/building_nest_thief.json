@@ -78,7 +78,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NEST_THIEF"
+   "define": "ART_DEF_BUILDING_NEST_THIEF"
   }
  },
  "identity": {

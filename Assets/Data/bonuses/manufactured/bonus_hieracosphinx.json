@@ -2,7 +2,7 @@
  "type": "BONUS_HIERACOSPHINX",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HIERACOSPHINX"
+   "define": "ART_DEF_BONUS_HIERACOSPHINX"
   }
  },
  "identity": {

@@ -90,7 +90,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_FIBERGLASS"
+   "define": "ART_DEF_BUILDING_FACTORY_FIBERGLASS"
   }
  },
  "identity": {

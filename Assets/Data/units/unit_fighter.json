@@ -86,6 +86,11 @@
   "production": 1110,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PROPERLLER_NAVAL_FIGHTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FIGHTER",
   "civilopedia": "TXT_KEY_UNIT_FIGHTER_PEDIA",

@@ -102,6 +102,11 @@
   "production": 310,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PEN_HUO_QI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PEN_HUO_QI",
   "civilopedia": "TXT_KEY_UNIT_PEN_HUO_QI_PEDIA",

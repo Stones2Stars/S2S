@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FIGHTING_PIT"
+   "define": "ART_DEF_BUILDING_FIGHTING_PIT"
   }
  },
  "sound": {

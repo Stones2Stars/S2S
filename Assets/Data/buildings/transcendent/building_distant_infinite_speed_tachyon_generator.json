@@ -57,7 +57,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DISTANT_INFINITE_SPEED_TACHYON_GENERATOR"
+   "define": "ART_DEF_BUILDING_DISTANT_INFINITE_SPEED_TACHYON_GENERATOR"
   }
  },
  "identity": {

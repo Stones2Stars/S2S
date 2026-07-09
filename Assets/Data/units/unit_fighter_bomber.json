@@ -96,6 +96,11 @@
   "production": 1130,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PROPELLER_TACTICAL_BOMBER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FIGHTER_BOMBER",
   "civilopedia": "TXT_KEY_UNIT_FIGHTER_BOMBER_PEDIA",

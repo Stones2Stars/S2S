@@ -105,7 +105,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERROGATION_BUILDING"
+   "define": "ART_DEF_BUILDING_INTERROGATION_BUILDING"
   }
  },
  "sound": {

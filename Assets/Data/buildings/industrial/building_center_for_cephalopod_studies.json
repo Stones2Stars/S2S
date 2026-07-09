@@ -46,7 +46,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CENTER_FOR_CEPHALOPOD_STUDIES"
+   "define": "ART_DEF_BUILDING_CENTER_FOR_CEPHALOPOD_STUDIES"
   }
  },
  "sound": {

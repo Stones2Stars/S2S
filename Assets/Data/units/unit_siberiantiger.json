@@ -53,6 +53,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SIBERIANTIGER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SIBERIANTIGER",
   "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",

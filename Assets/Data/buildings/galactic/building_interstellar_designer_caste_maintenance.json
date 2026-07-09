@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_DESIGNER_CASTE_MAINTENANCE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_DESIGNER_CASTE_MAINTENANCE"
   }
  },
  "identity": {

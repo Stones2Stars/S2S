@@ -19,7 +19,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_FISHING_NETS"
+   "define": "ART_DEF_BONUS_FISHING_NETS"
   }
  },
  "identity": {

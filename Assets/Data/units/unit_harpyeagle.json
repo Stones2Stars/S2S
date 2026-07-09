@@ -57,6 +57,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HARPYEAGLE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HARPYEAGLE",
   "civilopedia": "TXT_KEY_UNIT_HARPYEAGLE_PEDIA",

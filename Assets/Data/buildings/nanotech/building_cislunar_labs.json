@@ -46,7 +46,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CISLUNAR_LABS"
+   "define": "ART_DEF_BUILDING_CISLUNAR_LABS"
   }
  },
  "sound": {

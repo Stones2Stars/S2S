@@ -38,7 +38,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PERSONALIZED_ADVERTISING"
+   "define": "ART_DEF_BUILDING_PERSONALIZED_ADVERTISING"
   }
  },
  "identity": {

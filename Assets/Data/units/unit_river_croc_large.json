@@ -49,6 +49,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CROCODILE_LARGE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_RIVER_CROC_LARGE",
   "civilopedia": "TXT_KEY_UNIT_CROCODILE_PEDIA",

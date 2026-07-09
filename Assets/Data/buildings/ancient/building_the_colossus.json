@@ -108,7 +108,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THE_COLOSSUS"
+   "define": "ART_DEF_BUILDING_THE_COLOSSUS"
   }
  },
  "sound": {

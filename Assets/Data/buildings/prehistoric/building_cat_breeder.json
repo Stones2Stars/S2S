@@ -96,7 +96,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CAT_BREEDER"
+   "define": "ART_DEF_BUILDING_CAT_BREEDER"
   }
  },
  "sound": {

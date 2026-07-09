@@ -65,6 +65,11 @@
   "production": 310,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SONINKE_SWORDSMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SONINKE_SWORDSMAN",
   "civilopedia": "TXT_KEY_UNIT_SONINKE_SWORDSMAN_PEDIA",

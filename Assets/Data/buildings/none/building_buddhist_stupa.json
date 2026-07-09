@@ -112,7 +112,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BUDDHIST_STUPA"
+   "define": "ART_DEF_BUILDING_BUDDHIST_STUPA"
   }
  },
  "sound": {

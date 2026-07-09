@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS"
+   "define": "ART_DEF_BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS"
   }
  },
  "identity": {

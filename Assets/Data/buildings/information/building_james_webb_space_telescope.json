@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_JAMES_WEBB_SPACE_TELESCOPE"
+   "define": "ART_DEF_BUILDING_JAMES_WEBB_SPACE_TELESCOPE"
   }
  },
  "identity": {

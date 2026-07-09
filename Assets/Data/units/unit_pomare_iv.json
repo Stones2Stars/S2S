@@ -39,6 +39,11 @@
   "production": 2620,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_POMARE_IV"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_POMARE_IV",
   "civilopedia": "TXT_KEY_UNIT_POMARE_IV_PEDIA",

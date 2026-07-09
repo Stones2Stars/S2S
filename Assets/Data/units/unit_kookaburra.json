@@ -39,6 +39,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KOOKABURRA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KOOKABURRA",
   "civilopedia": "TXT_KEY_UNIT_KOOKABURRA_PEDIA",

@@ -75,7 +75,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TSUKIJI_FISH_MARKET"
+   "define": "ART_DEF_BUILDING_TSUKIJI_FISH_MARKET"
   }
  },
  "identity": {

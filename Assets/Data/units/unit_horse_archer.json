@@ -108,6 +108,11 @@
   "production": 210,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HORSE_ARCHER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HORSE_ARCHER",
   "civilopedia": "TXT_KEY_UNIT_HORSE_ARCHER_PEDIA",

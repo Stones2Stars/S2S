@@ -66,6 +66,11 @@
   "upkeep": 6,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MECHANIC"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MECHANIC",
   "civilopedia": "TXT_KEY_UNIT_MECHANIC_PEDIA",

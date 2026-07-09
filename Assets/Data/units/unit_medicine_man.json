@@ -70,6 +70,11 @@
   "upkeep": 3,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MEDICINE_MAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MEDICINE_MAN",
   "civilopedia": "TXT_KEY_UNIT_MEDICINE_MAN_PEDIA",

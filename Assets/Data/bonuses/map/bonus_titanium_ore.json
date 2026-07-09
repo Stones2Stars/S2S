@@ -25,7 +25,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_TITANIUM_ORE"
+   "define": "ART_DEF_BONUS_TITANIUM_ORE"
   }
  },
  "mapGeneration": {

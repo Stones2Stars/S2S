@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FIREPROOF_BUILDING_MATERIALS"
+   "define": "ART_DEF_BUILDING_FIREPROOF_BUILDING_MATERIALS"
   }
  },
  "identity": {

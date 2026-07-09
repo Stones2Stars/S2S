@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CISLUNAR_SOLAR_MONITOR"
+   "define": "ART_DEF_BUILDING_CISLUNAR_SOLAR_MONITOR"
   }
  },
  "identity": {

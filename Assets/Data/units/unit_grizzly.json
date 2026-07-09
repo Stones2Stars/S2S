@@ -41,6 +41,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GRIZZLY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GRIZZLY",
   "civilopedia": "TXT_KEY_UNIT_GRIZZLY_PEDIA",

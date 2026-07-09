@@ -115,7 +115,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BREWERY"
+   "define": "ART_DEF_BUILDING_BREWERY"
   }
  },
  "sound": {

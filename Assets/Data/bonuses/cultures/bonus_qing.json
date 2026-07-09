@@ -8,7 +8,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_QING"
+   "define": "ART_DEF_BONUS_QING"
   }
  },
  "identity": {

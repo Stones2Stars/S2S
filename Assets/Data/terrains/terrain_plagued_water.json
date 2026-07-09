@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_PLAGUED_WATER"
+   "define": "ART_DEF_TERRAIN_PLAGUED_WATER"
   }
  },
  "sound": {

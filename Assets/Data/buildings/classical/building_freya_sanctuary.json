@@ -127,7 +127,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FREYA"
+   "define": "ART_DEF_BUILDING_FREYA"
   }
  },
  "sound": {

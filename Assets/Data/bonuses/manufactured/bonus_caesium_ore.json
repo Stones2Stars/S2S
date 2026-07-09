@@ -2,7 +2,7 @@
  "type": "BONUS_CAESIUM_ORE",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CAESIUM_ORE"
+   "define": "ART_DEF_BONUS_CAESIUM_ORE"
   }
  },
  "identity": {

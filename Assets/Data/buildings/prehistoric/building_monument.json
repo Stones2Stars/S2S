@@ -92,7 +92,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MONUMENT"
+   "define": "ART_DEF_BUILDING_MONUMENT"
   }
  },
  "sound": {

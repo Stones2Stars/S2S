@@ -59,6 +59,11 @@
   "production": 1760,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_OSMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_OSMAN",
   "civilopedia": "TXT_KEY_UNIT_OSMAN_PEDIA",

@@ -56,6 +56,11 @@
   "production": 7381,
   "upkeep": 33
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FUSION_NOVA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FUSION_NOVA",
   "civilopedia": "TXT_KEY_UNIT_FUSION_NOVA_PEDIA",

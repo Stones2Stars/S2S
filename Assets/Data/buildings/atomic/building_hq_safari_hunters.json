@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HQ_SAFARI_HUNTERS"
+   "define": "ART_DEF_BUILDING_HQ_SAFARI_HUNTERS"
   }
  },
  "sound": {

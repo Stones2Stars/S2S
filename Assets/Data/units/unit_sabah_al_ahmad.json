@@ -38,6 +38,11 @@
   "production": 3800,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SABAH_AL_AHMAD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SABAH_AL_AHMAD",
   "civilopedia": "TXT_KEY_UNIT_SABAH_AL_AHMAD_PEDIA",

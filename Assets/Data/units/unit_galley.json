@@ -66,6 +66,11 @@
   "production": 145,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GALLEY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GALLEY",
   "civilopedia": "TXT_KEY_UNIT_GALLEY_PEDIA",

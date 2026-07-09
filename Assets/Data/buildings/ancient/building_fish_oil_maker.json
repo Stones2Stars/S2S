@@ -109,7 +109,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FISH_OIL_MAKER"
+   "define": "ART_DEF_BUILDING_FISH_OIL_MAKER"
   }
  },
  "identity": {

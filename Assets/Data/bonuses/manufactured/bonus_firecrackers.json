@@ -2,7 +2,7 @@
  "type": "BONUS_FIRECRACKERS",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_FIRECRACKERS"
+   "define": "ART_DEF_BONUS_FIRECRACKERS"
   }
  },
  "identity": {

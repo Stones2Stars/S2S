@@ -272,7 +272,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CANNERY"
+   "define": "ART_DEF_BUILDING_CANNERY"
   }
  },
  "sound": {

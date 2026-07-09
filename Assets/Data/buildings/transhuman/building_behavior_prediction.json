@@ -30,7 +30,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BEHAVIOR_PREDICTION"
+   "define": "ART_DEF_BUILDING_BEHAVIOR_PREDICTION"
   }
  },
  "identity": {

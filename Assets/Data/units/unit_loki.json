@@ -75,6 +75,11 @@
  "cost": {
   "production": 300
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LOKI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LOKI",
   "civilopedia": "TXT_KEY_UNIT_VIKING_BESERKER_PEDIA",

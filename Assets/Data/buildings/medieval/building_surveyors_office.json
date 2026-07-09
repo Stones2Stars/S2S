@@ -57,7 +57,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SURVEYORS_OFFICE"
+   "define": "ART_DEF_BUILDING_SURVEYORS_OFFICE"
   }
  },
  "identity": {

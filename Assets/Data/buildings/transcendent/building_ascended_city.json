@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ASCENDED_CITY"
+   "define": "ART_DEF_BUILDING_ASCENDED_CITY"
   }
  },
  "identity": {

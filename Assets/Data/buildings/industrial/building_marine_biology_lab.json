@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARINE_BIOLOGY_LAB"
+   "define": "ART_DEF_BUILDING_MARINE_BIOLOGY_LAB"
   }
  },
  "identity": {

@@ -9,7 +9,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HUMAN_MOD_ROBOTIC_BODY"
+   "define": "ART_DEF_BONUS_HUMAN_MOD_ROBOTIC_BODY"
   }
  },
  "identity": {

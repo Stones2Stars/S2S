@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BAMBOO_ARMOURER"
+   "define": "ART_DEF_BUILDING_BAMBOO_ARMOURER"
   }
  },
  "identity": {

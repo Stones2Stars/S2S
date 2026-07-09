@@ -101,7 +101,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EAST_WEST_TRADERS_STORE"
+   "define": "ART_DEF_BUILDING_EAST_WEST_TRADERS_STORE"
   }
  },
  "sound": {

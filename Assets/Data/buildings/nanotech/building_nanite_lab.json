@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NANITE_LAB"
+   "define": "ART_DEF_BUILDING_NANITE_LAB"
   }
  },
  "sound": {

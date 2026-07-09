@@ -73,6 +73,11 @@
   "production": 225,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LITHOBOLOS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LITHOBOLOS",
   "civilopedia": "TXT_KEY_UNIT_LITHOBOLOS_PEDIA",

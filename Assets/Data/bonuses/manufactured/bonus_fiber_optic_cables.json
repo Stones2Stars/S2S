@@ -14,7 +14,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_FIBER_OPTIC_CABLES"
+   "define": "ART_DEF_BONUS_FIBER_OPTIC_CABLES"
   }
  },
  "identity": {

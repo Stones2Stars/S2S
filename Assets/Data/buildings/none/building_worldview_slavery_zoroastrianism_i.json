@@ -30,7 +30,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SLAVERY_BAD_ZORO"
+   "define": "ART_DEF_BUILDING_SLAVERY_BAD_ZORO"
   }
  },
  "identity": {

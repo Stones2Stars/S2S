@@ -134,7 +134,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EU_HARVARD_UNIVERSITY"
+   "define": "ART_DEF_BUILDING_EU_HARVARD_UNIVERSITY"
   }
  },
  "identity": {

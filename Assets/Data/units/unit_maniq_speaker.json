@@ -95,6 +95,11 @@
   "upkeep": 4,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MANIQ_SPEAKER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MANIQ_SPEAKER",
   "civilopedia": "TXT_KEY_UNIT_MANIQ_SPEAKER_PEDIA",

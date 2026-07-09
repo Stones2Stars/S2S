@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_KUIPER_BELT_INTERSTELLAR_SUPPLY_BASE"
+   "define": "ART_DEF_BUILDING_KUIPER_BELT_INTERSTELLAR_SUPPLY_BASE"
   }
  },
  "identity": {

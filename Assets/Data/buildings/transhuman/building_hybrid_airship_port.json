@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYBRID_AIRSHIP_PORT"
+   "define": "ART_DEF_BUILDING_HYBRID_AIRSHIP_PORT"
   }
  },
  "identity": {

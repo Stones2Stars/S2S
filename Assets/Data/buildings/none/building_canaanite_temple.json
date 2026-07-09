@@ -66,7 +66,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CANAANITE_TEMPLE"
+   "define": "ART_DEF_BUILDING_CANAANITE_TEMPLE"
   }
  },
  "sound": {

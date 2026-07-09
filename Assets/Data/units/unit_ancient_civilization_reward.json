@@ -36,6 +36,11 @@
  "cost": {
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ANCIENT_CIVILIZATION_REWARD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ANCIENT_CIVILIZATION_REWARD",
   "civilopedia": "TXT_KEY_UNIT_ANCIENT_CIVILIZATION_REWARD_PEDIA",

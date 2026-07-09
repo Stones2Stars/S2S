@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_GUINEA_PIGS"
+   "define": "ART_DEF_BONUS_GUINEA_PIGS"
   }
  },
  "mapGeneration": {

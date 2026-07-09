@@ -109,7 +109,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PALISADE"
+   "define": "ART_DEF_BUILDING_PALISADE"
   }
  },
  "sound": {

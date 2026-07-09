@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_NEW_ZEALANDER"
+   "define": "ART_DEF_BUILDING_CULTURE_NEW_ZEALANDER"
   }
  },
  "identity": {

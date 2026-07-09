@@ -74,6 +74,11 @@
   "production": 220,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ZHUGE_NO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ZHUGE_NO",
   "civilopedia": "TXT_KEY_UNIT_ZHUGE_NO_PEDIA",

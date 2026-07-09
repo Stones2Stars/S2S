@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DEEP_SPACE_BISHOP_RING"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_BISHOP_RING"
   }
  },
  "identity": {

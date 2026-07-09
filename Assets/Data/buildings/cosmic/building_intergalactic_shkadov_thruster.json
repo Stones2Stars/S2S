@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_SHKADOV_THRUSTER"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_SHKADOV_THRUSTER"
   }
  },
  "identity": {

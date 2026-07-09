@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FARM_FLOWER_SUNFLOWER"
+   "define": "ART_DEF_BUILDING_FARM_FLOWER_SUNFLOWER"
   }
  },
  "identity": {

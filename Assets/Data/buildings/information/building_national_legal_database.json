@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NATIONAL_LEGAL_DATABASE"
+   "define": "ART_DEF_BUILDING_NATIONAL_LEGAL_DATABASE"
   }
  },
  "identity": {

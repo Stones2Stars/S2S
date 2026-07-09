@@ -43,6 +43,11 @@
    "BUILDING_DANCE_BIRD"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PEACOCK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_PEACOCK",
   "civilopedia": "TXT_KEY_UNIT_PEACOCK_PEDIA",

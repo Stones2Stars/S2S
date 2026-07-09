@@ -47,6 +47,11 @@
   "production": 1008,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HIAWATHA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HIAWATHA",
   "civilopedia": "TXT_KEY_UNIT_HIAWATHA_PEDIA",

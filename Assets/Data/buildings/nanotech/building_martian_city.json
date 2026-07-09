@@ -100,7 +100,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_CITY"
+   "define": "ART_DEF_BUILDING_MARTIAN_CITY"
   }
  },
  "identity": {

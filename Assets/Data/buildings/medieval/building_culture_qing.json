@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_QING"
+   "define": "ART_DEF_BUILDING_CULTURE_QING"
   }
  },
  "identity": {

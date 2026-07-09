@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_OSTRICH_FEATHERS"
+   "define": "ART_DEF_BONUS_OSTRICH_FEATHERS"
   }
  },
  "identity": {

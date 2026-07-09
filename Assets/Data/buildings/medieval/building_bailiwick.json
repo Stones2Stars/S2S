@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BAILIWICK"
+   "define": "ART_DEF_BUILDING_BAILIWICK"
   }
  },
  "identity": {

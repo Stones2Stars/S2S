@@ -2,7 +2,7 @@
  "type": "BONUS_PUMICE_STONE",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_PUMICE_STONE"
+   "define": "ART_DEF_BONUS_PUMICE_STONE"
   }
  },
  "identity": {

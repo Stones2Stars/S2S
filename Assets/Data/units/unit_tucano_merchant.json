@@ -243,6 +243,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TUCANO_MERCHANT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TUCANO_MERCHANT",
   "civilopedia": "TXT_KEY_UNIT_TUCANO_MERCHANT_PEDIA",

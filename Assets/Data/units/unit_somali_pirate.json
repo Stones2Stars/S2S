@@ -89,6 +89,11 @@
   "production": 1264,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SOMALI_PIRATE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SOMALI_PIRATE",
   "civilopedia": "TXT_KEY_UNIT_SOMALI_PIRATE_PEDIA",

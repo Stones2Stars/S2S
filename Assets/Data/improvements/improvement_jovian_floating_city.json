@@ -25,7 +25,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_JOVIAN_FLOATING_CITY"
+   "define": "ART_DEF_IMPROVEMENT_JOVIAN_FLOATING_CITY"
   }
  },
  "mapGeneration": {

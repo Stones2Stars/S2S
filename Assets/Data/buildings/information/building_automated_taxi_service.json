@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_AUTOMATED_TAXI_SERVICE"
+   "define": "ART_DEF_BUILDING_AUTOMATED_TAXI_SERVICE"
   }
  },
  "identity": {

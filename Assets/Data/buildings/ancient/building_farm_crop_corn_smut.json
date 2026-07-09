@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FARM_CROP_CORN_SMUT"
+   "define": "ART_DEF_BUILDING_FARM_CROP_CORN_SMUT"
   }
  },
  "identity": {

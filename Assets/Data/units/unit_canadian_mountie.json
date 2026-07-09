@@ -159,6 +159,11 @@
   "production": 640,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MOUNTIE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CANADIAN_MOUNTIE",
   "civilopedia": "TXT_KEY_UNIT_MOUNTIE_PEDIA",

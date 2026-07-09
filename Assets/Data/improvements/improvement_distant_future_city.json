@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_DISTANT_FUTURE_CITY"
+   "define": "ART_DEF_IMPROVEMENT_DISTANT_FUTURE_CITY"
   }
  },
  "mapGeneration": {

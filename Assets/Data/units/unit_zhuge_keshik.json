@@ -136,6 +136,11 @@
   "production": 245,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ZHUGE_KESHIK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ZHUGE_KESHIK",
   "civilopedia": "TXT_KEY_UNIT_ZHUGE_KESHIK_PEDIA",

@@ -69,15 +69,6 @@
    "cityAttack": {
     "percent": 15
    },
-   "perSizeMore": {
-    "percent": 10
-   },
-   "perVolumeMore": {
-    "percent": -10
-   },
-   "perVolumeLess": {
-    "percent": 10
-   },
    "lunge": {
     "percent": 14
    },
@@ -196,6 +187,18 @@
     "FLAVOR_MILITARY": 1
    }
   ]
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perSizeMore": 10,
+   "perVolumeMore": -10,
+   "perVolumeLess": 10
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MOCOVI_TRACKER"
+  }
  },
  "identity": {
   "description": "TXT_KEY_UNIT_MOCOVI_TRACKER",

@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SNOWCASTLE_OF_KEMI"
+   "define": "ART_DEF_BUILDING_SNOWCASTLE_OF_KEMI"
   }
  },
  "sound": {

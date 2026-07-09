@@ -47,6 +47,11 @@
   "production": 1820,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VAKHTANG_VI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_VAKHTANG_VI",
   "civilopedia": "TXT_KEY_UNIT_VAKHTANG_VI_PEDIA",

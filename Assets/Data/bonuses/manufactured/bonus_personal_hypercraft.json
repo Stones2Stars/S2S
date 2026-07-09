@@ -2,7 +2,7 @@
  "type": "BONUS_PERSONAL_HYPERCRAFT",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_PERSONAL_HYPERCRAFT"
+   "define": "ART_DEF_BONUS_PERSONAL_HYPERCRAFT"
   }
  },
  "identity": {

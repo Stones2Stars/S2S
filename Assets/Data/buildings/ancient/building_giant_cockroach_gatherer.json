@@ -88,7 +88,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GIANT_COCKROACH_GATHERER"
+   "define": "ART_DEF_BUILDING_GIANT_COCKROACH_GATHERER"
   }
  },
  "identity": {

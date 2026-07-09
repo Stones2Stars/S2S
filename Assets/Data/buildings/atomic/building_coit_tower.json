@@ -110,7 +110,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_COIT_TOWER"
+   "define": "ART_DEF_BUILDING_COIT_TOWER"
   }
  },
  "identity": {

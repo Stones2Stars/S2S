@@ -115,6 +115,11 @@
  "cost": {
   "production": 455
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GIRAFFE_DRAGOON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GIRAFFE_DRAGOON",
   "civilopedia": "TXT_KEY_UNIT_GIRAFFE_ARCHER_PEDIA",

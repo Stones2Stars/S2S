@@ -46,7 +46,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MERCURY_CITY"
+   "define": "ART_DEF_BUILDING_MERCURY_CITY"
   }
  },
  "identity": {

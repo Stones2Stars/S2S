@@ -198,7 +198,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_COMMERCIAL_PORT"
+   "define": "ART_DEF_BUILDING_COMMERCIAL_PORT"
   }
  },
  "sound": {

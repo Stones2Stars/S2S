@@ -89,7 +89,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HAGIA_SOPHIA"
+   "define": "ART_DEF_BUILDING_HAGIA_SOPHIA"
   }
  },
  "identity": {

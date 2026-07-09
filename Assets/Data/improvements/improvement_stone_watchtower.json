@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_STONE_WATCHTOWER"
+   "define": "ART_DEF_IMPROVEMENT_STONE_WATCHTOWER"
   }
  },
  "mapGeneration": {

@@ -84,7 +84,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NGAI_NA_NYOKE_BLESS"
+   "define": "ART_DEF_BUILDING_NGAI_NA_NYOKE_BLESS"
   }
  },
  "sound": {

@@ -90,6 +90,11 @@
   "production": 385,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SHAN_WARRIOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SHAN_WARRIOR",
   "civilopedia": "TXT_KEY_UNIT_SHAN_WARRIOR_PEDIA",

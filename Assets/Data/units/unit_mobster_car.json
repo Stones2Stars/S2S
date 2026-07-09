@@ -160,6 +160,11 @@
   "production": 700,
   "upkeep": 10
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MOBSTER_CAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MOBSTER_CAR",
   "civilopedia": "TXT_KEY_UNIT_MOBSTER_CAR_PEDIA",

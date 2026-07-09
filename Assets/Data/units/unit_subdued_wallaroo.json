@@ -49,6 +49,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WALLAROO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_WALLAROO",
   "civilopedia": "TXT_KEY_UNIT_WALLAROO_PEDIA",

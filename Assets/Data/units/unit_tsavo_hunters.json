@@ -55,6 +55,11 @@
   "production": 510,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TSAVO_HUNTERS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TSAVO_HUNTERS",
   "civilopedia": "TXT_KEY_UNIT_TSAVO_HUNTERS_PEDIA",

@@ -34,7 +34,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SQUASH"
+   "define": "ART_DEF_BONUS_SQUASH"
   }
  },
  "mapGeneration": {

@@ -18,6 +18,11 @@
    "BUILDING_FOLKLORE_T_RAY"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TALESOF_RAY_MANTA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TALESOF_RAY_MANTA",
   "civilopedia": "TXT_KEY_UNIT_RAY_MANTA_PEDIA",

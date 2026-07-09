@@ -112,7 +112,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_STONE"
+   "define": "ART_DEF_BONUS_STONE"
   }
  },
  "mapGeneration": {

@@ -93,7 +93,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANIMA_CHAMBER"
+   "define": "ART_DEF_BUILDING_ANIMA_CHAMBER"
   }
  },
  "identity": {

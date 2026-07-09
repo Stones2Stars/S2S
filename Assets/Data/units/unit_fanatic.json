@@ -29,6 +29,11 @@
   "production": 400,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FANATIC"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FANATIC",
   "civilopedia": "TXT_KEY_UNIT_FANATIC_PEDIA",

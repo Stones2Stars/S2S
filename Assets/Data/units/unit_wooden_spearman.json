@@ -70,6 +70,11 @@
   "production": 38,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WOODEN_SPEARMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WOODEN_SPEARMAN",
   "civilopedia": "TXT_KEY_UNIT_WOODEN_SPEARMAN_PEDIA",

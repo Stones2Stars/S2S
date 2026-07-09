@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TERRAFORMED_EUROPA"
+   "define": "ART_DEF_BUILDING_TERRAFORMED_EUROPA"
   }
  },
  "identity": {

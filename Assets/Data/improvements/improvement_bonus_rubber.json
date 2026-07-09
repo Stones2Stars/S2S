@@ -2,7 +2,7 @@
  "type": "IMPROVEMENT_BONUS_RUBBER",
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_LAND_WORKED"
+   "define": "ART_DEF_IMPROVEMENT_LAND_WORKED"
   }
  },
  "identity": {

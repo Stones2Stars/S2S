@@ -92,7 +92,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SMELTER_STEEL"
+   "define": "ART_DEF_BUILDING_SMELTER_STEEL"
   }
  },
  "sound": {

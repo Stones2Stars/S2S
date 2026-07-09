@@ -149,6 +149,11 @@
    "BUILDING_FOLKLORE_IMPALA"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_IMPALA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_IMPALA",
   "civilopedia": "TXT_KEY_UNIT_IMPALA_PEDIA",

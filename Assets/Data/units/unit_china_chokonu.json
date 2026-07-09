@@ -80,6 +80,11 @@
   "production": 270,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CHINA_CHOKONU"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CHINA_CHOKONU",
   "civilopedia": "TXT_KEY_UNIT_CHINA_CHOKONU_PEDIA",

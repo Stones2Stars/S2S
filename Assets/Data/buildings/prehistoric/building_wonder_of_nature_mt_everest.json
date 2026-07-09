@@ -121,7 +121,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WONDER_OF_NATURE_MT_EVEREST"
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_MT_EVEREST"
   }
  },
  "identity": {

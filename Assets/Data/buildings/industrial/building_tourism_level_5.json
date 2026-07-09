@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PROPERTYTOURISM"
+   "define": "ART_DEF_BUILDING_PROPERTYTOURISM"
   }
  },
  "identity": {

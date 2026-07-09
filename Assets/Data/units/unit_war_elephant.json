@@ -71,6 +71,11 @@
   "production": 340,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WAR_ELEPHANT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WAR_ELEPHANT",
   "civilopedia": "TXT_KEY_UNIT_WAR_ELEPHANT_PEDIA",

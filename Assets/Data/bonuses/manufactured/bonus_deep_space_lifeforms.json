@@ -2,7 +2,7 @@
  "type": "BONUS_DEEP_SPACE_LIFEFORMS",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_DEEP_SPACE_LIFEFORMS"
+   "define": "ART_DEF_BONUS_DEEP_SPACE_LIFEFORMS"
   }
  },
  "identity": {

@@ -48,6 +48,11 @@
   "production": 1200,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BILGE_KHAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BILGE_KHAN",
   "civilopedia": "TXT_KEY_UNIT_BILGE_KHAN_PEDIA",

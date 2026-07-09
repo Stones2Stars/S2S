@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER"
   }
  },
  "identity": {

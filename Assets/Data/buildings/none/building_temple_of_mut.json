@@ -108,7 +108,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EGYPTIAN_MYTH_CATHEDRAL"
+   "define": "ART_DEF_BUILDING_EGYPTIAN_MYTH_CATHEDRAL"
   }
  },
  "sound": {

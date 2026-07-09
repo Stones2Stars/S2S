@@ -85,6 +85,11 @@
   "production": 2865,
   "upkeep": 9
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HYBRID_GUNSHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HYBRID_GUNSHIP",
   "civilopedia": "TXT_KEY_UNIT_HYBRID_GUNSHIP_PEDIA",

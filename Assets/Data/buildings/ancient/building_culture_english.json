@@ -118,7 +118,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_ENGLISH"
+   "define": "ART_DEF_BUILDING_CULTURE_ENGLISH"
   }
  },
  "identity": {

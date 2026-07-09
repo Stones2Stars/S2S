@@ -48,6 +48,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PROCOPTODON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PROCOPTODON",
   "civilopedia": "TXT_KEY_UNIT_PROCOPTODON_PEDIA",

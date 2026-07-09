@@ -70,7 +70,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NATIONAL_MEDICAL_DATABASE"
+   "define": "ART_DEF_BUILDING_NATIONAL_MEDICAL_DATABASE"
   }
  },
  "identity": {

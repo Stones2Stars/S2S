@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_MAMELUK"
+   "define": "ART_DEF_BUILDING_CULTURE_MAMELUK"
   }
  },
  "identity": {

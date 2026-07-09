@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_TOYS"
+   "define": "ART_DEF_BUILDING_FACTORY_TOYS"
   }
  },
  "identity": {

@@ -56,6 +56,11 @@
   "production": 2320,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PHILIBERT_TSIRANANA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PHILIBERT_TSIRANANA",
   "civilopedia": "TXT_KEY_UNIT_PHILIBERT_TSIRANANA_PEDIA",

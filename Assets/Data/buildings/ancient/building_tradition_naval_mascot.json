@@ -28,7 +28,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRADITION_NAVAL_MASCOT"
+   "define": "ART_DEF_BUILDING_TRADITION_NAVAL_MASCOT"
   }
  },
  "identity": {

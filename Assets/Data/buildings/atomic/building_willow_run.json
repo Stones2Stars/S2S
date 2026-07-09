@@ -83,7 +83,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WILLOW_RUN"
+   "define": "ART_DEF_BUILDING_WILLOW_RUN"
   }
  },
  "identity": {

@@ -88,6 +88,11 @@
  "cost": {
   "production": 415
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GREAT_FARMER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GREAT_FARMER",
   "civilopedia": "TXT_KEY_UNIT_GREAT_FARMER_PEDIA",

@@ -120,6 +120,11 @@
   "production": 115,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GREEK_PHALANX"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GREEK_PHALANX",
   "civilopedia": "TXT_KEY_UNIT_GREEK_PHALANX_PEDIA",

@@ -70,6 +70,11 @@
   "production": 320,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_QHATUQ"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_QHATUQ",
   "civilopedia": "TXT_KEY_UNIT_QHATUQ_PEDIA",

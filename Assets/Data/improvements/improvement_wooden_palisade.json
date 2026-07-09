@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_WOODEN_PALISADE"
+   "define": "ART_DEF_IMPROVEMENT_WOODEN_PALISADE"
   }
  },
  "mapGeneration": {

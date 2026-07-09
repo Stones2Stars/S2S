@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_COLONY_HABITAT_SMALL"
+   "define": "ART_DEF_IMPROVEMENT_COLONY_HABITAT_SMALL"
   }
  },
  "identity": {

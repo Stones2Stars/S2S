@@ -43,6 +43,11 @@
   "production": 1200,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JAYAVARMAN_VII"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_JAYAVARMAN_VII",
   "civilopedia": "TXT_KEY_UNIT_JAYAVARMAN_VII_PEDIA",

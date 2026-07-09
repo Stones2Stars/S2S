@@ -42,6 +42,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TORTOISE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_DESERT_TORTOISE",
   "civilopedia": "TXT_KEY_UNIT_DESERT_TORTOISE_PEDIA",

@@ -96,7 +96,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MOTEL"
+   "define": "ART_DEF_BUILDING_MOTEL"
   }
  },
  "sound": {

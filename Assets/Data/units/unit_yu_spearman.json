@@ -111,6 +111,11 @@
   "production": 115,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_YU_SPEARMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_YU_SPEARMAN",
   "civilopedia": "TXT_KEY_UNIT_YU_SPEARMAN_PEDIA",

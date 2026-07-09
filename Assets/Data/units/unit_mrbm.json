@@ -42,6 +42,11 @@
   "production": 1600,
   "upkeep": 6
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MRBM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MRBM",
   "civilopedia": "TXT_KEY_UNIT_TACTICAL_NUKE_PEDIA",

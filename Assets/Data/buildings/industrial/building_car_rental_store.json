@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CAR_RENTAL_STORE"
+   "define": "ART_DEF_BUILDING_CAR_RENTAL_STORE"
   }
  },
  "identity": {

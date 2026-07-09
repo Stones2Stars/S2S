@@ -59,7 +59,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BANK"
+   "define": "ART_DEF_BUILDING_BANK"
   }
  },
  "sound": {

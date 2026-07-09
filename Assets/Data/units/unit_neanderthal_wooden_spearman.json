@@ -57,6 +57,11 @@
   "production": 62,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NEANDERTHAL_WOODEN_SPEARMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NEANDERTHAL_WOODEN_SPEARMAN",
   "civilopedia": "TXT_KEY_UNIT_WOODEN_SPEARMAN_PEDIA",

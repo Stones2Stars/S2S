@@ -44,7 +44,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EUROPA_PROBE"
+   "define": "ART_DEF_BUILDING_EUROPA_PROBE"
   }
  },
  "identity": {

@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ACHIEVEMENT_COMMERCIAL"
+   "define": "ART_DEF_BUILDING_ACHIEVEMENT_COMMERCIAL"
   }
  },
  "identity": {

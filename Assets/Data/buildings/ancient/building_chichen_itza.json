@@ -117,7 +117,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CHICHEN_ITZA"
+   "define": "ART_DEF_BUILDING_CHICHEN_ITZA"
   }
  },
  "identity": {

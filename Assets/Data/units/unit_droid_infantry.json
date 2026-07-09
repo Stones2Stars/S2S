@@ -67,6 +67,11 @@
   "production": 3700,
   "upkeep": 11
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DROID_INFANTRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DROID_INFANTRY",
   "civilopedia": "TXT_KEY_UNIT_DROID_INFANTRY_PEDIA",

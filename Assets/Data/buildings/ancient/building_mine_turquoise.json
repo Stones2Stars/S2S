@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MINE_TURQUOISE"
+   "define": "ART_DEF_BUILDING_MINE_TURQUOISE"
   }
  },
  "identity": {

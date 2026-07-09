@@ -41,6 +41,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ANCIENT_SPY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SPY",
   "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",

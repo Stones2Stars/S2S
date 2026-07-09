@@ -182,7 +182,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GRANARY"
+   "define": "ART_DEF_BUILDING_GRANARY"
   }
  },
  "sound": {

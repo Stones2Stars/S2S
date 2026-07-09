@@ -35,6 +35,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LOON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_LOON",
   "civilopedia": "TXT_KEY_UNIT_LOON_PEDIA",

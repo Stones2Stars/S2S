@@ -147,6 +147,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CAIMAN_BLACK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_CAIMAN",
   "civilopedia": "TXT_KEY_UNIT_CAIMAN_BLACK_PEDIA",

@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_PERFUME"
+   "define": "ART_DEF_BUILDING_FACTORY_PERFUME"
   }
  },
  "identity": {

@@ -66,6 +66,11 @@
  "cost": {
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MASTER_CHASER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MASTER_CHASER",
   "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",

@@ -90,7 +90,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TANNIN_MAKER"
+   "define": "ART_DEF_BUILDING_TANNIN_MAKER"
   }
  },
  "identity": {

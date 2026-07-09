@@ -2,7 +2,7 @@
  "type": "FEATURE_PLATY_AUYANTEPUI",
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_AUYANTEPUI"
+   "define": "ART_DEF_FEATURE_AUYANTEPUI"
   }
  },
  "sound": {

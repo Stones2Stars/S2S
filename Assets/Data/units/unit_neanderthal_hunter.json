@@ -63,6 +63,11 @@
   "production": 92,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NEANDERTHAL_HUNTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NEANDERTHAL_HUNTER",
   "civilopedia": "TXT_KEY_UNIT_HUNTER_PEDIA",

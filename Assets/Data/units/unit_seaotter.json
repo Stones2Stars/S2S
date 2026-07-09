@@ -53,6 +53,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SEAOTTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SEAOTTER",
   "civilopedia": "TXT_KEY_UNIT_SEAOTTER_PEDIA",

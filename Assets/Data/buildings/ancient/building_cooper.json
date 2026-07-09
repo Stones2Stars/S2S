@@ -102,7 +102,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_COOPER"
+   "define": "ART_DEF_BUILDING_COOPER"
   }
  },
  "identity": {

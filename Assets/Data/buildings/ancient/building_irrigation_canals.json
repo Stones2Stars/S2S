@@ -73,7 +73,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_IRRIGATION_CANALS"
+   "define": "ART_DEF_BUILDING_IRRIGATION_CANALS"
   }
  },
  "sound": {

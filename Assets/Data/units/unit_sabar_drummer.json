@@ -88,6 +88,11 @@
   "production": 250,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SABAR_DRUMMER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SABAR_DRUMMER",
   "civilopedia": "TXT_KEY_UNIT_SABAR_DRUMMER_PEDIA",

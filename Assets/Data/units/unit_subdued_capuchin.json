@@ -35,6 +35,11 @@
    "BUILDING_FOLKLORE_T_NEW_WORLD_MONKEYS"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CAPUCHIN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_CAPUCHIN",
   "civilopedia": "TXT_KEY_UNIT_CAPUCHIN_PEDIA",

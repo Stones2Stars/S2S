@@ -38,6 +38,11 @@
   "production": 2800,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CLONE_INFANTRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CLONE_INFANTRY",
   "civilopedia": "TXT_KEY_UNIT_CLONE_INFANTRY_PEDIA",

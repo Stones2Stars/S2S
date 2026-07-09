@@ -99,7 +99,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_KNIGHTS_STABLES"
+   "define": "ART_DEF_BUILDING_KNIGHTS_STABLES"
   }
  },
  "sound": {

@@ -49,6 +49,11 @@
   "production": 2140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_STEPHEN_AUSTIN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_STEPHEN_AUSTIN",
   "civilopedia": "TXT_KEY_UNIT_STEPHEN_AUSTIN_PEDIA",

@@ -216,7 +216,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GREAT_MOSQUE_OF_DJENNE"
+   "define": "ART_DEF_BUILDING_GREAT_MOSQUE_OF_DJENNE"
   }
  },
  "sound": {

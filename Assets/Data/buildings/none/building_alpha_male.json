@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ALPHA_MALE"
+   "define": "ART_DEF_BUILDING_ALPHA_MALE"
   }
  },
  "identity": {

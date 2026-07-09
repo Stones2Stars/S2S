@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY"
+   "define": "ART_DEF_BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY"
   }
  },
  "identity": {

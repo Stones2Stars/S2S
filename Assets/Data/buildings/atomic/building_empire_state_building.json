@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EMPIRE_STATE_BUILDING"
+   "define": "ART_DEF_BUILDING_EMPIRE_STATE_BUILDING"
   }
  },
  "identity": {

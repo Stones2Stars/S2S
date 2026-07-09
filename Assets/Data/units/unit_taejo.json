@@ -40,6 +40,11 @@
   "production": 1472,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TAEJO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TAEJO",
   "civilopedia": "TXT_KEY_UNIT_TAEJO_PEDIA",

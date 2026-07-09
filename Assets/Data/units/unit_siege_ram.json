@@ -75,6 +75,11 @@
   "production": 240,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SIEGE_RAM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SIEGE_RAM",
   "civilopedia": "TXT_KEY_UNIT_SIEGE_RAM_PEDIA",

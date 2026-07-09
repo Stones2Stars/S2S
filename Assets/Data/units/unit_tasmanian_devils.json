@@ -65,6 +65,11 @@
   "production": 270,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TASMANIAN_DEVILS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TASMANIAN_DEVILS",
   "civilopedia": "TXT_KEY_UNIT_TASMANIAN_DEVILS_PEDIA",

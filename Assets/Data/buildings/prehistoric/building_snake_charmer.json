@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SNAKE_CHARMER"
+   "define": "ART_DEF_BUILDING_SNAKE_CHARMER"
   }
  },
  "identity": {

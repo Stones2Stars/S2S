@@ -102,7 +102,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SCROLL_MAKER"
+   "define": "ART_DEF_BUILDING_SCROLL_MAKER"
   }
  },
  "identity": {

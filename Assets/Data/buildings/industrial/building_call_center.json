@@ -31,7 +31,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CALL_CENTER"
+   "define": "ART_DEF_BUILDING_CALL_CENTER"
   }
  },
  "identity": {

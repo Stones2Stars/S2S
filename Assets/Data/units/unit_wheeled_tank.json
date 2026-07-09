@@ -132,6 +132,11 @@
   "production": 1345,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WHEELED_TANK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WHEELED_TANK",
   "civilopedia": "TXT_KEY_UNIT_WHEELED_TANK_PEDIA",

@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_ELECTROACTIVE_POLYMERS"
+   "define": "ART_DEF_BONUS_ELECTROACTIVE_POLYMERS"
   }
  },
  "identity": {

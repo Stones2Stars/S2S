@@ -73,7 +73,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CENTRAL_BREEDER_DONKEY"
+   "define": "ART_DEF_BUILDING_CENTRAL_BREEDER_DONKEY"
   }
  },
  "sound": {

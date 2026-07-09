@@ -39,7 +39,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RESOURCES_WOOD"
+   "define": "ART_DEF_BUILDING_RESOURCES_WOOD"
   }
  },
  "identity": {

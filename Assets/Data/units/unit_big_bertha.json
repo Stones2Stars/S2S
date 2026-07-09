@@ -93,6 +93,11 @@
   "production": 1080,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BIG_BERTHA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BIG_BERTHA",
   "civilopedia": "TXT_KEY_UNIT_BIG_BERTHA_PEDIA",

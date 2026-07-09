@@ -148,6 +148,11 @@
    "BUILDING_ZOO"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BEAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_BROWN_BEAR",
   "civilopedia": "TXT_KEY_UNIT_BROWN_BEAR_PEDIA",

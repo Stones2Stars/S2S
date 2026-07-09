@@ -49,6 +49,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_REDFOX"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_REDFOX",
   "civilopedia": "TXT_KEY_UNIT_REDFOX_PEDIA",

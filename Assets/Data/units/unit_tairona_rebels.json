@@ -74,6 +74,11 @@
   "production": 385,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TAIRONA_REBELS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TAIRONA_REBELS",
   "civilopedia": "TXT_KEY_UNIT_TAIRONA_REBELS_PEDIA",

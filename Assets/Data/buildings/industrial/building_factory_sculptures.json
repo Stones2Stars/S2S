@@ -118,7 +118,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_SCULPTURES"
+   "define": "ART_DEF_BUILDING_FACTORY_SCULPTURES"
   }
  },
  "identity": {

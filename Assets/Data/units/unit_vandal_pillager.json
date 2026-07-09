@@ -116,6 +116,11 @@
   "production": 225,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VANDAL_PILLAGER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_VANDAL_PILLAGER",
   "civilopedia": "TXT_KEY_UNIT_VANDAL_PILLAGER_PEDIA",

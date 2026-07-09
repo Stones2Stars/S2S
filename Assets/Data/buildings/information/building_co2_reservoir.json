@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CO2_RESERVOIR"
+   "define": "ART_DEF_BUILDING_CO2_RESERVOIR"
   }
  },
  "identity": {

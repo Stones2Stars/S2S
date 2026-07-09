@@ -2,7 +2,7 @@
  "type": "BONUS_HUMAN_MOD_RADIATION_TOLERANCE",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HUMAN_MOD_RADIATION_TOLERANCE"
+   "define": "ART_DEF_BONUS_HUMAN_MOD_RADIATION_TOLERANCE"
   }
  },
  "identity": {

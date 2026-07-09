@@ -53,6 +53,11 @@
   "production": 170,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SWORDSMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LIGHT_SWORDSMAN",
   "civilopedia": "TXT_KEY_UNIT_SWORDSMAN_PEDIA",

@@ -4,9 +4,6 @@
   "unit": {
    "space": {
     "flat": 3
-   },
-   "smSpace": {
-    "flat": 27
    }
   }
  },
@@ -30,5 +27,10 @@
   "description": "TXT_KEY_PROMOTION_BOUNTY_HUNTER1",
   "domainCargoChange": "DOMAIN_LAND",
   "specialCargoChange": "SPECIALUNIT_CAPTIVE"
+ },
+ "sizeMatters": {
+  "cargo": {
+   "smSpace": 27
+  }
  }
 }

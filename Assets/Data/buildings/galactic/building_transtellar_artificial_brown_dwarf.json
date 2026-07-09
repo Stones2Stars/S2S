@@ -37,7 +37,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRANSTELLAR_ARTIFICIAL_BROWN_DWARF"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_ARTIFICIAL_BROWN_DWARF"
   }
  },
  "identity": {

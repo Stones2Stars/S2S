@@ -40,7 +40,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_REMOTE_VIEWING"
+   "define": "ART_DEF_BUILDING_REMOTE_VIEWING"
   }
  },
  "identity": {

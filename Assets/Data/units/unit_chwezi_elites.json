@@ -66,6 +66,11 @@
   "production": 290,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CHWEZI_ELITES"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CHWEZI_ELITES",
   "civilopedia": "TXT_KEY_UNIT_CHWEZI_ELITES_PEDIA",

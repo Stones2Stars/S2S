@@ -44,7 +44,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_MARSH"
+   "define": "ART_DEF_TERRAIN_MARSH"
   }
  },
  "sound": {

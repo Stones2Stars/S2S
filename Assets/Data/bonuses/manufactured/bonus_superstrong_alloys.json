@@ -17,7 +17,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SUPERSTRONG_ALLOYS"
+   "define": "ART_DEF_BONUS_SUPERSTRONG_ALLOYS"
   }
  },
  "identity": {

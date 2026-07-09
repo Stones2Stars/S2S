@@ -50,6 +50,11 @@
   "production": 180,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BELLYBOWMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BELLYBOWMAN",
   "civilopedia": "TXT_KEY_UNIT_CROSSBOWMAN_PEDIA",

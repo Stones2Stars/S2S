@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LIFE_METHANE_BASED"
+   "define": "ART_DEF_BUILDING_LIFE_METHANE_BASED"
   }
  },
  "identity": {

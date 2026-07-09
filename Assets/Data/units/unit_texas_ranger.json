@@ -158,6 +158,11 @@
   "production": 630,
   "upkeep": 7
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TEXAS_RANGER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TEXAS_RANGER",
   "civilopedia": "TXT_KEY_UNIT_TEXAS_RANGER_PEDIA",

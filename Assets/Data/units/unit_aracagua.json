@@ -70,6 +70,11 @@
   "production": 1820,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ARACAGUA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ARACAGUA",
   "civilopedia": "TXT_KEY_UNIT_ARACAGUA_PEDIA",

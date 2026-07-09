@@ -67,6 +67,11 @@
   "production": 1150,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_EARLY_JET_FIGHTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_EARLYJET",
   "civilopedia": "TXT_KEY_UNIT_EARLY_JET_PEDIA",

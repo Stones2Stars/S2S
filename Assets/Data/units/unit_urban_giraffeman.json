@@ -112,6 +112,11 @@
  "cost": {
   "production": 1030
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_URBAN_GIRAFFEMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_URBAN_GIRAFFEMAN",
   "civilopedia": "TXT_KEY_UNIT_GIRAFFE_ARCHER_PEDIA",

@@ -48,6 +48,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CHIMPANZEE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CHIMPANZEE",
   "civilopedia": "TXT_KEY_UNIT_CHIMPANZEE_PEDIA",

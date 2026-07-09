@@ -84,7 +84,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY"
+   "define": "ART_DEF_BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY"
   }
  },
  "identity": {

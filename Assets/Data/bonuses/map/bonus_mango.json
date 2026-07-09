@@ -39,7 +39,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_MANGO"
+   "define": "ART_DEF_BONUS_MANGO"
   }
  },
  "mapGeneration": {

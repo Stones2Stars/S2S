@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EXPRESSWAY"
+   "define": "ART_DEF_BUILDING_EXPRESSWAY"
   }
  },
  "sound": {

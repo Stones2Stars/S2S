@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYADES_STAR_CLUSTER_COLONY"
+   "define": "ART_DEF_BUILDING_HYADES_STAR_CLUSTER_COLONY"
   }
  },
  "identity": {

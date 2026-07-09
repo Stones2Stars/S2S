@@ -110,6 +110,11 @@
   "production": 155,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AXEMAN_ROXOLANI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AXEMAN_ROXOLANI",
   "civilopedia": "TXT_KEY_UNIT_AXEMAN_ROXOLANI_PEDIA",

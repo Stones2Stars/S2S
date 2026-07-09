@@ -67,7 +67,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CAO_DAI_MONASTERY"
+   "define": "ART_DEF_BUILDING_CAO_DAI_MONASTERY"
   }
  },
  "identity": {

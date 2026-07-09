@@ -74,7 +74,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SU_SONGS_WORKSHOP"
+   "define": "ART_DEF_BUILDING_SU_SONGS_WORKSHOP"
   }
  },
  "identity": {

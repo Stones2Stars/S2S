@@ -102,6 +102,11 @@
   "production": 1050,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_57TH_INFANTRY_REGIMENT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_57TH_INFANTRY_REGIMENT",
   "civilopedia": "TXT_KEY_UNIT_57TH_INFANTRY_REGIMENT_PEDIA",

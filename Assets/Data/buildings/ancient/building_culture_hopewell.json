@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_HOPEWELL"
+   "define": "ART_DEF_BUILDING_CULTURE_HOPEWELL"
   }
  },
  "identity": {

@@ -39,7 +39,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_ROMAN_RING"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_ROMAN_RING"
   }
  },
  "identity": {

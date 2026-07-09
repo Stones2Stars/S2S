@@ -139,7 +139,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_PETROLEUM_PRODUCTS"
+   "define": "ART_DEF_BONUS_PETROLEUM_PRODUCTS"
   }
  },
  "identity": {

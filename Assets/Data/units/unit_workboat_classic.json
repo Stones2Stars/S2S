@@ -42,6 +42,11 @@
   "production": 100,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WORKBOAT_CLASSIC"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WORKBOAT_CLASSIC",
   "civilopedia": "TXT_KEY_UNIT_WORKBOAT_PEDIA",

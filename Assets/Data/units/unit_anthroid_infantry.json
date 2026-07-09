@@ -67,6 +67,11 @@
   "production": 5500,
   "upkeep": 11
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ANTHROID_INFANTRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ANTHROID_INFANTRY",
   "civilopedia": "TXT_KEY_UNIT_ANTHROID_INFANTRY_PEDIA",

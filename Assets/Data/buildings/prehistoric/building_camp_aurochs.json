@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CAMP_AUROCHS"
+   "define": "ART_DEF_BUILDING_CAMP_AUROCHS"
   }
  },
  "identity": {

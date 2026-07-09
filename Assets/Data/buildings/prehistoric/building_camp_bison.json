@@ -82,7 +82,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CAMP_BISON"
+   "define": "ART_DEF_BUILDING_CAMP_BISON"
   }
  },
  "identity": {

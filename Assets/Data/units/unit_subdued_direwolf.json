@@ -155,6 +155,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DIREWOLF"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_DIREWOLF",
   "civilopedia": "TXT_KEY_UNIT_DIREWOLF_PEDIA",

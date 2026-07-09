@@ -9,7 +9,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_CRATER_SMALL"
+   "define": "ART_DEF_FEATURE_CRATER_SMALL"
   }
  },
  "sound": {

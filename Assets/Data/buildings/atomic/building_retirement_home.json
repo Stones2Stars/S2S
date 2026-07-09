@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RETIREMENT_HOME"
+   "define": "ART_DEF_BUILDING_RETIREMENT_HOME"
   }
  },
  "identity": {

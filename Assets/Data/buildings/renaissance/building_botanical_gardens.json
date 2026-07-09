@@ -95,7 +95,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BOTANICAL_GARDENS"
+   "define": "ART_DEF_BUILDING_BOTANICAL_GARDENS"
   }
  },
  "sound": {

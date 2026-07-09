@@ -106,7 +106,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NETWORK_NODE"
+   "define": "ART_DEF_BUILDING_NETWORK_NODE"
   }
  },
  "sound": {

@@ -113,6 +113,11 @@
   "production": 215,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CZIBCZA_WARRIOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CZIBCZA_WARRIOR",
   "civilopedia": "TXT_KEY_UNIT_CZIBCZA_WARRIOR_PEDIA",

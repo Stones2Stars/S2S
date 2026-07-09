@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FARM_CROP_SWEET_POTATO"
+   "define": "ART_DEF_BUILDING_FARM_CROP_SWEET_POTATO"
   }
  },
  "identity": {

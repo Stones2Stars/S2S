@@ -38,7 +38,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CISLUNAR_OMNISURVEILLANCE"
+   "define": "ART_DEF_BUILDING_CISLUNAR_OMNISURVEILLANCE"
   }
  },
  "identity": {

@@ -9,7 +9,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_SINAI"
+   "define": "ART_DEF_FEATURE_SINAI"
   }
  },
  "sound": {

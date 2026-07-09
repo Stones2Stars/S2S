@@ -77,6 +77,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ORCA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ORCA",
   "civilopedia": "TXT_KEY_UNIT_ORCA_PEDIA",

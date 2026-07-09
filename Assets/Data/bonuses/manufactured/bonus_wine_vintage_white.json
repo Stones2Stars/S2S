@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_WINE_VINTAGE_WHITE"
+   "define": "ART_DEF_BONUS_WINE_VINTAGE_WHITE"
   }
  },
  "identity": {

@@ -149,6 +149,11 @@
    "BUILDING_ZOO"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SLOTHBEAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_SLOTHBEAR",
   "civilopedia": "TXT_KEY_UNIT_SLOTHBEAR_PEDIA",

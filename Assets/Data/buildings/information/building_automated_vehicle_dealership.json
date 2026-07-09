@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_AUTOMATED_VEHICLE_DEALERSHIP"
+   "define": "ART_DEF_BUILDING_AUTOMATED_VEHICLE_DEALERSHIP"
   }
  },
  "identity": {

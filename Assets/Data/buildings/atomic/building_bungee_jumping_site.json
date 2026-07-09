@@ -67,7 +67,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BUNGEE_JUMPING_SITE"
+   "define": "ART_DEF_BUILDING_BUNGEE_JUMPING_SITE"
   }
  },
  "identity": {

@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_STATIONERY_STORE"
+   "define": "ART_DEF_BUILDING_STATIONERY_STORE"
   }
  },
  "identity": {

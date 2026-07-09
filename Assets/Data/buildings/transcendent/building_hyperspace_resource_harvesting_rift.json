@@ -36,7 +36,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYPERSPACE_RESOURCE_HARVESTING_RIFT"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_RESOURCE_HARVESTING_RIFT"
   }
  },
  "identity": {

@@ -30,6 +30,11 @@
   "production": 4300,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GENETIC_SOLDIER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BLEEDER",
   "civilopedia": "TXT_KEY_UNIT_BLEEDER_PEDIA",

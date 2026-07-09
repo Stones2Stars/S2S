@@ -38,6 +38,11 @@
   "upkeep": 11,
   "hurryCostModifier": 10000
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AUTOM_INFANTRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_VENUS_INFANTRY",
   "civilopedia": "TXT_KEY_UNIT_VENUS_INFANTRY_PEDIA",

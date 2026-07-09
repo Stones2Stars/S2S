@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_TERRAFORMED_PLANET"
+   "define": "ART_DEF_IMPROVEMENT_TERRAFORMED_PLANET"
   }
  },
  "identity": {

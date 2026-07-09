@@ -96,7 +96,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WINTER_CHALET"
+   "define": "ART_DEF_BUILDING_WINTER_CHALET"
   }
  },
  "sound": {

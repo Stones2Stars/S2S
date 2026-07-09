@@ -75,6 +75,11 @@
   "production": 290,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PATAGONIAN_ARCHER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PATAGONIAN_ARCHER",
   "civilopedia": "TXT_KEY_UNIT_PATAGONIAN_ARCHER_PEDIA",

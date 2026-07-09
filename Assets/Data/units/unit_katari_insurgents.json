@@ -86,6 +86,11 @@
   "production": 455,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KATARI_INSURGENTS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KATARI_INSURGENTS",
   "civilopedia": "TXT_KEY_UNIT_KATARI_INSURGENTS_PEDIA",

@@ -48,6 +48,11 @@
   "production": 1424,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LEO_I"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LEO_I",
   "civilopedia": "TXT_KEY_UNIT_LEO_I_PEDIA",

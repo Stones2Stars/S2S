@@ -44,6 +44,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TUNA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_TUNA",
   "civilopedia": "TXT_KEY_UNIT_TUNA_PEDIA",

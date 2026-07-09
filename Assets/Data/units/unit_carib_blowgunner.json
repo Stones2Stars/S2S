@@ -109,6 +109,11 @@
   "production": 46,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CARIB_BLOWGUNNER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CARIB_BLOWGUNNER",
   "civilopedia": "TXT_KEY_UNIT_CARIB_BLOWGUNNER_PEDIA",

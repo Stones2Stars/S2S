@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_HARVEST_KELP"
+   "define": "ART_DEF_IMPROVEMENT_HARVEST_KELP"
   }
  },
  "identity": {

@@ -47,6 +47,11 @@
   "production": 2220,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_URHO_KEKKONEN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_URHO_KEKKONEN",
   "civilopedia": "TXT_KEY_UNIT_URHO_KEKKONEN_PEDIA",

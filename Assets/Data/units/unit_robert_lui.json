@@ -55,6 +55,11 @@
   "production": 4720,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ROBERT_LUI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ROBERT_LUI",
   "civilopedia": "TXT_KEY_UNIT_ROBERT_LUI_PEDIA",

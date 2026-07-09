@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYPERSPACE_INFLATON_FIELD"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_INFLATON_FIELD"
   }
  },
  "identity": {

@@ -129,7 +129,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PATTAKY_OF_OLOKUN"
+   "define": "ART_DEF_BUILDING_PATTAKY_OF_OLOKUN"
   }
  },
  "sound": {

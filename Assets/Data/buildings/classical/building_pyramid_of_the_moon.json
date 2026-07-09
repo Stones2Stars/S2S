@@ -129,7 +129,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PYRAMID_OF_THE_MOON"
+   "define": "ART_DEF_BUILDING_PYRAMID_OF_THE_MOON"
   }
  },
  "sound": {

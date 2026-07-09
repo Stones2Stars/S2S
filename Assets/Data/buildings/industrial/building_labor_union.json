@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LABOR_UNION"
+   "define": "ART_DEF_BUILDING_LABOR_UNION"
   }
  },
  "sound": {

@@ -39,6 +39,11 @@
    "BUILDING_DANCE_FOX"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FENNECFOX"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_FENNECFOX",
   "civilopedia": "TXT_KEY_UNIT_FENNECFOX_PEDIA",

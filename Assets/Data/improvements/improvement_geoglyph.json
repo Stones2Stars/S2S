@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_GEOGLYPH"
+   "define": "ART_DEF_IMPROVEMENT_GEOGLYPH"
   }
  },
  "mapGeneration": {

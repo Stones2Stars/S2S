@@ -2,7 +2,7 @@
  "type": "BONUS_ICE_CREAM",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_ICE_CREAM"
+   "define": "ART_DEF_BONUS_ICE_CREAM"
   }
  },
  "identity": {

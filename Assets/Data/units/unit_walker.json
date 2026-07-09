@@ -66,6 +66,11 @@
   "production": 2406,
   "upkeep": 11
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WALKER_DROID"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WALKER",
   "civilopedia": "TXT_KEY_UNIT_WALKER_PEDIA",

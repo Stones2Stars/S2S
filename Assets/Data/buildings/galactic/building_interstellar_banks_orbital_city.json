@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_BANKS_ORBITAL_CITY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BANKS_ORBITAL_CITY"
   }
  },
  "identity": {

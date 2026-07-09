@@ -76,6 +76,11 @@
  "cost": {
   "production": 475
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WAR_MAMMOTH"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WAR_MAMMOTH",
   "civilopedia": "TXT_KEY_UNIT_TRAINED_MAMMOTH_PEDIA",

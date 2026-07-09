@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_DANISH"
+   "define": "ART_DEF_BONUS_DANISH"
   }
  },
  "identity": {

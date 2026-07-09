@@ -70,7 +70,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ELECTRIC_CHAIR"
+   "define": "ART_DEF_BUILDING_ELECTRIC_CHAIR"
   }
  },
  "identity": {

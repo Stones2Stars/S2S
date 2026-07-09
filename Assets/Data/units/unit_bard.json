@@ -80,6 +80,11 @@
   "production": 151,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BARD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BARD",
   "civilopedia": "TXT_KEY_UNIT_BARD_PEDIA",

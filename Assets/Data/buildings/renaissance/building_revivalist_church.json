@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_REVIVALIST_CHURCH"
+   "define": "ART_DEF_BUILDING_REVIVALIST_CHURCH"
   }
  },
  "identity": {

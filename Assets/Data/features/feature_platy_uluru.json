@@ -16,7 +16,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_ULURU"
+   "define": "ART_DEF_FEATURE_ULURU"
   }
  },
  "sound": {

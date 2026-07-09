@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_AMUNDSEN_SCOTT_SOUTH_POLE_STATION"
+   "define": "ART_DEF_BUILDING_AMUNDSEN_SCOTT_SOUTH_POLE_STATION"
   }
  },
  "identity": {

@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_COMMAND_BUNKER"
+   "define": "ART_DEF_IMPROVEMENT_COMMAND_BUNKER"
   }
  },
  "mapGeneration": {

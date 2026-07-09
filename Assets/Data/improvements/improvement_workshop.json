@@ -96,7 +96,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_WORKSHOP"
+   "define": "ART_DEF_IMPROVEMENT_WORKSHOP"
   }
  },
  "identity": {

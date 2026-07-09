@@ -63,7 +63,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SUN_TZUS_ART_OF_WAR"
+   "define": "ART_DEF_BUILDING_SUN_TZUS_ART_OF_WAR"
   }
  },
  "sound": {

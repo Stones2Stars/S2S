@@ -91,6 +91,11 @@
   "production": 67,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NAZCA_HEADHUNTERS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NAZCA_HEADHUNTERS",
   "civilopedia": "TXT_KEY_UNIT_NAZCA_HEADHUNTERS_PEDIA",

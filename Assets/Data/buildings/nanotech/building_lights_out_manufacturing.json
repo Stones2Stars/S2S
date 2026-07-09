@@ -59,7 +59,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LIGHTS_OUT_MANUFACTURING"
+   "define": "ART_DEF_BUILDING_LIGHTS_OUT_MANUFACTURING"
   }
  },
  "identity": {

@@ -45,7 +45,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HIKING_TRAILS"
+   "define": "ART_DEF_BUILDING_HIKING_TRAILS"
   }
  },
  "identity": {

@@ -79,6 +79,11 @@
   "production": 990,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PESHMERGA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PESHMERGA",
   "civilopedia": "TXT_KEY_UNIT_PESHMERGA_PEDIA",

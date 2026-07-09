@@ -60,6 +60,11 @@
   "production": 4500,
   "upkeep": 11
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LEVITATION_ARTILLERY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LEVITATION_ARTILLERY",
   "civilopedia": "TXT_KEY_UNIT_LEVITATION_ARTILLERY_PEDIA",

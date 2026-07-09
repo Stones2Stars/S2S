@@ -49,6 +49,11 @@
   "production": 936,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_THEMISTOCLES"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_THEMISTOCLES",
   "civilopedia": "TXT_KEY_UNIT_THEMISTOCLES_PEDIA",

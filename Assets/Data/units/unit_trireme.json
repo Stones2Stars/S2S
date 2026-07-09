@@ -59,6 +59,11 @@
   "production": 210,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TRIREME"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TRIREME",
   "civilopedia": "TXT_KEY_UNIT_TRIREME_PEDIA",

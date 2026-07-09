@@ -49,6 +49,11 @@
   "production": 704,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TISH_ATAL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TISH_ATAL",
   "civilopedia": "TXT_KEY_UNIT_TISH_ATAL_PEDIA",

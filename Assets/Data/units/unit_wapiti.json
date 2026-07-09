@@ -64,6 +64,11 @@
   "production": 235,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WAPITI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WAPITI",
   "civilopedia": "TXT_KEY_UNIT_WAPITI_PEDIA",

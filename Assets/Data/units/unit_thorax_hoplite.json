@@ -119,6 +119,11 @@
   "production": 115,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_THORAX_HOPLITE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_THORAX_HOPLITE",
   "civilopedia": "TXT_KEY_UNIT_THORAX_HOPLITE_PEDIA",

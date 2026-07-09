@@ -79,6 +79,11 @@
   "production": 1180,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_REPUBLICAN_GUARD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_REPUBLICAN_GUARD",
   "civilopedia": "TXT_KEY_UNIT_REPUBLICAN_GUARD_PEDIA",

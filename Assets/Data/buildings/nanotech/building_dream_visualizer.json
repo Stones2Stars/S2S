@@ -87,7 +87,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DREAM_VISUALIZER"
+   "define": "ART_DEF_BUILDING_DREAM_VISUALIZER"
   }
  },
  "identity": {

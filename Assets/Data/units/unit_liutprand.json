@@ -46,6 +46,11 @@
   "production": 900,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LIUTPRAND"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LIUTPRAND",
   "civilopedia": "TXT_KEY_UNIT_LIUTPRAND_PEDIA",

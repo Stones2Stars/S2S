@@ -139,7 +139,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_STONEWORKER"
+   "define": "ART_DEF_BUILDING_STONEWORKER"
   }
  },
  "sound": {

@@ -149,6 +149,11 @@
    "BUILDING_FOLKLORE_T_OLD_WORLD_MONKEYS"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GORILLA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_GORILLA",
   "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",

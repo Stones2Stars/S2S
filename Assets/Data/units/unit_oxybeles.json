@@ -83,6 +83,11 @@
   "production": 225,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_OXYBELES"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_OXYBELES",
   "civilopedia": "TXT_KEY_UNIT_BALLISTA_PEDIA",

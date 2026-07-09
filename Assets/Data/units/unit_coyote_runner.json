@@ -95,6 +95,11 @@
   "production": 67,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_COYOTE_RUNNER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_COYOTE_RUNNER",
   "civilopedia": "TXT_KEY_UNIT_COYOTE_RUNNER_PEDIA",

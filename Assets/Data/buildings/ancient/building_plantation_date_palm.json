@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PLANTATION_DATE_PALM"
+   "define": "ART_DEF_BUILDING_PLANTATION_DATE_PALM"
   }
  },
  "identity": {

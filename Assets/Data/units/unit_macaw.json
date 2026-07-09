@@ -33,6 +33,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MACAW"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MACAW",
   "civilopedia": "TXT_KEY_UNIT_MACAW_PEDIA",

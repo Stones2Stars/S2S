@@ -136,6 +136,11 @@
   "production": 380,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CUIRASSIER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CUIRASSIER",
   "civilopedia": "TXT_KEY_UNIT_CUIRASSIER_PEDIA",

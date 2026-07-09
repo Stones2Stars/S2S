@@ -78,7 +78,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PESTS_FLIES"
+   "define": "ART_DEF_BUILDING_PESTS_FLIES"
   }
  },
  "identity": {

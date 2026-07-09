@@ -118,7 +118,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_HOVERCRAFTS"
+   "define": "ART_DEF_BUILDING_FACTORY_HOVERCRAFTS"
   }
  },
  "identity": {

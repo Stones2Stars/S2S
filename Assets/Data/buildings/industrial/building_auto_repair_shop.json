@@ -95,7 +95,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_AUTO_REPAIR_SHOP"
+   "define": "ART_DEF_BUILDING_AUTO_REPAIR_SHOP"
   }
  },
  "identity": {

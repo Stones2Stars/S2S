@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SELF_CONSTRUCTION_FIRM"
+   "define": "ART_DEF_BUILDING_SELF_CONSTRUCTION_FIRM"
   }
  },
  "identity": {

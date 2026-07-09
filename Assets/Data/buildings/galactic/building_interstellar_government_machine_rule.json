@@ -40,7 +40,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_GOVERNMENT_MACHINE_RULE"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_GOVERNMENT_MACHINE_RULE"
   }
  },
  "identity": {

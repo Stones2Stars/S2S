@@ -14,7 +14,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_UNMANNED_AIRCRAFTS"
+   "define": "ART_DEF_BONUS_UNMANNED_AIRCRAFTS"
   }
  },
  "identity": {

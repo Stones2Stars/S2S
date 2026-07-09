@@ -113,6 +113,11 @@
   "production": 645,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CLOUD_DESTROYER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CLOUD_DESTROYER",
   "civilopedia": "TXT_KEY_UNIT_CLOUD_DESTROYER_PEDIA",

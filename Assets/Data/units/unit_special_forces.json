@@ -172,6 +172,11 @@
   "production": 1620,
   "upkeep": 11
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SPECIAL_FORCES_GERMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SPECIAL_FORCES",
   "civilopedia": "TXT_KEY_UNIT_SPECIAL_FORCES_PEDIA",

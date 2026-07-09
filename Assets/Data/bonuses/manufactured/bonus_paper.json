@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_PAPER"
+   "define": "ART_DEF_BONUS_PAPER"
   }
  },
  "identity": {

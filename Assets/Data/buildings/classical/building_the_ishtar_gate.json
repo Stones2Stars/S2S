@@ -113,7 +113,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THE_ISHTAR_GATE"
+   "define": "ART_DEF_BUILDING_THE_ISHTAR_GATE"
   }
  },
  "identity": {

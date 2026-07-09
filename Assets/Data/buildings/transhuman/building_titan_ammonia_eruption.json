@@ -33,7 +33,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TITAN_AMMONIA_ERUPTION"
+   "define": "ART_DEF_BUILDING_TITAN_AMMONIA_ERUPTION"
   }
  },
  "identity": {

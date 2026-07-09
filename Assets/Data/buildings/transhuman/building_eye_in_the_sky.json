@@ -68,7 +68,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EYE_IN_THE_SKY"
+   "define": "ART_DEF_BUILDING_EYE_IN_THE_SKY"
   }
  },
  "identity": {

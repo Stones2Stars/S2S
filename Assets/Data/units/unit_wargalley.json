@@ -58,6 +58,11 @@
   "production": 150,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WARGALLEY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WARGALLEY",
   "civilopedia": "TXT_KEY_UNIT_WARGALLEY_PEDIA",

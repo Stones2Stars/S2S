@@ -68,7 +68,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RECORDING_STUDIO"
+   "define": "ART_DEF_BUILDING_RECORDING_STUDIO"
   }
  },
  "sound": {

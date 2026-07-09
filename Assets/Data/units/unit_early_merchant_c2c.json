@@ -225,6 +225,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_EARLY_MERCHANT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_EARLY_MERCHANT",
   "civilopedia": "TXT_KEY_CONCEPT_TRADE_CARAVAN_PEDIA",

@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RHEA_MILITARY_BASE"
+   "define": "ART_DEF_BUILDING_RHEA_MILITARY_BASE"
   }
  },
  "identity": {

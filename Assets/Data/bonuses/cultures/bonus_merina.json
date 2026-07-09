@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_MERINA"
+   "define": "ART_DEF_BONUS_MERINA"
   }
  },
  "identity": {

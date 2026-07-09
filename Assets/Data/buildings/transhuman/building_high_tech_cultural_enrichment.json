@@ -614,7 +614,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+   "define": "ART_DEF_BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
   }
  },
  "identity": {

@@ -77,6 +77,11 @@
   "production": 425,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FALCONET"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FALCONET",
   "civilopedia": "TXT_KEY_UNIT_FALCONET_PEDIA",

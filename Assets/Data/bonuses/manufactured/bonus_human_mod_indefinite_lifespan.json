@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HUMAN_MOD_INDEFINITE_LIFESPAN"
+   "define": "ART_DEF_BONUS_HUMAN_MOD_INDEFINITE_LIFESPAN"
   }
  },
  "identity": {

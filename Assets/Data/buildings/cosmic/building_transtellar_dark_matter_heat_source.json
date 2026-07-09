@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRANSTELLAR_DARK_MATTER_HEAT_SOURCE"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_DARK_MATTER_HEAT_SOURCE"
   }
  },
  "identity": {

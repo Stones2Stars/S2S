@@ -105,6 +105,11 @@
   "production": 200,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BACTRIAN_CATAPHRACT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BACTRIAN_CATAPHRACT",
   "civilopedia": "TXT_KEY_UNIT_BACTRIAN_CATAPHRACT_PEDIA",

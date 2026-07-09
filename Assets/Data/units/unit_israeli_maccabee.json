@@ -73,6 +73,11 @@
   "production": 195,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MACCABEE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ISRAELI_MACCABEE",
   "civilopedia": "TXT_KEY_UNIT_MACCABEE_PEDIA",

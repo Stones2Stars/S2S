@@ -34,6 +34,11 @@
   "production": 2000,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WORKER_ANDROID"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LUNAR_WORKER",
   "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",

@@ -89,6 +89,11 @@
   "upkeep": 8,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AUTO_ELECTRICIAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AUTO_ELECTRICIAN",
   "civilopedia": "TXT_KEY_UNIT_AUTO_ELECTRICIAN_PEDIA",

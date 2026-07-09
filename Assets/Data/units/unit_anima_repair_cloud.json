@@ -111,6 +111,11 @@
   "upkeep": 19,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ANIMA_REPAIR_CLOUD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ANIMA_REPAIR_CLOUD",
   "civilopedia": "TXT_KEY_UNIT_ANIMA_REPAIR_CLOUD_PEDIA",

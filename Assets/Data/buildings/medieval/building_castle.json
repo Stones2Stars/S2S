@@ -151,7 +151,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CASTLE"
+   "define": "ART_DEF_BUILDING_CASTLE"
   }
  },
  "sound": {

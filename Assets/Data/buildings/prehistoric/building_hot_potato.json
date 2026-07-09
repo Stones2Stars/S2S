@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOT_POTATO"
+   "define": "ART_DEF_BUILDING_HOT_POTATO"
   }
  },
  "identity": {

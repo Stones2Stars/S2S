@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HUMAN_MOD_LUNARIS"
+   "define": "ART_DEF_BONUS_HUMAN_MOD_LUNARIS"
   }
  },
  "identity": {

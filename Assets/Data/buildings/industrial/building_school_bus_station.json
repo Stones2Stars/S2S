@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SCHOOL_BUS_STATION"
+   "define": "ART_DEF_BUILDING_SCHOOL_BUS_STATION"
   }
  },
  "sound": {

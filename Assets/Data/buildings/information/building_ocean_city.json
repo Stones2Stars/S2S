@@ -107,7 +107,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_OCEAN_CITY"
+   "define": "ART_DEF_BUILDING_OCEAN_CITY"
   }
  },
  "identity": {

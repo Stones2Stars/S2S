@@ -73,6 +73,11 @@
   "production": 175,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WALLABY_HUNTERS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WALLABY_HUNTERS",
   "civilopedia": "TXT_KEY_UNIT_WALLABY_HUNTERS_PEDIA",

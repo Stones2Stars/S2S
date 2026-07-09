@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_CARTHAGINIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_CARTHAGINIAN"
   }
  },
  "identity": {

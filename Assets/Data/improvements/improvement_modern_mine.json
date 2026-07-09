@@ -283,7 +283,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_MODERN_MINE"
+   "define": "ART_DEF_IMPROVEMENT_MODERN_MINE"
   }
  },
  "identity": {

@@ -23,7 +23,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EFFECT_CISLUNAR_ECONOMY"
+   "define": "ART_DEF_BUILDING_EFFECT_CISLUNAR_ECONOMY"
   }
  },
  "identity": {

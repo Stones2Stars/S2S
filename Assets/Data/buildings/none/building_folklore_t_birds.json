@@ -128,7 +128,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOLKLORE_T_BIRDS"
+   "define": "ART_DEF_BUILDING_FOLKLORE_T_BIRDS"
   }
  },
  "identity": {

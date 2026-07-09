@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANTARCTIC_SKYSCRAPER"
+   "define": "ART_DEF_BUILDING_ANTARCTIC_SKYSCRAPER"
   }
  },
  "identity": {

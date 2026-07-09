@@ -8,7 +8,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_LONGOBARDIAN"
+   "define": "ART_DEF_BONUS_LONGOBARDIAN"
   }
  },
  "identity": {

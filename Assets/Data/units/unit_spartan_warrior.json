@@ -72,6 +72,11 @@
   "production": 200,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SPARTAN_WARRIOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SPARTAN_WARRIOR",
   "civilopedia": "TXT_KEY_UNIT_SPARTAN_WARRIOR_PEDIA",

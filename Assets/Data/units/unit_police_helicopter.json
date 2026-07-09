@@ -113,6 +113,11 @@
   "production": 1150,
   "upkeep": 12
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_POLICE_HELICOPTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_POLICE_HELICOPTER",
   "civilopedia": "TXT_KEY_UNIT_POLICE_HELICOPTER_PEDIA",

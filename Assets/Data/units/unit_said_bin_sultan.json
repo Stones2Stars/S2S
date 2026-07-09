@@ -49,6 +49,11 @@
   "production": 2140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SAID_BIN_SULTAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SAID_BIN_SULTAN",
   "civilopedia": "TXT_KEY_UNIT_SAID_BIN_SULTAN_PEDIA",

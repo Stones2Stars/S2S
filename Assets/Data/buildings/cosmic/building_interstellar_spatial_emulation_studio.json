@@ -45,7 +45,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_SPATIAL_EMULATION_STUDIO"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_SPATIAL_EMULATION_STUDIO"
   }
  },
  "identity": {

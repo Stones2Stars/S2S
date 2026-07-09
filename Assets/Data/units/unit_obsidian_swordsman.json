@@ -68,6 +68,11 @@
   "production": 66,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_OBSIDIAN_SWORDSMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_OBSIDIAN_SWORDSMAN",
   "civilopedia": "TXT_KEY_UNIT_OBSIDIAN_SWORDSMAN_PEDIA",

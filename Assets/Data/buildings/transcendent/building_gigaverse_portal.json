@@ -57,7 +57,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GIGAVERSE_PORTAL"
+   "define": "ART_DEF_BUILDING_GIGAVERSE_PORTAL"
   }
  },
  "identity": {

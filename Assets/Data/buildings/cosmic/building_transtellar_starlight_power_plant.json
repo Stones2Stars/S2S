@@ -31,7 +31,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRANSTELLAR_STARLIGHT_POWER_PLANT"
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_STARLIGHT_POWER_PLANT"
   }
  },
  "identity": {

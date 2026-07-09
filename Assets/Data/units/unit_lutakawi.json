@@ -55,6 +55,11 @@
   "production": 4720,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LUTAKAWI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LUTAKAWI",
   "civilopedia": "TXT_KEY_UNIT_LUTAKAWI_PEDIA",

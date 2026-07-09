@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HERD_COW"
+   "define": "ART_DEF_BUILDING_HERD_COW"
   }
  },
  "sound": {

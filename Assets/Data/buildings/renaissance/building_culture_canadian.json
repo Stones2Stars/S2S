@@ -86,7 +86,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_CANADIAN"
+   "define": "ART_DEF_BUILDING_CULTURE_CANADIAN"
   }
  },
  "identity": {

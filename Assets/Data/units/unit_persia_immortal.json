@@ -126,6 +126,11 @@
   "production": 98,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PERSIA_IMMORTAL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PERIA_IMMORTAL",
   "civilopedia": "TXT_KEY_UNIT_PERIA_IMMORTAL_PEDIA",

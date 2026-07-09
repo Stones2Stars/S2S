@@ -144,7 +144,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RIDING_SCHOOL"
+   "define": "ART_DEF_BUILDING_RIDING_SCHOOL"
   }
  },
  "identity": {

@@ -76,6 +76,11 @@
   "production": 200,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GASTRAPHETES"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GASTRAPHETES",
   "civilopedia": "TXT_KEY_UNIT_GASTRAPHETES_PEDIA",

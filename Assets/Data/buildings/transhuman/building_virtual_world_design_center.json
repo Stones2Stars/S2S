@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VIRTUAL_WORLD_DESIGN_CENTER"
+   "define": "ART_DEF_BUILDING_VIRTUAL_WORLD_DESIGN_CENTER"
   }
  },
  "identity": {

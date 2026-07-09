@@ -121,6 +121,11 @@
   "production": 115,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SACRED_BAND"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SACRED_BAND",
   "civilopedia": "TXT_KEY_UNIT_SACRED_BAND_PEDIA",

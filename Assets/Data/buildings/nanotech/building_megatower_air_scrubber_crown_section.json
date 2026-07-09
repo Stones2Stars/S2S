@@ -56,7 +56,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MEGATOWER_AIR_SCRUBBER_CROWN_SECTION"
+   "define": "ART_DEF_BUILDING_MEGATOWER_AIR_SCRUBBER_CROWN_SECTION"
   }
  },
  "identity": {

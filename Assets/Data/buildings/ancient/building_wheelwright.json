@@ -121,7 +121,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WHEELWRIGHT"
+   "define": "ART_DEF_BUILDING_WHEELWRIGHT"
   }
  },
  "sound": {

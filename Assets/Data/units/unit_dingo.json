@@ -42,6 +42,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DINGO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DINGO",
   "civilopedia": "TXT_KEY_UNIT_DINGO_PEDIA",

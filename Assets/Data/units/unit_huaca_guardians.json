@@ -153,6 +153,11 @@
   "production": 370,
   "upkeep": 6
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HUACA_GUARDIANS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HUACA_GUARDIANS",
   "civilopedia": "TXT_KEY_UNIT_HUACA_GUARDIANS_PEDIA",

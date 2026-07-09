@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ASTROLOGICAL_INFLUENCE_OF_LIBRA"
+   "define": "ART_DEF_BUILDING_ASTROLOGICAL_INFLUENCE_OF_LIBRA"
   }
  },
  "identity": {

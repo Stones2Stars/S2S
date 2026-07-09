@@ -148,6 +148,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NILECROC"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_NILECROC",
   "civilopedia": "TXT_KEY_UNIT_NILECROC_PEDIA",

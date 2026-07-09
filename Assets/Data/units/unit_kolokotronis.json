@@ -49,6 +49,11 @@
   "production": 2140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KOLOKOTRONIS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KOLOKOTRONIS",
   "civilopedia": "TXT_KEY_UNIT_KOLOKOTRONIS_PEDIA",

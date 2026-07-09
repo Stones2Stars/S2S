@@ -147,7 +147,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BIG_MCDOWELLS_RESTAURANT"
+   "define": "ART_DEF_BUILDING_BIG_MCDOWELLS_RESTAURANT"
   }
  },
  "sound": {

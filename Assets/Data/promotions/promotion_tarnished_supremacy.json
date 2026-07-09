@@ -1,12 +1,5 @@
 {
  "type": "PROMOTION_TARNISHED_SUPREMACY",
- "strength": {
-  "unit": {
-   "quality": {
-    "flat": -1
-   }
-  }
- },
  "skills": {
   "unitCombats": [
    "UNITCOMBAT_QUALITY_ELITE"
@@ -32,5 +25,8 @@
    "UNITCOMBAT_ANIMAL"
   ],
   "forOffset": true
+ },
+ "sizeMatters": {
+  "quality": -1
  }
 }

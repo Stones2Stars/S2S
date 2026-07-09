@@ -96,6 +96,11 @@
   "production": 330,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CHIVALRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CHIVALRY",
   "civilopedia": "TXT_KEY_UNIT_CHIVALRY_PEDIA",

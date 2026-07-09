@@ -44,7 +44,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LUNAR_ECUMENOPOLIS"
+   "define": "ART_DEF_BUILDING_LUNAR_ECUMENOPOLIS"
   }
  },
  "identity": {

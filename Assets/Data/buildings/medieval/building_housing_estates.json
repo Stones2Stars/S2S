@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOUSING_ESTATES"
+   "define": "ART_DEF_BUILDING_HOUSING_ESTATES"
   }
  },
  "identity": {

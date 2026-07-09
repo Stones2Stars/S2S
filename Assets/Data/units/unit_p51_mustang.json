@@ -66,6 +66,11 @@
   "production": 930,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_P51_MUSTANG"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_P51_MUSTANG",
   "civilopedia": "TXT_KEY_UNIT_P51_MUSTANG_PEDIA",

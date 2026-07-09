@@ -46,7 +46,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_COLONY_EUGENICS"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_COLONY_EUGENICS"
   }
  },
  "identity": {

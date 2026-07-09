@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_IQ_TESTING_CENTER"
+   "define": "ART_DEF_BUILDING_IQ_TESTING_CENTER"
   }
  },
  "identity": {

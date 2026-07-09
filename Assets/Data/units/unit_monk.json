@@ -73,6 +73,11 @@
   "production": 270,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MONK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MONK",
   "civilopedia": "TXT_KEY_UNIT_MONK_PEDIA",

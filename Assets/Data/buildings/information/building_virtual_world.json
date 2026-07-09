@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VIRTUAL_WORLD"
+   "define": "ART_DEF_BUILDING_VIRTUAL_WORLD"
   }
  },
  "identity": {

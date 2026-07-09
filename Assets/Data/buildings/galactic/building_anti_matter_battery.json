@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANTI_MATTER_BATTERY"
+   "define": "ART_DEF_BUILDING_ANTI_MATTER_BATTERY"
   }
  },
  "sound": {

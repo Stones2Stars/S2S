@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYPERSPACE_IMPORTER"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_IMPORTER"
   }
  },
  "identity": {

@@ -104,7 +104,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GUARD_TOWER"
+   "define": "ART_DEF_BUILDING_GUARD_TOWER"
   }
  },
  "sound": {

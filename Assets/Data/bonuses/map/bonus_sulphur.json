@@ -91,7 +91,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SULPHUR"
+   "define": "ART_DEF_BONUS_SULPHUR"
   }
  },
  "mapGeneration": {

@@ -49,7 +49,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MATTER_DECOMPILER"
+   "define": "ART_DEF_BUILDING_MATTER_DECOMPILER"
   }
  },
  "sound": {

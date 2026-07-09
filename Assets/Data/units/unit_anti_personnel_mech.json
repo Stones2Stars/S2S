@@ -57,6 +57,11 @@
   "production": 4800,
   "upkeep": 11
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ANTI_PERSONNEL_MECH"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ANTI_PERSONNEL_MECH",
   "civilopedia": "TXT_KEY_UNIT_ANTI_PERSONNEL_MECH_PEDIA",

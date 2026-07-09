@@ -64,6 +64,11 @@
  "cost": {
   "production": 140
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TAMED_BOAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TAMED_BOAR",
   "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",

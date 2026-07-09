@@ -56,6 +56,11 @@
   "production": 1200,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CG_CUTTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CG_CUTTER",
   "civilopedia": "TXT_KEY_UNIT_CG_CUTTER_PEDIA",

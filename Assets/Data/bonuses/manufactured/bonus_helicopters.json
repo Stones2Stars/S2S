@@ -16,7 +16,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HELICOPTERS"
+   "define": "ART_DEF_BONUS_HELICOPTERS"
   }
  },
  "identity": {

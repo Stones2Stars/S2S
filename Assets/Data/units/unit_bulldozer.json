@@ -66,6 +66,11 @@
   "production": 800,
   "upkeep": 5
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BULLDOZER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BULLDOZER",
   "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",

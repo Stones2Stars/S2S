@@ -94,7 +94,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ORIENT_EXPRESS"
+   "define": "ART_DEF_BUILDING_ORIENT_EXPRESS"
   }
  },
  "identity": {

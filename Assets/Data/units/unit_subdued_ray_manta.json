@@ -55,6 +55,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RAY_MANTA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_RAY_MANTA",
   "civilopedia": "TXT_KEY_UNIT_RAY_MANTA_PEDIA",

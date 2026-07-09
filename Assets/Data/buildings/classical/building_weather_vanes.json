@@ -92,7 +92,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WEATHER_VANES"
+   "define": "ART_DEF_BUILDING_WEATHER_VANES"
   }
  },
  "identity": {

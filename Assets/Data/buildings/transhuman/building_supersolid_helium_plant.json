@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SUPERSOLID_HELIUM_PLANT"
+   "define": "ART_DEF_BUILDING_SUPERSOLID_HELIUM_PLANT"
   }
  },
  "identity": {

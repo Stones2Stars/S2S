@@ -125,7 +125,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_AIRBASE"
+   "define": "ART_DEF_BUILDING_AIRBASE"
   }
  },
  "sound": {

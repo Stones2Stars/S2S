@@ -17,6 +17,11 @@
   "production": 400,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VICEROY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_VICEROY",
   "civilopedia": "TXT_KEY_UNIT_VICEROY_PEDIA",

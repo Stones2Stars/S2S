@@ -59,6 +59,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FREIGHT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FREIGHT",
   "civilopedia": "TXT_KEY_CONCEPT_FREIGHT_PEDIA",

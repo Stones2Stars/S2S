@@ -46,6 +46,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PANTHER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PANTHER",
   "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",

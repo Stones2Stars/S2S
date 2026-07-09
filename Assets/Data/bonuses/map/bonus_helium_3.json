@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HELIUM_3"
+   "define": "ART_DEF_BONUS_HELIUM_3"
   }
  },
  "mapGeneration": {

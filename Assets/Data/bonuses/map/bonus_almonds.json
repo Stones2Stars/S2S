@@ -39,7 +39,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_ALMONDS"
+   "define": "ART_DEF_BONUS_ALMONDS"
   }
  },
  "mapGeneration": {

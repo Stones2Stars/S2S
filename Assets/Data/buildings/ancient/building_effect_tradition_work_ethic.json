@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRADITION"
+   "define": "ART_DEF_BUILDING_TRADITION"
   }
  },
  "identity": {

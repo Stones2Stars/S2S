@@ -46,6 +46,11 @@
   "production": 1681,
   "upkeep": 6
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TACTICAL_NUKE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TACTICAL_NUKE",
   "civilopedia": "TXT_KEY_UNIT_TACTICAL_NUKE_PEDIA",

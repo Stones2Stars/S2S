@@ -41,6 +41,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BUFFALO_CAPE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BUFFALO_CAPE",
   "civilopedia": "TXT_KEY_UNIT_BUFFALO_CAPE_PEDIA",

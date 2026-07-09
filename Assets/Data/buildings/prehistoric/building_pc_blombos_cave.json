@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PC_BLOMBOS_CAVE"
+   "define": "ART_DEF_BUILDING_PC_BLOMBOS_CAVE"
   }
  },
  "identity": {

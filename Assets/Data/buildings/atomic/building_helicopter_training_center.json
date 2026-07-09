@@ -68,7 +68,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HELICOPTER_TRAINING_CENTER"
+   "define": "ART_DEF_BUILDING_HELICOPTER_TRAINING_CENTER"
   }
  },
  "identity": {

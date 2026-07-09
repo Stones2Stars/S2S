@@ -130,6 +130,11 @@
   "production": 1250,
   "upkeep": 9
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GUERILLA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GUERRILLA",
   "civilopedia": "TXT_KEY_UNIT_GUERRILLA_PEDIA",

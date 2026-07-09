@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BARBWIRE_FENCE"
+   "define": "ART_DEF_BUILDING_BARBWIRE_FENCE"
   }
  },
  "sound": {

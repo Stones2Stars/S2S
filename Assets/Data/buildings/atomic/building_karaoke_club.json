@@ -122,7 +122,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_KARAOKE_CLUB"
+   "define": "ART_DEF_BUILDING_KARAOKE_CLUB"
   }
  },
  "identity": {

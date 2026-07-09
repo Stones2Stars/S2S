@@ -66,7 +66,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RAIL_SHIPPING_WAREHOUSE"
+   "define": "ART_DEF_BUILDING_RAIL_SHIPPING_WAREHOUSE"
   }
  },
  "identity": {

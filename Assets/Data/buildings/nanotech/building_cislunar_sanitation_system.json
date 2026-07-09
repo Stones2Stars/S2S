@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CISLUNAR_SANITATION_SYSTEM"
+   "define": "ART_DEF_BUILDING_CISLUNAR_SANITATION_SYSTEM"
   }
  },
  "identity": {

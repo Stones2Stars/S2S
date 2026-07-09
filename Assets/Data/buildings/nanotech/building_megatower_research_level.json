@@ -100,7 +100,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MEGATOWER_RESEARCH_LEVEL"
+   "define": "ART_DEF_BUILDING_MEGATOWER_RESEARCH_LEVEL"
   }
  },
  "identity": {

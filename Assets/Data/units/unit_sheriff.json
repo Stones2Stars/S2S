@@ -134,6 +134,11 @@
   "production": 565,
   "upkeep": 7
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SHERIFF"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SHERIFF",
   "civilopedia": "TXT_KEY_UNIT_SHERIFF_PEDIA",

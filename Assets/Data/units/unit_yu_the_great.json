@@ -49,6 +49,11 @@
   "production": 584,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_YU_THE_GREAT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_YU_THE_GREAT",
   "civilopedia": "TXT_KEY_UNIT_YU_THE_GREAT_PEDIA",

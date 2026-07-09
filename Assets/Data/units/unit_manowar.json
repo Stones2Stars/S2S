@@ -97,6 +97,11 @@
   "production": 640,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MANOWAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MANOWAR",
   "civilopedia": "TXT_KEY_UNIT_MANOWAR_PEDIA",

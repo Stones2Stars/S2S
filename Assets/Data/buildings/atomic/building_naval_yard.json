@@ -87,7 +87,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NAVAL_YARD"
+   "define": "ART_DEF_BUILDING_NAVAL_YARD"
   }
  },
  "sound": {

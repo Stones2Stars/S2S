@@ -2,7 +2,7 @@
  "type": "BONUS_HUMAN_MOD_ATEMPORAL",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HUMAN_MOD_ATEMPORAL"
+   "define": "ART_DEF_BONUS_HUMAN_MOD_ATEMPORAL"
   }
  },
  "identity": {

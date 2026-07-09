@@ -170,6 +170,11 @@
   "production": 875,
   "upkeep": 11
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ROBBER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ROBBER",
   "civilopedia": "TXT_KEY_UNIT_ROBBER_PEDIA",

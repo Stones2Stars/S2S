@@ -77,6 +77,11 @@
   "production": 342,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HIGHLANDER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HIGHLANDER",
   "civilopedia": "TXT_KEY_UNIT_HIGHLANDER_PEDIA",

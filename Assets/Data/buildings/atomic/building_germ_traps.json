@@ -95,7 +95,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GERM_TRAPS"
+   "define": "ART_DEF_BUILDING_GERM_TRAPS"
   }
  },
  "sound": {

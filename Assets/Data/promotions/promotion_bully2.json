@@ -1,12 +1,5 @@
 {
  "type": "PROMOTION_BULLY2",
- "strength": {
-  "unit": {
-   "perSizeLess": {
-    "percent": 15
-   }
-  }
- },
  "promotionLine": {
   "PROMOTIONLINE_BULLY": 2
  },
@@ -18,6 +11,11 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perSizeLess": 15
+  }
  },
  "identity": {
   "description": "TXT_KEY_PROMOTION_BULLY2"

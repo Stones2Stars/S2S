@@ -121,7 +121,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TAOIST_MONASTERY"
+   "define": "ART_DEF_BUILDING_TAOIST_MONASTERY"
   }
  },
  "sound": {

@@ -43,6 +43,11 @@
   "production": 864,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HAMILCAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HAMILCAR",
   "civilopedia": "TXT_KEY_UNIT_HAMILCAR_PEDIA",

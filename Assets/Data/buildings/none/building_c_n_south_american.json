@@ -16,7 +16,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_SOUTH_AMERICAN"
+   "define": "ART_DEF_BUILDING_CULTURE_SOUTH_AMERICAN"
   }
  },
  "identity": {

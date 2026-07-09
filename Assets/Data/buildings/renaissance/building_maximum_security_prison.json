@@ -103,7 +103,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MAXIMUM_SECURITY_PRISON"
+   "define": "ART_DEF_BUILDING_MAXIMUM_SECURITY_PRISON"
   }
  },
  "sound": {

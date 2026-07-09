@@ -76,6 +76,11 @@
   "production": 970,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DOUBLE_BIPLANE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DOUBLE_BIPLANE",
   "civilopedia": "TXT_KEY_UNIT_DOUBLE_BIPLANE_PEDIA",

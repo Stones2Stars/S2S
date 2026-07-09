@@ -153,6 +153,11 @@
  "cost": {
   "production": 475
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GIRAFFE_CARABINIER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GIRAFFE_CARABINIER",
   "civilopedia": "TXT_KEY_UNIT_GIRAFFE_ARCHER_PEDIA",

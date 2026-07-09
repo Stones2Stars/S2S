@@ -77,7 +77,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WIRELESS_GRID"
+   "define": "ART_DEF_BUILDING_WIRELESS_GRID"
   }
  },
  "identity": {

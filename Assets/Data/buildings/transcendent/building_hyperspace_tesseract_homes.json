@@ -40,7 +40,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYPERSPACE_TESSERACT_HOMES"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_TESSERACT_HOMES"
   }
  },
  "identity": {

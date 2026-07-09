@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_CISLUNAR_BASE"
+   "define": "ART_DEF_IMPROVEMENT_CISLUNAR_BASE"
   }
  },
  "mapGeneration": {

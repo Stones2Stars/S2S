@@ -47,6 +47,11 @@
    "icon": "Art/Interface/Buttons/Units/sleeper.dds"
   }
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SETTLER_MALE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SLEEPER",
   "civilopedia": "TXT_KEY_UNIT_SLEEPER_PEDIA",

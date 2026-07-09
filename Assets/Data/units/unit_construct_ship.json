@@ -38,6 +38,11 @@
   "production": 1729,
   "upkeep": 5
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CONSTRUCT_SHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CONSTRUCT_SHIP",
   "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",

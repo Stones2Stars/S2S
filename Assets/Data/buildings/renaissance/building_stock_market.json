@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_STOCK_MARKET"
+   "define": "ART_DEF_BUILDING_STOCK_MARKET"
   }
  },
  "sound": {

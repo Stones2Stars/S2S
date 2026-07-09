@@ -82,6 +82,11 @@
   "production": 320,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KNIGHT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KNIGHT",
   "civilopedia": "TXT_KEY_UNIT_KNIGHT_PEDIA",

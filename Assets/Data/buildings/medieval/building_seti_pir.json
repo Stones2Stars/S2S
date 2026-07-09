@@ -86,7 +86,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SETI_PIR"
+   "define": "ART_DEF_BUILDING_SETI_PIR"
   }
  },
  "sound": {

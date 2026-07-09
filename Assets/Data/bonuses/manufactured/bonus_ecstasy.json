@@ -2,7 +2,7 @@
  "type": "BONUS_ECSTASY",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_ECSTASY"
+   "define": "ART_DEF_BONUS_ECSTASY"
   }
  },
  "identity": {

@@ -128,7 +128,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SCULPTORS_WORKSHOP"
+   "define": "ART_DEF_BUILDING_SCULPTORS_WORKSHOP"
   }
  },
  "sound": {

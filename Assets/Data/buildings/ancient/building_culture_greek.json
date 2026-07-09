@@ -91,7 +91,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_GREEK"
+   "define": "ART_DEF_BUILDING_CULTURE_GREEK"
   }
  },
  "identity": {

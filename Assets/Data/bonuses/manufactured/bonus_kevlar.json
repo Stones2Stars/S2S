@@ -2,7 +2,7 @@
  "type": "BONUS_KEVLAR",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_KEVLAR"
+   "define": "ART_DEF_BONUS_KEVLAR"
   }
  },
  "identity": {

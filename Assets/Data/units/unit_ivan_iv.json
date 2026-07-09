@@ -42,6 +42,11 @@
   "production": 1328,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_IVAN_IV"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_IVAN_IV",
   "civilopedia": "TXT_KEY_UNIT_IVAN_IV_PEDIA",

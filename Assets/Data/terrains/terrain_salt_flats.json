@@ -28,7 +28,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_SALT"
+   "define": "ART_DEF_TERRAIN_SALT"
   }
  },
  "sound": {

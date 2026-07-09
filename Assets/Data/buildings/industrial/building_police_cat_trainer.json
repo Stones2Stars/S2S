@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_POLICE_CAT_TRAINER"
+   "define": "ART_DEF_BUILDING_POLICE_CAT_TRAINER"
   }
  },
  "identity": {

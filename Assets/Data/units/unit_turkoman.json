@@ -115,6 +115,11 @@
   "production": 355,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TURKOMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TURKOMAN",
   "civilopedia": "TXT_KEY_UNIT_TURKOMAN_PEDIA",

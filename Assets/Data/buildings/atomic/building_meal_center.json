@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MEAL_CENTER"
+   "define": "ART_DEF_BUILDING_MEAL_CENTER"
   }
  },
  "identity": {

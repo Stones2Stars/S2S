@@ -41,6 +41,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_COD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_COD",
   "civilopedia": "TXT_KEY_UNIT_COD_PEDIA",

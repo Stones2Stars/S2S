@@ -86,6 +86,11 @@
   "production": 3942,
   "upkeep": 5
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CANIS_SUPERIOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CANIS_SUPERIOR",
   "civilopedia": "TXT_KEY_UNIT_CANIS_SUPERIOR_PEDIA",

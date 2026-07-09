@@ -128,7 +128,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CIRCUS_MAXIMUS"
+   "define": "ART_DEF_BUILDING_CIRCUS_MAXIMUS"
   }
  },
  "sound": {

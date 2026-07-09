@@ -103,6 +103,11 @@
   "production": 600,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WORKER_WAGON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WORKER_INDUSTRIAL",
   "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",

@@ -94,7 +94,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CISLUNAR_SPORTS_ARENA"
+   "define": "ART_DEF_BUILDING_CISLUNAR_SPORTS_ARENA"
   }
  },
  "sound": {

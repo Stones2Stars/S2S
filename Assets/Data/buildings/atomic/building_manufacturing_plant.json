@@ -94,7 +94,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MANUFACTURING_PLANT"
+   "define": "ART_DEF_BUILDING_MANUFACTURING_PLANT"
   }
  },
  "sound": {

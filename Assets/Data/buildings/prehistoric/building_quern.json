@@ -114,7 +114,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_QUERN"
+   "define": "ART_DEF_BUILDING_QUERN"
   }
  },
  "identity": {

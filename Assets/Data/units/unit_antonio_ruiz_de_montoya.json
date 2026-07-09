@@ -44,6 +44,11 @@
   "production": 1640,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ANTONIO_RUIZ_DE_MONTOYA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ANTONIO_RUIZ_DE_MONTOYA",
   "civilopedia": "TXT_KEY_UNIT_ANTONIO_RUIZ_DE_MONTOYA_PEDIA",

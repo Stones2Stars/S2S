@@ -40,7 +40,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT"
   }
  },
  "identity": {

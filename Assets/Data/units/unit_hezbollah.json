@@ -163,6 +163,11 @@
   "production": 1750,
   "upkeep": 13
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HEZBOLLAH"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HEZBOLLAH",
   "civilopedia": "TXT_KEY_UNIT_HEZBOLLAH_PEDIA",

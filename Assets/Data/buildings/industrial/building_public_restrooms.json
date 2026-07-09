@@ -92,7 +92,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PUBLIC_RESTROOMS"
+   "define": "ART_DEF_BUILDING_PUBLIC_RESTROOMS"
   }
  },
  "identity": {

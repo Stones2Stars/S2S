@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_KUGELBLITZ_FACTORY"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_KUGELBLITZ_FACTORY"
   }
  },
  "identity": {

@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_JADE_CARVER"
+   "define": "ART_DEF_BUILDING_JADE_CARVER"
   }
  },
  "sound": {

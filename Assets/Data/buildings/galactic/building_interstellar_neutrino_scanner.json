@@ -45,7 +45,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_NEUTRINO_SCANNER"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_NEUTRINO_SCANNER"
   }
  },
  "identity": {

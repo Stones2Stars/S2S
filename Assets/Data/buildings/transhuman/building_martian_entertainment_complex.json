@@ -38,7 +38,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_ENTERTAINMENT_COMPLEX"
+   "define": "ART_DEF_BUILDING_MARTIAN_ENTERTAINMENT_COMPLEX"
   }
  },
  "identity": {

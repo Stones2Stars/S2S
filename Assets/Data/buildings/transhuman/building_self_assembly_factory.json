@@ -106,7 +106,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SELF_ASSEMBLY_FACTORY"
+   "define": "ART_DEF_BUILDING_SELF_ASSEMBLY_FACTORY"
   }
  },
  "identity": {

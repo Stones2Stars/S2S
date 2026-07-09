@@ -102,6 +102,11 @@
   "production": 3600,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FUSION_DESTROYER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FF_DESTROYER_I",
   "civilopedia": "TXT_KEY_UNIT_FF_DESTROYER_PEDIA",

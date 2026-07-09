@@ -85,6 +85,11 @@
   "production": 385,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LA_PLATA_MOSQUETERO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LA_PLATA_MOSQUETERO",
   "civilopedia": "TXT_KEY_UNIT_LA_PLATA_MOSQUETERO_PEDIA",

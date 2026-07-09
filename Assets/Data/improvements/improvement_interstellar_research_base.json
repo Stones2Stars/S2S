@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_INTERSTELLAR_RESEARCH_BASE"
+   "define": "ART_DEF_IMPROVEMENT_INTERSTELLAR_RESEARCH_BASE"
   }
  },
  "identity": {

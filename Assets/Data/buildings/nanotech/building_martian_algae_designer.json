@@ -46,7 +46,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_ALGAE_DESIGNER"
+   "define": "ART_DEF_BUILDING_MARTIAN_ALGAE_DESIGNER"
   }
  },
  "identity": {

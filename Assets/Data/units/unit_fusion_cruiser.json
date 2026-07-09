@@ -90,6 +90,11 @@
   "production": 4600,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FUSION_CRUISER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FUSION_CRUISER",
   "civilopedia": "TXT_KEY_UNIT_FUSION_CRUISER_PEDIA",

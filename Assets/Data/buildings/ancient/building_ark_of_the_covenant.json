@@ -77,7 +77,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ARK_OF_THE_COVENANT"
+   "define": "ART_DEF_BUILDING_ARK_OF_THE_COVENANT"
   }
  },
  "sound": {

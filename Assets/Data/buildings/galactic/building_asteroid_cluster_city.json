@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ASTEROID_CLUSTER_CITY"
+   "define": "ART_DEF_BUILDING_ASTEROID_CLUSTER_CITY"
   }
  },
  "identity": {

@@ -2,7 +2,7 @@
  "type": "BONUS_FULLERENE",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_FULLERENE"
+   "define": "ART_DEF_BONUS_FULLERENE"
   }
  },
  "identity": {

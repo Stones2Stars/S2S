@@ -8,7 +8,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HUMAN_MOD_DIGITAL_LIFESTYLE"
+   "define": "ART_DEF_BONUS_HUMAN_MOD_DIGITAL_LIFESTYLE"
   }
  },
  "identity": {

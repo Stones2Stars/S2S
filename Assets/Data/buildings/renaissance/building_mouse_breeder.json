@@ -60,7 +60,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MOUSE_BREEDER"
+   "define": "ART_DEF_BUILDING_MOUSE_BREEDER"
   }
  },
  "identity": {

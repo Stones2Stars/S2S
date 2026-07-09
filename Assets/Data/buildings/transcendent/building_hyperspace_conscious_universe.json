@@ -38,7 +38,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYPERSPACE_CONSCIOUS_UNIVERSE"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_CONSCIOUS_UNIVERSE"
   }
  },
  "identity": {

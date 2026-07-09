@@ -21,7 +21,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SMART_MEDICINE"
+   "define": "ART_DEF_BONUS_SMART_MEDICINE"
   }
  },
  "identity": {

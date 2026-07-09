@@ -124,7 +124,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SOLOMONS_TEMPLE"
+   "define": "ART_DEF_BUILDING_SOLOMONS_TEMPLE"
   }
  },
  "sound": {

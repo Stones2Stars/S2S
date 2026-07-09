@@ -88,7 +88,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CEMENT_MILL"
+   "define": "ART_DEF_BUILDING_CEMENT_MILL"
   }
  },
  "sound": {

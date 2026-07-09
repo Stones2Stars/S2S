@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CARINA_AND_SAGITTARIUS_ARM_COLONY"
+   "define": "ART_DEF_BUILDING_CARINA_AND_SAGITTARIUS_ARM_COLONY"
   }
  },
  "identity": {

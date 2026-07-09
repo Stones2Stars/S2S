@@ -69,6 +69,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FEMALE_PROPHET"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DOCTOR",
   "civilopedia": "TXT_KEY_CONCEPT_GREAT_DOCTOR_PEDIA",

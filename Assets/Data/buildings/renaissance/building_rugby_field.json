@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RUGBY_FIELD"
+   "define": "ART_DEF_BUILDING_RUGBY_FIELD"
   }
  },
  "identity": {

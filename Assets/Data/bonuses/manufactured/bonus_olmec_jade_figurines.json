@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_OLMEC_JADE_FIGURINES"
+   "define": "ART_DEF_BONUS_OLMEC_JADE_FIGURINES"
   }
  },
  "identity": {

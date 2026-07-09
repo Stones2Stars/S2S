@@ -27,7 +27,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_INFECTED_WATER"
+   "define": "ART_DEF_TERRAIN_INFECTED_WATER"
   }
  },
  "sound": {

@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_WATER_EXTRACTION"
+   "define": "ART_DEF_BUILDING_MARTIAN_WATER_EXTRACTION"
   }
  },
  "identity": {

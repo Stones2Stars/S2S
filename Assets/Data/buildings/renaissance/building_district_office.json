@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DISTRICT_OFFICE"
+   "define": "ART_DEF_BUILDING_DISTRICT_OFFICE"
   }
  },
  "identity": {

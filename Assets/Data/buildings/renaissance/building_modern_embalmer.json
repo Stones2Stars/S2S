@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MODERN_EMBALMER"
+   "define": "ART_DEF_BUILDING_MODERN_EMBALMER"
   }
  },
  "identity": {

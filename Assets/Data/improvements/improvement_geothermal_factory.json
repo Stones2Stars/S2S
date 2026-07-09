@@ -63,7 +63,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_GEOTHERMAL_FACTORY"
+   "define": "ART_DEF_IMPROVEMENT_GEOTHERMAL_FACTORY"
   }
  },
  "identity": {

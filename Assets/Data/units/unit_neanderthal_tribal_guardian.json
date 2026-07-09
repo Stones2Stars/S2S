@@ -39,6 +39,11 @@
  "cost": {
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NEANDERTHAL_TRIBAL_GUARDIAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NEANDERTHAL_TRIBAL_GUARDIAN",
   "civilopedia": "TXT_KEY_UNIT_TRIBAL_GUARDIAN_PEDIA",

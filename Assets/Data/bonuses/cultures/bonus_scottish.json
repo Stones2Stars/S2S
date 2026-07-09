@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SCOTTISH"
+   "define": "ART_DEF_BONUS_SCOTTISH"
   }
  },
  "identity": {

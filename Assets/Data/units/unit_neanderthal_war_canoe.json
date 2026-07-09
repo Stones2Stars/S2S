@@ -57,6 +57,11 @@
   "production": 107,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NEANDERTHAL_WAR_CANOE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NEANDERTHAL_WAR_CANOE",
   "civilopedia": "TXT_KEY_UNIT_WAR_CANOE_PEDIA",

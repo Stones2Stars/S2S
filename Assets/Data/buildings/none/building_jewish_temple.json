@@ -119,7 +119,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_JEWISH_TEMPLE"
+   "define": "ART_DEF_BUILDING_JEWISH_TEMPLE"
   }
  },
  "sound": {

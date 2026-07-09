@@ -2,7 +2,7 @@
  "type": "FEATURE_PLATY_NGORONGORO_CRATER",
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_NGORONGORO_CRATER"
+   "define": "ART_DEF_FEATURE_NGORONGORO_CRATER"
   }
  },
  "sound": {

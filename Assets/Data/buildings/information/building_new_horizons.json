@@ -44,7 +44,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NEW_HORIZONS"
+   "define": "ART_DEF_BUILDING_NEW_HORIZONS"
   }
  },
  "identity": {

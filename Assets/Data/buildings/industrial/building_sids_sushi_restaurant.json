@@ -136,7 +136,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SIDS_SUSHI_RESTAURANT"
+   "define": "ART_DEF_BUILDING_SIDS_SUSHI_RESTAURANT"
   }
  },
  "sound": {

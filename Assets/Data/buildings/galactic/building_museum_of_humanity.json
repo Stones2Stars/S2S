@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MUSEUM_OF_HUMANITY"
+   "define": "ART_DEF_BUILDING_MUSEUM_OF_HUMANITY"
   }
  },
  "identity": {

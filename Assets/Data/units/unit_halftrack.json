@@ -78,6 +78,11 @@
   "production": 1030,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ANTIAIR_HALFTRACK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HALFTRACK",
   "civilopedia": "TXT_KEY_UNIT_HALFTRACK_PEDIA",

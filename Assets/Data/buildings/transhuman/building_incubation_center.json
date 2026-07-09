@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INCUBATION_CENTER"
+   "define": "ART_DEF_BUILDING_INCUBATION_CENTER"
   }
  },
  "sound": {

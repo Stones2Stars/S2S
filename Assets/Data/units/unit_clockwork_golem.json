@@ -99,6 +99,11 @@
  "cost": {
   "production": 350
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CLOCKWORK_GOLEM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CLOCKWORK_GOLEM",
   "civilopedia": "TXT_KEY_UNIT_CLOCKWORK_GOLEM_PEDIA",

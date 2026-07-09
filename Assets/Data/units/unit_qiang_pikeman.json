@@ -66,6 +66,11 @@
   "production": 275,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_QIANG_PIKEMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_QIANG_PIKEMAN",
   "civilopedia": "TXT_KEY_UNIT_QIANG_PIKEMAN_PEDIA",

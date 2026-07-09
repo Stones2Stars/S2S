@@ -68,6 +68,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ELEPHANT_AFRICAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ELEPHANT_AFRICAN",
   "civilopedia": "TXT_KEY_UNIT_ELEPHANT_PEDIA",

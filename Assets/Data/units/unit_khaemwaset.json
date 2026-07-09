@@ -60,6 +60,11 @@
   "production": 704,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KHAEMWASET"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KHAEMWASET",
   "civilopedia": "TXT_KEY_UNIT_KHAEMWASET_PEDIA",

@@ -48,6 +48,11 @@
   "production": 900,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KHARAVELA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KHARAVELA",
   "civilopedia": "TXT_KEY_UNIT_KHARAVELA_PEDIA",

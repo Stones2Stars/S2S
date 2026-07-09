@@ -59,7 +59,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ENCRYPTED_FIREWALL"
+   "define": "ART_DEF_BUILDING_ENCRYPTED_FIREWALL"
   }
  },
  "identity": {

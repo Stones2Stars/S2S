@@ -36,7 +36,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LIFE_CRISPR_CAS9_BACTERIA"
+   "define": "ART_DEF_BUILDING_LIFE_CRISPR_CAS9_BACTERIA"
   }
  },
  "identity": {

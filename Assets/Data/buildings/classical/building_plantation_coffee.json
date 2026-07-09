@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PLANTATION_COFFEE"
+   "define": "ART_DEF_BUILDING_PLANTATION_COFFEE"
   }
  },
  "identity": {

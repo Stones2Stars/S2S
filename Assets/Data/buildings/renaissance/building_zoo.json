@@ -266,7 +266,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ZOO"
+   "define": "ART_DEF_BUILDING_ZOO"
   }
  },
  "sound": {

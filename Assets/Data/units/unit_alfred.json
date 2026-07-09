@@ -45,6 +45,11 @@
   "production": 900,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ALFRED"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ALFRED",
   "civilopedia": "TXT_KEY_UNIT_ALFRED_PEDIA",

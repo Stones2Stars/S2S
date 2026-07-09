@@ -60,6 +60,11 @@
   "production": 1472,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HIDEYOSHI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HIDEYOSHI",
   "civilopedia": "TXT_KEY_UNIT_HIDEYOSHI_PEDIA",

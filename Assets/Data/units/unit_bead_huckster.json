@@ -94,6 +94,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BEAD_HUCKSTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BEAD_HUCKSTER",
   "civilopedia": "TXT_KEY_UNIT_BEAD_HUCKSTER_PEDIA",

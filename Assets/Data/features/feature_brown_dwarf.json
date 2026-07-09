@@ -16,7 +16,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_BROWN_DWARF"
+   "define": "ART_DEF_FEATURE_BROWN_DWARF"
   }
  },
  "sound": {

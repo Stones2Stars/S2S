@@ -38,7 +38,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_PEAK"
+   "define": "ART_DEF_TERRAIN_PEAK"
   }
  },
  "identity": {

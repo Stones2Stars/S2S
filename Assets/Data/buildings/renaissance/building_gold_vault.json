@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GOLD_VAULT"
+   "define": "ART_DEF_BUILDING_GOLD_VAULT"
   }
  },
  "sound": {

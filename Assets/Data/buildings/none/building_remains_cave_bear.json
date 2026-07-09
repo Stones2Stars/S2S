@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_REMAINS_CAVE_BEAR"
+   "define": "ART_DEF_BUILDING_REMAINS_CAVE_BEAR"
   }
  },
  "identity": {

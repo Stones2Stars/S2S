@@ -2,7 +2,7 @@
  "type": "BONUS_WATERPROOF_CEMENT",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_WATERPROOF_CEMENT"
+   "define": "ART_DEF_BONUS_WATERPROOF_CEMENT"
   }
  },
  "identity": {

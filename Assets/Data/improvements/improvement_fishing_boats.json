@@ -161,7 +161,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_FISHING_BOATS"
+   "define": "ART_DEF_IMPROVEMENT_FISHING_BOATS"
   }
  },
  "identity": {

@@ -134,6 +134,11 @@
   "production": 425,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CARABINIER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CARABINIER",
   "civilopedia": "TXT_KEY_UNIT_CARABINIER_PEDIA",

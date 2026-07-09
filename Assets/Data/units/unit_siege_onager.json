@@ -72,6 +72,11 @@
   "production": 250,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SIEGE_ONAGER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SIEGE_ONAGER",
   "civilopedia": "TXT_KEY_UNIT_SIEGE_ONAGER_PEDIA",

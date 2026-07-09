@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ZUSE_COMPUTER"
+   "define": "ART_DEF_BUILDING_ZUSE_COMPUTER"
   }
  },
  "identity": {

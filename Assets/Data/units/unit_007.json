@@ -54,6 +54,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TOP_SECRET_AGENT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_007",
   "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",

@@ -118,6 +118,11 @@
   "production": 455,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HERNANDARIAS_REGIMENTO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HERNANDARIAS_REGIMENTO",
   "civilopedia": "TXT_KEY_UNIT_HERNANDARIAS_REGIMENTO_PEDIA",

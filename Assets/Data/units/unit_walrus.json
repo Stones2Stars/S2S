@@ -68,6 +68,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WALRUS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WALRUS",
   "civilopedia": "TXT_KEY_UNIT_WALRUS_PEDIA",

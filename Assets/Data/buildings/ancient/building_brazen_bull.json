@@ -94,7 +94,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BRAZEN_BULL"
+   "define": "ART_DEF_BUILDING_BRAZEN_BULL"
   }
  },
  "identity": {

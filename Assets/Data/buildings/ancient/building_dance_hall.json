@@ -101,7 +101,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DANCE_HALL"
+   "define": "ART_DEF_BUILDING_DANCE_HALL"
   }
  },
  "identity": {

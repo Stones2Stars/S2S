@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_STRANGE_STAR_CITY"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_STRANGE_STAR_CITY"
   }
  },
  "identity": {

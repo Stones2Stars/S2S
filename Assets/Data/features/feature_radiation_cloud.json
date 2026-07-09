@@ -2,7 +2,7 @@
  "type": "FEATURE_RADIATION_CLOUD",
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_RADIATION_CLOUD"
+   "define": "ART_DEF_FEATURE_RADIATION_CLOUD"
   }
  },
  "sound": {

@@ -30,7 +30,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_BAUXITE_ORE"
+   "define": "ART_DEF_BONUS_BAUXITE_ORE"
   }
  },
  "mapGeneration": {

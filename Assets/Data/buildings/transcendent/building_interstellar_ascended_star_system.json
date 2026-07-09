@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_ASCENDED_STAR_SYSTEM"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_ASCENDED_STAR_SYSTEM"
   }
  },
  "identity": {

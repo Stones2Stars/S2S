@@ -173,6 +173,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HIGHWAYMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HIGHWAYMAN",
   "civilopedia": "TXT_KEY_UNIT_HIGHWAYMAN_PEDIA",

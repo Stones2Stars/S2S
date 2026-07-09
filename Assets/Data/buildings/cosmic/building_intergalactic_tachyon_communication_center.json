@@ -38,7 +38,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER"
   }
  },
  "identity": {

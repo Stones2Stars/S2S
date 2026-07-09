@@ -38,6 +38,11 @@
   "production": 175,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_EXPLORER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_EXPLORER",
   "civilopedia": "TXT_KEY_UNIT_EXPLORER_PEDIA",

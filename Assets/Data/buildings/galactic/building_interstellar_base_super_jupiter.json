@@ -46,7 +46,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_BASE_SUPER_JUPITER"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BASE_SUPER_JUPITER"
   }
  },
  "identity": {

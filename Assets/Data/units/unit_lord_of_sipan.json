@@ -46,6 +46,11 @@
   "production": 900,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LORD_OF_SIPAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LORD_OF_SIPAN",
   "civilopedia": "TXT_KEY_UNIT_LORD_OF_SIPAN_PEDIA",

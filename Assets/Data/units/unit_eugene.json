@@ -48,6 +48,11 @@
   "production": 2140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_EUGENE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_EUGENE",
   "civilopedia": "TXT_KEY_UNIT_EUGENE_PEDIA",

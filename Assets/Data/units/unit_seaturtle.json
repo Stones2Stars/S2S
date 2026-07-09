@@ -77,6 +77,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SEATURTLE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SEATURTLE",
   "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",

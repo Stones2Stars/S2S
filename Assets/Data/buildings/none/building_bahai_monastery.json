@@ -104,7 +104,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BAHAI_MONASTERY"
+   "define": "ART_DEF_BUILDING_BAHAI_MONASTERY"
   }
  },
  "identity": {

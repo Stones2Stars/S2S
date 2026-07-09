@@ -49,6 +49,11 @@
   "production": 2140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JUAN_JOSE_FLORES"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_JUAN_JOSE_FLORES",
   "civilopedia": "TXT_KEY_UNIT_JUAN_JOSE_FLORES_PEDIA",

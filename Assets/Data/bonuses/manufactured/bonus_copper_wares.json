@@ -115,7 +115,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_COPPER_WARES"
+   "define": "ART_DEF_BONUS_COPPER_WARES"
   }
  },
  "identity": {

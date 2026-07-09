@@ -54,6 +54,11 @@
  "cost": {
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CARAVEL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MASTER_SAILOR_CARAVEL",
   "civilopedia": "TXT_KEY_UNIT_CARAVEL_PEDIA",

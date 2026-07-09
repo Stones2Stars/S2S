@@ -30,7 +30,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EFFECT_PRIME_DIRECTIVE"
+   "define": "ART_DEF_BUILDING_EFFECT_PRIME_DIRECTIVE"
   }
  },
  "identity": {

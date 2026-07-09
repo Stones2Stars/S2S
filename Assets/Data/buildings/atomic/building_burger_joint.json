@@ -108,7 +108,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BURGER_JOINT"
+   "define": "ART_DEF_BUILDING_BURGER_JOINT"
   }
  },
  "identity": {

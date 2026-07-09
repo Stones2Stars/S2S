@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOLKLORE_TUNA"
+   "define": "ART_DEF_BUILDING_FOLKLORE_TUNA"
   }
  },
  "identity": {

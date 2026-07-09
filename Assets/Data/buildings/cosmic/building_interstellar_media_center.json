@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_MEDIA_CENTER"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_MEDIA_CENTER"
   }
  },
  "identity": {

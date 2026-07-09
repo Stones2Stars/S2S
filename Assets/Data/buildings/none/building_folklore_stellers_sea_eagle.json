@@ -77,7 +77,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOLKLORE_STELLERS_SEA_EAGLE"
+   "define": "ART_DEF_BUILDING_FOLKLORE_STELLERS_SEA_EAGLE"
   }
  },
  "identity": {

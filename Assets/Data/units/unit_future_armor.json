@@ -104,6 +104,11 @@
   "production": 4500,
   "upkeep": 4
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FUTURE_ARMOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FUTURE_ARMOR",
   "civilopedia": "TXT_KEY_UNIT_FUTURE_ARMOR_PEDIA",

@@ -72,6 +72,11 @@
   "production": 245,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CATAPULT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MANGONEL",
   "civilopedia": "TXT_KEY_UNIT_MANGONEL_PEDIA",

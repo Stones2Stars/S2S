@@ -113,7 +113,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NATIONAL_LIBRARY_SERVICE"
+   "define": "ART_DEF_BUILDING_NATIONAL_LIBRARY_SERVICE"
   }
  },
  "identity": {

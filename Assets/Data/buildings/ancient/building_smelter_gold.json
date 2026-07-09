@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SMELTER_GOLD"
+   "define": "ART_DEF_BUILDING_SMELTER_GOLD"
   }
  },
  "identity": {

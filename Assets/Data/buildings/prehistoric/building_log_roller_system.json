@@ -120,7 +120,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LOG_ROLLER_SYSTEM"
+   "define": "ART_DEF_BUILDING_LOG_ROLLER_SYSTEM"
   }
  },
  "identity": {

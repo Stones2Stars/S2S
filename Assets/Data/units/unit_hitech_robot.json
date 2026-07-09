@@ -40,6 +40,11 @@
   "production": 8300,
   "upkeep": 21
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HITECH_ROBOT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HITECH_ROBOT",
   "civilopedia": "TXT_KEY_UNIT_HITECH_ROBOT_PEDIA",

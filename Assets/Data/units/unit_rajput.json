@@ -63,6 +63,11 @@
   "production": 310,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RAJPUT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_RAJPUT",
   "civilopedia": "TXT_KEY_UNIT_RAJPUT_PEDIA",

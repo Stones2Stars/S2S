@@ -32,6 +32,11 @@
   "production": 280,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WARLORD_VASSAL"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_WARLORD_VASSAL",
   "civilopedia": "TXT_KEY_UNIT_WARLORD_VASSAL_PEDIA",

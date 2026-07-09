@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CENTER_FOR_THE_STUDY_OF_CIVILIZATION"
+   "define": "ART_DEF_BUILDING_CENTER_FOR_THE_STUDY_OF_CIVILIZATION"
   }
  },
  "identity": {

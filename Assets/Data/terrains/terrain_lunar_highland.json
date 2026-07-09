@@ -22,7 +22,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_LUNAR_HIGHLAND"
+   "define": "ART_DEF_TERRAIN_LUNAR_HIGHLAND"
   }
  },
  "sound": {

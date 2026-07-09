@@ -87,6 +87,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ADMIRAL_ANCIENT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GREAT_ADMIRAL",
   "civilopedia": "TXT_KEY_CONCEPT_GREAT_ADMIRALS_PEDIA",

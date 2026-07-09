@@ -82,7 +82,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_CELLPHONES"
+   "define": "ART_DEF_BUILDING_FACTORY_CELLPHONES"
   }
  },
  "identity": {

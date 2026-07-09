@@ -126,7 +126,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EU_JAGIELLONIAN_UNIVERSITY"
+   "define": "ART_DEF_BUILDING_EU_JAGIELLONIAN_UNIVERSITY"
   }
  },
  "identity": {

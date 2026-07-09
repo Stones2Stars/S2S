@@ -51,6 +51,11 @@
  "cost": {
   "production": 4720
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LARA_CROFT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LARA_CROFT",
   "civilopedia": "TXT_KEY_UNIT_LARA_CROFT_PEDIA",

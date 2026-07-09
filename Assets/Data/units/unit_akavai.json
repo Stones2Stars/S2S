@@ -132,6 +132,11 @@
   "production": 140,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ARSONIST"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AKAVAI",
   "civilopedia": "TXT_KEY_UNIT_AKAVAI_PEDIA",

@@ -16,6 +16,11 @@
   "production": 110,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MISSIONARY_NAGHUALISM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NAGUALISM_MISSIONARY",
   "civilopedia": "TXT_KEY_CONCEPT_RELIGION_PEDIA",

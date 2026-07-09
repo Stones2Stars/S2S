@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_PLANTATION"
+   "define": "ART_DEF_IMPROVEMENT_PLANTATION"
   }
  },
  "identity": {

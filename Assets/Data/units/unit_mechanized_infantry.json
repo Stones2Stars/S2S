@@ -73,6 +73,11 @@
   "production": 1605,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MECHANIZED_INFANTRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MECHANIZED_INFANTRY",
   "civilopedia": "TXT_KEY_UNIT_MECHANIZED_INFANTRY_PEDIA",

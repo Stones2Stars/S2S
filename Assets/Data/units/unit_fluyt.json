@@ -67,6 +67,11 @@
   "production": 340,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FLUYT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FLUYT",
   "civilopedia": "TXT_KEY_UNIT_FLUYT_PEDIA",

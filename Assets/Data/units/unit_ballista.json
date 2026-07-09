@@ -82,6 +82,11 @@
   "production": 250,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BALLISTA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BALLISTA",
   "civilopedia": "TXT_KEY_UNIT_BALLISTA_PEDIA",

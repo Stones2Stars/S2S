@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MICRO_WORMHOLE"
+   "define": "ART_DEF_BUILDING_MICRO_WORMHOLE"
   }
  },
  "identity": {

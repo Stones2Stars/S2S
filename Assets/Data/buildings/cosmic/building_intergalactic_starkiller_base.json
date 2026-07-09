@@ -30,7 +30,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_STARKILLER_BASE"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_STARKILLER_BASE"
   }
  },
  "identity": {

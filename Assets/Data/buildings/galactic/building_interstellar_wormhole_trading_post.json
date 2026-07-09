@@ -68,7 +68,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST"
   }
  },
  "identity": {

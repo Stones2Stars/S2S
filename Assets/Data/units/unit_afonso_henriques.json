@@ -48,6 +48,11 @@
   "production": 1328,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AFONSO_HENRIQUES"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AFONSO_HENRIQUES",
   "civilopedia": "TXT_KEY_UNIT_AFONSO_HENRIQUES_PEDIA",

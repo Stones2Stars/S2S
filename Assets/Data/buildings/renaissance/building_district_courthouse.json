@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DISTRICT_COURTHOUSE"
+   "define": "ART_DEF_BUILDING_DISTRICT_COURTHOUSE"
   }
  },
  "sound": {

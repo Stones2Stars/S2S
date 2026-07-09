@@ -65,7 +65,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SELF_AWARE_CITY"
+   "define": "ART_DEF_BUILDING_SELF_AWARE_CITY"
   }
  },
  "identity": {

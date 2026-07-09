@@ -39,7 +39,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FLOCKS_OF_PEACOCK"
+   "define": "ART_DEF_BUILDING_FLOCKS_OF_PEACOCK"
   }
  },
  "sound": {

@@ -82,6 +82,11 @@
   "production": 95,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ARCHER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ARCHER",
   "civilopedia": "TXT_KEY_UNIT_ARCHER_PEDIA",

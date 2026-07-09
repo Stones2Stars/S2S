@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_METEOROLOGY_LAB"
+   "define": "ART_DEF_BUILDING_METEOROLOGY_LAB"
   }
  },
  "identity": {

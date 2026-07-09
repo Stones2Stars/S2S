@@ -62,7 +62,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DISTANT_RECURSIVE_WORLD"
+   "define": "ART_DEF_BUILDING_DISTANT_RECURSIVE_WORLD"
   }
  },
  "identity": {

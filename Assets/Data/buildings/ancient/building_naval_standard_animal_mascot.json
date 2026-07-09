@@ -43,7 +43,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT"
+   "define": "ART_DEF_BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT"
   }
  },
  "identity": {

@@ -29,6 +29,11 @@
    "BUILDING_ENTOMOLOGY_LAB"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DESERT_TARANTULA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_DESERT_TARANTULA",
   "civilopedia": "TXT_KEY_UNIT_TARANTULA_PEDIA",

@@ -80,6 +80,11 @@
   "production": 1080,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LOS_MARINOS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_LOS_MARINOS",
   "civilopedia": "TXT_KEY_UNIT_LOS_MARINOS_PEDIA",

@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ROBOTIC_SURGEON"
+   "define": "ART_DEF_BUILDING_ROBOTIC_SURGEON"
   }
  },
  "identity": {

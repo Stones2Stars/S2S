@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_RADAR_TOWER"
+   "define": "ART_DEF_IMPROVEMENT_RADAR_TOWER"
   }
  },
  "mapGeneration": {

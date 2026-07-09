@@ -84,7 +84,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SISTINE_CHAPEL"
+   "define": "ART_DEF_BUILDING_SISTINE_CHAPEL"
   }
  },
  "identity": {

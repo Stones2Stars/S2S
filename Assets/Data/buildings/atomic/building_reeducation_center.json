@@ -83,7 +83,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_REEDUCATION_CENTER"
+   "define": "ART_DEF_BUILDING_REEDUCATION_CENTER"
   }
  },
  "identity": {

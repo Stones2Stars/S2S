@@ -73,6 +73,11 @@
   "production": 1000,
   "upkeep": 2
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PRE_DREADNOUGHT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PRE_DREADNOUGHT",
   "civilopedia": "TXT_KEY_UNIT_PRE_DREADNOUGHT_PEDIA",

@@ -150,7 +150,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FUNERARY_SERVICES"
+   "define": "ART_DEF_BUILDING_FUNERARY_SERVICES"
   }
  },
  "identity": {

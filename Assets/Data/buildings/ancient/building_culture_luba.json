@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_LUBA"
+   "define": "ART_DEF_BUILDING_CULTURE_LUBA"
   }
  },
  "identity": {

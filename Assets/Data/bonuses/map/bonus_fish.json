@@ -40,7 +40,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_FISH"
+   "define": "ART_DEF_BONUS_FISH"
   }
  },
  "mapGeneration": {

@@ -149,6 +149,11 @@
    "BUILDING_ZOO"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_POLARBEAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_POLARBEAR",
   "civilopedia": "TXT_KEY_UNIT_POLAR_BEAR_PEDIA",

@@ -145,7 +145,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PLASTIC_RECLAMATION_PLANT"
+   "define": "ART_DEF_BUILDING_PLASTIC_RECLAMATION_PLANT"
   }
  },
  "identity": {

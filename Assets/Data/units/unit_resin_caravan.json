@@ -94,6 +94,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RESIN_CARAVAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_RESIN_CARAVAN",
   "civilopedia": "TXT_KEY_UNIT_RESIN_CARAVAN_PEDIA",

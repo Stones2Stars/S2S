@@ -104,6 +104,11 @@
   "production": 250,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_UNDEAD_WORKER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_UNDEAD_WORKER",
   "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",

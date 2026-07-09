@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOUSING_IGLOOS"
+   "define": "ART_DEF_BUILDING_HOUSING_IGLOOS"
   }
  },
  "identity": {

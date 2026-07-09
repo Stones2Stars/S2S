@@ -145,6 +145,11 @@
   "production": 860,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TRENCH_CAVALRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TRENCH_CAVALRY",
   "civilopedia": "TXT_KEY_UNIT_TRENCH_CAVALRY_PEDIA",

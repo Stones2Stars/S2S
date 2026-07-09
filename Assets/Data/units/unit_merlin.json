@@ -77,6 +77,11 @@
   "upkeep": 1,
   "hurryCostModifier": 25
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MERLIN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MERLIN",
   "civilopedia": "TXT_KEY_UNIT_MERLIN_PEDIA",

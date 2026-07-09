@@ -49,6 +49,11 @@
   "production": 704,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NARAMSIN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NARAMSIN",
   "civilopedia": "TXT_KEY_UNIT_NARAMSIN_PEDIA",

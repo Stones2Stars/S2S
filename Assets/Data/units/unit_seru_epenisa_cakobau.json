@@ -49,6 +49,11 @@
   "production": 2520,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SERU_EPENISA_CAKOBAU"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SERU_EPENISA_CAKOBAU",
   "civilopedia": "TXT_KEY_UNIT_SERU_EPENISA_CAKOBAU_PEDIA",

@@ -75,6 +75,11 @@
   "production": 165,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MOTU_ARCHERS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MOTU_ARCHERS",
   "civilopedia": "TXT_KEY_UNIT_MOTU_ARCHERS_PEDIA",

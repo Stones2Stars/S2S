@@ -2,7 +2,7 @@
  "type": "BONUS_PHOENIX",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_PHOENIX"
+   "define": "ART_DEF_BONUS_PHOENIX"
   }
  },
  "identity": {

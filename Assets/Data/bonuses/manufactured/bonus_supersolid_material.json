@@ -9,7 +9,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SUPERSOLID_MATERIAL"
+   "define": "ART_DEF_BONUS_SUPERSOLID_MATERIAL"
   }
  },
  "identity": {

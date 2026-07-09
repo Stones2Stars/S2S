@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_UNMANNED_MARKET"
+   "define": "ART_DEF_BUILDING_UNMANNED_MARKET"
   }
  },
  "identity": {

@@ -97,7 +97,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TATTOOER"
+   "define": "ART_DEF_BUILDING_TATTOOER"
   }
  },
  "identity": {

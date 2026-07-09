@@ -30,7 +30,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_REGIONAL_PLANNING_COMMISSION"
+   "define": "ART_DEF_BUILDING_REGIONAL_PLANNING_COMMISSION"
   }
  },
  "identity": {

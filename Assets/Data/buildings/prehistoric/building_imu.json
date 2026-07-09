@@ -121,7 +121,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_IMU"
+   "define": "ART_DEF_BUILDING_IMU"
   }
  },
  "identity": {

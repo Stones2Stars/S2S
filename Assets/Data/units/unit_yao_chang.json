@@ -42,6 +42,11 @@
   "production": 1200,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_YAO_CHANG"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_YAO_CHANG",
   "civilopedia": "TXT_KEY_UNIT_YAO_CHANG_PEDIA",

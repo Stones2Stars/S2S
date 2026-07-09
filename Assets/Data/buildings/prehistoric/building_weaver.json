@@ -181,7 +181,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WEAVER"
+   "define": "ART_DEF_BUILDING_WEAVER"
   }
  },
  "identity": {

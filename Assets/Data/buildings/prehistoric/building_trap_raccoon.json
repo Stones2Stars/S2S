@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TRAP_RACCOON"
+   "define": "ART_DEF_BUILDING_TRAP_RACCOON"
   }
  },
  "identity": {

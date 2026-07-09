@@ -74,6 +74,11 @@
   "production": 7700,
   "upkeep": 16
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ASSAULT_MECH"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ASSAULT_MECH",
   "civilopedia": "TXT_KEY_UNIT_ASSAULT_MECH_PEDIA",

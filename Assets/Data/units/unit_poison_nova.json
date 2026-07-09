@@ -49,6 +49,11 @@
   "production": 5000,
   "upkeep": 21
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PLAGUE_BRINGER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_POISON_NOVA",
   "civilopedia": "TXT_KEY_UNIT_POISON_NOVA_PEDIA",

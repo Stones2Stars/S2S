@@ -77,7 +77,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FALCONRY_SCHOOL"
+   "define": "ART_DEF_BUILDING_FALCONRY_SCHOOL"
   }
  },
  "identity": {

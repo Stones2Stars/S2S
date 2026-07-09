@@ -115,7 +115,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MASADA"
+   "define": "ART_DEF_BUILDING_MASADA"
   }
  },
  "sound": {

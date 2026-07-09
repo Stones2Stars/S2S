@@ -87,7 +87,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FACTORY_RUBBER"
+   "define": "ART_DEF_BUILDING_FACTORY_RUBBER"
   }
  },
  "sound": {

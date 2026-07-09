@@ -76,6 +76,11 @@
   "production": 385,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SEPOY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SEPOY",
   "civilopedia": "TXT_KEY_UNIT_SEPOY_PEDIA",

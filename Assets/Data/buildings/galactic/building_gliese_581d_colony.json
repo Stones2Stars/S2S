@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GLIESE_581D_COLONY"
+   "define": "ART_DEF_BUILDING_GLIESE_581D_COLONY"
   }
  },
  "identity": {

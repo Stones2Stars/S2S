@@ -2,7 +2,7 @@
  "type": "BONUS_CANDY",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CANDY"
+   "define": "ART_DEF_BONUS_CANDY"
   }
  },
  "identity": {

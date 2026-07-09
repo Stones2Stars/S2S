@@ -77,7 +77,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NATIONAL_PARK"
+   "define": "ART_DEF_BUILDING_NATIONAL_PARK"
   }
  },
  "identity": {

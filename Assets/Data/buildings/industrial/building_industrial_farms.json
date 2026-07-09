@@ -240,7 +240,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INDUSTRIAL_FARMS"
+   "define": "ART_DEF_BUILDING_INDUSTRIAL_FARMS"
   }
  },
  "identity": {

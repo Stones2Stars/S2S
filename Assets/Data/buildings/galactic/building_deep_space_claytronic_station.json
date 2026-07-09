@@ -37,7 +37,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DEEP_SPACE_CLAYTRONIC_STATION"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_CLAYTRONIC_STATION"
   }
  },
  "identity": {

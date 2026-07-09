@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BEE_BOMBS"
+   "define": "ART_DEF_BUILDING_BEE_BOMBS"
   }
  },
  "identity": {

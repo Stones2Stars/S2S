@@ -158,6 +158,11 @@
   "production": 425,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ALVARADO_CAVALRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ALVARADO_CAVALRY",
   "civilopedia": "TXT_KEY_UNIT_ALVARADO_CAVALRY_PEDIA",

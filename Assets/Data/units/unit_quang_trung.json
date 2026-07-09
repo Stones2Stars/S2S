@@ -63,6 +63,11 @@
   "production": 2960,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_QUANG_TRUNG"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_QUANG_TRUNG",
   "civilopedia": "TXT_KEY_UNIT_QUANG_TRUNG_PEDIA",

@@ -125,7 +125,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SURGEONS_OFFICE"
+   "define": "ART_DEF_BUILDING_SURGEONS_OFFICE"
   }
  },
  "sound": {

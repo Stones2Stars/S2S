@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_CHACHAPOYA"
+   "define": "ART_DEF_BUILDING_CULTURE_CHACHAPOYA"
   }
  },
  "identity": {

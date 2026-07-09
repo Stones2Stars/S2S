@@ -87,7 +87,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LSD_LAB"
+   "define": "ART_DEF_BUILDING_LSD_LAB"
   }
  },
  "identity": {

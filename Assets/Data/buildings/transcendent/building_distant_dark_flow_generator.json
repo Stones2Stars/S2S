@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DISTANT_DARK_FLOW_GENERATOR"
+   "define": "ART_DEF_BUILDING_DISTANT_DARK_FLOW_GENERATOR"
   }
  },
  "identity": {

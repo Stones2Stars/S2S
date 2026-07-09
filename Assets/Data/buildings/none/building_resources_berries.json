@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RESOURCES_BERRIES"
+   "define": "ART_DEF_BUILDING_RESOURCES_BERRIES"
   }
  },
  "identity": {

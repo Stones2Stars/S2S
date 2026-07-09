@@ -83,7 +83,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_NGAI_BLESS"
+   "define": "ART_DEF_BUILDING_NGAI_BLESS"
   }
  },
  "sound": {

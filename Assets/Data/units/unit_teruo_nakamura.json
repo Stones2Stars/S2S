@@ -55,6 +55,11 @@
   "production": 4720,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TERUO_NAKAMURA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TERUO_NAKAMURA",
   "civilopedia": "TXT_KEY_UNIT_TERUO_NAKAMURA_PEDIA",

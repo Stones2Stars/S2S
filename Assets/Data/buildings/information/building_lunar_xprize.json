@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LUNAR_XPRIZE"
+   "define": "ART_DEF_BUILDING_LUNAR_XPRIZE"
   }
  },
  "identity": {

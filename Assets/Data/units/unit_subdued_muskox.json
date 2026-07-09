@@ -151,6 +151,11 @@
    "BUILDING_ZOO"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MUSKOX"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_MUSKOX",
   "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",

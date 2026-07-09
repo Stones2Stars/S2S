@@ -115,7 +115,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CHRISTIAN_MONASTERY"
+   "define": "ART_DEF_BUILDING_CHRISTIAN_MONASTERY"
   }
  },
  "sound": {

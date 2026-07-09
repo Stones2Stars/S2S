@@ -86,6 +86,11 @@
   "production": 455,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PANGCAH_IMPANTERYA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PANGCAH_IMPANTERYA",
   "civilopedia": "TXT_KEY_UNIT_PANGCAH_IMPANTERYA_PEDIA",

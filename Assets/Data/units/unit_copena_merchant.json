@@ -95,6 +95,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_COPENA_MERCHANT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_COPENA_MERCHANT",
   "civilopedia": "TXT_KEY_UNIT_COPENA_MERCHANT_PEDIA",

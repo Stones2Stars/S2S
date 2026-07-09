@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FARM_ANIMAL_HORSE"
+   "define": "ART_DEF_BUILDING_FARM_ANIMAL_HORSE"
   }
  },
  "sound": {

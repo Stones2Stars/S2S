@@ -18,6 +18,11 @@
    "BUILDING_FOLKLORE_T_SHARKS"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TALESOF_HAMMERHEAD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TALESOF_HAMMERHEAD",
   "civilopedia": "TXT_KEY_UNIT_HAMMERHEAD_SHARK_PEDIA",

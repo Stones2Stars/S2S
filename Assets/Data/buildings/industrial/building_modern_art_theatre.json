@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MODERN_ART_THEATRE"
+   "define": "ART_DEF_BUILDING_MODERN_ART_THEATRE"
   }
  },
  "sound": {

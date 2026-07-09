@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HEATING_AND_COOLING_DISTRICT"
+   "define": "ART_DEF_BUILDING_HEATING_AND_COOLING_DISTRICT"
   }
  },
  "identity": {

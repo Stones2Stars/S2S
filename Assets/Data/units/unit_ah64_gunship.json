@@ -76,6 +76,11 @@
   "production": 1475,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AH64_GUNSHIP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_AH64_GUNSHIP",
   "civilopedia": "TXT_KEY_UNIT_GUNSHIP_PEDIA",

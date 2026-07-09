@@ -121,7 +121,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BOOBY_TRAPS"
+   "define": "ART_DEF_BUILDING_BOOBY_TRAPS"
   }
  },
  "sound": {

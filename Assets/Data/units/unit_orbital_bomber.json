@@ -92,6 +92,11 @@
   "production": 4900,
   "upkeep": 16
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ORBITAL_BOMBER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ORBITAL_BOMBER",
   "civilopedia": "TXT_KEY_UNIT_ORBITAL_BOMBER_PEDIA",

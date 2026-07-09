@@ -97,6 +97,11 @@
   "production": 470,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_UJEN_CHOOHA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_UJEN_CHOOHA",
   "civilopedia": "TXT_KEY_UNIT_UJEN_CHOOHA_PEDIA",

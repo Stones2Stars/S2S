@@ -23,7 +23,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_PLANT_BAMBOO"
+   "define": "ART_DEF_IMPROVEMENT_PLANT_BAMBOO"
   }
  },
  "identity": {

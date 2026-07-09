@@ -67,6 +67,11 @@
   "production": 290,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ORDER_OF_THE_DRAGON"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_ORDER_OF_THE_DRAGON",
   "civilopedia": "TXT_KEY_UNIT_ORDER_OF_THE_DRAGON_PEDIA",

@@ -44,7 +44,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYPERSPACE_OPEN_FRW_UNIVERSE"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_OPEN_FRW_UNIVERSE"
   }
  },
  "identity": {

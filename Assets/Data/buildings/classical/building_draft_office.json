@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DRAFT_OFFICE"
+   "define": "ART_DEF_BUILDING_DRAFT_OFFICE"
   }
  },
  "sound": {

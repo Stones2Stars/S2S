@@ -95,6 +95,11 @@
  "cost": {
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FUSION_CARRIER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MASTER_SAILOR_FUSION_CARRIER",
   "civilopedia": "TXT_KEY_UNIT_FUSION_CARRIER_PEDIA",

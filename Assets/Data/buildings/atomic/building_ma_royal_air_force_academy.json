@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MA_ROYAL_AIR_FORCE_ACADEMY"
+   "define": "ART_DEF_BUILDING_MA_ROYAL_AIR_FORCE_ACADEMY"
   }
  },
  "identity": {

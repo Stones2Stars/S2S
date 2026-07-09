@@ -56,7 +56,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HQ_MALLWART"
+   "define": "ART_DEF_BUILDING_HQ_MALLWART"
   }
  },
  "sound": {

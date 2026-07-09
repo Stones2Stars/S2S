@@ -33,7 +33,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_RESIN"
+   "define": "ART_DEF_BONUS_RESIN"
   }
  },
  "mapGeneration": {

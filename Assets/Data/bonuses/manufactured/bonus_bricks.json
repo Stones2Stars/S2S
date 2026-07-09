@@ -165,7 +165,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_BRICKS"
+   "define": "ART_DEF_BONUS_BRICKS"
   }
  },
  "identity": {

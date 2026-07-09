@@ -85,7 +85,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_UNESCO_HERITAGE_SITE"
+   "define": "ART_DEF_BUILDING_UNESCO_HERITAGE_SITE"
   }
  },
  "identity": {

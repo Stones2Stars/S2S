@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FARM_CROP_WHITE_MUSHROOM"
+   "define": "ART_DEF_BUILDING_FARM_CROP_WHITE_MUSHROOM"
   }
  },
  "identity": {

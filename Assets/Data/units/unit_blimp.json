@@ -58,6 +58,11 @@
   "production": 645,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BLIMP"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BLIMP",
   "civilopedia": "TXT_KEY_UNIT_BLIMP_PEDIA",

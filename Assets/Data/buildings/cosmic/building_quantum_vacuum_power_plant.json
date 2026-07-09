@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_QUANTUM_VACUUM_POWER_PLANT"
+   "define": "ART_DEF_BUILDING_QUANTUM_VACUUM_POWER_PLANT"
   }
  },
  "identity": {

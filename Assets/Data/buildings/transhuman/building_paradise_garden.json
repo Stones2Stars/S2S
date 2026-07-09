@@ -75,7 +75,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PARADISE"
+   "define": "ART_DEF_BUILDING_PARADISE"
   }
  },
  "sound": {

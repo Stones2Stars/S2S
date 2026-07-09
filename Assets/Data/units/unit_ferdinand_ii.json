@@ -48,6 +48,11 @@
   "production": 1424,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FERDINAND_II"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FERDINAND_II",
   "civilopedia": "TXT_KEY_UNIT_FERDINAND_II_PEDIA",

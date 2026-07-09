@@ -119,7 +119,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ISLAMIC_MOSQUE"
+   "define": "ART_DEF_BUILDING_ISLAMIC_MOSQUE"
   }
  },
  "sound": {

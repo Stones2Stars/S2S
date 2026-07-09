@@ -88,7 +88,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THREE_GORGES_DAM"
+   "define": "ART_DEF_BUILDING_THREE_GORGES_DAM"
   }
  },
  "identity": {

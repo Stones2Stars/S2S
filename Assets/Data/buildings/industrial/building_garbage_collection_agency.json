@@ -99,7 +99,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GARBAGE_COLLECTION_AGENCY"
+   "define": "ART_DEF_BUILDING_GARBAGE_COLLECTION_AGENCY"
   }
  },
  "sound": {

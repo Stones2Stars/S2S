@@ -114,6 +114,11 @@
   "production": 3580,
   "upkeep": 14
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_POLICE_MECH"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_POLICE_MECH",
   "civilopedia": "TXT_KEY_UNIT_POLICE_MECH_PEDIA",

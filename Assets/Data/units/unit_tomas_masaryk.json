@@ -56,6 +56,11 @@
   "production": 2320,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TOMAS_MASARYK"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TOMAS_MASARYK",
   "civilopedia": "TXT_KEY_UNIT_TOMAS_MASARYK_PEDIA",

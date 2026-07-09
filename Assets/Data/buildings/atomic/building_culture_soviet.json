@@ -73,7 +73,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_SOVIET"
+   "define": "ART_DEF_BUILDING_CULTURE_SOVIET"
   }
  },
  "identity": {

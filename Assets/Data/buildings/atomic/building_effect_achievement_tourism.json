@@ -22,7 +22,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ACHIEVEMENT_TOURISM_EFFECT"
+   "define": "ART_DEF_BUILDING_ACHIEVEMENT_TOURISM_EFFECT"
   }
  },
  "identity": {

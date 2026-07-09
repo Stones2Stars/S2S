@@ -44,6 +44,11 @@
   "production": 1640,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PEDRO_DE_ALVARADO"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PEDRO_DE_ALVARADO",
   "civilopedia": "TXT_KEY_UNIT_PEDRO_DE_ALVARADO_PEDIA",

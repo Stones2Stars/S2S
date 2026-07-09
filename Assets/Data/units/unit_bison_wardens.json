@@ -76,6 +76,11 @@
   "production": 295,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BISON_WARDENS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BISON_WARDENS",
   "civilopedia": "TXT_KEY_UNIT_BISON_WARDENS_PEDIA",

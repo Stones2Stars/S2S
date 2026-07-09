@@ -47,6 +47,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HAAST_EAGLE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HAAST_EAGLE",
   "civilopedia": "TXT_KEY_UNIT_HAAST_EAGLE_PEDIA",

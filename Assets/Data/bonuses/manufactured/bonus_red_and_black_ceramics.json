@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_RED_AND_BLACK_CERAMICS"
+   "define": "ART_DEF_BONUS_RED_AND_BLACK_CERAMICS"
   }
  },
  "identity": {

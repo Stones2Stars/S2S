@@ -78,6 +78,11 @@
   "production": 1600,
   "upkeep": 5
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MODERN_INTERCEPTOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_STRIKE_FIGHTER",
   "civilopedia": "TXT_KEY_UNIT_STRIKE_FIGHTER_PEDIA",

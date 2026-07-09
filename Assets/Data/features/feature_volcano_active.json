@@ -28,7 +28,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_VOLCANO_ACTIVE"
+   "define": "ART_DEF_FEATURE_VOLCANO_ACTIVE"
   }
  },
  "sound": {

@@ -9,9 +9,6 @@
   "unit": {
    "space": {
     "flat": 1
-   },
-   "smSpace": {
-    "flat": 3
    }
   }
  },
@@ -26,6 +23,11 @@
  },
  "sound": {
   "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "cargo": {
+   "smSpace": 3
+  }
  },
  "identity": {
   "description": "TXT_KEY_PROMOTION_TRANSPORT_MISSILES2"

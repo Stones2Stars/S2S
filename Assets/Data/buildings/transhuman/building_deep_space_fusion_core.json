@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DEEP_SPACE_FUSION_CORE"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_FUSION_CORE"
   }
  },
  "identity": {

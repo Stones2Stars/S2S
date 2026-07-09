@@ -86,6 +86,11 @@
   "production": 990,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GUDARI"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GUDARI",
   "civilopedia": "TXT_KEY_UNIT_GUDARI_PEDIA",

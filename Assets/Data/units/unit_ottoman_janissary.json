@@ -93,6 +93,11 @@
   "production": 385,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_OTTOMAN_JANISSARY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_OTTOMAN_JANISSARY",
   "civilopedia": "TXT_KEY_UNIT_OTTOMAN_JANISSARY_PEDIA",

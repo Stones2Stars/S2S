@@ -41,7 +41,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_AI_SINGLETON"
+   "define": "ART_DEF_BUILDING_AI_SINGLETON"
   }
  },
  "identity": {

@@ -111,6 +111,11 @@
   "production": 155,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MOUND_GUARDIAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MOUND_GUARDIAN",
   "civilopedia": "TXT_KEY_UNIT_MOUND_GUARDIAN_PEDIA",

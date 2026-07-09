@@ -49,6 +49,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SEAEAGLE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_SEAEAGLE",
   "civilopedia": "TXT_KEY_UNIT_SEAEAGLE_PEDIA",

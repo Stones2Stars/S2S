@@ -75,6 +75,11 @@
   "production": 260,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PHOENICAN_BIREME"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PHOENICAN_BIREME",
   "civilopedia": "TXT_KEY_UNIT_PHOENICAN_BIREME_PEDIA",

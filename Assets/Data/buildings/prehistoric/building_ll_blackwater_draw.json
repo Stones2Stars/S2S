@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LL_BLACKWATER_DRAW"
+   "define": "ART_DEF_BUILDING_LL_BLACKWATER_DRAW"
   }
  },
  "identity": {

@@ -98,6 +98,11 @@
   "production": 275,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KOREAN_HWACHA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KOREAN_HWACHA",
   "civilopedia": "TXT_KEY_UNIT_KOREAN_HWACHA_PEDIA",

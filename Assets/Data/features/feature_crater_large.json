@@ -16,7 +16,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_CRATER_LARGE"
+   "define": "ART_DEF_FEATURE_CRATER_LARGE"
   }
  },
  "sound": {

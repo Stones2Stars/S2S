@@ -2,7 +2,7 @@
  "type": "BONUS_CHAOS_WANDS",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CHAOS_WANDS"
+   "define": "ART_DEF_BONUS_CHAOS_WANDS"
   }
  },
  "identity": {

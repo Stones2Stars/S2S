@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERROGATION_CHAIR"
+   "define": "ART_DEF_BUILDING_INTERROGATION_CHAIR"
   }
  },
  "sound": {

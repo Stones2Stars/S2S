@@ -98,7 +98,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_COMMERCIAL_SPACEPORT"
+   "define": "ART_DEF_BUILDING_COMMERCIAL_SPACEPORT"
   }
  },
  "sound": {

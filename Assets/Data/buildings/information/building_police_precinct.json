@@ -163,7 +163,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_POLICE_PRECINCT"
+   "define": "ART_DEF_BUILDING_POLICE_PRECINCT"
   }
  },
  "identity": {

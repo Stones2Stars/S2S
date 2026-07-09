@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LUNAR_OBSERVATORY"
+   "define": "ART_DEF_BUILDING_LUNAR_OBSERVATORY"
   }
  },
  "identity": {

@@ -96,7 +96,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ULTIMATE_SOLDIERS_TRAINER"
+   "define": "ART_DEF_BUILDING_ULTIMATE_SOLDIERS_TRAINER"
   }
  },
  "sound": {

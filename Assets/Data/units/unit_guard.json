@@ -127,6 +127,11 @@
   "production": 330,
   "upkeep": 5
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GUARD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GUARD",
   "civilopedia": "TXT_KEY_UNIT_GUARD_PEDIA",

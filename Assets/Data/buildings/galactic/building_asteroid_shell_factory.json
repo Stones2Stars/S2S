@@ -44,7 +44,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ASTEROID_SHELL_FACTORY"
+   "define": "ART_DEF_BUILDING_ASTEROID_SHELL_FACTORY"
   }
  },
  "identity": {

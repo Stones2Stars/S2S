@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EXOTIC_ARCHITECTURE"
+   "define": "ART_DEF_BUILDING_EXOTIC_ARCHITECTURE"
   }
  },
  "identity": {

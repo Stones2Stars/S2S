@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ADVANCED_NEUROIMPLANT_EXPORTER"
+   "define": "ART_DEF_BUILDING_ADVANCED_NEUROIMPLANT_EXPORTER"
   }
  },
  "identity": {

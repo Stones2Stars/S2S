@@ -62,6 +62,11 @@
   "production": 936,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HUANTAR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HUANTAR",
   "civilopedia": "TXT_KEY_UNIT_HUANTAR_PEDIA",

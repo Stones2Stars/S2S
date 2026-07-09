@@ -71,6 +71,11 @@
   "production": 295,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BOLA_HUNTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_BOLA_HUNTER",
   "civilopedia": "TXT_KEY_UNIT_BOLA_HUNTER_PEDIA",

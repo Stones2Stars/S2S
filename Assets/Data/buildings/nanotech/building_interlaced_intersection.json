@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERLACED_INTERSECTION"
+   "define": "ART_DEF_BUILDING_INTERLACED_INTERSECTION"
   }
  },
  "identity": {

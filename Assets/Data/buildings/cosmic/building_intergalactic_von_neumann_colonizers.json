@@ -53,7 +53,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_VON_NEUMANN_COLONIZERS"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_VON_NEUMANN_COLONIZERS"
   }
  },
  "identity": {

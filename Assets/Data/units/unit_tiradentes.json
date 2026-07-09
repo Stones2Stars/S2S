@@ -62,6 +62,11 @@
   "production": 2060,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TIRADENTES"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TIRADENTES",
   "civilopedia": "TXT_KEY_UNIT_TIRADENTES_PEDIA",

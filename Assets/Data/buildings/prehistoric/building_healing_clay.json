@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HEALING_CLAY"
+   "define": "ART_DEF_BUILDING_HEALING_CLAY"
   }
  },
  "identity": {

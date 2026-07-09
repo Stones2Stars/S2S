@@ -167,6 +167,11 @@
   "production": 950,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SAUD_CAVALRY"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SAUD_CAVALRY",
   "civilopedia": "TXT_KEY_UNIT_SAUD_CAVALRY_PEDIA",

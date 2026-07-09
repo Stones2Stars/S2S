@@ -28,7 +28,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_ORBITAL_MIRROR_ARRAY"
+   "define": "ART_DEF_BUILDING_MARTIAN_ORBITAL_MIRROR_ARRAY"
   }
  },
  "identity": {

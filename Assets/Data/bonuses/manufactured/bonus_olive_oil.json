@@ -20,7 +20,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_OLIVE_OIL"
+   "define": "ART_DEF_BONUS_OLIVE_OIL"
   }
  },
  "identity": {

@@ -29,7 +29,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_TERRAIN_COAST_TROPICAL"
+   "define": "ART_DEF_TERRAIN_COAST_TROPICAL"
   }
  },
  "sound": {

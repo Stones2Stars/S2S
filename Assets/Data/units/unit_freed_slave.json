@@ -40,6 +40,11 @@
  "cost": {
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SLAVE_GATHERER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_FREED_SLAVE",
   "civilopedia": "TXT_KEY_UNIT_FREED_SLAVE_PEDIA",

@@ -59,7 +59,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_DYSON_SWARM"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_DYSON_SWARM"
   }
  },
  "identity": {

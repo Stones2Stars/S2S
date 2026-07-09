@@ -113,7 +113,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THE_GREAT_SPHINX"
+   "define": "ART_DEF_BUILDING_THE_GREAT_SPHINX"
   }
  },
  "sound": {

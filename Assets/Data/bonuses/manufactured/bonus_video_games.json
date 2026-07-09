@@ -10,7 +10,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_VIDEO_GAMES"
+   "define": "ART_DEF_BONUS_VIDEO_GAMES"
   }
  },
  "identity": {

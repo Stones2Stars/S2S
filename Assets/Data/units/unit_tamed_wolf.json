@@ -59,6 +59,11 @@
  "cost": {
   "production": 133
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TAMED_WOLF"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_TAMED_WOLF",
   "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",

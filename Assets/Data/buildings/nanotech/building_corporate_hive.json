@@ -32,7 +32,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CORPORATE_HIVE"
+   "define": "ART_DEF_BUILDING_CORPORATE_HIVE"
   }
  },
  "identity": {

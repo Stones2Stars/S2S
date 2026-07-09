@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THE_MOTHERLAND_CALLS"
+   "define": "ART_DEF_BUILDING_THE_MOTHERLAND_CALLS"
   }
  },
  "identity": {

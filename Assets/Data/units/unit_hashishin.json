@@ -165,6 +165,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HASHISHIN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HASHISHIN",
   "civilopedia": "TXT_KEY_UNIT_HASHISHIN_PEDIA",

@@ -47,7 +47,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_FEATURE_FOREST_ANCIENT",
+   "define": "ART_DEF_FEATURE_FOREST_ANCIENT",
    "effect": {
     "type": "EFFECT_BIRDSCATTER",
     "probability": 15

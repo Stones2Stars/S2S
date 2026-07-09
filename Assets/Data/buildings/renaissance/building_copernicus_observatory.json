@@ -112,7 +112,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_COPERNICUS"
+   "define": "ART_DEF_BUILDING_COPERNICUS"
   }
  },
  "sound": {

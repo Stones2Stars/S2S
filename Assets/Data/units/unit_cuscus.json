@@ -43,6 +43,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CUSCUS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_CUSCUS",
   "civilopedia": "TXT_KEY_UNIT_CUSCUS_PEDIA",

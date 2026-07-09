@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TEA_CEREMONY"
+   "define": "ART_DEF_BUILDING_TEA_CEREMONY"
   }
  },
  "identity": {

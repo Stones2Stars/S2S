@@ -43,7 +43,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_VISION_QUEST"
+   "define": "ART_DEF_BUILDING_VISION_QUEST"
   }
  },
  "identity": {

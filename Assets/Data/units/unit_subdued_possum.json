@@ -36,6 +36,11 @@
    "BUILDING_TAXIDERMIST"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_POSSUM"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_POSSUM",
   "civilopedia": "TXT_KEY_UNIT_POSSUM_PEDIA",

@@ -93,7 +93,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DIVE_BAR"
+   "define": "ART_DEF_BUILDING_DIVE_BAR"
   }
  },
  "identity": {

@@ -69,6 +69,11 @@
   "production": 325,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_OMUCHTAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_OMUCHTAN",
   "civilopedia": "TXT_KEY_UNIT_OMUCHTAN_PEDIA",

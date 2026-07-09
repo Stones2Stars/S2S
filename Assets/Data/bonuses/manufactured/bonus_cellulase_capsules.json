@@ -2,7 +2,7 @@
  "type": "BONUS_CELLULASE_CAPSULES",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_CELLULASE_CAPSULES"
+   "define": "ART_DEF_BONUS_CELLULASE_CAPSULES"
   }
  },
  "identity": {

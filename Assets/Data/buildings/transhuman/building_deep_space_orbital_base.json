@@ -104,7 +104,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DEEP_SPACE_ORBITAL_BASE"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_ORBITAL_BASE"
   }
  },
  "identity": {

@@ -34,6 +34,11 @@
   "production": 773,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MACHETE_WARRIOR"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MACHETE_WARRIOR",
   "civilopedia": "TXT_KEY_UNIT_APOCALYPSE_URBAN_CROSSBOWMAN_PEDIA",

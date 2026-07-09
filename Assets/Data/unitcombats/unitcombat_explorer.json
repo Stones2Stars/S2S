@@ -4,9 +4,6 @@
   "unit": {
    "damageModifier": {
     "percent": -15
-   },
-   "perVolumeMore": {
-    "percent": -5
    }
   }
  },
@@ -25,6 +22,11 @@
    "INVISIBLE_SUBMARINE": 2,
    "INVISIBLE_DISGUISED": 1,
    "INVISIBLE_CAMOUFLAGE": 1
+  }
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perVolumeMore": -5
   }
  },
  "ui": {

@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RESOURCES_SEASONING"
+   "define": "ART_DEF_BUILDING_RESOURCES_SEASONING"
   }
  },
  "identity": {

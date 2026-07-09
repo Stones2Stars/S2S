@@ -110,7 +110,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SPACE_ELEVATOR"
+   "define": "ART_DEF_BUILDING_SPACE_ELEVATOR"
   }
  },
  "identity": {

@@ -76,6 +76,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DUGONG"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_DUGONG",
   "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",

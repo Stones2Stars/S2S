@@ -75,7 +75,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GROVE_ACACIA"
+   "define": "ART_DEF_BUILDING_GROVE_ACACIA"
   }
  },
  "identity": {

@@ -52,7 +52,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HERD_MAMMOTH"
+   "define": "ART_DEF_BUILDING_HERD_MAMMOTH"
   }
  },
  "sound": {

@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_AFRICAN"
+   "define": "ART_DEF_BUILDING_CULTURE_AFRICAN"
   }
  },
  "identity": {

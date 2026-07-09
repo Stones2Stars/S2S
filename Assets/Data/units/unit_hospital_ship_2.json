@@ -95,6 +95,11 @@
   "production": 1200,
   "upkeep": 5
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HOSPITAL_SHIP2"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HOSPITAL_SHIP_2",
   "civilopedia": "TXT_KEY_UNIT_HOSPITAL_SHIP_PEDIA",

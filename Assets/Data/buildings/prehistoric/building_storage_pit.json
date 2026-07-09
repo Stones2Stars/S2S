@@ -102,7 +102,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_STORAGE_PIT"
+   "define": "ART_DEF_BUILDING_STORAGE_PIT"
   }
  },
  "identity": {

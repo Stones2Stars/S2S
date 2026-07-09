@@ -78,7 +78,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TOKYO_SKY_TREE"
+   "define": "ART_DEF_BUILDING_TOKYO_SKY_TREE"
   }
  },
  "identity": {

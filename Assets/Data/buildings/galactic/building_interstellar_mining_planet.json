@@ -46,7 +46,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_MINING_PLANET"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_MINING_PLANET"
   }
  },
  "identity": {

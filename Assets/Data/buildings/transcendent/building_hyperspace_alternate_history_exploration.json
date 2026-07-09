@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYPERSPACE_ALTERNATE_HISTORY_EXPLORATION"
+   "define": "ART_DEF_BUILDING_HYPERSPACE_ALTERNATE_HISTORY_EXPLORATION"
   }
  },
  "identity": {

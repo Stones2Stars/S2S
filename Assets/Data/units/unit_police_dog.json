@@ -85,6 +85,11 @@
   "production": 601,
   "upkeep": 3
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_POLICEDOG"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_POLICE_DOG",
   "civilopedia": "TXT_KEY_UNIT_POLICE_DOG_PEDIA",

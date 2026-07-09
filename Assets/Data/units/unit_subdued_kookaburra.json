@@ -35,6 +35,11 @@
    "BUILDING_FOLKLORE_KOOKABURRA"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KOOKABURRA"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_KOOKABURRA",
   "civilopedia": "TXT_KEY_UNIT_KOOKABURRA_PEDIA",

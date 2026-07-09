@@ -42,6 +42,11 @@
  "cost": {
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NEPTUNE_REWARD"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NEPTUNE_REWARD",
   "civilopedia": "TXT_KEY_UNIT_NEPTUNE_REWARD_PEDIA",

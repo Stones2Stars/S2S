@@ -68,7 +68,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_SAFETY_GREAT_FIREWALL"
+   "define": "ART_DEF_BUILDING_SAFETY_GREAT_FIREWALL"
   }
  },
  "identity": {

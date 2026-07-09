@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_ELECTRUM_WARES"
+   "define": "ART_DEF_BONUS_ELECTRUM_WARES"
   }
  },
  "identity": {

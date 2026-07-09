@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_BUFFALO_JUMP"
+   "define": "ART_DEF_BUILDING_BUFFALO_JUMP"
   }
  },
  "identity": {

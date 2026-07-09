@@ -39,6 +39,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PUFFADDER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PUFFADDER",
   "civilopedia": "TXT_KEY_UNIT_PUFFADDER_PEDIA",

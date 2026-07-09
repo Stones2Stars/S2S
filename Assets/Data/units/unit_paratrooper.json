@@ -59,6 +59,11 @@
   "production": 1230,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PARATROOPER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PARATROOPER",
   "civilopedia": "TXT_KEY_UNIT_PARATROOPER_PEDIA",

@@ -48,7 +48,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_RECRUITMENT_CENTER"
+   "define": "ART_DEF_BUILDING_RECRUITMENT_CENTER"
   }
  },
  "identity": {

@@ -58,7 +58,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CENTER_FOR_NANOTECH_SAFETY"
+   "define": "ART_DEF_BUILDING_CENTER_FOR_NANOTECH_SAFETY"
   }
  },
  "identity": {

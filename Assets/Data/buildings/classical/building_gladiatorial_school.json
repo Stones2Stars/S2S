@@ -71,7 +71,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GLADIATORIAL_SCHOOL"
+   "define": "ART_DEF_BUILDING_GLADIATORIAL_SCHOOL"
   }
  },
  "identity": {

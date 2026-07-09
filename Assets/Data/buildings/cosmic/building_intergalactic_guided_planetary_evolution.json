@@ -33,7 +33,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_GUIDED_PLANETARY_EVOLUTION"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_GUIDED_PLANETARY_EVOLUTION"
   }
  },
  "identity": {

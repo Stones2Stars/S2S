@@ -49,6 +49,11 @@
   "production": 392,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KHYAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_KHYAN",
   "civilopedia": "TXT_KEY_UNIT_KHYAN_PEDIA",

@@ -108,6 +108,11 @@
   "production": 455,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PRIVATEER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_PRIVATEER",
   "civilopedia": "TXT_KEY_UNIT_PRIVATEER_PEDIA",

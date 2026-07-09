@@ -50,7 +50,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERSTELLAR_CAPTURED_NEUTRON_STARS"
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CAPTURED_NEUTRON_STARS"
   }
  },
  "identity": {

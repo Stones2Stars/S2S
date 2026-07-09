@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_OORT_CLOUD_SOLAR_ARRAY"
+   "define": "ART_DEF_BUILDING_OORT_CLOUD_SOLAR_ARRAY"
   }
  },
  "identity": {

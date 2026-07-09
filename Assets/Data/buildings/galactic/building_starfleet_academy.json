@@ -59,7 +59,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_STARFLEET_ACADEMY"
+   "define": "ART_DEF_BUILDING_STARFLEET_ACADEMY"
   }
  },
  "identity": {

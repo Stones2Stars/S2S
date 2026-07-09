@@ -91,7 +91,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WIND_WATER_PUMP"
+   "define": "ART_DEF_BUILDING_WIND_WATER_PUMP"
   }
  },
  "identity": {

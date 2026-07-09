@@ -148,6 +148,11 @@
    "BUILDING_ZOO"
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BOAR_NEW"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SUBDUED_BOAR",
   "civilopedia": "TXT_KEY_UNIT_BOAR_PEDIA",

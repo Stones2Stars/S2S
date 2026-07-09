@@ -20,7 +20,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HEAVY_WATER"
+   "define": "ART_DEF_BONUS_HEAVY_WATER"
   }
  },
  "identity": {

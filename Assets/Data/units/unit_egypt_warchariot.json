@@ -81,6 +81,11 @@
   "production": 175,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_EGYPT_WARCHARIOT"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_EGYPT_WARCHARIOT",
   "civilopedia": "TXT_KEY_UNIT_EGYPT_WARCHARIOT_PEDIA",

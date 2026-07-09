@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LIBRARY_OF_NINEVEH"
+   "define": "ART_DEF_BUILDING_LIBRARY_OF_NINEVEH"
   }
  },
  "identity": {

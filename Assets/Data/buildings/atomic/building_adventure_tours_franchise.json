@@ -101,7 +101,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ADVENTURE_TOURS_FRANCHISE"
+   "define": "ART_DEF_BUILDING_ADVENTURE_TOURS_FRANCHISE"
   }
  },
  "sound": {

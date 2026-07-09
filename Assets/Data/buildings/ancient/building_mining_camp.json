@@ -215,7 +215,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MINING_CAMP"
+   "define": "ART_DEF_BUILDING_MINING_CAMP"
   }
  },
  "identity": {

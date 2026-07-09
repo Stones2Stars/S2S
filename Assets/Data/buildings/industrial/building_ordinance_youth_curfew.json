@@ -38,7 +38,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ORDINANCE_YOUTH_CURFEW"
+   "define": "ART_DEF_BUILDING_ORDINANCE_YOUTH_CURFEW"
   }
  },
  "sound": {

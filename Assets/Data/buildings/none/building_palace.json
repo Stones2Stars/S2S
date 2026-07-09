@@ -184,7 +184,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_PALACE"
+   "define": "ART_DEF_BUILDING_PALACE"
   }
  },
  "identity": {

@@ -61,6 +61,11 @@
   "production": 2006,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GUIDED_MISSILE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GUIDED_MISSILE",
   "civilopedia": "TXT_KEY_UNIT_GUIDED_MISSILE_PEDIA",

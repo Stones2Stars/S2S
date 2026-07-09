@@ -64,7 +64,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_THIEVES_HIDEOUT"
+   "define": "ART_DEF_BUILDING_THIEVES_HIDEOUT"
   }
  },
  "identity": {

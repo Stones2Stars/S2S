@@ -49,7 +49,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CULTURE_YEMENI"
+   "define": "ART_DEF_BUILDING_CULTURE_YEMENI"
   }
  },
  "identity": {

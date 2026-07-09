@@ -42,7 +42,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DEEP_SPACE_RECONNAISSANCE"
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_RECONNAISSANCE"
   }
  },
  "identity": {

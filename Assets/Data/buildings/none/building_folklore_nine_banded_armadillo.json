@@ -75,7 +75,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FOLKLORE_NINE_BANDED_ARMADILLO"
+   "define": "ART_DEF_BUILDING_FOLKLORE_NINE_BANDED_ARMADILLO"
   }
  },
  "identity": {

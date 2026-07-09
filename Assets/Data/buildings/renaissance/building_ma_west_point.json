@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MA_WEST_POINT"
+   "define": "ART_DEF_BUILDING_MA_WEST_POINT"
   }
  },
  "sound": {

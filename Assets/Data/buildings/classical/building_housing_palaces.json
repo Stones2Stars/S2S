@@ -82,7 +82,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOUSING_PALACES"
+   "define": "ART_DEF_BUILDING_HOUSING_PALACES"
   }
  },
  "identity": {

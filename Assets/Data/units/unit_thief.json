@@ -168,6 +168,11 @@
    }
   ]
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_THIEF"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_THIEF",
   "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",

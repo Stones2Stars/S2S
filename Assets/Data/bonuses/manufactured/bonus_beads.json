@@ -7,7 +7,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_BEADS"
+   "define": "ART_DEF_BONUS_BEADS"
   }
  },
  "identity": {

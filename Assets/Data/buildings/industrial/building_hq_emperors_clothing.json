@@ -51,7 +51,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HQ_EMPERORS_CLOTHING"
+   "define": "ART_DEF_BUILDING_HQ_EMPERORS_CLOTHING"
   }
  },
  "sound": {

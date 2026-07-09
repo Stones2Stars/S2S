@@ -54,7 +54,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_IMPROVEMENT_INTERSTELLAR_COLONY"
+   "define": "ART_DEF_IMPROVEMENT_INTERSTELLAR_COLONY"
   }
  },
  "identity": {

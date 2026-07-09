@@ -84,7 +84,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MODERN_STABLE"
+   "define": "ART_DEF_BUILDING_MODERN_STABLE"
   }
  },
  "sound": {

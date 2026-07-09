@@ -61,7 +61,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_CLOUD_SERVER"
+   "define": "ART_DEF_BUILDING_CLOUD_SERVER"
   }
  },
  "identity": {

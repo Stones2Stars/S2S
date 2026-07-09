@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS"
+   "define": "ART_DEF_BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS"
   }
  },
  "identity": {

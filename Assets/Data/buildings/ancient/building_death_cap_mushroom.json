@@ -79,7 +79,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_DEATH_CAP_MUSHROOM"
+   "define": "ART_DEF_BUILDING_DEATH_CAP_MUSHROOM"
   }
  },
  "identity": {

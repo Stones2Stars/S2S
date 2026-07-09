@@ -30,7 +30,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_EMANCIPATION_PROCLAMATION"
+   "define": "ART_DEF_BUILDING_EMANCIPATION_PROCLAMATION"
   }
  },
  "identity": {

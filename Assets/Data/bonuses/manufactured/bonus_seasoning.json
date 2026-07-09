@@ -2,7 +2,7 @@
  "type": "BONUS_SEASONING",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_SEASONING"
+   "define": "ART_DEF_BONUS_SEASONING"
   }
  },
  "identity": {

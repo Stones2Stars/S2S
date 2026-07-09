@@ -40,7 +40,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM"
+   "define": "ART_DEF_BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM"
   }
  },
  "identity": {

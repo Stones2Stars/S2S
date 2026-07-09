@@ -49,6 +49,11 @@
   "production": 2520,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_OHIGGINS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_OHIGGINS",
   "civilopedia": "TXT_KEY_UNIT_OHIGGINS_PEDIA",

@@ -217,7 +217,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_FARM_NANOBOT_CONTROL_CENTER"
+   "define": "ART_DEF_BUILDING_FARM_NANOBOT_CONTROL_CENTER"
   }
  },
  "identity": {

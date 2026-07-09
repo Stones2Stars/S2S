@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_WIRELESS_ELECTRIC_FENCE"
+   "define": "ART_DEF_BUILDING_WIRELESS_ELECTRIC_FENCE"
   }
  },
  "sound": {

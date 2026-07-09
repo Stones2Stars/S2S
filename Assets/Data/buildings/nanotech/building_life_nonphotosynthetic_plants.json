@@ -43,7 +43,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_LIFE_NONPHOTOSYNTHETIC_PLANTS"
+   "define": "ART_DEF_BUILDING_LIFE_NONPHOTOSYNTHETIC_PLANTS"
   }
  },
  "identity": {

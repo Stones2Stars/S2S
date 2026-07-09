@@ -159,6 +159,11 @@
   "production": 630,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MAMBISE"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_MAMBISE",
   "civilopedia": "TXT_KEY_UNIT_MAMBISE_PEDIA",

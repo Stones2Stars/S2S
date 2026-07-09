@@ -278,7 +278,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_ANTIQUE_SHOP"
+   "define": "ART_DEF_BUILDING_ANTIQUE_SHOP"
   }
  },
  "identity": {

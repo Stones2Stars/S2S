@@ -34,7 +34,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MARTIAN_ALBEDO_REDUCTION"
+   "define": "ART_DEF_BUILDING_MARTIAN_ALBEDO_REDUCTION"
   }
  },
  "identity": {

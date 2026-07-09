@@ -2,7 +2,7 @@
  "type": "BONUS_HUMAN_MOD_METAPHYSICAL",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_HUMAN_MOD_METAPHYSICAL"
+   "define": "ART_DEF_BONUS_HUMAN_MOD_METAPHYSICAL"
   }
  },
  "identity": {

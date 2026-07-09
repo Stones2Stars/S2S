@@ -111,6 +111,11 @@
   "production": 63,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HEADHUNTER"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_HEADHUNTER",
   "civilopedia": "TXT_KEY_UNIT_HEADHUNTER_PEDIA",

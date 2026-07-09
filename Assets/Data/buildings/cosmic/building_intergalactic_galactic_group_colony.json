@@ -66,7 +66,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY"
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY"
   }
  },
  "identity": {

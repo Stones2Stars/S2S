@@ -73,6 +73,11 @@
   "production": 47,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NOOTKA_CLUBMAN"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_NOOTKA_CLUBMAN",
   "civilopedia": "TXT_KEY_UNIT_NOOTKA_CLUBMAN_PEDIA",

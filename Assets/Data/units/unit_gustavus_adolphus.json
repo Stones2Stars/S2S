@@ -47,6 +47,11 @@
   "production": 2520,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GUSTAVUS_ADOLPHUS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_GUSTAVUS_ADOLPHUS",
   "civilopedia": "TXT_KEY_UNIT_GUSTAVUS_ADOLPHUS_PEDIA",

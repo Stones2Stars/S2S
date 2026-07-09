@@ -76,7 +76,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TALLY_STONE"
+   "define": "ART_DEF_BUILDING_TALLY_STONE"
   }
  },
  "identity": {

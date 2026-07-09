@@ -47,6 +47,11 @@
   "production": 864,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SEMIRAMIS"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_SEMIRAMIS",
   "civilopedia": "TXT_KEY_UNIT_SEMIRAMIS_PEDIA",

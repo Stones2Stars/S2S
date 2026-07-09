@@ -55,7 +55,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_MUSSEL_RAFTS"
+   "define": "ART_DEF_BUILDING_MUSSEL_RAFTS"
   }
  },
  "identity": {

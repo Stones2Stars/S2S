@@ -81,7 +81,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_GESTATION_TANKS"
+   "define": "ART_DEF_BUILDING_GESTATION_TANKS"
   }
  },
  "identity": {

@@ -56,7 +56,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_HYDROPONIC_VEGETABLE_GARDEN"
+   "define": "ART_DEF_BUILDING_HYDROPONIC_VEGETABLE_GARDEN"
   }
  },
  "identity": {

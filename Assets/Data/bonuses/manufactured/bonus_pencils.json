@@ -2,7 +2,7 @@
  "type": "BONUS_PENCILS",
  "world": {
   "art": {
-   "icon": "ART_DEF_BONUS_PENCILS"
+   "define": "ART_DEF_BONUS_PENCILS"
   }
  },
  "identity": {

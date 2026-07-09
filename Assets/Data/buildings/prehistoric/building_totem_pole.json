@@ -80,7 +80,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_TOTEM_POLE"
+   "define": "ART_DEF_BUILDING_TOTEM_POLE"
   }
  },
  "sound": {

@@ -92,7 +92,7 @@
  },
  "world": {
   "art": {
-   "icon": "ART_DEF_BUILDING_INVOCATION_HUT"
+   "define": "ART_DEF_BUILDING_INVOCATION_HUT"
   }
  },
  "sound": {

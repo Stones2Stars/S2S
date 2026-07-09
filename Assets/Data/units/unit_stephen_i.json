@@ -62,6 +62,11 @@
   "production": 2220,
   "upkeep": 1
  },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_STEPHEN_I"
+  }
+ },
  "identity": {
   "description": "TXT_KEY_UNIT_STEPHEN_I",
   "civilopedia": "TXT_KEY_UNIT_STEPHEN_I_PEDIA",
