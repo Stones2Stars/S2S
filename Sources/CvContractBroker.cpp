@@ -74,7 +74,7 @@ void CvContractBroker::cleanup()
 	m_contractedUnits.clear();
 	m_advertisingTenders.clear();
 	m_iEmployedUnits = 0;
-	for (unsigned int iI = 0; iI < (int)m_workRequests.size(); iI++)
+	for (unsigned int iI = 0; iI < (int)m_workRequests.size(); )
 	{
 		if (m_workRequests[iI].bFulfilled)
 		{
@@ -86,7 +86,10 @@ void CvContractBroker::cleanup()
 			m_workRequests.erase(wr);
 			fulfilledContracts++;
 		}
-
+		else
+        {
+            iI++;
+        }
 	}
 	log(1, "[CTB/turn] fulfilledContractsLastTurn=%d workRequestsRemaining=%d", fulfilledContracts, m_workRequests.size());
 
