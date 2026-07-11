@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_USURPER1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_USURPER2"
   ]
  },

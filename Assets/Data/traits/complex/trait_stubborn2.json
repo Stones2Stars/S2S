@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_STUBBORN2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_STUBBORN3"
   ]
  },

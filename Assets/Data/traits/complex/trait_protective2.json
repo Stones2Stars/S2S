@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_PROTECTIVE2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_PROTECTIVE3"
   ]
  },

@@ -1,5 +1,22 @@
 {
  "type": "UNIT_REEF_SHARK",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_GROUP_SMALL"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_AGGREGATION"
+  }
+ ],
  "requires": {
   "build": {
    "all": [
@@ -17,7 +34,6 @@
   "noDefensiveBonus": true,
   "blendIntoCity": true,
   "onlyDefensive": true,
-  "animalIgnoresBorders": true,
   "targets": {
    "UNITCOMBAT_ANIMAL_INVERTEBRATE": true,
    "UNITCOMBAT_FISH_BONEY": true,

@@ -1,5 +1,10 @@
 {
  "type": "UNIT_SIKH_MISSIONARY",
+ "spread": {
+  "religion": {
+   "RELIGION_SIKHISM": 80
+  }
+ },
  "requires": {
   "build": {
    "all": [

@@ -112,7 +112,7 @@
    "BUILDING_WORLD_TRADE_CENTER",
    "BUILDING_ZOO"
   ],
-  "routes": [
+  "routesAnd": [
    "ROUTE_ELECTRIC_RAILROAD",
    "ROUTE_RAILROAD",
    "ROUTE_TUNNEL"

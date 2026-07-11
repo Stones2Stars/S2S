@@ -6,12 +6,12 @@
 //	CvJsonCivilizationInfo -- the JSON poco for CIVILIZATIONS (uniformity ruling: every info type has its own
 //	CvJson<X>Info home). Composes the section units the civilization data authors: `edges` (enables.*) + `grants`
 //	(the game-start civics/techs/buildings seeds the grants machine resolves). Everything else is served by the
-//	CvJsonInfo base; no typed members yet (the base dispatch covers the composed sections -- no mapFrom override).
+//	CvInfo base; no typed members yet (the base dispatch covers the composed sections -- no mapFrom override).
 //
 
-#include "CvJsonInfo.h"
+#include "CvInfo.h"
 
-class CvJsonCivilizationInfo : public CvJsonInfo
+class CvJsonCivilizationInfo : public CvInfo
 {
 public:
 	CvJsonCivilizationInfo();

@@ -1,5 +1,27 @@
 {
  "type": "UNIT_HIPPO",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_BLOAT"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_HERD"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_COMPANY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_THUNDER"
+  }
+ ],
  "skills": {
   "blendIntoCity": true
  },

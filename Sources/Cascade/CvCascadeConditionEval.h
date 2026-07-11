@@ -59,8 +59,12 @@ struct CvCascadeEvalFlags
 	bool ignorePlotScope;               // per-plot PLACEMENT atoms are satisfied (an UNLOCK question, the engine availableBuilds)
 	bool ignoreDisabled;                // a group's `disabled` (dormancy) clause is NOT applied (buildability vs operate)
 	bool bonusFromPlot;                 // a bare {HAS_BONUS:X} reads THIS plot (plot-substrate yield), not the city's trade set
+	bool testVisible;                   // the VISIBLE (build-list) frontier: the GREYABLE clauses -- a connectable BONUS_ resource
+	                                    // and an unadopted CIVIC_ -- are treated as satisfied so the entity shows GREYED, not HIDDEN
+	                                    // (enabler.md §6; "grey on resources / unadopted civics"). Hard hides (tech, building,
+	                                    // terrain/placement, religion, ...) stay enforced. Mirrors legacy canConstruct(bTestVisible).
 	CvCascadeEvalFlags()
-		: strictStateReligionForBuild(false), ignorePlotScope(false), ignoreDisabled(false), bonusFromPlot(false) {}
+		: strictStateReligionForBuild(false), ignorePlotScope(false), ignoreDisabled(false), bonusFromPlot(false), testVisible(false) {}
 };
 
 // Is a building ACTIVE for `ec.city`? Reads the cascade-computed `ec.activeBuildings` set (present ∧ operate-holds ∧

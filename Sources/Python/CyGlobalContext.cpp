@@ -7,13 +7,13 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "CvJsonBuildingInfo.h"
+#include "CvBuildingInfo.h"
 #include "CvBonusInfo.h"
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "CvInfos.h"
 #include "Defines/CvDiplomacyClasses.h"
-#include "CvJsonUnitCombatInfo.h"
+#include "CvUnitCombatInfo.h"
 #include "CvPlayerOptionInfo.h"
 #include "Engine/CvMap.h"
 #include "AI/CvPlayerAI.h"
@@ -189,13 +189,13 @@ const CvLeaderHeadInfo* CyGlobalContext::getLeaderHeadInfo(int i) const
 }
 
 
-const CvJsonTraitInfo* CyGlobalContext::getTraitInfo(int i) const
+const CvTraitInfo* CyGlobalContext::getTraitInfo(int i) const
 {
 	return (i>=0 && i<GC.getNumTraitInfos()) ? &GC.getTraitInfo((TraitTypes) i) : NULL;
 }
 
 
-const CvJsonUnitInfo* CyGlobalContext::getUnitInfo(int i) const
+const CvUnitInfo* CyGlobalContext::getUnitInfo(int i) const
 {
 	return (i>=0 && i<GC.getNumUnitInfos()) ? &GC.getUnitInfo((UnitTypes) i) : NULL;
 }
@@ -217,7 +217,7 @@ const CvCommerceInfo* CyGlobalContext::getCommerceInfo(int i) const
 }
 
 
-const CvJsonRouteInfo* CyGlobalContext::getRouteInfo(int i) const
+const CvRouteInfo* CyGlobalContext::getRouteInfo(int i) const
 {
 	return (i>=0 && i<GC.getNumRouteInfos()) ? &GC.getRouteInfo((RouteTypes) i) : NULL;
 }
@@ -247,7 +247,7 @@ const CvHandicapInfo* CyGlobalContext::getHandicapInfo(int i) const
 }
 
 
-const CvJsonBuildingInfo* CyGlobalContext::getBuildingInfo(int i) const
+const CvBuildingInfo* CyGlobalContext::getBuildingInfo(int i) const
 {
 	return (i>=0 && i<GC.getNumBuildingInfos()) ? &GC.getBuildingInfo((BuildingTypes) i) : NULL;
 }
@@ -258,7 +258,7 @@ const CvInfoBase* CyGlobalContext::getUnitCombatInfo(int i) const
 	return (i>=0 && i<GC.getNumUnitCombatInfos()) ? &GC.getUnitCombatInfo((UnitCombatTypes)i) : NULL;
 }
 
-const CvJsonPromotionLineInfo* CyGlobalContext::getPromotionLineInfo(int i) const
+const CvPromotionLineInfo* CyGlobalContext::getPromotionLineInfo(int i) const
 {
 	return (i>=0 && i<GC.getNumPromotionLineInfos()) ? &GC.getPromotionLineInfo((PromotionLineTypes)i) : NULL;
 }
@@ -289,13 +289,13 @@ const CvMissionInfo* CyGlobalContext::getMissionInfo(int i) const
 	return (i>=0 && i<GC.getNumMissionInfos()) ? &GC.getMissionInfo((MissionTypes) i) : NULL;
 }
 
-const CvJsonPromotionInfo* CyGlobalContext::getPromotionInfo(int i) const
+const CvPromotionInfo* CyGlobalContext::getPromotionInfo(int i) const
 {
 	return (i>=0 && i<GC.getNumPromotionInfos()) ? &GC.getPromotionInfo((PromotionTypes) i) : NULL;
 }
 
 
-const CvJsonTechInfo* CyGlobalContext::getTechInfo(int i) const
+const CvTechInfo* CyGlobalContext::getTechInfo(int i) const
 {
 	return (i>=0 && i<GC.getNumTechInfos()) ? &GC.getTechInfo((TechTypes) i) : NULL;
 }
@@ -307,37 +307,37 @@ const CvSpecialBuildingInfo* CyGlobalContext::getSpecialBuildingInfo(int i) cons
 }
 
 
-const CvJsonReligionInfo* CyGlobalContext::getReligionInfo(int i) const
+const CvReligionInfo* CyGlobalContext::getReligionInfo(int i) const
 {
 	return (i>=0 && i<GC.getNumReligionInfos()) ? &GC.getReligionInfo((ReligionTypes) i) : NULL;
 }
 
 
-const CvJsonHeritageInfo* CyGlobalContext::getHeritageInfo(int i) const
+const CvHeritageInfo* CyGlobalContext::getHeritageInfo(int i) const
 {
 	return (i >= 0 && i < GC.getNumHeritageInfos()) ? &GC.getHeritageInfo((HeritageTypes)i) : NULL;
 }
 
 
-const CvJsonCorporationInfo* CyGlobalContext::getCorporationInfo(int i) const
+const CvCorporationInfo* CyGlobalContext::getCorporationInfo(int i) const
 {
 	return (i>=0 && i<GC.getNumCorporationInfos()) ? &GC.getCorporationInfo((CorporationTypes) i) : NULL;
 }
 
 
-const CvJsonSpecialistInfo* CyGlobalContext::getSpecialistInfo(int i) const
+const CvSpecialistInfo* CyGlobalContext::getSpecialistInfo(int i) const
 {
 	return (i>=0 && i<GC.getNumSpecialistInfos()) ? &GC.getSpecialistInfo((SpecialistTypes) i) : NULL;
 }
 
 
-const CvJsonCivicOptionInfo* CyGlobalContext::getCivicOptionInfo(int i) const
+const CvCivicOptionInfo* CyGlobalContext::getCivicOptionInfo(int i) const
 {
 	return (i>=0 && i<GC.getNumCivicOptionInfos()) ? &GC.getCivicOptionInfo((CivicOptionTypes) i) : NULL;
 }
 
 
-const CvJsonCivicInfo* CyGlobalContext::getCivicInfo(int i) const
+const CvCivicInfo* CyGlobalContext::getCivicInfo(int i) const
 {
 	return (i>=0 && i<GC.getNumCivicInfos()) ? &GC.getCivicInfo((CivicTypes) i) : NULL;
 }
@@ -353,7 +353,7 @@ const CvHurryInfo* CyGlobalContext::getHurryInfo(int i) const
 }
 
 
-const CvJsonProjectInfo* CyGlobalContext::getProjectInfo(int i) const
+const CvProjectInfo* CyGlobalContext::getProjectInfo(int i) const
 {
 	return (i>=0 && i<GC.getNumProjectInfos()) ? &GC.getProjectInfo((ProjectTypes) i) : NULL;
 }
@@ -365,7 +365,7 @@ const CvVoteInfo* CyGlobalContext::getVoteInfo(int i) const
 }
 
 
-const CvJsonProcessInfo* CyGlobalContext::getProcessInfo(int i) const
+const CvProcessInfo* CyGlobalContext::getProcessInfo(int i) const
 {
 	return (i>=0 && i<GC.getNumProcessInfos()) ? &GC.getProcessInfo((ProcessTypes) i) : NULL;
 }
@@ -377,7 +377,7 @@ const CvEmphasizeInfo* CyGlobalContext::getEmphasizeInfo(int i) const
 }
 
 
-const CvJsonCultureLevelInfo* CyGlobalContext::getCultureLevelInfo(int i) const
+const CvCultureLevelInfo* CyGlobalContext::getCultureLevelInfo(int i) const
 {
 	return (i>=0 && i<GC.getNumCultureLevelInfos()) ? &GC.getCultureLevelInfo((CultureLevelTypes) i) : NULL;
 }
@@ -437,7 +437,7 @@ const CvAdvisorInfo* CyGlobalContext::getAdvisorInfo(int i) const
 }
 
 
-const CvJsonPropertyInfo* CyGlobalContext::getPropertyInfo(int i) const
+const CvPropertyInfo* CyGlobalContext::getPropertyInfo(int i) const
 {
 	return (i>=0 && i<GC.getNumPropertyInfos()) ? &GC.getPropertyInfo((PropertyTypes)i) : NULL;
 }

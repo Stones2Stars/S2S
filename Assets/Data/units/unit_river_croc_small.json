@@ -1,10 +1,26 @@
 {
  "type": "UNIT_RIVER_CROC_SMALL",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_LONE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_BASK"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_CONGREGATION"
+  }
+ ],
  "skills": {
   "assassin": true,
   "blendIntoCity": true,
   "onlyDefensive": true,
-  "animalIgnoresBorders": true,
   "targets": {
    "UNITCOMBAT_SIZE_DIMINUTIVE": true,
    "UNITCOMBAT_SIZE_TINY": true,

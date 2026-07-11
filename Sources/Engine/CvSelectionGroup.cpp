@@ -19,7 +19,7 @@
 #include "AI/CvPlayerAI.h"
 #include "CvPopupInfo.h"
 #include "CvSelectionGroup.h"
-#include "CvJsonUnitCombatInfo.h"
+#include "CvUnitCombatInfo.h"
 #include "Cascade/CvCascadePerfCount.h"   // the automation-window census counters
 #include "AI/BetterBTSAI.h"               // PerfAccumTimer
 #include "AI/CvSelectionGroupAI.h"

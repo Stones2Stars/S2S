@@ -1,5 +1,22 @@
 {
  "type": "UNIT_BONGO",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 5,
+   "title": "TXT_KEY_GROUPTITLE_SINGULAR"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_FAMILY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_HERD"
+  }
+ ],
  "withdrawal": {
   "unit": {
    "percent": 40
@@ -7,8 +24,7 @@
  },
  "skills": {
   "blendIntoCity": true,
-  "onlyDefensive": true,
-  "animalIgnoresBorders": true
+  "onlyDefensive": true
  },
  "outcomes": {
   "kill": [

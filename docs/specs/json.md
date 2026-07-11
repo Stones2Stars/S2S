@@ -582,6 +582,9 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
 
 - **`identity`** — "what am I": all **TEXT** (`description`, `help`, `civilopedia`, `message`, `quote`, `strategy`,
   `adjective`, `shortDescription`) + intrinsic flags/values (radii, classifications, capability bools, base stats).
+  ⛔ **`identity` is STRICTLY self-description — NEVER a catch-all** (owner 2026-07-11): a datum that isn't "what am I"
+  (e.g. per-religion spread strength) does NOT go here; it gets its own block (`spread`, §9). Reaching for `identity`
+  because a value has no obvious home is the anti-pattern.
   Two buildability flags: `notConstructible` (excluded from the player production queue; placed by another system)
   and `autoBuild` (auto-placed in every city where `requires.build` holds); `autoBuild ⊂ notConstructible`.
   **Civilization selectability** lives here too: `playable` / `aiPlayable` (can a human / the AI pick this civ) —
@@ -694,6 +697,11 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
 - **`headquarters`** — the corp-HQ analog of `shrine`: the building is a corporation's HEADQUARTERS,
   `headquarters: CORPORATION_X` (the corporation FK). The per-commerce values live on the **corporation**, scaled
   per corporation presence. Same FK-relationship shape as `shrine`, one for religion and one for corporation.
+- **`spread`** (UNIT) — the unit's per-religion / per-corporation **spread strength** (a standing capability, NOT a
+  timed handout): `spread.religion: { RELIGION_X: N }` / `spread.corporation: { CORPORATION_X: N }` — keyed magnitude
+  maps (`N` = the legacy `iReligionSpread`/`iCorporationSpread`). Its **own** block on purpose (owner 2026-07-11):
+  burying spread strength under `grants` (one-shot/recurring handouts) misleads a modder — it is what the unit is
+  *able* to spread and *how strongly*, read by the missionary / corporate-executive spread systems.
 - **`sizeMatters`** — the data the **Size-Matters** combat system needs (gated by `GAMEOPTION_COMBAT_SIZE_MATTERS`),
   a dedicated block per the own-block rule below. It is **cross-entity** — "size matters is mostly governed in
   unitcombat" — so the **base ranks are authored on UnitCombat** (the source) and summed onto the unit at load, while
@@ -718,8 +726,8 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   data. *(This is the pattern for every game-option-specific system — each gets its own block, e.g. `hideAndSeek`
   when `GAMEOPTION_COMBAT_HIDE_AND_SEEK` returns.)*
 - **bespoke** object-sections, each read by its own system: `promotionLine` · `buildUp` · `shrine` · `headquarters` ·
-  `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` · `cityFounding` ·
-  `unitCapability`.
+  `spread` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` ·
+  `cityFounding` · `unitCapability`.
 
 A dedicated system's data lives in its **own block** — a module is "on" iff its block exists and is non-empty — so
 a system can be added, swapped, or removed as a unit.

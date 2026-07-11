@@ -1,9 +1,20 @@
 {
  "type": "UNIT_GROUNDSLOTH",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_FAMILY"
+  }
+ ],
  "skills": {
   "blendIntoCity": true,
-  "onlyDefensive": true,
-  "animalIgnoresBorders": true
+  "onlyDefensive": true
  },
  "outcomes": {
   "kill": [

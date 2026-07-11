@@ -1,9 +1,30 @@
 {
  "type": "UNIT_ELEPHANT_AFRICAN",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_ROGUE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 6,
+   "title": "TXT_KEY_GROUPTITLE_FAMILY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 5,
+   "title": "TXT_KEY_GROUPTITLE_HERD"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_COMPANY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_MEMORY"
+  }
+ ],
  "skills": {
   "blendIntoCity": true,
-  "onlyDefensive": true,
-  "animalIgnoresBorders": true
+  "onlyDefensive": true
  },
  "outcomes": {
   "kill": [

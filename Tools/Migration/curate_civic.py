@@ -49,7 +49,7 @@ SCALAR = {
     "iHomeAreaMaintenanceModifier":    ("maintenance", "empire", "homeArea",    "percent"),
     "iOtherAreaMaintenanceModifier":   ("maintenance", "empire", "otherArea",   "percent"),
     "iCorporationMaintenanceModifier": ("maintenance", "empire", "corporation", "percent"),
-    "iInflation":                      ("upkeep", "empire", "inflation",   "percent"),
+    "iInflation":                      ("inflation", "empire", None,       "percent"),
     "iCivilianUnitUpkeepMod":          ("upkeep", "empire", "unitCivilian","percent"),
     "iMilitaryUnitUpkeepMod":          ("upkeep", "empire", "unitMilitary","percent"),
     "iDistantUnitSupportCostModifier": ("upkeep", "empire", "supply",      "percent"),

@@ -1,5 +1,10 @@
 {
  "type": "UNIT_EXECUTIVE_FASHION",
+ "spread": {
+  "corporation": {
+   "CORPORATION_FASHION": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

@@ -35,6 +35,15 @@
    ]
   }
  },
+ "domainMoves": {
+  "empire": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "canTradeOn": {
   "terrains": [
    "TERRAIN_OCEAN",

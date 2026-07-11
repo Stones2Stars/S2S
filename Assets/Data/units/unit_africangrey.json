@@ -1,5 +1,22 @@
 {
  "type": "UNIT_AFRICANGREY",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_COMPANY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_PANDEMONIUM"
+  }
+ ],
  "withdrawal": {
   "unit": {
    "percent": 45
@@ -7,8 +24,7 @@
  },
  "skills": {
   "blendIntoCity": true,
-  "onlyDefensive": true,
-  "animalIgnoresBorders": true
+  "onlyDefensive": true
  },
  "outcomes": {
   "kill": [

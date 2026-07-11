@@ -162,6 +162,8 @@ static const char* CJK_INTRINSIC_KEYS[] = {
 	"promotionLine", "buildUp", "shrine", "headquarters", "worldGen", "properties", "voteSource", "threshold", "role", "victory",
 	"targetLevel", "conversion", "cityFounding", "unitCapability",
 	"canTrade", "canTradeOn", "canWorkOn",   // tech bespoke blocks (owner 2026-07-02, json.md §2 / capabilities.md)
+	"spread",   // UNIT spread strength block: spread.religion/spread.corporation keyed maps (owner 2026-07-11 -- clearer than burying under timed `grants`)
+	"groupSpawn",   // UNIT group-spawn config: struct rows {unitCombat, chance, title} (owner 2026-07-11 -- config, not a grant)
 	0
 };
 // Purged vocabulary -- keys that must NEVER be parsed again; a straggler in the data surfaces in the unconsumed

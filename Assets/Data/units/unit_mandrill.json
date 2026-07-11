@@ -1,5 +1,37 @@
 {
  "type": "UNIT_MANDRILL",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_FAMILY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_GROUP"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_COMPANY",
+   "chance": 8,
+   "title": "TXT_KEY_GROUPTITLE_HORDE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_BATTALION",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_HORDE_LARGE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_FORCES",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_HORDE_HUGE"
+  }
+ ],
  "withdrawal": {
   "unit": {
    "percent": 20
@@ -7,8 +39,7 @@
  },
  "skills": {
   "blendIntoCity": true,
-  "onlyDefensive": true,
-  "animalIgnoresBorders": true
+  "onlyDefensive": true
  },
  "outcomes": {
   "kill": [

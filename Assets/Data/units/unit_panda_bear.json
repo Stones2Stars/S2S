@@ -2,8 +2,7 @@
  "type": "UNIT_PANDA_BEAR",
  "skills": {
   "blendIntoCity": true,
-  "onlyDefensive": true,
-  "animalIgnoresBorders": true
+  "onlyDefensive": true
  },
  "outcomes": {
   "kill": [

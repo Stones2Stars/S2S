@@ -223,3 +223,10 @@ genuine needs). **Home:** [json.md §2](../specs/json.md) (the Applicability row
 The tree deliberately does NOT compile: the XML `CvXInfo` classes are archived (`SourceArchive/Infos/`) as a
 fallback-proof ratchet — never restore them, never re-add a `CvXInfo`; green is reached ONLY by finishing the
 JsonInfo structure + the full getter/consumer wiring. **Home:** [AGENTS.md](../../AGENTS.md) Build And Test.
+
+### DEC-no-xml-into-game
+
+Reading a REPLACED info's legacy XML **into the running game is HARD BANNED**. The `CIV4<X>Infos.xml` files are kept
+in the tree as **curator INPUT ONLY** (removing them broke the curator); the game registers + populates replaced
+infos from the **JSON** load path, never from `LoadGlobalClassInfo(GC.m_pa<X>Info, "CIV4<X>Infos", …)`. Their presence
+for the curator is not license to load them at runtime — the recurring rollerskate. **Home:** [AGENTS.md](../../AGENTS.md) Build And Test.

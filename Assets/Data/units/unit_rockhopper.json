@@ -1,9 +1,45 @@
 {
  "type": "UNIT_ROCKHOPPER",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_PAIR"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_WADDLE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_COMPANY",
+   "chance": 6,
+   "title": "TXT_KEY_GROUPTITLE_HUDDLE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_BATTALION",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_HUDDLE_LARGE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_FORCES",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_ROOKERY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_CLAN",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_ROOKERY_LARGE"
+  }
+ ],
  "skills": {
   "blendIntoCity": true,
-  "onlyDefensive": true,
-  "animalIgnoresBorders": true
+  "onlyDefensive": true
  },
  "outcomes": {
   "kill": [

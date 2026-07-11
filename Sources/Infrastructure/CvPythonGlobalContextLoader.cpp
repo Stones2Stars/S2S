@@ -3,9 +3,9 @@
 #include "CvGameCoreDLL.h"
 #include "Python/CyGlobalContext.h"
 #include "CvBonusInfo.h"
-#include "CvJsonBuildingInfo.h"
+#include "CvBuildingInfo.h"
 #include "CvImprovementInfo.h"
-#include "CvJsonHeritageInfo.h"
+#include "CvHeritageInfo.h"
 #include "CvInfos.h"
 #include "Tools/CvRandom.h"
 #include "Python/CyGame.h"
@@ -15,7 +15,7 @@
 #include "Python/CyTeam.h"
 #include "Defines/CvDiplomacyClasses.h"
 #include "CvPlayerOptionInfo.h"
-#include "CvJsonTraitInfo.h"
+#include "CvTraitInfo.h"
 #include <boost/python/overloads.hpp>
 
 

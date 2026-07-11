@@ -81,13 +81,6 @@
    }
   }
  },
- "upkeep": {
-  "empire": {
-   "inflation": {
-    "percent": -10
-   }
-  }
- },
  "hurry": {
   "empire": {
    "cost": {
@@ -103,6 +96,11 @@
    "democracyLevel": {
     "flat": -8
    }
+  }
+ },
+ "inflation": {
+  "empire": {
+   "percent": -10
   }
  },
  "policies": {

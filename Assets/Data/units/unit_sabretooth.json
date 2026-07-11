@@ -1,5 +1,17 @@
 {
  "type": "UNIT_SABRETOOTH",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 5,
+   "title": "TXT_KEY_GROUPTITLE_LONE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_AMBUSH"
+  }
+ ],
  "withdrawal": {
   "unit": {
    "percent": 20

@@ -1,5 +1,17 @@
 {
  "type": "UNIT_SALTWATER_CROC_SMALL",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_LONE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_BASK"
+  }
+ ],
  "requires": {
   "build": {
    "all": [

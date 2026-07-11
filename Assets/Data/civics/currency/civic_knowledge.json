@@ -66,13 +66,6 @@
    }
   }
  },
- "upkeep": {
-  "empire": {
-   "inflation": {
-    "percent": -5
-   }
-  }
- },
  "tradeRoutes": {
   "empire": {
    "foreign": {
@@ -85,6 +78,11 @@
    "attitudeShare": {
     "flat": 1
    }
+  }
+ },
+ "inflation": {
+  "empire": {
+   "percent": -5
   }
  },
  "ui": {

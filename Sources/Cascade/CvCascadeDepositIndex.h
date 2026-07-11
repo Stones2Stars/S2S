@@ -27,7 +27,7 @@
 #include <string>
 #include <vector>
 
-class CvJsonInfo;
+class CvInfo;
 class CvJsonCondition;
 
 //
@@ -85,7 +85,7 @@ public:
 	// THE PUSH (readJson load, once per mapped info): walk j->getModifiers()->all() (+ j->getWhenObsolete()) and
 	// compile every (address, entry) pair into this index's registry -- the spec-model input seam of the compiled
 	// index (the runtime shape below it is unchanged). NULL / family-less infos no-op.
-	static void pushInfo(const CvJsonInfo* j);
+	static void pushInfo(const CvInfo* j);
 
 	// Re-map safety (rj_clearAllRepos): drop the compiled registry -- its keys are the about-to-be-freed infos.
 	// The interner is NOT cleared (append-only law; ids survive the re-map).
@@ -93,8 +93,8 @@ public:
 
 	// The compiled records of one source info -- the matchers' iteration surface (a shared empty vector when the
 	// info authored none / is NULL). whenObsoleteFor = the building's obsolete-state tree (json #4.2).
-	static const std::vector<CascadeDeposit>& depositsFor(const CvJsonInfo* j);
-	static const std::vector<CascadeDeposit>& whenObsoleteFor(const CvJsonInfo* j);
+	static const std::vector<CascadeDeposit>& depositsFor(const CvInfo* j);
+	static const std::vector<CascadeDeposit>& whenObsoleteFor(const CvInfo* j);
 
 	// Fill a record's compiled fields from its address/unit strings (push-time; the strings stay for
 	// rendering/diagnostics). Splits the dotted address, interns each segment (the first CASC_DEP_SEGS kept),

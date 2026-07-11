@@ -1,5 +1,10 @@
 {
  "type": "UNIT_ANDEAN_MISSIONARY",
+ "spread": {
+  "religion": {
+   "RELIGION_ANDEANISM": 80
+  }
+ },
  "requires": {
   "build": {
    "all": [

@@ -524,7 +524,7 @@ public:
 	 *   (weight > 0 or prerequisite tech known).
 	 * - Compares combat strength (`getCombat()`) of units.
 	 *
-	 * \see CvJsonUnitInfo::getUnitAIType()
+	 * \see CvUnitInfo::getUnitAIType()
 	 * \see GET_TEAM()
 	 * \see CvPlayerAI::m_aiUnitWeights
 	 *
@@ -723,7 +723,7 @@ protected:
 	void AI_doCounter();
 	void AI_doMilitary();
 
-	int heritagePropertiesValue(const CvJsonHeritageInfo& heritage) const;
+	int heritagePropertiesValue(const CvHeritageInfo& heritage) const;
 
 public:
 	void AI_doCivics();

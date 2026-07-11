@@ -2,8 +2,7 @@
  "type": "UNIT_GALAPAGOS_TORTOISE",
  "skills": {
   "blendIntoCity": true,
-  "onlyDefensive": true,
-  "animalIgnoresBorders": true
+  "onlyDefensive": true
  },
  "outcomes": {
   "kill": [

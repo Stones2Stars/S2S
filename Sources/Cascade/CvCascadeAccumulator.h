@@ -81,9 +81,13 @@ public:
 
 	// ===== the ENABLER frontier reads (#430 THE FLIP -- ensure-on-read, the operating buildings idiom) =====
 	static bool enConstruct(const CvCity* pCity, int eBuilding);
+	static bool enConstructVisible(const CvCity* pCity, int eBuilding);   // the VISIBLE build-list frontier (bTestVisible)
 	static bool enTrain(const CvCity* pCity, int eUnit);
+	static bool enTrainVisible(const CvCity* pCity, int eUnit);          // the VISIBLE build-list frontier (bTestVisible)
 	static bool enCreate(const CvCity* pCity, int eProject);
+	static bool enCreateVisible(const CvCity* pCity, int eProject);      // the VISIBLE build-list frontier (bTestVisible)
 	static bool enMaintain(const CvCity* pCity, int eProcess);
+	static bool enMaintainVisible(const CvCity* pCity, int eProcess);    // the VISIBLE build-list frontier (bTestVisible)
 	static bool enResearch(const CvPlayer* pPlayer, int eTech);
 	static bool enCivic(const CvPlayer* pPlayer, int eCivic);
 	static bool enHurry(const CvPlayer* pPlayer, int eHurry);

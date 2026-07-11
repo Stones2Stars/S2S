@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_CHARISMATIC2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_CHARISMATIC3"
   ]
  },

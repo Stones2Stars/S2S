@@ -1,5 +1,32 @@
 {
  "type": "UNIT_CAMEL",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_LONE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 12,
+   "title": "TXT_KEY_GROUPTITLE_CARAVAN"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 10,
+   "title": "TXT_KEY_GROUPTITLE_FLOCK"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_COMPANY",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_HERD"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_BATTALION",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_TRAIN"
+  }
+ ],
  "withdrawal": {
   "unit": {
    "percent": 30
@@ -7,8 +34,7 @@
  },
  "skills": {
   "blendIntoCity": true,
-  "onlyDefensive": true,
-  "animalIgnoresBorders": true
+  "onlyDefensive": true
  },
  "outcomes": {
   "kill": [

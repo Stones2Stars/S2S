@@ -68,6 +68,17 @@
    },
    "stealth": {
     "percent": 20
+   },
+   "flanking": {
+    "UNITCOMBAT_RUFFIAN": {
+     "percent": 25
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    },
+    "UNITCOMBAT_STRIKE_TEAM": {
+     "percent": 50
+    }
    }
   }
  },

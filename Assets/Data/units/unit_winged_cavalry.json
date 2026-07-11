@@ -92,6 +92,14 @@
     "UNITCOMBAT_SIEGE_WOODEN": {
      "percent": 50
     }
+   },
+   "flankingUnit": {
+    "UNIT_CATAPULT": {
+     "percent": 100
+    },
+    "UNIT_TREBUCHET": {
+     "percent": 100
+    }
    }
   }
  },

@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_UNSANITARY1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_UNSANITARY2",
    "TRAIT_UNSANITARY3"
   ]

@@ -1,5 +1,27 @@
 {
  "type": "UNIT_BARBARYAPE",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_FAMILY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 6,
+   "title": "TXT_KEY_GROUPTITLE_TROOP"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_COMPANY",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_COMMUNITY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_BATTALION",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_SHREWDNESS"
+  }
+ ],
  "skills": {
   "blendIntoCity": true
  },

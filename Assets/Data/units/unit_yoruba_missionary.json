@@ -1,5 +1,10 @@
 {
  "type": "UNIT_YORUBA_MISSIONARY",
+ "spread": {
+  "religion": {
+   "RELIGION_YORUBA": 80
+  }
+ },
  "requires": {
   "build": {
    "all": [

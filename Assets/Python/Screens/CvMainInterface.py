@@ -3806,7 +3806,9 @@ class CvMainInterface:
 
 			# Projects
 			for iType in xrange(self.iNumProjectInfos):
-				if city.canCreate(iType, True, False):
+				# #430: bContinue=False so this routes to the cascade canCreate frontier (the bContinue=True shape
+				# fell through to legacy canCreate -> every project shown ungated). City screen relies purely on cascade.
+				if city.canCreate(iType, False, False):
 					if iCount == iBtnPerRow:
 						x = xStart
 						y += dx

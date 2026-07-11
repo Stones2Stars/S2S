@@ -9,8 +9,8 @@
 #include "CvCascadePerfCount.h"   // per-turn call counters + stopwatches (owner 2026-07-02: repeat-calc hunt)
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "CvCascadeEnablerKernel.h"
-#include "CvJsonInfo.h"
-#include "CvJsonTechInfo.h"        // cascadeStartNode -- the synthetic TECH_GAME_START root
+#include "CvInfo.h"
+#include "CvTechInfo.h"        // cascadeStartNode -- the synthetic TECH_GAME_START root
 #include "Repos/InfoRepo.h"
 #include "CvCascadeTally.h"
 #include "AI/CvPlayerAI.h"            // GET_PLAYER
@@ -22,36 +22,36 @@
 #include "CvCascadeConditionEval.h"   // cascadeEvalCondition -- the StoneBase-ported typed-condition evaluator
 #include "CvJsonCondition.h"       // CvJsonCondition tree (CASC_COND_*/CASC_PRED_*) -- scanned for the operate reverse-index
 #include "CvCascadeAccumulator.h"     // the accumulator package surface (the epochs are DELETED -- scope-packages.md phase 3)
-#include "CvJsonBuildingInfo.h"
-#include "CvJsonUnitInfo.h"
-#include "CvJsonTechInfo.h"
-#include "CvJsonCivicInfo.h"
-#include "CvJsonProjectInfo.h"
-#include "CvJsonProcessInfo.h"
-#include "CvJsonPromotionInfo.h"
-#include "Infos/CvBuildInfo.h"
+#include "CvBuildingInfo.h"
+#include "CvUnitInfo.h"
+#include "CvTechInfo.h"
+#include "CvCivicInfo.h"
+#include "CvProjectInfo.h"
+#include "CvProcessInfo.h"
+#include "CvPromotionInfo.h"
+#include "CvBuildInfo.h"
 #include "Engine/CvGame.h"
 
 // The enables buckets this pass generates over (one HAVE traversal fills them all).
 static const char* EN_BUCKETS[] = { "buildings", "units", "projects", "processes", "techs", "civics", "promotions", "builds", "hurries", NULL };
 
-// The per-(bucket) InfoRepo dispatch -- the entity's CvJsonInfo by bucket name + id.
-const CvJsonInfo* EnablerKernel::jsonFor(const std::string& b, int id)
+// The per-(bucket) InfoRepo dispatch -- the entity's CvInfo by bucket name + id.
+const CvInfo* EnablerKernel::jsonFor(const std::string& b, int id)
 {
-	if (b == "buildings") return InfoRepo<CvJsonBuildingInfo>::get().get(id);
-	if (b == "units")     return InfoRepo<CvJsonUnitInfo>::get().get(id);
-	if (b == "projects")  return InfoRepo<CvJsonProjectInfo>::get().get(id);
-	if (b == "processes") return InfoRepo<CvJsonProcessInfo>::get().get(id);
-	if (b == "techs")     return InfoRepo<CvJsonTechInfo>::get().get(id);
-	if (b == "civics")    return InfoRepo<CvJsonCivicInfo>::get().get(id);
-	if (b == "promotions") return InfoRepo<CvJsonPromotionInfo>::get().get(id);
+	if (b == "buildings") return InfoRepo<CvBuildingInfo>::get().get(id);
+	if (b == "units")     return InfoRepo<CvUnitInfo>::get().get(id);
+	if (b == "projects")  return InfoRepo<CvProjectInfo>::get().get(id);
+	if (b == "processes") return InfoRepo<CvProcessInfo>::get().get(id);
+	if (b == "techs")     return InfoRepo<CvTechInfo>::get().get(id);
+	if (b == "civics")    return InfoRepo<CvCivicInfo>::get().get(id);
+	if (b == "promotions") return InfoRepo<CvPromotionInfo>::get().get(id);
 	if (b == "builds")    return InfoRepo<CvBuildInfo>::get().get(id);
 	// "hurries" has no InfoRepo (HURRY_ not in RJ_REPO_TYPES) -> NULL; canHurry needs only the enables.hurries edges
 	// (on the civics/techs), and a NULL json passes requires/allowed -> the gate IS "the hurry type is generated".
 	return NULL;
 }
 
-void EnablerKernel::addEdge(const CvJsonInfo* j, const std::string& key, std::set<int>& out)
+void EnablerKernel::addEdge(const CvInfo* j, const std::string& key, std::set<int>& out)
 {
 	if (j == NULL) return;
 	const std::vector<int>* p = j->edge(key);
@@ -61,7 +61,7 @@ void EnablerKernel::addEdge(const CvJsonInfo* j, const std::string& key, std::se
 
 // Accumulate one HAVE entity's source-side edges across every bucket: enables ADD to candidates; obsoletes/replaces/
 // disables collected into rem (subtracted after the whole HAVE set is gathered -- enabler.md §2 set-difference).
-void EnablerKernel::accumHave(const CvJsonInfo* j, EnBucketSets& cand, EnBucketSets& rem)
+void EnablerKernel::accumHave(const CvInfo* j, EnBucketSets& cand, EnBucketSets& rem)
 {
 	if (j == NULL) return;
 	for (int i = 0; EN_BUCKETS[i] != NULL; ++i)
@@ -83,18 +83,18 @@ void EnablerKernel::generate(const CvPlayer& kPlayer, const CvCity* pCity, EnBuc
 	// no-tech-prereq starting set: CAVE_DWELLING/NOMADISM/LANGUAGE, UNIT_BRUTE, …) into GENERATE for every player.
 	accumHave(&cascadeStartNode(), cand, rem);
 	for (int iT = 0; iT < GC.getNumTechInfos(); ++iT)
-		if (kTeam.isHasTech((TechTypes)iT)) accumHave(InfoRepo<CvJsonTechInfo>::get().get(iT), cand, rem);
+		if (kTeam.isHasTech((TechTypes)iT)) accumHave(InfoRepo<CvTechInfo>::get().get(iT), cand, rem);
 	for (int iCO = 0; iCO < GC.getNumCivicOptionInfos(); ++iCO)
 	{
 		const CivicTypes eCivic = kPlayer.getCivics((CivicOptionTypes)iCO);
-		if (eCivic != NO_CIVIC) accumHave(InfoRepo<CvJsonCivicInfo>::get().get((int)eCivic), cand, rem);
+		if (eCivic != NO_CIVIC) accumHave(InfoRepo<CvCivicInfo>::get().get((int)eCivic), cand, rem);
 	}
 	if (pCity != NULL)
 	{
 		const std::vector<BuildingTypes> aHas = pCity->getHasBuildings();
 		for (size_t i = 0; i < aHas.size(); ++i)
 		{
-			const CvJsonInfo* jb = InfoRepo<CvJsonBuildingInfo>::get().get((int)aHas[i]);
+			const CvInfo* jb = InfoRepo<CvBuildingInfo>::get().get((int)aHas[i]);
 			// #430 obsoletion FLIP (owner 2026-07-07): a now-present obsolete building no longer UNLOCKS -- its
 			// `enables` are SUPERSEDED (the same frontier outcome as the pre-flip world where legacy removed it),
 			// so it is skipped from GENERATE. This keeps the frontier input INVARIANT to the flip -- the enabler
@@ -111,7 +111,7 @@ void EnablerKernel::generate(const CvPlayer& kPlayer, const CvCity* pCity, EnBuc
 	}
 }
 
-bool EnablerKernel::obsoletedByHeldTech(const CvJsonInfo* j, const CvTeam& kTeam)
+bool EnablerKernel::obsoletedByHeldTech(const CvInfo* j, const CvTeam& kTeam)
 {
 	if (j == NULL) return false;
 	const std::vector<int>* p = j->edge("obsoletedBy.techs");
@@ -124,17 +124,18 @@ bool EnablerKernel::obsoletedByHeldTech(const CvJsonInfo* j, const CvTeam& kTeam
 // requires gate: build ∧ operate, evaluated through the typed-condition evaluator (StoneBase port) against the live
 // engine ctx. The ENABLER reads with STRICT flags -- a {STATE_RELIGION:X} in requires.build must MATCH the player's
 // state religion (the modifier's lenient compound is the modifier-side reading; json §3.5 / enabler §3).
-bool EnablerKernel::requiresMet(const CvJsonInfo* j, const CvCascadeEvalCtx& ec)
+bool EnablerKernel::requiresMet(const CvInfo* j, const CvCascadeEvalCtx& ec, bool bVisible)
 {
 	if (j == NULL) return true;
 	CvCascadeEvalFlags flags;
 	flags.strictStateReligionForBuild = true;
+	flags.testVisible = bVisible;   // VISIBLE frontier: relax the greyable clauses (connectable resource / unadopted civic -> GREYED, enabler.md §6)
 	if (j->requiresBuild() != NULL && !cascadeEvalCondition(j->requiresBuild(), ec, flags)) return false;
 	if (j->requiresOperate() != NULL && !cascadeEvalCondition(j->requiresOperate(), ec, flags)) return false;
 	return true;
 }
 
-bool EnablerKernel::allowedOk(const CvJsonInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit, const std::string& bucket)
+bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit, const std::string& bucket)
 {
 	if (j == NULL) return true;
 	// PROJECTS (parity find 2026-07-02): the tally has NO project domain, so the cap check read buildingCount(projectId)
@@ -190,15 +191,15 @@ bool EnablerKernel::canFoundReligion(const CvPlayer& kPlayer)
 
 // GATE: candidates[bucket] -> the available set (requires + allowed + obsoletedBy).
 void EnablerKernel::gateSet(const std::string& bucket, const EnBucketSets& cand, const CvCascadeEvalCtx& ec,
-	const CvPlayer& kPlayer, const CvTeam& kTeam, bool bUnit, std::set<int>& avail)
+	const CvPlayer& kPlayer, const CvTeam& kTeam, bool bUnit, std::set<int>& avail, bool bVisible)
 {
 	EnBucketSets::const_iterator b = cand.find(bucket);
 	if (b == cand.end()) return;
 	for (std::set<int>::const_iterator it = b->second.begin(); it != b->second.end(); ++it)
 	{
-		const CvJsonInfo* j = jsonFor(bucket, *it);
+		const CvInfo* j = jsonFor(bucket, *it);
 		if (obsoletedByHeldTech(j, kTeam)) continue;
-		if (requiresMet(j, ec) && allowedOk(j, *it, kPlayer, bUnit, bucket)) avail.insert(*it);
+		if (requiresMet(j, ec, bVisible) && allowedOk(j, *it, kPlayer, bUnit, bucket)) avail.insert(*it);
 	}
 }
 
@@ -217,7 +218,7 @@ enum EkBuildingVerdict
 // b's `provides.bonuses` (json §5a), or NULL.
 static const std::vector<int>* ek_provides(int b)
 {
-	const CvJsonInfo* j = InfoRepo<CvJsonBuildingInfo>::get().get(b);
+	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
 	if (j == NULL) return NULL;
 	const CvJsonProvides* pv = j->getProvides();
 	return (pv != NULL && !pv->bonuses.empty()) ? &pv->bonuses : NULL;
@@ -230,7 +231,7 @@ static const std::vector<int>* ek_provides(int b)
 // building whose obsoletedBy tech is held is obsolete regardless of operate, so it is checked FIRST.
 static EkBuildingVerdict ek_classifyBuilding(int b, const CvCity* pCity, CvCascadeEvalCtx& ecOp, const CvCascadeEvalFlags& flags)
 {
-	const CvJsonInfo* j = InfoRepo<CvJsonBuildingInfo>::get().get(b);
+	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
 	if (j == NULL) return EK_ACTIVE;
 	if (ecOp.team != NULL && EnablerKernel::obsoletedByHeldTech(j, *ecOp.team)) return EK_OBSOLETE;
 	if (j->requiresOperate() != NULL && !cascadeEvalCondition(j->requiresOperate(), ecOp, flags)) return EK_DORMANT_OPERATE;
@@ -458,7 +459,7 @@ void EnablerKernel::buildActiveIndex()
 	const int nB = GC.getNumBuildingInfos();
 	for (int b = 0; b < nB; ++b)
 	{
-		const CvJsonInfo* j = InfoRepo<CvJsonBuildingInfo>::get().get(b);
+		const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
 		if (j == NULL) continue;
 		CascadeCondDeps d;
 		// OPERATE only -- active/dormant is governed by requires.operate; DYNAMIC marked (the per-turn re-check bucket).

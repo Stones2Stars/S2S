@@ -19,6 +19,15 @@
    ]
   }
  },
+ "domainMoves": {
+  "empire": {
+   "domains": {
+    "DOMAIN_AIR": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "cost": {
   "research": 6351
  },

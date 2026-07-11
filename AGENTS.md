@@ -2,12 +2,12 @@
 
 > # ⛔ STOP — READ THIS BEFORE YOU TOUCH ANYTHING ⛔
 >
-> ## HOURS WASTED ON ROLLERSKATING: **137** &nbsp;·&nbsp; *and counting*
+> ## HOURS WASTED ON ROLLERSKATING: **142** &nbsp;·&nbsp; *and counting*
 > *(Increment this every time an agent ships an ungrounded fix / design / edit — one the docs already answered — that the owner has to rein in. It is a real number, not a joke.)*
 >
 > This project is **~4 weeks old** and has cost the owner **262 hours**. **~25% of that time** was spent writing the documentation, architecture, and specs in this repo **for one purpose: to stop agents from rollerskating** — guessing, reinventing the wheel, and hacking around problems the spec had *already solved*.
 >
-> **It has not worked.** Roughly **50% of agents — Fable and Opus alike — decide they are too good for the documentation and rollerskate anyway.** The measured result: **137 of the 262 hours — HALF the entire project — have been outright wasted** reining in ungrounded nonsense that reading the relevant spec *once* would have prevented.
+> **It has not worked.** Roughly **50% of agents — Fable and Opus alike — decide they are too good for the documentation and rollerskate anyway.** The measured result: **142 of the 266 hours — OVER HALF the entire project — have been outright wasted** reining in ungrounded nonsense that reading the relevant spec *once* would have prevented.
 >
 > **You are not the exception. Assume you are about to add to that number unless you deliberately do the opposite:**
 > - **⚑ SESSION-START PROTOCOL — before your FIRST action (and again after any context compaction): enumerate every file in `docs/specs/`, `docs/architecture/`, and `docs/reference/` and read each one IN FULL.** Not the subset you judge relevant — ALL of them. They are ONE interconnected design (`CvDerivedCache` + the event spine + the cascades + `readJson` + `state-repositories`), and the reference docs are how the engine actually behaves today; the connection you skip is the one that bites. **Your judgment of what is "necessary" is NOT trusted — it is systematically biased toward reading too little.** ([DEC-all-means-all](docs/architecture/decisions.md#dec-all-means-all))
@@ -59,6 +59,17 @@ architecture rules that apply to DLL source.
 > fallback was removed. **Never restore anything from `SourceArchive/`, never re-add a `CvXInfo` class, never treat
 > the RED build as a defect.** The ONLY road to green: build the JsonInfo structure, wire it up, and wire up/replace
 > ALL the getters (the engine/AI/UI consumer surface onto the JSON-fed infos).
+
+> **⛔ HARD RULE — READING A REPLACED INFO'S XML **INTO THE GAME** IS HARD BANNED ([DEC-no-xml-into-game](docs/architecture/decisions.md#dec-no-xml-into-game)).**
+> The legacy info XMLs (`Assets/XML/**/CIV4<X>Infos.xml`) for every type we have replaced with a `CvJson<X>Info`
+> poco are **CURATOR INPUT ONLY** — the curator reads them to generate the `Assets/Data/**` JSON, which is why they
+> were kept in the repo after being removed once (their removal broke the curator). **The running GAME must NEVER
+> read them.** Concretely: **do NOT add or keep `LoadGlobalClassInfo(GC.m_pa<X>Info, "CIV4<X>Infos", …)` for a
+> replaced type** — that loads the XML into the engine and is the exact rollerskate that keeps sneaking back
+> ("the XMLs are present, so we're allowed to use them" — NO). Replaced infos are registered + populated from the
+> **JSON** load path, not the XML shell. Symptom when violated: a JSON-only entity (e.g. `TECH_GAME_START`, which has
+> no XML entry) gets no engine id → falls out of `m_pa<X>Info`/`m_pabHasTech` → wild `isHasTech` reads / load crashes.
+> The XML files staying in the tree for the curator is **not** license to read them at runtime.
 
 The build is driven by **`Tools/_Build.ps1`** (a FastBuild wrapper). Invoke it
 **from the `Sources/` directory**:

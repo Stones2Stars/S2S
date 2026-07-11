@@ -2,8 +2,7 @@
  "type": "UNIT_ARMADILLO",
  "skills": {
   "blendIntoCity": true,
-  "onlyDefensive": true,
-  "animalIgnoresBorders": true
+  "onlyDefensive": true
  },
  "vision": {
   "invisibleTerrain": [

@@ -52,6 +52,32 @@
     "DOMAIN_SEA": {
      "percent": -50
     }
+   },
+   "flankingUnit": {
+    "UNIT_CATAPULT": {
+     "percent": 100
+    },
+    "UNIT_TREBUCHET": {
+     "percent": 100
+    },
+    "UNIT_BOMBARD": {
+     "percent": 100
+    },
+    "UNIT_CANNON": {
+     "percent": 100
+    },
+    "UNIT_LIGHT_ARTILLERY": {
+     "percent": 100
+    },
+    "UNIT_ARTILLERY": {
+     "percent": 100
+    },
+    "UNIT_MOBILE_ARTILLERY": {
+     "percent": 100
+    },
+    "UNIT_ROCKET_ARTILLERY": {
+     "percent": 100
+    }
    }
   }
  },

@@ -1,5 +1,10 @@
 {
  "type": "UNIT_MORMON_MISSIONARY",
+ "spread": {
+  "religion": {
+   "RELIGION_MORMON": 80
+  }
+ },
  "requires": {
   "build": {
    "all": [

@@ -1,5 +1,10 @@
 {
  "type": "UNIT_EXECUTIVE_EMPCLOTH",
+ "spread": {
+  "corporation": {
+   "CORPORATION_EMPCLOTH": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

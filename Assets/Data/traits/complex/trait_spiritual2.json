@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_SPIRITUAL2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_SPIRITUAL3"
   ]
  },

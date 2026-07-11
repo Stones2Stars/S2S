@@ -1,5 +1,32 @@
 {
  "type": "UNIT_AFRICAN_PENGUIN",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_PAIR"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_WADDLE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_COMPANY",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_ROOKERY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_BATTALION",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_COLONY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_FORCES",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_HUDDLE"
+  }
+ ],
  "withdrawal": {
   "unit": {
    "percent": 45
@@ -7,8 +34,7 @@
  },
  "skills": {
   "blendIntoCity": true,
-  "onlyDefensive": true,
-  "animalIgnoresBorders": true
+  "onlyDefensive": true
  },
  "outcomes": {
   "kill": [

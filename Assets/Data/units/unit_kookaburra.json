@@ -1,5 +1,22 @@
 {
  "type": "UNIT_KOOKABURRA",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_GROUP"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_FLOCK"
+  }
+ ],
  "withdrawal": {
   "unit": {
    "percent": 65
@@ -9,7 +26,6 @@
   "assassin": true,
   "blendIntoCity": true,
   "onlyDefensive": true,
-  "animalIgnoresBorders": true,
   "targets": {
    "UNITCOMBAT_ANIMAL_AMPHIBIAN": true,
    "UNITCOMBAT_ANIMAL_INSECT": true,

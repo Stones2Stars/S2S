@@ -1,5 +1,10 @@
 {
  "type": "UNIT_BUDDHIST_MISSIONARY",
+ "spread": {
+  "religion": {
+   "RELIGION_BUDDHISM": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

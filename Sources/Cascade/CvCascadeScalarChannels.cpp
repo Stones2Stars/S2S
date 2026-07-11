@@ -13,8 +13,8 @@
 #include "CvCascadeAccumulator.h"     // the accumulator package surface (the stamps are DELETED -- scope-packages.md phase 3)
 #include "CvCascadeEnablerKernel.h"   // operatingBuildings -- the player-wide maintenance walk
 #include "CvCascadeOperatingBuildings.h"
-#include "CvJsonInfo.h"
-#include "CvJsonTraitInfo.h"
+#include "CvInfo.h"
+#include "CvTraitInfo.h"
 #include "Repos/InfoRepo.h"
 #include "Defines/CvGlobals.h"
 #include "AI/CvPlayerAI.h"            // GET_PLAYER (was riding a preceding unity-batch file -- self-sufficient now)
@@ -22,16 +22,16 @@
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
 #include "Engine/CvCity.h"
-#include "CvJsonBuildingInfo.h"
-#include "CvJsonCivicInfo.h"
-#include "CvJsonTechInfo.h"
-#include "CvJsonSpecialistInfo.h"
-#include "CvJsonUnitInfo.h"
-#include "CvJsonUnitCombatInfo.h"
-#include "CvJsonProjectInfo.h"      // InfoRepo<CvJsonProjectInfo> -- the L9 project maintenance fold
-#include "CvJsonCorporationInfo.h"  // InfoRepo<CvJsonCorporationInfo> -- the L10 corp military buildRate fold
+#include "CvBuildingInfo.h"
+#include "CvCivicInfo.h"
+#include "CvTechInfo.h"
+#include "CvSpecialistInfo.h"
+#include "CvUnitInfo.h"
+#include "CvUnitCombatInfo.h"
+#include "CvProjectInfo.h"      // InfoRepo<CvProjectInfo> -- the L9 project maintenance fold
+#include "CvCorporationInfo.h"  // InfoRepo<CvCorporationInfo> -- the L10 corp military buildRate fold
 #include "Engine/CvArea.h"            // isHomeArea -- the L8 civic home/other-area overlay gate
-#include "CvJsonProjectInfo.h"
+#include "CvProjectInfo.h"
 #include <map>
 
 // Σ a unit over the city's ACTIVE buildings at an address (the shared building-source walk). Iterates the
@@ -44,7 +44,7 @@ static int sc_buildings(const std::string& addr, const char* unit, const CvCity*
 	{
 		for (std::set<int>::const_iterator it = ec.activeBuildings->begin(); it != ec.activeBuildings->end(); ++it)
 		{
-			const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get(*it);
+			const CvInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
 			if (d != NULL) iSum += MMKernel::sumUnit(d, addr, unit, ec);
 		}
 		// obsolete buildings deliver their whenObsolete numbers into the SAME sum (json §4.2; part-1 delivery, no
@@ -52,7 +52,7 @@ static int sc_buildings(const std::string& addr, const char* unit, const CvCity*
 		if (ec.obsoleteBuildings != NULL)
 			for (std::set<int>::const_iterator it = ec.obsoleteBuildings->begin(); it != ec.obsoleteBuildings->end(); ++it)
 			{
-				const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get(*it);
+				const CvInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
 				if (d != NULL) iSum += MMKernel::sumUnitFrom(DepositIndex::whenObsoleteFor(d), addr, unit, ec);
 			}
 		return iSum;
@@ -60,7 +60,7 @@ static int sc_buildings(const std::string& addr, const char* unit, const CvCity*
 	const int nB = GC.getNumBuildingInfos();   // unwired-ctx fallback (correctness identical)
 	for (int b = 0; b < nB; ++b)
 	{
-		const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get(b);
+		const CvInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
 		if (d == NULL) continue;
 		if (cascadeIsBuildingActive(b, ec)) iSum += MMKernel::sumUnit(d, addr, unit, ec);
 		else if (cascadeIsBuildingObsolete(b, ec)) iSum += MMKernel::sumUnitFrom(DepositIndex::whenObsoleteFor(d), addr, unit, ec);
@@ -81,7 +81,7 @@ static int sc_playerBuildings(const std::string& addr, const char* unit, const C
 		pec.activeBuildings = &operatingBuildings.active; pec.vicinityProvidedBonuses = &operatingBuildings.provided;
 		for (std::set<int>::const_iterator it = operatingBuildings.active.begin(); it != operatingBuildings.active.end(); ++it)
 		{
-			const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get(*it);
+			const CvInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
 			if (d != NULL) iSum += MMKernel::sumUnit(d, addr, unit, pec);
 		}
 	}
@@ -96,13 +96,13 @@ static int sc_civicsTraits(const std::string& addr, const char* unit, const CvPl
 	{
 		const CivicTypes eCivic = owner.getCivics((CivicOptionTypes)i);
 		if (eCivic == NO_CIVIC) continue;
-		const CvJsonInfo* d = InfoRepo<CvJsonCivicInfo>::get().get(eCivic);
+		const CvInfo* d = InfoRepo<CvCivicInfo>::get().get(eCivic);
 		if (d != NULL) iSum += MMKernel::sumUnit(d, addr, unit, ec);
 	}
 	for (int i = 0; i < GC.getNumTraitInfos(); ++i)
 	{
 		if (!owner.hasTrait((TraitTypes)i)) continue;
-		const CvJsonTraitInfo* d = MMKernel::traitData(i);
+		const CvTraitInfo* d = MMKernel::traitData(i);
 		if (d != NULL) iSum += MMKernel::sumTrait(d, addr, unit, ec);
 	}
 	return iSum;
@@ -128,7 +128,7 @@ static void sc_maintAreaSplit(const CvPlayer& owner, const CvTeam* pTeam,
 		const int iArea = pc->area()->getID();
 		for (std::set<int>::const_iterator it = operatingBuildings.active.begin(); it != operatingBuildings.active.end(); ++it)
 		{
-			const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get(*it);
+			const CvInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
 			if (d == NULL) continue;
 			areaPct[iArea] += MMKernel::sumUnit(d, "maintenance.area", "percent", pec);
 			const int iOther = MMKernel::sumUnit(d, "maintenance.area.otherArea", "percent", pec);
@@ -150,7 +150,7 @@ int CascadeScalarChannels::gpBaseSpecialists(const CvCity* pCity, const CvCascad
 	{
 		const int iCount = pCity->getSpecialistCount((SpecialistTypes)i) + pCity->getFreeSpecialistCount((SpecialistTypes)i);
 		if (iCount == 0) continue;
-		const CvJsonInfo* d = InfoRepo<CvJsonSpecialistInfo>::get().get(i);
+		const CvInfo* d = InfoRepo<CvSpecialistInfo>::get().get(i);
 		if (d != NULL) iSum += iCount * MMKernel::sumUnit(d, "greatPeopleRate.city", "flat", ec);
 	}
 	return iSum;
@@ -224,7 +224,7 @@ static const ScFsSegs& sc_fsSegs()
 	if (s.count < 0) s.count = DepositIndex::lookupSegment("count");
 	return s;
 }
-static void sc_fsFold(const CvJsonInfo* d, int scopeId, const CvCascadeEvalCtx& ec, int iPureSign,
+static void sc_fsFold(const CvInfo* d, int scopeId, const CvCascadeEvalCtx& ec, int iPureSign,
 	int& outAny, std::vector<int>* pByType)
 {
 	if (d == NULL) return;
@@ -253,7 +253,7 @@ void CascadeScalarChannels::fillFreeSpecialistsCity(const CvCity* pCity, const C
 	outByType.assign(GC.getNumSpecialistInfos(), 0);
 	const OperatingBuildings& operatingBuildings = EnablerKernel::operatingBuildings(pCity);
 	for (std::set<int>::const_iterator it = operatingBuildings.active.begin(); it != operatingBuildings.active.end(); ++it)
-		sc_fsFold(InfoRepo<CvJsonBuildingInfo>::get().get(*it), sc_fsSegs().city, ec, 0, outAny, &outByType);
+		sc_fsFold(InfoRepo<CvBuildingInfo>::get().get(*it), sc_fsSegs().city, ec, 0, outAny, &outByType);
 }
 
 int CascadeScalarChannels::defenseBombardCity(const CvCity* pCity, const CvCascadeEvalCtx& ec)
@@ -280,7 +280,7 @@ int CascadeScalarChannels::tradeRouteCount(const CvCity* pCity, const CvCascadeE
 		for (int i = 0; i < GC.getNumTechInfos(); ++i)
 		{
 			if (!team.isHasTech((TechTypes)i)) continue;
-			const CvJsonInfo* d = InfoRepo<CvJsonTechInfo>::get().get(i);
+			const CvInfo* d = InfoRepo<CvTechInfo>::get().get(i);
 			if (d != NULL) iCount += MMKernel::sumUnit(d, "tradeRoutes.empire", "flat", ec);
 		}
 	}
@@ -314,7 +314,7 @@ int CascadeScalarChannels::tradeRouteLiveInputs(const CvCity* /*pCity*/)
 	return GC.getGame().getTradeRoutes() + GC.getINITIAL_TRADE_ROUTES();
 }
 
-// PROJECT world routes (the precipice-review Internet-class find): CvJsonProjectInfo world flats granted to
+// PROJECT world routes (the precipice-review Internet-class find): CvProjectInfo world flats granted to
 // EVERY player on completion (CvTeam::processProjectChange:4341; PROJECT_THE_INTERNET authors
 // tradeRoutes.world.flat:1). Derived from the RAW team project counts × the compiled deposits -- the
 // recompute also pays late-born players (the drift-repair class, cascade-right). The live data authors
@@ -331,7 +331,7 @@ int CascadeScalarChannels::tradeRoutesWorldProjects()
 		{
 			const int n = kT.getProjectCount((ProjectTypes)p);
 			if (n <= 0) continue;
-			const CvJsonInfo* d = InfoRepo<CvJsonProjectInfo>::get().get(p);
+			const CvInfo* d = InfoRepo<CvProjectInfo>::get().get(p);
 			if (d != NULL) iCount += n * MMKernel::sumUnit(d, "tradeRoutes.world", "flat", ec);
 		}
 	}
@@ -360,7 +360,7 @@ static int sc_buildRateKeyed(const char* szMember, const char* szKey, const CvCi
 	for (int b = 0; b < nB; ++b)
 	{
 		if (!cascadeIsBuildingActive(b, ec)) continue;
-		const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get(b);
+		const CvInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
 		if (d != NULL) iSum += MMKernel::sumKeyed4U(d, chanId, cityId, memberId, keyId, pctId, ec, false);
 	}
 	// the player-wide EMPIRE-scope keyed member (any city's building feeds the player accumulator)
@@ -374,7 +374,7 @@ static int sc_buildRateKeyed(const char* szMember, const char* szKey, const CvCi
 			pec.activeBuildings = &operatingBuildings.active; pec.vicinityProvidedBonuses = &operatingBuildings.provided;
 			for (std::set<int>::const_iterator it = operatingBuildings.active.begin(); it != operatingBuildings.active.end(); ++it)
 			{
-				const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get(*it);
+				const CvInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
 				if (d != NULL) iSum += MMKernel::sumKeyed4U(d, chanId, empireId, memberId, keyId, pctId, pec, false);
 			}
 		}
@@ -384,14 +384,14 @@ static int sc_buildRateKeyed(const char* szMember, const char* szKey, const CvCi
 	{
 		const CivicTypes eCivic = owner.getCivics((CivicOptionTypes)i);
 		if (eCivic == NO_CIVIC) continue;
-		const CvJsonInfo* d = InfoRepo<CvJsonCivicInfo>::get().get(eCivic);
+		const CvInfo* d = InfoRepo<CvCivicInfo>::get().get(eCivic);
 		if (d != NULL) iSum += MMKernel::sumKeyed4U(d, chanId, empireId, memberId, keyId, pctId, ec, false);
 	}
 	const bool bPure = GC.getGame().isOption(GAMEOPTION_LEADER_PURE_TRAITS);
 	for (int i = 0; i < GC.getNumTraitInfos(); ++i)
 	{
 		if (!owner.hasTrait((TraitTypes)i)) continue;
-		const CvJsonTraitInfo* d = MMKernel::traitData(i);
+		const CvTraitInfo* d = MMKernel::traitData(i);
 		if (d == NULL) continue;
 		const int iPureSign = bPure ? (d->negativeTrait ? -1 : 1) : 0;
 		iSum += MMKernel::sumKeyed4U(d, chanId, empireId, memberId, keyId, pctId, ec, false, iPureSign);
@@ -422,9 +422,9 @@ int CascadeScalarChannels::productionModifier(const CvCity* pCity, const CvCasca
 	BuildRateParts parts;
 	if (eUnit != NO_UNIT)
 	{
-		const CvJsonUnitInfo& unit = GC.getUnitInfo(eUnit);
+		const CvUnitInfo& unit = GC.getUnitInfo(eUnit);
 		// the target's OWN bonus-gated mods (BonusProductionModifiers -> buildRate.self, conditions gate on hasBonus)
-		const CvJsonInfo* d = InfoRepo<CvJsonUnitInfo>::get().get(eUnit);
+		const CvInfo* d = InfoRepo<CvUnitInfo>::get().get(eUnit);
 		if (d != NULL) parts.iSelf = MMKernel::sumUnit(d, "buildRate.self", "percent", ec);
 		// the keyed source mods (the engine skips non-type mods under isNoNonTypeProdMods)
 		parts.iKeyed = sc_buildRateKeyed("units", unit.getType(), pCity, ec);
@@ -445,7 +445,7 @@ int CascadeScalarChannels::productionModifier(const CvCity* pCity, const CvCasca
 	}
 	else if (eB != NO_BUILDING)
 	{
-		const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get(eB);
+		const CvInfo* d = InfoRepo<CvBuildingInfo>::get().get(eB);
 		if (d != NULL) parts.iSelf = MMKernel::sumUnit(d, "buildRate.self", "percent", ec);
 		parts.iKeyed = sc_buildRateKeyed("buildings", GC.getBuildingInfo(eB).getType(), pCity, ec);
 		if (bSrInCity)
@@ -453,7 +453,7 @@ int CascadeScalarChannels::productionModifier(const CvCity* pCity, const CvCasca
 	}
 	else if (ePr != NO_PROJECT)
 	{
-		const CvJsonInfo* d = InfoRepo<CvJsonProjectInfo>::get().get(ePr);
+		const CvInfo* d = InfoRepo<CvProjectInfo>::get().get(ePr);
 		if (d != NULL) parts.iSelf = MMKernel::sumUnit(d, "buildRate.self", "percent", ec);
 		if (GC.getProjectInfo(ePr).isSpaceship())
 			parts.iMember = sc_buildRateMember("space", pCity, ec);
@@ -483,7 +483,7 @@ int CascadeScalarChannels::maintenanceModifier(const CvCity* pCity, const CvCasc
 		for (int i = 0; i < GC.getNumTechInfos(); ++i)
 		{
 			if (!team.isHasTech((TechTypes)i)) continue;
-			const CvJsonInfo* d = InfoRepo<CvJsonTechInfo>::get().get(i);
+			const CvInfo* d = InfoRepo<CvTechInfo>::get().get(i);
 			if (d != NULL) iMod += MMKernel::sumUnit(d, "maintenance.empire", "percent", ec);
 		}
 	}
@@ -541,7 +541,7 @@ int CascadeScalarChannels::maintenanceModifierCity(const CvCity* pCity, const Cv
 	for (int i = 0; i < GC.getNumTechInfos(); ++i)
 	{
 		if (!team.isHasTech((TechTypes)i)) continue;
-		const CvJsonInfo* d = InfoRepo<CvJsonTechInfo>::get().get(i);
+		const CvInfo* d = InfoRepo<CvTechInfo>::get().get(i);
 		if (d != NULL) iMod += MMKernel::sumUnit(d, "maintenance.empire", "percent", ec);
 	}
 	return iMod;
@@ -556,7 +556,7 @@ int CascadeScalarChannels::tradeRoutesCity(const CvCity* pCity, const CvCascadeE
 	for (int i = 0; i < GC.getNumTechInfos(); ++i)
 	{
 		if (!team.isHasTech((TechTypes)i)) continue;
-		const CvJsonInfo* d = InfoRepo<CvJsonTechInfo>::get().get(i);
+		const CvInfo* d = InfoRepo<CvTechInfo>::get().get(i);
 		if (d != NULL) iCount += MMKernel::sumUnit(d, "tradeRoutes.empire", "flat", ec);
 	}
 	return iCount;
@@ -610,7 +610,7 @@ void CascadeScalarChannels::fillPlayerScalars(const CvPlayer& player, CascadePla
 		{
 			const int n = pTeam->getProjectCount((ProjectTypes)i);
 			if (n <= 0) continue;
-			const CvJsonInfo* d = InfoRepo<CvJsonProjectInfo>::get().get(i);
+			const CvInfo* d = InfoRepo<CvProjectInfo>::get().get(i);
 			if (d == NULL) continue;
 			out.maintPlayerAll += n * MMKernel::sumUnit(d, "maintenance.empire.all", "percent", pec);
 			out.maintConnPct += n * MMKernel::sumUnit(d, "maintenance.empire.connectedCity", "percent", pec);
@@ -629,14 +629,14 @@ void CascadeScalarChannels::fillPlayerScalars(const CvPlayer& player, CascadePla
 		{
 			const CivicTypes eCivic = player.getCivics((CivicOptionTypes)i);
 			if (eCivic == NO_CIVIC) continue;
-			sc_fsFold(InfoRepo<CvJsonCivicInfo>::get().get(eCivic), sc_fsSegs().empire, fsec, 0,
+			sc_fsFold(InfoRepo<CvCivicInfo>::get().get(eCivic), sc_fsSegs().empire, fsec, 0,
 				out.fsEmpireAny, &out.fsEmpireByType);
 		}
 		const bool bPure = GC.getGame().isOption(GAMEOPTION_LEADER_PURE_TRAITS);
 		for (int t = 0; t < GC.getNumTraitInfos(); ++t)
 		{
 			if (!player.hasTrait((TraitTypes)t)) continue;
-			const CvJsonTraitInfo* d = MMKernel::traitData(t);
+			const CvTraitInfo* d = MMKernel::traitData(t);
 			if (d == NULL) continue;
 			sc_fsFold(d, sc_fsSegs().empire, fsec, bPure ? (d->negativeTrait ? -1 : 1) : 0,
 				out.fsEmpireAny, &out.fsEmpireByType);
@@ -652,7 +652,7 @@ void CascadeScalarChannels::fillPlayerScalars(const CvPlayer& player, CascadePla
 			int iAreaAny = 0;
 			for (std::set<int>::const_iterator it = operatingBuildings.active.begin(); it != operatingBuildings.active.end(); ++it)
 			{
-				const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get(*it);
+				const CvInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
 				sc_fsFold(d, sc_fsSegs().empire, pec, 0, out.fsEmpireAny, &out.fsEmpireByType);
 				sc_fsFold(d, sc_fsSegs().area, pec, 0, iAreaAny, NULL);   // area BY-TYPE has no authorings (census guard)
 			}
@@ -679,7 +679,7 @@ void CascadeScalarChannels::fillPlayerScalars(const CvPlayer& player, CascadePla
 			for (int t = 0; t < GC.getNumTraitInfos(); ++t)
 			{
 				if (!player.hasTrait((TraitTypes)t)) continue;
-				const CvJsonTraitInfo* d = MMKernel::traitData(t);
+				const CvTraitInfo* d = MMKernel::traitData(t);
 				if (d == NULL) continue;
 				const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
 				for (size_t i = 0; i < deps.size(); ++i)
@@ -731,7 +731,7 @@ static void sc_brLedgerReset(CascadeBrLedger& out)
 // (seg[2]) into the dense per-kind table, indexed by the FK-resolved target id (match-equivalent to the
 // former (memberSeg<<20)|keySeg map key -- both derive from the same INFOTYPE string; the precipice-§5
 // dense-form fix, generic-code-static-storage on the read path).
-static void sc_brLedgerFold(const CvJsonInfo* d, int chanId, int scopeId, int pctId,
+static void sc_brLedgerFold(const CvInfo* d, int chanId, int scopeId, int pctId,
 	const CvCascadeEvalCtx& ec, int iPureSign, CascadeBrLedger& out)
 {
 	if (d == NULL) return;
@@ -771,7 +771,7 @@ void CascadeScalarChannels::fillBuildRateCity(const CvCity* pCity, const CvCasca
 	if (chanId >= 0 && cityId >= 0 && pctId >= 0 && ec.activeBuildings != NULL)
 	{
 		for (std::set<int>::const_iterator it = ec.activeBuildings->begin(); it != ec.activeBuildings->end(); ++it)
-			sc_brLedgerFold(InfoRepo<CvJsonBuildingInfo>::get().get(*it), chanId, cityId, pctId, ec, 0, outKeyed);
+			sc_brLedgerFold(InfoRepo<CvBuildingInfo>::get().get(*it), chanId, cityId, pctId, ec, 0, outKeyed);
 	}
 	// civics + traits keyed (empire scope, CITY-REALIZED -- conditions evaluate against THIS city)
 	if (chanId >= 0 && empireId >= 0 && pctId >= 0)
@@ -781,13 +781,13 @@ void CascadeScalarChannels::fillBuildRateCity(const CvCity* pCity, const CvCasca
 		{
 			const CivicTypes eCivic = owner.getCivics((CivicOptionTypes)i);
 			if (eCivic == NO_CIVIC) continue;
-			sc_brLedgerFold(InfoRepo<CvJsonCivicInfo>::get().get(eCivic), chanId, empireId, pctId, ec, 0, outKeyed);
+			sc_brLedgerFold(InfoRepo<CvCivicInfo>::get().get(eCivic), chanId, empireId, pctId, ec, 0, outKeyed);
 		}
 		const bool bPure = GC.getGame().isOption(GAMEOPTION_LEADER_PURE_TRAITS);
 		for (int i = 0; i < GC.getNumTraitInfos(); ++i)
 		{
 			if (!owner.hasTrait((TraitTypes)i)) continue;
-			const CvJsonTraitInfo* d = MMKernel::traitData(i);
+			const CvTraitInfo* d = MMKernel::traitData(i);
 			if (d == NULL) continue;
 			sc_brLedgerFold(d, chanId, empireId, pctId, ec, bPure ? (d->negativeTrait ? -1 : 1) : 0, outKeyed);
 		}
@@ -800,7 +800,7 @@ void CascadeScalarChannels::fillBuildRateCity(const CvCity* pCity, const CvCasca
 	// "Versailles bug" class, consumed by no reader -- was fixed + regenerated the same day).
 	for (int c = 0; c < GC.getNumCorporationInfos(); ++c)
 	{
-		const CvJsonInfo* d = InfoRepo<CvJsonCorporationInfo>::get().get(c);
+		const CvInfo* d = InfoRepo<CvCorporationInfo>::get().get(c);
 		if (d != NULL) outMilitary += MMKernel::sumUnit(d, "buildRate.city.military", "percent", ec);
 	}
 	outSpace = sc_buildings("buildRate.city.space", "percent", pCity, ec)
@@ -836,7 +836,7 @@ void CascadeScalarChannels::fillBuildRatePlayer(const CvPlayer& player, CascadeP
 			pec.city = pc; pec.plot = pc->plot(); pec.player = &player; pec.team = pTeam;
 			pec.activeBuildings = &operatingBuildings.active; pec.vicinityProvidedBonuses = &operatingBuildings.provided;
 			for (std::set<int>::const_iterator it = operatingBuildings.active.begin(); it != operatingBuildings.active.end(); ++it)
-				sc_brLedgerFold(InfoRepo<CvJsonBuildingInfo>::get().get(*it), chanId, empireId, pctId, pec, 0, out.brEmpKeyed);
+				sc_brLedgerFold(InfoRepo<CvBuildingInfo>::get().get(*it), chanId, empireId, pctId, pec, 0, out.brEmpKeyed);
 		}
 	}
 	out.brEmpMilitary = sc_playerBuildings("buildRate.empire.military", "percent", player, pTeam);

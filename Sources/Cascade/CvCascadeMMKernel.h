@@ -15,9 +15,9 @@
 #include <string>
 #include <vector>
 
-class CvJsonInfo;
+class CvInfo;
 struct CascadeDeposit;   // the compiled deposit record (sumUnit100From takes a vector of these) -- full def in CvCascadeDepositIndex.h
-class CvJsonTraitInfo;
+class CvTraitInfo;
 class CvPlot;
 class CvPlayer;
 class CvCity;
@@ -42,10 +42,10 @@ public:
 	static long perScale(const CascadeDeposit& dep, const CvCascadeEvalCtx& ec, long value100);
 
 	// Sum a channel's SCOPE-WIDE percent deposits (address == "<family>.<scope>", unit "percent"), gated, as HUMAN percent.
-	static int sumPercent(const CvJsonInfo* d, const std::string& wantAddress, const CvCascadeEvalCtx& ec);
+	static int sumPercent(const CvInfo* d, const std::string& wantAddress, const CvCascadeEvalCtx& ec);
 
 	// Σ a unit at a scope-wide address as a HUMAN int (value100/100; StoneBase SumUnitAtScope = Σ (int)m.Value), gated.
-	static int sumUnit(const CvJsonInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec);
+	static int sumUnit(const CvInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec);
 
 	// Vector-taking core of sumUnit (the int twin of sumUnit100From): sum a compiled-record vector directly, so a channel
 	// summer folds an obsolete building's `whenObsolete` tree (DepositIndex::whenObsoleteFor(d)) into the SAME per-position
@@ -54,7 +54,7 @@ public:
 
 	// Σ a unit at a scope-wide address in ×100 FIXED-POINT (value100 direct; StoneBase SumUnit100 = Σ round(human×100)),
 	// gated -- the OOS-correct sum for FRACTIONAL flats (a commerce −0.6 stays −60, not truncated to 0). modifier.md §2.
-	static long sumUnit100(const CvJsonInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec);
+	static long sumUnit100(const CvInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec);
 
 	// Vector-taking core of sumUnit100: sum a compiled-record vector directly -- so a channel folds a building's
 	// `whenObsolete` tree (DepositIndex::whenObsoleteFor(d), json §4.2) with the SAME gated match as its normal records.
@@ -63,17 +63,17 @@ public:
 
 	// Σ a unit's UNCONDITIONED magnitudes at a scope-wide address (no enabled/disabled) -- the entity's INTRINSIC base
 	// (a specialist's own getYield/CommerceChange). StoneBase SumUnitUnconditioned. Human int (value100/100).
-	static int sumUnconditioned(const CvJsonInfo* d, const std::string& wantAddress, const char* unit);
+	static int sumUnconditioned(const CvInfo* d, const std::string& wantAddress, const char* unit);
 
-	// The active trait set's CvJsonTraitInfo for trait t -- COMPLEX if GAMEOPTION_LEADER_COMPLEX_TRAITS, else SIMPLE
+	// The active trait set's CvTraitInfo for trait t -- COMPLEX if GAMEOPTION_LEADER_COMPLEX_TRAITS, else SIMPLE
 	// (StoneBase ActiveTraitSet). The two sets collide on the engine id, so they live in separate repos; this picks by the
-	// live option (asserted from /state in StoneBase). NEVER the engine CvJsonTraitInfo (its CvInfoReplacements swap is the catastrophe).
-	static const CvJsonTraitInfo* traitData(int t);
+	// live option (asserted from /state in StoneBase). NEVER the engine CvTraitInfo (its CvInfoReplacements swap is the catastrophe).
+	static const CvTraitInfo* traitData(int t);
 
 	// Σ a TRAIT's deposits (addr, unit) with the PURE_TRAITS sign filter (StoneBase PureFilter: under GAMEOPTION_LEADER_PURE_TRAITS
 	// a negative trait keeps only v<=0, a positive keeps only v>=0). sumTrait = human (value100/100); sumTrait100 = ×100.
-	static int sumTrait(const CvJsonTraitInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec);
-	static long sumTrait100(const CvJsonTraitInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec);
+	static int sumTrait(const CvTraitInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec);
+	static long sumTrait100(const CvTraitInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec);
 
 	// ---- the KEYED plot helpers run on the COMPILED deposit index (DepositIndex): callers pass INTERNED segment
 	// ---- ids (chanId = DepositIndex::lookupSegment(channel); scopeId likewise; impKeyIds via segIdForImprovement).
@@ -82,27 +82,27 @@ public:
 	// KeyedMember by compiled segments: Σ a source's <unit> at "<chan>.<scope>.<member>.<KEY>"
 	// (ModifierMath.KeyedMember). sumKeyed4U takes the unit SEGMENT id explicitly (percent for the keyed
 	// buildRate members -- they are percent-unit deposits); sumKeyed4F is the flat parameterization.
-	static int sumKeyed4U(const CvJsonInfo* d, int chanId, int scopeId, int memberId, int keyId, int unitId,
+	static int sumKeyed4U(const CvInfo* d, int chanId, int scopeId, int memberId, int keyId, int unitId,
 		const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign = 0);
-	static int sumKeyed4F(const CvJsonInfo* d, int chanId, int scopeId, int memberId, int keyId,
+	static int sumKeyed4F(const CvInfo* d, int chanId, int scopeId, int memberId, int keyId,
 		const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign = 0);
 
 	// KeyedPlotYield: Σ a source's flat keyed by THIS plot's improvement(s)/terrain/feature/bonus at a scope (the engine's
 	// improvementYieldChange / terrainYieldChange / per-plot-bonus addends). impKeyIds = the plot's improvement + its
 	// upgrade-ancestors (a building source) or just the direct improvement (civic/trait/substrate), as interned segment ids.
-	static int keyedPlotYield(int chanId, const CvJsonInfo* d, int scopeId, const CvPlot* p,
+	static int keyedPlotYield(int chanId, const CvInfo* d, int scopeId, const CvPlot* p,
 		TeamTypes eTeam, const std::vector<int>& impKeyIds, const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign = 0);
 
 	// Just the IMPROVEMENT-keyed part of the above (the engine's impPlayer/impTeam accumulator inside the clamped improvement addend).
-	static int keyedImprovementOnly(int chanId, const CvJsonInfo* d, int scopeId,
+	static int keyedImprovementOnly(int chanId, const CvInfo* d, int scopeId,
 		const std::vector<int>& impKeyIds, const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign = 0);
 
 	// PlotsTargetYield: Σ a source's plots-TARGET flat that applies to THIS plot (the predicate evaluated against the plot).
-	static int plotsTargetYield(int chanId, const CvJsonInfo* d, int scopeId, const CvCascadeEvalCtx& ec, int pureSign = 0);
+	static int plotsTargetYield(int chanId, const CvInfo* d, int scopeId, const CvCascadeEvalCtx& ec, int pureSign = 0);
 
 	// One plot-substrate entity's own plot.flat + its plot-keyed yield (a route folds the improvement's RouteYieldChanges),
 	// PlotEval (bonusFromPlot). StoneBase SubstratePlotYield. NULL info -> 0.
-	static int substratePlotYield(int chanId, const CvJsonInfo* d, const CvPlot* p, TeamTypes eTeam,
+	static int substratePlotYield(int chanId, const CvInfo* d, const CvPlot* p, TeamTypes eTeam,
 		const std::vector<int>& directImpKeyIds, const CvCascadeEvalCtx& ec);
 
 	// The player's effective extra/less-yield threshold for a channel: MIN over the POSITIVE per-DEPOSIT magnitudes of

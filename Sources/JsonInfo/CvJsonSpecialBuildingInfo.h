@@ -5,13 +5,13 @@
 //
 //	CvJsonSpecialBuildingInfo -- the JSON poco for SPECIAL BUILDINGS (the building group/slot axis; uniformity
 //	ruling: every info type has its own CvJson<X>Info home). Composes the section unit the special-building data
-//	authors: `allowed` (the per-player group instance caps). Everything else is served by the CvJsonInfo base; no
+//	authors: `allowed` (the per-player group instance caps). Everything else is served by the CvInfo base; no
 //	typed members yet (the base dispatch covers the composed section -- no mapFrom override).
 //
 
-#include "CvJsonInfo.h"
+#include "CvInfo.h"
 
-class CvJsonSpecialBuildingInfo : public CvJsonInfo
+class CvJsonSpecialBuildingInfo : public CvInfo
 {
 public:
 	CvJsonSpecialBuildingInfo();

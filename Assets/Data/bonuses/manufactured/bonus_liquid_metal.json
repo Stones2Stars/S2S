@@ -1,7 +1,7 @@
 {
  "type": "BONUS_LIQUID_METAL",
  "enables": {
-  "routes": [
+  "routesAnd": [
    "ROUTE_GRAVITY_TRAIN"
   ]
  },

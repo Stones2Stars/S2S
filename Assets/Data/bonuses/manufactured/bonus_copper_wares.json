@@ -32,7 +32,9 @@
    "BUILDING_WIND_WATER_PUMP"
   ],
   "routes": [
-   "ROUTE_ELECTRIC_RAILROAD",
+   "ROUTE_ELECTRIC_RAILROAD"
+  ],
+  "routesAnd": [
    "ROUTE_MAGLEV"
   ],
   "units": [

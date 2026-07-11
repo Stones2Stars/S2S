@@ -1,5 +1,10 @@
 {
  "type": "UNIT_EXECUTIVE_MOBBY",
+ "spread": {
+  "corporation": {
+   "CORPORATION_MOBBY": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

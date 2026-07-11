@@ -7,20 +7,20 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeMMKernel.h"
-#include "CvJsonInfo.h"                // CvJsonInfo (the spec model the DepositIndex compiled from)
+#include "CvInfo.h"                // CvInfo (the spec model the DepositIndex compiled from)
 #include "Repos/InfoRepo.h"            // InfoRepo<CvXInfo>::get().get(id) -- the JSON info home
 #include "Defines/CvGlobals.h"
 #include "Engine/CvPlot.h"
 #include "Engine/CvPlayer.h"
 #include "Engine/CvCity.h"             // building-keyed percent iterates the city's active buildings
-#include "CvJsonBuildingInfo.h"      // GC.getBuildingInfo(b).getType() -- the address key for building-keyed deposits
+#include "CvBuildingInfo.h"      // GC.getBuildingInfo(b).getType() -- the address key for building-keyed deposits
 #include "Engine/CvGame.h"             // GC.getGame().isOption (the trait-set option gate)
-#include "Infos/CvTerrainInfo.h"
-#include "Infos/CvFeatureInfo.h"
-#include "Infos/CvBonusInfo.h"
-#include "Infos/CvImprovementInfo.h"
-#include "CvJsonTraitInfo.h"
-#include "CvJsonCivicInfo.h"
+#include "CvTerrainInfo.h"
+#include "CvFeatureInfo.h"
+#include "CvBonusInfo.h"
+#include "CvImprovementInfo.h"
+#include "CvTraitInfo.h"
+#include "CvCivicInfo.h"
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "CvCascadeConditionEval.h"    // cascadeEvalCondition
 #include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (hot paths match ints)
@@ -76,7 +76,7 @@ long MMKernel::perScale(const CascadeDeposit& dep, const CvCascadeEvalCtx& ec, l
 }
 
 // Sum a channel's SCOPE-WIDE percent deposits (address == "<family>.<scope>", unit "percent"), gated, as HUMAN percent.
-int MMKernel::sumPercent(const CvJsonInfo* d, const std::string& wantAddress, const CvCascadeEvalCtx& ec)
+int MMKernel::sumPercent(const CvInfo* d, const std::string& wantAddress, const CvCascadeEvalCtx& ec)
 {
 	const int wantId = DepositIndex::lookupAddress(wantAddress);
 	if (wantId < 0) return 0;   // never authored anywhere
@@ -101,7 +101,7 @@ int MMKernel::sumPercent(const CvJsonInfo* d, const std::string& wantAddress, co
 // StoneBase ActiveTraitSet) and PURE_TRAITS IS applied (sumTrait/sumTrait100 drop off-alignment values, StoneBase PureFilter).
 
 // Σ a unit at a scope-wide address as a HUMAN int (value100/100; StoneBase SumUnitAtScope = Σ (int)m.Value), gated.
-int MMKernel::sumUnit(const CvJsonInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec)
+int MMKernel::sumUnit(const CvInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec)
 {
 	return sumUnitFrom(DepositIndex::depositsFor(d), wantAddress, unit, ec);
 }
@@ -128,7 +128,7 @@ int MMKernel::sumUnitFrom(const std::vector<CascadeDeposit>& deps, const std::st
 
 // Σ a unit at a scope-wide address in ×100 FIXED-POINT (value100 direct; StoneBase SumUnit100 = Σ round(human×100)),
 // gated -- the OOS-correct sum for FRACTIONAL flats (a commerce −0.6 stays −60, not truncated to 0). modifier.md §2.
-long MMKernel::sumUnit100(const CvJsonInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec)
+long MMKernel::sumUnit100(const CvInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec)
 {
 	return sumUnit100From(DepositIndex::depositsFor(d), wantAddress, unit, ec);
 }
@@ -154,7 +154,7 @@ long MMKernel::sumUnit100From(const std::vector<CascadeDeposit>& deps, const std
 
 // Σ a unit's UNCONDITIONED magnitudes at a scope-wide address (no enabled/disabled) -- the entity's INTRINSIC base
 // (a specialist's own getYield/CommerceChange). StoneBase SumUnitUnconditioned. Human int (value100/100).
-int MMKernel::sumUnconditioned(const CvJsonInfo* d, const std::string& wantAddress, const char* unit)
+int MMKernel::sumUnconditioned(const CvInfo* d, const std::string& wantAddress, const char* unit)
 {
 	const int wantId = DepositIndex::lookupAddress(wantAddress);
 	if (wantId < 0) return 0;
@@ -174,25 +174,25 @@ int MMKernel::sumUnconditioned(const CvJsonInfo* d, const std::string& wantAddre
 	return sum;
 }
 
-// ---- the active-trait-set + PURE_TRAITS helpers (StoneBase ActiveTraitSet + PureFilter; NEVER the engine CvJsonTraitInfo) ----
+// ---- the active-trait-set + PURE_TRAITS helpers (StoneBase ActiveTraitSet + PureFilter; NEVER the engine CvTraitInfo) ----
 
-// The active trait set's CvJsonTraitInfo for trait t -- COMPLEX if GAMEOPTION_LEADER_COMPLEX_TRAITS, else SIMPLE
+// The active trait set's CvTraitInfo for trait t -- COMPLEX if GAMEOPTION_LEADER_COMPLEX_TRAITS, else SIMPLE
 // (StoneBase ActiveTraitSet). The two sets collide on the engine id, so they live in separate repos; this picks by the
-// live option (asserted from /state in StoneBase). NEVER the engine CvJsonTraitInfo (its CvInfoReplacements swap is the catastrophe).
-const CvJsonTraitInfo* MMKernel::traitData(int t)
+// live option (asserted from /state in StoneBase). NEVER the engine CvTraitInfo (its CvInfoReplacements swap is the catastrophe).
+const CvTraitInfo* MMKernel::traitData(int t)
 {
 	if (GC.getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS))
 	{
-		const CvJsonInfo* d = InfoRepo<CvComplexTraitTag>::get().get(t);
-		if (d != NULL) return static_cast<const CvJsonTraitInfo*>(d);
+		const CvInfo* d = InfoRepo<CvComplexTraitTag>::get().get(t);
+		if (d != NULL) return static_cast<const CvTraitInfo*>(d);
 	}
-	const CvJsonInfo* d = InfoRepo<CvJsonTraitInfo>::get().get(t);   // the SIMPLE set (engine CvJsonTraitInfo tag = the simple repo)
-	return d != NULL ? static_cast<const CvJsonTraitInfo*>(d) : NULL;
+	const CvInfo* d = InfoRepo<CvTraitInfo>::get().get(t);   // the SIMPLE set (engine CvTraitInfo tag = the simple repo)
+	return d != NULL ? static_cast<const CvTraitInfo*>(d) : NULL;
 }
 
 // Σ a TRAIT's deposits (addr, unit) with the PURE_TRAITS sign filter (StoneBase PureFilter: under GAMEOPTION_LEADER_PURE_TRAITS
 // a negative trait keeps only v<=0, a positive keeps only v>=0). sumTrait = human (value100/100); sumTrait100 = ×100.
-int MMKernel::sumTrait(const CvJsonTraitInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec)
+int MMKernel::sumTrait(const CvTraitInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec)
 {
 	if (d == NULL) return 0;
 	const int wantId = DepositIndex::lookupAddress(wantAddress);
@@ -212,7 +212,7 @@ int MMKernel::sumTrait(const CvJsonTraitInfo* d, const std::string& wantAddress,
 	}
 	return sum;
 }
-long MMKernel::sumTrait100(const CvJsonTraitInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec)
+long MMKernel::sumTrait100(const CvTraitInfo* d, const std::string& wantAddress, const char* unit, const CvCascadeEvalCtx& ec)
 {
 	if (d == NULL) return 0;
 	const int wantId = DepositIndex::lookupAddress(wantAddress);
@@ -242,7 +242,7 @@ long MMKernel::sumTrait100(const CvJsonTraitInfo* d, const std::string& wantAddr
 // The shared flat-sum core over COMPILED SEGMENTS: match by segment count + each segment id, with the plot-eval
 // flag (bonusFromPlot: a bare {HAS_BONUS:X} reads THIS plot -- ModifierMath.PlotEval; the caller sets ec.plot)
 // and the PureFilter sign gate (+1 positive trait keeps non-negative values; -1 negative keeps non-positive).
-static int mmk_sumFlatSegs(const CvJsonInfo* d, int nSeg, int s0, int s1, int s2, int s3,
+static int mmk_sumFlatSegs(const CvInfo* d, int nSeg, int s0, int s1, int s2, int s3,
 	const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign, int unitFlat)
 {
 	CvCascadeEvalFlags f;
@@ -267,7 +267,7 @@ static int mmk_sumFlatSegs(const CvJsonInfo* d, int nSeg, int s0, int s1, int s2
 
 // KeyedMember by compiled segments at an EXPLICIT unit: Σ a source's <unit> at "<chan>.<scope>.<member>.<KEY>"
 // (ModifierMath.KeyedMember). The keyed percent channels (buildRate) pass the percent segment; the flat form below.
-int MMKernel::sumKeyed4U(const CvJsonInfo* d, int chanId, int scopeId, int memberId, int keyId, int unitId,
+int MMKernel::sumKeyed4U(const CvInfo* d, int chanId, int scopeId, int memberId, int keyId, int unitId,
 	const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign)
 {
 	if (d == NULL || chanId < 0 || scopeId < 0 || memberId < 0 || keyId < 0 || unitId < 0) return 0;   // never authored => 0
@@ -275,7 +275,7 @@ int MMKernel::sumKeyed4U(const CvJsonInfo* d, int chanId, int scopeId, int membe
 }
 
 // The FLAT parameterization of the above (the plot/keyed-yield walks).
-int MMKernel::sumKeyed4F(const CvJsonInfo* d, int chanId, int scopeId, int memberId, int keyId,
+int MMKernel::sumKeyed4F(const CvInfo* d, int chanId, int scopeId, int memberId, int keyId,
 	const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign)
 {
 	return sumKeyed4U(d, chanId, scopeId, memberId, keyId, mmk_seg("flat", s_segFlat), ec, bonusFromPlot, pureSign);
@@ -284,7 +284,7 @@ int MMKernel::sumKeyed4F(const CvJsonInfo* d, int chanId, int scopeId, int membe
 // KeyedPlotYield: Σ a source's flat keyed by THIS plot's improvement(s)/terrain/feature/bonus at a scope (the engine's
 // improvementYieldChange / terrainYieldChange / per-plot-bonus addends). impKeyIds = the plot's improvement + its
 // upgrade-ancestors (a building source) or just the direct improvement (civic/trait/substrate), as interned segment ids.
-int MMKernel::keyedPlotYield(int chanId, const CvJsonInfo* d, int scopeId, const CvPlot* p,
+int MMKernel::keyedPlotYield(int chanId, const CvInfo* d, int scopeId, const CvPlot* p,
 	TeamTypes eTeam, const std::vector<int>& impKeyIds, const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign)
 {
 	if (d == NULL || chanId < 0 || scopeId < 0) return 0;
@@ -305,7 +305,7 @@ int MMKernel::keyedPlotYield(int chanId, const CvJsonInfo* d, int scopeId, const
 }
 
 // Just the IMPROVEMENT-keyed part of the above (the engine's impPlayer/impTeam accumulator inside the clamped improvement addend).
-int MMKernel::keyedImprovementOnly(int chanId, const CvJsonInfo* d, int scopeId,
+int MMKernel::keyedImprovementOnly(int chanId, const CvInfo* d, int scopeId,
 	const std::vector<int>& impKeyIds, const CvCascadeEvalCtx& ec, bool bonusFromPlot, int pureSign)
 {
 	if (d == NULL || chanId < 0 || scopeId < 0) return 0;
@@ -317,7 +317,7 @@ int MMKernel::keyedImprovementOnly(int chanId, const CvJsonInfo* d, int scopeId,
 }
 
 // PlotsTargetYield: Σ a source's plots-TARGET flat that applies to THIS plot (the predicate evaluated against the plot).
-int MMKernel::plotsTargetYield(int chanId, const CvJsonInfo* d, int scopeId, const CvCascadeEvalCtx& ec, int pureSign)
+int MMKernel::plotsTargetYield(int chanId, const CvInfo* d, int scopeId, const CvCascadeEvalCtx& ec, int pureSign)
 {
 	if (d == NULL || chanId < 0 || scopeId < 0) return 0;
 	const int mPlots = mmk_seg("plots", s_segPlots);
@@ -327,7 +327,7 @@ int MMKernel::plotsTargetYield(int chanId, const CvJsonInfo* d, int scopeId, con
 
 // One plot-substrate entity's own plot.flat + its plot-keyed yield (a route folds the improvement's RouteYieldChanges),
 // PlotEval (bonusFromPlot). StoneBase SubstratePlotYield. NULL info -> 0.
-int MMKernel::substratePlotYield(int chanId, const CvJsonInfo* d, const CvPlot* p, TeamTypes eTeam,
+int MMKernel::substratePlotYield(int chanId, const CvInfo* d, const CvPlot* p, TeamTypes eTeam,
 	const std::vector<int>& directImpKeyIds, const CvCascadeEvalCtx& ec)
 {
 	if (d == NULL || chanId < 0) return 0;
@@ -357,7 +357,7 @@ int MMKernel::minPosThreshold(const char* thresholdFamily, const std::string& ch
 	for (int t = 0; t < GC.getNumTraitInfos(); ++t)
 	{
 		if (!player.hasTrait((TraitTypes)t)) continue;
-		const CvJsonTraitInfo* d = traitData(t);   // the option-gated active set (simple/complex), StoneBase ActiveTraitSet
+		const CvTraitInfo* d = traitData(t);   // the option-gated active set (simple/complex), StoneBase ActiveTraitSet
 		if (d == NULL) continue;
 		if (bPure)   // StoneBase threshold-family pure gate (source-level, by family), NOT the value-sign sumTrait filter
 		{
@@ -378,7 +378,7 @@ int MMKernel::minPosThreshold(const char* thresholdFamily, const std::string& ch
 	{
 		const CivicTypes c = player.getCivics((CivicOptionTypes)co);
 		if (c == NO_CIVIC) continue;
-		const CvJsonInfo* d = InfoRepo<CvJsonCivicInfo>::get().get((int)c);
+		const CvInfo* d = InfoRepo<CvCivicInfo>::get().get((int)c);
 		if (d == NULL) continue;
 		const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
 		for (size_t i = 0; i < deps.size(); ++i)   // civics: no alignment, no pure filter
@@ -412,7 +412,7 @@ int MMKernel::buildingKeyedSourcePercent(const std::string& channel, const CvCit
 	{
 		const CivicTypes c = player.getCivics((CivicOptionTypes)co);
 		if (c == NO_CIVIC) continue;
-		const CvJsonInfo* d = InfoRepo<CvJsonCivicInfo>::get().get((int)c);
+		const CvInfo* d = InfoRepo<CvCivicInfo>::get().get((int)c);
 		if (d == NULL) continue;
 		const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
 		for (size_t i = 0; i < deps.size(); ++i)

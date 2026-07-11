@@ -1,5 +1,10 @@
 {
  "type": "UNIT_JAINISM_MISSIONARY",
+ "spread": {
+  "religion": {
+   "RELIGION_JAINISM": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

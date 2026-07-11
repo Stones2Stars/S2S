@@ -1,5 +1,17 @@
 {
  "type": "UNIT_RIVER_CROC_LARGE",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_LONE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_BASK"
+  }
+ ],
  "skills": {
   "assassin": true,
   "blendIntoCity": true,

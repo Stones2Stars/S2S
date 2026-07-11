@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_EFFICIENT1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_EFFICIENT2"
   ]
  },

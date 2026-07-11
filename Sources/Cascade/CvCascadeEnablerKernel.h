@@ -19,7 +19,7 @@
 #include <string>
 #include <vector>
 
-class CvJsonInfo;
+class CvInfo;
 class CvJsonCondition;
 class CvPlayer;
 class CvCity;
@@ -47,34 +47,36 @@ struct CascadeCondDeps
 class EnablerKernel
 {
 public:
-	// The per-(bucket) InfoRepo dispatch -- the entity's CvJsonInfo by bucket name + id.
-	static const CvJsonInfo* jsonFor(const std::string& b, int id);
+	// The per-(bucket) InfoRepo dispatch -- the entity's CvInfo by bucket name + id.
+	static const CvInfo* jsonFor(const std::string& b, int id);
 
 	// Insert edge `key`'s targets (if present) into out.
-	static void addEdge(const CvJsonInfo* j, const std::string& key, std::set<int>& out);
+	static void addEdge(const CvInfo* j, const std::string& key, std::set<int>& out);
 
 	// Accumulate one HAVE entity's source-side edges across every bucket (enables ADD to cand; obsoletes/replaces/
 	// disables collected into rem for the post-gather set-difference).
-	static void accumHave(const CvJsonInfo* j, EnBucketSets& cand, EnBucketSets& rem);
+	static void accumHave(const CvInfo* j, EnBucketSets& cand, EnBucketSets& rem);
 
 	// GENERATE (enabler.md §2). HAVE = team techs + adopted civics (+ the city's buildings if pCity != NULL).
 	static void generate(const CvPlayer& kPlayer, const CvCity* pCity, EnBucketSets& cand);
 
 	// Target-side obsoletedBy.techs: any held team tech obsoletes j.
-	static bool obsoletedByHeldTech(const CvJsonInfo* j, const CvTeam& kTeam);
+	static bool obsoletedByHeldTech(const CvInfo* j, const CvTeam& kTeam);
 
 	// requires gate: build ∧ operate, through the typed-condition evaluator (STRICT state religion for build).
-	static bool requiresMet(const CvJsonInfo* j, const CvCascadeEvalCtx& ec);
+	// bVisible=true relaxes the GREYABLE clauses (connectable resource / unadopted civic) for the visible frontier (enabler.md §6).
+	static bool requiresMet(const CvInfo* j, const CvCascadeEvalCtx& ec, bool bVisible = false);
 
 	// allowed cap gate: current tally count vs each scope cap (world/team/empire).
-	static bool allowedOk(const CvJsonInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit, const std::string& bucket = "");
+	static bool allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit, const std::string& bucket = "");
 
 	// canFoundReligion -- a PLAYER-WIDE state predicate reproduced from game state (CvPlayer::canFoundReligion).
 	static bool canFoundReligion(const CvPlayer& kPlayer);
 
-	// GATE: candidates[bucket] -> the available set (requires + allowed + obsoletedBy).
+	// GATE: candidates[bucket] -> the available set (requires + allowed + obsoletedBy). bVisible=true yields the
+	// VISIBLE frontier (greyable clauses relaxed, enabler.md §6) for the build-list (bTestVisible) read.
 	static void gateSet(const std::string& bucket, const EnBucketSets& cand, const CvCascadeEvalCtx& ec,
-		const CvPlayer& kPlayer, const CvTeam& kTeam, bool bUnit, std::set<int>& avail);
+		const CvPlayer& kPlayer, const CvTeam& kTeam, bool bUnit, std::set<int>& avail, bool bVisible = false);
 
 	// The ONE requires-tree HAVE-atom scanner (recursing GROUP children + enabled/disabled): classifies PRESENCE
 	// atoms by type prefix/token and PREDICATEs by predKind into `d`. The two legs that differ between the three

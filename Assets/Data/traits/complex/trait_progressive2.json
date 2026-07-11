@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_PROGRESSIVE2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_PROGRESSIVE3"
   ]
  },

@@ -164,6 +164,10 @@ struct CascadeCityPackages
 	// served by the flipped can* gates via ensure-on-read (the operating buildings idiom, deliberately NOT the rates'
 	// bare fetch: gate reads are decision-time and legacy chains builds within a turn) --
 	std::set<int> enBuildable, enTrainable, enCreatable, enMaintainable;
+	// the VISIBLE (build-list) frontier -- the CAN-GET set with the GREYABLE clauses relaxed (connectable resource /
+	// unadopted civic show GREYED, not HIDDEN; enabler.md §6). Served by can*(bTestVisible=true); filled in the SAME
+	// CPK_FRONT_* blocks as the strict sets above. The strict sets stay the buildable-now (bTestVisible=false) answer.
+	std::set<int> enBuildableVisible, enTrainableVisible, enCreatableVisible, enMaintainableVisible;
 
 	CvDerivedCacheSet<CvCity> set;       // the ONE dirty protocol (bind in CvCity's ctor)
 

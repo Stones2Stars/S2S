@@ -230,7 +230,7 @@ void callChangeValueByProperty(const CvGameObject* pObject, PropertyTypes eProp,
 void CvProperties::propagateChange(PropertyTypes eProp, int iChange)
 {
 	PROFILE_EXTRA_FUNC();
-	const CvJsonPropertyInfo& kInfo = GC.getPropertyInfo(eProp);
+	const CvPropertyInfo& kInfo = GC.getPropertyInfo(eProp);
 	for (int iI = 0; iI < NUM_GAMEOBJECTS; iI++)
 	{
 		const int iChangePercent = kInfo.getChangePropagator(m_pGameObject->getGameObjectType(), (GameObjectTypes)iI);

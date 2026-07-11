@@ -1,5 +1,22 @@
 {
  "type": "UNIT_MINKIE_WHALE",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 10,
+   "title": "TXT_KEY_GROUPTITLE_SOLO"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 5,
+   "title": "TXT_KEY_GROUPTITLE_POD"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_SCHOOL"
+  }
+ ],
  "requires": {
   "build": {
    "all": [
@@ -11,8 +28,7 @@
   "noDefensiveBonus": true,
   "blendIntoCity": true,
   "onlyDefensive": true,
-  "renderBelowWater": true,
-  "animalIgnoresBorders": true
+  "renderBelowWater": true
  },
  "outcomes": {
   "kill": [

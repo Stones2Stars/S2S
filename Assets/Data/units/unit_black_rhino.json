@@ -1,5 +1,17 @@
 {
  "type": "UNIT_BLACK_RHINO",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 8,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_CRASH"
+  }
+ ],
  "skills": {
   "blendIntoCity": true
  },

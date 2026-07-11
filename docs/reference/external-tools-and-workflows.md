@@ -5,8 +5,8 @@
 > external repos under `c:\code\s2s\` (FpkBuilder). Line numbers drift — confirm the named
 > function, not the integer.
 > Out-of-tree tooling and side-channel workflows used when developing S2S that are **not** part of the
-> in-tree build/validate loop and have no other home: offline crash-dump symbolization, one known-harmless
-> crash, and the sibling binary (`FpkBuilder`) that lives outside this tree. For the
+> in-tree build/validate loop and have no other home: offline crash-dump symbolization and the sibling
+> binary (`FpkBuilder`) that lives outside this tree. For the
 > in-tree tooling (build wrapper, validators, the migration curators, the cascade testers), this doc only
 > points — those are documented at their canonical homes; see [§ See also](#see-also).
 
@@ -51,20 +51,6 @@ configs. EXE frames stay unresolved (no Firaxis symbols) — that's expected; ou
   null/garbage pointer deref.
 
 Output is verbose (NatVis unload spam) — filter with `Select-String`.
-
-## Known harmless crash — load-after-load `onFinalInitialized`
-
-**Pre-existing, harmless, deferred.** Loading a save **after a previous game has already been loaded in the
-same process** throws `RuntimeError: unidentifiable C++ exception` from `CvGame::onFinalInitialized` (via
-`CvEventManager.gameStart` → `onLoadGame`). A fresh EXE start + a single load does **not** hit it.
-
-- **Root cause:** `reset()` isn't reliably called between in-session loads, so `onFinalInitialized` runs over
-  stale team/player/plot state.
-- Commit `f567bbc5` only removed a debug-only `FAssert(!m_bFinalInitialized)`; the underlying release-build
-  exception remains. Confirmed harmless — the game still loads and plays.
-- **To revisit:** build `Assert`/`Debug` (translates the C++ exception into a real message + `FAssert`
-  line), load a 2nd game in-session to repro, and focus on what state survives between loads without
-  `reset()`.
 
 ## External sibling repos / binaries
 

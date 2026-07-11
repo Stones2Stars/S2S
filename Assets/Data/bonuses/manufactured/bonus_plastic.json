@@ -32,7 +32,9 @@
    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
   ],
   "routes": [
-   "ROUTE_MAGLEV",
+   "ROUTE_MAGLEV"
+  ],
+  "routesAnd": [
    "ROUTE_PLANETARY_MAGLEV"
   ]
  },

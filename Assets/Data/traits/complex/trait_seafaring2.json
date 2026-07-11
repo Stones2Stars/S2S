@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_SEAFARING2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_SEAFARING3"
   ]
  },

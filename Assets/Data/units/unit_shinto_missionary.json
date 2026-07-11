@@ -1,5 +1,10 @@
 {
  "type": "UNIT_SHINTO_MISSIONARY",
+ "spread": {
+  "religion": {
+   "RELIGION_SHINTO": 80
+  }
+ },
  "requires": {
   "build": {
    "all": [

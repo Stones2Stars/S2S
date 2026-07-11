@@ -15,7 +15,7 @@ UnitCompCommander::UnitCompCommander(const CvUnit* unit, short iCP, short iCPL, 
 }
 UnitCompCommander::~UnitCompCommander() { }
 
-UnitCompCommander::UnitCompCommander(const CvUnit* unit, CvJsonUnitInfo* unitInfo) // Used when unit becomes commander
+UnitCompCommander::UnitCompCommander(const CvUnit* unit, CvUnitInfo* unitInfo) // Used when unit becomes commander
 {
 	m_unit = unit;
 	m_iControlPoints = unitInfo->getControlPoints();
@@ -93,7 +93,7 @@ UnitCompCommodore::UnitCompCommodore(const CvUnit* unit, short iCP, short iCPL, 
 }
 UnitCompCommodore::~UnitCompCommodore() { }
 
-UnitCompCommodore::UnitCompCommodore(const CvUnit* unit, CvJsonUnitInfo* unitInfo) // Used when unit becomes commodore
+UnitCompCommodore::UnitCompCommodore(const CvUnit* unit, CvUnitInfo* unitInfo) // Used when unit becomes commodore
 {
 	m_unit = unit;
 	m_iControlPoints = unitInfo->getControlPoints();
@@ -171,7 +171,7 @@ UnitCompWorker::~UnitCompWorker()
 	m_extraWorkModForBuilds.clear();
 }
 
-UnitCompWorker::UnitCompWorker(CvJsonUnitInfo* unitInfo)
+UnitCompWorker::UnitCompWorker(CvUnitInfo* unitInfo)
 {
 	m_iHillsWorkModifier = unitInfo->getHillsWorkModifier();
 	m_iPeaksWorkModifier = unitInfo->getPeaksWorkModifier();

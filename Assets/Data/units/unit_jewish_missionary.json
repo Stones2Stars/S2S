@@ -1,5 +1,10 @@
 {
  "type": "UNIT_JEWISH_MISSIONARY",
+ "spread": {
+  "religion": {
+   "RELIGION_JUDAISM": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

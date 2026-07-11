@@ -1,5 +1,10 @@
 {
  "type": "UNIT_EXECUTIVE_MALLWART",
+ "spread": {
+  "corporation": {
+   "CORPORATION_MALLWART": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

@@ -59,7 +59,7 @@ FAMILIES = {
     "iDistanceMaintenanceModifier":   ("maintenance", "empire", "distance",         "percent"),
     "iNumCitiesMaintenanceModifier":  ("maintenance", "empire", "numCities",        "percent"),
     "iConnectedCityMaintenanceModifier": ("maintenance", "empire", "connectedCity", "percent"),
-    "iInflationModifier":             ("upkeep",      "empire", "inflation",        "percent"),
+    "iInflationModifier":             ("inflation",   "empire", None,               "percent"),
     "iGlobalHappiness":               ("happiness",   "empire", None,               "flat"),
     "iGlobalHealth":                  ("health",      "empire", None,               "flat"),
     "iWorldHappiness":                ("happiness",   "world",  None,               "flat"),

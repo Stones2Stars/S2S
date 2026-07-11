@@ -130,13 +130,6 @@
    }
   }
  },
- "upkeep": {
-  "empire": {
-   "inflation": {
-    "percent": 5
-   }
-  }
- },
  "workRate": {
   "empire": {
    "percent": -5
@@ -161,6 +154,11 @@
    "military": {
     "percent": -5
    }
+  }
+ },
+ "inflation": {
+  "empire": {
+   "percent": 5
   }
  },
  "PROPERTY_AIR_POLLUTION": {

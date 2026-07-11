@@ -77,11 +77,9 @@
    }
   }
  },
- "upkeep": {
+ "inflation": {
   "empire": {
-   "inflation": {
-    "percent": 15
-   }
+   "percent": 15
   }
  },
  "grants": {

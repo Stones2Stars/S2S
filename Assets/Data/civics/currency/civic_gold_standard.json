@@ -114,13 +114,6 @@
    }
   }
  },
- "upkeep": {
-  "empire": {
-   "inflation": {
-    "percent": -5
-   }
-  }
- },
  "tradeRoutes": {
   "empire": {
    "flat": 1,
@@ -139,6 +132,11 @@
    "national": {
     "flat": -1
    }
+  }
+ },
+ "inflation": {
+  "empire": {
+   "percent": -5
   }
  },
  "ai": {

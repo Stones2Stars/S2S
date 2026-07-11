@@ -2,8 +2,7 @@
  "type": "UNIT_DESERT_TARANTULA",
  "skills": {
   "blendIntoCity": true,
-  "onlyDefensive": true,
-  "animalIgnoresBorders": true
+  "onlyDefensive": true
  },
  "outcomes": {
   "kill": [

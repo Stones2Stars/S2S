@@ -94,6 +94,17 @@ into other techs' `enables` for generation and does not keep them on the child**
 off the child. `requires.build` only —
 techs are monotonic, no `operate`.
 
+> **Reverse-mapping the forward compat views (owner standing direction — "reverse-map everything on load").** The
+> store's prereq-inversion is *for the GENERATE pass* (it flattens each entity's prereqs into the prereq entity's
+> `enables`). But many legacy consumers still read the **forward** view off the child — a route's `getPrereqBonus`
+> (the `CvPlot` build gate), a trait's `getPrereqTrait`, a tech's `leadsTo`. These are **reconstructed AT LOAD from
+> the inverted `enables`** (never stubbed, never re-authored on the child): the tech `leadsTo` + trait prereqs in
+> `CvGlobals::doPostLoadCaching`, the route bonus prereqs in `CvCascadeReadJson`. **The inversion must keep AND vs OR
+> in DISTINCT buckets** or the reverse map loses the distinction — a single AND prereq inverts to its own bucket
+> (`enables.routesAnd` / `enables.traitsAnd`), the OR-list to another (`enables.routes` / `enables.traitsOr`), and
+> the load pass rebuilds each forward getter separately. *(The tech case reconstructs from the child's retained
+> `requires.build.all`/`.any` instead — same goal, the two reconstruction sources.)*
+
 **Empire/team-scope constructables need NO new machinery** (the scope spine already has team/empire): stage-gates
 via `enables` (the space line), doctrine bans via `disables` + empire modifiers — replacing the `FreeBuilding`
 autobuild clunk (~345 uses) with one empire-scope building. (INTERIM — a later issue; the per-city machinery
@@ -143,11 +154,14 @@ relationships are **distinct gates, mirroring the engine** (`build`/`operate` sh
 - **`UnitUpgrades` → `requires.build.dormant.all`** = the unit's *direct* upgrades **minus** any that are also
   superseders. The cascade recurses these engine-side (mirrors `allUpgradesAvailable`): hide the unit only when
   **every** such upgrade resolves to a reachable-trainable unit (one dead branch keeps it buildable). The named
-  `dormant` clause is fail-safe (default *not*-dormant).
+  `dormant` clause is fail-safe (default *not*-dormant). *(This recursion — `uc_reachable`, the StoneBase
+  `UnitCascade.Reachable` closure — is what resolves the whole upgrade TREE: chains, obsolete intermediates, cycles.
+  It is the spec'd resolver; do NOT replace it with a one-level or hand-rolled scheme.)*
 - **`SupersedingUnits` → the `replaces` edge (`replacedBy.units`, §2)** = genuine **removal-on-succession**: the unit
   drops from buildable the moment any superseder is itself buildable (mirrors `isSupersedingUnitAvailable`). The engine
   SKIPS superseders in `allUpgradesAvailable`, so they live here, not in the dormancy gate. This is the first real use
-  of the long-reserved `replaces` family.
+  of the long-reserved `replaces` family. **The enabler reads the curated TARGET-side `replacedBy.units`** (each unit's
+  own superseders), never the source-side `replaces.units` (which nothing authors).
 
 Other gates fold into `requires.build` as **declarative conditions** (no engine special-case, modder-extensible):
 **game options** → the **ENTITY-LEVEL `enabled`/`disabled` gate** ([DEC-entity-gate] — e.g. the inquisitor's

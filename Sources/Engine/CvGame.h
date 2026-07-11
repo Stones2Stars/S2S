@@ -21,7 +21,7 @@ class CvPlot;
 class CvReplayMessage;
 class CvReplayInfo;
 class CvUnit;
-class CvJsonUnitCombatInfo;
+class CvUnitCombatInfo;
 
 //	Max number of barbarian units in existence for a spawn of a new one to be allowed
 //	This allows a 'space' for 'real' barbarians to be built before we use up the entire
@@ -656,6 +656,12 @@ public:
 	void setTeamScore(TeamTypes eTeam, int iScore);
 
 	DllExport bool isOption(GameOptionTypes eIndex) const;
+	// Trait validity under the current game options -- moved off the pure-data CvTraitInfo poco ([DEC-json-not-cascade],
+	// owner 2026-07-11): the poco holds the static flags, this consumer reads them + the live options.
+	bool isTraitValid(TraitTypes eTrait, bool bGameStart = false) const;
+	// Civic city-limit under the current options -- moved off the pure-data CvCivicInfo poco ([DEC-json-not-cascade],
+	// owner 2026-07-11): the option + world-size FORMULA over the civic's raw base (CvCivicInfo::getCityLimitBase).
+	int getCivicCityLimit(CivicTypes eCivic) const;
 	void setOption(GameOptionTypes eIndex, bool bEnabled);
 
 	DllExport bool isMPOption(MultiplayerOptionTypes eIndex) const;
@@ -889,7 +895,7 @@ public:
 	CvProperties* getProperties();
 	const CvProperties* getPropertiesConst() const;
 
-	bool isValidByGameOption(const CvJsonUnitCombatInfo& info) const;
+	bool isValidByGameOption(const CvUnitCombatInfo& info) const;
 
 	void enforceOptionCompatibility(GameOptionTypes eOption);
 

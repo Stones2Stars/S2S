@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_AGRICULTURAL2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_AGRICULTURAL3"
   ]
  },

@@ -49,3 +49,11 @@ CvTeam::m_aiCommerceFlexibleCount        (int array, NUM_COMMERCE_TYPES)
 CvPlayer::m_aiCommerceFlexibleCount      (int array, NUM_COMMERCE_TYPES)
 CvPlayer::m_bHasLanguage                 (bool)
 ========================
+
+========================
+2026-07-11 — animal border-ignore is now a game-option-derived BITMASK (CvUnit::getAnimalIgnoresBordersCount),
+not a stored/promotion-fed count. The accumulator + its changer + the two apply sites were removed; the field's
+read is now a WRAPPER_SKIP_ELEMENT (drains old saves), the write deleted.
+
+CvUnit::m_iAnimalIgnoresBordersCount     (int)
+========================

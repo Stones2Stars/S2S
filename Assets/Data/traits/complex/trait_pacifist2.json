@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_PACIFIST2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_PACIFIST3"
   ]
  },

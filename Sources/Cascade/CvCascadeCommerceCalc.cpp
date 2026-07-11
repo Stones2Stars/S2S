@@ -8,20 +8,20 @@
 #include "CvCascadeCommerceCalc.h"
 #include "CvCascadeMMKernel.h"
 #include "CvCascadeBuildingPackage.h"    // buildingFlat (reused §1 package)
-#include "CvJsonInfo.h"                // CvJsonInfo + the cascade Json* identity structs
-#include "CvJsonCorporationInfo.h"     // the corp typed members (change/produced/prereqBonuses -- the collapsed corp families)
+#include "CvInfo.h"                // CvInfo + the cascade Json* identity structs
+#include "CvCorporationInfo.h"     // the corp typed members (change/produced/prereqBonuses -- the collapsed corp families)
 #include "Repos/InfoRepo.h"            // InfoRepo<CvXInfo>::get().get(id)
 #include "Defines/CvGlobals.h"
 #include "Engine/CvCity.h"
 #include "Engine/CvPlayer.h"
 #include "Engine/CvGame.h"            // GC.getGame().countReligionLevels / countCorporationLevels / getGameTurnYear (§2)
 #include "Engine/CvMap.h"             // GC.getMap().getWorldSize (the §2 corp maintenance percent)
-#include "CvJsonBuildingInfo.h"
-#include "CvJsonReligionInfo.h"     // InfoRepo<CvJsonReligionInfo> + getGlobalReligionCommerce (the §2 religion/shrine packages)
-#include "CvJsonCorporationInfo.h"  // getHeadquarterCommerce (the §2 corp-HQ package)
-#include "CvJsonHeritageInfo.h"     // InfoRepo<CvJsonHeritageInfo> (the §2 player-extra heritage commerce)
+#include "CvBuildingInfo.h"
+#include "CvReligionInfo.h"     // InfoRepo<CvReligionInfo> + getGlobalReligionCommerce (the §2 religion/shrine packages)
+#include "CvCorporationInfo.h"  // getHeadquarterCommerce (the §2 corp-HQ package)
+#include "CvHeritageInfo.h"     // InfoRepo<CvHeritageInfo> (the §2 player-extra heritage commerce)
 #include "Infos/CvWorldInfo.h"        // getCorporationMaintenancePercent (the §2 corporation package)
-#include "CvJsonProcessInfo.h"      // InfoRepo<CvJsonProcessInfo> -- the L2 process production->commerce fold
+#include "CvProcessInfo.h"      // InfoRepo<CvProcessInfo> -- the L2 process production->commerce fold
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM
 #include "CvCascadeCapabilities.h"     // corporationRevenueModifier -- the derived-from-tech read (never the legacy accumulator)
@@ -42,7 +42,7 @@ int CommerceCalc::religion(const std::string& channel, const CvCity* pCity, cons
 	for (int r = 0; r < GC.getNumReligionInfos(); ++r)
 	{
 		if (!pCity->isHasReligion((ReligionTypes)r)) continue;
-		const CvJsonInfo* d = InfoRepo<CvJsonReligionInfo>::get().get(r);
+		const CvInfo* d = InfoRepo<CvReligionInfo>::get().get(r);
 		if (d != NULL) sum += MMKernel::sumUnit(d, wantCity, "flat", ec);
 	}
 	return sum;
@@ -63,7 +63,7 @@ long CommerceCalc::playerExtra(const std::string& channel, const CvPlayer& playe
 	for (int h = 0; h < GC.getNumHeritageInfos(); ++h)
 	{
 		if (!player.hasHeritage((HeritageTypes)h)) continue;
-		const CvJsonInfo* d = InfoRepo<CvJsonHeritageInfo>::get().get(h);
+		const CvInfo* d = InfoRepo<CvHeritageInfo>::get().get(h);
 		if (d != NULL) sum += MMKernel::sumUnit100(d, wantEmpire, "flat", ec);
 	}
 	return sum;
@@ -90,7 +90,7 @@ void CommerceCalc::buildingKeyedLedger(const std::string& channel, const CvPlaye
 	{
 		const int cnt = player.getBuildingCount((BuildingTypes)g);
 		if (cnt <= 0) continue;
-		const CvJsonInfo* dg = InfoRepo<CvJsonBuildingInfo>::get().get(g);
+		const CvInfo* dg = InfoRepo<CvBuildingInfo>::get().get(g);
 		if (dg == NULL) continue;
 		const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(dg);
 		for (size_t i = 0; i < deps.size(); ++i)
@@ -121,13 +121,13 @@ long CommerceCalc::shrine(const std::string& channel, const CvCity* pCity)
 	if (ec.activeBuildings == NULL) return 0;   // the standing active set IS the walk domain (never all infos)
 	for (std::set<int>::const_iterator abIt = ec.activeBuildings->begin(); abIt != ec.activeBuildings->end(); ++abIt)
 	{
-		const CvJsonInfo* bd = InfoRepo<CvJsonBuildingInfo>::get().get(*abIt);
+		const CvInfo* bd = InfoRepo<CvBuildingInfo>::get().get(*abIt);
 		if (bd == NULL) continue;
-		const int rel = static_cast<const CvJsonBuildingInfo*>(bd)->shrineReligion;   // cascade identity.shrine FK (self-contained)
+		const int rel = static_cast<const CvBuildingInfo*>(bd)->shrineReligion;   // cascade identity.shrine FK (self-contained)
 		if (rel < 0) continue;
-		const CvJsonInfo* rd = InfoRepo<CvJsonReligionInfo>::get().get(rel);
+		const CvInfo* rd = InfoRepo<CvReligionInfo>::get().get(rel);
 		if (rd == NULL) continue;
-		const std::map<std::string, int>& sc = static_cast<const CvJsonReligionInfo*>(rd)->shrineCommerce;
+		const std::map<std::string, int>& sc = static_cast<const CvReligionInfo*>(rd)->shrineCommerce;
 		std::map<std::string, int>::const_iterator it = sc.find(channel);
 		if (it != sc.end() && it->second != 0) sum += (long)it->second * GC.getGame().countReligionLevels((ReligionTypes)rel) * 100;
 	}
@@ -143,11 +143,11 @@ long CommerceCalc::corpHQ(const std::string& channel, const CvCity* pCity, const
 	if (ec.activeBuildings == NULL) return 0;
 	for (std::set<int>::const_iterator abIt = ec.activeBuildings->begin(); abIt != ec.activeBuildings->end(); ++abIt)
 	{
-		const CvJsonInfo* bd = InfoRepo<CvJsonBuildingInfo>::get().get(*abIt);
+		const CvInfo* bd = InfoRepo<CvBuildingInfo>::get().get(*abIt);
 		if (bd == NULL) continue;
-		const int corp = static_cast<const CvJsonBuildingInfo*>(bd)->corpHQ;   // cascade identity.corporationHQ FK (self-contained)
+		const int corp = static_cast<const CvBuildingInfo*>(bd)->corpHQ;   // cascade identity.corporationHQ FK (self-contained)
 		if (corp < 0) continue;
-		const CvJsonInfo* cd = InfoRepo<CvJsonCorporationInfo>::get().get(corp);
+		const CvInfo* cd = InfoRepo<CvCorporationInfo>::get().get(corp);
 		if (cd == NULL) continue;
 		const int per = MMKernel::sumUnit(cd, wantHQ, "perCorporationLevel", ec);      // the corp's headquarters deposit (cascade)
 		if (per != 0) sum += (long)per * GC.getGame().countCorporationLevels((CorporationTypes)corp) * 100;
@@ -167,9 +167,9 @@ long CommerceCalc::stateReligionPool(const std::string& channel, const CvPlayer&
 	{
 		const int cnt = player.getBuildingCount((BuildingTypes)b);
 		if (cnt <= 0) continue;
-		const CvJsonInfo* bd = InfoRepo<CvJsonBuildingInfo>::get().get(b);
+		const CvInfo* bd = InfoRepo<CvBuildingInfo>::get().get(b);
 		if (bd == NULL) continue;
-		const std::map<std::string, int>& m = static_cast<const CvJsonBuildingInfo*>(bd)->stateReligionCommerce;   // cascade identity (self-contained)
+		const std::map<std::string, int>& m = static_cast<const CvBuildingInfo*>(bd)->stateReligionCommerce;   // cascade identity (self-contained)
 		std::map<std::string, int>::const_iterator it = m.find(channel);
 		if (it != m.end() && it->second != 0) pool += (long)cnt * it->second;
 	}
@@ -183,8 +183,8 @@ int CommerceCalc::stateReligionMatch(const CvCity* pCity, const CvCascadeEvalCtx
 	int match = 0;
 	for (std::set<int>::const_iterator abIt = ec.activeBuildings->begin(); abIt != ec.activeBuildings->end(); ++abIt)
 	{
-		const CvJsonInfo* bd = InfoRepo<CvJsonBuildingInfo>::get().get(*abIt);
-		if (bd != NULL && static_cast<const CvJsonBuildingInfo*>(bd)->religion == (int)eState) ++match;   // cascade identity.religion FK
+		const CvInfo* bd = InfoRepo<CvBuildingInfo>::get().get(*abIt);
+		if (bd != NULL && static_cast<const CvBuildingInfo*>(bd)->religion == (int)eState) ++match;   // cascade identity.religion FK
 	}
 	return match;
 }
@@ -214,9 +214,9 @@ long CommerceCalc::doubleExtra(const std::string& channel, const CvCity* pCity, 
 	for (std::set<int>::const_iterator abIt = ec.activeBuildings->begin(); abIt != ec.activeBuildings->end(); ++abIt)
 	{
 		const int b = *abIt;
-		const CvJsonInfo* bd = InfoRepo<CvJsonBuildingInfo>::get().get(b);
+		const CvInfo* bd = InfoRepo<CvBuildingInfo>::get().get(b);
 		if (bd == NULL) continue;
-		const CvJsonBuildingInfo* bj = static_cast<const CvJsonBuildingInfo*>(bd);
+		const CvBuildingInfo* bj = static_cast<const CvBuildingInfo*>(bd);
 		std::map<std::string, int>::const_iterator dt = bj->commerceDoubleTime.find(channel);   // cascade identity.commerceDoubleTime
 		if (dt == bj->commerceDoubleTime.end() || dt->second <= 0) continue;
 		const int built = pCity->getBuildingData((BuildingTypes)b).iTimeBuilt;
@@ -225,10 +225,10 @@ long CommerceCalc::doubleExtra(const std::string& channel, const CvCity* pCity, 
 		const int rel = bj->shrineReligion;                                    // its shrine (cascade)
 		if (rel >= 0)
 		{
-			const CvJsonInfo* rd = InfoRepo<CvJsonReligionInfo>::get().get(rel);
+			const CvInfo* rd = InfoRepo<CvReligionInfo>::get().get(rel);
 			if (rd != NULL)
 			{
-				const std::map<std::string, int>& sc = static_cast<const CvJsonReligionInfo*>(rd)->shrineCommerce;
+				const std::map<std::string, int>& sc = static_cast<const CvReligionInfo*>(rd)->shrineCommerce;
 				std::map<std::string, int>::const_iterator it = sc.find(channel);
 				if (it != sc.end()) extra += (long)it->second * GC.getGame().countReligionLevels((ReligionTypes)rel) * 100;
 			}
@@ -236,7 +236,7 @@ long CommerceCalc::doubleExtra(const std::string& channel, const CvCity* pCity, 
 		const int corp = bj->corpHQ;                                           // its corp-HQ (cascade)
 		if (corp >= 0)
 		{
-			const CvJsonInfo* cd = InfoRepo<CvJsonCorporationInfo>::get().get(corp);
+			const CvInfo* cd = InfoRepo<CvCorporationInfo>::get().get(corp);
 			if (cd != NULL) extra += (long)MMKernel::sumUnit(cd, wantHQ, "perCorporationLevel", ec) * GC.getGame().countCorporationLevels((CorporationTypes)corp) * 100;
 		}
 	}
@@ -265,14 +265,14 @@ int CommerceCalc::corporation(const std::string& channel, const CvCity* pCity, c
 	for (int c = 0; c < nC; ++c)
 	{
 		if (!pCity->isActiveCorporation((CorporationTypes)c)) continue;
-		const CvJsonInfo* cd = InfoRepo<CvJsonCorporationInfo>::get().get(c);   // the corp's cascade data (self-contained, no engine config)
+		const CvInfo* cd = InfoRepo<CvCorporationInfo>::get().get(c);   // the corp's cascade data (self-contained, no engine config)
 		if (cd == NULL) continue;
-		// The corp families are COLLAPSED to typed members (CvJsonCorporationInfo: the uniform HAS_CORPORATION gate --
+		// The corp families are COLLAPSED to typed members (CvCorporationInfo: the uniform HAS_CORPORATION gate --
 		// carried by the isActiveCorporation walk above -- + the ONE shared per:{anyOf} prereq set; CvJsonModEntry.h:
 		// "do NOT wrap those"): CHANGE = the un-per'd flat (×1, so ×100 here = the old entry's value100);
 		// PRODUCED = the per-scaled base (already ×100), applied per prereq-bonus × city count × maintPct --
 		// the identical (value, bonus) terms as the retired per-deposit walk.
-		const CvJsonCorporationInfo* corp = static_cast<const CvJsonCorporationInfo*>(cd);
+		const CvCorporationInfo* corp = static_cast<const CvCorporationInfo*>(cd);
 		int iC100 = 100 * corp->getCommerceChange(eC);
 		const int produced = corp->getCommerceProduced(eC);
 		if (produced != 0)
@@ -322,7 +322,7 @@ long CommerceCalc::combineSplit(CommerceTypes eC, const CvCity* pCity, long yiel
 		const ProcessTypes eProcess = pCity->getProductionProcess();
 		if (eProcess != NO_PROCESS)
 		{
-			const CvJsonInfo* pd = InfoRepo<CvJsonProcessInfo>::get().get((int)eProcess);
+			const CvInfo* pd = InfoRepo<CvProcessInfo>::get().get((int)eProcess);
 			if (pd != NULL)
 			{
 				const CvPlayer& kOwner = GET_PLAYER(pCity->getOwner());

@@ -5,7 +5,7 @@
 //
 //	CvJsonParse -- the SHARED, composable JSON parse primitives the JsonInfo layer reuses (relocated out of the
 //	retired Cascade-side parse-helper home, owner ruling 2026-07-08: parsing the info data is INFO-side, not cascade --
-//	[DEC-json-not-cascade]). The tiny reused primitives live here so the base CvJsonInfo::mapFrom, every section
+//	[DEC-json-not-cascade]). The tiny reused primitives live here so the base CvInfo::mapFrom, every section
 //	UNIT (CvJsonRequires/Edges/Allowed/Grants/...), AND each per-type subclass's mapFrom draw from ONE place --
 //	no walker is re-hand-rolled per type. Behaviour is a faithful relocation of the spec/StoneBase-proven logic
 //	(json.md; the ×100 rule is fixed-point-and-scales.md §1).
@@ -66,7 +66,7 @@ void jsonReadFlavours(const picojson::object& aiObj, std::map<int, int>& out);
 CvCascScope jsonParseScope(const std::string& s, CvCascScope defaultScope);
 
 // --- top-level key classification (json.md §1) -- the ONE home for the reserved/intrinsic vocabulary ---
-// Shared by the base CvJsonInfo::mapFrom (dispatch the section units / skip the rest) and the reader's completeness
+// Shared by the base CvInfo::mapFrom (dispatch the section units / skip the rest) and the reader's completeness
 // CENSUS (prove 0 UNCLASSIFIED). An unknown OBJECT key is a modifier family; an unknown SCALAR is a flag/text -- so
 // EVERY key gets a class, never "unclassified". (The intrinsic/auxiliary/classification blocks are CJK_INTRINSIC:
 // the base skips them; the owning subclass / another system parses them.) CJK_GATE is the entity-level

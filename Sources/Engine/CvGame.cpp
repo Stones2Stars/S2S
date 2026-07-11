@@ -7,7 +7,7 @@
 #include "CvGameCoreDLL.h"
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
-#include "CvJsonBuildingInfo.h"
+#include "CvBuildingInfo.h"
 #include "CvCity.h"
 #include "UI/CvEventReporter.h"
 #include "CvEventSpine.h"
@@ -18,7 +18,7 @@
 #include "Tools/CvHttpServer.h"
 #include "Infrastructure/CvInitCore.h"
 #include "CvInfos.h"
-#include "CvJsonUnitCombatInfo.h"
+#include "CvUnitCombatInfo.h"
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "CvMap.h"
@@ -311,7 +311,7 @@ void CvGame::init(HandicapTypes eHandicap)
 	{
 		for (int iUI = 0; iUI < GC.getNumUnitInfos(); ++iUI)
 		{
-			CvJsonUnitInfo* info = &GC.getUnitInfo((UnitTypes)iUI);
+			CvUnitInfo* info = &GC.getUnitInfo((UnitTypes)iUI);
 			if (info->isGreatGeneral())
 			{
 				info->setPowerValue(info->getPowerValue() / 10);
@@ -499,6 +499,25 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		averageHandicaps();
 	}
 
+	// #430: TECH_GAME_START is the universal no-prereq start tech -- a REAL engine tech (loaded from
+	// Assets/Data/techs), granted to every new game via the civ's grants.techs. OLD saves predate it, so a loaded
+	// team may not hold it; inject it here (before ANY tech read -- cacheAdjacentResearch/canResearch below) so the
+	// tech tree + the cascade start node are consistent for every alive team. Idempotent: skipped where already held.
+	{
+		const TechTypes eGameStart = (TechTypes)GC.getInfoTypeForString("TECH_GAME_START", true);
+		if (eGameStart != NO_TECH)
+		{
+			for (int iI = 0; iI < MAX_TEAMS; iI++)
+			{
+				CvTeam& kTeam = GET_TEAM((TeamTypes)iI);
+				if (kTeam.isAlive() && !kTeam.isHasTech(eGameStart))
+				{
+					kTeam.setHasTech(eGameStart, true, NO_PLAYER, false, false);
+				}
+			}
+		}
+	}
+
 	for (int iI = 0; iI < MAX_TEAMS; iI++)
 	{
 		if (GET_TEAM((TeamTypes)iI).isAlive())
@@ -565,8 +584,23 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		processGreatWall(false, true, false);
 		processGreatWall(true, true);
 
-		// Is a modifier recalc needed?
-		GC.getInitCore().checkVersions();
+		// #430 (owner 2026-07-11): derived caches are NEVER serialized, so every load MUST rebuild all derived state.
+		// The legacy checksum gate (checkVersions -> BUTTONPOPUP_MODIFIER_RECALCULATION) is DEAD: with the replaced-info
+		// XML gone the asset checksum never mismatches, so the popup never shows -- and it was only ever a MANUAL,
+		// human-accepted asset-change repair, never a normal-load path. Post the recompute UNCONDITIONALLY instead.
+		// It MUST go through the message system (MP-safe, per AIAndy's CvEventReporter note) so recalculateModifiers
+		// runs at the post-init synced point -- exactly where the popup-accept / Ctrl+Shift+R ran it -- NOT inline,
+		// which cannot fire mid-onFinalInitialized. This is the ACCURACY-FIRST starting point (a heavy full recalc);
+		// the follow-up is a per-cache recompute map for a coherent, cheaper surface (cutover-consumption.md).
+		// Gated to an active HUMAN player (mirroring the retired popup's scope); autoplay-load coverage is a noted
+		// follow-up that lands with the cache map, not this starting cut.
+		{
+			const PlayerTypes eActivePlayer = getActivePlayer();
+			if (NO_PLAYER != eActivePlayer && GET_PLAYER(eActivePlayer).isHumanPlayer())
+			{
+				CvMessageControl::getInstance().sendRecalculateModifiers();
+			}
+		}
 	}
 	// Set the unit/building filters to default state now that game is fully initialized.
 	UnitFilterList::setFilterActiveAll(UNIT_FILTER_HIDE_UNBUILDABLE, getBugOptionBOOL("CityScreen__HideUntrainableUnits", true));
@@ -1246,7 +1280,7 @@ void CvGame::initFreeState()
 
 	for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
 	{
-		const CvJsonTechInfo& tech = GC.getTechInfo((TechTypes)iI);
+		const CvTechInfo& tech = GC.getTechInfo((TechTypes)iI);
 
 		for (int iJ = 0; iJ < MAX_TEAMS; iJ++)
 		{
@@ -5408,7 +5442,7 @@ int CvGame::countNumReligionTechsDiscovered() const
 	int iCount = 0;
 	for (int iRI = 0; iRI < GC.getNumReligionInfos(); ++iRI)
 	{
-		const CvJsonReligionInfo* info = &GC.getReligionInfo((ReligionTypes)iRI);
+		const CvReligionInfo* info = &GC.getReligionInfo((ReligionTypes)iRI);
 		if (countKnownTechNumTeams(info->getTechPrereq()) > 0)
 		{
 			iCount++;
@@ -6215,7 +6249,7 @@ void enumSpawnPlots(const CvSpawnInfo& spawnInfo, std::vector<CvPlot*>* plots)
 			return;
 		}
 	}
-	const CvJsonUnitInfo& unitInfo = GC.getUnitInfo(spawnInfo.getUnitType());
+	const CvUnitInfo& unitInfo = GC.getUnitInfo(spawnInfo.getUnitType());
 
 	const bool bNoTerrainFeatureBonus = spawnInfo.getTerrain().empty() && spawnInfo.getFeatures().empty() && spawnInfo.getBonuses().empty() && !spawnInfo.getPeaks();
 	const bool bHills = spawnInfo.getHills();
@@ -6530,7 +6564,7 @@ void CvGame::doSpawns(PlayerTypes ePlayer)
 				&& localUnitTypeCount * 100 / localAreaSize < iMaxLocalDensity * 100 / TotalLocalArea)
 				{
 					// Spawn a new unit
-					CvJsonUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+					CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
 					CvUnit* pUnit = GET_PLAYER(ePlayer).initUnit(eUnit, pPlot->getX(), pPlot->getY(), kUnit.getDefaultUnitAIType(), NO_DIRECTION, getSorenRandNum(10000, "AI Unit Birthmark"));
 					if (pUnit == NULL)
@@ -6886,7 +6920,7 @@ void CvGame::doHeadquarters()
 
 	for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
 	{
-		const CvJsonCorporationInfo& kCorporation = GC.getCorporationInfo((CorporationTypes)iI);
+		const CvCorporationInfo& kCorporation = GC.getCorporationInfo((CorporationTypes)iI);
 		if (!isCorporationFounded((CorporationTypes)iI))
 		{
 			const TechTypes eTechPrereq = kCorporation.getTechPrereq();
@@ -7153,7 +7187,7 @@ void CvGame::createBarbarianCities(bool bNeanderthal)
 }
 
 namespace {
-	bool isValidBarbarianSpawnUnit(const CvArea* area, const CvJsonUnitInfo& unitInfo, const UnitTypes unitType)
+	bool isValidBarbarianSpawnUnit(const CvArea* area, const CvUnitInfo& unitInfo, const UnitTypes unitType)
 	{
 		return unitInfo.getCombat() > 0 && !unitInfo.isOnlyDefensive()
 			// Make sure its the correct unit type for the area type (land or water)
@@ -7253,7 +7287,7 @@ void CvGame::createBarbarianUnits()
 
 			for (int iJ = 0; iJ < GC.getNumUnitInfos(); iJ++)
 			{
-				const CvJsonUnitInfo& kUnit = GC.getUnitInfo((UnitTypes) iJ);
+				const CvUnitInfo& kUnit = GC.getUnitInfo((UnitTypes) iJ);
 
 				if (isValidBarbarianSpawnUnit(pLoopArea, kUnit, (UnitTypes) iJ))
 				{
@@ -8632,7 +8666,7 @@ void CvGame::read(FDataStreamBase* pStream)
 
 			if (bReligionIsNew)
 			{
-				const CvJsonReligionInfo& newReligion = GC.getReligionInfo((ReligionTypes)iI);
+				const CvReligionInfo& newReligion = GC.getReligionInfo((ReligionTypes)iI);
 				const TechTypes eFoundingTech = newReligion.getTechPrereq();
 
 				setTechCanFoundReligion(eFoundingTech, false);
@@ -11421,7 +11455,7 @@ bool CvGame::canEverConstruct(BuildingTypes eBuilding) const
 	{
 		return false;
 	}
-	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	if (kBuilding.getPrereqGameOption() != NO_GAMEOPTION && !isOption((GameOptionTypes)kBuilding.getPrereqGameOption()))
 	{
@@ -11488,7 +11522,7 @@ bool CvGame::canEverTrain(UnitTypes eUnit) const
 	{
 		return false;
 	}
-	const CvJsonUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
 	if (kUnit.getPrereqGameOption() != NO_GAMEOPTION && !isOption((GameOptionTypes)kUnit.getPrereqGameOption()))
 	{
@@ -11530,7 +11564,7 @@ bool CvGame::canEverSpread(CorporationTypes eCorporation) const
 }
 
 namespace {
-	bool validBarbarianShipUnit(const CvJsonUnitInfo& unitInfo, const UnitTypes unitType)
+	bool validBarbarianShipUnit(const CvUnitInfo& unitInfo, const UnitTypes unitType)
 	{
 		return unitInfo.getCombat() > 0 && !unitInfo.isOnlyDefensive()
 			&& unitInfo.getDomainType() == DOMAIN_LAND
@@ -11553,7 +11587,7 @@ void CvGame::loadPirateShip(CvUnit* pUnit)
 		int iBestValue = 0;
 		for (int iJ = 0; iJ < GC.getNumUnitInfos(); iJ++)
 		{
-			const CvJsonUnitInfo& unitInfo = GC.getUnitInfo((UnitTypes) iJ);
+			const CvUnitInfo& unitInfo = GC.getUnitInfo((UnitTypes) iJ);
 
 			if (validBarbarianShipUnit(unitInfo, (UnitTypes) iJ) && (!bSM || pUnit->cargoSpaceAvailable((SpecialUnitTypes)unitInfo.getSpecialUnitType(), unitInfo.getDomainType()) > 0))
 			{
@@ -11594,6 +11628,53 @@ void CvGame::loadPirateShip(CvUnit* pUnit)
 #define S2S_LOAD_PHASE(nm) do { const DWORD _n = GetTickCount(); \
 	gDLL->logMsg("Loading.log", CvString::format("[RECALC] phase=%-24s ms=%u total=%u", nm, (unsigned)(_n - s2sTp), (unsigned)(_n - s2sT0)).c_str(), true, false); \
 	s2sTp = _n; } while (0)
+
+// Civic city-limit under the current game options. Moved off the pure-data CvCivicInfo poco ([DEC-json-not-cascade],
+// owner 2026-07-11) because it reads GC.getGame().isOption + GC.getMap().getWorldSize(). Faithful to the archived
+// CvCivicInfo::getCityLimit: 0 unless the overexpansion-penalties option is on; else the civic's base scaled by world size.
+int CvGame::getCivicCityLimit(CivicTypes eCivic) const
+{
+	if (eCivic == NO_CIVIC || !isOption(GAMEOPTION_EXP_OVEREXPANSION_PENALTIES)) return 0;
+	return GC.getCivicInfo(eCivic).getCityLimitBase()
+		* GC.getWorldInfo(GC.getMap().getWorldSize()).getCityLimitsScalePercent() / 100;
+}
+
+// Trait validity under the current game options. A FAITHFUL transcription of the archived CvTraitInfo::isValidTrait,
+// moved here because a pure-data poco must not read GC.getGame().isOption ([DEC-json-not-cascade], owner 2026-07-11).
+// The per-trait OnGameOptions/NotOnGameOptions loop is intentionally OMITTED: the simple/complex FOLDER split
+// (modifier.md) replaces that gate. The negative/positive/developing option gates below are live and preserved.
+bool CvGame::isTraitValid(TraitTypes eTrait, bool bGameStart) const
+{
+	if (eTrait == NO_TRAIT) return false;
+	const CvTraitInfo& kTrait = GC.getTraitInfo(eTrait);
+
+	if (bGameStart && kTrait.isBarbarianSelectionOnly()) return true;
+
+	if (kTrait.isNegativeTrait())
+	{
+		if (isOption(GAMEOPTION_LEADER_NO_NEGATIVE_TRAITS)
+		|| (bGameStart && isOption(GAMEOPTION_LEADER_START_NO_POSITIVE_TRAITS) && isOption(GAMEOPTION_LEADER_DEVELOPING)))
+		{
+			return false;
+		}
+	}
+	else if (bGameStart && isOption(GAMEOPTION_LEADER_START_NO_POSITIVE_TRAITS))
+	{
+		return false;
+	}
+
+	if (kTrait.isCivilizationTrait()) return true;
+
+	if (isOption(GAMEOPTION_LEADER_DEVELOPING))
+	{
+		if (kTrait.getLinePriority() == 0) return false;
+	}
+	else if (kTrait.getLinePriority() != 0)
+	{
+		return false;
+	}
+	return true;
+}
 
 void CvGame::recalculateModifiers()
 {
@@ -11922,7 +12003,7 @@ void CvGame::changeImprovementCount(ImprovementTypes eIndex, int iChange)
 	FASSERT_NOT_NEGATIVE(getImprovementCount(eIndex));
 }
 
-bool CvGame::isValidByGameOption(const CvJsonUnitCombatInfo& info) const
+bool CvGame::isValidByGameOption(const CvUnitCombatInfo& info) const
 {
 	PROFILE_EXTRA_FUNC();
 	for (int iI = 0; iI < info.getNumNotOnGameOptions(); iI++)

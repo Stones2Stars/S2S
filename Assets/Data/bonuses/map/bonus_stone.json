@@ -101,7 +101,7 @@
    "BUILDING_WATCH_TOWER",
    "BUILDING_ZIGGURAT"
   ],
-  "routes": [
+  "routesAnd": [
    "ROUTE_PAVED_ROAD"
   ]
  },

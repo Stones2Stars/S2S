@@ -1,5 +1,10 @@
 {
  "type": "UNIT_MOONBEAN_EXECUTIVE",
+ "spread": {
+  "corporation": {
+   "CORPORATION_MOONBEAN": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

@@ -108,6 +108,14 @@
     "UNITCOMBAT_ARCHER": {
      "percent": 25
     }
+   },
+   "flankingUnit": {
+    "UNIT_CATAPULT": {
+     "percent": 100
+    },
+    "UNIT_TREBUCHET": {
+     "percent": 100
+    }
    }
   }
  },

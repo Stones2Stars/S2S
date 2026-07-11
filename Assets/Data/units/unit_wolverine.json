@@ -5,7 +5,6 @@
   "blendIntoCity": true,
   "flatMovementCost": true,
   "onlyDefensive": true,
-  "animalIgnoresBorders": true,
   "targets": {
    "UNITCOMBAT_MAMMAL_CERVID": true,
    "UNITCOMBAT_MAMMAL_MUSTELIDAE": true,

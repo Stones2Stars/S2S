@@ -1,5 +1,10 @@
 {
  "type": "UNIT_EXECUTIVE_MAPSTER",
+ "spread": {
+  "corporation": {
+   "CORPORATION_MAPSTER": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_IMPERIALIST2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_IMPERIALIST3"
   ]
  },

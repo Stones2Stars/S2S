@@ -1,5 +1,10 @@
 {
  "type": "UNIT_ZOROASTRIAN_MISSIONARY",
+ "spread": {
+  "religion": {
+   "RELIGION_ZOROASTRIANISM": 30
+  }
+ },
  "requires": {
   "build": {
    "all": [

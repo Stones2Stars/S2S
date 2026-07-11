@@ -1,5 +1,22 @@
 {
  "type": "UNIT_EWOLF",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_LONE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 5,
+   "title": "TXT_KEY_GROUPTITLE_PACK_SMALL"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_PACK_LARGE"
+  }
+ ],
  "withdrawal": {
   "unit": {
    "percent": 15
@@ -9,7 +26,6 @@
   "assassin": true,
   "blendIntoCity": true,
   "onlyDefensive": true,
-  "animalIgnoresBorders": true,
   "targets": {
    "UNITCOMBAT_MAMMAL_RODENT": true
   }

@@ -8,15 +8,15 @@
 #include "CvEventSpine.h" // #430: name-change DOMAIN event on setName (Cascade/ is on /I)
 #include "CvCascadeAccumulator.h" // #430 THE ENABLER FLIP: enPromotionValid (isPromotionValid serves the cascade composite)
 #include "CvArea.h"
-#include "CvJsonBuildingInfo.h"
+#include "CvBuildingInfo.h"
 #include "CvCity.h"
 #include "UI/CvEventReporter.h"
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "CvImprovementInfo.h"
 #include "CvInfos.h"
-#include "CvJsonUnitCombatInfo.h"
-#include "CvJsonTraitInfo.h"
+#include "CvUnitCombatInfo.h"
+#include "CvTraitInfo.h"
 #include "UI/CvOutcomeList.h"
 #include "CvMap.h"
 #include "AI/CvPlayerAI.h"
@@ -553,7 +553,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iExtraDynamicDefense = 0;
 	m_iExtraStrength = 0;
 	m_iSMStrength = 0;
-	m_iAnimalIgnoresBordersCount = 0;
 	m_iOnslaughtCount = 0;
 	m_iExtraEndurance = 0;
 	m_iExtraPoisonProbabilityModifier = 0;
@@ -861,7 +860,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iExtraDynamicDefense = other.m_iExtraDynamicDefense;
 	m_iExtraStrength = other.m_iExtraStrength;
 	m_iSMStrength = other.m_iSMStrength;
-	m_iAnimalIgnoresBordersCount = other.m_iAnimalIgnoresBordersCount;
 	m_iOnslaughtCount = other.m_iOnslaughtCount;
 	m_iExtraEndurance = other.m_iExtraEndurance;
 	m_iExtraPoisonProbabilityModifier = other.m_iExtraPoisonProbabilityModifier;
@@ -1156,12 +1154,12 @@ void CvUnit::convert(CvUnit* pUnit, const bool bKillOriginal)
 		for (int iI = GC.getNumPromotionInfos() - 1; iI > -1; iI--)
 		{
 			const PromotionTypes ePromoX = static_cast<PromotionTypes>(iI);
-			const CvJsonPromotionInfo& kPromo = GC.getPromotionInfo(ePromoX);
+			const CvPromotionInfo& kPromo = GC.getPromotionInfo(ePromoX);
 			PromotionLineTypes eLine = kPromo.getPromotionLine();
 			bool bIsBuildup = false;
 			if (eLine != NO_PROMOTIONLINE)
 			{
-				const CvJsonPromotionLineInfo& kLine = GC.getPromotionLineInfo(eLine);
+				const CvPromotionLineInfo& kLine = GC.getPromotionLineInfo(eLine);
 				bIsBuildup = kLine.isBuildUp();
 			}
 			if (pUnit->isHasPromotion(ePromoX) && !bIsBuildup)
@@ -10249,7 +10247,7 @@ int CvUnit::canLead(const CvPlot* pPlot, int iUnitId) const
 	}
 
 	int iNumUnits = 0;
-	const CvJsonUnitInfo& kUnitInfo = getUnitInfo();
+	const CvUnitInfo& kUnitInfo = getUnitInfo();
 
 	if (-1 == iUnitId)
 	{
@@ -10508,7 +10506,7 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 	{
 		return NULL;
 	}
-	const CvJsonUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
+	const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 
 	//The following checks to make sure that the upgrade won't make it impossible for a ship to hold
 	//the cargo it already does.
@@ -13101,45 +13099,14 @@ int CvUnit::dynamicDefenseTotal() const
 	return std::max(0, iData);
 }
 
-bool CvUnit::canAnimalIgnoresBorders() const
-{
-	if (GC.getGame().isOption(GAMEOPTION_ANIMAL_STAY_OUT))
-	{
-		return false;
-	}
-    if (GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS))
-    {
-        return true;
-    }
-	return getAnimalIgnoresBordersCount() > 0;
-}
-
-bool CvUnit::canAnimalIgnoresImprovements() const
-{
-	if (GC.getGame().isOption(GAMEOPTION_ANIMAL_STAY_OUT))
-	{
-		return false;
-	}
-	if (GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS))
-	{
-		return true;
-	}
-	return getAnimalIgnoresBordersCount() > 1;
-
-}
-
-bool CvUnit::canAnimalIgnoresCities() const
-{
-	if (GC.getGame().isOption(GAMEOPTION_ANIMAL_STAY_OUT))
-	{
-		return false;
-	}
-	if (GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS))
-	{
-		return true;
-	}
-	return getAnimalIgnoresBordersCount() > 2;
-}
+// Owner 2026-07-11: animal border-ignoring is PURELY game-option-driven, represented as a BITMASK (short) --
+// getAnimalIgnoresBordersCount returns which boundaries are ignored as INDEPENDENT bits (borders / improvements /
+// cities), NOT a cumulative tier count. Each can* getter tests its OWN bit, so the boundaries are decoupled (a future
+// option could grant e.g. cities without improvements). Bit constants (the ONE definition both sides read):
+enum { ANIMAL_IGNORE_BORDERS = 0x1, ANIMAL_IGNORE_IMPROVEMENTS = 0x2, ANIMAL_IGNORE_CITIES = 0x4 };
+bool CvUnit::canAnimalIgnoresBorders() const      { return (getAnimalIgnoresBordersCount() & ANIMAL_IGNORE_BORDERS) != 0; }
+bool CvUnit::canAnimalIgnoresImprovements() const { return (getAnimalIgnoresBordersCount() & ANIMAL_IGNORE_IMPROVEMENTS) != 0; }
+bool CvUnit::canAnimalIgnoresCities() const       { return (getAnimalIgnoresBordersCount() & ANIMAL_IGNORE_CITIES) != 0; }
 
 bool CvUnit::canOnslaught() const
 {
@@ -15998,14 +15965,18 @@ void CvUnit::changeExtraDynamicDefense(int iChange)
 	FASSERT_NOT_NEGATIVE(m_iExtraDynamicDefense);
 }
 
-int CvUnit::getAnimalIgnoresBordersCount() const
+short CvUnit::getAnimalIgnoresBordersCount() const
 {
-	return m_pUnitInfo->canAnimalIgnoresBorders() + m_iAnimalIgnoresBordersCount;
-}
-
-void CvUnit::changeAnimalIgnoresBordersCount(int iChange)
-{
-	m_iAnimalIgnoresBordersCount += iChange;
+	// A BITMASK (short) of the boundaries an animal ignores under the current options (owner 2026-07-11): each bit is
+	// independent (ANIMAL_IGNORE_BORDERS / _IMPROVEMENTS / _CITIES), NOT a cumulative tier. STAY_OUT clears all;
+	// RECKLESS -> borders; DANGEROUS -> borders|improvements (OR'd). Purely game-option-driven -- no curated/promotion
+	// data (the ability is option-derived; the old m_iAnimalIgnoresBordersCount accumulator + changer + serialized
+	// field were REMOVED 2026-07-11 -- the field is drained from old saves via WRAPPER_SKIP_ELEMENT, savemigration.txt).
+	if (GC.getGame().isOption(GAMEOPTION_ANIMAL_STAY_OUT)) return 0;
+	short mask = 0;
+	if (GC.getGame().isOption(GAMEOPTION_ANIMAL_RECKLESS))  mask |= ANIMAL_IGNORE_BORDERS;
+	if (GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS)) mask |= (ANIMAL_IGNORE_BORDERS | ANIMAL_IGNORE_IMPROVEMENTS);
+	return mask;
 }
 
 int CvUnit::getOnslaughtCount() const
@@ -16847,7 +16818,7 @@ const UnitTypes CvUnit::getUnitType() const
 	return m_eUnitType;
 }
 
-const CvJsonUnitInfo& CvUnit::getUnitInfo() const
+const CvUnitInfo& CvUnit::getUnitInfo() const
 {
 	return *m_pUnitInfo;
 }
@@ -17528,7 +17499,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 		return false;
 	}
 
-	const CvJsonPromotionInfo& promo = GC.getPromotionInfo(ePromotion);
+	const CvPromotionInfo& promo = GC.getPromotionInfo(ePromotion);
 
 	if (!bForStatus && promo.isStatus())
 	{
@@ -17656,7 +17627,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 	// Must have the next less promotionline priority unless this is an affliction, equipment, or BuildUp or Status.
 	if (ePromotionLine != NO_PROMOTIONLINE && !bEquip && !bForBuildUp && !bForStatus && promo.getLinePriority() > 1)
 	{
-		const CvJsonPromotionLineInfo& promoLine = GC.getPromotionLineInfo(ePromotionLine);
+		const CvPromotionLineInfo& promoLine = GC.getPromotionLineInfo(ePromotionLine);
 		const int numPromotions = promoLine.getNumPromotions();
 		for (int iJ = 0; iJ < numPromotions; iJ++)
 		{
@@ -17681,7 +17652,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 				const PromotionTypes ePrereq = (PromotionTypes)iI;
 				if (isHasPromotion(ePrereq))
 				{
-					const CvJsonPromotionInfo& kPrereqPromotion = GC.getPromotionInfo(ePrereq);
+					const CvPromotionInfo& kPrereqPromotion = GC.getPromotionInfo(ePrereq);
 					if (kPrereqPromotion.getPromotionLine() == ePromotionLine)
 					{
 						if (kPrereqPromotion.getLinePriority() == promo.getLinePriority())
@@ -17891,7 +17862,7 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
 bool CvUnit::isPromotionValidLegacy(PromotionTypes ePromotion, bool bFree, bool bKeepCheck) const
 {
 	PROFILE_EXTRA_FUNC();
-	const CvJsonPromotionInfo& promo = GC.getPromotionInfo(ePromotion);
+	const CvPromotionInfo& promo = GC.getPromotionInfo(ePromotion);
 
 	if (!bKeepCheck) // If the unit got the promo then these checks have already passed.
 	{
@@ -18279,7 +18250,7 @@ bool CvUnit::isHasUnitCombat(UnitCombatTypes eIndex) const
 void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPromo)
 {
 	PROFILE_EXTRA_FUNC();
-	const CvJsonUnitCombatInfo& kUnitCombat = GC.getUnitCombatInfo(eIndex);
+	const CvUnitCombatInfo& kUnitCombat = GC.getUnitCombatInfo(eIndex);
 	const int iChange = (bAdding ? 1 : -1);
 	int	iI;
 
@@ -18439,7 +18410,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeAlwaysInvisibleCount((kUnitCombat.isAlwaysInvisible()) ? iChange : 0);
 	changeStampedeCount((kUnitCombat.isStampedeChange()) ? iChange : 0);
 	changeStampedeCount((kUnitCombat.isRemoveStampede()) ? -iChange : 0);
-	changeAnimalIgnoresBordersCount(kUnitCombat.getAnimalIgnoresBordersChange() * iChange);
 	changeOnslaughtCount((kUnitCombat.isOnslaughtChange()) ? iChange : 0);
 	changeAttackOnlyCitiesCount((kUnitCombat.isAttackOnlyCitiesAdd()) ? iChange : 0);
 	changeAttackOnlyCitiesCount((kUnitCombat.isAttackOnlyCitiesSubtract()) ? -iChange : 0);
@@ -18623,7 +18593,7 @@ void CvUnit::setHasUnitCombat(UnitCombatTypes eIndex, bool bNewValue, bool bByPr
 
 	if (isHasUnitCombat(eIndex) != bNewValue)
 	{
-		const CvJsonUnitCombatInfo& info = GC.getUnitCombatInfo(eIndex);
+		const CvUnitCombatInfo& info = GC.getUnitCombatInfo(eIndex);
 
 		if (GC.getGame().isValidByGameOption(info)
 		// Disable spy promotions mechanism, exempt commando promotion
@@ -18674,7 +18644,7 @@ bool CvUnit::isHasPromotion(PromotionTypes eIndex) const
 void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial)
 {
 	PROFILE_EXTRA_FUNC();
-	const CvJsonPromotionInfo& kPromotion = GC.getPromotionInfo(eIndex);
+	const CvPromotionInfo& kPromotion = GC.getPromotionInfo(eIndex);
 	const int iChange = (bAdding ? 1 : -1);
 	int	iI;
 	bool bSMrecalc = false;
@@ -18828,7 +18798,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 		changeExtraStrength(kPromotion.getStrengthChange() * iChange);
 		bSMrecalc = true;
 	}
-	changeAnimalIgnoresBordersCount(kPromotion.getAnimalIgnoresBordersChange() * iChange);
 	changeOnslaughtCount((kPromotion.isOnslaughtChange()) ? iChange : 0);
 	changeExtraEndurance(kPromotion.getEnduranceChange() * iChange);
 	changeExtraPoisonProbabilityModifier(kPromotion.getPoisonProbabilityModifierChange() * iChange);
@@ -19141,7 +19110,7 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue, bool bFree, 
 		return;
 	}
 
-	const CvJsonPromotionInfo& kPromotion = GC.getPromotionInfo(eIndex);
+	const CvPromotionInfo& kPromotion = GC.getPromotionInfo(eIndex);
 	// Disable spy promotions mechanism
 	bool canPromote = !isSpy() || GC.isSS_ENABLED() || kPromotion.isEnemyRoute(); //exempt commando promotion
 
@@ -19639,7 +19608,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraLunge);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraDynamicDefense);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraStrength);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iAnimalIgnoresBordersCount);
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvUnit", m_iAnimalIgnoresBordersCount, SAVE_VALUE_ANY);   // retired 2026-07-11 -- animal-ignore is game-option-derived, not a stored count (savemigration.txt)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iOnslaughtCount);
 
 	// Read compressed data format
@@ -20539,7 +20508,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraLunge);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraDynamicDefense);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraStrength);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iAnimalIgnoresBordersCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iOnslaughtCount);
 
 
@@ -21872,14 +21840,14 @@ bool CvUnit::isTargetOf(const CvUnit& attacker) const
 {
 	PROFILE_EXTRA_FUNC();
 
-	const CvJsonUnitInfo& attackerInfo = attacker.getUnitInfo();
+	const CvUnitInfo& attackerInfo = attacker.getUnitInfo();
 
 	if (getUnitType() != NO_UNIT && attackerInfo.isTargetUnit(getUnitType()))
 	{
 		return true;
 	}
 
-	const CvJsonUnitInfo& ourInfo = getUnitInfo();
+	const CvUnitInfo& ourInfo = getUnitInfo();
 
 	if (attacker.getUnitType() != NO_UNIT && ourInfo.isDefendAgainstUnit(attacker.getUnitType()))
 	{
@@ -23999,7 +23967,7 @@ bool CvUnit::performInquisition()
 
 				foreach_(const BuildingTypes eType, pCity->getHasBuildings())
 				{
-					const CvJsonBuildingInfo& buildingX = GC.getBuildingInfo(eType);
+					const CvBuildingInfo& buildingX = GC.getBuildingInfo(eType);
 					if (buildingX.getPrereqReligion() == NO_RELIGION)
 					{
 						continue;
@@ -24867,7 +24835,7 @@ void CvUnit::doBattleFieldPromotions(CvUnit* pDefender, const CombatDetails& cdD
 	for (int iI = 0; iI < GC.getNumPromotionInfos(); iI++)
 	{
 		const PromotionTypes promotionType = static_cast<PromotionTypes>(iI);
-		const CvJsonPromotionInfo& kPromotion = GC.getPromotionInfo(promotionType);
+		const CvPromotionInfo& kPromotion = GC.getPromotionInfo(promotionType);
 		/* Block These Promotions */
 		if (kPromotion.getKamikazePercent() > 0 ||
 			kPromotion.isLeader() ||
@@ -25429,7 +25397,7 @@ void CvUnit::checkPromotionObsoletion()
 		for (int iI = GC.getNumPromotionInfos() - 1; iI > -1; iI--)
 		{
 			const PromotionTypes ePromotion = static_cast<PromotionTypes>(iI);
-			const CvJsonPromotionInfo& promotionInfo = GC.getPromotionInfo(ePromotion);
+			const CvPromotionInfo& promotionInfo = GC.getPromotionInfo(ePromotion);
 			bool bPromo = true;
 			bool bPromotionFree = isPromotionFree(ePromotion);
 
@@ -25473,7 +25441,7 @@ bool CvUnit::canKeepPromotion(PromotionTypes ePromotion, bool bAssertFree, bool 
 	}
 	bool bPromo = false;
 
-	const CvJsonPromotionInfo& promo = GC.getPromotionInfo(ePromotion);
+	const CvPromotionInfo& promo = GC.getPromotionInfo(ePromotion);
 
 	bPromo = true;
 
@@ -25963,7 +25931,7 @@ void CvUnit::checkFreetoCombatClass()
 			for (int iK = GC.getNumPromotionInfos() - 1; iK > -1; iK--)
 			{
 				const PromotionTypes ePromo = static_cast<PromotionTypes>(iK);
-				const CvJsonPromotionInfo& promoInfo = GC.getPromotionInfo(ePromo);
+				const CvPromotionInfo& promoInfo = GC.getPromotionInfo(ePromo);
 
 				if (promoInfo.isFreetoUnitCombat(iI))
 				{
@@ -26600,7 +26568,7 @@ void CvUnit::checkCityAttackDefensesDamage(CvCity* pCity, const std::vector<Unit
 		{
 			continue;
 		}
-		const CvJsonBuildingInfo& buildingX = GC.getBuildingInfo(eType);
+		const CvBuildingInfo& buildingX = GC.getBuildingInfo(eType);
 
 		if (!buildingX.isDamageAttackerCapable())
 		{
@@ -28526,7 +28494,7 @@ void CvUnit::establishBuildups()
 	for (int iI = GC.getNumPromotionLineInfos() - 1; iI > -1; iI--)
 	{
 		const PromotionLineTypes ePromotionLine = static_cast<PromotionLineTypes>(iI);
-		const CvJsonPromotionLineInfo& kPromotionLine = GC.getPromotionLineInfo(ePromotionLine);
+		const CvPromotionLineInfo& kPromotionLine = GC.getPromotionLineInfo(ePromotionLine);
 		if (kPromotionLine.isBuildUp())
 		{
 			for (int iJ = 0; iJ < kPromotionLine.getNumPromotions(); iJ++)
@@ -28595,12 +28563,12 @@ void CvUnit::setBuildUpType(PromotionLineTypes ePromotionLine, MissionTypes eSle
 			if (it->second.m_bValidBuildUp)
 			{
 				const PromotionLineTypes ePotentialPromotionLine = it->first;
-				const CvJsonPromotionLineInfo& kPotentialPromotionLine = GC.getPromotionLineInfo(ePotentialPromotionLine);
+				const CvPromotionLineInfo& kPotentialPromotionLine = GC.getPromotionLineInfo(ePotentialPromotionLine);
 
 				for (int iI = 0; iI < kPotentialPromotionLine.getNumPromotions(); iI++)
 				{
 					const PromotionTypes ePromotion = (PromotionTypes)kPotentialPromotionLine.getPromotion(iI);
-					const CvJsonPromotionInfo& kPromotion = GC.getPromotionInfo(ePromotion);
+					const CvPromotionInfo& kPromotion = GC.getPromotionInfo(ePromotion);
 
 					if (kPromotion.getLinePriority() == 1
 					&& canAcquirePromotion(ePromotion, PromotionRequirements::IgnoreHas | PromotionRequirements::ForFree | PromotionRequirements::ForBuildUp))
@@ -28665,7 +28633,7 @@ void CvUnit::setBuildUpType(PromotionLineTypes ePromotionLine, MissionTypes eSle
 		if (it->second.m_bValidBuildUp)
 		{
 			const PromotionLineTypes ePotentialPromotionLine = it->first;
-			const CvJsonPromotionLineInfo& kPotentialPromotionLine = GC.getPromotionLineInfo(ePotentialPromotionLine);
+			const CvPromotionLineInfo& kPotentialPromotionLine = GC.getPromotionLineInfo(ePotentialPromotionLine);
 			for (int iI = 0; iI < kPotentialPromotionLine.getNumPromotions(); iI++)
 			{
 				const PromotionTypes ePromotion = (PromotionTypes)kPotentialPromotionLine.getPromotion(iI);

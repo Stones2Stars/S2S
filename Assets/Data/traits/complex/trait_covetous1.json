@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_COVETOUS1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_COVETOUS2"
   ]
  },

@@ -1,5 +1,5 @@
 ﻿#include "CvGameCoreDLL.h"
-#include "CvJsonBuildingInfo.h"
+#include "CvBuildingInfo.h"
 #include "CvCity.h"
 #include "AI/CvGameAI.h"
 #include "CvGame.h"
@@ -286,7 +286,7 @@ bool isCorporationTech(TechTypes eTech)
 
 bool isTechRequiredForUnit(TechTypes eTech, UnitTypes eUnit)
 {
-	const CvJsonUnitInfo& info = GC.getUnitInfo(eUnit);
+	const CvUnitInfo& info = GC.getUnitInfo(eUnit);
 
 	if (info.getPrereqAndTech() == eTech)
 	{
@@ -297,7 +297,7 @@ bool isTechRequiredForUnit(TechTypes eTech, UnitTypes eUnit)
 
 bool isTechRequiredForBuilding(TechTypes eTech, BuildingTypes eBuilding)
 {
-	const CvJsonBuildingInfo& info = GC.getBuildingInfo(eBuilding);
+	const CvBuildingInfo& info = GC.getBuildingInfo(eBuilding);
 
 	if (info.getPrereqAndTech() == eTech
 	|| algo::any_of_equal(info.getPrereqAndTechs(), eTech))
@@ -372,7 +372,7 @@ int limitedWonderLimit(BuildingTypes eBuilding)
 {
 	int iCount = 0;
 	bool bIsLimited = false;
-	const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
 	int iMax = kBuilding.getMaxGlobalInstances();
 	if (iMax != -1)

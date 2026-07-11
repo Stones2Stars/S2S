@@ -1,5 +1,10 @@
 {
  "type": "UNIT_EXECUTIVE_WONKA",
+ "spread": {
+  "corporation": {
+   "CORPORATION_WONKA": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_TIMID1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_TIMID2"
   ]
  },

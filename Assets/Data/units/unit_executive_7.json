@@ -1,5 +1,10 @@
 {
  "type": "UNIT_EXECUTIVE_7",
+ "spread": {
+  "corporation": {
+   "CORPORATION_7": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

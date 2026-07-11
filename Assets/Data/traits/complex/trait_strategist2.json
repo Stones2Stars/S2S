@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_STRATEGIST2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_STRATEGIST3"
   ]
  },

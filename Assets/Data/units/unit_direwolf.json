@@ -1,5 +1,22 @@
 {
  "type": "UNIT_DIREWOLF",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_LONE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 5,
+   "title": "TXT_KEY_GROUPTITLE_PACK_SMALL"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_PACK_LARGE"
+  }
+ ],
  "withdrawal": {
   "unit": {
    "percent": 25

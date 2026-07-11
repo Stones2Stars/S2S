@@ -1,5 +1,27 @@
 {
  "type": "UNIT_BOAR",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 9,
+   "title": "TXT_KEY_GROUPTITLE_SINGULAR"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 14,
+   "title": "TXT_KEY_GROUPTITLE_DRIFT"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_SOUNDER"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_COMPANY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_DROVE"
+  }
+ ],
  "withdrawal": {
   "unit": {
    "percent": 15
@@ -7,8 +29,7 @@
  },
  "skills": {
   "blendIntoCity": true,
-  "onlyDefensive": true,
-  "animalIgnoresBorders": true
+  "onlyDefensive": true
  },
  "vision": {
   "invisibleFeature": [

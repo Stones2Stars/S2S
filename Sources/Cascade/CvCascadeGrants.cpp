@@ -8,13 +8,13 @@
 #include "CvGameCoreDLL.h"          // PCH umbrella
 #include "CvCascadeGrants.h"
 #include "CvEventSpine.h"
-#include "CvJsonInfo.h"             // CvJsonInfo::grantList / grantPulse100 / grantFlag (the CvJsonGrants unit's read-throughs)
-#include "Repos/InfoRepo.h"        // InfoRepo<CvXInfo>::get().get(id) -> the mapped CvJsonInfo*
-#include "CvJsonBuildingInfo.h"        // InfoRepo<CvJsonBuildingInfo>
-#include "CvJsonUnitInfo.h"            // InfoRepo<CvJsonUnitInfo>
-#include "CvJsonTechInfo.h"           // InfoRepo<CvJsonTechInfo> (tech first-discover grants)
-#include "CvJsonReligionInfo.h" // InfoRepo<CvJsonReligionInfo> (religion founder grants)
-#include "CvJsonCivicInfo.h"    // InfoRepo<CvJsonCivicInfo> (civic revolution grant)
+#include "CvInfo.h"             // CvInfo::grantList / grantPulse100 / grantFlag (the CvJsonGrants unit's read-throughs)
+#include "Repos/InfoRepo.h"        // InfoRepo<CvXInfo>::get().get(id) -> the mapped CvInfo*
+#include "CvBuildingInfo.h"        // InfoRepo<CvBuildingInfo>
+#include "CvUnitInfo.h"            // InfoRepo<CvUnitInfo>
+#include "CvTechInfo.h"           // InfoRepo<CvTechInfo> (tech first-discover grants)
+#include "CvReligionInfo.h" // InfoRepo<CvReligionInfo> (religion founder grants)
+#include "CvCivicInfo.h"    // InfoRepo<CvCivicInfo> (civic revolution grant)
 #include "Infos/CvCivilizationInfo.h" // InfoRepo<CvCivilizationInfo> (game-start civ grants)
 #include "Infos/CvEraInfo.h"      // InfoRepo<CvEraInfo> (game-start era grants)
 #include "Infos/CvHandicapInfo.h" // InfoRepo<CvHandicapInfo> (game-start handicap grants)
@@ -85,23 +85,23 @@ static void gr_registerDomain()
 	if (!s_reg) { spineRegisterDomain(SD_GRANTS, gr_prefix, "Cascade.log", gr_field); s_reg = true; }
 }
 
-// ===================== resolution off the mapped CvJsonInfo =====================
+// ===================== resolution off the mapped CvInfo =====================
 // A grantList bucket's id-count (0 if absent). GENUINE buckets only -- the deferred mission-keys (unit `buildings`/
 // `greatPeople`/`greatPersonAction`/`goldenAge`) are simply not read here (they migrate in the missions pass).
-static int gr_listCount(const CvJsonInfo* j, const char* szBucket)
+static int gr_listCount(const CvInfo* j, const char* szBucket)
 {
 	const std::vector<int>* l = j->grantList(szBucket);
 	return (l != NULL) ? (int)l->size() : 0;
 }
-static int gr_pulse(const CvJsonInfo* j, const char* szChannel)   // pulses are stored ×100 -> /100 to the human count/amount
+static int gr_pulse(const CvInfo* j, const char* szChannel)   // pulses are stored ×100 -> /100 to the human count/amount
 {
 	return j->grantPulse100(szChannel) / 100;
 }
-static int gr_flag(const CvJsonInfo* j, const char* szFlag)   // a bool grant present? (goldenAge)
+static int gr_flag(const CvInfo* j, const char* szFlag)   // a bool grant present? (goldenAge)
 {
 	return j->grantFlag(szFlag) ? 1 : 0;
 }
-static int gr_scopedPulseSum(const CvJsonInfo* j, const char* szChannel)   // sum a scoped pulse over its scopes (×100 -> /100)
+static int gr_scopedPulseSum(const CvInfo* j, const char* szChannel)   // sum a scoped pulse over its scopes (×100 -> /100)
 {
 	const CvJsonGrants* g = j->getGrants();
 	return g ? g->scopedPulseSumAllScopes100(szChannel) / 100 : 0;
@@ -109,7 +109,7 @@ static int gr_scopedPulseSum(const CvJsonInfo* j, const char* szChannel)   // su
 
 static void gr_resolveBuilding(int iBuilding, int iPlayer)
 {
-	const CvJsonInfo* j = InfoRepo<CvJsonBuildingInfo>::get().get(iBuilding);
+	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(iBuilding);
 	if (j == NULL) return;
 	const int nRepeat    = (j->getGrants() != NULL) ? (int)j->getGrants()->repeatables().size() : 0;   // per-turn spawn/heal (recurring) -- the structured set (2b)
 	const int nFreePromo = gr_listCount(j, "freePromotions");   // end-turn promotions to units in the city (recurring)
@@ -125,7 +125,7 @@ static void gr_resolveBuilding(int iBuilding, int iPlayer)
 
 static void gr_resolveUnit(int iUnit, int iPlayer)
 {
-	const CvJsonInfo* j = InfoRepo<CvJsonUnitInfo>::get().get(iUnit);
+	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(iUnit);
 	if (j == NULL) return;
 	const int nPromos = gr_listCount(j, "promotions");        // free promotions on creation
 	const int nFound  = gr_listCount(j, "foundBuildings");    // settle-time building seeds (settler)
@@ -135,14 +135,14 @@ static void gr_resolveUnit(int iUnit, int iPlayer)
 		.addI(GF_PROMOTIONS, nPromos).addI(GF_FOUNDBUILDINGS, nFound));
 }
 
-static int gr_firstId(const CvJsonInfo* j, const char* szBucket)   // a single-id grant bucket's id (-1 if absent)
+static int gr_firstId(const CvInfo* j, const char* szBucket)   // a single-id grant bucket's id (-1 if absent)
 {
 	return (j->getGrants() != NULL) ? j->getGrants()->firstListId(szBucket) : -1;
 }
 
 static void gr_resolveTech(int iTech, int iPlayer)
 {
-	const CvJsonInfo* j = InfoRepo<CvJsonTechInfo>::get().get(iTech);
+	const CvInfo* j = InfoRepo<CvTechInfo>::get().get(iTech);
 	if (j == NULL) return;
 	const int iFirstUnit    = gr_firstId(j, "firstFreeUnit");     // first-discover free unit id (-1 none)
 	const int iFirstProphet = gr_firstId(j, "firstFreeProphet");  // first-discover free prophet id (option-gated)
@@ -155,7 +155,7 @@ static void gr_resolveTech(int iTech, int iPlayer)
 
 static void gr_resolveReligion(int iReligion, int iPlayer)
 {
-	const CvJsonInfo* j = InfoRepo<CvJsonReligionInfo>::get().get(iReligion);
+	const CvInfo* j = InfoRepo<CvReligionInfo>::get().get(iReligion);
 	if (j == NULL) return;
 	const int nNumFree  = gr_pulse(j, "numFreeUnits");   // count of founder units
 	const int iFreeUnit = gr_firstId(j, "freeUnit");      // the founder unit type
@@ -167,7 +167,7 @@ static void gr_resolveReligion(int iReligion, int iPlayer)
 
 static void gr_resolveCivic(int iCivic, int iPlayer)
 {
-	const CvJsonInfo* j = InfoRepo<CvJsonCivicInfo>::get().get(iCivic);
+	const CvInfo* j = InfoRepo<CvCivicInfo>::get().get(iCivic);
 	if (j == NULL) return;
 	const int nRev = gr_pulse(j, "revolution");   // rev-index pulse on adopt (signed; Python-applied in legacy)
 	if (nRev == 0) return;
@@ -180,9 +180,9 @@ static void gr_resolveCivic(int iCivic, int iPlayer)
 static void gr_resolvePlayerInit(int iPlayer)
 {
 	const CvPlayer& p = GET_PLAYER((PlayerTypes)iPlayer);
-	const CvJsonInfo* jc = InfoRepo<CvCivilizationInfo>::get().get(p.getCivilizationType());
-	const CvJsonInfo* je = InfoRepo<CvEraInfo>::get().get(p.getCurrentEra());
-	const CvJsonInfo* jh = InfoRepo<CvHandicapInfo>::get().get(p.getHandicapType());
+	const CvInfo* jc = InfoRepo<CvCivilizationInfo>::get().get(p.getCivilizationType());
+	const CvInfo* je = InfoRepo<CvEraInfo>::get().get(p.getCurrentEra());
+	const CvInfo* jh = InfoRepo<CvHandicapInfo>::get().get(p.getHandicapType());
 	const int nCivics = (jc != NULL) ? gr_listCount(jc, "civics")    : 0;
 	const int nTechs  = (jc != NULL) ? gr_listCount(jc, "techs")     : 0;
 	const int nBuild  = (jc != NULL) ? gr_listCount(jc, "buildings") : 0;

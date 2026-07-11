@@ -6,12 +6,12 @@
 //	CvJsonHurryInfo -- the JSON poco for HURRIES (the production-hurry kinds; uniformity ruling: every info type
 //	has its own CvJson<X>Info home, even when empty). Its sections are intrinsic/bespoke (the hurry cost params);
 //	availability rides the enablers' `enables.hurries` edges, not this poco. Type + description are served by the
-//	CvJsonInfo base; this is where any future hurry-level typed member would land.
+//	CvInfo base; this is where any future hurry-level typed member would land.
 //
 
-#include "CvJsonInfo.h"
+#include "CvInfo.h"
 
-class CvJsonHurryInfo : public CvJsonInfo
+class CvJsonHurryInfo : public CvInfo
 {
 public:
 	CvJsonHurryInfo();

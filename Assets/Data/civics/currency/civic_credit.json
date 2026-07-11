@@ -48,18 +48,16 @@
    }
   }
  },
- "upkeep": {
-  "empire": {
-   "inflation": {
-    "percent": 20
-   }
-  }
- },
  "tradeRoutes": {
   "empire": {
    "foreign": {
     "percent": 10
    }
+  }
+ },
+ "inflation": {
+  "empire": {
+   "percent": 20
   }
  },
  "ui": {

@@ -12,7 +12,6 @@
   "blendIntoCity": true,
   "onlyDefensive": true,
   "renderBelowWater": true,
-  "animalIgnoresBorders": true,
   "targets": {
    "UNITCOMBAT_SIZE_SMALL": true,
    "UNITCOMBAT_SIZE_MEDIUM": true

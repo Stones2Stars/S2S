@@ -75,6 +75,11 @@
     "UNITCOMBAT_GUN": {
      "percent": 25
     }
+   },
+   "flanking": {
+    "UNITCOMBAT_GUN": {
+     "percent": 25
+    }
    }
   }
  },

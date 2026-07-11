@@ -5,13 +5,13 @@
 //
 //	CvJsonGameSpeedInfo -- the JSON poco for GAME SPEEDS (uniformity ruling: every info type has its own
 //	CvJson<X>Info home). Composes the section unit the game-speed data authors: its modifier families (the
-//	speed.world.percent scaling family). Everything else is served by the CvJsonInfo base; no typed members yet
+//	speed.world.percent scaling family). Everything else is served by the CvInfo base; no typed members yet
 //	(the base dispatch covers the composed section -- no mapFrom override).
 //
 
-#include "CvJsonInfo.h"
+#include "CvInfo.h"
 
-class CvJsonGameSpeedInfo : public CvJsonInfo
+class CvJsonGameSpeedInfo : public CvInfo
 {
 public:
 	CvJsonGameSpeedInfo();

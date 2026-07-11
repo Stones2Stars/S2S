@@ -12,21 +12,21 @@
                                       // SFT_PLAYER consumer render (line ~202) -- imported DIRECTLY (was a latent
                                       // missing include masked by a unity batch-mate until readJson stopped pulling
                                       // CvPlayer.h; unity builds hide missing includes -- structural-cleanup.md §2)
-#include "CvJsonBuildingInfo.h"
-#include "CvJsonUnitInfo.h"
+#include "CvBuildingInfo.h"
+#include "CvUnitInfo.h"
 #include "CvCascadeGrants.h"   // the #430 GRANTS consumer -- registered at the composition root below
 // typeIndex name-resolution in the consumer: the Info headers for each SFT_ kind (so GC.getXInfo(i).getType() compiles).
 // Imported DIRECTLY (no CvInfos.h umbrella -- owner 2026-06-18: that umbrella should be retired, import directly).
 #include "CvBonusInfo.h"
 #include "CvImprovementInfo.h"
-#include "CvJsonPromotionInfo.h"
-#include "CvJsonReligionInfo.h"
-#include "CvJsonCorporationInfo.h"
-#include "Infos/CvFeatureInfo.h"
-#include "Infos/CvTerrainInfo.h"
-#include "CvJsonCivicInfo.h"
-#include "CvJsonProjectInfo.h"
-#include "CvJsonSpecialistInfo.h"
+#include "CvPromotionInfo.h"
+#include "CvReligionInfo.h"
+#include "CvCorporationInfo.h"
+#include "CvFeatureInfo.h"
+#include "CvTerrainInfo.h"
+#include "CvCivicInfo.h"
+#include "CvProjectInfo.h"
+#include "CvSpecialistInfo.h"
 
 // ===================== the spine =====================
 
@@ -307,7 +307,7 @@ void cascadeRegisterConsumers()
 	// DOMAIN count events still flow to logging (observability) + the future invalidation/offline consumers.
 	eventSpine().registerConsumer(&s_cascadeLogConsumer);
 	// The #430 GRANTS machine: a SELECTIVE DOMAIN consumer -- on a building-built / unit-created event it resolves the
-	// source entity's genuine grants off the mapped CvJsonInfo and emits a [GRANTS] shadow diagnostic (resolution only,
+	// source entity's genuine grants off the mapped CvInfo and emits a [GRANTS] shadow diagnostic (resolution only,
 	// un-run parity). The tally stays a non-consumer (reads object-owned counts).
 	cascadeRegisterGrants();
 }

@@ -1,5 +1,17 @@
 {
  "type": "UNIT_ELASMOTHERIUM",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_CRASH"
+  }
+ ],
  "collateral": {
   "unit": {
    "damage": {

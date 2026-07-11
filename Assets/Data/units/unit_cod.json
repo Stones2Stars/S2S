@@ -1,5 +1,42 @@
 {
  "type": "UNIT_COD",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_RANDOM"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_SCATTERED"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_COMPANY",
+   "chance": 6,
+   "title": "TXT_KEY_GROUPTITLE_SCHOOL_TINY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_BATTALION",
+   "chance": 8,
+   "title": "TXT_KEY_GROUPTITLE_SCHOOL_SMALL"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_FORCES",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_SCHOOL"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_CLAN",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_SCHOOL_LARGE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_HORDE",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_SCHOOL_HUGE"
+  }
+ ],
  "requires": {
   "build": {
    "all": [
@@ -10,8 +47,7 @@
  "skills": {
   "noDefensiveBonus": true,
   "blendIntoCity": true,
-  "onlyDefensive": true,
-  "animalIgnoresBorders": true
+  "onlyDefensive": true
  },
  "outcomes": {
   "kill": [

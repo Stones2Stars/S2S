@@ -1,5 +1,10 @@
 {
  "type": "UNIT_CAODAI_MISSIONARY",
+ "spread": {
+  "religion": {
+   "RELIGION_CAO_DAI": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

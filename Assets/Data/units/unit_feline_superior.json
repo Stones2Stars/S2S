@@ -50,6 +50,20 @@
    },
    "stealth": {
     "percent": 50
+   },
+   "flanking": {
+    "UNITCOMBAT_CRIMINAL": {
+     "percent": 50
+    },
+    "UNITCOMBAT_RUFFIAN": {
+     "percent": 50
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    },
+    "UNITCOMBAT_STRIKE_TEAM": {
+     "percent": 50
+    }
    }
   }
  },

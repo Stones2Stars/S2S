@@ -1,5 +1,17 @@
 {
  "type": "UNIT_GREATWHITE",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_LONE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_PACK"
+  }
+ ],
  "requires": {
   "build": {
    "all": [

@@ -20,8 +20,10 @@
    "BUILDING_TEST_PILOT_INSTITUTE"
   ],
   "routes": [
-   "ROUTE_HIGHWAY",
    "ROUTE_RAILROAD"
+  ],
+  "routesAnd": [
+   "ROUTE_HIGHWAY"
   ],
   "units": [
    "UNIT_A10_BOMBER",

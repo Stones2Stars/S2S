@@ -78,6 +78,17 @@
    },
    "stealth": {
     "percent": 30
+   },
+   "flanking": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 25
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 25
+    },
+    "UNITCOMBAT_THROWING": {
+     "percent": 50
+    }
    }
   }
  },

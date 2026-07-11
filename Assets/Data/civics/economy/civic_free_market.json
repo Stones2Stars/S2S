@@ -106,13 +106,6 @@
    }
   }
  },
- "upkeep": {
-  "empire": {
-   "inflation": {
-    "percent": 10
-   }
-  }
- },
  "tradeRoutes": {
   "empire": {
    "flat": 1
@@ -126,6 +119,11 @@
    "environmentalProtection": {
     "flat": -1
    }
+  }
+ },
+ "inflation": {
+  "empire": {
+   "percent": 10
   }
  },
  "grants": {

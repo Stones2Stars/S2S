@@ -96,13 +96,6 @@
    }
   }
  },
- "upkeep": {
-  "empire": {
-   "inflation": {
-    "percent": 10
-   }
-  }
- },
  "hurry": {
   "empire": {
    "cost": {
@@ -121,6 +114,11 @@
    "environmentalProtection": {
     "flat": -1
    }
+  }
+ },
+ "inflation": {
+  "empire": {
+   "percent": 10
   }
  },
  "ui": {

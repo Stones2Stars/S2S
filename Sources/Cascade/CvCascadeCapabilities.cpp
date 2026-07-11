@@ -4,13 +4,13 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeCapabilities.h"
-#include "CvJsonInfo.h"
-#include "CvJsonTechInfo.h"
+#include "CvInfo.h"
+#include "CvTechInfo.h"
 #include "Repos/InfoRepo.h"
 #include "Defines/CvGlobals.h"
 #include "Engine/CvTeam.h"
 #include "AI/CvTeamAI.h"      // GET_TEAM
-#include "CvJsonTechInfo.h"
+#include "CvTechInfo.h"
 #include <set>
 #include <string>
 #include <vector>
@@ -42,7 +42,7 @@ static const CcapKeyRow CCAP_KEYS[] =
 	{ CCF_HAS_CENTERED_MAP, 0, "hasCenteredMap" },
 };
 
-static void ccap_union(const CvJsonTechInfo* j, CascadeTeamCaps& c)
+static void ccap_union(const CvTechInfo* j, CascadeTeamCaps& c)
 {
 	if (j == NULL) return;
 	const CvJsonBoolBlock* caps = j->getCapabilities();
@@ -59,11 +59,11 @@ void CascadeCapabilities::refreshInto(const CvTeam& kTeam, CascadeTeamCaps& c)
 	c.corpRevenueMod = 0;
 	// The universal start node: every civ holds TECH_GAME_START (the no-prereq root), so its blocks are
 	// universally active (the canSetScienceRate/canSetEspionageRate/base-tradable-terrain defaults live there).
-	ccap_union(static_cast<const CvJsonTechInfo*>(&cascadeStartNode()), c);
+	ccap_union(static_cast<const CvTechInfo*>(&cascadeStartNode()), c);
 	for (int t = 0; t < GC.getNumTechInfos(); ++t)
 		if (kTeam.isHasTech((TechTypes)t))
 		{
-			ccap_union(static_cast<const CvJsonTechInfo*>(InfoRepo<CvJsonTechInfo>::get().get(t)), c);
+			ccap_union(static_cast<const CvTechInfo*>(InfoRepo<CvTechInfo>::get().get(t)), c);
 			// the derived corp revenue modifier (the header note: interim static-Info read, JSON plug later)
 			c.corpRevenueMod += GC.getTechInfo((TechTypes)t).getCorporationRevenueModifier();
 		}

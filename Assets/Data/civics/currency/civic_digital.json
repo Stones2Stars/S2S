@@ -33,13 +33,6 @@
    }
   }
  },
- "upkeep": {
-  "empire": {
-   "inflation": {
-    "percent": 10
-   }
-  }
- },
  "tradeRoutes": {
   "empire": {
    "foreign": {
@@ -50,6 +43,11 @@
  "workRate": {
   "empire": {
    "percent": -1
+  }
+ },
+ "inflation": {
+  "empire": {
+   "percent": 10
   }
  },
  "ui": {

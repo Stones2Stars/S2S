@@ -1,5 +1,17 @@
 {
  "type": "UNIT_CAVEBEAR",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_SLEUTH"
+  }
+ ],
  "skills": {
   "blendIntoCity": true
  },

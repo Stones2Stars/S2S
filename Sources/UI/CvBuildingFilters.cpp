@@ -11,7 +11,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvBuildingFilters.h"
-#include "CvJsonBuildingInfo.h"
+#include "CvBuildingInfo.h"
 #include "Infrastructure/CvBugOptions.h"
 #include "Engine/CvCity.h"
 #include "AI/CvGameAI.h"
@@ -83,7 +83,7 @@ bool BuildingFilterIsCommerce::isFilteredBuilding(const CvPlayer *pPlayer, CvCit
 	{
 		return pCity->getAdditionalCommerceTimes100ByBuilding(m_eCommerce, eBuilding) > 0;
 	}
-	const CvJsonBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
+	const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
 	return buildingInfo.getCommerceChange(m_eCommerce) > 0
 		|| buildingInfo.getCommercePerPopChange(m_eCommerce) > 0
 		|| buildingInfo.getCommerceModifier(m_eCommerce) > 0
@@ -104,7 +104,7 @@ bool BuildingFilterIsYieldAndCommerce::isFilteredBuilding(const CvPlayer *pPlaye
 	}
 	else
 	{
-		const CvJsonBuildingInfo& info = GC.getBuildingInfo(eBuilding);
+		const CvBuildingInfo& info = GC.getBuildingInfo(eBuilding);
 		foreach_(const PlotArray& pair, info.getPlotYieldChanges())
 		{
 			if (pair.second[m_eYield] > 0)
@@ -143,7 +143,7 @@ bool BuildingFilterIsYieldAndCommerce::isFilteredBuilding(const CvPlayer *pPlaye
 	}
 	else
 	{
-		const CvJsonBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
+		const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
 		bHasCommerce = buildingInfo.getCommerceChange(m_eCommerce) > 0
 			|| buildingInfo.getCommercePerPopChange(m_eCommerce) > 0
 			|| buildingInfo.getCommerceModifier(m_eCommerce) > 0
@@ -163,7 +163,7 @@ bool BuildingFilterIsYield::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *
 	{
 		return pCity->getAdditionalYieldByBuilding(m_eYield, eBuilding, true) > 0;
 	}
-	const CvJsonBuildingInfo& info = GC.getBuildingInfo(eBuilding);
+	const CvBuildingInfo& info = GC.getBuildingInfo(eBuilding);
 
 	foreach_(const PlotArray& pair, info.getPlotYieldChanges())
 	{
@@ -194,7 +194,7 @@ bool BuildingFilterIsHappiness::isFilteredBuilding(const CvPlayer *pPlayer, CvCi
 	{
 		return pCity->getAdditionalHappinessByBuilding(eBuilding) > 0;
 	}
-	const CvJsonBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
+	const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
 	foreach_(const TechModifier& modifier, buildingInfo.getTechHappinessChanges())
 	{
 		if (modifier.second > 0)
@@ -212,7 +212,7 @@ bool BuildingFilterIsHealth::isFilteredBuilding(const CvPlayer *pPlayer, CvCity 
 	{
 		return pCity->getAdditionalHealthByBuilding(eBuilding) > 0;
 	}
-	const CvJsonBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
+	const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
 	foreach_(const TechModifier& modifier, buildingInfo.getTechHealthChanges())
 	{
 		if (modifier.second > 0)
@@ -230,7 +230,7 @@ bool BuildingFilterIsUnhappiness::isFilteredBuilding(const CvPlayer *pPlayer, Cv
 	{
 		return pCity->getAdditionalHappinessByBuilding(eBuilding) < 0;
 	}
-	const CvJsonBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
+	const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
 	foreach_(const TechModifier& modifier, buildingInfo.getTechHappinessChanges())
 	{
 		if (modifier.second < 0)
@@ -248,7 +248,7 @@ bool BuildingFilterIsUnhealthiness::isFilteredBuilding(const CvPlayer *pPlayer, 
 	{
 		return pCity->getAdditionalHealthByBuilding(eBuilding) < 0;
 	}
-	const CvJsonBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
+	const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
 	foreach_(const TechModifier& modifier, buildingInfo.getTechHealthChanges())
 	{
 		if (modifier.second < 0)
@@ -261,7 +261,7 @@ bool BuildingFilterIsUnhealthiness::isFilteredBuilding(const CvPlayer *pPlayer, 
 
 bool BuildingFilterIsMilitary::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *pCity, BuildingTypes eBuilding) const // not finished
 {
-	const CvJsonBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
+	const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
 	return buildingInfo.getMilitaryProductionModifier() > 0
 		|| buildingInfo.getFreeExperience() > 0
 		|| buildingInfo.getNumUnitCombatRetrainTypes() > 0
@@ -273,7 +273,7 @@ bool BuildingFilterIsMilitary::isFilteredBuilding(const CvPlayer *pPlayer, CvCit
 
 bool BuildingFilterIsCityDefense::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *pCity, BuildingTypes eBuilding) const
 {
-	const CvJsonBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
+	const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
 	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY))
 	{
 		if (buildingInfo.getLocalDynamicDefense() > 0)
@@ -296,7 +296,7 @@ bool BuildingFilterIsCityDefense::isFilteredBuilding(const CvPlayer *pPlayer, Cv
 bool BuildingFilterIsProperty::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *pCity, BuildingTypes eBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
-	const CvJsonBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
+	const CvBuildingInfo& kInfo = GC.getBuildingInfo(eBuilding);
 	if ((kInfo.getProperties()->getValueByProperty(m_eProperty) != 0) || (kInfo.getPropertiesAllCities()->getValueByProperty(m_eProperty)))
 		return true;
 

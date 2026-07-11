@@ -107,9 +107,12 @@ CAP_BOOL = {
     "bIgnoreNoEntryLevel": "ignoreNoEntryLevel", "bFliesToMove": "fliesToMove", "bFreeDrop": "freeDrop",
     "bDCMFighterEngage": "dcmFighterEngage", "bRenderBelowWater": "renderBelowWater",
     "bMilitaryTrade": "militaryTrade", "bNoSelfHeal": "noSelfHeal",   # mirror curate_promotion CAP_BOOL (unit no-self-heal skill)
+    "bNoRevealMap": "noRevealMap",   # goody-hut gate (CvUnit): unit reveals no map on a hut result
 }
 # count-int capabilities (>0 -> has it)
-CAP_COUNT = {"iAnimalIgnoresBorders": "animalIgnoresBorders"}
+# iAnimalIgnoresBorders is DROPPED (owner 2026-07-11): animal border-ignoring is PURELY game-option-driven at runtime
+# (GAMEOPTION_ANIMAL_STAY_OUT / _DANGEROUS in CvUnit::canAnimalIgnoresBorders), NOT curated unit data -- so it emits nothing.
+CAP_COUNT = {}
 # DCM air-bomb tier bools -> capabilities.dcmAirBomb (the highest set tier)
 DCM_AIRBOMB = ["bDCMAirBomb1", "bDCMAirBomb2", "bDCMAirBomb3", "bDCMAirBomb4", "bDCMAirBomb5"]
 # ---- tags: a unit's IMMUTABLE, accounting-only classification (json.md §8). DERIVED, greenfield — there is NO
@@ -137,8 +140,13 @@ CRIMINAL_COMBAT = "UNITCOMBAT_CRIMINAL"
 
 # ---- grants (one-shot, lists) ----
 GRANT_LIST = {"FreePromotions": "promotions", "GreatPeoples": "greatPeople",
-              "GroupSpawnUnitCombatTypes": "groupSpawn", "ReligionSpreads": "religionSpreads",
-              "CorporationSpreads": "corporationSpreads", "Buildings": "buildings"}
+              "Buildings": "buildings"}
+# GroupSpawnUnitCombatTypes is NOT a grant (handout) -- it is the unit's own group-SPAWN config (pack combat class +
+# chance + title). It emits to its OWN top-level `groupSpawn` block as struct rows (owner principle 2026-07-11: config
+# data gets its own self-documenting block, not `grants`); a flat _typelist would drop iChance + Title.
+# ReligionSpreads/CorporationSpreads are NOT timed grants -- they are the unit's standing per-religion / per-corp
+# SPREAD STRENGTH (magnitude), and burying them under `grants` misleads a modder (owner 2026-07-11). They emit to
+# their OWN `spread.religion` / `spread.corporation` keyed-map block (see the spread emit in curate()).
 # `builds` (owner ruling): the per-unit-type list of BUILD_* a unit can PERFORM is NOT a one-shot grant/provision
 # handed out -- it is the unit's build REPERTOIRE. So it lives in its OWN top-level `builds` block, not under grants.
 # ---- cost ----
@@ -219,6 +227,20 @@ def _typelist_struct(rec, wrapper, keytag):
         k = engine.text(c.find(keytag)) if c.find(keytag) is not None else engine.text(c)
         if k and k != "NONE":
             out.append(k)
+    return out
+
+
+def _keyed_int(rec, wrapper, keytag, valtag):
+    """{TypeString: int} from a struct-list wrapper -- e.g. ReligionSpreads/ReligionSpread{ReligionType,iReligionSpread}."""
+    node = rec.find(wrapper)
+    if node is None:
+        return {}
+    out = {}
+    for c in node:
+        k = engine.text(c.find(keytag)) if c.find(keytag) is not None else None
+        v = c.find(valtag)
+        if k and k != "NONE" and v is not None and engine.is_int(engine.text(v)):
+            out[k] = int(engine.text(v))
     return out
 
 
@@ -420,6 +442,7 @@ VS_KEYED = {
     "UnitCombatMods": ("unitCombat", None), "DomainMods": ("domain", None),
     "FlankingStrikesbyUnitCombat": ("flanking", None), "UnitAttackMods": ("vsUnit", "attack"),
     "UnitDefenseMods": ("vsUnit", "defense"),
+    "FlankingStrikes": ("flankingUnit", None),   # by-UNIT flanking strength -> strength.unit.flankingUnit.{UNIT}.percent
 }
 # targeting/immunity capability LISTS -> capabilities.<name>: {TYPE: true}
 CAP_LIST = {
@@ -446,7 +469,9 @@ def _pairs(node):
     for item in list(node):
         key, val = None, None
         for c in item:
-            if key is None and c.tag.endswith("Type"):
+            # the FK reference child: usually <...Type>, but FlankingStrikesbyUnitCombat's key is
+            # <FlankingStrikeUnitCombat> (ends "Combat") -- accept both so its rows aren't silently dropped.
+            if key is None and (c.tag.endswith("Type") or c.tag.endswith("Combat")):
                 key = engine.text(c)
             elif engine.is_int(engine.text(c)):
                 val = int(engine.text(c))
@@ -657,6 +682,36 @@ def curate(typ, rec, store):
         lst = _typelist(rec, tag)
         if lst:
             grants[key] = lst
+    # --- spread: the unit's per-religion / per-corporation SPREAD STRENGTH (a standing capability, NOT a timed grant;
+    # owner 2026-07-11). Its OWN self-documenting block so a modder reads spread.religion / spread.corporation. ---
+    spread = {}
+    rel = _keyed_int(rec, "ReligionSpreads", "ReligionType", "iReligionSpread")
+    if rel:
+        spread["religion"] = rel
+    corp = _keyed_int(rec, "CorporationSpreads", "CorporationType", "iCorporationSpread")
+    if corp:
+        spread["corporation"] = corp
+    if spread:
+        out["spread"] = spread
+    # --- groupSpawn: the unit's group-SPAWN config (pack combat class + chance + title) -- its own block, struct rows
+    # (owner 2026-07-11); a flat _typelist dropped iChance + Title. ---
+    gs = []
+    gsnode = rec.find("GroupSpawnUnitCombatTypes")
+    if gsnode is not None:
+        for c in gsnode:
+            uc = engine.text(c.find("UnitCombatType")) if c.find("UnitCombatType") is not None else None
+            if not uc or uc == "NONE":
+                continue
+            row = {"unitCombat": uc}
+            ch = c.find("iChance")
+            if ch is not None and engine.is_int(engine.text(ch)):
+                row["chance"] = int(engine.text(ch))
+            ti = engine.text(c.find("Title")) if c.find("Title") is not None else None
+            if ti and ti != "NONE":
+                row["title"] = ti
+            gs.append(row)
+    if gs:
+        out["groupSpawn"] = gs
     # --- builds (the unit's per-type build REPERTOIRE -> top-level `builds`, NOT a grant; owner ruling) ---
     blds = _typelist(rec, "Builds")
     if blds:
@@ -835,6 +890,9 @@ HANDLED = (set(BASE) | set(UNIT_FAMILIES) | set(CAP_BOOL) | set(CAP_COUNT) | set
            | set(COST) | set(ID_SCALAR) | set(ID_LIST) | set(TEXT) | set(ART) | REQUIRES_TAGS | STORE_TAGS
            | PASS2_TAGS | {"Type", "Combat", "Flavors", "iAIWeight", "iInstanceCostModifier", "bGoldenAge",
                            "DefaultUnitAI", "UnitMeshGroups", "FreePromotions", "Builds",
+                           "ReligionSpreads", "CorporationSpreads",   # -> spread.religion / spread.corporation (own block)
+                           "GroupSpawnUnitCombatTypes",   # -> groupSpawn (own block, struct rows)
+                           "iAnimalIgnoresBorders",   # DROPPED: pure game-option runtime, not curated (owner 2026-07-11)
                            "bSpy",   # dropped: redundant with the 'spy' tag (every bSpy unit is UNITAI_SPY); spy isn't a skill (owner 2026-06-23)
                            # reclassified to IS_MILITARY (json §3.5) -- military-ness is the `military` tag, not a skill
                            # (bMilitarySupport's IS_MILITARY tag-signal read at ~656 stays intact -- only its skill emit is dropped)

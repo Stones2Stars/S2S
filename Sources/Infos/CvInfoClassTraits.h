@@ -5,17 +5,17 @@
 
 
 #define EXPAND_FOR_EACH_INFO_CLASS(MACRO_FUNC)	\
-	MACRO_FUNC(CvJsonBuildingInfo, BUILDING_INFO, BuildingTypes) \
-	MACRO_FUNC(CvJsonUnitInfo, UNIT_INFO, UnitTypes) \
+	MACRO_FUNC(CvBuildingInfo, BUILDING_INFO, BuildingTypes) \
+	MACRO_FUNC(CvUnitInfo, UNIT_INFO, UnitTypes) \
 	MACRO_FUNC(CvBonusInfo, BONUS_INFO, BonusTypes) \
-	MACRO_FUNC(CvJsonProjectInfo, PROJECT_INFO, ProjectTypes) \
-	MACRO_FUNC(CvJsonSpecialistInfo, SPECIALIST_INFO, SpecialistTypes) \
+	MACRO_FUNC(CvProjectInfo, PROJECT_INFO, ProjectTypes) \
+	MACRO_FUNC(CvSpecialistInfo, SPECIALIST_INFO, SpecialistTypes) \
 	MACRO_FUNC(CvImprovementInfo, IMPROVEMENT_INFO, ImprovementTypes) \
-	MACRO_FUNC(CvJsonReligionInfo, RELIGION_INFO, ReligionTypes) \
-	MACRO_FUNC(CvJsonPromotionInfo, PROMOTION_INFO, PromotionTypes) \
-	MACRO_FUNC(CvJsonCorporationInfo, CORPORATION_INFO, CorporationTypes) \
-	MACRO_FUNC(CvJsonTechInfo, TECH_INFO, TechTypes) \
-	MACRO_FUNC(CvJsonCivicInfo, CIVIC_INFO, CivicTypes) \
+	MACRO_FUNC(CvReligionInfo, RELIGION_INFO, ReligionTypes) \
+	MACRO_FUNC(CvPromotionInfo, PROMOTION_INFO, PromotionTypes) \
+	MACRO_FUNC(CvCorporationInfo, CORPORATION_INFO, CorporationTypes) \
+	MACRO_FUNC(CvTechInfo, TECH_INFO, TechTypes) \
+	MACRO_FUNC(CvCivicInfo, CIVIC_INFO, CivicTypes) \
 	MACRO_FUNC(CvVoteInfo, VOTE_INFO, VoteTypes) \
 	MACRO_FUNC(CvVoteSourceInfo, VOTE_SOURCE_INFO, VoteSourceTypes) \
 	MACRO_FUNC(CvSpecialUnitInfo, SPECIAL_UNIT_INFO, SpecialUnitTypes) \
@@ -23,10 +23,10 @@
 	MACRO_FUNC(CvUpkeepInfo, UPKEEP_INFO, UpkeepTypes) \
 	MACRO_FUNC(CvHurryInfo, HURRY_INFO, HurryTypes) \
 	MACRO_FUNC(CvFeatureInfo, FEATURE_INFO, FeatureTypes) \
-	MACRO_FUNC(CvJsonCivicOptionInfo, CIVIC_OPTION_INFO, CivicOptionTypes) \
+	MACRO_FUNC(CvCivicOptionInfo, CIVIC_OPTION_INFO, CivicOptionTypes) \
 	MACRO_FUNC(CvBuildInfo, BUILD_INFO, BuildTypes) \
 	MACRO_FUNC(CvTerrainInfo, TERRAIN_INFO, TerrainTypes) \
-	MACRO_FUNC(CvJsonRouteInfo, ROUTE_INFO, RouteTypes) \
+	MACRO_FUNC(CvRouteInfo, ROUTE_INFO, RouteTypes) \
 	MACRO_FUNC(CvVictoryInfo, VICTORY_INFO, VictoryTypes) \
 	MACRO_FUNC(CvLeaderHeadInfo, LEADERHEAD_INFO, LeaderHeadTypes) \
 	MACRO_FUNC(CvCivilizationInfo, CIVILIZATION_INFO, CivilizationTypes) \
@@ -36,12 +36,12 @@
 	MACRO_FUNC(CvEventInfo, EVENT_INFO, EventTypes) \
 	MACRO_FUNC(CvEventTriggerInfo, EVENT_TRIGGER_INFO, EventTriggerTypes) \
 	MACRO_FUNC(CvGameSpeedInfo, GAME_SPEED_INFO, GameSpeedTypes) \
-	MACRO_FUNC(CvJsonPropertyInfo, PROPERTy_INFO, PropertyTypes) \
-	MACRO_FUNC(CvJsonPromotionLineInfo, PROMOTION_LINE_INFO, PromotionLineTypes) \
-	MACRO_FUNC(CvJsonTraitInfo, TRAIT_INFO, TraitTypes) \
+	MACRO_FUNC(CvPropertyInfo, PROPERTy_INFO, PropertyTypes) \
+	MACRO_FUNC(CvPromotionLineInfo, PROMOTION_LINE_INFO, PromotionLineTypes) \
+	MACRO_FUNC(CvTraitInfo, TRAIT_INFO, TraitTypes) \
 	MACRO_FUNC(CvInvisibleInfo, INVISIBLE_INFO, InvisibleTypes) \
 	MACRO_FUNC(CvCategoryInfo, CATEGORY_INFO, CategoryTypes) \
-	MACRO_FUNC(CvJsonHeritageInfo, HERITAGE_INFO, HeritageTypes) \
+	MACRO_FUNC(CvHeritageInfo, HERITAGE_INFO, HeritageTypes) \
 	MACRO_FUNC(CvMapCategoryInfo, MAPCATEGORy_INFO, MapCategoryTypes) \
 	MACRO_FUNC(CvIdeaClassInfo, IDEACLASS_INFO, IdeaClassTypes) \
 	MACRO_FUNC(CvIdeaInfo, IDEA_INFO, IdeaTypes) \
@@ -91,7 +91,7 @@
 	MACRO_FUNC(CvGoodyInfo, GOODY_INFO, GoodyTypes) \
 	MACRO_FUNC(CvHandicapInfo, HANDICAP_INFO, HandicapTypes) \
 	MACRO_FUNC(CvTurnTimerInfo, TURN_TIMER_INFO, TurnTimerTypes) \
-	MACRO_FUNC(CvJsonProcessInfo, PROCESS_INFO, ProcessTypes) \
+	MACRO_FUNC(CvProcessInfo, PROCESS_INFO, ProcessTypes) \
 	MACRO_FUNC(CvActionInfo, ACTION_INFO, ActionTypes) \
 	MACRO_FUNC(CvControlInfo, CONTROL_INFOS, ControlTypes) \
 	MACRO_FUNC(CvCommandInfo, COMMAND_INFO, CommandTypes) \
@@ -99,7 +99,7 @@
 	MACRO_FUNC(CvDiplomacyInfo, DIPLOMACY_INFO, DiplomacyTypes) \
 	MACRO_FUNC(CvEraInfo, ERA_INFO, EraTypes) \
 	MACRO_FUNC(CvEmphasizeInfo, EMPHASIZE_INFO, EmphasizeTypes) \
-	MACRO_FUNC(CvJsonCultureLevelInfo, CULTURE_LEVEL_INFO, CultureLevelTypes) \
+	MACRO_FUNC(CvCultureLevelInfo, CULTURE_LEVEL_INFO, CultureLevelTypes) \
 	MACRO_FUNC(CvForceControlInfo, FORCE_CONTROL_INFO, ForceControlTypes) \
 	MACRO_FUNC(CvPlayerOptionInfo, PLAYER_OPTION_INFO, PlayerOptionTypes) \
 	MACRO_FUNC(CvGraphicOptionInfo, GRAPHIC_OPTION_INFO, GraphicOptionTypes) \
@@ -107,7 +107,7 @@
 	MACRO_FUNC(CvUnitArtStyleTypeInfo, UNIT_ART_STYLE_TYPE_INFO, UnitArtStyleTypes) \
 	MACRO_FUNC(CvMainMenuInfo, MAIN_MENU_INFO, MainMenuTypes) \
 	MACRO_FUNC(CvOutcomeInfo, OUTCOME_INFO, OutcomeTypes) \
-	MACRO_FUNC(CvJsonUnitCombatInfo, UNIT_COMBAT_INFO, UnitCombatTypes) \
+	MACRO_FUNC(CvUnitCombatInfo, UNIT_COMBAT_INFO, UnitCombatTypes) \
 	MACRO_FUNC(CvModLoadControlInfo, MOD_LOAD_CONTROL_INFO, ModLoadControlTypes) \
 	MACRO_FUNC(CvHintInfo, HINT_INFO, HintTypes) \
 	MACRO_FUNC(CvArtInfoAsset, ASSET_ART_INFO, AssetArtTypes) \

@@ -6,13 +6,13 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeDepositIndex.h"
-#include "CvJsonInfo.h"               // CvJsonInfo::getModifiers()/getWhenObsolete() -- the push's read surface
+#include "CvInfo.h"               // CvInfo::getModifiers()/getWhenObsolete() -- the push's read surface
 #include "Defines/CvGlobals.h"
-#include "Infos/CvTerrainInfo.h"
-#include "Infos/CvFeatureInfo.h"
-#include "Infos/CvBonusInfo.h"
-#include "Infos/CvImprovementInfo.h"
-#include "CvJsonBuildingInfo.h"
+#include "CvTerrainInfo.h"
+#include "CvFeatureInfo.h"
+#include "CvBonusInfo.h"
+#include "CvImprovementInfo.h"
+#include "CvBuildingInfo.h"
 #include <map>
 #include <vector>
 
@@ -26,7 +26,7 @@ struct DiCompiledSet
 	std::vector<CascadeDeposit> main;
 	std::vector<CascadeDeposit> whenObsolete;
 };
-static std::map<const CvJsonInfo*, DiCompiledSet> s_compiled;
+static std::map<const CvInfo*, DiCompiledSet> s_compiled;
 static const std::vector<CascadeDeposit> s_noDeposits;   // the shared empty answer (NULL / family-less infos)
 
 int DepositIndex::internSegment(const std::string& s)
@@ -111,7 +111,7 @@ void DepositIndex::compile(CascadeDeposit& d)
 // payload (value100 / enabled / disabled, borrowed) + the entry's unit spelled as the unit segment; compile()
 // interns + FK-resolves. Family map order (std::map, address-sorted) is the record order -- every consumer sums
 // commutatively, so order carries no semantics. `j` = the SOURCE info (the SELF per token collapses onto it).
-static void di_pushFamilies(const CvJsonInfo* j, const CvJsonModifiers* mods, std::vector<CascadeDeposit>& out)
+static void di_pushFamilies(const CvInfo* j, const CvJsonModifiers* mods, std::vector<CascadeDeposit>& out)
 {
 	if (mods == NULL || mods->empty()) return;
 	const std::map<std::string, CvJsonModFamily*>& fams = mods->all();
@@ -160,7 +160,7 @@ static void di_pushFamilies(const CvJsonInfo* j, const CvJsonModifiers* mods, st
 	}
 }
 
-void DepositIndex::pushInfo(const CvJsonInfo* j)
+void DepositIndex::pushInfo(const CvInfo* j)
 {
 	if (j == NULL) return;
 	const CvJsonModifiers* mods = j->getModifiers();
@@ -178,17 +178,17 @@ void DepositIndex::clearCompiled()
 	s_compiled.clear();
 }
 
-const std::vector<CascadeDeposit>& DepositIndex::depositsFor(const CvJsonInfo* j)
+const std::vector<CascadeDeposit>& DepositIndex::depositsFor(const CvInfo* j)
 {
 	if (j == NULL) return s_noDeposits;
-	const std::map<const CvJsonInfo*, DiCompiledSet>::const_iterator it = s_compiled.find(j);
+	const std::map<const CvInfo*, DiCompiledSet>::const_iterator it = s_compiled.find(j);
 	return it == s_compiled.end() ? s_noDeposits : it->second.main;
 }
 
-const std::vector<CascadeDeposit>& DepositIndex::whenObsoleteFor(const CvJsonInfo* j)
+const std::vector<CascadeDeposit>& DepositIndex::whenObsoleteFor(const CvInfo* j)
 {
 	if (j == NULL) return s_noDeposits;
-	const std::map<const CvJsonInfo*, DiCompiledSet>::const_iterator it = s_compiled.find(j);
+	const std::map<const CvInfo*, DiCompiledSet>::const_iterator it = s_compiled.find(j);
 	return it == s_compiled.end() ? s_noDeposits : it->second.whenObsolete;
 }
 

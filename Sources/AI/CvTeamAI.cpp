@@ -6,7 +6,7 @@
 #include "CvGameCoreDLL.h"
 #include "BetterBTSAI.h"
 #include "Engine/CvArea.h"
-#include "CvJsonBuildingInfo.h"
+#include "CvBuildingInfo.h"
 #include "CvBonusInfo.h"
 #include "Engine/CvCity.h"
 #include "CvGameAI.h"
@@ -2143,7 +2143,7 @@ int CvTeamAI::AI_getRivalAirPower( ) const
 
 	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 	{
-		const CvJsonUnitInfo& kUnit = GC.getUnitInfo((UnitTypes)iI);
+		const CvUnitInfo& kUnit = GC.getUnitInfo((UnitTypes)iI);
 
 		if (kUnit.getDomainType() == DOMAIN_AIR && kUnit.getAirCombat() > 0)
 		{

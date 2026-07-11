@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_FOREIGN2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_FOREIGN3"
   ]
  },

@@ -10,8 +10,7 @@
  "skills": {
   "noDefensiveBonus": true,
   "blendIntoCity": true,
-  "onlyDefensive": true,
-  "animalIgnoresBorders": true
+  "onlyDefensive": true
  },
  "outcomes": {
   "kill": [

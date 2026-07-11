@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_EXPANSIVE2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_EXPANSIVE3"
   ]
  },

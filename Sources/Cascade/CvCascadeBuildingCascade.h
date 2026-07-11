@@ -13,7 +13,7 @@
 
 #include <set>
 
-class CvJsonInfo;
+class CvInfo;
 class CvPlayer;
 class CvTeam;
 class CvCity;
@@ -26,14 +26,17 @@ public:
 	static void augmentWaived(const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& waived);
 
 	// Instance cap (StoneBase Capped): current tally count + in-production making >= allowed, at some scope.
-	static bool capped(const CvJsonInfo* j, int eB, const CvPlayer& kPlayer);
+	static bool capped(const CvInfo* j, int eB, const CvPlayer& kPlayer);
 
 	// ScaledPrereq (StoneBase BuildingCascade.ScaledPrereq, VERBATIM): the world-size-scaled required count of a
 	// PrereqNumOfBuildings prereq.
 	static int scaledPrereq(int baseN, int wsMod, bool selfLimited, bool prereqLimited, bool selfNoScale, int selfCount);
 
-	// The city's BUILDABLE set (the engine canConstruct TRUE-set), computed IN ISOLATION.
-	static void buildable(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& avail);
+	// The city's BUILDABLE set (the engine canConstruct TRUE-set), computed IN ISOLATION. bVisible=true yields the
+	// VISIBLE (build-list) frontier instead -- the CAN-GET set with the GREYABLE clauses relaxed (connectable resource /
+	// unadopted civic show GREYED), keeping every hard hide (notConstructible/tech/obsolete/cap/dormancy/placement).
+	// enabler.md §6; the strict (bVisible=false) set is byte-identical to before.
+	static void buildable(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& avail, bool bVisible = false);
 
 	// #430 the isolated-box TARGETED update (owner 2026-07-05, "per-turn frontier cache you can remove a building
 	// from; NEVER rebuilt on building-completed; rebuilt only on mid-turn tech etc."). A building changed (built or

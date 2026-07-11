@@ -1,5 +1,10 @@
 {
  "type": "UNIT_ISLAMIC_MISSIONARY",
+ "spread": {
+  "religion": {
+   "RELIGION_ISLAM": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

@@ -11,8 +11,8 @@
 #include "CvGameCoreDLL.h"
 #include "CvCascadeModifierMath.h"
 #include "Defines/CvGlobals.h"
-#include "CvJsonInfo.h"               // the mapped info (getModifiers/requiresOperate/dormantTriggers) -- the repo census
-#include "Repos/InfoRepo.h"           // InfoRepo<CvJsonBuildingInfo> -- ditto
+#include "CvInfo.h"               // the mapped info (getModifiers/requiresOperate/dormantTriggers) -- the repo census
+#include "Repos/InfoRepo.h"           // InfoRepo<CvBuildingInfo> -- ditto
 #include "CvCascadePerfCount.h"       // CascadePerf -- the [MODIFIER/perf] census
 #include "CvCascadeReadJson.h"        // cascadeReadJsonStats -- re-surface the dark load-time probe stats
 #include "CvJsonParse.h"              // jsonUnresolvedIds -- re-surface the dark load-time FK misses
@@ -128,7 +128,7 @@ static void mm_repoCensus()
 	const int nTot = GC.getNumBuildingInfos();
 	for (int b = 0; b < nTot; ++b)
 	{
-		const CvJsonInfo* d = InfoRepo<CvJsonBuildingInfo>::get().get(b);
+		const CvInfo* d = InfoRepo<CvBuildingInfo>::get().get(b);
 		if (d == NULL) continue;
 		++nMapped;
 		if (d->getModifiers() != NULL && !d->getModifiers()->empty()) ++nDep;

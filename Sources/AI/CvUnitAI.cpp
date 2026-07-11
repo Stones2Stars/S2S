@@ -5,7 +5,7 @@
 #include "Tools/FProfiler.h"
 
 #include "Engine/CvArea.h"
-#include "CvJsonBuildingInfo.h"
+#include "CvBuildingInfo.h"
 #include "CvBonusInfo.h"
 #include "Engine/CvCity.h"
 #include "CvCityAI.h"
@@ -13,8 +13,8 @@
 #include "CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "CvImprovementInfo.h"
-#include "CvJsonHeritageInfo.h"
-#include "CvJsonUnitCombatInfo.h"
+#include "CvHeritageInfo.h"
+#include "CvUnitCombatInfo.h"
 #include "CvInfos.h"
 #include "Engine/CvMap.h"
 #include "Infrastructure/CvPathGenerator.h"
@@ -993,7 +993,7 @@ bool CvUnitAI::AI_upgrade()
 	// the AI kept upgrading their best pick for something and then upgrading it to another unit that couldn't be that AI type.
 	// NOW, we should ALWAYS maintain the role a unit was designed for.
 	// Watch for odd problems this might introduce elsewhere though.
-	const CvJsonUnitInfo& unitInfo = GC.getUnitInfo(getUnitType());
+	const CvUnitInfo& unitInfo = GC.getUnitInfo(getUnitType());
 
 	std::vector<int> upgradeChain = unitInfo.getUnitUpgradeChain();
 
@@ -14261,7 +14261,7 @@ namespace {
 	// Helper function to determine if a unit looks legendaryish
 	bool isLegendary(const CvUnit* unit)
 	{
-		const CvJsonUnitInfo& unitInfo = GC.getUnitInfo(unit->getUnitType());
+		const CvUnitInfo& unitInfo = GC.getUnitInfo(unit->getUnitType());
 		return (unitInfo.getMaxGlobalInstances() > 0 && unitInfo.getMaxGlobalInstances() <= 3)
 			|| (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) && unit->qualityRank() > 8);
 	}
@@ -15181,7 +15181,7 @@ bool CvUnitAI::AI_outcomeMission()
 
 	std::vector<std::pair<MissionTypes, const CvOutcomeList*> > aMissions;
 
-	const CvJsonUnitInfo& kInfo = getUnitInfo();
+	const CvUnitInfo& kInfo = getUnitInfo();
 
 	for (int iI = 0; iI < kInfo.getNumActionOutcomes(); iI++)
 	{
@@ -15193,7 +15193,7 @@ bool CvUnitAI::AI_outcomeMission()
 	{
 		if (it->second.m_bHasUnitCombat)
 		{
-			const CvJsonUnitCombatInfo& kCombatInfo = GC.getUnitCombatInfo(it->first);
+			const CvUnitCombatInfo& kCombatInfo = GC.getUnitCombatInfo(it->first);
 			for (int iI = 0; iI < kCombatInfo.getNumActionOutcomes(); iI++)
 			{
 				aMissions.push_back(std::make_pair(kCombatInfo.getActionOutcomeMission(iI), kCombatInfo.getActionOutcomeList(iI)));
@@ -22744,7 +22744,7 @@ bool CvUnitAI::AI_pickup(UnitAITypes eUnitAI, bool bCountProduction, int iMaxPat
 					{
 						if (pCity->getProductionTurnsLeft() < 4)
 						{
-							const CvJsonUnitInfo& kUnitInfo = GC.getUnitInfo(pCity->getProductionUnit());
+							const CvUnitInfo& kUnitInfo = GC.getUnitInfo(pCity->getProductionUnit());
 							if ((kUnitInfo.getDomainType() != DOMAIN_AIR) || kUnitInfo.getAirRange() > 0)
 							{
 								iCount++;
@@ -22828,7 +22828,7 @@ bool CvUnitAI::AI_pickup(UnitAITypes eUnitAI, bool bCountProduction, int iMaxPat
 
 					if (bCountProduction && (pLoopCity->getProductionUnitAI() == eUnitAI))
 					{
-						const CvJsonUnitInfo& kUnitInfo = GC.getUnitInfo(pLoopCity->getProductionUnit());
+						const CvUnitInfo& kUnitInfo = GC.getUnitInfo(pLoopCity->getProductionUnit());
 						if ((kUnitInfo.getDomainType() != DOMAIN_AIR) || kUnitInfo.getAirRange() > 0)
 						{
 							iValue++;
@@ -28169,7 +28169,7 @@ int	CvUnitAI::AI_genericUnitValueTimes100(UnitValueFlags eFlags) const
 		{
 			if (keyedInfo.second.m_bHasPromotion)
 			{
-				const CvJsonPromotionInfo& kPromotion = GC.getPromotionInfo(keyedInfo.first);
+				const CvPromotionInfo& kPromotion = GC.getPromotionInfo(keyedInfo.first);
 				bool bPromotionHasAccountedValue = false;
 
 				//	Generic strength multiplier
@@ -29446,7 +29446,7 @@ bool CvUnitAI::AI_selectStatus(bool bStack, CvUnit* pUnit)
 	{
 		int iValue = 0;
 		const PromotionTypes eStatus = GC.getStatusPromotion(iI);
-		const CvJsonPromotionInfo& kPromotion = GC.getPromotionInfo(eStatus);
+		const CvPromotionInfo& kPromotion = GC.getPromotionInfo(eStatus);
 		PromotionTypes eRemoveStatus = NO_PROMOTION;
 
 		for (int iJ = 0; iJ < iNumStatusPromotions; iJ++)

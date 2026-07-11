@@ -809,6 +809,11 @@ private:
 /************************************************************************************************/
 	template <class T>
 	void LoadGlobalClassInfo(std::vector<T*>& aInfos, const char* szFileRoot, const char* szFileDirectory, const wchar_t* szXmlPath, bool bTwoPass, CvInfoReplacements<T>* pReplacements = NULL);
+	// #430: JSON-sourced sibling of LoadGlobalClassInfo. Loads a cascade-replaced info type from
+	// Assets/Data/<folder>/*.json (mapFrom per entity) instead of the archived CIV4<X>Infos.xml shell
+	// (reading a replaced info's XML into the game is HARD BANNED -- AGENTS.md / DEC-no-xml-into-game).
+	template <class T>
+	void LoadGlobalClassInfoJson(std::vector<T*>& aInfos, const char* szDataFolder, bool bSkipComplex = false);
 /************************************************************************************************/
 /* MODULAR_LOADING_CONTROL                 05/13/08                                MRGENIE      */
 /*                                                                                              */

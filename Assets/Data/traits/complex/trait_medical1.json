@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_MEDICAL1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_MEDICAL2",
    "TRAIT_MEDICAL3"
   ]

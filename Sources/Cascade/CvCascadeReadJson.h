@@ -7,7 +7,7 @@
 //	docs/plans/structural-cleanup/readjson.md). Built FROM SCRATCH, interface-bounded; it NEVER threads through
 //	CvInfoUtil / the XML read() path (cascade-engine-430.md §2b/§3). Conditionals parse through the StoneBase-ported
 //	typed condition tree (cascadeParseCondition -> CvJsonCondition), NOT BoolExpr. It maps each entity's JSON to a
-//	CvJsonInfo held in the per-info-type InfoRepo (the cascade machines -- modifier/enabler -- read it from there).
+//	CvInfo held in the per-info-type InfoRepo (the cascade machines -- modifier/enabler -- read it from there).
 //
 
 //	Map the whole Assets/Data set into the per-type InfoRepo, ONCE per process, at the SAME load point as the XML
@@ -17,11 +17,10 @@
 //	gated in the consumer). So loading the game with the XML always populates the cascade's static data-feed.
 void cascadeLoadJson();
 
-//	#430 collapse: the per-entity JSON lookup CvJsonInfo::read() uses. Lazily builds a type->JSON index (one
+//	#430 collapse: the per-entity JSON lookup CvInfo::read() uses. Lazily builds a type->JSON index (one
 //	Assets/Data scan) and returns this entity's parsed JSON (NULL if it has none). The JSON load thus rides the normal
 //	SetGlobalClassInfo->read() flow -- no separate InfoRepo pass.
 namespace picojson { class value; }
-const picojson::value* cascadeJsonForType(const char* szType);
 
 #include <string>
 //	The probe-stat stash (set=true stores at map time; set=false reads): what the DARK load-time [READJSON] burst

@@ -30,6 +30,15 @@
    ]
   }
  },
+ "domainMoves": {
+  "empire": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 1
+    }
+   }
+  }
+ },
  "cost": {
   "research": 3074
  },

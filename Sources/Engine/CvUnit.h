@@ -17,7 +17,7 @@ class CvCity;
 class CvPlot;
 class CvSelectionGroup;
 class CvArtInfoUnit;
-class CvJsonUnitInfo;
+class CvUnitInfo;
 class CvUnitSelectionCriteria;
 #ifdef USE_OLD_PATH_GENERATOR
 class FAStarNode;
@@ -1169,8 +1169,7 @@ public:
 	int getSMStrength () const;
 	void setSMStrength ();
 
-	int getAnimalIgnoresBordersCount() const;
-	void changeAnimalIgnoresBordersCount(int iChange);
+	short getAnimalIgnoresBordersCount() const;   // BITMASK (owner 2026-07-11): ANIMAL_IGNORE_BORDERS|_IMPROVEMENTS|_CITIES bits, game-option-derived (no stored count)
 
 	int getOnslaughtCount() const;
 	bool mayOnslaught() const;
@@ -1276,7 +1275,7 @@ public:
 	CvUnit* getCapturingUnit() const;
 	void setCapturingUnit(const CvUnit* pCapturingUnit);
 
-	const CvJsonUnitInfo& getUnitInfo() const;
+	const CvUnitInfo& getUnitInfo() const;
 
 	void setLeaderUnitType(UnitTypes leaderUnitType);
 
@@ -1594,7 +1593,6 @@ protected:
 	int m_iExtraDynamicDefense;
 	int m_iExtraStrength;
 	int m_iSMStrength;
-	int m_iAnimalIgnoresBordersCount;
 	int m_iOnslaughtCount;
 	int m_iExtraSelfHealModifier;
 	int m_iExtraNumHealSupport;
@@ -1730,7 +1728,7 @@ protected:
 	UnitTypes m_eUnitType;
 	UnitTypes m_eLeaderUnitType;
 	UnitTypes m_eGGExperienceEarnedTowardsType;
-	CvJsonUnitInfo *m_pUnitInfo;
+	CvUnitInfo *m_pUnitInfo;
 	ReligionTypes m_eReligionType;
 
 	IDInfo m_combatUnit;
@@ -2453,7 +2451,7 @@ public:
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, int, getArea);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, const CvArea*, area);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, const CvPlot*, plot);
-		DECLARE_MAP_FUNCTOR_CONST(CvUnit, const CvJsonUnitInfo&, getUnitInfo);
+		DECLARE_MAP_FUNCTOR_CONST(CvUnit, const CvUnitInfo&, getUnitInfo);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, const CvUnit*, getTransportUnit);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, BuildTypes, getBuildType);
 		DECLARE_MAP_FUNCTOR_CONST(CvUnit, ImprovementTypes, getBuildTypeImprovement);

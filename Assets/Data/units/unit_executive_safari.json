@@ -1,5 +1,10 @@
 {
  "type": "UNIT_EXECUTIVE_SAFARI",
+ "spread": {
+  "corporation": {
+   "CORPORATION_SAFARI": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_SLOB2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_SLOB3"
   ]
  },

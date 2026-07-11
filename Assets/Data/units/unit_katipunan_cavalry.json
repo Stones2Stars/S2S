@@ -139,6 +139,23 @@
       "percent": 50
      }
     }
+   },
+   "flankingUnit": {
+    "UNIT_CATAPULT": {
+     "percent": 100
+    },
+    "UNIT_TREBUCHET": {
+     "percent": 100
+    },
+    "UNIT_BOMBARD": {
+     "percent": 100
+    },
+    "UNIT_CANNON": {
+     "percent": 100
+    },
+    "UNIT_LIGHT_ARTILLERY": {
+     "percent": 100
+    }
    }
   }
  },

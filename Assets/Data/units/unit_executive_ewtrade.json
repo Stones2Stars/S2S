@@ -1,5 +1,10 @@
 {
  "type": "UNIT_EXECUTIVE_EWTRADE",
+ "spread": {
+  "corporation": {
+   "CORPORATION_EWTRADE": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

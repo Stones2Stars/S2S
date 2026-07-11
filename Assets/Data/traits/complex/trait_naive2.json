@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_NAIVE2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_NAIVE3"
   ]
  },

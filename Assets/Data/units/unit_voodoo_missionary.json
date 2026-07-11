@@ -1,5 +1,10 @@
 {
  "type": "UNIT_VOODOO_MISSIONARY",
+ "spread": {
+  "religion": {
+   "RELIGION_VOODOO": 100
+  }
+ },
  "requires": {
   "build": {
    "all": [

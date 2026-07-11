@@ -70,6 +70,14 @@
     "UNITCOMBAT_SIEGE_ROCKETRY": {
      "percent": 50
     }
+   },
+   "flanking": {
+    "UNITCOMBAT_SIEGE_GUNPOWDER": {
+     "percent": 50
+    },
+    "UNITCOMBAT_SIEGE_ROCKETRY": {
+     "percent": 50
+    }
    }
   }
  },

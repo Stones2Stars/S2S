@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_INNOVATIVE2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_INNOVATIVE3"
   ]
  },

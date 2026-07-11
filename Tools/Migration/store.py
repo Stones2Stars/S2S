@@ -143,12 +143,12 @@ PREREQ_FIELDS = [
     # tech. Inverted to top-down `enables.traits` on the prereq trait / tech (the dependent trait drops these
     # fields). OR-pair is schema-present/data-empty today; the trait's PromotionLine carries a second tech gate
     # (owned by PromotionLineInfo's own PrereqTech edge above). #428 Trait curation (curate_trait.py).
-    ("TraitInfo",    "TraitPrereq",     "traits"),
-    ("TraitInfo",    "TraitPrereqOr1",  "traits"),
-    ("TraitInfo",    "TraitPrereqOr2",  "traits"),
-    ("TraitInfo",    "PrereqTech",      "traits"),
-    ("RouteInfo",    "BonusType",                       "routes"),
-    ("RouteInfo",    "PrereqOrBonuses/BonusType",       "routes"),
+    ("TraitInfo",    "TraitPrereq",     "traitsAnd"),   # single AND prereq -> getPrereqTrait (bucket-split keeps AND vs OR distinct; reverse-mapped at load)
+    ("TraitInfo",    "TraitPrereqOr1",  "traitsOr"),     # OR pair -> getPrereqOrTrait1/2
+    ("TraitInfo",    "TraitPrereqOr2",  "traitsOr"),
+    ("TraitInfo",    "PrereqTech",      "traits"),        # tech->trait prereq (on the prereq TECH's enables) -> getPrereqTech
+    ("RouteInfo",    "BonusType",                       "routesAnd"),   # single AND prereq -> distinct bucket (getPrereqBonus); reverse-mapped at load
+    ("RouteInfo",    "PrereqOrBonuses/BonusType",       "routes"),      # OR-list -> getPrereqOrBonuses
     ("BuildInfo",    "PrereqBonusTypes/PrereqBonusType", "builds"),
     ("PromotionInfo", "PrereqBonusTypes/BonusType",     "promotions"),
     ("PromotionInfo", "PrereqPlotBonusTypes/PrereqPlotBonusType", "promotions"),

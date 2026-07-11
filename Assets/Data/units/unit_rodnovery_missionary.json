@@ -1,5 +1,10 @@
 {
  "type": "UNIT_RODNOVERY_MISSIONARY",
+ "spread": {
+  "religion": {
+   "RELIGION_RODNOVERA": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

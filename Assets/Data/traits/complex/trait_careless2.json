@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_CARELESS2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_CARELESS3"
   ]
  },

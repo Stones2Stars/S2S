@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_NATURALIST2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_NATURALIST3"
   ]
  },

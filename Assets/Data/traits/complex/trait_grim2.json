@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_GRIM2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_GRIM3"
   ]
  },

@@ -1,5 +1,10 @@
 {
  "type": "UNIT_EXECUTIVE_BURGERWORLD",
+ "spread": {
+  "corporation": {
+   "CORPORATION_BURGERWORLD": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

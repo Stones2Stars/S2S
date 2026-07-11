@@ -1,5 +1,10 @@
 {
  "type": "UNIT_EGYPT_MYTH_MISSIONARY",
+ "spread": {
+  "religion": {
+   "RELIGION_KEMETISM": 30
+  }
+ },
  "requires": {
   "build": {
    "all": [

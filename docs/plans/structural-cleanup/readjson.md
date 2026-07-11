@@ -120,12 +120,16 @@ add real handling per `json.md` §5 (grants: lists, numeric pulses, `foundBuildi
   `GC.getInfoTypeForString` (`Defines/CvGlobals.cpp:2682`, decl `CvGlobals.h:1418`) over `m_infosMap`
   (`CvGlobals.h:929`) — the EXE binds the same indices, so the fresh structures key on the same `int` ids the engine
   uses. (`setInfoTypeFromString` `:2708` registers any new ids.)
-- **Runs IN ADDITION to the XML load during shadow.** The XML path (`SetGlobalClassInfo` → `read()`,
-  `Infrastructure/CvXMLLoadUtilitySet.cpp:1516`/`:1588`) stays authoritative; `readJson` populates the cascade's own
-  fresh structures in parallel. At the **atomic cutover**, the XML path is deleted and the fresh structures serve the
-  **EXE-bound accessor surface** (`CvInfoBase` DllExport getters `Infos/CvInfoBase.h:55/71/72/73/75`; `read()` is NOT
-  DllExport, so it goes). Serving that surface from fresh structures (or reworking it) is a **cutover** detail, not a
-  shadow one.
+- **✅ THE XML SHELL READ IS GONE for the 23 replaced infos (owner ruling — landed).** They load from
+  `Assets/Data/<folder>/*.json` via **`CvXMLLoadUtility::LoadGlobalClassInfoJson<T>`** — a per-category sibling of
+  `LoadGlobalClassInfo` at the SAME call sites/order in `LoadPre/PostMenuGlobals`: scan the folder → sort by type
+  (deterministic ids, MP-safe) → `setInfoTypeFromString(type,id)` → `new Cv<X>Info` → `mapFrom(json)`. The
+  replaced-type `LoadGlobalClassInfo(GC.m_pa<X>Info, "CIV4<X>Infos", …)` XML calls are DELETED (reading a replaced
+  info's XML into the game is HARD BANNED — [DEC-no-xml-into-game]); the legacy XMLs stay in the tree as curator input
+  only. `mapFrom` IS the per-info read — `CvInfo::read()` (the old `CvHotkeyInfo::read(XML)` + mapFrom hook) and its
+  `cascadeJsonForType` index are REMOVED. **`cascadeLoadJson` now only wires foreign keys** (the reverse-index tail +
+  the census + DepositIndex push); it no longer maps aliased types (they are mapped by the loader). FK-resolution
+  timing is preserved because the per-category loaders run in the same order the XML loads did.
 - **`BoolExpr` is the deliberate reuse** (`cascade-engine-430.md` §2b) — the one existing piece pulled out, not rebuilt.
 
 ---

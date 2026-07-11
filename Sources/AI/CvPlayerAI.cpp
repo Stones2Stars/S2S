@@ -3,7 +3,7 @@
 #include "CvGameCoreDLL.h"
 #include "Engine/CvArea.h"
 #include "CvBonusInfo.h"
-#include "CvJsonBuildingInfo.h"
+#include "CvBuildingInfo.h"
 #include "Engine/CvCity.h"
 #include "CvCityAI.h"
 #include "Engine/CvDeal.h"
@@ -14,9 +14,9 @@
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "CvInfos.h"
-#include "CvJsonHeritageInfo.h"
-#include "CvJsonUnitCombatInfo.h"
-#include "CvJsonTraitInfo.h"
+#include "CvHeritageInfo.h"
+#include "CvUnitCombatInfo.h"
+#include "CvTraitInfo.h"
 #include "Infrastructure/CvInitCore.h"
 #include "Engine/CvMap.h"
 #include "Engine/CvPlot.h"
@@ -4575,7 +4575,7 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 	resetBonusClassTallyCache(GC.getGame().getGameTurn());
 
-	const CvJsonTechInfo& kTech = GC.getTechInfo(eTech);
+	const CvTechInfo& kTech = GC.getTechInfo(eTech);
 	const CvTeam& kTeam = GET_TEAM(getTeam());
 
 	
@@ -5570,7 +5570,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 
 		if (GC.getGame().canEverConstruct(eLoopBuilding))
 		{
-			const CvJsonBuildingInfo& kLoopBuilding = GC.getBuildingInfo(eLoopBuilding);
+			const CvBuildingInfo& kLoopBuilding = GC.getBuildingInfo(eLoopBuilding);
 			if (isTechRequiredForBuilding(eTech, eLoopBuilding))
 			{
 				if (isWorldWonder(eLoopBuilding))
@@ -5938,7 +5938,7 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 
 		if (GC.getGame().canEverTrain(eUnitX) && isTechRequiredForUnit(eTech, eUnitX))
 		{
-			const CvJsonUnitInfo& unitX = GC.getUnitInfo(eUnitX);
+			const CvUnitInfo& unitX = GC.getUnitInfo(eUnitX);
 			iValue += 200;
 
 			if (unitX.getPrereqAndTech() == eTech)
@@ -6429,7 +6429,7 @@ void CvPlayerAI::AI_chooseResearch()
 
 		if (eBestTech != NO_TECH)
 		{
-			CvJsonTechInfo& tech = GC.getTechInfo(eBestTech);
+			CvTechInfo& tech = GC.getTechInfo(eBestTech);
 
 			OutputDebugString(CvString::format("Game turn %d, AI chooses tech %S\n", GC.getGame().getGameTurn(), tech.getDescription()).c_str());
 			pushResearch(eBestTech);
@@ -9090,12 +9090,12 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 					PROFILE("CvPlayerAI::AI_baseBonusVal::recalculate Unit Value");
 					for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 					{
-						const CvJsonUnitInfo& kLoopUnit = GC.getUnitInfo((UnitTypes)iI);
+						const CvUnitInfo& kLoopUnit = GC.getUnitInfo((UnitTypes)iI);
 
 						//	Don't consider units more than one era ahead of us
 						if (kLoopUnit.getPrereqAndTech() != NO_TECH)
 						{
-							const CvJsonTechInfo& prereqTech = GC.getTechInfo((TechTypes)kLoopUnit.getPrereqAndTech());
+							const CvTechInfo& prereqTech = GC.getTechInfo((TechTypes)kLoopUnit.getPrereqAndTech());
 
 							if (prereqTech.getEra() > (int)getCurrentEra() + 1)
 							{
@@ -9187,14 +9187,14 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 								//	the religion
 								if (kLoopUnit.getPrereqReligion() != NO_RELIGION)
 								{
-									const CvJsonReligionInfo& kReligion = GC.getReligionInfo((ReligionTypes)kLoopUnit.getPrereqReligion());
+									const CvReligionInfo& kReligion = GC.getReligionInfo((ReligionTypes)kLoopUnit.getPrereqReligion());
 
 									iTechDistance = std::max(iTechDistance, findPathLength(kReligion.getTechPrereq(), false));
 								}
 								//	Similarly corporations
 								if (kLoopUnit.getPrereqCorporation() != NO_RELIGION)
 								{
-									const CvJsonCorporationInfo& kCorporation = GC.getCorporationInfo((CorporationTypes)kLoopUnit.getPrereqCorporation());
+									const CvCorporationInfo& kCorporation = GC.getCorporationInfo((CorporationTypes)kLoopUnit.getPrereqCorporation());
 
 									iTechDistance = std::max(iTechDistance, findPathLength(kCorporation.getTechPrereq(), false));
 								}
@@ -9218,7 +9218,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 
 					if (!GET_TEAM(getTeam()).isObsoleteBuilding(eBuildingX))
 					{
-						const CvJsonBuildingInfo& kLoopBuilding = GC.getBuildingInfo(eBuildingX);
+						const CvBuildingInfo& kLoopBuilding = GC.getBuildingInfo(eBuildingX);
 						bool bCanConstruct = false;
 
 						if (bJustNonTradeBuildings || bForTrade)
@@ -9443,7 +9443,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 				for (int iI = 0; iI < GC.getNumProjectInfos(); iI++)
 				{
 					const ProjectTypes eProject = static_cast<ProjectTypes>(iI);
-					const CvJsonProjectInfo& kLoopProject = GC.getProjectInfo(eProject);
+					const CvProjectInfo& kLoopProject = GC.getProjectInfo(eProject);
 
 					int iTempValue = kLoopProject.getBonusProductionModifier(eBonus) / 10;
 
@@ -9575,7 +9575,7 @@ int CvPlayerAI::AI_corporationBonusVal(BonusTypes eBonus) const
 		if (iCorpCount > 0)
 		{
 			iCorpCount += getNumCities() / 6 + 1;
-			const CvJsonCorporationInfo& kCorp = GC.getCorporationInfo((CorporationTypes)iCorporation);
+			const CvCorporationInfo& kCorp = GC.getCorporationInfo((CorporationTypes)iCorporation);
 			foreach_(const BonusTypes ePrereqBonus, kCorp.getPrereqBonuses())
 			{
 				if (eBonus == ePrereqBonus)
@@ -10377,7 +10377,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eUnit);
 	FASSERT_BOUNDS(0, NUM_UNITAI_TYPES, eUnitAI);
 
-	const CvJsonUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
+	const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnit);
 
 	if (kUnitInfo.getDomainType() != AI_unitAIDomainType(eUnitAI) && eUnitAI != UNITAI_ICBM)
 	{
@@ -12481,7 +12481,7 @@ int CvPlayerAI::AI_corporationValue(CorporationTypes eCorporation, const CvCity*
 	{
 		return 0;
 	}
-	const CvJsonCorporationInfo& kCorp = GC.getCorporationInfo(eCorporation);
+	const CvCorporationInfo& kCorp = GC.getCorporationInfo(eCorporation);
 	int iBonusValue = 0;
 
 	for (int iBonus = 0; iBonus < GC.getNumBonusInfos(); iBonus++)
@@ -13159,7 +13159,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	{
 		return m_aiCivicValueCache[eCivic + (bCivicOptionVacuum ? 0 : GC.getNumCivicInfos())];
 	}
-	const CvJsonCivicInfo& kCivic = GC.getCivicInfo(eCivic);
+	const CvCivicInfo& kCivic = GC.getCivicInfo(eCivic);
 	const CvTeamAI& pTeam = GET_TEAM(getTeam());
 
 	bool bWarPlan = pTeam.hasWarPlan(true);
@@ -13316,7 +13316,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 	if (GC.getGame().isOption(GAMEOPTION_UNSUPPORTED_REVOLUTION))
 	{
 		// If there is no civicOption vacuum we need to subtract out the current civic
-		CvJsonCivicInfo* kCurrentCivic = NULL;
+		CvCivicInfo* kCurrentCivic = NULL;
 
 		if (!bCivicOptionVacuum)
 		{
@@ -13378,21 +13378,21 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 		}
 	}
 
-	if (kCivic.getCityLimit(getID()) > 0)
+	if (GC.getGame().getCivicCityLimit(eCivic) > 0)
 	{
 		if (kCivic.getCityOverLimitUnhappy() == 0)
 		{
 			//	Treat numCities == limit as a want-to-expand case even if we have not actually (yet) decided
 			//	to produce the settler
-			if (getNumCities() + AI_totalUnitAIs(UNITAI_SETTLE) >= kCivic.getCityLimit(getID()))
+			if (getNumCities() + AI_totalUnitAIs(UNITAI_SETTLE) >= GC.getGame().getCivicCityLimit(eCivic))
 			{
-				iValue -= (getNumCities() + AI_totalUnitAIs(UNITAI_SETTLE) + 1 - kCivic.getCityLimit(getID())) * 100; //if we are planning to expand, city limitations suck
+				iValue -= (getNumCities() + AI_totalUnitAIs(UNITAI_SETTLE) + 1 - GC.getGame().getCivicCityLimit(eCivic)) * 100; //if we are planning to expand, city limitations suck
 			}
 			else
 			{
 				//	Smaller limits suck more but since we are not trying to expand it can't be
 				//	worse than the best case where we ARE trying and can't
-				iValue -= 100 / kCivic.getCityLimit(getID());
+				iValue -= 100 / GC.getGame().getCivicCityLimit(eCivic);
 			}
 		}
 		else
@@ -13402,9 +13402,9 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 			int iCount = 0;
 			int iWantToBuild = getNumCities() + AI_totalUnitAIs(UNITAI_SETTLE) + 1;
 
-			if (iWantToBuild > kCivic.getCityLimit(getID()))
+			if (iWantToBuild > GC.getGame().getCivicCityLimit(eCivic))
 			{
-				int iExtraCities = iWantToBuild - kCivic.getCityLimit(getID());
+				int iExtraCities = iWantToBuild - GC.getGame().getCivicCityLimit(eCivic);
 
 				foreach_(const CvCity * pLoopCity, cities() | filtered(!CvCity::fn::isNoUnhappiness()))
 				{
@@ -14173,7 +14173,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 		|| kCivic.isAnyBuildingHappinessChange() || kCivic.isAnyFeatureHappinessChange()
 		|| kCivic.getNonStateReligionHappiness() != 0
 		|| (kCivic.getWarWearinessModifier() != 0 && getWarWearinessPercentAnger() != 0)
-		|| (kCivic.getCityLimit(getID()) > 0 && kCivic.getCityOverLimitUnhappy() > 0)
+		|| (GC.getGame().getCivicCityLimit(eCivic) > 0 && kCivic.getCityOverLimitUnhappy() > 0)
 		|| (kCivic.getStateReligionHappiness() != 0 && (kCivic.isStateReligion() || isStateReligion()))))
 	{
 		int iExtraPop = 1;
@@ -14308,7 +14308,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 			iTempValue = kCivic.getBuildingHappinessChanges(iI);
 			if (iTempValue != 0 && !isLimitedWonder((BuildingTypes)iI) && !pTeam.isObsoleteBuilding((BuildingTypes)iI))
 			{
-				const CvJsonBuildingInfo& buildingInfo = GC.getBuildingInfo((BuildingTypes)iI);
+				const CvBuildingInfo& buildingInfo = GC.getBuildingInfo((BuildingTypes)iI);
 				if (buildingInfo.getPrereqAndTech() == NO_TECH || GC.getTechInfo((TechTypes)buildingInfo.getPrereqAndTech()).getEra() <= getCurrentEra())
 				{
 					//+0.5 per city that does not yet have that building
@@ -14354,7 +14354,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 			const CivicTypes eTempCivic = ((paeSelectedCivics == NULL) ? getCivics((CivicOptionTypes)iI) : paeSelectedCivics[iI]);
 			if (eTempCivic != NO_CIVIC)
 			{
-				const CvJsonCivicInfo& kTempCivic = GC.getCivicInfo(eTempCivic);
+				const CvCivicInfo& kTempCivic = GC.getCivicInfo(eTempCivic);
 				if (kTempCivic.getCivicOptionType() == iI)
 				{
 					if (bCivicOptionVacuum)
@@ -15742,7 +15742,7 @@ int CvPlayerAI::AI_espionageVal(PlayerTypes eTargetPlayer, EspionageMissionTypes
 
 		if (pCity && pCity->isActiveBuilding((BuildingTypes)iData))
 		{
-			const CvJsonBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iData);
+			const CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iData);
 			if (kBuilding.getProductionCost() > 1 && !isWorldWonder((BuildingTypes)iData))
 			{
 				iValue += pCity->AI_buildingValue((BuildingTypes)iData);
@@ -15756,7 +15756,7 @@ int CvPlayerAI::AI_espionageVal(PlayerTypes eTargetPlayer, EspionageMissionTypes
 	{
 		if (canSpyDestroyProject(eTargetPlayer, (ProjectTypes)iData))
 		{
-			const CvJsonProjectInfo& kProject = GC.getProjectInfo((ProjectTypes)iData);
+			const CvProjectInfo& kProject = GC.getProjectInfo((ProjectTypes)iData);
 
 			iValue += getProductionNeeded((ProjectTypes)iData) * ((kProject.getMaxTeamInstances() == 1) ? 3 : 2);
 		}
@@ -15773,7 +15773,7 @@ int CvPlayerAI::AI_espionageVal(PlayerTypes eTargetPlayer, EspionageMissionTypes
 			{
 				if (pCity->getProductionProject() != NO_PROJECT)
 				{
-					const CvJsonProjectInfo& kProject = GC.getProjectInfo(pCity->getProductionProject());
+					const CvProjectInfo& kProject = GC.getProjectInfo(pCity->getProductionProject());
 					iValue += iTempValue * ((kProject.getMaxTeamInstances() == 1) ? 4 : 2);
 				}
 				else if (pCity->getProductionBuilding() != NO_BUILDING)
@@ -21376,7 +21376,7 @@ int CvPlayerAI::AI_cultureVictoryTechValue(TechTypes eTech) const
 
 		if (isTechRequiredForBuilding(eTech, eLoopBuilding))
 		{
-			const CvJsonBuildingInfo& kLoopBuilding = GC.getBuildingInfo(eLoopBuilding);
+			const CvBuildingInfo& kLoopBuilding = GC.getBuildingInfo(eLoopBuilding);
 
 			iValue += 15 * (kLoopBuilding.getCommerceChange(COMMERCE_CULTURE) + kLoopBuilding.getCommercePerPopChange(COMMERCE_CULTURE)) / 2;
 			iValue += kLoopBuilding.getCommerceModifier(COMMERCE_CULTURE) * 2;
@@ -22331,7 +22331,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 	{
 		if (getCapitalCity() && getCapitalCity()->canTrain((UnitTypes)iI))
 		{
-			const CvJsonUnitInfo& unit = GC.getUnitInfo((UnitTypes)iI);
+			const CvUnitInfo& unit = GC.getUnitInfo((UnitTypes)iI);
 			const int iMoves = unit.getMoves();
 
 			if (unit.getUnitAIType(UNITAI_RESERVE)
@@ -23706,7 +23706,7 @@ UnitTypes CvPlayerAI::AI_bestAdvancedStartUnitAI(const CvPlot* pPlot, UnitAIType
 
 	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 	{
-		const CvJsonUnitInfo& kUnit = GC.getUnitInfo((UnitTypes)iI);
+		const CvUnitInfo& kUnit = GC.getUnitInfo((UnitTypes)iI);
 
 		int iUnitCost = getAdvancedStartUnitCost((UnitTypes)iI, true, pPlot);
 		if (iUnitCost >= 0)
@@ -24849,7 +24849,7 @@ int CvPlayerAI::AI_calculateTotalBombard(DomainTypes eDomain) const
 
 	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 	{
-		const CvJsonUnitInfo& kUnit = GC.getUnitInfo((UnitTypes)iI);
+		const CvUnitInfo& kUnit = GC.getUnitInfo((UnitTypes)iI);
 
 		if (kUnit.getDomainType() == eDomain)
 		{
@@ -25052,7 +25052,7 @@ int CvPlayerAI::AI_calculateUnitAIViability(UnitAITypes eUnitAI, DomainTypes eDo
 
 	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 	{
-		const CvJsonUnitInfo& kUnitInfo = GC.getUnitInfo((UnitTypes)iI);
+		const CvUnitInfo& kUnitInfo = GC.getUnitInfo((UnitTypes)iI);
 
 		if (kUnitInfo.getDomainType() == eDomain)
 		{
@@ -25372,7 +25372,7 @@ bool CvPlayerAI::AI_isCivicCanChangeOtherValues(CivicTypes eCivicSelected, Relig
 		return false;
 	}
 
-	const CvJsonCivicInfo& kCivicSelected = GC.getCivicInfo(eCivicSelected);
+	const CvCivicInfo& kCivicSelected = GC.getCivicInfo(eCivicSelected);
 
 	//happiness
 	if (kCivicSelected.getCivicPercentAnger() != 0 || kCivicSelected.getHappyPerMilitaryUnit() != 0
@@ -25445,8 +25445,8 @@ bool CvPlayerAI::AI_isCivicValueRecalculationRequired(CivicTypes eCivic, CivicTy
 		return false;
 	}
 
-	const CvJsonCivicInfo& kCivic = GC.getCivicInfo(eCivic);
-	const CvJsonCivicInfo& kCivicSelected = GC.getCivicInfo(eCivicSelected);
+	const CvCivicInfo& kCivic = GC.getCivicInfo(eCivic);
+	const CvCivicInfo& kCivicSelected = GC.getCivicInfo(eCivicSelected);
 
 	//happiness
 	if (kCivic.getCivicPercentAnger() != 0 || kCivic.getHappyPerMilitaryUnit() != 0
@@ -26401,7 +26401,7 @@ int CvPlayerAI::AI_militaryUnitTradeVal(const CvUnit* pUnit) const
 
 		if (pEvaluationCity != NULL)
 		{
-			const CvJsonUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+			const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
 			//	Subdued animals are rated primarily on what they can construct
 			for (int iI = 0; iI < kUnit.getNumBuildings(); iI++)
@@ -26462,7 +26462,7 @@ int CvPlayerAI::AI_militaryUnitTradeVal(const CvUnit* pUnit) const
 			{
 				if (pUnit->isHasUnitCombat((UnitCombatTypes)iJ))
 				{
-					const CvJsonUnitCombatInfo& kInfo = GC.getUnitCombatInfo((UnitCombatTypes)iJ);
+					const CvUnitCombatInfo& kInfo = GC.getUnitCombatInfo((UnitCombatTypes)iJ);
 					for (int iI = 0; iI < kInfo.getNumActionOutcomes(); iI++)
 					{
 						if (kInfo.getActionOutcomeMission(iI) != NO_MISSION)
@@ -26666,7 +26666,7 @@ int CvPlayerAI::AI_getCivicAttitudeChange(PlayerTypes ePlayer) const
 	{
 		if (getCivics((CivicOptionTypes)iI) != NO_CIVIC)
 		{
-			const CvJsonCivicInfo& kCivicOption = GC.getCivicInfo(getCivics((CivicOptionTypes)iI));
+			const CvCivicInfo& kCivicOption = GC.getCivicInfo(getCivics((CivicOptionTypes)iI));
 
 			for (int iJ = 0; iJ < GC.getNumCivicOptionInfos(); iJ++)
 			{
@@ -26886,8 +26886,8 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	int iTemp = 0;
 	int iExtra;
 	int iValue = 0;
-	const CvJsonPromotionInfo& kPromotion = GC.getPromotionInfo(ePromotion);
-	const CvJsonUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+	const CvPromotionInfo& kPromotion = GC.getPromotionInfo(ePromotion);
+	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 	const CvPlot* pPlot = pUnit ? pUnit->plot() : NULL;
 	const int iMoves = pUnit ? pUnit->maxMoves() : kUnit.getMoves();
 	const bool bNoDefensiveBonus = !pUnit && kUnit.isNoDefensiveBonus() || pUnit && pUnit->noDefensiveBonus();
@@ -30424,8 +30424,8 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 
 	int iValue = 0;
 
-	const CvJsonUnitCombatInfo& kUnitCombat = GC.getUnitCombatInfo(eUnitCombat);
-	const CvJsonUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+	const CvUnitCombatInfo& kUnitCombat = GC.getUnitCombatInfo(eUnitCombat);
+	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
 	const int iMoves = pUnit ? pUnit->maxMoves() : kUnit.getMoves();
 
@@ -33400,7 +33400,7 @@ void CvPlayerAI::AI_noteWarStatusChange(TeamTypes eTeam, bool bAtWar)
 
 
 // Evaluate a building we are considering building here in terms of its effect on properties
-int CvPlayerAI::heritagePropertiesValue(const CvJsonHeritageInfo& heritage) const
+int CvPlayerAI::heritagePropertiesValue(const CvHeritageInfo& heritage) const
 {
 	PROFILE_EXTRA_FUNC();
 
@@ -33457,7 +33457,7 @@ int CvPlayerAI::AI_heritageValue(const HeritageTypes eType) const
 {
 	PROFILE_FUNC();
 
-	const CvJsonHeritageInfo& heritage = GC.getHeritageInfo(eType);
+	const CvHeritageInfo& heritage = GC.getHeritageInfo(eType);
 
 	int iValue = 0;
 	{

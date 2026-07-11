@@ -2,8 +2,7 @@
  "type": "UNIT_ANTEATER",
  "skills": {
   "blendIntoCity": true,
-  "onlyDefensive": true,
-  "animalIgnoresBorders": true
+  "onlyDefensive": true
  },
  "vision": {
   "invisibleFeature": [

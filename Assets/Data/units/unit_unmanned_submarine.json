@@ -74,6 +74,20 @@
       "percent": 50
      }
     }
+   },
+   "flankingUnit": {
+    "UNIT_FLUYT": {
+     "percent": 50
+    },
+    "UNIT_GALLEON": {
+     "percent": 50
+    },
+    "UNIT_TRANSPORT": {
+     "percent": 50
+    },
+    "UNIT_LANDING_SHIP": {
+     "percent": 50
+    }
    }
   }
  },

@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_LIAR1",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_LIAR2"
   ]
  },

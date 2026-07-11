@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_POPULIST2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_POPULIST3"
   ]
  },

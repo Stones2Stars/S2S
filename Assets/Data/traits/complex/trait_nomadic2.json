@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_NOMADIC2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_NOMADIC3"
   ]
  },

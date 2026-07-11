@@ -9,7 +9,6 @@
   "assassin": true,
   "blendIntoCity": true,
   "onlyDefensive": true,
-  "animalIgnoresBorders": true,
   "targets": {
    "UNITCOMBAT_BIRD_GAMEBIRD": true,
    "UNITCOMBAT_MAMMAL_RODENT": true

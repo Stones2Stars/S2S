@@ -6,7 +6,7 @@
 //
 //  PURPOSE: A single, introspectable construction/training prerequisite, expressed uniformly
 //           as a requirement over a game-object-modifier (GOM) type. Aggregates the
-//           historically scattered typed Prereq* fields of CvJsonBuildingInfo / CvJsonUnitInfo into
+//           historically scattered typed Prereq* fields of CvBuildingInfo / CvUnitInfo into
 //           one queryable form so that consumers (the Civilopedia, help text, the
 //           constructibility enabler index) can ask "what gates this?" in one place.
 //

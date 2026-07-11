@@ -1,6 +1,6 @@
 #include "CvGameCoreDLL.h"
 #include "CvHttpServer.h"
-#include "CvJsonBuildingInfo.h"
+#include "CvBuildingInfo.h"
 #include "Engine/CvPropertySource.h" // property-source completeness oracle: getSource()->getProperty()
 #include "Engine/CvPropertyManipulators.h" // the property CONSTANT-source recompute (the property channel's net)
 #include "Cascade/CvCascadeProperty.h"     // the §430 property channel's per-city sourced numbers
@@ -8,11 +8,11 @@
 #include "Cascade/CvCascadeAccumulator.h"    // CascadeRateSlots -- the increment-F standing slot twins on the wellbeing action
 #include "CvBonusInfo.h" // bonus-name resolution in the /diagnostic/whyNot trace
 #include "CvImprovementInfo.h" // cityInput loadout: worked-plot improvement type
-#include "CvJsonTraitInfo.h" // cityInput loadout: player trait list
+#include "CvTraitInfo.h" // cityInput loadout: player trait list
 #include "CvYieldInfo.h" // /extractor world.config: per-yield trade-modifier base (YieldInfo.getTradeModifier)
 #include "CvGameOptionInfo.h" // /extractor world.options: active game-option type names
-#include "CvJsonProjectInfo.h"    // /extractor team.projects: completed project type names
-#include "CvJsonHeritageInfo.h"   // /extractor empire.heritages: owned heritage type names
+#include "CvProjectInfo.h"    // /extractor team.projects: completed project type names
+#include "CvHeritageInfo.h"   // /extractor empire.heritages: owned heritage type names
 #include "CvEraInfo.h"        // /extractor empire.era: current era type name
 #include "Engine/CvCity.h"
 #include "Engine/CvPlot.h" // pCity->plot()->canTrain in the /diagnostic/whyNot trace
@@ -25,7 +25,7 @@
 #include "Engine/CvSelectionGroup.h"
 #include "AI/CvTeamAI.h"
 #include "Engine/CvUnit.h"
-#include "CvJsonUnitCombatInfo.h" // /computed/cities/yields heal-per-unitcombat decomposition (getUnitCombatInfo().getType())
+#include "CvUnitCombatInfo.h" // /computed/cities/yields heal-per-unitcombat decomposition (getUnitCombatInfo().getType())
 #include "Cascade/CvCascadeCapabilities.h" // /computed/teamFlags hasLanguage (the legacy latch is cut, #430)
 #include "Cascade/CvCascadeWellbeing.h"    // the §2b wellbeing port's verdicts on /computed/cities/wellbeing
 #include "Cascade/CvCascadeEnablerKernel.h" // wireOperatingBuildings for the wellbeing eval ctx
@@ -266,7 +266,7 @@ namespace
 		if (pCity->canConstruct(eBuilding)) return "(buildable)";
 		const CvPlayer& kP = GET_PLAYER(pCity->getOwner());
 		const CvTeam& kT = GET_TEAM(pCity->getTeam());
-		const CvJsonBuildingInfo& kB = GC.getBuildingInfo(eBuilding);
+		const CvBuildingInfo& kB = GC.getBuildingInfo(eBuilding);
 		const SpecialBuildingTypes eSB = kB.getSpecialBuilding();
 
 		if (kB.getExtendsBuilding() > NO_BUILDING && !pCity->hasBuilding(kB.getExtendsBuilding())) return "extends";
@@ -862,7 +862,7 @@ namespace
 		// CvCity.cpp:12625, the WORLD one -- NOT the handicap maint% used by the corp-MAINTENANCE calc).
 		world["corporationMaintenancePercent"] = picojson::value((double)GC.getWorldInfo(GC.getMap().getWorldSize()).getCorporationMaintenancePercent());
 
-		// world teamsEverAlive -- countCivTeamsEverAlive(), the exact source of the TEAM count atom (CvJsonBuildingInfo
+		// world teamsEverAlive -- countCivTeamsEverAlive(), the exact source of the TEAM count atom (CvBuildingInfo
 		// getNumTeamsPrereq gate, CvPlayer.cpp:6688). Emitted explicitly so the offline calc reads the ever-alive
 		// count, NOT an alive-only approximation (dead teams still count toward the prereq).
 		world["teamsEverAlive"] = picojson::value((double)GC.getGame().countCivTeamsEverAlive());
@@ -1784,7 +1784,7 @@ namespace
 						foreach_(const BuildingTypes eWbBt, pCity->getHasBuildings())
 						{
 							if (pCity->isReligiouslyLimitedBuilding(eWbBt) || pCity->isDisabledBuilding(eWbBt)) continue;
-							const CvJsonBuildingInfo& kWbBI = GC.getBuildingInfo(eWbBt);
+							const CvBuildingInfo& kWbBI = GC.getBuildingInfo(eWbBt);
 							iWbEngBag += kWbBI.getProperties()->getValueByProperty((PropertyTypes)iWbP);
 							const CvPropertyManipulators* pWbMan = kWbBI.getPropertyManipulators();
 							if (pWbMan == NULL) continue;
@@ -1948,7 +1948,7 @@ namespace
 							const bool bWbBrSr = kWbOwner.getStateReligion() != NO_RELIGION && pCity->isHasReligion(kWbOwner.getStateReligion());
 							if (eWbBrU != NO_UNIT)
 							{
-								const CvJsonUnitInfo& kWbBrUnit = GC.getUnitInfo(eWbBrU);
+								const CvUnitInfo& kWbBrUnit = GC.getUnitInfo(eWbBrU);
 								sc["buildRateOrder"] = picojson::value(std::string(kWbBrUnit.getType()));
 								// player-generic = trait unit/special-unit keyed + (military) the player military mod
 								sc["brPlayerGenericLeg"] = picojson::value((double)kWbOwner.getProductionModifier(eWbBrU));
@@ -2002,7 +2002,7 @@ namespace
 							}
 							else if (eWbBrB != NO_BUILDING)
 							{
-								const CvJsonBuildingInfo& kWbBrBld = GC.getBuildingInfo(eWbBrB);
+								const CvBuildingInfo& kWbBrBld = GC.getBuildingInfo(eWbBrB);
 								sc["buildRateOrder"] = picojson::value(std::string(kWbBrBld.getType()));
 								// player-generic = trait building/special-building keyed + the wonder max-mods
 								sc["brPlayerGenericLeg"] = picojson::value((double)kWbOwner.getProductionModifier(eWbBrB));
@@ -2017,7 +2017,7 @@ namespace
 							}
 							else if (eWbBrPr != NO_PROJECT)
 							{
-								const CvJsonProjectInfo& kWbBrPrj = GC.getProjectInfo(eWbBrPr);
+								const CvProjectInfo& kWbBrPrj = GC.getProjectInfo(eWbBrPr);
 								sc["buildRateOrder"] = picojson::value(std::string(kWbBrPrj.getType()));
 								sc["brPlayerGenericLeg"] = picojson::value((double)kWbOwner.getProductionModifier(eWbBrPr));
 								sc["brCitySpaceLeg"] = picojson::value((double)(kWbBrPrj.isSpaceship() ? pCity->getSpaceProductionModifier() : 0));
@@ -2148,7 +2148,7 @@ namespace
 					foreach_(const BuildingTypes eWbBt, pCity->getHasBuildings())
 					{
 						if (pCity->isReligiouslyLimitedBuilding(eWbBt) || pCity->isDisabledBuilding(eWbBt)) continue;
-						const CvJsonBuildingInfo& kWbB = GC.getBuildingInfo(eWbBt);
+						const CvBuildingInfo& kWbB = GC.getBuildingInfo(eWbBt);
 						if (kWbB.getHappiness() > 0) iWbBldGoodRe += kWbB.getHappiness(); else iWbBldBadRe += kWbB.getHappiness();
 						const int iWbLedger = pCity->getBuildingHappyChange(eWbBt);
 						if (iWbLedger > 0) iWbBldGoodRe += iWbLedger; else iWbBldBadRe += iWbLedger;
@@ -2229,7 +2229,7 @@ namespace
 					foreach_(const BuildingTypes eWbBt, pCity->getHasBuildings())
 					{
 						if (pCity->isReligiouslyLimitedBuilding(eWbBt) || pCity->isDisabledBuilding(eWbBt)) continue;
-						const CvJsonBuildingInfo& kWbB = GC.getBuildingInfo(eWbBt);
+						const CvBuildingInfo& kWbB = GC.getBuildingInfo(eWbBt);
 						if (kWbB.getHealth() > 0) iWbBldGoodHRe += kWbB.getHealth(); else iWbBldBadHRe += kWbB.getHealth();
 						const int iWbLedger = pCity->getBuildingHealthChange(eWbBt);
 						if (iWbLedger > 0) iWbBldGoodHRe += iWbLedger; else iWbBldBadHRe += iWbLedger;
@@ -2473,7 +2473,7 @@ namespace
 				{
 					const int cnt=pCity->getSpecialistCount((SpecialistTypes)s)+pCity->getFreeSpecialistCount((SpecialistTypes)s);
 					if(cnt<=0) continue;
-					const CvJsonSpecialistInfo& si=GC.getSpecialistInfo((SpecialistTypes)s);
+					const CvSpecialistInfo& si=GC.getSpecialistInfo((SpecialistTypes)s);
 					picojson::value::object e;
 					e["type"]=picojson::value(std::string(si.getType()));
 					e["count"]=picojson::value((double)cnt);
@@ -2534,7 +2534,7 @@ namespace
 				{
 					const int cnt=pCity->getSpecialistCount((SpecialistTypes)s)+pCity->getFreeSpecialistCount((SpecialistTypes)s);
 					if(cnt<=0) continue;
-					const CvJsonSpecialistInfo& si=GC.getSpecialistInfo((SpecialistTypes)s);
+					const CvSpecialistInfo& si=GC.getSpecialistInfo((SpecialistTypes)s);
 					picojson::value::object e;
 					e["type"]=picojson::value(std::string(si.getType()));
 					e["count"]=picojson::value((double)cnt);
@@ -2595,20 +2595,20 @@ namespace
 					{
 						const CivicTypes eC = kPlayer.getCivics((CivicOptionTypes)co);
 						if (eC == NO_CIVIC) continue;
-						const CvJsonCivicInfo& kC = GC.getCivicInfo(eC);
+						const CvCivicInfo& kC = GC.getCivicInfo(eC);
 						const int m = kC.getYieldModifier(eY), cm = kC.getCapitalYieldModifier(eY);
 						if (m || cm) { picojson::value::object o; o["type"]=picojson::value(std::string(kC.getType())); if(m)o["mod"]=picojson::value((double)m); if(cm)o["capMod"]=picojson::value((double)cm); civA.push_back(picojson::value(o)); }
 					}
 					for (int tr = 0; tr < GC.getNumTraitInfos(); ++tr)
 					{
 						if (!kPlayer.hasTrait((TraitTypes)tr)) continue;
-						const CvJsonTraitInfo& kTr = GC.getTraitInfo((TraitTypes)tr);
+						const CvTraitInfo& kTr = GC.getTraitInfo((TraitTypes)tr);
 						const int m = kTr.getYieldModifier(eY), cm = kTr.getCapitalYieldModifier(eY);
 						if (m || cm) { picojson::value::object o; o["type"]=picojson::value(std::string(kTr.getType())); if(m)o["mod"]=picojson::value((double)m); if(cm)o["capMod"]=picojson::value((double)cm); trA.push_back(picojson::value(o)); }
 					}
 					for (int bb = 0; bb < GC.getNumBuildingInfos(); ++bb)
 					{
-						const CvJsonBuildingInfo& kB = GC.getBuildingInfo((BuildingTypes)bb);
+						const CvBuildingInfo& kB = GC.getBuildingInfo((BuildingTypes)bb);
 						const int g = kB.getGlobalYieldModifier(eY);
 						if (!g) continue;
 						const int cnt = kPlayer.countNumBuildings((BuildingTypes)bb);
@@ -2626,7 +2626,7 @@ namespace
 					for (int tr = 0; tr < GC.getNumTraitInfos(); ++tr)
 					{
 						if (!kPlayer.hasTrait((TraitTypes)tr)) continue;
-						const CvJsonTraitInfo& kTr = GC.getTraitInfo((TraitTypes)tr);
+						const CvTraitInfo& kTr = GC.getTraitInfo((TraitTypes)tr);
 						picojson::value::object specs;
 						for (int s = 0; s < GC.getNumSpecialistInfos(); ++s)
 						{
@@ -2682,7 +2682,7 @@ namespace
 				for (int t = 0; t < GC.getNumTraitInfos(); ++t)
 				{
 					if (!kThP.hasTrait((TraitTypes)t)) continue;
-					const CvJsonTraitInfo& kTr = GC.getTraitInfo((TraitTypes)t);
+					const CvTraitInfo& kTr = GC.getTraitInfo((TraitTypes)t);
 					const int iLes = kTr.getLessYieldThreshold(YIELD_PRODUCTION);
 					const int iExt = kTr.getExtraYieldThreshold(YIELD_PRODUCTION);
 					if (iLes == 0 && iExt == 0) continue;       // only traits carrying a production threshold
@@ -2712,7 +2712,7 @@ namespace
 			{
 				if (!pCity->hasBuilding((BuildingTypes)b)) continue;
 				if (!pCity->hasFullyActiveBuilding((BuildingTypes)b)) continue;
-				const CvJsonBuildingInfo& bi = GC.getBuildingInfo((BuildingTypes)b);
+				const CvBuildingInfo& bi = GC.getBuildingInfo((BuildingTypes)b);
 				picojson::value::object e;
 				bool bAny = false;
 				// YIELDS (flat100 + pct) -- always emitted (primary channel). flat mirrors processBuilding
@@ -2919,7 +2919,7 @@ namespace
 					{
 						const BuildingTypes eBB = (BuildingTypes)bb;
 						if (!pCity->isActiveBuilding(eBB)) continue;
-						const CvJsonBuildingInfo& kBB = GC.getBuildingInfo(eBB);
+						const CvBuildingInfo& kBB = GC.getBuildingInfo(eBB);
 						int iBuild = 0;
 						if (!pCity->isReligiouslyLimitedBuilding(eBB))
 						{
@@ -3133,7 +3133,7 @@ namespace
 					for (int cp = 0; cp < GC.getNumCorporationInfos(); ++cp)
 					{
 						if (!pCity->isActiveCorporation((CorporationTypes)cp)) continue;
-						const CvJsonCorporationInfo& kC = GC.getCorporationInfo((CorporationTypes)cp);
+						const CvCorporationInfo& kC = GC.getCorporationInfo((CorporationTypes)cp);
 						picojson::value::object co;
 						co["corp"] = picojson::value(std::string(kC.getType()));
 						int iHq = 0;
@@ -3490,7 +3490,7 @@ namespace
 				const int iUnit = GC.getInfoTypeForString(szType, true);
 				if (iUnit >= 0)
 				{
-					const CvJsonUnitInfo& kU = GC.getUnitInfo((UnitTypes)iUnit);
+					const CvUnitInfo& kU = GC.getUnitInfo((UnitTypes)iUnit);
 					const UnitCombatTypes eUC = (UnitCombatTypes)kU.getUnitCombatType();
 					picojson::value::object ub;
 					ub["unit"]                    = picojson::value(std::string(szType));
@@ -3828,7 +3828,7 @@ namespace
 			const CvPlot* pPlot = pU->plot();
 			const TeamTypes eUTeam = pU->getTeam();
 			const UnitTypes eUT = pU->getUnitType();
-			const CvJsonUnitInfo& kUInfo = GC.getUnitInfo(eUT);
+			const CvUnitInfo& kUInfo = GC.getUnitInfo(eUT);
 
 			// identity + HP state
 			o["owner"]    = picojson::value((double)(int)pU->getOwner());
@@ -4019,7 +4019,7 @@ namespace
 			// Trace the legacy canTrain decision INPUTS for a UNIT -- the lit map of the canTrain cavern, so the
 			// hide-reason is self-evident (e.g. obsoleteTechResearched:true). type= must be a UNIT_*.
 			const UnitTypes eU = (UnitTypes)iIdx;
-			const CvJsonUnitInfo& kU = GC.getUnitInfo(eU);
+			const CvUnitInfo& kU = GC.getUnitInfo(eU);
 			o["city"] = picojson::value((double)iCityId);
 			o["legacyCanTrain"] = (pCity != NULL) ? picojson::value(pCity->canTrain(eU)) : picojson::value();
 

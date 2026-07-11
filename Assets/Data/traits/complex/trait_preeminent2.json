@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_PREEMINENT2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_PREEMINENT3"
   ]
  },

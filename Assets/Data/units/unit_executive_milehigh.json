@@ -1,5 +1,10 @@
 {
  "type": "UNIT_EXECUTIVE_MILEHIGH",
+ "spread": {
+  "corporation": {
+   "CORPORATION_MILEHIGH": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

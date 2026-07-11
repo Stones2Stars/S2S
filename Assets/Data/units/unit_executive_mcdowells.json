@@ -1,5 +1,10 @@
 {
  "type": "UNIT_EXECUTIVE_MCDOWELLS",
+ "spread": {
+  "corporation": {
+   "CORPORATION_MCDOWELLS": 40
+  }
+ },
  "requires": {
   "build": {
    "all": [

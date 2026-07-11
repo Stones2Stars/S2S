@@ -473,7 +473,7 @@ bool CvOutcome::isPossible(const CvUnit& kUnit) const
 	// Removed because outcome has its own prereq and obsolete tech
 	/*if (m_ePromotionType != NO_PROMOTION)
 	{
-		CvJsonPromotionInfo& kPromotion = GC.getPromotionInfo(m_ePromotionType);
+		CvPromotionInfo& kPromotion = GC.getPromotionInfo(m_ePromotionType);
 		if (!kTeam.isHasTech(kPromotion.getTechPrereq()))
 		{
 			return false;
@@ -640,7 +640,7 @@ bool CvOutcome::isPossibleSomewhere(const CvUnit& kUnit) const
 	// Removed because outcome has its own prereq and obsolete tech
 	/*if (m_ePromotionType != NO_PROMOTION)
 	{
-		CvJsonPromotionInfo& kPromotion = GC.getPromotionInfo(m_ePromotionType);
+		CvPromotionInfo& kPromotion = GC.getPromotionInfo(m_ePromotionType);
 		if (!kTeam.isHasTech(kPromotion.getTechPrereq()))
 		{
 			return false;
@@ -796,7 +796,7 @@ bool CvOutcome::isPossibleInPlot(const CvUnit& kUnit, const CvPlot& kPlot, bool 
 	// Removed because outcome has its own prereq and obsolete tech
 	/*if (m_ePromotionType != NO_PROMOTION)
 	{
-		CvJsonPromotionInfo& kPromotion = GC.getPromotionInfo(m_ePromotionType);
+		CvPromotionInfo& kPromotion = GC.getPromotionInfo(m_ePromotionType);
 		if (!kTeam.isHasTech(kPromotion.getTechPrereq()))
 		{
 			return false;
@@ -947,7 +947,7 @@ bool CvOutcome::isPossible(const CvPlayerAI& kPlayer) const
 	// Removed because outcome has its own prereq and obsolete tech
 	/*if (m_ePromotionType != NO_PROMOTION)
 	{
-		CvJsonPromotionInfo& kPromotion = GC.getPromotionInfo(m_ePromotionType);
+		CvPromotionInfo& kPromotion = GC.getPromotionInfo(m_ePromotionType);
 		if (!kTeam.isHasTech(kPromotion.getTechPrereq()))
 		{
 			return false;
@@ -1001,7 +1001,7 @@ bool CvOutcome::execute(CvUnit &kUnit, PlayerTypes eDefeatedUnitPlayer, UnitType
 
 	const bool bToCoastalCity = GC.getOutcomeInfo(getType()).getToCoastalCity();
 
-	const CvJsonUnitInfo* pUnitInfo =
+	const CvUnitInfo* pUnitInfo =
 	(
 		eDefeatedUnitType > NO_UNIT
 		?
@@ -1345,7 +1345,7 @@ int CvOutcome::AI_getValueInPlot(const CvUnit &kUnit, const CvPlot &kPlot, bool 
 
 	CvPlayerAI& kPlayer = GET_PLAYER(kUnit.getOwner());
 	const bool bToCoastalCity = GC.getOutcomeInfo(getType()).getToCoastalCity();
-	//CvJsonUnitInfo* pUnitInfo = &kUnit.getUnitInfo();
+	//CvUnitInfo* pUnitInfo = &kUnit.getUnitInfo();
 
 	if (m_ePromotionType > NO_PROMOTION)
 	{
@@ -1702,7 +1702,7 @@ void CvOutcome::buildDisplayString(CvWStringBuffer &szBuffer, const CvUnit& kUni
 {
 	//CvPlayer& kPlayer = GET_PLAYER(kUnit.getOwner());
 	const bool bToCoastalCity = GC.getOutcomeInfo(getType()).getToCoastalCity();
-	//CvJsonUnitInfo* pUnitInfo = &kUnit.getUnitInfo();
+	//CvUnitInfo* pUnitInfo = &kUnit.getUnitInfo();
 
 	szBuffer.append(GC.getOutcomeInfo(getType()).getText());
 	szBuffer.append(L" ( ");

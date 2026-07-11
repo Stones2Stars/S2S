@@ -3,7 +3,7 @@
 //
 #include "CvGameCoreDLL.h"
 #include "Infrastructure/BoolExpr.h"
-#include "CvJsonBuildingInfo.h"
+#include "CvBuildingInfo.h"
 #include "AI/CvGameAI.h"
 #include "CvGlobals.h"
 #include "Tools/CvHttpServer.h"
@@ -12,7 +12,7 @@
 #include "CvInfos.h"
 #include "CvInfoUtil.h"
 #include "CvDiplomacyClasses.h"
-#include "CvJsonUnitCombatInfo.h"
+#include "CvUnitCombatInfo.h"
 #include "CvPlayerOptionInfo.h"
 #include "CvInfoWater.h"
 #include "Infrastructure/CvInitCore.h"
@@ -1205,7 +1205,7 @@ int cvInternalGlobals::getNumTraitInfos() const
 	return (int)m_paTraitInfo.size();
 }
 
-CvJsonTraitInfo& cvInternalGlobals::getTraitInfo(TraitTypes eTraitNum) const
+CvTraitInfo& cvInternalGlobals::getTraitInfo(TraitTypes eTraitNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumTraitInfos(), eTraitNum);
 	// #430: the ACTIVE trait set -- COMPLEX when GAMEOPTION_LEADER_COMPLEX_TRAITS is on AND the id exists in the
@@ -1213,9 +1213,9 @@ CvJsonTraitInfo& cvInternalGlobals::getTraitInfo(TraitTypes eTraitNum) const
 	// live in separate repos -- cascade-engine-430.md §6). The engine CvInfoReplacements trait swap is demolition fodder.
 	if (getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS) && InfoRepo<CvComplexTraitTag>::get().get(eTraitNum) != NULL)
 	{
-		return *static_cast<CvJsonComplexTraitInfo*>(InfoRepo<CvComplexTraitTag>::get().editPtr(eTraitNum));
+		return *static_cast<CvComplexTraitInfo*>(InfoRepo<CvComplexTraitTag>::get().editPtr(eTraitNum));
 	}
-	return *static_cast<CvJsonSimpleTraitInfo*>(InfoRepo<CvJsonTraitInfo>::get().editPtr(eTraitNum));
+	return *static_cast<CvSimpleTraitInfo*>(InfoRepo<CvTraitInfo>::get().editPtr(eTraitNum));
 }
 
 
@@ -1312,10 +1312,10 @@ int cvInternalGlobals::getNumUnitInfos() const
 	return (int)m_paUnitInfo.size();
 }
 
-CvJsonUnitInfo& cvInternalGlobals::getUnitInfo(UnitTypes eUnitNum) const
+CvUnitInfo& cvInternalGlobals::getUnitInfo(UnitTypes eUnitNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eUnitNum);
-	return *static_cast<CvJsonUnitInfo*>(InfoRepo<CvJsonUnitInfo>::get().editPtr(eUnitNum));
+	return *static_cast<CvUnitInfo*>(InfoRepo<CvUnitInfo>::get().editPtr(eUnitNum));
 }
 
 int cvInternalGlobals::getNumSpawnInfos() const
@@ -1453,10 +1453,10 @@ int cvInternalGlobals::getNumHeritageInfos() const
 	return (int)m_heritageInfo.size();
 }
 
-CvJsonHeritageInfo& cvInternalGlobals::getHeritageInfo(HeritageTypes e) const
+CvHeritageInfo& cvInternalGlobals::getHeritageInfo(HeritageTypes e) const
 {
 	FASSERT_BOUNDS(0, GC.getNumHeritageInfos(), e);
-	return *static_cast<CvJsonHeritageInfo*>(InfoRepo<CvJsonHeritageInfo>::get().editPtr(e));
+	return *static_cast<CvHeritageInfo*>(InfoRepo<CvHeritageInfo>::get().editPtr(e));
 }
 
 
@@ -1477,10 +1477,10 @@ int cvInternalGlobals::getNumUnitCombatInfos() const
 	return (int)m_paUnitCombatInfo.size();
 }
 
-CvJsonUnitCombatInfo& cvInternalGlobals::getUnitCombatInfo(UnitCombatTypes e) const
+CvUnitCombatInfo& cvInternalGlobals::getUnitCombatInfo(UnitCombatTypes e) const
 {
 	FASSERT_BOUNDS(0, GC.getNumUnitCombatInfos(), e);
-	return *static_cast<CvJsonUnitCombatInfo*>(InfoRepo<CvJsonUnitCombatInfo>::get().editPtr(e));
+	return *static_cast<CvUnitCombatInfo*>(InfoRepo<CvUnitCombatInfo>::get().editPtr(e));
 }
 
 
@@ -1495,10 +1495,10 @@ int cvInternalGlobals::getNumPromotionLineInfos() const
 	return (int)m_paPromotionLineInfo.size();
 }
 
-CvJsonPromotionLineInfo& cvInternalGlobals::getPromotionLineInfo(PromotionLineTypes e) const
+CvPromotionLineInfo& cvInternalGlobals::getPromotionLineInfo(PromotionLineTypes e) const
 {
 	FASSERT_BOUNDS(0, GC.getNumPromotionLineInfos(), e);
-	return *static_cast<CvJsonPromotionLineInfo*>(InfoRepo<CvJsonPromotionLineInfo>::get().editPtr(e));
+	return *static_cast<CvPromotionLineInfo*>(InfoRepo<CvPromotionLineInfo>::get().editPtr(e));
 }
 
 int cvInternalGlobals::getNumMapCategoryInfos() const
@@ -2022,12 +2022,12 @@ int cvInternalGlobals::getNumRouteInfos() const
 	return (int)m_paRouteInfo.size();
 }
 
-CvJsonRouteInfo& cvInternalGlobals::getRouteInfo(RouteTypes eRouteNum) const
+CvRouteInfo& cvInternalGlobals::getRouteInfo(RouteTypes eRouteNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumRouteInfos(), eRouteNum);
-	// #430: the JSON poco from the per-type InfoRepo (the payload IS a CvJsonRouteInfo); the XML m_paRouteInfo
+	// #430: the JSON poco from the per-type InfoRepo (the payload IS a CvRouteInfo); the XML m_paRouteInfo
 	// load is demolition fodder cut at the atomic cutover (cascade-engine-430.md §3).
-	return *static_cast<CvJsonRouteInfo*>(InfoRepo<CvJsonRouteInfo>::get().editPtr(eRouteNum));
+	return *static_cast<CvRouteInfo*>(InfoRepo<CvRouteInfo>::get().editPtr(eRouteNum));
 }
 
 int cvInternalGlobals::getNumImprovementInfos() const
@@ -2117,10 +2117,10 @@ int cvInternalGlobals::getNumProcessInfos() const
 	return (int)m_paProcessInfo.size();
 }
 
-CvJsonProcessInfo& cvInternalGlobals::getProcessInfo(ProcessTypes e) const
+CvProcessInfo& cvInternalGlobals::getProcessInfo(ProcessTypes e) const
 {
 	FASSERT_BOUNDS(0, GC.getNumProcessInfos(), e);
-	return *static_cast<CvJsonProcessInfo*>(InfoRepo<CvJsonProcessInfo>::get().editPtr(e));
+	return *static_cast<CvProcessInfo*>(InfoRepo<CvProcessInfo>::get().editPtr(e));
 }
 
 int cvInternalGlobals::getNumVoteInfos() const
@@ -2139,10 +2139,10 @@ int cvInternalGlobals::getNumProjectInfos() const
 	return (int)m_paProjectInfo.size();
 }
 
-CvJsonProjectInfo& cvInternalGlobals::getProjectInfo(ProjectTypes e) const
+CvProjectInfo& cvInternalGlobals::getProjectInfo(ProjectTypes e) const
 {
 	FASSERT_BOUNDS(0, GC.getNumProjectInfos(), e);
-	return *static_cast<CvJsonProjectInfo*>(InfoRepo<CvJsonProjectInfo>::get().editPtr(e));
+	return *static_cast<CvProjectInfo*>(InfoRepo<CvProjectInfo>::get().editPtr(e));
 }
 
 int cvInternalGlobals::getNumBuildingInfos() const
@@ -2150,10 +2150,10 @@ int cvInternalGlobals::getNumBuildingInfos() const
 	return (int)m_paBuildingInfo.size();
 }
 
-CvJsonBuildingInfo& cvInternalGlobals::getBuildingInfo(BuildingTypes eBuildingNum) const
+CvBuildingInfo& cvInternalGlobals::getBuildingInfo(BuildingTypes eBuildingNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eBuildingNum);
-	return *static_cast<CvJsonBuildingInfo*>(InfoRepo<CvJsonBuildingInfo>::get().editPtr(eBuildingNum));
+	return *static_cast<CvBuildingInfo*>(InfoRepo<CvBuildingInfo>::get().editPtr(eBuildingNum));
 }
 
 int cvInternalGlobals::getNumSpecialBuildingInfos() const
@@ -2213,10 +2213,10 @@ int cvInternalGlobals::getNumPromotionInfos() const
 	return (int)m_paPromotionInfo.size();
 }
 
-CvJsonPromotionInfo& cvInternalGlobals::getPromotionInfo(PromotionTypes ePromotionNum) const
+CvPromotionInfo& cvInternalGlobals::getPromotionInfo(PromotionTypes ePromotionNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumPromotionInfos(), ePromotionNum);
-	return *static_cast<CvJsonPromotionInfo*>(InfoRepo<CvJsonPromotionInfo>::get().editPtr(ePromotionNum));
+	return *static_cast<CvPromotionInfo*>(InfoRepo<CvPromotionInfo>::get().editPtr(ePromotionNum));
 }
 
 PromotionTypes cvInternalGlobals::findPromotion(PromotionPredicateFn predicateFn) const
@@ -2237,10 +2237,10 @@ int cvInternalGlobals::getNumTechInfos() const
 	return (int)m_paTechInfo.size();
 }
 
-CvJsonTechInfo& cvInternalGlobals::getTechInfo(TechTypes eTechNum) const
+CvTechInfo& cvInternalGlobals::getTechInfo(TechTypes eTechNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumTechInfos(), eTechNum);
-	return *static_cast<CvJsonTechInfo*>(InfoRepo<CvJsonTechInfo>::get().editPtr(eTechNum));
+	return *static_cast<CvTechInfo*>(InfoRepo<CvTechInfo>::get().editPtr(eTechNum));
 }
 
 int cvInternalGlobals::getNumReligionInfos() const
@@ -2248,10 +2248,10 @@ int cvInternalGlobals::getNumReligionInfos() const
 	return (int)m_paReligionInfo.size();
 }
 
-CvJsonReligionInfo& cvInternalGlobals::getReligionInfo(ReligionTypes eReligionNum) const
+CvReligionInfo& cvInternalGlobals::getReligionInfo(ReligionTypes eReligionNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumReligionInfos(), eReligionNum);
-	return *static_cast<CvJsonReligionInfo*>(InfoRepo<CvJsonReligionInfo>::get().editPtr(eReligionNum));
+	return *static_cast<CvReligionInfo*>(InfoRepo<CvReligionInfo>::get().editPtr(eReligionNum));
 }
 
 int cvInternalGlobals::getNumCorporationInfos() const
@@ -2259,10 +2259,10 @@ int cvInternalGlobals::getNumCorporationInfos() const
 	return (int)m_paCorporationInfo.size();
 }
 
-CvJsonCorporationInfo& cvInternalGlobals::getCorporationInfo(CorporationTypes eCorporationNum) const
+CvCorporationInfo& cvInternalGlobals::getCorporationInfo(CorporationTypes eCorporationNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumCorporationInfos(), eCorporationNum);
-	return *static_cast<CvJsonCorporationInfo*>(InfoRepo<CvJsonCorporationInfo>::get().editPtr(eCorporationNum));
+	return *static_cast<CvCorporationInfo*>(InfoRepo<CvCorporationInfo>::get().editPtr(eCorporationNum));
 }
 
 int cvInternalGlobals::getNumSpecialistInfos() const
@@ -2270,10 +2270,10 @@ int cvInternalGlobals::getNumSpecialistInfos() const
 	return (int)m_paSpecialistInfo.size();
 }
 
-CvJsonSpecialistInfo& cvInternalGlobals::getSpecialistInfo(SpecialistTypes eSpecialistNum) const
+CvSpecialistInfo& cvInternalGlobals::getSpecialistInfo(SpecialistTypes eSpecialistNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eSpecialistNum);
-	return *static_cast<CvJsonSpecialistInfo*>(InfoRepo<CvJsonSpecialistInfo>::get().editPtr(eSpecialistNum));
+	return *static_cast<CvSpecialistInfo*>(InfoRepo<CvSpecialistInfo>::get().editPtr(eSpecialistNum));
 }
 
 int cvInternalGlobals::getNumCivicOptionInfos() const
@@ -2281,10 +2281,10 @@ int cvInternalGlobals::getNumCivicOptionInfos() const
 	return (int)m_paCivicOptionInfo.size();
 }
 
-CvJsonCivicOptionInfo& cvInternalGlobals::getCivicOptionInfo(CivicOptionTypes eCivicOptionNum) const
+CvCivicOptionInfo& cvInternalGlobals::getCivicOptionInfo(CivicOptionTypes eCivicOptionNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumCivicOptionInfos(), eCivicOptionNum);
-	return *static_cast<CvJsonCivicOptionInfo*>(InfoRepo<CvJsonCivicOptionInfo>::get().editPtr(eCivicOptionNum));
+	return *static_cast<CvCivicOptionInfo*>(InfoRepo<CvCivicOptionInfo>::get().editPtr(eCivicOptionNum));
 }
 
 int cvInternalGlobals::getNumCivicInfos() const
@@ -2292,10 +2292,10 @@ int cvInternalGlobals::getNumCivicInfos() const
 	return (int)m_paCivicInfo.size();
 }
 
-CvJsonCivicInfo& cvInternalGlobals::getCivicInfo(CivicTypes eCivicNum) const
+CvCivicInfo& cvInternalGlobals::getCivicInfo(CivicTypes eCivicNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumCivicInfos(), eCivicNum);
-	return *static_cast<CvJsonCivicInfo*>(InfoRepo<CvJsonCivicInfo>::get().editPtr(eCivicNum));
+	return *static_cast<CvCivicInfo*>(InfoRepo<CvCivicInfo>::get().editPtr(eCivicNum));
 }
 
 int cvInternalGlobals::getNumDiplomacyInfos() const
@@ -2358,10 +2358,10 @@ int cvInternalGlobals::getNumCultureLevelInfos() const
 	return (int)m_paCultureLevelInfo.size();
 }
 
-CvJsonCultureLevelInfo& cvInternalGlobals::getCultureLevelInfo(CultureLevelTypes eCultureLevelNum) const
+CvCultureLevelInfo& cvInternalGlobals::getCultureLevelInfo(CultureLevelTypes eCultureLevelNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumCultureLevelInfos(), eCultureLevelNum);
-	return *static_cast<CvJsonCultureLevelInfo*>(InfoRepo<CvJsonCultureLevelInfo>::get().editPtr(eCultureLevelNum));
+	return *static_cast<CvCultureLevelInfo*>(InfoRepo<CvCultureLevelInfo>::get().editPtr(eCultureLevelNum));
 }
 
 int cvInternalGlobals::getNumVictoryInfos() const
@@ -2543,10 +2543,10 @@ int cvInternalGlobals::getNumPropertyInfos() const
 	return (int)m_paPropertyInfo.size();
 }
 
-CvJsonPropertyInfo& cvInternalGlobals::getPropertyInfo(PropertyTypes ePropertyNum) const
+CvPropertyInfo& cvInternalGlobals::getPropertyInfo(PropertyTypes ePropertyNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumPropertyInfos(), ePropertyNum);
-	return *static_cast<CvJsonPropertyInfo*>(InfoRepo<CvJsonPropertyInfo>::get().editPtr(ePropertyNum));
+	return *static_cast<CvPropertyInfo*>(InfoRepo<CvPropertyInfo>::get().editPtr(ePropertyNum));
 }
 
 int cvInternalGlobals::getNumOutcomeInfos() const
@@ -3308,6 +3308,21 @@ void cvInternalGlobals::doPostLoadCaching()
 				}
 			}
 		}
+		// Each bonus's (improvement, build) trade-providing pair list -- eager at load (the JSON poco has no lazy
+		// build path; mirrors the archived CvBonusInfo::getTradeProvidingImprovements): for each build, if the
+		// improvement it lays trade-provides the bonus, record (improvement, build). Consumer: AI_countNumImprovableBonuses.
+		for (int iBonus = 0; iBonus < iNumBonusInfos; iBonus++)
+		{
+			for (int iJ = 0; iJ < getNumBuildInfos(); iJ++)
+			{
+				const BuildTypes eBuild = static_cast<BuildTypes>(iJ);
+				const ImprovementTypes eImp = getBuildInfo(eBuild).getImprovement();
+				if (eImp != NO_IMPROVEMENT && getImprovementInfo(eImp).isImprovementBonusTrade(iBonus))
+				{
+					getBonusInfo(static_cast<BonusTypes>(iBonus)).addTradeProvidingImprovement(eImp, eBuild);
+				}
+			}
+		}
 		for (int iBonus = 0; iBonus < iNumBonusInfos; iBonus++)
 		{
 			if (getBonusInfo(static_cast<BonusTypes>(iBonus)).getPlacementOrder() > -1)
@@ -3315,6 +3330,57 @@ void cvInternalGlobals::doPostLoadCaching()
 				m_mapBonuses.push_back(static_cast<BonusTypes>(iBonus));
 			}
 		}
+	}
+
+	// Tech "leads to" reverse index: invert every tech's prereq (AND + OR) lists so getLeadsToTechs(P) yields every
+	// tech that lists P as a prereq. Prereqs are populated by mapFrom (pre-menu), so this reads real data here.
+	for (int iI = 0; iI < getNumTechInfos(); iI++)
+	{
+		const TechTypes eTech = static_cast<TechTypes>(iI);
+		const CvTechInfo& kTech = getTechInfo(eTech);
+		const std::vector<TechTypes>& andPrereqs = kTech.getPrereqAndTechs();
+		for (size_t j = 0; j < andPrereqs.size(); ++j)
+			if (andPrereqs[j] != NO_TECH) getTechInfo(andPrereqs[j]).addLeadsToTech(eTech);
+		const std::vector<TechTypes>& orPrereqs = kTech.getPrereqOrTechs();
+		for (size_t j = 0; j < orPrereqs.size(); ++j)
+			if (orPrereqs[j] != NO_TECH) getTechInfo(orPrereqs[j]).addLeadsToTech(eTech);
+	}
+
+	// Trait prereq reverse index (reverse-map at load): the curator inverts each trait's prereqs onto the prereq
+	// entity's `enables`, bucket-split to keep AND vs OR distinct (store.py) -- the prereq TRAIT carries
+	// enables.traitsAnd (single AND) / enables.traitsOr (OR pair), the prereq TECH carries enables.traits. Reconstruct
+	// the forward getters the engine + pedia read (getPrereqTrait/OrTrait1/2 CvPlayer.cpp:29492 / CvGameTextMgr.cpp:6214).
+	// getTraitInfo returns the ACTIVE trait set (simple/complex per option) -- exactly what those getters read.
+	for (int iI = 0; iI < getNumTraitInfos(); iI++)
+	{
+		const TraitTypes ePrereq = static_cast<TraitTypes>(iI);
+		const CvJsonEdges* pEdges = getTraitInfo(ePrereq).getEdges();
+		if (pEdges == NULL) continue;
+		if (const std::vector<int>* andT = pEdges->find("enables.traitsAnd"))
+			for (size_t j = 0; j < andT->size(); ++j)
+				getTraitInfo(static_cast<TraitTypes>((*andT)[j])).setPrereqTrait(ePrereq);
+		if (const std::vector<int>* orT = pEdges->find("enables.traitsOr"))
+			for (size_t j = 0; j < orT->size(); ++j)
+				getTraitInfo(static_cast<TraitTypes>((*orT)[j])).addPrereqOrTrait(ePrereq);
+	}
+	// tech -> trait prereq: the prereq tech carries the trait in enables.traits -> getPrereqTech.
+	for (int iI = 0; iI < getNumTechInfos(); iI++)
+	{
+		const TechTypes eTech2 = static_cast<TechTypes>(iI);
+		const CvJsonEdges* pEdges = getTechInfo(eTech2).getEdges();
+		if (pEdges == NULL) continue;
+		if (const std::vector<int>* traits = pEdges->find("enables.traits"))
+			for (size_t j = 0; j < traits->size(); ++j)
+				getTraitInfo(static_cast<TraitTypes>((*traits)[j])).setPrereqTech(eTech2);
+	}
+
+	// Improvement -> builds reverse index (getBuildTypes): for each build, record it on the improvement it lays.
+	// Mirrors the legacy doPostLoadCaching scan; worker AI reads it.
+	for (int iJ = 0; iJ < getNumBuildInfos(); iJ++)
+	{
+		const BuildTypes eBuild = static_cast<BuildTypes>(iJ);
+		const ImprovementTypes eImp = getBuildInfo(eBuild).getImprovement();
+		if (eImp != NO_IMPROVEMENT) getImprovementInfo(eImp).addBuildType(eBuild);
 	}
 
 	{
@@ -3392,7 +3458,7 @@ void cvInternalGlobals::buildInvisibleSeerIndex()
 
 	for (int iI = 0; iI < getNumUnitInfos(); iI++)
 	{
-		const CvJsonUnitInfo& kUnit = getUnitInfo(static_cast<UnitTypes>(iI));
+		const CvUnitInfo& kUnit = getUnitInfo(static_cast<UnitTypes>(iI));
 
 		if (kUnit.getProductionCost() < 0 || !kUnit.getUnitAIType(UNITAI_SEE_INVISIBLE))
 		{
@@ -3429,7 +3495,7 @@ void cvInternalGlobals::buildConstructibilityEnablerIndex()
 	std::vector< std::vector<BuildingTypes> > aBonusFreeGivers(iNumBonuses);
 	for (int iB = 0; iB < iNumBuildings; iB++)
 	{
-		const CvJsonBuildingInfo& kB = getBuildingInfo(static_cast<BuildingTypes>(iB));
+		const CvBuildingInfo& kB = getBuildingInfo(static_cast<BuildingTypes>(iB));
 		foreach_(const BonusModifier& kFree, kB.getFreeBonuses())
 		{
 			if (kFree.first >= 0 && kFree.first < iNumBonuses)
@@ -3442,7 +3508,7 @@ void cvInternalGlobals::buildConstructibilityEnablerIndex()
 	for (int iC = 0; iC < iNumBuildings; iC++)
 	{
 		const BuildingTypes eC = static_cast<BuildingTypes>(iC);
-		const CvJsonBuildingInfo& kC = getBuildingInfo(eC);
+		const CvBuildingInfo& kC = getBuildingInfo(eC);
 		std::set<BuildingTypes> aEnablers;
 
 		// Direct building prerequisites, read through the #195 Phase 2 unified requirement
@@ -3514,7 +3580,7 @@ void cvInternalGlobals::buildConstructibilityEnablerIndex()
 	for (int iU = 0; iU < iNumUnits; iU++)
 	{
 		const UnitTypes eU = static_cast<UnitTypes>(iU);
-		const CvJsonUnitInfo& kU = getUnitInfo(eU);
+		const CvUnitInfo& kU = getUnitInfo(eU);
 		std::set<BuildingTypes> aEnablers;
 
 		// Direct building prereqs, read through the #195 Phase 2 requirement model. Only
@@ -3601,7 +3667,7 @@ void cvInternalGlobals::logConstructRequirementFidelity() const
 
 	for (int iC = 0, nC = getNumBuildingInfos(); iC < nC; iC++)
 	{
-		const CvJsonBuildingInfo& kC = getBuildingInfo(static_cast<BuildingTypes>(iC));
+		const CvBuildingInfo& kC = getBuildingInfo(static_cast<BuildingTypes>(iC));
 		std::set<BuildingTypes> aTyped;
 		std::set<BuildingTypes> aModel;
 		for (int i = 0, n = kC.getNumPrereqInCityBuildings(); i < n; i++)
@@ -3629,7 +3695,7 @@ void cvInternalGlobals::logConstructRequirementFidelity() const
 
 	for (int iU = 0, nU = getNumUnitInfos(); iU < nU; iU++)
 	{
-		const CvJsonUnitInfo& kU = getUnitInfo(static_cast<UnitTypes>(iU));
+		const CvUnitInfo& kU = getUnitInfo(static_cast<UnitTypes>(iU));
 		std::set<BuildingTypes> aTypedBld;
 		std::set<BuildingTypes> aModelBld;
 		std::set<BonusTypes> aTypedBonus;
@@ -3708,7 +3774,7 @@ void cvInternalGlobals::cacheGameSpecificValues()
 	PROFILE_EXTRA_FUNC();
 	int iLevel = 0;
 
-	foreach_(CvJsonCultureLevelInfo* info, m_paCultureLevelInfo)
+	foreach_(CvCultureLevelInfo* info, m_paCultureLevelInfo)
 	{
 		if (info->getPrereqGameOption() == NO_GAMEOPTION || getGame().isOption((GameOptionTypes)info->getPrereqGameOption()))
 		{

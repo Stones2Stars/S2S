@@ -14,7 +14,7 @@
 #include <map>
 #include <set>
 
-class CvJsonInfo;
+class CvInfo;
 class CvPlayer;
 class CvTeam;
 class CvCity;
@@ -24,12 +24,14 @@ class UnitCascade
 public:
 	// Unit instance cap (StoneBase UnitCascade.Capped): WORLD = lifetime-created + making >= allowed.world;
 	// EMPIRE = live count + making >= ERA-SCALED allowed.empire (waived by NO_NATIONAL_UNIT_LIMIT unless unlimitedException).
-	static bool capped(const CvJsonInfo* j, int eU, const CvPlayer& kPlayer, bool noNationalLimit);
+	static bool capped(const CvInfo* j, int eU, const CvPlayer& kPlayer, bool noNationalLimit);
 
 	// The city's TRAINABLE set (the engine canTrain TRUE-set), GENERATE-then-GATE. Built on the ONE per-unit
 	// availability/trainable primitive pair (file-static uc_isAvailable/uc_isTrainable, incl. the uc_reachable
 	// upgrade-reachability closure) shared with the targeted box re-checks -- the bc_isBuildable idiom.
-	static void trainable(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& result);
+	// bVisible=true yields the VISIBLE (build-list) frontier -- greyable clauses relaxed (connectable resource /
+	// unadopted civic -> GREYED, enabler.md §6); the strict (bVisible=false) trainable-now set is unchanged.
+	static void trainable(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& result, bool bVisible = false);
 
 	// ===== #430 the isolated-box TARGETED updates (enabler-frontier-perf.md; the UNIT analogue of the proven
 	// BuildingCascade incremental path). The trainable box is maintained IN PLACE off targeted re-checks instead

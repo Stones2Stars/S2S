@@ -1,10 +1,21 @@
 {
  "type": "UNIT_GHARIAL",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_SOLO"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_BASK"
+  }
+ ],
  "skills": {
   "assassin": true,
   "blendIntoCity": true,
   "onlyDefensive": true,
-  "animalIgnoresBorders": true,
   "targets": {
    "UNITCOMBAT_SIZE_FINE": true,
    "UNITCOMBAT_SIZE_DIMINUTIVE": true,

@@ -1,5 +1,22 @@
 {
  "type": "UNIT_ANIMAL_JAGUAR",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 90,
+   "title": "TXT_KEY_GROUPTITLE_LONE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 9,
+   "title": "TXT_KEY_GROUPTITLE_LEAP"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_PROWL"
+  }
+ ],
  "withdrawal": {
   "unit": {
    "percent": 25

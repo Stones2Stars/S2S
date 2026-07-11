@@ -1,7 +1,7 @@
 {
  "type": "TRAIT_AGGRESSIVE2",
  "enables": {
-  "traits": [
+  "traitsAnd": [
    "TRAIT_AGGRESSIVE3"
   ]
  },

@@ -17,7 +17,6 @@
   "noDefensiveBonus": true,
   "blendIntoCity": true,
   "onlyDefensive": true,
-  "animalIgnoresBorders": true,
   "targets": {
    "UNITCOMBAT_ANIMAL_INVERTEBRATE": true,
    "UNITCOMBAT_FISH_BONEY": true,

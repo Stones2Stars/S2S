@@ -1,5 +1,17 @@
 {
  "type": "UNIT_HUMPBACK_WHALE",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 5,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_POD"
+  }
+ ],
  "requires": {
   "build": {
    "all": [
@@ -11,8 +23,7 @@
   "noDefensiveBonus": true,
   "blendIntoCity": true,
   "onlyDefensive": true,
-  "renderBelowWater": true,
-  "animalIgnoresBorders": true
+  "renderBelowWater": true
  },
  "outcomes": {
   "kill": [
