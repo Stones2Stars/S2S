@@ -42,13 +42,15 @@
    "percent": 100
   }
  },
- "PROPERTY_WATER_POLLUTION": {
+ "PROPERTY_FLAMMABILITY": {
   "city": {
    "flat": -5
   }
  },
- "grants": {
-  "PROPERTY_FLAMMABILITY": -5
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
  },
  "cost": {
   "production": 3805,

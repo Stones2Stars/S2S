@@ -58,13 +58,15 @@
    }
   }
  },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 10
+  }
+ },
  "PROPERTY_TOURISM": {
   "city": {
    "flat": -2
   }
- },
- "grants": {
-  "PROPERTY_FLAMMABILITY": 10
  },
  "attributes": {
   "nukeImmune": true

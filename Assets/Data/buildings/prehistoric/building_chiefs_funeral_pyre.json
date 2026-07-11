@@ -37,6 +37,11 @@
    "percent": 100
   }
  },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 10
+  }
+ },
  "PROPERTY_DISEASE": {
   "city": {
    "flat": -5
@@ -46,9 +51,6 @@
   "city": {
    "flat": 5
   }
- },
- "grants": {
-  "PROPERTY_FLAMMABILITY": 10
  },
  "cost": {
   "production": 172,

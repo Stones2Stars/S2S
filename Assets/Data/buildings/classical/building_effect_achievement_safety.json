@@ -16,13 +16,15 @@
    "flat": -5
   }
  },
- "PROPERTY_CRIME": {
+ "PROPERTY_FLAMMABILITY": {
   "city": {
    "flat": -10
   }
  },
- "grants": {
-  "PROPERTY_FLAMMABILITY": -10
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
  },
  "attributes": {
   "nukeImmune": true,

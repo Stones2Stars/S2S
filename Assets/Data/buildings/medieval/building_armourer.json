@@ -75,13 +75,17 @@
    "percent": 100
   }
  },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 10
+  }
+ },
  "allowedSpecialists": {
   "city": {
    "SPECIALIST_ENGINEER": 1
   }
  },
  "grants": {
-  "PROPERTY_FLAMMABILITY": 10,
   "freePromotions": [
    "PROMOTION_BAMBOO_ARMOR"
   ]

@@ -80,6 +80,11 @@
    "percent": 100
   }
  },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 10
+  }
+ },
  "PROPERTY_AIR_POLLUTION": {
   "city": {
    "flat": 1
@@ -99,9 +104,6 @@
   "city": {
    "SPECIALIST_SCIENTIST": 1
   }
- },
- "grants": {
-  "PROPERTY_FLAMMABILITY": 10
  },
  "cost": {
   "production": 495,

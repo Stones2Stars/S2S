@@ -40,6 +40,11 @@
    "percent": 100
   }
  },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 25
+  }
+ },
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": 4
@@ -49,9 +54,6 @@
   "city": {
    "SPECIALIST_SCIENTIST": 1
   }
- },
- "grants": {
-  "PROPERTY_FLAMMABILITY": 25
  },
  "cost": {
   "production": 1410,

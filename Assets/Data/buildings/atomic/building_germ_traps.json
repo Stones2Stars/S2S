@@ -76,8 +76,10 @@
    "flat": 3
   }
  },
- "grants": {
-  "PROPERTY_DISEASE": 25
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 25
+  }
  },
  "cost": {
   "production": 1180,

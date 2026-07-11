@@ -48,13 +48,15 @@
    "flat": 2
   }
  },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -5
+  }
+ },
  "PROPERTY_TOURISM": {
   "city": {
    "flat": 1
   }
- },
- "grants": {
-  "PROPERTY_FLAMMABILITY": -5
  },
  "cost": {
   "production": 1512,

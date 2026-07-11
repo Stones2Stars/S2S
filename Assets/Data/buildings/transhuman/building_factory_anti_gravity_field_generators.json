@@ -89,8 +89,12 @@
    "percent": 100
   }
  },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 10
+  }
+ },
  "grants": {
-  "PROPERTY_FLAMMABILITY": 10,
   "repeatable": [
    {
     "unitCombat": "UNITCOMBAT_HEALS_AS_NAVAL",
