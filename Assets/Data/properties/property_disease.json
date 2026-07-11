@@ -23,6 +23,31 @@
    "percent": 5
   }
  },
+ "properties": {
+  "diffuse": [
+   {
+    "from": "city",
+    "to": "plots",
+    "relation": "near",
+    "distance": 1,
+    "percent": 5
+   },
+   {
+    "from": "plot",
+    "to": "city",
+    "relation": "samePlot",
+    "percent": 12
+   },
+   {
+    "from": "plot",
+    "to": "plots",
+    "relation": "near",
+    "distance": 1,
+    "percent": 4,
+    "enabled": "IS_OWNED"
+   }
+  ]
+ },
  "grants": {
   "buildings": [
    "BUILDING_DISEASE_ANTHRAX",

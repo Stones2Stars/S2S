@@ -7,6 +7,15 @@
   "prereqMin": "TXT_KEY_PROPERTY_FLAMMABILITY_PREREQ_MIN",
   "prereqMax": "TXT_KEY_PROPERTY_FLAMMABILITY_PREREQ_MAX"
  },
+ "properties": {
+  "changePropagation": [
+   {
+    "from": "city",
+    "to": "empire",
+    "percent": 100
+   }
+  ]
+ },
  "ai": {
   "weight": -50,
   "scale": "city",

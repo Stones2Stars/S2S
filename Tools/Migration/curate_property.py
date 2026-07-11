@@ -123,6 +123,61 @@ def _target_level(rec):
     return int(base) if engine.is_int(base) else None
 
 
+# --- #429/diffusion (owner 2026-07-11: KEEP property spread -- "fairly ingrained in how properties work"; overrides
+# the earlier drop). PropertyPropagator(DIFFUSE) + ChangePropagators -> the approved `properties` block. ---
+PROP_OBJ_FROM = {"GAMEOBJECT_CITY": "city", "GAMEOBJECT_PLOT": "plot", "GAMEOBJECT_PLAYER": "empire"}
+PROP_OBJ_TO = {"GAMEOBJECT_CITY": "city", "GAMEOBJECT_PLOT": "plots", "GAMEOBJECT_PLAYER": "empire"}
+PROP_RELATION = {"RELATION_NEAR": "near", "RELATION_SAME_PLOT": "samePlot", "RELATION_TRADE": "trade"}
+# the legacy Active-gate plot TAGs -> the EXISTING json.md predicates (§3.5) -- no new predicates invented.
+PROP_TAG_PRED = {"TAG_OWNED": "IS_OWNED", "TAG_PEAK": "HAS_PEAK", "TAG_WATER": "IS_WATER", "TAG_CITY": "IS_CITY"}
+
+
+def _propagators(rec):
+    """Diffuse propagators + ChangePropagators -> `properties.diffuse[]` / `properties.changePropagation[]` (the
+    approved shape). Each diffuse = {from, to, relation, distance?, percent, enabled?}; the optional Active/Is TAG_*
+    gate maps to an existing predicate. changePropagation = {from, to, percent} (City->Player rollup; FLAMMABILITY only)."""
+    props = OrderedDict()
+    pm = rec.find("PropertyManipulators")
+    diffuse = []
+    if pm is not None:
+        for pp in pm.findall("PropertyPropagator"):
+            if engine.text(pp.find("PropertyPropagatorType")) != "PROPERTYPROPAGATOR_DIFFUSE":
+                continue
+            frm = PROP_OBJ_FROM.get(engine.text(pp.find("GameObjectType")))
+            to = PROP_OBJ_TO.get(engine.text(pp.find("TargetObjectType")))
+            rel = PROP_RELATION.get(engine.text(pp.find("TargetRelationType")))
+            if not frm or not to or not rel:
+                continue
+            entry = OrderedDict([("from", frm), ("to", to), ("relation", rel)])
+            dist = engine.text(pp.find("iTargetDistance"))
+            if engine.is_int(dist) and int(dist) != 0:
+                entry["distance"] = int(dist)
+            pct = engine.text(pp.find("iPercent"))
+            if engine.is_int(pct):
+                entry["percent"] = int(pct)
+            active = pp.find("Active")
+            if active is not None:
+                istag = active.find("Is")
+                pred = PROP_TAG_PRED.get(engine.text(istag)) if istag is not None else None
+                if pred:
+                    entry["enabled"] = pred
+            diffuse.append(entry)
+    if diffuse:
+        props["diffuse"] = diffuse
+    cpn = rec.find("ChangePropagators")
+    change = []
+    if cpn is not None:
+        for cp in cpn.findall("ChangePropagator"):
+            frm = PROP_OBJ_FROM.get(engine.text(cp.find("GameObjectTypeFrom")))
+            to = PROP_OBJ_TO.get(engine.text(cp.find("GameObjectTypeTo")))
+            pct = engine.text(cp.find("iChangePercent"))
+            if frm and to and engine.is_int(pct):
+                change.append(OrderedDict([("from", frm), ("to", to), ("percent", int(pct))]))
+    if change:
+        props["changePropagation"] = change
+    return {"properties": props} if props else {}
+
+
 def curate(typ, rec):
     out = OrderedDict([("type", typ)])
     desc = engine.text(rec.find("Description"))
@@ -132,6 +187,7 @@ def curate(typ, rec):
     if text:
         out["text"] = text
     out.update(_modifiers(rec, typ))                         # <PROPERTY>.<scope>.<unit> basic modifiers (decay)
+    out.update(_propagators(rec))                            # `properties` block: diffuse + changePropagation (owner: keep spread)
     gb = _granted_buildings(rec)
     if gb:
         out["grants"] = OrderedDict([("buildings", gb)])    # threshold bands = the enablers

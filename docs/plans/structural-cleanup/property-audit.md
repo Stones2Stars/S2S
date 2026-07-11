@@ -8,9 +8,19 @@
 > Symptom: `+264 PROPERTY_CRIME`, `-198 PROPERTY_EDUCATION`/turn in Canterbury (crime never decays, buildings never
 > cut it); commerce craters **downstream** (education→science, crime→happiness/maintenance), not an independent bug.
 >
-> **Owner decisions (2026-07-11):** implement the FULL model in **one landing** (not phased); the `properties` JSON
-> block shape below is **approved**. `CvCascadeProperty.cpp` is diagnostic-only (`CvHttpServer.cpp:1778`) — NOT the
+> **Owner decisions (2026-07-11):** `CvCascadeProperty.cpp` is diagnostic-only (`CvHttpServer.cpp:1778`) — NOT the
 > fix, do not extend.
+>
+> **DIFFUSION IS KEPT (owner 2026-07-11, final):** the owner briefly considered dropping property spread, then ruled
+> *"it seems to be fairly ingrained in how properties work, so may as well keep it."* So the earlier `#429` drop in
+> `curate_property.py` is **overridden** — the curator now emits the diffuse propagators + `changePropagation` into the
+> approved `properties` block, and `CvPropertyInfo` reads them into `CvPropertyPropagatorDiffuse` + the change-prop
+> table. (Plot-scope sources have "no real purpose at this time" but ride along — they cost nothing.)
+>
+> **Build order (owner "curator next"):** (1) ✅ the city-scope C++ bridge — building/unit flats + decay + population
+> baseline (already-curated data, DONE, compiling: increments 1+2). (2) curator emits `properties.diffuse[]` /
+> `changePropagation[]`. (3) `CvPropertyInfo` reads them. (4) the BoolExpr translator (conditioned diffuse gates + the
+> ~44 conditioned building flats). (5) empire-scope gather. (6) validate.
 
 ## The five legacy source channels (all stub-empty today)
 1. Property's **own** decay + population baseline + spatial diffusion — `CvPropertyInfo::m_PropertyManipulators`.
