@@ -107,6 +107,32 @@ the ONLY engine touch (plus B3, C3 below). Does not touch `read()`, `CvPropertyS
 manipulators. `PropertyBuildings`/`PropertyPromotions` value-bands stay the separately-flagged curator-gap
 (`CvPropertyInfo.h:49-57`), not folded here.
 
+## Increment 4 — the JSON→legacy-`BoolExpr` / `IntExpr` translator (LOCKED design, next build)
+The source/propagator bridge DEFERS-and-COUNTS three conditioned classes; this increment lands them. Node types:
+`BoolExpr.h` (`BoolExprIs(TagTypes)`, `BoolExprHas(GOMTypes,id)`, `BoolExprAnd`/`Or`/`Not`, `BoolExprConstant`) and
+`IntExpr.h` (`IntExprConstant`, `IntExprAttribute(ATTRIBUTE_POPULATION)`, `IntExprMult`, `IntExprDiv`).
+
+1. **Gated diffuse** (`jsonBuildPropertyPropagators`, currently `if(enabled) defer`): the `enabled` is a bare
+   predicate STRING in the `properties.diffuse` entry. Map string→`TagTypes` → `BoolExprIs` → `pp->setActive(...)`:
+   `IS_OWNED→TAG_OWNED`, `HAS_PEAK→TAG_PEAK`, `IS_WATER→TAG_WATER`, `IS_CITY→TAG_CITY` (verify the `TagTypes` names +
+   how a tag string resolves — `BoolExprIs::read`/the tag registry). 4 tags, ~20 lines. (These strings do NOT parse
+   into `CvJsonCondition` — `CASC_PRED_IS_OWNED`/`IS_CITY` aren't in the predicate enum — so translate the raw string.)
+2. **Tech-gated building flats** (~35 files, `jsonBuildPropertyManipulators` conditioned branch): the `enabled` IS a
+   `CvJsonCondition*` (from the modifier-family parse). Write `cascadeJsonCondToBoolExpr(const CvJsonCondition*)`:
+   - `CASC_COND_PRESENCE` `TECH_*` → `BoolExprHas(GOM_TECH, cond->id)` (confirm the `GOMTypes` for tech/bonus/building —
+     grep `GOM_`); `BONUS_*`/`BUILDING_*` likewise if any appear.
+   - `CASC_COND_PREDICATE` → `BoolExprIs`/other per the predKind (only if a building gate uses one).
+   - `CASC_COND_GROUP`: `all`→fold `BoolExprAnd`, `anyOf`→`BoolExprOr`, `noneOf`→`BoolExprNot(Or…)`.
+   - Then `src->setActive(expr)` on the `CvPropertySourceConstant`. Unknown/empty → skip the source (don't over-apply).
+3. **Per-population building flats** (~9 files, e.g. Foundling Hospital `each>1`): build the amount `IntExpr` —
+   `IntExprDiv(IntExprMult(IntExprConstant(value), IntExprAttribute(ATTRIBUTE_POPULATION)), IntExprConstant(each))` —
+   into `CvPropertySourceConstant(prop, thatExpr)`. (The `each==1` property-baseline already uses `AttributeConstant`.)
+4. **`changePropagation` table** (FLAMMABILITY only): add storage to `CvPropertyInfo` (a small `from×to→percent` map)
+   + a real `getChangePropagator(from,to)`; populate from the deferred `changePropagation[]`.
+5. **Empire-scope building props** (5 `FLAMMABILITY` files): the minimal gather touch in
+   `CvGameObjectCity::foreachManipulator` (`CvGameObject.cpp:662-672`) to also walk the owning player's `empire`-scope
+   building deposits — OR accept as out-of-scope (owner call at build time).
+
 ## Validate
 Rebuild (Assert compile-check, then Release/agentstart), end a turn: property per-turn deltas match the legacy
 XML-era values (the shadow bar); Canterbury crime/education normalise; commerce recovers on its own. Cross-check with
