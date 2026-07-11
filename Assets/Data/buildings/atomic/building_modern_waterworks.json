@@ -47,11 +47,6 @@
    "percent": 100
   }
  },
- "PROPERTY_FLAMMABILITY": {
-  "city": {
-   "flat": -50
-  }
- },
  "PROPERTY_WATER_POLLUTION": {
   "city": {
    "flat": -10
@@ -61,6 +56,9 @@
   "city": {
    "flat": -5
   }
+ },
+ "grants": {
+  "PROPERTY_FLAMMABILITY": -50
  },
  "cost": {
   "production": 1540,

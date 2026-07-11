@@ -79,10 +79,8 @@
    "percent": 100
   }
  },
- "PROPERTY_FLAMMABILITY": {
-  "city": {
-   "flat": -25
-  }
+ "grants": {
+  "PROPERTY_FLAMMABILITY": -25
  },
  "cost": {
   "production": 630,

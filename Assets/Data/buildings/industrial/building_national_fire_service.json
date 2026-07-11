@@ -49,12 +49,12 @@
   }
  },
  "PROPERTY_FLAMMABILITY": {
-  "city": {
-   "flat": -25
-  },
   "empire": {
    "flat": -5
   }
+ },
+ "grants": {
+  "PROPERTY_FLAMMABILITY": -25
  },
  "cost": {
   "production": 1420,

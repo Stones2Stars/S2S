@@ -155,11 +155,6 @@
    "percent": 100
   }
  },
- "PROPERTY_FLAMMABILITY": {
-  "city": {
-   "flat": 20
-  }
- },
  "PROPERTY_AIR_POLLUTION": {
   "city": {
    "flat": 5
@@ -171,6 +166,7 @@
   }
  },
  "grants": {
+  "PROPERTY_FLAMMABILITY": 20,
   "repeatable": [
    {
     "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL",

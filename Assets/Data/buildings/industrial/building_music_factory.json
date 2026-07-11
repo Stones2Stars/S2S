@@ -51,12 +51,8 @@
    "percent": 100
   }
  },
- "PROPERTY_FLAMMABILITY": {
-  "city": {
-   "flat": 5
-  }
- },
  "grants": {
+  "PROPERTY_FLAMMABILITY": 5,
   "freePromotions": [
    "PROMOTION_CACOPHONY"
   ]

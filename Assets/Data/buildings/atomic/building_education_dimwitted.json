@@ -77,11 +77,6 @@
    "percent": -70
   }
  },
- "PROPERTY_FLAMMABILITY": {
-  "city": {
-   "flat": 16
-  }
- },
  "PROPERTY_CRIME": {
   "city": {
    "flat": 28
@@ -91,6 +86,9 @@
   "city": {
    "flat": 28
   }
+ },
+ "grants": {
+  "PROPERTY_FLAMMABILITY": 16
  },
  "attributes": {
   "nukeImmune": true

@@ -558,15 +558,26 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, capabili
     if shrine:
         bespoke["shrine"] = shrine
 
-    # --- CvProperties: Properties (city) / PropertiesAllCities (empire) -> per-PROPERTY family deposits ---
-    for tag, scope in (("Properties", "city"), ("PropertiesAllCities", "empire")):
-        node = rec.find(tag)
-        if node is not None:
-            for c in node:
-                p = engine.text(c.find("PropertyType")) if c.find("PropertyType") is not None else None
-                amt = _intval(c)
-                if p and p != "NONE" and amt:
-                    fams.setdefault(p, OrderedDict()).setdefault(scope, OrderedDict())["flat"] = amt
+    # --- CvProperties (owner 2026-07-12: split one-time from per-turn) ---
+    # <Properties> = a ONE-TIME property change applied ONCE on construction (CvCity.cpp:4693 getProperties->addProperties)
+    # -> a `grants` PULSE (json §5 one-shot), NEVER the per-turn `.city.flat`. Merging it into `.city.flat` (which is the
+    # per-turn <PropertySource>) made the engine bridge REPLAY the one-shot every turn -> runaway crime/education
+    # (property-audit.md 2026-07-12). <PropertiesAllCities> = the one-time ALL-CITIES change -> `.empire.flat` (the
+    # PropertiesAllCities path, applied once on build -- correct, kept distinct from `.city`).
+    pnode = rec.find("Properties")
+    if pnode is not None:
+        for c in pnode:
+            p = engine.text(c.find("PropertyType")) if c.find("PropertyType") is not None else None
+            amt = _intval(c)
+            if p and p != "NONE" and amt:
+                grants[p] = grants.get(p, 0) + amt
+    acnode = rec.find("PropertiesAllCities")
+    if acnode is not None:
+        for c in acnode:
+            p = engine.text(c.find("PropertyType")) if c.find("PropertyType") is not None else None
+            amt = _intval(c)
+            if p and p != "NONE" and amt:
+                fams.setdefault(p, OrderedDict()).setdefault("empire", OrderedDict())["flat"] = amt
     pm = rec.find("PropertyManipulators")
     if pm is not None:
         for s in pm.findall("PropertySource"):

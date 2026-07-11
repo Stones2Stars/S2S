@@ -107,7 +107,22 @@ the ONLY engine touch (plus B3, C3 below). Does not touch `read()`, `CvPropertyS
 manipulators. `PropertyBuildings`/`PropertyPromotions` value-bands stay the separately-flagged curator-gap
 (`CvPropertyInfo.h:49-57`), not folded here.
 
-## Increment 4 — the JSON→legacy-`BoolExpr` / `IntExpr` translator (LOCKED design, next build)
+## Increment 4 — the translator + FLAMMABILITY tail — ✅ DONE + COMPILING (2026-07-12)
+> **STATUS: the whole property source-data migration is implemented and compiling.** All in the working tree:
+> - Parts 1-3 (`CvJsonPropertyBridge.cpp`): gated diffuse → `BoolExprIs`, tech-gated building flats →
+>   `cond_toBoolExpr`/`BoolExprHas(GOM_TECH)`, per-population flats → `IntExpr`.
+> - Part 4 `changePropagation`: real `CvPropertyInfo::getChangePropagator` table (`m_cpFrom/To/Pct`), populated in
+>   `mapFrom` from `properties.changePropagation[]`.
+> - Part 5 empire-scope: the legacy path is **`PropertiesAllCities`** (not a `GAMEOBJECT_PLAYER` source) — a
+>   `<PropertiesAllCities>` `CvProperties` applied to ALL the owner's cities (`CvCity.cpp:4686`).
+>   `jsonBuildPropertiesAllCities` populates `CvBuildingInfo::m_PropertiesAllCities` from `PROPERTY_*.empire.flat`
+>   (the 5 FLAMMABILITY fire-service buildings). No gather change needed — the existing build/removal hook consumes it.
+>
+> **Remaining = VALIDATE ONLY.** Build Release, end a turn: crime decays + buildings cut it + commerce recovers;
+> diff property deltas vs legacy. (Known non-migrated, separately flagged: `PropertyBuildings`/`PropertyPromotions`
+> value-bands — the curator's Building-pass gap, `CvPropertyInfo.h:49-57`, NOT part of this source migration.)
+
+### The locked design (reference)
 The source/propagator bridge DEFERS-and-COUNTS three conditioned classes; this increment lands them. Node types:
 `BoolExpr.h` (`BoolExprIs(TagTypes)`, `BoolExprHas(GOMTypes,id)`, `BoolExprAnd`/`Or`/`Not`, `BoolExprConstant`) and
 `IntExpr.h` (`IntExprConstant`, `IntExprAttribute(ATTRIBUTE_POPULATION)`, `IntExprMult`, `IntExprDiv`).
@@ -132,6 +147,25 @@ The source/propagator bridge DEFERS-and-COUNTS three conditioned classes; this i
 5. **Empire-scope building props** (5 `FLAMMABILITY` files): the minimal gather touch in
    `CvGameObjectCity::foreachManipulator` (`CvGameObject.cpp:662-672`) to also walk the owning player's `empire`-scope
    building deposits — OR accept as out-of-scope (owner call at build time).
+
+## ⛔ BUG FOUND IN VALIDATION (2026-07-12) — one-time vs per-turn conflation
+> **Symptom:** after the migration loads clean and kills the wild ±200/turn swings + recovers science, the per-turn
+> property deltas are "way too high the wrong way" — crime crashes negative, education/pollution pin at the floor.
+> **Root cause (confirmed in code+data+engine):** the legacy has TWO distinct building→property paths —
+> `<Properties>` applied **ONCE on construction** (`CvCity.cpp:4685-4706`, `getProperties()->addProperties`) and
+> `<PropertyManipulators><PropertySource>` applied **EVERY TURN** (the solver). `curate_building.py:561-573` emits
+> **BOTH into `PROPERTY_X.city.flat`**, so `jsonBuildPropertyManipulators` applies the one-shot construction values
+> every turn → runaway. (The `.empire` one-shots ARE correct — `jsonBuildPropertiesAllCities` → `m_PropertiesAllCities`
+> is the one-time all-cities path.)
+>
+> **Fix (needs an owner data-model call on the one-time shape):**
+> 1. **Curator** — emit the one-time `<Properties>` (city) into a shape DISTINCT from the per-turn `<PropertySource>`
+>    (`.city.flat`). Candidates: a `grants.PROPERTY_X: value` one-shot pulse (json §5 numeric pulses), or a dedicated
+>    `properties.onBuild` block. Per-turn `<PropertySource>` stays `.city.flat`.
+> 2. **Bridge** — `jsonBuildPropertyManipulators` keeps reading only `.city.flat` (now per-turn only, no code change).
+>    Add a `getProperties()` bridge (mirror `jsonBuildPropertiesAllCities`) populating `CvBuildingInfo::m_Properties`
+>    (also stub-empty) from the one-time shape, so the engine's construction hook (`CvCity.cpp:4693`) applies it once.
+> ⚠ Distinguishing the two REQUIRES the curator change — in the current JSON they are indistinguishable (both `.city.flat`).
 
 ## Validate
 Rebuild (Assert compile-check, then Release/agentstart), end a turn: property per-turn deltas match the legacy

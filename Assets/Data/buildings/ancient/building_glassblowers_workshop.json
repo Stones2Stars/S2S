@@ -101,15 +101,13 @@
    "percent": 100
   }
  },
- "PROPERTY_FLAMMABILITY": {
-  "city": {
-   "flat": 5
-  }
- },
  "allowedSpecialists": {
   "city": {
    "SPECIALIST_ENGINEER": 1
   }
+ },
+ "grants": {
+  "PROPERTY_FLAMMABILITY": 5
  },
  "cost": {
   "production": 200,

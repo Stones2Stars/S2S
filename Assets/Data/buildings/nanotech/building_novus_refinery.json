@@ -88,11 +88,6 @@
    "percent": 100
   }
  },
- "PROPERTY_FLAMMABILITY": {
-  "city": {
-   "flat": 30
-  }
- },
  "PROPERTY_AIR_POLLUTION": {
   "city": {
    "flat": 15
@@ -102,6 +97,9 @@
   "city": {
    "flat": 15
   }
+ },
+ "grants": {
+  "PROPERTY_FLAMMABILITY": 30
  },
  "cost": {
   "production": 3805,

@@ -41,11 +41,6 @@
    "percent": 100
   }
  },
- "PROPERTY_AIR_POLLUTION": {
-  "city": {
-   "flat": -50
-  }
- },
  "PROPERTY_WATER_POLLUTION": {
   "city": {
    "flat": -50
@@ -60,6 +55,9 @@
   "city": {
    "SPECIALIST_ENGINEER": 1
   }
+ },
+ "grants": {
+  "PROPERTY_AIR_POLLUTION": -50
  },
  "cost": {
   "production": 12630,
