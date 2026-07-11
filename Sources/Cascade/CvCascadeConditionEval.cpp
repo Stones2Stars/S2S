@@ -21,10 +21,10 @@
 #include "Engine/CvArea.h"
 #include "Engine/CvProperties.h"
 #include "CvCascadeMMKernel.h"        // traitData -- the active-set trait resolver (the L1 policy read)
-#include "CvJsonCivicInfo.h"          // the civic §9 policies block (the L1 policy read)
-#include "CvJsonTraitInfo.h"          // the trait §9 policies block
+#include "CvCivicInfo.h"          // the civic §9 policies block (the L1 policy read)
+#include "CvTraitInfo.h"          // the trait §9 policies block
 #include "Repos/InfoRepo.h"
-#include "CvJsonCivicInfo.h"
+#include "CvCivicInfo.h"
 #include <string>
 
 static bool ev_playerHasPolicy(const CvPlayer* pPlayer, const char* szKey);   // defined below (the L1 policy read)
@@ -130,7 +130,11 @@ static bool ev_bonusPresent(const CvCascadeEvalCtx& ctx, int eBonus, CvCascConne
 	{
 	case CASC_CONN_VICINITY:          return ev_vicinityHas(ctx, eBonus, vic);
 	case CASC_CONN_TRADE:             return c != NULL && c->hasBonus((BonusTypes)eBonus);
-	case CASC_CONN_TRADE_OR_VICINITY: return c != NULL && c->hasBonus((BonusTypes)eBonus);
+	// "trade|vicinity" = trade-network OR in-vicinity (json §3.4). The vicinity leg is REQUIRED here: a
+	// MANUFACTURED bonus is supplied by an active building's `provides.bonuses` (json §5a) into
+	// vicinityProvidedBonuses, NOT the trade network -- so a hasBonus-only check misses every building-supplied
+	// bonus (the "manufactured bonus buildings can't be built" bug). Matches StoneBase's TradeOrVicinity.
+	case CASC_CONN_TRADE_OR_VICINITY: return (c != NULL && c->hasBonus((BonusTypes)eBonus)) || ev_vicinityHas(ctx, eBonus, vic);
 	default:
 		if (ctx.plot != NULL) return (int)ctx.plot->getBonusType(ctx.team ? ctx.team->getID() : NO_TEAM) == eBonus;
 		return c != NULL && c->hasBonus((BonusTypes)eBonus);
@@ -237,11 +241,23 @@ static bool ev_evalPresence(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlag
 {
 	if (f.ignorePlotScope && a->scope == CASC_SCOPE_PLOT) return true;
 	const std::string& t = a->type;
+	// VISIBLE-frontier GREYABLE relaxation (enabler.md §6): for the build-list question, a connectable BONUS_ resource
+	// and an unadopted CIVIC_ are treated as PRESENT so the entity shows GREYED rather than HIDDEN ("go get copper" /
+	// "adopt this civic"). Every other clause (tech, building prereq, terrain/placement, religion, ...) stays a HARD
+	// hide. Model: "pretend the resource/civic is present" -- a positive requirement is satisfied. STRICT gates
+	// (bTestVisible=false) never set testVisible, so the buildable-now set is unchanged.
+	if (f.testVisible && (en_starts(t, "BONUS_") || en_starts(t, "CIVIC_"))) return true;
 	if (en_starts(t, "PROPERTY_"))
 	{
 		const int val = ev_countOf(ctx, a);
 		return (a->min < 0 || val >= a->min) && (a->max < 0 || val <= a->max);
 	}
+	// A typed BONUS_ presence whose reference did NOT resolve (a->id < 0 -- a curator typo like BONUS_ELEPHANT for
+	// BONUS_ELEPHANTS, or a renamed/removed bonus) names an entity that does not exist, so it is NOT present. Guard
+	// BEFORE any id-indexed engine read: hasBonus((BonusTypes)-1) walks m_paiNumBonuses[-1] (an out-of-bounds read ->
+	// the load-warm-up AV), and a plot's NO_BONUS (== -1) would SPURIOUSLY match a->id == -1. An unknown reference must
+	// degrade to false, never crash/mis-satisfy (json §3.5); the miss is surfaced by the load-time FK census, not here.
+	if (a->id < 0 && en_starts(t, "BONUS_")) return false;
 	if (a->min >= 0 || a->max >= 0)
 	{
 		if (en_starts(t, "BONUS_") && (a->min < 0 || a->min <= 1) && a->max < 0)
@@ -378,13 +394,13 @@ static bool ev_playerHasPolicy(const CvPlayer* pPlayer, const char* szKey)
 	{
 		const CivicTypes eCivic = pPlayer->getCivics((CivicOptionTypes)i);
 		if (eCivic == NO_CIVIC) continue;
-		const CvJsonCivicInfo* d = static_cast<const CvJsonCivicInfo*>(InfoRepo<CvJsonCivicInfo>::get().get(eCivic));
+		const CvCivicInfo* d = static_cast<const CvCivicInfo*>(InfoRepo<CvCivicInfo>::get().get(eCivic));
 		if (d != NULL && d->getPolicies() != NULL && d->getPolicies()->has(szKey)) bHas = true;
 	}
 	for (int t = 0; t < GC.getNumTraitInfos() && !bHas; ++t)
 	{
 		if (!pPlayer->hasTrait((TraitTypes)t)) continue;
-		const CvJsonTraitInfo* d = MMKernel::traitData(t);
+		const CvTraitInfo* d = MMKernel::traitData(t);
 		if (d != NULL && d->getPolicies() != NULL && d->getPolicies()->has(szKey)) bHas = true;
 	}
 	s_policyMemoNSRC[p] = bHas;

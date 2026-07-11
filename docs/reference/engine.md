@@ -109,6 +109,18 @@ resolves dynamically by name.
   to declarative XML" goal.
 - The asset **checksum** only triggers the modifier-recalc popup on mismatch — it does NOT gate MP OOS or block
   loading; full parity is not required when restructuring data (cost = one spurious popup per existing save).
+- **`LoadGlobalClassInfoJson` is TWO-PASS by requirement, never one.** Each JSON category loads by (1) registering
+  **every** type→id (`setInfoTypeFromString`), then (2) running `mapFrom` on each entity. `mapFrom` resolves its FKs
+  at parse time (`jsonResolveId` → `getInfoTypeForString(id, /*bHideAssert*/true)`), so a single register-then-map
+  pass silently DROPS any **same-category forward reference** — an id naming a sibling that sorts *after* its owner
+  (entities load sorted by type name). The miss is invisible (`bHideAssert` writes no `Xml_MissingTypes.log` line);
+  it only shows in the cascade FK census (`jsonUnresolvedIds`, capped at 64). This severed ~47% of unit
+  `requires.build.dormant`/`replacedBy.units` edges — the entire upgrade/dormancy chain
+  (machete→musketman→rifleman→trench_infantry, every trigger sorted after its owner), so no old unit went
+  dormant/replaced and the build list showed everything. The two-pass load is the fix; **do NOT collapse it back**.
+  Cross-category forward refs (an earlier-loaded category naming a later one) are a *separate* residue — the load
+  order at `CvXMLLoadUtilitySet.cpp` puts units LAST, so unit→tech/bonus/building resolve; a category referencing a
+  later one is not covered by this per-category two-pass (verify before relying on such an edge).
 
 ## UnitCombat — the fat info class + the cascade-migration note
 

@@ -7,19 +7,19 @@
 
 #include "CvGameCoreDLL.h"
 #include "UI/CvArtFileMgr.h"
-#include "CvJsonBuildingInfo.h"
+#include "CvBuildingInfo.h"
 #include "UI/CvGameTextMgr.h"
 #include "Defines/CvGlobals.h"
 #include "CvImprovementInfo.h"
-#include "CvJsonUnitCombatInfo.h"
+#include "CvUnitCombatInfo.h"
 #include "CvBonusInfo.h"
 #include "CvInfoClassTraits.h"
 #include "CvInfos.h"
 #include "Defines/CvDiplomacyClasses.h"
 #include "CvPlayerOptionInfo.h"
 #include "CvInfoWater.h"
-#include "CvJsonTraitInfo.h"
-#include "CvJsonHeritageInfo.h"
+#include "CvTraitInfo.h"
+#include "CvHeritageInfo.h"
 #include "CvInitCore.h"
 #include "CvXMLLoadUtility.h"
 #include "CvXMLLoadUtilityModTools.h"
@@ -29,6 +29,10 @@
 #include "Repos/BuildsRepo.h"
 #include "Tools/FVariableSystem.h"
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <algorithm>
+#include <utility>
 
 bool CvXMLLoadUtility::ReadGlobalDefines(const char* szXMLFileName, CvCacheObject* cache)
 {
@@ -733,9 +737,9 @@ bool CvXMLLoadUtility::LoadBasicInfos()
 }
 
 // comparator function for sorting ReligionInfos by TGA index
-inline bool cmpReligionTGA(CvJsonReligionInfo* lhs, CvJsonReligionInfo* rhs) { return lhs->getTGAIndex() < rhs->getTGAIndex();}
+inline bool cmpReligionTGA(CvReligionInfo* lhs, CvReligionInfo* rhs) { return lhs->getTGAIndex() < rhs->getTGAIndex();}
 // comparator function for sorting CorporationInfos by TGA index
-inline bool cmpCorporationTGA(CvJsonCorporationInfo* lhs, CvJsonCorporationInfo* rhs) { return lhs->getTGAIndex() < rhs->getTGAIndex();}
+inline bool cmpCorporationTGA(CvCorporationInfo* lhs, CvCorporationInfo* rhs) { return lhs->getTGAIndex() < rhs->getTGAIndex();}
 // comparator function for sorting InfoBase by TextKey alphabetically
 inline bool cmpInfoByAlphabet(CvInfoBase* lhs, CvInfoBase* rhs) { return CvWString::format(lhs->getTextKeyWide()) < CvWString::format(rhs->getTextKeyWide());}
 
@@ -770,50 +774,50 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 	LoadGlobalClassInfo(GC.m_paAdvisorInfo, "CIV4AdvisorInfos", "Interface", L"/Civ4AdvisorInfos/AdvisorInfos/AdvisorInfo", false);
 	LoadGlobalClassInfo(GC.m_paIdeaClassInfo, "CIV4IdeaClassInfos", "GameInfo", L"/Civ4IdeaClassInfos/IdeaClassInfos/IdeaClassInfo", false);
 	LoadGlobalClassInfo(GC.m_paIdeaInfo, "CIV4IdeaInfos", "GameInfo", L"/Civ4IdeaInfos/IdeaInfos/IdeaInfo", false);
-	LoadGlobalClassInfo(GC.m_paTerrainInfo, "CIV4TerrainInfos", "Terrain", L"/Civ4TerrainInfos/TerrainInfos/TerrainInfo", false, &GC.m_TerrainInfoReplacements);
+	LoadGlobalClassInfoJson(GC.m_paTerrainInfo, "terrains");
 	LoadGlobalClassInfo(GC.m_paYieldInfo, "CIV4YieldInfos", "Terrain", L"/Civ4YieldInfos/YieldInfos/YieldInfo", false);
 	LoadGlobalClassInfo(GC.m_paCommerceInfo, "CIV4CommerceInfo", "GameInfo", L"/Civ4CommerceInfo/CommerceInfos/CommerceInfo", false);
 	LoadGlobalClassInfo(GC.m_aEraInfo, "CIV4EraInfos", "GameInfo", L"/Civ4EraInfos/EraInfos/EraInfo", false, &GC.m_EraInfoReplacements);
 	LoadGlobalClassInfo(GC.m_paAnimationCategoryInfo, "CIV4AnimationInfos", "Units", L"/Civ4AnimationInfos/AnimationCategories/AnimationCategory", false);
 	LoadGlobalClassInfo(GC.m_paAnimationPathInfo, "CIV4AnimationPathInfos", "Units", L"/Civ4AnimationPathInfos/AnimationPaths/AnimationPath", false);
 	LoadGlobalClassInfo(GC.m_paCursorInfo, "CIV4CursorInfo", "GameInfo", L"/Civ4CursorInfo/CursorInfos/CursorInfo", false);
-	LoadGlobalClassInfo(GC.m_paCivicOptionInfo, "CIV4CivicOptionInfos", "Civilizations", L"/Civ4CivicOptionInfos/CivicOptionInfos/CivicOptionInfo", false);
+	LoadGlobalClassInfoJson(GC.m_paCivicOptionInfo, "civicoptions");
 	LoadGlobalClassInfo(GC.m_paUpkeepInfo, "CIV4UpkeepInfo", "GameInfo", L"/Civ4UpkeepInfo/UpkeepInfos/UpkeepInfo", false);
-	LoadGlobalClassInfo(GC.m_paCultureLevelInfo, "CIV4CultureLevelInfo", "GameInfo", L"/Civ4CultureLevelInfo/CultureLevelInfos/CultureLevelInfo", false, &GC.m_CultureLevelInfoReplacements);
+	LoadGlobalClassInfoJson(GC.m_paCultureLevelInfo, "culturelevels");
 	LoadGlobalClassInfo(GC.m_paBonusClassInfo, "CIV4BonusClassInfos", "Terrain", L"/Civ4BonusClassInfos/BonusClassInfos/BonusClassInfo", false, &GC.m_BonusClassInfoReplacements);
 	LoadGlobalClassInfo(GC.m_paVictoryInfo, "CIV4VictoryInfo", "GameInfo", L"/Civ4VictoryInfo/VictoryInfos/VictoryInfo", false);
 	LoadGlobalClassInfo(GC.m_paEffectInfo, "CIV4EffectInfos", "Misc", L"/Civ4EffectInfos/EffectInfos/EffectInfo", false);
 	LoadGlobalClassInfo(GC.m_paEntityEventInfo, "CIV4EntityEventInfos", "Units", L"/Civ4EntityEventInfos/EntityEventInfos/EntityEventInfo", false);
-	LoadGlobalClassInfo(GC.m_paPropertyInfo, "CIV4PropertyInfos", "GameInfo", L"/Civ4PropertyInfos/PropertyInfos/PropertyInfo", false);
-	LoadGlobalClassInfo(GC.m_paSpecialistInfo, "CIV4SpecialistInfos", "GameInfo", L"/Civ4SpecialistInfos/SpecialistInfos/SpecialistInfo", false, &GC.m_SpecialistInfoReplacements);
+	LoadGlobalClassInfoJson(GC.m_paPropertyInfo, "properties");
+	LoadGlobalClassInfoJson(GC.m_paSpecialistInfo, "specialists");
 	LoadGlobalClassInfo(GC.m_paVoteSourceInfo, "CIV4VoteSourceInfos", "GameInfo", L"/Civ4VoteSourceInfos/VoteSourceInfos/VoteSourceInfo", false);
-	LoadGlobalClassInfo(GC.m_paTechInfo, "CIV4TechInfos", "Technologies", L"/Civ4TechInfos/TechInfos/TechInfo", false, &GC.m_TechInfoReplacements);
-	LoadGlobalClassInfo(GC.m_paFeatureInfo, "CIV4FeatureInfos", "Terrain", L"/Civ4FeatureInfos/FeatureInfos/FeatureInfo", false, &GC.m_FeatureInfoReplacements);
-	LoadGlobalClassInfo(GC.m_paReligionInfo, "CIV4ReligionInfo", "GameInfo", L"/Civ4ReligionInfo/ReligionInfos/ReligionInfo", false, &GC.m_ReligionInfoReplacements);
+	LoadGlobalClassInfoJson(GC.m_paTechInfo, "techs");
+	LoadGlobalClassInfoJson(GC.m_paFeatureInfo, "features");
+	LoadGlobalClassInfoJson(GC.m_paReligionInfo, "religions");
 	// TGA indexation - important must do before anything else
-	std::vector<CvJsonReligionInfo*>& aReligionInfos = GC.m_paReligionInfo;
+	std::vector<CvReligionInfo*>& aReligionInfos = GC.m_paReligionInfo;
 	std::sort(aReligionInfos.begin(), aReligionInfos.end(), cmpReligionTGA);
 	for (int i = 0; i < (int)aReligionInfos.size(); i++)
 	{
 		GC.setInfoTypeFromString(aReligionInfos.at(i)->getType(), i);
 	}
 
-	LoadGlobalClassInfo(GC.m_heritageInfo, "HeritageInfos", "Civilizations", L"/C2C_HeritageInfos/HeritageInfos/HeritageInfo", false);
-	LoadGlobalClassInfo(GC.m_paBonusInfo, "CIV4BonusInfos", "Terrain", L"/Civ4BonusInfos/BonusInfos/BonusInfo", false, &GC.m_BonusInfoReplacements);
+	LoadGlobalClassInfoJson(GC.m_heritageInfo, "heritages");
+	LoadGlobalClassInfoJson(GC.m_paBonusInfo, "bonuses");
 	LoadGlobalClassInfo(GC.m_paSpecialUnitInfo, "CIV4SpecialUnitInfos", "Units", L"/Civ4SpecialUnitInfos/SpecialUnitInfos/SpecialUnitInfo", false);
 	shouldHaveType = true;
-	LoadGlobalClassInfo(GC.m_paRouteInfo, "CIV4RouteInfos", "Misc", L"/Civ4RouteInfos/RouteInfos/RouteInfo", false, &GC.m_RouteInfoReplacements);
+	LoadGlobalClassInfoJson(GC.m_paRouteInfo, "routes");
 	shouldHaveType = false;
-	LoadGlobalClassInfo(GC.m_paImprovementInfo, "CIV4ImprovementInfos", "Terrain", L"/Civ4ImprovementInfos/ImprovementInfos/ImprovementInfo", false, &GC.m_ImprovementInfoReplacements);
-	LoadGlobalClassInfo(GC.m_paUnitCombatInfo, "CIV4UnitCombatInfos", "Units", L"/Civ4UnitCombatInfos/UnitCombatInfos/UnitCombatInfo", false);
+	LoadGlobalClassInfoJson(GC.m_paImprovementInfo, "improvements");
+	LoadGlobalClassInfoJson(GC.m_paUnitCombatInfo, "unitcombats");
 	//TB Promotion Line Mod begin
-	LoadGlobalClassInfo(GC.m_paPromotionLineInfo, "CIV4PromotionLineInfos", "Units", L"/Civ4PromotionLineInfos/PromotionLineInfos/PromotionLineInfo", false);
+	LoadGlobalClassInfoJson(GC.m_paPromotionLineInfo, "promotionlines");
 	//TB Promotion Line Mod begin
-	LoadGlobalClassInfo(GC.m_paPromotionInfo, "CIV4PromotionInfos", "Units", L"/Civ4PromotionInfos/PromotionInfos/PromotionInfo", false, &GC.m_PromotionInfoReplacements);
+	LoadGlobalClassInfoJson(GC.m_paPromotionInfo, "promotions");
 	LoadGlobalClassInfo(GC.m_paHurryInfo, "CIV4HurryInfo", "GameInfo", L"/Civ4HurryInfo/HurryInfos/HurryInfo", false);
-	LoadGlobalClassInfo(GC.m_paCorporationInfo, "CIV4CorporationInfo", "GameInfo", L"/Civ4CorporationInfo/CorporationInfos/CorporationInfo", false, &GC.m_CorporationInfoReplacements);
+	LoadGlobalClassInfoJson(GC.m_paCorporationInfo, "corporations");
 	// TGA indexation - important must do before anything else
-	std::vector<CvJsonCorporationInfo*>& aCorporationInfos = GC.m_paCorporationInfo;
+	std::vector<CvCorporationInfo*>& aCorporationInfos = GC.m_paCorporationInfo;
 	std::sort(aCorporationInfos.begin(), aCorporationInfos.end(), cmpCorporationTGA);
 	for (int i = 0; i < (int)aCorporationInfos.size(); i++)
 	{
@@ -821,17 +825,22 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 	}
 
 	LoadGlobalClassInfo(GC.m_paSpecialBuildingInfo, "CIV4SpecialBuildingInfos", "Buildings", L"/Civ4SpecialBuildingInfos/SpecialBuildingInfos/SpecialBuildingInfo", false, &GC.m_SpecialBuildingInfoReplacements);
-	LoadGlobalClassInfo(GC.m_paBuildingInfo, "CIV4BuildingInfos", "Buildings", L"/Civ4BuildingInfos/BuildingInfos/BuildingInfo", false, &GC.m_BuildingInfoReplacements);
-	LoadGlobalClassInfo(GC.m_paCivicInfo, "CIV4CivicInfos", "Civilizations", L"/Civ4CivicInfos/CivicInfos/CivicInfo", false, &GC.m_CivicInfoReplacements);
+	LoadGlobalClassInfoJson(GC.m_paBuildingInfo, "buildings");
+	LoadGlobalClassInfoJson(GC.m_paCivicInfo, "civics");
 	LoadGlobalClassInfo(GC.m_paPlayerColorInfo, "CIV4PlayerColorInfos", "Interface", L"/Civ4PlayerColorInfos/PlayerColorInfos/PlayerColorInfo", false);
-	LoadGlobalClassInfo(GC.m_buildTable.rows(), "CIV4BuildInfos", "Units", L"/Civ4BuildInfos/BuildInfos/BuildInfo", false, &GC.m_BuildInfoReplacements);
+	LoadGlobalClassInfoJson(GC.m_buildTable.rows(), "builds");
 	LoadGlobalClassInfo(GC.m_paOutcomeInfo, "CIV4OutcomeInfos", "GameInfo", L"/Civ4OutcomeInfos/OutcomeInfos/OutcomeInfo", false);
 
 	//	AlbertS2: Register mission types
 	GC.registerMissions();
 	LoadGlobalClassInfo(GC.m_paMissionInfo, "CIV4MissionInfos", "Units", L"/Civ4MissionInfos/MissionInfos/MissionInfo", false);
-	LoadGlobalClassInfo(GC.m_paUnitInfo, "CIV4UnitInfos", "Units", L"/Civ4UnitInfos/UnitInfos/UnitInfo", false, &GC.m_UnitInfoReplacements);
-	LoadGlobalClassInfo(GC.m_paTraitInfo, "CIV4TraitInfos", "Civilizations", L"/Civ4TraitInfos/TraitInfos/TraitInfo", false, &GC.m_TraitInfoReplacements);
+	LoadGlobalClassInfoJson(GC.m_paUnitInfo, "units");
+	// ALL trait types must be registered (simple-only, complex-only developing levels, and the shared ids) -- saves +
+	// isHasTrait index the whole union. Load the simple BASE first, then the complex set: dedup keeps simple for shared
+	// ids and ADDS the 239 complex-only types (SEAFARING2/3, ...). The runtime simple-vs-complex VALUE swap by
+	// GAMEOPTION_LEADER_COMPLEX_TRAITS is the separate deferred active-set step (modifier.md §4 / cascade-engine-430 §6).
+	LoadGlobalClassInfoJson(GC.m_paTraitInfo, "traits\\simple");
+	LoadGlobalClassInfoJson(GC.m_paTraitInfo, "traits\\complex");
 	LoadGlobalClassInfo(GC.m_paLeaderHeadInfo, "CIV4LeaderHeadInfos", "Civilizations", L"/Civ4LeaderHeadInfos/LeaderHeadInfos/LeaderHeadInfo", false, &GC.m_LeaderHeadInfoReplacements);
 
 	OutputDebugString("Pre leaderhead sort\n");
@@ -845,7 +854,7 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 	LoadGlobalClassInfo(GC.m_paUnitArtStyleTypeInfo, "CIV4UnitArtStyleTypeInfos", "Civilizations", L"/Civ4UnitArtStyleTypeInfos/UnitArtStyleTypeInfos/UnitArtStyleTypeInfo", false);
 	LoadGlobalClassInfo(GC.m_paCivilizationInfo, "CIV4CivilizationInfos", "Civilizations", L"/Civ4CivilizationInfos/CivilizationInfos/CivilizationInfo", false, &GC.m_CivilizationInfoReplacements);
 
-	LoadGlobalClassInfo(GC.m_paProjectInfo, "CIV4ProjectInfo", "GameInfo", L"/Civ4ProjectInfo/ProjectInfos/ProjectInfo", false, &GC.m_ProjectInfoReplacements);
+	LoadGlobalClassInfoJson(GC.m_paProjectInfo, "projects");
 
 	OutputDebugString("Pre civ sort\n");
 	std::sort(GC.m_paCivilizationInfo.begin(), GC.m_paCivilizationInfo.end(), cmpInfoByAlphabet);
@@ -956,9 +965,9 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 	GC.doPostLoadCaching();
 
 	// Add TGA space fillers
-	CvJsonReligionInfo* pReligionBogus = new CvJsonReligionInfo();
+	CvReligionInfo* pReligionBogus = new CvReligionInfo();
 	aReligionInfos.insert(aReligionInfos.end(), GC.getGAMEFONT_TGA_RELIGIONS() - aReligionInfos.size(), pReligionBogus);
-	CvJsonCorporationInfo* pCorporationBogus = new CvJsonCorporationInfo();
+	CvCorporationInfo* pCorporationBogus = new CvCorporationInfo();
 	aCorporationInfos.insert(aCorporationInfos.end(), GC.getGAMEFONT_TGA_CORPORATIONS() - aCorporationInfos.size(), pCorporationBogus);
 
 	OutputDebugString("Load globals complete\n");
@@ -1018,7 +1027,7 @@ bool CvXMLLoadUtility::LoadPostMenuGlobals()
 
 	UpdateProgressCB("Global Process");
 
-	LoadGlobalClassInfo(GC.m_paProcessInfo, "CIV4ProcessInfo", "GameInfo", L"/Civ4ProcessInfo/ProcessInfos/ProcessInfo", false, &GC.m_ProcessInfoReplacements);
+	LoadGlobalClassInfoJson(GC.m_paProcessInfo, "processes");
 
 	UpdateProgressCB("Global Emphasize");
 
@@ -1279,7 +1288,7 @@ void CvXMLLoadUtility::SetGlobalActionInfo()
 		pActionInfo->setOriginalIndex(i);
 		pActionInfo->setSubType(ACTIONSUBTYPE_UNIT);
 
-		CvJsonUnitInfo& unit = GC.getUnitInfo(static_cast<UnitTypes>(i));
+		CvUnitInfo& unit = GC.getUnitInfo(static_cast<UnitTypes>(i));
 
 		unit.setCommandType(GetInfoClass("COMMAND_UPGRADE"));
 		unit.setActionInfoIndex(iActionInfoIndex++);
@@ -1295,7 +1304,7 @@ void CvXMLLoadUtility::SetGlobalActionInfo()
 		pActionInfo->setOriginalIndex(i);
 		pActionInfo->setSubType(ACTIONSUBTYPE_SPECIALIST);
 
-		CvJsonSpecialistInfo& specialist = GC.getSpecialistInfo(static_cast<SpecialistTypes>(i));
+		CvSpecialistInfo& specialist = GC.getSpecialistInfo(static_cast<SpecialistTypes>(i));
 
 		specialist.setMissionType(GetInfoClass("MISSION_JOIN"));
 		specialist.setActionInfoIndex(iActionInfoIndex++);
@@ -1311,7 +1320,7 @@ void CvXMLLoadUtility::SetGlobalActionInfo()
 		pActionInfo->setOriginalIndex(i);
 		pActionInfo->setSubType(ACTIONSUBTYPE_RELIGION);
 
-		CvJsonReligionInfo& religion = GC.getReligionInfo(static_cast<ReligionTypes>(i));
+		CvReligionInfo& religion = GC.getReligionInfo(static_cast<ReligionTypes>(i));
 
 		religion.setMissionType(GetInfoClass("MISSION_SPREAD"));
 		religion.setActionInfoIndex(iActionInfoIndex++);
@@ -1327,7 +1336,7 @@ void CvXMLLoadUtility::SetGlobalActionInfo()
 		pActionInfo->setOriginalIndex(i);
 		pActionInfo->setSubType(ACTIONSUBTYPE_CORPORATION);
 
-		CvJsonCorporationInfo& corp = GC.getCorporationInfo(static_cast<CorporationTypes>(i));
+		CvCorporationInfo& corp = GC.getCorporationInfo(static_cast<CorporationTypes>(i));
 
 		corp.setMissionType(GetInfoClass("MISSION_SPREAD_CORPORATION"));
 		corp.setActionInfoIndex(iActionInfoIndex++);
@@ -1343,7 +1352,7 @@ void CvXMLLoadUtility::SetGlobalActionInfo()
 		pActionInfo->setOriginalIndex(i);
 		pActionInfo->setSubType(ACTIONSUBTYPE_BUILDING);
 
-		CvJsonBuildingInfo& building = GC.getBuildingInfo(static_cast<BuildingTypes>(i));
+		CvBuildingInfo& building = GC.getBuildingInfo(static_cast<BuildingTypes>(i));
 
 		building.setMissionType(GetInfoClass("MISSION_CONSTRUCT"));
 		building.setActionInfoIndex(iActionInfoIndex++);
@@ -1358,7 +1367,7 @@ void CvXMLLoadUtility::SetGlobalActionInfo()
 		pActionInfo->setOriginalIndex(i);
 		pActionInfo->setSubType(ACTIONSUBTYPE_HERITAGE);
 
-		CvJsonHeritageInfo& heritage = GC.getHeritageInfo(static_cast<HeritageTypes>(i));
+		CvHeritageInfo& heritage = GC.getHeritageInfo(static_cast<HeritageTypes>(i));
 
 		heritage.setMissionType(GetInfoClass("MISSION_HERITAGE"));
 		heritage.setActionInfoIndex(iActionInfoIndex++);
@@ -1406,7 +1415,7 @@ void CvXMLLoadUtility::SetGlobalActionInfo()
 
 		for (int i = 0; i < iNumPromoInfos; i++)
 		{
-			const CvJsonPromotionInfo& promo = GC.getPromotionInfo((PromotionTypes)i);
+			const CvPromotionInfo& promo = GC.getPromotionInfo((PromotionTypes)i);
 
 			if (promo.isStatus())
 			{
@@ -1418,7 +1427,7 @@ void CvXMLLoadUtility::SetGlobalActionInfo()
 
 		for (int i = 0; i < iNumPromoInfos; i++)
 		{
-			const CvJsonPromotionInfo& promo = GC.getPromotionInfo((PromotionTypes)i);
+			const CvPromotionInfo& promo = GC.getPromotionInfo((PromotionTypes)i);
 
 			if (!promo.isStatus())
 			{
@@ -1439,7 +1448,7 @@ void CvXMLLoadUtility::SetGlobalActionInfo()
 			pActionInfo->setOriginalIndex(piIndexList[piOrderedIndex[i]]);
 			pActionInfo->setSubType(ACTIONSUBTYPE_PROMOTION);
 
-			CvJsonPromotionInfo& promo = GC.getPromotionInfo((PromotionTypes)piIndexList[piOrderedIndex[i]]);
+			CvPromotionInfo& promo = GC.getPromotionInfo((PromotionTypes)piIndexList[piOrderedIndex[i]]);
 
 			if (promo.isStatus())
 			{
@@ -1784,6 +1793,99 @@ void CvXMLLoadUtility::SetDiplomacyInfo(std::vector<CvDiplomacyInfo*>& DiploInfo
 			}
 		} while (TryMoveToXmlNextSibling());
 	}
+}
+
+// ================= #430: JSON-sourced info loading (the replaced-XML shell reads are GONE) =================
+// The 23 cascade-replaced info types load their data from Assets/Data/<folder>/*.json, NOT the archived legacy
+// CIV4<X>Infos.xml. Reading a replaced info's XML into the running game is HARD BANNED (AGENTS.md / DEC-no-xml-into-game):
+// the legacy XMLs are CURATOR INPUT ONLY. This mirrors LoadGlobalClassInfo's enumerate->create->read flow, sourced
+// from JSON: scan the folder, register each entity's type->id, create the poco, and mapFrom() its curated JSON
+// (mapFrom IS the poco's JSON read -- the XML half of CvInfo::read is not used on this path). Foreign keys are
+// wired AFTER loading, in cascadeLoadJson (its reverse-index tail), so a source category loading before its target
+// still drops forward FKs at mapFrom and the tail rebuilds them -- identical timing to the XML load this replaces.
+// Files are SORTED BY TYPE so id assignment is deterministic + machine-independent (MP OOS: every client must agree
+// on the type->id map).
+static void s2sFindJsonFiles(const std::string& dir, std::vector<std::string>& out)
+{
+	const std::string pattern = dir + "\\*";
+	WIN32_FIND_DATAA fd;
+	HANDLE h = FindFirstFileA(pattern.c_str(), &fd);
+	if (h == INVALID_HANDLE_VALUE) return;
+	do
+	{
+		const std::string name = fd.cFileName;
+		if (name == "." || name == "..") continue;
+		const std::string full = dir + "\\" + name;
+		if ((fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0) s2sFindJsonFiles(full, out);
+		else if (name.size() > 5 && name.substr(name.size() - 5) == ".json") out.push_back(full);
+	} while (FindNextFileA(h, &fd) != 0);
+	FindClose(h);
+}
+
+static bool s2sJsonEntityLess(const std::pair<std::string, picojson::value>& a, const std::pair<std::string, picojson::value>& b)
+{
+	return a.first < b.first;
+}
+
+template <class T>
+void CvXMLLoadUtility::LoadGlobalClassInfoJson(std::vector<T*>& aInfos, const char* szDataFolder, bool bSkipComplex)
+{
+	PROFILE_EXTRA_FUNC();
+	const DWORD s2sT0 = GetTickCount();
+	GC.addToInfosVectors(&aInfos, InfoClassTraits<T>::InfoClassEnum);
+
+	std::string base = gDLL->getModName(true);
+	if (!base.empty() && base[base.size() - 1] != '\\' && base[base.size() - 1] != '/') base += "\\";
+	const std::string dir = base + "Assets\\Data\\" + szDataFolder;
+
+	std::vector<std::string> files;
+	s2sFindJsonFiles(dir, files);
+
+	// Parse + collect (type, value); drop non-entities and (for traits) the option-selected complex set.
+	std::vector<std::pair<std::string, picojson::value> > entities;
+	for (size_t i = 0; i < files.size(); ++i)
+	{
+		if (bSkipComplex && files[i].find("\\complex\\") != std::string::npos) continue;
+		std::ifstream f(files[i].c_str(), std::ios::binary);
+		if (!f.is_open()) continue;
+		std::ostringstream ss; ss << f.rdbuf();
+		picojson::value v;
+		if (!picojson::parse(v, ss.str()).empty() || !v.is<picojson::object>()) continue;
+		const picojson::object& o = v.get<picojson::object>();
+		picojson::object::const_iterator t = o.find("type");
+		if (t == o.end() || !t->second.is<std::string>()) continue;
+		entities.push_back(std::make_pair(t->second.get<std::string>(), v));
+	}
+	std::sort(entities.begin(), entities.end(), s2sJsonEntityLess);
+
+	// TWO-PASS load: register EVERY type->id (pass 1), THEN create + mapFrom (pass 2). A mapFrom resolves its FKs
+	// (jsonResolveId -> getInfoTypeForString) at parse time, so it must see EVERY sibling type in this category
+	// ALREADY registered -- regardless of the sorted load order. A single register-then-mapFrom pass silently drops
+	// any same-category FORWARD reference (a naming id that sorts AFTER its owner): getInfoTypeForString returns -1
+	// (bHideAssert -> no Xml_MissingTypes entry) and the ref vanishes. That severed ~47% of unit dormant/replacedBy
+	// edges -- the whole upgrade/dormancy chain (machete->musketman->rifleman->trench_infantry, every trigger sorted
+	// after its owner) -- so no old unit ever went dormant/replaced and the build list showed everything. Same trap
+	// for building->building (ReplacementBuildings), tech->tech, any intra-category edge. id == the array index,
+	// assigned in pass 1 and honored by the pass-2 push order.
+	// DEDUP by type: a type already registered (a trait shared by the simple+complex folders, or a dup within the
+	// folder) keeps its FIRST-loaded object -- skipped in BOTH passes. ALL types must be registered (saves + the
+	// isHas* indices key on them).
+	std::vector<size_t> load;   // entities[] indices newly registered here -- the exact set mapped in pass 2
+	load.reserve(entities.size());
+	for (size_t i = 0; i < entities.size(); ++i)
+	{
+		if (GC.getInfoTypeForString(entities[i].first.c_str(), true) >= 0) continue;   // already registered -- keep the first
+		GC.setInfoTypeFromString(entities[i].first.c_str(), (int)(aInfos.size() + load.size()));
+		load.push_back(i);
+	}
+	for (size_t k = 0; k < load.size(); ++k)
+	{
+		T* pInfo = new T();
+		pInfo->mapFrom(entities[load[k]].second);
+		aInfos.push_back(pInfo);
+	}
+
+	gDLL->logMsg("Loading.log", CvString::format("[JSONLOAD] %-28s loaded=%u ms=%u", szDataFolder, (unsigned)aInfos.size(), (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 }
 
 template <class T>
@@ -2687,14 +2789,14 @@ bool CvXMLLoadUtility::SetModLoadControlInfo(std::vector<CvModLoadControlInfo*>&
 void CvXMLLoadUtility::RemoveTGAFiller()
 {
 	PROFILE_EXTRA_FUNC();
-	std::vector<CvJsonReligionInfo*>& aInfos1 = GC.m_paReligionInfo;
-	std::vector<CvJsonCorporationInfo*>& aInfos2 = GC.m_paCorporationInfo;
+	std::vector<CvReligionInfo*>& aInfos1 = GC.m_paReligionInfo;
+	std::vector<CvCorporationInfo*>& aInfos2 = GC.m_paCorporationInfo;
 	if (aInfos1.size() && aInfos1.size() == GC.getGAMEFONT_TGA_RELIGIONS())
 	{
 		std::sort(aInfos1.begin(), aInfos1.end(), cmpReligionTGA);
 		if (aInfos1.front()->getTGAIndex() == -1)
 		{
-			std::vector<CvJsonReligionInfo*>::iterator it = aInfos1.begin();
+			std::vector<CvReligionInfo*>::iterator it = aInfos1.begin();
 			while (it != aInfos1.end() && (*it)->getTGAIndex() == -1) {it++;}
 			SAFE_DELETE(aInfos1.front())
 			aInfos1.erase(aInfos1.begin(), it);
@@ -2705,7 +2807,7 @@ void CvXMLLoadUtility::RemoveTGAFiller()
 		std::sort(aInfos2.begin(), aInfos2.end(), cmpCorporationTGA);
 		if (aInfos2.front()->getTGAIndex() == -1)
 		{
-			std::vector<CvJsonCorporationInfo*>::iterator it = aInfos2.begin();
+			std::vector<CvCorporationInfo*>::iterator it = aInfos2.begin();
 			while (it != aInfos2.end() && (*it)->getTGAIndex() == -1) {it++;}
 			SAFE_DELETE(aInfos2.front())
 			aInfos2.erase(aInfos2.begin(), it);
