@@ -68,8 +68,10 @@ stands.) **Home:** [AGENTS.md](../../AGENTS.md).
 
 ### DEC-parity
 
-Parity is the only goal — exact match, no tolerance band; a divergence is a data-collection gap, never
-a formula difference. **Home:** [validation.md](../specs/validation.md).
+The COMPLETENESS + ATTRIBUTION bar: every value's sources are fully attributed, with no tolerance band and no agent
+grading of acceptability; a divergence is a data-collection gap (a missing source), never a formula difference to
+tweak away. Parity/shadow as an ACTIVE validation phase is CLOSED ([DEC-verify-in-game-not-reshadow](#dec-verify-in-game-not-reshadow));
+what survives is this completeness bar, now verified live via the endpoints. **Home:** [validation.md](../specs/validation.md).
 
 ### DEC-mirror-then-redesign
 
@@ -168,8 +170,10 @@ spec-fidelity, never by a green shadow. **Home:** [validation.md](../specs/valid
 
 A deposit's condition is expressed as a **PREDICATE** in `enabled`/`disabled`/`requires` (the predicate registry is
 EXTENSIBLE — define new predicates freely); it is NEVER encoded as a bespoke sub-scope MEMBER. Adding a predicate
-*extends* the model; a condition-carrying member *changes the core structure*. **Exception:** golden age
-(`empire.goldenAge`) stays a member-mirror, deferred to post-migration — it is engine-core, not data-defined.
+*extends* the model; a condition-carrying member *changes the core structure*. **Exception:** golden age's YIELD
+EFFECT (`empire.goldenAge`) stays an engine member-mirror PERMANENTLY (owner-ruled engine-core, not data-defined) —
+the effect is a plot base-yield-threshold additive the XML/JSON never modeled. NARROW: only the yield effect is
+carved out; golden-age LENGTH + grant ARE curated JSON (`goldenAge.empire.percent`, `grants.goldenAge`).
 **Home:** [modifier.md §3](../specs/modifier.md), [json.md §3.5](../specs/json.md).
 
 ### DEC-single-implementation
@@ -177,7 +181,8 @@ EXTENSIBLE — define new predicates freely); it is NEVER encoded as a bespoke s
 Every cascade calculation/evaluation exists **exactly once**, as a pure static function exposed on a shared surface —
 a purely-organizational static-methods class (never a namespace: VC7.1/Boost/EXE-ABI name-mangling risk; never
 file-`static`-hidden: the next consumer reimplements it). ONE evaluator (`cascadeEvalCondition`) evaluates all
-conditions/predicates. The legacy shadow is the only sanctioned duplication, scheduled to die at the atomic cutover.
+conditions/predicates. No duplication is sanctioned — the shadow phase, which once sanctioned the cascade running
+alongside legacy, has ended.
 **Home:** [patterns.md § DRY](patterns.md).
 
 ### DEC-json-not-cascade
@@ -217,6 +222,91 @@ outside every percentage modification. Unit movement therefore never dirties ANY
 A whole-entity game-option gate authors as the ENTITY-LEVEL `enabled`/`disabled` condition pair (`"enabled":
 "GAMEOPTION_X"`), evaluated live — never a bespoke section and never smuggled into `requires` (which holds only
 genuine needs). **Home:** [json.md §2](../specs/json.md) (the Applicability row) + [enabler.md §7](../specs/enabler.md).
+
+### DEC-no-rollerskate-evidence
+
+Leave NO evidence of a previous rollerskate — dead / commented-out old code, superseded dual surfaces, transitional
+shims, and `renamed from X` / `was Y` / `(formerly …)` trails are all REMOVED, in CODE as well as docs. Code and docs
+read as if built right the first time. The rule is load-bearing, not tidiness: leftover evidence of the abandoned
+path is exactly what the next agent finds and rollerskates off — it caused much of the drift this project is digging
+out of. The delete-don't-annotate half of [DEC-docs-current-truth](#dec-docs-current-truth) extended to code;
+strengthens [DEC-proper-once](#dec-proper-once). **Home:** [AGENTS.md](../../AGENTS.md) Conventions.
+
+### DEC-no-deferred
+
+Anything marked deferred / parked / not-yet-landed / blocked / post-cutover / "later" / "acceptable for now" / TODO /
+pending is a FAILURE to fix, not a backlog item — the word agents hide behind to skip hard work hoping it lacks
+impact. The general form of [DEC-data-first](#dec-data-first) (which bans it for data specifically), now extended to
+ALL work. The only exceptions are owner-ruled PERMANENT design carve-outs, recorded as such (e.g. the golden-age
+yield-effect member-mirror; Python-authoritative gameplay staying Python). **Home:** [AGENTS.md](../../AGENTS.md) Conventions.
+
+### DEC-universal-yield
+
+ANY number modified by game mechanics is a yield — base yields, commerce, free XP, free specialists, properties, and
+any other — carried by ONE machine in ONE uniform package format (Σflat / Σpercent per channel per scope). A number
+computed by a legacy ad-hoc path OUTSIDE the machine is a shortcut/failure. The **OUTPUT-SEAM**: where the engine does
+placement/application (free-specialist assignment; the golden-age plot-base-yield-threshold "+1"), the cascade owns
+the authored INPUTS + the OUTPUT yields — both live in the machine — and ONLY the middle mechanism is engine-owned.
+**Home:** [modifier.md](../specs/modifier.md).
+
+### DEC-done-is-observable
+
+Done = the effect is observable in the RUNNING GAME via an endpoint poll — never "the code path exists" or "the data
+loads." "Straight up missing" means it does not show in-game even if it loads (the break is downstream, in
+apply/display). Every work item's acceptance is an endpoint-observable pass/fail on a real save, a real turn — the
+strict complement of [DEC-verify-in-game-not-reshadow](#dec-verify-in-game-not-reshadow). Programmatic already: the
+`/computed` oracle endpoints expose the real engine values as game-thread snapshots (a blind value is EMITTED first,
+step one of its fix); StoneBase's frontend renders them alongside the calc-counts. **Home:** [validation.md](../specs/validation.md).
+
+### DEC-calc-count-gate
+
+Every calculation logs its `(scope, channel)` (scope ∈ world/team/empire/area/city/plot/building/unit/specialist;
+channel = every modifiable number). The per-turn count is a standing acceptance gate + regression tripwire: >50k/turn
+is near-certainly a failure (a blanket recompute), a quiet turn approaches zero, steady-state tracks EVENT volume
+(thousands) not entity count (millions). Exposed live via the StoneBase performance dashboard. **Home:** [observability.md](../reference/observability.md).
+
+### DEC-cy-not-fixed
+
+The `Cy*` info-binding contract (the boost::python `.def` surface) is NOT a fixed contract to preserve; freezing it
+forced the JSON pocos to mirror the entire legacy `CvXInfo` field contract (a stub per legacy field). Redesign the
+boundary around the cascade/JSON model + rewire the Python info-CONSUMERS; fix the stub-fed wrong values. DISTINCT
+from the computed-getter flip strategy (which keeps those contracts and rewires bodies, not call sites). Python
+gameplay stays Python. **Home:** [cutover.md](../plans/structural-cleanup/cutover.md).
+
+### DEC-no-self-heal
+
+Self-heal is NOT a backstop the cascade keeps. No blanket per-turn/per-slice rebuild (`playerSliceRebuild`, the epoch
+bump, the turn-roll self-heal) papers over a missed invalidation — those blankets are REMOVED, not graded as
+"acceptable interims." Correctness comes ONLY from complete, targeted, spine-routed per-source-mask invalidation; a
+missed invalidation must surface as a live divergence, never be silently rebuilt away. Sharpens the CAPSTONE RULE
+(LOAD is the only full pass). **Home:** [state-repositories.md](state-repositories.md).
+
+### DEC-spine-reseed
+
+On load, the cascade is built from events that come from **inside the save read itself** — reading a fact off the
+stream is what fires its DOMAIN event (`CvGame::read` → `CvPlayer`/`CvCity`/`CvTeam`/`CvPlot::read`); the north-star is
+the event SETTING the state (read → emit → populate), object-populated-by-events being a known step-too-far for now.
+It is NOT a separate post-deserialization pass that fabricates events by walking already-populated objects — that
+pseudo-emit is banned ([superseded-ideas](superseded-ideas.md) #13); no clean middle exists, so the event-sourced
+read is built as its own step. The load lifecycle is bracketed by `GAME_LOAD_STARTED` / `GAME_LOAD_FINISHED` spine
+events; result-producers (grants) rely PURELY on the spine and suppress between them (a grant is a RESULT of a genuine
+in-play acquisition; a load is not one), while the cache-build consumer stays load-active. New game builds the same
+way (real init fires the same events, grants active). **Status: not built** — the accepted design, the next build.
+**Home:** [event-spine.md](../specs/event-spine.md).
+
+### DEC-verify-in-game-not-reshadow
+
+Parity + shadow are CLOSED — their job is FINISHED and they are NOT to be re-run, re-invoked, or used to frame any
+remaining work. The confirmation already exists and is sufficient: StoneBase strongly verified the event-spine
+STRUCTURE and the shadow strongly verified the CALCULATIONS reach the right numbers — the design is proven
+achievable. The original `readJson`-direct shadow read JSON STRAIGHT, bypassing the loaded `CvJson<X>Info` objects;
+that bypass was itself a rollerskate and must NOT be repeated. ⛔ Do not re-shadow and do not re-frame work as
+"parity"/"shadow": that framing sends agents rollerskating back into offline validation instead of building the real
+info-object-backed runtime. Remaining verification is the LIVE game ONLY — manifestation via the endpoints
+([DEC-done-is-observable](#dec-done-is-observable)) + the per-turn `(scope,channel)` calc-count gate. StoneBase itself
+is repurposed: PROMOTED from offline parity oracle to the USER-VISIBLE PERFORMANCE LAYER (the live
+`(scope,channel)`/turn-time dashboard — Razor + SignalR); it MAY still spot-verify parity against known-good as a
+sanity check, but that is not the migration's validation path. **Home:** [validation.md](../specs/validation.md).
 
 ### DEC-red-ratchet
 

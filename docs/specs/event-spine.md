@@ -33,20 +33,72 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
 [modifier](modifier.md) → [enabler](enabler.md). *(The tally is a read-only accessor, not a step on the spine.)*
 
 ## The C++ shape (`CvEventSpine.{h,cpp}`)
-- **`CvCascadeEvent`** is a POD with **two payload modes**: DOMAIN (`iType`/`iA`/`iB`/`iC`) vs logging
-  (`iDomainTag`/`iEventId`/`aFields[]`, `SPINE_MAX_FIELDS = 16`). A field is `{int eTag; union{int i; float f; char* s; wchar_t* w;}}` (8B/POD).
-  The `iType`/`iA`/`iB`/`iC` mode is for **`DOMAIN`** events; the `aFields[]` mode is for **`DIAGNOSTIC`/`TRACE`** (logging) events.
+- **`CvSpineEvent`** is a POD carrying **two payloads, not two exclusive modes**: the raw **DOMAIN state ints**
+  (`iType`/`iA`/`iB`/`iC` + `iSrcLoc` = WHERE), which `grants` and the cache-invalidation consumer read; **and** the
+  **render payload** (`iDomainTag`/`iEventId`/`aFields[]`, `SPINE_MAX_FIELDS = 16`; a field is `{int eTag; union{int
+  i; float f; char* s; wchar_t* w;}}`, 8B/POD) that the one logging path formats. A **`DOMAIN`** event carries BOTH —
+  its state ints for the machine consumers **and** a domain tag + fields so it renders through the same registered
+  path as everything else; a **`DIAGNOSTIC`/`TRACE`** event carries only the render payload. There is no
+  inline-formatted event: the spine's own DOMAIN events register under `SD_SPINE` exactly like an AI domain.
 - **Per-domain isolation:** a domain registers via `spineRegisterDomain` (a line-prefix fn + a field-info fn with
-  typed index kinds `SFT_BUILDING`/`UNIT`/`BONUS`/…); `cascadeRenderEventLine` formats. **Zero global field registry,
-  zero shared edits per domain** — adding a domain touches only that domain.
+  typed index kinds `SFT_BUILDING`/`UNIT`/`BONUS`/…); `spineRenderEventLine` formats. **Zero global field registry,
+  zero shared edits per domain** — adding a domain touches only that domain. **The logging consumer is exactly
+  `gate(iLevel) → spineRenderEventLine → write`** — no per-event branch, no inline `sprintf`; a line's identity is
+  entirely its registered prefix + fields.
 - **Interest guard:** an `m_iInterestMask` bit-test gates dispatch, so the verbose call-site `if(logLevel)` gates
   vanish structurally.
 - **Allocation-free hot path** (stack-buffer formatting, a bounded `/events` queue) — 32-bit ceiling discipline.
-- **Name-change event** (`CASCADE_EVT_NAME_CHANGE`): the four set-name choke points emit `(NameChangeKind, owner,
-  entity_id)` — **string-free** (carry the ID, let the consumer resolve the name); logging resolves it live.
-- **Build status:** spine = DONE; logging = registered first; the **tally** = a read-only accessor (buildings + units),
-  NOT a spine consumer (`Cascade/CvCascadeTally.{h,cpp}`); grants = resolver built, the apply-loop pending
-  ([grants-machine.md](../plans/structural-cleanup/grants-machine.md)).
+- **Name-change event** (`SEVT_NAME_CHANGE`): the four set-name choke points emit `(NameChangeKind, owner,
+  entity_id)` in the DOMAIN ints (an out-of-process consumer keys on those). Because the logging consumer is generic,
+  the `emitNameChange` endpoint resolves the NEW name + kind LIVE and passes them as render fields (`SFT_STR` kind +
+  `SFT_WSTR` name — the emit render is synchronous on the game thread, so the borrowed pointers outlive it). This is
+  the one place a spine endpoint does resolution at emit rather than deferring to the gated render — justified because
+  a rename is rare (four low-frequency choke points), not a hot-path firehose.
+- **Build status:** the spine primitive + KIND firewall + `IEventConsumer` = DONE; the **DOMAIN emit surface**
+  (source-carrying endpoints + every mutation choke point wired) = DONE, incremental emits verified firing live from
+  **real in-play state-changes**. The **load reseed is NOT built** — the accepted design is the read-driven
+  event-sourced load (below), the next build. The **load-lifecycle bracket** (`GAME_LOAD_STARTED` /
+  `GAME_LOAD_FINISHED`) + the result-producer gate = not built. Logging = registered first; the **tally** = a
+  read-only accessor (buildings + units), NOT a spine consumer (`Cascade/CvCascadeTally.{h,cpp}`); grants = resolver
+  built, the apply-loop not built ([grants-machine.md](../plans/structural-cleanup/grants-machine.md)); the
+  **cache-build/invalidation consumer** = not built (it READS this surface).
+
+## The DOMAIN emit surface + the load RESEED
+
+**The spine is the SINGLE place a state change is announced.** Every game state change emits ONE source-carrying
+DOMAIN event through a clean endpoint (`emitBuildingChanged`, `emitTechChanged`, `emitImprovementChanged`,
+`emitCityOwnerChanged`, …); the event names WHAT (`iType`), WHO (`iC`, owner/triggering player), and WHERE
+(`iSrcLoc` = cityId | plotId | -1). `emit()` dispatches **synchronously** — it is not an async listener bus; it calls
+each interested consumer's `onEvent` inline at the mutation site. So nothing else in the engine detects changes: the
+hand-wired per-site invalidation is retired in favour of this one surface.
+
+**Events are FACTS, not causal steps.** "This building is here", "this tech is held" — order-independent,
+prerequisite-free. Prerequisites are evaluated ONLY by the enabler (`canConstruct`/`canTrain`/`canResearch` — the
+"*can* I?" question), never by a has-been-done fact; so the emit stream carries no ordering and no prereq logic.
+Corollary — **yield is a computed RESULT, never an event**: emit the CAUSES (improvement/terrain/feature/route
+changed), and a consumer computes the yield downstream.
+
+**The load RESEED — event-source the save READ (NOT yet built).** A loaded save deserializes state directly into the
+`CvCity`/`CvPlot` objects — the incremental setters never fire, so the **cascade** (its value packages AND its enabler
+side) has nothing to build from. The proper reseed fixes this **from inside the save read itself**: reading a fact off
+the stream is what fires its DOMAIN event (`CvGame::read` → `CvPlayer::read` → `CvCity::read` / `CvTeam::read` /
+`CvPlot::read`). The north-star is that the event itself SETS the state — read → emit → populate, one mechanism for the
+game object AND the cascade; the object-populated-by-events end is a known **step too far** for now, but the events
+must still come from the genuine read.
+
+⛔ What the reseed is **NOT**: a separate pass that walks already-deserialized objects and **fabricates** events from
+their populated state (a "for each building present, emit built"). That pseudo-emit feeds the cascade reconstructed
+lies and trains the next agent to reconstruct more — it is banned
+([superseded-ideas](../architecture/superseded-ideas.md)). There is no clean middle between it and the real
+event-sourced read, so the read-driven reseed is built as its own step, never shimmed.
+
+**The load lifecycle is bracketed by two spine events — `GAME_LOAD_STARTED` / `GAME_LOAD_FINISHED`.** Result-producers
+(grants, and any future on-event side-effect machinery) rely **purely on the spine**: they see `LOAD_STARTED` →
+suppress, `LOAD_FINISHED` → resume, so nothing is granted during reconstruction (a grant is a RESULT of a genuine
+in-play acquisition, and a load is not an acquisition). The **cache-build consumer** is the load-active one — it
+consumes the in-read events to build the cascade. New game builds the same way: its real init fires the same events,
+with grants active because those are genuine acquisitions. Ledgered as
+[DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed).
 
 ## See also
 - [logging.md](logging.md) — the broad consumer (what to log). [tally.md](tally.md) — the read-only count accessor

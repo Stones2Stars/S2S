@@ -1281,7 +1281,7 @@ void CvCity::doTurn()
 			logCityAI(1, "[CIT/proplevel] turn=%d city=%S owner=%d prop=%s val=%d change=%d",
 				iTurn, getName().GetCString(), (int)getOwner(), GC.getPropertyInfo(eProp).getType(),
 				pProps->getValueByProperty(eProp), pProps->getChangeByProperty(eProp));
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PROPLEVEL, 1)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PROPLEVEL, 1)
 				.addI(CITF_turn, iTurn).addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
 				.addI(CITF_prop, (int)eProp)
 				.addI(CITF_val, pProps->getValueByProperty(eProp))
@@ -4616,6 +4616,9 @@ void CvCity::processBonus(BonusTypes eBonus, int iChange)
 			}
 		}
 	}
+
+	// #430 event spine: announce the bonus change (iChange is the applied delta).
+	emitBonusChanged(getID(), getOwner(), (int)eBonus, iChange);
 }
 
 
@@ -5246,6 +5249,9 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	}
 	setMaintenanceDirty(true);
 	setLayoutDirty(true);
+
+	// #430 event spine: announce the building state change (iChange is asserted +1/-1 above).
+	emitBuildingChanged(getID(), getOwner(), (int)eBuilding, iChange);
 }
 
 
@@ -7035,6 +7041,9 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 	// dirtied (the wb pop terms fold LIVE pop at read; end-turn cadence).
 	CascadeAccumulator::dirtyCity(this, CPK_YEXTRA | CPK_CBASE | CPK_FRONT_PP);
 	CascadeAccumulator::cityHaveChanged(this, CascadeAccumulator::CASC_HAVE_POP);
+
+	// #430 event spine: announce the population change (past the no-change guard above).
+	emitPopulationChanged(getID(), getOwner(), iNewValue);
 
 	FASSERT_NOT_NEGATIVE(iNewValue);
 
@@ -10296,6 +10305,8 @@ void CvCity::changePowerCount(int iChange)
 
 		m_iPowerCount += iChange;
 		FASSERT_NOT_NEGATIVE(getPowerCount());
+		// #430 event spine: announce the power change (inside the iChange != 0 guard).
+		emitPowerChanged(getID(), getOwner(), iChange);
 		// cppcheck-suppress knownConditionTrueFalse
 		if (wasPower != isPower())
 		{
@@ -13608,7 +13619,7 @@ void CvCity::setName(const wchar_t* szNewValue, bool bFound)
 		if (GET_PLAYER(getOwner()).isCityNameValid(szName, false))
 		{
 			m_szName = szName;
-			cascadeEmitNameChange(NAMECHANGE_CITY, getOwner(), getID());
+			emitNameChange(NAMECHANGE_CITY, getOwner(), getID());
 
 			setInfoDirty(true);
 
@@ -14273,6 +14284,8 @@ void CvCity::setSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 		m_paiSpecialistCount[eIndex] = iNewValue;
 		FASSERT_NOT_NEGATIVE(getSpecialistCount(eIndex));
 		CascadeAccumulator::dirtyCity(this, CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC);   // #430: specialist packages (incl. the gpBase specialist scalar); WB deliberately NOT dirtied (end-turn cadence -- governor churn is automation-frequency)
+		// #430 event spine: announce the specialist change (delta from the captured old count; inside the change guard).
+		emitSpecialistChanged(getID(), getOwner(), (int)eIndex, iNewValue - iOldValue);
 
 		changeSpecialistPopulation(iNewValue - iOldValue);
 		processSpecialist(eIndex, (iNewValue - iOldValue));
@@ -15424,6 +15437,8 @@ void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce
 		// CPK_FRONTIER; CPK_FRONT_PP kept broad (rule 3, as setPopulation).
 		CascadeAccumulator::dirtyCity(this, CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT | CPK_FRONT_PP);
 		CascadeAccumulator::cityHaveChanged(this, CascadeAccumulator::CASC_HAVE_RELIGION);   // operating buildings: the targeted active-set ripple rides here (onHaveChangedActive)
+		// #430 event spine: announce the religion change (past the isHasReligion != bNewValue guard).
+		emitReligionChanged(getID(), getOwner(), (int)eIndex, bNewValue);
 
 		for (int iVoteSource = 0; iVoteSource < GC.getNumVoteSourceInfos(); ++iVoteSource)
 		{
@@ -15658,6 +15673,9 @@ void CvCity::setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAn
 		}
 
 		m_pabHasCorporation[eIndex] = bNewValue;
+		// #430 event spine: announce the corporation change (after the field commit; the early-return HQ-replace
+		// path commits this city's corp through a nested setHasCorporation that emits on its own).
+		emitCorporationChanged(getID(), getOwner(), (int)eIndex, bNewValue);
 
 		GET_PLAYER(getOwner()).changeHasCorporationCount(eIndex, ((isHasCorporation(eIndex)) ? 1 : -1));
 
@@ -15980,7 +15998,7 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 					// same dog/guard/healer; alreadyQueued shows how deep the pile already is.
 					logCityAI(2, "[CIT/push/reject] city=%S owner=%d UNIT %S alreadyQueued=%d reason=spamGuard",
 						getName().GetCString(), (int)getOwner(), GC.getUnitInfo(unitType).getDescription(), alreadyQueued);
-					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PUSH_REJECT_UNIT, 2)
+					eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PUSH_REJECT_UNIT, 2)
 						.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
 						.addI(CITF_unitType, (int)unitType).addI(CITF_alreadyQueued, alreadyQueued));
 					return;
@@ -16016,7 +16034,7 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 					// [CIT/push/reject] -- duplicate-building guard blocked re-queuing this building.
 					logCityAI(2, "[CIT/push/reject] city=%S owner=%d BUILDING %S alreadyQueued=%d reason=dupGuard",
 						getName().GetCString(), (int)getOwner(), GC.getBuildingInfo(buildingType).getDescription(), alreadyQueued);
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PUSH_REJECT_BUILDING, 2)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PUSH_REJECT_BUILDING, 2)
 					.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
 					.addI(CITF_building, (int)buildingType).addI(CITF_alreadyQueued, alreadyQueued));
 					return;
@@ -16107,7 +16125,7 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 		case ORDER_LIST:      iCitPushEvent = CIT_PUSH_LIST;      break;
 		default: break;
 		}
-		CvCascadeEvent ePushEv(EVENTKIND_DIAGNOSTIC, SD_CITY, iCitPushEvent, 2);
+		CvSpineEvent ePushEv(EVENTKIND_DIAGNOSTIC, SD_CITY, iCitPushEvent, 2);
 		ePushEv.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
 			.addI(CITF_append, bAppend ? 1 : 0).addI(CITF_force, bForce ? 1 : 0);
 		eventSpine().emit(ePushEv);
@@ -16259,7 +16277,7 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 			break;
 		default: break;
 		}
-		CvCascadeEvent eCancelEv(EVENTKIND_DIAGNOSTIC, SD_CITY, iCancelEvent, 1);
+		CvSpineEvent eCancelEv(EVENTKIND_DIAGNOSTIC, SD_CITY, iCancelEvent, 1);
 		eCancelEv.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner());
 		if (iTypeArg >= 0)
 		{
@@ -16340,7 +16358,7 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 					getName().GetCString(), (int)getOwner(), GC.getUnitInfo(eTrainUnit).getDescription(),
 					(int)eTrainAIUnit, owner.getUnitCount(eTrainUnit), owner.AI_getNumAIUnits(eTrainAIUnit),
 					iOverflow, m_iLostProductionModified);
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PRODUCED_UNIT, 1)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PRODUCED_UNIT, 1)
 					.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
 					.addI(CITF_unitType, (int)eTrainUnit).addI(CITF_unitAI, (int)eTrainAIUnit)
 					.addI(CITF_ownerHas, owner.getUnitCount(eTrainUnit))
@@ -16489,7 +16507,7 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 				logCityAI(1, "[CIT/produced] city=%S owner=%d BUILDING %S overflow=%d lost=%d",
 					getName().GetCString(), (int)getOwner(), GC.getBuildingInfo(eConstructBuilding).getDescription(),
 					iOverflow, m_iLostProductionModified);
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PRODUCED_BUILDING, 1)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PRODUCED_BUILDING, 1)
 					.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
 					.addI(CITF_building, (int)eConstructBuilding)
 					.addI(CITF_overflow, iOverflow).addI(CITF_lost, m_iLostProductionModified));
@@ -16534,7 +16552,7 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 				// [CIT/produced] -- project completion (wonder/spaceship part/etc.).
 				logCityAI(1, "[CIT/produced] city=%S owner=%d PROJECT %S",
 					getName().GetCString(), (int)getOwner(), GC.getProjectInfo(eCreateProject).getDescription());
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PRODUCED_PROJECT, 1)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PRODUCED_PROJECT, 1)
 					.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
 					.addI(CITF_project, (int)eCreateProject));
 
@@ -17086,7 +17104,7 @@ void CvCity::doProduction(bool bAllowNoProduction)
 			{
 				logCityAI(1, "[CIT/spin] city=%S owner=%d reason=produceLoopCap",
 					getName().GetCString(), (int)getOwner());
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_SPIN_LOOP_CAP, 1)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_SPIN_LOOP_CAP, 1)
 					.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner()));
 				break;
 			}
@@ -17107,7 +17125,7 @@ void CvCity::doProduction(bool bAllowNoProduction)
 					AI_setChooseProductionDirty(true);
 					logCityAI(1, "[CIT/spin] city=%S owner=%d reason=noProductionChosen",
 						getName().GetCString(), (int)getOwner());
-					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_SPIN_NO_PROD, 1)
+					eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_SPIN_NO_PROD, 1)
 						.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner()));
 					break;
 				}
@@ -17138,7 +17156,7 @@ void CvCity::doProduction(bool bAllowNoProduction)
 			// overflow, or mis-sequenced builds). Pairs with [CIT/produced] lost=.
 			logCityAI(1, "[CIT/waste] city=%S owner=%d lostProd=%d -> gold=%d",
 				getName().GetCString(), (int)getOwner(), m_iLostProductionModified, m_iGoldFromLostProduction);
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_WASTE, 1)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_WASTE, 1)
 				.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
 				.addI(CITF_lostProd, m_iLostProductionModified).addI(CITF_gold, m_iGoldFromLostProduction));
 

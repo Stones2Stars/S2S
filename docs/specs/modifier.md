@@ -44,6 +44,19 @@ tech deposits down onto everything below it (cheaper/better); the lower thing ne
 gate. (c) **info DATA vs engine MACHINERY is a hard boundary** — the JSON carries only values + relationships;
 the producers, evaluators, and tally that consume them are engine-side, so authoring stays declarative.
 
+**Every modifiable number is a yield.** ANY number game mechanics modify — base yields, commerce, free XP, free
+specialists, property magnitudes, combat percents, heal rates — is a channel in this ONE machine, carried in the ONE
+uniform package format (Σflat / Σpercent per channel per scope; the unit is part of the slot key). A number still
+computed by a legacy ad-hoc path outside the machine is a shortcut to fold in
+([DEC-universal-yield](../architecture/decisions.md#dec-universal-yield)).
+
+**The output-seam.** Where the engine performs placement/application, the machine owns the two ends and the engine
+the middle: (1) authored INPUTS are source-centric deposits (a package); (2) placement/application is engine
+infrastructure (free-specialist assignment; the golden-age plot-base-yield-threshold "+1"), not modeled; (3) the
+OUTPUT yields flow back as a package, consumed exactly like plot yields. Free specialists (amount + forced type →
+deposits; engine places; output yields = package) and golden age (length + grant = JSON inputs; plot-threshold
+effect = engine middle; extra plot yield = output package) are the exemplars.
+
 ---
 
 ## 2. The combine arithmetic
@@ -74,10 +87,12 @@ slot does pure integer math and never sees the human boundary.
 > ever be needed, it applies **here, inside the isolated plot calc** — **never** in the city `(100+Σpercent)` stack,
 > which only ever scales the already-summed base. Consequence: a `basePlotYield` divergence is *necessarily* a per-plot
 > **flat** miscount (missing or double-counted), because no city-level percentage exists that could move a single plot.
-
-> **Parity is the bar ([DEC-parity]).** Multiplier deposits are treated as identity on the yield/commerce channels —
-> no source authors one, so the cascade is additive, exactly matching legacy. Full parity discipline (the shadow
-> phase itself has ended): [validation](validation.md).
+>
+> **Completeness is the bar ([DEC-represent-dont-fit](../architecture/decisions.md#dec-represent-dont-fit)).**
+> Multiplier deposits are treated as identity on the yield/commerce channels — no source authors one, so the cascade
+> is additive, exactly matching legacy. Live acceptance is done-is-observable
+> ([DEC-done-is-observable](../architecture/decisions.md#dec-done-is-observable)) + the `(scope,channel)` calc-count
+> gate: [validation](validation.md).
 
 **Three non-additive combine modes, declared as FAMILY metadata (never per-deposit):** a `min` member that floors
 the combined total (e.g. `defense`); `combine: max|min` for worst/best-across-sources (anarchy turns,
@@ -172,14 +187,14 @@ clamp(unhappy − happy, 0, pop)`. The channel oracle is **`/computed/cities/wel
   is deliberately dropped from the data, so the engine's `improvementGood/Bad` term is an **intentional
   divergence** — attributed via the oracle's `improvementGood100/Bad100` fields, shown, never chased
   ([validation](validation.md) intentional-model-change class); the term dies at the channel's legacy cut.
-  **Celebrity happiness** is an INPUT until the `skills.celebrity` unit-scan port (the ⏳ post-migration CvCity
-  scan, data-migration-remaining.md).
+  **Celebrity happiness** is currently an INPUT; the `skills.celebrity` unit-scan port (the CvCity scan,
+  data-migration-remaining.md) is PENDING migration work to finish it.
 - **RAW-STATE INPUTS (folded, never derived)** — the runtime timers/counters no deposit produces: the **anger
   percents** (overcrowding = f(pop), noMilitary, foreign-culture, enemy-religion, hurry/conscript/defy/
   revRequest timers, war-weariness, revIndex, civic anger%), the **espionage counters**, **event anger**
   (one-shot event state), **tax-rate unhappiness**, **foreign-culture anger**, **landmark anger** (option-gated —
   ⚖ KEEP through the migration: the existing engine implementation stays, *"straight up state derived from the
-  plot in question"*; the landmark data pass is POST-migration, ticket #448),
+  plot in question"*; the landmark data pass is a sanctioned separate data pass (#448); the engine impl KEEPS),
   **city-over-limit**, and **vassal** terms. These are saved/derived-from-saved state (legitimate inputs per the
   [http-endpoints](http-endpoints.md) hard rule) — the calc folds them at the level combine exactly where the
   engine does.
@@ -247,11 +262,11 @@ enabler resolves that shape to *availability* ("can I?"), the modifier resolves 
 > structure* — the kraken way, and the exact shape (`byEra`, `empire.capital`, `perMilitaryUnit`) agents keep
 > re-inventing. Retire any such member to a predicate-gated deposit.
 >
-> **⏳ Exception — golden age.** Golden-age yield/commerce is applied by the **core
+> **Exception — golden age.** Golden-age yield/commerce is applied by the **core
 > engine** and is **not defined as data anywhere** — modelling it via `IS_GOLDEN_AGE` would mean authoring it
-> virtually everywhere it fires. So `empire.goldenAge` **stays a member-mirror for now**, a deferred special case
-> (NOT a retire-now invention). The `IS_GOLDEN_AGE` predicate exists ([json](json.md) §3.5) and is **reserved for
-> when golden age is extracted from the engine core and moved where it belongs — post-migration** ([golden-age](../reference/golden-age.md)).
+> virtually everywhere it fires. So `empire.goldenAge` is a **PERMANENT engine member-mirror (effect-only)** (NOT a
+> retire-now invention); golden-age **LENGTH + grant ARE curated JSON** (`goldenAge.empire.percent`,
+> `grants.goldenAge`). The `IS_GOLDEN_AGE` predicate exists ([json](json.md) §3.5) ([golden-age](../reference/golden-age.md)).
 
 **But they are SEPARATE FIELDS, not one condition** — because a thing can **require one condition yet gate its
 effect (a buff *or* a nerf) on another**: a Forge `requires` connected iron to *operate*, but its +1 happiness is
@@ -311,7 +326,7 @@ authored shape.
 > is not "simple") nor from file load-order. Using the wrong file silently yields wrong magnitudes. (The enabler is
 > unaffected: it reads trait *presence*, which
 > `/state` already resolves to the active set; only the modifier cascade reads trait *family values*.)
-
+>
 > **⛔ Inverted-onto-a-SHARED-entity boosts stay on the TRAIT, per set — the own-output carve-out.**
 > The [deliveryguy rule](#4-ownership--the-deliveryguy-rule) normally puts a trait's boost of *another* entity's output
 > ON that entity as **own-output** (a trait boosting a Merchant's commerce → on the **specialist**, `enabled:{trait}`).
@@ -325,7 +340,7 @@ authored shape.
 > omits is **0/absent** in the complex, never inherited from base). The cascade reads it from the **active** trait
 > set and applies it × the city's count of that specialist. *(Building/civic specialist boosts have no
 > simple/complex split, so they keep the ordinary own-output inversion onto the specialist.)*
-
+>
 > **⛔ Trait option resolution — the curator translates the CRAZY → sensible; the cascade applies only CLEAN gates
 > (this is the volcano every agent rollerskates into — read it before touching trait values).**
 > Several `GAMEOPTION_LEADER_*` options can be live at once (complex, developing, pure, no-negative, …) and each
@@ -392,6 +407,7 @@ predicate-filtered unit count and targeting `cities`: `happiness.empire.cities.{
 the unit may use the **load/unload** action is `is_cargo_vessel`, and the attack restriction it brings is
 `defend_only` (both skills, [json](json.md) §8). The *amounts* live in the **`cargo`** modifier family (a unit
 self-accumulator, set on the unit or a promotion), with two complementary members:
+
 - **`cargo.space`** — how much the unit **carries** *and what*: `cargo.space.{unit: IS_<domain>, flat: N}` — a
   carrier is `cargo.space.{unit: IS_AIR, flat: N}` (*you can't transport a plane on a landing craft*); an
   unrestricted hold is just `cargo.space.flat`. (From legacy `iCargo` + `DomainCargo`.)
@@ -436,6 +452,7 @@ No bespoke host↔cargo family is needed. The full unit-stat family vocabulary
 ---
 
 ## See also
+
 - [json.md](json.md) — the data this machine reads: the modifier-family address, `flat`/`percent`/`multiplier`
   units, `enabled`/`disabled`/`per` conditioning, `plots`/`units` targets, and the `buildRate` vs `production`
   split (§3, §6).

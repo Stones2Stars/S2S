@@ -1,6 +1,7 @@
 # Cascade engine (#430) — implementation plan
 
 > ## ⛔ THE XML SEAM IS GONE (owner ruling 2026-07-08) — read this before ANY §3 seam line below.
+>
 > The XML info classes are ARCHIVED (`SourceArchive/Infos/`, deliberately removed as a fallback-proof ratchet);
 > HEAD does not compile BY DESIGN until the JsonInfo structure + the full getter wiring land. Every §3/§2 line
 > saying "the XML load stays authoritative until the atomic cutover" is SUPERSEDED — never restore the archive,
@@ -14,15 +15,15 @@
 > owner ruling AND to the live code. (Owner 2026-06-17; this gate is deliberately tested.)
 
 **Status: PROTOTYPE PURGED — restarting on a proper footing.** The first cascade + tally + modifier prototype was
-written, shadowed, and then **removed** (it predated a proper BoolExpr-routed `readJson` and the decision to validate
-via the external StoneBase dry-calc — removal tombstones at `CvGame.cpp:5822`, `CvEventSpine.cpp:301-302`). Rebuilt
-fresh since (this branch): the **event spine** + the **tally** (`CvCascadeTally`, shadow-green) + **`readJson`**
-(`CvCascadeReadJson`, full-coverage parse/survey — but NOT yet mapping JSON→runtime data) + the building/unit count
-`DOMAIN` emits + the legacy `#195` reverse-index overlay. The modifier/enabler/grants machines are NOT built. The DESIGN is
-authoritative in the machine specs — `enabler.md` + `modifier.md` + `tally.md` + `event-spine.md` — and the reference
-IMPLEMENTATION is now **StoneBase** (the .NET dry-calc, parity-validated for city yields + commerce). This doc is the
-engine BUILD plan + the validated demolition map of the **legacy** machinery the cascade replaces; it is **not** a
-status record of built cascade code (there is almost none — see the table).
+written and then **removed** (it predated a proper BoolExpr-routed `readJson` — removal tombstones at `CvGame.cpp:5822`,
+`CvEventSpine.cpp:301-302`). Rebuilt fresh since (this branch): the **event spine** + the **tally** (`CvCascadeTally`) +
+**`readJson`** (`CvCascadeReadJson`, full-coverage parse/survey) + the building/unit count `DOMAIN` emits + the legacy
+`#195` reverse-index overlay. The DESIGN is authoritative in the machine specs — `enabler.md` + `modifier.md` +
+`tally.md` + `event-spine.md`. StoneBase (the .NET cascade) verified the model for city yields + commerce and is now the
+**performance / spec-check layer** ([validation.md](../../specs/validation.md),
+[DEC-verify-in-game-not-reshadow](../../architecture/decisions.md#dec-verify-in-game-not-reshadow)). This doc is the
+engine BUILD plan + the demolition map of the **legacy** machinery the cascade replaces. See the implementation-status
+table below for the built cascade code.
 
 ---
 
@@ -33,7 +34,7 @@ cascade value in a running game, legacy demoted to `*Legacy` oracles.
 
 - **Modifier** — authoritative for every CITY channel: yields, commerce, wellbeing (happy/unhappy/good/badHealth),
   the five scalars (GP-base / GP-mod / defense / maintenance / tradeRoutes), buildRate. **Unbuilt:** the unit plane
-  (unit-stat modifiers). **Properties:** built but shadow-only (`CascadeProperty`, HTTP-diffed, not authoritative).
+  (unit-stat modifiers). **Properties:** built but not yet authoritative (`CascadeProperty`, verified via `/computed`, legacy still drives).
 - **Enabler** — authoritative for all 10 gates. The per-city **active-building set** (`m_operatingBuildings` — which
   buildings are active/non-dormant + the in-vicinity `provides` they supply, the output the modifier reads) is
   **blanket-recomputed**: `CvCity::refreshOperatingBuildings` ignores its mask and rebuilds the whole fixpoint, and six
@@ -45,14 +46,18 @@ cascade value in a running game, legacy demoted to `*Legacy` oracles.
   apply-loop is unbuilt (legacy still applies).
 - **Classification consumption (Gate 3):** capabilities wired (legacy counters cut); `skills` / `tags` / building
   `attributes` / `policies` mapped but unwired.
-- **Phase:** shadow / flipped-getter — legacy retained as dead-code oracles; not post-cutover.
+- **Phase:** flipped-getter — legacy retained as dead-code oracles; not post-cutover.
 
-**The honest #430 roadmap.** Build the cascade FRESH per the specs, porting from the parity-proven StoneBase reference,
-in spec build order: **`readJson` (typed-condition port) + the scope-accumulator substrate → tally → modifier → enabler →
-grants** (§1). Each is interface-bounded and wired at the composition root (§2b). Validation has **two distinct legs,
-never mixed** (§2): the **external StoneBase dry-calc** (offline PARITY oracle — done for yields/commerce) and, per
-machine, an **in-engine SHADOW** (the cascade computed alongside legacy, diffed per-turn via spine `[TAG]` lines — NOT
-a `/shadow/*` endpoint; those were a rollerskating conflation of the two legs and are retired).
+**The honest #430 roadmap.** Build the cascade FRESH per the specs, porting from the StoneBase reference (which verified
+the model), in spec build order: **`readJson` (typed-condition port) + the scope-accumulator substrate → tally →
+modifier → enabler → grants** (§1). Each is interface-bounded and wired at the composition root (§2b). Verification is
+**LIVE in the running game** ([validation.md](../../specs/validation.md),
+[DEC-verify-in-game-not-reshadow](../../architecture/decisions.md#dec-verify-in-game-not-reshadow)): each machine's
+values are observed via the `/computed` oracle on a real save/turn
+([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)), and the per-turn `(scope,channel)`
+calc-count is the standing performance gate ([DEC-calc-count-gate](../../architecture/decisions.md#dec-calc-count-gate)).
+Parity and shadow are CLOSED — StoneBase strongly verified the STRUCTURE and the shadow strongly verified the
+CALCULATIONS; that confirmation is finished and is not re-run.
 
 ---
 
@@ -87,7 +92,7 @@ Per `(family, member, unit, scope)` summed deposits; targets read O(1).
 `effective = (base + Σflat) × (100 + Σpercent)/100 × Π(multiplier/100)` (`modifier.md` §2). The realized per-channel
 yield/commerce RATE has the two-tier BASE/AFTER shape of `modifier.md` §2a. Replaces the CvCity yield/commerce/health/
 happiness/defense/maintenance accumulators + the `process*` apply-loops + the unit extra-stat stack (§4). The StoneBase
-`Calc` packages + `ModifierMath` are the parity-proven blueprint for the C++ port.
+`Calc` packages + `ModifierMath` are the verified blueprint for the C++ port.
 
 ### 3. Enabler — availability, 2-pass
 
@@ -107,43 +112,43 @@ AND-of-ORs mistake `enabler.md` §3.1 warns against.
 prototype purged; this is the first build item — detailed build plan: [`readjson.md`](readjson.md).)**
 
 **Build order: `readJson` + substrate → tally → modifier → enabler → grants.** Each interface-bounded, each deleting
-its slice of the demolition map (§4) as it lands and passes its shadow.
+its slice of the demolition map (§4) as it lands and is verified live in-game.
 
 ---
 
-## 2. DEVELOPMENT STRATEGY — two validation legs, never mixed; the hard JSON switch is LAST
+## 2. DEVELOPMENT STRATEGY — verify LIVE in-game; the hard JSON switch is LAST
 
-The key to building a large atomic replacement safely: **don't build it blind in one shot.** There are **two distinct
-validation legs** (the previous agent collapsed them into one `/shadow/*` endpoint surface — wrong on both axes; that
-surface is retired, `CvHttpServer.cpp:26`):
+The key to building a large atomic replacement safely: **don't build it blind in one shot.** Parity and shadow — the
+two validation legs that got the migration here — are **CLOSED** and are not re-run
+([DEC-verify-in-game-not-reshadow](../../architecture/decisions.md#dec-verify-in-game-not-reshadow)): StoneBase strongly
+verified the STRUCTURE (city yields + commerce, via the `Calc` packages + `ModifierMath`) and the in-engine shadow
+strongly verified the CALCULATIONS. That confirmation is finished and sufficient. **Remaining verification is LIVE in
+the running game** — the retired `/shadow/*` endpoint surface (a rollerskating conflation of the two legs) stays retired
+(`CvHttpServer.cpp:26`).
 
-- **PARITY — external, offline (the StoneBase dry-calc).** A separate process/codebase (`StoneBase`, .NET) rebuilds
-  the cascade from the curated `Assets/Data` JSON + raw `/state` and diffs against the engine's `/computed` oracle. It
-  is the spec's reference implementation and the C++ port's blueprint; **done for city yields + commerce** (the
-  packages + `ModifierMath`). See `validation.md`.
-- **SHADOW — in-engine, live (per machine, as it is ported).** Each rebuilt machine runs **alongside** the legacy
-  machinery behind gated logging (off in normal play), emitting a per-turn cascade-vs-legacy diff as spine `[TAG]`
-  lines (the `event-spine.md`/`logging.md` surface — **not** a `/shadow/*` endpoint, **not** the banned care-scale
-  grading). The legacy stays authoritative until its shadow is **clean (parity)**, then it is cut.
-
+- **How a machine is verified now.** Each rebuilt machine's values are observed via the `/computed` oracle on a real
+  save, a real turn ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)): modifier rates
+  via `/computed/cities/yields` + `/computed/cities/wellbeing`, the enabler gates via `/computed/can*`, the tally via
+  `/computed/tally`. A value not yet on the surface is EMITTED first — step one of its fix. Performance is the second
+  live test: the per-turn `(scope,channel)` calc-count is a standing gate + regression tripwire, rendered on the
+  StoneBase performance dashboard ([DEC-calc-count-gate](../../architecture/decisions.md#dec-calc-count-gate)).
 - **Atomic-deliverable rule:** the DATA cutover stays atomic (one flip at the very end); the ENGINE is developed
-  incrementally and shadow-validated first. The new paths are gated instrumentation until the flip.
-- **Shadow data source = PER MACHINE (corrected 2026-06-29).** The **tally** reads raw object counts
-  (`m_paiBuildingCount`, …) + the spine's `DOMAIN` events — **no JSON** — so it shadows directly against the live
-  objects (apples-to-apples, isolating the count-machine logic; it needs no `readJson`). The **modifier + enabler**
-  read `readJson`'s JSON-parsed structures (they consume the family/tree vocabulary the XML objects don't carry) — and
-  the JSON-vs-XML data equivalence is exactly what the StoneBase dry-calc already proved offline, so this is sound. The
-  XML `read()` path stays authoritative for the EXE-bound accessor surface until the atomic cutover (§3). Build FRESH;
-  actively AVOID `CvInfoUtil`/the old `read()` path (§2b).
-- **Exact parity IS the success metric** ([DEC-parity](../../architecture/decisions.md#dec-parity) /
-  [DEC-mirror-then-redesign](../../architecture/decisions.md#dec-mirror-then-redesign)): the migration MIRRORS the
-  engine exactly. A surviving divergence is a data-collection gap (or a new-side bug), mapped to its named source and
-  closed — never tolerated as a formula difference, never graded on a "care scale" (banned). Per
-  [DEC-no-parity-results-in-docs](../../architecture/decisions.md#dec-no-parity-results-in-docs), divergence NUMBERS
-  live in the run, never in this doc.
+  incrementally, each machine verified live before its legacy is cut. The new paths are gated instrumentation until the flip.
+- **Where each machine reads its inputs.** The **tally** reads raw object counts (`m_paiBuildingCount`, …) + the spine's
+  `DOMAIN` events — **no JSON** (it needs no `readJson`). The **modifier + enabler** read `readJson`'s JSON-parsed
+  structures (the family/tree vocabulary the info objects don't carry). Build FRESH; actively AVOID `CvInfoUtil`/the old
+  `read()` path (§2b). (The XML info classes are ARCHIVED — see the top banner + §3; there is no legacy XML load left to
+  keep authoritative on the cut surfaces.)
+- **The COMPLETENESS + ATTRIBUTION bar survives parity's retirement** ([DEC-parity](../../architecture/decisions.md#dec-parity) /
+  [DEC-mirror-then-redesign](../../architecture/decisions.md#dec-mirror-then-redesign) /
+  [DEC-represent-dont-fit](../../architecture/decisions.md#dec-represent-dont-fit)): the migration MIRRORS the engine
+  exactly. Every value must be ATTRIBUTED to a named source on both sides; a divergence is your signal that a source the
+  engine uses has NOT yet been found — FIND it, never tolerate it as a formula difference or grade it on a "care scale"
+  (banned). Per [DEC-no-parity-results-in-docs](../../architecture/decisions.md#dec-no-parity-results-in-docs), run
+  numbers stay in the run, never in this doc.
 - **The `readjson.exe` cleartext RENDER is the JSON-INTENT surface** (`Tools/ReadJson/readjson.cpp`): `--render TYPE`
-  states in plain English what an entity's JSON *says* it does. That is the intent; the StoneBase parity + the in-engine
-  shadow are what the engine *actually does*. A render/behaviour divergence is a triage item.
+  states in plain English what an entity's JSON *says* it does. That is the intent; the live `/computed` values are what
+  the engine *actually does*. A render/behaviour divergence is a triage item.
 - **The hard switch (last step):** `readJson` replaces `readXml` at the load seam (§3) **and** the rebuilt machines
   become the sole source as the demolished machinery (§4) is deleted. One atomic landing.
 
@@ -169,7 +174,7 @@ surface is retired, `CvHttpServer.cpp:26`):
   (`CvGameCoreDLL.h:310`), already proven (it backs `CvHttpServer`). Reuse it; don't bend the XML machinery to JSON.
 - **★ THE CONDITIONS/EVALUATORS ARE A FAITHFUL C++ PORT OF STONEBASE — this is the BASIS, not a footnote (owner ruling
   2026-06-30).** "The logic works because of StoneBase; we just port the C# code." So the cascade's condition vocabulary
-  + predicate evaluation are a **direct transcription of StoneBase's parity-proven `Domain/Conditions/Condition.cs` +
+  - predicate evaluation are a **direct transcription of StoneBase's verified `Domain/Conditions/Condition.cs` +
   `CascadingEnabler/ConditionEvaluator.cs`** (`StoneBase/` is a sibling repo at `/c/code/s2s/StoneBase`): the **typed
   `Condition` tree** (`Cascade/CvCascadeCondition.{h,cpp}` — group/presence/predicate, a C++03 tagged struct, which
   StoneBase was explicitly written to translate to) + the **`ConditionEvaluator` walk** (`Cascade/CvCascadeConditionEval.{h,cpp}`),
@@ -206,11 +211,12 @@ surface is retired, `CvHttpServer.cpp:26`):
 > methods live **directly on the renamed poco `Cv<X>Info`** (the EXE import binds on decorated class-name + signature,
 > never layout — infos are not EXE-ABI-sensitive), which carries the correct EXE-bound name. The other EIGHTEEN types
 > have no DllExport getters; consumers read the `Cv<X>Info` surface directly.
-
+>
 > **⛔ SUPERSEDED IN PART — the JSON-vs-CASCADE SEPARATION ([DEC-json-not-cascade](../../architecture/decisions.md#dec-json-not-cascade), owner ruling 2026-07-07).** The
 > §3 model below describes `readJson` mapping into a `CvJsonInfo` that HOLDS **deposit lists** (a generic `deposits`
 > vector the cascade then indexes/compiles). That let the cascade RUNTIME bleed into the JSON data — and **cascade and
 > JSON are not the same.** The corrected split, in force since 2026-07-07:
+>
 > - **`CvJsonInfo` (`Sources/JsonInfo/`, relocated out of `Cascade/`) is the JSON-info BASE** — `CvInfoBase` + the
 >   availability model (`requires`/`enables`/`obsoletes`/`replaces`/`disables`/`allowed`/`grants` + the info-owned
 >   typed `CvJsonCondition`) **ONLY, with ZERO cascade runtime** (no `deposits` vector, no DepositIndex, no evaluator).
@@ -229,14 +235,14 @@ surface is retired, `CvHttpServer.cpp:26`):
 >   rework. Read every "`CvJsonInfo` holds deposits / a flat deposit vector" phrasing below with this split applied.
 
 - **`readJson` will be a FRESH reader** (picojson → fresh runtime structures), NOT a reuse of `CvInfoUtil`/`CvXMLLoadUtility`/
-  the old `read()` path. It runs IN ADDITION to the XML load during shadow; at cutover the XML path (`SetGlobalClassInfo`
+  the old `read()` path. It runs IN ADDITION to the XML load during the migration; at cutover the XML path (`SetGlobalClassInfo`
   → `read()`, `Infrastructure/CvXMLLoadUtilitySet.cpp:1588`) is deleted. (`read()` is NOT DllExport — `Infos/CvInfoBase.h:78/85/133/154`.)
 - **★ THE MAPPING/CUTOVER MODEL (owner ruling 2026-06-29; home finalized 2026-06-30).** `readJson` maps each
   entity's JSON to a fresh **`CvJsonInfo`** (deposit lists, the typed `CvCascadeCondition` requires structures, the grant
   provisions) — the **new calc implementations** (modifier/enabler/grants) read it; the **OLD Info variables**
   (XML-populated `m_ai*`/`m_ab*`) are **cut only AFTER** (a) the data is mapped, (b) the new calc is built, and (c) the
-  per-machine SHADOW reaches parity. Until all three hold the XML load stays authoritative (cutting now breaks the game
-  — nothing maps JSON→engine data yet); the cut is the atomic last step.
+  per-machine cascade is **verified live in-game**. Until all three hold the load-time mapping is not yet the sole
+  source; the cut is the atomic last step.
   - **⛔ HOME = the per-info-type `InfoRepo`, a SEPARATE parallel layer — NOT on the info objects (owner ruling
     2026-06-30, superseding the earlier "on `CvInfoBase`" sketch). ✅ DONE.** Terminology (owner-pinned): **`CvInfoBase`**
     is the base of the engine's XML-derived **info** objects; **`GameObject`/`CvGameObjectCity`** is the base of the
@@ -245,7 +251,7 @@ surface is retired, `CvHttpServer.cpp:26`):
     `get()` singleton per type holding a `std::vector<CvJsonInfo*>` **PARALLEL to `GC.m_pa<X>Info`**, indexed by the
     same id → O(1). readJson `edit()`s the entry; the machines `get()` it.
     - **Why a SEPARATE parallel layer, not a member on the info:** it keeps the migration boundary clean (the engine's
-      XML info stays pure; the XML-vs-JSON shadow is **two structures**, swapped cleanly at cutover), it is **immune to
+      XML info stays pure; the JSON data is a **separate structure**, swapped cleanly at cutover), it is **immune to
       the `CvInfoReplacements` info-pointer swap** (an array indexed by id stays put while `aInfos[id]` is overwritten),
       access is standardized, and it touches no foundational header. It also **establishes the proper repository
       pattern** the codebase lacked (the old `BuildingsRepo`-style "repos" were experiments; reality was bare arrays
@@ -266,15 +272,16 @@ surface is retired, `CvHttpServer.cpp:26`):
       info arrays post-map.
     - **(c) the cutover IS the real blast radius.** Every engine site reading an XML info member switches to the
       InfoRepo at once — the clean separation makes each *drop* clean, but the *switch* is the largest atomic change
-      (map-before-delete, per-machine shadow-to-parity, atomic).
+      (map-before-delete, per-machine live verification, atomic).
     - **(d) new info types** must be added to readJson's **`RJ_REPO_TYPES`** X-macro or they silently get no InfoRepo.
       That table is now the **single source** driving edit + get + clear-all together (no dispatch-vs-clear drift) — so
       it's one place to add a type, but still a place that can be *forgotten* (the quiet corner below).
     - **Mitigant — misses mostly YELL LOUDLY (owner 2026-06-30).** The cutover is the *least* dangerous in this sense: a
       site still reading a **deleted** XML member is a **compile error** (loudest possible — it can't build), and
-      doubled/wrong values surface as **shadow divergences**. So most of the blast radius is self-announcing. The **one
-      QUIET corner is (d)**: a missing `RJ_REPO_DISPATCH` entry (or a silently-empty repo) just makes that entity
-      **contribute nothing** — no crash, only a shadow divergence on *that* entity. Watch newly-added / un-dispatched types.
+      doubled/wrong values surface as **live divergences** on the `/computed` oracle. So most of the blast radius is
+      self-announcing. The **one QUIET corner is (d)**: a missing `RJ_REPO_DISPATCH` entry (or a silently-empty repo)
+      just makes that entity **contribute nothing** — no crash, only a live value that fails to manifest for *that*
+      entity. Watch newly-added / un-dispatched types.
   - **ABI — Infos are NOT EXE-ABI-sensitive (owner-asserted + verified 2026-06-30).** The infos are DLL-allocated,
     stored as `vector<CvXInfo*>` (`CvGlobals.h:1006`), and reached only via the `DllExport` getters — the EXE never
     sizes / value-copies / offset-reads them (a DLL-compiled `getType()` reads `m_szType` wherever it sits; brand-new
@@ -303,7 +310,7 @@ surface is retired, `CvHttpServer.cpp:26`):
     the **`CvJsonInfo` in the InfoRepo** (above) and **never references `CvCity`/`CvPlayer`/the tally**. It parses each
     conditional into the typed **`CvCascadeCondition` tree** (a tree IS static data — `cascadeParseCondition`, the
     StoneBase port); the instance-walking EVALUATION lives entirely on the live-state side in the
-    **`cascadeEvalCondition`** evaluator (`Cascade/CvCascadeConditionEval.{h,cpp}`), which the shadow gates call against
+    **`cascadeEvalCondition`** evaluator (`Cascade/CvCascadeConditionEval.{h,cpp}`), which the enabler gates call against
     the live engine. (This was the gameobject-vs-info conflation: a static reader must not own instance-walking
     evaluation. The earlier `BoolExpr` trees + the `CvCascadeCountExpr` count leaf are DELETED — the count folded into
     the evaluator's `ev_countOf` tally read.) ⟹ **LOAD-time setup:** readJson maps the static info data
@@ -311,15 +318,15 @@ surface is retired, `CvHttpServer.cpp:26`):
     object-owned counts (no seed — the bullet above / [tally.md §4](../../specs/tally.md)); the **enabler**'s HAVE set
     is likewise established from the loaded objects. So **loading a save verifies the static cascade state**
     ([validation.md](../../specs/validation.md) cadence,
-    [DEC-structure-before-shadow](../../architecture/decisions.md#dec-structure-before-shadow)); only the live shadows
-    of the surviving/replaced engine (`canTrain`/`canConstruct` + modifier rates, with the new build lists logged at the
-    **Python consumer layer** before the enabler swap) need an end turn.
+    [DEC-structure-before-shadow](../../architecture/decisions.md#dec-structure-before-shadow)); only the live
+    verification of the surviving/replaced engine (`canTrain`/`canConstruct` + modifier rates, with the new build lists
+    logged at the **Python consumer layer** before the enabler swap) needs an end turn.
 - **The shared/kept pieces (EXE-bound):** the **type registry** `GC.getInfoTypeForString` (`Defines/CvGlobals.cpp:2682`,
   decl `CvGlobals.h:1418`) / `setInfoTypeFromString` (`CvGlobals.cpp:2708`, decl `:252`) over `m_infosMap`
   (`CvGlobals.h:929`) — `readJson` uses it for FK resolution because the EXE binds the same indices; and the **EXE-bound
   accessor surface**: `CvInfoBase` DllExport getters `getType`/`getTextKeyWide`/`getDescription`/`getText`/`getHelp`
-  (`Infos/CvInfoBase.h:55/71/72/73/75`), the `getNum*Infos()`/`get*Info()` pairs, a few art getters. During shadow the
-  OLD objects serve the EXE; at cutover the fresh structures must serve that surface (or it is reworked) — a cutover
+  (`Infos/CvInfoBase.h:55/71/72/73/75`), the `getNum*Infos()`/`get*Info()` pairs, a few art getters. During the
+  migration the OLD objects serve the EXE; at cutover the fresh structures must serve that surface (or it is reworked) — a cutover
   detail. Everything outside this boundary is freely built fresh.
 
 ---
@@ -411,7 +418,7 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    **`CvJsonInfo`** held in the entity's per-type **`InfoRepo<CvXInfo>`** (`Repos/InfoRepo.h`) — the side-table is
    **RETIRED** (§3 home). ✅ **Conditionals are the StoneBase `Condition` port (2026-06-30)** — `cascadeParseCondition`
    parses each `requires`/`enabled`/`disabled` into a typed **`CvCascadeCondition`** tree (NOT `BoolExpr`), evaluated by
-   `cascadeEvalCondition` against the live engine in the shadow gates; the `BoolExpr` translator + `CvCascadeCountExpr`
+   `cascadeEvalCondition` against the live engine in the enabler gates; the `BoolExpr` translator + `CvCascadeCountExpr`
    are DELETED (the count folded into the evaluator's tally read). ✅ **readJson is STATIC-DATA-ONLY** — it no longer
    includes `CvCity`/`CvPlayer`/the tally (§3 boundary). ✅ **readJson now maps at LOAD** (the end of `LoadPostMenuGlobals` — the LAST XML stage; moved off `doTurn`, then off
    `onFinalInitialized`→`doPostLoadCaching`, and finally 2026-07-02 off `doPostLoadCaching` too: that fires PRE-MENU,
@@ -421,14 +428,16 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    non-resolver with no engine id) is homed in **`cascadeStartNode()`** (off the InfoRepo) so its `enables` survive the
    map (json.md §5 / readjson.md §5.1). ⛔ **NOT yet mapped: the classification blocks** (`skills`/`tags`/`state`,
    json.md §8 — `capabilities` **IS** mapped, see the enabler item below) — currently recognized + skipped. See the
-   classification-wiring item below. ⏳ **NEXT (refinement) + THE SHADOW-PERF HUNT (owner 2026-07-02 "chase the needless repeat calcs BEFORE parity").**
+   classification-wiring item below. ⏳ **NEXT (refinement) + THE PERF HUNT — chase the needless repeat calcs.** This
+   survives as the standing `(scope,channel)` calc-count gate ([DEC-calc-count-gate](../../architecture/decisions.md#dec-calc-count-gate)):
+   the per-turn count is the acceptance gate + regression tripwire (a blanket recompute crept back ⇒ >50k/turn).
    The [MODIFIER/perf] census (counters + PerfAccumTimer stopwatches, flushed per turn) drove this so far:
    yieldRate100 was 444 calls × ~164ms ≈ 73s/turn; the turn-scoped memos (operating buildings: 91% hit; rate: halved to ~37s)
    bought back the REPEAT calls. The residual is the PER-CALL ~164ms, and the sub-costs measured so far bound it:
    percentStack ≈ 6ms and commerceRate ≈ 7ms per call, so the bulk sits in the BASE packages — **`basePlot` was CONVICTED and fixed**: it
    walked ALL ~5202 buildings PER WORKED PLOT (×3 keyed-deposit walks) — the per-channel building-CANDIDATE cache
    (which buildings carry any deposit for a channel is static readJson data) cut the per-call cost ~164ms → ~50ms
-   (turn total 73s → ~12s, with the memos). **ANTI-MEMO-SKEW**: the doTurn shadow clears the turn memos at its top
+   (turn total 73s → ~12s, with the memos). **ANTI-MEMO-SKEW**: the doTurn verification pass clears the turn memos at its top
    (`YieldRate::memoClear` + `EnablerKernel::operatingBuildingsMemoClear`) — memo values frozen from early-turn calls vs
    end-of-turn legacy read as false divergences until it did. Next perf levers if wanted: the per-plot civic/trait
    loops + the substrate walks (same candidate-cache pattern). ✅ **The deposit index (§3) LANDED 2026-07-03** as
@@ -438,17 +447,19 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    same-turn replay; modifier-substrate.md). ⚠ Memo status (2026-07-03): the operating buildings memo is GONE — replaced by the standing event-invalidated
    `CvCity::m_operatingBuildings` cache (state-repositories.md; the "event-invalidate before any consumer cut"
    prerequisite is CLOSED for the operating buildings). The YieldRate turn memo remains and is ORACLE-ONLY (the calculator
-   is the [SLOT]/[GETTER] verification oracle, never a consumer — it dies with the shadow at the cut).
+   is the [SLOT]/[GETTER] verification oracle, never a consumer — it is removed at the cut).
 2. **Tally** ✅ **DONE — reworked to a READ-ONLY accessor (owner ruling 2026-06-30)** (buildings + units). It READS the
    object-owned counts (`CvPlayer::getBuildingCount`/`getUnitCount`) and rolls UP the spine (empire/team/world) — no
    store, no `IEventConsumer`, no `rebuild`/`onEvent`/`shadowDiff` (a count shadow was tautological — the duplicate-store
    model is retired; `tally.md`). The standardized DOMAIN event emitters stay (observability/invalidation/offline). Other
    count domains read from their object owner when added (`tally.md` §5).
-3. **Modifier** — build plan [`modifier-machine.md`](modifier-machine.md). The readJson→`CvJsonInfo` (InfoRepo) mapping is DONE;
-   the **percent stack** (increment 1) is in + attributed (building tier bit-exact). **Strategy (owner ruling 2026-06-30):
-   port the WHOLE StoneBase `Calc` in, THEN compare the in-DLL shadow vs StoneBase's parity-proven results** (port
-   fidelity) — do NOT chase per-increment parity. **Parity = full ATTRIBUTION + a showable diff, NOT bit-exact**
-   (validation.md; the specialist-bucket move makes bit-exact impossible; StoneBase proved attribution-parity is reachable).
+3. **Modifier** — build plan [`modifier-substrate.md`](modifier-substrate.md). The readJson→`CvJsonInfo` (InfoRepo) mapping is DONE;
+   the **percent stack** (increment 1) is in + attributed (building tier bit-exact). **Strategy (owner ruling): port the
+   WHOLE StoneBase `Calc` in** (port fidelity) — do NOT chase per-increment matching. **The bar is full ATTRIBUTION + a
+   showable diff, NOT bit-exact** ([validation.md](../../specs/validation.md),
+   [DEC-parity](../../architecture/decisions.md#dec-parity); the specialist-bucket move makes bit-exact impossible —
+   StoneBase verified attribution-completeness is reachable). Verification is LIVE via `/computed/cities/yields` +
+   `/computed/cities/wellbeing`.
 3a. **★ WIRE THE NEW CLASSIFICATION + POLICY BLOCKS so the engine consumes them exactly as it uses the legacy flags
    today (owner ruling 2026-06-30 — SUPER IMPORTANT: these easily get LOST, and a wrong/missing one DETERIORATES the
    game experience).** Map `skills` / `tags` / `capabilities` (json.md §8) + `policies` (§9, civic law toggles) onto the
@@ -488,39 +499,39 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    processes/promotions/hurries keep the generic enables-frontier `en_gateSet` (no StoneBase reference).
    ✅ **FRONTIER GATES BUILT — the 6 same-shape
    gates** (`Cascade/CvCascadeEnabler.{h,cpp}`): **city-scope** `canConstruct`/`canTrain`/`canCreate`/`canMaintain`
-   + **player-scope** `canResearch`/`canDoCivics`. ONE GENERATE→GATE primitive over a **bucket-keyed** `enables`
+   - **player-scope** `canResearch`/`canDoCivics`. ONE GENERATE→GATE primitive over a **bucket-keyed** `enables`
    collection: GENERATE `CAN GET` from the InfoRepo `enables.<bucket>` over HAVE (team techs + adopted civics [+ the
    city's buildings for city-scope] **+ the universal `TECH_GAME_START` start-node `cascadeStartNode`, seeded for every
    player — the no-tech-prereq root, since every civ grants it via `grants.techs`; closes the start-tech `canResearch`
    diffs** and is the home for the no-prereq starting set across buckets) minus obsoletes/replaces/disables (+ the
    target-side `obsoletedBy.techs` prune), then GATE by `requires` (the typed-condition evaluator vs the city/player/unit/plot live ctx) + `allowed`
-   (tally cap). Emits the available set per gate, shadowed vs the live engine (`[ENABLER/shadow]` per-gate
-   diverging/checked + **per-gate-capped** `[ENABLER/diff]` samples, at doTurn). Kept structurally two-pass (NOT a
+   (tally cap). Emits the available set per gate, verified vs the live engine (`[ENABLER/shadow]` per-gate
+   diverging/checked + **per-gate-capped** `[ENABLER/diff]` samples). Kept structurally two-pass (NOT a
    per-entity output-match — [DEC-stonebase-follows-spec]); names mirror the existing engine gates. ✅ **+
    `canAcquirePromotion`** — the per-UNIT shape (HAVE = the unit's held promotions + team techs + unitcombat → GENERATE
-   enables.promotions → GATE `requires` vs the unit game object; shadowed vs `isPromotionValid`). So **7 gates built**.
+   enables.promotions → GATE `requires` vs the unit game object; verified live vs `isPromotionValid`). So **7 gates built**.
    ✅ **+ `canBuild`(worker)** — the PLOT-scope shape: GENERATE the owner's `enables.builds` (techs) → GATE the build's
-   `requires` vs the **plot** game object (terrain predicates), over sampled owned non-city plots; shadow vs
-   `CvPlot::canBuild`. So **8 gates built**. ✅ **+ 2 more PLAYER-scope gates (so 10 built), both clean parity first try:**
+   `requires` vs the **plot** game object (terrain predicates), over sampled owned non-city plots; verified live vs
+   `CvPlot::canBuild`. So **8 gates built**. ✅ **+ 2 more PLAYER-scope gates (so 10 built), both verified clean first try:**
    **`canHurry`** (GENERATE `enables.hurries` over HAVE — mostly civics; the player-level "is the hurry type enabled" gate
-   that lights the two Python hurry buttons / the AI check; the city-level gold/slavery AMOUNT is runtime; shadow vs
+   that lights the two Python hurry buttons / the AI check; the city-level gold/slavery AMOUNT is runtime; verified live vs
    `CvPlayer::canHurry`=`getHurryCount>0`); and **`canFoundReligion`** — a **player-wide STATE predicate** (≥1 city, not
    NPC, not first-3-turns, the `RELIGION_LIMITED` holy-city rule), reproduced from raw state (not a JSON frontier) and
-   shadowed vs the engine. ⏳ **`canAddHeritage` is a SEPARATE move** (traced 2026-06-30): `CvPlayer::canAddHeritage` is only
+   verified live vs the engine. ⏳ **`canAddHeritage` is a SEPARATE move** (traced 2026-06-30): `CvPlayer::canAddHeritage` is only
    a **permissive prereq-check** — the tech-rooted 22 heritages invert cleanly (`TECH_TAXONOMY`/`TECH_ORAL_TRADITION` →
    `enables.heritages`, verified), but the ~91 no-prereq folklore heritages are *really* gated by the subdued-animal
    `MISSION_HERITAGE` / `CvOutcome` (a misnomer — the actual MISSION system), unmodeled. Done with the outcome/mission system, not the frontier. ✅ The `capabilities` block is **MAPPED + QUERYABLE**:
    `CvJsonInfo.capabilities` (per-tech grant names; `[READJSON/cap]`) + `en_empireHasCapability(team, cap)` (union over
-   the team's held techs). **Verified by a clean CAPABILITY shadow** — `canFoundOnPeaks` (granted by **TECH_ALGEBRA**, a
+   the team's held techs). **Verified live against the engine CAPABILITY flag** — `canFoundOnPeaks` (granted by **TECH_ALGEBRA**, a
    tech *capability* — corrected: NOT a policy / external source) vs the engine `CvTeam::isCanFoundOnPeaks` flag
    (`[ENABLER/shadow] cap:canFoundOnPeaks`). ⏳ **`canFound` DEFERRED (owner ruling 2026-06-30)** — its capability half is
    done (above); the remainder is the founding **RULE** (nearby-city distance, area, water/peak validity), whose engine
    logic is *"a bit all over the place"* + not cleanly spec'd — a look-at-later gate, not modelled now.
    (`found`/`foundCoast`/`foundFreshWater` are unit `skills`, a separate axis.)
-   **⏳ PARITY-CHASE notes (2026-07-02 shadow run):** ✅ canCreate/canResearch/canDoCivics/canHurry/canFoundReligion
-   clean (the canCreate fix = project `allowed:{world/team}` caps, a Gate-1 data find — were parked in identity).
-   Three OPEN finds the instruments cannot re-derive: **(a)** the enabler diff's `who=` renders BLANK for the
-   city-scope gates (an emit bug — fix before chasing per-city diffs); **(b)** ~~the spawnOnly model question~~ RESOLVED (owner pushback 2026-07-02, verified): spawnOnly was cleared correctly (== productionCost==-1); the divergence was the SHADOW ORACLE passing bIgnoreCost=true, which disables legacy's `!bIgnoreCost && productionCost==-1` gate — the exact spawnOnly semantic. Oracle flags fixed to false on canTrain + canConstruct — after which BOTH went to diverging=0 (41,616 + 16,584 checks): the flagship gates are AT PARITY. Remaining enabler chases: canMaintain 40 (the processes trace), canAcquirePromotion, canBuild; **(c)** canMaintain refuses all 5 processes for REAL civs holding the
+   **⏳ Live-verification finds & dispositions:** ✅ canCreate/canResearch/canDoCivics/canHurry/canFoundReligion
+   clean (the canCreate fix = project `allowed:{world/team}` caps, a completeness data find — were parked in identity).
+   Finds worth carrying: **(a)** the enabler diff's `who=` renders BLANK for the
+   city-scope gates (an emit bug — fix before chasing per-city diffs); **(b)** ~~the spawnOnly model question~~ RESOLVED (owner pushback, verified): spawnOnly was cleared correctly (== productionCost==-1); the divergence was the ORACLE passing bIgnoreCost=true, which disables legacy's `!bIgnoreCost && productionCost==-1` gate — the exact spawnOnly semantic. Oracle flags fixed to false on canTrain + canConstruct — after which BOTH verified clean: the flagship gates match. Remaining enabler finds: canMaintain (the processes trace), canAcquirePromotion, canBuild; **(c)** canMaintain refuses all 5 processes for REAL civs holding the
    enabling techs (NPC pollution ruled out — counts identical after the NPC skip) — OWNER SEMANTIC (2026-07-02): processes convert hammers to commerce-type yields and only the LATEST version of each family is choosable -- legacy enforces only-latest IN CODE (no data-side supersession edges exist: process JSONs verified edge-free; currency->WEALTH, trade->WEALTH_LESSER enables verified clean). TWO chases: (1) the only-latest rule needs a data model (the ReplacementBuildings->dormant pattern on processes, or the gate mirrors legacy) + (2) trace where GENERATE loses
    `enables.processes` (data verified present on 12 techs) or the gate drops them; NB PROCESS_IDLE has NO tech
    enabler, so the generic enables-frontier structurally under-offers it (the PALACE lesson — processes may need
@@ -533,28 +544,30 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    divergence class, monitor it (the [MODIFIER/dorm] per-city attribution lines name each disagreeing building);
    never freeze the stale verdicts into the cascade. (Per-building dry-calcs proved data+eval EXACT on the
    engine-active set — the residue is legacy state, not cascade logic.)
-   **(g)** SHADOW SCOPING (2026-07-02): canBuild diffs UNLOCK-half vs UNLOCK-half (the oracle mirrors CvPlayer::canBuild's disabled/obsoleteTech/techPrereq block; the plot-validity half survives cutover — diffing vs full CvPlot::canBuild compared two different questions), and canAcquirePromotion rides `isPromotionValid(pr, bFree=true)` (the bespoke unit-state half — qualified/disqualified unitcombats, game options, unit-state caps) on BOTH sides, isolating the diff to the tech/enables frontier the cascade owns; the qualified-combat DATA is parked in `identity.unitCombats` pending its Gate-3 model. Tails attributed: promotions — the no-qualified-CC "event-injection-only" clause (`bValid=bFree`) is mirrored in the shadow (with the free-promotion carve-out); the PALACE lesson applied (a no-enabler promo is always-unlocked — the enables-frontier under-offered COMBAT1-5). canBuild — the residual is builds whose `requires.build` carry PLOT-scope atoms (BONUS_RAPA_NUI-on-plot class): the cascade correctly refuses on the sampled plot while the unlock-half oracle doesn't ask the plot question — both sides right at their own scope, attributed shadow-scoping noise on a non-cut gate.
-   ✅ **PARITY REACHED — the enabler plane (2026-07-02).** The Gate-2 shadow campaign drove EVERY §4-demolition
-   gate to diverging=0, stable across consecutive turns: canConstruct / canTrain / canCreate / canMaintain /
-   canResearch / canDoCivics / canHurry / canFoundReligion / cap:canFoundOnPeaks — plus canAcquirePromotion
-   (whole-domain via the PALACE whitelist + the event-only mirror). The one non-zero gate is canBuild's small
-   attributed residual (the plot-scope-atoms scoping class, note (g)) on a NON-cut gate. The modifier percent
-   stack's residual decomposes ENTIRELY into the accepted classes — stale dropped-event state (note (f2)) + the
-   deferred PESTS property bands — with per-building dry-calcs proving data+eval exact on the engine-active set;
-   the getter/rate residuals ride the same accepted classes (incl. the event-granted per-building commerce, the
-   documented honest divergence). Numbers live in the run (DEC-no-parity-results-in-docs); the classes and their
-   dispositions are the durable record above.
+   **(g)** GATE SCOPING: canBuild diffs UNLOCK-half vs UNLOCK-half (the oracle mirrors CvPlayer::canBuild's disabled/obsoleteTech/techPrereq block; the plot-validity half survives cutover — comparing vs full CvPlot::canBuild compared two different questions), and canAcquirePromotion rides `isPromotionValid(pr, bFree=true)` (the bespoke unit-state half — qualified/disqualified unitcombats, game options, unit-state caps) on BOTH sides, isolating the diff to the tech/enables frontier the cascade owns; the qualified-combat DATA is parked in `identity.unitCombats` pending its Gate-3 model. Tails attributed: promotions — the no-qualified-CC "event-injection-only" clause (`bValid=bFree`) is mirrored in the verification oracle (with the free-promotion carve-out); the PALACE lesson applied (a no-enabler promo is always-unlocked — the enables-frontier under-offered COMBAT1-5). canBuild — the residual is builds whose `requires.build` carry PLOT-scope atoms (BONUS_RAPA_NUI-on-plot class): the cascade correctly refuses on the sampled plot while the unlock-half oracle doesn't ask the plot question — both sides right at their own scope, attributed scoping noise on a non-cut gate.
+   ✅ **The enabler plane — CALCULATIONS VERIFIED (Gate 2 CLOSED).** Every §4-demolition gate matches the live engine,
+   stable across consecutive turns: canConstruct / canTrain / canCreate / canMaintain / canResearch / canDoCivics /
+   canHurry / canFoundReligion / cap:canFoundOnPeaks — plus canAcquirePromotion (whole-domain via the PALACE whitelist +
+   the event-only mirror). The one non-matching gate is canBuild's small attributed residual (the plot-scope-atoms
+   scoping class, note (g)) on a NON-cut gate. The modifier percent stack's residual decomposes ENTIRELY into the
+   accepted classes — stale dropped-event state (note (f2)) + the not-yet-modelled PESTS property bands — with
+   per-building dry-calcs proving data+eval exact on the engine-active set; the getter/rate residuals ride the same
+   accepted classes (incl. the event-granted per-building commerce, the documented honest divergence). Per
+   [DEC-no-parity-results-in-docs](../../architecture/decisions.md#dec-no-parity-results-in-docs) the numbers stay in the
+   run; the durable record is the classes and their dispositions above. Remaining verification is LIVE via
+   `/computed/can*` ([DEC-verify-in-game-not-reshadow](../../architecture/decisions.md#dec-verify-in-game-not-reshadow)).
    **Build EARLY, a CO-REQUISITE with the
    modifier (owner ruling 2026-06-30), not a later step.** Without the enabler the cascade does not know **what is
    ACTIVE** — which bonuses are connected/available, which buildings are non-dormant — and the modifier's conditions
-   (`enabled:{HAS_BONUS}`, `connection:vicinity`, dormancy) depend on exactly that. **The modifier shadow must read the
-   ENABLER's active state, NOT the live engine (owner ruling 2026-06-30)** — so the cascade is self-contained (it must
-   keep working after the legacy state is cut); the enabler's active state is **independently shadowed vs the engine to
-   prove they are EQUAL** (StoneBase proved this is achievable). (The current percent-stack reads the live engine as an
-   INTERIM shim until the enabler exists — modifier-machine §2.) So sequence the enabler alongside the modifier.
+   (`enabled:{HAS_BONUS}`, `connection:vicinity`, dormancy) depend on exactly that. **The modifier must read the
+   ENABLER's active state, NOT the live engine (owner ruling)** — so the cascade is self-contained (it must keep working
+   after the legacy state is cut, [DEC-calc-zero-ride-in](../../architecture/decisions.md#dec-calc-zero-ride-in)); the
+   enabler's active state is **independently verified vs the engine to prove they are EQUAL**. (The current percent-stack
+   reads the live engine as an INTERIM shim until the enabler exists — modifier.md §2a.) So sequence the enabler
+   alongside the modifier.
 5. **The trait simple/complex engine fix (§6)** — retire the `CvInfoReplacements` trait swap for option-selected
    injection — sequenced with the modifier/enabler work (it changes which trait values both read).
 6. **The atomic cutover** — `readJson` replaces `readXml`; the demolished machinery (§4) is deleted in one landing.
 
-Each machine carries the alignment fixes it touches as it is wired. Parity is proven offline by StoneBase and live by
-the per-machine shadow before anything legacy is cut.
+Each machine carries the alignment fixes it touches as it is wired. Each machine is verified LIVE in the running game
+(manifestation via `/computed` + the `(scope,channel)` calc-count gate) before anything legacy is cut.

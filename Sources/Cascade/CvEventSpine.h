@@ -5,11 +5,14 @@
 #include <vector>
 
 //
-//	CvEventSpine -- the #430 cascade's FRONT DOOR (design: docs/specs/event-spine.md).
+//	CvEventSpine -- the GENERAL state-change event dispatch primitive (design: docs/specs/event-spine.md).
 //
-//	Callers emit(KIND, type, payload) to the spine; consumers read the event KINDS they care about. The registered
-//	consumers are LOGGING and `grants`. The TALLY is NOT a spine consumer -- it READS the object-owned counts on
-//	demand (tally.md); the DOMAIN count events serve observability + the out-of-process replay, never a tally feed.
+//	These are GAME domain state-change events (building built, unit created, tech acquired, ...) dispatched by a
+//	general spine. The spine is NOT cascade-owned: the cascade is just ONE consumer that READS these events as
+//	inputs, alongside LOGGING, `grants`, and the out-of-process OOS-replay. Callers emit(KIND, type, payload) to
+//	the spine; each consumer reads the event KINDS it cares about. The registered consumers are LOGGING and
+//	`grants`. The TALLY is NOT a spine consumer -- it READS the object-owned counts on demand (tally.md); the
+//	DOMAIN count events serve observability + the out-of-process replay, never a tally feed.
 //
 //	KIND is the OOS FIREWALL axis, declared at the call site (never inferred):
 //	  - DOMAIN     : game STATE changed (building built, unit created). SYNCED/deterministic -> gate-eligible;
@@ -54,7 +57,8 @@ enum SpineFieldType
 	// typeIndex kinds: the int is a Types index, rendered to its type string via GC.getXInfo (resolution in the consumer).
 	// This is how a former "%s = GC.getXInfo(i).getType()" line becomes a clean raw field (the index travels, not the string).
 	SFT_BUILDING, SFT_UNIT, SFT_TECH, SFT_PLAYER,
-	SFT_BONUS, SFT_IMPROVEMENT, SFT_PROMOTION, SFT_RELIGION, SFT_CORPORATION, SFT_FEATURE, SFT_TERRAIN, SFT_CIVIC, SFT_PROJECT, SFT_SPECIALIST
+	SFT_BONUS, SFT_IMPROVEMENT, SFT_PROMOTION, SFT_RELIGION, SFT_CORPORATION, SFT_FEATURE, SFT_TERRAIN, SFT_CIVIC, SFT_PROJECT, SFT_SPECIALIST,
+	SFT_TRAIT, SFT_ROUTE
 };
 
 //	Field identities are DOMAIN-LOCAL (owner 2026-06-18): each migrated domain defines its OWN field-tag enum + a
@@ -62,7 +66,7 @@ enum SpineFieldType
 //	this isolates each domain (Clean-Architecture), kills the fragile central enum-plus-two-parallel-tables sync, and lets
 //	domains migrate in PARALLEL with zero shared edits. (Constant labels like "action=safety" are NOT fields -- they live
 //	in the event prefix.) A field slot's `eTag` is interpreted only together with the event's `iDomainTag`.
-struct CvCascadeEventField
+struct CvSpineEventField
 {
 	int eTag; // a DOMAIN-LOCAL field tag (resolved to name+type by the domain's registered SpineFieldInfoFn)
 	union { int i; float f; const char* s; const wchar_t* w; } v; // pointers are 4B on x86 -> the slot stays POD/8B
@@ -94,6 +98,7 @@ enum SpineDomainTag
 	SD_ENABLER,    // [ENABLER] reserved (historical tag; no live registrant)
 	SD_MODIFIER,   // [MODIFIER] the perf + repo census (CvCascadeModifierMath)
 	SD_GRANTS,     // [GRANTS] the "provisions" consumer (CvCascadeGrants) -- resolves an entity's genuine grants on a DOMAIN event
+	SD_SPINE,      // [SPINE] spine lifecycle signals (game-load started/finished) -- rendered via the registered prefix, not inline
 	NUM_SPINE_DOMAINS
 };
 
@@ -113,10 +118,12 @@ void spineRegisterDomain(int iDomainTag, SpineLinePrefixFn prefixFn, const char*
 //	The cap on slots per event -- 16 covers every operational AI line (97th pct; widest operational = [WAI/score] @ 16).
 static const int SPINE_MAX_FIELDS = 16;
 
-//	A cascade event: KIND (firewall axis) + a RAW, self-describing payload (NEVER a formatted string). Two payload modes,
-//	both raw: DOMAIN count events use iType + iA/iB/iC (the tally reads these); logging events (DIAGNOSTIC/TRACE) use
-//	iDomainTag + iEventId (-> the constant line prefix) + aFields[iFieldCount] (the variable "name=value" fields).
-struct CvCascadeEvent
+//	A spine event: KIND (firewall axis) + a RAW, self-describing payload (NEVER a formatted string). TWO payloads,
+//	carried TOGETHER (not exclusive modes): the DOMAIN state ints iType + iA/iB/iC (+ iSrcLoc) that grants / the
+//	cache-invalidation consumer read; AND the render payload iDomainTag + iEventId (-> the constant line prefix) +
+//	aFields[iFieldCount] (the variable "name=value" fields) that the ONE logging path formats. A DOMAIN event carries
+//	BOTH (its emit endpoint tags SD_SPINE + adds fields); a DIAGNOSTIC/TRACE event carries only the render payload.
+struct CvSpineEvent
 {
 	EventKind eKind;
 	int iEventId;
@@ -124,42 +131,49 @@ struct CvCascadeEvent
 	int iA;
 	int iB;
 	int iC;
+	int iSrcLoc;      // DOMAIN source LOCATION id (cityId | plotId, per the event kind; -1 = empire/world scope) --
+	                  // lets a source-carrying event name WHERE it happened so a consumer can route it to the
+	                  // affected packages (state-repositories.md: "a DOMAIN event carries its SOURCE"). Non-count
+	                  // events set it; the legacy count events leave it -1 (their footprint is the whole empire).
 
-	int iDomainTag;   // SpineDomainTag -- the line's [TAG] family (logging events); SD_NONE for the legacy count path
+	int iDomainTag;   // SpineDomainTag -- the line's [TAG] family (every emitted event tags one; SD_NONE only if a
+	                  // caller forgot -- spineRenderEventLine still renders it via the generic prefix/field fallback)
 	int iLevel;       // the surveillance level this line emits at (1 Telescreen .. 4 Thought Police); consumer gates on it
-	int iFieldCount;  // number of valid aFields (0 = a legacy count event, uses iType/iA/iB/iC)
-	CvCascadeEventField aFields[SPINE_MAX_FIELDS];
+	int iFieldCount;  // number of valid aFields (the DOMAIN state ints iType/iA/iB/iC ride alongside for the machine consumers)
+	CvSpineEventField aFields[SPINE_MAX_FIELDS];
 
-	// Legacy DOMAIN-count constructor (iFieldCount stays 0; aFields unused).
-	CvCascadeEvent(EventKind eKind_, int iEventId_, int iType_ = -1, int iA_ = 0, int iB_ = 0, int iC_ = 0)
+	// DOMAIN constructor: the state ints + iSrcLoc (-1 = empire/world scope; a per-city / per-plot event passes its
+	// cityId / plotId so the event names WHERE it happened). Defaults iDomainTag = SD_NONE / iFieldCount = 0; the emit
+	// endpoint then sets iDomainTag = SD_SPINE and appends render fields via addI (so the event renders like any other).
+	CvSpineEvent(EventKind eKind_, int iEventId_, int iType_ = -1, int iA_ = 0, int iB_ = 0, int iC_ = 0, int iSrcLoc_ = -1)
 		: eKind(eKind_), iEventId(iEventId_), iType(iType_), iA(iA_), iB(iB_), iC(iC_)
-		, iDomainTag(SD_NONE), iLevel(1), iFieldCount(0) {}
+		, iSrcLoc(iSrcLoc_), iDomainTag(SD_NONE), iLevel(1), iFieldCount(0) {}
 
 	// Logging-event constructor (DIAGNOSTIC/TRACE): domain + event id + the level it emits at, then add fields. The
 	// domain param is the SpineDomainTag ENUM (not int) -- this disambiguates from the legacy int-eventId ctor above.
-	CvCascadeEvent(EventKind eKind_, SpineDomainTag eDomainTag_, int iEventId_, int iLevel_)
+	CvSpineEvent(EventKind eKind_, SpineDomainTag eDomainTag_, int iEventId_, int iLevel_)
 		: eKind(eKind_), iEventId(iEventId_), iType(-1), iA(0), iB(0), iC(0)
-		, iDomainTag((int)eDomainTag_), iLevel(iLevel_), iFieldCount(0) {}
+		, iSrcLoc(-1), iDomainTag((int)eDomainTag_), iLevel(iLevel_), iFieldCount(0) {}
 
 	// Append a raw field by its DOMAIN-LOCAL tag (int or typeIndex). No-op past the cap (a backstop; lines <=16 by the catalog).
-	CvCascadeEvent& addI(int iFieldTag, int iValue)
+	CvSpineEvent& addI(int iFieldTag, int iValue)
 	{
 		if (iFieldCount < SPINE_MAX_FIELDS) { aFields[iFieldCount].eTag = iFieldTag; aFields[iFieldCount].v.i = iValue; ++iFieldCount; }
 		return *this;
 	}
-	CvCascadeEvent& addF(int iFieldTag, float fValue)
+	CvSpineEvent& addF(int iFieldTag, float fValue)
 	{
 		if (iFieldCount < SPINE_MAX_FIELDS) { aFields[iFieldCount].eTag = iFieldTag; aFields[iFieldCount].v.f = fValue; ++iFieldCount; }
 		return *this;
 	}
 	// Carry a POINTER to an EXISTING string (no copy, no concat). The pointee must outlive the synchronous emit (the
 	// consumer renders then). The domain's field resolver must return SFT_STR / SFT_WSTR for this tag. See SpineFieldType.
-	CvCascadeEvent& addStr(int iFieldTag, const char* szValue)
+	CvSpineEvent& addStr(int iFieldTag, const char* szValue)
 	{
 		if (iFieldCount < SPINE_MAX_FIELDS) { aFields[iFieldCount].eTag = iFieldTag; aFields[iFieldCount].v.s = szValue; ++iFieldCount; }
 		return *this;
 	}
-	CvCascadeEvent& addWStr(int iFieldTag, const wchar_t* szValue)
+	CvSpineEvent& addWStr(int iFieldTag, const wchar_t* szValue)
 	{
 		if (iFieldCount < SPINE_MAX_FIELDS) { aFields[iFieldCount].eTag = iFieldTag; aFields[iFieldCount].v.w = szValue; ++iFieldCount; }
 		return *this;
@@ -169,23 +183,59 @@ struct CvCascadeEvent
 //	Render a logging event's RAW fields into szBuf as "<prefix> name=value name=value ..." (the consumer's job).
 //	prefix from the domain's registered prefix provider; field names/types from the domain's registered SpineFieldInfoFn. Declared here,
 //	defined in the .cpp beside the logging consumer.
-void cascadeRenderEventLine(char* szBuf, int iBufSize, const CvCascadeEvent& kEvent);
+void spineRenderEventLine(char* szBuf, int iBufSize, const CvSpineEvent& kEvent);
 
 //	Real (non-test) DOMAIN event ids -- WHAT changed in synced game state. Distinct namespace from the temporary
 //	DIAGNOSTIC ids in CvCascadeSelfTest (the KIND prefix in the log disambiguates). This is the production side: real
 //	gameplay state-changes emit these, so the spine's consumers are driven by genuine input, not a recompute.
-enum CascadeDomainEvent
+enum SpineDomainEvent
 {
-	CASCADE_EVT_BUILDING_COUNT = 1,  // iType = BuildingTypes, iA = new empire count, iB = delta, iC = PlayerTypes -- a counted-domain event
-	CASCADE_EVT_UNIT_COUNT     = 2,  // iType = UnitTypes,     iA = new empire count, iB = delta, iC = PlayerTypes
-	CASCADE_EVT_NAME_CHANGE    = 3,  // iType = NameChangeKind, iA = owner player, iB = entity id (= owner for PLAYER/CIV), iC = 0
-	CASCADE_EVT_TECH_ACQUIRED  = 4,  // iType = TechTypes, iA = 1 (first-discoverer), iC = discovering player -- the tech-grant trigger
-	CASCADE_EVT_RELIGION_FOUNDED = 5,// iType = ReligionTypes, iC = founding player -- the religion-founder grant trigger
-	CASCADE_EVT_CIVIC_ADOPTED  = 6,  // iType = CivicTypes, iC = adopting player -- the civic grant trigger (revolution pulse)
-	CASCADE_EVT_PLAYER_INIT    = 7   // iType = iC = player -- game start: resolve the player's civ/era/handicap grants
+	SEVT_BUILDING_COUNT = 1,  // iType = BuildingTypes, iA = new empire count, iB = delta, iC = PlayerTypes -- a counted-domain event
+	SEVT_UNIT_COUNT     = 2,  // iType = UnitTypes,     iA = new empire count, iB = delta, iC = PlayerTypes
+	SEVT_NAME_CHANGE    = 3,  // iType = NameChangeKind, iA = owner player, iB = entity id (= owner for PLAYER/CIV), iC = 0
+	SEVT_TECH_ACQUIRED  = 4,  // iType = TechTypes, iA = 1 (first-discoverer), iC = discovering player -- the tech-grant trigger
+	SEVT_RELIGION_FOUNDED = 5,// iType = ReligionTypes, iC = founding player -- the religion-founder grant trigger
+	SEVT_CIVIC_ADOPTED  = 6,  // iType = CivicTypes, iC = adopting player -- the civic grant trigger (revolution pulse)
+	SEVT_PLAYER_INIT    = 7,  // iType = iC = player -- game start: resolve the player's civ/era/handicap grants
+
+	// The per-source STATE-CHANGE events -- the COMPLETE emit surface (event-spine.md: a DOMAIN event on EVERY state
+	// change a package can depend on). iType = source type index; iC = owner / triggering player; iSrcLoc = cityId
+	// (per-city) | plotId (per-plot) | -1 (empire/team/world); iA/iB carry has/new-value/delta where meaningful.
+	SEVT_BUILDING_CHANGED       = 8,  // CvCity::processBuilding: iType=Building, iC=owner, iSrcLoc=cityId, iB=+1/-1
+	SEVT_RELIGION_CHANGED       = 9,  // CvCity::setHasReligion: iType=Religion, iC=owner, iSrcLoc=cityId, iA=has
+	SEVT_CORPORATION_CHANGED    = 10, // CvCity::setHasCorporation: iType=Corp, iC=owner, iSrcLoc=cityId, iA=has
+	SEVT_BONUS_CHANGED          = 11, // CvCity::processBonus/doVicinityBonus: iType=Bonus, iC=owner, iSrcLoc=cityId, iB=change
+	SEVT_POPULATION_CHANGED     = 12, // CvCity::setPopulation: iC=owner, iSrcLoc=cityId, iA=newPop
+	SEVT_SPECIALIST_CHANGED     = 13, // CvCity::setSpecialistCount: iType=Specialist, iC=owner, iSrcLoc=cityId, iB=delta
+	SEVT_POWER_CHANGED          = 14, // CvCity::changePowerCount: iC=owner, iSrcLoc=cityId, iB=delta
+	// plot SUBSTRATE changes -- the ACTUAL state changes. Yield is a COMPUTED RESULT of these, never itself an event
+	// (an improvement/terrain/feature/route changed; the yield recomputes downstream). These emit for observability
+	// + consumers, but they are NOT the yield-cache gate: plot yield is pull-computed (updateYield self-dirties).
+	SEVT_IMPROVEMENT_CHANGED    = 15, // CvPlot::setImprovementType: iType=Improvement, iC=owner, iSrcLoc=plotId
+	SEVT_TERRAIN_CHANGED        = 16, // CvPlot::setTerrainType: iType=Terrain, iC=owner, iSrcLoc=plotId
+	SEVT_FEATURE_CHANGED        = 17, // CvPlot::setFeatureType: iType=Feature, iC=owner, iSrcLoc=plotId
+	SEVT_ROUTE_CHANGED          = 18, // CvPlot::setRouteType: iType=Route, iC=owner, iSrcLoc=plotId
+	SEVT_TECH_CHANGED           = 19, // CvTeam::setHasTech (BROAD -- any set): iType=Tech, iC=triggering player, iA=has
+	SEVT_TRAIT_CHANGED          = 20, // CvPlayer::processTrait/setHasTrait: iType=Trait, iC=player, iA=add
+	SEVT_PROJECT_CHANGED        = 21, // CvTeam::processProjectChange: iType=Project, iC=triggering player, iB=delta
+	SEVT_GOLDEN_AGE_CHANGED     = 22, // CvPlayer::changeGoldenAgeTurns (flip): iC=player, iA=on
+	SEVT_STATE_RELIGION_CHANGED = 23, // CvPlayer::setLastStateReligion: iType=Religion, iC=player
+	// ownership changes -- a city/plot changed OWNER (conquest / culture flip / gift): the entity's packages move
+	// scope and BOTH owners' empire aggregates change. iSrcLoc = cityId | plotId; iA = OLD owner; iC = NEW owner.
+	SEVT_CITY_OWNER_CHANGED     = 24, // a city changed owner (acquire / dispose)
+	SEVT_PLOT_OWNER_CHANGED     = 25, // CvPlot::setOwner
+	// a plot's WORKING CITY was reassigned -- the plot's yield moves from the old city to the new (both cities'
+	// yield packages change). iSrcLoc = plotId; iA = old working cityId; iB = new working cityId; iC = owner.
+	SEVT_WORKING_CITY_CHANGED   = 26, // CvPlot::setWorkingCity
+	// load LIFECYCLE -- a synced DOMAIN signal (NOT a state change): the save read is beginning / complete.
+	// Result-producers (grants) rely PURELY on the spine, so they gate on THESE -- LOAD_STARTED -> suppress,
+	// LOAD_FINISHED -> resume (a grant is a RESULT of a genuine in-play acquisition, and a load is not one). The
+	// cache-build consumer stays load-active. (event-spine.md the load-RESEED.)
+	SEVT_GAME_LOAD_STARTED      = 27,
+	SEVT_GAME_LOAD_FINISHED     = 28
 };
 
-//	Which entity's display name changed (the iType of a CASCADE_EVT_NAME_CHANGE event). The logging consumer resolves the
+//	Which entity's display name changed (the iType of a SEVT_NAME_CHANGE event). The logging consumer resolves the
 //	NEW name LIVE (synchronous game-thread render -> exact), so the payload stays string-free; an out-of-process consumer
 //	(StoneBase / an agent) rebuilds its id->name table from the emitted lines -- REQUIRED for the total-observability
 //	("Orwell") bar (event-spine.md §8). CIV = the empire name (the civic-name-on-civic-change bug lever).
@@ -199,7 +249,49 @@ enum NameChangeKind
 
 //	Emit a name-change DOMAIN event. Call AFTER the name field is updated (the consumer resolves the NEW name live).
 //	iOwner = owning player; iEntityId = city/unit id (pass iOwner for PLAYER/CIV). String-free payload by design.
-void cascadeEmitNameChange(int iKind, int iOwner, int iEntityId);
+void emitNameChange(int iKind, int iOwner, int iEntityId);
+
+// ===== the DOMAIN emit ENDPOINTS -- the ONE API every state-change choke point calls (event-spine.md: "a DOMAIN
+// event on every state change"). Each builds a source-carrying DOMAIN event and hands it to eventSpine().emit().
+// Call AFTER the state field is updated. Source-carrying: the event names WHAT (iType) + WHO (iOwner) + WHERE
+// (iSrcLoc), so a consumer can route it -- but the endpoints themselves only emit (no consumer/routing here). =====
+void emitBuildingChanged(int iCity, int iOwner, int iBuilding, int iDelta);
+void emitReligionChanged(int iCity, int iOwner, int iReligion, bool bHas);
+void emitCorporationChanged(int iCity, int iOwner, int iCorporation, bool bHas);
+void emitBonusChanged(int iCity, int iOwner, int iBonus, int iChange);
+void emitPopulationChanged(int iCity, int iOwner, int iNewPop);
+void emitSpecialistChanged(int iCity, int iOwner, int iSpecialist, int iDelta);
+void emitPowerChanged(int iCity, int iOwner, int iDelta);
+void emitImprovementChanged(int iPlot, int iOwner, int iImprovement);
+void emitTerrainChanged(int iPlot, int iOwner, int iTerrain);
+void emitFeatureChanged(int iPlot, int iOwner, int iFeature);
+void emitRouteChanged(int iPlot, int iOwner, int iRoute);
+void emitTechChanged(int iPlayer, int iTech, bool bHas);
+void emitTraitChanged(int iPlayer, int iTrait, bool bAdd);
+// A civic was adopted (revolution pulse). Mirrors the inline SEVT_CIVIC_ADOPTED emit in CvPlayer::setCivics so the
+// full-state replay + any future callers share one clean endpoint. iType = CivicTypes, iC = adopting player.
+void emitCivicAdopted(int iPlayer, int iCivic);
+void emitProjectChanged(int iPlayer, int iProject, int iDelta);
+void emitGoldenAgeChanged(int iPlayer, bool bOn);
+void emitStateReligionChanged(int iPlayer, int iReligion);
+void emitCityOwnerChanged(int iCity, int iOldOwner, int iNewOwner);
+void emitPlotOwnerChanged(int iPlot, int iOldOwner, int iNewOwner);
+void emitWorkingCityChanged(int iPlot, int iOwner, int iOldCity, int iNewCity);
+
+// The empire-count observability events + the grant-trigger events -- distinct from the per-source state-change
+// endpoints above (these carry the whole-empire count / a game-start or first-discover trigger, iSrcLoc = -1). One
+// clean endpoint each so the emit sites in CvPlayer / CvTeam never build a CvSpineEvent inline (single-source; every
+// DOMAIN emit is tagged for the logging render path). grants reads iType/iA/iB/iC off these (CvCascadeGrants).
+void emitBuildingCount(int iPlayer, int iBuilding, int iNewCount, int iDelta);
+void emitUnitCount(int iPlayer, int iUnit, int iNewCount, int iDelta);
+void emitTechAcquired(int iPlayer, int iTech);
+void emitReligionFounded(int iPlayer, int iReligion);
+void emitPlayerInit(int iPlayer);
+
+// The load-lifecycle bracket (event-spine.md the load-RESEED): emit STARTED before the save read begins, FINISHED
+// after it completes. Result-producers (grants) suppress between them; the cache-build consumer stays load-active.
+void emitGameLoadStarted();
+void emitGameLoadFinished();
 
 //	A consumer of spine events (tally / grants / logging). C++03 virtual interface -- the consumer's state lives in the
 //	consumer (no captures, no Boost). wantedKinds() returns a bitmask of (1 << EventKind); the spine uses it to skip
@@ -209,7 +301,7 @@ class IEventConsumer
 public:
 	virtual ~IEventConsumer() {}
 	virtual int wantedKinds() const = 0;
-	virtual void onEvent(const CvCascadeEvent& kEvent) = 0;
+	virtual void onEvent(const CvSpineEvent& kEvent) = 0;
 };
 
 //	The front door. Consumers register once at startup; emit() dispatches to interested consumers and SKIPS ENTIRELY
@@ -221,7 +313,7 @@ public:
 	CvEventSpine() : m_iInterestMask(0) {}
 
 	void registerConsumer(IEventConsumer* pConsumer);
-	void emit(const CvCascadeEvent& kEvent);
+	void emit(const CvSpineEvent& kEvent);
 
 	bool anyInterest(EventKind eKind) const { return (m_iInterestMask & (1 << eKind)) != 0; }
 
@@ -236,6 +328,6 @@ CvEventSpine& eventSpine();
 //	Register the built-in cascade consumers -- the broad logging consumer AND the selective grants consumer. The tally
 //	is NOT a consumer (it reads the object-owned counts on demand, tally.md). Idempotent; call once
 //	(CvGame::doTurn guards it).
-void cascadeRegisterConsumers();
+void spineRegisterConsumers();
 
 #endif // CV_EVENT_SPINE_H

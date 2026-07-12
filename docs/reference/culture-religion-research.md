@@ -1,9 +1,10 @@
 # Culture, religion, research & corporations reference
 
-> Lifted + condensed mechanics (the formulas the validator re-derives). Behaviour as-is; the cascade shadows then
-> replaces these.
+> Lifted + condensed mechanics (the formulas the validator re-derives). Behaviour as-is; the cascade replaces these
+> (verified live in-game).
 
 ## Culture (city + plot)
+
 - **Accrual:** `doCulture` adds `getCommerceRateTimes100(CULTURE)` to `m_aiCulture[owner]`; `doPlotCulture` spreads
   to a Chebyshev square of radius `cultureLevel`, linear dropoff via `CITY_CULTURE_DENSITY_FACTOR` (min 1).
   Improvement culture radiates **flat** within `getCultureRange()`.
@@ -18,6 +19,7 @@
   improvement owned past `SUPER_FORTS_DURATION_BEFORE_REVOLT`, a different cultural owner, no defenders → immediate flip.
 
 ## Religion spread
+
 - Passive spread/decay: **one religion per `doCorporation` call per turn** (break after the first fires); gated by
   `MODDERGAMEOPTION_RELIGION_DECAY` / `_MULTIPLE_RELIGION_SPREAD`.
 - **Spread:** `iRandThreshold = max(iSpread)` — the best single source, **NOT a sum**. Foreign distance penalty
@@ -29,6 +31,7 @@
   ÷2 into a foreign-team city, + an empty-slot bonus; the unit is always killed.
 
 ## Research & tech diffusion
+
 - **Beaker deposit:** `calculateResearchRate + getModifiedIntValue(overflow, researchModifier)` → `m_paiResearchProgress`.
   `baseNetResearch = BASE_RESEARCH_RATE + getCommerceRate(RESEARCH)`, × `(nationalTechResearchModifier + researchModifier)`,
   clamped `MAX_RESEARCH_RATE_VALUE`.
@@ -41,6 +44,7 @@
   AI-handicap reduction. Barbarian free-tech is a separate `CvTeam::doTurn` path (bypasses `doResearch`).
 
 ## Heritage & score
+
 - **Heritage** is a permanent player flag (`m_myHeritage`, no removal path). Prereqs: `needLanguage()` (a tech with
   `isLanguage`), `getPrereqTech()`, `getPrereqOrHeritage()` (OR-list of held heritages). **Commerce:**
   `getEraCommerceChanges100` (an era→commerce map) stacks for all eras ≤ current, applied as a flat empire-wide
@@ -50,6 +54,7 @@
   `1 + era`, wonder weight 6 (limited) / 1; computed in the frame loop (`CvGame::update`), not `doTurn`.
 
 ## Corporations
+
 - Two modes: **Classic** (manual unit spread only; `doCorporation` returns immediately) vs **Advanced**
   (`GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS`; autonomous per-turn spread/decay).
 - **Spread:** `iRandThreshold = max over connected cities of corpInfluence·getSpread/100 / distance`, × player
@@ -62,5 +67,6 @@
   rebels pay 50%.
 
 ## See also
+
 - [economy.md](economy.md) · [engine.md](engine.md) (the property solver — corporations ride it) ·
   [../specs/enabler.md](../specs/enabler.md) (the resource/tech dormancy gates) · [../specs/modifier.md](../specs/modifier.md).

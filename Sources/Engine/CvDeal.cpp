@@ -799,7 +799,7 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 	// trace; pairs with the [DIP/cand]/[DIP/decision] valuation in CvPlayerAI).
 	logDiploAI(2, "[DIP/trade] from=%d to=%d item=%d data=%d",
 		(int)eFromPlayer, (int)eToPlayer, (int)trade.m_eItemType, trade.m_iData);
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_TRADE_ID, 2)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_TRADE_ID, 2)
 		.addI(DIPF_from_id, (int)eFromPlayer).addI(DIPF_to_id, (int)eToPlayer)
 		.addI(DIPF_item_id, (int)trade.m_eItemType).addI(DIPF_data_id, trade.m_iData));
 

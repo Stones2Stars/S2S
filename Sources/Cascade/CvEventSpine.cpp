@@ -27,6 +27,8 @@
 #include "CvCivicInfo.h"
 #include "CvProjectInfo.h"
 #include "CvSpecialistInfo.h"
+#include "CvTraitInfo.h"
+#include "CvRouteInfo.h"
 
 // ===================== the spine =====================
 
@@ -40,7 +42,7 @@ void CvEventSpine::registerConsumer(IEventConsumer* pConsumer)
 	m_iInterestMask |= pConsumer->wantedKinds();
 }
 
-void CvEventSpine::emit(const CvCascadeEvent& kEvent)
+void CvEventSpine::emit(const CvSpineEvent& kEvent)
 {
 	const int iBit = 1 << kEvent.eKind;
 	if ((m_iInterestMask & iBit) == 0)
@@ -66,17 +68,6 @@ CvEventSpine& eventSpine()
 // Outputs every event it sees to Cascade.log, gated by gPlayerLogLevel. It renders the RAW payload HERE -- only
 // when the gate is on -- which is the whole point of the spine: call sites emit raw fields with no if(loglevel),
 // and the costly formatting lives in the gated consumer. (The tally is the SELECTIVE consumer, registered + seeded below.)
-
-static const char* cascadeKindName(EventKind eKind)
-{
-	switch (eKind)
-	{
-	case EVENTKIND_DOMAIN:     return "DOMAIN";
-	case EVENTKIND_DIAGNOSTIC: return "DIAGNOSTIC";
-	case EVENTKIND_TRACE:      return "TRACE";
-	default:                   return "?";
-	}
-}
 
 // ===================== RAW field rendering (the logging consumer's formatter) =====================
 // Field name/type knowledge lives PER DOMAIN (each domain registers a SpineFieldInfoFn) -- the spine holds no global
@@ -121,7 +112,7 @@ static const char* spineDomainFile(int iDomainTag)
 	return "Cascade.log";
 }
 
-void cascadeRenderEventLine(char* szBuf, int iBufSize, const CvCascadeEvent& kEvent)
+void spineRenderEventLine(char* szBuf, int iBufSize, const CvSpineEvent& kEvent)
 {
 	char szPre[48];
 	int n = _snprintf(szBuf, iBufSize, "%s", spineLinePrefix(kEvent.iDomainTag, kEvent.iEventId, szPre, sizeof(szPre)));
@@ -131,7 +122,7 @@ void cascadeRenderEventLine(char* szBuf, int iBufSize, const CvCascadeEvent& kEv
 		? g_domains[kEvent.iDomainTag].fieldFn : NULL;
 	for (int k = 0; k < kEvent.iFieldCount && n < iBufSize - 1; ++k)
 	{
-		const CvCascadeEventField& fld = kEvent.aFields[k];
+		const CvSpineEventField& fld = kEvent.aFields[k];
 		SpineFieldType eType = SFT_INT;
 		const char* szName = (fieldFn != NULL) ? fieldFn(fld.eTag, &eType) : NULL;
 		char szIdx[12];
@@ -194,6 +185,14 @@ void cascadeRenderEventLine(char* szBuf, int iBufSize, const CvCascadeEvent& kEv
 			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
 				(fld.v.i >= 0 && fld.v.i < GC.getNumSpecialistInfos()) ? GC.getSpecialistInfo((SpecialistTypes)fld.v.i).getType() : "?");
 			break;
+		case SFT_TRAIT:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumTraitInfos()) ? GC.getTraitInfo((TraitTypes)fld.v.i).getType() : "?");
+			break;
+		case SFT_ROUTE:
+			m = _snprintf(szBuf + n, iBufSize - n, " %s=%s", szName,
+				(fld.v.i >= 0 && fld.v.i < GC.getNumRouteInfos()) ? GC.getRouteInfo((RouteTypes)fld.v.i).getType() : "?");
+			break;
 		case SFT_PLAYER:
 			// Instance name + raw id, BOTH (owner 2026-06-19): name=human readability, (id)=stable machine join-key for the
 			// primary consumers (AI agents during shadow-verify + StoneBase). Resolved LIVE here, which is exact + safe:
@@ -218,7 +217,7 @@ void cascadeRenderEventLine(char* szBuf, int iBufSize, const CvCascadeEvent& kEv
 	szBuf[iBufSize - 1] = '\0';
 }
 
-class CvCascadeLogConsumer : public IEventConsumer
+class CvSpineLogConsumer : public IEventConsumer
 {
 public:
 	// BROAD: logging sees every kind (the tally is the SELECTIVE counterpart).
@@ -227,74 +226,123 @@ public:
 		return (1 << EVENTKIND_DOMAIN) | (1 << EVENTKIND_DIAGNOSTIC) | (1 << EVENTKIND_TRACE);
 	}
 
-	void onEvent(const CvCascadeEvent& kEvent)
+	void onEvent(const CvSpineEvent& kEvent)
 	{
-		if (gPlayerLogLevel < 1)
-		{
-			return; // gate: format + write only when logging is enabled
-		}
-		// Raw payload -> text HERE (gated), which is the whole point of the raw-payload design: resolve known
-		// data-Type indices to readable names so a reader sees BUILDING_FORGE, not "type=1613". Unknown/other
-		// events (e.g. the temporary self-test, whose iType is a playerId) fall back to the raw fields.
+		// ONE render path, no per-event string here (event-spine.md the C++ shape). EVERY event -- the [SPINE] DOMAIN
+		// state-changes + count/name + the load bracket, and the [HAI]/[MODIFIER]/... DIAGNOSTIC domains -- renders
+		// through its domain's REGISTERED prefix + field-info resolvers via spineRenderEventLine. The costly index->text
+		// formatting lives here, only when the gate is on. Gated by the event's OWN surveillance level (1 Telescreen ..
+		// 4 Thought Police; the [SPINE] load bracket uses 0 so it always logs, since GAME_LOAD_STARTED fires before the
+		// BUG log level is pushed). Every emit endpoint tags its domain, so an untagged (SD_NONE) event never occurs in
+		// practice; spineRenderEventLine's generic prefix/field fallback keeps even that case readable, not crashing.
+		if (gPlayerLogLevel < kEvent.iLevel) return;
 		char szBuf[512];
-		// RAW-FIELD logging event (DIAGNOSTIC/TRACE with fields): render via the generic field formatter -> the
-		// migrated [TAG] key=value line. This is the consolidation target path (event-spine-spec section 3). Gated by
-		// the event's own surveillance LEVEL (1 Telescreen .. 4 Thought Police), so per-line levels are respected.
-		if (kEvent.iFieldCount > 0)
-		{
-			if (gPlayerLogLevel < kEvent.iLevel) return;
-			cascadeRenderEventLine(szBuf, sizeof(szBuf), kEvent);
-			gDLL->logMsg(spineDomainFile(kEvent.iDomainTag), szBuf); // R-2: per-domain file ([HAI] -> HunterAI.log)
-			streamLogTee(1, szBuf);
-			return;
-		}
-		if (kEvent.eKind == EVENTKIND_DOMAIN && kEvent.iEventId == CASCADE_EVT_BUILDING_COUNT
-			&& kEvent.iType >= 0 && kEvent.iType < GC.getNumBuildingInfos())
-		{
-			sprintf(szBuf, "[SPINE/DOMAIN] buildingCount %s player=%d count=%d delta=%+d",
-				GC.getBuildingInfo((BuildingTypes)kEvent.iType).getType(), kEvent.iC, kEvent.iA, kEvent.iB);
-		}
-		else if (kEvent.eKind == EVENTKIND_DOMAIN && kEvent.iEventId == CASCADE_EVT_UNIT_COUNT
-			&& kEvent.iType >= 0 && kEvent.iType < GC.getNumUnitInfos())
-		{
-			sprintf(szBuf, "[SPINE/DOMAIN] unitCount %s player=%d count=%d delta=%+d",
-				GC.getUnitInfo((UnitTypes)kEvent.iType).getType(), kEvent.iC, kEvent.iA, kEvent.iB);
-		}
-		else if (kEvent.eKind == EVENTKIND_DOMAIN && kEvent.iEventId == CASCADE_EVT_NAME_CHANGE)
-		{
-			// iType = NameChangeKind, iA = owner player, iB = entity id. Resolve the NEW name LIVE (synchronous on the game
-			// thread -> exact + off-thread-safe). CvWString holds it so getName()-by-value can't dangle through the sprintf.
-			const PlayerTypes eOwner = (PlayerTypes)kEvent.iA;
-			const char* szKind = "?";
-			CvWString szName = L"?";
-			if (eOwner >= 0 && eOwner < MAX_PLAYERS)
-			{
-				const CvPlayer& kP = GET_PLAYER(eOwner);
-				switch (kEvent.iType)
-				{
-				case NAMECHANGE_PLAYER: szKind = "player"; szName = kP.getName(); break;
-				case NAMECHANGE_CIV:    szKind = "civ";    szName = kP.getCivilizationShortDescription(); break;
-				case NAMECHANGE_CITY:   szKind = "city";   { const CvCity* pCity = kP.getCity(kEvent.iB); if (pCity != NULL) szName = pCity->getName(); } break;
-				case NAMECHANGE_UNIT:   szKind = "unit";   { const CvUnit* pUnit = kP.getUnit(kEvent.iB); if (pUnit != NULL) szName = pUnit->getName(); } break;
-				}
-			}
-			sprintf(szBuf, "[SPINE/DOMAIN] nameChange kind=%s player=%d id=%d name=%S", szKind, kEvent.iA, kEvent.iB, szName.GetCString());
-		}
-		else
-		{
-			sprintf(szBuf, "[SPINE/%s] eventId=%d type=%d a=%d b=%d c=%d",
-				cascadeKindName(kEvent.eKind), kEvent.iEventId, kEvent.iType, kEvent.iA, kEvent.iB, kEvent.iC);
-		}
-		gDLL->logMsg("Cascade.log", szBuf);
+		spineRenderEventLine(szBuf, sizeof(szBuf), kEvent);
+		gDLL->logMsg(spineDomainFile(kEvent.iDomainTag), szBuf); // R-2: per-domain file ([HAI] -> HunterAI.log; [SPINE] -> Cascade.log)
 		// Tee onto the live /events SSE stream (#419) so spine events are observable out-of-process (curl /events)
 		// without holding the .log file open. Shared tee with the BBAI log helpers; gated by gStreamLogLevel.
 		streamLogTee(1, szBuf);
 	}
 };
 
-static CvCascadeLogConsumer s_cascadeLogConsumer;
+static CvSpineLogConsumer s_cascadeLogConsumer;
 
-void cascadeRegisterConsumers()
+// ===================== the [SPINE] DOMAIN's own render registration =====================
+// The spine's DOMAIN events (the per-source state-changes, the empire counts, name-change, the grant triggers, and
+// the load bracket) all render through the SAME registered-prefix path every other domain uses (event-spine.md the
+// C++ shape) -- a line PREFIX per eventId + a field-info resolver for its LOCAL field tags -- never an inline
+// per-event string in the consumer. The DOMAIN ints (iType/iA/iB/iC) still ride for grants/cache; these fields are
+// the readable render twin (the struct carries both payloads).
+
+// The [SPINE] domain's LOCAL field tags (the eTag passed to addI). Domain-local per the per-domain isolation rule --
+// the spine holds no global field registry; spineDomainFieldInfo below maps each to (name, render-type).
+enum SpineDomainField
+{
+	SPF_BUILDING = 0, SPF_UNIT, SPF_RELIGION, SPF_CORPORATION, SPF_BONUS, SPF_SPECIALIST,
+	SPF_TECH, SPF_TRAIT, SPF_CIVIC, SPF_PROJECT, SPF_IMPROVEMENT, SPF_TERRAIN, SPF_FEATURE, SPF_ROUTE,
+	SPF_OWNER, SPF_OLD_OWNER, SPF_NEW_OWNER,
+	SPF_CITY, SPF_PLOT, SPF_OLD_CITY, SPF_NEW_CITY,
+	SPF_DELTA, SPF_HAS, SPF_VALUE, SPF_COUNT, SPF_ON,
+	SPF_NAME_KIND, SPF_ENTITY_ID, SPF_NAME
+};
+
+// The constant line PREFIX for each spine DOMAIN eventId ("[SPINE] <eventName>"). The variable fields follow as
+// name=value (spineRenderEventLine).
+static const char* spineDomainPrefix(int iEventId)
+{
+	switch (iEventId)
+	{
+	case SEVT_BUILDING_COUNT:         return "[SPINE] buildingCount";
+	case SEVT_UNIT_COUNT:             return "[SPINE] unitCount";
+	case SEVT_NAME_CHANGE:            return "[SPINE] nameChange";
+	case SEVT_TECH_ACQUIRED:          return "[SPINE] techAcquired";
+	case SEVT_RELIGION_FOUNDED:       return "[SPINE] religionFounded";
+	case SEVT_CIVIC_ADOPTED:          return "[SPINE] civicAdopted";
+	case SEVT_PLAYER_INIT:            return "[SPINE] playerInit";
+	case SEVT_BUILDING_CHANGED:       return "[SPINE] buildingChanged";
+	case SEVT_RELIGION_CHANGED:       return "[SPINE] religionChanged";
+	case SEVT_CORPORATION_CHANGED:    return "[SPINE] corporationChanged";
+	case SEVT_BONUS_CHANGED:          return "[SPINE] bonusChanged";
+	case SEVT_POPULATION_CHANGED:     return "[SPINE] populationChanged";
+	case SEVT_SPECIALIST_CHANGED:     return "[SPINE] specialistChanged";
+	case SEVT_POWER_CHANGED:          return "[SPINE] powerChanged";
+	case SEVT_IMPROVEMENT_CHANGED:    return "[SPINE] improvementChanged";
+	case SEVT_TERRAIN_CHANGED:        return "[SPINE] terrainChanged";
+	case SEVT_FEATURE_CHANGED:        return "[SPINE] featureChanged";
+	case SEVT_ROUTE_CHANGED:          return "[SPINE] routeChanged";
+	case SEVT_TECH_CHANGED:           return "[SPINE] techChanged";
+	case SEVT_TRAIT_CHANGED:          return "[SPINE] traitChanged";
+	case SEVT_PROJECT_CHANGED:        return "[SPINE] projectChanged";
+	case SEVT_GOLDEN_AGE_CHANGED:     return "[SPINE] goldenAgeChanged";
+	case SEVT_STATE_RELIGION_CHANGED: return "[SPINE] stateReligionChanged";
+	case SEVT_CITY_OWNER_CHANGED:     return "[SPINE] cityOwnerChanged";
+	case SEVT_PLOT_OWNER_CHANGED:     return "[SPINE] plotOwnerChanged";
+	case SEVT_WORKING_CITY_CHANGED:   return "[SPINE] workingCityChanged";
+	case SEVT_GAME_LOAD_STARTED:      return "[SPINE] gameLoadStarted";
+	case SEVT_GAME_LOAD_FINISHED:     return "[SPINE] gameLoadFinished";
+	default:                          return "[SPINE] ?";
+	}
+}
+
+// Resolve a [SPINE]-LOCAL field tag to its name + render-type (event-spine.md: field knowledge lives in the domain).
+static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
+{
+	switch (iFieldTag)
+	{
+	case SPF_BUILDING:    *peType = SFT_BUILDING;    return "building";
+	case SPF_UNIT:        *peType = SFT_UNIT;        return "unit";
+	case SPF_RELIGION:    *peType = SFT_RELIGION;    return "religion";
+	case SPF_CORPORATION: *peType = SFT_CORPORATION; return "corporation";
+	case SPF_BONUS:       *peType = SFT_BONUS;       return "bonus";
+	case SPF_SPECIALIST:  *peType = SFT_SPECIALIST;  return "specialist";
+	case SPF_TECH:        *peType = SFT_TECH;        return "tech";
+	case SPF_TRAIT:       *peType = SFT_TRAIT;       return "trait";
+	case SPF_CIVIC:       *peType = SFT_CIVIC;       return "civic";
+	case SPF_PROJECT:     *peType = SFT_PROJECT;     return "project";
+	case SPF_IMPROVEMENT: *peType = SFT_IMPROVEMENT; return "improvement";
+	case SPF_TERRAIN:     *peType = SFT_TERRAIN;     return "terrain";
+	case SPF_FEATURE:     *peType = SFT_FEATURE;     return "feature";
+	case SPF_ROUTE:       *peType = SFT_ROUTE;       return "route";
+	case SPF_OWNER:       *peType = SFT_PLAYER;      return "owner";
+	case SPF_OLD_OWNER:   *peType = SFT_PLAYER;      return "oldOwner";
+	case SPF_NEW_OWNER:   *peType = SFT_PLAYER;      return "newOwner";
+	case SPF_CITY:        *peType = SFT_INT;         return "city";
+	case SPF_PLOT:        *peType = SFT_INT;         return "plot";
+	case SPF_OLD_CITY:    *peType = SFT_INT;         return "oldCity";
+	case SPF_NEW_CITY:    *peType = SFT_INT;         return "newCity";
+	case SPF_DELTA:       *peType = SFT_INT;         return "delta";
+	case SPF_HAS:         *peType = SFT_INT;         return "has";
+	case SPF_VALUE:       *peType = SFT_INT;         return "value";
+	case SPF_COUNT:       *peType = SFT_INT;         return "count";
+	case SPF_ON:          *peType = SFT_INT;         return "on";
+	case SPF_NAME_KIND:   *peType = SFT_STR;         return "kind";
+	case SPF_ENTITY_ID:   *peType = SFT_INT;         return "id";
+	case SPF_NAME:        *peType = SFT_WSTR;        return "name";
+	default:              *peType = SFT_INT;         return NULL;
+	}
+}
+
+void spineRegisterConsumers()
 {
 	static bool s_bRegistered = false;
 	if (s_bRegistered)
@@ -306,15 +354,248 @@ void cascadeRegisterConsumers()
 	// object-owned counts on demand (CvCascadeTally.h), so it neither registers here nor needs a load-time seed. The
 	// DOMAIN count events still flow to logging (observability) + the future invalidation/offline consumers.
 	eventSpine().registerConsumer(&s_cascadeLogConsumer);
+	// The [SPINE] DOMAIN: register its prefix + field-info resolvers so EVERY spine event (state-changes, counts,
+	// name-change, grant triggers, the load bracket) renders through the consumer's structured path
+	// (spineRenderEventLine), never an inline string. NULL log file => Cascade.log.
+	spineRegisterDomain(SD_SPINE, spineDomainPrefix, NULL, spineDomainFieldInfo);
 	// The #430 GRANTS machine: a SELECTIVE DOMAIN consumer -- on a building-built / unit-created event it resolves the
 	// source entity's genuine grants off the mapped CvInfo and emits a [GRANTS] shadow diagnostic (resolution only,
 	// un-run parity). The tally stays a non-consumer (reads object-owned counts).
 	cascadeRegisterGrants();
 }
 
-void cascadeEmitNameChange(int iKind, int iOwner, int iEntityId)
+void emitNameChange(int iKind, int iOwner, int iEntityId)
 {
-	// DOMAIN kind: a rename is synced state an observer must track (Orwell bar). The tally IGNORES it (its switch default
-	// returns; iC = 0 keeps the player-slot guard happy); the logging consumer renders it, resolving the NEW name live.
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DOMAIN, CASCADE_EVT_NAME_CHANGE, iKind, iOwner, iEntityId, 0));
+	// DOMAIN kind: a rename is synced state an observer must track (Orwell bar). Resolve the NEW name + kind LIVE and
+	// pass them as render fields -- the emit() render is synchronous on the game thread, so the CvWString + the literal
+	// kind both outlive it (SFT_WSTR/SFT_STR carry a borrowed pointer, event-spine.md §3). iType/iA/iB keep the raw
+	// payload (NameChangeKind, owner, entity id) an out-of-process consumer can key on.
+	const char* szKind = "?";
+	CvWString szName = L"?";
+	if (iOwner >= 0 && iOwner < MAX_PLAYERS)
+	{
+		const CvPlayer& kP = GET_PLAYER((PlayerTypes)iOwner);
+		switch (iKind)
+		{
+		case NAMECHANGE_PLAYER: szKind = "player"; szName = kP.getName(); break;
+		case NAMECHANGE_CIV:    szKind = "civ";    szName = kP.getCivilizationShortDescription(); break;
+		case NAMECHANGE_CITY:   szKind = "city";   { const CvCity* pCity = kP.getCity(iEntityId); if (pCity != NULL) szName = pCity->getName(); } break;
+		case NAMECHANGE_UNIT:   szKind = "unit";   { const CvUnit* pUnit = kP.getUnit(iEntityId); if (pUnit != NULL) szName = pUnit->getName(); } break;
+		}
+	}
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_NAME_CHANGE, iKind, iOwner, iEntityId, 0);
+	e.iDomainTag = SD_SPINE;
+	e.addStr(SPF_NAME_KIND, szKind).addI(SPF_OWNER, iOwner).addI(SPF_ENTITY_ID, iEntityId).addWStr(SPF_NAME, szName.GetCString());
+	eventSpine().emit(e);   // synchronous render -> szName / szKind still in scope
+}
+
+// ===== the DOMAIN emit ENDPOINTS (event-spine.md) -- source-carrying: iType = WHAT, iC = WHO (owner/triggering
+// player), iSrcLoc = WHERE (cityId | plotId | -1). Each builds the event, tags the [SPINE] domain, and adds its
+// render fields, then emits; NO consumer/routing here (that is a separate build). The DOMAIN ints (iType/iA/iB/iC)
+// are kept for grants/cache; the addI fields are the readable render twin. The interest-guard makes an emit ~free
+// when no consumer wants DOMAIN. Ctor order is (kind, eventId, iType, iA, iB, iC, iSrcLoc). Call AFTER the state
+// field is updated.
+void emitBuildingChanged(int iCity, int iOwner, int iBuilding, int iDelta)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_BUILDING_CHANGED, iBuilding, 0, iDelta, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_DELTA, iDelta);
+	eventSpine().emit(e);
+}
+void emitReligionChanged(int iCity, int iOwner, int iReligion, bool bHas)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_RELIGION_CHANGED, iReligion, bHas ? 1 : 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_RELIGION, iReligion).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_HAS, bHas ? 1 : 0);
+	eventSpine().emit(e);
+}
+void emitCorporationChanged(int iCity, int iOwner, int iCorporation, bool bHas)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CORPORATION_CHANGED, iCorporation, bHas ? 1 : 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_CORPORATION, iCorporation).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_HAS, bHas ? 1 : 0);
+	eventSpine().emit(e);
+}
+void emitBonusChanged(int iCity, int iOwner, int iBonus, int iChange)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_BONUS_CHANGED, iBonus, 0, iChange, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_DELTA, iChange);
+	eventSpine().emit(e);
+}
+void emitPopulationChanged(int iCity, int iOwner, int iNewPop)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_POPULATION_CHANGED, -1, iNewPop, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_VALUE, iNewPop);
+	eventSpine().emit(e);
+}
+void emitSpecialistChanged(int iCity, int iOwner, int iSpecialist, int iDelta)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_SPECIALIST_CHANGED, iSpecialist, 0, iDelta, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_SPECIALIST, iSpecialist).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_DELTA, iDelta);
+	eventSpine().emit(e);
+}
+void emitPowerChanged(int iCity, int iOwner, int iDelta)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_POWER_CHANGED, -1, 0, iDelta, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_DELTA, iDelta);
+	eventSpine().emit(e);
+}
+void emitImprovementChanged(int iPlot, int iOwner, int iImprovement)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_IMPROVEMENT_CHANGED, iImprovement, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_IMPROVEMENT, iImprovement).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+void emitTerrainChanged(int iPlot, int iOwner, int iTerrain)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TERRAIN_CHANGED, iTerrain, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_TERRAIN, iTerrain).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+void emitFeatureChanged(int iPlot, int iOwner, int iFeature)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_FEATURE_CHANGED, iFeature, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_FEATURE, iFeature).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+void emitRouteChanged(int iPlot, int iOwner, int iRoute)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_ROUTE_CHANGED, iRoute, 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_ROUTE, iRoute).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+void emitTechChanged(int iPlayer, int iTech, bool bHas)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TECH_CHANGED, iTech, bHas ? 1 : 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_TECH, iTech).addI(SPF_OWNER, iPlayer).addI(SPF_HAS, bHas ? 1 : 0);
+	eventSpine().emit(e);
+}
+void emitTraitChanged(int iPlayer, int iTrait, bool bAdd)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TRAIT_CHANGED, iTrait, bAdd ? 1 : 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_TRAIT, iTrait).addI(SPF_OWNER, iPlayer).addI(SPF_HAS, bAdd ? 1 : 0);
+	eventSpine().emit(e);
+}
+void emitCivicAdopted(int iPlayer, int iCivic)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CIVIC_ADOPTED, iCivic, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_CIVIC, iCivic).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+void emitProjectChanged(int iPlayer, int iProject, int iDelta)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PROJECT_CHANGED, iProject, 0, iDelta, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PROJECT, iProject).addI(SPF_OWNER, iPlayer).addI(SPF_DELTA, iDelta);
+	eventSpine().emit(e);
+}
+void emitGoldenAgeChanged(int iPlayer, bool bOn)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_GOLDEN_AGE_CHANGED, -1, bOn ? 1 : 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer).addI(SPF_ON, bOn ? 1 : 0);
+	eventSpine().emit(e);
+}
+void emitStateReligionChanged(int iPlayer, int iReligion)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_STATE_RELIGION_CHANGED, iReligion, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_RELIGION, iReligion).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+void emitCityOwnerChanged(int iCity, int iOldOwner, int iNewOwner)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_OWNER_CHANGED, -1, iOldOwner, 0, iNewOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_CITY, iCity).addI(SPF_OLD_OWNER, iOldOwner).addI(SPF_NEW_OWNER, iNewOwner);
+	eventSpine().emit(e);
+}
+void emitPlotOwnerChanged(int iPlot, int iOldOwner, int iNewOwner)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_OWNER_CHANGED, -1, iOldOwner, 0, iNewOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PLOT, iPlot).addI(SPF_OLD_OWNER, iOldOwner).addI(SPF_NEW_OWNER, iNewOwner);
+	eventSpine().emit(e);
+}
+void emitWorkingCityChanged(int iPlot, int iOwner, int iOldCity, int iNewCity)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_WORKING_CITY_CHANGED, -1, iOldCity, iNewCity, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PLOT, iPlot).addI(SPF_OWNER, iOwner).addI(SPF_OLD_CITY, iOldCity).addI(SPF_NEW_CITY, iNewCity);
+	eventSpine().emit(e);
+}
+
+// The empire-count observability events + the grant-trigger events. iSrcLoc = -1 (empire/world footprint). grants
+// reads iType/iA/iB/iC off these (CvCascadeGrants); the addI fields are the render twin. One endpoint each so the
+// CvPlayer / CvTeam emit sites never build a CvSpineEvent inline.
+void emitBuildingCount(int iPlayer, int iBuilding, int iNewCount, int iDelta)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_BUILDING_COUNT, iBuilding, iNewCount, iDelta, iPlayer);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iPlayer).addI(SPF_COUNT, iNewCount).addI(SPF_DELTA, iDelta);
+	eventSpine().emit(e);
+}
+void emitUnitCount(int iPlayer, int iUnit, int iNewCount, int iDelta)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_COUNT, iUnit, iNewCount, iDelta, iPlayer);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_UNIT, iUnit).addI(SPF_OWNER, iPlayer).addI(SPF_COUNT, iNewCount).addI(SPF_DELTA, iDelta);
+	eventSpine().emit(e);
+}
+void emitTechAcquired(int iPlayer, int iTech)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TECH_ACQUIRED, iTech, 1, 0, iPlayer);   // iA = 1 (first-discoverer)
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_TECH, iTech).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+void emitReligionFounded(int iPlayer, int iReligion)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_RELIGION_FOUNDED, iReligion, 0, 0, iPlayer);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_RELIGION, iReligion).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+void emitPlayerInit(int iPlayer)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLAYER_INIT, iPlayer, 0, 0, iPlayer);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+// The load-lifecycle bracket (event-spine.md the load-RESEED). Paired via a static flag so a FINISHED fires ONLY
+// when a load actually STARTED: onFinalInitialized calls emitGameLoadFinished() for new game too, where it no-ops
+// (no matching STARTED). Result-producers (grants) will gate on these -- that is the grant engine's own job, later.
+static bool s_bGameLoadInProgress = false;
+// DOMAIN-kind (so the grant engine will see the bracket) but tagged with the [SPINE] domain so the logging consumer
+// renders it through the registered prefix; iLevel 0 = a lifecycle signal that ALWAYS logs (STARTED fires before the
+// BUG log level is pushed).
+void emitGameLoadStarted()
+{
+	s_bGameLoadInProgress = true;
+	CvSpineEvent kEvt(EVENTKIND_DOMAIN, SEVT_GAME_LOAD_STARTED);
+	kEvt.iDomainTag = SD_SPINE;
+	kEvt.iLevel = 0;
+	eventSpine().emit(kEvt);
+}
+void emitGameLoadFinished()
+{
+	if (!s_bGameLoadInProgress) { return; }   // new game: no STARTED fired -> no FINISHED
+	CvSpineEvent kEvt(EVENTKIND_DOMAIN, SEVT_GAME_LOAD_FINISHED);
+	kEvt.iDomainTag = SD_SPINE;
+	kEvt.iLevel = 0;
+	eventSpine().emit(kEvt);
+	s_bGameLoadInProgress = false;
 }

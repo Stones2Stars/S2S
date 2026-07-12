@@ -1,4 +1,4 @@
-﻿// playerAI.cpp
+// playerAI.cpp
 
 #include "CvGameCoreDLL.h"
 #include "Engine/CvArea.h"
@@ -8056,14 +8056,14 @@ int CvPlayerAI::AI_dealVal(PlayerTypes ePlayer, const CLinkList<TradeData>* pLis
 		}
 		logDiploAI(3, "[DIP/cand] player=%d from=%d item=%d data=%d value=%d",
 			getID(), (int)ePlayer, (int)pNode->m_data.m_eItemType, pNode->m_data.m_iData, iValue - iItemBefore);
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_CAND, 3)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_CAND, 3)
 			.addI(DIPF_player, (int)getID()).addI(DIPF_from, (int)ePlayer)
 			.addI(DIPF_item, (int)pNode->m_data.m_eItemType).addI(DIPF_data, pNode->m_data.m_iData)
 			.addI(DIPF_value, iValue - iItemBefore));
 	}
 	logDiploAI(2, "[DIP/dealval] player=%d from=%d items=%d total=%d atWar=%d",
 		getID(), (int)ePlayer, pList->getLength(), iValue, bAtWar ? 1 : 0);
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_DEALVAL, 2)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_DEALVAL, 2)
 		.addI(DIPF_player, (int)getID()).addI(DIPF_from, (int)ePlayer)
 		.addI(DIPF_items, pList->getLength()).addI(DIPF_total, iValue)
 		.addI(DIPF_atWar, bAtWar ? 1 : 0));
@@ -8104,7 +8104,7 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 
 	logDiploAI(1, "[DIP/begin] player=%d with=%d give=%d get=%d iChange=%d",
 		getID(), (int)ePlayer, pOurList->getLength(), pTheirList->getLength(), iChange);
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_BEGIN, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_BEGIN, 1)
 		.addI(DIPF_player, (int)getID()).addI(DIPF_with, (int)ePlayer)
 		.addI(DIPF_give, pOurList->getLength()).addI(DIPF_get, pTheirList->getLength())
 		.addI(DIPF_iChange, iChange));
@@ -8123,7 +8123,7 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 			{
 				logDiploAI(1, "[DIP/decision] player=%d with=%d verdict=reject reason=denial item=%d",
 					getID(), (int)ePlayer, (int)pNode->m_data.m_eItemType);
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_DECISION_REJECT_DENIAL, 1)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_DECISION_REJECT_DENIAL, 1)
 					.addI(DIPF_player, (int)getID()).addI(DIPF_with, (int)ePlayer)
 					.addI(DIPF_item, (int)pNode->m_data.m_eItemType));
 				return false;
@@ -8184,7 +8184,7 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 
 	logDiploAI(2, "[DIP/score] player=%d with=%d ourValue=%d theirValue=%d",
 		getID(), (int)ePlayer, iOurValue, iTheirValue);
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_SCORE, 2)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_SCORE, 2)
 		.addI(DIPF_player, (int)getID()).addI(DIPF_with, (int)ePlayer)
 		.addI(DIPF_ourValue, iOurValue).addI(DIPF_theirValue, iTheirValue));
 
@@ -8243,7 +8243,7 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 		const bool bAcceptGrant = iOurValue < iThreshold;
 		logDiploAI(1, "[DIP/decision] player=%d with=%d verdict=%s reason=grant ourValue=%d threshold=%d",
 			getID(), (int)ePlayer, bAcceptGrant ? "ACCEPT" : "reject", iOurValue, iThreshold);
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO,
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO,
 				bAcceptGrant ? DIP_DECISION_ACCEPT_GRANT : DIP_DECISION_REJECT_GRANT, 1)
 			.addI(DIPF_player, (int)getID()).addI(DIPF_with, (int)ePlayer)
 			.addI(DIPF_ourValue, iOurValue).addI(DIPF_threshold, iThreshold));
@@ -8255,7 +8255,7 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 		const bool bAcceptRenew = iTheirValue * 110 >= iOurValue * 100;
 		logDiploAI(1, "[DIP/decision] player=%d with=%d verdict=%s ourValue=%d theirValue=%d iChange<0",
 			getID(), (int)ePlayer, bAcceptRenew ? "ACCEPT" : "reject", iOurValue, iTheirValue);
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO,
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO,
 				bAcceptRenew ? DIP_DECISION_ACCEPT_RENEW : DIP_DECISION_REJECT_RENEW, 1)
 			.addI(DIPF_player, (int)getID()).addI(DIPF_with, (int)ePlayer)
 			.addI(DIPF_ourValue, iOurValue).addI(DIPF_theirValue, iTheirValue));
@@ -8264,7 +8264,7 @@ bool CvPlayerAI::AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData
 	const bool bAccept = iTheirValue >= iOurValue;
 	logDiploAI(1, "[DIP/decision] player=%d with=%d verdict=%s ourValue=%d theirValue=%d",
 		getID(), (int)ePlayer, bAccept ? "ACCEPT" : "reject", iOurValue, iTheirValue);
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO,
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO,
 			bAccept ? DIP_DECISION_ACCEPT : DIP_DECISION_REJECT, 1)
 		.addI(DIPF_player, (int)getID()).addI(DIPF_with, (int)ePlayer)
 		.addI(DIPF_ourValue, iOurValue).addI(DIPF_theirValue, iTheirValue));
@@ -15673,7 +15673,7 @@ EspionageMissionTypes CvPlayerAI::AI_bestPlotEspionage(CvPlot* pSpyPlot, PlayerT
 	logEspionageAI(1, "[ESP/best] player=%d spyAt=(%d,%d) mission=%d target=%d value=%d",
 		getID(), pSpyPlot ? pSpyPlot->getX() : -1, pSpyPlot ? pSpyPlot->getY() : -1,
 		(int)eBestMission, (eBestMission != NO_ESPIONAGEMISSION ? (int)eTargetPlayer : -1), iBestValue);
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_ESPIONAGE, ESP_BEST, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_ESPIONAGE, ESP_BEST, 1)
 		.addI(ESPF_player, (int)getID())
 		.addI(ESPF_spyX, pSpyPlot ? pSpyPlot->getX() : -1)
 		.addI(ESPF_spyY, pSpyPlot ? pSpyPlot->getY() : -1)
@@ -19809,7 +19809,7 @@ void CvPlayerAI::AI_doDiplo()
 								}
 							}
 
-							eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_CONSIDER, 2)
+							eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_CONSIDER, 2)
 								.addI(DIPF_actor, getID()).addI(DIPF_target, iI)
 								.addI(DIPF_minAtWar, iMinAtWarCounter).addI(DIPF_rand, iDeclareWarTradeRand));
 
@@ -19826,7 +19826,7 @@ void CvPlayerAI::AI_doDiplo()
 								iDeclareWarTradeRand++;
 							}
 
-							eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_RANDADJ, 2)
+							eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_RANDADJ, 2)
 								.addI(DIPF_actor, getID()).addI(DIPF_target, iI)
 								.addI(DIPF_minAtWar, iMinAtWarCounter).addI(DIPF_rand, iDeclareWarTradeRand));
 
@@ -19835,7 +19835,7 @@ void CvPlayerAI::AI_doDiplo()
 								iBestValue = 0;
 								eBestTeam = NO_TEAM;
 
-								eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_PASSRAND, 2)
+								eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_PASSRAND, 2)
 									.addI(DIPF_actor, getID()).addI(DIPF_target, iI));
 
 								for (int iJ = 0; iJ < MAX_PC_TEAMS; iJ++)
@@ -19867,11 +19867,11 @@ void CvPlayerAI::AI_doDiplo()
 								}
 
 								if (eBestTeam != NO_TEAM)
-									eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_TEAM, 2)
+									eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_TEAM, 2)
 										.addI(DIPF_actor, getID()).addI(DIPF_target, iI)
 										.addI(DIPF_value, iBestValue).addI(DIPF_ally, GET_TEAM(eBestTeam).getLeaderID()));
 								else
-									eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_NOTEAM, 2)
+									eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_NOTEAM, 2)
 										.addI(DIPF_actor, getID()).addI(DIPF_target, iI));
 
 								if (eBestTeam != NO_TEAM)
@@ -19904,14 +19904,14 @@ void CvPlayerAI::AI_doDiplo()
 									if (eBestGiveTech != NO_TECH)
 									{
 										iTheirValue = GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_techTradeVal(eBestGiveTech, getTeam());
-										eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_TECH, 2)
+										eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_TECH, 2)
 											.addI(DIPF_actor, getID()).addI(DIPF_target, iI)
 											.addI(DIPF_tech, eBestGiveTech).addI(DIPF_theirValue, iTheirValue));
 									}
 									else
 									{
 										iTheirValue = 0;
-										eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_NOTECH, 2)
+										eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_NOTECH, 2)
 											.addI(DIPF_actor, getID()).addI(DIPF_target, iI));
 									}
 
@@ -19947,7 +19947,7 @@ void CvPlayerAI::AI_doDiplo()
 										{
 											int iTechValue = GET_TEAM(GET_PLAYER((PlayerTypes)iI).getTeam()).AI_techTradeVal(eBestGiveTech2, getTeam());
 											iTheirValue += iTechValue;
-											eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_TECH2, 2)
+											eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_TECH2, 2)
 												.addI(DIPF_actor, getID()).addI(DIPF_target, iI)
 												.addI(DIPF_tech, eBestGiveTech2).addI(DIPF_value, iTechValue).addI(DIPF_total, iTheirValue));
 										}
@@ -19978,7 +19978,7 @@ void CvPlayerAI::AI_doDiplo()
 												}
 											}
 
-											eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_ASK, 2)
+											eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_ASK, 2)
 												.addI(DIPF_actor, getID()).addI(DIPF_target, iI).addI(DIPF_gold, iGold));
 
 											if (iGold > 0)
@@ -20019,7 +20019,7 @@ void CvPlayerAI::AI_doDiplo()
 												}
 											}
 
-											eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_OFFER, 2)
+											eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_OFFER, 2)
 												.addI(DIPF_actor, getID()).addI(DIPF_target, iI).addI(DIPF_gold, iGold));
 
 											if (iGold > 0)
@@ -20039,13 +20039,13 @@ void CvPlayerAI::AI_doDiplo()
 										}
 									}
 
-									eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_VALUES, 2)
+									eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_VALUES, 2)
 										.addI(DIPF_actor, getID()).addI(DIPF_target, iI)
 										.addI(DIPF_theirValue, iTheirValue).addI(DIPF_ourValue, iOurValue));
 
 									if (iTheirValue > (iOurValue * 3 / 4))
 									{
-										eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_PROCEED, 2)
+										eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_WARALLY_PROCEED, 2)
 											.addI(DIPF_actor, getID()).addI(DIPF_target, iI));
 
 										ourList.clear();

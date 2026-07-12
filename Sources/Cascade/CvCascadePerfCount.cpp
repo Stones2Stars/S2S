@@ -5,6 +5,7 @@
 #include "CvGameCoreDLL.h"
 #include "CvCascadePerfCount.h"
 
+long CascadePerf::calcCount[CSCOPE_COUNT][CCHAN_COUNT] = { { 0 } };
 int CascadePerf::operatingBuildingsRecomputed = 0;
 int CascadePerf::operatingBuildingsCacheHits = 0;
 int CascadePerf::pctStack = 0;
@@ -40,6 +41,8 @@ double CascadePerf::autoMissionMs = 0.0;
 
 void CascadePerf::reset()
 {
+	for (int s = 0; s < CSCOPE_COUNT; ++s)
+		for (int c = 0; c < CCHAN_COUNT; ++c) calcCount[s][c] = 0;
 	operatingBuildingsRecomputed = 0; operatingBuildingsCacheHits = 0; pctStack = 0; condEval = 0; accRefresh = 0;
 	wbCompute = 0;
 	for (int i = 0; i < CC_COUNT; ++i) condEvalBy[i] = 0;   // condCaller itself is a live scope tag -- never reset

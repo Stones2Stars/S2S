@@ -1,4 +1,4 @@
-﻿#include "CvArmy.h"
+#include "CvArmy.h"
 #include "CvUnit.h"
 #include "CvSelectionGroup.h"
 #include "Defines/CvString.h"
@@ -248,7 +248,7 @@ void CvArmy::doTurn()
         pLeaderGroup->getHeadUnit() ? pLeaderGroup->getHeadUnit()->getID() : -1,
         pLeaderPlot->getX(), pLeaderPlot->getY(),
         m_pTargetPlot ? m_pTargetPlot->getX() : -1, m_pTargetPlot ? m_pTargetPlot->getY() : -1);
-    eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_GROUP, GRP_ARMY_ID, 2)
+    eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GROUP, GRP_ARMY_ID, 2)
         .addI(GRPF_OWNER, (int)getOwner()).addI(GRPF_ARMY, m_iID).addI(GRPF_MISSION, (int)m_eMission)
         .addI(GRPF_LEADERUNIT, pLeaderGroup->getHeadUnit() ? pLeaderGroup->getHeadUnit()->getID() : -1)
         .addI(GRPF_X, pLeaderPlot->getX()).addI(GRPF_Y, pLeaderPlot->getY())
@@ -516,7 +516,7 @@ void CvArmy::setLeader(CvSelectionGroup* pLeader)
         // [GRP/leader] -- army leader (group) assignment.
         logGroupAI(2, "[GRP/leader] owner=%d army=%d leaderGroup=%d",
             (int)getOwner(), m_iID, pLeader->getID());
-        eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_GROUP, GRP_LEADER_ID, 2)
+        eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GROUP, GRP_LEADER_ID, 2)
             .addI(GRPF_OWNER, (int)getOwner()).addI(GRPF_ARMY, m_iID).addI(GRPF_LEADERGROUP, pLeader->getID()));
     }
     else

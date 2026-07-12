@@ -32,12 +32,14 @@ live in the getters; the side effects the deleted changers carried (the trade-ne
 gates anything.
 
 ## What a capability is (recap)
+
 - **Team / empire scope** — applies to the whole civilization, not one unit (the section name carries the scope).
 - **Source-derived, never granted** — active iff some **live** HAVE source (tech / civic / building) carries the
   key; derived on query, enabler-style. Monotonic only insofar as the source is (a tech is; a building isn't).
 - The empire analogue of a unit `skill` (a `skill` is the *unit* ability; a `capability` is the *empire* one).
 
 > **⚖ PARAMETERIZED abilities.** Two shapes, decided by the value's shape (json.md §2):
+>
 > - **Per-commerce sliders — discrete capability keys** (`setScienceRate`/`setCultureRate`/`setEspionageRate`):
 >   after the split each is a genuine bare-bool ability, so the flat set carries them.
 > - **Per-terrain trade — NOT a capability: the root `canTradeOn` block** (named `canTradeOn`, not `canTrade`, to
@@ -55,7 +57,7 @@ gates anything.
 >   "trade ROAD" (a connectivity conduit, like routes) — NOT whether you can trade on a river tile — so it is not
 >   terrain-list data; it **IS a capability** (a river-interaction ability like `bridgeBuilding`), outside
 >   `canTradeOn`, which stays purely "which plot types carry trade".
-
+>
 > **⚖ The `canTrade` block — the whole `-Trading` family re-homes out of flat capabilities.**
 > The semantic model first: `openBorders` is FULLY open — a civilization-to-civilization **"tradeable
 > pact"** (all units pass); `limitedBorders` means only CIVILIAN units (merchants and such) can pass — **in-game
@@ -86,16 +88,17 @@ gates anything.
 > **Engine-side option compositions stay at the consumer:** `canTrade.vassals` / `canTrade.permanentAlliance`
 > compose GAME OPTIONS engine-side (`CvTeam.cpp:3262/3279`: the flag getter = capability ∧
 > `GAMEOPTION_ENABLE_PERMANENT_ALLIANCES` / ¬`GAMEOPTION_NO_VASSAL_STATES`) — the capability DATA is the unlock,
-> like era-scaling on `allowed` caps. Any parity harness must fold the options. `isCommerceFlexible` additionally
+> like era-scaling on `allowed` caps. Any spec-check must fold the options. `isCommerceFlexible` additionally
 > gates espionage on met-civs and everything on founded-first-city — runtime UI conditions, not capability data.
 > `canSetScienceRate` + `canSetEspionageRate` are UNIVERSAL defaults (`CIV4CommerceInfo.xml` `bFlexiblePercent=1`,
 > a system global with no grantor) — their data home is `TECH_GAME_START`'s `capabilities`; culture stays
 > tech-gated (TECH_DRAMA); gold has no slider.
-
+>
 > **⚖ The `canWorkOn` block.** *Which plot classes a city's citizens may WORK.*
 > Deliberately **coarse plot classes, not terrain lists** — in essence
 > **`water` · `ocean` · `peaks` · `space`**. The `CvCity::canWork` gate queries the block generically (derived
 > union over live sources). Grounded legacy sources:
+>
 > - **water/ocean** — `bWaterWork` (`TECH_TRAP_FISHING` → `CvTeam::isWaterWork`, the `canWork` `isWater()` gate,
 >   `CvCity.cpp:1753`) is the ONE direct work gate found. The owner half-remembers a separate ocean (and
 >   deepOcean) tech requirement — NOT found in `canWork` (all water terrains carry positive base yield,
@@ -108,7 +111,7 @@ gates anything.
 > Same magically-free modularity as `canTrade`/`canTradeOn`: a new workable plot class is data, not a new
 > hardcoded gate. **If terrain-level explicitness is ever needed here, rework it THEN** — the
 > coarse classes are the model until a real need says otherwise.
-
+>
 > **⚖ Dual-plane abilities — same name on both planes.** An ability can exist as BOTH a
 > unit **skill** and an empire **capability**, under the **same clean name**. The exemplar: **`canPassPeaks`** — a
 > promotion grants the unit skill (legacy `bCanMovePeaks`) to a specific unit, and `TECH_MOUNTAINEERING` makes it
@@ -152,7 +155,7 @@ gates anything.
 - **`canSeeFurtherFromWater`** — see FROM water plots one level higher (`CvPlot::seeFromLevel`, `CvPlot.cpp:2562`) —
   ships stop being nearsighted; second consumer in AI settle scoring (`CvCity.cpp:6327`). It *could* be modelled in
   the vision system proper, but **stays a capability — solve if/when it is a problem**; expected surfacing point:
-  when the visibility system is modelled properly during shadow/cutover — whoever builds that system revisits this
+  when the visibility system is modelled properly during the cutover build — whoever builds that system revisits this
   key then (it sits next to the BLOCKED unit visibility/invisibility accumulators and the building `lineOfSight`
   channel).
 - **`hasCenteredMap`** — *"when it arrives, map gets centered, and stays centered"* — an arrive-and-stay latch in
@@ -165,11 +168,13 @@ gates anything.
   (`CvGameInterface.cpp:2907`) + globe view goes round-with-stars (`CvGame.cpp:2760`).
 
 ## Open
+
 - **Ocean-working trace** — the half-remembered ocean/deepOcean requirement (see the `canWorkOn` ruling).
 - **Stale code comment** — `CvJsonTechInfo.h:7` still claims "techs are the ONLY grantor"; fix when the
   capability union widens from techs-only to the full HAVE axis (civic/building grantors).
 
 ## See also
+
 - [json.md](json.md) §8 — the system. · [skills.md](skills.md) — the unit counterpart. · [tags.md](tags.md) ·
   [state.md](state.md). · [engine.md](../reference/engine.md) — the save-field retirement mechanism + the
   deleted-changer side-effect audit rule the capability cut proved.

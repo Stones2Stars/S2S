@@ -6,6 +6,7 @@
 > observability-infra docs (the old `README` was fully superseded by `logging.md`).
 
 ## Gate knobs (the log levels)
+
 - The four AI globals `gPlayerLogLevel` / `gTeamLogLevel` / `gCityLogLevel` / `gUnitLogLevel` are **aliases driven by
   the single `Autolog__LogLevelPlayerBBAI` BUG option**. `gPerfLogLevel` is independent; `gStreamLogLevel` (default 1)
   is a further subset gate on top of the file gate. `_DEBUG` forces all four AI globals to 4.
@@ -15,12 +16,14 @@
   "fires in FinalRelease, CRIT" framing is wrong for the shipped build).
 
 ## Domain / tag registry
+
 14 domains, each `[TAG]` prefix → log file → scope global → source: e.g. `[WAI]` → `BuildEvaluation.log` →
 `gPlayerLogLevel` → `CvWorkerAI.cpp`; plus `[CIT]`/`[UNT]`/`[COM]`/`[WAR]`/`[CTB]`/`[ENG]`/`[PERF]`. `[PERF/reqmodel]`
 passes when `mismatches=0`. `[INIT/*]` was renamed from `[GAME/*]` to avoid clashing with the `[STATE/game]` cascade
 feed. Call-site census exists (WAI 43 sites, HAI 54, CTB 66, …). Dead sinks: `CB.log`, `C2C.log` (ruled DELETE).
 
 ## The live HTTP server (today)
+
 - Bind **`127.0.0.1:7227`**, GET-only HTTP/1.0 (405 otherwise). BUG option `Autolog__HttpServer` (default **off**).
 - **Two data buckets, split on verification** (full map + the route table: [http-endpoints](../specs/http-endpoints.md)):
   - **`/state/*`** — RAW inputs only, **no computed value** (no yields, no buildability verdicts). `/state/all`,
@@ -38,6 +41,7 @@ feed. Call-site census exists (WAI 43 sites, HAI 54, CTB 66, …). Dead sinks: `
   `/shadow` sweeps) and the rationale are in [http-endpoints](../specs/http-endpoints.md) "What was dropped".
 
 ## The field census (event-spine migration input)
+
 The exhaustive raw-field census: ~196 gated log templates across 10 domains, each field's name + cType + a sample
 call-site. **Distribution:** ~80% int, ~15% string, ~5% typeIndex, ~3% float (PERF only); median 5–6 fields, ~85% fit
 ≤ 9, only 6 templates > 12. **Migration constraints:** wide `wchar_t*` strings can't travel raw on the spine — carry
@@ -46,6 +50,7 @@ pre-composed `CvString` criteria/joinInfo fields are the hardest to decompose; `
 `int64_t` outlier (needs a dual-slot / extended tag).
 
 ## PlotSnapshot — the one CSV surface
+
 - Written at 4 call points (all from `CvGame`): `start` (new game), `load`, `regen`, `turn` (top of every `doTurn`,
   before AI decisions). File: `…/Beyond The Sword/Logs/PlotSnapshot_<tag>_t<turn>.csv`.
 - **Rotation:** `turn` keeps only the last 3; `start`/`load`/`regen` wipe **all** other `PlotSnapshot_*.csv` — a turn
@@ -56,11 +61,23 @@ pre-composed `CvString` criteria/joinInfo fields are the hardest to decompose; `
   `improvementCurrentValue` `0 = uninitialised, not zero` caveat.
 
 ## Target consolidation
+
 The migration target is one routing — `emit → CvEventSpine::dispatch → CvCascadeLogConsumer / Tally / grants` (the
 [logging](../specs/logging.md) §4 event spine). Old anomalies slated for removal: dead `logCB`/`logToFile` Python
 exports (an arbitrary-file-write surface), the `C2C.log` firehose, the `rjLogLine` split gate (a hardcoded level-1 tee).
 
+## The `(scope,channel)` calc-count gate
+
+Every calculation logs its `(scope, channel)` — scope ∈ world / team / empire / area / city / plot / building / unit /
+specialist; channel = every modifiable number (base yields, commerce, properties, free XP, free specialists, …). The
+per-turn count is a standing acceptance gate AND regression tripwire: over ~50k calculations for anything in a single
+turn is near-certainly a failure (a blanket recompute has crept back); a quiet turn approaches zero; steady-state cost
+tracks EVENT volume (thousands), never entity count (millions). The counter is exposed live via the StoneBase
+performance dashboard (Razor + SignalR), the histogram naming the culprit scope/channel on a breach
+([DEC-calc-count-gate](../architecture/decisions.md#dec-calc-count-gate)).
+
 ## See also
+
 - [../specs/logging.md](../specs/logging.md) — the observability bar + hook-shape *design*.
   [../specs/http-endpoints.md](../specs/http-endpoints.md) — the endpoint redesign this server moves toward.
   [../specs/validation.md](../specs/validation.md) — the extractor's role as the verification oracle.

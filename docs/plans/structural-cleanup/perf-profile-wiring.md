@@ -6,7 +6,7 @@
 > the internal `PROFILE_*` profiler is **never** coming back. This doc is cutover-coupled (the pre-cut
 > pair-timing slice below closes at each legacy cut), so it lives with the [structural-cleanup](README.md)
 > bulldozer set and dies with the cascade cutover.
-
+>
 > **⛔ RULING (owner 2026-07-05, HARDENED 2026-07-06): NEVER use the internal profiler; NEVER reinstate the
 > `PROFILE_*` macro family.** The census / `[MODIFIER/perf]` gated logging suits our purposes better and is
 > the *only* perf surface we build on. The one attempt to ship the internal profiler in **Release** (behind a
@@ -19,7 +19,7 @@
 > the profiler is dead, and **[#449](https://github.com/Stones2Stars/S2S/issues/449) is its REMOVAL**, not a
 > fix that brings it back. Do not add, un-gate, or Release-compile any `PROFILE_*` / `IFP*` / internal-profiler
 > path.
-
+>
 > **✅ THE PERF SURFACE (what we DO use — the wiring already in place):** the census —
 > `Cascade/CvCascadePerfCount` + the per-turn `[MODIFIER/perf]` spine lines: call counts
 > (operating buildings/yieldRate/pctStack/commerceRate/condEval/…), the `PerfAccumTimer` ms buckets, the **condEval CALLER
@@ -35,8 +35,9 @@
 - **The `[MODIFIER/perf]` census** (`Cascade/CvCascadePerfCount.{h,cpp}`): per-turn whole-turn CALL COUNTERS
   (operating buildings recomputes vs cache hits, yieldRate100/percentStack/commerceRate100 computes, condition-evaluator
   leaf evals, accumulator refreshes, wellbeing computes) + `PerfAccumTimer` stopwatch accumulators
-  (gPerfLogLevel-gated, ms×10 ints), flushed once per turn by the modifier shadow as a spine line teed to
-  `/events`. Every perf ruling on the #430 branch was made from these numbers.
+  (gPerfLogLevel-gated, ms×10 ints), flushed once per turn as a `[MODIFIER/perf]` spine line teed to
+  `/events` — the perf counters feed the `(scope,channel)` calc-count gate + the StoneBase performance dashboard
+  ([DEC-calc-count-gate](../../architecture/decisions.md#dec-calc-count-gate)). Every perf ruling on the #430 branch was made from these numbers.
 - **The condEval CALLER-DOMAIN split** (`CascadeCondCaller` + `CascadeCondScope`, the flip-era outlier lap):
   a scoped tag set at the outermost compute entries attributes every eval to whoever initiated the chain
   (`ceOther/ceRates/ceWb/ceScalars/ceOperatingBuildings/ceFrontB/ceFrontU/ceFrontPP/ceFrontP/ceCanBuild/cePromo`); `ceOther`
@@ -44,7 +45,7 @@
   counters/stopwatches (`front{B,U,PP,P}Fills/MsX10` + `promoFills/MsX10`).
 - **The whole-turn wall time** (`turnMsX10`, landed 2026-07-04): flush-to-flush WALL time on the second
   `[MODIFIER/perf]` line, beside `legacyRateMsX10`/`legacyWbMsX10` (the legacy oracle calls timed in the
-  shadow nets). ⚠ In interactive play `turnMsX10` includes the human's between-turn time; it is clean on
+  pre-cut pair nets). ⚠ In interactive play `turnMsX10` includes the human's between-turn time; it is clean on
   scripted/autoplay benches.
 - **The store lives in StoneBase** (the GameTracker port): the `/events` listener persists one row per turn to
   the owner's Postgres (`perf_turns` + key-value `perf_fields`; CSV fallback). Verified live end-to-end.
@@ -74,12 +75,12 @@ pair only when `gPerfLogLevel` is on. Observational only, no OOS surface.
 > can use"*). Capture each channel's pair numbers **before** its legacy accumulators are deleted — after the
 > cut the comparison is unmeasurable.
 
-Every flipped getter carries its `*Legacy` sibling in the same build, and the shadow nets already call BOTH
+Every flipped getter carries its `*Legacy` sibling in the same build, and the pre-cut pair nets already call BOTH
 sides — so per-family pair stopwatches (cascade-body ms vs legacy-body ms accumulated per turn on the existing
 `[MODIFIER/perf]` line) give "what is legacy faster at", per channel, before any cut.
 
-First pair numbers on record (2026-07-04): legacy oracle reads ~40–60 ms/turn vs the shadow CALCULATOR
-~500 ms/turn (stored-accumulator O(1) fetch vs from-scratch walk — NB the calculator is the shadow oracle, not
+First pair numbers on record (2026-07-04): legacy oracle reads ~40–60 ms/turn vs the from-scratch CALCULATOR
+~500 ms/turn (stored-accumulator O(1) fetch vs from-scratch walk — NB the calculator is the pre-cut comparison oracle, not
 the flipped slot-read path the game runs on).
 
 What the comparison informs (the transferable-technique question): legacy's speed = O(1) incremental
@@ -93,6 +94,7 @@ trade). The current component-recompute substrate is the coarse-but-honest v1; t
 the legacy speed claimed without the legacy disease, and the pair numbers say where it is worth it.
 
 ## See also
+
 - [state-repositories.md](../../architecture/state-repositories.md) — the derived-cache model + the turn-end
   unified rebuild end-state this wiring measures.
 - [logging.md](../../specs/logging.md) — the gated `[TAG]`/spine surface the sink rides.

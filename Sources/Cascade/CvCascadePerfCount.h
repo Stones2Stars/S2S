@@ -29,8 +29,53 @@ enum CascadeCondCaller
 	CC_COUNT
 };
 
+// The (scope, channel) CALC-COUNT axis -- [DEC-calc-count-gate] / observability.md. Every package-value recompute
+// increments calcCount[scope][channel]; the census flushes the total + marginals (the [MODIFIER/perf] line, 16-field
+// cap) and /computed/perf exposes the full scope x channel matrix live. A quiet turn (no state change) touches
+// nothing -> ~0; a blanket recompute balloons it; >50k/turn is near-certainly a failure (a blanket has crept back),
+// and the histogram names the culprit scope/channel. Steady-state tracks EVENT volume, never entity count. Ungated
+// int-increment-per-event (perf-profile-wiring.md: the counter is always-on; only stopwatches are gPerfLogLevel-gated).
+// Scope axis = observability.md's nine; channel axis = the owner's family list ("any number modified by game
+// mechanics is a yield") -- EXTENSIBLE: add a CCHAN_* when a new modifiable number appears (CCHAN_OTHER is the honest
+// residual -- a big OTHER names the next channel to split).
+enum CascadeCalcScope
+{
+	CSCOPE_WORLD = 0,
+	CSCOPE_TEAM,
+	CSCOPE_EMPIRE,       // the player scope
+	CSCOPE_AREA,
+	CSCOPE_CITY,
+	CSCOPE_PLOT,
+	CSCOPE_BUILDING,
+	CSCOPE_UNIT,
+	CSCOPE_SPECIALIST,
+	CSCOPE_COUNT
+};
+enum CascadeCalcChan
+{
+	CCHAN_BASE_YIELDS = 0,   // yield packages (percent / specialist / building-flat)
+	CCHAN_COMMERCE,          // commerce packages (specialist / percent / base-own / keyed / SR-match)
+	CCHAN_WELLBEING,         // health + happiness city terms + verdict assemble
+	CCHAN_GP,                // great-people rate (base + modifier + specialist)
+	CCHAN_DEFENSE,           // defense amount + bombard + min
+	CCHAN_MAINTENANCE,       // maintenance modifier
+	CCHAN_TRADE,             // trade routes (city + coastal)
+	CCHAN_BUILDRATE,         // buildRate ledgers + members
+	CCHAN_FREE_SPECIALISTS,  // freeSpecialists AMOUNT fills (the ruled seam)
+	CCHAN_FREE_XP,           // free experience
+	CCHAN_PROPERTIES,        // property source magnitudes
+	CCHAN_FRONTIER,          // the enabler frontier fills (buildable / trainable / creatable / maintainable / promo)
+	CCHAN_OTHER,             // residual bucket (a big OTHER names the next channel to split -- an honest gap)
+	CCHAN_COUNT
+};
+
 struct CascadePerf
 {
+	// the (scope, channel) calc-count -- the DEC-calc-count-gate histogram; reset per turn like every census counter
+	static long calcCount[CSCOPE_COUNT][CCHAN_COUNT];
+	static inline void calc(int eScope, int eChan) { ++calcCount[eScope][eChan]; }
+	static inline void calcN(int eScope, int eChan, int n) { calcCount[eScope][eChan] += n; }
+
 	static int operatingBuildingsRecomputed;  // operating-buildings RECOMPUTES (recomputeOperatingBuildingsInto runs)
 	static int operatingBuildingsCacheHits;  // operating buildings READS served by the standing cache (operatingBuildings calls)
 	static int pctStack;      // PercentStack::percentStack computes

@@ -14,6 +14,13 @@
 
 ## The shape — component slots OVER the calculator packages
 
+> **⚠ Current model:** the store-at-target city-slot substrate this section describes was rebuilt to the
+> founding per-scope-package design in increment I — [scope-packages.md](scope-packages.md) is the authoritative
+> substrate doc. In particular, the **GLOBAL EPOCH, the per-player epochs, the turn stamp, and every per-turn
+> self-heal named in the tables below are REMOVED** ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)):
+> freshness is targeted, spine-routed per-source-mask invalidation only — read the "dirtied by" columns as the
+> event triggers, never as epoch/turn-roll polling.
+
 modifier.md §2a decomposes the city rate into components with **different volatility**. The accumulator stores
 each component as standing state and recomputes ONLY a component whose inputs changed — the calculator packages
 (`PercentStack::percentStack`, `YieldBasePackages::basePlot/specialist/freeCity/goldenAge`,
@@ -22,6 +29,7 @@ adds what was missing: the standing state + event-driven freshness. A clean read
 components (§2a combine) — **no source re-walk on any read** (§1 rule (a)).
 
 Per **city** (channels ×100 fixed-point):
+
 | component | §2a term | recompute fn | dirtied by |
 |---|---|---|---|
 | `PCT[7]` | the ONE additive percent stack (city+area+empire buildings, civics, traits, projects, civic building-keyed) | `PercentStack::percentStack` | building events in this city; the global epoch (tech/civic/trait/GA/project); turn roll |
@@ -36,10 +44,14 @@ Per **player**: `FREECITY[3]` + `GA[3]` (trait flats; golden-age member) — dir
 commerce **slider** (`getCommercePercent` — multiplies at combine, so slider moves need NO invalidation),
 `isDisorder`, population (for the perPop term inside EXTRA's recompute).
 
-**Dirty machinery:** per-city bitmask + a GLOBAL EPOCH (player/team-level events: tech, civic, trait,
-golden-age, project) + a **turn stamp** — every component recomputes at least once per turn (the §3
-"re-evaluated every recompute" dormancy cadence AND the self-heal for any unhooked mutation). Conditioned
-deposits are thereby re-checked whenever their component recomputes — §3 holds by construction.
+**Dirty machinery:** per-scope per-source dirty masks, each marked by the spine event at the scope its deposits
+actually touch — the targeted, spine-routed invalidation the founding design calls for
+([scope-packages.md](scope-packages.md) §1). There is **no global epoch, no per-player epoch, no turn stamp, and
+no per-turn self-heal** ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)): no blanket
+recompute papers over a missed mark; a missed invalidation surfaces as a LIVE divergence, never a silently
+self-healed cost. A conditioned deposit is re-checked when its own source is marked (§3 holds by construction),
+and the per-turn recompute cost is read live off the `(scope,channel)` calc-count gate
+([DEC-calc-count-gate](../../architecture/decisions.md#dec-calc-count-gate)), never measured by a shadow.
 
 **Operating buildings ride along:** `PCT`/`EXTRA` recomputes consume `EnablerKernel::recomputeOperatingBuildingsInto` (memoized;
 evicted ONLY on building events — juggling/specialist churn never evicts the fixpoint).
@@ -55,8 +67,10 @@ evicted ONLY on building events — juggling/specialist churn never evicts the f
 | `CvTeam::setHasTech` / `CvPlayer::setCivics` / trait changes / `changeGoldenAgeTurns` (GA flip) / project completion | global epoch bump |
 | *(slider)* | none — read live at combine |
 
-Coarse-but-honest v1: anything missed self-heals at the turn roll, and the shadows MEASURE the residual as
-attributable diff lines (never silent).
+The hooks above are the complete set of triggers; there is no turn-roll backstop behind them
+([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)). A hook the map misses cannot self-heal —
+it surfaces as a live `(scope,channel)` divergence, which is the signal to add the missing mark, not a residual
+to measure away.
 
 ## Verification — two nets
 
@@ -84,9 +98,10 @@ attributable diff lines (never silent).
      riding the accumulator's live `getPlotYield` pull: the ENGINE side is wrong (phantom yields from
      unreachable history), the calculator's derivation is right, and the cutover repairs it. NOT a slot
      dirty-mapping hole — no substrate action needed.
-   - **The `cbase` class (small commerce residues):** the standing C_BASEEXTRA slot lagging a fresh mid-turn
-     mutation the hooks don't carry (the watched bonus-network / religion condition-flip class) — self-heals
-     at the turn roll, surfaces as named `cbaseS/C` pairs when it fires.
+   - **The `cbase` class (small commerce residues):** a C_BASEEXTRA slot lagging a mutation the hook map does
+     not yet carry (the watched bonus-network / religion condition-flip class) — surfaces as named `cbaseS/C`
+     pairs when it fires, which is the signal to add the missing per-source mark, never a residual a turn-roll
+     rebuild absorbs ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)).
 2. **The `[GETTER]` in-body net** (at flip time): accumulator vs the legacy in-body expression — the standing
    accepted-class residue plus anything new.
 
@@ -120,7 +135,8 @@ attributable diff lines (never silent).
   **Steady state:** pctStack ~4.6k calls, accRefresh ~10k, turn feel at baseline. The `[SLOT]` residue
   is ✅ **FULLY ATTRIBUTED** via the component-decomposed diff + the per-plot probe (see Verification §1):
   the stale-serialized-accumulator class (engine-side phantom, cutover repairs) + the watched unhooked
-  `cbase` class (turn-roll self-heals). `[GETTER]` = the legacy repair map, standing.
+  `cbase` class (a missing per-source mark, added when it fires — no turn-roll backstop). `[GETTER]` = the
+  legacy repair map, standing.
   **✅ THE COMPILED DEPOSIT INDEX LANDED (2026-07-03)** — the named perf follow-up, built as
   `Cascade/CvCascadeDepositIndex.{h,cpp}`: every deposit's address/unit is interned to ints at readJson
   push-time (append-only interner; the dotted segments + a FK-resolved target id ride each deposit), the
@@ -141,7 +157,9 @@ attributable diff lines (never silent).
   exact-to-±1, happy +1..+3, goodHealth 0..−5, badHealth −9..−28 — the documented accepted residue (the
   improvement BALANCE-CUT + the stored-accumulator DRIFT, modifier.md §2b). **The `ACCD_WB` slot LANDED in the
   same pass:** `aWb[4]` standing verdicts on the rate slots, all five existing CvCity dirty sites gained
-  `ACCD_WB` (building/population/specialist/religion/corporation; epoch + turn roll cover the rest), and the
+  `ACCD_WB` (building/population/specialist/religion/corporation; the remaining triggers are the player-event
+  marks — the epoch/turn-roll backstop this increment leaned on is deleted in increment I per
+  [DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)), and the
   shadow nets the slots against its fresh compute (the `slotDiverging` summary field). **Queued:** the
   freshness proof over real played turns (slotDiverging must read 0), THEN the getter flip
   (happyLevel/unhappyLevel/goodHealth/badHealth return the slots, legacy in-body as the net); the residue's
@@ -192,8 +210,9 @@ attributable diff lines (never silent).
   **✅ THE HOOK MAP IS PROVEN (2026-07-04, the increment-A method by owner ruling):** a transient
   self-heal-off gate ran the scalar bits on pure hook+epoch-maintained state (turn-roll skipped for
   ACCD_SCALAR*, the net reading via the ENSURING accessors -- non-tautological) through two owner-played
-  turns: `[MODIFIER/scalar] checked=22 diverging=0` BOTH turns, zero holes. The gate is removed (the net
-  back on raw reads; self-heal restored). **✅ FOUR FLIPS LANDED (2026-07-04, same day):** `getBaseGreatPeopleRate` (slot city-base +
+  turns: `[MODIFIER/scalar] checked=22 diverging=0` BOTH turns, zero holes — proving the hook map complete
+  without any turn-roll backstop ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)). The
+  gate is removed (the net back on raw reads). **✅ FOUR FLIPS LANDED (2026-07-04, same day):** `getBaseGreatPeopleRate` (slot city-base +
   live national), `getTotalGreatPeopleRateModifier`, `getBuildingDefense`, `getEffectiveMaintenanceModifier`
   return the cascade slots; the legacy bodies live on as `*Legacy` siblings (the net oracles; the endpoint's
   `*Leg` fields + the `/computed` decomposition surfaces read them so aggregates keep equaling their legacy

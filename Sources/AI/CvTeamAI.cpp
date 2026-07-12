@@ -287,7 +287,7 @@ void CvTeamAI::AI_updateAreaStragies(const bool bTargets)
 		{
 			logWarAI(1, "[WAR/area] team=%d area=%d posture %d -> %d",
 				(int)getID(), pLoopArea->getID(), (int)eOldAreaAI, (int)eNewAreaAI);
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WAR, WAR_AREA, 1)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WAR, WAR_AREA, 1)
 				.addI(WARF_team, (int)getID()).addI(WARF_area, pLoopArea->getID())
 				.addI(WARF_postureFrom, (int)eOldAreaAI).addI(WARF_postureTo, (int)eNewAreaAI));
 		}
@@ -3349,7 +3349,7 @@ void CvTeamAI::AI_setWarPlan(TeamTypes eIndex, WarPlanTypes eNewValue, bool bWar
 		// (declare / prepare / escalate / abandon) funnels through here.
 		logWarAI(1, "[WAR/warplan] team=%d vs team=%d plan %d -> %d (atWar=%d)",
 			(int)getID(), (int)eIndex, (int)AI_getWarPlan(eIndex), (int)eNewValue, isAtWar(eIndex) ? 1 : 0);
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WAR, WAR_WARPLAN, 1)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WAR, WAR_WARPLAN, 1)
 			.addI(WARF_team, (int)getID()).addI(WARF_vsTeam, (int)eIndex)
 			.addI(WARF_planFrom, (int)AI_getWarPlan(eIndex)).addI(WARF_planTo, (int)eNewValue).addI(WARF_atWar, isAtWar(eIndex) ? 1 : 0));
 
@@ -3997,7 +3997,7 @@ void CvTeamAI::AI_doWar()
 	logWarAI(1, "[WAR/begin] team=%d turn=%d enemyPowerPct=%d fundedPct=%d safePct=%d atWar=%d warPlans=%d",
 		(int)getID(), GC.getGame().getGameTurn(), iEnemyPowerPercent, (int)iFundedPercent, iSafePercent,
 		getAtWarCount(true), getAnyWarPlanCount(true));
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WAR, WAR_BEGIN, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WAR, WAR_BEGIN, 1)
 		.addI(WARF_team, (int)getID()).addI(WARF_turn, GC.getGame().getGameTurn())
 		.addI(WARF_enemyPowerPct, iEnemyPowerPercent).addI(WARF_fundedPct, (int)iFundedPercent).addI(WARF_safePct, iSafePercent)
 		.addI(WARF_atWar, getAtWarCount(true)).addI(WARF_warPlans, getAnyWarPlanCount(true)));

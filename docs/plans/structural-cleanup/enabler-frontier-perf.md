@@ -16,12 +16,14 @@
   kept — but it re-runs **INCREMENTALLY over only the affected candidates**, not the whole frontier.
 - **The reverse index is what makes the up-walk incremental:** at load, invert every `requires` into
   "HAVE-atom → the entities that reference it," so a HAVE-change re-gates only its dependents.
-- **The per-slice rebuild is the correctness NET.** `playerSliceRebuild` already marks every city's packages
-  all-dirty once per player per turn (frontier stays lazy → rebuilt on first read). That is the "down once"
-  floor. Over-inclusion in the reverse index is safe (a few extra re-checks); a MISSED class self-heals at the
-  slice boundary (at worst a one-slice staleness — the accepted wellbeing-lag class). **Validation: the legacy
-  shadow re-finds divergences after the cut** (owner 2026-07-06: "do it completely, then we re-find divergences,
-  that is why we still have the shadow legacy").
+- **Correctness IS the targeted invalidation — there is no per-slice self-heal net behind it**
+  ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)). The reverse index + targeted
+  propagation is the whole correctness mechanism: every HAVE-change re-gates exactly its dependents, so the
+  frontier is rebuilt when (and only when) its reverse-index marks it. No blanket `playerSliceRebuild` markAll
+  sits behind it absorbing misses — over-inclusion in the reverse index stays safe (a few harmless extra
+  re-checks), but a MISS is a bug to close, not an accepted one-slice lag: a missed invalidation must surface as
+  a LIVE divergence (the `can*` endpoints + the `(scope,channel)` calc-count gate) and that divergence is the
+  signal to fix the reverse-index hole, never a residual a slice-boundary rebuild heals away.
 
 ## Root cause (mapped, `file:line`)
 
@@ -49,12 +51,14 @@ recomputes alongside → the 2.8M `ceOperatingBuildings`.
 ## The fix — do all of it (owner: complete)
 
 ### A — fill the reverse indices at LOAD (not lazily)
+
 Move `bc_buildIndices()` off its lazy first-`onBuildingChanged` trigger to a load-end hook — the eager cache
 warm-up block `CvGame::onFinalInitialized` (`CvGame.cpp:632-646`), where plot/city caches already warm. Build a
 **UNIT reverse index** there too (mirror the `s_bc*` scan over unit `requiresBuild` atoms). Idempotent
 (`s_bcIdxBuilt`), so a load-end call is safe.
 
 ### B — unit incremental path + STOP the blanket dirty (the biggest lever)
+
 - Add `UnitCascade::onUnitChanged` mirroring `BuildingCascade::onBuildingChanged` (`:338`): a unit trained/lost
   re-checks only the changed unit + its dependents (units whose `capped()` count / cap depends on it) via the
   unit reverse index, in place — no full rebuild.
@@ -65,6 +69,7 @@ warm-up block `CvGame::onFinalInitialized` (`CvGame.cpp:632-646`), where plot/ci
   (via the unit reverse index for provided bonuses). Correctness held by the index + the slice net.
 
 ### C — consume the building HAVE-atom buckets
+
 On a specific HAVE change, call `bc_recheckBuildings` over **only** that bucket's ids, instead of dirtying
 `CPK_FRONT_B`/`CPK_FRONTIER` broadly. Wire the event sites: `setPopulation` (`CvCity.cpp:7019`, → `s_bcPop`),
 `setHasReligion` (`:15404`, → `s_bcReligion`), `setHasCorporation` (`:15609`, → `s_bcCorp`), tech
@@ -73,17 +78,38 @@ On a specific HAVE change, call `bc_recheckBuildings` over **only** that bucket'
 unit reverse index.
 
 ### D — narrow the operating buildings co-dirtying
+
 Operating buildings is co-dirtied with the frontiers by the same events, so A-C already cut it. Additionally: a completed
 building only changes the active/dormant/`provides` status of buildings sharing its dormant-triggers or
 `provides.bonuses`, so `recomputeOperatingBuildingsInto` should be gated to the affected subset rather than a full
 `markAllDirty` (`CvCascadeAccumulator.cpp:817`) + full recompute (`CvCity::refreshOperatingBuildings` ignores its mask,
 `CvCity.cpp:11375` — give it a real one). Same reverse-index principle applied to the operating buildings fixpoint.
 
+## Standing rule — the frontier box is per-item targeted, never a whole-frontier recompute at order frequency
+
+The buildable/trainable/creatable/maintainable frontier is an **ISOLATED BOX with TARGETED removal**: only
+whatever has been committed leaves the box, never the whole frontier. When an item is queued,
+`CvCity::pushOrder` does a single per-order
+`m_cascadeCityPackages.en{Buildable,Trainable,Creatable,Maintainable}.erase(iData1)` (O(log n)) — the item
+leaves the box the moment it is queued, so the AI never re-picks it (the `CvCity` "cycles forever" build
+loop). This mirrors the unit-box train-order erase (`CvCity.cpp:16113`).
+
+⛔ A whole-frontier `dirtyCity` mark on every push/pop is BANNED: it forces a full frontier rebuild at
+order-churn frequency (100s/turn), which triggers the modifier-recalc storm and a MAF. **Frontier freshness is
+a targeted box update, NEVER a full recompute at order frequency** — the same discipline as the modifier
+caches, which must never mid-round recompute (the "mid-round buffs" rule). This is the targeted-invalidation
+half of [DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal): the box changes by exactly the
+committed item, with no blanket recompute sitting behind it.
+
 ## Safety + validation
-- The **per-slice rebuild stays** as the net (never removed). Mid-turn incremental is an optimization on top; a
-  miss self-heals at the slice boundary.
-- **Validate via the legacy shadow** after: re-find divergences (cascade `can*` vs legacy `can*`) to catch any
-  stale-frontier correctness regression, then fix.
+
+- **Correctness rides entirely on the targeted marks being complete** — there is no self-heal net, no
+  blanket per-slice rebuild absorbing a miss ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)).
+  The incremental path is not an optimization "on top" of a net; it is the correctness path.
+- **Verify LIVE, in the running game** ([DEC-verify-in-game-not-reshadow](../../architecture/decisions.md#dec-verify-in-game-not-reshadow)):
+  a stale-frontier regression shows as a `can*` endpoint divergence on a real save/turn — poll the `/computed/can*`
+  oracle and fix the reverse-index hole it names. This is live manifestation, NOT a re-run of the closed legacy
+  shadow.
 - **Measure:** the **wall** metric (end-turn press → next-turn start, StoneBase perf store) before/after, plus the
   `[MODIFIER/perf]` component counters (`condEval`, the `ceX` split, `frontUFills`/`frontBFills`, the frontier
   stopwatches) which are idle-independent. Target: `ceFrontU`/`ceFrontB`/most of `ceOperatingBuildings` (~4.8M of 5.2M) go
@@ -120,21 +146,27 @@ by the ripple:
    (a big frequency win on top of the per-event cost win).
 5. **Dynamic predicates → a bounded per-turn re-check.** `requiresOperate` clauses that read live non-HAVE state
    (connection, IS_CAPITAL, count thresholds) can't be tracked by HAVE-atom deltas; collect the (small) set of
-   buildings with such operate clauses and re-check ONLY them once per turn (the bounded pass). The per-slice
-   rebuild remains the ultimate net.
+   buildings with such operate clauses and re-check ONLY them once per turn (the bounded pass) — a targeted
+   per-turn sweep of that small dynamic-predicate set, NOT a blanket self-heal behind the deltas
+   ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)).
 6. **Load-time init.** Build the package once at load (`onFinalInitialized` warm-up, beside the Stage-1 indices) —
    the one full computation, per the capstone "full rebuild = LOAD ONLY."
 
-**⛔ VALIDATION built in — the full recompute is the SHADOW ORACLE.** Keep `recomputeOperatingBuildingsInto` and, under the
-shadow gate, diff the delta-maintained (active, provided) against a fresh full recompute per city per turn; emit
-`operatingBuildingsDiverging` on the `[MODIFIER/perf]` line (mirror the heal-diff). Drive it to 0 before trusting the delta;
-the full recompute is the oracle exactly as the legacy shadow is for the enabler. This is the owner's "do it, then
-re-find divergences" applied to the operating buildings.
+**⛔ VALIDATION — the full recompute stays the LOAD SEED + an on-demand spot-check oracle, NOT a per-turn shadow.**
+`recomputeOperatingBuildingsInto` is retained as the load-time seed ([enabler.md](../../specs/enabler.md) §3.2) and
+as an on-demand oracle a spot-check can call to sanity the delta-maintained (active, provided) set. It is NOT run
+as a per-city-per-turn shadow diff driven to 0 — that shadow pattern is CLOSED
+([DEC-verify-in-game-not-reshadow](../../architecture/decisions.md#dec-verify-in-game-not-reshadow),
+[DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)). A missed delta must surface as a LIVE
+divergence — a wrong `can*`/rate value on a real turn, or a `(scope,channel)` calc-count anomaly on the
+`[MODIFIER/perf]` line — which is the signal to fix the delta's ripple, never a residual a full recompute quietly
+corrects.
 
 **Measure:** `ceOperatingBuildings` (target: ~2M → a fraction) + total condEval + the fill counts (the frontier reads get cheaper
 operating buildings) + `wall` once StoneBase is up.
 
 ## See also
+
 - [enabler.md](../../specs/enabler.md) §5 (the load-bearing AND asymmetry — up-walk kept) · §7 (recompute cadence).
 - [state-repositories.md](../../architecture/state-repositories.md) (the `CvDerivedCache`/dirty model + the
   turn-end unified rebuild end-state this feeds) · [DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king).

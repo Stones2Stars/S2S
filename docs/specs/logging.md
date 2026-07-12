@@ -6,8 +6,8 @@
 The **observability surface** for the whole rework — *what the game exposes*. The load-bearing rationale is
 **map-before-delete**: you cannot safely delete a legacy maintainer you cannot fully observe, so the game must be
 fully observable from the wire — never the screen. This doc specs **what to log**; the **event spine** it draws
-events from is [event-spine.md](event-spine.md), and how the cascade is **measured against legacy** (the shadow +
-the parity bar) is [validation.md](validation.md).
+events from is [event-spine.md](event-spine.md), and how the cascade is **verified live** (live endpoint
+manifestation + the calc-count gate) is [validation.md](validation.md).
 
 It is not polish. Without total observability the cascade ([enabler](enabler.md)/[modifier](modifier.md)/
 [tally](tally.md)) cannot prove it replicates the legacy machinery it replaces — so it cannot safely replace it.
@@ -86,8 +86,9 @@ The two reliable live reads:
 ---
 
 ## See also
-- [event-spine.md](event-spine.md) — the event source logging consumes. [validation.md](validation.md) — the shadow
-  + parity bar that *uses* this observability to prove a maintainer before it's cut.
+
+- [event-spine.md](event-spine.md) — the event source logging consumes. [validation.md](validation.md) — the live
+  endpoint manifestation + calc-count gate that *uses* this observability to prove a maintainer before it's cut.
 - [http-endpoints.md](http-endpoints.md) — the clean endpoint catalogue (`/state`, `/computed`, `/events`) this
   surface publishes through.
 - [tally.md](tally.md) — the read-only count accessor (reads the object-owned counts; NOT a spine consumer). The KIND

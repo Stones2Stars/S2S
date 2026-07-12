@@ -4258,6 +4258,13 @@ void CvTeam::changeProjectCount(ProjectTypes eIndex, int iChange)
 
 		processProjectChange(eIndex, iChange, iOldProjectCount);
 
+		// #430 event spine: announce the project count change (inside the iChange != 0 guard, after commit + apply).
+		// A team has no single actor; use the team LEADER as the triggering player -- the same representative this
+		// function's own completion replay message uses (getLeaderID() at the replay call below). Emitted HERE (the
+		// count choke point), NOT in processProjectChange, whose other caller (CvTeam.cpp reapply-projects warm-up)
+		// re-applies effects on load and is not a genuine state change.
+		emitProjectChanged((int)getLeaderID(), (int)eIndex, iChange);
+
 		if (iChange > 0 && GC.getGame().isFinalInitialized() && !gDLL->GetWorldBuilderMode())
 		{
 			const CvProjectInfo& kProject = GC.getProjectInfo(eIndex);
@@ -4906,6 +4913,8 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 			setResearchProgress(eTech, 0, ePlayer);
 		}
 		processTech(eTech, iChange, bAnnounce);
+		// #430 event spine: broad tech-changed event on the repeat-tech (e.g. Future Tech) count change path.
+		emitTechChanged((int)ePlayer, (int)eTech, bNewValue);
 		return;
 	}
 
@@ -4929,6 +4938,9 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 	}
 
 	m_pabHasTech[eTech] = bNewValue;
+	// #430 event spine: broad tech-changed event (any set, gain or loss) -- past the no-change guard, after commit.
+	// This is the ADDITIONAL broad emit; the existing SEVT_TECH_ACQUIRED first-discoverer emit stays separate.
+	emitTechChanged((int)ePlayer, (int)eTech, bNewValue);
 	m_cascadeTeamCaps.set.markAllDirty();   // the derived capability union is f(held techs) -- the ONE mutation point
 	// #430: a researched tech marks THIS team's players' packages + their cities' directly (conditions on
 	// city-scope deposits reference techs -- the fan-out is the event's real footprint)
@@ -5184,7 +5196,7 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 		{
 			// #430 cascade: the tech's first-discoverer grants (firstFreeUnit / firstFreeProphet / freeTechs) fire in
 			// this block -> emit the DOMAIN trigger so the grants machine resolves them (synced, deterministic).
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DOMAIN, CASCADE_EVT_TECH_ACQUIRED, (int)eTech, 1, 0, (int)ePlayer));
+			emitTechAcquired((int)ePlayer, (int)eTech);
 
 			const UnitTypes eFreeUnit = (UnitTypes)kTech.getFirstFreeUnit();
 			if (eFreeUnit != NO_UNIT)

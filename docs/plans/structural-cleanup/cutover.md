@@ -1,9 +1,9 @@
-# The cutover — from shadow to cut (#430)
+# The cutover (#430)
 
 > Scopes the #430 **cutover**: replacing the legacy Info-variable-driven mechanisms with the cascade, and retiring the
 > legacy fields. The compute machines (modifier / enabler / grants) + the data + readJson + tally are all **IN** (the
 > "get everything in" phase is done); this doc is **what's left to actually CUT**. Authority:
-> [validation.md](../../specs/validation.md) §1 (the shadow-then-cut discipline), [cascade-engine-430.md](cascade-engine-430.md)
+> [validation.md](../../specs/validation.md) (the live-verification discipline), [cascade-engine-430.md](cascade-engine-430.md)
 > §4 (the demolition map).
 
 ## ⛔ Cutover is NOT one event — it's several independent cuts
@@ -45,9 +45,9 @@ The map's Gate-1 gaps + load-bearing unresolved questions were put to the owner;
 mapping: [`code-cut-map.md`](code-cut-map.md) §Rulings addendum):
 
 1. **The unported modifier channels are ALL PRE-CUTOVER** — health, happiness, defense, maintenance, buildRate
-   (item-cost), GP-rate, and the trade-route scalars each get their calc machine built, shadowed, and cut *within*
+   (item-cost), GP-rate, and the trade-route scalars each get their calc machine built, verified live, and cut *within*
    #430; none is deferred past the cutover. They follow the standing machine pipeline
-   ([validation.md](../../specs/validation.md)): spec → StoneBase parity → C++ port → in-DLL shadow → cut.
+   ([validation.md](../../specs/validation.md)): spec → build the real path → verify live in-game → cut.
 2. **GP-rate BASE economy + building `lineOfSight` → CASCADE HOME** — the Pass-2 whole-subsystem finds
    (`m_iBaseGreatPeopleRate`/`GreatPeopleUnitRate`/`Progress`; `m_iLineOfSight`) are modelled in the cascade
    (pre-cutover), not BLOCKED-deferred. Mechanism per the spec work when their channel is built.
@@ -88,22 +88,23 @@ mapping: [`code-cut-map.md`](code-cut-map.md) §Rulings addendum):
 5. **⚖ THE GETTER-CONTRACT CUT STRATEGY (owner ruling 2026-07-02)** — resolves BOTH the entry-point question and
    the self-containment classification wholesale. **The getters are fine — they are the stable CONTRACTS.** The
    cut goes *through* the getters, one by one:
-   1. **Instrument** — each legacy getter the cascade replaces gets an event-spine emit INSIDE the body ("cascadeValue"),
-      logging the cascade's answer against the legacy return **at the real call moment** — the shadow rides the
-      actual consumer calls (per validation.md's end-turn discipline). Gate + aggregate like the existing
-      `[ENABLER/shadow]` pattern (per-turn diverging/checked counts, capped samples) — these getters are hot paths.
-      **✅ LIVE (2026-07-02) for the modifier pair** — `CvCity::getYieldRate100` + `getCommerceRateTimes100` via
-      `Cascade/CvCascadeGetterShadow.{h,cpp}` (`[GETTER/diff]` + per-turn `[GETTER/shadow]` summary, `SD_GETTER`):
-      once per (city,channel) per turn at the first real call (full-city coverage, memoized), reentrancy-guarded,
-      compute-capped (1024/turn), a single gated int compare when logging is off. Extend the same hooks per getter
-      as its cascade counterpart lands.
-   2. **Flip** — at clean parity the getter BODY returns the cascade value; the legacy accumulator behind it is
-      deleted. **Consumers are never rewired** (this IS the answer to the getYieldRate100-vs-its-consumers
+   1. **Verify live** — each legacy getter the cascade replaces is confirmed against the `/computed` oracle **at the
+      real call moment** — the verification rides the actual consumer calls (per validation.md's end-turn discipline):
+      the getter's cascade answer is observed in the running game via the endpoint poll, never eyeballed and never
+      re-shadowed offline ([DEC-verify-in-game-not-reshadow](../../architecture/decisions.md#dec-verify-in-game-not-reshadow),
+      [DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)). These getters are hot paths, so
+      the `(scope,channel)` calc-count gate ([DEC-calc-count-gate](../../architecture/decisions.md#dec-calc-count-gate))
+      is the standing performance check on each one. Verify each getter this way as its cascade counterpart lands.
+   2. **Flip** — once verified live via `/computed` the getter BODY returns the cascade value; the legacy accumulator
+      behind it is deleted. **Consumers are never rewired** (this IS the answer to the getYieldRate100-vs-its-consumers
       question: rewire the body, not the call sites).
       **⚡ FLIP ATTEMPT #1 (2026-07-02, commit `71b977e27` → REVERTED `899705ec6`) — the finding that gates the
       real flip: the §1 ACCUMULATOR SUBSTRATE must be built first.** The modifier pair was flipped with a full
       net (a `CascadeRates` service: event-invalidated memo — per-city version + tech/civic/GA epochs + slider
-      commerce-epoch + turn-stamp self-heal; legacy kept in-body as `get*100Legacy()` oracles; load path legacy).
+      commerce-epoch; legacy kept in-body as `get*100Legacy()` oracles; load path legacy). *(The turn-stamp
+      self-heal that memo originally carried is REMOVED per [DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)
+      — no blanket per-turn rebuild papers over a missed invalidation; correctness comes only from targeted,
+      spine-routed per-source invalidation. The memo/substrate design itself stays.)*
       Values were RIGHT (pre-turn city reads sane), but the turn ran **25+ minutes**: what is in C++ is the
       StoneBase **parity CALCULATOR** (a from-scratch source re-walk, ~25ms/compute), not modifier.md §1's
       standing accumulator machine ("the target … never re-walks the sources"). Under AI churn every
@@ -142,39 +143,54 @@ mapping: [`code-cut-map.md`](code-cut-map.md) §Rulings addendum):
    (building present / civic adopted / trait active), i.e. the continuous modifier shape
    ([modifier.md](../../specs/modifier.md) §Specialist counts), resolving the map's unresolved #75. The
    grants-inventory freeSpecialist-shaped rows reclassify to the modifier plane.
+8. **The `Cy*` info-binding contract is NOT fixed.** Freezing the boost::python `.def` surface forced the JSON pocos
+   to reproduce the entire legacy `CvXInfo` field contract — a stub per legacy field, feeding Python silent
+   wrong-values. That frozen boundary is a root cause of the drift. The Cy* info bindings are redesigned around the
+   cascade/JSON model and the Python info-CONSUMERS (Pedia/Advisors/display) rewired to the new contract; the
+   stub-fed wrong values are fixed (they violate the reproduce-not-default rule). This is DISTINCT from the
+   computed-getter flip strategy (item 5) — that keeps `getYieldRate100`-style contracts stable and rewires the BODY,
+   never the call sites. Python-authoritative GAMEPLAY (Revolution, random events, outcomes, missions) stays Python,
+   out of scope ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
 
-## Gate 1 — StoneBase-completeness *(the PRIMARY, critical, game-breaking gate — owner 2026-07-01)*
+## Gate 1 — completeness — CLOSED *(nothing StoneBase mapped is missing)*
 
-**The critical pre-cutover risk is a source/system StoneBase mapped that is MISSING in the C++ cascade** — when the
-legacy is deleted, that contribution silently vanishes (wrong values, missing gates). So the primary gate is
-**completeness**: everything StoneBase's parity-proven model mapped must be **taken care of** in the C++ port. A missing
-source is game-breaking; a small numeric divergence is not — which is exactly why **parity is SECONDARY** (Gate 2).
-*(Owner: reasonably high confidence all systems are in; the job is to CONFIRM nothing StoneBase mapped was dropped.)*
-
-**Status — largely verified.** The modifier + enabler **port-completeness audits** (C++-vs-StoneBase, code-to-code)
-already did this per-machine: each enumerated every StoneBase source/term and found + closed the gaps (modifier — civic
-building-keyed percent, projects, the `minPosThreshold` MIN; enabler — self-containment, SpecialBuilding caps). readJson
+**Gate 1 verified the STRUCTURE and is CLOSED.** The critical pre-cutover risk it guards is a source/system StoneBase
+mapped that is MISSING in the C++ cascade — when the legacy is deleted, that contribution silently vanishes (wrong
+values, missing gates). The completeness principle SURVIVES as a standing bar: everything StoneBase's model mapped must
+be **taken care of** in the C++ port, and a source that is missing outranks a small numeric divergence
+([DEC-represent-dont-fit](../../architecture/decisions.md#dec-represent-dont-fit)). The modifier + enabler
+port-completeness audits enumerated every StoneBase source/term per-machine and closed the gaps (modifier — civic
+building-keyed percent, projects, the `minPosThreshold` MIN; enabler — self-containment, SpecialBuilding caps); readJson
 maps every entity with **0 unclassified**. *(Grants is NOT a StoneBase concern — StoneBase never modelled it, being an
-offline dry-calc; so grants completeness is judged against the legacy engine, not StoneBase.)* So the critical
-pre-cutover step is a **final, comprehensive, ADVERSARIAL StoneBase-completeness sweep** — re-confirm that NO
-StoneBase-mapped source/system is unhandled, per the
-[DEC-all-means-all](../../architecture/decisions.md#dec-all-means-all) bar (a self-certified pass is not enough — prove
-it adversarially; a careful solo pass already missed 77 sources once). **This gate must be clean before ANY cut.**
+offline dry-calc; so grants completeness is judged against the legacy engine, not StoneBase.)*
 
-## Gate 2 — shadow-parity *(SECONDARY — after completeness)*
+**How completeness is now proven: LIVE.** With parity/shadow CLOSED
+([DEC-verify-in-game-not-reshadow](../../architecture/decisions.md#dec-verify-in-game-not-reshadow)), a source that is
+missing shows up as a value that does not manifest in the running game — the `/computed` oracle exposes what the engine
+actually computed, so a dropped source is a value that fails to appear on the endpoint poll
+([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)). The completeness bar is verified by
+that live manifestation, not by an offline re-sweep against StoneBase.
 
-Parity — the exact numbers matching — is **secondary** to completeness (owner ruling): drive it once Gate 1 is assured.
-The machines are built + shadow-wired but **un-run** (owner rule: *no live parity until everything is in* — and now
-everything IS in). The step: run the game, drive each machine's per-turn shadow diff to **`diverging=0`**, then delete
-its legacy accumulators/gates (§4 demolition map).
+## Gate 2 — the CALCULATIONS — CLOSED
 
-- **modifier** — `YieldRate::yieldRate100` / `CommerceCalc::commerceRate100` vs the legacy accumulators
-  (`getYieldRate100` / `getCommerceRateTimes100`). Shadow: `cvCascadeModifierShadow`.
-- **enabler** — the frontier gates (`canConstruct` / `canTrain` / …) vs the legacy `can*`. Shadow: `CvCascadeEnabler`.
-- **grants** — the resolution vs legacy application (needs the **apply-loop** first — see prerequisites).
+**Gate 2 verified the CALCULATIONS reach the right numbers and is CLOSED.** StoneBase strongly verified the
+event-spine STRUCTURE and the shadow strongly verified the per-machine CALCULATIONS; that confirmation is finished and
+sufficient, and it is NOT to be re-run
+([DEC-verify-in-game-not-reshadow](../../architecture/decisions.md#dec-verify-in-game-not-reshadow)). There is no legacy
+oracle left to shadow against on the cut surfaces anyway (the XML Info classes are archived as the red ratchet,
+[DEC-red-ratchet](../../architecture/decisions.md#dec-red-ratchet)).
 
-Mechanical once it runs — the shadows are already wired and decomposed to sub-terms, so a divergence localises to a
-named source (the total-observability bar). This is the *"then parity at the end"* phase.
+What survives Gate 2's retirement is the LIVE acceptance test, in two parts
+([validation.md](../../specs/validation.md)):
+
+- **Manifestation** — the machine's values are observed in the running game via `/computed` on a real save, a real
+  turn: modifier yields/commerce via `/computed/cities/yields`, wellbeing via `/computed/cities/wellbeing`, the enabler
+  gates via `/computed/can*`, the tally via `/computed/tally`
+  ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)). A value not yet on the surface is
+  EMITTED first — that is step one of its fix.
+- **The `(scope,channel)` calc-count gate** — every calculation logs its `(scope, channel)`; the per-turn count is a
+  standing acceptance gate + regression tripwire (>50k/turn ⇒ a blanket recompute has crept back), rendered live on the
+  StoneBase performance dashboard ([DEC-calc-count-gate](../../architecture/decisions.md#dec-calc-count-gate)).
 
 ## Gate 3 — the classification CONSUMPTION *(the biggest, largely-parallel piece)*
 
@@ -190,10 +206,10 @@ classification instead:
 | building **`attributes`** | `CvCity` (nukeImmune, governmentCenter, providesFreshWater, borderObstacle, …) |
 | civic/trait **`policies`** | the empire-state systems (noForeignTrade, noCorporations, allReligionsBanned, …) |
 
-**Key property — this is mostly INDEPENDENT of the machine shadows.** The machines read the classification *internally*
-(the enabler's predicates, the modifier's active traits); *this* gate is the engine-**behaviour** consumption. It is a
-large, breadth-first rewiring ("a lot of places") and can proceed **in parallel** with the shadow runs. It is the
-**long pole** of the cutover.
+**Key property — this is mostly INDEPENDENT of the machine calc surfaces.** The machines read the classification
+*internally* (the enabler's predicates, the modifier's active traits); *this* gate is the engine-**behaviour**
+consumption. It is a large, breadth-first rewiring ("a lot of places") and can proceed **in parallel** with the
+per-machine live verification. It is the **long pole** of the cutover.
 
 ## Prerequisites feeding the cuts
 
@@ -261,33 +277,36 @@ large, breadth-first rewiring ("a lot of places") and can proceed **in parallel*
   All six pass-2 angles otherwise clean (header-inline 0 reads; flipped gates raw-only; area/game/plot
   indirect raw; EvalCtx wiring raw + the three DEC-cited cascade sets; HTTP boundary honest; leaf functions
   fully classified).
-- **The grants apply-loop** ([grants-machine.md](grants-machine.md) increment 5). The grants machine *resolves* +
-  *shadows* today; before the grants cut it must **apply** — the per-turn recurring (spawn / heal / freePromotions) +
-  the trigger grants — replacing legacy's application.
+- **The grants apply-loop** ([grants-machine.md](grants-machine.md) increment 5). The grants machine *resolves* today
+  (the apply-loop is unbuilt, legacy still applies); before the grants cut it must **apply** — the per-turn recurring
+  (spawn / heal / freePromotions) + the trigger grants — replacing legacy's application.
 - **The BLOCKED data tail** ([data-migration-remaining.md](data-migration-remaining.md)): `state`/paralyze,
   unitcombat→`tags`, NPC civs, corp-system rework, ranked-target. Each blocks **its** consumer's cut (not the whole
   cutover).
 
 ## Sequencing
 
-0. **The code-cut map** ✅ ([`code-cut-map.md`](code-cut-map.md), built 2026-07-02) — the master artifact; everything below executes from it. Its Gate-1 gap list + BLOCKED tail is the pre-cut worklist.
-1. **StoneBase-completeness** (Gate 1) — the final adversarial sweep; confirm nothing StoneBase mapped is missing. THE gate.
-2. **Shadow-parity** (Gate 2, secondary) — drive each machine to `diverging=0`; cut its legacy as it goes clean.
-3. **Classification consumption** (Gate 3) — in parallel; the long pole.
+0. **The code-cut map** ✅ ([`code-cut-map.md`](code-cut-map.md)) — the master artifact; everything below executes from it. Its gap list + BLOCKED tail is the pre-cut worklist.
+1. **Completeness (Gate 1) — CLOSED.** Nothing StoneBase mapped is missing; the surviving bar is verified LIVE (a dropped source is a value that fails to manifest on the `/computed` poll).
+2. **The calculations (Gate 2) — CLOSED.** The machines reach the right numbers; remaining verification per machine is LIVE — manifestation via `/computed` + the `(scope,channel)` calc-count gate — then cut its legacy (§4 demolition map).
+3. **Classification consumption** (Gate 3, the active gate) — verified in-game, in parallel; the long pole.
 4. **Grants apply-loop + self-containment audit** — before their respective cuts.
 5. **→ push to `main`.** The cascade on `main` is the endgame of #430. (Then the leaderhead trait remap, by another modder.)
 
 ## Explicitly POST-CUTOVER (after `main`)
 
-- **⏳ Leaderhead trait remap (traits → leaders) — POST-CUTOVER, AFTER `main` (owner ruling 2026-07-01).** This is
-  **NOT a cutover blocker**: **leaders work WITHOUT traits**, and developing leaders works fine — so the trait-to-leader
-  assignment is deliberately deferred until *after* the cascade is merged to `main`. **Why `main` specifically:** the
-  trait-to-leader work will be done by **another modder**, and we want the new cascade system **on `main` before they
-  start**, so they build on the new system rather than the old. (The leaderhead trait assignments were already
-  **stripped** in the data migration; this remap is the deferred, hand-off-to-another-modder step — hence its home is
-  here, not the pre-cutover tail.)
+- **Leaderhead trait remap (traits → leaders) — an owner-ruled PERMANENT carve-out from #430, POST-CUTOVER after
+  `main`.** This is a sanctioned scope boundary, not a hidden deferral
+  ([DEC-no-deferred](../../architecture/decisions.md#dec-no-deferred) carves out owner-ruled permanent boundaries): it
+  is **NOT a cutover blocker** because **leaders work WITHOUT traits** and developing leaders works fine, so the
+  trait-to-leader assignment is deliberately placed *after* the cascade is merged to `main`. **Why `main` specifically:**
+  the trait-to-leader work is done by **another modder**, and the new cascade system must be **on `main` before they
+  start** so they build on the new system, not the old. (The leaderhead trait assignments were already **stripped** in
+  the data migration; this remap is the hand-off-to-another-modder step — hence its home is here, not the pre-cutover
+  tail.)
 
 ## See also
-- [validation.md](../../specs/validation.md) — shadow-then-cut. · [cascade-engine-430.md](cascade-engine-430.md) §4 —
+
+- [validation.md](../../specs/validation.md) — the live-verification discipline. · [cascade-engine-430.md](cascade-engine-430.md) §4 —
   the demolition map. · [grants-machine.md](grants-machine.md) — the grants apply (increment 5). ·
   [data-migration-remaining.md](data-migration-remaining.md) — the blocked data tail.

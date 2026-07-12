@@ -4,6 +4,7 @@
 > from `composability.md` + `faking-di.md`.
 
 ## The interface shape (composability)
+
 - A C++03 **interface** = an abstract base class with only pure-virtuals + a virtual dtor and **NO data members**
   (`IEventConsumer` is the realized model).
 - **MI as `implements`:** one concrete satisfies several role-contracts via MI of their stateless interface bases —
@@ -17,12 +18,15 @@
   complex/Thunderbrd traits.)
 
 ## Poor-man's DI (faking-di)
+
 No DI container exists (C++03/VC7.1; the EXE binds concretes), so:
+
 1. Define the dependency as an **interface** (pure-virtual base, no data).
 2. The consumer holds a **pointer to the interface**, never to a concrete.
 3. At the **composition root**, a literal `if`/`switch` picks the concrete and assigns it — that `if`/`switch` is
    the manual "container." (Canonical use: game-option override-by-design swaps — one option check selects the impl;
    the consumer sees only the contract.)
+
 - **Guardrails:** MI is not a DI substitute (you still inject via a base pointer); the decoupling is real even
   without a container ("no container" is never an excuse to `#include` the concrete into the consumer); the
   composition root is the **only** place that names concretes (a leaked concrete = the root is no longer the single
@@ -61,8 +65,8 @@ needs a fact FEEDS it to the one function, it never re-derives it.
    static-methods classes — the **modifier** (`MMKernel` / `PercentStack` / `YieldBasePackages` / `BuildingPackage` /
    `YieldRate` / `CommerceCalc`, mirroring StoneBase `Calc/*`) and the **enabler** (`EnablerKernel` + `TechCascade` /
    `BuildingCascade` / `UnitCascade`, mirroring StoneBase `CascadingEnabler/*`), each `CvCascade<X>.{h,cpp}`.)*
-5. **Harness ≠ calc.** The shadow/parity harness and the spine logging are **separate consumers** of the calc surface,
-   never folded into the calc functions.
+5. **Harness ≠ calc.** The performance/observability surface (the StoneBase dashboard) and the spine logging are
+   **separate consumers** of the calc surface, never folded into the calc functions.
 6. **Single source of "active".** "Is X active / available / connected / non-dormant" is computed **once, by the
    enabler**; the modifier **reads** it — it never recomputes from the live engine, and above all never reads the
    engine's *dormancy verdict* (the camouflaged ride-in, [DEC-calc-zero-ride-in](decisions.md#dec-calc-zero-ride-in)).

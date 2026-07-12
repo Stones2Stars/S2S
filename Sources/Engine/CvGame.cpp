@@ -583,24 +583,6 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		// Remove and re-add the GW on load
 		processGreatWall(false, true, false);
 		processGreatWall(true, true);
-
-		// #430 (owner 2026-07-11): derived caches are NEVER serialized, so every load MUST rebuild all derived state.
-		// The legacy checksum gate (checkVersions -> BUTTONPOPUP_MODIFIER_RECALCULATION) is DEAD: with the replaced-info
-		// XML gone the asset checksum never mismatches, so the popup never shows -- and it was only ever a MANUAL,
-		// human-accepted asset-change repair, never a normal-load path. Post the recompute UNCONDITIONALLY instead.
-		// It MUST go through the message system (MP-safe, per AIAndy's CvEventReporter note) so recalculateModifiers
-		// runs at the post-init synced point -- exactly where the popup-accept / Ctrl+Shift+R ran it -- NOT inline,
-		// which cannot fire mid-onFinalInitialized. This is the ACCURACY-FIRST starting point (a heavy full recalc);
-		// the follow-up is a per-cache recompute map for a coherent, cheaper surface (cutover-consumption.md).
-		// Gated to an active HUMAN player (mirroring the retired popup's scope); autoplay-load coverage is a noted
-		// follow-up that lands with the cache map, not this starting cut.
-		{
-			const PlayerTypes eActivePlayer = getActivePlayer();
-			if (NO_PLAYER != eActivePlayer && GET_PLAYER(eActivePlayer).isHumanPlayer())
-			{
-				CvMessageControl::getInstance().sendRecalculateModifiers();
-			}
-		}
 	}
 	// Set the unit/building filters to default state now that game is fully initialized.
 	UnitFilterList::setFilterActiveAll(UNIT_FILTER_HIDE_UNBUILDABLE, getBugOptionBOOL("CityScreen__HideUntrainableUnits", true));
@@ -661,7 +643,7 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	// tally is NOT seeded -- it READS the object-owned counts on demand (CvCascadeTally.h). The JSON->InfoRepo map is
 	// NOT here -- it runs at the end of LoadPostMenuGlobals (the LAST XML stage, CvXMLLoadUtilitySet.cpp), so the
 	// cascade's static data is populated once, after every FK target registers, regardless of logging.
-	cascadeRegisterConsumers();
+	spineRegisterConsumers();
 
 	// #430 EAGER CACHE WARM-UP (the load boundary IS the same ensure run eagerly -- scope-packages.md; a
 	// longer load for better turn time is an easy trade). Every plot cache + every scope's packages build
@@ -682,6 +664,10 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		}
 		CascadeAccumulator::worldRebuild();
 	}
+
+	// #430 LOAD LIFECYCLE: the load's per-object read()s are complete -- close the bracket. No-op on a new game
+	// (no GAME_LOAD_STARTED fired), so this is safe on both paths.
+	emitGameLoadFinished();
 
 	OutputDebugString("onFinalInitialized: End\n");
 }
@@ -8539,6 +8525,14 @@ void CvGame::read(FDataStreamBase* pStream)
 	wrapper.AttachToStream(pStream);
 
 	WRAPPER_READ_OBJECT_START(wrapper);
+
+	// #430 LOAD LIFECYCLE (event-spine.md the load-RESEED). CvGame::read is the earliest DLL load hook and runs ONLY
+	// on load (a new game inits, never deserializes). Register the spine consumers HERE -- before the per-object
+	// read()s fire their in-read DOMAIN events -- so those events have a listener (onFinalInitialized's register is
+	// idempotent). Then emit GAME_LOAD_STARTED to open the load bracket; GAME_LOAD_FINISHED closes it at the end of
+	// onFinalInitialized. (The grant engine, once built, gates on this bracket -- not our concern here.)
+	spineRegisterConsumers();
+	emitGameLoadStarted();
 
 	WRAPPER_READ_STRING(wrapper, "CvGame", m_gameId);	// flags for expansion
 

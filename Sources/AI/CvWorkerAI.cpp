@@ -492,7 +492,7 @@ bool considerCandidate(const CandidateContext& ctx,
 			kBuild.getType(), kImpr.getType(),
 			bCultureBranch ? " (culture)" : "",
 			iYieldSum, kBuild.getTime(), iTimeScore);
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BUILD_CAND, 3)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BUILD_CAND, 3)
 			.addI(WAIF_build, (int)eBuild).addI(WAIF_impr, (int)eImpr).addI(WAIF_culture, bCultureBranch ? 1 : 0)
 			.addI(WAIF_yield, iYieldSum).addI(WAIF_time, kBuild.getTime()).addI(WAIF_timeScore, iTimeScore));
 	}
@@ -569,7 +569,7 @@ bool CvWorkerAI::pushBuildMission(CvUnitAI* unit, CvPlot* pBestPlot, BuildTypes 
 				GC.getBuildInfo(eChosenBuild).getType(),
 				GC.getBuildInfo(eBestBuild).getType(),
 				missionName, iBestValue);
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_MISSION_BUILD_SUBST, 2)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_MISSION_BUILD_SUBST, 2)
 				.addI(WAIF_x, pBestPlot->getX()).addI(WAIF_y, pBestPlot->getY())
 				.addI(WAIF_chosen_build, (int)eChosenBuild).addI(WAIF_actual_build, (int)eBestBuild)
 				.addI(WAIF_value, iBestValue));
@@ -581,7 +581,7 @@ bool CvWorkerAI::pushBuildMission(CvUnitAI* unit, CvPlot* pBestPlot, BuildTypes 
 				pBestPlot->getX(), pBestPlot->getY(),
 				GC.getBuildInfo(eBestBuild).getType(),
 				missionName, iBestValue);
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_MISSION_BUILD, 2)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_MISSION_BUILD, 2)
 				.addI(WAIF_x, pBestPlot->getX()).addI(WAIF_y, pBestPlot->getY())
 				.addI(WAIF_build, (int)eBestBuild).addI(WAIF_value, iBestValue));
 		}
@@ -604,7 +604,7 @@ bool CvWorkerAI::pushBuildMission(CvUnitAI* unit, CvPlot* pBestPlot, BuildTypes 
 					section, unit->getID(), pBestPlot->getX(), pBestPlot->getY(),
 					GC.getBuildInfo(eChosenBuild).getType(),
 					GC.getBuildInfo(eBestBuild).getType(), iBestValue);
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_BUILD_ATPLOT_SUBST, 1)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_BUILD_ATPLOT_SUBST, 1)
 					.addI(WAIF_unit, unit->getID())
 					.addI(WAIF_x, pBestPlot->getX()).addI(WAIF_y, pBestPlot->getY())
 					.addI(WAIF_chosen_build, (int)eChosenBuild).addI(WAIF_actual_build, (int)eBestBuild)
@@ -615,7 +615,7 @@ bool CvWorkerAI::pushBuildMission(CvUnitAI* unit, CvPlot* pBestPlot, BuildTypes 
 				logBuildEvaluation(1, "[%s/end] unit=%d result=build at=(%d,%d) build=%s value=%d (atPlot)",
 					section, unit->getID(), pBestPlot->getX(), pBestPlot->getY(),
 					GC.getBuildInfo(eBestBuild).getType(), iBestValue);
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_BUILD_ATPLOT, 1)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_BUILD_ATPLOT, 1)
 					.addI(WAIF_unit, unit->getID())
 					.addI(WAIF_x, pBestPlot->getX()).addI(WAIF_y, pBestPlot->getY())
 					.addI(WAIF_build, (int)eBestBuild).addI(WAIF_value, iBestValue));
@@ -651,7 +651,7 @@ bool CvWorkerAI::pushBuildMission(CvUnitAI* unit, CvPlot* pBestPlot, BuildTypes 
 					section, unit->getID(), pBestPlot->getX(), pBestPlot->getY(),
 					GC.getBuildInfo(eChosenBuild).getType(),
 					GC.getBuildInfo(eBestBuild).getType(), iBestValue);
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_BUILD_SUBST, 1)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_BUILD_SUBST, 1)
 					.addI(WAIF_unit, unit->getID())
 					.addI(WAIF_x, pBestPlot->getX()).addI(WAIF_y, pBestPlot->getY())
 					.addI(WAIF_chosen_build, (int)eChosenBuild).addI(WAIF_actual_build, (int)eBestBuild)
@@ -662,7 +662,7 @@ bool CvWorkerAI::pushBuildMission(CvUnitAI* unit, CvPlot* pBestPlot, BuildTypes 
 				logBuildEvaluation(1, "[%s/end] unit=%d result=build at=(%d,%d) build=%s value=%d",
 					section, unit->getID(), pBestPlot->getX(), pBestPlot->getY(),
 					GC.getBuildInfo(eBestBuild).getType(), iBestValue);
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_BUILD, 1)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_BUILD, 1)
 					.addI(WAIF_unit, unit->getID())
 					.addI(WAIF_x, pBestPlot->getX()).addI(WAIF_y, pBestPlot->getY())
 					.addI(WAIF_build, (int)eBestBuild).addI(WAIF_value, iBestValue));
@@ -734,7 +734,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			(int)ePlayer, unit->getID(), unit->getX(), unit->getY(),
 			allowedMovementTurns, iSearchRange, bCanRoute ? 1 : 0);
 	}
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BEGIN, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BEGIN, 1)
 		.addI(WAIF_owner, (int)ePlayer).addI(WAIF_unit, unit->getID())
 		.addI(WAIF_x, unit->getX()).addI(WAIF_y, unit->getY())
 		.addI(WAIF_allowedTurns, allowedMovementTurns).addI(WAIF_searchRange, iSearchRange)
@@ -750,7 +750,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 	if (plotSet.begin() == plotSet.end() && gPlayerLogLevel >= 1)
 	{
 		logBuildEvaluation(1, "[WAI/plotset-empty] no reachable plots for unit=%d", unit->getID());
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOTSET_EMPTY, 1)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOTSET_EMPTY, 1)
 			.addI(WAIF_unit, unit->getID()));
 	}
 
@@ -789,7 +789,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 				case REJECT_NOT_CLOSE_ENOUGH: iCachedEvId = WAI_PLOT_SKIP_CACHED_NOTCLOSE;     break;
 				default:                      iCachedEvId = WAI_PLOT_SKIP_CACHED_OWNERSHIP;    break;
 				}
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, iCachedEvId, 3)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, iCachedEvId, 3)
 					.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY()));
 			}
 			continue;
@@ -806,7 +806,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			if (gPlayerLogLevel >= 2)
 				logBuildEvaluation(2, "[WAI/plot/skip] at=(%d,%d) reason=ownership owner=%d",
 					pLoopPlot->getX(), pLoopPlot->getY(), (int)ePlotOwner);
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_OWNERSHIP, 2)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_OWNERSHIP, 2)
 				.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY())
 				.addI(WAIF_owner_skip, (int)ePlotOwner));
 			continue;
@@ -817,7 +817,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			if (gPlayerLogLevel >= 2)
 				logBuildEvaluation(2, "[WAI/plot/skip] at=(%d,%d) reason=plotInvalid",
 					pLoopPlot->getX(), pLoopPlot->getY());
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_PLOTINVALID, 2)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_PLOTINVALID, 2)
 				.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY()));
 			continue;
 		}
@@ -829,7 +829,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			if (gPlayerLogLevel >= 2)
 				logBuildEvaluation(2, "[WAI/plot/skip] at=(%d,%d) reason=areaMismatch",
 					pLoopPlot->getX(), pLoopPlot->getY());
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_AREAMISMATCH, 2)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_AREAMISMATCH, 2)
 				.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY()));
 			continue;
 		}
@@ -844,7 +844,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			if (gPlayerLogLevel >= 3)
 				logBuildEvaluation(3, "[WAI/plot/skip] at=(%d,%d) reason=noBonus",
 					pLoopPlot->getX(), pLoopPlot->getY());
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_NOBONUS, 3)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_NOBONUS, 3)
 				.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY()));
 			continue;
 		}
@@ -877,7 +877,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 				logBuildEvaluation(3, "[WAI/plot/close] at=(%d,%d) bonus=%s closeEnough=%d",
 					pLoopPlot->getX(), pLoopPlot->getY(),
 					GC.getBonusInfo(eNonObsoleteBonus).getType(), bCloseEnough ? 1 : 0);
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_CLOSE, 3)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_CLOSE, 3)
 					.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY())
 					.addI(WAIF_bonus, (int)eNonObsoleteBonus).addI(WAIF_closeEnough, bCloseEnough ? 1 : 0));
 			}
@@ -889,7 +889,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			if (gPlayerLogLevel >= 2)
 				logBuildEvaluation(2, "[WAI/plot/skip] at=(%d,%d) reason=notCloseEnough",
 					pLoopPlot->getX(), pLoopPlot->getY());
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_NOTCLOSEENOUGH, 2)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_NOTCLOSEENOUGH, 2)
 				.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY()));
 			continue;
 		}
@@ -919,7 +919,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 				logBuildEvaluation(2, "[WAI/plot/skip] at=(%d,%d) reason=%s",
 					pLoopPlot->getX(), pLoopPlot->getY(),
 					!bAccessible ? "inaccessible" : "visibleEnemy");
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER,
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER,
 				!bAccessible ? WAI_PLOT_SKIP_INACCESSIBLE : WAI_PLOT_SKIP_VISIBLEENEMY, 2)
 				.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY()));
 			continue;
@@ -988,7 +988,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 						GC.getBonusInfo(eNonObsoleteBonus).getType(),
 						eBestTempBuild == NO_BUILD ? "NO_BUILD" : GC.getBuildInfo(eBestTempBuild).getType(),
 						best.qualified, best.qualified ? best.yieldScore : 0);
-					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BUILD_HIT, 2)
+					eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BUILD_HIT, 2)
 						.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY())
 						.addI(WAIF_bonus, (int)eNonObsoleteBonus)
 						.addI(WAIF_build, (int)eBestTempBuild)  // NO_BUILD (-1) when no winner
@@ -1062,7 +1062,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 						GC.getBonusInfo(eNonObsoleteBonus).getType(),
 						eBestTempBuild == NO_BUILD ? "NO_BUILD" : GC.getBuildInfo(eBestTempBuild).getType(),
 						best.qualified, best.yieldScore, best.timeScore);
-					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BUILD_WINNER, 2)
+					eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BUILD_WINNER, 2)
 						.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY())
 						.addI(WAIF_bonus, (int)eNonObsoleteBonus)
 						.addI(WAIF_build, (int)eBestTempBuild)
@@ -1074,7 +1074,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 					logBuildEvaluation(3, "[WAI/build/winner] at=(%d,%d) bonus=%s -> NO_BUILD",
 						pLoopPlot->getX(), pLoopPlot->getY(),
 						GC.getBonusInfo(eNonObsoleteBonus).getType());
-					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BUILD_WINNER_NOBUILD, 3)
+					eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BUILD_WINNER_NOBUILD, 3)
 						.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY())
 						.addI(WAIF_bonus, (int)eNonObsoleteBonus));
 				}
@@ -1123,7 +1123,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			if (gPlayerLogLevel >= 3)
 				logBuildEvaluation(3, "[WAI/plot/skip] at=(%d,%d) reason=noPath",
 					pLoopPlot->getX(), pLoopPlot->getY());
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_NOPATH, 3)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_PLOT_SKIP_NOPATH, 3)
 				.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY()));
 			continue;
 		}
@@ -1251,7 +1251,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 				iValue, iPathTurns, iMaxWorkers, iOtherBuilders,
 				bCityRadius ? 1 : 0, bAtPlot ? 1 : 0,
 				bDedupOK && bBuildtimeOK ? 1 : 0);
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_SCORE, 2)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_SCORE, 2)
 				.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY())
 				.addI(WAIF_bonus, (int)eNonObsoleteBonus)
 				.addI(WAIF_base, iValueInitial).addI(WAIF_yield, iValueYields)
@@ -1270,7 +1270,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 					pLoopPlot->getX(), pLoopPlot->getY(),
 					!bDedupOK ? "maxWorkers" : "buildTimeVsPath",
 					iOtherBuilders, iMaxWorkers);
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER,
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER,
 				!bDedupOK ? WAI_DEDUP_MAXWORKERS : WAI_DEDUP_BUILDTIMEVSPATH, 2)
 				.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY())
 				.addI(WAIF_others, iOtherBuilders).addI(WAIF_max, iMaxWorkers));
@@ -1298,7 +1298,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 						pLoopPlot->getX(), pLoopPlot->getY(),
 						GC.getBonusInfo(eNonObsoleteBonus).getType(),
 						GC.getBuildInfo(eBestBuild).getType(), iValue);
-					eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BEST_IMPROVE, 1)
+					eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BEST_IMPROVE, 1)
 						.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY())
 						.addI(WAIF_bonus, (int)eNonObsoleteBonus)
 						.addI(WAIF_build, (int)eBestBuild).addI(WAIF_value, iValue));
@@ -1328,7 +1328,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 						logBuildEvaluation(1, "[WAI/best] at=(%d,%d) bonus=%s build=ROUTE value=%d (connect)",
 							pLoopPlot->getX(), pLoopPlot->getY(),
 							GC.getBonusInfo(eNonObsoleteBonus).getType(), iValue);
-						eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BEST_CONNECT, 1)
+						eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_BEST_CONNECT, 1)
 							.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY())
 							.addI(WAIF_bonus, (int)eNonObsoleteBonus).addI(WAIF_value, iValue));
 					}
@@ -1344,7 +1344,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 	{
 		if (gPlayerLogLevel >= 1)
 			logBuildEvaluation(1, "[WAI/end] unit=%d result=noTarget", unit->getID());
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_NOTARGET, 1)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_NOTARGET, 1)
 			.addI(WAIF_unit, unit->getID()));
 		return false;
 	}
@@ -1384,7 +1384,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 		if (gPlayerLogLevel >= 2)
 			logBuildEvaluation(2, "[WAI/mission] at=(%d,%d) build=ROUTE mission=connectPlot value=%d",
 				pBestPlot->getX(), pBestPlot->getY(), iBestValue);
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_MISSION_ROUTE, 2)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_MISSION_ROUTE, 2)
 			.addI(WAIF_x, pBestPlot->getX()).addI(WAIF_y, pBestPlot->getY())
 			.addI(WAIF_value, iBestValue));
 
@@ -1393,7 +1393,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 			if (gPlayerLogLevel >= 1)
 				logBuildEvaluation(1, "[WAI/end] unit=%d result=route at=(%d,%d) value=%d",
 					unit->getID(), pBestPlot->getX(), pBestPlot->getY(), iBestValue);
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_ROUTE, 1)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_ROUTE, 1)
 				.addI(WAIF_unit, unit->getID())
 				.addI(WAIF_x, pBestPlot->getX()).addI(WAIF_y, pBestPlot->getY())
 				.addI(WAIF_value, iBestValue));
@@ -1407,7 +1407,7 @@ bool CvWorkerAI::improveBonus(CvUnitAI* unit, int allowedMovementTurns)
 
 	if (gPlayerLogLevel >= 1)
 		logBuildEvaluation(1, "[WAI/end] unit=%d result=fallthrough", unit->getID());
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_FALLTHROUGH, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_END_FALLTHROUGH, 1)
 		.addI(WAIF_unit, unit->getID()));
 	return false;
 }
@@ -1494,7 +1494,7 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 				if (gPlayerLogLevel >= 3)
 					logBuildEvaluation(3, "[WAI/city/plot/skip] at=(%d,%d) reason=safeAutomation",
 						pLoopPlot->getX(), pLoopPlot->getY());
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_PLOT_SKIP_SAFEAUTOMATION, 3)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_PLOT_SKIP_SAFEAUTOMATION, 3)
 					.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY()));
 				continue;
 			}
@@ -1524,7 +1524,7 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 					eBuild == NO_BUILD ? "NO_BUILD" : GC.getBuildInfo(eBuild).getType(),
 					iValue, bCanBuild ? 1 : 0,
 					(eBuild != NO_BUILD && std::max<int64_t>(0, kOwner.getGold()) < kOwner.getBuildCost(pLoopPlot, eBuild)) ? 1 : 0);
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_EVAL_HIT, 2)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_EVAL_HIT, 2)
 					.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY())
 					.addI(WAIF_build, (int)eBuild)
 					.addI(WAIF_value, iValue).addI(WAIF_canBuild, bCanBuild ? 1 : 0)
@@ -1552,7 +1552,7 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 					eBuild == NO_BUILD ? "NO_BUILD" : GC.getBuildInfo(eBuild).getType(),
 					iValue, bCanBuild ? 1 : 0,
 					(eBuild != NO_BUILD && std::max<int64_t>(0, kOwner.getGold()) < kOwner.getBuildCost(pLoopPlot, eBuild)) ? 1 : 0);
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_EVAL_NEW, 2)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_EVAL_NEW, 2)
 					.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY())
 					.addI(WAIF_build, (int)eBuild)
 					.addI(WAIF_value, iValue).addI(WAIF_canBuild, bCanBuild ? 1 : 0)
@@ -1576,7 +1576,7 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 					(int)pLoopPlot->getOwner(),
 					pLoopPlot->isBorder(true) ? 1 : 0,
 					plotDistance(unit->getX(), unit->getY(), pLoopPlot->getX(), pLoopPlot->getY()));
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_PLOT_SKIP_ENEMY, 2)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_PLOT_SKIP_ENEMY, 2)
 					.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY())
 					.addI(WAIF_build, (int)eBuild)
 					.addI(WAIF_owner_skip, (int)pLoopPlot->getOwner())
@@ -1624,7 +1624,7 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 					plotDistance(unit->getX(), unit->getY(), pLoopPlot->getX(), pLoopPlot->getY()),
 					pLoopPlot->isVisibleEnemyUnit(unit) ? 1 : 0,
 					iAdjOwn, iAdjForeign, iAdjWater, iAdjPeak);
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_PLOT_SKIP_NOPATH, 2)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_PLOT_SKIP_NOPATH, 2)
 					.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY())
 					.addI(WAIF_build, (int)eBuild)
 					.addI(WAIF_owner_skip, (int)pLoopPlot->getOwner())
@@ -1672,7 +1672,7 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 				GC.getBuildInfo(eBuild).getType(),
 				iValue, iPathTurns, bAtPlot ? 1 : 0, iMaxWorkers, iOtherBuilders,
 				iScored, bDedupOK ? 1 : 0);
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_SCORE, 2)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_SCORE, 2)
 				.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY())
 				.addI(WAIF_build, (int)eBuild)
 				.addI(WAIF_base, iValue).addI(WAIF_path, iPathTurns)
@@ -1686,7 +1686,7 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 			if (gPlayerLogLevel >= 2)
 				logBuildEvaluation(2, "[WAI/city/dedup] at=(%d,%d) skip others=%d max=%d",
 					pLoopPlot->getX(), pLoopPlot->getY(), iOtherBuilders, iMaxWorkers);
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_DEDUP, 2)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_DEDUP, 2)
 				.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY())
 				.addI(WAIF_others, iOtherBuilders).addI(WAIF_max, iMaxWorkers));
 			continue;
@@ -1704,7 +1704,7 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 				logBuildEvaluation(1, "[WAI/city/best] at=(%d,%d) build=%s value=%d",
 					pLoopPlot->getX(), pLoopPlot->getY(),
 					GC.getBuildInfo(eBestBuild).getType(), iScored);
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_BEST, 1)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_BEST, 1)
 					.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY())
 					.addI(WAIF_build, (int)eBestBuild).addI(WAIF_value, iScored));
 			}

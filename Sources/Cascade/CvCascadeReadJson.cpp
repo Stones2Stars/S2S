@@ -285,7 +285,7 @@ void cascadeLoadJson()
 	// premenu-only map drops the edges to not-yet-loaded types -- the canMaintain empty-frontier bug). NOT one-shot: the
 	// postmenu re-run is what completes the FK edges. UNCONDITIONAL: no gPlayerLogLevel dependency (cold this early) --
 	// the [READJSON/*] census rides the event spine (SD_READJSON; the log consumer gates per level).
-	cascadeRegisterConsumers();   // register the spine's logging CONSUMER (idempotent) before the census emits
+	spineRegisterConsumers();   // register the spine's logging CONSUMER (idempotent) before the census emits
 	rj_registerDomain();
 	rj_clearAllRepos();           // care-point (a): re-map-safe (no-op first run)
 	jsonResetDiag();              // reset the FK-unresolved accumulator (surfaced below)
@@ -333,7 +333,7 @@ void cascadeLoadJson()
 		// \complex\ files into the complex repo -- only the id changed from a private counter to the engine id.)
 		const int typeId = (type == "TECH_GAME_START") ? -1 : rj_registerId(type);   // engine id (or -1 = DEFER to its load phase)
 		if (typeId >= 0) ++iResolved;
-		else { ++iUnresolved; if (iShownUnres < 16) { eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_UNRESOLVED, 1).addStr(RJF_TYPE, type.c_str())); ++iShownUnres; } }
+		else { ++iUnresolved; if (iShownUnres < 16) { eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_UNRESOLVED, 1).addStr(RJF_TYPE, type.c_str())); ++iShownUnres; } }
 		RjEntity rec; rec.type = type; rec.typeId = typeId; rec.data = NULL; rec.value = v; rec.path = files[i];
 		store.push_back(rec);
 	}
@@ -384,8 +384,8 @@ void cascadeLoadJson()
 	int iStashFiles = (int)files.size(), iStashEntities = iEntities;
 	cascadeReadJsonStats(true, iStashFiles, iStashEntities, dataDir);
 
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_DIR, 1).addStr(RJF_DIR, dataDir.c_str()));
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_PROBE, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_DIR, 1).addStr(RJF_DIR, dataDir.c_str()));
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_PROBE, 1)
 		.addI(RJF_FILES, (int)files.size()).addI(RJF_PARSED, (int)files.size() - iFailed).addI(RJF_FAILED, iFailed)
 		.addI(RJF_ENTITIES, iEntities).addI(RJF_RESOLVED, iResolved).addI(RJF_UNRESOLVED, iUnresolved)
 		.addI(RJF_FAMILYKINDS, (int)familyKinds.size()).addI(RJF_FLAGKINDS, (int)flagKinds.size()));
@@ -394,7 +394,7 @@ void cascadeLoadJson()
 	// jsonResolveId during the maps -- surfaced so a data typo never hides.
 	const std::set<std::string>& unres = jsonUnresolvedIds();
 	for (std::set<std::string>::const_iterator it = unres.begin(); it != unres.end(); ++it)
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_EDGE_UNRES, 1).addStr(RJF_ID, it->c_str()));
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_EDGE_UNRES, 1).addStr(RJF_ID, it->c_str()));
 
 	// READ-BACK survey: reconstruct the modifier stats + per-entity structure counts from the MAPPED data (the
 	// home) -- the §6 families on getModifiers(), the spec model ([DEC-json-not-cascade]; the retired generic
@@ -425,7 +425,7 @@ void cascadeLoadJson()
 					if (en->hasPer) ++mPer;   // the §3.7 per count-scaler (represented since 2026-07-08)
 					if (iModSample < 10)   // concrete value samples -- proves the single human->×100 conversion at the leaf
 					{
-						eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MOD, 1)
+						eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MOD, 1)
 							.addStr(RJF_TYPE, store[s].type.c_str()).addStr(RJF_ADDR, fit->first.c_str())
 							.addStr(RJF_UNIT, DepositIndex::unitSegment(en->unit)).addI(RJF_VAL, en->value100));
 						++iModSample;
@@ -435,7 +435,7 @@ void cascadeLoadJson()
 		}
 		if (iMapSample < 8)
 		{
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MAP, 1)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MAP, 1)
 				.addStr(RJF_TYPE, store[s].type.c_str()).addI(RJF_DEPOSITS, cd->getModifiers() ? (int)cd->getModifiers()->all().size() : 0)
 				.addI(RJF_REQBUILD, cd->requiresBuild() ? 1 : 0).addI(RJF_REQOPERATE, cd->requiresOperate() ? 1 : 0)
 				.addI(RJF_EDGES, cd->getEdges() ? (int)cd->getEdges()->all().size() : 0)
@@ -445,7 +445,7 @@ void cascadeLoadJson()
 			++iMapSample;
 		}
 	}
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MOD_SURVEY, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MOD_SURVEY, 1)
 		.addI(RJF_MAGNITUDES, mMag).addI(RJF_FLAT, mFlat).addI(RJF_PERCENT, mPercent).addI(RJF_MULT, mMult)
 		.addI(RJF_OTHER, mOther).addI(RJF_CONDITIONED, mCond).addI(RJF_PERSCALED, mPer).addI(RJF_FAMILYKINDS, (int)familyKinds.size()));
 
@@ -462,15 +462,15 @@ void cascadeLoadJson()
 		for (std::set<std::string>::const_iterator it = caps->all().begin(); it != caps->all().end(); ++it)
 		{ ++capGrants; capNames.insert(*it); }
 	}
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_CAP_SURVEY, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_CAP_SURVEY, 1)
 		.addI(RJF_GRANTING, capEntities).addI(RJF_CAPGRANTS, capGrants).addI(RJF_DISTINCTNAMES, (int)capNames.size()));
 	for (std::set<std::string>::const_iterator it = capNames.begin(); it != capNames.end(); ++it)
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_CAP, 1).addStr(RJF_NAME, it->c_str()));
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_CAP, 1).addStr(RJF_NAME, it->c_str()));
 
 	// FULL-COVERAGE census line: every top-level key kind + its class -- UNCLASSIFIED (impossible: classify always
 	// returns family/flag for an unknown) is the thing to investigate.
 	for (std::map<std::string, int>::const_iterator it = topKeys.begin(); it != topKeys.end(); ++it)
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_KEY, 1)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_KEY, 1)
 			.addStr(RJF_KEY, it->first.c_str()).addI(RJF_COUNT, it->second)
 			.addStr(RJF_CLASS, jsonKeyClassName(keyClass[it->first])));
 
@@ -576,6 +576,6 @@ void cascadeLoadJson()
 		}
 	}
 
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MAP_SUMMARY, 1).addI(RJF_WITHDATA, iAttached));
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MAP_SUMMARY, 1).addI(RJF_WITHDATA, iAttached));
 	gDLL->logMsg("Loading.log", CvString::format("[READJSON] END withData=%d reverseIndex+survey done totalMs=%u", iAttached, (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 }

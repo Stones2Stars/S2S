@@ -1,11 +1,12 @@
 # The duplicate surface — every legacy↔cascade pair running today (#430)
 
-> **What this is:** the verified INDEX of the shadow-phase duplication — every value currently computed by
-> BOTH the legacy engine and the cascade, which side SERVES the game, the net that diffs them, and where each
-> pair dies ([code-cut-map.md](code-cut-map.md) owns the cut rows). The duplication is the ONE sanctioned
-> double ([patterns.md](../../architecture/patterns.md) rule 7) with a defined death at each plane's cut.
+> **What this is:** the verified INDEX of the **cut-pending legacy oracles** — every value still computed by
+> BOTH the legacy engine and the cascade, which side SERVES the game, and where each pair dies
+> ([code-cut-map.md](code-cut-map.md) owns the cut rows). The `*Legacy` getters are **demolition-pending
+> residuals**, not a sanctioned duplication: each dies at its mechanism's **atomic cut**, and the cascade that
+> replaces it is verified **live in the running game** before that cut
+> ([validation.md](../../specs/validation.md) — the shadow phase is closed; what remains is live verification).
 > Line numbers drift — confirm the named function/member, not the integer.
-> Swept from the live tree 2026-07-04 (post the scope-packages landing).
 
 ## A. The CITY MODIFIER plane — CASCADE SERVES, legacy maintains itself as the oracle
 
@@ -45,45 +46,46 @@ canBuild rem-set + the promotion tech halves) — **ensure-on-read (the operatin
 rates' bare fetch: gate reads are decision-time and legacy chains builds within a turn)**, filled by the
 harness-proven cascade calls (`BuildingCascade::buildable` / `UnitCascade::trainable` /
 `TechCascade::available` / the kernel gateSets). The flipped bodies (default shapes; what-if/visible params
+
 + pre-init ride Legacy): `CvCity::canConstruct/canTrain/canCreate/canMaintain`,
 `CvPlayer::canResearch/canDoCivics/canHurry/canFoundReligion` + the `canBuild` UNLOCK half,
 `CvUnit::isPromotionValid` (the composite: frontier half over the bespoke `isPromotionValidLegacy(...,true)`
 ride). Every gate keeps its intact `can*Legacy` oracle; `[ENABLER/shadow]` now diffs SERVING-vs-oracle. The
 legacy gate caches (`m_bCanConstruct*`, the canTrain cache) serve the Legacy path only; the
 `CvCityAI::CalculateAllBuildingValues` PreLoop rides legacy until the enabler CUT (the deletion still waits
-for the verification window + the standing gates).
+for live verification + the standing gates).
 
 ## C. The THIRD surface — the oracle calculators (net-sampled only)
 
 `YieldRate` / `CommerceCalc` / `CascadeWellbeing::compute` / `CascadeScalarChannels` (`Sources/Cascade/`):
-from-scratch derivations the `[SLOT]`-class nets sample (capped per turn). Not game-serving; they die with the
-shadow at the cut (the one-generic-assembler consolidation is the parked end-state, scope-packages.md).
+from-scratch derivations the `[SLOT]`-class nets sample (capped per turn). Not game-serving; they die at the
+cut (the one-generic-assembler consolidation is the parked end-state, scope-packages.md).
 
 ## D. NOT duplicated (already single-surface)
 
-- **Capabilities** — CUT (the 22 `CvTeam` getters run `CascadeCapabilities`; 21 counters deleted; sliders +
++ **Capabilities** — CUT (the 22 `CvTeam` getters run `CascadeCapabilities`; 21 counters deleted; sliders +
   `hasLanguage` cut in wave 2). ✅ Its cache converged onto the Set protocol 2026-07-05 (`CascadeTeamCaps`
   owner-side on `CvTeam`, the scope-packages §3b census row).
-- **Plot yields** — the `CvPlot` cache IS the one source (both the cascade combine and legacy pull it; the
++ **Plot yields** — the `CvPlot` cache IS the one source (both the cascade combine and legacy pull it; the
   push-maintained `m_aiBaseYieldRate` member is dead).
-- **The tally** — a read-only accessor over object-owned counts by design (a duplicate would be tautological).
-- **readJson/InfoRepo static data** — parallel to the XML infos by design until the final data flip (the XML
++ **The tally** — a read-only accessor over object-owned counts by design (a duplicate would be tautological).
++ **readJson/InfoRepo static data** — parallel to the XML infos by design until the final data flip (the XML
   stays authoritative for the EXE-bound accessor surface; the atomic last step).
 
 ## E. The UNIT plane — LEGACY ONLY (no duplication yet)
 
 The unit stat stack (the ~91 `CvUnit::changeExtra*` setters) has no cascade side yet — it needs the
-`unitInput` endpoint + the unit families on the one engine, then its own shadow window and cut.
+`unitInput` endpoint + the unit families on the one engine, then its own live-verification pass and cut.
 
-## F. The save surface during the window
+## F. The save surface until the cut
 
 The legacy accumulators still SERIALIZE (saves unchanged; the packages never serialize). At each cut, every
 deleted serialized member retires two-stage: drop the write + a named `WRAPPER_SKIP_ELEMENT` on the read +
 the `savemigration.txt` ledger entry ([engine.md](../../reference/engine.md) §Save/load — the capabilities
 lesson: a deleted read DESYNCS old saves).
 
-## The cost of the window (measured)
+## The cost of running both surfaces (measured)
 
 Both bookkeepings run per mutation (legacy incremental pushes + cascade marks); memory holds both states
 (~2.5GB on the reference save, with headroom); the oracles cost only net samples; saves are unchanged. The
-window closes plane-by-plane per [cutover.md](cutover.md), executed from [code-cut-map.md](code-cut-map.md).
+duplication closes plane-by-plane per [cutover.md](cutover.md), executed from [code-cut-map.md](code-cut-map.md).

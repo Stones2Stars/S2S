@@ -12,7 +12,7 @@
 >
 > **You are not the exception. Assume you are about to add to that number unless you deliberately do the opposite:**
 >
-> - **⚑ SESSION-START PROTOCOL — before your FIRST action (and again after any context compaction): enumerate every file in `docs/specs/`, `docs/architecture/`, and `docs/reference/` and read each one IN FULL.** Not the subset you judge relevant — ALL of them. They are ONE interconnected design (`CvDerivedCache` + the event spine + the cascades + `readJson` + `state-repositories`), and the reference docs are how the engine actually behaves today; the connection you skip is the one that bites. **Your judgment of what is "necessary" is NOT trusted — it is systematically biased toward reading too little.** ([DEC-all-means-all](docs/architecture/decisions.md#dec-all-means-all))
+> - **⚑ SESSION-START PROTOCOL — before your FIRST action (and again after any context compaction): enumerate every file in `docs/specs/`, `docs/architecture/`, and `docs/reference/` and read each one IN FULL, PLUS the #430 master roadmap [`docs/plans/structural-cleanup/roadmap.md`](docs/plans/structural-cleanup/roadmap.md) (the plan for the active work).** Not the subset you judge relevant — ALL of them. They are ONE interconnected design (`CvDerivedCache` + the event spine + the cascades + `readJson` + `state-repositories`), and the reference docs are how the engine actually behaves today; the connection you skip is the one that bites. **Your judgment of what is "necessary" is NOT trusted — it is systematically biased toward reading too little.** ([DEC-all-means-all](docs/architecture/decisions.md#dec-all-means-all)) **⛔ ALL docs live in the repo — a plan or design note kept only in a local/private notes folder (`.claude/plans/`, assistant memory) is a core-rule VIOLATION to fix by moving it into `docs/`, not a doc you may skip.**
 > - **READ the docs for whatever you touch, IN FULL, BEFORE you act** — not the code, not your memory, not a stale plan doc: the authoritative specs. ([DEC-fast-is-slow](docs/architecture/decisions.md#dec-fast-is-slow-slow-is-fast) · [DEC-no-guessing](docs/architecture/decisions.md#dec-no-guessing) · [DEC-kraken](docs/architecture/decisions.md#dec-kraken))
 > - **IMPLEMENT the spec as written. Poke holes in the spec *afterward*, with evidence** — never by inventing your own approach up front.
 > - The instant you catch yourself *designing* something, stop and ask whether the spec already defines it. It almost certainly does. Go read it, then implement *that*.
@@ -52,7 +52,7 @@ architecture rules that apply to DLL source.
 > genuinely **C++03, 32-bit/x86** — *no* `std::thread`, *no* OpenMP, *no* C++11+. This is a hard compiler limit (the
 > toolchain is locked to stay ABI/STL-compatible with the closed VC7.1 game `.exe`), **not** a style convention.
 > In-process threading means raw Win32 only. Do not modernize or replace the build chain/toolchain.
-
+>
 > **⛔ HARD RULE — THE TREE DELIBERATELY DOES NOT COMPILE ([DEC-red-ratchet](docs/architecture/decisions.md#dec-red-ratchet)).
 > NEVER "fix" it by restoring old Infos.** The 23 XML engine info classes (`CvBuildingInfo`, `CvUnitInfo`,
 > `CvTechInfo`, … — 46 files) were moved to `SourceArchive/Infos/` ON PURPOSE: parity is past, the JSON-fed
@@ -61,7 +61,7 @@ architecture rules that apply to DLL source.
 > fallback was removed. **Never restore anything from `SourceArchive/`, never re-add a `CvXInfo` class, never treat
 > the RED build as a defect.** The ONLY road to green: build the JsonInfo structure, wire it up, and wire up/replace
 > ALL the getters (the engine/AI/UI consumer surface onto the JSON-fed infos).
-
+>
 > **⛔ HARD RULE — READING A REPLACED INFO'S XML **INTO THE GAME** IS HARD BANNED ([DEC-no-xml-into-game](docs/architecture/decisions.md#dec-no-xml-into-game)).**
 > The legacy info XMLs (`Assets/XML/**/CIV4<X>Infos.xml`) for every type we have replaced with a `CvJson<X>Info`
 > poco are **CURATOR INPUT ONLY** — the curator reads them to generate the `Assets/Data/**` JSON, which is why they
@@ -293,6 +293,13 @@ the total-observability bar below.)
   [north-star.md](docs/architecture/north-star.md); the concrete C++03 shape (pure-virtual interfaces, MI as
   `implements`, poor-man's DI at a composition root, graft onto DLL-derived classes never EXE-bound bases) is
   [patterns.md](docs/architecture/patterns.md) / [DEC-interface-contracts](docs/architecture/decisions.md#dec-interface-contracts).
+- **⛔ "Deferred" is BANNED — a deferred / parked / blocked / not-yet-landed / post-cutover / "later" / "acceptable for now" / TODO / pending item is a FAILURE to fix, not a backlog entry**
+  ([DEC-no-deferred](docs/architecture/decisions.md#dec-no-deferred)). It is the word agents hide behind to skip hard
+  work hoping it won't have impact — and the measured result is a half-built branch whose load-bearing minority is
+  quietly missing while it looks nearly done. The general form of
+  [DEC-data-first](docs/architecture/decisions.md#dec-data-first), extended from data to ALL work. The ONLY exceptions
+  are owner-ruled PERMANENT design carve-outs, recorded as such (the golden-age yield-effect member-mirror;
+  Python-authoritative gameplay staying Python).
 - **"Minimal, local changes" bounds the SIZE of an edit, NOT the SCOPE of the work.** A targeted fix inside a
   tightly-coupled legacy core file stays minimal — don't sprawl it or gratuitously refactor around it. But this is
   no brake on deliberate structural rework (the cascade, the docs rebuild, dissolving the `Cv*AI` god-classes),

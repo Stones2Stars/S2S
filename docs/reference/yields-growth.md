@@ -2,9 +2,10 @@
 
 > Lifted + condensed mechanics (the formulas the validator re-derives). The old docs' "what's dark on the wire /
 > proposed hooks" sections are deliberately **not** here — that's a build tracker, not mechanics. Behaviour as-is;
-> the cascade shadows then replaces these.
+> the cascade replaces these (verified live in-game).
 
 ## Civics
+
 - State: `CvPlayer::m_paeCivics[]` (one `CivicTypes` per `CivicOptionTypes`); NPCs hold civics but `processCivics`
   is a no-op for them. `canDoCivics` = tech prereq met OR option already unlocked, AND city count within limit.
 - **Anarchy length:** `Σ(anarchyLength·100 per changed civic)` → qty discount `−= total·N·CIVIC_ANARCHY_QTY_DISCOUNT/100`
@@ -14,6 +15,7 @@
   no log, no event. AI re-evaluates on a 25-turn throttle (`CIVIC_CHANGE_DELAY`).
 
 ## Food & growth (city)
+
 - Tick `changeFood(foodDifference(), true)` at `doTurn`. **Gross food** = `min(CITY_MAX_YIELD_RATE, max(100,
   (baseYieldRate + specialistYield)·baseYieldRateModifier + 100·extraYield))`.
 - **Consumption** = `getFoodConsumedByPopulation − healthRate − angryPop + foodWastage`, using
@@ -28,6 +30,7 @@
   player.threshold(pop), cityGrowthRatePercent + playerGrowthRatePercent)`, halved for barbarian.
 
 ## Improvements & plot yields
+
 - Per-plot per-turn order: ownership → bonus discover/deplete → improvement **upgrade** (only if worked OR
   fortify-upgrade) → feature growth/disappear → culture diffusion.
 - **Upgrade:** +`getImprovementUpgradeProgressRate` (base 100 + civic/trait/tech) each qualifying turn; threshold
@@ -38,6 +41,7 @@
   value, refreshed by `updateYield` on any input change.
 
 ## City production
+
 - `doTurn` order: `doCheckProduction` → food → culture → `doAutobuild` → `doProduction` (growth precedes hammers).
 - **Hammers/turn** = `max(1, extraYield + overflow(if flag) + foodSurplus(if FoodProduction) + (baseYieldRate +
   specialistYield)·baseYieldRateModifier/100)`. `isDisorder()` → 0. Process-mode converts to gold/science/culture
@@ -50,6 +54,7 @@
   `BUILDING_PRODUCTION_DECAY_PERCENT`% per `BUILDING_PRODUCTION_DECAY_TIME` turns (speed-scaled).
 
 ## Golden ages & era
+
 - **Golden age** — full reference: **[golden-age.md](golden-age.md)**. Yield-relevant summary: it adds yield in
   **three** places, all in `base` (so all `× modifier`): the **per-plot** threshold bonus (`calculateYield` — tested on
   the **PRE-improvement/route** running yield), the **player** golden-age yield, and golden-age **commerce**. Plus
@@ -60,5 +65,6 @@
   gates `requires` atoms and scales anarchy/growth/event-prob + the AI per-era handicap bonus.
 
 ## See also
+
 - [economy.md](economy.md) — maintenance/upkeep/happiness feed off these. [engine.md](engine.md) — gamespeed/era +
   the property solver. [../specs/modifier.md](../specs/modifier.md) — the yield modifier families that replace the stacks above.

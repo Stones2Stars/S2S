@@ -1,9 +1,10 @@
 # Special systems reference — espionage, great people, promotions/XP, vision, trade, diplomacy, victory
 
-> Lifted + condensed mechanics (the formulas the validator re-derives). Behaviour as-is; the cascade shadows then
-> replaces these.
+> Lifted + condensed mechanics (the formulas the validator re-derives). Behaviour as-is; the cascade replaces these
+> (verified live in-game).
 
 ## Espionage
+
 - **EP accrual:** `doEspionagePoints` → `doEspionageOneOffPoints(getCommerceRate(ESPIONAGE))`; off until ≥1 team met.
 - **EP split:** divided per turn proportionally by `m_aiEspionageSpendingWeightAgainstTeam[]` (0–99 per target;
   unmet/dead/self excluded). **Mission cost** = `baseCost × costModifier/100 × numTeamMembers` (chain: pop, trade
@@ -14,6 +15,7 @@
   Four per-city effect timers (health/happiness/disabled-power/war-weariness) all −1/turn.
 
 ## Great people (city)
+
 - **GPP:** `doGreatPeople` per city (disorder guard); adds `getGreatPeopleRate()` to `m_iGreatPeopleProgress` +
   per-type. **Rate** = `isDisorder()?0 : baseGreatPeopleRate × totalGreatPeopleRateModifier/100`; base =
   `baseGreatPeopleRate + nationalGreatPeopleRate`; modifier = city + player + global + state-religion + golden-age.
@@ -23,6 +25,7 @@
   the threshold modifier ramps each spawn by `GREAT_PEOPLE_THRESHOLD_INCREASE·(created/5 + 2)` (non-linear).
 
 ## Promotions & XP (unit)
+
 - XP stored **×100** (`m_iExperience`), all via `changeExperience100(iChange, iMax, bFromCombat, bInBorders, bUpdateGlobal)`.
 - **Level threshold** `calcBaseExpNeeded(level, owner) = (99 + (level²+1)·(100 + getLevelExperienceModifier()))/100`;
   Commander/Commodore × 3/2. **Caps:** vs animals → `ANIMAL_MAX_XP_VALUE` (unless EXPLORER/ANIMAL_HUNTER); vs
@@ -34,6 +37,7 @@
   recurses silently. **No log anywhere in the XP/promo system** beyond `level` in `/units`.
 
 ## Vision & visibility (plot, per team)
+
 - Per-plot per-team: `m_aiVisibilityCount` (>0 = visible now), `m_abRevealed` (ever-seen, permanent), `…LastSeenTurn`,
   `…StolenVisibilityCount`, `…InvisibleVisibilityCount`. `isVisible = visibilityCount>0 || stolenVisibilityCount>0`.
 - **Sight range** = `1 + plot.getTerrainElevation() + getExtraVisibilityRange() + improvement.getVisibilityChange()`,
@@ -45,6 +49,7 @@
   units with no per-viewer invisibility filter.
 
 ## Trade routes (city)
+
 - **Slot budget** = `game + player + (coastal? player.coastal : 0) + city.extra`, capped `[0, getMaxTradeRoutes]`.
   `updateTradeRoutes` runs **eagerly on every modifier change, not in doTurn**; candidates gate on
   `canHaveTradeRoutesWith` (diplomacy) + same `CvPlotGroup` (connectivity).
@@ -56,6 +61,7 @@
   group as the capital.
 
 ## Diplomacy / attitude (AI)
+
 - `AI_getAttitudeVal(player)` ∈ [−100, 100], lazily cached, thresholded to `AttitudeTypes` (0 Furious … 4 Friendly);
   short-circuits: NPC → −100, same team / uncapitulated vassal → 100. **~26 additive components** (peace-weight match
   `4 − |Δ|`, warmonger-respect min, war/peace/religion/civic/trade counters each `counter/divisor`).
@@ -64,6 +70,7 @@
   counters in `AI_doDiploCounters`. **Attitude is the master variable routing every AI diplomatic decision.**
 
 ## Victory
+
 - `CvGame::testVictory()` every turn (grace: bail if `< speedPercent/10` turns elapsed). Checks: Time/Score, Conquest
   (no other alive non-vassal team has cities), Domination (X% pop AND Y% land), Religious, Cultural (N cities at a
   level), Scientific/Building (≥ threshold of a building), Space (every project ≥ `getVictoryMinThreshold`).
@@ -74,5 +81,6 @@
   Mastery/Total clears all other winners (by `getTotalVictoryScore`); Mercy Rule: a team > half the global total wins after a countdown.
 
 ## See also
+
 - [engine.md](engine.md) (pathfinding/plot-groups, the save latches) · [economy.md](economy.md) (war-weariness/espionage
   timers) · [../specs/tally.md](../specs/tally.md) (counters/EP are tally domains) · [../specs/enabler.md](../specs/enabler.md) (plot-group dormancy gate).

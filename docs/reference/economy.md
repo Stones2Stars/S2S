@@ -1,14 +1,15 @@
 # Economy reference — maintenance, upkeep, happiness, health, war-weariness, pollution
 
 > Lifted + condensed from the old observability docs. The per-subsystem **mechanics the validator re-derives**.
-> Behaviour as-is today; the cascade ([modifier](../specs/modifier.md)/[tally](../specs/tally.md)) shadows then
-> replaces these maintainers ([logging](../specs/logging.md) §6).
+> Behaviour as-is today; the cascade ([modifier](../specs/modifier.md)/[tally](../specs/tally.md)) replaces these
+> maintainers (verified live in-game) ([logging](../specs/logging.md) §6).
 
 ## Gold expense (player)
 
 `getFinalExpense = calculatePreInflatedCosts() × getInflationMod10000()/10000` (suppressed during anarchy).
 **Six additive pre-inflation components:** treasury upkeep + total maintenance + civic upkeep + unit upkeep + unit
 supply + corporate maintenance.
+
 - **Treasury tax** (anti-hoarding): `(gold + 250·√gold) / (25 · gameSpeedPercent)`.
 - **City maintenance** = era floor + modified base; suppressed on disorder/WLTK. Base = distance (distance×pop, 0
   at the government center) + numCities `((n−1)·72·(pop+13)/13`, vassal-divided) + colony + corporation +
@@ -19,7 +20,7 @@ supply + corporate maintenance.
 - **Per-turn order:** `verifyGoldCommercePercent` (silently raises the gold slider on deficit) → `doGold` (strike +
   forced-disband when gold < 0) → `doAdvancedEconomy` (inflation decay).
 - **⚑ Cascade fold:** negative-gold buildings route to **`maintenance.city.flat`** (NOT `gold.flat`) — this brought
-  the maintenance divergence to 0. (Open post-cutover: crime/ordinance pseudobuildings — maintenance vs negative commerce.)
+  the maintenance divergence to 0. (Gap to close: crime/ordinance pseudobuildings — classify as maintenance vs negative commerce.)
 
 ## Unit upkeep + supply (player)
 
@@ -77,5 +78,6 @@ supply + corporate maintenance.
   `TOXIC_HYDROSPHERE`@≥1800), placed/removed by `checkPropertyBuildings` — a property-band maintainer the cascade replaces.
 
 ## See also
+
 - [engine.md](engine.md) — the property solver + the save checksum these feed.
 - [../specs/modifier.md](../specs/modifier.md) / [../specs/tally.md](../specs/tally.md) — the machines that replace these maintainers.

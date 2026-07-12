@@ -23,6 +23,7 @@
 > ~44 conditioned building flats). (5) empire-scope gather. (6) validate.
 
 ## The five legacy source channels (all stub-empty today)
+
 1. Property's **own** decay + population baseline + spatial diffusion — `CvPropertyInfo::m_PropertyManipulators`.
 2. Property's **change-propagation** table (City→Player rollup) — `CvPropertyInfo::getChangePropagator` (`CvPropertyInfo.h:31`).
 3. **Building** flat/conditioned deposits — `CvBuildingInfo::m_PropertyManipulators` (`CvBuildingInfo.h:611`).
@@ -31,6 +32,7 @@
    stub matching an empty legacy reality; leave stubbed, nothing to migrate.
 
 ## Legacy target classes (READ-ONLY — never touch the solving math)
+
 - `CvPropertySource.h` + `.cpp`: `CvPropertySourceConstant` (`IntExpr* m_pAmountPerTurn` — the FLAT kind),
   `CvPropertySourceDecay` (`iPercent` self-decay toward `iNoDecayAmount`), `CvPropertySourceAttributeConstant`
   (`ATTRIBUTE_POPULATION × iAmountPerTurn` — the population baseline). `CvPropertySourceConstantLimited` = **dead**
@@ -47,6 +49,7 @@
   building deposit to every city** (owner-decision #3 below).
 
 ## What the JSON already carries (curated — bridge only, no shape change)
+
 - **Property own decay + population baseline** in `Assets/Data/properties/*.json` (7 files): decay = `PROPERTY_X.city.percent`
   / `.plot.percent`; population baseline = `PROPERTY_X.city.flat:{value,per:{type:POPULATION,each}}`. Matches XML exactly.
 - **Building/unit flat deposits**: ordinary `PROPERTY_*` modifier families — `PROPERTY_X.city.flat` / `.plot.flat` —
@@ -56,7 +59,9 @@
   **changePropagation** (`PROPERTY_FLAMMABILITY` City→Player 100%), and the `properties`-block gate predicates.
 
 ## APPROVED JSON shape — the `properties` bespoke section (json.md §9 reserves the name)
+
 On the property's own entity (`Assets/Data/properties/<X>.json`):
+
 ```jsonc
 "properties": {
   "diffuse": [
@@ -67,6 +72,7 @@ On the property's own entity (`Assets/Data/properties/<X>.json`):
   "changePropagation": [ { "from": "city", "to": "empire", "percent": 100 } ]  // FLAMMABILITY only
 }
 ```
+
 - `from`/`to` = the two objects (diffuse is two-object, unlike a `grants` pulse); `relation`+`distance` mirror the
   `grants` property-pulse vocabulary (§5). `enabled` = an ordinary condition (§3.4/§3.5).
 - The legacy `PLOT→PLOT` `Active` tag-BoolExpr gates map onto EXISTING json.md predicates (no new predicates):
@@ -74,13 +80,17 @@ On the property's own entity (`Assets/Data/properties/<X>.json`):
   Curator applies a fixed translation table.
 
 ## Implementation (one landing)
+
 ### A. Engine — one small ADDITIVE method (no solver/read/math change)
+
 `CvPropertyManipulators` (+ `CvPropertySource`/`CvPropertyPropagator`): add a **programmatic constructor path** —
 e.g. `addConstantSource(PropertyTypes, int iAmount, GameObjectTypes=NO_GAMEOBJECT, RelationTypes=NO_RELATION, int
 iData=0, const BoolExpr* =NULL)`, `addDecaySource(...)`, `addAttributeConstantSource(...)`, `addDiffusePropagator(...)`
 — mirroring the `addSource(PropertySourceTypes)` factory (`.cpp:58-79`) but building the object graph directly. This is
 the ONLY engine touch (plus B3, C3 below). Does not touch `read()`, `CvPropertySolver`, or any predict/correct math.
+
 ### B. Pocos — `mapFrom` bridge (after `CvInfo::mapFrom` has parsed `m_modifiers`)
+
 1. **Building** (`CvBuildingInfo.cpp:336`-ish, mirror the river/plot-type array bridge at `:71-90`) + **Unit**
    (`CvUnitInfo.cpp:336`): walk `getModifiers()->all()`; for each `PROPERTY_*.{city|plot}.flat` `CvJsonModEntry`,
    `jsonResolveId` the property, then:
@@ -95,19 +105,24 @@ the ONLY engine touch (plus B3, C3 below). Does not touch `read()`, `CvPropertyS
 3. **JSON→legacy-BoolExpr translator** (NEW, small, scoped — owner-decision #1/#2 APPROVED): translate a
    `CvJsonCondition` (the pocos' `enabled`/`disabled`) into a legacy `const BoolExpr*` for the known predicate set
    (the 4 diffuse tag-gates + the building tech-gates). One `BoolExprIs`-shaped node type; NOT a general bridge.
+
 ### C. Curator + data
+
 1. Emit `properties.diffuse[]` / `properties.changePropagation[]` into `Assets/Data/properties/*.json` from
    `CIV4PropertyInfos.xml` (`PROPERTYPROPAGATOR_DIFFUSE` + the one `ChangePropagators`), applying the tag→predicate
    table. Recurate + regen; commit the regenerated data.
 2. **Empire-scope building props (5 files, `PROPERTY_FLAMMABILITY`)** — owner-decision #3: add a small gather in
    `CvGameObjectCity::foreachManipulator` to also walk the owning player's `empire`-scope-flagged building deposits
    (the minimal engine touch), so those 5 deliver. *(Confirm with owner at implement time if a non-engine route exists.)*
+
 ### D. Explicitly SKIP (dead legacy surface — 0 real data; not phantom gaps)
+
 `CvPropertySourceConstantLimited`, `CvPropertyPropagatorSpread`/`Gather`, all `CvPropertyInteraction`, and Corporation
 manipulators. `PropertyBuildings`/`PropertyPromotions` value-bands stay the separately-flagged curator-gap
 (`CvPropertyInfo.h:49-57`), not folded here.
 
 ## Increment 4 — the JSON→legacy-`BoolExpr` / `IntExpr` translator (LOCKED design, next build)
+
 The source/propagator bridge DEFERS-and-COUNTS three conditioned classes; this increment lands them. Node types:
 `BoolExpr.h` (`BoolExprIs(TagTypes)`, `BoolExprHas(GOMTypes,id)`, `BoolExprAnd`/`Or`/`Not`, `BoolExprConstant`) and
 `IntExpr.h` (`IntExprConstant`, `IntExprAttribute(ATTRIBUTE_POPULATION)`, `IntExprMult`, `IntExprDiv`).
@@ -128,18 +143,21 @@ The source/propagator bridge DEFERS-and-COUNTS three conditioned classes; this i
    `IntExprDiv(IntExprMult(IntExprConstant(value), IntExprAttribute(ATTRIBUTE_POPULATION)), IntExprConstant(each))` —
    into `CvPropertySourceConstant(prop, thatExpr)`. (The `each==1` property-baseline already uses `AttributeConstant`.)
 4. **`changePropagation` table** (FLAMMABILITY only): add storage to `CvPropertyInfo` (a small `from×to→percent` map)
-   + a real `getChangePropagator(from,to)`; populate from the deferred `changePropagation[]`.
+   - a real `getChangePropagator(from,to)`; populate from the deferred `changePropagation[]`.
 5. **Empire-scope building props** (5 `FLAMMABILITY` files): the minimal gather touch in
    `CvGameObjectCity::foreachManipulator` (`CvGameObject.cpp:662-672`) to also walk the owning player's `empire`-scope
    building deposits — OR accept as out-of-scope (owner call at build time).
 
 ## Validate
-Rebuild (Assert compile-check, then Release/agentstart), end a turn: property per-turn deltas match the legacy
-XML-era values (the shadow bar); Canterbury crime/education normalise; commerce recovers on its own. Cross-check with
-StoneBase `CheckPropertySweep.cs` (curated `PROPERTY_*` families ↔ engine property sources — LOST/Extra = 0).
+
+Rebuild (Assert compile-check, then Release/agentstart), end a turn: the property sources are verified LIVE via the
+endpoints (the per-turn `PROPERTY_*` deltas / property-source decomposition) — none lost, each attributed to a named
+source; Canterbury crime/education normalise; commerce recovers on its own. StoneBase is the perf/spec-check layer —
+`CheckPropertySweep.cs` maps curated `PROPERTY_*` families ↔ engine property sources for spec-compliance.
 
 ## Reference
-- StoneBase (`C:\code\s2s\StoneBase`): `src/Application/Features/Parity/CheckPropertySweep.cs` (family↔source map),
+
+- StoneBase (`C:\code\s2s\StoneBase`) — the perf/spec-check layer: `src/Application/Features/Parity/CheckPropertySweep.cs` (the spec-check family↔source map),
   `src/Domain/Modifiers/ModifierFamilyParser.cs` (generic `PROPERTY_*` parse — no bespoke shape needed for flats).
 - [json.md](../../specs/json.md) §5 (grants pulses `on`/`relation`/`distance`), §9 (`properties` bespoke section),
   §6 (families) · [modifier.md](../../specs/modifier.md) (`per`). Legacy: `CvPropertySource`/`CvPropertyManipulators`/

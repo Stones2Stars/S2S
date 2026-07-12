@@ -22,7 +22,7 @@
 
 // ===================== [MODIFIER] spine domain (logging.md §4: logging is a spine CONSUMER) =====================
 // The census emits EVENTKIND_DIAGNOSTIC events through the event spine (NOT direct gDLL->logMsg) -- the
-// CvCascadeLogConsumer renders the raw typed fields + tees to /events, gated by level.
+// CvSpineLogConsumer renders the raw typed fields + tees to /events, gated by level.
 // Per-emitter domain (SD_MODIFIER), one file (Cascade.log).
 enum MdEvt { MDE_REPO = 1, MDE_PERF };
 enum MdFld
@@ -147,7 +147,7 @@ static void mm_repoCensus()
 		if (!sUnres.empty()) sUnres += ",";
 		sUnres += *uit;
 	}
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_REPO, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_REPO, 1)
 		.addI(MDF_TOTAL, nTot).addI(MDF_MAPPED, nMapped).addI(MDF_WDEPOSITS, nDep)
 		.addI(MDF_WOPERATE, nOp).addI(MDF_WTRIGGERS, nTrig)
 		.addI(MDF_FILES2, iFiles).addI(MDF_ENTITIES2, iEnt).addStr(MDF_SAMPLE, sDir.c_str())
@@ -171,7 +171,7 @@ void cvCascadeModifierPerfCensus()
 			iTurnMsX10 = (int)((now.QuadPart - s_lastPerfFlush.QuadPart) * 10000 / freq.QuadPart);
 		s_lastPerfFlush = now;
 	}
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_PERF, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_PERF, 1)
 		.addI(MDF_OPERATING_BUILDINGS_RECOMPUTED, CascadePerf::operatingBuildingsRecomputed).addI(MDF_OPERATING_BUILDINGS_CACHE_HITS, CascadePerf::operatingBuildingsCacheHits)
 		.addI(MDF_PSN, CascadePerf::pctStack).addI(MDF_CEN, CascadePerf::condEval)
 		.addI(MDF_ACCN, CascadePerf::accRefresh)
@@ -180,7 +180,7 @@ void cvCascadeModifierPerfCensus()
 		.addI(MDF_WBN, CascadePerf::wbCompute).addI(MDF_WBMS, (int)(CascadePerf::wbComputeMs * 10.0)));
 	// the second perf line (the spine caps an event at 16 fields): the game turn + the flush-to-flush WALL
 	// time (the DEC-turn-time-is-king headline) + the flipped scalar getter reads + the automation window
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_PERF, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_PERF, 1)
 		.addI(MDF_TURNNO, GC.getGame().getGameTurn()).addI(MDF_TURNMS, iTurnMsX10)
 		.addI(MDF_SCGPB, CascadePerf::scGpBaseReads).addI(MDF_SCGPM, CascadePerf::scGpModReads)
 		.addI(MDF_SCDEF, CascadePerf::scDefReads).addI(MDF_SCMNT, CascadePerf::scMaintReads)
@@ -189,7 +189,7 @@ void cvCascadeModifierPerfCensus()
 		.addI(MDF_AUTON, CascadePerf::autoMissions).addI(MDF_AUTOMS, (int)(CascadePerf::autoMissionMs * 10.0)));
 	// the third perf line: the condEval CALLER split (the 6.8M-outlier attribution -- who initiated the
 	// eval chains; ceOther is the honest residual: a big OTHER names the next tag to place)
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_PERF, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_PERF, 1)
 		.addI(MDF_CE_OTHER, CascadePerf::condEvalBy[CC_OTHER]).addI(MDF_CE_RATES, CascadePerf::condEvalBy[CC_RATES])
 		.addI(MDF_CE_WB, CascadePerf::condEvalBy[CC_WB]).addI(MDF_CE_SC, CascadePerf::condEvalBy[CC_SCALARS])
 		.addI(MDF_CE_OPERATING_BUILDINGS, CascadePerf::condEvalBy[CC_OPERATING_BUILDINGS]).addI(MDF_CE_FRB, CascadePerf::condEvalBy[CC_FRONT_B])
@@ -198,7 +198,7 @@ void cvCascadeModifierPerfCensus()
 		.addI(MDF_CE_PROMO, CascadePerf::condEvalBy[CC_PROMO]));
 	// the fourth perf line: the frontier fill counts + wall clock (the flip-era surfaces the census had
 	// NO ms bucket for -- how often each frontier rebuilds and what a rebuild costs)
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_PERF, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_MODIFIER, MDE_PERF, 1)
 		.addI(MDF_FRB_N, CascadePerf::frontBFills).addI(MDF_FRB_MS, (int)(CascadePerf::frontBMs * 10.0))
 		.addI(MDF_FRU_N, CascadePerf::frontUFills).addI(MDF_FRU_MS, (int)(CascadePerf::frontUMs * 10.0))
 		.addI(MDF_FRPP_N, CascadePerf::frontPPFills).addI(MDF_FRPP_MS, (int)(CascadePerf::frontPPMs * 10.0))

@@ -133,6 +133,7 @@ each holds a list of **children**, and a child is **either a leaf** (a count/pre
 ```
 
 So `any` is exactly `||` on what is directly below it:
+
 - `any: [BONUS_COPPER, BONUS_IRON]` = `copper || iron`.
 - `any: [ {all:[STONE,IRON]}, {any:[COPPER,WOOD]} ]` = `(stone && iron) || (copper || wood)`.
 
@@ -180,6 +181,7 @@ scope. **Forcing a redundant `{type, scope}` only invites authoring bugs.** *(Pl
   { "type": "BONUS_SHRIMP",   "scope": "city", "connection": "vicinity", "vicinity": "owned" }      // raw presence on an owned tile
   { "type": "BONUS_GOLD_ORE", "scope": "city", "connection": "vicinity", "vicinity": "connected" }  // must be obtained
   ```
+
 - **`PROPERTY_*` band atom** `{type:PROPERTY_X, scope, min?, max?}` — its "count" is the city's property value;
   **absent `min` = no lower bound** (a max-only band), the one exception to the presence=`min:1` convention.
   Authored in `requires.operate`.
@@ -200,8 +202,9 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
 > Adding a predicate *extends* the model within the structure. What you must NOT do is encode the condition as a new
 > sub-scope **member** (`{family}.empire.capital.percent`, `perMilitaryUnit`) — that changes the core structure (the
 > kraken way; see [modifier.md §3](modifier.md), which also notes the **golden-age exception**: `empire.goldenAge`
-> stays a member-mirror, deferred to post-migration, because golden age is engine-core and not data-defined).
-
+> is a PERMANENT engine member-mirror (effect-only), because the yield effect is engine-core and not data-defined;
+> golden-age length + grant ARE curated JSON (`goldenAge.empire.percent`, `grants.goldenAge`)).
+>
 > **`IS_*` vs `HAS_*` — literal English.** Plain English picks the prefix: `IS_*` = whether the
 > target **is** something (a plot `IS_WATER`, a city `IS_CAPITAL`); `HAS_*` = whether it **has** something (a plot
 > `HAS_RIVER`, `HAS_PEAK`, `HAS_COAST`). These semantics span **every target group**, not just plots — a *unit*
@@ -430,7 +433,7 @@ declare the number. Enforcement reads the [tally](tally.md) count.
 One-shot or recurring things an entity hands out (not per-turn modifiers).
 
 > **`grants` is ONLY genuine provisions handed out on a trigger.** What does NOT belong here (and where it lives
-> instead): unit `buildings` (MISSION_CONSTRUCT) / `greatPersonAction` / `goldenAge` → **`missions`** (§8, deferred);
+> instead): unit `buildings` (MISSION_CONSTRUCT) / `greatPersonAction` / `goldenAge` → **`missions`** (§8 — PERMANENT carve-out: missions/CvOutcome ground-up rework);
 > `builds` → the **`builds`** block (§8); promotion `unitCombats`/`removesUnitCombats` → **`skills`**; project
 > `grantsSpecialBuilding` → **`enables.specialBuildings`** (flips SpecialBuildingValid — unlocks, hands out nothing);
 > corp `bonusProduced` → **`provides.bonuses`** (continuous supply, §5a); building `holyCity` → **`requires.build`**
@@ -539,11 +542,13 @@ The full address of a deposit:
 ### 6.1 Two ways a deposit picks WHAT it lands on
 
 - **plural object-target** (`plots`/`units`/…, predicate-filtered) = *every object of that kind in the scope*:
+
   ```jsonc
   "production": { "empire": { "plots": { "flat": { "value": 1, "enabled": "IS_WATER" } } } } // +1 to every empire water plot
   "food":       { "city":   { "plots": { "flat": { "value": 1, "enabled": {"all":["VICINITY","IS_WORKED"]} } } } }
   "movement":   { "empire": { "units": { "flat": { "value": 1, "enabled": "IS_WATER" } } } } // +1 move to every naval unit
   ```
+
 - **named-entity key** (`improvements.{IMPROVEMENT_FARM}`, `terrains.{…}`, `features.{…}`, `bonus.{…}`,
   `buildings.{…}`) = a deposit onto a specific named target, kept on the source.
 
@@ -636,12 +641,13 @@ its `capabilities` are what it *hands to the empire* (provided) — the opposite
 provides the slider to the empire).
 
 **Two further unit blocks:**
+
 - **`builds`** — the unit's per-type **`BUILD_*` repertoire** (which worker-builds it can perform), owned **per unit-type**
   (tech gates *which builds are unlocked* — via `enables.builds` / the BUILD's own prereq; `builds` is *which THIS unit
   can do*; NOT "all workers, tech-gated"), promotion-augmentable. Wired as an **intrinsic key** (the readJson base skips
   it; `CvJsonUnitInfo` parses it). Same shared-vocabulary word as `enables.builds` — a `BUILD_*` list either way; the
   enclosing section gives the relationship (`enables.builds` = "unlocks these," unit `builds` = "can perform these").
-- **`missions`** ⏳ *(model forming — migration DEFERRED to a dedicated pass)* — the actions a unit **performs**, each
+- **`missions`** *(PERMANENT carve-out — missions/CvOutcome ground-up rework)* — the actions a unit **performs**, each
   producing an **outcome**; **a mission carries its `grants`** — the outcome (what lands) IS the mission's grant payload.
   Unifies the hardcoded mission-abilities (MISSION_CONSTRUCT/DISCOVER/GOLDEN_AGE — mis-filed today as `grants.buildings` /
   `greatPersonAction` / `goldenAge`) AND the un-migrated **`CvOutcome`** system (`CvUnitInfo` `KillOutcomes` +
@@ -749,6 +755,7 @@ a system can be added, swapped, or removed as a unit.
   "cost": { "production": 120 }
 }
 ```
+
 *Unlocks the Crossbowman; needs connected iron to keep operating; +25% production and (while powered) +1 happiness
 in its city; costs 120 hammers.*
 
@@ -763,6 +770,7 @@ in its city; costs 120 hammers.*
   "culture": { "city": { "flat": [ 10, { "value": 10, "enabled": { "existedFor": { "min": 1000 } } } ] } }
 }
 ```
+
 *Only one may exist in the world; can't be built where a capital already sits; builds twice as fast with connected
 marble; +10 culture, doubling after it has stood 1000 turns.*
 
@@ -776,6 +784,7 @@ marble; +10 culture, doubling after it has stood 1000 turns.*
   "defense": { "city": { "amount": { "percent": 12 } } }
 }
 ```
+
 *A city at this level may hold up to 2 world / 2 team / 8 national wonders, and gets +12% defense.*
 
 ---

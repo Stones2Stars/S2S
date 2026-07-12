@@ -6,6 +6,7 @@
 #include "Cascade/CvCascadeProperty.h"     // the §430 property channel's per-city sourced numbers
 #include "Cascade/CvCascadeScalarChannels.h" // the city scalar channels' nets (GP-rate/defense/maintenance)
 #include "Cascade/CvCascadeAccumulator.h"    // CascadeRateSlots -- the increment-F standing slot twins on the wellbeing action
+#include "Cascade/CvCascadePerfCount.h"      // /computed/perf: the (scope,channel) calc-count histogram (DEC-calc-count-gate)
 #include "CvBonusInfo.h" // bonus-name resolution in the /diagnostic/whyNot trace
 #include "CvImprovementInfo.h" // cityInput loadout: worked-plot improvement type
 #include "CvTraitInfo.h" // cityInput loadout: player trait list
@@ -1613,12 +1614,67 @@ namespace
 		return CvString(picojson::value(root).serialize().c_str());
 	}
 
+	// /computed/perf -- the (scope,channel) calc-count histogram + total this turn (DEC-calc-count-gate /
+	// observability.md). The full scope x channel matrix (exceeds the spine's 16-field cap, so it lives on this
+	// endpoint, not the [MODIFIER/perf] census line) + per-scope + per-channel marginals + the total + the 50k gate
+	// verdict. Game thread; reads the per-turn CascadePerf::calcCount snapshot (reset at the next census flush).
+	CvString extractCalcPerf()
+	{
+		static const char* const SCOPE_NAMES[CSCOPE_COUNT] =
+			{ "world", "team", "empire", "area", "city", "plot", "building", "unit", "specialist" };
+		static const char* const CHAN_NAMES[CCHAN_COUNT] =
+			{ "baseYields", "commerce", "wellbeing", "gp", "defense", "maintenance", "trade", "buildRate",
+			  "freeSpecialists", "freeXp", "properties", "frontier", "other" };
+		picojson::value::object o;
+		o["action"] = picojson::value(std::string("perf"));
+		o["turn"] = picojson::value((double)GC.getGame().getGameTurn());
+		long lTotal = 0;
+		long aChanTotals[CCHAN_COUNT];
+		for (int c0 = 0; c0 < CCHAN_COUNT; ++c0) aChanTotals[c0] = 0;
+		picojson::value::object matrix, byScope, byChannel;
+		for (int s = 0; s < CSCOPE_COUNT; ++s)
+		{
+			long lScopeTotal = 0;
+			picojson::value::object row;
+			for (int c = 0; c < CCHAN_COUNT; ++c)
+			{
+				const long v = CascadePerf::calcCount[s][c];
+				if (v != 0) row[CHAN_NAMES[c]] = picojson::value((double)v);
+				lScopeTotal += v; aChanTotals[c] += v; lTotal += v;
+			}
+			if (lScopeTotal != 0)
+			{
+				matrix[SCOPE_NAMES[s]] = picojson::value(row);
+				byScope[SCOPE_NAMES[s]] = picojson::value((double)lScopeTotal);
+			}
+		}
+		for (int c = 0; c < CCHAN_COUNT; ++c)
+			if (aChanTotals[c] != 0) byChannel[CHAN_NAMES[c]] = picojson::value((double)aChanTotals[c]);
+		o["total"] = picojson::value((double)lTotal);
+		o["byScope"] = picojson::value(byScope);
+		o["byChannel"] = picojson::value(byChannel);
+		o["matrix"] = picojson::value(matrix);
+		picojson::value::object gate;
+		gate["threshold"] = picojson::value((double)50000);
+		gate["over"] = picojson::value(lTotal > 50000);
+		o["gate"] = picojson::value(gate);
+		o["notes"] = picojson::value(std::string(
+			"(scope,channel) package-recompute count this turn; reset at the next [MODIFIER/perf] census flush; "
+			">50k is near-certainly a blanket-recompute failure. NB city/empire/world instrumented; "
+			"plot-yield (pull model) + operating-buildings recompute not yet attributed here."));
+		return CvString(picojson::value(o).serialize().c_str());
+	}
+
 	CvString evaluateGate(const char* szAction, const char* szType, int iPlayer, int iCityReq, int iUnitReq)
 	{
 		// /state/all -- the entire raw game-state in one document; iPlayer < 0 == ALL players (runs before the
 		// single-player resolution below, so the "all players" walk is reachable).
 		if (strcmp(szAction, "gamestate") == 0)
 			return extractGameState(iPlayer);
+
+		// /computed/perf -- GLOBAL (scope,channel) calc-count; no player/type, so resolved here (like gamestate).
+		if (strcmp(szAction, "perf") == 0)
+			return extractCalcPerf();
 
 		// /state/plots -- the GLOBAL map dump (not per-player); resolved before the per-player stateSlice below.
 		if (strcmp(szAction, "statePlots") == 0)
@@ -4218,6 +4274,7 @@ namespace
 			{ "/computed/unitSkills",      "unitSkills",     "per-unit EFFECTIVE skill booleans (unit+promotion composite getters) — the skills-parity oracle" },
 			{ "/computed/units/heal",      "unitHeal",       "a pinpointed unit's per-turn healRate + per-source decomposition (player=N&unit=M) — read-only, no doHeal" },
 			{ "/computed/game",            "game",           "turn / game-over / winner / victory countdowns" },
+			{ "/computed/perf",            "perf",           "the (scope,channel) calc-count histogram + total this turn — the 50k gate (DEC-calc-count-gate)" },
 		};
 		const int iNumRoutes = (int)(sizeof(ROUTES) / sizeof(ROUTES[0]));
 

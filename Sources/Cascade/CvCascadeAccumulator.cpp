@@ -80,6 +80,26 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 {
 	if (pCity == NULL || iMask == 0) return;
 	++CascadePerf::accRefresh;
+	// (scope,channel) calc-count [DEC-calc-count-gate]: attribute this refresh's value-computes to (city, channel).
+	// Mirrors EXACTLY the iMask-gated compute blocks below -- yields/commerce count per type (the loops), the
+	// scalars per named channel. A quiet turn refreshes nothing -> zero; the blanket refreshes every bit for every
+	// city -> it balloons and the histogram names the culprit.
+	if (iMask & CPK_YPCT)     CascadePerf::calcN(CSCOPE_CITY, CCHAN_BASE_YIELDS, NUM_YIELD_TYPES);
+	if (iMask & CPK_YSPEC)    CascadePerf::calcN(CSCOPE_CITY, CCHAN_BASE_YIELDS, NUM_YIELD_TYPES);
+	if (iMask & CPK_YEXTRA)   CascadePerf::calcN(CSCOPE_CITY, CCHAN_BASE_YIELDS, NUM_YIELD_TYPES);
+	if (iMask & CPK_CSPEC)    CascadePerf::calcN(CSCOPE_CITY, CCHAN_COMMERCE, NUM_COMMERCE_TYPES);
+	if (iMask & CPK_CPCT)     CascadePerf::calcN(CSCOPE_CITY, CCHAN_COMMERCE, NUM_COMMERCE_TYPES);
+	if (iMask & CPK_CBASE)    CascadePerf::calcN(CSCOPE_CITY, CCHAN_COMMERCE, NUM_COMMERCE_TYPES);
+	if (iMask & CPK_WB)       CascadePerf::calc(CSCOPE_CITY, CCHAN_WELLBEING);
+	if (iMask & CPK_SCFLAT) { CascadePerf::calc(CSCOPE_CITY, CCHAN_GP); CascadePerf::calc(CSCOPE_CITY, CCHAN_TRADE);
+	                          CascadePerf::calc(CSCOPE_CITY, CCHAN_FREE_SPECIALISTS); }
+	if (iMask & CPK_SCPCT) { CascadePerf::calc(CSCOPE_CITY, CCHAN_GP); CascadePerf::calc(CSCOPE_CITY, CCHAN_DEFENSE);
+	                          CascadePerf::calc(CSCOPE_CITY, CCHAN_MAINTENANCE); }
+	if (iMask & CPK_SCSPEC)   CascadePerf::calc(CSCOPE_CITY, CCHAN_GP);
+	if (iMask & CPK_BR)       CascadePerf::calc(CSCOPE_CITY, CCHAN_BUILDRATE);
+	if (iMask & CPK_FRONT_B)  CascadePerf::calc(CSCOPE_CITY, CCHAN_FRONTIER);
+	if (iMask & CPK_FRONT_U)  CascadePerf::calc(CSCOPE_CITY, CCHAN_FRONTIER);
+	if (iMask & CPK_FRONT_PP) CascadePerf::calc(CSCOPE_CITY, CCHAN_FRONTIER);
 	CascadeCondScope ccsRates(CC_RATES);   // the condEval split default for this fill; the WB/scalar/frontier branches re-tag
 	CascadeCityPackages& st = pCity->m_cascadeCityPackages;
 
@@ -241,6 +261,15 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 void CascadeAccumulator::refreshPlayerScope(const CvPlayer* pPlayer, int iMask)
 {
 	if (pPlayer == NULL || iMask == 0) return;
+	// (scope,channel) calc-count [DEC-calc-count-gate]: attribute this refresh's value-computes to (empire, channel)
+	if (iMask & PSC_YFLAT)       CascadePerf::calcN(CSCOPE_EMPIRE, CCHAN_BASE_YIELDS, NUM_YIELD_TYPES);
+	if (iMask & PSC_CFLAT)       CascadePerf::calcN(CSCOPE_EMPIRE, CCHAN_COMMERCE, NUM_COMMERCE_TYPES);
+	if (iMask & PSC_WB)          CascadePerf::calc(CSCOPE_EMPIRE, CCHAN_WELLBEING);
+	if (iMask & PSC_SC)        { CascadePerf::calc(CSCOPE_EMPIRE, CCHAN_GP); CascadePerf::calc(CSCOPE_EMPIRE, CCHAN_MAINTENANCE);
+	                             CascadePerf::calc(CSCOPE_EMPIRE, CCHAN_TRADE); }
+	if (iMask & PSC_BR)          CascadePerf::calc(CSCOPE_EMPIRE, CCHAN_BUILDRATE);
+	if (iMask & PSC_FRONT_P)     CascadePerf::calc(CSCOPE_EMPIRE, CCHAN_FRONTIER);
+	if (iMask & PSC_FRONT_PROMO) CascadePerf::calc(CSCOPE_EMPIRE, CCHAN_FRONTIER);
 	CascadeCondScope ccsRates(CC_RATES);   // the split default (YFLAT/CFLAT); the WB/scalar/frontier branches re-tag
 	CascadePlayerScope& ps = pPlayer->m_cascadePlayerScope;
 
@@ -332,6 +361,8 @@ void CascadeAccumulator::refreshPlayerScope(const CvPlayer* pPlayer, int iMask)
 void CascadeAccumulator::refreshWorldScope(const CvGame* pGame, int iMask)
 {
 	if (pGame == NULL || iMask == 0) return;
+	// (scope,channel) calc-count [DEC-calc-count-gate]: the world scope's tenant today is the tradeRoutes world term
+	CascadePerf::calc(CSCOPE_WORLD, CCHAN_TRADE);
 	CascadeWorldScope& ws = pGame->m_cascadeWorldScope;
 	ws.tradeWorldFlat = 0;
 	for (int p = 0; p < MAX_PC_PLAYERS; ++p)

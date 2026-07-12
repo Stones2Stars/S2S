@@ -27,7 +27,7 @@ enumerated list below.
 > game-object state (wonder presence, revolution state) is invisible to a field-census. The `-Trading`/`canTradeOn`
 > class of miss (Tier 0) was still an XML field the sweep *should* have caught; the Python-hardcoded class below is
 > a different, out-of-scope quadrant. See **Tier 0b**.
-
+>
 > **STATUS — the DECISION-NEEDED (🔴) tier is CLEARED (owner rulings, 2026-07-01).** Every parked/dropped field across
 > every entity has been ruled and migrated (buildings, leaderhead, corp/route/tech, property-pulses, improvement,
 > project, era, handicap, promotion/celebrity, unit-cargo). What remains is only the **BLOCKED/deferred** tier below
@@ -36,8 +36,8 @@ enumerated list below.
 > (e.g. the celebrity-skill CvCity scan, the `enables.traits`→HAVE self-containment step — the `IS_HOLY_CITY` eval is
 > already wired). Per [DEC-data-first] the data foundation is complete — the machine backlog proceeds on solid data.
 > **The CUTOVER scope** — what's left before the cascade replaces legacy + pushes to `main` — is written up in
-> [`cutover.md`](cutover.md): shadow-parity for the 3 machines + the **classification-consumption rewiring** (the long
-> pole) + the self-containment audit + the grants apply-loop. **⏳ Leaderhead trait remap is POST-CUTOVER, after `main`**
+> [`cutover.md`](cutover.md): live verification of the 3 machines + the **classification-consumption rewiring** (the long
+> pole) + the self-containment audit + the grants apply-loop. **⏳ Leaderhead trait remap is a PERMANENT carve-out (owner-ruled), landing after `main`**
 > (leaders work without traits; another modder does it on the merged cascade — see cutover.md).
 
 ---
@@ -135,13 +135,13 @@ civic `revolution` grant touches an XML **data** field (`getRevIdxSwitchTo`), wh
 the broader revolution mechanic is itself a deferred ground-up rework, not migrated. These wonder effects have no such
 XML data hook, so they are wholly out.)*
 
-## ⚖ Tier 0c — the HEAL channel is KEEP-LEGACY through #430; the cascade heal family is a POST-MIGRATION rework (owner ruling 2026-07-06)
+## ⚖ Tier 0c — the HEAL channel is KEEP-LEGACY through #430; the cascade heal family is a PERMANENT carve-out (owner-ruled ground-up rework)
 
 > **RULING (owner 2026-07-06, refined):** *healing is done by units (healers) or buildings (hospitals, healers'
 > hut, …). I do not want to touch it much right now — as long as units and buildings still heal units, I'm happy;
 > it needs a broader rework to make sense anyway.* So the cascade **does NOT build a `heal` modifier family in
-> #430**; the legacy heal machinery **stays intact** and keeps applying, and the proper heal model is deferred to a
-> **post-migration broader rework** (siblings: `isPower` KEEP, the missions/CvOutcome ground-up rework).
+> #430**; the legacy heal machinery **stays intact** and keeps applying, and the proper heal model is a
+> **PERMANENT carve-out (owner-ruled) — a broader rework** (siblings: `isPower` KEEP, the missions/CvOutcome ground-up rework).
 >
 > **⚖ ACCEPTANCE BAR — heal is BEHAVIORAL-LOOSE, NOT parity (owner 2026-07-06):** *"how healing has worked has
 > always been slightly diffuse; as long as healing isn't lost, or isn't wildly overpowered, I am happy… I care
@@ -152,12 +152,12 @@ XML data hook, so they are wholly out.)*
 > decomposition). The `[READJSON/healdiff]` shadow is downgraded to a **coarse net** (a huge `diverging` count or
 > a heal collapse is the signal), NOT a 0-target gate — do not chase heal parity.
 >
-> **⚖ THE POST-MIGRATION HEAL REDESIGN IS A COUPLED CLUSTER (owner 2026-07-06):** *"healing overall needs to be
+> **⚖ THE HEAL REDESIGN (PERMANENT carve-out) IS A COUPLED CLUSTER (owner-ruled):** *"healing overall needs to be
 > thought out and redesigned so it makes more sense, but that ties into the dismantling of the unitcombat fiesta
 > that currently exists, and we need to flesh out tags properly."* The heal redesign is **NOT standalone** — it
 > depends on (1) **dismantling the current unit-combat complexity** (the heavy per-UnitCombat heal-as-type
 > dimension — `getHealRateAsType` / `HealUnitCombat` lists — is a symptom of that "fiesta") and (2) the **tags**
-> system being fleshed out properly (the deferred unitcombat→`tags` pass, [tags.md](../../specs/tags.md) §Tech/
+> system being fleshed out properly (the unitcombat→`tags` pass — a PERMANENT carve-out, [tags.md](../../specs/tags.md) §Tech/
 > equipment class + Tier 3 below). Do the heal redesign only AS PART OF that cluster, post-migration — designing it
 > before the unitcombat/tags cleanup would just re-encode the current mess. This is the WHY behind KEEP-legacy-now:
 > a dependency order, not a punt.
@@ -167,6 +167,7 @@ JSON, but **nothing in the cascade consumes it** — no `DepositIndex::lookupSeg
 anywhere in `Sources/`, and the unit cascade reads only the enabler fields (no `deposits`). So every heal field is
 either PARSED-but-unconsumed or RESOLVED-but-not-applied. The data homes are **fragmented across three shapes** for
 one mechanic:
+
 - **promotion + unit-combat heal** → a proper **`heal` modifier family** (`heal.enemy/neutral/friendly/sameTile/`
   `adjacentTile/selfModifier/support/victory/victoryAdjacent/victoryStack`, `heal.unit.unitCombat.{UC}`) — parsed
   into `CvJsonInfo::deposits` (generic family walker), **zero readers**. `alwaysHeal`/`noSelfHeal`/`healsAs` → skills.
@@ -192,6 +193,7 @@ populated ONLY by the XML read (`.add(m_iHealRateChange,…)` CvBuildingInfo.cpp
 accumulators are fed by `processBuilding`/`processPromotion`/`processUnitCombat` reading those getters. So **cutting
 the XML now → the heal Info members reset to 0 → `doHeal` loses every contribution → healing stops.** The JSON heal
 data sits in `CvJsonInfo` (parsed, unconsumed) and **never reaches `CvUnit`/`CvCity`**.
+
 - **THE REQUIRED BRIDGE (owner's bar: "if the json data gets properly read into CvUnit and CvCity, I'm happy for
   now"):** serve the heal Info getters from the JSON — `getHealRateChange` / `getNumUnitFullHeal` /
   `getSelfHealModifier` / the promotion + unit-combat heal getters return the `CvJsonInfo` value instead of the XML
@@ -228,6 +230,7 @@ data sits in `CvJsonInfo` (parsed, unconsumed) and **never reaches `CvUnit`/`CvC
 > `processBuilding`/`processUnit`/solver stay unchanged. Consequence: the building heal/spawn/pulse data must be
 > reachable in getter-shape — so re-homing it OUT of `grants.repeatable` (§ double-up guardrail) and the cut-safety
 > read-in are the SAME fix.
+
 - **⛔ THE ONE GUARDRAIL — the grants apply-loop (increment 5) must NOT apply the heal repeatables.** The building
   heal is currently **mis-homed** to `grants.repeatable` (`curate_building.py:598-600` `iNumUnitFullHeal` →
   `{heal:"full",count,interval}`, the `heal:"full"` string an unflagged agent invention; `:601-612`
@@ -237,7 +240,7 @@ data sits in `CvJsonInfo` (parsed, unconsumed) and **never reaches `CvUnit`/`CvC
   the cascade JSON, legacy applies it from XML). Low-touch; do it at/with increment 5, not urgently (inert until then).
 - The proper heal model (ONE `heal` modifier family: unit/promotion/unitcombat/building sources deposit into a
   cascade `healRate()`, applied via the surviving `changeDamage`; the per-UnitCombat heal-as-type dimension;
-  unifying the three fragmented homes above into one channel) is the **post-migration broader rework**, not #430.
+  unifying the three fragmented homes above into one channel) is a **PERMANENT carve-out (owner-ruled) broader rework**, not #430.
   ⚠ The `mapping/*.json` files are **dead/unconsumed metadata** — the heal curators use hardcoded tables, NOT the
   mapping (`curate_building.py:47`: "the mapping's were often wrong"), so their `unitFullHeal`/`healRate`/`identity`
   heal listings mislead; ignore them and reconcile channel naming from the curator code when the rework runs.
@@ -270,7 +273,7 @@ data sits in `CvJsonInfo` (parsed, unconsumed) and **never reaches `CvUnit`/`CvC
   works out of the box. The one remaining follow-up is the self-contained **`enables.traits`→empire-active-trait HAVE**
   computation (today the modifier reads engine `hasTrait`, which already includes the building's `setHasTrait`, so the
   effect flows; the cascade-computed active-trait set is a cutover self-containment step, not a data gap).
-- **⏳ DEFERRED (grants-pass discovery) — unit `missions` + the `CvOutcome` system.** The grants pass found the unit
+- **⏳ PERMANENT carve-out (owner-ruled) — unit `missions` + the `CvOutcome` system.** The grants pass found the unit
   *activated-mission* keys — `buildings` (MISSION_CONSTRUCT), `greatPersonAction`, `goldenAge` — are **missions**, NOT
   grants (a `skill` is a permanent property; a **mission** is an action producing an OUTCOME, often consuming the unit),
   and the engine's **`CvOutcome`** system (`CvUnitInfo` `KillOutcomes` + `m_aOutcomeMissions` — *"outcome system (no
@@ -296,6 +299,7 @@ owner call before a curator edit — per [DEC-no-guessing] the agent must not de
 ### Confirmed real losses — RESOLVED (owner 2026-07-01, see Tier 1)
 
 The whitelist completeness sweep found exactly two, both now ruled and landed:
+
 - **`iMaxNationalWondersOCC`** → DROP (OCC not feasible in this mod).
 - **`iOperationalRange{Min,Max}`** → `ai.operationalRange:{min,max}` (AI-only).
 
@@ -325,7 +329,7 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
   - `EnabledCivilizationTypes` → identity interim (→ `requires.build` when NPC civs wired); `bAllowsNukes` → `requires.build.disabled` (done).
 - **leaderhead — DONE (owner ruling 2026-07-01): ALL traits stripped.** Every leader trait assignment (`Traits`,
   `DefaultTraits`, `DefaultComplexTraits` — simple AND complex) is dropped from the JSON; **no leader carries traits**.
-  The leader↔trait mapping (incl. simple→complex) goes to a dedicated POST-MIGRATION pass (which re-adds a
+  The leader↔trait mapping (incl. simple→complex) goes to a dedicated PERMANENT carve-out (owner-ruled) pass (which re-adds a
   `grants.traits` emit). Safe pre-cutover (the game runs traits off XML meanwhile). 118 leaderheads regenerated.
 - **era — DONE (owner ruling 2026-07-01):** `bNoGoodies`/`bNoBarbUnits`/`bNoBarbCities` → a bespoke **`worldGen`** block
   (LIVE C++ world-RULE gates: goody/barb placement — "bespoke worldgen works better", not identity/modifiers). All-false
@@ -338,7 +342,7 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
   inflation, `CvUnit.cpp:8687`), `iSpreadCost`→`cost.spread`, `CompetingCorporations`→**`excludes`** (json §9 same-tier
   mutual exclusion; empty in base XML, so the MAPPING migrates but shipped output is unchanged) — all executing.
   **NB: the corporation SYSTEM deserves a principle-level rework later** (owner 2026-07-01: "don't like how corporations
-  work in principle") — that is POST-migration ([DEC-mirror-then-redesign]: migrate faithfully now, redesign the corp
+  work in principle") — that is a PERMANENT carve-out (owner-ruled) ([DEC-mirror-then-redesign]: migrate faithfully now, redesign the corp
   model after); the corp-HQ revenue (`HeadquarterCommerces`) rides that rework.
 - **improvement — DONE (owner rulings 2026-07-01):** `iAirBombDefense` → **`defense.plot.air.flat`** (101 improvements;
   the air-bomb defense magnitude, `CvUnit.cpp:7127`). `iFeatureGrowth` / `iCultureRange` / per-bonus `depletionRand` →
@@ -358,7 +362,7 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
   (Tier 3, → `requires.build` when NPC civs wired); stays `identity` interim. cargo restriction → `identity`.
 - **promotion — DONE (owner ruling 2026-07-01):** `iCelebrityHappy` (the numeric per-unit celebrity-happiness stat) →
   a boolean **`skills.celebrity`** (3 promotions: INSPIRE3/6/9; unit-combats carry the same field → `skills.celebrity`
-  too, 0 today). The AMOUNT is dropped ("not a random field on a unit"); ⏳ **POST-MIGRATION engine fix:** `CvCity`
+  too, 0 today). The AMOUNT is dropped ("not a random field on a unit"); ⏳ **failure-to-close (Gate-3 skills work):** `CvCity`
   scans for celebrity-skilled units and owns the happiness (replacing the `CvCity.cpp:5718` per-unit-stat sum).
   `iPoisonProbabilityModifierChange` inert (kept).
 - **handicap**: `advancedStart` (`iAdvancedStartPointsMod`, `iAIAdvancedStartPercent`) → `identity`, no consumer wired.
@@ -367,12 +371,12 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
 
 ## Tier 3 — BLOCKED (needs a prerequisite / decision first)
 
-- **`paralyze`** → `state` block — the `state` block SHAPE is greenfield/undefined (state.md). Left as-is (inert; no
-  data lost, no structure moved — owner 2026-07-01). Unblocks when the `state` model is designed.
-- **`mechanized`/`gunpowder`/`mounted` tags** — derived from unitcombats in the post-migration **unitcombat→tag pass**
+- **`paralyze`** → `state` block — a failure-to-close: it blocks on the greenfield `state` model (state.md), which is
+  in-scope migration work to BUILD (not a park). No data is lost or moved meanwhile; it closes when the `state` model is built.
+- **`mechanized`/`gunpowder`/`mounted` tags** — derived from unitcombats in the **unitcombat→tag pass** (a PERMANENT carve-out, owner-ruled)
   (`curate_unitcombat.py` emits no tags yet).
 - **`stronglyRestricted`** (NPC build-lockdown) → a `requires.build` civ-membership gate (paired with
-  `EnabledCivilization`) — deferred until **NPC civilizations are wired**. **⚖ NOT a flip/cutover constraint
+  `EnabledCivilization`) — a PERMANENT carve-out (owner-ruled), pending **NPC civilizations being wired**. **⚖ NOT a flip/cutover constraint
   (owner ruling 2026-07-02):** losing the NPC lockdown during the enabler flip is **accepted** — *"I truly don't
   care about NPC barbarians or neanderthals being locked down or not… it's something to solve post migration, we
   may after all want to do it in a better manner anyway."* The enabler gates may flip without preserving the
@@ -386,8 +390,9 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
   property arrays through it (replacing the verbatim `properties` parking). **#429 is ONLY the ENGINE
   spatial-distribution** that later reads `on`/`relation`/`distance` — a separate consumer, not a data blocker.
 - **Corp HQ revenue** (`HeadquarterCommerces`) → the corp-rework pass.
-- **`ranked-target-selection`** (`max:`/`orderedBy`) — design locked, impl pending; blocks retiring `largestCity`
-  (so `curate_civic.py`/`curate_trait.py` still emit `iLargestCityHappiness`). See `../parked/ranked-target-selection.md`.
+- **`ranked-target-selection`** (`max:`/`orderedBy`) — a failure-to-close: design locked; the implementation is pending
+  migration work to finish. Until it lands it blocks retiring `largestCity` (so `curate_civic.py`/`curate_trait.py` still
+  emit `iLargestCityHappiness`). See `../parked/ranked-target-selection.md`.
 
 ---
 
@@ -407,5 +412,5 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
 
 The machine backlog does not start until the data tier is closed: substrate rebuild → full modifier port
 (AFTER/BASE/assembler/commerce) → **A5 wire `skills`/`tags`/`capabilities`/`policies` onto the game object** ("SUPER
-IMPORTANT, easily LOST") → enabler parity pass → grants machine → trait simple/complex engine fix → atomic cutover +
-§4 deletions. Plus the observability dump gaps. Tracked in `cascade-engine-430.md` / `modifier-machine.md`.
+IMPORTANT, easily LOST") → enabler verification pass → grants machine → trait simple/complex engine fix → atomic cutover +
+§4 deletions. Plus the observability dump gaps. Tracked in `cascade-engine-430.md` / `modifier-substrate.md`.

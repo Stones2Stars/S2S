@@ -652,7 +652,7 @@ void CvUnitAI::AI_logAct(const char* szDecision, const char* szReason, const CvP
 		pTarget ? pTarget->getX() : getX(), pTarget ? pTarget->getY() : getY());
 	// Spine (shadow alongside legacy): decision/reason ride as SFT_STR -- the call site passes the EXISTING string
 	// pointers (caller literals), no concat; the consumer composes the line (owner 2026-06-19, event-spine-spec section 3).
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_ACT, 2)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_ACT, 2)
 		.addI(UNTF_owner, (int)getOwner()).addI(UNTF_unit, getID()).addI(UNTF_type, (int)AI_getUnitAIType())
 		.addStr(UNTF_decision, szDecision).addStr(UNTF_reason, szReason ? szReason : "-")
 		.addI(UNTF_targetX, pTarget ? pTarget->getX() : getX()).addI(UNTF_targetY, pTarget ? pTarget->getY() : getY()));
@@ -680,7 +680,7 @@ void CvUnitAI::doUnitAIMove()
 	// runs this turn (the contract/merge early-outs above are handled separately).
 	logUnitAI(2, "[UNT/move] owner=%d unit=%d type=%d at=(%d,%d) stack=%d",
 		(int)getOwner(), getID(), (int)AI_getUnitAIType(), getX(), getY(), getGroup()->getNumUnits());
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_MOVE, 2)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_MOVE, 2)
 		.addI(UNTF_owner, (int)getOwner()).addI(UNTF_unit, getID()).addI(UNTF_type, (int)AI_getUnitAIType())
 		.addI(UNTF_x, getX()).addI(UNTF_y, getY()).addI(UNTF_stack, getGroup()->getNumUnits()));
 
@@ -1726,7 +1726,7 @@ void CvUnitAI::AI_setUnitAIType(UnitAITypes eNewValue)
 		// [UNT/role] -- unit changes its AI role (a deliberate reassignment decision).
 		logUnitAI(1, "[UNT/role] owner=%d unit=%d UNITAI %d -> %d",
 			(int)getOwner(), getID(), (int)AI_getUnitAIType(), (int)eNewValue);
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_ROLE, 1)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_ROLE, 1)
 			.addI(UNTF_owner, (int)getOwner()).addI(UNTF_unit, getID())
 			.addI(UNTF_roleFrom, (int)AI_getUnitAIType()).addI(UNTF_roleTo, (int)eNewValue));
 
@@ -2661,7 +2661,7 @@ void CvUnitAI::AI_barbAttackMove()
 			{
 				logUnitAI(2, "[UNT/horde] owner=%d unit=%d city=(%d,%d) dist=%d pack=%d reach=%d",
 					(int)getOwner(), getID(), pHordeTarget->getX(), pHordeTarget->getY(), iBestDistance, iPack, iReach);
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_HORDE_CITY, 2)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_HORDE_CITY, 2)
 					.addI(UNTF_owner, (int)getOwner()).addI(UNTF_unit, getID())
 					.addI(UNTF_cityX, pHordeTarget->getX()).addI(UNTF_cityY, pHordeTarget->getY())
 					.addI(UNTF_dist, iBestDistance).addI(UNTF_pack, iPack).addI(UNTF_reach, iReach));
@@ -2693,7 +2693,7 @@ void CvUnitAI::AI_barbAttackMove()
 			{
 				logUnitAI(2, "[UNT/horde] owner=%d unit=%d fieldPack at=(%d,%d)",
 					(int)getOwner(), getID(), getX(), getY());
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_HORDE_FIELDPACK, 2)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_HORDE_FIELDPACK, 2)
 					.addI(UNTF_owner, (int)getOwner()).addI(UNTF_unit, getID())
 					.addI(UNTF_x, getX()).addI(UNTF_y, getY()));
 				return;
@@ -2702,7 +2702,7 @@ void CvUnitAI::AI_barbAttackMove()
 			{
 				logUnitAI(2, "[UNT/horde] owner=%d unit=%d fieldMarch at=(%d,%d)",
 					(int)getOwner(), getID(), getX(), getY());
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_HORDE_FIELDMARCH, 2)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_HORDE_FIELDMARCH, 2)
 					.addI(UNTF_owner, (int)getOwner()).addI(UNTF_unit, getID())
 					.addI(UNTF_x, getX()).addI(UNTF_y, getY()));
 				return;
@@ -3381,7 +3381,7 @@ bool CvUnitAI::AI_smMergeToBreachCity(const CvCity* pTargetCity)
 		logUnitAI(1, "[UNT/merge2breach] owner=%d unit=%d type=%d target=(%d,%d) singleStr=%d defStr=%d",
 			(int)getOwner(), pBase->getID(), (int)pBase->getUnitType(),
 			pTargetCity->getX(), pTargetCity->getY(), iSingleStr, iDefenderStr);
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_MERGE2BREACH, 1)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_MERGE2BREACH, 1)
 			.addI(UNTF_owner, (int)getOwner()).addI(UNTF_unit, pBase->getID()).addI(UNTF_type, (int)pBase->getUnitType())
 			.addI(UNTF_targetX, pTargetCity->getX()).addI(UNTF_targetY, pTargetCity->getY())
 			.addI(UNTF_singleStr, iSingleStr).addI(UNTF_defStr, iDefenderStr));
@@ -18199,7 +18199,7 @@ bool CvUnitAI::AI_cityAttack(int iRange, int iOddsThreshold, bool bFollow)
 		// [COM/decision] -- the attack target this unit commits to (odds vs the base bar).
 		logCombatAI(2, "[COM/decision] owner=%d unit=%d routine=cityAttack target=(%d,%d) odds=%d base=%d action=attack",
 			(int)getOwner(), getID(), pBestPlot->getX(), pBestPlot->getY(), iBestValue, iOddsThreshold);
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_COMBAT, COM_DECISION_CITYATTACK, 2)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_COMBAT, COM_DECISION_CITYATTACK, 2)
 			.addI(COMF_owner, (int)getOwner()).addI(COMF_unit, getID())
 			.addI(COMF_targetX, pBestPlot->getX()).addI(COMF_targetY, pBestPlot->getY())
 			.addI(COMF_odds, iBestValue).addI(COMF_base, iOddsThreshold));
@@ -18406,7 +18406,7 @@ bool CvUnitAI::AI_anyAttack(int iRange, int iOddsThreshold, int iMinStack, bool 
 		// [COM/decision] -- the attack target this unit commits to (odds vs the base bar).
 		logCombatAI(2, "[COM/decision] owner=%d unit=%d routine=anyAttack target=(%d,%d) odds=%d base=%d action=attack",
 			(int)getOwner(), getID(), pBestPlot->getX(), pBestPlot->getY(), iBestValue, iOddsThreshold);
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_COMBAT, COM_DECISION_ANYATTACK, 2)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_COMBAT, COM_DECISION_ANYATTACK, 2)
 			.addI(COMF_owner, (int)getOwner()).addI(COMF_unit, getID())
 			.addI(COMF_targetX, pBestPlot->getX()).addI(COMF_targetY, pBestPlot->getY())
 			.addI(COMF_odds, iBestValue).addI(COMF_base, iOddsThreshold));
@@ -18546,7 +18546,7 @@ bool CvUnitAI::AI_leaveAttack(int iRange, int iOddsThreshold, int iStrengthThres
 			// [COM/decision] -- the attack target this unit commits to (odds vs the base bar).
 			logCombatAI(2, "[COM/decision] owner=%d unit=%d routine=leaveAttack target=(%d,%d) odds=%d base=%d action=attack",
 				(int)getOwner(), getID(), pBestPlot->getX(), pBestPlot->getY(), iBestValue, iOddsThreshold);
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_COMBAT, COM_DECISION_LEAVEATTACK, 2)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_COMBAT, COM_DECISION_LEAVEATTACK, 2)
 				.addI(COMF_owner, (int)getOwner()).addI(COMF_unit, getID())
 				.addI(COMF_targetX, pBestPlot->getX()).addI(COMF_targetY, pBestPlot->getY())
 				.addI(COMF_odds, iBestValue).addI(COMF_base, iOddsThreshold));
@@ -19500,7 +19500,7 @@ bool CvUnitAI::AI_found()
 		logFoundAI(1, "[FND/site] owner=%d unit=%d site=(%d,%d) value=%d candidateSites=%d action=%s",
 			(int)getOwner(), getID(), pBestPlot->getX(), pBestPlot->getY(), iBestFoundValue,
 			GET_PLAYER(getOwner()).AI_getNumCitySites(), atPlot(pBestPlot) ? "FOUND" : "moveto");
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_FOUND,
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_FOUND,
 				atPlot(pBestPlot) ? FND_SITE_FOUND : FND_SITE_MOVETO, 1)
 			.addI(FNDF_owner, (int)getOwner()).addI(FNDF_unit, getID())
 			.addI(FNDF_siteX, pBestPlot->getX()).addI(FNDF_siteY, pBestPlot->getY())
@@ -25473,7 +25473,7 @@ int CvUnitAI::AI_finalOddsThreshold(const CvPlot* pPlot, int iOddsThreshold) con
 	logCombatAI(3, "[COM/threshold] owner=%d unit=%d target=(%d,%d) base=%d final=%d",
 		(int)getOwner(), getID(), pPlot ? pPlot->getX() : -1, pPlot ? pPlot->getY() : -1,
 		iOddsThreshold, range(iFinalOddsThreshold, 0, 100));
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_COMBAT, COM_THRESHOLD, 3)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_COMBAT, COM_THRESHOLD, 3)
 		.addI(COMF_owner, (int)getOwner()).addI(COMF_unit, getID())
 		.addI(COMF_targetX, pPlot ? pPlot->getX() : -1).addI(COMF_targetY, pPlot ? pPlot->getY() : -1)
 		.addI(COMF_base, iOddsThreshold).addI(COMF_final, range(iFinalOddsThreshold, 0, 100)));
@@ -28695,7 +28695,7 @@ void CvUnitAI::AI_setAsGarrison(const CvCity* pCity)
 			(int)getOwner(), getID(), (int)AI_getUnitAIType(),
 			iGarrisonCity == -1 ? "leave" : "join",
 			iGarrisonCity == -1 ? m_iGarrisonCity : iGarrisonCity);
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT,
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT,
 				iGarrisonCity == -1 ? UNT_GARRISON_LEAVE : UNT_GARRISON_JOIN, 2)
 			.addI(UNTF_owner, (int)getOwner()).addI(UNTF_unit, getID()).addI(UNTF_type, (int)AI_getUnitAIType())
 			.addI(UNTF_city, iGarrisonCity == -1 ? m_iGarrisonCity : iGarrisonCity));

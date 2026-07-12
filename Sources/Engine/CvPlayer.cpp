@@ -1869,7 +1869,7 @@ void CvPlayer::initFreeUnits()
 
 	// #430 cascade: player game start -> emit the DOMAIN trigger so the grants machine resolves this player's game-start
 	// grants (civilization civics/techs/buildings + era/handicap starting*). The player's civ/era/handicap are set here.
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DOMAIN, CASCADE_EVT_PLAYER_INIT, (int)getID(), 0, 0, (int)getID()));
+	emitPlayerInit((int)getID());
 
 	if (GC.getGame().isOption(GAMEOPTION_CORE_CUSTOM_START))
 	{
@@ -2355,6 +2355,8 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 			oldOwner.changeCitiesLost(1);
 		}
 		raze(pOldCity);
+		// owner change (raze half): the old owner's city is DESTROYED, going to no owner. iSrcLoc = the OLD city id.
+		emitCityOwnerChanged(iOldCityId, (int)eOldOwner, (int)NO_PLAYER);
 	}
 	else
 	{
@@ -2742,6 +2744,9 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 		// checked) -- realize the new owner's city packages NOW, before the keep/raze evaluation reads
 		// the city (owner ruling 2026-07-04: a new city's yields/caches stand immediately).
 		CascadeAccumulator::cityCreated(pNewCity);
+		// owner change (acquire half): iSrcLoc = the NEW city id (the surviving entity now under the new owner);
+		// old + new owner drive both empires' aggregate change.
+		emitCityOwnerChanged(pNewCity->getID(), (int)eOldOwner, (int)eNewOwner);
 
 		// Don't bother with plot group calculations if they are immediately to be superseded by an auto raze
 		if (bUpdatePlotGroups)
@@ -3346,7 +3351,7 @@ void CvPlayer::setName(std::wstring szNewValue)
 	if (isCityNameValid(CvWString(szNewValue), false))
 	{
 		m_szName = szNewValue;
-		cascadeEmitNameChange(NAMECHANGE_PLAYER, getID(), getID());
+		emitNameChange(NAMECHANGE_PLAYER, getID(), getID());
 		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 		gDLL->getInterfaceIFace()->setDirty(Foreign_Screen_DIRTY_BIT, true);
 		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
@@ -3415,7 +3420,7 @@ void CvPlayer::setCivName(std::wstring szNewDesc, std::wstring szNewShort, std::
 	m_szCivDesc = szNewDesc;
 	m_szCivShort = szNewShort;
 	m_szCivAdj = szNewAdj;
-	cascadeEmitNameChange(NAMECHANGE_CIV, getID(), getID());
+	emitNameChange(NAMECHANGE_CIV, getID(), getID());
 	gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 	gDLL->getInterfaceIFace()->setDirty(Foreign_Screen_DIRTY_BIT, true);
 	gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
@@ -8888,7 +8893,7 @@ void CvPlayer::foundReligion(ReligionTypes eReligion, ReligionTypes eSlotReligio
 
 		// #430 cascade: religion founded here -> emit the DOMAIN trigger so the grants machine resolves the founder
 		// grants (numFreeUnits / freeUnit). Synced/deterministic.
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DOMAIN, CASCADE_EVT_RELIGION_FOUNDED, (int)eReligion, 0, 0, (int)getID()));
+		emitReligionFounded((int)getID(), (int)eReligion);
 
 		if (bAward && GC.getReligionInfo(eSlotReligion).getNumFreeUnits() > 0)
 		{
@@ -9458,6 +9463,8 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 
 		if (bWasGoldenAge != isGoldenAge())
 		{
+			// #430 event spine: announce ONLY on the golden-age flip (on<->off), after the turns field commit.
+			emitGoldenAgeChanged(getID(), isGoldenAge());
 			CascadeAccumulator::markPlayerScopeAndCities(getID());   // #430: GA flip -- the flats gate LIVE; this mark covers IS_GOLDEN_AGE-conditioned deposits
 			if (!bWasGoldenAge)
 			{
@@ -12584,6 +12591,8 @@ void CvPlayer::setLastStateReligion(const ReligionTypes eNewReligion)
 	if (eOldReligion != eNewReligion)
 	{
 		m_eLastStateReligion = eNewReligion;
+		// #430 event spine: announce the state-religion switch (past the no-change guard, after the field commit).
+		emitStateReligionChanged(getID(), (int)eNewReligion);
 
 		updateReligionHappiness();
 		updateReligionCommerce();
@@ -13692,7 +13701,7 @@ void CvPlayer::changeUnitCount(const UnitTypes eUnit, const int iChange)
 	}
 	GET_TEAM(getTeam()).changeUnitCount(eUnit, iChange);
 	// #430 cascade DOMAIN emit (mirror of changeBuildingCount): real per-player unit-count change -> the tally.
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DOMAIN, CASCADE_EVT_UNIT_COUNT, (int)eUnit, getUnitCount(eUnit), iChange, (int)getID()));
+	emitUnitCount((int)getID(), (int)eUnit, getUnitCount(eUnit), iChange);
 	// enabler-frontier-perf.md Part B: the UNIT incremental path (the analogue of buildingProcessed's onBuildingChanged).
 	// A trained/lost unit re-checks its trainability box across this player's cities -- but ONLY when the unit is
 	// instance-capped or referenced by another unit's requires (unit caps are the sole count-driven availability
@@ -13797,7 +13806,7 @@ void CvPlayer::changeBuildingCount(BuildingTypes eIndex, int iChange)
 	// building gain/loss drives a DOMAIN event through the spine, carrying the real building type + new empire
 	// count + delta. This proves the spine on REAL gameplay input and shadows m_paiBuildingCount -- the exact
 	// counter the tally will replace. DOMAIN = synced state change (tally-eligible). No-op until consumers register.
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DOMAIN, CASCADE_EVT_BUILDING_COUNT, (int)eIndex, getBuildingCount(eIndex), iChange, (int)getID()));
+	emitBuildingCount((int)getID(), (int)eIndex, getBuildingCount(eIndex), iChange);
 
 	// #430 accumulator: NO epoch bump here (measured 2026-07-03: building completions are the highest-frequency
 	// player event; bumping per completion 5x'd the turn -- pctStack 6.5k->38.5k calls/208s). The sibling-city
@@ -14394,7 +14403,7 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 		// #430 cascade: a civic newly adopted -> emit the DOMAIN trigger for the grants machine (revolution pulse etc.).
 		if (eNewValue != NO_CIVIC)
 		{
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DOMAIN, CASCADE_EVT_CIVIC_ADOPTED, (int)eNewValue, 0, 0, (int)getID()));
+			emitCivicAdopted((int)getID(), (int)eNewValue);
 		}
 
 		// Afforess - Check Buildings, Clear Caches
@@ -29396,6 +29405,10 @@ void CvPlayer::setHasTrait(TraitTypes eIndex, bool bNewValue)
 	if (!bNewValue || (bNewValue && GC.getGame().isTraitValid(eIndex)))
 	{
 		m_pabHasTrait[eIndex] = bNewValue;
+		// #430 event spine: announce the RUNTIME trait change (past the top-of-function no-change guard, after the
+		// field commit inside the validity gate). Static/initial trait assignment goes through processTrait directly
+		// at init and is covered by PLAYER_INIT + load warm-up, so the emit lives HERE, not in processTrait.
+		emitTraitChanged(getID(), (int)eIndex, bNewValue);
 		processTrait(eIndex, bNewValue ? 1 : -1);
 
 		if (GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eIndex).getLinePriority() != 0)

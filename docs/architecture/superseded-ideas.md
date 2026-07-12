@@ -31,7 +31,7 @@
    (json.md §6). **No bespoke era key.**
 7. **Condition-carrying sub-scope members** (`empire.capital`, `perMilitaryUnit`, …) *(dead as a class)* — encoding
    a deposit's condition as a bespoke member instead of a predicate/`unit:` qualifier. Killed by
-   [DEC-conditions-are-predicates](decisions.md) (the golden-age member-mirror is the one deferred exception).
+   [DEC-conditions-are-predicates](decisions.md) (the golden-age yield-effect member-mirror is the one PERMANENT exception).
    `perMilitaryUnit` specifically authors as the `cities.{unit: IS_MILITARY}` entry (json.md §3.7).
 8. **The "deliberately more permissive" vicinity model** *(dead)* — vicinity with no ownership filter. Killed:
    vicinity mirrors the engine's ownership tiers (owned ⊂ owned+neutral ⊂ crossBorder; json.md §3.4, enabler.md §3).
@@ -48,3 +48,11 @@
 12. **The `/shadow/*` endpoint surface** *(dead)* — in-DLL cascade-vs-legacy sweep endpoints. Killed: the two
     verification legs never mix surfaces ([validation.md](../specs/validation.md)); the shadow rode the gated
     logging, and the shadow phase itself has since ended.
+13. **The load reseed as a fabricated full-state replay (`spineEmitGameState`)** *(dead)* — a separate pass, run
+    after deserialization, that walked already-populated game objects and emitted a synthetic DOMAIN event for every
+    present fact ("for each building the city has, emit built"). Killed: it FABRICATES events from populated state
+    rather than the events coming from the genuine save read — a pseudo-emit that feeds the cascade reconstructed
+    values and invites the next agent to reconstruct more state the same way. The reseed must be **event-sourced from
+    inside the read** ([event-spine.md](../specs/event-spine.md) load-RESEED, [DEC-spine-reseed](decisions.md#dec-spine-reseed)):
+    reading a fact off the stream is what fires its event. **Never re-add a post-deserialization state-walking emit
+    pass.**

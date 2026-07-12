@@ -57,7 +57,7 @@ not yet ported (still authored in `Assets/XML`, referenced from JSON by id). Ver
 | `VOTE_` | a diplomatic proposal (vote) | ✅ `votes/` |
 | `EFFECT_` | a map graphics effect (`EFFECT_BIRDSCATTER`) | ☐ XML only — referenced from a feature's `world.art.effect`. *(NOT `BUILDING_EFFECT_*`, the property pseudo-buildings — those are the `BUILDING_` infotype.)* |
 | `MAPCATEGORY_` | a map category (`MAPCATEGORY_EARTH`) | ☐ XML only — referenced from a building's `requires.build` |
-| `EVENT_` | an event (and its trigger) | ☐ XML only — deferred to the #425 event rework |
+| `EVENT_` | an event (and its trigger) | ☐ XML only — PERMANENT carve-out (#425 event rework — events stay Python, out of #430) |
 | `ART_` | an art define (`ART_DEF_*`, `ART_PEDIA`, …) | ☐ XML only — referenced from `ui` / `world` art blocks |
 
 Paths are relative to `Assets/Data/` (ported) or `Assets/XML/` (not). The legacy XML holds the **complete** id

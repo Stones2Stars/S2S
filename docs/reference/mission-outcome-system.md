@@ -16,8 +16,8 @@
 > for that future clean pass. **Scope decided for that pass (owner 2026-07-01):** the `missions` array lists **BOTH**
 > the data-driven outcome-missions (`<Actions>`) **and** the hardcoded mission-abilities; the `greatPersonAction`
 > `base`/`multiplier` **magnitudes are LEFT as-is** (whether they end up used is TBD). Until the pass runs, **the four
-> deferred grants keys** (`buildings`/`greatPersonAction`/`goldenAge`/`greatPeople`, magnitudes and all) stay in
-> `grants` untouched (the grants machine already ignores them).
+> grants keys** (`buildings`/`greatPersonAction`/`goldenAge`/`greatPeople`, magnitudes and all) — a PERMANENT carve-out
+> (ground-up rework, out of #430) — stay in `grants` untouched (the grants machine already ignores them).
 
 ## The three objects (the payload does NOT live where you'd expect)
 
@@ -41,6 +41,7 @@
 ## Two carriers × two surfaces
 
 Both `CvUnitInfo` **and** `CvUnitCombatInfo` expose both surfaces (runtime merges unit + all its combat-class lists):
+
 - **`KillOutcomes`** (`m_KillOutcomeList`, `<KillOutcomes>`) — fired on a **combat kill** (the subdue/hunt case).
   Runtime: `CvUnit::updateCombat` (3100/3623). ⚠ **Subject asymmetry:** the **victor** receives the grant, gated by
   the **defeated** unit's kill-outcome definition.
@@ -84,7 +85,7 @@ trees** (Constant/Random/Plus/Mult/AdaptUnitYield/Property/Python), conditions a
 | great commander | GREAT_COMMANDER | `isGreatGeneral` | become Commander | no |
 | great commodore | GREAT_COMMODORE | (option-gated) | become Commodore | no |
 
-The three **deferred grants keys** are members of this family: unit `buildings`→construct, `greatPersonAction`→
+The three **carved-out grants keys** (PERMANENT carve-out — ground-up rework, out of #430) are members of this family: unit `buildings`→construct, `greatPersonAction`→
 discover/hurry/trade/greatWork/hurryFood, `goldenAge`→golden age (and `greatPeople`→join).
 
 ## Data census
@@ -94,7 +95,7 @@ discover/hurry/trade/greatWork/hurryFood, `goldenAge`→golden age (and `greatPe
   sacrifice, go-to-map/space-travel, colonize-map.
 - **194** units with `KillOutcomes` (all wild animals). **237** `Actions` occurrences (subdued/tamed animals + 28 land
   units + combat-class-level). `<Action>` `iCost`/`bKill`/`PropertyCost` are unused in current data.
-- **Curator: NONE.** `curate_unit.py` lists `KillOutcomes`/`Actions` in its pass-2 **DEFERRED** set and passes them
+- **Curator: NONE.** `curate_unit.py` lists `KillOutcomes`/`Actions` in its pass-2 **PERMANENT carve-out (ground-up rework, out of #430)** set and passes them
   through `engine.generic()` verbatim under an `outcomes` key — faithfully copied, not migrated.
 
 ## ~~Design questions the `missions` block must answer~~ (SCRAPPED — outcomes are not ported; see the ruling up top)
@@ -121,5 +122,6 @@ discover/hurry/trade/greatWork/hurryFood, `goldenAge`→golden age (and `greatPe
    outcome-mission `default:` dispatch is the hook that could absorb them, but that's a larger reunification.
 
 ## See also
-- [json.md](../specs/json.md) §5 (`grants`) / §8 (the `missions` block, deferred). ·
+
+- [json.md](../specs/json.md) §5 (`grants`) / §8 (the `missions` block — a PERMANENT carve-out, ground-up rework, out of #430). ·
   [data-migration-remaining.md](../plans/structural-cleanup/data-migration-remaining.md) (the deferred-pass entry).

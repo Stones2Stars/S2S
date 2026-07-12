@@ -612,7 +612,7 @@ void CvCityAI::AI_doGarrisonConsolidation()
 		// the strength position left (each merge also logs centrally as [UNT/merge]).
 		logCityAI(1, "[CIT/garrcons] city=%S owner=%d merges=%d strLeft=%d need=%d",
 			getName().GetCString(), (int)getOwner(), iMerges, iHave100 / 100, AI_neededDefenseStrength());
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_GARRCONS, 1)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_GARRCONS, 1)
 			.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
 			.addI(CITF_merges, iMerges).addI(CITF_strLeft, iHave100 / 100).addI(CITF_need, AI_neededDefenseStrength()));
 	}
@@ -1082,7 +1082,7 @@ void CvCityAI::AI_chooseProduction()
 	logCityAI(1, "[CIT/begin] city=%S owner=%d pop=%d danger=%d dangerVal=%d finTrouble=%d critGold=%d foodProd=%d",
 		getName().GetCString(), (int)eOwner, getPopulation(), bDanger ? 1 : 0, iDangerValue,
 		bFinancialTrouble ? 1 : 0, bCriticalGold ? 1 : 0, bWasFoodProduction ? 1 : 0);
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_BEGIN, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_BEGIN, 1)
 		.addI(CITF_city, getID()).addI(CITF_owner, (int)eOwner)
 		.addI(CITF_pop, getPopulation()).addI(CITF_danger, bDanger ? 1 : 0).addI(CITF_dangerVal, iDangerValue)
 		.addI(CITF_finTrouble, bFinancialTrouble ? 1 : 0).addI(CITF_critGold, bCriticalGold ? 1 : 0)
@@ -1231,7 +1231,7 @@ void CvCityAI::AI_chooseProduction()
 			getName().GetCString(), (int)getOwner(), getNumWorkers(), AI_getWorkersNeeded(),
 			iWorkersInArea, iNeededWorkersInArea, iDangerValue, bInhibitUnits ? 1 : 0,
 			bStrategyTurtle ? 1 : 0, iBestBuildVal);
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_STRANDED, 1)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_STRANDED, 1)
 			.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
 			.addI(CITF_wHave, getNumWorkers()).addI(CITF_wNeed, AI_getWorkersNeeded())
 			.addI(CITF_areaHave, iWorkersInArea).addI(CITF_areaNeed, iNeededWorkersInArea)
@@ -2148,7 +2148,7 @@ void CvCityAI::AI_chooseProduction()
 		m_iLastStrandedWorkerTurn = GC.getGame().getGameTurn();
 		logCityAI(1, "[CIT/stranded/try] city=%S owner=%d wNeed=%d areaHave=%d areaNeed=%d",
 			getName().GetCString(), (int)getOwner(), iWorkersNeeded, iWorkersInArea, iNeededWorkersInArea);
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_STRANDED_TRY, 1)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_STRANDED_TRY, 1)
 			.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
 			.addI(CITF_wNeed, iWorkersNeeded).addI(CITF_areaHave, iWorkersInArea).addI(CITF_areaNeed, iNeededWorkersInArea));
 		// Build the worker LOCALLY (AI_chooseUnitImmediate), NOT via AI_chooseUnit -- the latter
@@ -2160,7 +2160,7 @@ void CvCityAI::AI_chooseProduction()
 			return;
 		}
 		logCityAI(1, "[CIT/stranded/declined] city=%S cannot build any worker unit locally", getName().GetCString());
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_STRANDED_DECLINED, 1)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_STRANDED_DECLINED, 1)
 			.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner()));
 		bChooseWorker = true;
 	}
@@ -2468,7 +2468,7 @@ void CvCityAI::AI_chooseProduction()
 			getName().GetCString(), (int)eOwner, iNbMinimalAttackers, iDefShortfall, iSqrtCities,
 			iAttackNeeded, iOwnedAttackers, iOwnedAtkRaw,
 			(iOwnedAttackers < iAttackNeeded) ? 1 : 0);
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_DANGER, 2)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_DANGER, 2)
 			.addI(CITF_city, getID()).addI(CITF_owner, (int)eOwner)
 			.addI(CITF_minAtk, iNbMinimalAttackers).addI(CITF_defShortfall, iDefShortfall)
 			.addI(CITF_sqrtCities, iSqrtCities).addI(CITF_need, iAttackNeeded)
@@ -9260,7 +9260,7 @@ bool CvCityAI::AI_chooseBuilding(int iFocusFlags, int iMaxTurns, int iMinThresho
 			logCityAI(1, "[CIT/order] city=%S CONSTRUCT %S score=%I64d rank=%d/%d focus=0x%x",
 				getName().GetCString(), GC.getBuildingInfo(eBestBuilding).getDescription(),
 				bestBuildings[i].score, (int)i, (int)bestBuildings.size(), iFocusFlags);
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ORDER_CONSTRUCT, 1)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ORDER_CONSTRUCT, 1)
 				.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
 				.addI(CITF_building, (int)eBestBuilding)
 				.addI(CITF_score, (int)bestBuildings[i].score)
@@ -9312,7 +9312,7 @@ bool CvCityAI::AI_chooseProject()
 		// [CIT/order] -- city commits to a project (e.g. wonder/spaceship part).
 		logCityAI(1, "[CIT/order] city=%S CREATE_PROJECT %S",
 			getName().GetCString(), GC.getProjectInfo(eBestProject).getDescription());
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ORDER_PROJECT, 1)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ORDER_PROJECT, 1)
 			.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
 			.addI(CITF_project, (int)eBestProject));
 		pushOrder(ORDER_CREATE, eBestProject, -1, false, false, true);
@@ -9342,7 +9342,7 @@ bool CvCityAI::AI_chooseProcess(CommerceTypes eCommerceType, int64_t* commerceWe
 		// [CIT/order] -- city falls back to running a process (gold/research/culture/...).
 		logCityAI(1, "[CIT/order] city=%S MAINTAIN_PROCESS %S commerce=%d",
 			getName().GetCString(), GC.getProcessInfo(eBestProcess).getDescription(), (int)eCommerceType);
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ORDER_PROCESS, 1)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ORDER_PROCESS, 1)
 			.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
 			.addI(CITF_process, (int)eBestProcess).addI(CITF_commerce, (int)eCommerceType));
 		pushOrder(ORDER_MAINTAIN, eBestProcess, -1, false, false, !bforce);
@@ -15009,7 +15009,7 @@ bool CvCityAI::AI_choosePropertyControlBuildingAndUnit(int iTriggerPercentOfProp
 					isGettingBetter ? 1 : 0, isGoodEnough ? 1 : 0, ismaxPropUnitsReached ? 1 : 0,
 					(iPropControlInArea * 100 / (iUnitsInArea + 1)),
 					(iEval > iCheck && !isGettingBetter && !isGoodEnough && !ismaxPropUnitsReached) ? 1 : 0);
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PROP, 2)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_PROP, 2)
 					.addI(CITF_city, getID()).addI(CITF_owner, (int)eOwner)
 					.addI(CITF_prop, (int)eProperty)
 					.addI(CITF_val, iCurrentValue).addI(CITF_change, iCurrentChange).addI(CITF_pct, iCurrentPercent)

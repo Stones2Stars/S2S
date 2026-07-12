@@ -2,12 +2,13 @@
 
 > Lifted + condensed from the old `reference/engine/` set. The durable engine facts a fresh S2S engineer needs:
 > the closed-`.exe` constraints, the systems the cascade reads or replaces, and the footguns. Behaviour **as it is
-> today** — the cascade rework shadows each legacy maintainer ([logging](../specs/logging.md) §6) before cutting it.
+> today** — the cascade rework replaces each legacy maintainer ([logging](../specs/logging.md) §6), verified live before cutting it.
 
 ## Toolchain — the locked closed-`.exe` stack
 
 The closed Firaxis `.exe` (**VC7.1 / MSVC 7.1 / VC++ Toolkit 2003**) freezes the whole stack via ABI/STL sharing
 across the process boundary — **not** style choices: **C++03, 32-bit, Python 2.4, Boost 1.32 + 1.55**.
+
 - **Two Boosts coexist.** **1.32** (`boost::`) — general + the *only* compiled lib, `boost_python-vc71` (the
   C++↔Py2.4 bridge); can't be dropped (Boost.Python isn't header-only and no 1.55 Python lib can be built on this
   toolchain). **1.55** (`boost155::`, namespace-renamed, header-only) — used mainly via the `foreach_` /
@@ -19,6 +20,7 @@ across the process boundary — **not** style choices: **C++03, 32-bit, Python 2
 
 Format is **name-keyed, not positional** — `(id, type-code, value)` tuples; no save-version number; compatibility
 resolves dynamically by name.
+
 - **Adding** a field is SOFT (old save, new code): the new read mismatches the stream's next element, no-ops, and
   keeps its default — `Expect()` returns false and leaves the stream untouched
   (`Sources/Infrastructure/CvTaggedSaveFormatWrapper.cpp:3830`).
@@ -71,7 +73,7 @@ resolves dynamically by name.
   pass (spread resolves against *pre-source* values, then production applies — counter-intuitive).
 - **Band auto-placement** (the crime/disease/education/pollution buildings): `CvPropertyInfo` `PropertyBuilding`
   bands silently grant/revoke buildings as a value crosses thresholds (`checkPropertyBuildings`, skipped for NPCs).
-  **A legacy maintainer the cascade replaces — shadow, then cut.** Property values fold into the OOS/save checksum.
+  **A legacy maintainer the cascade replaces — verified live, then cut.** Property values fold into the OOS/save checksum.
 
 ## Map generation — Python callbacks, DLL fallback
 
@@ -139,8 +141,9 @@ resolves dynamically by name.
   blunt 2026-06-14 purge over-reached on both and was fully reverted.
 - **Cascade migration:** UnitCombat is a **source/enabler** (membership = the enabler axis; the ~150 fields = a
   modifier deposit) and should share Promotion's modifier-family vocabulary — **do UnitCombat + Promotion together**.
-  Shadow-then-cut any dead-class purge.
+  Verify live, then cut any dead-class purge.
 
 ## See also
+
 - [../specs/](../specs/) — the cascade model the engine feeds. [../specs/logging.md](../specs/logging.md) — the
-  shadow + map-before-delete bar that gates cutting any legacy maintainer above.
+  map-before-delete + observability bar that gates cutting any legacy maintainer above.

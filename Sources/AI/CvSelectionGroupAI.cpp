@@ -83,7 +83,7 @@ namespace {
 		{
 			logGroupAI(2, "[GRP/split] owner=%d group=%d separated=%d",
 				(int)eOwner, iGroupId, iSeparated);
-			eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_GROUP, 0 /*GRP_SPLIT*/, 2)
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GROUP, 0 /*GRP_SPLIT*/, 2)
 				.addI(0 /*GRPF_owner*/, (int)eOwner).addI(1 /*GRPF_group*/, iGroupId).addI(2 /*GRPF_separated*/, iSeparated));
 		}
 	}
@@ -711,7 +711,7 @@ int CvSelectionGroupAI::AI_attackOdds(const CvPlot* pPlot, bool bPotentialEnemy,
 	logCombatAI(3, "[COM/odds] owner=%d unit=%d target=(%d,%d) goodness=%d leadWin=%d win=%d",
 		(int)getOwner(), getHeadUnit() ? getHeadUnit()->getID() : -1,
 		pPlot ? pPlot->getX() : -1, pPlot ? pPlot->getY() : -1, iResult, iLeadAttackerWinOdds, bIsWin ? 1 : 0);
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_COMBAT, COM_ODDS_ID, 3)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_COMBAT, COM_ODDS_ID, 3)
 		.addI(COMF_OWNER, (int)getOwner()).addI(COMF_UNIT, getHeadUnit() ? getHeadUnit()->getID() : -1)
 		.addI(COMF_TARGETX, pPlot ? pPlot->getX() : -1).addI(COMF_TARGETY, pPlot ? pPlot->getY() : -1)
 		.addI(COMF_GOODNESS, iResult).addI(COMF_LEADWIN, iLeadAttackerWinOdds).addI(COMF_WIN, bIsWin ? 1 : 0));
@@ -1246,7 +1246,7 @@ void CvSelectionGroupAI::AI_setMissionAI(MissionAITypes eNewMissionAI, const CvP
 		logUnitAI(2, "[UNT/mission] owner=%d unit=%d unitAI=%d missionAI=%d -> target=(%d,%d) stack=%d",
 			(int)getOwner(), pHead ? pHead->getID() : -1, pHead ? (int)pHead->AI_getUnitAIType() : -1,
 			(int)eNewMissionAI, newPlot ? newPlot->getX() : -1, newPlot ? newPlot->getY() : -1, getNumUnits());
-		eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_MISSION_ID, 2)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_MISSION_ID, 2)
 			.addI(UNTF_OWNER, (int)getOwner()).addI(UNTF_UNIT, pHead ? pHead->getID() : -1)
 			.addI(UNTF_UNITAI, pHead ? (int)pHead->AI_getUnitAIType() : -1).addI(UNTF_MISSIONAI, (int)eNewMissionAI)
 			.addI(UNTF_TARGETX, newPlot ? newPlot->getX() : -1).addI(UNTF_TARGETY, newPlot ? newPlot->getY() : -1)

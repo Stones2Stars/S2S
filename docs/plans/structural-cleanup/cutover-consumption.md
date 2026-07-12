@@ -39,13 +39,14 @@
   `bContinue=True` bypassed the cascade flip → legacy → every project shown. Now `canCreate(iType, False, False)`.
 - **`getMaxPopulationAllowed()`** poco stub `return 0` → `return -1` (unset), killing the "Sets base max population
   at 0" help text on every building.
-- **Unconditional recompute-on-load (the accuracy-first START of the retire-serialization work)** —
-  `CvGame::onFinalInitialized` (load branch, `CvGame.cpp:587`) now posts `CvMessageControl::sendRecalculateModifiers()`
-  unconditionally (active-human-gated) in place of the dead `checkVersions()` checksum/popup gate. Restores correct
-  derived state on every load without a human accepting the (never-firing) popup. Compiles; **needs an in-game
-  playtest** (load a save → manufactured resources / build list correct with NO manual recalc). Heavy full recalc by
-  design ("data accuracy is mega important, so we start there" — owner 2026-07-11); the per-cache map below makes it
-  cheaper. Follow-ups noted in-code: autoplay-load coverage (no active human) lands with the cache map.
+- **`recalculateModifiers`-on-load — REMOVED.** The load-branch `sendRecalculateModifiers()` post is deleted. It
+  re-ran `processBuilding`/`processBonus`/`changePowerCount` across every city on every load, spraying ~100k+ spurious
+  "changed" DOMAIN events — re-application, not real state changes: the broken-cascade churn the owner flagged — and it
+  rebuilt legacy accumulators the cascade replaces anyway. The cascade is built from events (the read-driven reseed —
+  [DEC-spine-reseed](../../architecture/decisions.md#dec-spine-reseed)), never a recompute; legacy accumulators that
+  still need correct-on-load die at their channel's cascade cut. Its legacy-correctness pass is moot pre-cutover (the
+  game is not playable, parity invalid). ⚠ The retire-serialization audit below was written *around* this recompute
+  path and is largely superseded — reconcile it to the reseed model when the read-driven load lands.
 
 ## The retire-serialization audit (chosen scope — the real end-state)
 
@@ -73,10 +74,17 @@ NOT the recompute itself. The recompute stops being popup/network-bound because 
 rebuilds deterministically and independently, so the load-time rebuild needs no popup and no network message.
 
 **Consequences for the audit:**
-- The cascade caches already do this — `onFinalInitialized`'s **eager cache-warmup block** (`CvGame.cpp:654-668`:
-  `buildFrontierIndices` + every plot's yield cache + `playerSliceRebuild` (operating buildings + city/player packages)
-  + `worldRebuild`) IS the "build all caches on load" step for cascade state. The **legacy** accumulators are the
-  missing half: the `recalculateModifiers` derived-recompute content joins the unconditional load-time rebuild.
+
+- The CASCADE's load build is the **event reseed** — NOT the recompute-from-state warm-up (`playerSliceRebuild` +
+  `worldRebuild` are REMOVED — [f0-eventspine-invalidation.md](f0-eventspine-invalidation.md) /
+  [DEC-spine-reseed](../../architecture/decisions.md#dec-spine-reseed)): the save read fires the DOMAIN events for
+  every fact at load and the cache-build consumer populates every cascade package (the plot-yield cache, a
+  game-object cache, still warms from its own state). The **legacy** accumulators are a SEPARATE half: the reseed's events feed the cascade
+  consumer, not the legacy apply-loops, so each legacy accumulator that must be correct-on-load keeps its
+  `recalculateModifiers`-content recompute UNTIL its channel is cut to the cascade — at which point the reseed
+  subsumes it. ⚠ Whether `recalculateModifiers` can be removed WHOLESALE (i.e. the reseed already re-runs the legacy
+  apply-loops it drove) vs. staying until the last legacy channel cuts is an open build-time question — verify, do
+  not assume.
 - Any code comment claiming `recalculateModifiers` "repopulates X fresh on load" describes a path that never ran on a
   normal load — so `m_aiSpecialistCommerce100` (skip-read) and `m_paiFreeBonus` (serialized-trusted) are BOTH latently
   wrong on load today, fixed only when a human accepted the (asset-change) popup. The unconditional load rebuild fixes
@@ -177,8 +185,9 @@ pocos (which would have been the "no promotions" root cause) was WRONG — mapFr
 promotion bug is NOT this ordering; likely `unitCombats` under `skills` vs `identity` (confirm at `getQualifiedUnitCombatType`).
 
 **Remaining RECOVERABLE work by fix-type:**
+
 - **`getPropertyManipulators` family** (7 pocos: Property/Specialist/Civic/Heritage/Trait/Feature/Improvement) —
-  ⚖ **DEFERRED to the property-engine cut / #429 (assessed 2026-07-11): this is NOT a getter-wire.** Building a
+  ⚖ **PERMANENT carve-out (#429 property spatial-distribution): this is NOT a getter-wire.** Building a
   `CvPropertySource` needs an **`IntExpr` expression tree** for the amount (`CvPropertySourceConstant(PropertyTypes,
   const IntExpr*)`), no poco constructs one today, and the spatial intent it carries (`on`/`relation`/`distance`, the
   `grants.repeatable` pollution pulse) is the **pending #429 property-distribution** work (json.md §5, "curator-to-spec
@@ -207,10 +216,10 @@ promotion bug is NOT this ordering; likely `unitCombats` under `skills` vs `iden
 - ✅ **`isMilitarySupport`/`isMilitaryProduction`/`isMilitaryHappiness` — DONE:** unified onto the `military` tag /
   `IS_MILITARY` (owner-confirmed 2026-07-11, per skills.md §3 — a deliberate behaviour change; the differing legacy
   corpora collapse to one verdict). The audit's "re-emit distinct bools" was overruled by the owner.
-- **`getGroupSize`/mesh-group getters — owner-deferred** (UnitMeshGroups, graphics/animation only). Stubbed by design.
+- **`getGroupSize`/mesh-group getters — PERMANENT carve-out (mesh-groups)** (UnitMeshGroups, graphics/animation only). Stubbed by design.
 
 **⇒ Every RECOVERABLE getter that is a getter-wire is DONE. The only untouched RECOVERABLE items are the two
-legitimately-deferred categories (property-engine/#429; mesh groups).**
+owner-ruled PERMANENT carve-outs (#429 property spatial; mesh-groups).**
 
 ## Verified working (do not re-chase)
 
@@ -222,7 +231,7 @@ legitimately-deferred categories (property-engine/#429; mesh groups).**
   is fresh (confirmed: a `recalculateModifiers` makes them all appear) — the recompute-on-load audit removes the
   need for the manual recalc.
 
-## Deferred — fix AFTER the getter sweep (owner ruling: getters first)
+## Fix with the getter sweep (owner ruling: getters first)
 
 - **`CvJsonModifiers` string lookup on the HOT PATH.** The runtime modifier calc rides the compiled int-interned
   `DepositIndex` (fine), but some POCO GETTERS do the string-keyed `getModifiers()->all()` dotted-address match
@@ -237,6 +246,7 @@ legitimately-deferred categories (property-engine/#429; mesh groups).**
   chain; not yet traced.
 
 ## See also
+
 - [enabler.md](../../specs/enabler.md) §6 (HIDDEN/GREYED/LISTED) · [cutover.md](cutover.md) (the machine cuts) ·
   [engine.md](../../reference/engine.md) §Save/load (the two-stage serialization retirement) ·
   [DEC-derived-never-trusted](../../architecture/decisions.md#dec-derived-never-trusted).

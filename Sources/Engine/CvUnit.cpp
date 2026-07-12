@@ -17138,7 +17138,7 @@ void CvUnit::setName(CvWString szNewValue)
 	gDLL->stripSpecialCharacters(szNewValue);
 
 	m_szName = szNewValue;
-	cascadeEmitNameChange(NAMECHANGE_UNIT, getOwner(), getID());
+	emitNameChange(NAMECHANGE_UNIT, getOwner(), getID());
 
 	if (IsSelected())
 	{

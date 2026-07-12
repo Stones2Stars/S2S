@@ -8,6 +8,7 @@ The catalogue of a unit's **immutable, accounting-only classification tags** (th
 > `curate_unit.py`; many units are untagged and that's fine (low-risk, fixed in validation).
 
 ## What a tag is (recap)
+
 - **Immutable** — derived from the unit's *type*, re-set only at creation/upgrade; **not** promotion-grantable.
 - **Accounting-only** — pure membership, **no behaviour or modifiers**; read by `IS_<TAG>` predicates for
   counting/gating.
@@ -16,6 +17,7 @@ The catalogue of a unit's **immutable, accounting-only classification tags** (th
 ## Tags (first pass)
 
 ### Role / category — derived from `DefaultUnitAI` + the IS_MILITARY signal
+
 | tag | meaning | derivation |
 |---|---|---|
 | `military` | a military unit | `bMilitarySupport` (the IS_MILITARY signal) — **suppressed** when a specific role below applies |
@@ -26,13 +28,15 @@ The catalogue of a unit's **immutable, accounting-only classification tags** (th
 | `merchant` | trade-mission unit | `UNITAI_MERCHANT` → `merchant` + `civilian` |
 | `spy` | runs espionage missions (only spies do) | `UNITAI_SPY` → `spy` (not civilian, not military) |
 
-### Tech / equipment class — ⏳ deferred (from unitcombats, post-migration)
+### Tech / equipment class — PERMANENT carve-out (from unitcombats, unitcombat→tag pass)
+
 `gunpowder` (uses gunpowder) · `mechanized` (mechanical/motorised) · `mounted` (cavalry) · … — these are *type*
 classes a unit gains/loses on upgrade (a swordsman → rifleman gains `gunpowder`; a `mounted` horseman *loses*
-`mounted` upgrading to a helicopter). To be derived from **unitcombats** in the post-migration unitcombat pass,
+`mounted` upgrading to a helicopter). To be derived from **unitcombats** in the unitcombat→tag pass (a PERMANENT carve-out),
 not the first cut.
 
 ### Criminal-type — `outlaw`
+
 Derived from the **criminal combat CLASS**, not a `DefaultUnitAI` role. A unit is criminal-type →
 tag **`outlaw`** iff its **primary `<Combat>` is `UNITCOMBAT_CRIMINAL`** *or* `UNITCOMBAT_CRIMINAL` appears in its
 **`<SubCombatTypes>`**. Curator: `combat_class == UNITCOMBAT_CRIMINAL or UNITCOMBAT_CRIMINAL in SubCombatTypes`
@@ -52,12 +56,14 @@ covers **22** units, adding the ones INFILTRATOR missed — `OUTLAW` (primary `R
 > hidden-nationality skill are independent: most outlaws carry the skill, but the tag is defined by the combat class.
 
 ## Open
-- `gunpowder`/`mechanized`/… from **unitcombats** (post-migration).
+
+- `gunpowder`/`mechanized`/… from **unitcombats** (PERMANENT carve-out — unitcombat→tag pass).
 - **Completeness** — most units untagged for now (fine).
 - The **bSpy skill → `spy` tag** reconciliation (the spy notion is mis-filed as a skill too — drop the skill).
 - `IS_*` predicates are **independent queries** (not tag-membership), but **may be defined to encompass tags**;
   JSON-definable + predicate groups come post-migration ([json](json.md) §3.7).
 
 ## See also
+
 - [json.md](json.md) §8 — the system (the four-block classification model).
 - [skills.md](skills.md) — the sibling (mutable abilities). · [state.md](state.md) · [capabilities.md](capabilities.md).

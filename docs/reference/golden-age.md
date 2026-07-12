@@ -23,6 +23,7 @@ into `Sources/`.
 
 `getGoldenAgeLength() = max(1, getModifiedIntValue(game.goldenAgeLength100, getGoldenAgeModifier()) / 100)`
 (`CvPlayer.cpp:9460`).
+
 - **Base × gamespeed:** `goldenAgeLength100 = GOLDEN_AGE_LENGTH × gamespeed.speedPercent` (`CvGame.cpp:3257`).
 - **Modifier:** `getGoldenAgeModifier()` accumulates trait `getGoldenAgeDurationModifier()` + building `getGoldenAgeModifier()`.
 
@@ -39,7 +40,7 @@ All three are gated on `isGoldenAge()` and land in the city's **`base`**, so the
    **threshold-gated**: a worked plot gets `+CvYieldInfo.getGoldenAgeYield(y)` **only if** its yield clears
    `CvYieldInfo.getGoldenAgeYieldThreshold(y)`; a plot below the threshold gets nothing. This addend is part of
    `basePlotYield` ([calc-map](../plans/structural-cleanup/legacy-value-calc-map.md) §10.1).
-   - **⚠ The threshold IGNORES the plot's improvement & route (counter-intuitive, and load-bearing for parity):**
+   - **⚠ The threshold IGNORES the plot's improvement & route (counter-intuitive, and load-bearing for faithful reproduction):**
      the test runs on the **PRE-improvement, PRE-route** running yield — `nature + extra + [centre] + playerTerrain +
      seaPlot + getYieldChangeAt + landmark + extra/less-threshold`. The improvement (`:8430`) and route (`:8435`) are
      added **AFTER** the golden-age check, so a rich improvement/route on a tile does **not** help it qualify — only
@@ -95,14 +96,18 @@ anarchy** while in a golden age — the canonical "switch civics for free" windo
 
 Golden age touches the yield path in **three** places, all inside `base` (so all `× modifier`): the
 **per-plot** threshold bonus (in `basePlotYield`), the **player** golden-age yield, and the **golden-age
-commerce** — plus faster growth, faster great people, and zero-anarchy civic swaps elsewhere. The one parity
+commerce** — plus faster growth, faster great people, and zero-anarchy civic swaps elsewhere. The one reproduction
 gotcha is the per-plot bonus's **pre-improvement/pre-route** threshold test (`CvPlot.cpp:8403`).
 
-> **⏳ Cascade representation — deferred member-mirror, NOT a now-retire invention (owner ruling 2026-06-28).**
+> **Cascade representation — PERMANENT engine member-mirror, effect-only.**
 > [DEC-conditions-are-predicates](../architecture/decisions.md#dec-conditions-are-predicates) retires condition-as-member
-> shapes (`empire.capital` → `enabled:IS_CAPITAL`). **Golden age is the standing exception:** its yield/commerce is
-> applied by the **core engine** and is **not defined as data anywhere**, so modelling it through the `IS_GOLDEN_AGE`
-> predicate would mean authoring it virtually everywhere it fires. The cascade therefore keeps mirroring it as the
-> `empire.goldenAge` member for now. The `IS_GOLDEN_AGE` predicate ([json](../specs/json.md) §3.5) exists and is
-> **reserved for when golden age is extracted from the engine core and moved where it belongs — post-migration**
-> ([DEC-mirror-then-redesign](../architecture/decisions.md#dec-mirror-then-redesign)).
+> shapes (`empire.capital` → `enabled:IS_CAPITAL`). **The golden-age YIELD EFFECT is the standing PERMANENT exception:**
+> the per-plot threshold bonus, the player golden-age yield, and the golden-age commerce are applied by the **core
+> engine** and are **not defined as data anywhere** — the per-plot bonus is a base-yield threshold test ("does the plot
+> already have enough of this base yield? +1"), improvement-independent, which the XML/JSON never modeled. Modelling it
+> through the `IS_GOLDEN_AGE` predicate would mean authoring it virtually everywhere it fires, so the cascade mirrors it
+> as the `empire.goldenAge` member permanently. This is **NARROW — only the yield/commerce EFFECT is carved out:**
+> golden-age **LENGTH** (trait `iGoldenAgeDurationModifier`, building `iGoldenAgeModifier` → `goldenAge.empire.percent`)
+> and the golden-age **GRANT** (`grants.goldenAge`, `grants.goldenAgeOnBirthOfGreatPerson`) ARE curated JSON. The
+> `IS_GOLDEN_AGE` predicate ([json](../specs/json.md) §3.5) exists and is reserved for any future engine-core rework,
+> not a migration item.

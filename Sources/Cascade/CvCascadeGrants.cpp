@@ -117,7 +117,7 @@ static void gr_resolveBuilding(int iBuilding, int iPlayer)
 	const int nGoldenAge = gr_flag(j, "goldenAge");            // one-shot golden age (bool grant, increment 2)
 	const int nPop       = gr_scopedPulseSum(j, "population");  // one-shot population boost (scoped pulse, increment 2)
 	if (nRepeat == 0 && nFreePromo == 0 && nFreeTech == 0 && nGoldenAge == 0 && nPop == 0) return;
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_BUILDING, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_BUILDING, 1)
 		.addI(GF_PLAYER, iPlayer).addI(GF_BUILDING, iBuilding)
 		.addI(GF_REPEATABLE, nRepeat).addI(GF_FREEPROMOS, nFreePromo).addI(GF_FREETECHS, nFreeTech)
 		.addI(GF_GOLDENAGE, nGoldenAge).addI(GF_POPULATION, nPop));
@@ -130,7 +130,7 @@ static void gr_resolveUnit(int iUnit, int iPlayer)
 	const int nPromos = gr_listCount(j, "promotions");        // free promotions on creation
 	const int nFound  = gr_listCount(j, "foundBuildings");    // settle-time building seeds (settler)
 	if (nPromos == 0 && nFound == 0) return;
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_UNIT, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_UNIT, 1)
 		.addI(GF_PLAYER, iPlayer).addI(GF_UNIT, iUnit)
 		.addI(GF_PROMOTIONS, nPromos).addI(GF_FOUNDBUILDINGS, nFound));
 }
@@ -148,7 +148,7 @@ static void gr_resolveTech(int iTech, int iPlayer)
 	const int iFirstProphet = gr_firstId(j, "firstFreeProphet");  // first-discover free prophet id (option-gated)
 	const int nFreeTechs    = gr_pulse(j, "freeTechs");          // first-discover free tech picks (count)
 	if (iFirstUnit < 0 && iFirstProphet < 0 && nFreeTechs == 0) return;
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_TECH, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_TECH, 1)
 		.addI(GF_PLAYER, iPlayer).addI(GF_TECH, iTech)
 		.addI(GF_FIRSTUNIT, iFirstUnit).addI(GF_FIRSTPROPHET, iFirstProphet).addI(GF_FREETECHS, nFreeTechs));
 }
@@ -160,7 +160,7 @@ static void gr_resolveReligion(int iReligion, int iPlayer)
 	const int nNumFree  = gr_pulse(j, "numFreeUnits");   // count of founder units
 	const int iFreeUnit = gr_firstId(j, "freeUnit");      // the founder unit type
 	if (nNumFree == 0 && iFreeUnit < 0) return;
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_RELIGION, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_RELIGION, 1)
 		.addI(GF_PLAYER, iPlayer).addI(GF_RELIGION, iReligion)
 		.addI(GF_NUMFREEUNITS, nNumFree).addI(GF_FREEUNIT, iFreeUnit));
 }
@@ -171,7 +171,7 @@ static void gr_resolveCivic(int iCivic, int iPlayer)
 	if (j == NULL) return;
 	const int nRev = gr_pulse(j, "revolution");   // rev-index pulse on adopt (signed; Python-applied in legacy)
 	if (nRev == 0) return;
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_CIVIC, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_CIVIC, 1)
 		.addI(GF_PLAYER, iPlayer).addI(GF_CIVIC, iCivic).addI(GF_REVOLUTION, nRev));
 }
 
@@ -188,23 +188,23 @@ static void gr_resolvePlayerInit(int iPlayer)
 	const int nBuild  = (jc != NULL) ? gr_listCount(jc, "buildings") : 0;
 	const int nGold   = ((je != NULL) ? gr_pulse(je, "startingGold") : 0) + ((jh != NULL) ? gr_pulse(jh, "startingGold") : 0);
 	if (nCivics == 0 && nTechs == 0 && nBuild == 0 && nGold == 0) return;
-	eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_GAMESTART, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_GAMESTART, 1)
 		.addI(GF_PLAYER, iPlayer).addI(GF_CIVICS, nCivics).addI(GF_TECHS, nTechs)
 		.addI(GF_BUILDINGS, nBuild).addI(GF_STARTINGGOLD, nGold));
 }
 
-void CvCascadeGrants::onEvent(const CvCascadeEvent& e)
+void CvCascadeGrants::onEvent(const CvSpineEvent& e)
 {
 	// Observe-only (un-run shadow) -- free when logging is off. The DOMAIN interest-guard already dispatched us.
 	if (gPlayerLogLevel < 1 || e.eKind != EVENTKIND_DOMAIN) return;
 	switch (e.iEventId)
 	{
-	case CASCADE_EVT_BUILDING_COUNT: if (e.iB > 0) gr_resolveBuilding(e.iType, e.iC); break;  // iB = delta; only on ADD (built)
-	case CASCADE_EVT_UNIT_COUNT:     if (e.iB > 0) gr_resolveUnit(e.iType, e.iC);     break;  // only on ADD (created)
-	case CASCADE_EVT_TECH_ACQUIRED:  gr_resolveTech(e.iType, e.iC);                   break;  // first-discover only (iC = discoverer)
-	case CASCADE_EVT_RELIGION_FOUNDED: gr_resolveReligion(e.iType, e.iC);            break;  // iC = founding player
-	case CASCADE_EVT_CIVIC_ADOPTED:  gr_resolveCivic(e.iType, e.iC);                 break;  // iC = adopting player
-	case CASCADE_EVT_PLAYER_INIT:    gr_resolvePlayerInit(e.iC);                     break;  // iC = player (game start)
+	case SEVT_BUILDING_COUNT: if (e.iB > 0) gr_resolveBuilding(e.iType, e.iC); break;  // iB = delta; only on ADD (built)
+	case SEVT_UNIT_COUNT:     if (e.iB > 0) gr_resolveUnit(e.iType, e.iC);     break;  // only on ADD (created)
+	case SEVT_TECH_ACQUIRED:  gr_resolveTech(e.iType, e.iC);                   break;  // first-discover only (iC = discoverer)
+	case SEVT_RELIGION_FOUNDED: gr_resolveReligion(e.iType, e.iC);            break;  // iC = founding player
+	case SEVT_CIVIC_ADOPTED:  gr_resolveCivic(e.iType, e.iC);                 break;  // iC = adopting player
+	case SEVT_PLAYER_INIT:    gr_resolvePlayerInit(e.iC);                     break;  // iC = player (game start)
 	}
 }
 

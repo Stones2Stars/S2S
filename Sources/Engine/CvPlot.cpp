@@ -6469,6 +6469,8 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 	{
 		PROFILE("CvPlot::setOwner.changed");
 
+		const PlayerTypes eOldPlotOwner = getOwner(); // #430: capture BEFORE m_eOwner is committed (for the spine emit)
+
 		GC.getGame().addReplayMessage(REPLAY_MESSAGE_PLOT_OWNER_CHANGE, eNewValue, (char*)NULL, getX(), getY());
 
 		CvCity* pOldCity = getPlotCity();
@@ -6591,6 +6593,8 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 			}
 
 			m_eOwner = eNewValue;
+			// #430 event spine: announce the plot owner change (past the no-change guard, after the field commit).
+			emitPlotOwnerChanged(GC.getMap().plotNum(getX(), getY()), (int)eOldPlotOwner, (int)eNewValue);
 
 			setWorkingCityOverride(NULL);
 			updateWorkingCity();
@@ -7071,6 +7075,8 @@ void CvPlot::setTerrainType(TerrainTypes eNewValue, bool bRecalculate, bool bReb
 	if (eOldTerrain != eNewValue)
 	{
 		m_eTerrainType = eNewValue;
+		// #430 event spine: announce the terrain change (past the no-change guard). plotId per /state/plots convention.
+		emitTerrainChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
 
 		if (eOldTerrain != NO_TERRAIN)
 		{
@@ -7200,6 +7206,11 @@ void CvPlot::setFeatureType(FeatureTypes eNewValue, int iVariety, bool bImprovem
 		}
 		m_eFeatureType = eNewValue;
 		m_iFeatureVariety = iVariety;
+		// #430 event spine: announce the feature change ONLY on a real feature-type change (not a variety-only reroll).
+		if (eOldFeature != eNewValue)
+		{
+			emitFeatureChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
+		}
 
 		if (bUpdateSight)
 		{
@@ -7553,6 +7564,8 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 			updatePlotGroupBonus(false);
 		}
 		m_eImprovementType = eNewImprovement;
+		// #430 event spine: announce the improvement change (past the no-change guard, after the field commit).
+		emitImprovementChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewImprovement);
 		if (isOwned())
 		{
 			updatePlotGroupBonus(true);
@@ -7696,6 +7709,8 @@ void CvPlot::setRouteType(RouteTypes eNewValue, bool bUpdatePlotGroups)
 	}
 
 	m_eRouteType = eNewValue;
+	// #430 event spine: announce the route change (past the no-change early-return guard, after the field commit).
+	emitRouteChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
 
 	if (isOwned())
 	{
@@ -7919,6 +7934,12 @@ void CvPlot::updateWorkingCity()
 			m_workingCity = pBestCity->getIDInfo();
 		}
 		else m_workingCity.reset();
+
+		// #430 event spine: announce the working-city reassignment (past the pOld != pBest guard, after the commit).
+		// City ids are per-owner; -1 when there is no city on either side.
+		emitWorkingCityChanged(GC.getMap().plotNum(getX(), getY()), getOwner(),
+			pOldWorkingCity != NULL ? pOldWorkingCity->getID() : -1,
+			pBestCity != NULL ? pBestCity->getID() : -1);
 
 
 		if (pOldWorkingCity != NULL)
@@ -9210,7 +9231,7 @@ void CvPlot::changeVisibilityCount(TeamTypes eTeam, int iChange, InvisibleTypes 
 			{
 				logEngine(2, "[ENG/viscap] team=%d plot=(%d,%d) count=%d change=%d - negative visibility count capped to 0",
 					eTeam, getX(), getY(), m_aiVisibilityCount[eTeam], iChange);
-				eventSpine().emit(CvCascadeEvent(EVENTKIND_DIAGNOSTIC, SD_ENGINE, ENG_VISCAP, 2)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_ENGINE, ENG_VISCAP, 2)
 					.addI(ENGF_team,   (int)eTeam)
 					.addI(ENGF_x,      getX())
 					.addI(ENGF_y,      getY())
@@ -11198,6 +11219,11 @@ void CvPlot::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvPlot", &m_eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_ePlotType);
 	WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_TERRAINS, &m_eTerrainType);
+	// #430 PROTOTYPE -- the read-driven reseed (event-spine.md the load-RESEED): the terrain DOMAIN event fires HERE,
+	// as the field deserializes off the stream, INSIDE the read -- never a later pass over already-populated plots
+	// (that pseudo-emit is banned, superseded-ideas #13). Coords (m_iX/m_iY) + owner (m_eOwner) are already read
+	// above. This is the ONE prototyped fact; the remaining reads follow the same in-read pattern.
+	emitTerrainChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eTerrainType);
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_FEATURES, &m_eFeatureType);
 
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_BONUSES, &m_eBonusType);

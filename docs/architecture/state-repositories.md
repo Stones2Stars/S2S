@@ -84,6 +84,7 @@ public:
 ```
 
 **Contract rules (in the header; each plugged a real hole):**
+
 1. **Clear-dirty BEFORE recompute** — clear-after recurses on read-back and loses mid-recompute dirties.
 2. **The recompute must fully define its output every call** — zero-fill on can't-compute; an early-return that
    leaves stale values behind a clean flag is the bug class this kills.
@@ -97,11 +98,12 @@ public:
   means a loaded game recomputes on first read.
 - **Converged onto the component:** the plot-yield cache; `CascadeRateSlots` (a mutable `CvCity` member, the cascade
   math module-side behind the one `cascadeRefreshRates` delegate — the pattern every modifier channel reuses); the
-  operating-building set (event-invalidated, epoch-stamped, turn-roll self-heal); the player building-commerce
+  operating-building set (event-invalidated via targeted propagation; the epoch-stamp + turn-roll self-heal are
+  removed per [DEC-no-self-heal](decisions.md#dec-no-self-heal)); the player building-commerce
   ledger (Vec form). **Deliberately NOT converged:** the legacy CvCity hand-rolled dirty caches (`m_aiCommerceRate`,
   `m_aiBuildingCommerce100`, squirrelBanana) — demolition fodder at the modifier cut; polishing them is backwards
-  investment. **Remaining live follow-up:** the specialist getters await the ONE invalidation mechanism at the
-  turn-end unified rebuild (with the parked AI build-queue-parity rework), not the Vec form.
+  investment. **Remaining live work:** the specialist getters get the targeted spine-routed invalidation mechanism at the
+  turn-end unified rebuild (the F0 foundation), not the Vec form.
 
 ## ⚖ Refinements
 
@@ -111,18 +113,22 @@ public:
   `CascadeAccumulator`'s `AccDirty` bits over the modifier packages
   ([modifier-substrate.md](../plans/structural-cleanup/modifier-substrate.md)). The single-flag form stays for leaf
   caches.
-- **⚖ THE CAPSTONE RULE: the ONLY time the entire cascade is rebuilt — all packages, all yields — is ON LOAD.**
-  Post-load, every recompute is marked-component-only at a boundary (the slice-start rebuild; eventually the unified
-  turn-end pass below); a full rebuild mid-game is a design violation. The remaining BLANKETS are named interims
-  graded against this rule — the EPOCH bump (tech/civic/GA marks ALL bits for the player's cities) and the RATE
-  components' turn-roll self-heal — each retires via a proven hook map + a data-derived per-source mask (building
-  masks landed; tech/civic/trait masks are the successors), until load is the only full pass. Siblings of the rule:
-  reads are BARE NUMBER FETCHES during the turn (an ensure-per-read protocol on AI-hot paths measurably ground unit
-  automation); recomputes happen at the START OF EACH PLAYER'S SLICE (`CascadeAccumulator::playerSliceRebuild`); and
-  "it's the percentage recalcs that hurt" — the mask derivation splits percent-vs-flat so flat-only events never
-  rebuild a percent stack. **The granularity TARGET: per-(package × CHANNEL)** — the compiled deposits carry the
-  channel, so the dirty bits split per yield/commerce channel; the bit-layout split is the increment after the
-  bare-fetch shape verifies.
+- **⚖ THE CAPSTONE RULE: the cascade is built and kept current ENTIRELY from events — no blanket rebuild, ever.**
+  On LOAD the cascade is stood up by the **event reseed** — the save read fires the DOMAIN events for every fact as it
+  deserializes, and each package builds from its own deposits ([event-spine.md](../specs/event-spine.md) /
+  [DEC-spine-reseed](decisions.md#dec-spine-reseed)); the old recompute-on-load / warm-up recalc
+  (`playerSliceRebuild` + `worldRebuild` + the `recalculateModifiers` content) was a stabilize-the-drift STOPGAP and
+  is REMOVED. Post-load, an event marks only the package(s) its deposits touch, and **ONLY marked (dirty) packages
+  rebuild** — there is NO full per-player rebuild on `doTurn`, NO mark-all, NO per-slice blanket, and NO turn-roll
+  self-heal ([DEC-no-self-heal](decisions.md#dec-no-self-heal)): those blankets (`playerSliceRebuild`, the EPOCH
+  bump, the RATE turn-roll) are REMOVED, each replaced by targeted, spine-routed per-source-mask invalidation. A
+  missed invalidation surfaces as a live divergence, never a silently self-healed cost — which is precisely why the
+  event spine must be COMPLETE (every mutation emits) and is built proper and FIRST. Reads are BARE NUMBER FETCHES
+  during the turn (an ensure-per-read protocol on AI-hot paths measurably ground unit automation). "It's the
+  percentage recalcs that hurt" — the mask derivation splits percent-vs-flat so a flat-only event never rebuilds a
+  percent stack. **The granularity TARGET: per-(package × CHANNEL)** — the compiled deposits carry the channel, so
+  the dirty bits split per yield/commerce channel; the bit-layout split is the increment after the bare-fetch shape
+  verifies.
 - **⚠ NAMED DEBT: a SECOND invalidation philosophy rides beside the component — a DEPARTURE from this doc's own
   model, not a design alternative.** The slots/operating-building Sets are event-MARKED (the documented way), but two
   POLLING primitives accreted around them: the epoch counters (+ the `iEpoch`/`iTurn` stamp fields on
@@ -130,7 +136,7 @@ public:
   all). They exist because player-scope events fan out to N cities' Sets and the routing wasn't built yet — the
   interim polls versions instead. Dissolution = this doc's own end-state: player-scope events mark the affected Sets
   directly via data-derived per-source masks, the rollups become `CvDerivedCache` instances bound to `CvPlayer`, and
-  the epochs + stamps DELETE. One component, one philosophy — sequenced after the bare-fetch increment verifies.
+  the epochs + stamps DELETE. One component, one philosophy — built as the F0 foundation rework, NOT sequenced to "later" ([DEC-no-self-heal](decisions.md#dec-no-self-heal)).
 - **⚖ THE PER-SCOPE PACKAGE MODEL — the cascade's FOUNDING DESIGN ([modifier.md](../specs/modifier.md) §1), stated
   as cache architecture.** A `CvDerivedCache` lives ON EVERY SCOPED ITEM, every level (world → team → player → area
   → city → plot); the cascade loads **yield packages in ONE UNIFORM FORMAT** (Σflat and Σpercent each their OWN
@@ -168,14 +174,16 @@ public:
   in the middle of a turn is not retroactive; start of next turn is what is expected"*), with the city-creation
   eager ensure (`CascadeAccumulator::cityCreated`) the one ruled exception. Full consequences:
   [scope-packages.md](../plans/structural-cleanup/scope-packages.md) §1.
-- **LOAD-TIME RECOMPUTE IS AN EASY TRADE — EAGER WARM-UP IS THE GENERAL POLICY.** *"I am happy to add even MINUTES
-  to load time in order to have caches eagerly built on load in general."* Every derived cache recomputes on load
-  (dirty-on-construct gives correctness) **and gets eagerly WARMED at load-end as the default** — the realized site
-  is `CvGame::onFinalInitialized`'s cache warm-up block (every plot's yield cache + every city's accumulator slots);
-  new derived caches join that block. No design ever serializes a derived value to save load time. **The perf LAW:
-  "the name of any game in this town will always be TURN TIMES — if game load takes 50% longer it matters nothing if
-  we can shave 5-10-15% on turn time, because there is only 1 game load, but many many many turns."** Turn time is
-  the objective EVERY perf decision optimizes; load time is the currency that pays for it. Ledgered as
+- **EAGERLY BUILD ALL CACHES AT LOAD — the general policy stands.** *"I am happy to add even MINUTES to load time
+  in order to have caches eagerly built on load in general."* ALL caches are warmed at load: a game-object's own
+  derived cache (the plot-yield cache) eagerly from that object's own state, and the **cascade** eagerly by the
+  **event reseed** — the spine fires every present-fact, so the cache-build/invalidation consumer populates every
+  cascade package and turn 1 runs warm. What changed is ONLY the cascade's population MECHANISM: the
+  recompute-from-state recalc (`playerSliceRebuild` + `worldRebuild`) is REMOVED (the CAPSTONE above); the eventspine
+  reseed replaces it. No design ever serializes a derived value to save load time. **The perf LAW: "the name of any
+  game in this town will always be TURN TIMES — if game load takes 50% longer it matters nothing if we can shave
+  5-10-15% on turn time, because there is only 1 game load, but many many many turns."** Turn time is the objective
+  EVERY perf decision optimizes; load time is the currency that pays for it. Ledgered as
   [DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king).
 
 This is the Clean-Architecture north-star applied to engine state: the repository **is** the contract, and it is the
