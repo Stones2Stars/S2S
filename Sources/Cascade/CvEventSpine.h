@@ -297,6 +297,9 @@ void emitPlayerInit(int iPlayer);
 // after it completes. Result-producers (grants) suppress between them; the cache-build consumer stays load-active.
 void emitGameLoadStarted();
 void emitGameLoadFinished();
+// True between GAME_LOAD_STARTED and GAME_LOAD_FINISHED -- the load-active window (the reseed). Consumers that must
+// behave differently during the reseed (e.g. skip play-time targeted ripples) read this.
+bool spineGameLoadInProgress();
 
 //	A consumer of spine events (tally / grants / logging). C++03 virtual interface -- the consumer's state lives in the
 //	consumer (no captures, no Boost). wantedKinds() returns a bitmask of (1 << EventKind); the spine uses it to skip

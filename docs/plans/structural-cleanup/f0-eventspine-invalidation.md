@@ -76,6 +76,34 @@ segments) exists; the inversion does not.
 operating-buildings ripple where relevant. Registered in `cascadeRegisterConsumers()`. This REPLACES the hand-wired
 choke-point calls and both blankets.
 
+**STATUS (built, STAGED — `CvSpineInvalidationConsumer` in `CvEventSpine.cpp`).** The consumer is built + registered,
+routing every play-time DOMAIN event to the per-source mask (masks lifted VERBATIM from the `CvCity.cpp` mutation
+sites, so it is mask-equivalent to the hand-wiring; R2's derived masks are the follow-up). It is **load-inert**
+(`spineGameLoadInProgress()` → return): mid-reseed the targeted ripples are invalid because the frontier/operating-
+building reverse indices aren't built until `onFinalInitialized`; the load warm-up builds the cascade. Registered
+**ADDITIVELY** — the hand-wired mutation-site marks AND the per-turn self-heal remain in place, so R3 currently
+double-marks (harmless) and changes no behaviour; this lets the routing be verified firing live with zero corruption
+risk.
+
+**⛔ WHY THE FLIP IS NOT DONE (the load-bearing reason).** With the modifier getters **already flipped onto the
+cascade**, a missed invalidation is a wrong value that **IS the `/computed` oracle** — there is no legacy value left
+to diff against, so manifestation polls **cannot** detect it. The per-turn self-heal is the only thing catching gaps
+today; its own comment names "power flips, bonus-network shifts, **timers**" as mutations that otherwise "stale a
+package FOREVER." Deleting it therefore requires a proven-complete invalidation surface, which cannot be verified
+blind — it needs a live playtest for value-correctness.
+
+**THE FLIP RECIPE (the payoff, to do with the owner able to playtest):**
+1. **Completeness audit** — enumerate EVERY mutation that stales a package: the source events (covered), the R4 gaps
+   (bonus/project/state-religion/trait/power — R3 masks them PROVISIONALLY, confirm against the deposit index), and
+   the **timer/counter mutations** the self-heal silently covers (war-weariness, anger/espionage timers, culture,
+   inflation, …) — each must emit a DOMAIN event + route in R3, or be proven not to feed any cascade package.
+2. **Remove the hand-wired play-time marks** now duplicated by R3 (`CvCity.cpp:4636/7042/10317/14286/15438/15651`,
+   `CvPlayer.cpp:9468/14391`, `CvTeam.cpp:4951`) — R3 owns them.
+3. **Delete the per-turn self-heal** — `CvPlayer::doTurn:3700` `playerSliceRebuild` + the per-turn `worldRebuild`
+   (`CvGame.cpp:5878`). KEEP the LOAD warm-up (`CvGame.cpp:663/665`, reframed as the eager build) + `cityCreated`.
+4. **Verify LIVE + PLAYTEST** — the `(scope,channel)` counter collapses (a quiet turn ≈ 0); `/computed` oracle values
+   stay correct across many turns; **the owner plays** to confirm no drift the oracle can't see.
+
 ### R4. Complete the DOMAIN emit surface (the completeness gap)
 The spec wants a DOMAIN event on EVERY state change. Current emits (10): building-count, unit-count, civic, tech,
 religion-founded, player-init (`CvPlayer.cpp:1872/8891/13695/13800/14397`, `CvTeam.cpp:5187`) + 4 name-change

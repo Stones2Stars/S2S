@@ -15,6 +15,7 @@
 #include "CvBuildingInfo.h"
 #include "CvUnitInfo.h"
 #include "CvCascadeGrants.h"   // the #430 GRANTS consumer -- registered at the composition root below
+#include "CvCascadeAccumulator.h"   // the #430 F0 cache-invalidation consumer (R3, below) marks via these + the CPK_* masks
 // typeIndex name-resolution in the consumer: the Info headers for each SFT_ kind (so GC.getXInfo(i).getType() compiles).
 // Imported DIRECTLY (no CvInfos.h umbrella -- owner 2026-06-18: that umbrella should be retired, import directly).
 #include "CvBonusInfo.h"
@@ -29,6 +30,7 @@
 #include "CvSpecialistInfo.h"
 #include "CvTraitInfo.h"
 #include "CvRouteInfo.h"
+#include "CvTechInfo.h"   // SFT_TECH render (getTechInfo().getType()) -- imported directly (was a latent unity-transitive include)
 
 // ===================== the spine =====================
 
@@ -343,6 +345,67 @@ static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
 	}
 }
 
+// ===================== the #430 F0 cache-invalidation consumer (R3) =====================
+// Turns a DOMAIN state-change event into the package dirty-marks its source touches -- the spine as the invalidation
+// FRONT DOOR (retiring the hand-wired per-site marks). Reuses the accumulator's known-correct per-source masks (lifted
+// verbatim from the CvCity mutation sites); the derived-from-deposit-index refinement (R2) is a follow-up.
+//
+// ⚠ STAGED WIRING (deliberate): registered ADDITIVELY -- the hand-wired mutation-site marks AND the per-turn self-heal
+// (playerSliceRebuild) remain the correctness guarantee while this routing is verified firing on a live game. The FLIP
+// (remove the hand-wired marks + delete the self-heal) is the payoff and is GATED on a completeness audit: with the
+// modifier getters already flipped onto the cascade, a missed invalidation is a wrong value that IS the oracle --
+// UNDETECTABLE by /computed (no legacy left to diff). See f0-eventspine-invalidation.md.
+//
+// Load-INERT: during the reseed the targeted ripples (operating-buildings / frontier) are invalid -- their reverse
+// indices are not built until onFinalInitialized (buildFrontierIndices). The load warm-up builds the cascade; this is
+// a PLAY-TIME consumer.
+static const CvCity* invResolveCity(int iOwner, int iCityId)
+{
+	if (iOwner < 0 || iOwner >= MAX_PLAYERS || iCityId < 0) return NULL;
+	return GET_PLAYER((PlayerTypes)iOwner).getCity(iCityId);
+}
+
+class CvSpineInvalidationConsumer : public IEventConsumer
+{
+public:
+	int wantedKinds() const { return (1 << EVENTKIND_DOMAIN); }
+	void onEvent(const CvSpineEvent& e)
+	{
+		if (spineGameLoadInProgress()) return;   // load-inert: ripples invalid pre-buildFrontierIndices
+		switch (e.iEventId)
+		{
+		// ---- per-CITY sources (iC = owner, iSrcLoc = cityId); masks lifted verbatim from CvCity.cpp ----
+		case SEVT_BUILDING_CHANGED:
+		{ const CvCity* c = invResolveCity(e.iC, e.iSrcLoc); if (c != NULL) CascadeAccumulator::buildingProcessed(c, (BuildingTypes)e.iType); break; }
+		case SEVT_RELIGION_CHANGED:
+		{ const CvCity* c = invResolveCity(e.iC, e.iSrcLoc); if (c != NULL) { CascadeAccumulator::dirtyCity(c, CPK_YPCT|CPK_CBASE|CPK_CPCT|CPK_WB|CPK_SCPCT|CPK_FRONT_PP); CascadeAccumulator::cityHaveChanged(c, CascadeAccumulator::CASC_HAVE_RELIGION); } break; }
+		case SEVT_CORPORATION_CHANGED:
+		{ const CvCity* c = invResolveCity(e.iC, e.iSrcLoc); if (c != NULL) { CascadeAccumulator::dirtyCity(c, CPK_YPCT|CPK_CBASE|CPK_CPCT|CPK_WB|CPK_SCPCT|CPK_BR|CPK_FRONTIER); CascadeAccumulator::cityHaveChanged(c, CascadeAccumulator::CASC_HAVE_CORP); } break; }
+		case SEVT_SPECIALIST_CHANGED:
+		{ const CvCity* c = invResolveCity(e.iC, e.iSrcLoc); if (c != NULL) CascadeAccumulator::dirtyCity(c, CPK_YSPEC|CPK_CSPEC|CPK_SCSPEC); break; }
+		case SEVT_POPULATION_CHANGED:
+		{ const CvCity* c = invResolveCity(e.iC, e.iSrcLoc); if (c != NULL) { CascadeAccumulator::dirtyCity(c, CPK_YEXTRA|CPK_CBASE|CPK_FRONT_PP); CascadeAccumulator::cityHaveChanged(c, CascadeAccumulator::CASC_HAVE_POP); } break; }
+		case SEVT_POWER_CHANGED:   // R4 gap #5: the rate/WB mask is PROVISIONAL (self-heal-backstopped) beyond the frontier re-check
+		{ const CvCity* c = invResolveCity(e.iC, e.iSrcLoc); if (c != NULL) { CascadeAccumulator::dirtyCity(c, CPK_YPCT|CPK_WB); CascadeAccumulator::cityHaveChanged(c, CascadeAccumulator::CASC_HAVE_POWER); } break; }
+		case SEVT_BONUS_CHANGED:   // R4 gap #1: PROVISIONAL presence mask (self-heal-backstopped)
+		{ const CvCity* c = invResolveCity(e.iC, e.iSrcLoc); if (c != NULL) CascadeAccumulator::dirtyCity(c, CPK_YPCT|CPK_CBASE|CPK_CPCT|CPK_WB|CPK_SCPCT); break; }
+		// ---- per-EMPIRE sources / conditioner fan-out (iC = player): the broad mark (conditioner fan-out spans
+		// obsoletes/enables/waiver edges the deposit index does not reverse-map -- the deliberate correctness floor;
+		// trait / state-religion / project ride it as R4 gaps, self-heal-backstopped) ----
+		case SEVT_TECH_CHANGED:
+		case SEVT_CIVIC_ADOPTED:
+		case SEVT_GOLDEN_AGE_CHANGED:
+		case SEVT_TRAIT_CHANGED:
+		case SEVT_STATE_RELIGION_CHANGED:
+		case SEVT_PROJECT_CHANGED:
+			if (e.iC >= 0 && e.iC < MAX_PLAYERS) CascadeAccumulator::markPlayerScopeAndCities((PlayerTypes)e.iC);
+			break;
+		default: break;   // count/name/grant-trigger/lifecycle/plot-substrate events are not modifier-package sources
+		}
+	}
+};
+static CvSpineInvalidationConsumer s_invalidationConsumer;
+
 void spineRegisterConsumers()
 {
 	static bool s_bRegistered = false;
@@ -363,6 +426,11 @@ void spineRegisterConsumers()
 	// source entity's genuine grants off the mapped CvInfo and emits a [GRANTS] shadow diagnostic (resolution only,
 	// un-run parity). The tally stays a non-consumer (reads object-owned counts).
 	cascadeRegisterGrants();
+	// The #430 F0 cache-invalidation consumer (R3): the spine-driven package invalidation front door. Registered
+	// ADDITIVELY for now -- the hand-wired mutation-site marks + the per-turn self-heal remain as the correctness
+	// guarantee while the routing is verified live; the flip (remove those + delete the self-heal) is gated on the
+	// completeness audit (f0-eventspine-invalidation.md). Load-inert (skips the reseed; the warm-up builds on load).
+	eventSpine().registerConsumer(&s_invalidationConsumer);
 }
 
 void emitNameChange(int iKind, int iOwner, int iEntityId)
@@ -607,3 +675,8 @@ void emitGameLoadFinished()
 	eventSpine().emit(kEvt);
 	s_bGameLoadInProgress = false;
 }
+
+// True in the load-active window (between GAME_LOAD_STARTED and GAME_LOAD_FINISHED). The R3 cache-invalidation
+// consumer reads this to SKIP the play-time targeted ripples during the reseed -- the frontier/operating-building
+// reverse indices are not built until onFinalInitialized (buildFrontierIndices), so a mid-reseed ripple is invalid.
+bool spineGameLoadInProgress() { return s_bGameLoadInProgress; }
