@@ -792,6 +792,29 @@ void CvBuildingInfo::reconstructFromComposed()
 			else if (fk >= 0) mod_addScalar(m_freeSpecialistCount, (SpecialistTypes)fk, fam_uncond100(f, CASC_UNIT_COUNT) / 100);
 			continue;
 		}
+		// PROPERTY_* per-turn SOURCE (property-audit.md increment B): <PROPERTY_X>.{city|plot}.flat -> a Constant source
+		// into m_PropertyManipulators, fed to the KEEP-legacy solver. per:POPULATION -> AttributeConstant. Conditioned
+		// (`enabled`/`disabled`) entries DEFER to the increment-4 BoolExpr translator (not silently applied).
+		if (f0.compare(0, 9, "PROPERTY_") == 0 && s.size() == 2 && (s[1] == "city" || s[1] == "plot"))
+		{
+			const int eProp = jsonResolveId(f0);
+			if (eProp >= 0)
+			{
+				const GameObjectTypes eObj = (s[1] == "plot") ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
+				for (int i = 0; i < f->size(); ++i)
+				{
+					const CvJsonModEntry* e = f->entries[i];
+					if (e->unit != CASC_UNIT_FLAT || e->enabled != NULL || e->disabled != NULL) continue;
+					if (e->hasPer)
+					{
+						if (e->perType == "POPULATION")
+							m_PropertyManipulators.addAttributeConstantSource((PropertyTypes)eProp, ATTRIBUTE_POPULATION, e->value100 / 100, eObj);
+					}
+					else m_PropertyManipulators.addConstantSource((PropertyTypes)eProp, e->value100 / 100, eObj);
+				}
+			}
+			continue;
+		}
 	}
 
 	// Part B: COND-KEYED (base address; the entry `enabled` carries the key).

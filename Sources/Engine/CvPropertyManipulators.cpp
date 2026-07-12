@@ -16,6 +16,7 @@
 #include "CvPropertyPropagator.h"
 #include "CvPropertySource.h"
 #include "Infrastructure/CvXMLLoadUtility.h"
+#include "Infrastructure/IntExpr.h"
 #include "Tools/CheckSum.h"
 
 CvPropertyManipulators::~CvPropertyManipulators()
@@ -76,6 +77,43 @@ int CvPropertyManipulators::addSource(PropertySourceTypes eType)
 			return (int)m_apSources.size()-1;
 	}
 	return -1;
+}
+
+// --- the JSON->manipulator load bridge (property-audit.md increment A): build fully-configured source/propagator
+// objects directly, mirroring what read() constructs from the XML PropertyManipulators block. ---
+void CvPropertyManipulators::addConstantSource(PropertyTypes eProp, int iAmount, GameObjectTypes eObject,
+	RelationTypes eRelation, int iRelationData)
+{
+	CvPropertySourceConstant* p = new CvPropertySourceConstant(eProp, new IntExprConstant(iAmount));
+	p->setObjectType(eObject);
+	p->setRelation(eRelation);
+	p->setRelationData(iRelationData);
+	m_apSources.push_back(p);
+}
+
+void CvPropertyManipulators::addDecaySource(PropertyTypes eProp, int iPercent, int iNoDecayAmount, GameObjectTypes eObject)
+{
+	CvPropertySourceDecay* p = new CvPropertySourceDecay(eProp, iPercent, iNoDecayAmount);
+	p->setObjectType(eObject);
+	m_apSources.push_back(p);
+}
+
+void CvPropertyManipulators::addAttributeConstantSource(PropertyTypes eProp, AttributeTypes eAttribute, int iAmount, GameObjectTypes eObject)
+{
+	CvPropertySourceAttributeConstant* p = new CvPropertySourceAttributeConstant(eProp, eAttribute, iAmount);
+	p->setObjectType(eObject);
+	m_apSources.push_back(p);
+}
+
+void CvPropertyManipulators::addDiffusePropagator(PropertyTypes eProp, int iPercent, GameObjectTypes eObject,
+	GameObjectTypes eTargetObject, RelationTypes eTargetRelation, int iTargetDistance)
+{
+	CvPropertyPropagatorDiffuse* p = new CvPropertyPropagatorDiffuse(eProp, iPercent);
+	p->setObjectType(eObject);
+	p->setTargetObjectType(eTargetObject);
+	p->setTargetRelation(eTargetRelation);
+	p->setTargetRelationData(iTargetDistance);
+	m_apPropagators.push_back(p);
 }
 
 int CvPropertyManipulators::getNumInteractions() const

@@ -7,6 +7,8 @@
 #include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
 #include "CvPropertyInfo.h"
 #include "CvJsonParse.h"          // jsonChildObj / jsonIdInt / jsonIdBool / jsonIdStr / jsonResolveId
+#include "CvJsonModifiers.h"      // getModifiers() walk -> the property's own decay/per-pop families
+#include "Defines/CvGlobals.h"    // GC.getInfoTypeForString (self property id)
 
 // ai.scale -- the curator emits the AIScaleTypes enum name prefix-stripped + lowercased (AISCALE_CITY -> "city";
 // "none" is never emitted). AIScaleTypes is a FIXED C-enum (CvEnums.h), NOT a registered info type, so map the tokens
@@ -87,5 +89,54 @@ void CvPropertyInfo::mapFrom(const picojson::value& entity)
 		if (jsonIdStr(*txt, "prereqMin", szMin) && !szMin.empty()) m_szPrereqMinDisplayText = CvWString(szMin.c_str());
 		std::string szMax;
 		if (jsonIdStr(*txt, "prereqMax", szMax) && !szMax.empty()) m_szPrereqMaxDisplayText = CvWString(szMax.c_str());
+	}
+
+	// -- the property-engine SOURCE bridge (property-audit.md increment A/B; DEC-data-first / DEC-no-xml-into-game).
+	// The KEEP-legacy CvPropertySolver reads m_PropertyManipulators; feed the property's OWN manipulators from the
+	// curated JSON: decay (<self>.{city|plot}.percent -> CvPropertySourceDecay toward targetLevel), the per-POPULATION
+	// baseline (<self>.city.flat + per:POPULATION -> AttributeConstant), and the spatial diffuse propagators (the
+	// `properties.diffuse[]` block). Conditioned entries (`enabled`) DEFER to the increment-4 BoolExpr translator.
+	const PropertyTypes eSelf = (PropertyTypes)GC.getInfoTypeForString(getType(), true);
+	if (eSelf != NO_PROPERTY)
+	{
+		const int iTarget = getTargetLevel();
+		static const char* const SC[2] = { "city", "plot" };
+		static const GameObjectTypes SG[2] = { GAMEOBJECT_CITY, GAMEOBJECT_PLOT };
+		for (int si = 0; si < 2; ++si)
+		{
+			const CvJsonModFamily* f = getModifiers()->find(std::string(getType()) + "." + SC[si]);
+			if (f == NULL) continue;
+			for (int i = 0; i < f->size(); ++i)
+			{
+				const CvJsonModEntry* e = f->entries[i];
+				if (e->enabled != NULL || e->disabled != NULL) continue;   // conditioned -> increment 4
+				if (e->unit == CASC_UNIT_PERCENT)
+					m_PropertyManipulators.addDecaySource(eSelf, e->value100 / 100, iTarget, SG[si]);
+				else if (e->unit == CASC_UNIT_FLAT && e->hasPer && e->perType == "POPULATION")
+					m_PropertyManipulators.addAttributeConstantSource(eSelf, ATTRIBUTE_POPULATION, e->value100 / 100, SG[si]);
+				else if (e->unit == CASC_UNIT_FLAT && !e->hasPer)
+					m_PropertyManipulators.addConstantSource(eSelf, e->value100 / 100, SG[si]);
+			}
+		}
+		if (const picojson::object* po = jsonChildObj(o, "properties"))
+		{
+			picojson::object::const_iterator dit = po->find("diffuse");
+			if (dit != po->end() && dit->second.is<picojson::array>())
+			{
+				const picojson::array& arr = dit->second.get<picojson::array>();
+				for (size_t i = 0; i < arr.size(); ++i)
+				{
+					if (!arr[i].is<picojson::object>()) continue;
+					const picojson::object& dd = arr[i].get<picojson::object>();
+					if (dd.find("enabled") != dd.end()) continue;   // conditioned diffuse -> increment 4
+					std::string from, to, rel;
+					jsonIdStr(dd, "from", from); jsonIdStr(dd, "to", to); jsonIdStr(dd, "relation", rel);
+					const GameObjectTypes eFrom = (from == "plot" || from == "plots") ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
+					const GameObjectTypes eTo   = (to == "plot"   || to == "plots")   ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
+					const RelationTypes eRel = (rel == "samePlot") ? RELATION_SAME_PLOT : RELATION_NEAR;
+					m_PropertyManipulators.addDiffusePropagator(eSelf, jsonIdInt(dd, "percent"), eFrom, eTo, eRel, jsonIdInt(dd, "distance"));
+				}
+			}
+		}
 	}
 }
