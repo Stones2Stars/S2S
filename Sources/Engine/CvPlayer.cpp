@@ -18393,7 +18393,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iTotalLandScored);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGoldPerTurn);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iAdvancedStartPoints);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iGoldenAgeTurns);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iGoldenAgeTurns);   // #430 reseed: golden-age emit deferred below, after m_eID reads (getID() is NO_PLAYER here)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNumUnitGoldenAges);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStrikeTurns);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iAnarchyTurns);
@@ -18537,9 +18537,23 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eCurrentEra);
 		WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_RELIGIONS, (int*)&m_eLastStateReligion);
+		if (m_eLastStateReligion != NO_RELIGION) { emitStateReligionChanged(getID(), (int)m_eLastStateReligion); }   // #430 reseed
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eParent);
 		updateTeamType(); //m_eTeamType not saved
 		updateHuman();
+
+		// #430 reseed: golden-age + TECH, emitted HERE -- getID() is valid only after m_eID was read (above) and
+		// getTeam() only after updateTeamType() just ran (m_eTeamType is NOT saved; reset() cleared it). Tech is
+		// TEAM-held and the EXE reads teams BEFORE players (verified: a per-member emit from CvTeam::read fired 0), so
+		// the team's techs are loaded now -- emit per-self for each held team tech (== the owner's "one per alive
+		// member player" ruling, realized from the player side). m_iGoldenAgeTurns was read earlier and is stored.
+		if (m_iGoldenAgeTurns > 0) { emitGoldenAgeChanged(getID(), true); }
+		if (getTeam() != NO_TEAM)
+		{
+			const CvTeam& kMyTeam = GET_TEAM(getTeam());
+			for (int iTech = 0; iTech < GC.getNumTechInfos(); ++iTech)
+				if (kMyTeam.isHasTech((TechTypes)iTech)) { emitTechChanged(getID(), iTech, true); }
+		}
 
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiSeaPlotYield);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiYieldRateModifier);
@@ -18784,6 +18798,11 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 		}
+
+		// #430 reseed: adopted civics, emitted AFTER the load-time civic validation/fixup above (m_paeCivics is final
+		// here). getID() is this player; a NO_CIVIC slot is no fact.
+		for (int iCiv = 0; iCiv < GC.getNumCivicOptionInfos(); ++iCiv)
+			if (m_paeCivics[iCiv] != NO_CIVIC) { emitCivicAdopted(getID(), (int)m_paeCivics[iCiv]); }
 
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
 		{
@@ -19315,6 +19334,9 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiSpecialistExtraYield);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iTraitExtraCityDefense);
 		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TRAITS, GC.getNumTraitInfos(), m_pabHasTrait);
+		// #430 reseed: the player's held traits (wholesale-array read -> loop HERE, inside read(); getID() is this player).
+		for (int iTr = 0; iTr < GC.getNumTraitInfos(); ++iTr)
+			if (m_pabHasTrait[iTr]) { emitTraitChanged(getID(), iTr, true); }
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iLeaderHeadLevel);
 		// @SAVEBREAK - Delete
 		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_iTraitDisplayCount, SAVE_VALUE_ANY);

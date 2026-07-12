@@ -287,6 +287,7 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_SPECIALIST_CHANGED:     return "[SPINE] specialistChanged";
 	case SEVT_POWER_CHANGED:          return "[SPINE] powerChanged";
 	case SEVT_IMPROVEMENT_CHANGED:    return "[SPINE] improvementChanged";
+	case SEVT_PLOT_BONUS_CHANGED:     return "[SPINE] plotBonusChanged";
 	case SEVT_TERRAIN_CHANGED:        return "[SPINE] terrainChanged";
 	case SEVT_FEATURE_CHANGED:        return "[SPINE] featureChanged";
 	case SEVT_ROUTE_CHANGED:          return "[SPINE] routeChanged";
@@ -449,6 +450,13 @@ void emitImprovementChanged(int iPlot, int iOwner, int iImprovement)
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_IMPROVEMENT_CHANGED, iImprovement, 0, 0, iOwner, iPlot);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_IMPROVEMENT, iImprovement).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+void emitPlotBonusChanged(int iPlot, int iOwner, int iBonus, int iChange)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_BONUS_CHANGED, iBonus, 0, iChange, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_DELTA, iChange);
 	eventSpine().emit(e);
 }
 void emitTerrainChanged(int iPlot, int iOwner, int iTerrain)

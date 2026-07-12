@@ -114,6 +114,43 @@ load-active consumers (the R3 cache-build) must be set up at `GAME_LOAD_STARTED`
 events to land. **Load lifecycle:** emit `GAME_LOAD_STARTED` before the read + `GAME_LOAD_FINISHED` after;
 result-producers (grants) rely purely on the spine and suppress between them (a load is not a genuine acquisition).
 
+**The in-read emit shape, by fact storage.** A scalar field emits right after its own read (the terrain prototype,
+`CvPlot::read`). A field read **element-by-element in a loop** emits INSIDE that loop (buildings, the `CvCity::read`
+BuildingLedger loop — the cleanest hook). A field read **WHOLESALE** (`WRAPPER_READ_CLASS_ARRAY`, no per-element
+hook) emits from a loop placed **immediately after** that read, still inside the object's `read()` and co-located
+with its deserialization (religion/corporation/bonus/specialist in `CvCity::read`). All three are "the events come
+from the genuine read"; NONE is the banned separate post-deserialization walk over already-populated objects
+([superseded-ideas](../../architecture/superseded-ideas.md) #13) — the distinction is the emit is coupled to *this*
+object's read, not a decoupled global pass. Present/nonzero-gated (an absent feature / zero count is no fact).
+
+**Reseed emit map (per read site):**
+- `CvPlot::read` — terrain (prototype), feature, improvement, route, **plot resource** (`SEVT_PLOT_BONUS_CHANGED`).
+  ✅ wired. *(Plot resource is a genuine plot-substrate event: a Great-Farmer build places one, a discovery event
+  reveals one from an improvement, removal clears one — all route through `CvPlot::setBonusType`, which now emits the
+  SAME event play-time; the reseed fires it too. Distinct from the city resource-ACCESS count `m_paiNumBonuses`.)*
+- `CvCity::read` — buildings (ledger loop); religion, corporation, bonus, specialist (wholesale-array loops);
+  population, power (scalars). ✅ wired.
+- **Tech** — reseeded from `CvPlayer::read`, NOT `CvTeam::read`. **VERIFIED: the EXE reads teams BEFORE players are
+  set up** (a per-member emit from `CvTeam::read` fired 0 — no alive members yet). So the team's techs ARE loaded by
+  the time a player reads: each player emits `techChanged` per-self for every tech its team holds
+  (`GET_TEAM(getTeam()).isHasTech`) — the owner's "one per alive member player" ruling, realized player-side. Proper
+  end-state remains a **team-scope cascade component**. ✅ wired.
+- `CvPlayer::read` — traits (wholesale-array loop), civics (per-slot, AFTER the load-time civic fixup), state-religion
+  (scalar), golden-age + tech (emitted AFTER `m_eID` reads + `updateTeamType()`). ✅ wired.
+  **⚠ GOTCHA (cost real time):** `reset()` at the top of `CvPlayer::read` clears `m_eID` to `NO_PLAYER`, and it is
+  re-read partway down; `m_eTeamType` is NOT saved and is rebuilt by `updateTeamType()` further down. So `getID()` is
+  `-1` until its read and `getTeam()` is `NO_TEAM` until `updateTeamType()` — any reseed emit that needs owner/team
+  must sit AFTER both, not at the top of `read()` (an emit at the top renders `owner=?(-1)`).
+- Change-shaped owner events (`null → current`): plot owner + working-city (`CvPlot::read`), city owner
+  (`CvCity::read`). ✅ wired.
+
+**Representation rulings (owner-resolved):**
+1. **Change-shaped events on reseed fire as `null → current`** — exactly like a real acquisition: `plotOwnerChanged` /
+   `cityOwnerChanged` / `workingCityChanged` emit `old = NO_PLAYER/NO_TEAM/no-city (-1) → new = the loaded owner`.
+   ✅ wired.
+2. **Plot resource IS a first-class plot-substrate event** — added as `SEVT_PLOT_BONUS_CHANGED` (see the `CvPlot::read`
+   map row). ✅ resolved + wired.
+
 ### R5. The `(scope,channel)` reporting counter + `/computed/perf` endpoint
 Today's `CascadePerf` counters (`CvCascadePerfCount.h:32-67`) count refresh PASSES + eval leaves, split by CALLER
 domain (`CascadeCondCaller`), NOT by (scope × channel). Add a `(scope,channel)` calc-count: a counter keyed on

@@ -232,7 +232,11 @@ enum SpineDomainEvent
 	// LOAD_FINISHED -> resume (a grant is a RESULT of a genuine in-play acquisition, and a load is not one). The
 	// cache-build consumer stays load-active. (event-spine.md the load-RESEED.)
 	SEVT_GAME_LOAD_STARTED      = 27,
-	SEVT_GAME_LOAD_FINISHED     = 28
+	SEVT_GAME_LOAD_FINISHED     = 28,
+	// plot SUBSTRATE (sibling of terrain/feature/improvement/route, §15-18): a plot's RESOURCE (BONUS_*) was placed /
+	// discovered / removed. All play-time paths route through CvPlot::setBonusType (a Great-Farmer build, a discovery
+	// event, removal); the reseed fires the SAME event. iType=Bonus, iC=owner, iSrcLoc=plotId, iB=+1 placed / -1 removed.
+	SEVT_PLOT_BONUS_CHANGED     = 29
 };
 
 //	Which entity's display name changed (the iType of a SEVT_NAME_CHANGE event). The logging consumer resolves the
@@ -263,6 +267,7 @@ void emitPopulationChanged(int iCity, int iOwner, int iNewPop);
 void emitSpecialistChanged(int iCity, int iOwner, int iSpecialist, int iDelta);
 void emitPowerChanged(int iCity, int iOwner, int iDelta);
 void emitImprovementChanged(int iPlot, int iOwner, int iImprovement);
+void emitPlotBonusChanged(int iPlot, int iOwner, int iBonus, int iChange);   // plot RESOURCE placed(+1)/removed(-1)
 void emitTerrainChanged(int iPlot, int iOwner, int iTerrain);
 void emitFeatureChanged(int iPlot, int iOwner, int iFeature);
 void emitRouteChanged(int iPlot, int iOwner, int iRoute);

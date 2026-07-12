@@ -7349,6 +7349,7 @@ void CvPlot::setBonusType(BonusTypes eNewValue)
 {
 	if (getBonusType() != eNewValue)
 	{
+		const BonusTypes eOldBonus = getBonusType();   // #430: capture before m_eBonusType is set (getBonusType() returns new after)
 		setImprovementUpgradeCache(-1);
 
 		if (getBonusType() != NO_BONUS)
@@ -7386,6 +7387,14 @@ void CvPlot::setBonusType(BonusTypes eNewValue)
 		{
 			updatePlotGroupBonus(true);
 			GET_PLAYER(getOwner()).endDeferredPlotGroupBonusCalculation();
+		}
+		// #430 plot-substrate emit: the plot's RESOURCE changed (a Great-Farmer build / discovery event places or
+		// reveals it, or it is removed). The SAME event the reseed (CvPlot::read) fires. A plot holds at most one
+		// bonus, so a replace emits the old at -1 then the new at +1.
+		{
+			const int iPlotNum = GC.getMap().plotNum(getX(), getY());
+			if (eOldBonus != NO_BONUS) { emitPlotBonusChanged(iPlotNum, (int)getOwner(), (int)eOldBonus, -1); }
+			if (eNewValue != NO_BONUS) { emitPlotBonusChanged(iPlotNum, (int)getOwner(), (int)eNewValue, 1); }
 		}
 
 		if (getBonusType() != NO_BONUS)
@@ -11224,11 +11233,27 @@ void CvPlot::read(FDataStreamBase* pStream)
 	// (that pseudo-emit is banned, superseded-ideas #13). Coords (m_iX/m_iY) + owner (m_eOwner) are already read
 	// above. This is the ONE prototyped fact; the remaining reads follow the same in-read pattern.
 	emitTerrainChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eTerrainType);
+	// #430 reseed: plot OWNERSHIP as a change from unowned -> current (owner ruling: reseed change-shaped events as
+	// null -> current, exactly like a real acquisition). Only an OWNED plot has an ownership fact.
+	if (m_eOwner != NO_PLAYER)
+		emitPlotOwnerChanged(GC.getMap().plotNum(m_iX, m_iY), (int)NO_PLAYER, (int)m_eOwner);
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_FEATURES, &m_eFeatureType);
+	// #430 reseed (event-spine.md the load-RESEED): the plot-substrate DOMAIN events fire HERE as each field
+	// deserializes, INSIDE the read -- the same in-read pattern the terrain prototype above proved (never a later pass
+	// over already-populated plots, superseded-ideas #13). Present-gated: a plot with no feature/improvement/route has
+	// no fact to reseed, so nothing fires (emitting NO_* for every empty plot would be pure noise, not a fact).
+	if (m_eFeatureType != NO_FEATURE)
+		emitFeatureChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eFeatureType);
 
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_BONUSES, &m_eBonusType);
+	if (m_eBonusType != NO_BONUS)
+		emitPlotBonusChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eBonusType, 1);   // plot RESOURCE present (+1)
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_IMPROVEMENTS, &m_eImprovementType);
+	if (m_eImprovementType != NO_IMPROVEMENT)
+		emitImprovementChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eImprovementType);
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_ROUTES, &m_eRouteType);
+	if (m_eRouteType != NO_ROUTE)
+		emitRouteChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eRouteType);
 	WRAPPER_READ(wrapper, "CvPlot", &m_eRiverNSDirection);
 	WRAPPER_READ(wrapper, "CvPlot", &m_eRiverWEDirection);
 
@@ -11236,6 +11261,10 @@ void CvPlot::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvPlot", &m_plotCity.iID);
 	WRAPPER_READ(wrapper, "CvPlot", (int*)&m_workingCity.eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_workingCity.iID);
+	// #430 reseed: this plot is WORKED by a city -> the working-city link as a change from none -> current (owner
+	// ruling: null -> current). iOwner = the working city's owner; oldCity = -1 (none); newCity = its id.
+	if (m_workingCity.eOwner != NO_PLAYER)
+		emitWorkingCityChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_workingCity.eOwner, -1, m_workingCity.iID);
 	WRAPPER_READ(wrapper, "CvPlot", (int*)&m_workingCityOverride.eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_workingCityOverride.iID);
 

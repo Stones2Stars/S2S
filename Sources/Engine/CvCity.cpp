@@ -17670,6 +17670,29 @@ void CvCity::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_CITY_PLOTS, m_pabWorkingPlot);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_pabHasReligion);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_CORPORATIONS, GC.getNumCorporationInfos(), m_pabHasCorporation);
+	// #430 reseed (event-spine.md the load-RESEED): the per-city presence/count DOMAIN events. These members are read
+	// WHOLESALE (WRAPPER_READ_CLASS_ARRAY has no per-element hook), so the reseed loops the just-read arrays HERE,
+	// inside read(), co-located with their deserialization -- the in-read reseed, NOT a separate post-load walk over
+	// all cities (that pseudo-emit is banned, superseded-ideas #13). Present/nonzero-gated. m_iID / m_eOwner + the
+	// scalar counts (m_iPopulation / m_iPowerCount) are read earlier in read().
+	{
+		const int iCityId = m_iID;
+		const int iCityOwner = (int)m_eOwner;
+		int iI;
+		// #430 reseed: the city's OWNERSHIP first (null -> current, owner ruling) -- establishes the city belongs to
+		// its owner before its contents (population/buildings/religion/...) reseed.
+		emitCityOwnerChanged(iCityId, (int)NO_PLAYER, iCityOwner);
+		emitPopulationChanged(iCityId, iCityOwner, m_iPopulation);
+		if (m_iPowerCount > 0) { emitPowerChanged(iCityId, iCityOwner, m_iPowerCount); }
+		for (iI = 0; iI < GC.getNumReligionInfos(); ++iI)
+			if (m_pabHasReligion[iI]) { emitReligionChanged(iCityId, iCityOwner, iI, true); }
+		for (iI = 0; iI < GC.getNumCorporationInfos(); ++iI)
+			if (m_pabHasCorporation[iI]) { emitCorporationChanged(iCityId, iCityOwner, iI, true); }
+		for (iI = 0; iI < GC.getNumBonusInfos(); ++iI)
+			if (m_paiNumBonuses[iI] != 0) { emitBonusChanged(iCityId, iCityOwner, iI, m_paiNumBonuses[iI]); }
+		for (iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
+			if (m_paiSpecialistCount[iI] > 0) { emitSpecialistChanged(iCityId, iCityOwner, iI, m_paiSpecialistCount[iI]); }
+	}
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iImprovementGoodHealth);
 	WRAPPER_READ(wrapper, "CvCity", &m_iImprovementBadHealth);
@@ -18190,6 +18213,11 @@ void CvCity::read(FDataStreamBase* pStream)
 			{
 				m_bHasBuildings[eType] = true; // quick lookup
 				m_hasBuildings.push_back(eType); // quick iteration
+				// #430 reseed (event-spine.md the load-RESEED): the per-city building DOMAIN event fires HERE, as each
+				// building deserializes off the ledger stream, INSIDE the read loop -- the genuine per-element read
+				// (not a later walk over a populated array, superseded-ideas #13). Feeds the cache-build consumer's
+				// per-city operating-building set + building packages. m_iID / m_eOwner are read earlier in read().
+				emitBuildingChanged(m_iID, (int)m_eOwner, (int)eType, 1);
 				// compressed data all buildings have
 				BuiltBuildingData data;
 				data.eBuiltBy = (PlayerTypes)iPlayer;
