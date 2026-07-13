@@ -85,24 +85,32 @@ building reverse indices aren't built until `onFinalInitialized`; the load warm-
 double-marks (harmless) and changes no behaviour; this lets the routing be verified firing live with zero corruption
 risk.
 
-**⛔ WHY THE FLIP IS NOT DONE (the load-bearing reason).** With the modifier getters **already flipped onto the
-cascade**, a missed invalidation is a wrong value that **IS the `/computed` oracle** — there is no legacy value left
-to diff against, so manifestation polls **cannot** detect it. The per-turn self-heal is the only thing catching gaps
-today; its own comment names "power flips, bonus-network shifts, **timers**" as mutations that otherwise "stale a
-package FOREVER." Deleting it therefore requires a proven-complete invalidation surface, which cannot be verified
-blind — it needs a live playtest for value-correctness.
+**⛔ THERE IS NO "FLIP" — it already happened (owner correction).** The getters are ALREADY on the cascade. The flip
+was done, and it went **catastrophically wrong** (bad rollerskating built a broken invalidation), so the owner
+reverted to the **self-heal + hand-wired marks as a CRUTCH** and is forcing each invalidation piece (reseed → R3 →
+this observability) to be built + **VERIFIED WORKING individually** before the crutch comes off. The remaining work is
+therefore not a flip — it is **removing the self-heal crutch** once the invalidation is proven complete. (Performance
+is NOT a concern until the cascade is actually rebuilt this way — the crutch's per-turn cost is irrelevant now.)
 
-**THE FLIP RECIPE (the payoff, to do with the owner able to playtest):**
+**Why the crutch can't come off blind:** with the getters already on the cascade, a missed invalidation is a wrong
+value that **IS the `/computed` oracle** — no legacy left to diff, so polls can't detect it. The self-heal's own
+comment names "power flips, bonus-network shifts, **timers**" as mutations it silently covers. Removing it needs a
+proven-complete invalidation surface + a live playtest for value-correctness — never a blind deletion. **This is why
+`SEVT_CACHE_INVALIDATE` exists: so each invalidation ANNOUNCES itself (`[CASCADE] invalidate scope/id/pkg/src`) and
+the pieces can be VERIFIED, not assumed.**
+
+**CRUTCH-REMOVAL RECIPE (do with the owner playtesting, once each piece is verified):**
 1. **Completeness audit** — enumerate EVERY mutation that stales a package: the source events (covered), the R4 gaps
    (bonus/project/state-religion/trait/power — R3 masks them PROVISIONALLY, confirm against the deposit index), and
    the **timer/counter mutations** the self-heal silently covers (war-weariness, anger/espionage timers, culture,
-   inflation, …) — each must emit a DOMAIN event + route in R3, or be proven not to feed any cascade package.
+   inflation, …) — each must emit a DOMAIN event + route in R3, or be proven not to feed any cascade package. The
+   `[CASCADE] invalidate` stream is the audit instrument (does every state change produce the right marks?).
 2. **Remove the hand-wired play-time marks** now duplicated by R3 (`CvCity.cpp:4636/7042/10317/14286/15438/15651`,
    `CvPlayer.cpp:9468/14391`, `CvTeam.cpp:4951`) — R3 owns them.
 3. **Delete the per-turn self-heal** — `CvPlayer::doTurn:3700` `playerSliceRebuild` + the per-turn `worldRebuild`
-   (`CvGame.cpp:5878`). KEEP the LOAD warm-up (`CvGame.cpp:663/665`, reframed as the eager build) + `cityCreated`.
-4. **Verify LIVE + PLAYTEST** — the `(scope,channel)` counter collapses (a quiet turn ≈ 0); `/computed` oracle values
-   stay correct across many turns; **the owner plays** to confirm no drift the oracle can't see.
+   (`CvGame.cpp:5878`). KEEP the LOAD warm-up (`CvGame.cpp:663/665`, the eager build) + `cityCreated`.
+4. **Verify LIVE + PLAYTEST** — `/computed` oracle values stay correct across many turns; **the owner plays** to
+   confirm no drift the oracle can't see.
 
 ### R4. Complete the DOMAIN emit surface (the completeness gap)
 The spec wants a DOMAIN event on EVERY state change. Current emits (10): building-count, unit-count, civic, tech,

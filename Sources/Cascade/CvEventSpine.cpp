@@ -15,7 +15,8 @@
 #include "CvBuildingInfo.h"
 #include "CvUnitInfo.h"
 #include "CvCascadeGrants.h"   // the #430 GRANTS consumer -- registered at the composition root below
-#include "CvCascadeAccumulator.h"   // the #430 F0 cache-invalidation consumer (R3, below) marks via these + the CPK_* masks
+#include "CvCascadeInvalidation.h"   // the #430 F0 cache-invalidation consumer (R3) -- registered at the composition root below
+#include "CvCascadeScopePackages.h"  // CPK_*/PSC_*/WSC_* package-bit enums (the invalidate-observability decoder)
 // typeIndex name-resolution in the consumer: the Info headers for each SFT_ kind (so GC.getXInfo(i).getType() compiles).
 // Imported DIRECTLY (no CvInfos.h umbrella -- owner 2026-06-18: that umbrella should be retired, import directly).
 #include "CvBonusInfo.h"
@@ -265,7 +266,9 @@ enum SpineDomainField
 	SPF_OWNER, SPF_OLD_OWNER, SPF_NEW_OWNER,
 	SPF_CITY, SPF_PLOT, SPF_OLD_CITY, SPF_NEW_CITY,
 	SPF_DELTA, SPF_HAS, SPF_VALUE, SPF_COUNT, SPF_ON,
-	SPF_NAME_KIND, SPF_ENTITY_ID, SPF_NAME
+	SPF_NAME_KIND, SPF_ENTITY_ID, SPF_NAME,
+	// the [CASCADE] invalidate observability fields
+	SPF_SCOPE, SPF_ID, SPF_PKG, SPF_SRC
 };
 
 // The constant line PREFIX for each spine DOMAIN eventId ("[SPINE] <eventName>"). The variable fields follow as
@@ -303,6 +306,7 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_WORKING_CITY_CHANGED:   return "[SPINE] workingCityChanged";
 	case SEVT_GAME_LOAD_STARTED:      return "[SPINE] gameLoadStarted";
 	case SEVT_GAME_LOAD_FINISHED:     return "[SPINE] gameLoadFinished";
+	case SEVT_CACHE_INVALIDATE:       return "[CASCADE] invalidate";
 	default:                          return "[SPINE] ?";
 	}
 }
@@ -341,70 +345,71 @@ static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
 	case SPF_NAME_KIND:   *peType = SFT_STR;         return "kind";
 	case SPF_ENTITY_ID:   *peType = SFT_INT;         return "id";
 	case SPF_NAME:        *peType = SFT_WSTR;        return "name";
+	case SPF_SCOPE:       *peType = SFT_STR;         return "scope";
+	case SPF_ID:          *peType = SFT_INT;         return "id";
+	case SPF_PKG:         *peType = SFT_STR;         return "pkg";
+	case SPF_SRC:         *peType = SFT_STR;         return "src";
 	default:              *peType = SFT_INT;         return NULL;
 	}
 }
 
-// ===================== the #430 F0 cache-invalidation consumer (R3) =====================
-// Turns a DOMAIN state-change event into the package dirty-marks its source touches -- the spine as the invalidation
-// FRONT DOOR (retiring the hand-wired per-site marks). Reuses the accumulator's known-correct per-source masks (lifted
-// verbatim from the CvCity mutation sites); the derived-from-deposit-index refinement (R2) is a follow-up.
-//
-// ⚠ STAGED WIRING (deliberate): registered ADDITIVELY -- the hand-wired mutation-site marks AND the per-turn self-heal
-// (playerSliceRebuild) remain the correctness guarantee while this routing is verified firing on a live game. The FLIP
-// (remove the hand-wired marks + delete the self-heal) is the payoff and is GATED on a completeness audit: with the
-// modifier getters already flipped onto the cascade, a missed invalidation is a wrong value that IS the oracle --
-// UNDETECTABLE by /computed (no legacy left to diff). See f0-eventspine-invalidation.md.
-//
-// Load-INERT: during the reseed the targeted ripples (operating-buildings / frontier) are invalid -- their reverse
-// indices are not built until onFinalInitialized (buildFrontierIndices). The load warm-up builds the cascade; this is
-// a PLAY-TIME consumer.
-static const CvCity* invResolveCity(int iOwner, int iCityId)
+// ===================== the [CASCADE] invalidate OBSERVABILITY =====================
+// Decode a package dirty-mask to a "|"-joined HUMAN-READABLE name string, per scope. The cryptic CPK_*/PSC_* enum
+// spellings never reach the log -- the reader sees "yieldPercent|wellbeing|buildRate", not "YPCT|WB|BR".
+static void invDecodePackageNames(int iScopeKind, int iMask, char* szOut, int iOutSize)
 {
-	if (iOwner < 0 || iOwner >= MAX_PLAYERS || iCityId < 0) return NULL;
-	return GET_PLAYER((PlayerTypes)iOwner).getCity(iCityId);
-}
-
-class CvSpineInvalidationConsumer : public IEventConsumer
-{
-public:
-	int wantedKinds() const { return (1 << EVENTKIND_DOMAIN); }
-	void onEvent(const CvSpineEvent& e)
+	szOut[0] = '\0';
+	if (iScopeKind == 2) { _snprintf(szOut, iOutSize, "all"); szOut[iOutSize - 1] = '\0'; return; }
+	struct PackageName { int iBit; const char* szName; };
+	static const PackageName kCityPackages[] = {
+		{ CPK_YPCT, "yieldPercent" }, { CPK_YSPEC, "yieldSpecialist" }, { CPK_YEXTRA, "yieldBuildingFlat" },
+		{ CPK_CSPEC, "commerceSpecialist" }, { CPK_CPCT, "commercePercent" }, { CPK_CBASE, "commerceBase" },
+		{ CPK_WB, "wellbeing" }, { CPK_SCFLAT, "scalarFlat" }, { CPK_SCPCT, "scalarPercent" },
+		{ CPK_SCSPEC, "scalarSpecialist" }, { CPK_BR, "buildRate" }, { CPK_FRONT_B, "frontierBuildable" },
+		{ CPK_FRONT_U, "frontierTrainable" }, { CPK_FRONT_PP, "frontierProjectProcess" } };
+	static const PackageName kEmpirePackages[] = {
+		{ PSC_YFLAT, "yieldFlat" }, { PSC_CFLAT, "commerceFlat" }, { PSC_WB, "wellbeing" }, { PSC_SC, "scalar" },
+		{ PSC_BR, "buildRate" }, { PSC_FRONT_P, "frontier" }, { PSC_FRONT_PROMO, "frontierPromotion" } };
+	const PackageName* pTable = (iScopeKind == 1) ? kEmpirePackages : kCityPackages;
+	const int iTableSize = (iScopeKind == 1) ? (int)(sizeof(kEmpirePackages) / sizeof(PackageName))
+	                                         : (int)(sizeof(kCityPackages) / sizeof(PackageName));
+	bool bWroteAny = false;
+	for (int i = 0; i < iTableSize; ++i)
 	{
-		if (spineGameLoadInProgress()) return;   // load-inert: ripples invalid pre-buildFrontierIndices
-		switch (e.iEventId)
+		if ((iMask & pTable[i].iBit) != 0)
 		{
-		// ---- per-CITY sources (iC = owner, iSrcLoc = cityId); masks lifted verbatim from CvCity.cpp ----
-		case SEVT_BUILDING_CHANGED:
-		{ const CvCity* c = invResolveCity(e.iC, e.iSrcLoc); if (c != NULL) CascadeAccumulator::buildingProcessed(c, (BuildingTypes)e.iType); break; }
-		case SEVT_RELIGION_CHANGED:
-		{ const CvCity* c = invResolveCity(e.iC, e.iSrcLoc); if (c != NULL) { CascadeAccumulator::dirtyCity(c, CPK_YPCT|CPK_CBASE|CPK_CPCT|CPK_WB|CPK_SCPCT|CPK_FRONT_PP); CascadeAccumulator::cityHaveChanged(c, CascadeAccumulator::CASC_HAVE_RELIGION); } break; }
-		case SEVT_CORPORATION_CHANGED:
-		{ const CvCity* c = invResolveCity(e.iC, e.iSrcLoc); if (c != NULL) { CascadeAccumulator::dirtyCity(c, CPK_YPCT|CPK_CBASE|CPK_CPCT|CPK_WB|CPK_SCPCT|CPK_BR|CPK_FRONTIER); CascadeAccumulator::cityHaveChanged(c, CascadeAccumulator::CASC_HAVE_CORP); } break; }
-		case SEVT_SPECIALIST_CHANGED:
-		{ const CvCity* c = invResolveCity(e.iC, e.iSrcLoc); if (c != NULL) CascadeAccumulator::dirtyCity(c, CPK_YSPEC|CPK_CSPEC|CPK_SCSPEC); break; }
-		case SEVT_POPULATION_CHANGED:
-		{ const CvCity* c = invResolveCity(e.iC, e.iSrcLoc); if (c != NULL) { CascadeAccumulator::dirtyCity(c, CPK_YEXTRA|CPK_CBASE|CPK_FRONT_PP); CascadeAccumulator::cityHaveChanged(c, CascadeAccumulator::CASC_HAVE_POP); } break; }
-		case SEVT_POWER_CHANGED:   // R4 gap #5: the rate/WB mask is PROVISIONAL (self-heal-backstopped) beyond the frontier re-check
-		{ const CvCity* c = invResolveCity(e.iC, e.iSrcLoc); if (c != NULL) { CascadeAccumulator::dirtyCity(c, CPK_YPCT|CPK_WB); CascadeAccumulator::cityHaveChanged(c, CascadeAccumulator::CASC_HAVE_POWER); } break; }
-		case SEVT_BONUS_CHANGED:   // R4 gap #1: PROVISIONAL presence mask (self-heal-backstopped)
-		{ const CvCity* c = invResolveCity(e.iC, e.iSrcLoc); if (c != NULL) CascadeAccumulator::dirtyCity(c, CPK_YPCT|CPK_CBASE|CPK_CPCT|CPK_WB|CPK_SCPCT); break; }
-		// ---- per-EMPIRE sources / conditioner fan-out (iC = player): the broad mark (conditioner fan-out spans
-		// obsoletes/enables/waiver edges the deposit index does not reverse-map -- the deliberate correctness floor;
-		// trait / state-religion / project ride it as R4 gaps, self-heal-backstopped) ----
-		case SEVT_TECH_CHANGED:
-		case SEVT_CIVIC_ADOPTED:
-		case SEVT_GOLDEN_AGE_CHANGED:
-		case SEVT_TRAIT_CHANGED:
-		case SEVT_STATE_RELIGION_CHANGED:
-		case SEVT_PROJECT_CHANGED:
-			if (e.iC >= 0 && e.iC < MAX_PLAYERS) CascadeAccumulator::markPlayerScopeAndCities((PlayerTypes)e.iC);
-			break;
-		default: break;   // count/name/grant-trigger/lifecycle/plot-substrate events are not modifier-package sources
+			int iRemaining = iOutSize - (int)strlen(szOut) - 1;
+			if (iRemaining <= 0) break;
+			if (bWroteAny) { strncat(szOut, "|", iRemaining); iRemaining = iOutSize - (int)strlen(szOut) - 1; }
+			if (iRemaining > 0) strncat(szOut, pTable[i].szName, iRemaining);
+			bWroteAny = true;
 		}
 	}
-};
-static CvSpineInvalidationConsumer s_invalidationConsumer;
+	if (!bWroteAny) strncat(szOut, "none", iOutSize - (int)strlen(szOut) - 1);
+}
+
+// The short name of a spine event id (strips the "[SPINE] " render prefix) -- the invalidate observability's `src`.
+const char* spineEventName(int iEventId)
+{
+	const char* szPrefix = spineDomainPrefix(iEventId);
+	if (szPrefix != NULL && strncmp(szPrefix, "[SPINE] ", 8) == 0) return szPrefix + 8;
+	return (szPrefix != NULL) ? szPrefix : "?";
+}
+
+// Announce a package dirty-mark (DIAGNOSTIC -- logging only, gated at level 1). Renders via the registered SD_SPINE
+// path as "[CASCADE] invalidate scope=<> id=<> pkg=<NAMES> src=<why>". Called by the R3 consumer (play-time,
+// szSource = the source event name) and the load warm-up / self-heal (szSource = "sliceRebuild"/"worldRebuild") so
+// the whole invalidation flow is visible in Cascade.log.
+void emitCacheInvalidate(int iScopeKind, int iId, int iMask, const char* szSource)
+{
+	char szPackages[256];
+	invDecodePackageNames(iScopeKind, iMask, szPackages, sizeof(szPackages));
+	const char* szScope = (iScopeKind == 0) ? "city" : (iScopeKind == 1) ? "empire" : "world";
+	CvSpineEvent kEvent(EVENTKIND_DIAGNOSTIC, SD_SPINE, SEVT_CACHE_INVALIDATE, 1);
+	kEvent.addStr(SPF_SCOPE, szScope).addI(SPF_ID, iId).addStr(SPF_PKG, szPackages).addStr(SPF_SRC, (szSource != NULL) ? szSource : "?");
+	eventSpine().emit(kEvent);   // synchronous render -> szPackages / szScope / szSource still in scope
+}
+
 
 void spineRegisterConsumers()
 {
@@ -426,11 +431,11 @@ void spineRegisterConsumers()
 	// source entity's genuine grants off the mapped CvInfo and emits a [GRANTS] shadow diagnostic (resolution only,
 	// un-run parity). The tally stays a non-consumer (reads object-owned counts).
 	cascadeRegisterGrants();
-	// The #430 F0 cache-invalidation consumer (R3): the spine-driven package invalidation front door. Registered
-	// ADDITIVELY for now -- the hand-wired mutation-site marks + the per-turn self-heal remain as the correctness
-	// guarantee while the routing is verified live; the flip (remove those + delete the self-heal) is gated on the
+	// The #430 F0 cache-invalidation consumer (R3, CvCascadeInvalidation.cpp): the spine-driven package invalidation
+	// front door. Registered ADDITIVELY for now -- the hand-wired mutation-site marks + the per-turn self-heal remain
+	// the correctness guarantee (the CRUTCH) while the routing is verified live; removing the crutch is gated on the
 	// completeness audit (f0-eventspine-invalidation.md). Load-inert (skips the reseed; the warm-up builds on load).
-	eventSpine().registerConsumer(&s_invalidationConsumer);
+	cascadeRegisterInvalidation();
 }
 
 void emitNameChange(int iKind, int iOwner, int iEntityId)

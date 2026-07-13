@@ -236,7 +236,10 @@ enum SpineDomainEvent
 	// plot SUBSTRATE (sibling of terrain/feature/improvement/route, §15-18): a plot's RESOURCE (BONUS_*) was placed /
 	// discovered / removed. All play-time paths route through CvPlot::setBonusType (a Great-Farmer build, a discovery
 	// event, removal); the reseed fires the SAME event. iType=Bonus, iC=owner, iSrcLoc=plotId, iB=+1 placed / -1 removed.
-	SEVT_PLOT_BONUS_CHANGED     = 29
+	SEVT_PLOT_BONUS_CHANGED     = 29,
+	// DIAGNOSTIC (not a state-change): the cache invalidation OBSERVABILITY -- a package was marked dirty. Carries the
+	// scope + owning-object id + the package-bit names + the source event. The Orwell bar for the invalidation flow.
+	SEVT_CACHE_INVALIDATE       = 30
 };
 
 //	Which entity's display name changed (the iType of a SEVT_NAME_CHANGE event). The logging consumer resolves the
@@ -300,6 +303,14 @@ void emitGameLoadFinished();
 // True between GAME_LOAD_STARTED and GAME_LOAD_FINISHED -- the load-active window (the reseed). Consumers that must
 // behave differently during the reseed (e.g. skip play-time targeted ripples) read this.
 bool spineGameLoadInProgress();
+
+// The cache-invalidation OBSERVABILITY (SEVT_CACHE_INVALIDATE): announce a package dirty-mark so the invalidation
+// flow is verifiable in Cascade.log ("[CASCADE] invalidate scope=<city|empire|world> id=<n> pkg=<NAMES> src=<why>").
+// iScopeKind 0=city / 1=empire / 2=world; iMask = the CPK_*/PSC_*/WSC_* bits (decoded to names per scope); szSrc = the
+// reason (the source event name, or "sliceRebuild"/"worldRebuild" for the load warm-up + self-heal). DIAGNOSTIC kind.
+void emitCacheInvalidate(int iScopeKind, int iId, int iMask, const char* szSource);
+// The short human name of a spine event id (e.g. "religionChanged") -- the invalidate observability's `src`.
+const char* spineEventName(int iEventId);
 
 //	A consumer of spine events (tally / grants / logging). C++03 virtual interface -- the consumer's state lives in the
 //	consumer (no captures, no Boost). wantedKinds() returns a bitmask of (1 << EventKind); the spine uses it to skip
