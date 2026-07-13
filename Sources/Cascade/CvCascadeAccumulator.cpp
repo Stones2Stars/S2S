@@ -1005,7 +1005,7 @@ void CascadeAccumulator::playerSliceRebuild(PlayerTypes ePlayer)
 	// narrowed CBASE|WB self-heal was an over-fix -- the original 222s cost lived in the all-infos walks +
 	// the string hot paths, both since fixed, NOT in the mark breadth).
 	kPlayer.m_cascadePlayerScope.set.markAllDirty();
-	emitCacheInvalidate(1, (int)ePlayer, PSC_ALL, "sliceRebuild");   // observability: the empire blanket (the self-heal crutch)
+	emitCacheInvalidate(1, (int)ePlayer, (int)ePlayer, PSC_ALL, "sliceRebuild");   // observability: the empire blanket (the self-heal crutch)
 	kPlayer.m_cascadePlayerScope.set.ensure(PSC_EAGER);   // the frontier stays LAZY (ensure-on-read; the eager rebuild was the measured turn-grind)
 	int iLoop;
 	for (const CvCity* pc = kPlayer.firstCity(&iLoop); pc != NULL; pc = kPlayer.nextCity(&iLoop))
@@ -1013,7 +1013,7 @@ void CascadeAccumulator::playerSliceRebuild(PlayerTypes ePlayer)
 		pc->m_operatingBuildings.set.ensure();      // SEED on first visit (dirty from reset/load); no-op after -- the package fills read operating buildings
 		EnablerKernel::onSliceRebuildActive(pc);   // the bounded per-turn dynamic re-check (replaces the whole-city operating buildings recompute)
 		pc->m_cascadeCityPackages.set.markAllDirty();
-		emitCacheInvalidate(0, pc->getID(), CPK_ALL, "sliceRebuild");   // observability: the per-city blanket
+		emitCacheInvalidate(0, (int)ePlayer, pc->getID(), CPK_ALL, "sliceRebuild");   // observability: the per-city blanket (owner,id = the unambiguous handle)
 		pc->m_cascadeCityPackages.set.ensure(CPK_EAGER);   // ditto: a city with a standing build queue never pays a frontier walk
 	}
 }
@@ -1021,7 +1021,7 @@ void CascadeAccumulator::playerSliceRebuild(PlayerTypes ePlayer)
 void CascadeAccumulator::worldRebuild()
 {
 	GC.getGame().m_cascadeWorldScope.set.markAllDirty();
-	emitCacheInvalidate(2, 0, WSC_ALL, "worldRebuild");   // observability: the world blanket
+	emitCacheInvalidate(2, -1, -1, WSC_ALL, "worldRebuild");   // observability: the world blanket (no owner/id)
 	GC.getGame().m_cascadeWorldScope.set.ensure();
 }
 

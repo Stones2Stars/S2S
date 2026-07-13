@@ -308,7 +308,7 @@ bool spineGameLoadInProgress();
 // flow is verifiable in Cascade.log ("[CASCADE] invalidate scope=<city|empire|world> id=<n> pkg=<NAMES> src=<why>").
 // iScopeKind 0=city / 1=empire / 2=world; iMask = the CPK_*/PSC_*/WSC_* bits (decoded to names per scope); szSrc = the
 // reason (the source event name, or "sliceRebuild"/"worldRebuild" for the load warm-up + self-heal). DIAGNOSTIC kind.
-void emitCacheInvalidate(int iScopeKind, int iId, int iMask, const char* szSource);
+void emitCacheInvalidate(int iScopeKind, int iOwner, int iId, int iMask, const char* szSource);   // iOwner: the empire (city ids are unique only within a player); -1 = none
 // The short human name of a spine event id (e.g. "religionChanged") -- the invalidate observability's `src`.
 const char* spineEventName(int iEventId);
 

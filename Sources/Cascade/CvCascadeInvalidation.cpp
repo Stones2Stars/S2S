@@ -45,7 +45,7 @@ public:
 			if (pCity != NULL)
 			{
 				CascadeAccumulator::buildingProcessed(pCity, (BuildingTypes)kEvent.iType);
-				emitCacheInvalidate(0, kEvent.iSrcLoc, CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC | CPK_FRONT_B | CPK_FRONT_U), szSource);
+				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC | CPK_FRONT_B | CPK_FRONT_U), szSource);
 			}
 			break;
 		}
@@ -57,7 +57,7 @@ public:
 				const int iDirtyPackages = CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT | CPK_FRONT_PP;
 				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
 				CascadeAccumulator::cityHaveChanged(pCity, CascadeAccumulator::CASC_HAVE_RELIGION);
-				emitCacheInvalidate(0, kEvent.iSrcLoc, iDirtyPackages, szSource);
+				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
 			}
 			break;
 		}
@@ -69,7 +69,7 @@ public:
 				const int iDirtyPackages = CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT | CPK_BR | CPK_FRONTIER;
 				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
 				CascadeAccumulator::cityHaveChanged(pCity, CascadeAccumulator::CASC_HAVE_CORP);
-				emitCacheInvalidate(0, kEvent.iSrcLoc, iDirtyPackages, szSource);
+				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
 			}
 			break;
 		}
@@ -80,7 +80,7 @@ public:
 			{
 				const int iDirtyPackages = CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC;
 				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
-				emitCacheInvalidate(0, kEvent.iSrcLoc, iDirtyPackages, szSource);
+				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
 			}
 			break;
 		}
@@ -92,7 +92,7 @@ public:
 				const int iDirtyPackages = CPK_YEXTRA | CPK_CBASE | CPK_FRONT_PP;
 				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
 				CascadeAccumulator::cityHaveChanged(pCity, CascadeAccumulator::CASC_HAVE_POP);
-				emitCacheInvalidate(0, kEvent.iSrcLoc, iDirtyPackages, szSource);
+				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
 			}
 			break;
 		}
@@ -104,7 +104,7 @@ public:
 				const int iDirtyPackages = CPK_YPCT | CPK_WB;
 				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
 				CascadeAccumulator::cityHaveChanged(pCity, CascadeAccumulator::CASC_HAVE_POWER);
-				emitCacheInvalidate(0, kEvent.iSrcLoc, iDirtyPackages, szSource);
+				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
 			}
 			break;
 		}
@@ -115,7 +115,7 @@ public:
 			{
 				const int iDirtyPackages = CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT;
 				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
-				emitCacheInvalidate(0, kEvent.iSrcLoc, iDirtyPackages, szSource);
+				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
 			}
 			break;
 		}
@@ -131,7 +131,7 @@ public:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{
 				CascadeAccumulator::markPlayerScopeAndCities((PlayerTypes)kEvent.iC);
-				emitCacheInvalidate(1, kEvent.iC, PSC_ALL, szSource);
+				emitCacheInvalidate(1, kEvent.iC, kEvent.iC, PSC_ALL, szSource);
 			}
 			break;
 

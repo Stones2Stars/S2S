@@ -400,13 +400,16 @@ const char* spineEventName(int iEventId)
 // path as "[CASCADE] invalidate scope=<> id=<> pkg=<NAMES> src=<why>". Called by the R3 consumer (play-time,
 // szSource = the source event name) and the load warm-up / self-heal (szSource = "sliceRebuild"/"worldRebuild") so
 // the whole invalidation flow is visible in Cascade.log.
-void emitCacheInvalidate(int iScopeKind, int iId, int iMask, const char* szSource)
+void emitCacheInvalidate(int iScopeKind, int iOwner, int iId, int iMask, const char* szSource)
 {
 	char szPackages[256];
 	invDecodePackageNames(iScopeKind, iMask, szPackages, sizeof(szPackages));
 	const char* szScope = (iScopeKind == 0) ? "city" : (iScopeKind == 1) ? "empire" : "world";
 	CvSpineEvent kEvent(EVENTKIND_DIAGNOSTIC, SD_SPINE, SEVT_CACHE_INVALIDATE, 1);
-	kEvent.addStr(SPF_SCOPE, szScope).addI(SPF_ID, iId).addStr(SPF_PKG, szPackages).addStr(SPF_SRC, (szSource != NULL) ? szSource : "?");
+	kEvent.addStr(SPF_SCOPE, szScope);
+	if (iOwner >= 0) kEvent.addI(SPF_OWNER, iOwner);      // the empire (SFT_PLAYER -> name(id)); the (owner,id) tuple is the unambiguous handle
+	if (iScopeKind == 0) kEvent.addI(SPF_ID, iId);        // the city id -- only meaningful WITH the owner (not unique across empires)
+	kEvent.addStr(SPF_PKG, szPackages).addStr(SPF_SRC, (szSource != NULL) ? szSource : "?");
 	eventSpine().emit(kEvent);   // synchronous render -> szPackages / szScope / szSource still in scope
 }
 
