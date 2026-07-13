@@ -239,7 +239,10 @@ enum SpineDomainEvent
 	SEVT_PLOT_BONUS_CHANGED     = 29,
 	// DIAGNOSTIC (not a state-change): the cache invalidation OBSERVABILITY -- a package was marked dirty. Carries the
 	// scope + owning-object id + the package-bit names + the source event. The Orwell bar for the invalidation flow.
-	SEVT_CACHE_INVALIDATE       = 30
+	SEVT_CACHE_INVALIDATE       = 30,
+	// DIAGNOSTIC: the complement -- a package was REBUILT (recomputed from dirty). invalidate = max work queued;
+	// rebuilt = work actually done. Carries scope + owner + id + the package-bit names (no src).
+	SEVT_CACHE_REBUILT          = 31
 };
 
 //	Which entity's display name changed (the iType of a SEVT_NAME_CHANGE event). The logging consumer resolves the
@@ -309,6 +312,7 @@ bool spineGameLoadInProgress();
 // iScopeKind 0=city / 1=empire / 2=world; iMask = the CPK_*/PSC_*/WSC_* bits (decoded to names per scope); szSrc = the
 // reason (the source event name, or "sliceRebuild"/"worldRebuild" for the load warm-up + self-heal). DIAGNOSTIC kind.
 void emitCacheInvalidate(int iScopeKind, int iOwner, int iId, int iMask, const char* szSource);   // iOwner: the empire (city ids are unique only within a player); -1 = none
+void emitCacheRebuilt(int iScopeKind, int iOwner, int iId, int iMask);   // the complement: a package was recomputed
 // The short human name of a spine event id (e.g. "religionChanged") -- the invalidate observability's `src`.
 const char* spineEventName(int iEventId);
 

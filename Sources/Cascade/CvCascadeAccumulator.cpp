@@ -80,6 +80,7 @@ static int acc_mapGetI(const std::map<int, int>& m, int key)
 void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 {
 	if (pCity == NULL || iMask == 0) return;
+	emitCacheRebuilt(0, pCity->getOwner(), pCity->getID(), iMask);   // observability: this city's packages recomputed
 	++CascadePerf::accRefresh;
 	// (scope,channel) calc-count [DEC-calc-count-gate]: attribute this refresh's value-computes to (city, channel).
 	// Mirrors EXACTLY the iMask-gated compute blocks below -- yields/commerce count per type (the loops), the
@@ -262,6 +263,7 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 void CascadeAccumulator::refreshPlayerScope(const CvPlayer* pPlayer, int iMask)
 {
 	if (pPlayer == NULL || iMask == 0) return;
+	emitCacheRebuilt(1, pPlayer->getID(), pPlayer->getID(), iMask);   // observability: this empire's packages recomputed
 	// (scope,channel) calc-count [DEC-calc-count-gate]: attribute this refresh's value-computes to (empire, channel)
 	if (iMask & PSC_YFLAT)       CascadePerf::calcN(CSCOPE_EMPIRE, CCHAN_BASE_YIELDS, NUM_YIELD_TYPES);
 	if (iMask & PSC_CFLAT)       CascadePerf::calcN(CSCOPE_EMPIRE, CCHAN_COMMERCE, NUM_COMMERCE_TYPES);
@@ -362,6 +364,7 @@ void CascadeAccumulator::refreshPlayerScope(const CvPlayer* pPlayer, int iMask)
 void CascadeAccumulator::refreshWorldScope(const CvGame* pGame, int iMask)
 {
 	if (pGame == NULL || iMask == 0) return;
+	emitCacheRebuilt(2, -1, -1, iMask);   // observability: the world packages recomputed
 	// (scope,channel) calc-count [DEC-calc-count-gate]: the world scope's tenant today is the tradeRoutes world term
 	CascadePerf::calc(CSCOPE_WORLD, CCHAN_TRADE);
 	CascadeWorldScope& ws = pGame->m_cascadeWorldScope;
