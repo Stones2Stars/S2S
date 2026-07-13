@@ -143,6 +143,90 @@ standing number; at read they are **all summed together into the one modifier** 
 super simple in isolation — that simplicity IS the design; complexity anywhere in a package rebuild or a
 read composition is a sign the scope/position split was gotten wrong.
 
+### ⚖ THE READ PATH — the CASCADE PROVIDES, the GAME OBJECT SUMS (owner 2026-07-13, LOCKED)
+
+> The load-bearing correction the read layer must conform to. It is where the misunderstanding that cost the
+> repeated rebuilds lives: agents treat "the cascade" as the thing that *computes* a yield, and leave the game
+> objects as passengers. It is the opposite.
+
+- **The cascade = the invalidated PACKAGE STORE, nothing more.** Per (scope × channel × combine-position) it holds
+  one standing sum — *how a yield is influenced, and by how much, from every source*. It answers "what influences
+  this," and it **never computes a final number**. Its only job beyond storing is keeping each package fresh via the
+  eventspine marks.
+- **ONE unified reporting surface.** A single way to enumerate "the packages influencing (object, channel)", read
+  **identically** by (a) the consuming game object, to SUM, and (b) the observability endpoints / StoneBase, to
+  DECOMPOSE. One surface ⇒ the number a city computes and the breakdown an endpoint renders are the **same bytes**;
+  the legacy-shadow decomposition (the engine's `modBuilding`/`modPlayer` accumulators masquerading as the cascade's
+  answer) becomes structurally impossible, not merely discouraged.
+- **The GAME OBJECT sums LIVE; the sum is NEVER cached.** The object that consumes a channel (plot → city → empire)
+  fetches its packages + the lower providers' outputs and applies the channel's §2a combine **on read**. The sum is a
+  handful of integer ops over ~5 cached packages — caching it would only add a second thing to invalidate for zero
+  gain. Freshness is entirely write-side (the packages carry the event marks); the read never ensures, never
+  re-walks a source. **The cascade does NOT own a `yieldRate100`-style "compute the whole rate" function** — that
+  summing belongs to the consuming object.
+- **Plot / specialist / building caches are PROVIDERS on the surface.** Each computes its own output by pulling its
+  influences **FROM THE CASCADE**, never from a legacy player accumulator. ⛔ Today the plot base still reads the
+  legacy accumulators (`CvPlayer::getTerrainYieldChange` / `getSeaPlotYield` / `getExtraYieldThreshold`, maintained
+  by legacy `processCivics`/`processBuilding`/`processTrait`) — i.e. the plot is **not on the cascade surface at
+  all**, which is the measured "plots read low" symptom. Moving the plot base onto the surface (terrain / civic /
+  trait / threshold influences pulled from the cascade) is the cure and the concrete meaning of "the plot is a
+  cascade provider."
+- **One consuming scope per channel — CULTURE the lone exception.** Every channel is summed at exactly ONE scope
+  (food/production → city; gold/research/espionage → empire), so there is no combinatorial rollup and no dual
+  machinery. The single genuine dual-CONSUMER is **culture**: the city sums it for plot-culture + border expansion,
+  the empire sums it for civ-culture + traits — two independent live sums over the same culture packages, each blind
+  to the other.
+- **A channel's READER is whatever consumes it — not always a yield getter.** A yield's reader is the city/empire
+  rate getter; a **property's reader is the PROPERTY SOLVER** — it reads the cascade's summed per-turn property FEED
+  (the `PROPERTY_*` packages) off the surface and runs its propagation/equilibrium, writing the plot/city property
+  VALUES (its own internal state, then read by e.g. a `requires.operate` band). free-XP, free-specialist AMOUNTS,
+  combat channels, buildRate, defense, maintenance — each has its own consuming reader. The surface is uniform; the
+  readers are many and various.
+
+**⚠ THE READER STRUCTURE DOES NOT PROPERLY EXIST TODAY — it must be DEFINED.** The "unified reporting surface" is not
+a thing the code has; today each getter hand-reaches into specific package fields (or into legacy accumulators). The
+rework must first DEFINE the reader structure: the one contract by which a consumer enumerates/fetches "the packages
+influencing (object, channel)" and combines them — the same contract the observability endpoints render. This is
+net-new design, not a rewire of something present.
+
+**The current deviation (the rework target):** `getYieldRate100`/`getCommerceRate` route into
+`CascadeAccumulator::yieldRate100` — the *cascade* computing the whole rate — and the plot base is legacy. The rework
+(1) DEFINES the unified reader structure, (2) moves the summing INTO the game objects over it, (3) moves the plot base
+ONTO the cascade, and (4) recasts the per-channel calculator modules (`YieldRate`/`CommerceCalc`/…) as the surface's
+providers, not the owners of the final sum. **Prerequisite step:** exhaustively IDENTIFY every reader (all yields, all
+properties → the solver, free XP, free-specialist amounts, combat/defense/maintenance/buildRate, every
+modifier-influenced consumer — [DEC-all-means-all]) so the reader structure is designed against the real, complete
+consumer set — then wire each reader to read packages off the surface, which exposes the real state of what is
+cascade-backed vs legacy today. The inventory is [reader-inventory.md](reader-inventory.md).
+
+**⚖ THE MIGRATION AXIS — "cascade vs legacy" is NOT "done vs todo" (owner 2026-07-13).** A reader has two independent
+properties: WHO does the calc (the game object, or the cascade), and WHAT it sums (cascade packages, or legacy
+accumulators). The target quadrant is **game-object calc + cascade-package inputs** — which *neither* current pattern
+occupies:
+
+- A **game-object calculator that reads legacy accumulators** (`CvCity::getProductionPerTurn` summing
+  `getBaseYieldRateModifier`'s `m_ai*` members; `foodDifference`; the warehouse-style readers) is in the RIGHT place
+  — the game object SHOULD compute its own number; it is wrong only in its INPUTS. Migration = swap the inputs to
+  cascade packages via the surface; do NOT move the calc into the cascade.
+- A **getter that delegates to the cascade** (`getYieldRate100 → CascadeAccumulator::yieldRate100`) has the cascade
+  doing the calc — the WRONG place under this model. Migration = **unwind** the sum back into the game object over
+  the surface. A "cascade-backed" reader is therefore sometimes the thing to *undo*, not the finish line.
+
+**Game-object MECHANICS are not cascade jobs.** Several channels have a game-object mechanic on top of the cascade
+input, and that mechanic is NOT the cascade's to compute:
+- the production **warehouse** — `doProduction`/`getProductionDifference` banking, spending the queue, overflow — is
+  the city's own mechanic (it READS the cascade-fed making-rate, then accumulates/spends);
+- the **commerce rate** (`getCommerceRate`) — converting base commerce into gold/research/culture/espionage is the
+  **user's slider ratio** (live state), and the empire rate is the **aggregation of city commerce** (`m_aiCommerceRate`
+  = Σ cities). The cascade feeds the base commerce YIELD + the per-channel commerce base-terms (`cBaseOwn100`/
+  `cKeyed100`); the base×slider split + the Σ-cities rollup are the game object's, NOT a cascade concern ever;
+- the **culture VALUE** (`getCulture`/`getCultureLevel`) — accumulate the cascade-fed culture rate, spend it on borders
+  + level-ups (the culture warehouse).
+
+All stay as-is by design; any future interactivity is OUT of #430 scope. The cascade feeds the rate/base + the
+influence terms; the warehouse/conversion/aggregation is the game object's. (Consequence for the getter flip-list: a
+getter over one of these mechanics is `warehouse-mechanic` — leave it; do not chase it as a "legacy" flip.)
+
 **ONE rebuild mechanism — events mark, dirty packages ensure; the FULL build happens ONLY on load.** During play
 an incremental event marks only the package(s) its deposits touch, and only those rebuild. On LOAD the **event
 reseed** ([event-spine.md](../../specs/event-spine.md) /

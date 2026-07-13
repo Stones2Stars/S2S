@@ -177,7 +177,7 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvJsonCondition* a)
 // back to presence 0/1). A bool-protocol, NOT a sentinel: a PROPERTY_* "count" is the city's property VALUE and
 // can be legitimately NEGATIVE. Cross-city scopes resolve via the tally (tally.md §2); WORLD rides the same
 // tally roll-up, EXCEPT a unit's world count = the engine's LIFETIME-CREATED counter (json §4.4 / tally.md §4 --
-// the UnitCascade world-cap read: "born once, still consumes its slot").
+// the UnitEnabler world-cap read: "born once, still consumes its slot").
 static bool ev_countCore(const CvCascadeEvalCtx& ctx, const std::string& t, int id, CvCascScope eScope, int& iOut)
 {
 	if (en_starts(t, "PROPERTY_"))

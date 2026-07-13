@@ -30,7 +30,7 @@
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"
 #include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the spine (CvCity side)
 #include "Cascade/CvCascadeAccumulator.h"  // #430 the modifier scope accumulator -- DOMAIN dirty hooks (modifier-substrate.md)
-#include "Cascade/CvCascadeEnablerKernel.h" // EnablerKernel::recomputeOperatingBuildingsInto -- the operating buildings cache's refresh delegate target
+#include "Cascade/CvEnablerKernel.h" // EnablerKernel::recomputeOperatingBuildingsInto -- the operating buildings cache's refresh delegate target
 #include "AI/CvCityLogTags.h" // [CIT] tag enums (shared with CvCityAI.cpp -- defined once, see header)
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "CvTraitInfo.h"
@@ -2372,7 +2372,7 @@ void CvCity::clearUpgradeCache(UnitTypes eUnit) const
 
 bool CvCity::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreUpgrades, bool bPropertySpawn) const
 {
-	// ==== #430 THE ENABLER FLIP: the DEFAULT gate shape serves the cascade frontier (UnitCascade::trainable,
+	// ==== #430 THE ENABLER FLIP: the DEFAULT gate shape serves the cascade frontier (UnitEnabler::trainable,
 	// parity-proven vs the WHOLE composite -- player leg + city leg + caches). Non-default shapes + pre-init
 	// ride the Legacy path (the canTrain cache serves the Legacy path only). ====
 	// #430 owner 2026-07-10: BOTH the trainable-now (bTestVisible=false -> strict) AND the VISIBLE build-list
@@ -2534,7 +2534,7 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 		return false;
 	}
 	// ==== #430 THE ENABLER FLIP (owner 2026-07-04 "flip it all"): the DEFAULT gate shape serves the cascade
-	// frontier (BuildingCascade::buildable cached on the city package, ensure-on-read -- the operating buildings idiom, so
+	// frontier (BuildingEnabler::buildable cached on the city package, ensure-on-read -- the operating buildings idiom, so
 	// legacy's same-turn chain-building survives). What-if/visible shapes + pre-init ride the Legacy path
 	// below; the m_bCanConstruct cache serves the Legacy path only (the [ENABLER/shadow] oracle stays cheap). ====
 	// #430 owner 2026-07-10: canConstruct's GATE verdict rides the cascade frontier for BOTH shapes -- the buildable-now
@@ -16156,7 +16156,7 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 	// loop). This is a single O(log n) set.erase on the isolated box -- NOT the whole-frontier rebuild that,
 	// at order-churn frequency (100s/turn), triggered the modifier-recalc storm + MAF. "Only whatever has been
 	// built [committed] needs updating, not the entire frontier." A dirty/absent box self-corrects on its next
-	// full fill (the queue-exclusion at CvCascadeBuildingCascade:138); completion's broad refresh is unchanged.
+	// full fill (the queue-exclusion at CvBuildingEnabler:138); completion's broad refresh is unchanged.
 	switch (eOrder)
 	{
 	case ORDER_CONSTRUCT: m_cascadeCityPackages.enBuildable.erase(iData1); break;

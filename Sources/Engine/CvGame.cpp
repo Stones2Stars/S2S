@@ -645,24 +645,20 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	// cascade's static data is populated once, after every FK target registers, regardless of logging.
 	spineRegisterConsumers();
 
-	// #430 EAGER CACHE WARM-UP (the load boundary IS the same ensure run eagerly -- scope-packages.md; a
-	// longer load for better turn time is an easy trade). Every plot cache + every scope's packages build
-	// NOW, so turn 1 runs warm instead of paying the lazy first-fill.
+	// #430 LOAD-TIME index/plot warm-up. The cascade SCOPE PACKAGES are NOT eager-built here: the
+	// playerSliceRebuild/worldRebuild markAll+ensure-ALL blanket is REMOVED ([DEC-no-self-heal]) -- the packages
+	// are dirty from reset and fill LAZILY on first read, and ONLY the needed packages recalc. What stays is the
+	// frontier reverse-index build (index-building, not a package recompute) + the plot-yield cache warm (a
+	// game-object cache, scope-packages.md). The eager cascade warm via the eventspine reseed is a later add.
 	{
 		PROFILE("CvGame::onFinalInitialized.cacheWarmup");
 		// enabler-frontier-perf.md Part A: build the building + unit frontier reverse indices HERE (off the lazy
-		// first-onBuildingChanged trigger) so the load-end warm-up + turn 1's targeted re-checks stand on a ready
-		// index. Idempotent -- safe to call once at the load boundary.
+		// first-onBuildingChanged trigger) so turn 1's targeted re-checks stand on a ready index. Idempotent.
 		CascadeAccumulator::buildFrontierIndices();
 		for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
 		{
 			GC.getMap().plotByIndex(iI)->getYield(YIELD_FOOD);   // ONE read builds the whole per-plot cache
 		}
-		for (int iI = 0; iI < MAX_PLAYERS; iI++)
-		{
-			CascadeAccumulator::playerSliceRebuild((PlayerTypes)iI);   // operating buildings + city + player packages, ensured
-		}
-		CascadeAccumulator::worldRebuild();
 	}
 
 	// #430 LOAD LIFECYCLE: the load's per-object read()s are complete -- close the bracket. No-op on a new game
@@ -5894,9 +5890,9 @@ void CvGame::doTurn()
 {
 	PROFILE_BEGIN("CvGame::doTurn()",DOTURN1);
 
-	// #430 the WORLD boundary: re-mark + ensure the world packages once per game turn (the self-heal for the
-	// world-scope sums; the building-derived marks cover the in-turn changes).
-	CascadeAccumulator::worldRebuild();
+	// #430 the per-turn WORLD self-heal (worldRebuild -- markAll + ensure the world packages) is REMOVED
+	// ([DEC-no-self-heal]): the world package is dirty from reset, fills lazily on read, and the spine-routed
+	// building world-deposit marks cover in-play changes. Do NOT re-add a per-turn world blanket.
 
 	// #430 shadow cascade (self-test / readJson slice / placement / dormancy / modifier / state-log) REMOVED --
 	// it was the initial prototype, built on the botched AND-of-ORs predicates; pure shadow over the live engine,

@@ -18,7 +18,7 @@
 #include "CvCascadeWellbeing.h"
 #include "CvCascadeMMKernel.h"
 #include "CvCascadeDepositIndex.h"
-#include "CvCascadeEnablerKernel.h"
+#include "CvEnablerKernel.h"
 #include "CvCascadeAccumulator.h"   // the scope-package types ride its ScopePackages include
 #include "CvCascadePerfCount.h"      // the wbCompute counter/timer (automation-cost attribution)
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer

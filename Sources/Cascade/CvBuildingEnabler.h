@@ -1,11 +1,11 @@
 #pragma once
-#ifndef CV_CASCADE_BUILDING_CASCADE_H
-#define CV_CASCADE_BUILDING_CASCADE_H
+#ifndef CV_BUILDING_ENABLER_H
+#define CV_BUILDING_ENABLER_H
 
 //
-//	BuildingCascade -- StoneBase CalculateBuildableBuildings.cs: the city's BUILDABLE set (the engine canConstruct
+//	BuildingEnabler -- StoneBase CalculateBuildableBuildings.cs: the city's BUILDABLE set (the engine canConstruct
 //	TRUE-set), computed IN ISOLATION over the whole-domain frontier (ALL buildings; the engine has NO enables-frontier).
-//	Also owns the shared AugmentState prereq-WAIVER set (BuildingCascade.AugmentState), which the unit cascade reuses.
+//	Also owns the shared AugmentState prereq-WAIVER set (BuildingEnabler.AugmentState), which the unit cascade reuses.
 //	See patterns.md (the single-source law) + docs/plans/structural-cleanup/cascade-engine-430.md.
 //
 //	Purely-organizational static-methods class: NO data members, never instantiated, no per-instance state.
@@ -18,7 +18,7 @@ class CvPlayer;
 class CvTeam;
 class CvCity;
 
-class BuildingCascade
+class BuildingEnabler
 {
 public:
 	// AugmentState's prereq-WAIVER set (ObsoleteBuildings ∪ PrereqWaivedBuildings). Shared by the building + unit
@@ -28,7 +28,7 @@ public:
 	// Instance cap (StoneBase Capped): current tally count + in-production making >= allowed, at some scope.
 	static bool capped(const CvInfo* j, int eB, const CvPlayer& kPlayer);
 
-	// ScaledPrereq (StoneBase BuildingCascade.ScaledPrereq, VERBATIM): the world-size-scaled required count of a
+	// ScaledPrereq (StoneBase BuildingEnabler.ScaledPrereq, VERBATIM): the world-size-scaled required count of a
 	// PrereqNumOfBuildings prereq.
 	static int scaledPrereq(int baseN, int wsMod, bool selfLimited, bool prereqLimited, bool selfNoScale, int selfCount);
 
@@ -55,4 +55,4 @@ public:
 	static void recheckHave(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, int eHaveKind);
 };
 
-#endif // CV_CASCADE_BUILDING_CASCADE_H
+#endif // CV_BUILDING_ENABLER_H

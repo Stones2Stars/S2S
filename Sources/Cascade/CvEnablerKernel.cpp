@@ -8,7 +8,7 @@
 #include "CvGameCoreDLL.h"
 #include "CvCascadePerfCount.h"   // per-turn call counters + stopwatches (owner 2026-07-02: repeat-calc hunt)
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer
-#include "CvCascadeEnablerKernel.h"
+#include "CvEnablerKernel.h"
 #include "CvInfo.h"
 #include "CvTechInfo.h"        // cascadeStartNode -- the synthetic TECH_GAME_START root
 #include "Repos/InfoRepo.h"
@@ -318,7 +318,7 @@ void EnablerKernel::recomputeOperatingBuildingsInto(const CvCity* pCity, std::se
 // The per-city active-building set (m_operatingBuildings.active/provided) is a CASCADE maintained by TARGETED
 // PROPAGATION, not blanket-recomputed on every event: a HAVE-change ripples ONLY the affected buildings into the
 // AUTHORITATIVE set (the recompute above stays the LOAD seed + the validation oracle). Mirrors the frontier's
-// s_bc*/recheckHave (CvCascadeBuildingCascade.cpp), extended to the operate<->provides fixpoint. enabler.md §7.
+// s_bc*/recheckHave (CvBuildingEnabler.cpp), extended to the operate<->provides fixpoint. enabler.md §7.
 namespace {
 
 static bool s_opIdxBuilt = false;

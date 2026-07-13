@@ -29,7 +29,7 @@
 #include "CvUnitCombatInfo.h" // /computed/cities/yields heal-per-unitcombat decomposition (getUnitCombatInfo().getType())
 #include "Cascade/CvCascadeCapabilities.h" // /computed/teamFlags hasLanguage (the legacy latch is cut, #430)
 #include "Cascade/CvCascadeWellbeing.h"    // the §2b wellbeing port's verdicts on /computed/cities/wellbeing
-#include "Cascade/CvCascadeEnablerKernel.h" // wireOperatingBuildings for the wellbeing eval ctx
+#include "Cascade/CvEnablerKernel.h" // wireOperatingBuildings for the wellbeing eval ctx
 // NB no Cascade headers: this surface serves RAW state (/state) and the ENGINE's own answers (/computed)
 // only -- the cascade-vs-legacy shadow comparison was retired (the cutover is validated by the external
 // dry-calc + logging). See docs/specs/http-endpoints.md.

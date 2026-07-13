@@ -37,7 +37,7 @@
 #include "Repos/BuildsRepo.h"
 #include "Infrastructure/FAStarNode.h"
 #include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [ENG] lines through the event spine
-#include "Cascade/CvCascadeEnablerKernel.h" // EnablerKernel::operatingBuildings -- the cascade active-building verdict (recomputeYieldInto)
+#include "Cascade/CvEnablerKernel.h" // EnablerKernel::operatingBuildings -- the cascade active-building verdict (recomputeYieldInto)
 
 // #430 logging: [ENG] engine-integrity -> event spine (CvPlot). Self-registers its prefix provider + Engine.log file;
 // the spine stays domain-agnostic (never names ENG). Shadow discipline: emits run ALONGSIDE the legacy logEngine calls.

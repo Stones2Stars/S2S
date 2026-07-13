@@ -1,11 +1,11 @@
 //
-//	TechCascade -- StoneBase CalculateAvailableTechs.cs (see the header). Ported VERBATIM from CvCascadeEnabler.cpp's
+//	TechEnabler -- StoneBase CalculateAvailableTechs.cs (see the header). Ported VERBATIM from CvCascadeEnabler.cpp's
 //	file-static en_techAvailable; promoted to a declared surface (the single-source law, patterns.md). LOGIC unchanged:
 //	only the signature was rewritten.
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvCascadeTechCascade.h"
+#include "CvTechEnabler.h"
 #include "CvInfo.h"
 #include "Repos/InfoRepo.h"
 #include "AI/CvTeamAI.h"             // GET_TEAM
@@ -15,12 +15,12 @@
 #include "CvCascadeConditionEval.h"   // cascadeEvalCondition
 #include "CvTechInfo.h"
 
-// --- TechCascade.cs: a tech is available iff not disabled, not held, under allowed.world, requires.build holds.
-// (Default flags -- TechCascade uses `new ConditionEvaluator()`.) The all-techs+requires set is "researchable now".
-void TechCascade::available(const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& avail)
+// --- TechEnabler.cs: a tech is available iff not disabled, not held, under allowed.world, requires.build holds.
+// (Default flags -- TechEnabler uses `new ConditionEvaluator()`.) The all-techs+requires set is "researchable now".
+void TechEnabler::available(const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& avail)
 {
 	CvCascadeEvalCtx ec; ec.player = &kPlayer; ec.team = &kTeam;
-	CvCascadeEvalFlags flags;   // default (NOT strict) -- mirrors StoneBase TechCascade's plain evaluator
+	CvCascadeEvalFlags flags;   // default (NOT strict) -- mirrors StoneBase TechEnabler's plain evaluator
 	const int nT = GC.getNumTechInfos();
 	for (int t = 0; t < nT; ++t)
 	{

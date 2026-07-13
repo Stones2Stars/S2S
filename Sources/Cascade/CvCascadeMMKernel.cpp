@@ -24,7 +24,7 @@
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "CvCascadeConditionEval.h"    // cascadeEvalCondition
 #include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (hot paths match ints)
-#include "CvCascadeEnablerKernel.h"    // EnablerKernel::obsoletedByHeldTech -- the obsolescence verdict (isBuildingObsolete)
+#include "CvEnablerKernel.h"    // EnablerKernel::obsoletedByHeldTech -- the obsolescence verdict (isBuildingObsolete)
 #include "Engine/CvTeam.h"             // *ec.team for obsoletedByHeldTech
 #include <map>
 

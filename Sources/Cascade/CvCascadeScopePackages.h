@@ -102,10 +102,10 @@ enum CascadeCityPkg
 	CPK_SCSPEC  = 512,   // the gpBase specialist flat package (governor churn touches ONLY this)
 	CPK_BR      = 1024,  // the buildRate city ledgers + city member percents
 	// the ENABLER frontier sets -- SPLIT per domain so a gate read rebuilds ONLY its own walk (the
-	// perf surgery 2026-07-04 late: one shared bit made canConstruct pay the UnitCascade walk and
+	// perf surgery 2026-07-04 late: one shared bit made canConstruct pay the UnitEnabler walk and
 	// the boundary pay everything for every city)
-	CPK_FRONT_B  = 2048,  // buildable (BuildingCascade)
-	CPK_FRONT_U  = 4096,  // trainable (UnitCascade)
+	CPK_FRONT_B  = 2048,  // buildable (BuildingEnabler)
+	CPK_FRONT_U  = 4096,  // trainable (UnitEnabler)
 	CPK_FRONT_PP = 8192,  // creatable + maintainable (generate + the two gateSets)
 	CPK_FRONTIER = CPK_FRONT_B | CPK_FRONT_U | CPK_FRONT_PP,
 	CPK_RATES   = CPK_YPCT | CPK_YSPEC | CPK_YEXTRA | CPK_CSPEC | CPK_CPCT | CPK_CBASE,   // = 63

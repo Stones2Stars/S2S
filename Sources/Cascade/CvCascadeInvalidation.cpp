@@ -1,11 +1,13 @@
 //
 //	CvCascadeInvalidation -- the #430 F0 cache-invalidation consumer (R3). See the header for the summary.
 //
-//	⚠ STAGED, ADDITIVE (deliberate): the hand-wired mutation-site marks AND the per-turn self-heal (playerSliceRebuild)
-//	remain the correctness CRUTCH while this routing is verified live. The modifier getters are ALREADY on the cascade,
-//	so a missed invalidation is a wrong value that IS the /computed oracle -- UNDETECTABLE without a playtest. So the
-//	crutch stays until the invalidation is proven complete (f0-eventspine-invalidation.md); this consumer's job now is
-//	to route correctly + ANNOUNCE every mark ([CASCADE] invalidate ...) so each piece can be verified, not assumed.
+//	THE SELF-HEAL BLANKET IS REMOVED ([DEC-no-self-heal], 2026-07-13): playerSliceRebuild/worldRebuild (markAll +
+//	ensure ALL packages every turn) no longer exist -- correctness is the eventspine (this consumer) routing each
+//	DOMAIN event to ONLY the packages its source feeds, + lazy recalc. The modifier getters are ALREADY on the
+//	cascade, so a missed invalidation is a wrong value that IS the /computed oracle -- now it SURFACES as a live
+//	divergence instead of being blanket-healed away (the point). The hand-wired mutation-site marks still run
+//	ALONGSIDE this consumer (harmless double-mark) until they are removed and the eventspine is the SOLE path.
+//	This consumer ANNOUNCES every mark ([CASCADE] invalidate ...) so the real invalidation state is mappable.
 //
 //	Load-INERT: mid-reseed the targeted ripples (operating-buildings / frontier) are invalid -- their reverse indices
 //	are not built until onFinalInitialized (buildFrontierIndices). The load warm-up builds the cascade; this is a

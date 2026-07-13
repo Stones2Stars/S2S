@@ -103,12 +103,9 @@ public:
 	static bool enPromotionValid(const CvUnit* pUnit, int ePromo);
 
 	// ===== the boundaries =====
-	// The slice-start rebuild ("Cascade.RebuildCache(myPlayerId)"): the self-heal re-mark for the unhooked
-	// classes + the eager ensure of this player's packages and his cities'. Runs at CvPlayer::doTurn top;
-	// the load warm-up calls the same thing per player (the one mechanism, run eagerly).
-	static void playerSliceRebuild(PlayerTypes ePlayer);
-	// The world boundary: re-mark + ensure the world packages (CvGame::doTurn + the load warm-up).
-	static void worldRebuild();
+	// The per-turn/load SELF-HEAL blankets (playerSliceRebuild, worldRebuild) are REMOVED ([DEC-no-self-heal]):
+	// they recomputed ALL packages every turn instead of only the spine-marked ones. Invalidation is now the
+	// eventspine (R3 consumer) alone + lazy recalc of the dirty packages. cityCreated is the one ruled eager-ensure.
 	// The city-creation boundary (owner ruling 2026-07-04): a founded/acquired city's yields stand
 	// IMMEDIATELY (time-to-build is visible at once) -- one eager ensure after the founding/acquisition
 	// setup completes; from there the city rides the ordinary marks + slice boundaries.

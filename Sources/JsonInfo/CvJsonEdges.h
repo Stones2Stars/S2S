@@ -8,7 +8,7 @@
 //	Composed BY VALUE on the derived infos that author any edge (the data-grounded table). WRITE-ONCE AT LOAD.
 //
 //	Storage is the consumer-proven dotted key "<edge>.<bucket>" -> [ids] ("enables.units", "obsoletedBy.techs") --
-//	the exact query surface the enabler's GENERATE pass reads (EnablerKernel/BuildingCascade/UnitCascade). One
+//	the exact query surface the enabler's GENERATE pass reads (EnablerKernel/BuildingEnabler/UnitEnabler). One
 //	find(), no per-edge classes: the edge/bucket vocabulary is DATA (json §4.1), not structure.
 //
 

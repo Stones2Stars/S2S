@@ -15,7 +15,7 @@
 #include "CvCascadePercentStack.h"
 #include "CvCascadeCommerceCalc.h"    // baseOwn100 + the CombineSplit kernel + the pools/ledgers
 #include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx
-#include "CvCascadeEnablerKernel.h"   // EnablerKernel::wireOperatingBuildings / operatingBuildings -- the standing operating buildings cache
+#include "CvEnablerKernel.h"   // EnablerKernel::wireOperatingBuildings / operatingBuildings -- the standing operating buildings cache
 #include "CvCascadeWellbeing.h"       // the §2b gather + the ONE verdict assembly
 #include "CvCascadeScalarChannels.h"  // the scalar city halves + the player fill + the buildRate ledgers
 #include "CvCascadeOperatingBuildings.h"
@@ -38,9 +38,9 @@
 #include "CvBuildInfo.h"         // enBuildUnlocked
 #include "CvPromotionInfo.h"     // enPromotionValid
 #include "CvUnitCombatInfo.h"    // enPromotionValid (the unitcombat HAVE leg)
-#include "CvCascadeTechCascade.h"      // TechCascade::available -- the researchable frontier
-#include "CvCascadeBuildingCascade.h"  // BuildingCascade::buildable -- the constructible frontier
-#include "CvCascadeUnitCascade.h"      // UnitCascade::trainable -- the trainable frontier
+#include "CvTechEnabler.h"      // TechEnabler::available -- the researchable frontier
+#include "CvBuildingEnabler.h"  // BuildingEnabler::buildable -- the constructible frontier
+#include "CvUnitEnabler.h"      // UnitEnabler::trainable -- the trainable frontier
 #include "Engine/CvUnit.h"             // enPromotionValid (held promotions + isPromotionValidLegacy)
 #include "AI/CvPlayerAI.h"            // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM
@@ -216,7 +216,7 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 	if (iMask & (CPK_FRONT_B | CPK_FRONT_U | CPK_FRONT_PP))
 	{
 		// the ENABLER frontier sets (#430 THE FLIP): the harness-proven calls VERBATIM at the city ctx --
-		// SPLIT per domain (the perf surgery): a canConstruct read pays ONLY the BuildingCascade walk, etc.
+		// SPLIT per domain (the perf surgery): a canConstruct read pays ONLY the BuildingEnabler walk, etc.
 		const CvTeam& kTeam = GET_TEAM(player.getTeam());
 		if (iMask & CPK_FRONT_B)
 		{
@@ -224,12 +224,12 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 			PerfAccumTimer perfFr(CascadePerf::frontBMs);
 			CascadeCondScope ccsFr(CC_FRONT_B);
 			st.enBuildable.clear();
-			BuildingCascade::buildable(pCity, player, kTeam, st.enBuildable);
+			BuildingEnabler::buildable(pCity, player, kTeam, st.enBuildable);
 			// the VISIBLE (build-list) frontier -- CAN GET with the greyable clauses relaxed (enabler.md §6). Served by
 			// canConstruct(bTestVisible=true). A second full walk here (once per HAVE-change, not per read); folding both
 			// sets into one bc_isBuildable pass is a parked perf follow-up.
 			st.enBuildableVisible.clear();
-			BuildingCascade::buildable(pCity, player, kTeam, st.enBuildableVisible, /*bVisible*/ true);
+			BuildingEnabler::buildable(pCity, player, kTeam, st.enBuildableVisible, /*bVisible*/ true);
 		}
 		if (iMask & CPK_FRONT_U)
 		{
@@ -237,9 +237,9 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 			PerfAccumTimer perfFr(CascadePerf::frontUMs);
 			CascadeCondScope ccsFr(CC_FRONT_U);
 			st.enTrainable.clear();
-			UnitCascade::trainable(pCity, player, kTeam, st.enTrainable);
+			UnitEnabler::trainable(pCity, player, kTeam, st.enTrainable);
 			st.enTrainableVisible.clear();   // the VISIBLE (build-list) frontier (enabler.md §6), served to canTrain(bTestVisible=true)
-			UnitCascade::trainable(pCity, player, kTeam, st.enTrainableVisible, /*bVisible*/ true);
+			UnitEnabler::trainable(pCity, player, kTeam, st.enTrainableVisible, /*bVisible*/ true);
 		}
 		if (iMask & CPK_FRONT_PP)
 		{
@@ -335,7 +335,7 @@ void CascadeAccumulator::refreshPlayerScope(const CvPlayer* pPlayer, int iMask)
 		EnBucketSets candP;
 		EnablerKernel::generate(*pPlayer, NULL, candP);
 		ps.enResearchable.clear(); ps.enCivicsOk.clear(); ps.enHurryOk.clear();
-		TechCascade::available(*pPlayer, kTeam, ps.enResearchable);
+		TechEnabler::available(*pPlayer, kTeam, ps.enResearchable);
 		EnablerKernel::gateSet("civics",  candP, fec, *pPlayer, kTeam, false, ps.enCivicsOk);
 		EnablerKernel::gateSet("hurries", candP, fec, *pPlayer, kTeam, false, ps.enHurryOk);
 		// the canBuild UNLOCK rem-set (the harness's remBld: obsoletes.builds over held techs)
@@ -899,58 +899,28 @@ void CascadeAccumulator::buildingProcessed(const CvCity* pCity, BuildingTypes eB
 	// for CAN-GET GROWTH (mid-turn tech/civic via markPlayerScopeAndCities).
 	pCity->m_cascadeCityPackages.set.markDirty(CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC | CPK_FRONT_B | CPK_FRONT_U));
 	EnablerKernel::onBuildingChangedActive(pCity, (int)eBuilding);   // operating buildings: targeted ripple into the authoritative active set (was blanket markAllDirty)
-	BuildingCascade::onBuildingChanged(pCity, (int)eBuilding);       // CPK_FRONT_B: targeted (reads the fresh operating buildings)
-	UnitCascade::onBuildingChangedUnits(pCity, (int)eBuilding);      // CPK_FRONT_U: targeted (reads the fresh operating buildings)
+	BuildingEnabler::onBuildingChanged(pCity, (int)eBuilding);       // CPK_FRONT_B: targeted (reads the fresh operating buildings)
+	UnitEnabler::onBuildingChangedUnits(pCity, (int)eBuilding);      // CPK_FRONT_U: targeted (reads the fresh operating buildings)
 
 	const CvInfo* d = InfoRepo<CvBuildingInfo>::get().get((int)eBuilding);
 	if (d == NULL) return;
-	static int segArea = -2, segEmpire = -2, segWorld = -2, segPercent = -2, segBuildings = -2, segSpecialist = -2;
-	if (segArea == -2)
-	{
-		segArea = DepositIndex::lookupSegment("area");
-		segEmpire = DepositIndex::lookupSegment("empire");
-		segWorld = DepositIndex::lookupSegment("world");
-		segPercent = DepositIndex::lookupSegment("percent");
-		segBuildings = DepositIndex::lookupSegment("buildings");
-		segSpecialist = DepositIndex::lookupSegment("specialist");   // #430 G4: <ch>.empire.specialist.perSpecialist (wonders)
-	}
-	int iPlayerMask = 0, iSiblingMask = 0;
-	bool bWorld = false;
-	const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
-	for (size_t i = 0; i < deps.size(); ++i)
-	{
-		const CascadeDeposit& dep = deps[i];
-		if (dep.seg[1] == segWorld) { bWorld = true; iPlayerMask |= PSC_SC; continue; }
-		if (dep.seg[1] != segEmpire && dep.seg[1] != segArea) continue;
-		if (dep.unitId == segPercent)
-		{
-			// empire/area PERCENTS enter every sibling city's CITY-REALIZED stacks (the owned-type walk)
-			// + the player building sums (gp/maint)
-			iPlayerMask |= PSC_SC | PSC_BR;
-			iSiblingMask |= CPK_YPCT | CPK_CPCT | CPK_SCPCT | CPK_BR;
-		}
-		else
-		{
-			// empire/area FLATS feed the player building sums (trade) + the wb fold maps + the keyed ledgers
-			iPlayerMask |= PSC_SC | PSC_CFLAT | PSC_WB;
-			if (dep.nSeg == 4 && dep.seg[2] == segBuildings)
-				iSiblingMask |= CPK_CBASE | CPK_WB;   // the guild-grant + Royal-Tomb classes: every city's keyed realization re-fills
-			else if (dep.nSeg >= 3 && dep.seg[2] == segSpecialist)
-				iSiblingMask |= CPK_YSPEC | CPK_CSPEC;   // #430 G4: <ch>.empire.specialist.perSpecialist -> EVERY city's specialist package (the empire-wide getBuildingCount fold; the sibling loop includes this city)
-		}
-	}
-	if (iPlayerMask != 0 || iSiblingMask != 0)
+	// #430 R2: the cross-scope masks are the COMPILED reverse route (DepositIndex::routeFor) -- the former inline
+	// per-deposit loop, lifted verbatim into the index and computed once. So a city-only building routes to nothing
+	// here; only a genuine grantor (empire/area buildings-keyed commerce, specialist perSpecialist, world flats)
+	// fans out to the player / sibling-city / world packages.
+	const SourceRoute& route = DepositIndex::routeFor(d);
+	if (route.playerBits != 0 || route.cityBits != 0)
 	{
 		const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
-		if (iPlayerMask != 0) owner.m_cascadePlayerScope.set.markDirty(iPlayerMask);
-		if (iSiblingMask != 0)
+		if (route.playerBits != 0) owner.m_cascadePlayerScope.set.markDirty(route.playerBits);
+		if (route.cityBits != 0)
 		{
 			int iLoop;
 			for (const CvCity* pc = owner.firstCity(&iLoop); pc != NULL; pc = owner.nextCity(&iLoop))
-				pc->m_cascadeCityPackages.set.markDirty(iSiblingMask);
+				pc->m_cascadeCityPackages.set.markDirty(route.cityBits);   // the sibling loop includes this city
 		}
 	}
-	if (bWorld) GC.getGame().m_cascadeWorldScope.set.markAllDirty();
+	if (route.world) GC.getGame().m_cascadeWorldScope.set.markAllDirty();
 }
 
 void CascadeAccumulator::markPlayerScopeAndCities(PlayerTypes ePlayer)
@@ -975,8 +945,8 @@ void CascadeAccumulator::markPlayerScopeAndCities(PlayerTypes ePlayer)
 // on a ready index instead of paying the lazy first-build.
 void CascadeAccumulator::buildFrontierIndices()
 {
-	BuildingCascade::buildIndices();
-	UnitCascade::buildIndices();
+	BuildingEnabler::buildIndices();
+	UnitEnabler::buildIndices();
 	EnablerKernel::buildActiveIndex();   // the operate reverse-index for the targeted active-set maintenance
 }
 
@@ -987,49 +957,25 @@ void CascadeAccumulator::cityHaveChanged(const CvCity* pCity, int eHaveKind)
 	if (pCity == NULL) return;
 	const CvPlayer& kPlayer = GET_PLAYER(pCity->getOwner());
 	const CvTeam& kTeam = GET_TEAM(kPlayer.getTeam());
-	BuildingCascade::recheckHave(pCity, kPlayer, kTeam, eHaveKind);
-	UnitCascade::recheckHave(pCity, kPlayer, kTeam, eHaveKind);
+	BuildingEnabler::recheckHave(pCity, kPlayer, kTeam, eHaveKind);
+	UnitEnabler::recheckHave(pCity, kPlayer, kTeam, eHaveKind);
 	EnablerKernel::onHaveChangedActive(pCity, eHaveKind);   // operating buildings: targeted ripple for the HAVE-referencing operate
 }
 
 // Part B: a unit's empire count changed -> the trainable re-check across the player's cities (empire-scoped caps).
 void CascadeAccumulator::unitCountChanged(const CvPlayer& kPlayer, int eUnit)
 {
-	UnitCascade::onUnitChanged(kPlayer, eUnit);
+	UnitEnabler::onUnitChanged(kPlayer, eUnit);
 }
 
 // ===================== the BOUNDARIES =====================
-
-void CascadeAccumulator::playerSliceRebuild(PlayerTypes ePlayer)
-{
-	if (ePlayer < 0 || ePlayer >= MAX_PLAYERS) return;
-	const CvPlayer& kPlayer = GET_PLAYER(ePlayer);
-	if (!kPlayer.isAlive()) return;
-	// The FULL per-player rebuild ("Cascade.RebuildCache(myPlayerId)"): the self-heal must cover ALL
-	// packages -- an unhooked mutation (power flips, bonus-network shifts, timers) otherwise stales a
-	// package FOREVER (the measured Burdigala class: packages frozen across turns while legacy moved; a
-	// narrowed CBASE|WB self-heal was an over-fix -- the original 222s cost lived in the all-infos walks +
-	// the string hot paths, both since fixed, NOT in the mark breadth).
-	kPlayer.m_cascadePlayerScope.set.markAllDirty();
-	emitCacheInvalidate(1, (int)ePlayer, (int)ePlayer, PSC_ALL, "sliceRebuild");   // observability: the empire blanket (the self-heal crutch)
-	kPlayer.m_cascadePlayerScope.set.ensure(PSC_EAGER);   // the frontier stays LAZY (ensure-on-read; the eager rebuild was the measured turn-grind)
-	int iLoop;
-	for (const CvCity* pc = kPlayer.firstCity(&iLoop); pc != NULL; pc = kPlayer.nextCity(&iLoop))
-	{
-		pc->m_operatingBuildings.set.ensure();      // SEED on first visit (dirty from reset/load); no-op after -- the package fills read operating buildings
-		EnablerKernel::onSliceRebuildActive(pc);   // the bounded per-turn dynamic re-check (replaces the whole-city operating buildings recompute)
-		pc->m_cascadeCityPackages.set.markAllDirty();
-		emitCacheInvalidate(0, (int)ePlayer, pc->getID(), CPK_ALL, "sliceRebuild");   // observability: the per-city blanket (owner,id = the unambiguous handle)
-		pc->m_cascadeCityPackages.set.ensure(CPK_EAGER);   // ditto: a city with a standing build queue never pays a frontier walk
-	}
-}
-
-void CascadeAccumulator::worldRebuild()
-{
-	GC.getGame().m_cascadeWorldScope.set.markAllDirty();
-	emitCacheInvalidate(2, -1, -1, WSC_ALL, "worldRebuild");   // observability: the world blanket (no owner/id)
-	GC.getGame().m_cascadeWorldScope.set.ensure();
-}
+//
+// The per-turn / load SELF-HEAL blankets (playerSliceRebuild, worldRebuild -- markAll + eager ensure of ALL
+// packages) are REMOVED ([DEC-no-self-heal]). They were the calc-ALL rollerskate: they recomputed every package
+// every turn instead of only the ones a spine event marked. Correctness is now ONLY the eventspine-routed marks
+// (the R3 cache-invalidation consumer -> the deposit-index route) + LAZY recalc of the dirty packages; a missed
+// invalidation surfaces as a live divergence, never a silently rebuilt-away cost. The only ruled eager-ensure is
+// cityCreated (a founded city's yields stand at once). Do NOT re-introduce a slice/world blanket.
 
 void CascadeAccumulator::cityCreated(const CvCity* pCity)
 {

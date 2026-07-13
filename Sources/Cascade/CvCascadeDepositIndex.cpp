@@ -6,6 +6,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeDepositIndex.h"
+#include "CvCascadeScopePackages.h"   // the CPK_*/PSC_* package-bit vocabulary routeFor maps deposits onto
 #include "CvInfo.h"               // CvInfo::getModifiers()/getWhenObsolete() -- the push's read surface
 #include "Defines/CvGlobals.h"
 #include "CvTerrainInfo.h"
@@ -28,6 +29,10 @@ struct DiCompiledSet
 };
 static std::map<const CvInfo*, DiCompiledSet> s_compiled;
 static const std::vector<CascadeDeposit> s_noDeposits;   // the shared empty answer (NULL / family-less infos)
+
+// The lazy reverse-route cache (F0 R2): source info -> its compiled cross-scope route. Filled on first routeFor
+// query, dropped with s_compiled by clearCompiled() (its keys are the about-to-be-freed infos).
+static std::map<const CvInfo*, SourceRoute> s_routes;
 
 int DepositIndex::internSegment(const std::string& s)
 {
@@ -176,6 +181,76 @@ void DepositIndex::pushInfo(const CvInfo* j)
 void DepositIndex::clearCompiled()
 {
 	s_compiled.clear();
+	s_routes.clear();
+}
+
+// THE REVERSE ROUTE (F0 R2). The body is a VERBATIM transcription of CascadeAccumulator::buildingProcessed's former
+// inline per-deposit loop -- generalized to any source info and computed once (cached) instead of re-derived every
+// event. So it is derivation-IDENTICAL to the proven building path: a percent empire/area deposit fans to every
+// city's percent stacks (+ the player gp/maint/buildRate sums); a flat one to the player flat/wb/keyed sums (+ the
+// sibling CBASE/WB keyed realization, or the specialist packages); a world deposit sets the world flag. The
+// per-CHANNEL narrowing (which yield) is the R2b follow-on; this is the scope x unit x member level.
+const SourceRoute& DepositIndex::routeFor(const CvInfo* j)
+{
+	static const SourceRoute s_empty;
+	if (j == NULL) return s_empty;
+	const std::map<const CvInfo*, SourceRoute>::const_iterator cit = s_routes.find(j);
+	if (cit != s_routes.end()) return cit->second;
+
+	// The interned segment ids the routing compares against (all authored in any loaded game; a real deposit's
+	// address is always >= 2 segments, so seg[1] is never -1 and an unauthored id can never false-match).
+	const int segArea       = lookupSegment("area");
+	const int segEmpire     = lookupSegment("empire");
+	const int segWorld      = lookupSegment("world");
+	const int segPercent    = lookupSegment("percent");
+	const int segBuildings  = lookupSegment("buildings");
+	const int segSpecialist = lookupSegment("specialist");
+	// R2b PER-CHANNEL narrowing (the family segment seg[0], grounded from the fills' channel strings:
+	// BuildingPackage/PercentStack yields = {food,production,commerce}, CommerceCalc = {gold,research,culture,
+	// espionage}, ScalarChannels = greatPeopleRate/maintenance/buildRate). A yield/commerce empire PERCENT is
+	// purely CITY-realized (yPctCity/cPct) -- the player scope holds NO yield/commerce percent (verified against
+	// CascadePlayerScope), so it marks ONE city bit and NO player bit. gp/maint keep their player scalar half
+	// (gpModPlayer/maintPlayerAll = PSC_SC); buildRate keeps PSC_BR. The GROUPED families (defense, stateReligion --
+	// seg[0] not a plain channel) + any unrecognized family fall to the COARSE-SAFE percent mask (never under-mark).
+	const int segFood = lookupSegment("food"), segProd = lookupSegment("production"), segCommY = lookupSegment("commerce");
+	const int segGold = lookupSegment("gold"), segResearch = lookupSegment("research"),
+	          segCulture = lookupSegment("culture"), segEsp = lookupSegment("espionage");
+	const int segGp = lookupSegment("greatPeopleRate"), segMaint = lookupSegment("maintenance"), segBr = lookupSegment("buildRate");
+
+	SourceRoute r;
+	const std::vector<CascadeDeposit>& deps = depositsFor(j);
+	for (size_t i = 0; i < deps.size(); ++i)
+	{
+		const CascadeDeposit& dep = deps[i];
+		if (dep.seg[1] == segWorld) { r.world = true; r.playerBits |= PSC_SC; continue; }
+		if (dep.seg[1] != segEmpire && dep.seg[1] != segArea) continue;
+		if (dep.unitId == segPercent)
+		{
+			// empire/area PERCENTS enter the CITY-REALIZED stacks (the owned-type walk); the player half is only the
+			// scalar sums (gp/maint = PSC_SC, buildRate = PSC_BR) -- NOT the yield/commerce percents (city-only).
+			const int f = dep.seg[0];
+			if (f == segFood || f == segProd || f == segCommY)                            r.cityBits |= CPK_YPCT;
+			else if (f == segGold || f == segResearch || f == segCulture || f == segEsp)  r.cityBits |= CPK_CPCT;
+			else if (f == segGp)    { r.cityBits |= CPK_SCPCT; r.playerBits |= PSC_SC; }
+			else if (f == segMaint) { r.cityBits |= CPK_SCPCT; r.playerBits |= PSC_SC; }
+			else if (f == segBr)    { r.cityBits |= CPK_BR;    r.playerBits |= PSC_BR; }
+			else   // defense / stateReligion (grouped) / unrecognized -> coarse-safe (never under-mark)
+			{
+				r.cityBits   |= CPK_YPCT | CPK_CPCT | CPK_SCPCT | CPK_BR;
+				r.playerBits |= PSC_SC | PSC_BR;
+			}
+		}
+		else
+		{
+			// empire/area FLATS feed the player building sums (trade) + the wb fold maps + the keyed ledgers
+			r.playerBits |= PSC_SC | PSC_CFLAT | PSC_WB;
+			if (dep.nSeg == 4 && dep.seg[2] == segBuildings)
+				r.cityBits |= CPK_CBASE | CPK_WB;   // the guild-grant + Royal-Tomb classes: every city's keyed realization re-fills
+			else if (dep.nSeg >= 3 && dep.seg[2] == segSpecialist)
+				r.cityBits |= CPK_YSPEC | CPK_CSPEC;   // <ch>.empire.specialist.perSpecialist -> every city's specialist package (G4)
+		}
+	}
+	return s_routes[j] = r;
 }
 
 const std::vector<CascadeDeposit>& DepositIndex::depositsFor(const CvInfo* j)

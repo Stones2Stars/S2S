@@ -72,6 +72,28 @@ struct CascadeDeposit
 	{ for (int i = 0; i < CASC_DEP_SEGS; ++i) seg[i] = -1; }
 };
 
+//
+//	The COMPILED REVERSE ROUTE of a source info (#430 F0 R2, state-repositories.md "the event->cache routing is
+//	DERIVED from the deposit index"). A DOMAIN event's source names the channels x scopes it touches straight off its
+//	compiled deposits; this is that inversion, computed ONCE per source info and cached. It carries ONLY the
+//	CROSS-SCOPE reach a source's EMPIRE/AREA/WORLD deposits route to -- the player-package bits, the city-package bits
+//	every owner city realizes (empire/area deposits roll DOWN to all cities), and the world flag. The source's OWN
+//	city floor is NOT here: for a BUILDING it is the operate/provides fixpoint's conservative mark (a building flip can
+//	flip sibling buildings' active state, so the own-city effect is not bounded by the building's own deposits), added
+//	by the consumer. So a city-only source routes to nothing here; only a genuine grantor fans out.
+//	Granularity: the PERCENT branch is per-CHANNEL (R2b -- yield-percent -> CPK_YPCT only, commerce-percent ->
+//	CPK_CPCT, gp/maint -> CPK_SCPCT+PSC_SC, buildRate -> CPK_BR+PSC_BR; grouped/unknown families fall to a
+//	coarse-safe mask, never under-marking). The FLAT branch stays scope x unit x member coarse (its pulled-live vs
+//	city-realized routing is not yet nailed per family -- kept safe rather than guessed).
+//
+struct SourceRoute
+{
+	int  playerBits;   // CascadePlayerPkg bits (PSC_*) marked on the owner
+	int  cityBits;     // CascadeCityPkg bits (CPK_*) marked on EVERY owner city (the empire/area realization)
+	bool world;        // a world-scope deposit is present -> mark CascadeWorldScope
+	SourceRoute() : playerBits(0), cityBits(0), world(false) {}
+};
+
 class DepositIndex
 {
 public:
@@ -95,6 +117,12 @@ public:
 	// info authored none / is NULL). whenObsoleteFor = the building's obsolete-state tree (json #4.2).
 	static const std::vector<CascadeDeposit>& depositsFor(const CvInfo* j);
 	static const std::vector<CascadeDeposit>& whenObsoleteFor(const CvInfo* j);
+
+	// THE REVERSE ROUTE (F0 R2): the source info's cross-scope package reach, unioned over its compiled deposits and
+	// cached (lazy, first query; dropped by clearCompiled with the compiled registry -- its keys are the freed infos).
+	// The invalidation consumer queries this O(1) to mark exactly the player/sibling/world packages a source feeds,
+	// replacing buildingProcessed's inline per-deposit derivation. NULL / family-less info -> the empty route.
+	static const SourceRoute& routeFor(const CvInfo* j);
 
 	// Fill a record's compiled fields from its address/unit strings (push-time; the strings stay for
 	// rendering/diagnostics). Splits the dotted address, interns each segment (the first CASC_DEP_SEGS kept),

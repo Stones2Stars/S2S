@@ -1,13 +1,13 @@
 //
-//	BuildingCascade -- StoneBase CalculateBuildableBuildings.cs (see the header). Ported VERBATIM from
+//	BuildingEnabler -- StoneBase CalculateBuildableBuildings.cs (see the header). Ported VERBATIM from
 //	CvCascadeEnabler.cpp's file-static en_augmentWaived / en_buildingCapped / en_scaledPrereq / en_buildingBuildable;
 //	promoted to a declared surface (the single-source law, patterns.md). LOGIC unchanged: only the signatures + the
 //	EnablerKernel-qualified call sites were rewritten.
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvCascadeBuildingCascade.h"
-#include "CvCascadeEnablerKernel.h"    // EnablerKernel::obsoletedByHeldTech
+#include "CvBuildingEnabler.h"
+#include "CvEnablerKernel.h"    // EnablerKernel::obsoletedByHeldTech
 #include "CvInfo.h"
 #include "CvBuildingInfo.h"       // notConstructible (the cascade's own never-buildable flag; self-containment)
 #include "Repos/InfoRepo.h"
@@ -28,13 +28,13 @@
 #include "Engine/CvMap.h"
 #include "Engine/CvGame.h"
 
-// AugmentState's prereq-WAIVER set (StoneBase BuildingCascade.AugmentState: ObsoleteBuildings ∪ PrereqWaivedBuildings):
+// AugmentState's prereq-WAIVER set (StoneBase BuildingEnabler.AugmentState: ObsoleteBuildings ∪ PrereqWaivedBuildings):
 // a BUILDING is a waived prereq iff its obsoleting tech is held by the team (the JSON `obsoletedBy.techs` edge --
 // EnablerKernel::obsoletedByHeldTech, the ONE tech-obsolescence authority), OR its SpecialBuilding group is made
 // not-required by an adopted civic (enables.specialBuildingsWaived). Shared by the building + unit cascades (both gate
 // requires.build through the SAME evaluator). The vicinity-supply + gov-center AugmentState operating buildings are read LIVE by the
 // evaluator (hasVicinityBonus / isGovernmentCenter), so only the waived set is materialized here.
-void BuildingCascade::augmentWaived(const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& waived)
+void BuildingEnabler::augmentWaived(const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& waived)
 {
 	const int nB = GC.getNumBuildingInfos();
 	for (int b = 0; b < nB; ++b)   // obsolete-by-held-tech (obsoletedBy.techs)
@@ -63,7 +63,7 @@ void BuildingCascade::augmentWaived(const CvPlayer& kPlayer, const CvTeam& kTeam
 // Instance cap (StoneBase Capped): the entity is maxed at some scope -- current tally count + in-production making >=
 // allowed. Reads the cascade's own allowed (CvInfo) + tally + the live making, NOT the engine's isBuildingMaxedOut
 // (tautological vs canConstruct -- the cascade owns its OWN count).
-bool BuildingCascade::capped(const CvInfo* j, int eB, const CvPlayer& kPlayer)
+bool BuildingEnabler::capped(const CvInfo* j, int eB, const CvPlayer& kPlayer)
 {
 	if (j == NULL) return false;
 	const CvJsonAllowed* a = j->getAllowed();
@@ -81,12 +81,12 @@ bool BuildingCascade::capped(const CvInfo* j, int eB, const CvPlayer& kPlayer)
 	return false;
 }
 
-// ScaledPrereq (StoneBase BuildingCascade.ScaledPrereq, VERBATIM): the required count of a PrereqNumOfBuildings prereq --
+// ScaledPrereq (StoneBase BuildingEnabler.ScaledPrereq, VERBATIM): the required count of a PrereqNumOfBuildings prereq --
 // world-size-scaled (getModifiedIntValue: wsMod>0 -> *(100+m)/100; wsMod<0 -> *100/(100-m)), then *(1+selfCount) unless
 // SELF is a limited wonder; bypassed (= base) if SELF is forceNoPrereqScaling OR the PREREQ is a limited wonder. This is
 // a faithful TRANSCRIPTION of the legacy CvPlayer::getBuildingPrereqBuilding math -- ported, NOT called (the legacy
 // method does not understand the cascade). CHALLENGE_ONE_CITY is omitted, as StoneBase omits it.
-int BuildingCascade::scaledPrereq(int baseN, int wsMod, bool selfLimited, bool prereqLimited, bool selfNoScale, int selfCount)
+int BuildingEnabler::scaledPrereq(int baseN, int wsMod, bool selfLimited, bool prereqLimited, bool selfNoScale, int selfCount)
 {
 	if (baseN < 1) return 0;
 	if (selfNoScale || prereqLimited) return baseN;
@@ -162,7 +162,7 @@ static bool bc_isBuildable(int b, const CvCity* pCity, const CvPlayer& kPlayer, 
 		const CvBuildingInfo* jb = (const CvBuildingInfo*)j;
 		if (jb != NULL && jb->notConstructible) return false;          // EXCLUDE never-buildable (identity.notConstructible)
 	}
-	if (BuildingCascade::capped(j, b, kPlayer)) return false;          // INSTANCE CAP (created + making >= allowed)
+	if (BuildingEnabler::capped(j, b, kPlayer)) return false;          // INSTANCE CAP (created + making >= allowed)
 	const SpecialBuildingTypes sb = bi.getSpecialBuilding();
 	if (sb != NO_SPECIALBUILDING)
 	{
@@ -187,7 +187,7 @@ static bool bc_isBuildable(int b, const CvCity* pCity, const CvPlayer& kPlayer, 
 	{
 		const CvInfo* pj = InfoRepo<CvBuildingInfo>::get().get((int)it->first);
 		const bool prereqLimited = (pj != NULL && pj->getAllowed() != NULL && !pj->getAllowed()->isEmpty());
-		const int required = BuildingCascade::scaledPrereq(it->second, wsMod, selfLimited, prereqLimited, selfNoScale, selfCount);
+		const int required = BuildingEnabler::scaledPrereq(it->second, wsMod, selfLimited, prereqLimited, selfNoScale, selfCount);
 		if (cascadeTally().buildingCount((int)kPlayer.getID(), (int)it->first, CASCADE_COUNT_EMPIRE) < required) return false;  // PREREQ-AMOUNT
 	}
 	if (j != NULL)
@@ -199,13 +199,13 @@ static bool bc_isBuildable(int b, const CvCity* pCity, const CvPlayer& kPlayer, 
 	return true;
 }
 
-// --- BuildingCascade.cs: the city's BUILDABLE set (the engine canConstruct TRUE-set), computed IN ISOLATION.
+// --- BuildingEnabler.cs: the city's BUILDABLE set (the engine canConstruct TRUE-set), computed IN ISOLATION.
 // FRONTIER = ALL buildings (the engine has NO enables-frontier; an enables-frontier under-offers no-enabler buildings
 // like PALACE). Prune in StoneBase's order: tech-obsolete, already-built, in-queue, never-buildable (notConstructible),
 // instance-capped, special-building GROUP-capped, dormant-on-build, prereq-AMOUNT unmet. Then GATE requires.build
 // (STRICT state religion) + requires.operate (IgnoreDisabled -- its dormancy `disabled` must not remove the building
 // from buildable; POSITIVE prereqs still gate, with obsolete/civic-waived prereqs skipped via the AugmentState set).
-void BuildingCascade::buildable(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& avail, bool bVisible)
+void BuildingEnabler::buildable(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& avail, bool bVisible)
 {
 	std::set<int> waived;
 	augmentWaived(kPlayer, kTeam, waived);
@@ -257,7 +257,7 @@ static void bc_recheckBuildings(const CvCity* pCity, const CvPlayer& kPlayer, co
 	const std::vector<int>& affected, std::set<int>& avail)
 {
 	if (affected.empty()) return;
-	std::set<int> waived; BuildingCascade::augmentWaived(kPlayer, kTeam, waived);
+	std::set<int> waived; BuildingEnabler::augmentWaived(kPlayer, kTeam, waived);
 	CvCascadeEvalCtx ec; ec.city = pCity; ec.plot = pCity->plot(); ec.player = &kPlayer; ec.team = &kTeam; ec.waivedPrereqBuildings = &waived;
 	EnablerKernel::wireOperatingBuildings(pCity, ec);
 	CvCascadeEvalFlags buildFlags; buildFlags.strictStateReligionForBuild = true;
@@ -292,7 +292,7 @@ static void bc_recheckBuildings(const CvCity* pCity, const CvPlayer& kPlayer, co
 	}
 }
 
-void BuildingCascade::onBuildingChanged(const CvCity* pCity, int eBuilding)
+void BuildingEnabler::onBuildingChanged(const CvCity* pCity, int eBuilding)
 {
 	if (pCity == NULL || eBuilding < 0) return;
 	// Only touch a currently-BUILT box: if CPK_FRONT_B is dirty a full rebuild is already pending on next read,
@@ -313,7 +313,7 @@ void BuildingCascade::onBuildingChanged(const CvCity* pCity, int eBuilding)
 }
 
 // Part A: promote the lazy first-onBuildingChanged trigger to the load-end warm-up (idempotent -- s_bcIdxBuilt).
-void BuildingCascade::buildIndices()
+void BuildingEnabler::buildIndices()
 {
 	bc_buildIndices();
 }
@@ -321,7 +321,7 @@ void BuildingCascade::buildIndices()
 // Part C: a city-local HAVE atom flipped -> re-check ONLY the buildings that reference it (the matching s_bc*
 // bucket) in this city's buildable box, in place. Skips a box with a full rebuild already pending (correctness
 // held by that rebuild). Consumes the "built but dead" HAVE-atom buckets (bc_buildIndices).
-void BuildingCascade::recheckHave(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, int eHaveKind)
+void BuildingEnabler::recheckHave(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, int eHaveKind)
 {
 	if (pCity == NULL) return;
 	if (pCity->m_cascadeCityPackages.set.isDirty(CPK_FRONT_B)) return;

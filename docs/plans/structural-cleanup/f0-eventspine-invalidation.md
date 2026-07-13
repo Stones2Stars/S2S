@@ -61,14 +61,111 @@ city/plot/area id. Extend the DOMAIN payload to a source-carrying shape: `(sourc
 cityId|plotId|areaId, delta)`. Keep the logging-mode payload as-is (`aFields[]`).
 
 ### R2. Reverse routing surface on `DepositIndex`
-Today `DepositIndex` is a FORWARD map: `source CvInfo* → its CascadeDeposit records` (compiled interned segments
-family/scope/member/target + FK — `CvCascadeDepositIndex.h:42-73`, built at readJson push `cpp:163-174`). There is
-**no reverse `source-type → (scope, packageBit, channel, targetFk)` routing** and no query API a consumer could call
-to go "building X changed → these package bits." Today the routing is re-derived INLINE, by hand, **for buildings
-only**, in `buildingProcessed` (`CvCascadeAccumulator.cpp:870-916`); tech/civic/trait/bonus/project use the blanket.
-Build the inversion once at push time: a compiled reverse index `sourceKind → list of (packageScope, packageBit,
-channel, targetFk)`, queried O(1) by the invalidation consumer to produce the dirty masks. The raw material (compiled
-segments) exists; the inversion does not.
+`DepositIndex` was a FORWARD map only: `source CvInfo* → its CascadeDeposit records` (compiled interned segments
+family/scope/member/target + FK — `CvCascadeDepositIndex.h`, built at readJson push). The routing was re-derived
+INLINE, by hand, **for buildings only**, in `buildingProcessed`; tech/civic/trait/bonus/project used the blanket.
+
+**R2a — LANDED (the reverse route at scope×unit×member granularity).** `DepositIndex::routeFor(const CvInfo*)`
+returns a compiled `SourceRoute {playerBits, cityBits, world}` — the source's cross-scope reach, unioned over its
+deposits and lazily cached (dropped by `clearCompiled` on re-map). The body is a **VERBATIM transcription** of
+`buildingProcessed`'s former inline loop, generalized to any source info: a percent empire/area deposit fans to every
+owner city's percent stacks (`CPK_YPCT|CPCT|SCPCT|BR`) + the player gp/maint/buildRate sums (`PSC_SC|PSC_BR`); a flat
+one to the player flat/wb/keyed sums (`PSC_SC|PSC_CFLAT|PSC_WB`) + the sibling `CPK_CBASE|WB` keyed realization (or
+`CPK_YSPEC|CSPEC` for `specialist.perSpecialist`); a world deposit sets the world flag. `buildingProcessed` now
+QUERIES it (the inline loop + its duplicate is DELETED — the delete-list item); the derivation is provably identical
+(transcription), so building invalidation is unchanged. This is the **single routing-truth surface** the consumer
+narrowing needs. It carries ONLY the cross-scope reach — the building's OWN-city conservative-ALL floor (the
+operate/provides fixpoint) stays on the consumer.
+
+**R2b — the PERCENT per-channel narrowing (LANDED).** `routeFor`'s percent branch is now per-CHANNEL, grounded from
+the fills' channel strings: a yield-percent empire/area deposit (`food`/`production`/`commerce`) marks the siblings'
+`CPK_YPCT` **only** and NO player bit (the player scope holds no yield/commerce percent — verified against
+`CascadePlayerScope`, so `buildingProcessed`'s old coarse `PSC_SC|PSC_BR` on it was pure waste); commerce-percent
+(`gold`/`research`/`culture`/`espionage`) → `CPK_CPCT`; `greatPeopleRate`/`maintenance` → `CPK_SCPCT`+`PSC_SC`;
+`buildRate` → `CPK_BR`+`PSC_BR`. The GROUPED families (`defense`, `stateReligion` — seg[0] is not a plain channel) and
+any unrecognized family fall to the coarse-safe percent mask, so it never under-marks. The FLAT branch stays coarse:
+its pulled-live-vs-city-realized routing is NOT nailed per family and is NOT guessed (below).
+
+**R2b — the CONDITIONER narrowing is NOT a `routeFor` swap; it is the invalidation-runtime hard-look (needs a
+condition-reverse-index).** The empire sources (tech/civic/trait/SR/project) still ride `markPlayerScopeAndCities`'s
+broad `PSC_ALL` + every-city `CPK_ALL`. It is **wrong to narrow this to `routeFor(source)`**: a source's own deposits
+are only half its footprint — the other half is **every OTHER info's deposit gated on it** (`enabled:{CIVIC_X}`,
+`{TECH_X}`, era-threshold flats). When CIVIC_X is adopted, a Forge's `happiness enabled:{CIVIC_X}` deposit goes
+live and that city's package restales — a fan-out `routeFor(civic)` does NOT see. The broad mark is load-bearing for
+exactly this; narrowing it correctly needs a **condition-reverse-index** (`referenced-type → the deposits/packages
+gated on it`), a NEW compiled index that intersects the predicate registry + the existing hand-mask events (power/
+bonus/religion/GA already emit) — squarely the "real hard look at the cascades" (the consumer/invalidation runtime),
+sequenced AFTER nailing the deposits. It must also keep the frontier + operate ripple + policy re-arm (which ride the
+enables/requires index, not the deposit index). Correctness-gated at crutch-removal (playtest), never a blind flip.
+
+**⚠ Latent gap the R2 grounding exposed (crutch-removal completeness, not an R2 regression):** `buildingProcessed`'s
+FLAT branch marks siblings only for `buildings`-keyed (`CPK_CBASE|WB`) / `specialist` (`CPK_YSPEC|CSPEC`) empire flats
+— a plain `{happiness|health}.empire.flat` (fed into every city's BAKED `aWbVerdict` via the player `wbEmpireByFam`
+fold) gets only the player `PSC_WB` mark, NOT the sibling `CPK_WB` re-bake. The self-heal covers it today; it is a
+real invalidation to add before the crutch comes off (it predates R2 — `routeFor` transcribes it faithfully).
+
+**THE DEPOSIT→PACKAGE-BIT ROUTING TABLE (the known-data spec — verified from the fills, all cited; abbrevs: PS
+`CvCascadePercentStack`, YBP `…YieldBasePackages`, BP `…BuildingPackage`, CC `…CommerceCalc`, WB `…Wellbeing`, SC
+`…ScalarChannels`, MMK `…MMKernel`, Acc `…Accumulator`). `yield`=food/production/commerce; `commerce`=gold/research/
+culture/espionage; each channel traverses an identical shape set (expand `{ch}` mechanically).**
+
+*City packages:*
+- **CPK_YPCT / CPK_CPCT** (`percent`): `{ch}.city.percent` + `{ch}.area.percent` (building) + `{ch}.empire.percent`
+  (building/civic/trait/project) + `{ch}.empire.buildings.{B}.percent` (civic, city-realized keyed — MMK:401). PS:98-124.
+- **CPK_YSPEC / CPK_CSPEC**: `{ch}.city.flat`+`.city.percent` (specialist intrinsic/local) + `{ch}.empire.flat`
+  (specialist perType) + `{ch}.empire.specialists.{SPEC}.flat` (trait) + `{ch}.empire.specialist.perSpecialist`
+  (building/civic/trait). YBP:80-127.
+- **CPK_YEXTRA**: `yield.city.flat` + `yield.city.perPopulation` (building; incl. `whenObsolete`). BP:58-67.
+- **CPK_CBASE**: `commerce.city.flat` (religion) + building own-flat/perPop (BP) + `commerce.empire.headquarters.
+  perCorporationLevel` (corp) + doubleTime re-adds; **+ realized** `cKeyed100`←`commerce.empire.buildings.{B}.flat`
+  (building grantor, from PSC_CFLAT) + `iCSrMatch`×`cSrPool`. CC:38-303, Acc:134-143.
+- **CPK_WB**: building `commerceHappiness.city.{c}.flat` + `{happiness|health}.city.flat|perPopulation`
+  (BASE/BONUS_/TECH_/STATE_RELIGION-classified); civic/trait `{fam}.empire.flat`, `.empire.buildings.{B}.flat`,
+  `.empire.features.{F}.flat`, `.empire.cities.flat`{unit:IS_MILITARY|ranked}; bonus/corp/tech/project/specialist
+  `{fam}.*.flat`; feature `{fam}.plot.percent`; civic `stateReligion.empire.happiness.flat` + `happiness.empire.
+  nonStateReligion.flat`. **+ realized** from PSC_WB (empire/area/buildingKeyed). WB:89-483.
+- **CPK_SCFLAT**: `greatPeopleRate.city.flat` (building) + `tradeRoutes.city.flat` (building) + `tradeRoutes.empire.
+  flat` (civic/trait/tech) + `tradeRoutes.empire.coastal.flat` (civic/trait) + `freeSpecialists.city.{any|SPEC}.
+  count` (building). SC:143-567.
+- **CPK_SCPCT** (`percent`, +`scDefMin` flat): `greatPeopleRate.city|empire.percent` (bld+civic/trait) +
+  `stateReligion.empire.greatPeopleRate.percent` + `defense.city.{amount|bombardDefense}.percent` + `defense.city.
+  min.flat` + `maintenance.city|empire|area.percent` (+tech) + `maintenance.empire.{homeArea|otherArea}.percent`. SC:204-545.
+- **CPK_SCSPEC**: `greatPeopleRate.city.flat` (specialist × count). SC:154.
+- **CPK_BR** (`percent`): `buildRate.{city|empire}.{units|buildings|domains|unitCombats|specialBuildings}.{KEY}` +
+  `.{city|empire}.{military|space}` (bld+civic/trait+corp) + `stateReligion.empire.{unit|building}Production` +
+  `buildRate.empire.{world|team|national}Wonder` (civic/trait). SC:762-816.
+
+*Player packages (building-sourced per source-city unless noted):*
+- **PSC_YFLAT**: trait `yield.empire.flat` + `yield.empire.goldenAge.flat` (ungated). YBP:30-54.
+- **PSC_CFLAT**: trait `commerce.empire.flat` + heritage `commerce.empire.flat` (era-gated) + trait `.empire.
+  goldenAge.flat` + **building** `commerce.empire.buildings.{B}.flat` (grantor ledger `cKeyedLedger`) + `cSrPool`
+  (config). CC:58-177.
+- **PSC_WB**: building `{fam}.empire.flat`→`wbEmpireByFam`, `.area.flat`→`wbAreaByFam`, `.empire.buildings.{B}.
+  flat`→`wbBuildingKeyedByFam`. WB:178-229.
+- **PSC_SC**: building `greatPeopleRate.empire.percent`, `maintenance.empire|area.percent` (+connectedCity/otherArea
+  members, +project), `tradeRoutes.empire|coastal|world.flat`, `defense.empire.{amount|bombardDefense}.percent`
+  (+civic/trait), `freeSpecialists.empire|area.count` (+civic/trait), trait `greatPeopleRate.empire.units.{U}.flat`.
+  SC:570-705.
+- **PSC_BR**: building `buildRate.empire.{keyed|military|space}.percent`. SC:818-844.
+
+*World:* **WSC_ALL** = Σ players' `tradeRoutes.world.flat` (building, via PSC_SC) + project world flats. Acc:364-381.
+
+**⛔ THE 8 CROSS-SCOPE REALIZATIONS — an invalidation on the deposit's ADDRESS scope must mark the DESTINATION
+package; the reverse index MUST encode these, NOT a naive scope→package map:**
+1. civic `{ch}.empire.buildings.{B}.percent` → CITY CPK_YPCT/CPCT (paid while B active in the reading city).
+2. building `commerce.empire.buildings.{B}.flat` → PSC_CFLAT ledger, realized into CITY CPK_CBASE ×active B (two-hop).
+3. building `stateReligionCommerce` (config) → PSC_CFLAT `cSrPool`, realized via CPK_CBASE `iCSrMatch` (city).
+4. building `{fam}.empire|area.flat` → PSC_WB, threaded into every same-area/all-city CPK_WB verdict.
+5. building `{fam}.empire.buildings.{B}.flat` → PSC_WB keyed, realized into CPK_WB ×active B.
+6. **civic/trait `*.empire.*` are CITY-REALIZED, not player-scope**: the whole percent stack (YPCT/CPCT), gp/maint/
+   trade scalars, all buildRate legs, `maintenance.empire.{home|other}Area` — evaluated against THIS city's ctx and
+   stored city-side (conditions reference the city). The player packages hold ONLY the per-source-city *building* walks.
+7. building `greatPeopleRate.empire.percent` → PSC_SC (player half), composed with the civic/trait CITY half at read.
+8. `tradeRoutes.world.flat` → world→player→city three-level cascade (WSC_ALL read by every city).
+
+**Non-package LIVE reads (cached NOWHERE — NOT missing invalidations):** `buildRate.self.percent` (produced item,
+live in `productionModifier`/`acc_brSelf`); the `unit:IS_MILITARY` ×count military-happiness fold (live at read);
+`commerce.city.percent` on a Process (live in `combineSplit`).
 
 ### R3. The cache-invalidation `IEventConsumer`
 `wantedKinds() = 1<<EVENTKIND_DOMAIN`; `onEvent(e)` queries the R2 reverse index for `e.sourceKind/id` → the affected
@@ -327,7 +424,8 @@ histogram names the culprit scope/channel on a breach.
 - The recompute-on-load CASCADE recalc — `worldRebuild` + `playerSliceRebuild` (the cascade half of the
   `CvGame::onFinalInitialized` warm-up block) + the `recalculateModifiers` content — DELETED. The **reseed** (R6) is
   the cascade's load build. (The plot-yield cache's own dirty-on-load recompute is a game-object cache and stays.)
-- The inline hand-derived routing in `buildingProcessed` (`:870-916`) — replaced by R2/R3.
+- ✅ The inline hand-derived routing in `buildingProcessed` — DELETED; `buildingProcessed` queries
+  `DepositIndex::routeFor` (R2a).
 - `CvCity::refreshOperatingBuildings` mask-ignoring reseed (`CvCity.cpp:11399`) — honor the mask / rely on ripples.
 - KEEP (not blankets): `dirtyCity` (the mark primitive — masks become index-derived), `cityHaveChanged`/
   `unitCountChanged` (frontier targeted re-check), `cityCreated` (the one ruled eager-ensure).

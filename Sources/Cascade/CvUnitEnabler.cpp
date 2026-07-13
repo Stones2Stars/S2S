@@ -1,14 +1,14 @@
 //
-//	UnitCascade -- StoneBase CalculateTrainableUnits.cs (see the header). Ported VERBATIM from CvCascadeEnabler.cpp's
+//	UnitEnabler -- StoneBase CalculateTrainableUnits.cs (see the header). Ported VERBATIM from CvCascadeEnabler.cpp's
 //	file-static en_unitCapped / en_unitReachable / en_unitTrainable; promoted to a declared surface (the single-source
-//	law, patterns.md). LOGIC unchanged: only the signatures + the EnablerKernel/BuildingCascade-qualified call sites
+//	law, patterns.md). LOGIC unchanged: only the signatures + the EnablerKernel/BuildingEnabler-qualified call sites
 //	were rewritten.
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvCascadeUnitCascade.h"
-#include "CvCascadeEnablerKernel.h"     // EnablerKernel::obsoletedByHeldTech
-#include "CvCascadeBuildingCascade.h"   // BuildingCascade::augmentWaived (shared AugmentState waiver)
+#include "CvUnitEnabler.h"
+#include "CvEnablerKernel.h"     // EnablerKernel::obsoletedByHeldTech
+#include "CvBuildingEnabler.h"   // BuildingEnabler::augmentWaived (shared AugmentState waiver)
 #include "CvInfo.h"
 #include "CvUnitInfo.h"           // spawnOnly (the cascade's own never-trained flag; self-containment)
 #include "Repos/InfoRepo.h"
@@ -26,10 +26,10 @@
 #include "CvBuildingInfo.h"     // InfoRepo<CvBuildingInfo> (a changed building's provides.bonuses / enables.units)
 #include "Engine/CvGame.h"
 
-// Unit instance cap (StoneBase UnitCascade.Capped): WORLD = lifetime-created (getUnitCreatedCount) + making >=
+// Unit instance cap (StoneBase UnitEnabler.Capped): WORLD = lifetime-created (getUnitCreatedCount) + making >=
 // allowed.world; EMPIRE = live count (tally) + making >= ERA-SCALED (base-5 => +5/era) allowed.empire, waived by
 // NO_NATIONAL_UNIT_LIMIT unless the unit is unlimitedException. (Units have no team cap.)
-bool UnitCascade::capped(const CvInfo* j, int eU, const CvPlayer& kPlayer, bool noNationalLimit)
+bool UnitEnabler::capped(const CvInfo* j, int eU, const CvPlayer& kPlayer, bool noNationalLimit)
 {
 	if (j == NULL) return false;
 	const int making = kPlayer.getUnitMaking((UnitTypes)eU);
@@ -47,7 +47,7 @@ bool UnitCascade::capped(const CvInfo* j, int eU, const CvPlayer& kPlayer, bool 
 
 // ===========================================================================================================
 // The isolated-box REVERSE INDEX for UNITS (enabler-frontier-perf.md Part A) -- the UNIT analogue of the proven
-// s_bc* building index (CvCascadeBuildingCascade.cpp). At LOAD we invert every unit's requires.build tree into
+// s_bc* building index (CvBuildingEnabler.cpp). At LOAD we invert every unit's requires.build tree into
 // "HAVE-atom kind -> {unit ids that reference it}", so a HAVE-change (pop / religion / corp / power / a specific
 // tech or bonus, or a building the unit requires) re-checks ONLY its bucket via the shared uc_isTrainable,
 // instead of the ~3340-unit full re-walk. trainable() gates ONLY on requires.build (NOT operate), so the shared
@@ -119,7 +119,7 @@ static bool uc_isAvailable(int u, UcRecheckCtx& x)
 	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
 	if (j != NULL && ((const CvUnitInfo*)j)->spawnOnly) return false;
 	if (EnablerKernel::obsoletedByHeldTech(j, *x.team)) return false;
-	if (UnitCascade::capped(j, u, *x.player, x.noNationalLimit)) return false;
+	if (UnitEnabler::capped(j, u, *x.player, x.noNationalLimit)) return false;
 	if (j != NULL && !cascadeGateOk(j->getGate(), *x.ec, *x.flags)) return false;   // entity-level enabled/disabled
 	if (j != NULL && j->requiresBuild() != NULL && !cascadeEvalCondition(j->requiresBuild(), *x.ec, *x.flags)) return false;
 	return true;
@@ -134,7 +134,7 @@ static bool uc_availMemo(int u, UcRecheckCtx& x)
 	return r;
 }
 
-// reachable(v) (StoneBase UnitCascade.Reachable) -- the ONE upgrade-reachability closure, driven by the memoized
+// reachable(v) (StoneBase UnitEnabler.Reachable) -- the ONE upgrade-reachability closure, driven by the memoized
 // availability PREDICATE (uc_availMemo, the more general form: a precomputed set is just this predicate frozen),
 // so the full fill and a targeted recheck share one implementation: v is itself available OR some DIRECT upgrade
 // of v (its dormant triggers = requires.build.dormant.all) is reachable. Cycle-guarded (a cycle -> self-available).
@@ -187,7 +187,7 @@ static void uc_recheckUnits(const CvCity* pCity, const CvPlayer& kPlayer, const 
 	const std::vector<int>& affected, std::set<int>& box)
 {
 	if (affected.empty()) return;
-	std::set<int> waived; BuildingCascade::augmentWaived(kPlayer, kTeam, waived);
+	std::set<int> waived; BuildingEnabler::augmentWaived(kPlayer, kTeam, waived);
 	CvCascadeEvalCtx ec; ec.city = pCity; ec.plot = pCity->plot(); ec.player = &kPlayer; ec.team = &kTeam; ec.waivedPrereqBuildings = &waived;
 	EnablerKernel::wireOperatingBuildings(pCity, ec);
 	CvCascadeEvalFlags flags; flags.strictStateReligionForBuild = true;
@@ -215,7 +215,7 @@ static void uc_appendMapBucket(const std::map<int, std::vector<int> >& m, int ke
 
 } // namespace
 
-// --- UnitCascade.cs: the city's TRAINABLE set (the engine canTrain TRUE-set), GENERATE-then-GATE. Units REUSE the
+// --- UnitEnabler.cs: the city's TRAINABLE set (the engine canTrain TRUE-set), GENERATE-then-GATE. Units REUSE the
 // building machinery -- only the inputs differ. Built on the ONE primitive pair (the bc_isBuildable idiom: one
 // primitive, two consumers -- the full fill here and the targeted box re-checks can never diverge in per-unit logic):
 // (1) GATE availability: uc_isAvailable, memoized -- all units minus spawnOnly (identity.spawnOnly, the cascade's OWN
@@ -226,10 +226,10 @@ static void uc_appendMapBucket(const std::map<int, std::vector<int> >& m, int ke
 // non-available frontier member is GREYED, not LISTED; requires.build.dormant.all = the direct-upgrade closure:
 // a unit hides only when EVERY direct upgrade is reachable-trainable; one dead branch keeps it buildable).
 // AugmentState vicinity/gov-center operating buildings are read LIVE by the evaluator.
-void UnitCascade::trainable(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& result, bool bVisible)
+void UnitEnabler::trainable(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& result, bool bVisible)
 {
 	std::set<int> waived;
-	BuildingCascade::augmentWaived(kPlayer, kTeam, waived);   // SAME AugmentState waiver the building cascade uses (shared evaluator)
+	BuildingEnabler::augmentWaived(kPlayer, kTeam, waived);   // SAME AugmentState waiver the building cascade uses (shared evaluator)
 	CvCascadeEvalCtx ec; ec.city = pCity; ec.plot = pCity->plot(); ec.player = &kPlayer; ec.team = &kTeam; ec.waivedPrereqBuildings = &waived;
 	// The two per-city operating buildings (active set + in-vicinity `provides` supply, json §5a): a herd/tamed-animal
 	// building that provides e.g. HORSE ⇒ HORSE in-vicinity, so a horse unit's `requires` {BONUS, connection:vicinity}
@@ -247,7 +247,7 @@ void UnitCascade::trainable(const CvCity* pCity, const CvPlayer& kPlayer, const 
 	for (int u = 0; u < nU; ++u)
 		if (uc_availMemo(u, x)) available.insert(u);
 
-	// The replaced set (StoneBase UnitCascade: `u.ReplacedBy["units"].Any(available.Contains)`): a unit is HIDDEN the
+	// The replaced set (StoneBase UnitEnabler: `u.ReplacedBy["units"].Any(available.Contains)`): a unit is HIDDEN the
 	// moment any of its SUPERSEDERS is AVAILABLE. The curator emits SupersedingUnits TARGET-side as the predecessor's
 	// `replacedBy.units`, which CvUnitInfo.mapFrom parses into m_superseding (getSupersedingUnit) -- NOT the CvJsonEdges
 	// bucket, so it is read from the poco, NOT j->edge("replacedBy.units") (that returns NULL -- the inert-read trap).
@@ -282,12 +282,12 @@ void UnitCascade::trainable(const CvCity* pCity, const CvPlayer& kPlayer, const 
 		if (uc_isTrainable(*it, x)) result.insert(*it);
 }
 
-void UnitCascade::buildIndices()
+void UnitEnabler::buildIndices()
 {
 	uc_buildIndices();
 }
 
-void UnitCascade::recheckHave(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, int eHaveKind)
+void UnitEnabler::recheckHave(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, int eHaveKind)
 {
 	if (pCity == NULL) return;
 	// Only touch a currently-BUILT box: a dirty CPK_FRONT_U means a full rebuild is already pending on next read,
@@ -306,7 +306,7 @@ void UnitCascade::recheckHave(const CvCity* pCity, const CvPlayer& kPlayer, cons
 	uc_recheckUnits(pCity, kPlayer, kTeam, *bucket, pCity->m_cascadeCityPackages.enTrainable);
 }
 
-void UnitCascade::onUnitChanged(const CvPlayer& kPlayer, int eUnit)
+void UnitEnabler::onUnitChanged(const CvPlayer& kPlayer, int eUnit)
 {
 	if (eUnit < 0) return;
 	uc_buildIndices();
@@ -335,7 +335,7 @@ void UnitCascade::onUnitChanged(const CvPlayer& kPlayer, int eUnit)
 	}
 }
 
-void UnitCascade::onBuildingChangedUnits(const CvCity* pCity, int eBuilding)
+void UnitEnabler::onBuildingChangedUnits(const CvCity* pCity, int eBuilding)
 {
 	if (pCity == NULL || eBuilding < 0) return;
 	if (pCity->m_cascadeCityPackages.set.isDirty(CPK_FRONT_U)) return;   // rebuild pending -> skip

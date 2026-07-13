@@ -25,7 +25,7 @@
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM
 #include "CvCascadeCapabilities.h"     // corporationRevenueModifier -- the derived-from-tech read (never the legacy accumulator)
-#include "CvCascadeEnablerKernel.h"    // EnablerKernel::wireOperatingBuildings (shrine/stateReligion build their own ctx over the standing operating buildings)
+#include "CvEnablerKernel.h"    // EnablerKernel::wireOperatingBuildings (shrine/stateReligion build their own ctx over the standing operating buildings)
 #include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (buildingKeyed matches ints)
 #include <map>
 #include <set>

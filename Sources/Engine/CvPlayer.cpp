@@ -3700,9 +3700,10 @@ void CvPlayer::doTurn()
 {
 	PROFILE_FUNC();
 	PERF_SCOPE("CvPlayer::doTurn", getID());
-	// #430 the SLICE-START rebuild ("Cascade.RebuildCache(myPlayerId)"): the self-heal re-mark + the eager
-	// ensure of this player's packages and his cities' -- reads are bare fetches for the rest of the slice.
-	CascadeAccumulator::playerSliceRebuild(getID());
+	// #430 the per-turn SELF-HEAL (playerSliceRebuild -- markAll + eager ensure of ALL packages, this player's
+	// and his cities') is REMOVED ([DEC-no-self-heal]). Correctness is the targeted spine-routed marks + LAZY
+	// recalc of ONLY the dirty packages, read as a trivial sum. A missed invalidation now surfaces as a live
+	// divergence instead of being blanket-rebuilt away -- do NOT re-add a slice rebuild here.
 
 	// Only decrement the GA counter at the end of this function if GA started before this point, i.e last turn.
 	const bool bWasGoldenAgeLastTurn = getGoldenAgeTurns() > 0; 
@@ -8326,7 +8327,7 @@ bool CvPlayer::canEverResearch(TechTypes eTech) const
 bool CvPlayer::canResearch(const TechTypes eTech, const bool bRightNow, const bool bSpecialRequirements) const
 {
 	// #430 THE ENABLER FLIP (owner 2026-07-04 "flip it all"): the default shape (researchable NOW, special
-	// requirements on -- the harness-proven pairing) serves the cascade frontier (TechCascade::available,
+	// requirements on -- the harness-proven pairing) serves the cascade frontier (TechEnabler::available,
 	// cached on the player package, ensure-on-read). Other shapes + pre-init ride the Legacy oracle.
 	if (bRightNow && bSpecialRequirements && GC.getGame().isFinalInitialized())
 	{

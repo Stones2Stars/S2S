@@ -20,8 +20,8 @@ enum CascadeCondCaller
 	CC_WB,          // wellbeing computes/gathers (city terms + player fold maps + the oracle)
 	CC_SCALARS,     // the scalar channel fills (gp/defense/maint/trade/buildRate, city + player)
 	CC_OPERATING_BUILDINGS,       // the operating buildings fixpoint (recomputeOperatingBuildingsInto)
-	CC_FRONT_B,     // the buildable frontier fill (BuildingCascade::buildable)
-	CC_FRONT_U,     // the trainable frontier fill (UnitCascade::trainable)
+	CC_FRONT_B,     // the buildable frontier fill (BuildingEnabler::buildable)
+	CC_FRONT_U,     // the trainable frontier fill (UnitEnabler::trainable)
 	CC_FRONT_PP,    // the creatable+maintainable fills (generate + the two gateSets)
 	CC_FRONT_P,     // the researchable/civics/hurries/buildRem player fill
 	CC_CANBUILD,    // the canBuild UNLOCK reads (enBuildUnlocked -- per-(build,plot), worker-AI hot)

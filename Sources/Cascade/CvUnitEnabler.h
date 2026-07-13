@@ -1,11 +1,11 @@
 #pragma once
-#ifndef CV_CASCADE_UNIT_CASCADE_H
-#define CV_CASCADE_UNIT_CASCADE_H
+#ifndef CV_UNIT_ENABLER_H
+#define CV_UNIT_ENABLER_H
 
 //
-//	UnitCascade -- StoneBase CalculateTrainableUnits.cs: the city's TRAINABLE set (the engine canTrain TRUE-set),
+//	UnitEnabler -- StoneBase CalculateTrainableUnits.cs: the city's TRAINABLE set (the engine canTrain TRUE-set),
 //	GENERATE-then-GATE over the whole-domain frontier. Units REUSE the building machinery (the shared AugmentState
-//	waiver on BuildingCascade) -- only the inputs differ. See patterns.md (the single-source law) +
+//	waiver on BuildingEnabler) -- only the inputs differ. See patterns.md (the single-source law) +
 //	docs/plans/structural-cleanup/cascade-engine-430.md.
 //
 //	Purely-organizational static-methods class: NO data members, never instantiated, no per-instance state.
@@ -19,10 +19,10 @@ class CvPlayer;
 class CvTeam;
 class CvCity;
 
-class UnitCascade
+class UnitEnabler
 {
 public:
-	// Unit instance cap (StoneBase UnitCascade.Capped): WORLD = lifetime-created + making >= allowed.world;
+	// Unit instance cap (StoneBase UnitEnabler.Capped): WORLD = lifetime-created + making >= allowed.world;
 	// EMPIRE = live count + making >= ERA-SCALED allowed.empire (waived by NO_NATIONAL_UNIT_LIMIT unless unlimitedException).
 	static bool capped(const CvInfo* j, int eU, const CvPlayer& kPlayer, bool noNationalLimit);
 
@@ -34,7 +34,7 @@ public:
 	static void trainable(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& result, bool bVisible = false);
 
 	// ===== #430 the isolated-box TARGETED updates (enabler-frontier-perf.md; the UNIT analogue of the proven
-	// BuildingCascade incremental path). The trainable box is maintained IN PLACE off targeted re-checks instead
+	// BuildingEnabler incremental path). The trainable box is maintained IN PLACE off targeted re-checks instead
 	// of the every-turn full re-walk; a box with a full rebuild pending (CPK_FRONT_U dirty) is skipped, and the
 	// per-slice rebuild remains the correctness net. =====
 
@@ -58,4 +58,4 @@ public:
 	static void onBuildingChangedUnits(const CvCity* pCity, int eBuilding);
 };
 
-#endif // CV_CASCADE_UNIT_CASCADE_H
+#endif // CV_UNIT_ENABLER_H

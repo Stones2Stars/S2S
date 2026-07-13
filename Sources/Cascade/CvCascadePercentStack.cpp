@@ -20,7 +20,7 @@
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM
 #include "CvCascadeConditionEval.h"    // CvCascadeEvalCtx + cascadeIsBuildingActive
-#include "CvCascadeEnablerKernel.h"    // EnablerKernel::wireOperatingBuildings (the standing cascade active set + vicinity provides)
+#include "CvEnablerKernel.h"    // EnablerKernel::wireOperatingBuildings (the standing cascade active set + vicinity provides)
 #include "CvCascadeOperatingBuildings.h"        // OperatingBuildings -- the areaPercentByArea player-city walk
 #include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (the candidate prefilter)
 #include "Engine/CvArea.h"             // area()->getID() -- the area-map grouping

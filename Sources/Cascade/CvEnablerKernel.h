@@ -1,11 +1,11 @@
 #pragma once
-#ifndef CV_CASCADE_ENABLER_KERNEL_H
-#define CV_CASCADE_ENABLER_KERNEL_H
+#ifndef CV_ENABLER_KERNEL_H
+#define CV_ENABLER_KERNEL_H
 
 //
 //	EnablerKernel -- the shared GENERATE->GATE primitive + gate helpers of the #430 "can I?" machine (enabler.md §1-3):
-//	ONE GENERATE->GATE over the InfoRepo `enables` edges, applied per gate. The per-domain cascades (TechCascade /
-//	BuildingCascade / UnitCascade) and the generic civics/builds/projects/processes gates FEED themselves through these;
+//	ONE GENERATE->GATE over the InfoRepo `enables` edges, applied per gate. The per-domain cascades (TechEnabler /
+//	BuildingEnabler / UnitEnabler) and the generic civics/builds/projects/processes gates FEED themselves through these;
 //	they are the single-implementation enabler primitives. See docs/architecture/patterns.md (the single-source law) +
 //	docs/plans/structural-cleanup/cascade-engine-430.md.
 //
@@ -118,4 +118,4 @@ public:
 	static void wireOperatingBuildings(const CvCity* pCity, CvCascadeEvalCtx& ec);
 };
 
-#endif // CV_CASCADE_ENABLER_KERNEL_H
+#endif // CV_ENABLER_KERNEL_H
