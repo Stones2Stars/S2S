@@ -4,7 +4,7 @@
 
 //
 //	EnablerKernel -- the shared GENERATE->GATE primitive + gate helpers of the #430 "can I?" machine (enabler.md §1-3):
-//	ONE GENERATE->GATE over the InfoRepo `enables` edges, applied per gate. The per-domain cascades (TechEnabler /
+//	ONE GENERATE->GATE over the InfoRepo `enables` edges, applied per gate. The per-domain enablers (TechEnabler /
 //	BuildingEnabler / UnitEnabler) and the generic civics/builds/projects/processes gates FEED themselves through these;
 //	they are the single-implementation enabler primitives. See docs/architecture/patterns.md (the single-source law) +
 //	docs/plans/structural-cleanup/cascade-engine-430.md.
@@ -26,7 +26,7 @@ class CvCity;
 class CvTeam;
 
 // The buckets keyed on the JSON `enables`/`obsoletes`/`replaces`/`disables` edge families -- one HAVE traversal fills
-// them all. Shared by the kernel + the per-domain cascades + the accumulator's frontier fills (promotions included).
+// them all. Shared by the kernel + the per-domain enablers + the accumulator's frontier fills (promotions included).
 typedef std::map<std::string, std::set<int> > EnBucketSets;
 
 // The requires-tree HAVE-atom dependency signature: which HAVE-classes gate an entity's requires. The ONE shape the
@@ -97,7 +97,7 @@ public:
 	// STANDING cache via operatingBuildings()/wireOperatingBuildings() below.
 	static void recomputeOperatingBuildingsInto(const CvCity* pCity, std::set<int>& activeOut, std::set<int>& providedOut, std::set<int>& obsoleteOut);
 
-	// --- ACTIVE-SET targeted maintenance (state-repositories.md: the active-building set is a CASCADE kept by
+	// --- ACTIVE-SET targeted maintenance (state-repositories.md: the active-building set is maintained by
 	// targeted PROPAGATION, not blanket-recomputed). buildActiveIndex() inverts every building's `requires.operate`
 	// into an operate-only reverse index at LOAD; the on*Active hooks ripple ONLY the affected buildings into the
 	// AUTHORITATIVE m_operatingBuildings (active/provided/providedCount) in place -- the recompute above stays the load
@@ -106,7 +106,6 @@ public:
 	static void onBuildingChangedActive(const CvCity* pCity, int eBuilding);   // a building built/lost in pCity
 	static void onHaveChangedActive(const CvCity* pCity, int eHaveKind);       // pop/religion/corp/power (CASC_HAVE_*)
 	static void onPlayerScopeChangedActive(const CvCity* pCity);              // tech/civic/golden-age (player scope)
-	static void onSliceRebuildActive(const CvCity* pCity);                    // the bounded per-turn dynamic re-check
 	static void seedOperatingBuildings(const CvCity* pCity);                          // the LOAD seed: full recompute + the provider ref-count
 
 	// The STANDING per-city operating buildings (CvCity::m_operatingBuildings, CvCascadeOperatingBuildings.h) -- ensures freshness (event

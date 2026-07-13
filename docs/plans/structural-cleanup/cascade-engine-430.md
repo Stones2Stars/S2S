@@ -468,9 +468,9 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    `policies.noForeignTrade` → the trade-route engine; unit `tags` → the `IS_<TAG>` accounting. **empire capabilities +
    unit skills especially.** The classification blocks are currently parsed-but-skipped (not mapped) — this is the wiring.
 4. **Enabler** (generate-then-gate, on the validated tally) + **grants**.
-   ✅ **StoneBase CascadingEnabler PORTED for tech/building/unit (2026-06-30)** — `en_techAvailable` (TechCascade),
-   `en_buildingBuildable` (BuildingCascade + the AugmentState operating buildings, which the live evaluator reads directly via
-   `hasVicinityBonus`/`isGovernmentCenter`), and `en_unitTrainable` (UnitCascade: GATE-availability → GENERATE-frontier
+   ✅ **StoneBase CascadingEnabler PORTED for tech/building/unit (2026-06-30)** — `en_techAvailable` (TechEnabler),
+   `en_buildingBuildable` (BuildingEnabler + the AugmentState operating buildings, which the live evaluator reads directly via
+   `hasVicinityBonus`/`isGovernmentCenter`), and `en_unitTrainable` (UnitEnabler: GATE-availability → GENERATE-frontier
    minus `replaces` → GATE not-dormant via the reachable upgrade closure) **REPLACE the first-cut enables-frontier for
    their domains.** Per StoneBase: the FRONTIER is the **WHOLE domain** (all techs / all buildings / all units) gated by
    `requires`, NOT an enables-frontier — the engine's canConstruct/canTrain have none, and an enables-frontier
@@ -498,7 +498,7 @@ curated-set model as part of this migration. The current mechanism (mapped 2026-
    (in-flight per json §3.5). **Builds stay the per-plot `canBuild` gate** (it subsumes BuildCascade's unlock set); civics/projects/
    processes/promotions/hurries keep the generic enables-frontier `en_gateSet` (no StoneBase reference).
    ✅ **FRONTIER GATES BUILT — the 6 same-shape
-   gates** (`Cascade/CvCascadeEnabler.{h,cpp}`): **city-scope** `canConstruct`/`canTrain`/`canCreate`/`canMaintain`
+   gates** (built into the enabler): **city-scope** `canConstruct`/`canTrain`/`canCreate`/`canMaintain`
    - **player-scope** `canResearch`/`canDoCivics`. ONE GENERATE→GATE primitive over a **bucket-keyed** `enables`
    collection: GENERATE `CAN GET` from the InfoRepo `enables.<bucket>` over HAVE (team techs + adopted civics [+ the
    city's buildings for city-scope] **+ the universal `TECH_GAME_START` start-node `cascadeStartNode`, seeded for every

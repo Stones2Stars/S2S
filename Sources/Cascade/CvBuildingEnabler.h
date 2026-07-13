@@ -5,7 +5,7 @@
 //
 //	BuildingEnabler -- StoneBase CalculateBuildableBuildings.cs: the city's BUILDABLE set (the engine canConstruct
 //	TRUE-set), computed IN ISOLATION over the whole-domain frontier (ALL buildings; the engine has NO enables-frontier).
-//	Also owns the shared AugmentState prereq-WAIVER set (BuildingEnabler.AugmentState), which the unit cascade reuses.
+//	Also owns the shared AugmentState prereq-WAIVER set (BuildingEnabler.AugmentState), which the unit enabler reuses.
 //	See patterns.md (the single-source law) + docs/plans/structural-cleanup/cascade-engine-430.md.
 //
 //	Purely-organizational static-methods class: NO data members, never instantiated, no per-instance state.
@@ -22,7 +22,7 @@ class BuildingEnabler
 {
 public:
 	// AugmentState's prereq-WAIVER set (ObsoleteBuildings ∪ PrereqWaivedBuildings). Shared by the building + unit
-	// cascades (both gate requires.build through the SAME evaluator).
+	// enablers (both gate requires.build through the SAME evaluator).
 	static void augmentWaived(const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& waived);
 
 	// Instance cap (StoneBase Capped): current tally count + in-production making >= allowed, at some scope.

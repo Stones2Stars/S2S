@@ -73,7 +73,7 @@ Authority: [state-repositories.md](../../architecture/state-repositories.md), [m
   (world→team→player→area→city→plot); each level's packages in ONE uniform format (Σflat, Σpercent each their own
   package per channel; unit is part of the slot key); the only live calc is adding the ~5 packages at read.
 - **A cascade is a cache, two kinds:** yield/percent packages = value cache (memoize, event-invalidate,
-  recompute-from-inputs). The ENABLER cascades (frontier + operating-building set) = maintained by TARGETED
+  recompute-from-inputs). The ENABLER's sets (frontier + operating-building set) = maintained by TARGETED
   PROPAGATION through the reverse index, in place — NEVER blanket-recomputed.
 - **THE OUTPUT-SEAM PATTERN.** Where the engine does placement/application, the cascade owns the two ends and the
   engine the middle: (1) authored INPUTS → cascade (source-centric deposits); (2) placement/application → engine

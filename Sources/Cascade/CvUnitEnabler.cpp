@@ -1,8 +1,7 @@
 //
-//	UnitEnabler -- StoneBase CalculateTrainableUnits.cs (see the header). Ported VERBATIM from CvCascadeEnabler.cpp's
-//	file-static en_unitCapped / en_unitReachable / en_unitTrainable; promoted to a declared surface (the single-source
-//	law, patterns.md). LOGIC unchanged: only the signatures + the EnablerKernel/BuildingEnabler-qualified call sites
-//	were rewritten.
+//	UnitEnabler -- StoneBase CalculateTrainableUnits.cs (see the header): the unit frontier generate/gate (cap,
+//	reachable-upgrade closure, trainable), a declared surface over the ONE EnablerKernel primitive (the
+//	single-source law, patterns.md).
 //
 
 #include "CvGameCoreDLL.h"
@@ -10,7 +9,7 @@
 #include "CvEnablerKernel.h"     // EnablerKernel::obsoletedByHeldTech
 #include "CvBuildingEnabler.h"   // BuildingEnabler::augmentWaived (shared AugmentState waiver)
 #include "CvInfo.h"
-#include "CvUnitInfo.h"           // spawnOnly (the cascade's own never-trained flag; self-containment)
+#include "CvUnitInfo.h"           // spawnOnly (the enabler's own never-trained flag; self-containment)
 #include "Repos/InfoRepo.h"
 #include "CvCascadeTally.h"
 #include "AI/CvPlayerAI.h"            // GET_PLAYER
@@ -180,7 +179,7 @@ static bool uc_isTrainable(int u, UcRecheckCtx& x)
 
 // Re-check ONLY the units in `affected` in pCity's LIVE trainable box (a TARGETED update, no full rebuild) and
 // insert/erase each. Per-city setup mirrors trainable() (waived / operating buildings / flags -- no condEvals) so only the
-// affected units pay the requires eval. NB trainable() has NO queued-exclusion (that is the building cascade's);
+// affected units pay the requires eval. NB trainable() has NO queued-exclusion (that is the building enabler's);
 // the per-turn "don't re-pick what was queued" erase lives at CvCity::pushOrder, so this path matches the full
 // fill by NOT excluding queued.
 static void uc_recheckUnits(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam,
@@ -218,7 +217,7 @@ static void uc_appendMapBucket(const std::map<int, std::vector<int> >& m, int ke
 // --- UnitEnabler.cs: the city's TRAINABLE set (the engine canTrain TRUE-set), GENERATE-then-GATE. Units REUSE the
 // building machinery -- only the inputs differ. Built on the ONE primitive pair (the bc_isBuildable idiom: one
 // primitive, two consumers -- the full fill here and the targeted box re-checks can never diverge in per-unit logic):
-// (1) GATE availability: uc_isAvailable, memoized -- all units minus spawnOnly (identity.spawnOnly, the cascade's OWN
+// (1) GATE availability: uc_isAvailable, memoized -- all units minus spawnOnly (identity.spawnOnly, the enabler's OWN
 // flag -- never player-trained; self-containment, StoneBase u.SpawnOnly) / tech-obsoleted / instance-capped /
 // entity-gate-failed, then requires.build (STRICT). (2) GENERATE frontier: all units
 // minus spawnOnly/obsoleted/replaced-when-the-replacer-is-available (the `replaces` edge -- source-side, inverted;
@@ -229,11 +228,11 @@ static void uc_appendMapBucket(const std::map<int, std::vector<int> >& m, int ke
 void UnitEnabler::trainable(const CvCity* pCity, const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& result, bool bVisible)
 {
 	std::set<int> waived;
-	BuildingEnabler::augmentWaived(kPlayer, kTeam, waived);   // SAME AugmentState waiver the building cascade uses (shared evaluator)
+	BuildingEnabler::augmentWaived(kPlayer, kTeam, waived);   // SAME AugmentState waiver the building enabler uses (shared evaluator)
 	CvCascadeEvalCtx ec; ec.city = pCity; ec.plot = pCity->plot(); ec.player = &kPlayer; ec.team = &kTeam; ec.waivedPrereqBuildings = &waived;
 	// The two per-city operating buildings (active set + in-vicinity `provides` supply, json §5a): a herd/tamed-animal
 	// building that provides e.g. HORSE ⇒ HORSE in-vicinity, so a horse unit's `requires` {BONUS, connection:vicinity}
-	// trains. Computed from the cascade, NOT the engine's hasVicinityBonus (DEC-calc-zero-ride-in).
+	// trains. Computed from the enabler, NOT the engine's hasVicinityBonus (DEC-calc-zero-ride-in).
 	EnablerKernel::wireOperatingBuildings(pCity, ec);
 	CvCascadeEvalFlags flags; flags.strictStateReligionForBuild = true;
 	flags.testVisible = bVisible;   // VISIBLE frontier: relax greyable clauses (connectable resource / unadopted civic -> GREYED, enabler.md §6)
@@ -271,7 +270,7 @@ void UnitEnabler::trainable(const CvCity* pCity, const CvPlayer& kPlayer, const 
 	for (int u = 0; u < nU; ++u)
 	{
 		const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
-		if (j != NULL && ((const CvUnitInfo*)j)->spawnOnly) continue;   // spawnOnly (cascade's own flag; self-containment)
+		if (j != NULL && ((const CvUnitInfo*)j)->spawnOnly) continue;   // spawnOnly (the enabler's own flag; self-containment)
 		if (EnablerKernel::obsoletedByHeldTech(j, kTeam)) continue;
 		if (replacedUnits.count(u) != 0) continue;
 		frontier.insert(u);

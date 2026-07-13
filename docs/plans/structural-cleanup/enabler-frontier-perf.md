@@ -29,19 +29,19 @@
 
 `buildingProcessed` (`CvCascadeAccumulator.cpp:816`) — fires on **every building added/removed in a city** —
 marks `CPK_ALL & ~(YSPEC|CSPEC|SCSPEC|FRONT_B)` dirty, which **includes `CPK_FRONT_U` + `CPK_FRONT_PP` + the operating buildings
-fixpoint**. Buildings got an incremental path (`onBuildingChanged`, `CvCascadeBuildingCascade.cpp:338`, so
+fixpoint**. Buildings got an incremental path (`onBuildingChanged`, `CvBuildingEnabler.cpp:338`, so
 `FRONT_B` is excluded — building fills are only 149). **Units never got one** — `CvUnit.cpp` never dirties the
 cascade; the only unit-box maintenance is a targeted erase on train-order (`CvCity.cpp:16113`). So every building
 completion (+ city growth `setPopulation:7019`, religion `setHasReligion:15404`, corp `setHasCorporation:15609`)
 blanket-dirties the whole unit frontier, and the next AI `canTrain` read forces a full **~3340-unit re-walk**
-(`UnitCascade::trainable`, `CvCascadeUnitCascade.cpp:73`, one `cascadeEvalCondition(requiresBuild)` per unit at
+(`UnitEnabler::trainable`, `CvUnitEnabler.cpp:73`, one `cascadeEvalCondition(requiresBuild)` per unit at
 `:96`). 446 of those/turn = the 1.4M `ceFrontU`. The operating buildings fixpoint
-(`EnablerKernel::recomputeOperatingBuildingsInto`, `CvCascadeEnablerKernel.cpp:199`) rides the SAME triggers, so it
+(`EnablerKernel::recomputeOperatingBuildingsInto`, `CvEnablerKernel.cpp`) rides the SAME triggers, so it
 recomputes alongside → the 2.8M `ceOperatingBuildings`.
 
 ## The reverse-index state (owner's original ask — all confirmed)
 
-- `bc_buildIndices()` is built **LAZILY** on first `onBuildingChanged` (`CvCascadeBuildingCascade.cpp:166`),
+- `bc_buildIndices()` is built **LAZILY** on first `onBuildingChanged` (`CvBuildingEnabler.cpp:166`),
   NOT at load.
 - `s_bcBuildingDeps` (building→dependent-buildings) is the **ONLY** bucket consumed (`onBuildingChanged` `:350`).
 - The HAVE-atom→dependents buckets (`s_bcTech`/`s_bcBonus`/`s_bcPop`/`s_bcReligion`/`s_bcCorp`/`s_bcPower`/
@@ -59,7 +59,7 @@ warm-up block `CvGame::onFinalInitialized` (`CvGame.cpp:632-646`), where plot/ci
 
 ### B — unit incremental path + STOP the blanket dirty (the biggest lever)
 
-- Add `UnitCascade::onUnitChanged` mirroring `BuildingCascade::onBuildingChanged` (`:338`): a unit trained/lost
+- Add `UnitEnabler::onUnitChanged` mirroring `BuildingEnabler::onBuildingChanged` (`:338`): a unit trained/lost
   re-checks only the changed unit + its dependents (units whose `capped()` count / cap depends on it) via the
   unit reverse index, in place — no full rebuild.
 - Add a unit HAVE-change recheck (mirror `bc_recheckBuildings` `:299`) over the unit reverse-index bucket.
@@ -122,7 +122,7 @@ committed item, with no blanket recompute sitting behind it.
 > fill still RE-EVALUATES. The operating buildings fixpoint (`ceOperatingBuildings` ~2M, the biggest condEval caller) is the keystone: it is the
 > **active building set** (`requiresOperate` holds ∧ no dormant successor ∧ present) + the **in-vicinity provided
 > bonuses**, and it feeds BOTH the enabler frontier AND the modifier packages. Today it is a full least-fixpoint
-> recompute (`recomputeOperatingBuildingsInto`, `CvCascadeEnablerKernel.cpp:199`) on every operating buildings-dirty. Make it a
+> recompute (`recomputeOperatingBuildingsInto`, `CvEnablerKernel.cpp`) on every operating buildings-dirty. Make it a
 > **maintained package** ([modifier-substrate.md](modifier-substrate.md) §1 applied to the operating buildings): reads O(1), a
 > HAVE-change applies a bounded DELTA, no full recompute.
 

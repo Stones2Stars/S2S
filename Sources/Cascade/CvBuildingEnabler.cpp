@@ -1,15 +1,14 @@
 //
-//	BuildingEnabler -- StoneBase CalculateBuildableBuildings.cs (see the header). Ported VERBATIM from
-//	CvCascadeEnabler.cpp's file-static en_augmentWaived / en_buildingCapped / en_scaledPrereq / en_buildingBuildable;
-//	promoted to a declared surface (the single-source law, patterns.md). LOGIC unchanged: only the signatures + the
-//	EnablerKernel-qualified call sites were rewritten.
+//	BuildingEnabler -- StoneBase CalculateBuildableBuildings.cs (see the header): the building frontier
+//	generate/gate (waiver augment, cap, scaled prereq, buildable), a declared surface over the ONE EnablerKernel
+//	primitive (the single-source law, patterns.md).
 //
 
 #include "CvGameCoreDLL.h"
 #include "CvBuildingEnabler.h"
 #include "CvEnablerKernel.h"    // EnablerKernel::obsoletedByHeldTech
 #include "CvInfo.h"
-#include "CvBuildingInfo.h"       // notConstructible (the cascade's own never-buildable flag; self-containment)
+#include "CvBuildingInfo.h"       // notConstructible (the enabler's own never-buildable flag; self-containment)
 #include "Repos/InfoRepo.h"
 #include "CvCascadeTally.h"
 #include "AI/CvPlayerAI.h"            // GET_PLAYER
@@ -31,7 +30,7 @@
 // AugmentState's prereq-WAIVER set (StoneBase BuildingEnabler.AugmentState: ObsoleteBuildings ∪ PrereqWaivedBuildings):
 // a BUILDING is a waived prereq iff its obsoleting tech is held by the team (the JSON `obsoletedBy.techs` edge --
 // EnablerKernel::obsoletedByHeldTech, the ONE tech-obsolescence authority), OR its SpecialBuilding group is made
-// not-required by an adopted civic (enables.specialBuildingsWaived). Shared by the building + unit cascades (both gate
+// not-required by an adopted civic (enables.specialBuildingsWaived). Shared by the building + unit enablers (both gate
 // requires.build through the SAME evaluator). The vicinity-supply + gov-center AugmentState operating buildings are read LIVE by the
 // evaluator (hasVicinityBonus / isGovernmentCenter), so only the waived set is materialized here.
 void BuildingEnabler::augmentWaived(const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& waived)
@@ -61,8 +60,8 @@ void BuildingEnabler::augmentWaived(const CvPlayer& kPlayer, const CvTeam& kTeam
 }
 
 // Instance cap (StoneBase Capped): the entity is maxed at some scope -- current tally count + in-production making >=
-// allowed. Reads the cascade's own allowed (CvInfo) + tally + the live making, NOT the engine's isBuildingMaxedOut
-// (tautological vs canConstruct -- the cascade owns its OWN count).
+// allowed. Reads the enabler's own allowed (CvInfo) + tally + the live making, NOT the engine's isBuildingMaxedOut
+// (tautological vs canConstruct -- the enabler owns its OWN count).
 bool BuildingEnabler::capped(const CvInfo* j, int eB, const CvPlayer& kPlayer)
 {
 	if (j == NULL) return false;
@@ -85,7 +84,7 @@ bool BuildingEnabler::capped(const CvInfo* j, int eB, const CvPlayer& kPlayer)
 // world-size-scaled (getModifiedIntValue: wsMod>0 -> *(100+m)/100; wsMod<0 -> *100/(100-m)), then *(1+selfCount) unless
 // SELF is a limited wonder; bypassed (= base) if SELF is forceNoPrereqScaling OR the PREREQ is a limited wonder. This is
 // a faithful TRANSCRIPTION of the legacy CvPlayer::getBuildingPrereqBuilding math -- ported, NOT called (the legacy
-// method does not understand the cascade). CHALLENGE_ONE_CITY is omitted, as StoneBase omits it.
+// method does not understand the enabler). CHALLENGE_ONE_CITY is omitted, as StoneBase omits it.
 int BuildingEnabler::scaledPrereq(int baseN, int wsMod, bool selfLimited, bool prereqLimited, bool selfNoScale, int selfCount)
 {
 	if (baseN < 1) return 0;
@@ -211,7 +210,7 @@ void BuildingEnabler::buildable(const CvCity* pCity, const CvPlayer& kPlayer, co
 	augmentWaived(kPlayer, kTeam, waived);
 	CvCascadeEvalCtx ec; ec.city = pCity; ec.plot = pCity->plot(); ec.player = &kPlayer; ec.team = &kTeam; ec.waivedPrereqBuildings = &waived;
 	// The two per-city operating buildings (active set + in-vicinity `provides` supply, json §5a) so a requires with an
-	// ACTIVE-building or vicinity-provided BONUS predicate resolves from the cascade, not the engine (DEC-calc-zero-ride-in).
+	// ACTIVE-building or vicinity-provided BONUS predicate resolves from the enabler, not the engine (DEC-calc-zero-ride-in).
 	EnablerKernel::wireOperatingBuildings(pCity, ec);
 	CvCascadeEvalFlags buildFlags; buildFlags.strictStateReligionForBuild = true;   // requires.build = strict
 	CvCascadeEvalFlags operFlags;  operFlags.ignoreDisabled = true;                  // requires.operate = positive prereqs only

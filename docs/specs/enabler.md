@@ -2,9 +2,9 @@
 
 > **⛔ NAMING ([DEC-enabler-not-cascade](../architecture/decisions.md#dec-enabler-not-cascade)).** This is **the
 > enabler** — a system SEPARATE from the modifier **cascade**. The two are routinely conflated; do not. "cascade"
-> names the modifier ("how much?") system ONLY. The enabler's classes drop the `Cascade` prefix
-> (`CvCascadeEnablerKernel`/`BuildingCascade`/`UnitCascade`/`TechCascade` → their enabler equivalents), and its
-> availability getters read the enabler's OWN cached sets directly.
+> names the modifier ("how much?") system ONLY. The enabler's classes carry no `Cascade` prefix
+> (`EnablerKernel`/`BuildingEnabler`/`UnitEnabler`/`TechEnabler`), and its availability getters read the enabler's
+> OWN cached sets directly.
 
 The enabler is the machine that decides **what an entity is allowed to do or build right now** — research a tech,
 train a unit, construct a building, adopt a civic, lay an improvement. It answers one question per candidate: *"can I

@@ -145,15 +145,15 @@ public:
   only live calculation is adding the ~5 packages together at read.** The plot and city levels live this way; the
   player level lands with the freshness consolidation (`CascadePlayerScope`); area/team/world follow per channel
   (the tradeRoutes world term is the first world-scope tenant). Full rebuild of everything = LOAD ONLY.
-- **⚖ A CASCADE IS A CACHE — BUT NOT AN INPUT/OUTPUT CACHE.** Two distinct cache kinds; do not conflate them:
+- **⚖ TWO DISTINCT KINDS OF DERIVED CACHE — do not conflate them:**
   - **The yield + percent packages are an INPUT/OUTPUT (value) cache** — memoize the computed number,
     dirty-invalidate on a source event, recompute from inputs on next read. This is what `CvDerivedCache` is FOR.
-  - **The ENABLER cascades (the frontier + the operating-building set) are a CASCADE** — themselves derived state,
+  - **The ENABLER's sets (the frontier + the operating-building set) are themselves derived state** —
     but maintained by **TARGETED PROPAGATION**: computed once (the walk-down), then each HAVE-change propagates
     through the **affected subset only** (re-check the affected candidates / ripple the fixpoint), updating the
-    authoritative dataset **in place** via the reverse-index ([enabler.md](../specs/enabler.md) §7). A cascade is
+    authoritative dataset **in place** via the reverse-index ([enabler.md](../specs/enabler.md) §7). They are
     NEVER blanket-invalidated-and-recomputed, and NEVER a parallel shadow-delta.
-  ⛔ Blanket-recomputing the whole operating-building fixpoint for every city on every event runs a cascade AS an
+  ⛔ Blanket-recomputing the whole operating-building fixpoint for every city on every event runs the enabler's set AS an
   input/output cache — **"burning down the library of Alexandria" (DESPAIR_INDEX #2)**. The fix is targeted
   propagation, the shape the frontier ALREADY uses (`onBuildingChanged` / `recheckHave` off the reverse-index). It
   is likewise **not a given** the yield-package shape fits any OTHER non-package channel (the unit plane,

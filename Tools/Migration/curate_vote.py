@@ -10,7 +10,7 @@ changeFreeTradeCount, changeForceCivicCount, isOpenBorders/isForceWar/isAssignCi
 vote RESULT). So the effect fields below feed processVote, not a cascade.
 
 **A vote (really a "DiplomaticProposal" — rename DEFERRED to another day, owner 2026-06-14) participates in
-NEITHER cascade: no cascade modifier, no cascade enabler. It is a self-contained PROPOSAL — all its data lives ON
+NEITHER machine: no modifier deposit, no enabler edge. It is a self-contained PROPOSAL — all its data lives ON
 it as intrinsic config for the EXISTING vote subsystem (CvGame voting), and it is "relatively neatly packaged":**
 
 ⚠ This SUPERSEDES the ranking's "Vote world-state bools → enables-family" note (re-verify vs the C++, 2026-06-15):
@@ -26,7 +26,7 @@ sections); moot today since no era sets one.
 - `voteSource` — which VoteSource(s)/council may raise this proposal (DiploVotes). The three sources are the
   diplomatic-voting bodies: DIPLOVOTE_UN = the United Nations, DIPLOVOTE_POPE = the Apostolic Palace, and
   DIPLOVOTE_CVIENNA = the Congress of Vienna — the UN + the two diplomatic WONDERS (owner, 2026-06-15).
-  Intrinsic to the proposal (which council it belongs to), read by `isVoteSourceType`; NOT a cascade enabler.
+  Intrinsic to the proposal (which council it belongs to), read by `isVoteSourceType`; NOT an enabler edge.
 - `threshold` — pass rules: `iPopulationThreshold` (% of eligible votes), `iMinVoters` (min eligible),
   `iStateReligionVotePercent` (per-player vote-weight bonus when state religion matches; 0 dropped).
 - EXACTLY ONE of (mutually exclusive in the data):

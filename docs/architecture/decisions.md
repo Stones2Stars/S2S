@@ -326,8 +326,9 @@ for the curator is not license to load them at runtime — the recurring rollers
 The **enabler** ("can I?" — the generate-then-gate availability machine: the frontier + operating-building sets) and
 the **modifier cascade** ("how much?" — the magnitude machine) are TWO SEPARATE SYSTEMS that agents routinely
 conflate — a top cause of the read-path rollerskates. To kill the ambiguity: **"cascade" names the MODIFIER system
-ONLY**; the availability machine is **"the enabler"**, never "the enabler cascade." Drop `Cascade` from its class
-names (`CvCascadeEnablerKernel` / `BuildingCascade` / `UnitCascade` / `TechCascade` → their enabler equivalents).
+ONLY**; the availability machine is **"the enabler"**, never "the enabler cascade." Its classes carry no `Cascade`
+prefix (`EnablerKernel` / `BuildingEnabler` / `UnitEnabler` / `TechEnabler`), and it handles the `enables` forward
+walk + the `requires` gate.
 Availability getters (`canConstruct`/`canTrain`/`canResearch`/…) read the enabler's OWN cached sets directly (the same
 "read your own cache" shape the modifier getters use for the game-object modifier caches — [DEC-no-self-heal](#dec-no-self-heal),
 [scope-packages.md](../plans/structural-cleanup/scope-packages.md)). **Home:** [enabler.md](../specs/enabler.md).

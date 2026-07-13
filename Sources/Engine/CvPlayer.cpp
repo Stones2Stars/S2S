@@ -8326,14 +8326,10 @@ bool CvPlayer::canEverResearch(TechTypes eTech) const
 
 bool CvPlayer::canResearch(const TechTypes eTech, const bool bRightNow, const bool bSpecialRequirements) const
 {
-	// #430 THE ENABLER FLIP (owner 2026-07-04 "flip it all"): the default shape (researchable NOW, special
-	// requirements on -- the harness-proven pairing) serves the cascade frontier (TechEnabler::available,
-	// cached on the player package, ensure-on-read). Other shapes + pre-init ride the Legacy oracle.
-	if (bRightNow && bSpecialRequirements && GC.getGame().isFinalInitialized())
-	{
-		return CascadeAccumulator::enResearch(this, (int)eTech);
-	}
-	return canResearchLegacy(eTech, bRightNow, bSpecialRequirements);
+	// #430: the LEGACY path is REMOVED (owner) -- canResearch reads ONLY the enabler frontier
+	// (TechEnabler::available, cached on the player package, ensure-on-read). No legacy fallback, no shape gating.
+	// return canResearchLegacy(eTech, bRightNow, bSpecialRequirements);   // legacy oracle -- REMOVED
+	return CascadeAccumulator::enResearch(this, (int)eTech);
 }
 
 bool CvPlayer::canResearchLegacy(const TechTypes eTech, const bool bRightNow, const bool bSpecialRequirements) const

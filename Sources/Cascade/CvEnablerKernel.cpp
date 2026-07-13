@@ -1,8 +1,6 @@
 //
-//	EnablerKernel -- the shared GENERATE->GATE primitive + gate helpers (see the header). Ported VERBATIM from
-//	CvCascadeEnabler.cpp's file-static en_* helpers; promoted to a declared surface so every cascade reaches the ONE
-//	implementation (the single-source law, patterns.md). LOGIC unchanged: only the signatures + internal call sites
-//	were rewritten.
+//	EnablerKernel -- the shared GENERATE->GATE primitive + gate helpers (see the header): the `enables` forward walk
+//	and the `requires` gate, the ONE implementation every enabler reaches (the single-source law, patterns.md).
 //
 
 #include "CvGameCoreDLL.h"
@@ -174,7 +172,7 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 // the kernel's former techs-only duplicate was folded into it 2026-07-02, capabilities.md.)
 
 // canFoundReligion -- a PLAYER-WIDE state predicate (CvPlayer::canFoundReligion): NOT a JSON frontier, reproduced from
-// game state so the cascade owns the gate (it is what enables/AI-reads the religion-founding action). >=1 city, not
+// game state so the enabler owns the gate (it is what enables/AI-reads the religion-founding action). >=1 city, not
 // NPC, not the first 3 turns; under RELIGION_LIMITED a holy-city owner cannot found another (minus the rebel /
 // LIMITED_RELIGIONS_EXCEPTIONS carve-out). Reads raw state only -- a faithful mirror of the engine predicate.
 bool EnablerKernel::canFoundReligion(const CvPlayer& kPlayer)
@@ -281,7 +279,7 @@ void EnablerKernel::recomputeOperatingBuildingsInto(const CvCity* pCity, std::se
 	// single pass evaluates those consumers against an incomplete supply and dorms them wrongly (per-building
 	// dry-calc proved the data exact; the whole bC under-count was ~14 buildings dormed by a NULL/partial provB).
 	// StoneBase never faced this: its AugmentState reads the ENGINE's dormant set (the "StoneBase cheated on
-	// dormancy" the owner flagged); the self-contained cascade must solve the fixpoint itself. LEAST fixpoint:
+	// dormancy" the owner flagged); the self-contained enabler must solve the fixpoint itself. LEAST fixpoint:
 	// start with an EMPTY supply, iterate active→provides until stable (bounded; provides only ever ADD, so
 	// convergence is fast — typically 2 scans).
 	std::set<int> prov;
@@ -315,7 +313,7 @@ void EnablerKernel::recomputeOperatingBuildingsInto(const CvCity* pCity, std::se
 }
 
 // ============================ the ACTIVE-SET targeted maintenance ==========================================
-// The per-city active-building set (m_operatingBuildings.active/provided) is a CASCADE maintained by TARGETED
+// The per-city active-building set (m_operatingBuildings.active/provided) is maintained by TARGETED
 // PROPAGATION, not blanket-recomputed on every event: a HAVE-change ripples ONLY the affected buildings into the
 // AUTHORITATIVE set (the recompute above stays the LOAD seed + the validation oracle). Mirrors the frontier's
 // s_bc*/recheckHave (CvBuildingEnabler.cpp), extended to the operate<->provides fixpoint. enabler.md §7.
@@ -526,16 +524,6 @@ void EnablerKernel::onPlayerScopeChangedActive(const CvCity* pCity)
 	seeds.insert(seeds.end(), s_opGolden.begin(), s_opGolden.end());
 	seeds.insert(seeds.end(), s_opObsoletable.begin(), s_opObsoletable.end());   // tech research flips obsolescence (json §4.2)
 	ek_recheckActiveSet(pCity, seeds);
-}
-
-void EnablerKernel::onSliceRebuildActive(const CvCity* pCity)
-{
-	buildActiveIndex();
-	if (pCity == NULL) return;
-	// the bounded per-turn self-heal: re-check ONLY the DYNAMIC-operate buildings (operate reads live non-HAVE
-	// state no event carries -- IS_CAPITAL, counts, connection, bonus trade/vicinity shifts). Everything else is
-	// event-hooked. Replaces the whole-city full recompute every slice.
-	ek_recheckActiveSet(pCity, s_opDynamic);
 }
 
 // The LOAD seed (CvCity::refreshOperatingBuildings): the ONE full recompute of active/provided + the provider ref-count

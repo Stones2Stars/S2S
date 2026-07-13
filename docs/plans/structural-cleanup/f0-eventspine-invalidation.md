@@ -244,7 +244,7 @@ package; the boundary ensure rolls it to cities next slice, matching the plain e
 G5 = `markPlayerScopeAndCities` in `changeLeader` (the runtime path that bypassed `setHasTrait`). **G3 is
 RECLASSIFIED — NOT an emit gap** (the `emitBonusChanged` choke is complete): it is an ENABLER build — a
 `CASC_HAVE_BONUS` targeted operate/build re-check (patterned on religion/corp `cityHaveChanged`), because bonus is
-one of the enabler's self-heal-backstopped "unhooked classes" (`CvCascadeEnablerKernel.cpp:560`). Sequence it with
+one of the enabler's self-heal-backstopped "unhooked classes" (`CvEnablerKernel.cpp`). Sequence it with
 the enabler reverse-index work, not the emit surface.
 
 **BONUS-ACCESS EMIT MODEL (owner-ruled — supersedes the single narrow bonus route).** A bonus condition reads TWO
@@ -341,7 +341,7 @@ hole of madness." The cascade cares only about the resulting yield in the bucket
 **Latent (no current staleness, but the emit must land WHEN the deposit is consumed):**
 - **L1 — Culture level.** `setCultureLevel`/`updateCultureLevel` (`CvCity.cpp:10750/10833`) emit nothing. No stored
   package reads culture level yet (`defenseAmount` folds buildings only; the CultureLevel wonder-caps are an unwired
-  BuildingCascade follow-on, `CvCascadeBuildingCascade.cpp:78`). So the authored `defense.city.amount.percent` +
+  BuildingEnabler follow-on, `CvBuildingEnabler.cpp:78`). So the authored `defense.city.amount.percent` +
   wonder-cap deposits on culturelevels are currently **unconsumed**; the moment either is wired into a fold it becomes
   a live gap because the emit is absent — wire the emit in the SAME change.
 

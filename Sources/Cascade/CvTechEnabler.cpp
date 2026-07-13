@@ -1,7 +1,6 @@
 //
-//	TechEnabler -- StoneBase CalculateAvailableTechs.cs (see the header). Ported VERBATIM from CvCascadeEnabler.cpp's
-//	file-static en_techAvailable; promoted to a declared surface (the single-source law, patterns.md). LOGIC unchanged:
-//	only the signature was rewritten.
+//	TechEnabler -- StoneBase CalculateAvailableTechs.cs (see the header): the tech availability generate/gate,
+//	a declared surface over the ONE EnablerKernel primitive (the single-source law, patterns.md).
 //
 
 #include "CvGameCoreDLL.h"
@@ -12,33 +11,24 @@
 #include "Defines/CvGlobals.h"
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
-#include "CvCascadeConditionEval.h"   // cascadeEvalCondition
+#include "CvEnablerKernel.h"           // EnablerKernel::generate + EnBucketSets -- the enable-side GENERATE
 #include "CvTechInfo.h"
 
-// --- TechEnabler.cs: a tech is available iff not disabled, not held, under allowed.world, requires.build holds.
-// (Default flags -- TechEnabler uses `new ConditionEvaluator()`.) The all-techs+requires set is "researchable now".
+// --- STAGE 1: the ENABLE-SIDE CAN GET only (enabler.md §1-2). CAN GET = union(enables.techs) - (disables/obsoletes/
+// replaces) over HAVE, minus already-held. This is the GENERATE pass; the requires.build GATE + the allowed cap are
+// LATER stages, so this set is DELIBERATELY OVER-INCLUSIVE -- a multi-prereq tech appears once ANY ONE prereq is held
+// (the `enables` OR; `requires.build.all` will confirm the AND in the gate stage). Event-driven: recomputed when a
+// tech-HAVE event marks the frontier (enabler.md §7 recompute-on-HAVE-change) -- no poll, no self-heal.
 void TechEnabler::available(const CvPlayer& kPlayer, const CvTeam& kTeam, std::set<int>& avail)
 {
-	CvCascadeEvalCtx ec; ec.player = &kPlayer; ec.team = &kTeam;
-	CvCascadeEvalFlags flags;   // default (NOT strict) -- mirrors StoneBase TechEnabler's plain evaluator
-	const int nT = GC.getNumTechInfos();
-	for (int t = 0; t < nT; ++t)
+	EnBucketSets cand;
+	EnablerKernel::generate(kPlayer, NULL, cand);   // union(enables) - removals over HAVE (start node + held techs + civics)
+	const std::set<int>& techs = cand["techs"];
+	for (std::set<int>::const_iterator it = techs.begin(); it != techs.end(); ++it)
 	{
-		if (GC.getTechInfo((TechTypes)t).isDisable()) continue;        // IsDisabled
-		if (kTeam.isHasTech((TechTypes)t)) continue;                   // held
-		const CvInfo* j = InfoRepo<CvTechInfo>::get().get(t);
-		if (j != NULL)
-		{
-			const int wcap = j->allowedCap("world");
-			if (wcap >= 0)                                             // world cap (rare: a globally-unique tech)
-			{
-				int held = 0;
-				for (int tm = 0; tm < MAX_TEAMS; ++tm)
-					if (GET_TEAM((TeamTypes)tm).isAlive() && GET_TEAM((TeamTypes)tm).isHasTech((TechTypes)t)) ++held;
-				if (held >= wcap) continue;
-			}
-			if (j->requiresBuild() != NULL && !cascadeEvalCondition(j->requiresBuild(), ec, flags)) continue;
-		}
+		const int t = *it;
+		if (kTeam.isHasTech((TechTypes)t)) continue;              // already held -> not a CAN GET candidate
+		if (GC.getTechInfo((TechTypes)t).isDisable()) continue;   // the reversible law-ban (the Neanderthal research ban)
 		avail.insert(t);
 	}
 }
