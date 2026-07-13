@@ -3855,8 +3855,16 @@ bool CvGame::isNoNukes() const
 
 void CvGame::changeNoNukesCount(int iChange)
 {
+	const bool bWasNoNukes = isNoNukes();
 	m_iNoNukesCount += iChange;
 	FASSERT_NOT_NEGATIVE(m_iNoNukesCount);
+	// #430 event spine: the AP-UN no-nukes BAN is WORLD (isNoNukes = option || count>0) and flips EVERY player's nuke
+	// state to/from BANNED at once -- announce each alive player's new 3-state. (The cascade NO_NUKES predicate reads
+	// this ban half; the per-player ENABLED/DISABLED half is makeNukesValid.)
+	if (bWasNoNukes != isNoNukes())
+		for (int iP = 0; iP < MAX_PC_PLAYERS; ++iP)
+			if (GET_PLAYER((PlayerTypes)iP).isAlive())
+				emitNukesChanged(iP, GET_PLAYER((PlayerTypes)iP).getNukeState());
 }
 
 
@@ -5554,6 +5562,14 @@ CvCity* CvGame::getHolyCity(ReligionTypes eIndex) const
 	return getCity(m_paHolyCity[eIndex]);
 }
 
+bool CvGame::isHolyCityByOwnerId(ReligionTypes eIndex, PlayerTypes eOwner, int iID) const
+{
+	// #430: compare the loaded holy-city IDInfo DIRECTLY (no getCity resolution) -- read-safe during CvCity::read,
+	// where the city isn't yet resolvable back to itself via getCity() (the reseed getHolyCity()==this trap).
+	FASSERT_BOUNDS(0, GC.getNumReligionInfos(), eIndex);
+	return m_paHolyCity[eIndex].eOwner == eOwner && m_paHolyCity[eIndex].iID == iID;
+}
+
 
 void CvGame::setHolyCity(ReligionTypes eIndex, const CvCity* pNewValue, bool bAnnounce)
 {
@@ -5571,6 +5587,11 @@ void CvGame::setHolyCity(ReligionTypes eIndex, const CvCity* pNewValue, bool bAn
 		m_paHolyCity[eIndex] = pNewValue->getIDInfo();
 	}
 	else m_paHolyCity[eIndex].reset();
+
+	// #430 event spine: the holy-city DESIGNATION moved -- IS_HOLY_CITY / IS_STATE_RELIGION_HOLY_CITY flip for the OLD
+	// city (loses) and the NEW city (gains), gating conditioned commerce/yields. Announce per affected city.
+	if (pOldValue != NULL) emitHolyCityChanged(pOldValue->getID(), pOldValue->getOwner(), (int)eIndex, false);
+	if (pNewValue != NULL) emitHolyCityChanged(pNewValue->getID(), pNewValue->getOwner(), (int)eIndex, true);
 
 
 	if (pOldValue != NULL)

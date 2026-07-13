@@ -10758,6 +10758,10 @@ void CvCity::setCultureLevel(CultureLevelTypes eNewValue, bool bUpdatePlotGroups
 	const CultureLevelTypes eOldValue = m_eCultureLevel;
 
 	m_eCultureLevel = eNewValue;
+	// #430 event spine: culture level is a cascade input (wonder caps, defense, enabler frontier) AND the city's
+	// workable RADIUS grows with it -- so this ONE fact is ALSO the vicinity-MEMBERSHIP signal (the city gains/loses
+	// plots into its vicinity). Announce it.
+	emitCultureLevelChanged(getID(), getOwner(), (int)eNewValue);
 
 	// Culture level change can change our radius requiring recalculation of best builds
 	AI_markBestBuildValuesStale();
@@ -17685,13 +17689,14 @@ void CvCity::read(FDataStreamBase* pStream)
 		emitPopulationChanged(iCityId, iCityOwner, m_iPopulation);
 		if (m_iPowerCount > 0) { emitPowerChanged(iCityId, iCityOwner, m_iPowerCount); }
 		for (iI = 0; iI < GC.getNumReligionInfos(); ++iI)
-			if (m_pabHasReligion[iI]) { emitReligionChanged(iCityId, iCityOwner, iI, true); }
+			if (m_pabHasReligion[iI]) { emitReligionChanged(iCityId, iCityOwner, iI, true); if (GC.getGame().isHolyCityByOwnerId((ReligionTypes)iI, m_eOwner, iCityId)) { emitHolyCityChanged(iCityId, iCityOwner, iI, true); } }   // #430 reseed: religion presence + holy-city (read-safe IDInfo check)
 		for (iI = 0; iI < GC.getNumCorporationInfos(); ++iI)
 			if (m_pabHasCorporation[iI]) { emitCorporationChanged(iCityId, iCityOwner, iI, true); }
 		for (iI = 0; iI < GC.getNumBonusInfos(); ++iI)
 			if (m_paiNumBonuses[iI] != 0) { emitBonusChanged(iCityId, iCityOwner, iI, m_paiNumBonuses[iI]); }
 		for (iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
 			if (m_paiSpecialistCount[iI] > 0) { emitSpecialistChanged(iCityId, iCityOwner, iI, m_paiSpecialistCount[iI]); }
+			if (m_eCultureLevel != NO_CULTURELEVEL) { emitCultureLevelChanged(iCityId, iCityOwner, (int)m_eCultureLevel); }   // #430 reseed: culture level (+ its radius/vicinity footprint)
 	}
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iImprovementGoodHealth);

@@ -268,7 +268,8 @@ enum SpineDomainField
 	SPF_DELTA, SPF_HAS, SPF_VALUE, SPF_COUNT, SPF_ON,
 	SPF_NAME_KIND, SPF_ENTITY_ID, SPF_NAME,
 	// the [CASCADE] invalidate observability fields
-	SPF_SCOPE, SPF_ID, SPF_PKG, SPF_SRC
+	SPF_SCOPE, SPF_ID, SPF_PKG, SPF_SRC,
+	SPF_HERITAGE, SPF_ERA
 };
 
 // The constant line PREFIX for each spine DOMAIN eventId ("[SPINE] <eventName>"). The variable fields follow as
@@ -301,6 +302,13 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_PROJECT_CHANGED:        return "[SPINE] projectChanged";
 	case SEVT_GOLDEN_AGE_CHANGED:     return "[SPINE] goldenAgeChanged";
 	case SEVT_STATE_RELIGION_CHANGED: return "[SPINE] stateReligionChanged";
+	case SEVT_HERITAGE_CHANGED:       return "[SPINE] heritageChanged";
+	case SEVT_PLOTGROUP_BONUS_CHANGED: return "[SPINE] plotGroupBonusChanged";
+	case SEVT_CITY_NETWORK_CHANGED:    return "[SPINE] cityNetworkChanged";
+	case SEVT_ERA_CHANGED:             return "[SPINE] eraChanged";
+	case SEVT_NUKES_CHANGED:           return "[SPINE] nukesChanged";
+	case SEVT_CITY_CULTURE_LEVEL_CHANGED: return "[SPINE] cultureLevelChanged";
+	case SEVT_HOLY_CITY_CHANGED:       return "[SPINE] holyCityChanged";
 	case SEVT_CITY_OWNER_CHANGED:     return "[SPINE] cityOwnerChanged";
 	case SEVT_PLOT_OWNER_CHANGED:     return "[SPINE] plotOwnerChanged";
 	case SEVT_WORKING_CITY_CHANGED:   return "[SPINE] workingCityChanged";
@@ -350,6 +358,8 @@ static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
 	case SPF_ID:          *peType = SFT_INT;         return "id";
 	case SPF_PKG:         *peType = SFT_STR;         return "pkg";
 	case SPF_SRC:         *peType = SFT_STR;         return "src";
+	case SPF_HERITAGE:    *peType = SFT_INT;         return "heritage";
+	case SPF_ERA:         *peType = SFT_INT;         return "era";
 	default:              *peType = SFT_INT;         return NULL;
 	}
 }
@@ -605,6 +615,57 @@ void emitStateReligionChanged(int iPlayer, int iReligion)
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_STATE_RELIGION_CHANGED, iReligion, 0, 0, iPlayer, -1);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_RELIGION, iReligion).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+void emitHeritageChanged(int iPlayer, int iHeritage, bool bAdd)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_HERITAGE_CHANGED, iHeritage, bAdd ? 1 : 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_HERITAGE, iHeritage).addI(SPF_OWNER, iPlayer).addI(SPF_HAS, bAdd ? 1 : 0);
+	eventSpine().emit(e);
+}
+void emitPlotGroupBonusChanged(int iOwner, int iPlotGroupId, int iBonus, int iDelta)
+{
+	// iSrcLoc = the plot-group id (the network identity; unique within the owner, like a city id)
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOTGROUP_BONUS_CHANGED, iBonus, 0, iDelta, iOwner, iPlotGroupId);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_ID, iPlotGroupId).addI(SPF_DELTA, iDelta);
+	eventSpine().emit(e);
+}
+void emitCityNetworkChanged(int iOwner, int iCity)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_NETWORK_CHANGED, -1, 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner);
+	eventSpine().emit(e);
+}
+void emitEraChanged(int iPlayer, int iEra)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_ERA_CHANGED, -1, iEra, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_ERA, iEra).addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+void emitNukesChanged(int iPlayer, int iState)
+{
+	// iA = state: 0 DISABLED / 1 ENABLED / 2 BANNED
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_NUKES_CHANGED, -1, iState, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer).addI(SPF_VALUE, iState);
+	eventSpine().emit(e);
+}
+void emitCultureLevelChanged(int iCity, int iOwner, int iNewLevel)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_CULTURE_LEVEL_CHANGED, -1, iNewLevel, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_VALUE, iNewLevel);
+	eventSpine().emit(e);
+}
+void emitHolyCityChanged(int iCity, int iOwner, int iReligion, bool bIsHoly)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_HOLY_CITY_CHANGED, iReligion, bIsHoly ? 1 : 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_RELIGION, iReligion).addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_HAS, bIsHoly ? 1 : 0);
 	eventSpine().emit(e);
 }
 void emitCityOwnerChanged(int iCity, int iOldOwner, int iNewOwner)

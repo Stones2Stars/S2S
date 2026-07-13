@@ -1612,6 +1612,11 @@ void CvPlayer::changeLeader(LeaderHeadTypes eNewLeader)
 		}
 	}
 
+	// #430 G5: changeLeader mutates traits via direct processTrait (clearLeaderTraits + the add loops above),
+	// bypassing setHasTrait's emitTraitChanged -- so no cache invalidation fired. Mark the player scope + cities
+	// (the exact footprint the SEVT_TRAIT_CHANGED route uses) once, after the full leader-trait swap.
+	CascadeAccumulator::markPlayerScopeAndCities(getID());
+
 	if (!isNPC() && canLeaderPromote())
 	{
 		do
@@ -12500,6 +12505,9 @@ void CvPlayer::setCurrentEra(EraTypes eNewValue)
 	{
 		EraTypes eOldEra = m_eCurrentEra;
 		m_eCurrentEra = eNewValue;
+		// #430 event spine: era is a BROAD player-scope cascade input -- PSC_CFLAT (heritage era-stacked commerce,
+		// applied just below), every ERA-counter-gated deposit, and ERA requires atoms (frontier). Announce the fact.
+		emitEraChanged(getID(), (int)eNewValue);
 
 		// Toffer - Heritage may change commerce output with era.
 		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
@@ -18548,6 +18556,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		// the team's techs are loaded now -- emit per-self for each held team tech (== the owner's "one per alive
 		// member player" ruling, realized from the player side). m_iGoldenAgeTurns was read earlier and is stored.
 		if (m_iGoldenAgeTurns > 0) { emitGoldenAgeChanged(getID(), true); }
+		emitEraChanged(getID(), (int)m_eCurrentEra);   // #430 reseed: the player's current era (a broad cascade input; m_eCurrentEra read just above)
+		emitNukesChanged(getID(), getNukeState());   // #430 reseed: the player's nuke 3-state (m_bNukesValid read above; isNoNukes is world-loaded)
 		if (getTeam() != NO_TEAM)
 		{
 			const CvTeam& kMyTeam = GET_TEAM(getTeam());
@@ -19706,6 +19716,11 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 		}
+		// #430 G1 reseed: fire the present-fact for each held heritage so the load cache build sees PSC_CFLAT
+		// (heritage empire commerce). The emit rides the genuine read; getID()/getTeam() are valid here (well past
+		// m_eID's re-read + updateTeamType), matching the GA/tech reseed placement.
+		for (std::vector<HeritageTypes>::const_iterator itHeritage = m_myHeritage.begin(); itHeritage != m_myHeritage.end(); ++itHeritage)
+			emitHeritageChanged(getID(), (int)*itHeritage, true);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_extraCommerce);
 		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_bHasLanguage, SAVE_VALUE_ANY);   // retired 2026-07-02 (#430 capability cut) -- savemigration.txt
 		// Read Vector
@@ -29227,9 +29242,22 @@ bool CvPlayer::isNukesValid() const
 }
 
 
+int CvPlayer::getNukeState() const
+{
+	// 0 DISABLED (no nuke-enabling building) / 1 ENABLED (available) / 2 BANNED (world AP-UN no-nukes vote/option).
+	// isNoNukes (world) OVERRIDES -- the option/vote ban trumps per-player availability.
+	if (GC.getGame().isNoNukes()) return 2;
+	return isNukesValid() ? 1 : 0;
+}
+
 void CvPlayer::makeNukesValid(bool bValid)
 {
+	const int iWasState = getNukeState();
 	m_bNukesValid = bValid;
+	// #430 event spine: this player's nuke AVAILABILITY flipped (built the nuke-enabling building). Announce the new
+	// 3-state only if it actually changed (a BANNED player stays 2 -- the ban overrides -- so no spurious emit).
+	if (getNukeState() != iWasState)
+		emitNukesChanged(getID(), getNukeState());
 }
 
 typedef struct buildingCommerceStruct
@@ -31101,6 +31129,7 @@ void CvPlayer::setHeritage(const HeritageTypes eType, const bool bNewValue)
 		{
 			m_myHeritage.push_back(eType);
 			processHeritage(eType, 1);
+			emitHeritageChanged(getID(), (int)eType, true);   // #430 G1: heritage feeds PSC_CFLAT (era-stacked empire commerce)
 		}
 		else FErrorMsg("Tried to add a duplicate vector element!");
 	}
@@ -31108,6 +31137,7 @@ void CvPlayer::setHeritage(const HeritageTypes eType, const bool bNewValue)
 	{
 		m_myHeritage.erase(itr);
 		processHeritage(eType, -1);
+		emitHeritageChanged(getID(), (int)eType, false);   // #430 G1: heritage removal
 	}
 	else FErrorMsg("Vector element to remove was missing!");
 

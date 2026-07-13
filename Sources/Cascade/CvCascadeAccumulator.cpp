@@ -904,7 +904,7 @@ void CascadeAccumulator::buildingProcessed(const CvCity* pCity, BuildingTypes eB
 
 	const CvInfo* d = InfoRepo<CvBuildingInfo>::get().get((int)eBuilding);
 	if (d == NULL) return;
-	static int segArea = -2, segEmpire = -2, segWorld = -2, segPercent = -2, segBuildings = -2;
+	static int segArea = -2, segEmpire = -2, segWorld = -2, segPercent = -2, segBuildings = -2, segSpecialist = -2;
 	if (segArea == -2)
 	{
 		segArea = DepositIndex::lookupSegment("area");
@@ -912,6 +912,7 @@ void CascadeAccumulator::buildingProcessed(const CvCity* pCity, BuildingTypes eB
 		segWorld = DepositIndex::lookupSegment("world");
 		segPercent = DepositIndex::lookupSegment("percent");
 		segBuildings = DepositIndex::lookupSegment("buildings");
+		segSpecialist = DepositIndex::lookupSegment("specialist");   // #430 G4: <ch>.empire.specialist.perSpecialist (wonders)
 	}
 	int iPlayerMask = 0, iSiblingMask = 0;
 	bool bWorld = false;
@@ -934,6 +935,8 @@ void CascadeAccumulator::buildingProcessed(const CvCity* pCity, BuildingTypes eB
 			iPlayerMask |= PSC_SC | PSC_CFLAT | PSC_WB;
 			if (dep.nSeg == 4 && dep.seg[2] == segBuildings)
 				iSiblingMask |= CPK_CBASE | CPK_WB;   // the guild-grant + Royal-Tomb classes: every city's keyed realization re-fills
+			else if (dep.nSeg >= 3 && dep.seg[2] == segSpecialist)
+				iSiblingMask |= CPK_YSPEC | CPK_CSPEC;   // #430 G4: <ch>.empire.specialist.perSpecialist -> EVERY city's specialist package (the empire-wide getBuildingCount fold; the sibling loop includes this city)
 		}
 	}
 	if (iPlayerMask != 0 || iSiblingMask != 0)

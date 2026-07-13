@@ -78,7 +78,8 @@ public:
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
-				const int iDirtyPackages = CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC;
+				// #430 G2: specialists ALSO deposit §2b happiness/health (wbTerms.spec, folded at fill) -> CPK_WB
+				const int iDirtyPackages = CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC | CPK_WB;
 				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
 				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
 			}
@@ -135,7 +136,48 @@ public:
 			}
 			break;
 
-		default: break;   // count / name / grant-trigger / lifecycle / plot-substrate events are not package sources
+		case SEVT_HERITAGE_CHANGED:   // #430 G1: heritage empire commerce flats -> PSC_CFLAT (the boundary ensure rolls it to the cities next slice -- the ruled player-scope mid-turn cadence, matching the plain empire-commerce-flat case in buildingProcessed)
+			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+			{
+				GET_PLAYER((PlayerTypes)kEvent.iC).m_cascadePlayerScope.set.markDirty(PSC_CFLAT);
+				emitCacheInvalidate(1, kEvent.iC, kEvent.iC, PSC_CFLAT, szSource);
+			}
+			break;
+
+		// #430 BONUS NETWORK ACCESS -- the connection:trade axis, keyed on the plot-group identity the city already
+		// carries. TWO triggers: a plot-group's resource SET changed (resource event), and a city MOVED to a different
+		// group (membership event). Mask = the bonus-CONDITIONED packages; the operate-dormancy ripple (YEXTRA/BR +
+		// frontier) is the CASC_HAVE_BONUS enabler follow-on, self-heal-backstopped. Wired ADDITIVELY alongside the
+		// legacy per-city SEVT_BONUS_CHANGED (retired at the crutch-removal pass). The connection:vicinity (RADIUS)
+		// axis rides a CITY plot-gain/loss hook -- reshape pending (membership is city/plot STATE, not a cascade
+		// fat-cross recompute); until then vicinity stays self-heal-backstopped.
+		case SEVT_PLOTGROUP_BONUS_CHANGED:   // NETWORK RESOURCE: a plot-group gained/lost a resource -> its member cities re-eval connection:trade
+			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+			{
+				const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)kEvent.iC);
+				const int iDirtyPackages = CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT;
+				int iLoop;
+				for (const CvCity* pc = kPlayer.firstCity(&iLoop); pc != NULL; pc = kPlayer.nextCity(&iLoop))
+					if (pc->plot()->getPlotGroupId((PlayerTypes)kEvent.iC) == kEvent.iSrcLoc)
+					{
+						CascadeAccumulator::dirtyCity(pc, iDirtyPackages);
+						emitCacheInvalidate(0, kEvent.iC, pc->getID(), iDirtyPackages, szSource);
+					}
+			}
+			break;
+		case SEVT_CITY_NETWORK_CHANGED:   // NETWORK MEMBERSHIP: a city's own center plot moved plot-group (merge/split) -> its whole network set changed
+		{
+			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
+			if (pCity != NULL)
+			{
+				const int iDirtyPackages = CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT;
+				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
+				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
+			}
+			break;
+		}
+
+		default: break;   // count / name / grant-trigger / lifecycle / plot-substrate events are not package sources (plot yield is pull-computed; the connection:vicinity axis is pending the city plot-gain/loss hook)
 		}
 	}
 };

@@ -242,7 +242,36 @@ enum SpineDomainEvent
 	SEVT_CACHE_INVALIDATE       = 30,
 	// DIAGNOSTIC: the complement -- a package was REBUILT (recomputed from dirty). invalidate = max work queued;
 	// rebuilt = work actually done. Carries scope + owner + id + the package-bit names (no src).
-	SEVT_CACHE_REBUILT          = 31
+	SEVT_CACHE_REBUILT          = 31,
+	// a player HERITAGE was acquired/removed (CvPlayer::setHeritage) -- feeds PSC_CFLAT (heritage empire commerce
+	// flats, era-stacked). Acquired mid-game via MISSION_HERITAGE. iType=Heritage, iC=player, iA=add. DOMAIN.
+	SEVT_HERITAGE_CHANGED       = 32,
+	// a plot-group (the connectivity / trade-NETWORK identity) gained/lost access to a resource --
+	// CvPlotGroup::changeNumBonuses on a presence transition. A traded resource enters at the capital's group and
+	// reaches every connected city; the consumer re-evals connection:trade deposits for the group's member cities.
+	// iType=Bonus, iC=owner, iSrcLoc=plotGroupId, iB=+1 gained / -1 lost. DOMAIN.
+	SEVT_PLOTGROUP_BONUS_CHANGED = 33,
+	// a CITY's own center plot moved to a different plot-group (merge/split -- CvPlot::setPlotGroup, owner-gated), so
+	// its whole NETWORK resource set changed. The membership twin of SEVT_PLOTGROUP_BONUS_CHANGED (which is the
+	// resource-set twin). iC=owner, iSrcLoc=cityId. DOMAIN.
+	SEVT_CITY_NETWORK_CHANGED   = 34,
+	// a player's ERA advanced (CvPlayer::setCurrentEra) -- a BROAD player-scope cascade input: heritage era-stacked
+	// commerce (PSC_CFLAT), every ERA-counter-threshold deposit, and ERA requires atoms (frontier). iC=player,
+	// iA=newEra. DOMAIN. (Cache-masked today via setHasTech's tech mark, but the state change is its own fact.)
+	SEVT_ERA_CHANGED            = 35,
+	// a player's NUKE STATE changed -- one of THREE: 0 DISABLED (no nuke-enabling building) / 1 ENABLED (built +
+	// available) / 2 BANNED (the world AP-UN no-nukes vote or option). "available" is PER-PLAYER (`m_bNukesValid`,
+	// `makeNukesValid` at CvCity processBuilding); "banned" is WORLD (`isNoNukes`) and flips EVERY player at once.
+	// iC=player, iA=state(0/1/2). DOMAIN. (The cascade NO_NUKES predicate reads only the world BAN half.)
+	SEVT_NUKES_CHANGED          = 36,
+	// a city's CULTURE LEVEL changed (CvCity::setCultureLevel). TWO things ride this one fact: the culture-level
+	// cascade input (wonder caps, defense) AND the city's workable RADIUS growth -- so it is ALSO the vicinity
+	// MEMBERSHIP signal (the city gains/loses plots into its vicinity). iC=owner, iSrcLoc=cityId, iA=newLevel. DOMAIN.
+	SEVT_CITY_CULTURE_LEVEL_CHANGED = 37,
+	// a religion's HOLY CITY designation moved (CvGame::setHolyCity) -- the IS_HOLY_CITY / IS_STATE_RELIGION_HOLY_CITY
+	// predicates flip for the OLD city (loses) and the NEW city (gains); gates conditioned commerce/yields. Emitted
+	// per affected city. iType=religion, iC=cityOwner, iSrcLoc=cityId, iA=1 now holy / 0 no longer. DOMAIN.
+	SEVT_HOLY_CITY_CHANGED      = 38
 };
 
 //	Which entity's display name changed (the iType of a SEVT_NAME_CHANGE event). The logging consumer resolves the
@@ -285,6 +314,13 @@ void emitCivicAdopted(int iPlayer, int iCivic);
 void emitProjectChanged(int iPlayer, int iProject, int iDelta);
 void emitGoldenAgeChanged(int iPlayer, bool bOn);
 void emitStateReligionChanged(int iPlayer, int iReligion);
+void emitHeritageChanged(int iPlayer, int iHeritage, bool bAdd);
+void emitPlotGroupBonusChanged(int iOwner, int iPlotGroupId, int iBonus, int iDelta);   // network: a plot-group gained(+1)/lost(-1) a resource
+void emitCityNetworkChanged(int iOwner, int iCity);   // network membership: a city's center plot moved to a different plot-group
+void emitEraChanged(int iPlayer, int iEra);   // a player's era advanced (broad player-scope cascade input)
+void emitNukesChanged(int iPlayer, int iState);   // a player's nuke state: 0 disabled / 1 enabled / 2 banned
+void emitCultureLevelChanged(int iCity, int iOwner, int iNewLevel);   // culture level (+ the radius/vicinity growth it drives)
+void emitHolyCityChanged(int iCity, int iOwner, int iReligion, bool bIsHoly);   // a city gained(true)/lost(false) a religion's holy-city designation
 void emitCityOwnerChanged(int iCity, int iOldOwner, int iNewOwner);
 void emitPlotOwnerChanged(int iPlot, int iOldOwner, int iNewOwner);
 void emitWorkingCityChanged(int iPlot, int iOwner, int iOldCity, int iNewCity);

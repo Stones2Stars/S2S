@@ -724,6 +724,7 @@ public:
 	void setTechCanFoundReligion(TechTypes eIndex, bool bUsed);
 
 	CvCity* getHolyCity(ReligionTypes eIndex) const;
+	bool isHolyCityByOwnerId(ReligionTypes eIndex, PlayerTypes eOwner, int iID) const;   // #430: read-safe holy-city check off the loaded IDInfo (no getCity resolution)
 	void setHolyCity(ReligionTypes eIndex, const CvCity* pNewValue, bool bAnnounce);
 
 	int getCorporationGameTurnFounded(CorporationTypes eIndex) const;

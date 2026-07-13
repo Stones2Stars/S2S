@@ -8931,6 +8931,11 @@ void CvPlot::setPlotGroup(PlayerTypes ePlayer, CvPlotGroup* pNewValue, bool bRec
 					pCity->changeNumBonuses((BonusTypes)iI, getPlotGroup(ePlayer)->getNumBonuses((BonusTypes)iI));
 				}
 			}
+			// #430 NETWORK MEMBERSHIP (trigger #3): this city's OWN center plot moved to a different plot-group
+			// (merge/split), so its whole network resource set changed. Owner-gated -- a group change for a NON-owner
+			// player over this plot doesn't touch the city's network access. Announce it so the cache re-evals connection:trade.
+			if (pCity != NULL && pCity->getOwner() == ePlayer)
+				emitCityNetworkChanged((int)pCity->getOwner(), pCity->getID());
 			if (ePlayer == getOwner())
 			{
 				updatePlotGroupBonus(true);
