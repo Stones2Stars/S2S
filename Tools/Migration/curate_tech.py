@@ -132,8 +132,12 @@ CFG = cc.EntityConfig("TechInfo", cost_rename={"iCost": "research"}, grants=GRAN
 # curator translates:
 #   techs        — minus bDisable placeholders (TECH_DUMMY); yields the 3 root successor techs
 #   civics       — none needed (the 15 start civics)
-#   units        — minus spawn-only (iCost == -1 -> identity.spawnOnly, curate_unit); a settler carries NO iCost
-#                  tag (population-based cost) and stays: UNIT_BRUTE + UNIT_BAND (the prehistoric settler)
+#   units        — minus spawn-only (iCost == -1 -> identity.spawnOnly, curate_unit) and minus ZERO instance cap
+#                  (iMaxGlobal/Player/TeamInstances == 0 -> allowed:{...:0}, curate_unit.allowed_unit): a 0-cap
+#                  unit can never be CREATED by training, only granted — UNIT_BAND, the start-only settler every
+#                  civ receives at game start (owner ruling 2026-07-14; the first BUILDABLE settler is the
+#                  tech-gated UNIT_TRIBE). A settler carrying NO iCost tag (population-based cost) otherwise
+#                  stays; yields UNIT_BRUTE
 #   buildings    — minus notConstructible (iCost in (None,-1), curate_building): pseudobuildings are placed by
 #                  their own systems, never generated. PALACE + the special-building-group members remain — a
 #                  group's TechPrereq lives in each member's requires.build (curate_building), so GENERATE stays
@@ -166,6 +170,13 @@ def synthesize_game_start(store, result):
     def truthy(rec, tag):
         return engine.text(rec.find(tag)) in ("1", "true", "True")
 
+    def cap0(rec):                       # a 0 instance cap at ANY scope = never created by build/train
+        for tag in ("iMaxGlobalInstances", "iMaxPlayerInstances", "iMaxTeamInstances"):
+            v = engine.text(rec.find(tag))
+            if engine.is_int(v) and int(v) == 0:
+                return True
+        return False
+
     produced = set()                     # improvements a worker build lays (BuildInfo.ImprovementType)
     for rec in store.table("BuildInfo").values():
         t = engine.text(rec.find("ImprovementType"))
@@ -174,14 +185,14 @@ def synthesize_game_start(store, result):
 
     enables = OrderedDict()              # bucket order mirrors curate()'s sorted(enables)
     for bucket, ent, sbuckets, keep in (
-        ("buildings",    "BuildingInfo",    ["buildings"],    lambda t, r: cost(r) not in (None, -1)),
+        ("buildings",    "BuildingInfo",    ["buildings"],    lambda t, r: cost(r) not in (None, -1) and not cap0(r)),
         ("builds",       "BuildInfo",       ["builds"],       None),
         ("civics",       "CivicInfo",       ["civics"],       None),
         ("improvements", "ImprovementInfo", ["improvements"], lambda t, r: t in produced),
         ("processes",    "ProcessInfo",     ["processes"],    None),
         ("promotions",   "PromotionInfo",   ["promotions"],   None),
         ("techs",        "TechInfo",        ["techs"],        lambda t, r: not truthy(r, "bDisable")),
-        ("units",        "UnitInfo",        ["units"],        lambda t, r: cost(r) != -1),
+        ("units",        "UnitInfo",        ["units"],        lambda t, r: cost(r) != -1 and not cap0(r)),
     ):
         ids = _start_enabled(store, ent, sbuckets, keep)
         if ids:
