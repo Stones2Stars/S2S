@@ -130,7 +130,11 @@ CFG = cc.EntityConfig("TechInfo", cost_rename={"iCost": "research"}, grants=GRAN
 # start-enabled iff NO inbound enables-family ADD edge exists anywhere in the store index ("no prereq in legacy
 # => enabled from game start"), minus each kind's never-generated class — the SAME sentinel that kind's own
 # curator translates:
-#   techs        — minus bDisable placeholders (TECH_DUMMY); yields the 3 root successor techs
+#   techs        — minus bDisable placeholders; yields the 3 root successor techs. NB TECH_DUMMY is the legacy
+#                  EVENT-GRANT PARKING NODE (owner): entities prereq'd on it (162 promotions, 8 builds,
+#                  IMPROVEMENT_CITY) are deliberately unreachable in the tree — an inbound edge from a
+#                  never-held tech — and are granted directly into HAVE by events/systems. They correctly do
+#                  NOT root; do not "fix" them into the root.
 #   civics       — none needed (the 15 start civics)
 #   units        — minus spawn-only (iCost == -1 -> identity.spawnOnly, curate_unit) and minus ZERO instance cap
 #                  (iMaxGlobal/Player/TeamInstances == 0 -> allowed:{...:0}, curate_unit.allowed_unit): a 0-cap
