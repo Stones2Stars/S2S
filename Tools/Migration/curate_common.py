@@ -572,12 +572,14 @@ def run(cfg, boosts_config, store=None, post_process=None):
     return store, result
 
 
-def main(cfg, boosts_config, out_dir, post_process=None):
+def main(cfg, boosts_config, out_dir, post_process=None, synthesize=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--sample", nargs="*", help="print these types (default: first 1)")
     ap.add_argument("--write", action="store_true")
     args = ap.parse_args()
-    _, result = run(cfg, boosts_config, post_process=post_process)
+    store, result = run(cfg, boosts_config, post_process=post_process)
+    if synthesize:                    # whole-set hook: append SYNTHETIC entities that have no XML record of their
+        synthesize(store, result)     # own, derived from the FULL store (the TECH_GAME_START root). Mutates result.
     n = len(result)
     has = lambda k: sum(1 for (o, _) in result.values() if k in o)
     STRUCT = {"type", "description", "civilopedia", "help", "quote", "strategy", "enables", "obsoletes",
