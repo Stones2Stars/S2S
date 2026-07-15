@@ -90,6 +90,9 @@
    }
   ]
  },
+ "attributes": {
+  "connectsTradeNetwork": true
+ },
  "world": {
   "art": {
    "define": "ART_DEF_BUILDING_AIRPORT"

@@ -79,6 +79,9 @@
  "cost": {
   "production": 1080
  },
+ "attributes": {
+  "connectsTradeNetwork": true
+ },
  "world": {
   "art": {
    "define": "ART_DEF_BUILDING_AERODROME"
