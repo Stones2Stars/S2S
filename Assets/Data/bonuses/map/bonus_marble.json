@@ -121,6 +121,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_MARBLE",
   "civilopedia": "TXT_KEY_BONUS_MARBLE_PEDIA",
-  "bonusClassType": "BONUSCLASS_STRATEGIC"
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
  }
 }

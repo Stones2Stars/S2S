@@ -26,6 +26,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_NEUROIMPLANTS",
   "civilopedia": "TXT_KEY_BONUS_NEUROIMPLANTS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

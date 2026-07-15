@@ -22,6 +22,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_ATOMPUNK",
   "civilopedia": "TXT_KEY_BONUS_ATOMPUNK_PEDIA",
-  "bonusClassType": "BONUSCLASS_GENMODS"
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "culture"
  }
 }

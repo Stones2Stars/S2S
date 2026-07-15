@@ -8,6 +8,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_QUETZALCOATL",
   "civilopedia": "TXT_KEY_BONUS_QUETZALCOATL_PEDIA",
-  "bonusClassType": "BONUSCLASS_WONDER"
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
  }
 }

@@ -43,6 +43,7 @@
   "description": "TXT_KEY_BONUS_METALLIC_ASTEROID",
   "civilopedia": "TXT_KEY_BONUS_METALLIC_ASTEROID_PEDIA",
   "bonusClassType": "BONUSCLASS_PRODUCTION",
-  "randApp4": 25
+  "randApp4": 25,
+  "source": "natural"
  }
 }

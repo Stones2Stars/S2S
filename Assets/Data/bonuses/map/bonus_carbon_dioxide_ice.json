@@ -37,6 +37,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_CARBON_DIOXIDE_ICE",
   "civilopedia": "TXT_KEY_BONUS_CARBON_DIOXIDE_ICE_PEDIA",
-  "bonusClassType": "BONUSCLASS_MISC"
+  "bonusClassType": "BONUSCLASS_MISC",
+  "source": "natural"
  }
 }

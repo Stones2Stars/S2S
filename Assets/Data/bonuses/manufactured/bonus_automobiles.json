@@ -69,6 +69,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_AUTOMOBILES",
   "civilopedia": "TXT_KEY_BONUS_AUTOMOBILES_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

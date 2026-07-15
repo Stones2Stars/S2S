@@ -18,6 +18,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_IMMUNITY_DRUGS",
   "civilopedia": "TXT_KEY_BONUS_IMMUNITY_DRUGS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

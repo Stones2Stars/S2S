@@ -13,6 +13,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_HIT_SINGLES",
   "civilopedia": "TXT_KEY_BONUS_HIT_SINGLES_PEDIA",
-  "bonusClassType": "BONUSCLASS_WONDER"
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
  }
 }

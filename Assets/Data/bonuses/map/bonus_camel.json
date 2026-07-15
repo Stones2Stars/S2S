@@ -80,6 +80,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_CAMEL",
   "civilopedia": "TXT_KEY_BONUS_CAMEL_PEDIA",
-  "bonusClassType": "BONUSCLASS_STRATEGIC"
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
  }
 }

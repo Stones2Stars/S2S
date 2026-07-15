@@ -66,6 +66,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_LLAMA",
   "civilopedia": "TXT_KEY_BONUS_LLAMA_PEDIA",
-  "bonusClassType": "BONUSCLASS_STRATEGIC"
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
  }
 }

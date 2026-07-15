@@ -35,6 +35,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_METAMATERIALS",
   "civilopedia": "TXT_KEY_BONUS_METAMATERIALS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

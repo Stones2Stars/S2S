@@ -147,6 +147,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_PETROLEUM_PRODUCTS",
   "civilopedia": "TXT_KEY_BONUS_PETROLEUM_PRODUCTS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

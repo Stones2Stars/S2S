@@ -14,6 +14,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_TOYS",
   "civilopedia": "TXT_KEY_BONUS_TOYS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

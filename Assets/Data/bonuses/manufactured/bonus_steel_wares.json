@@ -185,6 +185,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_STEEL_WARES",
   "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

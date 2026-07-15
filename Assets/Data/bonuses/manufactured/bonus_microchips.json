@@ -49,6 +49,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_MICROCHIPS",
   "civilopedia": "TXT_KEY_BONUS_MICROCHIPS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

@@ -31,6 +31,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_LEATHER",
   "civilopedia": "TXT_KEY_BONUS_LEATHER_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

@@ -75,6 +75,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_PARROTS",
   "civilopedia": "TXT_KEY_BONUS_PARROTS_PEDIA",
-  "bonusClassType": "BONUSCLASS_LUXURY"
+  "bonusClassType": "BONUSCLASS_LUXURY",
+  "source": "natural"
  }
 }

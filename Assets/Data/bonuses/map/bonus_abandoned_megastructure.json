@@ -34,6 +34,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_ABANDONED_MEGASTRUCTURE",
   "civilopedia": "TXT_KEY_BONUS_ABANDONED_MEGASTRUCTURE_PEDIA",
-  "bonusClassType": "BONUSCLASS_MISC"
+  "bonusClassType": "BONUSCLASS_MISC",
+  "source": "natural"
  }
 }

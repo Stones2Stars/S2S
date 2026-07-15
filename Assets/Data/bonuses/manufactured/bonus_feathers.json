@@ -13,6 +13,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_FEATHERS",
   "civilopedia": "TXT_KEY_BONUS_FEATHERS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

@@ -40,6 +40,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_TABLETS",
   "civilopedia": "TXT_KEY_BONUS_TABLETS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

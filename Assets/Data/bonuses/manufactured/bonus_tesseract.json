@@ -8,6 +8,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_TESSERACT",
   "civilopedia": "TXT_KEY_BONUS_TESSERACT_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

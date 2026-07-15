@@ -18,6 +18,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_CAT",
   "civilopedia": "TXT_KEY_BONUS_CAT_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

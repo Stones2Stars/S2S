@@ -14,6 +14,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_KUGELBLITZ",
   "civilopedia": "TXT_KEY_BONUS_KUGELBLITZ_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

@@ -8,6 +8,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_METAL_FOAM",
   "civilopedia": "TXT_KEY_BONUS_METAL_FOAM_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

@@ -95,6 +95,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_OBSIDIAN",
   "civilopedia": "TXT_KEY_BONUS_OBSIDIAN_PEDIA",
-  "bonusClassType": "BONUSCLASS_PRODUCTION"
+  "bonusClassType": "BONUSCLASS_PRODUCTION",
+  "source": "natural"
  }
 }

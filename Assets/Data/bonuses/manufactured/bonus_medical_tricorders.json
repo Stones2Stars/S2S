@@ -18,6 +18,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_MEDICAL_TRICORDERS",
   "civilopedia": "TXT_KEY_BONUS_MEDICAL_TRICORDERS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

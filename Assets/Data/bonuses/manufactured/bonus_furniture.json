@@ -45,6 +45,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_FURNITURE",
   "civilopedia": "TXT_KEY_BONUS_FURNITURE_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

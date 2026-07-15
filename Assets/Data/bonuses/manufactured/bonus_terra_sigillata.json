@@ -13,6 +13,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_TERRA_SIGILLATA",
   "civilopedia": "TXT_KEY_BONUS_TERRA_SIGILLATA_PEDIA",
-  "bonusClassType": "BONUSCLASS_WONDER"
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
  }
 }

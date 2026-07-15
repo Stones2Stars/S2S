@@ -69,6 +69,17 @@ BONUS_FAMILIES = {
 CFG = cc.EntityConfig("BonusInfo", extra_drop=["TechObsolete"], era_fn=bonus_folder, map_gen=BONUS_MAP_GEN,
                       families=BONUS_FAMILIES)
 
+# identity.source — WHERE the bonus comes from (owner ruling 2026-07-15): "natural" (spawns on the map),
+# "manufactured" (produced/refined by buildings — provides.bonuses), "culture" (the culture chain). The runtime
+# treats every bonus uniformly in the trade network; this is pure self-description, derived from the same rule
+# that picks the output folder (bonus_folder above; folder "map" = source "natural").
+_SOURCE_BY_FOLDER = {"map": "natural", "manufactured": "manufactured", "cultures": "culture"}
+
+
+def post_process(typ, obj, rec, store):
+    obj.setdefault("identity", {})["source"] = _SOURCE_BY_FOLDER[bonus_folder(rec, store)]
+
+
 if __name__ == "__main__":
     # No inbound boosts — a resource is never a target (only enables/amplifies).
-    cc.main(CFG, [], os.path.join(REPO, "Assets", "Data", "bonuses"))
+    cc.main(CFG, [], os.path.join(REPO, "Assets", "Data", "bonuses"), post_process=post_process)

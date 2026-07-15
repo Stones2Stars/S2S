@@ -16,6 +16,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_ALICE_MATTER",
   "civilopedia": "TXT_KEY_BONUS_ALICE_MATTER_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

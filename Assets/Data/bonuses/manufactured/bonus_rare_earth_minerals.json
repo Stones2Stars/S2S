@@ -14,6 +14,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_RARE_EARTH_MINERALS",
   "civilopedia": "TXT_KEY_BONUS_RARE_EARTH_MINERALS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

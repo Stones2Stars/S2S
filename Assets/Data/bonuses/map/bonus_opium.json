@@ -57,6 +57,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_OPIUM",
   "civilopedia": "TXT_KEY_BONUS_OPIUM_PEDIA",
-  "bonusClassType": "BONUSCLASS_LUXURY"
+  "bonusClassType": "BONUSCLASS_LUXURY",
+  "source": "natural"
  }
 }

@@ -74,6 +74,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_BISON",
   "civilopedia": "TXT_KEY_BONUS_BISON_PEDIA",
-  "bonusClassType": "BONUSCLASS_LIVESTOCK"
+  "bonusClassType": "BONUSCLASS_LIVESTOCK",
+  "source": "natural"
  }
 }

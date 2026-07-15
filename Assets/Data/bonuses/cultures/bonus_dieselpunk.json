@@ -29,6 +29,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_DIESELPUNK",
   "civilopedia": "TXT_KEY_BONUS_DIESELPUNK_PEDIA",
-  "bonusClassType": "BONUSCLASS_GENMODS"
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "culture"
  }
 }

@@ -20,6 +20,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_SAND",
   "civilopedia": "TXT_KEY_BONUS_SAND_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

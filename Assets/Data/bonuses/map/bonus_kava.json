@@ -65,6 +65,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_KAVA",
   "civilopedia": "TXT_KEY_BONUS_KAVA_PEDIA",
-  "bonusClassType": "BONUSCLASS_LUXURY"
+  "bonusClassType": "BONUSCLASS_LUXURY",
+  "source": "natural"
  }
 }

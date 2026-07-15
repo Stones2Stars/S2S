@@ -8,6 +8,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_TRANSPARENT_ALUMINUM",
   "civilopedia": "TXT_KEY_BONUS_TRANSPARENT_ALUMINUM_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

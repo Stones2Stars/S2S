@@ -77,6 +77,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_LEMONS",
   "civilopedia": "TXT_KEY_BONUS_LEMONS_PEDIA",
-  "bonusClassType": "BONUSCLASS_CROP"
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
  }
 }

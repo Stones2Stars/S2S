@@ -63,6 +63,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_GEOTHERMAL_ENERGY",
   "civilopedia": "TXT_KEY_BONUS_GEOTHERMAL_ENERGY_PEDIA",
-  "bonusClassType": "BONUSCLASS_PRODUCTION"
+  "bonusClassType": "BONUSCLASS_PRODUCTION",
+  "source": "natural"
  }
 }

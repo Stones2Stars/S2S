@@ -8,6 +8,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_UNOBTAINIUM",
   "civilopedia": "TXT_KEY_BONUS_UNOBTAINIUM_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

@@ -16,6 +16,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_ORGANIC_PHOTONIC_CELLS",
   "civilopedia": "TXT_KEY_BONUS_ORGANIC_PHOTONIC_CELLS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

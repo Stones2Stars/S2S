@@ -59,6 +59,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_RUBIES",
   "civilopedia": "TXT_KEY_BONUS_RUBIES_PEDIA",
-  "bonusClassType": "BONUSCLASS_LUXURY"
+  "bonusClassType": "BONUSCLASS_LUXURY",
+  "source": "natural"
  }
 }

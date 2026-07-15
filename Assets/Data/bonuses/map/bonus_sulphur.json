@@ -136,6 +136,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_SULPHUR",
   "civilopedia": "TXT_KEY_BONUS_SULPHUR_PEDIA",
-  "bonusClassType": "BONUSCLASS_STRATEGIC"
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
  }
 }

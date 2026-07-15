@@ -26,6 +26,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_HEAVY_WATER",
   "civilopedia": "TXT_KEY_BONUS_HEAVY_WATER_PEDIA",
-  "bonusClassType": "BONUSCLASS_WONDER"
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
  }
 }

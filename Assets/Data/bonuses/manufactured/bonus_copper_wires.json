@@ -22,6 +22,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_COPPER_WIRES",
   "civilopedia": "TXT_KEY_BONUS_COPPER_WIRES_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

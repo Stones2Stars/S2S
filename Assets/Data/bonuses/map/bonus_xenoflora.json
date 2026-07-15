@@ -42,6 +42,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_XENOFLORA",
   "civilopedia": "TXT_KEY_BONUS_XENOFLORA_PEDIA",
-  "bonusClassType": "BONUSCLASS_CROP"
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
  }
 }

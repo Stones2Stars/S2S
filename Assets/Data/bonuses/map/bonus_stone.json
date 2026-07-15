@@ -149,6 +149,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_STONE",
   "civilopedia": "TXT_KEY_BONUS_STONE_PEDIA",
-  "bonusClassType": "BONUSCLASS_STRATEGIC"
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
  }
 }

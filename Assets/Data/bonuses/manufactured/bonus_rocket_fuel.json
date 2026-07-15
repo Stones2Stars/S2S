@@ -32,6 +32,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_ROCKET_FUEL",
   "civilopedia": "TXT_KEY_BONUS_ROCKET_FUEL_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

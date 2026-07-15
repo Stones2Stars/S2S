@@ -107,6 +107,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_ELEPHANTS",
   "civilopedia": "TXT_KEY_BONUS_ELEPHANTS_PEDIA",
-  "bonusClassType": "BONUSCLASS_STRATEGIC"
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
  }
 }

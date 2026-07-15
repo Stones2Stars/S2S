@@ -42,6 +42,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_ORGANIC_VOLATILES",
   "civilopedia": "TXT_KEY_BONUS_ORGANIC_VOLATILES_PEDIA",
-  "bonusClassType": "BONUSCLASS_MISC"
+  "bonusClassType": "BONUSCLASS_MISC",
+  "source": "natural"
  }
 }

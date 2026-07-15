@@ -13,6 +13,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_MING_VASE",
   "civilopedia": "TXT_KEY_BONUS_MING_VASE_PEDIA",
-  "bonusClassType": "BONUSCLASS_WONDER"
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
  }
 }

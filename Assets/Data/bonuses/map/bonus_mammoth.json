@@ -72,6 +72,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_MAMMOTH",
   "civilopedia": "TXT_KEY_BONUS_MAMMOTH_PEDIA",
-  "bonusClassType": "BONUSCLASS_STRATEGIC"
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
  }
 }

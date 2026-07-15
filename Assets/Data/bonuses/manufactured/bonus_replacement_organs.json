@@ -18,6 +18,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_REPLACEMENT_ORGANS",
   "civilopedia": "TXT_KEY_BONUS_REPLACEMENT_ORGANS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

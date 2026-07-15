@@ -13,6 +13,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_WINE_VINTAGE_WHITE",
   "civilopedia": "TXT_KEY_BONUS_VINTAGE_WINE_PEDIA",
-  "bonusClassType": "BONUSCLASS_WONDER"
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
  }
 }

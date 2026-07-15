@@ -23,6 +23,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_SUPERSTRONG_ALLOYS",
   "civilopedia": "TXT_KEY_BONUS_SUPERSTRONG_ALLOYS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

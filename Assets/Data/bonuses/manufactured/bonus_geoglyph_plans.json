@@ -13,6 +13,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_GEOGLYPH_PLANS",
   "civilopedia": "TXT_KEY_BONUS_GEOGLYPH_PLANS_PEDIA",
-  "bonusClassType": "BONUSCLASS_WONDER"
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
  }
 }

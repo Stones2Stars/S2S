@@ -183,6 +183,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_PRIME_TIMBER",
   "civilopedia": "TXT_KEY_BONUS_PRIME_TIMBER_PEDIA",
-  "bonusClassType": "BONUSCLASS_STRATEGIC"
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
  }
 }

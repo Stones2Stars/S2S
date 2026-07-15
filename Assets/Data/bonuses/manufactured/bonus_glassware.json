@@ -68,6 +68,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_GLASSWARE",
   "civilopedia": "TXT_KEY_BONUS_GLASSWARE_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

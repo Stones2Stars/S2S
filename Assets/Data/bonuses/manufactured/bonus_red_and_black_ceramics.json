@@ -13,6 +13,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_RED_AND_BLACK_CERAMICS",
   "civilopedia": "TXT_KEY_BONUS_RED_AND_BLACK_CERAMICS_PEDIA",
-  "bonusClassType": "BONUSCLASS_WONDER"
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
  }
 }

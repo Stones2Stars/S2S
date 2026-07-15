@@ -66,6 +66,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_BARLEY",
   "civilopedia": "TXT_KEY_BONUS_BARLEY_PEDIA",
-  "bonusClassType": "BONUSCLASS_CROP"
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
  }
 }

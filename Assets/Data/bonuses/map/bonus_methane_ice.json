@@ -61,6 +61,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_METHANE_ICE",
   "civilopedia": "TXT_KEY_BONUS_METHANE_ICE_PEDIA",
-  "bonusClassType": "BONUSCLASS_STRATEGIC"
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
  }
 }

@@ -48,6 +48,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_BOOKS",
   "civilopedia": "TXT_KEY_BONUS_BOOKS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

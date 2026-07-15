@@ -74,6 +74,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_MANGO",
   "civilopedia": "TXT_KEY_BONUS_MANGO_PEDIA",
-  "bonusClassType": "BONUSCLASS_CROP"
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
  }
 }

@@ -74,6 +74,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_COFFEE",
   "civilopedia": "TXT_KEY_BONUS_COFFEE_PEDIA",
-  "bonusClassType": "BONUSCLASS_LUXURY"
+  "bonusClassType": "BONUSCLASS_LUXURY",
+  "source": "natural"
  }
 }

@@ -16,6 +16,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_CRYSTALPUNK",
   "civilopedia": "TXT_KEY_BONUS_CRYSTALPUNK_PEDIA",
-  "bonusClassType": "BONUSCLASS_GENMODS"
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "culture"
  }
 }

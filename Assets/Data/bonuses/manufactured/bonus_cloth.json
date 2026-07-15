@@ -30,6 +30,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_CLOTH",
   "civilopedia": "TXT_KEY_BONUS_CLOTH_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

@@ -19,6 +19,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_HIDE",
   "civilopedia": "TXT_KEY_BONUS_HIDE_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

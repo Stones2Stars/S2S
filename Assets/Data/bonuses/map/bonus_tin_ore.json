@@ -62,6 +62,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_TIN_ORE",
   "civilopedia": "TXT_KEY_BONUS_TIN_ORE_PEDIA",
-  "bonusClassType": "BONUSCLASS_PRODUCTION"
+  "bonusClassType": "BONUSCLASS_PRODUCTION",
+  "source": "natural"
  }
 }

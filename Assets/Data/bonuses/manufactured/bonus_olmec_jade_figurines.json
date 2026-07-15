@@ -13,6 +13,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_OLMEC_JADE_FIGURINES",
   "civilopedia": "TXT_KEY_BONUS_OLMEC_JADE_FIGURINES_PEDIA",
-  "bonusClassType": "BONUSCLASS_WONDER"
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
  }
 }

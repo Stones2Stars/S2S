@@ -15,6 +15,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_SHOES",
   "civilopedia": "TXT_KEY_BONUS_SHOES_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

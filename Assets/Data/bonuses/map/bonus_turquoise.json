@@ -63,6 +63,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_TURQUOISE",
   "civilopedia": "TXT_KEY_BONUS_TURQUOISE_PEDIA",
-  "bonusClassType": "BONUSCLASS_LUXURY"
+  "bonusClassType": "BONUSCLASS_LUXURY",
+  "source": "natural"
  }
 }

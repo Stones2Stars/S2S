@@ -89,6 +89,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_MUSHROOMS",
   "civilopedia": "TXT_KEY_BONUS_MUSHROOMS_PEDIA",
-  "bonusClassType": "BONUSCLASS_CROP"
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
  }
 }

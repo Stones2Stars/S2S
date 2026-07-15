@@ -64,6 +64,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_TITANIUM_ORE",
   "civilopedia": "TXT_KEY_BONUS_TITANIUM_ORE_PEDIA",
-  "bonusClassType": "BONUSCLASS_STRATEGIC"
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
  }
 }

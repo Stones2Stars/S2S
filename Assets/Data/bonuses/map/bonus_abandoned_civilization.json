@@ -42,6 +42,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_ABANDONED_CIVILIZATION",
   "civilopedia": "TXT_KEY_BONUS_ABANDONED_CIVILIZATION_PEDIA",
-  "bonusClassType": "BONUSCLASS_MISC"
+  "bonusClassType": "BONUSCLASS_MISC",
+  "source": "natural"
  }
 }

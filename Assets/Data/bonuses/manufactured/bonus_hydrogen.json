@@ -23,6 +23,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_HYDROGEN",
   "civilopedia": "TXT_KEY_BONUS_HYDROGEN_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

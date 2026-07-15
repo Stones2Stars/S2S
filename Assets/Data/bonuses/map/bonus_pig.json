@@ -79,6 +79,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_PIG",
   "civilopedia": "TXT_KEY_BONUS_PIG_PEDIA",
-  "bonusClassType": "BONUSCLASS_LIVESTOCK"
+  "bonusClassType": "BONUSCLASS_LIVESTOCK",
+  "source": "natural"
  }
 }

@@ -90,6 +90,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_DEER",
   "civilopedia": "TXT_KEY_BONUS_DEER_PEDIA",
-  "bonusClassType": "BONUSCLASS_LIVESTOCK"
+  "bonusClassType": "BONUSCLASS_LIVESTOCK",
+  "source": "natural"
  }
 }

@@ -45,6 +45,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_NATRON",
   "civilopedia": "TXT_KEY_BONUS_NATRON_PEDIA",
-  "bonusClassType": "BONUSCLASS_PRODUCTION"
+  "bonusClassType": "BONUSCLASS_PRODUCTION",
+  "source": "natural"
  }
 }

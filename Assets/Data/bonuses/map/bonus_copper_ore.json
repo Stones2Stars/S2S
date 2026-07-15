@@ -73,6 +73,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_COPPER_ORE",
   "civilopedia": "TXT_KEY_BONUS_COPPER_ORE_PEDIA",
-  "bonusClassType": "BONUSCLASS_STRATEGIC"
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
  }
 }

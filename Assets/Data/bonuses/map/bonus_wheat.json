@@ -75,6 +75,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_WHEAT",
   "civilopedia": "TXT_KEY_BONUS_WHEAT_PEDIA",
-  "bonusClassType": "BONUSCLASS_CROP"
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
  }
 }

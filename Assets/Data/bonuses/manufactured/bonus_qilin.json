@@ -8,6 +8,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_QILIN",
   "civilopedia": "TXT_KEY_BONUS_QILIN_PEDIA",
-  "bonusClassType": "BONUSCLASS_WONDER"
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
  }
 }

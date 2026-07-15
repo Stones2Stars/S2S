@@ -18,6 +18,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_HIT_MOVIES",
   "civilopedia": "TXT_KEY_BONUS_HIT_MOVIES_PEDIA",
-  "bonusClassType": "BONUSCLASS_WONDER"
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
  }
 }

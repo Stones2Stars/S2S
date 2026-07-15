@@ -17,6 +17,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_CYBERPUNK",
   "civilopedia": "TXT_KEY_BONUS_CYBERPUNK_PEDIA",
-  "bonusClassType": "BONUSCLASS_GENMODS"
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "culture"
  }
 }

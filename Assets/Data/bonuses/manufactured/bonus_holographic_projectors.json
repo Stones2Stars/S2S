@@ -22,6 +22,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_HOLOGRAPHIC_PROJECTORS",
   "civilopedia": "TXT_KEY_BONUS_HOLOGRAPHIC_PROJECTORS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

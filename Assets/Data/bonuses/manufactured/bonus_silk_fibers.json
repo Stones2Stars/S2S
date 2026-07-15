@@ -15,6 +15,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_SILK_FIBERS",
   "civilopedia": "TXT_KEY_BONUS_SILK_FIBERS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

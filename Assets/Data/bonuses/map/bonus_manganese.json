@@ -51,6 +51,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_MANGANESE",
   "civilopedia": "TXT_KEY_BONUS_MANGANESE_PEDIA",
-  "bonusClassType": "BONUSCLASS_PRODUCTION"
+  "bonusClassType": "BONUSCLASS_PRODUCTION",
+  "source": "natural"
  }
 }

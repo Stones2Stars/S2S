@@ -158,8 +158,16 @@ CFG = cc.EntityConfig("TechInfo", cost_rename={"iCost": "research"}, grants=GRAN
 # promotionLines/specialBuildings (grouping metadata; their gates ride the members' requires).
 
 def _start_enabled(store, ent, buckets, keep=None):
+    # BONUS_-sourced enables edges are GATE-view data, never membership (owner ruling 2026-07-15): a bonus you'd
+    # rely on a plot group for (traded / manufactured / vicinity) only ever gates via the target's requires atom
+    # (which the inversion retains target-side), so it does not count as an inbound MEMBERSHIP edge here. An
+    # entity whose only inbound edges are bonuses therefore roots — visible from game start, GREYED on its bonus
+    # requirement (json.md §6 "grey on resources"). The plot-bonus→improvement carve-out (enables.builds) needs
+    # no exception: those builds all carry tech edges, and their plot-bonus half is the live per-plot gate.
     have_edge = set()
-    for bmap in store.enables.values():
+    for src, bmap in store.enables.items():
+        if src.startswith("BONUS_"):
+            continue
         for b in buckets:
             have_edge |= bmap.get(b, set())
     return sorted(t for t, rec in store.table(ent).items()

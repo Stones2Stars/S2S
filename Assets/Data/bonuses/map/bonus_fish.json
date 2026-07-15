@@ -75,6 +75,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_FISH",
   "civilopedia": "TXT_KEY_BONUS_FISH_PEDIA",
-  "bonusClassType": "BONUSCLASS_SEAFOOD"
+  "bonusClassType": "BONUSCLASS_SEAFOOD",
+  "source": "natural"
  }
 }

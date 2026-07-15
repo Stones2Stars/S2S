@@ -84,6 +84,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_SHEEP",
   "civilopedia": "TXT_KEY_BONUS_SHEEP_PEDIA",
-  "bonusClassType": "BONUSCLASS_LIVESTOCK"
+  "bonusClassType": "BONUSCLASS_LIVESTOCK",
+  "source": "natural"
  }
 }

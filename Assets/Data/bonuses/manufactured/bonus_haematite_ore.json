@@ -8,6 +8,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_HAEMATITE_ORE",
   "civilopedia": "TXT_KEY_BONUS_HAEMATITE_ORE_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

@@ -37,6 +37,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_MARTIAN_BLUEBERRIES",
   "civilopedia": "TXT_KEY_BONUS_MARTIAN_BLUEBERRIES_PEDIA",
-  "bonusClassType": "BONUSCLASS_PRODUCTION"
+  "bonusClassType": "BONUSCLASS_PRODUCTION",
+  "source": "natural"
  }
 }

@@ -62,6 +62,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_SHRIMP",
   "civilopedia": "TXT_KEY_BONUS_SHRIMP_PEDIA",
-  "bonusClassType": "BONUSCLASS_SEAFOOD"
+  "bonusClassType": "BONUSCLASS_SEAFOOD",
+  "source": "natural"
  }
 }

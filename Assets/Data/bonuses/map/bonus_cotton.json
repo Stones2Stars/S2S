@@ -67,6 +67,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_COTTON",
   "civilopedia": "TXT_KEY_BONUS_COTTON_PEDIA",
-  "bonusClassType": "BONUSCLASS_PRODUCTION"
+  "bonusClassType": "BONUSCLASS_PRODUCTION",
+  "source": "natural"
  }
 }

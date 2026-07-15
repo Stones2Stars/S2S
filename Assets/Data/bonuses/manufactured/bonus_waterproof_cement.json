@@ -8,6 +8,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_WATERPROOF_CEMENT",
   "civilopedia": "TXT_KEY_BONUS_WATERPROOF_CEMENT_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

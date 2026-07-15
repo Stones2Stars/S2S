@@ -70,6 +70,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_FOSSIL_BEDS",
   "civilopedia": "TXT_KEY_BONUS_FOSSIL_BEDS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MISC"
+  "bonusClassType": "BONUSCLASS_MISC",
+  "source": "natural"
  }
 }

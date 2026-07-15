@@ -57,6 +57,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_PAPYRUS",
   "civilopedia": "TXT_KEY_BONUS_PAPYRUS_PEDIA",
-  "bonusClassType": "BONUSCLASS_PRODUCTION"
+  "bonusClassType": "BONUSCLASS_PRODUCTION",
+  "source": "natural"
  }
 }

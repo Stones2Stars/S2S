@@ -13,6 +13,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_JADE_DEATH_MASKS",
   "civilopedia": "TXT_KEY_BONUS_JADE_DEATH_MASKS_PEDIA",
-  "bonusClassType": "BONUSCLASS_WONDER"
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
  }
 }

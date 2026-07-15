@@ -75,6 +75,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_ALMONDS",
   "civilopedia": "TXT_KEY_BONUS_ALMONDS_PEDIA",
-  "bonusClassType": "BONUSCLASS_CROP"
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
  }
 }

@@ -20,6 +20,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_JEWELRY",
   "civilopedia": "TXT_KEY_BONUS_JEWELRY_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

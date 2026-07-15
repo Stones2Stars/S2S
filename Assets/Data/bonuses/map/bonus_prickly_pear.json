@@ -58,6 +58,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_PRICKLY_PEAR",
   "civilopedia": "TXT_KEY_BONUS_PRICKLY_PEAR_PEDIA",
-  "bonusClassType": "BONUSCLASS_CROP"
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
  }
 }

@@ -64,6 +64,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_HENNA",
   "civilopedia": "TXT_KEY_BONUS_HENNA_PEDIA",
-  "bonusClassType": "BONUSCLASS_LUXURY"
+  "bonusClassType": "BONUSCLASS_LUXURY",
+  "source": "natural"
  }
 }

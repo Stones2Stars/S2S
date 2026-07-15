@@ -50,6 +50,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_PARTS",
   "civilopedia": "TXT_KEY_BONUS_PARTS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

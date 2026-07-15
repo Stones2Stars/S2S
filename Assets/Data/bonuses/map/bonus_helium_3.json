@@ -33,6 +33,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_HELIUM_3",
   "civilopedia": "TXT_KEY_BONUS_HELIUM_3_PEDIA",
-  "bonusClassType": "BONUSCLASS_MISC"
+  "bonusClassType": "BONUSCLASS_MISC",
+  "source": "natural"
  }
 }

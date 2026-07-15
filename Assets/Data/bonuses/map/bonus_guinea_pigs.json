@@ -69,6 +69,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_GUINEA_PIGS",
   "civilopedia": "TXT_KEY_BONUS_GUINEA_PIGS_PEDIA",
-  "bonusClassType": "BONUSCLASS_LIVESTOCK"
+  "bonusClassType": "BONUSCLASS_LIVESTOCK",
+  "source": "natural"
  }
 }

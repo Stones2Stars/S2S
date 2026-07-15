@@ -87,6 +87,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_FINE_CLAY",
   "civilopedia": "TXT_KEY_BONUS_FINE_CLAY_PEDIA",
-  "bonusClassType": "BONUSCLASS_PRODUCTION"
+  "bonusClassType": "BONUSCLASS_PRODUCTION",
+  "source": "natural"
  }
 }

@@ -82,6 +82,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_GRAPES",
   "civilopedia": "TXT_KEY_BONUS_GRAPES_PEDIA",
-  "bonusClassType": "BONUSCLASS_CROP"
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
  }
 }

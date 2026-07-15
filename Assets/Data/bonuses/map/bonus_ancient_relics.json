@@ -55,6 +55,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_ANCIENT_RELICS",
   "civilopedia": "TXT_KEY_BONUS_ANCIENT_RELICS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MISC"
+  "bonusClassType": "BONUSCLASS_MISC",
+  "source": "natural"
  }
 }

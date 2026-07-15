@@ -72,6 +72,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_PAPAYA",
   "civilopedia": "TXT_KEY_BONUS_PAPAYA_PEDIA",
-  "bonusClassType": "BONUSCLASS_CROP"
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
  }
 }

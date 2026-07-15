@@ -13,6 +13,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_SHANG_JADE_RITUAL_ITEMS",
   "civilopedia": "TXT_KEY_BONUS_SHANG_JADE_RITUAL_ITEMS_PEDIA",
-  "bonusClassType": "BONUSCLASS_WONDER"
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
  }
 }

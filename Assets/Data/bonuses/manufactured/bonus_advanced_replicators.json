@@ -13,6 +13,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_ADVANCED_REPLICATORS",
   "civilopedia": "TXT_KEY_BONUS_ADVANCED_REPLICATORS_PEDIA",
-  "bonusClassType": "BONUSCLASS_MANUFACTURED"
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
  }
 }

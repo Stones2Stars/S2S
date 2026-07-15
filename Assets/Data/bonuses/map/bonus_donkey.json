@@ -67,6 +67,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_DONKEY",
   "civilopedia": "TXT_KEY_BONUS_DONKEY_PEDIA",
-  "bonusClassType": "BONUSCLASS_STRATEGIC"
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
  }
 }

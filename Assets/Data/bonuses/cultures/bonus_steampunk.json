@@ -24,6 +24,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_STEAMPUNK",
   "civilopedia": "TXT_KEY_BONUS_STEAMPUNK_PEDIA",
-  "bonusClassType": "BONUSCLASS_GENMODS"
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "culture"
  }
 }

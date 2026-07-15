@@ -77,6 +77,7 @@
  "identity": {
   "description": "TXT_KEY_BONUS_IRON_ORE",
   "civilopedia": "TXT_KEY_BONUS_IRON_ORE_PEDIA",
-  "bonusClassType": "BONUSCLASS_STRATEGIC"
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
  }
 }
