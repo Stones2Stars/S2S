@@ -1345,12 +1345,6 @@ def curate(typ, rec, store):
     for tag, name in CAP_ATTRIBUTES.items():
         if _bool(rec, tag):
             attributes[name] = True
-    # connectsTradeNetwork (owner ruling 2026-07-15): an AIRPORT connects its city to the capital's trade
-    # network -- a simple "airport built" event engine-side. Derived from iAirlift > 0 (the airport signal;
-    # legacy had NO network mechanic for it, the connection is the new engine consumer of this attribute).
-    _airlift = _int(rec, "iAirlift")
-    if _airlift is not None and _airlift > 0:
-        attributes["connectsTradeNetwork"] = True
     for tag, name in CAP_IDENTITY.items():
         if _bool(rec, tag):
             identity[name] = True

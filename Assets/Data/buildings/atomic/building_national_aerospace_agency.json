@@ -102,8 +102,7 @@
   ]
  },
  "attributes": {
-  "destroyedOnCapture": true,
-  "connectsTradeNetwork": true
+  "destroyedOnCapture": true
  },
  "ui": {
   "art": {

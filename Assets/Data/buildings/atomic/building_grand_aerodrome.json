@@ -70,9 +70,6 @@
  "cost": {
   "production": 1230
  },
- "attributes": {
-  "connectsTradeNetwork": true
- },
  "world": {
   "art": {
    "define": "ART_DEF_BUILDING_GRAND_AERODROME"
