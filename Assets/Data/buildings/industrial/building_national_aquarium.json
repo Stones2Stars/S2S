@@ -9,11 +9,6 @@
   "build": {
    "all": [
     {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
-    {
      "type": "BUILDING_AQUARIUM",
      "scope": "empire",
      "min": 3,
@@ -23,6 +18,15 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     }
    ]
   }

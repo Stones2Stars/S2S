@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_ANIMA_CHAMBER",
     "TECH_COMPREHENSIVE_CYBERNETICS",
     "TECH_ARTIFICIAL_LIFE",
@@ -19,7 +18,8 @@
      "type": "BONUS_HUMAN_MOD_DIGITAL_IDENTITY",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

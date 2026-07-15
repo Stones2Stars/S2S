@@ -13,11 +13,6 @@
       "minArea": 10
      }
     },
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "TECH_SEAFARING",
     {
      "any": [
@@ -28,6 +23,15 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
     }
    ]
   }

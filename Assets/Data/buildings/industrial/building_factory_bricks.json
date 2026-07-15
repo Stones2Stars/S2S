@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_FACTORY",
     "TECH_ASSEMBLY_LINE",
     {
@@ -27,6 +26,7 @@
   },
   "operate": {
    "all": [
+    "HAS_POWER",
     {
      "any": [
       {

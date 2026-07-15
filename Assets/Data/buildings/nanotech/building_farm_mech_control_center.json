@@ -8,8 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
-    "HAS_POWER",
     "BUILDING_FARM_BOT_CONTROL_CENTER",
     "BUILDING_PHENOTYPE_STUDIO",
     "TECH_AUTOMATED_ROBOTICS",
@@ -26,7 +24,9 @@
      "type": "BONUS_MECHS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_FRESHWATER",
+    "HAS_POWER"
    ]
   }
  },

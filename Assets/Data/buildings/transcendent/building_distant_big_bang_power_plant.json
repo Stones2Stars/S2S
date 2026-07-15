@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_DISTANT_BIG_BANG_PROBE",
     "TECH_PARAMETER_TUNING",
     {
@@ -34,6 +33,9 @@
  },
  "cost": {
   "production": 2666
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

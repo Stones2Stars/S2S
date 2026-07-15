@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_ANIMATION_STUDIO",
     "TECH_3D_MODELLING",
     {
@@ -29,7 +28,8 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

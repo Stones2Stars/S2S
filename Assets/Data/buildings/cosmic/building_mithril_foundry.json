@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_LUNAR_ARCOLOGY",
     "BUILDING_LUNAR_SPACE_PORT",
     "TECH_FANTASY_MATERIALS",
@@ -11,6 +10,11 @@
      "type": "MAPCATEGORY_LUNAR",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

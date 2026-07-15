@@ -12,7 +12,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_DELTA_ASSEMBLER",
     "TECH_NOVUS_CHEMISTRY",
     {
@@ -27,7 +26,8 @@
      "type": "BONUS_NOVUS_CHEMICALS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

@@ -3,17 +3,21 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 30
-    },
     "BUILDING_PALACE",
     "BUILDING_METROPOLITAN_ADMINISTRATION",
     "TECH_SOCIAL_CONTRACT",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 30
     }
    ]
   }

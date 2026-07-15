@@ -14,7 +14,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_STRATOSPHERIC_TOWER",
     "TECH_FRICTIONLESS_FLIGHT",
     {
@@ -29,7 +28,8 @@
      "type": "BONUS_SUPERSOLID_MATERIAL",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_STRINGWORKS",
     "TECH_SUBDIMENSIONAL_UNIVERSE",
     {
@@ -18,7 +17,8 @@
      "type": "BONUS_POCKET_UNIVERSE",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

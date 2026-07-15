@@ -8,12 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "TECH_TOURISM",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -23,6 +17,12 @@
   },
   "operate": {
    "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
     {
      "type": "BONUS_STEEL_WARES",
      "scope": "city",

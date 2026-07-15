@@ -11,7 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_INCANDESCENT_LIGHTING",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -26,6 +25,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "any": [
       {

@@ -3,13 +3,17 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MARTIAN_ECOSYSTEM",
     "TECH_ASTROECOLOGY",
     {
      "type": "MAPCATEGORY_MARTIAN",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

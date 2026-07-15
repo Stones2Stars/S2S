@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MINING_BOT_CONTROL_CENTER",
     "BUILDING_EVOLUTIONARY_ALGORITHMS",
     "TECH_WARMACHINES",
@@ -25,7 +24,8 @@
      "type": "BONUS_MECHS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

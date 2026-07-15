@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_EFFECT_MARS_CYCLER",
     "BUILDING_MARTIAN_CITY",
     "TECH_PLANETARY_TRADE",
@@ -11,6 +10,11 @@
      "type": "MAPCATEGORY_MARTIAN",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

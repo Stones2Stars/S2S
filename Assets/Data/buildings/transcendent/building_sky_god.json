@@ -8,13 +8,17 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_AERIAL_CITY",
     "TECH_DEITIES",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

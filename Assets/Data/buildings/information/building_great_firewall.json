@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_COMPUTER_NETWORK",
     "TECH_CYBERWARFARE",
     {
@@ -17,6 +16,7 @@
   },
   "operate": {
    "all": [
+    "HAS_POWER",
     {
      "any": [
       "CIVIC_INQUISITORIAL",

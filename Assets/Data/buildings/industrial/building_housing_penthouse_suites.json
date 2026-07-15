@@ -8,13 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
-    "HAS_POWER",
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "BUILDING_WATER_PIPES",
     "BUILDING_SEWER_SYSTEM",
     "BUILDING_SKYSCRAPER",
@@ -33,6 +26,13 @@
      "type": "BONUS_MARBLE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "HAS_FRESHWATER",
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     }
    ],
    "dormant": [

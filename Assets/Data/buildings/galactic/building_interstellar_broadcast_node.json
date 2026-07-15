@@ -3,13 +3,17 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_NETWORK_NODE",
     "TECH_INTERSTELLAR_COMMUNICATION",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

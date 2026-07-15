@@ -11,7 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_ALPHA_ASSEMBLER",
     "TECH_MEGASTRONG_ALLOYS",
     {
@@ -21,6 +20,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_MATERIALIZATION_COMPLEX"
    ]

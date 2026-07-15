@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     {
      "type": "BUILDING_CISLUNAR_ASTEROID_MINE",
      "scope": "empire",
@@ -33,6 +32,11 @@
      "type": "MAPCATEGORY_CISLUNAR",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

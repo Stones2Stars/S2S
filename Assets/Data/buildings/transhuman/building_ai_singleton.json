@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
     "TECH_TECHNOLOGICAL_SINGULARITY",
     {
@@ -14,6 +13,7 @@
   },
   "operate": {
    "all": [
+    "HAS_POWER",
     "CIVIC_MACHINE_RULE"
    ]
   }

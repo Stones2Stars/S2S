@@ -10,13 +10,17 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SPACETIME_FACTORY",
     "TECH_STRING_MANIPULATION",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

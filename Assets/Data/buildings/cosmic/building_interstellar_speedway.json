@@ -3,13 +3,17 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_COMMERCIAL_SPACEPORT",
     "TECH_REACTIONLESS_DRIVE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

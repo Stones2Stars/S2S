@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 13
-    },
     "TECH_FLIGHT",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -21,6 +16,11 @@
      "type": "BONUS_AIRCRAFT",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
     }
    ]
   }

@@ -11,12 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "BUILDING_FACTORY",
     "TECH_GRAVITY_CONTROL",
     {
@@ -26,6 +20,14 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ],
    "dormant": [
     "BUILDING_MATERIALIZATION_COMPLEX"
    ]

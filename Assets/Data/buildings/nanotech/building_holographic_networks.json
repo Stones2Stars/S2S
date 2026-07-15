@@ -24,7 +24,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_ENCRYPTED_FIREWALL",
     "BUILDING_MARKET_RESEARCH",
     "TECH_HOLOGRAPHICS",
@@ -40,7 +39,8 @@
      "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_EXOCORTEX_NETWORKS"

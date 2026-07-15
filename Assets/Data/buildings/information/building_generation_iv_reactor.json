@@ -18,7 +18,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MANUFACTURING_PLANT",
     "BUILDING_POWER_LINES",
     "TECH_INDUSTRIAL_ECOLOGY",
@@ -71,6 +70,9 @@
   "sizeModifier": 3,
   "materialsModifier": 2,
   "complexityModifier": 2
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

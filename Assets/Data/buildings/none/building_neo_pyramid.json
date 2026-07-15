@@ -4,11 +4,6 @@
   "build": {
    "all": [
     {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
-    {
      "type": "BUILDING_THE_GREAT_PYRAMID",
      "scope": "empire",
      "min": 1,
@@ -27,6 +22,11 @@
      "type": "BONUS_STARPUNK",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
     }
    ]
   }

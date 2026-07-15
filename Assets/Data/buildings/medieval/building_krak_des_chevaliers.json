@@ -8,11 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "TECH_ENGINEERING",
     "TECH_THEOLOGY",
     "STATE_RELIGION_IN_CITY",
@@ -38,6 +33,11 @@
      "type": "BONUS_STONE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     }
    ]
   }

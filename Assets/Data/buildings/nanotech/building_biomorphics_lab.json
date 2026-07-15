@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MECHATRONICS_LAB",
     "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
     "TECH_THOUGHT_SCANNING",
@@ -26,6 +25,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
      "scope": "city",

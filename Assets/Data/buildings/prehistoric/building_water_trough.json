@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
     "TECH_CARPENTRY",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -18,6 +17,7 @@
   },
   "operate": {
    "all": [
+    "HAS_FRESHWATER",
     {
      "type": "BONUS_WOOD",
      "scope": "city",

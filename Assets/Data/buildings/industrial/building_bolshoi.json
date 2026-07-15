@@ -3,16 +3,20 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "BUILDING_OPERA_HOUSE",
     "TECH_REALISM",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
     }
    ]
   }

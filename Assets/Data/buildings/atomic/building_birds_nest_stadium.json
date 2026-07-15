@@ -3,15 +3,19 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 13
-    },
     "TECH_MODERN_SPORTS",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
     }
    ]
   }

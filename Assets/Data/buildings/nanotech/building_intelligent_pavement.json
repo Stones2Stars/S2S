@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_COMPUTER_NETWORK",
     "TECH_AUTOMATED_URBANIZATION",
     {
@@ -39,6 +38,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "any": [
       {

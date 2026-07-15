@@ -11,11 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "TECH_DIESELPUNK",
     {
      "any": [
@@ -35,6 +30,11 @@
      "type": "BONUS_DIESELPUNK",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     }
    ],
    "dormant": [

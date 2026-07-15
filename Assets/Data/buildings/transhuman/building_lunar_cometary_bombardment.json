@@ -3,13 +3,17 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_LUNAR_SPACE_PORT",
     "TECH_ASTEROID_EXTRACTION",
     {
      "type": "MAPCATEGORY_LUNAR",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "BUILDING_UNIVERSITY",
     "TECH_FISSION",
     {
@@ -25,6 +20,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
     {
      "any": [
       {

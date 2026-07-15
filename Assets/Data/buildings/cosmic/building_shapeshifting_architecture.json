@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SPACESCRAPER",
     "BUILDING_EXOTIC_ARCHITECTURE",
     "TECH_SHAPESHIFTING",
@@ -11,6 +10,11 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_TRITON_COLONY",
     "TECH_ASTROGATION_CONSTELLATION",
     {
@@ -34,6 +33,9 @@
  },
  "cost": {
   "production": 1272
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

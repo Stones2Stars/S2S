@@ -11,7 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_DELTA_ASSEMBLER",
     "TECH_SUPERSTRONG_ALLOYS",
     {
@@ -26,7 +25,8 @@
      "type": "BONUS_GRAPHENE",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_PICOTECH_COMPLEX"

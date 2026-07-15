@@ -23,7 +23,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_POWER_LINES",
     "BUILDING_HELIUM_3_IMPORTER",
     "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
@@ -39,7 +38,8 @@
      "type": "BONUS_SUPERSTRONG_ALLOYS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
@@ -74,6 +74,9 @@
   "countModifier": 1,
   "materialsModifier": 1,
   "complexityModifier": 1
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

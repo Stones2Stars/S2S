@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MEGATOWER_OFFICE_LEVEL",
     "TECH_MEGACORPORATIONS",
     {
@@ -14,6 +13,7 @@
   },
   "operate": {
    "all": [
+    "HAS_POWER",
     "CIVIC_CORPOR_NATION"
    ]
   }

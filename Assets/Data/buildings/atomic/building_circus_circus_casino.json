@@ -8,12 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "BUILDING_CASINO",
     "TECH_LEGALIZED_GAMBLING",
     {
@@ -35,6 +29,14 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ],
    "dormant": [
     "BUILDING_ORDINANCE_GAMBLING_BAN"
    ]

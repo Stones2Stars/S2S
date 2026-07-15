@@ -3,13 +3,17 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY",
     "TECH_HYPOTHETICAL_BIOCHEMISTRY",
     {
      "type": "MAPCATEGORY_LUNAR",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

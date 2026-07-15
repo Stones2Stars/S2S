@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SCIENTOLOGY_TEMPLE",
     "TECH_MUSICAL_NOTATION",
     {
@@ -20,6 +19,7 @@
   },
   "operate": {
    "all": [
+    "HAS_POWER",
     "RELIGION_SCIENTOLOGY"
    ]
   }

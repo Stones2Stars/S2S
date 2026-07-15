@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_EFFECT_SOLAR_ECONOMY",
     {
      "type": "BUILDING_SPACESCRAPER",
@@ -22,6 +21,11 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

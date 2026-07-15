@@ -3,16 +3,20 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "BUILDING_MOVIE_THEATRE",
     "TECH_MOTION_PICTURES",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     }
    ]
   }

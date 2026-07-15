@@ -15,7 +15,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_HYPERSPACE_5D_ARTIFICIAL_GRAVITY",
     "BUILDING_HYPERSPACE_INFLATON_FIELD",
     "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
@@ -24,6 +23,11 @@
      "type": "MAPCATEGORY_HYPERSPACE",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

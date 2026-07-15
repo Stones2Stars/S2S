@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_ATMOSPHERIC_WATER_GENERATOR",
     "BUILDING_STATE_PARK",
     "TECH_GAIA_ECOLOGY",
@@ -27,6 +26,11 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

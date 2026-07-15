@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_DEEP_SPACE_FACTORY",
     "BUILDING_DEEP_SPACE_TELESCOPE",
     "TECH_SOLAR_ORDNANCE",
@@ -16,6 +15,11 @@
      "type": "MAPCATEGORY_SOLAR_SYSTEM",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MARTIAN_CITY",
     "BUILDING_MARTIAN_BIOFACTORY",
     "TECH_DYSTOPIA_PATHOGENS",
@@ -13,6 +12,11 @@
      "type": "MAPCATEGORY_MARTIAN",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

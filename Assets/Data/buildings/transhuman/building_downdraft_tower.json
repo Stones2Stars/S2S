@@ -11,8 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
-    "HAS_POWER",
     "BUILDING_FACTORY",
     "BUILDING_POWER_LINES",
     "BUILDING_WATER_PUMPING_STATION",
@@ -45,6 +43,7 @@
   },
   "operate": {
    "all": [
+    "HAS_FRESHWATER",
     {
      "any": [
       {
@@ -91,6 +90,9 @@
   "countModifier": 1,
   "materialsModifier": 1,
   "complexityModifier": 1
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

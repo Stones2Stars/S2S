@@ -11,7 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_FACTORY",
     "TECH_AMPHIBIOUS_WARFARE",
     {
@@ -27,6 +26,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_STEEL_WARES",
      "scope": "city",

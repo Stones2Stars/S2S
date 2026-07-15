@@ -3,13 +3,17 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_LUNAR_MANUFACTURING_PLANT",
     "TECH_HYPERMAGNETICS",
     {
      "type": "MAPCATEGORY_LUNAR",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

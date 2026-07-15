@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
     "BUILDING_DEEP_SPACE_SUN_SCOOP",
     "TECH_FEMTOTECHNOLOGY",
@@ -15,6 +14,11 @@
      "type": "MAPCATEGORY_SOLAR_SYSTEM",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

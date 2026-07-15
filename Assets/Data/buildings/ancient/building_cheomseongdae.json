@@ -30,11 +30,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "TECH_MASONRY",
     "TECH_STARGAZING",
     {
@@ -45,6 +40,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
     {
      "any": [
       {

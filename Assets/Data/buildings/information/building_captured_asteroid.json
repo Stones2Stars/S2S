@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     {
      "type": "BUILDING_COMMERCIAL_SPACEPORT",
      "scope": "empire",
@@ -27,6 +26,11 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

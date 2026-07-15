@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "TECH_TOURNAMENTS",
     {
      "any": [
@@ -23,6 +18,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
     {
      "any": [
       {

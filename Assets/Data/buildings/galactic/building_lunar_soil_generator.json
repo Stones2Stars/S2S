@@ -8,13 +8,17 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_LUNAR_ALGAE_FARM",
     "TECH_PARATERRAFORMING",
     {
      "type": "MAPCATEGORY_LUNAR",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

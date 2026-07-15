@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "TECH_ADVANCED_ROCKETRY",
     {
      "any": [
@@ -27,6 +22,11 @@
      "type": "BONUS_ROCKET_FUEL",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     }
    ]
   }

@@ -15,7 +15,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_ASTROANTHROPOLOGY",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -25,6 +24,7 @@
   },
   "operate": {
    "all": [
+    "HAS_POWER",
     {
      "any": [
       {

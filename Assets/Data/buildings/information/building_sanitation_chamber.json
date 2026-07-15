@@ -3,8 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
-    "HAS_POWER",
     "BUILDING_SEWER_SYSTEM",
     "BUILDING_WATER_PIPES",
     "BUILDING_COMPUTER_NETWORK",
@@ -21,7 +19,9 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_FRESHWATER",
+    "HAS_POWER"
    ]
   }
  },

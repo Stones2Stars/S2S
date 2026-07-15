@@ -23,7 +23,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_ANTIMATTER_PRODUCTION",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -37,7 +36,8 @@
      "type": "BONUS_ANTIMATTER",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
@@ -70,6 +70,9 @@
   "sizeModifier": 3,
   "materialsModifier": 2,
   "complexityModifier": 2
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

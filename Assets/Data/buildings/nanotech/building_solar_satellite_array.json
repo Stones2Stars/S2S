@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_CISLUNAR_FACTORY",
     {
      "type": "BUILDING_LUNAR_LAUNCH_SITE",
@@ -22,6 +21,11 @@
      "type": "MAPCATEGORY_CISLUNAR",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_CLONING_FACTORY",
     "TECH_MAINSTREAM_CLONING",
     "TECH_AUGMENTED_CONSUMABLES",
@@ -27,6 +26,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_NANOTECH_COMPLEX"
    ]

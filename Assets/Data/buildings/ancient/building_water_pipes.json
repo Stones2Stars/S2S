@@ -40,7 +40,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
     "TECH_PLUMBING",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -50,6 +49,7 @@
   },
   "operate": {
    "all": [
+    "HAS_FRESHWATER",
     {
      "any": [
       {

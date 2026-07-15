@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_CLAYTRONIC_CITY",
     "BUILDING_CLAYTRONIC_FIRE_SUPPRESSION",
     "TECH_PICOTECHNOLOGY",
@@ -24,7 +23,8 @@
      "type": "BONUS_ATOMICALLY_PRECISE_ALLOYS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

@@ -20,7 +20,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_OMEGA_ASSEMBLER",
     "TECH_GRAVITRONICS",
     {
@@ -30,6 +29,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_QUANTUM_ASSEMBLER",
     "BUILDING_MATERIALIZER"

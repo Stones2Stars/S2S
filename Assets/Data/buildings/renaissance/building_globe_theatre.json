@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "BUILDING_THEATRE",
     {
      "type": "BUILDING_THEATRE",
@@ -19,6 +14,15 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
     }
    ]
   }

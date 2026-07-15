@@ -12,7 +12,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_ABYSS_COLONIZATION",
     {
      "type": "MAPCATEGORY_TITANIC",
@@ -45,6 +44,9 @@
   "city": {
    "flat": -5
   }
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

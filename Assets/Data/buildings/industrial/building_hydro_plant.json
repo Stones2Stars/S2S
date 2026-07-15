@@ -12,7 +12,6 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    "HAS_POWER",
     "BUILDING_FACTORY",
     "BUILDING_POWER_LINES",
     "TECH_HYDROELECTRICITY",
@@ -87,6 +86,9 @@
     "FLAVOR_PRODUCTION": 10
    }
   ]
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

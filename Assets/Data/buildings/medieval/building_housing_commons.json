@@ -8,12 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "TECH_SURVEYING",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -27,6 +21,12 @@
      "type": "BONUS_WOOD",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "HAS_FRESHWATER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
     },
     {
      "type": "BONUS_BRICKS",

@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
     "BUILDING_ALEPH_ASSEMBLER",
     "TECH_MATERIALIZATION",
@@ -11,6 +10,11 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_KNOWLEDGE_MANAGEMENT",
     "TECH_SUPERCONDUCTORS",
     "TECH_ATOMPUNK",
@@ -34,6 +33,7 @@
   }
  },
  "attributes": {
+  "providesPower": true,
   "destroyedOnCapture": true
  },
  "world": {

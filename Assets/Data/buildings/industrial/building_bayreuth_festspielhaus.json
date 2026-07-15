@@ -9,11 +9,6 @@
   "build": {
    "all": [
     {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
-    {
      "type": "BUILDING_OPERA_HOUSE",
      "scope": "empire",
      "min": 3,
@@ -23,6 +18,15 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
     }
    ]
   }

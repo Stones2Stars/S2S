@@ -8,11 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "TECH_CONSTITUTION",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -22,6 +17,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
     {
      "any": [
       {

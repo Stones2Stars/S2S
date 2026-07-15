@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION",
     "BUILDING_CISLUNAR_ONEILL_CYLINDER",
     "TECH_PHOTONIC_SATELLITES",
@@ -31,6 +30,9 @@
  },
  "cost": {
   "production": 3362
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

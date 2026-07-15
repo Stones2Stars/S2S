@@ -17,7 +17,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_NANITE_LAB",
     "BUILDING_DELTA_ASSEMBLER",
     "TECH_NANOELECTRONICS",
@@ -33,7 +32,8 @@
      "type": "BONUS_NANOGENERATORS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_PICOTECH_COMPLEX"

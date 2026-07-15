@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "BUILDING_FOLKLORE_E_SEA",
     "TECH_CELEBRATION",
     {
@@ -81,6 +76,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
     {
      "any": [
       {

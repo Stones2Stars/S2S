@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "BUILDING_LABORATORY",
     "BUILDING_INDUSTRIAL_PARK",
     "TECH_ATOMPUNK",
@@ -23,6 +18,11 @@
      "type": "BONUS_ATOMPUNK",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     }
    ]
   }

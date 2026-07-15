@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_LUNAR_ROCK_QUARRY",
     "TECH_LUNAR_COLONIZATION",
     {
@@ -23,7 +22,8 @@
      "type": "BONUS_CEMENT",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

@@ -10,7 +10,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_GAMMA_ASSEMBLER",
     "BUILDING_ANIMA_STUDIO",
     "TECH_ADVANCED_WARMACHINES",
@@ -18,6 +17,11 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

@@ -14,7 +14,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_LUNAR_ROCK_QUARRY",
     "TECH_LUNAR_MANUFACTURING",
     {
@@ -40,6 +39,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "any": [
       {

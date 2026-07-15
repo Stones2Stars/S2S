@@ -25,7 +25,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
     "TECH_QUANTUM_COMPUTING",
     "TECH_DROIDS",
@@ -41,7 +40,8 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

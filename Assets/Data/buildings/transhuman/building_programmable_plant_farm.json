@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
     "BUILDING_CHEMOSYNTHESIS_PLANT_FARM",
     "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
@@ -25,6 +24,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_CYBERNETIC_CHLOROPLASTS",
      "scope": "city",

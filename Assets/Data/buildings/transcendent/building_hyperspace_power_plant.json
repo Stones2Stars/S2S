@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
     {
      "type": "MAPCATEGORY_HYPERSPACE",
@@ -29,6 +28,9 @@
  },
  "cost": {
   "production": 1261
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

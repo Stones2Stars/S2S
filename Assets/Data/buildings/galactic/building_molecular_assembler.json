@@ -20,7 +20,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_ALPHA_ASSEMBLER",
     "TECH_MOLECULAR_ASSEMBLY",
     {
@@ -30,6 +29,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_ATOMIC_ASSEMBLER",
     "BUILDING_QUANTUM_ASSEMBLER",

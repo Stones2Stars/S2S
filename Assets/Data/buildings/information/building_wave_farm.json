@@ -18,7 +18,6 @@
   "build": {
    "all": [
     "HAS_COAST",
-    "HAS_POWER",
     "BUILDING_FACTORY",
     "BUILDING_POWER_LINES",
     "TECH_RENEWABLE_ENERGY",
@@ -67,6 +66,9 @@
   "countModifier": 1,
   "materialsModifier": 1,
   "complexityModifier": 1
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

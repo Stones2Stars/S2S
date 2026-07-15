@@ -8,11 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "TECH_ENGINEERING",
     {
      "any": [
@@ -29,6 +24,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
     {
      "type": "BONUS_STONE",
      "scope": "city",

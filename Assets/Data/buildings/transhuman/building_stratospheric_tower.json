@@ -17,7 +17,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MAGLEV_ELEVATORS",
     "TECH_HYPERMAGNETICS",
     {
@@ -32,7 +31,8 @@
      "type": "BONUS_DIAMOND_NANOTHREADS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

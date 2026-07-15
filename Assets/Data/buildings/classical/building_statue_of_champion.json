@@ -8,11 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "TECH_COMBAT_SPORTS",
     {
      "any": [
@@ -35,6 +30,11 @@
      "type": "BONUS_SCULPTURES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
     },
     {
      "any": [

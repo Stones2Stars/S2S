@@ -15,7 +15,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_CLAYTRONIC_CITY",
     "BUILDING_SPACESCRAPER",
     "BUILDING_ALPHA_ASSEMBLER",
@@ -32,7 +31,8 @@
      "type": "BONUS_PERSONAL_SPACECRAFT",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

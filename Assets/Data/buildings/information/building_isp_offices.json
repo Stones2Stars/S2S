@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MODERN_OFFICES",
     "BUILDING_COMPUTER_NETWORK",
     "TECH_FIBER_OPTICS",
@@ -19,7 +18,8 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

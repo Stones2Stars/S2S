@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
     "TECH_SURVEYING",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -22,7 +21,8 @@
      "type": "BONUS_WOOD",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_FRESHWATER"
    ],
    "dormant": [
     "BUILDING_HOUSING_BOONDOCKS",

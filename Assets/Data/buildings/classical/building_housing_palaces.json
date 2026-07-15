@@ -15,12 +15,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "BUILDING_SEWER_SYSTEM",
     "TECH_SANITATION",
     {
@@ -35,6 +29,12 @@
      "type": "BONUS_MARBLE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "HAS_FRESHWATER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
     },
     {
      "type": "BONUS_BRICKS",

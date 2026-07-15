@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_PALACE",
     "BUILDING_ORBITAL_HEAT_SINK",
     "TECH_PLANETARY_MEGASTRUCTURES",
@@ -11,6 +10,11 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

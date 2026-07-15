@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
     "TECH_SINGULARITY_STABILIZATION",
     {
@@ -42,6 +41,9 @@
  },
  "cost": {
   "production": 7850
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

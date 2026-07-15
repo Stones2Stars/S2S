@@ -17,7 +17,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_FACTORY",
     "BUILDING_MECHATRONICS_LAB",
     "TECH_POWERED_EXOSKELETON",
@@ -34,6 +33,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_PLATINUM_WARES",
      "scope": "city",

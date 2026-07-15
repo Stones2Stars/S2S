@@ -13,11 +13,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 2
-    },
     "TECH_CANINE_DOMESTICATION",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -27,6 +22,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 2
+    },
     {
      "any": [
       {

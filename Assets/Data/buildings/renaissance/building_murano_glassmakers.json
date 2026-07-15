@@ -4,11 +4,6 @@
   "build": {
    "all": [
     {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
-    {
      "type": "BUILDING_GLAZE_MAKER",
      "scope": "empire",
      "min": 1,
@@ -18,6 +13,15 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
     }
    ]
   }

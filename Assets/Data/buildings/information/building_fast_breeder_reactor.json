@@ -12,7 +12,6 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    "HAS_POWER",
     "BUILDING_FACTORY",
     "TECH_SUPERCONDUCTORS",
     {
@@ -75,6 +74,9 @@
   "sizeModifier": 3,
   "materialsModifier": 1,
   "complexityModifier": 2
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

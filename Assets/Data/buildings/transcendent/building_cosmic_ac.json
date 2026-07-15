@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
     {
      "type": "BUILDING_INTERSTELLAR_GALACTIC_AC",
@@ -22,6 +21,11 @@
      "type": "MAPCATEGORY_HYPERSPACE",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

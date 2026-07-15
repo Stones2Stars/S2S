@@ -8,12 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "BUILDING_LABORATORY",
     "TECH_SMART_DRUGS",
     {
@@ -34,6 +28,12 @@
      "type": "BONUS_PHARMACEUTICALS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     }
    ]
   }

@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_LUNAR_HYDROPONICS_FARM",
     "TECH_LUNAR_COLONIZATION",
     {
@@ -39,6 +38,9 @@
  },
  "cost": {
   "production": 450
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

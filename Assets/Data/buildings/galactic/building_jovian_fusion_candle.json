@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_DEEP_SPACE_FUSION_CORE",
     "TECH_ORBITAL_ENGINEERING",
     {
@@ -30,6 +29,11 @@
      "type": "MAPCATEGORY_SOLAR_SYSTEM",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_TELEPHONE_NETWORK",
     "TECH_TELEPHONE",
     {
@@ -14,6 +13,7 @@
   },
   "operate": {
    "all": [
+    "HAS_POWER",
     "CIVIC_DEMOCRACY"
    ]
   }

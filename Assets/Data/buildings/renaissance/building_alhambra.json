@@ -25,11 +25,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "TECH_DIVINE_RIGHT",
     "STATE_RELIGION_IN_CITY",
     {
@@ -44,6 +39,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
     "RELIGION_ISLAM"
    ]
   }

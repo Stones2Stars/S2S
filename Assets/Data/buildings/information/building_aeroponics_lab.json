@@ -8,8 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
-    "HAS_POWER",
     "BUILDING_HYDROPONICS_LAB",
     "TECH_MOLECULAR_MEDICINE",
     {
@@ -24,7 +22,9 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_FRESHWATER",
+    "HAS_POWER"
    ]
   }
  },

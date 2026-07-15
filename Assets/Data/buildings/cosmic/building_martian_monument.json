@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MARTIAN_CITY",
     "TECH_NOOGENESIS",
     {
@@ -14,6 +13,7 @@
   },
   "operate": {
    "all": [
+    "HAS_POWER",
     {
      "any": [
       "CIVIC_DIVINE_CULT",

@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MARTIAN_ARCOLOGY",
     {
      "type": "BUILDING_MARTIAN_CO2_SUBLIMATION",
@@ -58,6 +57,11 @@
      "type": "MAPCATEGORY_MARTIAN",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

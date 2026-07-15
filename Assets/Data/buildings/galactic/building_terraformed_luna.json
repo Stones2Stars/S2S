@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     {
      "type": "BUILDING_LUNAR_SOIL_GENERATOR",
      "scope": "empire",
@@ -27,6 +26,11 @@
      "type": "MAPCATEGORY_LUNAR",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

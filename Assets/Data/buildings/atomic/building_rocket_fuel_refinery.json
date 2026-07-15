@@ -12,8 +12,6 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    "HAS_FRESHWATER",
-    "HAS_POWER",
     "BUILDING_HYDROGEN_GENERATOR",
     "BUILDING_INDUSTRIAL_PARK",
     "TECH_ROCKETRY",
@@ -25,6 +23,10 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_FRESHWATER",
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_CHEMICALS_DISTRICT"
    ]

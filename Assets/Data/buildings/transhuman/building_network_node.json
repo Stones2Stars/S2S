@@ -19,7 +19,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_COMPUTER_NETWORK",
     "TECH_TERRA_COMPUTER",
     {
@@ -34,7 +33,8 @@
      "type": "BONUS_NANOBOTS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_HYPERSPACE_RESIDENTIAL_PORTAL",
     "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
     "TECH_TESSERACT_CONSTRUCTION",
@@ -12,6 +11,11 @@
      "type": "MAPCATEGORY_HYPERSPACE",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

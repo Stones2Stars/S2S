@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MARTIAN_ARCOLOGY",
     "BUILDING_MARTIAN_SPACEPORT",
     "TECH_FOLDING_SPACE",
@@ -16,6 +15,11 @@
      "type": "MAPCATEGORY_MARTIAN",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

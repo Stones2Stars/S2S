@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SPACE_COLONY_DEEP_SPACE",
     "TECH_SOLAR_ORDNANCE",
     {
@@ -78,6 +77,9 @@
  },
  "cost": {
   "production": 2959
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

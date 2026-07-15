@@ -10,13 +10,17 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
     "TECH_TRANSFINITE_STRUCTURES",
     {
      "type": "MAPCATEGORY_HYPERSPACE",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

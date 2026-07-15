@@ -19,7 +19,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_ENCRYPTED_FIREWALL",
     "BUILDING_MARKET_RESEARCH",
     "TECH_EXOCORTEX_NETWORKS",
@@ -35,7 +34,8 @@
      "type": "BONUS_NEUROIMPLANTS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

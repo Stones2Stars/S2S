@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_PSYCHOLOGY_LAB",
     "BUILDING_NEUROSCIENCE_CENTER",
     "TECH_MEDIA_PSYCHOLOGY",
@@ -32,7 +31,8 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_HEALTHCARE_MEGACOMPLEX"

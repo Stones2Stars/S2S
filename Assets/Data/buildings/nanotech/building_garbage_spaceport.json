@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "BUILDING_EFFECT_LAUNCH_SITE",
     "TECH_ORBITAL_FLIGHT",
     {
@@ -18,6 +13,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
     "CIVIC_OFF_PLANET_DUMPING"
    ]
   }

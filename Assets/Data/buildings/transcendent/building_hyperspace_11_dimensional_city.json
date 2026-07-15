@@ -3,13 +3,17 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
     "TECH_DECOMPACTIFIED_SPACE",
     {
      "type": "MAPCATEGORY_HYPERSPACE",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

@@ -11,7 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_FACTORY",
     "TECH_PLASTICS",
     {
@@ -22,6 +21,7 @@
   },
   "operate": {
    "all": [
+    "HAS_POWER",
     {
      "any": [
       {

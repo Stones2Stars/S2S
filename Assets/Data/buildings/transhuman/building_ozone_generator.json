@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_INDUSTRIAL_PARK",
     "TECH_WEATHER_CONTROL",
     {
@@ -18,7 +17,8 @@
      "type": "BONUS_NANOBOTS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

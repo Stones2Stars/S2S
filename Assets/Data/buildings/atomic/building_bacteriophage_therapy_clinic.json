@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_VACCINE_LAB",
     "BUILDING_NUCLEIC_ACID_LAB",
     "BUILDING_PROTEIN_LAB",
@@ -33,6 +32,11 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

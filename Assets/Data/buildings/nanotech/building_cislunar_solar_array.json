@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
     {
      "type": "MAPCATEGORY_CISLUNAR",
@@ -24,6 +23,9 @@
  },
  "cost": {
   "production": 528
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_BLOCKCHAIN_AUTHENTICATION",
     "TECH_DIRECT_MERCHANDISING",
     {
@@ -14,6 +13,7 @@
   },
   "operate": {
    "all": [
+    "HAS_POWER",
     "CIVIC_DEMOCRACY"
    ]
   }

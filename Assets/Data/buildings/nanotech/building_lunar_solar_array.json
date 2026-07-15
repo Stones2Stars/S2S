@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_LUNAR_ASSEMBLY_PLANT",
     "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY",
     "TECH_LUNAR_MANUFACTURING",
@@ -20,6 +19,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_MICROCHIPS",
      "scope": "city",
@@ -48,6 +48,9 @@
  },
  "cost": {
   "production": 7800
+ },
+ "attributes": {
+  "providesPower": true
  },
  "ui": {
   "art": {

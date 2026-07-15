@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MATHEMATICS_DEPARTMENT",
     "BUILDING_COMPUTER_NETWORK",
     "TECH_CHAOS_THEORY",
@@ -11,6 +10,11 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

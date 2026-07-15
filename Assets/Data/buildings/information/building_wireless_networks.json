@@ -9,7 +9,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_COMMUNICATIONS_SATELLITE",
     "TECH_COMMUNICATION_NETWORKS",
     {
@@ -30,7 +29,8 @@
      "type": "BONUS_CELLPHONES",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SHOPPING_DISTRICT",
     "TECH_PERSONAL_COMPUTERS",
     "TECH_ANIMATION",
@@ -25,6 +24,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_COMPUTERS",
      "scope": "city",

@@ -10,11 +10,6 @@
    "all": [
     "HAS_COAST",
     {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
-    {
      "latitude": {
       "max": 80
      }
@@ -28,6 +23,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
     {
      "any": [
       {

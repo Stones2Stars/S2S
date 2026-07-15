@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_DEEP_SPACE_BISHOP_RING",
     "BUILDING_JOVIAN_ANTIMATTER_HARVESTER",
     {
@@ -21,6 +20,11 @@
      "type": "MAPCATEGORY_SOLAR_SYSTEM",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

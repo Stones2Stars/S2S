@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_DEEP_SPACE_SUN_SCOOP",
     "TECH_STAR_LIFTING",
     {
@@ -14,6 +13,11 @@
      "type": "MAPCATEGORY_SOLAR_SYSTEM",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

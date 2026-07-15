@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SPACE_COLONY_CISLUNAR",
     {
      "type": "BUILDING_MAGLEV_LAUNCHER",
@@ -22,6 +21,11 @@
      "type": "MAPCATEGORY_CISLUNAR",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

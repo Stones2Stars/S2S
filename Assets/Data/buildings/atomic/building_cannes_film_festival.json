@@ -4,11 +4,6 @@
   "build": {
    "all": [
     {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
-    {
      "type": "BUILDING_MOVIE_STUDIO",
      "scope": "empire",
      "min": 1,
@@ -22,6 +17,15 @@
    ],
    "noneOf": [
     "BUILDING_HOLLYWOOD"
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
    ]
   }
  },

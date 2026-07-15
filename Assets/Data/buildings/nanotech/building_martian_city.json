@@ -21,7 +21,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SPACE_COLONY_MARTIAN",
     "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
     {
@@ -37,6 +36,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_MARTIAN_ALGAE",
      "scope": "city",

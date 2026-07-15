@@ -8,11 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "TECH_STEAMPUNK",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -26,6 +21,11 @@
      "type": "BONUS_STEAMPUNK",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     },
     {
      "type": "BONUS_COPPER_WARES",

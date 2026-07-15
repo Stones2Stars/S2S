@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 12
-    },
     "BUILDING_C_L_NORTH_AMERICAN",
     "TECH_MYTHOLOGICAL_BESTIARY",
     {
@@ -30,6 +25,11 @@
      "type": "BONUS_ORGANIC_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 12
     }
    ]
   }

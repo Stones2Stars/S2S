@@ -10,7 +10,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MEGATOWER_EDUCATION_LEVEL",
     "TECH_HOLOGRAPHICS",
     {
@@ -25,7 +24,8 @@
      "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

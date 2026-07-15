@@ -8,11 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "TECH_CLOCKPUNK",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -26,6 +21,11 @@
      "type": "BONUS_CLOCKPUNK",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
     },
     {
      "type": "BONUS_COPPER_WARES",

@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_POWER_LINES",
     "BUILDING_LANDFILL",
     "BUILDING_RECYCLING_CENTER",
@@ -56,6 +55,9 @@
   "sizeModifier": 2,
   "materialsModifier": 1,
   "complexityModifier": 1
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

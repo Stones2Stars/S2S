@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MEGATOWER_PARK_LEVEL",
     "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
     "TECH_UTOPIA_DESTINY",
@@ -16,6 +15,11 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

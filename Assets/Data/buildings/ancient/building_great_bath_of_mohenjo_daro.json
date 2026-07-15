@@ -8,12 +8,16 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
     "TECH_POTTERY",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_FRESHWATER"
    ]
   }
  },

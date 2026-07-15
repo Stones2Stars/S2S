@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
     "BUILDING_HYPERSPACE_INFLATON_FIELD",
     {
@@ -17,6 +16,11 @@
      "type": "MAPCATEGORY_HYPERSPACE",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

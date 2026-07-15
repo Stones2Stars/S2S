@@ -11,8 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
-    "HAS_POWER",
     "BUILDING_FACTORY",
     "TECH_GASTRONOMY",
     {
@@ -28,6 +26,8 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_FRESHWATER",
+    "HAS_POWER",
     {
      "type": "BONUS_SUGAR",
      "scope": "city",

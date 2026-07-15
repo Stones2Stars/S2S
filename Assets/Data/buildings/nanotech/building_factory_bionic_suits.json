@@ -11,7 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_FACTORY",
     "BUILDING_EVOLUTIONARY_ALGORITHMS",
     "TECH_BIONICS",
@@ -28,6 +27,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_BIOPOLYMERS",
      "scope": "city",

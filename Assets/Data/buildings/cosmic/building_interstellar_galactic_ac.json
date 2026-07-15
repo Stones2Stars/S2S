@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_INTERSTELLAR_SUPERCOMPUTER",
     {
      "type": "BUILDING_MULTIVAC",
@@ -30,6 +29,11 @@
       }
      ]
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

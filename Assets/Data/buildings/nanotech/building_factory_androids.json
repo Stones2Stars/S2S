@@ -19,7 +19,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_COMPUTER_NETWORK",
     "BUILDING_FACTORY",
     "TECH_ANDROIDS",
@@ -36,6 +35,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_BIOPOLYMERS",
      "scope": "city",

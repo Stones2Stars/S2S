@@ -18,13 +18,17 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_OMEGA_ASSEMBLER",
     "TECH_ZERO_POINT_ENERGY",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },
@@ -55,6 +59,9 @@
   "countModifier": 1,
   "materialsModifier": 1,
   "complexityModifier": 1
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

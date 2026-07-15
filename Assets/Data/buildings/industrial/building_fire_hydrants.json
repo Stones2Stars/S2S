@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
     "BUILDING_WATER_PIPES",
     "BUILDING_WATER_PUMPING_STATION",
     "TECH_MODERN_SANITATION",
@@ -15,6 +14,7 @@
   },
   "operate": {
    "all": [
+    "HAS_FRESHWATER",
     {
      "any": [
       {

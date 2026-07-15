@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MOVIE_THEATRE",
     "TECH_ANIMATION",
     {
@@ -24,6 +23,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_DYE",
      "scope": "city",

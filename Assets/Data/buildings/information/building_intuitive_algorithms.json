@@ -12,7 +12,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
     "TECH_AFFECTIVE_ALGORITHMS",
     {
@@ -27,7 +26,8 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

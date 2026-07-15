@@ -17,7 +17,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_VIROTHERAPY_CLINIC",
     "BUILDING_PHENOTYPE_STUDIO",
     "BUILDING_INTUITIVE_ALGORITHMS",
@@ -35,6 +34,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_BIOPOLYMERS",
      "scope": "city",

@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_HYDROELECTRICITY",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -29,6 +28,7 @@
  },
  "attributes": {
   "nukeImmune": true,
+  "providesPower": true,
   "destroyedOnCapture": true
  },
  "world": {

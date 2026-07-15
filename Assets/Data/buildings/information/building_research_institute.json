@@ -3,18 +3,22 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "BUILDING_LABORATORY",
     "BUILDING_MODERN_OFFICES",
     "TECH_SUPERCONDUCTORS",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     }
    ]
   }

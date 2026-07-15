@@ -38,11 +38,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 20
-    },
     "TECH_CITY_PLANNING",
     "CULTURELEVEL_REFINED",
     {
@@ -57,6 +52,11 @@
      "type": "BONUS_FURNITURE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 20
     },
     {
      "any": [

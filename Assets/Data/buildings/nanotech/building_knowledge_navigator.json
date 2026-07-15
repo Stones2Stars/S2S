@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_INTELLIGENT_PERSONAL_ASSISTANT",
     "BUILDING_NATURAL_LANGUAGE_ALGORITHMS",
     "TECH_ONTOLOGICAL_ENGINEERING",
@@ -11,6 +10,11 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

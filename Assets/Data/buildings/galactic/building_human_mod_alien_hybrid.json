@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_GALACTIC_CANTINA",
     "TECH_SPECIES_AMALGAMATION",
     {
@@ -34,6 +33,7 @@
   },
   "operate": {
    "all": [
+    "HAS_POWER",
     {
      "any": [
       {

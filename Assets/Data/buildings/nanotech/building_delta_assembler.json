@@ -14,7 +14,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_EPSILON_ASSEMBLER",
     "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
     "TECH_ELECTRIC_ARC_WEAPONRY",
@@ -44,6 +43,11 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

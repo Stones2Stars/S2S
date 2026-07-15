@@ -10,8 +10,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
-    "HAS_POWER",
     "BUILDING_LABORATORY",
     "BUILDING_GREENHOUSE",
     "BUILDING_WATER_PIPES",
@@ -20,6 +18,12 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_FRESHWATER",
+    "HAS_POWER"
    ]
   }
  },

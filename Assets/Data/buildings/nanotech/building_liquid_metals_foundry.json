@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_BIOINFORMATICS_LAB",
     "TECH_LIQUID_METALS",
     {
@@ -47,7 +46,8 @@
      "type": "BONUS_GRAPHENE",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_PICOTECH_COMPLEX"

@@ -8,11 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 2
-    },
     "BUILDING_PESTS_FLEAS",
     "TECH_SEDENTARY_LIFESTYLE",
     {
@@ -23,6 +18,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 2
+    },
     {
      "type": "PROPERTY_DISEASE",
      "scope": "city",

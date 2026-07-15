@@ -15,7 +15,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_STRATOSPHERIC_TOWER",
     "TECH_ATOMIC_SCALE_ENGINEERING",
     {
@@ -30,7 +29,8 @@
      "type": "BONUS_ATOMICALLY_PRECISE_ALLOYS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

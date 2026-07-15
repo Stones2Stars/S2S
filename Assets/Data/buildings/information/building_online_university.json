@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_UNIVERSITY",
     "BUILDING_COMPUTER_NETWORK",
     "TECH_VIRTUAL_SOCIETY",
@@ -15,6 +14,7 @@
   },
   "operate": {
    "all": [
+    "HAS_POWER",
     "CIVIC_ONLINE"
    ]
   }

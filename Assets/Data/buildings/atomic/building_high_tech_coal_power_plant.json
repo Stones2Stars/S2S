@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_FACTORY",
     "BUILDING_POWER_LINES",
     "TECH_SEMICONDUCTORS",
@@ -83,6 +82,9 @@
   "sizeModifier": 3,
   "materialsModifier": 1,
   "complexityModifier": 2
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

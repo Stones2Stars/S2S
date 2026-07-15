@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_MOTORIZED_TRANSPORTATION",
     {
      "type": "TERRAIN_PEAK",
@@ -34,7 +33,8 @@
      "type": "BONUS_STEEL_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_TELEPORT_BOOTH"

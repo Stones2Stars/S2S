@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_LUNAR_MANUFACTURING_PLANT",
     "TECH_NANOMINING",
     "TECH_LUNAR_TRADE",
@@ -15,6 +14,7 @@
   },
   "operate": {
    "all": [
+    "HAS_POWER",
     {
      "any": [
       {

@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SPACE_COLONY_LUNAR_BASE",
     {
      "type": "BUILDING_COMMERCIAL_SPACEPORT",
@@ -16,6 +15,11 @@
      "type": "MAPCATEGORY_LUNAR",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

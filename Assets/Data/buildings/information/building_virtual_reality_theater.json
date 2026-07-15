@@ -11,7 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_COMPUTER_NETWORK",
     "TECH_AUGMENTED_REALITY",
     {
@@ -21,6 +20,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]

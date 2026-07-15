@@ -11,12 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "BUILDING_POWER_LINES",
     "TECH_ELECTRICITY",
     "TECH_STEAMPUNK",
@@ -32,6 +26,11 @@
      "type": "BONUS_STEAMPUNK",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
     },
     {
      "type": "BONUS_COAL",
@@ -81,6 +80,9 @@
  },
  "cost": {
   "production": 770
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

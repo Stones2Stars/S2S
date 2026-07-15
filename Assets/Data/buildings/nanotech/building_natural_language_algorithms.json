@@ -10,7 +10,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_INTUITIVE_ALGORITHMS",
     "TECH_UBIQUITOUS_COMPUTING",
     "TECH_THOUGHT_SCANNING",
@@ -26,7 +25,8 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_STRATOSPHERIC_TOWER",
     "TECH_ANIMAMATERIALS",
     {
@@ -23,7 +22,8 @@
      "type": "BONUS_CLAYTRONIC_ATOMS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

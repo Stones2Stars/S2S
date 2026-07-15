@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_PERSONAL_COMPUTERS",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -18,6 +17,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "PROPERTY_CRIME",
      "scope": "city",

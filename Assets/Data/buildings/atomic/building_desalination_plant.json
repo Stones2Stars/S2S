@@ -17,7 +17,6 @@
   "build": {
    "all": [
     "HAS_COAST",
-    "HAS_FRESHWATER",
     "BUILDING_WATER_PIPES",
     "TECH_INDUSTRIALISM",
     {
@@ -27,6 +26,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_FRESHWATER"
+   ],
    "dormant": [
     "BUILDING_MATERIALS_CONGLOMERATE"
    ]

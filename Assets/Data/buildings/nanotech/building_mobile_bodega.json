@@ -11,7 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_UNMANNED_MARKET",
     "BUILDING_AUTOMATED_TAXI_SERVICE",
     "TECH_AUTOMATED_TRAFFIC",
@@ -22,6 +21,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_TELEPORT_BOOTH"
    ]

@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
     "BUILDING_INTERGALACTIC_MINE",
     "TECH_DARK_ENERGY_HARVESTING",
@@ -37,6 +36,9 @@
  },
  "cost": {
   "production": 4492
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

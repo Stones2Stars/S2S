@@ -9,7 +9,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_ECOLOGICAL_ENGINEERING",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -19,6 +18,7 @@
   },
   "operate": {
    "all": [
+    "HAS_POWER",
     {
      "any": [
       {

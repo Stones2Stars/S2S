@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_INTELLIGENCE_AGENCY",
     "BUILDING_SECURITY_CENTER",
     "TECH_WAR_SIMULATIONS",
@@ -26,7 +25,8 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

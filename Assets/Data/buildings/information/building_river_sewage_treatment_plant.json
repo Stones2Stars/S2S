@@ -4,13 +4,17 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    "HAS_POWER",
     "BUILDING_WATER_TREATMENT_PLANT",
     "TECH_ECOLOGICAL_ENGINEERING",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

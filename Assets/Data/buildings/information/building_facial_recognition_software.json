@@ -12,7 +12,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
     "BUILDING_SPEECH_RECOGNITION_SOFTWARE",
     "TECH_AUGMENTED_REALITY",
@@ -28,7 +27,8 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

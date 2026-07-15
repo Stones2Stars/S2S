@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MARTIAN_FACTORY",
     "TECH_PLANETARY_MANUFACTURING",
     {
@@ -30,6 +29,9 @@
  },
  "cost": {
   "production": 905
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

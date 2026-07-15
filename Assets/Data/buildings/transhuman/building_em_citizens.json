@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
     "TECH_WHOLE_BRAIN_EMULATION",
     {
@@ -13,6 +12,11 @@
    ],
    "noneOf": [
     "BUILDING_EM_SLAVES"
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

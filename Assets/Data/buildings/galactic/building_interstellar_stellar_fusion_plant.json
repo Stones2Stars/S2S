@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_INTERSTELLAR_STAR_SCOOP",
     "TECH_PLANET_ENGINEERING",
     "TECH_STAR_LIFTING",
@@ -39,6 +38,9 @@
  },
  "cost": {
   "production": 3212
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

@@ -25,11 +25,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "TECH_PHILOSOPHY",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -43,6 +38,11 @@
      "type": "BONUS_BRICKS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
     }
    ]
   }

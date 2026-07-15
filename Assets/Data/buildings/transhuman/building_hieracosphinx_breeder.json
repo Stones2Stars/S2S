@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 12
-    },
     "BUILDING_C_AC_AFRICAN",
     "BUILDING_C_L_AFRICAN",
     "TECH_MYTHOLOGICAL_BESTIARY",
@@ -31,6 +26,11 @@
      "type": "BONUS_ORGANIC_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 12
     }
    ]
   }

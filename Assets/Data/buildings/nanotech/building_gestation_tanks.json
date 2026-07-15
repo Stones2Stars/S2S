@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_GENOTYPE_STUDIO",
     "BUILDING_CLONING_FACTORY",
     "TECH_RAPID_RECUPERATION",
@@ -32,7 +31,8 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_NANOMORPHIC_REPLICATOR"

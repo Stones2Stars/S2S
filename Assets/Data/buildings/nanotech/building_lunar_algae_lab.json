@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_LUNAR_HYDROPONICS_FARM",
     "TECH_LUNAR_MANUFACTURING",
     {
@@ -38,7 +37,8 @@
      "type": "BONUS_GLASSWARE",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

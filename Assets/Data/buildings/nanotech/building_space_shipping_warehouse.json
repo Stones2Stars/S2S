@@ -17,7 +17,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MODERN_WAREHOUSE",
     "BUILDING_COMMERCIAL_SPACEPORT",
     "TECH_ORBITAL_FLIGHT",
@@ -28,6 +27,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
    ]

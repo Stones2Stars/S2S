@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
     "BUILDING_DREAM_VISUALIZER",
     "TECH_NEURON_ENGINEERING",
@@ -19,7 +18,8 @@
      "type": "BONUS_NANOBOTS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

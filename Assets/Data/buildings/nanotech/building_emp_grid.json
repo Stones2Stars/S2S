@@ -19,7 +19,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_POWER_LINES",
     "TECH_ELECTROMAGNETIC_VOLTAGE",
     {
@@ -34,7 +33,8 @@
      "type": "BONUS_ELECTROLYTIC_CELLS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_SUPERCONDUCTING_GRID"

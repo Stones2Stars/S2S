@@ -9,13 +9,17 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
     "BUILDING_WATER_PIPES",
     "TECH_PHYSICS",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_FRESHWATER"
    ]
   }
  },

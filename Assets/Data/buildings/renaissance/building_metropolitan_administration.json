@@ -37,11 +37,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 30
-    },
     "TECH_SOCIAL_CONTRACT",
     "CULTURELEVEL_INFLUENTIAL",
     {
@@ -56,6 +51,11 @@
      "type": "BONUS_FURNITURE",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 30
     },
     {
      "any": [

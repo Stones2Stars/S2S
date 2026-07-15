@@ -10,7 +10,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_LUNAR_LAUNCH_SITE",
     "TECH_LUNAR_TOURISM",
     {
@@ -36,6 +35,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "any": [
       {

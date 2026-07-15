@@ -10,7 +10,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_BIOMATHEMATICS",
     {
      "any": [
@@ -30,7 +29,8 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

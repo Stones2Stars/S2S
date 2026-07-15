@@ -19,11 +19,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 10
-    },
     "TECH_COMMUNITY",
     "CULTURELEVEL_DEVELOPING",
     {
@@ -34,6 +29,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 10
+    },
     {
      "any": [
       {

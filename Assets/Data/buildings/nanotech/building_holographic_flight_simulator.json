@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_HOLOGRAPHICS",
     {
      "any": [
@@ -24,7 +23,8 @@
      "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

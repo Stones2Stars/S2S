@@ -4,7 +4,6 @@
   "build": {
    "all": [
     "HAS_COAST",
-    "HAS_POWER",
     "BUILDING_CLOUD_SERVER",
     "TECH_CLOUD_COMPUTING",
     "TECH_UNMANNED_NAVAL_VEHICLES",
@@ -12,6 +11,11 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

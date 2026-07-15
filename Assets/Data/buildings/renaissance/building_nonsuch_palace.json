@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "BUILDING_GRAND_MANOR",
     "TECH_HUMANISM",
     {
@@ -22,6 +17,11 @@
      "type": "BONUS_GOLD_WARES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     },
     "CIVIC_VASSALAGE",
     {

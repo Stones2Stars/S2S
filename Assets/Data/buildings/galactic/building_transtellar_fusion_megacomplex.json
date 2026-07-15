@@ -9,7 +9,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_FORGE_WORLDS",
     {
      "type": "MAPCATEGORY_INTERSTELLAR",
@@ -30,6 +29,9 @@
  },
  "cost": {
   "production": 2856
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

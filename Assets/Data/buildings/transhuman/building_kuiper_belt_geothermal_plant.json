@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_KUIPER_BELT_OUTPOST",
     "TECH_ASTEROID_EXTRACTION",
     {
@@ -29,6 +28,9 @@
  },
  "cost": {
   "production": 2363
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

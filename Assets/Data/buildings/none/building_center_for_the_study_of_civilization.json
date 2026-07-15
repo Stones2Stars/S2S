@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
     "TECH_SPACEPUNK",
     {
@@ -18,7 +17,8 @@
      "type": "BONUS_SPACEPUNK",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

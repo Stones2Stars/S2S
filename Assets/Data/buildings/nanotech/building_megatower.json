@@ -33,7 +33,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SKYSCRAPER",
     "BUILDING_SHOPPING_DISTRICT",
     "TECH_NANO_ARCHITECTURE",
@@ -49,7 +48,8 @@
      "type": "BONUS_METAMATERIALS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

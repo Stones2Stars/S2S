@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MEDICAL_CLINIC",
     "TECH_MOLECULAR_MEDICINE",
     {
@@ -31,7 +30,8 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_HEALTHCARE_MEGACOMPLEX"

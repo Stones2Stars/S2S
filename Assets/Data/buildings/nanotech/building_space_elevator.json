@@ -4,11 +4,6 @@
   "build": {
    "all": [
     {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 13
-    },
-    {
      "type": "VICTORY_SPACE_RACE",
      "scope": "world"
     },
@@ -25,6 +20,11 @@
      "type": "BONUS_NANOTUBES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
     }
    ]
   }

@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_NEON_BOUTIQUE",
     "TECH_MICROGENERATORS",
     {
@@ -32,6 +31,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
      "scope": "city",

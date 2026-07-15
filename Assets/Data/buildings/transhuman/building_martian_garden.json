@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MARTIAN_WATER_EXTRACTION",
     "BUILDING_MARTIAN_METROPOLIS",
     "TECH_QUADRUPLE_HELIX",
@@ -12,6 +11,11 @@
      "type": "MAPCATEGORY_MARTIAN",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

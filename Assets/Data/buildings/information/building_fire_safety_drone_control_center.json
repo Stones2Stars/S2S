@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_CONTROL_CENTER",
     "BUILDING_FIRE_STATION",
     "TECH_DISASTER_ROBOTS",
@@ -19,7 +18,8 @@
      "type": "BONUS_SERVICE_BOTS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

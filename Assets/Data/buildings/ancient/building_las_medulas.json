@@ -8,12 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "BUILDING_WATER_PIPES",
     "TECH_HYDRAULIC_MINING",
     {
@@ -23,6 +17,16 @@
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_FRESHWATER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
     }
    ]
   }

@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_CLAYTRONIC_CITY",
     "BUILDING_MICRO_WORMHOLE",
     "TECH_MULTIVERSE_TRAVERSAL",
@@ -16,6 +15,11 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

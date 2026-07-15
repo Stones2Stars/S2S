@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_VIRTUAL_WORLD_GUILD",
     "TECH_CYBERSOCIAL_INTEGRATION",
     {
@@ -23,7 +22,8 @@
      "type": "BONUS_HUMAN_MOD_DIGITAL_IDENTITY",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

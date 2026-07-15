@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_INTERSTELLAR_TIMEHOLE",
     {
      "type": "BUILDING_TERAVERSE_PORTAL",
@@ -28,6 +27,11 @@
      "type": "MAPCATEGORY_MILKY_WAY",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

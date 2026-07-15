@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_MASS_TRANSIT",
     {
      "type": "BONUS_PARTS",
@@ -36,6 +35,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_CEMENT",
      "scope": "city",

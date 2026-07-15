@@ -12,7 +12,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_LUNAR_PARCOLOGY",
     "BUILDING_LUNAR_MANUFACTURING_PLANT",
     "TECH_LUNAR_MEGASTRUCTURES",
@@ -20,6 +19,11 @@
      "type": "MAPCATEGORY_LUNAR",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

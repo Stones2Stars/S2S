@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_LUNAR_SPACE_PORT",
     "TECH_LUNAR_TOURISM",
     {
@@ -18,7 +17,8 @@
      "type": "BONUS_CEMENT",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

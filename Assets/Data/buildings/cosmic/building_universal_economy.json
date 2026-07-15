@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_EFFECT_GALACTIC_ECONOMY",
     {
      "type": "BUILDING_OMEGA_ASSEMBLER",
@@ -22,6 +21,11 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

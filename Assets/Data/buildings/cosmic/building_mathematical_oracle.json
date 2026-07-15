@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SELF_AWARE_CITY",
     "BUILDING_OMEGA_ASSEMBLER",
     "TECH_UNIFICATION_MATHEMATICS",
@@ -24,7 +23,8 @@
      "type": "BONUS_COMPUTRONIUM",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

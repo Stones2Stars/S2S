@@ -9,7 +9,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_METEOROLOGY_LAB",
     "TECH_CLIMATE_MODELS",
     {
@@ -24,7 +23,8 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

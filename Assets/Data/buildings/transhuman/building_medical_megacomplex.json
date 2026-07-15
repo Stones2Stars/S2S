@@ -8,12 +8,16 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_MOLECULAR_SCANNING",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

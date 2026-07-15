@@ -11,11 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "BUILDING_OPERA_HOUSE",
     "TECH_REALISM",
     "TECH_CLOCKPUNK",
@@ -31,6 +26,11 @@
      "type": "BONUS_CLOCKPUNK",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     }
    ],
    "dormant": [

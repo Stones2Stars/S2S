@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
     "TECH_SANITATION",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -23,6 +22,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_FRESHWATER",
     {
      "type": "BONUS_BRICKS",
      "scope": "city",

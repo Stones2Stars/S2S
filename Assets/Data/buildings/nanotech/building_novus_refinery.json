@@ -11,7 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_INDUSTRIAL_PARK",
     "BUILDING_EVOLUTIONARY_ALGORITHMS",
     "TECH_NOVUS_CHEMISTRY",
@@ -43,7 +42,8 @@
      "type": "BONUS_SHOCKWAVE_ENGINES",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_PICOTECH_COMPLEX"

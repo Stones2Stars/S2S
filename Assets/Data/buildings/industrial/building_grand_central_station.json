@@ -8,11 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "TECH_RAILROAD",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -26,6 +21,11 @@
      "type": "BONUS_COAL",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     },
     {
      "type": "BONUS_STEEL_WARES",

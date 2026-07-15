@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_VIROTHERAPY_CLINIC",
     "BUILDING_NEUROTRANSMITTER_MANIPULATOR_LAB",
     "BUILDING_REJUVENATION_TANK",
@@ -30,7 +29,8 @@
      "type": "BONUS_NOVUS_CHEMICALS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

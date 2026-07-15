@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_PLANET_CRACKING",
     {
      "any": [
@@ -56,6 +55,9 @@
  },
  "cost": {
   "production": 2536
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

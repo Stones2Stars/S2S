@@ -8,13 +8,17 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SPACE_COLONY_VENUS",
     "TECH_PLANETARY_MANUFACTURING",
     {
      "type": "MAPCATEGORY_VENUSIAN",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

@@ -12,11 +12,6 @@
   "build": {
    "all": [
     {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 4
-    },
-    {
      "latitude": {
       "max": 80
      }
@@ -30,6 +25,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 4
+    },
     {
      "any": [
       {

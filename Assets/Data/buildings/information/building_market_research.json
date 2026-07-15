@@ -10,7 +10,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MODERN_OFFICES",
     "BUILDING_COMPUTER_NETWORK",
     "BUILDING_SKYSCRAPER",
@@ -19,6 +18,11 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

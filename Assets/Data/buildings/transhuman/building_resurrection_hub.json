@@ -18,7 +18,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_GESTATION_TANKS",
     "BUILDING_UTERINE_REPLICATOR",
     "BUILDING_ANIMA_STUDIO",
@@ -36,7 +35,8 @@
      "type": "BONUS_NANOBOTS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_NANOMORPHIC_REPLICATOR"

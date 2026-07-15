@@ -18,7 +18,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MANUFACTURING_PLANT",
     "BUILDING_MECHATRONICS_LAB",
     "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
@@ -36,6 +35,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_FLASH_MEMORY_DEVICES",
      "scope": "city",

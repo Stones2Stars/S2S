@@ -8,11 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "BUILDING_OBSERVATORY",
     {
      "type": "BUILDING_OBSERVATORY",
@@ -28,6 +23,13 @@
    ]
   },
   "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ],
    "dormant": [
     "BUILDING_POLLUTION_BLACKENED_SKIES"
    ]

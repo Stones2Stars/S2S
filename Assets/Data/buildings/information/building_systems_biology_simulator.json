@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_STEM_CELL_LAB",
     "BUILDING_COMPUTER_NETWORK",
     "BUILDING_EVOLUTION_SIMULATOR",
@@ -25,7 +24,8 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

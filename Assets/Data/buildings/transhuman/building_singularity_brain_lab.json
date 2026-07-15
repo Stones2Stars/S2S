@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_CYBERNETIC_ORGAN_LAB",
     "BUILDING_NETWORK_NODE",
     "TECH_TERRA_COMPUTER",
@@ -19,7 +18,8 @@
      "type": "BONUS_NANOBOTS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

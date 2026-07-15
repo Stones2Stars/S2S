@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "BUILDING_C_L_ASIAN",
     {
      "type": "BUILDING_GLAZE_MAKER",
@@ -36,6 +31,11 @@
      "scope": "city",
      "connection": "vicinity",
      "vicinity": "connected"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
     }
    ]
   }

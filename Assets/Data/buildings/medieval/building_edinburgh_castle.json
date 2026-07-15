@@ -25,11 +25,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "TECH_ENGINEERING",
     {
      "any": [
@@ -44,6 +39,15 @@
     }
    ],
    "disabled": "IS_GOVERNMENT_CENTER"
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
   }
  },
  "allowed": {

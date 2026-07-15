@@ -58,7 +58,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_CIVIL_ENGINEERING",
     {
      "type": "BONUS_FURNITURE",
@@ -78,6 +77,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "any": [
       {

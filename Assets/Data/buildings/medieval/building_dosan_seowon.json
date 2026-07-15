@@ -9,11 +9,6 @@
   "build": {
    "all": [
     {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
-    {
      "type": "BUILDING_UNIVERSITY",
      "scope": "empire",
      "min": 4,
@@ -32,6 +27,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
     "RELIGION_CONFUCIANISM"
    ]
   }

@@ -35,7 +35,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_TELEPHONE",
     {
      "any": [
@@ -52,6 +51,7 @@
   },
   "operate": {
    "all": [
+    "HAS_POWER",
     {
      "type": "BONUS_COPPER_WIRES",
      "scope": "city",

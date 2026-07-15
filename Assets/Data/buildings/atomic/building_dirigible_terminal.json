@@ -8,12 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "TECH_ZEPPELINS",
     "TECH_DIESELPUNK",
     {
@@ -34,6 +28,12 @@
      "type": "BONUS_DIESELPUNK",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     }
    ]
   }

@@ -22,12 +22,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "BUILDING_LABORATORY",
     "BUILDING_POWER_LINES",
     "TECH_FUSION",
@@ -38,6 +32,13 @@
    ]
   },
   "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ],
    "dormant": [
     "BUILDING_D_HE3_FUSION_PLANT",
     "BUILDING_HE3_FUSION_POWER_PLANT",
@@ -82,6 +83,7 @@
   ]
  },
  "attributes": {
+  "providesPower": true,
   "destroyedOnCapture": true
  },
  "world": {

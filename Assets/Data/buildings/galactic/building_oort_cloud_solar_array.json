@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_OORT_CLOUD_BASE",
     {
      "type": "BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT",
@@ -29,6 +28,11 @@
      ]
     }
    ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
   }
  },
  "production": {
@@ -48,6 +52,9 @@
  },
  "cost": {
   "production": 1192
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

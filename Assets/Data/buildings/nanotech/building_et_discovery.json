@@ -4,11 +4,6 @@
   "build": {
    "all": [
     {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
-    {
      "type": "BUILDING_ASTRONOMICAL_DATABASE",
      "scope": "empire",
      "min": 3,
@@ -40,6 +35,13 @@
    ]
   },
   "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ],
    "dormant": [
     "BUILDING_POLLUTION_BLACKENED_SKIES"
    ]

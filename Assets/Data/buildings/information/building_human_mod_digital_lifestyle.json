@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_DIGITAL_OFFICES",
     "TECH_ONLINE_COMMUNITY",
     {
@@ -25,7 +24,8 @@
      "type": "BONUS_CELLPHONES",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

@@ -43,7 +43,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_HOSPITAL",
     "TECH_MODERN_HEALTH_CARE",
     {
@@ -68,6 +67,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_HEALTHCARE_MEGACOMPLEX"
    ]

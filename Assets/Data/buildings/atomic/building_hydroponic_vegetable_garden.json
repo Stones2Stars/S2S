@@ -16,8 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
-    "HAS_POWER",
     "BUILDING_HYDROPONICS_LAB",
     "TECH_HYDROPONICS",
     {
@@ -27,6 +25,10 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_FRESHWATER",
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_FARMSCRAPER_I"
    ]

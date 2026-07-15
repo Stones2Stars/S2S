@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SPACE_COLONY_CISLUNAR",
     "TECH_ELECTROMAGNETIC_VOLTAGE",
     {
@@ -30,6 +29,9 @@
  },
  "cost": {
   "production": 1421
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

@@ -9,12 +9,6 @@
   "build": {
    "all": [
     "HAS_RIVER",
-    "HAS_POWER",
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 13
-    },
     "BUILDING_FACTORY",
     "TECH_KNOWLEDGE_MANAGEMENT",
     "TECH_SUPERCONDUCTORS",
@@ -49,6 +43,11 @@
      "connection": "trade|vicinity"
     },
     {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    },
+    {
      "type": "BONUS_URANIUM",
      "scope": "city",
      "connection": "trade|vicinity"
@@ -78,6 +77,7 @@
   "production": 4010
  },
  "attributes": {
+  "providesPower": true,
   "destroyedOnCapture": true
  },
  "ui": {

@@ -8,13 +8,17 @@
       "minArea": 10
      }
     },
-    "HAS_POWER",
     "BUILDING_MEGATOWER",
     "TECH_NANO_ARCHITECTURE",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

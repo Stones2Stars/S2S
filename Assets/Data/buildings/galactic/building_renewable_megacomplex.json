@@ -10,7 +10,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_ATOMIC_SCALE_ENGINEERING",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -67,6 +66,9 @@
   "countModifier": 1,
   "materialsModifier": 1,
   "complexityModifier": 1
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

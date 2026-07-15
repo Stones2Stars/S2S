@@ -8,11 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "TECH_THEOLOGY",
     "STATE_RELIGION_IN_CITY",
     {
@@ -30,6 +25,15 @@
     }
    ],
    "disabled": "IS_HOLY_CITY"
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
   }
  },
  "allowed": {

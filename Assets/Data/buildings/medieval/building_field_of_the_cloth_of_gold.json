@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "TECH_TOURNAMENTS",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -17,6 +12,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
     {
      "any": [
       "CIVIC_VASSAL_LEVIES",

@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SHOPPING_DISTRICT",
     "TECH_3D_PRINTING",
     {
@@ -32,6 +31,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_CHEMICALS",
      "scope": "city",

@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MEGATOWER_OFFICE_LEVEL",
     "TECH_AUTOMATED_URBANIZATION",
     {
@@ -26,6 +25,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
    ]

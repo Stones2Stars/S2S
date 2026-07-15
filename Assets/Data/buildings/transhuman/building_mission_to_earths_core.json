@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 13
-    },
     "BUILDING_SUBTERRANEAN_LAB",
     "TECH_SUBTERRANEAN_EXPLORATION",
     {
@@ -18,6 +13,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    },
     {
      "any": [
       {

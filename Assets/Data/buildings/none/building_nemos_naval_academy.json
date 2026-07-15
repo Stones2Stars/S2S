@@ -13,11 +13,6 @@
       "minArea": 10
      }
     },
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "BUILDING_NAVAL_ACADEMY",
     {
      "type": "BUILDING_NAVAL_ACADEMY",
@@ -38,6 +33,11 @@
      "type": "BONUS_STEAMPUNK",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     }
    ]
   }

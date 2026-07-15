@@ -11,7 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_TV_STUDIO",
     "TECH_TELEVISION",
     {
@@ -28,6 +27,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]

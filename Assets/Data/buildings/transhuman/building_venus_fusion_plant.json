@@ -10,7 +10,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_VENUS_SURFACE_CITY",
     "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
     {
@@ -32,6 +31,9 @@
  },
  "cost": {
   "production": 3065
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

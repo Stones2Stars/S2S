@@ -21,7 +21,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_ASTROENGINEERING",
     {
      "any": [
@@ -56,6 +55,9 @@
  },
  "cost": {
   "production": 3611
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

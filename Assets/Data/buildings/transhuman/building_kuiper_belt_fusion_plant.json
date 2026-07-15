@@ -9,7 +9,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_KUIPER_BELT_OUTPOST",
     "TECH_NUCLEAR_PULSE_PROPULSION",
     {
@@ -35,6 +34,9 @@
  },
  "cost": {
   "production": 3308
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

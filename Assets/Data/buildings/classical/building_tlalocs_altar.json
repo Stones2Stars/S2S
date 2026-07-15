@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "BUILDING_TEMPLE_OF_TLALOC",
     "TECH_MATHEMATICS",
     {
@@ -18,6 +13,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
     "CIVIC_DIVINE_CULT",
     "RELIGION_NAGHUALISM"
    ]

@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "TECH_COMPUTER_NETWORKS",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -21,6 +16,11 @@
      "type": "BONUS_MICROCHIPS",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     }
    ]
   }

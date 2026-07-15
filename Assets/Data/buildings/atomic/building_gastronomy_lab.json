@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_CULINARY_SCHOOL",
     "BUILDING_LABORATORY",
     "TECH_GASTRONOMY",
@@ -20,6 +19,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_REFRIGERATORS",
      "scope": "city",

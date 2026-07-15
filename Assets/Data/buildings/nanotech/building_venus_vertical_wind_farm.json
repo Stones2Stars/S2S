@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SPACE_COLONY_VENUS",
     "TECH_PLANETARY_EXTRACTION",
     {
@@ -30,6 +29,9 @@
  },
  "cost": {
   "production": 800
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

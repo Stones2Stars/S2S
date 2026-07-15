@@ -10,7 +10,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MEDICAL_DIAGNOSTAT",
     "BUILDING_CYBERNETIC_ORGAN_LAB",
     "TECH_ARTIFICIAL_LIFE",
@@ -26,7 +25,8 @@
      "type": "BONUS_NANOBOTS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

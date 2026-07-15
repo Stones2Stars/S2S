@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "BUILDING_GARBAGE_COLLECTION_AGENCY",
     "BUILDING_COURTHOUSE",
     "TECH_RECYCLING",
@@ -23,6 +18,11 @@
      "type": "BONUS_TIRES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     }
    ]
   }

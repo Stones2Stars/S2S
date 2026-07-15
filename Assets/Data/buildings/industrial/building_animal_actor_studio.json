@@ -11,11 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "BUILDING_MOVIE_STUDIO",
     "TECH_MOTION_PICTURES",
     {
@@ -35,6 +30,13 @@
    ]
   },
   "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ],
    "dormant": [
     "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]

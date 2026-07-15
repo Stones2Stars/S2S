@@ -3,12 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "BUILDING_SKYSCRAPER",
     "BUILDING_CONSTRUCTION_FIRM",
     {
@@ -30,6 +24,12 @@
      "type": "BONUS_CEMENT",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
     },
     {
      "type": "BONUS_STEEL_WARES",

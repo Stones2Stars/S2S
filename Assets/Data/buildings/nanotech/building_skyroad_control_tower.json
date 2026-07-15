@@ -39,7 +39,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_SKYROADS",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -48,6 +47,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_TELEPORT_BOOTH"
    ]

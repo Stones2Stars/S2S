@@ -13,7 +13,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MARTIAN_MEGACITY",
     "TECH_PLANETARY_MEGASTRUCTURES",
     {
@@ -28,7 +27,8 @@
      "type": "BONUS_MARTIAN_CROPS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

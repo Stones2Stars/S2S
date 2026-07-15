@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
     "TECH_LUNAR_MANUFACTURING",
     {
@@ -33,7 +32,8 @@
      "type": "BONUS_CHEMICALS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

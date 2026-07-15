@@ -17,7 +17,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_RIDESHARE",
     "BUILDING_EFFECT_GPS",
     "BUILDING_AUTOMATED_PARKING_GARAGE",
@@ -29,6 +28,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_TELEPORT_BOOTH"
    ]

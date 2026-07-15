@@ -13,11 +13,6 @@
       "minArea": 10
      }
     },
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "TECH_IMPERIALISM",
     {
      "any": [
@@ -32,6 +27,15 @@
    ],
    "noneOf": [
     "BUILDING_SCAPA_FLOW"
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
    ]
   }
  },

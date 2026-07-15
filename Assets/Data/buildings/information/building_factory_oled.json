@@ -11,7 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_FACTORY",
     "BUILDING_BIOINFORMATICS_LAB",
     "TECH_ORGANIC_PHOTONICS",
@@ -37,7 +36,8 @@
      "type": "BONUS_GLASSWARE",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_CHEMICALS_DISTRICT"

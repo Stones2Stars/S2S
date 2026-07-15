@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_ASSEMBLY_LINE",
     "BUILDING_FACTORY",
     {
@@ -33,6 +32,7 @@
      "connection": "vicinity",
      "vicinity": "connected"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_STONE",
      "scope": "city",

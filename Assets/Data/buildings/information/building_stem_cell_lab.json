@@ -13,7 +13,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_FORENSICS_LAB",
     "BUILDING_CLONING_LABORATORY",
     "TECH_CLONING",
@@ -30,6 +29,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_COMPUTERS",
      "scope": "city",

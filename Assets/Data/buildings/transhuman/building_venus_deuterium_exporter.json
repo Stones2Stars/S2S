@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_VENUS_TRADING_POST",
     "BUILDING_VENUS_HYDROGEN_GENERATOR",
     "TECH_PLANETARY_TRADE",
@@ -12,6 +11,11 @@
      "type": "MAPCATEGORY_VENUSIAN",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

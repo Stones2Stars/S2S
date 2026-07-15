@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
     "BUILDING_DIGITAL_ADVERTISING_FIRM",
     "TECH_THOUGHT_SCANNING",
@@ -11,6 +10,11 @@
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

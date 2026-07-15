@@ -32,7 +32,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_COMMERCIAL_AIRPORT",
     "TECH_COMMERCIAL_SPACEFLIGHT",
     {
@@ -48,6 +47,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_NANOTUBES",
      "scope": "city",

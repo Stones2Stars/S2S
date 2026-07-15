@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_CONSTRUCTION_FIRM",
     "TECH_MEGASTRUCTURE_ENGINEERING",
     {
@@ -24,6 +23,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "any": [
       {

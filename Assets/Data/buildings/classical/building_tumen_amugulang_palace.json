@@ -8,11 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
     "TECH_AESTHETICS",
     "TECH_CANAL_SYSTEMS",
     {
@@ -33,6 +28,11 @@
      "type": "BONUS_SCULPTURES",
      "scope": "city",
      "connection": "trade|vicinity"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
     },
     {
      "type": "BONUS_SILVER_WARES",

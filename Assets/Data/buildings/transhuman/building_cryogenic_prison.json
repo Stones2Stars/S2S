@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_CRYONICS",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -21,6 +20,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_NANOTUBES",
      "scope": "city",

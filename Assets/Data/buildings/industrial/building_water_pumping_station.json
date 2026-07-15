@@ -9,7 +9,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
     "BUILDING_WATER_TOWER",
     "TECH_SCREW_PROPELLER",
     {
@@ -20,6 +19,7 @@
   },
   "operate": {
    "all": [
+    "HAS_FRESHWATER",
     {
      "any": [
       {

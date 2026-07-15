@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     {
      "type": "BUILDING_MEGAVERSE_PORTAL",
      "scope": "empire",
@@ -29,6 +28,11 @@
       }
      ]
     }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
    ]
   }
  },

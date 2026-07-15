@@ -10,7 +10,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SYSTEMS_BIOLOGY_SIMULATOR",
     "BUILDING_EFFECT_MEDICAL_DATABASE",
     "TECH_BIOMATHEMATICS",
@@ -26,7 +25,8 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

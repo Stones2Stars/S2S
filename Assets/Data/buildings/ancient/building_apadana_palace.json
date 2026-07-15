@@ -4,11 +4,6 @@
   "build": {
    "all": [
     {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 3
-    },
-    {
      "type": "CITY",
      "scope": "empire",
      "min": 8
@@ -28,6 +23,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
     "RELIGION_ZOROASTRIANISM"
    ]
   }

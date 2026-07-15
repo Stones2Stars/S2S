@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
     "BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY",
     "TECH_LUNAR_MANUFACTURING",
@@ -19,7 +18,8 @@
      "type": "BONUS_CEMENT",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

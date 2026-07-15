@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_INDUSTRIAL_PARK",
     "BUILDING_BACTERIUM_BIOFORGE",
     "TECH_BACTERIUM_ENGINEERING",
@@ -28,6 +27,7 @@
   },
   "operate": {
    "all": [
+    "HAS_POWER",
     {
      "any": [
       {

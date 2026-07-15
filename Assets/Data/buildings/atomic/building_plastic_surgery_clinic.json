@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "TECH_MODERN_HEALTH_CARE",
     {
      "any": [
@@ -31,6 +30,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
    ]

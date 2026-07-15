@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_NETWORK_NODE",
     "TECH_SENTIENT_EARTH",
     {
@@ -19,6 +18,7 @@
      "scope": "city",
      "connection": "trade|vicinity"
     },
+    "HAS_POWER",
     {
      "type": "BONUS_HUMAN_MOD_ENLIGHTENED",
      "scope": "city",

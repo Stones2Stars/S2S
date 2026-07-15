@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
     "TECH_NATURAL_PIGMENTS",
     {
      "any": [
@@ -35,6 +34,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_FRESHWATER"
+   ],
    "dormant": [
     "BUILDING_MODERN_EARTHWORKS"
    ]

@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_FACTORY",
     "BUILDING_POWER_LINES",
     "TECH_SOLAR_POWER",
@@ -79,6 +78,9 @@
   "countModifier": 2,
   "materialsModifier": 2,
   "complexityModifier": 2
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

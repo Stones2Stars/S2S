@@ -17,7 +17,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_FACTORY",
     "TECH_REFRIGERATION",
     {
@@ -33,6 +32,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
    ]

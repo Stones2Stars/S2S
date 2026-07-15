@@ -18,7 +18,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MARTIAN_METROPOLIS",
     "TECH_ANIMAMATERIALS",
     {
@@ -33,7 +32,8 @@
      "type": "BONUS_MARTIAN_FRUIT",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

@@ -3,11 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "TECH_LEGALIZED_GAMBLING",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -20,6 +15,11 @@
   },
   "operate": {
    "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
     {
      "any": [
       {

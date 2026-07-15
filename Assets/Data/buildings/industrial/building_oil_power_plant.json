@@ -11,7 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_FACTORY",
     "BUILDING_POWER_LINES",
     "TECH_ELECTRICITY",
@@ -75,6 +74,9 @@
     "FLAVOR_PRODUCTION": 10
    }
   ]
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

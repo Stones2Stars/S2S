@@ -11,8 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
-    "HAS_POWER",
     "BUILDING_WATER_PIPES",
     "BUILDING_SEWER_SYSTEM",
     "BUILDING_TELEPHONE_NETWORK",
@@ -24,6 +22,10 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_FRESHWATER",
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_HOUSING_COLONY_ARCOLOGY",
     "BUILDING_LAUNCH_ARCOLOGY"

@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_COURTHOUSE",
     "BUILDING_JAIL",
     "TECH_CRIMINOLOGY",
@@ -28,6 +27,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_LETHAL_INJECTION"
    ]

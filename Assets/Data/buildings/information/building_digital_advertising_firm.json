@@ -8,7 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_ADVERTISING_AGENCY",
     "BUILDING_DIGITAL_OFFICES",
     "TECH_MACHINE_LEARNING",
@@ -25,7 +24,8 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

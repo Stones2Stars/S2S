@@ -23,6 +23,10 @@ OWNER RULINGS folded in (handover #6):
   (bDamageAllAttackers + MayDamageAttackingUnitCombatTypes) -> defense.city.counterDamage. EXCEPTIONS to enables-family:
   bForceTeamVoteEligible->enables.votes, Hurrys->enables.hurries, FoundsCorporation->enables.corporations.
 - DROP (dead §8-i): iMaxPopulationAllowed, iMaxPopulationChange, iDCMNukesOkay/bDCMNukesOkay.
+- power split (owner 2026-07-15): `bPower` (PROVIDES power, the power-plant flag) -> attributes.providesPower;
+  `bPrereqPower` (NEEDS power) -> requires.operate HAS_POWER. The engine DORMS on the operate legs (checkBuildings):
+  bPrereqPower (CvCity.cpp:21559), bFreshWater (:21567), iPrereqPopulation (:21582) -> all three author OPERATE
+  (operate implies build, json §4.3). iCitiesPrereq/iTeamsPrereq stay build (canConstruct-only, no disable leg).
 - iNukeExplosionRand: NOT emitted (live code, but only the EXCLUDED Bad_Karma/Building_Meltdown module populates it).
 
 ⚠ THIS IS PASS 1 (the bulk): scalar/percent families + yield/commerce + requires + store edges + cost + caps + art/ai +
@@ -171,6 +175,11 @@ CAP_ATTRIBUTES = {
     "bTeamShare": "teamShare", "bOrbital": "orbital", "bOrbitalInfrastructure": "orbitalInfrastructure",
     "bGovernmentCenter": "governmentCenter", "bCapital": "capital",
     "bProvidesFreshWater": "providesFreshWater",  # fresh water is NOT a BONUS_, so an attribute, NOT `provides`
+    # bPower = the building PROVIDES power (a power plant -- legacy CvCity::processBuilding changePowerCount leg).
+    # HELD intrinsic like providesFreshWater; power is NOT a BONUS_, so an attribute, NOT `provides`. Distinct from
+    # bPrereqPower (NEEDS power -> requires.operate HAS_POWER); the two were once collapsed into one HAS_POWER
+    # requires atom, making ~800 buildings read as power plants (the circular-power defect).
+    "bPower": "providesPower",
     # bNeverCapture (the 17th attribute, owner ruling 2026-07-01): the building is destroyed/not-transferred when its
     # city is captured (CvPlayer.cpp:2565) -- a real HELD building attribute, RENAMED for clarity to `destroyedOnCapture`.
     "bNeverCapture": "destroyedOnCapture",
@@ -898,11 +907,15 @@ def requires_building(rec, store):
         build_all.append(coast)
     elif br:
         build_all.append("HAS_RIVER")
+    # bFreshWater = NEEDS fresh water; the engine DORMS the built building when access is lost (checkBuildings,
+    # CvCity.cpp:21567) -> requires.OPERATE (operate implies build, json §4.3, so construct gating is preserved).
     if _bool(rec, "bFreshWater"):
-        build_all.append("HAS_FRESHWATER")
-    # --- power (presence) ---
-    if _bool(rec, "bPower") or _bool(rec, "bPrereqPower"):
-        build_all.append("HAS_POWER")
+        op_all.append("HAS_FRESHWATER")
+    # --- power: bPrereqPower = NEEDS power; the engine DORMS on power loss (checkBuildings, CvCity.cpp:21559)
+    # -> requires.OPERATE. bPower = PROVIDES power -> attributes.providesPower (CAP_ATTRIBUTES), never a
+    # requirement (folding it here made power plants require the power they produce -- the circular-power defect).
+    if _bool(rec, "bPrereqPower"):
+        op_all.append("HAS_POWER")
     pb = _txt(rec, "PowerBonus")
     if pb:
         bonus_all.append(_atom(pb, "city", connection="trade|vicinity", role="power"))   # operate/build by bAutoBuild
@@ -910,10 +923,16 @@ def requires_building(rec, store):
     # iLevelPrereq (the "empire has a unit of level >= N" gate, CvPlayer::canConstruct:6766 getHighestUnitLevel) is
     # INTENTIONALLY DROPPED (owner ruling 2026-06-24): the gate is removed from the game (XML iLevelPrereq zeroed on
     # the 6 MA_* academies, its only users) and from the model -- so parity holds with the requirement simply gone.
-    for tag, scope in (("iPrereqPopulation", "city"), ("iCitiesPrereq", "empire"), ("iTeamsPrereq", "world")):
+    # iPrereqPopulation = the engine DORMS the built building when population drops below it (checkBuildings,
+    # CvCity.cpp:21582) -> requires.OPERATE. iCitiesPrereq/iTeamsPrereq have NO disable leg (canConstruct-only)
+    # -> stay build.
+    v = _int(rec, "iPrereqPopulation")
+    if v and v > 0:
+        op_all.append(_atom("POPULATION", "city", min=v))
+    for tag, scope in (("iCitiesPrereq", "empire"), ("iTeamsPrereq", "world")):
         v = _int(rec, tag)
         if v and v > 0:
-            kind = {"iPrereqPopulation": "POPULATION", "iCitiesPrereq": "CITY", "iTeamsPrereq": "TEAM"}[tag]
+            kind = {"iCitiesPrereq": "CITY", "iTeamsPrereq": "TEAM"}[tag]
             build_all.append(_atom(kind, scope, min=v))
     # iMinAreaSize for a LAND building -> AREA_SIZE atom = the landmass tile count (area()->getNumTiles()). For a
     # WATER building it is the SEA-BODY size, folded into {HAS_COAST:{minArea:N}} above (legacy isCoastal(N)).

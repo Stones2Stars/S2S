@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_TRANSGENICS_LAB",
     "TECH_NUTRACEUTICAL_ANIMALS",
     {
@@ -26,6 +25,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
    "dormant": [
     "BUILDING_MEDICAL_MEGACOMPLEX"
    ]

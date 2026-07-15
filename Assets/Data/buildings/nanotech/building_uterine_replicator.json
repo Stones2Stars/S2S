@@ -17,7 +17,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_ANTHROPOMORPHICS_LAB",
     "BUILDING_CYBERNETIC_ORGAN_LAB",
     "TECH_CYBERNETICS",
@@ -33,7 +32,8 @@
      "type": "BONUS_NANOBOTS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_NANOMORPHIC_REPLICATOR"

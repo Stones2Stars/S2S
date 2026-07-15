@@ -11,12 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 7
-    },
     "BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
     "BUILDING_COURTHOUSE",
     "TECH_MOTORIZED_TRANSPORTATION",
@@ -27,6 +21,14 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ],
    "dormant": [
     "BUILDING_TELEPORT_BOOTH"
    ]

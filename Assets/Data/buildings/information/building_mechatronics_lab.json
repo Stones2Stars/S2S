@@ -11,7 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_ROBOTICS_LAB",
     "TECH_BIOMECHANICAL_HARVESTING",
     "TECH_MACHINE_LEARNING",
@@ -27,7 +26,8 @@
      "type": "BONUS_COMPUTERS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

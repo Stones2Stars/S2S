@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
     "BUILDING_WATER_PIPES",
     "TECH_THERMODYNAMICS",
     {
@@ -26,6 +25,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_FRESHWATER"
+   ],
    "dormant": [
     "BUILDING_CHEMICALS_DISTRICT"
    ]

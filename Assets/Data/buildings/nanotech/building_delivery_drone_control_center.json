@@ -11,7 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_CONTROL_CENTER",
     "BUILDING_MODERN_WAREHOUSE",
     "TECH_AUTOMATED_URBANIZATION",
@@ -27,7 +26,8 @@
      "type": "BONUS_SERVICE_BOTS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ],
    "dormant": [
     "BUILDING_TELEPORT_BOOTH"

@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_LUNAR_ASSEMBLY_PLANT",
     "TECH_PLASTIC_ELECTRONICS",
     "TECH_LUNAR_MANUFACTURING",
@@ -34,7 +33,8 @@
      "type": "BONUS_MICROCHIPS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_POWER"
    ]
   }
  },

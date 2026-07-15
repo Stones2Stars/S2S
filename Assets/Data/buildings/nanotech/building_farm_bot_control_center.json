@@ -8,8 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
-    "HAS_POWER",
     "BUILDING_CONTROL_CENTER",
     "BUILDING_AEROPONICS_LAB",
     "TECH_BIOMETRIC_WARFARE",
@@ -25,7 +23,9 @@
      "type": "BONUS_SERVICE_BOTS",
      "scope": "city",
      "connection": "trade|vicinity"
-    }
+    },
+    "HAS_FRESHWATER",
+    "HAS_POWER"
    ]
   }
  },

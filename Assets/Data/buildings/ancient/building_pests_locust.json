@@ -8,11 +8,6 @@
  "requires": {
   "build": {
    "all": [
-    {
-     "type": "POPULATION",
-     "scope": "city",
-     "min": 4
-    },
     "TECH_AGRICULTURE",
     {
      "type": "MAPCATEGORY_EARTH",
@@ -27,6 +22,11 @@
      "scope": "city",
      "connection": "vicinity",
      "vicinity": "connected"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 4
     }
    ]
   }

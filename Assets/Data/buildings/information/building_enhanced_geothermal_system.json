@@ -16,7 +16,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_MODERN_EARTHWORKS",
     "BUILDING_POWER_LINES",
     "TECH_INDUSTRIAL_ECOLOGY",
@@ -65,6 +64,9 @@
   "sizeModifier": 3,
   "materialsModifier": 1,
   "complexityModifier": 2
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {

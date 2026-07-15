@@ -11,7 +11,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_FRESHWATER",
     "BUILDING_WATER_PIPES",
     "TECH_PLUMBING",
     {
@@ -27,6 +26,9 @@
    ]
   },
   "operate": {
+   "all": [
+    "HAS_FRESHWATER"
+   ],
    "dormant": [
     "BUILDING_HYPERMARKET"
    ]

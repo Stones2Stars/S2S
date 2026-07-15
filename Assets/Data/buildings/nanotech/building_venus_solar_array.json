@@ -3,7 +3,6 @@
  "requires": {
   "build": {
    "all": [
-    "HAS_POWER",
     "BUILDING_SPACE_COLONY_VENUS",
     "TECH_PLANETARY_COLONIZATION",
     {
@@ -25,6 +24,9 @@
  },
  "cost": {
   "production": 702
+ },
+ "attributes": {
+  "providesPower": true
  },
  "world": {
   "art": {
