@@ -35,8 +35,11 @@ each matching worked plot (§5). The target reads a combined value — it never 
 > model + the CvDerivedCache component.)
 
 This is purely top-down: a condition *inside* a deposit (`enabled`/`per`) is a forward **read** of state, never
-an upward cascade-walk. The reverse view ("who modifies me") is derived once at load for the pedia, never on the
-hot path.
+an upward cascade-walk. **The reverse view ("who references/modifies me") is derived once at load, never on a
+hot path** — realized as reverse edge FAMILIES on the referenced info object itself, populated by the readJson
+reverse pass (`EDGEF_RELATED` = the display/pedia candidate lists the tooltips iterate; `EDGEF_REQUIRED_BY` =
+the enabler's requires-reverse-index). After load every info ALREADY CARRIES its reverse lookups; no consumer
+builds its own scan or side index ([DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view)).
 
 **Three governing rules:** (a) **purely top-down** — sources deposit DOWN, targets read an O(1) accumulator; the
 reverse index is cold-path only. (b) **tech-inflation is a downward DEPOSIT, not an upward gate** — a researched

@@ -22,6 +22,27 @@
 #include "CvPopupInfo.h"
 #include "UI/CvPopupReturn.h"
 #include "CvPython.h"
+#include "Infos/CvActionInfo.h"    // getActionInfo(...) reads (unity-batch include exposure: own your includes)
+#include "CvReligionInfo.h"        // getReligionInfo(...) reads (ditto)
+#include "Infos/CvArtInfoInterface.h" // getInterfaceArtInfo(...)->getPath() (ditto)
+#include "Infos/CvVoteSourceInfo.h"   // getVoteSourceInfo(...) reads (ditto)
+#include "CvTechInfo.h"               // getTechInfo(...) reads (ditto)
+#include "Infos/CvAdvisorInfo.h"      // getAdvisorInfo(...) reads (ditto)
+#include "CvCivicInfo.h"              // getCivicInfo(...) reads (ditto)
+#include "Infos/CvEspionageMissionInfo.h" // getEspionageMissionInfo(...) reads (ditto)
+#include "CvSpecialistInfo.h"         // getSpecialistInfo(...) reads (ditto)
+#include "CvProjectInfo.h"            // getProjectInfo(...) reads (ditto)
+#include "CvCorporationInfo.h"        // getCorporationInfo(...) reads (ditto)
+#include "CvBuildingInfo.h"           // getBuildingInfo(...) reads (ditto)
+#include "CvUnitInfo.h"               // getUnitInfo(...) reads (ditto)
+#include "CvBonusInfo.h"              // getBonusInfo(...) reads (ditto)
+#include "CvImprovementInfo.h"        // getImprovementInfo(...) reads (ditto)
+#include "CvPromotionInfo.h"          // getPromotionInfo(...) reads (ditto)
+#include "Infos/CvEventTriggerInfo.h" // getEventTriggerInfo(...) reads (ditto)
+#include "Infos/CvEventInfo.h"        // getEventInfo(...) reads (ditto)
+#include "Infos/CvColorInfo.h"        // getColorInfo(...) reads (ditto)
+#include "Infos/CvVictoryInfo.h"      // getVictoryInfo(...) reads (ditto)
+#include "CvPromotionLineInfo.h"      // getPromotionLineInfo(...) reads (ditto)
 #include "Engine/CvSelectionGroup.h"
 #include "AI/CvTeamAI.h"
 #include "Engine/CvUnit.h"

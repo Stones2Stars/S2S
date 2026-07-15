@@ -29,4 +29,10 @@ namespace picojson { class value; }
 //	census) re-surfaces these where logging is live. iFiles/iEntities are -1 if the probe never ran.
 const std::string& cascadeReadJsonStats(bool bSet, int& iFiles, int& iEntities, const std::string& sDir);
 
+//	The ONE INFOTYPE-prefix -> InfoRepo dispatch (naming.md routes by prefix): the mapped CvInfo for any
+//	repo-homed type, or NULL (tokens, XML-only kinds). Serves the /state/info observability read + any
+//	consumer needing an info by its type string.
+class CvInfo;
+CvInfo* rjInfoForType(const std::string& szType, int iId);
+
 #endif // CV_CASCADE_READJSON_H

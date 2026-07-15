@@ -27,6 +27,7 @@ CvTerrainInfo::CvTerrainInfo()
 
 void CvTerrainInfo::mapFrom(const picojson::value& entity)
 {
+	m_aeMapCategories.clear();   // remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom
 	CvInfo::mapFrom(entity);   // core reading: type + identity text + button
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();

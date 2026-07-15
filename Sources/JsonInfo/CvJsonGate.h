@@ -31,6 +31,7 @@ public:
 	void parseDisabled(const picojson::value& v);
 
 	bool isEmpty() const { return enabled == NULL && disabled == NULL; }
+	void clearParsed();   // frees the trees + resets (the dtor body; the clear-first half of the section re-map)
 
 private:
 	CvJsonGate(const CvJsonGate&);            // noncopyable -- owns the condition trees

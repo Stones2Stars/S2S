@@ -11933,14 +11933,33 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 
 	const CvPlayer* playerAct = ePlayerAct != NO_PLAYER ? &GET_PLAYER(ePlayerAct) : NULL;
 
+	// #430 THE REVERSE VIEW (modifier.md par.1): the tech's info already carries, per kind, the entities that
+	// reference it (EDGEF_RELATED, populated at the JSON read) -- every section below keeps its exact predicate
+	// but iterates the (tiny) candidate list instead of scanning a whole info database per hover.
+	const std::vector<int>* relBuildings    = GC.getTechInfo(eTech).edge(EDGEF_RELATED, EDGEB_BUILDINGS);
+	const std::vector<int>* relBonuses      = GC.getTechInfo(eTech).edge(EDGEF_RELATED, EDGEB_BONUSES);
+	const std::vector<int>* relSpecials     = GC.getTechInfo(eTech).edge(EDGEF_RELATED, EDGEB_SPECIAL_BUILDINGS);
+	const std::vector<int>* relImprovements = GC.getTechInfo(eTech).edge(EDGEF_RELATED, EDGEB_IMPROVEMENTS);
+	const std::vector<int>* relBuilds       = GC.getTechInfo(eTech).edge(EDGEF_RELATED, EDGEB_BUILDS);
+	const std::vector<int>* relCivics       = GC.getTechInfo(eTech).edge(EDGEF_RELATED, EDGEB_CIVICS);
+	const std::vector<int>* relUnits        = GC.getTechInfo(eTech).edge(EDGEF_RELATED, EDGEB_UNITS);
+	const std::vector<int>* relHeritages    = GC.getTechInfo(eTech).edge(EDGEF_RELATED, EDGEB_HERITAGES);
+	const std::vector<int>* relProjects     = GC.getTechInfo(eTech).edge(EDGEF_RELATED, EDGEB_PROJECTS);
+	const std::vector<int>* relProcesses    = GC.getTechInfo(eTech).edge(EDGEF_RELATED, EDGEB_PROCESSES);
+	const std::vector<int>* relReligions    = GC.getTechInfo(eTech).edge(EDGEF_RELATED, EDGEB_RELIGIONS);
+	const std::vector<int>* relCorporations = GC.getTechInfo(eTech).edge(EDGEF_RELATED, EDGEB_CORPORATIONS);
+	const std::vector<int>* relPromotions   = GC.getTechInfo(eTech).edge(EDGEF_RELATED, EDGEB_PROMOTIONS);
+
 	if (bTreeInfo && (NO_TECH != eFromTech))
 	{
 		buildTechTreeString(szBuffer, eTech, bPlayerContext, eFromTech);
 	}
 
 	// Obsolete Buildings
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); ++iI)
+	if (relBuildings != NULL)
+	for (size_t iRel = 0; iRel < relBuildings->size(); ++iRel)
 	{
+		const int iI = (*relBuildings)[iRel];
 		if ((!bPlayerContext || playerAct->getBuildingCount((BuildingTypes)iI) > 0)
 		&& GC.getGame().canEverConstruct((BuildingTypes)iI)
 		&& GC.getBuildingInfo((BuildingTypes)iI).getObsoleteTech() == eTech)
@@ -11950,16 +11969,20 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 	}
 
 	//	Obsolete Bonuses
-	for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
+	if (relBonuses != NULL)
+	for (size_t iRel = 0; iRel < relBonuses->size(); ++iRel)
 	{
+		const int iI = (*relBonuses)[iRel];
 		if (GC.getBonusInfo((BonusTypes)iI).getTechObsolete() == eTech)
 		{
 			buildObsoleteBonusString(szBuffer, iI, true);
 		}
 	}
 
-	for (int iI = 0; iI < GC.getNumSpecialBuildingInfos(); ++iI)
+	if (relSpecials != NULL)
+	for (size_t iRel = 0; iRel < relSpecials->size(); ++iRel)
 	{
+		const int iI = (*relSpecials)[iRel];
 		if (GC.getSpecialBuildingInfo((SpecialBuildingTypes) iI).getObsoleteTech() == eTech)
 		{
 			buildObsoleteSpecialString(szBuffer, iI, true);
@@ -12108,8 +12131,10 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 		}
 	}
 
-	for (int iI = 0; iI < GC.getNumImprovementInfos(); ++iI)
+	if (relImprovements != NULL)
+	for (size_t iRel = 0; iRel < relImprovements->size(); ++iRel)
 	{
+		const int iI = (*relImprovements)[iRel];
 		if (GC.getImprovementInfo((ImprovementTypes)iI).getPrereqTech() == eTech && GC.getImprovementInfo((ImprovementTypes)iI).getImprovementPillage() != NO_IMPROVEMENT)
 		{
 			szBuffer.append(NEWLINE);
@@ -12133,9 +12158,10 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 	buildVassalStateString(szBuffer, eTech, true, bPlayerContext);
 
 	//	Build farm, irrigation, etc...
-	for (int iI = 0; iI < GC.getNumBuildInfos(); ++iI)
+	if (relBuilds != NULL)
+	for (size_t iRel = 0; iRel < relBuilds->size(); ++iRel)
 	{
-		buildImprovementString(szBuffer, eTech, (BuildTypes)iI, true, bPlayerContext);
+		buildImprovementString(szBuffer, eTech, (BuildTypes)(*relBuilds)[iRel], true, bPlayerContext);
 	}
 
 	//	Extra moves for certain domains...
@@ -12168,13 +12194,16 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 	buildRiverTradeString(szBuffer, eTech, true, bPlayerContext);
 
 	//	Special Buildings
-	for (int iI = 0; iI < GC.getNumSpecialBuildingInfos(); ++iI)
+	if (relSpecials != NULL)
+	for (size_t iRel = 0; iRel < relSpecials->size(); ++iRel)
 	{
-		buildSpecialBuildingString(szBuffer, eTech, iI, true, bPlayerContext);
+		buildSpecialBuildingString(szBuffer, eTech, (*relSpecials)[iRel], true, bPlayerContext);
 	}
 
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); ++iI)
+	if (relBuildings != NULL)
+	for (size_t iRel = 0; iRel < relBuildings->size(); ++iRel)
 	{
+		const int iI = (*relBuildings)[iRel];
 		if (GC.getGame().canEverConstruct((BuildingTypes)iI))
 		{
 			const CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iI);
@@ -12305,23 +12334,26 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 		}
 	}
 	//	Build farm, mine, etc...
-	for (int iI = 0; iI < GC.getNumImprovementInfos(); ++iI)
+	if (relImprovements != NULL)
+	for (size_t iRel = 0; iRel < relImprovements->size(); ++iRel)
 	{
-		buildYieldChangeString(szBuffer, eTech, iI, true, bPlayerContext);
+		buildYieldChangeString(szBuffer, eTech, (*relImprovements)[iRel], true, bPlayerContext);
 	}
 
 	bool bFirst = true;
 
-	for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
+	if (relBonuses != NULL)
+	for (size_t iRel = 0; iRel < relBonuses->size(); ++iRel)
 	{
-		bFirst = buildBonusRevealString(szBuffer, eTech, iI, bFirst, true, bPlayerContext);
+		bFirst = buildBonusRevealString(szBuffer, eTech, (*relBonuses)[iRel], bFirst, true, bPlayerContext);
 	}
 
 	bFirst = true;
 
-	for (int iI = 0; iI < GC.getNumCivicInfos(); ++iI)
+	if (relCivics != NULL)
+	for (size_t iRel = 0; iRel < relCivics->size(); ++iRel)
 	{
-		bFirst = buildCivicRevealString(szBuffer, eTech, iI, bFirst, true, bPlayerContext);
+		bFirst = buildCivicRevealString(szBuffer, eTech, (*relCivics)[iRel], bFirst, true, bPlayerContext);
 	}
 	CvWString szFirstBuffer;
 
@@ -12329,8 +12361,10 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 	{
 		bFirst = true;
 
-		for (int iI = 0; iI < GC.getNumUnitInfos(); ++iI)
+		if (relUnits != NULL)
+		for (size_t iRel = 0; iRel < relUnits->size(); ++iRel)
 		{
+			const int iI = (*relUnits)[iRel];
 			if (GC.getGame().canEverTrain((UnitTypes) iI)
 			&& (!bPlayerContext ||
 					!playerAct->isProductionMaxedUnit((UnitTypes) iI)
@@ -12357,8 +12391,11 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 
 		bFirst = true;
 
-		for (int iI = GC.getNumHeritageInfos() - 1; iI > -1; --iI)
+		// (descending order preserved -- the reverse-view lists are ascending-sorted)
+		if (relHeritages != NULL)
+		for (size_t iRel = relHeritages->size(); iRel-- > 0; )
 		{
+			const int iI = (*relHeritages)[iRel];
 			if (GC.getHeritageInfo((HeritageTypes)iI).getPrereqTech() == eTech)
 			{
 				szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_TECHHELP_CAN_CONSTRUCT").c_str());
@@ -12373,9 +12410,11 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 		}
 		bFirst = true;
 
-		for (int iI = GC.getNumBuildingInfos() - 1; iI > -1; --iI)
+		// (descending order preserved -- the reverse-view lists are ascending-sorted)
+		if (relBuildings != NULL)
+		for (size_t iRel = relBuildings->size(); iRel-- > 0; )
 		{
-			const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(iI);
+			const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>((*relBuildings)[iRel]);
 			if (!bPlayerContext || !playerAct->isProductionMaxedBuilding(eLoopBuilding))
 			{
 				if (GC.getGame().canEverConstruct(eLoopBuilding))
@@ -12396,8 +12435,10 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 		}
 		bFirst = true;
 
-		for (int iI = 0; iI < GC.getNumProjectInfos(); ++iI)
+		if (relProjects != NULL)
+		for (size_t iRel = 0; iRel < relProjects->size(); ++iRel)
 		{
+			const int iI = (*relProjects)[iRel];
 			if (GC.getProjectInfo((ProjectTypes)iI).getTechPrereq() == eTech
 			&& (!bPlayerContext || !playerAct->isProductionMaxedProject((ProjectTypes)iI) && !playerAct->canCreate((ProjectTypes)iI, false, true)))
 			{
@@ -12409,16 +12450,19 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 		}
 	}
 	bFirst = true;
-	for (int iI = 0; iI < GC.getNumProcessInfos(); ++iI)
+	if (relProcesses != NULL)
+	for (size_t iRel = 0; iRel < relProcesses->size(); ++iRel)
 	{
-		bFirst = buildProcessInfoString(szBuffer, eTech, iI, bFirst, true, bPlayerContext);
+		bFirst = buildProcessInfoString(szBuffer, eTech, (*relProcesses)[iRel], bFirst, true, bPlayerContext);
 	}
 
 	bFirst = true;
 	if (!GC.getGame().isOption(GAMEOPTION_RELIGION_DIVINE_PROPHETS))
 	{
-		for (int iI = 0; iI < GC.getNumReligionInfos(); ++iI)
+		if (relReligions != NULL)
+		for (size_t iRel = 0; iRel < relReligions->size(); ++iRel)
 		{
+			const int iI = (*relReligions)[iRel];
 			if (!bPlayerContext || !GC.getGame().isReligionSlotTaken((ReligionTypes)iI) && playerAct->canFoundReligion())
 			{
 				bFirst = buildFoundReligionString(szBuffer, eTech, iI, bFirst, true, bPlayerContext);
@@ -12436,8 +12480,10 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 	}
 
 	bFirst = true;
-	for (int iI = 0; iI < GC.getNumCorporationInfos(); ++iI)
+	if (relCorporations != NULL)
+	for (size_t iRel = 0; iRel < relCorporations->size(); ++iRel)
 	{
+		const int iI = (*relCorporations)[iRel];
 		if (GC.getGame().canEverSpread((CorporationTypes)iI))
 		{
 			if (!bPlayerContext || !(GC.getGame().isCorporationFounded((CorporationTypes)iI)))
@@ -12448,14 +12494,17 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 	}
 
 	bFirst = true;
-	for (int iI = 0; iI < GC.getNumPromotionInfos(); ++iI)
+	if (relPromotions != NULL)
+	for (size_t iRel = 0; iRel < relPromotions->size(); ++iRel)
 	{
-		bFirst = buildPromotionString(szBuffer, eTech, iI, bFirst, true);
+		bFirst = buildPromotionString(szBuffer, eTech, (*relPromotions)[iRel], bFirst, true);
 	}
 
 	bFirst = true;
-	for (int iI = 0; iI < GC.getNumPromotionInfos(); ++iI)
+	if (relPromotions != NULL)
+	for (size_t iRel = 0; iRel < relPromotions->size(); ++iRel)
 	{
+		const int iI = (*relPromotions)[iRel];
 		if (GC.getPromotionInfo((PromotionTypes)iI).getObsoleteTech() == eTech)
 		{
 			if (bFirst)

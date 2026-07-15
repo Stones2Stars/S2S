@@ -71,6 +71,8 @@ bool CvFeatureInfo::isTerrain(int iTerrain) const
 
 void CvFeatureInfo::mapFrom(const picojson::value& entity)
 {
+	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom
+	m_aeValidTerrains.clear(); m_aeMapCategories.clear();
 	CvInfo::mapFrom(entity);   // core reading + availability model
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();

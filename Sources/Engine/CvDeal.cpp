@@ -7,6 +7,8 @@
 #include "AI/BetterBTSAI.h"
 #include "CvBuildingInfo.h"
 #include "CvBonusInfo.h"
+#include "CvCivicInfo.h"          // getCivicInfo(...) reads (unity-batch include exposure: own your includes)
+#include "CvCorporationInfo.h"    // getCorporationInfo(...) reads (ditto)
 #include "CvDeal.h"
 #include "UI/CvEventReporter.h"
 #include "AI/CvGameAI.h"

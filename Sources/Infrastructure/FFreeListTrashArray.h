@@ -676,6 +676,57 @@ inline void ReadStreamableFFreeListTrashArray( FFreeListTrashArray< T >& flist, 
 	WRAPPER_READ_OBJECT_END(wrapper);
 }
 
+// The TWO-PHASE variant (#430 the load reseed): T::readIdentity deserializes just the id, the object is
+// REGISTERED (flist.load keys on getID() only -- the slot metadata was restored above), and T::readBody streams
+// the rest. Same bytes in the same order as the one-phase read (no save-format change); the difference is purely
+// WHEN the object becomes resolvable by id -- so the DOMAIN events an object emits from inside its own read
+// (the in-read reseed, event-spine.md) resolve through the ordinary registry lookup. Used by CvPlayer's m_cities.
+template < class T >
+inline void ReadStreamableFFreeListTrashArrayTwoPhase( FFreeListTrashArray< T >& flist, FDataStreamBase* pStream )
+{
+	PROFILE_EXTRA_FUNC();
+	CvTaggedSaveFormatWrapper&	wrapper = CvTaggedSaveFormatWrapper::getSaveFormatWrapper();
+
+	wrapper.AttachToStream(pStream);
+
+	WRAPPER_READ_OBJECT_START(wrapper);
+
+	int iTemp;
+	WRAPPER_READ_DECORATED(wrapper, "WriteStreamableFFreeListTrashArray", &iTemp, "flistNumSlots" );
+	flist.init( iTemp );
+	WRAPPER_READ_DECORATED(wrapper, "WriteStreamableFFreeListTrashArray", &iTemp, "flistLastIndex" );
+	flist.setLastIndex( iTemp );
+	WRAPPER_READ_DECORATED(wrapper, "WriteStreamableFFreeListTrashArray", &iTemp, "flistFreeListHead" );
+	flist.setFreeListHead( iTemp );
+	WRAPPER_READ_DECORATED(wrapper, "WriteStreamableFFreeListTrashArray", &iTemp, "flistFreeListCount" );
+	flist.setFreeListCount( iTemp );
+	WRAPPER_READ_DECORATED(wrapper, "WriteStreamableFFreeListTrashArray", &iTemp, "flistCurrentId" );
+	flist.setCurrentID( iTemp );
+
+	for ( int i = 0; i < flist.getNumSlots(); i++ )
+	{
+		WRAPPER_READ_DECORATED(wrapper, "WriteStreamableFFreeListTrashArray", &iTemp, "flistNextFree" );
+		flist.setNextFreeIndex( i, iTemp );
+	}
+
+	int iCount;
+	WRAPPER_READ_DECORATED(wrapper, "WriteStreamableFFreeListTrashArray", &iCount, "flistCount" );
+
+	for ( int i = 0; i < iCount; i++ )
+	{
+		T* pData = new T;
+		pData->readIdentity( pStream );
+		flist.load( pData );        // registered BEFORE the body streams (id-resolvable during its own read)
+		pData->readBody( pStream );
+	}
+
+	iTemp = 0;
+	WRAPPER_READ_DECORATED(wrapper, "WriteStreamableFFreeListTrashArray", &iTemp, "flistCorruptedAdjustment" );
+	flist.setCorruptedAdjustment( iTemp );
+
+	WRAPPER_READ_OBJECT_END(wrapper);
+}
+
 template < class T >
 inline void WriteStreamableFFreeListTrashArray( FFreeListTrashArray< T >& flist, FDataStreamBase* pStream )
 {

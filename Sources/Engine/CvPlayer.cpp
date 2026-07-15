@@ -15,6 +15,12 @@
 #include "CvEventSpine.h"   // #430 cascade spine -- first real DOMAIN emit at changeBuildingCount
 #include "Cascade/CvCascadeCapabilities.h"   // #430 Gate-3: the commerce-slider capability flip (isCommerceFlexible)
 #include "Cascade/CvCascadeAccumulator.h"    // #430 the modifier scope accumulator -- civic/golden-age epoch bumps
+#include "Cascade/CvTechEnabler.h"           // #430 the standardized enabler's tech domain -- canResearch's bare read
+#include "Cascade/CvCivicEnabler.h"          // #430 the standardized enabler's civics domain -- canDoCivics' bare read
+#include "Cascade/CvProjectEnabler.h"        // #430 the projects domain -- the city canCreate's read-through target
+#include "Cascade/CvProcessEnabler.h"        // #430 the processes domain -- the city canMaintain's read-through target
+#include "Cascade/CvBuildEnabler.h"          // #430 the worker-builds domain -- canBuild's unlock-half bare read
+#include "Cascade/CvPromotionEnabler.h"      // #430 the promotions domain -- the level-up composite's player planes
 #include "CvDeal.h"
 #include "UI/CvDiploParameters.h"
 #include "UI/CvEventReporter.h"
@@ -522,6 +528,15 @@ void CvPlayer::init(PlayerTypes eID)
 	m_hunterAI.setOwner(eID);
 	m_decisionAI.setOwner(eID);
 	AI_init();
+	// #430: the standardized enabler's lifecycle INIT (sizing + static exclusions, NO content -- never a read
+	// path, enabler.md par.7). The content is built PURELY from DOMAIN events: the real init/grant emits here at
+	// creation, the in-read reseed emits at load (one mechanism, DEC-spine-reseed).
+	TechEnabler::initDomain(*this);
+	CivicEnabler::initDomain(*this);
+	ProjectEnabler::initDomain(*this);
+	ProcessEnabler::initDomain(*this);
+	BuildEnabler::initDomain(*this);
+	PromotionEnabler::initDomain(*this);
 }
 
 //
@@ -619,6 +634,15 @@ void CvPlayer::initInGame(PlayerTypes eID, bool bSetAlive)
 	m_hunterAI.setOwner(eID);
 	m_decisionAI.setOwner(eID);
 	AI_init();
+	// #430: the standardized enabler's lifecycle INIT (sizing + static exclusions, NO content -- never a read
+	// path, enabler.md par.7). The content is built PURELY from DOMAIN events (the mid-game creation's real
+	// grant/state emits populate it).
+	TechEnabler::initDomain(*this);
+	CivicEnabler::initDomain(*this);
+	ProjectEnabler::initDomain(*this);
+	ProcessEnabler::initDomain(*this);
+	BuildEnabler::initDomain(*this);
+	PromotionEnabler::initDomain(*this);
 }
 
 //
@@ -759,6 +783,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_dataRepository.reset();
 	m_cascadePlayerScope.set.markAllDirty();   // #430: a reused player object starts with stale packages
+	m_enabler.reset();   // #430: the standardized enabler unseeds -- re-seeded at load warm-up / first read
 
 	//--------------------------------
 	// Uninit class
@@ -7544,14 +7569,15 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestVisibl
 
 	const CvBuildInfo& kBuild = GC.getBuildInfo(eBuild);
 
-	// #430 THE ENABLER FLIP -- the UNLOCK half only (the scope ruling: plot-validity + the feature/terrain
-	// tech gates + gold STAY ENGINE below). The serving path is the FAST unlock (rem-set + obsolescence +
-	// the config techPrereq compare -- this is a per-(plot × build) worker hot path; the full requires.build
-	// eval stays the harness's net side). bTestVisible (the UI greyed list) rides Legacy.
+	// #430 THE ENABLER READ (owner: no availability list reads legacy) -- the UNLOCK half only (enabler.md
+	// par.7.1: the player maintains the unlocked-builds set; plot-validity + the feature/terrain tech gates +
+	// gold STAY ENGINE below). A BARE member read of the player's builds domain (event-built: enables.builds ->
+	// the enable plane, obsoletes.builds -> the remove plane); isDisabled is a live RUNTIME toggle (Python
+	// settings scripts), never domain state. bTestVisible (the UI greyed list) rides Legacy.
 	const bool bCascadeUnlock = !bTestVisible && GC.getGame().isFinalInitialized();
 	if (bCascadeUnlock)
 	{
-		if (!CascadeAccumulator::enBuildUnlockedFast(this, (int)eBuild))
+		if (kBuild.isDisabled() || !m_enabler.builds.listed((int)eBuild))
 		{
 			return false;
 		}
@@ -8326,54 +8352,11 @@ bool CvPlayer::canEverResearch(TechTypes eTech) const
 
 bool CvPlayer::canResearch(const TechTypes eTech, const bool bRightNow, const bool bSpecialRequirements) const
 {
-	// #430: the LEGACY path is REMOVED (owner) -- canResearch reads ONLY the enabler frontier
-	// (TechEnabler::available, cached on the player package, ensure-on-read). No legacy fallback, no shape gating.
-	// return canResearchLegacy(eTech, bRightNow, bSpecialRequirements);   // legacy oracle -- REMOVED
-	return CascadeAccumulator::enResearch(this, (int)eTech);
+	// #430: the STANDARDIZED ENABLER (enabler.md par.7/7.1) -- a BARE member read of the maintained per-player
+	// tech vector, nothing else (owner 2026-07-14: a calculator on a live path is always wrong; seeding is a
+	// lifecycle act -- load warm-up / player init -- never a read-path guard). Unseeded reads HIDDEN -> false.
+	return eTech != NO_TECH && m_enabler.techs.listed((int)eTech);
 }
-
-bool CvPlayer::canResearchLegacy(const TechTypes eTech, const bool bRightNow, const bool bSpecialRequirements) const
-{
-	PROFILE_EXTRA_FUNC();
-	if (GET_TEAM(getTeam()).isHasTech(eTech) || !canEverResearch(eTech))
-	{
-		return false;
-	}
-
-	if (bSpecialRequirements && !hasValidBuildings(eTech))
-	{
-		return false;
-	}
-
-	if (bRightNow)
-	{
-		bool bOk = true;
-		foreach_(const TechTypes ePrereq, GC.getTechInfo(eTech).getPrereqOrTechs())
-		{
-			bOk = false;
-
-			if (GET_TEAM(getTeam()).isHasTech(ePrereq))
-			{
-				bOk = true;
-				break;
-			}
-		}
-		if (!bOk)
-		{
-			return false;
-		}
-
-		foreach_(const TechTypes ePrereq, GC.getTechInfo(eTech).getPrereqAndTechs())
-		{
-			if (canEverResearch(ePrereq) && !GET_TEAM(getTeam()).isHasTech(ePrereq))
-			{
-				return false;
-			}
-		}
-	}
-	return true;
-}
-
 
 TechTypes CvPlayer::getCurrentResearch() const
 {
@@ -8385,6 +8368,7 @@ TechTypes CvPlayer::getCurrentResearch() const
 	}
 	return NO_TECH;
 }
+
 
 
 bool CvPlayer::isCurrentResearchRepeat() const
@@ -8492,11 +8476,13 @@ bool CvPlayer::isCivic(CivicTypes eCivic) const
 
 bool CvPlayer::canDoCivics(CivicTypes eCivic) const
 {
-	// #430 THE ENABLER FLIP: serves the cascade frontier (generate->gateSet civics, bare player ctx).
+	// #430 THE ENABLER READ (owner: no availability list reads legacy; a static is a pure calculator, never a
+	// read path): a BARE member read of the per-player civics domain (enabler.md par.7/8) -- deliberately
+	// OVER-INCLUSIVE until the requires gate + city-limit/force-civic overrides land on the gate stage.
 	// NO_CIVIC keeps its legacy true; pre-init rides the Legacy oracle.
 	if (eCivic != NO_CIVIC && GC.getGame().isFinalInitialized())
 	{
-		return CascadeAccumulator::enCivic(this, (int)eCivic);
+		return m_enabler.civics.listed((int)eCivic);   // listed == inTree until GREYED lands (par.6)
 	}
 	return canDoCivicsLegacy(eCivic);
 }
@@ -13715,7 +13701,6 @@ void CvPlayer::changeUnitCount(const UnitTypes eUnit, const int iChange)
 	// gate makes that explicit and matches the other play-only cascade hooks.
 	if (GC.getGame().isFinalInitialized())
 	{
-		CascadeAccumulator::unitCountChanged(*this, (int)eUnit);
 	}
 }
 
@@ -14408,7 +14393,7 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 		// #430 cascade: a civic newly adopted -> emit the DOMAIN trigger for the grants machine (revolution pulse etc.).
 		if (eNewValue != NO_CIVIC)
 		{
-			emitCivicAdopted((int)getID(), (int)eNewValue);
+			emitCivicAdopted((int)getID(), (int)eNewValue, (int)eOldCivic);
 		}
 
 		// Afforess - Check Buildings, Clear Caches
@@ -18547,6 +18532,15 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		updateTeamType(); //m_eTeamType not saved
 		updateHuman();
 
+		// #430: the standardized enabler's lifecycle INIT (sizing + static exclusions, NO content) -- BEFORE the
+		// in-read reseed emits below, which build the content through the same appliers as play (one mechanism,
+		// DEC-spine-reseed). getTeam() is valid (updateTeamType() just ran).
+		TechEnabler::initDomain(*this);
+		CivicEnabler::initDomain(*this);
+		ProjectEnabler::initDomain(*this);
+		ProcessEnabler::initDomain(*this);
+		BuildEnabler::initDomain(*this);
+		PromotionEnabler::initDomain(*this);
 		// #430 reseed: golden-age + TECH, emitted HERE -- getID() is valid only after m_eID was read (above) and
 		// getTeam() only after updateTeamType() just ran (m_eTeamType is NOT saved; reset() cleared it). Tech is
 		// TEAM-held and the EXE reads teams BEFORE players (verified: a per-member emit from CvTeam::read fired 0), so
@@ -18560,6 +18554,14 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			const CvTeam& kMyTeam = GET_TEAM(getTeam());
 			for (int iTech = 0; iTech < GC.getNumTechInfos(); ++iTech)
 				if (kMyTeam.isHasTech((TechTypes)iTech)) { emitTechChanged(getID(), iTech, true); }
+			// #430 reseed: the team's completed projects, per-self (the tech-emit precedent -- one emit per alive
+			// member player; the applier scopes to the emitting player, so the reseed is exactly-once per player).
+			// The count IS the delta (old = 0 at load), so the applier's 0-crossing math holds.
+			for (int iProj = 0; iProj < GC.getNumProjectInfos(); ++iProj)
+			{
+				const int iCount = kMyTeam.getProjectCount((ProjectTypes)iProj);
+				if (iCount > 0) { emitProjectChanged(getID(), iProj, iCount); }
+			}
 		}
 
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiSeaPlotYield);
@@ -18809,7 +18811,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		// #430 reseed: adopted civics, emitted AFTER the load-time civic validation/fixup above (m_paeCivics is final
 		// here). getID() is this player; a NO_CIVIC slot is no fact.
 		for (int iCiv = 0; iCiv < GC.getNumCivicOptionInfos(); ++iCiv)
-			if (m_paeCivics[iCiv] != NO_CIVIC) { emitCivicAdopted(getID(), (int)m_paeCivics[iCiv]); }
+			if (m_paeCivics[iCiv] != NO_CIVIC) { emitCivicAdopted(getID(), (int)m_paeCivics[iCiv], (int)NO_CIVIC); }
 
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
 		{
@@ -18882,7 +18884,9 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_groupCycles[i]->Read(pStream);
 			ReadStreamableFFreeListTrashArray(*m_plotGroups[i], pStream);
-			ReadStreamableFFreeListTrashArray(*m_cities[i], pStream);
+			// #430 TWO-PHASE (the load reseed): register each city by id BEFORE its body streams, so the city's
+			// own in-read DOMAIN emits resolve through the ordinary registry lookup (same bytes, same order).
+			ReadStreamableFFreeListTrashArrayTwoPhase(*m_cities[i], pStream);
 			ReadStreamableFFreeListTrashArray(*m_units[i], pStream);
 			ReadStreamableFFreeListTrashArray(*m_selectionGroups[i], pStream);
 		}

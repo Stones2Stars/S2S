@@ -224,6 +224,13 @@ struct IDValueMap
 		m_map.push_back(std::make_pair(id, value));
 	}
 
+	// Drop every entry. The JSON loader's remap-idempotency reset (CvInfo.h): the addValue/addArrayValue writers
+	// ACCUMULATE, so a mapFrom re-run (the full-registry pass) must clear the map first.
+	void clear()
+	{
+		m_map.clear();
+	}
+
 	// Set (insert-or-overwrite) the scalar value for `id`. The code-side writer the JSON loader needs -- the read*()
 	// methods above all take a pXML, so there was no way to populate this map from readJson (#430). Idempotent per id
 	// (re-map-safe, mirroring rj_clearAllRepos). Scalar Value_; the array form uses addArrayValue.

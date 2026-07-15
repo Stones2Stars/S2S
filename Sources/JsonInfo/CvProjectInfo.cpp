@@ -22,6 +22,7 @@ CvProjectInfo::CvProjectInfo()
 
 void CvProjectInfo::mapFrom(const picojson::value& entity)
 {
+	m_aeMapCategories.clear();   // remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom
 	CvInfo::mapFrom(entity);   // core + availability (enables.projects, requires.build world-scope, enables.specialBuildings, allowed caps)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();

@@ -33,6 +33,7 @@
 #include "Engine/CvPlot.h"
 #include "Engine/CvArea.h"
 #include "Engine/CvTeam.h"
+#include "AI/CvTeamAI.h"              // GET_TEAM (unity-batch include exposure: own your includes)
 #include "Engine/CvGameCoreUtils.h"   // plotCity / range / PUF_canDefend
 #include "Infos/CvHandicapInfo.h"
 #include "CvTraitInfo.h"

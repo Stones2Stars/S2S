@@ -48,6 +48,8 @@ static void pl_collectGameOptions(const CvJsonCondition* c, std::vector<int>& ou
 
 void CvPromotionLineInfo::mapFrom(const picojson::value& entity)
 {
+	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom
+	m_aiNotOnGameOptions.clear(); m_aeNotOnDomains.clear(); m_aiUnitCombats.clear(); m_aiNotOnUnitCombats.clear();
 	CvInfo::mapFrom(entity);   // core + availability (tech enables.promotionLines; the entity-level gate via mutGate)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();

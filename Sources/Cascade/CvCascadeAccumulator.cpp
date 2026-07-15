@@ -35,12 +35,8 @@
 #include "CvProjectInfo.h"
 #include "Infos/CvWorldInfo.h"
 #include "CvTechInfo.h"          // the frontier fills (obsoletes.builds rem-set + promo tech halves)
-#include "CvBuildInfo.h"         // enBuildUnlocked
 #include "CvPromotionInfo.h"     // enPromotionValid
 #include "CvUnitCombatInfo.h"    // enPromotionValid (the unitcombat HAVE leg)
-#include "CvTechEnabler.h"      // TechEnabler::available -- the researchable frontier
-#include "CvBuildingEnabler.h"  // BuildingEnabler::buildable -- the constructible frontier
-#include "CvUnitEnabler.h"      // UnitEnabler::trainable -- the trainable frontier
 #include "Engine/CvUnit.h"             // enPromotionValid (held promotions + isPromotionValidLegacy)
 #include "AI/CvPlayerAI.h"            // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM
@@ -99,9 +95,6 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 	                          CascadePerf::calc(CSCOPE_CITY, CCHAN_MAINTENANCE); }
 	if (iMask & CPK_SCSPEC)   CascadePerf::calc(CSCOPE_CITY, CCHAN_GP);
 	if (iMask & CPK_BR)       CascadePerf::calc(CSCOPE_CITY, CCHAN_BUILDRATE);
-	if (iMask & CPK_FRONT_B)  CascadePerf::calc(CSCOPE_CITY, CCHAN_FRONTIER);
-	if (iMask & CPK_FRONT_U)  CascadePerf::calc(CSCOPE_CITY, CCHAN_FRONTIER);
-	if (iMask & CPK_FRONT_PP) CascadePerf::calc(CSCOPE_CITY, CCHAN_FRONTIER);
 	CascadeCondScope ccsRates(CC_RATES);   // the condEval split default for this fill; the WB/scalar/frontier branches re-tag
 	CascadeCityPackages& st = pCity->m_cascadeCityPackages;
 
@@ -213,51 +206,8 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 		CascadeScalarChannels::fillBuildRateCity(pCity, ec, st.brCityKeyed, st.brCityMilitary, st.brCitySpace,
 			st.brSrUnitProd, st.brSrBuildingProd, st.brCityWorldWonder, st.brCityTeamWonder, st.brCityNationalWonder);
 	}
-	if (iMask & (CPK_FRONT_B | CPK_FRONT_U | CPK_FRONT_PP))
-	{
-		// the ENABLER frontier sets (#430 THE FLIP): the harness-proven calls VERBATIM at the city ctx --
-		// SPLIT per domain (the perf surgery): a canConstruct read pays ONLY the BuildingEnabler walk, etc.
-		const CvTeam& kTeam = GET_TEAM(player.getTeam());
-		if (iMask & CPK_FRONT_B)
-		{
-			++CascadePerf::frontBFills;
-			PerfAccumTimer perfFr(CascadePerf::frontBMs);
-			CascadeCondScope ccsFr(CC_FRONT_B);
-			st.enBuildable.clear();
-			BuildingEnabler::buildable(pCity, player, kTeam, st.enBuildable);
-			// the VISIBLE (build-list) frontier -- CAN GET with the greyable clauses relaxed (enabler.md §6). Served by
-			// canConstruct(bTestVisible=true). A second full walk here (once per HAVE-change, not per read); folding both
-			// sets into one bc_isBuildable pass is a parked perf follow-up.
-			st.enBuildableVisible.clear();
-			BuildingEnabler::buildable(pCity, player, kTeam, st.enBuildableVisible, /*bVisible*/ true);
-		}
-		if (iMask & CPK_FRONT_U)
-		{
-			++CascadePerf::frontUFills;
-			PerfAccumTimer perfFr(CascadePerf::frontUMs);
-			CascadeCondScope ccsFr(CC_FRONT_U);
-			st.enTrainable.clear();
-			UnitEnabler::trainable(pCity, player, kTeam, st.enTrainable);
-			st.enTrainableVisible.clear();   // the VISIBLE (build-list) frontier (enabler.md §6), served to canTrain(bTestVisible=true)
-			UnitEnabler::trainable(pCity, player, kTeam, st.enTrainableVisible, /*bVisible*/ true);
-		}
-		if (iMask & CPK_FRONT_PP)
-		{
-			++CascadePerf::frontPPFills;
-			PerfAccumTimer perfFr(CascadePerf::frontPPMs);
-			CascadeCondScope ccsFr(CC_FRONT_PP);
-			EnBucketSets candC;
-			EnablerKernel::generate(player, pCity, candC);
-			st.enCreatable.clear(); st.enMaintainable.clear();
-			EnablerKernel::gateSet("projects",  candC, ec, player, kTeam, false, st.enCreatable);
-			EnablerKernel::gateSet("processes", candC, ec, player, kTeam, false, st.enMaintainable);
-			// the VISIBLE (build-list) frontier (enabler.md §6), served to canCreate/canMaintain(bTestVisible=true). GENERATE
-			// (candC) already hides non-HAVE-tech candidates (CAN GET); the visible gate just relaxes the greyable clauses.
-			st.enCreatableVisible.clear(); st.enMaintainableVisible.clear();
-			EnablerKernel::gateSet("projects",  candC, ec, player, kTeam, false, st.enCreatableVisible,  /*bVisible*/ true);
-			EnablerKernel::gateSet("processes", candC, ec, player, kTeam, false, st.enMaintainableVisible, /*bVisible*/ true);
-		}
-	}
+	// (the buildable/trainable/creatable/maintainable frontiers all live on the standardized enabler domains --
+	// CvCity::m_enabler / CvPlayer::m_enabler, event-maintained; enabler.md par.7/8)
 }
 
 void CascadeAccumulator::refreshPlayerScope(const CvPlayer* pPlayer, int iMask)
@@ -272,7 +222,6 @@ void CascadeAccumulator::refreshPlayerScope(const CvPlayer* pPlayer, int iMask)
 	                             CascadePerf::calc(CSCOPE_EMPIRE, CCHAN_TRADE); }
 	if (iMask & PSC_BR)          CascadePerf::calc(CSCOPE_EMPIRE, CCHAN_BUILDRATE);
 	if (iMask & PSC_FRONT_P)     CascadePerf::calc(CSCOPE_EMPIRE, CCHAN_FRONTIER);
-	if (iMask & PSC_FRONT_PROMO) CascadePerf::calc(CSCOPE_EMPIRE, CCHAN_FRONTIER);
 	CascadeCondScope ccsRates(CC_RATES);   // the split default (YFLAT/CFLAT); the WB/scalar/frontier branches re-tag
 	CascadePlayerScope& ps = pPlayer->m_cascadePlayerScope;
 
@@ -334,31 +283,16 @@ void CascadeAccumulator::refreshPlayerScope(const CvPlayer* pPlayer, int iMask)
 		fec.player = pPlayer; fec.team = &kTeam;
 		EnBucketSets candP;
 		EnablerKernel::generate(*pPlayer, NULL, candP);
-		ps.enResearchable.clear(); ps.enCivicsOk.clear(); ps.enHurryOk.clear();
-		TechEnabler::available(*pPlayer, kTeam, ps.enResearchable);
-		EnablerKernel::gateSet("civics",  candP, fec, *pPlayer, kTeam, false, ps.enCivicsOk);
-		EnablerKernel::gateSet("hurries", candP, fec, *pPlayer, kTeam, false, ps.enHurryOk);
-		// the canBuild UNLOCK rem-set (the harness's remBld: obsoletes.builds over held techs)
-		ps.enBuildRem.clear();
-		for (int t = 0; t < GC.getNumTechInfos(); ++t)
-			if (kTeam.isHasTech((TechTypes)t))
-				EnablerKernel::addEdge(InfoRepo<CvTechInfo>::get().get(t), "obsoletes.builds", ps.enBuildRem);
+		// (techs + civics left this fill: their lists are the STANDARDIZED enabler's maintained vectors --
+		// CvPlayer::m_enabler.techs/.civics, seeded at load + event-delta'd; enabler.md par.7/7.1)
+		ps.enHurryOk.clear();
+		EnablerKernel::gateSet(EDGEB_HURRIES, candP, fec, *pPlayer, kTeam, false, ps.enHurryOk);
+		// (the canBuild unlock left this fill: the builds domain is the STANDARDIZED enabler's maintained
+		// vector -- CvPlayer::m_enabler.builds, event-built; enabler.md par.7.1)
 	}
-	if (iMask & PSC_FRONT_PROMO)
-	{
-		// the promotion frontier's PLAYER-WIDE tech halves (a 700-tech accumHave walk -- its OWN bit so
-		// only promotion picks ever pay it; the per-unit composite folds these + the unit's own halves)
-		++CascadePerf::promoFills;
-		PerfAccumTimer perfFr(CascadePerf::promoMs);
-		CascadeCondScope ccsFr(CC_PROMO);
-		const CvTeam& kTeam = GET_TEAM(pPlayer->getTeam());
-		ps.enPromoTechCand.clear(); ps.enPromoTechRem.clear();
-		EnBucketSets pc, pr;
-		for (int t = 0; t < GC.getNumTechInfos(); ++t)
-			if (kTeam.isHasTech((TechTypes)t)) EnablerKernel::accumHave(InfoRepo<CvTechInfo>::get().get(t), pc, pr);
-		ps.enPromoTechCand.swap(pc["promotions"]);
-		ps.enPromoTechRem.swap(pr["promotions"]);
-	}
+	// (the promotion frontier's player-wide tech halves left this fill: the promotions domain is the
+	// STANDARDIZED enabler's maintained vector -- CvPlayer::m_enabler.promotions, event-built; the per-unit
+	// composite overlays its planes at level-up. enabler.md par.7.1)
 }
 
 void CascadeAccumulator::refreshWorldScope(const CvGame* pGame, int iMask)
@@ -541,70 +475,6 @@ int CascadeAccumulator::scTradeRoutes(const CvCity* pCity)
 	return iCount;
 }
 
-// ===================== the ENABLER frontier reads (#430 THE FLIP, owner 2026-07-04 "flip it all") =====================
-// ENSURE-ON-READ (the operating buildings idiom, deliberately NOT the rates' bare fetch): gate reads are decision-time,
-// and legacy chains builds within a turn (complete A -> queue B the same slice), so a marked frontier
-// rebuilds at the read -- a clean bit costs one branch. The sets fill via the harness-proven cascade calls.
-
-bool CascadeAccumulator::enConstruct(const CvCity* pCity, int eBuilding)
-{
-	if (pCity == NULL || eBuilding < 0) return false;
-	pCity->m_cascadeCityPackages.set.ensure(CPK_FRONT_B);
-	return pCity->m_cascadeCityPackages.enBuildable.count(eBuilding) != 0;
-}
-
-// The VISIBLE (build-list) frontier read -- CAN GET with greyable clauses relaxed (enabler.md §6). Served to
-// canConstruct(bTestVisible=true) so the Python production list is the cascade's frontier, not legacy. Same CPK_FRONT_B
-// mask fills both the strict + visible sets (one HAVE-change ensure), so a clean bit costs one branch.
-bool CascadeAccumulator::enConstructVisible(const CvCity* pCity, int eBuilding)
-{
-	if (pCity == NULL || eBuilding < 0) return false;
-	pCity->m_cascadeCityPackages.set.ensure(CPK_FRONT_B);
-	return pCity->m_cascadeCityPackages.enBuildableVisible.count(eBuilding) != 0;
-}
-
-bool CascadeAccumulator::enTrain(const CvCity* pCity, int eUnit)
-{
-	if (pCity == NULL || eUnit < 0) return false;
-	pCity->m_cascadeCityPackages.set.ensure(CPK_FRONT_U);
-	return pCity->m_cascadeCityPackages.enTrainable.count(eUnit) != 0;
-}
-
-bool CascadeAccumulator::enTrainVisible(const CvCity* pCity, int eUnit)
-{
-	if (pCity == NULL || eUnit < 0) return false;
-	pCity->m_cascadeCityPackages.set.ensure(CPK_FRONT_U);
-	return pCity->m_cascadeCityPackages.enTrainableVisible.count(eUnit) != 0;
-}
-
-bool CascadeAccumulator::enCreate(const CvCity* pCity, int eProject)
-{
-	if (pCity == NULL || eProject < 0) return false;
-	pCity->m_cascadeCityPackages.set.ensure(CPK_FRONT_PP);
-	return pCity->m_cascadeCityPackages.enCreatable.count(eProject) != 0;
-}
-
-bool CascadeAccumulator::enCreateVisible(const CvCity* pCity, int eProject)
-{
-	if (pCity == NULL || eProject < 0) return false;
-	pCity->m_cascadeCityPackages.set.ensure(CPK_FRONT_PP);
-	return pCity->m_cascadeCityPackages.enCreatableVisible.count(eProject) != 0;
-}
-
-bool CascadeAccumulator::enMaintain(const CvCity* pCity, int eProcess)
-{
-	if (pCity == NULL || eProcess < 0) return false;
-	pCity->m_cascadeCityPackages.set.ensure(CPK_FRONT_PP);
-	return pCity->m_cascadeCityPackages.enMaintainable.count(eProcess) != 0;
-}
-
-bool CascadeAccumulator::enMaintainVisible(const CvCity* pCity, int eProcess)
-{
-	if (pCity == NULL || eProcess < 0) return false;
-	pCity->m_cascadeCityPackages.set.ensure(CPK_FRONT_PP);
-	return pCity->m_cascadeCityPackages.enMaintainableVisible.count(eProcess) != 0;
-}
-
 // The L6 fold's read: the derived trait national GP flat (replaces the m_iNationalGreatPeopleRate ride-in
 // in the flipped getBaseGreatPeopleRate; the *Legacy bodies are demolition fodder, unread by the cascade).
 // The max(0,·) clamp mirrors the legacy getter exactly.
@@ -613,20 +483,6 @@ int CascadeAccumulator::scGpNational(const CvPlayer* pPlayer)
 	if (pPlayer == NULL) return 0;
 	pPlayer->m_cascadePlayerScope.set.ensure(PSC_SC);
 	return std::max(0, pPlayer->m_cascadePlayerScope.gpNationalFlat);
-}
-
-bool CascadeAccumulator::enResearch(const CvPlayer* pPlayer, int eTech)
-{
-	if (pPlayer == NULL || eTech < 0) return false;
-	pPlayer->m_cascadePlayerScope.set.ensure(PSC_FRONT_P);
-	return pPlayer->m_cascadePlayerScope.enResearchable.count(eTech) != 0;
-}
-
-bool CascadeAccumulator::enCivic(const CvPlayer* pPlayer, int eCivic)
-{
-	if (pPlayer == NULL || eCivic < 0) return false;
-	pPlayer->m_cascadePlayerScope.set.ensure(PSC_FRONT_P);
-	return pPlayer->m_cascadePlayerScope.enCivicsOk.count(eCivic) != 0;
 }
 
 bool CascadeAccumulator::enHurry(const CvPlayer* pPlayer, int eHurry)
@@ -642,38 +498,6 @@ bool CascadeAccumulator::enFoundReligion(const CvPlayer* pPlayer)
 	return EnablerKernel::canFoundReligion(*pPlayer);   // a cheap player-state predicate -- live, no cache
 }
 
-// The canBuild UNLOCK half only (the harness's cascade side verbatim): the rem-set + target-side
-// obsolescence + requires.build vs the PLOT ctx (strict state religion). The plot-validity half
-// (canHaveImprovement / feature-removal / route / gold / feature-terrain tech gates) STAYS ENGINE.
-bool CascadeAccumulator::enBuildUnlocked(const CvPlayer* pPlayer, int eBuild, const CvPlot* pPlot)
-{
-	if (pPlayer == NULL || eBuild < 0 || pPlot == NULL) return false;
-	pPlayer->m_cascadePlayerScope.set.ensure(PSC_FRONT_P);
-	const CascadePlayerScope& ps = pPlayer->m_cascadePlayerScope;
-	if (ps.enBuildRem.count(eBuild) != 0) return false;
-	const CvTeam& kTeam = GET_TEAM(pPlayer->getTeam());
-	const CvInfo* j = InfoRepo<CvBuildInfo>::get().get(eBuild);
-	if (EnablerKernel::obsoletedByHeldTech(j, kTeam)) return false;
-	if (j == NULL || j->requiresBuild() == NULL) return true;
-	CascadeCondScope ccs(CC_CANBUILD);   // per-(build,plot) worker-AI reads -- their own census bucket
-	CvCascadeEvalCtx pec;
-	pec.plot = pPlot; pec.player = pPlayer; pec.team = &kTeam;
-	CvCascadeEvalFlags bflags; bflags.strictStateReligionForBuild = true;
-	return cascadeEvalCondition(j->requiresBuild(), pec, bflags);
-}
-
-bool CascadeAccumulator::enBuildUnlockedFast(const CvPlayer* pPlayer, int eBuild)
-{
-	if (pPlayer == NULL || eBuild < 0) return false;
-	pPlayer->m_cascadePlayerScope.set.ensure(PSC_FRONT_P);
-	if (pPlayer->m_cascadePlayerScope.enBuildRem.count(eBuild) != 0) return false;
-	const CvTeam& kTeam = GET_TEAM(pPlayer->getTeam());
-	if (EnablerKernel::obsoletedByHeldTech(InfoRepo<CvBuildInfo>::get().get(eBuild), kTeam)) return false;
-	const CvBuildInfo& kBuild = GC.getBuildInfo((BuildTypes)eBuild);
-	if (kBuild.isDisabled()) return false;
-	const TechTypes eTechPrereq = (TechTypes)kBuild.getTechPrereq();
-	return eTechPrereq == NO_TECH || kTeam.isHasTech(eTechPrereq);
-}
 
 // The promotion COMPOSITE (the harness's cascade side verbatim, single source -- the harness now consumes
 // this): the frontier half (tech halves cached player-wide + the unit's held promos + its unitcombat) +
@@ -682,11 +506,9 @@ bool CascadeAccumulator::enBuildUnlockedFast(const CvPlayer* pPlayer, int eBuild
 bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 {
 	if (pUnit == NULL || ePromo < 0) return false;
-	CascadeCondScope ccs(CC_PROMO);   // the composite's own evals (the frontier-half fill re-tags itself)
+	CascadeCondScope ccs(CC_PROMO);   // the composite's own evals
 	const CvPlayer& kPlayer = GET_PLAYER(pUnit->getOwner());
 	const CvTeam& kTeam = GET_TEAM(kPlayer.getTeam());
-	kPlayer.m_cascadePlayerScope.set.ensure(PSC_FRONT_PROMO);
-	const CascadePlayerScope& ps = kPlayer.m_cascadePlayerScope;
 
 	// the per-UNIT halves MEMO (the promotion-TREE pattern: one unit × ~600 candidate promos per render;
 	// rebuilding the held-promo folds per candidate was the measured UI sluggishness, owner 2026-07-04).
@@ -722,8 +544,8 @@ bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 			if (pUnit->isHasPromotion((PromotionTypes)pr)) EnablerKernel::accumHave(InfoRepo<CvPromotionInfo>::get().get(pr), cand, rem);
 		if (eUC != NO_UNITCOMBAT) EnablerKernel::accumHave(InfoRepo<CvUnitCombatInfo>::get().get((int)eUC), cand, rem);
 		memo.uCand.clear(); memo.uRem.clear();
-		memo.uCand.swap(cand["promotions"]);
-		memo.uRem.swap(rem["promotions"]);
+		memo.uCand.swap(cand[EDGEB_PROMOTIONS]);
+		memo.uRem.swap(rem[EDGEB_PROMOTIONS]);
 	}
 	{
 		std::map<int, bool>::const_iterator vit = memo.verdicts.find(ePromo);
@@ -731,20 +553,15 @@ bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 	}
 	const std::set<int>& uCand = memo.uCand;
 	const std::set<int>& uRem = memo.uRem;
-	// a promo rooted in NO tech edge anywhere is ALWAYS-unlocked (the PALACE lesson for promotions)
-	static std::set<int> s_enablerRooted;
-	static bool s_rootedBuilt = false;
-	if (!s_rootedBuilt)
-	{
-		for (int t = 0; t < GC.getNumTechInfos(); ++t)
-			EnablerKernel::addEdge(InfoRepo<CvTechInfo>::get().get(t), "enables.promotions", s_enablerRooted);
-		s_rootedBuilt = true;
-	}
-	// the original algebra, copy-free: promoCand = (techCand + unitCand) - (techRem + unitRem);
-	// bUnlocked = inCand&&!inRem || !rooted&&!inRem  ==  !inRem && (inCand || !rooted)
-	const bool bInRem = ps.enPromoTechRem.count(ePromo) != 0 || uRem.count(ePromo) != 0;
-	const bool bInCand = ps.enPromoTechCand.count(ePromo) != 0 || uCand.count(ePromo) != 0;
-	const bool bUnlocked = !bInRem && (bInCand || s_enablerRooted.count(ePromo) == 0);
+	// the membership FORMULA with the per-unit planes OVERLAID on the player domain's maintained planes
+	// (enabler.md par.7.1: the player holds the unlocked-promotions set; the unit's held-promo/unitcombat
+	// halves overlay at level-up): Σenable > 0 && Σremove == 0. The old "no tech edge anywhere ==>
+	// always-unlocked" whitelist is DEAD (superseded-ideas #14) -- start promotions ride the
+	// TECH_GAME_START root's enables.promotions; a missing edge fails CLOSED, visibly.
+	const EnablerDomain& d = kPlayer.m_enabler.promotions;
+	const bool bInRem = d.removeCount(ePromo) > 0 || uRem.count(ePromo) != 0;
+	const bool bInCand = d.enableCount(ePromo) > 0 || uCand.count(ePromo) != 0;
+	const bool bUnlocked = !bInRem && bInCand;
 	// the event-injection-only mirror (no qualified-unitcombat list => legacy refuses unless FREE)
 	const CvPromotionInfo& kPromo = GC.getPromotionInfo((PromotionTypes)ePromo);
 	const bool bEventOnly = kPromo.getNumQualifiedUnitCombatTypes() == 0
@@ -888,19 +705,10 @@ void CascadeAccumulator::dirtyCity(const CvCity* pCity, int iMask)
 void CascadeAccumulator::buildingProcessed(const CvCity* pCity, BuildingTypes eBuilding)
 {
 	if (pCity == NULL) return;
-	// #430 THE PER-TURN FRONTIER CACHE (owner 2026-07-05 + enabler-frontier-perf.md 2026-07-06): a building change
-	// does NOT rebuild the buildable OR the trainable frontier -- CPK_FRONT_B **and CPK_FRONT_U** are EXCLUDED from
-	// this mark. Instead both boxes are maintained INCREMENTALLY: onBuildingChanged (buildings whose requires
-	// reference the changed one) + onBuildingChangedUnits (units the changed building's provides.bonuses / enables /
-	// building-prereq reference). This kills the every-completion ~3340-unit re-walk that was 1.4M condEval/turn.
-	// CPK_FRONT_PP (projects/processes) is KEPT broad: a completed building CAN enable a project (enables.projects
-	// feeds the generate set), there is no per-project incremental primitive, and PP fills are cheap (~42/turn) --
-	// so keeping it correct-by-rebuild is the safe floor (rule 3). The full frontier rebuild otherwise stays only
-	// for CAN-GET GROWTH (mid-turn tech/civic via markPlayerScopeAndCities).
-	pCity->m_cascadeCityPackages.set.markDirty(CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC | CPK_FRONT_B | CPK_FRONT_U));
+	// #430: the buildable/trainable frontiers live on the per-city ENABLER domains (CvCity::m_enabler --
+	// event-maintained, enabler.md par.7), so a building change marks only the modifier packages here.
+	pCity->m_cascadeCityPackages.set.markDirty(CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC));
 	EnablerKernel::onBuildingChangedActive(pCity, (int)eBuilding);   // operating buildings: targeted ripple into the authoritative active set (was blanket markAllDirty)
-	BuildingEnabler::onBuildingChanged(pCity, (int)eBuilding);       // CPK_FRONT_B: targeted (reads the fresh operating buildings)
-	UnitEnabler::onBuildingChangedUnits(pCity, (int)eBuilding);      // CPK_FRONT_U: targeted (reads the fresh operating buildings)
 
 	const CvInfo* d = InfoRepo<CvBuildingInfo>::get().get((int)eBuilding);
 	if (d == NULL) return;
@@ -945,8 +753,6 @@ void CascadeAccumulator::markPlayerScopeAndCities(PlayerTypes ePlayer)
 // on a ready index instead of paying the lazy first-build.
 void CascadeAccumulator::buildFrontierIndices()
 {
-	BuildingEnabler::buildIndices();
-	UnitEnabler::buildIndices();
 	EnablerKernel::buildActiveIndex();   // the operate reverse-index for the targeted active-set maintenance
 }
 
@@ -957,15 +763,7 @@ void CascadeAccumulator::cityHaveChanged(const CvCity* pCity, int eHaveKind)
 	if (pCity == NULL) return;
 	const CvPlayer& kPlayer = GET_PLAYER(pCity->getOwner());
 	const CvTeam& kTeam = GET_TEAM(kPlayer.getTeam());
-	BuildingEnabler::recheckHave(pCity, kPlayer, kTeam, eHaveKind);
-	UnitEnabler::recheckHave(pCity, kPlayer, kTeam, eHaveKind);
 	EnablerKernel::onHaveChangedActive(pCity, eHaveKind);   // operating buildings: targeted ripple for the HAVE-referencing operate
-}
-
-// Part B: a unit's empire count changed -> the trainable re-check across the player's cities (empire-scoped caps).
-void CascadeAccumulator::unitCountChanged(const CvPlayer& kPlayer, int eUnit)
-{
-	UnitEnabler::onUnitChanged(kPlayer, eUnit);
 }
 
 // ===================== the BOUNDARIES =====================

@@ -376,11 +376,10 @@ static void invDecodePackageNames(int iScopeKind, int iMask, char* szOut, int iO
 		{ CPK_YPCT, "yieldPercent" }, { CPK_YSPEC, "yieldSpecialist" }, { CPK_YEXTRA, "yieldBuildingFlat" },
 		{ CPK_CSPEC, "commerceSpecialist" }, { CPK_CPCT, "commercePercent" }, { CPK_CBASE, "commerceBase" },
 		{ CPK_WB, "wellbeing" }, { CPK_SCFLAT, "scalarFlat" }, { CPK_SCPCT, "scalarPercent" },
-		{ CPK_SCSPEC, "scalarSpecialist" }, { CPK_BR, "buildRate" }, { CPK_FRONT_B, "frontierBuildable" },
-		{ CPK_FRONT_U, "frontierTrainable" }, { CPK_FRONT_PP, "frontierProjectProcess" } };
+		{ CPK_SCSPEC, "scalarSpecialist" }, { CPK_BR, "buildRate" } };
 	static const PackageName kEmpirePackages[] = {
 		{ PSC_YFLAT, "yieldFlat" }, { PSC_CFLAT, "commerceFlat" }, { PSC_WB, "wellbeing" }, { PSC_SC, "scalar" },
-		{ PSC_BR, "buildRate" }, { PSC_FRONT_P, "frontier" }, { PSC_FRONT_PROMO, "frontierPromotion" } };
+		{ PSC_BR, "buildRate" }, { PSC_FRONT_P, "frontier" } };
 	const PackageName* pTable = (iScopeKind == 1) ? kEmpirePackages : kCityPackages;
 	const int iTableSize = (iScopeKind == 1) ? (int)(sizeof(kEmpirePackages) / sizeof(PackageName))
 	                                         : (int)(sizeof(kCityPackages) / sizeof(PackageName));
@@ -454,9 +453,11 @@ void spineRegisterConsumers()
 	// un-run parity). The tally stays a non-consumer (reads object-owned counts).
 	cascadeRegisterGrants();
 	// The #430 F0 cache-invalidation consumer (R3, CvCascadeInvalidation.cpp): the spine-driven package invalidation
-	// front door. Registered ADDITIVELY for now -- the hand-wired mutation-site marks + the per-turn self-heal remain
-	// the correctness guarantee (the CRUTCH) while the routing is verified live; removing the crutch is gated on the
-	// completeness audit (f0-eventspine-invalidation.md). Load-inert (skips the reseed; the warm-up builds on load).
+	// front door + the ENABLER's build/maintenance path. Two halves by load behaviour (DEC-spine-reseed): the enabler
+	// deltas are LOAD-ACTIVE (the reseed's in-read emits BUILD the domains); the modifier marks are load-inert (the
+	// modifier warm-up builds at load). The hand-wired mutation-site marks still run alongside the mark half (the
+	// CRUTCH) while the routing is verified live; removal is gated on the completeness audit
+	// (f0-eventspine-invalidation.md).
 	cascadeRegisterInvalidation();
 }
 
@@ -589,9 +590,9 @@ void emitTraitChanged(int iPlayer, int iTrait, bool bAdd)
 	e.addI(SPF_TRAIT, iTrait).addI(SPF_OWNER, iPlayer).addI(SPF_HAS, bAdd ? 1 : 0);
 	eventSpine().emit(e);
 }
-void emitCivicAdopted(int iPlayer, int iCivic)
+void emitCivicAdopted(int iPlayer, int iCivic, int iOldCivic)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CIVIC_ADOPTED, iCivic, 0, 0, iPlayer, -1);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CIVIC_ADOPTED, iCivic, 0, iOldCivic, iPlayer, -1);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_CIVIC, iCivic).addI(SPF_OWNER, iPlayer);
 	eventSpine().emit(e);
@@ -654,9 +655,9 @@ void emitNukesChanged(int iPlayer, int iState)
 	e.addI(SPF_OWNER, iPlayer).addI(SPF_VALUE, iState);
 	eventSpine().emit(e);
 }
-void emitCultureLevelChanged(int iCity, int iOwner, int iNewLevel)
+void emitCultureLevelChanged(int iCity, int iOwner, int iNewLevel, int iOldLevel)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_CULTURE_LEVEL_CHANGED, -1, iNewLevel, 0, iOwner, iCity);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_CULTURE_LEVEL_CHANGED, -1, iNewLevel, iOldLevel, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_VALUE, iNewLevel);
 	eventSpine().emit(e);
@@ -754,7 +755,8 @@ void emitGameLoadFinished()
 	s_bGameLoadInProgress = false;
 }
 
-// True in the load-active window (between GAME_LOAD_STARTED and GAME_LOAD_FINISHED). The R3 cache-invalidation
-// consumer reads this to SKIP the play-time targeted ripples during the reseed -- the frontier/operating-building
+// True in the load-active window (between GAME_LOAD_STARTED and GAME_LOAD_FINISHED). The R3 consumer's MODIFIER-MARK
+// half reads this to SKIP the play-time targeted ripples during the reseed -- the frontier/operating-building
 // reverse indices are not built until onFinalInitialized (buildFrontierIndices), so a mid-reseed ripple is invalid.
+// (Its ENABLER half stays load-active -- the reseed events BUILD the enabler domains, DEC-spine-reseed.)
 bool spineGameLoadInProgress() { return s_bGameLoadInProgress; }

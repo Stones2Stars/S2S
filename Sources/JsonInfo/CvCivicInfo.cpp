@@ -205,6 +205,11 @@ static int* civArrOrNull(const int* arr, int n)
 
 void CvCivicInfo::mapFrom(const picojson::value& entity)
 {
+	// remap-idempotency (CvInfo.h): the sparse keyed caches append and must clear; the IDValueMap
+	// (m_aBuildingProductionModifier) needs none -- setValue updates-or-appends per key, idempotent on a re-parse.
+	m_vBuildingHappinessChangesSparse.clear(); m_vBuildingHealthChangesSparse.clear();
+	m_vFeatureHappinessChangesSparse.clear();
+
 	CvInfo::mapFrom(entity);   // core reading + the section dispatch into the composed units (fills m_modifiers)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
@@ -258,7 +263,7 @@ int CvCivicInfo::getCityLimitBase() const { return civSumUnconditioned(getModifi
 
 bool CvCivicInfo::isHurry(int i) const
 {
-	const std::vector<int>* v = edge("enables.hurries");
+	const std::vector<int>* v = edge(EDGEF_ENABLES, EDGEB_HURRIES);
 	if (v == NULL) return false;
 	for (size_t k = 0; k < v->size(); ++k) if ((*v)[k] == i) return true;
 	return false;
@@ -267,19 +272,19 @@ bool CvCivicInfo::isHurry(int i) const
 // --- enables-edge derived bools (curate_civic.py ENABLE_LISTS -> enables.specialists / enables.specialBuildingsWaived) ---
 bool CvCivicInfo::isSpecialistValid(int i) const
 {
-	const std::vector<int>* v = edge("enables.specialists");
+	const std::vector<int>* v = edge(EDGEF_ENABLES, EDGEB_SPECIALISTS);
 	if (v == NULL) return false;
 	for (size_t k = 0; k < v->size(); ++k) if ((*v)[k] == i) return true;
 	return false;
 }
 bool CvCivicInfo::isAnySpecialistValid() const
 {
-	const std::vector<int>* v = edge("enables.specialists");
+	const std::vector<int>* v = edge(EDGEF_ENABLES, EDGEB_SPECIALISTS);
 	return v != NULL && !v->empty();
 }
 bool CvCivicInfo::isSpecialBuildingNotRequired(int i) const
 {
-	const std::vector<int>* v = edge("enables.specialBuildingsWaived");
+	const std::vector<int>* v = edge(EDGEF_ENABLES, EDGEB_SPECIAL_BUILDINGS_WAIVED);
 	if (v == NULL) return false;
 	for (size_t k = 0; k < v->size(); ++k) if ((*v)[k] == i) return true;
 	return false;

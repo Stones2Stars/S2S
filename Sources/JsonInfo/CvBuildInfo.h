@@ -10,12 +10,13 @@
 //
 //	Live callers (verified 2026-07-07/08): getImprovement / getRoute -> worker-AI target selection; isFeatureRemove ->
 //	CvCityAI/CvWorkerAI chop logic; getTime -> build-turn estimate; getType/getDescription -> UI; getTechPrereq ->
-//	CvPlot/CvPlayer::canBuild + CascadeAccumulator::enBuildUnlockedFast (the fast-path tech gate) + UI help text;
+//	CvPlot::canBuild + the bTestVisible legacy leg of CvPlayer::canBuild + UI help text (the flipped unlock gate
+//	is the STANDARDIZED enabler's builds domain -- CvPlayer::m_enabler.builds, a bare member read);
 //	getFeatureTech/getFeatureTime/getFeatureProduction -> the per-feature chop tech-gate/time/hammers
 //	(CvPlot::getBuildTime/getFeatureProduction, CvPlayer::canBuild, CvDLLWidgetData help); getPlaceBonusTypes ->
 //	CvPlot's place-a-bonus walk (curate_build.py: the struct is DROPPED, 0/304 builds author it, so this is
 //	permanently empty pending the #430 outcome-system place-bonus capability); isDisabled/setDisabled -> a RUNTIME
-//	toggle (never JSON-authored) read by CascadeAccumulator::enBuildUnlockedFast / CvPlayer::canBuild, written by
+//	toggle (never JSON-authored) read live by CvPlayer::canBuild (never domain state), written by
 //	mod Python settings scripts (Assets/Python/Afforess/ANewDawnSettings.py).
 //
 
@@ -54,7 +55,7 @@ public:
 	// placement check itself also rides the cascade requires.build evaluation; this is the positive-prereq view.
 	const std::vector<BonusTypes>& getPrereqBonuses() const { return m_aePrereqBonusTypes; }
 	// ObsoleteTech is store-inverted to tech.obsoletes.builds (curate_build.py:50; the obsolete gate itself rides the
-	// cascade -- EnablerKernel::obsoletedByHeldTech, enBuildUnlockedFast). The compat getter FK is reconstructed at LOAD
+	// builds domain's REMOVE plane -- the tech events apply it, enabler.md par.7.1). The compat getter FK is reconstructed at LOAD
 	// by the cascadeLoadJson tech-FK reverse-index pass (the Route<-bonus pattern), which calls setObsoleteTech.
 	TechTypes getObsoleteTech() const { return m_eObsoleteTech; }
 	void setObsoleteTech(TechTypes e) { m_eObsoleteTech = e; }   // load-time reverse-index writer (cascadeLoadJson)

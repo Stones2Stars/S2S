@@ -164,11 +164,6 @@ public:
 
 	virtual void mapFrom(const picojson::value& entity);
 
-	// Resolve the improvement->improvement self-FKs (upgradesTo/pillageTo/alternativeUpgrades) against the COMPLETE type
-	// registry. SetGlobalClassInfo registers each improvement's id AFTER its read()/mapFrom, so a same-class FORWARD
-	// reference is unresolvable at read() time; cascadeLoadJson drives this post-read (NO XML delayed resolution). Idempotent.
-	void resolveDeferredFks();
-
 private:
 	// mapFrom helpers (defined in the .cpp where the full picojson type is available):
 	void readConditionalYields(const picojson::value& entity);   // base + gated deposits from the yield-family `flat` arrays
@@ -202,10 +197,8 @@ private:
 	int m_iCultureRange;                   // identity.cultureRange (stays identity)
 	int m_iFeatureGrowthProbability;       // identity.featureGrowth (stays identity)
 	int m_iUpgradeTime;                    // identity.upgradeTime
-	ImprovementTypes m_eImprovementUpgrade;// identity.upgradesTo (FK) -- resolved POST-read (self-FK, see resolveDeferredFks)
-	ImprovementTypes m_eImprovementPillage;// identity.pillageTo (FK) -- resolved POST-read (self-FK)
-	std::string m_szUpgradeStr, m_szPillageStr;   // raw ids STASHED at read(); improvement->improvement forward FKs are
-	                                              // unresolvable at read() time (registry incomplete), resolved post-read
+	ImprovementTypes m_eImprovementUpgrade;// identity.upgradesTo (FK; self-FKs resolve fully at the full-registry re-run)
+	ImprovementTypes m_eImprovementPillage;// identity.pillageTo (FK)
 	BonusTypes m_eBonusChange;             // identity.bonusChange (FK)
 	bool m_bActsAsCity, m_bMilitaryStructure, m_bCarriesIrrigation;
 	bool m_bOutsideBorders, m_bBombardable, m_bZOCSource, m_bExtraterrestrial, m_bUniversalBonusTrade;
@@ -222,8 +215,7 @@ private:
 	int m_iAdvancedStartCost;              // identity.advancedStart.cost
 	bool m_bUpgradeRequiresFortify;        // identity.upgradeRequiresFortify
 	bool m_bPlacesBonus, m_bPlacesFeature, m_bPlacesTerrain, m_bChangeRemove;   // identity placement-transform flags
-	std::vector<int> m_aiAlternativeImprovementUpgradeTypes;   // identity.alternativeUpgrades (FK-resolved IMPROVEMENT_ ids; resolved POST-read)
-	std::vector<std::string> m_altUpgradeStrs;                 // raw alternativeUpgrades ids STASHED at read() (self-FKs, resolved post-read)
+	std::vector<int> m_aiAlternativeImprovementUpgradeTypes;   // identity.alternativeUpgrades (FK-resolved IMPROVEMENT_ ids)
 	std::vector<int> m_aiFeatureChangeTypes;                   // identity.featureChanges (FK-resolved FEATURE_ ids)
 	std::map<int, int> m_bonusDiscoverRand;    // identity.bonuses.{BONUS}.discoverRand
 	std::map<int, int> m_bonusDepletionRand;   // identity.bonuses.{BONUS}.depletionRand

@@ -12,8 +12,14 @@
 
 CvJsonRequires::~CvJsonRequires()
 {
-	delete build;
-	delete operate;
+	clearParsed();
+}
+
+void CvJsonRequires::clearParsed()
+{
+	delete build;   build = NULL;
+	delete operate; operate = NULL;
+	dormantTriggers.clear();
 }
 
 void CvJsonRequires::parse(const picojson::value& v)

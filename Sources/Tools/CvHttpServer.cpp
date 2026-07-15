@@ -7,6 +7,8 @@
 #include "Cascade/CvCascadeScalarChannels.h" // the city scalar channels' nets (GP-rate/defense/maintenance)
 #include "Cascade/CvCascadeAccumulator.h"    // CascadeRateSlots -- the increment-F standing slot twins on the wellbeing action
 #include "Cascade/CvCascadePerfCount.h"      // /computed/perf: the (scope,channel) calc-count histogram (DEC-calc-count-gate)
+#include "Cascade/CvCascadeReadJson.h"       // /state/info: rjInfoForType -- the info-object edge dump (DEC-one-reverse-view)
+#include "Cascade/CvBuildingEnabler.h"       // /computed/enabler/buildings: the per-city domain's oracle verification
 #include "CvBonusInfo.h" // bonus-name resolution in the /diagnostic/whyNot trace
 #include "CvImprovementInfo.h" // cityInput loadout: worked-plot improvement type
 #include "CvTraitInfo.h" // cityInput loadout: player trait list
@@ -1663,6 +1665,40 @@ namespace
 			">50k is near-certainly a blanket-recompute failure. NB city/empire/world instrumented; "
 			"plot-yield (pull model) + operating-buildings recompute not yet attributed here."));
 		return CvString(picojson::value(o).serialize().c_str());
+	}
+
+	// The per-bucket id -> type-name render for the /state/info edge dump (NULL = unhomed kind, emit the raw id).
+	static const char* evalEdgeTypeName(EnEdgeBucket b, int id)
+	{
+		if (id < 0) return NULL;
+		switch (b)
+		{
+		case EDGEB_BUILDINGS:      return id < GC.getNumBuildingInfos() ? GC.getBuildingInfo((BuildingTypes)id).getType() : NULL;
+		case EDGEB_UNITS:          return id < GC.getNumUnitInfos() ? GC.getUnitInfo((UnitTypes)id).getType() : NULL;
+		case EDGEB_BUILDS:         return id < GC.getNumBuildInfos() ? GC.getBuildInfo((BuildTypes)id).getType() : NULL;
+		case EDGEB_TECHS:          return id < GC.getNumTechInfos() ? GC.getTechInfo((TechTypes)id).getType() : NULL;
+		case EDGEB_CIVICS:         return id < GC.getNumCivicInfos() ? GC.getCivicInfo((CivicTypes)id).getType() : NULL;
+		case EDGEB_RELIGIONS:      return id < GC.getNumReligionInfos() ? GC.getReligionInfo((ReligionTypes)id).getType() : NULL;
+		case EDGEB_CORPORATIONS:   return id < GC.getNumCorporationInfos() ? GC.getCorporationInfo((CorporationTypes)id).getType() : NULL;
+		case EDGEB_PROJECTS:       return id < GC.getNumProjectInfos() ? GC.getProjectInfo((ProjectTypes)id).getType() : NULL;
+		case EDGEB_PROCESSES:      return id < GC.getNumProcessInfos() ? GC.getProcessInfo((ProcessTypes)id).getType() : NULL;
+		case EDGEB_PROMOTIONS:     return id < GC.getNumPromotionInfos() ? GC.getPromotionInfo((PromotionTypes)id).getType() : NULL;
+		case EDGEB_PROMOTION_LINES: return id < GC.getNumPromotionLineInfos() ? GC.getPromotionLineInfo((PromotionLineTypes)id).getType() : NULL;
+		case EDGEB_HERITAGES:      return id < GC.getNumHeritageInfos() ? GC.getHeritageInfo((HeritageTypes)id).getType() : NULL;
+		case EDGEB_SPECIAL_BUILDINGS:
+		case EDGEB_SPECIAL_BUILDINGS_WAIVED: return id < GC.getNumSpecialBuildingInfos() ? GC.getSpecialBuildingInfo((SpecialBuildingTypes)id).getType() : NULL;
+		case EDGEB_IMPROVEMENTS:   return id < GC.getNumImprovementInfos() ? GC.getImprovementInfo((ImprovementTypes)id).getType() : NULL;
+		case EDGEB_BONUSES:        return id < GC.getNumBonusInfos() ? GC.getBonusInfo((BonusTypes)id).getType() : NULL;
+		case EDGEB_ROUTES:
+		case EDGEB_ROUTES_AND:     return id < GC.getNumRouteInfos() ? GC.getRouteInfo((RouteTypes)id).getType() : NULL;
+		case EDGEB_VOTES:          return id < GC.getNumVoteInfos() ? GC.getVoteInfo((VoteTypes)id).getType() : NULL;
+		case EDGEB_HURRIES:        return id < GC.getNumHurryInfos() ? GC.getHurryInfo((HurryTypes)id).getType() : NULL;
+		case EDGEB_TRAITS:
+		case EDGEB_TRAITS_AND:
+		case EDGEB_TRAITS_OR:      return id < GC.getNumTraitInfos() ? GC.getTraitInfo((TraitTypes)id).getType() : NULL;
+		case EDGEB_SPECIALISTS:    return id < GC.getNumSpecialistInfos() ? GC.getSpecialistInfo((SpecialistTypes)id).getType() : NULL;
+		default:                   return NULL;
+		}
 	}
 
 	CvString evaluateGate(const char* szAction, const char* szType, int iPlayer, int iCityReq, int iUnitReq)
@@ -4034,10 +4070,153 @@ namespace
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
+		// /computed/enabler/buildings -- the standardized per-city building domain's standing verification
+		// (?player=N&city=M, no type): the maintained tri-state vector vs a FRESH seed from current state
+		// (0 mismatches = the event maintenance is exact), plus the listed/tree counts.
+		if (strcmp(szAction, "enablerBuildings") == 0)
+		{
+			if (pCity == NULL)
+			{
+				o["error"] = picojson::value(std::string("city required (?player=N&city=M)"));
+				return CvString(picojson::value(o).serialize().c_str());
+			}
+			o["city"] = picojson::value((double)iCityId);
+			o["seeded"] = picojson::value(pCity->m_enabler.buildings.isSeeded());
+			int iListed = 0, iTree = 0, iHeld = 0;
+			for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
+			{
+				if (pCity->m_enabler.buildings.listed(b)) ++iListed;
+				if (pCity->m_enabler.buildings.inTree(b)) ++iTree;
+				if (pCity->m_enabler.buildings.isHeld(b)) ++iHeld;
+			}
+			o["listed"] = picojson::value((double)iListed);
+			o["inTree"] = picojson::value((double)iTree);
+			o["held"] = picojson::value((double)iHeld);
+			std::string sDiff;
+			o["oracleMismatches"] = picojson::value((double)BuildingEnabler::verifyCity(*pCity, sDiff));
+			if (!sDiff.empty()) o["oracleDiff"] = picojson::value(sDiff);
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
 		const int iIdx = GC.getInfoTypeForString(szType, true);
 		if (iIdx < 0)
 		{
 			o["error"] = picojson::value(std::string("type not loaded this game"));
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
+		// /computed/enabler/promotions -- the level-up composite's DECOMPOSITION (?player=N&type=PROMOTION_X
+		// [&unit=U]): the player promotions domain's raw planes + (unit given) each composite leg, so a pick
+		// failure attributes to a NAMED term (domain / composite / legacy / canPromote) -- the no-guessing surface.
+		if (strcmp(szAction, "enablerPromotions") == 0)
+		{
+			const EnablerDomain& dP = kPlayer.m_enabler.promotions;
+			o["seeded"] = picojson::value(dP.isSeeded());
+			o["enableCount"] = picojson::value((double)dP.enableCount(iIdx));
+			o["removeCount"] = picojson::value((double)dP.removeCount(iIdx));
+			o["listed"] = picojson::value(dP.listed(iIdx));
+			int iMembers = 0;
+			for (int p = 0; p < GC.getNumPromotionInfos(); ++p)
+				if (dP.listed(p)) ++iMembers;
+			o["domainMembers"] = picojson::value((double)iMembers);
+			if (iUnitReq >= 0)
+			{
+				CvUnit* pU = kPlayer.getUnit(iUnitReq);
+				if (pU == NULL)
+				{
+					o["error"] = picojson::value(std::string("unit not found for this player"));
+					return CvString(picojson::value(o).serialize().c_str());
+				}
+				o["composite"] = picojson::value(CascadeAccumulator::enPromotionValid(pU, iIdx));
+				o["legacyLeg"] = picojson::value(pU->isPromotionValidLegacy((PromotionTypes)iIdx, true));
+				o["canPromote"] = picojson::value(pU->canPromote((PromotionTypes)iIdx, 0));
+				o["promotionReady"] = picojson::value(pU->isPromotionReady());
+			}
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
+		// /state/info -- the INFO-OBJECT observability read: what readJson actually put ON this info's edge unit,
+		// AUTHORED and LOAD-DERIVED (related/requiredBy) families alike -- the DEC-one-reverse-view verification
+		// surface (the reverse lookups are info-homed data, so they are observable HERE, per info, by name).
+		if (strcmp(szAction, "infoEdges") == 0)
+		{
+			const CvInfo* jInfo = rjInfoForType(szType, iIdx);
+			if (jInfo == NULL)
+			{
+				o["error"] = picojson::value(std::string("type has no InfoRepo home"));
+				return CvString(picojson::value(o).serialize().c_str());
+			}
+			const CvJsonEdges* pEdges = jInfo->getEdges();
+			picojson::value::object fams;
+			int iTotal = 0;
+			if (pEdges != NULL)
+			{
+				for (int f = 0; f < NUM_EDGEF; ++f)
+				{
+					picojson::value::object buckets;
+					for (int b = 0; b < NUM_EDGEB; ++b)
+					{
+						const std::vector<int>* v = pEdges->find((EnEdgeFamily)f, (EnEdgeBucket)b);
+						if (v == NULL || v->empty()) continue;
+						picojson::value::array a;
+						for (size_t i = 0; i < v->size(); ++i)
+						{
+							const char* szName = evalEdgeTypeName((EnEdgeBucket)b, (*v)[i]);
+							if (szName != NULL) a.push_back(picojson::value(std::string(szName)));
+							else a.push_back(picojson::value((double)(*v)[i]));
+						}
+						iTotal += (int)v->size();
+						buckets[CvJsonEdges::bucketName((EnEdgeBucket)b)] = picojson::value(a);
+					}
+					if (!buckets.empty()) fams[CvJsonEdges::familyName((EnEdgeFamily)f)] = picojson::value(buckets);
+				}
+			}
+			o["edges"] = picojson::value(fams);
+			o["edgeIds"] = picojson::value((double)iTotal);
+			// TYPED cross-category FK members (the loader-time drop class the full-registry mapFrom re-run fixes;
+			// readjson.md) -- exposed per kind so /state/info stays the standing "loaded ≡ authored" verification
+			// for them exactly as it is for the edge families.
+			{
+				picojson::value::object typed;
+				if (strncmp(szType, "SPECIALIST_", 11) == 0 && iIdx >= 0 && iIdx < GC.getNumSpecialistInfos())
+				{
+					const int iGP = GC.getSpecialistInfo((SpecialistTypes)iIdx).getGreatPeopleUnitType();
+					typed["greatPeopleUnit"] = (iGP >= 0 && iGP < GC.getNumUnitInfos())
+						? picojson::value(std::string(GC.getUnitInfo((UnitTypes)iGP).getType())) : picojson::value();
+				}
+				else if (strncmp(szType, "UNITCOMBAT_", 11) == 0 && iIdx >= 0 && iIdx < GC.getNumUnitCombatInfos())
+				{
+					const CvUnitCombatInfo& kUC = GC.getUnitCombatInfo((UnitCombatTypes)iIdx);
+					picojson::value::array gg, st;
+					for (int i = 0; i < kUC.getNumGGptsforUnitTypes(); ++i)
+					{
+						const int u = kUC.getGGptsforUnitType(i);
+						if (u >= 0 && u < GC.getNumUnitInfos()) gg.push_back(picojson::value(std::string(GC.getUnitInfo((UnitTypes)u).getType())));
+					}
+					for (int i = 0; i < kUC.getNumDefaultStatusTypes(); ++i)
+					{
+						const int p = kUC.getDefaultStatusType(i);
+						if (p >= 0 && p < GC.getNumPromotionInfos()) st.push_back(picojson::value(std::string(GC.getPromotionInfo((PromotionTypes)p).getType())));
+					}
+					typed["ggPointsForUnits"] = picojson::value(gg);
+					typed["defaultStatuses"] = picojson::value(st);
+				}
+				else if ((strncmp(szType, "BUILDING_", 9) == 0 || strncmp(szType, "UNIT_", 5) == 0) && iIdx >= 0)
+				{
+					const bool bBld = (szType[0] == 'B');
+					const int n = bBld ? GC.getBuildingInfo((BuildingTypes)iIdx).getNumEnabledCivilizationTypes()
+					                   : GC.getUnitInfo((UnitTypes)iIdx).getNumEnabledCivilizationTypes();
+					picojson::value::array civs;
+					for (int i = 0; i < n; ++i)
+					{
+						const int c = bBld ? (int)GC.getBuildingInfo((BuildingTypes)iIdx).getEnabledCivilizationType(i)
+						                   : (int)GC.getUnitInfo((UnitTypes)iIdx).getEnabledCivilizationType(i);
+						if (c >= 0 && c < GC.getNumCivilizationInfos()) civs.push_back(picojson::value(std::string(GC.getCivilizationInfo((CivilizationTypes)c).getType())));
+					}
+					if (n > 0) typed["enabledCivilizations"] = picojson::value(civs);
+				}
+				if (!typed.empty()) o["typed"] = picojson::value(typed);
+			}
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
@@ -4064,11 +4243,15 @@ namespace
 		}
 		else if (strcmp(szAction, "canCreate") == 0)
 		{
-			o["legacy"] = picojson::value(kPlayer.canCreate((ProjectTypes)iIdx));
+			// the REAL gate is the CITY's (the production choose-list -- the flipped enabler read); the player
+			// leg stays visible as the legacy diagnostic
+			if (pCity != NULL) o["verdict"] = picojson::value(pCity->canCreate((ProjectTypes)iIdx));
+			o["legacyPlayerLeg"] = picojson::value(kPlayer.canCreate((ProjectTypes)iIdx));
 		}
 		else if (strcmp(szAction, "canMaintain") == 0)
 		{
-			o["legacy"] = picojson::value(kPlayer.canMaintain((ProcessTypes)iIdx));
+			if (pCity != NULL) o["verdict"] = picojson::value(pCity->canMaintain((ProcessTypes)iIdx));
+			o["legacyPlayerLeg"] = picojson::value(kPlayer.canMaintain((ProcessTypes)iIdx));
 		}
 		else if (strcmp(szAction, "whyNot") == 0)
 		{
@@ -4254,12 +4437,15 @@ namespace
 			{ "/state/cities",  "stateCities",  "raw city substrate: plots/buildings/specialists/bonuses (no yields)" },
 			{ "/state/plots",   "statePlots",   "every map plot by global index: contents/facts + workingCity link (no yields)" },
 			{ "/state/units",   "stateUnits",   "raw unit facts (type/ai/pos/group/damage/level/promotions)" },
+			{ "/state/info",    "infoEdges",    "an info object's edge unit: authored + load-derived (related/requiredBy) families (type=ANY_INFOTYPE)" },
 			{ "/computed/cities/yields",   "cityInput",      "getYieldRate100 per channel + full per-source decomposition" },
 			{ "/computed/cities/wellbeing","cityWellbeing",  "health + happiness: realized levels + the FULL per-source decomposition (anger percents, signed sources, gate flags)" },
 			{ "/computed/cities/buildable","cityBuildable",  "the engine's canConstruct TRUE-set for the city (the buildable oracle)" },
 			{ "/computed/cities/trainable","cityTrainable",  "the engine's canTrain TRUE-set for the city (the trainable oracle)" },
 			{ "/computed/players",         "playerInput",    "empire economy: gold/science/upkeep/inflation/demographics" },
 			{ "/computed/canConstruct",    "canConstruct",   "engine buildability verdict (type=BUILDING_X[&city=M])" },
+			{ "/computed/enabler/buildings", "enablerBuildings", "the standardized per-city building domain: listed/tree counts + fresh-seed oracle diff (player=N&city=M)" },
+			{ "/computed/enabler/promotions", "enablerPromotions", "the promotions composite decomposition: domain planes + per-leg verdicts (player=N&type=PROMOTION_X&unit=U)" },
 			{ "/computed/canTrain",        "canTrain",       "engine trainability verdict (type=UNIT_X[&city=M])" },
 			{ "/computed/canResearch",     "canResearch",    "engine canResearch verdict (type=TECH_X)" },
 			{ "/computed/canDoCivics",     "canDoCivics",    "engine canDoCivics verdict (type=CIVIC_X)" },

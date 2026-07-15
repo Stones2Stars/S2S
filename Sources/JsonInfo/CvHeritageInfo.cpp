@@ -28,7 +28,7 @@ void CvHeritageInfo::resolvePrereqs() const
 	{
 		const CvJsonEdges* pEdges = GC.getTechInfo((TechTypes)t).getEdges();
 		if (pEdges == NULL) continue;
-		const std::vector<int>* pList = pEdges->find("enables.heritages");
+		const std::vector<int>* pList = pEdges->find(EDGEF_ENABLES, EDGEB_HERITAGES);
 		if (pList == NULL) continue;
 		for (size_t k = 0; k < pList->size(); ++k)
 			if ((*pList)[k] == iThis) { m_iPrereqTech = t; break; }
@@ -40,7 +40,7 @@ void CvHeritageInfo::resolvePrereqs() const
 		if (h == iThis) continue;
 		const CvJsonEdges* pEdges = GC.getHeritageInfo((HeritageTypes)h).getEdges();
 		if (pEdges == NULL) continue;
-		const std::vector<int>* pList = pEdges->find("enables.heritages");
+		const std::vector<int>* pList = pEdges->find(EDGEF_ENABLES, EDGEB_HERITAGES);
 		if (pList == NULL) continue;
 		for (size_t k = 0; k < pList->size(); ++k)
 			if ((*pList)[k] == iThis) { m_prereqOrHeritage.push_back((HeritageTypes)h); break; }
@@ -61,6 +61,8 @@ const std::vector<HeritageTypes>& CvHeritageInfo::getPrereqOrHeritage() const
 
 void CvHeritageInfo::mapFrom(const picojson::value& entity)
 {
+	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom
+	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) m_aEraCommerce[c].clear();
 	CvInfo::mapFrom(entity);   // core + availability (tech enables.heritages, this heritage's enables.heritages)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();

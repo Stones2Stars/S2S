@@ -21,7 +21,19 @@
 #include "CvInfo.h"                // CvInfo (+ cascadeStartNode) -- the mapped info data + the TECH_GAME_START root
 #include "CvCascadeDepositIndex.h"     // DepositIndex::pushInfo/clearCompiled -- the compiled deposit index (push-time interning)
 #include "CvTechInfo.h"            // CvTechInfo -- for the capabilities read-back survey
-#include "CvImprovementInfo.h"     // CvImprovementInfo -- the post-read self-FK resolution pass (resolveDeferredFks)
+#include "CvImprovementInfo.h"     // CvImprovementInfo -- the reverse-view improvement relations
+#include "CvBuildingInfo.h"        // the REVERSE-VIEW build pass (rj_buildReverseView) -- the tech-referencing relations
+#include "CvUnitInfo.h"
+#include "CvBonusInfo.h"
+#include "CvCivicInfo.h"
+#include "CvHeritageInfo.h"
+#include "CvBuildInfo.h"
+#include "CvPromotionInfo.h"
+#include "CvSpecialistInfo.h"      // /state/info typed-member dispatch (rjInfoForType)
+#include "CvUnitCombatInfo.h"      // /state/info typed-member dispatch (rjInfoForType)
+#include "CvInfos.h"               // legacy CvSpecialBuildingInfo (XML-loaded uniformity set) -- scanned by the reverse view
+#include "CvJsonCondition.h"       // the typed requires tree -- walked by the REQUIRED_BY inversion
+#include "CvEnablerKernel.h"       // EnablerKernel::jsonFor -- the one per-bucket InfoRepo dispatch (single-source)
 #include "Repos/InfoRepo.h"            // the per-info-type home (InfoRepo<CvXInfo>) -- readJson edit()s, mapFrom populates;
                                        // the CvXInfo tag types for the RJ_REPO_TYPES prefix dispatch are forward-declared there
 #include <fstream>
@@ -31,12 +43,280 @@
 #include <map>
 #include <string>
 
+// ==================== THE REVERSE VIEW (built at JSON read -- modifier.md par.1) ====================
+// The info objects ALREADY CARRY their reverse lookups after load: this pass inverts, onto each referenced
+// TECH's own edges (EDGEF_RELATED, per kind), every tech-referencing relation the consumers check --
+// prereqs, obsoletes, tech-keyed value tables, secondary gates -- exactly the getters setTechHelp et al.
+// evaluate, so a consumer keeps its exact predicate and iterates the (tiny) candidate list instead of the
+// whole database. ⛔ EDGEF_RELATED is DISPLAY-ONLY (a candidate SUPERSET): the enabler's GENERATE/GATE
+// never reads it; the gate's own axis is EDGEF_REQUIRED_BY, populated here when the requires-gate stage
+// lands -- NEVER as a bespoke index inside an enabler.
+
+// The reverse-build observability counters + timing (emitted as RJE_REVERSE_DONE at the call site -- the
+// SD_READJSON enums are declared below this block).
+static int s_rvRelated = 0, s_rvRequiredBy = 0;
+static DWORD s_rvMs = 0;
+
+// Add iId under the referenced tech's RELATED bucket (skips NO_TECH).
+static void rvAddTech(TechTypes eTech, EnEdgeBucket eBucket, int iId)
+{
+	if (eTech <= NO_TECH || (int)eTech >= GC.getNumTechInfos()) return;
+	CvInfo* jt = InfoRepo<CvTechInfo>::get().editPtr((int)eTech);
+	if (jt != NULL) { jt->addReverseEdge(EDGEF_RELATED, eBucket, iId); ++s_rvRelated; }
+}
+
+// --- the requires -> EDGEF_REQUIRED_BY inversion (the enabler's requires-reverse-index; enabler.md par.7.1
+// step 2, DEC-one-reverse-view): every HAVE-axis atom a dependent's requires references gains that dependent
+// under the dependent's kind bucket, ON THE REFERENCED INFO -- the gate stage re-gates exactly these
+// dependents when the atom's HAVE-event fires, never a database sweep. ---
+
+// The referenced HAVE-axis info by its INFOTYPE prefix (naming.md routes by prefix). NULL = not a HAVE-axis
+// re-gate target: engine tokens (TURN/POPULATION/ERA), the plot substrate (terrain/feature/improvement --
+// the dynamic plot axis with its own event routing), and PROPERTY_ bands (the property engine's axis).
+static CvInfo* rvRefInfo(const std::string& t, int id)
+{
+	// the synthetic root's cascade data lives OFF the InfoRepo (cascadeStartNode) -- route it there, never the
+	// GC poco (the split-brain the /state/info read exposed)
+	if (t == "TECH_GAME_START")            return &cascadeStartNode();
+	if (!t.compare(0, 5, "TECH_"))         return InfoRepo<CvTechInfo>::get().editPtr(id);
+	if (!t.compare(0, 9, "BUILDING_"))     return InfoRepo<CvBuildingInfo>::get().editPtr(id);
+	if (!t.compare(0, 6, "BONUS_"))        return InfoRepo<CvBonusInfo>::get().editPtr(id);
+	if (!t.compare(0, 6, "CIVIC_"))        return InfoRepo<CvCivicInfo>::get().editPtr(id);
+	if (!t.compare(0, 5, "UNIT_"))         return InfoRepo<CvUnitInfo>::get().editPtr(id);
+	if (!t.compare(0, 9, "RELIGION_"))     return InfoRepo<CvReligionInfo>::get().editPtr(id);
+	if (!t.compare(0, 12, "CORPORATION_")) return InfoRepo<CvCorporationInfo>::get().editPtr(id);
+	if (!t.compare(0, 9, "HERITAGE_"))     return InfoRepo<CvHeritageInfo>::get().editPtr(id);
+	if (!t.compare(0, 8, "PROJECT_"))      return InfoRepo<CvProjectInfo>::get().editPtr(id);
+	return NULL;
+}
+
+// Recurse one requires tree: every FK-resolved PRESENCE atom + parameterized PREDICATE lands the dependent on
+// the referenced info's REQUIRED_BY bucket.
+static void rvRequiresWalk(const CvJsonCondition* c, EnEdgeBucket eDepKind, int iDepId)
+{
+	if (c == NULL) return;
+	for (size_t i = 0; i < c->all.size(); ++i)    rvRequiresWalk(c->all[i], eDepKind, iDepId);
+	for (size_t i = 0; i < c->anyOf.size(); ++i)  rvRequiresWalk(c->anyOf[i], eDepKind, iDepId);
+	for (size_t i = 0; i < c->noneOf.size(); ++i) rvRequiresWalk(c->noneOf[i], eDepKind, iDepId);
+	rvRequiresWalk(c->enabled, eDepKind, iDepId);
+	rvRequiresWalk(c->disabled, eDepKind, iDepId);
+	if (c->id < 0) return;
+	CvInfo* jr = NULL;
+	if (c->kind == CASC_COND_PRESENCE) jr = rvRefInfo(c->type, c->id);
+	else if (c->kind == CASC_COND_PREDICATE && !c->param.empty()) jr = rvRefInfo(c->param, c->id);
+	if (jr != NULL) { jr->addReverseEdge(EDGEF_REQUIRED_BY, eDepKind, iDepId); ++s_rvRequiredBy; }
+}
+
+// The ONE INFOTYPE-prefix -> InfoRepo dispatch (exported; header decl). Broader than rvRefInfo above, which
+// deliberately keeps only the HAVE-axis re-gate kinds.
+CvInfo* rjInfoForType(const std::string& t, int iId)
+{
+	if (CvInfo* j = rvRefInfo(t, iId)) return j;
+	if (!t.compare(0, 10, "PROMOTION_"))    return InfoRepo<CvPromotionInfo>::get().editPtr(iId);
+	if (!t.compare(0, 8, "PROCESS_"))       return InfoRepo<CvProcessInfo>::get().editPtr(iId);
+	if (!t.compare(0, 6, "BUILD_"))         return InfoRepo<CvBuildInfo>::get().editPtr(iId);
+	if (!t.compare(0, 12, "IMPROVEMENT_"))  return InfoRepo<CvImprovementInfo>::get().editPtr(iId);
+	if (!t.compare(0, 14, "PROMOTIONLINE_")) return InfoRepo<CvPromotionLineInfo>::get().editPtr(iId);
+	if (!t.compare(0, 11, "SPECIALIST_"))   return InfoRepo<CvSpecialistInfo>::get().editPtr(iId);
+	if (!t.compare(0, 11, "UNITCOMBAT_"))   return InfoRepo<CvUnitCombatInfo>::get().editPtr(iId);
+	return NULL;
+}
+
+static int rvNumFor(EnEdgeBucket b)
+{
+	switch (b)
+	{
+	case EDGEB_BUILDINGS:  return GC.getNumBuildingInfos();
+	case EDGEB_UNITS:      return GC.getNumUnitInfos();
+	case EDGEB_TECHS:      return GC.getNumTechInfos();
+	case EDGEB_CIVICS:     return GC.getNumCivicInfos();
+	case EDGEB_PROJECTS:   return GC.getNumProjectInfos();
+	case EDGEB_PROCESSES:  return GC.getNumProcessInfos();
+	case EDGEB_PROMOTIONS: return GC.getNumPromotionInfos();
+	case EDGEB_BUILDS:     return GC.getNumBuildInfos();
+	default:               return 0;
+	}
+}
+
+static void rj_buildReverseView()
+{
+	const DWORD rvT0 = GetTickCount();
+	s_rvRelated = 0; s_rvRequiredBy = 0;
+	const int nTech = GC.getNumTechInfos();
+
+	for (int i = 0; i < GC.getNumBuildingInfos(); ++i)
+	{
+		const CvBuildingInfo& k = GC.getBuildingInfo((BuildingTypes)i);
+		rvAddTech(k.getObsoleteTech(), EDGEB_BUILDINGS, i);
+		rvAddTech((TechTypes)k.getPrereqAndTech(), EDGEB_BUILDINGS, i);
+		// The tech-side FORWARD obsoletion view (building obsoletion is authored TARGET-side, obsoletedBy.techs;
+		// nothing authors tech.obsoletes.buildings) -- reconstructed here so the enabler's O(delta) tech
+		// application can find "which buildings does this tech obsolete" without a candidate scan
+		// (the leadsTo/getPrereqBonus reconstruction class, readjson.md).
+		{
+			const CvInfo* jb = InfoRepo<CvBuildingInfo>::get().get(i);
+			const std::vector<int>* obs = jb ? jb->edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS) : NULL;
+			if (obs != NULL)
+				for (size_t j = 0; j < obs->size(); ++j)
+				{
+					CvInfo* jt = InfoRepo<CvTechInfo>::get().editPtr((*obs)[j]);
+					if (jt != NULL) jt->addReverseEdge(EDGEF_OBSOLETES, EDGEB_BUILDINGS, i);
+				}
+		}
+		for (size_t j = 0; j < k.getPrereqAndTechs().size(); ++j)
+			rvAddTech(k.getPrereqAndTechs()[j], EDGEB_BUILDINGS, i);
+		foreach_(const TechArray& p, k.getTechYieldChanges100())    rvAddTech(p.first, EDGEB_BUILDINGS, i);
+		foreach_(const TechArray& p, k.getTechYieldModifiers())     rvAddTech(p.first, EDGEB_BUILDINGS, i);
+		foreach_(const TechCommerceArray& p, k.getTechCommerceChanges100()) rvAddTech(p.first, EDGEB_BUILDINGS, i);
+		foreach_(const TechCommerceArray& p, k.getTechCommerceModifiers())  rvAddTech(p.first, EDGEB_BUILDINGS, i);
+		for (int t = 0; t < nTech; ++t)
+		{
+			const TechTypes eT = (TechTypes)t;
+			if (k.getTechHappiness(eT) != 0 || k.getTechHealth(eT) != 0) { rvAddTech(eT, EDGEB_BUILDINGS, i); continue; }
+			if (k.isAnyTechSpecialistChanges())
+				for (int s = 0; s < GC.getNumSpecialistInfos(); ++s)
+					if (k.getTechSpecialistChange(t, s) != 0) { rvAddTech(eT, EDGEB_BUILDINGS, i); break; }
+		}
+	}
+	for (int i = 0; i < GC.getNumUnitInfos(); ++i)
+	{
+		const CvUnitInfo& k = GC.getUnitInfo((UnitTypes)i);
+		rvAddTech((TechTypes)k.getPrereqAndTech(), EDGEB_UNITS, i);
+		for (size_t j = 0; j < k.getPrereqAndTechs().size(); ++j)
+			rvAddTech((TechTypes)k.getPrereqAndTechs()[j], EDGEB_UNITS, i);
+	}
+	// The tech-side FORWARD obsoletion view for PROCESSES (authored TARGET-side, obsoletedBy.techs -- the
+	// lesser/meager process tiers; "processes is pure enabler gate, with replace": the obsoleting tech drops
+	// the tier from the TREE) -- reconstructed exactly like the buildings one above, so the processes domain's
+	// O(delta) tech application feeds its REMOVE plane.
+	for (int i = 0; i < GC.getNumProcessInfos(); ++i)
+	{
+		const CvInfo* jp = InfoRepo<CvProcessInfo>::get().get(i);
+		const std::vector<int>* obs = jp ? jp->edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS) : NULL;
+		if (obs != NULL)
+			for (size_t j = 0; j < obs->size(); ++j)
+			{
+				CvInfo* jt = InfoRepo<CvTechInfo>::get().editPtr((*obs)[j]);
+				if (jt != NULL) jt->addReverseEdge(EDGEF_OBSOLETES, EDGEB_PROCESSES, i);
+			}
+	}
+	for (int i = 0; i < GC.getNumBonusInfos(); ++i)
+	{
+		const CvBonusInfo& k = GC.getBonusInfo((BonusTypes)i);
+		rvAddTech((TechTypes)k.getTechReveal(), EDGEB_BONUSES, i);
+		rvAddTech((TechTypes)k.getTechObsolete(), EDGEB_BONUSES, i);
+	}
+	for (int i = 0; i < GC.getNumSpecialBuildingInfos(); ++i)
+	{
+		const CvSpecialBuildingInfo& k = GC.getSpecialBuildingInfo((SpecialBuildingTypes)i);
+		rvAddTech((TechTypes)k.getTechPrereq(), EDGEB_SPECIAL_BUILDINGS, i);
+		rvAddTech((TechTypes)k.getTechPrereqAnyone(), EDGEB_SPECIAL_BUILDINGS, i);
+		rvAddTech((TechTypes)k.getObsoleteTech(), EDGEB_SPECIAL_BUILDINGS, i);
+	}
+	for (int i = 0; i < GC.getNumImprovementInfos(); ++i)
+	{
+		const CvImprovementInfo& k = GC.getImprovementInfo((ImprovementTypes)i);
+		rvAddTech(k.getPrereqTech(), EDGEB_IMPROVEMENTS, i);
+		for (int t = 0; t < nTech; ++t)
+			if (k.getTechYieldChangesArray(t) != NULL) rvAddTech((TechTypes)t, EDGEB_IMPROVEMENTS, i);
+	}
+	for (int i = 0; i < GC.getNumBuildInfos(); ++i)
+	{
+		const CvBuildInfo& k = GC.getBuildInfo((BuildTypes)i);
+		rvAddTech(k.getTechPrereq(), EDGEB_BUILDS, i);
+		foreach_(const TerrainStructs& ts, k.getTerrainStructs())
+			rvAddTech(ts.ePrereqTech, EDGEB_BUILDS, i);
+		for (int f = 0; f < GC.getNumFeatureInfos(); ++f)
+			rvAddTech(k.getFeatureTech((FeatureTypes)f), EDGEB_BUILDS, i);
+	}
+	for (int i = 0; i < GC.getNumCivicInfos(); ++i)
+		rvAddTech((TechTypes)GC.getCivicInfo((CivicTypes)i).getTechPrereq(), EDGEB_CIVICS, i);
+	for (int i = 0; i < GC.getNumHeritageInfos(); ++i)
+		rvAddTech((TechTypes)GC.getHeritageInfo((HeritageTypes)i).getPrereqTech(), EDGEB_HERITAGES, i);
+	for (int i = 0; i < GC.getNumProjectInfos(); ++i)
+		rvAddTech((TechTypes)GC.getProjectInfo((ProjectTypes)i).getTechPrereq(), EDGEB_PROJECTS, i);
+	for (int i = 0; i < GC.getNumProcessInfos(); ++i)
+		rvAddTech((TechTypes)GC.getProcessInfo((ProcessTypes)i).getTechPrereq(), EDGEB_PROCESSES, i);
+	for (int i = 0; i < GC.getNumReligionInfos(); ++i)
+		rvAddTech((TechTypes)GC.getReligionInfo((ReligionTypes)i).getTechPrereq(), EDGEB_RELIGIONS, i);
+	for (int i = 0; i < GC.getNumCorporationInfos(); ++i)
+		rvAddTech((TechTypes)GC.getCorporationInfo((CorporationTypes)i).getTechPrereq(), EDGEB_CORPORATIONS, i);
+	for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
+	{
+		const CvPromotionInfo& k = GC.getPromotionInfo((PromotionTypes)i);
+		rvAddTech((TechTypes)k.getTechPrereq(), EDGEB_PROMOTIONS, i);
+		rvAddTech((TechTypes)k.getObsoleteTech(), EDGEB_PROMOTIONS, i);
+	}
+	// requires -> EDGEF_REQUIRED_BY (the enabler's requires-reverse-index): every dependent kind's
+	// requires.build + requires.operate trees + its dormant triggers, inverted onto the referenced infos.
+	static const EnEdgeBucket DEP_KINDS[] =
+	{
+		EDGEB_BUILDINGS, EDGEB_UNITS, EDGEB_TECHS, EDGEB_CIVICS,
+		EDGEB_PROJECTS, EDGEB_PROCESSES, EDGEB_PROMOTIONS, EDGEB_BUILDS, NO_EDGEB
+	};
+	for (int k = 0; DEP_KINDS[k] != NO_EDGEB; ++k)
+	{
+		const EnEdgeBucket eKind = DEP_KINDS[k];
+		const int n = rvNumFor(eKind);
+		for (int i = 0; i < n; ++i)
+		{
+			const CvInfo* j = EnablerKernel::jsonFor(eKind, i);
+			if (j == NULL) continue;
+			rvRequiresWalk(j->requiresBuild(), eKind, i);
+			rvRequiresWalk(j->requiresOperate(), eKind, i);
+			// dormant triggers reference same-kind successors (building ReplacementBuildings; unit upgrades)
+			const std::vector<int>& dorm = j->dormantTriggers();
+			for (size_t d = 0; d < dorm.size(); ++d)
+			{
+				CvInfo* jr = (CvInfo*)EnablerKernel::jsonFor(eKind, dorm[d]);
+				if (jr != NULL) { jr->addReverseEdge(EDGEF_REQUIRED_BY, eKind, i); ++s_rvRequiredBy; }
+			}
+		}
+	}
+	// improvements + heritages carry requires too (no jsonFor bucket dispatch -- repo-direct)
+	for (int i = 0; i < GC.getNumImprovementInfos(); ++i)
+	{
+		const CvInfo* j = InfoRepo<CvImprovementInfo>::get().get(i);
+		if (j == NULL) continue;
+		rvRequiresWalk(j->requiresBuild(), EDGEB_IMPROVEMENTS, i);
+		rvRequiresWalk(j->requiresOperate(), EDGEB_IMPROVEMENTS, i);
+	}
+	for (int i = 0; i < GC.getNumHeritageInfos(); ++i)
+	{
+		const CvInfo* j = InfoRepo<CvHeritageInfo>::get().get(i);
+		if (j == NULL) continue;
+		rvRequiresWalk(j->requiresBuild(), EDGEB_HERITAGES, i);
+		rvRequiresWalk(j->requiresOperate(), EDGEB_HERITAGES, i);
+	}
+
+	// dedup the derived lists (sortUnique touches ONLY the RELATED/REQUIRED_BY families) -- every kind that
+	// can carry reverse edges: techs (RELATED + REQUIRED_BY) + the HAVE-axis referenced kinds (REQUIRED_BY)
+	for (int t = 0; t < nTech; ++t)
+	{
+		CvInfo* jt = InfoRepo<CvTechInfo>::get().editPtr(t);
+		if (jt != NULL) jt->sortUniqueEdges();
+	}
+	for (int i = 0; i < GC.getNumBuildingInfos(); ++i)    { CvInfo* j = InfoRepo<CvBuildingInfo>::get().editPtr(i);    if (j) j->sortUniqueEdges(); }
+	for (int i = 0; i < GC.getNumUnitInfos(); ++i)        { CvInfo* j = InfoRepo<CvUnitInfo>::get().editPtr(i);        if (j) j->sortUniqueEdges(); }
+	for (int i = 0; i < GC.getNumBonusInfos(); ++i)       { CvInfo* j = InfoRepo<CvBonusInfo>::get().editPtr(i);       if (j) j->sortUniqueEdges(); }
+	for (int i = 0; i < GC.getNumCivicInfos(); ++i)       { CvInfo* j = InfoRepo<CvCivicInfo>::get().editPtr(i);       if (j) j->sortUniqueEdges(); }
+	for (int i = 0; i < GC.getNumReligionInfos(); ++i)    { CvInfo* j = InfoRepo<CvReligionInfo>::get().editPtr(i);    if (j) j->sortUniqueEdges(); }
+	for (int i = 0; i < GC.getNumCorporationInfos(); ++i) { CvInfo* j = InfoRepo<CvCorporationInfo>::get().editPtr(i); if (j) j->sortUniqueEdges(); }
+	for (int i = 0; i < GC.getNumHeritageInfos(); ++i)    { CvInfo* j = InfoRepo<CvHeritageInfo>::get().editPtr(i);    if (j) j->sortUniqueEdges(); }
+	for (int i = 0; i < GC.getNumProjectInfos(); ++i)     { CvInfo* j = InfoRepo<CvProjectInfo>::get().editPtr(i);     if (j) j->sortUniqueEdges(); }
+
+	s_rvMs = GetTickCount() - rvT0;   // announced as RJE_REVERSE_DONE at the call site (the enums live below)
+}
+
 // ===================== [READJSON] spine domain (logging.md §4: logging is a spine CONSUMER) =====================
 enum RjEvt
 {
 	RJE_UNRESOLVED = 1, RJE_MOD, RJE_EDGE, RJE_GRANT, RJE_DIR, RJE_PROBE, RJE_COND_SURVEY, RJE_MOD_SURVEY,
 	RJE_EDGE_SURVEY, RJE_EDGE_UNRES, RJE_GRANT_SURVEY, RJE_GRANT_UNRES, RJE_KEY, RJE_MAP, RJE_CAP_SURVEY,
-	RJE_CAP, RJE_MAP_SUMMARY
+	RJE_CAP, RJE_MAP_SUMMARY,
+	RJE_REMAPPED,      // one aliased entity's full-registry section re-map: what it maps (type + edge/family counts)
+	RJE_MAP_DONE,      // the initial JSON map (PASS 1+2) is DONE -- entities/resolved/remapped/ms
+	RJE_REVERSE_DONE   // the reverse-view build (RELATED + REQUIRED_BY) is DONE -- add counts/ms
 };
 
 // DOMAIN-LOCAL field tags, shared by name across lines where a field recurs.
@@ -48,7 +328,8 @@ enum RjFld
 	RJF_PERSCALED, RJF_BAREVALUES, RJF_EDGES, RJF_BUCKETENTRIES, RJF_BUCKETKINDS, RJF_ALLOWEDCLAUSES, RJF_CAPKINDS,
 	RJF_LISTENTRIES, RJF_LISTKINDS, RJF_PULSES, RJF_PULSECHANNELS, RJF_FLAGS, RJF_ENTRYARRAYS, RJF_OBJECTS,
 	RJF_KEY, RJF_COUNT, RJF_CLASS, RJF_DEPOSITS, RJF_REQBUILD, RJF_REQOPERATE, RJF_ALLOWED, RJF_GRANTLISTS,
-	RJF_GRANTPULSES, RJF_GRANTING, RJF_CAPGRANTS, RJF_DISTINCTNAMES, RJF_NAME, RJF_WITHDATA
+	RJF_GRANTPULSES, RJF_GRANTING, RJF_CAPGRANTS, RJF_DISTINCTNAMES, RJF_NAME, RJF_WITHDATA,
+	RJF_MS, RJF_REMAPPED, RJF_RELATED, RJF_REQUIREDBY
 };
 
 static const char* rj_prefix(int evt)
@@ -72,6 +353,9 @@ static const char* rj_prefix(int evt)
 	case RJE_CAP_SURVEY:   return "[READJSON/cap-survey]";
 	case RJE_CAP:          return "[READJSON/cap]";
 	case RJE_MAP_SUMMARY:  return "[READJSON/map-summary]";
+	case RJE_REMAPPED:     return "[READJSON/remapped]";
+	case RJE_MAP_DONE:     return "[READJSON/map-done]";
+	case RJE_REVERSE_DONE: return "[READJSON/reverse-done]";
 	default:               return "[READJSON]";
 	}
 }
@@ -136,6 +420,10 @@ static const char* rj_field(int tag, SpineFieldType* peType)
 	case RJF_DISTINCTNAMES: return "distinctNames";
 	case RJF_NAME:          *peType = SFT_STR; return "name";
 	case RJF_WITHDATA:      return "entitiesWithCascadeData";
+	case RJF_MS:            return "ms";
+	case RJF_REMAPPED:      return "remapped";
+	case RJF_RELATED:       return "relatedIds";
+	case RJF_REQUIREDBY:    return "requiredByIds";
 	default:                return NULL;
 	}
 }
@@ -194,6 +482,7 @@ static void rj_find(const std::string& dir, std::vector<std::string>& out)
 	X("CIVICOPTION_",   CvCivicOptionInfo)    \
 	X("CIVIC_",         CvCivicInfo)          \
 	X("TRAIT_",         CvTraitInfo)          \
+	X("SPECIALBUILDING_", CvSpecialBuildingInfo) \
 	X("SPECIALIST_",    CvSpecialistInfo)     \
 	X("BONUS_",         CvBonusInfo)          \
 	X("RELIGION_",      CvReligionInfo)       \
@@ -303,7 +592,7 @@ void cascadeLoadJson()
 	rj_find(dataDir, files);
 	gDLL->logMsg("Loading.log", CvString::format("[READJSON] scan dir=%s files=%u ms=%u", dataDir.c_str(), (unsigned)files.size(), (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 
-	int iFailed = 0, iEntities = 0, iResolved = 0, iUnresolved = 0, iShownUnres = 0;
+	int iFailed = 0, iEntities = 0, iResolved = 0, iUnresolved = 0, iShownUnres = 0, iRemapped = 0;
 	std::set<std::string> familyKinds, flagKinds;
 	std::map<std::string, int> topKeys;                       // FULL-COVERAGE census: every top-level key kind -> count
 	std::map<std::string, JsonKeyClass> keyClass;             // key -> its class (for the RJE_KEY completeness line)
@@ -357,14 +646,26 @@ void cascadeLoadJson()
 		rec.data = data;
 		if (data != NULL)
 		{
-			// The truly-ALIASED types (rj_jsonEdit -> GC.m_pa<X>Info) were already mapFrom'd by CvInfo::read() --
-			// do NOT re-map (mapFrom accumulates; a second pass double-counts). The OWNED objects have NO read() and
-			// MUST be mapped here: the synthetic start node (cascadeStartNode) and the complex-trait set (CvComplexTraitTag)
-			// -- both match an aliased type PREFIX (TECH_/TRAIT_) so rj_isAliased(type) is true for them, but they are NOT
-			// the aliased GC objects, so guard on the actual owned-vs-aliased path, not the prefix. (Fixes the empty
-			// TECH_GAME_START -> missing canSetScienceRate/canSetEspionageRate sliders + empty complex traits.)
+			// THE FULL-REGISTRY LINK RE-REGISTRATION (owner constraint: FK links register AFTER all JSONs are
+			// loaded). An ALIASED poco (rj_jsonEdit -> GC.m_pa<X>Info) was mapFrom'd by its category's loader
+			// MID-registry -- any FK naming a later-loading category silently dropped (the cross-category drop
+			// defect, readjson.md: section edges AND subclass typed members alike). The registry is complete HERE,
+			// so the FULL virtual mapFrom re-runs -- mapFrom is IDEMPOTENT BY CONTRACT (CvInfo.h: sections clear via
+			// clearSections, subclass typed containers clear at their parse top), so every link (composed sections +
+			// typed FK members) resolves against the full id space, no mismatch, no double-accumulation. The OWNED
+			// objects -- the synthetic start node (cascadeStartNode) and the complex-trait set (CvComplexTraitTag),
+			// both matching an aliased type PREFIX (TECH_/TRAIT_) without being the aliased GC objects -- get their
+			// FIRST (and only) map here, on the same call.
 			const bool bAliased = !bStartNode && !bComplexTrait && rj_isAliased(rec.type);
-			if (!bAliased) data->mapFrom(rec.value);
+			data->mapFrom(rec.value);
+			if (bAliased)
+			{
+				++iRemapped;
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_REMAPPED, 1)
+					.addStr(RJF_TYPE, rec.type.c_str())
+					.addI(RJF_EDGES, data->getEdges() ? data->getEdges()->count() : 0)
+					.addI(RJF_DEPOSITS, data->getModifiers() ? (int)data->getModifiers()->all().size() : 0));
+			}
 			DepositIndex::pushInfo(data);   // the compiled deposit index PUSH: the info's §6 families (+ whenObsolete)
 			                                // intern + compile HERE, at readJson push-time (modifier-substrate.md)
 		}
@@ -377,7 +678,11 @@ void cascadeLoadJson()
 			else if (c == CJK_FLAG) flagKinds.insert(it->first);
 		}
 	}
-	gDLL->logMsg("Loading.log", CvString::format("[READJSON] PASS2-map (mapFrom+DepositIndex) ms=%u", (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
+	gDLL->logMsg("Loading.log", CvString::format("[READJSON] PASS2-map (mapFrom+DepositIndex) remapped=%d ms=%u", iRemapped, (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
+	// The initial JSON map is DONE -- the spine announcement (the owner's load-lifecycle observability):
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MAP_DONE, 1)
+		.addI(RJF_ENTITIES, iEntities).addI(RJF_RESOLVED, iResolved).addI(RJF_REMAPPED, iRemapped)
+		.addI(RJF_MS, (int)(GetTickCount() - s2sT0)));
 
 	// STASH the probe stats for post-load re-emission (the load-time burst is dark: gPlayerLogLevel is 0 here, so
 	// the log consumer drops these lines -- the [MODIFIER/repo] census re-emits them per turn where logging is live).
@@ -438,7 +743,7 @@ void cascadeLoadJson()
 			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MAP, 1)
 				.addStr(RJF_TYPE, store[s].type.c_str()).addI(RJF_DEPOSITS, cd->getModifiers() ? (int)cd->getModifiers()->all().size() : 0)
 				.addI(RJF_REQBUILD, cd->requiresBuild() ? 1 : 0).addI(RJF_REQOPERATE, cd->requiresOperate() ? 1 : 0)
-				.addI(RJF_EDGES, cd->getEdges() ? (int)cd->getEdges()->all().size() : 0)
+				.addI(RJF_EDGES, cd->getEdges() ? cd->getEdges()->count() : 0)
 				.addI(RJF_ALLOWED, cd->getAllowed() ? (int)cd->getAllowed()->all().size() : 0)
 				.addI(RJF_GRANTLISTS, cd->getGrants() ? (int)cd->getGrants()->lists().size() : 0)
 				.addI(RJF_GRANTPULSES, cd->getGrants() ? cd->getGrants()->pulseCount() : 0));
@@ -485,28 +790,17 @@ void cascadeLoadJson()
 		{
 			const CvInfo* jb = InfoRepo<CvBonusInfo>::get().get(b);
 			if (jb == NULL || jb->getEdges() == NULL) continue;
-			const std::vector<int>* routes = jb->getEdges()->find("enables.routes");
+			const std::vector<int>* routes = jb->getEdges()->find(EDGEF_ENABLES, EDGEB_ROUTES);
 			if (routes != NULL)
 				for (size_t r = 0; r < routes->size(); ++r)
 					static_cast<CvRouteInfo*>(InfoRepo<CvRouteInfo>::get().editPtr((*routes)[r]))->addPrereqOrBonus((BonusTypes)b);
 			// the single AND-prereq bonus rides a DISTINCT bucket (store.py routesAnd) so it stays out of the OR-list --
 			// getPrereqBonus (the CvPlot build gate), not getPrereqOrBonuses. A route has at most one single AND bonus.
-			const std::vector<int>* routesAnd = jb->getEdges()->find("enables.routesAnd");
+			const std::vector<int>* routesAnd = jb->getEdges()->find(EDGEF_ENABLES, EDGEB_ROUTES_AND);
 			if (routesAnd != NULL)
 				for (size_t r = 0; r < routesAnd->size(); ++r)
 					static_cast<CvRouteInfo*>(InfoRepo<CvRouteInfo>::get().editPtr((*routesAnd)[r]))->setPrereqBonus((BonusTypes)b);
 		}
-	}
-
-	// IMPROVEMENT self-FK resolution -- upgradesTo/pillageTo/alternativeUpgrades are improvement->improvement FKs.
-	// SetGlobalClassInfo registers each improvement's id AFTER its read()/mapFrom (CvXMLLoadUtilitySet.cpp: read at
-	// :1604, register at :1626), so a same-class FORWARD reference is unresolvable at read() time and silently drops
-	// (dead upgrade chains + the updatePlotHelp AV). The poco stashed the raw ids at read(); resolve them HERE, once,
-	// against the complete registry -- the intended "cascadeLoadJson owns FK resolution" model, NOT XML delayed resolution.
-	{
-		const int nImp = GC.getNumImprovementInfos();
-		for (int i = 0; i < nImp; ++i)
-			static_cast<CvImprovementInfo*>(InfoRepo<CvImprovementInfo>::get().editPtr(i))->resolveDeferredFks();
 	}
 
 	// STORE-INVERTED TECH-FK REVERSE INDEX -- the Route<-bonus pattern above, generalized. curate_*.py DROP each
@@ -524,43 +818,43 @@ void cascadeLoadJson()
 			if (jt == NULL || jt->getEdges() == NULL) continue;
 			const CvJsonEdges* e = jt->getEdges();
 			const TechTypes eTech = (TechTypes)t;
-			if (const std::vector<int>* v = e->find("enables.bonuses"))
+			if (const std::vector<int>* v = e->find(EDGEF_ENABLES, EDGEB_BONUSES))
 				for (size_t k = 0; k < v->size(); ++k)
 				{
 					CvBonusInfo* p = static_cast<CvBonusInfo*>(InfoRepo<CvBonusInfo>::get().editPtr((*v)[k]));
 					if (p->getTechReveal() == NO_TECH) { p->setTechReveal(eTech); p->setTechCityTrade(eTech); }   // first (lowest-id) tech wins -- merged/indistinguishable
 				}
-			if (const std::vector<int>* v = e->find("obsoletes.bonuses"))
+			if (const std::vector<int>* v = e->find(EDGEF_OBSOLETES, EDGEB_BONUSES))
 				for (size_t k = 0; k < v->size(); ++k)
 					static_cast<CvBonusInfo*>(InfoRepo<CvBonusInfo>::get().editPtr((*v)[k]))->setTechObsolete(eTech);
-			if (const std::vector<int>* v = e->find("obsoletes.builds"))
+			if (const std::vector<int>* v = e->find(EDGEF_OBSOLETES, EDGEB_BUILDS))
 				for (size_t k = 0; k < v->size(); ++k)
 					static_cast<CvBuildInfo*>(InfoRepo<CvBuildInfo>::get().editPtr((*v)[k]))->setObsoleteTech(eTech);
-			if (const std::vector<int>* v = e->find("enables.projects"))
+			if (const std::vector<int>* v = e->find(EDGEF_ENABLES, EDGEB_PROJECTS))
 				for (size_t k = 0; k < v->size(); ++k)
 					static_cast<CvProjectInfo*>(InfoRepo<CvProjectInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
-			if (const std::vector<int>* v = e->find("enables.corporations"))
+			if (const std::vector<int>* v = e->find(EDGEF_ENABLES, EDGEB_CORPORATIONS))
 				for (size_t k = 0; k < v->size(); ++k)
 					static_cast<CvCorporationInfo*>(InfoRepo<CvCorporationInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
-			if (const std::vector<int>* v = e->find("obsoletes.corporations"))
+			if (const std::vector<int>* v = e->find(EDGEF_OBSOLETES, EDGEB_CORPORATIONS))
 				for (size_t k = 0; k < v->size(); ++k)
 					static_cast<CvCorporationInfo*>(InfoRepo<CvCorporationInfo>::get().editPtr((*v)[k]))->setObsoleteTech(eTech);
-			if (const std::vector<int>* v = e->find("enables.religions"))
+			if (const std::vector<int>* v = e->find(EDGEF_ENABLES, EDGEB_RELIGIONS))
 				for (size_t k = 0; k < v->size(); ++k)
 					static_cast<CvReligionInfo*>(InfoRepo<CvReligionInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
-			if (const std::vector<int>* v = e->find("enables.processes"))
+			if (const std::vector<int>* v = e->find(EDGEF_ENABLES, EDGEB_PROCESSES))
 				for (size_t k = 0; k < v->size(); ++k)
 					static_cast<CvProcessInfo*>(InfoRepo<CvProcessInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
-			if (const std::vector<int>* v = e->find("enables.promotions"))
+			if (const std::vector<int>* v = e->find(EDGEF_ENABLES, EDGEB_PROMOTIONS))
 				for (size_t k = 0; k < v->size(); ++k)
 					static_cast<CvPromotionInfo*>(InfoRepo<CvPromotionInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
-			if (const std::vector<int>* v = e->find("obsoletes.promotions"))
+			if (const std::vector<int>* v = e->find(EDGEF_OBSOLETES, EDGEB_PROMOTIONS))
 				for (size_t k = 0; k < v->size(); ++k)
 					static_cast<CvPromotionInfo*>(InfoRepo<CvPromotionInfo>::get().editPtr((*v)[k]))->setObsoleteTech(eTech);
-			if (const std::vector<int>* v = e->find("enables.promotionLines"))
+			if (const std::vector<int>* v = e->find(EDGEF_ENABLES, EDGEB_PROMOTION_LINES))
 				for (size_t k = 0; k < v->size(); ++k)
 					static_cast<CvPromotionLineInfo*>(InfoRepo<CvPromotionLineInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
-			if (const std::vector<int>* v = e->find("obsoletes.promotionLines"))
+			if (const std::vector<int>* v = e->find(EDGEF_OBSOLETES, EDGEB_PROMOTION_LINES))
 				for (size_t k = 0; k < v->size(); ++k)
 					static_cast<CvPromotionLineInfo*>(InfoRepo<CvPromotionLineInfo>::get().editPtr((*v)[k]))->setObsoleteTech(eTech);
 		}
@@ -570,11 +864,21 @@ void cascadeLoadJson()
 		{
 			const CvInfo* jp = InfoRepo<CvProjectInfo>::get().get(pr);
 			if (jp == NULL || jp->getEdges() == NULL) continue;
-			if (const std::vector<int>* v = jp->getEdges()->find("enables.projects"))
+			if (const std::vector<int>* v = jp->getEdges()->find(EDGEF_ENABLES, EDGEB_PROJECTS))
 				for (size_t k = 0; k < v->size(); ++k)
 					static_cast<CvProjectInfo*>(InfoRepo<CvProjectInfo>::get().editPtr((*v)[k]))->addProjectNeeded(pr);
 		}
 	}
+
+	// THE REVERSE VIEW -- inverted onto the referenced infos' own edges, so every consumer reads its info
+	// directly (the pedia/tooltip candidate lists; modifier.md par.1). Runs after every FK/compat view above
+	// so it inverts the final reconstructed getters.
+	rj_buildReverseView();
+	// The reverse-view build is DONE -- the spine announcement (counts pre-dedup: the raw inversion volume).
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_REVERSE_DONE, 1)
+		.addI(RJF_RELATED, s_rvRelated).addI(RJF_REQUIREDBY, s_rvRequiredBy).addI(RJF_MS, (int)s_rvMs));
+	gDLL->logMsg("Loading.log", CvString::format("[READJSON] reverse-view related=%d requiredBy=%d ms=%u",
+		s_rvRelated, s_rvRequiredBy, (unsigned)s_rvMs).c_str(), true, false);
 
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MAP_SUMMARY, 1).addI(RJF_WITHDATA, iAttached));
 	gDLL->logMsg("Loading.log", CvString::format("[READJSON] END withData=%d reverseIndex+survey done totalMs=%u", iAttached, (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);

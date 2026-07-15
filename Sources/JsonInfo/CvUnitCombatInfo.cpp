@@ -159,14 +159,28 @@ CvUnitCombatInfo::CvUnitCombatInfo()
 	  m_bAnyDomainModifierPercent(false)
 {
 	for (int i = 0; i < NUM_DOMAIN_TYPES; ++i) m_aiDomainModifierPercent[i] = 0;
+	// Runtime, non-XML: a per-type random hash contribution -- drawn ONCE at construction exactly as the archived
+	// CvUnitCombatInfo ctor did (never in mapFrom: the full-registry pass re-runs mapFrom, and a re-run must not
+	// redraw the synced RNG).
+	m_zobristValue = GC.getGame().getSorenRand().getInt();
 }
 
 void CvUnitCombatInfo::mapFrom(const picojson::value& entity)
 {
-	CvInfo::mapFrom(entity);   // core reading + the section dispatch into the composed units
+	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom -- fully define every appending vector.
+	m_aiGGptsforUnitTypes.clear(); m_aiDefaultStatusTypes.clear();
+	m_terrainAttack.clear(); m_terrainDefense.clear(); m_terrainWork.clear();
+	m_featureAttack.clear(); m_featureDefense.clear(); m_featureWork.clear();
+	m_buildWork.clear(); m_unitCombatMod.clear(); m_flanking.clear(); m_trapAvoidance.clear();
+	m_aiOnGameOptions.clear(); m_aiNotOnGameOptions.clear();
+	m_aiTerrainDoubleMove.clear(); m_aiFeatureDoubleMove.clear(); m_aiTrapImmunity.clear();
+	m_aInvisibleTerrainChanges.clear(); m_aVisibleTerrainChanges.clear(); m_aVisibleTerrainRangeChanges.clear();
+	m_aInvisibleFeatureChanges.clear(); m_aVisibleFeatureChanges.clear(); m_aVisibleFeatureRangeChanges.clear();
+	m_aInvisibleImprovementChanges.clear(); m_aVisibleImprovementChanges.clear(); m_aVisibleImprovementRangeChanges.clear();
+	m_aiInvisibilityIntensity.clear(); m_aiVisibilityIntensity.clear();
+	m_aiVisibilityIntensityRange.clear(); m_aiVisibilityIntensitySameTile.clear();
 
-	// Runtime, non-XML: a per-type random hash contribution (the archived CvUnitCombatInfo set this in its ctor).
-	m_zobristValue = GC.getGame().getSorenRand().getInt();
+	CvInfo::mapFrom(entity);   // core reading + the section dispatch into the composed units
 
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();

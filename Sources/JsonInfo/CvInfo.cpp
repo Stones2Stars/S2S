@@ -26,6 +26,31 @@ const std::vector<int>& CvInfo::dormantTriggers() const
 
 void CvInfo::mapFrom(const picojson::value& entity)
 {
+	clearSections();          // idempotency contract: a re-run (the full-registry pass) fully redefines the sections
+	mapSections(entity);
+}
+
+// The clear-first half of the idempotent mapFrom: reset every composed unit this type carries (each unit's
+// clearParsed is its dtor body -- single-sourced), so the full-registry re-run cannot double-accumulate.
+void CvInfo::clearSections()
+{
+	if (CvJsonEdges* u = mutEdges())            u->clearParsed();
+	if (CvJsonProvides* u = mutProvides())      u->clearParsed();
+	if (CvJsonAllowed* u = mutAllowed())        u->clearParsed();
+	if (CvJsonGrants* u = mutGrants())          u->clearParsed();
+	if (CvJsonRequires* u = mutRequires())      u->clearParsed();
+	if (CvJsonGate* u = mutGate())              u->clearParsed();
+	if (CvJsonModifiers* u = mutModifiers())    u->clearParsed();
+	if (CvJsonModifiers* u = mutWhenObsolete()) u->clearParsed();
+	if (CvJsonBoolBlock* u = mutSkills())       u->clearParsed();
+	if (CvJsonBoolBlock* u = mutTags())         u->clearParsed();
+	if (CvJsonBoolBlock* u = mutAttributes())   u->clearParsed();
+	if (CvJsonBoolBlock* u = mutCapabilities()) u->clearParsed();
+	if (CvJsonBoolBlock* u = mutPolicies())     u->clearParsed();
+}
+
+void CvInfo::mapSections(const picojson::value& entity)
+{
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
 	std::string s;

@@ -100,6 +100,7 @@ public:
 	int scopedPulseSumAllScopes100(const std::string& szChannel) const;   // one channel summed over its scopes
 	bool flag(const std::string& szName) const { return m_flags.count(szName) != 0; }
 	int pulseCount() const { return (int)m_pulses100.size(); }            // census read
+	void clearParsed();   // frees the owned entries + resets (the dtor body; the clear-first half of the section re-map)
 
 	const std::map<std::string, std::vector<int> >& lists() const { return m_lists; }
 	const std::vector<CvJsonFoundBuilding*>& foundBuildings() const { return m_foundBuildings; }

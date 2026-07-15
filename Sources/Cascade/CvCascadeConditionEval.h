@@ -49,7 +49,13 @@ struct CvCascadeEvalCtx
 	// (EnablerKernel::recomputeOperatingBuildingsInto, in the SAME pass as activeBuildings -- the standing operatingBuildings cache); the evaluator READS it (stays
 	// decoupled from InfoRepo). Computed from JSON, NEVER read from the engine's hasVicinityBonus. NULL = none.
 	const std::set<int>* vicinityProvidedBonuses;
-	CvCascadeEvalCtx() : city(NULL), player(NULL), team(NULL), plot(NULL), unit(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL), obsoleteBuildings(NULL), vicinityProvidedBonuses(NULL) {}
+	// The ENABLER-GATE atom mode (set by EnablerKernel::requiresMet): a city-scope BUILDING presence atom reads
+	// raw PRESENCE -- the §7 object-owned has-list, the engine PrereqInCity/NotInCity mirror (a present-but-
+	// DORMANT building still satisfies a positive prereq and still blocks a noneOf exclusion -- the burial-
+	// tradition case). Deposits and the operate fixpoint keep the ACTIVE read (a dormant building deposits
+	// nothing, json §3.2).
+	bool buildingAtomsPresence;
+	CvCascadeEvalCtx() : city(NULL), player(NULL), team(NULL), plot(NULL), unit(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL), obsoleteBuildings(NULL), vicinityProvidedBonuses(NULL), buildingAtomsPresence(false) {}
 };
 
 // Evaluator flags (StoneBase's init-only props). For a `requires.build` gate set strictStateReligionForBuild=true.

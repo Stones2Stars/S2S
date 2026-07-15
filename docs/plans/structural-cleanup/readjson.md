@@ -131,10 +131,36 @@ add real handling per `json.md` §5 (grants: lists, numeric pulses, `foundBuildi
   replaced-type `LoadGlobalClassInfo(GC.m_pa<X>Info, "CIV4<X>Infos", …)` XML calls are DELETED (reading a replaced
   info's XML into the game is HARD BANNED — [DEC-no-xml-into-game]); the legacy XMLs stay in the tree as curator input
   only. `mapFrom` IS the per-info read — `CvInfo::read()` (the old `CvHotkeyInfo::read(XML)` + mapFrom hook) and its
-  `cascadeJsonForType` index are REMOVED. **`cascadeLoadJson` now only wires foreign keys** (the reverse-index tail +
-  the census + DepositIndex push); it no longer maps aliased types (they are mapped by the loader). FK-resolution
+  `cascadeJsonForType` index are REMOVED. **`cascadeLoadJson` now only wires foreign keys** — the forward-compat FK
+  reconstruction (un-inverting the curator's store-inversion back into the target FK getters: routes←bonus, the
+  tech-FK getters, project←project, improvement self-FKs, and the building-obsoletion forward view
+  `tech.obsoletes.buildings` ← the target-side `obsoletedBy.techs` — this is reverse-MAPPING, not a reverse lookup), **the
+  REVERSE VIEW** (`rj_buildReverseView`: `EDGEF_RELATED` display candidates + `EDGEF_REQUIRED_BY`, the
+  requires-reverse-index, populated onto the referenced infos —
+  [DEC-one-reverse-view](../../architecture/decisions.md#dec-one-reverse-view)), the census, and the DepositIndex
+  push; it no longer maps aliased types (they are mapped by the loader). FK-resolution
   timing is preserved because the per-category loaders run in the same order the XML loads did.
 + **`BoolExpr` is the deliberate reuse** (`cascade-engine-430.md` §2b) — the one existing piece pulled out, not rebuilt.
+
+> **⚖ THE FULL-REGISTRY LINK RE-REGISTRATION (owner constraint): FK links register AFTER all JSONs are initially
+> loaded.** Two-phase, exactly: (1) every info is individually READ — created + id-registered at its category's
+> load moment (an aliased poco's loader-time `mapFrom` would drop any FK naming a later-loading category — the
+> cross-category drop class, found live via `/state/info`; it hit section edges AND subclass typed members alike:
+> specialist `greatPeopleUnit`→UNIT, unitcombat `defaultStatuses`→PROMOTION, building/unit
+> `enabledCivilizations`→CIVILIZATION, …); (2) `cascadeLoadJson`'s full-registry pass **re-runs the FULL virtual
+> `mapFrom` on every ALIASED entity**. `mapFrom` is **IDEMPOTENT BY CONTRACT** (`CvInfo.h`): the base clears the
+> composed sections (`clearSections` → each unit's `clearParsed`) before the dispatch, and every subclass clears
+> its accumulating typed containers (vectors, `+=` maps/arrays, `IDValueMap::clear`) at the top of its own parse
+> — so ALL links (sections + typed FK members) resolve against the complete id space, no mismatch, no
+> double-accumulation. Per-member deferral idioms are retired (the improvement `resolveDeferredFks` stash);
+> RNG-derived per-info values (the zobrist seeds) live in the CONSTRUCTORS, never in `mapFrom`, so a re-run never
+> redraws. The synthetic `TECH_GAME_START` routes to `cascadeStartNode` in every dispatch
+> (`rvRefInfo`/`rjInfoForType`) — one object, no split-brain. The load announces itself on the spine:
+> `[READJSON/remapped]` per entity (what it maps), `[READJSON/map-done]` (entities/resolved/remapped/ms),
+> `[READJSON/reverse-done]` (related/requiredBy counts/ms). **Standing acceptance: `/state/info?type=X` ≡ the
+> authored JSON** (validation.md) — the response carries the edge families AND a per-kind `typed` block
+> (greatPeopleUnit / ggPointsForUnits / defaultStatuses / enabledCivilizations), both verified live against the
+> authored data.
 
 ---
 

@@ -14,6 +14,7 @@
 #include "CvDerivedData.h"
 #include "Cascade/CvCascadeAccumulator.h"   // CascadeCityPackages -- the #430 city scope packages (m_cascadeCityPackages)
 #include "Cascade/CvCascadeOperatingBuildings.h"     // OperatingBuildings -- the standing cascade operating-buildings cache (m_operatingBuildings)
+#include "Cascade/CvEnabler.h"              // CityEnabler -- the standardized enabler's per-city domain vectors (m_enabler)
 #include "UI/CityOutputHistory.h"
 #include "CvGameObject.h"
 
@@ -1397,6 +1398,12 @@ public:
 	int getHomeAreaMaintenanceSavedTimes100ByCivic(CivicTypes eCivic) const;
 	int getOtherAreaMaintenanceSavedTimes100ByCivic(CivicTypes eCivic) const;
 
+	// The TWO-PHASE stream read (the load reseed): readIdentity deserializes just m_iID (the first element), so
+	// the stream loop can REGISTER the city in its owner's m_cities BEFORE readBody streams the rest -- the
+	// city's own in-read DOMAIN emits then resolve through the ordinary registry lookup. Same bytes, same order
+	// as the old single read() (no save-format change); read() remains the pair for any one-shot caller.
+	void readIdentity(FDataStreamBase* pStream);
+	void readBody(FDataStreamBase* pStream);
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);
 
@@ -1856,6 +1863,9 @@ public:
 	// #430: the standing cascade operating buildings (active set + vicinity provides) -- same derived-cache idiom
 	// (never serialized; event-marked; the slice boundary is the self-heal). Query via EnablerKernel::operatingBuildings/wireOperatingBuildings.
 	mutable OperatingBuildings m_operatingBuildings;
+	// #430: the standardized per-city enabler (enabler.md par.7 -- CvEnabler.h): the city's constructible domain,
+	// seeded once + event-maintained by BuildingEnabler. Never serialized; reset() unseeds (lazy re-seed on read).
+	mutable CityEnabler m_enabler;
 	void refreshOperatingBuildings(int iMask) const;   // the CacheSet's refresh delegate -> EnablerKernel::recomputeOperatingBuildingsInto
 protected:
 

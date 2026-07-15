@@ -116,6 +116,11 @@ static int sumFlatAsIs(const picojson::value* flat)
 
 void CvCorporationInfo::mapFrom(const picojson::value& entity)
 {
+	// remap-idempotency (CvInfo.h): demux ACCUMULATES (+=) into the yield/commerce arrays and appends the prereqs.
+	for (int y = 0; y < NUM_YIELD_TYPES; ++y)    { m_aiYieldChange[y] = 0;    m_aiYieldProduced[y] = 0; }
+	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) { m_aiCommerceChange[c] = 0; m_aiCommerceProduced[c] = 0; }
+	m_aePrereqBonuses.clear(); m_aeExcludes.clear();
+
 	CvInfo::mapFrom(entity);   // base: text + availability (enables.buildings, provides.bonuses, tech/bonus enables.corporations)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();

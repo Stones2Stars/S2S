@@ -12054,13 +12054,31 @@ BuildingTypes CvCityAI::AI_bestAdvancedStartBuilding(int iPass)
 
 void CvCityAI::read(FDataStreamBase* pStream)
 {
+	readIdentity(pStream);
+	readBody(pStream);
+}
+
+// Phase 1 of the two-phase stream read (CvCity.h): open the CvCityAI wrapper object + deserialize just the
+// identity (m_iID via CvCity::readIdentity), so the stream loop can REGISTER the city in its owner's m_cities
+// before readBody streams the rest (the city's own in-read reseed emits then resolve by ordinary id lookup).
+void CvCityAI::readIdentity(FDataStreamBase* pStream)
+{
 	CvTaggedSaveFormatWrapper& wrapper = CvTaggedSaveFormatWrapper::getSaveFormatWrapper();
 
 	wrapper.AttachToStream(pStream);
 
 	WRAPPER_READ_OBJECT_START(wrapper);
 
-	CvCity::read(pStream);
+	CvCity::readIdentity(pStream);
+}
+
+void CvCityAI::readBody(FDataStreamBase* pStream)
+{
+	CvTaggedSaveFormatWrapper& wrapper = CvTaggedSaveFormatWrapper::getSaveFormatWrapper();
+
+	wrapper.AttachToStream(pStream);
+
+	CvCity::readBody(pStream);
 
 	WRAPPER_READ(wrapper, "CvCityAI", &m_iEmphasizeAvoidGrowthCount);
 	WRAPPER_READ(wrapper, "CvCityAI", &m_iEmphasizeGreatPeopleCount);

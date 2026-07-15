@@ -253,6 +253,12 @@ CvTraitInfo::CvTraitInfo()
 
 void CvTraitInfo::mapFrom(const picojson::value& entity)
 {
+	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom -- fully define every appending vector
+	// (the IDValueMap setValue + the freePromotions map-of-sets re-apply identically: no clear needed).
+	m_aBuildingProductionModifiers.clear(); m_aUnitProductionModifiers.clear();
+	m_aSpecialUnitProductionModifiers.clear(); m_aUnitCombatProductionModifiers.clear();
+	m_aUnitCombatFreeExperiences.clear(); m_aCivicOptionNoUpkeepTypes.clear(); m_aDisallowedTraitTypes.clear();
+
 	CvInfo::mapFrom(entity);   // core reading + section dispatch (edges/grants/modifiers/policies)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();

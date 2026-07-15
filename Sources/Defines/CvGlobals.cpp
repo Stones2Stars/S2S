@@ -3356,10 +3356,10 @@ void cvInternalGlobals::doPostLoadCaching()
 		const TraitTypes ePrereq = static_cast<TraitTypes>(iI);
 		const CvJsonEdges* pEdges = getTraitInfo(ePrereq).getEdges();
 		if (pEdges == NULL) continue;
-		if (const std::vector<int>* andT = pEdges->find("enables.traitsAnd"))
+		if (const std::vector<int>* andT = pEdges->find(EDGEF_ENABLES, EDGEB_TRAITS_AND))
 			for (size_t j = 0; j < andT->size(); ++j)
 				getTraitInfo(static_cast<TraitTypes>((*andT)[j])).setPrereqTrait(ePrereq);
-		if (const std::vector<int>* orT = pEdges->find("enables.traitsOr"))
+		if (const std::vector<int>* orT = pEdges->find(EDGEF_ENABLES, EDGEB_TRAITS_OR))
 			for (size_t j = 0; j < orT->size(); ++j)
 				getTraitInfo(static_cast<TraitTypes>((*orT)[j])).addPrereqOrTrait(ePrereq);
 	}
@@ -3369,7 +3369,7 @@ void cvInternalGlobals::doPostLoadCaching()
 		const TechTypes eTech2 = static_cast<TechTypes>(iI);
 		const CvJsonEdges* pEdges = getTechInfo(eTech2).getEdges();
 		if (pEdges == NULL) continue;
-		if (const std::vector<int>* traits = pEdges->find("enables.traits"))
+		if (const std::vector<int>* traits = pEdges->find(EDGEF_ENABLES, EDGEB_TRAITS))
 			for (size_t j = 0; j < traits->size(); ++j)
 				getTraitInfo(static_cast<TraitTypes>((*traits)[j])).setPrereqTech(eTech2);
 	}

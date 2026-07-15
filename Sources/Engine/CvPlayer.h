@@ -7,6 +7,7 @@
 
 #include "Tools/copy_iterator.h"
 #include "Cascade/CvCascadeScopePackages.h"   // CascadePlayerScope -- the #430 player scope packages (m_cascadePlayerScope)
+#include "Cascade/CvEnabler.h"                // PlayerEnabler -- the standardized enabler's player-domain vectors (m_enabler)
 #include "UI/CvBuildLists.h"
 #include "AI/CvCityAI.h"
 #include "AI/CvContractBroker.h"
@@ -84,6 +85,12 @@ public:
 	// the query surface; the cache lives ON the object it caches for.
 	mutable CascadePlayerScope m_cascadePlayerScope;
 	void cascadeRefreshPlayerScope(int iMask) const;   // the CacheSet's refresh delegate -> CascadeAccumulator::refreshPlayerScope
+
+	// #430: the standardized ENABLER object (enabler.md par.7/7.1) -- the player-domain maintained vectors
+	// (techs first). The delta-apply SIBLING of CvDerivedCache: seeded once at load, updated in place by the
+	// spine consumer's O(delta) events, read as bare O(1) lookups. Never serialized. Mutable for the one-time
+	// lazy seed guard on const reads (the m_cascadePlayerScope precedent).
+	mutable PlayerEnabler m_enabler;
 
 	void setIdleCity(const int iCityID, const bool bNewValue);
 	bool hasIdleCity() const;
@@ -321,7 +328,6 @@ public:
 	bool canCreate(ProjectTypes eProject, bool bContinue = false, bool bTestVisible = false) const;
 	bool canMaintain(ProcessTypes eProcess) const;
 	// the #430 enabler-flip net oracles (the intact pre-flip bodies)
-	bool canResearchLegacy(const TechTypes eTech, const bool bRightNow = true, const bool bSpecialRequirements = true) const;
 	bool canDoCivicsLegacy(CivicTypes eCivic) const;
 	bool canHurryLegacy(HurryTypes eIndex) const;
 	bool canFoundReligionLegacy() const;

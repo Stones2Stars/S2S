@@ -45,6 +45,9 @@ int CvReligionInfo::getNumFreeUnits() const
 
 void CvReligionInfo::mapFrom(const picojson::value& entity)
 {
+	// remap-idempotency (CvInfo.h): the state-religion/holy-city demux below ACCUMULATES (+=) -- start from zero.
+	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) { m_aiStateReligionCommerce[c] = 0; m_aiHolyCityCommerce[c] = 0; }
+	shrineCommerce.clear();
 	CvInfo::mapFrom(entity);   // base: text + availability (enables.buildings/units, grants.freeUnit/numFreeUnits)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();

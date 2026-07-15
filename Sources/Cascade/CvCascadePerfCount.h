@@ -20,11 +20,11 @@ enum CascadeCondCaller
 	CC_WB,          // wellbeing computes/gathers (city terms + player fold maps + the oracle)
 	CC_SCALARS,     // the scalar channel fills (gp/defense/maint/trade/buildRate, city + player)
 	CC_OPERATING_BUILDINGS,       // the operating buildings fixpoint (recomputeOperatingBuildingsInto)
-	CC_FRONT_B,     // the buildable frontier fill (BuildingEnabler::buildable)
-	CC_FRONT_U,     // the trainable frontier fill (UnitEnabler::trainable)
-	CC_FRONT_PP,    // the creatable+maintainable fills (generate + the two gateSets)
+	CC_FRONT_B,     // RETIRED tag (the whole-set buildable fill died with the city box) -- kept for slot stability
+	CC_FRONT_U,     // RETIRED tag (the whole-set trainable fill died with the city box) -- kept for slot stability
+	CC_FRONT_PP,    // RETIRED tag (the creatable+maintainable box fills died with the city box) -- kept for slot stability
 	CC_FRONT_P,     // the researchable/civics/hurries/buildRem player fill
-	CC_CANBUILD,    // the canBuild UNLOCK reads (enBuildUnlocked -- per-(build,plot), worker-AI hot)
+	CC_CANBUILD,    // RETIRED tag (the canBuild unlock is a bare builds-domain read now) -- kept for slot stability
 	CC_PROMO,       // the promotion frontier halves + the per-unit composite
 	CC_COUNT
 };

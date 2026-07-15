@@ -43,6 +43,10 @@
 ## City production
 
 - `doTurn` order: `doCheckProduction` → food → culture → `doAutobuild` → `doProduction` (growth precedes hammers).
+- **Projects build exactly like units/buildings/wonders** — one city's queue, hammers in, order completes (the
+  effect lands team-wide). ⚠ The engine *looks* like it supports multiple cities working on the same project
+  (per-city `m_paiProjectProduction`), but that multi-city production feed **does not actually work** — a
+  project is effectively single-city built. Changing that is a post-migration redesign, not a #430 item.
 - **Hammers/turn** = `max(1, extraYield + overflow(if flag) + foodSurplus(if FoodProduction) + (baseYieldRate +
   specialistYield)·baseYieldRateModifier/100)`. `isDisorder()` → 0. Process-mode converts to gold/science/culture
   (no overflow).

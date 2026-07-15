@@ -284,14 +284,16 @@ missed invalidation must surface as a live divergence, never be silently rebuilt
 ### DEC-spine-reseed
 
 On load, the cascade is built from events that come from **inside the save read itself** — reading a fact off the
-stream is what fires its DOMAIN event (`CvGame::read` → `CvPlayer`/`CvCity`/`CvTeam`/`CvPlot::read`); the north-star is
+stream is what fires its DOMAIN event (`CvGame::read` → `CvPlayer`/`CvCity`/`CvPlot::read`); the north-star is
 the event SETTING the state (read → emit → populate), object-populated-by-events being a known step-too-far for now.
 It is NOT a separate post-deserialization pass that fabricates events by walking already-populated objects — that
-pseudo-emit is banned ([superseded-ideas](superseded-ideas.md) #13); no clean middle exists, so the event-sourced
-read is built as its own step. The load lifecycle is bracketed by `GAME_LOAD_STARTED` / `GAME_LOAD_FINISHED` spine
-events; result-producers (grants) rely PURELY on the spine and suppress between them (a grant is a RESULT of a genuine
-in-play acquisition; a load is not one), while the cache-build consumer stays load-active. New game builds the same
-way (real init fires the same events, grants active). **Status: not built** — the accepted design, the next build.
+pseudo-emit is banned ([superseded-ideas](superseded-ideas.md) #13) — and equally NOT a warm-up "seed" that walks
+has-lists into a consumer's cache beside the event stream (an invented second build mechanism that leaves the
+consumer deaf to the reseed and defeats the missed-emit tripwire). The load lifecycle is bracketed by
+`GAME_LOAD_STARTED` / `GAME_LOAD_FINISHED` spine events; result-producers (grants) rely PURELY on the spine and
+suppress between them (a grant is a RESULT of a genuine in-play acquisition; a load is not one), while the
+cache-build consumer stays load-active. New game builds the same way (real init fires the same events, grants
+active). **The reseed emits + the bracket are BUILT and live** (verified in `Cascade.log`).
 **Home:** [event-spine.md](../specs/event-spine.md).
 
 ### DEC-verify-in-game-not-reshadow
@@ -320,6 +322,15 @@ Reading a REPLACED info's legacy XML **into the running game is HARD BANNED**. T
 in the tree as **curator INPUT ONLY** (removing them broke the curator); the game registers + populates replaced
 infos from the **JSON** load path, never from `LoadGlobalClassInfo(GC.m_pa<X>Info, "CIV4<X>Infos", …)`. Their presence
 for the curator is not license to load them at runtime — the recurring rollerskate. **Home:** [AGENTS.md](../../AGENTS.md) Build And Test.
+
+### DEC-one-reverse-view
+
+Reverse lookups ("who references me") are populated ONCE, at the JSON read, as reverse edge FAMILIES on the
+referenced info object itself (`EDGEF_RELATED` = the display/pedia candidate lists; `EDGEF_REQUIRED_BY` = the
+enabler's requires-reverse-index). After load every info ALREADY CARRIES its reverse lookups: a consumer
+(CvGameTextMgr, an enabler, anything) reads its info's own lists — never a whole-database scan on a hot path,
+and never a bespoke reverse view or side index of its own (especially not inside an enabler).
+**Home:** [modifier.md §1](../specs/modifier.md).
 
 ### DEC-enabler-not-cascade
 

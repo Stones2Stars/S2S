@@ -3,10 +3,11 @@
 #define CV_CASCADE_INVALIDATION_H
 
 //
-//	CvCascadeInvalidation -- the #430 F0 cache-invalidation consumer (R3): the ONE IEventConsumer that turns a DOMAIN
-//	state-change event into the package dirty-marks its source touches, so the event SPINE is the front door for
-//	invalidation. It also emits a [CASCADE] invalidate observability line per mark, so the invalidation flow is
-//	verifiable in Cascade.log. See the .cpp for the staged-wiring rationale + the load-inert behaviour.
+//	CvCascadeInvalidation -- the #430 F0 cache consumer (R3): the ONE IEventConsumer with two halves -- the
+//	ENABLER deltas (LOAD-ACTIVE: the reseed's in-read emits build the enabler domains through the same appliers
+//	as play, DEC-spine-reseed) and the MODIFIER package dirty-marks (load-inert; the spine as invalidation's
+//	front door). It also emits a [CASCADE] invalidate observability line per mark, so the invalidation flow is
+//	verifiable in Cascade.log. See the .cpp for the staged-wiring rationale + the per-half load behaviour.
 //
 
 void cascadeRegisterInvalidation();   // register the R3 consumer on the event spine (from spineRegisterConsumers)

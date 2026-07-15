@@ -66,7 +66,7 @@ public:
 	int getEveryoneSpecialUnit() const { return m_iEveryoneSpecialUnit; }   // grants.grantsSpecialUnit (no current project authors it -> NO_SPECIALUNIT)
 	const char* getMovieArtDef() const { return m_szMovieArtDef.c_str(); }  // ui.art.movie.defineTag
 	int getEveryoneSpecialBuilding() const                                 // enables.specialBuildings (first; legacy carried one) -> NO_SPECIALBUILDING when absent
-	{ const std::vector<int>* v = edge("enables.specialBuildings"); return (v && !v->empty()) ? (*v)[0] : -1; }
+	{ const std::vector<int>* v = edge(EDGEF_ENABLES, EDGEB_SPECIAL_BUILDINGS); return (v && !v->empty()) ? (*v)[0] : -1; }
 	// TechPrereq and PrereqProjects are store-INVERTED onto the OTHER entity (tech.enables.projects / the prerequisite
 	// project's enables.projects, set-based -- the per-edge iNeeded count is dropped, all 1 today, curate_project.py:27).
 	// The project's own JSON carries NO back-reference, so they are reconstructed at LOAD by the cascadeLoadJson tech-FK

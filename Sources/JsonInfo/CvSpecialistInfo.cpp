@@ -58,6 +58,8 @@ static int readWellbeing(const picojson::object& o, const char* family, std::map
 
 void CvSpecialistInfo::mapFrom(const picojson::value& entity)
 {
+	// remap-idempotency (CvInfo.h): readWellbeing ACCUMULATES (+=) into the tech maps; the XP vector appends.
+	m_techHealth.clear(); m_techHappiness.clear(); m_aUnitCombatExperienceTypes.clear();
 	CvInfo::mapFrom(entity);   // core reading + availability
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();

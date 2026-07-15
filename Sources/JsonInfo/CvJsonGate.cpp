@@ -8,8 +8,13 @@
 
 CvJsonGate::~CvJsonGate()
 {
-	delete enabled;
-	delete disabled;
+	clearParsed();
+}
+
+void CvJsonGate::clearParsed()
+{
+	delete enabled;  enabled = NULL;
+	delete disabled; disabled = NULL;
 }
 
 void CvJsonGate::parseEnabled(const picojson::value& v)

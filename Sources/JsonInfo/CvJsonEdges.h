@@ -3,13 +3,15 @@
 #define CV_JSON_EDGES_H
 
 //
-//	CvJsonEdges -- the `enables`-family edges as ONE composable unit (json.md §4.1/§4.2): the source-side
+//	CvJsonEdges -- the `enables`-family edges as ONE composable unit (json.md par.4.1/par.4.2): the source-side
 //	enables/obsoletes/replaces/disables buckets + the target-side obsoletedBy, each a per-kind FK id list.
 //	Composed BY VALUE on the derived infos that author any edge (the data-grounded table). WRITE-ONCE AT LOAD.
 //
-//	Storage is the consumer-proven dotted key "<edge>.<bucket>" -> [ids] ("enables.units", "obsoletedBy.techs") --
-//	the exact query surface the enabler's GENERATE pass reads (EnablerKernel/BuildingEnabler/UnitEnabler). One
-//	find(), no per-edge classes: the edge/bucket vocabulary is DATA (json §4.1), not structure.
+//	INTERNED STORAGE (the DepositIndex discipline): the edge/bucket vocabulary is the SPEC'S FIXED SET
+//	(json.md par.4.1 + the enabler.md par.2 reverse-map buckets), so both axes are ENUMS -- the JSON strings are
+//	interned ONCE in the load-time parse(); every runtime read is an int-keyed lookup. No string survives into
+//	the query surface (scope-packages GENERIC-CODE-STATIC-STORAGE; the earlier stringly dotted-key map was the
+//	JSON shape leaking into runtime).
 //
 
 #include <string>
@@ -18,26 +20,98 @@
 
 namespace picojson { class value; }
 
+// The edge FAMILIES: the AUTHORED set (json.md par.4.1/par.4.2 -- the source-side four + the target-side
+// obsoletedBy) plus the LOAD-DERIVED reverse families (never authored in JSON; populated onto the referenced
+// info by the readJson reverse-view pass, so every info ALREADY CARRIES its reverse lookups after load --
+// modifier.md par.1: the reverse view is derived once at load, never on the hot path; no consumer may build
+// its own scan or side index):
+//   EDGEF_RELATED     -- display axis (the pedia/tooltip): entities of a kind that REFERENCE this info in any
+//                        relation (prereq, obsolete, tech-keyed value tables, secondary gates). A candidate
+//                        SUPERSET -- consumers keep their exact predicates over it. ⛔ Display-only: the
+//                        enabler's GENERATE/GATE never reads it.
+//   EDGEF_REQUIRED_BY -- the gate axis (the enabler's requires-reverse-index, enabler.md par.7.1 step 2):
+//                        entities whose `requires` (build + operate + dormant triggers) reference this info as
+//                        an atom, POPULATED by the readJson reverse pass. The gate stage re-gates exactly
+//                        these dependents on this info's HAVE-event -- never a database sweep, and never a
+//                        bespoke index inside an enabler.
+enum EnEdgeFamily
+{
+	EDGEF_ENABLES = 0,
+	EDGEF_OBSOLETES,
+	EDGEF_REPLACES,
+	EDGEF_DISABLES,
+	EDGEF_OBSOLETED_BY,
+	EDGEF_RELATED,
+	EDGEF_REQUIRED_BY,
+	NUM_EDGEF
+};
+
+// The edge BUCKETS (json.md par.4.1's per-kind list + the enabler.md par.2 reverse-map buckets
+// traitsAnd/traitsOr/routesAnd). Grounded exhaustively against the authored data.
+enum EnEdgeBucket
+{
+	EDGEB_BUILDINGS = 0,
+	EDGEB_UNITS,
+	EDGEB_BUILDS,
+	EDGEB_TECHS,
+	EDGEB_CIVICS,
+	EDGEB_RELIGIONS,
+	EDGEB_CORPORATIONS,
+	EDGEB_PROJECTS,
+	EDGEB_PROCESSES,
+	EDGEB_PROMOTIONS,
+	EDGEB_PROMOTION_LINES,
+	EDGEB_HERITAGES,
+	EDGEB_SPECIAL_BUILDINGS,
+	EDGEB_SPECIAL_BUILDINGS_WAIVED,
+	EDGEB_IMPROVEMENTS,
+	EDGEB_BONUSES,
+	EDGEB_ROUTES,
+	EDGEB_ROUTES_AND,
+	EDGEB_VOTES,
+	EDGEB_HURRIES,
+	EDGEB_TRAITS,
+	EDGEB_TRAITS_AND,
+	EDGEB_TRAITS_OR,
+	EDGEB_SPECIALISTS,
+	NUM_EDGEB,
+	NO_EDGEB = -1
+};
+
 class CvJsonEdges
 {
 public:
 	CvJsonEdges() {}
 
 	// The unit's single load-time writer: parse ONE edge section ("enables"/"obsoletes"/"replaces"/"disables"/
-	// "obsoletedBy") -- a per-kind bucket object {bucket:[INFOTYPE_ids]} -- into the dotted map, FK-resolving each id.
+	// "obsoletedBy") -- a per-kind bucket object {bucket:[INFOTYPE_ids]} -- FK-resolving each id and INTERNING
+	// the family + bucket strings to the enums above. An unknown bucket key fails LOUD (assert) and is skipped.
 	void parse(const std::string& szEdge, const picojson::value& v);
 
-	// The GENERATE-pass read: the id list at "<edge>.<bucket>", or NULL if the edge/bucket is not authored.
-	const std::vector<int>* find(const std::string& szEdgeDotBucket) const
+	// The runtime read: the id list at (family, bucket), or NULL if not authored. Int-keyed -- no strings.
+	const std::vector<int>* find(EnEdgeFamily eFamily, EnEdgeBucket eBucket) const
 	{
-		std::map<std::string, std::vector<int> >::const_iterator it = m_edges.find(szEdgeDotBucket);
+		std::map<short, std::vector<int> >::const_iterator it = m_edges.find(key(eFamily, eBucket));
 		return (it != m_edges.end()) ? &it->second : NULL;
 	}
-	const std::map<std::string, std::vector<int> >& all() const { return m_edges; }
+	int count() const { return (int)m_edges.size(); }   // the readJson census
 	bool isEmpty() const { return m_edges.empty(); }
 
+	// The reverse-view writers -- LOAD-ONLY (the readJson reverse pass; part of the write-once-at-load window).
+	void add(EnEdgeFamily eFamily, EnEdgeBucket eBucket, int iId) { m_edges[key(eFamily, eBucket)].push_back(iId); }
+	void sortUnique();                                  // dedup every list after the reverse build
+	void clearParsed() { m_edges.clear(); }             // the clear-first half of the full-registry section re-map
+
+	// The load-time intern tables (also serve any render/pedia reverse need).
+	static EnEdgeFamily familyFromString(const std::string& szFamily);   // NUM_EDGEF = unknown
+	static EnEdgeBucket bucketFromString(const std::string& szBucket);   // NO_EDGEB = unknown
+	static const char* bucketName(EnEdgeBucket eBucket);
+	static const char* familyName(EnEdgeFamily eFamily);
+
 private:
-	std::map<std::string, std::vector<int> > m_edges;   // "<edge>.<bucket>" -> FK ids
+	static short key(EnEdgeFamily eFamily, EnEdgeBucket eBucket) { return (short)(((int)eFamily << 5) | (int)eBucket); }
+
+	std::map<short, std::vector<int> > m_edges;         // (family,bucket) -> FK ids
 	CvJsonEdges(const CvJsonEdges&);                    // noncopyable (held by-value on the noncopyable info)
 	CvJsonEdges& operator=(const CvJsonEdges&);
 };

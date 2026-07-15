@@ -120,9 +120,11 @@ resolves dynamically by name.
   `requires.build.dormant`/`replacedBy.units` edges — the entire upgrade/dormancy chain
   (machete→musketman→rifleman→trench_infantry, every trigger sorted after its owner), so no old unit went
   dormant/replaced and the build list showed everything. The two-pass load is the fix; **do NOT collapse it back**.
-  Cross-category forward refs (an earlier-loaded category naming a later one) are a *separate* residue — the load
-  order at `CvXMLLoadUtilitySet.cpp` puts units LAST, so unit→tech/bonus/building resolve; a category referencing a
-  later one is not covered by this per-category two-pass (verify before relying on such an edge).
+  Cross-category forward refs (an earlier-loaded category naming a later one — specialist→UNIT, building/unit→
+  CIVILIZATION, …) are resolved by the SAME principle one level up: `cascadeLoadJson`'s full-registry pass re-runs
+  the complete `mapFrom` on every aliased entity once ALL categories are registered — `mapFrom` is idempotent by
+  contract (`CvInfo.h`), and `/state/info?type=X` is the standing loaded≡authored verification
+  ([readjson.md](../plans/structural-cleanup/readjson.md)).
 
 ## UnitCombat — the fat info class + the cascade-migration note
 

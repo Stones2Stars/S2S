@@ -56,3 +56,10 @@
     inside the read** ([event-spine.md](../specs/event-spine.md) load-RESEED, [DEC-spine-reseed](decisions.md#dec-spine-reseed)):
     reading a fact off the stream is what fires its event. **Never re-add a post-deserialization state-walking emit
     pass.**
+14. **The whole-domain enabler frontier + implicit "no-enabler ⇒ always-available" rules** *(dead as a class)* —
+    workarounds for entities with no inbound `enables` edge (PALACE, PROCESS_IDLE, the COMBAT1-5 promotions):
+    making the frontier ALL entities of the domain gated by `requires`, or hardcoded always-unlocked whitelists
+    (the promotion "PALACE-whitelist"). Killed: the tree is **fully connected** — start-available entities are
+    authored onto the `TECH_GAME_START` root's `enables` (curator-derived, fails closed;
+    [enabler.md §2](../specs/enabler.md)), the long-specced root model these workarounds skated around.
+    **Never re-add a whole-domain frontier or an implicit availability rule.**

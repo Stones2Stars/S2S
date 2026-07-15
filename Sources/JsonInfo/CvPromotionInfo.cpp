@@ -181,6 +181,16 @@ static void collectGameOptions(const CvJsonCondition* c, std::vector<int>& out)
 
 void CvPromotionInfo::mapFrom(const picojson::value& entity)
 {
+	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom -- fully define every appending vector
+	// (the readIdSet std::sets re-insert identical elements and need no clear).
+	m_aiOnGameOptions.clear(); m_aiNotOnGameOptions.clear(); m_aHealUnitCombat.clear(); m_aAIWeight.clear();
+	m_aiSubCombat.clear(); m_aiRemoves.clear(); m_aeUnitCombat.clear(); m_aiNotOnUnitCombats.clear();
+	m_aiNotOnDomains.clear(); m_aiPrereqTerrains.clear(); m_aiPrereqFeatures.clear(); m_aiPrereqImprovements.clear();
+	m_aiPrereqPlotBonuses.clear(); m_aiPrereqLocalBuildings.clear(); m_aiPrereqBonuses.clear(); m_aiNegatesInvisibility.clear();
+	m_aInvisibleTerrainChanges.clear(); m_aVisibleTerrainChanges.clear(); m_aVisibleTerrainRangeChanges.clear();
+	m_aInvisibleFeatureChanges.clear(); m_aVisibleFeatureChanges.clear(); m_aVisibleFeatureRangeChanges.clear();
+	m_aInvisibleImprovementChanges.clear(); m_aVisibleImprovementChanges.clear(); m_aVisibleImprovementRangeChanges.clear();
+
 	CvInfo::mapFrom(entity);   // core reading + the section dispatch into the composed units (modifiers/skills/gate/grants)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();

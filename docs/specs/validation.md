@@ -37,7 +37,10 @@ zero, steady-state tracks EVENT volume (thousands) not entity count (millions)
 
 Live verification reads two endpoint families ([http-endpoints.md](http-endpoints.md)):
 
-- **`/state/*`** — the raw game state (raw inputs only, no computed outputs).
+- **`/state/*`** — the raw game state (raw inputs only, no computed outputs). **`/state/info?type=X` is the
+  INFO-OBJECT check**: the loaded info's edge data must MATCH the entity's authored `Assets/Data` JSON — the
+  standing verification that readJson put the data where the machines read it (a diff = a load defect, found
+  live, never accepted).
 - **`/computed/*`** — the engine's actual values as game-thread snapshots: the per-source yield/commerce
   decomposition (`/computed/cities/yields`), the wellbeing decomposition (`/computed/cities/wellbeing`), the
   `/computed/can*` gate verdicts, `/computed/tally`, `/computed/unitSkills`, `/computed/units/heal`. These are the

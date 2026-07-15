@@ -153,7 +153,11 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvJsonCondition* a)
 	if (en_starts(t, "RELIGION_")) return ctx.city != NULL && id >= 0 && ctx.city->isHasReligion((ReligionTypes)id);
 	if (en_starts(t, "HERITAGE_")) return ctx.player != NULL && id >= 0 && ctx.player->hasHeritage((HeritageTypes)id);
 	if (en_starts(t, "PROJECT_"))  return ctx.team != NULL && id >= 0 && ctx.team->getProjectCount((ProjectTypes)id) > 0;
-	if (en_starts(t, "BUILDING_")) return ev_hasActiveBuilding(ctx, id);
+	// the enabler GATE reads raw PRESENCE (ctx.buildingAtomsPresence -- the §7 has-list / engine PrereqInCity
+	// mirror, exclusions included); deposits + the operate fixpoint read the cascade-computed ACTIVE set
+	if (en_starts(t, "BUILDING_")) return ctx.buildingAtomsPresence
+		? (ctx.city != NULL && id >= 0 && ctx.city->hasBuilding((BuildingTypes)id))
+		: ev_hasActiveBuilding(ctx, id);
 	if (en_starts(t, "CORPORATION_")) return ctx.city != NULL && id >= 0 && ctx.city->isHasCorporation((CorporationTypes)id);
 	if (en_starts(t, "VICTORY_"))  return id >= 0 && GC.getGame().isVictoryValid((VictoryTypes)id);
 	if (en_starts(t, "GAMEOPTION_")) return id >= 0 && GC.getGame().isOption((GameOptionTypes)id);

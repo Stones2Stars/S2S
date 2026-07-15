@@ -34,6 +34,10 @@ CvImprovementInfo::CvImprovementInfo()
 
 void CvImprovementInfo::mapFrom(const picojson::value& entity)
 {
+	// remap-idempotency (CvInfo.h contract): fully define every accumulating member -- the full-registry pass re-runs mapFrom.
+	m_aeMapCategories.clear(); m_aiAlternativeImprovementUpgradeTypes.clear(); m_aiFeatureChangeTypes.clear();
+	m_bonusTradeIds.clear(); m_bonusDiscoverRand.clear(); m_bonusDepletionRand.clear();
+
 	CvInfo::mapFrom(entity);   // core reading + availability (requires.build carries the placement/validity prereqs)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
@@ -68,10 +72,11 @@ void CvImprovementInfo::mapFrom(const picojson::value& entity)
 		m_iCultureRange             = jsonIdInt(*io, "cultureRange");         // iCultureRange -> identity (owner: leave)
 		m_iFeatureGrowthProbability = jsonIdInt(*io, "featureGrowth");        // iFeatureGrowth -> identity (owner: leave)
 		m_iUpgradeTime              = jsonIdInt(*io, "upgradeTime");          // iUpgradeTime -> identity
-		// upgradesTo/pillageTo are improvement->improvement self-FKs -- STASH the raw id, resolve POST-read (resolveDeferredFks):
-		// SetGlobalClassInfo registers this improvement's id only AFTER read(), so a forward reference resolves to -1 here.
-		jsonIdStr(*io, "upgradesTo", m_szUpgradeStr);
-		jsonIdStr(*io, "pillageTo",  m_szPillageStr);
+		// upgradesTo/pillageTo are improvement->improvement self-FKs -- direct resolution: LoadGlobalClassInfoJson
+		// registers the whole category BEFORE any mapFrom (two-pass, engine.md), and the full-registry re-run
+		// (cascadeLoadJson PASS 2) re-resolves against the complete id space regardless.
+		m_eImprovementUpgrade = (ImprovementTypes)jsonIdFk(*io, "upgradesTo");
+		m_eImprovementPillage = (ImprovementTypes)jsonIdFk(*io, "pillageTo");
 		m_eBonusChange              = (BonusTypes)jsonIdFk(*io, "bonusChange");         // BonusChange -> identity.bonusChange
 
 		m_bActsAsCity            = jsonIdBool(*io, "actsAsCity");
@@ -107,8 +112,7 @@ void CvImprovementInfo::mapFrom(const picojson::value& entity)
 		{
 			const picojson::array& a = au->second.get<picojson::array>();
 			for (size_t i = 0; i < a.size(); ++i)
-				if (a[i].is<std::string>()) m_altUpgradeStrs.push_back(a[i].get<std::string>());   // self-FKs -- resolve POST-read
-
+				if (a[i].is<std::string>()) { const int id = jsonResolveId(a[i].get<std::string>()); if (id >= 0) m_aiAlternativeImprovementUpgradeTypes.push_back(id); }
 		}
 
 		picojson::object::const_iterator fc = io->find("featureChanges");   // FeatureChangeTypes (id_rename) -> FEATURE_ ids
@@ -288,22 +292,6 @@ bool CvImprovementInfo::isAlternativeImprovementUpgradeType(int i) const
 	return false;
 }
 
-// POST-read self-FK resolution (cascadeLoadJson drives, after every improvement's id is registered). The strings were
-// stashed at read() because SetGlobalClassInfo registers this improvement's id AFTER read()/mapFrom, so a same-class
-// forward reference (a lower improvement upgrading to a higher one defined later in the XML) resolves to -1 at read()
-// time. Resolve here against the COMPLETE registry. Idempotent (safe to re-run): the vector is cleared first.
-void CvImprovementInfo::resolveDeferredFks()
-{
-	if (!m_szUpgradeStr.empty()) m_eImprovementUpgrade = (ImprovementTypes)jsonResolveId(m_szUpgradeStr);
-	if (!m_szPillageStr.empty()) m_eImprovementPillage = (ImprovementTypes)jsonResolveId(m_szPillageStr);
-	m_aiAlternativeImprovementUpgradeTypes.clear();
-	for (size_t i = 0; i < m_altUpgradeStrs.size(); ++i)
-	{
-		const int id = jsonResolveId(m_altUpgradeStrs[i]);
-		if (id >= 0) m_aiAlternativeImprovementUpgradeTypes.push_back(id);
-	}
-}
-
 bool CvImprovementInfo::isFeatureChangeType(int i) const
 {
 	for (size_t k = 0; k < m_aiFeatureChangeTypes.size(); ++k)
@@ -324,6 +312,17 @@ static std::vector<int>& yieldBucket(std::map<int, std::vector<int> >& m, int ke
 // a {value,enabled} entry's gate routes to Irrigated/RiverSide/per-bonus/per-tech (see the header block comment).
 void CvImprovementInfo::readConditionalYields(const picojson::value& entity)
 {
+	// fully define the output (remap-idempotency, CvInfo.h): this walk ACCUMULATES (+=) into the yield buckets,
+	// so a full-registry re-run must start from zero or every improvement yield doubles.
+	for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+	{
+		m_aiYieldChange[i] = 0;
+		m_aiRiverSideYieldChange[i] = 0;
+		m_aiIrrigatedYieldChange[i] = 0;
+	}
+	m_bonusYieldChanges.clear();
+	m_techYieldChanges.clear();
+
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
 	const char* fam[3] = { "food", "production", "commerce" };

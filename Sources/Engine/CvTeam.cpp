@@ -4259,11 +4259,14 @@ void CvTeam::changeProjectCount(ProjectTypes eIndex, int iChange)
 		processProjectChange(eIndex, iChange, iOldProjectCount);
 
 		// #430 event spine: announce the project count change (inside the iChange != 0 guard, after commit + apply).
-		// A team has no single actor; use the team LEADER as the triggering player -- the same representative this
-		// function's own completion replay message uses (getLeaderID() at the replay call below). Emitted HERE (the
-		// count choke point), NOT in processProjectChange, whose other caller (CvTeam.cpp reapply-projects warm-up)
-		// re-applies effects on load and is not a genuine state change.
-		emitProjectChanged((int)getLeaderID(), (int)eIndex, iChange);
+		// PER-MEMBER emits -- one per alive member player (the tech-emit precedent, the owner's "one per alive
+		// member player" ruling): a project is TEAM state consumed per player (the enabler applies to the emitting
+		// player's domain; the modifier mark scopes per player), so a single leader-only emit under-reaches
+		// teammates. Emitted HERE (the count choke point), NOT in processProjectChange, whose other caller
+		// (CvTeam.cpp reapply-projects warm-up) re-applies effects on load and is not a genuine state change.
+		for (int iM = 0; iM < MAX_PLAYERS; iM++)
+			if (GET_PLAYER((PlayerTypes)iM).isAlive() && GET_PLAYER((PlayerTypes)iM).getTeam() == getID())
+				emitProjectChanged(iM, (int)eIndex, iChange);
 
 		if (iChange > 0 && GC.getGame().isFinalInitialized() && !gDLL->GetWorldBuilderMode())
 		{
@@ -6272,6 +6275,21 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_SKIP_ELEMENT(wrapper, "CvTeam", m_paiTerrainTradeCount, SAVE_VALUE_ANY);	// #430 capability cut -- array retired, tag consumed
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VICTORIES, GC.getNumVictoryInfos(), m_aiVictoryCountdown);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_pabHasTech);
+	// #430: TECH_GAME_START (the universal no-prereq root, enabler.md par.2) postdates older saves -- upgrade the save
+	// ON READ: the team deserializes as if it had always held it. A RAW flag write on purpose: every consumer of the
+	// root derives from state at load (capabilities are derived-on-query, plot groups recalculate, the enabler seeds,
+	// and the reseed's per-held-tech emits announce it like any saved tech), while the full setHasTech side-effect
+	// chain (map loops, processTech, per-city sweeps) is unsafe mid-deserialization -- players are not set up yet.
+	// Unconditional across ALL teams (dead teams too -- a later revival must not resurrect a rootless team).
+	// New games never pass here; they receive it as a genuine grant (CvGame::onFinalInitialized).
+	{
+		const TechTypes eGameStart = (TechTypes)GC.getInfoTypeForString("TECH_GAME_START", true);
+		FAssertMsg(eGameStart != NO_TECH, "TECH_GAME_START missing from the loaded data -- the enabler root is gone, generation would run empty");
+		if (eGameStart != NO_TECH)
+		{
+			m_pabHasTech[eGameStart] = true;
+		}
+	}
 	// #430 reseed NOTE: tech is reseeded from CvPlayer::read (per-self, once per member player), NOT here -- the EXE
 	// reads teams BEFORE players are set up, so a per-member emit from this point finds no alive members (verified: 0).
 

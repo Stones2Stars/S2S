@@ -14,6 +14,7 @@
 #include "Infos/CvArtInfoUnit.h"    // CvArtInfoUnit complete type -- getButton() call needs the full definition
 #include "AI/CvGameAI.h"            // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 #include "CvUnitCombatInfo.h"   // GC.getUnitCombatInfo(e).getGroupBase() -- the baseGroupRank derivation
+#include "CvTechInfo.h"         // GC.getTechInfo(...).getEra() -- the era-comparison reads (unity include exposure)
 #include "CvPromotionInfo.h"    // GC.getPromotionInfo(i).getUnitCombat() -- the canAcquireExperience derivation
 #include "CvJsonModifiers.h"    // getModifiers() walk -> the unit's PROPERTY_* emission sources
 
@@ -336,6 +337,19 @@ void CvUnitInfo::reconstructPrereqs()
 // ------------------------------------------------------------------------------------------------------------------
 void CvUnitInfo::mapFrom(const picojson::value& entity)
 {
+	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom -- fully define every appending vector
+	// (keyed std::maps assign per key and the std::sets re-insert identical elements: no clear needed).
+	// NB m_upgradeChain is NOT cleared -- runtime-built via addUnitToUpgradeChain by a separate pass, not this parse.
+	m_unitAIs.clear(); m_notUnitAIs.clear(); m_mapCategories.clear(); m_heritage.clear(); m_subCombatTypes.clear();
+	m_targetUnits.clear(); m_freePromotions.clear(); m_buildings.clear(); m_greatPeoples.clear();
+	m_seeInvisibleTypes.clear(); m_impassableTerrains.clear(); m_impassableFeatures.clear();
+	m_defendAgainstUnits.clear(); m_upgrades.clear(); m_superseding.clear(); m_enabledCivs.clear();
+	m_groupSpawn.clear(); m_healUnitCombat.clear(); m_invisibilityIntensity.clear();
+	m_invisibleFeatureChanges.clear(); m_invisibleTerrainChanges.clear();
+	m_prereqAndTechs.clear(); m_prereqOrBonuses.clear(); m_prereqOrVicinityBonuses.clear();
+	m_prereqAndBuildings.clear(); m_prereqOrBuildings.clear();
+	m_prereqAndHeritage.clear(); m_prereqOrHeritage.clear(); m_prereqOrCivics.clear();
+
 	CvInfo::mapFrom(entity);   // core fields + composed units (skills/tags/requires/grants/edges/modifier families)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();

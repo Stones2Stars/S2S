@@ -272,7 +272,7 @@ public:
 	int getMaxPlayerInstances() const { const CvJsonAllowed* a = getAllowed(); return a ? a->cap("empire") : -1; }  // allowed.empire
 
 	// --- edges (target-side obsolete) ---
-	int getObsoleteTech() const { const CvJsonEdges* e = getEdges(); const std::vector<int>* l = e ? e->find("obsoletedBy.techs") : NULL; return (l && !l->empty()) ? (*l)[0] : -1; }  // obsoletedBy.techs
+	int getObsoleteTech() const { const CvJsonEdges* e = getEdges(); const std::vector<int>* l = e ? e->find(EDGEF_OBSOLETED_BY, EDGEB_TECHS) : NULL; return (l && !l->empty()) ? (*l)[0] : -1; }  // obsoletedBy.techs
 
 	// --- requires-tree reconstructed prereqs ---
 	int getPrereqAndTech() const { return m_iPrereqAndTech; }                     // requires.build.all TECH_ (first)

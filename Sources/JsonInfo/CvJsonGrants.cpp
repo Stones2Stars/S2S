@@ -20,8 +20,19 @@
 
 CvJsonGrants::~CvJsonGrants()
 {
+	clearParsed();
+}
+
+void CvJsonGrants::clearParsed()
+{
 	for (size_t i = 0; i < m_foundBuildings.size(); ++i) delete m_foundBuildings[i];
 	for (size_t i = 0; i < m_repeatables.size(); ++i) delete m_repeatables[i];
+	m_foundBuildings.clear();
+	m_repeatables.clear();
+	m_lists.clear();
+	m_pulses100.clear();
+	m_scopedPulses100.clear();
+	m_flags.clear();
 }
 
 int CvJsonGrants::scopedPulseSumAllScopes100(const std::string& szChannel) const

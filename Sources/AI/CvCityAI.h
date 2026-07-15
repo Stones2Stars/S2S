@@ -611,6 +611,9 @@ public:
 
 	BuildingTypes AI_bestAdvancedStartBuilding(int iPass);
 
+	// The two-phase stream read (CvCity.h): identity (register-before-body) + body. read() = the pair.
+	void readIdentity(FDataStreamBase* pStream);
+	void readBody(FDataStreamBase* pStream);
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);
 

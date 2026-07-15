@@ -24,6 +24,7 @@ public:
 	void parse(const picojson::value& v);
 
 	bool isEmpty() const { return bonuses.empty(); }
+	void clearParsed() { bonuses.clear(); }   // the clear-first half of the full-registry section re-map
 
 private:
 	CvJsonProvides(const CvJsonProvides&);            // noncopyable (held by-value on the noncopyable info)

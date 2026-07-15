@@ -1,0 +1,120 @@
+#pragma once
+#ifndef CV_ENABLER_H
+#define CV_ENABLER_H
+
+//
+//	The STANDARDIZED ENABLER component (enabler.md par.7 + par.7.1) -- the delta-apply SIBLING of CvDerivedCache.
+//	It CANNOT operate like a value cache: there is NO dirty->recompute path at all. The CAN-HAVE content is built
+//	PURELY on the events of already-HAS -- ONE mechanism for load and play (DEC-spine-reseed): at load the
+//	in-read reseed emits stream through the same O(delta) appliers the play-time emits use (the domain is
+//	init'd -- sized + static exclusions, NO content -- at its owner's lifecycle start, before the emits). The
+//	only non-event fold is the city-created applier's cross-scope fold (team techs + player civics predate the
+//	city; no events can carry them to it). Every read is a bare O(1) lookup.
+//
+//	EnablerDomain -- ONE domain's storage on its scope owner: the tri-state array (HIDDEN/GREYED/LISTED, the par.6
+//	tri-state IS the array) + the two membership refcount planes. Membership is the FORMULA, never the operation
+//	sequence (par.7.1 step 1):
+//
+//	    in CAN GET  <=>  enableCount > 0  &&  removeCount == 0  &&  !held  &&  !staticExcluded
+//
+//	REMOVAL WINS regardless of event arrival order -- the sequenced add/erase delta is BANNED (an enables-add
+//	arriving after an obsoletes-remove must NOT re-insert the candidate; the TECH_GAME_START-arrives-last /
+//	obsoleted-candidate edge case). The REQUIRES GATE (par.7.1 step 2) splits a tree member's state:
+//	gate passed -> LISTED, gate failed -> GREYED (the FLAG_GATE_FAILED bit, set by the domain enabler's
+//	gate-on-entry + EDGEF_REQUIRED_BY re-gates); the gate NEVER changes membership. A domain whose gate stage
+//	has not landed simply never sets the flag -- every tree member LISTED (the enable-side over-offer).
+//
+//	The per-domain enabler (TechEnabler / BuildingEnabler / UnitEnabler) owns the delta LOGIC (which edges feed
+//	which domain); this component owns only the standardized storage + formula. HAVE itself is NEVER stored here --
+//	the enabler ties into the object-owned has-lists that already exist (the held flag mirrors them per candidate
+//	for the formula's exclusion only).
+//
+
+#include <set>
+#include <vector>
+
+class EnablerDomain
+{
+public:
+	enum State
+	{
+		STATE_HIDDEN = 0,   // not in CAN GET -- generation never reached it, or a held source removes it
+		STATE_GREYED = 1,   // in CAN GET, requires unmet (the gate stage -- unused until it lands)
+		STATE_LISTED = 2    // in CAN GET, gate passed (enable-side stage: every tree member)
+	};
+
+	EnablerDomain() : m_bSeeded(false) {}
+
+	// The lifecycle: init() sizes + zeroes and marks the domain ready (isSeeded) -- the DOMAIN events then build
+	// the content (the appliers skip an un-init'd domain: its owner's own read/init emits replay its facts);
+	// reset() un-readies (a new/other game re-inits fresh).
+	void init(int iCount);
+	void reset();
+	bool isSeeded() const { return m_bSeeded; }
+
+	// The delta primitives -- each recomputes the touched id's state from the FORMULA (O(1)).
+	void addEnable(int iId, int iDelta);           // a held source's enables edge (+1 acquired / -1 lost)
+	void addRemove(int iId, int iDelta);           // a held source's obsoletes/replaces/disables edge
+	void setHeld(int iId, bool bHeld);             // the candidate itself is now held/built (leaves the frontier)
+	void setStaticExcluded(int iId, bool bExcluded); // static never-offered (identity.disable class) -- set at seed
+	// The REQUIRES-GATE verdict (par.7.1 step 2 -- the gate stage): set by the domain enabler's gate evaluation
+	// (gate-on-entry + the EDGEF_REQUIRED_BY re-gates); a failed gate flips a tree member LISTED -> GREYED
+	// (membership itself is untouched -- requires never adds/removes candidates, par.1).
+	void setGateFailed(int iId, bool bFailed);
+	bool isHeld(int iId) const;
+
+	// The bare O(1) reads.
+	unsigned char state(int iId) const;
+	bool inTree(int iId) const { return state(iId) >= (unsigned char)STATE_GREYED; }
+	bool listed(int iId) const { return state(iId) == (unsigned char)STATE_LISTED; }
+	// The raw membership-plane reads (bare O(1)) -- for a composite gate that OVERLAYS per-instance planes on
+	// the maintained ones before applying the formula (the promotions level-up gate: the player domain's tech
+	// planes + the unit's held-promo/unitcombat planes; membership = Σenable > 0 && Σremove == 0).
+	int enableCount(int iId) const;
+	int removeCount(int iId) const;
+
+private:
+	enum { FLAG_HELD = 1, FLAG_STATIC_EXCLUDED = 2, FLAG_GATE_FAILED = 4 };
+
+	bool inRange(int iId) const { return iId >= 0 && iId < (int)m_aState.size(); }
+	void refresh(int iId);                         // re-derive m_aState[iId] from the formula
+
+	std::vector<unsigned char> m_aState;           // tri-state per enum id -- the frontier the reads serve
+	std::vector<short> m_aiEnable;                 // held sources enabling id
+	std::vector<short> m_aiRemove;                 // held sources removing id (obsoletes/replaces/disables)
+	std::vector<unsigned char> m_aFlags;           // FLAG_HELD | FLAG_STATIC_EXCLUDED
+	bool m_bSeeded;
+};
+
+// The per-PLAYER enabler object (enabler.md par.7.1: player domains = techs, civics, projects, processes,
+// hurries). Projects/processes are PLAYER-held even though cities build them (owner ruling): their axes are
+// team/player-scope, so per-city copies would be byte-identical duplicated state that must never drift -- the
+// city gate reads through its owner instead (a dynamic GET_PLAYER(getOwner()) lookup, conquest-safe; never a
+// stored pointer), and the one city-local fact (the project map-category gate) stays a live check at the gate
+// when the requires stage lands (the par.7.1 worker-builds split).
+struct PlayerEnabler
+{
+	EnablerDomain techs;     // the researchable list -- maintained by TechEnabler (init + onTechChanged)
+	EnablerDomain civics;    // the adoptable list -- maintained by CivicEnabler (init + onTechChanged)
+	EnablerDomain projects;  // the creatable list -- maintained by ProjectEnabler (init + tech/project deltas)
+	EnablerDomain processes; // the maintainable list -- maintained by ProcessEnabler (init + onTechChanged)
+	EnablerDomain builds;    // the unlocked worker-builds set (par.7.1) -- maintained by BuildEnabler (init + onTechChanged)
+	EnablerDomain promotions; // the unlocked-promotions set (par.7.1) -- maintained by PromotionEnabler (init + onTechChanged); the per-unit gate overlays its planes at level-up
+
+	void reset() { techs.reset(); civics.reset(); projects.reset(); processes.reset(); builds.reset(); promotions.reset(); }
+};
+
+// The per-CITY enabler object (enabler.md par.7.1: city domains = buildings, units -- the domains with
+// genuinely city-local HAVE axes). EACH CITY owns its own instance. The domain arrays are the ONLY mutable
+// state (par.7.1) -- every HAVE-event applies its source's edge deltas DIRECTLY (the event carries the delta;
+// a thin event is an emit-surface gap to fix, never a license for side state), and the load seed replays the
+// same appliers over the object-owned has-lists.
+struct CityEnabler
+{
+	EnablerDomain buildings;   // the constructible list -- maintained by BuildingEnabler (seed + on*Changed)
+	EnablerDomain units;       // the trainable list -- maintained by UnitEnabler (seed + on*Changed)
+
+	void reset() { buildings.reset(); units.reset(); }
+};
+
+#endif // CV_ENABLER_H

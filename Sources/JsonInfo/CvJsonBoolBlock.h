@@ -27,6 +27,7 @@ public:
 	bool has(const std::string& szName) const { return m_names.count(szName) != 0; }
 	const std::set<std::string>& all() const { return m_names; }
 	bool isEmpty() const { return m_names.empty(); }
+	void clearParsed() { m_names.clear(); }   // the clear-first half of the full-registry section re-map
 
 private:
 	std::set<std::string> m_names;

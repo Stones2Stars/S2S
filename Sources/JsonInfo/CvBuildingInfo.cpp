@@ -15,6 +15,28 @@
 
 void CvBuildingInfo::mapFrom(const picojson::value& entity)
 {
+	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom (incl. reconstructFromComposed below),
+	// whose writers ACCUMULATE (push_back / mod_addScalar / mod_addYield / +=) -- fully define every output.
+	m_aiMayDamageUnitCombats.clear(); m_aeMapCategoryTypes.clear(); m_enabledCivTypes.clear();
+	m_aFreePromoTypes.clear(); m_aiFreeTraitTypes.clear(); m_healUnitCombats.clear(); m_consumptionRelevantBonuses.clear();
+	m_piPrereqAndTechs.clear(); m_prereqOrImprovement.clear(); m_prereqOrHeritage.clear();
+	m_aePrereqOrBonuses.clear(); m_piPrereqOrVicinityBonuses.clear(); m_aePrereqOrRawVicinityBonuses.clear();
+	m_techSpecialistChange.clear();
+	m_aPlotYieldChanges.clear(); m_aTerrainYieldChanges.clear(); m_aImprovementYieldChanges.clear();
+	m_aGlobalImprovementYieldChanges.clear(); m_aBuildingHappinessChanges.clear(); m_religionChange.clear();
+	m_bonusDefenseChanges.clear(); m_unitCombatDefenseAgainst.clear(); m_aUnitCombatFreeExperience.clear();
+	m_domainFreeExperience.clear(); m_aUnitCombatExtraStrength.clear(); m_aUnitProductionModifier.clear();
+	m_unitCombatProdModifier.clear(); m_domainProductionModifier.clear(); m_aBuildingProductionModifier.clear();
+	m_aGlobalBuildingProductionModifier.clear(); m_specialistCount.clear(); m_improvementFreeSpecialists.clear();
+	m_freeSpecialistCount.clear(); m_techYieldChanges.clear(); m_techYieldModifiers.clear();
+	m_vicinityBonusYieldChanges.clear(); m_bonusYieldChanges.clear(); m_bonusYieldModifier.clear();
+	m_aTechHappinessChanges.clear(); m_piBonusHappinessChanges.clear(); m_aTechHealthChanges.clear();
+	m_piBonusHealthChanges.clear(); m_bonusProductionModifier.clear(); m_aGlobalBuildingCostModifier.clear();
+	m_techCommerceChanges.clear(); m_techCommerceModifiers.clear(); m_bonusCommercePercentChanges.clear();
+	m_aGlobalBuildingCommerceChanges.clear();
+	m_iNumUnitFullHeal = 0; m_iStateReligionHappiness = 0;
+	for (int y = 0; y < NUM_YIELD_TYPES; ++y) { m_aiRiverPlotYieldChange[y] = 0; m_powerYieldModifier[y] = 0; }
+
 	CvInfo::mapFrom(entity);
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
@@ -205,7 +227,7 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 			m_aFreePromoTypes.push_back(f);
 		}
 	// enables.traits -> getFreeTraitTypes (TraitTypes FK ids; whole civ-trait conferred while active).
-	if (const std::vector<int>* ft = getEdges()->find("enables.traits"))
+	if (const std::vector<int>* ft = getEdges()->find(EDGEF_ENABLES, EDGEB_TRAITS))
 		for (size_t i = 0; i < ft->size(); ++i) m_aiFreeTraitTypes.push_back((TraitTypes)(*ft)[i]);
 
 	// grants.repeatable[] -> the property-spawn + full-heal + per-unitCombat heal reads.
@@ -388,7 +410,7 @@ bool CvBuildingInfo::isCommerceFlexible(int i) const
 
 // FoundsCorporation -> the building's `enables.corporations` edge (curate_building.py, owner 2026-07-01) -- REAL data.
 int CvBuildingInfo::getFoundsCorporation() const
-{ const std::vector<int>* v = edge("enables.corporations"); return (v != NULL && !v->empty()) ? (*v)[0] : -1; }
+{ const std::vector<int>* v = edge(EDGEF_ENABLES, EDGEB_CORPORATIONS); return (v != NULL && !v->empty()) ? (*v)[0] : -1; }
 
 // REAL: grants.repeatable[] unitCombat heal (getHealUnitCombatType) + identity.enabledCivilizations
 // (getEnabledCivilizationType). getBonusAidModifier / getAidRateChange stay zero-filled statics (CURATOR-GAP: both
@@ -497,9 +519,9 @@ const python::list CvBuildingInfo::cyGetFreePromoTypes() const
 // relics) is authored to `whenObsolete` INSTEAD of `obsoletedBy.buildings`, so getObsoletesToBuilding() faithfully
 // returns NO_BUILDING for those; the reduced-output tree lives on getWhenObsolete().
 TechTypes CvBuildingInfo::getObsoleteTech() const
-{ const std::vector<int>* v = edge("obsoletedBy.techs"); return (TechTypes)((v != NULL && !v->empty()) ? (*v)[0] : NO_TECH); }
+{ const std::vector<int>* v = edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS); return (TechTypes)((v != NULL && !v->empty()) ? (*v)[0] : NO_TECH); }
 BuildingTypes CvBuildingInfo::getObsoletesToBuilding() const
-{ const std::vector<int>* v = edge("obsoletedBy.buildings"); return (BuildingTypes)((v != NULL && !v->empty()) ? (*v)[0] : NO_BUILDING); }
+{ const std::vector<int>* v = edge(EDGEF_OBSOLETED_BY, EDGEB_BUILDINGS); return (BuildingTypes)((v != NULL && !v->empty()) ? (*v)[0] : NO_BUILDING); }
 
 // EXE-bound art surface: ARTFILEMGR keyed by the art-define tag (mirrors SourceArchive/Infos/CvBonusInfo.cpp's
 // shim pattern, re-based onto the JSON-mapped m_szArtDefineTag).

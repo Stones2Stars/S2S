@@ -30,6 +30,7 @@ public:
 	}
 	const std::map<std::string, int>& all() const { return m_caps; }
 	bool isEmpty() const { return m_caps.empty(); }
+	void clearParsed() { m_caps.clear(); }   // the clear-first half of the full-registry section re-map
 
 private:
 	std::map<std::string, int> m_caps;

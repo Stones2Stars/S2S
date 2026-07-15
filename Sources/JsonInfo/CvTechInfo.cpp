@@ -32,6 +32,9 @@ static double id_dbl(const picojson::object& io, const char* k)
 
 void CvTechInfo::mapFrom(const picojson::value& entity)
 {
+	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom -- fully define the accumulating members
+	// (the ability SETS re-insert identical elements and need no clear; the prereq vectors would double).
+	m_aePrereqAndTechs.clear(); m_aePrereqOrTechs.clear(); m_aPrereqOrBuildings.clear();
 	CvInfo::mapFrom(entity);    // the common cascade sections (text + availability) first
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();

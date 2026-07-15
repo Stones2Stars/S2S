@@ -72,33 +72,18 @@ public:
 	// lazy first-onBuildingChanged trigger -- the indices stand ready before turn 1's targeted re-checks.
 	static void buildFrontierIndices();
 	// Part C: a city-local HAVE atom (CascadeHaveKind) flipped -> TARGETED frontier re-check (buildable + trainable)
-	// over that atom's reverse-index bucket, in place. Replaces the broad CPK_FRONTIER dirty at pop/religion/corp/
+	// over that atom's reverse-index bucket, in place. Replaces the broad frontier dirty at pop/religion/corp/
 	// power; a box with a full rebuild pending is left to that rebuild.
 	static void cityHaveChanged(const CvCity* pCity, int eHaveKind);
 	// Part B: a unit's EMPIRE count changed (trained / lost) -> TARGETED trainable re-check across the player's
 	// cities (unit caps are empire-scoped). A no-op for an uncapped, unreferenced unit (the combat common case).
-	static void unitCountChanged(const CvPlayer& kPlayer, int eUnit);
 
 	// ===== the ENABLER frontier reads (#430 THE FLIP -- ensure-on-read, the operating buildings idiom) =====
-	static bool enConstruct(const CvCity* pCity, int eBuilding);
-	static bool enConstructVisible(const CvCity* pCity, int eBuilding);   // the VISIBLE build-list frontier (bTestVisible)
-	static bool enTrain(const CvCity* pCity, int eUnit);
 	static bool enTrainVisible(const CvCity* pCity, int eUnit);          // the VISIBLE build-list frontier (bTestVisible)
-	static bool enCreate(const CvCity* pCity, int eProject);
-	static bool enCreateVisible(const CvCity* pCity, int eProject);      // the VISIBLE build-list frontier (bTestVisible)
-	static bool enMaintain(const CvCity* pCity, int eProcess);
-	static bool enMaintainVisible(const CvCity* pCity, int eProcess);    // the VISIBLE build-list frontier (bTestVisible)
-	static bool enResearch(const CvPlayer* pPlayer, int eTech);
-	static bool enCivic(const CvPlayer* pPlayer, int eCivic);
 	static bool enHurry(const CvPlayer* pPlayer, int eHurry);
 	static bool enFoundReligion(const CvPlayer* pPlayer);
-	// the canBuild UNLOCK half only (the plot-validity half stays engine -- the scope ruling)
-	static bool enBuildUnlocked(const CvPlayer* pPlayer, int eBuild, const CvPlot* pPlot);
-	// the SERVING canBuild unlock (the worker hot path -- per (plot × build) at planning scale): rem-set +
-	// target-side obsolescence + the CONFIG techPrereq compare (static Info, the sanctioned class) --
-	// verdict-equivalent to the legacy triple by construction; enBuildUnlocked above is the FULL
-	// requires.build eval (the plot-aware form)
-	static bool enBuildUnlockedFast(const CvPlayer* pPlayer, int eBuild);
+	// (the canBuild UNLOCK half is the standardized enabler's builds domain -- CvPlayer::m_enabler.builds,
+	// a bare member read at the gate; the plot-validity half stays engine, enabler.md par.7.1)
 	// the promotion composite: the cascade frontier half over the bespoke legacy half (isPromotionValidLegacy(...,true))
 	static bool enPromotionValid(const CvUnit* pUnit, int ePromo);
 

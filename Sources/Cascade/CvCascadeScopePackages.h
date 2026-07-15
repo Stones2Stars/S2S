@@ -101,18 +101,11 @@ enum CascadeCityPkg
 	CPK_SCPCT   = 256,   // scalar percent packages: gpMod city, defense amount, maintenance city
 	CPK_SCSPEC  = 512,   // the gpBase specialist flat package (governor churn touches ONLY this)
 	CPK_BR      = 1024,  // the buildRate city ledgers + city member percents
-	// the ENABLER frontier sets -- SPLIT per domain so a gate read rebuilds ONLY its own walk (the
-	// perf surgery 2026-07-04 late: one shared bit made canConstruct pay the UnitEnabler walk and
-	// the boundary pay everything for every city)
-	CPK_FRONT_B  = 2048,  // buildable (BuildingEnabler)
-	CPK_FRONT_U  = 4096,  // trainable (UnitEnabler)
-	CPK_FRONT_PP = 8192,  // creatable + maintainable (generate + the two gateSets)
-	CPK_FRONTIER = CPK_FRONT_B | CPK_FRONT_U | CPK_FRONT_PP,
+	// (the enabler frontiers -- buildable/trainable/creatable/maintainable -- live on the standardized enabler
+	// domains, CvCity::m_enabler / CvPlayer::m_enabler, event-maintained; enabler.md par.7/8. No CPK bit.)
 	CPK_RATES   = CPK_YPCT | CPK_YSPEC | CPK_YEXTRA | CPK_CSPEC | CPK_CPCT | CPK_CBASE,   // = 63
-	CPK_ALL     = 16383,
-	// ⛔ the frontier is LAZY (ensure-on-read only): the boundaries mark it but must NEVER eagerly ensure
-	// it -- an eager whole-frontier rebuild per city per turn was the measured turn-grind (2026-07-04)
-	CPK_EAGER   = CPK_ALL & ~CPK_FRONTIER
+	CPK_ALL     = 2047,
+	CPK_EAGER   = CPK_ALL
 };
 
 struct CascadeCityPackages
@@ -161,14 +154,6 @@ struct CascadeCityPackages
 	std::vector<int> fsCityByType;       // freeSpecialists.city.{SPECIALIST_X} counts, by SpecialistTypes
 
 	// -- the ENABLER frontier (#430 THE FLIP, owner 2026-07-04): the harness-proven availability sets,
-	// served by the flipped can* gates via ensure-on-read (the operating buildings idiom, deliberately NOT the rates'
-	// bare fetch: gate reads are decision-time and legacy chains builds within a turn) --
-	std::set<int> enBuildable, enTrainable, enCreatable, enMaintainable;
-	// the VISIBLE (build-list) frontier -- the CAN-GET set with the GREYABLE clauses relaxed (connectable resource /
-	// unadopted civic show GREYED, not HIDDEN; enabler.md §6). Served by can*(bTestVisible=true); filled in the SAME
-	// CPK_FRONT_* blocks as the strict sets above. The strict sets stay the buildable-now (bTestVisible=false) answer.
-	std::set<int> enBuildableVisible, enTrainableVisible, enCreatableVisible, enMaintainableVisible;
-
 	CvDerivedCacheSet<CvCity> set;       // the ONE dirty protocol (bind in CvCity's ctor)
 
 	CascadeCityPackages()
@@ -201,10 +186,9 @@ enum CascadePlayerPkg
 	PSC_BR     = 16,   // the buildRate empire building ledgers + building member pcts
 	// the ENABLER player frontier -- SPLIT (the perf surgery): the promo tech halves are a 700-tech
 	// accumHave walk only promotion picks need; researchable/civics/hurries/buildRem fill together
-	PSC_FRONT_P     = 32,  // researchable + civics + hurries + the canBuild rem-set
-	PSC_FRONT_PROMO = 64,  // the promotion frontier's tech halves
-	PSC_FRONTIER = PSC_FRONT_P | PSC_FRONT_PROMO,
-	PSC_ALL    = 127,
+	PSC_FRONT_P     = 32,  // the hurries gate set (the one remaining box frontier slice)
+	PSC_FRONTIER = PSC_FRONT_P,
+	PSC_ALL    = 63,
 	PSC_EAGER  = PSC_ALL & ~PSC_FRONTIER   // the frontier is LAZY (ensure-on-read only)
 };
 
@@ -246,11 +230,11 @@ struct CascadePlayerScope
 	// -- buildRate (building-sourced halves only) --
 	CascadeBrLedger brEmpKeyed;          // dense per-kind tables -> Σ pcts (all cities' active buildings)
 	int brEmpMilitary, brEmpSpace;       // empire member pcts (buildings)
-	// -- the ENABLER player frontier (#430 THE FLIP): researchable/civics/hurries sets (the harness-proven
-	// bare-player-ctx fills), the canBuild UNLOCK rem-set (obsoletes.builds over held techs), and the
-	// promotion frontier's player-wide tech halves (the per-unit composite folds these + the unit's own) --
-	std::set<int> enResearchable, enCivicsOk, enHurryOk, enBuildRem;
-	std::set<int> enPromoTechCand, enPromoTechRem;
+	// -- the ENABLER player frontier (#430 THE FLIP): the hurries set (the harness-proven bare-player-ctx
+	// fill -- hurries are NOT an enabler domain, enabler.md par.7.1; this box slice serves canHurry until the
+	// civic-ability model consumes it). TECHS + CIVICS + BUILDS + PROMOTIONS left this package: their lists
+	// are the STANDARDIZED enabler's maintained vectors (CvPlayer::m_enabler.*) --
+	std::set<int> enHurryOk;
 
 	CvDerivedCacheSet<CvPlayer> set;     // bind in CvPlayer's ctor
 

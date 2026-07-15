@@ -37,6 +37,9 @@ CvBonusInfo::CvBonusInfo()
 
 void CvBonusInfo::mapFrom(const picojson::value& entity)
 {
+	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom. NB m_providedByImprovementTypes is
+	// NOT cleared here -- it is populated by a separate derived-cache pass, not by this parse.
+	m_aeMapCategories.clear();
 	CvInfo::mapFrom(entity);   // core reading + availability (enables.units/buildings)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();

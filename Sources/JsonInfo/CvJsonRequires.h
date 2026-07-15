@@ -29,6 +29,8 @@ public:
 	// parser drops the structural `dormant` key, so the trigger ids are extracted separately here (json §4.3).
 	void parse(const picojson::value& v);
 
+	void clearParsed();   // frees the trees + resets (the dtor body; the clear-first half of the section re-map)
+
 	bool isEmpty() const { return build == NULL && operate == NULL && dormantTriggers.empty(); }
 
 private:

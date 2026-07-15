@@ -9,19 +9,33 @@
 //	ALONGSIDE this consumer (harmless double-mark) until they are removed and the eventspine is the SOLE path.
 //	This consumer ANNOUNCES every mark ([CASCADE] invalidate ...) so the real invalidation state is mappable.
 //
-//	Load-INERT: mid-reseed the targeted ripples (operating-buildings / frontier) are invalid -- their reverse indices
-//	are not built until onFinalInitialized (buildFrontierIndices). The load warm-up builds the cascade; this is a
-//	PLAY-TIME consumer. The per-source CITY masks are lifted VERBATIM from the CvCity.cpp mutation sites (so this is
-//	mask-equivalent to the hand-wiring); the derived-from-deposit-index refinement (R2) is a follow-up.
+//	TWO HALVES BY LOAD BEHAVIOUR (DEC-spine-reseed: "the cache-build consumer stays load-active"):
+//	-- the ENABLER DELTAS are LOAD-ACTIVE: the reseed's in-read emits are what BUILD the enabler domains (they
+//	   apply source-side edges straight off the loaded info objects -- no reverse index needed);
+//	-- the MODIFIER MARKS are load-inert: mid-reseed the targeted ripples (operating-buildings) are invalid --
+//	   their reverse indices are not built until onFinalInitialized (buildFrontierIndices) -- and marks during
+//	   the reseed are pointless (the modifier warm-up builds at load).
+//	The per-source CITY masks are lifted VERBATIM from the CvCity.cpp mutation sites (so this is mask-equivalent
+//	to the hand-wiring); the derived-from-deposit-index refinement (R2) is a follow-up.
 //
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeInvalidation.h"
 #include "CvEventSpine.h"          // IEventConsumer, the SEVT_* ids, emitCacheInvalidate / spineEventName, spineGameLoadInProgress
 #include "CvCascadeAccumulator.h"  // CascadeAccumulator (the mark methods) + the CPK_*/PSC_* package-bit masks
+#include "CvTechEnabler.h"         // TechEnabler::onTechChanged -- the standardized enabler's tech-domain delta
+#include "CvBuildingEnabler.h"     // BuildingEnabler::onCity* -- the standardized per-city building-domain deltas
+#include "CvUnitEnabler.h"         // UnitEnabler::onCity* -- the standardized per-city unit-domain deltas
+#include "CvCivicEnabler.h"        // CivicEnabler::onTechChanged -- the civics domain's tech delta
+#include "CvProjectEnabler.h"      // ProjectEnabler::onTechChanged/onProjectChanged -- the projects domain's deltas
+#include "CvProcessEnabler.h"      // ProcessEnabler::onTechChanged -- the processes domain's tech delta
+#include "CvBuildEnabler.h"        // BuildEnabler::onTechChanged -- the worker-builds domain's tech delta
+#include "CvPromotionEnabler.h"    // PromotionEnabler::onTechChanged -- the promotions domain's tech delta
 #include "AI/CvPlayerAI.h"         // GET_PLAYER
 
-// Resolve a per-city event's (owner, cityId) to the live CvCity. A negative owner/id => NULL (an empire/world event).
+// Resolve a per-city event's (owner, cityId) to the live CvCity. A negative owner/id => NULL (an empire/world
+// event). Works during the load reseed too: the two-phase city stream read (FFreeListTrashArray.h) registers a
+// city in its owner's m_cities off readIdentity, BEFORE its body streams its in-read emits.
 static const CvCity* cityForEvent(int iOwner, int iCityId)
 {
 	if (iOwner < 0 || iOwner >= MAX_PLAYERS || iCityId < 0) return NULL;
@@ -35,7 +49,134 @@ public:
 
 	void onEvent(const CvSpineEvent& kEvent)
 	{
-		if (spineGameLoadInProgress()) return;   // load-inert: ripples invalid pre-buildFrontierIndices
+		// THE ENABLER DELTAS -- LOAD-ACTIVE (the cache-BUILD half): the reseed's in-read emits build the enabler
+		// domains through the same appliers as play (DEC-spine-reseed).
+		routeEnablerDeltas(kEvent);
+		// THE MODIFIER MARKS -- load-inert: mid-reseed the targeted ripples are invalid (reverse indices unbuilt
+		// until buildFrontierIndices) and marks are pointless (the modifier warm-up builds at load).
+		if (spineGameLoadInProgress()) return;
+		routeModifierMarks(kEvent);
+	}
+
+private:
+	// The standardized per-domain enabler appliers (enabler.md par.7.1) -- consume EVERY DOMAIN emit, play-time
+	// and the load reseed alike. Order contracts live here (pre-flip held-flag guards).
+	void routeEnablerDeltas(const CvSpineEvent& kEvent)
+	{
+		switch (kEvent.iEventId)
+		{
+		case SEVT_BUILDING_CHANGED:
+		{
+			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
+			if (pCity != NULL)
+			{
+				// held flip + the building's own enables contribution.
+				// ORDER: UnitEnabler first (its flip guard reads the buildings domain's held flag PRE-flip).
+				UnitEnabler::onCityBuildingChanged(*pCity, kEvent.iType, kEvent.iB > 0);
+				BuildingEnabler::onCityBuildingChanged(*pCity, kEvent.iType, kEvent.iB > 0);   // idempotency = the domain's held guard
+			}
+			break;
+		}
+		case SEVT_RELIGION_CHANGED:
+		{
+			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
+			if (pCity != NULL)
+			{
+				BuildingEnabler::onCityReligionChanged(*pCity, kEvent.iType, kEvent.iA != 0);   // flip-guarded emit
+				UnitEnabler::onCityReligionChanged(*pCity, kEvent.iType, kEvent.iA != 0);
+			}
+			break;
+		}
+		case SEVT_CORPORATION_CHANGED:
+		{
+			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
+			if (pCity != NULL) BuildingEnabler::onCityCorporationChanged(*pCity, kEvent.iType, kEvent.iA != 0);   // flip-guarded emit
+			break;
+		}
+		case SEVT_BONUS_CHANGED:
+		{
+			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
+			if (pCity != NULL)
+			{
+				BuildingEnabler::onCityBonusChanged(*pCity, kEvent.iType, kEvent.iB);   // count-delta crossing
+				UnitEnabler::onCityBonusChanged(*pCity, kEvent.iType, kEvent.iB);
+			}
+			break;
+		}
+		case SEVT_CITY_CULTURE_LEVEL_CHANGED:   // the culture-level HAVE axis
+		{
+			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
+			if (pCity != NULL) BuildingEnabler::onCityCultureLevelChanged(*pCity, kEvent.iB, kEvent.iA);   // old (iB) -> new (iA)
+			break;
+		}
+		case SEVT_TECH_CHANGED:
+			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+			{
+				// the tech domain's O(delta) membership update -- the SOLE maintainer of the availability
+				// vectors' tech axis. iType=Tech, iA=has, iC=triggering player (the team resolves from it).
+				// ORDERING CONTRACT: every domain whose flip guard reads the PLAYER tech domain's held flag
+				// MUST run BEFORE TechEnabler::onTechChanged flips that flag.
+				BuildingEnabler::onCityTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
+				UnitEnabler::onCityTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
+				CivicEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
+				ProjectEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
+				ProcessEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
+				BuildEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
+				PromotionEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
+				TechEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, kEvent.iA != 0);
+			}
+			break;
+		case SEVT_CIVIC_ADOPTED:
+			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+			{
+				// the civic HAVE axis -- the emit carries the swap fact (adopted iType, swapped-out iB)
+				BuildingEnabler::onPlayerCivicsChanged((PlayerTypes)kEvent.iC, kEvent.iB, kEvent.iType);
+				UnitEnabler::onPlayerCivicsChanged((PlayerTypes)kEvent.iC, kEvent.iB, kEvent.iType);
+			}
+			break;
+		case SEVT_PROJECT_CHANGED:
+			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+			{
+				// the project->project HAVE axis (iType=Project, iB=team count delta). PER-MEMBER emits (one per
+				// alive team member -- play and the load reseed alike), so the applier scopes to the emitting
+				// player: exactly-once per player, no team-wide double-apply.
+				ProjectEnabler::onProjectChanged((PlayerTypes)kEvent.iC, (ProjectTypes)kEvent.iType, kEvent.iB);
+			}
+			break;
+		// ---- the requires-gate CLASS re-gates (no FK reverse edge exists for these -- the load-compiled
+		// class lists re-gate; BuildingEnabler skips them inside the load bracket) ----
+		case SEVT_POPULATION_CHANGED:
+		{
+			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
+			if (pCity != NULL) BuildingEnabler::onCityGateClass(*pCity, BuildingEnabler::GATE_POP);
+			break;
+		}
+		case SEVT_POWER_CHANGED:
+		{
+			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
+			if (pCity != NULL) BuildingEnabler::onCityGateClass(*pCity, BuildingEnabler::GATE_POWER);
+			break;
+		}
+		case SEVT_GOLDEN_AGE_CHANGED:
+			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+				BuildingEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, BuildingEnabler::GATE_GOLDEN_AGE);
+			break;
+		case SEVT_STATE_RELIGION_CHANGED:
+			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+				BuildingEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, BuildingEnabler::GATE_STATE_RELIGION);
+			break;
+		// ---- the load-end gate pass (the par.7.1 order rule's "gate once after the stream ends" option --
+		// fires while the bracket is still open, at the end of onFinalInitialized, state fully final) ----
+		case SEVT_GAME_LOAD_FINISHED:
+			BuildingEnabler::onLoadFinished();
+			break;
+		default: break;
+		}
+	}
+
+	// The modifier-package marks (the invalidation half) -- play-time only.
+	void routeModifierMarks(const CvSpineEvent& kEvent)
+	{
 		const char* szSource = spineEventName(kEvent.iEventId);   // the source event's name, for the observability line
 
 		switch (kEvent.iEventId)
@@ -47,7 +188,7 @@ public:
 			if (pCity != NULL)
 			{
 				CascadeAccumulator::buildingProcessed(pCity, (BuildingTypes)kEvent.iType);
-				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC | CPK_FRONT_B | CPK_FRONT_U), szSource);
+				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC), szSource);
 			}
 			break;
 		}
@@ -56,7 +197,7 @@ public:
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
-				const int iDirtyPackages = CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT | CPK_FRONT_PP;
+				const int iDirtyPackages = CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT;
 				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
 				CascadeAccumulator::cityHaveChanged(pCity, CascadeAccumulator::CASC_HAVE_RELIGION);
 				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
@@ -68,7 +209,7 @@ public:
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
-				const int iDirtyPackages = CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT | CPK_BR | CPK_FRONTIER;
+				const int iDirtyPackages = CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT | CPK_BR;
 				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
 				CascadeAccumulator::cityHaveChanged(pCity, CascadeAccumulator::CASC_HAVE_CORP);
 				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
@@ -92,7 +233,7 @@ public:
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
-				const int iDirtyPackages = CPK_YEXTRA | CPK_CBASE | CPK_FRONT_PP;
+				const int iDirtyPackages = CPK_YEXTRA | CPK_CBASE;
 				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
 				CascadeAccumulator::cityHaveChanged(pCity, CascadeAccumulator::CASC_HAVE_POP);
 				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
@@ -127,10 +268,17 @@ public:
 		// trait / state-religion / project ride it as R4 gaps, self-heal-backstopped) ----
 		case SEVT_TECH_CHANGED:
 		case SEVT_CIVIC_ADOPTED:
+		case SEVT_PROJECT_CHANGED:
+			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+			{
+				CascadeAccumulator::markPlayerScopeAndCities((PlayerTypes)kEvent.iC);   // the broad conditioner mark (unchanged)
+				emitCacheInvalidate(1, kEvent.iC, kEvent.iC, PSC_ALL, szSource);
+			}
+			break;
+
 		case SEVT_GOLDEN_AGE_CHANGED:
 		case SEVT_TRAIT_CHANGED:
 		case SEVT_STATE_RELIGION_CHANGED:
-		case SEVT_PROJECT_CHANGED:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{
 				CascadeAccumulator::markPlayerScopeAndCities((PlayerTypes)kEvent.iC);
@@ -162,6 +310,8 @@ public:
 				for (const CvCity* pc = kPlayer.firstCity(&iLoop); pc != NULL; pc = kPlayer.nextCity(&iLoop))
 					if (pc->plot()->getPlotGroupId((PlayerTypes)kEvent.iC) == kEvent.iSrcLoc)
 					{
+						// (the per-city enabler's bonus axis needs nothing here: the network recount flows through
+						// CvCity::processBonus, whose SEVT_BONUS_CHANGED count-deltas the domain already consumes)
 						CascadeAccumulator::dirtyCity(pc, iDirtyPackages);
 						emitCacheInvalidate(0, kEvent.iC, pc->getID(), iDirtyPackages, szSource);
 					}

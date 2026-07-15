@@ -32,6 +32,7 @@ public:
 	const CvJsonModFamily* find(const std::string& address) const;   // e.g. "food.city" / "happiness.city.buildings.BUILDING_FORGE"
 	const std::map<std::string, CvJsonModFamily*>& all() const { return m_families; }
 	bool empty() const { return m_families.empty(); }
+	void clearParsed();   // frees the families + resets (the dtor body; the clear-first half of the section re-map)
 
 private:
 	void walk(const std::string& addr, const picojson::value& node);   // recurse; a unit key -> a leaf, else deeper

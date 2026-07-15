@@ -86,6 +86,8 @@ int CvBuildInfo::getFeatureProduction(FeatureTypes e) const
 
 void CvBuildInfo::mapFrom(const picojson::value& entity)
 {
+	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom
+	m_aePrereqBonusTypes.clear(); m_aFeatureStructs.clear(); m_aTerrainStructs.clear();
 	CvInfo::mapFrom(entity);   // core reading + availability model (populates m_requires, incl. requires.build)
 	m_eTechPrereq = findBuildTechPrereq(m_requires.build);        // real data: the team-scoped clause of requires.build
 	collectPrereqBonuses(m_requires.build, m_aePrereqBonusTypes); // real data: the plot-scoped BONUS_ clauses

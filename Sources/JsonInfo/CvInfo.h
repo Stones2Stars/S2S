@@ -49,11 +49,22 @@ public:
 	CvInfo();
 	virtual ~CvInfo();
 
-	// #430: the ONE load hook. LoadGlobalClassInfoJson (CvXMLLoadUtilitySet) creates the poco and calls mapFrom on
-	// this entity's curated JSON -- NO XML read (DEC-no-xml-into-game). A per-type subclass overrides mapFrom, calls
-	// CvInfo::mapFrom(entity) FIRST (shared CvInfoBase fields + the ONE section dispatch), then parses its own typed
-	// members (keyed skills, FKs, flags).
+	// #430: the ONE load hook -- IDEMPOTENT BY CONTRACT (owner constraint: FK links register AFTER all JSONs are
+	// loaded). LoadGlobalClassInfoJson (CvXMLLoadUtilitySet) creates the poco and calls mapFrom on this entity's
+	// curated JSON -- NO XML read (DEC-no-xml-into-game). A per-type subclass overrides mapFrom, calls
+	// CvInfo::mapFrom(entity) FIRST (clears + re-parses the composed sections), then parses its own typed members
+	// (keyed skills, FKs, flags). Because an ALIASED poco is mapFrom'd by its category's loader MID-registry (any
+	// FK naming a later-loading category silently drops), cascadeLoadJson RE-RUNS the full mapFrom once the
+	// registry is complete -- so every mapFrom (base AND subclass) must FULLY DEFINE its output each call:
+	// sections clear via clearSections() here; a subclass CLEARS its accumulating typed containers (vectors,
+	// += maps) at the top of its own parse. Scalar assigns are naturally idempotent.
 	virtual void mapFrom(const picojson::value& entity);
+
+protected:
+	void mapSections(const picojson::value& entity);   // the ONE base section dispatch (mapFrom's body)
+	void clearSections();                              // clearParsed() on every composed unit the type carries
+
+public:
 
 	// --- the composable section units -- DATA-FREE here; a derived info that composes one overrides its pair ---
 	virtual const CvJsonRequires*  getRequires()     const { return NULL; }   // §4.3
@@ -74,8 +85,14 @@ public:
 	const CvJsonCondition* requiresBuild() const   { const CvJsonRequires* r = getRequires(); return r ? r->build : NULL; }
 	const CvJsonCondition* requiresOperate() const { const CvJsonRequires* r = getRequires(); return r ? r->operate : NULL; }
 	const std::vector<int>& dormantTriggers() const;                          // empty static when absent
-	const std::vector<int>* edge(const std::string& szEdgeDotBucket) const    // NULL when absent
-	{ const CvJsonEdges* e = getEdges(); return e ? e->find(szEdgeDotBucket) : NULL; }
+	const std::vector<int>* edge(EnEdgeFamily eFamily, EnEdgeBucket eBucket) const   // NULL when absent; int-keyed, no strings
+	{ const CvJsonEdges* e = getEdges(); return e ? e->find(eFamily, eBucket) : NULL; }
+	// The reverse-view writer -- LOAD-ONLY (the readJson reverse pass fills EDGEF_RELATED/EDGEF_REQUIRED_BY onto
+	// the REFERENCED info, so every info already carries its reverse lookups after load). Part of the
+	// write-once-at-load window; never called post-load.
+	void addReverseEdge(EnEdgeFamily eFamily, EnEdgeBucket eBucket, int iId)
+	{ CvJsonEdges* e = mutEdges(); if (e != NULL) e->add(eFamily, eBucket, iId); }
+	void sortUniqueEdges() { CvJsonEdges* e = mutEdges(); if (e != NULL) e->sortUnique(); }
 	int allowedCap(const std::string& szKind) const                           // -1 = uncapped/absent
 	{ const CvJsonAllowed* a = getAllowed(); return a ? a->cap(szKind) : -1; }
 	const std::vector<int>* grantList(const std::string& szBucket) const      // NULL when absent

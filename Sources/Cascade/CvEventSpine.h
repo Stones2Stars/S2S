@@ -217,7 +217,7 @@ enum SpineDomainEvent
 	SEVT_ROUTE_CHANGED          = 18, // CvPlot::setRouteType: iType=Route, iC=owner, iSrcLoc=plotId
 	SEVT_TECH_CHANGED           = 19, // CvTeam::setHasTech (BROAD -- any set): iType=Tech, iC=triggering player, iA=has
 	SEVT_TRAIT_CHANGED          = 20, // CvPlayer::processTrait/setHasTrait: iType=Trait, iC=player, iA=add
-	SEVT_PROJECT_CHANGED        = 21, // CvTeam::processProjectChange: iType=Project, iC=triggering player, iB=delta
+	SEVT_PROJECT_CHANGED        = 21, // CvTeam::changeProjectCount (+ the load reseed): iType=Project, iC=member player (PER-MEMBER, one emit per alive team member), iB=count delta
 	SEVT_GOLDEN_AGE_CHANGED     = 22, // CvPlayer::changeGoldenAgeTurns (flip): iC=player, iA=on
 	SEVT_STATE_RELIGION_CHANGED = 23, // CvPlayer::setLastStateReligion: iType=Religion, iC=player
 	// ownership changes -- a city/plot changed OWNER (conquest / culture flip / gift): the entity's packages move
@@ -310,7 +310,7 @@ void emitTechChanged(int iPlayer, int iTech, bool bHas);
 void emitTraitChanged(int iPlayer, int iTrait, bool bAdd);
 // A civic was adopted (revolution pulse). Mirrors the inline SEVT_CIVIC_ADOPTED emit in CvPlayer::setCivics so the
 // full-state replay + any future callers share one clean endpoint. iType = CivicTypes, iC = adopting player.
-void emitCivicAdopted(int iPlayer, int iCivic);
+void emitCivicAdopted(int iPlayer, int iCivic, int iOldCivic);   // the swap fact: adopted + swapped-out (iB)
 void emitProjectChanged(int iPlayer, int iProject, int iDelta);
 void emitGoldenAgeChanged(int iPlayer, bool bOn);
 void emitStateReligionChanged(int iPlayer, int iReligion);
@@ -319,7 +319,7 @@ void emitPlotGroupBonusChanged(int iOwner, int iPlotGroupId, int iBonus, int iDe
 void emitCityNetworkChanged(int iOwner, int iCity);   // network membership: a city's center plot moved to a different plot-group
 void emitEraChanged(int iPlayer, int iEra);   // a player's era advanced (broad player-scope cascade input)
 void emitNukesChanged(int iPlayer, int iState);   // a player's nuke state: 0 disabled / 1 enabled / 2 banned
-void emitCultureLevelChanged(int iCity, int iOwner, int iNewLevel);   // culture level (+ the radius/vicinity growth it drives)
+void emitCultureLevelChanged(int iCity, int iOwner, int iNewLevel, int iOldLevel);   // culture level old->new (+ the radius/vicinity growth it drives)
 void emitHolyCityChanged(int iCity, int iOwner, int iReligion, bool bIsHoly);   // a city gained(true)/lost(false) a religion's holy-city designation
 void emitCityOwnerChanged(int iCity, int iOldOwner, int iNewOwner);
 void emitPlotOwnerChanged(int iPlot, int iOldOwner, int iNewOwner);

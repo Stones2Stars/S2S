@@ -171,6 +171,13 @@ Shape: **`/state/<slice>`** for game-wide lists, **`/state/<entity>/...`** for e
 - **unit scope**
   - `/state/units` · `/state/units?player=N` — raw unit facts: type, unitAI, position, group, mission/activity,
     damage, level, domain
+- **info scope**
+  - `/state/info?type=ANY_INFOTYPE` — the loaded INFO OBJECT's edge unit: the authored families
+    (`enables`/`obsoletes`/`obsoletedBy`/…) AND the load-derived reverse families (`related`/`requiredBy`,
+    [DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view)), ids rendered to type names.
+    **The standing readJson-correctness verification (owner ruling): what this returns must MATCH the entity's
+    authored `Assets/Data` JSON** — a divergence is a load/parse defect (e.g. the aliased cross-category edge
+    drop, found by exactly this read), never data to accept.
 
 ## `/computed/*` — the engine's answers (verification ground-truth)
 

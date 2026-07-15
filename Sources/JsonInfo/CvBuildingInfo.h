@@ -119,8 +119,8 @@ public:
 	bool isDamageAllAttackers() const      { return m_bDamageAllAttackers; }   // defense.city.counterDamage present with NO `units` selector
 	bool isDamageAttackerCapable() const   { return m_bHasCounterDamage; }     // a defense.city.counterDamage object exists
 	bool getNotShowInCity() const          { return false; }   // CURATOR-GAP: derived display flag, not emitted
-	bool EnablesOtherBuildings() const     { const std::vector<int>* v = getEdges()->find("enables.buildings"); return v != NULL && !v->empty(); }   // REAL enables.buildings edge
-	bool EnablesUnits() const              { const std::vector<int>* v = getEdges()->find("enables.units"); return v != NULL && !v->empty(); }         // REAL enables.units edge
+	bool EnablesOtherBuildings() const     { const std::vector<int>* v = getEdges()->find(EDGEF_ENABLES, EDGEB_BUILDINGS); return v != NULL && !v->empty(); }   // REAL enables.buildings edge
+	bool EnablesUnits() const              { const std::vector<int>* v = getEdges()->find(EDGEF_ENABLES, EDGEB_UNITS); return v != NULL && !v->empty(); }         // REAL enables.units edge
 
 	// --- typed identity / cost members -- REAL data ---
 	int getReligionType() const              { return religion; }                // identity.religion FK (state-religion match)
@@ -487,7 +487,7 @@ public:
 	bool isPrereqAndTerrain(int i) const { return vecHas(m_prereqAndTerrains, i); }// REAL requires.build AND TERRAIN
 	bool isPrereqOrFeature(int i) const { return vecHas(m_prereqOrFeatures, i); }  // REAL requires.build OR FEATURE
 	bool isHurry(int i) const   // REAL enables.hurries edge (HURRY_* FK ids)
-	{ const std::vector<int>* v = getEdges()->find("enables.hurries"); if (!v) return false;
+	{ const std::vector<int>* v = getEdges()->find(EDGEF_ENABLES, EDGEB_HURRIES); if (!v) return false;
 	  for (std::size_t k = 0; k < v->size(); ++k) if ((*v)[k] == i) return true; return false; }
 	bool isNewCityFree(const CvGameObject* /*pObject*/) const { return false; }  // CURATOR-GAP (by design): NewCityFree relocated onto settler grants.foundBuildings (curate_unit); nothing emitted building-side
 

@@ -31,6 +31,8 @@
 #include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the spine (CvCity side)
 #include "Cascade/CvCascadeAccumulator.h"  // #430 the modifier scope accumulator -- DOMAIN dirty hooks (modifier-substrate.md)
 #include "Cascade/CvEnablerKernel.h" // EnablerKernel::recomputeOperatingBuildingsInto -- the operating buildings cache's refresh delegate target
+#include "Cascade/CvBuildingEnabler.h" // BuildingEnabler::onCityCreated -- the per-city buildings domain (canConstruct reads m_enabler)
+#include "Cascade/CvUnitEnabler.h"     // UnitEnabler::onCityCreated -- the per-city units domain (canTrain reads m_enabler)
 #include "AI/CvCityLogTags.h" // [CIT] tag enums (shared with CvCityAI.cpp -- defined once, see header)
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "CvTraitInfo.h"
@@ -426,6 +428,12 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	m_UnitList.init();
 
 	AI_init();
+
+	// #430: the standardized per-city enabler's CITY-CREATED applier (never a read path -- enabler.md par.7):
+	// init + the cross-scope fold (team techs + player civics). The city's own facts arrive as DOMAIN events --
+	// here at founding from the real grant/build emits, at load from the in-read reseed emits (one mechanism).
+	BuildingEnabler::onCityCreated(*this);
+	UnitEnabler::onCityCreated(*this);
 }
 
 
@@ -485,6 +493,7 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_operatingBuildings.obsolete.clear();
 	m_operatingBuildings.provided.clear();
 	m_operatingBuildings.providedCount.clear();
+	m_enabler.reset();   // #430: the standardized per-city enabler unseeds -- re-seeded at load warm-up / first read
 
 	//--------------------------------
 	// Uninit class
@@ -1267,6 +1276,11 @@ void CvCity::doTurn()
 	// #430 (DEC-unit-modifiers-on-top): the unit-sourced property memo refreshes at END-TURN cadence --
 	// unit movement never clears it (noteUnitMoved is a no-op; the per-move clear was an automation storm).
 	m_unitSourcedPropertyCache.clear();
+
+	// #430 the requires gate's bounded DYNAMIC re-check (enabler-frontier-perf St.2 step 5): once per city
+	// turn, re-gate ONLY the small load-compiled set whose requires read live non-HAVE state -- a targeted
+	// sweep of that list, never a blanket.
+	BuildingEnabler::onCityTurn(*this);
 
 	// [CIT/proplevel] -- per-city property snapshot at the start of each turn (crime/disease/
 	// education/...), so property TRENDS are trackable from the log over turns -- hard to eyeball
@@ -2372,16 +2386,14 @@ void CvCity::clearUpgradeCache(UnitTypes eUnit) const
 
 bool CvCity::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreUpgrades, bool bPropertySpawn) const
 {
-	// ==== #430 THE ENABLER FLIP: the DEFAULT gate shape serves the cascade frontier (UnitEnabler::trainable,
-	// parity-proven vs the WHOLE composite -- player leg + city leg + caches). Non-default shapes + pre-init
-	// ride the Legacy path (the canTrain cache serves the Legacy path only). ====
-	// #430 owner 2026-07-10: BOTH the trainable-now (bTestVisible=false -> strict) AND the VISIBLE build-list
-	// (bTestVisible=true -> CAN-GET/greyed set) ride the cascade; legacy stays for AI/what-if shapes only.
+	// ==== #430 THE ENABLER READ (owner: no availability list reads legacy; a static is a pure calculator,
+	// never a read path). The gate verdict is a BARE member read of the per-city units domain (enabler.md
+	// par.7/8) -- deliberately OVER-INCLUSIVE until the requires gate + allowed caps land on the component.
+	// Legacy survives only as the AI's what-if data source (bContinue/bIgnore*/bPropertySpawn shapes). ====
 	if (!bContinue && !bIgnoreCost && !bIgnoreUpgrades && !bPropertySpawn
 	&& GC.getGame().isFinalInitialized())
 	{
-		return bTestVisible ? CascadeAccumulator::enTrainVisible(this, (int)eUnit)
-		                    : CascadeAccumulator::enTrain(this, (int)eUnit);
+		return m_enabler.units.listed((int)eUnit);   // listed == inTree until GREYED lands (par.6)
 	}
 	return canTrainLegacy(eUnit, bContinue, bTestVisible, bIgnoreCost, bIgnoreUpgrades, bPropertySpawn);
 }
@@ -2533,20 +2545,19 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 	{
 		return false;
 	}
-	// ==== #430 THE ENABLER FLIP (owner 2026-07-04 "flip it all"): the DEFAULT gate shape serves the cascade
-	// frontier (BuildingEnabler::buildable cached on the city package, ensure-on-read -- the operating buildings idiom, so
-	// legacy's same-turn chain-building survives). What-if/visible shapes + pre-init ride the Legacy path
-	// below; the m_bCanConstruct cache serves the Legacy path only (the [ENABLER/shadow] oracle stays cheap). ====
-	// #430 owner 2026-07-10: canConstruct's GATE verdict rides the cascade frontier for BOTH shapes -- the buildable-now
-	// check (bTestVisible=false -> strict set) AND the VISIBLE build-list the Python UI populates (bTestVisible=true ->
-	// the CAN-GET/greyed set, enabler.md §6). Legacy (canConstructLegacy) survives ONLY as the AI's per-building data
-	// source and for the what-if shapes (bContinue / bIgnore* / eIgnoreTechReq / probability / bExposed), never as the
-	// gate the player's list sees. (Was: the flip dodged bTestVisible, so the list ran on legacy -- the faked-frontier bug.)
+	// ==== #430 THE ENABLER READ (owner 2026-07-14: "none of the things that need the enabler read legacy anymore
+	// -- that is the premise; otherwise we do not see what is broken"). The gate verdict is a BARE READ of the
+	// standardized per-city domain (CvCity::m_enabler, event-maintained -- enabler.md par.7/8): deliberately
+	// OVER-INCLUSIVE until the requires gate + allowed caps land on the component (GREYED); a wrong offer is a
+	// VISIBLE defect to fix on the enabler, never a reason to fall back. Legacy (canConstructLegacy) survives
+	// ONLY as the AI's per-building data source for the what-if shapes (bContinue / bIgnore* / eIgnoreTechReq /
+	// probability / bExposed), never as the gate the player's list or the AI's offer sees. ====
 	if (!bContinue && !bIgnoreCost && !bIgnoreAmount && !bIgnoreBuildings && eIgnoreTechReq == NO_TECH && probabilityEverConstructable == NULL && !bExposed
 	&& GC.getGame().isFinalInitialized())
 	{
-		return bTestVisible ? CascadeAccumulator::enConstructVisible(this, (int)eBuilding)
-		                    : CascadeAccumulator::enConstruct(this, (int)eBuilding);
+		// a BARE member read, nothing else (owner 2026-07-14: no calculator on a live path; seeding is a
+		// lifecycle act -- load warm-up / city init -- never a read-path guard)
+		return m_enabler.buildings.listed((int)eBuilding);   // listed == inTree until GREYED lands (par.6)
 	}
 	return canConstructLegacy(eBuilding, bContinue, bTestVisible, bIgnoreCost, bIgnoreAmount, bIgnoreBuildings, eIgnoreTechReq, probabilityEverConstructable, bExposed);
 }
@@ -3089,13 +3100,14 @@ bool CvCity::canConstructInternal(BuildingTypes eBuilding, bool bContinue, bool 
 
 bool CvCity::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisible) const
 {
-	// #430 THE ENABLER FLIP: the default shape serves the cascade frontier (generate->gateSet projects). Owner
-	// 2026-07-10: the VISIBLE build-list (bTestVisible=true) rides the cascade CAN-GET/greyed set too (was legacy ->
-	// the "every project unlocked, Theory of Everything 5 eras early" bug); legacy stays for bContinue only.
+	// #430 THE ENABLER READ (owner: no availability list reads legacy): project AVAILABILITY is the PLAYER-held
+	// domain (enabler.md par.7.1 -- team-scope axes, one instance so per-city copies cannot drift); CREATION
+	// stays this city gate, reading through the owner (dynamic lookup, conquest-safe). Deliberately
+	// OVER-INCLUSIVE until the requires gate + allowed caps land (the plot map-category check joins then as a
+	// live city-local gate); legacy stays for bContinue (the what-if/AI shape) only.
 	if (!bContinue && GC.getGame().isFinalInitialized())
 	{
-		return bTestVisible ? CascadeAccumulator::enCreateVisible(this, (int)eProject)
-		                    : CascadeAccumulator::enCreate(this, (int)eProject);
+		return GET_PLAYER(getOwner()).m_enabler.projects.listed((int)eProject);   // listed == inTree until GREYED lands
 	}
 	return canCreateLegacy(eProject, bContinue, bTestVisible);
 }
@@ -3118,11 +3130,13 @@ bool CvCity::canCreateLegacy(ProjectTypes eProject, bool bContinue, bool bTestVi
 
 bool CvCity::canMaintain(ProcessTypes eProcess) const
 {
-	// #430 THE ENABLER FLIP: serves the cascade frontier (generate->gateSet processes). NB the Python
-	// cannotMaintain veto rides the Legacy oracle only -- parity-clean means no live veto in the data today.
+	// #430 THE ENABLER READ (owner: no availability list reads legacy): process AVAILABILITY is the PLAYER-held
+	// domain (enabler.md par.7.1 -- the tech axis is team-scope, one instance so per-city copies cannot drift);
+	// the maintain choice stays this city gate, reading through the owner (dynamic lookup, conquest-safe). NB
+	// the Python cannotMaintain veto rode the Legacy oracle only -- no live veto exists in the data today.
 	if (GC.getGame().isFinalInitialized())
 	{
-		return CascadeAccumulator::enMaintain(this, (int)eProcess);
+		return GET_PLAYER(getOwner()).m_enabler.processes.listed((int)eProcess);   // listed == inTree until GREYED lands
 	}
 	return canMaintainLegacy(eProcess);
 }
@@ -7035,11 +7049,10 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 		return;
 	}
 	m_iPopulation = iNewValue;
-	// #430 + enabler-frontier-perf.md Part C: perPop terms + the pop-prereq'd frontier. The frontier is now TARGETED
-	// (only pop-referencing buildings/units re-checked) instead of a blanket CPK_FRONTIER re-walk; CPK_FRONT_PP is
-	// kept broad (no per-project incremental primitive; projects can be pop-gated -- rule 3). WB deliberately NOT
+	// #430: perPop terms. Pop-gated availability is a REQUIRES atom (the gate stage re-gates it via the reverse
+	// index); the enabler frontiers are event-maintained domains, nothing to mark here. WB deliberately NOT
 	// dirtied (the wb pop terms fold LIVE pop at read; end-turn cadence).
-	CascadeAccumulator::dirtyCity(this, CPK_YEXTRA | CPK_CBASE | CPK_FRONT_PP);
+	CascadeAccumulator::dirtyCity(this, CPK_YEXTRA | CPK_CBASE);
 	CascadeAccumulator::cityHaveChanged(this, CascadeAccumulator::CASC_HAVE_POP);
 
 	// #430 event spine: announce the population change (past the no-change guard above).
@@ -10761,7 +10774,7 @@ void CvCity::setCultureLevel(CultureLevelTypes eNewValue, bool bUpdatePlotGroups
 	// #430 event spine: culture level is a cascade input (wonder caps, defense, enabler frontier) AND the city's
 	// workable RADIUS grows with it -- so this ONE fact is ALSO the vicinity-MEMBERSHIP signal (the city gains/loses
 	// plots into its vicinity). Announce it.
-	emitCultureLevelChanged(getID(), getOwner(), (int)eNewValue);
+	emitCultureLevelChanged(getID(), getOwner(), (int)eNewValue, (int)eOldValue);
 
 	// Culture level change can change our radius requiring recalculation of best builds
 	AI_markBestBuildValuesStale();
@@ -15436,10 +15449,8 @@ void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce
 		m_pabHasReligion[eIndex] = bNewValue;
 		// #430: religion presence feeds the commerce base terms (religion/shrine/SR match) + operate
 		// conditions + SR-conditioned percents; the SR-gated PLAYER sums apply through live gates (no mark)
-		// #430 + enabler-frontier-perf.md Part C: the religion-gated frontier is now TARGETED (only religion-
-		// referencing buildings/units re-checked, reading the FRESH operating buildings marked below) instead of blanket
-		// CPK_FRONTIER; CPK_FRONT_PP kept broad (rule 3, as setPopulation).
-		CascadeAccumulator::dirtyCity(this, CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT | CPK_FRONT_PP);
+		// (the enabler frontiers are event-maintained domains fed by the emit below; nothing frontier to mark here)
+		CascadeAccumulator::dirtyCity(this, CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT);
 		CascadeAccumulator::cityHaveChanged(this, CascadeAccumulator::CASC_HAVE_RELIGION);   // operating buildings: the targeted active-set ripple rides here (onHaveChangedActive)
 		// #430 event spine: announce the religion change (past the isHasReligion != bNewValue guard).
 		emitReligionChanged(getID(), getOwner(), (int)eIndex, bNewValue);
@@ -15646,13 +15657,9 @@ void CvCity::setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAn
 	{
 		// #430: corporation presence feeds the commerce base terms (corporation/corp-HQ) + operate conditions
 		// (corp-conditioned deposits ride along) + the buildRate military member (the L10 corp fold 2026-07-05)
-		// enabler-frontier-perf.md Part C -- CORP KEPT BROAD (rule 3, deliberate): the corp presence bit
-		// (m_pabHasCorporation) is committed LATE (below, after the competing-HQ replacement logic + an early
-		// return whose corp-commit path routes through replaceCorporation), so there is no guaranteed point here to
-		// run a SYNCHRONOUS targeted re-check against COMMITTED corp state. A deferred blanket CPK_FRONTIER dirty is
-		// order-independent (rebuilt correct on next read), so it stays the safe floor; corp spread is infrequent, so
-		// the cost of the broad rebuild is minor. (pop/religion/power commit their state before the re-check -> targeted.)
-		CascadeAccumulator::dirtyCity(this, CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT | CPK_BR | CPK_FRONTIER);
+		// (the enabler frontiers are event-maintained domains fed by the corp emit -- which fires past the
+		// commit, so the domain delta reads committed state; nothing frontier to mark here)
+		CascadeAccumulator::dirtyCity(this, CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT | CPK_BR);
 		m_operatingBuildings.set.markAllDirty();
 		if (bNewValue)
 		{
@@ -16151,20 +16158,9 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 		m_orderQueue.insert(m_orderQueue.begin(), order);
 	}
 
-	// #430 ISOLATED FRONTIER BOX — targeted removal (owner 2026-07-05): the just-committed item leaves the
-	// buildable/trainable box so the AI never re-picks what it queued this turn (the :17035 "cycles forever"
-	// loop). This is a single O(log n) set.erase on the isolated box -- NOT the whole-frontier rebuild that,
-	// at order-churn frequency (100s/turn), triggered the modifier-recalc storm + MAF. "Only whatever has been
-	// built [committed] needs updating, not the entire frontier." A dirty/absent box self-corrects on its next
-	// full fill (the queue-exclusion at CvBuildingEnabler:138); completion's broad refresh is unchanged.
-	switch (eOrder)
-	{
-	case ORDER_CONSTRUCT: m_cascadeCityPackages.enBuildable.erase(iData1); break;
-	case ORDER_TRAIN:     m_cascadeCityPackages.enTrainable.erase(iData1); break;
-	case ORDER_CREATE:    m_cascadeCityPackages.enCreatable.erase(iData1); break;
-	case ORDER_MAINTAIN:  m_cascadeCityPackages.enMaintainable.erase(iData1); break;
-	default: break;
-	}
+	// #430: the availability frontiers are the per-city/per-player ENABLER domains (event-maintained,
+	// enabler.md par.7/8). Membership changes on HAVE events only -- a queued item does NOT leave the frontier
+	// (held flips on BUILT; queue-time over-offer is the enable-side premise until the requires stage).
 
 	if (!bAppend || getOrderQueueLength() == 1)
 	{
@@ -17496,8 +17492,15 @@ void CvCity::doMeltdown()
 
 void CvCity::read(FDataStreamBase* pStream)
 {
+	readIdentity(pStream);
+	readBody(pStream);
+}
 
-	PROFILE_EXTRA_FUNC();
+// Phase 1 of the two-phase stream read (see the header): object-start + reset + m_iID ONLY -- everything the
+// stream loop needs to REGISTER this city in its owner's m_cities (FFreeListTrashArray::load keys on getID())
+// before readBody streams the rest and fires the city's own in-read reseed emits.
+void CvCity::readIdentity(FDataStreamBase* pStream)
+{
 	CvTaggedSaveFormatWrapper& wrapper = CvTaggedSaveFormatWrapper::getSaveFormatWrapper();
 
 	wrapper.AttachToStream(pStream);
@@ -17508,6 +17511,15 @@ void CvCity::read(FDataStreamBase* pStream)
 	reset();
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iID);
+}
+
+void CvCity::readBody(FDataStreamBase* pStream)
+{
+	PROFILE_EXTRA_FUNC();
+	CvTaggedSaveFormatWrapper& wrapper = CvTaggedSaveFormatWrapper::getSaveFormatWrapper();
+
+	wrapper.AttachToStream(pStream);
+
 	WRAPPER_READ(wrapper, "CvCity", &m_iX);
 	WRAPPER_READ(wrapper, "CvCity", &m_iY);
 	WRAPPER_READ(wrapper, "CvCity", &m_iRallyX);
@@ -17683,6 +17695,12 @@ void CvCity::read(FDataStreamBase* pStream)
 		const int iCityId = m_iID;
 		const int iCityOwner = (int)m_eOwner;
 		int iI;
+		// #430: the CITY-CREATED applier BEFORE this city's own in-read emits stream -- init the per-city enabler
+		// domains + fold the cross-scope HAVE that predates the city (team techs + player civics, both read before
+		// cities). The emits below then build the city's own facts through the same appliers as play (the city is
+		// already REGISTERED -- the two-phase stream read loaded it into m_cities off readIdentity).
+		BuildingEnabler::onCityCreated(*this);
+		UnitEnabler::onCityCreated(*this);
 		// #430 reseed: the city's OWNERSHIP first (null -> current, owner ruling) -- establishes the city belongs to
 		// its owner before its contents (population/buildings/religion/...) reseed.
 		emitCityOwnerChanged(iCityId, (int)NO_PLAYER, iCityOwner);
@@ -17696,7 +17714,7 @@ void CvCity::read(FDataStreamBase* pStream)
 			if (m_paiNumBonuses[iI] != 0) { emitBonusChanged(iCityId, iCityOwner, iI, m_paiNumBonuses[iI]); }
 		for (iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
 			if (m_paiSpecialistCount[iI] > 0) { emitSpecialistChanged(iCityId, iCityOwner, iI, m_paiSpecialistCount[iI]); }
-			if (m_eCultureLevel != NO_CULTURELEVEL) { emitCultureLevelChanged(iCityId, iCityOwner, (int)m_eCultureLevel); }   // #430 reseed: culture level (+ its radius/vicinity footprint)
+			if (m_eCultureLevel != NO_CULTURELEVEL) { emitCultureLevelChanged(iCityId, iCityOwner, (int)m_eCultureLevel, (int)NO_CULTURELEVEL); }   // #430 reseed: culture level (+ its radius/vicinity footprint)
 	}
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iImprovementGoodHealth);

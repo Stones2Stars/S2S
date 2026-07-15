@@ -21,6 +21,7 @@
 #include "CvUnitCombatInfo.h"
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
+#include "CvTraitInfo.h"   // was reaching this transitively via unity batching -- made explicit when the batch shifted
 #include "CvMap.h"
 #include "Infrastructure/CvMapGenerator.h"
 #include "UI/CvMessageControl.h"
@@ -499,12 +500,15 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		averageHandicaps();
 	}
 
-	// #430: TECH_GAME_START is the universal no-prereq start tech -- a REAL engine tech (loaded from
-	// Assets/Data/techs), granted to every new game via the civ's grants.techs. OLD saves predate it, so a loaded
-	// team may not hold it; inject it here (before ANY tech read -- cacheAdjacentResearch/canResearch below) so the
-	// tech tree + the cascade start node are consistent for every alive team. Idempotent: skipped where already held.
+	// #430: TECH_GAME_START -- the universal no-prereq root (enabler.md par.2) -- granted to every NEW game here.
+	// This is the genuine grant (world fully initialized, the full setHasTech is correct), standing in for the
+	// unbuilt grants apply-loop (the civs' grants.techs row, roadmap F3) and moving there when grants apply.
+	// LOADED saves never need this: an old save is upgraded ON READ instead (CvTeam::read backfills the raw flag),
+	// so every loaded team already holds it before anything reads tech state.
+	if (bNewGame)
 	{
 		const TechTypes eGameStart = (TechTypes)GC.getInfoTypeForString("TECH_GAME_START", true);
+		FAssertMsg(eGameStart != NO_TECH, "TECH_GAME_START missing from the loaded data -- the enabler root is gone, generation would run empty");
 		if (eGameStart != NO_TECH)
 		{
 			for (int iI = 0; iI < MAX_TEAMS; iI++)
@@ -518,6 +522,10 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		}
 	}
 
+	// #430: NO enabler warm-up here -- the domains are built PURELY from DOMAIN events (DEC-spine-reseed): at
+	// load by the in-read reseed emits (consumed as they stream, the domains initialized at each object's
+	// read-start), at new game by the real init/grant emits (incl. the TECH_GAME_START grant just above).
+	// cacheAdjacentResearch below reads canResearch -- a bare read of the already-event-built techs domain.
 	for (int iI = 0; iI < MAX_TEAMS; iI++)
 	{
 		if (GET_TEAM((TeamTypes)iI).isAlive())

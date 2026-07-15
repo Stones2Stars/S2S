@@ -14,6 +14,7 @@
 
 #include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx / CvCascadeEvalFlags -- the eval target for requires conditions
 #include "CvCascadeOperatingBuildings.h"       // OperatingBuildings -- the standing per-city operating-buildings cache
+#include "CvJsonEdges.h"              // EnEdgeFamily/EnEdgeBucket -- the interned edge vocabulary (no strings at runtime)
 #include <map>
 #include <set>
 #include <string>
@@ -25,9 +26,15 @@ class CvPlayer;
 class CvCity;
 class CvTeam;
 
-// The buckets keyed on the JSON `enables`/`obsoletes`/`replaces`/`disables` edge families -- one HAVE traversal fills
-// them all. Shared by the kernel + the per-domain enablers + the accumulator's frontier fills (promotions included).
-typedef std::map<std::string, std::set<int> > EnBucketSets;
+// The per-bucket candidate/removal sets one HAVE traversal fills -- indexed by the INTERNED bucket enum
+// (CvJsonEdges.h; no strings at runtime). Shared by the kernel + the per-domain enablers + the accumulator's
+// frontier fills (promotions included).
+struct EnBucketSets
+{
+	std::set<int> a[NUM_EDGEB];
+	std::set<int>& operator[](EnEdgeBucket e) { return a[e]; }
+	const std::set<int>& operator[](EnEdgeBucket e) const { return a[e]; }
+};
 
 // The requires-tree HAVE-atom dependency signature: which HAVE-classes gate an entity's requires. The ONE shape the
 // three reverse-index builders (the building/unit frontier boxes + the kernel's operate index) collect into via
@@ -44,14 +51,16 @@ struct CascadeCondDeps
 		stateReligion(false), civicAny(false), dynamic(false) {}
 };
 
+class EnablerDomain;
+
 class EnablerKernel
 {
 public:
-	// The per-(bucket) InfoRepo dispatch -- the entity's CvInfo by bucket name + id.
-	static const CvInfo* jsonFor(const std::string& b, int id);
+	// The per-(bucket) InfoRepo dispatch -- the entity's CvInfo by bucket + id.
+	static const CvInfo* jsonFor(EnEdgeBucket eBucket, int id);
 
-	// Insert edge `key`'s targets (if present) into out.
-	static void addEdge(const CvInfo* j, const std::string& key, std::set<int>& out);
+	// Insert the (family, bucket) edge's targets (if present) into out.
+	static void addEdge(const CvInfo* j, EnEdgeFamily eFamily, EnEdgeBucket eBucket, std::set<int>& out);
 
 	// Accumulate one HAVE entity's source-side edges across every bucket (enables ADD to cand; obsoletes/replaces/
 	// disables collected into rem for the post-gather set-difference).
@@ -62,20 +71,27 @@ public:
 
 	// Target-side obsoletedBy.techs: any held team tech obsoletes j.
 	static bool obsoletedByHeldTech(const CvInfo* j, const CvTeam& kTeam);
+	// ... by a held tech OTHER than eExclude (the tech-delta's obsolete-present ripple counterfactual).
+	static bool obsoletedByOtherHeldTech(const CvInfo* j, const CvTeam& kTeam, TechTypes eExclude);
+
+	// The ONE domain-refcount edge applier (enabler.md par.7.1; DEC-single-implementation): apply/withdraw a
+	// HAVE-source's edges into a domain -- enables.<bucket> -> the enable plane, obsoletes/replaces/
+	// disables.<bucket> -> the remove plane. Every per-domain enabler's seed + event deltas route through this.
+	static void applyEdges(EnablerDomain& d, const CvInfo* j, EnEdgeBucket eBucket, int iDelta);
 
 	// requires gate: build ∧ operate, through the typed-condition evaluator (STRICT state religion for build).
 	// bVisible=true relaxes the GREYABLE clauses (connectable resource / unadopted civic) for the visible frontier (enabler.md §6).
 	static bool requiresMet(const CvInfo* j, const CvCascadeEvalCtx& ec, bool bVisible = false);
 
 	// allowed cap gate: current tally count vs each scope cap (world/team/empire).
-	static bool allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit, const std::string& bucket = "");
+	static bool allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit, EnEdgeBucket eBucket = NO_EDGEB);
 
 	// canFoundReligion -- a PLAYER-WIDE state predicate reproduced from game state (CvPlayer::canFoundReligion).
 	static bool canFoundReligion(const CvPlayer& kPlayer);
 
 	// GATE: candidates[bucket] -> the available set (requires + allowed + obsoletedBy). bVisible=true yields the
 	// VISIBLE frontier (greyable clauses relaxed, enabler.md §6) for the build-list (bTestVisible) read.
-	static void gateSet(const std::string& bucket, const EnBucketSets& cand, const CvCascadeEvalCtx& ec,
+	static void gateSet(EnEdgeBucket eBucket, const EnBucketSets& cand, const CvCascadeEvalCtx& ec,
 		const CvPlayer& kPlayer, const CvTeam& kTeam, bool bUnit, std::set<int>& avail, bool bVisible = false);
 
 	// The ONE requires-tree HAVE-atom scanner (recursing GROUP children + enabled/disabled): classifies PRESENCE

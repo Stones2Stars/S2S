@@ -14,8 +14,14 @@
 
 CvJsonModifiers::~CvJsonModifiers()
 {
+	clearParsed();
+}
+
+void CvJsonModifiers::clearParsed()
+{
 	for (std::map<std::string, CvJsonModFamily*>::iterator it = m_families.begin(); it != m_families.end(); ++it)
 		delete it->second;
+	m_families.clear();
 }
 
 const CvJsonModFamily* CvJsonModifiers::find(const std::string& address) const

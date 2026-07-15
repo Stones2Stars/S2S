@@ -7,6 +7,7 @@
 #include "CvCascadePerfCount.h"   // per-turn call counters + stopwatches (owner 2026-07-02: repeat-calc hunt)
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "CvEnablerKernel.h"
+#include "CvEnabler.h"            // EnablerDomain -- the standardized domain the applyEdges deltas write
 #include "CvInfo.h"
 #include "CvTechInfo.h"        // cascadeStartNode -- the synthetic TECH_GAME_START root
 #include "Repos/InfoRepo.h"
@@ -31,28 +32,35 @@
 #include "Engine/CvGame.h"
 
 // The enables buckets this pass generates over (one HAVE traversal fills them all).
-static const char* EN_BUCKETS[] = { "buildings", "units", "projects", "processes", "techs", "civics", "promotions", "builds", "hurries", NULL };
-
-// The per-(bucket) InfoRepo dispatch -- the entity's CvInfo by bucket name + id.
-const CvInfo* EnablerKernel::jsonFor(const std::string& b, int id)
+static const EnEdgeBucket EN_GEN_BUCKETS[] =
 {
-	if (b == "buildings") return InfoRepo<CvBuildingInfo>::get().get(id);
-	if (b == "units")     return InfoRepo<CvUnitInfo>::get().get(id);
-	if (b == "projects")  return InfoRepo<CvProjectInfo>::get().get(id);
-	if (b == "processes") return InfoRepo<CvProcessInfo>::get().get(id);
-	if (b == "techs")     return InfoRepo<CvTechInfo>::get().get(id);
-	if (b == "civics")    return InfoRepo<CvCivicInfo>::get().get(id);
-	if (b == "promotions") return InfoRepo<CvPromotionInfo>::get().get(id);
-	if (b == "builds")    return InfoRepo<CvBuildInfo>::get().get(id);
-	// "hurries" has no InfoRepo (HURRY_ not in RJ_REPO_TYPES) -> NULL; canHurry needs only the enables.hurries edges
-	// (on the civics/techs), and a NULL json passes requires/allowed -> the gate IS "the hurry type is generated".
-	return NULL;
+	EDGEB_BUILDINGS, EDGEB_UNITS, EDGEB_PROJECTS, EDGEB_PROCESSES, EDGEB_TECHS,
+	EDGEB_CIVICS, EDGEB_PROMOTIONS, EDGEB_BUILDS, EDGEB_HURRIES, NO_EDGEB
+};
+
+// The per-(bucket) InfoRepo dispatch -- the entity's CvInfo by bucket + id.
+const CvInfo* EnablerKernel::jsonFor(EnEdgeBucket eBucket, int id)
+{
+	switch (eBucket)
+	{
+	case EDGEB_BUILDINGS:  return InfoRepo<CvBuildingInfo>::get().get(id);
+	case EDGEB_UNITS:      return InfoRepo<CvUnitInfo>::get().get(id);
+	case EDGEB_PROJECTS:   return InfoRepo<CvProjectInfo>::get().get(id);
+	case EDGEB_PROCESSES:  return InfoRepo<CvProcessInfo>::get().get(id);
+	case EDGEB_TECHS:      return InfoRepo<CvTechInfo>::get().get(id);
+	case EDGEB_CIVICS:     return InfoRepo<CvCivicInfo>::get().get(id);
+	case EDGEB_PROMOTIONS: return InfoRepo<CvPromotionInfo>::get().get(id);
+	case EDGEB_BUILDS:     return InfoRepo<CvBuildInfo>::get().get(id);
+	// EDGEB_HURRIES has no InfoRepo (HURRY_ not in RJ_REPO_TYPES) -> NULL; canHurry needs only the enables.hurries
+	// edges (on the civics/techs), and a NULL json passes requires/allowed -> the gate IS "the hurry type is generated".
+	default:               return NULL;
+	}
 }
 
-void EnablerKernel::addEdge(const CvInfo* j, const std::string& key, std::set<int>& out)
+void EnablerKernel::addEdge(const CvInfo* j, EnEdgeFamily eFamily, EnEdgeBucket eBucket, std::set<int>& out)
 {
 	if (j == NULL) return;
-	const std::vector<int>* p = j->edge(key);
+	const std::vector<int>* p = j->edge(eFamily, eBucket);
 	if (p == NULL) return;
 	for (size_t i = 0; i < p->size(); ++i) out.insert((*p)[i]);
 }
@@ -62,13 +70,13 @@ void EnablerKernel::addEdge(const CvInfo* j, const std::string& key, std::set<in
 void EnablerKernel::accumHave(const CvInfo* j, EnBucketSets& cand, EnBucketSets& rem)
 {
 	if (j == NULL) return;
-	for (int i = 0; EN_BUCKETS[i] != NULL; ++i)
+	for (int i = 0; EN_GEN_BUCKETS[i] != NO_EDGEB; ++i)
 	{
-		const std::string b = EN_BUCKETS[i];
-		addEdge(j, "enables." + b, cand[b]);
-		addEdge(j, "obsoletes." + b, rem[b]);
-		addEdge(j, "replaces." + b, rem[b]);
-		addEdge(j, "disables." + b, rem[b]);
+		const EnEdgeBucket b = EN_GEN_BUCKETS[i];
+		addEdge(j, EDGEF_ENABLES,   b, cand[b]);
+		addEdge(j, EDGEF_OBSOLETES, b, rem[b]);
+		addEdge(j, EDGEF_REPLACES,  b, rem[b]);
+		addEdge(j, EDGEF_DISABLES,  b, rem[b]);
 	}
 }
 
@@ -102,17 +110,40 @@ void EnablerKernel::generate(const CvPlayer& kPlayer, const CvCity* pCity, EnBuc
 			accumHave(jb, cand, rem);
 		}
 	}
-	for (EnBucketSets::iterator it = cand.begin(); it != cand.end(); ++it)
+	for (int i = 0; i < NUM_EDGEB; ++i)
 	{
-		const std::set<int>& r = rem[it->first];
-		for (std::set<int>::const_iterator jt = r.begin(); jt != r.end(); ++jt) it->second.erase(*jt);
+		const std::set<int>& r = rem.a[i];
+		for (std::set<int>::const_iterator jt = r.begin(); jt != r.end(); ++jt) cand.a[i].erase(*jt);
+	}
+}
+
+bool EnablerKernel::obsoletedByOtherHeldTech(const CvInfo* j, const CvTeam& kTeam, TechTypes eExclude)
+{
+	if (j == NULL) return false;
+	const std::vector<int>* p = j->edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS);
+	if (p == NULL) return false;
+	for (size_t i = 0; i < p->size(); ++i)
+		if ((TechTypes)(*p)[i] != eExclude && kTeam.isHasTech((TechTypes)(*p)[i])) return true;
+	return false;
+}
+
+void EnablerKernel::applyEdges(EnablerDomain& d, const CvInfo* j, EnEdgeBucket eBucket, int iDelta)
+{
+	if (j == NULL) return;
+	const std::vector<int>* p = j->edge(EDGEF_ENABLES, eBucket);
+	if (p != NULL) for (size_t i = 0; i < p->size(); ++i) d.addEnable((*p)[i], iDelta);
+	static const EnEdgeFamily REMOVE_FAMILIES[] = { EDGEF_OBSOLETES, EDGEF_REPLACES, EDGEF_DISABLES, NUM_EDGEF };
+	for (int e = 0; REMOVE_FAMILIES[e] != NUM_EDGEF; ++e)
+	{
+		p = j->edge(REMOVE_FAMILIES[e], eBucket);
+		if (p != NULL) for (size_t i = 0; i < p->size(); ++i) d.addRemove((*p)[i], iDelta);
 	}
 }
 
 bool EnablerKernel::obsoletedByHeldTech(const CvInfo* j, const CvTeam& kTeam)
 {
 	if (j == NULL) return false;
-	const std::vector<int>* p = j->edge("obsoletedBy.techs");
+	const std::vector<int>* p = j->edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS);
 	if (p == NULL) return false;
 	for (size_t i = 0; i < p->size(); ++i)
 		if (kTeam.isHasTech((TechTypes)(*p)[i])) return true;
@@ -125,15 +156,17 @@ bool EnablerKernel::obsoletedByHeldTech(const CvInfo* j, const CvTeam& kTeam)
 bool EnablerKernel::requiresMet(const CvInfo* j, const CvCascadeEvalCtx& ec, bool bVisible)
 {
 	if (j == NULL) return true;
+	CvCascadeEvalCtx gateEc = ec;
+	gateEc.buildingAtomsPresence = true;   // the GATE reads the §7 has-list (presence), never the operate-derived active set
 	CvCascadeEvalFlags flags;
 	flags.strictStateReligionForBuild = true;
 	flags.testVisible = bVisible;   // VISIBLE frontier: relax the greyable clauses (connectable resource / unadopted civic -> GREYED, enabler.md §6)
-	if (j->requiresBuild() != NULL && !cascadeEvalCondition(j->requiresBuild(), ec, flags)) return false;
-	if (j->requiresOperate() != NULL && !cascadeEvalCondition(j->requiresOperate(), ec, flags)) return false;
+	if (j->requiresBuild() != NULL && !cascadeEvalCondition(j->requiresBuild(), gateEc, flags)) return false;
+	if (j->requiresOperate() != NULL && !cascadeEvalCondition(j->requiresOperate(), gateEc, flags)) return false;
 	return true;
 }
 
-bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit, const std::string& bucket)
+bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit, EnEdgeBucket eBucket)
 {
 	if (j == NULL) return true;
 	// PROJECTS (parity find 2026-07-02): the tally has NO project domain, so the cap check read buildingCount(projectId)
@@ -141,7 +174,7 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 	// Projects read the engine-owned counts (the tally read-not-store philosophy): world = created-ever, team = held.
 	const CvJsonAllowed* a = j->getAllowed();
 	if (a == NULL) return true;
-	if (bucket == "projects")
+	if (eBucket == EDGEB_PROJECTS)
 	{
 		for (std::map<std::string, int>::const_iterator it = a->all().begin(); it != a->all().end(); ++it)
 		{
@@ -149,6 +182,22 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 			if (it->first == "world")      iCount = GC.getGame().getProjectCreatedCount((ProjectTypes)iId);
 			else if (it->first == "team")  iCount = GET_TEAM(kPlayer.getTeam()).getProjectCount((ProjectTypes)iId);
 			else if (it->first == "empire") iCount = GET_TEAM(kPlayer.getTeam()).getProjectCount((ProjectTypes)iId);
+			if (iCount >= 0 && iCount >= it->second) return false;
+		}
+		return true;
+	}
+	if (eBucket == EDGEB_TECHS)
+	{
+		// TECHS read the engine-owned counts too (the tally read-not-store philosophy; the PROJECT precedent
+		// above): world = ever-alive teams holding it (countKnownTechNumTeams -- techs are monotonic, so held
+		// == ever-held); team/empire = the own team's held flag. The live authoring is the 29 world-unique
+		// founder techs (allowed:{world:1}).
+		for (std::map<std::string, int>::const_iterator it = a->all().begin(); it != a->all().end(); ++it)
+		{
+			int iCount = -1;
+			if (it->first == "world")       iCount = GC.getGame().countKnownTechNumTeams((TechTypes)iId);
+			else if (it->first == "team"
+			      || it->first == "empire")  iCount = GET_TEAM(kPlayer.getTeam()).isHasTech((TechTypes)iId) ? 1 : 0;
 			if (iCount >= 0 && iCount >= it->second) return false;
 		}
 		return true;
@@ -188,16 +237,15 @@ bool EnablerKernel::canFoundReligion(const CvPlayer& kPlayer)
 }
 
 // GATE: candidates[bucket] -> the available set (requires + allowed + obsoletedBy).
-void EnablerKernel::gateSet(const std::string& bucket, const EnBucketSets& cand, const CvCascadeEvalCtx& ec,
+void EnablerKernel::gateSet(EnEdgeBucket eBucket, const EnBucketSets& cand, const CvCascadeEvalCtx& ec,
 	const CvPlayer& kPlayer, const CvTeam& kTeam, bool bUnit, std::set<int>& avail, bool bVisible)
 {
-	EnBucketSets::const_iterator b = cand.find(bucket);
-	if (b == cand.end()) return;
-	for (std::set<int>::const_iterator it = b->second.begin(); it != b->second.end(); ++it)
+	const std::set<int>& b = cand[eBucket];
+	for (std::set<int>::const_iterator it = b.begin(); it != b.end(); ++it)
 	{
-		const CvInfo* j = jsonFor(bucket, *it);
+		const CvInfo* j = jsonFor(eBucket, *it);
 		if (obsoletedByHeldTech(j, kTeam)) continue;
-		if (requiresMet(j, ec, bVisible) && allowedOk(j, *it, kPlayer, bUnit, bucket)) avail.insert(*it);
+		if (requiresMet(j, ec, bVisible) && allowedOk(j, *it, kPlayer, bUnit, eBucket)) avail.insert(*it);
 	}
 }
 
@@ -476,7 +524,7 @@ void EnablerKernel::buildActiveIndex()
 		const std::vector<int>& dorm = j->dormantTriggers();
 		for (size_t i = 0; i < dorm.size(); ++i) s_opDormBy[dorm[i]].push_back(b);
 		// obsolescence is tech-driven (obsoletedBy.techs): index the obsoletable buildings for the player-scope re-check.
-		if (j->edge("obsoletedBy.techs") != NULL) s_opObsoletable.push_back(b);
+		if (j->edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS) != NULL) s_opObsoletable.push_back(b);
 	}
 }
 
