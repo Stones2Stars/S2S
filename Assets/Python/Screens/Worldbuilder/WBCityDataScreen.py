@@ -453,9 +453,8 @@ class WBCityDataScreen:
 		pCity.changeGreatPeopleProgress(iCount)
 
 	def editGreatPeopleRate(self, iCount):
-		if iCount < 0:
-			iCount = max(iCount, - pCity.getBaseGreatPeopleRate())
-		pCity.changeBaseGreatPeopleRate(iCount)
+		# base great-people rate is cascade-derived (buildings/specialists); no settable accumulator.
+		pass
 
 	def editGreatPeopleProgress(self, item) :
 		iCount = iChange

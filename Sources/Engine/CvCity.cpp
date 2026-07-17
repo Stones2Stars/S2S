@@ -76,8 +76,6 @@ CvCity::CvCity()
 	m_aiCorporationYield = new int[NUM_YIELD_TYPES];
 	m_aiExtraSpecialistYield = new int[NUM_YIELD_TYPES];
 	m_aiExtraSpecialistCommerce = new int[NUM_COMMERCE_TYPES];
-	m_aiCommerceRate = new int[NUM_COMMERCE_TYPES];
-	m_abCommerceRateDirty = new bool[NUM_COMMERCE_TYPES];
 	m_aiProductionToCommerceModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiBuildingCommerce = new int[NUM_COMMERCE_TYPES];
 	m_aiBuildingCommerce100 = new int[NUM_COMMERCE_TYPES];
@@ -203,8 +201,6 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_aiExtraSpecialistYield);
 
 	SAFE_DELETE_ARRAY(m_aiExtraSpecialistCommerce);
-	SAFE_DELETE_ARRAY(m_aiCommerceRate);
-	SAFE_DELETE_ARRAY(m_abCommerceRateDirty);
 	SAFE_DELETE_ARRAY(m_aiProductionToCommerceModifier);
 	SAFE_DELETE_ARRAY(m_aiBuildingCommerce);
 	SAFE_DELETE_ARRAY(m_aiBuildingCommerce100);
@@ -515,7 +511,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iWorkingPopulation = 0;
 	m_iSpecialistPopulation = 0;
 	m_iNumGreatPeople = 0;
-	m_iBaseGreatPeopleRate = 0;
 	m_iGreatPeopleRateModifier = 0;
 	m_iGreatPeopleProgress = 0;
 	m_iNumWorldWonders = 0;
@@ -571,8 +566,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iExtraTradeRoutes = 0;
 	m_iTradeRouteModifier = 0;
 	m_iForeignTradeRouteModifier = 0;
-	m_iBuildingDefense = 0;
-	m_iBuildingBombardDefense = 0;
 	m_iFreeExperience = 0;
 	m_iCurrAirlift = 0;
 	m_iMaxAirlift = 0;
@@ -649,7 +642,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iExtraLocalCaptureResistanceModifier = 0;
 	m_iExtraLocalDynamicDefense = 0;
 	m_iExtraRiverDefensePenalty = 0;
-	m_iExtraMinDefense = 0;
 	m_iExtraBuildingDefenseRecoverySpeedModifier = 0;
 	m_iModifiedBuildingDefenseRecoverySpeedCap = 0;
 	m_iExtraCityDefenseRecoverySpeedModifier = 0;
@@ -689,8 +681,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		m_aiCommerceRate[iI] = 0;
-		m_abCommerceRateDirty[iI] = false;
 		m_aiProductionToCommerceModifier[iI] = 0;
 		m_aiBuildingCommerce[iI] = 0;
 		m_aiBuildingCommerce100[iI] = 0;
@@ -1183,9 +1173,6 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 	pPlot->setPlotCity(NULL);
 
 	pPlot->setImprovementType(GC.getIMPROVEMENT_CITY_RUINS());
-
-	kOwner.setCommerceDirty(NO_COMMERCE);
-	kOwner.updateCommerce(NO_COMMERCE);
 
 	CvEventReporter::getInstance().cityLost(this);
 
@@ -4953,7 +4940,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	{
 		changeExtraLocalDynamicDefense(kBuilding.getLocalDynamicDefense() * iChange);
 		changeExtraRiverDefensePenalty(kBuilding.getRiverDefensePenalty() * iChange);
-		changeExtraMinDefense(kBuilding.getMinDefense() * iChange);
 		if (kBuilding.getBuildingDefenseRecoverySpeedModifier() > 0 && kBuilding.getDefenseModifier() > 0)
 		{
 			changeExtraBuildingDefenseRecoverySpeedModifier(kBuilding.getBuildingDefenseRecoverySpeedModifier() * iChange);
@@ -5257,11 +5243,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		//TB DEFENSEBUG:  The following building defense line is allowing buildings that are replaced to continue to function!
 		//We can only assume this entire section therefore gets around replaced buildings, particularly after a recalc.
 
-		changeBuildingDefense(kBuilding.getDefenseModifier() * iChange);
-		changeBuildingBombardDefense(kBuilding.getBombardDefenseModifier() * iChange);
-
-		changeBaseGreatPeopleRate(kBuilding.getGreatPeopleRateChange() * iChange);
-
 		UnitTypes eGreatPeopleUnit = (UnitTypes)kBuilding.getGreatPeopleUnitType();
 
 		if (eGreatPeopleUnit != NO_UNIT)
@@ -5333,8 +5314,6 @@ void CvCity::processSpecialist(SpecialistTypes eSpecialist, int iChange)
 	{
 		changeGreatPeopleUnitRate(eGreatPeopleUnit, GC.getSpecialistInfo(eSpecialist).getGreatPeopleRateChange() * iChange);
 	}
-
-	changeBaseGreatPeopleRate(GC.getSpecialistInfo(eSpecialist).getGreatPeopleRateChange() * iChange);
 
 	// STREAMLINED 2026-06-28: the per-specialist YIELD total is no longer accumulated incrementally here (additive
 	// getYieldChange + pct/100, baked at assignment — the same stale pattern as commerce). It is recomputed cleanly by
@@ -7365,17 +7344,9 @@ void CvCity::changeNumGreatPeople(int iChange)
 
 int CvCity::getBaseGreatPeopleRate() const
 {
-	// #430 FLIP (scope-packages): a BARE package fetch; the legacy body below is the net oracle. The LOAD
-	// path stays legacy (the warm-up arms the packages at final-init). The national leg reads the CASCADE-
-	// derived trait sum since 2026-07-05 (the L6 fold) -- never the legacy m_iNationalGreatPeopleRate
-	// accumulator, which lives on in the Legacy oracle only.
-	if (!GC.getGame().isFinalInitialized()) return getBaseGreatPeopleRateLegacy();
+	// #430: max(0, cascade city base) + the cascade-derived national trait sum. The legacy accumulators
+	// (m_iBaseGreatPeopleRate / m_iNationalGreatPeopleRate) are cut.
 	return std::max(0, CascadeAccumulator::scGpBase(this)) + CascadeAccumulator::scGpNational(&GET_PLAYER(getOwner()));
-}
-
-int CvCity::getBaseGreatPeopleRateLegacy() const
-{
-	return std::max(0, m_iBaseGreatPeopleRate) + GET_PLAYER(getOwner()).getNationalGreatPeopleRate();
 }
 
 
@@ -7413,12 +7384,6 @@ int CvCity::getTotalGreatPeopleRateModifierLegacy() const
 	}
 
 	return std::max(0, iModifier);
-}
-
-
-void CvCity::changeBaseGreatPeopleRate(int iChange)
-{
-	m_iBaseGreatPeopleRate += iChange;
 }
 
 
@@ -10181,55 +10146,17 @@ void CvCity::changeForeignTradeRouteModifier(int iChange)
 
 int CvCity::getBuildingDefense() const
 {
-	// #430 FLIP (scope-packages): a BARE package fetch (the hottest path -- 1.28M reads/turn measured; the
-	// package read is a member load). Legacy (the stored accumulator, incl. its known drift) = the net oracle.
-	if (!GC.getGame().isFinalInitialized()) return getBuildingDefenseLegacy();
+	// #430: a BARE cascade package fetch (the hottest path -- 1.28M reads/turn measured). The legacy stored
+	// accumulator (m_iBuildingDefense, which carried a known drift) is cut; the cascade is the sole source.
 	return CascadeAccumulator::scDefense(this);
-}
-
-int CvCity::getBuildingDefenseLegacy() const
-{
-	return m_iBuildingDefense;
-}
-
-
-void CvCity::changeBuildingDefense(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingDefense += iChange;
-
-		setInfoDirty(true);
-
-		plot()->plotAction(PUF_makeInfoBarDirty);
-	}
 }
 
 
 int CvCity::getBuildingBombardDefense() const
 {
-	// #430 FLIP (L13 defense, owner 2026-07-05 "everything over to cascade"): the composed cascade value
-	// (scBuildingBombardDefense = min(MAX_BOMBARD_DEFENSE, Σbuilding bombard + national trait bombard),
-	// reconciled Casc==Leg). LOAD stays legacy (substrate not warm pre-init).
-	if (!GC.getGame().isFinalInitialized()) return getBuildingBombardDefenseLegacy();
+	// #430: the composed cascade value (scBuildingBombardDefense = min(MAX_BOMBARD_DEFENSE, Σbuilding bombard +
+	// national trait bombard)). The legacy stored accumulator (m_iBuildingBombardDefense) is cut.
 	return CascadeAccumulator::scBuildingBombardDefense(this);
-}
-
-int CvCity::getBuildingBombardDefenseLegacy() const
-{
-	int iBombardDefenseTotal = m_iBuildingBombardDefense;
-	iBombardDefenseTotal += GET_PLAYER(getOwner()).getNationalBombardDefenseModifier();
-	return std::min(GC.getGame().getModderGameOption(MODDERGAMEOPTION_MAX_BOMBARD_DEFENSE), iBombardDefenseTotal);
-}
-
-
-void CvCity::changeBuildingBombardDefense(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingBombardDefense += iChange;
-		FASSERT_NOT_NEGATIVE(getBuildingBombardDefense());
-	}
 }
 
 // BUG - Building Additional Bombard Defense - start
@@ -12261,12 +12188,6 @@ int CvCity::getBaseCommerceRate(CommerceTypes eIndex) const
 int CvCity::getBaseCommerceRateTimes100(CommerceTypes eIndex) const
 {
 	PROFILE_FUNC();
-
-	if (m_abCommerceRateDirty[eIndex])
-	{
-		updateCommerce(eIndex);
-	}
-
 	//STEP 1 : Slider + remaining steps.
 	return getCommerceFromPercent(eIndex) + getBaseCommerceRateExtra(eIndex);
 }
@@ -12310,10 +12231,6 @@ int CvCity::getCommerceRateAtSliderPercent(CommerceTypes eIndex, int iSliderPerc
 	if (isDisorder())
 	{
 		return 0;
-	}
-	if (m_abCommerceRateDirty[eIndex])
-	{
-		updateCommerce(eIndex);
 	}
 	int iRate = std::min<int>(CITY_MAX_YIELD_RATE100, getYieldRate100(YIELD_COMMERCE));
 	int iExtraRate = std::min<int>(CITY_MAX_YIELD_RATE100, getBaseCommerceRateExtra(eIndex));
@@ -12403,54 +12320,14 @@ void CvCity::setCommerceDirty(CommerceTypes eCommerce)
 	}
 	else
 	{
-		m_abCommerceRateDirty[eCommerce] = true;
 		m_abBuildingCommerce100Dirty[eCommerce] = true;   // rebuild the building-commerce recompute-cache on the SAME trigger (obvious + unmissable)
 		if (getOwner() != NO_PLAYER)
 		{
+			// #430: commerce is live-summed (no stored rate). The rank cache invalidates on this commerce-change
+			// funnel (it was in the deleted updateCommerce); setCommerceDirty(playerOnly) is now a no-op but kept
+			// for the call-site contract.
+			GET_PLAYER(getOwner()).invalidateCommerceRankCache(eCommerce);
 			GET_PLAYER(getOwner()).setCommerceDirty(eCommerce, true);
-		}
-	}
-}
-
-void CvCity::updateCommerce(CommerceTypes eIndex, bool bForce) const
-{
-	PROFILE_EXTRA_FUNC();
-	if (!GC.getGame().isRecalculatingModifiers())
-	{
-		if (eIndex == NO_COMMERCE)
-		{
-			GET_PLAYER(getOwner()).invalidateYieldRankCache();
-
-			for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-			{
-				updateCommerce((CommerceTypes)iI, bForce);
-			}
-		}
-		else
-		{
-			FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-			if (bForce || m_abCommerceRateDirty[eIndex])
-			{
-				m_abCommerceRateDirty[eIndex] = false;
-				const int iOldCommerce = m_aiCommerceRate[eIndex];
-				const int iNewCommerce = getCommerceRateAtSliderPercent(eIndex, GET_PLAYER(getOwner()).getCommercePercent(eIndex));
-
-				if (iOldCommerce != iNewCommerce)
-				{
-					m_aiCommerceRate[eIndex] = iNewCommerce;
-
-					GET_PLAYER(getOwner()).invalidateCommerceRankCache(eIndex);
-
-					GET_PLAYER(getOwner()).changeCommerceRate(eIndex, iNewCommerce - iOldCommerce);
-
-					if (isCitySelected())
-					{
-						exeSetUIDirty(InfoPane_DIRTY_BIT, true);
-						exeSetUIDirty(CityScreen_DIRTY_BIT, true);
-					}
-				}
-			}
 		}
 	}
 }
@@ -17781,7 +17658,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iWorkingPopulation);
 	WRAPPER_READ(wrapper, "CvCity", &m_iSpecialistPopulation);
 	WRAPPER_READ(wrapper, "CvCity", &m_iNumGreatPeople);
-	WRAPPER_READ(wrapper, "CvCity", &m_iBaseGreatPeopleRate);
 	WRAPPER_READ(wrapper, "CvCity", &m_iGreatPeopleRateModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iGreatPeopleProgress);
 	WRAPPER_READ(wrapper, "CvCity", &m_iNumWorldWonders);
@@ -17841,8 +17717,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iExtraTradeRoutes);
 	WRAPPER_READ(wrapper, "CvCity", &m_iTradeRouteModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iForeignTradeRouteModifier);
-	WRAPPER_READ(wrapper, "CvCity", &m_iBuildingDefense);
-	WRAPPER_READ(wrapper, "CvCity", &m_iBuildingBombardDefense);
 	WRAPPER_READ(wrapper, "CvCity", &m_iFreeExperience);
 	WRAPPER_READ(wrapper, "CvCity", &m_iCurrAirlift);
 	WRAPPER_READ(wrapper, "CvCity", &m_iMaxAirlift);
@@ -17895,7 +17769,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiCorporationYield);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiExtraSpecialistYield);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRate);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerce);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiReligionCommerce);
@@ -18172,7 +18045,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistBannedCount);
 	WRAPPER_READ(wrapper, "CvCity", &m_iExtraLocalDynamicDefense);
 	WRAPPER_READ(wrapper, "CvCity", &m_iExtraRiverDefensePenalty);
-	WRAPPER_READ(wrapper, "CvCity", &m_iExtraMinDefense);
 	WRAPPER_READ(wrapper, "CvCity", &m_iExtraBuildingDefenseRecoverySpeedModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iModifiedBuildingDefenseRecoverySpeedCap);
 	WRAPPER_READ(wrapper, "CvCity", &m_iExtraCityDefenseRecoverySpeedModifier);
@@ -18559,7 +18431,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iWorkingPopulation);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iSpecialistPopulation);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iNumGreatPeople);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iBaseGreatPeopleRate);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iGreatPeopleRateModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iGreatPeopleProgress);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iNumWorldWonders);
@@ -18615,8 +18486,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraTradeRoutes);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iTradeRouteModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iForeignTradeRouteModifier);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iBuildingDefense);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iBuildingBombardDefense);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iFreeExperience);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iCurrAirlift);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iMaxAirlift);
@@ -18661,7 +18530,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiCorporationYield);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiExtraSpecialistYield);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRate);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerce);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiReligionCommerce);
@@ -18816,7 +18684,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistBannedCount);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraLocalDynamicDefense);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraRiverDefensePenalty);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraMinDefense);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraBuildingDefenseRecoverySpeedModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iModifiedBuildingDefenseRecoverySpeedCap);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraCityDefenseRecoverySpeedModifier);
@@ -22896,8 +22763,6 @@ void CvCity::clearModifierTotals()
 	m_iExtraTradeRoutes = 0;
 	m_iTradeRouteModifier = 0;
 	m_iForeignTradeRouteModifier = 0;
-	m_iBuildingDefense = 0;
-	m_iBuildingBombardDefense = 0;
 	m_iFreeExperience = 0;
 	m_iMaxAirlift = 0;
 	m_iAirModifier = 0;
@@ -22922,7 +22787,6 @@ void CvCity::clearModifierTotals()
 	m_iMinimumDefenseLevel = 0;
 	m_iHealthPercentPerPopulation = 0;
 	m_iHappinessPercentPerPopulation = 0;
-	m_iBaseGreatPeopleRate = 0;
 	m_iNumPopulationEmployed = 0;
 
 	for (int iI = GC.getNumBonusInfos() - 1; iI > -1; iI--)
@@ -22995,8 +22859,6 @@ void CvCity::clearModifierTotals()
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		m_aiCommerceRate[iI] = 0;
-		m_abCommerceRateDirty[iI] = false;
 		m_aiProductionToCommerceModifier[iI] = 0;
 		m_aiBuildingCommerce[iI] = 0;
 		m_aiBuildingCommerce100[iI] = 0;
@@ -23049,7 +22911,6 @@ void CvCity::clearModifierTotals()
 	m_iExtraLocalCaptureResistanceModifier = 0;
 	m_iExtraLocalDynamicDefense = 0;
 	m_iExtraRiverDefensePenalty = 0;
-	m_iExtraMinDefense = 0;
 	m_iExtraBuildingDefenseRecoverySpeedModifier = 0;
 	m_iModifiedBuildingDefenseRecoverySpeedCap = 0;
 	m_iExtraCityDefenseRecoverySpeedModifier = 0;
@@ -23597,23 +23458,9 @@ void CvCity::changeExtraRiverDefensePenalty(int iChange)
 
 int CvCity::getExtraMinDefense() const
 {
-	// #430 FLIP (L13 defense, owner 2026-07-05 "everything over to cascade"): the cascade min-floor
-	// (scDefenseMin = Σ building defense.city.min, reconciled Casc==Leg). LOAD stays legacy.
-	if (!GC.getGame().isFinalInitialized()) return getExtraMinDefenseLegacy();
+	// #430: the cascade min-floor (scDefenseMin = Σ building defense.city.min). The legacy stored accumulator
+	// (m_iExtraMinDefense) is cut.
 	return CascadeAccumulator::scDefenseMin(this);
-}
-
-int CvCity::getExtraMinDefenseLegacy() const
-{
-	return m_iExtraMinDefense;
-}
-void CvCity::setExtraMinDefense(int iValue)
-{
-	m_iExtraMinDefense = iValue;
-}
-void CvCity::changeExtraMinDefense(int iChange)
-{
-	m_iExtraMinDefense += iChange;
 }
 
 int CvCity::getExtraBuildingDefenseRecoverySpeedModifier() const

@@ -179,8 +179,6 @@ m_cachedBonusCount(NULL)
 	m_aiTradeYieldModifier = new int[NUM_YIELD_TYPES];
 	m_extraCommerce = new int[NUM_COMMERCE_TYPES];
 	m_aiCommercePercent = new int[NUM_COMMERCE_TYPES];
-	m_aiCommerceRate = new int[NUM_COMMERCE_TYPES];
-	m_abCommerceDirty = new bool[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifierfromEvents = new int[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifierfromBuildings = new int[NUM_COMMERCE_TYPES];
@@ -256,7 +254,6 @@ m_cachedBonusCount(NULL)
 
 	m_bRebel = false;
 	m_iMotherPlayer = -1;
-	m_iNationalGreatPeopleRate = 0;
 
 	// Used for DynamicCivNames
 	CvWString m_szName;
@@ -313,8 +310,6 @@ CvPlayer::~CvPlayer()
 	SAFE_DELETE_ARRAY(m_aiTradeYieldModifier);
 	SAFE_DELETE_ARRAY(m_extraCommerce);
 	SAFE_DELETE_ARRAY(m_aiCommercePercent);
-	SAFE_DELETE_ARRAY(m_aiCommerceRate);
-	SAFE_DELETE_ARRAY(m_abCommerceDirty);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifier);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifierfromEvents);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifierfromBuildings);
@@ -970,7 +965,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_iExtraStateReligionSpreadModifier = 0;
 	m_iExtraNonStateReligionSpreadModifier = 0;
-	m_iNationalGreatPeopleRate = 0;
 	//TB Traits end
 	m_iBaseMergeSelection = FFreeList::INVALID_INDEX;
 	m_iFirstMergeSelection = FFreeList::INVALID_INDEX;
@@ -1028,7 +1022,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iTaxRateUnhappiness = 0;
 	m_iCivicHappiness = 0;
 	m_iUnitUpgradePriceModifier = 0;
-	m_iNationalGreatPeopleRate = 0;
 
 	// Afforess Food Threshold Modifier 08/16/09
 	m_fPopulationgrowthratepercentageLog = 0;
@@ -1074,7 +1067,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iSelectionRegroup = 0;
 
 	m_iFractionalCombatExperience = 0;
-	m_iNationalGreatPeopleRate = 0;
 
 	m_bInhibitPlotGroupRecalc = false;
 
@@ -1099,8 +1091,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	{
 		m_aiCommercePercent[iI] = 0;
 		m_extraCommerce[iI] = 0;
-		m_aiCommerceRate[iI] = 0;
-		m_abCommerceDirty[iI] = false;
 		m_aiCommerceRateModifier[iI] = 0;
 		m_aiCommerceRateModifierfromEvents[iI] = 0;
 		m_aiCommerceRateModifierfromBuildings[iI] = 0;
@@ -4226,27 +4216,11 @@ void CvPlayer::updateExtraSpecialistYield()
 }
 
 
-void CvPlayer::updateCommerce(CommerceTypes eCommerce, bool bForce) const
-{
-	PROFILE_EXTRA_FUNC();
-	if ( eCommerce == NO_COMMERCE )
-	{
-		for(int iI = 0; iI < NUM_COMMERCE_TYPES; iI++ )
-		{
-			updateCommerce((CommerceTypes)iI, bForce);
-		}
-	}
-	else if (bForce || m_abCommerceDirty[eCommerce])
-	{
-		m_abCommerceDirty[eCommerce] = false;
-
-		algo::for_each(cities(), CvCity::fn::updateCommerce(eCommerce, bForce));
-	}
-}
-
 void CvPlayer::setCommerceDirty(CommerceTypes eIndex, bool bPlayerOnly)
 {
 	PROFILE_EXTRA_FUNC();
+	// #430: empire commerce is live-summed (no player accumulator), so there is no player-side dirty to set --
+	// this only forwards the city-side dirties (building-commerce recompute cache + rank invalidation).
 	if (eIndex == NO_COMMERCE)
 	{
 		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
@@ -4254,14 +4228,9 @@ void CvPlayer::setCommerceDirty(CommerceTypes eIndex, bool bPlayerOnly)
 			setCommerceDirty((CommerceTypes)iI, bPlayerOnly);
 		}
 	}
-	else
+	else if (!bPlayerOnly)
 	{
-		m_abCommerceDirty[eIndex] = true;
-
-		if (!bPlayerOnly)
-		{
-			algo::for_each(cities(), CvCity::fn::setCommerceDirty(eIndex));
-		}
+		algo::for_each(cities(), CvCity::fn::setCommerceDirty(eIndex));
 	}
 }
 
@@ -11458,7 +11427,6 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 			{
 				pOldCapitalCity->setCommerceModifierDirty((CommerceTypes)iI);
 			}
-			pOldCapitalCity->updateCommerce();
 			pOldCapitalCity->setInfoDirty(true);
 		}
 		if (pNewCapitalCity)
@@ -11467,7 +11435,6 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 			{
 				pNewCapitalCity->setCommerceModifierDirty((CommerceTypes)iI);
 			}
-			pNewCapitalCity->updateCommerce();
 			pNewCapitalCity->setInfoDirty(true);
 		}
 	}
@@ -12864,11 +12831,6 @@ void CvPlayer::changeCapitalYieldRateModifier(YieldTypes eIndex, int iChange)
 
 		if (pCapitalCity)
 		{
-			if (eIndex == YIELD_COMMERCE)
-			{
-				pCapitalCity->updateCommerce();
-			}
-
 			pCapitalCity->AI_setAssignWorkDirty(true);
 
 			if (pCapitalCity->getTeam() == GC.getGame().getActiveTeam())
@@ -13062,12 +13024,10 @@ void CvPlayer::changeCommercePercent(CommerceTypes eIndex, int iChange)
 int CvPlayer::getCommerceRate(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (m_abCommerceDirty[eIndex])
-	{
-		updateCommerce(eIndex, false);
-	}
-	return m_aiCommerceRate[eIndex] / 100;
+	// #430: empire commerce is the live per-channel sum of the cascade-split city commerce. The cascade feeds the
+	// commerce YIELD; the player sliders split it per channel PER CITY (floored per city, in getCommerceRateTimes100);
+	// the empire total is the plain per-channel sum. No stored accumulator, no lazy-recompute.
+	return algo::accumulate(cities() | transformed(CvCity::fn::getCommerceRateTimes100(eIndex)), 0) / 100;
 }
 
 int CvPlayer::getTotalCityBaseCommerceRate(CommerceTypes eIndex) const
@@ -13081,20 +13041,6 @@ int CvPlayer::getTotalCityBaseCommerceRate(CommerceTypes eIndex) const
 			m_cachedTotalCityBaseCommerceRate[eIndex] = MAX_COMMERCE_RATE_VALUE;
 	}
 	return m_cachedTotalCityBaseCommerceRate[eIndex];
-}
-
-void CvPlayer::changeCommerceRate(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiCommerceRate[eIndex] = std::min(m_aiCommerceRate[eIndex]+iChange,MAX_COMMERCE_RATE_VALUE);
-		if (getID() == GC.getGame().getActivePlayer())
-		{
-			exeSetUIDirty(GameData_DIRTY_BIT, true);
-		}
-	}
 }
 
 int CvPlayer::getCommerceRateModifier(CommerceTypes eIndex) const
@@ -18586,7 +18532,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiTradeYieldModifier);
 		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_aiFreeCityCommerce, SAVE_VALUE_ANY);   // retired (#430 dead-array cut) -- unused; savemigration.txt
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommercePercent);
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRate);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCapitalCommerceRateModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiStateReligionBuildingCommerce);
@@ -19425,8 +19370,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eGreatGeneralTypetoAssign);
 
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_abCommerceDirty);
-
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFocusPlotX);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFocusPlotY);
 
@@ -19440,7 +19383,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iSelectionRegroup);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreedomFighterCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraFreedomFighters);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalGreatPeopleRate);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivilianUnitUpkeepMod);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMilitaryUnitUpkeepMod);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iUnitUpkeepCivilian100);
@@ -19984,7 +19926,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiExtraYieldThreshold);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiTradeYieldModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommercePercent);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRate);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCapitalCommerceRateModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiStateReligionBuildingCommerce);
@@ -20421,7 +20362,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifierfromEvents);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifierfromBuildings);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_eGreatGeneralTypetoAssign);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_abCommerceDirty);
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFocusPlotX);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFocusPlotY);
@@ -20432,7 +20372,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iSelectionRegroup);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreedomFighterCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraFreedomFighters);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalGreatPeopleRate);
 		//TB Traits end
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivilianUnitUpkeepMod);
@@ -28391,7 +28330,6 @@ void CvPlayer::clearModifierTotals()
 
 	m_iExtraStateReligionSpreadModifier = 0;
 	m_iExtraNonStateReligionSpreadModifier = 0;
-	m_iNationalGreatPeopleRate = 0;
 
 	m_iBaseMergeSelection = FFreeList::INVALID_INDEX;
 	m_iFirstMergeSelection = FFreeList::INVALID_INDEX;
@@ -28543,8 +28481,6 @@ void CvPlayer::clearModifierTotals()
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
 		m_extraCommerce[iI] = 0;
-		m_aiCommerceRate[iI] = 0;
-		m_abCommerceDirty[iI] = false;
 		m_aiCommerceRateModifier[iI] = 0;
 		m_aiCommerceRateModifierfromEvents[iI] = 0;
 		m_aiCommerceRateModifierfromBuildings[iI] = 0;
@@ -30002,8 +29938,6 @@ void CvPlayer::changeNationalGreatPeopleUnitRate(const UnitTypes eUnit, const in
 		FErrorMsg("This is not a change!");
 		return;
 	}
-	m_iNationalGreatPeopleRate += iChange;
-
 	if (eUnit == NO_UNIT)
 	{
 		return;
@@ -30033,7 +29967,7 @@ int CvPlayer::getNationalGreatPeopleUnitRate(const UnitTypes eUnit) const
 
 int CvPlayer::getNationalGreatPeopleRate() const
 {
-	return std::max(0, m_iNationalGreatPeopleRate);
+	return CascadeAccumulator::scGpNational(this);
 }
 
 

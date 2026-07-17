@@ -1055,18 +1055,6 @@ void CvTeam::updateYield()
 }
 
 
-void CvTeam::updateCommerce()
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < MAX_PLAYERS; iI++)
-	{
-		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
-		{
-			GET_PLAYER((PlayerTypes)iI).updateCommerce();
-		}
-	}
-}
-
 
 bool CvTeam::canChangeWarPeace(TeamTypes eTeam, bool bAllowVassal) const
 {

@@ -2186,11 +2186,9 @@ namespace
 						sc["tradeRoutesSlot"] = picojson::value((double)CascadeAccumulator::scTradeRoutes(pCity));
 					}
 					sc["gpBaseCasc"] = picojson::value((double)CascadeScalarChannels::gpRateBase(pCity, wbec));
-					sc["gpBaseLeg"] = picojson::value((double)(pCity->getBaseGreatPeopleRateLegacy() - kWbOwner.getNationalGreatPeopleRate()));
 					// the NATIONAL leg pair (the L6 fold 2026-07-05): the cascade-derived trait sum the flipped
 					// getter now adds vs the legacy accumulator -- a divergence names the drift/PURE class here
 					sc["gpNationalCasc"] = picojson::value((double)CascadeAccumulator::scGpNational(&kWbOwner));
-					sc["gpNationalLeg"] = picojson::value((double)kWbOwner.getNationalGreatPeopleRate());
 					sc["gpModCasc"] = picojson::value((double)CascadeScalarChannels::gpRateModifier(pCity, wbec));
 					sc["gpModLeg"] = picojson::value((double)pCity->getTotalGreatPeopleRateModifierLegacy());
 					// the gpMod legacy PARTS + the cascade-side split (attribute, don't guess)
@@ -2204,7 +2202,6 @@ namespace
 						sc["gpModSrCasc"] = picojson::value((double)iWbGpSr);
 					}
 					sc["defenseCasc"] = picojson::value((double)CascadeScalarChannels::defenseAmount(pCity, wbec));
-					sc["defenseLeg"] = picojson::value((double)pCity->getBuildingDefenseLegacy());
 					// the L13 wired members (2026-07-05): each pair = the cascade member vs its legacy
 					// accumulator -- the pre-flip attribution for the bombard/min/player defense getters
 					sc["defBombardCasc"] = picojson::value((double)CascadeAccumulator::scBuildingBombardDefense(pCity));
@@ -3439,7 +3436,7 @@ namespace
 				picojson::value::object d;
 				d["totalDefense"]              = picojson::value((double)pCity->getTotalDefense(false));
 				d["defenseModifier"]           = picojson::value((double)pCity->getDefenseModifier(false)); // realized
-				d["buildingDefense"]           = picojson::value((double)pCity->getBuildingDefenseLegacy());   // the LEGACY decomposition surface (the flipped getter returns the cascade)
+				d["buildingDefense"]           = picojson::value((double)pCity->getBuildingDefense());   // the cascade building-defense (the legacy drift-store is cut)
 				d["naturalDefense"]            = picojson::value((double)pCity->getNaturalDefense());
 				d["playerCityDefenseModifier"] = picojson::value((double)kPlayer.getCityDefenseModifier()); // aggregate (split below)
 				d["playerExtraCityDefense"]    = picojson::value((double)kPlayer.getExtraCityDefense());      // leaf of getCityDefenseModifier
@@ -3803,13 +3800,13 @@ namespace
 			{
 				picojson::value::object gp;
 				gp["greatPeopleRate"]     = picojson::value((double)pCity->getGreatPeopleRate()); // realized
-				gp["baseGreatPeopleRate"] = picojson::value((double)pCity->getBaseGreatPeopleRateLegacy()); // aggregate (city base + national; LEGACY -- the decomposition surface)
+				gp["baseGreatPeopleRate"] = picojson::value((double)pCity->getBaseGreatPeopleRate()); // aggregate (city base + national; cascade)
 				gp["totalGPRateModifier"] = picojson::value((double)pCity->getTotalGreatPeopleRateModifierLegacy()); // aggregate (split below; LEGACY)
 				gp["greatPeopleProgress"] = picojson::value((double)pCity->getGreatPeopleProgress());
 				gp["threshold"]           = picojson::value((double)kPlayer.greatPeopleThresholdNonMilitary());
 				// base split (getBaseGreatPeopleRate, CvCity.cpp): max(0,m_iBaseGreatPeopleRate) + national; city base = base - national.
 				gp["nationalGreatPeopleRate"] = picojson::value((double)kPlayer.getNationalGreatPeopleRate());
-				gp["baseGreatPeopleRateRaw"] = picojson::value((double)pCity->getBaseGreatPeopleRateRaw()); // raw m_iBaseGreatPeopleRate (pre-max/national)
+				gp["baseGreatPeopleRateRaw"] = picojson::value((double)(pCity->getBaseGreatPeopleRate() - kPlayer.getNationalGreatPeopleRate())); // cascade city base (pre-national)
 				// modifier split (getTotalGreatPeopleRateModifier): 100 + city + player + (stateReligion) + (goldenAge):
 				gp["cityGPRateModifier"]   = picojson::value((double)pCity->getGreatPeopleRateModifier());
 				gp["playerGPRateModifier"] = picojson::value((double)kPlayer.getGreatPeopleRateModifier());

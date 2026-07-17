@@ -50,6 +50,42 @@ CvCity::m_buildingCommerceMod            (int array, NUM_COMMERCE_TYPES)
 ========================
 
 ========================
+2026-07-17 — #430 delete-driven legacy cut (defense cluster): the stored building / bombard / min defense
+accumulators fully removed (no member, no serialization, no changer). getBuildingDefense /
+getBuildingBombardDefense / getExtraMinDefense read the cascade scalar slots (scDefense /
+scBuildingBombardDefense / scDefenseMin) unconditionally; the *Legacy oracles + the processBuilding change*
+writers are gone. The stored building-defense value carried a known drift -- the cascade is the sole source.
+
+CvCity::m_iBuildingDefense               (int)
+CvCity::m_iBuildingBombardDefense        (int)
+CvCity::m_iExtraMinDefense               (int)
+========================
+
+========================
+2026-07-17 — #430 delete-driven legacy cut (GP-rate accumulators): the stored base great-people-rate (city) and
+national great-people-rate (player) accumulators fully removed. getBaseGreatPeopleRate reads max(0, scGpBase) +
+scGpNational; getNationalGreatPeopleRate reads the cascade trait sum (scGpNational). The *Legacy oracle, the
+changeBaseGreatPeopleRate changer + its Cy binding / WorldBuilder callers, and the m_iNationalGreatPeopleRate
+total-write (the per-unit map m_greatPeopleRateforUnit is kept -- no cascade home yet) are gone.
+
+CvCity::m_iBaseGreatPeopleRate           (int)
+CvPlayer::m_iNationalGreatPeopleRate     (int)
+========================
+
+========================
+2026-07-18 — #430 delete-driven legacy cut (empire-commerce lazy-recompute cluster): the stored per-channel
+commerce accumulators + their lazy-recompute machinery fully removed on BOTH objects. CvPlayer::getCommerceRate is
+now the live per-channel sum of the cascade-split city commerce (Σ cities getCommerceRateTimes100 / 100 -- the
+cascade feeds the commerce YIELD, the sliders split per channel per city). Deleted: CvCity/CvPlayer updateCommerce,
+CvPlayer changeCommerceRate, the city->player push, and the dirty flags. setCommerceDirty keeps the building-commerce
+dirty + rank-cache invalidation. (CvCity::m_abCommerceRateDirty was never serialized -- no ledger entry.)
+
+CvCity::m_aiCommerceRate                 (int array, NUM_COMMERCE_TYPES)
+CvPlayer::m_aiCommerceRate               (int array, NUM_COMMERCE_TYPES)
+CvPlayer::m_abCommerceDirty              (bool array, NUM_COMMERCE_TYPES)
+========================
+
+========================
 2026-07-02 — #430 capability cut (CvTeam): the empire-capability counters retired;
 the getters derive from CascadeCapabilities (the cascade union). Skips live in CvTeam::read.
 

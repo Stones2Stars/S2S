@@ -12126,7 +12126,6 @@ void CvGame::recalculateModifiers()
 			foreach_(CvCity* pLoopCity, kLoopPlayer.cities())
 			{
 				pLoopCity->updateBuildingCommerce();
-				pLoopCity->updateCommerce(NO_COMMERCE, true);
 			}
 			kLoopPlayer.recordHistory();
 		}

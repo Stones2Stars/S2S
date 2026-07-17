@@ -166,7 +166,6 @@ public:
 	int getNumGreatPeople() const;
 	int getBaseGreatPeopleRate() const;
 	int getGreatPeopleRate() const;
-	void changeBaseGreatPeopleRate(int iChange);
 	int getGreatPeopleRateModifier() const;
 	int getGreatPeopleProgress() const;
 	void changeGreatPeopleProgress(int iChange);

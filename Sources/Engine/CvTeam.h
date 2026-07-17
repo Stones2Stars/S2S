@@ -50,7 +50,6 @@ public:
 	void doTurn();
 
 	void updateYield();
-	void updateCommerce();
 
 	bool canChangeWarPeace(TeamTypes eTeam, bool bAllowVassal = false) const;
 	DllExport bool canDeclareWar(TeamTypes eTeam) const;

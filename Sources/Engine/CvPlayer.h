@@ -249,7 +249,6 @@ public:
 
 	void updateExtraSpecialistYield();
 	void setCommerceDirty(CommerceTypes eIndex = NO_COMMERCE, bool bPlayerOnly = false);
-	void updateCommerce(CommerceTypes eCommerce = NO_COMMERCE, bool bForce = true) const;
 	void updateBuildingCommerce();
 	void updateReligionCommerce();
 	void updateCorporation();
@@ -947,7 +946,6 @@ public:
 
 	int getTotalCityBaseCommerceRate(CommerceTypes eIndex) const;
 	int getCommerceRate(CommerceTypes eIndex) const;
-	void changeCommerceRate(CommerceTypes eIndex, int iChange);
 
 	int getCommerceRateModifier(CommerceTypes eIndex) const;
 	void changeCommerceRateModifier(CommerceTypes eIndex, int iChange);
@@ -1860,7 +1858,6 @@ protected:
 	bool m_bInquisitionConditions;
 
 	int m_iUnitUpgradePriceModifier;
-	int m_iNationalGreatPeopleRate;
 
 	int m_iNumNukeUnits;
 	int m_iNumOutsideUnits;
@@ -2004,8 +2001,6 @@ protected:
 	int* m_aiTradeYieldModifier;
 	int* m_extraCommerce;
 	int* m_aiCommercePercent;
-	int* m_aiCommerceRate;
-	bool* m_abCommerceDirty;
 	int* m_aiCommerceRateModifier;
 	int* m_aiCommerceRateModifierfromEvents;
 	int* m_aiCommerceRateModifierfromBuildings;

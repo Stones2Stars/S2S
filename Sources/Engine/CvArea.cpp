@@ -949,8 +949,6 @@ void CvArea::changeCleanPowerCount(TeamTypes eIndex, int iChange)
 
 		if (bWasCleanPower != (m_aiCleanPowerCount[eIndex] > 0))
 		{
-			GET_TEAM(eIndex).updateCommerce();
-
 			if (eIndex == GC.getGame().getActiveTeam())
 			{
 				exeSetUIDirty(CityInfo_DIRTY_BIT, true);

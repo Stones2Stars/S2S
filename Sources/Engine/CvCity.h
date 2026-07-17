@@ -494,14 +494,9 @@ public:
 	void changeNumGreatPeople(int iChange);
 
 	int getBaseGreatPeopleRate() const;          // FLIPPED (#430, 2026-07-04): returns the cascade scalar slot
-	int getBaseGreatPeopleRateLegacy() const;    // the legacy accumulator body -- the in-DLL net oracle until the cut
-	// raw member (m_iBaseGreatPeopleRate), pre-max(0,·) and pre-national -- exposed so the dump can reconstruct
-	// the base when it is negative (owner ruling 2026-06-20: visibility never justifies dropping a calc source).
-	int getBaseGreatPeopleRateRaw() const { return m_iBaseGreatPeopleRate; }
 	int getGreatPeopleRate() const;
 	int getTotalGreatPeopleRateModifier() const;         // FLIPPED (#430, 2026-07-04)
 	int getTotalGreatPeopleRateModifierLegacy() const;   // the legacy stack -- the net oracle until the cut
-	void changeBaseGreatPeopleRate(int iChange);
 
 	int getGreatPeopleRateModifier() const;
 	void changeGreatPeopleRateModifier(int iChange);
@@ -726,13 +721,9 @@ public:
 	int getForeignTradeRouteModifier() const;
 	void changeForeignTradeRouteModifier(int iChange);
 
-	int getBuildingDefense() const;          // FLIPPED (#430, 2026-07-04): returns the cascade scalar slot (repairs the stored drift)
-	int getBuildingDefenseLegacy() const;    // the stored m_iBuildingDefense -- the net oracle until the cut
-	void changeBuildingDefense(int iChange);
+	int getBuildingDefense() const;          // #430: the cascade scalar slot (the legacy m_iBuildingDefense drift-store is cut)
 
 	int getBuildingBombardDefense() const;
-	int getBuildingBombardDefenseLegacy() const;   // #430 net oracle until the delete step
-	void changeBuildingBombardDefense(int iChange);
 	int getAdditionalBombardDefenseByBuilding(BuildingTypes eType) const;
 
 	int getFreeExperience() const;
@@ -938,7 +929,6 @@ public:
 	int getTotalCommerceRateModifier(CommerceTypes eIndex) const;
 	void setCommerceModifierDirty(CommerceTypes eCommerce);
 	void setCommerceDirty(CommerceTypes eCommerce = NO_COMMERCE);
-	void updateCommerce(CommerceTypes eIndex = NO_COMMERCE, bool bForce = true) const;
 
 	int getProductionToCommerceModifier(CommerceTypes eIndex) const;
 	void changeProductionToCommerceModifier(CommerceTypes eIndex, int iChange);
@@ -1620,7 +1610,6 @@ protected:
 	int m_iWorkingPopulation;
 	int m_iSpecialistPopulation;
 	int m_iNumGreatPeople;
-	int m_iBaseGreatPeopleRate;
 	int m_iGreatPeopleRateModifier;
 	int m_iGreatPeopleProgress;
 	int m_iNumWorldWonders;
@@ -1742,8 +1731,6 @@ protected:
 	int m_iExtraTradeRoutes;
 	int m_iTradeRouteModifier;
 	int m_iForeignTradeRouteModifier;
-	int m_iBuildingDefense;
-	int m_iBuildingBombardDefense;
 	int m_iFreeExperience;
 	int m_iCurrAirlift;
 	int m_iMaxAirlift;
@@ -1802,7 +1789,6 @@ protected:
 	int m_iExtraLocalCaptureResistanceModifier;
 	int m_iExtraLocalDynamicDefense;
 	int m_iExtraRiverDefensePenalty;
-	int m_iExtraMinDefense;
 	int m_iExtraBuildingDefenseRecoverySpeedModifier;
 	int m_iModifiedBuildingDefenseRecoverySpeedCap;
 	int m_iExtraCityDefenseRecoverySpeedModifier;
@@ -1840,8 +1826,6 @@ protected:
 	int* m_aiCorporationYield;
 	int* m_aiExtraSpecialistYield;
 	int* m_aiExtraSpecialistCommerce;
-	mutable int* m_aiCommerceRate;
-	mutable bool* m_abCommerceRateDirty;
 	int* m_aiProductionToCommerceModifier;
 	int* m_aiBuildingCommerce;
 	// STREAMLINED 2026-06-28: getBuildingCommerce100 is now a RECOMPUTE-ONLY, dirty-flagged cache (the plot/specialist
@@ -2068,9 +2052,6 @@ public:
 	void changeExtraRiverDefensePenalty(int iChange);
 
 	int getExtraMinDefense() const;
-	int getExtraMinDefenseLegacy() const;   // #430 net oracle until the delete step
-	void setExtraMinDefense(int iValue);
-	void changeExtraMinDefense(int iChange);
 
 	int getExtraBuildingDefenseRecoverySpeedModifier() const;
 	void setExtraBuildingDefenseRecoverySpeedModifier(int iValue);
@@ -2195,7 +2176,6 @@ public:
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, changeFood, int);
 
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, setBuildingListFilterActive, BuildingFilterTypes, bool);
-		DECLARE_MAP_FUNCTOR_2(CvCity, void, updateCommerce, CommerceTypes, bool);
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, setFreeBuilding, BuildingTypes, bool);
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, changeFreeAreaBuildingCount, BuildingTypes, int);
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, changeFreeSpecialistCount, SpecialistTypes, int);

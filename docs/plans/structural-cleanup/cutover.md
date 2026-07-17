@@ -12,6 +12,27 @@ Each legacy mechanism cuts over **separately**, gated by its **own** verificatio
 switch": the modifier, the enabler, the grants, and the classification consumption each cut when *their* verification
 is clean. This is deliberate — a monolithic cut is un-verifiable, and the pieces are largely independent.
 
+## ⛔ PLAYABILITY IS NOT A GATE ON THE CUT — the delete-driven method ([DEC-playability-not-a-gate](../../architecture/decisions.md#dec-playability-not-a-gate))
+
+The `json-data-migration` branch is knowingly **not playable**, and that is NOT a blocker on removing legacy —
+"it would break the game" / "needs a playtest first" is a rollerskate excuse agents hide behind to avoid finishing
+a cut. The removal method is **delete-driven**, and its bar is *done + certified*, never *plays*:
+
+- **Hard-delete** the legacy member (no member, no read, no write — the save reader drains the tag via
+  `Assets/savemigration.txt`, so old saves still load). *Gone > stubbed*: a deleted member still read anywhere is a
+  **compile error** (caught); a stub silently returns a wrong value (hidden).
+- **The compiler IS the census.** Every consumer still on the deleted member is a `LNK`/compile error — an
+  un-self-certifiable list. You cannot "flip and pretend it's done" when the tree will not link until the rewire is
+  total. This is why the earlier flip-and-assert failed: ~80% of "to spec" mechanics were leaning on legacy and
+  producing right-looking numbers by riding on it (the [DEC-calc-zero-ride-in](../../architecture/decisions.md#dec-calc-zero-ride-in)
+  camouflage). Deleting the thing they *could* cheat off is how the in-engine cascade finally earns the zero-ride-in
+  guarantee StoneBase had structurally — you cannot fake conformance against a member that does not exist.
+- **Certified** = compiler-complete rewire onto the cascade **+ endpoint-observable correctness on a LOADED save**
+  (`/computed` value == an independent recompute; the old save drains clean). Loading a save and polling an endpoint
+  is not *playing*; a pre-init/load-window cold-cache value is acceptable, not a reason to keep a legacy fallback.
+- The ONLY legacy that stays is an **owner-ruled carve-out** (`isPower`, heal, `m_aiTradeYield`, the dormancy
+  baseline `m_vDisabledBuildings`) — never "can't cut, needs the game working."
+
 ## ⭐ The master artifact — the comprehensive CODE-CUT MAP (a pure audit) — ✅ PRODUCED
 
 > **✅ Built 2026-07-02 → [`code-cut-map.md`](code-cut-map.md)** (two-pass, adversarial, per

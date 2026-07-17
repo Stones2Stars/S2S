@@ -122,7 +122,6 @@ void CvPythonCityLoader::CyCityPythonInterface1(boost::python::class_<CyCity>& i
 		.def("getNumGreatPeople", &CyCity::getNumGreatPeople, "int () - # of great people who are joined to the city")
 		.def("getBaseGreatPeopleRate", &CyCity::getBaseGreatPeopleRate, "int () - base great person rate")
 		.def("getGreatPeopleRate", &CyCity::getGreatPeopleRate, "int () - total Great Person rate")
-		.def("changeBaseGreatPeopleRate", &CyCity::changeBaseGreatPeopleRate)
 		.def("getGreatPeopleProgress", &CyCity::getGreatPeopleProgress, "int () - current great person progress")
 		.def("getGreatPeopleRateModifier", &CyCity::getGreatPeopleRateModifier, "int ()")
 

@@ -310,6 +310,15 @@ is repurposed: PROMOTED from offline parity oracle to the USER-VISIBLE PERFORMAN
 `(scope,channel)`/turn-time dashboard — Razor + SignalR); it MAY still spot-verify parity against known-good as a
 sanity check, but that is not the migration's validation path. **Home:** [validation.md](../specs/validation.md).
 
+### DEC-playability-not-a-gate
+
+The `json-data-migration` branch is knowingly not playable, and playability is NOT a gate on removing legacy —
+"it would break the game / needs a playtest first" is a rollerskate excuse. Removal is DELETE-DRIVEN: hard-delete the
+member (save-safe via `savemigration.txt`), and the COMPILER is the census (every consumer still on it is a compile
+error — un-self-certifiable, so you cannot flip-and-pretend). Done = compiler-complete rewire onto the cascade +
+endpoint-observable correctness on a LOADED save (not *playing*). The only legacy that stays is an owner-ruled
+carve-out. **Home:** [cutover.md](../plans/structural-cleanup/cutover.md).
+
 ### DEC-red-ratchet
 
 The tree deliberately does NOT compile: the XML `CvXInfo` classes are archived (`SourceArchive/Infos/`) as a

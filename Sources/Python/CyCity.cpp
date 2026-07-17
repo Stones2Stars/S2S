@@ -654,11 +654,6 @@ int CyCity::getGreatPeopleRate() const
 	return m_pCity->getGreatPeopleRate();
 }
 
-void CyCity::changeBaseGreatPeopleRate(int iChange)
-{
-	m_pCity->changeBaseGreatPeopleRate(iChange);
-}
-
 int CyCity::getGreatPeopleRateModifier() const
 {
 	return m_pCity->getGreatPeopleRateModifier();
