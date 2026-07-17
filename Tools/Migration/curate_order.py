@@ -1,0 +1,119 @@
+#!/usr/bin/env python3
+"""
+curate_order.py -- emit the per-category ORDER MANIFEST (`Assets/Data/<folder>/_order.json`).
+
+WHY: the JSON loader (LoadGlobalClassInfoJson) registers a category's engine ids in its load-sort order.
+Without a manifest that sort is alphabetical-by-type, which reshuffled every id-ordered UI surface against
+the legacy game -- most painfully the unit level-up promotion popup, whose button layout follows promotion
+ids (the legacy XML grouped each promotion line's tiers adjacently, and mod-era additions appended at the
+END of the document, so the base layout was stable and new lines showed up last). The manifest restores the
+LEGACY DOCUMENT ORDER: each `_order.json` is the category's type list in the store's merged enumeration
+(base `Assets/XML` document order, then module additions -- the same sequence every curator consumes).
+
+The loader sorts a category's entities by manifest position; a type ABSENT from the manifest (synthetic
+TECH_GAME_START, future hand-authored entities) sorts AFTER every listed one, alphabetically -- reproducing
+the legacy new-stuff-appends behaviour with zero authoring burden.
+
+Derived artifact -- regenerate + commit freely (the manifests are curator OUTPUT, never hand-edited):
+    python3 curate_order.py --write
+"""
+import argparse
+import glob
+import json
+import os
+import xml.etree.ElementTree as ET
+
+import engine
+import store as store_mod
+
+REPO = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+OUT = os.path.join(REPO, "Assets", "Data")
+
+# entity record-element -> the Assets/Data folder its curator writes (only the categories the JSON
+# loader registers ids for; TraitInfo is deliberately absent -- the simple/complex folder split shares
+# engine ids and no id-ordered UI surface reads traits).
+FOLDERS = {
+    "TechInfo": "techs",
+    "BuildingInfo": "buildings",
+    "UnitInfo": "units",
+    "BuildInfo": "builds",
+    "SpecialistInfo": "specialists",
+    "ImprovementInfo": "improvements",
+    "RouteInfo": "routes",
+    "CivicInfo": "civics",
+    "CivicOptionInfo": "civicoptions",
+    "ReligionInfo": "religions",
+    "BonusInfo": "bonuses",
+    "CorporationInfo": "corporations",
+    "ProjectInfo": "projects",
+    "ProcessInfo": "processes",
+    "PromotionInfo": "promotions",
+    "PromotionLineInfo": "promotionlines",
+    "UnitCombatInfo": "unitcombats",
+    "HeritageInfo": "heritages",
+    "CultureLevelInfo": "culturelevels",
+    "PropertyInfo": "properties",
+    "TerrainInfo": "terrains",
+    "FeatureInfo": "features",
+}
+
+
+def _files(glb):
+    """The LEGACY registration order: BASE `Assets/XML` files first, THEN the modules -- the legacy loader
+    registered the base document first and appended module additions, which is exactly the id order players'
+    muscle memory formed on. (The store's own file sort puts Modules/ before XML/ -- right for value-merging,
+    WRONG for id ordering -- hence this local enumeration. Module-vs-module order approximates the MLF config
+    alphabetically; base-vs-module and per-file document order are the load-bearing parts.)"""
+    out = []
+    for base in (store_mod.XML_DIR, store_mod.MOD_DIR):
+        found = sorted(glob.glob(os.path.join(base, "**", glb), recursive=True))
+        for f in found:
+            norm = f.replace("\\", "/").lower()
+            if "schema" in norm or any(ex in norm for ex in store_mod.EXCLUDED_MODULE_SUBPATHS):
+                continue
+            out.append(f)
+    return out
+
+
+def order_of(ent, glb):
+    seen = set()
+    types = []
+    for path in _files(glb):
+        try:
+            root = engine.strip_ns(ET.parse(path).getroot())
+        except ET.ParseError:
+            continue
+        for rec in root.iter(ent):
+            typ = engine.text(rec.find("Type"))
+            # a conditional-replacement record registers under its ReplacementID (store.py's rule): the base
+            # Type stays a separate, earlier record -- both get their own document position.
+            rid_node = rec.find("ReplacementID")
+            rid = engine.text(rid_node) if rid_node is not None else ""
+            if rid and rid != "NONE":
+                typ = rid
+            if not typ or typ in seen:
+                continue
+            seen.add(typ)
+            types.append(typ)
+    return types
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--write", action="store_true")
+    args = ap.parse_args()
+    for ent, folder in sorted(FOLDERS.items()):
+        types = order_of(ent, store_mod.ENTITIES[ent])
+        print("%-20s -> %s/_order.json  (%d types; first: %s)"
+              % (ent, folder, len(types), ", ".join(types[:3])))
+        if args.write:
+            path = os.path.join(OUT, folder)
+            os.makedirs(path, exist_ok=True)
+            with open(os.path.join(path, "_order.json"), "w") as f:
+                json.dump(types, f, indent=1)
+    if args.write:
+        print("\nwrote %d order manifests under Assets/Data/" % len(FOLDERS))
+
+
+if __name__ == "__main__":
+    main()
