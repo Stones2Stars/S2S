@@ -526,6 +526,7 @@ def main():
     handled = (set(STRENGTH) | set(FAMILIES) | set(VS_KEYED) | set(CAP_BOOL) | set(CAP_PAIR)
                | set(CAP_COUNT) | set(CAP_LIST) | set(SKILL_UNITCOMBAT_LIST) | set(VISION_PAIRS) | set(VISION_STRUCTS)
                | set(GRANT_LIST) | set(ID_SCALAR) | set(ID_LIST) | set(ID_BOOL) | DROP
+               | set(SM_FLAT_CHANGE) | set(SM_COMBATMOD_CHANGE) | set(SM_CARGO_CHANGE)   # consumed by emit_sizematters (json.md §9) -- were mis-reported UNHANDLED
                | {"PropertyManipulators", "HealUnitCombatChangeTypes", "NegatesInvisibilityTypes",
                   "SetSpecialUnit", "OnGameOptions", "NotOnGameOptions", "iCommandType",
                   "AIWeightbyUnitCombatTypes", "PromotionLine", "iLinePriority",

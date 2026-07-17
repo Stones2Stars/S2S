@@ -274,6 +274,7 @@ def main():
                | set(CAP_PAIR) | set(CAP_COUNT) | set(CAP_COUNT_X) | set(CAP_LIST) | set(VISION_PAIRS)
                | set(VISION_PAIRS_X) | set(VISION_STRUCTS) | set(BASE_SENTINEL10) | set(BASE_PLAIN)
                | set(ID_REF) | set(ID_BOOL) | set(ID_LIST) | DROP
+               | set(SM_FLAT_CHANGE) | set(SM_COMBATMOD_CHANGE) | set(SM_CARGO_CHANGE)   # consumed by emit_sizematters (json.md §9) -- were mis-reported UNHANDLED
                | {"PropertyManipulators", "KillOutcomes", "Actions", "OnGameOptions", "NotOnGameOptions",
                   "Button",
                   "iCelebrityHappy"})   # -> skills.celebrity (boolean), amount dropped (owner 2026-07-01)
