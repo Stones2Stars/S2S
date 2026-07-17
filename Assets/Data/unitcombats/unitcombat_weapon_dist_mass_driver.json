@@ -1,21 +1,11 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_MASS_DRIVER",
- "skills": {
-  "rBombardDirect": true
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/wields_distance.dds"
   }
  },
  "identity": {
-  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_MASS_DRIVER",
-  "base": {
-   "rangedBombardDamage": 150,
-   "rangedBombardLimit": 125,
-   "rangedBombardMaxUnits": 2,
-   "dcmRange": 3,
-   "dcmAccuracy": 65
-  }
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_MASS_DRIVER"
  }
 }

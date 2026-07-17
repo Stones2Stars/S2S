@@ -53,8 +53,7 @@
  },
  "skills": {
   "ignoreTerrainCost": true,
-  "onlyDefensive": true,
-  "rBombardForceAbility": true
+  "onlyDefensive": true
  },
  "tags": {
   "military": true

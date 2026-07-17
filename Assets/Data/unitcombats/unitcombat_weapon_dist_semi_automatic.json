@@ -1,21 +1,11 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
- "skills": {
-  "rBombardDirect": true
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/wields_distance.dds"
   }
  },
  "identity": {
-  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
-  "base": {
-   "rangedBombardDamage": 60,
-   "rangedBombardLimit": 50,
-   "rangedBombardMaxUnits": 1,
-   "dcmRange": 1,
-   "dcmAccuracy": 50
-  }
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC"
  }
 }

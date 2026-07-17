@@ -146,6 +146,19 @@ after XML/Python changes.
 
 ### Tier 2 — audit required
 
+- **DCM RANGE BOMBARD ("ranged assault") — FULL REMOVAL RULED (owner; re-affirmed 2026-07-17).** The whole DCM
+  ranged mod goes — ranged attack is GONE until/unless rebuilt siege-only as its own design. The ruling was made
+  in the curator phase but never recorded, so the curators faithfully ported the legacy data and every
+  distance-weapon-class unit got ranged assault (`canRBombard` keys on the class-sourced `getBaseDCMBombRange`).
+  **Data cut (done with this ruling's recording):** the curators stop emitting every DCM-ranged field —
+  unitcombat `identity.base` `rangedBombardDamage`/`rangedBombardLimit`/`rangedBombardMaxUnits`/`dcmRange`/
+  `dcmAccuracy` + the `rBombardDirect`/`rBombardForceAbility` skills; unit `bombard.rangedDamage`/
+  `rangedDamageLimit`/`dcmRange`/`dcmAccuracy` + the `rBombardForceAbility` skill; promotion `bombard.ranged*`/
+  `dcm*` deltas + the `rBombardPrereq` flag — and the data regenerates without them (absent reads 0 → the
+  ability gates off everywhere). **C++ removal surface (the follow-up, ACO-style delete like air bombing
+  below):** `canRBombard`/`canBombardAtRanged`/`bombardRanged` + the `MISSION_RBOMBARD` dispatch + the
+  `DCM_RANGE_BOMBARD` define/BUG option + the rBombard promotion-prereq legs + the AI callers; same
+  REMAPPED-mission save handling as the air-bomb entry.
 - **DCM air bombing — audit COMPLETE (2026-07-02), REMOVAL SLATED (owner: "rather have it gone, unless it's
   load-bearing" — it is not).** The map: **effectively OFF for every default install** — `GlobalDefinesAlt.xml`
   ships `DCM_AIR_BOMBING=1` but the RevDCM BUG option (default **False**) overwrites the define at init

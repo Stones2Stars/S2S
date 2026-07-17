@@ -64,10 +64,9 @@ UNIT_FAMILIES = {
     "iFirstStrikes": ("firstStrike", "strikes", "flat"),
     "iChanceFirstStrikes": ("firstStrike", "chance", "flat"),
     "iBombardRate": ("bombard", "rate", "percent"),
-    "iRBombardDamage": ("bombard", "rangedDamage", "flat"),
-    "iRBombardDamageLimit": ("bombard", "rangedDamageLimit", "flat"),
-    "iDCMBombRange": ("bombard", "dcmRange", "flat"),
-    "iDCMBombAccuracy": ("bombard", "dcmAccuracy", "flat"),
+    # iRBombardDamage/iRBombardDamageLimit/iDCMBombRange/iDCMBombAccuracy: DCM RANGE BOMBARD is ruled FULLY
+    # REMOVED (structural-cleanup.md Tier 2) -- DROPped below; vanilla city bombard (iBombardRate) and air
+    # bombing (iBombRate, its own slated removal) are separate systems and stay.
     "iBombRate": ("bombard", "airBombRate", "flat"),
     "iCollateralDamage": ("collateral", "damage", "percent"),
     "iCollateralDamageLimit": ("collateral", "limit", "flat"),
@@ -100,7 +99,7 @@ CAP_BOOL = {
     "bInquisitor": "inquisitor", "bInvestigate": "investigate", "bInvisible": "alwaysInvisible",
     "bMechanized": "mechanized", "bNoBadGoodies": "noBadGoodies", "bNoNonOwnedCityEntry": "noNonOwnedCityEntry",
     "bNoNonTypeProdMods": "noNonTypeProdMods", "bNukeImmune": "nukeImmune", "bOnlyDefensive": "onlyDefensive",
-    "bPassage": "passage", "bRBombardForceAbility": "rBombardForceAbility", "bRivalTerritory": "rivalTerritory",
+    "bPassage": "passage", "bRivalTerritory": "rivalTerritory",   # bRBombardForceAbility DROPs with the DCM-range removal
     "bSabotage": "sabotage", "bStateReligion": "stateReligion", "bStealPlans": "stealPlans",
     "bStealthDefense": "stealthDefense", "bSuicide": "suicide", "bUnlimitedException": "unlimitedException",
     "bUpgradeAnywhere": "upgradeAnywhere", "bWorkerTrade": "workerTrade", "bAttackOnlyCities": "attackOnlyCities",
@@ -894,6 +893,9 @@ HANDLED = (set(BASE) | set(UNIT_FAMILIES) | set(CAP_BOOL) | set(CAP_COUNT) | set
                            "GroupSpawnUnitCombatTypes",   # -> groupSpawn (own block, struct rows)
                            "iAnimalIgnoresBorders",   # DROPPED: pure game-option runtime, not curated (owner 2026-07-11)
                            "bSpy",   # dropped: redundant with the 'spy' tag (every bSpy unit is UNITAI_SPY); spy isn't a skill (owner 2026-06-23)
+                           # DCM RANGE BOMBARD ruled FULLY REMOVED (structural-cleanup.md Tier 2) -- all dropped:
+                           "iRBombardDamage", "iRBombardDamageLimit", "iDCMBombRange", "iDCMBombAccuracy",
+                           "bRBombardForceAbility",
                            # reclassified to IS_MILITARY (json §3.5) -- military-ness is the `military` tag, not a skill
                            # (bMilitarySupport's IS_MILITARY tag-signal read at ~656 stays intact -- only its skill emit is dropped)
                            "bMilitaryHappiness", "bMilitaryProduction", "bMilitarySupport"})

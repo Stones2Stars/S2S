@@ -87,11 +87,7 @@ FAMILIES = {
     "iFirstStrikesChange":          ("firstStrike", "strikes", "flat"),
     "iChanceFirstStrikesChange":    ("firstStrike", "chance", "flat"),
     "iBombardRateChange":           ("bombard", "rate", "percent"),
-    "iRBombardDamageChange":        ("bombard", "rangedDamage", "flat"),
-    "iRBombardDamageLimitChange":   ("bombard", "rangedDamageLimit", "flat"),
-    "iRBombardDamageMaxUnitsChange": ("bombard", "rangedDamageMaxUnits", "flat"),
-    "iDCMBombRangeChange":          ("bombard", "dcmRange", "flat"),
-    "iDCMBombAccuracyChange":       ("bombard", "dcmAccuracy", "flat"),
+    # iRBombard*/iDCMBomb*Change: DCM RANGE BOMBARD ruled FULLY REMOVED (structural-cleanup.md Tier 2) -- DROPped.
     "iCollateralDamageChange":      ("collateral", "damage", "percent"),
     "iCollateralDamageLimitChange": ("collateral", "limit", "flat"),
     "iCollateralDamageMaxUnitsChange": ("collateral", "maxUnits", "flat"),
@@ -223,7 +219,7 @@ ID_BOOL = {"bLeader": "leader", "bStatus": "status", "bQuick": "quick", "bStarsi
            "bZeroesXP": "zeroesXP", "bRemoveAfterSet": "removeAfterSet", "bForOffset": "forOffset",
            "bSetOnHNCapture": "setOnHNCapture", "bSetOnInvestigated": "setOnInvestigated",
            "bPlotPrereqsKeepAfter": "plotPrereqsKeepAfter", "bCargoPrereq": "cargoPrereq",
-           "bRBombardPrereq": "rBombardPrereq", "bPrereqNormInvisible": "prereqNormInvisible"}
+           "bPrereqNormInvisible": "prereqNormInvisible"}   # bRBombardPrereq DROPs with the DCM-range removal
 # DROP entirely (store-handled, dead, or pedia-derived).
 DROP = {"Type", "Description", "Help", "Sound", "Button",
         "TechPrereq", "ObsoleteTech",                       # store (tech enables/obsoletes promotions)
@@ -231,6 +227,9 @@ DROP = {"Type", "Description", "Help", "Sound", "Button",
         "iDamageperTurn", "iStrAdjperTurn", "iWeakenperTurn",  # BATTLEWORN (nuked, owner)
         "Categories",                                       # dead
         "iStealthCombatModifier",                           # XML typo (engine reads ...Change); ignored in-game (2 recs)
+        # DCM RANGE BOMBARD ruled FULLY REMOVED (structural-cleanup.md Tier 2):
+        "iRBombardDamageChange", "iRBombardDamageLimitChange", "iRBombardDamageMaxUnitsChange",
+        "iDCMBombRangeChange", "iDCMBombAccuracyChange", "bRBombardPrereq",
         "QualifiedUnitCombatTypes", "DisqualifiedUnitCombatTypes",  # pedia-derived (doPostLoadCaching)
         # trap sub-system -- DEAD (traps removed from the game)
         "iTrapDamageMax", "iTrapDamageMin", "iTrapComplexity", "iNumTriggers",

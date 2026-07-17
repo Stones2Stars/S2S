@@ -4,15 +4,6 @@
   "unit": {
    "rate": {
     "percent": 6
-   },
-   "rangedDamage": {
-    "flat": 10
-   },
-   "rangedDamageLimit": {
-    "flat": 10
-   },
-   "dcmAccuracy": {
-    "flat": 10
    }
   }
  },
@@ -28,7 +19,6 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
-  "description": "TXT_KEY_PROMOTION_SHRAPNEL_SHOWER1",
-  "rBombardPrereq": true
+  "description": "TXT_KEY_PROMOTION_SHRAPNEL_SHOWER1"
  }
 }

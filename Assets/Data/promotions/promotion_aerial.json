@@ -12,16 +12,6 @@
    }
   }
  },
- "bombard": {
-  "unit": {
-   "rangedDamage": {
-    "flat": 10
-   },
-   "dcmAccuracy": {
-    "flat": 10
-   }
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Buttons/Promotions/PromotionAerial.dds"

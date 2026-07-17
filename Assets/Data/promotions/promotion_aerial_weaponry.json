@@ -7,13 +7,6 @@
    }
   }
  },
- "bombard": {
-  "unit": {
-   "rangedDamage": {
-    "flat": 10
-   }
-  }
- },
  "air": {
   "unit": {
    "intercept": {

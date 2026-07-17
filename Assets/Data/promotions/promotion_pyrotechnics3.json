@@ -4,18 +4,6 @@
   "unit": {
    "rate": {
     "percent": 2
-   },
-   "rangedDamage": {
-    "flat": 15
-   },
-   "rangedDamageLimit": {
-    "flat": 20
-   },
-   "rangedDamageMaxUnits": {
-    "flat": 1
-   },
-   "dcmAccuracy": {
-    "flat": 10
    }
   }
  },
@@ -31,7 +19,6 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
-  "description": "TXT_KEY_PROMOTION_PYROTECHNICS3",
-  "rBombardPrereq": true
+  "description": "TXT_KEY_PROMOTION_PYROTECHNICS3"
  }
 }

@@ -1,18 +1,5 @@
 {
  "type": "PROMOTION_POWER_BEAM1",
- "bombard": {
-  "unit": {
-   "rangedDamage": {
-    "flat": 25
-   },
-   "rangedDamageLimit": {
-    "flat": 10
-   },
-   "dcmAccuracy": {
-    "flat": 10
-   }
-  }
- },
  "promotionLine": {
   "PROMOTIONLINE_POWER_BEAM": 1
  },
@@ -25,7 +12,6 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
-  "description": "TXT_KEY_PROMOTION_POWER_BEAM1",
-  "rBombardPrereq": true
+  "description": "TXT_KEY_PROMOTION_POWER_BEAM1"
  }
 }

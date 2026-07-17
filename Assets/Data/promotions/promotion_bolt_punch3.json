@@ -4,18 +4,6 @@
   "unit": {
    "rate": {
     "percent": 3
-   },
-   "rangedDamage": {
-    "flat": 20
-   },
-   "rangedDamageLimit": {
-    "flat": 10
-   },
-   "dcmRange": {
-    "flat": 1
-   },
-   "dcmAccuracy": {
-    "flat": 25
    }
   }
  },
@@ -31,7 +19,6 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
-  "description": "TXT_KEY_PROMOTION_BOLT_PUNCH3",
-  "rBombardPrereq": true
+  "description": "TXT_KEY_PROMOTION_BOLT_PUNCH3"
  }
 }

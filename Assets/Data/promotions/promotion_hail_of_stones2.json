@@ -4,15 +4,6 @@
   "unit": {
    "rate": {
     "percent": 4
-   },
-   "rangedDamage": {
-    "flat": 20
-   },
-   "rangedDamageLimit": {
-    "flat": 15
-   },
-   "dcmAccuracy": {
-    "flat": 10
    }
   }
  },
@@ -28,7 +19,6 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
-  "description": "TXT_KEY_PROMOTION_HAIL_OF_STONES2",
-  "rBombardPrereq": true
+  "description": "TXT_KEY_PROMOTION_HAIL_OF_STONES2"
  }
 }

@@ -67,16 +67,6 @@
    }
   }
  },
- "bombard": {
-  "unit": {
-   "rangedDamage": {
-    "flat": 5
-   },
-   "dcmAccuracy": {
-    "flat": 10
-   }
-  }
- },
  "capture": {
   "unit": {
    "probability": {

@@ -18,13 +18,6 @@
    }
   }
  },
- "bombard": {
-  "unit": {
-   "dcmAccuracy": {
-    "flat": -10
-   }
-  }
- },
  "heal": {
   "unit": {
    "selfModifier": {

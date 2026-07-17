@@ -1,21 +1,5 @@
 {
  "type": "PROMOTION_ARROW_BARRAGE3",
- "bombard": {
-  "unit": {
-   "rangedDamage": {
-    "flat": 15
-   },
-   "rangedDamageLimit": {
-    "flat": 15
-   },
-   "rangedDamageMaxUnits": {
-    "flat": 1
-   },
-   "dcmAccuracy": {
-    "flat": 15
-   }
-  }
- },
  "promotionLine": {
   "PROMOTIONLINE_ARROW_BARRAGE": 3
  },
@@ -28,7 +12,6 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
-  "description": "TXT_KEY_PROMOTION_ARROW_BARRAGE3",
-  "rBombardPrereq": true
+  "description": "TXT_KEY_PROMOTION_ARROW_BARRAGE3"
  }
 }

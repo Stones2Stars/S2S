@@ -21,13 +21,6 @@
    }
   }
  },
- "bombard": {
-  "unit": {
-   "dcmAccuracy": {
-    "flat": -20
-   }
-  }
- },
  "vision": {
   "negates": [
    "INVISIBLE_CAMOUFLAGE",

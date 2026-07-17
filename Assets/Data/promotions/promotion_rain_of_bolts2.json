@@ -1,18 +1,5 @@
 {
  "type": "PROMOTION_RAIN_OF_BOLTS2",
- "bombard": {
-  "unit": {
-   "rangedDamage": {
-    "flat": 10
-   },
-   "rangedDamageLimit": {
-    "flat": 10
-   },
-   "dcmAccuracy": {
-    "flat": 15
-   }
-  }
- },
  "promotionLine": {
   "PROMOTIONLINE_RAIN_OF_BOLTS": 2
  },
@@ -25,7 +12,6 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
-  "description": "TXT_KEY_PROMOTION_RAIN_OF_BOLTS2",
-  "rBombardPrereq": true
+  "description": "TXT_KEY_PROMOTION_RAIN_OF_BOLTS2"
  }
 }

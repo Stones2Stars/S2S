@@ -6,13 +6,6 @@
   }
  },
  "identity": {
-  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
-  "base": {
-   "rangedBombardDamage": 90,
-   "rangedBombardLimit": 90,
-   "rangedBombardMaxUnits": 4,
-   "dcmRange": 2,
-   "dcmAccuracy": 90
-  }
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE"
  }
 }

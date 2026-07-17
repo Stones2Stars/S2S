@@ -6,13 +6,6 @@
   }
  },
  "identity": {
-  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_FIREWORKS",
-  "base": {
-   "rangedBombardDamage": 30,
-   "rangedBombardLimit": 25,
-   "rangedBombardMaxUnits": 4,
-   "dcmRange": 1,
-   "dcmAccuracy": 35
-  }
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_FIREWORKS"
  }
 }

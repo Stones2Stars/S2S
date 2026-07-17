@@ -4,15 +4,6 @@
   "unit": {
    "rate": {
     "percent": 5
-   },
-   "rangedDamage": {
-    "flat": 15
-   },
-   "rangedDamageLimit": {
-    "flat": 10
-   },
-   "dcmAccuracy": {
-    "flat": 5
    }
   }
  },
@@ -28,7 +19,6 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
-  "description": "TXT_KEY_PROMOTION_ROLLING_THUNDER1",
-  "rBombardPrereq": true
+  "description": "TXT_KEY_PROMOTION_ROLLING_THUNDER1"
  }
 }

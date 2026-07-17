@@ -90,22 +90,6 @@
    }
   }
  },
- "bombard": {
-  "unit": {
-   "rangedDamage": {
-    "flat": 30
-   },
-   "rangedDamageLimit": {
-    "flat": 30
-   },
-   "dcmRange": {
-    "flat": 1
-   },
-   "dcmAccuracy": {
-    "flat": 10
-   }
-  }
- },
  "collateral": {
   "unit": {
    "limit": {

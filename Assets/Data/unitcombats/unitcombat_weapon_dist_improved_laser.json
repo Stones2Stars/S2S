@@ -1,21 +1,11 @@
 {
  "type": "UNITCOMBAT_WEAPON_DIST_IMPROVED_LASER",
- "skills": {
-  "rBombardDirect": true
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/wields_distance.dds"
   }
  },
  "identity": {
-  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_IMPROVED_LASER",
-  "base": {
-   "rangedBombardDamage": 100,
-   "rangedBombardLimit": 75,
-   "rangedBombardMaxUnits": 1,
-   "dcmRange": 2,
-   "dcmAccuracy": 80
-  }
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_DIST_IMPROVED_LASER"
  }
 }

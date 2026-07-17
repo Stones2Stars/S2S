@@ -60,7 +60,6 @@
  },
  "skills": {
   "cannotMergeSplit": true,
-  "rBombardForceAbility": true,
   "noInvisibility": true
  },
  "ui": {

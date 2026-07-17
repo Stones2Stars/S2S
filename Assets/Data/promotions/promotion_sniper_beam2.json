@@ -1,21 +1,5 @@
 {
  "type": "PROMOTION_SNIPER_BEAM2",
- "bombard": {
-  "unit": {
-   "rangedDamage": {
-    "flat": 10
-   },
-   "rangedDamageLimit": {
-    "flat": 10
-   },
-   "dcmRange": {
-    "flat": 1
-   },
-   "dcmAccuracy": {
-    "flat": 25
-   }
-  }
- },
  "promotionLine": {
   "PROMOTIONLINE_SNIPER_BEAM": 2
  },
@@ -28,7 +12,6 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
-  "description": "TXT_KEY_PROMOTION_SNIPER_BEAM2",
-  "rBombardPrereq": true
+  "description": "TXT_KEY_PROMOTION_SNIPER_BEAM2"
  }
 }

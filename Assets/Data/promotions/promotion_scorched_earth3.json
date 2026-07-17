@@ -4,21 +4,6 @@
   "unit": {
    "rate": {
     "percent": 7
-   },
-   "rangedDamage": {
-    "flat": 25
-   },
-   "rangedDamageLimit": {
-    "flat": 25
-   },
-   "rangedDamageMaxUnits": {
-    "flat": 1
-   },
-   "dcmRange": {
-    "flat": 1
-   },
-   "dcmAccuracy": {
-    "flat": 25
    }
   }
  },
@@ -34,7 +19,6 @@
   "sound": "AS2D_IF_LEVELUP"
  },
  "identity": {
-  "description": "TXT_KEY_PROMOTION_SCORCHED_EARTH3",
-  "rBombardPrereq": true
+  "description": "TXT_KEY_PROMOTION_SCORCHED_EARTH3"
  }
 }

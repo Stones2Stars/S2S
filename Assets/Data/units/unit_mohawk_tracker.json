@@ -95,22 +95,6 @@
    }
   }
  },
- "bombard": {
-  "unit": {
-   "rangedDamage": {
-    "flat": 15
-   },
-   "rangedDamageLimit": {
-    "flat": 15
-   },
-   "dcmRange": {
-    "flat": 1
-   },
-   "dcmAccuracy": {
-    "flat": 20
-   }
-  }
- },
  "air": {
   "unit": {
    "intercept": {

@@ -44,8 +44,8 @@ from curate_promotion import (STRENGTH, FAMILIES, CAP_BOOL, CAP_PAIR, CAP_COUNT,
                               VISION_STRUCTS, _txt, _int, _simple_list, _pairs)
 
 # UnitCombat-specific extensions to the shared tables.
-CAP_BOOL_X = {"bCannotMergeSplit": "cannotMergeSplit", "bRBombardDirect": "rBombardDirect",
-              "bRBombardForceAbility": "rBombardForceAbility", "bInvisible": "alwaysInvisible", "bHealsAs": "healsAs"}
+# bRBombardDirect/bRBombardForceAbility DROP with the DCM-range removal ruling (see BASE_PLAIN note).
+CAP_BOOL_X = {"bCannotMergeSplit": "cannotMergeSplit", "bInvisible": "alwaysInvisible", "bHealsAs": "healsAs"}
 CAP_COUNT_X = {"iNoCaptureChange": "noCapture"}
 VISION_PAIRS_X = {"VisibilityIntensitySameTileChangeTypes": "visibilityIntensitySameTile"}
 # vs-keyed combat modifiers — UnitCombat's container names (struct-vectors {Type, iModifier}); same homes as
@@ -69,9 +69,10 @@ CAP_LIST = {"TerrainDoubleMoveChangeTypes": "terrainDoubleMove",
 # *Base -> identity.base (§0.6 create-unit base data). quality/group/size use a -10 "unset" sentinel.
 # *Base ranks -> the sizeMatters block (json.md §9), NOT identity.base. -10 = "unset" sentinel (0 is a real rank).
 BASE_SENTINEL10 = {"iQualityBase": "qualityBase", "iGroupBase": "groupBase", "iSizeBase": "sizeBase"}
-BASE_PLAIN = {"iRBombardDamageBase": "rangedBombardDamage", "iRBombardDamageLimitBase": "rangedBombardLimit",
-              "iRBombardDamageMaxUnitsBase": "rangedBombardMaxUnits", "iDCMBombRangeBase": "dcmRange",
-              "iDCMBombAccuracyBase": "dcmAccuracy"}
+# DCM RANGE BOMBARD: the whole mod is ruled FULLY REMOVED (structural-cleanup.md Tier 2, owner) -- ranged
+# attack is GONE until/unless rebuilt siege-only. The five *Base fields DROP (absent reads 0 -> canRBombard
+# gates off); the C++ system removal is the recorded follow-up.
+BASE_PLAIN = {}
 ID_REF = {"ReligionType": "religion", "CultureType": "culture", "EraType": "era"}
 ID_BOOL = {"bForMilitary": "forMilitary", "bForNavalMilitary": "forNavalMilitary"}
 ID_LIST = {"GGptsforUnitTypes": "ggPointsForUnits", "DefaultStatusTypes": "defaultStatuses"}
@@ -80,7 +81,10 @@ ID_LIST = {"GGptsforUnitTypes": "ggPointsForUnits", "DefaultStatusTypes": "defau
 # Promotion iStealthCombatModifier-typo pattern). Button handled via put_art.
 # bSpy: spy is a TAG ONLY (owner 2026-06-23) -- not a skill; the `spy` tag derives at the UNIT level (curate_unit,
 # from UNITAI_SPY) and the legacy bSpy CAP is dropped there too. So DROP it here as well (curate_unit already does).
-DROP = {"Type", "Description", "Help", "Categories", "FeatureAttacks", "FeatureDefenses", "iWithdrawalProb", "bSpy"}
+DROP = {"Type", "Description", "Help", "Categories", "FeatureAttacks", "FeatureDefenses", "iWithdrawalProb", "bSpy",
+        # the DCM-range removal ruling (see BASE_PLAIN note):
+        "iRBombardDamageBase", "iRBombardDamageLimitBase", "iRBombardDamageMaxUnitsBase",
+        "iDCMBombRangeBase", "iDCMBombAccuracyBase", "bRBombardDirect", "bRBombardForceAbility"}
 
 
 def curate(typ, rec, store):

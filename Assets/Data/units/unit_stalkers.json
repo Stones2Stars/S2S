@@ -61,13 +61,6 @@
    }
   }
  },
- "bombard": {
-  "unit": {
-   "dcmAccuracy": {
-    "flat": 5
-   }
-  }
- },
  "costs": {
   "empire": {
    "perInstance": {
