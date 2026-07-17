@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_REPAIR_AIRCRAFT",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SELF_REPAIR1"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "support": {

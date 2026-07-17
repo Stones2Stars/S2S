@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_TOPGUN",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_ACE"
+   ]
+  }
+ },
  "experience": {
   "unit": {
    "percent": 20

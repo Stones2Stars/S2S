@@ -8,6 +8,13 @@
    "PROMOTION_FORMATION3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_DRILL2"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

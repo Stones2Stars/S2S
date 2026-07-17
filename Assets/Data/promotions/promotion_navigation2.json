@@ -5,6 +5,13 @@
    "PROMOTION_NAVIGATION3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_NAVIGATION1"
+   ]
+  }
+ },
  "movement": {
   "unit": {
    "moves": {

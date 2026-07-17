@@ -5,6 +5,18 @@
    "PROMOTION_OPERATIONS4"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_OPERATIONS2",
+    {
+     "any": [
+      "PROMOTION_TACTICS4"
+     ]
+    }
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "neutral": {

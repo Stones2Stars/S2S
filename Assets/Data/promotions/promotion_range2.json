@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_RANGE2",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_RANGE1"
+   ]
+  }
+ },
  "air": {
   "unit": {
    "range": {

@@ -5,6 +5,13 @@
    "PROMOTION_TOPGUN"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_VETERAN"
+   ]
+  }
+ },
  "experience": {
   "unit": {
    "percent": 15

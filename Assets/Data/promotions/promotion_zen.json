@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_ZEN",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
  "capture": {
   "unit": {
    "probability": {

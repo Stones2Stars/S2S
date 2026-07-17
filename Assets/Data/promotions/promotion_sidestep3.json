@@ -1,5 +1,17 @@
 {
  "type": "PROMOTION_SIDESTEP3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SIDESTEP2",
+    {
+     "any": [
+      "PROMOTION_COMBAT1"
+     ]
+    }
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

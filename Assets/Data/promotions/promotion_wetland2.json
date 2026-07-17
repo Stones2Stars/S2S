@@ -5,6 +5,13 @@
    "PROMOTION_WETLAND3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_WETLAND1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "terrain": {

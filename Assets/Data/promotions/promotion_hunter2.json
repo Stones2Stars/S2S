@@ -6,6 +6,13 @@
    "PROMOTION_HUNTING_SIGHT2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_HUNTER1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -15,

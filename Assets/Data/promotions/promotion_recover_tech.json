@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_RECOVER_TECH",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SELF_REPAIR1"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "support": {

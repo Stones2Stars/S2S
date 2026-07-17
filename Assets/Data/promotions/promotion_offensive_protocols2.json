@@ -5,6 +5,13 @@
    "PROMOTION_OFFENSIVE_PROTOCOLS3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_OFFENSIVE_PROTOCOLS1"
+   ]
+  }
+ },
  "capture": {
   "unit": {
    "probability": {

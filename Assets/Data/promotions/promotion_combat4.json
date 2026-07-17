@@ -13,6 +13,13 @@
    "PROMOTION_SPEED"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT3"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

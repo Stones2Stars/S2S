@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_WEAPON_UPGRADE3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_WEAPON_UPGRADE2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityAttack": {

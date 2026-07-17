@@ -5,6 +5,13 @@
    "PROMOTION_BARD2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_LORDSHIP"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityDefense": {

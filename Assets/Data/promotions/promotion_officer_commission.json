@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_OFFICER_COMMISSION",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_LORDSHIP"
+   ]
+  }
+ },
  "experience": {
   "unit": {
    "percent": 25

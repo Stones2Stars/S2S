@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_SENSORS3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SENSORS2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 10,

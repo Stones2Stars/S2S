@@ -5,6 +5,13 @@
    "PROMOTION_SHIP_OPERATIONS2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHIP_TACTICS2"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

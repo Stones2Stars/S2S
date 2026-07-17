@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_LAND_WARRIOR3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LAND_WARRIOR2"
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

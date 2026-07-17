@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_LASER_GUIDANCE",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_HEAT_SEEKING"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityAttack": {

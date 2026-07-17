@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_SEA_HUNTER_GREAT",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SEA_HUNTER3"
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

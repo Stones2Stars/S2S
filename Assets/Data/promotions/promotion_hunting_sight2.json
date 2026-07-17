@@ -1,5 +1,17 @@
 {
  "type": "PROMOTION_HUNTING_SIGHT2",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_HUNTING_SIGHT1",
+    {
+     "any": [
+      "PROMOTION_HUNTER2"
+     ]
+    }
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

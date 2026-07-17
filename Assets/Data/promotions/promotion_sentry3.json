@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_SENTRY3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SENTRY2"
+   ]
+  }
+ },
  "capture": {
   "unit": {
    "probability": {

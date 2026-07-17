@@ -5,6 +5,13 @@
    "PROMOTION_POLAR_WORKER3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_POLAR_WORKER1"
+   ]
+  }
+ },
  "workRate": {
   "unit": {
    "terrain": {

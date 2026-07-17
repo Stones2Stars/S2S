@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_LOGISTICS3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LOGISTICS2"
+   ]
+  }
+ },
  "movement": {
   "unit": {
    "moves": {

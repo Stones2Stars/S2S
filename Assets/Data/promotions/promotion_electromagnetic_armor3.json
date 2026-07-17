@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_ELECTROMAGNETIC_ARMOR3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_ELECTROMAGNETIC_ARMOR2"
+   ]
+  }
+ },
  "movement": {
   "unit": {
    "moveDiscount": {

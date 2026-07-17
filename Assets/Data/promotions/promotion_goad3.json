@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_GOAD3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_GOAD2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "taunt": {

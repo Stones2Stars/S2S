@@ -1,5 +1,13 @@
 {
  "type": "PROMOTION_SPEED",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT4",
+    "PROMOTION_FLANKING3"
+   ]
+  }
+ },
  "movement": {
   "unit": {
    "moves": {

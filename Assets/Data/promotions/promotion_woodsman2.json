@@ -5,6 +5,13 @@
    "PROMOTION_WOODSMAN3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_WOODSMAN1"
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

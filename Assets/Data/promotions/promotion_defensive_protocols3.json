@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_DEFENSIVE_PROTOCOLS3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_DEFENSIVE_PROTOCOLS2"
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 25

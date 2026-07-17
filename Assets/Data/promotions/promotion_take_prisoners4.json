@@ -5,6 +5,13 @@
    "PROMOTION_TAKE_PRISONERS5"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_TAKE_PRISONERS3"
+   ]
+  }
+ },
  "capture": {
   "unit": {
    "probability": {

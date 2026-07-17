@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_STINGING_INSULTS1",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FLANKING1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "taunt": {

@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_KANAI",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

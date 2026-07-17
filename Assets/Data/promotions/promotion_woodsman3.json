@@ -5,6 +5,18 @@
    "PROMOTION_FORESTRY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_WOODSMAN2",
+    {
+     "any": [
+      "PROMOTION_COMBAT2"
+     ]
+    }
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

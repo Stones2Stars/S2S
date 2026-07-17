@@ -5,6 +5,18 @@
    "PROMOTION_SELFPRESERVATION3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_OPERATIONS2",
+    {
+     "any": [
+      "PROMOTION_SELFPRESERVATION1"
+     ]
+    }
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

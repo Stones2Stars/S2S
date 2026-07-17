@@ -5,6 +5,13 @@
    "PROMOTION_HERDING2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_BARK"
+   ]
+  }
+ },
  "capture": {
   "unit": {
    "probability": {

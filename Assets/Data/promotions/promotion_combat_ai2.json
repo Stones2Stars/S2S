@@ -7,6 +7,13 @@
    "PROMOTION_TERRAIN_ANALYSIS1"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT_AI1"
+   ]
+  }
+ },
  "experience": {
   "unit": {
    "percent": 10

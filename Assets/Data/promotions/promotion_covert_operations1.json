@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_COVERT_OPERATIONS1",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMMANDO"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

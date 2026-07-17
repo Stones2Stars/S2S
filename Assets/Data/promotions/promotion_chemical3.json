@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_CHEMICAL3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CHEMICAL2"
+   ]
+  }
+ },
  "collateral": {
   "unit": {
    "damage": {

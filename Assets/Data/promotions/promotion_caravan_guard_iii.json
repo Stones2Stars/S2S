@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_CARAVAN_GUARD_III",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CARAVAN_GUARD_II"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 5,

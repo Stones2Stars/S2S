@@ -5,6 +5,13 @@
    "PROMOTION_FIREARMS3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_FIREARMS1"
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "chance": {

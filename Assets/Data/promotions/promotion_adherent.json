@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_ADHERENT",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
  "revoltProtection": {
   "unit": {
    "percent": 10

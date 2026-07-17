@@ -9,6 +9,13 @@
    "PROMOTION_WAR_CRY"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_MORALE1"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

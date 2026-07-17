@@ -5,6 +5,18 @@
    "PROMOTION_COMMAND1"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_INITIATIVE3",
+    {
+     "any": [
+      "PROMOTION_TACTICS3"
+     ]
+    }
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

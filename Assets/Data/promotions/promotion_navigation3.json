@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_NAVIGATION3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_NAVIGATION2"
+   ]
+  }
+ },
  "movement": {
   "unit": {
    "moves": {

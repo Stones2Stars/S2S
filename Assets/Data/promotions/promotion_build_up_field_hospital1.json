@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_BUILD_UP_FIELD_HOSPITAL1",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FIRST_AID_PEOPLE1"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "support": {

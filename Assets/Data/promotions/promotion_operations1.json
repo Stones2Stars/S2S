@@ -5,6 +5,13 @@
    "PROMOTION_OPERATIONS2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_TACTICS2"
+   ]
+  }
+ },
  "promotionLine": {
   "PROMOTIONLINE_OPERATIONS": 1
  },

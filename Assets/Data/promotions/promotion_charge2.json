@@ -5,6 +5,13 @@
    "PROMOTION_CHARGE3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CHARGE"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

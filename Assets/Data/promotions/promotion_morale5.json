@@ -6,6 +6,13 @@
    "PROMOTION_INITIATIVE4"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_MORALE4"
+   ]
+  }
+ },
  "experience": {
   "unit": {
    "percent": 10

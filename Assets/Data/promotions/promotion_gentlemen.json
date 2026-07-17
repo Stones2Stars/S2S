@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_GENTLEMEN",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityAttack": {

@@ -5,6 +5,13 @@
    "PROMOTION_BERZERKER2"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -5,

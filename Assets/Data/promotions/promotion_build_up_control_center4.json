@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_BUILD_UP_CONTROL_CENTER4",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_RECOVER_TECH4"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "support": {

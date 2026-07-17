@@ -5,6 +5,13 @@
    "PROMOTION_SLAVE_MASTER3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SLAVE_MASTER1"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

@@ -5,6 +5,13 @@
    "PROMOTION_SHIP_COMMAND7"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHIP_COMMAND5"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

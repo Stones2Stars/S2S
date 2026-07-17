@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_BOMBARDING3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_BOMBARDING2"
+   ]
+  }
+ },
  "bombard": {
   "unit": {
    "rate": {

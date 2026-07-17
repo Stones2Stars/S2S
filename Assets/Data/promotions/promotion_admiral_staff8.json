@@ -5,6 +5,13 @@
    "PROMOTION_ADMIRAL_STAFF9"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_ADMIRAL_STAFF7"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

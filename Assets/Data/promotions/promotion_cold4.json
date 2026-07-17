@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_COLD4",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COLD3"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "terrain": {

@@ -5,6 +5,13 @@
    "PROMOTION_TO_THE_DEATH4"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_TO_THE_DEATH2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 5

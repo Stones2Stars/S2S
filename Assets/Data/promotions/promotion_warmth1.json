@@ -5,6 +5,13 @@
    "PROMOTION_WARMTH2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "terrain": {

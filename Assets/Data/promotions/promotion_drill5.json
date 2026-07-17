@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_DRILL5",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_DRILL4"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

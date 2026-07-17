@@ -5,6 +5,13 @@
    "PROMOTION_BUSHIDO3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_BUSHIDO1"
+   ]
+  }
+ },
  "capture": {
   "unit": {
    "resistance": {

@@ -6,6 +6,13 @@
    "PROMOTION_CARAVAN_SHALLOW_DRAFT"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CARAVAN_MARINES_I"
+   ]
+  }
+ },
  "movement": {
   "unit": {
    "moves": {

@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_ENTRAPMENT3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_ENTRAPMENT2"
+   ]
+  }
+ },
  "capture": {
   "unit": {
    "probability": {

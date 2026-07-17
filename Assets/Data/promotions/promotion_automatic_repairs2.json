@@ -5,6 +5,13 @@
    "PROMOTION_AUTOMATIC_REPAIRS3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_AUTOMATIC_REPAIRS1"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "neutral": {

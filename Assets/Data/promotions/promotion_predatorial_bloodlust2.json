@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_PREDATORIAL_BLOODLUST2",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_PREDATORIAL_BLOODLUST1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 25

@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_SHADOWSTALKER3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHADOWSTALKER2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "stealth": {

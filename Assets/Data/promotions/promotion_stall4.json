@@ -5,6 +5,13 @@
    "PROMOTION_STALL5"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_STALL3"
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 5

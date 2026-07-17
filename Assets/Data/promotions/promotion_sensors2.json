@@ -5,6 +5,13 @@
    "PROMOTION_SENSORS3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SENSORS"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 10,

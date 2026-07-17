@@ -5,6 +5,13 @@
    "PROMOTION_ESCAPE2"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_SECURITY1"
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 40

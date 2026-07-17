@@ -57,6 +57,13 @@ public:
 	virtual const CvJsonBoolBlock* getSkills()    const { return &m_skills; }
 	virtual const CvJsonGate*      getGate()      const { return &m_gate; }
 	virtual const CvJsonGrants*    getGrants()    const { return &m_grants; }
+	// the promotion->promotion chain edges (store-inverted enables.promotions, owner 2026-07-17): without this
+	// opt-in the base's CJK_EDGE dispatch hit mutEdges()==NULL and DROPPED every authored enables block at load
+	// (loaded edgeIds=0 vs authored 18 on PROMOTION_LEADER -- the /state/info loaded!=authored oracle catch).
+	virtual const CvJsonEdges*     getEdges()     const { return &m_edges; }
+	// the chain's AND-half: requires.build retention (the tech multi-parent pattern) -- confirmed by
+	// EnablerKernel::requiresMet inside enPromotionValid (the evaluator's PROMOTION_ atom reads ctx.unit).
+	virtual const CvJsonRequires*  getRequires()  const { return &m_requires; }
 
 	// =========================================================================================================
 	//  strength family (general combat % + named members)
@@ -446,6 +453,8 @@ protected:
 	virtual CvJsonBoolBlock* mutSkills()    { return &m_skills; }
 	virtual CvJsonGate*      mutGate()      { return &m_gate; }
 	virtual CvJsonGrants*    mutGrants()    { return &m_grants; }
+	virtual CvJsonEdges*     mutEdges()     { return &m_edges; }
+	virtual CvJsonRequires*  mutRequires()  { return &m_requires; }
 
 private:
 	static int mapGet(const std::map<int, int>& m, int k) { std::map<int, int>::const_iterator it = m.find(k); return it != m.end() ? it->second : 0; }
@@ -460,6 +469,8 @@ private:
 	CvJsonBoolBlock m_skills;
 	CvJsonGate      m_gate;
 	CvJsonGrants    m_grants;
+	CvJsonEdges     m_edges;     // enables.promotions chains (see the getEdges opt-in note)
+	CvJsonRequires  m_requires;  // the chain's requires.build AND-half (see the getRequires opt-in note)
 
 	// strength family scalars
 	int m_iCombatPercent, m_iStrengthChange, m_iStrengthModifier, m_iAttackCombatModifierChange, m_iDefenseCombatModifierChange;

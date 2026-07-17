@@ -6,6 +6,18 @@
    "PROMOTION_SELFPRESERVATION2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_OPERATIONS1",
+    {
+     "any": [
+      "PROMOTION_TACTICS3"
+     ]
+    }
+   ]
+  }
+ },
  "promotionLine": {
   "PROMOTIONLINE_OPERATIONS": 2
  },

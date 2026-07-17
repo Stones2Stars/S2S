@@ -5,6 +5,13 @@
    "PROMOTION_BLITZ"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_VETERAN"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -15

@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_LEADERSHIP",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
  "experience": {
   "unit": {
    "percent": 100

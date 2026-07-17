@@ -5,6 +5,13 @@
    "PROMOTION_MASTER_HUNTER3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_MASTER_HUNTER1"
+   ]
+  }
+ },
  "skills": {
   "river": true
  },

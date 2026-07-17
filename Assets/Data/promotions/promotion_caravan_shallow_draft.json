@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_CARAVAN_SHALLOW_DRAFT",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CARAVAN_SEA_MOVEMENT_I"
+   ]
+  }
+ },
  "skills": {
   "featureDoubleMove": {
    "FEATURE_REEF": true,

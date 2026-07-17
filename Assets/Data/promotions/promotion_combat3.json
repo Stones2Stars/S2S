@@ -17,6 +17,13 @@
    "PROMOTION_WARRIORS_INTUITION2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT2"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

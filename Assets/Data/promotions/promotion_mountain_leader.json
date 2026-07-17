@@ -1,5 +1,13 @@
 {
  "type": "PROMOTION_MOUNTAIN_LEADER",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LEADER",
+    "PROMOTION_INITIATIVE4"
+   ]
+  }
+ },
  "skills": {
   "canPassPeaks": true,
   "canLeadThroughPeaks": true

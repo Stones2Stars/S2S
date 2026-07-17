@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_INTERCEPTION2",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_INTERCEPTION1"
+   ]
+  }
+ },
  "air": {
   "unit": {
    "intercept": {

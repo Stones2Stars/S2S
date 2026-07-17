@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_ORDER_OF_ORMAZD",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityAttack": {

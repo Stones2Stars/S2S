@@ -5,6 +5,13 @@
    "PROMOTION_BULLY4"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_BULLY2"
+   ]
+  }
+ },
  "promotionLine": {
   "PROMOTIONLINE_BULLY": 3
  },

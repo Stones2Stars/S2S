@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_CHAFF",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_IMPROVED_RADAR"
+   ]
+  }
+ },
  "air": {
   "unit": {
    "evasion": {

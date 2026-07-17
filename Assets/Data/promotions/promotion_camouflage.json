@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_CAMOUFLAGE",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "defense": {

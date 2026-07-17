@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_ANTIBIOLOGICAL",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -15,

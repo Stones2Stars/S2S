@@ -5,6 +5,13 @@
    "PROMOTION_DEFENSIVE_PROTOCOLS2"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT_AI1"
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 15

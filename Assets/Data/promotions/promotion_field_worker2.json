@@ -5,6 +5,13 @@
    "PROMOTION_FIELD_WORKER3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FIELD_WORKER1"
+   ]
+  }
+ },
  "workRate": {
   "unit": {
    "terrain": {

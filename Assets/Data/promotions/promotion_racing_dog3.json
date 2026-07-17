@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_RACING_DOG3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_RACING_DOG2"
+   ]
+  }
+ },
  "movement": {
   "unit": {
    "moves": {

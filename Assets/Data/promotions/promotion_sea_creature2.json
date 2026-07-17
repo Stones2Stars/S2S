@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_SEA_CREATURE2",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SEA_CREATURE1"
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "chance": {

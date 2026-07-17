@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_FERAL3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FERAL2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "attack": {

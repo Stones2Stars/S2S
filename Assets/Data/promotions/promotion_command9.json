@@ -6,6 +6,13 @@
    "PROMOTION_GENERAL_STAFF10"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMMAND8"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

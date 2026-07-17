@@ -1,5 +1,18 @@
 {
  "type": "PROMOTION_HEROIC2",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT6",
+    {
+     "any": [
+      "PROMOTION_HEROIC",
+      "PROMOTION_DRILL4"
+     ]
+    }
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "upgradeDiscount": {

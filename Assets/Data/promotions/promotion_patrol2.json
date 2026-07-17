@@ -5,6 +5,13 @@
    "PROMOTION_PATROL3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_PATROL"
+   ]
+  }
+ },
  "movement": {
   "unit": {
    "moves": {

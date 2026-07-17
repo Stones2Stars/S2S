@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_TACTICS",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 20

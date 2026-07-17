@@ -5,6 +5,13 @@
    "PROMOTION_TERRAIN_ANALYSIS2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT_AI2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "hillsAttack": {

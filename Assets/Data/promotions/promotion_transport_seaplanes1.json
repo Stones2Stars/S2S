@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_TRANSPORT_SEAPLANES1",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_TRANSPORT_SEAPLANES"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -10

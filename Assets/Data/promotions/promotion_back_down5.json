@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_BACK_DOWN5",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_BACK_DOWN4"
+   ]
+  }
+ },
  "movement": {
   "unit": {
    "moves": {

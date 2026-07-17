@@ -5,6 +5,14 @@
    "PROMOTION_SENSORS2"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT3",
+    "PROMOTION_COMBAT_AI1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 10,

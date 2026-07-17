@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_TRACK_SCENT3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_TRACK_SCENT2"
+   ]
+  }
+ },
  "capture": {
   "unit": {
    "probability": {

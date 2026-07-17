@@ -5,6 +5,13 @@
    "PROMOTION_SEA_HUNTER3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SEA_HUNTER1"
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

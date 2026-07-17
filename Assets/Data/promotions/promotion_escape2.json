@@ -1,5 +1,17 @@
 {
  "type": "PROMOTION_ESCAPE2",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SECURITY2",
+    {
+     "any": [
+      "PROMOTION_ESCAPE1"
+     ]
+    }
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 40

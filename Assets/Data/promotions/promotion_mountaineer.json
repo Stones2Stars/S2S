@@ -1,5 +1,17 @@
 {
  "type": "PROMOTION_MOUNTAINEER",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT3",
+    {
+     "any": [
+      "PROMOTION_GUERILLA3"
+     ]
+    }
+   ]
+  }
+ },
  "skills": {
   "canPassPeaks": true
  },

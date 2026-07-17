@@ -6,6 +6,13 @@
    "PROMOTION_SHIELDING3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_POWER_SOURCE_UPGRADE1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

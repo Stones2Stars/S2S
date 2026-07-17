@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_TAKE_PRISONERS5",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_TAKE_PRISONERS4"
+   ]
+  }
+ },
  "capture": {
   "unit": {
    "probability": {

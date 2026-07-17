@@ -5,6 +5,13 @@
    "PROMOTION_SHOCK3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHOCK"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

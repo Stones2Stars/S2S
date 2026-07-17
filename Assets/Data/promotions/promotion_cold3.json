@@ -5,6 +5,13 @@
    "PROMOTION_COLD4"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COLD2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "terrain": {

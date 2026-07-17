@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_SELF_HEAL5",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SELF_HEAL4"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "enemy": {

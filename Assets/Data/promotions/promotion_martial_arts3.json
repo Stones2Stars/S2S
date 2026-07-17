@@ -1,5 +1,17 @@
 {
  "type": "PROMOTION_MARTIAL_ARTS3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_MARTIAL_ARTS2",
+    {
+     "any": [
+      "PROMOTION_LEADER"
+     ]
+    }
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

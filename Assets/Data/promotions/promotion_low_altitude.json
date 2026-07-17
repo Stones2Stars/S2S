@@ -5,6 +5,13 @@
    "PROMOTION_KAMIKAZE"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_VETERAN"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -15,

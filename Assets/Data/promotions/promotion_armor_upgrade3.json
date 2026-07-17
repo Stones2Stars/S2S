@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_ARMOR_UPGRADE3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_ARMOR_UPGRADE2"
+   ]
+  }
+ },
  "movement": {
   "unit": {
    "moves": {

@@ -6,6 +6,13 @@
    "PROMOTION_SPHINX"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT5"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

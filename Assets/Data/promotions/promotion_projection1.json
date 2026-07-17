@@ -5,6 +5,13 @@
    "PROMOTION_PROJECTION2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT1"
+   ]
+  }
+ },
  "movement": {
   "unit": {
    "moves": {

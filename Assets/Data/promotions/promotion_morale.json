@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_MORALE",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
  "movement": {
   "unit": {
    "moves": {

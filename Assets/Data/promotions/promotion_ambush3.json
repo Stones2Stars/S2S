@@ -1,5 +1,17 @@
 {
  "type": "PROMOTION_AMBUSH3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_AMBUSH2",
+    {
+     "any": [
+      "PROMOTION_DRILL3"
+     ]
+    }
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

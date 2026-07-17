@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_FORESTRY",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_WOODSMAN3"
+   ]
+  }
+ },
  "skills": {
   "featureDoubleMove": {
    "FEATURE_JUNGLE": true,

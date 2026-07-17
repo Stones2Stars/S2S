@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_HARAKIRI",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_BUSHIDO1"
+   ]
+  }
+ },
  "capture": {
   "unit": {
    "resistance": {

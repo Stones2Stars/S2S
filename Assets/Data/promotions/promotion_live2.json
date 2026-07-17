@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_LIVE2",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_LIVE1"
+   ]
+  }
+ },
  "promotionLine": {
   "PROMOTIONLINE_LIVE": 2
  },

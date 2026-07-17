@@ -1,5 +1,13 @@
 {
  "type": "PROMOTION_PARAMEDIC3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_PARAMEDIC2",
+    "PROMOTION_COMBAT3"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "sameTile": {

@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_CAUTIOUS5",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CAUTIOUS4"
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 5

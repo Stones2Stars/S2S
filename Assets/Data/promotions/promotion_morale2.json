@@ -6,6 +6,13 @@
    "PROMOTION_TACTICS2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_MORALE1"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

@@ -5,6 +5,13 @@
    "PROMOTION_UNQUESTIONING_OBEDIENCE4"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_UNQUESTIONING_OBEDIENCE2"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

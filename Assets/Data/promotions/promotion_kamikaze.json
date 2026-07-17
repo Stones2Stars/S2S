@@ -1,5 +1,13 @@
 {
  "type": "PROMOTION_KAMIKAZE",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_FANATIC",
+    "PROMOTION_LOW_ALTITUDE"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityAttack": {

@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_RUGGED3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_RUGGED2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "terrain": {

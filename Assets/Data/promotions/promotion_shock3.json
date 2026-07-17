@@ -1,5 +1,18 @@
 {
  "type": "PROMOTION_SHOCK3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHOCK2",
+    {
+     "any": [
+      "PROMOTION_COMBAT2",
+      "PROMOTION_DRILL2"
+     ]
+    }
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

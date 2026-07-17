@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_STATUS_TRESPASS_OFF",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_STATUS_TRESPASS_ON"
+   ]
+  }
+ },
  "promotionLine": {
   "PROMOTIONLINE_TRESPASS": 1
  },

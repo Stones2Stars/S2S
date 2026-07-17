@@ -5,6 +5,18 @@
    "PROMOTION_GENERAL_STAFF2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SELFPRESERVATION3",
+    {
+     "any": [
+      "PROMOTION_OPERATIONS4"
+     ]
+    }
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

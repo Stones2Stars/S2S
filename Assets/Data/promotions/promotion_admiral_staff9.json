@@ -6,6 +6,13 @@
    "PROMOTION_SHIP_COMMAND10"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_ADMIRAL_STAFF8"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

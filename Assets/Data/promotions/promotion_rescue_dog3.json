@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_RESCUE_DOG3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_RESCUE_DOG2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -5

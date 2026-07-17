@@ -5,6 +5,13 @@
    "PROMOTION_LAND_WARRIOR3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LAND_WARRIOR1"
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "chance": {

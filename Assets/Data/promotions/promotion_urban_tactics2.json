@@ -5,6 +5,13 @@
    "PROMOTION_URBAN_TACTICS3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_URBAN_TACTICS1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityAttack": {

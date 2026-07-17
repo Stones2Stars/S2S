@@ -1,5 +1,17 @@
 {
  "type": "PROMOTION_GLOBAL_AWERENESS",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_QUANTUM_ALGORITHMS",
+    {
+     "any": [
+      "PROMOTION_COMBAT_AI3"
+     ]
+    }
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

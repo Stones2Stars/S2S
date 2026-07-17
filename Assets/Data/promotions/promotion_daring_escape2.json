@@ -5,6 +5,13 @@
    "PROMOTION_DARING_ESCAPE3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_DARING_ESCAPE1"
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 10

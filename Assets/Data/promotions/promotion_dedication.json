@@ -1,5 +1,17 @@
 {
  "type": "PROMOTION_DEDICATION",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_LORDSHIP",
+    {
+     "any": [
+      "PROMOTION_COMBAT2"
+     ]
+    }
+   ]
+  }
+ },
  "capture": {
   "unit": {
    "probability": {

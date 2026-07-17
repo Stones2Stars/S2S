@@ -1,5 +1,17 @@
 {
  "type": "PROMOTION_SHIELDING3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_POWER_SOURCE_UPGRADE2",
+    {
+     "any": [
+      "PROMOTION_SHIELDING2"
+     ]
+    }
+   ]
+  }
+ },
  "collateral": {
   "unit": {
    "protection": {

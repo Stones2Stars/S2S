@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_MASTER_HUNTER3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_MASTER_HUNTER2"
+   ]
+  }
+ },
  "skills": {
   "enemyRoute": true
  },

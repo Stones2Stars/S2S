@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_TRENCH3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_TRENCH2"
+   ]
+  }
+ },
  "collateral": {
   "unit": {
    "protection": {

@@ -5,6 +5,19 @@
    "PROMOTION_SHIP_COMMAND1"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHIP_INITIATIVE3",
+    {
+     "any": [
+      "PROMOTION_SHIP_MORALE5",
+      "PROMOTION_SHIP_TACTICS4"
+     ]
+    }
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

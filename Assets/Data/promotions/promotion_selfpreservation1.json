@@ -5,6 +5,13 @@
    "PROMOTION_SELFPRESERVATION2"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_TACTICS2"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

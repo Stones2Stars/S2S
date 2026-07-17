@@ -6,6 +6,18 @@
    "PROMOTION_MOUNTAINEER"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_GUERILLA2",
+    {
+     "any": [
+      "PROMOTION_COMBAT2"
+     ]
+    }
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "hillsAttack": {

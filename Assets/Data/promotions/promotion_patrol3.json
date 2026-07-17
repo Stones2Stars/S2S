@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_PATROL3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_PATROL2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityDefense": {

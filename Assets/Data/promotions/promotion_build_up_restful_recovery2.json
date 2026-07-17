@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_BUILD_UP_RESTFUL_RECOVERY2",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SELF_HEAL1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -4

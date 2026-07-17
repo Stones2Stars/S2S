@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_SILVER_TONGUE3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SILVER_TONGUE2"
+   ]
+  }
+ },
  "promotionLine": {
   "PROMOTIONLINE_SILVERTONGUE": 3
  },

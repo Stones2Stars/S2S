@@ -5,6 +5,13 @@
    "PROMOTION_AUTOMATIC_REPAIRS2"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_REINFORCED_STRUCTURE"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "friendly": {

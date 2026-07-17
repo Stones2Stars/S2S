@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_HILLSMAN",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_GUERILLA3"
+   ]
+  }
+ },
  "skills": {
   "hillsDoubleMove": true,
   "terrainDoubleMove": {

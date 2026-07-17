@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_DECEPTION3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_DECEPTION2"
+   ]
+  }
+ },
  "air": {
   "unit": {
    "evasion": {

@@ -1,5 +1,13 @@
 {
  "type": "PROMOTION_PROJECTION3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_PROJECTION2",
+    "PROMOTION_COMBAT4"
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

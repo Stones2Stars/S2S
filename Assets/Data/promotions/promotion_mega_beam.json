@@ -1,5 +1,18 @@
 {
  "type": "PROMOTION_MEGA_BEAM",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_POWER_BEAM2",
+    {
+     "any": [
+      "PROMOTION_WIDE_BEAM2",
+      "PROMOTION_SNIPER_BEAM2"
+     ]
+    }
+   ]
+  }
+ },
  "bombard": {
   "unit": {
    "rate": {

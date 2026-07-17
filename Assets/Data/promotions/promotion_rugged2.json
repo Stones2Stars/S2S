@@ -5,6 +5,13 @@
    "PROMOTION_RUGGED3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_RUGGED1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "terrain": {

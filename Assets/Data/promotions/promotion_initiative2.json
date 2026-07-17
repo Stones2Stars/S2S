@@ -6,6 +6,19 @@
    "PROMOTION_SELFPRESERVATION3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_INITIATIVE1",
+    {
+     "any": [
+      "PROMOTION_MORALE4",
+      "PROMOTION_TACTICS2"
+     ]
+    }
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

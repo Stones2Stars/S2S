@@ -6,6 +6,13 @@
    "PROMOTION_SECURITY3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_SECURITY1"
+   ]
+  }
+ },
  "air": {
   "unit": {
    "intercept": {

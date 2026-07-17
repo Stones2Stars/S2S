@@ -1,5 +1,17 @@
 {
  "type": "PROMOTION_STREET_FIGHTER4",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_STREET_FIGHTER3",
+    {
+     "any": [
+      "PROMOTION_COMBAT2"
+     ]
+    }
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityAttack": {

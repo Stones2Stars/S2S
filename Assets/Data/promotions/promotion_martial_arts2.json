@@ -5,6 +5,13 @@
    "PROMOTION_MARTIAL_ARTS3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_MARTIAL_ARTS"
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

@@ -1,5 +1,18 @@
 {
  "type": "PROMOTION_FORMATION3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FORMATION2",
+    {
+     "any": [
+      "PROMOTION_COMBAT3",
+      "PROMOTION_DRILL3"
+     ]
+    }
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

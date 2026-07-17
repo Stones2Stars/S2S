@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_SELF_DESTRUCT",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_FUSION_POWER_SOURCE"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "kamikaze": {

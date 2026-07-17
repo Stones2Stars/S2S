@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_AUTOMATIC_REPAIRS3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_AUTOMATIC_REPAIRS2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityAttack": {

@@ -5,6 +5,13 @@
    "PROMOTION_COMMAND8"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMMAND6"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

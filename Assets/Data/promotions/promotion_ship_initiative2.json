@@ -6,6 +6,19 @@
    "PROMOTION_SHIP_STRIKEFORCE3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHIP_INITIATIVE1",
+    {
+     "any": [
+      "PROMOTION_SHIP_MORALE4",
+      "PROMOTION_SHIP_TACTICS2"
+     ]
+    }
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

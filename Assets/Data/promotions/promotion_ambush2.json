@@ -5,6 +5,13 @@
    "PROMOTION_AMBUSH3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_AMBUSH"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

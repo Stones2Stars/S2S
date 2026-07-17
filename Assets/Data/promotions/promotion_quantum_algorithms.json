@@ -5,6 +5,18 @@
    "PROMOTION_GLOBAL_AWERENESS"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FUZZY_LOGIC",
+    {
+     "any": [
+      "PROMOTION_COMBAT_AI2"
+     ]
+    }
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

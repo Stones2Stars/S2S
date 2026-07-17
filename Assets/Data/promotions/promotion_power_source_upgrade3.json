@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_POWER_SOURCE_UPGRADE3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_POWER_SOURCE_UPGRADE2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

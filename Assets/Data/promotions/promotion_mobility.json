@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_MOBILITY",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FLANKING2"
+   ]
+  }
+ },
  "movement": {
   "unit": {
    "moveDiscount": {

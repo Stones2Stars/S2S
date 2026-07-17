@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_OVERWHELM",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_LORDSHIP"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 10

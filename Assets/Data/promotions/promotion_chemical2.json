@@ -5,6 +5,13 @@
    "PROMOTION_CHEMICAL3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CHEMICAL1"
+   ]
+  }
+ },
  "collateral": {
   "unit": {
    "damage": {

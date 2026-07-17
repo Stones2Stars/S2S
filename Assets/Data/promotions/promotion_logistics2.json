@@ -5,6 +5,13 @@
    "PROMOTION_LOGISTICS3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LOGISTICS1"
+   ]
+  }
+ },
  "movement": {
   "unit": {
    "moveDiscount": {

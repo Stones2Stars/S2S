@@ -5,6 +5,13 @@
    "PROMOTION_GUERILLA3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_GUERILLA1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "hillsAttack": {

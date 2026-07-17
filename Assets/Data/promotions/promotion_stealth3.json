@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_STEALTH3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_STEALTH2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "stealth": {

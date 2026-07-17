@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_BUILD_UP_FIELD_VET4",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FIRST_AID_ANIMALS4"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "support": {

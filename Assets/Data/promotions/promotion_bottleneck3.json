@@ -5,6 +5,13 @@
    "PROMOTION_BOTTLENECK4"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_BOTTLENECK2"
+   ]
+  }
+ },
  "promotionLine": {
   "PROMOTIONLINE_BOTTLENECK": 3
  },

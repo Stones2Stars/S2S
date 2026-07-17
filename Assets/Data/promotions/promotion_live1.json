@@ -5,6 +5,18 @@
    "PROMOTION_LIVE2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT5",
+    {
+     "any": [
+      "PROMOTION_DRILL4"
+     ]
+    }
+   ]
+  }
+ },
  "promotionLine": {
   "PROMOTIONLINE_LIVE": 1
  },

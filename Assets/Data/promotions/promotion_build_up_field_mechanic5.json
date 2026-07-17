@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_BUILD_UP_FIELD_MECHANIC5",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_REPAIR_MECHANICAL5"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "support": {

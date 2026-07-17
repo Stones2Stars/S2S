@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_MUJAHID",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 15,

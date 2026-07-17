@@ -1,5 +1,17 @@
 {
  "type": "PROMOTION_CITY_GARRISON4",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CITY_GARRISON3",
+    {
+     "any": [
+      "PROMOTION_COMBAT2"
+     ]
+    }
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

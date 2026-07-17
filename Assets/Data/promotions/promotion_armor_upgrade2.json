@@ -5,6 +5,13 @@
    "PROMOTION_ARMOR_UPGRADE3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_ARMOR_UPGRADE1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityDefense": {

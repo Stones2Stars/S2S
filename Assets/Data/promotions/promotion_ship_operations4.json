@@ -5,6 +5,18 @@
    "PROMOTION_ADMIRAL_STAFF1"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHIP_OPERATIONS3",
+    {
+     "any": [
+      "PROMOTION_SHIP_INITIATIVE3"
+     ]
+    }
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

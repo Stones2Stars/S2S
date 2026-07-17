@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_STING4",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_STING3"
+   ]
+  }
+ },
  "promotionLine": {
   "PROMOTIONLINE_STING": 4
  },

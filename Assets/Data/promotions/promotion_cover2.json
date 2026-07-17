@@ -5,6 +5,13 @@
    "PROMOTION_COVER3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COVER"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

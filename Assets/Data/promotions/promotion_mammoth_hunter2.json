@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_MAMMOTH_HUNTER2",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_MAMMOTH_HUNTER1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

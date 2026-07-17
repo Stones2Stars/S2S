@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_FIELD_WORKER3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FIELD_WORKER2"
+   ]
+  }
+ },
  "workRate": {
   "unit": {
    "terrain": {

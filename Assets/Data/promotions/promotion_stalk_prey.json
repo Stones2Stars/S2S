@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_STALK_PREY",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT3"
+   ]
+  }
+ },
  "skills": {
   "immuneToFirstStrikes": true
  },

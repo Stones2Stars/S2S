@@ -5,6 +5,13 @@
    "PROMOTION_SENTRY3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SENTRY"
+   ]
+  }
+ },
  "capture": {
   "unit": {
    "probability": {

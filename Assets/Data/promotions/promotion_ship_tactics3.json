@@ -8,6 +8,18 @@
    "PROMOTION_SHIP_TACTICS4"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHIP_TACTICS2",
+    {
+     "any": [
+      "PROMOTION_SHIP_MORALE3"
+     ]
+    }
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

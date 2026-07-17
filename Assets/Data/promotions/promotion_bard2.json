@@ -5,6 +5,13 @@
    "PROMOTION_BARD3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_BARD1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityDefense": {

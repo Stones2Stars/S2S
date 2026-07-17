@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_BERZERKER3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_BERZERKER2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -10,

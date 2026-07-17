@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_BARRAGE3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_BARRAGE2"
+   ]
+  }
+ },
  "collateral": {
   "unit": {
    "damage": {

@@ -5,6 +5,13 @@
    "PROMOTION_PATRIOTIC3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_PATRIOTIC1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 15,

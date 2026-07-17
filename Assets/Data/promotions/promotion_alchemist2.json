@@ -5,6 +5,13 @@
    "PROMOTION_ALCHEMIST3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_ALCHEMIST1"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "friendly": {

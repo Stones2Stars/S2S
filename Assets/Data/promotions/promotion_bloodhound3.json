@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_BLOODHOUND3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_BLOODHOUND2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 5,

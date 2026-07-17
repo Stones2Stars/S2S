@@ -5,6 +5,14 @@
    "PROMOTION_INITIATIVE2"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_MORALE3",
+    "PROMOTION_TACTICS1"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

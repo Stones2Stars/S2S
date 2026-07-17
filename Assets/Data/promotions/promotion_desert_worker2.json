@@ -5,6 +5,13 @@
    "PROMOTION_DESERT_WORKER3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_DESERT_WORKER1"
+   ]
+  }
+ },
  "workRate": {
   "unit": {
    "terrain": {

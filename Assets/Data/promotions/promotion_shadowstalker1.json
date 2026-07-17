@@ -5,6 +5,13 @@
    "PROMOTION_SHADOWSTALKER2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT3"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "stealthStrikes": {

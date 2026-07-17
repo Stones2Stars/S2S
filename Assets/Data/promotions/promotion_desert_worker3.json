@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_DESERT_WORKER3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_DESERT_WORKER2"
+   ]
+  }
+ },
  "workRate": {
   "unit": {
    "terrain": {

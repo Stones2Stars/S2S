@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_PACK_HUNTER3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_PACK_HUNTER2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 5,

@@ -5,6 +5,19 @@
    "PROMOTION_URBAN_TACTICS2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT1",
+    {
+     "any": [
+      "PROMOTION_CITY_RAIDER1",
+      "PROMOTION_CITY_GARRISON1"
+     ]
+    }
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityAttack": {

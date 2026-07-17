@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_INSTIGATOR3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_INSTIGATOR2"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "neutral": {

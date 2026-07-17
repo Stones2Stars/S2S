@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_NAPALM_BOMBS",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_BARRAGE1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -10,

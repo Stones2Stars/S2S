@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_OBSERVERS",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT2"
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 5

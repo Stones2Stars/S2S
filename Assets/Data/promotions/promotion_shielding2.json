@@ -5,6 +5,18 @@
    "PROMOTION_SHIELDING3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_POWER_SOURCE_UPGRADE1",
+    {
+     "any": [
+      "PROMOTION_SHIELDING1"
+     ]
+    }
+   ]
+  }
+ },
  "collateral": {
   "unit": {
    "protection": {

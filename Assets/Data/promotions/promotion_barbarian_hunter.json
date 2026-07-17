@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_BARBARIAN_HUNTER",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_HUNTER1"
+   ]
+  }
+ },
  "disabled": "GAMEOPTION_UNIT_INFINITE_XP",
  "ui": {
   "art": {

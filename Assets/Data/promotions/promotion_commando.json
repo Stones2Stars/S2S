@@ -5,6 +5,13 @@
    "PROMOTION_COVERT_OPERATIONS1"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT4"
+   ]
+  }
+ },
  "skills": {
   "enemyRoute": true
  },

@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_BUILD_UP_MAINTENANCE_HANGAR4",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_REPAIR_AIRCRAFT4"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "support": {

@@ -5,6 +5,13 @@
    "PROMOTION_BACK_DOWN5"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_BACK_DOWN3"
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 20

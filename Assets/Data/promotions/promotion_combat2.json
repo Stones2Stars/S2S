@@ -28,6 +28,13 @@
    "PROMOTION_WOODSMAN3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT1"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

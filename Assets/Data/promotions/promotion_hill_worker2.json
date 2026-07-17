@@ -5,6 +5,13 @@
    "PROMOTION_HILL_WORKER3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_HILL_WORKER1"
+   ]
+  }
+ },
  "workRate": {
   "unit": {
    "hills": {

@@ -7,6 +7,13 @@
    "PROMOTION_RAPID_DEPLOYMENT1"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT_AI2"
+   ]
+  }
+ },
  "experience": {
   "unit": {
    "percent": 15

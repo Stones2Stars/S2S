@@ -5,6 +5,13 @@
    "PROMOTION_MANUEVERING3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_MANUEVERING1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

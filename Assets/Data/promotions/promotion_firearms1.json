@@ -5,6 +5,14 @@
    "PROMOTION_FIREARMS2"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT1",
+    "PROMOTION_DRILL1"
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "chance": {

@@ -7,6 +7,13 @@
    "PROMOTION_SHIELDING1"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_REINFORCED_STRUCTURE"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

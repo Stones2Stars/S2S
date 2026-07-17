@@ -5,6 +5,13 @@
    "PROMOTION_CITY_RAIDER3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CITY_RAIDER1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityAttack": {

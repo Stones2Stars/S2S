@@ -5,6 +5,13 @@
    "PROMOTION_AIR_DEFENSE3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_AIR_DEFENSE1"
+   ]
+  }
+ },
  "air": {
   "unit": {
    "intercept": {

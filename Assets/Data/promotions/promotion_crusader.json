@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_CRUSADER",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityAttack": {

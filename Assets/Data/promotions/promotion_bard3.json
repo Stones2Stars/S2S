@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_BARD3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_BARD2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityDefense": {

@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_WAR_CRY",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_TACTICS1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 5

@@ -5,6 +5,18 @@
    "PROMOTION_AIR_TO_AIR3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_AIR_TO_AIR1",
+    {
+     "any": [
+      "PROMOTION_IMPROVED_RADAR"
+     ]
+    }
+   ]
+  }
+ },
  "air": {
   "unit": {
    "intercept": {

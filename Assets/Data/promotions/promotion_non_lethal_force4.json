@@ -5,6 +5,13 @@
    "PROMOTION_NON_LETHAL_FORCE5"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_NON_LETHAL_FORCE3"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -5

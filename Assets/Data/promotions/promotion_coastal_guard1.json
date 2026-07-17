@@ -5,6 +5,13 @@
    "PROMOTION_COASTAL_GUARD2"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_NAVIGATION1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "terrain": {

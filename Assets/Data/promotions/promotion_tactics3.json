@@ -8,6 +8,18 @@
    "PROMOTION_TACTICS4"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_TACTICS2",
+    {
+     "any": [
+      "PROMOTION_MORALE3"
+     ]
+    }
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

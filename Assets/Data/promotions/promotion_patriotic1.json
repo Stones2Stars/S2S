@@ -5,6 +5,13 @@
    "PROMOTION_PATRIOTIC2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT4"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 10,

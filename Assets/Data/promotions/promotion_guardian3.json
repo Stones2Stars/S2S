@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_GUARDIAN3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_GUARDIAN2"
+   ]
+  }
+ },
  "revoltProtection": {
   "unit": {
    "percent": 10

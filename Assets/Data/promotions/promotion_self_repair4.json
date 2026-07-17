@@ -5,6 +5,13 @@
    "PROMOTION_SELF_REPAIR5"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SELF_REPAIR3"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "enemy": {

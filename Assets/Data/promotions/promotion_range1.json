@@ -5,6 +5,13 @@
    "PROMOTION_RANGE2"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_VETERAN"
+   ]
+  }
+ },
  "air": {
   "unit": {
    "range": {

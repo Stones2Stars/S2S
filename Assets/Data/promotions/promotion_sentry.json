@@ -5,6 +5,14 @@
    "PROMOTION_SENTRY2"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_FLANKING1",
+    "PROMOTION_COMBAT3"
+   ]
+  }
+ },
  "capture": {
   "unit": {
    "probability": {

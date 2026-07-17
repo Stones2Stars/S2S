@@ -5,6 +5,13 @@
    "PROMOTION_WEAPON_UPGRADE3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_WEAPON_UPGRADE1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "cityAttack": {

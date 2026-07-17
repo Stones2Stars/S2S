@@ -5,6 +5,13 @@
    "PROMOTION_CARAVAN_MARINES_III"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CARAVAN_MARINES_I"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 5,

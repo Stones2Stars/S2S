@@ -5,6 +5,13 @@
    "PROMOTION_WETLAND2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "terrain": {

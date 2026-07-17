@@ -5,6 +5,13 @@
    "PROMOTION_CITY_GARRISON4"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CITY_GARRISON2"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

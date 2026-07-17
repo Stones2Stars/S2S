@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_WIND_HORSE2",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_WIND_HORSE"
+   ]
+  }
+ },
  "experience": {
   "unit": {
    "percent": 15

@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_CARAVAN_CIRCLE_THE_WAGONS",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CARAVAN_GUARD_I"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 10,

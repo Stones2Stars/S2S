@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_TRANSPORT_FIGHTERS1",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_TRANSPORT_FIGHTERS"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -15

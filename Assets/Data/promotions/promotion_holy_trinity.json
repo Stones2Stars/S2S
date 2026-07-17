@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_HOLY_TRINITY",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
  "experience": {
   "unit": {
    "percent": 25

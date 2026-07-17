@@ -1,5 +1,17 @@
 {
  "type": "PROMOTION_COMMAND10",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMMAND9",
+    {
+     "any": [
+      "PROMOTION_GENERAL_STAFF9"
+     ]
+    }
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

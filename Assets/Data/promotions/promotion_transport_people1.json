@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_TRANSPORT_PEOPLE1",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_TRANSPORT_PEOPLE"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -5

@@ -5,6 +5,13 @@
    "PROMOTION_QUANTUM_ALGORITHMS"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT_AI1"
+   ]
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

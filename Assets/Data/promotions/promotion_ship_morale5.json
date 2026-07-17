@@ -6,6 +6,13 @@
    "PROMOTION_SHIP_INITIATIVE4"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHIP_MORALE4"
+   ]
+  }
+ },
  "experience": {
   "unit": {
    "percent": 10

@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_HIT_AND_RUN",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT2"
+   ]
+  }
+ },
  "movement": {
   "unit": {
    "moveDiscount": {

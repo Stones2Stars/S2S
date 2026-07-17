@@ -5,6 +5,14 @@
    "PROMOTION_PROJECTION3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_PROJECTION1",
+    "PROMOTION_COMBAT3"
+   ]
+  }
+ },
  "bombard": {
   "unit": {
    "rate": {

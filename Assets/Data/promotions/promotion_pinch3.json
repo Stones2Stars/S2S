@@ -1,5 +1,18 @@
 {
  "type": "PROMOTION_PINCH3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_PINCH2",
+    {
+     "any": [
+      "PROMOTION_COMBAT2",
+      "PROMOTION_DRILL2"
+     ]
+    }
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

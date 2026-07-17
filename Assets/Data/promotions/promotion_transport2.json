@@ -5,6 +5,13 @@
    "PROMOTION_TRANSPORT3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_TRANSPORT1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -20

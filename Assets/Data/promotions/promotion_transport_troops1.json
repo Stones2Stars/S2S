@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_TRANSPORT_TROOPS1",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_TRANSPORT_TROOPS"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -20

@@ -7,6 +7,13 @@
    "PROMOTION_STINGING_INSULTS2"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_FLANKING1"
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 15

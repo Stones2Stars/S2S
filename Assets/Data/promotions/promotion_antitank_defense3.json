@@ -1,5 +1,17 @@
 {
  "type": "PROMOTION_ANTITANK_DEFENSE3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_ANTITANK_DEFENSE2",
+    {
+     "any": [
+      "PROMOTION_COMBAT2"
+     ]
+    }
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

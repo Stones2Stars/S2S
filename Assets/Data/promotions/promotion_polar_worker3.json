@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_POLAR_WORKER3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_POLAR_WORKER2"
+   ]
+  }
+ },
  "workRate": {
   "unit": {
    "terrain": {

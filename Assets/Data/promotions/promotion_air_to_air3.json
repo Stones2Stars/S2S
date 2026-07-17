@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_AIR_TO_AIR3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_AIR_TO_AIR2"
+   ]
+  }
+ },
  "air": {
   "unit": {
    "range": {

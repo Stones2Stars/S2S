@@ -5,6 +5,13 @@
    "PROMOTION_TAKE_PRISONERS4"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_TAKE_PRISONERS2"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -5

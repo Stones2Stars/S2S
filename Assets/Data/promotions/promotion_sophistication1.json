@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_SOPHISTICATION1",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 5,

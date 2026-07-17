@@ -5,6 +5,13 @@
    "PROMOTION_FIELD3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FIELD1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "terrain": {

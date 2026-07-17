@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_HERDING2",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_HERDING1"
+   ]
+  }
+ },
  "capture": {
   "unit": {
    "probability": {

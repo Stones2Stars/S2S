@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_UNQUESTIONING_OBEDIENCE5",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_UNQUESTIONING_OBEDIENCE4"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

@@ -6,6 +6,14 @@
    "PROMOTION_PRECISION_BOMBING"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_CITY_RAIDER1",
+    "PROMOTION_BARRAGE1"
+   ]
+  }
+ },
  "bombard": {
   "unit": {
    "rate": {

@@ -5,6 +5,13 @@
    "PROMOTION_HEROIC2"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 20,

@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_JUMP_SETS",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_POWER_SOURCE_UPGRADE1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": 10

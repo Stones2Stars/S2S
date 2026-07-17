@@ -5,6 +5,13 @@
    "PROMOTION_SELF_REPAIR3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SELF_REPAIR1"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "neutral": {

@@ -5,6 +5,13 @@
    "PROMOTION_INSTIGATOR2"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_DECEPTION1"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "enemy": {

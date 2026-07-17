@@ -153,6 +153,8 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvJsonCondition* a)
 	if (en_starts(t, "RELIGION_")) return ctx.city != NULL && id >= 0 && ctx.city->isHasReligion((ReligionTypes)id);
 	if (en_starts(t, "HERITAGE_")) return ctx.player != NULL && id >= 0 && ctx.player->hasHeritage((HeritageTypes)id);
 	if (en_starts(t, "PROJECT_"))  return ctx.team != NULL && id >= 0 && ctx.team->getProjectCount((ProjectTypes)id) > 0;
+	// the promotion-chain requires.build atoms (unit context -- the enPromotionValid level-up gate): held check
+	if (en_starts(t, "PROMOTION_")) return ctx.unit != NULL && id >= 0 && ctx.unit->isHasPromotion((PromotionTypes)id);
 	// the enabler GATE reads raw PRESENCE (ctx.buildingAtomsPresence -- the §7 has-list / engine PrereqInCity
 	// mirror, exclusions included); deposits + the operate fixpoint read the cascade-computed ACTIVE set
 	if (en_starts(t, "BUILDING_")) return ctx.buildingAtomsPresence

@@ -5,6 +5,13 @@
    "PROMOTION_CARAVAN_MOVEMENT_II"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CARAVAN_GUARD_I"
+   ]
+  }
+ },
  "movement": {
   "unit": {
    "moves": {

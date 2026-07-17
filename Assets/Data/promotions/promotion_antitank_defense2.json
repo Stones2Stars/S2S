@@ -5,6 +5,13 @@
    "PROMOTION_ANTITANK_DEFENSE3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_ANTITANK_DEFENSE1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

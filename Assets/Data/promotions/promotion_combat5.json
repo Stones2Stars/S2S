@@ -7,6 +7,13 @@
    "PROMOTION_WARRIORS_INTUITION3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT4"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

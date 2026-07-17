@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_NON_LETHAL_FORCE5",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_NON_LETHAL_FORCE4"
+   ]
+  }
+ },
  "capture": {
   "unit": {
    "probability": {

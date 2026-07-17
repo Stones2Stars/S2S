@@ -5,6 +5,13 @@
    "PROMOTION_INSTIGATOR3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_INSTIGATOR1"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "enemy": {

@@ -5,6 +5,13 @@
    "PROMOTION_BARRAGE3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_BARRAGE1"
+   ]
+  }
+ },
  "collateral": {
   "unit": {
    "damage": {

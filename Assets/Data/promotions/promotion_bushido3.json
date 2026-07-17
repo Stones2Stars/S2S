@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_BUSHIDO3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_BUSHIDO2"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "upgradeDiscount": {

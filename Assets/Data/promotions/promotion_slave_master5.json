@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_SLAVE_MASTER5",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SLAVE_MASTER4"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

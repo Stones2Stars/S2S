@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_FLOWER_WAR",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
  "movement": {
   "unit": {
    "moveDiscount": {

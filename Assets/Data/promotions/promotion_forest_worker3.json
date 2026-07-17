@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_FOREST_WORKER3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FOREST_WORKER2"
+   ]
+  }
+ },
  "workRate": {
   "unit": {
    "feature": {

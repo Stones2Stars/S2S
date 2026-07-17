@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_DEPTH_CHARGES",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SONAR"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

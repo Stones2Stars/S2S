@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_RAPID_DEPLOYMENT2",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_RAPID_DEPLOYMENT1"
+   ]
+  }
+ },
  "capture": {
   "unit": {
    "probability": {

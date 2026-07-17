@@ -12,6 +12,13 @@
    "PROMOTION_SHOCK3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_DRILL1"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

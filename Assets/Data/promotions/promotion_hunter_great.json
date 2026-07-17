@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_HUNTER_GREAT",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_HUNTER3"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -5,

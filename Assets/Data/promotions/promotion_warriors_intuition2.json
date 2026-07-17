@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_WARRIORS_INTUITION2",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT3"
+   ]
+  }
+ },
  "vision": {
   "visibilityIntensityRange": {
    "INVISIBLE_CAMOUFLAGE": 1

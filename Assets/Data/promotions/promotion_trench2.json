@@ -5,6 +5,13 @@
    "PROMOTION_TRENCH3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_TRENCH1"
+   ]
+  }
+ },
  "collateral": {
   "unit": {
    "protection": {

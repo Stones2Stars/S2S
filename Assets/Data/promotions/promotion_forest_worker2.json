@@ -5,6 +5,13 @@
    "PROMOTION_FOREST_WORKER3"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FOREST_WORKER1"
+   ]
+  }
+ },
  "workRate": {
   "unit": {
    "feature": {

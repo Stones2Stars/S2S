@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_DARING_ESCAPE3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_DARING_ESCAPE2"
+   ]
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 15

@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_SAVAGE_BEAST5",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SAVAGE_BEAST4"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "attack": {

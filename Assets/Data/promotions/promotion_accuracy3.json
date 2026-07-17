@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_ACCURACY3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_ACCURACY2"
+   ]
+  }
+ },
  "bombard": {
   "unit": {
    "rate": {

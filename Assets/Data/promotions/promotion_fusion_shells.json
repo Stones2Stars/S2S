@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_FUSION_SHELLS",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_RAD_SHELLS"
+   ]
+  }
+ },
  "collateral": {
   "unit": {
    "damage": {

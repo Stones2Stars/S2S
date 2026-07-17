@@ -5,6 +5,13 @@
    "PROMOTION_SHIELDING2"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_FUSION_POWER_SOURCE"
+   ]
+  }
+ },
  "collateral": {
   "unit": {
    "protection": {

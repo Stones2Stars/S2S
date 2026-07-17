@@ -5,6 +5,13 @@
    "PROMOTION_IMPROVISE3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_IMPROVISE1"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "upgradeDiscount": {

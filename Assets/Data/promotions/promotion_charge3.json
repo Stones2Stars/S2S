@@ -1,5 +1,18 @@
 {
  "type": "PROMOTION_CHARGE3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CHARGE2",
+    {
+     "any": [
+      "PROMOTION_COMBAT3",
+      "PROMOTION_DRILL3"
+     ]
+    }
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "unitCombat": {

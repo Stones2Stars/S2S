@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_SPHINX",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT6"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "upgradeDiscount": {

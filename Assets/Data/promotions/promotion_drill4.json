@@ -8,6 +8,13 @@
    "PROMOTION_MARCH"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_DRILL3"
+   ]
+  }
+ },
  "upkeep": {
   "unit": {
    "modifier": {

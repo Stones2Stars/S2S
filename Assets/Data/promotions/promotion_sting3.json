@@ -5,6 +5,13 @@
    "PROMOTION_STING4"
   ]
  },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_STING2"
+   ]
+  }
+ },
  "promotionLine": {
   "PROMOTIONLINE_STING": 3
  },

@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_BUILD_UP_HEALTH_CARE4",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_HEAL4"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "sameTile": {

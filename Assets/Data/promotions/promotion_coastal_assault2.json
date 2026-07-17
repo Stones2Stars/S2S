@@ -5,6 +5,13 @@
    "PROMOTION_COASTAL_ASSAULT3"
   ]
  },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COASTAL_ASSAULT1"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "terrain": {

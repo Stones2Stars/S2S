@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_TRANSPORT_MISSILES1",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_TRANSPORT_MISSILES"
+   ]
+  }
+ },
  "strength": {
   "unit": {
    "percent": -5

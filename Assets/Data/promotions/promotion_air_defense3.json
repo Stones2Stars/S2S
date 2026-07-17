@@ -1,5 +1,17 @@
 {
  "type": "PROMOTION_AIR_DEFENSE3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_AIR_DEFENSE2",
+    {
+     "any": [
+      "PROMOTION_COMBAT1"
+     ]
+    }
+   ]
+  }
+ },
  "air": {
   "unit": {
    "intercept": {

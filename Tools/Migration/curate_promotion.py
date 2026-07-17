@@ -491,6 +491,26 @@ def curate(typ, rec, store):
     enables = store.enabled_by(typ)   # the promotion->promotion chain inversion (store.py ENABLE rows, owner 2026-07-17)
     if enables:
         out["enables"] = OrderedDict((k, enables[k]) for k in sorted(enables))
+    # promotion->promotion chain RETENTION (the tech multi-parent pattern, enabler.md §2): the store inversion
+    # above feeds GENERATION; the child RETAINS the chain as requires.build CONFIRMATION -- legacy semantics were
+    # TechPrereq AND PromotionPrereq, and the tech's OR-leg enables alone over-offered (the lvl1-autogyro Blitz find).
+    req_all = []
+    req_any = []
+    _pre = engine.text(rec.find("PromotionPrereq"))
+    if _pre and _pre != "NONE":
+        req_all.append(_pre)
+    for _tag in ("PromotionPrereqOr1", "PromotionPrereqOr2"):
+        _v = engine.text(rec.find(_tag))
+        if _v and _v != "NONE":
+            req_any.append(_v)
+    if req_all or req_any:
+        if req_all and req_any:
+            build = OrderedDict([("all", req_all + [OrderedDict([("any", req_any)])])])
+        elif req_all:
+            build = OrderedDict([("all", req_all)])
+        else:
+            build = OrderedDict([("any", req_any)])
+        out["requires"] = OrderedDict([("build", build)])
     obsoletes = store.obsoletes_of(typ)
     if obsoletes:
         out["obsoletes"] = OrderedDict((k, obsoletes[k]) for k in sorted(obsoletes))

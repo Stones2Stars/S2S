@@ -1,5 +1,13 @@
 {
  "type": "PROMOTION_MARCH",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT4",
+    "PROMOTION_DRILL4"
+   ]
+  }
+ },
  "capture": {
   "unit": {
    "resistance": {

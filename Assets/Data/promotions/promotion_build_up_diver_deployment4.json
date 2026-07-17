@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_BUILD_UP_DIVER_DEPLOYMENT4",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_REPAIR_NAVAL4"
+   ]
+  }
+ },
  "heal": {
   "unit": {
    "support": {

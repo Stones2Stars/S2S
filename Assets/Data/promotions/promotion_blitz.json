@@ -1,5 +1,13 @@
 {
  "type": "PROMOTION_BLITZ",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT3",
+    "PROMOTION_AIR_REFUEL"
+   ]
+  }
+ },
  "experience": {
   "unit": {
    "percent": -25
