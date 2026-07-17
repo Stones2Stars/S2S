@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_SHIP_COMMAND4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ADMIRAL_STAFF5",
+   "PROMOTION_SHIP_COMMAND5"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

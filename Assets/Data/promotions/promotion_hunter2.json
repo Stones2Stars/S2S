@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_HUNTER2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_HUNTER3",
+   "PROMOTION_HUNTING_SIGHT2"
+  ]
+ },
  "strength": {
   "unit": {
    "percent": -15,

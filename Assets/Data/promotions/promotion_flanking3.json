@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_FLANKING3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SPEED",
+   "PROMOTION_STINGING_INSULTS3"
+  ]
+ },
  "withdrawal": {
   "unit": {
    "percent": 15

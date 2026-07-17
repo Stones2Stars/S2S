@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_RECOVER_TECH3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUILD_UP_CONTROL_CENTER3"
+  ]
+ },
  "heal": {
   "unit": {
    "support": {

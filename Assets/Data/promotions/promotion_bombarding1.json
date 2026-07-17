@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_BOMBARDING1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BOMBARDING2"
+  ]
+ },
  "bombard": {
   "unit": {
    "rate": {

@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_MASTER_HUNTER2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_MASTER_HUNTER3"
+  ]
+ },
  "skills": {
   "river": true
  },

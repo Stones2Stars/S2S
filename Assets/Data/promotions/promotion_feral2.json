@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_FERAL2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_FERAL3"
+  ]
+ },
  "strength": {
   "unit": {
    "attack": {

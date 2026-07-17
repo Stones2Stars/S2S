@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_FIREARMS2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_FIREARMS3"
+  ]
+ },
  "firstStrike": {
   "unit": {
    "chance": {

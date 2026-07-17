@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_POWER_SOURCE_UPGRADE2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_POWER_SOURCE_UPGRADE3",
+   "PROMOTION_SHIELDING3"
+  ]
+ },
  "strength": {
   "unit": {
    "unitCombat": {

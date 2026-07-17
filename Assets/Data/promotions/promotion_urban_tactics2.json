@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_URBAN_TACTICS2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_URBAN_TACTICS3"
+  ]
+ },
  "strength": {
   "unit": {
    "cityAttack": {

@@ -152,6 +152,15 @@ PREREQ_FIELDS = [
     ("BuildInfo",    "PrereqBonusTypes/PrereqBonusType", "builds"),
     ("PromotionInfo", "PrereqBonusTypes/BonusType",     "promotions"),
     ("PromotionInfo", "PrereqPlotBonusTypes/PrereqPlotBonusType", "promotions"),
+    # promotion -> promotion chains (owner 2026-07-17): the PromotionPrereq(Or) chains store-invert onto the
+    # PREREQ promotion's enables.promotions -- holding the prereq PROPOSES the successor (OR is native to
+    # multiple enabling edges). The earlier drop's "line+priority carries it" premise failed: 74 chained promos
+    # have NO line (HEROIC/LEADER family) + every cross-line prereq was uncovered, and with no inbound edge the
+    # root synthesis start-enabled them all (the autogyro-Heroic find). Same-line tier order stays doubly
+    # gated by the CvUnit line+priority succession check.
+    ("PromotionInfo", "PromotionPrereq",    "promotions"),
+    ("PromotionInfo", "PromotionPrereqOr1", "promotions"),
+    ("PromotionInfo", "PromotionPrereqOr2", "promotions"),
     # civic / religion gated by a founding tech (TechPrereq; "NONE" = ungated, filtered out):
     ("CivicInfo",    "TechPrereq",           "civics"),
     ("ReligionInfo", "TechPrereq",           "religions"),

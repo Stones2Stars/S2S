@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_BACK_DOWN1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BACK_DOWN2"
+  ]
+ },
  "withdrawal": {
   "unit": {
    "percent": 5

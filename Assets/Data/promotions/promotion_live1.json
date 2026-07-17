@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_LIVE1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_LIVE2"
+  ]
+ },
  "promotionLine": {
   "PROMOTIONLINE_LIVE": 1
  },

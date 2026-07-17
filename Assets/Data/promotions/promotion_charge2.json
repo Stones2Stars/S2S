@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_CHARGE2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_CHARGE3"
+  ]
+ },
  "strength": {
   "unit": {
    "unitCombat": {

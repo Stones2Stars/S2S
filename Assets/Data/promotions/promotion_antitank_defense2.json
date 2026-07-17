@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_ANTITANK_DEFENSE2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ANTITANK_DEFENSE3"
+  ]
+ },
  "strength": {
   "unit": {
    "unitCombat": {

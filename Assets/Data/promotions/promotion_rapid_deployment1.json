@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_RAPID_DEPLOYMENT1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_RAPID_DEPLOYMENT2"
+  ]
+ },
  "capture": {
   "unit": {
    "probability": {

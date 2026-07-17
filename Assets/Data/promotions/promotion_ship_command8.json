@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_SHIP_COMMAND8",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SHIP_COMMAND9"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

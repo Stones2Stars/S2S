@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_CARAVAN_MOVEMENT_I",
+ "enables": {
+  "promotions": [
+   "PROMOTION_CARAVAN_MOVEMENT_II"
+  ]
+ },
  "movement": {
   "unit": {
    "moves": {

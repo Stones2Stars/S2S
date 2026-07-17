@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_COMBAT5",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COMBAT6",
+   "PROMOTION_LIVE1",
+   "PROMOTION_WARRIORS_INTUITION3"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

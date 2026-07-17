@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_BARRAGE1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ACCURACY",
+   "PROMOTION_BARRAGE2",
+   "PROMOTION_NAPALM_BOMBS"
+  ]
+ },
  "collateral": {
   "unit": {
    "damage": {

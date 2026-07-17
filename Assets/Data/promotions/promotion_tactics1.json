@@ -1,5 +1,14 @@
 {
  "type": "PROMOTION_TACTICS1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_CACOPHONY",
+   "PROMOTION_HAKA",
+   "PROMOTION_INITIATIVE1",
+   "PROMOTION_TACTICS2",
+   "PROMOTION_WAR_CRY"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

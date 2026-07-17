@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_STALL1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_STALL2"
+  ]
+ },
  "withdrawal": {
   "unit": {
    "percent": 5

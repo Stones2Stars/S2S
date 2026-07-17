@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_STATUS_TRESPASS_ON",
+ "enables": {
+  "promotions": [
+   "PROMOTION_STATUS_TRESPASS_OFF"
+  ]
+ },
  "firstStrike": {
   "unit": {
    "chance": {

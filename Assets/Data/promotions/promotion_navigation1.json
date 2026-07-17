@@ -1,5 +1,13 @@
 {
  "type": "PROMOTION_NAVIGATION1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COASTAL_ASSAULT1",
+   "PROMOTION_COASTAL_GUARD1",
+   "PROMOTION_MANUEVERING1",
+   "PROMOTION_NAVIGATION2"
+  ]
+ },
  "movement": {
   "unit": {
    "moves": {

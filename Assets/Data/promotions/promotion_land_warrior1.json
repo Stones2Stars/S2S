@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_LAND_WARRIOR1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_LAND_WARRIOR2"
+  ]
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

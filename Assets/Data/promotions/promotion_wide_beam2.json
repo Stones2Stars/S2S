@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_WIDE_BEAM2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_MEGA_BEAM"
+  ]
+ },
  "promotionLine": {
   "PROMOTIONLINE_WIDE_BEAM": 2
  },

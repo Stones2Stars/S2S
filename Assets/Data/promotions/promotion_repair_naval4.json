@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_REPAIR_NAVAL4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUILD_UP_DIVER_DEPLOYMENT4"
+  ]
+ },
  "heal": {
   "unit": {
    "support": {

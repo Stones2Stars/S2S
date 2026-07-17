@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_REPAIR_MECHANICAL3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUILD_UP_FIELD_MECHANIC3"
+  ]
+ },
  "heal": {
   "unit": {
    "support": {

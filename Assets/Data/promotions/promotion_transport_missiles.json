@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_TRANSPORT_MISSILES",
+ "enables": {
+  "promotions": [
+   "PROMOTION_TRANSPORT_MISSILES1"
+  ]
+ },
  "strength": {
   "unit": {
    "percent": -5

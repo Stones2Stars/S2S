@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_SEA_HUNTER3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SEA_HUNTER_GREAT"
+  ]
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

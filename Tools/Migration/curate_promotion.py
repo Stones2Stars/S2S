@@ -223,7 +223,7 @@ ID_BOOL = {"bLeader": "leader", "bStatus": "status", "bQuick": "quick", "bStarsi
 # DROP entirely (store-handled, dead, or pedia-derived).
 DROP = {"Type", "Description", "Help", "Sound", "Button",
         "TechPrereq", "ObsoleteTech",                       # store (tech enables/obsoletes promotions)
-        "PromotionPrereq", "PromotionPrereqOr1", "PromotionPrereqOr2",  # owner #4: line+priority+tech carry it
+        "PromotionPrereq", "PromotionPrereqOr1", "PromotionPrereqOr2",  # store-inverted -> the prereq promo's enables.promotions (owner 2026-07-17; the dependent drops the forward view, trait-prereq pattern)
         "iDamageperTurn", "iStrAdjperTurn", "iWeakenperTurn",  # BATTLEWORN (nuked, owner)
         "Categories",                                       # dead
         "iStealthCombatModifier",                           # XML typo (engine reads ...Change); ignored in-game (2 recs)
@@ -488,6 +488,9 @@ def curate(typ, rec, store):
     put_art(art_blocks, "Sound", engine.text(rec.find("Sound")))
 
     # --- assemble (reserved order: type/text, requires-less, families, capabilities, vision, grants, enabled/disabled, art, identity) ---
+    enables = store.enabled_by(typ)   # the promotion->promotion chain inversion (store.py ENABLE rows, owner 2026-07-17)
+    if enables:
+        out["enables"] = OrderedDict((k, enables[k]) for k in sorted(enables))
     obsoletes = store.obsoletes_of(typ)
     if obsoletes:
         out["obsoletes"] = OrderedDict((k, obsoletes[k]) for k in sorted(obsoletes))

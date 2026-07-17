@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_ESCAPE1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ESCAPE2"
+  ]
+ },
  "withdrawal": {
   "unit": {
    "percent": 40

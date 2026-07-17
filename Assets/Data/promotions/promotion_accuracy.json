@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_ACCURACY",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ACCURACY2",
+   "PROMOTION_PRECISION_BOMBING"
+  ]
+ },
  "bombard": {
   "unit": {
    "rate": {

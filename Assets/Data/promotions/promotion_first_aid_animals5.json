@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_FIRST_AID_ANIMALS5",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUILD_UP_FIELD_VET5"
+  ]
+ },
  "heal": {
   "unit": {
    "support": {

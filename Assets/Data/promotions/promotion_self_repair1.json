@@ -1,5 +1,14 @@
 {
  "type": "PROMOTION_SELF_REPAIR1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_RECOVER_TECH",
+   "PROMOTION_REPAIR_AIRCRAFT",
+   "PROMOTION_REPAIR_MECHANICAL",
+   "PROMOTION_REPAIR_NAVAL",
+   "PROMOTION_SELF_REPAIR2"
+  ]
+ },
  "heal": {
   "unit": {
    "neutral": {

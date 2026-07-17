@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_SENTRY",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SENTRY2"
+  ]
+ },
  "capture": {
   "unit": {
    "probability": {

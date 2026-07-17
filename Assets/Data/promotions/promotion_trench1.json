@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_TRENCH1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_TRENCH2"
+  ]
+ },
  "collateral": {
   "unit": {
    "protection": {

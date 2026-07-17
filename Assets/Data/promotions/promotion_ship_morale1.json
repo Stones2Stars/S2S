@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_SHIP_MORALE1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SHIP_MORALE2",
+   "PROMOTION_SHIP_TACTICS1"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

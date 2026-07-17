@@ -1,5 +1,18 @@
 {
  "type": "PROMOTION_COMBAT4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_CITY_RAIDER5",
+   "PROMOTION_COMBAT5",
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MARCH",
+   "PROMOTION_NANOIDS",
+   "PROMOTION_PATRIOTIC1",
+   "PROMOTION_PROJECTION3",
+   "PROMOTION_SNIPER",
+   "PROMOTION_SPEED"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

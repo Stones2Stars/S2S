@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_LOGISTICS1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_LOGISTICS2"
+  ]
+ },
  "movement": {
   "unit": {
    "moves": {

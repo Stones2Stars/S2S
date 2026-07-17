@@ -1,5 +1,17 @@
 {
  "type": "PROMOTION_DRILL2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_AMBUSH",
+   "PROMOTION_CHARGE",
+   "PROMOTION_COVER3",
+   "PROMOTION_DRILL3",
+   "PROMOTION_FIREARMS3",
+   "PROMOTION_FORMATION",
+   "PROMOTION_PINCH3",
+   "PROMOTION_SHOCK3"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

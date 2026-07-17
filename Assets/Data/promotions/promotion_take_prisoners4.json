@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_TAKE_PRISONERS4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_TAKE_PRISONERS5"
+  ]
+ },
  "capture": {
   "unit": {
    "probability": {

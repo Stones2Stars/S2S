@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_SNIPER_BEAM2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_MEGA_BEAM"
+  ]
+ },
  "promotionLine": {
   "PROMOTIONLINE_SNIPER_BEAM": 2
  },

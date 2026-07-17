@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_STREET_FIGHTER1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_STREET_FIGHTER2"
+  ]
+ },
  "strength": {
   "unit": {
    "cityAttack": {

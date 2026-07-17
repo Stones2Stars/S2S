@@ -1,5 +1,15 @@
 {
  "type": "PROMOTION_LORDSHIP",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BARD1",
+   "PROMOTION_DEDICATION",
+   "PROMOTION_LOCALLORD",
+   "PROMOTION_OFFICER_COMMISSION",
+   "PROMOTION_OVERWHELM",
+   "PROMOTION_TACTICIAN"
+  ]
+ },
  "withdrawal": {
   "unit": {
    "percent": 10

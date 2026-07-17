@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_BUSHIDO1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUSHIDO2",
+   "PROMOTION_HARAKIRI"
+  ]
+ },
  "capture": {
   "unit": {
    "resistance": {

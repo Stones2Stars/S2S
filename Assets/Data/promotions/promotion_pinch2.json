@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_PINCH2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_PINCH3"
+  ]
+ },
  "strength": {
   "unit": {
    "unitCombat": {

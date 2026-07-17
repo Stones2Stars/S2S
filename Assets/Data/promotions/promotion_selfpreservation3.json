@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_SELFPRESERVATION3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_GENERAL_STAFF1"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

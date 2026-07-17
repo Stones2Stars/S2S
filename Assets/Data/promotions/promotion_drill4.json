@@ -1,5 +1,13 @@
 {
  "type": "PROMOTION_DRILL4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_DRILL5",
+   "PROMOTION_HEROIC2",
+   "PROMOTION_LIVE1",
+   "PROMOTION_MARCH"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

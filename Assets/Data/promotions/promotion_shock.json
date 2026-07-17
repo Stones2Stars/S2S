@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_SHOCK",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SHOCK2"
+  ]
+ },
  "strength": {
   "unit": {
    "unitCombat": {

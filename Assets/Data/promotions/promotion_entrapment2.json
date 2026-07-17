@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_ENTRAPMENT2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ENTRAPMENT3"
+  ]
+ },
  "capture": {
   "unit": {
    "probability": {

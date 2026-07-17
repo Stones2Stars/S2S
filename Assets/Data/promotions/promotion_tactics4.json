@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_TACTICS4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_INITIATIVE4",
+   "PROMOTION_OPERATIONS3"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

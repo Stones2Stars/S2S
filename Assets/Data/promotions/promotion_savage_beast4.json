@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_SAVAGE_BEAST4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SAVAGE_BEAST5"
+  ]
+ },
  "strength": {
   "unit": {
    "attack": {

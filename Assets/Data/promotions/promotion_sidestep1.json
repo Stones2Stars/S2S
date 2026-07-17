@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_SIDESTEP1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SIDESTEP2"
+  ]
+ },
  "strength": {
   "unit": {
    "unitCombat": {

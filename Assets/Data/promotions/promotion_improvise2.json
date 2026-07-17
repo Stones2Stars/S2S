@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_IMPROVISE2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_IMPROVISE3"
+  ]
+ },
  "upkeep": {
   "unit": {
    "upgradeDiscount": {

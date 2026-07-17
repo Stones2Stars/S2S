@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_TAKE_PRISONERS2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_TAKE_PRISONERS3"
+  ]
+ },
  "strength": {
   "unit": {
    "percent": -10

@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_CITY_GARRISON1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_CITY_GARRISON2",
+   "PROMOTION_URBAN_TACTICS1"
+  ]
+ },
  "strength": {
   "unit": {
    "cityDefense": {

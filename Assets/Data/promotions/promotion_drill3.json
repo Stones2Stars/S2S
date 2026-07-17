@@ -1,5 +1,13 @@
 {
  "type": "PROMOTION_DRILL3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_AMBUSH3",
+   "PROMOTION_CHARGE3",
+   "PROMOTION_DRILL4",
+   "PROMOTION_FORMATION3"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

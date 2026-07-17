@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_IMPROVED_RADAR",
+ "enables": {
+  "promotions": [
+   "PROMOTION_AIR_TO_AIR2",
+   "PROMOTION_CHAFF"
+  ]
+ },
  "air": {
   "unit": {
    "intercept": {

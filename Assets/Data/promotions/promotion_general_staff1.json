@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_GENERAL_STAFF1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_GENERAL_STAFF2"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

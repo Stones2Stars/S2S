@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_BLOODHOUND2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BLOODHOUND3"
+  ]
+ },
  "strength": {
   "unit": {
    "percent": 5,

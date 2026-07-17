@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_ELECTROMAGNETIC_ARMOR1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ELECTROMAGNETIC_ARMOR2"
+  ]
+ },
  "movement": {
   "unit": {
    "moveDiscount": {

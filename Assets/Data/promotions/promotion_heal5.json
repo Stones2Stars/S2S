@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_HEAL5",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUILD_UP_HEALTH_CARE5"
+  ]
+ },
  "heal": {
   "unit": {
    "sameTile": {

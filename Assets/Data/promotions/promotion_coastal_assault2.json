@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_COASTAL_ASSAULT2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COASTAL_ASSAULT3"
+  ]
+ },
  "strength": {
   "unit": {
    "terrain": {

@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_GUERILLA3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_HILLSMAN",
+   "PROMOTION_MOUNTAINEER"
+  ]
+ },
  "strength": {
   "unit": {
    "hillsAttack": {

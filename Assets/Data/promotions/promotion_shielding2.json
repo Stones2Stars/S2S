@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_SHIELDING2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SHIELDING3"
+  ]
+ },
  "collateral": {
   "unit": {
    "protection": {

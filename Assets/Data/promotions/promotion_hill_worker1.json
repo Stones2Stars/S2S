@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_HILL_WORKER1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_HILL_WORKER2"
+  ]
+ },
  "workRate": {
   "unit": {
    "hills": {

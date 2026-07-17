@@ -1,5 +1,13 @@
 {
  "type": "PROMOTION_VETERAN",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ACE",
+   "PROMOTION_AIR_REFUEL",
+   "PROMOTION_LOW_ALTITUDE",
+   "PROMOTION_RANGE1"
+  ]
+ },
  "experience": {
   "unit": {
    "percent": 10

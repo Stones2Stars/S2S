@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_INITIATIVE4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COMMAND1",
+   "PROMOTION_MOUNTAIN_LEADER"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_SEA_CREATURE1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SEA_CREATURE2"
+  ]
+ },
  "firstStrike": {
   "unit": {
    "chance": {

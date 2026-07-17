@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_TRANSPORT_TROOPS",
+ "enables": {
+  "promotions": [
+   "PROMOTION_TRANSPORT_TROOPS1"
+  ]
+ },
  "strength": {
   "unit": {
    "percent": -20

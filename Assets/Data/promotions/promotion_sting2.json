@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_STING2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_STING3"
+  ]
+ },
  "promotionLine": {
   "PROMOTIONLINE_STING": 2
  },

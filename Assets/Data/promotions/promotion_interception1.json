@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_INTERCEPTION1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_INTERCEPTION2"
+  ]
+ },
  "air": {
   "unit": {
    "intercept": {

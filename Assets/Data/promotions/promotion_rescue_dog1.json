@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_RESCUE_DOG1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_RESCUE_DOG2"
+  ]
+ },
  "strength": {
   "unit": {
    "percent": -5

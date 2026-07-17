@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_REPAIR_AIRCRAFT1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUILD_UP_MAINTENANCE_HANGAR1"
+  ]
+ },
  "heal": {
   "unit": {
    "support": {

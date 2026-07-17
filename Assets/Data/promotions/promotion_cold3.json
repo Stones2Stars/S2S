@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_COLD3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COLD4"
+  ]
+ },
  "strength": {
   "unit": {
    "terrain": {

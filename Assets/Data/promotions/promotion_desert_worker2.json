@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_DESERT_WORKER2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_DESERT_WORKER3"
+  ]
+ },
  "workRate": {
   "unit": {
    "terrain": {

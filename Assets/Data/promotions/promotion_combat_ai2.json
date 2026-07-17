@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_COMBAT_AI2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COMBAT_AI3",
+   "PROMOTION_QUANTUM_ALGORITHMS",
+   "PROMOTION_TERRAIN_ANALYSIS1"
+  ]
+ },
  "experience": {
   "unit": {
    "percent": 10

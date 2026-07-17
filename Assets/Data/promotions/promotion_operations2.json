@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_OPERATIONS2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_OPERATIONS3",
+   "PROMOTION_SELFPRESERVATION2"
+  ]
+ },
  "promotionLine": {
   "PROMOTIONLINE_OPERATIONS": 2
  },

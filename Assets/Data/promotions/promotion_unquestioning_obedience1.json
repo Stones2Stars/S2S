@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_UNQUESTIONING_OBEDIENCE1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_UNQUESTIONING_OBEDIENCE2"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

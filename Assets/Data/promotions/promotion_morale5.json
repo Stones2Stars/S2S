@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_MORALE5",
+ "enables": {
+  "promotions": [
+   "PROMOTION_INITIATIVE3",
+   "PROMOTION_INITIATIVE4"
+  ]
+ },
  "experience": {
   "unit": {
    "percent": 10

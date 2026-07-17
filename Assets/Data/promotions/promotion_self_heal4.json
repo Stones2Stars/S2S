@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_SELF_HEAL4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUILD_UP_RESTFUL_RECOVERY5",
+   "PROMOTION_SELF_HEAL5"
+  ]
+ },
  "heal": {
   "unit": {
    "enemy": {

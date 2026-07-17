@@ -1,5 +1,13 @@
 {
  "type": "PROMOTION_HUNTER1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ANIMAL_HUNTER",
+   "PROMOTION_BARBARIAN_HUNTER",
+   "PROMOTION_HUNTER2",
+   "PROMOTION_HUNTING_SIGHT1"
+  ]
+ },
  "firstStrike": {
   "unit": {
    "chance": {

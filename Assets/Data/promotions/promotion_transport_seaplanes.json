@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_TRANSPORT_SEAPLANES",
+ "enables": {
+  "promotions": [
+   "PROMOTION_TRANSPORT_SEAPLANES1"
+  ]
+ },
  "strength": {
   "unit": {
    "percent": -10

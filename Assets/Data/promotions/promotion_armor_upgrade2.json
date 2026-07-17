@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_ARMOR_UPGRADE2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ARMOR_UPGRADE3"
+  ]
+ },
  "strength": {
   "unit": {
    "cityDefense": {

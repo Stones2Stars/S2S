@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_FIELD_WORKER1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_FIELD_WORKER2"
+  ]
+ },
  "workRate": {
   "unit": {
    "terrain": {

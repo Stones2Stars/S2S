@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_FIELD1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_FIELD2"
+  ]
+ },
  "strength": {
   "unit": {
    "terrain": {

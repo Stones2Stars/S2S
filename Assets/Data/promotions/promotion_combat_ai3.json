@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_COMBAT_AI3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COMBAT_AI4",
+   "PROMOTION_GLOBAL_AWERENESS",
+   "PROMOTION_RAPID_DEPLOYMENT1"
+  ]
+ },
  "experience": {
   "unit": {
    "percent": 15

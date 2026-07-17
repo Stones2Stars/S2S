@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_WETLAND2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_WETLAND3"
+  ]
+ },
  "strength": {
   "unit": {
    "terrain": {

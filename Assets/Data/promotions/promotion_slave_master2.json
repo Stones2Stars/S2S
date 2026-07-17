@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_SLAVE_MASTER2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SLAVE_MASTER3"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_FORMATION",
+ "enables": {
+  "promotions": [
+   "PROMOTION_FORMATION2"
+  ]
+ },
  "strength": {
   "unit": {
    "unitCombat": {

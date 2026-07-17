@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_COMBAT6",
+ "enables": {
+  "promotions": [
+   "PROMOTION_HEROIC2",
+   "PROMOTION_SPHINX"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

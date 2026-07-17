@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_CARAVAN_SEA_MOVEMENT_II",
+ "enables": {
+  "promotions": [
+   "PROMOTION_CARAVAN_SEA_MOVEMENT_III"
+  ]
+ },
  "movement": {
   "unit": {
    "moves": {

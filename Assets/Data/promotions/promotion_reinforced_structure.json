@@ -1,5 +1,13 @@
 {
  "type": "PROMOTION_REINFORCED_STRUCTURE",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ARMOR_UPGRADE1",
+   "PROMOTION_AUTOMATIC_REPAIRS1",
+   "PROMOTION_FUSION_POWER_SOURCE",
+   "PROMOTION_WEAPON_UPGRADE1"
+  ]
+ },
  "strength": {
   "unit": {
    "cityAttack": {

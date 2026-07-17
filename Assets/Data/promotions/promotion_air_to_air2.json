@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_AIR_TO_AIR2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_AIR_TO_AIR3"
+  ]
+ },
  "air": {
   "unit": {
    "intercept": {

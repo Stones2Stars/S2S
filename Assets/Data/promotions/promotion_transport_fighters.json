@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_TRANSPORT_FIGHTERS",
+ "enables": {
+  "promotions": [
+   "PROMOTION_TRANSPORT_FIGHTERS1"
+  ]
+ },
  "strength": {
   "unit": {
    "percent": -15

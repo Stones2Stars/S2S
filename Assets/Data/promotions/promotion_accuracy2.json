@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_ACCURACY2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ACCURACY3"
+  ]
+ },
  "bombard": {
   "unit": {
    "rate": {

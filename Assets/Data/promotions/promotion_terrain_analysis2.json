@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_TERRAIN_ANALYSIS2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_TERRAIN_ANALYSIS3"
+  ]
+ },
  "strength": {
   "unit": {
    "hillsAttack": {

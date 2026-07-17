@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_MORALE4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_INITIATIVE2",
+   "PROMOTION_MORALE5",
+   "PROMOTION_TACTICS4"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

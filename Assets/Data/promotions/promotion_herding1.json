@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_HERDING1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_HERDING2"
+  ]
+ },
  "capture": {
   "unit": {
    "probability": {

@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_SECURITY2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ESCAPE2",
+   "PROMOTION_SECURITY3"
+  ]
+ },
  "air": {
   "unit": {
    "intercept": {

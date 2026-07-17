@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_SELF_REPAIR3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SELF_REPAIR4"
+  ]
+ },
  "heal": {
   "unit": {
    "selfModifier": {

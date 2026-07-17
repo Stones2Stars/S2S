@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_SELF_HEAL1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUILD_UP_RESTFUL_RECOVERY2",
+   "PROMOTION_SELF_HEAL2"
+  ]
+ },
  "heal": {
   "unit": {
    "neutral": {

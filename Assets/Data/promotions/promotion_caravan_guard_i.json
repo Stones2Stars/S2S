@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_CARAVAN_GUARD_I",
+ "enables": {
+  "promotions": [
+   "PROMOTION_CARAVAN_CIRCLE_THE_WAGONS",
+   "PROMOTION_CARAVAN_GUARD_II",
+   "PROMOTION_CARAVAN_MOVEMENT_I"
+  ]
+ },
  "strength": {
   "unit": {
    "percent": 5,

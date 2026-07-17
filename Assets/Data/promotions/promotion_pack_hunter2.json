@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_PACK_HUNTER2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_PACK_HUNTER3"
+  ]
+ },
  "strength": {
   "unit": {
    "percent": 5,

@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_BERZERKER2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BERZERKER3"
+  ]
+ },
  "strength": {
   "unit": {
    "percent": -5,

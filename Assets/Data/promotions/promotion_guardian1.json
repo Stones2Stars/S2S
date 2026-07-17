@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_GUARDIAN1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_GUARDIAN2"
+  ]
+ },
  "revoltProtection": {
   "unit": {
    "percent": 6

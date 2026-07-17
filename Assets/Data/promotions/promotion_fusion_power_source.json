@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_FUSION_POWER_SOURCE",
+ "enables": {
+  "promotions": [
+   "PROMOTION_POWER_SOURCE_UPGRADE1",
+   "PROMOTION_SELF_DESTRUCT",
+   "PROMOTION_SHIELDING1"
+  ]
+ },
  "strength": {
   "unit": {
    "unitCombat": {

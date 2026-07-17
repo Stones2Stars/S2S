@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_SHIP_OPERATIONS2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SHIP_OPERATIONS3",
+   "PROMOTION_SHIP_STRIKEFORCE2"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

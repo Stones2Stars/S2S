@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_CITY_RAIDER4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_CITY_RAIDER5"
+  ]
+ },
  "strength": {
   "unit": {
    "cityAttack": {

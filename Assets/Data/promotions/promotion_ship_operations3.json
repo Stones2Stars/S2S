@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_SHIP_OPERATIONS3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SHIP_OPERATIONS4"
+  ]
+ },
  "upkeep": {
   "unit": {
    "modifier": {

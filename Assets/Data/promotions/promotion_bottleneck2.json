@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_BOTTLENECK2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BOTTLENECK3"
+  ]
+ },
  "promotionLine": {
   "PROMOTIONLINE_BOTTLENECK": 2
  },

@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_CITY_RAIDER1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ACCURACY",
+   "PROMOTION_CITY_RAIDER2",
+   "PROMOTION_URBAN_TACTICS1"
+  ]
+ },
  "strength": {
   "unit": {
    "cityAttack": {

@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_WIND_HORSE",
+ "enables": {
+  "promotions": [
+   "PROMOTION_WIND_HORSE2"
+  ]
+ },
  "experience": {
   "unit": {
    "percent": 10

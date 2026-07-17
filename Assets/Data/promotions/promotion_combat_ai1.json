@@ -1,5 +1,15 @@
 {
  "type": "PROMOTION_COMBAT_AI1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COMBAT_AI2",
+   "PROMOTION_DEFENSIVE_PROTOCOLS1",
+   "PROMOTION_FUZZY_LOGIC",
+   "PROMOTION_GUARDIAN1",
+   "PROMOTION_OFFENSIVE_PROTOCOLS1",
+   "PROMOTION_SENSORS"
+  ]
+ },
  "experience": {
   "unit": {
    "percent": 5

@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_FIRST_AID_PEOPLE1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUILD_UP_FIELD_HOSPITAL1"
+  ]
+ },
  "heal": {
   "unit": {
    "support": {

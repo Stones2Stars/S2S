@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_INSTIGATOR2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_INSTIGATOR3"
+  ]
+ },
  "heal": {
   "unit": {
    "enemy": {

@@ -1,5 +1,11 @@
 {
  "type": "PROMOTION_CARAVAN_MARINES_I",
+ "enables": {
+  "promotions": [
+   "PROMOTION_CARAVAN_MARINES_II",
+   "PROMOTION_CARAVAN_SEA_MOVEMENT_I"
+  ]
+ },
  "strength": {
   "unit": {
    "percent": 5,

@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_AMBUSH",
+ "enables": {
+  "promotions": [
+   "PROMOTION_AMBUSH2"
+  ]
+ },
  "strength": {
   "unit": {
    "unitCombat": {

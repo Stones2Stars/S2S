@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_BARK",
+ "enables": {
+  "promotions": [
+   "PROMOTION_HERDING1"
+  ]
+ },
  "strength": {
   "unit": {
    "taunt": {

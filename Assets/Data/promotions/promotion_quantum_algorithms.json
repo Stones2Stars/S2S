@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_QUANTUM_ALGORITHMS",
+ "enables": {
+  "promotions": [
+   "PROMOTION_GLOBAL_AWERENESS"
+  ]
+ },
  "firstStrike": {
   "unit": {
    "strikes": {

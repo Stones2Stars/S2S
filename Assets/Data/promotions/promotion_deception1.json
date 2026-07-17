@@ -1,5 +1,12 @@
 {
  "type": "PROMOTION_DECEPTION1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ALCHEMIST1",
+   "PROMOTION_DECEPTION2",
+   "PROMOTION_INSTIGATOR1"
+  ]
+ },
  "air": {
   "unit": {
    "evasion": {

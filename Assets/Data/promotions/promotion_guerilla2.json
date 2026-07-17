@@ -1,5 +1,10 @@
 {
  "type": "PROMOTION_GUERILLA2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_GUERILLA3"
+  ]
+ },
  "strength": {
   "unit": {
    "hillsAttack": {
