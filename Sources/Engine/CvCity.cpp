@@ -32,6 +32,7 @@
 #include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the spine (CvCity side)
 #include "Cascade/CvCascadeAccumulator.h"  // #430 the modifier scope accumulator -- DOMAIN dirty hooks (modifier-substrate.md)
 #include "Cascade/CvEnablerKernel.h" // EnablerKernel::recomputeOperatingBuildingsInto -- the operating buildings cache's refresh delegate target
+#include "Cascade/CvCascadeWellbeing.h" // CascadeWellbeing::bonusWellbeing -- per-source §2b terms for the flipped legacy sub-getters
 #include "Cascade/CvBuildingEnabler.h" // BuildingEnabler::onCityCreated -- the per-city buildings domain (canConstruct reads m_enabler)
 #include "Cascade/CvUnitEnabler.h"     // UnitEnabler::onCityCreated -- the per-city units domain (canTrain reads m_enabler)
 #include "AI/CvCityLogTags.h" // [CIT] tag enums (shared with CvCityAI.cpp -- defined once, see header)
@@ -530,8 +531,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iFeatureBadHealth = 0;
 	m_iBuildingGoodHealth = 0;
 	m_iBuildingBadHealth = 0;
-	m_iBonusGoodHealth = 0;
-	m_iBonusBadHealth = 0;
 	m_iHurryAngerTimer = 0;
 	m_iRevRequestAngerTimer = 0;
 	m_iRevSuccessTimer = 0;
@@ -547,8 +546,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iExtraBuildingBadHealth = 0;
 	m_iFeatureGoodHappiness = 0;
 	m_iFeatureBadHappiness = 0;
-	m_iBonusGoodHappiness = 0;
-	m_iBonusBadHappiness = 0;
 	m_iReligionGoodHappiness = 0;
 	m_iReligionBadHappiness = 0;
 	m_iExtraHappiness = 0;
@@ -4536,74 +4533,8 @@ int CvCity::getBonusYieldRateModifier(YieldTypes eIndex, BonusTypes eBonus) cons
 void CvCity::processBonus(BonusTypes eBonus, int iChange)
 {
 	PROFILE_FUNC();
-	{
-		const int iBaseValue = GC.getBonusInfo(eBonus).getHealth();
-		int iGoodValue = std::max(0, iBaseValue);
-		int iBadValue = std::min(0, iBaseValue);
-
-		foreach_(const BuildingTypes eTypeX, getHasBuildings())
-		{
-			if (!isReligiouslyLimitedBuilding(eTypeX) && !isDisabledBuilding(eTypeX))
-			{
-				const int iValue = GC.getBuildingInfo(eTypeX).getBonusHealthChanges().getValue(eBonus);
-
-				if (iValue >= 0)
-				{
-					iGoodValue += iValue;
-				}
-				else iBadValue += iValue;
-			}
-		}
-
-		changeBonusGoodHealth(iGoodValue * iChange);
-		changeBonusBadHealth(iBadValue * iChange);
-	}
-
-	{
-		const int iBaseValue = GC.getBonusInfo(eBonus).getHappiness();
-		int iGoodValue = std::max(0, iBaseValue);
-		int iBadValue = std::min(0, iBaseValue);
-
-		foreach_(const BuildingTypes eTypeX, getHasBuildings())
-		{
-			if (!isReligiouslyLimitedBuilding(eTypeX) && !isDisabledBuilding(eTypeX))
-			{
-				const int iValue = GC.getBuildingInfo(eTypeX).getBonusHappinessChanges().getValue(eBonus);
-
-				if (iValue >= 0)
-				{
-					iGoodValue += iValue;
-				}
-				else iBadValue += iValue;
-			}
-		}
-		for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
-		{
-			const TraitTypes eTrait = (TraitTypes)iI;
-			if (GET_PLAYER(getOwner()).hasTrait(eTrait))
-			{
-				int iValue = 0;
-				foreach_(const BonusModifier& pair, GC.getTraitInfo((TraitTypes)iI).getBonusHappinessChanges())
-				{
-					if (pair.first == eBonus)
-					{
-						iValue = pair.second;
-						break;
-					}
-				}
-				if (iValue >= 0)
-				{
-					iGoodValue += iValue;
-				}
-				else
-				{
-					iBadValue += iValue;
-				}
-			}
-		}
-		changeBonusGoodHappiness(iGoodValue * iChange);
-		changeBonusBadHappiness(iBadValue * iChange);
-	}
+	// #430: bonus health/happiness is computed by the cascade (§2b, gathered into hea.bonus/hap.bonus). The legacy
+	// per-bonus apply + the m_iBonus*Health/Happiness accumulators are cut; getBonus* stand on the cascade term.
 
 	changePowerCount(getBonusPower(eBonus) * iChange);
 
@@ -5042,36 +4973,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	foreach_(const ImprovementModifier& pair, kBuilding.getImprovementFreeSpecialists())
 	{
 		changeImprovementFreeSpecialists(pair.first, pair.second * iChange);
-	}
-
-	foreach_(const BonusModifier& modifier, kBuilding.getBonusHealthChanges())
-	{
-		if (hasBonus(modifier.first))
-		{
-			if (modifier.second > 0)
-			{
-				changeBonusGoodHealth(modifier.second * iChange);
-			}
-			else
-			{
-				changeBonusBadHealth(modifier.second * iChange);
-			}
-		}
-	}
-
-	foreach_(const BonusModifier& modifier, kBuilding.getBonusHappinessChanges())
-	{
-		if (hasBonus(modifier.first))
-		{
-			if (modifier.second > 0)
-			{
-				changeBonusGoodHappiness(modifier.second * iChange);
-			}
-			else
-			{
-				changeBonusBadHappiness(modifier.second * iChange);
-			}
-		}
 	}
 
 	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
@@ -8581,40 +8482,12 @@ void CvCity::changeBuildingBadHealth(int iChange)
 
 int CvCity::getBonusGoodHealth() const
 {
-	return m_iBonusGoodHealth;
+	int hg, hb, eg, eb; CascadeWellbeing::bonusWellbeing(this, hg, hb, eg, eb); return eg;
 }
 
 int CvCity::getBonusBadHealth() const
 {
-	return m_iBonusBadHealth;
-}
-
-void CvCity::changeBonusGoodHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBonusGoodHealth += iChange;
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
-void CvCity::changeBonusBadHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBonusBadHealth += iChange;
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
+	int hg, hb, eg, eb; CascadeWellbeing::bonusWellbeing(this, hg, hb, eg, eb); return eb;
 }
 
 
@@ -9583,34 +9456,15 @@ void CvCity::updateFeatureHappiness(bool bLimited)
 
 int CvCity::getBonusGoodHappiness() const
 {
-	return m_iBonusGoodHappiness;
+	int hg, hb, eg, eb; CascadeWellbeing::bonusWellbeing(this, hg, hb, eg, eb); return hg;
 }
 
 
 int CvCity::getBonusBadHappiness() const
 {
-	return m_iBonusBadHappiness;
+	int hg, hb, eg, eb; CascadeWellbeing::bonusWellbeing(this, hg, hb, eg, eb); return hb;
 }
 
-
-void CvCity::changeBonusGoodHappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBonusGoodHappiness += iChange;
-		AI_setAssignWorkDirty(true);
-	}
-}
-
-
-void CvCity::changeBonusBadHappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBonusBadHappiness += iChange;
-		AI_setAssignWorkDirty(true);
-	}
-}
 
 
 int CvCity::getReligionGoodHappiness() const
@@ -18450,8 +18304,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iFeatureBadHealth);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iBuildingGoodHealth);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iBuildingBadHealth);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iBonusGoodHealth);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iBonusBadHealth);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iHurryAngerTimer);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iRevRequestAngerTimer);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iRevSuccessTimer);
@@ -18467,8 +18319,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraBuildingBadHealth);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iFeatureGoodHappiness);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iFeatureBadHappiness);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iBonusGoodHappiness);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iBonusBadHappiness);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iReligionGoodHappiness);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iReligionBadHappiness);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraHappiness);
@@ -22740,16 +22590,12 @@ void CvCity::clearModifierTotals()
 	m_iHealRate = 0;
 	m_iBuildingGoodHealth = 0;
 	m_iBuildingBadHealth = 0;
-	m_iBonusGoodHealth = 0;
-	m_iBonusBadHealth = 0;
 	m_iBuildingGoodHappiness = 0;
 	m_iBuildingBadHappiness = 0;
 	m_iExtraBuildingGoodHappiness = 0;
 	m_iExtraBuildingBadHappiness = 0;
 	m_iExtraBuildingGoodHealth = 0;
 	m_iExtraBuildingBadHealth = 0;
-	m_iBonusGoodHappiness = 0;
-	m_iBonusBadHappiness = 0;
 	m_iReligionGoodHappiness = 0;
 	m_iReligionBadHappiness = 0;
 	m_iExtraHappiness = 0;

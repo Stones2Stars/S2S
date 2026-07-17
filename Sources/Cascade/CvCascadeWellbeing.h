@@ -42,6 +42,11 @@ public:
 	static void gatherCityTerms(const CvCity* pCity, const CvCascadeEvalCtx& ec,
 		CascadeWbTerms& hap, CascadeWbTerms& hea, int aiCommercePer[/*NUM_COMMERCE_TYPES*/]);
 
+	// Per-source §2b decomposition terms for the legacy sub-getters (live gather; the VERDICT stays the cached
+	// path). Lets getBonus*/getBuilding* stand on the cascade instead of the retired stored accumulators.
+	// iGood = Σ positive contributions, iBad = Σ negative contributions (the WbSplit convention == the legacy split).
+	static void bonusWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad);
+
 	// The PLAYER-scope area/empire building fold maps (famSeg -> areaId -> split; famSeg -> empire split)
 	// + the building-KEYED ledger (famSeg -> targetFk -> Σ flats: the Royal-Tomb class, a BUILDING granting
 	// happiness/health to every city holding the KEYED building -- legacy player extraBuilding* accumulators),

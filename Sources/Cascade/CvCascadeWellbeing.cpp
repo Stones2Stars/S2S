@@ -645,6 +645,21 @@ CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
 	return out;
 }
 
+// Per-source terms for the legacy sub-getters -- a live city gather (the verdict is the cached path). Perf is not a
+// gate now; UI/AI decomposition reads are cold. The bonus term maps 1:1 to the retired m_iBonus* accumulators
+// (sign convention identical: iGood = positives, iBad = negatives).
+void CascadeWellbeing::bonusWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad)
+{
+	CvCascadeEvalCtx ec;
+	CascadeWbTerms hap, hea;
+	int aiPer[NUM_COMMERCE_TYPES];
+	gatherCityTerms(pCity, ec, hap, hea, aiPer);
+	iHapGood = hap.bonus.iGood;
+	iHapBad  = hap.bonus.iBad;
+	iHeaGood = hea.bonus.iGood;
+	iHeaBad  = hea.bonus.iBad;
+}
+
 // The /computed decomposition recompute: fresh city gather + fresh player area/empire walk + the ONE assembly.
 CascadeWellbeingVerdicts CascadeWellbeing::compute(const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {

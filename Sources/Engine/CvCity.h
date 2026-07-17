@@ -600,8 +600,6 @@ public:
 
 	int getBonusGoodHealth() const;
 	int getBonusBadHealth() const;
-	void changeBonusGoodHealth(int iChange);
-	void changeBonusBadHealth(int iChange);
 
 	int getMilitaryHappiness() const;
 	int getMilitaryHappinessUnits() const;
@@ -639,8 +637,6 @@ public:
 
 	int getBonusGoodHappiness() const;
 	int getBonusBadHappiness() const;
-	void changeBonusGoodHappiness(int iChange);
-	void changeBonusBadHappiness(int iChange);
 
 	int getReligionGoodHappiness() const;
 	int getReligionBadHappiness() const;
@@ -1629,8 +1625,6 @@ protected:
 	int m_iFeatureBadHealth;
 	int m_iBuildingGoodHealth;
 	int m_iBuildingBadHealth;
-	int m_iBonusGoodHealth;
-	int m_iBonusBadHealth;
 	int m_iHurryAngerTimer;
 	int m_iRevRequestAngerTimer;
 	int m_iRevSuccessTimer;
@@ -1646,8 +1640,6 @@ protected:
 	int m_iExtraBuildingBadHealth;
 	int m_iFeatureGoodHappiness;
 	int m_iFeatureBadHappiness;
-	int m_iBonusGoodHappiness;
-	int m_iBonusBadHappiness;
 	int m_iReligionGoodHappiness;
 	int m_iReligionBadHappiness;
 	int m_iExtraHappiness;
