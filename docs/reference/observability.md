@@ -30,6 +30,9 @@ and the CALLER's RVA (`ln CvGameCoreDLL+<rva>` against the PDB): the whole `getI
 (symbols/minimap/flag/center-unit/layout — `exeEngFrom` passing the wrapper's caller). Per-kind cumulative
 counters ride `/computed/perf` `exeCalls` (double-sample for rates). Rationale: the EXE render pipeline is a
 black box; an FPS drop with an idle DLL is attributed from what we TOLD the EXE to do, never hypothesized.
+`/computed/perf` also carries the process **`memory`** gauge (`workingSetMB`/`peakWorkingSetMB`/`pagefileMB`,
+the CvPlotPaging `GetProcessMemoryInfo` mechanism) — poll across turns to split a per-turn RAM climb (leak)
+from a one-time step (retained structure); load-bearing in the 32-bit ~3.2GB address-space ceiling.
 Excluded (interaction, not render churn): popups, sounds, selection, camera/fog/layer toggles.
 
 ## The live HTTP server (today)

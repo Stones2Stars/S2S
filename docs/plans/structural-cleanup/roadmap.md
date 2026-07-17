@@ -239,6 +239,12 @@ Two acceptance pillars, per item, verified LIVE in-game ([validation.md](../../s
 
 ## Verification (end-to-end)
 
+- **The turn-time TARGET (owner): ≤ 2 minutes wall per turn on the standing late-game test save** (the
+  ~1338-era save; measured baseline `[PERF/phase] turn.wall` ~7min, `updateMoves` 124–197s of it). The
+  [DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king) objective made concrete;
+  the FPS hunt resumes ONLY after F0's caches are event-wired and the game runs behaviorally as it used to
+  (owner sequencing ruling).
+
 - Build: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <Config> <verb>` from
   `Sources/` (Release for interactive testing; FinalRelease for perf/turn-lag). Assert build = quick compile check.
 - Runtime (per-session owner permission only): `agentstart.bat` → poll `http://127.0.0.1:7227/` until up → verify via

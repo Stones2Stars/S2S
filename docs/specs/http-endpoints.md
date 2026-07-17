@@ -206,7 +206,12 @@ the external dry-calc + logging, not here).
   engine's per-player "what could be researched / adopted / built" sets.
 - **counts** — `/computed/tally?type=BUILDING_X|UNIT_X&player=N`: the engine count at world/team/empire scope.
 - **diagnostics** — `/computed/whyNot?type=UNIT_X&player=N[&city=M]` (the canTrain decision inputs) ·
-  `/computed/game` (turn / game-over / winner / victory countdowns — the autoplay terminal signal).
+  `/computed/game` (turn / game-over / winner / victory countdowns — the autoplay terminal signal) ·
+  `/computed/units/combat?player=N[&unit=M]` — per-unit combat-strength ATTRIBUTION: the persisted per-unit base
+  (`combatRaw` = the save-carried `m_iBaseCombat`, `canFight`'s gate), the loaded info's authored base
+  (`combatInfo` = `identity.base.combat` — a `combatRaw`≠`combatInfo` split names save-carried vs load-time as a
+  zero-strength origin), the effective read (`combatEff` = `baseCombatStr()`, SM-aware), `smStrength`, and the
+  `canFight`/`canAttack`/`onlyDefensive` verdicts. Read-only; NOT the unit-plane channel decomposition (below).
 - **classification-parity oracles** —
   `/computed/teamFlags?player=N`: the engine team/player capability flags by CANONICAL name (+ the
   `canTrade`/`canTradeOn`/`canWorkOn` blocks) — the capabilities-parity oracle; ·
@@ -232,9 +237,10 @@ the external dry-calc + logging, not here).
   localises to one named term. Source of truth: `CvUnit::healRate` (`CvUnit.cpp`:6021), `getHealRateAsType` (:6212),
   `doHeal` (:6467).
 
-> Unit combat/movement decomposition (beyond heal, above) is **deliberately not exposed yet** — those channels
-> aren't in drycalc's current focus (yields/modifiers + buildability). Raw unit membership lives on `/state/units`;
-> the computed combat/movement surfaces are added when those channels are worked (don't ship a lone half-channel).
+> Unit combat/movement CHANNEL decomposition (beyond heal and the combat-attribution diagnostic, above) is
+> **deliberately not exposed yet** — those channels aren't in drycalc's current focus (yields/modifiers +
+> buildability). Raw unit membership lives on `/state/units`; the computed combat/movement surfaces are added when
+> those channels are worked (don't ship a lone half-channel).
 
 ---
 
