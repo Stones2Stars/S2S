@@ -22,6 +22,16 @@
 passes when `mismatches=0`. `[INIT/*]` was renamed from `[GAME/*]` to avoid clashing with the `[STATE/game]` cascade
 feed. Call-site census exists (WAI 43 sites, HAI 54, CTB 66, …). Dead sinks: `CB.log`, `C2C.log` (ruled DELETE).
 
+**`[EXE]` — the DLL→EXE graphics/dirty call trace** (`Engine/CvExeTrace.{h,cpp}` → `ExeTrace.log`). Every DLL
+call that can make the closed EXE re-render emits a DIAGNOSTIC spine event naming the api (kind), its arguments,
+and the CALLER's RVA (`ln CvGameCoreDLL+<rva>` against the PDB): the whole `getInterfaceIFace()->setDirty` surface
+(routed through `exeSetUIDirty`), the engine-iface scene mutators (`SetDirty`/`addColoredPlot`/`RebuildPlot`/
+`fillAreaBorderPlot`/visibility/…, prefixed with `exeEng(EXEK_*)`), and the `CvPlot`/`CvCity` graphics wrappers
+(symbols/minimap/flag/center-unit/layout — `exeEngFrom` passing the wrapper's caller). Per-kind cumulative
+counters ride `/computed/perf` `exeCalls` (double-sample for rates). Rationale: the EXE render pipeline is a
+black box; an FPS drop with an idle DLL is attributed from what we TOLD the EXE to do, never hypothesized.
+Excluded (interaction, not render churn): popups, sounds, selection, camera/fog/layer toggles.
+
 ## The live HTTP server (today)
 
 - Bind **`127.0.0.1:7227`**, GET-only HTTP/1.0 (405 otherwise). BUG option `Autolog__HttpServer` (default **off**).
@@ -62,9 +72,23 @@ pre-composed `CvString` criteria/joinInfo fields are the hardest to decompose; `
 
 ## Target consolidation
 
-The migration target is one routing — `emit → CvEventSpine::dispatch → CvCascadeLogConsumer / Tally / grants` (the
-[logging](../specs/logging.md) §4 event spine). Old anomalies slated for removal: dead `logCB`/`logToFile` Python
-exports (an arbitrary-file-write surface), the `C2C.log` firehose, the `rjLogLine` split gate (a hardcoded level-1 tee).
+The migration target is one routing — `emit → CvEventSpine::dispatch → consumers` (the
+[logging](../specs/logging.md) §4 event spine): the eventSpine is the ONLY place any "happening" lives, and
+everything downstream is a consumer of it (owner, founding decree). Concretely (owner 2026-07-16):
+**the BetterBTSAI log helpers (`logAIJson` et al.) are RETIRED — never route new work through them — and every
+direct `gDLL->logMsg` inside Engine files is likewise unwanted**; each domain migrates by EMITTING spine events
+(the field census below is the prepared input), whereupon it gains the file consumer, the `/events` stream
+consumer, and the off-thread writer for free. Every DOMAIN event gets an assigned importance LEVEL as it
+migrates (levels today are only meaningful on the DIAGNOSTIC side; DOMAIN defaults to 1). The multiplayer
+**OOS special logger is deliberately KEPT** — a synchronization-debugging surface in its own right, and a
+natural future consumer of the synced DOMAIN stream. Old anomalies slated for removal: dead
+`logCB`/`logToFile` Python exports (an arbitrary-file-write surface), the `C2C.log` firehose, the `rjLogLine`
+split gate (a hardcoded level-1 tee).
+
+**The FILE sink is the off-thread `CvLogWriter`** (`Infrastructure/CvLogWriter.{h,cpp}`): the game thread
+renders + enqueues; a dedicated Win32 thread does all disk I/O and flushes per batch — so spine-written log
+files are READABLE WHILE THE GAME RUNS (the held-open pain applies only to the not-yet-migrated
+`gDLL->logMsg` sinks). Files are truncated fresh per session; lines stamp `[sec.mmm]` at enqueue.
 
 ## The `(scope,channel)` calc-count gate
 

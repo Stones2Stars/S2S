@@ -4,6 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvExeTrace.h"
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
 #include "UI/CvArtFileMgr.h"
@@ -20,6 +21,10 @@
 #include "Cascade/CvProjectEnabler.h"        // #430 the projects domain -- the city canCreate's read-through target
 #include "Cascade/CvProcessEnabler.h"        // #430 the processes domain -- the city canMaintain's read-through target
 #include "Cascade/CvBuildEnabler.h"          // #430 the worker-builds domain -- canBuild's unlock-half bare read
+#include "Cascade/CvBuildingEnabler.h"       // #430 the buildings domain -- the HIDE_REPLACED option toggle's re-gate
+#include "Cascade/CvEnablerKernel.h"         // #430 EnablerKernel::operatingBuildings -- the keyed improvement-yield recompute's ACTIVE verdict
+#include "Cascade/CvCascadeMMKernel.h"       // #430 MMKernel::sumUnit -- the specialist recomputes' evaluated conditioned-deposit sums
+#include "Cascade/CvCascadeConditionEval.h"  // #430 CvCascadeEvalCtx -- the recomputes' evaluation context
 #include "Cascade/CvPromotionEnabler.h"      // #430 the promotions domain -- the level-up composite's player planes
 #include "CvDeal.h"
 #include "UI/CvDiploParameters.h"
@@ -212,14 +217,15 @@ m_cachedBonusCount(NULL)
 	m_pabResearchingTech = NULL;
 	m_pabLoyalMember = NULL;
 	m_paeCivics = NULL;
-	m_ppaaiSpecialistExtraYield = NULL;
-	m_ppaaiImprovementYieldChange = NULL;
 	m_pabAutomatedCanBuild = NULL;
 	m_ppaaiTerrainYieldChange = NULL;
 	m_paiResourceConsumption = NULL;
 	m_paiFreeSpecialistCount = NULL;
 	m_ppiBuildingCommerceModifier = NULL;
 	m_buildingCommerceChange.bind(this, &CvPlayer::recomputeBuildingCommerceChange);   // dirty-on-construct; recompute-from-source on first read
+	m_improvementYieldChange.bind(this, &CvPlayer::recomputeImprovementYields);        // ditto (the keyed improvement-yield ledger)
+	m_specialistExtraYield.bind(this, &CvPlayer::recomputeSpecialistExtraYield);       // ditto (per-type specialist empire boosts)
+	m_specialistExtraCommerce.bind(this, &CvPlayer::recomputeSpecialistExtraCommerce); // ditto (the commerce twin)
 	m_ppiSpecialistCommercePercentChanges = NULL;
 	m_ppiSpecialistYieldPercentChanges = NULL;
 	m_ppiBonusCommerceModifier = NULL;
@@ -229,7 +235,6 @@ m_cachedBonusCount(NULL)
 	//TB Traits begin
 	m_paiImprovementUpgradeRateModifierSpecific = NULL;
 	m_paiBuildWorkerSpeedModifierSpecific = NULL;
-	m_ppaaiSpecialistExtraCommerce = NULL;
 	m_aiFreeCityYield = new int[NUM_YIELD_TYPES];
 	m_pabHasTrait = NULL;
 	m_aiLessYieldThreshold = new int[NUM_YIELD_TYPES];
@@ -703,8 +708,6 @@ void CvPlayer::uninit()
 
 	SAFE_DELETE(m_pBuildLists);
 
-	SAFE_DELETE_ARRAY2(m_ppaaiSpecialistExtraYield, GC.getNumSpecialistInfos());
-	SAFE_DELETE_ARRAY2(m_ppaaiImprovementYieldChange, GC.getNumImprovementInfos());
 	SAFE_DELETE_ARRAY(m_pabAutomatedCanBuild);
 	SAFE_DELETE_ARRAY(m_paiResourceConsumption);
 	SAFE_DELETE_ARRAY(m_paiFreeSpecialistCount);
@@ -714,7 +717,6 @@ void CvPlayer::uninit()
 	SAFE_DELETE_ARRAY(m_paiNationalDomainFreeExperience);
 	SAFE_DELETE_ARRAY(m_paiNationalDomainProductionModifier);
 	SAFE_DELETE_ARRAY(m_paiNationalTechResearchModifier);
-	SAFE_DELETE_ARRAY2(m_ppaaiSpecialistExtraCommerce, GC.getNumSpecialistInfos());
 	SAFE_DELETE_ARRAY2(m_ppaaiTerrainYieldChange, GC.getNumTerrainInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBuildingCommerceModifier, GC.getNumBuildingInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBonusCommerceModifier, GC.getNumBonusInfos());
@@ -1293,30 +1295,13 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		}
 
 		FAssertMsg(0 < GC.getNumSpecialistInfos(), "GC.getNumSpecialistInfos() is not greater than zero but it is used to allocate memory in CvPlayer::reset");
-		FAssertMsg(m_ppaaiSpecialistExtraYield==NULL, "about to leak memory, CvPlayer::m_ppaaiSpecialistExtraYield");
-		m_ppaaiSpecialistExtraYield = new int*[GC.getNumSpecialistInfos()];
+		// (m_specialistExtraYield/m_specialistExtraCommerce need no init-time allocation -- the CvDerivedCacheVec
+		// recomputes size them)
 		m_paiFreeSpecialistCount = new int[GC.getNumSpecialistInfos()];
 
 		for (iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 		{
-			m_ppaaiSpecialistExtraYield[iI] = new int[NUM_YIELD_TYPES];
-			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-			{
-				m_ppaaiSpecialistExtraYield[iI][iJ] = 0;
-			}
 			m_paiFreeSpecialistCount[iI] = 0;
-		}
-		//TB Traits begin
-		FAssertMsg(0 < GC.getNumSpecialistInfos(), "GC.getNumSpecialistInfos() is not greater than zero but it is used to allocate memory in CvPlayer::reset");
-		FAssertMsg(m_ppaaiSpecialistExtraCommerce==NULL, "about to leak memory, CvPlayer::m_ppaaiSpecialistExtraCommerce");
-		m_ppaaiSpecialistExtraCommerce = new int*[GC.getNumSpecialistInfos()];
-		for (iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-		{
-			m_ppaaiSpecialistExtraCommerce[iI] = new int[NUM_COMMERCE_TYPES];
-			for (iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-			{
-				m_ppaaiSpecialistExtraCommerce[iI][iJ] = 0;
-			}
 		}
 
 		FAssertMsg(m_pabHasTrait==NULL, "about to leak memory, CvPlayer::m_pabHasTrait");
@@ -1327,19 +1312,13 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		}
 
 		//TB Traits end
-		FAssertMsg(m_ppaaiImprovementYieldChange==NULL, "about to leak memory, CvPlayer::m_ppaaiImprovementYieldChange");
-		m_ppaaiImprovementYieldChange = new int*[GC.getNumImprovementInfos()];
+		// (m_improvementYieldChange needs no init-time allocation -- the CvDerivedCacheVec recompute sizes it)
 		//TB Traits begin
 		FAssertMsg(m_paiImprovementUpgradeRateModifierSpecific==NULL, "about to leak memory, CvPlayer::m_paiImprovementUpgradeRateModifierSpecific");
 		m_paiImprovementUpgradeRateModifierSpecific = new int [GC.getNumImprovementInfos()];
 		//TB Traits end
 		for (iI = 0; iI < GC.getNumImprovementInfos(); iI++)
 		{
-			m_ppaaiImprovementYieldChange[iI] = new int[NUM_YIELD_TYPES];
-			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-			{
-				m_ppaaiImprovementYieldChange[iI][iJ] = 0;
-			}
 			//TB Traits begin
 			m_paiImprovementUpgradeRateModifierSpecific[iI] = 0;
 			//TB Traits end
@@ -1653,14 +1632,14 @@ void CvPlayer::changeLeader(LeaderHeadTypes eNewLeader)
 
 	if (isAlive() || isEverAlive())
 	{
-		gDLL->getInterfaceIFace()->setDirty(HighlightPlot_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(Flag_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(MinimapSection_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(Foreign_Screen_DIRTY_BIT, true);
+		exeSetUIDirty(HighlightPlot_DIRTY_BIT, true);
+		exeSetUIDirty(CityInfo_DIRTY_BIT, true);
+		exeSetUIDirty(UnitInfo_DIRTY_BIT, true);
+		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+		exeSetUIDirty(Flag_DIRTY_BIT, true);
+		exeSetUIDirty(MinimapSection_DIRTY_BIT, true);
+		exeSetUIDirty(Score_DIRTY_BIT, true);
+		exeSetUIDirty(Foreign_Screen_DIRTY_BIT, true);
 	}
 	AI_init();
 }
@@ -1766,41 +1745,41 @@ void CvPlayer::changeCiv(CivilizationTypes eNewCiv)
 		}
 
 		//update flag eras
-		gDLL->getInterfaceIFace()->setDirty(Flag_DIRTY_BIT, true);
+		exeSetUIDirty(Flag_DIRTY_BIT, true);
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(Soundtrack_DIRTY_BIT, true);
+			exeSetUIDirty(Soundtrack_DIRTY_BIT, true);
 		}
 
 		gDLL->getInterfaceIFace()->makeInterfaceDirty();
 
 		// Need to force redraw
-		gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
-		gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
-		gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
-		gDLL->getEngineIFace()->SetDirty(GlobePartialTexture_DIRTY_BIT, true);
+		exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
+		exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
+		exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
+		exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(GlobePartialTexture_DIRTY_BIT, true);
 
-		gDLL->getInterfaceIFace()->setDirty(ColoredPlots_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(HighlightPlot_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(MinimapSection_DIRTY_BIT, true);
-		gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(Foreign_Screen_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(SelectionSound_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(GlobeInfo_DIRTY_BIT, true);
+		exeSetUIDirty(ColoredPlots_DIRTY_BIT, true);
+		exeSetUIDirty(HighlightPlot_DIRTY_BIT, true);
+		exeSetUIDirty(CityInfo_DIRTY_BIT, true);
+		exeSetUIDirty(UnitInfo_DIRTY_BIT, true);
+		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+		exeSetUIDirty(GlobeLayer_DIRTY_BIT, true);
+		exeSetUIDirty(MinimapSection_DIRTY_BIT, true);
+		exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
+		exeSetUIDirty(Score_DIRTY_BIT, true);
+		exeSetUIDirty(Foreign_Screen_DIRTY_BIT, true);
+		exeSetUIDirty(SelectionSound_DIRTY_BIT, true);
+		exeSetUIDirty(GlobeInfo_DIRTY_BIT, true);
 	}
 	else if( isEverAlive() )
 	{
 		// Not currently alive, but may show on some people's scoreboard
 		// or graphs
 		// change colors
-		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+		exeSetUIDirty(Score_DIRTY_BIT, true);
 	}
 
 	setupGraphical();
@@ -3382,13 +3361,13 @@ void CvPlayer::setName(std::wstring szNewValue)
 	{
 		m_szName = szNewValue;
 		emitNameChange(NAMECHANGE_PLAYER, getID(), getID());
-		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(Foreign_Screen_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(Flag_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(MinimapSection_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
+		exeSetUIDirty(Score_DIRTY_BIT, true);
+		exeSetUIDirty(Foreign_Screen_DIRTY_BIT, true);
+		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+		exeSetUIDirty(Flag_DIRTY_BIT, true);
+		exeSetUIDirty(CityInfo_DIRTY_BIT, true);
+		exeSetUIDirty(MinimapSection_DIRTY_BIT, true);
+		exeSetUIDirty(UnitInfo_DIRTY_BIT, true);
 	}
 }
 
@@ -3451,12 +3430,12 @@ void CvPlayer::setCivName(std::wstring szNewDesc, std::wstring szNewShort, std::
 	m_szCivShort = szNewShort;
 	m_szCivAdj = szNewAdj;
 	emitNameChange(NAMECHANGE_CIV, getID(), getID());
-	gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(Foreign_Screen_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(Flag_DIRTY_BIT, true);
-	gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+	exeSetUIDirty(Score_DIRTY_BIT, true);
+	exeSetUIDirty(Foreign_Screen_DIRTY_BIT, true);
+	exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+	exeSetUIDirty(Flag_DIRTY_BIT, true);
+	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
+	exeSetUIDirty(GameData_DIRTY_BIT, true);
 }
 
 
@@ -3725,6 +3704,9 @@ void CvPlayer::doTurn()
 {
 	PROFILE_FUNC();
 	PERF_SCOPE("CvPlayer::doTurn", getID());
+	// The EXE-order coalescing bracket (the FPS-drop experiment, CvExeTrace.h): the turn's ~210k per-unit-move
+	// flag/center-unit/minimap orders dedupe to distinct plots, flushed once at this scope's end.
+	ExeCoalesceBracket kExeCoalesce;
 	// #430 the per-turn SELF-HEAL (playerSliceRebuild -- markAll + eager ensure of ALL packages, this player's
 	// and his cities') is REMOVED ([DEC-no-self-heal]). Correctness is the targeted spine-routed marks + LAZY
 	// recalc of ONLY the dirty packages, read as a trivial sum. A missed invalidation now surfaces as a live
@@ -3932,7 +3914,7 @@ void CvPlayer::doTurn()
 
 	expireMessages(); // turn log
 
-	gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
+	exeSetUIDirty(CityInfo_DIRTY_BIT, true);
 
 	{ PERF_SCOPE("doTurn.AI_doTurnPost", getID()); AI_doTurnPost(); }
 
@@ -4111,11 +4093,11 @@ void CvPlayer::doTurnUnits()
 	{
 		gDLL->getFAStarIFace()->ForceReset(&GC.getInterfacePathFinder());
 
-		gDLL->getInterfaceIFace()->setDirty(Waypoints_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
+		exeSetUIDirty(Waypoints_DIRTY_BIT, true);
+		exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
 	}
 
-	gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
+	exeSetUIDirty(UnitInfo_DIRTY_BIT, true);
 
 	AI_doTurnUnitsPost();
 }
@@ -7504,12 +7486,12 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		changeYieldRateModifier(((YieldTypes)iI), (kBuilding.getGlobalYieldModifier(iI) * iChange));
 	}
 
-	foreach_(const ImprovementArray& pair, kBuilding.getGlobalImprovementYieldChanges())
+	if (!kBuilding.getGlobalImprovementYieldChanges().empty())
 	{
-		for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-		{
-			changeImprovementYieldChange(pair.first, ((YieldTypes)iI), (pair.second[iI] * iChange));
-		}
+		// keyed improvement yields are a recompute-from-source ledger now -- mark + fire the trigger the old
+		// per-cell changer fired
+		m_improvementYieldChange.markDirty();
+		updateYield();
 	}
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
@@ -7534,17 +7516,14 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		changeBuildingCostModifier(modifier.first, modifier.second * iChange);
 	}
 
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			changeExtraSpecialistYield(((SpecialistTypes)iI), ((YieldTypes)iJ), (kBuilding.getSpecialistYieldChange(iI, iJ) * iChange));
-		}
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			changeExtraSpecialistCommerce(((SpecialistTypes)iI), ((CommerceTypes)iJ), (kBuilding.getSpecialistCommerceChange(iI, iJ) * iChange));
-		}
-	}
+	// per-type specialist boosts: recompute-from-source ledgers now -- the building-conditioned entries live on
+	// the SPECIALISTS (the deliveryguy own-output home; the old building-side poco getters were stubs). A
+	// building flip can satisfy/unsatisfy those conditions, so mark + fire the triggers the old changers fired.
+	m_specialistExtraYield.markDirty();
+	m_specialistExtraCommerce.markDirty();
+	updateExtraSpecialistYield();
+	updateExtraSpecialistCommerce();
+	AI_makeAssignWorkDirty();
 	//TB Building tags
 	changeExtraNationalCaptureProbabilityModifier(kBuilding.getNationalCaptureProbabilityModifier() * iChange);
 	changeExtraNationalCaptureResistanceModifier(kBuilding.getNationalCaptureResistanceModifier() * iChange);
@@ -8611,7 +8590,7 @@ void CvPlayer::revolution(CivicTypes* paeNewCivics, bool bForce)
 
 	if (getID() == GC.getGame().getActivePlayer())
 	{
-		gDLL->getInterfaceIFace()->setDirty(Popup_DIRTY_BIT, true); // to force an update of the civic chooser popup
+		exeSetUIDirty(Popup_DIRTY_BIT, true); // to force an update of the civic chooser popup
 	}
 }
 
@@ -9383,9 +9362,9 @@ void CvPlayer::setGold(int64_t iNewValue)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(MiscButtons_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+			exeSetUIDirty(MiscButtons_DIRTY_BIT, true);
+			exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
+			exeSetUIDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -9415,9 +9394,9 @@ void CvPlayer::setAdvancedStartPoints(int iNewValue)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(MiscButtons_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+			exeSetUIDirty(MiscButtons_DIRTY_BIT, true);
+			exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
+			exeSetUIDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -9502,7 +9481,7 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+			exeSetUIDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -9578,18 +9557,18 @@ void CvPlayer::changeAnarchyTurns(int iChange, bool bHideMessages)
 
 			if (getID() == GC.getGame().getActivePlayer())
 			{
-				gDLL->getInterfaceIFace()->setDirty(MiscButtons_DIRTY_BIT, true);
+				exeSetUIDirty(MiscButtons_DIRTY_BIT, true);
 			}
 
 			if (getTeam() == GC.getGame().getActiveTeam())
 			{
-				gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
+				exeSetUIDirty(CityInfo_DIRTY_BIT, true);
 			}
 		}
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+			exeSetUIDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -10220,7 +10199,7 @@ void CvPlayer::changeNumOutsideUnits(int iChange)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+			exeSetUIDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -10437,7 +10416,7 @@ int64_t CvPlayer::calcFinalUnitUpkeep(const bool bReal) const
 		// Refresh relevant UI
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+			exeSetUIDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 	return iCalc;
@@ -10450,7 +10429,7 @@ void CvPlayer::setUnitUpkeepDirty() const
 	// Refresh relevant UI
 	if (getID() == GC.getGame().getActivePlayer() && isTurnActive())
 	{
-		gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+		exeSetUIDirty(GameData_DIRTY_BIT, true);
 	}
 }
 
@@ -10490,7 +10469,7 @@ void CvPlayer::changeNumMilitaryUnits(int iChange)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+			exeSetUIDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -10536,7 +10515,7 @@ void CvPlayer::changeMilitaryFoodProductionCount(int iChange, bool bLimited)
 
 		if (!bLimited && getTeam() == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
+			exeSetUIDirty(CityInfo_DIRTY_BIT, true);
 		}
 	}
 }
@@ -11196,7 +11175,7 @@ void CvPlayer::setRevolutionTimer(int iNewValue)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(MiscButtons_DIRTY_BIT, true);
+			exeSetUIDirty(MiscButtons_DIRTY_BIT, true);
 		}
 	}
 }
@@ -11223,7 +11202,7 @@ void CvPlayer::setConversionTimer(int iNewValue)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(MiscButtons_DIRTY_BIT, true);
+			exeSetUIDirty(MiscButtons_DIRTY_BIT, true);
 		}
 	}
 }
@@ -11273,7 +11252,7 @@ void CvPlayer::changeStateReligionCount(int iChange, bool bLimited)
 
 			GC.getGame().AI_makeAssignWorkDirty();
 
-			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+			exeSetUIDirty(Score_DIRTY_BIT, true);
 		}
 
 		checkReligiousDisablingAllBuildings();
@@ -11349,7 +11328,7 @@ void CvPlayer::changeStateReligionUnitProductionModifier(int iChange)
 
 		if (getTeam() == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
+			exeSetUIDirty(CityInfo_DIRTY_BIT, true);
 		}
 	}
 }
@@ -11369,7 +11348,7 @@ void CvPlayer::changeStateReligionBuildingProductionModifier(int iChange)
 
 		if (getTeam() == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
+			exeSetUIDirty(CityInfo_DIRTY_BIT, true);
 		}
 	}
 }
@@ -12111,7 +12090,7 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 			{
 				gDLL->getInterfaceIFace()->clearEventMessages();
 				GC.setResourceLayer(false);
-				//gDLL->getEngineIFace()->setResourceLayer(false);
+				//exeEng(EXEK_RESOURCE_LAYER), gDLL->getEngineIFace()->setResourceLayer(false);
 
 				GC.getGame().setActivePlayer(getID());
 			}
@@ -12252,7 +12231,7 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 			}
 		}
 		gDLL->getInterfaceIFace()->updateCursorType();
-		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+		exeSetUIDirty(Score_DIRTY_BIT, true);
 
 		GC.getMap().invalidateActivePlayerPlotCache();
 	}
@@ -12410,8 +12389,8 @@ void CvPlayer::setFoundedFirstCity(bool bNewValue)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(PercentButtons_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(ResearchButtons_DIRTY_BIT, true);
+			exeSetUIDirty(PercentButtons_DIRTY_BIT, true);
+			exeSetUIDirty(ResearchButtons_DIRTY_BIT, true);
 		}
 	}
 }
@@ -12433,7 +12412,7 @@ void CvPlayer::setStrike(bool bNewValue)
 		{
 			AddDLLMessage(getID(), false, GC.getEVENT_MESSAGE_TIME(), gDLL->getText("TXT_KEY_MISC_UNITS_ON_STRIKE").GetCString(), "AS2D_STRIKE", MESSAGE_TYPE_MINOR_EVENT, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_WARNING_TEXT"));
 
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+			exeSetUIDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -12537,11 +12516,11 @@ void CvPlayer::setCurrentEra(EraTypes eNewValue)
 		}
 
 		//update flag eras
-		gDLL->getInterfaceIFace()->setDirty(Flag_DIRTY_BIT, true);
+		exeSetUIDirty(Flag_DIRTY_BIT, true);
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(Soundtrack_DIRTY_BIT, true);
+			exeSetUIDirty(Soundtrack_DIRTY_BIT, true);
 		}
 
 		if (isHumanPlayer()
@@ -12591,7 +12570,7 @@ void CvPlayer::setLastStateReligion(const ReligionTypes eNewReligion)
 		GC.getGame().updateSecretaryGeneral();
 		GC.getGame().AI_makeAssignWorkDirty();
 
-		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+		exeSetUIDirty(Score_DIRTY_BIT, true);
 
 		if (GC.getGame().isFinalInitialized())
 		{
@@ -12861,7 +12840,7 @@ void CvPlayer::changeYieldRateModifier(YieldTypes eIndex, int iChange)
 
 		if (getTeam() == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
+			exeSetUIDirty(CityInfo_DIRTY_BIT, true);
 		}
 	}
 }
@@ -13069,10 +13048,10 @@ void CvPlayer::setCommercePercent(CommerceTypes eIndex, int iNewValue)
 
 		if (getTeam() == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(CityScreen_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(Financial_Screen_DIRTY_BIT, true);
+			exeSetUIDirty(GameData_DIRTY_BIT, true);
+			exeSetUIDirty(Score_DIRTY_BIT, true);
+			exeSetUIDirty(CityScreen_DIRTY_BIT, true);
+			exeSetUIDirty(Financial_Screen_DIRTY_BIT, true);
 		}
 	}
 }
@@ -13116,7 +13095,7 @@ void CvPlayer::changeCommerceRate(CommerceTypes eIndex, int iChange)
 		m_aiCommerceRate[eIndex] = std::min(m_aiCommerceRate[eIndex]+iChange,MAX_COMMERCE_RATE_VALUE);
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+			exeSetUIDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -13300,7 +13279,7 @@ void CvPlayer::changeGoldPerTurnByPlayer(PlayerTypes eIndex, int iChange)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+			exeSetUIDirty(GameData_DIRTY_BIT, true);
 		}
 
 		if (!isHumanPlayer())
@@ -13379,7 +13358,7 @@ void CvPlayer::changeBonusExport(const BonusTypes eBonus, const int iChange)
 		CvPlotGroup* ownerPlotGroup = pCapitalCity->plotGroup(getID());
 		if (ownerPlotGroup)
 		{
-			ownerPlotGroup->changeNumBonuses(eBonus, -iChange);
+			ownerPlotGroup->changeTradedBonus(eBonus, -iChange);
 		}
 	}
 }
@@ -13414,7 +13393,7 @@ void CvPlayer::changeBonusImport(const BonusTypes eBonus, const int iChange)
 		CvPlotGroup* ownerPlotGroup = pCapitalCity->plotGroup(getID());
 		if (ownerPlotGroup)
 		{
-			ownerPlotGroup->changeNumBonuses(eBonus, iChange);
+			ownerPlotGroup->changeTradedBonus(eBonus, iChange);
 		}
 	}
 }
@@ -13884,21 +13863,26 @@ bool CvPlayer::isBuildingMaxedOut(BuildingTypes eIndex, int iExtra) const
 
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
 
-	if (!isNationalWonder(eIndex))
+	// bNoLimit is the ENFORCEMENT waiver only (identity.noInstanceLimit): the building keeps its national-wonder
+	// CATEGORY (allowed.empire -- the prereq-scaling exemption, the wonder counts) but is never maxed out (the
+	// PALACE relocate case; legacy carried the two axes independently).
+	if (!isNationalWonder(eIndex) || GC.getBuildingInfo(eIndex).isNoLimit())
 	{
 		return false;
 	}
 
-	FAssertMsg(getBuildingCount(eIndex) <= (GC.getBuildingInfo(eIndex).getMaxPlayerInstances() + GC.getBuildingInfo(eIndex).getExtraPlayerInstances()),
-		CvString::format("BuildingCount for %s is expected to be less than or match the number of max player instances plus extra player instances (%d <= %d + %d)",
+	// allowed.empire is the curator-FOLDED cap (max + extra in ONE authored number, json §4.4 "author the real
+	// number"); callers wanting the stricter base-cap check pass the extra as iExtra slack (unchanged legacy
+	// arithmetic: count + extra >= max + extra == count >= max).
+	FAssertMsg(getBuildingCount(eIndex) <= GC.getBuildingInfo(eIndex).getMaxPlayerInstances(),
+		CvString::format("BuildingCount for %s is expected to be less than or match the allowed empire cap (%d <= %d)",
 			GC.getBuildingInfo(eIndex).getType(),
 			getBuildingCount(eIndex),
-			GC.getBuildingInfo(eIndex).getMaxPlayerInstances(),
-			GC.getBuildingInfo(eIndex).getExtraPlayerInstances()
+			GC.getBuildingInfo(eIndex).getMaxPlayerInstances()
 		).c_str()
 	);
 
-	return ((getBuildingCount(eIndex) + iExtra) >= (GC.getBuildingInfo(eIndex).getMaxPlayerInstances() + GC.getBuildingInfo(eIndex).getExtraPlayerInstances()));
+	return ((getBuildingCount(eIndex) + iExtra) >= GC.getBuildingInfo(eIndex).getMaxPlayerInstances());
 }
 
 bool CvPlayer::isBuildingGroupMaxedOut(SpecialBuildingTypes eIndex, int iExtra) const
@@ -13929,7 +13913,7 @@ void CvPlayer::changeBuildingGroupMaking(SpecialBuildingTypes eIndex, int iChang
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(Help_DIRTY_BIT, true);
+			exeSetUIDirty(Help_DIRTY_BIT, true);
 		}
 
 		clearCanConstructCacheForGroup(eIndex, true);
@@ -14062,7 +14046,7 @@ void CvPlayer::changeNoCivicUpkeepCount(CivicOptionTypes eIndex, int iChange)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+			exeSetUIDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -14198,7 +14182,7 @@ void CvPlayer::changeUpkeepCount(UpkeepTypes eIndex, int iChange)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+			exeSetUIDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -14260,7 +14244,7 @@ void CvPlayer::setResearchingTech(TechTypes eIndex, bool bNewValue)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(Popup_DIRTY_BIT, true); // to check whether we still need the tech chooser popup
+			exeSetUIDirty(Popup_DIRTY_BIT, true); // to check whether we still need the tech chooser popup
 		}
 	}
 }
@@ -14492,23 +14476,35 @@ int CvPlayer::getExtraSpecialistYield(SpecialistTypes eIndex1, YieldTypes eIndex
 {
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex1);
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-	return m_ppaaiSpecialistExtraYield[eIndex1][eIndex2];
+	return m_specialistExtraYield.get((int)eIndex1 * NUM_YIELD_TYPES + (int)eIndex2);
 }
 
-
-void CvPlayer::changeExtraSpecialistYield(SpecialistTypes eIndex1, YieldTypes eIndex2, int iChange)
+// The CvDerivedCacheVec recompute: each specialist's empire-scope boost, summed FRESH from its two source
+// kinds -- the SPECIALIST's own conditioned empire deposits (the wonder/building-enabled entries the
+// deliveryguy own-output inversion homed there, e.g. the engineer's +1 while BUILDING_LEONARDOS_WORKSHOP is
+// held empire-wide; evaluated through the ONE evaluator) + the active traits' keyed specialist rows (the
+// trait governing-deliverer carve-out, modifier.md par.4). The old serialized accumulator's building feeders
+// were poco STUBS returning 0, so these boosts never reached the output at all.
+void CvPlayer::recomputeSpecialistExtraYield(std::vector<int>& aOut) const
 {
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-
-	if (iChange != 0)
+	PROFILE_EXTRA_FUNC();
+	static const char* YIELD_CHAN[NUM_YIELD_TYPES] = { "food", "production", "commerce" };
+	aOut.assign(GC.getNumSpecialistInfos() * NUM_YIELD_TYPES, 0);   // rule 2: fully size + define, every call
+	CvCascadeEvalCtx ec;
+	ec.player = this;
+	ec.team = &GET_TEAM(getTeam());
+	for (int iS = 0; iS < GC.getNumSpecialistInfos(); iS++)
 	{
-		m_ppaaiSpecialistExtraYield[eIndex1][eIndex2] += iChange;
-		//TB Note: it should be ok to have a negative total Extra Specialist Yield now
-
-		updateExtraSpecialistYield();
-
-		AI_makeAssignWorkDirty();
+		const CvSpecialistInfo& kSpec = GC.getSpecialistInfo((SpecialistTypes)iS);
+		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+		{
+			int iSum = MMKernel::sumUnit(&kSpec, std::string(YIELD_CHAN[iJ]) + ".empire", "flat", ec);
+			for (int iT = 0; iT < GC.getNumTraitInfos(); iT++)
+			{
+				if (hasTrait((TraitTypes)iT)) iSum += GC.getTraitInfo((TraitTypes)iT).getSpecialistYieldChange(iS, iJ);
+			}
+			aOut[iS * NUM_YIELD_TYPES + iJ] = iSum;
+		}
 	}
 }
 
@@ -14517,19 +14513,45 @@ int CvPlayer::getImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIn
 {
 	FASSERT_BOUNDS(0, GC.getNumImprovementInfos(), eIndex1);
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-	return m_ppaaiImprovementYieldChange[eIndex1][eIndex2];
+	return m_improvementYieldChange.get((int)eIndex1 * NUM_YIELD_TYPES + (int)eIndex2);
 }
 
-
-void CvPlayer::changeImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2, int iChange)
+// The CvDerivedCacheVec recompute (the m_buildingCommerceChange precedent): the empire's keyed
+// improvement-yield total, summed FRESH from its three source kinds -- adopted civics, active traits, and
+// the cascade-ACTIVE buildings' Global rows (the same active verdict the plot fresh-sum reads,
+// DEC-calc-zero-ride-in) -- from getImprovementYieldChange when dirty (dirty on construct/load => never
+// stale/doubled-from-save). const: writes only the recompute-only ledger + the flag.
+void CvPlayer::recomputeImprovementYields(std::vector<int>& aOut) const
 {
-	FASSERT_BOUNDS(0, GC.getNumImprovementInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-
-	if (iChange != 0)
+	PROFILE_EXTRA_FUNC();
+	aOut.assign(GC.getNumImprovementInfos() * NUM_YIELD_TYPES, 0);   // rule 2: fully size + define, every call
+	for (int iO = 0; iO < GC.getNumCivicOptionInfos(); iO++)
 	{
-		m_ppaaiImprovementYieldChange[eIndex1][eIndex2] += iChange;
-		updateYield();
+		const CivicTypes eCivic = getCivics((CivicOptionTypes)iO);
+		if (eCivic == NO_CIVIC) continue;
+		const CvCivicInfo& kCivic = GC.getCivicInfo(eCivic);
+		for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
+			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+				aOut[iI * NUM_YIELD_TYPES + iJ] += kCivic.getImprovementYieldChanges(iI, iJ);
+	}
+	for (int iT = 0; iT < GC.getNumTraitInfos(); iT++)
+	{
+		if (!hasTrait((TraitTypes)iT)) continue;
+		const CvTraitInfo& kTrait = GC.getTraitInfo((TraitTypes)iT);
+		for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
+			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+				aOut[iI * NUM_YIELD_TYPES + iJ] += kTrait.getImprovementYieldChange(iI, iJ);
+	}
+	foreach_(const CvCity* cityX, cities())
+	{
+		const OperatingBuildings& kOps = EnablerKernel::operatingBuildings(cityX);
+		foreach_(const BuildingTypes eB, cityX->getHasBuildings())
+		{
+			if (kOps.active.find((int)eB) == kOps.active.end()) continue;
+			foreach_(const ImprovementArray& pair, GC.getBuildingInfo(eB).getGlobalImprovementYieldChanges())
+				for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+					aOut[(int)pair.first * NUM_YIELD_TYPES + iJ] += pair.second[iJ];
+		}
 	}
 }
 
@@ -14841,9 +14863,9 @@ void CvPlayer::clearResearchQueue()
 
 	if (getTeam() == GC.getGame().getActiveTeam())
 	{
-		gDLL->getInterfaceIFace()->setDirty(ResearchButtons_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+		exeSetUIDirty(ResearchButtons_DIRTY_BIT, true);
+		exeSetUIDirty(GameData_DIRTY_BIT, true);
+		exeSetUIDirty(Score_DIRTY_BIT, true);
 	}
 }
 
@@ -14931,9 +14953,9 @@ bool CvPlayer::pushResearch(TechTypes eTech, bool bClear)
 
 	if (getTeam() == GC.getGame().getActiveTeam())
 	{
-		gDLL->getInterfaceIFace()->setDirty(ResearchButtons_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+		exeSetUIDirty(ResearchButtons_DIRTY_BIT, true);
+		exeSetUIDirty(GameData_DIRTY_BIT, true);
+		exeSetUIDirty(Score_DIRTY_BIT, true);
 	}
 
 	CvEventReporter::getInstance().techSelected(eTech, getID());
@@ -14959,9 +14981,9 @@ void CvPlayer::popResearch(TechTypes eTech)
 
 	if (getTeam() == GC.getGame().getActiveTeam())
 	{
-		gDLL->getInterfaceIFace()->setDirty(ResearchButtons_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+		exeSetUIDirty(ResearchButtons_DIRTY_BIT, true);
+		exeSetUIDirty(GameData_DIRTY_BIT, true);
+		exeSetUIDirty(Score_DIRTY_BIT, true);
 	}
 }
 
@@ -16797,7 +16819,7 @@ bool CvPlayer::doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eT
 	if (pPlot && bShowExplosion && pPlot->isVisible(GC.getGame().getActiveTeam(), false))
 	{
 		EffectTypes eEffect = GC.getEntityEventInfo(GC.getMissionInfo(MISSION_BOMBARD).getEntityEvent()).getEffectType();
-		gDLL->getEngineIFace()->TriggerEffect(eEffect, pPlot->getPoint(), (float)(GC.getASyncRand().get(360)));
+		exeEng(EXEK_EFFECT), gDLL->getEngineIFace()->TriggerEffect(eEffect, pPlot->getPoint(), (float)(GC.getASyncRand().get(360)));
 		gDLL->getInterfaceIFace()->playGeneralSound("AS3D_UN_CITY_EXPLOSION", pPlot->getPoint());
 	}
 
@@ -16861,7 +16883,7 @@ void CvPlayer::setEspionageSpendingWeightAgainstTeam(TeamTypes eIndex, int iValu
 	{
 		m_aiEspionageSpendingWeightAgainstTeam[eIndex] = iValue;
 
-		gDLL->getInterfaceIFace()->setDirty(Espionage_Advisor_DIRTY_BIT, true);
+		exeSetUIDirty(Espionage_Advisor_DIRTY_BIT, true);
 	}
 }
 
@@ -17006,7 +17028,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 
 			if (getID() == GC.getGame().getActivePlayer())
 			{
-				gDLL->getInterfaceIFace()->setDirty(Advanced_Start_DIRTY_BIT, true);
+				exeSetUIDirty(Advanced_Start_DIRTY_BIT, true);
 			}
 		}
 		break;
@@ -17072,7 +17094,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 			}
 			if (getID() == GC.getGame().getActivePlayer())
 			{
-				gDLL->getInterfaceIFace()->setDirty(Advanced_Start_DIRTY_BIT, true);
+				exeSetUIDirty(Advanced_Start_DIRTY_BIT, true);
 			}
 		}
 		break;
@@ -17177,7 +17199,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 
 			if (getID() == GC.getGame().getActivePlayer())
 			{
-				gDLL->getInterfaceIFace()->setDirty(Advanced_Start_DIRTY_BIT, true);
+				exeSetUIDirty(Advanced_Start_DIRTY_BIT, true);
 			}
 		}
 		break;
@@ -17224,7 +17246,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 
 			if (getID() == GC.getGame().getActivePlayer())
 			{
-				gDLL->getInterfaceIFace()->setDirty(Advanced_Start_DIRTY_BIT, true);
+				exeSetUIDirty(Advanced_Start_DIRTY_BIT, true);
 			}
 		}
 		break;
@@ -17284,7 +17306,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 
 			if (getID() == GC.getGame().getActivePlayer())
 			{
-				gDLL->getInterfaceIFace()->setDirty(Advanced_Start_DIRTY_BIT, true);
+				exeSetUIDirty(Advanced_Start_DIRTY_BIT, true);
 			}
 		}
 		break;
@@ -17317,7 +17339,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 
 			if (getID() == GC.getGame().getActivePlayer())
 			{
-				gDLL->getInterfaceIFace()->setDirty(Advanced_Start_DIRTY_BIT, true);
+				exeSetUIDirty(Advanced_Start_DIRTY_BIT, true);
 			}
 		}
 		break;
@@ -17339,7 +17361,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 				{
 					NiColorA color(GC.getColorInfo(GC.getCOLOR_WHITE()).getColor());
 					color.a = 0.4f;
-					gDLL->getEngineIFace()->fillAreaBorderPlot(pPlot->getViewportX(), pPlot->getViewportY(), color, AREA_BORDER_LAYER_CITY_RADIUS);
+					exeEng(EXEK_AREA_BORDER), gDLL->getEngineIFace()->fillAreaBorderPlot(pPlot->getViewportX(), pPlot->getViewportY(), color, AREA_BORDER_LAYER_CITY_RADIUS);
 				}
 			}
 		}
@@ -18189,13 +18211,9 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 			changeFreeSpecialistCount((SpecialistTypes)iI, (kCivic.getFreeSpecialistCount(iI) * iChange));
 		}
 
-		for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-		{
-			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-			{
-				changeImprovementYieldChange(((ImprovementTypes)iI), ((YieldTypes)iJ), (kCivic.getImprovementYieldChanges(iI, iJ) * iChange));
-			}
-		}
+		// keyed improvement yields: a recompute-from-source ledger -- mark + the trigger the old changer fired
+		m_improvementYieldChange.markDirty();
+		updateYield();
 
 		changeForeignTradeRouteModifier(kCivic.getForeignTradeRouteModifier() * iChange);
 		changeReligionSpreadRate(kCivic.getReligionSpreadRate() * iChange);
@@ -18813,13 +18831,16 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		for (int iCiv = 0; iCiv < GC.getNumCivicOptionInfos(); ++iCiv)
 			if (m_paeCivics[iCiv] != NO_CIVIC) { emitCivicAdopted(getID(), (int)m_paeCivics[iCiv], (int)NO_CIVIC); }
 
+		// the per-type specialist boost ledger is a recompute-from-source CvDerivedCacheVec (never read from a
+		// save; savemigration.txt) -- DRAIN the old save's arrays under their original tag and discard.
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
 		{
 			int	iI = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_SPECIALISTS, i, true);
 
 			if ( iI != -1 )
 			{
-				WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_ppaaiSpecialistExtraYield[iI]);
+				int aiDrain[NUM_YIELD_TYPES];
+				WRAPPER_READ_ARRAY_DECORATED(wrapper, "CvPlayer", NUM_YIELD_TYPES, aiDrain, "m_ppaaiSpecialistExtraYield[iI]");
 			}
 			else
 			{
@@ -18828,13 +18849,16 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			}
 		}
 
+		// the keyed improvement-yield ledger is a recompute-from-source CvDerivedCacheVec (never read from a
+		// save; savemigration.txt) -- DRAIN the old save's arrays under their original tag and discard.
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_IMPROVEMENTS); ++i)
 		{
 			int	iI = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_IMPROVEMENTS, i, true);
 
 			if ( iI != -1 )
 			{
-				WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_ppaaiImprovementYieldChange[iI]);
+				int aiDrain[NUM_YIELD_TYPES];
+				WRAPPER_READ_ARRAY_DECORATED(wrapper, "CvPlayer", NUM_YIELD_TYPES, aiDrain, "m_ppaaiImprovementYieldChange[iI]");
 			}
 			else
 			{
@@ -19327,13 +19351,15 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiBuildWorkerSpeedModifierSpecific);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iAIAttitudeModifier);
 
+		// the commerce twin of the specialist boost ledger -- DRAIN and discard (savemigration.txt)
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
 		{
 			int	iI = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_SPECIALISTS, i, true);
 
 			if ( iI != -1 )
 			{
-				WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppaaiSpecialistExtraCommerce[iI]);
+				int aiDrain[NUM_COMMERCE_TYPES];
+				WRAPPER_READ_ARRAY_DECORATED(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, aiDrain, "m_ppaaiSpecialistExtraCommerce[iI]");
 			}
 			else
 			{
@@ -20084,15 +20110,9 @@ void CvPlayer::write(FDataStreamBase* pStream)
 			WRAPPER_WRITE_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CIVICS, m_paeCivics[iI]);
 		}
 
-		for (iI=0;iI<GC.getNumSpecialistInfos();iI++)
-		{
-			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_ppaaiSpecialistExtraYield[iI]);
-		}
-
-		for (iI=0;iI<GC.getNumImprovementInfos();iI++)
-		{
-			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_ppaaiImprovementYieldChange[iI]);
-		}
+		// m_ppaaiSpecialistExtraYield + m_ppaaiImprovementYieldChange: RETIRED (recompute-from-source
+		// CvDerivedCacheVec; savemigration.txt) -- the read-side drains consume them from old saves and no-op
+		// on saves that lack them.
 		m_researchQueue.Write(pStream);
 
 		{
@@ -20351,10 +20371,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiBuildWorkerSpeedModifierSpecific);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iAIAttitudeModifier);
 
-		for (iI=0;iI<GC.getNumSpecialistInfos();iI++)
-		{
-			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppaaiSpecialistExtraCommerce[iI]);
-		}
+		// m_ppaaiSpecialistExtraCommerce: RETIRED (recompute-from-source; savemigration.txt) -- drained on read.
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiFreeCityYield);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiSpecialistExtraYield);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTraitExtraCityDefense);
@@ -23780,7 +23797,7 @@ void CvPlayer::launch(VictoryTypes eVictory)
 	kTeam.finalizeProjectArtTypes();
 	kTeam.setVictoryCountdown(eVictory, kTeam.getVictoryDelay(eVictory));
 
-	gDLL->getEngineIFace()->AddLaunch(getID());
+	exeEng(EXEK_LAUNCH), gDLL->getEngineIFace()->AddLaunch(getID());
 
 	kTeam.setCanLaunch(eVictory, false);
 
@@ -26411,6 +26428,7 @@ void CvPlayer::changeBonusMintedPercent(const BonusTypes eBonus, const int iChan
 	// Process bonus back into cities after change
 	foreach_(CvCity* city, cities())
 	{
+		city->refreshEffectiveBonus(eBonus);   // the minted gate moved: refresh the maintained answer BEFORE re-reads
 		if (city->getNumBonuses(eBonus) > 0)
 		{
 			city->processBonus(eBonus, 1);
@@ -27755,22 +27773,22 @@ void CvPlayer::setColor(PlayerColorTypes eColor)
 	gDLL->getInterfaceIFace()->makeInterfaceDirty();
 
 	// Need to force redraw
-	gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
-	gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
-	gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
-	gDLL->getEngineIFace()->SetDirty(GlobePartialTexture_DIRTY_BIT, true);
+	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
+	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
+	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
+	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(GlobePartialTexture_DIRTY_BIT, true);
 
-	gDLL->getInterfaceIFace()->setDirty(ColoredPlots_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(HighlightPlot_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(MinimapSection_DIRTY_BIT, true);
-	gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(Foreign_Screen_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(GlobeInfo_DIRTY_BIT, true);
+	exeSetUIDirty(ColoredPlots_DIRTY_BIT, true);
+	exeSetUIDirty(HighlightPlot_DIRTY_BIT, true);
+	exeSetUIDirty(CityInfo_DIRTY_BIT, true);
+	exeSetUIDirty(UnitInfo_DIRTY_BIT, true);
+	exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+	exeSetUIDirty(GlobeLayer_DIRTY_BIT, true);
+	exeSetUIDirty(MinimapSection_DIRTY_BIT, true);
+	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
+	exeSetUIDirty(Score_DIRTY_BIT, true);
+	exeSetUIDirty(Foreign_Screen_DIRTY_BIT, true);
+	exeSetUIDirty(GlobeInfo_DIRTY_BIT, true);
 
 	setupGraphical();
 }
@@ -27814,13 +27832,20 @@ int CvPlayer::getModderOption(ModderOptionTypes eIndex) const
 void CvPlayer::setModderOption(ModderOptionTypes eIndex, int iNewValue)
 {
 	FASSERT_BOUNDS(0, NUM_MODDEROPTION_TYPES, eIndex);
+	const bool bChanged = m_aiModderOptions[eIndex] != iNewValue;
 	m_aiModderOptions[eIndex] = iNewValue;
+	// HIDE_REPLACED_BUILDINGS feeds the buildings gate verdict (bd_gate's replaced-hidden leg) -- a toggle
+	// re-gates every city so the build list reflects it immediately.
+	if (bChanged && eIndex == MODDEROPTION_HIDE_REPLACED_BUILDINGS)
+	{
+		foreach_(const CvCity* pCity, cities())
+			BuildingEnabler::gateCity(*pCity);
+	}
 }
 
 void CvPlayer::setModderOption(ModderOptionTypes eIndex, bool bNewValue)
 {
-	FASSERT_BOUNDS(0, NUM_MODDEROPTION_TYPES, eIndex);
-	m_aiModderOptions[eIndex] = bNewValue;
+	setModderOption(eIndex, (int)bNewValue);
 }
 
 int CvPlayer::getCorporationSpreadModifier() const
@@ -28425,28 +28450,16 @@ void CvPlayer::clearModifierTotals()
 		m_paiSpecialistValidCount[iI] = 0;
 	}
 
+	m_specialistExtraYield.markDirty();     // recompute-from-source on next read (never serialized)
+	m_specialistExtraCommerce.markDirty();
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			m_ppaaiSpecialistExtraYield[iI][iJ] = 0;
-		}
-		//TB Traits begin
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			m_ppaaiSpecialistExtraCommerce[iI][iJ] = 0;
-		}
-		//TB Traits end
-
 		m_paiFreeSpecialistCount[iI] = 0;
 	}
 
+	m_improvementYieldChange.markDirty();   // recompute-from-source on next read (never serialized)
 	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
 	{
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			m_ppaaiImprovementYieldChange[iI][iJ] = 0;
-		}
 		m_paiImprovementUpgradeRateModifierSpecific[iI] = 0;
 	}
 
@@ -28624,13 +28637,9 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	//	}
 	//}
 
-	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-	{
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			changeImprovementYieldChange(((ImprovementTypes)iI), ((YieldTypes)iJ), (GC.getTraitInfo(eTrait).getImprovementYieldChange(iI, iJ) * iChange));
-		}
-	}
+	// keyed improvement yields: a recompute-from-source ledger -- mark + the trigger the old changer fired
+	m_improvementYieldChange.markDirty();
+	updateYield();
 
 	//TB Traits begin
 	if (GC.getTraitInfo(eTrait).getMaxAnarchy() > -1)
@@ -28723,21 +28732,17 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 		changeBuildWorkerSpeedModifierSpecific(pair.first, iChange * pair.second);
 	}
 
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			changeExtraSpecialistYield(((SpecialistTypes)iI), ((YieldTypes)iJ), (GC.getTraitInfo(eTrait).getSpecialistYieldChange(iI, iJ) * iChange));
-		}
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			changeExtraSpecialistCommerce(((SpecialistTypes)iI), ((CommerceTypes)iJ), (GC.getTraitInfo(eTrait).getSpecialistCommerceChange(iI, iJ) * iChange));
-		}
+	// per-type specialist boosts: recompute-from-source ledgers -- the trait rows are a recompute source; mark
+	// + fire the triggers the old changers fired.
+	m_specialistExtraYield.markDirty();
+	m_specialistExtraCommerce.markDirty();
+	updateExtraSpecialistYield();
+	updateExtraSpecialistCommerce();
+	AI_makeAssignWorkDirty();
 
-		if ((SpecialistTypes)GC.getTraitInfo(eTrait).getEraAdvanceFreeSpecialistType() == ((SpecialistTypes)iI))
-		{
-			changeEraAdvanceFreeSpecialistCount((SpecialistTypes)GC.getTraitInfo(eTrait).getEraAdvanceFreeSpecialistType(), iChange);
-		}
+	if (GC.getTraitInfo(eTrait).getEraAdvanceFreeSpecialistType() != NO_SPECIALIST)
+	{
+		changeEraAdvanceFreeSpecialistCount((SpecialistTypes)GC.getTraitInfo(eTrait).getEraAdvanceFreeSpecialistType(), iChange);
 	}
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
@@ -29365,24 +29370,30 @@ int CvPlayer::getExtraSpecialistCommerce(SpecialistTypes eIndex1, CommerceTypes 
 {
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex1);
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex2);
-	return m_ppaaiSpecialistExtraCommerce[eIndex1][eIndex2];
+	return m_specialistExtraCommerce.get((int)eIndex1 * NUM_COMMERCE_TYPES + (int)eIndex2);
 }
 
-
-void CvPlayer::changeExtraSpecialistCommerce(SpecialistTypes eIndex1, CommerceTypes eIndex2, int iChange)
+// The commerce twin of recomputeSpecialistExtraYield (see there).
+void CvPlayer::recomputeSpecialistExtraCommerce(std::vector<int>& aOut) const
 {
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex1);
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex2);
-
-	if (iChange != 0)
+	PROFILE_EXTRA_FUNC();
+	static const char* COMMERCE_CHAN[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
+	aOut.assign(GC.getNumSpecialistInfos() * NUM_COMMERCE_TYPES, 0);   // rule 2: fully size + define, every call
+	CvCascadeEvalCtx ec;
+	ec.player = this;
+	ec.team = &GET_TEAM(getTeam());
+	for (int iS = 0; iS < GC.getNumSpecialistInfos(); iS++)
 	{
-		m_ppaaiSpecialistExtraCommerce[eIndex1][eIndex2] += iChange;
-		//TB Note: should be allowed to be negative.
-		//FASSERT_NOT_NEGATIVE(getExtraSpecialistCommerce(eIndex1, eIndex2));
-
-		updateExtraSpecialistCommerce();
-
-		AI_makeAssignWorkDirty();
+		const CvSpecialistInfo& kSpec = GC.getSpecialistInfo((SpecialistTypes)iS);
+		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
+		{
+			int iSum = MMKernel::sumUnit(&kSpec, std::string(COMMERCE_CHAN[iJ]) + ".empire", "flat", ec);
+			for (int iT = 0; iT < GC.getNumTraitInfos(); iT++)
+			{
+				if (hasTrait((TraitTypes)iT)) iSum += GC.getTraitInfo((TraitTypes)iT).getSpecialistCommerceChange(iS, iJ);
+			}
+			aOut[iS * NUM_COMMERCE_TYPES + iJ] = iSum;
+		}
 	}
 }
 

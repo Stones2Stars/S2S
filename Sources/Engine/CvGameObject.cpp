@@ -671,6 +671,23 @@ void CvGameObjectCity::foreachManipulator(ManipCallbackFn func) const
 		}
 	}
 
+	// Empire-wide building sources (the converted <PropertiesAllCities> one-shots -- property-audit.md one-shot
+	// ruling): every instance the OWNER holds anywhere delivers its all-cities sources in THIS city, once per
+	// instance (mirroring the legacy per-instance add). The load-built index keeps this a walk over the handful
+	// of qualifying types, never all building infos.
+	{
+		const CvPlayer& kOwner = GET_PLAYER(m_pCity->getOwner());
+		const std::vector<BuildingTypes>& aAllCities = GC.getAllCitiesManipBuildings();
+		for (size_t iI = 0; iI < aAllCities.size(); iI++)
+		{
+			const int iCount = kOwner.getBuildingCount(aAllCities[iI]);
+			for (int iJ = 0; iJ < iCount; iJ++)
+			{
+				func(GC.getBuildingInfo(aAllCities[iI]).getPropertyManipulatorsAllCities());
+			}
+		}
+	}
+
 	// Religions
 	for (int i=0; i< GC.getNumReligionInfos(); i++)
 	{

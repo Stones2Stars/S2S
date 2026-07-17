@@ -52,10 +52,12 @@ The redesigned endpoint catalogue is [http-endpoints.md](http-endpoints.md).
 ## 4. Logging is a consumer of the event spine
 
 Logging does **not** own the dispatch — it is one **`IEventConsumer`** behind the **[event spine](event-spine.md)**
-(so are the tally and grants). Logging is the **broad** consumer: it takes `DOMAIN`, `DIAGNOSTIC`, and `TRACE`
-events and formats the raw typed payload to text **only when its gate is on** (an off gate costs nothing), teeing
-to `/events`. The spine itself — the KIND firewall (`DOMAIN`/`DIAGNOSTIC`/`TRACE`), the `IEventConsumer` contract,
-the C++ shape — is specced in [event-spine.md](event-spine.md).
+(so are grants and the `/events` stream). Logging is the **broad** FILE consumer: it takes `DOMAIN`,
+`DIAGNOSTIC`, and `TRACE` events and formats the raw typed payload to text **only when its gate is on** (an off
+gate costs nothing). **The `/events` stream is its OWN consumer with its OWN gate** — DOMAIN facts stream
+unconditionally, DIAGNOSTIC/TRACE at `gStreamLogLevel` — so the two surfaces are independent: a line can be in
+either without the other. The spine itself — the KIND firewall (`DOMAIN`/`DIAGNOSTIC`/`TRACE`), the
+`IEventConsumer` contract, the C++ shape — is specced in [event-spine.md](event-spine.md).
 
 ---
 

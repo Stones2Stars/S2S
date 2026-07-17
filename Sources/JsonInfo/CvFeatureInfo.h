@@ -68,7 +68,7 @@ public:
 	DllExport const CvArtInfoFeature* getArtInfo() const;   // EXE map-gen art (merged from the removed shim leaf)
 	const char* getButton() const;                          // art-define button (else CvInfoBase's empty m_szButton)
 
-	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }   // property engine (self-contained; XML-era manip data deferred)
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }   // fed from the grants.repeatable PROPERTY pulses in mapFrom (plot gather)
 
 	// --- arrays / art / audio wired to their real curator addresses (see mapFrom for the reads) ---
 	int getRiverYieldChange(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiRiverYieldChange[i] : 0; }  // the HAS_RIVER-gated yield.plot.flat entries
@@ -142,7 +142,7 @@ private:
 	std::string m_szOnUnitChangeTo;        // grants.onUnitChangeTo
 	std::vector<TerrainTypes> m_aeValidTerrains;   // identity.validTerrains (resolved TERRAIN_ ids)
 	std::vector<MapCategoryTypes> m_aeMapCategories;
-	CvPropertyManipulators m_PropertyManipulators;   // empty -- property engine (#429); XML-era manipulator data deferred to that pass
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the grants.repeatable PROPERTY pulses (CascadePropertyBridge::bridgePulses)
 };
 
 #endif // CV_JSON_FEATURE_INFO_H

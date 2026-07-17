@@ -1079,11 +1079,17 @@ public:
 
 	int64_t getTreasuryUpkeep() const;
 
+	// per-type specialist empire boosts -- recompute-from-source CvDerivedCacheVec reads (never serialized).
+	// Sources: the SPECIALIST's own conditioned empire deposits (wonder/building-enabled, the deliveryguy
+	// own-output home; evaluated) + the active traits' keyed specialist rows. The old serialized accumulators
+	// + their changers are gone (the stub building feeders fed them 0 -- the boosts never landed in output).
 	int getExtraSpecialistYield(SpecialistTypes eIndex1, YieldTypes eIndex2) const;
-	void changeExtraSpecialistYield(SpecialistTypes eIndex1, YieldTypes eIndex2, int iChange);
+	void recomputeSpecialistExtraYield(std::vector<int>& aOut) const;
 
+	// The empire keyed improvement-yield total (civics + active traits + processed buildings' global rows) --
+	// a recompute-from-source CvDerivedCacheVec read (never serialized; dirty on construct/load). The old
+	// serialized accumulator + its changer are gone (the stored-accumulator drift class, modifier.md par.2b).
 	int getImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2) const;
-	void changeImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2, int iChange);
 
 	void updateGroupCycle(CvUnit* pUnit, bool bFarMove);
 	CLLNode<int>* removeGroupCycle(int iID);
@@ -1481,6 +1487,7 @@ public:
 	int getBuildingCommerceChange(BuildingTypes building, CommerceTypes CommerceType) const;
 	void changeBuildingCommerceChange(BuildingTypes building, CommerceTypes CommerceType, int iChange);
 	void recomputeBuildingCommerceChange(std::vector<int>& aOut) const;   // the CvDerivedCacheVec recompute (flat [building × commerce])
+	void recomputeImprovementYields(std::vector<int>& aOut) const;        // the CvDerivedCacheVec recompute (flat [improvement × yield])
 
 	int getBonusCommerceModifier(BonusTypes eBonus, CommerceTypes eIndex) const;
 	void changeBonusCommerceModifier(BonusTypes eBonus, CommerceTypes eIndex, int iChange);
@@ -1596,6 +1603,9 @@ protected:
 	// 2026-07-05 from the hand-rolled int** + dirty-bool pair; flat index = building*NUM_COMMERCE_TYPES + commerce;
 	// never serialized, dirty-on-construct, recompute-from-source)
 	mutable CvDerivedCacheVec<CvPlayer, int> m_buildingCommerceChange;
+	// the empire keyed improvement-yield ledger, same component + shape (flat index = improvement*NUM_YIELD_TYPES
+	// + yield; sources: adopted civics + active traits + cascade-ACTIVE buildings' global rows)
+	mutable CvDerivedCacheVec<CvPlayer, int> m_improvementYieldChange;
 	int** m_ppiBonusCommerceModifier;
 	bool* m_pabAutomatedCanBuild;
 	int* m_paiResourceConsumption;
@@ -2035,9 +2045,11 @@ protected:
 
 	CivicTypes* m_paeCivics;
 
-	int** m_ppaaiSpecialistExtraYield;
-	int** m_ppaaiImprovementYieldChange;
-	int** m_ppaaiSpecialistExtraCommerce;
+	// the per-type specialist empire boosts (flat index = specialist*channels + channel; sources: the
+	// SPECIALIST's own conditioned empire deposits -- the wonder/building-enabled entries the deliveryguy
+	// inversion homed there, evaluated via the ONE evaluator -- + the active traits' keyed specialist rows)
+	mutable CvDerivedCacheVec<CvPlayer, int> m_specialistExtraYield;
+	mutable CvDerivedCacheVec<CvPlayer, int> m_specialistExtraCommerce;
 
 	CLinkList<TechTypes> m_researchQueue;
 
@@ -2154,8 +2166,8 @@ public:
 	void setAIAttitudeModifier(int iNewValue);
 	void changeAIAttitudeModifier(int iChange);
 
-	int getExtraSpecialistCommerce(SpecialistTypes eIndex1, CommerceTypes eIndex2) const;
-	void changeExtraSpecialistCommerce(SpecialistTypes eIndex1, CommerceTypes eIndex2, int iChange);
+	int getExtraSpecialistCommerce(SpecialistTypes eIndex1, CommerceTypes eIndex2) const;   // see getExtraSpecialistYield
+	void recomputeSpecialistExtraCommerce(std::vector<int>& aOut) const;
 	void updateExtraSpecialistCommerce();
 
 	int getSpecialistExtraYield(YieldTypes eIndex) const;

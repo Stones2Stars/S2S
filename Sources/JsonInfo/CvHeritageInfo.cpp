@@ -9,6 +9,7 @@
 #include "CvHeritageInfo.h"
 #include "CvTechInfo.h"       // getPrereqTech reverse scan reads GC.getTechInfo(i).getEdges() -- needs the full type (C2027)
 #include "CvJsonParse.h"          // the shared walkers (jsonChildObj/jsonIdBool)
+#include "CvCascadePropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 
 // Reverse-scan the FORWARD enables.heritages edges the curator store-inverts the two acquisition prereqs onto
 // (curate_heritage.py DROP + store inversion): the tech that lists THIS heritage in enables.heritages is its
@@ -66,6 +67,13 @@ void CvHeritageInfo::mapFrom(const picojson::value& entity)
 	CvInfo::mapFrom(entity);   // core + availability (tech enables.heritages, this heritage's enables.heritages)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
+
+	// PROPERTY_* per-turn SOURCES: a heritage's <PROPERTY_X>.city.flat (the tech-gated folklore education)
+	// deposits in EVERY city while held -- the player gather walks heritages; RELATION_ASSOCIATED fans each
+	// source to every owner city per the curated `city` scope. (The legacy XML carried NO GameObjectType, so
+	// legacy deposited into the PLAYER's own property bag, which nothing reads -- the curated city scope is the
+	// evident intent and the delivery here; property-audit.md carriers note.)
+	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_ASSOCIATED);
 
 	// era-gated empire commerce -- {gold/research/culture/espionage}.empire.flat, each a bare number (one always-on
 	// band, eraMin 0) OR a list of { value, enabled:{type:"ERA", min:N} } era-threshold bands.

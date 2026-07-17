@@ -70,7 +70,9 @@ static void te_gate(const CvPlayer& kPlayer, const CvTeam& kTeam, EnablerDomain&
 	CvCascadeEvalCtx ec;
 	ec.player = &kPlayer;
 	ec.team = &kTeam;
-	d.setGateFailed(iTech, !EnablerKernel::requiresMet(j, ec)
+	CvCascadeEvalFlags gateFlags;
+	d.setGateFailed(iTech, (j != NULL && !cascadeGateOk(j->getGate(), ec, gateFlags))   // entity-level enabled/disabled (DEC-entity-gate)
+	                    || !EnablerKernel::requiresMet(j, ec)
 	                    || !EnablerKernel::allowedOk(j, iTech, kPlayer, false, EDGEB_TECHS));
 }
 

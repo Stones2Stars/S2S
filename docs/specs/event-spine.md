@@ -44,7 +44,16 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   typed index kinds `SFT_BUILDING`/`UNIT`/`BONUS`/…); `spineRenderEventLine` formats. **Zero global field registry,
   zero shared edits per domain** — adding a domain touches only that domain. **The logging consumer is exactly
   `gate(iLevel) → spineRenderEventLine → write`** — no per-event branch, no inline `sprintf`; a line's identity is
-  entirely its registered prefix + fields.
+  entirely its registered prefix + fields. Every rendered line carries the game turn as its first field
+  (`[TAG] t=NNN …`) — after the tag so prefix-anchored greps keep working — making each line self-placing in
+  time (when did this actually fire) instead of inferred from burst position.
+- **The `/events` STREAM is its OWN registered consumer** (`CvSpineStreamConsumer`) — never a tee inside the
+  logging consumer (that chained stream visibility to the FILE gate). **DOMAIN events stream UNCONDITIONALLY**
+  whenever the HTTP server is up (the facts the machine consumers see — the out-of-process replay feed);
+  DIAGNOSTIC/TRACE lines stream at the stream's own verbosity knob (`gStreamLogLevel` /
+  `Autolog__LogLevelStream`), fully decoupled from `gPlayerLogLevel` — streaming everything never requires
+  opening the level-4 file firehose. The SSE queue is capped; on overflow the first frame that fits again
+  reports `[STREAM] dropped=N` — a gap is always visible as a gap, never silent.
 - **Interest guard:** an `m_iInterestMask` bit-test gates dispatch, so the verbose call-site `if(logLevel)` gates
   vanish structurally.
 - **Allocation-free hot path** (stack-buffer formatting, a bounded `/events` queue) — 32-bit ceiling discipline.

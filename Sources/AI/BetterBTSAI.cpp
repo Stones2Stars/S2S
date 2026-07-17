@@ -48,6 +48,24 @@ double gPerfUpdateScoreAccumMs = 0;
 double gPerfUpdateTimersAccumMs = 0;
 double gPerfAssignWorkAccumMs = 0;
 double gPerfTestAliveAccumMs = 0;
+
+// Billboard-poll counters (monotonic; Δcount over Δwall via /computed/perf = the live poll rate) -- the
+// bars-on FPS-drop attribution: EXE draw cost polls nothing; per-frame DLL value polls show here.
+long gPerfBillboardColorPolls = 0;
+long gPerfBillboardProdIconPolls = 0;
+long gPerfFoodDifferenceCalls = 0;
+long gPerfProdTurnsLeftCalls = 0;
+long gPerfFoodBarPolls = 0;
+long gPerfProdBarPolls = 0;
+long gPerfProdDiffCalls = 0;
+// The EXHAUSTIVE billboard-surface census (owner 2026-07-16: trace ALL the data that goes into the billboards):
+// one slot per EXE-callable billboard entry point -- see gPerfBillboardFnNames for the index map.
+long gPerfBillboardFn[16] = { 0 };
+const char* gPerfBillboardFnNames[16] = {
+	"sizeIconColors", "productionIcon", "foodBarPct", "prodBarPct",
+	"barBackgroundColor", "isStarCity", "visibleBuildings", "visibleEffects",
+	"iconString", "nameString", "productionString", "sizeString",
+	"foodbarColors", "prodbarColors", "unused14", "unused15" };
 double gPerfUnitAITypeAccumMs[NUM_UNITAI_TYPES] = {0};
 int    gPerfUnitAITypeAccumN[NUM_UNITAI_TYPES] = {0};
 int    gPerfUnitAITypeForceN[NUM_UNITAI_TYPES] = {0};

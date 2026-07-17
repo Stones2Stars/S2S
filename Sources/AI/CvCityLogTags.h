@@ -40,7 +40,10 @@ enum CitEvent
 	CIT_PRODUCED_PROJECT,    // [CIT/produced] kind=project
 	CIT_SPIN_LOOP_CAP,       // [CIT/spin] reason=produceLoopCap
 	CIT_SPIN_NO_PROD,        // [CIT/spin] reason=noProductionChosen
-	CIT_WASTE                // [CIT/waste]
+	CIT_WASTE,               // [CIT/waste]
+	CIT_ASSIGN_DIRTY,        // [CIT/assign/dirty] -- assignWork false->true transition + the caller's RVA (the churn-storm attribution instrument)
+	CIT_ASSIGN_RUN,          // [CIT/assign/run] -- one AI_assignWorkingPlots run completed (runs/city/turn = the storm shape)
+	CIT_BILLBOARD_POLL       // [CIT/billboard] -- an EXE billboard entry point was called (fn = the census index; the exhaustive billboard-feed trace)
 };
 
 // CIT LOCAL field tags. city/owner are ints (city ID / PlayerTypes); prop is a PropertyTypes index (rendered as int).
@@ -59,7 +62,13 @@ enum CitField
 	CITF_alreadyQueued, CITF_append, CITF_force,
 	CITF_progressLost, CITF_willChoose,
 	CITF_overflow, CITF_lost, CITF_ownerHas, CITF_aiRoleHas,
-	CITF_lostProd, CITF_gold
+	CITF_lostProd, CITF_gold,
+	CITF_callerRva,  // the dirty-setter caller's RVA (module-relative return address; resolve via the PDB: `ln CvGameCoreDLL+<val>`)
+	CITF_fn          // the billboard entry-point census index (gPerfBillboardFnNames)
 };
+
+// The billboard-feed trace (owner 2026-07-16): EVERY billboard entry point emits a [CIT/billboard] spine event
+// per call (+ increments the census counter). Defined once in CvCityAI.cpp; called from CvCity.cpp + CvGameTextMgr.cpp.
+void citEmitBillboardPoll(int iFn, int iCityId);
 
 #endif // CV_CITY_LOG_TAGS_H

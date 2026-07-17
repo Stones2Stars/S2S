@@ -367,8 +367,14 @@ public:
 	bool isNoTradeTech(short iTech) const;
 	void setNoTradeTech(short iTech, bool bNewValue);
 
+	// The team keyed improvement-yield total = the recompute-from-source half (held techs x the improvements'
+	// tech rows; never serialized, dirty on construct/load) + the PERSISTED event-grant store (the Python
+	// wonder-event grants, e.g. TSUKIJI's fishing-boat yields -- genuine one-shot state a recompute cannot
+	// reproduce, so it lives in its own serialized map; the freeBonusEvents/building-commerce-events split).
+	// The changer is the EVENT-GRANT entry (the CyTeam Python path); the old serialized accumulator is gone.
 	int getImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2) const;
 	void changeImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2, int iChange);
+	void recomputeImprovementYields(std::vector<int>& aOut) const;   // the CvDerivedCacheVec recompute (flat [improvement x yield])
 
 	int getBuildingYieldTechChange(const YieldTypes eYield, const BuildingTypes eBuilding) const;
 	int getBuildingYieldTechModifier(const YieldTypes eYield, const BuildingTypes eBuilding) const;
@@ -524,7 +530,11 @@ protected:
 	int** m_ppiBuildingSpecialistChange;
 	int** m_ppiBuildingCommerceModifier;
 	int** m_ppiBuildingYieldModifier;
-	int** m_ppaaiImprovementYieldChange;
+	// the team keyed improvement-yield ledger (flat [improvement x yield]; sources: held techs' improvement
+	// rows + the persisted event grants below)
+	mutable CvDerivedCacheVec<CvTeam, int> m_improvementYieldChange;
+	// Python/WB event grants ONLY (persisted one-shot state; folded by the recompute, never wiped by it)
+	std::map<short, YieldArray> m_improvementYieldEvents;
 
 	int* m_paiFreeSpecialistCount;
 	int* m_aiStolenVisibilityTimer;

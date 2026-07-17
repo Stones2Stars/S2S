@@ -123,8 +123,7 @@ static void bd_seedInto(CityEnabler& en, const CvCity& kCity)
 		if (kCity.isHasReligion((ReligionTypes)r)) bd_applyAxis(d, BuildingEnabler::AX_RELIGION, r, +1);
 	for (int c = 0; c < GC.getNumCorporationInfos(); ++c)
 		if (kCity.isHasCorporation((CorporationTypes)c)) bd_applyAxis(d, BuildingEnabler::AX_CORP, c, +1);
-	for (int bo = 0; bo < GC.getNumBonusInfos(); ++bo)
-		if (kCity.getNumBonuses((BonusTypes)bo) > 0) bd_applyAxis(d, BuildingEnabler::AX_BONUS, bo, +1);
+	// no bonus axis: a plot-group-carried bonus is GATE-ONLY, never membership (owner ruling 2026-07-15)
 	if (kCity.getCultureLevel() != NO_CULTURELEVEL)
 		bd_applyAxis(d, BuildingEnabler::AX_CULTURE, (int)kCity.getCultureLevel(), +1);
 }
@@ -213,11 +212,22 @@ static void bd_gate(const CvCity& kCity, const CvPlayer& kPlayer, const std::set
 {
 	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(iB);
 	bool bDormant = false;
+	bool bReplacedHidden = false;
 	if (j != NULL)
 	{
 		const std::vector<int>& dorm = j->dormantTriggers();
 		for (size_t i = 0; i < dorm.size(); ++i)
 			if (kCity.hasBuilding((BuildingTypes)dorm[i])) { bDormant = true; break; }
+		// the HIDE-REPLACED interface option (the legacy canConstruct replacement leg, post-flip): with the
+		// option on, a candidate whose dormancy successor is REACHABLE hides from the offer -- inTree is the
+		// two-mode read the legacy recursive canConstruct(replacement, bTestVisible=true) maps onto. Freshness:
+		// a source flipping the successor's membership re-gates this predecessor via the one-level REQUIRED_BY
+		// expansion in bd_touched; the option toggle itself re-gates every city (CvPlayer::setModderOption).
+		if (!bDormant && kPlayer.isModderOption(MODDEROPTION_HIDE_REPLACED_BUILDINGS))
+		{
+			for (size_t i = 0; i < dorm.size(); ++i)
+				if (d.inTree(dorm[i])) { bReplacedHidden = true; break; }
+		}
 	}
 	CvCascadeEvalCtx ec;
 	ec.city = &kCity;
@@ -226,7 +236,11 @@ static void bd_gate(const CvCity& kCity, const CvPlayer& kPlayer, const std::set
 	ec.plot = kCity.plot();
 	ec.waivedPrereqBuildings = &waived;
 	EnablerKernel::wireOperatingBuildings(&kCity, ec);
+	CvCascadeEvalFlags gateFlags;
+	gateFlags.strictStateReligionForBuild = true;
 	d.setGateFailed(iB, bDormant
+	                 || bReplacedHidden
+	                 || (j != NULL && !cascadeGateOk(j->getGate(), ec, gateFlags))   // entity-level enabled/disabled (DEC-entity-gate)
 	                 || !EnablerKernel::requiresMet(j, ec)
 	                 || !EnablerKernel::allowedOk(j, iB, kPlayer, /*bUnit*/ false)
 	                 || !bd_groupCapOk(iB, kPlayer));
@@ -255,6 +269,18 @@ static void bd_touched(const CvInfo* j, std::set<int>& touched)
 	for (int f = 0; FAMS[f] != NUM_EDGEF; ++f)
 	{
 		const std::vector<int>* p = j->edge(FAMS[f], EDGEB_BUILDINGS);
+		if (p != NULL) touched.insert(p->begin(), p->end());
+	}
+	// ONE-LEVEL expansion: whoever REQUIRES a touched candidate re-gates too. The hide-replaced gate leg reads
+	// the SUCCESSOR's tree membership, so a source that (un)reaches the successor must re-gate its
+	// predecessors -- carried by the successor's own EDGEF_REQUIRED_BY (the dormant triggers invert there,
+	// DEC-one-reverse-view; other requires-dependents re-gate idempotently).
+	const std::set<int> firstOrder = touched;
+	for (std::set<int>::const_iterator it = firstOrder.begin(); it != firstOrder.end(); ++it)
+	{
+		const CvInfo* jt = InfoRepo<CvBuildingInfo>::get().get(*it);
+		if (jt == NULL) continue;
+		const std::vector<int>* p = jt->edge(EDGEF_REQUIRED_BY, EDGEB_BUILDINGS);
 		if (p != NULL) touched.insert(p->begin(), p->end());
 	}
 }
@@ -439,11 +465,29 @@ void BuildingEnabler::onCityBonusChanged(const CvCity& kCity, int iBonus, int iC
 {
 	EnablerDomain& d = kCity.m_enabler.buildings;
 	if (!d.isSeeded() || iBonus < 0 || iChange == 0) return;
-	// the emit carries the applied COUNT delta (processBonus); HAVE = count > 0, so apply only on a crossing
+	// GATE-ONLY (owner ruling 2026-07-15): a plot-group-carried bonus NEVER drives tree membership -- its
+	// enables edges are the reverse-mapped gate view, and the requires atom (retained target-side) is the one
+	// authority. A network crossing therefore re-gates the bonus's dependents; membership rides the
+	// tech/building/civic edges + the root (bonus-only entities root, curator-derived).
 	const int iNew = kCity.getNumBonuses((BonusTypes)iBonus);
 	const int iOld = iNew - iChange;
-	if ((iOld > 0) == (iNew > 0)) return;
-	bd_applyAxisGated(kCity, d, AX_BONUS, iBonus, iNew > 0 ? +1 : -1);
+	if ((iOld > 0) == (iNew > 0)) return;   // HAVE = count > 0: re-gate only on a presence crossing
+	if (spineGameLoadInProgress()) return;  // load: the one GAME_LOAD_FINISHED gate pass covers it
+	std::set<int> touched;
+	bd_touched(bd_sourceJson(AX_BONUS, iBonus), touched);
+	bd_gateSet(kCity, touched);
+}
+
+// The LOCAL-presence twin: vicinity is a plain "we have it here" fact (never an owned count -- that lives on
+// the plot group), so a flip is a pure gate re-check of the bonus's dependents, same gate-only shape.
+void BuildingEnabler::onCityVicinityBonusChanged(const CvCity& kCity, int iBonus)
+{
+	EnablerDomain& d = kCity.m_enabler.buildings;
+	if (!d.isSeeded() || iBonus < 0) return;
+	if (spineGameLoadInProgress()) return;  // load: the one GAME_LOAD_FINISHED gate pass covers it
+	std::set<int> touched;
+	bd_touched(bd_sourceJson(AX_BONUS, iBonus), touched);
+	bd_gateSet(kCity, touched);
 }
 
 void BuildingEnabler::onCityCultureLevelChanged(const CvCity& kCity, int iOldLevel, int iNewLevel)

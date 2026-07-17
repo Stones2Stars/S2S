@@ -21,6 +21,11 @@
 
 CvPropertyManipulators::~CvPropertyManipulators()
 {
+	clear();
+}
+
+void CvPropertyManipulators::clear()
+{
 	PROFILE_EXTRA_FUNC();
 	foreach_(const CvPropertySource* pSource, m_apSources)
 	{
@@ -34,6 +39,9 @@ CvPropertyManipulators::~CvPropertyManipulators()
 	{
 		delete pPropagator;
 	}
+	m_apSources.clear();
+	m_apInteractions.clear();
+	m_apPropagators.clear();
 }
 
 int CvPropertyManipulators::getNumSources() const
@@ -82,12 +90,19 @@ int CvPropertyManipulators::addSource(PropertySourceTypes eType)
 // --- the JSON->manipulator load bridge (property-audit.md increment A): build fully-configured source/propagator
 // objects directly, mirroring what read() constructs from the XML PropertyManipulators block. ---
 void CvPropertyManipulators::addConstantSource(PropertyTypes eProp, int iAmount, GameObjectTypes eObject,
-	RelationTypes eRelation, int iRelationData)
+	RelationTypes eRelation, int iRelationData, const BoolExpr* pActive)
 {
-	CvPropertySourceConstant* p = new CvPropertySourceConstant(eProp, new IntExprConstant(iAmount));
+	addConstantSource(eProp, new IntExprConstant(iAmount), eObject, eRelation, iRelationData, pActive);
+}
+
+void CvPropertyManipulators::addConstantSource(PropertyTypes eProp, const IntExpr* pAmount, GameObjectTypes eObject,
+	RelationTypes eRelation, int iRelationData, const BoolExpr* pActive)
+{
+	CvPropertySourceConstant* p = new CvPropertySourceConstant(eProp, pAmount);
 	p->setObjectType(eObject);
 	p->setRelation(eRelation);
 	p->setRelationData(iRelationData);
+	if (pActive != NULL) p->setActive(pActive);
 	m_apSources.push_back(p);
 }
 
@@ -106,13 +121,15 @@ void CvPropertyManipulators::addAttributeConstantSource(PropertyTypes eProp, Att
 }
 
 void CvPropertyManipulators::addDiffusePropagator(PropertyTypes eProp, int iPercent, GameObjectTypes eObject,
-	GameObjectTypes eTargetObject, RelationTypes eTargetRelation, int iTargetDistance)
+	GameObjectTypes eTargetObject, RelationTypes eTargetRelation, int iTargetDistance,
+	const BoolExpr* pActive)
 {
 	CvPropertyPropagatorDiffuse* p = new CvPropertyPropagatorDiffuse(eProp, iPercent);
 	p->setObjectType(eObject);
 	p->setTargetObjectType(eTargetObject);
 	p->setTargetRelation(eTargetRelation);
 	p->setTargetRelationData(iTargetDistance);
+	if (pActive != NULL) p->setActive(pActive);
 	m_apPropagators.push_back(p);
 }
 

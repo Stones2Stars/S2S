@@ -4,6 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvExeTrace.h"
 #include "AI/BetterBTSAI.h"
 #include "CvEventSpine.h" // #430: name-change DOMAIN event on setName (Cascade/ is on /I)
 #include "CvCascadeAccumulator.h" // #430 THE ENABLER FLIP: enPromotionValid (isPromotionValid serves the cascade composite)
@@ -410,7 +411,7 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 
 		if (eOwner == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+			exeSetUIDirty(GameData_DIRTY_BIT, true);
 		}
 
 		if (isWorldUnit(eUnit))
@@ -1593,6 +1594,7 @@ void CvUnit::killUnconditional(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 
 void CvUnit::NotifyEntity(MissionTypes eMission)
 {
+	exeIn(EXIN_UNIT_NOTIFY_ENTITY);
 	if ( !isUsingDummyEntities() && isInViewport() )
 	{
 		gDLL->getEntityIFace()->NotifyEntity(getUnitEntity(), eMission);
@@ -1651,7 +1653,7 @@ void CvUnit::doTurn()
 	{
 		m_commodore->restoreControlPoints();
 	}
-	gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+	exeSetUIDirty(InfoPane_DIRTY_BIT, true);
 
 	m_bRevealed = false;
 	if (m_bHasHNCapturePromotion && getOwner() == plot()->getOwner())
@@ -4998,7 +5000,7 @@ void CvUnit::move(CvPlot* pPlot, bool bShow)
 		&& GC.getASyncRand().get(100) < GC.getFeatureInfo(featureType).getEffectProbability())
 		{
 			EffectTypes eEffect = (EffectTypes)GC.getInfoTypeForString(GC.getFeatureInfo(featureType).getEffectType());
-			gDLL->getEngineIFace()->TriggerEffect(eEffect, pPlot->getPoint(), (float)(GC.getASyncRand().get(360)));
+			exeEng(EXEK_EFFECT), gDLL->getEngineIFace()->TriggerEffect(eEffect, pPlot->getPoint(), (float)(GC.getASyncRand().get(360)));
 			gDLL->getInterfaceIFace()->playGeneralSound("AS3D_UN_BIRDS_SCATTER", pPlot->getPoint());
 		}
 	}
@@ -5412,7 +5414,7 @@ void CvUnit::automate(AutomateTypes eAutomate)
 		}
 		if (IsSelected())
 		{
-			gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
+			exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
 		}
 		return;
 	}
@@ -5424,7 +5426,7 @@ void CvUnit::automate(AutomateTypes eAutomate)
 		}
 		if (IsSelected())
 		{
-			gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
+			exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
 		}
 		return;
 	}
@@ -6795,7 +6797,7 @@ bool CvUnit::nuke(int iX, int iY, bool bTrap)
 
 			if (GC.getInfoTypeForString("EFFECT_JETFIGHTER_NUKE_EXPLODE") != -1)
 			{
-				gDLL->getEngineIFace()->TriggerEffect((EffectTypes)GC.getInfoTypeForString("EFFECT_JETFIGHTER_NUKE_EXPLODE"), nukePlot->getPoint(), 0);
+				exeEng(EXEK_EFFECT), gDLL->getEngineIFace()->TriggerEffect((EffectTypes)GC.getInfoTypeForString("EFFECT_JETFIGHTER_NUKE_EXPLODE"), nukePlot->getPoint(), 0);
 				gDLL->getInterfaceIFace()->playGeneralSound("AS2D_NUKE_EXPLODES", nukePlot->getPoint());
 			}
 		}
@@ -7898,7 +7900,7 @@ void CvUnit::updatePlunder(int iChange, bool bUpdatePlotGroups)
 
 	if (bChanged)
 	{
-		gDLL->getInterfaceIFace()->setDirty(BlockadedPlots_DIRTY_BIT, true);
+		exeSetUIDirty(BlockadedPlots_DIRTY_BIT, true);
 
 		if (bUpdatePlotGroups)
 		{
@@ -10158,10 +10160,10 @@ bool CvUnit::promote(PromotionTypes ePromotion, int iLeaderUnitId)
 	{
 		gDLL->getInterfaceIFace()->playGeneralSound(GC.getPromotionInfo(ePromotion).getSound());
 
-		gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
+		exeSetUIDirty(UnitInfo_DIRTY_BIT, true);
 
 // BUG - Update Plot List - start
-		gDLL->getInterfaceIFace()->setDirty(PlotListButtons_DIRTY_BIT, true);
+		exeSetUIDirty(PlotListButtons_DIRTY_BIT, true);
 // BUG - Update Plot List - end
 	}
 	else
@@ -10816,11 +10818,13 @@ int CvUnit::movesLeft() const
 
 bool CvUnit::canMove() const
 {
+	exeIn(EXIN_UNIT_CAN_MOVE);
 	return !isDead() && getMoves() < maxMoves() && getImmobileTimer() < 1;
 }
 
 bool CvUnit::hasMoved()	const
 {
+	exeIn(EXIN_UNIT_HAS_MOVED);
 	return getMoves() > 0;
 }
 
@@ -11246,6 +11250,7 @@ bool CvUnit::canUnitCoexistWithArrivingUnit(const CvUnit& enemyUnit) const
 
 /*DllExport*/ bool CvUnit::isFighting() const
 {
+	exeIn(EXIN_UNIT_IS_FIGHTING);
 #ifdef _DEBUG
 	OutputDebugString("exe is asking if this unit is in battle\n");
 #endif
@@ -11305,7 +11310,10 @@ bool CvUnit::isHurt() const
 
 bool CvUnit::isDead() const
 {
-	return isDelayedDeath() || (getDamage() >= getMaxHP());
+	exeIn(EXIN_UNIT_IS_DEAD);
+	const bool bAnswer = isDelayedDeath() || (getDamage() >= getMaxHP());
+	exeInAnswer(EXIN_UNIT_IS_DEAD, (getOwner() << 24) | getID(), bAnswer ? 1 : 0);
+	return bAnswer;
 }
 
 
@@ -12653,6 +12661,7 @@ bool CvUnit::isAutomated() const
 
 bool CvUnit::isWaiting() const
 {
+	exeIn(EXIN_UNIT_IS_WAITING);
 	return getGroup()->isWaiting();
 }
 
@@ -12864,6 +12873,7 @@ void CvUnit::changeNoInvisibilityCount(int iChange)
 
 bool CvUnit::isInvisible(TeamTypes eTeam, bool bDebug, bool bCheckCargo) const
 {
+	exeIn(EXIN_UNIT_IS_INVISIBLE);
 	PROFILE_EXTRA_FUNC();
 	if (bDebug && GC.getGame().isDebugMode())
 	{
@@ -13612,7 +13622,7 @@ void CvUnit::joinGroup(CvSelectionGroup* pSelectionGroup, bool bRemoveSelected, 
 
 			if (pPlot == gDLL->getInterfaceIFace()->getSelectionPlot())
 			{
-				gDLL->getInterfaceIFace()->setDirty(PlotListButtons_DIRTY_BIT, true);
+				exeSetUIDirty(PlotListButtons_DIRTY_BIT, true);
 			}
 		}
 
@@ -13652,7 +13662,7 @@ void CvUnit::setHotKeyNumber(int iNewValue)
 
 		if (IsSelected())
 		{
-			gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+			exeSetUIDirty(InfoPane_DIRTY_BIT, true);
 		}
 	}
 }
@@ -13660,6 +13670,7 @@ void CvUnit::setHotKeyNumber(int iNewValue)
 
 int CvUnit::getViewportX() const
 {
+	exeIn(EXIN_UNIT_VIEWPORT_XY);
 	const CvViewport* pCurrentViewPort = GC.getCurrentViewport();
 	FAssert(pCurrentViewPort != NULL);
 
@@ -13669,6 +13680,7 @@ int CvUnit::getViewportX() const
 
 int CvUnit::getViewportY() const
 {
+	exeIn(EXIN_UNIT_VIEWPORT_XY);
 	const CvViewport* pCurrentViewPort = GC.getCurrentViewport();
 	FAssert(pCurrentViewPort != NULL);
 
@@ -13905,7 +13917,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 		{
 			gDLL->getInterfaceIFace()->verifyPlotListColumn();
 
-			gDLL->getInterfaceIFace()->setDirty(PlotListButtons_DIRTY_BIT, true);
+			exeSetUIDirty(PlotListButtons_DIRTY_BIT, true);
 		}
 	}
 
@@ -14095,7 +14107,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 		if (pNewPlot == gDLL->getInterfaceIFace()->getSelectionPlot())
 		{
 			gDLL->getInterfaceIFace()->verifyPlotListColumn();
-			gDLL->getInterfaceIFace()->setDirty(PlotListButtons_DIRTY_BIT, true);
+			exeSetUIDirty(PlotListButtons_DIRTY_BIT, true);
 		}
 
 		// Pillage on move: Only if unowned tile, or at war
@@ -14181,14 +14193,14 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 	{
 		if (isFound())
 		{
-			gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
+			exeSetUIDirty(GlobeLayer_DIRTY_BIT, true);
 
 			if (!isUsingDummyEntities() && isInViewport())
 			{
-				gDLL->getEngineIFace()->updateFoundingBorder();
+				exeEng(EXEK_FOUNDING_BORDER), gDLL->getEngineIFace()->updateFoundingBorder();
 			}
 		}
-		gDLL->getInterfaceIFace()->setDirty(ColoredPlots_DIRTY_BIT, true);
+		exeSetUIDirty(ColoredPlots_DIRTY_BIT, true);
 	}
 
 	//update glow
@@ -14208,6 +14220,7 @@ bool CvUnit::at(int iX, int iY) const
 
 bool CvUnit::atPlot(const CvPlot* pPlot) const
 {
+	exeIn(EXIN_UNIT_AT_PLOT);
 	return plot() == pPlot;
 }
 
@@ -14222,6 +14235,7 @@ CvPlot* CvUnit::plot() const
 
 /*DllExport*/ CvPlot* CvUnit::plotExternal() const
 {
+	exeIn(EXIN_UNIT_PLOT_EXTERNAL);
 #ifdef _DEBUG
 	OutputDebugString("exe is asking for the plot of this unit\n");
 #endif
@@ -14308,6 +14322,8 @@ void CvUnit::setGameTurnCreated(int iNewValue)
 
 int CvUnit::getDamage() const
 {
+	exeIn(EXIN_UNIT_GET_DAMAGE);
+	exeInAnswer(EXIN_UNIT_GET_DAMAGE, (getOwner() << 24) | getID(), m_iDamage);
 	return m_iDamage;
 }
 
@@ -14407,12 +14423,12 @@ void CvUnit::setDamage(int iNewValue, PlayerTypes ePlayer, bool bNotifyEntity, U
 
 			if (IsSelected())
 			{
-				gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+				exeSetUIDirty(InfoPane_DIRTY_BIT, true);
 			}
 
 			if (plot() == gDLL->getInterfaceIFace()->getSelectionPlot())
 			{
-				gDLL->getInterfaceIFace()->setDirty(PlotListButtons_DIRTY_BIT, true);
+				exeSetUIDirty(PlotListButtons_DIRTY_BIT, true);
 			}
 		}
 	}
@@ -14474,7 +14490,7 @@ void CvUnit::setMoves(int iNewValue)
 			if (canMove())
 			{
 				gDLL->getFAStarIFace()->ForceReset(&GC.getInterfacePathFinder());
-				gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+				exeSetUIDirty(InfoPane_DIRTY_BIT, true);
 			}
 			/* Toffer - make it a bug option - Unselect units upon expending all movement points.
 			else if (getGroup()->canAnyMove())
@@ -14486,7 +14502,7 @@ void CvUnit::setMoves(int iNewValue)
 
 		if (pPlot == gDLL->getInterfaceIFace()->getSelectionPlot())
 		{
-			gDLL->getInterfaceIFace()->setDirty(PlotListButtons_DIRTY_BIT, true);
+			exeSetUIDirty(PlotListButtons_DIRTY_BIT, true);
 		}
 	}
 }
@@ -14519,7 +14535,7 @@ void CvUnit::setExperience100(int iNewValue)
 
 		if (IsSelected())
 		{
-			gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+			exeSetUIDirty(InfoPane_DIRTY_BIT, true);
 		}
 	}
 }
@@ -14631,7 +14647,7 @@ void CvUnit::setLevel(int iNewValue)
 
 		if (IsSelected())
 		{
-			gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+			exeSetUIDirty(InfoPane_DIRTY_BIT, true);
 		}
 	}
 }
@@ -16654,7 +16670,7 @@ void CvUnit::setPromotionReady(bool bNewValue)
 
 		if (IsSelected())
 		{
-			gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
+			exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
 		}
 	}
 }
@@ -16908,12 +16924,12 @@ void CvUnit::setCombatUnit(CvUnit* pCombatUnit, bool bAttacking, bool bQuick, bo
 
 		if (IsSelected())
 		{
-			gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+			exeSetUIDirty(InfoPane_DIRTY_BIT, true);
 		}
 
 		if (plot() == gDLL->getInterfaceIFace()->getSelectionPlot())
 		{
-			gDLL->getInterfaceIFace()->setDirty(PlotListButtons_DIRTY_BIT, true);
+			exeSetUIDirty(PlotListButtons_DIRTY_BIT, true);
 		}
 
 		if (!isUsingDummyEntities() && isInViewport())
@@ -17142,7 +17158,7 @@ void CvUnit::setName(CvWString szNewValue)
 
 	if (IsSelected())
 	{
-		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
 	}
 }
 
@@ -17475,7 +17491,7 @@ void CvUnit::changeExtraUnitCombatModifier(UnitCombatTypes eIndex, int iChange)
 	}
 }
 
-bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, PromotionRequirements::flags requirements) const
+bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, PromotionRequirements::flags requirements, int* piFailLeg) const
 {
 	return canAcquirePromotion(ePromotion,
 		requirements & PromotionRequirements::IgnoreHas,
@@ -17484,11 +17500,12 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, PromotionRequirement
 		requirements & PromotionRequirements::ForOffset,
 		requirements & PromotionRequirements::ForFree,
 		requirements & PromotionRequirements::ForBuildUp,
-		requirements & PromotionRequirements::ForStatus
+		requirements & PromotionRequirements::ForStatus,
+		piFailLeg
 	);
 }
 
-bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, bool bEquip, bool bForLeader, bool bForOffset, bool bForFree, bool bForBuildUp, bool bForStatus) const
+bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, bool bEquip, bool bForLeader, bool bForOffset, bool bForFree, bool bForBuildUp, bool bForStatus, int* piFailLeg) const
 {
 	PROFILE_FUNC();
 
@@ -17496,24 +17513,24 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 
 	if (ePromotion == NO_PROMOTION || !bIgnoreHas && isHasPromotion(ePromotion))
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	const CvPromotionInfo& promo = GC.getPromotionInfo(ePromotion);
 
 	if (!bForStatus && promo.isStatus())
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	if (promo.getStateReligionPrereq() != NO_RELIGION && GET_PLAYER(getOwner()).getStateReligion() != promo.getStateReligionPrereq())
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	if (!isPromotionValid(ePromotion, bForFree))
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 
@@ -17522,42 +17539,42 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 	//promotions, and the check being called here is not for that specific purpose, then return false for that promotion.
 	if (!bForLeader && promo.isLeader())
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	if (!bForOffset && promo.isForOffset())
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	if (promo.getObsoleteTech() != NO_TECH && GET_TEAM(getTeam()).isHasTech(promo.getObsoleteTech()))
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	//Units without a primary unitcombat are unable to be assigned promos
 	if (getUnitCombatType() == NO_UNITCOMBAT)
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	if (promo.getReplacesUnitCombat() != NO_UNITCOMBAT && !isHasUnitCombat(promo.getReplacesUnitCombat()))
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	if (getLevel() < promo.getLevelPrereq() && !bForOffset)
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 	if (promo.isRBombardPrereq() && !canRBombard(true))
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 	const CvPlot* pPlot = plot();
 	if ((m_pUnitInfo != NULL && pPlot != NULL) && (!isMapCategory(*pPlot, promo) || !isMapCategory(*m_pUnitInfo, promo)))
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 	//TB Combat Mods Begin
 	if (!bForFree || bForBuildUp)
@@ -17566,7 +17583,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 
 		if (ePromotionPrerequisite != NO_PROMOTION && !isHasPromotion(ePromotionPrerequisite))
 		{
-			return false;
+			{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 		}
 		const PromotionTypes ePromotionPrerequisite1 = promo.getPrereqOrPromotion1();
 		const PromotionTypes ePromotionPrerequisite2 = promo.getPrereqOrPromotion2();
@@ -17575,7 +17592,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 		&&  (ePromotionPrerequisite1 == NO_PROMOTION || !isHasPromotion(ePromotionPrerequisite1))
 		&&  (ePromotionPrerequisite2 == NO_PROMOTION || !isHasPromotion(ePromotionPrerequisite2)))
 		{
-			return false;
+			{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 		}
 	}
 
@@ -17592,7 +17609,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 					if (
 						iMinEraInt > NO_ERA && iMinEraInt > iEra
 					||	iMaxEraInt > NO_ERA && iMaxEraInt < iEra
-					) return false;
+					) { if (piFailLeg) *piFailLeg = __LINE__; return false; }
 
 					break;
 				}
@@ -17605,7 +17622,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 		//If we have the unitcombat the promotion will give us already
 		if (isHasUnitCombat((UnitCombatTypes)promo.getSubCombatChangeType(iI)))
 		{
-			return false;
+			{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 		}
 	}
 	const PromotionLineTypes ePromotionLine = promo.getPromotionLine();
@@ -17613,7 +17630,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 	if (bForBuildUp && (ePromotionLine == NO_PROMOTIONLINE || !GC.getPromotionLineInfo(ePromotionLine).isBuildUp())
 	|| !bForBuildUp && ePromotionLine != NO_PROMOTIONLINE && GC.getPromotionLineInfo(ePromotionLine).isBuildUp())
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	if (
@@ -17621,7 +17638,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 	||
 		ePromotionLine != NO_PROMOTIONLINE
 	&&	GC.getPromotionLineInfo(ePromotionLine).isNotOnDomainType((int)getDomainType())
-	) return false;
+	) { if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	//TB SubCombat Mod End
 
 	// Must have the next less promotionline priority unless this is an affliction, equipment, or BuildUp or Status.
@@ -17634,7 +17651,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 			const PromotionTypes ePrereq = (PromotionTypes)promoLine.getPromotion(iJ);
 			if (GC.getPromotionInfo(ePrereq).getLinePriority() == promo.getLinePriority() - 1 && !isHasPromotion(ePrereq))
 			{
-				return false;
+				{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 			}
 		}
 	}
@@ -17657,7 +17674,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 					{
 						if (kPrereqPromotion.getLinePriority() == promo.getLinePriority())
 						{
-							return false;
+							{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 						}
 						if (promo.getLinePriority() == 1)
 						{
@@ -17671,34 +17688,34 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 		}
 		if (!bPrereqFound)
 		{
-			return false;
+			{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 		}
 	}
 	//TB Combat Mod end
 
 	if	(promo.isCargoPrereq() && cargoSpace() < 1)
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	if (promo.getSpecialCargoPrereq() != NO_SPECIALUNIT
 	&&  promo.getSpecialCargoPrereq() != getSpecialCargo())
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS)
 	&& promo.getSMNotSpecialCargoPrereq() != NO_SPECIALUNIT
 	&& promo.getSMNotSpecialCargoPrereq() != getSMNotSpecialCargo())
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	if (!bForFree)
 	{
 		if (promo.getTechPrereq() != NO_TECH && !GET_TEAM(getTeam()).isHasTech(promo.getTechPrereq()))
 		{
-			return false;
+			{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 		}
 		if (ePromotionLine != NO_PROMOTIONLINE
 		&&
@@ -17706,7 +17723,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 		&&
 			!GET_TEAM(getTeam()).isHasTech(GC.getPromotionLineInfo(ePromotionLine).getPrereqTech()))
 		{
-			return false;
+			{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 		}
 	}
 
@@ -17745,7 +17762,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 	}
 	if (!bValid)
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	for (int iI = 0; iI < promo.getNumPrereqFeatureTypes(); iI++)
@@ -17764,7 +17781,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 	}
 	if (!bValid)
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	// Improvements and buildings is an OR statement between all of them.
@@ -17811,7 +17828,7 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 	}
 	if (!bValid)
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	for (int iI = 0; iI < promo.getNumPrereqPlotBonusTypes(); iI++)
@@ -17830,17 +17847,17 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 	}
 	if (!bValid)
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	if (promo.isPrereqNormInvisible() && !hasInvisibleAbility())
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	if (!bForOffset && promo.getQualityChange() > 0 && getRetrainsAvailable() > 0)
 	{
-		return false;
+		{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
 	}
 
 	return true;
@@ -18620,8 +18637,8 @@ void CvUnit::setHasUnitCombat(UnitCombatTypes eIndex, bool bNewValue, bool bByPr
 			//  Not entirely sure this will be necessary?  Koshling what say you?
 			if (IsSelected())
 			{
-				gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
-				gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+				exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
+				exeSetUIDirty(InfoPane_DIRTY_BIT, true);
 			}
 
 			//update graphics
@@ -19205,8 +19222,8 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue, bool bFree, 
 			//	Updates the grpahics last after everything is calculated
 			if (IsSelected())
 			{
-				gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
-				gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+				exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
+				exeSetUIDirty(InfoPane_DIRTY_BIT, true);
 			}
 
 			//update graphics
@@ -24206,7 +24223,7 @@ void CvUnit::spyNuke(int iX, int iY, bool bCaught)
 	//This is just so the espionage mission makes the cool explosion effect.
 	if (GC.getInfoTypeForString("EFFECT_ICBM_NUCLEAR_EXPLOSION") != -1)
 	{
-		gDLL->getEngineIFace()->TriggerEffect((EffectTypes)GC.getInfoTypeForString("EFFECT_ICBM_NUCLEAR_EXPLOSION"), pPlot->getPoint(), 0);
+		exeEng(EXEK_EFFECT), gDLL->getEngineIFace()->TriggerEffect((EffectTypes)GC.getInfoTypeForString("EFFECT_ICBM_NUCLEAR_EXPLOSION"), pPlot->getPoint(), 0);
 		gDLL->getInterfaceIFace()->playGeneralSound("AS2D_NUKE_EXPLODES", pPlot->getPoint());
 	}
 	pPlot->nukeExplosion(0);
@@ -26047,10 +26064,10 @@ void CvUnit::statusUpdate(PromotionTypes eStatus)
 	{
 		gDLL->getInterfaceIFace()->playGeneralSound(GC.getPromotionInfo(eStatus).getSound());
 
-		gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
+		exeSetUIDirty(UnitInfo_DIRTY_BIT, true);
 
 // BUG - Update Plot List - start
-		gDLL->getInterfaceIFace()->setDirty(PlotListButtons_DIRTY_BIT, true);
+		exeSetUIDirty(PlotListButtons_DIRTY_BIT, true);
 // BUG - Update Plot List - end
 	}
 	else

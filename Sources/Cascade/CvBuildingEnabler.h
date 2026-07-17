@@ -74,7 +74,8 @@ public:
 	static void onCityBuildingChanged(const CvCity& kCity, int iBuilding, bool bPresent);
 	static void onCityReligionChanged(const CvCity& kCity, int iReligion, bool bHas);
 	static void onCityCorporationChanged(const CvCity& kCity, int iCorporation, bool bHas);
-	static void onCityBonusChanged(const CvCity& kCity, int iBonus, int iChange);     // count delta; applies on a 0-crossing
+	static void onCityBonusChanged(const CvCity& kCity, int iBonus, int iChange);     // network count delta; re-gates on a 0-crossing
+	static void onCityVicinityBonusChanged(const CvCity& kCity, int iBonus);          // LOCAL presence flip; re-gates vicinity dependents
 	static void onCityCultureLevelChanged(const CvCity& kCity, int iOldLevel, int iNewLevel);
 	static void onPlayerCivicsChanged(PlayerTypes ePlayer, int iOldCivic, int iNewCivic);
 

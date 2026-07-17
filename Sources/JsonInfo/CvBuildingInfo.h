@@ -104,15 +104,15 @@ public:
 	bool isAllowsNukes() const             { return m_bAllowsNukes; }
 	bool isQuarantine() const              { return getAttributes()->has("quarantine"); }
 	// requires-derived flags (reconstructed in reconstructFromComposed) + documented curator-gaps.
-	bool isPrereqPower() const             { return m_bPower; }   // REAL requires.build HAS_POWER (NB curator collapses bPower/bPrereqPower into ONE HAS_POWER atom -> isPower()==isPrereqPower(), the "provides vs requires" distinction is lost)
+	bool isPrereqPower() const             { return m_bPower; }   // REAL requires.operate HAS_POWER (NEEDS power; the engine dorms on power loss)
 	bool isApplyFreePromotionOnMove() const{ return false; }   // CURATOR-GAP: dropped as redundant (all freePromotions are end-turn-stay)
 	bool isNoEnemyPillagingIncome() const  { return false; }   // CURATOR-GAP: dead field (DROP_DEAD)
 	bool isPrereqWar() const               { return false; }   // DEAD: ZERO buildings author bPrereqWar=1 (verified 2026-07-11); the engine war-dormancy path (CvCity.cpp:21374) has no data. A future war-gated building = requires.operate predicate, not this bool.
 	bool isRequiresActiveCivics() const    { return false; }   // DEAD-as-getter: its meaning (build-vs-operate for civic prereqs) is FULLY captured -- all 144 civic-prereq buildings ARE RequiresActiveCivics, so curate_building emits PrereqOr/AndCivics -> requires.operate (exact); NO build-only civic building exists (verified 2026-07-11). No consumer needs the standalone bool.
 	bool isWater() const                   { return m_bWater; }   // REAL requires.build HAS_COAST
 	bool isRiver() const                   { return m_bRiver; }   // REAL requires.build HAS_RIVER
-	bool isFreshWater() const              { return m_bFreshWater; } // REAL requires.build HAS_FRESHWATER
-	bool isPower() const                   { return m_bPower; }   // REAL requires.build HAS_POWER (see isPrereqPower conflation note)
+	bool isFreshWater() const              { return m_bFreshWater; } // REAL requires.operate HAS_FRESHWATER (NEEDS fresh water; the engine dorms on loss)
+	bool isPower() const                   { return getAttributes()->has("providesPower"); }   // REAL attributes.providesPower: the building PROVIDES power (the power-plant flag feeding changePowerCount)
 	bool isNoHolyCity() const              { return m_bNoHolyCity; } // REAL requires.build.disabled IS_HOLY_CITY
 	bool isGoldenAge() const               { return getGrants()->flag("goldenAge"); }   // REAL grants.goldenAge
 	bool needStateReligionInCity() const   { return m_bNeedStateReligionInCity; }   // REAL requires.build STATE_RELIGION_IN_CITY
@@ -344,6 +344,10 @@ public:
 	const IDValueMap<TechTypes, CommerceArray>& getTechCommerceModifiers() const { return m_techCommerceModifiers; }// REAL <commerce>.city percent enabled TECH
 	const IDValueMap<ImprovementTypes, YieldArray>& getImprovementYieldChanges() const { return m_aImprovementYieldChanges; }  // REAL <yield>.city.improvements.<IMP>
 	const IDValueMap<ImprovementTypes, YieldArray>& getGlobalImprovementYieldChanges() const { return m_aGlobalImprovementYieldChanges; } // REAL <yield>.empire.improvements.<IMP>
+	// the doPostLoadCaching upgrade-chain expansion's writers (a building yield keyed to an improvement also
+	// lands on its upgrade DESCENDANTS -- the authored row keys the ancestor only)
+	void addImprovementYieldRow(ImprovementTypes eImp, const YieldArray& yields)       { m_aImprovementYieldChanges.addArrayValue(eImp, yields); }
+	void addGlobalImprovementYieldRow(ImprovementTypes eImp, const YieldArray& yields) { m_aGlobalImprovementYieldChanges.addArrayValue(eImp, yields); }
 	const IDValueMap<BuildingTypes, int>& getBuildingProductionModifiers() const { return m_aBuildingProductionModifier; }       // REAL buildRate.city.buildings.<BUILDING>
 	const IDValueMap<BuildingTypes, int>& getGlobalBuildingProductionModifiers() const { return m_aGlobalBuildingProductionModifier; } // REAL buildRate.empire.buildings.<BUILDING>
 	const IDValueMap<BuildingTypes, int>& getGlobalBuildingCostModifiers() const { return m_aGlobalBuildingCostModifier; }       // REAL costs.empire percent enabled BUILDING
@@ -358,13 +362,17 @@ public:
 	const std::vector<MapCategoryTypes>& getMapCategories() const            { return m_aeMapCategoryTypes; }      // REAL (identity.mapCategories)
 	const std::vector<FreePromoTypes>& getFreePromoTypes() const             { return m_aFreePromoTypes; }         // REAL grants.freePromotions (populated in mapFrom)
 	const std::vector<TraitTypes>& getFreeTraitTypes() const                 { return m_aiFreeTraitTypes; }        // REAL enables.traits (populated in mapFrom)
-	const CvProperties* getProperties() const                { return &m_Properties; }              // STUB empty -- per-PROPERTY families in m_modifiers, not reconstructed
-	const CvProperties* getPropertiesAllCities() const        { return &m_PropertiesAllCities; }      // STUB empty
+	const CvProperties* getProperties() const                { return &m_Properties; }              // EMPTY by ruling -- one-shots re-classified per-turn (property-audit.md one-shot ruling); nothing is held
+	const CvProperties* getPropertiesAllCities() const        { return &m_PropertiesAllCities; }      // EMPTY by ruling -- ditto (the empire entries ride getPropertyManipulatorsAllCities)
 	const CvProperties* getPrereqMinProperties() const        { return &m_PrereqMinProperties; }      // STUB empty
 	const CvProperties* getPrereqMaxProperties() const        { return &m_PrereqMaxProperties; }      // STUB empty
 	const CvProperties* getPrereqPlayerMinProperties() const  { return &m_PrereqPlayerMinProperties; }// STUB empty
 	const CvProperties* getPrereqPlayerMaxProperties() const  { return &m_PrereqPlayerMaxProperties; }// STUB empty
-	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; } // STUB empty -- XML-era manipulator data deferred (mirrors CvCorporationInfo)
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; } // fed from the PROPERTY_*.{city|plot} families in mapFrom (property-audit.md increments B+4)
+	// The building's EMPIRE-scope per-turn sources (the converted <PropertiesAllCities> one-shots, curated
+	// PROPERTY_X.empire.flat): delivered in EVERY city of the owner by the CvGameObjectCity::foreachManipulator
+	// all-cities walk, count-scaled (property-audit.md one-shot ruling / revived increment 5).
+	const CvPropertyManipulators* getPropertyManipulatorsAllCities() const { return &m_PropertyManipulatorsAllCities; }
 	const BoolExpr* getConstructCondition() const { return NULL; }   // CURATOR-GAP (by design): ConstructCondition dissolved into requires.build atoms (boolexpr.merge_into); no standalone BoolExpr emitted
 
 	// --- Python-binding list wrappers (CyInfoInterface1 .def-binds these). Each returns a boost::python::list built
@@ -609,6 +617,7 @@ private:
 	CvProperties m_PrereqPlayerMinProperties;
 	CvProperties m_PrereqPlayerMaxProperties;
 	CvPropertyManipulators m_PropertyManipulators;
+	CvPropertyManipulators m_PropertyManipulatorsAllCities;   // empire-scope per-turn sources (converted <PropertiesAllCities>)
 
 	// ===== GROUP 1: requires-condition-tree reconstruction (populated in reconstructFromComposed) =====
 	int m_iMinAreaSize, m_iMinLatitude, m_iMaxLatitude, m_iNumCitiesPrereq, m_iNumTeamsPrereq, m_iPrereqPopulation;

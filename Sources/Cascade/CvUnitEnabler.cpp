@@ -7,9 +7,13 @@
 #include "CvGameCoreDLL.h"
 #include "CvUnitEnabler.h"
 #include "CvEnabler.h"            // EnablerDomain/CityEnabler -- the standardized per-city domain (CvCity::m_enabler)
-#include "CvEnablerKernel.h"      // EnablerKernel::applyEdges / obsoletedByHeldTech / obsoletedByOtherHeldTech
+#include "CvEnablerKernel.h"      // EnablerKernel::applyEdges / obsoletedByHeldTech / scanCondDeps / wireOperatingBuildings
+#include "CvBuildingEnabler.h"    // BuildingEnabler::augmentWaived -- the SHARED AugmentState waiver (one evaluator)
+#include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx/Flags + cascadeEvalCondition + cascadeGateOk
+#include "CvCascadeTally.h"       // cascadeTally -- the empire live-count leg of the instance cap
+#include "CvEventSpine.h"         // spineGameLoadInProgress -- load gates once at GAME_LOAD_FINISHED, never mid-read
 #include "CvInfo.h"
-#include "CvUnitInfo.h"           // spawnOnly -- the static never-trainable exclusion
+#include "CvUnitInfo.h"           // spawnOnly / m_superseding -- the static exclusion + the replacedBy poco read
 #include "CvBuildingInfo.h"
 #include "CvTechInfo.h"           // cascadeStartNode -- the TECH_GAME_START root redirect (the tech HAVE axis)
 #include "CvCivicInfo.h"
@@ -20,8 +24,10 @@
 #include "AI/CvTeamAI.h"          // GET_TEAM
 #include "Defines/CvGlobals.h"
 #include "Engine/CvCity.h"
+#include "Engine/CvGame.h"        // getUnitCreatedCount / GAMEOPTION_NO_NATIONAL_UNIT_LIMIT (the cap legs)
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
+#include <map>
 
 // the source's cascade info per axis (the tech axis redirects the TECH_GAME_START root to cascadeStartNode).
 // Units' HAVE axes per the store's enables.units inversion sources: techs, buildings, bonuses, religions, civics.
@@ -30,6 +36,10 @@ static const CvInfo* ud_techJson(int iTech)
 	if (iTech == GC.getInfoTypeForString("TECH_GAME_START", true)) return &cascadeStartNode();
 	return InfoRepo<CvTechInfo>::get().get(iTech);
 }
+
+// forward decls -- the requires-gate helpers (the gate section below); the appliers call them post-apply
+static void ud_gateSet(const CvCity& kCity, const std::set<int>& ids);
+static void ud_touched(const CvInfo* j, std::set<int>& touched);
 
 // The CITY-CREATED applier (founding init + the load read's start, BEFORE the city's own in-read emits): init
 // the domain (size + the spawnOnly static exclusions) and fold ONLY the cross-scope HAVE that predates the
@@ -54,6 +64,9 @@ void UnitEnabler::onCityCreated(const CvCity& kCity)
 		const CivicTypes c = kPlayer.getCivics((CivicOptionTypes)co);
 		if (c != NO_CIVIC) EnablerKernel::applyEdges(d, InfoRepo<CvCivicInfo>::get().get((int)c), EDGEB_UNITS, +1);
 	}
+	// gate the fold's entrants (no events carried them). Inside the load bracket the GAME_LOAD_FINISHED pass
+	// gates instead (a mid-read evaluation is the hazard, see the gate header below).
+	if (!spineGameLoadInProgress()) gateCity(kCity);
 }
 
 // The tech delta. Broad emit -> the PLAYER tech domain's held flag is the flip guard; the invalidation route
@@ -64,6 +77,9 @@ void UnitEnabler::onCityTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 	const CvInfo* jt = ud_techJson((int)eTech);
 	const std::vector<int>* obsB = jt ? jt->edge(EDGEF_OBSOLETES, EDGEB_BUILDINGS) : NULL;
 	const CvTeam& kTeam = GET_TEAM(eTeam);
+	const bool bGate = !spineGameLoadInProgress();   // load gates once at GAME_LOAD_FINISHED
+	std::set<int> touched;
+	if (bGate) ud_touched(jt, touched);
 	for (int iP = 0; iP < MAX_PLAYERS; iP++)
 	{
 		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iP);
@@ -84,6 +100,7 @@ void UnitEnabler::onCityTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 					const CvInfo* jb = InfoRepo<CvBuildingInfo>::get().get(b);
 					if (!EnablerKernel::obsoletedByOtherHeldTech(jb, kTeam, eTech)) EnablerKernel::applyEdges(d, jb, EDGEB_UNITS, -iDelta);
 				}
+			if (bGate) ud_gateSet(*pCity, touched);   // gate-on-entry + the par.7.1 step-2 re-gates
 		}
 	}
 }
@@ -98,34 +115,375 @@ void UnitEnabler::onCityBuildingChanged(const CvCity& kCity, int iBuilding, bool
 	const CvInfo* jb = InfoRepo<CvBuildingInfo>::get().get(iBuilding);
 	if (!EnablerKernel::obsoletedByHeldTech(jb, GET_TEAM(kPlayer.getTeam())))
 		EnablerKernel::applyEdges(d, jb, EDGEB_UNITS, bPresent ? +1 : -1);
+	if (!spineGameLoadInProgress())
+	{
+		// gate the building's touched units + the units requiring a BONUS this building supplies in-vicinity
+		// (provides.bonuses -> the operating-buildings supply the evaluator reads; the bonus's REQUIRED_BY
+		// unit bucket names its dependents)
+		std::set<int> touched;
+		ud_touched(jb, touched);
+		const CvJsonProvides* prov = (jb != NULL) ? jb->getProvides() : NULL;
+		if (prov != NULL)
+			for (size_t i = 0; i < prov->bonuses.size(); ++i)
+			{
+				const CvInfo* jBonus = InfoRepo<CvBonusInfo>::get().get(prov->bonuses[i]);
+				const std::vector<int>* dep = (jBonus != NULL) ? jBonus->edge(EDGEF_REQUIRED_BY, EDGEB_UNITS) : NULL;
+				if (dep != NULL) touched.insert(dep->begin(), dep->end());
+			}
+		ud_gateSet(kCity, touched);
+	}
 }
 
 void UnitEnabler::onCityReligionChanged(const CvCity& kCity, int iReligion, bool bHas)
 {
 	EnablerDomain& d = kCity.m_enabler.units;
 	if (!d.isSeeded()) return;   // flip-guarded emit (setHasReligion)
-	EnablerKernel::applyEdges(d, InfoRepo<CvReligionInfo>::get().get(iReligion), EDGEB_UNITS, bHas ? +1 : -1);
+	const CvInfo* jr = InfoRepo<CvReligionInfo>::get().get(iReligion);
+	EnablerKernel::applyEdges(d, jr, EDGEB_UNITS, bHas ? +1 : -1);
+	if (!spineGameLoadInProgress())
+	{
+		std::set<int> touched;
+		ud_touched(jr, touched);
+		ud_gateSet(kCity, touched);
+	}
 }
 
 void UnitEnabler::onCityBonusChanged(const CvCity& kCity, int iBonus, int iChange)
 {
 	EnablerDomain& d = kCity.m_enabler.units;
 	if (!d.isSeeded() || iBonus < 0 || iChange == 0) return;
+	// GATE-ONLY (owner ruling 2026-07-15): a plot-group-carried bonus never drives tree membership -- the
+	// crossing re-gates the bonus's requires-dependents; the buildings-domain twin documents the model.
 	const int iNew = kCity.getNumBonuses((BonusTypes)iBonus);
 	const int iOld = iNew - iChange;
-	if ((iOld > 0) == (iNew > 0)) return;   // HAVE = count > 0: apply only on a crossing
-	EnablerKernel::applyEdges(d, InfoRepo<CvBonusInfo>::get().get(iBonus), EDGEB_UNITS, iNew > 0 ? +1 : -1);
+	if ((iOld > 0) == (iNew > 0)) return;   // HAVE = count > 0: re-gate only on a presence crossing
+	if (spineGameLoadInProgress()) return;  // load: the one GAME_LOAD_FINISHED gate pass covers it
+	std::set<int> touched;
+	ud_touched(InfoRepo<CvBonusInfo>::get().get(iBonus), touched);
+	ud_gateSet(kCity, touched);
+}
+
+// The LOCAL-presence twin: a vicinity flip is a pure gate re-check (the buildings-domain twin documents it).
+void UnitEnabler::onCityVicinityBonusChanged(const CvCity& kCity, int iBonus)
+{
+	EnablerDomain& d = kCity.m_enabler.units;
+	if (!d.isSeeded() || iBonus < 0) return;
+	if (spineGameLoadInProgress()) return;  // load: the one GAME_LOAD_FINISHED gate pass covers it
+	std::set<int> touched;
+	ud_touched(InfoRepo<CvBonusInfo>::get().get(iBonus), touched);
+	ud_gateSet(kCity, touched);
 }
 
 void UnitEnabler::onPlayerCivicsChanged(PlayerTypes ePlayer, int iOldCivic, int iNewCivic)
 {
 	if (ePlayer == NO_PLAYER || iOldCivic == iNewCivic) return;
 	CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+	const bool bGate = !spineGameLoadInProgress();
+	std::set<int> touched;
+	if (bGate)
+	{
+		ud_touched(iOldCivic >= 0 ? InfoRepo<CvCivicInfo>::get().get(iOldCivic) : NULL, touched);
+		ud_touched(iNewCivic >= 0 ? InfoRepo<CvCivicInfo>::get().get(iNewCivic) : NULL, touched);
+	}
 	foreach_(CvCity* pCity, kPlayer.cities())
 	{
 		EnablerDomain& d = pCity->m_enabler.units;
 		if (!d.isSeeded()) continue;
 		if (iOldCivic >= 0) EnablerKernel::applyEdges(d, InfoRepo<CvCivicInfo>::get().get(iOldCivic), EDGEB_UNITS, -1);
 		if (iNewCivic >= 0) EnablerKernel::applyEdges(d, InfoRepo<CvCivicInfo>::get().get(iNewCivic), EDGEB_UNITS, +1);
+		if (bGate) ud_gateSet(*pCity, touched);
+	}
+}
+
+// ==================== THE REQUIRES GATE (enabler.md par.7.1 steps 2+3; the par.3 unit machine) ====================
+// The parity-proven canTrain gate legs, restored onto the domain component (the pre-rewrite uc_* verdicts,
+// verified to full canTrain parity): the INSTANCE CAPS (world = lifetime-created + in-production `making`;
+// empire = live tally count + making vs the ERA-SCALED base-5 national cap, waived under
+// GAMEOPTION_NO_NATIONAL_UNIT_LIMIT unless unlimitedException -- units have no team cap), the ENTITY-LEVEL
+// enabled/disabled gate (DEC-entity-gate), requires.build (STRICT, the ONE evaluator, the SHARED AugmentState
+// waiver + the standing operating-buildings wiring -- vicinity `provides` supply included), the SUPERSEDER
+// removal (replacedBy.units: HIDDEN the moment any superseder is AVAILABLE -- read from the poco's
+// m_superseding, NOT j->edge("replacedBy") which returns NULL, the inert-read trap; mirrors
+// isSupersedingUnitAvailable), and the UPGRADE-TREE dormancy (requires.build.dormant.all -- uc_reachable, the
+// spec'd cycle-guarded closure, enabler.md par.3: a unit hides only when EVERY direct upgrade resolves to a
+// reachable-trainable unit; one dead branch keeps it buildable. Do NOT replace with a one-level scheme).
+// LOAD follows the par.7.1 order rule's "gate once after the stream ends" option (GAME_LOAD_FINISHED gates
+// every city; a mid-read evaluation would ensure the operating-buildings cache against half-read state).
+
+// Unit instance cap (StoneBase UnitEnabler.Capped).
+static bool ud_capped(const CvInfo* j, int eU, const CvPlayer& kPlayer, bool noNationalLimit)
+{
+	if (j == NULL) return false;
+	const int making = kPlayer.getUnitMaking((UnitTypes)eU);
+	const int wcap = j->allowedCap("world");
+	if (wcap >= 0 && GC.getGame().getUnitCreatedCount((UnitTypes)eU) + making >= wcap) return true;
+	const int ecap = j->allowedCap("empire");
+	if (ecap >= 0 && !(noNationalLimit && !GC.getUnitInfo((UnitTypes)eU).isUnlimitedException()))
+	{
+		const int era = (int)kPlayer.getCurrentEra();
+		const int cap = (ecap == 5 && era > 0) ? ecap + era * 5 : ecap;   // era-scaled base-5 national cap
+		if (cascadeTally().unitCount((int)kPlayer.getID(), eU, CASCADE_COUNT_EMPIRE) + making >= cap) return true;
+	}
+	return false;
+}
+
+// The per-gate-pass context: the ONE per-city setup (waived / ec / operating buildings / flags) computed once,
+// plus the memo caches so a gate set shares availability/reachability lookups (file scope: VC7.1 forbids local
+// types as arguments to the helpers below).
+struct UdGateCtx
+{
+	const CvPlayer* player;
+	const CvTeam* team;
+	CvCascadeEvalCtx* ec;
+	const CvCascadeEvalFlags* flags;
+	bool noNationalLimit;
+	std::map<int, bool> availCache;   // u -> ud_isAvailable(u)
+	std::map<int, bool> reachCache;   // v -> ud_reachable(v)
+	std::set<int> inProgress;         // reachable() cycle guard (always fully unwound between roots)
+};
+
+// The ONE availability predicate: spawnOnly / tech-obsolete / instance-cap / entity gate / requires.build STRICT.
+static bool ud_isAvailable(int u, UdGateCtx& x)
+{
+	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
+	if (j != NULL && ((const CvUnitInfo*)j)->spawnOnly) return false;
+	if (EnablerKernel::obsoletedByHeldTech(j, *x.team)) return false;
+	if (ud_capped(j, u, *x.player, x.noNationalLimit)) return false;
+	if (j != NULL && !cascadeGateOk(j->getGate(), *x.ec, *x.flags)) return false;   // entity-level enabled/disabled
+	// through the ONE gate surface (DEC-single-implementation): requiresMet sets buildingAtomsPresence -- gate
+	// atoms read the §7 presence has-list, never the operate-derived ACTIVE set (a direct evaluator call here
+	// made unit gates fail on present-but-dormant prereq buildings, un-superseding whole upgrade chains).
+	if (!EnablerKernel::requiresMet(j, *x.ec)) return false;
+	return true;
+}
+
+static bool ud_availMemo(int u, UdGateCtx& x)
+{
+	std::map<int, bool>::const_iterator it = x.availCache.find(u);
+	if (it != x.availCache.end()) return it->second;
+	const bool r = ud_isAvailable(u, x);
+	x.availCache[u] = r;
+	return r;
+}
+
+// reachable(v) (StoneBase UnitEnabler.Reachable) -- the ONE upgrade-reachability closure, driven by the
+// memoized availability predicate: v is itself available OR some DIRECT upgrade of v (its dormant triggers =
+// requires.build.dormant.all) is reachable. Cycle-guarded (a cycle -> self-available terminal).
+static bool ud_reachable(int v, UdGateCtx& x)
+{
+	std::map<int, bool>::const_iterator c = x.reachCache.find(v);
+	if (c != x.reachCache.end()) return c->second;
+	if (!x.inProgress.insert(v).second) return ud_availMemo(v, x);   // cycle -> self-available terminal
+	bool r = ud_availMemo(v, x);
+	if (!r)
+	{
+		const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(v);
+		if (j != NULL)
+		{
+			const std::vector<int>& dorm = j->dormantTriggers();
+			for (size_t i = 0; i < dorm.size() && !r; ++i)
+				r = ud_reachable(dorm[i], x);
+		}
+	}
+	x.inProgress.erase(v);
+	x.reachCache[v] = r;
+	return r;
+}
+
+// The ONE per-unit gate verdict: available ∧ NOT upgrade-dormant ∧ NOT superseded-by-an-available-replacer.
+static bool ud_verdict(int u, UdGateCtx& x)
+{
+	if (!ud_availMemo(u, x)) return false;
+	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
+	if (j == NULL) return true;
+	const std::vector<int>& dorm = j->dormantTriggers();
+	if (!dorm.empty())
+	{
+		bool dormant = true;
+		for (size_t i = 0; i < dorm.size() && dormant; ++i)
+			if (!ud_reachable(dorm[i], x)) dormant = false;
+		if (dormant) return false;
+	}
+	// the superseder removal: the poco's m_superseding (the curated replacedBy.units), never j->edge
+	const CvUnitInfo* ju = (const CvUnitInfo*)j;
+	for (int i = 0; i < ju->getNumSupersedingUnits(); ++i)
+	{
+		const int sup = ju->getSupersedingUnit(i);
+		if (sup >= 0 && ud_availMemo(sup, x)) return false;
+	}
+	return true;
+}
+
+// One city's gate context, set up once per gate pass.
+static void ud_setupCtx(const CvCity& kCity, const CvPlayer& kPlayer, const CvTeam& kTeam,
+	std::set<int>& waived, CvCascadeEvalCtx& ec, CvCascadeEvalFlags& flags, UdGateCtx& x)
+{
+	BuildingEnabler::augmentWaived(kPlayer, kTeam, waived);
+	ec.city = &kCity; ec.plot = kCity.plot(); ec.player = &kPlayer; ec.team = &kTeam;
+	ec.waivedPrereqBuildings = &waived;
+	EnablerKernel::wireOperatingBuildings(&kCity, ec);
+	flags.strictStateReligionForBuild = true;
+	x.player = &kPlayer; x.team = &kTeam; x.ec = &ec; x.flags = &flags;
+	x.noNationalLimit = GC.getGame().isOption(GAMEOPTION_NO_NATIONAL_UNIT_LIMIT);
+}
+
+static void ud_gateSet(const CvCity& kCity, const std::set<int>& ids)
+{
+	EnablerDomain& d = kCity.m_enabler.units;
+	if (!d.isSeeded() || ids.empty()) return;
+	const CvPlayer& kPlayer = GET_PLAYER(kCity.getOwner());
+	std::set<int> waived; CvCascadeEvalCtx ec; CvCascadeEvalFlags flags; UdGateCtx x;
+	ud_setupCtx(kCity, kPlayer, GET_TEAM(kPlayer.getTeam()), waived, ec, flags, x);
+	for (std::set<int>::const_iterator it = ids.begin(); it != ids.end(); ++it)
+		if (d.inTree(*it)) d.setGateFailed(*it, !ud_verdict(*it, x));
+}
+
+// The touched candidate set of one HAVE-event source (O(delta) off its own info): its enables/removal unit
+// targets + its EDGEF_REQUIRED_BY unit dependents (the readJson requires-reverse-index).
+static void ud_touched(const CvInfo* j, std::set<int>& touched)
+{
+	if (j == NULL) return;
+	static const EnEdgeFamily FAMS[] = { EDGEF_ENABLES, EDGEF_OBSOLETES, EDGEF_REPLACES, EDGEF_DISABLES, EDGEF_REQUIRED_BY, NUM_EDGEF };
+	for (int f = 0; FAMS[f] != NUM_EDGEF; ++f)
+	{
+		const std::vector<int>* p = j->edge(FAMS[f], EDGEB_UNITS);
+		if (p != NULL) touched.insert(p->begin(), p->end());
+	}
+}
+
+// The CLASS candidate lists + the unit-relation maps (load-compiled once, game-thread statics): the no-FK
+// event classes, the DYNAMIC per-turn set, referencedUnit -> dependents (a unit's requires naming another
+// unit's count), and upgrade -> predecessors (a flip of an upgrade's availability re-checks the units it
+// dorms). EnablerKernel::scanCondDeps is the ONE dependency-signature scanner.
+static std::set<int> s_udClass[UnitEnabler::NUM_GATE_CLASSES];
+static std::map<int, std::vector<int> > s_udUnitDeps;      // referencedUnitId -> {units whose requires references it}
+static std::map<int, std::vector<int> > s_udUpgradePred;   // upgradeUnitId  -> {units that name it as a dormant-trigger}
+static bool s_udClassBuilt = false;
+static void ud_buildClasses()
+{
+	if (s_udClassBuilt) return;
+	s_udClassBuilt = true;
+	for (int u = 0; u < GC.getNumUnitInfos(); ++u)
+	{
+		const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
+		if (j == NULL) continue;
+		CascadeCondDeps deps;
+		EnablerKernel::scanCondDeps(j->requiresBuild(), deps, /*bTrackUnits*/ true, /*bMarkDynamic*/ true);
+		if (deps.pop)           s_udClass[UnitEnabler::GATE_POP].insert(u);
+		if (deps.power)         s_udClass[UnitEnabler::GATE_POWER].insert(u);
+		if (deps.goldenAge)     s_udClass[UnitEnabler::GATE_GOLDEN_AGE].insert(u);
+		if (deps.stateReligion) s_udClass[UnitEnabler::GATE_STATE_RELIGION].insert(u);
+		if (deps.dynamic)       s_udClass[UnitEnabler::GATE_DYNAMIC].insert(u);
+		for (std::set<int>::const_iterator it = deps.units.begin(); it != deps.units.end(); ++it) s_udUnitDeps[*it].push_back(u);
+		const std::vector<int>& dorm = j->dormantTriggers();
+		for (size_t i = 0; i < dorm.size(); ++i) s_udUpgradePred[dorm[i]].push_back(u);
+	}
+}
+
+void UnitEnabler::gateCity(const CvCity& kCity)
+{
+	EnablerDomain& d = kCity.m_enabler.units;
+	if (!d.isSeeded()) return;
+	const CvPlayer& kPlayer = GET_PLAYER(kCity.getOwner());
+	std::set<int> waived; CvCascadeEvalCtx ec; CvCascadeEvalFlags flags; UdGateCtx x;
+	ud_setupCtx(kCity, kPlayer, GET_TEAM(kPlayer.getTeam()), waived, ec, flags, x);
+	for (int u = 0; u < GC.getNumUnitInfos(); ++u)
+		if (d.inTree(u)) d.setGateFailed(u, !ud_verdict(u, x));
+}
+
+// The decomposition: each ud_verdict leg evaluated independently against the SAME per-city gate context the
+// real gate uses -- the endpoint's attribution surface (never a read path).
+void UnitEnabler::explain(const CvCity& kCity, int iUnit, Explain& out)
+{
+	const EnablerDomain& d = kCity.m_enabler.units;
+	out.bInTree = d.isSeeded() && d.inTree(iUnit);
+	out.bListed = d.isSeeded() && d.listed(iUnit);
+	const CvPlayer& kPlayer = GET_PLAYER(kCity.getOwner());
+	std::set<int> waived; CvCascadeEvalCtx ec; CvCascadeEvalFlags flags; UdGateCtx x;
+	ud_setupCtx(kCity, kPlayer, GET_TEAM(kPlayer.getTeam()), waived, ec, flags, x);
+	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(iUnit);
+	if (j == NULL) return;
+	out.bSpawnOnly = ((const CvUnitInfo*)j)->spawnOnly;
+	out.bObsoleteTech = EnablerKernel::obsoletedByHeldTech(j, *x.team);
+	out.bCapped = ud_capped(j, iUnit, kPlayer, x.noNationalLimit);
+	out.bEntityGateFail = !cascadeGateOk(j->getGate(), ec, flags);
+	out.bRequiresFail = !EnablerKernel::requiresMet(j, ec);
+	const std::vector<int>& dorm = j->dormantTriggers();
+	if (!dorm.empty())
+	{
+		bool dormant = true;
+		for (size_t i = 0; i < dorm.size() && dormant; ++i)
+			if (!ud_reachable(dorm[i], x)) dormant = false;
+		out.bUpgradeDormant = dormant;
+	}
+	const CvUnitInfo* ju = (const CvUnitInfo*)j;
+	for (int i = 0; i < ju->getNumSupersedingUnits(); ++i)
+	{
+		const int sup = ju->getSupersedingUnit(i);
+		if (sup >= 0 && ud_availMemo(sup, x)) { out.bSuperseded = true; out.iSupersededBy = sup; break; }
+	}
+}
+
+void UnitEnabler::onLoadFinished()
+{
+	for (int iP = 0; iP < MAX_PLAYERS; iP++)
+	{
+		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iP);
+		foreach_(const CvCity* pCity, kPlayer.cities())
+			gateCity(*pCity);
+	}
+}
+
+void UnitEnabler::onCityGateClass(const CvCity& kCity, int eClass)
+{
+	if (spineGameLoadInProgress()) return;   // the load-end pass gates
+	ud_buildClasses();
+	ud_gateSet(kCity, s_udClass[eClass]);
+}
+
+void UnitEnabler::onPlayerGateClass(PlayerTypes ePlayer, int eClass)
+{
+	if (spineGameLoadInProgress() || ePlayer == NO_PLAYER) return;
+	ud_buildClasses();
+	CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+	foreach_(const CvCity* pCity, kPlayer.cities())
+		ud_gateSet(*pCity, s_udClass[eClass]);
+}
+
+void UnitEnabler::onCityTurn(const CvCity& kCity)
+{
+	if (spineGameLoadInProgress()) return;
+	ud_buildClasses();
+	ud_gateSet(kCity, s_udClass[GATE_DYNAMIC]);
+}
+
+// The CAP/RELATION crossing (par.7.1 step 3): a unit's empire count changed (trained / lost / queued --
+// SEVT_UNIT_COUNT). An uncapped, unreferenced, non-upgrade unit flips nothing -- skip (the combat common
+// case, the pre-rewrite guard). Otherwise re-gate the changed unit + its requires-dependents + the units it
+// dorms, across the OWNER's cities (empire caps); a WORLD-capped unit re-gates on every seeded city.
+void UnitEnabler::onUnitCountChanged(PlayerTypes ePlayer, int eUnit)
+{
+	if (spineGameLoadInProgress() || ePlayer == NO_PLAYER || eUnit < 0) return;
+	ud_buildClasses();
+	const CvInfo* jU = InfoRepo<CvUnitInfo>::get().get(eUnit);
+	const bool bCapped = (jU != NULL && jU->getAllowed() != NULL);
+	const bool bReferenced = (s_udUnitDeps.find(eUnit) != s_udUnitDeps.end());
+	const bool bUpgrade = (s_udUpgradePred.find(eUnit) != s_udUpgradePred.end());
+	if (!bCapped && !bReferenced && !bUpgrade) return;
+	std::set<int> affected;
+	affected.insert(eUnit);
+	{
+		std::map<int, std::vector<int> >::const_iterator it = s_udUnitDeps.find(eUnit);
+		if (it != s_udUnitDeps.end()) affected.insert(it->second.begin(), it->second.end());
+		it = s_udUpgradePred.find(eUnit);
+		if (it != s_udUpgradePred.end()) affected.insert(it->second.begin(), it->second.end());
+	}
+	const bool bWorldCap = (jU != NULL && jU->allowedCap("world") >= 0);
+	for (int iP = 0; iP < MAX_PLAYERS; iP++)
+	{
+		if (!bWorldCap && (PlayerTypes)iP != ePlayer) continue;   // empire caps reach the owner only
+		CvPlayer& kP = GET_PLAYER((PlayerTypes)iP);
+		foreach_(const CvCity* pCity, kP.cities())
+			ud_gateSet(*pCity, affected);
 	}
 }

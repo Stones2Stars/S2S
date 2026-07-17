@@ -4,6 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvExeTrace.h"
 #include "CvArea.h"
 #include "CvBonusInfo.h"
 #include "CvCity.h"
@@ -952,7 +953,7 @@ void CvArea::changeCleanPowerCount(TeamTypes eIndex, int iChange)
 
 			if (eIndex == GC.getGame().getActiveTeam())
 			{
-				gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
+				exeSetUIDirty(CityInfo_DIRTY_BIT, true);
 			}
 		}
 	}
@@ -1045,7 +1046,7 @@ void CvArea::changeYieldRateModifier(PlayerTypes eIndex1, YieldTypes eIndex2, in
 
 		if (GET_PLAYER(eIndex1).getTeam() == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
+			exeSetUIDirty(CityInfo_DIRTY_BIT, true);
 		}
 	}
 }

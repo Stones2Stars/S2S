@@ -73,6 +73,8 @@ static int acc_mapGetI(const std::map<int, int>& m, int key)
 
 // ===================== the FILLS (the refresh delegate targets) =====================
 
+static long acc_yieldCombine(const CvCity* pCity, YieldTypes eY);   // defined with the combines below; the CPK_YRATE fill stores it
+
 void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 {
 	if (pCity == NULL || iMask == 0) return;
@@ -206,6 +208,15 @@ void CascadeAccumulator::refreshCityPackages(const CvCity* pCity, int iMask)
 		CascadeScalarChannels::fillBuildRateCity(pCity, ec, st.brCityKeyed, st.brCityMilitary, st.brCitySpace,
 			st.brSrUnitProd, st.brSrBuildingProd, st.brCityWorldWonder, st.brCityTeamWonder, st.brCityNationalWonder);
 	}
+	// The REALIZED-rate cache (CPK_YRATE -- the "cache the sum" ruling): store the full §2a combine per yield
+	// channel. LAST in the fill so a co-marked call's input fills above land first; the plot pull + trade input
+	// + GA gate are baked at fill (their change sites mark this bit).
+	if (iMask & CPK_YRATE)
+	{
+		CascadePerf::calcN(CSCOPE_CITY, CCHAN_BASE_YIELDS, NUM_YIELD_TYPES);
+		for (int y = 0; y < NUM_YIELD_TYPES; ++y)
+			st.yRate100[y] = acc_yieldCombine(pCity, (YieldTypes)y);
+	}
 	// (the buildable/trainable/creatable/maintainable frontiers all live on the standardized enabler domains --
 	// CvCity::m_enabler / CvPlayer::m_enabler, event-maintained; enabler.md par.7/8)
 }
@@ -338,17 +349,21 @@ static long acc_yieldCombine(const CvCity* pCity, YieldTypes eY)
 long CascadeAccumulator::yieldRate100(const CvCity* pCity, YieldTypes eY)
 {
 	if (pCity == NULL || eY < 0 || eY >= NUM_YIELD_TYPES) return 0;
-	return acc_yieldCombine(pCity, eY);
+	// the CACHED realized sum (the "cache the sum" ruling): a stored int like legacy's m_aiBaseYieldRate --
+	// the dirty-flagged lazy read is the CvDerivedCache doctrine's own shape.
+	pCity->m_cascadeCityPackages.set.ensure(CPK_YRATE);
+	return pCity->m_cascadeCityPackages.yRate100[eY];
 }
 
 long CascadeAccumulator::commerceRate100(const CvCity* pCity, CommerceTypes eC)
 {
 	if (pCity == NULL || eC < 0 || eC >= NUM_COMMERCE_TYPES) return 0;
+	pCity->m_cascadeCityPackages.set.ensure(CPK_YRATE);
 	const CascadeCityPackages& st = pCity->m_cascadeCityPackages;
 	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
 	const CascadePlayerScope& ps = owner.m_cascadePlayerScope;
-	const long yc100 = acc_yieldCombine(pCity, YIELD_COMMERCE);
-	const long prate = acc_yieldCombine(pCity, YIELD_PRODUCTION) / 100;
+	const long yc100 = st.yRate100[YIELD_COMMERCE];
+	const long prate = st.yRate100[YIELD_PRODUCTION] / 100;
 	const long ga = owner.isGoldenAge() ? std::max(0L, ps.cGoldenAge[eC]) : 0;
 	const long baseExtra = st.cSpec100[eC] + st.cBaseOwn100[eC] + st.cKeyed100[eC]
 	                     + ps.cPlayerExtra100[eC] + 100L * ga + 100L * ps.cSrPool[eC] * st.iCSrMatch;
@@ -691,10 +706,17 @@ int CascadeAccumulator::buildRateProject(const CvCity* pCity, ProjectTypes eProj
 
 // ===================== the EVENT MARKS =====================
 
+// The WIDEN rule for the realized-rate cache: any mark touching a yield INPUT package invalidates the stored
+// combine too (the "cache the sum" ruling's freshness half).
+static int acc_widenCityBits(int iMask)
+{
+	return (iMask & (CPK_YPCT | CPK_YSPEC | CPK_YEXTRA)) ? (iMask | CPK_YRATE) : iMask;
+}
+
 void CascadeAccumulator::dirtyCity(const CvCity* pCity, int iMask)
 {
 	if (pCity == NULL) return;
-	pCity->m_cascadeCityPackages.set.markDirty(iMask);
+	pCity->m_cascadeCityPackages.set.markDirty(acc_widenCityBits(iMask));
 }
 
 // The building event: the CITY mask stays CONSERVATIVE-ALL (a new/lost building can flip OTHER buildings'
@@ -725,7 +747,7 @@ void CascadeAccumulator::buildingProcessed(const CvCity* pCity, BuildingTypes eB
 		{
 			int iLoop;
 			for (const CvCity* pc = owner.firstCity(&iLoop); pc != NULL; pc = owner.nextCity(&iLoop))
-				pc->m_cascadeCityPackages.set.markDirty(route.cityBits);   // the sibling loop includes this city
+				pc->m_cascadeCityPackages.set.markDirty(acc_widenCityBits(route.cityBits));   // the sibling loop includes this city
 		}
 	}
 	if (route.world) GC.getGame().m_cascadeWorldScope.set.markAllDirty();

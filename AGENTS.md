@@ -82,6 +82,9 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
 
 - **Configs:** `Assert`, `Debug`, `Release`, `FinalRelease`, `Profile`, `ProfileExtra`.
   Output lands in `Build/<Config>/CvGameCoreDLL.dll` (+ `.pdb`).
+  - **⛔ The `Profile`/`ProfileExtra` configs are BROKEN and purposeless (owner ruling): never use them, and never
+    add `PROFILE()`/FProfiler scopes as instrumentation — they report to nothing.** The ONE instrument is the
+    gated `[PERF]` logging (`logPerf`/`gPerfLogLevel`, `Autolog__LogLevelPerf`), which ships in every build.
   - **Which config for in-game testing:** for ordinary interactive testing — exercising a feature, pulling state
     from the HTTP endpoints, watching `/events` — a normal **`Release`** build suffices and is far faster than
     `FinalRelease` (a clean `FinalRelease` is a ~7-minute full rebuild). **Reserve `FinalRelease` for turn-lag /
@@ -213,9 +216,10 @@ the total-observability bar below.)
   `[TAG]` lines — which **burst at the TOP of `doTurn`, so you must be CONNECTED BEFORE the turn ticks**
   (connect-then-end-turn); and **(2) the on-demand mailbox-snapshot endpoints `/state/*` + `/computed/*`**, which
   compute a game-thread snapshot via the single-slot mailbox and depend on no log file or gate — the most reliable
-  read (see `docs/specs/http-endpoints.md`). Gates are separate: `gPlayerLogLevel ≥ 1` makes the per-turn `[TAG]`
-  lines *generate* (to the per-domain `.log`), and the `/events` tee is a *further* gate — so a line can be in the
-  log yet absent from `/events`. When in doubt about a magnitude/state, hit the endpoint, not the log.
+  read (see `docs/specs/http-endpoints.md`). Gates are separate and INDEPENDENT: `gPlayerLogLevel` gates the per-domain `.log` files;
+  the `/events` stream is its OWN spine consumer — spine DOMAIN facts stream unconditionally, DIAGNOSTIC/TRACE
+  at `gStreamLogLevel` — so a line can be in either surface without the other. When in doubt about a
+  magnitude/state, hit the endpoint, not the log.
 - **The events + logging + diagnostics must make the running game FULLY surveilled.** The bar: *map an accurate game
   state purely from the endpoints + `/events` + the gated logs — open the game, but never look at the SCREEN.* This
   is **non-negotiable and load-bearing**, not polish: it is the ONLY way to reliably verify the state logic on the

@@ -52,8 +52,8 @@
 //	  - getCategory / getNumCategories / isCategory: curator DROP "Categories".
 //	  - getCivicAttitudeReason: the cosmetic <Description> reason sibling is dropped by the curator (not gameplay data).
 //	  - isPolicy: the bPolicy schema element is NEVER authored (0 occurrences) -> the class-member default false.
-//	  - getPropertyManipulators: the CvPropertyManipulators subsystem is deferred across ALL pocos (curator emits the
-//	    property FAMILIES, not the XML-era manipulator objects); empty, consistent with Building/Trait/Corporation.
+//	  - getPropertyManipulators: fed from the curated PROPERTY_* FAMILIES in mapFrom via the ONE shared walk
+//	    (CascadePropertyBridge::bridgeFamilies) -- the KEEP-legacy solver's player gather delivers to every owner city.
 //	  - getCivicAttitudeChanges (the int* form): NULL -- it has NO runtime consumer (the per-index getCivicAttitudeChange(i)
 //	    carries the data); a dense NumCivics-sized owned array would be dead code.
 //	  - getBonusCommerceModifierArray: NULL -- curator DROP (BonusCommerceModifiers inverted onto the bonus).
@@ -82,7 +82,7 @@ public:
 	int getAIWeight() const { return m_iAIWeight; }                  // ai.behaviour.weight
 	int getMaxConscript() const;                                    // conscript.empire.flat (curate_civic.py SCALAR)
 	bool isHurry(int i) const;                                      // enables.hurries edge (curate_civic.py ENABLE_LISTS)
-	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; } // deferred subsystem (empty, all pocos)
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; } // fed from the PROPERTY_* families in mapFrom (player gather -> every owner city)
 
 	// getTechPrereq: CURATOR-GAP by design -- store-inverted onto tech.enables.civics; not authored on the civic. -> NO_TECH.
 	TechTypes getTechPrereq() const { return NO_TECH; }
@@ -292,7 +292,7 @@ private:
 	CvJsonGrants    m_grants;
 	CvJsonModifiers m_modifiers;
 	CvJsonBoolBlock m_policies;
-	CvPropertyManipulators m_PropertyManipulators;   // deferred subsystem -- empty, consistent with every JsonInfo poco
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the PROPERTY_* families (CascadePropertyBridge::bridgeFamilies)
 
 	// --- typed members mapped from the JSON (REAL data; see mapFrom) ---
 	int m_iCivicOptionType;

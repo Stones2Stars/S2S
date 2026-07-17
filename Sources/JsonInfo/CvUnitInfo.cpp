@@ -17,6 +17,7 @@
 #include "CvTechInfo.h"         // GC.getTechInfo(...).getEra() -- the era-comparison reads (unity include exposure)
 #include "CvPromotionInfo.h"    // GC.getPromotionInfo(i).getUnitCombat() -- the canAcquireExperience derivation
 #include "CvJsonModifiers.h"    // getModifiers() walk -> the unit's PROPERTY_* emission sources
+#include "CvCascadePropertyBridge.h" // the JSON->BoolExpr translator (property-audit.md increment 4)
 
 CvUnitInfo::CvUnitInfo()
 	: spawnOnly(false), unlimitedException(false)
@@ -355,31 +356,10 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 	const picojson::object& o = entity.get<picojson::object>();
 	picojson::object::const_iterator it;
 
-	// PROPERTY_* per-turn SOURCE (property-audit.md increment B): a unit's <PROPERTY_X>.{city|plot}.flat emits into the
-	// city / plot it stands on (RELATION_SAME_PLOT) each turn -- fed to the KEEP-legacy CvPropertySolver via
-	// m_PropertyManipulators. Conditioned (`enabled`/`disabled`) or per-scaled entries DEFER to increment 4.
-	{
-		const std::map<std::string, CvJsonModFamily*>& all = getModifiers()->all();
-		for (std::map<std::string, CvJsonModFamily*>::const_iterator mit = all.begin(); mit != all.end(); ++mit)
-		{
-			const std::string& addr = mit->first;
-			if (addr.compare(0, 9, "PROPERTY_") != 0) continue;
-			const size_t dot = addr.find('.');
-			if (dot == std::string::npos) continue;
-			const std::string scope = addr.substr(dot + 1);
-			if (scope != "city" && scope != "plot") continue;
-			const int eProp = jsonResolveId(addr.substr(0, dot));
-			if (eProp < 0) continue;
-			const GameObjectTypes eObj = (scope == "plot") ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
-			const CvJsonModFamily* f = mit->second;
-			for (int i = 0; i < f->size(); ++i)
-			{
-				const CvJsonModEntry* e = f->entries[i];
-				if (e->unit != CASC_UNIT_FLAT || e->hasPer || e->enabled != NULL || e->disabled != NULL) continue;
-				m_PropertyManipulators.addConstantSource((PropertyTypes)eProp, e->value100 / 100, eObj, RELATION_SAME_PLOT);
-			}
-		}
-	}
+	// PROPERTY_* per-turn SOURCES (property-audit.md increments B+4): a unit's <PROPERTY_X>.{city|plot}.flat
+	// emits into the city / plot it stands on (RELATION_SAME_PLOT) each turn -- the ONE shared walk
+	// (clear-and-refill + conditioned-entry translation inside).
+	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_SAME_PLOT);
 
 	// world.art.icon -- the ART_DEF_* tag getArtInfo resolves through ArtFileMgr (mirrors CvBonusInfo).
 	if (const picojson::object* art = jsonWorldArt(o)) jsonIdStr(*art, "define", m_szArtDefineTag);

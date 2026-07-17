@@ -37,14 +37,29 @@ A derived cache in this model is:
    via `WRAPPER_SKIP_ELEMENT` (the soft-remove of [DEC-save-remove-is-soft](decisions.md#dec-save-remove-is-soft)):
    it consumes a removed field's bytes from an *old* save by name so nothing after it shifts, and is a no-op on a new
    save that never wrote it. *Just deleting the read/write breaks the save layout.*
+   **This is UNIVERSAL, not per-field-optional (owner ruling): NO cache is ever serialized.** `CvGame::
+   recalculateModifiers()` existed to purge drifted serialized derived data; with derived data never read from a
+   save there is nothing to purge — **the recalc is RETIRED as a concept** (never invoke it, never extend it, never
+   cite it as a heal; the event spine + the load-time rebuild replace it). Each remaining serialized cache
+   converts by the same move: skip the read, rebuild at load from source state through the live entry points
+   (the bonus-network cluster — the plot-group counts AND membership, the bonus-fed wellbeing/modifier
+   accumulators, power, the dormancy verdicts — is the realized exemplar: the load-end rebuild in
+   `CvGame::onFinalInitialized` recolors the groups from current state, folds the counts as each plot joins,
+   and reconciles dormancy to the enabler's operate fixpoint, firing the ordinary crossing emits; the city
+   holds no bonus mirror at all — its read is a plot-group relay, [enabler.md §8](../specs/enabler.md)). A
+   serialized store survives ONLY for genuine non-derivable state (the event/WB grant stores, e.g.
+   `CvCity::m_paiFreeBonusEvents`).
 3. **The single source — PULL, not push.** Things up the chain (the city, the diagnostics, the cascade oracle) **read**
    the value; the source does not **push** deltas into them. Push + a parallel cache double-count and drift; pull from
    one authoritative value cannot.
 
 **Worked shape (the plot-yield cache):** `getYield()` = `if (dirty) recompute; return cached` — O(1) when clean;
 `updateYield()` is the **trigger only** (flips dirty, fires the downstream dirties the old push carried — no eager
-recompute, no push); `CvCity::getPlotYield()` **pulls** Σ over worked plots (the push-maintained `m_aiBaseYieldRate`
-is dead). The engine's actual base yield thereby equals the build-order-independent value the cascade computes —
+recompute, no push); `CvCity::getPlotYield()` reads the CITY-side worked-plot Σ cache (`CvCity::m_plotYieldSum`, a
+`CvDerivedCache` marked by worked-plot flips + working-plot yield changes) — the push-maintained `m_aiBaseYieldRate`
+is dead. ⛔ The pull must be a CACHE at EVERY level, never a per-read walk: the interim shape that re-summed the
+radius on every `getPlotYield` call turned the game's hottest read O(radius) and was measured at 913M plot reads in
+one turn inside the governor's valuation — the cost class this whole doc exists to prevent. The engine's actual base yield thereby equals the build-order-independent value the cascade computes —
 stale-cache divergences resolved **at the source**, behaviour-preserving
 ([DEC-parity](decisions.md#dec-parity), [DEC-mirror-then-redesign](decisions.md#dec-mirror-then-redesign)).
 

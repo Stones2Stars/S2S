@@ -38,6 +38,7 @@
 #include "CvTraitInfo.h"
 #include "CvJsonParse.h"            // jsonChildObj/jsonResolveId/jsonIdBool/jsonIdInt/jsonIdStr/jsonReadFlavours
 #include "CvJsonModEntry.h"         // CvJsonModFamily/CvJsonModEntry/CvCascUnit -- the parsed-modifier live reads (2D)
+#include "CvCascadePropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 #include "CvSpecialistInfo.h"   // GC.getSpecialistInfo(i).getType() -- the 2D specialist address
 #include "CvImprovementInfo.h" // GC.getImprovementInfo(i).getType() -- the 2D improvement address
 
@@ -262,6 +263,11 @@ void CvTraitInfo::mapFrom(const picojson::value& entity)
 	CvInfo::mapFrom(entity);   // core reading + section dispatch (edges/grants/modifiers/policies)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
+
+	// PROPERTY_* per-turn SOURCES: a trait's <PROPERTY_X>.city.flat deposits in EVERY city while the trait is
+	// held -- the player gather walks traits; RELATION_ASSOCIATED fans each source to every owner city (the
+	// legacy CITY+ASSOCIATED shape; the crime-band gates + per-pop scalers translate inside the shared walk).
+	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_ASSOCIATED);
 
 	// --- scalar modifier families (curate_trait.py SCALAR) -- UNCONDITIONED sum at the leaf ---
 	m_iHealth                             = traitScalar(o, "health", "empire", NULL, "flat");

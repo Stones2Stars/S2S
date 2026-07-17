@@ -210,6 +210,13 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 		else if (k == "team")   { eScope = CASCADE_COUNT_TEAM;   iEntity = (int)kPlayer.getTeam(); }
 		else if (k == "empire") { eScope = CASCADE_COUNT_EMPIRE; iEntity = (int)kPlayer.getID(); }
 		else continue;   // category cap -> first-cut TODO
+		if (!bUnit && k == "empire"
+		// identity.noInstanceLimit waives ONLY the empire (national-wonder) enforcement -- the cap stays
+		// authored (it IS the wonder category); the PALACE relocate case (CvPlayer::isBuildingMaxedOut mirror)
+		&& GC.getBuildingInfo((BuildingTypes)iId).isNoLimit())
+		{
+			continue;
+		}
 		const int iCount = bUnit ? cascadeTally().unitCount(iEntity, iId, eScope)
 		                         : cascadeTally().buildingCount(iEntity, iId, eScope);
 		if (iCount >= it->second) return false;

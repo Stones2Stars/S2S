@@ -2,6 +2,7 @@
 // globals.cpp
 //
 #include "CvGameCoreDLL.h"
+#include "Engine/CvExeTrace.h"
 #include "Infrastructure/BoolExpr.h"
 #include "CvBuildingInfo.h"
 #include "AI/CvGameAI.h"
@@ -16,6 +17,7 @@
 #include "CvPlayerOptionInfo.h"
 #include "CvInfoWater.h"
 #include "Infrastructure/CvInitCore.h"
+#include "Infrastructure/CvLogWriter.h"   // shutdown() at uninit -- the off-thread log writer
 #include "Engine/CvMap.h"
 #include "UI/CvMapExternal.h"
 #include "UI/CvMessageControl.h"
@@ -579,6 +581,7 @@ void cvInternalGlobals::uninit()
 	//
 	// See also CvXMLLoadUtilityInit.cpp::CleanUpGlobalVariables()
 	//
+	CvLogWriter::shutdown();   // drain + flush + join the off-thread log writer before globals tear down
 	SAFE_DELETE_ARRAY(m_aiPlotDirectionX);
 	SAFE_DELETE_ARRAY(m_aiPlotDirectionY);
 	SAFE_DELETE_ARRAY(m_aiPlotCardinalDirectionX);
@@ -743,7 +746,7 @@ void cvInternalGlobals::setResourceLayer(bool bOn)
 {
 	m_bResourceLayerOn = bOn;
 
-	gDLL->getEngineIFace()->setResourceLayer(bOn);
+	exeEng(EXEK_RESOURCE_LAYER), gDLL->getEngineIFace()->setResourceLayer(bOn);
 }
 
 bool cvInternalGlobals::getResourceLayer() const
@@ -2972,7 +2975,7 @@ CvMap& cvInternalGlobals::getMapByIndex(MapTypes eIndex) const
 
 void cvInternalGlobals::clearSigns()
 {
-	gDLL->getEngineIFace()->clearSigns();
+	exeEng(EXEK_SIGNS), gDLL->getEngineIFace()->clearSigns();
 
 	m_bSignsCleared = true;
 }
@@ -3278,6 +3281,35 @@ void cvInternalGlobals::doPostLoadCaching()
 	PROFILE_EXTRA_FUNC();
 	checkInitialCivics();
 
+	// Build the promotion-LINE member reverse index (line -> its promotions) from each promotion's
+	// promotionLine FK. This is the list the "must hold the next-lower line priority" ladder walk reads
+	// (CvUnit::canAcquirePromotion) -- nothing populated it since the JSON cut, so the walk was vacuous and
+	// every rank of a line offered at once. Clear-then-rebuild keeps the pass idempotent.
+	for (int iI = getNumPromotionLineInfos() - 1; iI > -1; iI--)
+	{
+		getPromotionLineInfo(static_cast<PromotionLineTypes>(iI)).clearPromotions();
+	}
+	for (int iI = getNumPromotionInfos() - 1; iI > -1; iI--)
+	{
+		const PromotionLineTypes eLine = getPromotionInfo(static_cast<PromotionTypes>(iI)).getPromotionLine();
+		if (eLine != NO_PROMOTIONLINE)
+		{
+			getPromotionLineInfo(eLine).addPromotion(iI);
+		}
+	}
+
+	// Index the buildings carrying EMPIRE-scope per-turn property sources (the converted <PropertiesAllCities>
+	// one-shots -- property-audit.md one-shot ruling), so the per-city gather walks this short list instead of
+	// every building info each solver turn. Clear-then-rebuild keeps the pass idempotent.
+	m_allCitiesManipBuildings.clear();
+	for (int iI = 0; iI < getNumBuildingInfos(); iI++)
+	{
+		if (getBuildingInfo(static_cast<BuildingTypes>(iI)).getPropertyManipulatorsAllCities()->getNumSources() > 0)
+		{
+			m_allCitiesManipBuildings.push_back(static_cast<BuildingTypes>(iI));
+		}
+	}
+
 	//Establish Promotion Pedia Help info
 	for (int iI = getNumPromotionInfos() - 1; iI > -1; iI--)
 	{
@@ -3382,6 +3414,10 @@ void cvInternalGlobals::doPostLoadCaching()
 		const ImprovementTypes eImp = getBuildInfo(eBuild).getImprovement();
 		if (eImp != NO_IMPROVEMENT) getImprovementInfo(eImp).addBuildType(eBuild);
 	}
+
+	// (Building improvement-keyed yield upgrade-chain expansion: lives in the readJson reverse pass
+	// (CvCascadeReadJson.cpp) -- it must run AFTER the post-menu full-registry mapFrom, which clears and
+	// re-populates the poco maps; this function fires PRE-menu on empty maps.)
 
 	{
 		//TB: Set Statuses and starsigns

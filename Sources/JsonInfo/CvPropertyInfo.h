@@ -28,7 +28,14 @@ public:
 	AIScaleTypes getAIScaleType() const { return m_eAIScaleType; }    // ai.scale ("city"/"area"/"player"/"team")
 	CvWString getPrereqMinDisplayText() const { return m_szPrereqMinDisplayText; }   // text.prereqMin (TXT_KEY)
 	CvWString getPrereqMaxDisplayText() const { return m_szPrereqMaxDisplayText; }   // text.prereqMax (TXT_KEY)
-	int getChangePropagator(GameObjectTypes /*eFrom*/, GameObjectTypes /*eTo*/) const { return 0; }    // STUB property propagation table (operational deferred)
+	// The change-propagation table (properties.changePropagation[]): a VALUE change on `eFrom` propagates
+	// percent-scaled onto every related `eTo` object (CvProperties::propagateChange). FLAMMABILITY's
+	// City->Player 100% rollup is the one authored row.
+	int getChangePropagator(GameObjectTypes eFrom, GameObjectTypes eTo) const
+	{
+		const std::map<int,int>::const_iterator it = m_changePropagation.find((int)eFrom * NUM_GAMEOBJECTS + (int)eTo);
+		return it != m_changePropagation.end() ? it->second : 0;
+	}
 	int getFontButtonIndex() const { return m_iFontButtonIndex; }    // identity.fontButtonIndex (raw int)
 	void setChar(int i) { m_iChar = i; }             // stores the glyph the CvGameTextMgr symbol pass assigns (getPropertyInfo(i).setChar, CvGameTextMgr.cpp:29147)
 	int getOperationalRangeMin() const { return m_iOperationalRangeMin; }   // ai.operationalRange.min
@@ -82,7 +89,8 @@ private:
 	CvWString m_szPrereqMaxDisplayText;                    // text.prereqMax
 	std::vector<PropertyPromotion> m_aPropertyPromotions;   // CURATOR-GAP (not migrated) -- see getter
 	std::vector<PropertyBuilding>  m_aPropertyBuildings;    // CURATOR-GAP (bands at Building pass) -- see getter
-	CvPropertyManipulators m_PropertyManipulators;          // DEFERRED SYSTEM -- property engine, XML-era manipulator data
+	CvPropertyManipulators m_PropertyManipulators;          // the property's own sources/propagators (fed from JSON in mapFrom)
+	std::map<int,int> m_changePropagation;                  // (from x NUM_GAMEOBJECTS + to) -> percent (properties.changePropagation[])
 };
 
 #endif // CV_JSON_PROPERTY_INFO_H

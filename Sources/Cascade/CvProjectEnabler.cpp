@@ -43,7 +43,9 @@ static void pj_gate(const CvPlayer& kPlayer, EnablerDomain& d, int iProject)
 	CvCascadeEvalCtx ec;
 	ec.player = &kPlayer;
 	ec.team = &GET_TEAM(kPlayer.getTeam());
-	d.setGateFailed(iProject, !EnablerKernel::requiresMet(j, ec)
+	CvCascadeEvalFlags gateFlags;
+	d.setGateFailed(iProject, (j != NULL && !cascadeGateOk(j->getGate(), ec, gateFlags))   // entity-level enabled/disabled (DEC-entity-gate)
+	                       || !EnablerKernel::requiresMet(j, ec)
 	                       || !EnablerKernel::allowedOk(j, iProject, kPlayer, /*bUnit*/ false, EDGEB_PROJECTS));
 }
 

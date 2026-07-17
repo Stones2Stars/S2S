@@ -190,6 +190,16 @@ static bool ev_countCore(const CvCascadeEvalCtx& ctx, const std::string& t, int 
 		return true;
 	}
 	if (t == "POPULATION") { iOut = ctx.city != NULL ? ctx.city->getPopulation() : 0; return true; }
+	// BONUS_ counts are VOLUMETRIC at city scope (json.md par.3.4: presence = min:1 of the same count; the network
+	// count lives on the plot group, read via the city relay). Without this branch every `per`-scaled bonus
+	// deposit (the legacy per-instance BonusYieldChanges class) fell to the 0/1 presence fallback and undercounted
+	// by the whole network count. Presence-shaped atoms (min<=1 with a connection) never reach here -- the
+	// evalPresence order routes them to ev_bonusPresent first.
+	if (en_starts(t, "BONUS_") && id >= 0 && eScope == CASC_SCOPE_CITY && ctx.city != NULL)
+	{
+		iOut = ctx.city->getNumBonuses((BonusTypes)id);
+		return true;
+	}
 	if (t == "CITY")       { iOut = ctx.player != NULL ? ctx.player->getNumCities() : 0; return true; }
 	if (t == "TEAM")       { iOut = ctx.team != NULL ? ctx.team->getNumMembers() : 0; return true; }
 	if (t == "AREA_SIZE")  { iOut = (ctx.city != NULL && ctx.city->area() != NULL) ? ctx.city->area()->getNumTiles() : 0; return true; }
@@ -258,7 +268,7 @@ static bool ev_evalPresence(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlag
 	}
 	// A typed BONUS_ presence whose reference did NOT resolve (a->id < 0 -- a curator typo like BONUS_ELEPHANT for
 	// BONUS_ELEPHANTS, or a renamed/removed bonus) names an entity that does not exist, so it is NOT present. Guard
-	// BEFORE any id-indexed engine read: hasBonus((BonusTypes)-1) walks m_paiNumBonuses[-1] (an out-of-bounds read ->
+	// BEFORE any id-indexed engine read: hasBonus((BonusTypes)-1) walks the plot-group bonus array at [-1] (an out-of-bounds read ->
 	// the load-warm-up AV), and a plot's NO_BONUS (== -1) would SPURIOUSLY match a->id == -1. An unknown reference must
 	// degrade to false, never crash/mis-satisfy (json §3.5); the miss is surfaced by the load-time FK census, not here.
 	if (a->id < 0 && en_starts(t, "BONUS_")) return false;
@@ -297,7 +307,13 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	case CASC_PRED_IS_LAND:         return !(p != NULL && p->isWater());
 	case CASC_PRED_HAS_COAST:       return pr->min >= 0 ? (ctx.city != NULL && ctx.city->isCoastal(pr->min))
 	                                                     : (p != NULL && p->isCoastalLand());
-	case CASC_PRED_HAS_FRESHWATER:  return (p != NULL && p->isFreshWater()) || (p != NULL && p->isRiver());
+	// Fresh water is target-relative (json §3.5): on a PLOT target the tile's own access; with a CITY in
+	// context ALSO the city's fresh-water ACCESS counter (providesFreshWater buildings feed it via
+	// changeFreshWater) -- the engine's own dormancy leg is plot()->isFreshWater() || hasFreshWater()
+	// (checkBuildings), so a plot-only read wrongly dorms every city fed by a provider building (the
+	// AQUEDUCT/WATER_TOWER chain -- the worked-plot yield collapse).
+	case CASC_PRED_HAS_FRESHWATER:  return (p != NULL && (p->isFreshWater() || p->isRiver()))
+	                                     || (ctx.city != NULL && ctx.city->hasFreshWater());
 	case CASC_PRED_HAS_TERRAIN:     return ev_cityPlotHas(ctx.city, evp_workedTerrain, pr);
 	case CASC_PRED_HAS_FEATURE:     return pr->id < 0 ? ev_cityPlotHas(ctx.city, evp_workedFeatureAny, pr)
 	                                                   : ev_cityPlotHas(ctx.city, evp_workedFeature, pr);

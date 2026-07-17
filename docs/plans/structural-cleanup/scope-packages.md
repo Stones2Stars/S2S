@@ -158,12 +158,17 @@ read composition is a sign the scope/position split was gotten wrong.
   DECOMPOSE. One surface ⇒ the number a city computes and the breakdown an endpoint renders are the **same bytes**;
   the legacy-shadow decomposition (the engine's `modBuilding`/`modPlayer` accumulators masquerading as the cascade's
   answer) becomes structurally impossible, not merely discouraged.
-- **The GAME OBJECT sums LIVE; the sum is NEVER cached.** The object that consumes a channel (plot → city → empire)
-  fetches its packages + the lower providers' outputs and applies the channel's §2a combine **on read**. The sum is a
-  handful of integer ops over ~5 cached packages — caching it would only add a second thing to invalidate for zero
-  gain. Freshness is entirely write-side (the packages carry the event marks); the read never ensures, never
-  re-walks a source. **The cascade does NOT own a `yieldRate100`-style "compute the whole rate" function** — that
-  summing belongs to the consuming object.
+- **⚖ THE REALIZED SUM IS CACHED (owner ruling 2026-07-16: "CACHE THE SUM" — supersedes the earlier
+  never-cache-the-sum lean).** The reasoning that "the sum is a handful of integer ops" undercounted the live
+  pieces the combine folds — the worked-plot Σ (O(plots) per read) and the live inputs — against consumers that
+  read it hundreds of thousands of times per turn (`foodDifference`: 356k calls/turn measured; legacy served
+  them from the stored `m_aiBaseYieldRate`-class ints). So the city carries the realized §2a combine as its own
+  package (`CPK_YRATE` / `yRate100[]`): filled by the ordinary refresh (last, after its input packages),
+  invalidated by the WIDEN rule (any yield-input mark implies the rate mark) plus the baked live inputs' own
+  sites (worked-plot flips, plot-yield changes, trade-yield refresh; GA/civic/tech ride
+  `markPlayerScopeAndCities`). Reads are stored-int fetches — legacy-equivalent cost with cascade-fed content.
+  The freshness stays entirely write-side; the ensure on the read is the `CvDerivedCache` doctrine's own lazy
+  dirty-check, not version polling.
 - **Plot / specialist / building caches are PROVIDERS on the surface.** Each computes its own output by pulling its
   influences **FROM THE CASCADE**, never from a legacy player accumulator. ⛔ Today the plot base still reads the
   legacy accumulators (`CvPlayer::getTerrainYieldChange` / `getSeaPlotYield` / `getExtraYieldThreshold`, maintained

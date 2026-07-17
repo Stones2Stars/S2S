@@ -29,8 +29,7 @@ public:
 	int getMissionType() const { return m_iMissionType; }    // RUNTIME (assigned post-load), NOT JSON
 	void setMissionType(int i) { m_iMissionType = i; }
 
-	// property engine (self-contained, #429); the XML-era manipulator data is deferred -- empty for now. The archived
-	// Info the one live caller (CvGameObject.cpp) used to read is gone, so the poco serves the surface.
+	// Fed from the PROPERTY_* families in mapFrom (the tech-gated folklore education; player gather -> every owner city).
 	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
 
 	// ============================ #430 mirrored legacy CvHeritageInfo getters (remainder of the archived surface) ============================
@@ -73,7 +72,7 @@ private:
 	std::vector<EraBand> m_aEraCommerce[NUM_COMMERCE_TYPES];   // {gold/research/culture/espionage}.empire.flat, era-gated
 	bool m_bNeedsLanguage;
 	int m_iMissionType;   // runtime
-	CvPropertyManipulators m_PropertyManipulators;   // STUB empty -- property engine, XML-era manipulator data deferred
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the PROPERTY_* families (CascadePropertyBridge::bridgeFamilies)
 
 	// REAL -- the archived getEraCommerceChanges100 shape, built from m_aEraCommerce in mapFrom (see .cpp).
 	IDValueMap<EraTypes, CommerceArray> m_eraCommerceChanges100;

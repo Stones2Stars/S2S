@@ -1,4 +1,5 @@
 #include "CvGameCoreDLL.h"
+#include "Engine/CvExeTrace.h"
 #include "Defines/CvDefines.h"
 #include "UI/CityOutputHistory.h"
 #include "Engine/CvArea.h"
@@ -161,11 +162,13 @@ bool CyCity::canMaintain(ProcessTypes eProcess) const
 
 int CyCity::getFoodTurnsLeft() const
 {
+	InterlockedIncrement((volatile LONG*)&gExeCyCityBarReads);
 	return m_pCity->getFoodTurnsLeft();
 }
 
 bool CyCity::isProduction() const
 {
+	InterlockedIncrement((volatile LONG*)&gExeCyCityBarReads);
 	return m_pCity->isProduction();
 }
 
@@ -236,6 +239,7 @@ std::wstring CyCity::getProductionNameKey() const
 
 bool CyCity::isFoodProduction() const
 {
+	InterlockedIncrement((volatile LONG*)&gExeCyCityBarReads);
 	return m_pCity->isFoodProduction();
 }
 
@@ -261,11 +265,13 @@ int CyCity::getProductionProgress() const
 
 int CyCity::getProductionNeeded() const
 {
+	InterlockedIncrement((volatile LONG*)&gExeCyCityBarReads);
 	return m_pCity->getProductionNeeded();
 }
 
 int CyCity::getProductionTurnsLeft() const
 {
+	InterlockedIncrement((volatile LONG*)&gExeCyCityBarReads);
 	return m_pCity->getProductionTurnsLeft();
 }
 
@@ -474,11 +480,13 @@ int CyCity::foodConsumption(bool bNoAngry, int iExtra) const
 
 int CyCity::foodDifference(bool bBottom) const
 {
+	InterlockedIncrement((volatile LONG*)&gExeCyCityBarReads);
 	return m_pCity->foodDifference(bBottom);
 }
 
 int CyCity::growthThreshold() const
 {
+	InterlockedIncrement((volatile LONG*)&gExeCyCityBarReads);
 	return m_pCity->growthThreshold();
 }
 
@@ -863,6 +871,7 @@ bool CyCity::isBuildingOnlyHealthy() const
 
 int CyCity::getFood() const
 {
+	InterlockedIncrement((volatile LONG*)&gExeCyCityBarReads);
 	return m_pCity->getFood();
 }
 
@@ -1347,7 +1356,8 @@ int CyCity::getFreeBonus(int /*BonusTypes*/ eIndex) const
 
 void CyCity::changeFreeBonus(int /*BonusTypes*/ eIndex, int iChange)
 {
-	m_pCity->changeFreeBonus((BonusTypes)eIndex, iChange);
+	// The Python callers (random events, WorldBuilder) ARE the event/WB grant path -- the persisted store.
+	m_pCity->changeFreeBonusEvent((BonusTypes)eIndex, iChange);
 }
 
 int CyCity::getNumBonuses(int /*BonusTypes*/ iBonus) const

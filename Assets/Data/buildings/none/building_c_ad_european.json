@@ -20,6 +20,9 @@
    ]
   }
  },
+ "allowed": {
+  "empire": 1
+ },
  "attributes": {
   "nukeImmune": true,
   "destroyedOnCapture": true

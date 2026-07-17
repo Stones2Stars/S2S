@@ -371,7 +371,7 @@ public:
 	const InvisibleImprovementChanges& getVisibleImprovementRangeChange(int i) const { return m_aVisibleImprovementRangeChanges[i]; }
 
 	const char* getSound() const { return m_szSound.c_str(); }
-	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }  // empty -- per-property modifier deposits carry the real data; the XML-era manipulator struct is deferred
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }  // fed from the PROPERTY_* families in mapFrom (unit gather -> same-plot city/plot)
 
 	bool hasNegativeEffects() const
 	{
@@ -516,7 +516,7 @@ private:
 	std::vector<InvisibleImprovementChanges> m_aInvisibleImprovementChanges, m_aVisibleImprovementChanges, m_aVisibleImprovementRangeChanges;
 	// misc
 	std::string m_szSound;
-	CvPropertyManipulators m_PropertyManipulators;   // empty -- deferred
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the PROPERTY_* families (CascadePropertyBridge::bridgeFamilies)
 };
 
 #endif // CV_JSON_PROMOTION_INFO_H

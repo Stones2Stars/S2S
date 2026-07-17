@@ -1128,11 +1128,15 @@ def allowed_building(rec):
     getMaxGlobalInstances()!=-1). Absent => uncapped. The new canDoStuff gate enforces it (build while
     tally.count(SELF,scope) < N) and owns ignoring it (NO_WONDER_LIMIT/NO_NATIONAL_UNIT_LIMIT/CHALLENGE_ONE_CITY),
     era-scaling, and +extra — all engine, never the parser (enabler-spec §5/§13.7)."""
-    # WORLD + TEAM caps apply regardless of bNoLimit: CvGame::isBuildingMaxedOut (world) / isWorldWonder gate on
-    # iMaxGlobalInstances!=-1 with NO bNoLimit short-circuit, so a CULTURE building (iMaxGlobalInstances:1) stays
-    # globally capped even though it is bNoLimit. bNoLimit suppresses ONLY the per-PLAYER (national-wonder) cap --
-    # the PALACE relocate case (CvPlayer::isBuildingMaxedOut gates on isNationalWonder; build it anywhere, gated
-    # instead by requires.build.disabled:IS_GOVERNMENT_CENTER). The empire cap is maxPlayer + extraPlayer.
+    # ALL caps emit regardless of bNoLimit -- the cap IS the wonder CATEGORY (world->worldWonder,
+    # team->teamWonder, empire->nationalWonder; isWorldWonder = getMaxGlobalInstances()!=-1), and legacy carries
+    # the category and the enforcement WAIVER as two independent axes: PALACE authors iMaxPlayerInstances=1 (a
+    # national wonder) AND bNoLimit (relocatable). Folding bNoLimit into a cap-absence stripped the CATEGORY from
+    # every consumer -- isLimitedWonder's prereq-SCALING exemption above all (getBuildingPrereqBuilding: a
+    # limited-wonder prereq never scales by self-count), which set the palace-prereq'd autobuild markers
+    # oscillating (need = K+1 palaces). The waiver keeps its own home (bNoLimit -> identity.noInstanceLimit) and
+    # the ENGINE composes it at the enforcement gate (CvPlayer::isBuildingMaxedOut early-outs on isNoLimit).
+    # The empire cap is maxPlayer + extraPlayer.
     allowed = OrderedDict()
     gw = _int(rec, "iMaxGlobalInstances")
     if gw is not None and gw >= 0:
@@ -1140,10 +1144,9 @@ def allowed_building(rec):
     tw = _int(rec, "iMaxTeamInstances")
     if tw is not None and tw >= 0:
         allowed["team"] = tw
-    if not _bool(rec, "bNoLimit"):
-        pw = _int(rec, "iMaxPlayerInstances")
-        if pw is not None and pw >= 0:
-            allowed["empire"] = pw + (_int(rec, "iExtraPlayerInstances") or 0)
+    pw = _int(rec, "iMaxPlayerInstances")
+    if pw is not None and pw >= 0:
+        allowed["empire"] = pw + (_int(rec, "iExtraPlayerInstances") or 0)
     return allowed or None
 
 

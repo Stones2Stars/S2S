@@ -7,6 +7,7 @@
 
 #include "Infrastructure/LinkedList.h"
 #include "Infrastructure/CvDLLEntity.h"
+#include "Infrastructure/CvDerivedCache.h"
 #include "CvGameObject.h"
 #include "CvProperties.h"
 #include "UI/CvBuildingList.h"
@@ -857,6 +858,10 @@ public:
 	int getYieldBySpecialist(YieldTypes eIndex, SpecialistTypes eSpecialist) const;
 
 	int getPlotYield(YieldTypes eIndex) const;
+	// The worked-plot Σ cache trigger (state-repositories: the city-side sum is a CvDerivedCache, NOT a per-read
+	// walk -- the per-read pull walked all radius plots on the game's hottest read, measured 913M plot reads/turn).
+	void markPlotYieldSumDirty() const { m_plotYieldSum.markDirty(); }
+	void recomputePlotYieldSumInto(int* aiOut) const;
 	int getBaseYieldRateModifier(YieldTypes eIndex, int iExtra = 0) const;
 	int getYieldRate(const YieldTypes eYield) const;
 	int getYieldRate100(const YieldTypes eYield) const;         // FLIPPED (#430): returns the ACCUMULATOR rate in a running game
@@ -1019,17 +1024,55 @@ public:
 	std::string getScriptData() const;
 	void setScriptData(std::string szNewValue);
 
+	// The city's bonus injection into its trade network: COMPUTED from the processed buildings' provides
+	// (json §5a) + the persisted event/WB grants -- never a stored ledger (no serialized caches).
 	int getFreeBonus(BonusTypes eIndex) const;
-	void changeFreeBonus(BonusTypes eIndex, int iChange);
+	int getFreeBonusEvents(BonusTypes eIndex) const;
+	void changeFreeBonusEvent(BonusTypes eIndex, int iChange);   // the Python (random-event / WorldBuilder) grant path
+
+	void rebuildBonusPowerAtLoad();   // the unconditional building-isPower half of m_iPowerCount (read is skipped)
+
+	// The city's whole bonus injection (computed building provides + event/WB grants) applied ± onto a plot
+	// group -- the one implementation updatePlotGroupBonus and the load fold go through.
+	void addProvidedBonusesToGroup(CvPlotGroup* pPlotGroup, int iSign) const;
 
 	void processNumBonusChange(BonusTypes eIndex, int iOldValue, int iNewValue);
+	// The maintained-count writers (the ONLY places the read answer changes; see the members' comment):
+	void refreshEffectiveBonus(BonusTypes eIndex);          // one bonus: gate x total + corp -> store
+	void refreshAllEffectiveBonuses();                      // gate sweep (tech/minted/corp changed; totals kept)
+	void seedEffectiveBonuses();                            // full pull from the group (join/load/reconcile)
+	int getNumBonusesOracle(BonusTypes eIndex) const;       // the retired per-read calculation -- VALIDATION ORACLE ONLY
 	void endDeferredBonusProcessing();
 	void startDeferredBonusProcessing();
+	bool isDeferringBonusProcessing() const { return m_deferringBonusProcessingCount > 0; }
+
+	// Bulk building processing: while the bracket is open, processBuilding SKIPS its wholesale full-city
+	// rescans (extra-building happiness/health, building commerce, religion happiness/commerce) and the
+	// bracket end runs them ONCE for the whole batch -- same end state (they are idempotent recomputes from
+	// current state), one rescan set per BATCH instead of per flip. checkBuildings brackets its flip loop
+	// with it (the load-end dormancy fixpoint's 40k-flip reconcile was paying ~5 full-city rescans per flip).
+	void startBulkBuildingProcessing() { ++m_bulkBuildingProcessingCount; }
+	void endBulkBuildingProcessing(bool bRunWholesale = true);
+	bool isBulkBuildingProcessing() const { return m_bulkBuildingProcessingCount > 0; }
+
+	// The CITIZEN-JUGGLE bracket (the governor-churn fix, owner 2026-07-16): the governor probes by REAL
+	// MUTATION (remove-worst/add-best), so every probe fired the full per-change side-effect layer -- three
+	// whole-set specialist recomputes, package invalidations, spine emits, plot-builder/symbol EXE calls, UI
+	// dirt -- thousands of times per turn (the measured 14k specialistChanged storm + the force->invalidate->
+	// force loop). Inside the bracket the probe mutations keep their SEMANTICS (raw counts, populations, the
+	// cheap +- incrementals the valuations read) while that side-effect layer is DEFERRED; endCitizenJuggling
+	// replays it ONCE as the run's NET (net specialist deltas emit; one package mark; net-changed plots refresh
+	// their symbols). A converged run (remove-then-re-add-the-same) is zero events, zero marks, zero redraws.
+	void startCitizenJuggling();
+	void endCitizenJuggling();
+	bool isCitizenJuggling() const { return m_iCitizenJugglingCount > 0; }
 	int getNumBonusesFromBase(BonusTypes eIndex, int iBaseNum) const;
 
+	// The NETWORK bonus count is a pure RELAY onto the city's plot group (produced/extracted + deal-traded, one
+	// sum) -- the count lives ONCE, on the group; the city stores NO mirror (owner ruling 2026-07-15). Vicinity
+	// stays city-owned and is never a second count (enabler.md par.8 RESIDENCY).
 	int getNumBonuses(BonusTypes eIndex) const;
 	bool hasBonus(BonusTypes eIndex) const;
-	void changeNumBonuses(BonusTypes eIndex, int iChange);
 
 	int getCorpBonusProduction(const BonusTypes eBonus) const;
 	void changeCorpBonusProduction(const BonusTypes eBonus, const int iChange);
@@ -1291,7 +1334,11 @@ public:
 	bool hasVicinityBonus(BonusTypes eBonus) const;
 	void clearRawVicinityBonusCache(BonusTypes eBonus);
 	bool hasRawVicinityBonus(BonusTypes eBonus) const;
-	void checkBuildings(bool bAlertOwner = true);
+	// The dormancy verdict apply: the enabler's operate classification + the two engine-side runtime legs
+	// (employed population, banned non-state religion) -> setDisabledBuilding. Returns whether any verdict
+	// flipped (the load-end cross-city fixpoint loops on it); paFlipped, when given, collects the flipped
+	// buildings (the fixpoint's work-list derivation reads their provides/trait carriage).
+	bool checkBuildings(bool bAlertOwner = true, std::vector<BuildingTypes>* paFlipped = NULL);
 	void doVicinityBonus();
 	bool isDevelopingCity() const;
 
@@ -1775,6 +1822,8 @@ protected:
 
 	int* m_aiRiverPlotYield;
 	int* m_aiBaseYieldRate;
+	// The worked-plot Σ per yield (recompute-only, never serialized; bound in the ctor) -- getPlotYield's O(1) source.
+	CvDerivedCache<CvCity, int, NUM_YIELD_TYPES> m_plotYieldSum;
 	int* m_buildingExtraYield100;
 	int* m_aiBuildingBonusVicinityYield100; // squirrelBanana: PURE-FUNCTION bonus/vicinity building yield (recomputed every read, NOT serialized, NOT the stale m_aiExtraYield edge-cache) -- #vicinity-build-order fix
 	// STREAMLINED 2026-06-28: getBuildingExtraYield100 (squirrelBanana) is now a RECOMPUTE-ONLY, dirty-flagged cache
@@ -1825,8 +1874,7 @@ protected:
 	CvWString m_szName;
 	CvString m_szScriptData;
 
-	int* m_paiFreeBonus;
-	int* m_paiNumBonuses;
+	int* m_paiFreeBonusEvents;   // event/WB-granted free bonuses ONLY (persisted one-shot state); the building part is computed
 	int* m_paiProjectProduction;
 	int* m_paiBuildingOriginalOwner;
 	int* m_paiBuildingOriginalTime;
@@ -1848,7 +1896,22 @@ protected:
 	bool* m_pabHasCorporation;
 
 	int	m_deferringBonusProcessingCount;
+	int	m_bulkBuildingProcessingCount;
 	int* m_paiStartDeferredSectionNumBonuses;
+	// The MAINTAINED bonus counts (owner design: added/subtracted on events, ZERO calculation on read).
+	// m_aiNetworkBonusTotal mirrors the group's per-bonus total AS DELIVERED by the fan-out (assigned, never
+	// summed); m_aiEffectiveBonusCount is the fully-gated read answer (tech gate x minted gate + corp add-on),
+	// refreshed ONLY at the events that move an input. Derived, never serialized; the group stays authoritative.
+	int* m_aiNetworkBonusTotal;
+	int* m_aiEffectiveBonusCount;
+
+	// the citizen-juggle bracket (see startCitizenJuggling): nesting count + the deferred-layer flags + the
+	// run-start snapshots the net replay diffs against
+	int m_iCitizenJugglingCount;
+	bool m_bJuggleDeferredSpec;
+	bool m_bJuggleDeferredWork;
+	std::vector<int> m_juggleSpecStart;
+	std::vector<bool> m_juggleWorkStart;
 
 	CvProperties m_Properties;
 	CvBuildingList m_BuildingList;
@@ -1884,7 +1947,9 @@ protected:
 	std::vector< std::pair<BonusTypes, int> > m_corpBonusProduction;
 
 	std::vector<EventTypes> m_aEventsOccured;
-	std::vector<BuildingYieldChange> m_aBuildingYieldChange;
+	std::vector<BuildingYieldChange> m_aBuildingYieldChange;   // MIXED store (event/vote grants + the bonus-conditioned
+	// building yield term riding m_aiExtraYield) -- the ONE bonus-fed member still serialized; its split awaits the
+	// modifier cut's extra-yield rework. The load fold SUPPRESSES processBonus's yield leg so nothing double-applies.
 	std::vector<BuildingCommerceChange> m_aBuildingCommerceChange;           // RETIRED (empire part moved to the player recompute ledger); read consume-don't-keep, no writers
 	std::vector<BuildingCommerceChange> m_aBuildingCommerceChangeEvents;     // event/vote-granted per-building commerce: SEPARATELY PERSISTED genuine state, outside the recompute-from-source empire path
 	BuildingChangeArray m_aBuildingHappyChange;

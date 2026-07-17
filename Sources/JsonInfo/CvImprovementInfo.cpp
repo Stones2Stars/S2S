@@ -10,6 +10,7 @@
 #include "UI/CvArtFileMgr.h"      // ARTFILEMGR -- the EXE-shim-merge getArtInfo()
 #include "Infos/CvArtInfoImprovement.h"   // complete CvArtInfoImprovement -- getButton() needs the full definition
 #include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonFamVal/...)
+#include "CvCascadePropertyBridge.h" // the shared grants.repeatable PROPERTY pulse -> manipulator walk
 
 CvImprovementInfo::CvImprovementInfo()
 	: m_iDefenseModifier(0), m_iAirBombDefense(0), m_iHealthPercent(0), m_iHappiness(0), m_iCulture(0),
@@ -41,6 +42,11 @@ void CvImprovementInfo::mapFrom(const picojson::value& entity)
 	CvInfo::mapFrom(entity);   // core reading + availability (requires.build carries the placement/validity prereqs)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
+
+	// PROPERTY_* per-turn SOURCES: the improvement's grants.repeatable property pulses (polluting mines/wells --
+	// authored per json §5) feed the KEEP-legacy solver via the plot gather, mirroring the legacy PLOT+NEAR
+	// shape. The ONE shared pulse walk (clear-and-refill inside).
+	CascadePropertyBridge::bridgePulses(getGrants(), m_PropertyManipulators);
 
 	// plot yield families (the improvement's own tile output): base + condition-gated deposits, all folded into the
 	// `<yield>.plot.flat` arrays by the curator. readConditionalYields sets m_aiYieldChange (base) AND the RiverSide/

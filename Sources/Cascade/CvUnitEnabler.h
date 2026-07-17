@@ -22,16 +22,43 @@ class UnitEnabler
 {
 public:
 	// The city-created applier: init (size + static exclusions) + fold the cross-scope HAVE that predates the
-	// city (team techs + player civics). Called at founding (CvCity::init) and at the start of the city's save
-	// read, BEFORE its own in-read emits stream. The city's own facts arrive as events.
+	// city (team techs + player civics), then (outside the load window) the one-city gate pass. Called at
+	// founding (CvCity::init) and at the start of the city's save read, BEFORE its own in-read emits stream.
 	static void onCityCreated(const CvCity& kCity);
 	// MUST run BEFORE TechEnabler::onTechChanged (the player tech domain's held flag is the broad-emit flip guard)
 	static void onCityTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas);
 	// MUST run BEFORE BuildingEnabler::onCityBuildingChanged (the buildings domain's held flag is the flip guard)
 	static void onCityBuildingChanged(const CvCity& kCity, int iBuilding, bool bPresent);
 	static void onCityReligionChanged(const CvCity& kCity, int iReligion, bool bHas);
-	static void onCityBonusChanged(const CvCity& kCity, int iBonus, int iChange);   // count delta; applies on a 0-crossing
+	static void onCityBonusChanged(const CvCity& kCity, int iBonus, int iChange);   // network count delta; re-gates on a 0-crossing
+	static void onCityVicinityBonusChanged(const CvCity& kCity, int iBonus);        // LOCAL presence flip; re-gates vicinity dependents
 	static void onPlayerCivicsChanged(PlayerTypes ePlayer, int iOldCivic, int iNewCivic);
+
+	// ==== THE REQUIRES GATE (enabler.md par.7.1 steps 2+3; the par.3 unit machine -- see the .cpp header):
+	// the parity-proven canTrain legs (era-scaled instance caps, entity gate, requires.build, the superseder
+	// removal, the uc_reachable upgrade-tree dormancy) as the domain's gate verdict. LOAD gates once at
+	// GAME_LOAD_FINISHED (the par.7.1 "gate once after the stream ends" option). ====
+	static void gateCity(const CvCity& kCity);
+	static void onLoadFinished();
+	enum GateClass { GATE_POP = 0, GATE_POWER = 1, GATE_GOLDEN_AGE = 2, GATE_STATE_RELIGION = 3, GATE_DYNAMIC = 4, NUM_GATE_CLASSES = 5 };
+	static void onCityGateClass(const CvCity& kCity, int eClass);
+	static void onPlayerGateClass(PlayerTypes ePlayer, int eClass);
+	static void onCityTurn(const CvCity& kCity);   // the bounded DYNAMIC re-check (frontier-perf St.2 step 5)
+	// SEVT_UNIT_COUNT (par.7.1 step 3): the changed unit's cap/relations re-gate (skip-guarded for the
+	// uncapped, unreferenced, non-upgrade common case -- combat births/deaths stay free).
+	static void onUnitCountChanged(PlayerTypes ePlayer, int eUnit);
+
+	// The DECOMPOSITION (the /computed/enabler/units no-guessing surface): one unit's verdict split into the
+	// NAMED ud_verdict legs, so a wrong offer attributes to a source instead of a hypothesis.
+	struct Explain
+	{
+		bool bInTree, bListed, bSpawnOnly, bObsoleteTech, bCapped, bEntityGateFail, bRequiresFail;
+		bool bUpgradeDormant, bSuperseded;
+		int iSupersededBy;   // the available superseder that removes it (-1 none)
+		Explain() : bInTree(false), bListed(false), bSpawnOnly(false), bObsoleteTech(false), bCapped(false),
+			bEntityGateFail(false), bRequiresFail(false), bUpgradeDormant(false), bSuperseded(false), iSupersededBy(-1) {}
+	};
+	static void explain(const CvCity& kCity, int iUnit, Explain& out);
 };
 
 #endif // CV_UNIT_ENABLER_H

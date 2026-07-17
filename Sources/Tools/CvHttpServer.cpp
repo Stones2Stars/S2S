@@ -1,4 +1,6 @@
 #include "CvGameCoreDLL.h"
+#include "Engine/CvExeTrace.h"
+#include "Infrastructure/CvDLLEntityIFaceBase.h"
 #include "CvHttpServer.h"
 #include "CvBuildingInfo.h"
 #include "Engine/CvPropertySource.h" // property-source completeness oracle: getSource()->getProperty()
@@ -7,8 +9,10 @@
 #include "Cascade/CvCascadeScalarChannels.h" // the city scalar channels' nets (GP-rate/defense/maintenance)
 #include "Cascade/CvCascadeAccumulator.h"    // CascadeRateSlots -- the increment-F standing slot twins on the wellbeing action
 #include "Cascade/CvCascadePerfCount.h"      // /computed/perf: the (scope,channel) calc-count histogram (DEC-calc-count-gate)
+#include "AI/BetterBTSAI.h"                  // /computed/perf frameAccumMs: the whole-turn frame-span ms accumulators
 #include "Cascade/CvCascadeReadJson.h"       // /state/info: rjInfoForType -- the info-object edge dump (DEC-one-reverse-view)
 #include "Cascade/CvBuildingEnabler.h"       // /computed/enabler/buildings: the per-city domain's oracle verification
+#include "Cascade/CvUnitEnabler.h"           // /computed/enabler/units: the per-unit verdict decomposition
 #include "CvBonusInfo.h" // bonus-name resolution in the /diagnostic/whyNot trace
 #include "CvImprovementInfo.h" // cityInput loadout: worked-plot improvement type
 #include "CvTraitInfo.h" // cityInput loadout: player trait list
@@ -110,6 +114,7 @@ namespace
 	// sample, not the complete live record the render-from-API/narrate-the-turn goal needs. 65536 frames x ~150-250B =>
 	// ~10-16MB worst-case transient, fine on the LAA process for playtesting; self-draining so it never sits full.
 	const size_t EVENT_QUEUE_CAP = 65536;
+	int g_iDroppedEvents = 0;              // guarded by g_eventLock -- frames lost to the cap since the last marker
 	std::vector<SOCKET> g_sseClients;      // server thread only
 	const size_t SSE_CLIENT_CAP = 8;
 
@@ -1660,10 +1665,110 @@ namespace
 		gate["threshold"] = picojson::value((double)50000);
 		gate["over"] = picojson::value(lTotal > 50000);
 		o["gate"] = picojson::value(gate);
+		// The whole-turn frame-span ms accumulators (BetterBTSAI.h; logged + reset at doTurn) exposed LIVE, plus a
+		// wall-clock stamp -- two samples N seconds apart give the CURRENT frame-loop cost per lane (Δaccum/Δwall),
+		// which is how an idle-FPS drop is attributed DLL-lane vs EXE-render by measurement, not guess.
+		{
+			picojson::value::object accum;
+			accum["gameUpdate"]   = picojson::value(gPerfGameUpdateAccumMs);
+			accum["updateMoves"]  = picojson::value(gPerfUpdateMovesAccumMs);
+			accum["autoMission"]  = picojson::value(gPerfAutoMissionAccumMs);
+			accum["unitUpdate"]   = picojson::value(gPerfUnitUpdateAccumMs);
+			accum["brokerPP"]     = picojson::value(gPerfBrokerPPAccumMs);
+			accum["pathGen"]      = picojson::value(gPerfPathGenAccumMs);
+			accum["reachable"]    = picojson::value(gPerfReachableAccumMs);
+			accum["assignWork"]   = picojson::value(gPerfAssignWorkAccumMs);
+			accum["updateScore"]  = picojson::value(gPerfUpdateScoreAccumMs);
+			accum["timers"]       = picojson::value(gPerfUpdateTimersAccumMs);
+			accum["testAlive"]    = picojson::value(gPerfTestAliveAccumMs);
+			accum["plotPaging"]   = picojson::value(gPerfPlotPagingAccumMs);
+			accum["pyGameUpdate"] = picojson::value(gPerfPyGameUpdateAccumMs);
+			accum["wallMs"]       = picojson::value((double)GetTickCount());
+			o["frameAccumMs"] = picojson::value(accum);
+			// Monotonic poll counters (never reset; rate = Δ/Δwall) -- the billboard/bar-value poll attribution.
+			picojson::value::object polls;
+			polls["billboardColor"]    = picojson::value((double)gPerfBillboardColorPolls);
+			polls["billboardProdIcon"] = picojson::value((double)gPerfBillboardProdIconPolls);
+			polls["foodDifference"]    = picojson::value((double)gPerfFoodDifferenceCalls);
+			polls["prodTurnsLeft"]     = picojson::value((double)gPerfProdTurnsLeftCalls);
+			polls["foodBar"]           = picojson::value((double)gPerfFoodBarPolls);
+			polls["prodBar"]           = picojson::value((double)gPerfProdBarPolls);
+			polls["prodDiff"]          = picojson::value((double)gPerfProdDiffCalls);
+			o["pollCounters"] = picojson::value(polls);
+		}
+		{
+			// the FULL 16-slot billboard entry-point census (the named pollCounters above are a subset --
+			// getVisibleBuildings=6 / getVisibleEffects=7 were counted but never exposed, a verification hole)
+			picojson::object fns;
+			for (int iFn = 0; iFn < 16; iFn++)
+			{
+				if (gPerfBillboardFn[iFn] != 0 && gPerfBillboardFnNames[iFn] != NULL)
+				{
+					fns[gPerfBillboardFnNames[iFn]] = picojson::value((double)gPerfBillboardFn[iFn]);
+				}
+			}
+			o["billboardFns"] = picojson::value(fns);
+		}
+		{
+			// The [EXE] DLL->EXE call trace: per-kind cumulative counters (CvExeTrace). Sample twice for rates.
+			picojson::object exeCalls;
+			const long* aiCalls = exeTraceCounters();
+			for (int iKind = 0; iKind < NUM_EXE_TRACE_KINDS; iKind++)
+			{
+				exeCalls[exeTraceKindName(iKind)] = picojson::value((double)aiCalls[iKind]);
+			}
+			o["exeCalls"] = picojson::value(exeCalls);
+		}
+		{
+			// The plot-yield read surface (EXE->DLL; the cache-death hypothesis): cumulative, sample twice for rates.
+			picojson::object py;
+			py["getYieldCalls"]   = picojson::value((double)gExePlotGetYieldCalls);
+			py["yieldRecomputes"] = picojson::value((double)gExePlotYieldRecomputes);
+			py["calcYieldCalls"]  = picojson::value((double)gExePlotCalcYieldCalls);
+			py["cyCityBarReads"]  = picojson::value((double)gExeCyCityBarReads);   // the PYTHON boundary rate
+			o["plotYieldReads"] = picojson::value(py);
+		}
+		{
+			// The EXE->DLL entry counters (the exeIn mirror of exeCalls): cumulative, sample twice for rates.
+			picojson::object in;
+			const long* aiIn = exeInCounters();
+			for (int iKind = 0; iKind < NUM_EXE_IN_KINDS; iKind++)
+			{
+				in[exeInKindName(iKind)] = picojson::value((double)aiIn[iKind]);
+			}
+			o["exeIn"] = picojson::value(in);
+		}
+		{
+			// The answer-stability detector: per-getter poll + FLIP counts (an unstable answer drives EXE re-render).
+			picojson::object flips;
+			const long* aiPolls = exeFlipPolls();
+			const long* aiFlips = exeFlipFlips();
+			for (int iKind = 0; iKind < NUM_EXE_IN_KINDS; iKind++)
+			{
+				if (aiPolls[iKind] == 0) continue;
+				picojson::object one;
+				one["polls"] = picojson::value((double)aiPolls[iKind]);
+				one["flips"] = picojson::value((double)aiFlips[iKind]);
+				flips[exeInKindName(iKind)] = picojson::value(one);
+			}
+			o["exeFlips"] = picojson::value(flips);
+		}
+		{
+			// The getYield caller census (sampled 1/65536; rva resolves via the linker map: ln CvGameCoreDLL+<rva>).
+			picojson::object yc;
+			int iSlots = 0;
+			const ExeRvaCount* aCallers = exeYieldCallerTable(&iSlots);
+			for (int i = 0; i < iSlots && aCallers[i].iRva != 0; i++)
+			{
+				yc[CvString::format("%d", aCallers[i].iRva).GetCString()] = picojson::value((double)aCallers[i].iCount);
+			}
+			o["yieldCallers"] = picojson::value(yc);
+		}
 		o["notes"] = picojson::value(std::string(
 			"(scope,channel) package-recompute count this turn; reset at the next [MODIFIER/perf] census flush; "
 			">50k is near-certainly a blanket-recompute failure. NB city/empire/world instrumented; "
-			"plot-yield (pull model) + operating-buildings recompute not yet attributed here."));
+			"plot-yield (pull model) + operating-buildings recompute not yet attributed here. "
+			"frameAccumMs: whole-turn frame-span ms accumulators (reset at doTurn) + wallMs -- sample twice for live rates."));
 		return CvString(picojson::value(o).serialize().c_str());
 	}
 
@@ -1711,6 +1816,124 @@ namespace
 		// /computed/perf -- GLOBAL (scope,channel) calc-count; no player/type, so resolved here (like gamestate).
 		if (strcmp(szAction, "perf") == 0)
 			return extractCalcPerf();
+
+		// /computed/sceneReset -- the FPS-drop conviction probe: re-run the LOAD-path city-scene build
+		// (setupGraphical) for the active player's cities during a live drop. FPS recovering on the spot proves
+		// the incremental (cityLayout-dirty) rebuild path degrades the scene representation vs the load build.
+		if (strcmp(szAction, "sceneReset") == 0)
+		{
+			int iReset = 0, iUnits = 0;
+			const PlayerTypes eActive = GC.getGame().getActivePlayer();
+			if (eActive != NO_PLAYER)
+			{
+				int iLoop;
+				CvPlayer& kAct = GET_PLAYER(eActive);
+				for (CvCity* pCity = kAct.firstCity(&iLoop); pCity != NULL; pCity = kAct.nextCity(&iLoop))
+				{
+					pCity->setupGraphical();
+					++iReset;
+				}
+				// the UNIT half (bare map hides units + billboards; city scenes stay): re-run the load-path
+				// entity build for every unit of every alive player -- the map-switch idiom
+				for (int iP = 0; iP < MAX_PLAYERS; iP++)
+				{
+					CvPlayer& kP = GET_PLAYER((PlayerTypes)iP);
+					if (!kP.isAlive()) continue;
+					foreach_(CvUnit* pUnit, kP.units())
+					{
+						if (!pUnit->isUsingDummyEntities())
+						{
+							gDLL->getEntityIFace()->createUnitEntity(pUnit);
+							pUnit->setupGraphical();
+							++iUnits;
+						}
+					}
+				}
+			}
+			return CvString(CvString::format("{\"action\":\"sceneReset\",\"citiesReset\":%d,\"unitsReset\":%d}", iReset, iUnits).GetCString());
+		}
+
+		// /computed/barProbe -- the EXACT float vectors the EXE billboard bar renderer is handed, per city, with
+		// NaN/INF/out-of-range flagged (the billboard VALUE-poison probe: a bad float renders as degenerate bar
+		// geometry EVERY FRAME with zero further DLL calls).
+		if (strcmp(szAction, "barProbe") == 0)
+		{
+			picojson::object o;
+			o["action"] = picojson::value(std::string("barProbe"));
+			picojson::array bad; int iCities = 0, iVals = 0;
+			for (int iP = 0; iP < MAX_PLAYERS; iP++)
+			{
+				const CvPlayer& kP = GET_PLAYER((PlayerTypes)iP);
+				if (!kP.isAlive()) continue;
+				int iLoop;
+				for (const CvCity* pCity = kP.firstCity(&iLoop); pCity != NULL; pCity = kP.nextCity(&iLoop))
+				{
+					++iCities;
+					std::vector<float> afFood, afProd;
+					const bool bF = pCity->getFoodBarPercentages(afFood);
+					const bool bP = pCity->getProductionBarPercentages(afProd);
+					for (int iSrc = 0; iSrc < 2; iSrc++)
+					{
+						const std::vector<float>& af = iSrc == 0 ? afFood : afProd;
+						if ((iSrc == 0 ? !bF : !bP)) continue;
+						for (size_t j = 0; j < af.size(); j++)
+						{
+							++iVals;
+							const float f = af[j];
+							// NaN (f != f), INF, or wildly out of the [−2, 2] plausible bar range
+							if (f != f || f > 2.0f || f < -2.0f)
+							{
+								picojson::object e;
+								e["owner"] = picojson::value((double)pCity->getOwner());
+								e["city"] = picojson::value((double)pCity->getID());
+								e["name"] = picojson::value(std::string(CvString(pCity->getName()).GetCString()));
+								e["bar"] = picojson::value(std::string(iSrc == 0 ? "food" : "prod"));
+								e["idx"] = picojson::value((double)j);
+								e["value"] = picojson::value((double)f);
+								bad.push_back(picojson::value(e));
+							}
+						}
+					}
+				}
+			}
+			o["cities"] = picojson::value((double)iCities);
+			o["valuesChecked"] = picojson::value((double)iVals);
+			o["badValues"] = picojson::value(bad);
+			// The PRESENTATION-STATE census (the blink/attention feed the EXE animates per frame): a compact
+			// per-active-player-city state string -- diff a pre-turn capture against a during-drop capture to see
+			// which cities changed presentation class at the turn.
+			{
+				picojson::object states;
+				const PlayerTypes eActive = GC.getGame().getActivePlayer();
+				if (eActive != NO_PLAYER)
+				{
+					int iLoop;
+					const CvPlayer& kAct = GET_PLAYER(eActive);
+					for (const CvCity* pCity = kAct.firstCity(&iLoop); pCity != NULL; pCity = kAct.nextCity(&iLoop))
+					{
+						NiColorA kDot(0,0,0,0), kText(0,0,0,0);
+						pCity->getCityBillboardSizeIconColors(kDot, kText);
+						const char* szIcon = pCity->getCityBillboardProductionIcon();
+						// the DRAWN-SCENE content: how many building MODELS this city tells the EXE to render
+						// (getVisibleBuildings -- the feed of the city-scene rebuild, i.e. the GPU load)
+						std::list<BuildingTypes> kVisible;
+						int iGenerics = 0;
+						const_cast<CvCity*>(pCity)->getVisibleBuildings(kVisible, iGenerics);
+						states[CvString::format("%d", pCity->getID()).GetCString()] = picojson::value(std::string(CvString::format(
+							"dot=%.2f,%.2f,%.2f,%.2f occ=%d angry=%d health=%d foodDiff=%d icon=%s vis=%d gen=%d",
+							kDot.r, kDot.g, kDot.b, kDot.a,
+							pCity->isOccupation() ? 1 : 0,
+							pCity->angryPopulation(),
+							pCity->healthRate(),
+							pCity->foodDifference(),
+							szIcon != NULL ? "y" : "n",
+							(int)kVisible.size(), iGenerics).GetCString()));
+					}
+				}
+				o["presentation"] = picojson::value(states);
+			}
+			return CvString(picojson::value(o).serialize().c_str());
+		}
 
 		// /state/plots -- the GLOBAL map dump (not per-player); resolved before the per-player stateSlice below.
 		if (strcmp(szAction, "statePlots") == 0)
@@ -2667,6 +2890,16 @@ namespace
 				e["base"]          = picojson::value((double)iBase);
 				e["specialist"]    = picojson::value((double)pCity->getSpecialistYieldTotal(eY));
 				e["modifier"]      = picojson::value((double)pCity->getBaseYieldRateModifier(eY)); // full % == 100 + sum%
+				// The CASCADE PACKAGE side (what the REALIZED rate actually combines -- the yields' authority) beside
+				// the legacy terms above, so an oracle-vs-package divergence attributes PER TERM (the blind-value rule:
+				// the realized combine's inputs were unobservable). realized100 = the flipped getter's answer itself.
+				{
+					const CascadeCityPackages& st = pCity->m_cascadeCityPackages;
+					e["cascadePct"]      = picojson::value((double)st.yPctCity[eY]);   // vs (modifier - 100)
+					e["cascadeSpec"]     = picojson::value((double)st.ySpec[eY]);      // vs specialist
+					e["cascadeExtra100"] = picojson::value((double)st.yExtra100[eY]);  // vs extraYield100
+					e["realized100"]     = picojson::value((double)pCity->getYieldRate100(eY));
+				}
 				// MODIFIER BREAKDOWN (getBaseYieldRateModifier components, CvCity.cpp:11217) -- so the emulator
 				// attributes the percent gap to the missing source (bonus/power/area/capital/player-trait), since
 				// StoneBase only sums building + civic %.
@@ -2911,11 +3144,76 @@ namespace
 					}
 					if (!km.empty()) { e["propertyManip"] = picojson::value(km); bAny = true; }
 				}
+				// EMPIRE-scope per-turn sources (the converted <PropertiesAllCities> one-shots -- property-audit.md
+				// one-shot ruling): the all-cities container, delivered in every owner city by the gather.
+				const CvPropertyManipulators* pPMe = bi.getPropertyManipulatorsAllCities();
+				if (pPMe != NULL)
+				{
+					picojson::value::array kme;
+					for (int mi = 0; mi < pPMe->getNumSources(); ++mi)
+					{
+						const CvPropertySource* pSrc = pPMe->getSource(mi);
+						if (pSrc != NULL && pSrc->getProperty() != NO_PROPERTY)
+							kme.push_back(picojson::value(std::string(GC.getPropertyInfo(pSrc->getProperty()).getType())));
+					}
+					if (!kme.empty()) { e["propertyManipEmpire"] = picojson::value(kme); bAny = true; }
+				}
 				if (!bAny) continue;
 				e["type"] = picojson::value(std::string(bi.getType()));
 				kBldgYield.push_back(picojson::value(e));
 			}
 			o["buildingYields"] = picojson::value(kBldgYield);
+
+			// The load-built empire-source building index (GC.getAllCitiesManipBuildings) + the owner's live count
+			// of each -- the delivery premise of the all-cities gather, observable at LOAD (done-is-observable).
+			{
+				picojson::value::object kAll;
+				const std::vector<BuildingTypes>& aAllCities = GC.getAllCitiesManipBuildings();
+				for (size_t ai = 0; ai < aAllCities.size(); ++ai)
+					kAll[GC.getBuildingInfo(aAllCities[ai]).getType()] =
+						picojson::value((double)GET_PLAYER(pCity->getOwner()).getBuildingCount(aAllCities[ai]));
+				o["allCitiesManipBuildings"] = picojson::value(kAll);
+			}
+
+			// PROPERTY-SOURCE CENSUS: per info CATEGORY, how many infos carry >=1 per-turn source and the total
+			// source count -- the load-observable proof that every carrier's poco bridge populated (the
+			// stubbing-is-not-allowed sweep; a category at 0 that legacy authored is a lost carrier).
+			{
+				picojson::value::object kCensus;
+				struct CensusRow { const char* name; int infos; int sources; };
+				CensusRow aRows[] = {
+					{ "buildings", GC.getNumBuildingInfos(), 0 }, { "units", GC.getNumUnitInfos(), 0 },
+					{ "civics", GC.getNumCivicInfos(), 0 }, { "traits", GC.getNumTraitInfos(), 0 },
+					{ "heritages", GC.getNumHeritageInfos(), 0 }, { "specialists", GC.getNumSpecialistInfos(), 0 },
+					{ "promotions", GC.getNumPromotionInfos(), 0 }, { "features", GC.getNumFeatureInfos(), 0 },
+					{ "improvements", GC.getNumImprovementInfos(), 0 }, { "properties", GC.getNumPropertyInfos(), 0 },
+				};
+				for (int r = 0; r < (int)(sizeof(aRows) / sizeof(aRows[0])); ++r)
+				{
+					int iInfos = 0, iSources = 0;
+					for (int i = 0; i < aRows[r].infos; ++i)
+					{
+						const CvPropertyManipulators* pM =
+							  (r == 0) ? GC.getBuildingInfo((BuildingTypes)i).getPropertyManipulators()
+							: (r == 1) ? GC.getUnitInfo((UnitTypes)i).getPropertyManipulators()
+							: (r == 2) ? GC.getCivicInfo((CivicTypes)i).getPropertyManipulators()
+							: (r == 3) ? GC.getTraitInfo((TraitTypes)i).getPropertyManipulators()
+							: (r == 4) ? GC.getHeritageInfo((HeritageTypes)i).getPropertyManipulators()
+							: (r == 5) ? GC.getSpecialistInfo((SpecialistTypes)i).getPropertyManipulators()
+							: (r == 6) ? GC.getPromotionInfo((PromotionTypes)i).getPropertyManipulators()
+							: (r == 7) ? GC.getFeatureInfo((FeatureTypes)i).getPropertyManipulators()
+							: (r == 8) ? GC.getImprovementInfo((ImprovementTypes)i).getPropertyManipulators()
+							:            GC.getPropertyInfo((PropertyTypes)i).getPropertyManipulators();
+						const int n = (pM != NULL) ? pM->getNumSources() + pM->getNumPropagators() : 0;
+						if (n > 0) { ++iInfos; iSources += n; }
+					}
+					picojson::value::object kRow;
+					kRow["infos"] = picojson::value((double)iInfos);
+					kRow["sources"] = picojson::value((double)iSources);
+					kCensus[aRows[r].name] = picojson::value(kRow);
+				}
+				o["propertySourceCensus"] = picojson::value(kCensus);
+			}
 
 			// UNIT property-source PROVIDERS (owner 2026-06-29: units can impact a city's property too -- the
 			// RELATION_SAME_PLOT unit->city crime/disease/education emission via getPropertyManipulators). Per unit TYPE
@@ -4098,6 +4396,51 @@ namespace
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
+		// /computed/enabler/units -- the per-city unit domain's totals (?player=N&city=M) + a per-unit verdict
+		// DECOMPOSITION (&type=UNIT_X): each ud_verdict leg named, so a wrong offer attributes to a source
+		// (capped / entityGate / requires / upgradeDormant / supersededBy) -- the no-guessing surface.
+		if (strcmp(szAction, "enablerUnits") == 0)
+		{
+			if (pCity == NULL)
+			{
+				o["error"] = picojson::value(std::string("city required (?player=N&city=M)"));
+				return CvString(picojson::value(o).serialize().c_str());
+			}
+			o["city"] = picojson::value((double)iCityId);
+			o["seeded"] = picojson::value(pCity->m_enabler.units.isSeeded());
+			int iListed = 0, iTree = 0;
+			for (int u = 0; u < GC.getNumUnitInfos(); ++u)
+			{
+				if (pCity->m_enabler.units.listed(u)) ++iListed;
+				if (pCity->m_enabler.units.inTree(u)) ++iTree;
+			}
+			o["listed"] = picojson::value((double)iListed);
+			o["inTree"] = picojson::value((double)iTree);
+			if (szType[0] != '\0')
+			{
+				const int iU = GC.getInfoTypeForString(szType, true);
+				if (iU < 0)
+				{
+					o["error"] = picojson::value(std::string("type not loaded this game"));
+					return CvString(picojson::value(o).serialize().c_str());
+				}
+				UnitEnabler::Explain ex;
+				UnitEnabler::explain(*pCity, iU, ex);
+				o["inTreeUnit"] = picojson::value(ex.bInTree);
+				o["listedUnit"] = picojson::value(ex.bListed);
+				o["spawnOnly"] = picojson::value(ex.bSpawnOnly);
+				o["obsoleteTech"] = picojson::value(ex.bObsoleteTech);
+				o["capped"] = picojson::value(ex.bCapped);
+				o["entityGateFail"] = picojson::value(ex.bEntityGateFail);
+				o["requiresFail"] = picojson::value(ex.bRequiresFail);
+				o["upgradeDormant"] = picojson::value(ex.bUpgradeDormant);
+				o["superseded"] = picojson::value(ex.bSuperseded);
+				if (ex.iSupersededBy >= 0)
+					o["supersededBy"] = picojson::value(std::string(GC.getUnitInfo((UnitTypes)ex.iSupersededBy).getType()));
+			}
+			return CvString(picojson::value(o).serialize().c_str());
+		}
+
 		const int iIdx = GC.getInfoTypeForString(szType, true);
 		if (iIdx < 0)
 		{
@@ -4131,6 +4474,36 @@ namespace
 				o["legacyLeg"] = picojson::value(pU->isPromotionValidLegacy((PromotionTypes)iIdx, true));
 				o["canPromote"] = picojson::value(pU->canPromote((PromotionTypes)iIdx, 0));
 				o["promotionReady"] = picojson::value(pU->isPromotionReady());
+				// the per-leg canPromote/canAcquire DECOMPOSITION (a diagnostic mirror of CvUnit::canAcquirePromotion's
+				// gate order, so a false canPromote NAMES its leg in one poll instead of a guess-chase)
+				{
+					const CvPromotionInfo& kPromo = GC.getPromotionInfo((PromotionTypes)iIdx);
+					int iFailLeg = 0;
+					o["canAcquirePromote"] = picojson::value(pU->canAcquirePromotion((PromotionTypes)iIdx, PromotionRequirements::Promote, &iFailLeg));
+					o["acquireFailLine"] = picojson::value((double)iFailLeg);   // CvUnit.cpp source line of the refusing check (0 = none)
+					o["hasPromotion"] = picojson::value(pU->isHasPromotion((PromotionTypes)iIdx));
+					o["validStrict"] = picojson::value(pU->isPromotionValid((PromotionTypes)iIdx, false));
+					o["isStatus"] = picojson::value(kPromo.isStatus());
+					o["isLeader"] = picojson::value(kPromo.isLeader());
+					o["isForOffset"] = picojson::value(kPromo.isForOffset());
+					o["unitCombatType"] = picojson::value((double)pU->getUnitCombatType());
+					o["unitLevel"] = picojson::value((double)pU->getLevel());
+					o["levelPrereq"] = picojson::value((double)kPromo.getLevelPrereq());
+					o["obsoleteTechHeld"] = picojson::value(kPromo.getObsoleteTech() != NO_TECH && GET_TEAM(pU->getTeam()).isHasTech((TechTypes)kPromo.getObsoleteTech()));
+					o["stateReligionOk"] = picojson::value(kPromo.getStateReligionPrereq() == NO_RELIGION || GET_PLAYER(pU->getOwner()).getStateReligion() == kPromo.getStateReligionPrereq());
+					o["replacesUnitCombatOk"] = picojson::value(kPromo.getReplacesUnitCombat() == NO_UNITCOMBAT || pU->isHasUnitCombat((UnitCombatTypes)kPromo.getReplacesUnitCombat()));
+					o["rBombardOk"] = picojson::value(!kPromo.isRBombardPrereq() || pU->canRBombard(true));
+					const PromotionTypes ePre = (PromotionTypes)kPromo.getPrereqPromotion();
+					const PromotionTypes eOr1 = (PromotionTypes)kPromo.getPrereqOrPromotion1();
+					const PromotionTypes eOr2 = (PromotionTypes)kPromo.getPrereqOrPromotion2();
+					bool bPrereqOk = (ePre == NO_PROMOTION || pU->isHasPromotion(ePre));
+					if (bPrereqOk && (eOr1 != NO_PROMOTION || eOr2 != NO_PROMOTION))
+					{
+						bPrereqOk = (eOr1 != NO_PROMOTION && pU->isHasPromotion(eOr1))
+								 || (eOr2 != NO_PROMOTION && pU->isHasPromotion(eOr2));
+					}
+					o["prereqPromoOk"] = picojson::value(bPrereqOk);
+				}
 			}
 			return CvString(picojson::value(o).serialize().c_str());
 		}
@@ -4231,7 +4604,10 @@ namespace
 		else if (strcmp(szAction, "canTrain") == 0)
 		{
 			o["city"] = picojson::value((double)iCityId);
-			o["legacy"] = (pCity != NULL) ? picojson::value(pCity->canTrain((UnitTypes)iIdx)) : picojson::value();
+			// the STRICT domain verdict (the flipped read) + the legacy leg as the diagnostic (the old field
+			// name "legacy" was a lie -- it returned the domain read)
+			o["verdict"] = (pCity != NULL) ? picojson::value(pCity->canTrain((UnitTypes)iIdx)) : picojson::value();
+			o["legacyLeg"] = (pCity != NULL) ? picojson::value(pCity->canTrainLegacy((UnitTypes)iIdx)) : picojson::value();
 		}
 		else if (strcmp(szAction, "canResearch") == 0)
 		{
@@ -4445,6 +4821,7 @@ namespace
 			{ "/computed/players",         "playerInput",    "empire economy: gold/science/upkeep/inflation/demographics" },
 			{ "/computed/canConstruct",    "canConstruct",   "engine buildability verdict (type=BUILDING_X[&city=M])" },
 			{ "/computed/enabler/buildings", "enablerBuildings", "the standardized per-city building domain: listed/tree counts + fresh-seed oracle diff (player=N&city=M)" },
+			{ "/computed/enabler/units",     "enablerUnits",    "the per-city unit domain: listed/tree counts + per-unit verdict decomposition (player=N&city=M[&type=UNIT_X])" },
 			{ "/computed/enabler/promotions", "enablerPromotions", "the promotions composite decomposition: domain planes + per-leg verdicts (player=N&type=PROMOTION_X&unit=U)" },
 			{ "/computed/canTrain",        "canTrain",       "engine trainability verdict (type=UNIT_X[&city=M])" },
 			{ "/computed/canResearch",     "canResearch",    "engine canResearch verdict (type=TECH_X)" },
@@ -4461,6 +4838,8 @@ namespace
 			{ "/computed/units/heal",      "unitHeal",       "a pinpointed unit's per-turn healRate + per-source decomposition (player=N&unit=M) — read-only, no doHeal" },
 			{ "/computed/game",            "game",           "turn / game-over / winner / victory countdowns" },
 			{ "/computed/perf",            "perf",           "the (scope,channel) calc-count histogram + total this turn — the 50k gate (DEC-calc-count-gate)" },
+			{ "/computed/barProbe",        "barProbe",       "every city's EXE billboard bar floats, NaN/INF/out-of-range flagged (the value-poison probe)" },
+			{ "/computed/sceneReset",      "sceneReset",     "re-run the LOAD-path city-scene build for the active player's cities (the drop-conviction probe)" },
 		};
 		const int iNumRoutes = (int)(sizeof(ROUTES) / sizeof(ROUTES[0]));
 
@@ -4468,6 +4847,37 @@ namespace
 		if (strcmp(szTarget, "/") == 0)
 		{
 			sendResponse(sock, "200 OK", "text/plain", CvString("hello world\n"), snapshotTurn());
+			return false;
+		}
+		// The EIP sampler (CvExeTrace) is SERVER-thread served deliberately -- it must arm/report while the game
+		// thread is buried mid-wall (the exact moment worth profiling). ?arm=SECONDS starts/extends, ?stop stops,
+		// bare = report the top-96 EIP histogram (resolve: DLL base 0x10000000 via the linker map; EXE ~0x00400000).
+		if (strcmp(szTarget, "/computed/sampler") == 0)
+		{
+			CvString szBody;
+			if (szQuery != NULL && strncmp(szQuery, "arm=", 4) == 0)
+			{
+				exeSamplerArm(atoi(szQuery + 4));
+				szBody = CvString::format("{\"sampler\":\"armed\",\"running\":%s}\n", exeSamplerRunning() ? "true" : "false");
+			}
+			else if (szQuery != NULL && strncmp(szQuery, "stop", 4) == 0)
+			{
+				exeSamplerStop();
+				szBody = "{\"sampler\":\"stopped\"}\n";
+			}
+			else
+			{
+				ExeEipCount aTop[96];
+				long iTotal = 0;
+				const int iN = exeSamplerTop(aTop, 96, &iTotal);
+				szBody = CvString::format("{\"running\":%s,\"totalSamples\":%d,\"top\":{", exeSamplerRunning() ? "true" : "false", iTotal);
+				for (int i = 0; i < iN; i++)
+				{
+					szBody += CvString::format("%s\"%u\":%d", i > 0 ? "," : "", aTop[i].uiEip, aTop[i].iCount);
+				}
+				szBody += "}}\n";
+			}
+			sendResponse(sock, "200 OK", "application/json", szBody, snapshotTurn());
 			return false;
 		}
 		if (strcmp(szTarget, "/events") == 0)
@@ -4799,8 +5209,16 @@ void CvHttpServer::publishEvent(const char* szEvent, const char* szJsonData)
 	EnterCriticalSection(&g_eventLock);
 	if (g_pendingEvents.size() < EVENT_QUEUE_CAP)
 	{
+		// No silent caps (observability.md): if the cap dropped frames, the first frame that fits again says
+		// how many were lost, so a gap in /events is always visible AS a gap.
+		if (g_iDroppedEvents > 0)
+		{
+			g_pendingEvents.push_back(CvString::format("event: log\ndata: [STREAM] dropped=%d (event queue overflow)\n\n", g_iDroppedEvents));
+			g_iDroppedEvents = 0;
+		}
 		g_pendingEvents.push_back(szFrame);
 	}
+	else ++g_iDroppedEvents;
 	LeaveCriticalSection(&g_eventLock);
 }
 

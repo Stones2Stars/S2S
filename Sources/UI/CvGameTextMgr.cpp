@@ -26643,8 +26643,11 @@ void CvGameTextMgr::parseGreatGeneralHelp(CvWStringBuffer &szBuffer, CvPlayer& k
 
 //------------------------------------------------------------------------------------------------
 
+#include "AI/CvCityLogTags.h"   // citEmitBillboardPoll -- the billboard-feed trace (every entry point emits)
+
 void CvGameTextMgr::buildCityBillboardIconString( CvWStringBuffer& szBuffer, CvCity* pCity)
 {
+	citEmitBillboardPoll(8, pCity->getID());
 	PROFILE_EXTRA_FUNC();
 	szBuffer.clear();
 /************************************************************************************************/
@@ -26804,6 +26807,7 @@ void CvGameTextMgr::buildCityBillboardIconString( CvWStringBuffer& szBuffer, CvC
 
 void CvGameTextMgr::buildCityBillboardCityNameString( CvWStringBuffer& szBuffer, CvCity* pCity)
 {
+	citEmitBillboardPoll(9, pCity->getID());
 	szBuffer.assign(pCity->getName());
 
 	if (pCity->canBeSelected())
@@ -26843,6 +26847,7 @@ void CvGameTextMgr::buildCityBillboardCityNameString( CvWStringBuffer& szBuffer,
 
 void CvGameTextMgr::buildCityBillboardProductionString( CvWStringBuffer& szBuffer, CvCity* pCity)
 {
+	citEmitBillboardPoll(10, pCity->getID());
 	if (pCity->getOrderQueueLength() > 0)
 	{
 		szBuffer.assign(pCity->getProductionName());
@@ -26866,6 +26871,7 @@ void CvGameTextMgr::buildCityBillboardProductionString( CvWStringBuffer& szBuffe
 
 void CvGameTextMgr::buildCityBillboardCitySizeString( CvWStringBuffer& szBuffer, CvCity* pCity, const NiColorA& kColor)
 {
+	citEmitBillboardPoll(11, pCity->getID());
 #define CAPARAMS(c) (int)((c).r * 255.0f), (int)((c).g * 255.0f), (int)((c).b * 255.0f), (int)((c).a * 255.0f)
 	szBuffer.assign(CvWString::format(SETCOLR L"%d" ENDCOLR, CAPARAMS(kColor), pCity->getPopulation()));
 #undef CAPARAMS
@@ -26873,6 +26879,7 @@ void CvGameTextMgr::buildCityBillboardCitySizeString( CvWStringBuffer& szBuffer,
 
 void CvGameTextMgr::getCityBillboardFoodbarColors(CvCity* pCity, std::vector<NiColorA>& aColors)
 {
+	citEmitBillboardPoll(12, pCity->getID());
 	aColors.resize(NUM_INFOBAR_TYPES);
 	aColors[INFOBAR_STORED] = GC.getColorInfo((ColorTypes)(GC.getYieldInfo(YIELD_FOOD).getColorType())).getColor();
 	aColors[INFOBAR_RATE] = aColors[INFOBAR_STORED];
@@ -26883,6 +26890,7 @@ void CvGameTextMgr::getCityBillboardFoodbarColors(CvCity* pCity, std::vector<NiC
 
 void CvGameTextMgr::getCityBillboardProductionbarColors(CvCity* pCity, std::vector<NiColorA>& aColors)
 {
+	citEmitBillboardPoll(13, pCity->getID());
 	aColors.resize(NUM_INFOBAR_TYPES);
 	aColors[INFOBAR_STORED] = GC.getColorInfo((ColorTypes)(GC.getYieldInfo(YIELD_PRODUCTION).getColorType())).getColor();
 	aColors[INFOBAR_RATE] = aColors[INFOBAR_STORED];

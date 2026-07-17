@@ -5,6 +5,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvExeTrace.h"
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
@@ -13,6 +14,7 @@
 #include "CvEventSpine.h"
 #include "CvCascadeAccumulator.h"   // the scalar-slot warm-up read (increment F joins the load-end warm block)
 #include "CvCascadeModifierMath.h"  // cvCascadeModifierPerfCensus -- the per-turn [MODIFIER/perf]+[MODIFIER/repo] census
+#include "CvEnablerKernel.h"        // the load-end dormancy fixpoint's explicit operating-set ensure (stage timing)
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "Tools/CvHttpServer.h"
@@ -598,8 +600,8 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 
 	// Toffer - We have some issues with signs disappearing,
 	//	not sure if these are really needed, commented out as a test.
-	//gDLL->getEngineIFace()->clearSigns();
-	gDLL->getEngineIFace()->setResourceLayer(GC.getResourceLayer());
+	//exeEng(EXEK_SIGNS), gDLL->getEngineIFace()->clearSigns();
+	exeEng(EXEK_RESOURCE_LAYER), gDLL->getEngineIFace()->setResourceLayer(GC.getResourceLayer());
 	//gDLL->getInterfaceIFace()->setEndTurnCounter(2 * getBugOptionINT("MainInterface__AutoEndTurnDelay", 2));
 
 	// Capture a CSV reference of every plot's state for cross-referencing with
@@ -653,25 +655,271 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 	// cascade's static data is populated once, after every FK target registers, regardless of logging.
 	spineRegisterConsumers();
 
-	// #430 LOAD-TIME index/plot warm-up. The cascade SCOPE PACKAGES are NOT eager-built here: the
+	// #430 LOAD-TIME index build. The cascade SCOPE PACKAGES are NOT eager-built here: the
 	// playerSliceRebuild/worldRebuild markAll+ensure-ALL blanket is REMOVED ([DEC-no-self-heal]) -- the packages
-	// are dirty from reset and fill LAZILY on first read, and ONLY the needed packages recalc. What stays is the
-	// frontier reverse-index build (index-building, not a package recompute) + the plot-yield cache warm (a
-	// game-object cache, scope-packages.md). The eager cascade warm via the eventspine reseed is a later add.
+	// are dirty from reset and fill LAZILY on first read, and ONLY the needed packages recalc. What stays here is
+	// the frontier reverse-index build ONLY (index-building over static info data, not a value recompute). ⛔ NO
+	// yield/modifier cache build runs until ALL data is loaded (owner ruling 2026-07-15) -- the plot-yield warm
+	// lives at the END of the load flow, after the network rebuild + dormancy fixpoint + the load-finish emit.
+	// enabler-frontier-perf.md Part A: build the building + unit frontier reverse indices HERE (off the lazy
+	// first-onBuildingChanged trigger) so turn 1's targeted re-checks stand on a ready index. Idempotent.
+	CascadeAccumulator::buildFrontierIndices();
+
+	// #430 THE LOAD-END BONUS NETWORK REBUILD (no-serialized-caches; owner ruling 2026-07-15 "we do not want a
+	// plotlist cached in the save"): neither the bonus counts NOR the plot-group MEMBERSHIP are trusted from a
+	// save -- membership is derived state too (routes + terrain-trade capabilities + ownership; a save can carry
+	// severed/merged networks baked under an old broken derivation -- the Nekhen island case). The deserialized
+	// groups are only stream-drained (a positional block, not name-skippable); here the existing wheel --
+	// updatePlotGroups(reInitialize) -- throws them away and re-colors from current state, folding the counts
+	// through the SAME live entry points as each plot joins (extracted bonuses + each city's computed provides/
+	// event injection + the capital's deal import/export via updatePlotGroupBonus). The member cities hold NO
+	// mirror (the getNumBonuses plot-group relay); the crossing fan-out applies the legacy processBonus effects
+	// onto their zeroed (de-serialized) accumulators exactly once, via the deferral reconcile. Runs INSIDE the
+	// load bracket, before the GAME_LOAD_FINISHED gate pass, so the city domains gate against final counts.
+	// New game: doPreTurn0's updatePlotGroups builds the network the same way -- this rebuild is load-only.
+	int iRebuildMs = 0, iFixpointMs = 0, iFixpointPasses = 0;
+	int iFixpointFlips = 0, iFixpointConverged = 1, iFixpointVerifyCatches = 0;
+	int iFixEnsureMs = 0, iFixProcessMs = 0;   // the fixpoint's cost split: operating-set recomputes vs checkBuildings+processBuilding
+	if (!bNewGame)
 	{
-		PROFILE("CvGame::onFinalInitialized.cacheWarmup");
-		// enabler-frontier-perf.md Part A: build the building + unit frontier reverse indices HERE (off the lazy
-		// first-onBuildingChanged trigger) so turn 1's targeted re-checks stand on a ready index. Idempotent.
-		CascadeAccumulator::buildFrontierIndices();
-		for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
+		const DWORD tRebuild0 = GetTickCount();
+		for (int iI = 0; iI < MAX_PLAYERS; iI++)
 		{
-			GC.getMap().plotByIndex(iI)->getYield(YIELD_FOOD);   // ONE read builds the whole per-plot cache
+			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iI);
+			if (!kPlayer.isEverAlive()) continue;
+			int iLoop;
+			for (CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+			{
+				pCity->rebuildBonusPowerAtLoad();
+			}
+			kPlayer.updatePlotGroups(NULL, /*reInitialize*/ true);
+		}
+		iRebuildMs = (int)(GetTickCount() - tRebuild0);
+
+		// #430 THE LOAD-END DORMANCY FIXPOINT (task #13, DEC-calc-zero-ride-in): the deserialized disabled flags
+		// are only the PROCESSED-STATE baseline (they key the still-serialized legacy effect accumulators, and the
+		// fold above injected per them); the VERDICT is the enabler's operate classification. Reconciling a
+		// dormancy flip re-processes the building (setDisabledBuilding -> processBuilding), whose provides
+		// injection changes the network, which can flip further verdicts -- a manufactured chain lights tier by
+		// tier (ore -> wares -> firearms). The iteration is WORK-LIST driven (state-repositories: targeted
+		// propagation through the affected subset, never a blanket): pass 1 sweeps every city (the one legitimate
+		// full build); a later pass re-fixpoints ONLY the cities whose verdict inputs the previous pass's flips
+		// can have changed -- the flipping city itself (its own processed state: power / fresh water / employed
+		// population), the owner's same-plot-group cities when a flipped building carries provides (the network
+		// counts), and the owner's whole city set on the rare free-trait building (player-scope state). The flips
+		// keep the FULL per-flip processBuilding semantics -- processBuilding's side-effect surface is deliberately
+		// NOT mirrored anywhere. Convergence is declared ONLY by a quiet FULL pass (the verify backstop), so an
+		// incomplete affected-derivation surfaces as a loud verify catch, never as a silently wrong end state.
+		// Runs INSIDE the load bracket, before the GAME_LOAD_FINISHED gate pass, so gates see the final network.
+		{
+			const DWORD tFix0 = GetTickCount();
+			LARGE_INTEGER liQpcFreq, liQpcA, liQpcB, liQpcC;
+			QueryPerformanceFrequency(&liQpcFreq);
+			__int64 llEnsureTicks = 0, llProcessTicks = 0;
+			std::set< std::pair<int,int> > affectedCities;   // (player, cityId) to re-check; unused while bCheckAll
+			bool bCheckAll = true;                            // pass 1 + every verify pass sweep all cities
+			bool bConverged = false;
+
+			// Bracket every city's bonus-EFFECT processing for the work passes: the tier-lighting chains cross
+			// bonus presence transiently and repeatedly (measured: ~15.8k crossings per load, each paying the
+			// full per-city processBonus battery); the deferral (the updatePlotGroups reconcile mechanism)
+			// collapses them to ONE old->new reconcile per city. The group COUNTS stay live (the operate atoms
+			// read the group relay), only the crossing EFFECTS defer. The reconcile runs BEFORE the verify pass,
+			// so verdict-relevant effect legs (bonus power) land and any resulting flip is caught loudly by the
+			// undeferred verify.
+			bool bBonusDeferred = true;
+			for (int iI = 0; iI < MAX_PLAYERS; iI++)
+			{
+				CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iI);
+				if (!kPlayer.isAlive()) continue;
+				int iLoop;
+				for (CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+				{
+					pCity->startDeferredBonusProcessing();
+				}
+			}
+
+			for (int iPass = 0; !bConverged && iPass < 24; ++iPass)
+			{
+				++iFixpointPasses;
+				bool bAnyFlip = false;
+				std::set< std::pair<int,int> > nextAffected;
+
+				for (int iI = 0; iI < MAX_PLAYERS; iI++)
+				{
+					CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iI);
+					if (!kPlayer.isAlive()) continue;
+					int iLoop;
+					for (CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+					{
+						if (!bCheckAll && affectedCities.find(std::make_pair(iI, pCity->getID())) == affectedCities.end())
+						{
+							continue;
+						}
+						QueryPerformanceCounter(&liQpcA);
+						pCity->m_operatingBuildings.set.markAllDirty();   // re-fixpoint under the current network counts
+						EnablerKernel::operatingBuildings(pCity);         // pay the recompute here, stage-timed
+						QueryPerformanceCounter(&liQpcB);
+						llEnsureTicks += liQpcB.QuadPart - liQpcA.QuadPart;
+
+						std::vector<BuildingTypes> aFlipped;
+						const bool bFlipped = pCity->checkBuildings(false, &aFlipped);
+						QueryPerformanceCounter(&liQpcC);
+						llProcessTicks += liQpcC.QuadPart - liQpcB.QuadPart;
+						if (!bFlipped)
+						{
+							continue;
+						}
+						bAnyFlip = true;
+						iFixpointFlips += (int)aFlipped.size();
+
+						// the affected-derivation: what these flips can have changed, verdict-input-wise
+						nextAffected.insert(std::make_pair(iI, pCity->getID()));
+						bool bProvides = false;
+						bool bTrait = false;
+						for (size_t iF = 0; iF < aFlipped.size(); ++iF)
+						{
+							const CvBuildingInfo& kFlipped = GC.getBuildingInfo(aFlipped[iF]);
+							bProvides |= !kFlipped.getFreeBonuses().empty();
+							bTrait |= !kFlipped.getFreeTraitTypes().empty();
+						}
+						if (bTrait || bProvides)
+						{
+							const CvPlotGroup* pGroup = pCity->plotGroup((PlayerTypes)iI);
+							int iLoopX;
+							for (CvCity* pOther = kPlayer.firstCity(&iLoopX); pOther != NULL; pOther = kPlayer.nextCity(&iLoopX))
+							{
+								if (bTrait || pOther->plotGroup((PlayerTypes)iI) == pGroup)
+								{
+									nextAffected.insert(std::make_pair(iI, pOther->getID()));
+								}
+							}
+						}
+					}
+				}
+
+				if (!bAnyFlip)
+				{
+					if (bCheckAll)
+					{
+						bConverged = true;    // a quiet FULL pass is the ONLY convergence criterion
+					}
+					else
+					{
+						if (bBonusDeferred)
+						{
+							// reconcile the deferred bonus effects BEFORE the verify pass (bonus power et al.
+							// land here; a resulting verdict flip is the verify pass's to catch, undeferred)
+							for (int iI = 0; iI < MAX_PLAYERS; iI++)
+							{
+								CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iI);
+								if (!kPlayer.isAlive()) continue;
+								int iLoop;
+								for (CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+								{
+									pCity->endDeferredBonusProcessing();
+								}
+							}
+							bBonusDeferred = false;
+						}
+						bCheckAll = true;     // work-list drained -> the full VERIFY pass decides
+						affectedCities.clear();
+					}
+				}
+				else
+				{
+					if (bCheckAll && iPass > 0)
+					{
+						// a verify pass flipped something the work-list missed: the affected-derivation has a
+						// hole. The loop stays correct (full passes continue until a quiet one) -- announce it.
+						++iFixpointVerifyCatches;
+						FErrorMsg("load-end dormancy fixpoint: verify pass flipped -- affected-derivation incomplete");
+					}
+					bCheckAll = false;
+					affectedCities.swap(nextAffected);
+				}
+			}
+			if (bBonusDeferred)
+			{
+				// quiet-pass-1 convergence (or the cap): the bracket is still open -- close it (a no-flip run
+				// has nothing to reconcile; the call is balance, not work)
+				for (int iI = 0; iI < MAX_PLAYERS; iI++)
+				{
+					CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iI);
+					if (!kPlayer.isAlive()) continue;
+					int iLoop;
+					for (CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+					{
+						pCity->endDeferredBonusProcessing();
+					}
+				}
+				bBonusDeferred = false;
+			}
+			iFixpointConverged = bConverged ? 1 : 0;
+			FAssertMsg(bConverged, "load-end dormancy fixpoint did not converge");
+			iFixpointMs = (int)(GetTickCount() - tFix0);
+			if (liQpcFreq.QuadPart > 0)
+			{
+				iFixEnsureMs = (int)(llEnsureTicks * 1000 / liQpcFreq.QuadPart);
+				iFixProcessMs = (int)(llProcessTicks * 1000 / liQpcFreq.QuadPart);
+			}
 		}
 	}
 
 	// #430 LOAD LIFECYCLE: the load's per-object read()s are complete -- close the bracket. No-op on a new game
 	// (no GAME_LOAD_STARTED fired), so this is safe on both paths.
 	emitGameLoadFinished();
+
+	// #430 THE PLOT-YIELD WARM -- the LAST load act (owner ruling 2026-07-15: no yield/modifier cache build
+	// until ALL data is loaded). The explicit re-dirty pass first is CORRECTNESS, not cost: any plot cache a
+	// mid-load read happened to warm was computed against pre-rebuild state and sits behind a CLEAN flag -- the
+	// trigger flips it back so the warm read below recomputes from the final, fully-loaded state.
+	{
+		const DWORD tWarm0 = GetTickCount();
+		for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
+		{
+			GC.getMap().plotByIndex(iI)->updateYield();          // trigger only: mark dirty
+		}
+		for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
+		{
+			GC.getMap().plotByIndex(iI)->getYield(YIELD_FOOD);   // ONE read builds the whole per-plot cache
+		}
+		// THE LOAD-END PACKAGE WARM (state-repositories "EAGERLY BUILD ALL CACHES AT LOAD"; the capstone's
+		// "full rebuild of everything = LOAD ONLY" pass): realize every player's scope packages + every city's
+		// operating set and scope packages from the fully-loaded state, AFTER the plot warm (the package fills
+		// pull the plot caches). Without this the rate reads -- bare fetches by design -- serve the
+		// zero-initialized defaults forever (the 228-food / empty-percent-stack class: the screen and the
+		// endpoints both read the flipped getters, so the whole visible output collapses to base plots).
+		// Post-load freshness is the boundary ensure in CvCity::doTurn (events MARK, boundaries ENSURE).
+		const DWORD tPkg0 = GetTickCount();
+		for (int iI = 0; iI < MAX_PLAYERS; iI++)
+		{
+			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iI);
+			if (!kPlayer.isAlive()) continue;
+			kPlayer.m_cascadePlayerScope.set.ensure(PSC_EAGER);
+			int iLoop;
+			for (CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+			{
+				pCity->m_operatingBuildings.set.ensure();          // the package fills read the operating set
+				pCity->m_cascadeCityPackages.set.ensure(CPK_EAGER);
+				// the maintained bonus counts: the ONE full seed (LOAD is the only full pass) -- the network is
+				// rebuilt and the corp vector is read by this point, so the gated answers are final here. Covers
+				// the corp-only case the network reconcile's old!=new guard never touches (0->0 network total).
+				pCity->seedEffectiveBonuses();
+			}
+		}
+
+		// Re-run the BAKED consumers whose mid-load runs read unwarmed packages. The trade-route ASSIGNMENT is
+		// the known case: updateTradeRoutes fires eagerly on every modifier change, so the dormancy fixpoint's
+		// processBuilding churn re-assigned routes against zero-init trade-route packages (getTradeRoutes read
+		// ~the game base) -- and the assignment is BAKED engine state (m_paTradeCities), not a dirty-flag cache,
+		// so nothing re-runs it after the warm. One post-warm pass assigns against the real counts.
+		updateTradeRoutes();
+
+		// The load-pipeline diagnostic: stage timings + the fixpoint depth (how many tiers the manufactured
+		// chains needed to light) -- announced through the spine (the ONE dispatch; logging renders it gated).
+		emitLoadPipeline(iRebuildMs, iFixpointMs, iFixEnsureMs, iFixProcessMs, iFixpointPasses, iFixpointFlips, iFixpointConverged, iFixpointVerifyCatches, (int)(tPkg0 - tWarm0), (int)(GetTickCount() - tPkg0));
+	}
 
 	OutputDebugString("onFinalInitialized: End\n");
 }
@@ -820,7 +1068,7 @@ void CvGame::regenerateMap()
 		}
 	}
 
-	gDLL->getEngineIFace()->clearSigns();
+	exeEng(EXEK_SIGNS), gDLL->getEngineIFace()->clearSigns();
 
 	GC.getMap().erasePlots();
 
@@ -829,7 +1077,7 @@ void CvGame::regenerateMap()
 	CvMapGenerator::GetInstance().generateRandomMap();
 	CvMapGenerator::GetInstance().addGameElements();
 
-	gDLL->getEngineIFace()->RebuildAllPlots();
+	exeEng(EXEK_REBUILD_ALL), gDLL->getEngineIFace()->RebuildAllPlots();
 
 	CvEventReporter::getInstance().resetStatistics();
 
@@ -838,12 +1086,12 @@ void CvGame::regenerateMap()
 	initScoreCalculation();
 
 	GC.getMap().setupGraphical();
-	gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
-	gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(ColoredPlots_DIRTY_BIT, true);
+	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
+	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
+	exeSetUIDirty(ColoredPlots_DIRTY_BIT, true);
 	if (isInAdvancedStart())
 	{
-		gDLL->getInterfaceIFace()->setDirty(Advanced_Start_DIRTY_BIT, true);
+		exeSetUIDirty(Advanced_Start_DIRTY_BIT, true);
 	}
 	CvEventReporter::getInstance().mapRegen();
 
@@ -2353,8 +2601,8 @@ void CvGame::update()
 		if (m_lastGraphicUpdateRequestTickCount > 0 && GetTickCount() - m_lastGraphicUpdateRequestTickCount > 500)
 		{
 			m_lastGraphicUpdateRequestTickCount = 0;
-			gDLL->getEngineIFace()->RebuildAllPlots();
-			gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
+			exeEng(EXEK_REBUILD_ALL), gDLL->getEngineIFace()->RebuildAllPlots();
+			exeSetUIDirty(GlobeLayer_DIRTY_BIT, true);
 		}
 	}
 	{
@@ -3498,8 +3746,8 @@ void CvGame::setGameTurn(int iNewValue)
 
 		setScoreDirty(true);
 
-		gDLL->getInterfaceIFace()->setDirty(TurnTimer_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+		exeSetUIDirty(TurnTimer_DIRTY_BIT, true);
+		exeSetUIDirty(GameData_DIRTY_BIT, true);
 	}
 }
 
@@ -4533,7 +4781,7 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 {
 	m_bDebugMode = !m_bDebugMode;
 
-	gDLL->getEngineIFace()->RebuildAllPlots();
+	exeEng(EXEK_REBUILD_ALL), gDLL->getEngineIFace()->RebuildAllPlots();
 
 	GC.getMap().setupGraphical();
 	GC.getMap().updateVisibility();
@@ -4541,16 +4789,16 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 	GC.getMap().updateFlagSymbols();
 	GC.getMap().updateMinimapColor();
 
-	gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(MinimapSection_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
+	exeSetUIDirty(GameData_DIRTY_BIT, true);
+	exeSetUIDirty(Score_DIRTY_BIT, true);
+	exeSetUIDirty(MinimapSection_DIRTY_BIT, true);
+	exeSetUIDirty(UnitInfo_DIRTY_BIT, true);
+	exeSetUIDirty(CityInfo_DIRTY_BIT, true);
+	exeSetUIDirty(GlobeLayer_DIRTY_BIT, true);
 
-	//gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
-	gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
-	gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
+	//exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
+	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
+	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
 
 	if (m_bDebugMode)
 	{
@@ -4741,17 +4989,17 @@ void CvGame::setActivePlayer(PlayerTypes eNewValue, bool bForceHotSeat)
 			gDLL->getInterfaceIFace()->clearSelectedCities();
 			gDLL->getInterfaceIFace()->clearSelectionList();
 
-			gDLL->getInterfaceIFace()->setDirty(PercentButtons_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(ResearchButtons_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(MinimapSection_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(Flag_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
+			exeSetUIDirty(PercentButtons_DIRTY_BIT, true);
+			exeSetUIDirty(ResearchButtons_DIRTY_BIT, true);
+			exeSetUIDirty(GameData_DIRTY_BIT, true);
+			exeSetUIDirty(MinimapSection_DIRTY_BIT, true);
+			exeSetUIDirty(CityInfo_DIRTY_BIT, true);
+			exeSetUIDirty(UnitInfo_DIRTY_BIT, true);
+			exeSetUIDirty(Flag_DIRTY_BIT, true);
+			exeSetUIDirty(GlobeLayer_DIRTY_BIT, true);
 
-			gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(BlockadedPlots_DIRTY_BIT, true);
+			exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
+			exeSetUIDirty(BlockadedPlots_DIRTY_BIT, true);
 		}
 	}
 }
@@ -4867,7 +5115,7 @@ void CvGame::setBestLandUnit(UnitTypes eNewValue)
 	{
 		m_eBestLandUnit = eNewValue;
 
-		gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
+		exeSetUIDirty(UnitInfo_DIRTY_BIT, true);
 	}
 }
 
@@ -4913,8 +5161,8 @@ void CvGame::setWinner(TeamTypes eNewWinner, VictoryTypes eNewVictory)
 			}
 			else setGameState(GAMESTATE_OVER);
 		}
-		gDLL->getInterfaceIFace()->setDirty(Center_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(Soundtrack_DIRTY_BIT, true);
+		exeSetUIDirty(Center_DIRTY_BIT, true);
+		exeSetUIDirty(Soundtrack_DIRTY_BIT, true);
 	}
 }
 
@@ -4951,7 +5199,7 @@ void CvGame::setGameState(GameStateTypes eNewValue)
 				}
 			}
 		}
-		gDLL->getInterfaceIFace()->setDirty(Cursor_DIRTY_BIT, true);
+		exeSetUIDirty(Cursor_DIRTY_BIT, true);
 	}
 }
 
@@ -4989,7 +5237,7 @@ void CvGame::setRankPlayer(int iRank, PlayerTypes ePlayer)
 	{
 		m_aiRankPlayer[iRank] = ePlayer;
 
-		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+		exeSetUIDirty(Score_DIRTY_BIT, true);
 	}
 }
 
@@ -5039,7 +5287,7 @@ void CvGame::setPlayerScore(PlayerTypes ePlayer, int iScore)
 		m_aiPlayerScore[ePlayer] = iScore;
 		FASSERT_NOT_NEGATIVE(getPlayerScore(ePlayer));
 
-		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+		exeSetUIDirty(Score_DIRTY_BIT, true);
 	}
 }
 
@@ -5059,7 +5307,7 @@ void CvGame::setRankTeam(int iRank, TeamTypes eTeam)
 	{
 		m_aiRankTeam[iRank] = eTeam;
 
-		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+		exeSetUIDirty(Score_DIRTY_BIT, true);
 	}
 }
 
@@ -6182,7 +6430,7 @@ void CvGame::doTurn()
 
 	{
 		PERF_SCOPE("game.engineDoTurn", -1);
-		gDLL->getEngineIFace()->SetDirty(GlobePartialTexture_DIRTY_BIT, true);
+		exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(GlobePartialTexture_DIRTY_BIT, true);
 		gDLL->getEngineIFace()->DoTurn();
 	}
 
@@ -8159,7 +8407,7 @@ CvDeal* CvGame::addDeal()
 void CvGame::deleteDeal(int iID)
 {
 	m_deals.removeAt(iID);
-	gDLL->getInterfaceIFace()->setDirty(Foreign_Screen_DIRTY_BIT, true);
+	exeSetUIDirty(Foreign_Screen_DIRTY_BIT, true);
 }
 
 CvRandom& CvGame::getMapRand()
@@ -11831,7 +12079,7 @@ void CvGame::recalculateModifiers()
 	GC.getMap().updateSight(true, false);
 	S2S_LOAD_PHASE("updateSight");
 
-	gDLL->getEngineIFace()->RebuildAllPlots();
+	exeEng(EXEK_REBUILD_ALL), gDLL->getEngineIFace()->RebuildAllPlots();
 	S2S_LOAD_PHASE("RebuildAllPlots");
 
 	GC.getMap().setupGraphical();

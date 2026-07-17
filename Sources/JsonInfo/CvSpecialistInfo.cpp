@@ -6,6 +6,7 @@
 #include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
 #include "CvSpecialistInfo.h"
 #include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonFamVal/...) + jsonX100
+#include "CvCascadePropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 
 CvSpecialistInfo::CvSpecialistInfo()
 	: m_iGreatPeopleRateChange(0), m_iGreatPeopleUnitType(-1), m_iExperience(0), m_iHealthPercent(0),
@@ -63,6 +64,11 @@ void CvSpecialistInfo::mapFrom(const picojson::value& entity)
 	CvInfo::mapFrom(entity);   // core reading + availability
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
+
+	// PROPERTY_* per-turn SOURCES: a specialist's <PROPERTY_X>.city.flat (the doctor's disease cut, the
+	// law-keeper crime cuts) deposits in ITS city, once per assigned specialist (the city gather count-scales) --
+	// RELATION_SAME_PLOT mirrors the legacy CITY+SAME_PLOT shape. The ONE shared walk.
+	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_SAME_PLOT);
 
 	// city-scope yields + commerce (the specialist's own output)
 	m_aiYieldChange[YIELD_FOOD]       = jsonFamVal(o, "food", "city", "flat");

@@ -132,6 +132,19 @@ Hundreds of engine/AI/UI call-sites still read scattered legacy XML fields inste
 `getSkills()/getTags()/getCapabilities()/getAttributes()/getPolicies()`. `skills`/`tags`/`state` not yet mapped; the
 `IS_<TAG>` predicate surface is unbuilt and every rewire blocks on it.
 
+### F2b — The CONSUMER ITERATION sweep the getter flip skipped (whole-database loops → the enabler frontier).
+Spec authority: [enabler.md §6](../../specs/enabler.md) — the AI's decisions iterate ONLY the frontier, never the
+entity database. Divergence: the availability-getter flip rewired what `can*` READS (bare enabler lookup) but the
+CALLERS still iterate whole entity space probing per id — the census counts **262 whole-database iteration loops**
+over building/unit/tech/civic/project space in `AI/` + `Engine/` (CvPlayerAI 53, CvPlayer 42, CvCity 26, CvGame 21,
+CvTeam 19, CvCityAI 13, …). Measured cost of ONE instance (`AI_bestBuildingsThreshold`, called ~7×/city/turn by
+`AI_chooseProduction`'s sequential focus ladder): a 5,202-building `canConstruct` probe scan per attempt ≈ 4.8M
+redundant probes/turn, inside the turn-wall's dominant phase (chooseProduction = 96% of city doTurn; measured live
+2026-07-16, ~917M `CvPlot::getYield` calls in one turn). The sweep: classify each loop (hot per-turn vs load/init/
+UI-rare — full scans are legitimate off the hot path), rewire every hot one to iterate the enabler's LISTED set,
+and collapse `AI_chooseProduction`'s focus ladder to ONE scoring pass read seven ways (the scorer's own designed
+shape). Exhaustive, adversarially verified ([DEC-all-means-all](../../architecture/decisions.md#dec-all-means-all)).
+
 ### F3 — Grants apply-loop UNBUILT. [grants-machine.md](grants-machine.md), [event-spine.md](../../specs/event-spine.md).
 The grants machine resolves + shadows only; does NOT apply. ~30 PREREQ rows (religion founder units, game-start
 grants, free techs/gold/units/civics/population, trait freePromotions, building `bFirst` grants, settler

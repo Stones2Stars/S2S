@@ -101,10 +101,16 @@ enum CascadeCityPkg
 	CPK_SCPCT   = 256,   // scalar percent packages: gpMod city, defense amount, maintenance city
 	CPK_SCSPEC  = 512,   // the gpBase specialist flat package (governor churn touches ONLY this)
 	CPK_BR      = 1024,  // the buildRate city ledgers + city member percents
+	// The REALIZED yield rate100 cache (owner ruling 2026-07-16: "CACHE THE SUM" -- supersedes the
+	// never-cache-the-sum lean): the full §2a combine per yield channel stored, so every consumer
+	// (billboards, foodDifference's 356k calls/turn, rank walks, AI) reads a stored int like legacy's
+	// m_aiBaseYieldRate did. Marked by everything that marks the yield inputs (the widen rule) + the
+	// live-gate/live-input flips the combine bakes in: worked plots, plot yields, trade yield, GA.
+	CPK_YRATE   = 2048,
 	// (the enabler frontiers -- buildable/trainable/creatable/maintainable -- live on the standardized enabler
 	// domains, CvCity::m_enabler / CvPlayer::m_enabler, event-maintained; enabler.md par.7/8. No CPK bit.)
 	CPK_RATES   = CPK_YPCT | CPK_YSPEC | CPK_YEXTRA | CPK_CSPEC | CPK_CPCT | CPK_CBASE,   // = 63
-	CPK_ALL     = 2047,
+	CPK_ALL     = 4095,
 	CPK_EAGER   = CPK_ALL
 };
 
@@ -116,6 +122,7 @@ struct CascadeCityPackages
 	                                     // percent conditions reference the city, so the stack is a city-realized join)
 	long ySpec[NUM_YIELD_TYPES];         // specialist flats (human; own sub-stack resolved inside)
 	long yExtra100[NUM_YIELD_TYPES];     // building flats + perPopulation (×100)
+	long yRate100[NUM_YIELD_TYPES];      // the REALIZED §2a combine, CACHED (CPK_YRATE -- the "cache the sum" ruling)
 	// -- commerce, per channel --
 	long cSpec100[NUM_COMMERCE_TYPES];   // specialist terms ×100
 	long cPct[NUM_COMMERCE_TYPES];       // the WHOLE commerce percent stack, CITY-REALIZED (raw Σ, as yPctCity)
@@ -158,7 +165,7 @@ struct CascadeCityPackages
 
 	CascadeCityPackages()
 	{
-		for (int y = 0; y < NUM_YIELD_TYPES; ++y) { yPctCity[y] = 0; ySpec[y] = 0; yExtra100[y] = 0; }
+		for (int y = 0; y < NUM_YIELD_TYPES; ++y) { yPctCity[y] = 0; ySpec[y] = 0; yExtra100[y] = 0; yRate100[y] = 0; }
 		for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
 			{ cSpec100[c] = 0; cPct[c] = 0; cBaseOwn100[c] = 0; cKeyed100[c] = 0; aiWbCommercePer[c] = 0; }
 		iCSrMatch = 0;

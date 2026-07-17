@@ -10,6 +10,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvExeTrace.h"
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
 #include "CvCity.h"
@@ -386,11 +387,11 @@ void CvMap::setAllPlotTypes(PlotTypes ePlotType)
 	recalculateAreas();
 
 	//rebuild landscape
-	gDLL->getEngineIFace()->RebuildAllPlots();
+	exeEng(EXEK_REBUILD_ALL), gDLL->getEngineIFace()->RebuildAllPlots();
 
 	//mark minimap as dirty
-	gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
-	gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
+	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
+	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
 
 	//float endTime = (float) timeGetTime();
 	//OutputDebugString(CvString::format("[Jason] setAllPlotTypes: %f\n", endTime - startTime).c_str());
@@ -1414,7 +1415,7 @@ void CvMap::beforeSwitch()
 	}
 #endif // THE_GREAT_WALL
 
-	gDLL->getEngineIFace()->setResourceLayer(false);
+	exeEng(EXEK_RESOURCE_LAYER), gDLL->getEngineIFace()->setResourceLayer(false);
 
 	for (int i = 0; i < MAX_PLAYERS; i++)
 	{
@@ -1476,15 +1477,15 @@ void CvMap::afterSwitch()
 
 	gDLL->getEngineIFace()->ClearMinimap();
 	gDLL->getEngineIFace()->InitGraphics();
-	gDLL->getEngineIFace()->updateFoundingBorder(); // Matt: Maybe need this.
-	gDLL->getEngineIFace()->MarkBridgesDirty(); // Matt: Maybe need this.
-	gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
-	gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
+	exeEng(EXEK_FOUNDING_BORDER), gDLL->getEngineIFace()->updateFoundingBorder(); // Matt: Maybe need this.
+	exeEng(EXEK_BRIDGES_DIRTY), gDLL->getEngineIFace()->MarkBridgesDirty(); // Matt: Maybe need this.
+	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
+	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
 	gDLL->getInterfaceIFace()->makeSelectionListDirty();
-	gDLL->getInterfaceIFace()->setDirty(ColoredPlots_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(SelectionCamera_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(HighlightPlot_DIRTY_BIT, true);
-	gDLL->getInterfaceIFace()->setDirty(BlockadedPlots_DIRTY_BIT, true); // Matt: Maybe need this.
+	exeSetUIDirty(ColoredPlots_DIRTY_BIT, true);
+	exeSetUIDirty(SelectionCamera_DIRTY_BIT, true);
+	exeSetUIDirty(HighlightPlot_DIRTY_BIT, true);
+	exeSetUIDirty(BlockadedPlots_DIRTY_BIT, true); // Matt: Maybe need this.
 
 	int iWidth = GC.getMapInfo(getType()).getGridWidth();
 	if (iWidth == 0)
@@ -1512,7 +1513,7 @@ void CvMap::afterSwitch()
 		}
 	}
 
-	gDLL->getEngineIFace()->RebuildAllPlots();
+	exeEng(EXEK_REBUILD_ALL), gDLL->getEngineIFace()->RebuildAllPlots();
 
 	for (int i = 0; i < MAX_PLAYERS; i++)
 	{
@@ -1552,7 +1553,7 @@ void CvMap::afterSwitch()
 	}
 #endif // THE_GREAT_WALL
 
-	gDLL->getEngineIFace()->setResourceLayer(GC.getResourceLayer());
+	exeEng(EXEK_RESOURCE_LAYER), gDLL->getEngineIFace()->setResourceLayer(GC.getResourceLayer());
 
 	getCurrentViewport()->setActionState(VIEWPORT_ACTION_STATE_AFTER_SWITCH);
 

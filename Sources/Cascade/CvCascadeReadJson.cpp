@@ -289,6 +289,49 @@ static void rj_buildReverseView()
 		rvRequiresWalk(j->requiresOperate(), EDGEB_HERITAGES, i);
 	}
 
+	// Building improvement-KEYED yields ride DOWN the improvement upgrade chain (the mechanic the model
+	// carries; legacy doPostLoadCaching did the same expansion): a yield keyed to LUMBERMILL also lands on a
+	// worked TREEFARM/HYBRID_FOREST -- the authored row keys the ANCESTOR only. Expand each building's city +
+	// global improvement-yield rows onto every keyed improvement's TRANSITIVE upgrade descendants, so every
+	// consumer (the plot fresh-sum, the keyed-ledger recomputes, the endpoints) reads the propagated rows.
+	// Building rows ONLY -- civic/trait/tech keyed rows stay direct (the player/team accumulators never
+	// propagated). Runs HERE, after the full-registry mapFrom re-run (which clears + re-populates the maps).
+	{
+		const int iNumImps = GC.getNumImprovementInfos();
+		std::vector< std::vector<int> > aDescendants(iNumImps);
+		for (int iI = 0; iI < iNumImps; iI++)
+		{
+			std::set<int> seen;   // cycle guard
+			int iCur = (int)GC.getImprovementInfo((ImprovementTypes)iI).getImprovementUpgrade();
+			while (iCur >= 0 && seen.insert(iCur).second)
+			{
+				aDescendants[iI].push_back(iCur);
+				iCur = (int)GC.getImprovementInfo((ImprovementTypes)iCur).getImprovementUpgrade();
+			}
+		}
+		for (int iB = 0; iB < GC.getNumBuildingInfos(); iB++)
+		{
+			CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iB);
+			// snapshot the AUTHORED rows first -- the expansion must never chain off its own additions
+			const std::vector<ImprovementArray> aCityRows(kBuilding.getImprovementYieldChanges().begin(), kBuilding.getImprovementYieldChanges().end());
+			for (size_t iR = 0; iR < aCityRows.size(); ++iR)
+			{
+				const int iImp = (int)aCityRows[iR].first;
+				if (iImp < 0 || iImp >= iNumImps) continue;
+				for (size_t iD = 0; iD < aDescendants[iImp].size(); ++iD)
+					kBuilding.addImprovementYieldRow((ImprovementTypes)aDescendants[iImp][iD], aCityRows[iR].second);
+			}
+			const std::vector<ImprovementArray> aGlobalRows(kBuilding.getGlobalImprovementYieldChanges().begin(), kBuilding.getGlobalImprovementYieldChanges().end());
+			for (size_t iR = 0; iR < aGlobalRows.size(); ++iR)
+			{
+				const int iImp = (int)aGlobalRows[iR].first;
+				if (iImp < 0 || iImp >= iNumImps) continue;
+				for (size_t iD = 0; iD < aDescendants[iImp].size(); ++iD)
+					kBuilding.addGlobalImprovementYieldRow((ImprovementTypes)aDescendants[iImp][iD], aGlobalRows[iR].second);
+			}
+		}
+	}
+
 	// dedup the derived lists (sortUnique touches ONLY the RELATED/REQUIRED_BY families) -- every kind that
 	// can carry reverse edges: techs (RELATED + REQUIRED_BY) + the HAVE-axis referenced kinds (REQUIRED_BY)
 	for (int t = 0; t < nTech; ++t)

@@ -530,6 +530,70 @@ always-unlocked" whitelist is dead, superseded-ideas #14 — start promotions ri
 (Hurries are deliberately absent — not an enabler concern, §7.1; the box's `enHurryOk` slice serves `canHurry`
 until the civic-ability model consumes it.)
 
+> **⛔ "Complete" covers the VERDICT READS ONLY — the consumer ITERATION sweep has NOT run.** Every `can*` gate
+> returns the enabler's verdict, but the CALLERS still iterate whole entity space probing per id (262
+> whole-database loops censused in `AI/` + `Engine/`, 2026-07-16 — e.g. `AI_bestBuildingsThreshold`'s 5,202-building
+> `canConstruct` scan, run ~7×/city/turn by the chooseProduction focus ladder). §6's "the AI iterates only this
+> small frontier" is therefore NOT yet realized; any claim that "nothing runs on legacy" is false until the F2b
+> sweep ([roadmap](../plans/structural-cleanup/roadmap.md) §F2b) rewires the hot iterators onto the LISTED set.
+
+**The BONUS axis is GATE-ONLY (owner ruling 2026-07-15): a plot-group-carried bonus NEVER drives tree
+membership.** A bonus you would rely on the trade network for (traded / manufactured / vicinity-supplied) only
+ever gates: the curator keeps authoring the bonus `enables` edges (the reverse-mapped view of the target's
+retained `requires` atom — both views exist in the data), but the runtime consumes bonus events as pure
+stateless gate re-checks over the bonus's `EDGEF_REQUIRED_BY` dependents — no membership edge-applies, and the
+oracle's fresh build folds no bonus axis. Membership rides the tech/building/civic edges + the root; an entity
+whose only inbound edges are bonuses ROOTS (the curator's root derivation ignores `BONUS_` sources), sitting
+visible-GREYED on its bonus requirement — json.md §6's grey-on-resources lean. The one carve-out — a bonus ON a
+plot enabling an improvement's placement (`enables.builds`) — is the live per-plot gate, no domain involvement.
+
+**RESIDENCY + COUNTING.** The `CvPlotGroup` object holds the NETWORK's bonus content
+in two derived arrays — produced/extracted (vicinity-improved tiles + city `provides`) and deal-TRADED
+(import/export, anchored at the capital's group; the capital-plot fold re-homes it through every merge/split) —
+read as one SUM, presence crossings tested on the sum. **The plot group is the ONLY authoritative list for trade
+resources, own or partner-traded; the CITY holds NO authoritative mirror of it.** The city READ, however, is a
+**maintained number — added and subtracted on spine events, never calculated per read** (the standing
+[state-repositories capstone](../architecture/state-repositories.md) — reads are bare fetches — applied here;
+re-affirmed by the owner 2026-07-16 after the implementation shipped a per-read calculation anyway):
+`CvCity::getNumBonuses` must be a bare fetch of a derived, never-serialized per-city count kept
+current by the crossing fan-out (`processNumBonusChange`) + the tech/minted/corp events that move its gates.
+The per-read calculation it replaces (TechCityTrade gate → two-hop plot-group resolution → group sum → minted
+gate → corp add-on, re-executed on EVERY call) was measured by the EIP sampler as the turn wall's hottest
+cluster under the governor's read volume. Derived-cache discipline applies: the group stays the authority, the
+city count rebuilds from it at load/reconcile, and drift is a defect to surface.
+VICINITY belongs to the CITY and is a plain local-presence fact ("we have it
+here"): it satisfies `connection:"vicinity"` atoms and NOTHING else — it never adds a second owned count (one
+pasture is ONE horse, not vicinity+network=2; count atoms always read the network side). A vicinity-improved
+source — an improved tile in the radius OR an active building providing the bonus (a settled horse herd ≡ a
+horse plot) — is ONE class with ONE group injection each; two counts mean two genuine sources.
+
+**NEITHER the counts NOR the plot-group MEMBERSHIP are trusted from a save** ([state-repositories](../architecture/state-repositories.md)
+no-serialized-caches — membership is derived state: routes + terrain-trade capabilities + ownership). The
+deserialized groups are stream-drained and discarded; the load-end rebuild (`CvGame::onFinalInitialized`)
+re-colors membership from current state and folds the counts through the live entry points as each plot joins,
+announcing every bonus fact as a genuine crossing emit before the `GAME_LOAD_FINISHED` gate pass.
+
+**The DORMANCY VERDICT is the operating-building fixpoint** (§3.2; [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)):
+`CvCity::checkBuildings` applies the enabler's classification (active / operate-dormant / dormant-trigger /
+obsolete) through `setDisabledBuilding` — never a hand re-derivation from legacy prereq getters — plus the two
+runtime-state legs the authored data does not carry (the employed-population composition; the
+banned-non-state-religion policy), which stay engine-side compositions at the consumer. The serialized disabled
+flags are read only as the PROCESSED-STATE baseline (they key the still-serialized legacy effect accumulators);
+the load-end cross-city fixpoint — iterate {re-fixpoint each city's operating set → apply flips → the provides
+injections adjust the network} until stable — reconciles them to the computed verdict inside the load bracket
+(a manufactured chain lights tier by tier: ore → wares → firearms). The iteration is WORK-LIST driven (pass 1
+sweeps every city — the one legitimate full build; later passes re-check only the cities the previous pass's
+flips can have touched: self, same-owner group members on a provides flip, the whole player on a free-trait
+building), each flip keeps the FULL per-flip processBuilding semantics (its side-effect surface — power,
+freshwater, employed population, traits, provides — is never mirrored in an overlay), and convergence is
+declared ONLY by a quiet FULL verify pass — an incomplete affected-derivation surfaces as a loud verify catch,
+never a silently wrong end state. The `loadPipeline` spine line carries the stage timings + flip/convergence
+diagnostics. ⛔ BAKED-CONSUMER RE-RUNS: an engine consumer that BAKES state on modifier changes (the
+trade-route ASSIGNMENT — `updateTradeRoutes` fires eagerly off processBuilding) runs during this fixpoint
+against not-yet-warmed packages and its baked result self-heals never; every such consumer is re-run ONCE
+after the load-end package warm (`CvGame::updateTradeRoutes` is the known case). That flag read retires
+together with the legacy accumulator cluster at the modifier cut.
+
 **The REQUIRES-GATE stage (GREYED) — ✅ LIVE FOR TECHS.** The component carries the gate verdict as a per-id
 flag (`setGateFailed` — gate failed flips a tree member LISTED → GREYED, membership untouched; a domain whose
 gate stage has not landed never sets the flag, so its members stay LISTED — the enable-side over-offer).
@@ -545,7 +609,17 @@ read-not-store philosophy, the PROJECT-branch precedent — world = `countKnownT
 holding it; techs are monotonic so held == ever-held), covering the 29 world-unique founder techs
 (`allowed:{world:1}`). The cap CROSSING re-gates per §7.1 step 3: a tech event re-gates that one capped tech
 on ALL seeded players' domains (the founder techs vanish from every rival's list the moment one team takes
-them). **The BUILDINGS gate is LIVE the same way**: the gate verdict = `requiresMet` (build ∧ operate, the
+them). **The UNITS gate is LIVE** — the parity-proven canTrain legs restored onto the component as the gate
+verdict: the instance caps (world = lifetime-created + in-production `making`; empire = live tally count +
+`making` vs the ERA-SCALED base-5 national cap, waived under `GAMEOPTION_NO_NATIONAL_UNIT_LIMIT` unless
+`unlimitedException`), the entity-level `enabled`/`disabled` gate, `requires.build` (STRICT, the shared
+AugmentState waiver + operating-buildings wiring — vicinity `provides` supply included), the SUPERSEDER
+removal (`replacedBy.units`, read from the poco's superseding list — hidden the moment any superseder is
+available), and the §3 upgrade-tree dormancy (`requires.build.dormant.all` via the cycle-guarded
+`uc_reachable`-class closure — a unit hides only when EVERY direct upgrade is reachable-trainable).
+`SEVT_UNIT_COUNT` drives the step-3 cap/relation crossing (skip-guarded for the uncapped, unreferenced,
+non-upgrade common case, so combat births/deaths stay free); the no-FK classes + the bounded per-turn dynamic
+re-check mirror the buildings shape. **The BUILDINGS gate is LIVE the same way**: the gate verdict = `requiresMet` (build ∧ operate, the
 full city context — waived-prereq set + the standing operating-buildings wiring) ∧ `allowedOk` (the
 world/team/empire self-caps through the tally's buildings domain; the per-city wonder-CATEGORY caps stay the
 marked allowedOk TODO). LOAD takes the §7.1 order rule's **"gate once after the stream ends"** option — no

@@ -5,6 +5,8 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvEventSpine.h"
+#include "Tools/CvHttpServer.h"   // the /events STREAM consumer (isEnabled + publishEvent)
+#include "Infrastructure/CvLogWriter.h"   // the off-thread log file writer (the FILE consumer's sink)
 #include "AI/BetterBTSAI.h"   // gPlayerLogLevel (reused as the slice-1 gate; dedicated gate/BUG option + the live
                            // CvHttpServer feed come next)
 #include "Defines/CvGlobals.h"        // GC -- resolve raw Type indices to readable names in the (gated) consumer
@@ -118,7 +120,9 @@ static const char* spineDomainFile(int iDomainTag)
 void spineRenderEventLine(char* szBuf, int iBufSize, const CvSpineEvent& kEvent)
 {
 	char szPre[48];
-	int n = _snprintf(szBuf, iBufSize, "%s", spineLinePrefix(kEvent.iDomainTag, kEvent.iEventId, szPre, sizeof(szPre)));
+	// Every spine line carries the game turn by default (owner 2026-07-16) -- first field after the tag, so
+	// prefix-anchored greps keep working and any line is placeable in time without cross-referencing bursts.
+	int n = _snprintf(szBuf, iBufSize, "%s t=%d", spineLinePrefix(kEvent.iDomainTag, kEvent.iEventId, szPre, sizeof(szPre)), GC.getGame().getGameTurn());
 	if (n < 0 || n >= iBufSize) { szBuf[iBufSize - 1] = '\0'; return; }
 	// Resolve each field's name + type via the domain's registered field-info resolver (per-domain isolation).
 	SpineFieldInfoFn fieldFn = (kEvent.iDomainTag >= 0 && kEvent.iDomainTag < NUM_SPINE_DOMAINS)
@@ -241,14 +245,42 @@ public:
 		if (gPlayerLogLevel < kEvent.iLevel) return;
 		char szBuf[512];
 		spineRenderEventLine(szBuf, sizeof(szBuf), kEvent);
-		gDLL->logMsg(spineDomainFile(kEvent.iDomainTag), szBuf); // R-2: per-domain file ([HAI] -> HunterAI.log; [SPINE] -> Cascade.log)
-		// Tee onto the live /events SSE stream (#419) so spine events are observable out-of-process (curl /events)
-		// without holding the .log file open. Shared tee with the BBAI log helpers; gated by gStreamLogLevel.
-		streamLogTee(1, szBuf);
+		// Off-thread file write (owner 2026-07-16): render game-thread (live-object name resolution), enqueue,
+		// the CvLogWriter thread does the disk I/O -- and its per-batch flush keeps the file READABLE while the
+		// game runs. Per-domain file ([HAI] -> HunterAI.log; [SPINE] -> Cascade.log).
+		CvLogWriter::write(spineDomainFile(kEvent.iDomainTag), szBuf);
 	}
 };
 
 static CvSpineLogConsumer s_cascadeLogConsumer;
+
+// ===================== the /events STREAM consumer =====================
+// /events is its OWN spine consumer (owner ruling: never a tee inside the logging consumer -- that chained
+// stream visibility to the FILE gate, so a quiet gPlayerLogLevel silently starved the stream). DOMAIN events --
+// the FACTS the machine consumers see, and the out-of-process replay feed (event-spine.md) -- stream
+// UNCONDITIONALLY whenever the HTTP server is up. DIAGNOSTIC/TRACE lines stream at the stream's OWN verbosity
+// knob (gStreamLogLevel / Autolog__LogLevelStream), fully decoupled from file logging: streaming everything
+// never requires opening the level-4 file firehose. The not-yet-spine BBAI helpers keep their own
+// streamLogTee until each domain retires onto the spine (observability.md target consolidation).
+class CvSpineStreamConsumer : public IEventConsumer
+{
+public:
+	int wantedKinds() const
+	{
+		return (1 << EVENTKIND_DOMAIN) | (1 << EVENTKIND_DIAGNOSTIC) | (1 << EVENTKIND_TRACE);
+	}
+
+	void onEvent(const CvSpineEvent& kEvent)
+	{
+		if (!CvHttpServer::isEnabled()) return;
+		if (kEvent.eKind != EVENTKIND_DOMAIN && gStreamLogLevel < kEvent.iLevel) return;
+		char szBuf[512];
+		spineRenderEventLine(szBuf, sizeof(szBuf), kEvent);
+		CvHttpServer::publishEvent("log", szBuf);
+	}
+};
+
+static CvSpineStreamConsumer s_cascadeStreamConsumer;
 
 // ===================== the [SPINE] DOMAIN's own render registration =====================
 // The spine's DOMAIN events (the per-source state-changes, the empire counts, name-change, the grant triggers, and
@@ -269,7 +301,10 @@ enum SpineDomainField
 	SPF_NAME_KIND, SPF_ENTITY_ID, SPF_NAME,
 	// the [CASCADE] invalidate observability fields
 	SPF_SCOPE, SPF_ID, SPF_PKG, SPF_SRC,
-	SPF_HERITAGE, SPF_ERA
+	SPF_HERITAGE, SPF_ERA,
+	// the load-pipeline diagnostic fields (SEVT_LOAD_PIPELINE)
+	SPF_MS_REBUILD, SPF_MS_FIXPOINT, SPF_PASSES, SPF_MS_PLOTWARM, SPF_MS_PKGWARM,
+	SPF_FLIPS, SPF_CONVERGED, SPF_VERIFY_CATCH, SPF_MS_FIX_ENSURE, SPF_MS_FIX_PROCESS
 };
 
 // The constant line PREFIX for each spine DOMAIN eventId ("[SPINE] <eventName>"). The variable fields follow as
@@ -286,6 +321,8 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_CIVIC_ADOPTED:          return "[SPINE] civicAdopted";
 	case SEVT_PLAYER_INIT:            return "[SPINE] playerInit";
 	case SEVT_BUILDING_CHANGED:       return "[SPINE] buildingChanged";
+	case SEVT_BUILDING_PROCESSED:     return "[SPINE] buildingProcessed";
+	case SEVT_LOAD_PIPELINE:          return "[SPINE] loadPipeline";
 	case SEVT_RELIGION_CHANGED:       return "[SPINE] religionChanged";
 	case SEVT_CORPORATION_CHANGED:    return "[SPINE] corporationChanged";
 	case SEVT_BONUS_CHANGED:          return "[SPINE] bonusChanged";
@@ -305,6 +342,7 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_HERITAGE_CHANGED:       return "[SPINE] heritageChanged";
 	case SEVT_PLOTGROUP_BONUS_CHANGED: return "[SPINE] plotGroupBonusChanged";
 	case SEVT_CITY_NETWORK_CHANGED:    return "[SPINE] cityNetworkChanged";
+	case SEVT_VICINITY_BONUS_CHANGED:  return "[SPINE] vicinityBonusChanged";
 	case SEVT_ERA_CHANGED:             return "[SPINE] eraChanged";
 	case SEVT_NUKES_CHANGED:           return "[SPINE] nukesChanged";
 	case SEVT_CITY_CULTURE_LEVEL_CHANGED: return "[SPINE] cultureLevelChanged";
@@ -360,6 +398,16 @@ static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
 	case SPF_SRC:         *peType = SFT_STR;         return "src";
 	case SPF_HERITAGE:    *peType = SFT_INT;         return "heritage";
 	case SPF_ERA:         *peType = SFT_INT;         return "era";
+	case SPF_MS_REBUILD:  *peType = SFT_INT;         return "networkRebuildMs";
+	case SPF_MS_FIXPOINT: *peType = SFT_INT;         return "dormancyFixpointMs";
+	case SPF_PASSES:      *peType = SFT_INT;         return "passes";
+	case SPF_MS_PLOTWARM: *peType = SFT_INT;         return "plotYieldWarmMs";
+	case SPF_MS_PKGWARM:  *peType = SFT_INT;         return "packageWarmMs";
+	case SPF_FLIPS:       *peType = SFT_INT;         return "flips";
+	case SPF_CONVERGED:   *peType = SFT_INT;         return "converged";
+	case SPF_VERIFY_CATCH:*peType = SFT_INT;         return "verifyCatches";
+	case SPF_MS_FIX_ENSURE:  *peType = SFT_INT;      return "fixEnsureMs";
+	case SPF_MS_FIX_PROCESS: *peType = SFT_INT;      return "fixProcessMs";
 	default:              *peType = SFT_INT;         return NULL;
 	}
 }
@@ -431,6 +479,18 @@ void emitCacheInvalidate(int iScopeKind, int iOwner, int iId, int iMask, const c
 void emitCacheRebuilt(int iScopeKind, int iOwner, int iId, int iMask)
 { emitCacheEvent(SEVT_CACHE_REBUILT, iScopeKind, iOwner, iId, iMask, NULL); }
 
+// The load-end pipeline diagnostic (once per load): stage timings + fixpoint depth, through the ONE registered
+// render path -- never an inline log call at the site.
+void emitLoadPipeline(int iRebuildMs, int iFixpointMs, int iFixEnsureMs, int iFixProcessMs, int iPasses, int iFlips, int iConverged, int iVerifyCatches, int iPlotWarmMs, int iPackageWarmMs)
+{
+	CvSpineEvent kEvent(EVENTKIND_DIAGNOSTIC, SD_SPINE, SEVT_LOAD_PIPELINE, 1);
+	kEvent.addI(SPF_MS_REBUILD, iRebuildMs).addI(SPF_MS_FIXPOINT, iFixpointMs)
+	      .addI(SPF_MS_FIX_ENSURE, iFixEnsureMs).addI(SPF_MS_FIX_PROCESS, iFixProcessMs).addI(SPF_PASSES, iPasses)
+	      .addI(SPF_FLIPS, iFlips).addI(SPF_CONVERGED, iConverged).addI(SPF_VERIFY_CATCH, iVerifyCatches)
+	      .addI(SPF_MS_PLOTWARM, iPlotWarmMs).addI(SPF_MS_PKGWARM, iPackageWarmMs);
+	eventSpine().emit(kEvent);
+}
+
 
 void spineRegisterConsumers()
 {
@@ -444,6 +504,9 @@ void spineRegisterConsumers()
 	// object-owned counts on demand (CvCascadeTally.h), so it neither registers here nor needs a load-time seed. The
 	// DOMAIN count events still flow to logging (observability) + the future invalidation/offline consumers.
 	eventSpine().registerConsumer(&s_cascadeLogConsumer);
+	// The /events STREAM consumer -- DOMAIN facts unconditionally, DIAGNOSTIC/TRACE at gStreamLogLevel (its own
+	// knob, decoupled from the file gate).
+	eventSpine().registerConsumer(&s_cascadeStreamConsumer);
 	// The [SPINE] DOMAIN: register its prefix + field-info resolvers so EVERY spine event (state-changes, counts,
 	// name-change, grant triggers, the load bracket) renders through the consumer's structured path
 	// (spineRenderEventLine), never an inline string. NULL log file => Cascade.log.
@@ -495,6 +558,13 @@ void emitNameChange(int iKind, int iOwner, int iEntityId)
 void emitBuildingChanged(int iCity, int iOwner, int iBuilding, int iDelta)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_BUILDING_CHANGED, iBuilding, 0, iDelta, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_DELTA, iDelta);
+	eventSpine().emit(e);
+}
+void emitBuildingProcessed(int iCity, int iOwner, int iBuilding, int iDelta)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_BUILDING_PROCESSED, iBuilding, 0, iDelta, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_DELTA, iDelta);
 	eventSpine().emit(e);
@@ -631,6 +701,14 @@ void emitPlotGroupBonusChanged(int iOwner, int iPlotGroupId, int iBonus, int iDe
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOTGROUP_BONUS_CHANGED, iBonus, 0, iDelta, iOwner, iPlotGroupId);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_ID, iPlotGroupId).addI(SPF_DELTA, iDelta);
+	eventSpine().emit(e);
+}
+
+void emitVicinityBonusChanged(int iCity, int iOwner, int iBonus, int iDelta)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_VICINITY_BONUS_CHANGED, iBonus, 0, iDelta, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_BONUS, iBonus).addI(SPF_OWNER, iOwner).addI(SPF_ID, iCity).addI(SPF_DELTA, iDelta);
 	eventSpine().emit(e);
 }
 void emitCityNetworkChanged(int iOwner, int iCity)

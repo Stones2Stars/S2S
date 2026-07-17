@@ -99,6 +99,7 @@ enum SpineDomainTag
 	SD_MODIFIER,   // [MODIFIER] the perf + repo census (CvCascadeModifierMath)
 	SD_GRANTS,     // [GRANTS] the "provisions" consumer (CvCascadeGrants) -- resolves an entity's genuine grants on a DOMAIN event
 	SD_SPINE,      // [SPINE] spine lifecycle signals (game-load started/finished) -- rendered via the registered prefix, not inline
+	SD_EXE,        // [EXE] the DLL->EXE graphics/dirty call trace (CvExeTrace) -- every render-relevant call into the closed EXE
 	NUM_SPINE_DOMAINS
 };
 
@@ -271,7 +272,24 @@ enum SpineDomainEvent
 	// a religion's HOLY CITY designation moved (CvGame::setHolyCity) -- the IS_HOLY_CITY / IS_STATE_RELIGION_HOLY_CITY
 	// predicates flip for the OLD city (loses) and the NEW city (gains); gates conditioned commerce/yields. Emitted
 	// per affected city. iType=religion, iC=cityOwner, iSrcLoc=cityId, iA=1 now holy / 0 no longer. DOMAIN.
-	SEVT_HOLY_CITY_CHANGED      = 38
+	SEVT_HOLY_CITY_CHANGED      = 38,
+	// a city's LOCAL (vicinity) supply of a bonus changed -- an improved radius tile or an active providing
+	// building appeared/vanished (CvCity::processBuilding at construction/destruction, the per-turn
+	// doVicinityBonus tile backstop). Vicinity supply never adds an owned COUNT (that lives on the plot
+	// group); the consumer re-gates the bonus's connection:vicinity dependents. iType=Bonus, iC=owner,
+	// iSrcLoc=cityId, iB=the applied local delta (a city can hold several of a bonus locally). DOMAIN.
+	SEVT_VICINITY_BONUS_CHANGED = 39,
+	// a present building's PROCESSED (operating-contribution) state flipped -- construction/destruction's
+	// processing leg AND a dormancy disable/enable flip (setDisabledBuilding -> processBuilding). DISTINCT from
+	// SEVT_BUILDING_CHANGED (the PRESENCE fact, emitted at CvCity::setHasBuilding): events are facts, and a
+	// process flip is NOT a presence change -- conflating them fed the enabler domains fake has-flips (the
+	// 62-phantom-in-tree over-offer). Consumed by the modifier invalidation (package dirties + the operating-set
+	// mark); the enabler domains consume only the presence fact. iType=Building, iC=owner, iSrcLoc=cityId,
+	// iB=+1 processed-in / -1 processed-out. DOMAIN.
+	SEVT_BUILDING_PROCESSED     = 40,
+	// the load-end pipeline diagnostic (DIAGNOSTIC -- logging/observability only): the stage timings + the
+	// dormancy-fixpoint depth, announced once per load through the registered SD_SPINE render path.
+	SEVT_LOAD_PIPELINE          = 41
 };
 
 //	Which entity's display name changed (the iType of a SEVT_NAME_CHANGE event). The logging consumer resolves the
@@ -295,6 +313,8 @@ void emitNameChange(int iKind, int iOwner, int iEntityId);
 // Call AFTER the state field is updated. Source-carrying: the event names WHAT (iType) + WHO (iOwner) + WHERE
 // (iSrcLoc), so a consumer can route it -- but the endpoints themselves only emit (no consumer/routing here). =====
 void emitBuildingChanged(int iCity, int iOwner, int iBuilding, int iDelta);
+void emitBuildingProcessed(int iCity, int iOwner, int iBuilding, int iDelta);
+void emitLoadPipeline(int iRebuildMs, int iFixpointMs, int iFixEnsureMs, int iFixProcessMs, int iPasses, int iFlips, int iConverged, int iVerifyCatches, int iPlotWarmMs, int iPackageWarmMs);
 void emitReligionChanged(int iCity, int iOwner, int iReligion, bool bHas);
 void emitCorporationChanged(int iCity, int iOwner, int iCorporation, bool bHas);
 void emitBonusChanged(int iCity, int iOwner, int iBonus, int iChange);
@@ -316,6 +336,7 @@ void emitGoldenAgeChanged(int iPlayer, bool bOn);
 void emitStateReligionChanged(int iPlayer, int iReligion);
 void emitHeritageChanged(int iPlayer, int iHeritage, bool bAdd);
 void emitPlotGroupBonusChanged(int iOwner, int iPlotGroupId, int iBonus, int iDelta);   // network: a plot-group gained(+1)/lost(-1) a resource
+void emitVicinityBonusChanged(int iCity, int iOwner, int iBonus, int iDelta);           // vicinity: a city's local presence of a bonus flipped (+1/-1)
 void emitCityNetworkChanged(int iOwner, int iCity);   // network membership: a city's center plot moved to a different plot-group
 void emitEraChanged(int iPlayer, int iEra);   // a player's era advanced (broad player-scope cascade input)
 void emitNukesChanged(int iPlayer, int iState);   // a player's nuke state: 0 disabled / 1 enabled / 2 banned

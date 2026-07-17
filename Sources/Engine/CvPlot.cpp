@@ -4,6 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvExeTrace.h"
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
 #include "UI/CvArtFileMgr.h"
@@ -38,6 +39,7 @@
 #include "Infrastructure/FAStarNode.h"
 #include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [ENG] lines through the event spine
 #include "Cascade/CvEnablerKernel.h" // EnablerKernel::operatingBuildings -- the cascade active-building verdict (recomputeYieldInto)
+#include "Cascade/CvCascadeAccumulator.h" // dirtyCity(CPK_YRATE) -- a plot-yield change re-marks the working city's realized-rate cache
 
 // #430 logging: [ENG] engine-integrity -> event spine (CvPlot). Self-registers its prefix provider + Engine.log file;
 // the spine stays domain-agnostic (never names ENG). Shadow discipline: emits run ALONGSIDE the legacy logEngine calls.
@@ -668,12 +670,14 @@ float CvPlot::getSymbolSize() const
 
 float CvPlot::getSymbolOffsetX(int iOffset) const
 {
+	exeIn(EXIN_PLOT_SYMBOL_OFFSET);
 	return 40.0f + iOffset * 28.0f * getSymbolSize() - GC.getPLOT_SIZE() / 2.0f;
 }
 
 
 float CvPlot::getSymbolOffsetY(int iOffset) const
 {
+	exeIn(EXIN_PLOT_SYMBOL_OFFSET);
 	return 50.0f - GC.getPLOT_SIZE() / 2.0f;
 }
 
@@ -1240,7 +1244,7 @@ void CvPlot::updateFog(const bool bApplyDecay)
 				}
 			}
 #endif
-			gDLL->getEngineIFace()->LightenVisibility(getFOWIndex());
+			exeEng(EXEK_VISIBILITY, 2), gDLL->getEngineIFace()->LightenVisibility(getFOWIndex());
 		}
 		else
 		{
@@ -1248,14 +1252,14 @@ void CvPlot::updateFog(const bool bApplyDecay)
 			if (!bIsHuman || m_iVisibilityDecay == NO_DECAY || !bOptionDecay)
 			{
 #endif
-				gDLL->getEngineIFace()->DarkenVisibility(getFOWIndex());
+				exeEng(EXEK_VISIBILITY, 1), gDLL->getEngineIFace()->DarkenVisibility(getFOWIndex());
 #ifdef ENABLE_FOGWAR_DECAY
 			}
 			else
 			{
 				if (m_iVisibilityDecay > 0)
 				{
-					gDLL->getEngineIFace()->DarkenVisibility(getFOWIndex());
+					exeEng(EXEK_VISIBILITY, 1), gDLL->getEngineIFace()->DarkenVisibility(getFOWIndex());
 
 
 
@@ -1264,19 +1268,19 @@ void CvPlot::updateFog(const bool bApplyDecay)
 				}
 				else if (m_iVisibilityDecay > REMOVE_PLOT_DECAY)
 				{
-					gDLL->getEngineIFace()->BlackenVisibility(getFOWIndex());
+					exeEng(EXEK_VISIBILITY, 0), gDLL->getEngineIFace()->BlackenVisibility(getFOWIndex());
 					m_iVisibilityDecay--;
 				}
 				else
 				{
-					gDLL->getEngineIFace()->BlackenVisibility(getFOWIndex());
+					exeEng(EXEK_VISIBILITY, 0), gDLL->getEngineIFace()->BlackenVisibility(getFOWIndex());
 					setRevealed(team, false, false, NO_TEAM, false,false);
 				}
 			}
 #endif
 		}
 
-	} else gDLL->getEngineIFace()->BlackenVisibility(getFOWIndex());
+	} else exeEng(EXEK_VISIBILITY, 0), gDLL->getEngineIFace()->BlackenVisibility(getFOWIndex());
 }
 
 
@@ -1372,6 +1376,8 @@ void CvPlot::updateSymbolDisplay()
 {
 	PROFILE_FUNC();
 
+	exeEngFrom(EXEK_SYMBOL_DISPLAY, getX(), getY(), _ReturnAddress());
+
 	if ( !isGraphicsVisible(ECvPlotGraphics::SYMBOLS))
 	{
 		return;
@@ -1432,6 +1438,8 @@ void CvPlot::updateSymbols()
 bool CvPlot::updateSymbolsInternal()
 {
 	PROFILE_FUNC();
+
+	exeEngFrom(EXEK_SYMBOLS, getX(), getY(), _ReturnAddress());
 
 	deleteAllSymbols();
 	if (!isGraphicsVisible(ECvPlotGraphics::SYMBOLS) || !isRevealed(GC.getGame().getActiveTeam(), true))
@@ -1513,6 +1521,11 @@ void CvPlot::updateMinimapColor()
 	if (!shouldHaveGraphics())
 	{
 		return;
+	}
+	exeEngFrom(EXEK_MINIMAP_COLOR, getX(), getY(), _ReturnAddress());
+	if (exeCoalesceMark(2, GC.getMap().plotNum(getX(), getY())))
+	{
+		return;   // absorbed: the bracket flush recolors the distinct plot once
 	}
 	gDLL->getInterfaceIFace()->setMinimapColor(MINIMAPMODE_TERRITORY, getViewportX(),getViewportY(), plotMinimapColor(), STANDARD_MINIMAP_ALPHA);
 }
@@ -1768,22 +1781,19 @@ void CvPlot::updatePlotGroupBonus(bool bAdd)
 		{
 			PROFILE("CvPlot::updatePlotGroupBonus.PlotCity");
 
-			for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
-			{
-				if (!GET_TEAM(getTeam()).isBonusObsolete((BonusTypes)iI))
-				{
-					pPlotGroup->changeNumBonuses((BonusTypes)iI, (pPlotCity->getFreeBonus((BonusTypes)iI) * (bAdd ? 1 : -1)));
-				}
-			}
+			// the city's computed injection (building provides + event grants), one implementation
+			pPlotCity->addProvidedBonusesToGroup(pPlotGroup, bAdd ? 1 : -1);
 
 			if (pPlotCity->isCapital())
 			{
 				PROFILE("CvPlot::updatePlotGroupBonus.Capital");
 
+				// deal-traded content lands in the group's TRADED array (capital-anchored; this fold point is
+				// what re-homes it through every merge/split/capital move)
 				for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
 				{
-					pPlotGroup->changeNumBonuses((BonusTypes)iI, (GET_PLAYER(getOwner()).getBonusExport((BonusTypes)iI) * (bAdd ? -1 : 1)));
-					pPlotGroup->changeNumBonuses((BonusTypes)iI, (GET_PLAYER(getOwner()).getBonusImport((BonusTypes)iI) * (bAdd ? 1 : -1)));
+					pPlotGroup->changeTradedBonus((BonusTypes)iI, (GET_PLAYER(getOwner()).getBonusExport((BonusTypes)iI) * (bAdd ? -1 : 1)));
+					pPlotGroup->changeTradedBonus((BonusTypes)iI, (GET_PLAYER(getOwner()).getBonusImport((BonusTypes)iI) * (bAdd ? 1 : -1)));
 				}
 			}
 		}
@@ -5168,7 +5178,10 @@ bool CvPlot::isVisible(TeamTypes eTeam, bool bDebug) const
 
 bool CvPlot::isActiveVisible(bool bDebug) const
 {
-	return isVisible(GC.getGame().getActiveTeam(), bDebug);
+	exeIn(EXIN_PLOT_ACTIVE_VISIBLE);
+	const bool bAnswer = isVisible(GC.getGame().getActiveTeam(), bDebug);
+	exeInAnswer(EXIN_PLOT_ACTIVE_VISIBLE, (getX() << 16) | getY(), bAnswer ? 1 : 0);
+	return bAnswer;
 }
 
 
@@ -5457,11 +5470,13 @@ bool CvPlot::isVisiblePotentialEnemyDefenderless(const CvUnit* pUnit) const
 
 bool CvPlot::isVisibleEnemyUnit(PlayerTypes ePlayer) const
 {
+	exeIn(EXIN_PLOT_VISIBLE_ENEMY_UNIT);
 	return plotCheck(PUF_isEnemy, ePlayer, 0, NULL, NO_PLAYER, NO_TEAM, PUF_isVisible, ePlayer) != NULL;
 }
 
 int CvPlot::getNumVisibleUnits(PlayerTypes ePlayer) const
 {
+	exeIn(EXIN_PLOT_NUM_VISIBLE_UNITS);
 	return plotCount(PUF_isVisibleDebug, ePlayer);
 }
 
@@ -5510,6 +5525,7 @@ int CvPlot::getVisibleNonAllyStrength(PlayerTypes ePlayer) const
 
 bool CvPlot::isVisibleEnemyUnit(const CvUnit* pUnit) const
 {
+	exeIn(EXIN_PLOT_VISIBLE_ENEMY_UNIT);
 	return isVisible(pUnit->getTeam(), false) && plotCheck(PUF_isEnemy, pUnit->getOwner(), pUnit->isAlwaysHostile(this), pUnit, NO_PLAYER, NO_TEAM, PUF_isVisible, pUnit->getOwner());
 }
 
@@ -6457,6 +6473,14 @@ bool CvPlot::isFlagDirty() const
 
 void CvPlot::setFlagDirty(bool bNewValue)
 {
+	if (bNewValue)
+	{
+		exeEngFrom(EXEK_FLAG_DIRTY, getX(), getY(), _ReturnAddress());
+		if (exeCoalesceMark(0, GC.getMap().plotNum(getX(), getY())))
+		{
+			return;   // absorbed: the bracket flush sets it once for the distinct plot
+		}
+	}
 	m_bFlagDirty = bNewValue;
 }
 
@@ -6682,9 +6706,9 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 			{
 				updateMinimapColor();
 
-				gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
+				exeSetUIDirty(GlobeLayer_DIRTY_BIT, true);
 
-				gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
+				exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
 			}
 		}
 
@@ -7033,7 +7057,7 @@ void CvPlot::setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGr
 	if (bRebuildGraphics && GC.IsGraphicsInitialized() && shouldHaveGraphics())
 	{
 		//Update terrain graphical
-		gDLL->getEngineIFace()->RebuildPlot(getViewportX(), getViewportY(), true, true);
+		exeEng(EXEK_REBUILD_PLOT), gDLL->getEngineIFace()->RebuildPlot(getViewportX(), getViewportY(), true, true);
 		updateFeatureSymbol();
 		setLayoutDirty(true);
 		updateRouteSymbol(false, true);
@@ -7106,7 +7130,7 @@ void CvPlot::setTerrainType(TerrainTypes eNewValue, bool bRecalculate, bool bReb
 			if (bRebuildGraphics && shouldHaveGraphics())
 			{
 				// Update terrain graphics
-				gDLL->getEngineIFace()->RebuildPlot(getViewportX(), getViewportY(),false,true);
+				exeEng(EXEK_REBUILD_PLOT), gDLL->getEngineIFace()->RebuildPlot(getViewportX(), getViewportY(),false,true);
 			}
 
 			if (GC.getTerrainInfo(eNewValue).isWaterTerrain() != isWater())
@@ -7415,7 +7439,7 @@ void CvPlot::setBonusType(BonusTypes eNewValue)
 
 		setLayoutDirty(true);
 
-		gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
+		exeSetUIDirty(GlobeLayer_DIRTY_BIT, true);
 	}
 }
 
@@ -7646,7 +7670,7 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 			}
 		}
 
-		gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
+		exeSetUIDirty(GlobeLayer_DIRTY_BIT, true);
 
 		if (NO_IMPROVEMENT != eOldImprovement && GC.getImprovementInfo(eOldImprovement).isActsAsCity())
 		{
@@ -7678,7 +7702,7 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 			}
 		}
 		setImprovementCurrentValue();
-		gDLL->getInterfaceIFace()->setDirty(CitizenButtons_DIRTY_BIT, true);
+		exeSetUIDirty(CitizenButtons_DIRTY_BIT, true);
 	}
 }
 
@@ -7816,34 +7840,26 @@ void CvPlot::setPlotCity(CvCity* pNewValue)
 	GET_PLAYER(getOwner()).startDeferredPlotGroupBonusCalculation();
 
 	updatePlotGroupBonus(false);
-	if (isCity())
-	{
-		CvPlotGroup* pPlotGroup = getPlotGroup(getOwner());
-
-		if (pPlotGroup)
-		{
-			for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
-			{
-				getPlotCity()->changeNumBonuses((BonusTypes)iI, -pPlotGroup->getNumBonuses((BonusTypes)iI));
-			}
-		}
-	}
+	// The city holds NO bonus mirror (getNumBonuses RELAYS onto the plot group), so no count transfer on
+	// assign/unassign. A city UNASSIGNED here is being killed -- its effect state dies with it. A city ASSIGNED
+	// here (founding) applies its initial crossing effects from zero below.
 	if (pNewValue)
 	{
 		m_plotCity = pNewValue->getIDInfo();
 	}
 	else m_plotCity.reset();
 
-
 	if (isCity())
 	{
 		CvPlotGroup* pPlotGroup = getPlotGroup(getOwner());
 
-		if (pPlotGroup)
+		if (pPlotGroup && !getPlotCity()->isDeferringBonusProcessing())
 		{
+			// Founding: the new city was not in the player's city list when the deferral bracket above started,
+			// so reconcile its effects explicitly -- the from-zero application of every network bonus it joins.
 			for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
 			{
-				getPlotCity()->changeNumBonuses((BonusTypes)iI, pPlotGroup->getNumBonuses((BonusTypes)iI));
+				getPlotCity()->processNumBonusChange((BonusTypes)iI, 0, pPlotGroup->getNumBonuses((BonusTypes)iI));
 			}
 		}
 	}
@@ -7968,7 +7984,7 @@ void CvPlot::updateWorkingCity()
 		&& gDLL->getGraphicOption(GRAPHICOPTION_CITY_RADIUS)
 		&& gDLL->getInterfaceIFace()->canSelectionListFound())
 		{
-			gDLL->getInterfaceIFace()->setDirty(ColoredPlots_DIRTY_BIT, true);
+			exeSetUIDirty(ColoredPlots_DIRTY_BIT, true);
 		}
 	}
 }
@@ -8179,6 +8195,11 @@ short* CvPlot::getYield() const
 int CvPlot::getYield(YieldTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
+	// every 65536th call records its caller (the ~1.5M-calls/sec turn-wall census; see CvExeTrace.h)
+	if ((InterlockedIncrement((volatile LONG*)&gExePlotGetYieldCalls) & 0xFFFF) == 0)
+	{
+		exeYieldCallerSample(_ReturnAddress());
+	}
 	return m_yieldCache.get(eIndex);
 }
 
@@ -8199,6 +8220,9 @@ void CvPlot::updateYield()
 	{
 		pWorkingCity->AI_setAssignWorkDirty(true);
 		pWorkingCity->onYieldChange();   // downstream (commerce/UI) dirty -- was fired via the removed changePlotYield push
+		pWorkingCity->markPlotYieldSumDirty();   // the worked-plot Σ cache: this plot's yield feeds it
+		// the realized-rate cache bakes the worked-plot sum ("cache the sum" ruling) -- a plot-yield change re-marks it
+		CascadeAccumulator::dirtyCity(pWorkingCity, CPK_YRATE);
 	}
 	updateSymbols();
 }
@@ -8207,6 +8231,7 @@ void CvPlot::updateYield()
 // change-then-read, not per change and never per read). const: it writes only the cache's out-array.
 void CvPlot::recomputeYieldInto(short* aiOut) const
 {
+	InterlockedIncrement((volatile LONG*)&gExePlotYieldRecomputes);
 	if (!area()) { for (int i = 0; i < NUM_YIELD_TYPES; ++i) aiOut[i] = 0; return; }
 
 	// The building->improvement keyed buff is summed FRESH over the working city's ACTIVE buildings (the squirrelBanana
@@ -8384,6 +8409,8 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay) const
 {
 	PROFILE_FUNC();
+
+	InterlockedIncrement((volatile LONG*)&gExePlotCalcYieldCalls);
 
 	if (bDisplay && GC.getGame().isDebugMode())
 	{
@@ -8898,18 +8925,14 @@ void CvPlot::setPlotGroup(PlayerTypes ePlayer, CvPlotGroup* pNewValue, bool bRec
 		{
 			pCity = getPlotCity();
 
+			// The member cities hold NO bonus mirror (getNumBonuses RELAYS onto the group), so a membership change
+			// needs no count transfer -- the relay reads the new group by construction. The legacy crossing EFFECTS
+			// (processBonus) reconcile across the jump via the deferral bracket below: the snapshot captures the OLD
+			// group's totals, endDeferredPlotGroupBonusCalculation reconciles against the NEW group's.
 			if (ePlayer == getOwner())
 			{
 				GET_PLAYER(getOwner()).startDeferredPlotGroupBonusCalculation();
 				updatePlotGroupBonus(false);
-			}
-
-			if (pOldPlotGroup != NULL && pCity != NULL && pCity->getOwner() == ePlayer)
-			{
-				for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
-				{
-					pCity->changeNumBonuses((BonusTypes)iI, -pOldPlotGroup->getNumBonuses((BonusTypes)iI));
-				}
 			}
 		}
 
@@ -8924,13 +8947,6 @@ void CvPlot::setPlotGroup(PlayerTypes ePlayer, CvPlotGroup* pNewValue, bool bRec
 
 		if (bRecalculateEffect)
 		{
-			if (pCity != NULL && getPlotGroup(ePlayer) != NULL && pCity->getOwner() == ePlayer)
-			{
-				for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
-				{
-					pCity->changeNumBonuses((BonusTypes)iI, getPlotGroup(ePlayer)->getNumBonuses((BonusTypes)iI));
-				}
-			}
 			// #430 NETWORK MEMBERSHIP (trigger #3): this city's OWN center plot moved to a different plot-group
 			// (merge/split), so its whole network resource set changed. Owner-gated -- a group change for a NON-owner
 			// player over this plot doesn't touch the city's network access. Announce it so the cache re-evals connection:trade.
@@ -8964,7 +8980,7 @@ void CvPlot::updatePlotGroup()
 				updatePlotGroup((PlayerTypes)iI);
 			}
 		}
-		gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
+		exeSetUIDirty(GlobeLayer_DIRTY_BIT, true);
 		m_bPlotGroupsDirty = false;
 	}
 }
@@ -9460,9 +9476,9 @@ void CvPlot::setRevealedOwner(TeamTypes eTeam, PlayerTypes eNewValue)
 
 			if (GC.IsGraphicsInitialized())
 			{
-				gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
+				exeSetUIDirty(GlobeLayer_DIRTY_BIT, true);
 
-				gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
+				exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
 			}
 		}
 	}
@@ -9719,7 +9735,7 @@ void CvPlot::setRevealed(const TeamTypes eTeam, const bool bNewValue, const bool
 					// Unrevealed water plots adjacent to newly revealed plots need redrawing to prevent artifacting
 					if (pAdjacentPlot->isWater() && !pAdjacentPlot->isRevealed(eTeam, false) && pAdjacentPlot->isInViewport())
 					{
-						gDLL->getEngineIFace()->RebuildPlot(pAdjacentPlot->getViewportX(), pAdjacentPlot->getViewportY(),true,true);
+						exeEng(EXEK_REBUILD_PLOT), gDLL->getEngineIFace()->RebuildPlot(pAdjacentPlot->getViewportX(), pAdjacentPlot->getViewportY(),true,true);
 						pAdjacentPlot->setLayoutDirty(true);
 					}
 				}
@@ -9730,7 +9746,7 @@ void CvPlot::setRevealed(const TeamTypes eTeam, const bool bNewValue, const bool
 				}
 
 				//Update terrain graphics
-				gDLL->getEngineIFace()->RebuildPlot(getViewportX(), getViewportY(),true,true);
+				exeEng(EXEK_REBUILD_PLOT), gDLL->getEngineIFace()->RebuildPlot(getViewportX(), getViewportY(),true,true);
 			}
 
 			hideGraphics(ECvPlotGraphics::ALL);
@@ -9744,8 +9760,8 @@ void CvPlot::setRevealed(const TeamTypes eTeam, const bool bNewValue, const bool
 			}
 			updateVisibility();
 
-			gDLL->getInterfaceIFace()->setDirty(MinimapSection_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
+			exeSetUIDirty(MinimapSection_DIRTY_BIT, true);
+			exeSetUIDirty(GlobeLayer_DIRTY_BIT, true);
 		}
 
 		if (bNewValue)
@@ -9901,7 +9917,7 @@ void CvPlot::setRevealedImprovementType(TeamTypes eTeam, ImprovementTypes eNewVa
 		{
 			updateSymbols();
 			setLayoutDirty(true);
-			//gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
+			//exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
 		}
 	}
 }
@@ -10197,7 +10213,7 @@ void CvPlot::updateFeatureSymbolVisibility()
 		if(wasVisible != bVisible)
 		{
 			gDLL->getFeatureIFace()->Hide(m_pFeatureSymbol, !bVisible);
-			gDLL->getEngineIFace()->MarkPlotTextureAsDirty(getViewportX(),getViewportY());
+			exeEng(EXEK_TEXTURE_DIRTY), gDLL->getEngineIFace()->MarkPlotTextureAsDirty(getViewportX(),getViewportY());
 		}
 	}
 }
@@ -10214,7 +10230,7 @@ void CvPlot::updateFeatureSymbol(bool bForce)
 
 	const FeatureTypes eFeature = getFeatureType();
 
-	gDLL->getEngineIFace()->RebuildTileArt(getViewportX(),getViewportY());
+	exeEng(EXEK_REBUILD_TILE_ART), gDLL->getEngineIFace()->RebuildTileArt(getViewportX(),getViewportY());
 
 	if ( eFeature == NO_FEATURE ||
 		 GC.getFeatureInfo(eFeature).getArtInfo()->isRiverArt() ||
@@ -10245,6 +10261,7 @@ void CvPlot::updateFeatureSymbol(bool bForce)
 
 CvRoute* CvPlot::getRouteSymbol() const
 {
+	exeIn(EXIN_PLOT_ROUTE_SYMBOL);
 	return m_pRouteSymbol;
 }
 
@@ -10290,6 +10307,7 @@ void CvPlot::updateRouteSymbol(bool bForce, bool bAdjacent)
 
 CvRiver* CvPlot::getRiverSymbol() const
 {
+	exeIn(EXIN_PLOT_RIVER_SYMBOL);
 	return m_pRiverSymbol;
 }
 
@@ -10337,12 +10355,12 @@ void CvPlot::updateRiverSymbol(bool bForce, bool bAdjacent)
 			const CvPlot* pAdjacentPlot = plotDirection(getX(), getY(), affectedDirections[i]);
 			if (pAdjacentPlot != NULL && pAdjacentPlot->isInViewport())
 			{
-				gDLL->getEngineIFace()->ForceTreeOffsets(getViewportX(),getViewportY());
+				exeEng(EXEK_TREE_OFFSETS), gDLL->getEngineIFace()->ForceTreeOffsets(getViewportX(),getViewportY());
 			}
 		}
 
 		//cut out canyons
-		gDLL->getEngineIFace()->RebuildRiverPlotTile(getViewportX(),getViewportY(), true, false);
+		exeEng(EXEK_REBUILD_RIVER), gDLL->getEngineIFace()->RebuildRiverPlotTile(getViewportX(),getViewportY(), true, false);
 
 		//recontour adjacent rivers
 		foreach_(const CvPlot* pAdjacentPlot, adjacent())
@@ -10386,6 +10404,7 @@ void CvPlot::updateRiverSymbolArt(bool bAdjacent)
 
 CvFlagEntity* CvPlot::getFlagSymbol() const
 {
+	exeIn(EXIN_PLOT_FLAG_SYMBOL);
 	return m_pFlagSymbol;
 }
 
@@ -10396,6 +10415,7 @@ CvFlagEntity* CvPlot::getFlagSymbolOffset() const
 
 void CvPlot::updateFlagSymbol()
 {
+	exeIn(EXIN_PLOT_UPDATE_FLAG_SYMBOL);
 	PROFILE_FUNC();
 
 	if (!isGraphicsVisible(ECvPlotGraphics::UNIT))
@@ -10495,6 +10515,7 @@ void CvPlot::updateFlagSymbol()
 
 /*DllExport*/ CvUnit* CvPlot::getDebugCenterUnit() const
 {
+	exeIn(EXIN_PLOT_DEBUG_CENTER_UNIT);
 #ifdef _DEBUG
 	OutputDebugString(CvString::format("exe calls getDebugCenterUnit() for plot at (%d, %d)\n", getX(), getY()).c_str());
 #endif
@@ -10506,10 +10527,15 @@ void CvPlot::updateFlagSymbol()
 
 CvUnit* CvPlot::getCenterUnit(const bool bForced) const
 {
-	if (m_pCenterUnit || !bForced) return m_pCenterUnit;
-
-	const CLLNode<IDInfo>* pUnitNode = headUnitNode();
-	return pUnitNode ? ::getUnit(pUnitNode->m_data) : NULL;
+	exeIn(EXIN_PLOT_CENTER_UNIT);
+	CvUnit* pAnswer = m_pCenterUnit;
+	if (!pAnswer && bForced)
+	{
+		const CLLNode<IDInfo>* pUnitNode = headUnitNode();
+		pAnswer = pUnitNode ? ::getUnit(pUnitNode->m_data) : NULL;
+	}
+	exeInAnswer(EXIN_PLOT_CENTER_UNIT, (getX() << 16) | getY(), pAnswer != NULL ? ((pAnswer->getOwner() << 24) | pAnswer->getID()) : -1);
+	return pAnswer;
 }
 
 void CvPlot::updateCenterUnit()
@@ -10527,6 +10553,12 @@ void CvPlot::updateCenterUnit()
 		m_pCenterUnit = NULL;
 		return;
 	}
+	exeEngFrom(EXEK_CENTER_UNIT, getX(), getY(), _ReturnAddress());
+
+	// ⛔ center-unit is deliberately NOT coalesced: the NULL-then-flush shape FORCED a reloadEntity
+	// (destroy+recreate of the unit's render entity) on every marked occupied plot -- amplifying the very
+	// per-entity degradation under investigation. The normal path reloads only on a genuine center change.
+
 	CvUnit* newCenterUnit = isActiveVisible(true) ? getPreferredCenterUnit() : NULL;
 	if (!newCenterUnit && gDLL->GetWorldBuilderMode())
 	{
@@ -12046,6 +12078,11 @@ void CvPlot::setLayoutDirty(bool bDirty)
 		return;
 	}
 
+	if (bDirty)
+	{
+		exeEngFrom(EXEK_PLOT_LAYOUT, getX(), getY(), _ReturnAddress());
+	}
+
 	if (isLayoutDirty() != bDirty)
 	{
 		m_bPlotLayoutDirty = bDirty;
@@ -12088,6 +12125,15 @@ bool CvPlot::isLayoutDirty() const
 
 bool CvPlot::isLayoutStateDifferent() const
 {
+	// A plot whose graphics CANNOT re-layout right now (paged out / out of viewport / pre-init) reports NO
+	// difference: the EXE's reconcile poll otherwise finds it "different" every frame and re-attempts the
+	// layout forever -- updatePlotBuilder refuses exactly these plots -- which is the measured bars-on FPS
+	// collapse after a turn's worked-flag churn (hundreds of off-screen plots left permanently different,
+	// zero DLL work, retried per frame). The worked state re-bakes when the plot pages back in / re-enters
+	// the viewport (the page-in rebuild renders the CURRENT worked state; the first in-view reconcile then
+	// completes normally).
+	if (!isGraphicsVisible(ECvPlotGraphics::FEATURE)) return false;
+
 	bool bSame = true;
 	// is worked
 	bSame &= m_bLayoutStateWorked == isBeingWorked();
@@ -12105,6 +12151,7 @@ void CvPlot::setLayoutStateToCurrent()
 
 void CvPlot::getVisibleImprovementState(ImprovementTypes& eType, bool& bWorked) const
 {
+	exeIn(EXIN_PLOT_VISIBLE_IMPROVEMENT);
 	eType = NO_IMPROVEMENT;
 	bWorked = false;
 
@@ -12136,6 +12183,7 @@ void CvPlot::getVisibleImprovementState(ImprovementTypes& eType, bool& bWorked) 
 
 void CvPlot::getVisibleBonusState(BonusTypes& eType, bool& bImproved, bool& bWorked) const
 {
+	exeIn(EXIN_PLOT_VISIBLE_BONUS);
 	eType = NO_BONUS;
 	bImproved = false;
 	bWorked = false;

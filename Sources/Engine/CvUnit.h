@@ -1327,9 +1327,11 @@ public:
 
 	int getExtraUnitCombatModifier(UnitCombatTypes eIndex, const bool bCommander = true, const bool bCommodore = true) const;
 	void changeExtraUnitCombatModifier(UnitCombatTypes eIndex, int iChange);
-	bool canAcquirePromotion(PromotionTypes ePromotion, PromotionRequirements::flags requirements) const;
+	bool canAcquirePromotion(PromotionTypes ePromotion, PromotionRequirements::flags requirements, int* piFailLeg = NULL) const;
 	// Deprecated, use the one above that takes enum flags instead for increased readability.
-	bool canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas = false, bool bEquip = false, bool bForLeader = false, bool bForOffset = false, bool bForFree = false, bool bForBuildUp = false, bool bForStatus = false) const;
+	// piFailLeg (diagnostic): set to the __LINE__ of the refusing check when the answer is false -- the
+	// /computed/enabler/promotions decomposition names the leg instead of a mirror guessing at the gate order
+	bool canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas = false, bool bEquip = false, bool bForLeader = false, bool bForOffset = false, bool bForFree = false, bool bForBuildUp = false, bool bForStatus = false, int* piFailLeg = NULL) const;
 	//TB Combat Mods end
 	bool canAcquirePromotionAny() const;
 	bool isPromotionValid(PromotionTypes ePromotion, bool bFree = false, bool bKeepCheck = false) const;

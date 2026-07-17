@@ -103,6 +103,16 @@ private:
 			}
 			break;
 		}
+		case SEVT_VICINITY_BONUS_CHANGED:   // LOCAL presence flip: re-gate the bonus's connection:vicinity dependents
+		{
+			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
+			if (pCity != NULL)
+			{
+				BuildingEnabler::onCityVicinityBonusChanged(*pCity, kEvent.iType);
+				UnitEnabler::onCityVicinityBonusChanged(*pCity, kEvent.iType);
+			}
+			break;
+		}
 		case SEVT_CITY_CULTURE_LEVEL_CHANGED:   // the culture-level HAVE axis
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
@@ -112,6 +122,12 @@ private:
 		case SEVT_TECH_CHANGED:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{
+				// the MAINTAINED city bonus counts: a tech can move the TechCityTrade gate, so the gated
+				// answers refresh from the stored totals (no group walk) for the player's cities.
+				foreach_(CvCity* pLoopCity, GET_PLAYER((PlayerTypes)kEvent.iC).cities())
+				{
+					pLoopCity->refreshAllEffectiveBonuses();
+				}
 				// the tech domain's O(delta) membership update -- the SOLE maintainer of the availability
 				// vectors' tech axis. iType=Tech, iA=has, iC=triggering player (the team resolves from it).
 				// ORDERING CONTRACT: every domain whose flip guard reads the PLAYER tech domain's held flag
@@ -144,31 +160,51 @@ private:
 			}
 			break;
 		// ---- the requires-gate CLASS re-gates (no FK reverse edge exists for these -- the load-compiled
-		// class lists re-gate; BuildingEnabler skips them inside the load bracket) ----
+		// class lists re-gate; the enablers skip them inside the load bracket) ----
 		case SEVT_POPULATION_CHANGED:
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
-			if (pCity != NULL) BuildingEnabler::onCityGateClass(*pCity, BuildingEnabler::GATE_POP);
+			if (pCity != NULL)
+			{
+				BuildingEnabler::onCityGateClass(*pCity, BuildingEnabler::GATE_POP);
+				UnitEnabler::onCityGateClass(*pCity, UnitEnabler::GATE_POP);
+			}
 			break;
 		}
 		case SEVT_POWER_CHANGED:
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
-			if (pCity != NULL) BuildingEnabler::onCityGateClass(*pCity, BuildingEnabler::GATE_POWER);
+			if (pCity != NULL)
+			{
+				BuildingEnabler::onCityGateClass(*pCity, BuildingEnabler::GATE_POWER);
+				UnitEnabler::onCityGateClass(*pCity, UnitEnabler::GATE_POWER);
+			}
 			break;
 		}
 		case SEVT_GOLDEN_AGE_CHANGED:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+			{
 				BuildingEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, BuildingEnabler::GATE_GOLDEN_AGE);
+				UnitEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, UnitEnabler::GATE_GOLDEN_AGE);
+			}
 			break;
 		case SEVT_STATE_RELIGION_CHANGED:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+			{
 				BuildingEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, BuildingEnabler::GATE_STATE_RELIGION);
+				UnitEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, UnitEnabler::GATE_STATE_RELIGION);
+			}
+			break;
+		// ---- the unit-count crossing (par.7.1 step 3): caps / unit-count requires / upgrade availability ----
+		case SEVT_UNIT_COUNT:
+			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+				UnitEnabler::onUnitCountChanged((PlayerTypes)kEvent.iC, kEvent.iType);
 			break;
 		// ---- the load-end gate pass (the par.7.1 order rule's "gate once after the stream ends" option --
 		// fires while the bracket is still open, at the end of onFinalInitialized, state fully final) ----
 		case SEVT_GAME_LOAD_FINISHED:
 			BuildingEnabler::onLoadFinished();
+			UnitEnabler::onLoadFinished();
 			break;
 		default: break;
 		}
@@ -182,7 +218,13 @@ private:
 		switch (kEvent.iEventId)
 		{
 		// ---- per-CITY sources (iC = owner, iSrcLoc = cityId); masks lifted verbatim from CvCity.cpp ----
+		// The modifier marks key on BOTH building events: the PRESENCE fact (SEVT_BUILDING_CHANGED -- the load
+		// reseed's in-read emits AND play-time build/raze; processBuilding never runs during a load, so the
+		// package feed MUST ride the presence emit or the reseed leaves the percent packages empty -- the
+		// London food-collapse regression) AND the PROCESSED flip (dormancy disable/enable -- a disabled
+		// building stops depositing with no presence change). Idempotent marks; both route to the same body.
 		case SEVT_BUILDING_CHANGED:
+		case SEVT_BUILDING_PROCESSED:
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)

@@ -88,6 +88,9 @@
    "disabled": "IS_GOVERNMENT_CENTER"
   }
  },
+ "allowed": {
+  "empire": 2
+ },
  "food": {
   "city": {
    "percent": 5

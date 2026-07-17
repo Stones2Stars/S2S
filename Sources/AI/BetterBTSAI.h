@@ -142,6 +142,15 @@ extern double gPerfUpdateScoreAccumMs;   // CvGame::updateScore per slice
 extern double gPerfUpdateTimersAccumMs;  // updateTimers + updateTurnTimer per slice
 extern double gPerfAssignWorkAccumMs;    // CvGame::AI_updateAssignWork per slice
 extern double gPerfTestAliveAccumMs;     // CvGame::testAlive per slice
+extern long gPerfBillboardColorPolls;    // CvCity::getCityBillboardSizeIconColors calls (EXE billboard poll)
+extern long gPerfBillboardProdIconPolls; // CvCity::getCityBillboardProductionIcon calls (EXE billboard poll)
+extern long gPerfFoodDifferenceCalls;    // CvCity::foodDifference calls (the bar-fill value chain)
+extern long gPerfProdTurnsLeftCalls;     // CvCity::getProductionTurnsLeft calls (the bar-fill value chain)
+extern long gPerfFoodBarPolls;           // CvCity::getFoodBarPercentages calls (EXE bar-fill poll)
+extern long gPerfProdBarPolls;           // CvCity::getProductionBarPercentages calls (EXE bar-fill poll)
+extern long gPerfProdDiffCalls;          // CvCity::getCurrentProductionDifference calls (the production banking chain)
+extern long gPerfBillboardFn[16];        // the EXHAUSTIVE billboard entry-point census (index map: gPerfBillboardFnNames)
+extern const char* gPerfBillboardFnNames[16];
 //	Per-UNITAI-type decision time (CvSelectionGroupAI::AI_update attributed to the head
 //	unit's AI type) -- logged as a [PERF/unitai] table at the turn boundary.
 extern double gPerfUnitAITypeAccumMs[];

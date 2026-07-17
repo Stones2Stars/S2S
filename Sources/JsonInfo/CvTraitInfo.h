@@ -152,7 +152,7 @@ public:
 	// precedent); "" when unmapped (CvInfo's m_szTextKey is a localized CvWString -- a different type/meaning).
 	const char* getShortDescription() const { return m_szShortDescription.c_str(); }
 
-	// STUB empty -- property engine, XML-era manipulator data deferred (CvCorporationInfo precedent).
+	// Fed from the PROPERTY_* families in mapFrom (player gather -> every owner city; band gates + per-pop translate).
 	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
 
 	// --- RevIdx* (RevolutionDCM) -- REAL (curate_trait.py SCALAR -> revolution.empire.<member>.<unit>; fRev* floats) ---

@@ -33,6 +33,7 @@ public:
 	void setObjectType(GameObjectTypes e) { m_eObjectType = e; }
 	void setRelation(RelationTypes e) { m_eRelation = e; }
 	void setRelationData(int i) { m_iRelationData = i; }
+	void setActive(const BoolExpr* p) { m_pExprActive = p; }   // takes ownership (the dtor deletes)
 
 	virtual bool isActive(const CvGameObject* pObject) const;
 

@@ -14,11 +14,18 @@
 class CvPropertySource;
 class CvPropertyInteraction;
 class CvPropertyPropagator;
+class BoolExpr;
+class IntExpr;
 
 class CvPropertyManipulators
 {
 public:
 	~CvPropertyManipulators();
+
+	// Delete + empty everything. The JSON load bridges call this at the top of their (re-runnable) mapFrom walk
+	// -- mapFrom is idempotent by contract (CvInfo.h: an accumulating container clears at the top of its parse),
+	// and an append-only bridge duplicated every source on the aliased full-registry re-run.
+	void clear();
 
 	int getNumSources() const;
 	CvPropertySource* getSource(int index) const;
@@ -28,13 +35,18 @@ public:
 
 	// --- programmatic construction (the JSON->manipulator load bridge, property-audit.md increment A). Build a
 	// fully-configured source/propagator directly (mirroring what read() builds from XML) and append it. eObject =
-	// which GameObject scope the source is active on (NO_GAMEOBJECT = any). ---
+	// which GameObject scope the source is active on (NO_GAMEOBJECT = any). pActive = the translated `enabled`
+	// gate (increment 4; ownership passes to the source/propagator). pAmount overload = an expression amount
+	// (the per-POPULATION each>1 tree); ownership passes to the source. ---
 	void addConstantSource(PropertyTypes eProp, int iAmount, GameObjectTypes eObject = NO_GAMEOBJECT,
-		RelationTypes eRelation = NO_RELATION, int iRelationData = 0);
+		RelationTypes eRelation = NO_RELATION, int iRelationData = 0, const BoolExpr* pActive = NULL);
+	void addConstantSource(PropertyTypes eProp, const IntExpr* pAmount, GameObjectTypes eObject,
+		RelationTypes eRelation = NO_RELATION, int iRelationData = 0, const BoolExpr* pActive = NULL);
 	void addDecaySource(PropertyTypes eProp, int iPercent, int iNoDecayAmount, GameObjectTypes eObject);
 	void addAttributeConstantSource(PropertyTypes eProp, AttributeTypes eAttribute, int iAmount, GameObjectTypes eObject);
 	void addDiffusePropagator(PropertyTypes eProp, int iPercent, GameObjectTypes eObject,
-		GameObjectTypes eTargetObject, RelationTypes eTargetRelation, int iTargetDistance);
+		GameObjectTypes eTargetObject, RelationTypes eTargetRelation, int iTargetDistance,
+		const BoolExpr* pActive = NULL);
 
 	int getNumInteractions() const;
 	//CvPropertyInteraction* getInteraction(int index) const;

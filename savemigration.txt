@@ -57,3 +57,56 @@ read is now a WRAPPER_SKIP_ELEMENT (drains old saves), the write deleted.
 
 CvUnit::m_iAnimalIgnoresBordersCount     (int)
 ========================
+
+CvCity::m_paiFreeBonus                   (class int array, BONUSES)
+========================
+The old MIXED free-bonus ledger (building provides + Python event/WB grants in one serialized array). Retired
+2026-07-15 (no-serialized-caches): the building part is COMPUTED from the processed buildings' provides; the
+event/WB part moved to its own persisted store m_paiFreeBonusEvents (new tag, soft-absent on old saves -- old
+event grants are accepted drift; the array was stub-era polluted anyway). Read is a named skip; the write now
+carries m_paiFreeBonusEvents.
+
+CvCity bonus-fed derived cluster: m_paiNumBonuses (class int array), m_iBonusGoodHealth, m_iBonusBadHealth,
+m_iBonusGoodHappiness, m_iBonusBadHappiness, m_aiBonusYieldRateModifier, m_aiBonusCommerceRateModifier,
+m_aiBonusCommercePercentChanges, m_iPowerCount; CvPlotGroup::m_paiNumBonuses (+ its "bonusesPresent" bool)
+========================
+Derived caches, never read from a save (reads are named skips; writes KEPT for save-format compat -- the
+m_aiSpecialistCommerce100 precedent). Rebuilt at load by the bonus-network rebuild in CvGame::onFinalInitialized
+(building-power re-sum + updatePlotGroups(reInitialize) recolor, counts folded as each plot joins) through the
+live entry points. The skips + kept writes flush together at the next save-compat break.
+2026-07-15: CvCity::m_paiNumBonuses is GONE as a member (getNumBonuses is a plot-group RELAY; enabler.md par.8
+RESIDENCY) -- its read stays a named skip, its WRITE is now dropped too (skip no-ops on saves that lack it).
+
+Plot-group MEMBERSHIP (CvPlayer::m_plotGroups streamable block; CvPlot::m_aiPlotGroup ids)
+========================
+Derived state (routes + terrain-trade capabilities + ownership), never TRUSTED from a save: the load-end
+rebuild (CvGame::onFinalInitialized, updatePlotGroups(reInitialize)) discards the deserialized groups and
+re-colors from current state. The player plot-group array is a POSITIONAL streamable block (not name-skippable),
+so its bytes are still read-drained and its write KEPT; both retire together at the next save-compat break.
+
+CvCity::m_vDisabledBuildings (dormancy flags)
+========================
+Still read AND written -- but no longer the verdict: it is the PROCESSED-STATE baseline keying the still-
+serialized legacy effect accumulators. The verdict is the enabler operate fixpoint (checkBuildings applies it;
+the load-end cross-city fixpoint reconciles the baseline). The read retires WITH the legacy effect-accumulator
+cluster at the modifier cut, not before (skipping it alone would double-process building effects at load).
+
+CvPlayer::m_ppaaiImprovementYieldChange (per-improvement yield arrays); CvTeam::m_ppaaiImprovementYieldChange
+========================
+The keyed improvement-yield accumulators (civic/trait/building-global on the player; tech rows on the team) --
+the stored-accumulator drift class (modifier.md par.2b; the engine under-yielded on every improved plot vs the
+spec oracle). Converted to recompute-from-source CvDerivedCacheVec (never serialized; dirty on construct/load;
+sources: adopted civics + active traits + cascade-ACTIVE buildings' global rows / held techs' improvement rows).
+Reads are DRAINED under the original tags (discarded); writes dropped. The TEAM keeps a separate PERSISTED
+event-grant store m_improvementYieldEvents (new tags ImprovementYieldEvents*, soft-absent on old saves -- the
+Python wonder-event grants, e.g. TSUKIJI; pre-split grants on old saves are accepted drift, the freeBonusEvents
+precedent). The drains flush at the next save-compat break.
+
+CvPlayer::m_ppaaiSpecialistExtraYield; CvPlayer::m_ppaaiSpecialistExtraCommerce
+========================
+The per-type specialist empire-boost accumulators -- the stored-accumulator drift class. Their building
+feeders were poco STUBS returning 0 (the boosts were curated onto the SPECIALISTS as conditioned empire
+deposits per the deliveryguy own-output ruling), so the wonder/building specialist boosts never reached the
+output. Converted to recompute-from-source CvDerivedCacheVec (never serialized; sources: the specialist's own
+conditioned empire deposits evaluated via MMKernel::sumUnit + the active traits' keyed rows). Reads DRAINED
+under the original tags; writes dropped. Flush at the next save-compat break.

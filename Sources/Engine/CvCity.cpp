@@ -2,6 +2,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvExeTrace.h"
 #include "AI/BetterBTSAI.h" // logCityAI ([CIT/produced] / [CIT/waste] production-pipeline logging)
 #include "CvArea.h"
 #include "UI/CvArtFileMgr.h"
@@ -59,6 +60,9 @@ CvCity::CvCity()
 	m_dataRepository.init(this);
 	m_cascadeCityPackages.set.bind(this, &CvCity::cascadeRefreshPackages);   // #430: the city scope packages (all-dirty from birth)
 	m_operatingBuildings.set.bind(this, &CvCity::refreshOperatingBuildings);       // #430: the standing operating-buildings cache (ditto)
+	m_plotYieldSum.bind(this, &CvCity::recomputePlotYieldSumInto);           // the worked-plot Σ (dirty from birth)
+	m_aiNetworkBonusTotal = NULL;    // allocated in reset() (the per-info array pattern; uninit() frees)
+	m_aiEffectiveBonusCount = NULL;
 	m_aiRiverPlotYield = new int[NUM_YIELD_TYPES];
 	m_aiBaseYieldRate = new int[NUM_YIELD_TYPES];
 	m_aiExtraYield = new int[NUM_YIELD_TYPES];
@@ -103,8 +107,7 @@ CvCity::CvCity()
 	m_bHasBuildings = new bool[iNumBuildings];
 	m_pabReligiouslyDisabledBuilding = new bool[iNumBuildings];
 
-	m_paiFreeBonus = NULL;
-	m_paiNumBonuses = NULL;
+	m_paiFreeBonusEvents = NULL;
 	m_paiProjectProduction = NULL;
 	m_paiUnitProduction = NULL;
 	m_paiGreatPeopleUnitRate = NULL;
@@ -165,6 +168,10 @@ CvCity::CvCity()
 	m_abCommerceRankValid = new bool[NUM_COMMERCE_TYPES];
 
 	m_deferringBonusProcessingCount = 0;
+	m_bulkBuildingProcessingCount = 0;
+	m_iCitizenJugglingCount = 0;
+	m_bJuggleDeferredSpec = false;
+	m_bJuggleDeferredWork = false;
 	m_paiStartDeferredSectionNumBonuses = NULL;
 	m_bMarkedForDestruction = false;
 
@@ -439,8 +446,7 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 
 void CvCity::uninit()
 {
-	SAFE_DELETE_ARRAY(m_paiFreeBonus);
-	SAFE_DELETE_ARRAY(m_paiNumBonuses);
+	SAFE_DELETE_ARRAY(m_paiFreeBonusEvents);
 	SAFE_DELETE_ARRAY(m_paiProjectProduction);
 	SAFE_DELETE_ARRAY(m_paiUnitProduction);
 	SAFE_DELETE_ARRAY(m_paiGreatPeopleUnitRate);
@@ -472,6 +478,8 @@ void CvCity::uninit()
 	SAFE_DELETE_ARRAY(m_paiUnitCombatProductionModifier);
 	SAFE_DELETE_ARRAY(m_paiUnitCombatDefenseAgainstModifier);
 	SAFE_DELETE_ARRAY(m_paiStartDeferredSectionNumBonuses);
+	SAFE_DELETE_ARRAY(m_aiNetworkBonusTotal);
+	SAFE_DELETE_ARRAY(m_aiEffectiveBonusCount);
 	SAFE_DELETE_ARRAY(m_paiSpecialistBannedCount);
 	SAFE_DELETE_ARRAY(m_paiDamageAttackingUnitCombatCount);
 	SAFE_DELETE_ARRAY(m_paiHealUnitCombatTypeVolume);
@@ -489,6 +497,7 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	// read). Pure Set protocol -- the marks ARE the staleness (no version stamps exist).
 	m_cascadeCityPackages.set.markAllDirty();
 	m_operatingBuildings.set.markAllDirty();
+	m_plotYieldSum.markDirty();
 	m_operatingBuildings.active.clear();
 	m_operatingBuildings.obsolete.clear();
 	m_operatingBuildings.provided.clear();
@@ -796,8 +805,7 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		}
 
 		FAssertMsg(0 < GC.getNumBonusInfos(), "GC.getNumBonusInfos() is not greater than zero but an array is being allocated in CvCity::reset");
-		m_paiFreeBonus = new int[GC.getNumBonusInfos()];
-		m_paiNumBonuses = new int[GC.getNumBonusInfos()];
+		m_paiFreeBonusEvents = new int[GC.getNumBonusInfos()];
 		m_ppaaiExtraBonusAidModifier = new int* [GC.getNumBonusInfos()];
 
 		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
@@ -807,8 +815,7 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 			{
 				m_ppaaiExtraBonusAidModifier[iI][iJ] = 0;
 			}
-			m_paiFreeBonus[iI] = 0;
-			m_paiNumBonuses[iI] = 0;
+			m_paiFreeBonusEvents[iI] = 0;
 		}
 
 		m_paiProjectProduction = new int[GC.getNumProjectInfos()];
@@ -896,6 +903,12 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 			m_paiAidRate[iI] = 0;
 		}
 
+		// the MAINTAINED bonus counts (per-info arrays: reset allocates, uninit frees)
+		m_aiNetworkBonusTotal = new int[GC.getNumBonusInfos()];
+		m_aiEffectiveBonusCount = new int[GC.getNumBonusInfos()];
+		memset(m_aiNetworkBonusTotal, 0, sizeof(int) * GC.getNumBonusInfos());
+		memset(m_aiEffectiveBonusCount, 0, sizeof(int) * GC.getNumBonusInfos());
+
 		FAssertMsg((0 < GC.getNumInvisibleInfos()), "GC.getNumInvisibleInfos() is not greater than zero but an array is being allocated in CvCity::reset");
 		m_aiCachedBestSeeInvisibleUnit = new int[GC.getNumInvisibleInfos()];
 		m_abCachedBestSeeInvisibleUnit = new bool[GC.getNumInvisibleInfos()];
@@ -956,6 +969,10 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 
 	m_bIsGreatWallSeed = false;
 	m_deferringBonusProcessingCount = 0;
+	m_bulkBuildingProcessingCount = 0;
+	m_iCitizenJugglingCount = 0;
+	m_bJuggleDeferredSpec = false;
+	m_bJuggleDeferredWork = false;
 
 	m_outputHistory.reset();
 }
@@ -1255,7 +1272,7 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 
 	if (eOwner == GC.getGame().getActivePlayer())
 	{
-		gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
+		exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
 	}
 }
 
@@ -1273,14 +1290,21 @@ void CvCity::doTurn()
 	PROFILE("CvCity::doTurn()");
 	PERF_SCOPE("city.doTurn", getOwner());
 
+	// #430 the BOUNDARY ensure (scope-packages: events MARK, boundaries ENSURE): realize whatever packages the
+	// turn's events marked, so the whole turn's reads stay bare fetches of fresh values. A clean set costs one
+	// flag test; ONLY the marked bits recompute -- this is the designed per-turn boundary, not a blanket.
+	m_operatingBuildings.set.ensure();
+	m_cascadeCityPackages.set.ensure(CPK_EAGER);
+
 	// #430 (DEC-unit-modifiers-on-top): the unit-sourced property memo refreshes at END-TURN cadence --
 	// unit movement never clears it (noteUnitMoved is a no-op; the per-move clear was an automation storm).
 	m_unitSourcedPropertyCache.clear();
 
 	// #430 the requires gate's bounded DYNAMIC re-check (enabler-frontier-perf St.2 step 5): once per city
-	// turn, re-gate ONLY the small load-compiled set whose requires read live non-HAVE state -- a targeted
-	// sweep of that list, never a blanket.
+	// turn, re-gate ONLY the small load-compiled sets whose requires read live non-HAVE state -- a targeted
+	// sweep of those lists, never a blanket.
 	BuildingEnabler::onCityTurn(*this);
+	UnitEnabler::onCityTurn(*this);
 
 	// [CIT/proplevel] -- per-city property snapshot at the start of each turn (crime/disease/
 	// education/...), so property TRENDS are trackable from the log over turns -- hard to eyeball
@@ -2393,7 +2417,10 @@ bool CvCity::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool b
 	if (!bContinue && !bIgnoreCost && !bIgnoreUpgrades && !bPropertySpawn
 	&& GC.getGame().isFinalInitialized())
 	{
-		return m_enabler.units.listed((int)eUnit);   // listed == inTree until GREYED lands (par.6)
+		// STRICT both modes: the visible-mode inTree read put dormant/superseded tree members into the game's
+		// list (gateFailed cannot yet distinguish greyable-requires from hide-class verdicts) -- the wrong
+		// unit set in-game while every strict surface read green.
+		return m_enabler.units.listed((int)eUnit);
 	}
 	return canTrainLegacy(eUnit, bContinue, bTestVisible, bIgnoreCost, bIgnoreUpgrades, bPropertySpawn);
 }
@@ -2556,8 +2583,9 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 	&& GC.getGame().isFinalInitialized())
 	{
 		// a BARE member read, nothing else (owner 2026-07-14: no calculator on a live path; seeding is a
-		// lifecycle act -- load warm-up / city init -- never a read-path guard)
-		return m_enabler.buildings.listed((int)eBuilding);   // listed == inTree until GREYED lands (par.6)
+		// lifecycle act -- load warm-up / city init -- never a read-path guard). TWO-MODE (par.6): bTestVisible
+		// = tree membership (GREYED shows; the requires side handles the graying); strict = LISTED.
+		return bTestVisible ? m_enabler.buildings.inTree((int)eBuilding) : m_enabler.buildings.listed((int)eBuilding);
 	}
 	return canConstructLegacy(eBuilding, bContinue, bTestVisible, bIgnoreCost, bIgnoreAmount, bIgnoreBuildings, eIgnoreTechReq, probabilityEverConstructable, bExposed);
 }
@@ -3743,6 +3771,7 @@ int CvCity::getProductionNeeded(ProjectTypes eProject) const
 
 int CvCity::getProductionTurnsLeft() const
 {
+	++gPerfProdTurnsLeftCalls;   // bar-fill value-chain counter (the bars-on FPS attribution; /computed/perf)
 	bst::optional<OrderData> order = getHeadOrder();
 	return order ? getOrderProductionTurnsLeft(*order) : 0;
 }
@@ -4113,6 +4142,7 @@ int CvCity::getProductionDifference(const OrderData& orderData, ProductionCalc::
 
 int CvCity::getCurrentProductionDifference(ProductionCalc::flags flags) const
 {
+	++gPerfProdDiffCalls;   // production banking-chain counter (the bars-on FPS attribution; /computed/perf)
 	bst::optional<OrderData> order = getHeadOrder();
 	return order ? getProductionDifference(*order, flags) : 0;
 }
@@ -4250,7 +4280,7 @@ void CvCity::hurry(HurryTypes eHurry)
 
 	if (isCitySelected())
 	{
-		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
 	}
 
 	// Python Event
@@ -4618,15 +4648,21 @@ void CvCity::processBonus(BonusTypes eBonus, int iChange)
 		changeBonusCommerceRateModifier(((CommerceTypes)iI), (getBonusCommerceRateModifier(((CommerceTypes)iI), eBonus) * iChange));
 		changeBonusCommercePercentChanges(((CommerceTypes)iI), (getBonusCommercePercentChanges(((CommerceTypes)iI), eBonus) * iChange));
 	}
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
+	// LOAD-SUPPRESSED: m_aBuildingYieldChange + the m_aiExtraYield it rides are the ONE still-serialized
+	// bonus-fed store (mixed with event/vote grants -- split awaits the modifier cut), so the load fold must
+	// not re-apply what the save already carries. Play-time crossings apply as always.
+	if (!spineGameLoadInProgress())
 	{
-		if (!isReligiouslyLimitedBuilding(eTypeX)
-		&& GC.getBuildingInfo(eTypeX).getVicinityBonusYieldChanges(NO_BONUS, NO_YIELD) != 0
-		&& !isDisabledBuilding(eTypeX))
+		foreach_(const BuildingTypes eTypeX, getHasBuildings())
 		{
-			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+			if (!isReligiouslyLimitedBuilding(eTypeX)
+			&& GC.getBuildingInfo(eTypeX).getVicinityBonusYieldChanges(NO_BONUS, NO_YIELD) != 0
+			&& !isDisabledBuilding(eTypeX))
 			{
-				updateYieldRate(eTypeX, (YieldTypes)iJ, getBuildingYieldChange(eTypeX, (YieldTypes)iJ) + GC.getBuildingInfo(eTypeX).getBonusYieldChanges(eBonus, iJ) * iChange);
+				for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+				{
+					updateYieldRate(eTypeX, (YieldTypes)iJ, getBuildingYieldChange(eTypeX, (YieldTypes)iJ) + GC.getBuildingInfo(eTypeX).getBonusYieldChanges(eBonus, iJ) * iChange);
+				}
 			}
 		}
 	}
@@ -4741,12 +4777,28 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 			}
 		}
 
-		foreach_(const BonusModifier& pair, kBuilding.getFreeBonuses())
+		// provides.bonuses: inject the ±delta straight into the city's trade network (getFreeBonus is computed
+		// from the processed buildings, so there is no ledger to maintain -- a plot joining a group later picks
+		// this building's provides up through updatePlotGroupBonus's computed read). The construction/destruction
+		// site is ALSO where the city's LOCAL vicinity presence of a provided bonus can flip (owner: the if-check
+		// at completion is the event's best home) -- announce it immediately; the per-turn doVicinityBonus flip
+		// stays as the idempotent backstop for tile-driven changes.
 		{
-			changeFreeBonus(pair.first, pair.second * iChange);
-			clearVicinityBonusCache(pair.first);
-			clearRawVicinityBonusCache(pair.first);
+			CvPlotGroup* pProvidesGroup = plot()->getPlotGroup(getOwner());
+			foreach_(const BonusModifier& pair, kBuilding.getFreeBonuses())
+			{
+				if (pProvidesGroup != NULL && !GET_TEAM(getTeam()).isBonusObsolete(pair.first))
+				{
+					pProvidesGroup->changeNumBonuses(pair.first, pair.second * iChange);
+				}
+				clearVicinityBonusCache(pair.first);
+				clearRawVicinityBonusCache(pair.first);
+				// the event carries the applied local DELTA (a city can hold several of a bonus locally --
+				// a presence-flip gate would hide the 1->2/2->1 transitions and undercount downstream)
+				emitVicinityBonusChanged(getID(), getOwner(), (int)pair.first, pair.second * iChange);
+			}
 		}
+
 
 		if (kBuilding.getPropertySpawnProperty() != NO_PROPERTY && kBuilding.getPropertySpawnUnit() != NO_UNIT)
 		{
@@ -5190,8 +5242,11 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	*/
 	{
 		PROFILE("CvCity::processBuilding.Part5");
-		updateExtraBuildingHappiness();
-		updateExtraBuildingHealth();
+		if (!isBulkBuildingProcessing())   // batched: the bracket end runs these once (endBulkBuildingProcessing)
+		{
+			updateExtraBuildingHappiness();
+			updateExtraBuildingHealth();
+		}
 
 		owner.changeAssets(kBuilding.getAssetValue() * iChange);
 
@@ -5248,7 +5303,10 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 			}
 		}
 	}
-	updateBuildingCommerce();
+	if (!isBulkBuildingProcessing())   // batched: the bracket end runs it once
+	{
+		updateBuildingCommerce();
+	}
 
 	m_buildingSourcedPropertyCache.clear();
 
@@ -5258,14 +5316,19 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	if (!bReligiously && GC.getGame().isOption(GAMEOPTION_RELIGION_DISABLING))
 	{
 		checkReligiousDisabling(eBuilding, owner);
-		updateReligionHappiness();
-		updateReligionCommerce();
+		if (!isBulkBuildingProcessing())   // batched: the bracket end runs the pair once
+		{
+			updateReligionHappiness();
+			updateReligionCommerce();
+		}
 	}
 	setMaintenanceDirty(true);
 	setLayoutDirty(true);
 
-	// #430 event spine: announce the building state change (iChange is asserted +1/-1 above).
-	emitBuildingChanged(getID(), getOwner(), (int)eBuilding, iChange);
+	// #430 event spine: announce the PROCESSED (operating-contribution) flip -- fires on construction/destruction's
+	// processing leg AND on dormancy disable/enable. NOT the presence fact (that is setHasBuilding's
+	// emitBuildingChanged): a disable flip processed through here must never read as the building leaving the city.
+	emitBuildingProcessed(getID(), getOwner(), (int)eBuilding, iChange);
 }
 
 
@@ -5300,9 +5363,18 @@ void CvCity::processSpecialist(SpecialistTypes eSpecialist, int iChange)
 	// changed after assignment). It is now recomputed cleanly by updateSpecialistCommerce() (called from
 	// updateExtraSpecialistCommerce() just below), the plot-cache pattern: recalc on load + on change.
 
-	updateExtraSpecialistYield();
-	updateExtraSpecialistCommerce();   // ALSO recomputes the specialist-commerce cache (updateSpecialistCommerce, streamlined)
-	updateSpecialistHappinessHealthFromTech();
+	if (isCitizenJuggling())
+	{
+		// the juggle bracket: the three whole-set recomputes below ran PER PROBE (the measured gigantic churn);
+		// they defer to endCitizenJuggling's single batch run.
+		m_bJuggleDeferredSpec = true;
+	}
+	else
+	{
+		updateExtraSpecialistYield();
+		updateExtraSpecialistCommerce();   // ALSO recomputes the specialist-commerce cache (updateSpecialistCommerce, streamlined)
+		updateSpecialistHappinessHealthFromTech();
+	}
 
 	if (GC.getSpecialistInfo(eSpecialist).getHealthPercent() > 0)
 	{
@@ -6135,6 +6207,7 @@ float CvCity::foodWastage(int surplass) const
 
 int CvCity::foodDifference(const bool bBottom, const bool bIncludeWastage, const bool bIgnoreFoodBuildOrRev) const
 {
+	++gPerfFoodDifferenceCalls;   // bar-fill value-chain counter (the bars-on FPS attribution; /computed/perf)
 	if (!bIgnoreFoodBuildOrRev && isDisorder())
 	{
 		return 0;
@@ -6926,7 +6999,7 @@ void CvCity::setRallyPlot(const CvPlot* pPlot)
 
 		if (isCitySelected())
 		{
-			gDLL->getInterfaceIFace()->setDirty(ColoredPlots_DIRTY_BIT, true);
+			exeSetUIDirty(ColoredPlots_DIRTY_BIT, true);
 		}
 	}
 }
@@ -7113,9 +7186,9 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 
 	if (isCitySelected())
 	{
-		gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(CityScreen_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+		exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
+		exeSetUIDirty(CityScreen_DIRTY_BIT, true);
+		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
 	}
 }
 
@@ -10636,8 +10709,8 @@ void CvCity::setCitizensAutomated(bool bNewValue)
 
 		if (isCitySelected())
 		{
-			gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
-			gDLL->getInterfaceIFace()->setDirty(CitizenButtons_DIRTY_BIT, true);
+			exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+			exeSetUIDirty(CitizenButtons_DIRTY_BIT, true);
 		}
 	}
 }
@@ -10658,7 +10731,7 @@ void CvCity::setProductionAutomated(bool bNewValue)
 		{
 			clearOrderQueue();
 			AI_chooseProduction();
-			gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+			exeSetUIDirty(InfoPane_DIRTY_BIT, true);
 		}
 	}
 }
@@ -10701,6 +10774,10 @@ bool CvCity::isLayoutDirty() const
 
 void CvCity::setLayoutDirty(bool bNewValue)
 {
+	if (bNewValue)
+	{
+		exeEngFrom(EXEK_CITY_LAYOUT, getID(), getOwner(), _ReturnAddress());
+	}
 	m_bLayoutDirty = bNewValue;
 }
 
@@ -11454,20 +11531,33 @@ int CvCity::getYieldRate100(const YieldTypes eYield) const
 int CvCity::getPlotYield(YieldTypes eIndex)	const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	// PULL (owner ruling 2026-06-27): sum the current worked plots' yields straight from the plot cache -- the single
-	// source of a plot's yield -- replacing the old push-maintained m_aiBaseYieldRate. Each plot's getYield is O(1)
-	// once its (recompute-only, never-serialized) cache is clean; a dirty plot recomputes its own fresh sum on read.
-	int iYield = 0;
+	// PULL through the city-side CvDerivedCache (state-repositories): O(1) when clean. The per-READ radius walk this
+	// replaces was measured at 913M plot reads in one turn (the governor's rate reads x the walk) -- the sum is
+	// maintained lazily; the walk runs once per change-then-read in recomputePlotYieldSumInto.
+	return m_plotYieldSum.get(eIndex);
+}
+
+// The fresh worked-plot sum, all yields in one radius walk -- run lazily by the CvDerivedCache when dirty.
+// Triggers (markPlotYieldSumDirty): a worked-plot toggle (setWorkingPlot), a working plot's yield change
+// (CvPlot::updateYield), and reset/init (bind starts dirty).
+void CvCity::recomputePlotYieldSumInto(int* aiOut) const
+{
+	for (int j = 0; j < NUM_YIELD_TYPES; j++)
+	{
+		aiOut[j] = 0;
+	}
 	for (int iI = 0; iI < getNumCityPlots(); iI++)
 	{
 		if (!isWorkingPlot(iI)) continue;
 		const CvPlot* pPlot = getCityIndexPlot(iI);
 		if (pPlot != NULL)
 		{
-			iYield += pPlot->getYield(eIndex);
+			for (int j = 0; j < NUM_YIELD_TYPES; j++)
+			{
+				aiOut[j] += pPlot->getYield((YieldTypes)j);
+			}
 		}
 	}
-	return iYield;
 }
 
 void CvCity::changePlotYield(YieldTypes eIndex, int iChange)
@@ -11656,8 +11746,8 @@ void CvCity::onYieldChange()
 	}
 	if (isCitySelected())
 	{
-		gDLL->getInterfaceIFace()->setDirty(CityScreen_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+		exeSetUIDirty(CityScreen_DIRTY_BIT, true);
+		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
 	}
 }
 
@@ -11791,6 +11881,8 @@ void CvCity::setTradeYield(YieldTypes eIndex, int iNewValue)
 	{
 		m_aiTradeYield[eIndex] = iNewValue;
 		FASSERT_NOT_NEGATIVE(m_aiTradeYield[eIndex]);
+		// the realized-rate cache bakes the trade input ("cache the sum" ruling) -- a route refresh re-marks it
+		CascadeAccumulator::dirtyCity(this, CPK_YRATE);
 	}
 }
 
@@ -12151,8 +12243,8 @@ void CvCity::updateExtraSpecialistCommerce()
 	}
 	if (isCitySelected())
 	{
-		gDLL->getInterfaceIFace()->setDirty(CityScreen_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+		exeSetUIDirty(CityScreen_DIRTY_BIT, true);
+		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
 	}
 }
 
@@ -12398,8 +12490,8 @@ void CvCity::updateCommerce(CommerceTypes eIndex, bool bForce) const
 
 					if (isCitySelected())
 					{
-						gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
-						gDLL->getInterfaceIFace()->setDirty(CityScreen_DIRTY_BIT, true);
+						exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+						exeSetUIDirty(CityScreen_DIRTY_BIT, true);
 					}
 				}
 			}
@@ -12423,7 +12515,7 @@ void CvCity::changeProductionToCommerceModifier(CommerceTypes eIndex, int iChang
 		m_aiProductionToCommerceModifier[eIndex] += iChange;
 
 		setCommerceDirty(eIndex);
-		gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+		exeSetUIDirty(GameData_DIRTY_BIT, true);
 	}
 }
 
@@ -13087,6 +13179,7 @@ void CvCity::updateCorporationBonus()
 	PROFILE_EXTRA_FUNC();
 
 	m_corpBonusProduction.clear();
+	refreshAllEffectiveBonuses();   // corp add-ons dropped: the maintained answers refresh before the rebuild reads them
 	const int iNumBonuses = GC.getNumBonusInfos();
 	bool* abHadBonus = new bool[iNumBonuses];
 	int* aiLastCorpProducedBonus = new int[iNumBonuses];
@@ -13142,6 +13235,7 @@ void CvCity::updateCorporationBonus()
 					}
 				}
 				if (bFirst) m_corpBonusProduction.push_back(std::make_pair(static_cast<BonusTypes>(iI), aiExtraCorpProducedBonus[iI]));
+				refreshEffectiveBonus((BonusTypes)iI);   // the iterative rebuild reads getNumBonuses mid-loop (corp chains) -- keep the maintained answer current
 
 				bChanged = true; // The produced bonus might be consumed by another corp to produce another bonus,
 				//	which means we need to loop iIter to check for and handle that case.
@@ -13642,7 +13736,7 @@ void CvCity::setName(const wchar_t* szNewValue, bool bFound)
 
 			if (isCitySelected())
 			{
-				gDLL->getInterfaceIFace()->setDirty(CityScreen_DIRTY_BIT, true);
+				exeSetUIDirty(CityScreen_DIRTY_BIT, true);
 			}
 		}
 		if (bFound)
@@ -13675,27 +13769,92 @@ void CvCity::setScriptData(std::string szNewValue)
 }
 
 
+// COMPUTED (no serialized ledger): the processed buildings' provides (json §5a) + the persisted event/WB grants.
 int CvCity::getFreeBonus(BonusTypes eIndex) const
 {
+	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eIndex);
-	return m_paiFreeBonus[eIndex];
+
+	int iCount = m_paiFreeBonusEvents[eIndex];
+	foreach_(const BuildingTypes eTypeX, getHasBuildings())
+	{
+		if (!isReligiouslyLimitedBuilding(eTypeX) && !isDisabledBuilding(eTypeX))
+		{
+			iCount += GC.getBuildingInfo(eTypeX).getFreeBonuses().getValue(eIndex);
+		}
+	}
+	return iCount;
 }
 
+int CvCity::getFreeBonusEvents(BonusTypes eIndex) const
+{
+	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eIndex);
+	return m_paiFreeBonusEvents[eIndex];
+}
 
-void CvCity::changeFreeBonus(BonusTypes eIndex, int iChange)
+// The whole city injection ± onto a plot group: the persisted event/WB grants + the processed buildings'
+// provides, obsolete-gated. O(buildings x their provides) + O(bonuses) -- never O(bonuses x buildings).
+void CvCity::addProvidedBonusesToGroup(CvPlotGroup* pPlotGroup, int iSign) const
+{
+	PROFILE_EXTRA_FUNC();
+	if (pPlotGroup == NULL || iSign == 0) return;
+
+	const CvTeam& kTeam = GET_TEAM(getTeam());
+
+	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
+	{
+		if (m_paiFreeBonusEvents[iI] != 0 && !kTeam.isBonusObsolete((BonusTypes)iI))
+		{
+			pPlotGroup->changeNumBonuses((BonusTypes)iI, m_paiFreeBonusEvents[iI] * iSign);
+		}
+	}
+	foreach_(const BuildingTypes eTypeX, getHasBuildings())
+	{
+		if (!isReligiouslyLimitedBuilding(eTypeX) && !isDisabledBuilding(eTypeX))
+		{
+			foreach_(const BonusModifier& pair, GC.getBuildingInfo(eTypeX).getFreeBonuses())
+			{
+				if (!kTeam.isBonusObsolete(pair.first))
+				{
+					pPlotGroup->changeNumBonuses(pair.first, pair.second * iSign);
+				}
+			}
+		}
+	}
+}
+
+// The Python (random-event / WorldBuilder) grant path -- genuine one-shot state, kept in its own persisted
+// store so the computed building part can never wipe it. Injects the delta into the network live.
+void CvCity::changeFreeBonusEvent(BonusTypes eIndex, int iChange)
 {
 	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eIndex);
 
 	if (iChange != 0)
 	{
-		GET_PLAYER(getOwner()).startDeferredPlotGroupBonusCalculation();
+		m_paiFreeBonusEvents[eIndex] += iChange;
+		FASSERT_NOT_NEGATIVE(m_paiFreeBonusEvents[eIndex]);
 
-		plot()->updatePlotGroupBonus(false);
-		m_paiFreeBonus[eIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(getFreeBonus(eIndex));
-		plot()->updatePlotGroupBonus(true);
+		CvPlotGroup* pPlotGroup = plot()->getPlotGroup(getOwner());
+		if (pPlotGroup != NULL && !GET_TEAM(getTeam()).isBonusObsolete(eIndex))
+		{
+			pPlotGroup->changeNumBonuses(eIndex, iChange);
+		}
+	}
+}
 
-		GET_PLAYER(getOwner()).endDeferredPlotGroupBonusCalculation();
+// LOAD ONLY: m_iPowerCount's read is skipped (a derived cache); the bonus-gated halves rebuild through the
+// network fold's processBonus, but the unconditional building-isPower half (processBuilding's leg) never
+// re-runs at load -- this re-sums it from the present processed buildings.
+void CvCity::rebuildBonusPowerAtLoad()
+{
+	PROFILE_EXTRA_FUNC();
+	foreach_(const BuildingTypes eTypeX, getHasBuildings())
+	{
+		if (!isReligiouslyLimitedBuilding(eTypeX) && !isDisabledBuilding(eTypeX)
+		&& GC.getBuildingInfo(eTypeX).isPower())
+		{
+			changePowerCount(1);
+		}
 	}
 }
 
@@ -13708,7 +13867,20 @@ int CvCity::getNumBonusesFromBase(BonusTypes eIndex, int iBaseNum) const
 	return iBaseNum;
 }
 
+// A pure RELAY onto the city's plot group -- the network count (produced/extracted + deal-traded, one sum)
+// lives ONCE, on the group (owner ruling 2026-07-15; enabler.md par.8 RESIDENCY). The city holds no mirror.
 int CvCity::getNumBonuses(BonusTypes eIndex) const
+{
+	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eIndex);
+	// A MAINTAINED NUMBER -- added and subtracted at the events, ZERO calculation here (the owner design the
+	// spec always stated; the per-read calculation this replaces was measured as ~85% of the turn wall's
+	// active samples). Writers: refreshEffectiveBonus (fan-out/tech/minted/corp) + seedEffectiveBonuses.
+	return m_aiEffectiveBonusCount[eIndex];
+}
+
+// The retired per-read calculation -- VALIDATION ORACLE ONLY (the maintained-vs-fresh drift tripwire; the
+// enabler-oracle precedent). Never a read path.
+int CvCity::getNumBonusesOracle(BonusTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eIndex);
 
@@ -13716,7 +13888,36 @@ int CvCity::getNumBonuses(BonusTypes eIndex) const
 	{
 		return 0;
 	}
-	return getNumBonusesFromBase(eIndex, m_paiNumBonuses[eIndex]) + getCorpBonusProduction(eIndex);
+	const CvPlotGroup* pGroup = plotGroup(getOwner());
+	return getNumBonusesFromBase(eIndex, pGroup != NULL ? pGroup->getNumBonuses(eIndex) : 0) + getCorpBonusProduction(eIndex);
+}
+
+void CvCity::refreshEffectiveBonus(BonusTypes eIndex)
+{
+	int iValue = 0;
+	if (GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getBonusInfo(eIndex).getTechCityTrade()))
+	{
+		iValue = getNumBonusesFromBase(eIndex, m_aiNetworkBonusTotal[eIndex]) + getCorpBonusProduction(eIndex);
+	}
+	m_aiEffectiveBonusCount[eIndex] = iValue;
+}
+
+void CvCity::refreshAllEffectiveBonuses()
+{
+	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
+	{
+		refreshEffectiveBonus((BonusTypes)iI);
+	}
+}
+
+void CvCity::seedEffectiveBonuses()
+{
+	const CvPlotGroup* pGroup = plotGroup(getOwner());
+	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
+	{
+		m_aiNetworkBonusTotal[iI] = pGroup != NULL ? pGroup->getNumBonuses((BonusTypes)iI) : 0;
+		refreshEffectiveBonus((BonusTypes)iI);
+	}
 }
 
 
@@ -13725,6 +13926,10 @@ bool CvCity::hasBonus(BonusTypes eIndex) const
 	return getNumBonuses(eIndex) > 0;
 }
 
+// The deferral brackets a bulk network recalc (updatePlotGroups): it SNAPSHOTS the city's relayed group counts
+// before the churn and reconciles old->new ONCE at the end -- suppressing the transient crossings a teardown+
+// rebuild would otherwise fan through processBonus. The snapshot buffer is a transient old-value capture, never
+// serialized state; the authoritative count stays on the plot group (the relay).
 void CvCity::startDeferredBonusProcessing()
 {
 	PROFILE_EXTRA_FUNC();
@@ -13734,9 +13939,10 @@ void CvCity::startDeferredBonusProcessing()
 
 		m_paiStartDeferredSectionNumBonuses = new int[GC.getNumBonusInfos()];
 
+		const CvPlotGroup* pGroup = plotGroup(getOwner());
 		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 		{
-			m_paiStartDeferredSectionNumBonuses[iI] = m_paiNumBonuses[iI];
+			m_paiStartDeferredSectionNumBonuses[iI] = pGroup != NULL ? pGroup->getNumBonuses((BonusTypes)iI) : 0;
 		}
 	}
 }
@@ -13744,21 +13950,122 @@ void CvCity::startDeferredBonusProcessing()
 void CvCity::endDeferredBonusProcessing()
 {
 	PROFILE_EXTRA_FUNC();
+	if (m_deferringBonusProcessingCount <= 0)
+	{
+		return;   // founded inside the bracket -- no matching start (the founding reconcile covered it)
+	}
 	if (0 == --m_deferringBonusProcessingCount)
 	{
+		const CvPlotGroup* pGroup = plotGroup(getOwner());
 		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 		{
-			processNumBonusChange((BonusTypes)iI, m_paiStartDeferredSectionNumBonuses[iI], m_paiNumBonuses[iI]);
+			processNumBonusChange((BonusTypes)iI, m_paiStartDeferredSectionNumBonuses[iI],
+				pGroup != NULL ? pGroup->getNumBonuses((BonusTypes)iI) : 0);
 		}
 
 		SAFE_DELETE_ARRAY(m_paiStartDeferredSectionNumBonuses);
 	}
 }
 
+void CvCity::endBulkBuildingProcessing(bool bRunWholesale)
+{
+	if (m_bulkBuildingProcessingCount <= 0)
+	{
+		FErrorMsg("Unbalanced bulk building processing bracket!");
+		m_bulkBuildingProcessingCount = 0;
+		return;
+	}
+	if (0 == --m_bulkBuildingProcessingCount && bRunWholesale)
+	{
+		// the wholesale full-city recomputes processBuilding skipped per flip, run ONCE for the batch
+		updateExtraBuildingHappiness();
+		updateExtraBuildingHealth();
+		updateBuildingCommerce();
+		if (GC.getGame().isOption(GAMEOPTION_RELIGION_DISABLING))
+		{
+			updateReligionHappiness();
+			updateReligionCommerce();
+		}
+	}
+}
+
+// The citizen-juggle bracket (see the CvCity.h declaration): probes keep their semantics; the per-change
+// side-effect layer defers and replays ONCE as the run's NET.
+void CvCity::startCitizenJuggling()
+{
+	if (m_iCitizenJugglingCount++ == 0)
+	{
+		m_bJuggleDeferredSpec = false;
+		m_bJuggleDeferredWork = false;
+		const int iNumSpec = GC.getNumSpecialistInfos();
+		m_juggleSpecStart.resize(iNumSpec);
+		for (int i = 0; i < iNumSpec; ++i) m_juggleSpecStart[i] = getSpecialistCount((SpecialistTypes)i);
+		m_juggleWorkStart.resize(NUM_CITY_PLOTS);
+		for (int i = 0; i < NUM_CITY_PLOTS; ++i) m_juggleWorkStart[i] = isWorkingPlot(i);
+	}
+}
+
+void CvCity::endCitizenJuggling()
+{
+	if (m_iCitizenJugglingCount <= 0)
+	{
+		FErrorMsg("Unbalanced citizen-juggle bracket!");
+		m_iCitizenJugglingCount = 0;
+		return;
+	}
+	if (--m_iCitizenJugglingCount > 0) return;
+
+	if (m_bJuggleDeferredSpec)
+	{
+		// the three whole-set recomputes processSpecialist skipped per probe, run ONCE for the run
+		updateExtraSpecialistYield();
+		updateExtraSpecialistCommerce();
+		updateSpecialistHappinessHealthFromTech();
+		CascadeAccumulator::dirtyCity(this, CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC);
+		// the NET specialist deltas announce (converged probes cancel to nothing)
+		const int iNumSpec = std::min((int)m_juggleSpecStart.size(), GC.getNumSpecialistInfos());
+		for (int i = 0; i < iNumSpec; ++i)
+		{
+			const int iNet = getSpecialistCount((SpecialistTypes)i) - m_juggleSpecStart[i];
+			if (iNet != 0) emitSpecialistChanged(getID(), getOwner(), i, iNet);
+		}
+	}
+	if (m_bJuggleDeferredWork)
+	{
+		CascadeAccumulator::dirtyCity(this, CPK_YRATE);   // the realized-rate cache bakes the worked-plot sum
+		onYieldChange();
+		// net-changed plots refresh their worked symbols/builders once
+		const int iNumPlots = std::min((int)m_juggleWorkStart.size(), (int)NUM_CITY_PLOTS);
+		const bool bShow = getTeam() == GC.getGame().getActiveTeam() || GC.getGame().isDebugMode();
+		for (int i = 0; i < iNumPlots; ++i)
+		{
+			if (m_juggleWorkStart[i] != isWorkingPlot(i))
+			{
+				CvPlot* pPlot = getCityIndexPlot(i);
+				if (pPlot != NULL)
+				{
+					pPlot->updatePlotBuilder();
+					if (bShow) pPlot->updateSymbolDisplay();
+				}
+			}
+		}
+	}
+	if ((m_bJuggleDeferredSpec || m_bJuggleDeferredWork) && isCitySelected())
+	{
+		exeSetUIDirty(CitizenButtons_DIRTY_BIT, true);
+	}
+	m_bJuggleDeferredSpec = false;
+	m_bJuggleDeferredWork = false;
+}
+
 void CvCity::processNumBonusChange(BonusTypes eIndex, int iOldValue, int iNewValue)
 {
 	if (iOldValue != iNewValue)
 	{
+		// the maintained count: ASSIGN the delivered total, refresh the gated answer (no calculation on read)
+		m_aiNetworkBonusTotal[eIndex] = iNewValue;
+		refreshEffectiveBonus(eIndex);
+
 		const bool bOldHasBonus = (getNumBonusesFromBase(eIndex, iOldValue) != 0);
 		const bool bNewHasBonus = (getNumBonusesFromBase(eIndex, iNewValue) != 0);
 
@@ -13783,26 +14090,6 @@ void CvCity::processNumBonusChange(BonusTypes eIndex, int iOldValue, int iNewVal
 		FlushCanConstructCache();
 	}
 }
-
-void CvCity::changeNumBonuses(BonusTypes eIndex, int iChange)
-{
-	PROFILE_FUNC();
-
-	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eIndex);
-
-	if (iChange != 0)
-	{
-		//bool bOldHasBonus = hasBonus(eIndex);
-
-		m_paiNumBonuses[eIndex] += iChange;
-
-		if (m_deferringBonusProcessingCount == 0)
-		{
-			processNumBonusChange(eIndex, m_paiNumBonuses[eIndex] - iChange, m_paiNumBonuses[eIndex]);
-		}
-	}
-}
-
 
 int CvCity::getCorpBonusProduction(const BonusTypes eBonus) const
 {
@@ -13929,7 +14216,7 @@ void CvCity::changeProgressOnBuilding(const BuildingTypes eType, const int iChan
 
 		if (isCitySelected())
 		{
-			gDLL->getInterfaceIFace()->setDirty(CityScreen_DIRTY_BIT, true);
+			exeSetUIDirty(CityScreen_DIRTY_BIT, true);
 		}
 	}
 	for (std::vector< std::pair<BuildingTypes, int> >::iterator it = m_progressOnBuilding.begin(); it != m_progressOnBuilding.end(); ++it)
@@ -14068,7 +14355,7 @@ void CvCity::setProjectProduction(ProjectTypes eIndex, int iNewValue)
 
 		if ((getOwner() == GC.getGame().getActivePlayer()) && isCitySelected())
 		{
-			gDLL->getInterfaceIFace()->setDirty(CityScreen_DIRTY_BIT, true);
+			exeSetUIDirty(CityScreen_DIRTY_BIT, true);
 		}
 	}
 }
@@ -14123,7 +14410,7 @@ void CvCity::changeProgressOnUnit(const UnitTypes eUnit, const int iChange)
 
 		if (isCitySelected())
 		{
-			gDLL->getInterfaceIFace()->setDirty(CityScreen_DIRTY_BIT, true);
+			exeSetUIDirty(CityScreen_DIRTY_BIT, true);
 		}
 	}
 	for (std::vector< std::pair<UnitTypes, int> >::iterator it = m_progressOnUnit.begin(); it != m_progressOnUnit.end(); ++it)
@@ -14300,16 +14587,24 @@ void CvCity::setSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 	{
 		m_paiSpecialistCount[eIndex] = iNewValue;
 		FASSERT_NOT_NEGATIVE(getSpecialistCount(eIndex));
-		CascadeAccumulator::dirtyCity(this, CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC);   // #430: specialist packages (incl. the gpBase specialist scalar); WB deliberately NOT dirtied (end-turn cadence -- governor churn is automation-frequency)
-		// #430 event spine: announce the specialist change (delta from the captured old count; inside the change guard).
-		emitSpecialistChanged(getID(), getOwner(), (int)eIndex, iNewValue - iOldValue);
+		if (isCitizenJuggling())
+		{
+			// the juggle bracket: the mark/emit/UI layer defers to endCitizenJuggling's NET replay
+			m_bJuggleDeferredSpec = true;
+		}
+		else
+		{
+			CascadeAccumulator::dirtyCity(this, CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC);   // #430: specialist packages (incl. the gpBase specialist scalar); WB deliberately NOT dirtied (end-turn cadence -- governor churn is automation-frequency)
+			// #430 event spine: announce the specialist change (delta from the captured old count; inside the change guard).
+			emitSpecialistChanged(getID(), getOwner(), (int)eIndex, iNewValue - iOldValue);
+		}
 
 		changeSpecialistPopulation(iNewValue - iOldValue);
 		processSpecialist(eIndex, (iNewValue - iOldValue));
 
-		if (isCitySelected())
+		if (!isCitizenJuggling() && isCitySelected())
 		{
-			gDLL->getInterfaceIFace()->setDirty(CitizenButtons_DIRTY_BIT, true);
+			exeSetUIDirty(CitizenButtons_DIRTY_BIT, true);
 		}
 
 #ifdef YIELD_VALUE_CACHING
@@ -14499,7 +14794,7 @@ void CvCity::setForceSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 
 		if (isCitySelected())
 		{
-			gDLL->getInterfaceIFace()->setDirty(Help_DIRTY_BIT, true);
+			exeSetUIDirty(Help_DIRTY_BIT, true);
 		}
 
 		AI_setAssignWorkDirty(true);
@@ -14538,7 +14833,7 @@ void CvCity::setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 
 		if (isCitySelected())
 		{
-			gDLL->getInterfaceIFace()->setDirty(CitizenButtons_DIRTY_BIT, true);
+			exeSetUIDirty(CitizenButtons_DIRTY_BIT, true);
 		}
 	}
 }
@@ -14706,25 +15001,34 @@ void CvCity::processWorkingPlot(int iPlot, int iChange, bool yieldsOnly)
 				changeWorkingPopulation(iChange);
 			}
 
-			// update plot builder special case where a plot is being worked but is (a) unimproved  or (b) un-bonus'ed
-			pPlot->updatePlotBuilder();
-
-			if (getTeam() == GC.getGame().getActiveTeam() || GC.getGame().isDebugMode())
+			if (isCitizenJuggling())
 			{
-				pPlot->updateSymbolDisplay();
+				// the juggle bracket: plot-builder/symbol EXE calls + the yield trigger defer to the NET replay
+				m_bJuggleDeferredWork = true;
+			}
+			else
+			{
+				// update plot builder special case where a plot is being worked but is (a) unimproved  or (b) un-bonus'ed
+				pPlot->updatePlotBuilder();
+
+				if (getTeam() == GC.getGame().getActiveTeam() || GC.getGame().isDebugMode())
+				{
+					pPlot->updateSymbolDisplay();
+				}
 			}
 		}
 
 		// PULL model (owner ruling 2026-06-27): getPlotYield re-sums the current worked plots from the plot cache, so
 		// working/un-working a plot needs no push -- just fire the downstream trigger the old changePlotYield carried.
-		onYieldChange();
+		if (!isCitizenJuggling()) onYieldChange();
+		else m_bJuggleDeferredWork = true;
 	}
 
 	if (isCitySelected())
 	{
-		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(CityScreen_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(ColoredPlots_DIRTY_BIT, true);
+		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+		exeSetUIDirty(CityScreen_DIRTY_BIT, true);
+		exeSetUIDirty(ColoredPlots_DIRTY_BIT, true);
 	}
 
 #ifdef YIELD_VALUE_CACHING
@@ -14739,7 +15043,11 @@ void CvCity::setWorkingPlot(int iIndex, bool bNewValue)
 	if (isWorkingPlot(iIndex) != bNewValue)
 	{
 		m_pabWorkingPlot[iIndex] = bNewValue;
-		// (#430 accumulator: NO hook -- the worked-plot base is PULLED live from the plot cache at combine)
+		m_plotYieldSum.markDirty();   // the worked-plot Σ cache: every flip re-marks (lazy; juggle probes just re-walk on read, as before)
+		// the realized-rate cache bakes the worked-plot sum ("cache the sum" ruling) -- a worked flip re-marks it
+		// (inside a juggle bracket the mark defers to the NET replay)
+		if (!isCitizenJuggling()) CascadeAccumulator::dirtyCity(this, CPK_YRATE);
+		else m_bJuggleDeferredWork = true;
 
 		processWorkingPlot(iIndex, bNewValue ? 1 : -1);
 		if (bNewValue)
@@ -14873,6 +15181,11 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 				changeHasBuilding(eType, false);
 			}
 		}
+
+		// #430 event spine: the PRESENCE fact, at the presence choke point -- fires on EVERY genuine has-flip,
+		// including a building removed while disabled (which skips processBuilding entirely). The processed
+		// (operating) flip is the separate SEVT_BUILDING_PROCESSED from processBuilding.
+		emitBuildingChanged(getID(), getOwner(), (int)eType, bNewValue ? 1 : -1);
 
 		// Disable\Enable buildings replaced by this one.
 		for (int iI = 0; iI < kBuilding.getNumReplacedBuilding(); iI++)
@@ -15231,12 +15544,12 @@ bool CvCity::processGreatWall(bool bIn, bool bForce, bool bSeeded)
 			if (bIn)
 			{
 				pUseCity->m_bIsGreatWallSeed = true;
-				gDLL->getEngineIFace()->AddGreatWall(pUseCity);
+				exeEng(EXEK_GREAT_WALL, 1), gDLL->getEngineIFace()->AddGreatWall(pUseCity);
 			}
 			else
 			{
 				pUseCity->m_bIsGreatWallSeed = false;
-				gDLL->getEngineIFace()->RemoveGreatWall(pUseCity);
+				exeEng(EXEK_GREAT_WALL, 0), gDLL->getEngineIFace()->RemoveGreatWall(pUseCity);
 			}
 		}
 
@@ -16210,8 +16523,8 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 	}
 	if (isCitySelected())
 	{
-		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
+		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+		exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
 	}
 }
 
@@ -16759,8 +17072,8 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 	}
 	if (isCitySelected())
 	{
-		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
+		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+		exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
 	}
 }
 
@@ -17553,8 +17866,10 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iBuildingGoodHealth);
 	WRAPPER_READ(wrapper, "CvCity", &m_iBuildingBadHealth);
 
-	WRAPPER_READ(wrapper, "CvCity", &m_iBonusGoodHealth);
-	WRAPPER_READ(wrapper, "CvCity", &m_iBonusBadHealth);
+	// #430 no-serialized-caches: the bonus-fed derived cluster is NOT read from the save -- the load-end
+	// network fold rebuilds it exactly from present state. Still WRITTEN for save-format compat.
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBonusGoodHealth, SAVE_VALUE_ANY);
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBonusBadHealth, SAVE_VALUE_ANY);
 	WRAPPER_READ(wrapper, "CvCity", &m_iHurryAngerTimer);
 	WRAPPER_READ(wrapper, "CvCity", &m_iRevRequestAngerTimer);
 	WRAPPER_READ(wrapper, "CvCity", &m_iRevSuccessTimer);
@@ -17570,8 +17885,8 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iExtraBuildingBadHealth);
 	WRAPPER_READ(wrapper, "CvCity", &m_iFeatureGoodHappiness);
 	WRAPPER_READ(wrapper, "CvCity", &m_iFeatureBadHappiness);
-	WRAPPER_READ(wrapper, "CvCity", &m_iBonusGoodHappiness);
-	WRAPPER_READ(wrapper, "CvCity", &m_iBonusBadHappiness);
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBonusGoodHappiness, SAVE_VALUE_ANY);   // rebuilt by the load fold
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBonusBadHappiness, SAVE_VALUE_ANY);    // rebuilt by the load fold
 	WRAPPER_READ(wrapper, "CvCity", &m_iReligionGoodHappiness);
 	WRAPPER_READ(wrapper, "CvCity", &m_iReligionBadHappiness);
 	WRAPPER_READ(wrapper, "CvCity", &m_iExtraHappiness);
@@ -17598,7 +17913,8 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iAirUnitCapacity);
 	WRAPPER_READ(wrapper, "CvCity", &m_iNukeModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iFreeSpecialist);
-	WRAPPER_READ(wrapper, "CvCity", &m_iPowerCount);
+	// rebuilt at load: building half via rebuildBonusPowerAtLoad, bonus halves via the network fold
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iPowerCount, SAVE_VALUE_ANY);
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iDefenseDamage);
 	WRAPPER_READ(wrapper, "CvCity", &m_iLastDefenseDamage);
@@ -17639,7 +17955,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiBaseYieldRate);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiYieldRateModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiPowerYieldRateModifier);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiBonusYieldRateModifier);
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_aiBonusYieldRateModifier, SAVE_VALUE_TYPE_INT_ARRAY);   // rebuilt by the load fold
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiCorporationYield);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiExtraSpecialistYield);
@@ -17668,8 +17984,13 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ_STRING(wrapper, "CvCity", m_szName);
 	WRAPPER_READ_STRING(wrapper, "CvCity", m_szScriptData);
 
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiFreeBonus);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiNumBonuses);
+	// m_paiFreeBonus (the old MIXED building+event ledger) is retired: the building part is COMPUTED from
+	// provides, so the old save value (stub-era polluted, unsplittable) is drained, never read. The events-only
+	// store reads under its own tag (soft-absent on old saves -- old event grants are accepted drift).
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_paiFreeBonus, SAVE_VALUE_TYPE_CLASS_INT_ARRAY);
+	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiFreeBonusEvents);
+	// derived network count -- rebuilt by the load-end fold's fan-out, never read
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_paiNumBonuses, SAVE_VALUE_TYPE_CLASS_INT_ARRAY);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectProduction);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_paiUnitProduction);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_paiGreatPeopleUnitRate);
@@ -17710,8 +18031,8 @@ void CvCity::readBody(FDataStreamBase* pStream)
 			if (m_pabHasReligion[iI]) { emitReligionChanged(iCityId, iCityOwner, iI, true); if (GC.getGame().isHolyCityByOwnerId((ReligionTypes)iI, m_eOwner, iCityId)) { emitHolyCityChanged(iCityId, iCityOwner, iI, true); } }   // #430 reseed: religion presence + holy-city (read-safe IDInfo check)
 		for (iI = 0; iI < GC.getNumCorporationInfos(); ++iI)
 			if (m_pabHasCorporation[iI]) { emitCorporationChanged(iCityId, iCityOwner, iI, true); }
-		for (iI = 0; iI < GC.getNumBonusInfos(); ++iI)
-			if (m_paiNumBonuses[iI] != 0) { emitBonusChanged(iCityId, iCityOwner, iI, m_paiNumBonuses[iI]); }
+		// (no bonus reseed loop: the counts are no longer read from the save -- the load-end network fold
+		// announces every bonus fact through the genuine processBonus crossing emits, one mechanism)
 		for (iI = 0; iI < GC.getNumSpecialistInfos(); ++iI)
 			if (m_paiSpecialistCount[iI] > 0) { emitSpecialistChanged(iCityId, iCityOwner, iI, m_paiSpecialistCount[iI]); }
 			if (m_eCultureLevel != NO_CULTURELEVEL) { emitCultureLevelChanged(iCityId, iCityOwner, (int)m_eCultureLevel, (int)NO_CULTURELEVEL); }   // #430 reseed: culture level (+ its radius/vicinity footprint)
@@ -17727,8 +18048,8 @@ void CvCity::readBody(FDataStreamBase* pStream)
 
 	WRAPPER_READ(wrapper, "CvCity", &m_fPopulationgrowthratepercentageLog);
 
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBonusCommerceRateModifier);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBonusCommercePercentChanges);
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_aiBonusCommerceRateModifier, SAVE_VALUE_TYPE_INT_ARRAY);    // rebuilt by the load fold
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_aiBonusCommercePercentChanges, SAVE_VALUE_TYPE_INT_ARRAY);  // rebuilt by the load fold
 
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadVicinityBonus);
 	WRAPPER_READ_CLASS_ENUM(wrapper, "CvCity", REMAPPED_CLASS_TYPE_CIVILIZATIONS, &m_iCiv);
@@ -18441,8 +18762,9 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_STRING(wrapper, "CvCity", m_szName);
 	WRAPPER_WRITE_STRING(wrapper, "CvCity", m_szScriptData);
 
-	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiFreeBonus);
-	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiNumBonuses);
+	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiFreeBonusEvents);
+	// m_paiNumBonuses: RETIRED (the plot-group relay owns the network count; savemigration.txt) -- the read-side
+	// named skip drains it from old saves and no-ops on saves that lack it.
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectProduction);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_paiUnitProduction);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_paiGreatPeopleUnitRate);
@@ -18808,6 +19130,7 @@ public:
 
 void CvCity::getVisibleBuildings(std::list<BuildingTypes>& kChosenVisible, int& iChosenNumGenerics)
 {
+	citEmitBillboardPoll(6, getID());
 	PROFILE_EXTRA_FUNC();
 	if (!plot()->isGraphicsVisible(ECvPlotGraphics::CITY))
 	{
@@ -18900,6 +19223,7 @@ static int natGetDeterministicRandom(int iMin, int iMax, int iSeedX, int iSeedY)
 
 void CvCity::getVisibleEffects(ZoomLevelTypes eCurZoom, std::vector<const char*>& kEffectNames)
 {
+	citEmitBillboardPoll(7, getID());
 	PROFILE_EXTRA_FUNC();
 	if (isOccupation() && isVisible(getTeam(), false) == true)
 	{
@@ -18959,6 +19283,8 @@ void CvCity::getVisibleEffects(ZoomLevelTypes eCurZoom, std::vector<const char*>
 
 void CvCity::getCityBillboardSizeIconColors(NiColorA& kDotColor, NiColorA& kTextColor) const
 {
+	++gPerfBillboardColorPolls;   // EXE billboard poll counter (the bars-on FPS attribution; /computed/perf)
+	citEmitBillboardPoll(0, getID());
 	const NiColorA kPlayerColor = GC.getColorInfo((ColorTypes)GC.getPlayerColorInfo(GET_PLAYER(getOwner()).getPlayerColor()).getColorTypePrimary()).getColor();
 	static const NiColorA kGrowing(0.73f, 1, 0.73f, 1);
 	static const NiColorA kShrinking(1, 0.73f, 0.73f, 1);
@@ -19003,6 +19329,8 @@ void CvCity::getCityBillboardSizeIconColors(NiColorA& kDotColor, NiColorA& kText
 
 const char* CvCity::getCityBillboardProductionIcon() const
 {
+	++gPerfBillboardProdIconPolls;   // EXE billboard poll counter (the bars-on FPS attribution; /computed/perf)
+	citEmitBillboardPoll(1, getID());
 	if (canBeSelected() && isProduction())
 	{
 		bst::optional<OrderData> nextOrder = getHeadOrder();
@@ -19056,6 +19384,8 @@ const char* CvCity::getCityBillboardProductionIcon() const
 
 bool CvCity::getFoodBarPercentages(std::vector<float>& afPercentages) const
 {
+	++gPerfFoodBarPolls;   // EXE bar-fill poll counter (the bars-on FPS attribution; /computed/perf)
+	citEmitBillboardPoll(2, getID());
 	if (!canBeSelected())
 	{
 		return false;
@@ -19076,6 +19406,8 @@ bool CvCity::getFoodBarPercentages(std::vector<float>& afPercentages) const
 
 bool CvCity::getProductionBarPercentages(std::vector<float>& afPercentages) const
 {
+	++gPerfProdBarPolls;   // EXE bar-fill poll counter (the bars-on FPS attribution; /computed/perf)
+	citEmitBillboardPoll(3, getID());
 	if (!canBeSelected())
 	{
 		return false;
@@ -19096,6 +19428,7 @@ bool CvCity::getProductionBarPercentages(std::vector<float>& afPercentages) cons
 
 NiColorA CvCity::getBarBackgroundColor() const
 {
+	citEmitBillboardPoll(4, getID());
 	if (atWar(getTeam(), GC.getGame().getActiveTeam()))
 	{
 		return NiColorA(0.5f, 0, 0, 0.5f); // red
@@ -19105,6 +19438,7 @@ NiColorA CvCity::getBarBackgroundColor() const
 
 bool CvCity::isStarCity() const
 {
+	citEmitBillboardPoll(5, getID());
 	return isCapital();
 }
 
@@ -21283,220 +21617,53 @@ int CvCity::getAdditionalDefenseByBuilding(BuildingTypes eBuilding) const
 }
 
 
-void CvCity::checkBuildings(bool bAlertOwner)
+// The ONE dormancy verdict (task #13 / DEC-calc-zero-ride-in): a present building's operating state is the
+// ENABLER's classification -- the requires.operate + dormant-trigger least-fixpoint over the provided supply
+// (EnablerKernel::operatingBuildings; enabler.md par.3.2) -- never a hand re-derivation from legacy prereq
+// getters. Two runtime-state legs the authored data does not carry stay engine-side compositions (the
+// capabilities option-composition precedent): the EMPLOYED-population need and the banned-non-state-religion
+// policy. setDisabledBuilding stays the APPLY (processBuilding on/off; the provides group injection follows).
+// Obsolete-classified buildings keep their separate legacy handling (the obsolete swap) -- not disabled here.
+// Returns whether any verdict flipped -- the load-end cross-city fixpoint loops on it.
+bool CvCity::checkBuildings(bool bAlertOwner, std::vector<BuildingTypes>* paFlipped)
 {
 	PROFILE_FUNC();
 	const CvPlayer& player = GET_PLAYER(getOwner());
 	bAlertOwner = bAlertOwner && !player.isModderOption(MODDEROPTION_IGNORE_DISABLED_ALERTS);
 
 	const bool bBannedNonStateReligions = player.hasBannedNonStateReligions() && getReligionCount() > 0;
-	ReligionTypes eReligion = NO_RELIGION;
-	ReligionTypes eStateReligion = NO_RELIGION;
-	if (bBannedNonStateReligions)
-	{
-		eStateReligion = player.getStateReligion();
-	}
+	const ReligionTypes eStateReligion = bBannedNonStateReligions ? player.getStateReligion() : NO_RELIGION;
+
+	const OperatingBuildings& ob = EnablerKernel::operatingBuildings(this);
+
+	bool bAnyFlip = false;
+
+	// batch the wholesale rescans: every flip below routes through processBuilding, whose full-city
+	// recomputes run ONCE at the bracket end (iff anything flipped) instead of per flip
+	startBulkBuildingProcessing();
 
 	foreach_(const BuildingTypes eType, getHasBuildings())
 	{
-		bool bIsReplaced = false;
-		bool bDisableBuilding = false;
-
-		bool bMissingBonus = false;
-		bool bMissingFreshWater = false;
-		bool bRequiresCivics = false;
-		bool bRequiresWar = false;
-		bool bRequiresPower = false;
-		bool bRequiresPopulation = false;
-		bool bPopulationTooHigh = false;
-		bool bReligionBanned = false;
-
 		const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eType);
 
-		while (true) // This loop will never actually loop.
+		// the cascade verdict: present but neither active nor obsolete = dormant (operate fails / trigger present)
+		bool bDisableBuilding =
+			   ob.active.find((int)eType) == ob.active.end()
+			&& ob.obsolete.find((int)eType) == ob.obsolete.end();
+		bool bReligionBanned = false;
+		ReligionTypes eReligion = NO_RELIGION;
+
+		if (!bDisableBuilding)
 		{
-			/* Check if disabled through replacement */
-			for (int iJ = 0; iJ < kBuilding.getNumReplacementBuilding(); ++iJ)
-			{
-				// Toffer, we get into some ugly causality territory if we restrict this to isActiveBuilding.
-				//	Better to say that if the replacement gets disabled, then that means all it replaced also went disabled (which is what they are anyway).
-				//	If we try to enable the replaced when the replacement goes disabled,
-				//	then the order we check the replaced in is important as many of the replaced are replacements for the other replaced.
-				if (hasBuilding((BuildingTypes)kBuilding.getReplacementBuilding(iJ)))
-				{
-					bIsReplaced = true;
-					break;
-				}
-			}
-			if (bIsReplaced) break;
-
-			/* Check for Appropriate Resources */
-			{
-				bool bNeedsBonus = false;
-				bool bHasBonus = false;
-				bool bHasRawVicinityBonus = false;
-				bool bNeedsRawVicinityBonus = false;
-				bool bNeedsVicinityBonus = false;
-				bool bHasVicinityBonus = false;
-				if (kBuilding.getPrereqVicinityBonus() != NO_BONUS)
-				{
-					bNeedsVicinityBonus = true;
-					bHasVicinityBonus = hasVicinityBonus((BonusTypes)kBuilding.getPrereqVicinityBonus());
-				}
-				if (kBuilding.getPrereqRawVicinityBonus() != NO_BONUS)
-				{
-					bNeedsRawVicinityBonus = true;
-					bHasRawVicinityBonus = hasRawVicinityBonus((BonusTypes)kBuilding.getPrereqRawVicinityBonus());
-				}
-
-				if (!bNeedsVicinityBonus || bHasVicinityBonus)
-				{
-					bool bHasORVicinityBonus = false;
-					bool bNeedsORVicinityBonus = false;
-
-					foreach_(const BonusTypes ePrereqBonus, kBuilding.getPrereqOrVicinityBonuses())
-					{
-						bNeedsORVicinityBonus = true;
-						if (hasVicinityBonus(ePrereqBonus))
-						{
-							bHasORVicinityBonus = true;
-							break;
-						}
-					}
-
-					bNeedsVicinityBonus |= bNeedsORVicinityBonus;
-					if (bNeedsORVicinityBonus)
-					{
-						bHasVicinityBonus = bHasORVicinityBonus;
-					}
-				}
-
-				if (!bNeedsRawVicinityBonus || bHasRawVicinityBonus)
-				{
-					bool bHasORRawVicinityBonus = false;
-					bool bNeedsORRawVicinityBonus = false;
-
-					foreach_(BonusTypes bonus, kBuilding.getPrereqOrRawVicinityBonuses())
-					{
-						bNeedsORRawVicinityBonus = true;
-						if (hasRawVicinityBonus(bonus))
-						{
-							bHasORRawVicinityBonus = true;
-							break;
-						}
-					}
-
-					bNeedsRawVicinityBonus |= bNeedsORRawVicinityBonus;
-					if (bNeedsORRawVicinityBonus)
-					{
-						bHasRawVicinityBonus = bHasORRawVicinityBonus;
-					}
-				}
-
-				// We lack the nessecary resource, turn off the building
-				if (bNeedsRawVicinityBonus && !bHasRawVicinityBonus
-				|| bNeedsVicinityBonus && !bHasVicinityBonus)
-				{
-					bDisableBuilding = true;
-					bMissingBonus = true;
-					break;
-				}
-
-				// Check trade-available resource requirements
-				if (kBuilding.getPrereqAndBonus() != NO_BONUS)
-				{
-					bNeedsBonus = true;
-					bHasBonus = hasBonus((BonusTypes)kBuilding.getPrereqAndBonus());
-				}
-				if (!bNeedsBonus || bHasBonus)
-				{
-					bool bHasORBonus = false;
-					bool bNeedsORBonus = false;
-
-					foreach_(const BonusTypes ePrereqBonus, kBuilding.getPrereqOrBonuses())
-					{
-						bNeedsORBonus = true;
-						if (hasBonus(ePrereqBonus))
-						{
-							bHasORBonus = true;
-							break;
-						}
-					}
-
-					bNeedsBonus |= bNeedsORBonus;
-					if (bNeedsORBonus)
-					{
-						bHasBonus = bHasORBonus;
-					}
-				}
-
-				//we lack the nessecary resource, turn off the building
-				if (bNeedsBonus && !bHasBonus)
-				{
-					bDisableBuilding = true;
-					bMissingBonus = true;
-					break;
-				}
-			}
-
-			/* Check War Conditions */
-			if (kBuilding.isPrereqWar() && !GET_TEAM(getTeam()).isAtWar())
+			// engine-side leg 1: the EMPLOYED-population composition (runtime engine state; the authored
+			// POPULATION operate atom covers the plain prereq half)
+			const int iEmployedNeed = 1 + getNumPopulationEmployed() + kBuilding.getNumPopulationEmployed();
+			if (iEmployedNeed > 1 && getPopulation() < iEmployedNeed)
 			{
 				bDisableBuilding = true;
-				bRequiresWar = true;
-				break;
 			}
-
-			/* Check Civic Requirements */
-			if (kBuilding.isRequiresActiveCivics() && !player.hasValidCivics(eType))
-			{
-				bDisableBuilding = true;
-				bRequiresCivics = true;
-				break;
-			}
-
-			/*Check Elecricity Requirements */
-			if (kBuilding.isPrereqPower() && !isPower())
-			{
-				bDisableBuilding = true;
-				bRequiresPower = true;
-				break;
-			}
-
-			/* Check fresh water */
-			if (kBuilding.isFreshWater() && !plot()->isFreshWater() && !hasFreshWater())
-			{
-				bDisableBuilding = true;
-				bMissingFreshWater = true;
-				break;
-			}
-
-			{
-				/* Check The Employed Population */
-				const int iPrereqPopulation = (
-					std::max(
-						kBuilding.getPrereqPopulation(),
-						1 + getNumPopulationEmployed() + kBuilding.getNumPopulationEmployed()
-					)
-				);
-				if (iPrereqPopulation > 1 && getPopulation() < iPrereqPopulation)
-				{
-					bDisableBuilding = true;
-					bRequiresPopulation = true;
-					break;
-				}
-			}
-
-			/* Check max population requirement */
-			if (kBuilding.getMaxPopAllowed() > 0 && kBuilding.getMaxPopAllowed() < getPopulation())
-			{
-				bDisableBuilding = true;
-				bPopulationTooHigh = true;
-				break;
-			}
-
-			/* Check banned non-state religion */
-			if (bBannedNonStateReligions)
+			// engine-side leg 2: the banned-non-state-religion POLICY (a policy is queried at the consumer)
+			else if (bBannedNonStateReligions)
 			{
 				eReligion = (ReligionTypes)kBuilding.getReligionType();
 				if (eReligion == NO_RELIGION)
@@ -21507,18 +21674,20 @@ void CvCity::checkBuildings(bool bAlertOwner)
 				{
 					bDisableBuilding = true;
 					bReligionBanned = true;
-					break;
 				}
 			}
-			break; // The while loop is not supposed to loop.
 		}
-		if (bIsReplaced) continue; // Replacement disabling/enabling is handled in changeHasBuilding(...).
 
 		if (isDisabledBuilding(eType))
 		{
 			if (!bDisableBuilding)
 			{
 				setDisabledBuilding(eType, false);
+				bAnyFlip = true;
+				if (paFlipped != NULL)
+				{
+					paFlipped->push_back(eType);
+				}
 
 				if (bAlertOwner)
 				{
@@ -21533,39 +21702,25 @@ void CvCity::checkBuildings(bool bAlertOwner)
 		else if (bDisableBuilding)
 		{
 			setDisabledBuilding(eType, true);
+			bAnyFlip = true;
+			if (paFlipped != NULL)
+			{
+				paFlipped->push_back(eType);
+			}
 
 			if (bAlertOwner)
 			{
-				// Toffer - Should combine the text messages if there's more than one reason.
 				CvWString szBuffer;
-
-				if (bMissingBonus)
-				{
-					szBuffer = gDLL->getText("TXT_KEY_CITY_REMOVED_BUILDINGS_RESOURCES", kBuilding.getDescription(), getNameKey(), kBuilding.getDescription());
-				}
-				else if (bRequiresWar)
-					szBuffer = gDLL->getText("TXT_KEY_REMOVED_BUILDINGS_WARTIME", kBuilding.getDescription(), getNameKey());
-				else if (bRequiresCivics)
-					szBuffer = gDLL->getText("TXT_KEY_CITY_REMOVED_BUILDINGS_CIVICS", kBuilding.getDescription(), getNameKey(), kBuilding.getDescription());
-				else if (bRequiresPower)
-					szBuffer = gDLL->getText("TXT_KEY_CITY_REMOVED_BUILDINGS_POWER", kBuilding.getDescription(), getNameKey());
-				else if (bMissingFreshWater)
-					szBuffer = gDLL->getText("TXT_KEY_CITY_REMOVED_FRESH_WATER", kBuilding.getDescription(), getNameKey());
-				else if (bRequiresPopulation)
-					szBuffer = gDLL->getText("TXT_KEY_CITY_REMOVED_BUILDINGS_POPULATION", kBuilding.getDescription(), getNameKey());
-				else if (bPopulationTooHigh)
-					szBuffer = gDLL->getText("TXT_KEY_CITY_REMOVED_MAX_POPULATION", kBuilding.getDescription(), getNameKey());
-				else if (bReligionBanned)
+				if (bReligionBanned)
 					szBuffer = gDLL->getText("TXT_KEY_CITY_RELIGIOUSLY_DISABLED_COMPLETELY_BUILDINGS", getNameKey(), GC.getReligionInfo(eReligion).getDescription(), kBuilding.getDescription());
-				else
-				{
-					FErrorMsg("error");
+				else // operate-dormant / employed-population: the per-atom attribution lives on the explain surface
 					szBuffer = gDLL->getText("TXT_KEY_CITY_REMOVED_BUILDINGS_RESOURCES", kBuilding.getDescription(), getNameKey(), kBuilding.getDescription());
-				}
 				AddDLLMessage(getOwner(), false, GC.getEVENT_MESSAGE_TIME(), szBuffer, NULL, MESSAGE_TYPE_MINOR_EVENT, kBuilding.getButton(), GC.getCOLOR_WARNING_TEXT(), getX(), getY(), true, true);
 			}
 		}
 	}
+	endBulkBuildingProcessing(bAnyFlip);
+	return bAnyFlip;
 }
 
 
@@ -21877,6 +22032,10 @@ void CvCity::doVicinityBonus()
 		}
 		if (iChange != 0)
 		{
+			// #430 event spine: the city's LOCAL presence of this bonus flipped (an improved radius tile or an
+			// active providing building appeared/vanished) -- announce it so connection:vicinity dependents re-gate.
+			emitVicinityBonusChanged(getID(), getOwner(), iI, iChange);
+
 			for (int iJ = 0; iJ < GC.getNumBuildingInfos(); iJ++)
 			{
 				const CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iJ);
@@ -22856,8 +23015,8 @@ void CvCity::clearModifierTotals()
 		{
 			m_ppaaiExtraBonusAidModifier[iI][iJ] = 0;
 		}
-		m_paiFreeBonus[iI] = 0;
-		m_paiNumBonuses[iI] = 0;
+		// m_paiFreeBonusEvents is deliberately NOT cleared: it is genuine persisted one-shot state (event/WB
+		// grants), never a recalculable cache -- the legacy recalc used to wipe it (the known lossage).
 	}
 
 	for (int iI = GC.getNumBuildingInfos() - 1; iI > -1; iI--)

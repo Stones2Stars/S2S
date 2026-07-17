@@ -155,9 +155,9 @@ public:
 	// getImprovement()==this rebuilds it at load (mirrors the legacy cache). Worker AI reads it.
 	const std::vector<BuildTypes>& getBuildTypes() const { return m_aeBuildTypes; }
 	void addBuildType(BuildTypes eBuild) { m_aeBuildTypes.push_back(eBuild); }   // load-time reverse-index writer (doPostLoadCaching)
-	// CURATOR-GAP (by design): the improvement's PropertyManipulators are RELOCATED to grants.repeatable
-	// (curate_improvement.py post_process; owner 2026-07-01 "property pulses are repeatable grants"), so the legacy
-	// CvPropertyManipulators OBJECT is intentionally unpopulated here -- consumers read the pulse via getGrants().
+	// The improvement's property sources are authored as grants.repeatable pulses (curate_improvement.py
+	// post_process; owner 2026-07-01 "property pulses are repeatable grants") and BRIDGED back into this object
+	// in mapFrom (CascadePropertyBridge::bridgePulses) so the KEEP-legacy plot gather delivers them.
 	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
 
 	const std::vector<MapCategoryTypes>& getMapCategories() const { return m_aeMapCategories; }

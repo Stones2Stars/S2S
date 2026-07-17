@@ -18,9 +18,59 @@
 > table. (Plot-scope sources have "no real purpose at this time" but ride along — they cost nothing.)
 >
 > **Build order (owner "curator next"):** (1) ✅ the city-scope C++ bridge — building/unit flats + decay + population
-> baseline (already-curated data, DONE, compiling: increments 1+2). (2) curator emits `properties.diffuse[]` /
-> `changePropagation[]`. (3) `CvPropertyInfo` reads them. (4) the BoolExpr translator (conditioned diffuse gates + the
-> ~44 conditioned building flats). (5) empire-scope gather. (6) validate.
+> baseline (already-curated data, DONE, compiling: increments 1+2). (2) ✅ curator emits `properties.diffuse[]` /
+> `changePropagation[]`. (3) ✅ `CvPropertyInfo` reads them. (4) ✅ the BoolExpr translator
+> (`Cascade/CvCascadePropertyBridge` — conditioned building/unit flats incl. the 78 tech-gated education entries,
+> the IS_OWNED diffuse gates, the per-POPULATION `each>1` IntExpr amounts, the changePropagation table; verified
+> live: ANCIENT_CUSTOMS = exactly its 3 authored sources, folklore = their 2 gated education sources).
+> (5) ✅ the all-cities gather (revived by the one-shot ruling below): `PROPERTY_X.empire.flat` → the building's
+> all-cities manipulator container → the load-built `GC.getAllCitiesManipBuildings` index → the count-scaled
+> `CvGameObjectCity::foreachManipulator` walk; observable at load via the yields payload's
+> `allCitiesManipBuildings` root map + per-building `propertyManipEmpire`. (6) validate — the turn-level pass
+> (per-turn `PROPERTY_*` deltas attributed, education/crime normalise) runs on the next played turns.
+>
+> **⚖ THE ONE-SHOT RULING (owner 2026-07-16 — ruled earlier but never written down, twice, so it was "re-found"
+> a third time): the legacy one-shot `<Properties>`/`<PropertiesAllCities>` semantic is DEAD — EVERY such value
+> RE-CLASSIFIES as a PER-TURN source. No exceptions: flammability converts too and gets REBALANCED later
+> (accepted — its values will climb until the rebalance; the mechanic is dormant today). The rebalance's known
+> shape (owner): flammability's problem is NO early-game counters — every reducer is late (fire code / smoke
+> detector / fire service) — so counter-values get added to a few early entities (a data/balance pass).**
+> Why: the ORIGINAL property design made all pollution-class `<Properties>` one-shots, but building designers
+> after the original design authored against the same block ASSUMING per-turn — the shipped XML is mixed-intent
+> data sharing one shape, and the one-shot semantic "makes no sense whatsoever". A sanctioned intentional
+> divergence from legacy behaviour (an owner-ruled [DEC-mirror-then-redesign] carve-out).
+> Consequences:
+> - The curator's fold of `<Properties>` (city) into the `PROPERTY_X.city.flat` families **IS the decided model**
+>   (`curate_building.py` — NO curator change), and the bridge feeding them to the per-turn solver is CORRECT —
+>   incl. the 353 flammability adders, GERM_TRAPS' disease +25, GARDENS_BY_THE_BAY's air −50.
+> - The engine's one-shot held path (`processBuilding` add/subtract via `getProperties()`/
+>   `getPropertiesAllCities()`, `CvCity.cpp:4717`) stays STUB-FED — now correct by ruling: nothing is held.
+> - **Increment 5 REVIVES for the 6 `<PropertiesAllCities>` entries** (curated `PROPERTY_X.empire.flat` — the
+>   fire services etc., now per-turn in EVERY city of the owner): the bridge reads `empire`-scope families into
+>   an all-cities manipulator container on the building, and `CvGameObjectCity::foreachManipulator` additionally
+>   walks the owning player's buildings for those (count-scaled — one gather per instance, mirroring the legacy
+>   per-instance add). NO player-scope manipulator source exists in the XML (census: DEFAULT 2210 / CITY 79 /
+>   PLOT 72), so this gather serves exactly these converted one-shots.
+>
+> **⚠ FOUND (mapFrom idempotency): the increment-1/2 bridges were append-only** — the aliased full-registry
+> `mapFrom` re-run duplicated every property source ~3× (live-verified: ANCIENT_CUSTOMS 9 sources for 3 authored).
+> Fixed: `CvPropertyManipulators::clear()` + clear-and-refill at the top of each bridge walk (the CvInfo.h
+> contract).
+>
+> **✅ THE CARRIER BRIDGES (owner 2026-07-16: "stubbing is straight up not allowed"):** every legacy
+> property-source carrier delivers from its curated JSON through the ONE shared walk
+> (`CascadePropertyBridge::bridgeFamilies` / `bridgePulses`), mirroring each category's legacy delivery shape:
+> civics/traits/heritages CITY+RELATION_ASSOCIATED (player gather → every owner city; heritage's legacy XML
+> carried NO GameObjectType, so legacy deposited into the unread PLAYER property bag — the curated `city` scope
+> is the delivered intent), specialists/promotions CITY|PLOT+RELATION_SAME_PLOT, buildings NO_RELATION (+ the
+> empire all-cities container), units SAME_PLOT, feature/improvement `grants.repeatable` pulses PLOT+NEAR (the
+> json §5 shape stays the authored home; the bridge feeds the KEEP-legacy solver until the F3/#429 rework).
+> HANDICAPS are still legacy-XML-loaded (not a replaced type) — already delivering, no bridge.
+> Load-verified via the yields payload's `propertySourceCensus`: civics 39/63, heritages 22/44, specialists
+> 16/30, features 27/31, improvements 18/18, traits 171/252 (active complex set) — each exactly the authored
+> count, no duplication. ⚠ FOLLOW-UP: promotions census 106 infos/202 sources vs the XML's 74 manipulator
+> blocks/124 sources — the curated families fold MORE than the manipulator blocks (curate_promotion.py is the
+> map); attribute the delta to its named curator rule.
 
 ## The five legacy source channels (all stub-empty today)
 

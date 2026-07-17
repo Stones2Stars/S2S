@@ -10,6 +10,7 @@
 #include "CvPromotionInfo.h"
 #include "CvPromotionLineInfo.h"  // GC.getPromotionLineInfo(...) -> the line's unitcombat-prereq / notOnUnitCombat getters
 #include "CvJsonParse.h"            // jsonResolveId + jsonFamVal/jsonFamMemberVal + jsonIdInt/Bool/Fk/Str + jsonChildObj + jsonX100
+#include "CvCascadePropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 #include "AI/CvGameAI.h"            // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 
 CvPromotionInfo::CvPromotionInfo()
@@ -32,7 +33,7 @@ CvPromotionInfo::CvPromotionInfo()
 	  m_iUpkeepModifier(0), m_iExtraUpkeep100(0), m_iUpgradeDiscount(0), m_iVisibilityChange(0),
 	  m_iCaptureProbabilityModifierChange(0), m_iCaptureResistanceModifierChange(0), m_iPoisonProbabilityModifierChange(0),
 	  m_iInsidiousnessChange(0), m_iInvestigationChange(0), m_iRevoltProtection(0), m_iPillageChange(0), m_iSurvivorChance(0),
-	  m_iLayerAnimationPath(0), m_iMinEraType(0), m_iMaxEraType(0), m_iStateReligionPrereq(-1), m_iControlPoints(0), m_iCommandRange(0), m_iLevelPrereq(0), m_iLinePriority(0),
+	  m_iLayerAnimationPath(0), m_iMinEraType(NO_ERA), m_iMaxEraType(NO_ERA), m_iStateReligionPrereq(-1), m_iControlPoints(0), m_iCommandRange(0), m_iLevelPrereq(0), m_iLinePriority(0),
 	  m_iCommandType(NO_COMMAND), m_ePromotionLine(NO_PROMOTIONLINE),
 	  m_iReplacesUnitCombat(-1), m_iDomainCargoChange(-1), m_iSpecialCargoChange(-1), m_iSpecialCargoPrereq(-1), m_iSMNotSpecialCargoChange(-1), m_iSMNotSpecialCargoPrereq(-1),
 	  m_bLeader(false), m_bStatus(false), m_bQuick(false), m_bStarsign(false), m_bZeroesXP(false), m_bForOffset(false), m_bCargoPrereq(false), m_bRBombardPrereq(false),
@@ -98,14 +99,16 @@ static void readIdSet(const picojson::object& parent, const char* key, std::set<
 		if (it->second.is<bool>() && it->second.get<bool>()) { const int id = jsonResolveId(it->first); if (id >= 0) out.insert(id); }
 }
 
-// identity numeric-or-FK scalar: a plain number stays as-is; a string FK-resolves; absent -> 0.
-static int idNumOrFk(const picojson::object& io, const char* key)
+// identity numeric-or-FK scalar: a plain number stays as-is; a string FK-resolves; absent -> iAbsent
+// (the caller supplies the legacy "unset" sentinel -- an absent era BAND is NO_ERA, never era 0; a 0-default
+// there read as "max era = ancient" and refused every promotion for every post-ancient unit).
+static int idNumOrFk(const picojson::object& io, const char* key, int iAbsent = 0)
 {
 	picojson::object::const_iterator it = io.find(key);
-	if (it == io.end()) return 0;
+	if (it == io.end()) return iAbsent;
 	if (it->second.is<double>()) return (int)it->second.get<double>();
 	if (it->second.is<std::string>()) return jsonResolveId(it->second.get<std::string>());
-	return 0;
+	return iAbsent;
 }
 
 // vision struct rows: [{invisible, <slotKey>, intensity}] -> parallel FK ids + intensity into the caller's fields.
@@ -194,6 +197,11 @@ void CvPromotionInfo::mapFrom(const picojson::value& entity)
 	CvInfo::mapFrom(entity);   // core reading + the section dispatch into the composed units (modifiers/skills/gate/grants)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
+
+	// PROPERTY_* per-turn SOURCES: a promotion's <PROPERTY_X>.{city|plot}.flat (the crime-fighting /
+	// law-enforcement lines) emits into the holding unit's same-plot city / plot -- the unit gather walks held
+	// promotions; RELATION_SAME_PLOT mirrors the legacy shape. The ONE shared walk.
+	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_SAME_PLOT);
 
 	// entity-level gate (populated by the base dispatch) -> the flat OnGameOptions/NotOnGameOptions lists
 	collectGameOptions(m_gate.enabled, m_aiOnGameOptions);
@@ -364,8 +372,8 @@ void CvPromotionInfo::mapFrom(const picojson::value& entity)
 		{ picojson::object::const_iterator ct = io->find("commandType");   // default NO_COMMAND unless authored (runtime setter may override)
 		  if (ct != io->end() && ct->second.is<double>()) m_iCommandType = (int)ct->second.get<double>(); }
 		m_iLayerAnimationPath = idNumOrFk(*io, "layerAnimationPath");
-		m_iMinEraType         = idNumOrFk(*io, "minEra");
-		m_iMaxEraType         = idNumOrFk(*io, "maxEra");
+		m_iMinEraType         = idNumOrFk(*io, "minEra", NO_ERA);
+		m_iMaxEraType         = idNumOrFk(*io, "maxEra", NO_ERA);
 		m_iReplacesUnitCombat  = jsonIdFk(*io, "replacesUnitCombat");
 		m_iDomainCargoChange   = jsonIdFk(*io, "domainCargoChange");
 		m_iSpecialCargoChange  = jsonIdFk(*io, "specialCargoChange");

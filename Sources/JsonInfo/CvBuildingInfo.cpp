@@ -8,6 +8,7 @@
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson
 #include "CvBuildingInfo.h"
 #include "CvJsonParse.h"            // jsonResolveId / jsonCommerceMap / jsonIdFk / jsonIdInt / jsonIdBool / jsonWorldArt
+#include "CvCascadePropertyBridge.h" // the JSON->BoolExpr/IntExpr translator (property-audit.md increment 4)
 #include "UI/CvArtFileMgr.h"        // ARTFILEMGR.getBuildingArtInfo / getMovieArtInfo -- the art shims (mirrors CvBonusInfo)
 #include "Infos/CvArtInfoMovie.h"   // CvArtInfoMovie complete type -- getMovie() calls getPath() (via CvAssetInfoBase)
 #include "Infos/CvArtInfoBuilding.h" // CvArtInfoBuilding complete type -- getButton() call needs the full definition
@@ -681,7 +682,7 @@ void CvBuildingInfo::reconstructFromComposed()
 	  if (lat) { if (lat->min >= 0) m_iMinLatitude = lat->min; if (lat->max >= 0) m_iMaxLatitude = lat->max; } }
 	m_iNumCitiesPrereq   = cnd_andMin(build, "CITY");
 	m_iNumTeamsPrereq    = cnd_andMin(build, "TEAM");
-	m_iPrereqPopulation  = cnd_andMin(build, "POPULATION");
+	m_iPrereqPopulation  = cnd_andMin(op, "POPULATION");   // engine DORMANCY leg -> authored on OPERATE (curator 2026-07-15)
 	m_iVictoryPrereq     = cnd_firstAnd(build, "VICTORY_", -1);
 	{ const CvJsonCondition* p = cnd_findPredicate(build, CASC_PRED_IS_HOLY_CITY);   if (p) m_iHolyCity = p->id; }
 	{ const CvJsonCondition* p = cnd_findPredicate(build, CASC_PRED_STATE_RELIGION); if (p) m_iPrereqStateReligion = p->id; }
@@ -695,9 +696,11 @@ void CvBuildingInfo::reconstructFromComposed()
 	m_bNeedStateReligionInCity = cnd_hasPredicate(build, CASC_PRED_STATE_RELIGION_IN_CITY);
 	m_bWater      = cnd_hasPredicate(build, CASC_PRED_HAS_COAST);
 	m_bRiver      = cnd_hasPredicate(build, CASC_PRED_HAS_RIVER);
-	m_bFreshWater = cnd_hasPredicate(build, CASC_PRED_HAS_FRESHWATER);
+	// NEEDS-power / NEEDS-freshwater are engine DORMANCY legs -> authored on OPERATE (curator 2026-07-15).
+	// PROVIDES-power is attributes.providesPower, read directly by isPower() -- never a requires atom.
+	m_bFreshWater = cnd_hasPredicate(op, CASC_PRED_HAS_FRESHWATER);
 	m_bNoHolyCity = build && cnd_hasPredicate(build->disabled, CASC_PRED_IS_HOLY_CITY);
-	m_bPower      = cnd_hasPredicate(build, CASC_PRED_HAS_POWER);
+	m_bPower      = cnd_hasPredicate(op, CASC_PRED_HAS_POWER);
 	m_iPrereqAndBonus         = cnd_firstAndCV(op, "BONUS_", CASC_CONN_TRADE_OR_VICINITY, CASC_VIC_NONE);
 	m_iPrereqVicinityBonus    = cnd_firstAndCV(op, "BONUS_", CASC_CONN_VICINITY, CASC_VIC_CONNECTED);
 	m_iPrereqRawVicinityBonus = cnd_firstAndCV(op, "BONUS_", CASC_CONN_VICINITY, CASC_VIC_OWNED);
@@ -722,7 +725,8 @@ void CvBuildingInfo::reconstructFromComposed()
 
 	// getFreeBonuses -- the manufactured-resource (and culture-building) TRADE-NETWORK + vicinity supply (owner ruling
 	// 2026-07-11: manufactured resources are trade + vicinity, not vicinity-only). The engine's processBuilding
-	// (CvCity.cpp:4739) calls changeFreeBonus() per getFreeBonuses() -> m_paiFreeBonus -> getNumBonuses/hasBonus (TRADE)
+	// injects the provides delta straight into the city's plot group (getFreeBonus is COMPUTED from the processed
+	// buildings + the persisted event grants -- no ledger) -> getNumBonuses/hasBonus (TRADE)
 	// AND clears the vicinity caches (hasVicinityBonus). Sourced from provides.bonuses (BOTH are the legacy
 	// ExtraFreeBonuses); with the poco's getFreeBonuses stubbed empty the free bonus was vicinity-only (cascade provides)
 	// and never entered the trade network -- so anything needing it via `trade` (tanks/helicopters) couldn't be built,
@@ -740,6 +744,12 @@ void CvBuildingInfo::reconstructFromComposed()
 	if (!mods) return;
 	static const char* YN[NUM_YIELD_TYPES]   = { "food", "production", "commerce" };
 	static const char* CN[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
+
+	// PROPERTY_* per-turn SOURCES (property-audit.md increments B+4 + the one-shot ruling): city/plot flats ->
+	// m_PropertyManipulators (KEEP-legacy solver); empire flats (the converted <PropertiesAllCities>) -> the
+	// all-cities container, delivered per owner city by the CvGameObjectCity gather. The ONE shared walk
+	// (clear-and-refill inside -- the CvInfo.h idempotency contract).
+	CascadePropertyBridge::bridgeFamilies(mods, m_PropertyManipulators, NO_RELATION, 0, &m_PropertyManipulatorsAllCities);
 
 	// Part A: TARGET-KEYED (unconditioned) -- iterate every family, dispatch by dotted address.
 	const std::map<std::string, CvJsonModFamily*>& all = mods->all();
@@ -814,29 +824,8 @@ void CvBuildingInfo::reconstructFromComposed()
 			else if (fk >= 0) mod_addScalar(m_freeSpecialistCount, (SpecialistTypes)fk, fam_uncond100(f, CASC_UNIT_COUNT) / 100);
 			continue;
 		}
-		// PROPERTY_* per-turn SOURCE (property-audit.md increment B): <PROPERTY_X>.{city|plot}.flat -> a Constant source
-		// into m_PropertyManipulators, fed to the KEEP-legacy solver. per:POPULATION -> AttributeConstant. Conditioned
-		// (`enabled`/`disabled`) entries DEFER to the increment-4 BoolExpr translator (not silently applied).
-		if (f0.compare(0, 9, "PROPERTY_") == 0 && s.size() == 2 && (s[1] == "city" || s[1] == "plot"))
-		{
-			const int eProp = jsonResolveId(f0);
-			if (eProp >= 0)
-			{
-				const GameObjectTypes eObj = (s[1] == "plot") ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
-				for (int i = 0; i < f->size(); ++i)
-				{
-					const CvJsonModEntry* e = f->entries[i];
-					if (e->unit != CASC_UNIT_FLAT || e->enabled != NULL || e->disabled != NULL) continue;
-					if (e->hasPer)
-					{
-						if (e->perType == "POPULATION")
-							m_PropertyManipulators.addAttributeConstantSource((PropertyTypes)eProp, ATTRIBUTE_POPULATION, e->value100 / 100, eObj);
-					}
-					else m_PropertyManipulators.addConstantSource((PropertyTypes)eProp, e->value100 / 100, eObj);
-				}
-			}
-			continue;
-		}
+		// (PROPERTY_* families are bridged by the ONE shared CascadePropertyBridge::bridgeFamilies walk above.)
+		if (f0.compare(0, 9, "PROPERTY_") == 0) continue;
 	}
 
 	// Part B: COND-KEYED (base address; the entry `enabled` carries the key).

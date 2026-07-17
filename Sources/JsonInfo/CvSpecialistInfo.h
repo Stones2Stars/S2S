@@ -38,7 +38,7 @@ public:
 
 	int getFlavorValue(int i) const { return mapGet(m_flavours, i); }               // ai.flavours {FLAVOR:int}
 
-	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }  // property engine (self-contained; XML-era manip data deferred)
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }  // fed from the PROPERTY_* families in mapFrom (city gather, per assigned specialist)
 
 	const char* getTexture() const { return m_szTexture.c_str(); }   // ui.art.texture (the specialist's city-screen glyph)
 

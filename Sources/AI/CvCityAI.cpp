@@ -1,6 +1,7 @@
 // cityAI.cpp
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvExeTrace.h"
 #include "BetterBTSAI.h"
 
 #include "Tools/FProfiler.h"
@@ -36,6 +37,11 @@
 #include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the event spine (shadow)
 #include "CvCityLogTags.h" // [CIT] tag enums (shared with CvCity.cpp -- defined once, see header)
 
+// The compiler intrinsic behind the [CIT/assign/dirty] caller attribution (VC7.1 supports it; PDB-resolvable
+// as an RVA against the DLL module base).
+extern "C" void* _ReturnAddress(void);
+#pragma intrinsic(_ReturnAddress)
+
 // #430 logging: [CIT] city-production -> event spine (CvCityAI + CvCity). Self-registers prefixes + CityAI.log;
 // the spine never names CIT. Shadow: emits run ALONGSIDE existing logCityAI calls (diff on /events, then cut).
 // Constant labels recategorized to clean key=value per the recategorize-freely ruling.
@@ -58,6 +64,9 @@ namespace
 		case CIT_ORDER_PROCESS:       return "[CIT/order] action=maintainProcess";
 		case CIT_PROP:                return "[CIT/prop]";
 		case CIT_PROPLEVEL:           return "[CIT/proplevel]";
+		case CIT_ASSIGN_DIRTY:        return "[CIT/assign/dirty]";
+		case CIT_ASSIGN_RUN:          return "[CIT/assign/run]";
+		case CIT_BILLBOARD_POLL:      return "[CIT/billboard]";
 		case CIT_PUSH_REJECT_UNIT:    return "[CIT/push/reject] kind=unit reason=spamGuard";
 		case CIT_PUSH_REJECT_BUILDING:return "[CIT/push/reject] kind=building reason=dupGuard";
 		case CIT_PUSH_UNIT:           return "[CIT/push] kind=unit";
@@ -141,6 +150,8 @@ namespace
 		case CITF_aiRoleHas:    return "aiRoleHas";
 		case CITF_lostProd:     return "lostProd";
 		case CITF_gold:         return "gold";
+		case CITF_callerRva:    return "callerRva";
+		case CITF_fn:           return "fn";
 		default:              return NULL;
 		}
 	}
@@ -628,6 +639,10 @@ void CvCityAI::AI_assignWorkingPlots()
 		return;
 	}
 
+	// the citizen-juggle bracket (the governor-churn fix): every probe mutation inside this run keeps its
+	// semantics but defers the side-effect layer; endCitizenJuggling below replays the run's NET once.
+	startCitizenJuggling();
+
 	//update the special yield multiplier to be current
 	AI_updateSpecialYieldMultiplier();
 
@@ -715,12 +730,21 @@ void CvCityAI::AI_assignWorkingPlots()
 		FAssert((getWorkingPopulation() + getSpecialistPopulation()) <= (totalFreeSpecialists() + getPopulation()));
 	}
 
+	// close the juggle bracket BEFORE the dirty-flag clear: the net replay's own marks/emits are genuine
+	// run-results, not probe churn (and any re-dirty they cause is absorbed by the clear below)
+	endCitizenJuggling();
+
 	AI_setAssignWorkDirty(false);
+
+	// The storm-shape half of the churn instrument: one line per completed run -- runs/city/turn is the
+	// re-dirty frequency the [CIT/assign/dirty] callers explain.
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ASSIGN_RUN, 2)
+		.addI(CITF_city, getID()));
 
 	if (isCitySelected())
 	{
-		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
-		gDLL->getInterfaceIFace()->setDirty(CitizenButtons_DIRTY_BIT, true);
+		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+		exeSetUIDirty(CitizenButtons_DIRTY_BIT, true);
 	}
 }
 
@@ -7537,8 +7561,30 @@ bool CvCityAI::AI_isAssignWorkDirty() const
 }
 
 
+// The billboard-feed trace (owner 2026-07-16 -- "emit an event every time any of the getters that billboards
+// use are called"): one [CIT/billboard] DIAGNOSTIC per entry-point call, level 1 (deliberately loud -- a
+// diagnosis instrument), + the census counter. fn = the gPerfBillboardFnNames index.
+void citEmitBillboardPoll(int iFn, int iCityId)
+{
+	++gPerfBillboardFn[iFn & 15];
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_BILLBOARD_POLL, 1)
+		.addI(CITF_fn, iFn)
+		.addI(CITF_city, iCityId));
+}
+
 void CvCityAI::AI_setAssignWorkDirty(bool bNewValue)
 {
+	// The churn-storm attribution instrument: every false->true transition names its CALLER (module-relative
+	// return address; resolve offline via the PDB: `ln CvGameCoreDLL+<callerRva>`). The per-frame
+	// AI_updateAssignWork sweep re-runs the full assignment for every dirty city, so whoever keeps flipping
+	// this flag IS the measured assignWork wall + the specialistChanged event storm.
+	if (bNewValue && !m_bAssignWorkDirty)
+	{
+		static const char* s_pModuleBase = (const char*)GetModuleHandle("CvGameCoreDLL.dll");
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ASSIGN_DIRTY, 3)
+			.addI(CITF_city, getID())
+			.addI(CITF_callerRva, (int)((const char*)_ReturnAddress() - s_pModuleBase)));
+	}
 	m_bAssignWorkDirty = bNewValue;
 }
 

@@ -392,6 +392,11 @@ public:
 	PromotionTypes getStatusPromotion(int i) const;
 	int getNumStatusPromotions() const;
 
+	// Building types carrying EMPIRE-scope per-turn property sources (the converted <PropertiesAllCities>
+	// one-shots -- property-audit.md one-shot ruling). Load-built in doPostLoadCaching; the
+	// CvGameObjectCity::foreachManipulator all-cities walk iterates this short list, never all building infos.
+	const std::vector<BuildingTypes>& getAllCitiesManipBuildings() const { return m_allCitiesManipBuildings; }
+
 	inline PromotionTypes getStarsign(int i) const { return m_starsigns[i]; }
 	inline int getNumStarsigns() const { return (int)m_starsigns.size(); }
 
@@ -1146,6 +1151,7 @@ protected:
 	CvString m_szDllProfileText;
 
 	std::vector<BonusTypes> m_mapBonuses;
+	std::vector<BuildingTypes> m_allCitiesManipBuildings;   // empire-scope property-source buildings (load-built)
 	std::vector<PromotionTypes> m_aiStatusPromotions;
 	std::vector<PromotionTypes> m_starsigns;
 

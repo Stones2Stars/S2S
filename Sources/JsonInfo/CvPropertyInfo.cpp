@@ -8,6 +8,7 @@
 #include "CvPropertyInfo.h"
 #include "CvJsonParse.h"          // jsonChildObj / jsonIdInt / jsonIdBool / jsonIdStr / jsonResolveId
 #include "CvJsonModifiers.h"      // getModifiers() walk -> the property's own decay/per-pop families
+#include "CvCascadePropertyBridge.h" // the JSON->BoolExpr translator (property-audit.md increment 4)
 #include "Defines/CvGlobals.h"    // GC.getInfoTypeForString (self property id)
 
 // ai.scale -- the curator emits the AIScaleTypes enum name prefix-stripped + lowercased (AISCALE_CITY -> "city";
@@ -20,6 +21,19 @@ static AIScaleTypes aiScaleFromString(const std::string& s)
 	if (s == "player") return AISCALE_PLAYER;
 	if (s == "team")   return AISCALE_TEAM;
 	return AISCALE_NONE;
+}
+
+// A `properties.changePropagation` from/to scope token -> the legacy game-object type ("empire" is the json
+// spelling of the player scope; the legacy XML pair was GAMEOBJECT_CITY -> GAMEOBJECT_PLAYER).
+static GameObjectTypes jsonGameObjectScope(const std::string& s)
+{
+	if (s == "game")                    return GAMEOBJECT_GAME;
+	if (s == "team")                    return GAMEOBJECT_TEAM;
+	if (s == "empire" || s == "player") return GAMEOBJECT_PLAYER;
+	if (s == "city"   || s == "cities") return GAMEOBJECT_CITY;
+	if (s == "unit"   || s == "units")  return GAMEOBJECT_UNIT;
+	if (s == "plot"   || s == "plots")  return GAMEOBJECT_PLOT;
+	return NO_GAMEOBJECT;
 }
 
 CvPropertyInfo::CvPropertyInfo()
@@ -91,14 +105,17 @@ void CvPropertyInfo::mapFrom(const picojson::value& entity)
 		if (jsonIdStr(*txt, "prereqMax", szMax) && !szMax.empty()) m_szPrereqMaxDisplayText = CvWString(szMax.c_str());
 	}
 
-	// -- the property-engine SOURCE bridge (property-audit.md increment A/B; DEC-data-first / DEC-no-xml-into-game).
+	// -- the property-engine SOURCE bridge (property-audit.md increments A/B/4; DEC-data-first / DEC-no-xml-into-game).
 	// The KEEP-legacy CvPropertySolver reads m_PropertyManipulators; feed the property's OWN manipulators from the
 	// curated JSON: decay (<self>.{city|plot}.percent -> CvPropertySourceDecay toward targetLevel), the per-POPULATION
-	// baseline (<self>.city.flat + per:POPULATION -> AttributeConstant), and the spatial diffuse propagators (the
-	// `properties.diffuse[]` block). Conditioned entries (`enabled`) DEFER to the increment-4 BoolExpr translator.
+	// baseline (<self>.city.flat + per:POPULATION -> AttributeConstant), the spatial diffuse propagators (the
+	// `properties.diffuse[]` block, incl. the translated IS_OWNED gate), and the change-propagation table.
 	const PropertyTypes eSelf = (PropertyTypes)GC.getInfoTypeForString(getType(), true);
 	if (eSelf != NO_PROPERTY)
 	{
+		// clear-and-refill per the CvInfo.h idempotency contract (mapFrom re-runs on the aliased pass).
+		m_PropertyManipulators.clear();
+		m_changePropagation.clear();
 		const int iTarget = getTargetLevel();
 		static const char* const SC[2] = { "city", "plot" };
 		static const GameObjectTypes SG[2] = { GAMEOBJECT_CITY, GAMEOBJECT_PLOT };
@@ -109,7 +126,7 @@ void CvPropertyInfo::mapFrom(const picojson::value& entity)
 			for (int i = 0; i < f->size(); ++i)
 			{
 				const CvJsonModEntry* e = f->entries[i];
-				if (e->enabled != NULL || e->disabled != NULL) continue;   // conditioned -> increment 4
+				if (e->enabled != NULL || e->disabled != NULL) continue;   // no property authors a conditioned own-source; fail-closed skip
 				if (e->unit == CASC_UNIT_PERCENT)
 					m_PropertyManipulators.addDecaySource(eSelf, e->value100 / 100, iTarget, SG[si]);
 				else if (e->unit == CASC_UNIT_FLAT && e->hasPer && e->perType == "POPULATION")
@@ -128,13 +145,44 @@ void CvPropertyInfo::mapFrom(const picojson::value& entity)
 				{
 					if (!arr[i].is<picojson::object>()) continue;
 					const picojson::object& dd = arr[i].get<picojson::object>();
-					if (dd.find("enabled") != dd.end()) continue;   // conditioned diffuse -> increment 4
+					// A gated diffuse (`enabled` = a bare predicate string -- the crime/disease plot->plots
+					// IS_OWNED) translates to a legacy tag test (increment 4); an unknown gate skips the
+					// propagator -- fail closed, never over-apply.
+					const BoolExpr* pActive = NULL;
+					picojson::object::const_iterator eit = dd.find("enabled");
+					if (eit != dd.end())
+					{
+						std::string en;
+						jsonIdStr(dd, "enabled", en);
+						pActive = CascadePropertyBridge::predStringToBoolExpr(en);
+						if (pActive == NULL) continue;
+					}
 					std::string from, to, rel;
 					jsonIdStr(dd, "from", from); jsonIdStr(dd, "to", to); jsonIdStr(dd, "relation", rel);
 					const GameObjectTypes eFrom = (from == "plot" || from == "plots") ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
 					const GameObjectTypes eTo   = (to == "plot"   || to == "plots")   ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
 					const RelationTypes eRel = (rel == "samePlot") ? RELATION_SAME_PLOT : RELATION_NEAR;
-					m_PropertyManipulators.addDiffusePropagator(eSelf, jsonIdInt(dd, "percent"), eFrom, eTo, eRel, jsonIdInt(dd, "distance"));
+					m_PropertyManipulators.addDiffusePropagator(eSelf, jsonIdInt(dd, "percent"), eFrom, eTo, eRel, jsonIdInt(dd, "distance"), pActive);
+				}
+			}
+			// properties.changePropagation[] -> the change-propagation table (the FLAMMABILITY City->Player 100%
+			// rollup): a VALUE change on `from` propagates percent-scaled onto every related `to` object
+			// (CvProperties::propagateChange reads getChangePropagator per game-object type pair).
+			picojson::object::const_iterator cit = po->find("changePropagation");
+			if (cit != po->end() && cit->second.is<picojson::array>())
+			{
+				const picojson::array& arr = cit->second.get<picojson::array>();
+				for (size_t i = 0; i < arr.size(); ++i)
+				{
+					if (!arr[i].is<picojson::object>()) continue;
+					const picojson::object& cc = arr[i].get<picojson::object>();
+					std::string from, to;
+					jsonIdStr(cc, "from", from); jsonIdStr(cc, "to", to);
+					const GameObjectTypes eFrom = jsonGameObjectScope(from);
+					const GameObjectTypes eTo   = jsonGameObjectScope(to);
+					const int iPercent = jsonIdInt(cc, "percent");
+					if (eFrom != NO_GAMEOBJECT && eTo != NO_GAMEOBJECT && iPercent != 0)
+						m_changePropagation[(int)eFrom * NUM_GAMEOBJECTS + (int)eTo] = iPercent;
 				}
 			}
 		}
