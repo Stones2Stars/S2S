@@ -32,6 +32,10 @@ int CvCultureLevelInfo::getSpeedThreshold(int iSpeed) const
 void CvCultureLevelInfo::mapFrom(const picojson::value& entity)
 {
 	CvInfo::mapFrom(entity);   // core + availability (the entity-level gate, replacedBy edge, the allowed caps)
+	// materialized wonder-category caps (json §4.4; the getters are bare member reads)
+	m_iMaxWorldWonders    = wonderCap("worldWonders");
+	m_iMaxTeamWonders     = wonderCap("teamWonders");
+	m_iMaxNationalWonders = wonderCap("nationalWonders");
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
 
@@ -39,7 +43,7 @@ void CvCultureLevelInfo::mapFrom(const picojson::value& entity)
 
 	if (const picojson::object* io = jsonChildObj(o, "identity"))
 	{
-		m_iCityRadius = jsonIdInt(*io, "cityRadius");
+		m_iCityRadius = jsonIdInt(*io, "cityRadius", 1);  // legacy load default 1 (archive .add)
 		// cultureThreshold: a bare scalar, OR (if a game speed breaks the geometric ratio) a {base, overrides} object --
 		// read the base; the per-speed overrides are STUB deferred (the consumer derives per-speed by ×gamespeed%).
 		picojson::object::const_iterator ct = io->find("cultureThreshold");

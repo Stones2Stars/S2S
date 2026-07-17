@@ -21,12 +21,12 @@
 
 CvUnitInfo::CvUnitInfo()
 	: spawnOnly(false), unlimitedException(false)
-	, m_iCombat(0), m_iMoves(0), m_iWorkRate(0), m_iAirCombat(0), m_iCombatLimit(0), m_iAirCombatLimit(0), m_iAirUnitCap(0)
+	, m_iCombat(0), m_iMoves(0), m_iWorkRate(0), m_iAirCombat(0), m_iCombatLimit(100), m_iAirCombatLimit(0), m_iAirUnitCap(0)
 	, m_iUnitCombatType(-1), m_iDomainType(-1), m_iDefaultUnitAIType(-1), m_iSpecialUnitType(-1), m_iAdvisorType(-1), m_iLeaderPromotion(-1)
 	, m_iReligionType(-1), m_iUnitCaptureType(-1), m_iInvisibleType(-1)
-	, m_iAssetValue(0), m_iPowerValue(0), m_iXPValueAttack(0), m_iXPValueDefense(0), m_iConscriptionValue(0), m_iAggression(0)
+	, m_iAssetValue(0), m_iPowerValue(0), m_iXPValueAttack(0), m_iXPValueDefense(0), m_iConscriptionValue(0), m_iAggression(5)
 	, m_iAnimalCombatModifier(0), m_iCommandRange(0), m_iControlPoints(0), m_iLeaderExperience(0), m_iMinAreaSize(0), m_iEspionagePoints(0)
-	, m_iProductionCost(0), m_iBaseUpkeep(0), m_iHurryCostModifier(0), m_iInstanceCostModifier(0), m_iAdvancedStartCost(0)
+	, m_iProductionCost(0), m_iBaseUpkeep(0), m_iHurryCostModifier(0), m_iInstanceCostModifier(0), m_iAdvancedStartCost(100)
 	, m_iCargoSpace(0), m_iSpecialCargo(-1), m_iSMNotSpecialCargo(-1), m_iDomainCargo(-1)
 	, m_iCityAttackModifier(0), m_iCityDefenseModifier(0), m_iHillsAttackModifier(0), m_iHillsDefenseModifier(0), m_iVSBarbs(0)
 	, m_iAttackCombatModifier(0), m_iDefenseCombatModifier(0), m_iCombatModifierPerSizeMore(0), m_iCombatModifierPerSizeLess(0)
@@ -382,7 +382,7 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 		m_iXPValueAttack     = jsonIdInt(*id, "xpValueAttack");
 		m_iXPValueDefense    = jsonIdInt(*id, "xpValueDefense");
 		m_iConscriptionValue = jsonIdInt(*id, "conscription");
-		m_iAggression        = jsonIdInt(*id, "aggression");
+		m_iAggression        = childInt(*id, "aggression", 5);        // legacy load default 5 (archive .add:2780) -- curator elides it
 		m_iAnimalCombatModifier = jsonIdInt(*id, "animalCombat");
 		m_iCommandRange      = jsonIdInt(*id, "commandRange");
 		m_iControlPoints     = jsonIdInt(*id, "controlPoints");
@@ -391,6 +391,7 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 		m_iEspionagePoints   = jsonIdInt(*id, "espionagePoints");
 		m_iDomainType        = jsonIdFk(*id, "domain");
 		m_iDefaultUnitAIType = jsonIdFk(*id, "defaultUnitAI");
+		if (m_iDefaultUnitAIType < 0) m_iDefaultUnitAIType = GC.getInfoTypeForString("UNITAI_UNKNOWN");  // legacy load default (archive :3258); -1 negative-indexes AI count arrays
 		m_iSpecialUnitType   = jsonIdFk(*id, "special");
 		m_iAdvisorType       = jsonIdFk(*id, "advisor");
 		m_iLeaderPromotion   = jsonIdFk(*id, "leaderPromotion");
@@ -404,7 +405,8 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 			m_iMoves          = jsonIdInt(*base, "moves");
 			m_iWorkRate       = jsonIdInt(*base, "workRate");
 			m_iAirCombat      = jsonIdInt(*base, "airCombat");
-			m_iCombatLimit    = jsonIdInt(*base, "combatLimit");
+			m_iCombatLimit    = childInt(*base, "combatLimit", 100);  // legacy load default 100 (archive .add:2691) -- 0 reads
+			                                                          // every undamaged defender as combat-limit-reached (no attacks)
 			m_iAirCombatLimit = jsonIdInt(*base, "airCombatLimit");
 			m_iAirUnitCap     = jsonIdInt(*base, "airUnitCap");
 			m_iUnitCombatType = jsonIdFk(*base, "combatClass");   // the PRIMARY combat class
@@ -426,7 +428,7 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 			{ EnabledCivilizations e; e.eCivilization = (CivilizationTypes)civs[i]; m_enabledCivs.push_back(e); }
 		}
 		// identity.advancedStart.cost
-		if (const picojson::object* as = jsonChildObj(*id, "advancedStart")) m_iAdvancedStartCost = jsonIdInt(*as, "cost");
+		if (const picojson::object* as = jsonChildObj(*id, "advancedStart")) m_iAdvancedStartCost = childInt(*as, "cost", 100);  // legacy load default 100 (archive .add:2674)
 		// identity.cargo.special / smNotSpecial (SpecialUnit-cargo restrictions)
 		if (const picojson::object* cargo = jsonChildObj(*id, "cargo"))
 		{ m_iSpecialCargo = jsonIdFk(*cargo, "special"); m_iSMNotSpecialCargo = jsonIdFk(*cargo, "smNotSpecial"); }
@@ -694,4 +696,36 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 
 	// --- requires-tree prereqs (walk the composed requires.build the base just parsed) ---
 	reconstructPrereqs();
+
+}
+
+// ===================== game-option-gated getters (archive mirror -- SourceArchive/Infos/CvUnitInfo.cpp
+// :1642-:1950; owner ruling: IS_GAME_OPTION covers the combat-mod fields). Value = real curated data; the OPTION
+// decides whether the consuming system is on, exactly as legacy gated it at the getter. (getMaxHP stays the
+// header stub: NO unit authors sizeMatters.maxHP, and the archive returns 100 for unset under every option state.) =====
+int CvUnitInfo::getUnnerve() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) ? m_iUnnerve : 0; }
+int CvUnitInfo::getEnclose() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) ? m_iEnclose : 0; }
+int CvUnitInfo::getLunge() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) ? m_iLunge : 0; }
+int CvUnitInfo::getDynamicDefense() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) ? m_iDynamicDefense : 0; }
+int CvUnitInfo::getCombatModifierPerSizeMore() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iCombatModifierPerSizeMore : 0; }
+int CvUnitInfo::getCombatModifierPerSizeLess() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iCombatModifierPerSizeLess : 0; }
+int CvUnitInfo::getCombatModifierPerVolumeMore() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iCombatModifierPerVolumeMore : 0; }
+int CvUnitInfo::getCombatModifierPerVolumeLess() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iCombatModifierPerVolumeLess : 0; }
+int CvUnitInfo::getStealthStrikes() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_WITHOUT_WARNING) ? m_iStealthStrikes : 0; }
+int CvUnitInfo::getStealthCombatModifier() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_WITHOUT_WARNING) ? m_iStealthCombatModifier : 0; }
+bool CvUnitInfo::isStealthDefense() const
+{
+	if (!GC.getGame().isOption(GAMEOPTION_COMBAT_WITHOUT_WARNING)) return false;
+	static int s_clsId = -1;
+	return m_skills.hasKey(s_clsId, CLSD_SKILL, "stealthDefense");
 }

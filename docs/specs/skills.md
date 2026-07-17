@@ -22,6 +22,10 @@ The catalogue of a unit's **innate boolean abilities** — the `blitz`/`amphibio
 > The **empire** counterpart to unit `skills` is **`capabilities`**. This file is the `skills` glossary only;
 > `state`, `tags`, and `capabilities` get their own sibling glossaries (json.md §8 = the model).
 
+> **Every skill key is a runtime-generated `SKILL_*` info** ([DEC-classification-infos](../architecture/decisions.md#dec-classification-infos),
+> [json.md §8](json.md)): minted at load from the union of authored keys, resolved onto per-entity bitsets, read by
+> the getters as O(1) id bit tests — never per-call string lookups.
+>
 > **`capabilities` = empire, `skills` = unit — the rule.** The
 > unit-level ability block is **`skills`**; the empire-level block is **`capabilities`**
 > ([capabilities.md](capabilities.md)). The curators emit accordingly — `curate_unit.py` / `curate_promotion.py`

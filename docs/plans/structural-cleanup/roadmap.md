@@ -162,6 +162,25 @@ Engine math is intact (KEEP-legacy); only the JSON→engine feed is broken, both
 `<Properties>` replayed every turn — crime-spike/education-crash runaway) and **under-applies** (`changePropagation`
 getter hard-returns 0; gated/conditioned entries `continue`-skipped because the increment-4 BoolExpr/IntExpr
 translator does not exist). Scoped clean redo against the locked spec.
+- **⛔ BLOCKING (couples here from F0, adversarial-audit-confirmed LIVE gap): property-`operate` dormancy is never
+  invalidated.** A building's `requires.operate` `{PROPERTY_*, min/max}` band (crime/disease/education/pollution;
+  `operate`+`PROPERTY_` in 1735 files) falls to the **write-only `s_opDynamic` bucket** (`CvEnablerKernel.cpp:378/529`
+  — pushed, never read), and the solver mutates `m_Properties` emit-free, so `m_operatingBuildings` is never dirtied on
+  a band crossing and `checkBuildings` applies STALE dormancy (verified: `doTurn`'s `ensure()` is a no-op on the clean
+  set). MUST be fixed IN this F5 work: a property-band operate reverse-index (`scanCondDeps` collects the `PROPERTY_`
+  id + thresholds) driving a **moving-watermark crossing detector (owner-ruled mechanism)** — per city, per property
+  with operate consumers, hold the window `[min,max]` = the nearest band thresholds BRACKETING the current value; each
+  property tick is an O(1) in-window test that does NOTHING until the value reaches `min` or `max`, and only THEN
+  re-check that property's operate consumers + RESET the window to the new bracketing thresholds. This is the ONLY
+  no-self-heal-compliant shape (event-proportional — fires on actual crossings, never a per-turn poll/blanket). **The
+  watermark bookkeeping is ITS OWN LITTLE MODULE INSIDE the property engine (owner-ruled placement)** — consistent with
+  the self-contained property engine ([engine.md](../../reference/engine.md): "what happens inside the property engine
+  stays inside the property engine"): the module owns the window state and, on a crossing, emits a **DIRECTION-LESS
+  "property band hit" (city + property id ONLY — no high/low)**, because the enabler re-evaluation reads the current
+  value against the bands anyway, so direction is redundant and the property engine never needs to know WHICH buildings
+  care. The enabler receives it → re-evaluates that property's operate consumers → `cityHaveChanged(CASC_HAVE_PROPERTY)`
+  + the building-active footprint mask (the G3 bonus-operate pattern). Here, not after F5: crossing-detection on the
+  still-mangled feed would fire on wrong values — fix the feed + wire this together.
 
 ### F6 — Data that loads but does not manifest. Free XP / promotions case.
 Free XP + free promotions load end-to-end; the break is in APPLY/DISPLAY, not load. Real drops:
@@ -244,6 +263,12 @@ Two acceptance pillars, per item, verified LIVE in-game ([validation.md](../../s
   [DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king) objective made concrete;
   the FPS hunt resumes ONLY after F0's caches are event-wired and the game runs behaviorally as it used to
   (owner sequencing ruling).
+- **The MEMORY hunt is parked by the same sequencing ruling (owner): chasing per-turn memory consumption is
+  pointless until legacy is properly gone and everything runs on the cascade + enabler** — the growth is
+  turn-processing-borne (measured: idle dead-flat, settle-deltas +370/+69/+38MB per cycle with a ~60MB
+  in-processing transient; a 32-bit `bad_alloc` exit near the ceiling), and that processing is what the
+  remaining cutover legs replace. The `[PERF/mem]` phase-boundary probe (doTurn start / pre- / post-autoSave)
+  ships in every build so the eventual hunt starts attributed, but no allocation chase runs before the cut.
 
 - Build: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <Config> <verb>` from
   `Sources/` (Release for interactive testing; FinalRelease for perf/turn-lag). Assert build = quick compile check.

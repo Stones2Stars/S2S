@@ -120,7 +120,8 @@ public:
 	// SEED + the validation oracle. Mirrors the frontier's s_bc*/recheckHave, extended to the operate/provides fixpoint.
 	static void buildActiveIndex();
 	static void onBuildingChangedActive(const CvCity* pCity, int eBuilding);   // a building built/lost in pCity
-	static void onHaveChangedActive(const CvCity* pCity, int eHaveKind);       // pop/religion/corp/power (CASC_HAVE_*)
+	static void onHaveChangedActive(const CvCity* pCity, int eHaveKind);       // pop/religion/corp/power/bonus-whole-set (CASC_HAVE_*)
+	static void onBonusAccessChangedActive(const CvCity* pCity, int eBonus);   // #430 G3: a SINGLE bonus's access (trade/vicinity) flipped -> re-check its operate consumers (reverse-FK targeted)
 	static void onPlayerScopeChangedActive(const CvCity* pCity);              // tech/civic/golden-age (player scope)
 	static void seedOperatingBuildings(const CvCity* pCity);                          // the LOAD seed: full recompute + the provider ref-count
 

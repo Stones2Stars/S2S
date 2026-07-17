@@ -14,7 +14,7 @@
 
 CvFeatureInfo::CvFeatureInfo()
 	: m_iMovementCost(0), m_iDefenseModifier(0), m_iHealthPercent(0), m_iCultureDistance(0),
-	  m_iSeeThroughChange(0), m_iPopDestroys(0), m_iAppearanceProbability(0), m_iDisappearanceProbability(0),
+	  m_iSeeThroughChange(0), m_iPopDestroys(-1), m_iAppearanceProbability(0), m_iDisappearanceProbability(0),
 	  m_iGrowthProbability(0), m_iSpreadProbability(0), m_iAdvancedStartRemoveCost(0), m_iEffectProbability(0), m_iZobristValue(0),
 	  m_bImpassable(false), m_bNoCity(false), m_bNoImprovement(false), m_bNoBonus(false), m_bCountsAsPeak(false),
 	  m_bRequiresFlatlands(false), m_bRequiresRiver(false), m_bAddsFreshWater(false), m_bNukeImmune(false),
@@ -97,7 +97,7 @@ void CvFeatureInfo::mapFrom(const picojson::value& entity)
 	if (const picojson::object* io = jsonChildObj(o, "identity"))
 	{
 		m_iMovementCost      = jsonIdInt(*io, "movementCost");
-		m_iPopDestroys       = jsonIdInt(*io, "popDestroys");
+		m_iPopDestroys       = jsonIdInt(*io, "popDestroys", -1);  // legacy load default -1 = never destroyed by city pop
 		m_iAppearanceProbability    = jsonIdInt(*io, "appearance");
 		m_iDisappearanceProbability = jsonIdInt(*io, "disappearance");
 		m_iGrowthProbability        = jsonIdInt(*io, "growth");

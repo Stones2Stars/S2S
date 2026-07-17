@@ -54,7 +54,10 @@ int jsonFamVal(const picojson::object& o, const char* family, const char* scope,
 int jsonFamMemberVal(const picojson::object& o, const char* family, const char* scope, const char* member, const char* unit);
 // identity-block scalar reads: int (0 if absent), bool (false if absent), FK (-1 if absent; via jsonResolveId),
 // string (out untouched if absent; returns whether the key was present as a string).
-int jsonIdInt(const picojson::object& io, const char* key);
+// iDefault = the value an ABSENT key restores. The curator elides values equal to the LEGACY LOAD DEFAULT
+// (the archived .add(member, tag, default) third argument), so a non-zero legacy default MUST be passed here
+// by the poco read -- absent-reads-0 was the no-attacks combatLimit bug class.
+int jsonIdInt(const picojson::object& io, const char* key, int iDefault = 0);
 bool jsonIdBool(const picojson::object& io, const char* key);
 int jsonIdFk(const picojson::object& io, const char* key);
 bool jsonIdStr(const picojson::object& io, const char* key, std::string& out);

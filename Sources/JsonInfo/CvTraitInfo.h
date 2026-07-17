@@ -130,16 +130,17 @@ public:
 	int getGoldenAgeCommerceChanges(int i) const { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_aiGoldenAgeCommerceChange[i] : 0; }// {commerce}.empire.goldenAge.flat
 
 	// --- policy STATE flags (REAL; the §9 `policies` bool block, curate_trait.py POLICIES) ---
-	bool isNonStateReligionCommerce() const { return m_policies.has("nonStateReligionCommerce"); }
-	bool isUpgradeAnywhere() const          { return m_policies.has("upgradeAnywhere"); }
-	bool isMilitaryFoodProduction() const   { return m_policies.has("militaryFoodProduction"); }
-	bool isAllowsInquisitions() const       { return m_policies.has("allowInquisitions"); }
-	bool isCitiesStartwithStateReligion() const { return m_policies.has("citiesStartWithStateReligion"); }
-	bool isDraftsOnCityCapture() const      { return m_policies.has("draftsOnCityCapture"); }
-	bool isExtraGoody() const               { return m_policies.has("extraGoody"); }
-	bool isAllReligionsActive() const       { return m_policies.has("allReligionsActive"); }
-	bool isBansNonStateReligions() const    { return m_policies.has("bansNonStateReligions"); }
-	bool isFreedomFighter() const           { return m_policies.has("freedomFighter"); }
+	// O(1) generated-id bit tests (CLS_HAS; POLICY_* ids from the ClassificationRegistry)
+	bool isNonStateReligionCommerce() const CLS_HAS(m_policies, CLSD_POLICY, "nonStateReligionCommerce")
+	bool isUpgradeAnywhere() const          CLS_HAS(m_policies, CLSD_POLICY, "upgradeAnywhere")
+	bool isMilitaryFoodProduction() const   CLS_HAS(m_policies, CLSD_POLICY, "militaryFoodProduction")
+	bool isAllowsInquisitions() const       CLS_HAS(m_policies, CLSD_POLICY, "allowInquisitions")
+	bool isCitiesStartwithStateReligion() const CLS_HAS(m_policies, CLSD_POLICY, "citiesStartWithStateReligion")
+	bool isDraftsOnCityCapture() const      CLS_HAS(m_policies, CLSD_POLICY, "draftsOnCityCapture")
+	bool isExtraGoody() const               CLS_HAS(m_policies, CLSD_POLICY, "extraGoody")
+	bool isAllReligionsActive() const       CLS_HAS(m_policies, CLSD_POLICY, "allReligionsActive")
+	bool isBansNonStateReligions() const    CLS_HAS(m_policies, CLSD_POLICY, "bansNonStateReligions")
+	bool isFreedomFighter() const           CLS_HAS(m_policies, CLSD_POLICY, "freedomFighter")
 
 	// --- identity flags (REAL; curate_trait.py IDENTITY_FLAGS) ---
 	bool isCivilizationTrait() const { return civilizationTrait; }                          // identity.civilizationTrait
@@ -375,8 +376,14 @@ private:
 	std::map<int, int> m_flavours;                    // FlavorTypes -> weight (ai.flavours)
 	// identity flags (REAL)
 	bool m_bImpurePropertyManipulators, m_bImpurePromotions, m_bBarbarianSelectionOnly;
-	mutable int m_aiSpecYieldBuf[NUM_YIELD_TYPES];        // per-call recompute buffer for getSpecialistYieldChangeArray
-	mutable int m_aiSpecCommerceBuf[NUM_COMMERCE_TYPES];  // per-call recompute buffer for getSpecialistCommerceChangeArray
+	mutable int m_aiSpecYieldBuf[NUM_YIELD_TYPES];        // per-call fill buffer for getSpecialistYieldChangeArray
+	mutable int m_aiSpecCommerceBuf[NUM_COMMERCE_TYPES];  // per-call fill buffer for getSpecialistCommerceChangeArray
+	// materialized 2D keyed sparse maps (mapFrom-filled; the per-index getters are bare map reads -- no per-call
+	// string-address walks)
+	std::map<int, int> m_specYield[NUM_YIELD_TYPES];       // [yield] -> {specialist id -> flat}
+	std::map<int, int> m_specCommerce[NUM_COMMERCE_TYPES]; // [commerce] -> {specialist id -> flat}
+	std::map<int, int> m_impYield[NUM_YIELD_TYPES];        // [yield] -> {improvement id -> flat}
+	bool m_bAnySpecYield, m_bAnySpecCommerce;
 	std::string m_szShortDescription;
 	// target-KEYED list-index families materialized from JSON (REAL; enumerated in mapFrom)
 	std::vector<BuildingModifier>     m_aBuildingProductionModifiers;    // buildRate.empire.buildings.{B}.percent

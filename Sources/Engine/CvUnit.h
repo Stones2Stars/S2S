@@ -19,6 +19,11 @@ class CvSelectionGroup;
 class CvArtInfoUnit;
 class CvUnitInfo;
 class CvUnitSelectionCriteria;
+
+// The /computed/perf unit render-entity census (defined in CvUnit.cpp over its file-static counters): REAL engine
+// unit entities vs units riding the shared dummy -- the stacked-render / entity-accumulation observability read.
+int cvUnitRealEntityCount();
+int cvUnitDummyUsageCount();
 #ifdef USE_OLD_PATH_GENERATOR
 class FAStarNode;
 #endif

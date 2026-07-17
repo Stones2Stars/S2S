@@ -11,7 +11,8 @@
 static const char* COMMERCE_NAME[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
 
 CvReligionInfo::CvReligionInfo()
-	: m_iSpreadFactor(0), m_iTGAIndex(-1), m_iMissionType(-1), m_iChar(-1), m_iHolyCityChar(-1),   // TGAIndex -1 = the TGA-filler sentinel (RemoveTGAFiller erases fillers whose index stayed -1; real religions override from JSON)
+	: m_iSpreadFactor(0), m_iTGAIndex(-1), m_iFreeUnit(-1), m_iNumFreeUnits(0),   // TGAIndex -1 = the TGA-filler sentinel (RemoveTGAFiller erases fillers whose index stayed -1; real religions override from JSON)
+	  m_iMissionType(-1), m_iChar(-1), m_iHolyCityChar(-1),
 	  m_eTechPrereq(NO_TECH)
 {
 	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i) { m_aiStateReligionCommerce[i] = 0; m_aiHolyCityCommerce[i] = 0; m_aiGlobalReligionCommerce[i] = 0; }
@@ -38,10 +39,8 @@ const char* CvReligionInfo::getButtonDisabled() const
 }
 int CvReligionInfo::getFlavorValue(int i) const
 { std::map<int, int>::const_iterator it = m_flavours.find(i); return it != m_flavours.end() ? it->second : 0; }
-int CvReligionInfo::getFreeUnit() const
-{ return m_grants.firstListId("freeUnit"); }
-int CvReligionInfo::getNumFreeUnits() const
-{ return m_grants.pulse100("numFreeUnits") / 100; }   // pulses store ×100 (restored); /100 = the human count this getter always served
+int CvReligionInfo::getFreeUnit() const { return m_iFreeUnit; }          // grants.freeUnit (materialized at mapFrom)
+int CvReligionInfo::getNumFreeUnits() const { return m_iNumFreeUnits; }  // grants.numFreeUnits pulse (materialized at mapFrom)
 
 void CvReligionInfo::mapFrom(const picojson::value& entity)
 {
@@ -49,6 +48,9 @@ void CvReligionInfo::mapFrom(const picojson::value& entity)
 	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) { m_aiStateReligionCommerce[c] = 0; m_aiHolyCityCommerce[c] = 0; }
 	shrineCommerce.clear();
 	CvInfo::mapFrom(entity);   // base: text + availability (enables.buildings/units, grants.freeUnit/numFreeUnits)
+	// materialized grants reads (bucket-string reads are load-time only; pulses store ×100, /100 = the human count)
+	m_iFreeUnit = m_grants.firstListId("freeUnit");
+	m_iNumFreeUnits = m_grants.pulse100("numFreeUnits") / 100;
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
 

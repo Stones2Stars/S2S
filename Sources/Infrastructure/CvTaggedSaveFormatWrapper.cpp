@@ -3821,6 +3821,82 @@ void CvTaggedSaveFormatWrapper::ReadEndObject()
 
 //	Read next element from the stream, with info about what the load
 //	expects.  Various things can happen:
+// #430 SAVE MIGRATION TABLE -- the reader-consumed Assets/savemigration.txt (owner-ruled mechanism). Loaded ONCE
+// (lazily, first Expect of a load), it lets a retired serialized field be FULLY removed from the object -- no member,
+// no read/write, no per-object WRAPPER_SKIP_ELEMENT: an orphan CUT tag is drained transparently wherever it appears
+// (so it never desyncs the downstream reads), and a RENAMED tag matches its new member. The file is deployed under
+// Assets/ so the runtime DLL reads it via gDLL->getModName (mirrors CvCascadeReadJson's Assets\Data path). Load-only,
+// read-only; an absent/empty file => zero drains (exactly the pre-mechanism behaviour). Format + rules: the file header.
+namespace {
+	struct SaveMigrationTable
+	{
+		std::set<std::string> cuts;              // normalized "Class::field" of fully-removed fields -> drain the orphan tag
+		std::map<std::string, std::string> renames; // old "Class::field" -> new "Class::field"
+		bool loaded;
+		SaveMigrationTable() : loaded(false) {}
+	};
+	static SaveMigrationTable s_saveMig;
+
+	// The first "Class::field" token (contains "::") in [from,to); "" if none.
+	static std::string sm_token(const std::string& s, size_t from, size_t to)
+	{
+		size_t a = from; while (a < to && isspace((unsigned char)s[a])) ++a;
+		size_t b = a;    while (b < to && !isspace((unsigned char)s[b])) ++b;
+		std::string tok = s.substr(a, b - a);
+		return (tok.find("::") != std::string::npos) ? tok : std::string();
+	}
+
+	static void sm_ensureLoaded()
+	{
+		if (s_saveMig.loaded) return;
+		s_saveMig.loaded = true;   // load-once even on failure (no re-try storm)
+		std::string base = gDLL->getModName(true);
+		if (!base.empty() && base[base.size() - 1] != '\\' && base[base.size() - 1] != '/') base += "\\";
+		const std::string path = base + "Assets\\savemigration.txt";
+		FILE* f = fopen(path.c_str(), "r");
+		if (f == NULL)
+		{
+			gDLL->logMsg("Loading.log", CvString::format("[SAVEMIG] file NOT found: %s -- no cut/rename drains active", path.c_str()).c_str(), true, false);
+			return;
+		}
+		char line[512];
+		int nCuts = 0, nRenames = 0;
+		while (fgets(line, sizeof(line), f) != NULL)
+		{
+			std::string s(line);
+			size_t a = 0; while (a < s.size() && isspace((unsigned char)s[a])) ++a;
+			if (a >= s.size() || s[a] == '|' || s[a] == '=' || s[a] == '#') continue;   // header / separator / comment
+			const size_t arrow = s.find("->");
+			if (arrow != std::string::npos)
+			{
+				const std::string oldN = sm_token(s, 0, arrow), newN = sm_token(s, arrow + 2, s.size());
+				if (!oldN.empty() && !newN.empty()) { s_saveMig.renames[oldN] = newN; ++nRenames; }
+			}
+			else
+			{
+				const std::string cut = sm_token(s, 0, s.size());
+				if (!cut.empty()) { s_saveMig.cuts.insert(cut); ++nCuts; }
+			}
+		}
+		fclose(f);
+		gDLL->logMsg("Loading.log", CvString::format("[SAVEMIG] loaded %s: %d cuts, %d renames", path.c_str(), nCuts, nRenames).c_str(), true, false);
+	}
+
+	static bool sm_isCut(const char* name)
+	{
+		sm_ensureLoaded();
+		return !s_saveMig.cuts.empty() && s_saveMig.cuts.find(std::string(name)) != s_saveMig.cuts.end();
+	}
+	// If `streamName` is a retired-and-renamed field, returns its NEW name; else NULL.
+	static const char* sm_renameTarget(const char* streamName)
+	{
+		sm_ensureLoaded();
+		if (s_saveMig.renames.empty()) return NULL;
+		std::map<std::string, std::string>::const_iterator it = s_saveMig.renames.find(std::string(streamName));
+		return (it != s_saveMig.renames.end()) ? it->second.c_str() : NULL;
+	}
+}
+
 //		1) The element read matches what is expected - return the data
 //		2) The element read is not a match - assume that extra fields have been added
 //		   which we cannot fill in (they are left as their presumed defalts)
@@ -3862,6 +3938,14 @@ CvTaggedSaveFormatWrapper::Expect(const char* name, SaveValueType type)
 			FAssert(m_idDictionary.size() > (uint32_t)m_iNextElementNameId);
 
 			m_iNextElementType = m_idDictionary[m_iNextElementNameId].m_type;
+			// #430 save-migration CUT drain: a fully-removed field's orphan tag is consumed HERE (transparently,
+			// wherever it sits in the stream) so it never desyncs the following reads -- the member needs no member,
+			// no read/write, and no per-object WRAPPER_SKIP_ELEMENT. Driven by Assets/savemigration.txt (loaded once).
+			if (sm_isCut(m_idDictionary[m_iNextElementNameId].m_name.c_str()))
+			{
+				SkipElement();                     // drains the value per m_iNextElementType
+				m_bReadNextElementHeader = false;  // continue the header loop -> read the NEXT tag
+			}
 			break;
 		}
 	}
@@ -3902,6 +3986,17 @@ CvTaggedSaveFormatWrapper::Expect(const char* name, SaveValueType type)
 			//	Match
 			m_bReadNextElementHeader = false;
 			return true;
+		}
+		//	#430 save-migration RENAME: the stream tag is an OLD name whose NEW name (per Assets/savemigration.txt)
+		//	is exactly what we expect -> match it against the renamed member. Renames stop being save-breaking.
+		else if ( const char* szRenameTo = sm_renameTarget(m_idDictionary[m_iNextElementNameId].m_name.c_str()) )
+		{
+			if ( normalizedName.compare(szRenameTo) == 0 )
+			{
+				m_bReadNextElementHeader = false;
+				return true;
+			}
+			return false;
 		}
 		else
 		{

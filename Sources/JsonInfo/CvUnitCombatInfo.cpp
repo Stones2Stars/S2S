@@ -381,3 +381,35 @@ void CvUnitCombatInfo::mapFrom(const picojson::value& entity)
 		uc_readImprovementChanges(*vs, "visibleImprovementRange",    m_aVisibleImprovementRangeChanges);
 	}
 }
+
+// ===================== game-option-gated getters (archive mirror -- SourceArchive/Infos/CvUnitCombatInfo.cpp
+// :311-:560; owner ruling: IS_GAME_OPTION covers the combat-mod fields). Value = real curated data; the OPTION
+// decides whether the consuming system is on, exactly as legacy gated it at the getter. =====
+int CvUnitCombatInfo::getUnnerveChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) ? m_iUnnerveChange : 0; }
+int CvUnitCombatInfo::getEncloseChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) ? m_iEncloseChange : 0; }
+int CvUnitCombatInfo::getLungeChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) ? m_iLungeChange : 0; }
+int CvUnitCombatInfo::getDynamicDefenseChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) ? m_iDynamicDefenseChange : 0; }
+int CvUnitCombatInfo::getMaxHPChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iMaxHPChange : 0; }
+int CvUnitCombatInfo::getCombatModifierPerSizeMoreChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iCombatModifierPerSizeMoreChange : 0; }
+int CvUnitCombatInfo::getCombatModifierPerSizeLessChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iCombatModifierPerSizeLessChange : 0; }
+int CvUnitCombatInfo::getCombatModifierPerVolumeMoreChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iCombatModifierPerVolumeMoreChange : 0; }
+int CvUnitCombatInfo::getCombatModifierPerVolumeLessChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iCombatModifierPerVolumeLessChange : 0; }
+int CvUnitCombatInfo::getStealthStrikesChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_WITHOUT_WARNING) ? m_iStealthStrikesChange : 0; }
+int CvUnitCombatInfo::getStealthCombatModifierChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_WITHOUT_WARNING) ? m_iStealthCombatModifierChange : 0; }
+int CvUnitCombatInfo::getStealthDefenseChange() const
+{
+	if (!GC.getGame().isOption(GAMEOPTION_COMBAT_WITHOUT_WARNING)) return 0;
+	static int s_clsId = -1;
+	return m_skills.hasKey(s_clsId, CLSD_SKILL, "stealthDefense") ? 1 : 0;
+}

@@ -71,47 +71,50 @@ public:
 
 	// --- mirrored legacy CvTechInfo getters (consumer surface; operational side deferred, owner ruling 2026-07-08) ---
 	// Capability/trading flags: mirror the composed capability blocks (capabilities.md key mapping) -- real data.
-	bool isTechTrading() const              { return canTrade.count("techs") != 0; }
-	bool isGoldTrading() const              { return canTrade.count("gold") != 0; }
-	bool isMapTrading() const               { return canTrade.count("maps") != 0; }
-	bool isOpenBordersTrading() const       { return canTrade.count("openBorders") != 0; }
-	bool isDefensivePactTrading() const     { return canTrade.count("defensivePact") != 0; }
-	bool isPermanentAllianceTrading() const { return canTrade.count("permanentAlliance") != 0; }
-	bool isVassalStateTrading() const       { return canTrade.count("vassals") != 0; }
-	bool isWaterWork() const                { return canWorkOn.count("water") != 0; }
-	bool isBridgeBuilding() const           { return m_capabilities.has("canBuildBridges"); }
-	bool isIrrigation() const               { return m_capabilities.has("canSpreadIrrigation"); }
-	bool isIgnoreIrrigation() const         { return m_capabilities.has("canIgnoreIrrigation"); }
-	bool isRiverTrade() const               { return m_capabilities.has("hasRiverTrade"); }
-	bool isExtraWaterSeeFrom() const        { return m_capabilities.has("canSeeFurtherFromWater"); }
-	bool isMapCentering() const             { return m_capabilities.has("hasCenteredMap"); }
-	bool isMapVisible() const               { return m_capabilities.has("hasWholeMapRevealed"); }
-	bool isCanPassPeaks() const             { return m_capabilities.has("canPassPeaks"); }
-	bool isMoveFastPeaks() const            { return m_capabilities.has("canMoveFastOnPeaks"); }
-	bool isCanFoundOnPeaks() const          { return m_capabilities.has("canFoundOnPeaks"); }
-	bool isRebaseAnywhere() const           { return m_capabilities.has("canRebaseAnywhere"); }
-	bool isEnablesDesertFarming() const     { return m_capabilities.has("canFarmDesert"); }
-	bool isLanguage() const                 { return m_capabilities.has("hasLanguage"); }
-	bool isEmbassyTrading() const           { return canTrade.count("embassy") != 0; }
-	bool getDCMAirBombTech1() const { return m_capabilities.has("dcmAirBomb1"); }   // capabilities.dcmAirBomb1 (tech_radio); interim-correct until the DCM system's planned removal (capabilities.md)
-	bool getDCMAirBombTech2() const { return m_capabilities.has("dcmAirBomb2"); }   // capabilities.dcmAirBomb2 (tech_guided_weapons)
-	int getFirstFreeProphet() const { return m_grants.firstListId("firstFreeProphet"); }   // grants.firstFreeProphet (UNIT_ FK)
+	// materialized at mapFrom from the canTrade/canWorkOn blocks (bare member reads; the sets stay for cold renders)
+	bool isTechTrading() const              { return m_bTradeTechs; }
+	bool isGoldTrading() const              { return m_bTradeGold; }
+	bool isMapTrading() const               { return m_bTradeMaps; }
+	bool isOpenBordersTrading() const       { return m_bTradeOpenBorders; }
+	bool isDefensivePactTrading() const     { return m_bTradeDefensivePact; }
+	bool isPermanentAllianceTrading() const { return m_bTradePermanentAlliance; }
+	bool isVassalStateTrading() const       { return m_bTradeVassals; }
+	bool isWaterWork() const                { return m_bWorkWater; }
+	// O(1) generated-id bit tests (CLS_HAS; CAPABILITY_* ids from the ClassificationRegistry)
+	bool isBridgeBuilding() const           CLS_HAS(m_capabilities, CLSD_CAPABILITY, "canBuildBridges")
+	bool isIrrigation() const               CLS_HAS(m_capabilities, CLSD_CAPABILITY, "canSpreadIrrigation")
+	bool isIgnoreIrrigation() const         CLS_HAS(m_capabilities, CLSD_CAPABILITY, "canIgnoreIrrigation")
+	bool isRiverTrade() const               CLS_HAS(m_capabilities, CLSD_CAPABILITY, "hasRiverTrade")
+	bool isExtraWaterSeeFrom() const        CLS_HAS(m_capabilities, CLSD_CAPABILITY, "canSeeFurtherFromWater")
+	bool isMapCentering() const             CLS_HAS(m_capabilities, CLSD_CAPABILITY, "hasCenteredMap")
+	bool isMapVisible() const               CLS_HAS(m_capabilities, CLSD_CAPABILITY, "hasWholeMapRevealed")
+	bool isCanPassPeaks() const             CLS_HAS(m_capabilities, CLSD_CAPABILITY, "canPassPeaks")
+	bool isMoveFastPeaks() const            CLS_HAS(m_capabilities, CLSD_CAPABILITY, "canMoveFastOnPeaks")
+	bool isCanFoundOnPeaks() const          CLS_HAS(m_capabilities, CLSD_CAPABILITY, "canFoundOnPeaks")
+	bool isRebaseAnywhere() const           CLS_HAS(m_capabilities, CLSD_CAPABILITY, "canRebaseAnywhere")
+	bool isEnablesDesertFarming() const     CLS_HAS(m_capabilities, CLSD_CAPABILITY, "canFarmDesert")
+	bool isLanguage() const                 CLS_HAS(m_capabilities, CLSD_CAPABILITY, "hasLanguage")
+	bool isEmbassyTrading() const           { return m_bTradeEmbassy; }
+	bool getDCMAirBombTech1() const CLS_HAS(m_capabilities, CLSD_CAPABILITY, "dcmAirBomb1")   // capabilities.dcmAirBomb1 (tech_radio); interim-correct until the DCM system's planned removal (capabilities.md)
+	bool getDCMAirBombTech2() const CLS_HAS(m_capabilities, CLSD_CAPABILITY, "dcmAirBomb2")   // capabilities.dcmAirBomb2 (tech_guided_weapons)
+	int getFirstFreeProphet() const { return m_iFirstFreeProphet; }   // grants.firstFreeProphet (UNIT_ FK; materialized at mapFrom)
 	int getInflationModifier() const { return m_iInflationModifier; }   // inflation.empire.percent (legacy iInflationModifier; feeds CvPlayer::getTechInflation, summed in getInflationMod10000)
 	int* getCommerceModifierArray() const { static int s[NUM_COMMERCE_TYPES] = {0}; return s; }   // STUB zero array (paired with getCommerceModifierSTUB)
 	const PrereqBuilding& getPrereqBuilding(int /*i*/) const { return m_emptyPrereqBuilding; }    // STUB empty (getNumPrereqBuildings()==0 guards it)
 	const PrereqBuilding& getPrereqOrBuilding(int i) const { return m_aPrereqOrBuildings[i]; }    // requires.build.all[].any[] BUILDING_ OR-group (empire, min)
 	bool isTerrainTrade(int iTerrain) const { return canTradeOnTerrains.count(iTerrain) != 0; }
 	bool isCommerceFlexible(int i) const    // canSet{Science|Culture|Espionage}Rate; gold has no slider (capabilities.md)
-	{ return (i == COMMERCE_RESEARCH  && m_capabilities.has("canSetScienceRate"))
-	      || (i == COMMERCE_CULTURE   && m_capabilities.has("canSetCultureRate"))
-	      || (i == COMMERCE_ESPIONAGE && m_capabilities.has("canSetEspionageRate")); }
+	{ static int s_r = -1, s_c = -1, s_e = -1;
+	  return (i == COMMERCE_RESEARCH  && m_capabilities.hasKey(s_r, CLSD_CAPABILITY, "canSetScienceRate"))
+	      || (i == COMMERCE_CULTURE   && m_capabilities.hasKey(s_c, CLSD_CAPABILITY, "canSetCultureRate"))
+	      || (i == COMMERCE_ESPIONAGE && m_capabilities.hasKey(s_e, CLSD_CAPABILITY, "canSetEspionageRate")); }
 
 	// Relationship getters reconstructed from the composed availability units (requires/grants/allowed). The
 	// multi-parent prereqs are walked out of requires.build.all/.any in mapFrom; firstFree*/global read grants/allowed.
 	// leadsTo remains a STUB reverse index (operational deferred).
-	bool isGlobal() const { return m_allowed.cap("world") == 1; }              // legacy bGlobal -> allowed.world:1 (religion-uniqueness cap)
-	int getFirstFreeUnit() const { return m_grants.firstListId("firstFreeUnit"); }   // grants.firstFreeUnit (UNIT_ FK)
-	int getFirstFreeTechs() const { return m_grants.pulse100("freeTechs") / 100; }   // grants.freeTechs (int; stored x100 at parse)
+	bool isGlobal() const { return m_bGlobal; }                       // legacy bGlobal -> allowed.world:1 (materialized at mapFrom)
+	int getFirstFreeUnit() const { return m_iFirstFreeUnit; }         // grants.firstFreeUnit (UNIT_ FK; materialized at mapFrom)
+	int getFirstFreeTechs() const { return m_iFirstFreeTechs; }       // grants.freeTechs (int; materialized at mapFrom)
 	int getNumLeadsToTechs() const { return (int)m_leadsTo.size(); }
 	int getLeadsToTech(int iCount) const   // the iCount-th tech of the (ordered) reverse index
 	{
@@ -167,6 +170,10 @@ private:
 	int m_iCorporationRevenueModifier, m_iCorporationMaintenanceModifier, m_iAssetValue, m_iPowerValue, m_iGridX, m_iGridY;
 	int m_iAIWeight, m_iAITradeModifier;
 	bool m_bRepeat, m_bTrade, m_bDisable, m_bGoodyTech;
+	// materialized getter members (string-address reads are load-time only)
+	bool m_bTradeTechs, m_bTradeGold, m_bTradeMaps, m_bTradeOpenBorders, m_bTradeDefensivePact;
+	bool m_bTradePermanentAlliance, m_bTradeVassals, m_bTradeEmbassy, m_bWorkWater, m_bGlobal;
+	int m_iFirstFreeProphet, m_iFirstFreeUnit, m_iFirstFreeTechs;
 	std::map<int, int> m_flavours;        // FlavorTypes -> weight
 	std::map<int, int> m_domainExtraMoves;  // DomainTypes -> extra moves (domainMoves.empire.domains.{DOMAIN}.flat)
 	std::map<int, int> m_freeSpecialists; // SpecialistTypes -> count (inert today)

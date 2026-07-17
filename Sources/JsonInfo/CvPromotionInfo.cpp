@@ -33,12 +33,13 @@ CvPromotionInfo::CvPromotionInfo()
 	  m_iUpkeepModifier(0), m_iExtraUpkeep100(0), m_iUpgradeDiscount(0), m_iVisibilityChange(0),
 	  m_iCaptureProbabilityModifierChange(0), m_iCaptureResistanceModifierChange(0), m_iPoisonProbabilityModifierChange(0),
 	  m_iInsidiousnessChange(0), m_iInvestigationChange(0), m_iRevoltProtection(0), m_iPillageChange(0), m_iSurvivorChance(0),
-	  m_iLayerAnimationPath(0), m_iMinEraType(NO_ERA), m_iMaxEraType(NO_ERA), m_iStateReligionPrereq(-1), m_iControlPoints(0), m_iCommandRange(0), m_iLevelPrereq(0), m_iLinePriority(0),
+	  m_iLayerAnimationPath(-1) /* legacy addEnumAsInt default -1 = no layer -- 0 attached AnimationPath-0 render layers to every promoted unit */,
+	  m_iMinEraType(NO_ERA), m_iMaxEraType(NO_ERA), m_iStateReligionPrereq(-1), m_iControlPoints(0), m_iCommandRange(0), m_iLevelPrereq(0), m_iLinePriority(0),
 	  m_iCommandType(NO_COMMAND), m_ePromotionLine(NO_PROMOTIONLINE),
 	  m_iReplacesUnitCombat(-1), m_iDomainCargoChange(-1), m_iSpecialCargoChange(-1), m_iSpecialCargoPrereq(-1), m_iSMNotSpecialCargoChange(-1), m_iSMNotSpecialCargoPrereq(-1),
 	  m_bLeader(false), m_bStatus(false), m_bQuick(false), m_bStarsign(false), m_bZeroesXP(false), m_bForOffset(false), m_bCargoPrereq(false), m_bRBombardPrereq(false),
 	  m_bSetOnHNCapture(false), m_bSetOnInvestigated(false), m_bPrereqNormInvisible(false), m_bPlotPrereqsKeepAfter(false), m_bRemoveAfterSet(false),
-	  m_eTechPrereq(NO_TECH), m_eObsoleteTech(NO_TECH), m_iZobristValue(0)
+	  m_eTechPrereq(NO_TECH), m_eObsoleteTech(NO_TECH), m_iSetSpecialUnit(-1), m_iZobristValue(0)
 {
 	// Non-XML runtime state-hash value, drawn from the synced RNG at info construction EXACTLY as the archived
 	// CvPromotionInfo ctor did (SourceArchive/Infos/CvPromotionInfo.cpp:52). CvUnit XORs it into m_movementCharacteristicsHash.
@@ -193,10 +194,16 @@ void CvPromotionInfo::mapFrom(const picojson::value& entity)
 	m_aInvisibleTerrainChanges.clear(); m_aVisibleTerrainChanges.clear(); m_aVisibleTerrainRangeChanges.clear();
 	m_aInvisibleFeatureChanges.clear(); m_aVisibleFeatureChanges.clear(); m_aVisibleFeatureRangeChanges.clear();
 	m_aInvisibleImprovementChanges.clear(); m_aVisibleImprovementChanges.clear(); m_aVisibleImprovementRangeChanges.clear();
+	m_aiAddsBuilds.clear(); m_aiFreeToUnitCombats.clear(); m_iSetSpecialUnit = -1;
 
 	CvInfo::mapFrom(entity);   // core reading + the section dispatch into the composed units (modifiers/skills/gate/grants)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
+
+	// grants materialization (bucket-string reads are load-time only; the getters are bare member reads)
+	if (const std::vector<int>* l = grantList("builds")) m_aiAddsBuilds = *l;
+	if (const std::vector<int>* l = grantList("freeToUnitCombats")) m_aiFreeToUnitCombats = *l;
+	m_iSetSpecialUnit = m_grants.firstListId("specialUnit");
 
 	// PROPERTY_* per-turn SOURCES: a promotion's <PROPERTY_X>.{city|plot}.flat (the crime-fighting /
 	// law-enforcement lines) emits into the holding unit's same-plot city / plot -- the unit gather walks held
@@ -337,11 +344,10 @@ void CvPromotionInfo::mapFrom(const picojson::value& entity)
 						m_aHealUnitCombat.push_back(r);
 					}
 
-	// --- skills: raw tri-state bools + double-move keyed sets + unitcombat lists ---
+	// --- skills: the flat bools live on the composed m_skills block (both planes -- base dispatch); only the
+	// KEYED extras are subclass-parsed here ---
 	if (const picojson::object* sk = jsonChildObj(o, "skills"))
 	{
-		for (picojson::object::const_iterator it = sk->begin(); it != sk->end(); ++it)
-			if (it->second.is<bool>()) m_skillTri[it->first] = it->second.get<bool>();
 		readIdSet(*sk, "terrainDoubleMove", m_aiTerrainDoubleMove);
 		readIdSet(*sk, "featureDoubleMove", m_aiFeatureDoubleMove);
 		readIdList(*sk, "unitCombats", m_aiSubCombat);          // SubCombatChangeTypes
@@ -371,7 +377,7 @@ void CvPromotionInfo::mapFrom(const picojson::value& entity)
 		m_iLevelPrereq        = jsonIdInt(*io, "levelPrereq");
 		{ picojson::object::const_iterator ct = io->find("commandType");   // default NO_COMMAND unless authored (runtime setter may override)
 		  if (ct != io->end() && ct->second.is<double>()) m_iCommandType = (int)ct->second.get<double>(); }
-		m_iLayerAnimationPath = idNumOrFk(*io, "layerAnimationPath");
+		m_iLayerAnimationPath = idNumOrFk(*io, "layerAnimationPath", -1);   // legacy default -1 = no layer (see ctor note)
 		m_iMinEraType         = idNumOrFk(*io, "minEra", NO_ERA);
 		m_iMaxEraType         = idNumOrFk(*io, "maxEra", NO_ERA);
 		m_iReplacesUnitCombat  = jsonIdFk(*io, "replacesUnitCombat");
@@ -506,4 +512,35 @@ void CvPromotionInfo::setDisqualifiedUnitCombatTypes()
 			}
 		}
 	}
+}
+
+// ===================== game-option-gated getters (archive mirror -- SourceArchive/Infos/CvPromotionInfo.cpp
+// :758-:1090; owner ruling: IS_GAME_OPTION covers the combat-mod fields). The VALUE is real curated data; the
+// OPTION decides whether the system consuming it is on, exactly as legacy gated it at the getter. When the
+// unit-plane modifier machine lands these become data-conditioned deposits; until then the getter is the gate. =====
+int CvPromotionInfo::getUnnerveChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) ? m_iUnnerveChange : 0; }
+int CvPromotionInfo::getEncloseChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) ? m_iEncloseChange : 0; }
+int CvPromotionInfo::getLungeChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) ? m_iLungeChange : 0; }
+int CvPromotionInfo::getDynamicDefenseChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) ? m_iDynamicDefenseChange : 0; }
+int CvPromotionInfo::getCombatModifierPerSizeMoreChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iCombatModifierPerSizeMoreChange : 0; }
+int CvPromotionInfo::getCombatModifierPerSizeLessChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iCombatModifierPerSizeLessChange : 0; }
+int CvPromotionInfo::getCombatModifierPerVolumeMoreChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iCombatModifierPerVolumeMoreChange : 0; }
+int CvPromotionInfo::getCombatModifierPerVolumeLessChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iCombatModifierPerVolumeLessChange : 0; }
+int CvPromotionInfo::getStealthStrikesChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_WITHOUT_WARNING) ? m_iStealthStrikesChange : 0; }
+int CvPromotionInfo::getStealthCombatModifierChange() const
+{ return GC.getGame().isOption(GAMEOPTION_COMBAT_WITHOUT_WARNING) ? m_iStealthCombatModifierChange : 0; }
+int CvPromotionInfo::getStealthDefenseChange() const
+{
+	if (!GC.getGame().isOption(GAMEOPTION_COMBAT_WITHOUT_WARNING)) return 0;
+	static int s_clsId = -1;
+	return m_skills.countKey(s_clsId, CLSD_SKILL, "stealthDefense");
 }

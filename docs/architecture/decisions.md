@@ -332,6 +332,21 @@ enabler's requires-reverse-index). After load every info ALREADY CARRIES its rev
 and never a bespoke reverse view or side index of its own (especially not inside an enabler).
 **Home:** [modifier.md §1](../specs/modifier.md).
 
+### DEC-materialize-at-mapfrom
+
+A `CvJson<X>Info` getter NEVER does a per-call string-keyed read (modifier-address sums, bool-block string walks,
+grants/allowed bucket fetches, raw JSON re-reads) — every such value materializes ONCE at mapFrom into a typed
+member and the getter is a bare member read. `JsonModScan` is the ONE load-time scan surface; classification blocks
+read by generated id (`CLS_HAS`). **Home:** [patterns.md § Materialize at mapFrom](patterns.md).
+
+### DEC-classification-infos
+
+The §8/§9 classification categories (skills / tags / attributes / capabilities / policies) exist as
+RUNTIME-GENERATED INFOS: one info per distinct authored block key, minted at load into the global infotype map
+(`SKILL_`/`TAG_`/`ATTRIBUTE_`/`CAPABILITY_`/`POLICY_` + UPPER_SNAKE of the camelCase key) and its category's
+InfoRepo — referenceable like any authored info, with every entity's blocks resolved to by-id bitsets. Nothing is
+hand-authored per category; the registry derives from the data. **Home:** [json.md §8](../specs/json.md).
+
 ### DEC-enabler-not-cascade
 
 The **enabler** ("can I?" — the generate-then-gate availability machine: the frontier + operating-building sets) and

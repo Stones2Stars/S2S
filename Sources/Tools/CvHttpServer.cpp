@@ -9,6 +9,7 @@
 #include "Cascade/CvCascadeScalarChannels.h" // the city scalar channels' nets (GP-rate/defense/maintenance)
 #include "Cascade/CvCascadeAccumulator.h"    // CascadeRateSlots -- the increment-F standing slot twins on the wellbeing action
 #include "Cascade/CvCascadePerfCount.h"      // /computed/perf: the (scope,channel) calc-count histogram (DEC-calc-count-gate)
+#include <psapi.h>                           // /computed/perf memory gauge: GetProcessMemoryInfo (the CvPlotPaging mechanism)
 #include "AI/BetterBTSAI.h"                  // /computed/perf frameAccumMs: the whole-turn frame-span ms accumulators
 #include "Cascade/CvCascadeReadJson.h"       // /state/info: rjInfoForType -- the info-object edge dump (DEC-one-reverse-view)
 #include "Cascade/CvBuildingEnabler.h"       // /computed/enabler/buildings: the per-city domain's oracle verification
@@ -1635,6 +1636,23 @@ namespace
 		picojson::value::object o;
 		o["action"] = picojson::value(std::string("perf"));
 		o["turn"] = picojson::value((double)GC.getGame().getGameTurn());
+		// process memory (the CvPlotPaging GetProcessMemoryInfo mechanism): the RAM-step/leak attribution gauge --
+		// poll across turns to split per-turn climb (leak) from one-time step (retained structure). MB, truncated.
+		{
+			PROCESS_MEMORY_COUNTERS pmc;
+			if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc)))
+			{
+				picojson::value::object mem;
+				mem["workingSetMB"]     = picojson::value((double)(pmc.WorkingSetSize / (1024 * 1024)));
+				mem["peakWorkingSetMB"] = picojson::value((double)(pmc.PeakWorkingSetSize / (1024 * 1024)));
+				mem["pagefileMB"]       = picojson::value((double)(pmc.PagefileUsage / (1024 * 1024)));
+				// the unit render-entity census (stacked-render / entity-accumulation hunt): real engine entities
+				// vs units riding the shared dummy (CvUnit.cpp g_numEntities / g_dummyUsage)
+				mem["unitRealEntities"] = picojson::value((double)cvUnitRealEntityCount());
+				mem["unitDummyUsage"]   = picojson::value((double)cvUnitDummyUsageCount());
+				o["memory"] = picojson::value(mem);
+			}
+		}
 		long lTotal = 0;
 		long aChanTotals[CCHAN_COUNT];
 		for (int c0 = 0; c0 < CCHAN_COUNT; ++c0) aChanTotals[c0] = 0;
@@ -4198,6 +4216,36 @@ namespace
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
+		// ---- /computed/units/combat -- the combat-strength ATTRIBUTION set (THE NO-GUESSING RULE): per unit, the
+		// persisted per-unit base (combatRaw = m_iBaseCombat, save-carried -- canFight's gate), the LOADED info's
+		// authored base (combatInfo = identity.base.combat; combatRaw != combatInfo names save-carried vs load-time
+		// as the zero's origin), the effective strength read (combatEff = baseCombatStr(), SM-aware), and the attack
+		// verdicts. Diagnostics-class (the whyNot / units/heal precedent), read-only; NOT the F4 unit-plane channel
+		// decomposition (which lands with that machine). Selector ?player=N[&unit=M].
+		if (strcmp(szAction, "unitCombat") == 0)
+		{
+			picojson::value::array units;
+			int iLoopU;
+			for (const CvUnit* pU = kPlayer.firstUnit(&iLoopU); pU != NULL; pU = kPlayer.nextUnit(&iLoopU))
+			{
+				if (iUnitReq >= 0 && pU->getID() != iUnitReq) continue;
+				const UnitTypes eUT = pU->getUnitType();
+				picojson::value::object u;
+				u["id"]            = picojson::value((double)pU->getID());
+				u["type"]          = picojson::value(std::string(eUT != NO_UNIT ? GC.getUnitInfo(eUT).getType() : "NO_UNIT"));
+				u["combatRaw"]     = picojson::value((double)pU->getBaseCombat());
+				u["combatInfo"]    = picojson::value((double)(eUT != NO_UNIT ? GC.getUnitInfo(eUT).getCombat() : 0));
+				u["combatEff"]     = picojson::value((double)pU->baseCombatStr());
+				u["combatLimit"]   = picojson::value((double)pU->combatLimit(NULL)); // 0 here = the no-attacks default bug
+				u["smStrength"]    = picojson::value((double)pU->getSMStrength());
+				u["canFight"]      = picojson::value(pU->canFight());
+				u["canAttack"]     = picojson::value(pU->canAttack());
+				u["onlyDefensive"] = picojson::value(pU->isOnlyDefensive());
+				units.push_back(picojson::value(u));
+			}
+			o["units"] = picojson::value(units);
+			return CvString(picojson::value(o).serialize().c_str());
+		}
 		// ---- /computed/units/heal -- a pinpointed unit's per-turn HEAL rate + the per-source decomposition doHeal
 		// folds, computed READ-ONLY: CvUnit::healRate/getHealRateAsType/healTurns are const and called with
 		// bHealCheck=false, so the support-heal scan performs NO changeHealSupportUsed/changeExperience100 mutation;
@@ -4836,6 +4884,7 @@ namespace
 			{ "/computed/teamFlags",       "teamFlags",      "engine capability flags by canonical name (+canTrade/canTradeOn/canWorkOn) — the capabilities-parity oracle" },
 			{ "/computed/unitSkills",      "unitSkills",     "per-unit EFFECTIVE skill booleans (unit+promotion composite getters) — the skills-parity oracle" },
 			{ "/computed/units/heal",      "unitHeal",       "a pinpointed unit's per-turn healRate + per-source decomposition (player=N&unit=M) — read-only, no doHeal" },
+			{ "/computed/units/combat",    "unitCombat",     "per-unit combat-strength attribution: persisted base vs loaded-info base vs effective + attack verdicts (player=N[&unit=M])" },
 			{ "/computed/game",            "game",           "turn / game-over / winner / victory countdowns" },
 			{ "/computed/perf",            "perf",           "the (scope,channel) calc-count histogram + total this turn — the 50k gate (DEC-calc-count-gate)" },
 			{ "/computed/barProbe",        "barProbe",       "every city's EXE billboard bar floats, NaN/INF/out-of-range flagged (the value-poison probe)" },

@@ -2002,7 +2002,6 @@ protected:
 	int* m_aiCapitalYieldRateModifier;
 	int* m_aiExtraYieldThreshold;
 	int* m_aiTradeYieldModifier;
-	int* m_aiFreeCityCommerce; // @SAVEBREAK remove as it is unused.
 	int* m_extraCommerce;
 	int* m_aiCommercePercent;
 	int* m_aiCommerceRate;

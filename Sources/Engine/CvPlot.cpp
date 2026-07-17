@@ -1522,11 +1522,11 @@ void CvPlot::updateMinimapColor()
 	{
 		return;
 	}
-	exeEngFrom(EXEK_MINIMAP_COLOR, getX(), getY(), _ReturnAddress());
 	if (exeCoalesceMark(2, GC.getMap().plotNum(getX(), getY())))
 	{
-		return;   // absorbed: the bracket flush recolors the distinct plot once
+		return;   // absorbed: the bracket flush recolors the distinct plot once -- NO trace (nothing reached the EXE)
 	}
+	exeEngFrom(EXEK_MINIMAP_COLOR, getX(), getY(), _ReturnAddress());
 	gDLL->getInterfaceIFace()->setMinimapColor(MINIMAPMODE_TERRITORY, getViewportX(),getViewportY(), plotMinimapColor(), STANDARD_MINIMAP_ALPHA);
 }
 
@@ -6475,11 +6475,11 @@ void CvPlot::setFlagDirty(bool bNewValue)
 {
 	if (bNewValue)
 	{
-		exeEngFrom(EXEK_FLAG_DIRTY, getX(), getY(), _ReturnAddress());
 		if (exeCoalesceMark(0, GC.getMap().plotNum(getX(), getY())))
 		{
-			return;   // absorbed: the bracket flush sets it once for the distinct plot
+			return;   // absorbed: the bracket flush sets it once for the distinct plot -- NO trace (nothing reached the EXE)
 		}
+		exeEngFrom(EXEK_FLAG_DIRTY, getX(), getY(), _ReturnAddress());
 	}
 	m_bFlagDirty = bNewValue;
 }
@@ -10553,11 +10553,16 @@ void CvPlot::updateCenterUnit()
 		m_pCenterUnit = NULL;
 		return;
 	}
+	// Center-unit is PURELY VISUAL and human-only (owner ruling): during the doTurn coalescing bracket the
+	// recompute DEFERS -- the plot is marked, the OLD center pointer is RETAINED (kept valid by removeUnit's
+	// targeted clear), and the bracket flush recomputes each touched plot ONCE. reloadEntity then fires only
+	// on plots whose center genuinely NET-changed across the slice. (The RETENTION is what makes this shape
+	// viable where NULL-then-flush was not: an interim NULL forced a reload on every marked occupied plot.)
+	if (exeCoalesceMark(1, GC.getMap().plotNum(getX(), getY())))
+	{
+		return;
+	}
 	exeEngFrom(EXEK_CENTER_UNIT, getX(), getY(), _ReturnAddress());
-
-	// ⛔ center-unit is deliberately NOT coalesced: the NULL-then-flush shape FORCED a reloadEntity
-	// (destroy+recreate of the unit's render entity) on every marked occupied plot -- amplifying the very
-	// per-entity degradation under investigation. The normal path reloads only on a genuine center change.
 
 	CvUnit* newCenterUnit = isActiveVisible(true) ? getPreferredCenterUnit() : NULL;
 	if (!newCenterUnit && gDLL->GetWorldBuilderMode())
@@ -10782,6 +10787,13 @@ void CvPlot::addUnit(CvUnit* pUnit, bool bUpdate)
 void CvPlot::removeUnit(CvUnit* pUnit, bool bUpdate)
 {
 	PROFILE_EXTRA_FUNC();
+	const bool bWasCenter = (m_pCenterUnit == pUnit);
+	if (bWasCenter)
+	{
+		// targeted dangling-guard: the deferred center-unit recompute RETAINS the old pointer across the
+		// doTurn bracket, so it must not outlive its unit -- clear exactly when the center unit leaves.
+		m_pCenterUnit = NULL;
+	}
 	if (pUnit->isCommanderReady())
 	{
 		countCommander(false, pUnit);
@@ -10810,6 +10822,19 @@ void CvPlot::removeUnit(CvUnit* pUnit, bool bUpdate)
 	{
 		updateCenterUnit();
 		setFlagDirty(true);
+	}
+	else if (bWasCenter)
+	{
+		// The CENTER unit left on a no-update removal (cargo/grouped moves, kill paths): the guard above nulled
+		// m_pCenterUnit, and the exported CvPlot::getCenterUnit() has NO fallback -- a NULL center handed to the
+		// EXE loses the plot's single stack representative and every real entity draws atop the anchor (the
+		// stacked-render regression). ALWAYS re-derive: inside a doTurn coalesce bracket, mark the plot so the
+		// bracket flush recomputes it; outside, recompute immediately.
+		if (!exeCoalesceMark(1, GC.getMap().plotNum(getX(), getY())))
+		{
+			updateCenterUnit();
+			setFlagDirty(true);
+		}
 	}
 }
 

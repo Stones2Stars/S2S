@@ -35,7 +35,7 @@
 		evicts not-required (out-of-radius) graphics, so it is safe at any value. -->
 	<Define>
 		<DefineName>PAGING_RESIDENT_SOFT_CAP</DefineName>
-		<iDefineIntVal>1600000</iDefineIntVal>
+		<iDefineIntVal>3000000</iDefineIntVal>
 	</Define>
 	<!-- If specified, instead of MAX_DESIRED_MEMORY_USED, a set of test
 		allocations will be performed to test for low memory conditions -->

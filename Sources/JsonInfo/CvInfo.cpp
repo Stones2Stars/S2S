@@ -49,6 +49,17 @@ void CvInfo::clearSections()
 	if (CvJsonBoolBlock* u = mutPolicies())     u->clearParsed();
 }
 
+// §8/§9 classification id-plane resolve -- each carried block fills its by-id bitsets from the generated
+// ClassificationRegistry. LOAD-ONLY (called by ClassificationRegistry::buildAndResolve after minting).
+void CvInfo::resolveClassificationIds()
+{
+	if (CvJsonBoolBlock* u = mutSkills())       u->resolveIds(CLSD_SKILL);
+	if (CvJsonBoolBlock* u = mutTags())         u->resolveIds(CLSD_TAG);
+	if (CvJsonBoolBlock* u = mutAttributes())   u->resolveIds(CLSD_ATTRIBUTE);
+	if (CvJsonBoolBlock* u = mutCapabilities()) u->resolveIds(CLSD_CAPABILITY);
+	if (CvJsonBoolBlock* u = mutPolicies())     u->resolveIds(CLSD_POLICY);
+}
+
 void CvInfo::mapSections(const picojson::value& entity)
 {
 	if (!entity.is<picojson::object>()) return;

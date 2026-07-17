@@ -243,7 +243,10 @@ static void bd_gate(const CvCity& kCity, const CvPlayer& kPlayer, const std::set
 	                 || (j != NULL && !cascadeGateOk(j->getGate(), ec, gateFlags))   // entity-level enabled/disabled (DEC-entity-gate)
 	                 || !EnablerKernel::requiresMet(j, ec)
 	                 || !EnablerKernel::allowedOk(j, iB, kPlayer, /*bUnit*/ false)
-	                 || !bd_groupCapOk(iB, kPlayer));
+	                 || !bd_groupCapOk(iB, kPlayer)
+	                 // QUEUED leaves the fresh offer (par.7.1 step 3; the legacy !bContinue getFirstBuildingOrder
+	                 // exclusion). Live object-owned read; SEVT_CITY_ORDER_CHANGED triggers this re-gate.
+	                 || kCity.getFirstBuildingOrder((BuildingTypes)iB) != -1);
 }
 
 // Gate a SET of candidate ids in one city (the touched set of one event / a class list): the waived-prereq
@@ -445,6 +448,17 @@ static void bd_applyAxisGated(const CvCity& kCity, EnablerDomain& d, int eAxis, 
 	std::set<int> touched;
 	bd_touched(bd_sourceJson(eAxis, iId), touched);
 	bd_gateSet(kCity, touched);
+}
+
+void BuildingEnabler::onCityOrderChanged(const CvCity& kCity, int iBuilding)
+{
+	// queue push/pop of iBuilding (par.7.1 step 3): membership untouched -- ONE id re-gates, its verdict
+	// reading the live queue (bd_gate's getFirstBuildingOrder conjunct). Load-window emits never occur
+	// (the queue deserializes without pushOrder; the load-end gate pass reads it).
+	if (iBuilding < 0) return;
+	std::set<int> one;
+	one.insert(iBuilding);
+	bd_gateSet(kCity, one);
 }
 
 void BuildingEnabler::onCityReligionChanged(const CvCity& kCity, int iReligion, bool bHas)

@@ -89,6 +89,7 @@ private:
 	int m_aiGlobalReligionCommerce[NUM_COMMERCE_TYPES];  // shrine per-commerce, materialized from shrineCommerce at load
 	int m_iSpreadFactor;
 	int m_iTGAIndex;
+	int m_iFreeUnit, m_iNumFreeUnits;   // grants.freeUnit / numFreeUnits, materialized at mapFrom
 	CvWString m_szAdjectiveKey;
 	std::map<int, int> m_flavours;
 	std::string m_szSound, m_szTechButton, m_szGenericTechButton, m_szMovieFile, m_szMovieSound;

@@ -37,6 +37,7 @@
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson, GC, boost range/bind
 #include "CvTraitInfo.h"
 #include "CvJsonParse.h"            // jsonChildObj/jsonResolveId/jsonIdBool/jsonIdInt/jsonIdStr/jsonReadFlavours
+#include "CvJsonModScan.h"          // the ONE load-time modifier-family scan (mapFrom materialization)
 #include "CvJsonModEntry.h"         // CvJsonModFamily/CvJsonModEntry/CvCascUnit -- the parsed-modifier live reads (2D)
 #include "CvCascadePropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 #include "CvSpecialistInfo.h"   // GC.getSpecialistInfo(i).getType() -- the 2D specialist address
@@ -117,29 +118,6 @@ namespace
 		}
 	}
 
-	// Parsed-modifier UNCONDITIONED sum (for the live 2D per-index reads) -- value100 is human*100 at load, /100 back.
-	int traitModSum(const CvJsonModifiers* mods, const std::string& addr, CvCascUnit unit)
-	{
-		if (!mods) return 0;
-		const CvJsonModFamily* f = mods->find(addr);
-		if (!f) return 0;
-		int v100 = 0;
-		for (int i = 0; i < f->size(); ++i)
-		{
-			const CvJsonModEntry* e = f->entries[i];
-			if (e->unit == unit && e->enabled == NULL && e->disabled == NULL && !e->hasPer) v100 += e->value100;
-		}
-		return v100 / 100;
-	}
-	bool traitHasPrefix(const CvJsonModifiers* mods, const std::string& prefix)
-	{
-		if (!mods) return false;
-		const std::map<std::string, CvJsonModFamily*>& all = mods->all();
-		for (std::map<std::string, CvJsonModFamily*>::const_iterator it = all.begin(); it != all.end(); ++it)
-			if (it->first.compare(0, prefix.size(), prefix) == 0) return true;
-		return false;
-	}
-
 	// setValue every keyed (id, UNCONDITIONED value) at o[fam][scope][tt] into `map`, skipping 0 (load-path contract).
 	template <class Map>
 	void traitFillMap(const picojson::object& o, const char* fam, const char* scope, const char* tt, const char* unit, Map& map)
@@ -206,7 +184,7 @@ namespace
 }
 
 CvTraitInfo::CvTraitInfo()
-	: negativeTrait(false), civilizationTrait(false)
+	: negativeTrait(false), civilizationTrait(false), m_bAnySpecYield(false), m_bAnySpecCommerce(false)
 	, m_iHealth(0), m_iHappiness(0), m_iMaxAnarchy(-1), m_iMinAnarchy(0), m_iUpkeepModifier(0), m_iLevelExperienceModifier(0)
 	, m_iGreatPeopleRateModifier(0), m_iGreatGeneralRateModifier(0), m_iDomesticGreatGeneralRateModifier(0)
 	, m_iMaxGlobalBuildingProductionModifier(0), m_iMaxTeamBuildingProductionModifier(0), m_iMaxPlayerBuildingProductionModifier(0)
@@ -546,37 +524,52 @@ void CvTraitInfo::mapFrom(const picojson::value& entity)
 	// ai.flavours {FLAVOR:int}
 	if (const picojson::object* ai = jsonChildObj(o, "ai"))
 		jsonReadFlavours(*ai, m_flavours);
+
+	// --- 2D specialist/improvement yield/commerce MATERIALIZATION (the per-index getters are bare map reads;
+	// per-call string-address walks are banned from getters). Clear-first: this appends per channel. ---
+	m_bAnySpecYield = false; m_bAnySpecCommerce = false;
+	for (int j = 0; j < NUM_YIELD_TYPES; ++j)
+	{
+		m_specYield[j].clear(); m_impYield[j].clear();
+		std::vector<std::pair<int, int> > v;
+		JsonModScan::collectKeyedSparse<int>(getModifiers(), std::string(YIELD_FAM[j]) + ".empire.specialists.", CASC_UNIT_FLAT, v);
+		for (size_t k = 0; k < v.size(); ++k) m_specYield[j][v[k].first] = v[k].second;
+		if (!m_specYield[j].empty()) m_bAnySpecYield = true;
+		v.clear();
+		JsonModScan::collectKeyedSparse<int>(getModifiers(), std::string(YIELD_FAM[j]) + ".empire.improvements.", CASC_UNIT_FLAT, v);
+		for (size_t k = 0; k < v.size(); ++k) m_impYield[j][v[k].first] = v[k].second;
+	}
+	for (int j = 0; j < NUM_COMMERCE_TYPES; ++j)
+	{
+		m_specCommerce[j].clear();
+		std::vector<std::pair<int, int> > v;
+		JsonModScan::collectKeyedSparse<int>(getModifiers(), std::string(COMMERCE_FAM[j]) + ".empire.specialists.", CASC_UNIT_FLAT, v);
+		for (size_t k = 0; k < v.size(); ++k) m_specCommerce[j][v[k].first] = v[k].second;
+		if (!m_specCommerce[j].empty()) m_bAnySpecCommerce = true;
+	}
 }
 
-// --- 2D per-index specialist/improvement yield/commerce -- REAL, read live off the parsed m_modifiers by the target's
-//     own GC type string (CvCivicInfo's sumKeyed template; curate_trait.py KEYED Specialist*/ImprovementYieldChanges) ---
+// --- 2D per-index specialist/improvement yield/commerce -- bare reads of the mapFrom-materialized sparse maps ---
 int CvTraitInfo::getSpecialistYieldChange(int i, int j) const
 {
-	if (i < 0 || i >= GC.getNumSpecialistInfos() || j < 0 || j >= NUM_YIELD_TYPES) return 0;
-	return traitModSum(getModifiers(), std::string(YIELD_FAM[j]) + ".empire.specialists." + GC.getSpecialistInfo((SpecialistTypes)i).getType(), CASC_UNIT_FLAT);
+	if (j < 0 || j >= NUM_YIELD_TYPES) return 0;
+	std::map<int, int>::const_iterator it = m_specYield[j].find(i);
+	return it != m_specYield[j].end() ? it->second : 0;
 }
 int CvTraitInfo::getSpecialistCommerceChange(int i, int j) const
 {
-	if (i < 0 || i >= GC.getNumSpecialistInfos() || j < 0 || j >= NUM_COMMERCE_TYPES) return 0;
-	return traitModSum(getModifiers(), std::string(COMMERCE_FAM[j]) + ".empire.specialists." + GC.getSpecialistInfo((SpecialistTypes)i).getType(), CASC_UNIT_FLAT);
+	if (j < 0 || j >= NUM_COMMERCE_TYPES) return 0;
+	std::map<int, int>::const_iterator it = m_specCommerce[j].find(i);
+	return it != m_specCommerce[j].end() ? it->second : 0;
 }
 int CvTraitInfo::getImprovementYieldChange(int i, int j) const
 {
-	if (i < 0 || i >= GC.getNumImprovementInfos() || j < 0 || j >= NUM_YIELD_TYPES) return 0;
-	return traitModSum(getModifiers(), std::string(YIELD_FAM[j]) + ".empire.improvements." + GC.getImprovementInfo((ImprovementTypes)i).getType(), CASC_UNIT_FLAT);
+	if (j < 0 || j >= NUM_YIELD_TYPES) return 0;
+	std::map<int, int>::const_iterator it = m_impYield[j].find(i);
+	return it != m_impYield[j].end() ? it->second : 0;
 }
-bool CvTraitInfo::isAnySpecialistYieldChanges() const
-{
-	for (int j = 0; j < NUM_YIELD_TYPES; ++j)
-		if (traitHasPrefix(getModifiers(), std::string(YIELD_FAM[j]) + ".empire.specialists.")) return true;
-	return false;
-}
-bool CvTraitInfo::isAnySpecialistCommerceChanges() const
-{
-	for (int j = 0; j < NUM_COMMERCE_TYPES; ++j)
-		if (traitHasPrefix(getModifiers(), std::string(COMMERCE_FAM[j]) + ".empire.specialists.")) return true;
-	return false;
-}
+bool CvTraitInfo::isAnySpecialistYieldChanges() const { return m_bAnySpecYield; }
+bool CvTraitInfo::isAnySpecialistCommerceChanges() const { return m_bAnySpecCommerce; }
 
 // --- `filtered` getters -- an always-pass view over the member IDValueMap (populated in mapFrom via setValue). No
 //     PURE_TRAITS runtime gate (a consumer concern, modifier.md §4), so the predicate simply passes every entry. ---

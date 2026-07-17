@@ -788,6 +788,13 @@ void CascadeAccumulator::cityHaveChanged(const CvCity* pCity, int eHaveKind)
 	EnablerKernel::onHaveChangedActive(pCity, eHaveKind);   // operating buildings: targeted ripple for the HAVE-referencing operate
 }
 
+// #430 G3: a single bonus's access flipped -> the targeted operate ripple over that bonus's operate consumers.
+void CascadeAccumulator::cityBonusAccessChanged(const CvCity* pCity, int eBonus)
+{
+	if (pCity == NULL || eBonus < 0) return;
+	EnablerKernel::onBonusAccessChangedActive(pCity, eBonus);
+}
+
 // ===================== the BOUNDARIES =====================
 //
 // The per-turn / load SELF-HEAL blankets (playerSliceRebuild, worldRebuild -- markAll + eager ensure of ALL

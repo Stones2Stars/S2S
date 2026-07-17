@@ -20,6 +20,7 @@
 #include "CvJsonParse.h"               // jsonClassifyKey / jsonUnresolvedIds -- shared vocabulary + FK diag
 #include "CvInfo.h"                // CvInfo (+ cascadeStartNode) -- the mapped info data + the TECH_GAME_START root
 #include "CvCascadeDepositIndex.h"     // DepositIndex::pushInfo/clearCompiled -- the compiled deposit index (push-time interning)
+#include "CvClassificationRegistry.h"  // the §8/§9 generated classification categories -- minted + resolved post-map
 #include "CvTechInfo.h"            // CvTechInfo -- for the capabilities read-back survey
 #include "CvImprovementInfo.h"     // CvImprovementInfo -- the reverse-view improvement relations
 #include "CvBuildingInfo.h"        // the REVERSE-VIEW build pass (rj_buildReverseView) -- the tech-referencing relations
@@ -119,7 +120,9 @@ CvInfo* rjInfoForType(const std::string& t, int iId)
 	if (!t.compare(0, 14, "PROMOTIONLINE_")) return InfoRepo<CvPromotionLineInfo>::get().editPtr(iId);
 	if (!t.compare(0, 11, "SPECIALIST_"))   return InfoRepo<CvSpecialistInfo>::get().editPtr(iId);
 	if (!t.compare(0, 11, "UNITCOMBAT_"))   return InfoRepo<CvUnitCombatInfo>::get().editPtr(iId);
-	return NULL;
+	// the runtime-GENERATED classification categories (SKILL_/TAG_/ATTRIBUTE_/CAPABILITY_/POLICY_) -- referenceable
+	// like any authored info ([DEC-classification-infos]); cold-path const view, cast for the shared return type.
+	return const_cast<CvInfo*>(ClassificationRegistry::infoForType(t));
 }
 
 static int rvNumFor(EnEdgeBucket b)
@@ -722,6 +725,21 @@ void cascadeLoadJson()
 		}
 	}
 	gDLL->logMsg("Loading.log", CvString::format("[READJSON] PASS2-map (mapFrom+DepositIndex) remapped=%d ms=%u", iRemapped, (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
+
+	// ===== the §8/§9 CLASSIFICATION registries -- generated infos (SKILL_/TAG_/ATTRIBUTE_/CAPABILITY_/POLICY_)
+	// minted from the union of authored block keys (append-only ids, stable across both load passes), then every
+	// entity's blocks resolved to the by-id bitsets the O(1) getter surface reads (ClassificationRegistry).
+	{
+		std::vector<CvInfo*> mapped;
+		mapped.reserve(store.size());
+		for (size_t s = 0; s < store.size(); ++s)
+			if (store[s].data != NULL) mapped.push_back(store[s].data);
+		ClassificationRegistry::buildAndResolve(mapped);
+		gDLL->logMsg("Loading.log", CvString::format("[READJSON] classification minted skills=%d tags=%d attributes=%d capabilities=%d policies=%d ms=%u",
+			ClassificationRegistry::count(CLSD_SKILL), ClassificationRegistry::count(CLSD_TAG),
+			ClassificationRegistry::count(CLSD_ATTRIBUTE), ClassificationRegistry::count(CLSD_CAPABILITY),
+			ClassificationRegistry::count(CLSD_POLICY), (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
+	}
 	// The initial JSON map is DONE -- the spine announcement (the owner's load-lifecycle observability):
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MAP_DONE, 1)
 		.addI(RJF_ENTITIES, iEntities).addI(RJF_RESOLVED, iResolved).addI(RJF_REMAPPED, iRemapped)
@@ -843,6 +861,46 @@ void cascadeLoadJson()
 			if (routesAnd != NULL)
 				for (size_t r = 0; r < routesAnd->size(); ++r)
 					static_cast<CvRouteInfo*>(InfoRepo<CvRouteInfo>::get().editPtr((*routesAnd)[r]))->setPrereqBonus((BonusTypes)b);
+		}
+	}
+
+	// Improvement<-route YIELD REVERSE INDEX. RouteYieldChanges live ROUTE-side (deliveryguy, modifier.md §4:
+	// "a route upgrading improvements -> on the route, keyed by improvement" -- curate_route.py authors
+	// {food|production|commerce}.plot.improvements.{IMP}.flat), but the legacy improvement-side readers
+	// (CvPlot::calculateImprovementYieldChange:8354/8370/12357 + the CvDLLWidgetData help) still ask the
+	// IMPROVEMENT "what does route R add on me?" -- a stub 0 under-yielded every improved+routed plot and fed
+	// the AI wrong tile values. Reconstruct each improvement's route rows here, once, after every entity is
+	// mapped (flat unconditioned entries only -- the data authors nothing else on this address).
+	{
+		static const struct { const char* szFam; int iYield; } YFAMS[] = {
+			{ "food.plot.improvements.",       YIELD_FOOD },
+			{ "production.plot.improvements.", YIELD_PRODUCTION },
+			{ "commerce.plot.improvements.",   YIELD_COMMERCE } };
+		const int nRoute = GC.getNumRouteInfos();
+		for (int r = 0; r < nRoute; ++r)
+		{
+			const CvInfo* jr = InfoRepo<CvRouteInfo>::get().get(r);
+			if (jr == NULL || jr->getModifiers() == NULL) continue;
+			const std::map<std::string, CvJsonModFamily*>& fams = jr->getModifiers()->all();
+			for (std::map<std::string, CvJsonModFamily*>::const_iterator it = fams.begin(); it != fams.end(); ++it)
+			{
+				for (int f = 0; f < 3; ++f)
+				{
+					const size_t iLen = strlen(YFAMS[f].szFam);
+					if (it->first.compare(0, iLen, YFAMS[f].szFam) != 0) continue;
+					const int iImp = jsonResolveId(it->first.substr(iLen));
+					if (iImp < 0) break;
+					const CvJsonModFamily* fam = it->second;
+					for (int e = 0; e < fam->size(); ++e)
+					{
+						const CvJsonModEntry* en = fam->entries[e];
+						if (en->unit != CASC_UNIT_FLAT || en->hasPer || en->enabled != NULL || en->disabled != NULL) continue;
+						static_cast<CvImprovementInfo*>(InfoRepo<CvImprovementInfo>::get().editPtr(iImp))
+							->addRouteYieldChange(r, YFAMS[f].iYield, en->value100 / 100);
+					}
+					break;
+				}
+			}
 		}
 	}
 

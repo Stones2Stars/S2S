@@ -19,7 +19,7 @@ CvImprovementInfo::CvImprovementInfo()
 	  m_bActsAsCity(false), m_bMilitaryStructure(false), m_bCarriesIrrigation(false),
 	  m_bOutsideBorders(false), m_bBombardable(false), m_bZOCSource(false), m_bExtraterrestrial(false),
 	  m_bUniversalBonusTrade(false), m_bGoody(false), m_bRequiresRiverSide(false),
-	  m_iGoodyUniqueRange(0), m_iTilesPerGoody(0), m_iSeeFrom(0), m_iVisibilityChange(0), m_iAdvancedStartCost(0),
+	  m_iGoodyUniqueRange(0), m_iTilesPerGoody(0), m_iSeeFrom(0), m_iVisibilityChange(0), m_iAdvancedStartCost(100),
 	  m_bUpgradeRequiresFortify(false),
 	  m_bPlacesBonus(false), m_bPlacesFeature(false), m_bPlacesTerrain(false), m_bChangeRemove(false),
 	  m_iWorldSoundscapeScriptId(-1)
@@ -99,7 +99,7 @@ void CvImprovementInfo::mapFrom(const picojson::value& entity)
 		m_bPlacesTerrain         = jsonIdBool(*io, "placesTerrain");
 		m_bChangeRemove          = jsonIdBool(*io, "changeRemove");
 		if (const picojson::object* as = jsonChildObj(*io, "advancedStart"))
-			m_iAdvancedStartCost = jsonIdInt(*as, "cost");                   // iAdvancedStartCost -> identity.advancedStart.cost (to_identity)
+			m_iAdvancedStartCost = jsonIdInt(*as, "cost", 100);              // iAdvancedStartCost -> identity.advancedStart.cost; legacy load default 100
 		// NB waterImprovement / requiresIrrigation / peakImprovement / requiresFeature / requiresFlatlands / the
 		//    MakesValid family are NOT cached into their OWN members here: the curator store-inverts them into
 		//    requires.build (IS_WATER / HAS_IRRIGATION / HAS_PEAK / HAS_FEATURE / IS_FLATLANDS / HAS_TERRAIN /
@@ -328,6 +328,7 @@ void CvImprovementInfo::readConditionalYields(const picojson::value& entity)
 	}
 	m_bonusYieldChanges.clear();
 	m_techYieldChanges.clear();
+	m_routeYieldChanges.clear();   // refilled by the CvCascadeReadJson reverse pass, which runs after every re-map
 
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
@@ -431,6 +432,27 @@ int* CvImprovementInfo::getTechYieldChangesArray(int i) const
 {
 	std::map<int, std::vector<int> >::const_iterator it = m_techYieldChanges.find(i);
 	return it != m_techYieldChanges.end() ? const_cast<int*>(&it->second[0]) : NULL;   // legacy: NULL when the tech deposits none
+}
+
+int CvImprovementInfo::getRouteYieldChanges(int i, int j) const
+{
+	if (j < 0 || j >= NUM_YIELD_TYPES) return 0;
+	std::map<int, std::vector<int> >::const_iterator it = m_routeYieldChanges.find(i);
+	return it != m_routeYieldChanges.end() ? it->second[j] : 0;
+}
+
+int* CvImprovementInfo::getRouteYieldChangesArray(int i) const
+{
+	std::map<int, std::vector<int> >::const_iterator it = m_routeYieldChanges.find(i);
+	return it != m_routeYieldChanges.end() ? const_cast<int*>(&it->second[0]) : NULL;   // legacy: NULL when the route deposits none
+}
+
+void CvImprovementInfo::addRouteYieldChange(int iRoute, int iYield, int iValue)
+{
+	if (iYield < 0 || iYield >= NUM_YIELD_TYPES || iValue == 0) return;
+	std::vector<int>& row = m_routeYieldChanges[iRoute];
+	if (row.empty()) row.resize(NUM_YIELD_TYPES, 0);
+	row[iYield] += iValue;
 }
 
 const CvArtInfoImprovement* CvImprovementInfo::getArtInfo() const

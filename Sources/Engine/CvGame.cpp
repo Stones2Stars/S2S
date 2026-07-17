@@ -34,6 +34,7 @@
 #include "Utils/PlotSnapshot.h"
 #include "Infrastructure/CvPython.h"
 #include "CvReplayInfo.h"
+#include <psapi.h>   // GetProcessMemoryInfo -- the [PERF/mem] phase-boundary probe (leak attribution)
 #include "Tools/CvReplayMessage.h"
 #include "CvSelectionGroup.h"
 #include "AI/CvTeamAI.h"
@@ -6142,9 +6143,26 @@ void CvGame::addGreatPersonBornName(const CvWString& szName)
 
 // Protected Functions...
 
+// [PERF/mem] phase-boundary process-memory probe (bad_alloc leak attribution): workingSet/commit MB at named
+// points inside the turn cycle, so a per-turn climb or a transient spike localises to a phase from the log
+// alone (the /computed/perf gauge samples too coarsely to see inside the turn). Same GetProcessMemoryInfo
+// mechanism as the endpoint gauge; gated to gPerfLogLevel like every [PERF] line.
+static void perfLogMem(const char* szPoint)
+{
+	if (gPerfLogLevel < 1) return;
+	PROCESS_MEMORY_COUNTERS pmc;
+	pmc.cb = sizeof(pmc);
+	if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc)))
+	{
+		logPerf(1, "[PERF/mem] turn=%d point=%s wsMB=%d commitMB=%d",
+			GC.getGame().getGameTurn(), szPoint, (int)(pmc.WorkingSetSize >> 20), (int)(pmc.PagefileUsage >> 20));
+	}
+}
+
 void CvGame::doTurn()
 {
 	PROFILE_BEGIN("CvGame::doTurn()",DOTURN1);
+	perfLogMem("doTurn.start");
 
 	// #430 the per-turn WORLD self-heal (worldRebuild -- markAll + ensure the world packages) is REMOVED
 	// ([DEC-no-self-heal]): the world package is dirty from reset, fills lazily on read, and the spine-routed
@@ -6445,7 +6463,9 @@ void CvGame::doTurn()
 	}
 
 	stopProfilingDLL(true);
+	perfLogMem("preAutoSave");
 	{ PERF_SCOPE("game.autoSave", -1); gDLL->getEngineIFace()->AutoSave(); }
+	perfLogMem("postAutoSave");
 
 #ifdef MEMTRACK
 	//MemTrack::TrackListMemoryUsage(); // total

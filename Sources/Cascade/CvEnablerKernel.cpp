@@ -376,6 +376,7 @@ namespace {
 
 static bool s_opIdxBuilt = false;
 static std::vector<int> s_opPop, s_opPower, s_opReligion, s_opCorp, s_opGolden, s_opStateRel, s_opCivic, s_opTechAny, s_opDynamic;
+static std::vector<int> s_opAnyBonus;                         // {buildings whose operate references ANY bonus} -- the whole-set re-check (plot-group membership change)
 static std::map<int, std::vector<int> > s_opBonusConsumers;   // BONUS_ id -> {buildings whose operate consumes it}
 static std::map<int, std::vector<int> > s_opBuildingDeps;     // BUILDING_ id -> {buildings whose operate references it}
 static std::map<int, std::vector<int> > s_opDormBy;           // trigger BUILDING_ id -> {buildings it dorms}
@@ -526,6 +527,7 @@ void EnablerKernel::buildActiveIndex()
 		if (d.civicAny)       s_opCivic.push_back(b);
 		if (!d.techs.empty()) s_opTechAny.push_back(b);
 		if (d.dynamic)        s_opDynamic.push_back(b);
+		if (!d.bonuses.empty()) s_opAnyBonus.push_back(b);   // #430 G3: the whole-set bucket (a plot-group membership shift may move any of them)
 		for (std::set<int>::const_iterator it = d.bonuses.begin(); it != d.bonuses.end(); ++it) s_opBonusConsumers[*it].push_back(b);
 		for (std::set<int>::const_iterator it = d.buildings.begin(); it != d.buildings.end(); ++it) s_opBuildingDeps[*it].push_back(b);
 		const std::vector<int>& dorm = j->dormantTriggers();
@@ -564,8 +566,22 @@ void EnablerKernel::onHaveChangedActive(const CvCity* pCity, int eHaveKind)
 		ek_recheckActiveSet(pCity, seeds);
 		break;
 	}
+	// #430 G3: a plot-group MEMBERSHIP change (the city moved group) can shift its ENTIRE connected-resource set, so
+	// every bonus-operate building re-checks. A single bonus's access flip is the targeted onBonusAccessChangedActive.
+	case CascadeAccumulator::CASC_HAVE_BONUS: ek_recheckActiveSet(pCity, s_opAnyBonus); break;
 	default: break;
 	}
+}
+
+// #430 G3: a SINGLE bonus's ACCESS (connection:trade network count, or connection:vicinity presence) flipped in
+// pCity -> re-check ONLY the buildings whose requires.operate consumes THAT bonus (the reverse-FK bucket) into the
+// authoritative operating set. The provides-ripple inside ek_recheckActiveSet carries any cascading operate flips.
+void EnablerKernel::onBonusAccessChangedActive(const CvCity* pCity, int eBonus)
+{
+	buildActiveIndex();
+	if (pCity == NULL || eBonus < 0) return;
+	std::map<int, std::vector<int> >::const_iterator it = s_opBonusConsumers.find(eBonus);
+	if (it != s_opBonusConsumers.end()) ek_recheckActiveSet(pCity, it->second);
 }
 
 void EnablerKernel::onPlayerScopeChangedActive(const CvCity* pCity)

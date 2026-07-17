@@ -18,15 +18,16 @@
 class CvCultureLevelInfo : public CvInfo
 {
 public:
-	CvCultureLevelInfo() : m_iCityDefenseModifier(0), m_iCityRadius(0), m_iCultureThreshold(0), m_iLevel(0) {}
+	CvCultureLevelInfo() : m_iCityDefenseModifier(0), m_iCityRadius(1), m_iCultureThreshold(0), m_iLevel(0),
+		m_iMaxWorldWonders(0), m_iMaxTeamWonders(0), m_iMaxNationalWonders(0) {}
 
 	int getCityDefenseModifier() const { return m_iCityDefenseModifier; }   // defense.city.amount.percent (human %)
 	int getCityRadius() const { return m_iCityRadius; }                     // identity.cityRadius (override, not additive)
 
-	// per-city wonder-category caps -- thin accessors over the composed `allowed` unit (json.md §4.4).
-	int getMaxWorldWonders() const    { return wonderCap("worldWonders"); }
-	int getMaxTeamWonders() const     { return wonderCap("teamWonders"); }
-	int getMaxNationalWonders() const { return wonderCap("nationalWonders"); }
+	// per-city wonder-category caps (json.md §4.4) -- materialized at mapFrom (0-for-absent legacy convention).
+	int getMaxWorldWonders() const    { return m_iMaxWorldWonders; }
+	int getMaxTeamWonders() const     { return m_iMaxTeamWonders; }
+	int getMaxNationalWonders() const { return m_iMaxNationalWonders; }
 	// NB getMaxNationalWondersOCC DROPPED (One-City-Challenge not feasible in this mod, owner 2026-07-01; curator drops it).
 
 	// The legacy per-GameSpeed threshold TABLE was a REDUNDANT precompute of base(Normal) × GameSpeed.speedPercent/100
@@ -56,7 +57,7 @@ protected:
 	virtual CvJsonGate*      mutGate()      { return &m_gate; }
 
 private:
-	// wonder-cap read with the legacy 0-for-absent convention (the base allowedCap returns -1 = uncapped/absent).
+	// mapFrom-time wonder-cap read with the legacy 0-for-absent convention (the base allowedCap returns -1 = absent).
 	int wonderCap(const char* key) const
 	{ std::map<std::string, int>::const_iterator it = m_allowed.all().find(key); return it != m_allowed.all().end() ? it->second : 0; }
 
@@ -64,6 +65,7 @@ private:
 	int m_iCityRadius;            // identity.cityRadius
 	int m_iCultureThreshold;      // identity.cultureThreshold (raw culture points)
 	int m_iLevel;                 // runtime tier ordinal (not JSON)
+	int m_iMaxWorldWonders, m_iMaxTeamWonders, m_iMaxNationalWonders;   // §4.4 category caps, materialized at mapFrom
 	CvJsonEdges     m_edges;
 	CvJsonAllowed   m_allowed;
 	CvJsonModifiers m_modifiers;

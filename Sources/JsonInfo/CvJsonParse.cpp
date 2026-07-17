@@ -86,10 +86,10 @@ int jsonFamMemberVal(const picojson::object& o, const char* family, const char* 
 	return (u != mo->end() && u->second.is<double>()) ? (int)u->second.get<double>() : 0;
 }
 
-int jsonIdInt(const picojson::object& io, const char* key)
+int jsonIdInt(const picojson::object& io, const char* key, int iDefault)
 {
 	picojson::object::const_iterator it = io.find(key);
-	return (it != io.end() && it->second.is<double>()) ? (int)it->second.get<double>() : 0;
+	return (it != io.end() && it->second.is<double>()) ? (int)it->second.get<double>() : iDefault;
 }
 
 bool jsonIdBool(const picojson::object& io, const char* key)

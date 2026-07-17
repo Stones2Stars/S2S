@@ -76,10 +76,10 @@ public:
 	void setTechPrereq(TechTypes e) { m_eTechPrereq = e; }               // load-time reverse-index writers (cascadeLoadJson)
 	void addProjectNeeded(int iProject) { m_projectsNeeded.insert(iProject); }
 
-	// instance caps -- the base allowedCap read-through over the composed `allowed` unit; -1 = unlimited (absent,
-	// per the legacy convention -- the base helper's own convention).
-	int getMaxGlobalInstances() const { return allowedCap("world"); }
-	int getMaxTeamInstances() const { return allowedCap("team"); }
+	// instance caps -- materialized at mapFrom from the composed `allowed` unit; -1 = unlimited (absent,
+	// per the legacy convention).
+	int getMaxGlobalInstances() const { return m_iMaxGlobalInstances; }
+	int getMaxTeamInstances() const { return m_iMaxTeamInstances; }
 
 	virtual void mapFrom(const picojson::value& entity);
 
@@ -115,6 +115,7 @@ private:
 	std::string m_szMovieArtDef;      // ui.art.movie.defineTag
 	int m_iEveryoneSpecialUnit;       // grants.grantsSpecialUnit (NO_SPECIALUNIT default)
 	int m_iAnyoneProjectPrereq;       // requires.build{type,scope:world} (NO_PROJECT default)
+	int m_iMaxGlobalInstances, m_iMaxTeamInstances;   // `allowed` caps, materialized at mapFrom (-1 = absent/unlimited)
 	TechTypes m_eTechPrereq;          // store-inverted tech.enables.projects, reconstructed at load (cascadeLoadJson)
 	std::set<int> m_projectsNeeded;   // store-inverted PrereqProjects (prereq project's enables.projects), reconstructed at load
 };

@@ -21,7 +21,9 @@ Sibling of skills.md.
 sibling case — **policies enacted by a civic** → the `policies` block (emitted by `curate_civic`). Entity-level
 boolean gates that are neither (a building's `damageAllAttackers`, a wonder's `buildingOnlyHealthy`) stay as-is.
 
-**Current state:** readJson maps the `capabilities` block onto the entity's `CvJsonInfo`, and the CvTeam capability
+**Current state:** readJson maps the `capabilities` block onto the entity's `CvJsonInfo` — each key realized as a
+runtime-generated **`CAPABILITY_*` info** ([DEC-classification-infos](../architecture/decisions.md#dec-classification-infos),
+[json.md §8](json.md)) with the grantor-side getters reading O(1) id bitsets — and the CvTeam capability
 getters **run on the cascade**: `CascadeCapabilities` (per-team cached derived-on-query union — O(1) precomputed
 flags + a per-terrain bit vector, invalidated at `setHasTech`/`reset`) is the **sole** union; the legacy counters
 are deleted, their serialization retired via named `WRAPPER_SKIP_ELEMENT`s ledgered in `savemigration.txt`

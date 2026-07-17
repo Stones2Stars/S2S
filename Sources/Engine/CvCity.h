@@ -924,7 +924,7 @@ public:
 	int getExtraSpecialistCommerce(CommerceTypes eIndex, SpecialistTypes eSpecialist) const;
 	void updateExtraSpecialistCommerce(CommerceTypes eCommerce);
 	void updateExtraSpecialistCommerce();
-	void updateSpecialistCommerce(CommerceTypes eCommerce);   // streamlined: clean recompute of m_aiSpecialistCommerce100 (recalc on load + change)
+	void updateSpecialistCommerce(CommerceTypes eCommerce);   // fires the commerce-dirty trigger; getSpecialistCommerce recomputes on read (m_aiSpecialistCommerce100 removed, #430 sweep)
 	void updateSpecialistCommerce();
 
 	int getCommerceRate(CommerceTypes eIndex) const;
@@ -1821,11 +1821,9 @@ protected:
 	int m_iExtraInvestigation;
 
 	int* m_aiRiverPlotYield;
-	int* m_aiBaseYieldRate;
 	// The worked-plot Σ per yield (recompute-only, never serialized; bound in the ctor) -- getPlotYield's O(1) source.
 	CvDerivedCache<CvCity, int, NUM_YIELD_TYPES> m_plotYieldSum;
-	int* m_buildingExtraYield100;
-	int* m_aiBuildingBonusVicinityYield100; // squirrelBanana: PURE-FUNCTION bonus/vicinity building yield (recomputed every read, NOT serialized, NOT the stale m_aiExtraYield edge-cache) -- #vicinity-build-order fix
+	int* m_aiBuildingBonusVicinityYield100; // squirrelBanana: PURE-FUNCTION bonus/vicinity building yield (recomputed every read, NOT serialized) -- #vicinity-build-order fix
 	// STREAMLINED 2026-06-28: getBuildingExtraYield100 (squirrelBanana) is now a RECOMPUTE-ONLY, dirty-flagged cache
 	// (uniform with the building-commerce + plot + specialist caches). Was recompute-EVERY-read (getYieldRate100 is
 	// uncached, so it ran on every yield read — a real hot-path cost). m_abBuildingExtraYield100Dirty is flipped by
@@ -1834,9 +1832,6 @@ protected:
 	mutable int* m_aiBuildingExtraYield100Cache;
 	mutable bool* m_abBuildingExtraYield100Dirty;
 	int* m_buildingYieldMod;
-	int* m_buildingCommerceMod;
-	int* m_aiExtraYield;
-	int* m_aiSpecialistYieldTotal;
 	int* m_aiBaseYieldPerPopRate;
 	int* m_aiYieldRateModifier;
 	int* m_aiPowerYieldRateModifier;
@@ -1855,7 +1850,6 @@ protected:
 	// construct ⇒ rebuilt fresh on load. Kills the build-after-tech / build-after-bonus staleness uniformly with squirrelBanana.
 	mutable int* m_aiBuildingCommerce100;
 	mutable bool* m_abBuildingCommerce100Dirty;
-	int* m_aiSpecialistCommerce100;
 	int* m_aiReligionCommerce;
 	int* m_aiCorporationCommerce;
 	int* m_aiCommerceRateModifier;
@@ -1948,8 +1942,9 @@ protected:
 
 	std::vector<EventTypes> m_aEventsOccured;
 	std::vector<BuildingYieldChange> m_aBuildingYieldChange;   // MIXED store (event/vote grants + the bonus-conditioned
-	// building yield term riding m_aiExtraYield) -- the ONE bonus-fed member still serialized; its split awaits the
-	// modifier cut's extra-yield rework. The load fold SUPPRESSES processBonus's yield leg so nothing double-applies.
+	// building yield term) -- the ONE bonus-fed member still serialized; its split awaits the modifier cut's extra-yield
+	// rework. Its building-yield leg fed the removed m_aiExtraYield accumulator (#430 sweep; getExtraYield100 no longer
+	// reads it). The load fold SUPPRESSES processBonus's yield leg so nothing double-applies.
 	std::vector<BuildingCommerceChange> m_aBuildingCommerceChange;           // RETIRED (empire part moved to the player recompute ledger); read consume-don't-keep, no writers
 	std::vector<BuildingCommerceChange> m_aBuildingCommerceChangeEvents;     // event/vote-granted per-building commerce: SEPARATELY PERSISTED genuine state, outside the recompute-from-source empire path
 	BuildingChangeArray m_aBuildingHappyChange;

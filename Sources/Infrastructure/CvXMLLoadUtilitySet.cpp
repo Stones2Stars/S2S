@@ -1822,10 +1822,29 @@ static void s2sFindJsonFiles(const std::string& dir, std::vector<std::string>& o
 	FindClose(h);
 }
 
-static bool s2sJsonEntityLess(const std::pair<std::string, picojson::value>& a, const std::pair<std::string, picojson::value>& b)
+// The category ORDER MANIFEST sort (`_order.json`, curator-derived -- Tools/Migration/curate_order.py): entities
+// sort by their legacy XML document position, so the registered engine ids reproduce the LEGACY id order and every
+// id-ordered UI surface keeps its familiar layout (the unit level-up promotion popup grouped each line's tiers
+// adjacently because the XML did). A type ABSENT from the manifest (the synthetic TECH_GAME_START, future
+// additions, a category with no manifest) sorts AFTER every listed one, alphabetically -- the legacy
+// new-stuff-appends-last behaviour.
+struct S2sJsonEntityOrder
 {
-	return a.first < b.first;
-}
+	const std::map<std::string, int>* pOrder;
+	explicit S2sJsonEntityOrder(const std::map<std::string, int>* p) : pOrder(p) {}
+	int idx(const std::string& t) const
+	{
+		std::map<std::string, int>::const_iterator it = pOrder->find(t);
+		return it != pOrder->end() ? it->second : MAX_INT;
+	}
+	bool operator()(const std::pair<std::string, picojson::value>& a, const std::pair<std::string, picojson::value>& b) const
+	{
+		const int ia = idx(a.first);
+		const int ib = idx(b.first);
+		if (ia != ib) return ia < ib;
+		return a.first < b.first;
+	}
+};
 
 template <class T>
 void CvXMLLoadUtility::LoadGlobalClassInfoJson(std::vector<T*>& aInfos, const char* szDataFolder, bool bSkipComplex)
@@ -1842,7 +1861,10 @@ void CvXMLLoadUtility::LoadGlobalClassInfoJson(std::vector<T*>& aInfos, const ch
 	s2sFindJsonFiles(dir, files);
 
 	// Parse + collect (type, value); drop non-entities and (for traits) the option-selected complex set.
+	// `_order.json` is the category's ORDER MANIFEST (legacy XML document order, curator-derived), consumed into
+	// the sort below instead of the entity list.
 	std::vector<std::pair<std::string, picojson::value> > entities;
+	std::map<std::string, int> order;
 	for (size_t i = 0; i < files.size(); ++i)
 	{
 		if (bSkipComplex && files[i].find("\\complex\\") != std::string::npos) continue;
@@ -1850,13 +1872,28 @@ void CvXMLLoadUtility::LoadGlobalClassInfoJson(std::vector<T*>& aInfos, const ch
 		if (!f.is_open()) continue;
 		std::ostringstream ss; ss << f.rdbuf();
 		picojson::value v;
-		if (!picojson::parse(v, ss.str()).empty() || !v.is<picojson::object>()) continue;
+		if (!picojson::parse(v, ss.str()).empty()) continue;
+		if (files[i].size() >= 11 && files[i].substr(files[i].size() - 11) == "_order.json")
+		{
+			if (v.is<picojson::array>())
+			{
+				const picojson::array& a = v.get<picojson::array>();
+				for (size_t j = 0; j < a.size(); ++j)
+				{
+					if (!a[j].is<std::string>()) continue;
+					const int n = (int)order.size();
+					order[a[j].get<std::string>()] = n;
+				}
+			}
+			continue;
+		}
+		if (!v.is<picojson::object>()) continue;
 		const picojson::object& o = v.get<picojson::object>();
 		picojson::object::const_iterator t = o.find("type");
 		if (t == o.end() || !t->second.is<std::string>()) continue;
 		entities.push_back(std::make_pair(t->second.get<std::string>(), v));
 	}
-	std::sort(entities.begin(), entities.end(), s2sJsonEntityLess);
+	std::sort(entities.begin(), entities.end(), S2sJsonEntityOrder(&order));
 
 	// TWO-PASS load: register EVERY type->id (pass 1), THEN create + mapFrom (pass 2). A mapFrom resolves its FKs
 	// (jsonResolveId -> getInfoTypeForString) at parse time, so it must see EVERY sibling type in this category

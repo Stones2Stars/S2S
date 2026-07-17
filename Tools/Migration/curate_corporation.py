@@ -88,7 +88,11 @@ IDENTITY = {"iSpread": "spreadFactor", "iSpreadFactor": "competingSpreadCostPerc
 # emits `excludes` today — this migrates the MAPPING so future data lands in `excludes`, not identity.
 EXCLUDES = "CompetingCorporations"
 GRANTS = {"FreeUnit": "freeUnit"}
-DROP = {"TechPrereq", "PrereqBonuses", "PrereqBuildings"}
+DROP = {"TechPrereq", "PrereqBonuses"}
+# PrereqBuildings -> requires.spread count atoms ({type: BUILDING_X, scope: empire, min: N}, json §4.3): the corp's
+# per-building EMPIRE-count need for SPREADING into a city (the executive-spread gate, CvUnit.cpp; evaluated against
+# the target city's owner at spread time -- never the enabler). Empty in ALL shipped base+module XML (verified
+# 2026-07-17), so no corp emits it today -- the mapping is served so future data lands live (owner ruling: need fix).
 FAMILY_ORDER = ["food", "production", "commerce", "gold", "research", "culture", "espionage",
                 "health", "happiness", "experience", "maintenance"]
 
@@ -150,6 +154,7 @@ def curate(typ, rec, store):
     text, fam, art_blocks, identity, grants, cost, leftover = {}, {}, {}, {}, {}, {}, []
     excludes = []
     provides_bonuses = []   # BonusProduced -> provides.bonuses (§5a continuous in-vicinity supply while active)
+    spread_buildings = []   # PrereqBuildings pairs -> requires.spread count atoms (see the mapping note above)
     prereq_bonuses = [b for b in (engine.text(x) for x in rec.findall("PrereqBonuses/BonusType"))
                       if b and b != "NONE"]
     per_bonus = OrderedDict([("anyOf", prereq_bonuses), ("scope", "city")]) if prereq_bonuses else None
@@ -173,6 +178,15 @@ def curate(typ, rec, store):
         elif tag == "BonusProduced":                           # -> provides.bonuses (§5a continuous supply, owner 2026-07-01)
             if t and t != "NONE":
                 provides_bonuses.append(t)
+        elif tag == "PrereqBuildings":                         # -> requires.spread count atoms (mapping note above)
+            for pair in c:
+                kids = list(pair)
+                if len(kids) < 2:
+                    continue
+                b, n = engine.text(kids[0]), engine.text(kids[1])
+                if b and b != "NONE" and engine.is_int(n) and int(n) > 0:
+                    spread_buildings.append(OrderedDict(
+                        [("type", b), ("scope", "empire"), ("min", int(n))]))
         elif tag in GRANTS:
             v = engine.text(c)
             if v and v != "NONE":
@@ -198,6 +212,8 @@ def curate(typ, rec, store):
     enables = store.enabled_by(typ)
     if enables:
         out["enables"] = OrderedDict((k, enables[k]) for k in sorted(enables))
+    if spread_buildings:
+        out["requires"] = OrderedDict([("spread", OrderedDict([("all", spread_buildings)]))])
     if excludes:
         out["excludes"] = excludes
     for family in FAMILY_ORDER:

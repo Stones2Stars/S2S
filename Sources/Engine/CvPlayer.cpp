@@ -177,7 +177,6 @@ m_cachedBonusCount(NULL)
 	m_aiCapitalYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiExtraYieldThreshold = new int[NUM_YIELD_TYPES];
 	m_aiTradeYieldModifier = new int[NUM_YIELD_TYPES];
-	m_aiFreeCityCommerce = new int[NUM_COMMERCE_TYPES];
 	m_extraCommerce = new int[NUM_COMMERCE_TYPES];
 	m_aiCommercePercent = new int[NUM_COMMERCE_TYPES];
 	m_aiCommerceRate = new int[NUM_COMMERCE_TYPES];
@@ -312,7 +311,6 @@ CvPlayer::~CvPlayer()
 	SAFE_DELETE_ARRAY(m_aiCapitalYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiExtraYieldThreshold);
 	SAFE_DELETE_ARRAY(m_aiTradeYieldModifier);
-	SAFE_DELETE_ARRAY(m_aiFreeCityCommerce);
 	SAFE_DELETE_ARRAY(m_extraCommerce);
 	SAFE_DELETE_ARRAY(m_aiCommercePercent);
 	SAFE_DELETE_ARRAY(m_aiCommerceRate);
@@ -1100,7 +1098,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	for (iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
 		m_aiCommercePercent[iI] = 0;
-		m_aiFreeCityCommerce[iI] = 0;
 		m_extraCommerce[iI] = 0;
 		m_aiCommerceRate[iI] = 0;
 		m_abCommerceDirty[iI] = false;
@@ -18587,7 +18584,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiCapitalYieldRateModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiExtraYieldThreshold);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiTradeYieldModifier);
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiFreeCityCommerce);
+		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_aiFreeCityCommerce, SAVE_VALUE_ANY);   // retired (#430 dead-array cut) -- unused; savemigration.txt
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommercePercent);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRate);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
@@ -19986,7 +19983,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiCapitalYieldRateModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiExtraYieldThreshold);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiTradeYieldModifier);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiFreeCityCommerce);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommercePercent);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRate);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
@@ -28546,7 +28542,6 @@ void CvPlayer::clearModifierTotals()
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		m_aiFreeCityCommerce[iI] = 0;
 		m_extraCommerce[iI] = 0;
 		m_aiCommerceRate[iI] = 0;
 		m_abCommerceDirty[iI] = false;

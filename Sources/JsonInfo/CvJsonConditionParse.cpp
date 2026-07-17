@@ -62,7 +62,7 @@ static bool cp_isTypeRef(const std::string& n)
 	    || cp_starts(n, "HERITAGE_") || cp_starts(n, "PROJECT_") || cp_starts(n, "BUILDING_") || cp_starts(n, "CORPORATION_")
 	    || cp_starts(n, "BONUS_") || cp_starts(n, "MAPCATEGORY_") || cp_starts(n, "FEATURE_") || cp_starts(n, "TERRAIN_")
 	    || cp_starts(n, "IMPROVEMENT_") || cp_starts(n, "ROUTE_") || cp_starts(n, "VICTORY_") || cp_starts(n, "UNIT_")
-	    || cp_starts(n, "GAMEOPTION_") || cp_starts(n, "PROPERTY_");
+	    || cp_starts(n, "GAMEOPTION_") || cp_starts(n, "PROPERTY_") || cp_starts(n, "PROMOTION_");
 }
 
 // ---- node builders (FK resolution via jsonResolveId -- unresolved ids land in the load-time diagnostics) --------

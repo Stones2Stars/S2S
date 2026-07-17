@@ -64,10 +64,6 @@ CvCity::CvCity()
 	m_aiNetworkBonusTotal = NULL;    // allocated in reset() (the per-info array pattern; uninit() frees)
 	m_aiEffectiveBonusCount = NULL;
 	m_aiRiverPlotYield = new int[NUM_YIELD_TYPES];
-	m_aiBaseYieldRate = new int[NUM_YIELD_TYPES];
-	m_aiExtraYield = new int[NUM_YIELD_TYPES];
-	m_aiSpecialistYieldTotal = new int[NUM_YIELD_TYPES];
-	m_buildingExtraYield100 = new int[NUM_YIELD_TYPES];
 	m_aiBuildingBonusVicinityYield100 = new int[NUM_YIELD_TYPES];
 	m_aiBuildingExtraYield100Cache = new int[NUM_YIELD_TYPES];
 	m_abBuildingExtraYield100Dirty = new bool[NUM_YIELD_TYPES];
@@ -86,13 +82,11 @@ CvCity::CvCity()
 	m_aiBuildingCommerce = new int[NUM_COMMERCE_TYPES];
 	m_aiBuildingCommerce100 = new int[NUM_COMMERCE_TYPES];
 	m_abBuildingCommerce100Dirty = new bool[NUM_COMMERCE_TYPES];
-	m_aiSpecialistCommerce100 = new int[NUM_COMMERCE_TYPES];
 	m_aiReligionCommerce = new int[NUM_COMMERCE_TYPES];
 	m_aiCorporationCommerce = new int[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiCommerceHappinessPer = new int[NUM_COMMERCE_TYPES];
 	m_commercePerPopFromBuildings = new int[NUM_COMMERCE_TYPES];
-	m_buildingCommerceMod = new int[NUM_COMMERCE_TYPES];
 	m_aiDomainFreeExperience = new int[NUM_DOMAIN_TYPES];
 	m_aiDomainProductionModifier = new int[NUM_DOMAIN_TYPES];
 
@@ -196,15 +190,10 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_abCommerceRankValid);
 
 	SAFE_DELETE_ARRAY(m_aiRiverPlotYield);
-	SAFE_DELETE_ARRAY(m_aiBaseYieldRate);
-	SAFE_DELETE_ARRAY(m_aiExtraYield);
-	SAFE_DELETE_ARRAY(m_aiSpecialistYieldTotal);
-	SAFE_DELETE_ARRAY(m_buildingExtraYield100);
 	SAFE_DELETE_ARRAY(m_aiBuildingBonusVicinityYield100);
 	SAFE_DELETE_ARRAY(m_aiBuildingExtraYield100Cache);
 	SAFE_DELETE_ARRAY(m_abBuildingExtraYield100Dirty);
 	SAFE_DELETE_ARRAY(m_buildingYieldMod);
-	SAFE_DELETE_ARRAY(m_buildingCommerceMod);
 	SAFE_DELETE_ARRAY(m_aiBaseYieldPerPopRate);
 	SAFE_DELETE_ARRAY(m_aiYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiPowerYieldRateModifier);
@@ -220,7 +209,6 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_aiBuildingCommerce);
 	SAFE_DELETE_ARRAY(m_aiBuildingCommerce100);
 	SAFE_DELETE_ARRAY(m_abBuildingCommerce100Dirty);
-	SAFE_DELETE_ARRAY(m_aiSpecialistCommerce100);
 	SAFE_DELETE_ARRAY(m_aiReligionCommerce);
 	SAFE_DELETE_ARRAY(m_aiCorporationCommerce);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifier);
@@ -682,10 +670,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
 		m_aiRiverPlotYield[iI] = 0;
-		m_aiBaseYieldRate[iI] = 0;
-		m_aiExtraYield[iI] = 0;
-		m_aiSpecialistYieldTotal[iI] = 0;
-		m_buildingExtraYield100[iI] = 0;
 		m_aiBuildingBonusVicinityYield100[iI] = 0;
 		m_aiBuildingExtraYield100Cache[iI] = 0;
 		m_abBuildingExtraYield100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
@@ -711,7 +695,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		m_aiBuildingCommerce[iI] = 0;
 		m_aiBuildingCommerce100[iI] = 0;
 		m_abBuildingCommerce100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
-		m_aiSpecialistCommerce100[iI] = 0;
 		m_aiReligionCommerce[iI] = 0;
 		m_aiCorporationCommerce[iI] = 0;
 		m_aiCommerceRateModifier[iI] = 0;
@@ -721,7 +704,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		m_aiBonusCommercePercentChanges[iI] = 0;
 		m_aiBuildingCommerceTechChange[iI] = 0;
 		m_aiExtraSpecialistCommerce[iI] = 0;
-		m_buildingCommerceMod[iI] = 0;
 		m_abCommerceRankValid[iI] = false;
 		m_aiCommerceRank[iI] = -1;
 	}
@@ -4648,9 +4630,9 @@ void CvCity::processBonus(BonusTypes eBonus, int iChange)
 		changeBonusCommerceRateModifier(((CommerceTypes)iI), (getBonusCommerceRateModifier(((CommerceTypes)iI), eBonus) * iChange));
 		changeBonusCommercePercentChanges(((CommerceTypes)iI), (getBonusCommercePercentChanges(((CommerceTypes)iI), eBonus) * iChange));
 	}
-	// LOAD-SUPPRESSED: m_aBuildingYieldChange + the m_aiExtraYield it rides are the ONE still-serialized
-	// bonus-fed store (mixed with event/vote grants -- split awaits the modifier cut), so the load fold must
-	// not re-apply what the save already carries. Play-time crossings apply as always.
+	// LOAD-SUPPRESSED: m_aBuildingYieldChange is the still-serialized bonus-fed store (mixed with event/vote grants
+	// -- split awaits the modifier cut), so the load fold must not re-apply what the save already carries. (Its
+	// building-yield leg fed the removed m_aiExtraYield accumulator, #430 sweep.) Play-time crossings apply as always.
 	if (!spineGameLoadInProgress())
 	{
 		foreach_(const BuildingTypes eTypeX, getHasBuildings())
@@ -11566,8 +11548,7 @@ void CvCity::changePlotYield(YieldTypes eIndex, int iChange)
 
 	if (iChange != 0)
 	{
-		m_aiBaseYieldRate[eIndex] += iChange;
-		onYieldChange();
+		onYieldChange();   // #430: trigger only -- the plot-yield sum recomputes from source (m_aiBaseYieldRate deleted)
 	}
 }
 
@@ -11608,7 +11589,6 @@ void CvCity::changeBuildingExtraYield100(YieldTypes eYield, int iChange)
 
 	if (iChange != 0)
 	{
-		m_buildingExtraYield100[eYield] += iChange;
 		onYieldChange();
 	}
 }
@@ -11617,15 +11597,15 @@ int CvCity::getBuildingExtraYield100(YieldTypes eYield) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eYield);
 	// squirrelBanana (#vicinity-build-order): the per-building extra yield as a PURE FUNCTION of current state,
-	// recomputed fresh here -- NOT read from the stale edge-cache (m_buildingExtraYield100, m_aBuildingYieldChange ->
-	// m_aiExtraYield), which is build-order-dependent. Two staleness classes, both fixed by the fresh recompute:
+	// recomputed fresh here -- NOT from a stale, build-order-dependent edge-cache. (The old incremental accumulators
+	// m_buildingExtraYield100 / m_aiExtraYield were removed in the #430 dead-array sweep; this recompute IS the value.)
+	// Two staleness classes the fresh recompute fixes, that the old incremental cache suffered:
 	//  (a) bonus/vicinity: doVicinityBonus only stamped on a bonus-TRANSITION for already-active buildings, so a
 	//      building constructed AFTER the bonus connected was never credited (forever).
-	//  (b) tech: processBuilding (4677) adds only static+dynamic to m_buildingExtraYield100; the TECH yield enters
-	//      solely via CvTeam on tech RESEARCH (5247), so a building constructed AFTER its prereq tech never gets its
-	//      getBuildingYieldTechChange into the cache (the player-5 +100). The fresh sum (static + dynamic + tech +
-	//      bonus/vicinity) over active buildings is the build-order-INDEPENDENT truth. Stored in a recompute-only
-	//      holder (never serialized), so the legacy arrays stay untouched dead data and the test save loads byte-identical.
+	//  (b) tech: the old build-time accumulate added only static+dynamic; the TECH yield entered solely via CvTeam on
+	//      tech RESEARCH (5247), so a building constructed AFTER its prereq tech never got its getBuildingYieldTechChange
+	//      into the cache. The fresh sum (static + dynamic + tech + bonus/vicinity) over active buildings is the
+	//      build-order-INDEPENDENT truth, held in a recompute-only cache (never serialized).
 	// STREAMLINED 2026-06-28: now a RECOMPUTE-ONLY dirty-flagged cache (uniform with building-commerce + plot + specialist).
 	// The fresh sum runs ONLY when dirty (flipped by onYieldChange — the single yield trigger, so the rebuild point is
 	// OBVIOUS), cached between yield changes; was recompute-EVERY-read (getYieldRate100 is uncached, so a real hot-path cost).
@@ -11639,9 +11619,9 @@ int CvCity::getBuildingExtraYield100(YieldTypes eYield) const
 	{
 		if (!hasFullyActiveBuilding(eB)) continue;
 		const CvBuildingInfo& kB = GC.getBuildingInfo(eB);
-		// static (getYieldChange ×100) + tech (getBuildingYieldTechChange, already ×100), per building -- exactly what
-		// m_buildingExtraYield100 SHOULD hold. The per-city DYNAMIC (getBuildingYieldChange, event/bonus-set) is NOT
-		// here: it lives in m_aiExtraYield (the cascade reads it as CityExtraYield) -- adding it would double-count.
+		// static (getYieldChange ×100) + tech (getBuildingYieldTechChange, already ×100), per building. The per-city
+		// DYNAMIC term (getBuildingYieldChange, event/bonus-set) is NOT summed here: it rode the removed m_aiExtraYield
+		// accumulator, which had no live reader and was dropped in the #430 sweep (see getExtraYield100).
 		iFresh += 100 * kB.getYieldChange(eYield) + kTeam.getBuildingYieldTechChange(eYield, eB);
 		// has-any guard (getXxx(NO_BONUS, NO_YIELD) == "does this building define ANY such array") -- skips the
 		// per-bonus loop for the ~95% of buildings with no bonus/vicinity yields, so this stays cheap on the hot path.
@@ -11664,10 +11644,10 @@ int CvCity::getBuildingExtraYield100(YieldTypes eYield) const
 int CvCity::getExtraYield100(YieldTypes eYield) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eYield);
-	// m_aiExtraYield (the stale corp + event + edge-stamp munge) is DELIBERATELY NOT read -- see getBuildingExtraYield100
-	// / squirrelBanana. The bonus/vicinity building yield is the pure-function holder; corp/event city-yields ride in
-	// m_aiExtraYield and are dropped (acceptable: parity on a correct, build-order-independent base is the goal, and no
-	// event data sets building yields anyway).
+	// The removed m_aiExtraYield accumulator (the stale corp + event + edge-stamp munge) had no live reader -- see
+	// getBuildingExtraYield100 / squirrelBanana. The bonus/vicinity building yield is the pure-function holder; the
+	// corp/event city-yields that rode m_aiExtraYield are dropped (acceptable: parity on a correct, build-order-
+	// independent base is the goal, and no event data sets building yields anyway).
 	return (
 		getBuildingExtraYield100(eYield)
 		+
@@ -11681,7 +11661,6 @@ void CvCity::changeExtraYield(YieldTypes eYield, int iChange)
 
 	if (iChange != 0)
 	{
-		m_aiExtraYield[eYield] += iChange;
 		onYieldChange();
 	}
 }
@@ -11694,9 +11673,9 @@ int CvCity::getExtraYield(YieldTypes eYield) const
 int CvCity::getSpecialistYieldTotal(YieldTypes eYield) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eYield);
-	// STREAMLINED 2026-06-28: recompute-on-read = INTRINSIC (current state, multiplicative) + EXTRA (m_aiExtraSpecialistYield,
-	// eager-maintained, not stale). Never the stale serialized m_aiSpecialistYieldTotal (skip-read on load). Uniform with
-	// getSpecialistCommerce: getYieldChange × (100+pct)/100, ×100 fixed-point ÷100. (Dirty-flagged cache = perf follow-up.)
+	// recompute-on-read = INTRINSIC (current state, multiplicative) + EXTRA (m_aiExtraSpecialistYield, eager-maintained,
+	// not stale). The stored m_aiSpecialistYieldTotal accumulator was removed in the #430 sweep (no live reader). Uniform
+	// with getSpecialistCommerce: getYieldChange × (100+pct)/100, ×100 fixed-point ÷100. (Dirty-flagged cache = perf follow-up.)
 	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
 	int iIntrinsic100 = 0;
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
@@ -11721,7 +11700,6 @@ void CvCity::changeSpecialistYieldTotal(YieldTypes eYield, int iChange)
 
 	if (iChange != 0)
 	{
-		m_aiSpecialistYieldTotal[eYield] += iChange;
 		onYieldChange();
 	}
 }
@@ -12155,32 +12133,10 @@ void CvCity::updateExtraSpecialistYield(YieldTypes eYield)
 		iNewExtra += getExtraSpecialistYield(eYield, (SpecialistTypes)iI);
 	}
 	m_aiExtraSpecialistYield[eYield] = iNewExtra;
-
-	// STREAMLINED 2026-06-28: fully recompute the specialist-yield TOTAL = INTRINSIC (clean, multiplicative) + EXTRA,
-	// the plot-cache pattern (recalc on load + on change), replacing the stale incremental intrinsic (processSpecialist
-	// :5156, additive) + count-frozen pct (CvPlayer:27926). UNIFORM with getSpecialistCommerce — the percent multiplies
-	// the intrinsic getYieldChange: getYieldChange × (100 + SpecialistYieldPercentChanges)/100, ×100 fixed-point ÷100.
-	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
-	int iIntrinsic100 = 0;
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		const int iYieldChange = GC.getSpecialistInfo((SpecialistTypes)iI).getYieldChange(eYield);
-		if (iYieldChange == 0)
-		{
-			continue;
-		}
-		const int iCount = specialistCount((SpecialistTypes)iI);
-		if (iCount != 0)
-		{
-			iIntrinsic100 += iCount * iYieldChange * (100 + kPlayer.getSpecialistYieldPercentChanges((SpecialistTypes)iI, eYield));
-		}
-	}
-	const int iNewTotal = iIntrinsic100 / 100 + iNewExtra;
-	if (m_aiSpecialistYieldTotal[eYield] != iNewTotal)
-	{
-		m_aiSpecialistYieldTotal[eYield] = iNewTotal;
-		onYieldChange();
-	}
+	// m_aiSpecialistYieldTotal was a dead serialized cache -- getSpecialistYieldTotal recomputes on read and the #430
+	// cascade owns the value. The extra-specialist-yield refresh still fires the yield trigger so dependent caches
+	// invalidate (getSpecialistYieldTotal reads m_aiExtraSpecialistYield, updated just above).
+	onYieldChange();
 }
 
 
@@ -12865,9 +12821,9 @@ void CvCity::updateBuildingCommerce()
 int CvCity::getSpecialistCommerce(CommerceTypes eIndex)	const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	// STREAMLINED 2026-06-28: recompute-on-read from CURRENT state (never the stale serialized m_aiSpecialistCommerce100,
-	// which is now skip-read on load). Deterministic + always fresh on load AND change — the old incremental/count-frozen
-	// drift is gone. Intrinsic getCommerceChange × (100+pct)/100, ×100 fixed-point, ÷100 once. (A dirty-flagged cache —
+	// recompute-on-read from CURRENT state; the old stale incremental m_aiSpecialistCommerce100 accumulator was removed
+	// in the #430 sweep (this recompute IS the value). Deterministic + always fresh on load AND change — the old
+	// incremental/count-frozen drift is gone. Intrinsic getCommerceChange × (100+pct)/100, ×100 fixed-point, ÷100 once. (A dirty-flagged cache —
 	// the standardized cached-array refactor — is the perf follow-up; the upstream getCommerceRate cache bounds calls.)
 	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
 	int iValue100 = 0;
@@ -12887,39 +12843,18 @@ int CvCity::getSpecialistCommerce(CommerceTypes eIndex)	const
 	return iValue100 / 100;
 }
 
-// STREAMLINED 2026-06-28: m_aiSpecialistCommerce100 is now a CLEANLY-RECOMPUTED cache (the plot-cache pattern:
-// recalc on load + on change), NOT the old stale incremental accumulator. The legacy code wrote it incrementally
-// from processSpecialist (intrinsic×(100+pct) at assignment time) AND from changeSpecialistCommercePercentChanges
-// (CvPlayer:27896, specialistCount×Δpct frozen at civic-change time) — so it drifted with reassignment and survived
-// save/load + recalc, making getSpecialistCommerce non-deterministic (see docs/specs/validation.md +
-// legacy-value-calc-map §1.5). This recompute is the EXISTING primary formula evaluated deterministically:
-// Σ specialistCount(spec) × getCommerceChange(spec) × (100 + SpecialistCommercePercentChanges(spec)), ×100 fixed-point
-// (÷100 at the getter). The buggy count-frozen flat-per-specialist add-on is dropped (balance pass later). Called from
-// updateExtraSpecialistCommerce() (specialist add/remove, load/recalc, player-wide) + the pct-change path.
+// getSpecialistCommerce recomputes on read (Σ specialistCount(spec) × getCommerceChange(spec) × (100 +
+// SpecialistCommercePercentChanges(spec)) fixed-point), so specialist commerce is deterministic and the #430 cascade
+// owns the value; the old stale incremental m_aiSpecialistCommerce100 accumulator was removed in the dead-array sweep.
+// This updater just fires the commerce-dirty trigger. Called from updateExtraSpecialistCommerce() (specialist
+// add/remove, load/recalc, player-wide) + the pct-change path.
 void CvCity::updateSpecialistCommerce(CommerceTypes eCommerce)
 {
 	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eCommerce);
-	const CvPlayer& kPlayer = GET_PLAYER(getOwner());
-	int iNew100 = 0;
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		const int iIntrinsic = GC.getSpecialistInfo((SpecialistTypes)iI).getCommerceChange(eCommerce);
-		if (iIntrinsic == 0)
-		{
-			continue;
-		}
-		const int iCount = specialistCount((SpecialistTypes)iI);
-		if (iCount != 0)
-		{
-			iNew100 += iCount * iIntrinsic * (100 + kPlayer.getSpecialistCommercePercentChanges((SpecialistTypes)iI, eCommerce));
-		}
-	}
-	if (m_aiSpecialistCommerce100[eCommerce] != iNew100)
-	{
-		m_aiSpecialistCommerce100[eCommerce] = iNew100;
-		setCommerceDirty(eCommerce);
-	}
+	// m_aiSpecialistCommerce100 was a dead serialized cache -- getSpecialistCommerce recomputes on read and the #430
+	// cascade owns the value. Fire the commerce-dirty trigger so getCommerceRate rebuilds from the fresh source.
+	setCommerceDirty(eCommerce);
 }
 
 void CvCity::updateSpecialistCommerce()
@@ -12938,7 +12873,6 @@ void CvCity::changeSpecialistCommerceTimes100(CommerceTypes eIndex, int iChange)
 
 	if (iChange != 0)
 	{
-		m_aiSpecialistCommerce100[eIndex] += iChange;
 		setCommerceDirty(eIndex);
 	}
 }
@@ -13351,7 +13285,6 @@ void CvCity::changeBuildingCommerceModifier(CommerceTypes eIndex, int iChange)
 
 	if (iChange != 0)
 	{
-		m_buildingCommerceMod[eIndex] += iChange;
 		setCommerceModifierDirty(eIndex);
 		GET_PLAYER(getOwner()).invalidateCommerceRankCache();
 	}
@@ -16472,8 +16405,10 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 	}
 
 	// #430: the availability frontiers are the per-city/per-player ENABLER domains (event-maintained,
-	// enabler.md par.7/8). Membership changes on HAVE events only -- a queued item does NOT leave the frontier
-	// (held flips on BUILT; queue-time over-offer is the enable-side premise until the requires stage).
+	// enabler.md par.7/8). Membership changes on HAVE events only (held flips on BUILT); a QUEUED building
+	// leaves the fresh OFFER via the GATE (par.7.1 step 3) -- this emit triggers the one-id re-gate, whose
+	// verdict reads the live queue.
+	emitCityOrderChanged(getID(), (int)getOwner(), (int)eOrder, iData1, +1);
 
 	if (!bAppend || getOrderQueueLength() == 1)
 	{
@@ -16954,6 +16889,8 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 	}
 
 	m_orderQueue.erase(m_orderQueue.begin() + orderIndex);
+	// #430 enabler queue leg: the dequeue restores the fresh offer -- the one-id re-gate re-reads the queue.
+	emitCityOrderChanged(getID(), (int)getOwner(), (int)order.eOrderType, externalOrder.iData1, -1);
 
 	if (bStart)
 	{
@@ -17952,7 +17889,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iReinforcementCounter);
 
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiRiverPlotYield);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiBaseYieldRate);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiYieldRateModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiPowerYieldRateModifier);
 	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_aiBonusYieldRateModifier, SAVE_VALUE_TYPE_INT_ARRAY);   // rebuilt by the load fold
@@ -17962,11 +17898,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRate);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerce);
-	// STREAMLINED 2026-06-28: SKIP the save read — m_aiSpecialistCommerce100 is now a clean DERIVED cache (recalc on load
-	// + on change, the universal cached-array technique). Loading the serialized value would restore the OLD stale drift;
-	// instead recalculateModifiers repopulates it fresh on load (via processSpecialist → updateExtraSpecialistCommerce →
-	// updateSpecialistCommerce). Mirrors the LocalSpecialistExtra* skip pattern below. (Still WRITTEN for save-format compat.)
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_aiSpecialistCommerce100, SAVE_VALUE_TYPE_INT_ARRAY);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiReligionCommerce);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCorporationCommerce);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
@@ -18301,19 +18232,10 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadRawVicinityBonus);
 	WRAPPER_READ(wrapper, "CvCity", &m_bPropertyControlBuildingQueued);
 
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiExtraYield);
-	// Absent in older saves (stays 0; specialists are then still baked flat into m_aiExtraYield
-	// until a modifier recalculation rebuilds both arrays).
-	// STREAMLINED 2026-06-28: SKIP the save read — m_aiSpecialistYieldTotal is a clean DERIVED cache (recalc on load +
-	// change). recalculateModifiers repopulates it fresh on load (processSpecialist → updateExtraSpecialistYield). Loading
-	// the serialized value would restore stale drift. (Still WRITTEN for save-format compat.) Uniform with commerce above.
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_aiSpecialistYieldTotal, SAVE_VALUE_TYPE_INT_ARRAY);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerceTechChange);
 
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_commercePerPopFromBuildings);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_buildingExtraYield100);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_buildingYieldMod);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_buildingCommerceMod);
 	{
 		short iSize = 0;
 		short iType;
@@ -18733,7 +18655,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iReinforcementCounter);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiRiverPlotYield);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiBaseYieldRate);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiYieldRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiPowerYieldRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiBonusYieldRateModifier);
@@ -18743,7 +18664,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRate);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerce);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiSpecialistCommerce100);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiReligionCommerce);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCorporationCommerce);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
@@ -18934,14 +18854,10 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadRawVicinityBonus);
 	WRAPPER_WRITE(wrapper, "CvCity", m_bPropertyControlBuildingQueued);
 
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiExtraYield);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiSpecialistYieldTotal);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerceTechChange);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_commercePerPopFromBuildings);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_buildingExtraYield100);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_buildingYieldMod);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_buildingCommerceMod);
 	{
 		WRAPPER_WRITE_DECORATED(wrapper, "CvCity", (short)m_plotYieldChanges.size(), "PlotYieldChangesSize");
 		//for (std::map<short, YieldArray>::const_iterator it = m_plotYieldChanges.begin(), itEnd = m_plotYieldChanges.end(); it != itEnd; ++it)
@@ -23064,7 +22980,6 @@ void CvCity::clearModifierTotals()
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
 		m_aiRiverPlotYield[iI] = 0;
-		m_aiBaseYieldRate[iI] = 0;
 		m_aiBaseYieldPerPopRate[iI] = 0;
 		m_aiYieldRateModifier[iI] = 0;
 		m_aiPowerYieldRateModifier[iI] = 0;
@@ -23072,9 +22987,6 @@ void CvCity::clearModifierTotals()
 		m_aiTradeYield[iI] = 0;
 		m_aiCorporationYield[iI] = 0;
 		m_aiExtraSpecialistYield[iI] = 0;
-		m_aiExtraYield[iI] = 0;
-		m_aiSpecialistYieldTotal[iI] = 0;
-		m_buildingExtraYield100[iI] = 0;
 		m_aiBuildingBonusVicinityYield100[iI] = 0;
 		m_aiBuildingExtraYield100Cache[iI] = 0;
 		m_abBuildingExtraYield100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
@@ -23089,7 +23001,6 @@ void CvCity::clearModifierTotals()
 		m_aiBuildingCommerce[iI] = 0;
 		m_aiBuildingCommerce100[iI] = 0;
 		m_abBuildingCommerce100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
-		m_aiSpecialistCommerce100[iI] = 0;
 		m_aiReligionCommerce[iI] = 0;
 		m_aiCorporationCommerce[iI] = 0;
 		m_aiCommerceRateModifier[iI] = 0;
@@ -23099,7 +23010,6 @@ void CvCity::clearModifierTotals()
 		m_aiBonusCommercePercentChanges[iI] = 0;
 		m_aiBuildingCommerceTechChange[iI] = 0;
 		m_aiExtraSpecialistCommerce[iI] = 0;
-		m_buildingCommerceMod[iI] = 0;
 	}
 
 	for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)

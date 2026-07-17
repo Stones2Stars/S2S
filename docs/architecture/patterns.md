@@ -88,3 +88,29 @@ needs a fact FEEDS it to the one function, it never re-derives it.
 machine's condition gate routes through `cascadeEvalCondition`; confirm no calculator holds state. **A new
 "does-the-same-thing" function is the failure** — reuse the existing one, or lift it to the shared surface. This is the
 anti-rollerskate check an agent runs before adding cascade calc/eval code.
+
+## Materialize at mapFrom — no runtime string reads in info getters (the single-source law's load-time sibling)
+
+> Binding: [DEC-materialize-at-mapfrom](decisions.md#dec-materialize-at-mapfrom). Owner ruling: *"all of these should
+> use the standardized jsonreader and be loaded properly into the info — remapping directly from a json read is a
+> gigantic nono."*
+
+**The law.** A `CvJson<X>Info` GETTER never does a per-call string-keyed read — no modifier-address sum
+(`"happiness.city"` lookups), no bool-block `std::set<string>` walk, no grants/allowed bucket-string fetch, no raw
+picojson re-read. Every such value is **materialized ONCE at `mapFrom`** into a typed member (scalar, positional
+array, sparse id-keyed map, or a classification-id bitset), and the getter is a **bare member read**. The measured
+why: these getters sit under the EXE frame loop (`unit.isInvisible` ~98M calls/turn-window), the pathfinder's
+per-step gates, and the AI's per-candidate scans — a heap-string construction + map walk per call was a real
+turn-time/FPS tax.
+
+- **The ONE load-time scan surface is `JsonModScan`** (`Sources/JsonInfo/CvJsonModScan.{h,cpp}`) — the
+  unconditioned/keyed/condition-shape family walkers, shared by every poco's materialization pass (the per-file
+  `civSum*`/`sumUnconditioned` duplicates are gone). It is **load-time only**: a getter never calls into it.
+- **Classification blocks read by GENERATED ID** — the §8/§9 bool blocks resolve their keys to the
+  `ClassificationRegistry`'s runtime-minted ids ([DEC-classification-infos](decisions.md#dec-classification-infos)),
+  and the getters are `CLS_HAS`/`CLS_COUNT` bit tests (memoized id + O(1) bitset read; the pre-resolve load window
+  falls back to the string set so early consumers stay correct).
+- mapFrom is idempotent by contract, so the materialized members are fully redefined on every (re-)map —
+  clear-first for accumulating containers, unconditional assignment for scalars.
+- The cascade's own gated sums are NOT this surface — they are `MMKernel` over the compiled `DepositIndex`,
+  running at dirty-rebuild cadence, not per read.

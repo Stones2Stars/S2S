@@ -38,8 +38,8 @@ static GameObjectTypes jsonGameObjectScope(const std::string& s)
 
 CvPropertyInfo::CvPropertyInfo()
 	: m_iAIWeight(0), m_eAIScaleType(AISCALE_NONE), m_iFontButtonIndex(-1),
-	  m_iOperationalRangeMin(0), m_iOperationalRangeMax(0),
-	  m_iTargetLevel(0), m_iTrainReluctance(0), m_bSourceDrain(false), m_iChar(0)
+	  m_iOperationalRangeMin(-500), m_iOperationalRangeMax(500),
+	  m_iTargetLevel(0), m_iTrainReluctance(1), m_bSourceDrain(false), m_iChar(0)
 {}
 
 void CvPropertyInfo::mapFrom(const picojson::value& entity)
@@ -52,13 +52,13 @@ void CvPropertyInfo::mapFrom(const picojson::value& entity)
 	if (const picojson::object* ai = jsonChildObj(o, "ai"))
 	{
 		m_iAIWeight        = jsonIdInt(*ai, "weight");            // ai.weight
-		m_iTrainReluctance = jsonIdInt(*ai, "trainReluctance");  // ai.trainReluctance
+		m_iTrainReluctance = jsonIdInt(*ai, "trainReluctance", 1);  // ai.trainReluctance; legacy load default 1 -- 0 collapses the AI training threshold
 		std::string szScale;
 		if (jsonIdStr(*ai, "scale", szScale)) m_eAIScaleType = aiScaleFromString(szScale);  // ai.scale
 		if (const picojson::object* orange = jsonChildObj(*ai, "operationalRange"))
 		{
-			m_iOperationalRangeMin = jsonIdInt(*orange, "min");  // ai.operationalRange.min
-			m_iOperationalRangeMax = jsonIdInt(*orange, "max");  // ai.operationalRange.max
+			m_iOperationalRangeMin = jsonIdInt(*orange, "min", -500);  // ai.operationalRange.min; legacy load default -500
+			m_iOperationalRangeMax = jsonIdInt(*orange, "max", 500);   // ai.operationalRange.max; legacy load default 500 ((max-min) divides in CvCityAI)
 		}
 	}
 

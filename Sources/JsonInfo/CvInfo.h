@@ -81,6 +81,11 @@ public:
 	virtual const CvJsonBoolBlock* getCapabilities() const { return NULL; }   // §8 (grantors)
 	virtual const CvJsonBoolBlock* getPolicies()     const { return NULL; }   // §9 (civics/traits)
 
+	// §8/§9 classification id-plane resolve -- fills each carried block's by-id bitsets from the generated
+	// ClassificationRegistry (SKILL_/TAG_/ATTRIBUTE_/CAPABILITY_/POLICY_). Called by the registry's
+	// buildAndResolve after minting (LOAD-ONLY; the info touches its own protected mut* blocks).
+	void resolveClassificationIds();
+
 	// --- terse read-throughs (the cascade's hot query surface; safe when the unit is absent) ---
 	const CvJsonCondition* requiresBuild() const   { const CvJsonRequires* r = getRequires(); return r ? r->build : NULL; }
 	const CvJsonCondition* requiresOperate() const { const CvJsonRequires* r = getRequires(); return r ? r->operate : NULL; }

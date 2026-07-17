@@ -75,28 +75,28 @@ public:
 	int getDefenseCombatModifierChange() const { return m_iDefenseCombatModifierChange; }
 	int getVSBarbsChange() const { return m_iVSBarbsChange; }
 	int getReligiousCombatModifierChange() const { return m_iReligiousCombatModifierChange; }
-	int getStealthCombatModifierChange() const { return m_iStealthCombatModifierChange; }  // value real; legacy also runtime-gates on GAMEOPTION_COMBAT_WITHOUT_WARNING (consumer/deferred)
+	int getStealthCombatModifierChange() const;   // GAMEOPTION_COMBAT_WITHOUT_WARNING-gated (archive mirror; .cpp)
 	int getDamageModifierChange() const { return m_iDamageModifierChange; }
 	int getMaxHPChange() const { return m_iMaxHPChange; }
 	int getEnduranceChange() const { return m_iEnduranceChange; }
 	int getTauntChange() const { return m_iTauntChange; }
 	int getBreakdownChanceChange() const { return m_iBreakdownChanceChange; }
 	int getBreakdownDamageChange() const { return m_iBreakdownDamageChange; }
-	int getUnnerveChange() const { return m_iUnnerveChange; }                 // value real; legacy runtime-gates on GAMEOPTION_COMBAT_SURROUND_DESTROY (consumer/deferred)
-	int getEncloseChange() const { return m_iEncloseChange; }                 // value real; S&D runtime gate deferred
-	int getLungeChange() const { return m_iLungeChange; }                     // value real; S&D runtime gate deferred
-	int getDynamicDefenseChange() const { return m_iDynamicDefenseChange; }   // value real; S&D runtime gate deferred
-	int getCombatModifierPerSizeMoreChange() const { return m_iCombatModifierPerSizeMoreChange; }     // value real; SIZE_MATTERS runtime gate deferred
-	int getCombatModifierPerSizeLessChange() const { return m_iCombatModifierPerSizeLessChange; }     // value real; SIZE_MATTERS runtime gate deferred
-	int getCombatModifierPerVolumeMoreChange() const { return m_iCombatModifierPerVolumeMoreChange; } // value real; SIZE_MATTERS runtime gate deferred
-	int getCombatModifierPerVolumeLessChange() const { return m_iCombatModifierPerVolumeLessChange; } // value real; SIZE_MATTERS runtime gate deferred
+	int getUnnerveChange() const;                 // GAMEOPTION_COMBAT_SURROUND_DESTROY-gated (archive mirror; .cpp)
+	int getEncloseChange() const;                 // S&D-gated
+	int getLungeChange() const;                   // S&D-gated
+	int getDynamicDefenseChange() const;          // S&D-gated
+	int getCombatModifierPerSizeMoreChange() const;     // GAMEOPTION_COMBAT_SIZE_MATTERS-gated
+	int getCombatModifierPerSizeLessChange() const;     // SIZE_MATTERS-gated
+	int getCombatModifierPerVolumeMoreChange() const;   // SIZE_MATTERS-gated
+	int getCombatModifierPerVolumeLessChange() const;   // SIZE_MATTERS-gated
 	int getCityAttackPercent() const { return m_iCityAttackPercent; }
 	int getCityDefensePercent() const { return m_iCityDefensePercent; }
 	int getHillsAttackPercent() const { return m_iHillsAttackPercent; }
 	int getHillsDefensePercent() const { return m_iHillsDefensePercent; }
 	int getKamikazePercent() const { return m_iKamikazePercent; }
 	int getCombatLimitChange() const { return m_iCombatLimitChange; }
-	int getStealthStrikesChange() const { return m_iStealthStrikesChange; }   // value real; COMBAT_WITHOUT_WARNING runtime gate deferred
+	int getStealthStrikesChange() const;   // GAMEOPTION_COMBAT_WITHOUT_WARNING-gated (archive mirror; .cpp)
 	int getQualityChange() const { return m_iQualityChange; }
 	int getGroupChange() const { return m_iGroupChange; }
 
@@ -189,57 +189,59 @@ public:
 	// =========================================================================================================
 	//  section-8 boolean SKILLS block
 	// =========================================================================================================
-	bool isBlitz() const { return m_skills.has("blitz"); }
-	bool isAmphib() const { return m_skills.has("amphib"); }
-	bool isRiver() const { return m_skills.has("river"); }
-	bool isEnemyRoute() const { return m_skills.has("enemyRoute"); }
-	bool isAlwaysHeal() const { return m_skills.has("alwaysHeal"); }
-	bool isHillsDoubleMove() const { return m_skills.has("hillsDoubleMove"); }
-	bool isImmuneToFirstStrikes() const { return m_skills.has("immuneToFirstStrikes"); }
-	bool isDefensiveVictoryMove() const { return m_skills.has("defensiveVictoryMove"); }
-	bool isFreeDrop() const { return m_skills.has("freeDrop"); }
-	bool isOffensiveVictoryMove() const { return m_skills.has("offensiveVictoryMove"); }
-	bool isOneUp() const { return m_skills.has("oneUp"); }
-	bool isPillageEspionage() const { return m_skills.has("pillageEspionage"); }
-	bool isPillageMarauder() const { return m_skills.has("pillageMarauder"); }
-	bool isPillageOnMove() const { return m_skills.has("pillageOnMove"); }
-	bool isPillageOnVictory() const { return m_skills.has("pillageOnVictory"); }
-	bool isPillageResearch() const { return m_skills.has("pillageResearch"); }
-	bool isCanMovePeaks() const { return m_skills.has("canPassPeaks"); }        // dual-plane rename (capabilities.md)
-	bool isCanLeadThroughPeaks() const { return m_skills.has("canLeadThroughPeaks"); }
-	bool isZoneOfControl() const { return m_skills.has("zoneOfControl"); }
-	bool isOnslaughtChange() const { return m_skills.has("onslaught"); }
-	bool isParalyze() const { return m_skills.has("paralyze"); }
-	bool isNoSelfHeal() const { return m_skills.has("noSelfHeal"); }
+	// O(1) generated-id bit tests (CLS_HAS -> CvJsonBoolBlock::hasKey; the SKILL_* ids are the
+	// ClassificationRegistry's runtime-minted infos -- never a per-call string lookup).
+	bool isBlitz() const CLS_HAS(m_skills, CLSD_SKILL, "blitz")
+	bool isAmphib() const CLS_HAS(m_skills, CLSD_SKILL, "amphib")
+	bool isRiver() const CLS_HAS(m_skills, CLSD_SKILL, "river")
+	bool isEnemyRoute() const CLS_HAS(m_skills, CLSD_SKILL, "enemyRoute")
+	bool isAlwaysHeal() const CLS_HAS(m_skills, CLSD_SKILL, "alwaysHeal")
+	bool isHillsDoubleMove() const CLS_HAS(m_skills, CLSD_SKILL, "hillsDoubleMove")
+	bool isImmuneToFirstStrikes() const CLS_HAS(m_skills, CLSD_SKILL, "immuneToFirstStrikes")
+	bool isDefensiveVictoryMove() const CLS_HAS(m_skills, CLSD_SKILL, "defensiveVictoryMove")
+	bool isFreeDrop() const CLS_HAS(m_skills, CLSD_SKILL, "freeDrop")
+	bool isOffensiveVictoryMove() const CLS_HAS(m_skills, CLSD_SKILL, "offensiveVictoryMove")
+	bool isOneUp() const CLS_HAS(m_skills, CLSD_SKILL, "oneUp")
+	bool isPillageEspionage() const CLS_HAS(m_skills, CLSD_SKILL, "pillageEspionage")
+	bool isPillageMarauder() const CLS_HAS(m_skills, CLSD_SKILL, "pillageMarauder")
+	bool isPillageOnMove() const CLS_HAS(m_skills, CLSD_SKILL, "pillageOnMove")
+	bool isPillageOnVictory() const CLS_HAS(m_skills, CLSD_SKILL, "pillageOnVictory")
+	bool isPillageResearch() const CLS_HAS(m_skills, CLSD_SKILL, "pillageResearch")
+	bool isCanMovePeaks() const CLS_HAS(m_skills, CLSD_SKILL, "canPassPeaks")        // dual-plane rename (capabilities.md)
+	bool isCanLeadThroughPeaks() const CLS_HAS(m_skills, CLSD_SKILL, "canLeadThroughPeaks")
+	bool isZoneOfControl() const CLS_HAS(m_skills, CLSD_SKILL, "zoneOfControl")
+	bool isOnslaughtChange() const CLS_HAS(m_skills, CLSD_SKILL, "onslaught")
+	bool isParalyze() const CLS_HAS(m_skills, CLSD_SKILL, "paralyze")
+	bool isNoSelfHeal() const CLS_HAS(m_skills, CLSD_SKILL, "noSelfHeal")
 
-	// grant/revoke skill PAIRS -- tri-state (the section-8 bool block drops false, so these read the raw skills object)
-	bool isStampedeChange() const { return skillTrue("stampede"); }
-	bool isRemoveStampede() const { return skillFalse("stampede"); }
-	bool isAttackOnlyCitiesAdd() const { return skillTrue("attackOnlyCities"); }
-	bool isAttackOnlyCitiesSubtract() const { return skillFalse("attackOnlyCities"); }
-	bool isIgnoreNoEntryLevelAdd() const { return skillTrue("ignoreNoEntryLevel"); }
-	bool isIgnoreNoEntryLevelSubtract() const { return skillFalse("ignoreNoEntryLevel"); }
-	bool isIgnoreZoneofControlAdd() const { return skillTrue("ignoreZoneofControl"); }
-	bool isIgnoreZoneofControlSubtract() const { return skillFalse("ignoreZoneofControl"); }
-	bool isFliesToMoveAdd() const { return skillTrue("fliesToMove"); }
-	bool isFliesToMoveSubtract() const { return skillFalse("fliesToMove"); }
+	// grant/revoke skill PAIRS -- tri-state on the block's two planes (skills.md §4: true grants, false revokes)
+	bool isStampedeChange() const CLS_HAS(m_skills, CLSD_SKILL, "stampede")
+	bool isRemoveStampede() const CLS_HAS_FALSE(m_skills, CLSD_SKILL, "stampede")
+	bool isAttackOnlyCitiesAdd() const CLS_HAS(m_skills, CLSD_SKILL, "attackOnlyCities")
+	bool isAttackOnlyCitiesSubtract() const CLS_HAS_FALSE(m_skills, CLSD_SKILL, "attackOnlyCities")
+	bool isIgnoreNoEntryLevelAdd() const CLS_HAS(m_skills, CLSD_SKILL, "ignoreNoEntryLevel")
+	bool isIgnoreNoEntryLevelSubtract() const CLS_HAS_FALSE(m_skills, CLSD_SKILL, "ignoreNoEntryLevel")
+	bool isIgnoreZoneofControlAdd() const CLS_HAS(m_skills, CLSD_SKILL, "ignoreZoneofControl")
+	bool isIgnoreZoneofControlSubtract() const CLS_HAS_FALSE(m_skills, CLSD_SKILL, "ignoreZoneofControl")
+	bool isFliesToMoveAdd() const CLS_HAS(m_skills, CLSD_SKILL, "fliesToMove")
+	bool isFliesToMoveSubtract() const CLS_HAS_FALSE(m_skills, CLSD_SKILL, "fliesToMove")
 
 	// count-ability skills -- legacy returns int; curator collapsed the magnitude to a SIGN-aware bool, so these
 	// reconstruct +1 (grant) / -1 (revoke) / 0 (absent). Consumers test >0 / !=0 (semantics preserved).
-	int getExcileChange() const { return skillCount("excile"); }
-	int getPassageChange() const { return skillCount("passage"); }
-	int getNoNonOwnedCityEntryChange() const { return skillCount("noNonOwnedCityEntry"); }
-	int getBarbCoExistChange() const { return skillCount("barbCoExist"); }
-	int getBlendIntoCityChange() const { return skillCount("blendIntoCity"); }
-	int getUpgradeAnywhereChange() const { return skillCount("upgradeAnywhere"); }
-	int getHiddenNationalityChange() const { return skillCount("hiddenNationality"); }
-	int getAssassinChange() const { return skillCount("assassin"); }
-	int getStealthDefenseChange() const { return skillCount("stealthDefense"); }
-	int getDefenseOnlyChange() const { return skillCount("defenseOnly"); }
-	int getNoInvisibilityChange() const { return skillCount("noInvisibility"); }
-	int getNoDefensiveBonusChange() const { return skillCount("noDefensiveBonus"); }
-	int getGatherHerdChange() const { return skillCount("gatherHerd"); }
-	int getAnimalIgnoresBordersChange() const { return skillCount("animalIgnoresBorders"); }
+	int getExcileChange() const CLS_COUNT(m_skills, CLSD_SKILL, "excile")
+	int getPassageChange() const CLS_COUNT(m_skills, CLSD_SKILL, "passage")
+	int getNoNonOwnedCityEntryChange() const CLS_COUNT(m_skills, CLSD_SKILL, "noNonOwnedCityEntry")
+	int getBarbCoExistChange() const CLS_COUNT(m_skills, CLSD_SKILL, "barbCoExist")
+	int getBlendIntoCityChange() const CLS_COUNT(m_skills, CLSD_SKILL, "blendIntoCity")
+	int getUpgradeAnywhereChange() const CLS_COUNT(m_skills, CLSD_SKILL, "upgradeAnywhere")
+	int getHiddenNationalityChange() const CLS_COUNT(m_skills, CLSD_SKILL, "hiddenNationality")
+	int getAssassinChange() const CLS_COUNT(m_skills, CLSD_SKILL, "assassin")
+	int getStealthDefenseChange() const;   // GAMEOPTION_COMBAT_WITHOUT_WARNING-gated tri-state (archive mirror; .cpp)
+	int getDefenseOnlyChange() const CLS_COUNT(m_skills, CLSD_SKILL, "defenseOnly")
+	int getNoInvisibilityChange() const CLS_COUNT(m_skills, CLSD_SKILL, "noInvisibility")
+	int getNoDefensiveBonusChange() const CLS_COUNT(m_skills, CLSD_SKILL, "noDefensiveBonus")
+	int getGatherHerdChange() const CLS_COUNT(m_skills, CLSD_SKILL, "gatherHerd")
+	int getAnimalIgnoresBordersChange() const CLS_COUNT(m_skills, CLSD_SKILL, "animalIgnoresBorders")
 
 	// double-move keyed skills
 	bool getTerrainDoubleMove(int i) const { return m_aiTerrainDoubleMove.count(i) != 0; }
@@ -262,13 +264,14 @@ public:
 	// =========================================================================================================
 	//  grants
 	// =========================================================================================================
-	int getAddsBuildType(int i) const { const std::vector<int>* l = grantList("builds"); return (l && i >= 0 && i < (int)l->size()) ? (*l)[i] : -1; }
-	int getNumAddsBuildTypes() const { const std::vector<int>* l = grantList("builds"); return l ? (int)l->size() : 0; }
-	bool isAddsBuildType(int i) const { const std::vector<int>* l = grantList("builds"); return l && vecHas(*l, i); }
-	int getFreetoUnitCombat(int i) const { const std::vector<int>* l = grantList("freeToUnitCombats"); return (l && i >= 0 && i < (int)l->size()) ? (*l)[i] : -1; }
-	int getNumFreetoUnitCombats() const { const std::vector<int>* l = grantList("freeToUnitCombats"); return l ? (int)l->size() : 0; }
-	bool isFreetoUnitCombat(int i) const { const std::vector<int>* l = grantList("freeToUnitCombats"); return l && vecHas(*l, i); }
-	SpecialUnitTypes setSpecialUnit() const { return static_cast<SpecialUnitTypes>(m_grants.firstListId("specialUnit")); }
+	// materialized at mapFrom from the grants unit (bucket-string reads are load-time only)
+	int getAddsBuildType(int i) const { return vecGet(m_aiAddsBuilds, i); }
+	int getNumAddsBuildTypes() const { return (int)m_aiAddsBuilds.size(); }
+	bool isAddsBuildType(int i) const { return vecHas(m_aiAddsBuilds, i); }
+	int getFreetoUnitCombat(int i) const { return vecGet(m_aiFreeToUnitCombats, i); }
+	int getNumFreetoUnitCombats() const { return (int)m_aiFreeToUnitCombats.size(); }
+	bool isFreetoUnitCombat(int i) const { return vecHas(m_aiFreeToUnitCombats, i); }
+	SpecialUnitTypes setSpecialUnit() const { return static_cast<SpecialUnitTypes>(m_iSetSpecialUnit); }
 
 	// =========================================================================================================
 	//  identity (parked availability gates + flags + text/FK references)
@@ -460,10 +463,6 @@ private:
 	static int mapGet(const std::map<int, int>& m, int k) { std::map<int, int>::const_iterator it = m.find(k); return it != m.end() ? it->second : 0; }
 	static int vecGet(const std::vector<int>& v, int i) { return (i >= 0 && i < (int)v.size()) ? v[i] : -1; }
 	static bool vecHas(const std::vector<int>& v, int id) { for (size_t j = 0; j < v.size(); ++j) if (v[j] == id) return true; return false; }
-	// skills tri-state (raw skills object: present true / present false / absent)
-	bool skillTrue(const char* n) const { std::map<std::string, bool>::const_iterator it = m_skillTri.find(n); return it != m_skillTri.end() && it->second; }
-	bool skillFalse(const char* n) const { std::map<std::string, bool>::const_iterator it = m_skillTri.find(n); return it != m_skillTri.end() && !it->second; }
-	int skillCount(const char* n) const { std::map<std::string, bool>::const_iterator it = m_skillTri.find(n); return it == m_skillTri.end() ? 0 : (it->second ? 1 : -1); }
 
 	CvJsonModifiers m_modifiers;
 	CvJsonBoolBlock m_skills;
@@ -501,9 +500,11 @@ private:
 	std::vector<HealUnitCombat> m_aHealUnitCombat;
 	std::vector<UnitCombatModifier> m_aAIWeight;
 	// skills
-	std::map<std::string, bool> m_skillTri;     // raw skills bool object (tri-state pairs + count-abilities)
 	std::set<int> m_aiTerrainDoubleMove, m_aiFeatureDoubleMove;
 	std::vector<int> m_aiSubCombat, m_aiRemoves;
+	// grants (materialized at mapFrom -- bucket-string reads are load-time only)
+	std::vector<int> m_aiAddsBuilds, m_aiFreeToUnitCombats;
+	int m_iSetSpecialUnit;
 	// identity
 	int m_iLayerAnimationPath, m_iMinEraType, m_iMaxEraType, m_iStateReligionPrereq, m_iControlPoints, m_iCommandRange, m_iLevelPrereq, m_iLinePriority, m_iCommandType;
 	PromotionLineTypes m_ePromotionLine;

@@ -289,7 +289,14 @@ enum SpineDomainEvent
 	SEVT_BUILDING_PROCESSED     = 40,
 	// the load-end pipeline diagnostic (DIAGNOSTIC -- logging/observability only): the stage timings + the
 	// dormancy-fixpoint depth, announced once per load through the registered SD_SPINE render path.
-	SEVT_LOAD_PIPELINE          = 41
+	SEVT_LOAD_PIPELINE          = 41,
+	// a city's production QUEUE gained/lost an order (CvCity::pushOrder / popOrder). The enabler's queue leg
+	// (enabler.md par.7.1 step 3 -- "queueing/completion is the targeted single-id erase"): a QUEUED building
+	// leaves the fresh offer (the legacy !bContinue getFirstBuildingOrder exclusion, canConstructInternal), and
+	// a dequeue restores it -- the event triggers the one-id re-gate; the gate itself reads the live queue
+	// (object-owned state, the resolved-fork rule). iType = the ordered item id, iA = OrderTypes,
+	// iB = +1 push / -1 pop, iC = owner, iSrcLoc = cityId. DOMAIN.
+	SEVT_CITY_ORDER_CHANGED     = 42
 };
 
 //	Which entity's display name changed (the iType of a SEVT_NAME_CHANGE event). The logging consumer resolves the
@@ -342,6 +349,7 @@ void emitEraChanged(int iPlayer, int iEra);   // a player's era advanced (broad 
 void emitNukesChanged(int iPlayer, int iState);   // a player's nuke state: 0 disabled / 1 enabled / 2 banned
 void emitCultureLevelChanged(int iCity, int iOwner, int iNewLevel, int iOldLevel);   // culture level old->new (+ the radius/vicinity growth it drives)
 void emitHolyCityChanged(int iCity, int iOwner, int iReligion, bool bIsHoly);   // a city gained(true)/lost(false) a religion's holy-city designation
+void emitCityOrderChanged(int iCity, int iOwner, int iOrderType, int iItem, int iDelta);   // production queue push(+1)/pop(-1) of an order (iOrderType = OrderTypes)
 void emitCityOwnerChanged(int iCity, int iOldOwner, int iNewOwner);
 void emitPlotOwnerChanged(int iPlot, int iOldOwner, int iNewOwner);
 void emitWorkingCityChanged(int iPlot, int iOwner, int iOldCity, int iNewCity);

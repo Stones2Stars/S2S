@@ -34,7 +34,10 @@ public:
 	// footprint is a clean requires-only, per-city re-check (pop / religion / corporation / power). tech / civic /
 	// golden-age deliberately stay the broad markPlayerScopeAndCities (their footprint spans obsoletes/enables/
 	// waiver edges the requires-scan index does not carry -- keeping them broad is the correctness floor, rule 3).
-	enum CascadeHaveKind { CASC_HAVE_POP = 0, CASC_HAVE_RELIGION, CASC_HAVE_CORP, CASC_HAVE_POWER };
+	// CASC_HAVE_BONUS is the WHOLE-SET bonus-access re-check (a city's plot-group membership changed -- its entire
+	// connected-resource set may have shifted, so every bonus-operate building re-checks). A SINGLE bonus's access
+	// flip routes through the targeted cityBonusAccessChanged (below) instead -- the reverse-FK lookup, less traversing.
+	enum CascadeHaveKind { CASC_HAVE_POP = 0, CASC_HAVE_RELIGION, CASC_HAVE_CORP, CASC_HAVE_POWER, CASC_HAVE_BONUS };
 
 	// ===== the realized reads (bare fetches + the combine; O(1) integer arithmetic) =====
 	static long yieldRate100(const CvCity* pCity, YieldTypes eY);          // §2a: (plots+trade+BASE)×pct + EXTRA
@@ -75,6 +78,10 @@ public:
 	// over that atom's reverse-index bucket, in place. Replaces the broad frontier dirty at pop/religion/corp/
 	// power; a box with a full rebuild pending is left to that rebuild.
 	static void cityHaveChanged(const CvCity* pCity, int eHaveKind);
+	// #430 G3: a SINGLE bonus's access (trade network count / vicinity presence) flipped in pCity -> the targeted
+	// operate-dormancy ripple over ONLY that bonus's operate consumers (reverse-FK; the whole-set variant is
+	// cityHaveChanged(pCity, CASC_HAVE_BONUS), used when plot-group MEMBERSHIP shifts the entire resource set).
+	static void cityBonusAccessChanged(const CvCity* pCity, int eBonus);
 	// Part B: a unit's EMPIRE count changed (trained / lost) -> TARGETED trainable re-check across the player's
 	// cities (unit caps are empire-scoped). A no-op for an uncapped, unreferenced unit (the combat common case).
 

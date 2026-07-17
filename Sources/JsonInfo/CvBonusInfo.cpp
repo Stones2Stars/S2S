@@ -23,8 +23,8 @@ static void jsonReadFkIntSet(const picojson::object& o, const char* key, std::se
 }
 
 CvBonusInfo::CvBonusInfo()
-	: m_iBonusClassType(-1), m_iAIObjective(-1), m_iAITradeModifier(0), m_iHealth(0), m_iHappiness(0), m_iChar(0),
-	  m_iMinAreaSize(0), m_iMinLatitude(0), m_iMaxLatitude(90), m_iPlacementOrder(0), m_iTilesPer(0),
+	: m_iBonusClassType(-1), m_iAIObjective(0) /* legacy load default 0 (plain .add) -- -1 fed unclamped AI valuation */, m_iAITradeModifier(0), m_iHealth(0), m_iHappiness(0), m_iChar(0),
+	  m_iMinAreaSize(0), m_iMinLatitude(0), m_iMaxLatitude(90), m_iPlacementOrder(-1), m_iTilesPer(0),
 	  m_iUniqueRange(0), m_iGroupRange(0), m_iGroupRand(0),
 	  m_iConstAppearance(0), m_iRandAppearance1(0), m_iRandAppearance2(0), m_iRandAppearance3(0), m_iRandAppearance4(0),
 	  m_iMinLandPercent(0), m_iPercentPerPlayer(0),
@@ -67,8 +67,8 @@ void CvBonusInfo::mapFrom(const picojson::value& entity)
 	{
 		m_iMinAreaSize     = jsonIdInt(*mg, "minAreaSize");
 		m_iMinLatitude     = jsonIdInt(*mg, "minLatitude");
-		m_iMaxLatitude     = jsonIdInt(*mg, "maxLatitude");
-		m_iPlacementOrder  = jsonIdInt(*mg, "placementOrder");
+		m_iMaxLatitude     = jsonIdInt(*mg, "maxLatitude", 90);      // legacy load default 90 (archive .add) -- 0 equator-locks placement
+		m_iPlacementOrder  = jsonIdInt(*mg, "placementOrder", -1);   // legacy load default -1 = not a map-placed bonus
 		m_iTilesPer        = jsonIdInt(*mg, "tilesPer");
 		m_iMinLandPercent  = jsonIdInt(*mg, "minLandPercent");
 		m_iConstAppearance = jsonIdInt(*mg, "constAppearance");

@@ -11,7 +11,7 @@
 #include "AI/CvGameAI.h"          // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 
 CvRouteInfo::CvRouteInfo()
-	: m_iValue(0), m_iAdvancedStartCost(0), m_iMovementCost(0), m_iFlatMovementCost(0), m_iZobristValue(0),
+	: m_iValue(0), m_iAdvancedStartCost(100), m_iMovementCost(0), m_iFlatMovementCost(0), m_iZobristValue(0),
 	  m_ePrereqBonus(NO_BONUS), m_bSeaTunnel(false)
 {
 	for (int i = 0; i < NUM_YIELD_TYPES; ++i) m_aiYieldChange[i] = 0;
@@ -69,7 +69,7 @@ void CvRouteInfo::mapFrom(const picojson::value& entity)
 		m_iFlatMovementCost = jsonIdInt(*io, "flatMovementCost");
 		m_bSeaTunnel        = jsonIdBool(*io, "seaTunnel");
 		if (const picojson::object* as = jsonChildObj(*io, "advancedStart"))
-			m_iAdvancedStartCost = jsonIdInt(*as, "cost");
+			m_iAdvancedStartCost = jsonIdInt(*as, "cost", 100);  // legacy load default 100 (archive .add)
 	}
 
 	// (the route's bonus prerequisite is NOT read here -- it is modelled as the BONUS's enables.routes availability

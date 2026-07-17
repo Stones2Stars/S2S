@@ -14,7 +14,7 @@ static const char* YIELD_NAME[NUM_YIELD_TYPES]  = { "food", "production", "comme
 static const char* COMM_NAME[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
 
 CvCorporationInfo::CvCorporationInfo()
-	: m_iMaintenance(0), m_iHealth(0), m_iHappiness(0), m_iFreeXP(0), m_iMilitaryProductionModifier(0),
+	: m_iMaintenance(0), m_iHealth(0), m_iHappiness(0), m_iFreeXP(0), m_iMilitaryProductionModifier(0), m_iFreeUnit(-1),
 	  m_iSpreadCost(0), m_iSpread(0), m_iCompetingSpreadCostPercent(0), m_iTGAIndex(-1), m_iHeadquarterChar(-1), m_iMissionType(-1), m_iChar(0),   // TGAIndex -1 = TGA-filler sentinel (RemoveTGAFiller)
 	  m_eTechPrereq(NO_TECH), m_eObsoleteTech(NO_TECH)
 {
@@ -114,14 +114,34 @@ static int sumFlatAsIs(const picojson::value* flat)
 	return sum;
 }
 
+// Collect requires.spread BUILDING count atoms (json §4.3) into the per-building-id count map -- the legacy
+// PrereqBuildings semantics the executive-spread gate reads (min absent = presence = 1).
+static void corpCollectSpreadBuildings(const CvJsonCondition* c, std::map<int, int>& out)
+{
+	if (c == NULL) return;
+	if (c->kind == CASC_COND_PRESENCE)
+	{
+		if (c->id >= 0 && c->type.compare(0, 9, "BUILDING_") == 0)
+			out[c->id] = c->min > 0 ? c->min : 1;
+		return;
+	}
+	if (c->kind == CASC_COND_GROUP)
+	{
+		for (size_t i = 0; i < c->all.size(); ++i) corpCollectSpreadBuildings(c->all[i], out);
+		for (size_t i = 0; i < c->anyOf.size(); ++i) corpCollectSpreadBuildings(c->anyOf[i], out);
+	}
+}
+
 void CvCorporationInfo::mapFrom(const picojson::value& entity)
 {
 	// remap-idempotency (CvInfo.h): demux ACCUMULATES (+=) into the yield/commerce arrays and appends the prereqs.
 	for (int y = 0; y < NUM_YIELD_TYPES; ++y)    { m_aiYieldChange[y] = 0;    m_aiYieldProduced[y] = 0; }
 	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) { m_aiCommerceChange[c] = 0; m_aiCommerceProduced[c] = 0; }
-	m_aePrereqBonuses.clear(); m_aeExcludes.clear();
+	m_aePrereqBonuses.clear(); m_aeExcludes.clear(); m_prereqBuildingCounts.clear();
 
 	CvInfo::mapFrom(entity);   // base: text + availability (enables.buildings, provides.bonuses, tech/bonus enables.corporations)
+	m_iFreeUnit = m_grants.firstListId("freeUnit");   // materialized (the getter is a bare member read)
+	corpCollectSpreadBuildings(m_requires.spread, m_prereqBuildingCounts);   // requires.spread -> getPrereqBuilding
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
 

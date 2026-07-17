@@ -380,6 +380,10 @@ The means a target needs. Two timings:
 - **`build`** — needed to construct it; **greyed** if missing. Checked once, at build.
 - **`operate`** — needed to construct **and** keep running; if lost later the built thing goes **dormant**
   (inactive, not destroyed) and wakes when it returns.
+- **`spread`** *(CORPORATIONS only)* — needed to **spread** into a city, evaluated by the spread system at
+  spread time against the target city's owner — never the enabler. Same condition vocabulary; the grounded
+  legacy case is the per-building empire-count need (`{type: BUILDING_X, scope: empire, min: N}`, from the
+  corp `PrereqBuildings` table — authored by no shipped corp, served so future data lands live).
 - **`build` and `operate` share the SAME conditional vocabulary**, including the **`dormant`** sub-clause. **Units
   carry `build` only** (a trained unit never goes dormant on resource loss; on-map behaviour is out of the cascade's
   `canTrain` scope). A unit's two upgrade relationships are **distinct gates** (the machine: [enabler](enabler.md)):
@@ -667,6 +671,17 @@ NOT `grants` (it is held-while-active, not a one-shot handout).
 "attributes":   { "nukeImmune": true, "zoneOfControl": true }, // BUILDING, held city-scope intrinsic
 "capabilities": { "moveOnWater": true, "setCultureRate": true } // empire-HELD, grantor-PROVIDED (tech/civic/building)
 ```
+
+> **⚖ The classification categories are RUNTIME-GENERATED INFOS ([DEC-classification-infos]).** Every distinct
+> authored block key mints one generated info at load — the camelCase key becomes an `INFOTYPE_NAME` id
+> (`"setScienceRate"` → `CAPABILITY_SET_SCIENCE_RATE`; prefixes `SKILL_` / `TAG_` / `ATTRIBUTE_` / `CAPABILITY_` /
+> `POLICY_`, [naming.md](naming.md)) registered in the global infotype map and created as an info in its category's
+> repo — *"clear data to refer to, even if they are only in essence a boolean switch."* Nothing is authored per
+> category (no data folder): the registry derives from the union of keys across all entities
+> (`ClassificationRegistry`, minted append-only per load), and every entity's blocks resolve their names to by-id
+> bitsets, so the whole classification getter surface is an O(1) bit test — never a per-call string lookup
+> ([DEC-materialize-at-mapfrom](../architecture/decisions.md#dec-materialize-at-mapfrom)). A block authors BOTH
+> planes: `true` = grant, `false` = revoke (the skills.md §4 grant/revoke pairs ride the same two-plane block).
 
 Full glossaries: [skills.md](skills.md) · [tags.md](tags.md) · [state.md](state.md) · [capabilities.md](capabilities.md).
 

@@ -747,6 +747,13 @@ void emitHolyCityChanged(int iCity, int iOwner, int iReligion, bool bIsHoly)
 	e.addI(SPF_RELIGION, iReligion).addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_HAS, bIsHoly ? 1 : 0);
 	eventSpine().emit(e);
 }
+void emitCityOrderChanged(int iCity, int iOwner, int iOrderType, int iItem, int iDelta)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_ORDER_CHANGED, iItem, iOrderType, iDelta, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_VALUE, iOrderType).addI(SPF_ID, iItem).addI(SPF_DELTA, iDelta);
+	eventSpine().emit(e);
+}
 void emitCityOwnerChanged(int iCity, int iOldOwner, int iNewOwner)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_OWNER_CHANGED, -1, iOldOwner, 0, iNewOwner, iCity);

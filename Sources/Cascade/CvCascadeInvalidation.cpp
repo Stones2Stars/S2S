@@ -119,6 +119,15 @@ private:
 			if (pCity != NULL) BuildingEnabler::onCityCultureLevelChanged(*pCity, kEvent.iB, kEvent.iA);   // old (iB) -> new (iA)
 			break;
 		}
+		case SEVT_CITY_ORDER_CHANGED:   // queue push/pop: the buildings gate's queued-exclusion re-gate (par.7.1 step 3)
+		{
+			if (kEvent.iA == ORDER_CONSTRUCT)
+			{
+				const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
+				if (pCity != NULL) BuildingEnabler::onCityOrderChanged(*pCity, kEvent.iType);
+			}
+			break;
+		}
 		case SEVT_TECH_CHANGED:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{
@@ -195,6 +204,17 @@ private:
 				UnitEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, UnitEnabler::GATE_STATE_RELIGION);
 			}
 			break;
+		// #430 nukes: the world NO_NUKES ban flips a build gate (Manhattan-type buildings carry
+		// requires.build.disabled: NO_NUKES). NO_NUKES is an unrecognized predicate -> the GATE_DYNAMIC bucket, so the
+		// frontier re-gate is onPlayerGateClass(GATE_DYNAMIC). Emitted per-player (the ban fans out), rare (once/game),
+		// so re-gating the player's dynamic buildings is cheap. No modifier mark (no NO_NUKES-conditioned deposits).
+		case SEVT_NUKES_CHANGED:
+			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+			{
+				BuildingEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, BuildingEnabler::GATE_DYNAMIC);
+				UnitEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, UnitEnabler::GATE_DYNAMIC);
+			}
+			break;
 		// ---- the unit-count crossing (par.7.1 step 3): caps / unit-count requires / upgrade availability ----
 		case SEVT_UNIT_COUNT:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
@@ -234,12 +254,17 @@ private:
 			}
 			break;
 		}
+		// RELIGION / CORPORATION / POPULATION / POWER all fire the operate-dormancy ripple (cityHaveChanged ->
+		// ek_recheckActiveSet), which flips buildings active<->dormant. A flipped building deposits the FULL active
+		// footprint (YEXTRA/SCFLAT/BR beyond the source-conditioned packages), so the mask MUST be the building-active
+		// footprint (buildingProcessed's mask), exactly as the G3 bonus events. (The narrow source-conditioned mask
+		// left YEXTRA/SCFLAT/BR stale on an operate flip -- the adversarial mask audit's confirmed gap.)
 		case SEVT_RELIGION_CHANGED:
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
-				const int iDirtyPackages = CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT;
+				const int iDirtyPackages = CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC);
 				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
 				CascadeAccumulator::cityHaveChanged(pCity, CascadeAccumulator::CASC_HAVE_RELIGION);
 				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
@@ -251,7 +276,7 @@ private:
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
-				const int iDirtyPackages = CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT | CPK_BR;
+				const int iDirtyPackages = CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC);
 				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
 				CascadeAccumulator::cityHaveChanged(pCity, CascadeAccumulator::CASC_HAVE_CORP);
 				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
@@ -275,32 +300,66 @@ private:
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
-				const int iDirtyPackages = CPK_YEXTRA | CPK_CBASE;
+				// perPopulation deposits scale directly with pop (YEXTRA/CBASE) AND CASC_HAVE_POP flips pop-thresholded
+				// operate buildings -> the building-active footprint (the mask audit's #1 gap: SCFLAT/WB/CPCT/BR/SCPCT/YPCT
+				// went stale on every growth/starve tick).
+				const int iDirtyPackages = CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC);
 				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
 				CascadeAccumulator::cityHaveChanged(pCity, CascadeAccumulator::CASC_HAVE_POP);
 				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
 			}
 			break;
 		}
-		case SEVT_POWER_CHANGED:   // R4 gap #5: the rate/wellbeing mask is PROVISIONAL (self-heal-backstopped)
+		case SEVT_POWER_CHANGED:
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
-				const int iDirtyPackages = CPK_YPCT | CPK_WB;
+				// CASC_HAVE_POWER flips power-operate buildings (factory-class) -> the building-active footprint. (The
+				// old CPK_YPCT|CPK_WB mask + the doc's "Cleared (NOT a gap)" were BOTH wrong: 934 power-operate buildings
+				// leak CBASE/YEXTRA/SCFLAT/CPCT/BR/SCPCT on a power flip -- the mask audit's #2 gap.)
+				const int iDirtyPackages = CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC);
 				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
 				CascadeAccumulator::cityHaveChanged(pCity, CascadeAccumulator::CASC_HAVE_POWER);
 				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
 			}
 			break;
 		}
-		case SEVT_BONUS_CHANGED:   // R4 gap #1: PROVISIONAL presence mask (self-heal-backstopped)
+		case SEVT_BONUS_CHANGED:   // LEGACY per-city network-count crossing (processBonus); being RETIRED -- the forward
+		{                          // vicinity/plotgroup/network events (broadened + operate-rippled, G3) own the bonus axis.
+			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
+			if (pCity != NULL)
+			{
+				// Kept narrow ON PURPOSE: the operate-flip footprint + ripple ride the forward bonus events; this legacy
+				// mark just double-covers the deposit-conditioning until it retires. (No self-heal backstop exists.)
+				const int iDirtyPackages = CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT;
+				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
+				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
+			}
+			break;
+		}
+		// #430 the connection:VICINITY axis (owner model -- supersedes the pending "city plot-gain/loss hook" + the
+		// ring-walk): a bonus flipped in THIS city's workable radius (an improved tile via doVicinityBonus, or an active
+		// provider via processBuilding). Vicinity is a CITY-LOCAL presence fact (enabler.md par.8 -- "VICINITY belongs to
+		// the CITY"), so it marks ONLY the emitting city's bonus-conditioned packages. The NETWORK half -- a provider
+		// that makes the bonus TRADEABLE across the group -- is a SEPARATE fact: processBuilding injects it into the
+		// city's plot group (CvCity.cpp:4792 changeNumBonuses), which fires SEVT_PLOTGROUP_BONUS_CHANGED on the presence
+		// transition (CvPlotGroup.cpp:525) -> the member-city fan-out above. The city already carries its plot-group id
+		// and the group its member cities (the reverse-mapped membership) -- so there is NO plot->cities ring walk.
+		// Same mask as SEVT_BONUS_CHANGED (both gate the same deposit channels). The operate-dormancy ripple
+		// (a building whose requires.operate needs a connection:vicinity bonus) is the CASC_HAVE_BONUS enabler
+		// follow-on (G3), sequenced next; the enabler's own buildable re-gate already rides routeEnablerDeltas.
+		case SEVT_VICINITY_BONUS_CHANGED:
 		{
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
-				const int iDirtyPackages = CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT;
+				// #430 G3: a bonus's vicinity presence can flip an operate-gated building dormant/active, so the mask is
+				// the BUILDING-ACTIVE footprint (buildingProcessed's mask) -- the flipped building's YEXTRA/SCFLAT/BR
+				// deposits re-sum against the ripple-updated active set, not just the bonus-conditioned packages.
+				const int iDirtyPackages = CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC);
 				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
+				CascadeAccumulator::cityBonusAccessChanged(pCity, kEvent.iType);   // the targeted operate-dormancy ripple (reverse-FK)
 				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
 			}
 			break;
@@ -321,6 +380,11 @@ private:
 		case SEVT_GOLDEN_AGE_CHANGED:
 		case SEVT_TRAIT_CHANGED:
 		case SEVT_STATE_RELIGION_CHANGED:
+		// #430 era: a per-player broad input -- every ERA-counter-threshold deposit (era-band flats accumulate as the
+		// counter passes each min:, modifier.md §6) must re-sum. The heritage era-stacked commerce (PSC_CFLAT) is
+		// applied IN setCurrentEra; this mark covers the in-package era-threshold deposits. Frontier ERA build atoms
+		// ride the GATE_DYNAMIC per-turn re-check (ERA is a count token, not an FK), so no enabler route is needed here.
+		case SEVT_ERA_CHANGED:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{
 				CascadeAccumulator::markPlayerScopeAndCities((PlayerTypes)kEvent.iC);
@@ -339,15 +403,16 @@ private:
 		// #430 BONUS NETWORK ACCESS -- the connection:trade axis, keyed on the plot-group identity the city already
 		// carries. TWO triggers: a plot-group's resource SET changed (resource event), and a city MOVED to a different
 		// group (membership event). Mask = the bonus-CONDITIONED packages; the operate-dormancy ripple (YEXTRA/BR +
-		// frontier) is the CASC_HAVE_BONUS enabler follow-on, self-heal-backstopped. Wired ADDITIVELY alongside the
-		// legacy per-city SEVT_BONUS_CHANGED (retired at the crutch-removal pass). The connection:vicinity (RADIUS)
-		// axis rides a CITY plot-gain/loss hook -- reshape pending (membership is city/plot STATE, not a cascade
-		// fat-cross recompute); until then vicinity stays self-heal-backstopped.
+		// frontier) is the CASC_HAVE_BONUS enabler follow-on (G3), sequenced next. Wired ADDITIVELY alongside the
+		// legacy per-city SEVT_BONUS_CHANGED (retired at the crutch-removal pass). The connection:VICINITY (RADIUS)
+		// axis is the SEVT_VICINITY_BONUS_CHANGED case above -- a city-local presence mark; a provider's network half
+		// rides THIS plot-group fan-out via the provides->group injection (no ring walk, no plot->cities map).
 		case SEVT_PLOTGROUP_BONUS_CHANGED:   // NETWORK RESOURCE: a plot-group gained/lost a resource -> its member cities re-eval connection:trade
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{
 				const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)kEvent.iC);
-				const int iDirtyPackages = CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT;
+				// #430 G3: the network crossing can flip an operate-gated building -> the BUILDING-ACTIVE footprint mask.
+				const int iDirtyPackages = CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC);
 				int iLoop;
 				for (const CvCity* pc = kPlayer.firstCity(&iLoop); pc != NULL; pc = kPlayer.nextCity(&iLoop))
 					if (pc->plot()->getPlotGroupId((PlayerTypes)kEvent.iC) == kEvent.iSrcLoc)
@@ -355,6 +420,7 @@ private:
 						// (the per-city enabler's bonus axis needs nothing here: the network recount flows through
 						// CvCity::processBonus, whose SEVT_BONUS_CHANGED count-deltas the domain already consumes)
 						CascadeAccumulator::dirtyCity(pc, iDirtyPackages);
+						CascadeAccumulator::cityBonusAccessChanged(pc, kEvent.iType);   // #430 G3: the targeted operate-dormancy ripple for THIS bonus, per member city
 						emitCacheInvalidate(0, kEvent.iC, pc->getID(), iDirtyPackages, szSource);
 					}
 			}
@@ -364,14 +430,62 @@ private:
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
-				const int iDirtyPackages = CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT;
+				// #430 G3: the city's ENTIRE connected-resource set may have shifted -> the building-active footprint
+				// mask + the WHOLE-SET operate ripple (CASC_HAVE_BONUS re-checks every bonus-operate building here).
+				const int iDirtyPackages = CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC);
 				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
+				CascadeAccumulator::cityHaveChanged(pCity, CascadeAccumulator::CASC_HAVE_BONUS);
 				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
 			}
 			break;
 		}
 
-		default: break;   // count / name / grant-trigger / lifecycle / plot-substrate events are not package sources (plot yield is pull-computed; the connection:vicinity axis is pending the city plot-gain/loss hook)
+		// #430 holy-city: a per-city predicate flip (IS_HOLY_CITY / IS_STATE_RELIGION_HOLY_CITY) on a holy-city
+		// RELOCATION. Mark the city's building-active footprint (holy-city-conditioned deposits -- shrine commerce
+		// etc.) + the operate ripple: IS_HOLY_CITY buckets under `religion` in the operate reverse-index (s_opReligion),
+		// so CASC_HAVE_RELIGION re-checks the holy-city-operate buildings. NOTE: at religion FOUNDING the co-firing
+		// SEVT_RELIGION_CHANGED already invalidates this city; the standalone event matters for a relocation without a
+		// religion-presence change. The bare-IS_HOLY_CITY requires.BUILD frontier gate (predicate, not FK-bucketed) is
+		// a known enabler follow-on -- surfaced for the verification pass, not silently skipped.
+		case SEVT_HOLY_CITY_CHANGED:
+		{
+			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
+			if (pCity != NULL)
+			{
+				const int iDirtyPackages = CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC);
+				CascadeAccumulator::dirtyCity(pCity, iDirtyPackages);
+				CascadeAccumulator::cityHaveChanged(pCity, CascadeAccumulator::CASC_HAVE_RELIGION);
+				emitCacheInvalidate(0, kEvent.iC, kEvent.iSrcLoc, iDirtyPackages, szSource);
+			}
+			break;
+		}
+
+		// #430 FEATURE change (a PLOT event) -> the CACHED wellbeing term. Feature presence in a city's workable radius
+		// folds each feature's health.plot.percent (+ the civic/trait feature-keyed WB) into CPK_WB, so a worker-clear /
+		// feature spread / popDestroys stales the WB of EVERY city whose radius includes the plot. Fan out to those
+		// cities: enumerate the plot's 3-ring neighborhood (plotCity ring) and mark every city on it -- a bounded
+		// SUPERSET of the true radius cities (an over-mark is harmless -- the package re-sums and finds no change; an
+		// under-mark would be the bug, so the superset is provably safe and sidesteps the culture-radius membership
+		// subtlety). Feature YIELD is pull-computed (the plot-yield cache self-dirties on setFeatureType), so ONLY CPK_WB.
+		case SEVT_FEATURE_CHANGED:
+		{
+			const CvPlot* pPlot = GC.getMap().plotByIndex(kEvent.iSrcLoc);
+			if (pPlot != NULL)
+			{
+				for (int i = 0; i < NUM_CITY_PLOTS; i++)
+				{
+					const CvPlot* pRing = plotCity(pPlot->getX(), pPlot->getY(), i);
+					if (pRing == NULL) continue;
+					const CvCity* pRadiusCity = pRing->getPlotCity();
+					if (pRadiusCity == NULL) continue;
+					CascadeAccumulator::dirtyCity(pRadiusCity, CPK_WB);
+					emitCacheInvalidate(0, pRadiusCity->getOwner(), pRadiusCity->getID(), CPK_WB, szSource);
+				}
+			}
+			break;
+		}
+
+		default: break;   // count / name / grant-trigger / lifecycle / plot-substrate events are not package sources (plot yield is pull-computed; connection:vicinity is handled above via SEVT_VICINITY_BONUS_CHANGED)
 		}
 	}
 };

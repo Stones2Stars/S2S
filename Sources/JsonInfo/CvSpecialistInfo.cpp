@@ -20,7 +20,18 @@ CvSpecialistInfo::CvSpecialistInfo()
 const UnitCombatModifier& CvSpecialistInfo::getUnitCombatExperienceType(int iIndex) const
 {
 	static const UnitCombatModifier s_default = { NO_UNITCOMBAT, 0 };
-	return (iIndex >= 0 && iIndex < (int)m_aUnitCombatExperienceTypes.size()) ? m_aUnitCombatExperienceTypes[iIndex] : s_default;
+	if (iIndex < 0 || iIndex >= (int)m_aUnitCombatExperienceTypes.size()) return s_default;
+	// GAMEOPTION_UNIT_XP_FROM_SPECIALISTS-gated (archive mirror -- SourceArchive/Infos/CvSpecialistInfo.cpp:224):
+	// with the option OFF, a VISIBLE specialist serves the zero-modifier twin (same combat type, 0 XP) -- the
+	// archived parallel "Null" vector, reproduced as a per-call zeroed copy (game-thread only, consumed immediately).
+	if (!GC.getGame().isOption(GAMEOPTION_UNIT_XP_FROM_SPECIALISTS) && isVisible())
+	{
+		static UnitCombatModifier s_nullRow;
+		s_nullRow.eUnitCombat = m_aUnitCombatExperienceTypes[iIndex].eUnitCombat;
+		s_nullRow.iModifier = 0;
+		return s_nullRow;
+	}
+	return m_aUnitCombatExperienceTypes[iIndex];
 }
 
 // <family>.city.flat may be a scalar (base only) OR an array mixing the base scalar with tech KEEP-ON-SELF entries

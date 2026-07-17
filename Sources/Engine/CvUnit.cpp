@@ -46,6 +46,12 @@ static CvEntity* g_dummyEntity = NULL;
 static CvUnit*	 g_dummyUnit = NULL;
 static int		 g_numEntities = 0;
 static int		 g_dummyUsage = 0;
+
+// /computed/perf observability reads (the stacked-render / entity-accumulation hunt): how many REAL engine unit
+// entities exist vs units riding the shared dummy. A real-entity count that climbs on selection and never falls
+// back on deselection is the promotion-without-demotion accumulation, measured.
+int cvUnitRealEntityCount() { return g_numEntities; }
+int cvUnitDummyUsageCount() { return g_dummyUsage; }
 static bool		 g_bUseDummyEntities = false;
 
 
@@ -199,6 +205,20 @@ void CvUnit::reloadEntity(bool bForceLoad)
 		(plot()->getCenterUnit(false) == this || getOwner() == GC.getGame().getActivePlayer())
 	);
 
+	// [PERF/entity] DEMOTION probe (the invisible-selected-unit hunt): a REAL unit about to attach the shared
+	// dummy becomes undrawable, and the IsSelected no-op below makes that PERMANENT while selected -- log every
+	// real->dummy transition with the gate inputs so a wrong demote names its cause from the log alone.
+	const bool bWasReal = !isUsingDummyEntities() && getEntity() != NULL;
+	if (bWasReal && !bNeedsRealEntity && !IsSelected() && gPerfLogLevel >= 1)
+	{
+		logPerf(1, "[PERF/entity] DEMOTE unit=%d owner=%d type=%d plot=%s vis=%d center=%d activeOwner=%d",
+			getID(), (int)getOwner(), (int)getUnitType(),
+			plot() ? CvString::format("%d,%d", plot()->getX(), plot()->getY()).c_str() : "NULL",
+			plot() ? (int)plot()->isActiveVisible(false) : -1,
+			plot() ? (int)(plot()->getCenterUnit(false) == this) : -1,
+			(int)(getOwner() == GC.getGame().getActivePlayer()));
+	}
+
 	//OutputDebugString(CvString::format("reloadEntity for %08lx\n", this).c_str());
 	if (!IsSelected())
 	{
@@ -259,7 +279,31 @@ void CvUnit::reloadEntity(bool bForceLoad)
 			bGraphicsSetup = true;
 		}
 	}
-	else OutputDebugString("Reload of selected unit\n");
+	else
+	{
+		// The SELECTED no-op: a dummy-attached unit that gets selected can never re-promote through here -- the
+		// selection renders its (hidden) dummy entity, i.e. an invisible selected unit. Logged so the repro shows
+		// whether the broken unit hit this trap (and PROMOTE selected units that need a real entity: creating an
+		// entity does not disturb selection state the way the destroy path would -- only the destroy is unsafe).
+		if (isUsingDummyEntities() && bNeedsRealEntity)
+		{
+			if (gPerfLogLevel >= 1)
+			{
+				logPerf(1, "[PERF/entity] PROMOTE-selected unit=%d owner=%d type=%d (dummy->real while selected)",
+					getID(), (int)getOwner(), (int)getUnitType());
+			}
+			g_dummyUsage--;
+			setEntity(NULL);
+			CvDLLEntity::createUnitEntity(this);
+			g_numEntities++;
+			if (plot())
+			{
+				setupGraphical();
+			}
+			bGraphicsSetup = true;
+		}
+		else OutputDebugString("Reload of selected unit\n");
+	}
 }
 
 void CvUnit::changeIdentity(UnitTypes eUnit)
@@ -17579,20 +17623,28 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 	//TB Combat Mods Begin
 	if (!bForFree || bForBuildUp)
 	{
-		const PromotionTypes ePromotionPrerequisite = promo.getPrereqPromotion();
-
-		if (ePromotionPrerequisite != NO_PROMOTION && !isHasPromotion(ePromotionPrerequisite))
+		// Promotion-TIER succession -- the ruled replacement of the dropped PromotionPrereq(Or) chains
+		// ("line + priority + tech carry it", the curate_promotion DROP ruling; the old chain reads fed off
+		// stub -1 getters and no-opped, so every tier of a line was offered at once): tier N of a promotion
+		// line needs a HELD same-line promotion of priority N-1; tier 1 and line-less promotions need none.
+		// Same bForFree/bForBuildUp exemption as the legacy chain checks carried.
+		const PromotionLineTypes eSuccLine = promo.getPromotionLine();
+		if (eSuccLine != NO_PROMOTIONLINE && promo.getLinePriority() > 1)
 		{
-			{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
-		}
-		const PromotionTypes ePromotionPrerequisite1 = promo.getPrereqOrPromotion1();
-		const PromotionTypes ePromotionPrerequisite2 = promo.getPrereqOrPromotion2();
-
-		if ((ePromotionPrerequisite1 != NO_PROMOTION || ePromotionPrerequisite2 != NO_PROMOTION)
-		&&  (ePromotionPrerequisite1 == NO_PROMOTION || !isHasPromotion(ePromotionPrerequisite1))
-		&&  (ePromotionPrerequisite2 == NO_PROMOTION || !isHasPromotion(ePromotionPrerequisite2)))
-		{
-			{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
+			bool bHeldPrev = false;
+			for (int iP = 0; iP < GC.getNumPromotionInfos() && !bHeldPrev; ++iP)
+			{
+				if (isHasPromotion((PromotionTypes)iP))
+				{
+					const CvPromotionInfo& kHeld = GC.getPromotionInfo((PromotionTypes)iP);
+					bHeldPrev = kHeld.getPromotionLine() == eSuccLine
+					         && kHeld.getLinePriority() == promo.getLinePriority() - 1;
+				}
+			}
+			if (!bHeldPrev)
+			{
+				{ if (piFailLeg) *piFailLeg = __LINE__; return false; }
+			}
 		}
 	}
 
@@ -23077,40 +23129,13 @@ bool CvUnit::airBomb5(int iX, int iY)
 // ! Dale - AB: Bombing
 
 // Dale - RB: Field Bombard
-bool CvUnit::canRBombard(bool bEver) const
+bool CvUnit::canRBombard(bool /*bEver*/) const
 {
-	if (!GC.isDCM_RANGE_BOMBARD())
-	{
-		return false;
-	}
-
-	//No longer evaluates the unit itself so much as its Combat Classes (the weapon ones are the source of the ability)
-	if (getBaseDCMBombRange() < 1)
-	{
-        return false;
-	}
-
-	if (isOnlyDefensive() && !hasRBombardForceAbility())
-	{
-		return false;
-	}
-
-	if (getDomainType() == DOMAIN_AIR)
-	{
-		return false;
-	}
-
-	if (isMadeAttack() && !bEver)
-	{
-		return false;
-	}
-
-	if (isCargo() && !bEver)
-	{
-		return false;
-	}
-
-	return true;
+	// DCM RANGE BOMBARD is ruled FULLY REMOVED (structural-cleanup.md Tier 2). The data feed is cut, but the
+	// per-unit m_iBaseDCMBombRange accumulator is SERIALIZED, so old saves carry pre-cut ranges -- this gate
+	// is the removal's first increment: nothing ranged-bombards, whatever the save says. The rest of the
+	// system (missions/enums/serialization/AI callers) deletes per the recorded removal surface.
+	return false;
 }
 
 bool CvUnit::canBombardAtRanged(const CvPlot* pPlot, int iX, int iY) const
@@ -25841,14 +25866,26 @@ bool CvUnit::canKeepPromotion(PromotionTypes ePromotion, bool bAssertFree, bool 
 	if (!bIsFreePromotion)
 	{
 		{
-			const PromotionTypes ePromotionPrerequisite = promo.getPrereqPromotion();
-			const PromotionTypes ePromotionPrerequisite1 = promo.getPrereqOrPromotion1();
-			const PromotionTypes ePromotionPrerequisite2 = promo.getPrereqOrPromotion2();
-
-			if (ePromotionPrerequisite != NO_PROMOTION && !isHasPromotion(ePromotionPrerequisite)
-			|| (ePromotionPrerequisite1 != NO_PROMOTION || ePromotionPrerequisite2 != NO_PROMOTION)
-			&& (ePromotionPrerequisite1 == NO_PROMOTION || !isHasPromotion(ePromotionPrerequisite1))
-			&& (ePromotionPrerequisite2 == NO_PROMOTION || !isHasPromotion(ePromotionPrerequisite2)))
+			// tier-succession KEEP check -- the ruled line+priority replacement of the dropped
+			// PromotionPrereq(Or) chains (see canAcquirePromotion): a held tier-N line promotion stays valid
+			// only while a same-line priority-(N-1) promotion is held.
+			bool bSuccessionBroken = false;
+			const PromotionLineTypes eSuccLine = promo.getPromotionLine();
+			if (eSuccLine != NO_PROMOTIONLINE && promo.getLinePriority() > 1)
+			{
+				bSuccessionBroken = true;
+				for (int iP = 0; iP < GC.getNumPromotionInfos() && bSuccessionBroken; ++iP)
+				{
+					if (isHasPromotion((PromotionTypes)iP))
+					{
+						const CvPromotionInfo& kHeld = GC.getPromotionInfo((PromotionTypes)iP);
+						if (kHeld.getPromotionLine() == eSuccLine
+						&& kHeld.getLinePriority() == promo.getLinePriority() - 1)
+							bSuccessionBroken = false;
+					}
+				}
+			}
+			if (bSuccessionBroken)
 			{
 				if (bMessageOnFalse)
 				{

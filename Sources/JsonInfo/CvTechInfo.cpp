@@ -15,7 +15,11 @@ CvTechInfo::CvTechInfo()
 	  m_iGlobalTradeModifier(0), m_iGlobalForeignTradeModifier(0), m_iTradeMissionModifier(0),
 	  m_iCorporationRevenueModifier(0), m_iCorporationMaintenanceModifier(0), m_iInflationModifier(0), m_iAssetValue(0), m_iPowerValue(0),
 	  m_iGridX(0), m_iGridY(0), m_iAIWeight(0), m_iAITradeModifier(0),
-	  m_bRepeat(false), m_bTrade(false), m_bDisable(false), m_bGoodyTech(false)
+	  m_bRepeat(false), m_bTrade(false), m_bDisable(false), m_bGoodyTech(false),
+	  m_bTradeTechs(false), m_bTradeGold(false), m_bTradeMaps(false), m_bTradeOpenBorders(false),
+	  m_bTradeDefensivePact(false), m_bTradePermanentAlliance(false), m_bTradeVassals(false), m_bTradeEmbassy(false),
+	  m_bWorkWater(false), m_bGlobal(false),
+	  m_iFirstFreeProphet(-1), m_iFirstFreeUnit(-1), m_iFirstFreeTechs(0)
 {}
 
 // identity.quote -- RESOLVE the loaded TXT_KEY to display text, mirroring the archived CvTechInfo::getQuote. Returning
@@ -44,6 +48,20 @@ void CvTechInfo::mapFrom(const picojson::value& entity)
 	picojson::object::const_iterator it;
 	if ((it = o.find("canTrade")) != o.end()) jsonBoolSet(it->second, canTrade);
 	if ((it = o.find("canWorkOn")) != o.end()) jsonBoolSet(it->second, canWorkOn);
+	// materialized getter members (the per-call set/grants/allowed string reads retire to bare member reads)
+	m_bTradeTechs             = canTrade.count("techs") != 0;
+	m_bTradeGold              = canTrade.count("gold") != 0;
+	m_bTradeMaps              = canTrade.count("maps") != 0;
+	m_bTradeOpenBorders       = canTrade.count("openBorders") != 0;
+	m_bTradeDefensivePact     = canTrade.count("defensivePact") != 0;
+	m_bTradePermanentAlliance = canTrade.count("permanentAlliance") != 0;
+	m_bTradeVassals           = canTrade.count("vassals") != 0;
+	m_bTradeEmbassy           = canTrade.count("embassy") != 0;
+	m_bWorkWater              = canWorkOn.count("water") != 0;
+	m_bGlobal                 = m_allowed.cap("world") == 1;
+	m_iFirstFreeProphet       = m_grants.firstListId("firstFreeProphet");
+	m_iFirstFreeUnit          = m_grants.firstListId("firstFreeUnit");
+	m_iFirstFreeTechs         = m_grants.pulse100("freeTechs") / 100;
 	if ((it = o.find("canTradeOn")) != o.end() && it->second.is<picojson::object>())
 	{
 		picojson::object::const_iterator tt = it->second.get<picojson::object>().find("terrains");

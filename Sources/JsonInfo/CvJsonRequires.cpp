@@ -19,6 +19,7 @@ void CvJsonRequires::clearParsed()
 {
 	delete build;   build = NULL;
 	delete operate; operate = NULL;
+	delete spread;  spread = NULL;
 	dormantTriggers.clear();
 }
 
@@ -31,6 +32,7 @@ void CvJsonRequires::parse(const picojson::value& v)
 		CvJsonCondition* c = cascadeParseCondition(sub->second);
 		if (sub->first == "build")        { delete build;   build = c; }
 		else if (sub->first == "operate") { delete operate; operate = c; }
+		else if (sub->first == "spread")  { delete spread;  spread = c; }   // corp spread-time needs (json §4.3)
 		else { jsonNoteUnconsumed("requires", sub->first); delete c; }   // unknown sub-section -> the census, never silent
 		                                                                 // (the owning entity's type id is not reachable here)
 		// dormant triggers: building operate.dormant = [BUILDING_…]; unit build.dormant = {all:[UNIT_…]}.

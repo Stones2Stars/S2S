@@ -22,6 +22,7 @@
 
 #include "CvInfo.h"
 #include "Defines/CvEnums.h"   // NUM_YIELD_TYPES / NUM_COMMERCE_TYPES / BonusTypes
+#include <map>
 #include <vector>
 
 class CvCorporationInfo : public CvInfo
@@ -67,9 +68,12 @@ public:
 	void setTechPrereq(TechTypes e) { m_eTechPrereq = e; }       // load-time reverse-index writers (cascadeLoadJson)
 	void setObsoleteTech(TechTypes e) { m_eObsoleteTech = e; }
 	// curator-gap (curate_corporation.py DROP={TechPrereq,PrereqBonuses,PrereqBuildings}): PrereqBuildings is
-	// store-inverted onto the BUILDING (building.enables.corporations, from BuildingInfo.PrereqCorporation) at the
-	// Building pass -- NOT emitted on the corp, and (unlike getTechPrereq) NO reverse-index setter reconstructs it here.
-	int getPrereqBuilding(int /*i*/) const { return -1; }
+	// the corp's per-building COUNT prereq for SPREADING (legacy PrereqBuildings; the CvUnit executive-spread gate
+	// reads it per building id). Authored as requires.spread count atoms ({type:BUILDING_X, scope:empire, min:N},
+	// json §4.3 -- owner ruling 2026-07-17: the mechanism is served even while no corp authors it); materialized at
+	// mapFrom into the count map (0 = no requirement, the legacy unset value).
+	int getPrereqBuilding(int i) const
+	{ std::map<int, int>::const_iterator it = m_prereqBuildingCounts.find(i); return it != m_prereqBuildingCounts.end() ? it->second : 0; }
 	// curator-gap: no PrereqGameOption in the base corp XML and none in curate_corporation.py's tag tables; corps
 	// author NO entity-level enabled/disabled gate (the HAS_CORPORATION predicate rides each per-city family entry,
 	// not a whole-entity gate), so there is no GAMEOPTION_ atom to walk (contrast CvPromotionInfo getOnGameOption).
@@ -78,7 +82,7 @@ public:
 	// exclusion). Emitted address; empty in ALL shipped base XML (no corp authors CompetingCorporations today) -> reads
 	// an empty set until data lands. `excludes` classifies CJK_INTRINSIC, so the base skips it for this subclass to parse.
 	bool isCompetingCorporation(int i) const { for (int j = 0; j < (int)m_aeExcludes.size(); ++j) if (m_aeExcludes[j] == i) return true; return false; }
-	int getFreeUnit() const { return m_grants.firstListId("freeUnit"); }   // grants.freeUnit (as CvReligionInfo)
+	int getFreeUnit() const { return m_iFreeUnit; }   // grants.freeUnit (materialized at mapFrom, as CvReligionInfo)
 	int* getYieldChangeArray() const { return const_cast<int*>(m_aiYieldChange); }          // real (the ×1 change array)
 	int* getCommerceChangeArray() const { return const_cast<int*>(m_aiCommerceChange); }    // real
 	void setChar(int i);                                              // TGA-derived GameFont slot (defined in .cpp; needs GC)
@@ -93,24 +97,29 @@ public:
 	virtual const CvJsonProvides*  getProvides()  const { return &m_provides; }
 	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
 	virtual const CvJsonGrants*    getGrants()    const { return &m_grants; }   // grants.freeUnit (getFreeUnit)
+	virtual const CvJsonRequires*  getRequires()  const { return &m_requires; } // requires.spread (getPrereqBuilding)
 
 protected:
 	virtual CvJsonEdges*     mutEdges()     { return &m_edges; }
 	virtual CvJsonProvides*  mutProvides()  { return &m_provides; }
 	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
 	virtual CvJsonGrants*    mutGrants()    { return &m_grants; }
+	virtual CvJsonRequires*  mutRequires()  { return &m_requires; }
 
 private:
 	CvJsonEdges     m_edges;
 	CvJsonProvides  m_provides;
 	CvJsonModifiers m_modifiers;
 	CvJsonGrants    m_grants;
+	CvJsonRequires  m_requires;
+	std::map<int, int> m_prereqBuildingCounts;   // requires.spread BUILDING count atoms, materialized at mapFrom
 	int m_aiYieldChange[NUM_YIELD_TYPES];
 	int m_aiYieldProduced[NUM_YIELD_TYPES];
 	int m_aiCommerceChange[NUM_COMMERCE_TYPES];
 	int m_aiCommerceProduced[NUM_COMMERCE_TYPES];
 	int m_aiHeadquarterCommerce[NUM_COMMERCE_TYPES];
 	int m_iMaintenance, m_iHealth, m_iHappiness, m_iFreeXP, m_iMilitaryProductionModifier;
+	int m_iFreeUnit;   // grants.freeUnit, materialized at mapFrom
 	std::vector<int> m_aePrereqBonuses;
 	int m_iSpreadCost, m_iSpread, m_iCompetingSpreadCostPercent;
 	std::string m_szSound, m_szMovieFile, m_szMovieSound;   // sound.sound / ui.art.movie.file / ui.art.movie.sound

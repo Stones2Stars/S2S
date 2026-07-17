@@ -111,6 +111,13 @@ resolves dynamically by name.
   to declarative XML" goal.
 - The asset **checksum** only triggers the modifier-recalc popup on mismatch — it does NOT gate MP OOS or block
   loading; full parity is not required when restructuring data (cost = one spurious popup per existing save).
+- **Category id ORDER comes from the `_order.json` manifest** (`Assets/Data/<cat>/_order.json`, curator-derived —
+  `Tools/Migration/curate_order.py`): the loader sorts a category's entities by manifest position before
+  registering ids, so the engine ids reproduce the LEGACY id order (base XML document order, then module
+  additions) and every id-ordered UI surface keeps its familiar layout (the level-up promotion popup groups each
+  line's tiers adjacently because the XML did). A type absent from the manifest (synthetic `TECH_GAME_START`,
+  future additions, a manifest-less category) sorts AFTER every listed one, alphabetically — the legacy
+  new-stuff-appends-last behaviour. Manifests are derived artifacts: regenerate + commit freely, never hand-edit.
 - **`LoadGlobalClassInfoJson` is TWO-PASS by requirement, never one.** Each JSON category loads by (1) registering
   **every** type→id (`setInfoTypeFromString`), then (2) running `mapFrom` on each entity. `mapFrom` resolves its FKs
   at parse time (`jsonResolveId` → `getInfoTypeForString(id, /*bHideAssert*/true)`), so a single register-then-map

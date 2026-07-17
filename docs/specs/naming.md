@@ -55,6 +55,11 @@ not yet ported (still authored in `Assets/XML`, referenced from JSON by id). Ver
 | `UNITCOMBAT_` | a unit-combat class | ✅ `unitcombats/` |
 | `VICTORY_` | a victory condition | ✅ `victories/` |
 | `VOTE_` | a diplomatic proposal (vote) | ✅ `votes/` |
+| `SKILL_` | a unit skill (`SKILL_BLITZ`) | ⚙ runtime-GENERATED — minted at load from the union of authored `skills` block keys (json.md §8, `ClassificationRegistry`); no data folder |
+| `TAG_` | a unit tag (`TAG_MILITARY`) | ⚙ runtime-GENERATED (from `tags` block keys) |
+| `ATTRIBUTE_` | a building attribute (`ATTRIBUTE_NUKE_IMMUNE`) | ⚙ runtime-GENERATED (from `attributes` block keys) |
+| `CAPABILITY_` | an empire capability (`CAPABILITY_SET_SCIENCE_RATE`) | ⚙ runtime-GENERATED (from `capabilities` block keys) |
+| `POLICY_` | an empire policy (`POLICY_NO_FOREIGN_TRADE`) | ⚙ runtime-GENERATED (from `policies` block keys) |
 | `EFFECT_` | a map graphics effect (`EFFECT_BIRDSCATTER`) | ☐ XML only — referenced from a feature's `world.art.effect`. *(NOT `BUILDING_EFFECT_*`, the property pseudo-buildings — those are the `BUILDING_` infotype.)* |
 | `MAPCATEGORY_` | a map category (`MAPCATEGORY_EARTH`) | ☐ XML only — referenced from a building's `requires.build` |
 | `EVENT_` | an event (and its trigger) | ☐ XML only — PERMANENT carve-out (#425 event rework — events stay Python, out of #430) |

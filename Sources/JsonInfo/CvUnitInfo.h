@@ -96,16 +96,16 @@ public:
 	int getVSBarbs() const { return m_iVSBarbs; }                                // strength.unit.vsBarbs.percent
 	int getAttackCombatModifier() const { return m_iAttackCombatModifier; }      // strength.unit.attack.percent
 	int getDefenseCombatModifier() const { return m_iDefenseCombatModifier; }    // strength.unit.defense.percent
-	int getCombatModifierPerSizeMore() const { return m_iCombatModifierPerSizeMore; }      // strength.unit.perSizeMore.percent
-	int getCombatModifierPerSizeLess() const { return m_iCombatModifierPerSizeLess; }      // strength.unit.perSizeLess.percent
-	int getCombatModifierPerVolumeMore() const { return m_iCombatModifierPerVolumeMore; }  // strength.unit.perVolumeMore.percent
-	int getCombatModifierPerVolumeLess() const { return m_iCombatModifierPerVolumeLess; }  // strength.unit.perVolumeLess.percent
-	int getLunge() const { return m_iLunge; }                                    // strength.unit.lunge.percent
-	int getEnclose() const { return m_iEnclose; }                                // strength.unit.enclose.percent
-	int getUnnerve() const { return m_iUnnerve; }                                // strength.unit.unnerve.percent
-	int getDynamicDefense() const { return m_iDynamicDefense; }                  // strength.unit.dynamicDefense.percent
-	int getStealthStrikes() const { return m_iStealthStrikes; }                  // strength.unit.stealthStrikes.flat
-	int getStealthCombatModifier() const { return m_iStealthCombatModifier; }    // strength.unit.stealth.percent
+	int getCombatModifierPerSizeMore() const;      // GAMEOPTION_COMBAT_SIZE_MATTERS-gated (archive mirror; .cpp)
+	int getCombatModifierPerSizeLess() const;      // SIZE_MATTERS-gated
+	int getCombatModifierPerVolumeMore() const;    // SIZE_MATTERS-gated
+	int getCombatModifierPerVolumeLess() const;    // SIZE_MATTERS-gated
+	int getLunge() const;                          // GAMEOPTION_COMBAT_SURROUND_DESTROY-gated (archive mirror; .cpp)
+	int getEnclose() const;                        // S&D-gated
+	int getUnnerve() const;                        // S&D-gated
+	int getDynamicDefense() const;                 // S&D-gated
+	int getStealthStrikes() const;                 // GAMEOPTION_COMBAT_WITHOUT_WARNING-gated (archive mirror; .cpp)
+	int getStealthCombatModifier() const;          // WITHOUT_WARNING-gated
 	int getBreakdownChance() const { return m_iBreakdownChance; }                // strength.unit.breakdownChance.flat
 	int getBreakdownDamage() const { return m_iBreakdownDamage; }                // strength.unit.breakdownDamage.flat
 	int getWithdrawalProbability() const { return m_iWithdrawalProbability; }     // withdrawal.unit.percent
@@ -168,54 +168,57 @@ public:
 	int getFlavorValue(int i) const { return mapGet(m_flavours, i); }            // ai.flavours
 
 	// --- skills (section-8 flat bools) + the goldenAge grant flag + the spy tag ---
-	bool isAlwaysHostile() const { return skill("alwaysHostile"); }
-	bool isAssassin() const { return skill("assassin"); }
-	bool isHiddenNationality() const { return skill("hiddenNationality"); }
-	bool isNoCapture() const { return skill("noCapture"); }
-	bool isNoDefensiveBonus() const { return skill("noDefensiveBonus"); }
-	bool isPillage() const { return skill("pillage"); }
-	bool isStampede() const { return skill("stampede"); }
-	bool isBlendIntoCity() const { return skill("blendIntoCity"); }
-	bool isBarbCoExist() const { return skill("barbCoExist"); }
-	bool isCanMoveAllTerrain() const { return skill("canMoveAllTerrain"); }
-	bool isCanMoveImpassable() const { return skill("canMoveImpassable"); }
-	bool isCounterSpy() const { return skill("counterSpy"); }
-	bool isDestroy() const { return skill("destroy"); }
-	bool isFirstStrikeImmune() const { return skill("firstStrikeImmune"); }
-	bool isFlatMovementCost() const { return skill("flatMovementCost"); }
-	bool isFoodProduction() const { return skill("food"); }
-	bool isFound() const { return skill("found"); }
-	bool isGreatGeneral() const { return skill("greatGeneral"); }
-	bool isIgnoreBuildingDefense() const { return skill("ignoreBuildingDefense"); }
-	bool isIgnoreTerrainCost() const { return skill("ignoreTerrainCost"); }
-	bool isIgnoreZoneofControl() const { return skill("ignoreZoneOfControl"); }
-	bool isInquisitor() const { return skill("inquisitor"); }
-	bool isInvestigate() const { return skill("investigate"); }
-	bool isInvisible() const { return skill("alwaysInvisible"); }
-	bool isMechUnit() const { return skill("mechanized"); }
-	bool isNoBadGoodies() const { return skill("noBadGoodies"); }
-	bool isNoNonOwnedCityEntry() const { return skill("noNonOwnedCityEntry"); }
-	bool isNoNonTypeProdMods() const { return skill("noNonTypeProdMods"); }
-	bool isNukeImmune() const { return skill("nukeImmune"); }
-	bool isOnlyDefensive() const { return skill("onlyDefensive"); }
-	bool isPassage() const { return skill("passage"); }
-	bool isRBombardForceAbility() const { return skill("rBombardForceAbility"); }
-	bool isRivalTerritory() const { return skill("rivalTerritory"); }
-	bool isSabotage() const { return skill("sabotage"); }
-	bool isStateReligion() const { return skill("stateReligion"); }
-	bool isStealPlans() const { return skill("stealPlans"); }
-	bool isStealthDefense() const { return skill("stealthDefense"); }
-	bool isSuicide() const { return skill("suicide"); }
-	bool isUpgradeAnywhere() const { return skill("upgradeAnywhere"); }
-	bool isWorkerTrade() const { return skill("workerTrade"); }
-	bool isAttackOnlyCities() const { return skill("attackOnlyCities"); }
-	bool isIgnoreNoEntryLevel() const { return skill("ignoreNoEntryLevel"); }
-	bool isFliesToMove() const { return skill("fliesToMove"); }
-	bool isFreeDrop() const { return skill("freeDrop"); }
-	bool getDCMFighterEngage() const { return skill("dcmFighterEngage"); }
-	bool isRenderBelowWater() const { return skill("renderBelowWater"); }
-	bool isMilitaryTrade() const { return skill("militaryTrade"); }
-	bool isNoSelfHeal() const { return skill("noSelfHeal"); }
+	// O(1) generated-id bit tests (CLS_HAS -> CvJsonBoolBlock::hasKey; SKILL_* ids from the ClassificationRegistry).
+	// These sit on the render/AI hot paths (the EXE polls unit.isInvisible ~98M calls/turn-window; the pathfinder
+	// reads the movement gates per step) -- never a per-call string lookup.
+	bool isAlwaysHostile() const CLS_HAS(m_skills, CLSD_SKILL, "alwaysHostile")
+	bool isAssassin() const CLS_HAS(m_skills, CLSD_SKILL, "assassin")
+	bool isHiddenNationality() const CLS_HAS(m_skills, CLSD_SKILL, "hiddenNationality")
+	bool isNoCapture() const CLS_HAS(m_skills, CLSD_SKILL, "noCapture")
+	bool isNoDefensiveBonus() const CLS_HAS(m_skills, CLSD_SKILL, "noDefensiveBonus")
+	bool isPillage() const CLS_HAS(m_skills, CLSD_SKILL, "pillage")
+	bool isStampede() const CLS_HAS(m_skills, CLSD_SKILL, "stampede")
+	bool isBlendIntoCity() const CLS_HAS(m_skills, CLSD_SKILL, "blendIntoCity")
+	bool isBarbCoExist() const CLS_HAS(m_skills, CLSD_SKILL, "barbCoExist")
+	bool isCanMoveAllTerrain() const CLS_HAS(m_skills, CLSD_SKILL, "canMoveAllTerrain")
+	bool isCanMoveImpassable() const CLS_HAS(m_skills, CLSD_SKILL, "canMoveImpassable")
+	bool isCounterSpy() const CLS_HAS(m_skills, CLSD_SKILL, "counterSpy")
+	bool isDestroy() const CLS_HAS(m_skills, CLSD_SKILL, "destroy")
+	bool isFirstStrikeImmune() const CLS_HAS(m_skills, CLSD_SKILL, "firstStrikeImmune")
+	bool isFlatMovementCost() const CLS_HAS(m_skills, CLSD_SKILL, "flatMovementCost")
+	bool isFoodProduction() const CLS_HAS(m_skills, CLSD_SKILL, "food")
+	bool isFound() const CLS_HAS(m_skills, CLSD_SKILL, "found")
+	bool isGreatGeneral() const CLS_HAS(m_skills, CLSD_SKILL, "greatGeneral")
+	bool isIgnoreBuildingDefense() const CLS_HAS(m_skills, CLSD_SKILL, "ignoreBuildingDefense")
+	bool isIgnoreTerrainCost() const CLS_HAS(m_skills, CLSD_SKILL, "ignoreTerrainCost")
+	bool isIgnoreZoneofControl() const CLS_HAS(m_skills, CLSD_SKILL, "ignoreZoneOfControl")
+	bool isInquisitor() const CLS_HAS(m_skills, CLSD_SKILL, "inquisitor")
+	bool isInvestigate() const CLS_HAS(m_skills, CLSD_SKILL, "investigate")
+	bool isInvisible() const CLS_HAS(m_skills, CLSD_SKILL, "alwaysInvisible")
+	bool isMechUnit() const CLS_HAS(m_skills, CLSD_SKILL, "mechanized")
+	bool isNoBadGoodies() const CLS_HAS(m_skills, CLSD_SKILL, "noBadGoodies")
+	bool isNoNonOwnedCityEntry() const CLS_HAS(m_skills, CLSD_SKILL, "noNonOwnedCityEntry")
+	bool isNoNonTypeProdMods() const CLS_HAS(m_skills, CLSD_SKILL, "noNonTypeProdMods")
+	bool isNukeImmune() const CLS_HAS(m_skills, CLSD_SKILL, "nukeImmune")
+	bool isOnlyDefensive() const CLS_HAS(m_skills, CLSD_SKILL, "onlyDefensive")
+	bool isPassage() const CLS_HAS(m_skills, CLSD_SKILL, "passage")
+	bool isRBombardForceAbility() const CLS_HAS(m_skills, CLSD_SKILL, "rBombardForceAbility")
+	bool isRivalTerritory() const CLS_HAS(m_skills, CLSD_SKILL, "rivalTerritory")
+	bool isSabotage() const CLS_HAS(m_skills, CLSD_SKILL, "sabotage")
+	bool isStateReligion() const CLS_HAS(m_skills, CLSD_SKILL, "stateReligion")
+	bool isStealPlans() const CLS_HAS(m_skills, CLSD_SKILL, "stealPlans")
+	bool isStealthDefense() const;   // GAMEOPTION_COMBAT_WITHOUT_WARNING-gated skill read (archive mirror; .cpp)
+	bool isSuicide() const CLS_HAS(m_skills, CLSD_SKILL, "suicide")
+	bool isUpgradeAnywhere() const CLS_HAS(m_skills, CLSD_SKILL, "upgradeAnywhere")
+	bool isWorkerTrade() const CLS_HAS(m_skills, CLSD_SKILL, "workerTrade")
+	bool isAttackOnlyCities() const CLS_HAS(m_skills, CLSD_SKILL, "attackOnlyCities")
+	bool isIgnoreNoEntryLevel() const CLS_HAS(m_skills, CLSD_SKILL, "ignoreNoEntryLevel")
+	bool isFliesToMove() const CLS_HAS(m_skills, CLSD_SKILL, "fliesToMove")
+	bool isFreeDrop() const CLS_HAS(m_skills, CLSD_SKILL, "freeDrop")
+	bool getDCMFighterEngage() const CLS_HAS(m_skills, CLSD_SKILL, "dcmFighterEngage")
+	bool isRenderBelowWater() const CLS_HAS(m_skills, CLSD_SKILL, "renderBelowWater")
+	bool isMilitaryTrade() const CLS_HAS(m_skills, CLSD_SKILL, "militaryTrade")
+	bool isNoSelfHeal() const CLS_HAS(m_skills, CLSD_SKILL, "noSelfHeal")
 	bool canAnimalIgnoresBorders() const { return false; }  // DEAD (owner 2026-07-11): animal border-ignoring is PURE game-option runtime (CvUnit::canAnimalIgnoresBorders), not curated unit data
 	bool isGoldenAge() const { const CvJsonGrants* g = getGrants(); return g && g->flag("goldenAge"); }  // grants.goldenAge
 	bool isSpy() const { const CvJsonBoolBlock* t = getTags(); return t && t->has("spy"); }               // tags.spy
@@ -391,7 +394,8 @@ public:
 	int getVisibilityIntensityRangeType(int /*i*/) const { return -1; }
 	bool isVisibilityIntensityRangeType(int /*i*/) const { return false; }
 	const InvisibilityArray& getVisibilityIntensityRangeTypes() const { return m_emptyInvisibilityArray; }
-	int getNumInvisibleImprovementChanges() const { return 0; }   // GAP: InvisibleImprovementChanges not curated (VISION_STRUCTS has only terrain+feature)
+	int getNumInvisibleImprovementChanges() const { return 0; }   // UNITS author no InvisibleImprovementChanges (XML census 0) -- the authored rows live on
+	                                                              // unitcombats/promotions, whose pocos map them fully; this empty stub IS the faithful value
 	const InvisibleImprovementChanges& getInvisibleImprovementChange(int /*i*/) const { return m_emptyInvisibleImprovementChanges; }
 	int getNumVisibleTerrainChanges() const { return 0; }         // GAP: visible* changes not curated
 	const InvisibleTerrainChanges& getVisibleTerrainChange(int /*i*/) const { return m_emptyInvisibleTerrainChanges; }
@@ -461,7 +465,7 @@ public:
 	bool isGatherHerd() const { return false; }                  // GAP: bGatherHerd not curated
 	bool isSlave() const { return false; }                       // GAP: bSlave not curated
 	bool isForceUpgrade() const { return false; }                // GAP: bForceUpgrade not curated
-	bool isNoRevealMap() const { return skill("noRevealMap"); }  // skills.noRevealMap (bNoRevealMap, goody-hut gate)
+	bool isNoRevealMap() const CLS_HAS(m_skills, CLSD_SKILL, "noRevealMap")  // skills.noRevealMap (bNoRevealMap, goody-hut gate)
 	bool canMergeSplit() const { return false; }                 // GAP: bCanMergeSplit not curated
 	// The three legacy military* flags UNIFY onto the `military` tag / IS_MILITARY (skills.md §3; owner-confirmed
 	// 2026-07-11 -- a deliberate behaviour change, the differing legacy corpora collapse to one verdict).
@@ -518,7 +522,8 @@ protected:
 private:
 	void reconstructPrereqs();   // walk the composed requires.build into the typed prereq members (mapFrom-time)
 
-	bool skill(const char* szName) const { const CvJsonBoolBlock* s = getSkills(); return s && s->has(szName); }
+	bool skill(const char* szName) const { const CvJsonBoolBlock* s = getSkills(); return s && s->has(szName); }   // cold/oracle read only -- hot getters use CLS_HAS
+
 	static bool contains(const std::vector<int>& v, int id) { for (size_t i = 0; i < v.size(); ++i) if (v[i] == id) return true; return false; }
 	static int mapGet(const std::map<int, int>& m, int k) { std::map<int, int>::const_iterator it = m.find(k); return it != m.end() ? it->second : 0; }
 

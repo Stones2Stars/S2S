@@ -20,9 +20,12 @@ class CvJsonRequires
 public:
 	CvJsonCondition* build;              // requires.build   (greys)             -- NULL if none
 	CvJsonCondition* operate;            // requires.operate (greys + dormancy)  -- NULL if none
+	CvJsonCondition* spread;             // requires.spread  (CORPORATIONS: needed to SPREAD into a city --
+	                                     //   evaluated by the spread system at spread time, never the enabler;
+	                                     //   json §4.3) -- NULL if none
 	std::vector<int> dormantTriggers;    // requires.{build|operate}.dormant trigger ids (§4.3)
 
-	CvJsonRequires() : build(NULL), operate(NULL) {}
+	CvJsonRequires() : build(NULL), operate(NULL), spread(NULL) {}
 	~CvJsonRequires();
 
 	// The unit's single load-time writer: parse the section's JSON value (the `requires` object). The condition
@@ -31,7 +34,7 @@ public:
 
 	void clearParsed();   // frees the trees + resets (the dtor body; the clear-first half of the section re-map)
 
-	bool isEmpty() const { return build == NULL && operate == NULL && dormantTriggers.empty(); }
+	bool isEmpty() const { return build == NULL && operate == NULL && spread == NULL && dormantTriggers.empty(); }
 
 private:
 	CvJsonRequires(const CvJsonRequires&);            // noncopyable -- owns the condition trees

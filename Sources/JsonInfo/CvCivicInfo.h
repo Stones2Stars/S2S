@@ -96,27 +96,28 @@ public:
 	const wchar_t* getWeLoveTheKing() const { return m_szWeLoveTheKingKey; }       // CvWString -> const wchar_t* implicit (getTextKeyWide precedent)
 	const wchar_t* getWeLoveTheKingKey() const { return m_szWeLoveTheKingKey; }
 
-	// --- section-9 policy STATE flags -- REAL (the composed m_policies block; curate_civic.py POLICIES table) ---
-	bool isStateReligion() const            { return getPolicies()->has("stateReligion"); }
-	bool isNoForeignTrade() const           { return getPolicies()->has("noForeignTrade"); }
-	bool isNoCorporations() const           { return getPolicies()->has("noCorporations"); }
-	bool isNoForeignCorporations() const    { return getPolicies()->has("noForeignCorporations"); }
-	bool isFreeSpeech() const               { return getPolicies()->has("freeSpeech"); }
-	bool IsFixedBorders() const             { return getPolicies()->has("fixedBorders"); }
-	bool isMilitaryFoodProduction() const   { return getPolicies()->has("militaryFoodProduction"); }
-	bool isBuildingOnlyHealthy() const      { return getPolicies()->has("buildingOnlyHealthy"); }
-	bool isNoUnhealthyPopulation() const    { return getPolicies()->has("noUnhealthyPopulation"); }
-	bool isNoCapitalUnhappiness() const     { return getPolicies()->has("noCapitalUnhappiness"); }
-	bool isNoLandmarkAnger() const          { return getPolicies()->has("noLandmarkAnger"); }
-	bool isCommunism() const                { return getPolicies()->has("communism"); }
-	bool isCanDoElection() const            { return getPolicies()->has("canDoElection"); }
-	bool isUpgradeAnywhere() const          { return getPolicies()->has("upgradeAnywhere"); }
-	bool isNoNonStateReligionSpread() const { return getPolicies()->has("noNonStateReligionSpread"); }
-	bool isAllowInquisitions() const        { return getPolicies()->has("allowInquisitions"); }
-	bool isDisallowInquisitions() const     { return getPolicies()->has("disallowInquisitions"); }
-	bool isAllReligionsActive() const       { return getPolicies()->has("allReligionsActive"); }
-	bool isBansNonStateReligions() const    { return getPolicies()->has("bansNonStateReligions"); }
-	bool isFreedomFighter() const           { return getPolicies()->has("freedomFighter"); }
+	// --- section-9 policy STATE flags -- REAL (the composed m_policies block; curate_civic.py POLICIES table).
+	// O(1) generated-id bit tests (CLS_HAS; POLICY_* ids from the ClassificationRegistry). ---
+	bool isStateReligion() const            CLS_HAS(m_policies, CLSD_POLICY, "stateReligion")
+	bool isNoForeignTrade() const           CLS_HAS(m_policies, CLSD_POLICY, "noForeignTrade")
+	bool isNoCorporations() const           CLS_HAS(m_policies, CLSD_POLICY, "noCorporations")
+	bool isNoForeignCorporations() const    CLS_HAS(m_policies, CLSD_POLICY, "noForeignCorporations")
+	bool isFreeSpeech() const               CLS_HAS(m_policies, CLSD_POLICY, "freeSpeech")
+	bool IsFixedBorders() const             CLS_HAS(m_policies, CLSD_POLICY, "fixedBorders")
+	bool isMilitaryFoodProduction() const   CLS_HAS(m_policies, CLSD_POLICY, "militaryFoodProduction")
+	bool isBuildingOnlyHealthy() const      CLS_HAS(m_policies, CLSD_POLICY, "buildingOnlyHealthy")
+	bool isNoUnhealthyPopulation() const    CLS_HAS(m_policies, CLSD_POLICY, "noUnhealthyPopulation")
+	bool isNoCapitalUnhappiness() const     CLS_HAS(m_policies, CLSD_POLICY, "noCapitalUnhappiness")
+	bool isNoLandmarkAnger() const          CLS_HAS(m_policies, CLSD_POLICY, "noLandmarkAnger")
+	bool isCommunism() const                CLS_HAS(m_policies, CLSD_POLICY, "communism")
+	bool isCanDoElection() const            CLS_HAS(m_policies, CLSD_POLICY, "canDoElection")
+	bool isUpgradeAnywhere() const          CLS_HAS(m_policies, CLSD_POLICY, "upgradeAnywhere")
+	bool isNoNonStateReligionSpread() const CLS_HAS(m_policies, CLSD_POLICY, "noNonStateReligionSpread")
+	bool isAllowInquisitions() const        CLS_HAS(m_policies, CLSD_POLICY, "allowInquisitions")
+	bool isDisallowInquisitions() const     CLS_HAS(m_policies, CLSD_POLICY, "disallowInquisitions")
+	bool isAllReligionsActive() const       CLS_HAS(m_policies, CLSD_POLICY, "allReligionsActive")
+	bool isBansNonStateReligions() const    CLS_HAS(m_policies, CLSD_POLICY, "bansNonStateReligions")
+	bool isFreedomFighter() const           CLS_HAS(m_policies, CLSD_POLICY, "freedomFighter")
 	// isPolicy: the bPolicy schema element is NEVER authored (0 occurrences base+modules) -> class-member default.
 	bool isPolicy() const { return false; }
 
@@ -316,6 +317,35 @@ private:
 	std::vector<BuildingModifier2> m_vBuildingHappinessChangesSparse;
 	std::vector<BuildingModifier2> m_vBuildingHealthChangesSparse;
 	std::vector<std::pair<FeatureTypes, int> > m_vFeatureHappinessChangesSparse;
+
+	// --- MATERIALIZED scalar members (mapFrom-filled; the getters are bare member reads -- per-call string-address
+	// walks are banned from getters). Same address table as before, now scanned ONCE at load (JsonModScan). ---
+	int m_iMaxConscript, m_iCityLimitBase;
+	int m_iGreatPeopleRateModifier, m_iGreatGeneralRateModifier, m_iDomesticGreatGeneralRateModifier, m_iStateReligionGreatPeopleRateModifier;
+	int m_iDistanceMaintenanceModifier, m_iNumCitiesMaintenanceModifier, m_iHomeAreaMaintenanceModifier, m_iOtherAreaMaintenanceModifier, m_iCorporationMaintenanceModifier;
+	int m_iExtraHealth, m_iFreeExperience, m_iWorkerSpeedModifier, m_iImprovementUpgradeRateModifier, m_iMilitaryProductionModifier;
+	int m_iFreeUnitUpkeepCivilian, m_iFreeUnitUpkeepMilitary, m_iFreeUnitUpkeepCivilianPopPercent, m_iFreeUnitUpkeepMilitaryPopPercent;
+	int m_iCivilianUnitUpkeepMod, m_iMilitaryUnitUpkeepMod, m_iWarWearinessModifier, m_iFreeSpecialist, m_iTradeRoutes;
+	int m_iCivicPercentAnger, m_iStateReligionHappiness, m_iNonStateReligionHappiness, m_iStateReligionUnitProductionModifier;
+	int m_iStateReligionBuildingProductionModifier, m_iStateReligionFreeExperience, m_iExpInBorderModifier;
+	int m_iRevIdxLocal, m_iRevIdxNational, m_iRevIdxDistanceModifier, m_iRevIdxHolyCityGood, m_iRevIdxHolyCityBad, m_iRevIdxSwitchTo;
+	int m_iRevReligiousFreedom, m_iRevLaborFreedom, m_iRevEnvironmentalProtection, m_iRevDemocracyLevel;
+	int m_iAttitudeShareMod, m_iForeignerUnhappyPercent, m_iCityOverLimitUnhappy, m_iForeignTradeRouteModifier, m_iTaxRateUnhappiness;
+	int m_iPopulationgrowthratepercentage, m_iCivicHappiness, m_iDistantUnitSupportCostModifier, m_iExtraCityDefense;
+	int m_iNationalCaptureProbabilityModifier, m_iNationalCaptureResistanceModifier, m_iInflationModifier;
+	int m_iHurryInflationModifier, m_iHurryCostModifier, m_iSharedCivicTradeRouteModifier, m_iFreedomFighterChange;
+	int m_iLandmarkHappiness, m_iLargestCityHappiness, m_iHappyPerMilitaryUnit;
+	float m_fRevIdxNationalityMod, m_fRevIdxBadReligionMod, m_fRevIdxGoodReligionMod, m_fRevViolentMod;
+
+	// --- MATERIALIZED keyed maps (mapFrom-filled; the per-index getters are bare map reads) ---
+	std::map<int, int> m_buildingCommerceModifier[NUM_COMMERCE_TYPES];   // [commerce] -> {building id -> percent}
+	std::map<int, int> m_improvementYieldChanges[NUM_YIELD_TYPES];      // [yield] -> {improvement id -> flat}
+	std::map<int, int> m_terrainYieldChanges[NUM_YIELD_TYPES];          // [yield] -> {terrain id -> flat}
+	std::map<int, int> m_unitProductionModifier;                        // {unit id -> percent}
+	std::map<int, int> m_unitCombatProductionModifier;                  // {unitcombat id -> percent}
+	std::map<int, int> m_civicAttitudeChanges;                          // {civic id -> flat}
+	std::map<int, int> m_freeSpecialistCount;                           // {specialist id -> count}
+	bool m_bAnyImprovementYieldChange;
 };
 
 #endif // CV_JSON_CIVIC_INFO_H

@@ -15,6 +15,7 @@ CvProjectInfo::CvProjectInfo()
 	  m_iGlobalHappiness(0), m_iGlobalHealth(0), m_iWorldHappiness(0), m_iWorldHealth(0), m_iWorldTradeRoutes(0),
 	  m_iVictoryDelayPercent(0), m_iSuccessRate(0), m_eLaunchesVictory(-1), m_bSpaceship(false), m_bAllowsNukes(false),
 	  m_iEveryoneSpecialUnit(-1), m_iAnyoneProjectPrereq(-1),   // NO_SPECIALUNIT / NO_PROJECT
+	  m_iMaxGlobalInstances(-1), m_iMaxTeamInstances(-1),       // -1 = absent/unlimited (legacy convention)
 	  m_eTechPrereq(NO_TECH)
 {
 	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i) m_aiCommerceModifier[i] = 0;
@@ -24,6 +25,9 @@ void CvProjectInfo::mapFrom(const picojson::value& entity)
 {
 	m_aeMapCategories.clear();   // remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom
 	CvInfo::mapFrom(entity);   // core + availability (enables.projects, requires.build world-scope, enables.specialBuildings, allowed caps)
+	// materialized instance caps (the getters are bare member reads; the base allowedCap convention: -1 = absent)
+	m_iMaxGlobalInstances = allowedCap("world");
+	m_iMaxTeamInstances   = allowedCap("team");
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
 

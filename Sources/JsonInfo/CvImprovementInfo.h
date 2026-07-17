@@ -142,11 +142,14 @@ public:
 	// condition parser drops it (CvJsonConditionParse.cpp has no natureYield case -> CASC_PRED_UNKNOWN, value lost), so
 	// mapFrom reads it DIRECTLY from the raw requires.build.all JSON (readPrereqNatureYield).
 	int getPrereqNatureYield(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiPrereqNatureYield[i] : 0; }
-	// CURATOR-GAP (verified, by design): RouteYieldChanges is in curate_improvement.py EXTRA_DROP -- it "stays folded
-	// onto the ROUTE" (the route governs which improvements it upgrades; curate_route). ZERO route-yield data is
-	// emitted on the improvement side (grep: 0 "ROUTE_" in Assets/Data/improvements), so it cannot be served here.
-	int getRouteYieldChanges(int /*i*/, int /*j*/) const { return 0; }
-	int* getRouteYieldChangesArray(int /*i*/) const { return NULL; }   // legacy NULL-when-no-row semantics
+	// RouteYieldChanges live ROUTE-side in the data (deliveryguy, modifier.md §4: the route governs the
+	// improvements it upgrades -- curate_route.py authors {food|production|commerce}.plot.improvements.{IMP});
+	// the legacy improvement-side readers (CvPlot::calculateImprovementYieldChange + the widget help) still ask
+	// the IMPROVEMENT, so the rows are RECONSTRUCTED at load by the CvCascadeReadJson reverse pass (the
+	// route<-bonus prereq pattern). Same row/NULL semantics as TechYieldChanges above.
+	int getRouteYieldChanges(int i, int j) const;       // per-route (i = ROUTE id, j = yield)
+	int* getRouteYieldChangesArray(int i) const;        // row for ROUTE i, or NULL when it deposits none
+	void addRouteYieldChange(int iRoute, int iYield, int iValue);   // the load reverse-pass writer
 	// CURATOR-GAP (verified): bObsoleteBonusMakesValid and bNotOnAnyBonus are authored by ZERO improvements (grep
 	// CIV4ImprovementInfos.xml -> 0 matches each), so nothing is emitted and there is no data to serve.
 	bool isImprovementObsoleteBonusMakesValid(int /*i*/) const { return false; }
@@ -225,6 +228,7 @@ private:
 	int m_aiIrrigatedYieldChange[NUM_YIELD_TYPES];   // <yield>.plot.flat "HAS_IRRIGATION"-gated entries (IrrigatedYieldChange)
 	int m_aiPrereqNatureYield[NUM_YIELD_TYPES];      // requires.build.all {natureYield:{...}} min thresholds
 	std::map<int, std::vector<int> > m_techYieldChanges;   // TECH id -> NUM_YIELD_TYPES row ({type:TECH,scope:team}-gated)
+	std::map<int, std::vector<int> > m_routeYieldChanges;  // ROUTE id -> NUM_YIELD_TYPES row (load reverse-pass, see getRouteYieldChanges)
 	std::map<int, std::vector<int> > m_bonusYieldChanges;  // BONUS id -> NUM_YIELD_TYPES row ({HAS_BONUS:B}-gated)
 
 	std::vector<BuildTypes> m_aeBuildTypes;          // CURATOR-GAP always empty -- see getBuildTypes

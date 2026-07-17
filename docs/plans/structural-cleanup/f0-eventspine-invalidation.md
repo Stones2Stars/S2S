@@ -173,7 +173,7 @@ live in `productionModifier`/`acc_brSelf`); the `unit:IS_MILITARY` ×count milit
 operating-buildings ripple where relevant. Registered in `cascadeRegisterConsumers()`. This REPLACES the hand-wired
 choke-point calls and both blankets.
 
-**STATUS (built, STAGED — `CvSpineInvalidationConsumer` in `CvEventSpine.cpp`).** The consumer is built + registered,
+**STATUS (built, STAGED — `CvCacheInvalidationConsumer` in `CvCascadeInvalidation.cpp`).** The consumer is built + registered,
 routing every play-time DOMAIN event to the per-source mask (masks lifted VERBATIM from the `CvCity.cpp` mutation
 sites, so it is mask-equivalent to the hand-wiring; R2's derived masks are the follow-up). It is **load-inert**
 (`spineGameLoadInProgress()` → return): mid-reseed the targeted ripples are invalid because the frontier/operating-
@@ -197,17 +197,26 @@ proven-complete invalidation surface + a live playtest for value-correctness —
 the pieces can be VERIFIED, not assumed.**
 
 **CRUTCH-REMOVAL RECIPE (do with the owner playtesting, once each piece is verified):**
-1. **Completeness audit — DONE (see the R4 completeness map above).** Every source-kind's emit is wired; the audit's
-   adversarial second pass reduced the open work to the R4 gap table (G1 heritage, G2 specialist→WB, G3 bonus operate
-   ripple, G4 building perSpecialist, G5 changeLeader, G6 commerce-slider→WB [owner call]) + the L1 culture-level
-   latent. Confirmed NOT gaps: the **timer/counter mutations** the self-heal was thought to cover (war-weariness,
-   anger/espionage timers, culture, inflation) are RAW-STATE **live-at-read** wellbeing inputs (modifier §2b), folded
-   at the combine and never stored — they stale NO package and need NO emit. The `[CASCADE] invalidate` stream stays
-   the live instrument to confirm the fixes as they land.
-2. **Remove the hand-wired play-time marks** now duplicated by R3 (`CvCity.cpp:4636/7042/10317/14286/15438/15651`,
-   `CvPlayer.cpp:9468/14391`, `CvTeam.cpp:4951`) — R3 owns them.
-3. **Delete the per-turn self-heal** — `CvPlayer::doTurn:3700` `playerSliceRebuild` + the per-turn `worldRebuild`
-   (`CvGame.cpp:5878`). KEEP the LOAD warm-up (`CvGame.cpp:663/665`, the eager build) + `cityCreated`.
+1. **The per-turn self-heal blankets are ALREADY DELETED** — `playerSliceRebuild` (`CvPlayer::doTurn`) and the
+   per-turn `worldRebuild` (`CvGame::doTurn`) are gone (tombstone comments at `CvPlayer.cpp:3710` / `CvGame.cpp:6167`
+   name the removal); the LOAD warm-up (`CvGame::onFinalInitialized`) + `cityCreated` are KEPT. So the standing crutch
+   is now ONLY the hand-wired play-time marks (step 3) running alongside R3 (harmless double-mark).
+2. **Completeness audit — DONE (see the R4 completeness map above).** Every source-kind's emit is wired. The gap table
+   status: **G1/G2/G3/G4/G5 WIRED**, **G6 resolved** (slider = live calc, no emit), the **connection:vicinity leg WIRED**
+   (`SEVT_VICINITY_BONUS_CHANGED` routes the building-active mask + the bonus operate ripple; the network half rides
+   the provides→plot-group fan-out). The **era/nukes/holy-city consumer routes are WIRED** (see the Tier-1 sweep).
+   **REMAINING: the L1 culture-level latent** + the noted bare-`IS_HOLY_CITY` `requires.build` frontier gate (a
+   predicate with no FK bucket — surfaced, not skipped). Confirmed NOT gaps: the
+   **timer/counter mutations** the self-heal was thought to cover (war-weariness, anger/espionage timers, culture,
+   inflation) are RAW-STATE **live-at-read** wellbeing inputs (modifier §2b), folded at the combine and never stored —
+   they stale NO package and need NO emit. The `[CASCADE] invalidate` stream stays the live instrument to confirm the
+   fixes as they land.
+3. **Remove the hand-wired play-time marks** now duplicated by R3 — the `CascadeAccumulator::` mark calls still at the
+   `CvCity`/`CvPlayer`/`CvTeam` mutation sites (line numbers drift; grep `CascadeAccumulator::(dirtyCity|buildingProcessed|
+   markPlayerScopeAndCities|cityHaveChanged)` in `Sources/Engine`). ⚠ Per-site check required: a mark whose choke does
+   NOT emit must STAY — e.g. `CvPlayer::changeLeader`'s `markPlayerScopeAndCities` (G5) is the ONLY invalidation on that
+   path (it bypasses `setHasTrait`'s emit), and the `CPK_YRATE` worked-plot/citizen-churn marks (`CvCity`/`CvPlot`) are
+   NOT R3-duplicated (no event carries them) — both KEEP until they get their own events or a KEEP ruling.
 4. **Verify LIVE + PLAYTEST** — `/computed` oracle values stay correct across many turns; **the owner plays** to
    confirm no drift the oracle can't see.
 
@@ -241,11 +250,16 @@ is any package-feeding fact emitted NOWHERE. The audited gap list (adversarial s
 package; the boundary ensure rolls it to cities next slice, matching the plain empire-commerce-flat case); G2 =
 `CPK_WB` added to the specialist route; G4 = `buildingProcessed` adds sibling `CPK_YSPEC|CSPEC` on a
 `<ch>.empire.specialist` (`perSpecialist`) deposit — the empire-wide `getBuildingCount` fold reaches every city;
-G5 = `markPlayerScopeAndCities` in `changeLeader` (the runtime path that bypassed `setHasTrait`). **G3 is
-RECLASSIFIED — NOT an emit gap** (the `emitBonusChanged` choke is complete): it is an ENABLER build — a
-`CASC_HAVE_BONUS` targeted operate/build re-check (patterned on religion/corp `cityHaveChanged`), because bonus is
-one of the enabler's self-heal-backstopped "unhooked classes" (`CvEnablerKernel.cpp`). Sequence it with
-the enabler reverse-index work, not the emit surface.
+G5 = `markPlayerScopeAndCities` in `changeLeader` (the runtime path that bypassed `setHasTrait`). **G3 is WIRED** —
+the bonus operate-dormancy ripple: `EnablerKernel::onBonusAccessChangedActive(city, bonus)` re-checks ONLY that
+bonus's operate consumers via the existing `s_opBonusConsumers` reverse-FK index (`CvEnablerKernel.cpp`); the
+whole-set variant `CASC_HAVE_BONUS` (`s_opAnyBonus`) fires on a plot-group MEMBERSHIP shift. Routed from the three
+forward bonus events (`SEVT_VICINITY_BONUS_CHANGED` + `SEVT_PLOTGROUP_BONUS_CHANGED` per member city →
+`cityBonusAccessChanged`; `SEVT_CITY_NETWORK_CHANGED` → `cityHaveChanged(CASC_HAVE_BONUS)`), and their masks broadened
+from the bonus-conditioned subset to the **building-active footprint** (`CPK_ALL & ~(YSPEC|CSPEC|SCSPEC)`, matching
+`buildingProcessed`) so a flipped operate-gated building's YEXTRA/SCFLAT/BR deposits re-sum against the ripple-updated
+active set. The legacy per-turn dynamic poll (bonuses set `d.dynamic`) stays as the backstop until the
+crutch-removal playtest verifies the discrete path.
 
 **BONUS-ACCESS EMIT MODEL (owner-ruled — supersedes the single narrow bonus route).** A bonus condition reads TWO
 independent sources (`CvCascadeConditionEval.cpp`): `CASC_CONN_TRADE → hasBonus` (the **network**/connected count,
@@ -256,7 +270,7 @@ it's connectivity, not area):
 
 | Trigger | Hook | Fans out to | Invalidates |
 |---|---|---|---|
-| **Vicinity** — a resource appears/leaves a workable tile | `SEVT_PLOT_BONUS_CHANGED` (exists; route it) | the plot's `radiusCities` | vicinity packages |
+| **Vicinity** — a resource appears/leaves a city's workable radius (an improved tile, or an active provider) | `SEVT_VICINITY_BONUS_CHANGED` (a per-CITY event — emitted at `doVicinityBonus` for tile flips + `processBuilding` for provider flips) | the emitting city only (vicinity is a CITY-LOCAL fact) | vicinity packages (`YPCT\|CBASE\|CPCT\|WB\|SCPCT`) |
 | **Network resource** — a plot-group gains/loses a resource (trade import lands at the CAPITAL's group `CvPlayer:13425-13433`; route connect; deplete) | new `emitPlotGroupBonusChanged` at `CvPlotGroup::changeNumBonuses:505` (on the group presence transition) | the group's member cities (`plotGroup(owner)==id`, the filter the engine already uses at `:509`) | network packages + operate ripple (G3) |
 | **Network membership** — a city becomes part of a group (merge/split reassigns its plot; a new city joins) | the city→group association change (`CvPlot::setPlotGroup` on a city plot; founding covered by `cityCreated`) | that one city | network packages + operate ripple |
 
@@ -276,12 +290,18 @@ Both mark the bonus-conditioned mask `YPCT|CBASE|CPCT|WB|SCPCT` and run ALONGSID
 pair is complete by construction: on a merge, the ABSORBED-group city gets the membership event (its center moved),
 the SURVIVING-group city gets the resource event (its group gained resources).
 
-The **connection:vicinity (RADIUS)** axis is NOT the fat-cross recompute (removed — that was the cascade concerning
-itself with member-plot state). It reshapes onto a **CITY plot-gain/loss hook** (the engine's
-`changePlayerCityRadiusCount`-class choke — a city's workable set is its own STATE): a city gaining/losing a radius
-plot, and a resource changing on a plot routed via the plot's existing city membership. That hook is the pending
-piece; until it lands, vicinity stays self-heal-backstopped (as it was pre-session). STAGED for crutch removal: the
-vicinity city-hook, the **operate-dormancy ripple** (`CASC_HAVE_BONUS` → `YEXTRA/BR` + frontier), and retiring the
+The **connection:vicinity (RADIUS)** axis is WIRED (owner model — supersedes both the fat-cross recompute AND the
+pending "city plot-gain/loss hook" / plot→cities ring-walk). Vicinity is a **CITY-LOCAL presence fact** (enabler.md
+§8 — "VICINITY belongs to the CITY"), so it is announced by the per-CITY `SEVT_VICINITY_BONUS_CHANGED` (emitted at
+`CvCity::doVicinityBonus` for tile flips and `processBuilding` for provider flips) and its R3 route marks **only the
+emitting city's** bonus-conditioned packages (`YPCT|CBASE|CPCT|WB|SCPCT`, same mask as `SEVT_BONUS_CHANGED`). There is
+**no plot→cities structure** — the network half is a SEPARATE fact carried by the group: a provider that makes a bonus
+tradeable injects it into the city's plot group (`processBuilding` → `CvPlotGroup::changeNumBonuses`), which fires
+`SEVT_PLOTGROUP_BONUS_CHANGED` on the presence transition (`CvPlotGroup.cpp:525`) → the member-city fan-out. The city
+already carries its plot-group id and the group its member cities — the plot group **is** the reverse-mapped
+membership, so no ring walk and no per-plot city list is ever built. STILL STAGED for crutch removal: the
+**operate-dormancy ripple** (G3 — the `CASC_HAVE_BONUS` enabler follow-on: `YEXTRA/BR` + frontier re-check when a
+`requires.operate` vicinity/network bonus flips; `CASC_HAVE_BONUS` is not yet a `CascadeHaveKind`), and retiring the
 per-city `SEVT_BONUS_CHANGED` cache role (`CvCity::processBonus` keeps only its legacy accumulators).
 
 **Areas** are the orthogonal geography axis (`recalculateAreas`, plot-type land↔water only, NOT ownership) — the
@@ -301,11 +321,19 @@ serialization + the cascade's own consumer surface). Beyond the package-audit ga
 changes, tiered:
 
 *Tier 1 — cascade-relevant (a live cascade consumer FOLDS the state; needs an emit for cached-package correctness):*
-- **era** — ✅ WIRED (`SEVT_ERA_CHANGED`, `emitEraChanged` at `setCurrentEra` + reseed, Assert-green). Broad
+- **era** — ✅ WIRED, emit + consumer route (`SEVT_ERA_CHANGED`, `emitEraChanged` at `setCurrentEra` + reseed). Broad
   player-scope input: `PSC_CFLAT` (heritage era-stacked commerce, applied IN the setter) + every `ERA`-counter-gated
-  deposit + `ERA` requires atoms (frontier). Its eventual consumer routes broad (`markPlayerScopeAndCities`-style).
-- **holy-city designation** — ✅ WIRED (`SEVT_HOLY_CITY_CHANGED`, per-affected-city at `CvGame::setHolyCity` — old
-  loses / new gains). Flips `IS_HOLY_CITY` / `IS_STATE_RELIGION_HOLY_CITY` on a holy-city relocation. **Reseed:
+  deposit + `ERA` requires atoms (frontier). The consumer route is `markPlayerScopeAndCities` (the era-threshold
+  deposits re-sum); the frontier `ERA` build atoms ride the `GATE_DYNAMIC` per-turn re-check (`ERA` is a count token,
+  not an FK), so no enabler route is added.
+- **holy-city designation** — ✅ WIRED, emit + consumer route (`SEVT_HOLY_CITY_CHANGED`, per-affected-city at
+  `CvGame::setHolyCity` — old loses / new gains). Flips `IS_HOLY_CITY` / `IS_STATE_RELIGION_HOLY_CITY` on a holy-city
+  relocation. Consumer route: mark the city's building-active footprint (holy-city-conditioned deposits) +
+  `cityHaveChanged(CASC_HAVE_RELIGION)` (IS_HOLY_CITY buckets under `religion` in the operate index, so its operate
+  buildings re-check). At religion FOUNDING the co-firing `SEVT_RELIGION_CHANGED` already covers the city; the
+  standalone route matters for a relocation without a religion-presence change. ⚠ The bare-`IS_HOLY_CITY`
+  `requires.build` frontier gate (a predicate, not FK-bucketed) is the one KNOWN follow-on — surfaced for verification,
+  not silently skipped. **Reseed:
   `CvCity::read`** (the players-loaded window, where the event's owner field can render) via the read-safe accessor
   `CvGame::isHolyCityByOwnerId(religion, owner, id)` — compares the loaded `m_paHolyCity` `IDInfo` DIRECTLY (no
   `getCity`). Two earlier live-caught misses: `CvCity::read` + `getHolyCity()==this` (a city isn't resolvable via
@@ -316,7 +344,10 @@ changes, tiered:
   Assert-green): availability (`m_bNukesValid`, per-player) emits at `CvPlayer::makeNukesValid`; the world ban
   (`isNoNukes`) fans out per-player at `CvGame::changeNoNukesCount`; + load reseed. `getNukeState()` = `isNoNukes ? 2
   : (isNukesValid ? 1 : 0)`. (Grounded correction: the cascade `NO_NUKES` predicate reads only the world BAN half —
-  Manhattan/`isNukesValid` is the separate per-player availability axis, NOT the `NO_NUKES` gate.)
+  Manhattan/`isNukesValid` is the separate per-player availability axis, NOT the `NO_NUKES` gate.) Consumer route
+  WIRED: `NO_NUKES` is an unrecognized predicate → the `GATE_DYNAMIC` frontier bucket, so the route is
+  `onPlayerGateClass(GATE_DYNAMIC)` for buildings + units (a Manhattan-type `requires.build.disabled: NO_NUKES` flips);
+  no modifier mark (no `NO_NUKES`-conditioned deposits).
 - **culture level + vicinity membership** — ✅ WIRED (`SEVT_CITY_CULTURE_LEVEL_CHANGED`, `emitCultureLevelChanged` at
   `CvCity::setCultureLevel` + reseed, Assert-green). ONE hook: culture level is the cascade input (wonder caps,
   defense, frontier) AND the city's workable RADIUS grows with it, so this single fact IS the vicinity-membership
@@ -325,9 +356,18 @@ changes, tiered:
 - **area split/merge** — `CvMap::recalculateAreas` (via `CvPlot::setPlotType`) → area-scoped deposits
   (`maintAreaPct`/`wbAreaByFam`); ALSO needs an `area` scope added to the invalidation surface (only `0=city/1=empire/2=world` today).
 
+- **⛔ FEATURE change → cached CPK_WB (adversarial-audit GAP, was MISSED entirely).** `CvPlot::setFeatureType`
+  (`emitFeatureChanged`) routes to `default:` in BOTH switches, yet feature presence in a city's workable radius feeds
+  the **cached** wellbeing term (`CvCascadeWellbeing.cpp` builds `featureCounts` over the radius plots and folds each
+  feature's `health.plot.percent` — e.g. `FEATURE_SWAMP` health −50 — into the CPK_WB-cached verdict). A routine
+  worker-clear / feature spread / `popDestroys` removal stales the radius cities' cached health/happiness with nothing
+  to invalidate it. This is a PLOT event needing a plot→radius-cities fan-out for CPK_WB (the same shape as vicinity,
+  but features have NO city-local event analog — DESIGN CALL, not yet wired; see the note below).
+
 *Tier 2 — literal-bar-only (yield CAUSES feeding the PULL-computed plot-yield cache — `updateYield` self-dirties, city
 reads live; so gaps only against the OOS/observability bar, NOT cache correctness):* `setPlotType`, river
-(`setNOfRiver`/`setWOfRiver`/`changeRiverCrossingCount`), `setIrrigated`.
+(`setNOfRiver`/`setWOfRiver`/`changeRiverCrossingCount`), `setIrrigated`. *(Feature is NOT here — it feeds the cached
+WB term, above, not just the pull-computed yield.)*
 
 *N/A — live-folded inputs (no emit needed, correctly):* commerce sliders (`setCommercePercent`), trade-yield (the
 §-input), culture-anger + occupation/anarchy/war-weariness/espionage timers (§2b raw-state / `isDisorder()` gates).
@@ -345,9 +385,40 @@ hole of madness." The cascade cares only about the resulting yield in the bucket
   wonder-cap deposits on culturelevels are currently **unconsumed**; the moment either is wired into a fold it becomes
   a live gap because the emit is absent — wire the emit in the SAME change.
 
-**Cleared (checked, NOT gaps):** power (all 16 `HAS_POWER` deposits are yield-`percent` → `CPK_YPCT`, in-mask);
-vassal/relations (not folded into any maintenance/wellbeing term); commerce-RATE slider (live-read at the combine,
-not folded); `doVicinityBonus` (yield-only, not an access mutator — access is fully choked through `processBonus`).
+**⛔ THE OPERATE-FLIP FOOTPRINT MASK CLASS (adversarial mask-audit — a documented "NOT a gap" was FALSE).** Every
+event that fires the operate-dormancy ripple (`cityHaveChanged` → `ek_recheckActiveSet`) flips buildings
+active↔dormant, so a flipped building's FULL active footprint (`YEXTRA/SCFLAT/BR` + the source-conditioned packages)
+must re-mark — not just the source-conditioned subset. This was fixed for **bonus** (G3) but the SAME gap was live
+for **population** (465 pop-operate buildings — the worst by frequency, every growth/starve), **power** (934 buildings
+— the doc previously, WRONGLY, "Cleared" it as in-mask), **religion** (235), **corporation** (22). All four masks are
+now broadened to the building-active footprint `CPK_ALL & ~(YSPEC|CSPEC|SCSPEC)` (matching `buildingProcessed`/G3).
+RESIDUAL (surfaced, not hidden — G4-class): a flipped building with a `perSpecialist` deposit also stales
+`YSPEC/CSPEC`, which these masks exclude; that needs the enabler ripple to mark the flipped building's specialist bits
+(the derive-from-deposits refinement), shared across ALL operate-flip events. Small (the ~7 `perSpecialist` wonders,
+only when operate-gated), and a co-firing `SEVT_SPECIALIST_CHANGED` covers the pop case in practice.
+
+**⛔ CONFIRMED GAP — city PROPERTY changes never invalidate property-`operate` dormancy (`s_opDynamic` is WRITE-ONLY).**
+A building's `requires.operate` may be a `PROPERTY_*` band (`{PROPERTY_CRIME, min:450, …}` — crime/disease/education/
+pollution tiers; `operate`+`PROPERTY_` co-occur in **1735** building files, e.g. `building_crime_bank_robbery.json`
+deposits happiness/health/maintenance flats gated on the crime band). The property solver mutates
+`CvCity::m_Properties` every turn **emit-free** — no `SEVT_PROPERTY*` exists — and a property operate-atom falls to
+`d.dynamic` in `scanCondDeps`, landing in `EnablerKernel::s_opDynamic`. **`s_opDynamic` is never read** (grep: the decl
+`CvEnablerKernel.cpp:378` + the push `:529`, zero consumers) — the operate-side twin of the frontier's
+`s_gateClass[GATE_DYNAMIC]` (which `onCityTurn` DOES read) was never wired. So a band crossing stales both the
+operating-building set AND the flipped building's CPK_WB/SCPCT/SCFLAT/YEXTRA/BR packages until an unrelated event
+re-touches the city. **Deliberately NOT wired in this F0 increment: it is the PROPERTY subsystem** — F5 (the property
+feed is *mangled*, [property-audit.md](property-audit.md)) + [roadmap](roadmap.md) #12 (bands pending #430 wiring);
+invalidating a known-broken feed is backwards. Fix shape when F5 lands: the G3 pattern — a per-city `SEVT_PROPERTY_CHANGED`
+on the operate-threshold crossings → `cityHaveChanged(CASC_HAVE_PROPERTY)` → an `onHaveChangedActive` case that FINALLY
+reads `s_opDynamic` (the bounded operate re-check enabler.md §7.1 sanctions for live non-HAVE clauses) + the
+building-active footprint mask. Same dead-`s_opDynamic` root: an **IS_CAPITAL-`operate`** building would keep a stale
+active flag through a capital relocation (concrete only if such a building exists — the property case is the certain one).
+
+**Cleared (checked, NOT gaps):** vassal/relations (not folded into any maintenance/wellbeing term); commerce-RATE
+slider (live-read at the combine, not folded); `doVicinityBonus` (yield-only, not an access mutator — access is fully
+choked through `processBonus`); freshwater / government-center (single caller is `processBuilding` → shadowed by
+`SEVT_BUILDING_CHANGED`, same-city packages covered by its CPK_ALL mask). *(Power was REMOVED from this list — it was
+the false-confirmation above. existedFor is IGNORED by the evaluator today — an accuracy issue, not an emit gap.)*
 
 The BROAD-mask events (tech/civic/GA/trait/state-religion/project → `markPlayerScopeAndCities` + `PSC_ALL`) are
 correct-but-over-broad (a perf-narrowing follow-on via the R2 derived masks, not a correctness gap).
@@ -418,9 +489,13 @@ new `/computed/perf` route (add a `ROUTES[]` row `CvHttpServer.cpp:4194` + a `st
 histogram names the culprit scope/channel on a breach.
 
 ## Delete-list (verifiable — grep must show zero residual after F0)
-- The `markAllDirty` BLANKETS: `playerSliceRebuild` (`CvCascadeAccumulator.cpp:965-985`) and
-  `markPlayerScopeAndCities` (`:918-932`) — DELETED. Replaced by R3's derived per-source marks; there is no
-  per-turn / per-slice blanket ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)).
+- The per-turn / per-slice `markAllDirty` BLANKET (`playerSliceRebuild` — mark ALL + eager ensure of every package,
+  each turn) and its world twin `worldRebuild` — DELETED (tombstone comments at `CvPlayer.cpp:3710` / `CvGame.cpp:6167`).
+  There is no per-turn / per-slice blanket ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)).
+  **NB `CascadeAccumulator::markPlayerScopeAndCities` is NOT deleted** — it is the per-PLAYER broad **conditioner** mark
+  (one player + his cities), which R3 routes the broad-fan-out sources through (tech/civic/GA/trait/SR/project — the
+  deliberate over-broad correctness floor; narrowing to the condition-reverse-index is the R2b follow-on, not a
+  delete-list item).
 - The recompute-on-load CASCADE recalc — `worldRebuild` + `playerSliceRebuild` (the cascade half of the
   `CvGame::onFinalInitialized` warm-up block) + the `recalculateModifiers` content — DELETED. The **reseed** (R6) is
   the cascade's load build. (The plot-yield cache's own dirty-on-load recompute is a game-object cache and stays.)
