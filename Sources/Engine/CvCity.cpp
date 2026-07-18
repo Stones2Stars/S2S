@@ -64,7 +64,6 @@ CvCity::CvCity()
 	m_plotYieldSum.bind(this, &CvCity::recomputePlotYieldSumInto);           // the worked-plot Σ (dirty from birth)
 	m_aiNetworkBonusTotal = NULL;    // allocated in reset() (the per-info array pattern; uninit() frees)
 	m_aiEffectiveBonusCount = NULL;
-	m_aiRiverPlotYield = new int[NUM_YIELD_TYPES];
 	m_aiBuildingBonusVicinityYield100 = new int[NUM_YIELD_TYPES];
 	m_aiBuildingExtraYield100Cache = new int[NUM_YIELD_TYPES];
 	m_abBuildingExtraYield100Dirty = new bool[NUM_YIELD_TYPES];
@@ -187,7 +186,6 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_aiCommerceRank);
 	SAFE_DELETE_ARRAY(m_abCommerceRankValid);
 
-	SAFE_DELETE_ARRAY(m_aiRiverPlotYield);
 	SAFE_DELETE_ARRAY(m_aiBuildingBonusVicinityYield100);
 	SAFE_DELETE_ARRAY(m_aiBuildingExtraYield100Cache);
 	SAFE_DELETE_ARRAY(m_abBuildingExtraYield100Dirty);
@@ -632,7 +630,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
-		m_aiRiverPlotYield[iI] = 0;
 		m_aiBuildingBonusVicinityYield100[iI] = 0;
 		m_aiBuildingExtraYield100Cache[iI] = 0;
 		m_abBuildingExtraYield100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
@@ -4722,7 +4719,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		PROFILE("CvCity::processBuilding.Yields");
 		const YieldTypes eYieldX = static_cast<YieldTypes>(iI);
 		changeBuildingExtraYield100(eYieldX, 100 * iChange * (kBuilding.getYieldChange(iI) + getBuildingYieldChange(eBuilding, eYieldX)));
-		changeRiverPlotYield(eYieldX, kBuilding.getRiverPlotYieldChange(iI) * iChange);
 		changeBaseYieldPerPopRate(eYieldX, kBuilding.getYieldPerPopChange(iI) * iChange);
 
 		changeBuildingYieldModifier(eYieldX, iChange * kBuilding.getYieldModifier(iI));
@@ -10187,23 +10183,8 @@ void CvCity::updateCultureLevel(bool bUpdatePlotGroups)
 }
 
 
-int CvCity::getRiverPlotYield(YieldTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	return m_aiRiverPlotYield[eIndex];
-}
-
-void CvCity::changeRiverPlotYield(YieldTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiRiverPlotYield[eIndex] += iChange;
-
-		updateYield();
-	}
-}
+// #430 cut: m_aiRiverPlotYield removed. The building HAS_RIVER-gated river-plot yield is a cascade `plots` deposit
+// (CvBuildingInfo river-plot-yield -> <yield>.city.plots flat gated HAS_RIVER), computed by the cascade itself.
 
 
 void CvCity::changeTerrainYieldChanges(const TerrainTypes eTerrain, const YieldArray& yields)
@@ -10397,10 +10378,7 @@ int CvCity::getYieldChangeAt(const CvPlot* pPlot, const YieldTypes eYield) const
 		+
 		getTerrainYieldChange(pPlot->getTerrainType(), eYield)
 	);
-	if (pPlot->isRiver())
-	{
-		iYield += getRiverPlotYield(eYield);
-	}
+	// #430 cut: the city river-plot yield accumulator is gone (the building HAS_RIVER plots deposit is cascade-computed).
 	const ImprovementTypes eImprovement = pPlot->getImprovementType();
 	if (eImprovement != NO_IMPROVEMENT)
 	{
@@ -17036,7 +17014,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iRevolutionCounter);
 	WRAPPER_READ(wrapper, "CvCity", &m_iReinforcementCounter);
 
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiRiverPlotYield);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiYieldRateModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiPowerYieldRateModifier);
 	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_aiBonusYieldRateModifier, SAVE_VALUE_TYPE_INT_ARRAY);   // rebuilt by the load fold
@@ -17748,7 +17725,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iRevolutionCounter);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iReinforcementCounter);
 
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiRiverPlotYield);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiYieldRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiPowerYieldRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiBonusYieldRateModifier);
@@ -21924,7 +21900,6 @@ void CvCity::clearModifierTotals()
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
-		m_aiRiverPlotYield[iI] = 0;
 		m_aiBaseYieldPerPopRate[iI] = 0;
 		m_aiYieldRateModifier[iI] = 0;
 		m_aiPowerYieldRateModifier[iI] = 0;

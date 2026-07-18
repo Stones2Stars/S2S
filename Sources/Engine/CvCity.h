@@ -808,8 +808,6 @@ public:
 	void setCultureLevel(CultureLevelTypes eNewValue, bool bUpdatePlotGroups);
 	void updateCultureLevel(bool bUpdatePlotGroups);
 
-	int getRiverPlotYield(YieldTypes eIndex) const;
-	void changeRiverPlotYield(YieldTypes eIndex, int iChange);
 
 	int getTerrainYieldChange(const TerrainTypes eTerrain, const YieldTypes eYield) const;
 	void changeTerrainYieldChanges(const TerrainTypes eTerrain, const YieldArray& yields);
@@ -1755,7 +1753,6 @@ protected:
 	int m_iExtraInsidiousness;
 	int m_iExtraInvestigation;
 
-	int* m_aiRiverPlotYield;
 	// The worked-plot Σ per yield (recompute-only, never serialized; bound in the ctor) -- getPlotYield's O(1) source.
 	CvDerivedCache<CvCity, int, NUM_YIELD_TYPES> m_plotYieldSum;
 	int* m_aiBuildingBonusVicinityYield100; // squirrelBanana: PURE-FUNCTION bonus/vicinity building yield (recomputed every read, NOT serialized) -- #vicinity-build-order fix

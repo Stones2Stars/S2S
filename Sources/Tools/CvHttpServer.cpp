@@ -1249,7 +1249,7 @@ namespace
 				{
 					plotTypeChange    += pWorkingCity->getPlotYieldChange(pPlot->getPlotType(), eYield);
 					cityTerrainChange += pWorkingCity->getTerrainYieldChange(pPlot->getTerrainType(), eYield);
-					if (pPlot->isRiver()) riverPlotChange += pWorkingCity->getRiverPlotYield(eYield);
+					// #430 cut: city river-plot yield accumulator removed (cascade-computed via the building HAS_RIVER plots deposit)
 					const ImprovementTypes eImp = pPlot->getImprovementType();
 					if (eImp != NO_IMPROVEMENT) cityImprovementChange += freshCityImprovement(pPlot, eYield);   // fresh active-buildings sum (what getYield uses), not the stale cache
 				}
@@ -1356,7 +1356,7 @@ namespace
 					{
 						pp["cityPlotType"] = picojson::value((double)pWC->getPlotYieldChange(pPlot->getPlotType(), eYield));
 						pp["cityTerrain"]  = picojson::value((double)pWC->getTerrainYieldChange(pPlot->getTerrainType(), eYield));
-						if (pPlot->isRiver()) pp["cityRiver"] = picojson::value((double)pWC->getRiverPlotYield(eYield));
+						// #430 cut: cityRiver decomposition removed (city river-plot yield accumulator gone)
 						if (eImpP != NO_IMPROVEMENT) pp["cityImprovement"] = picojson::value((double)freshCityImprovement(pPlot, eYield));   // fresh active-buildings sum (what getYield uses)
 					}
 				}
