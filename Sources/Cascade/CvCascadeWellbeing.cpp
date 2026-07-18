@@ -547,6 +547,24 @@ int CascadeWellbeing::playerNonStateReligionHappiness(const CvPlayer& player)
 	int s, n; wb_playerReligionAcc(player, s, n); return n / 100;   // ÷100 human
 }
 
+// wb_fillCityCtx is defined below with the other decomposition accessors -- forward-declare it for techGatedWellbeing.
+static void wb_fillCityCtx(const CvCity* pCity, CvCascadeEvalCtx& ec);
+
+// The BUILDING tech-gated wellbeing net (iTechGatedNet, signed) for the retired m_iExtraBuilding{Happiness,Health}
+// FromTech accumulators. Active buildings' TECH-gated happiness/health deposits (wb_foldBuildingDeposits ->
+// WB_TECH_GATED). Human (÷100). Specialist tech-happiness is NOT counted here -- it is in the specialist bucket
+// (hap.spec/hea.spec), per the owner "specialist is its own bucket regardless of source" ruling.
+void CascadeWellbeing::techGatedWellbeing(const CvCity* pCity, int& iHapNet, int& iHeaNet)
+{
+	CvCascadeEvalCtx ec;
+	wb_fillCityCtx(pCity, ec);
+	CascadeWbTerms hap, hea;
+	int aiPer[NUM_COMMERCE_TYPES];
+	gatherCityTerms(pCity, ec, hap, hea, aiPer);
+	iHapNet = hap.iTechGatedNet / 100;   // ÷100 human (signed net)
+	iHeaNet = hea.iTechGatedNet / 100;
+}
+
 // ===================== the verdict assembly (the four engine bodies, term-substituted) =====================
 // PURE over its inputs + the live raw-state reads -- ONE implementation (patterns.md): the package combine
 // feeds standing terms, compute() feeds fresh ones.

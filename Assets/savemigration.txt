@@ -181,6 +181,28 @@ CvPlayer::m_iNonStateReligionHappiness   (int)
 ========================
 
 ========================
+2026-07-18 — #430 delete-driven legacy cut (FromTech wellbeing accumulators): the city tech-gated
+building/specialist happiness/health accumulators + the per-tech building maps fully removed. Both tech-gated
+sources ride the cascade already: BUILDING tech-happiness/health -> the iTechGatedNet term (TECH-gated building
+deposits, CascadeWellbeing.techGatedWellbeing); SPECIALIST tech-happiness/health -> the specialist bucket
+hap.spec/hea.spec (the tech entries are conditioned deposits summed by sumUnit100), per the owner "specialist is
+its own bucket regardless of source" ruling. getExtraTechHappinessTotal/HealthTotal now read the cascade
+(building-tech only -- no double-count with the specialist line). The per-tech maps used a decorated
+variable-length format (Size + N x Type/Value); those decorated tags drain by name below.
+
+CvCity::m_iExtraTechSpecialistHappiness   (int)
+CvCity::m_iExtraTechSpecialistHealth      (int)
+CvCity::m_iExtraBuildingHappinessFromTech (int)
+CvCity::m_iExtraBuildingHealthFromTech    (int)
+CvCity::BuildingHappinessFromTechSize     (decorated short)
+CvCity::BuildingHappinessFromTechType     (decorated short, per entry)
+CvCity::BuildingHappinessFromTechValue    (decorated int, per entry)
+CvCity::BuildingHealthFromTechSize        (decorated short)
+CvCity::BuildingHealthFromTechType        (decorated short, per entry)
+CvCity::BuildingHealthFromTechValue       (decorated int, per entry)
+========================
+
+========================
 2026-07-02 — #430 capability cut (CvTeam): the empire-capability counters retired;
 the getters derive from CascadeCapabilities (the cascade union). Skips live in CvTeam::read.
 

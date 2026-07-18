@@ -1749,10 +1749,6 @@ protected:
 	int m_iModifiedBuildingDefenseRecoverySpeedCap;
 	int m_iExtraCityDefenseRecoverySpeedModifier;
 
-	int m_iExtraTechSpecialistHappiness;
-	int m_iExtraBuildingHappinessFromTech;
-	int m_iExtraBuildingHealthFromTech;
-	int m_iExtraTechSpecialistHealth;
 	int** m_ppaaiLocalSpecialistExtraYield;
 	int** m_ppaaiLocalSpecialistExtraCommerce;
 	int m_iPrioritySpecialist;
@@ -1872,8 +1868,6 @@ protected:
 	OrderQueue m_orderQueue;
 
 	std::vector< std::pair<float, float> > m_kWallOverridePoints;
-	std::vector< std::pair<TechTypes, int> > m_buildingHappinessFromTech;
-	std::vector< std::pair<TechTypes, int> > m_buildingHealthFromTech;
 	std::vector< std::pair<BuildingTypes, int> > m_progressOnBuilding;
 	std::vector< std::pair<BuildingTypes, int> > m_delayOnBuilding;
 	std::vector< std::pair<UnitTypes, int> > m_progressOnUnit;
@@ -1951,18 +1945,8 @@ public:
 	int getLocalSpecialistExtraYield(SpecialistTypes eSpecialist, YieldTypes eYield) const;
 	int getLocalSpecialistExtraCommerce(SpecialistTypes eSpecialist, CommerceTypes eCommerce) const;
 
-private:
-	void updateExtraTechSpecialistHappiness();
+private:   // #430 cut: FromTech accumulator methods removed (cascade iTechGatedNet + specialist bucket)
 
-	int getBuildingHappinessFromTech(const TechTypes eTech) const;
-	void changeBuildingHappinessFromTech(const TechTypes eTech, const int iChange);
-	int getBuildingHealthFromTech(const TechTypes eTech) const;
-	void changeBuildingHealthFromTech(const TechTypes eTech, const int iChange);
-
-	void updateExtraTechHappiness();
-	void updateExtraTechSpecialistHealth();
-	int getExtraTechSpecialistHealth() const;
-	int getTechHealth(TechTypes eTech) const;
 	void changeLocalSpecialistExtraYield(SpecialistTypes eSpecialist, YieldTypes eYield, int iChange);
 	void changeLocalSpecialistExtraCommerce(SpecialistTypes eSpecialist, CommerceTypes eCommerce, int iChange);
 
@@ -1996,8 +1980,6 @@ public:
 public:
 	int getExtraLocalCaptureProbabilityModifier() const;
 	int getExtraLocalCaptureResistanceModifier() const;
-
-	void updateSpecialistHappinessHealthFromTech();
 
 	int getExtraLocalDynamicDefense() const;
 	void setExtraLocalDynamicDefense(int iValue);

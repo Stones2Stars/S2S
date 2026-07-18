@@ -622,10 +622,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iExtraBuildingDefenseRecoverySpeedModifier = 0;
 	m_iModifiedBuildingDefenseRecoverySpeedCap = 0;
 	m_iExtraCityDefenseRecoverySpeedModifier = 0;
-	m_iExtraTechSpecialistHappiness = 0;
-	m_iExtraBuildingHappinessFromTech = 0;
-	m_iExtraTechSpecialistHealth = 0;
-	m_iExtraBuildingHealthFromTech = 0;
 	m_iPrioritySpecialist = NO_SPECIALIST;
 	m_iExtraInsidiousness = 0;
 	m_iExtraInvestigation = 0;
@@ -715,8 +711,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_improvementYieldChanges.clear();
 	m_Properties.clear();
 	m_aPropertySpawns.clear();
-	m_buildingHappinessFromTech.clear();
-	m_buildingHealthFromTech.clear();
 	m_progressOnBuilding.clear();
 	m_delayOnBuilding.clear();
 	m_progressOnUnit.clear();
@@ -4848,15 +4842,8 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		changeExtraCityDefenseRecoverySpeedModifier(kBuilding.getCityDefenseRecoverySpeedModifier() * iChange);
 	}
 
-	foreach_(const TechModifier& modifier, kBuilding.getTechHappinessChanges())
-	{
-		changeBuildingHappinessFromTech(modifier.first, modifier.second * iChange);
-	}
-
-	foreach_(const TechModifier& modifier, kBuilding.getTechHealthChanges())
-	{
-		changeBuildingHealthFromTech(modifier.first, modifier.second * iChange);
-	}
+	// #430 accumulator cut: building tech-happiness/health ride the cascade iTechGatedNet (from the TECH-gated
+	// building deposits) -- no per-tech accumulation on processBuilding.
 
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
@@ -5199,12 +5186,11 @@ void CvCity::processSpecialist(SpecialistTypes eSpecialist, int iChange)
 	{
 		updateExtraSpecialistYield();
 		updateExtraSpecialistCommerce();   // ALSO recomputes the specialist-commerce cache (updateSpecialistCommerce, streamlined)
-		updateSpecialistHappinessHealthFromTech();
 	}
 
 	// #430 accumulator cut: the specialist happiness/health accumulators are gone -- the cascade computes
-	// hap.spec/hea.spec fresh from getSpecialistCount at read (CascadeWellbeing::specialistWellbeing), so no
-	// incremental accumulation here. (The FromTech specialist term still updates via updateSpecialistHappinessHealthFromTech above.)
+	// hap.spec/hea.spec fresh from getSpecialistCount at read (CascadeWellbeing::specialistWellbeing), incl. the
+	// tech-gated specialist deposits (sumUnit100 evaluates the TECH condition), so no incremental accumulation here.
 
 	changeSpecialistFreeExperience(GC.getSpecialistInfo(eSpecialist).getExperience() * iChange);
 
@@ -13172,7 +13158,6 @@ void CvCity::endCitizenJuggling()
 		// the three whole-set recomputes processSpecialist skipped per probe, run ONCE for the run
 		updateExtraSpecialistYield();
 		updateExtraSpecialistCommerce();
-		updateSpecialistHappinessHealthFromTech();
 		CascadeAccumulator::dirtyCity(this, CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC);
 		// the NET specialist deltas announce (converged probes cancel to nothing)
 		const int iNumSpec = std::min((int)m_juggleSpecStart.size(), GC.getNumSpecialistInfos());
@@ -17345,10 +17330,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	//TB Combat Mod (Buildings) begin
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiUnitCombatProductionModifier);
 
-	WRAPPER_READ(wrapper, "CvCity", &m_iExtraTechSpecialistHappiness);
-	WRAPPER_READ(wrapper, "CvCity", &m_iExtraBuildingHappinessFromTech);
-	WRAPPER_READ(wrapper, "CvCity", &m_iExtraTechSpecialistHealth);
-	WRAPPER_READ(wrapper, "CvCity", &m_iExtraBuildingHealthFromTech);
+	// #430 cut: m_iExtraTechSpecialist{Happiness,Health} + m_iExtraBuilding{Happiness,Health}FromTech removed (cascade); savemigration.txt
 	for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
 	{
 		int	iI = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_SPECIALISTS, i, true);
@@ -17482,34 +17464,9 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		}
 		short iSize;
 
-		// Techs
-		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "BuildingHappinessFromTechSize");
-		for (short i = 0; i < iSize; ++i)
-		{
-			int iValue = 0;
-			WRAPPER_READ_DECORATED(wrapper, "CvCity", &iType, "BuildingHappinessFromTechType");
-			WRAPPER_READ_DECORATED(wrapper, "CvCity", &iValue, "BuildingHappinessFromTechValue");
-			const TechTypes eTech = static_cast<TechTypes>(wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_TECHS, iType, true));
-
-			if (eTech != NO_TECH)
-			{
-				m_buildingHappinessFromTech.push_back(std::make_pair(eTech, iValue));
-			}
-		}
-
-		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "BuildingHealthFromTechSize");
-		for (short i = 0; i < iSize; ++i)
-		{
-			int iValue = 0;
-			WRAPPER_READ_DECORATED(wrapper, "CvCity", &iType, "BuildingHealthFromTechType");
-			WRAPPER_READ_DECORATED(wrapper, "CvCity", &iValue, "BuildingHealthFromTechValue");
-			const TechTypes eTech = static_cast<TechTypes>(wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_TECHS, iType, true));
-
-			if (eTech != NO_TECH)
-			{
-				m_buildingHealthFromTech.push_back(std::make_pair(eTech, iValue));
-			}
-		}
+		// #430 cut: m_buildingHappiness/HealthFromTech (per-tech maps) removed -- building tech-happiness/health ride
+		// the cascade iTechGatedNet. The decorated old-save tags (CvCity::BuildingHappiness/HealthFromTech{Size,Type,
+		// Value}) drain by name via savemigration.txt.
 
 		// Buildings
 		WRAPPER_READ_DECORATED(wrapper, "CvCity", &iSize, "FreeBuildingsSize");
@@ -17975,10 +17932,7 @@ void CvCity::write(FDataStreamBase* pStream)
 	//TB Combat Mod (Buildings) begin
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiUnitCombatProductionModifier);
 
-	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraTechSpecialistHappiness);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraBuildingHappinessFromTech);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraTechSpecialistHealth);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraBuildingHealthFromTech);
+	// #430 cut: m_iExtraTechSpecialist* + m_iExtraBuilding*FromTech writes removed (cascade-computed)
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
 		WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_ppaaiLocalSpecialistExtraYield[iI]);
@@ -18061,20 +18015,8 @@ void CvCity::write(FDataStreamBase* pStream)
 			}
 		}
 
-		// Techs
-		WRAPPER_WRITE_DECORATED(wrapper, "CvCity", (short)m_buildingHappinessFromTech.size(), "BuildingHappinessFromTechSize");
-		for (std::vector< std::pair<TechTypes, int> >::iterator it = m_buildingHappinessFromTech.begin(); it != m_buildingHappinessFromTech.end(); ++it)
-		{
-			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", static_cast<short>((*it).first), "BuildingHappinessFromTechType");
-			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", (*it).second, "BuildingHappinessFromTechValue");
-		}
-
-		WRAPPER_WRITE_DECORATED(wrapper, "CvCity", (short)m_buildingHealthFromTech.size(), "BuildingHealthFromTechSize");
-		for (std::vector< std::pair<TechTypes, int> >::iterator it = m_buildingHealthFromTech.begin(); it != m_buildingHealthFromTech.end(); ++it)
-		{
-			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", static_cast<short>((*it).first), "BuildingHealthFromTechType");
-			WRAPPER_WRITE_DECORATED(wrapper, "CvCity", (*it).second, "BuildingHealthFromTechValue");
-		}
+		// #430 cut: m_buildingHappiness/HealthFromTech removed (cascade iTechGatedNet) -- writes dropped; old-save
+		// decorated tags drain by name via savemigration.txt.
 
 		// Buildings
 		WRAPPER_WRITE_DECORATED(wrapper, "CvCity", (short)m_vFreeBuildings.size(), "FreeBuildingsSize");
@@ -22077,8 +22019,6 @@ void CvCity::clearModifierTotals()
 	m_buildingProductionMod.clear();
 	m_unitProductionMod.clear();
 	m_bonusDefenseChanges.clear();
-	m_buildingHappinessFromTech.clear();
-	m_buildingHealthFromTech.clear();
 	m_corpBonusProduction.clear();
 
 	m_terrainYieldChanges.clear();
@@ -22100,10 +22040,6 @@ void CvCity::clearModifierTotals()
 	m_iExtraBuildingDefenseRecoverySpeedModifier = 0;
 	m_iModifiedBuildingDefenseRecoverySpeedCap = 0;
 	m_iExtraCityDefenseRecoverySpeedModifier = 0;
-	m_iExtraTechSpecialistHappiness = 0;
-	m_iExtraBuildingHappinessFromTech = 0;
-	m_iExtraTechSpecialistHealth = 0;
-	m_iExtraBuildingHealthFromTech = 0;
 	m_iPrioritySpecialist = NO_SPECIALIST;
 	m_iExtraInsidiousness = 0;
 	m_iExtraInvestigation = 0;
@@ -22730,167 +22666,21 @@ void CvCity::changeDamageAttackingUnitCombatCount(UnitCombatTypes eUnitCombat, i
 }
 
 
-void CvCity::updateExtraTechSpecialistHappiness()
-{
-	PROFILE_EXTRA_FUNC();
-	int iRunningTotal = 0;
-
-	for (int iI = GC.getNumSpecialistInfos() - 1; iI > -1; iI--)
-	{
-		const SpecialistTypes eSpecialist = static_cast<SpecialistTypes>(iI);;
-		const int iSpecificSpecialistCount = specialistCount(eSpecialist);
-
-		for (int iJ = GC.getNumTechInfos() - 1; iJ > -1; iJ--)
-		{
-			if (GET_TEAM(getTeam()).isHasTech(static_cast<TechTypes>(iJ)))
-			{
-				iRunningTotal += iSpecificSpecialistCount * GC.getSpecialistInfo(eSpecialist).getTechHappiness(static_cast<TechTypes>(iJ));
-			}
-		}
-	}
-	m_iExtraTechSpecialistHappiness = iRunningTotal;
-}
-
-int CvCity::getBuildingHappinessFromTech(const TechTypes eTech) const
-{
-	PROFILE_EXTRA_FUNC();
-	for (std::vector< std::pair<TechTypes, int> >::const_iterator it = m_buildingHappinessFromTech.begin(); it != m_buildingHappinessFromTech.end(); ++it)
-	{
-		if ((*it).first == eTech)
-		{
-			return ((*it).second);
-		}
-	}
-	return 0;
-}
-
-void CvCity::changeBuildingHappinessFromTech(const TechTypes eTech, const int iChange)
-{
-	PROFILE_EXTRA_FUNC();
-	FASSERT_BOUNDS(0, GC.getNumTechInfos(), eTech);
-
-	if (iChange == 0)
-	{
-		return;
-	}
-	if (GET_TEAM(getTeam()).isHasTech(eTech))
-	{
-		m_iExtraBuildingHappinessFromTech += iChange;
-	}
-	bool bFirst = true;
-	for (std::vector< std::pair<TechTypes, int> >::iterator it = m_buildingHappinessFromTech.begin(); it != m_buildingHappinessFromTech.end(); ++it)
-	{
-		if ((*it).first == eTech)
-		{
-			if ((*it).second == -iChange)
-			{
-				m_buildingHappinessFromTech.erase(it);
-			}
-			else
-			{
-				(*it).second += iChange;
-			}
-			bFirst = false;
-			break;
-		}
-	}
-	if (bFirst) m_buildingHappinessFromTech.push_back(std::make_pair(eTech, iChange));
-}
-
+// #430 accumulator cut: the FromTech happiness accumulators (specialist tech-total + the per-tech building map)
+// are gone. Both tech-gated sources already ride the cascade: BUILDING tech-happiness -> iTechGatedNet
+// (techGatedWellbeing); SPECIALIST tech-happiness -> the specialist bucket hap.spec (getSpecialistHappiness), per
+// the owner "specialist is its own bucket regardless of source" ruling. This "tech" decomposition line is now
+// building-tech only (no double-count with the specialist line).
 int CvCity::getExtraTechHappinessTotal() const
 {
-	return m_iExtraBuildingHappinessFromTech + m_iExtraTechSpecialistHappiness;
+	int h, hh; CascadeWellbeing::techGatedWellbeing(this, h, hh); return h;
 }
 
-void CvCity::updateSpecialistHappinessHealthFromTech()
-{
-	updateExtraTechSpecialistHappiness();
-	updateExtraTechSpecialistHealth();
-
-	AI_setAssignWorkDirty(true);
-
-	if (getTeam() == GC.getGame().getActiveTeam())
-	{
-		setInfoDirty(true);
-	}
-}
-
-
-void CvCity::updateExtraTechSpecialistHealth()
-{
-	PROFILE_EXTRA_FUNC();
-	int iRunningTotal = 0;
-
-	for (int iI = GC.getNumSpecialistInfos() - 1; iI > -1; iI--)
-	{
-		const SpecialistTypes eSpecialist = static_cast<SpecialistTypes>(iI);
-		const int iSpecificSpecialistCount = specialistCount(eSpecialist);
-
-		for (int iJ = GC.getNumTechInfos() - 1; iJ > -1; iJ--)
-		{
-			if (GET_TEAM(getTeam()).isHasTech(static_cast<TechTypes>(iJ)))
-			{
-				iRunningTotal += iSpecificSpecialistCount * GC.getSpecialistInfo(eSpecialist).getTechHealth(static_cast<TechTypes>(iJ));
-			}
-		}
-	}
-	m_iExtraTechSpecialistHealth = iRunningTotal;
-}
-
-int CvCity::getExtraTechSpecialistHealth() const
-{
-	return m_iExtraTechSpecialistHealth;
-}
-
-int CvCity::getBuildingHealthFromTech(const TechTypes eTech) const
-{
-	PROFILE_EXTRA_FUNC();
-	for (std::vector< std::pair<TechTypes, int> >::const_iterator it = m_buildingHealthFromTech.begin(); it != m_buildingHealthFromTech.end(); ++it)
-	{
-		if ((*it).first == eTech)
-		{
-			return ((*it).second);
-		}
-	}
-	return 0;
-}
-
-void CvCity::changeBuildingHealthFromTech(const TechTypes eTech, const int iChange)
-{
-	PROFILE_EXTRA_FUNC();
-	FASSERT_BOUNDS(0, GC.getNumTechInfos(), eTech);
-
-	if (iChange == 0)
-	{
-		return;
-	}
-	if (GET_TEAM(getTeam()).isHasTech(eTech))
-	{
-		m_iExtraBuildingHealthFromTech += iChange;
-	}
-	bool bFirst = true;
-	for (std::vector< std::pair<TechTypes, int> >::iterator it = m_buildingHealthFromTech.begin(); it != m_buildingHealthFromTech.end(); ++it)
-	{
-		if ((*it).first == eTech)
-		{
-			if ((*it).second == -iChange)
-			{
-				m_buildingHealthFromTech.erase(it);
-			}
-			else
-			{
-				(*it).second += iChange;
-			}
-			bFirst = false;
-			break;
-		}
-	}
-	if (bFirst) m_buildingHealthFromTech.push_back(std::make_pair(eTech, iChange));
-}
-
+// #430 accumulator cut: FromTech health accumulators gone (see the happiness twin above). Building tech-health ->
+// cascade iTechGatedNet; specialist tech-health -> the specialist bucket hea.spec (getSpecialistGood/BadHealth).
 int CvCity::getExtraTechHealthTotal() const
 {
-	return m_iExtraBuildingHealthFromTech + m_iExtraTechSpecialistHealth;
+	int h, hh; CascadeWellbeing::techGatedWellbeing(this, h, hh); return hh;
 }
 
 int CvCity::getLocalSpecialistExtraYield(SpecialistTypes eSpecialist, YieldTypes eYield) const
@@ -23453,19 +23243,9 @@ void CvCity::setWorkerHave(const int iUnitID, const bool bNewValue)
 
 void CvCity::processTech(const TechTypes eTech, const int iChange)
 {
-	if (!GC.getGame().isRecalculatingModifiers())
-	{
-		updateSpecialistHappinessHealthFromTech();
-		{
-			const int iBuildingHappinessFromTech = getBuildingHappinessFromTech(eTech);
-
-			if (iBuildingHappinessFromTech != 0)
-			{
-				m_iExtraBuildingHappinessFromTech += iBuildingHappinessFromTech * iChange;
-			}
-		}
-		m_iExtraBuildingHealthFromTech += getBuildingHealthFromTech(eTech) * iChange;
-	}
+	// #430 accumulator cut: FromTech happiness/health ride the cascade (building tech -> iTechGatedNet, specialist
+	// tech -> the specialist bucket hap.spec/hea.spec) -- no per-tech accumulation. This was the only body.
+	(void)eTech; (void)iChange;
 }
 
 

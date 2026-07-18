@@ -70,6 +70,11 @@ public:
 	// m_i{State,NonState}ReligionHappiness): INITIAL + Σ adopted civics + Σ active traits (PURE-filtered). Human.
 	static int playerStateReligionHappiness(const CvPlayer& player);
 	static int playerNonStateReligionHappiness(const CvPlayer& player);
+	// The BUILDING tech-gated wellbeing net (for the retired m_iExtraBuilding{Happiness,Health}FromTech): the
+	// signed iTechGatedNet term (active buildings' TECH-gated happiness/health deposits). Human (÷100). Specialist
+	// tech-happiness is NOT here -- it rides the specialist bucket (hap.spec), per the owner "specialist is its own
+	// bucket regardless of source" ruling.
+	static void techGatedWellbeing(const CvCity* pCity, int& iHapNet, int& iHeaNet);
 	// The AREA/EMPIRE building-HEALTH rollups (the playerAreaEmpire fold, health family) for the retired
 	// CvArea/CvPlayer m_iBuildingGood/BadHealth accumulators. iBad is negative (WbSplit convention).
 	static void buildingHealthArea(const CvPlayer& player, int iAreaId, int& iGood, int& iBad);
