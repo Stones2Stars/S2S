@@ -8,6 +8,7 @@
 #include "CvArea.h"
 #include "CvBonusInfo.h"
 #include "CvCity.h"
+#include "Cascade/CvCascadeWellbeing.h"
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "CvMap.h"
@@ -27,8 +28,6 @@ CvArea::CvArea()
 	m_aiAnimalsPerPlayer = new int[MAX_PLAYERS];
 	m_aiCitiesPerPlayer = new int[MAX_PLAYERS];
 	m_aiPopulationPerPlayer = new int[MAX_PLAYERS];
-	m_aiBuildingGoodHealth = new int[MAX_PLAYERS];
-	m_aiBuildingBadHealth = new int[MAX_PLAYERS];
 	m_aiBuildingHappiness = new int[MAX_PLAYERS];
 	m_aiFreeSpecialist = new int[MAX_PLAYERS];
 	m_aiPower = new int[MAX_PLAYERS];
@@ -81,8 +80,6 @@ CvArea::~CvArea()
 	SAFE_DELETE_ARRAY(m_aiAnimalsPerPlayer);
 	SAFE_DELETE_ARRAY(m_aiCitiesPerPlayer);
 	SAFE_DELETE_ARRAY(m_aiPopulationPerPlayer);
-	SAFE_DELETE_ARRAY(m_aiBuildingGoodHealth);
-	SAFE_DELETE_ARRAY(m_aiBuildingBadHealth);
 	SAFE_DELETE_ARRAY(m_aiBuildingHappiness);
 	SAFE_DELETE_ARRAY(m_aiFreeSpecialist);
 	SAFE_DELETE_ARRAY(m_aiPower);
@@ -136,8 +133,6 @@ void CvArea::reset(int iID, bool bWater, bool bConstructorCall)
 		m_aiAnimalsPerPlayer[iI] = 0;
 		m_aiCitiesPerPlayer[iI] = 0;
 		m_aiPopulationPerPlayer[iI] = 0;
-		m_aiBuildingGoodHealth[iI] = 0;
-		m_aiBuildingBadHealth[iI] = 0;
 		m_aiBuildingHappiness[iI] = 0;
 		m_aiFreeSpecialist[iI] = 0;
 		m_aiPower[iI] = 0;
@@ -199,8 +194,6 @@ void CvArea::clearModifierTotals()
 	PROFILE_EXTRA_FUNC();
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
-		m_aiBuildingGoodHealth[iI] = 0;
-		m_aiBuildingBadHealth[iI] = 0;
 		m_aiBuildingHappiness[iI] = 0;
 		m_aiFreeSpecialist[iI] = 0;
 		m_aiPower[iI] = 0;
@@ -246,8 +239,9 @@ void CvArea::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiAnimalsPerPlayer);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiCitiesPerPlayer);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPopulationPerPlayer);
-	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingGoodHealth);
-	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingBadHealth);
+	// #430: area building-health rides the cascade (playerAreaEmpire fold); drain the old arrays. savemigration.txt.
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvArea", m_aiBuildingGoodHealth, SAVE_VALUE_TYPE_INT_ARRAY);
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvArea", m_aiBuildingBadHealth, SAVE_VALUE_TYPE_INT_ARRAY);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingHappiness);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiFreeSpecialist);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPower);
@@ -331,8 +325,6 @@ void CvArea::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiAnimalsPerPlayer);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiCitiesPerPlayer);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPopulationPerPlayer);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingGoodHealth);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingBadHealth);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingHappiness);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiFreeSpecialist);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPower);
@@ -660,42 +652,14 @@ void CvArea::changePopulationPerPlayer(PlayerTypes eIndex, int iChange)
 int CvArea::getBuildingGoodHealth(PlayerTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-	return m_aiBuildingGoodHealth[eIndex];
-}
-
-
-void CvArea::changeBuildingGoodHealth(PlayerTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiBuildingGoodHealth[eIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(getBuildingGoodHealth(eIndex));
-
-		GET_PLAYER(eIndex).AI_makeAssignWorkDirty();
-	}
+	int g, b; CascadeWellbeing::buildingHealthArea(GET_PLAYER(eIndex), getID(), g, b); return g;
 }
 
 
 int CvArea::getBuildingBadHealth(PlayerTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-	return m_aiBuildingBadHealth[eIndex];
-}
-
-
-void CvArea::changeBuildingBadHealth(PlayerTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiBuildingBadHealth[eIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(getBuildingBadHealth(eIndex));
-
-		GET_PLAYER(eIndex).AI_makeAssignWorkDirty();
-	}
+	int g, b; CascadeWellbeing::buildingHealthArea(GET_PLAYER(eIndex), getID(), g, b); return b;
 }
 
 

@@ -11151,12 +11151,7 @@ void CvPlot::processArea(CvArea* pArea, int iChange)
 
 			if (!pCity->isReligiouslyLimitedBuilding(eTypeX))
 			{
-				if (building.getAreaHealth() > 0)
-				{
-					pArea->changeBuildingGoodHealth(eOwner, building.getAreaHealth() * iChange);
-				}
-				else pArea->changeBuildingBadHealth(eOwner, building.getAreaHealth() * iChange);
-
+				// #430: area building-health rides the cascade (playerAreaEmpire fold); accumulator gone.
 				pArea->changeBuildingHappiness(eOwner, building.getAreaHappiness() * iChange);
 				pArea->changeFreeSpecialist(eOwner, building.getAreaFreeSpecialist() * iChange);
 

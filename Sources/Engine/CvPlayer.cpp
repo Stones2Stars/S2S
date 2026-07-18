@@ -15,6 +15,7 @@
 #include "AI/CvContractBroker.h"
 #include "CvEventSpine.h"   // #430 cascade spine -- first real DOMAIN emit at changeBuildingCount
 #include "Cascade/CvCascadeCapabilities.h"   // #430 Gate-3: the commerce-slider capability flip (isCommerceFlexible)
+#include "Cascade/CvCascadeWellbeing.h"       // #430 the wellbeing channel -- building-health empire rollup flip
 #include "Cascade/CvCascadeAccumulator.h"    // #430 the modifier scope accumulator -- civic/golden-age epoch bumps
 #include "Cascade/CvTechEnabler.h"           // #430 the standardized enabler's tech domain -- canResearch's bare read
 #include "Cascade/CvCivicEnabler.h"          // #430 the standardized enabler's civics domain -- canDoCivics' bare read
@@ -873,8 +874,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iLevelExperienceModifier = 0;
 	m_iExtraHealth = 0;
 	m_iCivicHealth = 0;
-	m_iBuildingGoodHealth = 0;
-	m_iBuildingBadHealth = 0;
 	m_iExtraHappiness = 0;
 	m_iExtraHappinessUnattributed = 0;
 	m_iBuildingHappiness = 0;
@@ -7405,22 +7404,8 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		}
 	}
 
-	if (kBuilding.getAreaHealth() > 0)
-	{
-		pArea->changeBuildingGoodHealth(getID(), (kBuilding.getAreaHealth() * iChange));
-	}
-	else
-	{
-		pArea->changeBuildingBadHealth(getID(), (kBuilding.getAreaHealth() * iChange));
-	}
-	if (kBuilding.getGlobalHealth() > 0)
-	{
-		changeBuildingGoodHealth(kBuilding.getGlobalHealth() * iChange);
-	}
-	else
-	{
-		changeBuildingBadHealth(kBuilding.getGlobalHealth() * iChange);
-	}
+	// #430: area/global building HEALTH now rides the cascade (playerAreaEmpire fold, read by
+	// CvArea/CvPlayer getBuildingGood/BadHealth); the retired accumulators are gone.
 	pArea->changeBuildingHappiness(getID(), (kBuilding.getAreaHappiness() * iChange));
 	changeBuildingHappiness(kBuilding.getGlobalHappiness() * iChange);
 	changeWorkerSpeedModifier(kBuilding.getWorkerSpeedModifier() * iChange);
@@ -10811,37 +10796,13 @@ void CvPlayer::changeExtraHealth(int iChange)
 
 int CvPlayer::getBuildingGoodHealth() const
 {
-	return m_iBuildingGoodHealth;
-}
-
-
-void CvPlayer::changeBuildingGoodHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingGoodHealth += iChange;
-		FASSERT_NOT_NEGATIVE(getBuildingGoodHealth());
-
-		AI_makeAssignWorkDirty();
-	}
+	int g, b; CascadeWellbeing::buildingHealthEmpire(*this, g, b); return g;
 }
 
 
 int CvPlayer::getBuildingBadHealth() const
 {
-	return m_iBuildingBadHealth;
-}
-
-
-void CvPlayer::changeBuildingBadHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingBadHealth += iChange;
-		FAssert(getBuildingBadHealth() <= 0);
-
-		AI_makeAssignWorkDirty();
-	}
+	int g, b; CascadeWellbeing::buildingHealthEmpire(*this, g, b); return b;
 }
 
 
@@ -18405,8 +18366,9 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iLevelExperienceModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHealth);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivicHealth);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingGoodHealth);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingBadHealth);
+		// #430: player global building-health rides the cascade (playerAreaEmpire fold); drain old tags. savemigration.txt.
+		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_iBuildingGoodHealth, SAVE_VALUE_ANY);
+		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_iBuildingBadHealth, SAVE_VALUE_ANY);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappinessUnattributed);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingHappiness);
@@ -19853,8 +19815,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLevelExperienceModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHealth);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivicHealth);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingGoodHealth);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingBadHealth);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappinessUnattributed);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingHappiness);
@@ -28262,8 +28222,6 @@ void CvPlayer::clearModifierTotals()
 	m_iLevelExperienceModifier = 0;
 	m_iExtraHealth = 0;
 	m_iCivicHealth = 0;
-	m_iBuildingGoodHealth = 0;
-	m_iBuildingBadHealth = 0;
 	m_iExtraHappiness = 0;
 	m_iBuildingHappiness = 0;
 	m_iLargestCityHappiness = 0;

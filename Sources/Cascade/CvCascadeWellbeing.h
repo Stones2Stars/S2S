@@ -50,6 +50,10 @@ public:
 	// per-building event ledger (getBuildingHappy/HealthChange). The area/empire building rollups are the
 	// SEPARATE playerAreaEmpire fold (CvArea/CvPlayer getters), not this term.
 	static void buildingWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad);
+	// The AREA/EMPIRE building-HEALTH rollups (the playerAreaEmpire fold, health family) for the retired
+	// CvArea/CvPlayer m_iBuildingGood/BadHealth accumulators. iBad is negative (WbSplit convention).
+	static void buildingHealthArea(const CvPlayer& player, int iAreaId, int& iGood, int& iBad);
+	static void buildingHealthEmpire(const CvPlayer& player, int& iGood, int& iBad);
 
 	// The PLAYER-scope area/empire building fold maps (famSeg -> areaId -> split; famSeg -> empire split)
 	// + the building-KEYED ledger (famSeg -> targetFk -> Σ flats: the Royal-Tomb class, a BUILDING granting

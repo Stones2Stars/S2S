@@ -87,10 +87,8 @@ public:
 	void changePopulationPerPlayer(PlayerTypes eIndex, int iChange);
 
 	int getBuildingGoodHealth(PlayerTypes eIndex) const;
-	void changeBuildingGoodHealth(PlayerTypes eIndex, int iChange);
 
 	int getBuildingBadHealth(PlayerTypes eIndex) const;
-	void changeBuildingBadHealth(PlayerTypes eIndex, int iChange);
 
 	int getBuildingHappiness(PlayerTypes eIndex) const;
 	void changeBuildingHappiness(PlayerTypes eIndex, int iChange);
@@ -186,8 +184,6 @@ protected:
 	int* m_aiAnimalsPerPlayer;
 	int* m_aiCitiesPerPlayer;
 	int* m_aiPopulationPerPlayer;
-	int* m_aiBuildingGoodHealth;
-	int* m_aiBuildingBadHealth;
 	int* m_aiBuildingHappiness;
 	int* m_aiFreeSpecialist;
 	int* m_aiPower;

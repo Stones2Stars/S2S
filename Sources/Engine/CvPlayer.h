@@ -728,10 +728,7 @@ public:
 	int getCivicHealth() const; // Included in getExtraHealth() but split off to aid hover text displays
 
 	int getBuildingGoodHealth() const;
-	void changeBuildingGoodHealth(int iChange);
-
 	int getBuildingBadHealth() const;
-	void changeBuildingBadHealth(int iChange);
 
 	int getExtraHappiness() const;
 	void changeExtraHappiness(int iChange, bool bUnattributed = false);
@@ -1898,8 +1895,6 @@ protected:
 	int m_iLevelExperienceModifier;
 	int m_iExtraHealth;
 	int m_iCivicHealth;
-	int m_iBuildingGoodHealth;
-	int m_iBuildingBadHealth;
 	int m_iExtraHappiness;
 	int m_iExtraHappinessUnattributed;
 	int m_iBuildingHappiness;

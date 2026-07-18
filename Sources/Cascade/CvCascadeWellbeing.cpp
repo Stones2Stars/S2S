@@ -674,6 +674,38 @@ void CascadeWellbeing::buildingWellbeing(const CvCity* pCity, int& iHapGood, int
 	iHeaBad  = hea.bld.iBad;
 }
 
+// The AREA/EMPIRE building-health rollups -- a fresh player area/empire walk (the cold Legacy-oracle path; the
+// served verdict uses the standing CvPlayer scope package, not these). health family; iBad is negative.
+void CascadeWellbeing::buildingHealthArea(const CvPlayer& player, int iAreaId, int& iGood, int& iBad)
+{
+	iGood = 0; iBad = 0;
+	std::map<int, std::map<int, WbSplit> > areaByFam;
+	std::map<int, WbSplit> empireByFam;
+	std::map<int, std::map<int, int> > keyedByFam;
+	playerAreaEmpire(player, areaByFam, empireByFam, keyedByFam);
+	const int famHealth = DepositIndex::lookupSegment("health");
+	std::map<int, std::map<int, WbSplit> >::const_iterator fit = areaByFam.find(famHealth);
+	if (fit == areaByFam.end()) return;
+	std::map<int, WbSplit>::const_iterator ait = fit->second.find(iAreaId);
+	if (ait == fit->second.end()) return;
+	iGood = ait->second.iGood;
+	iBad  = ait->second.iBad;
+}
+
+void CascadeWellbeing::buildingHealthEmpire(const CvPlayer& player, int& iGood, int& iBad)
+{
+	iGood = 0; iBad = 0;
+	std::map<int, std::map<int, WbSplit> > areaByFam;
+	std::map<int, WbSplit> empireByFam;
+	std::map<int, std::map<int, int> > keyedByFam;
+	playerAreaEmpire(player, areaByFam, empireByFam, keyedByFam);
+	const int famHealth = DepositIndex::lookupSegment("health");
+	std::map<int, WbSplit>::const_iterator eit = empireByFam.find(famHealth);
+	if (eit == empireByFam.end()) return;
+	iGood = eit->second.iGood;
+	iBad  = eit->second.iBad;
+}
+
 // The /computed decomposition recompute: fresh city gather + fresh player area/empire walk + the ONE assembly.
 CascadeWellbeingVerdicts CascadeWellbeing::compute(const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
