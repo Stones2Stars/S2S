@@ -936,7 +936,6 @@ public:
 	int getCommerceHappiness() const;
 	void changeCommerceHappinessPer(CommerceTypes eIndex, int iChange);
 
-	void changeCommercePerPopFromBuildings(const CommerceTypes eIndex, const int iChange);
 	int getCommercePerPopFromBuildings(const CommerceTypes eIndex) const;
 
 	int getDomainFreeExperience(DomainTypes eIndex) const;
@@ -1368,7 +1367,6 @@ public:
 	int getBonusCommercePercentChanges(CommerceTypes eIndex, BuildingTypes eType) const;
 	void changeBonusCommercePercentChanges(CommerceTypes eIndex, int iChange);
 
-	void changeBuildingCommerceTechChange(CommerceTypes eIndex, int iChange);
 	int getBuildingCommerceTechChange(CommerceTypes eIndex) const;
 	int getBuildingCommerceTechChange(CommerceTypes eIndex, TechTypes eTech) const;
 	int getBuildingCommerceTechModifier(CommerceTypes eYield, TechTypes eTech) const;
@@ -1635,7 +1633,6 @@ protected:
 
 	int* m_aiBonusCommerceRateModifier;
 	int* m_aiBonusCommercePercentChanges;
-	int* m_aiBuildingCommerceTechChange;
 
 	mutable int* m_cachedPropertyNeeds;
 	bool* m_pabHadVicinityBonus;
@@ -1758,7 +1755,6 @@ protected:
 	int* m_aiBonusYieldRateModifier;
 	int* m_aiTradeYield;
 	int* m_aiProductionToCommerceModifier;
-	int* m_aiBuildingCommerce;
 	// STREAMLINED 2026-06-28: getBuildingCommerce100 is now a RECOMPUTE-ONLY, dirty-flagged cache (the plot/specialist
 	// cache-rebuild mechanism, owner ruling). m_aiBuildingCommerce100 holds the fresh ×100 value; m_abBuildingCommerce100Dirty
 	// is flipped by setCommerceDirty (the single trigger) so the rebuild point is OBVIOUS; NEITHER is serialized — dirty on
@@ -1767,7 +1763,6 @@ protected:
 	mutable bool* m_abBuildingCommerce100Dirty;
 	int* m_aiCommerceRateModifier;
 	int* m_aiCommerceHappinessPer;
-	int* m_commercePerPopFromBuildings;
 	int* m_aiDomainFreeExperience;
 	int* m_aiDomainProductionModifier;
 	int* m_aiCulture;

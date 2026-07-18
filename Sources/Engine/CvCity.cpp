@@ -73,12 +73,10 @@ CvCity::CvCity()
 	m_aiBonusYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiTradeYield = new int[NUM_YIELD_TYPES];
 	m_aiProductionToCommerceModifier = new int[NUM_COMMERCE_TYPES];
-	m_aiBuildingCommerce = new int[NUM_COMMERCE_TYPES];
 	m_aiBuildingCommerce100 = new int[NUM_COMMERCE_TYPES];
 	m_abBuildingCommerce100Dirty = new bool[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiCommerceHappinessPer = new int[NUM_COMMERCE_TYPES];
-	m_commercePerPopFromBuildings = new int[NUM_COMMERCE_TYPES];
 	m_aiDomainFreeExperience = new int[NUM_DOMAIN_TYPES];
 	m_aiDomainProductionModifier = new int[NUM_DOMAIN_TYPES];
 
@@ -114,7 +112,6 @@ CvCity::CvCity()
 
 	m_aiBonusCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiBonusCommercePercentChanges = new int[NUM_COMMERCE_TYPES];
-	m_aiBuildingCommerceTechChange = new int[NUM_COMMERCE_TYPES];
 
 	m_cachedPropertyNeeds = NULL;
 	m_pabHadVicinityBonus = NULL;
@@ -190,12 +187,10 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_aiTradeYield);
 
 	SAFE_DELETE_ARRAY(m_aiProductionToCommerceModifier);
-	SAFE_DELETE_ARRAY(m_aiBuildingCommerce);
 	SAFE_DELETE_ARRAY(m_aiBuildingCommerce100);
 	SAFE_DELETE_ARRAY(m_abBuildingCommerce100Dirty);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifier);
 	SAFE_DELETE_ARRAY(m_aiCommerceHappinessPer);
-	SAFE_DELETE_ARRAY(m_commercePerPopFromBuildings);
 	SAFE_DELETE_ARRAY(m_aiDomainFreeExperience);
 	SAFE_DELETE_ARRAY(m_aiDomainProductionModifier);
 	SAFE_DELETE_ARRAY(m_aiCulture);
@@ -206,7 +201,6 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_abEspionageVisibility);
 	SAFE_DELETE_ARRAY(m_aiBonusCommerceRateModifier);
 	SAFE_DELETE_ARRAY(m_aiBonusCommercePercentChanges);
-	SAFE_DELETE_ARRAY(m_aiBuildingCommerceTechChange);
 
 	SAFE_DELETE_ARRAY(m_bHasBuildings);
 	SAFE_DELETE_ARRAY(m_pabReligiouslyDisabledBuilding);
@@ -635,15 +629,12 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
 		m_aiProductionToCommerceModifier[iI] = 0;
-		m_aiBuildingCommerce[iI] = 0;
 		m_aiBuildingCommerce100[iI] = 0;
 		m_abBuildingCommerce100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
 		m_aiCommerceRateModifier[iI] = 0;
 		m_aiCommerceHappinessPer[iI] = 0;
-		m_commercePerPopFromBuildings[iI] = 0;
 		m_aiBonusCommerceRateModifier[iI] = 0;
 		m_aiBonusCommercePercentChanges[iI] = 0;
-		m_aiBuildingCommerceTechChange[iI] = 0;
 		m_abCommerceRankValid[iI] = false;
 		m_aiCommerceRank[iI] = -1;
 	}
@@ -4712,7 +4703,7 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		PROFILE("CvCity::processBuilding.Commerces");
 		const CommerceTypes eCommerceX = static_cast<CommerceTypes>(iI);
 
-		changeCommercePerPopFromBuildings(eCommerceX, iChange * kBuilding.getCommercePerPopChange(iI));
+		// #430 cut: changeCommercePerPopFromBuildings removed (per-pop commerce rides getBuildingCommerce100 fresh).
 
 		// path-1 REMOVED (was half the build-order double-count): the per-building empire commerce-change is now
 		// recompute-from-source on the PLAYER ledger, PULLed by getBuildingCommerceByBuilding. The city ledger holds
@@ -4950,16 +4941,8 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 			}
 		}
 	}
-	foreach_(const TechCommerceArray& pair, kBuilding.getTechCommerceChanges100())
-	{
-		if (GET_TEAM(getTeam()).isHasTech(pair.first))
-		{
-			for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-			{
-				changeBuildingCommerceTechChange((CommerceTypes)iI, iChange * pair.second[(CommerceTypes)iI]);
-			}
-		}
-	}
+	// #430 cut: the city m_aiBuildingCommerceTechChange accumulator is gone -- building tech-commerce is computed
+	// fresh in getBuildingCommerce100 from the team's per-building tech-commerce; no per-building apply here.
 	foreach_(const TechCommerceArray& pair, kBuilding.getTechCommerceModifiers())
 	{
 		if (GET_TEAM(getTeam()).isHasTech(pair.first))
@@ -11548,7 +11531,12 @@ void CvCity::changeProductionToCommerceModifier(CommerceTypes eIndex, int iChang
 int CvCity::getBuildingCommerce(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiBuildingCommerce[eIndex];
+	// #430: RECOMPUTE-FROM-SOURCE (m_aiBuildingCommerce accumulator cut) -- Σ per-building base commerce
+	// (getBuildingCommerceByBuilding; active-checked inside), matching the retired updateBuildingCommerce sum.
+	int iCommerce = 0;
+	for (int iJ = 0; iJ < GC.getNumBuildingInfos(); iJ++)
+		iCommerce += getBuildingCommerceByBuilding(eIndex, (BuildingTypes)iJ);
+	return iCommerce;
 }
 
 int CvCity::getBuildingCommerce100(CommerceTypes eIndex) const
@@ -11862,27 +11850,11 @@ int CvCity::getAdditionalCommerceRateModifierByBuilding(CommerceTypes eIndex, Bu
 void CvCity::updateBuildingCommerce()
 {
 	PROFILE_FUNC();
-
-	// Disabled during modifier recalc (and called explicitly there after re-enabling)
+	// #430: the building-commerce accumulator is cut (getBuildingCommerce recomputes on read). This is now purely the
+	// setCommerceDirty trigger invalidating the getBuildingCommerce100 recompute cache on a building/tech/bonus change.
 	if (!GC.getGame().isRecalculatingModifiers())
 	{
-		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-		{
-			const CommerceTypes eType = static_cast<CommerceTypes>(iI);
-			int iNewBuildingCommerce = 0;
-
-			for (int iJ = 0; iJ < GC.getNumBuildingInfos(); iJ++)
-			{
-				iNewBuildingCommerce += getBuildingCommerceByBuilding(eType, (BuildingTypes)iJ);
-			}
-
-			if (getBuildingCommerce(eType) != iNewBuildingCommerce)
-			{
-				m_aiBuildingCommerce[iI] = iNewBuildingCommerce;
-
-				setCommerceDirty(eType);
-			}
-		}
+		setCommerceDirty(NO_COMMERCE);
 	}
 }
 
@@ -12258,20 +12230,15 @@ void CvCity::changeCommerceHappinessPer(CommerceTypes eIndex, int iChange)
 }
 
 
-void CvCity::changeCommercePerPopFromBuildings(const CommerceTypes eIndex, const int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	if (iChange != 0)
-	{
-		m_commercePerPopFromBuildings[eIndex] += iChange;
-		setCommerceDirty(eIndex);
-	}
-}
+// #430 cut: changeCommercePerPopFromBuildings removed. The building per-pop commerce is computed FRESH in
+// getBuildingCommerce100 (Σ building getCommercePerPopChange × pop over active buildings), not this accumulator.
 
 int CvCity::getCommercePerPopFromBuildings(const CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_commercePerPopFromBuildings[eIndex];
+	// #430: m_commercePerPopFromBuildings accumulator cut -- the per-pop commerce rides getBuildingCommerce100 fresh;
+	// this legacy decomposition getter has no live rate consumer and returns 0 (exposed).
+	return 0;
 }
 
 void CvCity::changeBuildingCommerceModifier(CommerceTypes eIndex, int iChange)
@@ -16854,7 +16821,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_aiBonusYieldRateModifier, SAVE_VALUE_TYPE_INT_ARRAY);   // rebuilt by the load fold
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerce);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceHappinessPer);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainFreeExperience);
@@ -17177,9 +17143,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadRawVicinityBonus);
 	WRAPPER_READ(wrapper, "CvCity", &m_bPropertyControlBuildingQueued);
 
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerceTechChange);
 
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_commercePerPopFromBuildings);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_buildingYieldMod);
 	{
 		short iSize = 0;
@@ -17559,7 +17523,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiBonusYieldRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerce);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceHappinessPer);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainFreeExperience);
@@ -17738,9 +17701,7 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadRawVicinityBonus);
 	WRAPPER_WRITE(wrapper, "CvCity", m_bPropertyControlBuildingQueued);
 
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerceTechChange);
 
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_commercePerPopFromBuildings);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_buildingYieldMod);
 	{
 		WRAPPER_WRITE_DECORATED(wrapper, "CvCity", (short)m_plotYieldChanges.size(), "PlotYieldChangesSize");
@@ -19777,22 +19738,15 @@ int CvCity::getBonusCommercePercentChanges(CommerceTypes eIndex, BuildingTypes e
 }
 
 
-void CvCity::changeBuildingCommerceTechChange(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiBuildingCommerceTechChange[eIndex] += iChange;
-		setCommerceDirty(eIndex);
-	}
-}
-
+// #430 cut: changeBuildingCommerceTechChange removed. The building tech-commerce is computed FRESH in
+// getBuildingCommerce100 (Σ kTeam.getBuildingCommerceTechChange over active buildings), not this city accumulator.
 
 int CvCity::getBuildingCommerceTechChange(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiBuildingCommerceTechChange[eIndex];
+	// #430: m_aiBuildingCommerceTechChange accumulator cut -- the tech-commerce rides getBuildingCommerce100 fresh;
+	// this legacy city-scope decomposition getter has no live rate consumer and returns 0 (exposed).
+	return 0;
 }
 
 int CvCity::getBuildingCommerceTechChange(CommerceTypes eIndex, TechTypes eTech) const
@@ -21736,15 +21690,12 @@ void CvCity::clearModifierTotals()
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
 		m_aiProductionToCommerceModifier[iI] = 0;
-		m_aiBuildingCommerce[iI] = 0;
 		m_aiBuildingCommerce100[iI] = 0;
 		m_abBuildingCommerce100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
 		m_aiCommerceRateModifier[iI] = 0;
 		m_aiCommerceHappinessPer[iI] = 0;
-		m_commercePerPopFromBuildings[iI] = 0;
 		m_aiBonusCommerceRateModifier[iI] = 0;
 		m_aiBonusCommercePercentChanges[iI] = 0;
-		m_aiBuildingCommerceTechChange[iI] = 0;
 	}
 
 	for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)

@@ -210,6 +210,9 @@ CvCity::m_aiExtraSpecialistYield          (int array)
 CvCity::m_aiReligionCommerce              (int array)
 CvCity::m_aiCorporationCommerce           (int array)
 CvCity::m_aiExtraSpecialistCommerce       (int array)
+CvCity::m_aiBuildingCommerce              (int array)
+CvCity::m_aiBuildingCommerceTechChange    (int array)
+CvCity::m_commercePerPopFromBuildings     (int array)
 ========================
 
 ========================

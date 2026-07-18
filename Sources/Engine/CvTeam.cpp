@@ -4966,7 +4966,9 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 				//	Not part of processTech to avoid it applying twice during recalc, would apply in processBuilding first then in processTech again after.
 				for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 				{
-					cityX->changeBuildingCommerceTechChange((CommerceTypes)iJ, iChange * cityX->getBuildingCommerceTechChange((CommerceTypes)iJ, eTech));
+					// #430: the city m_aiBuildingCommerceTechChange accumulator is cut -- building tech-commerce is
+					// computed fresh in getBuildingCommerce100; just invalidate that cache on the tech change.
+					cityX->setCommerceDirty((CommerceTypes)iJ);
 					cityX->changeBuildingCommerceModifier((CommerceTypes)iJ, iChange * cityX->getBuildingCommerceTechModifier((CommerceTypes)iJ, eTech));
 				}
 				for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
