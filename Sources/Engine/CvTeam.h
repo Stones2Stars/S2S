@@ -217,9 +217,6 @@ public:
 	bool canSignOpenBorders(TeamTypes eTeam) const;
 	void sendAmbassador(TeamTypes eTeam);
 
-	int getFreeSpecialistCount(SpecialistTypes eIndex) const;
-	void setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue);
-	void changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange);
 
 	bool isAnyVassal() const;
 	ImprovementTypes getImprovementUpgrade(ImprovementTypes eImprovement) const;
@@ -535,7 +532,6 @@ protected:
 	// Python/WB event grants ONLY (persisted one-shot state; folded by the recompute, never wiped by it)
 	std::map<short, YieldArray> m_improvementYieldEvents;
 
-	int* m_paiFreeSpecialistCount;
 	int* m_aiStolenVisibilityTimer;
 	int* m_aiWarWearinessTimes100;
 	int* m_aiTechShareCount;

@@ -27,6 +27,22 @@
 |-------------------------------------------------------------------|
 
 ========================
+2026-07-18 — #430 two-part free-specialist seam (modifier.md par.6): the cascade owns the AMOUNT (fsAmountAny /
+fsAmountByType -- the summed building/civic/trait freeSpecialists deposits), the engine owns PLACEMENT, consumers
+read the OUTPUT (getSpecialistCount + getFreeSpecialistCount). The derivable CvCity free-specialist AMOUNT ledgers
+fully removed (no member, no serialization); the changeFreeSpecialist(Count) process-applies are cut. The
+non-derivable one-shot store (m_paiFreeSpecialistCountUnattributed -- settled GP / MISSION_JOIN) is KEPT and still
+applies its specialist effects at placement.
+
+CvCity::m_iFreeSpecialist                (int)
+CvCity::m_paiFreeSpecialistCount         (int array, per SpecialistTypes)
+CvArea::m_aiFreeSpecialist               (int array, per player)
+CvPlayer::m_iFreeSpecialist              (int)
+CvPlayer::m_paiFreeSpecialistCount       (int array, per SpecialistTypes)
+CvTeam::m_paiFreeSpecialistCount         (int array, per SpecialistTypes)
+========================
+
+========================
 2026-07-17 — #430 dead-array cut: legacy derived accumulators the cascade now owns, fully removed (no member, no
 serialization). m_aiFreeCityCommerce keeps a transitional WRAPPER_SKIP_ELEMENT too (belt-and-suspenders during
 mechanism rollout); m_aiBaseYieldRate is the .txt-ONLY test case (its getter reads the plot-yield sum from source).

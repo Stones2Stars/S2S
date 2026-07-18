@@ -728,9 +728,6 @@ public:
 	int getNukeModifier() const;
 	void changeNukeModifier(int iChange);
 
-	int getFreeSpecialist() const;
-	void changeFreeSpecialist(int iChange);
-
 	int getPowerCount() const;
 	bool isPower() const;
 	bool isAreaCleanPower() const;
@@ -1089,7 +1086,6 @@ public:
 	void setForceSpecialistCount(SpecialistTypes eIndex, int iNewValue);
 
 	int getFreeSpecialistCount(SpecialistTypes eIndex) const;
-	void setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue);
 	void changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange, bool bUnattributed = false);
 	int getAddedFreeSpecialistCount(SpecialistTypes eIndex) const;
 
@@ -1674,7 +1670,6 @@ protected:
 	int m_iAirModifier;
 	int m_iAirUnitCapacity;
 	int m_iNukeModifier;
-	int m_iFreeSpecialist;
 	int m_iPowerCount;
 	int m_iDefenseDamage;
 	int m_iLastDefenseDamage;
@@ -1786,7 +1781,6 @@ protected:
 	int* m_paiSpecialistCount;
 	int* m_paiMaxSpecialistCount;
 	int* m_paiForceSpecialistCount;
-	int* m_paiFreeSpecialistCount;
 	int* m_paiFreeSpecialistCountUnattributed;
 	int* m_paiImprovementFreeSpecialists;
 	int* m_paiReligionInfluence;

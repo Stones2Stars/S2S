@@ -79,7 +79,6 @@ m_Properties(this)
 	m_abEmbassy = new bool[MAX_TEAMS];
 	m_abLimitedBorders = new bool[MAX_TEAMS];
 	m_abFreeTrade = new bool[MAX_TEAMS];
-	m_paiFreeSpecialistCount = NULL;
 
 	reset((TeamTypes)0, true);
 }
@@ -181,7 +180,6 @@ void CvTeam::uninit()
 	SAFE_DELETE_ARRAY(m_aiVictoryCountdown);
 	SAFE_DELETE_ARRAY(m_aiForceTeamVoteEligibilityCount);
 	SAFE_DELETE_ARRAY(m_pabHasTech);
-	SAFE_DELETE_ARRAY(m_paiFreeSpecialistCount);
 	SAFE_DELETE_ARRAY2(m_ppiBuildingSpecialistChange, GC.getNumBuildingInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBuildingCommerceModifier, GC.getNumBuildingInfos());
 }
@@ -361,12 +359,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 			{
 				m_ppiBuildingSpecialistChange[iI][iJ] = 0;
 			}
-		}
-		FAssertMsg(m_paiFreeSpecialistCount == NULL, "about to leak memory, CvTeam::m_paiFreeSpecialistCount");
-		m_paiFreeSpecialistCount = new int[GC.getNumSpecialistInfos()];
-		for (iJ = 0; iJ < GC.getNumSpecialistInfos(); iJ++)
-		{
-			m_paiFreeSpecialistCount[iJ] = 0;
 		}
 
 		FAssertMsg(m_ppiBuildingCommerceModifier == NULL, "about to leak memory, CvTeam::m_ppiBuildingCommerceModifier");
@@ -6412,7 +6404,6 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abEmbassy);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abLimitedBorders);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abFreeTrade);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCount);
 
 	for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_BUILDINGS); ++i)
 	{
@@ -6563,7 +6554,6 @@ void CvTeam::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abLimitedBorders);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abFreeTrade);
 
-	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCount);
 
 	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
@@ -7186,38 +7176,9 @@ void CvTeam::setLimitedBorders(TeamTypes eIndex, bool bNewValue)
 	}
 }
 
-int CvTeam::getFreeSpecialistCount(SpecialistTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
-	return m_paiFreeSpecialistCount[eIndex];
-}
-
-void CvTeam::setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue)
-{
-	PROFILE_EXTRA_FUNC();
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
-
-	const int iOldValue = getFreeSpecialistCount(eIndex);
-
-	if (iOldValue != iNewValue)
-	{
-		m_paiFreeSpecialistCount[eIndex] = iNewValue;
-		FASSERT_NOT_NEGATIVE(getFreeSpecialistCount(eIndex));
-
-		for (int iI = 0; iI < MAX_PLAYERS; iI++)
-		{
-			if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
-			{
-				algo::for_each(GET_PLAYER((PlayerTypes)iI).cities(), CvCity::fn::changeFreeSpecialistCount(eIndex, 0));
-			}
-		}
-	}
-}
-
-void CvTeam::changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange)
-{
-	setFreeSpecialistCount(eIndex, (getFreeSpecialistCount(eIndex) + iChange));
-}
+// #430 two-part seam: the team by-type free-specialist ledger (m_paiFreeSpecialistCount) is cut. Team-scope
+// free specialists are not in the cascade fsAmount seam today, so they surface as an exposed gap (F7 data)
+// rather than a silent legacy ride-in -- the delete-driven stance.
 
 
 bool CvTeam::isAnyVassal() const
@@ -7371,10 +7332,6 @@ void CvTeam::recalculateModifiers()
 		}
 	}
 
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		m_paiFreeSpecialistCount[iI] = 0;
-	}
 
 	for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
 	{

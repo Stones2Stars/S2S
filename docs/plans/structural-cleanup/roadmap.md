@@ -152,10 +152,12 @@ foundBuildings, per-turn spawn/heal). **Prime suspect for "free promotions load 
 endpoint, do not assume.
 
 ### F4 — Unit-plane modifier machine NOT BUILT. [code-cut-map.md](code-cut-map.md) §BLOCKED unit-plane.
-strength/combat-percent/withdrawal/heal/bombard/movement/espionage/keyed-terrain/invisibility/SizeMatters/
+strength/combat-percent/withdrawal/heal/bombard/movement/espionage/keyed-terrain/invisibility/**upkeep**/SizeMatters/
 promotion/unitcombat apply-loops + serialization. City channels maintenance/defense/health/happiness/GP-trade-air/
 buildRate flagged NOT BUILT. Empire civic/trait/tech apply-loops BLOCKED. Under universal-yield each is a channel
-through the uniform machine.
+through the uniform machine. **The upkeep accumulator cut is COUPLED here** ([fixed-point-conformance.md](fixed-point-conformance.md)):
+`CvPlayer::m_iUnitUpkeep{Civilian,Military}100` + the per-unit `CvUnit::m_iUpkeep100` push-accumulator retire together
+once upkeep is a real unit-plane channel — the cascade owns no unit upkeep today, so they are NOT a base-magnitude cut.
 
 ### F5 — Property feed mangled. [property-audit.md](property-audit.md) (locked, owner-approved).
 Engine math is intact (KEEP-legacy); only the JSON→engine feed is broken, both directions: **over-applies** (one-shot

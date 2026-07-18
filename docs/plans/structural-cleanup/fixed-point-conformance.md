@@ -115,8 +115,39 @@ riders (trade-network recompute, UI-dirty, power) the surviving trigger site mus
 | CvCity | **wellbeing** (pilot) | `m_iExtraBuilding{Good,Bad}{Happiness,Health}`, `m_iExtraBuilding{Happiness,Health}FromTech`, `m_iExtraTechSpecialist{Happiness,Health}`, `m_iReligion{Good,Bad}Happiness`, `m_paiStateReligionHappiness`, `m_iSpecialist{GoodHealth,BadHealth,Happiness,Unhappiness}` + their `update*`/`change*` |
 | CvCity | yield/commerce | `m_aiBuildingCommerce`, `m_aiBuildingCommerceTechChange`, `m_aiReligionCommerce`, `m_aiCorporation{Commerce,Yield}`, `m_aiExtraSpecialist{Yield,Commerce}`, `m_commercePerPopFromBuildings`, `m_aiBaseYieldPerPopRate`, `m_aiRiverPlotYield`, `m_aiTradeYield` |
 | CvPlayer | yield/commerce | `m_aiFreeCityYield`, `m_aiSpecialistExtra{Yield,Commerce}`, `m_aiStateReligionBuildingCommerce`, `m_extraCommerce`, `m_aiGoldenAge{Yield,Commerce}`, `m_paiFeatureHappiness` |
-| CvPlayer | upkeep | `m_iUnitUpkeep{Civilian,Military}100` |
 | CvCity/Player/Area/Team | freeSpecialist (two-part seam) | the `*FreeSpecialist*` AMOUNT ledgers — the summed `freeSpecialists` deposits replace `changeFreeSpecialistCount`; the per-type COUNT getter (`getSpecialistCount+getFreeSpecialistCount`) is the sanctioned output-seam read ([modifier.md §6](../../specs/modifier.md)) and STAYS |
+
+> **freeSpecialist AMOUNT cut — LANDED delete-driven (the two-part seam, [modifier.md §6](../../specs/modifier.md)).**
+> The cascade owns the AMOUNT (`CascadeAccumulator::fsAmountAny`/`fsAmountByType` — the summed building/civic/trait
+> `freeSpecialists` deposits at city+empire+area), the engine owns PLACEMENT (untouched), consumers read the OUTPUT
+> (`getSpecialistCount+getFreeSpecialistCount`). The derivable any/by-type ledgers on `CvCity`/`CvArea`/`CvPlayer`/
+> `CvTeam` (`m_iFreeSpecialist`, `m_paiFreeSpecialistCount`, `CvArea::m_aiFreeSpecialist`) + their
+> `changeFreeSpecialist(Count)` building/civic/trait process-applies are DELETED (drain-tagged in `savemigration.txt`);
+> `CvCity::getFreeSpecialistCount` → `fsAmountByType + unattributed`, `totalFreeSpecialists` → `fsAmountAny` (+ the
+> still-legacy improvement + per-wonder legs). **KEPT** (genuine one-shot state, not derivable): the settled-GP store
+> (`m_paiFreeSpecialistCountUnattributed`, MISSION_JOIN — still applies its specialist effects at placement) + the
+> era-advance pulses. **NOT cut (still legacy-live in `totalFreeSpecialists`):** the improvement-scaled leg
+> (`getImprovementFreeSpecialists × plots`) and per-wonder leg (`policies`-pending, json.md §9) — their own follow-ups.
+> **EXPOSED (delete-driven — cascade seam has no team leg, so it surfaces as a visible gap, never a legacy ride-in):**
+> team-scope by-type free specialists. The non-yield specialist EFFECTS of the derivable free specialists (GP-unit
+> rate, free XP, insidiousness, investigation) ride the still-legacy `processSpecialist` push and retire with the F4
+> unit/specialist apply-loop; their YIELDS already follow the cascade (recompute over `getFreeSpecialistCount`).
+
+> **⛔ Unit UPKEEP is NOT a base-magnitude cut — it retires with the F4 unit-plane build.** `CvPlayer::
+> m_iUnitUpkeep{Civilian,Military}100` are the player-scope civilian/military sums of per-unit upkeep, push-maintained
+> by `CvUnit::calcUpkeep100` → `changeUnitUpkeep`. **The cascade computes NO unit upkeep** — the cascade `maintenance`
+> channel is CITY maintenance (a separate gold-expense component, [economy.md](../../reference/economy.md),
+> [DEC-maintenance-bookkeeping](../../architecture/decisions.md#dec-maintenance-bookkeeping)); unit upkeep is a
+> **unit-plane channel** (per-unit `100·getBaseUpkeep + m_iExtraUpkeep100` × modifier × SM), and the unit-plane
+> modifier machine is **NOT BUILT** ([roadmap](roadmap.md) §F4). So these accumulators FAIL the three-part test's
+> criterion (3) "a per-turn quantity the cascade NOW OWNS": there is no `Cascade*` accessor to re-point to. The only cut
+> available now — Σ over `unit->getUpkeep100()` bucketed by `isMilitaryBranch()` — is an object-recompute that produces
+> the IDENTICAL value (nothing exposed, zero cascade progress), keeps the per-unit `m_iUpkeep100` push-accumulator, and
+> forces restructuring the marginal-cost what-if (`getFinalUnitUpkeepChange`, read by the AI disband valuations) + the
+> dirty trigger that rides the deleted push. The PROPER-ONCE cut is at **F4**, when upkeep becomes a real unit-plane
+> channel: `getUnitUpkeepCivilian100`/`Military100` re-point to a cascade accessor and BOTH the player sums AND the
+> per-unit `m_iUpkeep100` retire together. (The upkeep *percent* modifier `m_iUpkeepModifier` is the separate
+> percent-stack carve-out below.)
 
 The yield channel additionally carries a `getYieldRate100` + `getYield` (÷100) **SPLIT** — the exact "×100 variant"
 this ruling dissolves: the single getter returns ×100 and every consumer reduces at its reader/discrete boundary;

@@ -11149,8 +11149,8 @@ void CvPlot::processArea(CvArea* pArea, int iChange)
 
 			if (!pCity->isReligiouslyLimitedBuilding(eTypeX))
 			{
-				// #430: area building health + happiness ride the cascade (playerAreaEmpire fold); accumulators gone.
-				pArea->changeFreeSpecialist(eOwner, building.getAreaFreeSpecialist() * iChange);
+				// #430: area building health + happiness + free specialists ride the cascade (playerAreaEmpire /
+				// fsAreaAny fold); accumulators gone.
 
 				for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 				{

@@ -2214,7 +2214,8 @@ namespace
 					// vs the legacy accumulators -- the legacy side ALSO holds the non-derivable classes
 					// (events / settled GPs / era-advance pulses), so a delta attributes to those by name
 					sc["fsAnyCasc"] = picojson::value((double)CascadeAccumulator::fsAmountAny(pCity));
-					sc["fsAnyLeg"] = picojson::value((double)pCity->getFreeSpecialist());
+					// #430 two-part seam: the derivable city "any" free-specialist ledger is cut; fsAmountAny is
+					// now the sole source (the *Leg oracle pair is tautological -- removed per DEC-oracle-tautology).
 					{
 						int iFsTypeDiv = 0, iFsCascTot = 0, iFsLegTot = 0;
 						for (int iFs = 0; iFs < GC.getNumSpecialistInfos(); ++iFs)
@@ -2623,14 +2624,14 @@ namespace
 			// generic part only (getFreeSpecialist). These are the GENERIC "any" free specialists, distinct from the
 			// per-type assigned counts in /state.specialists (getSpecialistCount + getFreeSpecialistCount).
 			o["totalFreeSpecialists"] = picojson::value((double)pCity->totalFreeSpecialists());
-			o["cityFreeSpecialist"]   = picojson::value((double)pCity->getFreeSpecialist());
+			o["cityFreeSpecialist"]   = picojson::value((double)CascadeAccumulator::fsAmountAny(pCity));
 			// PER-TERM decomposition of totalFreeSpecialists (CvCity::totalFreeSpecialists, CvCity.cpp:5747) — emitted so a
 			// divergence ATTRIBUTES to a NAMED term (area/player/improvement/wonder), never a guessed aggregate (THE NO-
 			// GUESSING RULE / total-observability). total = max(0, city + area + player + improvement + wonder) [0 if pop<1].
 			{
 				const CvPlayer& kFsPlayer = GET_PLAYER(pCity->getOwner());
-				o["areaFreeSpecialist"]   = picojson::value((double)pCity->area()->getFreeSpecialist(pCity->getOwner()));
-				o["playerFreeSpecialist"] = picojson::value((double)kFsPlayer.getFreeSpecialist());
+				// #430 two-part seam: city+area+player "any" free specialists fold into the cascade AMOUNT
+				// (fsAmountAny, emitted as cityFreeSpecialist above); the separate area/player terms are gone.
 				int iImpFree = 0;
 				for (int iFsI = 0; iFsI < GC.getNumImprovementInfos(); ++iFsI)
 				{

@@ -11354,7 +11354,7 @@ int CvCityAI::AI_countGoodSpecialists(bool bHealthy) const
 			iCount += getMaxSpecialistCount(eSpecialist);
 		}
 	}
-	iCount -= getFreeSpecialist();
+	iCount -= totalFreeSpecialists();   // #430: city "any" free-specialist ledger cut -> the cascade-backed total
 
 	return iCount;
 }

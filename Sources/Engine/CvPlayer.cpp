@@ -213,7 +213,6 @@ m_cachedBonusCount(NULL)
 	m_pabAutomatedCanBuild = NULL;
 	m_ppaaiTerrainYieldChange = NULL;
 	m_paiResourceConsumption = NULL;
-	m_paiFreeSpecialistCount = NULL;
 	m_ppiBuildingCommerceModifier = NULL;
 	m_buildingCommerceChange.bind(this, &CvPlayer::recomputeBuildingCommerceChange);   // dirty-on-construct; recompute-from-source on first read
 	m_improvementYieldChange.bind(this, &CvPlayer::recomputeImprovementYields);        // ditto (the keyed improvement-yield ledger)
@@ -687,7 +686,6 @@ void CvPlayer::uninit()
 
 	SAFE_DELETE_ARRAY(m_pabAutomatedCanBuild);
 	SAFE_DELETE_ARRAY(m_paiResourceConsumption);
-	SAFE_DELETE_ARRAY(m_paiFreeSpecialistCount);
 	SAFE_DELETE_ARRAY(m_paiImprovementUpgradeRateModifierSpecific);
 	SAFE_DELETE_ARRAY(m_paiBuildWorkerSpeedModifierSpecific);
 	SAFE_DELETE_ARRAY(m_pabHasTrait);
@@ -862,7 +860,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iLargestCityHappiness = 0;
 	m_iWarWearinessPercentAnger = 0;
 	m_iWarWearinessModifier = 0;
-	m_iFreeSpecialist = 0;
 	m_iNoForeignTradeCount = 0;
 	m_iNoCorporationsCount = 0;
 	m_iNoForeignCorporationsCount = 0;
@@ -1249,12 +1246,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		FAssertMsg(0 < GC.getNumSpecialistInfos(), "GC.getNumSpecialistInfos() is not greater than zero but it is used to allocate memory in CvPlayer::reset");
 		// (m_specialistExtraYield/m_specialistExtraCommerce need no init-time allocation -- the CvDerivedCacheVec
 		// recomputes size them)
-		m_paiFreeSpecialistCount = new int[GC.getNumSpecialistInfos()];
-
-		for (iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-		{
-			m_paiFreeSpecialistCount[iI] = 0;
-		}
 
 		FAssertMsg(m_pabHasTrait==NULL, "about to leak memory, CvPlayer::m_pabHasTrait");
 		m_pabHasTrait = new bool[GC.getNumTraitInfos()];
@@ -6273,10 +6264,8 @@ void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 		}
 	}
 
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		pCity->setFreeSpecialistCount(((SpecialistTypes)iI), 0);
-	}
+	// #430 two-part seam: free-specialist AMOUNT is cascade-derived (not a stored per-city ledger), so the
+	// per-specialist reset loop is gone -- nothing to zero.
 
 	{
 		const int iCulture = getNationalCityStartCulture();
@@ -7340,8 +7329,7 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	changeHurryModifier(kBuilding.getGlobalHurryModifier() * iChange);
 	changeFreeExperience(kBuilding.getGlobalFreeExperience() * iChange);
 	changeWarWearinessModifier(kBuilding.getGlobalWarWearinessModifier() * iChange);
-	pArea->changeFreeSpecialist(getID(), (kBuilding.getAreaFreeSpecialist() * iChange));
-	changeFreeSpecialist(kBuilding.getGlobalFreeSpecialist() * iChange);
+	// #430 two-part seam: building area + global free specialists ride the cascade AMOUNT (fsAreaAny / fsEmpireAny).
 	changeCoastalTradeRoutes(kBuilding.getCoastalTradeRoutes() * iChange);
 	changeTradeRoutes(kBuilding.getGlobalTradeRoutes() * iChange);
 
@@ -10896,20 +10884,8 @@ void CvPlayer::changeWarWearinessModifier(int iChange, bool bLimited)
 }
 
 
-int CvPlayer::getFreeSpecialist() const
-{
-	return m_iFreeSpecialist;
-}
-
-
-void CvPlayer::changeFreeSpecialist(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iFreeSpecialist += iChange;
-		AI_makeAssignWorkDirty();
-	}
-}
+// #430 two-part seam: the player "any" free-specialist ledger (m_iFreeSpecialist) is cut; empire free
+// specialists ride the cascade AMOUNT (fsEmpireAny -> fsAmountAny), read by CvCity::totalFreeSpecialists.
 
 
 int CvPlayer::getNoForeignTradeCount() const
@@ -17897,7 +17873,7 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 		changeCivilianUnitUpkeepMod(kCivic.getCivilianUnitUpkeepMod() * iChange);
 		changeMilitaryUnitUpkeepMod(kCivic.getMilitaryUnitUpkeepMod() * iChange);
 		changeMaxConscript(getWorldSizeMaxConscript(eCivic) * iChange);
-		changeFreeSpecialist(kCivic.getFreeSpecialist() * iChange);
+		// #430 two-part seam: civic free specialists ride the cascade AMOUNT (fsEmpireAny).
 		changeTradeRoutes(kCivic.getTradeRoutes() * iChange);
 		changeStateReligionUnitProductionModifier(kCivic.getStateReligionUnitProductionModifier() * iChange);
 		changeStateReligionBuildingProductionModifier(kCivic.getStateReligionBuildingProductionModifier() * iChange);
@@ -17952,7 +17928,7 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 		for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 		{
 			changeSpecialistValidCount((SpecialistTypes)iI, kCivic.isSpecialistValid(iI) * iChange);
-			changeFreeSpecialistCount((SpecialistTypes)iI, (kCivic.getFreeSpecialistCount(iI) * iChange));
+			// #430 two-part seam: civic by-type free specialists ride the cascade AMOUNT (fsEmpireByType).
 		}
 
 		// keyed improvement yields: a recompute-from-source ledger -- mark + the trigger the old changer fired
@@ -18215,7 +18191,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iLargestCityHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iWarWearinessPercentAnger);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iWarWearinessModifier);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeSpecialist);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoForeignTradeCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoCorporationsCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoForeignCorporationsCount);
@@ -18420,7 +18395,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		FAssertMsg(0 < GC.getNumBonusInfos(), "GC.getNumBonusInfos() is not greater than zero but it is expected to be in CvPlayer::read");
 		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiResourceConsumption);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCount);
 
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_ePledgedVote);
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eSecretaryGeneralVote);
@@ -19651,7 +19625,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLargestCityHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWarWearinessPercentAnger);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWarWearinessModifier);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeSpecialist);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoForeignTradeCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoCorporationsCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoForeignCorporationsCount);
@@ -19787,7 +19760,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BUILDS, GC.getNumBuildInfos(), m_pabAutomatedCanBuild);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiResourceConsumption);
-		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCount);
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_ePledgedVote);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_eSecretaryGeneralVote);
@@ -26616,31 +26588,9 @@ void CvPlayer::changeNoCapitalUnhappiness(int iChange)
 	}
 }
 
-int CvPlayer::getFreeSpecialistCount(SpecialistTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
-	return m_paiFreeSpecialistCount[eIndex];
-}
-
-void CvPlayer::setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue)
-{
-	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
-
-	const int iOldValue = getFreeSpecialistCount(eIndex);
-
-	if (iOldValue != iNewValue)
-	{
-		m_paiFreeSpecialistCount[eIndex] = iNewValue;
-		FASSERT_NOT_NEGATIVE(getFreeSpecialistCount(eIndex));
-
-		algo::for_each(cities(), CvCity::fn::changeFreeSpecialistCount(eIndex, iNewValue - iOldValue));
-	}
-}
-
-void CvPlayer::changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange)
-{
-	setFreeSpecialistCount(eIndex, (getFreeSpecialistCount(eIndex) + iChange));
-}
+// #430 two-part seam: the player by-type free-specialist ledger (m_paiFreeSpecialistCount) is cut; empire
+// free specialists ride the cascade AMOUNT (fsEmpireByType -> fsAmountByType), read by
+// CvCity::getFreeSpecialistCount.
 
 int CvPlayer::getTerrainYieldChange(TerrainTypes eIndex1, YieldTypes eIndex2) const
 {
@@ -28039,7 +27989,6 @@ void CvPlayer::clearModifierTotals()
 	m_iExtraHappiness = 0;
 	m_iLargestCityHappiness = 0;
 	m_iWarWearinessModifier = 0;
-	m_iFreeSpecialist = 0;
 	m_iNoForeignTradeCount = 0;
 	m_iNoCorporationsCount = 0;
 	m_iNoForeignCorporationsCount = 0;
@@ -28154,10 +28103,6 @@ void CvPlayer::clearModifierTotals()
 
 	m_specialistExtraYield.markDirty();     // recompute-from-source on next read (never serialized)
 	m_specialistExtraCommerce.markDirty();
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		m_paiFreeSpecialistCount[iI] = 0;
-	}
 
 	m_improvementYieldChange.markDirty();   // recompute-from-source on next read (never serialized)
 	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
@@ -28361,7 +28306,7 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeMilitaryUnitUpkeepMod(iChange*GC.getTraitInfo(eTrait).getMilitaryUnitUpkeepMod());
 	changeHappyPerMilitaryUnit(iChange*GC.getTraitInfo(eTrait).getHappyPerMilitaryUnit());
 	changeLargestCityHappiness(iChange*GC.getTraitInfo(eTrait).getLargestCityHappiness());
-	changeFreeSpecialist(iChange*GC.getTraitInfo(eTrait).getFreeSpecialist());
+	// #430 two-part seam: trait free specialists ride the cascade AMOUNT (fsEmpireAny).
 	changeTradeRoutes(iChange*GC.getTraitInfo(eTrait).getTradeRoutes());
 	// #430 cut: state/non-state religion happiness is a cascade term (playerReligionAcc reads active traits)
 	changeStateReligionUnitProductionModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionUnitProductionModifier());

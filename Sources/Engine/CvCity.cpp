@@ -99,7 +99,6 @@ CvCity::CvCity()
 	m_paiSpecialistCount = NULL;
 	m_paiMaxSpecialistCount = NULL;
 	m_paiForceSpecialistCount = NULL;
-	m_paiFreeSpecialistCount = NULL;
 	m_paiFreeSpecialistCountUnattributed = NULL;
 	m_paiImprovementFreeSpecialists = NULL;
 	m_paiReligionInfluence = NULL;
@@ -416,7 +415,6 @@ void CvCity::uninit()
 	SAFE_DELETE_ARRAY(m_paiSpecialistCount);
 	SAFE_DELETE_ARRAY(m_paiMaxSpecialistCount);
 	SAFE_DELETE_ARRAY(m_paiForceSpecialistCount);
-	SAFE_DELETE_ARRAY(m_paiFreeSpecialistCount);
 	SAFE_DELETE_ARRAY(m_paiFreeSpecialistCountUnattributed);
 	SAFE_DELETE_ARRAY(m_paiImprovementFreeSpecialists);
 	SAFE_DELETE_ARRAY(m_paiReligionInfluence);
@@ -531,7 +529,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iAirModifier = 0;
 	m_iAirUnitCapacity = 0;
 	m_iNukeModifier = 0;
-	m_iFreeSpecialist = 0;
 	m_iPowerCount = 0;
 	m_iDefenseDamage = 0;
 	m_iLastDefenseDamage = 0;
@@ -755,14 +752,12 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		m_paiSpecialistCount = new int[GC.getNumSpecialistInfos()];
 		m_paiMaxSpecialistCount = new int[GC.getNumSpecialistInfos()];
 		m_paiForceSpecialistCount = new int[GC.getNumSpecialistInfos()];
-		m_paiFreeSpecialistCount = new int[GC.getNumSpecialistInfos()];
 		m_paiFreeSpecialistCountUnattributed = new int[GC.getNumSpecialistInfos()];
 		for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 		{
 			m_paiSpecialistCount[iI] = 0;
 			m_paiMaxSpecialistCount[iI] = 0;
 			m_paiForceSpecialistCount[iI] = 0;
-			m_paiFreeSpecialistCount[iI] = 0;
 			m_paiFreeSpecialistCountUnattributed[iI] = 0;
 		}
 
@@ -4663,7 +4658,8 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		changeAirModifier(kBuilding.getAirModifier() * iChange);
 		changeAirUnitCapacity(kBuilding.getAirUnitCapacity() * iChange);
 		changeNukeModifier(kBuilding.getNukeModifier() * iChange);
-		changeFreeSpecialist(kBuilding.getFreeSpecialist() * iChange);
+		// #430 two-part seam: building free specialists (any + by-type) ride the cascade AMOUNT
+		// (fsAmountAny/fsAmountByType); the changeFreeSpecialist(Count) process-applies are cut.
 		changeMaintenanceModifier(kBuilding.getMaintenanceModifier() * iChange);
 		changeWarWearinessModifier(kBuilding.getWarWearinessModifier() * iChange);
 		changeHurryAngerModifier(kBuilding.getHurryAngerModifier() * iChange);
@@ -4728,7 +4724,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		PROFILE("CvCity::processBuilding.Specialists");
 
 		changeMaxSpecialistCount((SpecialistTypes)iI, (kBuilding.getSpecialistCount(iI) + GET_TEAM(getTeam()).getBuildingSpecialistChange(eBuilding, (SpecialistTypes)iI)) * iChange);
-		changeFreeSpecialistCount((SpecialistTypes)iI, kBuilding.getFreeSpecialistCount(iI) * iChange);
 	}
 
 	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
@@ -5600,7 +5595,10 @@ int CvCity::totalFreeSpecialists() const
 	{
 		return 0;
 	}
-	int iCount = getFreeSpecialist() + area()->getFreeSpecialist(getOwner()) + GET_PLAYER(getOwner()).getFreeSpecialist();
+	// #430 two-part seam (modifier.md §6): the cascade owns the "any" free-specialist AMOUNT (fsAmountAny =
+	// city+empire+area building/civic/trait freeSpecialists.any deposits); the derivable city/area/player `any`
+	// ledgers are cut. Improvement-scaled + per-wonder legs stay engine-side until their data is curated (F7).
+	int iCount = CascadeAccumulator::fsAmountAny(this);
 
 	for (int iI = 0; iI < GC.getNumImprovementInfos(); ++iI)
 	{
@@ -9540,21 +9538,8 @@ void CvCity::changeNukeModifier(int iChange)
 }
 
 
-int CvCity::getFreeSpecialist() const
-{
-	return std::max(0, m_iFreeSpecialist);
-}
-
-
-void CvCity::changeFreeSpecialist(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iFreeSpecialist += iChange;
-
-		AI_setAssignWorkDirty(true);
-	}
-}
+// #430 two-part seam: the city "any" free-specialist ledger (m_iFreeSpecialist) is cut; the AMOUNT rides the
+// cascade (fsAmountAny), read by totalFreeSpecialists.
 
 
 int CvCity::getPowerCount() const
@@ -13693,7 +13678,11 @@ void CvCity::setForceSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 int CvCity::getFreeSpecialistCount(SpecialistTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
-	return m_paiFreeSpecialistCount[eIndex];
+	// #430 two-part seam (modifier.md §6): the cascade owns the AMOUNT (fsAmountByType -- the summed
+	// building/civic/trait freeSpecialists deposits at city+empire+area), the engine places, consumers read
+	// this output. The derivable m_paiFreeSpecialistCount ledger is cut; only the non-derivable one-shot
+	// store (settled GP / MISSION_JOIN) remains engine state.
+	return CascadeAccumulator::fsAmountByType(this, eIndex) + m_paiFreeSpecialistCountUnattributed[eIndex];
 }
 
 int CvCity::getAddedFreeSpecialistCount(SpecialistTypes eIndex) const
@@ -13701,38 +13690,24 @@ int CvCity::getAddedFreeSpecialistCount(SpecialistTypes eIndex) const
 	return m_paiFreeSpecialistCountUnattributed[eIndex];
 }
 
-void CvCity::setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue)
+void CvCity::changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange, bool bUnattributed)
 {
+	// #430 two-part seam: derivable free specialists ride the cascade (fsAmountByType), no push. This now
+	// records ONLY the non-derivable one-shot grant (settled GP / MISSION_JOIN) -- genuine engine state that
+	// still applies its specialist effects (GP-unit rate, free XP, ...) at the placement.
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
-
-	const int iOldValue = getFreeSpecialistCount(eIndex);
-
-	iNewValue += GET_PLAYER(getOwner()).getFreeSpecialistCount(eIndex);
-	iNewValue += GET_TEAM(getTeam()).getFreeSpecialistCount(eIndex);
-
-	iNewValue = std::max(0, iNewValue);
-	if (iOldValue != iNewValue)
+	if (bUnattributed && iChange != 0)
 	{
-		m_paiFreeSpecialistCount[eIndex] = iNewValue;
-		FASSERT_NOT_NEGATIVE(m_paiFreeSpecialistCount[eIndex]);
+		m_paiFreeSpecialistCountUnattributed[eIndex] += iChange;
+		FASSERT_NOT_NEGATIVE(m_paiFreeSpecialistCountUnattributed[eIndex]);
 
-		changeNumGreatPeople(iNewValue - iOldValue);
-		processSpecialist(eIndex, (iNewValue - iOldValue));
+		changeNumGreatPeople(iChange);
+		processSpecialist(eIndex, iChange);
 
 		if (isCitySelected())
 		{
 			exeSetUIDirty(CitizenButtons_DIRTY_BIT, true);
 		}
-	}
-}
-
-void CvCity::changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange, bool bUnattributed)
-{
-	setFreeSpecialistCount(eIndex, (getFreeSpecialistCount(eIndex) + iChange - GET_PLAYER(getOwner()).getFreeSpecialistCount(eIndex)) - GET_TEAM(getTeam()).getFreeSpecialistCount(eIndex));
-
-	if (bUnattributed)
-	{
-		m_paiFreeSpecialistCountUnattributed[eIndex] += iChange;
 	}
 }
 
@@ -16777,7 +16752,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iAirModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iAirUnitCapacity);
 	WRAPPER_READ(wrapper, "CvCity", &m_iNukeModifier);
-	WRAPPER_READ(wrapper, "CvCity", &m_iFreeSpecialist);
 	// rebuilt at load: building half via rebuildBonusPowerAtLoad, bonus halves via the network fold
 	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iPowerCount, SAVE_VALUE_ANY);
 
@@ -16850,7 +16824,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistCount);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiMaxSpecialistCount);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiForceSpecialistCount);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCount);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCountUnattributed);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementFreeSpecialists);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_paiReligionInfluence);
@@ -17487,7 +17460,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iAirModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iAirUnitCapacity);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iNukeModifier);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iFreeSpecialist);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iPowerCount);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iDefenseDamage);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iLastDefenseDamage);
@@ -17549,7 +17521,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiMaxSpecialistCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiForceSpecialistCount);
-	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCountUnattributed);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementFreeSpecialists);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_paiReligionInfluence);
@@ -21611,7 +21582,6 @@ void CvCity::clearModifierTotals()
 	m_iAirModifier = 0;
 	m_iAirUnitCapacity = 0;
 	m_iNukeModifier = 0;
-	m_iFreeSpecialist = 0;
 	m_iPowerCount = 0;
 	m_iSpecialistFreeExperience = 0;
 	m_iEspionageDefenseModifier = 0;
@@ -21652,7 +21622,6 @@ void CvCity::clearModifierTotals()
 	{
 		m_paiMaxSpecialistCount[iI] = 0;
 		m_paiForceSpecialistCount[iI] = 0;
-		m_paiFreeSpecialistCount[iI] = 0;
 	}
 
 	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
@@ -21778,11 +21747,10 @@ void CvCity::recalculateModifiers()
 			processSpecialist((SpecialistTypes)iI, iSpecialistCount);
 		}
 
-		//	Add back the unattributed specialists (those direct from Python or
-		//	from GPs that joined the city)
+		//	Re-apply the unattributed specialists' effects (settled GPs / direct Python) on load -- the
+		//	non-derivable one-shot store the #430 seam keeps engine-side.
 		if (m_paiFreeSpecialistCountUnattributed[iI] != 0)
 		{
-			m_paiFreeSpecialistCount[iI] += m_paiFreeSpecialistCountUnattributed[iI];
 			processSpecialist((SpecialistTypes)iI, m_paiFreeSpecialistCountUnattributed[iI]);
 		}
 	}

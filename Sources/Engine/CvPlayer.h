@@ -740,8 +740,6 @@ public:
 	int getWarWearinessModifier() const;
 	void changeWarWearinessModifier(int iChange, bool bLimited = false);
 
-	int getFreeSpecialist() const;
-	void changeFreeSpecialist(int iChange);
 
 	int getNoForeignTradeCount() const;
 	bool isNoForeignTrade() const;
@@ -1452,9 +1450,6 @@ public:
 	void setCommodoreFieldPlot(bool bNewValue, CvPlot* aPlot);
 	std::vector<CvPlot*> getCommodoreFieldPlots() const { return m_commodoreFieldPlots; }
 
-	int getFreeSpecialistCount(SpecialistTypes eIndex) const;
-	void setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue);
-	void changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange);
 
 	bool hasValidBuildings(TechTypes eTech) const;
 
@@ -1590,7 +1585,6 @@ protected:
 	int** m_ppiBonusCommerceModifier;
 	bool* m_pabAutomatedCanBuild;
 	int* m_paiResourceConsumption;
-	int* m_paiFreeSpecialistCount;
 	int* m_aiLandmarkYield;
 	int* m_aiModderOptions;
 	int m_iEnslavementChance;
@@ -1886,7 +1880,6 @@ protected:
 	int m_iLargestCityHappiness;
 	int m_iWarWearinessPercentAnger;
 	int m_iWarWearinessModifier;
-	int m_iFreeSpecialist;
 	int m_iNoForeignTradeCount;
 	int m_iNoCorporationsCount;
 	int m_iNoForeignCorporationsCount;
