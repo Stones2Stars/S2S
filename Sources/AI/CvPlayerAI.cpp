@@ -5776,10 +5776,6 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 
 				if (iTotalWeight > 0)
 				{
-					//	Chances are we'll be doing evaluations for many buildings and tending to use the same representative
-					//	cities, so get the canTrain cache fully populated so that cached values can be used in the evaluation
-					pRepresentativeCity->populateCanTrainCache(false);
-
 					//	2/3rds factor applied here since the representative city we are using is likely to be large (early id)
 					//	and so over-represent a bit
 					iRepresentativeBuildingValueInCity = (2 * BUILDING_VALUE_TO_TECH_BUILDING_VALUE_MULTIPLIER * pRepresentativeCity->AI_buildingValue(eLoopBuilding, iEconomyFlags, true)) / 3;
@@ -13672,9 +13668,6 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 
 	if (pCapital != NULL)
 	{
-		//	Warm up the can train cache for the capital
-		pCapital->populateCanTrainCache(false);
-
 		const CivicTypes eCurrentCivic = getCivics((CivicOptionTypes)kCivic.getCivicOptionType());
 
 		for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)

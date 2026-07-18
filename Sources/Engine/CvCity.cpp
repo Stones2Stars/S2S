@@ -132,10 +132,6 @@ CvCity::CvCity()
 	m_paiDamageAttackingUnitCombatCount = NULL;
 	m_paiHealUnitCombatTypeVolume = NULL;
 
-#ifdef CAN_TRAIN_CACHING
-	//	KOSHLING - clear canTrain cache validity
-	m_canTrainCachePopulated = false;
-#endif
 	m_bVisibilitySetup = false;
 
 	//CvDLLEntity::createCityEntity(this);		// create and attach entity to city
@@ -1258,9 +1254,6 @@ void CvCity::doTurn()
 		}
 		setBuildingListInvalid();
 		setUnitListInvalid();
-#ifdef CAN_TRAIN_CACHING
-		populateCanTrainCache(false);
-#endif
 	}
 
 	m_unitSourcedPropertyCache.clear();
@@ -1417,11 +1410,8 @@ void CvCity::doTurn()
 		}
 	}
 
-#ifdef CAN_TRAIN_CACHING
-	//	Outside the scope of the city's turn where we expect to be using cached values turn
-	//	the cache off (we may choose to widden the scope of usability later but for now this is safer)
-	clearCanTrainCache();
-#endif
+	//	#430: the dead canTrain cache is gone; keep the upgrade-cache clear at the turn boundary.
+	clearUpgradeCache(NO_UNIT);
 
 	// ONEVENT - Do turn
 	{ PERF_SCOPE("city.py.cityDoTurn", getOwner()); CvEventReporter::getInstance().cityDoTurn(this, getOwner()); }
@@ -2248,51 +2238,6 @@ bool CvCity::canTrainInternal(UnitTypes eUnit, bool bContinue, bool bTestVisible
 	return true;
 }
 
-#ifdef CAN_TRAIN_CACHING
-#ifdef _DEBUG
-//	Uncomment this for consistency testing of the canTrain cache
-//#define VALIDATE_CAN_TRAIN_CACHE_CONSISTENCY
-#endif
-
-void CvCity::populateCanTrainCache(bool bUnconditional) const
-{
-	PROFILE_FUNC();
-
-	if (bUnconditional || !m_canTrainCachePopulated)
-	{
-		clearCanTrainCache();
-
-		int iCount = 0;
-		const int numUnitInfos = GC.getNumUnitInfos();
-		for (int iI = 0; iI < numUnitInfos; iI++)
-		{
-			if (canTrain((UnitTypes)iI))
-			{
-				m_canTrainCacheUnits[(UnitTypes)iI] = true;
-				iCount++;
-			}
-		}
-
-		if (iCount == 0)
-		{
-			OutputDebugString("Nothing trainable!\n");
-		}
-
-		m_canTrainCachePopulated = true;
-		m_canTrainCacheDirty = false;
-
-	}
-}
-
-void CvCity::clearCanTrainCache() const
-{
-	m_canTrainCachePopulated = false;
-	m_canTrainCacheUnits.clear();
-
-	clearUpgradeCache(NO_UNIT);
-}
-#endif
-
 void CvCity::clearUpgradeCache(UnitTypes eUnit) const
 {
 	if (eUnit == NO_UNIT)
@@ -2312,28 +2257,6 @@ bool CvCity::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool b
 	// #430: PURE enabler read -- no legacy fallback/pre-init/what-if path (legacy is bait, XML removed pre-ship; DEC-no-legacy-masking).
 	// The what-if params (bContinue/bTestVisible/bIgnoreCost/bIgnoreUpgrades/bPropertySpawn) are now INERT.
 	return m_enabler.units.listed((int)eUnit);
-}
-
-void CvCity::invalidateCachedCanTrainForUnit(UnitTypes eUnit) const
-{
-	PROFILE_FUNC();
-
-	if (m_canTrainCachePopulated)
-	{
-		PROFILE("CvCity::invalidateCachedCanTrainForUnit");
-
-		if (eUnit == NO_UNIT)
-		{
-			m_canTrainCacheDirty = true;	//	Entire map dirty
-		}
-		else
-		{
-			m_canTrainCacheUnits[eUnit] = false;
-		}
-	}
-
-	clearUpgradeCache(eUnit);
-
 }
 
 bool CvCity::canTrain(UnitCombatTypes eUnitCombat) const
@@ -13646,10 +13569,8 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 #ifdef YIELD_VALUE_CACHING
 		ClearYieldValueCache(); // A new building can change yield rates
 #endif
-#ifdef CAN_TRAIN_CACHING
-		// Mark all unit canTrain values cached as dirty
-		invalidateCachedCanTrainForUnit(NO_UNIT);
-#endif
+		// #430: a new building can change unit upgrade availability -- clear the upgrade cache.
+		clearUpgradeCache(NO_UNIT);
 
 		alterBuildingLedger(eType, bNewValue, eOriginalOwner, iOriginalTime);
 
@@ -15231,11 +15152,8 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 					}
 				}
 
-#ifdef CAN_TRAIN_CACHING
-				//	Training a unit can mean we might not be abel to build any more of them
-				//	so clear its entry in the canTrain cache to force recalculation
-				invalidateCachedCanTrainForUnit(eTrainUnit);
-#endif
+				//	#430: training a unit can change its upgrade availability -- clear its upgrade-cache entry.
+				clearUpgradeCache(eTrainUnit);
 
 				//	KOSHLING - must not hold onto the pointer after the Python call or
 				//	a crash occurs if that Python decides to destroy the just-built unit

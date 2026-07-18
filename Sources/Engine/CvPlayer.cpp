@@ -3677,10 +3677,11 @@ void CvPlayer::doTurn()
 	m_hunterAI.onTurnBegin(GC.getGame().getGameTurn());
 	m_decisionAI.onTurnBegin(GC.getGame().getGameTurn());
 
-#ifdef CAN_TRAIN_CACHING
-	//	Clear training caches at the start of each turn
-	algo::for_each(cities(), CvCity::fn::clearCanTrainCache());
-#endif
+	//	#430: clear each city's unit upgrade-availability cache at turn start (the dead canTrain cache is gone).
+	foreach_(CvCity* pLoopCity, cities())
+	{
+		pLoopCity->clearUpgradeCache(NO_UNIT);
+	}
 
 	m_canHaveBuilder.clear();
 
@@ -3893,10 +3894,11 @@ void CvPlayer::doMultiMapTurn()
 	m_hunterAI.onTurnBegin(GC.getGame().getGameTurn());
 	m_decisionAI.onTurnBegin(GC.getGame().getGameTurn());
 
-#ifdef CAN_TRAIN_CACHING
-	//	Clear training caches at the start of each turn
-	algo::for_each(cities(), CvCity::fn::clearCanTrainCache());
-#endif
+	//	#430: clear each city's unit upgrade-availability cache at turn start (the dead canTrain cache is gone).
+	foreach_(CvCity* pLoopCity, cities())
+	{
+		pLoopCity->clearUpgradeCache(NO_UNIT);
+	}
 
 	setBuildingListInvalid();
 
