@@ -73,6 +73,14 @@ public:
 	int enableCount(int iId) const;
 	int removeCount(int iId) const;
 
+	// FRONTIER ITERATION (enabler.md par.6 -- the AI's production/research decisions iterate ONLY this small
+	// offered set, never the whole entity database; the F2b consumer sweep). One O(N) byte-scan fills `out` with
+	// the matching ids, replacing a caller's per-id whole-database gate probe. `out` is caller-owned (cleared
+	// first) so a hot caller reuses one buffer. `listedIds` = gate-passed/offerable (LISTED); `inTreeIds` =
+	// LISTED + GREYED (the visible tri-state, for a UI that shows greyed candidates too).
+	void listedIds(std::vector<int>& out) const;
+	void inTreeIds(std::vector<int>& out) const;
+
 private:
 	enum { FLAG_HELD = 1, FLAG_STATIC_EXCLUDED = 2, FLAG_GATE_FAILED = 4 };
 

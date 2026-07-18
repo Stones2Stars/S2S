@@ -95,3 +95,23 @@ int EnablerDomain::removeCount(int iId) const
 {
 	return inRange(iId) ? (int)m_aiRemove[iId] : 0;
 }
+
+void EnablerDomain::listedIds(std::vector<int>& out) const
+{
+	out.clear();
+	const int iN = (int)m_aState.size();
+	for (int iId = 0; iId < iN; ++iId)
+	{
+		if (m_aState[iId] == (unsigned char)STATE_LISTED) out.push_back(iId);
+	}
+}
+
+void EnablerDomain::inTreeIds(std::vector<int>& out) const
+{
+	out.clear();
+	const int iN = (int)m_aState.size();
+	for (int iId = 0; iId < iN; ++iId)
+	{
+		if (m_aState[iId] >= (unsigned char)STATE_GREYED) out.push_back(iId);
+	}
+}

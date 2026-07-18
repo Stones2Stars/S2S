@@ -13096,11 +13096,16 @@ CivicTypes CvPlayerAI::AI_bestCivic(CivicOptionTypes eCivicOption, int* iBestVal
 	(*iBestValue) = MIN_INT;
 	CivicTypes eBestCivic = NO_CIVIC;
 
-	for (int iI = GC.getNumCivicInfos() - 1; iI > -1; iI--)
+	// #430 F2b (enabler.md par.6): iterate the enabler's LISTED civic frontier (canDoCivics(i) default-args IS
+	// m_enabler.civics.listed(i)), REVERSE-iterated so the original descending-id order is preserved -- the
+	// strict-'>' best pick tie-breaks to the highest id, so order is load-bearing. The per-option filter stays.
+	std::vector<int> vecAdoptable;
+	m_enabler.civics.listedIds(vecAdoptable);
+	for (std::vector<int>::const_reverse_iterator it = vecAdoptable.rbegin(), itEnd = vecAdoptable.rend(); it != itEnd; ++it)
 	{
-		const CivicTypes eCivicX = static_cast<CivicTypes>(iI);
+		const CivicTypes eCivicX = static_cast<CivicTypes>(*it);
 
-		if (GC.getCivicInfo(eCivicX).getCivicOptionType() == eCivicOption && canDoCivics(eCivicX))
+		if (GC.getCivicInfo(eCivicX).getCivicOptionType() == eCivicOption)
 		{
 			const int iValue = AI_civicValue(eCivicX, bCivicOptionVacuum, paeSelectedCivics);
 
@@ -17130,16 +17135,18 @@ void CvPlayerAI::AI_doCivics()
 		paiAvailableChoices[iI] = 0;
 	}
 
-	for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
+	// #430 F2b (enabler.md par.6): count over the enabler's LISTED civic frontier. canDoCivics(i) default-args
+	// IS m_enabler.civics.listed(i) (CvPlayer.cpp), so this is the identical per-option count without the
+	// whole-civic-database scan. Order-irrelevant (a pure count accumulation).
+	std::vector<int> vecAdoptable;
+	m_enabler.civics.listedIds(vecAdoptable);
+	for (std::vector<int>::const_iterator it = vecAdoptable.begin(), itEnd = vecAdoptable.end(); it != itEnd; ++it)
 	{
-		if (canDoCivics((CivicTypes)iI))
-		{
-			const int iCivicOption = GC.getCivicInfo((CivicTypes)iI).getCivicOptionType();
+		const int iCivicOption = GC.getCivicInfo((CivicTypes)*it).getCivicOptionType();
 
-			FASSERT_BOUNDS(0, GC.getNumCivicOptionInfos(), iCivicOption);
+		FASSERT_BOUNDS(0, GC.getNumCivicOptionInfos(), iCivicOption);
 
-			paiAvailableChoices[iCivicOption]++;
-		}
+		paiAvailableChoices[iCivicOption]++;
 	}
 	/*
 		//Might be good to have if many civics from different cathegories affect each other much and become available at the same time
@@ -20495,23 +20502,27 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 
 	TechTypes eBestTech = NO_TECH;
 	int iBestValue = 0;
-	for (int iTech = 0; iTech < GC.getNumTechInfos(); ++iTech)
+	// #430 F2b (enabler.md): iterate the enabler's LISTED tech frontier instead of scanning every tech info and
+	// calling canResearch per id -- canResearch(i) default-args IS m_enabler.techs.listed(i) (CvPlayer.cpp). The
+	// whole loop body sits inside the gate; the best pick uses strict '>', so ascending (forward) order keeps the
+	// original lowest-id-wins result.
+	std::vector<int> vecResearchable;
+	m_enabler.techs.listedIds(vecResearchable);
+	for (std::vector<int>::const_iterator it = vecResearchable.begin(), itEnd = vecResearchable.end(); it != itEnd; ++it)
 	{
-		if (canResearch((TechTypes)iTech))
+		const TechTypes eTechX = static_cast<TechTypes>(*it);
+		if (NO_PLAYER == kTriggeredData.m_eOtherPlayer || GET_TEAM(GET_PLAYER(kTriggeredData.m_eOtherPlayer).getTeam()).isHasTech(eTechX))
 		{
-			if (NO_PLAYER == kTriggeredData.m_eOtherPlayer || GET_TEAM(GET_PLAYER(kTriggeredData.m_eOtherPlayer).getTeam()).isHasTech((TechTypes)iTech))
+			int iValue = 0;
+			for (int i = 0; i < GC.getNumFlavorTypes(); ++i)
 			{
-				int iValue = 0;
-				for (int i = 0; i < GC.getNumFlavorTypes(); ++i)
-				{
-					iValue += kEvent.getTechFlavorValue(i) * GC.getTechInfo((TechTypes)iTech).getFlavorValue(i);
-				}
+				iValue += kEvent.getTechFlavorValue(i) * GC.getTechInfo(eTechX).getFlavorValue(i);
+			}
 
-				if (iValue > iBestValue)
-				{
-					eBestTech = (TechTypes)iTech;
-					iBestValue = iValue;
-				}
+			if (iValue > iBestValue)
+			{
+				eBestTech = eTechX;
+				iBestValue = iValue;
 			}
 		}
 	}
@@ -22328,11 +22339,19 @@ int CvPlayerAI::AI_getStrategyHash() const
 	int iTypicalDefence = getTypicalUnitValue(UNITAI_CITY_DEFENSE);
 	// K-Mod end
 
-	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+	CvCity* pCapitalCity = getCapitalCity();
+	if (pCapitalCity != NULL)
 	{
-		if (getCapitalCity() && getCapitalCity()->canTrain((UnitTypes)iI))
+		// #430 F2b (enabler.md): iterate the capital city's LISTED unit frontier instead of scanning every unit
+		// info and calling canTrain per id -- default-args CvCity::canTrain IS m_enabler.units.listed. Guarded
+		// non-NULL; the loop body is wholly inside the gate and its accumulations (count/max/flags) are
+		// order-independent, so forward iteration matches.
+		std::vector<int> vecTrainable;
+		pCapitalCity->m_enabler.units.listedIds(vecTrainable);
+		for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 		{
-			const CvUnitInfo& unit = GC.getUnitInfo((UnitTypes)iI);
+			const UnitTypes eUnitX = static_cast<UnitTypes>(*it);
+			const CvUnitInfo& unit = GC.getUnitInfo(eUnitX);
 			const int iMoves = unit.getMoves();
 
 			if (unit.getUnitAIType(UNITAI_RESERVE)

@@ -4430,9 +4430,17 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, int& iBestValue, bool bAs
 		}
 	}
 
-	for (int iI = GC.getNumUnitInfos() - 1; iI > -1; iI--)
+	// #430 F2b (enabler.md par.6): scan the LISTED unit frontier, not the whole unit database -- canTrain(u) with
+	// default args IS the bare read m_enabler.units.listed(u) (CvCity.cpp:2324), so the dropped !canTrain(eUnitX)
+	// skip below is exactly the frontier's complement. REVERSE iteration: the original scanned DESCENDING (highest
+	// id first) and the winner is chosen by strict > (first-seen highest value wins ties) with a per-unit SorenRand
+	// draw, so id order is load-bearing for BOTH the tie-break AND the RNG-to-unit mapping; rbegin/rend over the
+	// ascending listedIds reproduces the identical descending visit order over the identical (canTrain-true) set.
+	std::vector<int> vecTrainable;
+	m_enabler.units.listedIds(vecTrainable);
+	for (std::vector<int>::const_reverse_iterator it = vecTrainable.rbegin(), itEnd = vecTrainable.rend(); it != itEnd; ++it)
 	{
-		const UnitTypes eUnitX = static_cast<UnitTypes>(iI);
+		const UnitTypes eUnitX = static_cast<UnitTypes>(*it);
 		if (bGrowMore && isFoodProduction(eUnitX) || !AI_meetsUnitSelectionCriteria(eUnitX, &tempCriteria))
 		{
 			continue;
@@ -4441,8 +4449,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, int& iBestValue, bool bAs
 
 		if (unit.getNotUnitAIType(eUnitAI)
 		|| tempCriteria.m_eIgnoreAdvisor != NO_ADVISOR
-		&& tempCriteria.m_eIgnoreAdvisor == unit.getAdvisorType()
-		|| !canTrain(eUnitX))
+		&& tempCriteria.m_eIgnoreAdvisor == unit.getAdvisorType())
 		{
 			continue;
 		}
@@ -4582,14 +4589,20 @@ const std::vector<CvCity::ScoredBuilding> CvCityAI::AI_bestBuildingsThreshold(in
 
 	std::vector<BuildingTypes> possibles;
 
-	for (int idx = 0; idx < GC.getNumBuildingInfos(); ++idx)
+	// #430 F2b (enabler.md par.6): iterate the enabler's LISTED frontier, not the whole ~5200-building
+	// database. canConstruct((BuildingTypes)idx) with default args IS the bare read m_enabler.buildings.listed(idx)
+	// (CvCity.cpp:2489), so {idx : canConstruct(idx)} == the listedIds set -- the identical membership, minus the
+	// per-turn 5200-probe scan (this loop ran ~7x/city/turn via AI_chooseProduction's focus ladder). isBuildingMaxedOut
+	// stays the per-candidate cap filter (the per-player extra-instances allowance the enabler allowedOk does not yet
+	// fully model); it now runs only over the small offered set. Order preserved: listedIds fills ascending id.
+	std::vector<int> vecConstructible;
+	m_enabler.buildings.listedIds(vecConstructible);
+	for (std::vector<int>::const_iterator it = vecConstructible.begin(), itEnd = vecConstructible.end(); it != itEnd; ++it)
 	{
-		if (!GET_PLAYER(getOwner()).isBuildingMaxedOut((BuildingTypes)idx, GC.getBuildingInfo((BuildingTypes)idx).getExtraPlayerInstances()))
+		const BuildingTypes eBuilding = (BuildingTypes)*it;
+		if (!GET_PLAYER(getOwner()).isBuildingMaxedOut(eBuilding, GC.getBuildingInfo(eBuilding).getExtraPlayerInstances()))
 		{
-			if (canConstruct((BuildingTypes)idx))
-			{
-				possibles.push_back((BuildingTypes)idx);
-			}
+			possibles.push_back(eBuilding);
 		}
 	}
 
@@ -5938,14 +5951,19 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				iValue += (kBuilding.getFreeExperience() * (bMetAnyCiv ? 16 : 8));
 
-				for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+				// #430 F2b (enabler.md par.6): iterate the LISTED unit frontier instead of scanning every unit --
+				// canTrain(u) default-args IS m_enabler.units.listed(u) (CvCity.cpp:2324). Order-independent
+				// (a commutative iValue += sum); the DOMAIN_SEA / combat-type checks stay as per-candidate filters.
+				std::vector<int> vecTrainable;
+				m_enabler.units.listedIds(vecTrainable);
+				for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 				{
-					const CvUnitInfo& kUnitInfo = GC.getUnitInfo((UnitTypes)iI);
+					const UnitTypes eUnitX = (UnitTypes)*it;
+					const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnitX);
 					UnitCombatTypes eCombatType = (UnitCombatTypes)kUnitInfo.getUnitCombatType();
 
 					if (eCombatType != NO_UNITCOMBAT
-						&& kUnitInfo.getDomainType() == DOMAIN_SEA
-						&& canTrain((UnitTypes)iI))
+						&& kUnitInfo.getDomainType() == DOMAIN_SEA)
 					{
 						iValue += (kBuilding.getUnitCombatFreeExperience().getValue(eCombatType) * (bMetAnyCiv ? 6 : 3));
 
@@ -6870,9 +6888,16 @@ ProjectTypes CvCityAI::AI_bestProject() const
 	int iBestValue = 0;
 	ProjectTypes eBestProject = NO_PROJECT;
 
-	for (int iI = 0; iI < GC.getNumProjectInfos(); iI++)
+	// #430 F2b (enabler.md par.6): iterate the enabler's LISTED project frontier, not the whole project database --
+	// projects are PLAYER-held, so canCreate(p) default-args reads through the owner as
+	// GET_PLAYER(getOwner()).m_enabler.projects.listed(p) (CvCity.cpp:3039); listedIds gives the identical set.
+	// Forward: original scanned ASCENDING and picks best by strict > (lowest-id wins ties), with a per-project
+	// SorenRand draw over that same ascending order -- ascending listedIds preserves both.
+	std::vector<int> vecCreatable;
+	GET_PLAYER(getOwner()).m_enabler.projects.listedIds(vecCreatable);
+	for (std::vector<int>::const_iterator it = vecCreatable.begin(), itEnd = vecCreatable.end(); it != itEnd; ++it)
 	{
-		if (canCreate((ProjectTypes)iI))
+		const int iI = *it;
 		{
 			int iValue = AI_projectValue((ProjectTypes)iI);
 
@@ -7029,18 +7054,21 @@ ProcessTypes CvCityAI::AI_bestProcess(CommerceTypes eCommerceType, int64_t* comm
 	int64_t iBestValue = 0;
 	ProcessTypes eBestProcess = NO_PROCESS;
 
-	for (int iI = 0; iI < GC.getNumProcessInfos(); iI++)
+	// #430 F2b (enabler.md par.6): iterate the enabler's LISTED process frontier, not the whole process database --
+	// processes are PLAYER-held, so canMaintain(p) reads through the owner as
+	// GET_PLAYER(getOwner()).m_enabler.processes.listed(p) (CvCity.cpp:3068); listedIds gives the identical set.
+	// Forward: original scanned ASCENDING and picks best by strict > (lowest-id wins ties); no RNG in the loop.
+	std::vector<int> vecMaintainable;
+	GET_PLAYER(getOwner()).m_enabler.processes.listedIds(vecMaintainable);
+	for (std::vector<int>::const_iterator it = vecMaintainable.begin(), itEnd = vecMaintainable.end(); it != itEnd; ++it)
 	{
-		const ProcessTypes eProcess = static_cast<ProcessTypes>(iI);
-		if (canMaintain(eProcess))
-		{
-			const int64_t iValue = AI_processValue(eProcess, eCommerceType, commerceWeights);
+		const ProcessTypes eProcess = static_cast<ProcessTypes>(*it);
+		const int64_t iValue = AI_processValue(eProcess, eCommerceType, commerceWeights);
 
-			if (iValue > iBestValue)
-			{
-				iBestValue = iValue;
-				eBestProcess = eProcess;
-			}
+		if (iValue > iBestValue)
+		{
+			iBestValue = iValue;
+			eBestProcess = eProcess;
 		}
 	}
 	return eBestProcess;
@@ -9179,17 +9207,25 @@ bool CvCityAI::AI_bestSpreadUnit(bool bMissionary, bool bExecutive, int iBaseCha
 					const int iReligionValue = kPlayer.AI_missionaryValue(area(), eReligion);
 					if (iReligionValue > 0)
 					{
-						for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+						// #430 F2b (enabler.md par.6): iterate the LISTED unit frontier instead of scanning every unit --
+						// canTrain(u) default-args IS m_enabler.units.listed(u) (CvCity.cpp:2324); the && canTrain guard on the
+						// best-update is now implicit in the frontier (canTrain-false units could never win via the short-circuit),
+						// so the set is identical. Forward: original ascending, strict > (lowest-id wins ties), no RNG in this inner
+						// loop (the missionary roll is drawn once above).
+						std::vector<int> vecTrainable;
+						m_enabler.units.listedIds(vecTrainable);
+						for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 						{
-							if (GC.getUnitInfo((UnitTypes)iI).getReligionSpreads(eReligion) > 0
-								&& GC.getUnitInfo((UnitTypes)iI).getProductionCost() > 0)
+							const UnitTypes eUnitX = (UnitTypes)*it;
+							if (GC.getUnitInfo(eUnitX).getReligionSpreads(eReligion) > 0
+								&& GC.getUnitInfo(eUnitX).getProductionCost() > 0)
 							{
-								const int iValue = iReligionValue / GC.getUnitInfo((UnitTypes)iI).getProductionCost();
+								const int iValue = iReligionValue / GC.getUnitInfo(eUnitX).getProductionCost();
 
-								if (iValue > iBestValue && canTrain((UnitTypes)iI))
+								if (iValue > iBestValue)
 								{
 									iBestValue = iValue;
-									*eBestSpreadUnit = (UnitTypes)iI;
+									*eBestSpreadUnit = eUnitX;
 									*iBestSpreadUnitValue = iReligionValue;
 								}
 							}
@@ -9220,10 +9256,17 @@ bool CvCityAI::AI_bestSpreadUnit(bool bMissionary, bool bExecutive, int iBaseCha
 					int iCorporationValue = kPlayer.AI_executiveValue(area(), eCorporation);
 					if (iCorporationValue > 0)
 					{
-						for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+						// #430 F2b (enabler.md par.6): iterate the LISTED unit frontier instead of scanning every unit --
+						// canTrain(u) default-args IS m_enabler.units.listed(u) (CvCity.cpp:2324); the && canTrain entry-guard is
+						// now implicit in the frontier, so the visited set is identical. Forward: original ascending, strict >
+						// (lowest-id wins ties), no RNG in this inner loop (the executive roll is drawn once above).
+						std::vector<int> vecTrainable;
+						m_enabler.units.listedIds(vecTrainable);
+						for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 						{
-							const CvUnitInfo& kUnitInfo = GC.getUnitInfo((UnitTypes)iI);
-							if (kUnitInfo.getCorporationSpreads(eCorporation) > 0 && canTrain((UnitTypes)iI))
+							const UnitTypes eUnitX = (UnitTypes)*it;
+							const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnitX);
+							if (kUnitInfo.getCorporationSpreads(eCorporation) > 0)
 							{
 								int iValue = iCorporationValue / kUnitInfo.getProductionCost();
 								int iTotalCount = 0;
@@ -9259,7 +9302,7 @@ bool CvCityAI::AI_bestSpreadUnit(bool bMissionary, bool bExecutive, int iBaseCha
 								if (iValue > iBestValue)
 								{
 									iBestValue = iValue;
-									*eBestSpreadUnit = (UnitTypes)iI;
+									*eBestSpreadUnit = eUnitX;
 									*iBestSpreadUnitValue = iCorporationValue;
 								}
 							}
@@ -12235,13 +12278,19 @@ bool CvCityAI::AI_trainInquisitor()
 	int iUnitCost = MAX_INT;
 	UnitTypes eBestUnit = NO_UNIT;
 
-	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+	// #430 F2b (enabler.md par.6): iterate this city's LISTED unit frontier. canTrain(i, false, false) is the
+	// default-value call (bContinue=false, bTestVisible=false) that hits the bare m_enabler.units.listed flip
+	// (CvCity::canTrain guard ignores bTestVisible in strict mode), so listedIds is the identical trainable set.
+	// isInquisitor + cheapest-cost stay per-candidate filters; ascending forward keeps the strict-'<' first-cheapest pick.
+	std::vector<int> vecTrainable;
+	m_enabler.units.listedIds(vecTrainable);
+	for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 	{
-		if (GC.getUnitInfo((UnitTypes)iI).isInquisitor()
-			&& GC.getUnitInfo((UnitTypes)iI).getProductionCost() < iUnitCost
-			&& canTrain((UnitTypes)iI, false, false))
+		const UnitTypes eUnit = (UnitTypes)*it;
+		if (GC.getUnitInfo(eUnit).isInquisitor()
+			&& GC.getUnitInfo(eUnit).getProductionCost() < iUnitCost)
 		{
-			eBestUnit = (UnitTypes)iI;
+			eBestUnit = eUnit;
 			iUnitCost = GC.getUnitInfo(eBestUnit).getProductionCost();
 		}
 	}
@@ -12360,9 +12409,15 @@ int CvCityAI::AI_getPromotionValue(PromotionTypes ePromotion) const
 	PROFILE_EXTRA_FUNC();
 	int iCanTrainCount = 0;
 	int iValue = 0;
-	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+	// #430 F2b (enabler.md par.6): iterate the LISTED unit frontier instead of scanning every unit --
+	// canTrain(u) default-args IS m_enabler.units.listed(u) (CvCity.cpp:2324). Order-independent: the loop only
+	// accumulates iCanTrainCount and a commutative iValue sum; the combat-type check stays a per-candidate filter.
+	std::vector<int> vecTrainable;
+	m_enabler.units.listedIds(vecTrainable);
+	for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 	{
-		const CvUnitInfo& kUnit = GC.getUnitInfo((UnitTypes)iI);
+		const UnitTypes eUnitX = (UnitTypes)*it;
+		const CvUnitInfo& kUnit = GC.getUnitInfo(eUnitX);
 
 		if (kUnit.getUnitCombatType() != NO_UNITCOMBAT)
 		{
@@ -12386,12 +12441,12 @@ int CvCityAI::AI_getPromotionValue(PromotionTypes ePromotion) const
 			}
 			//TB SubCombat Mod End
 
-			if (canTrain((UnitTypes)iI))
+			// #430 F2b: canTrain is implicit in the LISTED frontier above; the count/value block runs unchanged.
 			{
 				iCanTrainCount++;
 				if (bUnitCanGetPromotion)
 				{
-					iValue += GET_PLAYER(getOwner()).AI_promotionValue(ePromotion, (UnitTypes)iI);
+					iValue += GET_PLAYER(getOwner()).AI_promotionValue(ePromotion, eUnitX);
 				}
 			}
 		}
@@ -13037,13 +13092,17 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 		// set-growth cost rather than per-call cost.
 		int iConstructible = 0;
 		int iEnablers = 0;
-		for (int iBuilding = 0; iBuilding < iNumBuildings; iBuilding++)
+		// #430 F2b (enabler.md par.6): the directly-constructible outer set is the enabler's LISTED frontier
+		// -- canConstruct(eBuilding) with default args IS m_enabler.buildings.listed(eBuilding) (CvCity.cpp:2489),
+		// so iterating listedIds yields the identical constructible set without the whole-database scan. The inner
+		// dependent-augmentation below is UNCHANGED: it stays a genuine what-if (canConstructInternal with
+		// withExtraBuilding=eBuilding -- "could I build eType if I also had eBuilding") over the precomputed
+		// reverse-index, which the frontier cannot answer and enabler.md par.8 keeps on legacy.
+		std::vector<int> vecConstructible;
+		m_enabler.buildings.listedIds(vecConstructible);
+		for (std::vector<int>::const_iterator it = vecConstructible.begin(), itEnd = vecConstructible.end(); it != itEnd; ++it)
 		{
-			const BuildingTypes eBuilding = static_cast<BuildingTypes>(iBuilding);
-			if (!canConstruct(eBuilding))
-			{
-				continue;
-			}
+			const BuildingTypes eBuilding = static_cast<BuildingTypes>(*it);
 			buildingsToCalculate.insert(eBuilding);
 			iConstructible++;
 
@@ -13689,12 +13748,18 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 
 				int iValue = kBuilding.getFreeExperience() * (bMetAnyCiv ? 16 : 8);
 
-				for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+				// #430 F2b (enabler.md par.6): iterate the LISTED unit frontier instead of scanning every unit --
+				// canTrain(u) default-args IS m_enabler.units.listed(u) (CvCity.cpp:2324). Order-independent (a commutative
+				// iValue += sum); the DOMAIN_SEA / combat-type checks stay as per-candidate filters.
+				std::vector<int> vecTrainable;
+				m_enabler.units.listedIds(vecTrainable);
+				for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 				{
-					const CvUnitInfo& kUnitInfo = GC.getUnitInfo((UnitTypes)iI);
+					const UnitTypes eUnitX = (UnitTypes)*it;
+					const CvUnitInfo& kUnitInfo = GC.getUnitInfo(eUnitX);
 					UnitCombatTypes eCombatType = (UnitCombatTypes)kUnitInfo.getUnitCombatType();
 
-					if (eCombatType != NO_UNITCOMBAT && kUnitInfo.getDomainType() == DOMAIN_SEA && canTrain((UnitTypes)iI))
+					if (eCombatType != NO_UNITCOMBAT && kUnitInfo.getDomainType() == DOMAIN_SEA)
 					{
 						iValue += kBuilding.getUnitCombatFreeExperience().getValue(eCombatType) * (bMetAnyCiv ? 6 : 3);
 

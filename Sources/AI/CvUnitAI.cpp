@@ -15309,25 +15309,30 @@ bool CvUnitAI::AI_switchHurry()
 	int iBestValue = 0;
 	BuildingTypes eBestBuilding = NO_BUILDING;
 
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+	// #430 F2b (enabler.md par.6): iterate this city's LISTED building frontier instead of scanning the whole
+	// ~5200-building database. pCity->canConstruct(eBuilding) with default args IS the bare read
+	// pCity->m_enabler.buildings.listed(eBuilding) (CvCity.cpp:2489), so {iI : canConstruct(iI)} == listedIds --
+	// identical membership, minus the per-candidate DB probe. pCity is fixed for the whole loop (one frontier).
+	// isWorldWonder stays as the per-candidate body filter. Order preserved: listedIds fills ascending id, and
+	// the best-by-strict-> selection keeps the first winner on a tie exactly as the ascending scan did.
+	std::vector<int> vecConstructible;
+	pCity->m_enabler.buildings.listedIds(vecConstructible);
+	for (std::vector<int>::const_iterator it = vecConstructible.begin(), itEnd = vecConstructible.end(); it != itEnd; ++it)
 	{
-		const BuildingTypes eBuilding = static_cast<BuildingTypes>(iI);
+		const BuildingTypes eBuilding = static_cast<BuildingTypes>(*it);
 
 		if (isWorldWonder(eBuilding))
 		{
-			if (pCity->canConstruct(eBuilding))
+			if (pCity->getProgressOnBuilding(eBuilding) == 0)
 			{
-				if (pCity->getProgressOnBuilding(eBuilding) == 0)
+				if (getMaxHurryProduction(pCity) >= pCity->getProductionNeeded(eBuilding))
 				{
-					if (getMaxHurryProduction(pCity) >= pCity->getProductionNeeded(eBuilding))
-					{
-						const int iValue = pCity->AI_buildingValue(eBuilding);
+					const int iValue = pCity->AI_buildingValue(eBuilding);
 
-						if (iValue > iBestValue)
-						{
-							iBestValue = iValue;
-							eBestBuilding = eBuilding;
-						}
+					if (iValue > iBestValue)
+					{
+						iBestValue = iValue;
+						eBestBuilding = eBuilding;
 					}
 				}
 			}
