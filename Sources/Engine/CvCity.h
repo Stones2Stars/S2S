@@ -858,9 +858,6 @@ public:
 
 	void onYieldChange();
 
-	int getBaseYieldPerPopRate(YieldTypes eIndex) const;
-	void setBaseYieldPerPopRate(YieldTypes eIndex, int iNewValue);
-	void changeBaseYieldPerPopRate(YieldTypes eIndex, int iChange);
 
 	int getYieldRateModifier(YieldTypes eIndex) const;
 	void changeYieldRateModifier(YieldTypes eIndex, int iChange);
@@ -929,14 +926,12 @@ public:
 	void updateReligionCommerce(CommerceTypes eIndex);
 	void updateReligionCommerce();
 
-	void setCorporationYield(YieldTypes eIndex, int iNewValue);
 	int getCorporationCommerce(CommerceTypes eIndex) const;
 	int getCorporationCommerceByCorporation(CommerceTypes eIndex, CorporationTypes eCorporation) const;
 	int getCorporationYield(YieldTypes eIndex) const;
 	int getCorporationYieldByCorporation(YieldTypes eIndex, CorporationTypes eCorporation) const;
 	void updateCorporation();
 	void updateCorporationCommerce(CommerceTypes eIndex);
-	void updateCorporationYield(YieldTypes eIndex);
 	void updateCorporationBonus();
 
 	int getCommerceRateModifier(CommerceTypes eIndex) const;
@@ -1764,12 +1759,10 @@ protected:
 	mutable int* m_aiBuildingExtraYield100Cache;
 	mutable bool* m_abBuildingExtraYield100Dirty;
 	int* m_buildingYieldMod;
-	int* m_aiBaseYieldPerPopRate;
 	int* m_aiYieldRateModifier;
 	int* m_aiPowerYieldRateModifier;
 	int* m_aiBonusYieldRateModifier;
 	int* m_aiTradeYield;
-	int* m_aiCorporationYield;
 	int* m_aiExtraSpecialistYield;
 	int* m_aiExtraSpecialistCommerce;
 	int* m_aiProductionToCommerceModifier;

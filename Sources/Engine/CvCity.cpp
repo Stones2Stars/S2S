@@ -68,12 +68,10 @@ CvCity::CvCity()
 	m_aiBuildingExtraYield100Cache = new int[NUM_YIELD_TYPES];
 	m_abBuildingExtraYield100Dirty = new bool[NUM_YIELD_TYPES];
 	m_buildingYieldMod = new int[NUM_YIELD_TYPES];
-	m_aiBaseYieldPerPopRate = new int[NUM_YIELD_TYPES];
 	m_aiYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiPowerYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiBonusYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiTradeYield = new int[NUM_YIELD_TYPES];
-	m_aiCorporationYield = new int[NUM_YIELD_TYPES];
 	m_aiExtraSpecialistYield = new int[NUM_YIELD_TYPES];
 	m_aiExtraSpecialistCommerce = new int[NUM_COMMERCE_TYPES];
 	m_aiProductionToCommerceModifier = new int[NUM_COMMERCE_TYPES];
@@ -190,12 +188,10 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_aiBuildingExtraYield100Cache);
 	SAFE_DELETE_ARRAY(m_abBuildingExtraYield100Dirty);
 	SAFE_DELETE_ARRAY(m_buildingYieldMod);
-	SAFE_DELETE_ARRAY(m_aiBaseYieldPerPopRate);
 	SAFE_DELETE_ARRAY(m_aiYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiPowerYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiBonusYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiTradeYield);
-	SAFE_DELETE_ARRAY(m_aiCorporationYield);
 	SAFE_DELETE_ARRAY(m_aiExtraSpecialistYield);
 
 	SAFE_DELETE_ARRAY(m_aiExtraSpecialistCommerce);
@@ -634,12 +630,10 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		m_aiBuildingExtraYield100Cache[iI] = 0;
 		m_abBuildingExtraYield100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
 		m_buildingYieldMod[iI] = 0;
-		m_aiBaseYieldPerPopRate[iI] = 0;
 		m_aiYieldRateModifier[iI] = 0;
 		m_aiPowerYieldRateModifier[iI] = 0;
 		m_aiBonusYieldRateModifier[iI] = 0;
 		m_aiTradeYield[iI] = 0;
-		m_aiCorporationYield[iI] = 0;
 		m_aiExtraSpecialistYield[iI] = 0;
 		m_abBaseYieldRankValid[iI] = false;
 		m_abYieldRankValid[iI] = false;
@@ -4719,7 +4713,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		PROFILE("CvCity::processBuilding.Yields");
 		const YieldTypes eYieldX = static_cast<YieldTypes>(iI);
 		changeBuildingExtraYield100(eYieldX, 100 * iChange * (kBuilding.getYieldChange(iI) + getBuildingYieldChange(eBuilding, eYieldX)));
-		changeBaseYieldPerPopRate(eYieldX, kBuilding.getYieldPerPopChange(iI) * iChange);
 
 		changeBuildingYieldModifier(eYieldX, iChange * kBuilding.getYieldModifier(iI));
 
@@ -10865,11 +10858,9 @@ int CvCity::getExtraYield100(YieldTypes eYield) const
 	// getBuildingExtraYield100 / squirrelBanana. The bonus/vicinity building yield is the pure-function holder; the
 	// corp/event city-yields that rode m_aiExtraYield are dropped (acceptable: parity on a correct, build-order-
 	// independent base is the goal, and no event data sets building yields anyway).
-	return (
-		getBuildingExtraYield100(eYield)
-		+
-		getBaseYieldPerPopRate(eYield) * getPopulation()
-	);
+	// #430 cut: the per-pop base-yield accumulator (m_aiBaseYieldPerPopRate) is gone -- the building YieldPerPop is a
+	// cascade per-pop deposit, so getExtraYield100 is building-extra only (the legacy per-pop term is EXPOSED-dropped).
+	return getBuildingExtraYield100(eYield);
 }
 
 void CvCity::changeExtraYield(YieldTypes eYield, int iChange)
@@ -10946,28 +10937,6 @@ void CvCity::onYieldChange()
 	}
 }
 
-int CvCity::getBaseYieldPerPopRate(YieldTypes eIndex)	const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-
-	return m_aiBaseYieldPerPopRate[eIndex];
-}
-
-void CvCity::setBaseYieldPerPopRate(YieldTypes eIndex, int iNewValue)
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-
-	if (m_aiBaseYieldPerPopRate[eIndex] != iNewValue)
-	{
-		m_aiBaseYieldPerPopRate[eIndex] = iNewValue;
-		onYieldChange();
-	}
-}
-
-void CvCity::changeBaseYieldPerPopRate(YieldTypes eIndex, int iChange)
-{
-	setBaseYieldPerPopRate(eIndex, (getBaseYieldPerPopRate(eIndex) + iChange));
-}
 
 int CvCity::getYieldRateModifier(YieldTypes eIndex)	const
 {
@@ -12130,22 +12099,12 @@ void CvCity::updateReligionCommerce()
 int CvCity::getCorporationYield(YieldTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex)
-	return m_aiCorporationYield[eIndex];
-}
-
-void CvCity::setCorporationYield(YieldTypes eIndex, int iNewValue)
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex)
-
-	const int iOldValue = getCorporationYield(eIndex);
-
-	if (iOldValue != iNewValue)
-	{
-		m_aiCorporationYield[eIndex] = iNewValue;
-		FASSERT_NOT_NEGATIVE(getCorporationYield(eIndex));
-
-		changeExtraYield(eIndex, iNewValue - iOldValue);
-	}
+	// #430: RECOMPUTE-FROM-SOURCE -- the serialized m_aiCorporationYield accumulator is cut; Σ active corps'
+	// per-corp yield (getCorporationYieldByCorporation). Cold-path (decomposition/UI/Python), so recompute-on-read.
+	int iYield = 0;
+	for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
+		iYield += getCorporationYieldByCorporation(eIndex, (CorporationTypes)iI);
+	return iYield;
 }
 
 int CvCity::getCorporationCommerce(CommerceTypes eIndex) const
@@ -12223,37 +12182,13 @@ void CvCity::updateCorporationCommerce(CommerceTypes eIndex)
 	}
 }
 
-void CvCity::updateCorporationYield(YieldTypes eIndex)
-{
-	PROFILE_EXTRA_FUNC();
-	const int iOldYield = getCorporationYield(eIndex);
-	int iNewYield = 0;
-
-	for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
-	{
-		iNewYield += getCorporationYieldByCorporation(eIndex, (CorporationTypes)iI);
-	}
-
-	if (iOldYield != iNewYield)
-	{
-		m_aiCorporationYield[eIndex] = iNewYield;
-		FASSERT_NOT_NEGATIVE(getCorporationYield(eIndex));
-
-		changeExtraYield(eIndex, iNewYield - iOldYield);
-	}
-}
-
-
 void CvCity::updateCorporation()
 {
 	PROFILE_EXTRA_FUNC();
 	updateCorporationBonus();
 	updateBuildingCommerce();
 
-	for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
-	{
-		updateCorporationYield((YieldTypes)iI);
-	}
+	// #430: updateCorporationYield removed (getCorporationYield recomputes from source now).
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; ++iI)
 	{
 		updateCorporationCommerce((CommerceTypes)iI);
@@ -17018,7 +16953,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiPowerYieldRateModifier);
 	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_aiBonusYieldRateModifier, SAVE_VALUE_TYPE_INT_ARRAY);   // rebuilt by the load fold
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiCorporationYield);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiExtraSpecialistYield);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerce);
@@ -17325,7 +17259,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 			WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_ppaaiLocalSpecialistExtraCommerce[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 		}
 	}
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiBaseYieldPerPopRate);
 	WRAPPER_READ(wrapper, "CvCity", &m_bVisibilitySetup);
 	m_bVisibilitySetup = false;
 
@@ -17729,7 +17662,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiPowerYieldRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiBonusYieldRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiCorporationYield);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiExtraSpecialistYield);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerce);
@@ -17902,7 +17834,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	{
 		WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_ppaaiLocalSpecialistExtraCommerce[iI]);
 	}
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiBaseYieldPerPopRate);
 	WRAPPER_WRITE(wrapper, "CvCity", m_bVisibilitySetup);
 
 	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
@@ -21900,12 +21831,10 @@ void CvCity::clearModifierTotals()
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
-		m_aiBaseYieldPerPopRate[iI] = 0;
 		m_aiYieldRateModifier[iI] = 0;
 		m_aiPowerYieldRateModifier[iI] = 0;
 		m_aiBonusYieldRateModifier[iI] = 0;
 		m_aiTradeYield[iI] = 0;
-		m_aiCorporationYield[iI] = 0;
 		m_aiExtraSpecialistYield[iI] = 0;
 		m_aiBuildingBonusVicinityYield100[iI] = 0;
 		m_aiBuildingExtraYield100Cache[iI] = 0;

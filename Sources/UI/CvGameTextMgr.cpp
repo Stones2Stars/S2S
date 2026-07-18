@@ -26197,7 +26197,7 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 	}
 	// Buildings
 	{
-		const int iBuildingYield100 = city.getBuildingExtraYield100(eYieldType) + city.getBaseYieldPerPopRate(eYieldType) * city.getPopulation();
+		const int iBuildingYield100 = city.getBuildingExtraYield100(eYieldType);   // #430 cut: per-pop rate accumulator gone
 		if (0 != iBuildingYield100)
 		{
 			CvWString szValue;

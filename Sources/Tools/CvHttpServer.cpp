@@ -553,8 +553,7 @@ namespace
 			const char* yn = GC.getYieldInfo((YieldTypes)y).getType();
 			tradeY[yn]    = picojson::value((double)pCity->getTradeYield((YieldTypes)y));
 			freeCityY[yn] = picojson::value((double)kPlayer.getFreeCityYield((YieldTypes)y));
-			const int iRawExtra = (pCity->getExtraYield100((YieldTypes)y) - pCity->getBuildingExtraYield100((YieldTypes)y)
-			                       - pCity->getBaseYieldPerPopRate((YieldTypes)y) * pCity->getPopulation()) / 100;
+			const int iRawExtra = (pCity->getExtraYield100((YieldTypes)y) - pCity->getBuildingExtraYield100((YieldTypes)y)) / 100;   // #430 cut: per-pop accumulator gone
 			cityExtraY[yn] = picojson::value((double)iRawExtra);
 		}
 		c["tradeYield"]     = picojson::value(tradeY);
@@ -2988,7 +2987,7 @@ namespace
 				e["baseGoldenAgeYield"] = picojson::value((double)(kPlayer.isGoldenAge() ? kPlayer.getGoldenAgeYield(eY) : 0)); // golden-age yield
 				// EXTRA-bucket decomposition (getExtraYield100, CvCity.cpp:11323) -- flatExtra = extraYield100 - building - perPop×pop:
 				e["extraBuildingYield100"] = picojson::value((double)pCity->getBuildingExtraYield100(eY)); // per-building flat ×100
-				e["extraPerPopRate"]       = picojson::value((double)pCity->getBaseYieldPerPopRate(eY));   // per-pop rate (×pop in the bucket)
+				e["extraPerPopRate"]       = picojson::value((double)0);   // #430 cut: per-pop rate accumulator gone (cascade per-pop deposit)
 				// per-building BuildingYieldChange breakdown -- m_aBuildingYieldChange feeds m_aiExtraYield (the NON-building
 				// part of the extra bucket: extraYield100 - extraBuildingYield100 - perPop, minus corp yield). Each entry is a
 				// yield-change set by bonus / vicinity-bonus / vote-source / event (setBuildingYieldChange, CvCity.cpp:19187).

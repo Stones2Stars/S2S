@@ -204,6 +204,8 @@ Orphan tags drain as plain int-array elements (SkipElement SAVE_VALUE_TYPE_INT_A
 it is the isolated trade-route input package the cascade folds (modifier.md par.2a), outside cascade derivation scope.
 
 CvCity::m_aiRiverPlotYield                (int array)
+CvCity::m_aiBaseYieldPerPopRate           (int array)
+CvCity::m_aiCorporationYield              (int array)
 ========================
 
 ========================
