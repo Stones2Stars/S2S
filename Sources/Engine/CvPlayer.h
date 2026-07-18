@@ -925,7 +925,6 @@ public:
 	void changeTradeYieldModifier(YieldTypes eIndex, int iChange);
 
 	int getExtraCommerce100(const CommerceTypes eIndex) const;
-	void changeExtraCommerce100(const CommerceTypes eIndex, const int iChange);
 
 	int getCommercePercent(CommerceTypes eIndex) const;
 	void setCommercePercent(CommerceTypes eIndex, int iNewValue);
@@ -947,10 +946,8 @@ public:
 	void changeCapitalCommerceRateModifier(CommerceTypes eIndex, int iChange);
 
 	int getStateReligionBuildingCommerce(CommerceTypes eIndex) const;
-	void changeStateReligionBuildingCommerce(CommerceTypes eIndex, int iChange);
 
 	int getSpecialistExtraCommerce(CommerceTypes eIndex) const;
-	void changeSpecialistExtraCommerce(CommerceTypes eIndex, int iChange);
 
 	bool isCommerceFlexible(CommerceTypes eIndex) const;   // cascade-backed (#430): runtime gates + the team getter
 
@@ -989,7 +986,6 @@ public:
 	void changeExtraBuildingHealth(const BuildingTypes eIndex, const int iChange, const bool bLimited = false);
 
 	int getFeatureHappiness(FeatureTypes eIndex) const;
-	void changeFeatureHappiness(FeatureTypes eIndex, int iChange, bool bLimited = false);
 
 	int getUnitCount(const UnitTypes eUnit) const;
 	void changeUnitCount(const UnitTypes eUnit, const int iChange);
@@ -1947,7 +1943,6 @@ protected:
 	int m_iAIAttitudeModifier;
 	int m_iFocusPlotX;
 	int m_iFocusPlotY;
-	int* m_aiFreeCityYield;
 	int* m_aiLessYieldThreshold;
 
 	//TB Traits end
@@ -1979,15 +1974,11 @@ protected:
 	int* m_aiCapitalYieldRateModifier;
 	int* m_aiExtraYieldThreshold;
 	int* m_aiTradeYieldModifier;
-	int* m_extraCommerce;
 	int* m_aiCommercePercent;
 	int* m_aiCommerceRateModifier;
 	int* m_aiCommerceRateModifierfromEvents;
 	int* m_aiCommerceRateModifierfromBuildings;
 	int* m_aiCapitalCommerceRateModifier;
-	int* m_aiStateReligionBuildingCommerce;
-	int* m_aiSpecialistExtraCommerce;
-	int* m_aiSpecialistExtraYield;
 	int* m_aiGoldPerTurnByPlayer;
 	int* m_aiEspionageSpendingWeightAgainstTeam;
 
@@ -1999,7 +1990,6 @@ protected:
 	int* m_paiImprovementCount;
 	int** m_paiExtraBuildingYield;
 	int** m_paiExtraBuildingCommerce;
-	int* m_paiFeatureHappiness;
 	int* m_paiBuildingCount;
 	int* m_paiBuildingGroupCount;
 	int* m_paiBuildingGroupMaking;
@@ -2145,10 +2135,8 @@ public:
 	void updateExtraSpecialistCommerce();
 
 	int getSpecialistExtraYield(YieldTypes eIndex) const;
-	void changeSpecialistExtraYield(YieldTypes eIndex, int iChange);
 
 	int getFreeCityYield(YieldTypes eIndex) const;
-	void changeFreeCityYield(YieldTypes eIndex, int iChange);
 
 	int getTraitExtraCityDefense() const;
 	void setTraitExtraCityDefense(int iNewValue);

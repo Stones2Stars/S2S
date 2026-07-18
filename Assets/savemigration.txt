@@ -225,6 +225,12 @@ int-array elements (m_paiFeatureHappiness as a class int array).
 
 CvPlayer::m_aiGoldenAgeYield              (int array)
 CvPlayer::m_aiGoldenAgeCommerce           (int array)
+CvPlayer::m_aiFreeCityYield               (int array)
+CvPlayer::m_aiSpecialistExtraYield        (int array)
+CvPlayer::m_aiSpecialistExtraCommerce     (int array)
+CvPlayer::m_aiStateReligionBuildingCommerce (int array)
+CvPlayer::m_extraCommerce                 (int array)
+CvPlayer::m_paiFeatureHappiness           (class int array)
 ========================
 
 ========================
