@@ -906,10 +906,8 @@ public:
 	void changeSeaPlotYield(YieldTypes eIndex, int iChange);
 
 	int getGoldenAgeYield(YieldTypes eIndex) const;
-	void changeGoldenAgeYield(YieldTypes eIndex, int iChange);
 
 	int getGoldenAgeCommerce(CommerceTypes eIndex) const;
-	void changeGoldenAgeCommerce(CommerceTypes eIndex, int iChange);
 
 	int getYieldRateModifier(YieldTypes eIndex) const;
 	void changeYieldRateModifier(YieldTypes eIndex, int iChange);
@@ -1952,8 +1950,6 @@ protected:
 	int* m_aiFreeCityYield;
 	int* m_aiLessYieldThreshold;
 
-	int* m_aiGoldenAgeYield;
-	int* m_aiGoldenAgeCommerce;
 	//TB Traits end
 
 	// Used for DynamicCivNames

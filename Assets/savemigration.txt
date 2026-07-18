@@ -216,6 +216,18 @@ CvCity::m_commercePerPopFromBuildings     (int array)
 ========================
 
 ========================
+2026-07-18 — #430 delete-driven legacy cut (CvPlayer yield/commerce accumulators, cut incrementally): legacy player
+yield/commerce accumulators the cascade computes itself (golden-age = the empire.goldenAge member-mirror; free-city
+yield / specialist-extra / extra-commerce / feature-happiness = trait/civic/building-fed terms). The cascade reads
+NONE of these getters (verified); they fed the now-orphaned legacy sub-getters + decomposition, so the getters return
+0 (exposed) and the accumulators + changers + trait/civic/building feeders are deleted. Orphans drain as plain
+int-array elements (m_paiFeatureHappiness as a class int array).
+
+CvPlayer::m_aiGoldenAgeYield              (int array)
+CvPlayer::m_aiGoldenAgeCommerce           (int array)
+========================
+
+========================
 2026-07-18 — #430 delete-driven legacy cut (FromTech wellbeing accumulators): the city tech-gated
 building/specialist happiness/health accumulators + the per-tech building maps fully removed. Both tech-gated
 sources ride the cascade already: BUILDING tech-happiness/health -> the iTechGatedNet term (TECH-gated building

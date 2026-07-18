@@ -243,8 +243,6 @@ m_cachedBonusCount(NULL)
 
 	m_paiEraAdvanceFreeSpecialistCount = NULL;
 
-	m_aiGoldenAgeYield = new int[NUM_YIELD_TYPES];
-	m_aiGoldenAgeCommerce = new int[NUM_COMMERCE_TYPES];
 	//TB Traits end
 
 	m_bDisableHuman = false;
@@ -332,8 +330,6 @@ CvPlayer::~CvPlayer()
 		//Team Project (6)
 	SAFE_DELETE_ARRAY(m_paiEraAdvanceFreeSpecialistCount);
 	//Team Project (7)
-	SAFE_DELETE_ARRAY(m_aiGoldenAgeYield);
-	SAFE_DELETE_ARRAY(m_aiGoldenAgeCommerce);
 	//TB Traits end
 
 	SAFE_DELETE_ARRAY(m_cachedBonusCount);
@@ -1078,7 +1074,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		m_aiFreeCityYield[iI] = 0;
 		m_aiSpecialistExtraYield[iI] = 0;
 		m_aiLessYieldThreshold[iI] = 0;
-		m_aiGoldenAgeYield[iI] = 0;
 		//TB Traits end
 	}
 
@@ -1092,7 +1087,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		m_aiCapitalCommerceRateModifier[iI] = 0;
 		m_aiStateReligionBuildingCommerce[iI] = 0;
 		m_aiSpecialistExtraCommerce[iI] = 0;
-		m_aiGoldenAgeCommerce[iI] = 0;
 	}
 
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
@@ -12648,41 +12642,21 @@ void CvPlayer::changeSeaPlotYield(YieldTypes eIndex, int iChange)
 int CvPlayer::getGoldenAgeYield(YieldTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	return std::max(0,m_aiGoldenAgeYield[eIndex]);
+	// #430: m_aiGoldenAgeYield accumulator cut -- golden-age yield is a cascade term (empire.goldenAge member-mirror,
+	// golden-age.md); the cascade computes it independently, this legacy player getter returns 0 (exposed).
+	return 0;
 }
 
-
-void CvPlayer::changeGoldenAgeYield(YieldTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiGoldenAgeYield[eIndex] += iChange;
-
-		updateYield();
-	}
-}
-
+// #430 cut: changeGoldenAgeYield removed (golden-age yield rides the cascade empire.goldenAge member-mirror).
 
 int CvPlayer::getGoldenAgeCommerce(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return std::max(0,m_aiGoldenAgeCommerce[eIndex]);
+	// #430: m_aiGoldenAgeCommerce accumulator cut -- golden-age commerce rides the cascade (empire.goldenAge); 0 (exposed).
+	return 0;
 }
 
-
-void CvPlayer::changeGoldenAgeCommerce(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiGoldenAgeCommerce[eIndex] += iChange;
-
-		setCommerceDirty(eIndex);
-	}
-}
+// #430 cut: changeGoldenAgeCommerce removed (golden-age commerce rides the cascade).
 
 
 int CvPlayer::getYieldRateModifier(YieldTypes eIndex) const
@@ -19260,8 +19234,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeSpecialistperTeamProjectCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraGoodyCount);
 
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiGoldenAgeYield);
-		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiGoldenAgeCommerce);
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBaseMergeSelection);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFirstMergeSelection);
@@ -20249,8 +20221,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeSpecialistperTeamProjectCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraGoodyCount);
 
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiGoldenAgeYield);
-		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiGoldenAgeCommerce);
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBaseMergeSelection);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFirstMergeSelection);
@@ -28361,7 +28331,6 @@ void CvPlayer::clearModifierTotals()
 		m_aiFreeCityYield[iI] = 0;
 		m_aiSpecialistExtraYield[iI] = 0;
 		m_aiLessYieldThreshold[iI] = 0;
-		m_aiGoldenAgeYield[iI] = 0;
 		//TB Traits end
 	}
 
@@ -28374,7 +28343,6 @@ void CvPlayer::clearModifierTotals()
 		m_aiCapitalCommerceRateModifier[iI] = 0;
 		m_aiStateReligionBuildingCommerce[iI] = 0;
 		m_aiSpecialistExtraCommerce[iI] = 0;
-		m_aiGoldenAgeCommerce[iI] = 0;
 	}
 
 	// Reset power to just that due to pop. Other contributions will be re-added during the recalc
@@ -28571,14 +28539,14 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 		changeSpecialistExtraYield(eYield, GC.getTraitInfo(eTrait).getSpecialistExtraYield(iI) * iChange);
 		updateExtraYieldThreshold(eYield);
 		updateLessYieldThreshold(eYield);
-		changeGoldenAgeYield(eYield, GC.getTraitInfo(eTrait).getGoldenAgeYieldChanges(iI) * iChange);
+		// #430 cut: changeGoldenAgeYield removed (golden-age yield rides the cascade empire.goldenAge member-mirror).
 	}
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
 		changeCapitalCommerceRateModifier((CommerceTypes)iI, GC.getTraitInfo(eTrait).getCapitalCommerceModifier(iI) * iChange);
 		changeSpecialistExtraCommerce((CommerceTypes)iI, GC.getTraitInfo(eTrait).getSpecialistExtraCommerce(iI) * iChange);
-		changeGoldenAgeCommerce((CommerceTypes)iI, GC.getTraitInfo(eTrait).getGoldenAgeCommerceChanges(iI) * iChange);
+		// #430 cut: changeGoldenAgeCommerce removed (golden-age commerce rides the cascade).
 	}
 
 	int iGPRateChange = GC.getTraitInfo(eTrait).getGreatPeopleRateChange();
