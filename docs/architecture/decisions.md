@@ -310,6 +310,16 @@ is repurposed: PROMOTED from offline parity oracle to the USER-VISIBLE PERFORMAN
 `(scope,channel)`/turn-time dashboard — Razor + SignalR); it MAY still spot-verify parity against known-good as a
 sanity check, but that is not the migration's validation path. **Home:** [validation.md](../specs/validation.md).
 
+### DEC-oracle-tautology
+
+With the legacy accumulators DELETED (red ratchet), the `*Legacy` oracle getters + the `*Recomputed`/`*Leg` twins on
+the `/computed` endpoints read the cascade-derived flipped getters, NOT legacy — so every remaining oracle-vs-cascade
+comparison is cascade-vs-cascade: a structural always-parity that can never turn red (the false-confirmation trap). Oracle
+parity is NOT a verification signal (only served-value sanity + the compiler census are). The oracle surface is REMOVED,
+not maintained (a dedicated sweep). **An oracle endpoint is NOT a real consumer:** a legacy member whose only live
+consumer is an oracle endpoint is a self-referential keep-alive that fools the compiler census — remove the endpoint WITH
+the member; the oracle is never a reason to keep legacy alive. **Home:** [validation.md](../specs/validation.md).
+
 ### DEC-playability-not-a-gate
 
 The `json-data-migration` branch is knowingly not playable, and playability is NOT a gate on removing legacy —

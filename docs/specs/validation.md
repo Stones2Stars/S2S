@@ -16,6 +16,25 @@
 > as the red ratchet ([DEC-red-ratchet](../architecture/decisions.md#dec-red-ratchet)), so there is no legacy oracle
 > left to shadow against on the cut surfaces anyway. **What remains is live verification.**
 
+> **⛔ THE ORACLE IS NOW TAUTOLOGICAL — remove it, never read it ([DEC-oracle-tautology](../architecture/decisions.md#dec-oracle-tautology)).**
+> With the legacy accumulators DELETED (the red ratchet, [DEC-red-ratchet](../architecture/decisions.md#dec-red-ratchet)),
+> the `*Legacy` oracle getters (`happyLevelLegacy`, `getYieldRate100Legacy`, …) and the `*Recomputed`/`*Leg` twins on the
+> `/computed` endpoints no longer read legacy — they read the **cascade-derived flipped getters**. So every remaining
+> "oracle vs cascade" comparison is **cascade vs cascade**: a structural always-parity that can never turn red — the
+> false-confirmation trap ([tally.md](tally.md) "the same number twice") in its purest form, a green light that trains the
+> next agent to believe legacy still validates the cascade. **Oracle parity is NOT a verification signal**; the only live
+> signals are served-value SANITY (the running game shows a sane number) + the COMPILER CENSUS (a deleted member's
+> consumers are compile errors). Two consequences:
+> - **The oracle surface is REMOVED, not maintained** — the `*Legacy`/`*Recomputed`/`*Leg` comparison fields + the
+>   `*Legacy` getters that exist only to feed them. A dedicated sweep across `CvHttpServer` + every channel (kept as its
+>   own focused pass so it doesn't entangle a getter-flip cut).
+> - **⚖ An oracle endpoint is NOT a real consumer — it artificially keeps legacy members alive.** In the delete-driven
+>   cut, a legacy data member whose ONLY live consumer is an oracle endpoint (a `*Legacy` getter, a `/computed` twin
+>   emit) is NOT "still used" — the compiler census is fooled by a self-referential keep-alive (the member is alive only
+>   because the oracle reads it, and the oracle exists only to read the member). **Remove the endpoint WITH the member.**
+>   The oracle is never a reason to keep legacy breathing, and the removal unlocks a further round of member deletions the
+>   oracle was masking.
+
 **Done = observable in the running game.** A work item is complete only when its effect is observable in the RUNNING
 GAME via an endpoint poll — never because "the code path exists" or "the data loads." "Straight up missing" means it
 does not show in-game even if it loads; the break is then downstream, in apply/display, and is found by the poll, not
