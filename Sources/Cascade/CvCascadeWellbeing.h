@@ -55,6 +55,21 @@ public:
 	// improvement, the legacy getFeatureGoodHappiness bundle); HEALTH = featSubstrate only (feature's own
 	// plot.percent -- legacy calculateFeatureHealthPercent is feature-own, civic-per-feature health rides civic).
 	static void featureWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad);
+	// The SPECIALIST terms (hap.spec/hea.spec) for the retired m_iSpecialist{Happiness,Unhappiness,GoodHealth,
+	// BadHealth} accumulators. ×100 sign-split (iGood = positives, iBad = negatives) matching the legacy signs;
+	// these getters stay ×100 (their consumers ÷100 at use).
+	static void specialistWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad);
+	// The extraBuilding terms (hap.extraB/hea.extraB) for the retired m_iExtraBuilding{Good,Bad}{Happiness,Health}
+	// accumulators (civic/trait per-building + the building-keyed "Royal Tomb" leg). Needs the FULL path
+	// (gather + playerAreaEmpire + foldBuildingKeyed). ×100 sign-split; the human-scale getters ÷100.
+	static void extraBuildingWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad);
+	// The CITY religion-happiness split (for the retired m_iReligionGood/BadHappiness): each present religion
+	// contributes the player state/non-state acc, sign-split. Human (÷100 at the accessor). INITIAL + civics + TRAITS.
+	static void religionWellbeing(const CvCity* pCity, int& iGood, int& iBad);
+	// The player-scope state / non-state religion-happiness accumulators (for the retired CvPlayer
+	// m_i{State,NonState}ReligionHappiness): INITIAL + Σ adopted civics + Σ active traits (PURE-filtered). Human.
+	static int playerStateReligionHappiness(const CvPlayer& player);
+	static int playerNonStateReligionHappiness(const CvPlayer& player);
 	// The AREA/EMPIRE building-HEALTH rollups (the playerAreaEmpire fold, health family) for the retired
 	// CvArea/CvPlayer m_iBuildingGood/BadHealth accumulators. iBad is negative (WbSplit convention).
 	static void buildingHealthArea(const CvPlayer& player, int iAreaId, int& iGood, int& iBad);

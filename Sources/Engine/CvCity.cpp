@@ -532,12 +532,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iDefyResolutionAngerTimer = 0;
 	m_iHappinessTimer = 0;
 	m_iMilitaryHappinessUnits = 0;
-	m_iExtraBuildingGoodHappiness = 0;
-	m_iExtraBuildingBadHappiness = 0;
-	m_iExtraBuildingGoodHealth = 0;
-	m_iExtraBuildingBadHealth = 0;
-	m_iReligionGoodHappiness = 0;
-	m_iReligionBadHappiness = 0;
 	m_iExtraHappiness = 0;
 	m_iExtraHealth = 0;
 	m_iNoUnhappinessCount = 0;
@@ -574,10 +568,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_fPopulationgrowthratepercentageLog = 0.0;
 	m_iImprovementGoodHealth = 0;
 	m_iImprovementBadHealth = 0;
-	m_iSpecialistGoodHealth = 0;
-	m_iSpecialistBadHealth = 0;
-	m_iSpecialistHappiness = 0;
-	m_iSpecialistUnhappiness = 0;
 	m_iCiv = NO_CIVILIZATION;
 	m_iLineOfSight = 0;
 	m_iLandmarkAngerTimer = 0;
@@ -5090,11 +5080,7 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	*/
 	{
 		PROFILE("CvCity::processBuilding.Part5");
-		if (!isBulkBuildingProcessing())   // batched: the bracket end runs these once (endBulkBuildingProcessing)
-		{
-			updateExtraBuildingHappiness();
-			updateExtraBuildingHealth();
-		}
+		// #430 cut: extraBuilding is a cascade term (hap.extraB/hea.extraB) -- no per-building update recompute
 
 		owner.changeAssets(kBuilding.getAssetValue() * iChange);
 
@@ -5161,8 +5147,7 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		checkReligiousDisabling(eBuilding, owner);
 		if (!isBulkBuildingProcessing())   // batched: the bracket end runs the pair once
 		{
-			updateReligionHappiness();
-			updateReligionCommerce();
+			updateReligionCommerce();   // #430 cut: religion happiness is a cascade term (religionWellbeing)
 		}
 	}
 	setMaintenanceDirty(true);
@@ -5217,22 +5202,9 @@ void CvCity::processSpecialist(SpecialistTypes eSpecialist, int iChange)
 		updateSpecialistHappinessHealthFromTech();
 	}
 
-	if (GC.getSpecialistInfo(eSpecialist).getHealthPercent() > 0)
-	{
-		changeSpecialistGoodHealth(GC.getSpecialistInfo(eSpecialist).getHealthPercent() * iChange);
-	}
-	else
-	{
-		changeSpecialistBadHealth(GC.getSpecialistInfo(eSpecialist).getHealthPercent() * iChange);
-	}
-	if (GC.getSpecialistInfo(eSpecialist).getHappinessPercent() > 0)
-	{
-		changeSpecialistHappiness(GC.getSpecialistInfo(eSpecialist).getHappinessPercent() * iChange);
-	}
-	else
-	{
-		changeSpecialistUnhappiness(GC.getSpecialistInfo(eSpecialist).getHappinessPercent() * iChange);
-	}
+	// #430 accumulator cut: the specialist happiness/health accumulators are gone -- the cascade computes
+	// hap.spec/hea.spec fresh from getSpecialistCount at read (CascadeWellbeing::specialistWellbeing), so no
+	// incremental accumulation here. (The FromTech specialist term still updates via updateSpecialistHappinessHealthFromTech above.)
 
 	changeSpecialistFreeExperience(GC.getSpecialistInfo(eSpecialist).getExperience() * iChange);
 
@@ -8295,67 +8267,25 @@ int CvCity::getBuildingHappiness(BuildingTypes eBuilding) const
 }
 
 
+// #430 accumulator cut: extraBuilding happiness/health are computed fresh from the cascade (hap.extraB/hea.extraB --
+// the civic/trait per-building + building-keyed terms). Human-scale getters (consumers don't ÷100), so ÷100 here.
 int CvCity::getExtraBuildingGoodHappiness() const
 {
-	return m_iExtraBuildingGoodHappiness;
+	int hg, hb, eg, eb; CascadeWellbeing::extraBuildingWellbeing(this, hg, hb, eg, eb); return hg / 100;
 }
 
 
 int CvCity::getExtraBuildingBadHappiness() const
 {
-	return m_iExtraBuildingBadHappiness;
+	int hg, hb, eg, eb; CascadeWellbeing::extraBuildingWellbeing(this, hg, hb, eg, eb); return hb / 100;   // negative
 }
 
 
 /********************************************************************************/
 /* 	New Civic AI						19.08.2010				Fuyu			*/
 /********************************************************************************/
-//Fuyu bLimited
-void CvCity::updateExtraBuildingHappiness(bool bLimited)
-{
-	PROFILE_EXTRA_FUNC();
-	int iNewExtraBuildingGoodHappiness = 0;
-	int iNewExtraBuildingBadHappiness = 0;
-
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
-	{
-		if (!isReligiouslyLimitedBuilding(eTypeX) && !isDisabledBuilding(eTypeX))
-		{
-			int iChange = GET_PLAYER(getOwner()).getExtraBuildingHappiness(eTypeX);
-
-			if (iChange > 0)
-			{
-				iNewExtraBuildingGoodHappiness += iChange;
-			}
-			else
-			{
-				iNewExtraBuildingBadHappiness += iChange;
-			}
-		}
-	}
-
-	if (getExtraBuildingGoodHappiness() != iNewExtraBuildingGoodHappiness)
-	{
-		m_iExtraBuildingGoodHappiness = iNewExtraBuildingGoodHappiness;
-		FASSERT_NOT_NEGATIVE(getExtraBuildingGoodHappiness());
-
-		if (!bLimited)
-		{
-			AI_setAssignWorkDirty(true);
-		}
-	}
-
-	if (getExtraBuildingBadHappiness() != iNewExtraBuildingBadHappiness)
-	{
-		m_iExtraBuildingBadHappiness = iNewExtraBuildingBadHappiness;
-		FAssert(getExtraBuildingBadHappiness() <= 0);
-
-		if (!bLimited)
-		{
-			AI_setAssignWorkDirty(true);
-		}
-	}
-}
+// #430 accumulator cut: updateExtraBuildingHappiness deleted -- extraBuilding happiness is a cascade term (hap.extraB),
+// computed fresh from the civic/trait per-building deposits + the building-keyed leg (CascadeWellbeing::extraBuildingWellbeing).
 int CvCity::getAdditionalHappinessByCivic(CivicTypes eCivic, bool bDifferenceToCurrent, bool bCivicOptionVacuum, ReligionTypes eStateReligion, int iExtraPop, int iMilitaryHappinessUnits) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -9024,59 +8954,16 @@ void subtractGoodOrBad(int iValue, int& iGood, int& iBad)
 // BUG - Building Additional Happiness - end
 
 
+// #430 accumulator cut: extraBuilding health computed fresh from the cascade (hea.extraB). Human-scale getters, ÷100.
 int CvCity::getExtraBuildingGoodHealth() const
 {
-	return m_iExtraBuildingGoodHealth;
+	int hg, hb, eg, eb; CascadeWellbeing::extraBuildingWellbeing(this, hg, hb, eg, eb); return eg / 100;
 }
 
 
 int CvCity::getExtraBuildingBadHealth() const
 {
-	return m_iExtraBuildingBadHealth;
-}
-
-
-void CvCity::updateExtraBuildingHealth(bool bLimited)
-{
-	PROFILE_EXTRA_FUNC();
-	int iNewExtraBuildingGoodHealth = 0;
-	int iNewExtraBuildingBadHealth = 0;
-
-	foreach_(const BuildingTypes eTypeX, getHasBuildings())
-	{
-		if (!isReligiouslyLimitedBuilding(eTypeX) && !isDisabledBuilding(eTypeX))
-		{
-			int iChange = GET_PLAYER(getOwner()).getExtraBuildingHealth(eTypeX);
-
-			if (iChange > 0)
-			{
-				iNewExtraBuildingGoodHealth += iChange;
-			}
-			else iNewExtraBuildingBadHealth += iChange;
-		}
-	}
-
-	if (getExtraBuildingGoodHealth() != iNewExtraBuildingGoodHealth)
-	{
-		m_iExtraBuildingGoodHealth = iNewExtraBuildingGoodHealth;
-		FASSERT_NOT_NEGATIVE(getExtraBuildingGoodHealth());
-
-		if (!bLimited)
-		{
-			AI_setAssignWorkDirty(true);
-		}
-	}
-
-	if (getExtraBuildingBadHealth() != iNewExtraBuildingBadHealth)
-	{
-		m_iExtraBuildingBadHealth = iNewExtraBuildingBadHealth;
-		FAssert(getExtraBuildingBadHealth() <= 0);
-
-		if (!bLimited)
-		{
-			AI_setAssignWorkDirty(true);
-		}
-	}
+	int hg, hb, eg, eb; CascadeWellbeing::extraBuildingWellbeing(this, hg, hb, eg, eb); return eb / 100;   // negative
 }
 
 
@@ -9110,15 +8997,17 @@ int CvCity::getBonusBadHappiness() const
 
 
 
+// #430 accumulator cut: religion happiness is the cascade religion split (CascadeWellbeing::religionWellbeing --
+// INITIAL + civics + TRAITS per present religion; the trait term is the #430 gap fix). Human getters (÷100 inside).
 int CvCity::getReligionGoodHappiness() const
 {
-	return m_iReligionGoodHappiness;
+	int g, b; CascadeWellbeing::religionWellbeing(this, g, b); return g;
 }
 
 
 int CvCity::getReligionBadHappiness() const
 {
-	return m_iReligionBadHappiness;
+	int g, b; CascadeWellbeing::religionWellbeing(this, g, b); return b;   // negative
 }
 
 
@@ -9136,48 +9025,8 @@ int CvCity::getReligionHappiness(ReligionTypes eReligion) const
 }
 
 
-void CvCity::updateReligionHappiness(bool bLimited)
-{
-	PROFILE_EXTRA_FUNC();
-	int iNewReligionGoodHappiness = 0;
-	int iNewReligionBadHappiness = 0;
-
-	for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
-	{
-		int iChange = getReligionHappiness((ReligionTypes)iI);
-
-		if (iChange > 0)
-		{
-			iNewReligionGoodHappiness += iChange;
-		}
-		else
-		{
-			iNewReligionBadHappiness += iChange;
-		}
-	}
-
-	if (getReligionGoodHappiness() != iNewReligionGoodHappiness)
-	{
-		m_iReligionGoodHappiness = iNewReligionGoodHappiness;
-		FASSERT_NOT_NEGATIVE(getReligionGoodHappiness());
-
-		if (!bLimited)
-		{
-			AI_setAssignWorkDirty(true);
-		}
-	}
-
-	if (getReligionBadHappiness() != iNewReligionBadHappiness)
-	{
-		m_iReligionBadHappiness = iNewReligionBadHappiness;
-		FAssert(getReligionBadHappiness() <= 0);
-
-		if (!bLimited)
-		{
-			AI_setAssignWorkDirty(true);
-		}
-	}
-}
+// #430 accumulator cut: updateReligionHappiness deleted -- religion happiness is a cascade term
+// (CascadeWellbeing::religionWellbeing), computed fresh from INITIAL + civics + traits per present religion.
 
 
 int CvCity::getExtraHappiness() const
@@ -13283,13 +13132,11 @@ void CvCity::endBulkBuildingProcessing(bool bRunWholesale)
 	if (0 == --m_bulkBuildingProcessingCount && bRunWholesale)
 	{
 		// the wholesale full-city recomputes processBuilding skipped per flip, run ONCE for the batch
-		updateExtraBuildingHappiness();
-		updateExtraBuildingHealth();
+		// #430 cut: updateExtraBuilding{Happiness,Health} removed -- cascade terms (hap.extraB/hea.extraB)
 		updateBuildingCommerce();
 		if (GC.getGame().isOption(GAMEOPTION_RELIGION_DISABLING))
 		{
-			updateReligionHappiness();
-			updateReligionCommerce();
+			updateReligionCommerce();   // #430 cut: religion happiness is a cascade term (religionWellbeing)
 		}
 	}
 }
@@ -14979,8 +14826,7 @@ void CvCity::checkReligiousDisablingAllBuildings()
 		checkReligiousDisabling((BuildingTypes)iJ, player);
 	}
 	setMaintenanceDirty(true);
-	updateReligionHappiness();
-	updateReligionCommerce();
+	updateReligionCommerce();   // #430 cut: religion happiness is a cascade term (religionWellbeing)
 }
 
 void CvCity::checkReligiousDisabling(const BuildingTypes eBuilding, const CvPlayer& player)
@@ -15048,8 +14894,7 @@ void CvCity::applyReligionModifiers(const ReligionTypes eIndex, const bool bValu
 		}
 	}
 	setMaintenanceDirty(true);
-	updateReligionHappiness();
-	updateReligionCommerce();
+	updateReligionCommerce();   // #430 cut: religion happiness is a cascade term (religionWellbeing)
 }
 
 void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce, bool bArrows)
@@ -17169,13 +17014,8 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iEspionageHappinessCounter);
 	WRAPPER_READ(wrapper, "CvCity", &m_iFreshWaterGoodHealth);
 
-	// #430: feature health/happiness ride the cascade; drain the retired accumulators. savemigration.txt.
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iFeatureGoodHealth, SAVE_VALUE_ANY);
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iFeatureBadHealth, SAVE_VALUE_ANY);
-	// #430: building health/happiness ride the cascade (CascadeWellbeing bld term); the retired accumulators
-	// are drained from old saves. Ledgered in savemigration.txt.
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBuildingGoodHealth, SAVE_VALUE_ANY);
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBuildingBadHealth, SAVE_VALUE_ANY);
+	// #430: feature + building health/happiness are cascade terms; the retired members are FULLY removed -- old
+	// saves drain them via savemigration.txt, so NO SKIP_ELEMENT (no dead member left in the read path).
 
 	// #430 no-serialized-caches: the bonus-fed derived cluster is NOT read from the save -- the load-end
 	// network fold rebuilds it exactly from present state. Still WRITTEN for save-format compat.
@@ -17188,18 +17028,11 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iDefyResolutionAngerTimer);
 	WRAPPER_READ(wrapper, "CvCity", &m_iHappinessTimer);
 	WRAPPER_READ(wrapper, "CvCity", &m_iMilitaryHappinessUnits);
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBuildingGoodHappiness, SAVE_VALUE_ANY);
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBuildingBadHappiness, SAVE_VALUE_ANY);
-	WRAPPER_READ(wrapper, "CvCity", &m_iExtraBuildingGoodHappiness);
-	WRAPPER_READ(wrapper, "CvCity", &m_iExtraBuildingBadHappiness);
-	WRAPPER_READ(wrapper, "CvCity", &m_iExtraBuildingGoodHealth);
-	WRAPPER_READ(wrapper, "CvCity", &m_iExtraBuildingBadHealth);
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iFeatureGoodHappiness, SAVE_VALUE_ANY);
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iFeatureBadHappiness, SAVE_VALUE_ANY);
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBonusGoodHappiness, SAVE_VALUE_ANY);   // rebuilt by the load fold
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBonusBadHappiness, SAVE_VALUE_ANY);    // rebuilt by the load fold
-	WRAPPER_READ(wrapper, "CvCity", &m_iReligionGoodHappiness);
-	WRAPPER_READ(wrapper, "CvCity", &m_iReligionBadHappiness);
+	// bonus cluster: member still WRITTEN (rebuilt by the load network fold), so kept as SKIP until the bonus
+	// cluster is fully cut (member + write). (feature/building happiness members are gone -> savemigration.txt drains.)
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBonusGoodHappiness, SAVE_VALUE_ANY);
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBonusBadHappiness, SAVE_VALUE_ANY);
+	// #430 cut: m_iReligionGood/BadHappiness fully removed (cascade religionWellbeing); drained via savemigration.txt
 	WRAPPER_READ(wrapper, "CvCity", &m_iExtraHappiness);
 	WRAPPER_READ(wrapper, "CvCity", &m_iExtraHealth);
 	WRAPPER_READ(wrapper, "CvCity", &m_iNoUnhappinessCount);
@@ -17342,10 +17175,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iImprovementGoodHealth);
 	WRAPPER_READ(wrapper, "CvCity", &m_iImprovementBadHealth);
-	WRAPPER_READ(wrapper, "CvCity", &m_iSpecialistGoodHealth);
-	WRAPPER_READ(wrapper, "CvCity", &m_iSpecialistBadHealth);
-	WRAPPER_READ(wrapper, "CvCity", &m_iSpecialistHappiness);
-	WRAPPER_READ(wrapper, "CvCity", &m_iSpecialistUnhappiness);
 	WRAPPER_READ(wrapper, "CvCity", &m_iEventAnger);
 
 	WRAPPER_READ(wrapper, "CvCity", &m_fPopulationgrowthratepercentageLog);
@@ -17951,12 +17780,7 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iDefyResolutionAngerTimer);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iHappinessTimer);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iMilitaryHappinessUnits);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraBuildingGoodHappiness);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraBuildingBadHappiness);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraBuildingGoodHealth);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraBuildingBadHealth);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iReligionGoodHappiness);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iReligionBadHappiness);
+	// #430 cut: m_iExtraBuilding{Good,Bad}{Happiness,Health} writes removed (members deleted; cascade-computed)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraHappiness);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraHealth);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iNoUnhappinessCount);
@@ -18059,10 +17883,6 @@ void CvCity::write(FDataStreamBase* pStream)
 
 	WRAPPER_WRITE(wrapper, "CvCity", m_iImprovementGoodHealth);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iImprovementBadHealth);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iSpecialistGoodHealth);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iSpecialistBadHealth);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iSpecialistHappiness);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iSpecialistUnhappiness);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iEventAnger);
 	WRAPPER_WRITE(wrapper, "CvCity", m_fPopulationgrowthratepercentageLog);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBonusCommerceRateModifier);
@@ -20027,85 +19847,27 @@ void CvCity::clearLostProduction()
 	m_iGoldFromLostProduction = 0;
 }
 
+// #430 accumulator cut: the specialist happiness/health terms are computed fresh from getSpecialistCount by the
+// cascade (CascadeWellbeing::specialistWellbeing -> hap.spec/hea.spec, ×100 sign-split). These getters stay ×100
+// (display consumers ÷100 at use); the retired m_iSpecialist* members + their changeSpecialist* maintainers are gone.
 int CvCity::getSpecialistGoodHealth() const
 {
-	return m_iSpecialistGoodHealth;
+	int hg, hb, eg, eb; CascadeWellbeing::specialistWellbeing(this, hg, hb, eg, eb); return eg;   // ×100
 }
 
 int CvCity::getSpecialistBadHealth() const
 {
-	return m_iSpecialistBadHealth;
+	int hg, hb, eg, eb; CascadeWellbeing::specialistWellbeing(this, hg, hb, eg, eb); return eb;   // ×100 (negative)
 }
 
 int CvCity::getSpecialistHappiness() const
 {
-	return m_iSpecialistHappiness;
+	int hg, hb, eg, eb; CascadeWellbeing::specialistWellbeing(this, hg, hb, eg, eb); return hg;   // ×100
 }
 
 int CvCity::getSpecialistUnhappiness() const
 {
-	return m_iSpecialistUnhappiness;
-}
-
-void CvCity::changeSpecialistGoodHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iSpecialistGoodHealth += iChange;
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
-void CvCity::changeSpecialistBadHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iSpecialistBadHealth += iChange;
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
-void CvCity::changeSpecialistHappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iSpecialistHappiness += iChange;
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
-
-void CvCity::changeSpecialistUnhappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iSpecialistUnhappiness += iChange;
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
+	int hg, hb, eg, eb; CascadeWellbeing::specialistWellbeing(this, hg, hb, eg, eb); return hb;   // ×100 (negative)
 }
 
 int CvCity::getImprovementGoodHealth() const
@@ -22180,12 +21942,6 @@ void CvCity::clearModifierTotals()
 	m_iWarWearinessModifier = 0;
 	m_iHurryAngerModifier = 0;
 	m_iHealRate = 0;
-	m_iExtraBuildingGoodHappiness = 0;
-	m_iExtraBuildingBadHappiness = 0;
-	m_iExtraBuildingGoodHealth = 0;
-	m_iExtraBuildingBadHealth = 0;
-	m_iReligionGoodHappiness = 0;
-	m_iReligionBadHappiness = 0;
 	m_iExtraHappiness = 0;
 	m_iExtraHealth = 0;
 	m_iNoUnhappinessCount = 0;
@@ -22209,10 +21965,6 @@ void CvCity::clearModifierTotals()
 	m_fPopulationgrowthratepercentageLog = 0.0;
 	m_iImprovementGoodHealth = 0;
 	m_iImprovementBadHealth = 0;
-	m_iSpecialistGoodHealth = 0;
-	m_iSpecialistBadHealth = 0;
-	m_iSpecialistHappiness = 0;
-	m_iSpecialistUnhappiness = 0;
 	m_iLineOfSight = 0;
 	m_iAdjacentDamagePercent = 0;
 	m_iWorkableRadiusOverride = 0;

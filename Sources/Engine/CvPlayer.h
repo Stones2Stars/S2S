@@ -244,8 +244,6 @@ public:
 	void updateMaintenance() const;
 	void setMaintenanceDirty(const bool bDirty, const bool bCities = true) const;
 
-	void updateReligionHappiness(bool bLimited = false);
-
 	void updateExtraSpecialistYield();
 	void setCommerceDirty(CommerceTypes eIndex = NO_COMMERCE, bool bPlayerOnly = false);
 	void updateBuildingCommerce();
@@ -781,10 +779,8 @@ public:
 	bool isNoNonStateReligionSpread() const;
 	void changeNoNonStateReligionSpreadCount(int iChange);
 
-	int getStateReligionHappiness() const;
-	void changeStateReligionHappiness(int iChange, bool bLimited = false);
+	int getStateReligionHappiness() const;   // #430 cut: cascade-computed (CascadeWellbeing::playerStateReligionHappiness)
 	int getNonStateReligionHappiness() const;
-	void changeNonStateReligionHappiness(int iChange, bool bLimited = false);
 
 	int getStateReligionUnitProductionModifier() const;
 	void changeStateReligionUnitProductionModifier(int iChange);
@@ -1908,8 +1904,6 @@ protected:
 	int m_iConversionTimer;
 	int m_iStateReligionCount;
 	int m_iNoNonStateReligionSpreadCount;
-	int m_iStateReligionHappiness;
-	int m_iNonStateReligionHappiness;
 	int m_iStateReligionUnitProductionModifier;
 	int m_iStateReligionBuildingProductionModifier;
 	int m_iStateReligionFreeExperience;

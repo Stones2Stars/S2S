@@ -102,8 +102,11 @@ no shadow. **Home:** [tally.md](../specs/tally.md).
 
 ### DEC-save-remove-is-soft
 
-Removing a serialized field/Type is soft in the name-keyed save format; only a handful of cases are hard, and a
-deleted field's read needs a named `WRAPPER_SKIP_ELEMENT`. **Home:** [engine.md](../reference/engine.md).
+Removing a serialized field is soft via `Assets/savemigration.txt`: FULL-DELETE the member + read + write and NAME
+the tag there — the save reader (`CvTaggedSaveFormatWrapper::sm_isCut`) drains the orphan tag transparently at load,
+so **no `WRAPPER_SKIP_ELEMENT`** (a lingering skip still names the dead member — a rollerskate target) and **no
+save-break-flush** (save-breaking is obsolete; the old two-stage model is retired). The one hard case: an UNLISTED
+deleted-read orphan desyncs the whole downstream read. **Home:** [engine.md](../reference/engine.md).
 
 ### DEC-derived-never-trusted
 
@@ -345,6 +348,20 @@ recomputes from scratch on EVERY call — so ANY perf measurement taken while le
 FPS/lag numbers gathered with legacy on any hot read path are POISONED. Clean perf is only measurable AFTER legacy is
 fully purged — so the violent purge is a PREREQUISITE for the perf hunt, not merely a correctness/tidiness step.
 Sharpens [DEC-turn-time-is-king](#dec-turn-time-is-king). **Home:** [cutover.md](../plans/structural-cleanup/cutover.md).
+
+### DEC-accumulator-cut-uniform
+
+Every legacy serialized incremental accumulator (serialized + `change*`/`update*`/`process*`-maintained + a per-turn
+cascade-owned quantity — the STORED-ACCUMULATOR DRIFT class, [modifier.md §2b](../specs/modifier.md)) is cut by ONE
+uniform mechanism: re-point the getter to a cascade fresh-gather accessor (÷100 at the reader), hard-delete the member
++ its maintainers (audit each body for side-effect riders — [engine.md](../reference/engine.md)),
+full-delete the read + write and name the tag in `Assets/savemigration.txt` (the reader drains it — NO
+`WRAPPER_SKIP_ELEMENT`, [DEC-save-remove-is-soft](#dec-save-remove-is-soft)), and let the COMPILER census the consumers. **NOT
+wellbeing-specific — they ALL work exactly the same way**; wellbeing is the pilot. **Blast radius is the SIGNAL** (a
+cut that does not reach broadly is not cutting the legacy), never a limit; anything sneaking a legacy value back in is
+an ERROR ([DEC-no-legacy-masking](#dec-no-legacy-masking)). The recompute-from-source
+([state-repositories.md](state-repositories.md)) application of [DEC-universal-yield](#dec-universal-yield). **Home:**
+[fixed-point-conformance.md](../plans/structural-cleanup/fixed-point-conformance.md).
 
 ### DEC-playability-not-a-gate
 

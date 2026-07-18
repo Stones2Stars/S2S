@@ -24,21 +24,25 @@ resolves dynamically by name.
 - **Adding** a field is SOFT (old save, new code): the new read mismatches the stream's next element, no-ops, and
   keeps its default — `Expect()` returns false and leaves the stream untouched
   (`Sources/Infrastructure/CvTaggedSaveFormatWrapper.cpp:3830`).
-- **⛔ Removing a field's read is NOT soft — there is NO automatic drain of a stale tag (proven live).**
-  `Expect()` treats *any* mismatch as "the code is ahead of the stream" and never consumes the unexpected element,
-  so an orphaned tag in an old save makes **every subsequent read in that object** mismatch against it and silently
-  default — the load guts wholesale (the live failure: empty tech lists, buildingless cities). Retirement is
-  **two-stage**: (a) delete the `WRAPPER_WRITE` and replace the read with a **named
-  `WRAPPER_SKIP_ELEMENT(wrapper, "ClassName", memberName, SAVE_VALUE_ANY)`** — it Expects that exact tag and drains
-  it on old saves, and safely no-ops on newer saves that lack it — and ledger the field in **`savemigration.txt`**
-  (repo root, the conversion-step list); (b) flush the skips + ledger entries together at the next save-compat
-  break.
+- **⛔ Removing a field: FULL-DELETE the member + read + write, and NAME the tag in `Assets/savemigration.txt`.**
+  The save reader (`CvTaggedSaveFormatWrapper::Expect` → `sm_isCut`, `CvTaggedSaveFormatWrapper.cpp:~3944`) parses
+  that file ONCE at load and drains any listed orphan tag **transparently, wherever it sits in the stream** — so the
+  field is FULLY GONE from the object: no member, no read, no write, and **no `WRAPPER_SKIP_ELEMENT`** (a lingering
+  skip still names the dead member in the read path — a rollerskating target,
+  [DEC-no-rollerskate-evidence](../architecture/decisions.md#dec-no-rollerskate-evidence)). This makes
+  save-breaking **OBSOLETE**: old saves load clean as long as the tag is listed, forever — there is **no** "flush at
+  the next compat break" (that two-stage `SKIP_ELEMENT`+flush model is RETIRED). The tag name is the normalized
+  `"ClassName::memberName"` (the same the dictionary stores); `savemigration.txt` also does RENAME
+  (`Class::m_old -> Class::m_new`). ⛔ The one hard rule survives: an **UNLISTED** orphan (a deleted read with NO
+  `savemigration.txt` entry) makes `Expect()` treat *any* mismatch as "code ahead of stream", never consume the
+  element, and desync **every subsequent read in that object** into silent defaults — the load guts wholesale
+  (proven live: empty tech lists, buildingless cities). So the `.txt` entry is **MANDATORY** on delete.
 - **Enum/Type drift** is name-remapped on load (`getInfoTypeForString`); XML reorder/insert is free. A removed Type
   is SOFT only if its read site uses `WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING` (else HARD: message box + throw).
 - **The genuinely HARD save-breaks:** (1) a same-tag field whose *meaning* changed (silent wrong load); (2) a
   deleted Type read without `_ALLOW_MISSING`; (3) a legacy raw enum-indexed int array that shrinks; (4) a type-code
-  change under a reused name; (5) a deleted field read without its named `WRAPPER_SKIP_ELEMENT` (the stale-tag
-  desync above). *Hardening path:* flip a Type's read site to `_ALLOW_MISSING`, then delete.
+  change under a reused name; (5) a deleted field with NO `Assets/savemigration.txt` entry (the stale-tag desync
+  above — list the tag and it is soft). *Hardening path:* flip a Type's read site to `_ALLOW_MISSING`, then delete.
 - **Derived data serializes nothing** — `reset()` + mark-dirty-on-load is the pattern; the cascade [tally](../specs/tally.md) never serializes.
 - **⛔ When deleting a legacy changer/apply function, audit its whole BODY for side effects — an apply-site audit
   alone misses them.** Legacy changers carry non-obvious riders (`changeTerrainTradeCount`/`changeRiverTradeCount`

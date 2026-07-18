@@ -145,6 +145,42 @@ CvCity::m_iFeatureBadHappiness           (int)
 ========================
 
 ========================
+2026-07-18 — #430 delete-driven legacy cut (specialist + extraBuilding wellbeing accumulators): the stored city
+specialist happiness/health and extraBuilding happiness/health accumulators fully removed (no member, no read, no
+write). getSpecialist{GoodHealth,BadHealth,Happiness,Unhappiness} read the cascade spec term
+(CascadeWellbeing.specialistWellbeing -> hap.spec/hea.spec, x100); getExtraBuilding{Good,Bad}{Happiness,Health}
+read the extraB term (CascadeWellbeing.extraBuildingWellbeing -> hap.extraB/hea.extraB, human /100). The
+processSpecialist accumulation, updateExtraBuilding{Happiness,Health} rebuilders + their CvPlayer for_each /
+processBuilding / bulk-flush trigger sites, and the change* changers are gone. The player-side per-building
+m_extraBuildingHappiness/Health map is KEPT (live source: AI/UI/endpoint + the cascade extraB derivation).
+
+CvCity::m_iSpecialistGoodHealth          (int)
+CvCity::m_iSpecialistBadHealth           (int)
+CvCity::m_iSpecialistHappiness           (int)
+CvCity::m_iSpecialistUnhappiness         (int)
+CvCity::m_iExtraBuildingGoodHappiness    (int)
+CvCity::m_iExtraBuildingBadHappiness     (int)
+CvCity::m_iExtraBuildingGoodHealth       (int)
+CvCity::m_iExtraBuildingBadHealth        (int)
+========================
+
+========================
+2026-07-18 — #430 delete-driven legacy cut (religion happiness accumulators, family a): the civic/trait-fed
+religion-happiness accumulators fully removed on both objects. CvCity::getReligionGood/BadHappiness reads the
+cascade religion split (CascadeWellbeing::religionWellbeing); CvPlayer::getStateReligionHappiness /
+getNonStateReligionHappiness read the cascade playerReligionAcc (INITIAL + adopted civics + active traits, the
+trait term being a #430 gap fix -- the civic-only cascade under-counted anti_clerical/aloof/fanatical/spiritual/
+bigot). The city + player updateReligionHappiness rebuilders, the change{State,NonState}ReligionHappiness changers,
+and all their init/civic/trait/recalc feeders + trigger sites are gone. (The building-fed per-religion
+m_paiStateReligionHappiness -- family b -- is a SEPARATE follow-on, not this entry.)
+
+CvCity::m_iReligionGoodHappiness         (int)
+CvCity::m_iReligionBadHappiness          (int)
+CvPlayer::m_iStateReligionHappiness      (int)
+CvPlayer::m_iNonStateReligionHappiness   (int)
+========================
+
+========================
 2026-07-02 — #430 capability cut (CvTeam): the empire-capability counters retired;
 the getters derive from CascadeCapabilities (the cascade union). Skips live in CvTeam::read.
 

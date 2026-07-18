@@ -393,8 +393,7 @@ void CvPlayer::initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSet
 	changeFreeUnitUpkeepCivilianPopPercent(GC.getBASE_FREE_UNITS_UPKEEP_CIVILIAN_PER_100_POP());
 	changeFreeUnitUpkeepMilitaryPopPercent(GC.getBASE_FREE_UNITS_UPKEEP_MILITARY_PER_100_POP());
 	changeTradeRoutes(GC.getINITIAL_TRADE_ROUTES());
-	changeStateReligionHappiness(GC.getINITIAL_STATE_RELIGION_HAPPINESS());
-	changeNonStateReligionHappiness(GC.getINITIAL_NON_STATE_RELIGION_HAPPINESS());
+	// #430 cut: state/non-state religion happiness is a cascade term (playerReligionAcc seeds INITIAL itself)
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
@@ -889,8 +888,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iConversionTimer = 0;
 	m_iStateReligionCount = 0;
 	m_iNoNonStateReligionSpreadCount = 0;
-	m_iStateReligionHappiness = 0;
-	m_iNonStateReligionHappiness = 0;
 	m_iStateReligionUnitProductionModifier = 0;
 	m_iStateReligionBuildingProductionModifier = 0;
 	m_iStateReligionFreeExperience = 0;
@@ -4201,10 +4198,7 @@ void CvPlayer::updateYield()
 // #430: feature happiness rides the cascade (per-city CascadeWellbeing featMember+featSubstrate); the player-wide
 // updateFeatureHappiness rebuilder is gone.
 
-void CvPlayer::updateReligionHappiness(bool bLimited)
-{
-	algo::for_each(cities(), CvCity::fn::updateReligionHappiness(bLimited));
-}
+// #430 accumulator cut: updateReligionHappiness deleted -- religion happiness is a cascade term (no per-city rebuild).
 
 void CvPlayer::updateExtraSpecialistYield()
 {
@@ -11155,7 +11149,7 @@ void CvPlayer::changeStateReligionCount(int iChange, bool bLimited)
 			setMaintenanceDirty(true);
 		}
 
-		updateReligionHappiness(bLimited);
+		// #430 cut: religion happiness is a cascade term (no per-city rebuild trigger)
 
 		if (!bLimited)
 		{
@@ -11190,38 +11184,17 @@ void CvPlayer::changeNoNonStateReligionSpreadCount(int iChange)
 }
 
 
+// #430 accumulator cut: state/non-state religion happiness is the cascade playerReligionAcc (INITIAL + civics +
+// TRAITS -- the trait term is the #430 gap fix), not a stored accumulator. Human getters.
 int CvPlayer::getStateReligionHappiness() const
 {
-	return m_iStateReligionHappiness;
-}
-
-
-void CvPlayer::changeStateReligionHappiness(int iChange, bool bLimited)
-{
-	if (iChange != 0)
-	{
-		m_iStateReligionHappiness += iChange;
-
-		updateReligionHappiness(bLimited);
-	}
+	return CascadeWellbeing::playerStateReligionHappiness(*this);
 }
 
 
 int CvPlayer::getNonStateReligionHappiness() const
 {
-	return m_iNonStateReligionHappiness;
-}
-
-
-//Fuyu bLimited
-void CvPlayer::changeNonStateReligionHappiness(int iChange, bool bLimited)
-{
-	if (iChange != 0)
-	{
-		m_iNonStateReligionHappiness += iChange;
-
-		updateReligionHappiness(bLimited);
-	}
+	return CascadeWellbeing::playerNonStateReligionHappiness(*this);
 }
 
 
@@ -12473,8 +12446,7 @@ void CvPlayer::setLastStateReligion(const ReligionTypes eNewReligion)
 		// #430 event spine: announce the state-religion switch (past the no-change guard, after the field commit).
 		emitStateReligionChanged(getID(), (int)eNewReligion);
 
-		updateReligionHappiness();
-		updateReligionCommerce();
+		updateReligionCommerce();   // #430 cut: religion happiness is a cascade term (playerReligionAcc)
 
 		GC.getGame().updateSecretaryGeneral();
 		GC.getGame().AI_makeAssignWorkDirty();
@@ -13407,7 +13379,7 @@ void CvPlayer::changeExtraBuildingHappiness(const BuildingTypes eIndex, const in
 	{
 		m_extraBuildingHappiness[itr->first] += iChange;
 	}
-	algo::for_each(cities(), CvCity::fn::updateExtraBuildingHappiness(bLimited));
+	// #430 cut: extraBuilding is a cascade term (hap.extraB) -- no per-city update trigger
 }
 
 int CvPlayer::getExtraBuildingHappiness(const BuildingTypes eIndex) const
@@ -13439,7 +13411,7 @@ void CvPlayer::changeExtraBuildingHealth(const BuildingTypes eIndex, const int i
 	{
 		m_extraBuildingHealth[itr->first] += iChange;
 	}
-	algo::for_each(cities(), CvCity::fn::updateExtraBuildingHealth(bLimited));
+	// #430 cut: extraBuilding is a cascade term (hea.extraB) -- no per-city update trigger
 }
 
 int CvPlayer::getExtraBuildingHealth(const BuildingTypes eIndex) const
@@ -18202,8 +18174,7 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 
 	changeStateReligionCount(kCivic.isStateReligion() * iChange, bLimited);
 	changeNoNonStateReligionSpreadCount(kCivic.isNoNonStateReligionSpread() * iChange);
-	changeStateReligionHappiness(kCivic.getStateReligionHappiness() * iChange, bLimited);
-	changeNonStateReligionHappiness(kCivic.getNonStateReligionHappiness() * iChange, bLimited);
+	// #430 cut: state/non-state religion happiness is a cascade term (playerReligionAcc reads adopted civics)
 
 	changeRevIdxLocal(kCivic.getRevIdxLocal() * iChange);
 	changeRevIdxNational(kCivic.getRevIdxNational() * iChange);
@@ -18367,8 +18338,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iConversionTimer);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoNonStateReligionSpreadCount);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionHappiness);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNonStateReligionHappiness);
+		// #430 cut: m_i{State,NonState}ReligionHappiness fully removed (cascade playerReligionAcc); savemigration.txt
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionUnitProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionBuildingProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionFreeExperience);
@@ -19812,8 +19782,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iConversionTimer);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoNonStateReligionSpreadCount);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionHappiness);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNonStateReligionHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionUnitProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionBuildingProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionFreeExperience);
@@ -28214,8 +28182,6 @@ void CvPlayer::clearModifierTotals()
 	m_iTradeRoutes = 0;
 	m_iStateReligionCount = 0;
 	m_iNoNonStateReligionSpreadCount = 0;
-	m_iStateReligionHappiness = 0;
-	m_iNonStateReligionHappiness = 0;
 	m_iStateReligionUnitProductionModifier = 0;
 	m_iStateReligionBuildingProductionModifier = 0;
 	m_iStateReligionFreeExperience = 0;
@@ -28540,8 +28506,7 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeLargestCityHappiness(iChange*GC.getTraitInfo(eTrait).getLargestCityHappiness());
 	changeFreeSpecialist(iChange*GC.getTraitInfo(eTrait).getFreeSpecialist());
 	changeTradeRoutes(iChange*GC.getTraitInfo(eTrait).getTradeRoutes());
-	changeStateReligionHappiness(iChange*GC.getTraitInfo(eTrait).getStateReligionHappiness());
-	changeNonStateReligionHappiness(iChange*GC.getTraitInfo(eTrait).getNonStateReligionHappiness());
+	// #430 cut: state/non-state religion happiness is a cascade term (playerReligionAcc reads active traits)
 	changeStateReligionUnitProductionModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionUnitProductionModifier());
 	changeStateReligionBuildingProductionModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionBuildingProductionModifier());
 	changeStateReligionFreeExperience(iChange*GC.getTraitInfo(eTrait).getStateReligionFreeExperience());
@@ -28703,8 +28668,7 @@ void CvPlayer::recalculateModifiers()
 	changeFreeUnitUpkeepCivilianPopPercent(GC.getBASE_FREE_UNITS_UPKEEP_CIVILIAN_PER_100_POP());
 	changeFreeUnitUpkeepMilitaryPopPercent(GC.getBASE_FREE_UNITS_UPKEEP_MILITARY_PER_100_POP());
 	changeTradeRoutes(GC.getINITIAL_TRADE_ROUTES());
-	changeStateReligionHappiness(GC.getINITIAL_STATE_RELIGION_HAPPINESS());
-	changeNonStateReligionHappiness(GC.getINITIAL_NON_STATE_RELIGION_HAPPINESS());
+	// #430 cut: state/non-state religion happiness is a cascade term (playerReligionAcc seeds INITIAL itself)
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{

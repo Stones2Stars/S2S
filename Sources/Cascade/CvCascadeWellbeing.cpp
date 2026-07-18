@@ -481,6 +481,72 @@ void CascadeWellbeing::gatherCityTerms(const CvCity* pCity, const CvCascadeEvalC
 	wb_gather("health", pCity, ec, hea);
 }
 
+// ===================== the religion happiness terms (civic + TRAIT -- the #430 gap fix) =====================
+// The player-scope state/non-state religion-happiness accumulators (×100): INITIAL + Σ adopted civics + Σ active
+// traits (PURE_TRAITS-filtered), reproducing the legacy CvPlayer::m_i{State,NonState}ReligionHappiness feeders
+// (CvPlayer init :391-392 + processCivics :18205 + processTrait :28543). The TRAIT feed was MISSING from the
+// civic-only cascade religion term -- a real verdict under-count for anti_clerical/aloof/fanatical/spiritual/bigot.
+static void wb_playerReligionAcc(const CvPlayer& owner, int& iStateAcc, int& iNonStateAcc)
+{
+	iStateAcc = GC.getINITIAL_STATE_RELIGION_HAPPINESS() * 100;
+	iNonStateAcc = GC.getINITIAL_NON_STATE_RELIGION_HAPPINESS() * 100;
+	CvCascadeEvalCtx rec;   // unconditioned empire flats -- no city/plot needed
+	rec.player = &owner; rec.team = &GET_TEAM(owner.getTeam());
+	for (int i = 0; i < GC.getNumCivicOptionInfos(); ++i)
+	{
+		const CivicTypes eCivic = owner.getCivics((CivicOptionTypes)i);
+		if (eCivic == NO_CIVIC) continue;
+		const CvInfo* d = InfoRepo<CvCivicInfo>::get().get(eCivic);
+		if (d == NULL) continue;
+		iStateAcc += (int)MMKernel::sumUnit100(d, "stateReligion.empire.happiness", "flat", rec);
+		iNonStateAcc += (int)MMKernel::sumUnit100(d, "happiness.empire.nonStateReligion", "flat", rec);
+	}
+	const bool bPure = GC.getGame().isOption(GAMEOPTION_LEADER_PURE_TRAITS);
+	for (int i = 0; i < GC.getNumTraitInfos(); ++i)
+	{
+		if (!owner.hasTrait((TraitTypes)i)) continue;
+		const CvTraitInfo* td = MMKernel::traitData(i);
+		if (td == NULL) continue;
+		const int vs = (int)MMKernel::sumUnit100(td, "stateReligion.empire.happiness", "flat", rec);
+		if (wb_pureKeep(bPure, td->negativeTrait, vs)) iStateAcc += vs;
+		const int vn = (int)MMKernel::sumUnit100(td, "happiness.empire.nonStateReligion", "flat", rec);
+		if (wb_pureKeep(bPure, td->negativeTrait, vn)) iNonStateAcc += vn;
+	}
+}
+
+// The CITY religion split (×100): each PRESENT religion folds the player state-acc (if it is the state religion) or
+// the non-state-acc, sign-split -- reproducing CvCity::m_iReligionGood/BadHappiness (updateReligionHappiness ->
+// getReligionHappiness -> player state/nonstate).
+static WbSplit wb_religionSplit(const CvCity* pCity)
+{
+	WbSplit religion;
+	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
+	int iStateAcc, iNonStateAcc;
+	wb_playerReligionAcc(owner, iStateAcc, iNonStateAcc);
+	const ReligionTypes eState = owner.getStateReligion();
+	for (int i = 0; i < GC.getNumReligionInfos(); ++i)
+		if (pCity->isHasReligion((ReligionTypes)i))
+			religion.fold((ReligionTypes)i == eState ? iStateAcc : iNonStateAcc);
+	return religion;
+}
+
+void CascadeWellbeing::religionWellbeing(const CvCity* pCity, int& iGood, int& iBad)
+{
+	const WbSplit r = wb_religionSplit(pCity);
+	iGood = r.iGood / 100;   // ÷100 human decomposition getter
+	iBad  = r.iBad / 100;
+}
+
+int CascadeWellbeing::playerStateReligionHappiness(const CvPlayer& player)
+{
+	int s, n; wb_playerReligionAcc(player, s, n); return s / 100;   // ÷100 human
+}
+
+int CascadeWellbeing::playerNonStateReligionHappiness(const CvPlayer& player)
+{
+	int s, n; wb_playerReligionAcc(player, s, n); return n / 100;   // ÷100 human
+}
+
 // ===================== the verdict assembly (the four engine bodies, term-substituted) =====================
 // PURE over its inputs + the live raw-state reads -- ONE implementation (patterns.md): the package combine
 // feeds standing terms, compute() feeds fresh ones.
@@ -506,26 +572,9 @@ CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
 	// Σ adopted civics' values (writer census: init CvPlayer:391-392 + processCivics :18282-83 + the
 	// recalc re-seed :28764; no other feeder) -- never the m_i{State,NonState}ReligionHappiness
 	// accumulators, which are demolition fodder, unread by the cascade. Sign-split per religion (updateReligionHappiness).
-	WbSplit religion;
-	{
-		const ReligionTypes eState = owner.getStateReligion();
-		int iStateAcc = GC.getINITIAL_STATE_RELIGION_HAPPINESS() * 100;
-		int iNonStateAcc = GC.getINITIAL_NON_STATE_RELIGION_HAPPINESS() * 100;
-		CvCascadeEvalCtx rec;   // the civic deposits are unconditioned flats; assemble is pure over inputs
-		rec.city = pCity; rec.plot = pCity->plot(); rec.player = &owner; rec.team = &GET_TEAM(owner.getTeam());
-		for (int i = 0; i < GC.getNumCivicOptionInfos(); ++i)
-		{
-			const CivicTypes eCivic = owner.getCivics((CivicOptionTypes)i);
-			if (eCivic == NO_CIVIC) continue;
-			const CvInfo* d = InfoRepo<CvCivicInfo>::get().get(eCivic);
-			if (d == NULL) continue;
-			iStateAcc += (int)MMKernel::sumUnit100(d, "stateReligion.empire.happiness", "flat", rec);
-			iNonStateAcc += (int)MMKernel::sumUnit100(d, "happiness.empire.nonStateReligion", "flat", rec);
-		}
-		for (int i = 0; i < GC.getNumReligionInfos(); ++i)
-			if (pCity->isHasReligion((ReligionTypes)i))
-				religion.fold((ReligionTypes)i == eState ? iStateAcc : iNonStateAcc);
-	}
+	// religion happiness (×100): INITIAL + civics + TRAITS, per present religion (wb_religionSplit -- the shared
+	// single-source helper the getReligionGood/BadHappiness accessor also uses; the trait term is the #430 gap fix).
+	const WbSplit religion = wb_religionSplit(pCity);
 	// COMMERCE happiness (×100): per commerce type the building-fed per (×100) × the slider% /100 -> ×100, NET
 	int iCommerceHappy = 0;
 	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
@@ -742,6 +791,45 @@ void CascadeWellbeing::featureWellbeing(const CvCity* pCity, int& iHapGood, int&
 	iHapBad  = hap.featMember.iBad + hap.featSubstrate.iBad;
 	iHeaGood = hea.featSubstrate.iGood;                          // legacy feature health = feature-own plot.percent only
 	iHeaBad  = hea.featSubstrate.iBad;
+}
+
+// The SPECIALIST terms (hap.spec/hea.spec) for the retired m_iSpecialist{Happiness,Unhappiness,GoodHealth,BadHealth}
+// accumulators. Same live-gather shape as bonus/building; the spec term is ×100 sign-split (iGood = positives,
+// iBad = negatives), matching the legacy accumulator signs (m_iSpecialistHappiness/GoodHealth positive,
+// m_iSpecialistUnhappiness/BadHealth negative). The getters stay ×100 -- their display consumers ÷100 at use.
+void CascadeWellbeing::specialistWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad)
+{
+	CvCascadeEvalCtx ec;
+	wb_fillCityCtx(pCity, ec);
+	CascadeWbTerms hap, hea;
+	int aiPer[NUM_COMMERCE_TYPES];
+	gatherCityTerms(pCity, ec, hap, hea, aiPer);
+	iHapGood = hap.spec.iGood;
+	iHapBad  = hap.spec.iBad;
+	iHeaGood = hea.spec.iGood;
+	iHeaBad  = hea.spec.iBad;
+}
+
+// The extraBuilding terms (hap.extraB/hea.extraB) for the retired m_iExtraBuilding{Good,Bad}{Happiness,Health}
+// accumulators. The extraB term needs the FULL path: gatherCityTerms fills the civic/trait per-building keyed leg,
+// playerAreaEmpire + foldBuildingKeyed the building-keyed "Royal Tomb" leg. ×100 sign-split (iGood/iBad); the
+// human-scale legacy getters ÷100.
+void CascadeWellbeing::extraBuildingWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad)
+{
+	CvCascadeEvalCtx ec;
+	wb_fillCityCtx(pCity, ec);
+	CascadeWbTerms hap, hea;
+	int aiPer[NUM_COMMERCE_TYPES];
+	gatherCityTerms(pCity, ec, hap, hea, aiPer);
+	std::map<int, std::map<int, WbSplit> > areaByFam;
+	std::map<int, WbSplit> empireByFam;
+	std::map<int, std::map<int, int> > keyedByFam;
+	playerAreaEmpire(GET_PLAYER(pCity->getOwner()), areaByFam, empireByFam, keyedByFam);
+	foldBuildingKeyed(keyedByFam, ec, hap, hea);
+	iHapGood = hap.extraB.iGood;
+	iHapBad  = hap.extraB.iBad;
+	iHeaGood = hea.extraB.iGood;
+	iHeaBad  = hea.extraB.iBad;
 }
 
 // The AREA/EMPIRE building-health rollups -- a fresh player area/empire walk (the cold Legacy-oracle path; the

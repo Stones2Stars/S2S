@@ -71,39 +71,89 @@ number, NOT oracle parity) — specialist-heavy cities gain their previously-tru
 `angryPopulation` stays a sane whole count; no 100× display. NOT bit-parity with the old per-item-truncated numbers
 — matching the old truncation IS the divergence being removed.
 
-## Wellbeing legacy-accumulator CUT + the cascade-sourced breakdown (the combat-tooltip pattern)
+## The legacy-accumulator CUT — ALL accumulators, ONE uniform mechanism
 
-> **Owner ruling.** The legacy wellbeing ACCUMULATORS go (same as the `*Legacy` verdict bodies already deleted),
-> but the **per-scope/per-source breakdown for the Python tooltip STAYS** — re-sourced from the cascade, given
-> "the same treatment as the combat-tooltip rework."
+> **Owner ruling.** The accumulator cut is **NOT wellbeing-specific — it is EVERY legacy serialized incremental
+> accumulator, and they all work exactly the same way.** Wellbeing is the PILOT that proves the mechanism; the same
+> cut then repeats UNCHANGED across every cluster below. **Blast radius is not a concern — it is the SIGNAL: a cut
+> that does NOT reach broadly means the legacy is not actually being cut.** Anything that sneaks a legacy value back
+> in (a `*Legacy` fallback, a masking getter, a member kept alive only to feed one) is an **ERROR**, never a safety
+> net ([DEC-no-legacy-masking]); on this non-playable branch a wrong/empty cascade value is the CORRECT exposed
+> outcome, and a legacy-correct one is the defect. Ledgered as [DEC-accumulator-cut-uniform].
 
-**The pattern (from `CvCombatModel.h` `computeCombatPreview`):** ONE cascade-sourced producer returns the realized
-numbers **plus** a `detailLines` vector of ready-to-render `{label, signed value, category}` rows; `CvGameTextMgr`
-is a **pure renderer** (zero math of its own), printing them generically, coloured by category. The itemised
-breakdown is an extension seam (Shift-gated in combat; the wellbeing panel shows it inline).
+**What an accumulator IS (the three-part test).** A member on `CvCity`/`CvPlayer`/`CvArea`/`CvTeam` that is ALL of:
+(1) **serialized** in `read()`/`write()`; (2) **incrementally maintained** by `change*`/`update*`/`process*` deltas,
+never recomputed-from-source; (3) a **per-turn game quantity the cascade now owns** (a yield / commerce / happiness /
+health / upkeep / free-specialist amount). These are the **STORED-ACCUMULATOR DRIFT class**
+([modifier.md §2b](../../specs/modifier.md)): they carry decades of save history no live source can reproduce, so a
+stored-vs-recompute diff is DRIFT (history pollution), never state to preserve — the recompute-from-source is the
+correct side ([state-repositories.md](../../architecture/state-repositories.md) "incremental-accumulate ledgers
+convert to recompute-from-source").
 
-**Apply to wellbeing:**
+**The uniform mechanism (IDENTICAL per cluster — the landed building/bonus/feature wellbeing cut is the template).**
+1. Add/extend a `Cascade*` **fresh-gather accessor** returning the cluster's term from the cascade, ×100 internally
+   (the shape of the landed `CascadeWellbeing::bonusWellbeing`/`buildingWellbeing`/`featureWellbeing`).
+2. **Re-point the realized getter** to that accessor, reducing `÷100` at the reader boundary ([DEC-fixedpoint-x100]);
+   NO `*Legacy` fallback, NO variant getter.
+3. **HARD-DELETE** the member + its `change*`/`update*`/`process*` maintainers.
+4. **FULL-DELETE the read + write** and NAME the tag in `Assets/savemigration.txt` — the save reader (`sm_isCut`)
+   drains the orphan transparently at load ([engine.md §Save/load](../../reference/engine.md),
+   [DEC-save-remove-is-soft]). **No `WRAPPER_SKIP_ELEMENT`** (it leaves the dead member named in the read path — a
+   rollerskate target); save-breaking is OBSOLETE. An UNLISTED deleted-read orphan is the one hard desync.
+5. **The COMPILER is the census** ([DEC-playability-not-a-gate]) — every surviving consumer is a compile error to
+   rewire onto the getter; you cannot flip-and-pretend. **Done = endpoint-observable** on a loaded save
+   ([DEC-done-is-observable]), not "it compiles."
+
+⚠ Audit each deleted `change*`/`update*` BODY for side effects before removing it — legacy changers carry non-obvious
+riders (trade-network recompute, UI-dirty, power) the surviving trigger site must still fire
+([engine.md §Save/load](../../reference/engine.md) "audit the whole BODY").
+
+### The cut INVENTORY (from the exhaustive code map)
+
+| class | cluster | members (cut) |
+|---|---|---|
+| CvCity | **wellbeing** (pilot) | `m_iExtraBuilding{Good,Bad}{Happiness,Health}`, `m_iExtraBuilding{Happiness,Health}FromTech`, `m_iExtraTechSpecialist{Happiness,Health}`, `m_iReligion{Good,Bad}Happiness`, `m_paiStateReligionHappiness`, `m_iSpecialist{GoodHealth,BadHealth,Happiness,Unhappiness}` + their `update*`/`change*` |
+| CvCity | yield/commerce | `m_aiBuildingCommerce`, `m_aiBuildingCommerceTechChange`, `m_aiReligionCommerce`, `m_aiCorporation{Commerce,Yield}`, `m_aiExtraSpecialist{Yield,Commerce}`, `m_commercePerPopFromBuildings`, `m_aiBaseYieldPerPopRate`, `m_aiRiverPlotYield`, `m_aiTradeYield` |
+| CvPlayer | yield/commerce | `m_aiFreeCityYield`, `m_aiSpecialistExtra{Yield,Commerce}`, `m_aiStateReligionBuildingCommerce`, `m_extraCommerce`, `m_aiGoldenAge{Yield,Commerce}`, `m_paiFeatureHappiness` |
+| CvPlayer | upkeep | `m_iUnitUpkeep{Civilian,Military}100` |
+| CvCity/Player/Area/Team | freeSpecialist (two-part seam) | the `*FreeSpecialist*` AMOUNT ledgers — the summed `freeSpecialists` deposits replace `changeFreeSpecialistCount`; the per-type COUNT getter (`getSpecialistCount+getFreeSpecialistCount`) is the sanctioned output-seam read ([modifier.md §6](../../specs/modifier.md)) and STAYS |
+
+The yield channel additionally carries a `getYieldRate100` + `getYield` (÷100) **SPLIT** — the exact "×100 variant"
+this ruling dissolves: the single getter returns ×100 and every consumer reduces at its reader/discrete boundary;
+each channel's `MMKernel` gather moves off the truncating `sumUnit` onto `sumUnit100` (the truncating variant retires).
+
+### Carve-outs — NOT an accumulator cut (do not touch)
+
+- **Event/vote-grant persisted stores** — genuine one-shot non-derivable state: `m_aBuildingCommerceChangeEvents`,
+  `m_paiFreeBonusEvents`, `m_aBuildingHappy/HealthChange`. KEEP ([state-repositories.md](../../architecture/state-repositories.md)
+  "event/vote grants are NOT cached"). `m_aBuildingYieldChange` is MIXED — the event leg keeps, the bonus-conditioned
+  leg is a pending extra-yield cut; split at that channel.
+- **Genuine historical counters** — `m_iHighestPopulation`, ever-created/ever-alive counts, original-owner/time.
+- **Free-specialist PLACEMENT** — the per-type count OUTPUT read stays; only the amount-maintenance is cut (the seam).
+- **Raw-state INPUTS the cascade FOLDS** — the catch-all `m_iExtraHappiness`/`m_iExtraHealth`, `m_iFreshWaterGoodHealth`:
+  `assemble` reads these as inputs (subtracting the engine trait/tech parts, folding the remainder), not as cascade
+  targets. NOT cut here — they retire with their own input feeders, not this pass.
+- **Percent MODIFIER-stack accumulators** — `m_ai*Modifier` (maintenance/upkeep/commerce-rate percents): serialized
+  incremental, but the additive percent stack ([modifier.md §2a](../../specs/modifier.md)), not a base magnitude. A
+  distinct rework, lower priority — flagged, not folded into the base-magnitude cut.
+
+### Wellbeing — the PILOT cluster (+ the cascade-sourced breakdown, combat-tooltip pattern)
+
+The wellbeing cut also re-sources the **per-source breakdown for the Python/UI tooltip** from the cascade (owner:
+"the same treatment as the combat-tooltip rework"), so the breakdown STAYS while its stored accumulators go.
+
+**The pattern (`CvCombatModel.h` `computeCombatPreview`):** ONE cascade-sourced producer returns the realized numbers
+**plus** a `detailLines` vector of ready-to-render `{label, signed value, category}` rows; `CvGameTextMgr` is a **pure
+renderer** (zero math of its own), coloured by category.
+
 - **Producer** — `CascadeWellbeing::computeBreakdown(city)` returns the four verdicts + `happyLines`/`healthLines`/
-  `angerLines` (per-source rows: building good/bad, bonus, religion, specialist, civic, feature, extraBuilding,
-  area/empire, per-pop, the anger-percent sources, …), every value from the cascade terms already computed in
-  `gather`/`assemble` (×100; the renderer ÷100). One producer, single-source (patterns.md).
-- **Pure renderers** — `setHappyHelp`/`setBadHealthHelp`/`setGoodHealthHelp`/`setAngerHelp` render the lines; the
+  `angerLines` (per-source rows: building, bonus, religion, specialist, civic, feature, extraBuilding, area/empire,
+  per-pop, the anger-percent sources, …), every value from the `gather`/`assemble` terms (×100; renderer ÷100). One
+  producer, single-source (patterns.md).
+- **Pure renderers** — `setHappyHelp`/`setBadHealthHelp`/`setGoodHealthHelp`/`setAngerHelp`; the
   `/computed/cities/wellbeing` decomposition + Python read the SAME producer. No hand-summed decomposition anywhere.
-- **DELETE the legacy accumulator cluster** (still present — building/bonus/feature already cut): `extraBuilding`
-  (`m_iExtraBuildingGood/BadHappiness`, `…Good/BadHealth`, `…HappinessFromTech`, `…HealthFromTech`), `religion`
-  (`m_iReligionGood/BadHappiness` + `updateReligionHappiness`), `specialist` (`m_iSpecialistGood/BadHealth`,
-  `m_iSpecialistHappiness/Unhappiness`) — the members, their `change*`/`update*`/`process*` maintainers, and the
-  getters that read them (the getters re-point to the cascade breakdown, like the flipped building/bonus/feature
-  getters already do). ~106 maintainer/consumer sites across `CvCity`/`CvPlayer` (+ `CvArea`).
+- **DELETE** the wellbeing cluster (extraBuilding / religion / stateReligion / specialist / `*FromTech`) per the
+  inventory above — members, `change*`/`update*`/`process*` maintainers, getters re-pointed to the cascade breakdown
+  (like the flipped building/bonus/feature getters). ~106 maintainer/consumer sites across `CvCity`/`CvPlayer`/`CvArea`.
 
-**Scope:** a focused increment on the scale of the fixed-point cut above (producer + 4 UI panels + endpoint +
-the ~106-site accumulator deletion) — executed in one pass, verified live, so no half-cut state.
-
-## Remaining channels (same pattern, per-channel, verified live)
-
-Yields / commerce / the scalar channels / properties. The yield channel already carries ×100 internally but keeps a
-`getYieldRate100` + `getYield` (÷100) SPLIT — the exact "×100 variant" this ruling dissolves: the single getter
-returns ×100 and every consumer reduces at its reader/discrete boundary. Each channel's `MMKernel`/`Calc` gather
-moves off the truncating `sumUnit` onto `sumUnit100`; the enforcement point is the single-source calculators
-(`sumUnit` — the truncating variant — ultimately retires). Map the consumer surface exhaustively per channel
-([DEC-all-means-all]); convert; verify live.
+Executed in ONE pass per cluster, verified live — no half-cut state.

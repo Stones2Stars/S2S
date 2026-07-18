@@ -601,9 +601,8 @@ public:
 	int getBuildingBadHappiness() const;
 	int getBuildingHappiness(BuildingTypes eType) const;
 
-	int getExtraBuildingGoodHappiness() const;
+	int getExtraBuildingGoodHappiness() const;   // #430 cut: cascade-computed (CascadeWellbeing::extraBuildingWellbeing)
 	int getExtraBuildingBadHappiness() const;
-	void updateExtraBuildingHappiness(bool bLimited = false);
 
 	int getAdditionalHappinessByCivic(CivicTypes eCivic, bool bDifferenceToCurrent = true, bool bCivicOptionVacuum = false, ReligionTypes eStateReligion = NO_RELIGION, int iExtraPop = 0, int iMilitaryHappinessUnits = -1) const;
 	int getAdditionalHealthByCivic(CivicTypes eCivic, bool bDifferenceToCurrent = true) const;
@@ -616,7 +615,6 @@ public:
 
 	int getExtraBuildingGoodHealth() const;
 	int getExtraBuildingBadHealth() const;
-	void updateExtraBuildingHealth(bool bLimited = false);
 
 	int getAdditionalHealthByBuilding(BuildingTypes eType) const;
 	int getAdditionalHealthByBuilding(BuildingTypes eType, int& iGood, int& iBad, int& iSpoiledFood, int& iStarvation) const;
@@ -627,10 +625,9 @@ public:
 	int getBonusGoodHappiness() const;
 	int getBonusBadHappiness() const;
 
-	int getReligionGoodHappiness() const;
+	int getReligionGoodHappiness() const;   // #430 cut: cascade-computed (CascadeWellbeing::religionWellbeing)
 	int getReligionBadHappiness() const;
 	int getReligionHappiness(ReligionTypes eReligion) const;
-	void updateReligionHappiness(bool bLimited = false);
 
 	int getExtraHappiness() const;
 	void changeExtraHappiness(int iChange);
@@ -1271,14 +1268,10 @@ public:
 	void changeBonusCommerceRateModifier(CommerceTypes eIndex, int iChange);
 	bool isBuiltFoodProducedUnit() const;
 	void setBuiltFoodProducedUnit(bool bNewValue);
-	int getSpecialistGoodHealth() const;
+	int getSpecialistGoodHealth() const;   // #430 cut: cascade-computed (CascadeWellbeing::specialistWellbeing)
 	int getSpecialistBadHealth() const;
 	int getSpecialistHappiness() const;
 	int getSpecialistUnhappiness() const;
-	void changeSpecialistGoodHealth(int iChange);
-	void changeSpecialistBadHealth(int iChange);
-	void changeSpecialistHappiness(int iChange);
-	void changeSpecialistUnhappiness(int iChange);
 	int getImprovementGoodHealth() const;
 	int getImprovementBadHealth() const;
 	void updateImprovementHealth();
@@ -1617,12 +1610,6 @@ protected:
 	int m_iDefyResolutionAngerTimer;
 	int m_iHappinessTimer;
 	int m_iMilitaryHappinessUnits;
-	int m_iExtraBuildingGoodHappiness;
-	int m_iExtraBuildingBadHappiness;
-	int m_iExtraBuildingGoodHealth;
-	int m_iExtraBuildingBadHealth;
-	int m_iReligionGoodHappiness;
-	int m_iReligionBadHappiness;
 	int m_iExtraHappiness;
 	int m_iExtraHealth;
 	int m_iNoUnhappinessCount;
@@ -1635,10 +1622,6 @@ protected:
 	int m_iOverflowProduction;
 	int m_iFeatureProduction;
 
-	int m_iSpecialistGoodHealth;
-	int m_iSpecialistBadHealth;
-	int m_iSpecialistHappiness;
-	int m_iSpecialistUnhappiness;
 	int m_iImprovementGoodHealth;
 	int m_iImprovementBadHealth;
 	int m_iLostProductionModified;
@@ -2132,9 +2115,6 @@ public:
 		DECLARE_MAP_FUNCTOR(CvCity, void, invalidateYieldRankCache);
 		DECLARE_MAP_FUNCTOR(CvCity, void, invalidateCommerceRankCache);
 
-		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateExtraBuildingHappiness, bool);
-		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateExtraBuildingHealth, bool);
-		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateReligionHappiness, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setCommerceModifierDirty, CommerceTypes);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setCommerceDirty, CommerceTypes);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setLayoutDirty, bool);
