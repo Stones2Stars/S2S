@@ -1426,7 +1426,7 @@ int CvOutcome::AI_getValueInPlot(const CvUnit &kUnit, const CvPlot &kPlot, bool 
 
 			if (m_iHappinessTimer)
 			{
-				if (pCity->happyLevel() - pCity->unhappyLevel(1) < 0)
+				if (pCity->happyLevel() / 100 - pCity->unhappyLevel(1) / 100 < 0)   // ÷100: verdicts ×100
 				{
 					iValue += m_iHappinessTimer * 10;
 				}

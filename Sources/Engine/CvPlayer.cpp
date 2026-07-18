@@ -7781,7 +7781,7 @@ int CvPlayer::calculateTotalYield(YieldTypes eYield) const
 
 int CvPlayer::calculateTotalCityHappiness() const
 {
-	return algo::accumulate(cities() | transformed(CvCity::fn::happyLevel()), 0);
+	return algo::accumulate(cities() | transformed(CvCity::fn::happyLevel()), 0) / 100;   // ÷100: happyLevel is ×100
 }
 
 
@@ -7869,18 +7869,18 @@ int CvPlayer::calculateTotalImports(YieldTypes eYield) const
 
 int CvPlayer::calculateTotalCityUnhappiness() const
 {
-	return algo::accumulate(cities() | transformed(CvCity::fn::unhappyLevel()), 0);
+	return algo::accumulate(cities() | transformed(CvCity::fn::unhappyLevel()), 0) / 100;   // ÷100: ×100 verdict
 }
 
 
 int CvPlayer::calculateTotalCityHealthiness() const
 {
-	return algo::accumulate(cities() | transformed(CvCity::fn::goodHealth()), 0);
+	return algo::accumulate(cities() | transformed(CvCity::fn::goodHealth()), 0) / 100;   // ÷100: ×100 verdict
 }
 
 int CvPlayer::calculateTotalCityUnhealthiness() const
 {
-	return algo::accumulate(cities() | transformed(CvCity::fn::badHealth()), 0);
+	return algo::accumulate(cities() | transformed(CvCity::fn::badHealth()), 0) / 100;   // ÷100: ×100 verdict
 }
 
 int CvPlayer::calculateUnitSupply() const
@@ -10791,13 +10791,13 @@ void CvPlayer::changeExtraHealth(int iChange)
 
 int CvPlayer::getBuildingGoodHealth() const
 {
-	int g, b; CascadeWellbeing::buildingHealthEmpire(*this, g, b); return g;
+	int g, b; CascadeWellbeing::buildingHealthEmpire(*this, g, b); return g / 100;   // ÷100: cascade term ×100, human decomposition getter
 }
 
 
 int CvPlayer::getBuildingBadHealth() const
 {
-	int g, b; CascadeWellbeing::buildingHealthEmpire(*this, g, b); return b;
+	int g, b; CascadeWellbeing::buildingHealthEmpire(*this, g, b); return b / 100;   // ÷100: human decomposition getter
 }
 
 
@@ -10836,7 +10836,7 @@ void CvPlayer::changeExtraHappiness(int iChange, bool bUnattributed)
 
 int CvPlayer::getBuildingHappiness() const
 {
-	return CascadeWellbeing::buildingHappinessEmpire(*this);
+	return CascadeWellbeing::buildingHappinessEmpire(*this) / 100;   // ÷100: cascade term ×100, human decomposition getter
 }
 
 

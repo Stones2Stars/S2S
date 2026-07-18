@@ -11,8 +11,13 @@
 
 ### DEC-fixedpoint-x100
 
-All cascade value math is integer fixed-point ×100; JSON is human-readable; the single human→×100 conversion lives
-only in readJson. **Home:** [fixed-point-and-scales.md](../specs/curators/fixed-point-and-scales.md).
+×100 fixed-point is the engine's NATIVE representation EVERYWHERE — the cascade, the realized getters, and the
+consumers all carry ×100. JSON is human; human→×100 converts once at readJson (the IN boundary); ×100→human converts
+only at the OUT boundary — any READER (UI / `/computed` HTTP fields / `Cy*` Python) does a trivial `÷100`, and a value
+that becomes a DISCRETE game count (whole angry citizens) reduces there. **No getter has a ×100 "variant"** (never a
+`getX`+`getX100` pair); reducing at the getter forces that split and lets the cascade be shoehorned into legacy-shaped
+getters — the half-migration reflex. **Blast radius never limits the conversion.** **Home:**
+[fixed-point-and-scales.md](../specs/curators/fixed-point-and-scales.md).
 
 ### DEC-curator-owns-descale
 
@@ -319,6 +324,27 @@ parity is NOT a verification signal (only served-value sanity + the compiler cen
 not maintained (a dedicated sweep). **An oracle endpoint is NOT a real consumer:** a legacy member whose only live
 consumer is an oracle endpoint is a self-referential keep-alive that fools the compiler census — remove the endpoint WITH
 the member; the oracle is never a reason to keep legacy alive. **Home:** [validation.md](../specs/validation.md).
+
+### DEC-no-legacy-masking
+
+Legacy outputs must FAIL LOUD, never be preserved or snuck in via getters/fallbacks. A realized getter reads the
+CASCADE ONLY — no `*Legacy` fallback, no pre-init/what-if legacy path; a cascade gap returns a wrong/empty value
+(exposed), never a legacy-correct one (masked). Legacy masking a wrong cascade is WORSE than legacy failing: the mask
+hides the defect and defers the fix (the wellbeing panel reading legacy hid a 2× cascade inflation). Purge legacy
+**violently** so what is missing/wrong is immediately visible. Blast radius is never a reason to keep a legacy path
+alive. Corollary of [DEC-playability-not-a-gate](#dec-playability-not-a-gate) + [DEC-oracle-tautology](#dec-oracle-tautology)
+for the READ surface. **Home:** [cutover.md](../plans/structural-cleanup/cutover.md).
+
+### DEC-legacy-decache-poisons-perf
+
+The #430 cut NUKED the serialized accumulators legacy calcs depended on for O(1) reads (`m_iBuildingGoodHappiness` &
+its cluster, …). Stripped of those caches, a surviving legacy calc (`happyLevelLegacy`, `badHealthLegacy`, …)
+recomputes from scratch on EVERY call — so ANY perf measurement taken while legacy still runs in a read path measures
+**legacy's decache penalty, not the cascade** (proven: the unit-selection lag was legacy `unhappyLevel(iExtra)`/
+`badHealth(bNoAngry)` what-if re-sums per read; it vanished the instant the getters went cascade-only). All turn-time/
+FPS/lag numbers gathered with legacy on any hot read path are POISONED. Clean perf is only measurable AFTER legacy is
+fully purged — so the violent purge is a PREREQUISITE for the perf hunt, not merely a correctness/tidiness step.
+Sharpens [DEC-turn-time-is-king](#dec-turn-time-is-king). **Home:** [cutover.md](../plans/structural-cleanup/cutover.md).
 
 ### DEC-playability-not-a-gate
 

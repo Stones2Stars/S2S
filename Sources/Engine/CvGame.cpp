@@ -8568,10 +8568,10 @@ int CvGame::calculateSyncChecksum()
 					iMultiplier += pLoopCity->getWorkingPopulation();
 					iMultiplier += pLoopCity->getSpecialistPopulation();
 					iMultiplier += pLoopCity->getNumGreatPeople();
-					iMultiplier += pLoopCity->goodHealth();
-					iMultiplier += pLoopCity->badHealth();
-					iMultiplier += pLoopCity->happyLevel();
-					iMultiplier += pLoopCity->unhappyLevel();
+					iMultiplier += pLoopCity->goodHealth() / 100;   // ÷100: verdicts ×100
+					iMultiplier += pLoopCity->badHealth() / 100;
+					iMultiplier += pLoopCity->happyLevel() / 100;
+					iMultiplier += pLoopCity->unhappyLevel() / 100;
 					iMultiplier += pLoopCity->getFood();
 				}
 				break;

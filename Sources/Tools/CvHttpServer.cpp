@@ -2079,11 +2079,11 @@ namespace
 			o["population"] = picojson::value((double)pCity->getPopulation());
 			// ---- realized: POST-FLIP the plain getters ARE the cascade -- the parity fields read the LEGACY
 			// net oracles (the getYieldRate100Legacy pattern) ----
-			o["happyLevel"] = picojson::value((double)pCity->happyLevelLegacy());
-			o["unhappyLevel"] = picojson::value((double)pCity->unhappyLevelLegacy());
+			o["happyLevel"] = picojson::value((double)pCity->happyLevel() / 100);   // CASCADE-only (÷100 reader boundary)
+			o["unhappyLevel"] = picojson::value((double)pCity->unhappyLevel() / 100);
 			o["angryPopulation"] = picojson::value((double)pCity->angryPopulation());
-			o["goodHealth"] = picojson::value((double)pCity->goodHealthLegacy());
-			o["badHealth"] = picojson::value((double)pCity->badHealthLegacy());
+			o["goodHealth"] = picojson::value((double)pCity->goodHealth() / 100);
+			o["badHealth"] = picojson::value((double)pCity->badHealth() / 100);
 			o["healthRate"] = picojson::value((double)pCity->healthRate());
 			// ---- the C++ CASCADE port's verdicts (CascadeWellbeing::compute -- the §2b channel), emitted beside
 			// the legacy four so the port verifies on-demand (no turn-play needed); the accepted classes
@@ -3602,8 +3602,8 @@ namespace
 			// ---- CH.3a HEALTH (legacy-value-calc-map §3): good/bad signed-split (emulator splits each via max/min 0) ----
 			{
 				picojson::value::object h;
-				h["goodHealth"]              = picojson::value((double)pCity->goodHealth());   // realized
-				h["badHealth"]               = picojson::value((double)pCity->badHealth());    // realized
+				h["goodHealth"]              = picojson::value((double)pCity->goodHealth() / 100);   // realized (÷100: ×100 in-engine)
+				h["badHealth"]               = picojson::value((double)pCity->badHealth() / 100);    // realized (÷100)
 				h["healthRate"]              = picojson::value((double)pCity->healthRate());
 				h["freshWaterGoodHealth"]    = picojson::value((double)pCity->getFreshWaterGoodHealth());
 				h["featureGoodHealth"]       = picojson::value((double)pCity->getFeatureGoodHealth());
@@ -3646,8 +3646,8 @@ namespace
 			// ---- CH.3b HAPPINESS (legacy-value-calc-map §3): good/bad + percent-anger × pop / divisor ----
 			{
 				picojson::value::object hp;
-				hp["happyLevel"]            = picojson::value((double)pCity->happyLevel());   // realized
-				hp["unhappyLevel"]          = picojson::value((double)pCity->unhappyLevel()); // realized
+				hp["happyLevel"]            = picojson::value((double)pCity->happyLevel() / 100);   // realized (÷100: ×100 in-engine)
+				hp["unhappyLevel"]          = picojson::value((double)pCity->unhappyLevel() / 100); // realized (÷100)
 				hp["angryPopulation"]       = picojson::value((double)pCity->angryPopulation());
 				hp["buildingGoodHappiness"] = picojson::value((double)pCity->getBuildingGoodHappiness());
 				hp["buildingBadHappiness"]  = picojson::value((double)pCity->getBuildingBadHappiness());

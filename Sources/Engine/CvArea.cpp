@@ -647,21 +647,21 @@ void CvArea::changePopulationPerPlayer(PlayerTypes eIndex, int iChange)
 int CvArea::getBuildingGoodHealth(PlayerTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-	int g, b; CascadeWellbeing::buildingHealthArea(GET_PLAYER(eIndex), getID(), g, b); return g;
+	int g, b; CascadeWellbeing::buildingHealthArea(GET_PLAYER(eIndex), getID(), g, b); return g / 100;   // ÷100: cascade term ×100, human decomposition getter
 }
 
 
 int CvArea::getBuildingBadHealth(PlayerTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-	int g, b; CascadeWellbeing::buildingHealthArea(GET_PLAYER(eIndex), getID(), g, b); return b;
+	int g, b; CascadeWellbeing::buildingHealthArea(GET_PLAYER(eIndex), getID(), g, b); return b / 100;   // ÷100: human decomposition getter
 }
 
 
 int CvArea::getBuildingHappiness(PlayerTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-	return CascadeWellbeing::buildingHappinessArea(GET_PLAYER(eIndex), getID());
+	return CascadeWellbeing::buildingHappinessArea(GET_PLAYER(eIndex), getID()) / 100;   // ÷100: cascade term ×100, human decomposition getter
 }
 
 

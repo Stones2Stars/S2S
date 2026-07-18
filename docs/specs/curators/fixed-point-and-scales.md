@@ -12,21 +12,34 @@
 
 ---
 
-## 1. The model — integer ×100, conversion in exactly ONE layer
+## 1. The model — integer ×100 EVERYWHERE, human only at the IN and OUT boundaries
 
-The cascade does **all** value math in integer fixed-point with 2 decimals (×100). No floats anywhere —
-this is OOS-load-bearing (Civ4 MP is deterministic lockstep; CPU-dependent float math desyncs). `V100 =
-round(human × 100)`, so `1.00 → 100`, `7 → 700`, `0.5 → 50`; `FIXED_ONE = 100`.
+×100 fixed-point with 2 decimals is the engine's **native representation everywhere** — the cascade, the realized
+getters, and the consumers all carry ×100. No floats anywhere — this is OOS-load-bearing (Civ4 MP is deterministic
+lockstep; CPU-dependent float math desyncs). `V100 = round(human × 100)`, so `1.00 → 100`, `7 → 700`, `0.5 → 50`;
+`FIXED_ONE = 100`.
 
-The conversion human↔×100 lives in **exactly one layer**, so nobody in between guesses scales:
+Human numbers exist at exactly **two boundaries** — nobody in between guesses scales, and **no getter has a ×100
+"variant"** (there is no `getX()` + `getX100()` pair; the getter simply IS ×100):
 
 | Layer | Job | Sees ×100? |
 |---|---|---|
 | **XML** (legacy, frozen) | the inherited data — MIXED scales (some fields `*Changes100`, some normal) | the mess we're leaving |
 | **CURATOR** (`Tools/Migration/`) | resolve the XML per-100-vs-normal ambiguity → emit **uniform human-readable** numbers to JSON | reads ×100 XML, writes human |
 | **JSON** (`Assets/Data/**`) | human numbers only (`7`, `25`, `1.5`) — **no ×100, no scale markers** | NO |
-| **readJson** (the import) | the **entire** human→×100 conversion + percent semantics, once at load | converts → ×100 |
-| **CASCADE** (the math) | pure integer math on prepared data — never checks or knows about ×100 | NO (just integers) |
+| **readJson** (the IN boundary) | the **entire** human→×100 conversion + percent semantics, once at load | converts → ×100 |
+| **CASCADE + getters + consumers** (the engine) | pure integer ×100 math; the realized getters return ×100 and every consumer carries it | ×100 throughout |
+| **READERS + DISCRETE quantities** (the OUT boundary) | ×100 → human, once: any READER (UI / the `/computed` HTTP fields / the `Cy*` Python wrappers) does its own trivial `÷100`; a value that becomes a **discrete game count** (whole angry citizens, a whole food modifier) reduces `÷100` there and is human onward | converts ← ×100 |
+
+**Why ×100 out to the consumers, not reduced at the getter** ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)):
+reducing at the getter forces a human-variant getter (a `getX`+`getX100` split) the moment anything internal needs
+the ×100 form, and it lets the cascade be shoehorned into legacy-shaped getters instead of the consumers being
+rewired — the exact reflex that produced the half-migration. Carrying ×100 out makes format-tracking unnecessary
+(the answer is always "×100"), and the visible-100×-if-mis-wired forcing function makes every consumer wire
+correctly or be discarded. **Blast radius is never a reason to limit the conversion.** A consumer that only tests
+SIGN or ranks is scale-invariant (no change); one that mixes with a whole count reduces at that use; an aggregate
+stays ×100 and its own reader reduces. Migration status + the pilot pattern:
+[fixed-point-conformance.md](../../plans/structural-cleanup/fixed-point-conformance.md).
 
 **Consequence:** a ×100 value in a JSON file is a **curator bug** — it leaked an integer-math
 representation onto the human surface. Because the curator absorbs all scale mixing once, readJson has

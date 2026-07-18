@@ -52,6 +52,9 @@ struct CascadeBrLedger
 };
 
 // ===== the signed-split pair (modifier.md §2b; StoneBase Split) =====
+// ⛔ FIXED-POINT: iGood/iBad are ×100 (DEC-fixedpoint-x100) -- the ENGINE representation everywhere; the
+// single human reduction lives at the reader boundary (UI/API/Python) + the discrete realized quantities
+// (angryPopulation/healthRate), NEVER mid-chain. fold() accumulates the ×100 value directly.
 struct WbSplit
 {
 	int iGood, iBad;
@@ -61,24 +64,26 @@ struct WbSplit
 
 // The per-family CITY-scope wellbeing term set (the §2b deposit-derived terms this city's sources produce;
 // the area/empire building splits live PLAYER-side; the raw-state anger/timer inputs are LIVE at read).
+// ⛔ EVERY term is ×100 fixed-point (DEC-fixedpoint-x100): deposits accumulate at their native ×100 scale,
+// NO per-item/per-type ÷100 -- the reduction happens once at the reader/discrete boundary.
 struct CascadeWbTerms
 {
-	WbSplit bld;           // building city base (per-building NET fold) + the event ledger
-	WbSplit bonus;         // bonus empire flats (city presence) + BONUS-gated building/civic/trait entries
-	WbSplit extraB;        // civic/trait buildings.{B} keyed × this city's active set
-	WbSplit featMember;    // civic/trait features.{F} keyed × radius feature counts
-	WbSplit featSubstrate; // feature-info plot.percent per radius feature (÷100 per-feature fold)
-	WbSplit corp;          // corporation city flats (per-corp fold)
-	WbSplit project;       // project empire + world flats (per-project fold)
-	WbSplit spec;          // specialist city flats × count (×100 pools folded ÷100 per type)
-	int iCivicNet;         // civic plain empire flats, NET (city-conditioned joins -- realized here)
-	int iTraitNet;         // trait plain empire flats, NET
-	int iTechNet;          // tech empire flats, NET
-	int iSrNet;            // building {STATE_RELIGION:X}-gated, NET
-	int iTechGatedNet;     // building {TECH_X}-gated, NET
-	int iMilitary;         // the per-military-unit VALUE (× the LIVE count at read -- rides on top)
-	int iLargest;          // the ranked `cities` member (rank gate evaluated at fill)
-	int iPpPct;            // perPopulation percent pool (× live pop ÷100 at read)
+	WbSplit bld;           // building city base (per-building NET fold) + the event ledger (×100)
+	WbSplit bonus;         // bonus empire flats (city presence) + BONUS-gated building/civic/trait entries (×100)
+	WbSplit extraB;        // civic/trait buildings.{B} keyed × this city's active set (×100)
+	WbSplit featMember;    // civic/trait features.{F} keyed × radius feature counts (×100)
+	WbSplit featSubstrate; // feature-info plot.percent per radius feature + improvement plot.flat (×100)
+	WbSplit corp;          // corporation city flats (per-corp fold, ×100)
+	WbSplit project;       // project empire + world flats (per-project fold, ×100)
+	WbSplit spec;          // specialist city flats × count (×100, summed -- NO per-type ÷100)
+	int iCivicNet;         // civic plain empire flats, NET ×100 (city-conditioned joins -- realized here)
+	int iTraitNet;         // trait plain empire flats, NET ×100
+	int iTechNet;          // tech empire flats, NET ×100
+	int iSrNet;            // building {STATE_RELIGION:X}-gated, NET ×100
+	int iTechGatedNet;     // building {TECH_X}-gated, NET ×100
+	int iMilitary;         // the per-military-unit VALUE ×100 (× the LIVE count at read -- rides on top)
+	int iLargest;          // the ranked `cities` member ×100 (rank gate evaluated at fill)
+	int iPpPct;            // perPopulation pool ×100 (× live pop ÷100 at read -> ×100 result)
 	CascadeWbTerms() : iCivicNet(0), iTraitNet(0), iTechNet(0), iSrNet(0), iTechGatedNet(0),
 		iMilitary(0), iLargest(0), iPpPct(0) {}
 	void reset() { *this = CascadeWbTerms(); }
@@ -133,7 +138,7 @@ struct CascadeCityPackages
 	// reads are bare fetches + the live military fold on top) --
 	CascadeWbTerms wbHap, wbHea;
 	int aiWbCommercePer[NUM_COMMERCE_TYPES];   // commerce-happiness pools (folded at fill)
-	int aWbVerdict[4];                         // happy/unhappy/good/bad, MILITARY-FREE (military live at read)
+	int aWbVerdict[4];                         // happy/unhappy/good/bad ×100, MILITARY-FREE (military live at read)
 	// -- the scalar CITY-REALIZED halves (buildings + civics + traits + techs, THIS city's ctx -- percent/
 	// conditioned sums are city-realized joins; only the per-source-city building walks stay player-side) --
 	int scGpBaseBld;                     // greatPeopleRate.city building flats

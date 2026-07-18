@@ -5462,7 +5462,7 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 	// BUG - Health - start
 	if (getBugOptionBOOL("CityBar__Health", true, "BUG_CITYBAR_HEALTH"))
 	{
-		iRate = pCity->goodHealth() - pCity->badHealth();
+		iRate = pCity->goodHealth() / 100 - pCity->badHealth() / 100;   // ÷100: verdicts ×100
 		if (iRate > 0)
 		{
 			szTempBuffer.Format(L", %d %c", iRate, gDLL->getSymbolID(HEALTHY_CHAR));
@@ -5490,7 +5490,7 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 		}
 		else
 		{
-			iRate = pCity->happyLevel() - pCity->unhappyLevel();
+			iRate = pCity->happyLevel() / 100 - pCity->unhappyLevel() / 100;   // ÷100: verdicts ×100
 			if (iRate > 0)
 			{
 				szTempBuffer.Format(L", %d %c", iRate, gDLL->getSymbolID(HAPPY_CHAR));
@@ -19302,7 +19302,7 @@ void CvGameTextMgr::setProcessHelp(CvWStringBuffer &szBuffer, ProcessTypes eProc
 void CvGameTextMgr::setBadHealthHelp(CvWStringBuffer &szBuffer, CvCity& city)
 {
 	PROFILE_EXTRA_FUNC();
-	const int iBadHealthTotal = city.badHealth();
+	const int iBadHealthTotal = city.badHealth() / 100;   // ÷100: verdict ×100
 	if (iBadHealthTotal < 1)
 	{
 		return;
@@ -19496,7 +19496,7 @@ void CvGameTextMgr::setBadHealthHelp(CvWStringBuffer &szBuffer, CvCity& city)
 void CvGameTextMgr::setGoodHealthHelp(CvWStringBuffer &szBuffer, CvCity& city)
 {
 	PROFILE_EXTRA_FUNC();
-	const int iGoodHealthTotal = city.goodHealth();
+	const int iGoodHealthTotal = city.goodHealth() / 100;   // ÷100: verdict ×100
 	if (iGoodHealthTotal < 1)
 	{
 		return;
@@ -19742,7 +19742,7 @@ void CvGameTextMgr::setAngerHelp(CvWStringBuffer &szBuffer, CvCity& city)
 		szBuffer.append(gDLL->getText("TXT_KEY_ANGER_ANARCHY"));
 		return;
 	}
-	if (city.unhappyLevel() < 1)
+	if (city.unhappyLevel() / 100 < 1)   // ÷100: verdict ×100
 	{
 		return;
 	}
@@ -20065,7 +20065,7 @@ void CvGameTextMgr::setAngerHelp(CvWStringBuffer &szBuffer, CvCity& city)
 		}
 	}
 
-	int iUnhappy = city.unhappyLevel();
+	int iUnhappy = city.unhappyLevel() / 100;   // ÷100: verdict ×100
 	if (iUnhappy > iTotal)
 	{
 		// Accounting for rounding error in the above decomposition and other possible sources not handled above.
@@ -20084,7 +20084,7 @@ void CvGameTextMgr::setHappyHelp(CvWStringBuffer &szBuffer, CvCity& city)
 	{
 		return;
 	}
-	if (city.happyLevel() > 0)
+	if (city.happyLevel() / 100 > 0)   // ÷100: verdict ×100
 	{
 		int iTotalHappy = 0;
 		int iHappy = city.getRevSuccessHappiness();
@@ -20275,7 +20275,7 @@ void CvGameTextMgr::setHappyHelp(CvWStringBuffer &szBuffer, CvCity& city)
 
 		szBuffer.append(gDLL->getText("TXT_KEY_HAPPY_TOTAL_HAPPY", iTotalHappy));
 
-		FAssert(iTotalHappy == city.happyLevel())
+		FAssert(iTotalHappy == city.happyLevel() / 100)   // ÷100: verdict ×100 (may ±1 vs the pre-floored legacy decomposition)
 	}
 }
 

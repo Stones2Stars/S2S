@@ -936,7 +936,7 @@ int CvGameObjectCity::getAttribute(AttributeTypes eAttribute) const
 			return m_pCity->healthRate();
 
 		case ATTRIBUTE_HAPPINESS:
-			return m_pCity->happyLevel();
+			return m_pCity->happyLevel() / 100;   // ÷100: happyLevel is ×100; the attribute is a whole happiness
 	}
 	return 0;
 }

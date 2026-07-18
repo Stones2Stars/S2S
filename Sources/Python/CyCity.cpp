@@ -440,12 +440,12 @@ int CyCity::getRevIndexPercentAnger() const
 
 int CyCity::unhappyLevel(int iExtra) const
 {
-	return m_pCity->unhappyLevel(iExtra);
+	return m_pCity->unhappyLevel(iExtra) / 100;   // ÷100: the Python reader boundary (verdicts are ×100 in-engine)
 }
 
 int CyCity::happyLevel() const
 {
-	return m_pCity->happyLevel();
+	return m_pCity->happyLevel() / 100;   // ÷100: Python reader boundary
 }
 
 int CyCity::angryPopulation(int iExtra) const
@@ -460,12 +460,12 @@ int CyCity::totalFreeSpecialists() const
 
 int CyCity::goodHealth() const
 {
-	return m_pCity->goodHealth();
+	return m_pCity->goodHealth() / 100;   // ÷100: Python reader boundary
 }
 
 int CyCity::badHealth(bool bNoAngry) const
 {
-	return m_pCity->badHealth(bNoAngry);
+	return m_pCity->badHealth(bNoAngry) / 100;   // ÷100: Python reader boundary
 }
 
 int CyCity::healthRate(bool bNoAngry, int iExtra) const

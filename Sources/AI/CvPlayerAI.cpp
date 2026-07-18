@@ -13124,7 +13124,7 @@ int CvPlayerAI::AI_getOverallHappyness(int iExtraUnhappy) const
 
 	foreach_(const CvCity * pLoopCity, cities() | filtered(CvCity::fn::isNoUnhappiness()))
 	{
-		iHappyness += (pLoopCity->happyLevel() - pLoopCity->unhappyLevel() - iExtraUnhappy) * 50;
+		iHappyness += (pLoopCity->happyLevel() / 100 - pLoopCity->unhappyLevel() / 100 - iExtraUnhappy) * 50;
 	}
 
 	return iHappyness;
@@ -13409,7 +13409,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 
 				foreach_(const CvCity * pLoopCity, cities() | filtered(!CvCity::fn::isNoUnhappiness()))
 				{
-					const int iHappy = pLoopCity->happyLevel() - pLoopCity->unhappyLevel(3);	//	Allow for pop growth of 3
+					const int iHappy = pLoopCity->happyLevel() / 100 - pLoopCity->unhappyLevel(3) / 100;	//	Allow for pop growth of 3
 
 					iCount++;
 
@@ -13541,7 +13541,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 
 			foreach_(const CvCity * pLoopCity, cities())
 			{
-				int iCityHappy = pLoopCity->happyLevel() - pLoopCity->unhappyLevel();
+				int iCityHappy = pLoopCity->happyLevel() / 100 - pLoopCity->unhappyLevel() / 100;
 				int iCurrentFoodToGrow = pLoopCity->growthThreshold();
 				int iFoodPerTurn = pLoopCity->foodDifference(false, true, true);
 				int iCityValue = 0;
@@ -14183,7 +14183,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 		int iHappyValue = 0;
 		foreach_(const CvCity * pLoopCity, cities())
 		{
-			int iCityHappy = pLoopCity->happyLevel() - pLoopCity->unhappyLevel(iExtraPop);
+			int iCityHappy = pLoopCity->happyLevel() / 100 - pLoopCity->unhappyLevel(iExtraPop) / 100;
 
 			iCityHappy -= std::max(0, pLoopCity->getCommerceHappiness());
 
@@ -14391,7 +14391,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 		int iHealthValue = 0;
 		foreach_(const CvCity * pLoopCity, cities())
 		{
-			int iCityHealth = pLoopCity->goodHealth() - pLoopCity->badHealth(false, iExtraPop);
+			int iCityHealth = pLoopCity->goodHealth() / 100 - pLoopCity->badHealth(false, iExtraPop) / 100;
 
 			int iGoodHealthFromOtherCivics = 0;
 			int iBadHealthFromOtherCivics = 0;
@@ -15924,7 +15924,7 @@ int CvPlayerAI::AI_espionageVal(PlayerTypes eTargetPlayer, EspionageMissionTypes
 
 		if (NULL != pCity)
 		{
-			int iCityHealth = pCity->goodHealth() - pCity->badHealth(false, 0);
+			int iCityHealth = pCity->goodHealth() / 100 - pCity->badHealth(false, 0) / 100;
 			int iBaseUnhealth = GC.getEspionageMissionInfo(eMission).getCityPoisonWaterCounter();
 
 			// K-Mod: fixing some "wtf".
@@ -15956,7 +15956,7 @@ int CvPlayerAI::AI_espionageVal(PlayerTypes eTargetPlayer, EspionageMissionTypes
 
 		if (NULL != pCity)
 		{
-			int iCityCurAngerLevel = pCity->happyLevel() - pCity->unhappyLevel(0);
+			int iCityCurAngerLevel = pCity->happyLevel() / 100 - pCity->unhappyLevel(0) / 100;
 			int iBaseAnger = GC.getEspionageMissionInfo(eMission).getCityUnhappinessCounter();
 			int iAvgUnhappy = iCityCurAngerLevel - iBaseAnger / 2;
 
@@ -16085,7 +16085,7 @@ int CvPlayerAI::AI_espionageVal(PlayerTypes eTargetPlayer, EspionageMissionTypes
 
 		if (NULL != pCity)
 		{
-			int iCityCurAngerLevel = pCity->happyLevel() - pCity->unhappyLevel(0);
+			int iCityCurAngerLevel = pCity->happyLevel() / 100 - pCity->unhappyLevel(0) / 100;
 			int iBaseAnger = pCity->getWarWearinessPercentAnger();
 			iBaseAnger *= (100 + GC.getEspionageMissionInfo(eMission).getWarWearinessCounter());
 			iBaseAnger /= 100;
@@ -17066,7 +17066,7 @@ void CvPlayerAI::AI_doCivics()
 	m_iCityGrowthValueBase = 0;
 	foreach_(const CvCity * pLoopCity, cities())
 	{
-		int iCityHappy = pLoopCity->happyLevel() - pLoopCity->unhappyLevel();
+		int iCityHappy = pLoopCity->happyLevel() / 100 - pLoopCity->unhappyLevel() / 100;
 		int iCurrentFoodToGrow = pLoopCity->growthThreshold();
 		int iFoodPerTurn = pLoopCity->foodDifference(false, true, true);
 		int iCityValue = 0;
@@ -24020,7 +24020,7 @@ bool CvPlayerAI::AI_advancedStartPlaceCity(const CvPlot* pPlot)
 
 	int iDivisor = std::max(1, 2000 / std::max(1, getAdvancedStartPoints()));
 
-	int iTargetPopulation = pCity->happyLevel() + (getCurrentEra() / 2);
+	int iTargetPopulation = pCity->happyLevel() / 100 + (getCurrentEra() / 2);
 	iTargetPopulation /= iDivisor;
 
 	while (iPlotsImproved < iTargetPopulation)
@@ -25565,7 +25565,7 @@ int CvPlayerAI::AI_getHappinessWeight(int iHappy, int iExtraPop) const
 	int iValue = 0;
 	foreach_(const CvCity * pLoopCity, cities())
 	{
-		const int iCityHappy = pLoopCity->happyLevel() - pLoopCity->unhappyLevel(iExtraPop) - std::max(0, pLoopCity->getCommerceHappiness());
+		const int iCityHappy = pLoopCity->happyLevel() / 100 - pLoopCity->unhappyLevel(iExtraPop) / 100 - std::max(0, pLoopCity->getCommerceHappiness());
 
 		//Fuyu: max happy 5
 		const int iHappyNow = std::min(5, iCityHappy);
@@ -25611,7 +25611,7 @@ int CvPlayerAI::AI_getHealthWeight(int iHealth, int iExtraPop) const
 	int iValue = 0;
 	foreach_(const CvCity * pLoopCity, cities())
 	{
-		int iCityHealth = pLoopCity->goodHealth() - pLoopCity->badHealth(false, iExtraPop);
+		int iCityHealth = pLoopCity->goodHealth() / 100 - pLoopCity->badHealth(false, iExtraPop) / 100;
 
 		//Fuyu: max health 8
 		int iHealthNow = std::min(8, iCityHealth);
@@ -27440,7 +27440,7 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 			if (pUnit)
 			{
 				const CvCity* pCity = pPlot->getPlotCity();
-				if (pCity && pCity->happyLevel() < pCity->unhappyLevel())
+				if (pCity && pCity->happyLevel() / 100 < pCity->unhappyLevel() / 100)
 				{
 					iValue += iTemp * 40;
 				}
@@ -30762,7 +30762,7 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 				CvCity* pCity = pUnitPlot->getPlotCity();
 				if (pCity != NULL)
 				{
-					if ((pCity->happyLevel()) < (pCity->unhappyLevel()))
+					if ((pCity->happyLevel() / 100) < (pCity->unhappyLevel() / 100))
 					{
 						iTempTemp = (iTemp * 5);
 					}

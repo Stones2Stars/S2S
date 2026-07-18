@@ -3037,8 +3037,8 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 												iTemporaryUnhappiness += ((iAngerPercent * (pLoopCity->getPopulation())) / GC.getPERCENT_ANGER_DIVISOR());
 												iTemporaryUnhappiness += pLoopCity->getEspionageHappinessCounter();
 
-												int iHappinessLevel = pLoopCity->happyLevel() - pLoopCity->unhappyLevel() + iTemporaryUnhappiness;
-												int iHealthLevel = pLoopCity->goodHealth() - pLoopCity->badHealth() + pLoopCity->getEspionageHealthCounter();
+												int iHappinessLevel = pLoopCity->happyLevel() / 100 - pLoopCity->unhappyLevel() / 100 + iTemporaryUnhappiness;   // ÷100: verdicts ×100
+												int iHealthLevel = pLoopCity->goodHealth() / 100 - pLoopCity->badHealth() / 100 + pLoopCity->getEspionageHealthCounter();
 												//Adjustments
 												iHealthLevel += iFeatureHealthAdjust;
 												//Adjustment for building

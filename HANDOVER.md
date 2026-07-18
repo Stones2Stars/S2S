@@ -1,63 +1,67 @@
-# HANDOVER — 2026-07-08 (branch `json-data-migration`)
+# HANDOVER — 2026-07-18 (branch `json-data-migration`)
 
-> **TRANSIENT one-time relay** (AGENTS.md handover rules): work done + work upcoming, nothing load-bearing
-> lives only here. Every ruling below is captured durably in the named docs — read THOSE, not this summary.
+> **TRANSIENT one-time relay** (AGENTS.md handover rules): work done + work upcoming, nothing load-bearing lives
+> only here. The DURABLE design is in `docs/plans/structural-cleanup/fixed-point-conformance.md` and the DEC ledger
+> (`docs/architecture/decisions.md`) — read THOSE, not this summary. Deletable-without-loss once read.
 
-## ⛔ Before you do ANYTHING
+## DONE this session (wellbeing fixed-point #430 — verified in-game, owner confirmed "numbers correct again")
+- **Wellbeing cascade fixed-point conformance (COMPLETE).** ×100 through gather + assemble + every consumer; human
+  conversion happens ONLY at reader boundaries (UI / `/computed` / Python via `CyCity`) + the discrete realized
+  quantities (`angryPopulation`/`healthRate` = whole citizens). No ×100-variant getter.
+- **Root bug (mapped, not guessed) + fixed:** the per-population term's `/100` is the PERCENT DIVISOR
+  (`perPopulation` is a percent), NOT the fixed-point reduction — it had been wrongly stripped → 100× on that term
+  (London happy 968→**567**, `badHealth` corrected → resolved the DISEASE report). Fix in
+  `Sources/Cascade/CvCascadeWellbeing.cpp` assemble: `iPopExtraHappy = iPop * hap.iPpPct / 100;` (+ health twin).
+- **Legacy verdict bodies PURGED.** Deleted `happyLevelLegacy/unhappyLevelLegacy/goodHealthLegacy/badHealthLegacy`
+  (+ decls). The 4 realized getters are cascade-only (`CascadeAccumulator::wellbeing`, ×100). Endpoint `cityWellbeing`
+  + `CyCity` (Python) read the cascade. The what-if (`iExtra`/`bNoAngry`) is an EXPOSED cascade gap (returns the
+  base), never legacy.
+- **Perf regression fixed as a side effect:** the unit-selection/grouping LAG was legacy's what-if bodies recomputing
+  UNCACHED (their serialized caches nuked by #430); gone the instant getters went cascade-only.
+- **Consumers wired ×100** across 18 files: `CvCityAI`/`CvPlayerAI` (÷100 each getter, ~91 calls), `CvGame` score,
+  `CvPlayer` aggregates, `CvCity` getAdditional*/event-triggers, `CvGameObject` ATTRIBUTE_HAPPINESS, `CvOutcome`,
+  `CvDLLWidgetData`+`CvGameTextMgr` UI, `CvHttpServer`, the flipped decomposition getters (getFeature/Bonus/Building*
+  → ÷100; they read the cascade).
+- **Docs:** `fixed-point-and-scales.md §1` + `DEC-fixedpoint-x100` refined (×100 OUT to consumers, no variant getter);
+  added `DEC-no-legacy-masking` + `DEC-legacy-decache-poisons-perf`; `fixed-point-conformance.md` rewritten.
 
-1. **Session-start protocol** (AGENTS.md banner): read every file in `docs/specs/` + `docs/architecture/` IN FULL.
-2. **The tree deliberately does NOT compile** ([DEC-red-ratchet], AGENTS.md Build And Test ⛔): the 23 XML
-   `CvXInfo` classes are archived in `SourceArchive/Infos/` as a fallback-proof ratchet. **NEVER restore them,
-   never re-add a `CvXInfo`, never treat the RED build as a defect.** Green = the getter wiring below, finished.
-3. **No insta-commits of code** (AGENTS.md Conventions, owner 2026-07-08): code lands in the WORKING TREE, the
-   owner reviews the diff, THEN it commits. Curator + regenerated `Assets/Data` commit together freely.
-4. Do not invent. It is all specced. A question posed to the owner is a hard stop.
+## STATE
+- Working tree CLEAN (temp diag removed), **NOT committed** — awaiting owner diff review. `git diff --stat` = 18
+  files, ~−120 lines (the `*Legacy` deletion dominates `CvCity.cpp`).
+- Deployed Release DLL = the fix + a now-removed-in-tree diag (harmless extra endpoint fields); a rebuild picks up the
+  clean tree. Game running on the turn-1337 reference save.
+- Build (from `Sources/`): `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" Release build deploy`
+  (`Assert build` = ~40s compile check). ⚠ KILL the game before deploy (DLL lock). `agentstart.bat` relaunches;
+  poll `http://127.0.0.1:7227/computed/game` for `"turn":1337` (~90s). Verify:
+  `/computed/cities/wellbeing?player=0&name=London` — `cascHappy` (×100), `happyLevel` (human).
 
-## State: what this session landed (all committed)
+## NEXT — the wellbeing accumulator CUT (owner-directed, design LOCKED)
+Delete the remaining legacy wellbeing ACCUMULATORS, KEEP the per-source breakdown for Python, re-sourced from the
+cascade via the **COMBAT-TOOLTIP PATTERN** (`Sources/Engine/CvCombatModel.h` `computeCombatPreview`: ONE producer
+returns realized numbers + a `detailLines` vector of `{label, signed value, category}` rows; `CvGameTextMgr` = pure
+renderer).
+- **Producer:** `CascadeWellbeing::computeBreakdown(city)` → verdicts + happy/health/anger detailLines from the
+  cascade terms already in gather/assemble (×100; renderer ÷100). Single-source (patterns.md).
+- **Pure renderers:** `setHappyHelp`/`setBadHealthHelp`/`setGoodHealthHelp`/`setAngerHelp` + the endpoint
+  decomposition + Python.
+- **DELETE the accumulator cluster** (building/bonus/feature ALREADY cut): `extraBuilding`
+  (`m_iExtraBuildingGood/BadHappiness`, `…Good/BadHealth`, `…HappinessFromTech`, `…HealthFromTech`), `religion`
+  (`m_iReligionGood/BadHappiness` + `updateReligionHappiness`), `specialist` (`m_iSpecialistGood/BadHealth`,
+  `m_iSpecialistHappiness/Unhappiness`) — members + `change*`/`update*`/`process*` maintainers + the getters
+  (re-point getters to the cascade breakdown). **~106 sites** across `CvCity`/`CvPlayer`(+`CvArea`).
+- Full design: `docs/plans/structural-cleanup/fixed-point-conformance.md` → "Wellbeing legacy-accumulator CUT + the
+  cascade-sourced breakdown". Do it as ONE focused pass, verified live — no half-cut.
 
-- **The composable-unit foundation** (`1102a373a`): one unit class per json.md section in `Sources/JsonInfo/`
-  (`CvJsonRequires`/`Edges`/`Allowed`/`Grants`/`Provides`/`Gate`/`BoolBlock`/`Modifiers`), write-once at load,
-  const-only readers, composed BY VALUE **on the derived infos only** (the base `CvJsonInfo` carries ZERO section
-  data — data-free virtual accessors, one dispatch, unconsumed-section census via `jsonNoteUnconsumed`). All 24
-  subclasses recomposed per the data-grounded table + 12 new subclasses; parse primitives live in
-  `JsonInfo/CvJsonParse.{h,cpp}`.
-- **The not-to-spec cleanup** (same commit): the retired deposits model (`CvJsonInfo::deposits` /
-  `CvCascadeDeposit`-on-the-info / `whenObsoleteDeposits`) is PURGED from all calc files; the compiled
-  `DepositIndex` keeps its runtime shape and now compiles from `getModifiers()`/`getWhenObsolete()` (the
-  cascade-side `CascadeDeposit` record). Phantom `shadowEngine`×4, the dead healdiff shadow, loadPrune members,
-  stale epoch/stamp comments: gone. `cascadeStartNode` re-homed to `CvJsonTechInfo` (reset-recreate).
-- **loadPrune is dead end-to-end** (`36a14af98` data + `e1fff9685` docs): the entity-level `enabled`/`disabled`
-  gate ([DEC-entity-gate], json.md §2 Applicability) replaced it — curators emit it via `curate_common.gate_entity`,
-  readJson parses it (`CvJsonGate`), `cascadeGateOk` evaluates it in the unit/building cascades.
-- **perMilitaryUnit is dead** (`a357b8d67` + `4147ecfa0`): the ledger's named banned member now authors as the
-  §3.7 `unit: IS_MILITARY`-qualified `cities` entry; `CvJsonModEntry` gained `unitQual` (entry-form AND node-form —
-  the node form also un-drops cargo's live `{unit: IS_LAND}` data) and the `per` count-scaler + §6 COUNT leaves
-  (`CASC_UNIT_COUNT`) the first cut missed.
-- Docs commit `e1fff9685` also swept in the July-6 uncommitted docs work (disclosed to the owner; stands).
+## Owner rulings this session (all ledgered in decisions.md — the durable home)
+- **NO LEGACY — purge violently, fail loud** so gaps are visible; legacy MASKING a wrong cascade is worse than legacy
+  failing (`DEC-no-legacy-masking`).
+- **Legacy-decache poisons ALL perf numbers** — legacy calcs lost their nuked serialized caches, recompute per-read;
+  clean perf is only measurable after the full purge (`DEC-legacy-decache-poisons-perf`).
+- **×100 out to consumers; blast radius is NEVER a reason to limit the conversion** (`DEC-fixedpoint-x100`, refined).
+- On a non-playable branch, a wrong cascade has zero cost — it EXPOSES the defect. Don't gate legacy removal on
+  cascade correctness.
 
-## Upcoming: the road to green (the standing task list)
-
-1. **GC.get<X>Info accessor surface + every engine/AI/UI consumer** of the 23 archived classes onto
-   `CvJson<X>Info` (live callers only — dead getters die with their callers). Solve the `DllExport` EXE-bound
-   proxy signatures first (owner says solved — find the intended mechanism; do NOT guess).
-2. **`enPromotionValid`** (`CvCascadeAccumulator.cpp:604`, includes `:38/:39/:43`) still reads archived Infos +
-   `isPromotionValidLegacy` — rework onto CvJson surfaces; wire `cascadeGateOk(j->getGate())` into the promotion
-   path (units/buildings already gated). Same class: `CvCascadeProperty.cpp:24` `GC.getPropertyInfo` read.
-3. **RJ_REPO_TYPES dispatch gaps**: civilizations/eras/handicaps/gamespeeds/specialbuildings/leaderheads/
-   specialunits/victories/votes/hurries/bonusclasses folders are NOT dispatched — the grants machine reads
-   `InfoRepo<CvCivilizationInfo>` etc., which never populate. Add the dispatch rows.
-4. **Verify live once loadable**: freeSpecialists count-leaves now parse — `sc_fsFold`/`fillFreeSpecialistsCity`
-   must re-find their amounts; the `perScaled` census goes nonzero; the `[READJSON]` unconsumed-sections census
-   should be EMPTY (anything in it is a representation gap — surface it, never work around it).
-5. **Gate consumers** for culturelevels/unitcombats/promotionlines land with their systems' wiring;
-   `gr_resolveBuilding` should consume the structured `repeatables()`/`foundBuildings()`.
-6. Ranked-`cities` qualifiers (`max`/`orderedByDescending`, authored beside the flat) are still walk-ignored —
-   inert by design until `plans/parked/ranked-target-selection.md` unparks; do not "fix" ad hoc.
-
-## Where the truth lives
-
-- The unit/representation model: `Sources/JsonInfo/CvJsonInfo.h` header comment + json.md.
-- The rulings of 2026-07-08: [DEC-entity-gate], [DEC-red-ratchet] (decisions.md) + AGENTS.md Conventions.
-- The cut/wiring worklists: `docs/plans/structural-cleanup/` (cutover.md, code-cut-map.md).
-- Verification greps that must stay clean: `cascadeJson|CvCascadeJsonParse` (0), `loadPrune` outside
-  tombstones (0), `perMilitaryUnit` in data (0), `->deposits|whenObsoleteDeposits` (0).
+## Other channels (later, per plan doc)
+Yields / commerce / scalars / properties: the same ×100-to-consumers conformance; dissolve the
+`getYieldRate100`/`getYield` split (the "×100 variant" this ruling kills). See `fixed-point-conformance.md` →
+"Remaining channels".

@@ -102,7 +102,7 @@ static void wb_foldBuildingDeposits(const std::vector<CascadeDeposit>& deps,
 		{
 			for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
 				if (dep.seg[2] == aiChSeg[c] && MMKernel::applies(dep.enabled, dep.disabled, ec))
-					{ aiCommercePer[c] += (int)(MMKernel::perScale(dep, ec, dep.value100) / 100); break; }   // §3.7 per (identity when hasPer==false)
+					{ aiCommercePer[c] += (int)MMKernel::perScale(dep, ec, dep.value100); break; }   // ×100; §3.7 per
 			continue;
 		}
 		const bool bHap = dep.seg[0] == famHappy;
@@ -110,12 +110,12 @@ static void wb_foldBuildingDeposits(const std::vector<CascadeDeposit>& deps,
 		CascadeWbTerms& t = bHap ? tHap : tHea;
 		if (dep.unitId == unitPerPop)
 		{
-			if (MMKernel::applies(dep.enabled, dep.disabled, ec)) t.iPpPct += (int)(MMKernel::perScale(dep, ec, dep.value100) / 100);   // §3.7 per (identity when hasPer==false)
+			if (MMKernel::applies(dep.enabled, dep.disabled, ec)) t.iPpPct += (int)MMKernel::perScale(dep, ec, dep.value100);   // ×100; §3.7 per
 			continue;
 		}
 		if (dep.unitId != unitFlat) continue;
 		if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
-		const int v = (int)(MMKernel::perScale(dep, ec, dep.value100) / 100);   // §3.7 per (identity when hasPer==false)
+		const int v = (int)MMKernel::perScale(dep, ec, dep.value100);   // ×100; §3.7 per
 		switch (wb_classify(dep.enabled))
 		{
 		case WB_BONUS_GATED:    t.bonus.fold(v); break;
@@ -151,11 +151,12 @@ static void wb_buildingsAll(int famHappy, int famHealth, int famCH, const CvCity
 			aiChSeg, ec, tHap, tHea, aiCommercePer, iBaseNetHap, iBaseNetHea);
 		tHap.bld.fold(iBaseNetHap);
 		tHea.bld.fold(iBaseNetHea);
-		// the EVENT-granted per-building ledgers ride the same accumulators (measured zero save-wide)
+		// the EVENT-granted per-building ledgers ride the same accumulators (measured zero save-wide);
+		// these legacy getters are HUMAN -> ×100 to join the ×100 building term
 		const int iLedgerHap = pCity->getBuildingHappyChange((BuildingTypes)b);
-		if (iLedgerHap != 0) tHap.bld.fold(iLedgerHap);
+		if (iLedgerHap != 0) tHap.bld.fold(iLedgerHap * 100);
 		const int iLedgerHea = pCity->getBuildingHealthChange((BuildingTypes)b);
-		if (iLedgerHea != 0) tHea.bld.fold(iLedgerHea);
+		if (iLedgerHea != 0) tHea.bld.fold(iLedgerHea * 100);
 	}
 	// obsolete buildings deliver their whenObsolete wb numbers into the SAME terms (json §4.2). No event ledgers --
 	// an obsolete building's whenObsolete tree IS its cascade contribution. Inert until the swap cut.
@@ -212,17 +213,17 @@ void CascadeWellbeing::playerAreaEmpire(const CvPlayer& player,
 					// building -- ledgered here in the GRANTOR's ctx (the commerce-twin precedent),
 					// realized per city by foldBuildingKeyed
 					if (dep.targetFk >= 0 && MMKernel::applies(dep.enabled, dep.disabled, pec))
-						keyedByFam[dep.seg[0]][dep.targetFk] += (int)(MMKernel::perScale(dep, pec, dep.value100) / 100);   // §3.7 per, resolved at the GRANTOR's ctx (the ledger realization folds plain ints)
+						keyedByFam[dep.seg[0]][dep.targetFk] += (int)MMKernel::perScale(dep, pec, dep.value100);   // ×100; §3.7 per at the GRANTOR's ctx (ledger folds ×100 ints)
 					continue;
 				}
 				if (dep.nSeg != 2) continue;
 				if (dep.seg[1] == scopeEmpire)
 				{
-					if (MMKernel::applies(dep.enabled, dep.disabled, pec)) empireByFam[dep.seg[0]].fold((int)(MMKernel::perScale(dep, pec, dep.value100) / 100));   // §3.7 per (identity when hasPer==false)
+					if (MMKernel::applies(dep.enabled, dep.disabled, pec)) empireByFam[dep.seg[0]].fold((int)MMKernel::perScale(dep, pec, dep.value100));   // ×100; §3.7 per
 				}
 				else if (dep.seg[1] == scopeArea)
 				{
-					if (MMKernel::applies(dep.enabled, dep.disabled, pec)) areaByFam[dep.seg[0]][iArea].fold((int)(MMKernel::perScale(dep, pec, dep.value100) / 100));   // §3.7 per (identity when hasPer==false)
+					if (MMKernel::applies(dep.enabled, dep.disabled, pec)) areaByFam[dep.seg[0]][iArea].fold((int)MMKernel::perScale(dep, pec, dep.value100));   // ×100; §3.7 per
 				}
 			}
 		}
@@ -264,12 +265,12 @@ static void wb_memberSource(int famId, const CvInfo* d, bool bTrait, bool bPure,
 	{
 		const CascadeDeposit& dep = deps[i];
 		if (dep.seg[0] != famId || dep.seg[1] != scopeEmpire) continue;
-		const int v = dep.value100 / 100;   // the AUTHORED value: the pure filter (sign) + the military per-unit fold read it raw
+		const int v = dep.value100;   // ×100 AUTHORED value: the pure filter (sign) + the military per-unit fold
 		if (!wb_pureKeep(bPure, bNegative, v)) continue;
 		if (dep.nSeg == 2 && dep.unitId == unitFlat)
 		{
 			if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
-			const int vs = (int)(MMKernel::perScale(dep, ec, dep.value100) / 100);   // §3.7 per (identity when hasPer==false)
+			const int vs = (int)MMKernel::perScale(dep, ec, dep.value100);   // ×100; §3.7 per
 			if (wb_classify(dep.enabled) == WB_BONUS_GATED) t.bonus.fold(vs);
 			else iFlatNet += vs;
 		}
@@ -279,13 +280,13 @@ static void wb_memberSource(int famId, const CvInfo* d, bool bTrait, bool bPure,
 			// player extraBuildingHappiness/Health per-building accumulators)
 			if (dep.targetFk >= 0 && cascadeIsBuildingActive(dep.targetFk, ec)
 				&& MMKernel::applies(dep.enabled, dep.disabled, ec))
-				t.extraB.fold((int)(MMKernel::perScale(dep, ec, dep.value100) / 100));   // §3.7 per (identity when hasPer==false)
+				t.extraB.fold((int)MMKernel::perScale(dep, ec, dep.value100));   // ×100; §3.7 per
 		}
 		else if (dep.nSeg == 4 && dep.seg[2] == segFeatures)
 		{
 			std::map<int, int>::const_iterator fit = dep.targetFk >= 0 ? featureCounts.find(dep.targetFk) : featureCounts.end();
 			if (fit != featureCounts.end() && MMKernel::applies(dep.enabled, dep.disabled, ec))
-				t.featMember.fold(fit->second * (int)(MMKernel::perScale(dep, ec, dep.value100) / 100));   // §3.7 per (identity when hasPer==false)
+				t.featMember.fold(fit->second * (int)MMKernel::perScale(dep, ec, dep.value100));   // ×100; §3.7 per
 		}
 		else if (dep.nSeg == 4 && dep.seg[2] == segImprovements)
 		{
@@ -293,7 +294,7 @@ static void wb_memberSource(int famId, const CvInfo* d, bool bTrait, bool bPure,
 			// getFeatureGoodHappiness bundles feature + improvement happiness into ONE number (#430 gap fix)
 			std::map<int, int>::const_iterator iit = dep.targetFk >= 0 ? improvementCounts.find(dep.targetFk) : improvementCounts.end();
 			if (iit != improvementCounts.end() && MMKernel::applies(dep.enabled, dep.disabled, ec))
-				t.featMember.fold(iit->second * (int)(MMKernel::perScale(dep, ec, dep.value100) / 100));   // §3.7 per (identity when hasPer==false)
+				t.featMember.fold(iit->second * (int)MMKernel::perScale(dep, ec, dep.value100));   // ×100; §3.7 per
 		}
 		else if (dep.nSeg == 3 && dep.seg[2] == segCities && dep.unitId == unitFlat && dep.unitQual != NULL)
 		{
@@ -305,7 +306,7 @@ static void wb_memberSource(int famId, const CvInfo* d, bool bTrait, bool bPure,
 		{
 			// the ranked `cities` scaler (unqualified): pays while this city ranks <= the target city count
 			if (bInTopCities && MMKernel::applies(dep.enabled, dep.disabled, ec))
-				t.iLargest += (int)(MMKernel::perScale(dep, ec, dep.value100) / 100);   // §3.7 per (identity when hasPer==false)
+				t.iLargest += (int)MMKernel::perScale(dep, ec, dep.value100);   // ×100; §3.7 per
 		}
 	}
 	if (bTrait) t.iTraitNet += iFlatNet; else t.iCivicNet += iFlatNet;
@@ -315,7 +316,7 @@ static void wb_memberSource(int famId, const CvInfo* d, bool bTrait, bool bPure,
 static void wb_entity(const CvInfo* d, const std::string& addr, const CvCascadeEvalCtx& ec, WbSplit& out)
 {
 	if (d == NULL) return;
-	out.fold(MMKernel::sumUnit(d, addr, "flat", ec));
+	out.fold((int)MMKernel::sumUnit100(d, addr, "flat", ec));   // ×100
 }
 
 // ===================== the per-family gather =====================
@@ -382,7 +383,7 @@ static void wb_gather(const char* szFam, const CvCity* pCity, const CvCascadeEva
 	{
 		if (!team.isHasTech((TechTypes)i)) continue;
 		const CvInfo* d = InfoRepo<CvTechInfo>::get().get(i);
-		if (d != NULL) t.iTechNet += MMKernel::sumUnit(d, empAddr, "flat", ec);
+		if (d != NULL) t.iTechNet += (int)MMKernel::sumUnit100(d, empAddr, "flat", ec);   // ×100
 	}
 	// -- projects (empire per completed count ×1 presence + the lone world scope) --
 	const std::string worldAddr = fam + ".world";
@@ -393,7 +394,7 @@ static void wb_gather(const char* szFam, const CvCity* pCity, const CvCascadeEva
 		if (GC.getGame().getProjectCreatedCount((ProjectTypes)i) > 0)
 			wb_entity(InfoRepo<CvProjectInfo>::get().get(i), worldAddr, ec, t.project);
 	}
-	// -- specialists (city flats ×count, ×100 pools folded /100 per type -- the engine's /100-at-use) --
+	// -- specialists (city flats ×count, ×100 -- summed at native scale, NO per-type ÷100 truncation) --
 	for (int i = 0; i < GC.getNumSpecialistInfos(); ++i)
 	{
 		const int iCount = pCity->getSpecialistCount((SpecialistTypes)i) + pCity->getFreeSpecialistCount((SpecialistTypes)i);
@@ -401,7 +402,7 @@ static void wb_gather(const char* szFam, const CvCity* pCity, const CvCascadeEva
 		const CvInfo* d = InfoRepo<CvSpecialistInfo>::get().get(i);
 		if (d == NULL) continue;
 		const long v100 = MMKernel::sumUnit100(d, cityAddr, "flat", ec) * iCount;
-		if (v100 >= 0) t.spec.iGood += (int)(v100 / 100); else t.spec.iBad -= (int)(-v100 / 100);
+		t.spec.fold((int)v100);   // ×100 sign-split; the cross-type sum is lossless (was the -0.4/type truncation bug)
 	}
 	// -- the feature SUBSTRATE percent (health's fallout class): per radius feature, plot.percent summed
 	// -- per feature TYPE then /100 folded (the engine featureGood/Bad split per feature)
@@ -417,8 +418,10 @@ static void wb_gather(const char* szFam, const CvCity* pCity, const CvCascadeEva
 			const int pct = MMKernel::sumUnit(d, plotAddr, "percent", ec);
 			if (pct != 0) perFeature[(int)p->getFeatureType()] += pct;
 		}
+		// the summed feature health PERCENT is itself the ×100 health level (−25% == −0.25 face == −25 ×100);
+		// keep it at ×100 -- the fractional contribution survives to the discrete/reader boundary (was the ÷100 loss)
 		for (std::map<int, int>::const_iterator it = perFeature.begin(); it != perFeature.end(); ++it)
-			t.featSubstrate.fold(it->second / 100);
+			t.featSubstrate.fold(it->second);
 	}
 	// -- the improvement SUBSTRATE: per radius improvement, its intrinsic `<fam>.plot.flat` (the legacy
 	// getImprovementInfo.getHappiness per-radius-improvement, bundled into legacy getFeatureGoodHappiness).
@@ -433,7 +436,7 @@ static void wb_gather(const char* szFam, const CvCity* pCity, const CvCascadeEva
 			if (p == NULL || p->getImprovementType() == NO_IMPROVEMENT) continue;
 			const CvInfo* d = InfoRepo<CvImprovementInfo>::get().get(p->getImprovementType());
 			if (d == NULL) continue;
-			const int flat = MMKernel::sumUnit(d, plotAddr, "flat", ec);
+			const int flat = (int)MMKernel::sumUnit100(d, plotAddr, "flat", ec);   // ×100
 			if (flat != 0) t.featSubstrate.fold(flat);   // per-radius-plot, matching the legacy per-plot sum
 		}
 	}
@@ -454,6 +457,8 @@ static void wb_extraParts(const CvPlayer& owner, int& iTraitHappy, int& iTechHap
 			iTechHappy += GC.getTechInfo((TechTypes)i).getHappiness();
 			iTechHealth += GC.getTechInfo((TechTypes)i).getHealth();
 		}
+	// these engine parts are subtracted from the ×100 stored EXTRA inputs -> ×100 them
+	iTraitHappy *= 100; iTechHappy *= 100; iTechHealth *= 100;
 }
 
 // ===================== the city gather (the scope-package fill + the calculator's city half) =====================
@@ -468,7 +473,7 @@ void CascadeWellbeing::gatherCityTerms(const CvCity* pCity, const CvCascadeEvalC
 	// CvCity::init seeds m_aiCommerceHappinessPer with it). Static system-Info config, not legacy state
 	// (the sanctioned config-read class); the building commerceHappiness deposits then add on top.
 	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
-		aiCommercePer[c] = GC.getCommerceInfo((CommerceTypes)c).getInitialHappiness();
+		aiCommercePer[c] = GC.getCommerceInfo((CommerceTypes)c).getInitialHappiness() * 100;   // ×100 (building deposits add ×100)
 	// ONE building pass serves both families + the commerce-happiness pools (the wbCompute cost cut)
 	wb_buildingsAll(DepositIndex::lookupSegment("happiness"), DepositIndex::lookupSegment("health"),
 		DepositIndex::lookupSegment("commerceHappiness"), pCity, ec, hap, hea, aiCommercePer);
@@ -491,10 +496,12 @@ CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
 	int iTraitHappyPart, iTechHappyPart, iTechHealthPart;
 	wb_extraParts(owner, iTraitHappyPart, iTechHappyPart, iTechHealthPart);
 
-	// -- shared derived terms --
-	const int iPopExtraHappy = iPop * hap.iPpPct / 100;   // truncating (calculatePopulationHappiness)
-	const int iPopHealth = iPop * hea.iPpPct / 100;       // truncating (calculatePopulationHealth)
-	// RELIGION happiness: per present religion the state/non-state per-religion value, DERIVED (the
+	// -- shared derived terms (ALL ×100 -- DEC-fixedpoint-x100; the discrete/reader boundary reduces once) --
+	// iPpPct is a per-pop PERCENT ×100; the ÷100 here is the PERCENT DIVISOR (m × pop / 100 = happiness), NOT a
+	// fixed-point reduction -- so pop × iPpPct(×100) / 100 = ×100 of the human per-pop happiness. (Legacy calculatePopulationHappiness.)
+	const int iPopExtraHappy = iPop * hap.iPpPct / 100;
+	const int iPopHealth = iPop * hea.iPpPct / 100;
+	// RELIGION happiness (×100): per present religion the state/non-state per-religion value, DERIVED (the
 	// self-containment extraction 2026-07-05): the legacy player accumulators are exactly INITIAL define +
 	// Σ adopted civics' values (writer census: init CvPlayer:391-392 + processCivics :18282-83 + the
 	// recalc re-seed :28764; no other feeder) -- never the m_i{State,NonState}ReligionHappiness
@@ -502,8 +509,8 @@ CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
 	WbSplit religion;
 	{
 		const ReligionTypes eState = owner.getStateReligion();
-		int iStateAcc = GC.getINITIAL_STATE_RELIGION_HAPPINESS();
-		int iNonStateAcc = GC.getINITIAL_NON_STATE_RELIGION_HAPPINESS();
+		int iStateAcc = GC.getINITIAL_STATE_RELIGION_HAPPINESS() * 100;
+		int iNonStateAcc = GC.getINITIAL_NON_STATE_RELIGION_HAPPINESS() * 100;
 		CvCascadeEvalCtx rec;   // the civic deposits are unconditioned flats; assemble is pure over inputs
 		rec.city = pCity; rec.plot = pCity->plot(); rec.player = &owner; rec.team = &GET_TEAM(owner.getTeam());
 		for (int i = 0; i < GC.getNumCivicOptionInfos(); ++i)
@@ -512,28 +519,27 @@ CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
 			if (eCivic == NO_CIVIC) continue;
 			const CvInfo* d = InfoRepo<CvCivicInfo>::get().get(eCivic);
 			if (d == NULL) continue;
-			iStateAcc += MMKernel::sumUnit(d, "stateReligion.empire.happiness", "flat", rec);
-			iNonStateAcc += MMKernel::sumUnit(d, "happiness.empire.nonStateReligion", "flat", rec);
+			iStateAcc += (int)MMKernel::sumUnit100(d, "stateReligion.empire.happiness", "flat", rec);
+			iNonStateAcc += (int)MMKernel::sumUnit100(d, "happiness.empire.nonStateReligion", "flat", rec);
 		}
 		for (int i = 0; i < GC.getNumReligionInfos(); ++i)
 			if (pCity->isHasReligion((ReligionTypes)i))
 				religion.fold((ReligionTypes)i == eState ? iStateAcc : iNonStateAcc);
 	}
-	// COMMERCE happiness: per commerce type the building-fed per (pooled by the ONE building pass) × the
-	// slider% /100, truncating per type, NET
+	// COMMERCE happiness (×100): per commerce type the building-fed per (×100) × the slider% /100 -> ×100, NET
 	int iCommerceHappy = 0;
 	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
 		iCommerceHappy += aiCommercePer[c] * owner.getCommercePercent((CommerceTypes)c) / 100;
-	// the EXTRA nets: stored inputs − the engine trait/tech parts + the cascade's computed nets
-	const int iExtraHappy = pCity->getExtraHappiness() + owner.getExtraHappiness()
+	// the EXTRA nets (×100): stored inputs ×100 − the engine trait/tech parts (×100) + the cascade nets (×100)
+	const int iExtraHappy = (pCity->getExtraHappiness() + owner.getExtraHappiness()) * 100
 		- iTraitHappyPart - iTechHappyPart + hap.iTraitNet + hap.iTechNet;
-	const int iExtraHealthCity = pCity->getExtraHealth();
-	const int iExtraHealthPlayer = owner.getExtraHealth() - iTechHealthPart + hea.iTechNet;
+	const int iExtraHealthCity = pCity->getExtraHealth() * 100;
+	const int iExtraHealthPlayer = owner.getExtraHealth() * 100 - iTechHealthPart + hea.iTechNet;
 
-	// ---------------- happyLevel (:5709), term-substituted ----------------
+	// ---------------- happyLevel (:5709), term-substituted -- ALL ×100 ----------------
 	{
 		int iH = 0;
-		iH += std::max(0, pCity->getRevSuccessHappiness());
+		iH += std::max(0, pCity->getRevSuccessHappiness()) * 100;
 		iH += std::max(0, hap.iLargest);
 		iH += std::max(0, hap.iSrNet);
 		iH += hap.bld.iGood;
@@ -545,22 +551,22 @@ CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
 		iH += hapArea.iGood;
 		iH += hapEmp.iGood;
 		iH += std::max(0, iExtraHappy);
-		iH += std::max(0, GC.getHandicapInfo(pCity->getHandicapType()).getHappyBonus());
-		iH += std::max(0, pCity->getVassalHappiness());
+		iH += std::max(0, GC.getHandicapInfo(pCity->getHandicapType()).getHappyBonus()) * 100;
+		iH += std::max(0, pCity->getVassalHappiness()) * 100;
 		iH += std::max(0, hap.iCivicNet);
 		iH += std::max(0, iPopExtraHappy);
 		iH += hap.spec.iGood;
 		iH += hap.project.iGood;   // engine world+project split; the cascade folds both project scopes here
 		iH += hap.corp.iGood;
-		iH += std::max(0, pCity->getCelebrityHappiness());
+		iH += std::max(0, pCity->getCelebrityHappiness()) * 100;
 		iH += std::max(0, hap.iTechGatedNet);
 		if (GC.getGame().isOption(GAMEOPTION_MAP_PERSONALIZED))
-			iH += std::max(0, owner.getLandmarkHappiness());
+			iH += std::max(0, owner.getLandmarkHappiness()) * 100;
 		if (pCity->getHappinessTimer() > 0)
-			iH += GC.getTEMP_HAPPY();
+			iH += GC.getTEMP_HAPPY() * 100;
 		out.iHappy = std::max(0, iH);
 	}
-	// ---------------- unhappyLevel (:5626), term-substituted ----------------
+	// ---------------- unhappyLevel (:5626), term-substituted -- ALL ×100 ----------------
 	if (pCity->isNoUnhappiness() || (pCity->isCapital() && owner.isNoCapitalUnhappiness()))
 	{
 		out.iUnhappy = 0;
@@ -580,7 +586,8 @@ CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
 		iAngerPercent += pCity->getRevIndexPercentAnger();
 		for (int i = 0; i < GC.getNumCivicInfos(); ++i)
 			iAngerPercent += owner.getCivicPercentAnger((CivicTypes)i);
-		int iU = iAngerPercent * iPop / GC.getPERCENT_ANGER_DIVISOR();
+		// ×100 of the legacy (anger% × pop) / DIVISOR -- carrying the ×100 keeps the sub-unit anger, no mid-trunc
+		int iU = iAngerPercent * iPop * 100 / GC.getPERCENT_ANGER_DIVISOR();
 
 		iU -= std::min(0, hap.iLargest);
 		iU -= std::min(0, hap.iSrNet);
@@ -593,16 +600,16 @@ CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
 		iU -= hapArea.iBad;
 		iU -= hapEmp.iBad;
 		iU -= std::min(0, iExtraHappy);
-		iU -= std::min(0, GC.getHandicapInfo(pCity->getHandicapType()).getHappyBonus());
-		iU += std::max(0, pCity->getVassalUnhappiness());
-		iU += std::max(0, pCity->getEspionageHappinessCounter());
+		iU -= std::min(0, GC.getHandicapInfo(pCity->getHandicapType()).getHappyBonus()) * 100;
+		iU += std::max(0, pCity->getVassalUnhappiness()) * 100;
+		iU += std::max(0, pCity->getEspionageHappinessCounter()) * 100;
 		iU -= std::min(0, hap.iCivicNet);
 		iU -= std::min(0, iPopExtraHappy);
 		iU -= hap.spec.iBad;
 		iU -= hap.project.iBad;
-		iU += std::max(0, owner.calculateTaxRateUnhappiness());
+		iU += std::max(0, owner.calculateTaxRateUnhappiness()) * 100;
 		iU -= hap.corp.iBad;
-		iU += std::max(0, pCity->getEventAnger());
+		iU += std::max(0, pCity->getEventAnger()) * 100;
 		iU -= std::min(0, hap.iTechGatedNet);
 
 		int iForeignAnger = owner.getForeignUnhappyPercent();
@@ -610,40 +617,41 @@ CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
 		{
 			iForeignAnger = 100 / iForeignAnger;
 			iForeignAnger = (100 - pCity->plot()->calculateCulturePercent(pCity->getOwner())) * iForeignAnger / 100;
-			iU += std::max(0, iForeignAnger);
+			iU += std::max(0, iForeignAnger) * 100;
 		}
 		if (GC.getGame().isOption(GAMEOPTION_MAP_PERSONALIZED))
 		{
-			if (!owner.isNoLandmarkAnger()) iU += std::max(0, pCity->getLandmarkAnger());
-			iU -= std::min(0, owner.getLandmarkHappiness());
+			if (!owner.isNoLandmarkAnger()) iU += std::max(0, pCity->getLandmarkAnger()) * 100;
+			iU -= std::min(0, owner.getLandmarkHappiness()) * 100;
 		}
 		if (owner.getCityLimit() != 0 && owner.getCityOverLimitUnhappy() != 0)
 		{
 			const int iOver = owner.getNumCities() - owner.getCityLimit();
-			if (iOver > 0) iU += owner.getCityOverLimitUnhappy() * iOver;
+			if (iOver > 0) iU += owner.getCityOverLimitUnhappy() * iOver * 100;
 		}
 		out.iUnhappy = std::max(0, iU);
 	}
-	out.iMilPerUnit = hap.iMilitary;
-	// the angry-pop input to health folds the LIVE military term (the same combine the reads apply on top)
-	const int iMilLive = out.iMilPerUnit * pCity->getMilitaryHappinessUnits();
-	const int iAngry = range((out.iUnhappy - std::min(0, iMilLive)) - (out.iHappy + std::max(0, iMilLive)), 0, iPop);
+	out.iMilPerUnit = hap.iMilitary;   // ×100 per-unit military value (× the live count on top)
+	// the angry-pop input to health folds the LIVE military term (×100), then reduces ONCE to a DISCRETE
+	// whole citizen count (÷100) -- the physical boundary (the game unassigns WHOLE citizens from tiles)
+	const int iMilLive = out.iMilPerUnit * pCity->getMilitaryHappinessUnits();   // ×100
+	const int iAngry = range(((out.iUnhappy - std::min(0, iMilLive)) - (out.iHappy + std::max(0, iMilLive))) / 100, 0, iPop);
 
-	// -- the building-health composites (totalGood/BadBuildingHealth :5827/:5837) --
+	// -- the building-health composites (totalGood/BadBuildingHealth :5827/:5837) -- ×100 --
 	const int iTotalGoodBld = hea.bld.iGood + heaArea.iGood + heaEmp.iGood
 		+ hea.extraB.iGood + std::max(0, iPopHealth);
 	const int iTotalBadBld = pCity->isBuildingOnlyHealthy() ? 0
 		: hea.bld.iBad + heaArea.iBad + heaEmp.iBad + hea.extraB.iBad + std::min(0, iPopHealth);
 
-	// ---------------- goodHealth (:5851), term-substituted ----------------
+	// ---------------- goodHealth (:5851), term-substituted -- ALL ×100 ----------------
 	{
 		int iG = 0;
-		iG += std::max(0, pCity->getFreshWaterGoodHealth());
+		iG += std::max(0, pCity->getFreshWaterGoodHealth()) * 100;
 		iG += hea.featMember.iGood + hea.featSubstrate.iGood;
 		iG += hea.bonus.iGood;
 		iG += std::max(0, iTotalGoodBld);
 		iG += std::max(0, iExtraHealthCity);
-		iG += std::max(0, GC.getHandicapInfo(pCity->getHandicapType()).getHealthBonus());
+		iG += std::max(0, GC.getHandicapInfo(pCity->getHandicapType()).getHealthBonus()) * 100;
 		// improvement health: the deliberate curator BALANCE-CUT -- the cascade term is 0 by design (§2b)
 		iG += hea.spec.iGood;
 		iG += hea.corp.iGood;
@@ -654,15 +662,15 @@ CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
 		iG += hea.project.iGood;            // world+project health
 		out.iGood = iG;
 	}
-	// ---------------- badHealth (:5878), term-substituted ----------------
+	// ---------------- badHealth (:5878), term-substituted -- ALL ×100 ----------------
 	{
 		int iT = 0;
-		iT -= std::max(0, pCity->getEspionageHealthCounter());
+		iT -= std::max(0, pCity->getEspionageHealthCounter()) * 100;
 		iT += hea.featMember.iBad + hea.featSubstrate.iBad;
 		iT += hea.bonus.iBad;
 		iT += std::min(0, iTotalBadBld);
 		iT += std::min(0, iExtraHealthCity);
-		iT += std::min(0, GC.getHandicapInfo(pCity->getHandicapType()).getHealthBonus());
+		iT += std::min(0, GC.getHandicapInfo(pCity->getHandicapType()).getHealthBonus()) * 100;
 		iT += hea.extraB.iBad;   // the engine's DOUBLE-ADD of min(0, extraBuildingBadHealth) -- mirrored verbatim
 		// improvement bad health: BALANCE-CUT (0 by design)
 		iT += hea.spec.iBad;
@@ -672,7 +680,8 @@ CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
 		iT += std::min(0, hea.iCivicNet);
 		iT += std::min(0, hea.iTraitNet);
 		iT += hea.project.iBad;
-		const int iUnhealthyPop = pCity->isNoUnhealthyPopulation() ? 0 : std::max(0, iPop - iAngry);
+		// unhealthy population is a WHOLE citizen count (iAngry already discrete) -> ×100 to rejoin the ×100 verdict
+		const int iUnhealthyPop = pCity->isNoUnhealthyPopulation() ? 0 : std::max(0, iPop - iAngry) * 100;
 		out.iBad = iUnhealthyPop - iT;
 	}
 	return out;
