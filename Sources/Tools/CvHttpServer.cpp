@@ -2189,7 +2189,6 @@ namespace
 					// getter now adds vs the legacy accumulator -- a divergence names the drift/PURE class here
 					sc["gpNationalCasc"] = picojson::value((double)CascadeAccumulator::scGpNational(&kWbOwner));
 					sc["gpModCasc"] = picojson::value((double)CascadeScalarChannels::gpRateModifier(pCity, wbec));
-					sc["gpModLeg"] = picojson::value((double)pCity->getTotalGreatPeopleRateModifierLegacy());
 					// the gpMod legacy PARTS + the cascade-side split (attribute, don't guess)
 					sc["gpModCityLeg"] = picojson::value((double)pCity->getGreatPeopleRateModifier());
 					sc["gpModPlayerLeg"] = picojson::value((double)kWbOwner.getGreatPeopleRateModifier());
@@ -2240,7 +2239,6 @@ namespace
 						sc["defenseLegRecompute"] = picojson::value((double)iWbDefRe);
 					}
 					sc["maintModCasc"] = picojson::value((double)CascadeScalarChannels::maintenanceModifier(pCity, wbec));
-					sc["maintModLeg"] = picojson::value((double)pCity->getEffectiveMaintenanceModifierLegacy());
 					// the legacy PARTS (the getEffectiveMaintenanceModifier decomposition -- attribute, don't guess)
 					sc["maintCityLeg"] = picojson::value((double)pCity->getMaintenanceModifier());
 					sc["maintPlayerLeg"] = picojson::value((double)const_cast<CvPlayer&>(kWbOwner).getMaintenanceModifier());
@@ -2257,14 +2255,9 @@ namespace
 							const UnitTypes eWbBrU = pCity->getProductionUnit();
 							const BuildingTypes eWbBrB = pCity->getProductionBuilding();
 							const ProjectTypes eWbBrPr = pCity->getProductionProject();
-							// the TRUE legacy oracle: the head-order *Legacy overload. The no-arg dispatcher is
-							// FLIPPED, so it would net cascade-vs-cascade (the precipice-review tautology fix).
-							int iWbBrLeg = 0;
-							if (eWbBrU != NO_UNIT) iWbBrLeg = pCity->getProductionModifierLegacy(eWbBrU);
-							else if (eWbBrB != NO_BUILDING) iWbBrLeg = pCity->getProductionModifierLegacy(eWbBrB);
-							else if (eWbBrPr != NO_PROJECT) iWbBrLeg = pCity->getProductionModifierLegacy(eWbBrPr);
+							// #430: getProductionModifier is cascade-only now (the pre-init *Legacy fallback is cut),
+							// so the legacy oracle pair is gone -- buildRateCasc is the sole served value.
 							sc["buildRateCasc"] = picojson::value((double)iWbBr);
-							sc["buildRateLeg"] = picojson::value((double)iWbBrLeg);
 							// the cascade PARTS (the productionModifier member split -- attribute, don't guess)
 							sc["brSelfCasc"] = picojson::value((double)wbBrParts.iSelf);
 							sc["brKeyedCasc"] = picojson::value((double)wbBrParts.iKeyed);
@@ -2361,7 +2354,6 @@ namespace
 					}
 					// tradeRoutes: the cascade COUNT sources vs the legacy realized count (game base + max are config)
 					sc["tradeRoutesCasc"] = picojson::value((double)CascadeScalarChannels::tradeRouteCount(pCity, wbec));
-					sc["tradeRoutesLeg"] = picojson::value((double)pCity->getTradeRoutesLegacy());   // the TRUE oracle (the getter is FLIPPED)
 					sc["tradeRoutesGameBase"] = picojson::value((double)GC.getGame().getTradeRoutes());
 					sc["tradeRoutesInitial"] = picojson::value((double)GC.getINITIAL_TRADE_ROUTES());   // the :28712 config put-back
 					// the legacy PARTS (attribute, don't guess)
@@ -3474,7 +3466,7 @@ namespace
 				m["numCitiesMaint100"]   = picojson::value((double)pCity->calculateNumCitiesMaintenanceTimes100());
 				m["colonyMaint100"]      = picojson::value((double)pCity->calculateColonyMaintenanceTimes100());
 				m["corporationMaint100"] = picojson::value((double)pCity->calculateCorporationMaintenanceTimes100());
-				m["effectiveModifier"]   = picojson::value((double)pCity->getEffectiveMaintenanceModifierLegacy()); // aggregate (split below; LEGACY -- must equal the sum of its legacy parts)
+				m["effectiveModifier"]   = picojson::value((double)pCity->getEffectiveMaintenanceModifier()); // aggregate (cascade-only; split below)
 				// effectiveModifier split (getEffectiveMaintenanceModifier, CvCity.cpp:7590): city + player + area + connected:
 				m["maintModCity"]      = picojson::value((double)pCity->getMaintenanceModifier());
 				m["maintModPlayer"]    = picojson::value((double)kPlayer.getMaintenanceModifier());
@@ -3801,7 +3793,7 @@ namespace
 				picojson::value::object gp;
 				gp["greatPeopleRate"]     = picojson::value((double)pCity->getGreatPeopleRate()); // realized
 				gp["baseGreatPeopleRate"] = picojson::value((double)pCity->getBaseGreatPeopleRate()); // aggregate (city base + national; cascade)
-				gp["totalGPRateModifier"] = picojson::value((double)pCity->getTotalGreatPeopleRateModifierLegacy()); // aggregate (split below; LEGACY)
+				gp["totalGPRateModifier"] = picojson::value((double)pCity->getTotalGreatPeopleRateModifier()); // aggregate (cascade-only; split below)
 				gp["greatPeopleProgress"] = picojson::value((double)pCity->getGreatPeopleProgress());
 				gp["threshold"]           = picojson::value((double)kPlayer.greatPeopleThresholdNonMilitary());
 				// base split (getBaseGreatPeopleRate, CvCity.cpp): max(0,m_iBaseGreatPeopleRate) + national; city base = base - national.

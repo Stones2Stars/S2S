@@ -9825,16 +9825,10 @@ void CvPlayer::changeSpaceProductionModifier(int iChange)
 
 int CvPlayer::getCityDefenseModifier() const
 {
-	// #430 FLIP (L13 defense, owner 2026-07-05 "everything over to cascade"): the cascade empire defense pcts
-	// (scDefensePlayer = building allCityDefense + civic extraCityDefense + trait cityDefense, curated
-	// defense.empire.amount, reconciled Casc==Leg). LOAD stays legacy (substrate not warm pre-init).
-	if (!GC.getGame().isFinalInitialized()) return getCityDefenseModifierLegacy();
+	// #430: cascade-only (empire defense pcts: building allCityDefense + civic extraCityDefense + trait
+	// cityDefense, curated defense.empire.amount). The pre-init *Legacy fallback is cut -- dirty-on-load
+	// recompute (rate-cut ruling).
 	return CascadeAccumulator::scDefensePlayer(this);
-}
-
-int CvPlayer::getCityDefenseModifierLegacy() const
-{
-	return m_iCityDefenseModifier + getExtraCityDefense() + getTraitExtraCityDefense();
 }
 
 

@@ -280,10 +280,6 @@ public:
 	int getProductionModifier(UnitTypes eUnit) const;
 	int getProductionModifier(BuildingTypes eType) const;
 	int getProductionModifier(ProjectTypes eProject) const;
-	// the pre-flip legacy walks -- the #430 buildRate net oracles (the getYieldRate100Legacy pattern)
-	int getProductionModifierLegacy(UnitTypes eUnit) const;
-	int getProductionModifierLegacy(BuildingTypes eType) const;
-	int getProductionModifierLegacy(ProjectTypes eProject) const;
 
 	int getProductionPerTurn(ProductionCalc::flags flags) const;
 
@@ -491,7 +487,6 @@ public:
 	int getBaseGreatPeopleRate() const;          // FLIPPED (#430, 2026-07-04): returns the cascade scalar slot
 	int getGreatPeopleRate() const;
 	int getTotalGreatPeopleRateModifier() const;         // FLIPPED (#430, 2026-07-04)
-	int getTotalGreatPeopleRateModifierLegacy() const;   // the legacy stack -- the net oracle until the cut
 
 	int getGreatPeopleRateModifier() const;
 	void changeGreatPeopleRateModifier(int iChange);
@@ -530,7 +525,6 @@ public:
 	int getMaintenance() const;
 	int getMaintenanceTimes100() const;
 	int getEffectiveMaintenanceModifier() const;         // FLIPPED (#430, 2026-07-04): returns the cascade scalar slot
-	int getEffectiveMaintenanceModifierLegacy() const;   // the legacy triple-sum -- the net oracle until the cut
 	void updateMaintenance() const;
 	void setMaintenanceDirty(const bool bDirty, const bool bPlayer = true) const;
 	int calculateDistanceMaintenance() const;
@@ -1147,7 +1141,6 @@ public:
 
 	CvCity* getTradeCity(int iIndex) const;
 	int getTradeRoutes() const;
-	int getTradeRoutesLegacy() const;   // the intact pre-flip body -- the net oracle (#430)
 	void clearTradeRoutes();
 	void updateTradeRoutes();
 

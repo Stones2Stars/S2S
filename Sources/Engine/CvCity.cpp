@@ -3906,117 +3906,23 @@ int CvCity::getProductionModifier() const
 
 int CvCity::getProductionModifier(UnitTypes eUnit) const
 {
-	// #430 FLIP (scope-packages): buildRate ledger lookups + the item's own bonus-gated self mods (live);
-	// the legacy walk below is the net oracle (its parts reconciled 14/14 EXACT through the compiled index).
-	if (GC.getGame().isFinalInitialized()) return CascadeAccumulator::buildRateUnit(this, eUnit);
-	return getProductionModifierLegacy(eUnit);
-}
-
-int CvCity::getProductionModifierLegacy(UnitTypes eUnit) const
-{
-	PROFILE_EXTRA_FUNC();
-	const CvUnitInfo& unit = GC.getUnitInfo(eUnit);
-	int iMultiplier = GET_PLAYER(getOwner()).getProductionModifier(eUnit);
-
-	iMultiplier += getUnitProductionModifier(eUnit);
-	iMultiplier += GET_PLAYER(getOwner()).getUnitProductionModifier(eUnit);
-	if (!unit.isNoNonTypeProdMods())
-	{
-		iMultiplier += getDomainProductionModifier(unit.getDomainType());
-		if (unit.getUnitCombatType() != NO_UNITCOMBAT)
-		{
-			iMultiplier += GET_PLAYER(getOwner()).getUnitCombatProductionModifier((UnitCombatTypes)(unit.getUnitCombatType()));
-			iMultiplier += getUnitCombatProductionModifier((UnitCombatTypes)(unit.getUnitCombatType()));
-
-			foreach_(const UnitCombatTypes eSubCombat, unit.getSubCombatTypes())
-			{
-				iMultiplier += GET_PLAYER(getOwner()).getUnitCombatProductionModifier(eSubCombat);
-				iMultiplier += getUnitCombatProductionModifier(eSubCombat);
-			}
-		}
-
-		if (unit.isMilitaryProduction())
-		{
-			iMultiplier += getMilitaryProductionModifier();
-		}
-
-		if (GET_PLAYER(getOwner()).getStateReligion() != NO_RELIGION && isHasReligion(GET_PLAYER(getOwner()).getStateReligion()))
-		{
-			iMultiplier += GET_PLAYER(getOwner()).getStateReligionUnitProductionModifier();
-		}
-	}
-	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-	{
-		if (hasBonus((BonusTypes)iI))
-		{
-			iMultiplier += unit.getBonusProductionModifier(iI);
-		}
-	}
-	return iMultiplier;
+	// #430: cascade-only (buildRate ledger lookups + the item's own bonus-gated self mods). The pre-init
+	// *Legacy fallback is cut -- dirty-on-load recompute (rate-cut ruling).
+	return CascadeAccumulator::buildRateUnit(this, eUnit);
 }
 
 
 int CvCity::getProductionModifier(BuildingTypes eBuilding) const
 {
-	// #430 FLIP (scope-packages) -- see the unit overload.
-	if (GC.getGame().isFinalInitialized()) return CascadeAccumulator::buildRateBuilding(this, eBuilding);
-	return getProductionModifierLegacy(eBuilding);
-}
-
-int CvCity::getProductionModifierLegacy(BuildingTypes eBuilding) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iMultiplier = GET_PLAYER(getOwner()).getProductionModifier(eBuilding);
-
-	iMultiplier += getBuildingProductionModifier(eBuilding);
-
-	iMultiplier += GET_PLAYER(getOwner()).getBuildingProductionModifier(eBuilding);
-
-	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-	{
-		if (hasBonus((BonusTypes)iI))
-		{
-			iMultiplier += GC.getBuildingInfo(eBuilding).getBonusProductionModifier(iI);
-		}
-	}
-
-	if (GET_PLAYER(getOwner()).getStateReligion() != NO_RELIGION)
-	{
-		if (isHasReligion(GET_PLAYER(getOwner()).getStateReligion()))
-		{
-			iMultiplier += GET_PLAYER(getOwner()).getStateReligionBuildingProductionModifier();
-		}
-	}
-
-	return iMultiplier;
+	// #430: cascade-only -- see the unit overload. The pre-init *Legacy fallback is cut.
+	return CascadeAccumulator::buildRateBuilding(this, eBuilding);
 }
 
 
 int CvCity::getProductionModifier(ProjectTypes eProject) const
 {
-	// #430 FLIP (scope-packages) -- see the unit overload.
-	if (GC.getGame().isFinalInitialized()) return CascadeAccumulator::buildRateProject(this, eProject);
-	return getProductionModifierLegacy(eProject);
-}
-
-int CvCity::getProductionModifierLegacy(ProjectTypes eProject) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iMultiplier = GET_PLAYER(getOwner()).getProductionModifier(eProject);
-
-	if (GC.getProjectInfo(eProject).isSpaceship())
-	{
-		iMultiplier += getSpaceProductionModifier();
-	}
-
-	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-	{
-		if (hasBonus((BonusTypes)iI))
-		{
-			iMultiplier += GC.getProjectInfo(eProject).getBonusProductionModifier(iI);
-		}
-	}
-	return iMultiplier;
+	// #430: cascade-only -- see the unit overload. The pre-init *Legacy fallback is cut.
+	return CascadeAccumulator::buildRateProject(this, eProject);
 }
 
 
@@ -6968,28 +6874,9 @@ int CvCity::getGreatPeopleRate() const
 
 int CvCity::getTotalGreatPeopleRateModifier() const
 {
-	// #430 FLIP (scope-packages): city + player percent packages + the live SR/GA gates; legacy = the net oracle.
-	if (!GC.getGame().isFinalInitialized()) return getTotalGreatPeopleRateModifierLegacy();
+	// #430: cascade-only (city + player percent packages + live SR/GA gates). The pre-init *Legacy fallback is
+	// cut -- the scalar packages bind DIRTY, so a loaded save's first read recomputes-from-source (rate-cut ruling).
 	return CascadeAccumulator::scGpModifier(this);
-}
-
-int CvCity::getTotalGreatPeopleRateModifierLegacy() const
-{
-	const CvPlayer& owner = GET_PLAYER(getOwner());
-
-	int iModifier = 100 + getGreatPeopleRateModifier() + owner.getGreatPeopleRateModifier();
-
-	if (owner.getStateReligion() != NO_RELIGION && isHasReligion(owner.getStateReligion()))
-	{
-		iModifier += owner.getStateReligionGreatPeopleRateModifier();
-	}
-
-	if (owner.isGoldenAge())
-	{
-		iModifier += GC.getGOLDEN_AGE_GREAT_PEOPLE_MODIFIER();
-	}
-
-	return std::max(0, iModifier);
 }
 
 
@@ -7394,20 +7281,9 @@ int CvCity::getMaintenanceTimes100() const
 
 int CvCity::getEffectiveMaintenanceModifier() const
 {
-	// #430 FLIP (scope-packages): city + player packages + the area pick + the live conn gate; legacy = the net oracle.
-	if (!GC.getGame().isFinalInitialized()) return getEffectiveMaintenanceModifierLegacy();
+	// #430: cascade-only (city + player packages + area pick + live conn gate). The pre-init *Legacy fallback is
+	// cut -- dirty-on-load recompute (rate-cut ruling).
 	return CascadeAccumulator::scMaintenanceModifier(this);
-}
-
-int CvCity::getEffectiveMaintenanceModifierLegacy() const
-{
-	int iModifier = getMaintenanceModifier() + GET_PLAYER(getOwner()).getMaintenanceModifier() + area()->getTotalAreaMaintenanceModifier(getOwner());
-
-	if (isConnectedToCapital() && !isCapital())
-	{
-		iModifier += GET_PLAYER(getOwner()).getConnectedCityMaintenanceModifier();
-	}
-	return iModifier;
 }
 
 void CvCity::setMaintenanceDirty(const bool bDirty, const bool bPlayer) const
@@ -14946,22 +14822,8 @@ CvCity* CvCity::getTradeCity(int iIndex) const
 // (a mixed accumulator -- its store split lands at the demolition; attributed via the endpoint). ====
 int CvCity::getTradeRoutes() const
 {
-	if (!GC.getGame().isFinalInitialized()) return getTradeRoutesLegacy();   // pre-init: packages unwarmed
+	// #430: cascade-only. The pre-init *Legacy fallback is cut -- dirty-on-load recompute (rate-cut ruling).
 	return std::max(0, std::min(CascadeAccumulator::scTradeRoutes(this), getMaxTradeRoutes()));
-}
-
-int CvCity::getTradeRoutesLegacy() const
-{
-	int iTradeRoutes = GC.getGame().getTradeRoutes();
-	iTradeRoutes += GET_PLAYER(getOwner()).getTradeRoutes();
-
-	if (isCoastal(GC.getWorldInfo(GC.getMap().getWorldSize()).getOceanMinAreaSize()))
-	{
-		iTradeRoutes += GET_PLAYER(getOwner()).getCoastalTradeRoutes();
-	}
-	iTradeRoutes += getExtraTradeRoutes();
-
-	return std::max(0, std::min(iTradeRoutes, getMaxTradeRoutes()));
 }
 
 

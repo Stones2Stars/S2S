@@ -1,5 +1,18 @@
 # Getter flip-list — modifier read-path
 
+> **⛔ CURRENT TRUTH (the flips have LANDED; the pre-init `*Legacy` FALLBACKS are CUT).** The modifier-value getters
+> are flipped and now read **cascade-only** — there is **no** pre-init `!isFinalInitialized() → *Legacy` bridge left on
+> any of them. The per-row "flip action" / "keep pre-init fallback" / "`*Legacy` oracle" notes below are the ORIGINAL
+> 2026-07-13 PLAN and are historical: the fallback-cut ruling ([fixed-point-conformance.md](fixed-point-conformance.md),
+> [DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)) removed every pre-init `*Legacy`
+> fallback (rates, `getTotalGreatPeopleRateModifier`, `getEffectiveMaintenanceModifier`, `getTradeRoutes`,
+> `CvPlayer::getCityDefenseModifier`, `getProductionModifier`×3) + the oracle-only `*Legacy` (happy/health/defense/
+> GP-base). Cascade slots bind DIRTY so a loaded save recomputes-from-source on first read — no unwarm window.
+> **The ONLY `*Legacy` still alive are NOT fallbacks:** the enabler set (`canTrain/canConstruct/canCreate/canMaintain/
+> canDoCivics/canHurry/canFoundReligion` + `isPromotionValidLegacy`) — the AI's what-if data source
+> (`bContinue`/`bIgnore*`/probability), retired by the **F2b consumer sweep** (rewire the ~262 whole-database AI loops
+> onto the enabler frontier — [roadmap §F2b](roadmap.md)), NOT a getter-fallback delete.
+
 The distinct modifier-value GETTERS to flip so each reads its game-object's own cached
 calculations and sums them live (generated 2026-07-13, from the 14-family getter sweep).
 

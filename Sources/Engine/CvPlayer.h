@@ -567,7 +567,6 @@ public:
 	void changeSpaceProductionModifier(int iChange);
 
 	int getCityDefenseModifier() const;
-	int getCityDefenseModifierLegacy() const;   // #430 net oracle until the delete step
 	void changeCityDefenseModifier(int iChange);
 
 	bool isNonStateReligionCommerce() const;
