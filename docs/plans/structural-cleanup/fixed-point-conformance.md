@@ -122,6 +122,19 @@ The yield channel additionally carries a `getYieldRate100` + `getYield` (÷100) 
 this ruling dissolves: the single getter returns ×100 and every consumer reduces at its reader/discrete boundary;
 each channel's `MMKernel` gather moves off the truncating `sumUnit` onto `sumUnit100` (the truncating variant retires).
 
+> **⛔ The load-time legacy rate FALLBACK is CUT (owner ruling 2026-07-18).** `getYieldRate100`/`getCommerceRateTimes100`
+> are now **cascade-only** — the `!isFinalInitialized` branch that returned `getYieldRate100Legacy`/
+> `getCommerceRateTimes100Legacy` (the old "the cascade substrate isn't warm pre-init" bridge) and both `*Legacy`
+> getters are DELETED. It is SAFE because the cascade rate packages bind **DIRTY** (`CvDerivedCache`,
+> [state-repositories.md](../../architecture/state-repositories.md)): a loaded save's first rate read
+> **recompute-from-source** off the reseeded state and clears the flag — there is no unwarm-cascade window to bridge.
+> Keeping the legacy path alive was legacy-masking ([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)):
+> "I want legacy gone, because then I see what is broken" — a wrong/empty cascade rate is the correct EXPOSED outcome,
+> a legacy-correct one hides the defect. The `CvCascadeInvalidation` load-skip of `routeModifierMarks` is irrelevant to
+> this (it suppresses re-marking already-built packages; at load they are already dirty-by-construction). Live-verified:
+> cascade-only rates load sane. This unblocks the 11-member accumulator cut below (the accumulators fed only the now-
+> deleted legacy rate chain + the decomposition getters).
+
 ### Carve-outs — NOT an accumulator cut (do not touch)
 
 - **Event/vote-grant persisted stores** — genuine one-shot non-derivable state: `m_aBuildingCommerceChangeEvents`,

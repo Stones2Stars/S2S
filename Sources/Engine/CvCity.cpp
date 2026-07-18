@@ -10739,25 +10739,13 @@ void CvCity::refreshOperatingBuildings(int) const
 	EnablerKernel::seedOperatingBuildings(this);   // full recompute (the LOAD seed) + the provider ref-count; the targeted ripple maintains it thereafter
 }
 
-int CvCity::getYieldRate100Legacy(const YieldTypes eYield) const
-{
-	// Specialist yields receive the city yield modifier exactly like worked tiles (#317);
-	// the remaining extra bucket (corporations, per-building yield changes, flat building
-	// yields, per-pop yields) stays unmodified.
-	return std::min(CITY_MAX_YIELD_RATE,std::max(100,
-		(getBaseYieldRate(eYield) + getSpecialistYieldTotal(eYield)) * getBaseYieldRateModifier(eYield)
-		+ 100 * getExtraYield(eYield)));
-}
-
 int CvCity::getYieldRate100(const YieldTypes eYield) const
 {
 	PROFILE_FUNC();
-	// The cascade ACCUMULATOR is the SOLE authority in a running game. LOAD path stays legacy (the cascade
-	// substrate isn't warm pre-init; that is the ONE remaining legacy read and it is load-time, not play).
-	if (!GC.getGame().isFinalInitialized())
-	{
-		return getYieldRate100Legacy(eYield);
-	}
+	// #430: the cascade ACCUMULATOR is the SOLE authority -- the load-time legacy fallback is CUT (owner ruling
+	// 2026-07-18). The rate packages bind DIRTY (CvDerivedCache), so they recompute-from-source on first read at
+	// load; there is no unwarm-cascade window, and keeping a legacy rate path alive masks what is broken
+	// (DEC-no-legacy-masking). Live-verified: cascade-only rates load sane.
 	return (int)CascadeAccumulator::yieldRate100(this, eYield);
 }
 
@@ -11461,24 +11449,11 @@ int CvCity::getCommerceRate(CommerceTypes eIndex) const
 	return getCommerceRateTimes100(eIndex) / 100;
 }
 
-int CvCity::getCommerceRateTimes100Legacy(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	// RECOMPUTE-ON-READ from the CURRENT slider (deterministic): getCommerceRateAtSliderPercent handles
-	// isDisorder, runs the full combine, AND refreshes m_aiCommerceRate on its own dirty path. ⚠ This legacy
-	// chain reads the FLIPPED yield getter (getCommerceFromPercent -> getYieldRate100).
-	return getCommerceRateAtSliderPercent(eIndex, GET_PLAYER(getOwner()).getCommercePercent(eIndex));
-}
-
 int CvCity::getCommerceRateTimes100(CommerceTypes eIndex) const
 {
 	PROFILE_FUNC();
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	// See getYieldRate100: the cascade is the sole authority; pre-init stays legacy.
-	if (!GC.getGame().isFinalInitialized())
-	{
-		return getCommerceRateTimes100Legacy(eIndex);
-	}
+	// #430: cascade-only, the load-time legacy fallback CUT (see getYieldRate100).
 	return (int)CascadeAccumulator::commerceRate100(this, eIndex);
 }
 
