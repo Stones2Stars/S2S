@@ -196,6 +196,17 @@ CvCity::m_paiStateReligionHappiness      (class int array)
 ========================
 
 ========================
+2026-07-18 — #430 delete-driven legacy cut (CvCity YIELD/COMMERCE accumulators, cut incrementally 1 member/commit):
+the legacy per-source yield/commerce accumulators that fed the now-cascade-only legacy rate sub-getters
+(getBaseYieldRate/getSpecialistYieldTotal/getBuildingCommerce100/...) are removed. The cascade computes each term
+itself (river = the building HAS_RIVER `plots` deposit, ...) or folds it as an isolated input package (trade yield).
+Orphan tags drain as plain int-array elements (SkipElement SAVE_VALUE_TYPE_INT_ARRAY). getTradeYield is NOT cut --
+it is the isolated trade-route input package the cascade folds (modifier.md par.2a), outside cascade derivation scope.
+
+CvCity::m_aiRiverPlotYield                (int array)
+========================
+
+========================
 2026-07-18 — #430 delete-driven legacy cut (FromTech wellbeing accumulators): the city tech-gated
 building/specialist happiness/health accumulators + the per-tech building maps fully removed. Both tech-gated
 sources ride the cascade already: BUILDING tech-happiness/health -> the iTechGatedNet term (TECH-gated building
