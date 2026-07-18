@@ -335,7 +335,10 @@ CASCADE ONLY — no `*Legacy` fallback, no pre-init/what-if legacy path; a casca
 (exposed), never a legacy-correct one (masked). Legacy masking a wrong cascade is WORSE than legacy failing: the mask
 hides the defect and defers the fix (the wellbeing panel reading legacy hid a 2× cascade inflation). Purge legacy
 **violently** so what is missing/wrong is immediately visible. Blast radius is never a reason to keep a legacy path
-alive. Corollary of [DEC-playability-not-a-gate](#dec-playability-not-a-gate) + [DEC-oracle-tautology](#dec-oracle-tautology)
+alive. **Post-cutover the legacy XML is REMOVED, so a legacy fallback cannot even RUN — it is BAIT that substitutes
+a nonexistent answer and masks the hole** ([DEC-red-ratchet](#dec-red-ratchet)); a realized gate/getter is therefore
+a PURE cascade read (the six availability gates carry no `*Legacy` fallback, no pre-init guard, no what-if path).
+Corollary of [DEC-playability-not-a-gate](#dec-playability-not-a-gate) + [DEC-oracle-tautology](#dec-oracle-tautology)
 for the READ surface. **Home:** [cutover.md](../plans/structural-cleanup/cutover.md).
 
 ### DEC-legacy-decache-poisons-perf

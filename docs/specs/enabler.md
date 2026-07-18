@@ -484,8 +484,13 @@ per §7 a static is a PURE CALCULATOR (seed / delta / oracle) and NEVER appears 
 accessor, no lazy-seed guard; seeding is a lifecycle act — player/city init + the load warm-up). The set is
 deliberately OVER-INCLUSIVE until the requires gate + `allowed` caps land on the component — a wrong offer is
 a VISIBLE enabler defect to fix, never a reason to fall back (the rollerskating this cures was the opposite
-mechanism: a read path that live-calculated EVERYTHING per call with no cache). Legacy survives only as the
-AI's what-if data source (`bContinue`/`bIgnore*`/probability shapes), never the gate verdict.
+mechanism: a read path that live-calculated EVERYTHING per call with no cache). **The gates are PURE enabler
+reads — NO legacy fallback, NO pre-init guard, NO what-if legacy path; the `*Legacy` gate bodies are DELETED.**
+Legacy cannot even RUN post-ship (its XML is being removed — [DEC-red-ratchet](../architecture/decisions.md#dec-red-ratchet)),
+so a fallback is not a safety net but **BAIT**: it substitutes an answer that will not exist and MASKS the very
+cascade hole we need exposed. The what-if callers (`bContinue`/`bIgnore*`/`bTestVisible`/probability) now receive
+the plain frontier verdict — the enabler models no hypothetical, so a what-if that needs one is itself a hole to
+fix on the component, never a legacy read ([DEC-no-legacy-masking](../architecture/decisions.md#dec-no-legacy-masking)).
 
 The standardized component: **`Sources/Cascade/CvEnabler.{h,cpp}`** (`EnablerDomain` — the §7.1 tri-state
 array + the two membership refcount planes + the removal-wins formula), instantiated per §7.1's owners:
@@ -530,12 +535,15 @@ always-unlocked" whitelist is dead, superseded-ideas #14 — start promotions ri
 (Hurries are deliberately absent — not an enabler concern, §7.1; the box's `enHurryOk` slice serves `canHurry`
 until the civic-ability model consumes it.)
 
-> **⛔ "Complete" covers the VERDICT READS ONLY — the consumer ITERATION sweep has NOT run.** Every `can*` gate
-> returns the enabler's verdict, but the CALLERS still iterate whole entity space probing per id (262
-> whole-database loops censused in `AI/` + `Engine/`, 2026-07-16 — e.g. `AI_bestBuildingsThreshold`'s 5,202-building
-> `canConstruct` scan, run ~7×/city/turn by the chooseProduction focus ladder). §6's "the AI iterates only this
-> small frontier" is therefore NOT yet realized; any claim that "nothing runs on legacy" is false until the F2b
-> sweep ([roadmap](../plans/structural-cleanup/roadmap.md) §F2b) rewires the hot iterators onto the LISTED set.
+> **The consumer ITERATION sweep (F2b) — the CLEAN subset is done.** The hot AI decision loops whose gate is the
+> plain-verdict `can*` (default args) now iterate the enabler's LISTED frontier via `EnablerDomain::listedIds`
+> instead of scanning the whole entity database (`AI_bestBuildingsThreshold`, `CalculateAllBuildingValues`,
+> `AI_bestUnitAI`/`AI_bestProject`/`AI_bestProcess`, the spread/inquisitor/promotion-value loops, the civic
+> counts, the capital unit-analysis + event-value loops, …). What remains is NOT a frontier swap: a loop that
+> calls a gate with WHAT-IF args cannot iterate the frontier (it answers only the current verdict — and with the
+> `*Legacy` bodies now deleted, that caller receives the plain verdict, exposed), and the `AI_chooseProduction`
+> focus-ladder collapse (§F2b of the [roadmap](../plans/structural-cleanup/roadmap.md)) is an AI-architecture
+> change, not a per-loop rewrite.
 
 **The BONUS axis is GATE-ONLY (owner ruling 2026-07-15): a plot-group-carried bonus NEVER drives tree
 membership.** A bonus you would rely on the trade network for (traded / manufactured / vicinity-supplied) only

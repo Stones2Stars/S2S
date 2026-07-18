@@ -322,7 +322,6 @@ public:
 	bool canCreate(ProjectTypes eProject, bool bContinue = false, bool bTestVisible = false) const;
 	bool canMaintain(ProcessTypes eProcess) const;
 	// the #430 enabler-flip net oracles (the intact pre-flip bodies)
-	bool canDoCivicsLegacy(CivicTypes eCivic) const;
 	bool canHurryLegacy(HurryTypes eIndex) const;
 	bool canFoundReligionLegacy() const;
 	bool isProductionMaxedBuilding(BuildingTypes building, bool bAcquireCity = false) const;

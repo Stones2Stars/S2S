@@ -206,22 +206,15 @@ public:
 	int getMaxNumNationalWonders() const;
 
 	bool canTrain(UnitTypes eUnit, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreUpgrades = false, bool bPropertySpawn = false) const;
-	bool canTrainLegacy(UnitTypes eUnit, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreUpgrades = false, bool bPropertySpawn = false) const;   // the intact pre-flip composite -- the net oracle (#430)
 	bool canTrainInternal(UnitTypes eUnit, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreUpgrades = false) const;
 	bool canTrain(UnitCombatTypes eUnitCombat) const;
 
 	bool canConstruct(BuildingTypes eType, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreAmount = false, bool bIgnoreBuildings = false, TechTypes eIgnoreTechReq = NO_TECH, int* probabilityEverConstructable = NULL, bool bExposed = false) const;
-	bool canConstructLegacy(BuildingTypes eType, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreAmount = false, bool bIgnoreBuildings = false, TechTypes eIgnoreTechReq = NO_TECH, int* probabilityEverConstructable = NULL, bool bExposed = false) const;   // the intact pre-flip path incl. the cache -- the net oracle (#430)
 
-	//	KOSHLING - cache can build results
-	void FlushCanConstructCache(BuildingTypes eType = NO_BUILDING);
 	bool canConstructInternal(BuildingTypes eType, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreAmount, BuildingTypes withExtraBuilding = NO_BUILDING, bool bIgnoreBuildings = false, TechTypes eIgnoreTechReq = NO_TECH, int* probabilityEverConstructable = NULL, bool bExposed = false) const;
-	void NoteBuildingNoLongerConstructable(BuildingTypes eType) const;
 
 	bool canCreate(ProjectTypes eProject, bool bContinue = false, bool bTestVisible = false) const;
-	bool canCreateLegacy(ProjectTypes eProject, bool bContinue = false, bool bTestVisible = false) const;   // the net oracle (#430)
 	bool canMaintain(ProcessTypes eProcess) const;
-	bool canMaintainLegacy(ProcessTypes eProcess) const;   // the net oracle (#430; carries the Python veto)
 
 	int getFoodTurnsLeft() const;
 	bool isProduction() const;
@@ -2009,9 +2002,6 @@ private:
 	bool m_bVisibilitySetup;
 	mutable bool m_bMaintenanceDirty;
 
-	mutable std::map<int,bool>*	m_bCanConstruct;
-
-
 	//	Koshling - add cache of trainability of units which will be
 	//	populated prior to calculating the city's build choices and
 	//	then invalidated so it is only used within that scope
@@ -2056,7 +2046,6 @@ public:
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setCommerceModifierDirty, CommerceTypes);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setCommerceDirty, CommerceTypes);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setLayoutDirty, bool);
-		DECLARE_MAP_FUNCTOR_1(CvCity, void, FlushCanConstructCache, BuildingTypes);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, AI_setAssignWorkDirty, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, AI_setChooseProductionDirty, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, AI_setMilitaryProductionCity, bool);

@@ -6740,92 +6740,19 @@ bool CvPlayer::canConstructInternal(BuildingTypes eBuilding, bool bContinue, boo
 
 bool CvPlayer::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisible) const
 {
-	PROFILE_EXTRA_FUNC();
-	if (isNPC())
-	{
-		return false;
-	}
-
-	const CvProjectInfo& kProject = GC.getProjectInfo(eProject);
-	if (kProject.getProductionCost() == -1)
-	{
-		return false;
-	}
-
-	if (!GET_TEAM(getTeam()).isHasTech(kProject.getTechPrereq()))
-	{
-		return false;
-	}
-
-	if (kProject.getVictoryPrereq() != NO_VICTORY)
-	{
-		if (!GC.getGame().isVictoryValid((VictoryTypes)kProject.getVictoryPrereq()))
-		{
-			return false;
-		}
-
-		if (isMinorCiv())
-		{
-			return false;
-		}
-
-		if (GET_TEAM(getTeam()).getVictoryCountdown((VictoryTypes)kProject.getVictoryPrereq()) >= 0)
-		{
-			return false;
-		}
-	}
-
-	if (GC.getGame().isProjectMaxedOut(eProject))
-	{
-		return false;
-	}
-
-	if (GET_TEAM(getTeam()).isProjectMaxedOut(eProject))
-	{
-		return false;
-	}
-
-	if (!bTestVisible)
-	{
-		if (GC.getGame().isProjectMaxedOut(eProject, (GET_TEAM(getTeam()).getProjectMaking(eProject) + ((bContinue) ? -1 : 0))))
-		{
-			return false;
-		}
-
-		if (GET_TEAM(getTeam()).isProjectMaxedOut(eProject, (GET_TEAM(getTeam()).getProjectMaking(eProject) + ((bContinue) ? -1 : 0))))
-		{
-			return false;
-		}
-
-		if (GC.getGame().isNoNukes() && kProject.isAllowsNukes())
-		{
-			return false;
-		}
-
-		if (kProject.getAnyoneProjectPrereq() != NO_PROJECT)
-		{
-			if (GC.getGame().getProjectCreatedCount((ProjectTypes)kProject.getAnyoneProjectPrereq()) == 0)
-			{
-				return false;
-			}
-		}
-
-		for (int iI = 0; iI < GC.getNumProjectInfos(); iI++)
-		{
-			if (GET_TEAM(getTeam()).getProjectCount((ProjectTypes)iI) < kProject.getProjectsNeeded(iI))
-			{
-				return false;
-			}
-		}
-	}
-
-	return true;
+	// #430: the player-scope projects gate is a PURE enabler read (enabler.md par.7.1 -- projects are
+	// PLAYER-held), unified with CvCity::canCreate. NOTHING here relies on legacy: no fallback, no pre-init
+	// path, no what-if legacy (DEC-no-legacy-masking) -- a cascade gap returns empty/wrong, exposed. The
+	// bContinue/bTestVisible what-if params are inert (no player-scope caller passes them).
+	return m_enabler.projects.listed((int)eProject);
 }
 
 
 bool CvPlayer::canMaintain(ProcessTypes eProcess) const
 {
-	return GET_TEAM(getTeam()).isHasTech(GC.getProcessInfo(eProcess).getTechPrereq());
+	// #430: PURE enabler read (enabler.md par.7.1 -- processes are PLAYER-held), unified with CvCity::canMaintain.
+	// Nothing relies on legacy: no fallback, no pre-init path (DEC-no-legacy-masking).
+	return m_enabler.processes.listed((int)eProcess);
 }
 
 
@@ -8344,48 +8271,10 @@ bool CvPlayer::isCivic(CivicTypes eCivic) const
 
 bool CvPlayer::canDoCivics(CivicTypes eCivic) const
 {
-	// #430 THE ENABLER READ (owner: no availability list reads legacy; a static is a pure calculator, never a
-	// read path): a BARE member read of the per-player civics domain (enabler.md par.7/8) -- deliberately
-	// OVER-INCLUSIVE until the requires gate + city-limit/force-civic overrides land on the gate stage.
-	// NO_CIVIC keeps its legacy true; pre-init rides the Legacy oracle.
-	if (eCivic != NO_CIVIC && GC.getGame().isFinalInitialized())
-	{
-		return m_enabler.civics.listed((int)eCivic);   // listed == inTree until GREYED lands (par.6)
-	}
-	return canDoCivicsLegacy(eCivic);
-}
-
-bool CvPlayer::canDoCivicsLegacy(CivicTypes eCivic) const
-{
-	PROFILE_FUNC();
-
-	if (eCivic == NO_CIVIC)
-	{
-		return true;
-	}
-
-	if (GC.getGame().isForceCivicOption((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOptionType()))
-	{
-		return GC.getGame().isForceCivic(eCivic);
-	}
-
-	if (!isNPC()
-	&& (
-		(
-			GC.getGame().getCivicCityLimit(eCivic) > 0
-			&& GC.getCivicInfo(eCivic).getCityOverLimitUnhappy() == 0
-			&& GC.getGame().getCivicCityLimit(eCivic) < getNumCities()
-		)
-		||
-		(
-			!isHasCivicOption((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOptionType())
-			&& !GET_TEAM(getTeam()).isHasTech(GC.getCivicInfo(eCivic).getTechPrereq())
-		)
-	))
-	{
-		return false;
-	}
-	return true;
+	// #430: PURE enabler read -- no legacy fallback/pre-init/what-if path (legacy is bait, XML removed pre-ship; DEC-no-legacy-masking).
+	// A BARE member read of the per-player civics domain (enabler.md par.7/8) -- deliberately OVER-INCLUSIVE
+	// until the requires gate + city-limit/force-civic overrides land on the gate stage (par.6).
+	return eCivic != NO_CIVIC && m_enabler.civics.listed((int)eCivic);
 }
 
 
@@ -8405,10 +8294,17 @@ bool CvPlayer::canRevolution(CivicTypes* paeNewCivics) const
 	if (paeNewCivics == NULL)
 	{
 		// XXX is this necessary?
-		for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
+		// #430 F2b (enabler.md par.6): scan the player's LISTED civics frontier instead of the whole civic
+		// database. canDoCivics((CivicTypes)iI) with no extra args IS the bare read m_enabler.civics.listed(iI)
+		// (CvPlayer.cpp:8353), so listedIds == the canDoCivics-true set. This is a pure existence check (returns
+		// on the first qualifying civic), so iteration order is irrelevant; the "not currently selected in its
+		// option" filter stays in the body unchanged.
+		std::vector<int> vecCivics;
+		m_enabler.civics.listedIds(vecCivics);
+		for (std::vector<int>::const_iterator it = vecCivics.begin(), itEnd = vecCivics.end(); it != itEnd; ++it)
 		{
-			if (canDoCivics((CivicTypes)iI)
-			&& getCivics((CivicOptionTypes)GC.getCivicInfo((CivicTypes)iI).getCivicOptionType()) != iI)
+			const CivicTypes eCivic = (CivicTypes)*it;
+			if (getCivics((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOptionType()) != eCivic)
 			{
 				return true;
 			}
@@ -27863,11 +27759,6 @@ void CvPlayer::clearCanConstructCache(BuildingTypes building, bool bIncludeCitie
 		{
 			m_bCanConstructCached[iI] = false;
 			m_bCanConstructCachedDefaultParam[iI] = false;
-
-			if (bIncludeCities)
-			{
-				algo::for_each(cities(), CvCity::fn::FlushCanConstructCache(building));
-			}
 		}
 	}
 
@@ -27890,11 +27781,6 @@ void CvPlayer::clearCanConstructCacheForGroup(SpecialBuildingTypes eSpecialBuild
 		{
 			m_bCanConstructCached[iI] = false;
 			m_bCanConstructCachedDefaultParam[iI] = false;
-
-			if (bIncludeCities)
-			{
-				algo::for_each(cities(), CvCity::fn::FlushCanConstructCache((BuildingTypes)iI));
-			}
 		}
 	}
 

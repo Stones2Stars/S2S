@@ -137,7 +137,6 @@ CvCity::CvCity()
 	m_canTrainCachePopulated = false;
 #endif
 	m_bVisibilitySetup = false;
-	m_bCanConstruct = NULL;
 
 	//CvDLLEntity::createCityEntity(this);		// create and attach entity to city
 
@@ -1257,7 +1256,6 @@ void CvCity::doTurn()
 				AI_FlushBuildingValueCache();
 			}
 		}
-		FlushCanConstructCache();
 		setBuildingListInvalid();
 		setUnitListInvalid();
 #ifdef CAN_TRAIN_CACHING
@@ -2311,93 +2309,9 @@ void CvCity::clearUpgradeCache(UnitTypes eUnit) const
 
 bool CvCity::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreUpgrades, bool bPropertySpawn) const
 {
-	// ==== #430 THE ENABLER READ (owner: no availability list reads legacy; a static is a pure calculator,
-	// never a read path). The gate verdict is a BARE member read of the per-city units domain (enabler.md
-	// par.7/8) -- deliberately OVER-INCLUSIVE until the requires gate + allowed caps land on the component.
-	// Legacy survives only as the AI's what-if data source (bContinue/bIgnore*/bPropertySpawn shapes). ====
-	if (!bContinue && !bIgnoreCost && !bIgnoreUpgrades && !bPropertySpawn
-	&& GC.getGame().isFinalInitialized())
-	{
-		// STRICT both modes: the visible-mode inTree read put dormant/superseded tree members into the game's
-		// list (gateFailed cannot yet distinguish greyable-requires from hide-class verdicts) -- the wrong
-		// unit set in-game while every strict surface read green.
-		return m_enabler.units.listed((int)eUnit);
-	}
-	return canTrainLegacy(eUnit, bContinue, bTestVisible, bIgnoreCost, bIgnoreUpgrades, bPropertySpawn);
-}
-
-bool CvCity::canTrainLegacy(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreUpgrades, bool bPropertySpawn) const
-{
-	if (!GET_PLAYER(getOwner()).canTrain(eUnit, bContinue, bTestVisible, bIgnoreCost, bPropertySpawn))
-	{
-		return false;
-	}
-#ifdef CAN_TRAIN_CACHING
-	if (!bContinue && !bTestVisible && !bIgnoreCost && !bIgnoreUpgrades)
-	{
-		if (m_canTrainCachePopulated)
-		{
-			bool bHaveCachedResult;
-			bool bResult;
-
-			if (m_canTrainCacheDirty)
-			{
-				PROFILE("CvCity::canTrain.ProcessDirtyCache");
-
-				//	Needs repopulating
-				populateCanTrainCache();
-			}
-
-			stdext::hash_map<UnitTypes, bool>::iterator itr = m_canTrainCacheUnits.find(eUnit);
-			if (itr == m_canTrainCacheUnits.end())
-			{
-#ifdef VALIDATE_CAN_TRAIN_CACHE_CONSISTENCY
-				if (canTrainInternal(eUnit))
-				{
-					FErrorMsg("Consistency check failure in canTrain cache - false negative\n");
-				}
-#endif
-				bResult = false;
-				bHaveCachedResult = true;
-			}
-			else if (itr->second)
-			{
-#ifdef VALIDATE_CAN_TRAIN_CACHE_CONSISTENCY
-				if (!canTrainInternal(eUnit))
-				{
-					FErrorMsg("Consistency check failure in canTrain cache - false positive\n");
-				}
-#endif
-				bResult = true;
-				bHaveCachedResult = true;
-			}
-			else	//	In map but with false => recalculate
-			{
-				bHaveCachedResult = false;
-			}
-
-			if (!bHaveCachedResult)
-			{
-				bResult = canTrainInternal(eUnit);
-
-				if (bResult)
-				{
-					m_canTrainCacheUnits[eUnit] = true;
-				}
-				else
-				{
-					m_canTrainCacheUnits.erase(eUnit);
-				}
-
-			}
-
-			return bResult;
-		}
-	}
-#endif
-
-	PROFILE("canTrain.NonStandard");
-	return canTrainInternal(eUnit, bContinue, bTestVisible, bIgnoreCost, bIgnoreUpgrades);
+	// #430: PURE enabler read -- no legacy fallback/pre-init/what-if path (legacy is bait, XML removed pre-ship; DEC-no-legacy-masking).
+	// The what-if params (bContinue/bTestVisible/bIgnoreCost/bIgnoreUpgrades/bPropertySpawn) are now INERT.
+	return m_enabler.units.listed((int)eUnit);
 }
 
 void CvCity::invalidateCachedCanTrainForUnit(UnitTypes eUnit) const
@@ -2437,34 +2351,6 @@ bool CvCity::canTrain(UnitCombatTypes eUnitCombat) const
 	return false;
 }
 
-//	KOSHLING - cache can construct values
-#ifdef _DEBUG
-//	Uncomment to add runtime results checking
-//#define VALIDATE_CAN_CONSTRUCT_CACHE
-#endif
-
-void CvCity::FlushCanConstructCache(BuildingTypes eBuilding)
-{
-	//OutputDebugString(CvString::format("[%d] FlushCanConstructCache (%d), workitem priority = %08lx\n", GetCurrentThreadId(), eBuilding, (m_workItem == NULL ? -1 : m_workItem->GetPriority())).c_str());
-
-	if (eBuilding == NO_BUILDING)
-	{
-		SAFE_DELETE(m_bCanConstruct);
-	}
-	else if (m_bCanConstruct != NULL)
-	{
-		(*m_bCanConstruct).erase(eBuilding);
-	}
-}
-
-void CvCity::NoteBuildingNoLongerConstructable(BuildingTypes eBuilding) const
-{
-	if (m_bCanConstruct != NULL)
-	{
-		(*m_bCanConstruct)[eBuilding] = false;
-	}
-}
-
 bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreAmount, bool bIgnoreBuildings, TechTypes eIgnoreTechReq, int* probabilityEverConstructable, bool bExposed) const
 {
 	PROFILE_FUNC();
@@ -2473,81 +2359,12 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 	{
 		return false;
 	}
-	// ==== #430 THE ENABLER READ (owner 2026-07-14: "none of the things that need the enabler read legacy anymore
-	// -- that is the premise; otherwise we do not see what is broken"). The gate verdict is a BARE READ of the
-	// standardized per-city domain (CvCity::m_enabler, event-maintained -- enabler.md par.7/8): deliberately
-	// OVER-INCLUSIVE until the requires gate + allowed caps land on the component (GREYED); a wrong offer is a
-	// VISIBLE defect to fix on the enabler, never a reason to fall back. Legacy (canConstructLegacy) survives
-	// ONLY as the AI's per-building data source for the what-if shapes (bContinue / bIgnore* / eIgnoreTechReq /
-	// probability / bExposed), never as the gate the player's list or the AI's offer sees. ====
-	if (!bContinue && !bIgnoreCost && !bIgnoreAmount && !bIgnoreBuildings && eIgnoreTechReq == NO_TECH && probabilityEverConstructable == NULL && !bExposed
-	&& GC.getGame().isFinalInitialized())
-	{
-		// a BARE member read, nothing else (owner 2026-07-14: no calculator on a live path; seeding is a
-		// lifecycle act -- load warm-up / city init -- never a read-path guard). TWO-MODE (par.6): bTestVisible
-		// = tree membership (GREYED shows; the requires side handles the graying); strict = LISTED.
-		return bTestVisible ? m_enabler.buildings.inTree((int)eBuilding) : m_enabler.buildings.listed((int)eBuilding);
-	}
-	return canConstructLegacy(eBuilding, bContinue, bTestVisible, bIgnoreCost, bIgnoreAmount, bIgnoreBuildings, eIgnoreTechReq, probabilityEverConstructable, bExposed);
+	// #430: PURE enabler read -- no legacy fallback/pre-init/what-if path (legacy is bait, XML removed pre-ship; DEC-no-legacy-masking).
+	// TWO-MODE (par.6): bTestVisible = tree membership (GREYED shows; requires side handles graying); strict = LISTED. The what-if
+	// params (bContinue/bIgnoreCost/bIgnoreAmount/bIgnoreBuildings/eIgnoreTechReq/probabilityEverConstructable/bExposed) are now INERT.
+	return bTestVisible ? m_enabler.buildings.inTree((int)eBuilding) : m_enabler.buildings.listed((int)eBuilding);
 }
 
-bool CvCity::canConstructLegacy(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreAmount, bool bIgnoreBuildings, TechTypes eIgnoreTechReq, int* probabilityEverConstructable, bool bExposed) const
-{
-	if (eBuilding == NO_BUILDING)
-	{
-		return false;
-	}
-	if (!bContinue && !bTestVisible && !bIgnoreCost && !bIgnoreAmount && !bIgnoreBuildings && eIgnoreTechReq == NO_TECH && probabilityEverConstructable == NULL && !bExposed)
-	{
-		bool bResult;
-		bool bHaveCachedResult;
-
-		if (m_bCanConstruct == NULL)
-		{
-
-			m_bCanConstruct = new std::map<int, bool>();
-			bHaveCachedResult = false;
-		}
-		else
-		{
-			std::map<int, bool>::const_iterator itr = m_bCanConstruct->find(eBuilding);
-			if (itr == m_bCanConstruct->end())
-			{
-				bHaveCachedResult = false;
-			}
-			else
-			{
-				bResult = itr->second;
-				bHaveCachedResult = true;
-#ifdef VALIDATE_CAN_CONSTRUCT_CACHE
-				//	Verify if required
-				if (bResult != canConstructInternal(eBuilding, bContinue, bTestVisible, bIgnoreCost, bIgnoreAmount, NO_BUILDING, bIgnoreBuildings, eIgnoreTechReq, NULL, bExposed))
-				{
-					MessageBox(NULL, "canConstruct cached result mismatch", "cvGameCore", MB_OK);
-					FErrorMsg("canConstruct cached result mismatch");
-				}
-#endif
-			}
-		}
-
-		if (!bHaveCachedResult)
-		{
-			bResult = canConstructInternal(eBuilding, bContinue, bTestVisible, bIgnoreCost, bIgnoreAmount, NO_BUILDING, bIgnoreBuildings, eIgnoreTechReq, NULL, bExposed);
-			{
-
-				if (m_bCanConstruct == NULL)
-				{
-
-					m_bCanConstruct = new std::map<int, bool>();
-				}
-				(*m_bCanConstruct)[eBuilding] = bResult;
-			}
-		}
-
-		return bResult;
-	}
-	return canConstructInternal(eBuilding, bContinue, bTestVisible, bIgnoreCost, bIgnoreAmount, NO_BUILDING, bIgnoreBuildings, eIgnoreTechReq, probabilityEverConstructable, bExposed);
-}
 //	KOSHLING - Can construct cache end
 
 bool CvCity::canConstructInternal(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreAmount, BuildingTypes withExtraBuilding, bool bIgnoreBuildings, TechTypes eIgnoreTechReq, int* probabilityEverConstructable, bool bExposed) const
@@ -3029,55 +2846,18 @@ bool CvCity::canConstructInternal(BuildingTypes eBuilding, bool bContinue, bool 
 
 bool CvCity::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisible) const
 {
-	// #430 THE ENABLER READ (owner: no availability list reads legacy): project AVAILABILITY is the PLAYER-held
-	// domain (enabler.md par.7.1 -- team-scope axes, one instance so per-city copies cannot drift); CREATION
-	// stays this city gate, reading through the owner (dynamic lookup, conquest-safe). Deliberately
-	// OVER-INCLUSIVE until the requires gate + allowed caps land (the plot map-category check joins then as a
-	// live city-local gate); legacy stays for bContinue (the what-if/AI shape) only.
-	if (!bContinue && GC.getGame().isFinalInitialized())
-	{
-		return GET_PLAYER(getOwner()).m_enabler.projects.listed((int)eProject);   // listed == inTree until GREYED lands
-	}
-	return canCreateLegacy(eProject, bContinue, bTestVisible);
-}
-
-bool CvCity::canCreateLegacy(ProjectTypes eProject, bool bContinue, bool bTestVisible) const
-{
-	if (!GET_PLAYER(getOwner()).canCreate(eProject, bContinue, bTestVisible))
-	{
-		return false;
-	}
-
-	if (!isMapCategory(*plot(), GC.getProjectInfo(eProject)))
-	{
-		return false;
-	}
-
-	return true;
+	// #430: PURE enabler read -- no legacy fallback/pre-init/what-if path (legacy is bait, XML removed pre-ship; DEC-no-legacy-masking).
+	// The what-if params (bContinue/bTestVisible) are now INERT. listed == inTree until GREYED lands.
+	return GET_PLAYER(getOwner()).m_enabler.projects.listed((int)eProject);
 }
 
 
 bool CvCity::canMaintain(ProcessTypes eProcess) const
 {
-	// #430 THE ENABLER READ (owner: no availability list reads legacy): process AVAILABILITY is the PLAYER-held
-	// domain (enabler.md par.7.1 -- the tech axis is team-scope, one instance so per-city copies cannot drift);
-	// the maintain choice stays this city gate, reading through the owner (dynamic lookup, conquest-safe). NB
-	// the Python cannotMaintain veto rode the Legacy oracle only -- no live veto exists in the data today.
-	if (GC.getGame().isFinalInitialized())
-	{
-		return GET_PLAYER(getOwner()).m_enabler.processes.listed((int)eProcess);   // listed == inTree until GREYED lands
-	}
-	return canMaintainLegacy(eProcess);
-}
-
-bool CvCity::canMaintainLegacy(ProcessTypes eProcess) const
-{
-	if (!GET_PLAYER(getOwner()).canMaintain(eProcess)
-	|| Cy::call<bool>(PYGameModule, "cannotMaintain", Cy::Args() << const_cast<CvCity*>(this) << eProcess))
-	{
-		return false;
-	}
-	return true;
+	// #430: PURE enabler read -- no legacy fallback/pre-init/what-if path (legacy is bait, XML removed pre-ship; DEC-no-legacy-masking).
+	// The Python cannotMaintain veto rode the deleted Legacy oracle only -- no live veto exists in the data today.
+	// listed == inTree until GREYED lands.
+	return GET_PLAYER(getOwner()).m_enabler.processes.listed((int)eProcess);
 }
 
 
@@ -4158,16 +3938,19 @@ UnitTypes CvCity::getConscriptUnit() const
 	UnitTypes eBestUnit = NO_UNIT;
 
 	int iBestValue = 0;
-	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+	// #430 F2b (enabler.md par.6): iterate this city's LISTED unit frontier. canTrain(i) default-args IS the
+	// bare read m_enabler.units.listed(i) (CvCity::canTrain), so this is the identical trainable set without the
+	// whole-unit-database scan. Ascending forward iteration preserves the strict-'>' first-on-tie pick.
+	std::vector<int> vecTrainable;
+	m_enabler.units.listedIds(vecTrainable);
+	for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 	{
-		if (canTrain((UnitTypes) iI))
+		const UnitTypes eUnit = (UnitTypes)*it;
+		const int iValue = GC.getUnitInfo(eUnit).getConscriptionValue();
+		if (iValue > iBestValue)
 		{
-			int iValue = GC.getUnitInfo((UnitTypes) iI).getConscriptionValue();
-			if (iValue > iBestValue)
-			{
-				iBestValue = iValue;
-				eBestUnit = (UnitTypes) iI;
-			}
+			iBestValue = iValue;
+			eBestUnit = eUnit;
 		}
 	}
 	return eBestUnit;
@@ -12835,8 +12618,6 @@ void CvCity::processNumBonusChange(BonusTypes eIndex, int iOldValue, int iNewVal
 			updateCorporation();
 		}
 
-		//	Linking bonuses may change what is buildable
-		FlushCanConstructCache();
 	}
 }
 
@@ -13861,7 +13642,6 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 		if (kBuilding.EnablesOtherBuildings())
 		{
 			AI_FlushBuildingValueCache(true);
-			FlushCanConstructCache();
 		}
 #ifdef YIELD_VALUE_CACHING
 		ClearYieldValueCache(); // A new building can change yield rates
@@ -14499,9 +14279,6 @@ void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce
 
 		GET_PLAYER(getOwner()).changeHasReligionCount(eIndex, ((isHasReligion(eIndex)) ? 1 : -1));
 
-		// Religion changes may change what is buildable
-		FlushCanConstructCache();
-
 		AI_setAssignWorkDirty(true);
 
 		setInfoDirty(true);
@@ -15074,8 +14851,6 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 					return;
 				}
 
-				NoteBuildingNoLongerConstructable(buildingType);
-
 				owner.changeBuildingMaking(buildingType, 1);
 
 				const SpecialBuildingTypes eSpecialBuilding = GC.getBuildingInfo(buildingType).getSpecialBuilding();
@@ -15560,7 +15335,6 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 				}
 			}
 
-			FlushCanConstructCache(eConstructBuilding);	//	Flush value for this building
 			setBuildingListInvalid();
 			break;
 		}

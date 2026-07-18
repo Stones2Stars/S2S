@@ -4635,36 +4635,35 @@ namespace
 		if (strcmp(szAction, "canConstruct") == 0)
 		{
 			o["city"] = picojson::value((double)iCityId);
-			o["legacy"] = (pCity != NULL) ? picojson::value(pCity->canConstruct((BuildingTypes)iIdx)) : picojson::value();
-			o["legacyReason"] = (pCity != NULL) ? picojson::value(std::string(legacyBlockReason(pCity, (BuildingTypes)iIdx))) : picojson::value();
+			o["verdict"] = (pCity != NULL) ? picojson::value(pCity->canConstruct((BuildingTypes)iIdx)) : picojson::value();
+			o["blockReason"] = (pCity != NULL) ? picojson::value(std::string(legacyBlockReason(pCity, (BuildingTypes)iIdx))) : picojson::value();
 		}
 		else if (strcmp(szAction, "canTrain") == 0)
 		{
 			o["city"] = picojson::value((double)iCityId);
-			// the STRICT domain verdict (the flipped read) + the legacy leg as the diagnostic (the old field
-			// name "legacy" was a lie -- it returned the domain read)
+			// #430: the STRICT domain verdict (the enabler read). The legacy oracle leg is GONE -- legacy is bait
+			// (the XML is removed pre-ship, so a legacy path cannot even run), never a comparison source
+			// (DEC-oracle-tautology / DEC-no-legacy-masking).
 			o["verdict"] = (pCity != NULL) ? picojson::value(pCity->canTrain((UnitTypes)iIdx)) : picojson::value();
-			o["legacyLeg"] = (pCity != NULL) ? picojson::value(pCity->canTrainLegacy((UnitTypes)iIdx)) : picojson::value();
 		}
 		else if (strcmp(szAction, "canResearch") == 0)
 		{
-			o["legacy"] = picojson::value(kPlayer.canResearch((TechTypes)iIdx));
+			o["verdict"] = picojson::value(kPlayer.canResearch((TechTypes)iIdx));
 		}
 		else if (strcmp(szAction, "canDoCivics") == 0)
 		{
-			o["legacy"] = picojson::value(kPlayer.canDoCivics((CivicTypes)iIdx));
+			o["verdict"] = picojson::value(kPlayer.canDoCivics((CivicTypes)iIdx));
 		}
 		else if (strcmp(szAction, "canCreate") == 0)
 		{
-			// the REAL gate is the CITY's (the production choose-list -- the flipped enabler read); the player
-			// leg stays visible as the legacy diagnostic
+			// the gate is the CITY's (the production choose-list -- the enabler read). The player-scope canCreate
+			// now reads the SAME player-held projects domain, so a separate "player leg" would be tautological
+			// (DEC-oracle-tautology) -- removed.
 			if (pCity != NULL) o["verdict"] = picojson::value(pCity->canCreate((ProjectTypes)iIdx));
-			o["legacyPlayerLeg"] = picojson::value(kPlayer.canCreate((ProjectTypes)iIdx));
 		}
 		else if (strcmp(szAction, "canMaintain") == 0)
 		{
 			if (pCity != NULL) o["verdict"] = picojson::value(pCity->canMaintain((ProcessTypes)iIdx));
-			o["legacyPlayerLeg"] = picojson::value(kPlayer.canMaintain((ProcessTypes)iIdx));
 		}
 		else if (strcmp(szAction, "whyNot") == 0)
 		{
