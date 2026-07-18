@@ -181,6 +181,21 @@ CvPlayer::m_iNonStateReligionHappiness   (int)
 ========================
 
 ========================
+2026-07-18 — #430 delete-driven legacy cut (religion happiness accumulators, family b): the BUILDING-fed
+per-religion state-religion happiness array (CvCity::m_paiStateReligionHappiness) fully removed. The member +
+its changeStateReligionHappiness changer + the processBuilding apply + the read/write + the Cy binding + the
+WorldBuilder manual transfer are gone. CvCity::getStateReligionHappiness(eReligion) now recomputes fresh from
+the city's ACTIVE buildings whose religion == eReligion (CascadeWellbeing::cityStateReligionHappiness), so
+getCurrentStateReligionHappiness follows for free. This is the FIRST class-array member cut: the orphan tag is a
+CLASS_INT_ARRAY element, drained by the same sm_isCut path (SkipElement handles SAVE_VALUE_TYPE_CLASS_INT_ARRAY --
+reads the classType+numInts header, consumes numInts ints; the separate CLASS_MAP remap element is processed
+silently regardless). The changer's AI_setAssignWorkDirty rider is dropped (same as the pilot building/specialist
+happiness changers): the value is read fresh, and building add/remove re-dirties via processBuilding's other change*.
+
+CvCity::m_paiStateReligionHappiness      (class int array)
+========================
+
+========================
 2026-07-18 — #430 delete-driven legacy cut (FromTech wellbeing accumulators): the city tech-gated
 building/specialist happiness/health accumulators + the per-tech building maps fully removed. Both tech-gated
 sources ride the cascade already: BUILDING tech-happiness/health -> the iTechGatedNet term (TECH-gated building

@@ -383,7 +383,6 @@ public:
 	void changeReligionInfluence(int /*ReligionTypes*/ iIndex, int iChange);
 
 	int getStateReligionHappiness(int /*ReligionTypes*/ eIndex) const;
-	void changeStateReligionHappiness(int /*ReligionTypes*/ eIndex, int iChange);
 
 	int getSpecialistFreeExperience() const;
 	int getEspionageDefenseModifier() const;

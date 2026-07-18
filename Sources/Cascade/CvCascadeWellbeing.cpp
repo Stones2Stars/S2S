@@ -565,6 +565,27 @@ void CascadeWellbeing::techGatedWellbeing(const CvCity* pCity, int& iHapNet, int
 	iHeaNet = hea.iTechGatedNet / 100;
 }
 
+// The per-religion CITY building-sourced state-religion happiness (for the retired m_paiStateReligionHappiness):
+// Σ over the city's ACTIVE buildings whose religion == eReligion of the building's stateReligionHappiness -- the
+// recompute-from-source of the legacy per-religion accumulator (legacy fed it building-keyed by getReligionType(),
+// CvCity processBuilding). HUMAN-scale (the building info getter is human; the member was human), keyed by an
+// ARBITRARY religion -- so NOT the ×100 gather path (hap.iSrNet is the CURRENT state religion's building term,
+// gated live; this getter serves the civic what-if that asks a NON-state religion's slot).
+int CascadeWellbeing::cityStateReligionHappiness(const CvCity* pCity, int eReligion)
+{
+	if (eReligion == NO_RELIGION) return 0;
+	CvCascadeEvalCtx ec;
+	wb_fillCityCtx(pCity, ec);
+	if (ec.activeBuildings == NULL) return 0;
+	int iSum = 0;
+	for (std::set<int>::const_iterator it = ec.activeBuildings->begin(); it != ec.activeBuildings->end(); ++it)
+	{
+		const CvBuildingInfo& kB = GC.getBuildingInfo((BuildingTypes)*it);
+		if (kB.getReligionType() == eReligion) iSum += kB.getStateReligionHappiness();
+	}
+	return iSum;
+}
+
 // ===================== the verdict assembly (the four engine bodies, term-substituted) =====================
 // PURE over its inputs + the live raw-state reads -- ONE implementation (patterns.md): the package combine
 // feeds standing terms, compute() feeds fresh ones.

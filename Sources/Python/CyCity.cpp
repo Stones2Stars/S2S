@@ -1510,11 +1510,6 @@ int CyCity::getStateReligionHappiness(int /*ReligionTypes*/ eIndex) const
 	return m_pCity->getStateReligionHappiness((ReligionTypes) eIndex);
 }
 
-void CyCity::changeStateReligionHappiness(int /*ReligionTypes*/ eIndex, int iChange)
-{
-	m_pCity->changeStateReligionHappiness((ReligionTypes) eIndex, iChange);
-}
-
 int CyCity::getSpecialistFreeExperience() const
 {
 	return m_pCity->getSpecialistFreeExperience();

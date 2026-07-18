@@ -112,7 +112,6 @@ CvCity::CvCity()
 	m_paiFreeSpecialistCountUnattributed = NULL;
 	m_paiImprovementFreeSpecialists = NULL;
 	m_paiReligionInfluence = NULL;
-	m_paiStateReligionHappiness = NULL;
 	m_paiUnitCombatFreeExperience = NULL;
 	m_bPropertyControlBuildingQueued = false;
 
@@ -441,7 +440,6 @@ void CvCity::uninit()
 	SAFE_DELETE_ARRAY(m_paiFreeSpecialistCountUnattributed);
 	SAFE_DELETE_ARRAY(m_paiImprovementFreeSpecialists);
 	SAFE_DELETE_ARRAY(m_paiReligionInfluence);
-	SAFE_DELETE_ARRAY(m_paiStateReligionHappiness);
 	SAFE_DELETE_ARRAY(m_paiUnitCombatFreeExperience);
 	SAFE_DELETE_ARRAY(m_cachedPropertyNeeds);
 	SAFE_DELETE_ARRAY(m_pabHadVicinityBonus);
@@ -806,12 +804,10 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		}
 
 		m_paiReligionInfluence = new int[GC.getNumReligionInfos()];
-		m_paiStateReligionHappiness = new int[GC.getNumReligionInfos()];
 		m_pabHasReligion = new bool[GC.getNumReligionInfos()];
 		for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
 		{
 			m_paiReligionInfluence[iI] = 0;
-			m_paiStateReligionHappiness[iI] = 0;
 			m_pabHasReligion[iI] = false;
 		}
 
@@ -4707,10 +4703,8 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		// #430: building health/happiness now rides the cascade (CascadeWellbeing bld term, read by
 		// getBuildingGood/BadHealth/Happiness); the retired m_iBuildingGood/Bad* accumulators are gone.
 
-		if (kBuilding.getReligionType() != NO_RELIGION)
-		{
-			changeStateReligionHappiness((ReligionTypes)kBuilding.getReligionType(), kBuilding.getStateReligionHappiness() * iChange);
-		}
+		// #430 cut: building state-religion happiness now rides the cascade (getStateReligionHappiness reads
+		// CascadeWellbeing::cityStateReligionHappiness); the retired m_paiStateReligionHappiness accumulator is gone.
 		changeMilitaryProductionModifier(kBuilding.getMilitaryProductionModifier() * iChange);
 		changeSpaceProductionModifier(kBuilding.getSpaceProductionModifier() * iChange);
 		changeExtraTradeRoutes(kBuilding.getTradeRoutes() * iChange);
@@ -14026,20 +14020,9 @@ int CvCity::getCurrentStateReligionHappiness() const
 int CvCity::getStateReligionHappiness(ReligionTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumReligionInfos(), eIndex);
-	return m_paiStateReligionHappiness[eIndex];
-}
-
-
-void CvCity::changeStateReligionHappiness(ReligionTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, GC.getNumReligionInfos(), eIndex);
-
-	if (iChange != 0)
-	{
-		m_paiStateReligionHappiness[eIndex] += iChange;
-
-		AI_setAssignWorkDirty(true);
-	}
+	// #430 cut: the building-fed per-religion accumulator (m_paiStateReligionHappiness) is gone; recomputed fresh
+	// from the city's active state-religion-happy buildings (CascadeWellbeing::cityStateReligionHappiness).
+	return CascadeWellbeing::cityStateReligionHappiness(this, (int)eIndex);
 }
 
 
@@ -17122,7 +17105,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCountUnattributed);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementFreeSpecialists);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_paiReligionInfluence);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_paiStateReligionHappiness);
+	// #430 cut: m_paiStateReligionHappiness fully removed -> the orphan tag is drained via Assets/savemigration.txt.
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiUnitCombatFreeExperience);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_CITY_PLOTS, m_pabWorkingPlot);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_pabHasReligion);
@@ -17831,7 +17814,7 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCountUnattributed);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementFreeSpecialists);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_paiReligionInfluence);
-	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_paiStateReligionHappiness);
+	// #430 cut: m_paiStateReligionHappiness fully removed (recomputed from active buildings via the cascade).
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_paiUnitCombatFreeExperience);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_CITY_PLOTS, m_pabWorkingPlot);
@@ -21947,11 +21930,6 @@ void CvCity::clearModifierTotals()
 	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
 	{
 		m_paiImprovementFreeSpecialists[iI] = 0;
-	}
-
-	for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
-	{
-		m_paiStateReligionHappiness[iI] = 0;
 	}
 
 	for (int iI = GC.getNumUnitCombatInfos() - 1; iI > -1; iI--)

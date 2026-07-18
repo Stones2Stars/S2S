@@ -1276,7 +1276,8 @@ class WorldBuilder:
 			if bMove and pOldCity.isHolyCityByType(iReligion):
 				GAME.setHolyCity(iReligion, pNewCity, False)
 			pNewCity.changeReligionInfluence(iReligion, pOldCity.getReligionInfluence(iReligion) - pNewCity.getReligionInfluence(iReligion))
-			pNewCity.changeStateReligionHappiness(iReligion, pOldCity.getStateReligionHappiness(iReligion) - pNewCity.getStateReligionHappiness(iReligion))
+			# #430 cut: state-religion happiness is now recomputed from the new city's active buildings (cascade) --
+			# no manual per-religion transfer, and the changeStateReligionHappiness setter is gone.
 		for iCorporation in xrange(GC.getNumCorporationInfos()):
 			pNewCity.setHasCorporation(iCorporation, pOldCity.isHasCorporation(iCorporation), False, False)
 			if bMove and pOldCity.isHeadquartersByType(iCorporation):

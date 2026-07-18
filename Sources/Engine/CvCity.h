@@ -1116,8 +1116,7 @@ public:
 	void changeReligionInfluence(ReligionTypes eIndex, int iChange);
 
 	int getCurrentStateReligionHappiness() const;
-	int getStateReligionHappiness(ReligionTypes eIndex) const;
-	void changeStateReligionHappiness(ReligionTypes eIndex, int iChange);
+	int getStateReligionHappiness(ReligionTypes eIndex) const;   // #430 cut: cascade-computed (CascadeWellbeing::cityStateReligionHappiness)
 
 	int getUnitCombatFreeExperience(UnitCombatTypes eIndex) const;
 	void changeUnitCombatFreeExperience(UnitCombatTypes eIndex, int iChange);
@@ -1818,7 +1817,6 @@ protected:
 	int* m_paiFreeSpecialistCountUnattributed;
 	int* m_paiImprovementFreeSpecialists;
 	int* m_paiReligionInfluence;
-	int* m_paiStateReligionHappiness;
 	int* m_paiUnitCombatFreeExperience;
 
 	bool* m_pabWorkingPlot;

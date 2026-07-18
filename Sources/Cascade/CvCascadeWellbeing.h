@@ -70,6 +70,12 @@ public:
 	// m_i{State,NonState}ReligionHappiness): INITIAL + Σ adopted civics + Σ active traits (PURE-filtered). Human.
 	static int playerStateReligionHappiness(const CvPlayer& player);
 	static int playerNonStateReligionHappiness(const CvPlayer& player);
+	// The per-religion CITY building-sourced state-religion happiness (for the retired m_paiStateReligionHappiness):
+	// Σ over the city's ACTIVE buildings whose religion == eReligion of the building's stateReligionHappiness. Human
+	// (the building info getter is human; the member was human) -- keyed by an ARBITRARY religion (the civic what-if
+	// reads a non-state religion's slot), so NOT the ×100 verdict term (hap.iSrNet is the CURRENT state religion's
+	// building happiness, gathered live). eReligion is an int (ReligionTypes) -- NO_RELIGION returns 0.
+	static int cityStateReligionHappiness(const CvCity* pCity, int eReligion);
 	// The BUILDING tech-gated wellbeing net (for the retired m_iExtraBuilding{Happiness,Health}FromTech): the
 	// signed iTechGatedNet term (active buildings' TECH-gated happiness/health deposits). Human (÷100). Specialist
 	// tech-happiness is NOT here -- it rides the specialist bucket (hap.spec), per the owner "specialist is its own
