@@ -207,6 +207,9 @@ CvCity::m_aiRiverPlotYield                (int array)
 CvCity::m_aiBaseYieldPerPopRate           (int array)
 CvCity::m_aiCorporationYield              (int array)
 CvCity::m_aiExtraSpecialistYield          (int array)
+CvCity::m_aiReligionCommerce              (int array)
+CvCity::m_aiCorporationCommerce           (int array)
+CvCity::m_aiExtraSpecialistCommerce       (int array)
 ========================
 
 ========================

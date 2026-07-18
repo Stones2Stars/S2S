@@ -246,7 +246,6 @@ public:
 
 	void setCommerceDirty(CommerceTypes eIndex = NO_COMMERCE, bool bPlayerOnly = false);
 	void updateBuildingCommerce();
-	void updateReligionCommerce();
 	void updateCorporation();
 	void updateCitySight(bool bIncrement, bool bUpdatePlotGroups);
 	void updateTradeRoutes();

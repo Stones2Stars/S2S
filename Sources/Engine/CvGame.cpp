@@ -5850,7 +5850,6 @@ void CvGame::setHolyCity(ReligionTypes eIndex, const CvCity* pNewValue, bool bAn
 	if (pOldValue != NULL)
 	{
 		pOldValue->changeReligionInfluence(eIndex, -GC.getHOLY_CITY_INFLUENCE());
-		pOldValue->updateReligionCommerce();
 		pOldValue->setInfoDirty(true);
 	}
 
@@ -5860,7 +5859,6 @@ void CvGame::setHolyCity(ReligionTypes eIndex, const CvCity* pNewValue, bool bAn
 
 		pHolyCity->setHasReligion(eIndex, true, bAnnounce, true);
 		pHolyCity->changeReligionInfluence(eIndex, GC.getHOLY_CITY_INFLUENCE());
-		pHolyCity->updateReligionCommerce();
 		pHolyCity->setInfoDirty(true);
 
 		if (bAnnounce && isFinalInitialized() && !gDLL->GetWorldBuilderMode())

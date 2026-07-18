@@ -4227,10 +4227,7 @@ void CvPlayer::updateBuildingCommerce()
 }
 
 
-void CvPlayer::updateReligionCommerce()
-{
-	algo::for_each(cities(), CvCity::fn::updateReligionCommerce());
-}
+// #430 cut: updateReligionCommerce removed -- the per-city getReligionCommerce recomputes on read (no fan-out).
 
 
 void CvPlayer::updateCorporation()
@@ -9904,7 +9901,6 @@ void CvPlayer::changeNonStateReligionCommerce(int iNewValue)
 
 	if(iNewValue != 0)
 	{
-		updateReligionCommerce();
 		AI_makeAssignWorkDirty();
 	}
 }
@@ -11149,8 +11145,6 @@ void CvPlayer::changeStateReligionCount(int iChange, bool bLimited)
 
 		if (!bLimited)
 		{
-			updateReligionCommerce();
-
 			GC.getGame().AI_makeAssignWorkDirty();
 
 			exeSetUIDirty(Score_DIRTY_BIT, true);
@@ -12442,8 +12436,7 @@ void CvPlayer::setLastStateReligion(const ReligionTypes eNewReligion)
 		// #430 event spine: announce the state-religion switch (past the no-change guard, after the field commit).
 		emitStateReligionChanged(getID(), (int)eNewReligion);
 
-		updateReligionCommerce();   // #430 cut: religion happiness is a cascade term (playerReligionAcc)
-
+		// #430 cut: updateReligionCommerce removed (getReligionCommerce recomputes on read).
 		GC.getGame().updateSecretaryGeneral();
 		GC.getGame().AI_makeAssignWorkDirty();
 

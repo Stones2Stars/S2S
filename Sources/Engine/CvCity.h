@@ -887,7 +887,6 @@ public:
 
 	int getExtraSpecialistCommerceTotal(CommerceTypes eIndex) const;
 	int getExtraSpecialistCommerce(CommerceTypes eIndex, SpecialistTypes eSpecialist) const;
-	void updateExtraSpecialistCommerce(CommerceTypes eCommerce);
 	void updateExtraSpecialistCommerce();
 	void updateSpecialistCommerce(CommerceTypes eCommerce);   // fires the commerce-dirty trigger; getSpecialistCommerce recomputes on read (m_aiSpecialistCommerce100 removed, #430 sweep)
 	void updateSpecialistCommerce();
@@ -921,15 +920,12 @@ public:
 
 	int getReligionCommerce(CommerceTypes eIndex) const;
 	int getReligionCommerceByReligion(CommerceTypes eIndex, ReligionTypes eReligion) const;
-	void updateReligionCommerce(CommerceTypes eIndex);
-	void updateReligionCommerce();
 
 	int getCorporationCommerce(CommerceTypes eIndex) const;
 	int getCorporationCommerceByCorporation(CommerceTypes eIndex, CorporationTypes eCorporation) const;
 	int getCorporationYield(YieldTypes eIndex) const;
 	int getCorporationYieldByCorporation(YieldTypes eIndex, CorporationTypes eCorporation) const;
 	void updateCorporation();
-	void updateCorporationCommerce(CommerceTypes eIndex);
 	void updateCorporationBonus();
 
 	int getCommerceRateModifier(CommerceTypes eIndex) const;
@@ -1761,7 +1757,6 @@ protected:
 	int* m_aiPowerYieldRateModifier;
 	int* m_aiBonusYieldRateModifier;
 	int* m_aiTradeYield;
-	int* m_aiExtraSpecialistCommerce;
 	int* m_aiProductionToCommerceModifier;
 	int* m_aiBuildingCommerce;
 	// STREAMLINED 2026-06-28: getBuildingCommerce100 is now a RECOMPUTE-ONLY, dirty-flagged cache (the plot/specialist
@@ -1770,8 +1765,6 @@ protected:
 	// construct ⇒ rebuilt fresh on load. Kills the build-after-tech / build-after-bonus staleness uniformly with squirrelBanana.
 	mutable int* m_aiBuildingCommerce100;
 	mutable bool* m_abBuildingCommerce100Dirty;
-	int* m_aiReligionCommerce;
-	int* m_aiCorporationCommerce;
 	int* m_aiCommerceRateModifier;
 	int* m_aiCommerceHappinessPer;
 	int* m_commercePerPopFromBuildings;
@@ -2060,7 +2053,6 @@ public:
 		DECLARE_MAP_FUNCTOR(CvCity, void, clearCanTrainCache);
 		DECLARE_MAP_FUNCTOR(CvCity, void, checkReligiousDisablingAllBuildings);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateExtraSpecialistCommerce);
-		DECLARE_MAP_FUNCTOR(CvCity, void, updateReligionCommerce);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateBuildingCommerce);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateCorporation);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateYield);

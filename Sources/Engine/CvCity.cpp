@@ -72,13 +72,10 @@ CvCity::CvCity()
 	m_aiPowerYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiBonusYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiTradeYield = new int[NUM_YIELD_TYPES];
-	m_aiExtraSpecialistCommerce = new int[NUM_COMMERCE_TYPES];
 	m_aiProductionToCommerceModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiBuildingCommerce = new int[NUM_COMMERCE_TYPES];
 	m_aiBuildingCommerce100 = new int[NUM_COMMERCE_TYPES];
 	m_abBuildingCommerce100Dirty = new bool[NUM_COMMERCE_TYPES];
-	m_aiReligionCommerce = new int[NUM_COMMERCE_TYPES];
-	m_aiCorporationCommerce = new int[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiCommerceHappinessPer = new int[NUM_COMMERCE_TYPES];
 	m_commercePerPopFromBuildings = new int[NUM_COMMERCE_TYPES];
@@ -192,13 +189,10 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_aiBonusYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiTradeYield);
 
-	SAFE_DELETE_ARRAY(m_aiExtraSpecialistCommerce);
 	SAFE_DELETE_ARRAY(m_aiProductionToCommerceModifier);
 	SAFE_DELETE_ARRAY(m_aiBuildingCommerce);
 	SAFE_DELETE_ARRAY(m_aiBuildingCommerce100);
 	SAFE_DELETE_ARRAY(m_abBuildingCommerce100Dirty);
-	SAFE_DELETE_ARRAY(m_aiReligionCommerce);
-	SAFE_DELETE_ARRAY(m_aiCorporationCommerce);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifier);
 	SAFE_DELETE_ARRAY(m_aiCommerceHappinessPer);
 	SAFE_DELETE_ARRAY(m_commercePerPopFromBuildings);
@@ -644,15 +638,12 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		m_aiBuildingCommerce[iI] = 0;
 		m_aiBuildingCommerce100[iI] = 0;
 		m_abBuildingCommerce100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
-		m_aiReligionCommerce[iI] = 0;
-		m_aiCorporationCommerce[iI] = 0;
 		m_aiCommerceRateModifier[iI] = 0;
 		m_aiCommerceHappinessPer[iI] = 0;
 		m_commercePerPopFromBuildings[iI] = 0;
 		m_aiBonusCommerceRateModifier[iI] = 0;
 		m_aiBonusCommercePercentChanges[iI] = 0;
 		m_aiBuildingCommerceTechChange[iI] = 0;
-		m_aiExtraSpecialistCommerce[iI] = 0;
 		m_abCommerceRankValid[iI] = false;
 		m_aiCommerceRank[iI] = -1;
 	}
@@ -5112,10 +5103,7 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	if (!bReligiously && GC.getGame().isOption(GAMEOPTION_RELIGION_DISABLING))
 	{
 		checkReligiousDisabling(eBuilding, owner);
-		if (!isBulkBuildingProcessing())   // batched: the bracket end runs the pair once
-		{
-			updateReligionCommerce();   // #430 cut: religion happiness is a cascade term (religionWellbeing)
-		}
+		// #430 cut: updateReligionCommerce removed (getReligionCommerce recomputes from source on read).
 	}
 	setMaintenanceDirty(true);
 	setLayoutDirty(true);
@@ -11314,7 +11302,11 @@ int CvCity::getExtraSpecialistYield(YieldTypes eIndex, SpecialistTypes eSpeciali
 int CvCity::getExtraSpecialistCommerceTotal(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiExtraSpecialistCommerce[eIndex];
+	// #430: RECOMPUTE-FROM-SOURCE (m_aiExtraSpecialistCommerce accumulator cut) -- Σ per-specialist extra commerce.
+	int iCommerce = 0;
+	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+		iCommerce += getExtraSpecialistCommerce(eIndex, (SpecialistTypes)iI);
+	return iCommerce;
 }
 
 int CvCity::getExtraSpecialistCommerce(CommerceTypes eIndex, SpecialistTypes eSpecialist) const
@@ -11324,34 +11316,12 @@ int CvCity::getExtraSpecialistCommerce(CommerceTypes eIndex, SpecialistTypes eSp
 	return (specialistCount(eSpecialist) * (getLocalSpecialistExtraCommerce(eSpecialist, eIndex) + GET_PLAYER(getOwner()).getExtraSpecialistCommerce(eSpecialist, eIndex) + GET_PLAYER(getOwner()).getSpecialistExtraCommerce(eIndex)));
 }
 
-void CvCity::updateExtraSpecialistCommerce(CommerceTypes eCommerce)
-{
-	PROFILE_EXTRA_FUNC();
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eCommerce);
-
-	int iOldCommerce = getExtraSpecialistCommerceTotal(eCommerce);
-
-	int iNewCommerce = 0;
-
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		iNewCommerce += getExtraSpecialistCommerce(eCommerce, ((SpecialistTypes)iI));
-	}
-
-	if (iOldCommerce != iNewCommerce)
-	{
-		m_aiExtraSpecialistCommerce[eCommerce] = iNewCommerce;
-	}
-}
+// #430 cut: updateExtraSpecialistCommerce(CommerceTypes) removed -- getExtraSpecialistCommerceTotal recomputes on read.
 
 void CvCity::updateExtraSpecialistCommerce()
 {
 	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		updateExtraSpecialistCommerce((CommerceTypes)iI);
-	}
-	updateSpecialistCommerce();   // streamlined: keep the (intrinsic×pct) specialist-commerce cache fresh on the SAME events (specialist add/remove, load/recalc, player-wide) — replaces the stale incremental accumulator
+	updateSpecialistCommerce();   // keep the (intrinsic×pct) specialist-commerce cache fresh (the extra part now recomputes on read)
 
 	setCommerceDirty();
 
@@ -12012,7 +11982,11 @@ int CvCity::getAdditionalBaseCommerceRateBySpecialist(CommerceTypes eIndex, Spec
 int CvCity::getReligionCommerce(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex)
-	return m_aiReligionCommerce[eIndex];
+	// #430: RECOMPUTE-FROM-SOURCE (m_aiReligionCommerce accumulator cut) -- Σ present religions' per-religion commerce.
+	int iCommerce = 0;
+	for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
+		iCommerce += getReligionCommerceByReligion(eIndex, (ReligionTypes)iI);
+	return iCommerce;
 }
 
 
@@ -12041,35 +12015,7 @@ int CvCity::getReligionCommerceByReligion(CommerceTypes eIndex, ReligionTypes eR
 }
 
 
-// XXX can this be simplified???
-void CvCity::updateReligionCommerce(CommerceTypes eIndex)
-{
-	PROFILE_EXTRA_FUNC();
-	int iNewReligionCommerce = 0;
-
-	for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
-	{
-		iNewReligionCommerce += getReligionCommerceByReligion(eIndex, ((ReligionTypes)iI));
-	}
-
-	if (getReligionCommerce(eIndex) != iNewReligionCommerce)
-	{
-		m_aiReligionCommerce[eIndex] = iNewReligionCommerce;
-		FASSERT_NOT_NEGATIVE(getReligionCommerce(eIndex));
-
-		setCommerceDirty(eIndex);
-	}
-}
-
-
-void CvCity::updateReligionCommerce()
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		updateReligionCommerce((CommerceTypes)iI);
-	}
-}
+// #430 cut: updateReligionCommerce removed -- getReligionCommerce recomputes from source on read.
 
 
 int CvCity::getCorporationYield(YieldTypes eIndex) const
@@ -12086,7 +12032,11 @@ int CvCity::getCorporationYield(YieldTypes eIndex) const
 int CvCity::getCorporationCommerce(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiCorporationCommerce[eIndex];
+	// #430: RECOMPUTE-FROM-SOURCE (m_aiCorporationCommerce accumulator cut) -- Σ active corps' per-corp commerce.
+	int iCommerce = 0;
+	for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
+		iCommerce += getCorporationCommerceByCorporation(eIndex, (CorporationTypes)iI);
+	return iCommerce;
 }
 
 
@@ -12139,24 +12089,7 @@ int CvCity::getCorporationCommerceByCorporation(CommerceTypes eIndex, Corporatio
 	return (getModifiedIntValue(iCommerce, GET_TEAM(getTeam()).getCorporationRevenueModifier()) + 99) / 100;
 }
 
-void CvCity::updateCorporationCommerce(CommerceTypes eIndex)
-{
-	PROFILE_EXTRA_FUNC();
-	int iNewCommerce = 0;
-
-	for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
-	{
-		iNewCommerce += getCorporationCommerceByCorporation(eIndex, (CorporationTypes)iI);
-	}
-
-	if (getCorporationCommerce(eIndex) != iNewCommerce)
-	{
-		m_aiCorporationCommerce[eIndex] = iNewCommerce;
-		FASSERT_NOT_NEGATIVE(getCorporationCommerce(eIndex));
-
-		setCommerceDirty(eIndex);
-	}
-}
+// #430 cut: updateCorporationCommerce removed -- getCorporationCommerce recomputes from source on read.
 
 void CvCity::updateCorporation()
 {
@@ -12164,11 +12097,8 @@ void CvCity::updateCorporation()
 	updateCorporationBonus();
 	updateBuildingCommerce();
 
-	// #430: updateCorporationYield removed (getCorporationYield recomputes from source now).
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; ++iI)
-	{
-		updateCorporationCommerce((CommerceTypes)iI);
-	}
+	// #430: updateCorporationYield + updateCorporationCommerce removed -- getCorporationYield/getCorporationCommerce
+	// recompute from source on read.
 	setMaintenanceDirty(true);
 }
 
@@ -12978,10 +12908,7 @@ void CvCity::endBulkBuildingProcessing(bool bRunWholesale)
 		// the wholesale full-city recomputes processBuilding skipped per flip, run ONCE for the batch
 		// #430 cut: updateExtraBuilding{Happiness,Health} removed -- cascade terms (hap.extraB/hea.extraB)
 		updateBuildingCommerce();
-		if (GC.getGame().isOption(GAMEOPTION_RELIGION_DISABLING))
-		{
-			updateReligionCommerce();   // #430 cut: religion happiness is a cascade term (religionWellbeing)
-		}
+		// #430 cut: updateReligionCommerce removed (getReligionCommerce recomputes on read).
 	}
 }
 
@@ -14657,7 +14584,6 @@ void CvCity::checkReligiousDisablingAllBuildings()
 		checkReligiousDisabling((BuildingTypes)iJ, player);
 	}
 	setMaintenanceDirty(true);
-	updateReligionCommerce();   // #430 cut: religion happiness is a cascade term (religionWellbeing)
 }
 
 void CvCity::checkReligiousDisabling(const BuildingTypes eBuilding, const CvPlayer& player)
@@ -14725,7 +14651,6 @@ void CvCity::applyReligionModifiers(const ReligionTypes eIndex, const bool bValu
 		}
 	}
 	setMaintenanceDirty(true);
-	updateReligionCommerce();   // #430 cut: religion happiness is a cascade term (religionWellbeing)
 }
 
 void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce, bool bArrows)
@@ -16930,8 +16855,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerce);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiReligionCommerce);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCorporationCommerce);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceHappinessPer);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainFreeExperience);
@@ -17218,7 +17141,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		kChange.read(pStream);
 		m_aPropertySpawns.push_back(kChange);
 	}
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiExtraSpecialistCommerce);
 	for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
 	{
 		int	iI = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_SPECIALISTS, i, true);
@@ -17638,8 +17560,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerce);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiReligionCommerce);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCorporationCommerce);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceHappinessPer);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainFreeExperience);
@@ -17802,7 +17722,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	{
 		kPropertySpawn.write(pStream);
 	}
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiExtraSpecialistCommerce);
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
 		WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_ppaaiLocalSpecialistExtraCommerce[iI]);
@@ -21820,15 +21739,12 @@ void CvCity::clearModifierTotals()
 		m_aiBuildingCommerce[iI] = 0;
 		m_aiBuildingCommerce100[iI] = 0;
 		m_abBuildingCommerce100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
-		m_aiReligionCommerce[iI] = 0;
-		m_aiCorporationCommerce[iI] = 0;
 		m_aiCommerceRateModifier[iI] = 0;
 		m_aiCommerceHappinessPer[iI] = 0;
 		m_commercePerPopFromBuildings[iI] = 0;
 		m_aiBonusCommerceRateModifier[iI] = 0;
 		m_aiBonusCommercePercentChanges[iI] = 0;
 		m_aiBuildingCommerceTechChange[iI] = 0;
-		m_aiExtraSpecialistCommerce[iI] = 0;
 	}
 
 	for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
