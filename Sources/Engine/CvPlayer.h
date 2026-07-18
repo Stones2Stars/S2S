@@ -734,7 +734,6 @@ public:
 	void changeExtraHappiness(int iChange, bool bUnattributed = false);
 
 	int getBuildingHappiness() const;
-	void changeBuildingHappiness(int iChange);
 
 	int getLargestCityHappiness() const;
 	void changeLargestCityHappiness(int iChange, bool bLimited = false);
@@ -1897,7 +1896,6 @@ protected:
 	int m_iCivicHealth;
 	int m_iExtraHappiness;
 	int m_iExtraHappinessUnattributed;
-	int m_iBuildingHappiness;
 	int m_iLargestCityHappiness;
 	int m_iWarWearinessPercentAnger;
 	int m_iWarWearinessModifier;

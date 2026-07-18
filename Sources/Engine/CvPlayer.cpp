@@ -876,7 +876,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iCivicHealth = 0;
 	m_iExtraHappiness = 0;
 	m_iExtraHappinessUnattributed = 0;
-	m_iBuildingHappiness = 0;
 	m_iLargestCityHappiness = 0;
 	m_iWarWearinessPercentAnger = 0;
 	m_iWarWearinessModifier = 0;
@@ -7404,10 +7403,8 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		}
 	}
 
-	// #430: area/global building HEALTH now rides the cascade (playerAreaEmpire fold, read by
-	// CvArea/CvPlayer getBuildingGood/BadHealth); the retired accumulators are gone.
-	pArea->changeBuildingHappiness(getID(), (kBuilding.getAreaHappiness() * iChange));
-	changeBuildingHappiness(kBuilding.getGlobalHappiness() * iChange);
+	// #430: area/global building health + happiness now ride the cascade (playerAreaEmpire fold, read by
+	// CvArea/CvPlayer getBuildingGood/BadHealth + getBuildingHappiness); the retired accumulators are gone.
 	changeWorkerSpeedModifier(kBuilding.getWorkerSpeedModifier() * iChange);
 	changeSpaceProductionModifier(kBuilding.getGlobalSpaceProductionModifier() * iChange);
 	changeCityDefenseModifier(kBuilding.getAllCityDefenseModifier() * iChange);
@@ -10841,18 +10838,7 @@ void CvPlayer::changeExtraHappiness(int iChange, bool bUnattributed)
 
 int CvPlayer::getBuildingHappiness() const
 {
-	return m_iBuildingHappiness;
-}
-
-
-void CvPlayer::changeBuildingHappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingHappiness += iChange;
-
-		AI_makeAssignWorkDirty();
-	}
+	return CascadeWellbeing::buildingHappinessEmpire(*this);
 }
 
 
@@ -18371,7 +18357,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_iBuildingBadHealth, SAVE_VALUE_ANY);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappinessUnattributed);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingHappiness);
+		// #430: player global building-happiness rides the cascade (playerAreaEmpire fold); drain old tag. savemigration.txt.
+		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_iBuildingHappiness, SAVE_VALUE_ANY);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iLargestCityHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iWarWearinessPercentAnger);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iWarWearinessModifier);
@@ -19817,7 +19804,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivicHealth);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappinessUnattributed);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLargestCityHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWarWearinessPercentAnger);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWarWearinessModifier);
@@ -28223,7 +28209,6 @@ void CvPlayer::clearModifierTotals()
 	m_iExtraHealth = 0;
 	m_iCivicHealth = 0;
 	m_iExtraHappiness = 0;
-	m_iBuildingHappiness = 0;
 	m_iLargestCityHappiness = 0;
 	m_iWarWearinessModifier = 0;
 	m_iFreeSpecialist = 0;

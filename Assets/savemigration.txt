@@ -118,6 +118,18 @@ CvPlayer::m_iBuildingBadHealth           (int)
 ========================
 
 ========================
+2026-07-18 — #430 delete-driven legacy cut (area/player building-HAPPINESS rollups): the stored area (per-player)
+and empire building happiness accumulators (single signed) fully removed on both objects.
+CvArea::getBuildingHappiness and CvPlayer::getBuildingHappiness read the cascade playerAreaEmpire fold (happiness
+family, NET = iGood + iBad) via CascadeWellbeing::buildingHappinessArea / buildingHappinessEmpire; the changers and
+the processBuilding + CvPlot area/global-happiness feeders are gone. This COMPLETES the building wellbeing cluster
+(city health+happiness + area/player health + now area/player happiness — all on the cascade).
+
+CvArea::m_aiBuildingHappiness            (int array, MAX_PLAYERS)
+CvPlayer::m_iBuildingHappiness           (int)
+========================
+
+========================
 2026-07-02 — #430 capability cut (CvTeam): the empire-capability counters retired;
 the getters derive from CascadeCapabilities (the cascade union). Skips live in CvTeam::read.
 

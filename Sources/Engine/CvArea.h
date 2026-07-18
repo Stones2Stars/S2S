@@ -91,7 +91,6 @@ public:
 	int getBuildingBadHealth(PlayerTypes eIndex) const;
 
 	int getBuildingHappiness(PlayerTypes eIndex) const;
-	void changeBuildingHappiness(PlayerTypes eIndex, int iChange);
 
 	int getFreeSpecialist(PlayerTypes eIndex) const;
 	void changeFreeSpecialist(PlayerTypes eIndex, int iChange);
@@ -184,7 +183,6 @@ protected:
 	int* m_aiAnimalsPerPlayer;
 	int* m_aiCitiesPerPlayer;
 	int* m_aiPopulationPerPlayer;
-	int* m_aiBuildingHappiness;
 	int* m_aiFreeSpecialist;
 	int* m_aiPower;
 	int* m_aiBestFoundValue;

@@ -28,7 +28,6 @@ CvArea::CvArea()
 	m_aiAnimalsPerPlayer = new int[MAX_PLAYERS];
 	m_aiCitiesPerPlayer = new int[MAX_PLAYERS];
 	m_aiPopulationPerPlayer = new int[MAX_PLAYERS];
-	m_aiBuildingHappiness = new int[MAX_PLAYERS];
 	m_aiFreeSpecialist = new int[MAX_PLAYERS];
 	m_aiPower = new int[MAX_PLAYERS];
 	m_aiBestFoundValue = new int[MAX_PLAYERS];
@@ -80,7 +79,6 @@ CvArea::~CvArea()
 	SAFE_DELETE_ARRAY(m_aiAnimalsPerPlayer);
 	SAFE_DELETE_ARRAY(m_aiCitiesPerPlayer);
 	SAFE_DELETE_ARRAY(m_aiPopulationPerPlayer);
-	SAFE_DELETE_ARRAY(m_aiBuildingHappiness);
 	SAFE_DELETE_ARRAY(m_aiFreeSpecialist);
 	SAFE_DELETE_ARRAY(m_aiPower);
 	SAFE_DELETE_ARRAY(m_aiBestFoundValue);
@@ -133,7 +131,6 @@ void CvArea::reset(int iID, bool bWater, bool bConstructorCall)
 		m_aiAnimalsPerPlayer[iI] = 0;
 		m_aiCitiesPerPlayer[iI] = 0;
 		m_aiPopulationPerPlayer[iI] = 0;
-		m_aiBuildingHappiness[iI] = 0;
 		m_aiFreeSpecialist[iI] = 0;
 		m_aiPower[iI] = 0;
 		m_aiBestFoundValue[iI] = 0;
@@ -194,7 +191,6 @@ void CvArea::clearModifierTotals()
 	PROFILE_EXTRA_FUNC();
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
-		m_aiBuildingHappiness[iI] = 0;
 		m_aiFreeSpecialist[iI] = 0;
 		m_aiPower[iI] = 0;
 		m_aiMaintenanceModifier[iI] = 0;
@@ -239,10 +235,10 @@ void CvArea::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiAnimalsPerPlayer);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiCitiesPerPlayer);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPopulationPerPlayer);
-	// #430: area building-health rides the cascade (playerAreaEmpire fold); drain the old arrays. savemigration.txt.
+	// #430: area building health+happiness ride the cascade (playerAreaEmpire fold); drain the old arrays. savemigration.txt.
 	WRAPPER_SKIP_ELEMENT(wrapper, "CvArea", m_aiBuildingGoodHealth, SAVE_VALUE_TYPE_INT_ARRAY);
 	WRAPPER_SKIP_ELEMENT(wrapper, "CvArea", m_aiBuildingBadHealth, SAVE_VALUE_TYPE_INT_ARRAY);
-	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingHappiness);
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvArea", m_aiBuildingHappiness, SAVE_VALUE_TYPE_INT_ARRAY);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiFreeSpecialist);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPower);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBestFoundValue);
@@ -325,7 +321,6 @@ void CvArea::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiAnimalsPerPlayer);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiCitiesPerPlayer);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPopulationPerPlayer);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingHappiness);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiFreeSpecialist);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPower);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBestFoundValue);
@@ -666,20 +661,7 @@ int CvArea::getBuildingBadHealth(PlayerTypes eIndex) const
 int CvArea::getBuildingHappiness(PlayerTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-	return m_aiBuildingHappiness[eIndex];
-}
-
-
-void CvArea::changeBuildingHappiness(PlayerTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiBuildingHappiness[eIndex] += iChange;
-
-		GET_PLAYER(eIndex).AI_makeAssignWorkDirty();
-	}
+	return CascadeWellbeing::buildingHappinessArea(GET_PLAYER(eIndex), getID());
 }
 
 

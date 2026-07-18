@@ -54,6 +54,10 @@ public:
 	// CvArea/CvPlayer m_iBuildingGood/BadHealth accumulators. iBad is negative (WbSplit convention).
 	static void buildingHealthArea(const CvPlayer& player, int iAreaId, int& iGood, int& iBad);
 	static void buildingHealthEmpire(const CvPlayer& player, int& iGood, int& iBad);
+	// The AREA/EMPIRE building-HAPPINESS rollups (happiness family). Returns the NET signed value (iGood + iBad)
+	// -- the legacy CvArea/CvPlayer getBuildingHappiness is a single signed accumulator, split at read.
+	static int buildingHappinessArea(const CvPlayer& player, int iAreaId);
+	static int buildingHappinessEmpire(const CvPlayer& player);
 
 	// The PLAYER-scope area/empire building fold maps (famSeg -> areaId -> split; famSeg -> empire split)
 	// + the building-KEYED ledger (famSeg -> targetFk -> Σ flats: the Royal-Tomb class, a BUILDING granting
