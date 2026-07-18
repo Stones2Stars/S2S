@@ -46,6 +46,10 @@ public:
 	// path). Lets getBonus*/getBuilding* stand on the cascade instead of the retired stored accumulators.
 	// iGood = Σ positive contributions, iBad = Σ negative contributions (the WbSplit convention == the legacy split).
 	static void bonusWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad);
+	// The CITY-scope building term (hap.bld/hea.bld): active buildings' city flat/perPop deposits + the
+	// per-building event ledger (getBuildingHappy/HealthChange). The area/empire building rollups are the
+	// SEPARATE playerAreaEmpire fold (CvArea/CvPlayer getters), not this term.
+	static void buildingWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad);
 
 	// The PLAYER-scope area/empire building fold maps (famSeg -> areaId -> split; famSeg -> empire split)
 	// + the building-KEYED ledger (famSeg -> targetFk -> Σ flats: the Royal-Tomb class, a BUILDING granting

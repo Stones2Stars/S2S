@@ -86,6 +86,23 @@ CvPlayer::m_abCommerceDirty              (bool array, NUM_COMMERCE_TYPES)
 ========================
 
 ========================
+2026-07-18 — #430 delete-driven legacy cut (city building wellbeing accumulators): the stored city-scope building
+good/bad health + happiness accumulators fully removed. getBuildingGood/BadHealth and getBuildingGood/BadHappiness
+now read the cascade CITY building term (CascadeWellbeing::buildingWellbeing → hea.bld/hap.bld, which already folds
+the per-building event ledger getBuildingHealth/HappyChange); the happiness getters keep the live
+calculatePopulationHappiness fold. The processBuilding accumulation + the changeBuildingGood/Bad* changers are gone;
+setBuildingHappy/HealthChange keep the per-building ledger (m_aBuildingHappy/HealthChange, read by the cascade term)
+and the AI_setAssignWorkDirty governor dirty, dropping only the retired accumulator fold. The stored accumulators
+carried the modifier.md par.2b drift. NOTE: the area/player building-health rollups (CvArea/CvPlayer
+m_iBuildingGood/BadHealth) are a SEPARATE follow-on cut (playerAreaEmpire fold), not this entry.
+
+CvCity::m_iBuildingGoodHealth            (int)
+CvCity::m_iBuildingBadHealth             (int)
+CvCity::m_iBuildingGoodHappiness         (int)
+CvCity::m_iBuildingBadHappiness          (int)
+========================
+
+========================
 2026-07-02 — #430 capability cut (CvTeam): the empire-capability counters retired;
 the getters derive from CascadeCapabilities (the cascade union). Skips live in CvTeam::read.
 

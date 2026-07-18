@@ -660,6 +660,20 @@ void CascadeWellbeing::bonusWellbeing(const CvCity* pCity, int& iHapGood, int& i
 	iHeaBad  = hea.bonus.iBad;
 }
 
+// The CITY building term (hap.bld/hea.bld) for the retired m_iBuildingGood/Bad{Happiness,Health} accumulators.
+// Same live-gather shape as bonusWellbeing; the term already folds the event ledger (getBuildingHappy/HealthChange).
+void CascadeWellbeing::buildingWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad)
+{
+	CvCascadeEvalCtx ec;
+	CascadeWbTerms hap, hea;
+	int aiPer[NUM_COMMERCE_TYPES];
+	gatherCityTerms(pCity, ec, hap, hea, aiPer);
+	iHapGood = hap.bld.iGood;
+	iHapBad  = hap.bld.iBad;
+	iHeaGood = hea.bld.iGood;
+	iHeaBad  = hea.bld.iBad;
+}
+
 // The /computed decomposition recompute: fresh city gather + fresh player area/empire walk + the ONE assembly.
 CascadeWellbeingVerdicts CascadeWellbeing::compute(const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {

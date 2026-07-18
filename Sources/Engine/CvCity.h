@@ -595,8 +595,6 @@ public:
 	int getBuildingHealth(BuildingTypes eType) const;
 	int getBuildingGoodHealth(BuildingTypes eType) const;
 	int getBuildingBadHealth(BuildingTypes eType) const;
-	void changeBuildingGoodHealth(int iChange);
-	void changeBuildingBadHealth(int iChange);
 
 	int getBonusGoodHealth() const;
 	int getBonusBadHealth() const;
@@ -608,8 +606,6 @@ public:
 	int getBuildingGoodHappiness() const;
 	int getBuildingBadHappiness() const;
 	int getBuildingHappiness(BuildingTypes eType) const;
-	void changeBuildingGoodHappiness(int iChange);
-	void changeBuildingBadHappiness(int iChange);
 
 	int getExtraBuildingGoodHappiness() const;
 	int getExtraBuildingBadHappiness() const;
@@ -1623,8 +1619,6 @@ protected:
 	int m_iFreshWaterGoodHealth;
 	int m_iFeatureGoodHealth;
 	int m_iFeatureBadHealth;
-	int m_iBuildingGoodHealth;
-	int m_iBuildingBadHealth;
 	int m_iHurryAngerTimer;
 	int m_iRevRequestAngerTimer;
 	int m_iRevSuccessTimer;
@@ -1632,8 +1626,6 @@ protected:
 	int m_iDefyResolutionAngerTimer;
 	int m_iHappinessTimer;
 	int m_iMilitaryHappinessUnits;
-	int m_iBuildingGoodHappiness;
-	int m_iBuildingBadHappiness;
 	int m_iExtraBuildingGoodHappiness;
 	int m_iExtraBuildingBadHappiness;
 	int m_iExtraBuildingGoodHealth;

@@ -529,8 +529,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iFreshWaterGoodHealth = 0;
 	m_iFeatureGoodHealth = 0;
 	m_iFeatureBadHealth = 0;
-	m_iBuildingGoodHealth = 0;
-	m_iBuildingBadHealth = 0;
 	m_iHurryAngerTimer = 0;
 	m_iRevRequestAngerTimer = 0;
 	m_iRevSuccessTimer = 0;
@@ -538,8 +536,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iDefyResolutionAngerTimer = 0;
 	m_iHappinessTimer = 0;
 	m_iMilitaryHappinessUnits = 0;
-	m_iBuildingGoodHappiness = 0;
-	m_iBuildingBadHappiness = 0;
 	m_iExtraBuildingGoodHappiness = 0;
 	m_iExtraBuildingBadHappiness = 0;
 	m_iExtraBuildingGoodHealth = 0;
@@ -4730,19 +4726,8 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		changeHealRate(kBuilding.getHealRateChange() * iChange);
 		changeQuarantinedCount(kBuilding.isQuarantine() ? iChange : 0);
 
-		if (kBuilding.getHealth() > 0)
-		{
-			changeBuildingGoodHealth(kBuilding.getHealth() * iChange);
-		}
-		else changeBuildingBadHealth(kBuilding.getHealth() * iChange);
-
-
-		if (kBuilding.getHappiness() > 0)
-		{
-			changeBuildingGoodHappiness(kBuilding.getHappiness() * iChange);
-		}
-		else changeBuildingBadHappiness(kBuilding.getHappiness() * iChange);
-
+		// #430: building health/happiness now rides the cascade (CascadeWellbeing bld term, read by
+		// getBuildingGood/BadHealth/Happiness); the retired m_iBuildingGood/Bad* accumulators are gone.
 
 		if (kBuilding.getReligionType() != NO_RELIGION)
 		{
@@ -8402,12 +8387,12 @@ int CvCity::getAdditionalStarvation(int iSpoiledFood, int iFoodAdjust) const
 
 int CvCity::getBuildingGoodHealth() const
 {
-	return m_iBuildingGoodHealth;
+	int hg, hb, eg, eb; CascadeWellbeing::buildingWellbeing(this, hg, hb, eg, eb); return eg;
 }
 
 int CvCity::getBuildingBadHealth() const
 {
-	return m_iBuildingBadHealth;
+	int hg, hb, eg, eb; CascadeWellbeing::buildingWellbeing(this, hg, hb, eg, eb); return eb;
 }
 
 int CvCity::getBuildingHealth(BuildingTypes eBuilding) const
@@ -8446,39 +8431,6 @@ int CvCity::getBuildingBadHealth(BuildingTypes eBuilding) const
 
 	return iHealth;
 }
-
-void CvCity::changeBuildingGoodHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingGoodHealth += iChange;
-		FASSERT_NOT_NEGATIVE(getBuildingGoodHealth());
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
-void CvCity::changeBuildingBadHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingBadHealth += iChange;
-		FAssert(getBuildingBadHealth() <= 0);
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
 
 int CvCity::getBonusGoodHealth() const
 {
@@ -8521,13 +8473,15 @@ void CvCity::changeMilitaryHappinessUnits(int iChange)
 
 int CvCity::getBuildingGoodHappiness() const
 {
-	return m_iBuildingGoodHappiness + std::max(0, calculatePopulationHappiness());
+	int hg, hb, eg, eb; CascadeWellbeing::buildingWellbeing(this, hg, hb, eg, eb);
+	return hg + std::max(0, calculatePopulationHappiness());
 }
 
 
 int CvCity::getBuildingBadHappiness() const
 {
-	return m_iBuildingBadHappiness + std::min(0, calculatePopulationHappiness());
+	int hg, hb, eg, eb; CascadeWellbeing::buildingWellbeing(this, hg, hb, eg, eb);
+	return hb + std::min(0, calculatePopulationHappiness());
 }
 
 
@@ -8557,30 +8511,6 @@ int CvCity::getBuildingHappiness(BuildingTypes eBuilding) const
 	}
 
 	return iHappiness;
-}
-
-
-void CvCity::changeBuildingGoodHappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingGoodHappiness += iChange;
-		FASSERT_NOT_NEGATIVE(getBuildingGoodHappiness());
-
-		AI_setAssignWorkDirty(true);
-	}
-}
-
-
-void CvCity::changeBuildingBadHappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iBuildingBadHappiness += iChange;
-		FAssert(getBuildingBadHappiness() <= 0);
-
-		AI_setAssignWorkDirty(true);
-	}
 }
 
 
@@ -17530,8 +17460,10 @@ void CvCity::readBody(FDataStreamBase* pStream)
 
 	WRAPPER_READ(wrapper, "CvCity", &m_iFeatureGoodHealth);
 	WRAPPER_READ(wrapper, "CvCity", &m_iFeatureBadHealth);
-	WRAPPER_READ(wrapper, "CvCity", &m_iBuildingGoodHealth);
-	WRAPPER_READ(wrapper, "CvCity", &m_iBuildingBadHealth);
+	// #430: building health/happiness ride the cascade (CascadeWellbeing bld term); the retired accumulators
+	// are drained from old saves. Ledgered in savemigration.txt.
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBuildingGoodHealth, SAVE_VALUE_ANY);
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBuildingBadHealth, SAVE_VALUE_ANY);
 
 	// #430 no-serialized-caches: the bonus-fed derived cluster is NOT read from the save -- the load-end
 	// network fold rebuilds it exactly from present state. Still WRITTEN for save-format compat.
@@ -17544,8 +17476,8 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iDefyResolutionAngerTimer);
 	WRAPPER_READ(wrapper, "CvCity", &m_iHappinessTimer);
 	WRAPPER_READ(wrapper, "CvCity", &m_iMilitaryHappinessUnits);
-	WRAPPER_READ(wrapper, "CvCity", &m_iBuildingGoodHappiness);
-	WRAPPER_READ(wrapper, "CvCity", &m_iBuildingBadHappiness);
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBuildingGoodHappiness, SAVE_VALUE_ANY);
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBuildingBadHappiness, SAVE_VALUE_ANY);
 	WRAPPER_READ(wrapper, "CvCity", &m_iExtraBuildingGoodHappiness);
 	WRAPPER_READ(wrapper, "CvCity", &m_iExtraBuildingBadHappiness);
 	WRAPPER_READ(wrapper, "CvCity", &m_iExtraBuildingGoodHealth);
@@ -18302,8 +18234,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iFreshWaterGoodHealth);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iFeatureGoodHealth);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iFeatureBadHealth);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iBuildingGoodHealth);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iBuildingBadHealth);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iHurryAngerTimer);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iRevRequestAngerTimer);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iRevSuccessTimer);
@@ -18311,8 +18241,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iDefyResolutionAngerTimer);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iHappinessTimer);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iMilitaryHappinessUnits);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iBuildingGoodHappiness);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iBuildingBadHappiness);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraBuildingGoodHappiness);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraBuildingBadHappiness);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraBuildingGoodHealth);
@@ -19855,27 +19783,13 @@ void CvCity::setBuildingHappyChange(BuildingTypes eBuilding, int iChange)
 
 				if (hasFullyActiveBuilding(eBuilding))
 				{
-					if (iOldChange > 0)
-					{
-						changeBuildingGoodHappiness(-iOldChange);
-					}
-					else if (iOldChange < 0)
-					{
-						changeBuildingBadHappiness(-iOldChange);
-					}
-
+					// #430: the per-building ledger is kept (the cascade bld term reads it via
+					// getBuildingHappyChange); the retired m_iBuildingGood/BadHappiness fold is gone.
 					if (iChange != 0)
 					{
 						m_aBuildingHappyChange.push_back(std::make_pair(eBuilding, iChange));
-						if (iChange > 0)
-						{
-							changeBuildingGoodHappiness(iChange);
-						}
-						else if (iChange < 0)
-						{
-							changeBuildingBadHappiness(iChange);
-						}
 					}
+					AI_setAssignWorkDirty(true);
 				}
 			}
 			return;
@@ -19885,15 +19799,7 @@ void CvCity::setBuildingHappyChange(BuildingTypes eBuilding, int iChange)
 	if (0 != iChange && hasFullyActiveBuilding(eBuilding))
 	{
 		m_aBuildingHappyChange.push_back(std::make_pair(eBuilding, iChange));
-
-		if (iChange > 0)
-		{
-			changeBuildingGoodHappiness(iChange);
-		}
-		else if (iChange < 0)
-		{
-			changeBuildingBadHappiness(iChange);
-		}
+		AI_setAssignWorkDirty(true);
 	}
 }
 
@@ -19927,27 +19833,13 @@ void CvCity::setBuildingHealthChange(BuildingTypes eBuilding, int iChange)
 
 				if (hasFullyActiveBuilding(eBuilding))
 				{
-					if (iOldChange > 0)
-					{
-						changeBuildingGoodHealth(-iOldChange);
-					}
-					else if (iOldChange < 0)
-					{
-						changeBuildingBadHealth(-iOldChange);
-					}
-
+					// #430: the per-building ledger is kept (the cascade bld term reads it via
+					// getBuildingHealthChange); the retired m_iBuildingGood/BadHealth fold is gone.
 					if (iChange != 0)
 					{
 						m_aBuildingHealthChange.push_back(std::make_pair(eBuilding, iChange));
-						if (iChange > 0)
-						{
-							changeBuildingGoodHealth(iChange);
-						}
-						else if (iChange < 0)
-						{
-							changeBuildingBadHealth(iChange);
-						}
 					}
+					AI_setAssignWorkDirty(true);
 				}
 			}
 			return;
@@ -19957,15 +19849,7 @@ void CvCity::setBuildingHealthChange(BuildingTypes eBuilding, int iChange)
 	if (0 != iChange && hasFullyActiveBuilding(eBuilding))
 	{
 		m_aBuildingHealthChange.push_back(std::make_pair(eBuilding, iChange));
-
-		if (iChange > 0)
-		{
-			changeBuildingGoodHealth(iChange);
-		}
-		else if (iChange < 0)
-		{
-			changeBuildingBadHealth(iChange);
-		}
+		AI_setAssignWorkDirty(true);
 	}
 }
 
@@ -22588,10 +22472,6 @@ void CvCity::clearModifierTotals()
 	m_iWarWearinessModifier = 0;
 	m_iHurryAngerModifier = 0;
 	m_iHealRate = 0;
-	m_iBuildingGoodHealth = 0;
-	m_iBuildingBadHealth = 0;
-	m_iBuildingGoodHappiness = 0;
-	m_iBuildingBadHappiness = 0;
 	m_iExtraBuildingGoodHappiness = 0;
 	m_iExtraBuildingBadHappiness = 0;
 	m_iExtraBuildingGoodHealth = 0;
