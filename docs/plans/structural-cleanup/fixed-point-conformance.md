@@ -135,6 +135,26 @@ each channel's `MMKernel` gather moves off the truncating `sumUnit` onto `sumUni
 > cascade-only rates load sane. This unblocks the 11-member accumulator cut below (the accumulators fed only the now-
 > deleted legacy rate chain + the decomposition getters).
 
+> **⛔ CvCity yield/commerce cluster — CUT (owner ruling "cut now, expose the break"), two mechanisms per member.**
+> Unlike the wellbeing pilot (pure decomposition), these fed the legacy SUB-COMPONENT getters (`getBaseYieldRate`/
+> `getSpecialistYieldTotal`/`getBuildingCommerce100`/…) that AI/UI/tax read directly, with no cascade sub-component
+> accessor. The 10 cut members split by whether a per-source recompute already exists:
+> - **RECOMPUTE-FROM-SOURCE** (a `get<X>By<Y>` helper exists → the getter sums it on read; state-repositories
+>   "incremental ledger → recompute-from-source"): `getCorporationYield`/`getCorporationCommerce` (per-corp),
+>   `getReligionCommerce` (per-religion), `getExtraSpecialistYield`/`getExtraSpecialistCommerceTotal` (per-specialist),
+>   `getBuildingCommerce` (per-building). The serialized accumulators + their `update*` maintainers + the CvPlayer
+>   fan-outs (`updateExtraSpecialistYield`/`updateReligionCommerce`) are deleted; getters recompute cold-path.
+> - **EXPOSE (stub 0)** where the value is DEAD decomposition — the cascade rate computes it fresh and no live
+>   consumer needs the legacy term: `getRiverPlotYield` (building `HAS_RIVER` `plots` deposit), the per-pop base yield
+>   (`getExtraYield100` drops the term), `getBuildingCommerceTechChange`/`getCommercePerPopFromBuildings`
+>   (`getBuildingCommerce100` sums the TEAM per-building tech-commerce + building `getCommercePerPopChange` fresh).
+> - **`m_aiTradeYield` is HELD** — NOT an accumulator cut: it is the **isolated trade-route input package** the cascade
+>   FOLDS (`CvCascadeYieldBasePackages` reads `getTradeYield`), the one sanctioned live-yield input ([modifier.md §2a](../../specs/modifier.md)),
+>   outside the cascade's derivation scope. The cascade does NOT read any other legacy sub-component getter (verified).
+> - **The `setCommerceDirty` coupling:** `getBuildingCommerce100` is a KEPT recompute cache; its dirty trigger rode the
+>   deleted `updateBuildingCommerce`/`change*` maintainers. `updateBuildingCommerce` is retained as PURELY that trigger
+>   (`setCommerceDirty(NO_COMMERCE)`), and the tech-commerce apply in `CvTeam::setHasTech` becomes a `setCommerceDirty`.
+
 ### Carve-outs — NOT an accumulator cut (do not touch)
 
 - **Event/vote-grant persisted stores** — genuine one-shot non-derivable state: `m_aBuildingCommerceChangeEvents`,
