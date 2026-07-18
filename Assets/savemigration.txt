@@ -206,6 +206,7 @@ it is the isolated trade-route input package the cascade folds (modifier.md par.
 CvCity::m_aiRiverPlotYield                (int array)
 CvCity::m_aiBaseYieldPerPopRate           (int array)
 CvCity::m_aiCorporationYield              (int array)
+CvCity::m_aiExtraSpecialistYield          (int array)
 ========================
 
 ========================

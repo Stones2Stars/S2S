@@ -884,8 +884,6 @@ public:
 
 	int getExtraSpecialistYield(YieldTypes eIndex) const;
 	int getExtraSpecialistYield(YieldTypes eIndex, SpecialistTypes eSpecialist) const;
-	void updateExtraSpecialistYield(YieldTypes eYield);
-	void updateExtraSpecialistYield();
 
 	int getExtraSpecialistCommerceTotal(CommerceTypes eIndex) const;
 	int getExtraSpecialistCommerce(CommerceTypes eIndex, SpecialistTypes eSpecialist) const;
@@ -1763,7 +1761,6 @@ protected:
 	int* m_aiPowerYieldRateModifier;
 	int* m_aiBonusYieldRateModifier;
 	int* m_aiTradeYield;
-	int* m_aiExtraSpecialistYield;
 	int* m_aiExtraSpecialistCommerce;
 	int* m_aiProductionToCommerceModifier;
 	int* m_aiBuildingCommerce;
@@ -2062,7 +2059,6 @@ public:
 		DECLARE_MAP_FUNCTOR(CvCity, void, doTurn);
 		DECLARE_MAP_FUNCTOR(CvCity, void, clearCanTrainCache);
 		DECLARE_MAP_FUNCTOR(CvCity, void, checkReligiousDisablingAllBuildings);
-		DECLARE_MAP_FUNCTOR(CvCity, void, updateExtraSpecialistYield);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateExtraSpecialistCommerce);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateReligionCommerce);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateBuildingCommerce);

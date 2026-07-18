@@ -4200,11 +4200,8 @@ void CvPlayer::updateYield()
 
 // #430 accumulator cut: updateReligionHappiness deleted -- religion happiness is a cascade term (no per-city rebuild).
 
-void CvPlayer::updateExtraSpecialistYield()
-{
-	algo::for_each(cities(), CvCity::fn::updateExtraSpecialistYield());
-}
-
+// #430 cut: updateExtraSpecialistYield removed -- the per-city getSpecialistYieldTotal/getExtraSpecialistYield
+// recompute on read, so no player-wide fan-out rebuild is needed.
 
 void CvPlayer::setCommerceDirty(CommerceTypes eIndex, bool bPlayerOnly)
 {
@@ -7461,7 +7458,6 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	// building flip can satisfy/unsatisfy those conditions, so mark + fire the triggers the old changers fired.
 	m_specialistExtraYield.markDirty();
 	m_specialistExtraCommerce.markDirty();
-	updateExtraSpecialistYield();
 	updateExtraSpecialistCommerce();
 	AI_makeAssignWorkDirty();
 	//TB Building tags
@@ -27940,14 +27936,8 @@ void CvPlayer::changeSpecialistYieldPercentChanges(SpecialistTypes eIndex1, Yiel
 	{
 		m_ppiSpecialistYieldPercentChanges[eIndex1][eIndex2] += iChange;
 
-		// STREAMLINED 2026-06-28: recompute the specialist-yield total cleanly per city (plot-cache pattern) rather than
-		// the stale incremental specialistCount×Δpct/100 delta (count frozen at civic-change time → drift on later
-		// reassignment). updateExtraSpecialistYield rebuilds intrinsic(current count×pct) + extra for that yield. Uniform
-		// with the commerce pct-change path (changeSpecialistCommercePercentChanges).
-		foreach_(CvCity* pLoopCity, cities())
-		{
-			pLoopCity->updateExtraSpecialistYield(eIndex2);
-		}
+		// #430: the per-city specialist-yield total recomputes on read (getSpecialistYieldTotal/getExtraSpecialistYield),
+		// so no per-city update is needed on a specialist-yield-percent change.
 	}
 }
 
@@ -28570,7 +28560,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	// + fire the triggers the old changers fired.
 	m_specialistExtraYield.markDirty();
 	m_specialistExtraCommerce.markDirty();
-	updateExtraSpecialistYield();
 	updateExtraSpecialistCommerce();
 	AI_makeAssignWorkDirty();
 

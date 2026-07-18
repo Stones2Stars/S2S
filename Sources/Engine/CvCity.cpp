@@ -72,7 +72,6 @@ CvCity::CvCity()
 	m_aiPowerYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiBonusYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiTradeYield = new int[NUM_YIELD_TYPES];
-	m_aiExtraSpecialistYield = new int[NUM_YIELD_TYPES];
 	m_aiExtraSpecialistCommerce = new int[NUM_COMMERCE_TYPES];
 	m_aiProductionToCommerceModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiBuildingCommerce = new int[NUM_COMMERCE_TYPES];
@@ -192,7 +191,6 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_aiPowerYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiBonusYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiTradeYield);
-	SAFE_DELETE_ARRAY(m_aiExtraSpecialistYield);
 
 	SAFE_DELETE_ARRAY(m_aiExtraSpecialistCommerce);
 	SAFE_DELETE_ARRAY(m_aiProductionToCommerceModifier);
@@ -634,7 +632,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		m_aiPowerYieldRateModifier[iI] = 0;
 		m_aiBonusYieldRateModifier[iI] = 0;
 		m_aiTradeYield[iI] = 0;
-		m_aiExtraSpecialistYield[iI] = 0;
 		m_abBaseYieldRankValid[iI] = false;
 		m_abYieldRankValid[iI] = false;
 		m_aiBaseYieldRank[iI] = -1;
@@ -5167,7 +5164,6 @@ void CvCity::processSpecialist(SpecialistTypes eSpecialist, int iChange)
 	}
 	else
 	{
-		updateExtraSpecialistYield();
 		updateExtraSpecialistCommerce();   // ALSO recomputes the specialist-commerce cache (updateSpecialistCommerce, streamlined)
 	}
 
@@ -10899,7 +10895,7 @@ int CvCity::getSpecialistYieldTotal(YieldTypes eYield) const
 			iIntrinsic100 += iCount * iYieldChange * (100 + kPlayer.getSpecialistYieldPercentChanges((SpecialistTypes)iI, eYield));
 		}
 	}
-	return iIntrinsic100 / 100 + m_aiExtraSpecialistYield[eYield];
+	return iIntrinsic100 / 100 + getExtraSpecialistYield(eYield);   // #430: extra now recomputes from source
 }
 
 void CvCity::changeSpecialistYieldTotal(YieldTypes eYield, int iChange)
@@ -11289,7 +11285,12 @@ int CvCity::calculateTotalTradeYield(YieldTypes eIndex, PlayerTypes eWithPlayer,
 int CvCity::getExtraSpecialistYield(YieldTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	return m_aiExtraSpecialistYield[eIndex];
+	// #430: RECOMPUTE-FROM-SOURCE -- the serialized m_aiExtraSpecialistYield accumulator is cut; Σ per-specialist
+	// extra yield (local + player per-type + player all), matching the retired updateExtraSpecialistYield recompute.
+	int iExtra = 0;
+	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+		iExtra += getExtraSpecialistYield(eIndex, (SpecialistTypes)iI);
+	return iExtra;
 }
 
 
@@ -11308,32 +11309,7 @@ int CvCity::getExtraSpecialistYield(YieldTypes eIndex, SpecialistTypes eSpeciali
 }
 
 
-void CvCity::updateExtraSpecialistYield(YieldTypes eYield)
-{
-	PROFILE_EXTRA_FUNC();
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eYield);
-
-	int iNewExtra = 0;
-	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
-	{
-		iNewExtra += getExtraSpecialistYield(eYield, (SpecialistTypes)iI);
-	}
-	m_aiExtraSpecialistYield[eYield] = iNewExtra;
-	// m_aiSpecialistYieldTotal was a dead serialized cache -- getSpecialistYieldTotal recomputes on read and the #430
-	// cascade owns the value. The extra-specialist-yield refresh still fires the yield trigger so dependent caches
-	// invalidate (getSpecialistYieldTotal reads m_aiExtraSpecialistYield, updated just above).
-	onYieldChange();
-}
-
-
-void CvCity::updateExtraSpecialistYield()
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-	{
-		updateExtraSpecialistYield((YieldTypes)iI);
-	}
-}
+// #430 cut: updateExtraSpecialistYield removed -- getExtraSpecialistYield/getSpecialistYieldTotal recompute on read.
 
 int CvCity::getExtraSpecialistCommerceTotal(CommerceTypes eIndex) const
 {
@@ -13037,8 +13013,7 @@ void CvCity::endCitizenJuggling()
 
 	if (m_bJuggleDeferredSpec)
 	{
-		// the three whole-set recomputes processSpecialist skipped per probe, run ONCE for the run
-		updateExtraSpecialistYield();
+		// the whole-set recomputes processSpecialist skipped per probe, run ONCE for the run
 		updateExtraSpecialistCommerce();
 		CascadeAccumulator::dirtyCity(this, CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC);
 		// the NET specialist deltas announce (converged probes cancel to nothing)
@@ -16953,7 +16928,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiPowerYieldRateModifier);
 	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_aiBonusYieldRateModifier, SAVE_VALUE_TYPE_INT_ARRAY);   // rebuilt by the load fold
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiExtraSpecialistYield);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerce);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiReligionCommerce);
@@ -17662,7 +17636,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiPowerYieldRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiBonusYieldRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiExtraSpecialistYield);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBuildingCommerce);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiReligionCommerce);
@@ -21835,7 +21808,6 @@ void CvCity::clearModifierTotals()
 		m_aiPowerYieldRateModifier[iI] = 0;
 		m_aiBonusYieldRateModifier[iI] = 0;
 		m_aiTradeYield[iI] = 0;
-		m_aiExtraSpecialistYield[iI] = 0;
 		m_aiBuildingBonusVicinityYield100[iI] = 0;
 		m_aiBuildingExtraYield100Cache[iI] = 0;
 		m_abBuildingExtraYield100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
@@ -22557,7 +22529,7 @@ void CvCity::changeLocalSpecialistExtraYield(SpecialistTypes eSpecialist, YieldT
 	{
 		m_ppaaiLocalSpecialistExtraYield[eSpecialist][eYield] += iChange;
 	}
-	updateExtraSpecialistYield();
+	// #430: updateExtraSpecialistYield removed (getExtraSpecialistYield recomputes on read).
 	AI_setAssignWorkDirty(true);
 }
 

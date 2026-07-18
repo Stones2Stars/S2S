@@ -244,7 +244,6 @@ public:
 	void updateMaintenance() const;
 	void setMaintenanceDirty(const bool bDirty, const bool bCities = true) const;
 
-	void updateExtraSpecialistYield();
 	void setCommerceDirty(CommerceTypes eIndex = NO_COMMERCE, bool bPlayerOnly = false);
 	void updateBuildingCommerce();
 	void updateReligionCommerce();
