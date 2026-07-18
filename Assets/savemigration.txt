@@ -130,6 +130,21 @@ CvPlayer::m_iBuildingHappiness           (int)
 ========================
 
 ========================
+2026-07-18 — #430 delete-driven legacy cut (feature wellbeing accumulators): the stored city feature good/bad
+health + happiness accumulators fully removed. getFeatureGood/BadHealth reads the cascade featSubstrate term;
+getFeatureGood/BadHappiness reads featMember+featSubstrate (the improvement-happiness fold lands here -- the legacy
+getFeatureGoodHappiness bundled feature + improvement happiness) via CascadeWellbeing::featureWellbeing. The
+updateFeatureHealth/updateFeatureHappiness rebuilders (city + the CvPlayer twin + the map-functor) and all their
+CvCity/CvPlayer/CvPlot trigger sites are gone; calculateFeatureHealthPercent stays (the getAdditional* what-if reads
+it). Reads drain via WRAPPER_SKIP_ELEMENT; writes dropped.
+
+CvCity::m_iFeatureGoodHealth             (int)
+CvCity::m_iFeatureBadHealth              (int)
+CvCity::m_iFeatureGoodHappiness          (int)
+CvCity::m_iFeatureBadHappiness           (int)
+========================
+
+========================
 2026-07-02 — #430 capability cut (CvTeam): the empire-capability counters retired;
 the getters derive from CascadeCapabilities (the cascade union). Skips live in CvTeam::read.
 

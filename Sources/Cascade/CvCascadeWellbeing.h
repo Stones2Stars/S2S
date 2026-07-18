@@ -50,6 +50,11 @@ public:
 	// per-building event ledger (getBuildingHappy/HealthChange). The area/empire building rollups are the
 	// SEPARATE playerAreaEmpire fold (CvArea/CvPlayer getters), not this term.
 	static void buildingWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad);
+	// The FEATURE terms for the retired m_iFeatureGood/Bad{Health,Happiness} accumulators. ASYMMETRIC to match
+	// legacy: HAPPINESS = featMember + featSubstrate (civic-per-feature + civic-per-improvement + intrinsic
+	// improvement, the legacy getFeatureGoodHappiness bundle); HEALTH = featSubstrate only (feature's own
+	// plot.percent -- legacy calculateFeatureHealthPercent is feature-own, civic-per-feature health rides civic).
+	static void featureWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad);
 	// The AREA/EMPIRE building-HEALTH rollups (the playerAreaEmpire fold, health family) for the retired
 	// CvArea/CvPlayer m_iBuildingGood/BadHealth accumulators. iBad is negative (WbSplit convention).
 	static void buildingHealthArea(const CvPlayer& player, int iAreaId, int& iGood, int& iBad);

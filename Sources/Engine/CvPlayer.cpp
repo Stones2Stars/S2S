@@ -4198,10 +4198,8 @@ void CvPlayer::updateYield()
 }
 
 
-void CvPlayer::updateFeatureHappiness(bool bLimited)
-{
-	algo::for_each(cities(), CvCity::fn::updateFeatureHappiness(bLimited));
-}
+// #430: feature happiness rides the cascade (per-city CascadeWellbeing featMember+featSubstrate); the player-wide
+// updateFeatureHappiness rebuilder is gone.
 
 void CvPlayer::updateReligionHappiness(bool bLimited)
 {
@@ -13470,8 +13468,7 @@ void CvPlayer::changeFeatureHappiness(FeatureTypes eIndex, int iChange, bool bLi
 	if (iChange != 0)
 	{
 		m_paiFeatureHappiness[eIndex] += iChange;
-
-		updateFeatureHappiness(bLimited);
+		// #430: feature happiness rides the cascade; no accumulator refresh needed.
 	}
 }
 /********************************************************************************/
@@ -14301,8 +14298,6 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 		foreach_ (CvCity* city, cities())
 		{
 			city->checkBuildings();
-			if (bUpdateHappiness)
-				city->updateFeatureHappiness();
 			if (bUpdateHealth)
 				city->updateImprovementHealth();
 		}

@@ -575,7 +575,6 @@ public:
 
 	int getFeatureGoodHealth() const;
 	int getFeatureBadHealth() const;
-	void updateFeatureHealth();
 // BUG - Feature Health - start
 	void calculateFeatureHealthPercent(int& iGood, int& iBad) const;
 	void calculateFeatureHealthPercentChange(int& iGood, int& iBad, CvPlot* pIgnorePlot = NULL) const;
@@ -629,7 +628,6 @@ public:
 
 	int getFeatureGoodHappiness() const;
 	int getFeatureBadHappiness() const;
-	void updateFeatureHappiness(bool bLimited = false);
 
 	int getBonusGoodHappiness() const;
 	int getBonusBadHappiness() const;
@@ -1617,8 +1615,6 @@ protected:
 	int m_iEspionageHealthCounter;
 	int m_iEspionageHappinessCounter;
 	int m_iFreshWaterGoodHealth;
-	int m_iFeatureGoodHealth;
-	int m_iFeatureBadHealth;
 	int m_iHurryAngerTimer;
 	int m_iRevRequestAngerTimer;
 	int m_iRevSuccessTimer;
@@ -1630,8 +1626,6 @@ protected:
 	int m_iExtraBuildingBadHappiness;
 	int m_iExtraBuildingGoodHealth;
 	int m_iExtraBuildingBadHealth;
-	int m_iFeatureGoodHappiness;
-	int m_iFeatureBadHappiness;
 	int m_iReligionGoodHappiness;
 	int m_iReligionBadHappiness;
 	int m_iExtraHappiness;
@@ -2145,7 +2139,6 @@ public:
 
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateExtraBuildingHappiness, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateExtraBuildingHealth, bool);
-		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateFeatureHappiness, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateReligionHappiness, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setCommerceModifierDirty, CommerceTypes);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setCommerceDirty, CommerceTypes);

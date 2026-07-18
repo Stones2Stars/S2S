@@ -389,9 +389,7 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	changeAirUnitCapacity(GC.getCITY_AIR_UNIT_CAPACITY());
 
 	updateFreshWaterHealth();
-	updateFeatureHealth();
 	updateImprovementHealth();
-	updateFeatureHappiness();
 
 	player.setMaintenanceDirty(true);
 
@@ -527,8 +525,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iEspionageHealthCounter = 0;
 	m_iEspionageHappinessCounter = 0;
 	m_iFreshWaterGoodHealth = 0;
-	m_iFeatureGoodHealth = 0;
-	m_iFeatureBadHealth = 0;
 	m_iHurryAngerTimer = 0;
 	m_iRevRequestAngerTimer = 0;
 	m_iRevSuccessTimer = 0;
@@ -540,8 +536,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iExtraBuildingBadHappiness = 0;
 	m_iExtraBuildingGoodHealth = 0;
 	m_iExtraBuildingBadHealth = 0;
-	m_iFeatureGoodHappiness = 0;
-	m_iFeatureBadHappiness = 0;
 	m_iReligionGoodHappiness = 0;
 	m_iReligionBadHappiness = 0;
 	m_iExtraHappiness = 0;
@@ -7003,7 +6997,6 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 				plot()->setFeatureType(NO_FEATURE);
 			}
 		}
-		updateFeatureHealth();
 		if (bNormal)
 		{
 			checkBuildings();
@@ -8150,52 +8143,19 @@ void CvCity::updateFreshWaterHealth()
 
 int CvCity::getFeatureGoodHealth() const
 {
-	return m_iFeatureGoodHealth;
+	int hg, hb, eg, eb; CascadeWellbeing::featureWellbeing(this, hg, hb, eg, eb); return eg;
 }
 
 
 int CvCity::getFeatureBadHealth() const
 {
-	return m_iFeatureBadHealth;
+	int hg, hb, eg, eb; CascadeWellbeing::featureWellbeing(this, hg, hb, eg, eb); return eb;
 }
 
 
-// BUG - Feature Health - start
-/*
- * Recalculates the total percentage health effects from existing features
- * and updates the values if they have changed.
- *
- * Bad health is stored as a negative value.
- */
-void CvCity::updateFeatureHealth()
-{
-	int iNewGoodHealth = 0;
-	int iNewBadHealth = 0;
-
-	calculateFeatureHealthPercent(iNewGoodHealth, iNewBadHealth);
-	iNewBadHealth = -iNewBadHealth;  // convert to "negative is bad"
-
-	iNewGoodHealth /= 100;
-
-	// AIAndy: Feature unhealthiness reduced for small cities
-	iNewBadHealth *= std::max(std::min(getPopulation() - 2, 5), 0);
-	iNewBadHealth /= 500;
-
-	if ((getFeatureGoodHealth() != iNewGoodHealth) || (getFeatureBadHealth() != iNewBadHealth))
-	{
-		m_iFeatureGoodHealth = iNewGoodHealth;
-		m_iFeatureBadHealth = iNewBadHealth;
-		FAssert(getFeatureGoodHealth() >= 0);
-		FAssert(getFeatureBadHealth() <= 0);
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
+// #430: feature health now rides the cascade (CascadeWellbeing featSubstrate term, read by
+// getFeatureGood/BadHealth); the retired m_iFeatureGood/BadHealth accumulator + its updateFeatureHealth
+// rebuilder are gone. calculateFeatureHealthPercent stays -- the getAdditional* what-if reads it.
 
 /*
  * Adds the total percentage health effects from existing features to iGood and iBad.
@@ -9301,87 +9261,19 @@ void CvCity::updateExtraBuildingHealth(bool bLimited)
 
 int CvCity::getFeatureGoodHappiness() const
 {
-	return m_iFeatureGoodHappiness;
+	int hg, hb, eg, eb; CascadeWellbeing::featureWellbeing(this, hg, hb, eg, eb); return hg;
 }
 
 
 int CvCity::getFeatureBadHappiness() const
 {
-	return m_iFeatureBadHappiness;
+	int hg, hb, eg, eb; CascadeWellbeing::featureWellbeing(this, hg, hb, eg, eb); return hb;
 }
 
 
-void CvCity::updateFeatureHappiness(bool bLimited)
-{
-	PROFILE_EXTRA_FUNC();
-	int iNewFeatureGoodHappiness = 0;
-	int iNewFeatureBadHappiness = 0;
-
-	foreach_(const CvPlot* pLoopPlot, plots())
-	{
-		const FeatureTypes eFeature = pLoopPlot->getFeatureType();
-
-		if (eFeature != NO_FEATURE)
-		{
-			int iHappy = GET_PLAYER(getOwner()).getFeatureHappiness(eFeature);
-			if (iHappy > 0)
-			{
-				iNewFeatureGoodHappiness += iHappy;
-			}
-			else
-			{
-				iNewFeatureBadHappiness += iHappy;
-			}
-		}
-
-		const ImprovementTypes eImprovement = pLoopPlot->getImprovementType();
-
-		if (NO_IMPROVEMENT != eImprovement)
-		{
-			int iHappy = GC.getImprovementInfo(eImprovement).getHappiness();
-
-			const CvPlayer& kPlayer = GET_PLAYER(getOwner());
-			for (int iJ = 0; iJ < GC.getNumCivicOptionInfos(); iJ++)
-			{
-				if (kPlayer.getCivics((CivicOptionTypes)iJ) != NO_CIVIC)
-				{
-					iHappy += GC.getCivicInfo(kPlayer.getCivics((CivicOptionTypes)iJ)).getImprovementHappinessChanges(eImprovement);
-				}
-			}
-
-			if (iHappy > 0)
-			{
-				iNewFeatureGoodHappiness += iHappy;
-			}
-			else
-			{
-				iNewFeatureBadHappiness += iHappy;
-			}
-		}
-	}
-
-	if (getFeatureGoodHappiness() != iNewFeatureGoodHappiness)
-	{
-		m_iFeatureGoodHappiness = iNewFeatureGoodHappiness;
-		FASSERT_NOT_NEGATIVE(getFeatureGoodHappiness());
-
-		if (!bLimited)
-		{
-			AI_setAssignWorkDirty(true);
-		}
-	}
-
-	if (getFeatureBadHappiness() != iNewFeatureBadHappiness)
-	{
-		m_iFeatureBadHappiness = iNewFeatureBadHappiness;
-		FAssert(getFeatureBadHappiness() <= 0);
-
-		if (!bLimited)
-		{
-			AI_setAssignWorkDirty(true);
-		}
-	}
-}
+// #430: feature happiness now rides the cascade (CascadeWellbeing featMember+featSubstrate, read by
+// getFeatureGood/BadHappiness -- incl. the improvement-happiness fold); the retired m_iFeatureGood/BadHappiness
+// accumulator + its updateFeatureHappiness rebuilder (city + the CvPlayer twin + the map-functor) are gone.
 
 
 int CvCity::getBonusGoodHappiness() const
@@ -10561,9 +10453,7 @@ void CvCity::setCultureLevel(CultureLevelTypes eNewValue, bool bUpdatePlotGroups
 				GC.getCOLOR_WHITE(), getX(), getY(), true, true
 			);
 		}
-		// Afforess - Update Health and Happiness when culture expands
-		updateFeatureHappiness();
-		updateFeatureHealth();
+		// Afforess - Update Health and Happiness when culture expands (feature health/happiness ride the cascade now)
 		updateImprovementHealth();
 
 		// Alert people if max culture level acquired in a known city
@@ -17458,8 +17348,9 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iEspionageHappinessCounter);
 	WRAPPER_READ(wrapper, "CvCity", &m_iFreshWaterGoodHealth);
 
-	WRAPPER_READ(wrapper, "CvCity", &m_iFeatureGoodHealth);
-	WRAPPER_READ(wrapper, "CvCity", &m_iFeatureBadHealth);
+	// #430: feature health/happiness ride the cascade; drain the retired accumulators. savemigration.txt.
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iFeatureGoodHealth, SAVE_VALUE_ANY);
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iFeatureBadHealth, SAVE_VALUE_ANY);
 	// #430: building health/happiness ride the cascade (CascadeWellbeing bld term); the retired accumulators
 	// are drained from old saves. Ledgered in savemigration.txt.
 	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBuildingGoodHealth, SAVE_VALUE_ANY);
@@ -17482,8 +17373,8 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iExtraBuildingBadHappiness);
 	WRAPPER_READ(wrapper, "CvCity", &m_iExtraBuildingGoodHealth);
 	WRAPPER_READ(wrapper, "CvCity", &m_iExtraBuildingBadHealth);
-	WRAPPER_READ(wrapper, "CvCity", &m_iFeatureGoodHappiness);
-	WRAPPER_READ(wrapper, "CvCity", &m_iFeatureBadHappiness);
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iFeatureGoodHappiness, SAVE_VALUE_ANY);
+	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iFeatureBadHappiness, SAVE_VALUE_ANY);
 	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBonusGoodHappiness, SAVE_VALUE_ANY);   // rebuilt by the load fold
 	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iBonusBadHappiness, SAVE_VALUE_ANY);    // rebuilt by the load fold
 	WRAPPER_READ(wrapper, "CvCity", &m_iReligionGoodHappiness);
@@ -18232,8 +18123,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iEspionageHealthCounter);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iEspionageHappinessCounter);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iFreshWaterGoodHealth);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iFeatureGoodHealth);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iFeatureBadHealth);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iHurryAngerTimer);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iRevRequestAngerTimer);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iRevSuccessTimer);
@@ -18245,8 +18134,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraBuildingBadHappiness);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraBuildingGoodHealth);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraBuildingBadHealth);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iFeatureGoodHappiness);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iFeatureBadHappiness);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iReligionGoodHappiness);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iReligionBadHappiness);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iExtraHappiness);
@@ -22775,9 +22662,7 @@ void CvCity::recalculateModifiers()
 	}
 
 	updateFreshWaterHealth();
-	updateFeatureHealth();
 	updateImprovementHealth();
-	updateFeatureHappiness();
 
 	//ls612: Make Sure to keep the Air Unit capacity
 	changeAirUnitCapacity(GC.getCITY_AIR_UNIT_CAPACITY());

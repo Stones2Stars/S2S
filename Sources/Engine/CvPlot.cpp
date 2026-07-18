@@ -7279,8 +7279,7 @@ void CvPlot::setFeatureType(FeatureTypes eNewValue, int iVariety, bool bImprovem
 				CvCity* cityX = plotX->getPlotCity();
 				if (cityX)
 				{
-					cityX->updateFeatureHealth();
-					cityX->updateFeatureHappiness();
+					// #430: feature health/happiness ride the cascade; no accumulator refresh.
 				}
 			}
 		}
@@ -7661,7 +7660,6 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 
 				if (pLoopCity != NULL)
 				{
-					pLoopCity->updateFeatureHappiness();
 					pLoopCity->updateImprovementHealth();
 
 					//	Changed improvement status might change city best build opinions

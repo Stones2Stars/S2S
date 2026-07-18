@@ -244,7 +244,6 @@ public:
 	void updateMaintenance() const;
 	void setMaintenanceDirty(const bool bDirty, const bool bCities = true) const;
 
-	void updateFeatureHappiness(bool bLimited = false);
 	void updateReligionHappiness(bool bLimited = false);
 
 	void updateExtraSpecialistYield();

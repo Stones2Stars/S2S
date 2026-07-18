@@ -721,6 +721,20 @@ void CascadeWellbeing::buildingWellbeing(const CvCity* pCity, int& iHapGood, int
 	iHeaBad  = hea.bld.iBad;
 }
 
+// The FEATURE terms (asymmetric -- see the header). Same live-gather shape as bonus/building.
+void CascadeWellbeing::featureWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad)
+{
+	CvCascadeEvalCtx ec;
+	wb_fillCityCtx(pCity, ec);
+	CascadeWbTerms hap, hea;
+	int aiPer[NUM_COMMERCE_TYPES];
+	gatherCityTerms(pCity, ec, hap, hea, aiPer);
+	iHapGood = hap.featMember.iGood + hap.featSubstrate.iGood;   // legacy bundles civic-per-feature + improvement
+	iHapBad  = hap.featMember.iBad + hap.featSubstrate.iBad;
+	iHeaGood = hea.featSubstrate.iGood;                          // legacy feature health = feature-own plot.percent only
+	iHeaBad  = hea.featSubstrate.iBad;
+}
+
 // The AREA/EMPIRE building-health rollups -- a fresh player area/empire walk (the cold Legacy-oracle path; the
 // served verdict uses the standing CvPlayer scope package, not these). health family; iBad is negative.
 void CascadeWellbeing::buildingHealthArea(const CvPlayer& player, int iAreaId, int& iGood, int& iBad)
