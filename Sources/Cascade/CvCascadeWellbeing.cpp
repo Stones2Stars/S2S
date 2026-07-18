@@ -678,12 +678,25 @@ CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
 	return out;
 }
 
+// Fill a city eval-ctx for the standalone decomposition accessors. MUST carry the operating-buildings set --
+// wb_buildingsAll walks ec.activeBuildings and EARLY-RETURNS (0 building term) on a NULL set, and conditioned
+// bonus/civic deposits gate on the ctx. A default-constructed ctx silently zeroes the building term (the empty-ctx
+// bug the wellbeing test caught). Mirrors playerAreaEmpire's per-city pec.
+static void wb_fillCityCtx(const CvCity* pCity, CvCascadeEvalCtx& ec)
+{
+	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
+	const OperatingBuildings& ob = EnablerKernel::operatingBuildings(pCity);
+	ec.city = pCity; ec.plot = pCity->plot(); ec.player = &owner; ec.team = &GET_TEAM(owner.getTeam());
+	ec.activeBuildings = &ob.active; ec.vicinityProvidedBonuses = &ob.provided; ec.obsoleteBuildings = &ob.obsolete;
+}
+
 // Per-source terms for the legacy sub-getters -- a live city gather (the verdict is the cached path). Perf is not a
 // gate now; UI/AI decomposition reads are cold. The bonus term maps 1:1 to the retired m_iBonus* accumulators
 // (sign convention identical: iGood = positives, iBad = negatives).
 void CascadeWellbeing::bonusWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad)
 {
 	CvCascadeEvalCtx ec;
+	wb_fillCityCtx(pCity, ec);
 	CascadeWbTerms hap, hea;
 	int aiPer[NUM_COMMERCE_TYPES];
 	gatherCityTerms(pCity, ec, hap, hea, aiPer);
@@ -698,6 +711,7 @@ void CascadeWellbeing::bonusWellbeing(const CvCity* pCity, int& iHapGood, int& i
 void CascadeWellbeing::buildingWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad)
 {
 	CvCascadeEvalCtx ec;
+	wb_fillCityCtx(pCity, ec);
 	CascadeWbTerms hap, hea;
 	int aiPer[NUM_COMMERCE_TYPES];
 	gatherCityTerms(pCity, ec, hap, hea, aiPer);
