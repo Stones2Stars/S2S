@@ -190,6 +190,12 @@ clamp(unhappy − happy, 0, pop)`. The channel oracle is **`/computed/cities/wel
   is deliberately dropped from the data, so the engine's `improvementGood/Bad` term is an **intentional
   divergence** — attributed via the oracle's `improvementGood100/Bad100` fields, shown, never chased
   ([validation](validation.md) intentional-model-change class); the term dies at the channel's legacy cut.
+  ⚖ **Improvement HAPPINESS, by contrast, IS represented** (owner ruling — no gaps): the intrinsic per-radius
+  improvement happiness (`happiness.plot.flat` on the improvement) and the civic per-improvement happiness
+  (`happiness.empire.improvements.{I}.flat`) are **folded into the feature happiness terms** (`featSubstrate` +
+  `featMember`) — because the legacy `getFeatureGoodHappiness` bundles feature + improvement happiness into ONE
+  number. Structurally live end-to-end; **zero data carries it today** (schema-only civic field, no improvement
+  authors `iHappiness`), so the verdict is unchanged — the path is future-proof for any modder data.
   **Celebrity happiness** is currently an INPUT; the `skills.celebrity` unit-scan port (the CvCity scan,
   data-migration-remaining.md) is PENDING migration work to finish it.
 - **RAW-STATE INPUTS (folded, never derived)** — the runtime timers/counters no deposit produces: the **anger

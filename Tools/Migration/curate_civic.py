@@ -150,6 +150,7 @@ KEYED = {
     "BuildingProductionModifiers":  ("buildRate",  "empire", "buildings",   "percent", None),
     "BuildingCommerceModifiers":    (None,         "empire", "buildings",   "percent", COMMERCES),  # split commerce
     "FeatureHappinessChanges":      ("happiness",  "empire", "features",    "flat",    None),
+    "ImprovementHappinessChanges":  ("happiness",  "empire", "improvements","flat",    None),       # civic per-improvement happiness (#430 gap fix: was bundled into legacy getFeatureGoodHappiness, never curated)
     "ImprovementYieldChanges":      (None,         "empire", "improvements","flat",    YIELDS),      # split yield
     "TerrainYieldChanges":          (None,         "empire", "terrains",    "flat",    YIELDS),      # split yield
     "UnitProductionModifiers":      ("buildRate", "empire", "units",      "percent", None),

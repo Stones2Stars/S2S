@@ -250,12 +250,13 @@ void CascadeWellbeing::foldBuildingKeyed(const std::map<int, std::map<int, int> 
 // member's spec form) + the ranked `cities` member. Trait sources carry the PURE_TRAITS filter.
 static void wb_memberSource(int famId, const CvInfo* d, bool bTrait, bool bPure, bool bNegative,
 	const CvCity* pCity, const CvCascadeEvalCtx& ec, const std::map<int, int>& featureCounts,
-	bool bInTopCities, CascadeWbTerms& t)
+	const std::map<int, int>& improvementCounts, bool bInTopCities, CascadeWbTerms& t)
 {
 	const int scopeEmpire = DepositIndex::lookupSegment("empire");
 	const int unitFlat = DepositIndex::lookupSegment("flat");
 	const int segBuildings = DepositIndex::lookupSegment("buildings");
 	const int segFeatures = DepositIndex::lookupSegment("features");
+	const int segImprovements = DepositIndex::lookupSegment("improvements");
 	const int segCities = DepositIndex::lookupSegment("cities");
 	int iFlatNet = 0;
 	const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
@@ -285,6 +286,14 @@ static void wb_memberSource(int famId, const CvInfo* d, bool bTrait, bool bPure,
 			std::map<int, int>::const_iterator fit = dep.targetFk >= 0 ? featureCounts.find(dep.targetFk) : featureCounts.end();
 			if (fit != featureCounts.end() && MMKernel::applies(dep.enabled, dep.disabled, ec))
 				t.featMember.fold(fit->second * (int)(MMKernel::perScale(dep, ec, dep.value100) / 100));   // §3.7 per (identity when hasPer==false)
+		}
+		else if (dep.nSeg == 4 && dep.seg[2] == segImprovements)
+		{
+			// civic/trait per-improvement (ImprovementHappinessChanges): folded into featMember -- the legacy
+			// getFeatureGoodHappiness bundles feature + improvement happiness into ONE number (#430 gap fix)
+			std::map<int, int>::const_iterator iit = dep.targetFk >= 0 ? improvementCounts.find(dep.targetFk) : improvementCounts.end();
+			if (iit != improvementCounts.end() && MMKernel::applies(dep.enabled, dep.disabled, ec))
+				t.featMember.fold(iit->second * (int)(MMKernel::perScale(dep, ec, dep.value100) / 100));   // §3.7 per (identity when hasPer==false)
 		}
 		else if (dep.nSeg == 3 && dep.seg[2] == segCities && dep.unitId == unitFlat && dep.unitQual != NULL)
 		{
@@ -324,13 +333,20 @@ static void wb_gather(const char* szFam, const CvCity* pCity, const CvCascadeEva
 
 	// -- the shared member-walk inputs --
 	std::map<int, int> featureCounts;
+	std::map<int, int> improvementCounts;
 	for (int i = 0; i < pCity->getNumCityPlots(); ++i)
 	{
 		const CvPlot* p = plotCity(pCity->getX(), pCity->getY(), i);
-		if (p != NULL && p->getFeatureType() != NO_FEATURE)
+		if (p == NULL) continue;
+		if (p->getFeatureType() != NO_FEATURE)
 		{
 			const int fkey = DepositIndex::segIdForFeature(p->getFeatureType());
 			if (fkey >= 0) ++featureCounts[fkey];
+		}
+		if (p->getImprovementType() != NO_IMPROVEMENT)
+		{
+			const int ikey = DepositIndex::segIdForImprovement(p->getImprovementType());
+			if (ikey >= 0) ++improvementCounts[ikey];
 		}
 	}
 	const bool bInTopCities = pCity->findPopulationRank() <= GC.getWorldInfo(GC.getMap().getWorldSize()).getTargetNumCities();
@@ -342,14 +358,14 @@ static void wb_gather(const char* szFam, const CvCity* pCity, const CvCascadeEva
 		const CivicTypes eCivic = owner.getCivics((CivicOptionTypes)i);
 		if (eCivic == NO_CIVIC) continue;
 		const CvInfo* d = InfoRepo<CvCivicInfo>::get().get(eCivic);
-		if (d != NULL) wb_memberSource(famId, d, false, false, false, pCity, ec, featureCounts, bInTopCities, t);
+		if (d != NULL) wb_memberSource(famId, d, false, false, false, pCity, ec, featureCounts, improvementCounts, bInTopCities, t);
 	}
 	// -- traits (the option-selected curated set + the PURE_TRAITS filter; NEVER the engine CvTraitInfo) --
 	for (int i = 0; i < GC.getNumTraitInfos(); ++i)
 	{
 		if (!owner.hasTrait((TraitTypes)i)) continue;
 		const CvTraitInfo* d = MMKernel::traitData(i);
-		if (d != NULL) wb_memberSource(famId, d, true, bPure, d->negativeTrait, pCity, ec, featureCounts, bInTopCities, t);
+		if (d != NULL) wb_memberSource(famId, d, true, bPure, d->negativeTrait, pCity, ec, featureCounts, improvementCounts, bInTopCities, t);
 	}
 	// -- bonuses (presence ×1: processBonus is transition-gated -- the falsified ×count is documented) --
 	const std::string empAddr = fam + ".empire";
@@ -403,6 +419,23 @@ static void wb_gather(const char* szFam, const CvCity* pCity, const CvCascadeEva
 		}
 		for (std::map<int, int>::const_iterator it = perFeature.begin(); it != perFeature.end(); ++it)
 			t.featSubstrate.fold(it->second / 100);
+	}
+	// -- the improvement SUBSTRATE: per radius improvement, its intrinsic `<fam>.plot.flat` (the legacy
+	// getImprovementInfo.getHappiness per-radius-improvement, bundled into legacy getFeatureGoodHappiness).
+	// Folded into featSubstrate -- the legacy feature-happiness getter is ONE feature+improvement number
+	// (#430 gap fix). Improvements author no health.plot deposit (improvement health is the balance-cut), so
+	// the health gather finds nothing here.
+	{
+		const std::string plotAddr = fam + ".plot";
+		for (int i = 0; i < pCity->getNumCityPlots(); ++i)
+		{
+			const CvPlot* p = plotCity(pCity->getX(), pCity->getY(), i);
+			if (p == NULL || p->getImprovementType() == NO_IMPROVEMENT) continue;
+			const CvInfo* d = InfoRepo<CvImprovementInfo>::get().get(p->getImprovementType());
+			if (d == NULL) continue;
+			const int flat = MMKernel::sumUnit(d, plotAddr, "flat", ec);
+			if (flat != 0) t.featSubstrate.fold(flat);   // per-radius-plot, matching the legacy per-plot sum
+		}
 	}
 }
 

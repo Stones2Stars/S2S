@@ -80,6 +80,7 @@ IMP_FAMILIES = {
     "YieldChanges":      {"channel": "yield",   "scope": "plot", "kind": "flat", "valueKeys": engine.YIELDS},
     "iDefenseModifier":  {"channel": "defense",  "scope": "plot", "kind": "percent", "member": "amount"},
     "iAirBombDefense":   {"channel": "defense",  "scope": "plot", "kind": "flat", "member": "air"},    # air-bomb defense magnitude (rolled, CvUnit.cpp:7127); owner 2026-07-01
+    "iHappiness":        {"channel": "happiness", "scope": "plot", "kind": "flat"},   # #430 gap fix: intrinsic per-radius-improvement city happiness (was a dead identity.happiness leftover; x1 human, read raw by legacy updateFeatureHappiness)
     "iCulture":          {"channel": "culture",  "scope": "plot", "kind": "flat"},
     "iVisibilityChange": {"channel": "vision",   "scope": "plot", "kind": "flat", "member": "visibilityRange"},
     "iSeeFrom":          {"channel": "vision",   "scope": "plot", "kind": "flat", "member": "seeFrom"},
