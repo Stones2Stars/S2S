@@ -35,11 +35,15 @@ AGAINST" column, keyed by tag.**
   fights). So `strength.unit.percent {unit: IS_MOUNTED}` authored ON the anti-mounted UnitCombat — NOT
   `strength.unit.unitCombat.{UNITCOMBAT_MOUNTED}`; the `UnitCombat` id stops being a modifier *target* entirely.
 
-This sharpens the slim (§E): the combat-classes that today encode **identity** (mounted/gunpowder + the size/species/
-motility taxonomy — the bulk of the 480 vestigial) distill **INTO tags**; the ones that encode a genuine **vs-tag
-modifier group** (anti-mounted, …) stay as lean UnitCombats whose "vs" column now references tags. The whole reason
-the tags exist is to be that authoritative classification the cascade queries (upkeep pool, military count, the
-`{unit: IS_<tag>}` "vs" modifiers).
+**⚖ KEEP BOTH the unit-combat AND the tag, for now (owner 2026-07-19).** A tag holds **no stats**; the UnitCombat is
+the **stat-holder** (the modifier-source). So the unitcombat→tag mapping is **ADDITIVE** — a unit that *is* mounted
+KEEPS `UNITCOMBAT_MOUNTED` (its stats/deposits) *and* gains the `mounted` tag (its queryable identity). We do NOT
+delete/replace the unit-combat when we add the tag. Wholesale removal of a statless identity-only UnitCombat (once its
+identity fully lives as a tag) is a **deferred, separate** question — not this pass. The `{unit: IS_<tag>}` "vs"
+modifiers and the cascade queries (upkeep pool, military count) read the TAG; the stat deposits stay on the combat.
+
+Consequently the slim (§E) is scoped to **vestigial (unreferenced) + duplicate** classes ONLY — a memory purge —
+never "referenced classes that map to a tag" (those keep both). The tag mapping and the purge are independent passes.
 
 ## 1a. Scope (owner-ruled 2026-07-19) — MINIMUM to unblock + a welcomed purge
 
