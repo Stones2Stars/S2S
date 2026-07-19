@@ -81,10 +81,13 @@ that is what blocks every downstream consumer.
 
 ### A. Classification → `tags` (the core new data pass)
 1. **`curate_unitcombat.py` emits `tags`.** Add a `tags` block to its output. Two sub-cases:
-   - **Tech/equipment class — `mounted`/`gunpowder`/`mechanized`/… (GREENFIELD, no legacy boolean).** ⚠ There is NO
-     legacy flag to migrate from ([tags.md](../../specs/tags.md) §Tech/equipment — PERMANENT carve-out). Someone must
-     **author the unit-combat → tag mapping table** (which of the 335 live combat classes are `mounted`, which
-     `gunpowder`, etc.). This is the single biggest open decision (§8) — hand-authored, not derived.
+   - **Tech/equipment class — `mounted`/`gunpowder`/`mechanized`/… (GREENFIELD, no legacy boolean).** There is NO
+     legacy flag to migrate from ([tags.md](../../specs/tags.md) §Tech/equipment — PERMANENT carve-out); the
+     unit-combat → tag mapping is authored, not derived. **⚖ It does NOT need to be perfect (owner 2026-07-19):** a
+     reasonable FIRST-PASS is fine — the tags are curator-emitted data, so a wrong/missing tag is a quick edit after
+     the fact ([tags.md](../../specs/tags.md): "a glossary needn't be complete to begin; many units untagged, fixed
+     in validation"). So this is a first-pass authoring, NOT a perfection-gated blocker. (And it is TAIL anyway — the
+     minimum path (§1a) is `military`-only and never touches it.)
    - **The size/species/motility taxonomy** currently crammed into the combat-role enum (the `*Base` ranks →
      `identity`/`sizeMatters` today): decide per-family whether each becomes a `tag` (accounting membership) or stays
      `sizeMatters` data. Most are SizeMatters ranks (stay), a minority are genuine type-membership (→ tags).
