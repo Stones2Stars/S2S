@@ -157,7 +157,7 @@ grants, free techs/gold/units/civics/population, trait freePromotions, building 
 foundBuildings, per-turn spawn/heal). **Prime suspect for "free promotions load but don't show"** — attribute via
 endpoint, do not assume.
 
-### F4 — Unit-plane modifier machine NOT BUILT. [code-cut-map.md](code-cut-map.md) §BLOCKED unit-plane.
+### F4 — Unit-plane modifier machine NOT BUILT. [code-cut-map.md](code-cut-map.md) §BLOCKED unit-plane. Build doc (owner-approved design, gather-on-dirty unit-scope `CvDerivedCache`): [f4-unit-plane.md](f4-unit-plane.md).
 strength/combat-percent/withdrawal/heal/bombard/movement/espionage/keyed-terrain/invisibility/**upkeep**/SizeMatters/
 promotion/unitcombat apply-loops + serialization. City channels maintenance (`scMaintenanceModifier`), defense
 (`scDefense`/`scDefenseBombard`/`scDefenseMin`/`scDefensePlayer`), health/happiness (`CvCascadeWellbeing.cpp`), GP rate

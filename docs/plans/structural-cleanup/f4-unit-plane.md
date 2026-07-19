@@ -1,0 +1,113 @@
+# F4 — the unit-plane modifier machine (the unit-scope self-accumulator)
+
+> **Status:** build doc (owner-approved design 2026-07). The realization of [roadmap §F4](roadmap.md) — the last
+> unbuilt modifier scope. Brings the unit stat plane onto the ONE modifier machine
+> ([DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield)); today it is the biggest surface
+> still on legacy per-unit accumulators.
+
+## 1. The situation — data built, consumer absent
+
+The **data side is complete**; the **self-accumulator consumer does not exist**. This is a greenfield build, not an
+unpick:
+
+- `CvPromotionInfo` / `CvUnitCombatInfo` / `CvUnitInfo` each carry the address-keyed `CvJsonModifiers m_modifiers`
+  (the deposit form) **and** the materialized `get*Change()` scalar mirrors. `DepositIndex::pushInfo` already
+  compiles their deposits at readJson — **the push side needs zero extension**.
+- The legacy apply-loops read the materialized scalars **live today**: `CvUnit::processPromotion`
+  (`CvUnit.cpp:18713`), `CvUnit::processUnitCombat` (`:18283`), `CvUnit::processLoadedSpecialUnit` (`:28851`), each
+  folding `kX.getYChange() * iChange` into ~91 `changeExtra*` sinks (`grep '^void CvUnit::changeExtra'` = exactly
+  91, span `:11386…:30937`).
+- `Sources/Cascade/CvCascadeScopePackages.h` defines `CascadeCityPackages` / `CascadePlayerScope` /
+  `CascadeWorldScope` — **no unit scope**. That absence IS F4.
+
+The full channel inventory (24 groups, adversarially verified) lives in
+[code-cut-map.md](code-cut-map.md) (§ the unit-plane BLOCKED inventory) — this doc does not duplicate it; it states
+the **design** the build executes against it.
+
+## 2. The approved design (owner 2026-07)
+
+**A unit-scope package (`CascadeUnitPackages`) on `CvUnit`, backed by `CvDerivedCache` — the same
+recompute-only / dirty-flagged / never-serialized model as the plot-yield and city caches
+([state-repositories.md](../../architecture/state-repositories.md)).** One cache philosophy across every scope.
+
+- **Sources** = the unit's small held-set: its type intrinsic (`CvUnitInfo` base values) + held promotions +
+  primary/sub unit-combat classes. Bounded per unit (a handful), unlike a city's many sources.
+- **Fold shape — GATHER-ON-DIRTY (option A, approved; NOT incremental push).** A promotion / unitcombat / type
+  change flips the unit's cache **dirty**; the next read gathers `Σ` over the held-set via `MMKernel`
+  (`sumUnit100` / `sumKeyed4U` / `perScale` / `modifiedInt`), gated by `cascadeEvalCondition`, combined by the §2
+  formula `(base+Σflat)×(100+Σpercent)/100`. Reads are O(1) when clean. Rejected: incremental push-on-gain
+  (`modifier.md §6`'s "O(1) concatenation as added") — it reintroduces the maintained running-total push-accumulator
+  [state-repositories.md](../../architecture/state-repositories.md) is retiring, for no gain (the held-set is small
+  enough that gather-on-dirty is effectively O(1)).
+- **Never serialized** → the accumulated totals **re-derive from held promotions/unitcombats at load**
+  ([DEC-derived-never-trusted](../../architecture/decisions.md#dec-derived-never-trusted)); dirty-on-construct means
+  the first read after load recomputes. The serialized `m_iExtra*` block (`CvUnit.cpp` WRAPPER_READ ~`:19445` /
+  WRITE ~`:20456`) is removed by the **standard soft-remove — NOT a save-break**
+  ([DEC-save-remove-is-soft](../../architecture/decisions.md#dec-save-remove-is-soft)): full-delete the member +
+  read + write and NAME the drained tags in `Assets/savemigration.txt`; the reader drains old-save orphan bytes
+  transparently, so old saves load clean forever with no version bump. The only divergence from the city plane is
+  that this stack WAS serialized; the removal itself is the same drain-text every accumulator cut uses.
+
+**Reused wholesale (single-implementation law — never reimplement, [patterns.md](../../architecture/patterns.md)):**
+`MMKernel` (all leaf primitives are channel-agnostic), `DepositIndex` (`depositsFor(j)` already returns each
+promotion/unitcombat's compiled deposits), `cascadeEvalCondition` (the one gate; only the eval **context** needs a
+unit-scope fact surface — confirm `CvCascadeEvalCtx` accepts a unit when wiring), and the `CvDerivedCache`
+component. **New** = the unit scope struct + the `CvUnit` cache binding + the gather-over-held-set walk + the
+load-time re-derive path.
+
+## 3. Build order (incremental, each verified live in-game against the legacy consumer it replaces)
+
+1. **Stand up the scope + the gather-on-dirty fold**, validated on the **simplest scalar groups first** — no
+   side-effects, no keying: withdrawal / firstStrike / evasion / intercept (⚠ `changeExtraWithdrawal` has a
+   mid-combat transient tweak `CvUnit.cpp:7604/7606` to preserve), heal, collateral / bombard, capture /
+   vision-range / cargo-size scalars.
+2. **Core strength + combat-percent** groups (the largest consumer — `maxCombatStr`'s situational calc reads these
+   aggregates; validate against it early). Several combat-percent members carry `enabled` predicates (IS_CITY /
+   IS_HILLS) — the ordinary `cascadeEvalCondition` gate.
+3. **Keyed groups** — terrain/feature attack-defense-work percent, unitcombat/domain modifiers, trap-target, and
+   the largest sub-surface, vision/invisibility (15 setters, carries `updateSpotIntensity` plot side-effects to
+   preserve). Reuses `sumKeyed4U`/`sumKeyed4F`; sequence vision/invisibility after the keyed mechanism proves on a
+   smaller keyed group.
+4. **Remove the serialized stack (SOFT — the drain text, NOT a save-break)** — once the re-derive-at-load path is
+   proven, full-delete the `m_iExtra*` block (member + WRAPPER_READ + WRITE) and NAME the drained tags in
+   `Assets/savemigration.txt` ([DEC-save-remove-is-soft](../../architecture/decisions.md#dec-save-remove-is-soft));
+   the reader drains old-save orphans transparently — old saves load clean forever, no version bump, no
+   `WRAPPER_SKIP_ELEMENT`. The three apply-loops (`processPromotion`/`processUnitCombat`/`processLoadedSpecialUnit`)
+   retire onto the cache's dirty-mark.
+5. **Upkeep — lands WITH F4** ([fixed-point-conformance.md](fixed-point-conformance.md), named F4 dependency, not a
+   separate slice). It is the forcing case for a unit-scope channel feeding back UP into a player-scope
+   accumulator: `CvUnit::m_iExtraUpkeep100` (deposit-fed) → `calcUpkeep100` (`:15808`) → pushes the delta into
+   `CvPlayer::m_iUnitUpkeep{Civilian,Military}100` bucketed by `isMilitaryBranch()` (`isMilitarySupport` tag).
+   Design the player sums as recompute-Σ over live units' cascade-derived upkeep (or targeted-propagation push from
+   the unit package), and restructure `getFinalUnitUpkeepChange` (the AI disband marginal-cost what-if,
+   `CvPlayer.cpp:10192`). Base upkeep (`cost.upkeep`) is already curated.
+
+## 4. Explicitly OUT / separate (do not fold into the package build)
+
+- **Movement / range** — its own `(unit,edge)` resolver ([modifier.md §6](../../specs/modifier.md); the movement
+  subsystem doc is pending), NOT the deposit-DOWN shape. Needs its own design pass.
+- **SizeMatters** — a separate rework layered on the same infra later ([json.md §9](../../specs/json.md),
+  code-cut-map group 21). The promotion-delta half reuses the package; its load-time base-rank derivation (Σ over
+  combat classes' `*Base`, feeding `getUnitCountSM` = `count / 3^(groupRank−1)`) + the runtime merge/split
+  accumulators (`getExtraQuality/Group/Size`, live engine state) are its own. ⚠ `changeExtraGroup` carries a
+  `changeUnitCountSM`/`AI_changeEffNumAIUnitsTimes100` side-effect to preserve.
+- **Empire unit-count "ride-on-top" families** (military happiness/anger, garrison counts) — already correctly
+  modeled ([DEC-unit-modifiers-on-top](../../architecture/decisions.md#dec-unit-modifiers-on-top); realized for
+  military happiness in `CvCascadeWellbeing.cpp:303/722`: the per-unit VALUE folds at gather, the live count
+  multiplies at read). Untouched by F4. ⛔ Enforce the hard ban: no unit-authored `percent` deposit to yields/commerce.
+
+## 5. Open classifications to resolve before wiring their channel
+
+- `changeExtraBuildType` — skill/capability (can-perform-build) vs modifier magnitude (code-cut-map group 7).
+- `changeExtraNoDefensiveBonusCount` — gate-count vs magnitude.
+- Bespoke C2C families (trap/breakdown/insidiousness/poison) — confirm a named json family exists (or mint one)
+  before wiring; a data-migration-tail risk, not just an unbuilt consumer.
+
+## 6. Acceptance
+
+Per item, verified LIVE ([validation.md](../../specs/validation.md)): the cascade-derived unit stat matches the
+legacy consumer's value on a loaded save + a real combat/turn, via the endpoints (the unit combat/movement channel
+decomposition is added when its channel is worked — [http-endpoints.md](../../specs/http-endpoints.md)); the
+`(scope,channel)` calc-count stays event-proportional (a unit's cache recomputes only on promotion/unitcombat
+change, not per read/move). The removed serialized tags are named in `Assets/savemigration.txt` (the soft-remove
+drain — no save-break, [DEC-save-remove-is-soft](../../architecture/decisions.md#dec-save-remove-is-soft)).
