@@ -25,9 +25,39 @@ fat ~150-field class is its **classification** (→ `tags`) and its **ability** 
 | **classification** | tech/equipment class (`mounted`/`gunpowder`/`mechanized`) + role/size/species/motility taxonomy | **`tags`** ([tags.md](../../specs/tags.md), [json.md §8](../../specs/json.md)) |
 | **ability** | the ~48-boolean ability battery | **`skills`** ([skills.md](../../specs/skills.md)) |
 
-The whole reason the tags exist is to be the authoritative classification the cascade queries (upkeep pool, military
-count, `{unit: IS_<tag>}` combat modifiers). The `UnitCombat` id itself stops being a modifier *target* — a "vs
-mounted" bonus becomes a `{unit: IS_MOUNTED}` predicate deposit, never `strength.unit.unitCombat.{UNITCOMBAT_MOUNTED}`.
+**⚖ The load-bearing distinction (owner 2026-07-19): TAGS are the core "what a unit IS"; UNITCOMBATS carry the "good/bad
+AGAINST" column, keyed by tag.**
+- A **tag** is a unit's IDENTITY — `mounted`, `gunpowder`, `military`, `armored`, … "what this unit is." Tags are the
+  core classification system every consumer queries.
+- A **UnitCombat** is a **modifier group** whose "vs" modifiers reference **tags** (via `{unit: IS_<tag>}` evaluated
+  against the OPPONENT), never other unit-combat ids. The canonical example: **`anti-mounted` is a UnitCombat** (a
+  modifier group carrying the bonuses vs the `mounted` tag); **`mounted` is a Tag** (the identity of the unit it
+  fights). So `strength.unit.percent {unit: IS_MOUNTED}` authored ON the anti-mounted UnitCombat — NOT
+  `strength.unit.unitCombat.{UNITCOMBAT_MOUNTED}`; the `UnitCombat` id stops being a modifier *target* entirely.
+
+This sharpens the slim (§E): the combat-classes that today encode **identity** (mounted/gunpowder + the size/species/
+motility taxonomy — the bulk of the 480 vestigial) distill **INTO tags**; the ones that encode a genuine **vs-tag
+modifier group** (anti-mounted, …) stay as lean UnitCombats whose "vs" column now references tags. The whole reason
+the tags exist is to be that authoritative classification the cascade queries (upkeep pool, military count, the
+`{unit: IS_<tag>}` "vs" modifiers).
+
+## 1a. Scope (owner-ruled 2026-07-19) — MINIMUM to unblock + a welcomed purge
+
+**We care only about the MINIMUM that unblocks the stuck cascade consumers**, plus an opportunistic purge. Concretely:
+
+- **IN scope (the minimum):** the cascade-QUERY surface — the **`IS_<TAG>` predicate** (§3.D) + the **per-tag tally**
+  (§3.D) — and the **`IS_MILITARY` consumer rewires** (§4): military happiness (`happiness.empire.cities.{unit:
+  IS_MILITARY}`), military count (`getNumMilitaryUnits` + readers), military production, and the related gates. This
+  needs **NO new tag mapping** — the `military` tag already exists (`curate_unit.py` from `bMilitarySupport`;
+  `isMilitarySupport()` = `tags.has("military")`); the minimum is the QUERY surface reading it + the consumer rewires.
+- **WELCOMED (opportunistic):** **purge the superfluous unit-combats** (§3.E — the 480/59% referenced by no unit),
+  carefully respecting the "unreferenced ≠ dead" attribute-match caveat (engine.md; the 2026-06-14 blunt purge
+  over-reached and was reverted). A conservative purge of the genuinely-dead is a welcomed cleanup, not required.
+- **TAIL / OUT of the minimum:** the greenfield `mounted`/`gunpowder`/`mechanized` mapping table (§8.1 — NOT needed
+  for the minimum, which is `military`-only), the keyed "vs unit-combat-class" modifier re-expression (§3.C / F4
+  step 3 — stays parked), and the deep three-axis distillation. These land later, not to complete #430.
+
+So the gating "author the mapping table" decision (§8.1) is **deferred** — the minimum path does not touch it.
 
 ## 2. Current state — what exists vs what's missing (grounded)
 
@@ -88,7 +118,11 @@ that is what blocks every downstream consumer.
    object if a hot consumer needs O(1) — decide per the tally's read-not-store rule). This replaces
    `getNumMilitaryUnits` + the ~12 readers, and feeds `per:{unit: IS_MILITARY}` scalers (military happiness).
 
-### E. Slimming the vestigial classes
+### E. Slimming the vestigial classes  — a DIRECT MEMORY WIN (owner 2026-07-19)
+- **Motivation is memory, not tidiness:** every `CvUnitCombatInfo` (all ~150 fields) is loaded resident **whether any
+  unit references it or not**, so the 480 vestigial classes are pure wasted memory. Under the 32-bit ~3.2 GB
+  address-space ceiling (the roadmap's `bad_alloc`-near-the-ceiling pressure), purging them is a direct reduction —
+  this is why the owner welcomes it even though it is outside the minimum-to-unblock.
 - Re-derive the vestigial set from LIVE data (480/815 unreferenced by any unit primary/sub; ADD promotion-granted
   `skills.unitCombats` membership before finalizing — §7 risk 1). For each vestigial class decide: **delete**
   (genuinely dead — Categories, DCM, traps already dropped), or **fold** its taxonomy into a tag/`sizeMatters` and
