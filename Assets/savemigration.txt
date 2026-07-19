@@ -29,8 +29,9 @@
 ========================
 2026-07-19 — #430 F4 unit-plane pilot (withdrawal group): the stored per-unit extra-withdrawal accumulator is
 removed. CvUnit::getExtraWithdrawal now reads the cascade unit self-accumulator (m_cascadeUnitPackages.withdrawal,
-gathered on-dirty from the unit's held-set: type intrinsic + held promotions + held unit-combat classes via
-MMKernel::sumUnit "withdrawal.unit"."percent"), plus the LIVE commander/commodore inheritance fold on top. The
+gathered on-dirty from the unit's held-set: held promotions + held unit-combat classes via MMKernel::sumUnit
+"withdrawal.unit"."percent" -- DELTA-ONLY, the unit-type base is added ONCE by the withdrawalProbability() composite,
+NOT the cascade, DEC-mirror-then-redesign), plus the LIVE commander/commodore inheritance fold on top. The
 changeExtraWithdrawal changer, the three apply-loop folds (processPromotion / processUnitCombat /
 processLoadedSpecialUnit -> markDirty), and the read/write are gone; the never-serialized cache re-derives at load.
 The mid-combat sea-pillage suppress (was changeExtraWithdrawal(-prob)/restore) is now a within-frame transient flag
@@ -44,7 +45,8 @@ CvUnit::m_iExtraWithdrawal                (int)
 are removed. CvUnit::getExtraFirstStrikes / getExtraChanceFirstStrikes / getExtraEnemyHeal / getExtraNeutralHeal /
 getExtraFriendlyHeal / getSameTileHeal / getAdjacentTileHeal now read the cascade unit self-accumulator
 (m_cascadeUnitPackages.{fsStrikes,fsChance,healEnemy,healNeutral,healFriendly,healSameTile,healAdjacent}, gathered
-on-dirty from the held-set: type intrinsic + held promotions + held unit-combat classes via MMKernel::sumUnit
+on-dirty from the held-set: held promotions + held unit-combat classes (DELTA-ONLY, no unit-type base --
+DEC-mirror-then-redesign) via MMKernel::sumUnit
 "firstStrike.unit.strikes"/"firstStrike.unit.chance"/"heal.unit.{enemy,neutral,friendly,sameTile,adjacentTile}"."flat").
 The seven changers + their apply-loop folds (processPromotion / processUnitCombat) are gone -- consolidated to ONE
 markDirty(UPK_ALL) per apply loop; the never-serialized cache re-derives at load. The firstStrike getters keep the
@@ -58,6 +60,27 @@ CvUnit::m_iExtraNeutralHeal              (int)
 CvUnit::m_iExtraFriendlyHeal             (int)
 CvUnit::m_iSameTileHeal                  (int)
 CvUnit::m_iAdjacentTileHeal              (int)
+========================
+
+========================
+2026-07-19 — #430 F4 unit-plane (evasion + intercept + collateral + capture groups): four more stored per-unit
+delta accumulators removed. CvUnit::getExtraEvasion / getExtraIntercept / getExtraCollateralDamage now read the
+cascade unit self-accumulator (m_cascadeUnitPackages.{evasion,intercept,collateralDamage}); captureProbabilityTotal /
+captureResistanceTotal read m_cascadeUnitPackages.{captureProb,captureResist}. All are gathered on-dirty from the
+held-set: held promotions + held unit-combat classes (DELTA-ONLY, NO unit-type base -- DEC-mirror-then-redesign;
+the consumer composites evasionProbability() / maxInterceptionProbability() / collateralDamage() /
+captureProbabilityTotal() / captureResistanceTotal() add the m_pUnitInfo type base ONCE, and keep their
+commander/commodore + national + local-city folds + clamps) via MMKernel::sumUnit "air.unit.evasion"."percent" /
+"air.unit.intercept"."percent" / "collateral.unit.damage"."percent" / "capture.unit.probability"."flat" /
+"capture.unit.resistance"."flat". The five changers + their apply-loop folds (processPromotion / processUnitCombat)
+are gone -- consolidated into the existing markDirty(UPK_ALL) per apply loop; the never-serialized cache re-derives
+at load. (Collateral: only the damage member migrated; the limit/maxUnits/protection siblings stay legacy.)
+
+CvUnit::m_iExtraIntercept                 (int)
+CvUnit::m_iExtraEvasion                   (int)
+CvUnit::m_iExtraCollateralDamage          (int)
+CvUnit::m_iExtraCaptureProbabilityModifier (int)
+CvUnit::m_iExtraCaptureResistanceModifier (int)
 ========================
 
 ========================

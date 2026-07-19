@@ -326,12 +326,20 @@ void CascadeAccumulator::refreshWorldScope(const CvGame* pGame, int iMask)
 }
 
 // #430 F4: the UNIT self-accumulator refresh (modifier.md §6; f4-unit-plane.md). GATHER-ON-DIRTY over the unit's
-// small held-set -- the unit's TYPE intrinsic + each HELD promotion + each HELD unit-combat class (primary + subs,
-// tracked exactly as the retired apply-loops fired, via isHasUnitCombat). These step-1 deposits (withdrawal /
-// firstStrike / heal) are UNCONDITIONED, but the ctx carries unit/player/team (source == target) for the
-// conditioned unit channels that land later.
-// NONE of these groups has a special-unit source: special units author zero withdrawal/firstStrike/heal deposits
-// and SPECIALUNIT is not pushed into the DepositIndex (GC.getSpecialUnitInfo is the legacy CvInfoBase array, not a
+// small held-set -- each HELD promotion + each HELD unit-combat class (primary + subs, tracked exactly as the
+// retired apply-loops fired, via isHasUnitCombat). These step-1 deposits are UNCONDITIONED, but the ctx carries
+// unit/player/team (source == target) for the conditioned unit channels that land later.
+//
+// ⛔ DELTA-ONLY (DEC-mirror-then-redesign, owner 2026-07-19): the gather is a faithful MIRROR of the legacy
+// m_iExtra* accumulators, which were fed ONLY by processPromotion / processUnitCombat -- NEVER the unit-type base.
+// So the UNIT-TYPE intrinsic (CvUnitInfo base values) is DELIBERATELY NOT a source here: the consumer composite
+// (e.g. withdrawalProbability() = m_pUnitInfo->getWithdrawalProbability() + getExtraWithdrawal()) already adds the
+// type base ONCE. Summing jType would materialize that same base a SECOND time (the base scalar and the deposit
+// share one address, e.g. withdrawal.unit.percent) -- a double-count. getExtra*() must reproduce the legacy DELTA
+// (promotions + unit-combats), nothing more.
+//
+// NONE of these groups has a special-unit source: special units author zero deposits for these channels and
+// SPECIALUNIT is not pushed into the DepositIndex (GC.getSpecialUnitInfo is the legacy CvInfoBase array, not a
 // deposit-carrying CvInfo) -- so their legacy folds summed a perpetually-zero scalar; the cascade matches that zero.
 void CascadeAccumulator::refreshUnitPackages(const CvUnit* pUnit, int iMask)
 {
@@ -344,10 +352,8 @@ void CascadeAccumulator::refreshUnitPackages(const CvUnit* pUnit, int iMask)
 	if (iMask & UPK_WITHDRAWAL)
 	{
 		// contract rule 2: fully define the output every call (zero-then-sum). withdrawal.unit.percent, HUMAN int.
+		// DELTA-ONLY: promotions + unit-combats, NO unit-type base (the consumer composite adds the base once).
 		int iWithdrawal = 0;
-		// the unit's TYPE intrinsic (CvUnitInfo base withdrawal)
-		const CvInfo* jType = InfoRepo<CvUnitInfo>::get().get((int)pUnit->getUnitType());
-		if (jType != NULL) iWithdrawal += MMKernel::sumUnit(jType, "withdrawal.unit", "percent", ec);
 		// each HELD promotion
 		for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
 		{
@@ -368,14 +374,8 @@ void CascadeAccumulator::refreshUnitPackages(const CvUnit* pUnit, int iMask)
 	if (iMask & UPK_FIRSTSTRIKE)
 	{
 		// contract rule 2: fully define the outputs every call (zero-then-sum). firstStrike COUNT + CHANCE, HUMAN int.
+		// DELTA-ONLY: promotions + unit-combats, NO unit-type base (the consumer composite adds the base once).
 		int iStrikes = 0, iChance = 0;
-		// the unit's TYPE intrinsic (CvUnitInfo base first strikes)
-		const CvInfo* jType = InfoRepo<CvUnitInfo>::get().get((int)pUnit->getUnitType());
-		if (jType != NULL)
-		{
-			iStrikes += MMKernel::sumUnit(jType, "firstStrike.unit.strikes", "flat", ec);
-			iChance  += MMKernel::sumUnit(jType, "firstStrike.unit.chance", "flat", ec);
-		}
 		// each HELD promotion
 		for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
 		{
@@ -401,17 +401,11 @@ void CascadeAccumulator::refreshUnitPackages(const CvUnit* pUnit, int iMask)
 	if (iMask & UPK_HEAL)
 	{
 		// contract rule 2: fully define the outputs every call (zero-then-sum). heal territory family, HUMAN int.
+		// DELTA-ONLY: promotions + unit-combats. (Heal's jType returned 0 already -- no unit type authors territory
+		// heal, and the heal consumers read the cache directly with NO separate base add -- but drop jType for the
+		// one uniform rule; if a unit type ever authors territory heal it would belong in the type-base consumer path,
+		// not this delta accumulator.)
 		int iEnemy = 0, iNeutral = 0, iFriendly = 0, iSameTile = 0, iAdjacent = 0;
-		// the unit's TYPE intrinsic (CvUnitInfo base heal rates)
-		const CvInfo* jType = InfoRepo<CvUnitInfo>::get().get((int)pUnit->getUnitType());
-		if (jType != NULL)
-		{
-			iEnemy    += MMKernel::sumUnit(jType, "heal.unit.enemy", "flat", ec);
-			iNeutral  += MMKernel::sumUnit(jType, "heal.unit.neutral", "flat", ec);
-			iFriendly += MMKernel::sumUnit(jType, "heal.unit.friendly", "flat", ec);
-			iSameTile += MMKernel::sumUnit(jType, "heal.unit.sameTile", "flat", ec);
-			iAdjacent += MMKernel::sumUnit(jType, "heal.unit.adjacentTile", "flat", ec);
-		}
 		// each HELD promotion
 		for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
 		{
@@ -441,6 +435,87 @@ void CascadeAccumulator::refreshUnitPackages(const CvUnit* pUnit, int iMask)
 		st.healFriendly = iFriendly;
 		st.healSameTile = iSameTile;
 		st.healAdjacent = iAdjacent;
+	}
+
+	if (iMask & UPK_EVASION)
+	{
+		// contract rule 2: zero-then-sum. air.unit.evasion.percent, HUMAN int. DELTA-ONLY (promotions + unit-combats).
+		int iEvasion = 0;
+		for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
+		{
+			if (!pUnit->isHasPromotion((PromotionTypes)i)) continue;
+			const CvInfo* jP = InfoRepo<CvPromotionInfo>::get().get(i);
+			if (jP != NULL) iEvasion += MMKernel::sumUnit(jP, "air.unit.evasion", "percent", ec);
+		}
+		for (int i = 0; i < GC.getNumUnitCombatInfos(); ++i)
+		{
+			if (!pUnit->isHasUnitCombat((UnitCombatTypes)i)) continue;
+			const CvInfo* jC = InfoRepo<CvUnitCombatInfo>::get().get(i);
+			if (jC != NULL) iEvasion += MMKernel::sumUnit(jC, "air.unit.evasion", "percent", ec);
+		}
+		st.evasion = iEvasion;
+	}
+
+	if (iMask & UPK_INTERCEPT)
+	{
+		// contract rule 2: zero-then-sum. air.unit.intercept.percent, HUMAN int. DELTA-ONLY (promotions + unit-combats).
+		int iIntercept = 0;
+		for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
+		{
+			if (!pUnit->isHasPromotion((PromotionTypes)i)) continue;
+			const CvInfo* jP = InfoRepo<CvPromotionInfo>::get().get(i);
+			if (jP != NULL) iIntercept += MMKernel::sumUnit(jP, "air.unit.intercept", "percent", ec);
+		}
+		for (int i = 0; i < GC.getNumUnitCombatInfos(); ++i)
+		{
+			if (!pUnit->isHasUnitCombat((UnitCombatTypes)i)) continue;
+			const CvInfo* jC = InfoRepo<CvUnitCombatInfo>::get().get(i);
+			if (jC != NULL) iIntercept += MMKernel::sumUnit(jC, "air.unit.intercept", "percent", ec);
+		}
+		st.intercept = iIntercept;
+	}
+
+	if (iMask & UPK_COLLATERAL)
+	{
+		// contract rule 2: zero-then-sum. collateral.unit.damage.percent, HUMAN int. DELTA-ONLY (promotions + unit-combats).
+		int iCollateral = 0;
+		for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
+		{
+			if (!pUnit->isHasPromotion((PromotionTypes)i)) continue;
+			const CvInfo* jP = InfoRepo<CvPromotionInfo>::get().get(i);
+			if (jP != NULL) iCollateral += MMKernel::sumUnit(jP, "collateral.unit.damage", "percent", ec);
+		}
+		for (int i = 0; i < GC.getNumUnitCombatInfos(); ++i)
+		{
+			if (!pUnit->isHasUnitCombat((UnitCombatTypes)i)) continue;
+			const CvInfo* jC = InfoRepo<CvUnitCombatInfo>::get().get(i);
+			if (jC != NULL) iCollateral += MMKernel::sumUnit(jC, "collateral.unit.damage", "percent", ec);
+		}
+		st.collateralDamage = iCollateral;
+	}
+
+	if (iMask & UPK_CAPTURE)
+	{
+		// contract rule 2: zero-then-sum. capture.unit.{probability,resistance}.flat, HUMAN int. DELTA-ONLY.
+		int iProb = 0, iResist = 0;
+		for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
+		{
+			if (!pUnit->isHasPromotion((PromotionTypes)i)) continue;
+			const CvInfo* jP = InfoRepo<CvPromotionInfo>::get().get(i);
+			if (jP == NULL) continue;
+			iProb   += MMKernel::sumUnit(jP, "capture.unit.probability", "flat", ec);
+			iResist += MMKernel::sumUnit(jP, "capture.unit.resistance", "flat", ec);
+		}
+		for (int i = 0; i < GC.getNumUnitCombatInfos(); ++i)
+		{
+			if (!pUnit->isHasUnitCombat((UnitCombatTypes)i)) continue;
+			const CvInfo* jC = InfoRepo<CvUnitCombatInfo>::get().get(i);
+			if (jC == NULL) continue;
+			iProb   += MMKernel::sumUnit(jC, "capture.unit.probability", "flat", ec);
+			iResist += MMKernel::sumUnit(jC, "capture.unit.resistance", "flat", ec);
+		}
+		st.captureProb = iProb;
+		st.captureResist = iResist;
 	}
 }
 

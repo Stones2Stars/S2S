@@ -1095,11 +1095,9 @@ public:
 	int getExtraAirRange() const;
 	void changeExtraAirRange(int iChange);
 
-	int getExtraIntercept(bool bIgnoreCommanders = false,bool bIgnoreCommodores = false) const;
-	void changeExtraIntercept(int iChange);
+	int getExtraIntercept(bool bIgnoreCommanders = false,bool bIgnoreCommodores = false) const;   // #430 F4: cascade DELTA (changer retired)
 
-	int getExtraEvasion(bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	void changeExtraEvasion(int iChange);
+	int getExtraEvasion(bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;   // #430 F4: cascade DELTA (changer retired)
 
 	int getExtraFirstStrikes() const;
 	// #430 F4: changeExtraFirstStrikes retired -- gathered on-dirty from the held-set (cascadeRefreshUnitPackages).
@@ -1190,8 +1188,7 @@ public:
 	void changeExtraPoisonProbabilityModifier (int iChange);
 	//TB Combat Mods End
 
-	int getExtraCollateralDamage() const;
-	void changeExtraCollateralDamage(int iChange);
+	int getExtraCollateralDamage() const;   // #430 F4: cascade DELTA (changer retired)
 
 	// #430 F4: the heal territory family (enemy/neutral/friendly/sameTile/adjacentTile) is cascade self-gathered
 	// on-dirty from the held-set -- the changers are retired; the getters read m_cascadeUnitPackages.
@@ -1578,8 +1575,8 @@ protected:
 	int m_iExtraMoves;
 	int m_iExtraMoveDiscount;
 	int m_iExtraAirRange;
-	int m_iExtraIntercept;
-	int m_iExtraEvasion;
+	// #430 F4: m_iExtraIntercept / m_iExtraEvasion removed -- intercept + evasion are cascade self-accumulators
+	// (m_cascadeUnitPackages, gather-on-dirty; DELTA-only, the *Probability() composites add the type base + clamp).
 	// #430 F4: m_iExtraFirstStrikes / m_iExtraChanceFirstStrikes / m_iExtraWithdrawal removed -- firstStrike +
 	// withdrawal are cascade self-accumulators (m_cascadeUnitPackages, gather-on-dirty). m_bSuppressWithdrawal is
 	// the within-frame transient forcing 0 withdrawal during the sea-pillage counter-attack (honored by
@@ -1648,9 +1645,8 @@ protected:
 	int m_iSMExtraCargoVolume;
 	int m_iSMCargoVolumeModifier;
 
-	int m_iExtraCaptureProbabilityModifier;
-	int m_iExtraCaptureResistanceModifier;
-
+	// #430 F4: m_iExtraCapture{Probability,Resistance}Modifier removed -- capture is a cascade self-accumulator
+	// (m_cascadeUnitPackages, DELTA-only; captureProbabilityTotal/captureResistanceTotal add base + folds on top).
 	int m_iExtraBreakdownChance;
 	int m_iExtraBreakdownDamage;
 	int m_iExtraTaunt;
@@ -1682,7 +1678,8 @@ protected:
 	int m_iBaseDCMBombAccuracy;
 	int m_iBombardDirectCount;
 	//TB Combat Mods End
-	int m_iExtraCollateralDamage;
+	// #430 F4: m_iExtraCollateralDamage removed -- collateral damage is a cascade self-accumulator (DELTA-only;
+	// collateralDamage() adds the type base on top). limit/maxUnits/protection siblings stay legacy members.
 	int m_iExtraBombardRate;
 	int m_iSMBombardRate;
 	int m_iSMAirBombBaseRate;
@@ -1887,11 +1884,9 @@ public:
 
 	int getExperiencefromWithdrawal(const int iWithdrawalProbability) const;
 
-	void changeExtraCaptureProbabilityModifier(int iChange);
-	int captureProbabilityTotal() const;
+	int captureProbabilityTotal() const;   // #430 F4: reads cascade DELTA + type base + folds (changer retired)
 
-	void changeExtraCaptureResistanceModifier(int iChange);
-	int captureResistanceTotal() const;
+	int captureResistanceTotal() const;    // #430 F4: reads cascade DELTA + type base + folds (changer retired)
 	int surroundedCaptureModifier() const;
 
 	void changeExtraBreakdownChance(int iChange);

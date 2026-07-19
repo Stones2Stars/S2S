@@ -30,11 +30,19 @@ the **design** the build executes against it.
 recompute-only / dirty-flagged / never-serialized model as the plot-yield and city caches
 ([state-repositories.md](../../architecture/state-repositories.md)).** One cache philosophy across every scope.
 
-- **Sources** = the unit's small held-set: its type intrinsic (`CvUnitInfo` base values) + held promotions +
-  **held unit-combat classes** — the LIVE set enumerated via `isHasUnitCombat` (which captures the intrinsic
-  primary + subs AND promotion-granted combat classes; the exact set the legacy `processUnitCombat` fired on, not
-  just the intrinsic primary/sub — no double-count with the promotion loop, legacy folded both). Bounded per unit
-  (a handful), unlike a city's many sources. ⚠ The legacy `processLoadedSpecialUnit` (`CvUnit.cpp:28875`) also folded
+- **Sources** = the unit's small held-set that the legacy delta accumulator was fed from: **held promotions +
+  held unit-combat classes** — the LIVE set enumerated via `isHasUnitCombat` (which captures the intrinsic primary +
+  subs AND promotion-granted combat classes; the exact set the legacy `processUnitCombat` fired on — no double-count
+  with the promotion loop, legacy folded both). Bounded per unit (a handful), unlike a city's many sources.
+  ⛔ **The gather does NOT include the unit TYPE's base scalar** (`CvUnitInfo` base values). A base stat like
+  withdrawal/firstStrike is authored as a `<channel>.unit.*` family AND materialized into the info base scalar, and
+  the consumer already adds that base separately (`m_pUnitInfo->getX() + getExtra*()`) — so folding the type into the
+  cache would DOUBLE-COUNT it (this bit the first cut; caught + fixed 2026-07-19). The cache reproduces the legacy
+  `m_iExtra*` DELTA (promotions + unit-combats) exactly, and the unit-type base stays with the consumer's `base +
+  extra` composite. Folding the type base INTO the machine (whole-value ownership,
+  [DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield)) is a deferred proper-once redesign —
+  it means repointing the composite `*Probability()` getter itself onto the machine and giving the AI weighting
+  consumers a separate delta query — NOT part of flipping the legacy delta getters. ⚠ The legacy `processLoadedSpecialUnit` (`CvUnit.cpp:28875`) also folded
   a `CvSpecialUnitInfo` withdrawal change, but that is a **DEAD source in current data** (verified live 2026-07-19):
   SPECIALUNIT is not deposit-ported (no readJson type-prefix, never pushed to `DepositIndex`, and `GC.getSpecialUnitInfo`
   returns a legacy `CvInfoBase`, not a deposit-carrying `CvInfo`), and zero special-unit JSON authors withdrawal — so
@@ -75,8 +83,20 @@ load-time re-derive path.
    transient on a suppress flag) are DONE and Release-build clean. **Live-verified** on the loaded ~1338-era save:
    `/computed/units/heal` shows the cascade-gathered `sameTile` terms matching the held promotions to the number
    (18→18, 13→13 across sampled healer/recipient pairs, zero stuck-zeros); withdrawal/firstStrike ride the identical
-   gather (address-only difference) and link clean. **Remaining step-1 scalar groups** (evasion / intercept /
-   collateral / bombard / capture / vision-range / cargo-size) are NOT yet migrated — same pattern, next.
+   gather (address-only difference). ⚠ The first cut ALSO folded the unit-TYPE base into the gather, DOUBLE-COUNTING
+   any type-authored withdrawal/firstStrike base (the consumer adds it separately) — caught + fixed 2026-07-19: the
+   gather is promotions + unit-combats ONLY (see §2). Heal was unaffected (no type authors territory heal, so its
+   type fold was 0). ✅ **evasion / intercept / collateral(damage) / capture ALSO LANDED (2026-07-19)** on the
+   corrected delta-only pattern (Assert-build clean): 5 members (`m_iExtra{Intercept,Evasion,CollateralDamage,
+   CaptureProbabilityModifier,CaptureResistanceModifier}`) deleted; `getExtraEvasion` / `getExtraIntercept` /
+   `getExtraCollateralDamage` flipped to cache reads (commander/commodore fold preserved; the MAX clamps stay in the
+   `evasionProbability()` / `maxInterceptionProbability()` composites); `captureProbabilityTotal` /
+   `captureResistanceTotal` flipped to cache reads (type base + commander + national + local-city + `max(0,·)` all
+   preserved on top); the 5 changers + their apply-loop folds retired into the existing `markDirty(UPK_ALL)`;
+   serialization drained (`savemigration.txt`). Collateral migrated ONLY the `damage` member — the
+   limit/maxUnits/protection siblings stay legacy (different members/families). **Remaining:** **bombard + cargo defer
+   to the SizeMatters carve-out (§4)** and **vision-range to step 3** (its `changeAdjacentSight` plot side-effect) —
+   flagged, not forced.
    *(original step-1 scope, for the record:)* **Stand up the scope + the gather-on-dirty fold**, validated on the
    **simplest scalar groups first** — no side-effects, no keying: withdrawal / firstStrike (both members: `strikes`
    count + `chance` probability) /

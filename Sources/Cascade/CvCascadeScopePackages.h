@@ -292,10 +292,14 @@ struct CascadeWorldScope
 // (DEC-unit-modifiers-on-top -- a cross-unit traveling modifier, never baked into the cache).
 enum CascadeUnitPkg
 {
-	UPK_WITHDRAWAL  = 1,   // withdrawal.unit.percent
-	UPK_FIRSTSTRIKE = 2,   // firstStrike.unit.strikes.flat + firstStrike.unit.chance.flat
-	UPK_HEAL        = 4,   // heal.unit.{enemy,neutral,friendly,sameTile,adjacentTile}.flat
-	UPK_ALL         = 7,
+	UPK_WITHDRAWAL  = 1,    // withdrawal.unit.percent
+	UPK_FIRSTSTRIKE = 2,    // firstStrike.unit.strikes.flat + firstStrike.unit.chance.flat
+	UPK_HEAL        = 4,    // heal.unit.{enemy,neutral,friendly,sameTile,adjacentTile}.flat
+	UPK_EVASION     = 8,    // air.unit.evasion.percent
+	UPK_INTERCEPT   = 16,   // air.unit.intercept.percent
+	UPK_COLLATERAL  = 32,   // collateral.unit.damage.percent (the damage member only; limit/maxUnits/protection stay legacy)
+	UPK_CAPTURE     = 64,   // capture.unit.probability.flat + capture.unit.resistance.flat
+	UPK_ALL         = 127,
 	UPK_EAGER       = UPK_ALL
 };
 
@@ -313,12 +317,25 @@ struct CascadeUnitPackages
 	int healFriendly;    // heal.unit.friendly.flat
 	int healSameTile;    // heal.unit.sameTile.flat
 	int healAdjacent;    // heal.unit.adjacentTile.flat
+	// -- evasion (UPK_EVASION) -- own-gathered DELTA; the commander fold rides on top at getExtraEvasion; the
+	// MAX_EVASION_PROBABILITY clamp lives in the evasionProbability() composite (base + extra) --
+	int evasion;         // air.unit.evasion.percent
+	// -- intercept (UPK_INTERCEPT) -- own-gathered DELTA; commander fold at getExtraIntercept; the clamp lives in
+	// the maxInterceptionProbability() composite --
+	int intercept;       // air.unit.intercept.percent
+	// -- collateral damage (UPK_COLLATERAL) -- own-gathered DELTA; commander fold at getExtraCollateralDamage --
+	int collateralDamage;// collateral.unit.damage.percent
+	// -- capture (UPK_CAPTURE) -- own-gathered DELTA; the commander + national + local-city folds + max(0,·) ride on
+	// top inside captureProbabilityTotal()/captureResistanceTotal() --
+	int captureProb;     // capture.unit.probability.flat
+	int captureResist;   // capture.unit.resistance.flat
 
 	CvDerivedCacheSet<CvUnit> set;   // the ONE dirty protocol (bind in CvUnit's init)
 
 	CascadeUnitPackages()
 		: withdrawal(0), fsStrikes(0), fsChance(0),
-		  healEnemy(0), healNeutral(0), healFriendly(0), healSameTile(0), healAdjacent(0) {}
+		  healEnemy(0), healNeutral(0), healFriendly(0), healSameTile(0), healAdjacent(0),
+		  evasion(0), intercept(0), collateralDamage(0), captureProb(0), captureResist(0) {}
 };
 
 #endif // CV_CASCADE_SCOPE_PACKAGES_H
