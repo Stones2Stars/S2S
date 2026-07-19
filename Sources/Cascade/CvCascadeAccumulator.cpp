@@ -520,11 +520,12 @@ void CascadeAccumulator::refreshUnitPackages(const CvUnit* pUnit, int iMask)
 
 	if (iMask & UPK_STRENGTH)
 	{
-		// contract rule 2: zero-then-sum. The SCALAR SITUATIONAL combat percents, HUMAN int. DELTA-ONLY: held
-		// promotions + held unit-combats, NO unit-type base (the *Modifier()/*Total() composites add the type base
-		// once + keep their commander/commodore fold + clamps/gates). Each is strength.unit.<situation>.percent.
-		// ⛔ The GENERAL strength.unit.percent is NOT gathered here -- m_iExtraCombatPercent stays legacy (it carries a
-		// loaded-special-unit transient the held-set can't represent; see CvCascadeScopePackages.h UPK_STRENGTH note).
+		// contract rule 2: zero-then-sum. The SCALAR combat percents, HUMAN int. DELTA-ONLY: held promotions + held
+		// unit-combats, NO unit-type base (the *Modifier()/*Total() composites add the type base once + keep their
+		// commander/commodore fold + clamps/gates). Each is strength.unit.[<situation>].percent. The GENERAL
+		// strength.unit.percent gathers only the HELD-SET sum here; getExtraCombatPercent folds the loaded-special-unit
+		// cargo contribution LIVE at read (a cargo relationship the standing held-set gather can't hold).
+		int iGeneral = 0;
 		int iCityAtk = 0, iCityDef = 0, iHillAtk = 0, iHillDef = 0, iAtk = 0, iDef = 0, iVsB = 0, iRel = 0,
 			iStealth = 0, iDmg = 0, iUnnerve = 0, iEnclose = 0, iLunge = 0, iDynDef = 0;
 		for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
@@ -532,6 +533,7 @@ void CascadeAccumulator::refreshUnitPackages(const CvUnit* pUnit, int iMask)
 			if (!pUnit->isHasPromotion((PromotionTypes)i)) continue;
 			const CvInfo* jP = InfoRepo<CvPromotionInfo>::get().get(i);
 			if (jP == NULL) continue;
+			iGeneral += MMKernel::sumUnit(jP, "strength.unit", "percent", ec);
 			iCityAtk += MMKernel::sumUnit(jP, "strength.unit.cityAttack", "percent", ec);
 			iCityDef += MMKernel::sumUnit(jP, "strength.unit.cityDefense", "percent", ec);
 			iHillAtk += MMKernel::sumUnit(jP, "strength.unit.hillsAttack", "percent", ec);
@@ -552,6 +554,7 @@ void CascadeAccumulator::refreshUnitPackages(const CvUnit* pUnit, int iMask)
 			if (!pUnit->isHasUnitCombat((UnitCombatTypes)i)) continue;
 			const CvInfo* jC = InfoRepo<CvUnitCombatInfo>::get().get(i);
 			if (jC == NULL) continue;
+			iGeneral += MMKernel::sumUnit(jC, "strength.unit", "percent", ec);
 			iCityAtk += MMKernel::sumUnit(jC, "strength.unit.cityAttack", "percent", ec);
 			iCityDef += MMKernel::sumUnit(jC, "strength.unit.cityDefense", "percent", ec);
 			iHillAtk += MMKernel::sumUnit(jC, "strength.unit.hillsAttack", "percent", ec);
@@ -567,6 +570,7 @@ void CascadeAccumulator::refreshUnitPackages(const CvUnit* pUnit, int iMask)
 			iLunge   += MMKernel::sumUnit(jC, "strength.unit.lunge", "percent", ec);
 			iDynDef  += MMKernel::sumUnit(jC, "strength.unit.dynamicDefense", "percent", ec);
 		}
+		st.strCombatPercent = iGeneral;
 		st.strCityAttack = iCityAtk;
 		st.strCityDefense = iCityDef;
 		st.strHillsAttack = iHillAtk;

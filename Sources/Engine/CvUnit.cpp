@@ -646,8 +646,7 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iSMAirBombBaseRate = 0;
 	m_iSMBaseWorkRate = 0;
 	m_iSMRevoltProtection = 0;
-	m_iExtraCombatPercent = 0;
-	//#430 F4: m_iExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent removed -- cascade self-accumulators (UPK_STRENGTH), re-derived via markAllDirty above
+	//#430 F4: m_iExtraCombatPercent + m_iExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent removed -- cascade self-accumulators (UPK_STRENGTH), re-derived via markAllDirty above
 
 	m_iRevoltProtection = 0;
 	m_iCollateralDamageProtection = 0;
@@ -933,8 +932,7 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iSMBaseWorkRate = other.m_iSMBaseWorkRate;
 	m_iSMRevoltProtection = other.m_iSMRevoltProtection;
 	// #430 F4: heal accumulators gathered from the held-set (never copied) -- covered by the markDirty(UPK_ALL) above.
-	m_iExtraCombatPercent = other.m_iExtraCombatPercent;
-	//#430 F4: m_iExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent not copied -- cascade self-accumulators (UPK_STRENGTH), re-derived via markDirty(UPK_ALL) above
+	//#430 F4: m_iExtraCombatPercent + m_iExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent not copied -- cascade self-accumulators (UPK_STRENGTH), re-derived via markDirty(UPK_ALL) above
 	m_iRevoltProtection = other.m_iRevoltProtection;
 	m_iCollateralDamageProtection = other.m_iCollateralDamageProtection;
 	m_iPillageChange = other.m_iPillageChange;
@@ -16223,35 +16221,53 @@ int CvUnit::getAdjacentTileHeal() const
 	return m_cascadeUnitPackages.healAdjacent;
 }
 
+// This unit's OWN general combat percent: the cascade held-set sum (strCombatPercent, gathered from held promotions +
+// held unit-combats via strength.unit.percent) PLUS the LIVE loaded-special-unit cargo fold. A loaded special-unit
+// applies its combat percent to its transport -- a cross-unit cargo relationship (SPECIALUNIT is not deposit-ported),
+// folded live at read rather than cached (DEC-unit-modifiers-on-top).
+int CvUnit::combatPercentSelf() const
+{
+	m_cascadeUnitPackages.set.ensure();
+	int iValue = m_cascadeUnitPackages.strCombatPercent;
+	// The loaded cargo sits on this transport's plot (getTransportUnit() == this) -- the same set the load/unload path
+	// feeds through processLoadedSpecialUnit. hasCargo() is a cached-counter O(1) short-circuit, so a unit with no cargo
+	// (the overwhelming common case on the maxCombatStr hot path) pays a single int compare.
+	if (hasCargo())
+	{
+		foreach_(const CvUnit* pCargo, plot()->units())
+		{
+			if (pCargo->getTransportUnit() == this && pCargo->getSpecialUnitType() != NO_SPECIALUNIT)
+			{
+				iValue += GC.getSpecialUnitInfo(pCargo->getSpecialUnitType()).getCombatPercent();
+			}
+		}
+	}
+	return iValue;
+}
+
+// The general combat percent: this unit's own value + the ONE active leader's own value (commander preferred, else
+// commodore) -- matching the legacy self-member + leader-member read, where each side's value now includes its own
+// held-set sum AND its own loaded-special-unit cargo fold (both baked into combatPercentSelf()).
 int CvUnit::getExtraCombatPercent() const
 {
+	const int iOwn = combatPercentSelf();
 	if (!isCommander())
 	{
 		const CvUnit* pCommander = getCommander();
 		if (pCommander)
 		{
-			return m_iExtraCombatPercent + pCommander->m_iExtraCombatPercent;
+			return iOwn + pCommander->combatPercentSelf();
 		}
 	}
 	if (!isCommodore())
-    	{
-    		const CvUnit* pCommodore = getCommodore();
-    		if (pCommodore)
-    		{
-    			return m_iExtraCombatPercent + pCommodore->m_iExtraCombatPercent;
-    		}
-    	}
-	return m_iExtraCombatPercent;
-}
-
-void CvUnit::changeExtraCombatPercent(int iChange)
-{
-	if (iChange != 0)
 	{
-		m_iExtraCombatPercent += iChange;
-
-		setInfoBarDirty(true);
+		const CvUnit* pCommodore = getCommodore();
+		if (pCommodore)
+		{
+			return iOwn + pCommodore->combatPercentSelf();
+		}
 	}
+	return iOwn;
 }
 
 // #430 F4 (strength situational group): the OWN accumulated value is the cascade self-gathered delta (was
@@ -18325,8 +18341,8 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 
 	changeExtraBombardRate(kUnitCombat.getBombardRateChange() * iChange);//no merge/split (affect this volumetrically on the final value)
 	//#430 F4: firstStrike + heal + evasion + intercept + collateralDamage + capture folds retired -- gathered on-dirty via the markDirty(UPK_ALL) above
-	changeExtraCombatPercent(kUnitCombat.getCombatPercent() * iChange);//no merge/split
-	//#430 F4: cityAttack/cityDefense/hillsAttack/hillsDefense combat-% folds retired -- gathered on-dirty (UPK_STRENGTH) via the markDirty(UPK_ALL) above
+	// The strength combat percents (general strength.unit.percent + the situational cityAttack/cityDefense/hillsAttack/
+	// hillsDefense/... families) are cascade held-set sums, gathered on-dirty (UPK_STRENGTH) via the markDirty(UPK_ALL) above.
 	// Assume only worker units can get the relevant unit combats, if not then we'll need a retroactive unitComp late init function.
 	if (isWorker())
 	{
@@ -18832,8 +18848,8 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 		bSMrecalc = true;
 	}
 	//#430 F4: heal (enemy/neutral/friendly/sameTile/adjacentTile) folds retired -- gathered on-dirty via the markDirty(UPK_ALL) above
-	changeExtraCombatPercent(kPromotion.getCombatPercent() * iChange);
-	//#430 F4: cityAttack/cityDefense/hillsAttack/hillsDefense combat-% folds retired -- gathered on-dirty (UPK_STRENGTH) via the markDirty(UPK_ALL) above
+	// The strength combat percents (general strength.unit.percent + the situational cityAttack/cityDefense/hillsAttack/
+	// hillsDefense/... families) are cascade held-set sums, gathered on-dirty (UPK_STRENGTH) via the markDirty(UPK_ALL) above.
 	// Assume only worker units can get the relevant promotions, if not then we'll need a retroactive unitComp late init function.
 	if (isWorker())
 	{
@@ -19409,8 +19425,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraBombardRate);
 	// #430 F4: the five heal accumulators (enemy/neutral/friendly/sameTile/adjacentTile) drained (soft-remove) --
 	// heal re-derives from the held-set at load. Tags named in Assets/savemigration.txt.
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraCombatPercent);
-	//#430 F4: m_iExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent reads removed (UPK_STRENGTH; drained via savemigration.txt)
+	//#430 F4: m_iExtraCombatPercent + m_iExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent reads removed (UPK_STRENGTH; drained via savemigration.txt)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iRevoltProtection);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iCollateralDamageProtection);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iPillageChange);
@@ -20390,8 +20405,7 @@ void CvUnit::write(FDataStreamBase* pStream)
 	// serialized (soft-remove) -- all re-derive from the held-set.
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraBombardRate);
 	// #430 F4: the five heal accumulators no longer serialized (soft-remove) -- heal re-derives from the held-set.
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraCombatPercent);
-	//#430 F4: m_iExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent writes removed (UPK_STRENGTH)
+	//#430 F4: m_iExtraCombatPercent + m_iExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent writes removed (UPK_STRENGTH)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iRevoltProtection);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iCollateralDamageProtection);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iPillageChange);
@@ -28765,16 +28779,12 @@ void CvUnit::removeHNCapturePromotion()
 
 void CvUnit::processLoadedSpecialUnit(bool bChange, SpecialUnitTypes eSpecialUnit)
 {
-	const CvSpecialUnitInfo& kSpecialUnit = GC.getSpecialUnitInfo(eSpecialUnit);
-	const int iChange = (bChange ? 1 : -1);
-
-	changeExtraCombatPercent(kSpecialUnit.getCombatPercent() * iChange);
-	// #430 F4: withdrawal migrated to the cascade self-accumulator -- mark dirty (uniform with the promotion/
-	// unit-combat fold sites). NOTE (mapped, not guessed): special units author ZERO withdrawal deposits in the
-	// live data AND SPECIALUNIT is not pushed into the DepositIndex, so the gather deliberately does NOT include
-	// the special-unit info (GC.getSpecialUnitInfo is the legacy CvInfoBase array, not a deposit-carrying CvInfo);
-	// this mark therefore re-derives to the same value today -- kept for site uniformity + future-safety.
-	m_cascadeUnitPackages.set.markDirty(UPK_WITHDRAWAL);
+	// A loaded special-unit's combat percent applies to this transport, folded LIVE at read in getExtraCombatPercent's
+	// cargo walk (no stored member to update here). Loading/unloading it changes this transport's combat strength, so
+	// refresh its combat-stat UI. (bChange/eSpecialUnit are the load-direction + cargo type the caller already applied
+	// to the cargo relationship the live fold reads; the fold recomputes from that current relationship.)
+	(void)bChange; (void)eSpecialUnit;
+	setInfoBarDirty(true);
 }
 
 bool CvUnit::hasBuild(BuildTypes eBuild) const

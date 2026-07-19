@@ -1189,12 +1189,9 @@ public:
 
 	int getAdjacentTileHeal() const;
 
-	// getExtraCombatPercent (general strength.unit.percent) stays a LEGACY stored member -- it carries a cross-unit
-	// loaded-special-unit transient (processLoadedSpecialUnit) the held-set gather can't represent; NOT migrated.
+	// #430 F4 (strength group): getters read the cascade self-accumulator (UPK_STRENGTH); changers retired. The general
+	// getExtraCombatPercent folds its loaded-special-unit cargo contribution LIVE at read (combatPercentSelf, private).
 	int getExtraCombatPercent() const;
-	void changeExtraCombatPercent(int iChange);
-
-	// #430 F4 (strength situational group): getters read the cascade self-accumulator (UPK_STRENGTH); changers retired.
 	int getExtraCityAttackPercent() const;
 	int getExtraCityDefensePercent() const;
 	int getExtraHillsAttackPercent() const;
@@ -1664,8 +1661,7 @@ protected:
 	int m_iSMRevoltProtection;
 	// #430 F4: m_iExtraEnemyHeal / m_iExtraNeutralHeal / m_iExtraFriendlyHeal / m_iSameTileHeal / m_iAdjacentTileHeal
 	// removed -- the heal territory family is a cascade self-accumulator (m_cascadeUnitPackages, gather-on-dirty).
-	int m_iExtraCombatPercent;
-	// #430 F4: m_iExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent removed -- strength situational cascade self-accumulators (UPK_STRENGTH).
+	// #430 F4: m_iExtraCombatPercent + m_iExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent removed -- strength cascade self-accumulators (UPK_STRENGTH).
 
 	int m_iRevoltProtection;
 	int m_iCollateralDamageProtection;
@@ -1744,6 +1740,10 @@ public:
 	bool airStrike(CvPlot* pPlot);
 protected:
 	// ! Dale
+
+	// #430 F4: this unit's OWN general combat percent -- the UPK_STRENGTH held-set sum + the live loaded-special-unit
+	// cargo fold. getExtraCombatPercent composes self + the one active leader's own value from this.
+	int combatPercentSelf() const;
 
 	int planBattle( CvBattleDefinition & kBattleDefinition ) const;
 	int computeUnitsToDie( const CvBattleDefinition & kDefinition, bool bRanged, BattleUnitTypes iUnit ) const;

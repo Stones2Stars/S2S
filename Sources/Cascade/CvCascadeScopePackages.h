@@ -299,12 +299,12 @@ enum CascadeUnitPkg
 	UPK_INTERCEPT   = 16,   // air.unit.intercept.percent
 	UPK_COLLATERAL  = 32,   // collateral.unit.damage.percent (the damage member only; limit/maxUnits/protection stay legacy)
 	UPK_CAPTURE     = 64,   // capture.unit.probability.flat + capture.unit.resistance.flat
-	UPK_STRENGTH    = 128,  // strength.unit.<situation>.percent -- the SCALAR SITUATIONAL combat percents (cityAttack/
-	                        // cityDefense/hillsAttack/hillsDefense/attack/defense/vsBarbs/religious/stealth/damageModifier/
-	                        // unnerve/enclose/lunge/dynamicDefense). ⛔ The GENERAL strength.unit.percent (m_iExtraCombatPercent)
-	                        // is DELIBERATELY NOT here: it also carries a cross-unit LOADED-special-unit transient
-	                        // (processLoadedSpecialUnit folds CAPTIVE's -5 onto the TRANSPORT) that the held-set gather
-	                        // cannot represent (SPECIALUNIT is not in the DepositIndex) -- it stays a legacy stored member.
+	UPK_STRENGTH    = 128,  // strength.unit.[<situation>].percent -- the SCALAR combat percents: the GENERAL one
+	                        // (strCombatPercent) + the SITUATIONAL ones (cityAttack/cityDefense/hillsAttack/hillsDefense/
+	                        // attack/defense/vsBarbs/religious/stealth/damageModifier/unnerve/enclose/lunge/dynamicDefense).
+	                        // The general one's cache holds only the HELD-SET sum; its cross-unit loaded-special-unit
+	                        // contribution (a cargo relationship, SPECIALUNIT is not deposit-ported) is folded LIVE at read
+	                        // in getExtraCombatPercent (DEC-unit-modifiers-on-top), never cached here.
 	UPK_ALL         = 255,
 	UPK_EAGER       = UPK_ALL
 };
@@ -339,6 +339,8 @@ struct CascadeUnitPackages
 	// NO unit-type base). The consumer *Modifier()/*Total() composites add the m_pUnitInfo type base ONCE and keep their
 	// commander/commodore fold + clamps + gates (noDefensiveBonus zero, religious sign, COMBAT_WITHOUT_WARNING for stealth,
 	// dynamicDefense's city-local add). Every field is strength.unit.<situation>.percent, HUMAN int. --
+	int strCombatPercent;   // strength.unit.percent               (getExtraCombatPercent; HELD-SET sum only -- the loaded-
+	                        //                                      special-unit cargo contribution is folded LIVE at read)
 	int strCityAttack;      // strength.unit.cityAttack.percent    (cityAttackModifier)
 	int strCityDefense;     // strength.unit.cityDefense.percent   (cityDefenseModifier; noDefensiveBonus zero at read)
 	int strHillsAttack;     // strength.unit.hillsAttack.percent   (hillsAttackModifier)
@@ -360,6 +362,7 @@ struct CascadeUnitPackages
 		: withdrawal(0), fsStrikes(0), fsChance(0),
 		  healEnemy(0), healNeutral(0), healFriendly(0), healSameTile(0), healAdjacent(0),
 		  evasion(0), intercept(0), collateralDamage(0), captureProb(0), captureResist(0),
+		  strCombatPercent(0),
 		  strCityAttack(0), strCityDefense(0), strHillsAttack(0), strHillsDefense(0),
 		  strAttack(0), strDefense(0), strVsBarbs(0), strReligious(0), strStealth(0),
 		  strDamageModifier(0), strUnnerve(0), strEnclose(0), strLunge(0), strDynamicDefense(0) {}

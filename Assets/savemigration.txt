@@ -93,11 +93,14 @@ the m_pUnitInfo type base is added ONCE by the *Modifier()/*Total() composites, 
 MMKernel::sumUnit "strength.unit.<situation>"."percent". The 14 changers + their apply-loop folds (processPromotion /
 processUnitCombat) are gone -- consolidated into the existing markDirty(UPK_ALL) per apply loop; the never-serialized
 cache re-derives at load. The getters keep their LIVE commander/commodore fold (stealth had none) + consumer-side
-gates/clamps (noDefensiveBonus zero, religious sign, COMBAT_WITHOUT_WARNING, max(0,·)/max(-95,·)). ⛔ NOTE: the GENERAL
-strength.unit.percent (CvUnit::m_iExtraCombatPercent) is DELIBERATELY NOT migrated -- it also carries a cross-unit
-loaded-special-unit transient (processLoadedSpecialUnit folds SPECIALUNIT_CAPTIVE's -5 onto the transport) the held-set
-gather cannot represent; it stays a legacy stored member (still read/written).
+gates/clamps (noDefensiveBonus zero, religious sign, COMBAT_WITHOUT_WARNING, max(0,·)/max(-95,·)). The GENERAL
+strength.unit.percent (CvUnit::m_iExtraCombatPercent) migrates the same way for its HELD-SET part
+(m_cascadeUnitPackages.strCombatPercent), and its cross-unit LOADED-SPECIAL-UNIT contribution (a loaded special-unit
+applies its combat percent to the transport; SPECIALUNIT is not deposit-ported) is folded LIVE at read in
+getExtraCombatPercent by walking the transport's cargo -- so its changer + processLoadedSpecialUnit fold are gone too
+(the load/unload path refreshes the transport's combat-stat UI via setInfoBarDirty).
 
+CvUnit::m_iExtraCombatPercent              (int)
 CvUnit::m_iExtraCityAttackPercent          (int)
 CvUnit::m_iExtraCityDefensePercent         (int)
 CvUnit::m_iExtraHillsAttackPercent         (int)
