@@ -126,12 +126,20 @@ that is what blocks every downstream consumer.
   unit references it or not**, so the 480 vestigial classes are pure wasted memory. Under the 32-bit ~3.2 GB
   address-space ceiling (the roadmap's `bad_alloc`-near-the-ceiling pressure), purging them is a direct reduction —
   this is why the owner welcomes it even though it is outside the minimum-to-unblock.
+- **The working method (owner 2026-07-19): map the OBVIOUS, FLAG the unsure/not-mapped — don't force completeness.**
+  Both the tag mapping (§3.A) and the purge run this way: classify/purge the clear cases, and leave anything
+  ambiguous FLAGGED (kept, tagged "unsure") for a later editable pass. This is what makes it swingable relatively
+  easily — no exhaustive up-front analysis.
 - Re-derive the vestigial set from LIVE data (480/815 unreferenced by any unit primary/sub; ADD promotion-granted
   `skills.unitCombats` membership before finalizing — §7 risk 1). For each vestigial class decide: **delete**
-  (genuinely dead — Categories, DCM, traps already dropped), or **fold** its taxonomy into a tag/`sizeMatters` and
-  drop the class. ⚠ engine.md's "unreferenced ≠ dead" caveat (attribute-matched classes selected by
-  era/religion/culture, never XML-named) — the slimming must respect it (do not blunt-purge; the 2026-06-14 blunt
-  purge over-reached and was reverted).
+  (obviously dead — Categories, DCM, traps already dropped), or **fold** its taxonomy into a tag/`sizeMatters` and
+  drop the class; **flag** the unsure and leave it.
+- **Also purge DUPLICATES (owner 2026-07-19):** among 815 fat classes there are near-certainly functionally-identical
+  redundant unit-combats — detect classes whose field payload is identical (or trivially so), collapse each duplicate
+  set to one, and re-point the referencing units/subs to the survivor. Same memory win; same obvious-only + flag-unsure
+  discipline (only collapse where the payloads are genuinely identical; flag near-duplicates for review). ⚠ engine.md's "unreferenced ≠ dead" caveat (attribute-matched
+  classes selected by era/religion/culture, never XML-named) is exactly WHY the unsure ones get flagged not deleted —
+  do not blunt-purge (the 2026-06-14 blunt purge over-reached and was reverted).
 
 ## 4. What it unblocks (the payoff)
 
