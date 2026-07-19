@@ -267,8 +267,28 @@ def main():
     args = ap.parse_args()
     store = Store()
     table = store.table("UnitCombatInfo")
-    results = OrderedDict((typ, curate(typ, rec, store)) for typ, rec in table.items())
+    # Culture unit-combats are redundant double-data and are DROPPED outright (owner 2026-07-19): the
+    # culture<->unit identity is owned by the culture BONUS (BONUS_X.enables.units + identity.bonusClassType
+    # BONUSCLASS_CULTURE) and gated on the units (requires.build: BONUS_X); the UNITCOMBAT_CULTURE_* shell
+    # only re-points at it via identity.culture, whose engine getter (CvUnitCombatInfo::getCulture) has ZERO
+    # consumers, and it attaches to no unit. A culture record carrying REAL combat content would be a data
+    # bug -- guarded below, never silently dropped.
+    results = OrderedDict()
+    dropped_culture = []
+    for typ, rec in table.items():
+        out = curate(typ, rec, store)
+        if out.get("identity", {}).get("culture"):
+            extra = [k for k in out if k not in ("type", "ui", "identity")]
+            id_extra = [k for k in out["identity"] if k not in ("description", "help", "culture")]
+            assert not extra and not id_extra, (
+                "culture UC %s is not a pure shell (extra=%s identity_extra=%s) -- review before dropping"
+                % (typ, extra, id_extra))
+            dropped_culture.append(typ)
+            continue
+        results[typ] = out
     n = len(results)
+    if dropped_culture:
+        print("DROPPED %d culture unit-combats (redundant double-data; owner 2026-07-19)" % len(dropped_culture))
     # COVERAGE CHECK
     handled = (set(STRENGTH) | set(FAMILIES) | set(VS_KEYED) | set(CAP_BOOL) | set(CAP_BOOL_X)
                | set(CAP_PAIR) | set(CAP_COUNT) | set(CAP_COUNT_X) | set(CAP_LIST) | set(VISION_PAIRS)

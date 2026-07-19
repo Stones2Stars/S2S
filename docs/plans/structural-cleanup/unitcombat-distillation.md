@@ -138,6 +138,23 @@ that is what blocks every downstream consumer.
    `getNumMilitaryUnits` + the ~12 readers, and feeds `per:{unit: IS_MILITARY}` scalers (military happiness).
 
 ### E. Slimming the vestigial classes  — a DIRECT MEMORY WIN (owner 2026-07-19)
+
+> **✅ DONE — first slice: the 344 `UNITCOMBAT_CULTURE_*` DROPPED (owner ruling 2026-07-19).** These are
+> **redundant double-data**, not vestigial-but-real: each is a pure `{description, culture: BONUS_X}` shell, and the
+> culture↔unit identity is already owned by the culture **BONUS** (`BONUS_X.enables.units` +
+> `identity.bonusClassType: BONUSCLASS_CULTURE`) and gated on the units (`requires.build: BONUS_X`).
+> `CvUnitCombatInfo::getCulture()` has **zero engine consumers**, and no unit attaches a culture combat — so nothing
+> is lost. (Contrast `getReligion()`, which IS live — `CvUnit::getReligion` reads it off attached combats — so the 27
+> `UNITCOMBAT_RELIGION_*` are NOT the same case and STAY.) **Executed:** `curate_unitcombat.py` drops any culture
+> shell from the emit (guarded so a culture record carrying real combat content is never silently dropped); the 344
+> JSON files are deleted; unit-combats load from JSON, so it manifests in-game (814 → **470** live classes). The
+> `unitcombats/_order.json` manifest is **regenerated on the actual output** (814 → 470). `curate_order.py` now
+> generates EVERY manifest on-disk (legacy XML order ∩ emitted files) — the manifest's job is purely to re-impose the
+> legacy ORDER that per-file JSON cannot carry intrinsically, and it does so on exactly the files that exist. Dropping
+> a fileless phantom is a **no-op for engine ids**: the loader sorts only present entity files by manifest index, so a
+> phantom never gets an id (`CvXMLLoadUtilitySet.cpp:1876-1896`). The now-dead `CvUnitCombatInfo::getCulture()` +
+> `m_eCulture` member + ctor-init + `mapFrom` read are **DELETED** (consumer-verified: zero readers anywhere).
+
 - **Motivation is memory, not tidiness:** every `CvUnitCombatInfo` (all ~150 fields) is loaded resident **whether any
   unit references it or not**, so the 480 vestigial classes are pure wasted memory. Under the 32-bit ~3.2 GB
   address-space ceiling (the roadmap's `bad_alloc`-near-the-ceiling pressure), purging them is a direct reduction —

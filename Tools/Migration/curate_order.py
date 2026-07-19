@@ -14,6 +14,14 @@ The loader sorts a category's entities by manifest position; a type ABSENT from 
 TECH_GAME_START, future hand-authored entities) sorts AFTER every listed one, alphabetically -- reproducing
 the legacy new-stuff-appends behaviour with zero authoring burden.
 
+Each manifest is the legacy XML order INTERSECTED with the types actually emitted as JSON -- a legacy type a
+curator intentionally drops (e.g. the redundant culture unit-combats) is NOT listed. This is safe for every
+category: the loader (CvXMLLoadUtilitySet::LoadGlobalClassInfoJson) reads `_order.json` into `order[type]=index`
+and sorts only the PRESENT entity files by that index -- a fileless phantom never becomes an entity, so it never
+gets an id, and dropping it shifts only the absolute index VALUES, never the RELATIVE order of present types.
+So the assigned ids are identical with or without phantoms -- the manifest's job is purely to re-impose the
+legacy ORDER that per-file JSON cannot carry intrinsically, and it does that on exactly the files that exist.
+
 Derived artifact -- regenerate + commit freely (the manifests are curator OUTPUT, never hand-edited):
     python3 curate_order.py --write
 """
@@ -104,6 +112,15 @@ def main():
     args = ap.parse_args()
     for ent, folder in sorted(FOLDERS.items()):
         types = order_of(ent, store_mod.ENTITIES[ent])
+        # The manifest orders the FILES that exist, in legacy XML order: intersect the legacy type sequence with
+        # the types actually emitted as JSON, so a curator-dropped legacy type (e.g. culture unit-combats) is not
+        # listed. Provably a no-op for engine ids -- a fileless phantom never gets an id (docstring). Guarded: if
+        # the folder has not been generated yet, keep the full order rather than emptying the manifest.
+        present = {os.path.splitext(os.path.basename(p))[0].upper()
+                   for p in glob.glob(os.path.join(OUT, folder, "**", "*.json"), recursive=True)
+                   if os.path.basename(p) != "_order.json"}
+        if present:
+            types = [t for t in types if t in present]
         print("%-20s -> %s/_order.json  (%d types; first: %s)"
               % (ent, folder, len(types), ", ".join(types[:3])))
         if args.write:

@@ -41,9 +41,8 @@ public:
 	CvUnitCombatInfo();
 	virtual void mapFrom(const picojson::value& entity);
 
-	// --- textual refs (identity.{religion,culture,era} FKs; NO_* when unauthored) ---
+	// --- textual refs (identity.{religion,era} FKs; NO_* when unauthored) ---
 	ReligionTypes getReligion() const { return m_eReligion; }
-	BonusTypes    getCulture()  const { return m_eCulture; }
 	EraTypes      getEra()      const { return m_eEra; }
 
 	// --- create-unit `*Base` ranks (identity.base.*; quality/group/size carry the legacy -10 "unset" sentinel) ---
@@ -342,7 +341,6 @@ private:
 
 	// identity scalars
 	ReligionTypes m_eReligion;
-	BonusTypes    m_eCulture;
 	EraTypes      m_eEra;
 	int m_iQualityBase, m_iGroupBase, m_iSizeBase;   // identity.base.* (-10 sentinel default)
 	int m_iRBombardDamageBase, m_iRBombardDamageLimitBase, m_iRBombardDamageMaxUnitsBase;

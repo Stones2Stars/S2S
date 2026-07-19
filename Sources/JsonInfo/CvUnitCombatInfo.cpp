@@ -134,7 +134,7 @@ static void uc_readImprovementChanges(const picojson::object& vision, const char
 }
 
 CvUnitCombatInfo::CvUnitCombatInfo()
-	: m_eReligion(NO_RELIGION), m_eCulture(NO_BONUS), m_eEra(NO_ERA),
+	: m_eReligion(NO_RELIGION), m_eEra(NO_ERA),
 	  m_iQualityBase(-10), m_iGroupBase(-10), m_iSizeBase(-10),
 	  m_iRBombardDamageBase(0), m_iRBombardDamageLimitBase(0), m_iRBombardDamageMaxUnitsBase(0),
 	  m_iDCMBombRangeBase(0), m_iDCMBombAccuracyBase(0),
@@ -198,7 +198,6 @@ void CvUnitCombatInfo::mapFrom(const picojson::value& entity)
 			m_iDCMBombAccuracyBase        = jsonIdInt(*bo, "dcmAccuracy");
 		}
 		m_eReligion = (ReligionTypes)jsonIdFk(*io, "religion");
-		m_eCulture  = (BonusTypes)jsonIdFk(*io, "culture");
 		m_eEra      = (EraTypes)jsonIdFk(*io, "era");
 		m_bForMilitary      = jsonIdBool(*io, "forMilitary");
 		m_bForNavalMilitary = jsonIdBool(*io, "forNavalMilitary");

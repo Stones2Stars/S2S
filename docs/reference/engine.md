@@ -149,9 +149,13 @@ resolves dynamically by name.
 - Combat resolution: **additive-accumulate, multiply-once** — ~40 signed-% layers sum into one `iModifier`, applied
   multiplicatively once; "vs X" folds into the *defender's* number. **Four overlapping "vs" channels** add into the
   same `iModifier` with no precedence (silent stacking; a known live bug swaps the vs-class / vs-unit help labels).
-- **"Unreferenced ≠ dead"** — two purge blind spots: inactive-module classes that *look* orphaned, and engine
-  attribute-matches (`doSetUnitCombats` selects by `getEra()`/`getReligion()`/`getCulture()`, never XML-named). A
-  blunt 2026-06-14 purge over-reached on both and was fully reverted.
+- **"Unreferenced ≠ dead"** — two purge blind spots: inactive-module classes that *look* orphaned (Cultures /
+  Alt_Timelines / Ideas / ExoticAnimals module XML holds the assignments), and engine runtime-attachment. The ONLY
+  runtime-attach selector is `getEra()`: `doSetUnitCombats` (`CvUnit.cpp:26140`) attaches the first combat class whose
+  `getEra()` matches the unit's era, on top of the unit's primary/sub `combatClass`es, promotion grants, and heal-as
+  types. `identity.religion` is read FROM already-attached combats (`CvUnit::getReligion`, `:30868`), NOT an attach
+  selector; `identity.culture` has no attach path at all. A blunt 2026-06-14 purge over-reached on the module blind
+  spot and was fully reverted.
 - **Cascade migration:** UnitCombat is a **source/enabler** (membership = the enabler axis; the ~150 fields = a
   modifier deposit) and should share Promotion's modifier-family vocabulary — **do UnitCombat + Promotion together**.
   Verify live, then cut any dead-class purge.
