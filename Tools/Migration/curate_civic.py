@@ -16,8 +16,8 @@ workflow (9 field-slice agents + dead/double-author auditors + adversarial verif
   +1/-1 empire-count semantics is a consumer rule).
 - STATE-RELIGION: the 5 iStateReligion* effects -> a grouped `stateReligion` family (empire), gated on having a
   state religion. Civic-OWNED; NOT inverted onto any ReligionInfo.
-- BonusCommerceModifiers: INVERTED onto the bonus (the bonus is the conditioner) via a new curate_bonus
-  BONUS_BOOSTS row -> dropped here, mirroring building/unit/project BonusProductionModifiers.
+- BonusCommerceModifiers: NOT YET CAPTURED — dropped here and not picked up by curate_bonus either (known
+  live gap; no inversion table exists for it).
 
 Other: TechPrereq -> DROP (store inverts to tech.enables.civics). SpecialistYield/CommercePercentChanges ->
 DROP (already folded onto the specialist by curate_specialist — double-author). Entity-keyed maps
@@ -180,7 +180,7 @@ ENABLE_LISTS = {"SpecialistValids": "specialists", "Hurrys": "hurries", "Special
 TEXT = {"Description": "description", "Civilopedia": "civilopedia", "Help": "help", "Strategy": "strategy"}
 IDENTITY = {"Upkeep": "upkeepLevel", "CivicOptionType": "civicOption", "iAnarchyLength": "anarchyLength",
             "WeLoveTheKing": "weLoveTheKing"}
-# inverts onto the bonus (curate_bonus BONUS_BOOSTS); dropped here. Plus prereq + double-author + dead caches.
+# BonusCommerceModifiers: dropped, not captured anywhere (known gap). Plus prereq + double-author + dead caches.
 DROP = {"TechPrereq", "BonusCommerceModifiers", "SpecialistCommercePercentChanges", "SpecialistYieldPercentChanges",
         "Categories", "isAnyImprovementYieldChange"}
 FAMILY_ORDER = ["food", "production", "commerce", "gold", "research", "culture", "espionage", "yield",

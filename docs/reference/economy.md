@@ -47,7 +47,7 @@ supply + corporate maintenance.
   `isNoUnhealthyPopulation`). `foodConsumption = consumed − angryPop − healthRate` (sick cities eat more).
 - **WLTK ("We Love the King/Emperor Day", civic-named text)** — cleared on occupation / anger / sickness; else
   stochastic (pop ≥ min, `pop-rand < WE_LOVE_THE_KING_RAND`); a random event may set it via the Python setter.
-  **Sole gameplay effect = maintenance: `updateMaintenance` (`CvCity.cpp:7704`) accrues 0 while celebrating** — the
+  **Sole gameplay effect = maintenance: `updateMaintenance` (`CvCity.cpp:7025`) accrues 0 while celebrating** — the
   city sends no maintenance to the central ledger (ALL components, not just distance+numCities; the
   saved-maintenance-by-civic/building helpers read 0 during it too). The "no anger" half of the folklore is the
   TRIGGER condition, not an effect; everything else is cosmetic (fireworks, celebrate text). *(A prior claim here

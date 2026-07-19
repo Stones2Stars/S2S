@@ -167,8 +167,8 @@ by the unified percent total, with the building FLATs bolted on **after** — ne
 The city's **health** and **happiness** levels are the §2 combine applied with the **`polarity: signed-split`**
 family metadata (§2): every source deposits ONE signed value; the **good/happy side sums `max(0, source)`**, the
 **bad/unhappy side sums `−min(0, source)`** — the same source feeds both accumulators, split by sign at combine
-(the engine's exact shape: `happyLevel`/`unhappyLevel` `CvCity.cpp:5709/5626`, `goodHealth`/`badHealth`
-`:5851/:5878`). The realized verdicts: `healthRate = min(0, good − bad)`; `angryPopulation =
+(the engine's exact shape: `happyLevel`/`unhappyLevel`/`goodHealth`/`badHealth` `CvCity.cpp:5191/5195/5199/5203`,
+each delegating to `CascadeAccumulator::wellbeing(this, N)`). The realized verdicts: `healthRate = min(0, good − bad)`; `angryPopulation =
 clamp(unhappy − happy, 0, pop)`. The channel oracle is **`/computed/cities/wellbeing`**
 ([http-endpoints](http-endpoints.md)) — one field per named engine term.
 

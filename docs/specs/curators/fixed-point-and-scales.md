@@ -1,7 +1,7 @@
 # Fixed-point & the scale registry — the ONE place scales live
 
 > **Status:** reference (canonical scale registry) · **Verified against:** `Sources/Engine/CvCity.cpp`,
-> `Sources/Infos/*.h`.
+> `Sources/JsonInfo/*.h`.
 > **Grounding:** every scale below was figured from the math in the cited accessor, not from the field
 > name. Line numbers drift — confirm the named function, not the integer.
 >
@@ -60,13 +60,13 @@ A legacy field is **per-100 (÷100 to humanize)** iff its value flows **into a �
 `× 100` on the way in** — i.e. the engine treats the stored integer as already-scaled. It is **normal
 (×1, human)** iff the engine multiplies it by 100 when depositing. The tell is at the consumption site:
 
-- `getYieldRate100` (`CvCity.cpp:11246`) = `(getBaseYieldRate + getSpecialistYieldTotal) *
-  getBaseYieldRateModifier + 100 * getExtraYield` — the `× 100` on `getExtraYield` proves the extra bucket
-  is human-scale going in.
-- `getExtraYield100` (`CvCity.cpp:11323`) = `m_aiExtraYield * 100 + getBuildingExtraYield100 +
-  getBaseYieldPerPopRate * getPopulation()` — `m_aiExtraYield` is scaled **up** by 100 to enter ×100
-  space; a term added **raw** beside it is therefore either already-×100 or a ×1 value being applied at
-  1/100 strength.
+- `getYieldRate100` (`CvCity.cpp:10267`) is a one-line delegate to `CascadeAccumulator::yieldRate100`
+  (`CvCascadeAccumulator.cpp:349`) — the tell now lives in the cascade package computation, not the getter.
+- `getExtraYield100` (`CvCity.cpp:10408`) just returns `getBuildingExtraYield100` — building-extra only, no
+  other term. The tell lives in `getBuildingExtraYield100`
+  (`CvCity.cpp:10360`): `100 * kBuilding.getYieldChange(eYield) + kTeam.getBuildingYieldTechChange(eYield, eB)`
+  — the `× 100` on `getYieldChange` proves that field is human-scale going in (§4a); `getBuildingYieldTechChange`
+  is already ×100 (§4b).
 
 ## 4. The per-field scale REGISTRY
 
@@ -77,7 +77,7 @@ A legacy field is **per-100 (÷100 to humanize)** iff its value flows **into a �
 | `YieldModifier` / `CommerceModifier` | `getYieldModifier` … | an integer **percent** (emit `percent`) |
 
 ### 4b. The CLOSED per-100 set — ÷100 to humanize
-Verified exhaustive: `grep -rE "get[A-Za-z_]+100 *\(" Sources/Infos/*.h` returns **exactly six** `…100()`
+Verified exhaustive: `grep -rE "get[A-Za-z_]+100 *\(" Sources/JsonInfo/*.h` returns **exactly six** `…100()`
 accessors across all Info headers. That set IS the de-scale list:
 
 | field | accessor | scale | curator action |

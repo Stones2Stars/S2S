@@ -63,8 +63,10 @@ needs a fact FEEDS it to the one function, it never re-derives it.
    every consumer. **A file-`static` calculator is a DRY hazard**: the next consumer can't see it, so it reimplements it
    — the exact mechanism of the C2C rot. *(Realized: BOTH data-machines are split into per-package
    static-methods classes — the **modifier** (`MMKernel` / `PercentStack` / `YieldBasePackages` / `BuildingPackage` /
-   `YieldRate` / `CommerceCalc`, mirroring StoneBase `Calc/*`) and the **enabler** (`EnablerKernel` + `TechCascade` /
-   `BuildingCascade` / `UnitCascade`, mirroring StoneBase `CascadingEnabler/*`), each `CvCascade<X>.{h,cpp}`.)*
+   `CascadeAccumulator::yieldRate100` / `CommerceCalc`, mirroring StoneBase `Calc/*`) and the **enabler**
+   (`EnablerKernel` + `TechEnabler` / `BuildingEnabler` / `UnitEnabler` / `CivicEnabler` / `ProcessEnabler` /
+   `ProjectEnabler` / `PromotionEnabler` / `BuildEnabler`, mirroring StoneBase `CascadingEnabler/*`), each
+   `Cv<X>Enabler.{h,cpp}`.)*
 5. **Harness ≠ calc.** The performance/observability surface (the StoneBase dashboard) and the spine logging are
    **separate consumers** of the calc surface, never folded into the calc functions.
 6. **Single source of "active".** "Is X active / available / connected / non-dormant" is computed **once, by the

@@ -58,8 +58,9 @@ The split is **not** "raw vs. computed" — it is **"does drycalc compute this?"
 > - **⚠ `getBuildingCommerceChange` / `m_aiBuildingCommerceChange` is MIXED, not wholesale-underivable.** It
 >   conflates a **DERIVABLE bulk**
 >   (`GlobalBuildingExtraCommerces`: a building granting commerce to OTHER building types empire-wide, static JSON —
->   engine `CvCity.cpp:5050`→`4708`) with an **un-derivable remainder** (game-event grants `:19221` + vote-source
->   resolution grants `:15336`). **Reproduce the derivable `GlobalBuildingExtraCommerces` from the curated
+>   engine `CvPlayer::recomputeBuildingCommerceChange`, `CvPlayer.cpp:27191`) with an **un-derivable remainder**
+>   (game-event grants in `CvCity::applyEvent`, `CvCity.cpp:18207` + vote-source resolution grants in
+>   `CvCity::processVoteSourceBonus`, `CvCity.cpp:14357`). **Reproduce the derivable `GlobalBuildingExtraCommerces` from the curated
 >   `{c}.empire.buildings.{B}.flat`** (`BuildingKeyedEmpireCommerce100`), never read the live value; only the
 >   event/vote remainder diverges honestly.
 > - **If we pull live yield into the cascade calc, we are not validating the cascade at all.**
@@ -189,6 +190,9 @@ the external dry-calc + logging, not here).
   **with its full per-source decomposition** (base/specialist/plot/trade/building/bonus/civic/… flat + percent
   terms, and the commerce split) — the modifier-impact ground-truth the calculator reconciles against. Also
   carries **`maxTradeRoutes`** (drycalc computes the route capacity, so it is a target verified here).
+- **buildable / trainable oracles** — `/computed/cities/buildable?player=N&city=M`: the engine's `canConstruct`
+  TRUE-set for the city (the buildable oracle) · `/computed/cities/trainable?player=N&city=M`: the engine's
+  `canTrain` TRUE-set for the city (the trainable oracle).
 - **wellbeing** — `/computed/cities/wellbeing?player=N&city=M`: the city's health + happiness ORACLE — the
   realized levels (`happyLevel`/`unhappyLevel`/`angryPopulation`/`goodHealth`/`badHealth`/`healthRate`) **with
   the FULL per-source decomposition**: the named anger percents (overcrowding/noMilitary/culture/religion/
@@ -204,9 +208,18 @@ the external dry-calc + logging, not here).
   construct/train).
 - **availability oracles** — `/computed/availableTechs` · `availableCivics` · `availableBuilds` `?player=N`: the
   engine's per-player "what could be researched / adopted / built" sets.
+- **enabler domains** — `/computed/enabler/buildings?player=N&city=M`: the standardized per-city building domain
+  (listed/tree counts + fresh-seed oracle diff) · `/computed/enabler/units?player=N&city=M[&type=UNIT_X]`: the
+  per-city unit domain (listed/tree counts + per-unit verdict decomposition) ·
+  `/computed/enabler/promotions?player=N&type=PROMOTION_X&unit=U`: the promotions composite decomposition (domain
+  planes + per-leg verdicts).
 - **counts** — `/computed/tally?type=BUILDING_X|UNIT_X&player=N`: the engine count at world/team/empire scope.
 - **diagnostics** — `/computed/whyNot?type=UNIT_X&player=N[&city=M]` (the canTrain decision inputs) ·
   `/computed/game` (turn / game-over / winner / victory countdowns — the autoplay terminal signal) ·
+  `/computed/perf` (the (scope,channel) calc-count histogram + total this turn — the 50k gate,
+  DEC-calc-count-gate) · `/computed/barProbe` (every city's EXE billboard bar floats, NaN/INF/out-of-range
+  flagged — the value-poison probe) · `/computed/sceneReset` (re-run the LOAD-path city-scene build for the
+  active player's cities — the drop-conviction probe) ·
   `/computed/units/combat?player=N[&unit=M]` — per-unit combat-strength ATTRIBUTION: the persisted per-unit base
   (`combatRaw` = the save-carried `m_iBaseCombat`, `canFight`'s gate), the loaded info's authored base
   (`combatInfo` = `identity.base.combat` — a `combatRaw`≠`combatInfo` split names save-carried vs load-time as a
@@ -234,8 +247,8 @@ the external dry-calc + logging, not here).
   `doHeal` WOULD heal via the const `CvUnit::healRate`/`getHealRateAsType`/`healTurns` (all called `bHealCheck=false`,
   so even the support-heal scan performs no `changeHealSupportUsed`/`changeExperience100`); `doHeal`/`changeDamage`/
   `setDamage` are never called — the unit's HP is untouched. Mirrors `/computed/cities/yields` so a heal divergence
-  localises to one named term. Source of truth: `CvUnit::healRate` (`CvUnit.cpp`:6021), `getHealRateAsType` (:6212),
-  `doHeal` (:6467).
+  localises to one named term. Source of truth: `CvUnit::healRate` (`CvUnit.cpp`:6065), `getHealRateAsType` (:6256),
+  `doHeal` (:6511).
 
 > Unit combat/movement CHANNEL decomposition (beyond heal and the combat-attribution diagnostic, above) is
 > **deliberately not exposed yet** — those channels aren't in drycalc's current focus (yields/modifiers +

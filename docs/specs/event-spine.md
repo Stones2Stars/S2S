@@ -69,7 +69,7 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   save read (`CvPlayer::read` per-held-tech/projects/civics/traits, `CvCity::read` per building/religion/corp/
   bonus/culture, `CvPlot::read` substrate — verified in `Cascade.log`: ~190k DOMAIN events inside the load
   bracket), wrapped by the **load-lifecycle bracket** `GAME_LOAD_STARTED` / `GAME_LOAD_FINISHED` (also built —
-  `emitGameLoadStarted/Finished`; result-producers suppress inside it via `spineIsLoadActive`). Logging =
+  `emitGameLoadStarted/Finished`; result-producers suppress inside it via `spineGameLoadInProgress()`). Logging =
   registered first; the **tally** = a read-only accessor (buildings + units), NOT a spine consumer
   (`Cascade/CvCascadeTally.{h,cpp}`); grants = resolver built, the apply-loop not built
   ([grants-machine.md](../plans/structural-cleanup/grants-machine.md)); the **cache-invalidation consumer** =

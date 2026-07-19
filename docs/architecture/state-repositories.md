@@ -6,7 +6,7 @@ computed and kept coherent. `CvPlot` and `CvCity` are **domain objects** — the
 
 Realized on: the plot-yield cache (`CvPlot::m_yieldCache`, the exemplar), the specialist commerce/yield getters,
 the building commerce + yield caches, the per-building empire commerce-change ledger
-(`CvPlayer::m_buildingCommerceChange`), the cascade rate slots (`CvCity::m_cascadeRateSlots`), and the
+(`CvPlayer::m_buildingCommerceChange`), the cascade city packages (`CvCity::m_cascadeCityPackages`), and the
 operating-building set (`CvCity::m_operatingBuildings`).
 
 ## The problem: no unified `dataChanged` trigger
@@ -111,8 +111,8 @@ public:
   *bases* to EXE-bound classes, **not** data members.
 - **Never serialized.** The owner's `read()` does `WRAPPER_SKIP_ELEMENT` for the legacy field; dirty-on-construct
   means a loaded game recomputes on first read.
-- **Converged onto the component:** the plot-yield cache; `CascadeRateSlots` (a mutable `CvCity` member, the cascade
-  math module-side behind the one `cascadeRefreshRates` delegate — the pattern every modifier channel reuses); the
+- **Converged onto the component:** the plot-yield cache; `CascadeCityPackages` (a mutable `CvCity` member, the cascade
+  math module-side behind the one `cascadeRefreshPackages` delegate — the pattern every modifier channel reuses); the
   operating-building set (event-invalidated via targeted propagation; the epoch-stamp + turn-roll self-heal are
   removed per [DEC-no-self-heal](decisions.md#dec-no-self-heal)); the player building-commerce
   ledger (Vec form). **Deliberately NOT converged:** the legacy CvCity hand-rolled dirty caches (`m_aiCommerceRate`,
@@ -144,14 +144,6 @@ public:
   percent stack. **The granularity TARGET: per-(package × CHANNEL)** — the compiled deposits carry the channel, so
   the dirty bits split per yield/commerce channel; the bit-layout split is the increment after the bare-fetch shape
   verifies.
-- **⚠ NAMED DEBT: a SECOND invalidation philosophy rides beside the component — a DEPARTURE from this doc's own
-  model, not a design alternative.** The slots/operating-building Sets are event-MARKED (the documented way), but two
-  POLLING primitives accreted around them: the epoch counters (+ the `iEpoch`/`iTurn` stamp fields on
-  `CascadeRateSlots`) and `CvCascadePlayerStamp` (the wellbeing/scalar per-player rollups, not on the component at
-  all). They exist because player-scope events fan out to N cities' Sets and the routing wasn't built yet — the
-  interim polls versions instead. Dissolution = this doc's own end-state: player-scope events mark the affected Sets
-  directly via data-derived per-source masks, the rollups become `CvDerivedCache` instances bound to `CvPlayer`, and
-  the epochs + stamps DELETE. One component, one philosophy — built as the F0 foundation rework, NOT sequenced to "later" ([DEC-no-self-heal](decisions.md#dec-no-self-heal)).
 - **⚖ THE PER-SCOPE PACKAGE MODEL — the cascade's FOUNDING DESIGN ([modifier.md](../specs/modifier.md) §1), stated
   as cache architecture.** A `CvDerivedCache` lives ON EVERY SCOPED ITEM, every level (world → team → player → area
   → city → plot); the cascade loads **yield packages in ONE UNIFORM FORMAT** (Σflat and Σpercent each their OWN

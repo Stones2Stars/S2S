@@ -647,8 +647,12 @@ load-compiled class lists (`EnablerKernel::scanCondDeps`), and the live non-HAVE
 existedFor / IS_CAPITAL / vicinity connection / count tokens) ride the **bounded per-turn dynamic re-check**
 ([enabler-frontier-perf](../plans/structural-cleanup/enabler-frontier-perf.md) Stage 2 step 5) — a targeted
 sweep of that small list in `CvCity::doTurn`, never a blanket. `verifyCity`'s oracle diff compares MEMBERSHIP
-(the fresh build is enable-side only), keeping it the event-maintenance tripwire. The remaining domains gate
-the same way, each with its own axes.
+(the fresh build is enable-side only), keeping it the event-maintenance tripwire. **The requires-gate is wired
+for four of the eight domains — techs, buildings, units, projects** (`CvTechEnabler`/`CvBuildingEnabler`/
+`CvUnitEnabler`/`CvProjectEnabler`, each calling `EnablerDomain::setGateFailed` off `EnablerKernel::requiresMet`/
+`allowedOk`); **civics, processes, builds, and promotions have no gate logic** (`CvCivicEnabler`/
+`CvProcessEnabler`/`CvBuildEnabler`/`CvPromotionEnabler` never call `setGateFailed`) — their members stay
+enable-side LISTED per §7.1's "a domain whose gate stage has not landed never sets the flag" rule.
 
 ### Resolved forks (owner-ruled — now part of the §7 model)
 
@@ -686,8 +690,9 @@ the same way, each with its own axes.
    `SEVT_PLOTGROUP_BONUS_CHANGED`/`SEVT_CITY_NETWORK_CHANGED`, vicinity (radius growth) via
    `SEVT_CITY_CULTURE_LEVEL_CHANGED` — routed into the operate re-check of dependents. (The legacy
    `onSliceRebuildActive` bounded poll died with `playerSliceRebuild` and is NOT resurrected.)
-3. Event-maintain the operating-building set incrementally (add/remove on building/have events, no re-read) —
-   the frontier-perf targeted-propagation completion.
+3. ✅ Event-maintain the operating-building set incrementally (add/remove on building/have events, no re-read) —
+   the frontier-perf targeted-propagation completion (`EnablerKernel::onBuildingChangedActive` /
+   `ek_recheckActiveSet`, `Sources/Cascade/CvEnablerKernel.cpp`).
 3b. **Converge the enabler's PRIVATE reverse buckets onto `EDGEF_REQUIRED_BY`**
    ([DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view)): the `s_bc*` (lazily built,
    HAVE-atom buckets mostly built-but-dead), `s_uc*`, and operate `s_op*` static indexes inside

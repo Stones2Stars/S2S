@@ -109,12 +109,12 @@ defaults — the complement.)
 ## Failure inventory (the shortcuts — each cites spec authority + code divergence)
 
 ### F0 — FOUNDATION: the event-spine-driven single cache build/invalidation. Everything else is downstream.
-The build plan is [f0-eventspine-invalidation.md](f0-eventspine-invalidation.md). The spine emits DOMAIN events but
-its only registered consumers are logging + grants — **no cache build/invalidation consumer exists**; invalidation is
-a parallel hand-wired path (`buildingProcessed`/`dirtyCity`/`markPlayerScopeAndCities` wired into the mutation choke
-points), and the load build is the recompute-from-state recalc. F0: complete the emit surface (play + the load reseed
-emit) FIRST, then the one consumer that builds caches on load (the reseed) and invalidates them during play (derived
-from the deposit index); delete the blankets + the recompute-on-load recalc.
+The build plan is [f0-eventspine-invalidation.md](f0-eventspine-invalidation.md). `CvCacheInvalidationConsumer`
+(`Sources/Cascade/CvCascadeInvalidation.cpp`) is registered onto the spine via `cascadeRegisterInvalidation()` from
+`spineRegisterConsumers()` and drives most mutation choke points to narrow, event-derived `dirtyCity`/`buildingProcessed`
+invalidation. The remaining gap is the broad `markPlayerScopeAndCities` conditioner floor still standing in for the
+event-derived path at a handful of sites (civic/tech-driven empire-wide conditioner changes) — narrow those to the
+derived-from-deposit-index invalidation the rest of the consumer already uses.
 
 ### F1 — Reach GREEN (the RED build is a by-design ratchet — [DEC-red-ratchet](../../architecture/decisions.md#dec-red-ratchet); NEVER restore an archived `CvXInfo`).
 - The 23 archived-replacing pocos are defined + populated via `LoadGlobalClassInfoJson`, mirroring the legacy getter
@@ -123,8 +123,10 @@ from the deposit index); delete the blankets + the recompute-on-load recalc.
 - **DllExport EXE-bound accessor proxy layer** — narrow but it blocks compile.
 - **`enPromotionValid`** + the property cascade reads still on the legacy path.
 - **11 uniformity `CvJson<X>Info` pocos** (civilizations/eras/handicaps/gamespeeds/specialbuildings/leaderheads/
-  specialunits/victories/votes/hurries/bonusclasses) unpopulated — missing `RJ_REPO_TYPES` dispatch rows. Grants
-  reads them.
+  specialunits/victories/votes/hurries/bonusclasses) are populated but have **zero readers anywhere in `Sources/`**
+  outside their own definition + `Repos/InfoRepo.h` registration — dead code pending a consumer (or a park decision).
+  The live engine/AI surface for these types still reads the legacy `CvLeaderHeadInfo`/`CvGameSpeedInfo`/etc. classes
+  via `GC.get*Info()`.
 - Gate consumers for culturelevels/unitcombats/promotionlines.
 
 ### F2 — Gate 3 classification consumption (the long pole). [cutover.md](cutover.md) §Gate 3.
@@ -144,6 +146,10 @@ redundant probes/turn, inside the turn-wall's dominant phase (chooseProduction =
 UI-rare — full scans are legitimate off the hot path), rewire every hot one to iterate the enabler's LISTED set,
 and collapse `AI_chooseProduction`'s focus ladder to ONE scoring pass read seven ways (the scorer's own designed
 shape). Exhaustive, adversarially verified ([DEC-all-means-all](../../architecture/decisions.md#dec-all-means-all)).
+**Level A landed:** [enabler-finished-set.md](enabler-finished-set.md) — `CvCity::getConstructibleFrontier`/
+`getTrainableFrontier` return the enabler's LISTED frontier; the 12 hot `CvCityAI`/`CvPlayerAI`/`CvUnitAI` call sites
+read the frontier instead of probing the whole database; `AI_chooseProduction` collapses its economic focus stages
+into one `BUILDINGFOCUS_ECONOMY` scored pass. The remaining whole-database loops outside this set are still open.
 
 ### F3 — Grants apply-loop UNBUILT. [grants-machine.md](grants-machine.md), [event-spine.md](../../specs/event-spine.md).
 The grants machine resolves + shadows only; does NOT apply. ~30 PREREQ rows (religion founder units, game-start
@@ -153,17 +159,20 @@ endpoint, do not assume.
 
 ### F4 — Unit-plane modifier machine NOT BUILT. [code-cut-map.md](code-cut-map.md) §BLOCKED unit-plane.
 strength/combat-percent/withdrawal/heal/bombard/movement/espionage/keyed-terrain/invisibility/**upkeep**/SizeMatters/
-promotion/unitcombat apply-loops + serialization. City channels maintenance/defense/health/happiness/GP-trade-air/
-buildRate flagged NOT BUILT. Empire civic/trait/tech apply-loops BLOCKED. Under universal-yield each is a channel
+promotion/unitcombat apply-loops + serialization. City channels maintenance (`scMaintenanceModifier`), defense
+(`scDefense`/`scDefenseBombard`/`scDefenseMin`/`scDefensePlayer`), health/happiness (`CvCascadeWellbeing.cpp`), GP rate
+(`scGpModifier`), trade routes (`scTradeRoutes`), and buildRate (`buildRateUnit`/`buildRateBuilding`/`buildRateProject`)
+are BUILT and wired — the legacy `m_iBuildingDefense` accumulator is physically removed in favor of the cascade scalar
+slot. Empire civic/trait/tech apply-loops BLOCKED. Under universal-yield each is a channel
 through the uniform machine. **The upkeep accumulator cut is COUPLED here** ([fixed-point-conformance.md](fixed-point-conformance.md)):
 `CvPlayer::m_iUnitUpkeep{Civilian,Military}100` + the per-unit `CvUnit::m_iUpkeep100` push-accumulator retire together
 once upkeep is a real unit-plane channel — the cascade owns no unit upkeep today, so they are NOT a base-magnitude cut.
 
 ### F5 — Property feed mangled. [property-audit.md](property-audit.md) (locked, owner-approved).
-Engine math is intact (KEEP-legacy); only the JSON→engine feed is broken, both directions: **over-applies** (one-shot
-`<Properties>` replayed every turn — crime-spike/education-crash runaway) and **under-applies** (`changePropagation`
-getter hard-returns 0; gated/conditioned entries `continue`-skipped because the increment-4 BoolExpr/IntExpr
-translator does not exist). Scoped clean redo against the locked spec.
+Engine math is intact (KEEP-legacy); the JSON→engine feed side is built (`CvProperties::propagateChange` reads
+`CvPropertyInfo::getChangePropagator` live off the curated `changePropagation` map, and `CvCascadePropertyBridge`
+translates the increment-4 gated/conditioned entries' BoolExpr/IntExpr trees) but **over-applies**: one-shot
+`<Properties>` are replayed every turn (crime-spike/education-crash runaway). Scoped clean redo against the locked spec.
 - **⛔ BLOCKING (couples here from F0, adversarial-audit-confirmed LIVE gap): property-`operate` dormancy is never
   invalidated.** A building's `requires.operate` `{PROPERTY_*, min/max}` band (crime/disease/education/pollution;
   `operate`+`PROPERTY_` in 1735 files) falls to the **write-only `s_opDynamic` bucket** (`CvEnablerKernel.cpp:378/529`
@@ -186,9 +195,12 @@ translator does not exist). Scoped clean redo against the locked spec.
 
 ### F6 — Data that loads but does not manifest. Free XP / promotions case.
 Free XP + free promotions load end-to-end; the break is in APPLY/DISPLAY, not load. Real drops:
-`isApplyFreePromotionOnMove()` hardcoded `return false` (on-move re-apply branch dead); consumed stub getters return
-0/false and silently eat data; a broken cross-curator promise (`BonusCommerceModifiers` dropped by both curators).
-Reconcile the stale done-claims to code in the same fix.
+`isApplyFreePromotionOnMove()` hardcoded `return false` (`CvBuildingInfo.h`) permanently dead-codes `CvCity::doPromotion`'s
+on-move re-apply branch — since F3's grants apply-loop is unbuilt (grants resolves + shadows only; the legacy apply
+paths, `doPromotion` among them, are still the only apply mechanism), this is an unhandled gap, not the redundant
+no-op the getter's own comment claims; consumed stub getters return 0/false and silently eat data; a broken
+cross-curator promise (`BonusCommerceModifiers` dropped by both curators). Reconcile the stale done-claims to code in
+the same fix.
 
 ### F7 — Data tail (curator/JSON). [data-migration-remaining.md](data-migration-remaining.md).
 IN SCOPE (failures): NPC civs / `stronglyRestricted`, unitcombat→`tags` pass, `state`/paralyze, corporation rework,
