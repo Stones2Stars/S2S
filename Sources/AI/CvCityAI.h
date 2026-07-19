@@ -35,6 +35,18 @@
 
 #define BUILDINGFOCUS_CONSIDER_ANY			(1 << 20)
 
+// #430 Level-A -- the UNIFIED ECONOMIC value mask: every value dimension a building can contribute, OR'd
+// together, so the economic building decision scores ALL dimensions at once (a production building and a
+// commerce building compete on ONE comparable score) instead of a sequence of single-focus passes that each
+// commit to the first focus clearing its own threshold. The situational/strategic focuses keep their own
+// dedicated stages and are deliberately NOT in this mask: WONDER / DEFENSE / DOMAINSEA / PROPERTY / CAPITAL,
+// and EXPERIENCE (the military domain-XP focus -- build a domain's XP buildings; a military axis, not
+// economic value).
+#define BUILDINGFOCUS_ECONOMY				(BUILDINGFOCUS_FOOD | BUILDINGFOCUS_PRODUCTION | BUILDINGFOCUS_GOLD | \
+											 BUILDINGFOCUS_RESEARCH | BUILDINGFOCUS_CULTURE | BUILDINGFOCUS_HAPPY | \
+											 BUILDINGFOCUS_HEALTHY | BUILDINGFOCUS_MAINTENANCE | \
+											 BUILDINGFOCUS_SPECIALIST | BUILDINGFOCUS_ESPIONAGE)
+
 #define MAX_REQUESTEDUNIT_PER_CITY 1
 #define MAX_REQUESTEDBUILDING_PER_CITY 2
 #define NB_MAX_BUILDINGS 2

@@ -622,6 +622,17 @@ namespace
 		}
 		c["queuedBuildings"] = picojson::value(queuedB);
 		c["queuedUnits"] = picojson::value(queuedU);
+
+		// /state city banked-production attribution: on the FIRST turn after a save load a city can complete MORE
+		// buildings than its per-turn hammer RATE explains -- because it spends BANKED hammers on top. Two banked
+		// sources, both emitted so the churn is attributable to NAMED state (never a phantom "production != buildings
+		// produced" mismatch): overflowProduction = carried-across-turns OVERFLOW; productionProgress = hammers
+		// already accumulated toward the HEAD build (getProductionProgress). productionNeeded = the head build's cost;
+		// maxProductionOverflow = the overflow cap. So a turn's spendable hammers = yieldRate + overflow + progress.
+		c["overflowProduction"] = picojson::value((double)pCity->getOverflowProduction());
+		c["maxProductionOverflow"] = picojson::value((double)pCity->getMaxProductionOverflow());
+		c["productionProgress"] = picojson::value((double)pCity->getProductionProgress());
+		c["productionNeeded"] = picojson::value((double)pCity->getProductionNeeded());
 		// NB the per-city canConstruct/canTrain verdicts (a drycalc TARGET) are NOT emitted here -- /state is
 		// inputs only. They live on /computed/canConstruct?type=...&city=... (see docs/specs/http-endpoints.md).
 

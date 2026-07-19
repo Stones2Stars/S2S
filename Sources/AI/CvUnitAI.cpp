@@ -15316,7 +15316,7 @@ bool CvUnitAI::AI_switchHurry()
 	// isWorldWonder stays as the per-candidate body filter. Order preserved: listedIds fills ascending id, and
 	// the best-by-strict-> selection keeps the first winner on a tie exactly as the ascending scan did.
 	std::vector<int> vecConstructible;
-	pCity->m_enabler.buildings.listedIds(vecConstructible);
+	pCity->getConstructibleFrontier(vecConstructible);
 	for (std::vector<int>::const_iterator it = vecConstructible.begin(), itEnd = vecConstructible.end(); it != itEnd; ++it)
 	{
 		const BuildingTypes eBuilding = static_cast<BuildingTypes>(*it);

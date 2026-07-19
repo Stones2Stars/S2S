@@ -22340,7 +22340,7 @@ int CvPlayerAI::AI_getStrategyHash() const
 		// non-NULL; the loop body is wholly inside the gate and its accumulations (count/max/flags) are
 		// order-independent, so forward iteration matches.
 		std::vector<int> vecTrainable;
-		pCapitalCity->m_enabler.units.listedIds(vecTrainable);
+		pCapitalCity->getTrainableFrontier(vecTrainable);
 		for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 		{
 			const UnitTypes eUnitX = static_cast<UnitTypes>(*it);

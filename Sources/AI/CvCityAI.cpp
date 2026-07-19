@@ -1331,42 +1331,13 @@ void CvCityAI::AI_chooseProduction()
 			}
 		}
 	}
-	int iEconomyFlags = 0;
-	int iEconomyFlagBits = 0;
-
-	if (!isHuman() || AI_isEmphasizeYield(YIELD_PRODUCTION))
-	{
-		iEconomyFlags |= BUILDINGFOCUS_PRODUCTION;
-		iEconomyFlagBits++;
-	}
-	if (!isHuman() || AI_isEmphasizeYield(YIELD_COMMERCE))
-	{
-		iEconomyFlags |= BUILDINGFOCUS_GOLD;
-		iEconomyFlagBits++;
-	}
-	if (!isHuman() || AI_isEmphasizeCommerce(COMMERCE_RESEARCH))
-	{
-		iEconomyFlags |= BUILDINGFOCUS_RESEARCH;
-		iEconomyFlagBits++;
-	}
-	if (!bInhibitUnits)	//	This is actually a proxy for the human owner having set no explicit preferences
-	{
-		iEconomyFlags |= BUILDINGFOCUS_MAINTENANCE;
-		iEconomyFlags |= BUILDINGFOCUS_HAPPY;
-		iEconomyFlags |= BUILDINGFOCUS_HEALTHY;
-
-		iEconomyFlagBits += 3;
-	}
-	if (AI_isEmphasizeGreatPeople())
-	{
-		iEconomyFlags |= BUILDINGFOCUS_SPECIALIST;
-		iEconomyFlagBits++;
-	}
-	iEconomyFlags |= BUILDINGFOCUS_ESPIONAGE;
-	iEconomyFlagBits++;
-
-	//	Normalize threholds using this against the number of bits we are including
-	const int iEcononmyFlagsThreasholdWeighting = (100 * iEconomyFlagBits) / 8;
+	// #430 Level-A -- the economic building decision scores ALL value dimensions at once (a production
+	// building competes with a commerce building on ONE comparable scale), so iEconomyFlags is simply the
+	// full economic value mask; per-focus emphasis becomes a future WEIGHT, not a mask gate (which is why the
+	// old emphasize-gated construction is gone). The threshold weighting keeps the old per-dimension
+	// normalization (10 = the dimensions in BUILDINGFOCUS_ECONOMY).
+	const int iEconomyFlags = BUILDINGFOCUS_ECONOMY;
+	const int iEcononmyFlagsThreasholdWeighting = (100 * 10) / 8;
 
 	// Does this city require special attention as a cultural victory city?
 	bool bImportantCity = false; //be very careful about setting this.
@@ -2569,23 +2540,25 @@ void CvCityAI::AI_chooseProduction()
 	// -------------------- BBAI Notes -------------------------
 	// Top normal priorities
 
-	//#25 If Focus Food, Food buildings
-	if (!bPrimaryArea && !bLandWar && (!isHuman() || AI_isEmphasizeYield(YIELD_FOOD)) && AI_chooseBuilding(BUILDINGFOCUS_FOOD, 20, 10 + 2 * iWarTroubleThreshold, isHuman() ? -1 : 50))
+	//#25 (#430 Level-A) -- the UNIFIED economic building pass. Score every constructible building across ALL
+	// value dimensions (food / production / gold / research / culture / happy / health / maintenance /
+	// specialist / espionage) at once and build the best, so a production building and a commerce
+	// building compete on ONE comparable score. Replaces the old single-focus FOOD-then-PRODUCTION passes, which
+	// each committed to the first focus that cleared its own threshold and so could never rank one economic
+	// building against another. Runs only when the city is not under military pressure; the threshold keeps a
+	// weak building from preempting the military / expansion stages below (an assault-planning city rolls low
+	// odds so it usually falls through to build the invasion force instead).
+	if (!bLandWar && iDangerValue < 5
+	&&	AI_chooseBuilding(BUILDINGFOCUS_ECONOMY, 20, 15, (!isHuman() && bAssault) ? 25 : -1))
 	{
 		return;
 	}
 
 	m_iTempBuildPriority--;
 
-	//#26 Focus Production buildings
+	//#26 worker sub-stage -- with spare production and the area short on workers, grab a worker.
 	if (iDangerValue < 5 && (eCurrentEra > GC.getGame().getStartEra() + iProductionRank / 2 || eCurrentEra > GC.getNumEraInfos() / 2))
 	{
-		if ((!isHuman() || AI_isEmphasizeYield(YIELD_PRODUCTION))
-			&& AI_chooseBuilding(BUILDINGFOCUS_PRODUCTION, 20 - iWarTroubleThreshold, 15, (!isHuman() && (bLandWar || bAssault)) ? 25 : -1))
-		{
-			return;
-		}
-
 		if (!bChooseWorker && !bInhibitUnits && (!bDefenseWar || iWarSuccessRatio >= -30) && iWorkersInArea < iNeededWorkersInArea
 		&& (getPopulation() > 3 || iProductionRank < (player.getNumCities() + 1) / 2))
 		{
@@ -2837,15 +2810,6 @@ void CvCityAI::AI_chooseProduction()
 
 	m_iTempBuildPriority--;
 
-	//#36 Food Buildings Focus 2
-	if (!isHuman() || AI_isEmphasizeYield(YIELD_FOOD))
-	{
-		if (AI_chooseBuilding(BUILDINGFOCUS_FOOD, isCapital() ? 3 : 12, 30))
-		{
-			return;
-		}
-	}
-
 	//#37 Missionaries to spread Religion
 	if (!bInhibitUnits && !bDanger && !bStrategyTurtle)
 	{
@@ -3003,14 +2967,6 @@ void CvCityAI::AI_chooseProduction()
 
 	m_iTempBuildPriority--;
 
-	//#44 Food Buildings Focus 3
-	if ((!isHuman() || AI_isEmphasizeYield(YIELD_FOOD)) && AI_chooseBuilding(BUILDINGFOCUS_FOOD, 15, 10, (bLandWar ? 30 : -1)))
-	{
-		return;
-	}
-
-	m_iTempBuildPriority--;
-
 	//#45 Opportunistic wonder build Focus 2
 	if (!isHuman() && iDangerValue < 6 && (!hasActiveWorldWonder() || (player.getNumCities() > 3)))
 	{
@@ -3078,7 +3034,11 @@ void CvCityAI::AI_chooseProduction()
 
 	m_iTempBuildPriority--;
 
-	//#52 Buildings special BUILDINGFOCUS_EXPERIENCE
+	//#52 Military-XP focus -- with production to spare and the city lacking free LAND experience, build the
+	// buildings that grant units experience (the barracks line). This is a MILITARY axis, which is why
+	// EXPERIENCE is deliberately kept OUT of the unified BUILDINGFOCUS_ECONOMY pass and decided here. Land XP is
+	// the broad base (it tends to cover all units; domain-specific buildings like the Stable add mounted XP on
+	// top); the exact per-domain mechanic is ambiguous today and out of scope, so this stays on the land base.
 	if (getDomainFreeExperience(DOMAIN_LAND) == 0 && getYieldRate(YIELD_PRODUCTION) > 4	&& AI_chooseBuilding(BUILDINGFOCUS_EXPERIENCE, (eCurrentEra > 1) ? 0 : 7, 33))
 	{
 		return;
@@ -3822,16 +3782,6 @@ void CvCityAI::AI_chooseProduction()
 			}
 		}
 
-		if (!isHuman() || AI_isEmphasizeYield(YIELD_PRODUCTION))
-		{
-			if (getPlotYield(YIELD_PRODUCTION) >= 8)
-			{
-				if (AI_chooseBuilding(BUILDINGFOCUS_PRODUCTION, 40))
-				{
-					return;
-				}
-			}
-		}
 	}
 
 	m_iTempBuildPriority--;
@@ -4437,7 +4387,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, int& iBestValue, bool bAs
 	// draw, so id order is load-bearing for BOTH the tie-break AND the RNG-to-unit mapping; rbegin/rend over the
 	// ascending listedIds reproduces the identical descending visit order over the identical (canTrain-true) set.
 	std::vector<int> vecTrainable;
-	m_enabler.units.listedIds(vecTrainable);
+	getTrainableFrontier(vecTrainable);
 	for (std::vector<int>::const_reverse_iterator it = vecTrainable.rbegin(), itEnd = vecTrainable.rend(); it != itEnd; ++it)
 	{
 		const UnitTypes eUnitX = static_cast<UnitTypes>(*it);
@@ -4596,7 +4546,7 @@ const std::vector<CvCity::ScoredBuilding> CvCityAI::AI_bestBuildingsThreshold(in
 	// stays the per-candidate cap filter (the per-player extra-instances allowance the enabler allowedOk does not yet
 	// fully model); it now runs only over the small offered set. Order preserved: listedIds fills ascending id.
 	std::vector<int> vecConstructible;
-	m_enabler.buildings.listedIds(vecConstructible);
+	getConstructibleFrontier(vecConstructible);
 	for (std::vector<int>::const_iterator it = vecConstructible.begin(), itEnd = vecConstructible.end(); it != itEnd; ++it)
 	{
 		const BuildingTypes eBuilding = (BuildingTypes)*it;
@@ -5955,7 +5905,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				// canTrain(u) default-args IS m_enabler.units.listed(u) (CvCity.cpp:2324). Order-independent
 				// (a commutative iValue += sum); the DOMAIN_SEA / combat-type checks stay as per-candidate filters.
 				std::vector<int> vecTrainable;
-				m_enabler.units.listedIds(vecTrainable);
+				getTrainableFrontier(vecTrainable);
 				for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 				{
 					const UnitTypes eUnitX = (UnitTypes)*it;
@@ -9213,7 +9163,7 @@ bool CvCityAI::AI_bestSpreadUnit(bool bMissionary, bool bExecutive, int iBaseCha
 						// so the set is identical. Forward: original ascending, strict > (lowest-id wins ties), no RNG in this inner
 						// loop (the missionary roll is drawn once above).
 						std::vector<int> vecTrainable;
-						m_enabler.units.listedIds(vecTrainable);
+						getTrainableFrontier(vecTrainable);
 						for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 						{
 							const UnitTypes eUnitX = (UnitTypes)*it;
@@ -9261,7 +9211,7 @@ bool CvCityAI::AI_bestSpreadUnit(bool bMissionary, bool bExecutive, int iBaseCha
 						// now implicit in the frontier, so the visited set is identical. Forward: original ascending, strict >
 						// (lowest-id wins ties), no RNG in this inner loop (the executive roll is drawn once above).
 						std::vector<int> vecTrainable;
-						m_enabler.units.listedIds(vecTrainable);
+						getTrainableFrontier(vecTrainable);
 						for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 						{
 							const UnitTypes eUnitX = (UnitTypes)*it;
@@ -12283,7 +12233,7 @@ bool CvCityAI::AI_trainInquisitor()
 	// (CvCity::canTrain guard ignores bTestVisible in strict mode), so listedIds is the identical trainable set.
 	// isInquisitor + cheapest-cost stay per-candidate filters; ascending forward keeps the strict-'<' first-cheapest pick.
 	std::vector<int> vecTrainable;
-	m_enabler.units.listedIds(vecTrainable);
+	getTrainableFrontier(vecTrainable);
 	for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 	{
 		const UnitTypes eUnit = (UnitTypes)*it;
@@ -12413,7 +12363,7 @@ int CvCityAI::AI_getPromotionValue(PromotionTypes ePromotion) const
 	// canTrain(u) default-args IS m_enabler.units.listed(u) (CvCity.cpp:2324). Order-independent: the loop only
 	// accumulates iCanTrainCount and a commutative iValue sum; the combat-type check stays a per-candidate filter.
 	std::vector<int> vecTrainable;
-	m_enabler.units.listedIds(vecTrainable);
+	getTrainableFrontier(vecTrainable);
 	for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 	{
 		const UnitTypes eUnitX = (UnitTypes)*it;
@@ -13099,7 +13049,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 		// withExtraBuilding=eBuilding -- "could I build eType if I also had eBuilding") over the precomputed
 		// reverse-index, which the frontier cannot answer and enabler.md par.8 keeps on legacy.
 		std::vector<int> vecConstructible;
-		m_enabler.buildings.listedIds(vecConstructible);
+		getConstructibleFrontier(vecConstructible);
 		for (std::vector<int>::const_iterator it = vecConstructible.begin(), itEnd = vecConstructible.end(); it != itEnd; ++it)
 		{
 			const BuildingTypes eBuilding = static_cast<BuildingTypes>(*it);
@@ -13752,7 +13702,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 				// canTrain(u) default-args IS m_enabler.units.listed(u) (CvCity.cpp:2324). Order-independent (a commutative
 				// iValue += sum); the DOMAIN_SEA / combat-type checks stay as per-candidate filters.
 				std::vector<int> vecTrainable;
-				m_enabler.units.listedIds(vecTrainable);
+				getTrainableFrontier(vecTrainable);
 				for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 				{
 					const UnitTypes eUnitX = (UnitTypes)*it;

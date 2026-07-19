@@ -216,6 +216,13 @@ public:
 	bool canCreate(ProjectTypes eProject, bool bContinue = false, bool bTestVisible = false) const;
 	bool canMaintain(ProcessTypes eProcess) const;
 
+	// The set-returning frontier reads (enabler.md par.6) -- the maintained LISTED offer set the AI's
+	// production/decision loops iterate INSTEAD of probing canConstruct/canTrain per id over the whole entity
+	// database (the take-all-and-match anti-pattern). The per-id gates above stay the single-entity + what-if
+	// answer; these return the whole set. `out` is caller-owned (cleared first) so a hot loop reuses one buffer.
+	void getConstructibleFrontier(std::vector<int>& out) const;   // the LISTED buildings set (canConstruct default-args)
+	void getTrainableFrontier(std::vector<int>& out) const;       // the LISTED units set (canTrain default-args)
+
 	int getFoodTurnsLeft() const;
 	bool isProduction() const;
 	bool isProductionLimited() const;

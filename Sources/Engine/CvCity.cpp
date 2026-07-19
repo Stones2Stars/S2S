@@ -2784,6 +2784,21 @@ bool CvCity::canMaintain(ProcessTypes eProcess) const
 }
 
 
+// The set-returning frontier reads (enabler.md par.6): the maintained LISTED offer set, iterated by the AI's
+// production/decision loops instead of a per-id canConstruct/canTrain probe over the whole entity database. The
+// per-id gates stay the single-entity + what-if answer; these hand back the whole set (a bare byte-scan of the
+// domain's tri-state array). `out` is caller-owned (cleared by listedIds) so a hot loop reuses one buffer.
+void CvCity::getConstructibleFrontier(std::vector<int>& out) const
+{
+	m_enabler.buildings.listedIds(out);
+}
+
+void CvCity::getTrainableFrontier(std::vector<int>& out) const
+{
+	m_enabler.units.listedIds(out);
+}
+
+
 int CvCity::getFoodTurnsLeft() const
 {
 	const int iFoodDifference = foodDifference();
@@ -3865,7 +3880,7 @@ UnitTypes CvCity::getConscriptUnit() const
 	// bare read m_enabler.units.listed(i) (CvCity::canTrain), so this is the identical trainable set without the
 	// whole-unit-database scan. Ascending forward iteration preserves the strict-'>' first-on-tie pick.
 	std::vector<int> vecTrainable;
-	m_enabler.units.listedIds(vecTrainable);
+	getTrainableFrontier(vecTrainable);
 	for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 	{
 		const UnitTypes eUnit = (UnitTypes)*it;
