@@ -107,6 +107,9 @@ public:
 	static void refreshCityPackages(const CvCity* pCity, int iMask);
 	static void refreshPlayerScope(const CvPlayer* pPlayer, int iMask);
 	static void refreshWorldScope(const CvGame* pGame, int iMask);
+	// #430 F4: the UNIT self-accumulator refresh (gather-on-dirty over the unit's held-set: type intrinsic +
+	// held promotions + held unit-combat classes). CvUnit::cascadeRefreshUnitPackages forwards here.
+	static void refreshUnitPackages(const CvUnit* pUnit, int iMask);
 };
 
 #endif // CV_CASCADE_ACCUMULATOR_H

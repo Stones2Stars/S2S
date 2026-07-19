@@ -325,6 +325,125 @@ void CascadeAccumulator::refreshWorldScope(const CvGame* pGame, int iMask)
 	ws.tradeWorldFlat += CascadeScalarChannels::tradeRoutesWorldProjects();
 }
 
+// #430 F4: the UNIT self-accumulator refresh (modifier.md §6; f4-unit-plane.md). GATHER-ON-DIRTY over the unit's
+// small held-set -- the unit's TYPE intrinsic + each HELD promotion + each HELD unit-combat class (primary + subs,
+// tracked exactly as the retired apply-loops fired, via isHasUnitCombat). These step-1 deposits (withdrawal /
+// firstStrike / heal) are UNCONDITIONED, but the ctx carries unit/player/team (source == target) for the
+// conditioned unit channels that land later.
+// NONE of these groups has a special-unit source: special units author zero withdrawal/firstStrike/heal deposits
+// and SPECIALUNIT is not pushed into the DepositIndex (GC.getSpecialUnitInfo is the legacy CvInfoBase array, not a
+// deposit-carrying CvInfo) -- so their legacy folds summed a perpetually-zero scalar; the cascade matches that zero.
+void CascadeAccumulator::refreshUnitPackages(const CvUnit* pUnit, int iMask)
+{
+	if (pUnit == NULL || iMask == 0) return;
+	CascadeUnitPackages& st = pUnit->m_cascadeUnitPackages;
+	const CvPlayer& player = GET_PLAYER(pUnit->getOwner());
+	CvCascadeEvalCtx ec;
+	ec.unit = pUnit; ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
+
+	if (iMask & UPK_WITHDRAWAL)
+	{
+		// contract rule 2: fully define the output every call (zero-then-sum). withdrawal.unit.percent, HUMAN int.
+		int iWithdrawal = 0;
+		// the unit's TYPE intrinsic (CvUnitInfo base withdrawal)
+		const CvInfo* jType = InfoRepo<CvUnitInfo>::get().get((int)pUnit->getUnitType());
+		if (jType != NULL) iWithdrawal += MMKernel::sumUnit(jType, "withdrawal.unit", "percent", ec);
+		// each HELD promotion
+		for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
+		{
+			if (!pUnit->isHasPromotion((PromotionTypes)i)) continue;
+			const CvInfo* jP = InfoRepo<CvPromotionInfo>::get().get(i);
+			if (jP != NULL) iWithdrawal += MMKernel::sumUnit(jP, "withdrawal.unit", "percent", ec);
+		}
+		// each HELD unit-combat class (primary + subs -- the exact set the apply-loop processUnitCombat folded)
+		for (int i = 0; i < GC.getNumUnitCombatInfos(); ++i)
+		{
+			if (!pUnit->isHasUnitCombat((UnitCombatTypes)i)) continue;
+			const CvInfo* jC = InfoRepo<CvUnitCombatInfo>::get().get(i);
+			if (jC != NULL) iWithdrawal += MMKernel::sumUnit(jC, "withdrawal.unit", "percent", ec);
+		}
+		st.withdrawal = iWithdrawal;
+	}
+
+	if (iMask & UPK_FIRSTSTRIKE)
+	{
+		// contract rule 2: fully define the outputs every call (zero-then-sum). firstStrike COUNT + CHANCE, HUMAN int.
+		int iStrikes = 0, iChance = 0;
+		// the unit's TYPE intrinsic (CvUnitInfo base first strikes)
+		const CvInfo* jType = InfoRepo<CvUnitInfo>::get().get((int)pUnit->getUnitType());
+		if (jType != NULL)
+		{
+			iStrikes += MMKernel::sumUnit(jType, "firstStrike.unit.strikes", "flat", ec);
+			iChance  += MMKernel::sumUnit(jType, "firstStrike.unit.chance", "flat", ec);
+		}
+		// each HELD promotion
+		for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
+		{
+			if (!pUnit->isHasPromotion((PromotionTypes)i)) continue;
+			const CvInfo* jP = InfoRepo<CvPromotionInfo>::get().get(i);
+			if (jP == NULL) continue;
+			iStrikes += MMKernel::sumUnit(jP, "firstStrike.unit.strikes", "flat", ec);
+			iChance  += MMKernel::sumUnit(jP, "firstStrike.unit.chance", "flat", ec);
+		}
+		// each HELD unit-combat class (primary + subs -- the exact set the apply-loop processUnitCombat folded)
+		for (int i = 0; i < GC.getNumUnitCombatInfos(); ++i)
+		{
+			if (!pUnit->isHasUnitCombat((UnitCombatTypes)i)) continue;
+			const CvInfo* jC = InfoRepo<CvUnitCombatInfo>::get().get(i);
+			if (jC == NULL) continue;
+			iStrikes += MMKernel::sumUnit(jC, "firstStrike.unit.strikes", "flat", ec);
+			iChance  += MMKernel::sumUnit(jC, "firstStrike.unit.chance", "flat", ec);
+		}
+		st.fsStrikes = iStrikes;
+		st.fsChance = iChance;
+	}
+
+	if (iMask & UPK_HEAL)
+	{
+		// contract rule 2: fully define the outputs every call (zero-then-sum). heal territory family, HUMAN int.
+		int iEnemy = 0, iNeutral = 0, iFriendly = 0, iSameTile = 0, iAdjacent = 0;
+		// the unit's TYPE intrinsic (CvUnitInfo base heal rates)
+		const CvInfo* jType = InfoRepo<CvUnitInfo>::get().get((int)pUnit->getUnitType());
+		if (jType != NULL)
+		{
+			iEnemy    += MMKernel::sumUnit(jType, "heal.unit.enemy", "flat", ec);
+			iNeutral  += MMKernel::sumUnit(jType, "heal.unit.neutral", "flat", ec);
+			iFriendly += MMKernel::sumUnit(jType, "heal.unit.friendly", "flat", ec);
+			iSameTile += MMKernel::sumUnit(jType, "heal.unit.sameTile", "flat", ec);
+			iAdjacent += MMKernel::sumUnit(jType, "heal.unit.adjacentTile", "flat", ec);
+		}
+		// each HELD promotion
+		for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
+		{
+			if (!pUnit->isHasPromotion((PromotionTypes)i)) continue;
+			const CvInfo* jP = InfoRepo<CvPromotionInfo>::get().get(i);
+			if (jP == NULL) continue;
+			iEnemy    += MMKernel::sumUnit(jP, "heal.unit.enemy", "flat", ec);
+			iNeutral  += MMKernel::sumUnit(jP, "heal.unit.neutral", "flat", ec);
+			iFriendly += MMKernel::sumUnit(jP, "heal.unit.friendly", "flat", ec);
+			iSameTile += MMKernel::sumUnit(jP, "heal.unit.sameTile", "flat", ec);
+			iAdjacent += MMKernel::sumUnit(jP, "heal.unit.adjacentTile", "flat", ec);
+		}
+		// each HELD unit-combat class (primary + subs -- the exact set the apply-loop processUnitCombat folded)
+		for (int i = 0; i < GC.getNumUnitCombatInfos(); ++i)
+		{
+			if (!pUnit->isHasUnitCombat((UnitCombatTypes)i)) continue;
+			const CvInfo* jC = InfoRepo<CvUnitCombatInfo>::get().get(i);
+			if (jC == NULL) continue;
+			iEnemy    += MMKernel::sumUnit(jC, "heal.unit.enemy", "flat", ec);
+			iNeutral  += MMKernel::sumUnit(jC, "heal.unit.neutral", "flat", ec);
+			iFriendly += MMKernel::sumUnit(jC, "heal.unit.friendly", "flat", ec);
+			iSameTile += MMKernel::sumUnit(jC, "heal.unit.sameTile", "flat", ec);
+			iAdjacent += MMKernel::sumUnit(jC, "heal.unit.adjacentTile", "flat", ec);
+		}
+		st.healEnemy = iEnemy;
+		st.healNeutral = iNeutral;
+		st.healFriendly = iFriendly;
+		st.healSameTile = iSameTile;
+		st.healAdjacent = iAdjacent;
+	}
+}
+
 // ===================== the COMBINES (bare fetches + the channel formula + live gates) =====================
 
 // The §2a rate combine: (plots + trade + BASE flats) × max(0, 100 + Σ percent packages) + truncated EXTRA.

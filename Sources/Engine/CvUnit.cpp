@@ -90,6 +90,8 @@ bool CvUnit::isRealEntity(const CvEntity* entity)
 CvUnit::CvUnit(bool bIsDummy) : m_GameObject(this),
 m_Properties(this)
 {
+	// #430 F4: bind the unit scope packages (all-dirty from birth, address-stable owner -- CvDerivedCache rule 3).
+	m_cascadeUnitPackages.set.bind(this, &CvUnit::cascadeRefreshUnitPackages);
 	m_aiExtraDomainModifier = new int[NUM_DOMAIN_TYPES];
 	m_aiExtraVisibilityIntensity = new int[GC.getNumInvisibleInfos()];
 	m_aiExtraInvisibilityIntensity = new int[GC.getNumInvisibleInfos()];
@@ -579,9 +581,11 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iExtraAirRange = 0;
 	m_iExtraIntercept = 0;
 	m_iExtraEvasion = 0;
-	m_iExtraFirstStrikes = 0;
-	m_iExtraChanceFirstStrikes = 0;
-	m_iExtraWithdrawal = 0;
+	// #430 F4: withdrawal / firstStrike / heal are cascade self-accumulators now (m_iExtra{FirstStrikes,
+	// ChanceFirstStrikes,Withdrawal,EnemyHeal,NeutralHeal,FriendlyHeal}/m_iSameTileHeal/m_iAdjacentTileHeal removed)
+	// -- re-derive from the held-set (mark all-dirty on a reused/re-identitied unit); the mid-combat suppress starts clear.
+	m_bSuppressWithdrawal = false;
+	m_cascadeUnitPackages.set.markAllDirty();
 	//TB Combat Mods Begin
 	m_iExtraAttackCombatModifier = 0;
 	m_iExtraDefenseCombatModifier = 0;
@@ -651,11 +655,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iSMAirBombBaseRate = 0;
 	m_iSMBaseWorkRate = 0;
 	m_iSMRevoltProtection = 0;
-	m_iExtraEnemyHeal = 0;
-	m_iExtraNeutralHeal = 0;
-	m_iExtraFriendlyHeal = 0;
-	m_iSameTileHeal = 0;
-	m_iAdjacentTileHeal = 0;
 	m_iExtraCombatPercent = 0;
 	m_iExtraCityAttackPercent = 0;
 	m_iExtraCityDefensePercent = 0;
@@ -887,9 +886,10 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iExtraAirRange = other.m_iExtraAirRange;
 	m_iExtraIntercept = other.m_iExtraIntercept;
 	m_iExtraEvasion = other.m_iExtraEvasion;
-	m_iExtraFirstStrikes = other.m_iExtraFirstStrikes;
-	m_iExtraChanceFirstStrikes = other.m_iExtraChanceFirstStrikes;
-	m_iExtraWithdrawal = other.m_iExtraWithdrawal;
+	// #430 F4: withdrawal / firstStrike / heal are gathered from the held-set (never copied) -- mark ALL dirty so
+	// the target re-derives from its own copied promotions/unitcombats; carry the within-frame suppress transient.
+	m_bSuppressWithdrawal = other.m_bSuppressWithdrawal;
+	m_cascadeUnitPackages.set.markDirty(UPK_ALL);
 	m_iExtraAttackCombatModifier = other.m_iExtraAttackCombatModifier;
 	m_iExtraDefenseCombatModifier = other.m_iExtraDefenseCombatModifier;
 	m_iExtraVSBarbs = other.m_iExtraVSBarbs;
@@ -955,11 +955,7 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iSMAirBombBaseRate = other.m_iSMAirBombBaseRate;
 	m_iSMBaseWorkRate = other.m_iSMBaseWorkRate;
 	m_iSMRevoltProtection = other.m_iSMRevoltProtection;
-	m_iExtraEnemyHeal = other.m_iExtraEnemyHeal;
-	m_iExtraNeutralHeal = other.m_iExtraNeutralHeal;
-	m_iExtraFriendlyHeal = other.m_iExtraFriendlyHeal;
-	m_iSameTileHeal = other.m_iSameTileHeal;
-	m_iAdjacentTileHeal = other.m_iAdjacentTileHeal;
+	// #430 F4: heal accumulators gathered from the held-set (never copied) -- covered by the markDirty(UPK_ALL) above.
 	m_iExtraCombatPercent = other.m_iExtraCombatPercent;
 	m_iExtraCityAttackPercent = other.m_iExtraCityAttackPercent;
 	m_iExtraCityDefensePercent = other.m_iExtraCityDefensePercent;
@@ -7645,10 +7641,12 @@ bool CvUnit::pillage(const bool bAutoPillage)
 		{
 			setMadeAttack(false);
 
-			int iWithdrawal = withdrawalProbability();
-			changeExtraWithdrawal(-iWithdrawal); // no withdrawal since we are really the defender
+			// #430 F4: force zero withdrawal for this counter-attack (we are really the defender) via the
+			// transient suppress flag honored by withdrawalProbability() -- the cache is read-only now, so the
+			// former changeExtraWithdrawal(-prob)/restore pair is replaced by a within-frame override.
+			m_bSuppressWithdrawal = true;
 			attack(pInterceptor->plot());
-			changeExtraWithdrawal(iWithdrawal);
+			m_bSuppressWithdrawal = false;
 
 			return false;
 		}
@@ -13015,6 +13013,8 @@ int CvUnit::evasionProbability(bool bIgnoreCommanders, bool bIgnoreCommodores) c
 
 int CvUnit::withdrawalProbability() const
 {
+	// #430 F4: the sea-pillage counter-attack forces zero withdrawal for the duration of that attack.
+	if (m_bSuppressWithdrawal) return 0;
 	const int iProbability = m_pUnitInfo->getWithdrawalProbability() + getExtraWithdrawal() /*+ escapeModifier()*/;
 
 	if (shouldUseWithdrawalOddsCap())
@@ -15536,12 +15536,18 @@ void CvUnit::changeExtraEvasion(int iChange)
 
 int CvUnit::getExtraFirstStrikes() const
 {
+	// #430 F4: the OWN accumulated first-strike COUNT is the cascade self-gathered value (was m_iExtraFirstStrikes);
+	// the LIVE commander/commodore inheritance fold + the std::max(0,·) clamp ride ON TOP at read
+	// (DEC-unit-modifiers-on-top), reading the commander's OWN gathered field one level, as withdrawal does.
+	m_cascadeUnitPackages.set.ensure();
+	const int iOwn = m_cascadeUnitPackages.fsStrikes;
 	if (!isCommander())
 	{
 		const CvUnit* pCommander = getCommander();
 		if (pCommander)
 		{
-			return std::max(0, m_iExtraFirstStrikes + pCommander->getExtraFirstStrikes());
+			pCommander->m_cascadeUnitPackages.set.ensure();
+			return std::max(0, iOwn + pCommander->m_cascadeUnitPackages.fsStrikes);
 		}
 	}
 	if (!isCommodore())
@@ -15549,25 +15555,26 @@ int CvUnit::getExtraFirstStrikes() const
     		const CvUnit* pCommodore = getCommodore();
     		if (pCommodore)
     		{
-    			return std::max(0, m_iExtraFirstStrikes + pCommodore->getExtraFirstStrikes());
+    			pCommodore->m_cascadeUnitPackages.set.ensure();
+    			return std::max(0, iOwn + pCommodore->m_cascadeUnitPackages.fsStrikes);
     		}
     	}
-	return std::max(0, m_iExtraFirstStrikes);
-}
-
-void CvUnit::changeExtraFirstStrikes(int iChange)
-{
-	m_iExtraFirstStrikes += iChange;
+	return std::max(0, iOwn);
 }
 
 int CvUnit::getExtraChanceFirstStrikes() const
 {
+	// #430 F4: the OWN accumulated first-strike CHANCE is the cascade self-gathered value (was
+	// m_iExtraChanceFirstStrikes); the LIVE commander/commodore fold + the std::max(0,·) clamp ride ON TOP at read.
+	m_cascadeUnitPackages.set.ensure();
+	const int iOwn = m_cascadeUnitPackages.fsChance;
 	if (!isCommander())
 	{
 		const CvUnit* pCommander = getCommander();
 		if (pCommander)
 		{
-			return std::max(0, m_iExtraChanceFirstStrikes + pCommander->getExtraChanceFirstStrikes());
+			pCommander->m_cascadeUnitPackages.set.ensure();
+			return std::max(0, iOwn + pCommander->m_cascadeUnitPackages.fsChance);
 		}
 	}
 	if (!isCommodore())
@@ -15575,25 +15582,27 @@ int CvUnit::getExtraChanceFirstStrikes() const
     		const CvUnit* pCommodore = getCommodore();
     		if (pCommodore)
     		{
-    			return std::max(0, m_iExtraChanceFirstStrikes + pCommodore->getExtraChanceFirstStrikes());
+    			pCommodore->m_cascadeUnitPackages.set.ensure();
+    			return std::max(0, iOwn + pCommodore->m_cascadeUnitPackages.fsChance);
     		}
     	}
-	return std::max(0, m_iExtraChanceFirstStrikes);
-}
-
-void CvUnit::changeExtraChanceFirstStrikes(int iChange)
-{
-	m_iExtraChanceFirstStrikes += iChange;
+	return std::max(0, iOwn);
 }
 
 int CvUnit::getExtraWithdrawal(bool bIgnoreCommanders, bool bIgnoreCommodores) const
 {
+	// #430 F4: the OWN accumulated withdrawal is the cascade self-gathered value (was m_iExtraWithdrawal); the
+	// LIVE commander/commodore inheritance fold rides ON TOP at read (DEC-unit-modifiers-on-top), reading the
+	// commander's OWN gathered value exactly as it read the commander's raw member before.
+	m_cascadeUnitPackages.set.ensure();
+	const int iOwn = m_cascadeUnitPackages.withdrawal;
 	if (!bIgnoreCommanders && !isCommander())
 	{
 		const CvUnit* pCommander = getCommander();
 		if (pCommander)
 		{
-			return m_iExtraWithdrawal + pCommander->m_iExtraWithdrawal;
+			pCommander->m_cascadeUnitPackages.set.ensure();
+			return iOwn + pCommander->m_cascadeUnitPackages.withdrawal;
 		}
 	}
 	if (!bIgnoreCommodores && !isCommodore())
@@ -15601,15 +15610,18 @@ int CvUnit::getExtraWithdrawal(bool bIgnoreCommanders, bool bIgnoreCommodores) c
     		const CvUnit* pCommodore = getCommodore();
     		if (pCommodore)
     		{
-    			return m_iExtraWithdrawal + pCommodore->m_iExtraWithdrawal;
+    			pCommodore->m_cascadeUnitPackages.set.ensure();
+    			return iOwn + pCommodore->m_cascadeUnitPackages.withdrawal;
     		}
     	}
-	return m_iExtraWithdrawal;
+	return iOwn;
 }
 
-void CvUnit::changeExtraWithdrawal(int iChange)
+// #430 F4: the CvDerivedCacheSet refresh delegate -- the gather math stays module-side (mirrors CvCity's
+// cascadeRefreshPackages -> CascadeAccumulator::refreshCityPackages).
+void CvUnit::cascadeRefreshUnitPackages(int iMask) const
 {
-	m_iExtraWithdrawal += iChange;
+	CascadeAccumulator::refreshUnitPackages(this, iMask);
 }
 
 //TB Combat Mods Begin
@@ -16142,12 +16154,18 @@ void CvUnit::changeExtraCollateralDamage(int iChange)
 
 int CvUnit::getExtraEnemyHeal() const
 {
+	// #430 F4: OWN accumulated enemy-territory heal is the cascade self-gathered value (was m_iExtraEnemyHeal); the
+	// LIVE commander/commodore inheritance fold rides ON TOP at read (DEC-unit-modifiers-on-top), one level, as
+	// withdrawal does. NO max() clamp (legacy had none). Also consumed as a spy-mission strength -- transparent here.
+	m_cascadeUnitPackages.set.ensure();
+	const int iOwn = m_cascadeUnitPackages.healEnemy;
 	if (!isCommander())
 	{
 		const CvUnit* pCommander = getCommander();
 		if (pCommander)
 		{
-			return m_iExtraEnemyHeal + pCommander->m_iExtraEnemyHeal;
+			pCommander->m_cascadeUnitPackages.set.ensure();
+			return iOwn + pCommander->m_cascadeUnitPackages.healEnemy;
 		}
 	}
 	if (!isCommodore())
@@ -16155,25 +16173,26 @@ int CvUnit::getExtraEnemyHeal() const
     		const CvUnit* pCommodore = getCommodore();
     		if (pCommodore)
     		{
-    			return m_iExtraEnemyHeal + pCommodore->m_iExtraEnemyHeal;
+    			pCommodore->m_cascadeUnitPackages.set.ensure();
+    			return iOwn + pCommodore->m_cascadeUnitPackages.healEnemy;
     		}
     	}
-	return m_iExtraEnemyHeal;
-}
-
-void CvUnit::changeExtraEnemyHeal(int iChange)
-{
-	m_iExtraEnemyHeal += iChange;
+	return iOwn;
 }
 
 int CvUnit::getExtraNeutralHeal() const
 {
+	// #430 F4: OWN accumulated neutral-territory heal, cascade self-gathered (was m_iExtraNeutralHeal); LIVE
+	// commander/commodore fold on top, no max() clamp. Also consumed as a spy-mission strength -- transparent here.
+	m_cascadeUnitPackages.set.ensure();
+	const int iOwn = m_cascadeUnitPackages.healNeutral;
 	if (!isCommander())
 	{
 		const CvUnit* pCommander = getCommander();
 		if (pCommander)
 		{
-			return m_iExtraNeutralHeal + pCommander->m_iExtraNeutralHeal;
+			pCommander->m_cascadeUnitPackages.set.ensure();
+			return iOwn + pCommander->m_cascadeUnitPackages.healNeutral;
 		}
 	}
 	if (!isCommodore())
@@ -16181,25 +16200,26 @@ int CvUnit::getExtraNeutralHeal() const
     		const CvUnit* pCommodore = getCommodore();
     		if (pCommodore)
     		{
-    			return m_iExtraNeutralHeal + pCommodore->m_iExtraNeutralHeal;
+    			pCommodore->m_cascadeUnitPackages.set.ensure();
+    			return iOwn + pCommodore->m_cascadeUnitPackages.healNeutral;
     		}
     	}
-	return m_iExtraNeutralHeal;
-}
-
-void CvUnit::changeExtraNeutralHeal(int iChange)
-{
-	m_iExtraNeutralHeal += iChange;
+	return iOwn;
 }
 
 int CvUnit::getExtraFriendlyHeal() const
 {
+	// #430 F4: OWN accumulated friendly-territory heal, cascade self-gathered (was m_iExtraFriendlyHeal); LIVE
+	// commander/commodore fold on top, no max() clamp. Also consumed as a spy-mission strength -- transparent here.
+	m_cascadeUnitPackages.set.ensure();
+	const int iOwn = m_cascadeUnitPackages.healFriendly;
 	if (!isCommander())
 	{
 		const CvUnit* pCommander = getCommander();
 		if (pCommander)
 		{
-			return m_iExtraFriendlyHeal + pCommander->m_iExtraFriendlyHeal;
+			pCommander->m_cascadeUnitPackages.set.ensure();
+			return iOwn + pCommander->m_cascadeUnitPackages.healFriendly;
 		}
 	}
 	if (!isCommodore())
@@ -16207,38 +16227,25 @@ int CvUnit::getExtraFriendlyHeal() const
     		const CvUnit* pCommodore = getCommodore();
     		if (pCommodore)
     		{
-    			return m_iExtraFriendlyHeal + pCommodore->m_iExtraFriendlyHeal;
+    			pCommodore->m_cascadeUnitPackages.set.ensure();
+    			return iOwn + pCommodore->m_cascadeUnitPackages.healFriendly;
     		}
     	}
-	return m_iExtraFriendlyHeal;
-}
-
-
-void CvUnit::changeExtraFriendlyHeal(int iChange)
-{
-	m_iExtraFriendlyHeal += iChange;
+	return iOwn;
 }
 
 int CvUnit::getSameTileHeal() const
 {
-	return m_iSameTileHeal;
-}
-
-void CvUnit::changeSameTileHeal(int iChange)
-{
-	m_iSameTileHeal += iChange;
-	FASSERT_NOT_NEGATIVE(m_iSameTileHeal);
+	// #430 F4: cascade self-gathered (was m_iSameTileHeal) -- RAW read, no commander inheritance (legacy had none).
+	m_cascadeUnitPackages.set.ensure();
+	return m_cascadeUnitPackages.healSameTile;
 }
 
 int CvUnit::getAdjacentTileHeal() const
 {
-	return m_iAdjacentTileHeal;
-}
-
-void CvUnit::changeAdjacentTileHeal(int iChange)
-{
-	m_iAdjacentTileHeal += iChange;
-	FASSERT_NOT_NEGATIVE(m_iAdjacentTileHeal);
+	// #430 F4: cascade self-gathered (was m_iAdjacentTileHeal) -- RAW read, no commander inheritance.
+	m_cascadeUnitPackages.set.ensure();
+	return m_cascadeUnitPackages.healAdjacent;
 }
 
 int CvUnit::getExtraCombatPercent() const
@@ -18354,7 +18361,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeExtraAirRange(kUnitCombat.getAirRangeChange() * iChange);//no merge/split diff
 	changeExtraIntercept(kUnitCombat.getInterceptChange() * iChange);//no merge/split diff
 	changeExtraEvasion(kUnitCombat.getEvasionChange() * iChange);//no merge/split diff
-	changeExtraWithdrawal(kUnitCombat.getWithdrawalChange() * iChange);//no merge/split diff
+	m_cascadeUnitPackages.set.markDirty(UPK_ALL);//#430 F4: a unit-combat change invalidates EVERY migrated unit-plane channel (withdrawal/firstStrike/heal) -- gathered on-dirty from the held-set (was changeExtra{Withdrawal,FirstStrikes,ChanceFirstStrikes,*Heal})
 	changeCargoSpace(kUnitCombat.getCargoChange() * iChange);//no merge/split diff (since this mechanism is either a base setter or is for non-SM or non-player on SM.
 
 	changeSMCargoSpace(kUnitCombat.getSMCargoChange() * iChange);//merge/split volumetric
@@ -18363,13 +18370,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 
 	changeExtraCollateralDamage(kUnitCombat.getCollateralDamageChange() * iChange);//I suspect no merge/split
 	changeExtraBombardRate(kUnitCombat.getBombardRateChange() * iChange);//no merge/split (affect this volumetrically on the final value)
-	changeExtraFirstStrikes(kUnitCombat.getFirstStrikesChange() * iChange);//no merge/split
-	changeExtraChanceFirstStrikes(kUnitCombat.getChanceFirstStrikesChange() * iChange);//no merge/split
-	changeExtraEnemyHeal(kUnitCombat.getEnemyHealChange() * iChange);//no merge/split (modified but not multiplicative)
-	changeExtraNeutralHeal(kUnitCombat.getNeutralHealChange() * iChange);//no merge/split (modified but not multiplicative)
-	changeExtraFriendlyHeal(kUnitCombat.getFriendlyHealChange() * iChange);//no merge/split (modified but not multiplicative)
-	changeSameTileHeal(kUnitCombat.getSameTileHealChange() * iChange);//no merge/split (modified but not multiplicative)
-	changeAdjacentTileHeal(kUnitCombat.getAdjacentTileHealChange() * iChange);//no merge/split (modified but not multiplicative)
+	//#430 F4: firstStrike (strikes/chance) + heal (enemy/neutral/friendly/sameTile/adjacentTile) folds retired -- gathered on-dirty via the markDirty(UPK_ALL) above
 	changeExtraCombatPercent(kUnitCombat.getCombatPercent() * iChange);//no merge/split
 	changeExtraCityAttackPercent(kUnitCombat.getCityAttackPercent() * iChange);//no merge/split
 	changeExtraCityDefensePercent(kUnitCombat.getCityDefensePercent() * iChange);//no merge/split
@@ -18835,9 +18836,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeExtraAirRange(kPromotion.getAirRangeChange() * iChange);
 	changeExtraIntercept(kPromotion.getInterceptChange() * iChange);
 	changeExtraEvasion(kPromotion.getEvasionChange() * iChange);
-	changeExtraFirstStrikes(kPromotion.getFirstStrikesChange() * iChange);
-	changeExtraChanceFirstStrikes(kPromotion.getChanceFirstStrikesChange() * iChange);
-	changeExtraWithdrawal(kPromotion.getWithdrawalChange() * iChange);
+	m_cascadeUnitPackages.set.markDirty(UPK_ALL);//#430 F4: a promotion change invalidates EVERY migrated unit-plane channel (withdrawal/firstStrike/heal) -- gathered on-dirty from the held-set (was changeExtra{Withdrawal,FirstStrikes,ChanceFirstStrikes,*Heal})
 	//TB Combat Mods Begin
 	changeExtraAttackCombatModifier(kPromotion.getAttackCombatModifierChange() * iChange);
 	changeExtraDefenseCombatModifier(kPromotion.getDefenseCombatModifierChange() * iChange);
@@ -18901,11 +18900,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 		changeExtraBombardRate(kPromotion.getBombardRateChange() * iChange);
 		bSMrecalc = true;
 	}
-	changeExtraEnemyHeal(kPromotion.getEnemyHealChange() * iChange);
-	changeExtraNeutralHeal(kPromotion.getNeutralHealChange() * iChange);
-	changeExtraFriendlyHeal(kPromotion.getFriendlyHealChange() * iChange);
-	changeSameTileHeal(kPromotion.getSameTileHealChange() * iChange);
-	changeAdjacentTileHeal(kPromotion.getAdjacentTileHealChange() * iChange);
+	//#430 F4: heal (enemy/neutral/friendly/sameTile/adjacentTile) folds retired -- gathered on-dirty via the markDirty(UPK_ALL) above
 	changeExtraCombatPercent(kPromotion.getCombatPercent() * iChange);
 	changeExtraCityAttackPercent(kPromotion.getCityAttackPercent() * iChange);
 	changeExtraCityDefensePercent(kPromotion.getCityDefensePercent() * iChange);
@@ -19481,16 +19476,13 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraAirRange);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraIntercept);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraEvasion);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraFirstStrikes);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraChanceFirstStrikes);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraWithdrawal);
+	// #430 F4: m_iExtraFirstStrikes / m_iExtraChanceFirstStrikes / m_iExtraWithdrawal drained (soft-remove,
+	// DEC-save-remove-is-soft) -- the reader skips the orphan tags transparently; firstStrike/withdrawal re-derive
+	// from the held-set at load. Tags named in Assets/savemigration.txt.
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraCollateralDamage);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraBombardRate);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraEnemyHeal);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraNeutralHeal);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraFriendlyHeal);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iSameTileHeal);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iAdjacentTileHeal);
+	// #430 F4: the five heal accumulators (enemy/neutral/friendly/sameTile/adjacentTile) drained (soft-remove) --
+	// heal re-derives from the held-set at load. Tags named in Assets/savemigration.txt.
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraCombatPercent);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraCityAttackPercent);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraCityDefensePercent);
@@ -20477,16 +20469,11 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraAirRange);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraIntercept);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraEvasion);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraFirstStrikes);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraChanceFirstStrikes);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraWithdrawal);
+	// #430 F4: m_iExtraFirstStrikes / m_iExtraChanceFirstStrikes / m_iExtraWithdrawal no longer serialized
+	// (soft-remove) -- firstStrike/withdrawal re-derive from the held-set.
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraCollateralDamage);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraBombardRate);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraEnemyHeal);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraNeutralHeal);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraFriendlyHeal);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iSameTileHeal);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iAdjacentTileHeal);
+	// #430 F4: the five heal accumulators no longer serialized (soft-remove) -- heal re-derives from the held-set.
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraCombatPercent);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraCityAttackPercent);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraCityDefensePercent);
@@ -28872,7 +28859,12 @@ void CvUnit::processLoadedSpecialUnit(bool bChange, SpecialUnitTypes eSpecialUni
 	const int iChange = (bChange ? 1 : -1);
 
 	changeExtraCombatPercent(kSpecialUnit.getCombatPercent() * iChange);
-	changeExtraWithdrawal(kSpecialUnit.getWithdrawalChange() * iChange);
+	// #430 F4: withdrawal migrated to the cascade self-accumulator -- mark dirty (uniform with the promotion/
+	// unit-combat fold sites). NOTE (mapped, not guessed): special units author ZERO withdrawal deposits in the
+	// live data AND SPECIALUNIT is not pushed into the DepositIndex, so the gather deliberately does NOT include
+	// the special-unit info (GC.getSpecialUnitInfo is the legacy CvInfoBase array, not a deposit-carrying CvInfo);
+	// this mark therefore re-derives to the same value today -- kept for site uniformity + future-safety.
+	m_cascadeUnitPackages.set.markDirty(UPK_WITHDRAWAL);
 }
 
 bool CvUnit::hasBuild(BuildTypes eBuild) const

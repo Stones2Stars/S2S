@@ -31,7 +31,17 @@ recompute-only / dirty-flagged / never-serialized model as the plot-yield and ci
 ([state-repositories.md](../../architecture/state-repositories.md)).** One cache philosophy across every scope.
 
 - **Sources** = the unit's small held-set: its type intrinsic (`CvUnitInfo` base values) + held promotions +
-  primary/sub unit-combat classes. Bounded per unit (a handful), unlike a city's many sources.
+  **held unit-combat classes** — the LIVE set enumerated via `isHasUnitCombat` (which captures the intrinsic
+  primary + subs AND promotion-granted combat classes; the exact set the legacy `processUnitCombat` fired on, not
+  just the intrinsic primary/sub — no double-count with the promotion loop, legacy folded both). Bounded per unit
+  (a handful), unlike a city's many sources. ⚠ The legacy `processLoadedSpecialUnit` (`CvUnit.cpp:28875`) also folded
+  a `CvSpecialUnitInfo` withdrawal change, but that is a **DEAD source in current data** (verified live 2026-07-19):
+  SPECIALUNIT is not deposit-ported (no readJson type-prefix, never pushed to `DepositIndex`, and `GC.getSpecialUnitInfo`
+  returns a legacy `CvInfoBase`, not a deposit-carrying `CvInfo`), and zero special-unit JSON authors withdrawal — so
+  the legacy fold summed a perpetual zero and the cascade gather correctly EXCLUDES it (the fold SITE still migrates to
+  `markDirty` for uniformity/future-safety). *Open verify:* confirm no legacy specialunit XML authored `iWithdrawalChange`
+  — genuinely-dead vs a curator gap ([DEC-data-first](../../architecture/decisions.md#dec-data-first)); exotic, an F7
+  tail item if real.
 - **Fold shape — GATHER-ON-DIRTY (option A, approved; NOT incremental push).** A promotion / unitcombat / type
   change flips the unit's cache **dirty**; the next read gathers `Σ` over the held-set via `MMKernel`
   (`sumUnit100` / `sumKeyed4U` / `perScale` / `modifiedInt`), gated by `cascadeEvalCondition`, combined by the §2
@@ -57,10 +67,36 @@ load-time re-derive path.
 
 ## 3. Build order (incremental, each verified live in-game against the legacy consumer it replaces)
 
-1. **Stand up the scope + the gather-on-dirty fold**, validated on the **simplest scalar groups first** — no
-   side-effects, no keying: withdrawal / firstStrike / evasion / intercept (⚠ `changeExtraWithdrawal` has a
-   mid-combat transient tweak `CvUnit.cpp:7604/7606` to preserve), heal, collateral / bombard, capture /
-   vision-range / cargo-size scalars.
+1. ✅ **LANDED (2026-07-19, live-verified) — withdrawal + firstStrike + heal.** The scope struct
+   (`CascadeUnitPackages` on `CvUnit`, `CvDerivedCacheSet`), the `CascadeAccumulator::refreshUnitPackages`
+   gather-on-dirty over the held-set, and the full vertical slice for these three groups (8 members: getters flipped
+   to cache reads with the commander folds/clamps preserved, apply-loop folds retired to one `markDirty(UPK_ALL)`
+   per loop, members + changers + serialization deleted, 8 tags drained in `savemigration.txt`, the pillage
+   transient on a suppress flag) are DONE and Release-build clean. **Live-verified** on the loaded ~1338-era save:
+   `/computed/units/heal` shows the cascade-gathered `sameTile` terms matching the held promotions to the number
+   (18→18, 13→13 across sampled healer/recipient pairs, zero stuck-zeros); withdrawal/firstStrike ride the identical
+   gather (address-only difference) and link clean. **Remaining step-1 scalar groups** (evasion / intercept /
+   collateral / bombard / capture / vision-range / cargo-size) are NOT yet migrated — same pattern, next.
+   *(original step-1 scope, for the record:)* **Stand up the scope + the gather-on-dirty fold**, validated on the
+   **simplest scalar groups first** — no side-effects, no keying: withdrawal / firstStrike (both members: `strikes`
+   count + `chance` probability) /
+   evasion / intercept, heal (territory family: enemy/neutral/friendly/sameTile/adjacentTile), collateral /
+   bombard, capture / vision-range / cargo-size scalars. **Each group ships as a FULL VERTICAL SLICE (owner ruling
+   2026-07):** flip its getter(s) to read the cache + retire its apply-loop fold (→ `markDirty`) + delete its
+   `m_iExtra*` member(s) + drain the tag(s) in `Assets/savemigration.txt` — all in this step, per group. The
+   serialized-stack removal (old step 4) is therefore folded PER-GROUP here, not batched at the end — no
+   dead-but-serialized member ever lingers ([DEC-save-remove-is-soft](../../architecture/decisions.md#dec-save-remove-is-soft)
+   makes the drain zero-risk, so there is no reason to defer it). Verified findings: step-1 deposits are
+   **UNCONDITIONED** (no `enabled`/`disabled` on these channels — plain `MMKernel::sumUnit`, so unit-predicate
+   evaluation is a step-2 concern, not step-1's); the getters **compose commander/commodore inheritance** on top of
+   the accumulator — that live cross-unit fold STAYS, riding on top of the cached own-gathered value
+   ([DEC-unit-modifiers-on-top](../../architecture/decisions.md#dec-unit-modifiers-on-top)); the three
+   `getExtra{Enemy,Neutral,Friendly}Heal` getters are **reused as spy-mission strengths** (`CvPlayer.cpp:16117/16128/16140`) —
+   transparent to the flip (same number, cascade-sourced). ⚠ **The withdrawal mid-combat transient**
+   (`CvUnit.cpp:7648-51`, sea-pillage counter-attack: `changeExtraWithdrawal(-withdrawalProbability())` … `attack()` …
+   restore) cannot mutate the now-read-only cache — preserved via a **small transient suppress flag on `CvUnit`**
+   (owner ruling 2026-07) honored by `withdrawalProbability()`, set/cleared around the pillage attack (live runtime
+   override on top, never an accumulator).
 2. **Core strength + combat-percent** groups (the largest consumer — `maxCombatStr`'s situational calc reads these
    aggregates; validate against it early). Several combat-percent members carry `enabled` predicates (IS_CITY /
    IS_HILLS) — the ordinary `cascadeEvalCondition` gate.
@@ -68,12 +104,15 @@ load-time re-derive path.
    the largest sub-surface, vision/invisibility (15 setters, carries `updateSpotIntensity` plot side-effects to
    preserve). Reuses `sumKeyed4U`/`sumKeyed4F`; sequence vision/invisibility after the keyed mechanism proves on a
    smaller keyed group.
-4. **Remove the serialized stack (SOFT — the drain text, NOT a save-break)** — once the re-derive-at-load path is
-   proven, full-delete the `m_iExtra*` block (member + WRAPPER_READ + WRITE) and NAME the drained tags in
-   `Assets/savemigration.txt` ([DEC-save-remove-is-soft](../../architecture/decisions.md#dec-save-remove-is-soft));
-   the reader drains old-save orphans transparently — old saves load clean forever, no version bump, no
-   `WRAPPER_SKIP_ELEMENT`. The three apply-loops (`processPromotion`/`processUnitCombat`/`processLoadedSpecialUnit`)
-   retire onto the cache's dirty-mark.
+4. **Serialized-stack removal is now PER-GROUP (folded into steps 1–3, owner ruling 2026-07), not a batched final
+   step.** Each group's slice already full-deletes ITS `m_iExtra*` member(s) (member + WRAPPER_READ + WRITE) and
+   names the drained tag(s) in `Assets/savemigration.txt`
+   ([DEC-save-remove-is-soft](../../architecture/decisions.md#dec-save-remove-is-soft); the reader drains old-save
+   orphans transparently — old saves load clean forever, no version bump, no `WRAPPER_SKIP_ELEMENT`). So this step
+   is the FINAL RECONCILE, not a removal: once the last group lands, confirm zero `m_iExtra*` remnants remain and
+   the three apply-loops (`processPromotion`/`processUnitCombat`/`processLoadedSpecialUnit`) have fully retired onto
+   the cache's dirty-mark (each shed its folds group-by-group; the loops themselves vanish when their last folded
+   channel migrates).
 5. **Upkeep — lands WITH F4** ([fixed-point-conformance.md](fixed-point-conformance.md), named F4 dependency, not a
    separate slice). It is the forcing case for a unit-scope channel feeding back UP into a player-scope
    accumulator: `CvUnit::m_iExtraUpkeep100` (deposit-fed) → `calcUpkeep100` (`:15808`) → pushes the delta into

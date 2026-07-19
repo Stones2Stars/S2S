@@ -33,6 +33,7 @@
 class CvCity;
 class CvPlayer;
 class CvGame;
+class CvUnit;
 
 // ===== the keyed buildRate LEDGER, DENSE (the precipice-§5 hot-path fix) =====
 // The AI's production scoring reads this per (item × city); the former std::map<long,int> paid two
@@ -270,6 +271,54 @@ struct CascadeWorldScope
 	int tradeWorldFlat;                  // Σ living players' tradeWorldMine (world wonders grant EVERY player)
 	CvDerivedCacheSet<CvGame> set;       // bind in CvGame's reset (idempotent)
 	CascadeWorldScope() : tradeWorldFlat(0) {}
+};
+
+// ===== the UNIT packages (F4 -- the unit plane on the ONE modifier machine) =====
+// modifier.md §6 (the unit self-accumulator: source == target) + f4-unit-plane.md. A CvUnit-owned
+// CvDerivedCacheSet: a promotion / unit-combat / special-unit / type change flips the relevant channel-group
+// dirty; the next read GATHERS Σ over the unit's held-set (type intrinsic + held promotions + primary/sub
+// unit-combat classes + special-unit group) via MMKernel::sumUnit, gated by cascadeEvalCondition (ec.unit = the
+// unit). Reads are bare fetches when clean. GATHER-ON-DIRTY (f4 §2 option A), NOT incremental push -- the held-set
+// is a handful, so the fold is effectively O(1) and reuses the retiring push-accumulator's shape for nothing.
+//
+// NEVER serialized: dirty-on-construct re-derives from the DESERIALIZED held-promotion set at load -- no reseed
+// emit needed (the held set IS the source, already on the unit). The retired m_iExtra* serialized accumulators
+// drain via Assets/savemigration.txt (DEC-save-remove-is-soft), per-group as each channel migrates.
+//
+// SCALE: these unit stats are DISCRETE whole quantities (withdrawal %, first-strike COUNTS, heal points), so they
+// reduce ÷100 AT THE GATHER (MMKernel::sumUnit is the human ÷100 summer) and store HUMAN -- the discrete-count
+// reader-boundary reduction DEC-fixedpoint-x100 names. The getter returns the stored human value directly (matching
+// the legacy getExtra* return), with the LIVE commander/commodore inheritance fold added ON TOP at read
+// (DEC-unit-modifiers-on-top -- a cross-unit traveling modifier, never baked into the cache).
+enum CascadeUnitPkg
+{
+	UPK_WITHDRAWAL  = 1,   // withdrawal.unit.percent
+	UPK_FIRSTSTRIKE = 2,   // firstStrike.unit.strikes.flat + firstStrike.unit.chance.flat
+	UPK_HEAL        = 4,   // heal.unit.{enemy,neutral,friendly,sameTile,adjacentTile}.flat
+	UPK_ALL         = 7,
+	UPK_EAGER       = UPK_ALL
+};
+
+struct CascadeUnitPackages
+{
+	// -- withdrawal (UPK_WITHDRAWAL) -- own-gathered; the commander/commodore fold rides on top at the getter --
+	int withdrawal;      // withdrawal.unit.percent
+	// -- first strike (UPK_FIRSTSTRIKE) -- two members: the strike COUNT and the strike CHANCE (probability) --
+	int fsStrikes;       // firstStrike.unit.strikes.flat
+	int fsChance;        // firstStrike.unit.chance.flat
+	// -- heal (UPK_HEAL) -- the territory family (no `city` member: city heal derives from friendly/neutral in
+	// healRate); the enemy/neutral/friendly getters double as spy-mission strengths -- transparent to the flip --
+	int healEnemy;       // heal.unit.enemy.flat
+	int healNeutral;     // heal.unit.neutral.flat
+	int healFriendly;    // heal.unit.friendly.flat
+	int healSameTile;    // heal.unit.sameTile.flat
+	int healAdjacent;    // heal.unit.adjacentTile.flat
+
+	CvDerivedCacheSet<CvUnit> set;   // the ONE dirty protocol (bind in CvUnit's init)
+
+	CascadeUnitPackages()
+		: withdrawal(0), fsStrikes(0), fsChance(0),
+		  healEnemy(0), healNeutral(0), healFriendly(0), healSameTile(0), healAdjacent(0) {}
 };
 
 #endif // CV_CASCADE_SCOPE_PACKAGES_H

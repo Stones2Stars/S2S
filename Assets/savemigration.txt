@@ -27,6 +27,40 @@
 |-------------------------------------------------------------------|
 
 ========================
+2026-07-19 — #430 F4 unit-plane pilot (withdrawal group): the stored per-unit extra-withdrawal accumulator is
+removed. CvUnit::getExtraWithdrawal now reads the cascade unit self-accumulator (m_cascadeUnitPackages.withdrawal,
+gathered on-dirty from the unit's held-set: type intrinsic + held promotions + held unit-combat classes via
+MMKernel::sumUnit "withdrawal.unit"."percent"), plus the LIVE commander/commodore inheritance fold on top. The
+changeExtraWithdrawal changer, the three apply-loop folds (processPromotion / processUnitCombat /
+processLoadedSpecialUnit -> markDirty), and the read/write are gone; the never-serialized cache re-derives at load.
+The mid-combat sea-pillage suppress (was changeExtraWithdrawal(-prob)/restore) is now a within-frame transient flag
+(m_bSuppressWithdrawal, NOT serialized) honored by withdrawalProbability().
+
+CvUnit::m_iExtraWithdrawal                (int)
+========================
+
+========================
+2026-07-19 — #430 F4 unit-plane (firstStrike + heal groups): the stored per-unit first-strike + heal accumulators
+are removed. CvUnit::getExtraFirstStrikes / getExtraChanceFirstStrikes / getExtraEnemyHeal / getExtraNeutralHeal /
+getExtraFriendlyHeal / getSameTileHeal / getAdjacentTileHeal now read the cascade unit self-accumulator
+(m_cascadeUnitPackages.{fsStrikes,fsChance,healEnemy,healNeutral,healFriendly,healSameTile,healAdjacent}, gathered
+on-dirty from the held-set: type intrinsic + held promotions + held unit-combat classes via MMKernel::sumUnit
+"firstStrike.unit.strikes"/"firstStrike.unit.chance"/"heal.unit.{enemy,neutral,friendly,sameTile,adjacentTile}"."flat").
+The seven changers + their apply-loop folds (processPromotion / processUnitCombat) are gone -- consolidated to ONE
+markDirty(UPK_ALL) per apply loop; the never-serialized cache re-derives at load. The firstStrike getters keep the
+LIVE commander/commodore fold + std::max(0,·) clamp; the enemy/neutral/friendly heal getters keep the fold (no clamp,
+also reused as spy-mission strengths); sameTile/adjacentTile are raw cache reads.
+
+CvUnit::m_iExtraFirstStrikes             (int)
+CvUnit::m_iExtraChanceFirstStrikes       (int)
+CvUnit::m_iExtraEnemyHeal                (int)
+CvUnit::m_iExtraNeutralHeal              (int)
+CvUnit::m_iExtraFriendlyHeal             (int)
+CvUnit::m_iSameTileHeal                  (int)
+CvUnit::m_iAdjacentTileHeal              (int)
+========================
+
+========================
 2026-07-18 — #430 two-part free-specialist seam (modifier.md par.6): the cascade owns the AMOUNT (fsAmountAny /
 fsAmountByType -- the summed building/civic/trait freeSpecialists deposits), the engine owns PLACEMENT, consumers
 read the OUTPUT (getSpecialistCount + getFreeSpecialistCount). The derivable CvCity free-specialist AMOUNT ledgers

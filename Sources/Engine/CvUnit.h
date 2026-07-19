@@ -9,6 +9,7 @@
 #include "CvGameObject.h"
 #include "CvProperties.h"
 #include "CvUnitComponents.h"
+#include "Cascade/CvCascadeScopePackages.h"   // #430 F4: CascadeUnitPackages -- the unit scope modifier packages (m_cascadeUnitPackages)
 
 #pragma warning( disable: 4251 )		// needs to have dll-interface to be used by clients of class
 
@@ -1101,13 +1102,14 @@ public:
 	void changeExtraEvasion(int iChange);
 
 	int getExtraFirstStrikes() const;
-	void changeExtraFirstStrikes(int iChange);
+	// #430 F4: changeExtraFirstStrikes retired -- gathered on-dirty from the held-set (cascadeRefreshUnitPackages).
 
 	int getExtraChanceFirstStrikes() const;
-	void changeExtraChanceFirstStrikes(int iChange);
+	// #430 F4: changeExtraChanceFirstStrikes retired -- gathered on-dirty from the held-set.
 
 	int getExtraWithdrawal(bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	void changeExtraWithdrawal(int iChange);
+	// #430 F4: changeExtraWithdrawal retired -- withdrawal is now gathered on-dirty from the held-set (see
+	// cascadeRefreshUnitPackages); the mid-combat suppress is a transient flag honored by withdrawalProbability().
 
 	//TB Combat Mods Start
 	int getExtraAttackCombatModifier (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
@@ -1191,20 +1193,17 @@ public:
 	int getExtraCollateralDamage() const;
 	void changeExtraCollateralDamage(int iChange);
 
+	// #430 F4: the heal territory family (enemy/neutral/friendly/sameTile/adjacentTile) is cascade self-gathered
+	// on-dirty from the held-set -- the changers are retired; the getters read m_cascadeUnitPackages.
 	int getExtraEnemyHeal() const;
-	void changeExtraEnemyHeal(int iChange);
 
 	int getExtraNeutralHeal() const;
-	void changeExtraNeutralHeal(int iChange);
 
 	int getExtraFriendlyHeal() const;
-	void changeExtraFriendlyHeal(int iChange);
 
 	int getSameTileHeal() const;
-	void changeSameTileHeal(int iChange);
 
 	int getAdjacentTileHeal() const;
-	void changeAdjacentTileHeal(int iChange);
 
 	int getExtraCombatPercent() const;
 	void changeExtraCombatPercent(int iChange);
@@ -1581,9 +1580,11 @@ protected:
 	int m_iExtraAirRange;
 	int m_iExtraIntercept;
 	int m_iExtraEvasion;
-	int m_iExtraFirstStrikes;
-	int m_iExtraChanceFirstStrikes;
-	int m_iExtraWithdrawal;
+	// #430 F4: m_iExtraFirstStrikes / m_iExtraChanceFirstStrikes / m_iExtraWithdrawal removed -- firstStrike +
+	// withdrawal are cascade self-accumulators (m_cascadeUnitPackages, gather-on-dirty). m_bSuppressWithdrawal is
+	// the within-frame transient forcing 0 withdrawal during the sea-pillage counter-attack (honored by
+	// withdrawalProbability(); NOT serialized -- pure transient).
+	bool m_bSuppressWithdrawal;
 	//TB Combat Mods Begin
 	int m_iExtraAttackCombatModifier;
 	int m_iExtraDefenseCombatModifier;
@@ -1687,11 +1688,8 @@ protected:
 	int m_iSMAirBombBaseRate;
 	int m_iSMBaseWorkRate;
 	int m_iSMRevoltProtection;
-	int m_iExtraEnemyHeal;
-	int m_iExtraNeutralHeal;
-	int m_iExtraFriendlyHeal;
-	int m_iSameTileHeal;
-	int m_iAdjacentTileHeal;
+	// #430 F4: m_iExtraEnemyHeal / m_iExtraNeutralHeal / m_iExtraFriendlyHeal / m_iSameTileHeal / m_iAdjacentTileHeal
+	// removed -- the heal territory family is a cascade self-accumulator (m_cascadeUnitPackages, gather-on-dirty).
 	int m_iExtraCombatPercent;
 	int m_iExtraCityAttackPercent;
 	int m_iExtraCityDefensePercent;
@@ -1809,6 +1807,13 @@ protected:
 	// AIAndy: Properties
 	CvProperties m_Properties;
 public:
+	// #430 F4: the unit-scope modifier packages (the self-accumulator: source == target). Backed by
+	// CvDerivedCacheSet, gather-on-dirty, NEVER serialized (re-derives from the held promotion/unitcombat set at
+	// load). Public like CvCity::m_cascadeCityPackages so CascadeAccumulator::refreshUnitPackages can fill it.
+	mutable CascadeUnitPackages m_cascadeUnitPackages;
+	// The CvDerivedCacheSet refresh delegate: the gather math stays module-side (CascadeAccumulator).
+	void cascadeRefreshUnitPackages(int iMask) const;
+
 	CvProperties* getProperties();
 	const CvProperties* getPropertiesConst() const;
 
