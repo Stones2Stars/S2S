@@ -42,6 +42,18 @@ delete/replace the unit-combat when we add the tag. Wholesale removal of a statl
 identity fully lives as a tag) is a **deferred, separate** question — not this pass. The `{unit: IS_<tag>}` "vs"
 modifiers and the cascade queries (upkeep pool, military count) read the TAG; the stat deposits stay on the combat.
 
+**⚖ The END-STATE (owner 2026-07-19) — a UnitCombat distills to PURELY a "stats vs tag" list.** Target model: a
+UnitCombat carries ONLY the good/bad-against column — its stats express how well/poorly a unit does **against units
+of a specific TAG** (`strength vs {IS_MOUNTED}`, `strength vs {IS_ARMORED}`, …), keyed by TAG, never by another
+unit-combat id. All **identity/accounting** lives in TAGS; all **ability** in SKILLS; the UnitCombat is reduced to the
+vs-tag modifier list. **This IS the UnitCombat's reason to exist — a DRY shared bundle:** author "these stats vs
+these tags" ONCE on a unit-combat and attach it to every unit of a type, instead of manually duplicating the same
+vs-tag stats onto each unit. (The "general unit-group": pure shared modifiers, no stats/identity of its own.) **⛔ Promotion lists reference TAGS, not unit-combats** — a promotion's availability/prereq
+(`enables`/`requires`) and its grants key off tags (`mounted`) instead of `UNITCOMBAT_MOUNTED`; the promotion→
+unitcombat references migrate to promotion→tag. The **"keep both for now"** above is the TRANSITIONAL state toward
+this; reaching the pure stats-vs-tag end-state (unit-combats as vs-TAG lists + promotion lists on tags) is the FULL
+distillation — TAIL, after the minimum (§1a) + the purge.
+
 Consequently the slim (§E) is scoped to **vestigial (unreferenced) + duplicate** classes ONLY — a memory purge —
 never "referenced classes that map to a tag" (those keep both). The tag mapping and the purge are independent passes.
 
