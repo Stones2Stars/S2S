@@ -132,10 +132,25 @@ load-time re-derive path.
    uses separate families instead.)* Base-strength FLATS (`strength.unit.flat` → `m_iExtraStrength`, feeding
    `baseCombatStr`) are a separable follow-in of the same shape (verifiable via `/computed/units/combat` `combatEff`);
    the KEYED terrain/feature/unitcombat/domain percents are step 3.
-3. **Keyed groups** — terrain/feature attack-defense-work percent, unitcombat/domain modifiers, trap-target, and
-   the largest sub-surface, vision/invisibility (15 setters, carries `updateSpotIntensity` plot side-effects to
-   preserve). Reuses `sumKeyed4U`/`sumKeyed4F`; sequence vision/invisibility after the keyed mechanism proves on a
-   smaller keyed group.
+3. **Keyed groups — ⛔ the unit-classification half is BLOCKED (owner-flagged 2026-07-19; confirmed against
+   [code-cut-map.md](code-cut-map.md) §group 11/18/34/51, [json.md §3.7](../../specs/json.md), [tags.md](../../specs/tags.md)).**
+   These are NOT a straightforward `sumKeyed4U` gather. Split by target kind:
+   - **Unit-classification "vs" modifiers (unitcombat / domain)** — a "vs mounted" / "vs land" combat modifier is the
+     spec's `strength` deposit qualified by a `unit:` PREDICATE reading a TAG (`{unit: IS_MOUNTED}`, `{unit: IS_LAND}`),
+     NOT a raw `strength.unit.unitCombat.{X}.percent` keyed channel. The `mounted`/`gunpowder`/`mechanized` tags come
+     from the **unitcombat→tags distillation** — a BLOCKED data-migration tail (`curate_unitcombat.py` emits no tags
+     today, [data-migration-remaining.md](data-migration-remaining.md); code-cut-map §51/§group 34). So these are
+     **double-blocked**: they need the tag (the distillation pass) AND the `unit:` predicate wiring. Building them as
+     raw unit-combat/domain keyed channels REINSTATES exactly the legacy class-targeting the tag model dissolves — do NOT.
+   - **Plot-substrate keyed (terrain/feature attack/defense/work)** — keyed by real `TERRAIN_`/`FEATURE_` entities (not
+     a unit classification). code-cut-map §group 11 gives the replacement as a target-predicate deposit; confirm the
+     exact authored form (predicate vs keyed) + whether the 5-segment address recurates BEFORE building. In
+     code-cut-map's BLOCKED section, no consumer built.
+   - **vision/invisibility** (15 setters, `updateSpotIntensity` side-effects) — its own sub-phase.
+
+   ⚠ The scalar plane (steps 1–2, LANDED) correctly uses unit-combat as a deposit **SOURCE** (code-cut-map §group 18 /
+   line 1285 — the modifier-VALUE half, specced by [modifier.md §6](../../specs/modifier.md)); that is DISTINCT from,
+   and unaffected by, this classification/target-keying blocker.
 4. **Serialized-stack removal is now PER-GROUP (folded into steps 1–3, owner ruling 2026-07), not a batched final
    step.** Each group's slice already full-deletes ITS `m_iExtra*` member(s) (member + WRAPPER_READ + WRITE) and
    names the drained tag(s) in `Assets/savemigration.txt`
@@ -166,6 +181,19 @@ load-time re-derive path.
   modeled ([DEC-unit-modifiers-on-top](../../architecture/decisions.md#dec-unit-modifiers-on-top); realized for
   military happiness in `CvCascadeWellbeing.cpp:303/722`: the per-unit VALUE folds at gather, the live count
   multiplies at read). Untouched by F4. ⛔ Enforce the hard ban: no unit-authored `percent` deposit to yields/commerce.
+- **⛔ The unit-combat → TAGS/SKILLS distillation (and the keyed "vs classification" modifiers that depend on it) —
+  OUT of #430/F4 scope, needs its own serious grounded plan (owner 2026-07-19: NOT "giga rollerskating in").** Design
+  direction (owner): a **UnitCombat is a "general unit-group"** — a unit with no strength / unitdata of its own,
+  **just pure modifiers** applied to a group of member units. Two axes distill from it, and only ONE is in F4's
+  scope: (1) the **modifier-VALUE half** — the group depositing its stat modifiers onto its members — IS the
+  self-accumulator SOURCE the scalar plane (steps 1–2) already uses correctly ([modifier.md §6](../../specs/modifier.md),
+  code-cut-map §group 18); (2) the **classification half** — extracting the `mounted`/`gunpowder`/`mechanized`
+  **tags** and the ability **skills** out of the ~150-field UnitCombat, and re-expressing every "vs unit-combat-class"
+  modifier as a `{unit: IS_<TAG>}` PREDICATE deposit — is a **separate data-migration + design pass**
+  (`curate_unitcombat.py` emits no tags today; [tags.md](../../specs/tags.md), [skills.md](../../specs/skills.md),
+  [data-migration-remaining.md](data-migration-remaining.md)). Until that pass has its own grounded plan and lands,
+  the keyed unit-classification modifiers (step 3, above) stay BLOCKED — never built as raw unit-combat/domain keyed
+  channels.
 
 ## 5. Open classifications to resolve before wiring their channel
 
