@@ -2283,9 +2283,14 @@ bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 		return false;
 	}
 	// #430: PURE enabler read -- no legacy fallback/pre-init/what-if path (legacy is bait, XML removed pre-ship; DEC-no-legacy-masking).
-	// TWO-MODE (par.6): bTestVisible = tree membership (GREYED shows; requires side handles graying); strict = LISTED. The what-if
-	// params (bContinue/bIgnoreCost/bIgnoreAmount/bIgnoreBuildings/eIgnoreTechReq/probabilityEverConstructable/bExposed) are now INERT.
-	return bTestVisible ? m_enabler.buildings.inTree((int)eBuilding) : m_enabler.buildings.listed((int)eBuilding);
+	// TWO-MODE (par.6): bTestVisible = tree membership (GREYED shows; requires side handles graying); strict = LISTED.
+	// bContinue is HONORED (par.8): the CONTINUE verdict reads past the queued-exclusion, because a building already in
+	// the queue IS queued -- excluding it here made canContinueProduction false and doCheckProduction cancelled every
+	// in-progress build each turn. The other what-if params (bIgnoreCost/bIgnoreAmount/bIgnoreBuildings/eIgnoreTechReq/
+	// probabilityEverConstructable/bExposed) remain INERT.
+	if (bTestVisible) return m_enabler.buildings.inTree((int)eBuilding);
+	return bContinue ? m_enabler.buildings.listedForContinue((int)eBuilding)
+	                 : m_enabler.buildings.listed((int)eBuilding);
 }
 
 //	KOSHLING - Can construct cache end

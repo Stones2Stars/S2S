@@ -243,10 +243,13 @@ static void bd_gate(const CvCity& kCity, const CvPlayer& kPlayer, const std::set
 	                 || (j != NULL && !cascadeGateOk(j->getGate(), ec, gateFlags))   // entity-level enabled/disabled (DEC-entity-gate)
 	                 || !EnablerKernel::requiresMet(j, ec)
 	                 || !EnablerKernel::allowedOk(j, iB, kPlayer, /*bUnit*/ false)
-	                 || !bd_groupCapOk(iB, kPlayer)
-	                 // QUEUED leaves the fresh offer (par.7.1 step 3; the legacy !bContinue getFirstBuildingOrder
-	                 // exclusion). Live object-owned read; SEVT_CITY_ORDER_CHANGED triggers this re-gate.
-	                 || kCity.getFirstBuildingOrder((BuildingTypes)iB) != -1);
+	                 || !bd_groupCapOk(iB, kPlayer));
+	// QUEUED is the FRESH-OFFER exclusion (par.8, the legacy "!bContinue getFirstBuildingOrder"), NOT a gate reason:
+	// a SEPARATE read-time overlay so canConstruct(bContinue=true)/canContinueProduction can see past it. Folding it
+	// into the gate (as before) flipped a queued building to GREYED -> !listed -> canContinueProduction=false ->
+	// doCheckProduction cancelled every in-progress build EACH TURN (progress lost). Live object-owned read;
+	// re-run on SEVT_CITY_ORDER_CHANGED (onCityOrderChanged) + the load-end gate pass.
+	d.setQueued(iB, kCity.getFirstBuildingOrder((BuildingTypes)iB) != -1);
 }
 
 // Gate a SET of candidate ids in one city (the touched set of one event / a class list): the waived-prereq

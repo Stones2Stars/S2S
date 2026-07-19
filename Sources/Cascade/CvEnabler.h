@@ -61,12 +61,24 @@ public:
 	// (gate-on-entry + the EDGEF_REQUIRED_BY re-gates); a failed gate flips a tree member LISTED -> GREYED
 	// (membership itself is untouched -- requires never adds/removes candidates, par.1).
 	void setGateFailed(int iId, bool bFailed);
+	// The QUEUED overlay (par.7.1 step 3 / par.8): a building currently in this city's production queue leaves the
+	// FRESH OFFER (listed / listedIds) but stays CONTINUABLE (listedForContinue) and in-tree. A read-time overlay,
+	// NOT a gate reason -- set from the live getFirstBuildingOrder read on SEVT_CITY_ORDER_CHANGED (+ the load-end
+	// gate pass). Split out from FLAG_GATE_FAILED precisely so bContinue can tell "queued" from "gate failed".
+	void setQueued(int iId, bool bQueued);
 	bool isHeld(int iId) const;
 
 	// The bare O(1) reads.
 	unsigned char state(int iId) const;
 	bool inTree(int iId) const { return state(iId) >= (unsigned char)STATE_GREYED; }
-	bool listed(int iId) const { return state(iId) == (unsigned char)STATE_LISTED; }
+	// listed = the FRESH OFFER (canConstruct bContinue=false): gate-passed AND not currently queued. The QUEUED
+	// overlay (FLAG_QUEUED, the enabler.md par.8 "!bContinue getFirstBuildingOrder exclusion") is a read-time
+	// filter, NOT a gate/membership reason -- kept separate so a CONTINUE check can see past it.
+	bool listed(int iId) const { return state(iId) == (unsigned char)STATE_LISTED && !isQueued(iId); }
+	// listedForContinue = the CONTINUE verdict (canConstruct bContinue=true): gate-passed, IGNORING the queued
+	// overlay. A building already in the queue IS queued by definition, so excluding it here would cancel every
+	// in-progress build each turn (the doCheckProduction purge). Reads past FLAG_QUEUED; the requires-gate still applies.
+	bool listedForContinue(int iId) const { return state(iId) == (unsigned char)STATE_LISTED; }
 	// The raw membership-plane reads (bare O(1)) -- for a composite gate that OVERLAYS per-instance planes on
 	// the maintained ones before applying the formula (the promotions level-up gate: the player domain's tech
 	// planes + the unit's held-promo/unitcombat planes; membership = Σenable > 0 && Σremove == 0).
@@ -82,9 +94,10 @@ public:
 	void inTreeIds(std::vector<int>& out) const;
 
 private:
-	enum { FLAG_HELD = 1, FLAG_STATIC_EXCLUDED = 2, FLAG_GATE_FAILED = 4 };
+	enum { FLAG_HELD = 1, FLAG_STATIC_EXCLUDED = 2, FLAG_GATE_FAILED = 4, FLAG_QUEUED = 8 };
 
 	bool inRange(int iId) const { return iId >= 0 && iId < (int)m_aState.size(); }
+	bool isQueued(int iId) const { return inRange(iId) && (m_aFlags[iId] & (unsigned char)FLAG_QUEUED) != 0; }
 	void refresh(int iId);                         // re-derive m_aState[iId] from the formula
 
 	std::vector<unsigned char> m_aState;           // tri-state per enum id -- the frontier the reads serve

@@ -636,8 +636,12 @@ against half-read state); `GAME_LOAD_FINISHED` runs one full gate pass per city.
 per-event option: gate-on-entry + touched re-gates in every applier (the FK axes via `EDGEF_REQUIRED_BY`), the
 **cap crossing** re-gates a completed capped building on every seeded city (the world wonder vanishing
 everywhere), the **queue leg** (§7.1 step 3) rides `SEVT_CITY_ORDER_CHANGED` (`pushOrder`/`popOrder`) into a
-one-id re-gate whose verdict reads the live queue — a QUEUED building leaves the fresh offer (the legacy
-`!bContinue` `getFirstBuildingOrder` exclusion), restored on dequeue; the built case is the membership
+one-id update whose verdict reads the live queue — a QUEUED building leaves the **fresh offer**
+(`listed`/`listedIds`, the `!bContinue` `getFirstBuildingOrder` exclusion) via a **separate `FLAG_QUEUED`
+read-time overlay, NOT a gate-failure reason**, restored on dequeue. The overlay is split OUT of the gate so
+the **continue verdict** (`canConstruct` `bContinue=true` → `EnablerDomain::listedForContinue`) reads PAST it —
+an in-progress build stays valid to `canContinueProduction`; folding the queue INTO the gate (GREYED) instead
+cancels every in-progress build each turn (`doCheckProduction`'s `!canContinueProduction` → `popOrder` purge, progress lost); the built case is the membership
 leave — the no-FK event classes (population / power / golden-age / state-religion) re-gate their
 load-compiled class lists (`EnablerKernel::scanCondDeps`), and the live non-HAVE clauses (latitude /
 existedFor / IS_CAPITAL / vicinity connection / count tokens) ride the **bounded per-turn dynamic re-check**

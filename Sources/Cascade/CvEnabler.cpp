@@ -76,6 +76,17 @@ void EnablerDomain::setGateFailed(int iId, bool bFailed)
 	refresh(iId);
 }
 
+void EnablerDomain::setQueued(int iId, bool bQueued)
+{
+	if (!inRange(iId)) return;
+	// A read-time OVERLAY only -- it filters listed()/listedIds() (the fresh offer), NOT state/membership. So NO
+	// refresh(): a queued building stays LISTED in state (in-tree, continuable via listedForContinue) and is
+	// removed from the offer solely by the listed() read applying FLAG_QUEUED. (Stale FLAG_QUEUED on a
+	// non-LISTED id is harmless -- listed() checks STATE_LISTED first.)
+	if (bQueued) m_aFlags[iId] |= (unsigned char)FLAG_QUEUED;
+	else         m_aFlags[iId] &= (unsigned char)~FLAG_QUEUED;
+}
+
 bool EnablerDomain::isHeld(int iId) const
 {
 	return inRange(iId) && (m_aFlags[iId] & (unsigned char)FLAG_HELD) != 0;
@@ -102,7 +113,10 @@ void EnablerDomain::listedIds(std::vector<int>& out) const
 	const int iN = (int)m_aState.size();
 	for (int iId = 0; iId < iN; ++iId)
 	{
-		if (m_aState[iId] == (unsigned char)STATE_LISTED) out.push_back(iId);
+		// the FRESH OFFER: LISTED and not currently queued (FLAG_QUEUED overlay) -- the AI's production loops
+		// iterate only what they can newly START, exactly as canConstruct(bContinue=false) answers per id.
+		if (m_aState[iId] == (unsigned char)STATE_LISTED
+			&& (m_aFlags[iId] & (unsigned char)FLAG_QUEUED) == 0) out.push_back(iId);
 	}
 }
 
