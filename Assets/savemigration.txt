@@ -118,6 +118,24 @@ CvUnit::m_iExtraStealthCombatModifier      (int)
 ========================
 
 ========================
+2026-07-19 — #430 F4 unit-plane (BASE-strength group): the two stored per-unit base-strength accumulators are removed.
+CvUnit::getExtraStrength / getExtraStrengthModifier now read the cascade unit self-accumulator
+(m_cascadeUnitPackages.{strBaseFlat,strSizeMod}, gathered on-dirty from the held-set: held promotions + held
+unit-combats, DELTA-ONLY -- the baseCombatStr*PreCheck consumers add m_iBaseCombat + apply the clamp / ×(100+mod)/100
+size scaling) via MMKernel::sumUnit "strength.unit"."flat" and "strength.unit.sizeModifier"."percent" (the poco load
+addresses, CvUnitCombatInfo.cpp jsonFamVal/jsonFamMemberVal). The two changers (+ the callerless
+setExtraStrengthModifier) and their apply-loop folds (processPromotion / processUnitCombat) are gone -- consolidated
+into the existing markDirty(UPK_ALL) per apply loop (the promotion size-matters recalc trigger bSMrecalc is preserved);
+the never-serialized cache re-derives at load. Neither has a commander or cargo fold. NOTE: strength.unit.sizeModifier
+has zero authorings today (the curator's emit_sizematters writes it into a `sizeMatters` block while the loader reads
+strength.unit.sizeModifier.percent -- a pre-existing curator/loader address mismatch, out of scope here; the gather
+matches the loader address, so it stays 0 = legacy 0 and self-corrects if the curator is fixed).
+
+CvUnit::m_iExtraStrength                   (int)
+CvUnit::m_iExtraStrengthModifier           (int)
+========================
+
+========================
 2026-07-18 — #430 two-part free-specialist seam (modifier.md par.6): the cascade owns the AMOUNT (fsAmountAny /
 fsAmountByType -- the summed building/civic/trait freeSpecialists deposits), the engine owns PLACEMENT, consumers
 read the OUTPUT (getSpecialistCount + getFreeSpecialistCount). The derivable CvCity free-specialist AMOUNT ledgers

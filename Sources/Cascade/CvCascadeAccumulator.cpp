@@ -528,12 +528,17 @@ void CascadeAccumulator::refreshUnitPackages(const CvUnit* pUnit, int iMask)
 		int iGeneral = 0;
 		int iCityAtk = 0, iCityDef = 0, iHillAtk = 0, iHillDef = 0, iAtk = 0, iDef = 0, iVsB = 0, iRel = 0,
 			iStealth = 0, iDmg = 0, iUnnerve = 0, iEnclose = 0, iLunge = 0, iDynDef = 0;
+		// the BASE-strength members: strength.unit.flat (member-less, like the general percent) + the size modifier
+		// strength.unit.sizeModifier.percent (matches the poco's jsonFamVal/jsonFamMemberVal load addresses).
+		int iBaseFlat = 0, iSizeMod = 0;
 		for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
 		{
 			if (!pUnit->isHasPromotion((PromotionTypes)i)) continue;
 			const CvInfo* jP = InfoRepo<CvPromotionInfo>::get().get(i);
 			if (jP == NULL) continue;
 			iGeneral += MMKernel::sumUnit(jP, "strength.unit", "percent", ec);
+			iBaseFlat+= MMKernel::sumUnit(jP, "strength.unit", "flat", ec);
+			iSizeMod += MMKernel::sumUnit(jP, "strength.unit.sizeModifier", "percent", ec);
 			iCityAtk += MMKernel::sumUnit(jP, "strength.unit.cityAttack", "percent", ec);
 			iCityDef += MMKernel::sumUnit(jP, "strength.unit.cityDefense", "percent", ec);
 			iHillAtk += MMKernel::sumUnit(jP, "strength.unit.hillsAttack", "percent", ec);
@@ -555,6 +560,8 @@ void CascadeAccumulator::refreshUnitPackages(const CvUnit* pUnit, int iMask)
 			const CvInfo* jC = InfoRepo<CvUnitCombatInfo>::get().get(i);
 			if (jC == NULL) continue;
 			iGeneral += MMKernel::sumUnit(jC, "strength.unit", "percent", ec);
+			iBaseFlat+= MMKernel::sumUnit(jC, "strength.unit", "flat", ec);
+			iSizeMod += MMKernel::sumUnit(jC, "strength.unit.sizeModifier", "percent", ec);
 			iCityAtk += MMKernel::sumUnit(jC, "strength.unit.cityAttack", "percent", ec);
 			iCityDef += MMKernel::sumUnit(jC, "strength.unit.cityDefense", "percent", ec);
 			iHillAtk += MMKernel::sumUnit(jC, "strength.unit.hillsAttack", "percent", ec);
@@ -571,6 +578,8 @@ void CascadeAccumulator::refreshUnitPackages(const CvUnit* pUnit, int iMask)
 			iDynDef  += MMKernel::sumUnit(jC, "strength.unit.dynamicDefense", "percent", ec);
 		}
 		st.strCombatPercent = iGeneral;
+		st.strBaseFlat = iBaseFlat;
+		st.strSizeMod = iSizeMod;
 		st.strCityAttack = iCityAtk;
 		st.strCityDefense = iCityDef;
 		st.strHillsAttack = iHillAtk;

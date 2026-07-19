@@ -1155,8 +1155,8 @@ public:
 	int getExtraLunge (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
 	int getExtraDynamicDefense (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
 
+	// #430 F4 (base-strength): reads the cascade self-accumulator (UPK_STRENGTH, strength.unit.flat); changer retired.
 	int getExtraStrength () const;
-	void changeExtraStrength (int iChange);
 
 	int getSMStrength () const;
 	void setSMStrength ();
@@ -1569,8 +1569,7 @@ protected:
 	int m_iIgnoreNoEntryLevelCount;
 	int m_iIgnoreZoneofControlCount;
 	int m_iFliesToMoveCount;
-	// #430 F4: m_iExtra{Unnerve,Enclose,Lunge,DynamicDefense} removed -- strength situational cascade self-accumulators (UPK_STRENGTH).
-	int m_iExtraStrength;
+	// #430 F4: m_iExtra{Unnerve,Enclose,Lunge,DynamicDefense} + m_iExtraStrength removed -- strength cascade self-accumulators (UPK_STRENGTH).
 	int m_iSMStrength;
 	int m_iOnslaughtCount;
 	int m_iExtraSelfHealModifier;
@@ -1629,8 +1628,7 @@ protected:
 	int m_iExtraCombatModifierPerVolumeMore;
 	int m_iExtraCombatModifierPerVolumeLess;
 	int m_iExtraMaxHP;
-	int m_iExtraStrengthModifier;
-	// #430 F4: m_iExtraDamageModifier removed -- strength situational cascade self-accumulator (UPK_STRENGTH).
+	// #430 F4: m_iExtraStrengthModifier + m_iExtraDamageModifier removed -- strength cascade self-accumulators (UPK_STRENGTH).
 
 	int m_iExtraUpkeep100;
 	int m_iUpkeepModifier;
@@ -1892,9 +1890,9 @@ public:
 	void setExtraCombatModifierPerVolumeLess(int iChange);
 	int combatModifierPerVolumeLessTotal() const;
 
+	// #430 F4 (base-strength): reads the cascade self-accumulator (UPK_STRENGTH, strength.unit.sizeModifier.percent);
+	// changer + setter retired (the setter had no callers).
 	int getExtraStrengthModifier() const;
-	void changeExtraStrengthModifier(int iChange);
-	void setExtraStrengthModifier(int iChange);
 
 	void checkCityAttackDefensesDamage(CvCity* pCity, const std::vector<UnitCombatTypes>& kDamagableUnitCombatTypes);
 

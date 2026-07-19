@@ -595,7 +595,7 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iIgnoreZoneofControlCount = 0;
 	m_iFliesToMoveCount = 0;
 	//#430 F4: m_iExtra{Unnerve,Enclose,Lunge,DynamicDefense} removed -- cascade self-accumulators (UPK_STRENGTH), re-derived via markAllDirty above
-	m_iExtraStrength = 0;
+	//#430 F4: m_iExtraStrength removed -- base-strength cascade self-accumulator (UPK_STRENGTH), re-derived via markAllDirty above
 	m_iSMStrength = 0;
 	m_iOnslaughtCount = 0;
 	m_iExtraEndurance = 0;
@@ -620,8 +620,7 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iExtraCombatModifierPerVolumeMore = 0;
 	m_iExtraCombatModifierPerVolumeLess = 0;
 	m_iExtraMaxHP = 0;
-	m_iExtraStrengthModifier = 0;
-	//#430 F4: m_iExtraDamageModifier removed -- cascade self-accumulator (UPK_STRENGTH), re-derived via markAllDirty above
+	//#430 F4: m_iExtraStrengthModifier + m_iExtraDamageModifier removed -- cascade self-accumulators (UPK_STRENGTH), re-derived via markAllDirty above
 	m_iExtraUpkeep100 = 0;
 	m_iUpkeepModifier = 0;
 	m_iUpkeepMultiplierSM = 0;
@@ -882,7 +881,7 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iIgnoreZoneofControlCount = other.m_iIgnoreZoneofControlCount;
 	m_iFliesToMoveCount = other.m_iFliesToMoveCount;
 	//#430 F4: m_iExtra{Unnerve,Enclose,Lunge,DynamicDefense} not copied -- cascade self-accumulators (UPK_STRENGTH), re-derived via markDirty(UPK_ALL) above
-	m_iExtraStrength = other.m_iExtraStrength;
+	//#430 F4: m_iExtraStrength not copied -- base-strength cascade self-accumulator (UPK_STRENGTH), re-derived via markDirty(UPK_ALL) above
 	m_iSMStrength = other.m_iSMStrength;
 	m_iOnslaughtCount = other.m_iOnslaughtCount;
 	m_iExtraEndurance = other.m_iExtraEndurance;
@@ -906,8 +905,7 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iExtraCombatModifierPerVolumeMore = other.m_iExtraCombatModifierPerVolumeMore;
 	m_iExtraCombatModifierPerVolumeLess = other.m_iExtraCombatModifierPerVolumeLess;
 	m_iExtraMaxHP = other.m_iExtraMaxHP;
-	m_iExtraStrengthModifier = other.m_iExtraStrengthModifier;
-	//#430 F4: m_iExtraDamageModifier not copied -- cascade self-accumulator (UPK_STRENGTH), re-derived via markDirty(UPK_ALL) above
+	//#430 F4: m_iExtraStrengthModifier + m_iExtraDamageModifier not copied -- cascade self-accumulators (UPK_STRENGTH), re-derived via markDirty(UPK_ALL) above
 	m_iExtraUpkeep100 = other.m_iExtraUpkeep100;
 	m_iUpkeepModifier = other.m_iUpkeepModifier;
 	m_iUpkeepMultiplierSM = other.m_iUpkeepMultiplierSM;
@@ -11399,15 +11397,13 @@ int CvUnit::baseAirCombatStrPreCheck() const
 	return iStr;
 }
 
+// #430 F4 (base-strength): the cascade held-set sum (strength.unit.flat over held promotions + held unit-combats,
+// DELTA-only). No commander fold and no clamp here -- the baseCombatStr*PreCheck consumers add m_iBaseCombat and clamp
+// (iStr < 0 -> 0), exactly as before.
 int CvUnit::getExtraStrength() const
 {
-	return m_iExtraStrength;
-}
-
-void CvUnit::changeExtraStrength(int iChange)
-{
-	m_iExtraStrength += iChange;
-	FASSERT_NOT_NEGATIVE(m_iExtraStrength);
+	m_cascadeUnitPackages.set.ensure();
+	return m_cascadeUnitPackages.strBaseFlat;
 }
 
 int CvUnit::getSMStrength() const
@@ -18388,7 +18384,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeVictoryHeal((kUnitCombat.getVictoryHeal()) * iChange);//no merge/split
 	changeVictoryStackHeal((kUnitCombat.getVictoryStackHeal()) * iChange);//no merge/split
 	//#430 F4: attack/defense/vsBarbs/religious/damageModifier/unnerve/enclose/lunge/dynamicDefense combat-% folds retired -- gathered on-dirty (UPK_STRENGTH) via the markDirty(UPK_ALL) above
-	changeExtraStrength(kUnitCombat.getStrengthChange() * iChange);//no merge/split (but included into merge/split mult)
+	// strength.unit.flat (base strength) is a cascade held-set sum, gathered on-dirty (UPK_STRENGTH) via the markDirty(UPK_ALL) above.
 	changeExtraEndurance(kUnitCombat.getEnduranceChange() * iChange);//no merge/split
 	changeExtraPoisonProbabilityModifier(kUnitCombat.getPoisonProbabilityModifierChange() * iChange);//no merge/split
 	//#430 F4: capture probability/resistance folds retired -- gathered on-dirty via the markDirty(UPK_ALL) above
@@ -18397,7 +18393,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeExtraBreakdownDamage(kUnitCombat.getBreakdownDamageChange() * iChange);//no merge/split
 	changeExtraTaunt(kUnitCombat.getTauntChange() * iChange);//no merge/split
 	changeExtraMaxHP(kUnitCombat.getMaxHPChange() * iChange);//merge/split
-	changeExtraStrengthModifier(kUnitCombat.getStrengthModifier() * iChange);//merge/split
+	// strength.unit.sizeModifier.percent (base strength modifier) is a cascade held-set sum, gathered on-dirty (UPK_STRENGTH) via the markDirty(UPK_ALL) above.
 
 	changeExtraCombatModifierPerSizeMore(kUnitCombat.getCombatModifierPerSizeMoreChange() * iChange);//no merge/split
 	changeExtraCombatModifierPerSizeLess(kUnitCombat.getCombatModifierPerSizeLessChange() * iChange);//no merge/split
@@ -18812,7 +18808,8 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	//#430 F4: unnerve/enclose/lunge/dynamicDefense combat-% folds retired -- gathered on-dirty (UPK_STRENGTH) via the markDirty(UPK_ALL) above
 	if (kPromotion.getStrengthChange() != 0)
 	{
-		changeExtraStrength(kPromotion.getStrengthChange() * iChange);
+		// base strength (strength.unit.flat) is a cascade held-set sum (UPK_STRENGTH, via markDirty(UPK_ALL) above);
+		// still flag the size-matters recalc so m_iSMStrength refreshes when this promotion changes base strength.
 		bSMrecalc = true;
 	}
 	changeOnslaughtCount((kPromotion.isOnslaughtChange()) ? iChange : 0);
@@ -18837,7 +18834,8 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	}
 	if (kPromotion.getStrengthModifier() != 0)
 	{
-		changeExtraStrengthModifier(kPromotion.getStrengthModifier() * iChange);
+		// the base strength modifier (strength.unit.sizeModifier.percent) is a cascade held-set sum (UPK_STRENGTH, via
+		// markDirty(UPK_ALL) above); still flag the size-matters recalc so m_iSMStrength refreshes on this change.
 		bSMrecalc = true;
 	}
 	//TB Combat Mods End
@@ -19603,7 +19601,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	//#430 F4: m_iExtraVSBarbs read removed (UPK_STRENGTH; drained via savemigration.txt)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iStampedeCount);
 	//#430 F4: m_iExtra{Unnerve,Enclose,Lunge,DynamicDefense} reads removed (UPK_STRENGTH; drained via savemigration.txt)
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraStrength);
+	//#430 F4: m_iExtraStrength read removed (UPK_STRENGTH; drained via savemigration.txt)
 	WRAPPER_SKIP_ELEMENT(wrapper, "CvUnit", m_iAnimalIgnoresBordersCount, SAVE_VALUE_ANY);   // retired 2026-07-11 -- animal-ignore is game-option-derived, not a stored count (savemigration.txt)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iOnslaughtCount);
 
@@ -19813,8 +19811,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iGroupBaseTotal);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iSizeBaseTotal);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iCannotMergeSplitCount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraStrengthModifier);
-	//#430 F4: m_iExtraDamageModifier read removed (UPK_STRENGTH; drained via savemigration.txt)
+	//#430 F4: m_iExtraStrengthModifier + m_iExtraDamageModifier reads removed (UPK_STRENGTH; drained via savemigration.txt)
 
 	WRAPPER_READ_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, (int*)&m_eGGExperienceEarnedTowardsType);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iSMCargo);
@@ -20487,7 +20484,7 @@ void CvUnit::write(FDataStreamBase* pStream)
 	//#430 F4: m_iExtraVSBarbs write removed (UPK_STRENGTH)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iStampedeCount);
 	//#430 F4: m_iExtra{Unnerve,Enclose,Lunge,DynamicDefense} writes removed (UPK_STRENGTH)
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraStrength);
+	//#430 F4: m_iExtraStrength write removed (UPK_STRENGTH)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iOnslaughtCount);
 
 
@@ -20570,8 +20567,7 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iGroupBaseTotal);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSizeBaseTotal);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iCannotMergeSplitCount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraStrengthModifier);
-	//#430 F4: m_iExtraDamageModifier write removed (UPK_STRENGTH)
+	//#430 F4: m_iExtraStrengthModifier + m_iExtraDamageModifier writes removed (UPK_STRENGTH)
 	WRAPPER_WRITE_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, m_eGGExperienceEarnedTowardsType);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSMCargo);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSMCargoCapacity);
@@ -26506,19 +26502,13 @@ int CvUnit::combatModifierPerVolumeLessTotal() const
 	return iData;
 }
 
+// #430 F4 (base-strength): the cascade held-set sum (strength.unit.sizeModifier.percent over held promotions + held
+// unit-combats, DELTA-only -- the poco load address, CvUnitCombatInfo.cpp jsonFamMemberVal). No commander fold; the
+// baseCombatStr*PreCheck consumers apply the ×(100+mod)/100 size scaling.
 int CvUnit::getExtraStrengthModifier() const
 {
-	return m_iExtraStrengthModifier;
-}
-
-void CvUnit::changeExtraStrengthModifier(int iChange)
-{
-	m_iExtraStrengthModifier += iChange;
-}
-
-void CvUnit::setExtraStrengthModifier(int iChange)
-{
-	m_iExtraStrengthModifier = iChange;
+	m_cascadeUnitPackages.set.ensure();
+	return m_cascadeUnitPackages.strSizeMod;
 }
 
 void CvUnit::checkCityAttackDefensesDamage(CvCity* pCity, const std::vector<UnitCombatTypes>& kDamagableUnitCombatTypes)

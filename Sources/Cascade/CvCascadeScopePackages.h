@@ -355,6 +355,9 @@ struct CascadeUnitPackages
 	int strEnclose;         // strength.unit.enclose.percent       (encloseTotal; max(0,·) at read)
 	int strLunge;           // strength.unit.lunge.percent         (lungeTotal; max(0,·) at read)
 	int strDynamicDefense;  // strength.unit.dynamicDefense.percent(dynamicDefenseTotal; + city-local + max(0,·) at read)
+	// -- the BASE-strength members (feed baseCombatStr, not the percent modifier stack) --
+	int strBaseFlat;        // strength.unit.flat (member-less)     (getExtraStrength; baseCombatStr* adds m_iBaseCombat, clamps <0)
+	int strSizeMod;         // strength.unit.sizeModifier.percent   (getExtraStrengthModifier; baseCombatStr* applies ×(100+mod)/100)
 
 	CvDerivedCacheSet<CvUnit> set;   // the ONE dirty protocol (bind in CvUnit's init)
 
@@ -365,7 +368,8 @@ struct CascadeUnitPackages
 		  strCombatPercent(0),
 		  strCityAttack(0), strCityDefense(0), strHillsAttack(0), strHillsDefense(0),
 		  strAttack(0), strDefense(0), strVsBarbs(0), strReligious(0), strStealth(0),
-		  strDamageModifier(0), strUnnerve(0), strEnclose(0), strLunge(0), strDynamicDefense(0) {}
+		  strDamageModifier(0), strUnnerve(0), strEnclose(0), strLunge(0), strDynamicDefense(0),
+		  strBaseFlat(0), strSizeMod(0) {}
 };
 
 #endif // CV_CASCADE_SCOPE_PACKAGES_H
