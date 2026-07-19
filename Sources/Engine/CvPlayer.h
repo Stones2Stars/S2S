@@ -627,8 +627,9 @@ public:
 	int getMilitaryUnitUpkeepMod() const;
 	void changeCivilianUnitUpkeepMod(const int iChange);
 	void changeMilitaryUnitUpkeepMod(const int iChange);
-	void changeUnitUpkeep(const int iChange, const bool bMilitary);
+	void markUnitUpkeepDirty() const; // #430 F4: invalidate the per-unit-upkeep Sigma buckets + the final cache
 	void setUnitUpkeepDirty() const;
+	void ensureUnitUpkeepBuckets() const; // #430 F4: recompute the raw civ/mil buckets over live units when dirty
 
 	int64_t getUnitUpkeepCivilian100() const;
 	int64_t getUnitUpkeepCivilian() const;
@@ -636,10 +637,15 @@ public:
 	int64_t getUnitUpkeepMilitary100() const;
 	int64_t getUnitUpkeepMilitary() const;
 	int64_t getUnitUpkeepMilitaryNet() const;
+	int64_t applyCivilianUpkeep(const int64_t iRaw100) const;    // #430 F4: empire mod + /100 (civilian carve-out)
+	int64_t applyCivilianUpkeepNet(const int64_t iRaw100) const; // #430 F4: applyCivilianUpkeep - free allowance, floor 0
+	int64_t applyMilitaryUpkeep(const int64_t iRaw100) const;    // #430 F4: empire mod + /100 (military carve-out)
+	int64_t applyMilitaryUpkeepNet(const int64_t iRaw100) const; // #430 F4: applyMilitaryUpkeep - free allowance, floor 0
 	int64_t getUnitUpkeepNet(const bool bMilitary, const int iUnitUpkeep = MAX_INT) const;
 	int64_t calcFinalUnitUpkeep(const bool bReal=true) const;
+	int64_t calcFinalUnitUpkeepFrom(const int64_t iCivilian100, const int64_t iMilitary100) const; // #430 F4: pure, for the what-if
 	int64_t getFinalUnitUpkeep() const;
-	int getFinalUnitUpkeepChange(const int iExtra, const bool bMilitary);
+	int getFinalUnitUpkeepChange(const int iExtra, const bool bMilitary) const;
 	// ! Unit Upkeep
 
 	int getNumMilitaryUnits() const;
@@ -1840,8 +1846,12 @@ protected:
 	int m_iCivilianUnitUpkeepMod;
 	int m_iMilitaryUnitUpkeepMod;
 
-	int64_t m_iUnitUpkeepCivilian100;
-	int64_t m_iUnitUpkeepMilitary100;
+	//#430 F4: the raw per-unit-upkeep buckets are a recompute-Sigma over live units (was the serialized push-accumulators
+	// m_iUnitUpkeep{Civilian,Military}100 -- drained by name in Assets/savemigration.txt). Never serialized: re-derives
+	// on the first read after load. m_bUnitUpkeepBucketsDirty gates the units-walk; m_bUnitUpkeepDirty gates the FINAL cache.
+	mutable int64_t m_iUnitUpkeepCivilian100Cache;
+	mutable int64_t m_iUnitUpkeepMilitary100Cache;
+	mutable bool m_bUnitUpkeepBucketsDirty;
 	mutable int64_t m_iFinalUnitUpkeep;
 	mutable bool m_bUnitUpkeepDirty;
 

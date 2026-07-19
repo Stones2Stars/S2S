@@ -305,7 +305,10 @@ enum CascadeUnitPkg
 	                        // The general one's cache holds only the HELD-SET sum; its cross-unit loaded-special-unit
 	                        // contribution (a cargo relationship, SPECIALUNIT is not deposit-ported) is folded LIVE at read
 	                        // in getExtraCombatPercent (DEC-unit-modifiers-on-top), never cached here.
-	UPK_ALL         = 255,
+	UPK_UPKEEP      = 256,  // upkeep.unit.extra.flat -- the x100-NATIVE per-unit extra-upkeep delta (held promotions +
+	                        // held unit-combats). getUpkeep100 adds 100*getBaseUpkeep and applies the still-legacy percent
+	                        // modifier + SizeMatters on top; the player-scope Sigma buckets it by isMilitaryBranch().
+	UPK_ALL         = 511,
 	UPK_EAGER       = UPK_ALL
 };
 
@@ -359,6 +362,10 @@ struct CascadeUnitPackages
 	int strBaseFlat;        // strength.unit.flat (member-less)     (getExtraStrength; baseCombatStr* adds m_iBaseCombat, clamps <0)
 	int strSizeMod;         // strength.unit.sizeModifier.percent   (getExtraStrengthModifier; baseCombatStr* applies ×(100+mod)/100)
 
+		// -- upkeep (UPK_UPKEEP) -- x100-NATIVE delta (unlike the ÷100-human scalars above); getUpkeep100 adds
+		// 100*getBaseUpkeep + the legacy percent modifier + SizeMatters. No commander/cargo fold. --
+		int extraUpkeep100;     // upkeep.unit.extra.flat (x100)        (getExtraUpkeep100)
+
 	CvDerivedCacheSet<CvUnit> set;   // the ONE dirty protocol (bind in CvUnit's init)
 
 	CascadeUnitPackages()
@@ -369,7 +376,7 @@ struct CascadeUnitPackages
 		  strCityAttack(0), strCityDefense(0), strHillsAttack(0), strHillsDefense(0),
 		  strAttack(0), strDefense(0), strVsBarbs(0), strReligious(0), strStealth(0),
 		  strDamageModifier(0), strUnnerve(0), strEnclose(0), strLunge(0), strDynamicDefense(0),
-		  strBaseFlat(0), strSizeMod(0) {}
+		  strBaseFlat(0), strSizeMod(0), extraUpkeep100(0) {}
 };
 
 #endif // CV_CASCADE_SCOPE_PACKAGES_H

@@ -1118,11 +1118,8 @@ public:
 	int getExtraReligiousCombatModifier(bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
 	int getExtraDamageModifier (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
 
-	void changeExtraUpkeep100(const int iChange);
 	void changeUpkeepModifier(const int iChange);
 	void calcUpkeepMultiplierSM(const int iGroupOffset);
-	void calcUpkeep100();
-	void recalculateUnitUpkeep();
 	int getExtraUpkeep100() const;
 	int getUpkeepModifier() const;
 	int getUpkeepMultiplierSM() const;
@@ -1630,10 +1627,10 @@ protected:
 	int m_iExtraMaxHP;
 	// #430 F4: m_iExtraStrengthModifier + m_iExtraDamageModifier removed -- strength cascade self-accumulators (UPK_STRENGTH).
 
-	int m_iExtraUpkeep100;
+	//#430 F4: m_iExtraUpkeep100 removed -- cascade self-accumulator (m_cascadeUnitPackages.extraUpkeep100, UPK_UPKEEP);
+	//         m_iUpkeep100 removed -- getUpkeep100 is a computed accessor. Percent modifier + SizeMatters stay legacy.
 	int m_iUpkeepModifier;
 	int m_iUpkeepMultiplierSM;
-	int m_iUpkeep100;
 
 	int m_iSMAssetValue;
 	int m_iSMPowerValue;

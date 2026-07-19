@@ -391,7 +391,7 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 			}
 		}
 		setGameTurnCreated(GC.getGame().getGameTurn());
-		calcUpkeep100(); // This updates total upkeep on the player level too
+		GET_PLAYER(eOwner).markUnitUpkeepDirty(); // #430 F4: new unit -- the player per-unit-upkeep Sigma recomputes on next read
 
 		GC.getGame().incrementUnitCreatedCount(eUnit);
 		GET_PLAYER(eOwner).changeUnitCount(eUnit, 1);
@@ -621,10 +621,10 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iExtraCombatModifierPerVolumeLess = 0;
 	m_iExtraMaxHP = 0;
 	//#430 F4: m_iExtraStrengthModifier + m_iExtraDamageModifier removed -- cascade self-accumulators (UPK_STRENGTH), re-derived via markAllDirty above
-	m_iExtraUpkeep100 = 0;
+	//#430 F4: m_iExtraUpkeep100 + m_iUpkeep100 removed -- extra-upkeep is a cascade self-accumulator (UPK_UPKEEP,
+	// re-derived via markAllDirty above); per-unit upkeep is now the computed getUpkeep100. Percent modifier + SM stay legacy.
 	m_iUpkeepModifier = 0;
 	m_iUpkeepMultiplierSM = 0;
-	m_iUpkeep100 = 0;
 	m_iSMAssetValue = 0;
 	m_iSMPowerValue = 0;
 	m_iSMHPValue = 0;
@@ -906,10 +906,10 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iExtraCombatModifierPerVolumeLess = other.m_iExtraCombatModifierPerVolumeLess;
 	m_iExtraMaxHP = other.m_iExtraMaxHP;
 	//#430 F4: m_iExtraStrengthModifier + m_iExtraDamageModifier not copied -- cascade self-accumulators (UPK_STRENGTH), re-derived via markDirty(UPK_ALL) above
-	m_iExtraUpkeep100 = other.m_iExtraUpkeep100;
+	//#430 F4: m_iExtraUpkeep100 + m_iUpkeep100 not copied -- cascade self-accumulator (UPK_UPKEEP) + computed getUpkeep100,
+	// re-derived via markDirty(UPK_ALL) above. Percent modifier + SM stay legacy.
 	m_iUpkeepModifier = other.m_iUpkeepModifier;
 	m_iUpkeepMultiplierSM = other.m_iUpkeepMultiplierSM;
-	m_iUpkeep100 = other.m_iUpkeep100;
 	m_iSMAssetValue = other.m_iSMAssetValue;
 	m_iSMPowerValue = other.m_iSMPowerValue;
 	m_iSMHPValue = other.m_iSMHPValue;
@@ -1520,7 +1520,7 @@ void CvUnit::killUnconditional(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 		FAssertMsg(!getCombatUnit(), "The current unit instance's combat unit is expected to be NULL");
 	}
 
-	owner.changeUnitUpkeep(-getUpkeep100(), isMilitaryBranch());
+	owner.markUnitUpkeepDirty(); // #430 F4: unit removed -- the player per-unit-upkeep Sigma recomputes over the reduced live set
 
 	owner.changeUnitCount(m_eUnitType, -1);
 	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS)
@@ -15732,18 +15732,12 @@ int CvUnit::getExtraDamageModifier(bool bIgnoreCommanders, bool bIgnoreCommodore
 }
 
 // Toffer - Upkeep
-void CvUnit::changeExtraUpkeep100(const int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iExtraUpkeep100 += iChange;
-		calcUpkeep100();
-	}
-}
-
 int CvUnit::getExtraUpkeep100() const
 {
-	return m_iExtraUpkeep100;
+	// #430 F4: the per-unit extra-upkeep delta is a cascade self-accumulator (UPK_UPKEEP), gathered on-dirty from the
+	// held-set (held promotions + held unit-combats) via MMKernel::sumUnit100 "upkeep.unit.extra"."flat" -- x100-native.
+	m_cascadeUnitPackages.set.ensure();
+	return m_cascadeUnitPackages.extraUpkeep100;
 }
 
 void CvUnit::changeUpkeepModifier(const int iChange)
@@ -15751,7 +15745,9 @@ void CvUnit::changeUpkeepModifier(const int iChange)
 	if (iChange != 0)
 	{
 		m_iUpkeepModifier += iChange;
-		calcUpkeep100();
+		// #430 F4: the percent modifier stays legacy (this member); getUpkeep100 applies it live, so a change only
+		// invalidates the owner's per-unit-upkeep Sigma.
+		GET_PLAYER(getOwner()).markUnitUpkeepDirty();
 	}
 }
 
@@ -15785,42 +15781,28 @@ void CvUnit::calcUpkeepMultiplierSM(const int iGroupOffset)
 		}
 		m_iUpkeepMultiplierSM = -m_iUpkeepMultiplierSM;
 	}
-	calcUpkeep100();
-}
-
-void CvUnit::calcUpkeep100()
-{
-	if (isNPC())
-	{
-		return;
-	}
-	int iCalc = 100 * m_pUnitInfo->getBaseUpkeep() + m_iExtraUpkeep100;
-
-	if (iCalc > 0)
-	{
-		iCalc = getModifiedIntValue(iCalc, m_iUpkeepModifier);
-		iCalc = getModifiedIntValue(iCalc, m_iUpkeepMultiplierSM);
-
-		const int iOldUpkeep = m_iUpkeep100;
-		m_iUpkeep100 = std::max(0,  iCalc);
-
-		// Update player total
-		if (m_iUpkeep100 != iOldUpkeep)
-		{
-			GET_PLAYER(getOwner()).changeUnitUpkeep(m_iUpkeep100 - iOldUpkeep, isMilitaryBranch());
-		}
-	}
+	// #430 F4: SizeMatters multiplier stays legacy (this member); getUpkeep100 applies it live, so a change only
+	// invalidates the owner's per-unit-upkeep Sigma.
+	GET_PLAYER(getOwner()).markUnitUpkeepDirty();
 }
 
 int CvUnit::getUpkeep100() const
 {
-	return m_iUpkeep100;
-}
-
-void CvUnit::recalculateUnitUpkeep()
-{
-	m_iUpkeep100 = 0;
-	calcUpkeep100();
+	// #430 F4: computed accessor -- max(0, 100*getBaseUpkeep + cascade extra) x still-legacy percent modifier x SizeMatters
+	// (economy.md). The old m_iUpkeep100 push into CvPlayer::m_iUnitUpkeep{Civilian,Military}100 retired: the player
+	// buckets recompute-Sigma over live units' getUpkeep100() bucketed by isMilitaryBranch().
+	if (isNPC())
+	{
+		return 0;
+	}
+	int iCalc = 100 * m_pUnitInfo->getBaseUpkeep() + getExtraUpkeep100();
+	if (iCalc <= 0)
+	{
+		return 0;
+	}
+	iCalc = getModifiedIntValue(iCalc, m_iUpkeepModifier);
+	iCalc = getModifiedIntValue(iCalc, m_iUpkeepMultiplierSM);
+	return std::max(0, iCalc);
 }
 // ! Upkeep
 
@@ -18600,7 +18582,9 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 		defineReligion();
 	}
 
-	changeExtraUpkeep100(kUnitCombat.getExtraUpkeep100() * iChange);
+	// #430 F4: extra-upkeep fold retired -- gathered on-dirty (UPK_UPKEEP) via the markDirty(UPK_ALL) above; a unit-combat
+	// change also invalidates the owner's per-unit-upkeep Sigma. The percent modifier stays legacy (changeUpkeepModifier).
+	GET_PLAYER(getOwner()).markUnitUpkeepDirty();
 	changeUpkeepModifier(kUnitCombat.getUpkeepModifier() * iChange);
 
 	establishBuildups();
@@ -18792,7 +18776,9 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	//TB Combat Mods Begin
 	//#430 F4: attack/defense/vsBarbs/religious/damageModifier combat-% folds retired -- gathered on-dirty (UPK_STRENGTH) via the markDirty(UPK_ALL) above
 
-	changeExtraUpkeep100(kPromotion.getExtraUpkeep100() * iChange);
+	// #430 F4: extra-upkeep fold retired -- gathered on-dirty (UPK_UPKEEP) via the markDirty(UPK_ALL) above; a promotion
+	// change also invalidates the owner's per-unit-upkeep Sigma. The percent modifier stays legacy (changeUpkeepModifier).
+	GET_PLAYER(getOwner()).markUnitUpkeepDirty();
 	changeUpkeepModifier(kPromotion.getUpkeepModifier() * iChange);
 
 	changeStampedeCount((kPromotion.isStampedeChange()) ? iChange : 0);
@@ -20160,10 +20146,10 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_RELIGIONS, (int*)&m_eReligionType);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bIsReligionLocked);
 
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraUpkeep100);
+	//#430 F4: m_iExtraUpkeep100 + m_iUpkeep100 reads gone -- cascade self-accumulator + computed getUpkeep100 (old tags
+	// drained by name in Assets/savemigration.txt). Percent modifier + SizeMatters stay serialized (legacy carve-outs).
 	WRAPPER_READ(wrapper, "CvUnit", &m_iUpkeepModifier);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iUpkeepMultiplierSM);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iUpkeep100);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iBuildUpTurns);
 
 	for (int iI = GC.getNumUnitCombatInfos() - 1; iI > -1; iI--)
@@ -20835,10 +20821,9 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_RELIGIONS, m_eReligionType);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bIsReligionLocked);
 
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraUpkeep100);
+	//#430 F4: m_iExtraUpkeep100 + m_iUpkeep100 writes gone -- cascade self-accumulator + computed getUpkeep100.
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iUpkeepModifier);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iUpkeepMultiplierSM);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iUpkeep100);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iBuildUpTurns);
 
 	for (int iI = GC.getNumUnitCombatInfos() - 1; iI > -1; iI--)

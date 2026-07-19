@@ -3995,7 +3995,8 @@ namespace
 
 			// ---- UPKEEP decomposition (legacy-value-calc-map §5 / §12: only the realized civic+unit totals were dumped).
 			// The civilian/military gross-100 + net split + free allowances feed getFinalUnitUpkeep; the civic total feeds
-			// the maintenance ledger. (Per-unit calcUpkeep100 is the unitInput channel.) ----
+			// the maintenance ledger. (Per-unit CvUnit::getUpkeep100 is the unit-plane input; the player buckets
+			// recompute-Sigma over live units.) ----
 			{
 				picojson::value::object up;
 				up["finalUnitUpkeep"]        = picojson::value((double)(int)kPlayer.getFinalUnitUpkeep());

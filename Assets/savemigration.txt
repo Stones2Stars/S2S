@@ -136,6 +136,28 @@ CvUnit::m_iExtraStrengthModifier           (int)
 ========================
 
 ========================
+2026-07-19 — #430 F4 unit-plane (UPKEEP, lands WITH F4 per fixed-point-conformance.md): the per-unit base-magnitude
+upkeep chain migrates onto the cascade; the percent modifier + SizeMatters + empire upkeep mods stay legacy.
+CvUnit::getExtraUpkeep100 now reads the cascade unit self-accumulator (m_cascadeUnitPackages.extraUpkeep100,
+UPK_UPKEEP) gathered on-dirty from the held-set (held promotions + held unit-combats) via MMKernel::sumUnit100
+"upkeep.unit.extra"."flat" -- x100-NATIVE (the JSON holds the curator-descaled human; sumUnit100 re-applies the x100
+to match the legacy m_iExtraUpkeep100). CvUnit::getUpkeep100 is now a COMPUTED accessor:
+max(0, 100*getBaseUpkeep + extra) x m_iUpkeepModifier x m_iUpkeepMultiplierSM (both still-legacy members, KEPT +
+serialized). The per-unit push into the player accumulators (calcUpkeep100 -> changeUnitUpkeep) retired: CvPlayer's
+raw civilian/military buckets now recompute-Sigma over live units' getUpkeep100 bucketed by isMilitaryBranch(); the
+serialized CvPlayer push-accumulators are gone. calcUpkeep100 / recalculateUnitUpkeep / changeExtraUpkeep100 (unit)
+and changeUnitUpkeep (player) deleted; the two apply-loop folds retired (extra -> the existing markDirty(UPK_ALL) +
+a player markUnitUpkeepDirty; the percent modifier keeps changeUpkeepModifier). getFinalUnitUpkeepChange restructured
+NON-MUTATING (calcFinalUnitUpkeepFrom prices a hypothetical bucket, no temp add/restore). The never-serialized caches
+re-derive at load (dirty-on-construct/reset).
+
+CvUnit::m_iExtraUpkeep100                  (int)
+CvUnit::m_iUpkeep100                       (int)
+CvPlayer::m_iUnitUpkeepCivilian100         (int64_t)
+CvPlayer::m_iUnitUpkeepMilitary100         (int64_t)
+========================
+
+========================
 2026-07-18 — #430 two-part free-specialist seam (modifier.md par.6): the cascade owns the AMOUNT (fsAmountAny /
 fsAmountByType -- the summed building/civic/trait freeSpecialists deposits), the engine owns PLACEMENT, consumers
 read the OUTPUT (getSpecialistCount + getFreeSpecialistCount). The derivable CvCity free-specialist AMOUNT ledgers

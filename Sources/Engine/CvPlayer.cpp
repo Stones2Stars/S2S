@@ -240,6 +240,7 @@ m_cachedBonusCount(NULL)
 
 	m_bDisableHuman = false;
 	m_bUnitUpkeepDirty = true;
+	m_bUnitUpkeepBucketsDirty = true; //#430 F4: force the per-unit-upkeep Sigma to recompute on first read
 
 	m_iStabilityIndex = 500;
 	m_iStabilityIndexAverage = 500;
@@ -826,8 +827,10 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_iCivilianUnitUpkeepMod = 0;
 	m_iMilitaryUnitUpkeepMod = 0;
-	m_iUnitUpkeepMilitary100 = 0;
-	m_iUnitUpkeepCivilian100 = 0;
+	//#430 F4: the raw upkeep buckets recompute-Sigma over live units (dirty-on-reset -> recompute on first read).
+	m_iUnitUpkeepMilitary100Cache = 0;
+	m_iUnitUpkeepCivilian100Cache = 0;
+	m_bUnitUpkeepBucketsDirty = true;
 	m_iFinalUnitUpkeep = 0;
 
 	m_iNumMilitaryUnits = 0;
@@ -961,6 +964,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_bDisableHuman = false;
 	m_bUnitUpkeepDirty = true;
+	m_bUnitUpkeepBucketsDirty = true; //#430 F4: force the per-unit-upkeep Sigma to recompute on first read
 
 	m_iStabilityIndex = 500;
 	m_iStabilityIndexAverage = 500;
@@ -10055,33 +10059,52 @@ void CvPlayer::changeMilitaryUnitUpkeepMod(const int iChange)
 	}
 }
 
-void CvPlayer::changeUnitUpkeep(const int iChange, const bool bMilitary)
+void CvPlayer::markUnitUpkeepDirty() const
 {
-	if (iChange != 0)
+	//#430 F4: two-flag routing. The per-unit-upkeep BUCKETS (recompute-Sigma over live units) invalidate here; the
+	// FINAL cache (post empire-mod / free-allowance / handicap) invalidates via setUnitUpkeepDirty. A unit-set or
+	// per-unit-upkeep change trips BOTH (this path); a free-allowance / empire-mod change trips ONLY the final cache
+	// (setUnitUpkeepDirty alone) so it never forces a units-walk.
+	m_bUnitUpkeepBucketsDirty = true;
+	setUnitUpkeepDirty();
+}
+
+void CvPlayer::ensureUnitUpkeepBuckets() const
+{
+	if (!m_bUnitUpkeepBucketsDirty)
 	{
-		FAssertMsg(iChange > 0 || bMilitary && -iChange <= m_iUnitUpkeepMilitary100 || !bMilitary && -iChange <= m_iUnitUpkeepCivilian100, "These should always be positive!");
-
-		if (bMilitary)
-			m_iUnitUpkeepMilitary100 += iChange;
-		else m_iUnitUpkeepCivilian100 += iChange;
-
-		setUnitUpkeepDirty();
+		return;
 	}
+	int64_t iCiv = 0, iMil = 0;
+	foreach_(CvUnit* pUnit, units())
+	{
+		if (pUnit->isMilitaryBranch())
+			iMil += pUnit->getUpkeep100();
+		else iCiv += pUnit->getUpkeep100();
+	}
+	m_iUnitUpkeepCivilian100Cache = iCiv;
+	m_iUnitUpkeepMilitary100Cache = iMil;
+	m_bUnitUpkeepBucketsDirty = false;
 }
 
 int64_t CvPlayer::getUnitUpkeepCivilian100() const
 {
-	return m_iUnitUpkeepCivilian100;
+	//#430 F4: the raw civilian bucket is a recompute-Sigma over the live units' computed getUpkeep100 bucketed by
+	// isMilitaryBranch() (was the push-accumulator m_iUnitUpkeepCivilian100, retired). Empire mod + free allowances
+	// layer on top unchanged below.
+	ensureUnitUpkeepBuckets();
+	return m_iUnitUpkeepCivilian100Cache;
 }
 
 int64_t CvPlayer::getUnitUpkeepMilitary100() const
 {
-	return m_iUnitUpkeepMilitary100;
+	ensureUnitUpkeepBuckets();
+	return m_iUnitUpkeepMilitary100Cache;
 }
 
-int64_t CvPlayer::getUnitUpkeepCivilian() const
+int64_t CvPlayer::applyCivilianUpkeep(const int64_t iRaw100) const
 {
-	uint64_t iUpkeep = std::max<int64_t>(0, m_iUnitUpkeepCivilian100);
+	uint64_t iUpkeep = std::max<int64_t>(0, iRaw100);
 
 	if (m_iCivilianUnitUpkeepMod > 0)
 	{
@@ -10094,14 +10117,14 @@ int64_t CvPlayer::getUnitUpkeepCivilian() const
 	return static_cast<int64_t>(iUpkeep / 100);
 }
 
-int64_t CvPlayer::getUnitUpkeepCivilianNet() const
+int64_t CvPlayer::applyCivilianUpkeepNet(const int64_t iRaw100) const
 {
-	return std::max<int64_t>(0, getUnitUpkeepCivilian() - getFreeUnitUpkeepCivilian());
+	return std::max<int64_t>(0, applyCivilianUpkeep(iRaw100) - getFreeUnitUpkeepCivilian());
 }
 
-int64_t CvPlayer::getUnitUpkeepMilitary() const
+int64_t CvPlayer::applyMilitaryUpkeep(const int64_t iRaw100) const
 {
-	uint64_t iUpkeep = std::max<int64_t>(0, m_iUnitUpkeepMilitary100);
+	uint64_t iUpkeep = std::max<int64_t>(0, iRaw100);
 
 	if (m_iMilitaryUnitUpkeepMod > 0)
 	{
@@ -10114,9 +10137,29 @@ int64_t CvPlayer::getUnitUpkeepMilitary() const
 	return static_cast<int64_t>(iUpkeep / 100);
 }
 
+int64_t CvPlayer::applyMilitaryUpkeepNet(const int64_t iRaw100) const
+{
+	return std::max<int64_t>(0, applyMilitaryUpkeep(iRaw100) - getFreeUnitUpkeepMilitary());
+}
+
+int64_t CvPlayer::getUnitUpkeepCivilian() const
+{
+	return applyCivilianUpkeep(getUnitUpkeepCivilian100());
+}
+
+int64_t CvPlayer::getUnitUpkeepCivilianNet() const
+{
+	return applyCivilianUpkeepNet(getUnitUpkeepCivilian100());
+}
+
+int64_t CvPlayer::getUnitUpkeepMilitary() const
+{
+	return applyMilitaryUpkeep(getUnitUpkeepMilitary100());
+}
+
 int64_t CvPlayer::getUnitUpkeepMilitaryNet() const
 {
-	return std::max<int64_t>(0, getUnitUpkeepMilitary() - getFreeUnitUpkeepMilitary());
+	return applyMilitaryUpkeepNet(getUnitUpkeepMilitary100());
 }
 
 int64_t CvPlayer::getUnitUpkeepNet(const bool bMilitary, const int iUnitUpkeep) const
@@ -10133,16 +10176,15 @@ int64_t CvPlayer::getFinalUnitUpkeep() const
 	return m_bUnitUpkeepDirty ? calcFinalUnitUpkeep() : m_iFinalUnitUpkeep;
 }
 
-int64_t CvPlayer::calcFinalUnitUpkeep(const bool bReal) const
+int64_t CvPlayer::calcFinalUnitUpkeepFrom(const int64_t iCivilian100, const int64_t iMilitary100) const
 {
+	//#430 F4: the empire-mod + free-allowance + handicap chain, parametrized on the raw bucket totals so the marginal
+	// what-if (getFinalUnitUpkeepChange) prices a HYPOTHETICAL bucket through the identical math without mutating state.
 	if (isNPC())
 	{
 		return 0;
 	}
-	int64_t iCalc = 0;
-
-	iCalc += getUnitUpkeepCivilianNet();
-	iCalc += getUnitUpkeepMilitaryNet();
+	int64_t iCalc = applyCivilianUpkeepNet(iCivilian100) + applyMilitaryUpkeepNet(iMilitary100);
 
 	if (iCalc > 0)
 	{
@@ -10164,6 +10206,18 @@ int64_t CvPlayer::calcFinalUnitUpkeep(const bool bReal) const
 		FErrorMsg("Total unit upkeep is negative! You don't earn gold from upkeep costs!");
 		iCalc = 0;
 	}
+	return iCalc;
+}
+
+int64_t CvPlayer::calcFinalUnitUpkeep(const bool bReal) const
+{
+	if (isNPC())
+	{
+		return 0;
+	}
+	//#430 F4: the raw buckets are the recompute-Sigma getters now (getUnitUpkeep{Civilian,Military}100).
+	const int64_t iCalc = calcFinalUnitUpkeepFrom(getUnitUpkeepCivilian100(), getUnitUpkeepMilitary100());
+
 	if (bReal)
 	{
 		m_iFinalUnitUpkeep = iCalc;
@@ -10181,6 +10235,7 @@ int64_t CvPlayer::calcFinalUnitUpkeep(const bool bReal) const
 void CvPlayer::setUnitUpkeepDirty() const
 {
 	m_bUnitUpkeepDirty = true;
+	m_bUnitUpkeepBucketsDirty = true; //#430 F4: force the per-unit-upkeep Sigma to recompute on first read
 
 	// Refresh relevant UI
 	if (getID() == GC.getGame().getActivePlayer() && isTurnActive())
@@ -10189,23 +10244,16 @@ void CvPlayer::setUnitUpkeepDirty() const
 	}
 }
 
-int CvPlayer::getFinalUnitUpkeepChange(const int iExtra, const bool bMilitary)
+int CvPlayer::getFinalUnitUpkeepChange(const int iExtra, const bool bMilitary) const
 {
 	if (iExtra == 0) return 0;
 
-	// Temporary change
-	if (bMilitary)
-		m_iUnitUpkeepMilitary100 += iExtra;
-	else m_iUnitUpkeepCivilian100 += iExtra;
+	//#430 F4: NON-MUTATING marginal-cost what-if (was a temp add/restore on the retired push-accumulators). Price the
+	// hypothetical bucket totals through the shared final-upkeep math, diff against the real cached total.
+	const int64_t iCivilian100 = getUnitUpkeepCivilian100() + (bMilitary ? 0 : iExtra);
+	const int64_t iMilitary100 = getUnitUpkeepMilitary100() + (bMilitary ? iExtra : 0);
 
-	const int iChange = static_cast<int>(calcFinalUnitUpkeep(false) - getFinalUnitUpkeep());
-
-	// Very important to restore the real value!
-	if (bMilitary)
-		m_iUnitUpkeepMilitary100 -= iExtra;
-	else m_iUnitUpkeepCivilian100 -= iExtra;
-
-	return iChange;
+	return static_cast<int>(calcFinalUnitUpkeepFrom(iCivilian100, iMilitary100) - getFinalUnitUpkeep());
 }
 // ! Unit Upkeep
 
@@ -13239,9 +13287,11 @@ void CvPlayer::recalculateUnitCounts()
 
 	foreach_(CvUnit* unit, units())
 	{
-		unit->recalculateUnitUpkeep();
 		unit->area()->changePower(getID(), unit->getPowerValueTotal());
 	}
+	//#430 F4: per-unit upkeep is the computed getUpkeep100 now (no per-unit recalc/push); one dirty mark recomputes
+	// the per-unit-upkeep Sigma over the live set on next read.
+	markUnitUpkeepDirty();
 }
 
 void CvPlayer::changeUnitCount(const UnitTypes eUnit, const int iChange)
@@ -19013,8 +19063,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraFreedomFighters);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivilianUnitUpkeepMod);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMilitaryUnitUpkeepMod);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iUnitUpkeepCivilian100);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iUnitUpkeepMilitary100);
+		//#430 F4: m_iUnitUpkeep{Civilian,Military}100 reads gone -- the raw buckets recompute-Sigma over live units
+		// (old tags drained by name in Assets/savemigration.txt).
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBaseFreeUnitUpkeepCivilian);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBaseFreeUnitUpkeepMilitary);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeUnitUpkeepCivilianPopPercent);
@@ -19989,8 +20039,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivilianUnitUpkeepMod);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMilitaryUnitUpkeepMod);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUnitUpkeepCivilian100);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUnitUpkeepMilitary100);
+		//#430 F4: m_iUnitUpkeep{Civilian,Military}100 writes gone -- the raw buckets recompute-Sigma over live units.
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBaseFreeUnitUpkeepCivilian);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBaseFreeUnitUpkeepMilitary);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeUnitUpkeepCivilianPopPercent);
@@ -27813,8 +27862,10 @@ void CvPlayer::clearModifierTotals()
 	m_iFreeUnitUpkeepMilitaryPopPercent = 0;
 	m_iCivilianUnitUpkeepMod = 0;
 	m_iMilitaryUnitUpkeepMod = 0;
-	m_iUnitUpkeepMilitary100 = 0;
-	m_iUnitUpkeepCivilian100 = 0;
+	//#430 F4: the raw upkeep buckets recompute-Sigma over live units (dirty-on-reset -> recompute on first read).
+	m_iUnitUpkeepMilitary100Cache = 0;
+	m_iUnitUpkeepCivilian100Cache = 0;
+	m_bUnitUpkeepBucketsDirty = true;
 	m_iFinalUnitUpkeep = 0;
 
 	m_iHappyPerMilitaryUnit = 0;

@@ -595,6 +595,28 @@ void CascadeAccumulator::refreshUnitPackages(const CvUnit* pUnit, int iMask)
 		st.strLunge = iLunge;
 		st.strDynamicDefense = iDynDef;
 	}
+
+	if (iMask & UPK_UPKEEP)
+	{
+		// contract rule 2: zero-then-sum. upkeep.unit.extra.flat is a x100-NATIVE channel (the legacy m_iExtraUpkeep100
+		// was x100; the JSON holds the curator-descaled human, so sumUnit100 re-applies the x100 to match) -- gather via
+		// sumUnit100, NOT the ÷100-human sumUnit the combat scalars use. DELTA-ONLY: held promotions + held unit-combats,
+		// NO unit-type base (getUpkeep100 adds 100*getBaseUpkeep once, then the legacy percent modifier + SizeMatters).
+		long iExtra100 = 0;
+		for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
+		{
+			if (!pUnit->isHasPromotion((PromotionTypes)i)) continue;
+			const CvInfo* jP = InfoRepo<CvPromotionInfo>::get().get(i);
+			if (jP != NULL) iExtra100 += MMKernel::sumUnit100(jP, "upkeep.unit.extra", "flat", ec);
+		}
+		for (int i = 0; i < GC.getNumUnitCombatInfos(); ++i)
+		{
+			if (!pUnit->isHasUnitCombat((UnitCombatTypes)i)) continue;
+			const CvInfo* jC = InfoRepo<CvUnitCombatInfo>::get().get(i);
+			if (jC != NULL) iExtra100 += MMKernel::sumUnit100(jC, "upkeep.unit.extra", "flat", ec);
+		}
+		st.extraUpkeep100 = (int)iExtra100;
+	}
 }
 
 // ===================== the COMBINES (bare fetches + the channel formula + live gates) =====================
