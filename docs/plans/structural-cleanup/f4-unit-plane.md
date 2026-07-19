@@ -182,7 +182,8 @@ load-time re-derive path.
   military happiness in `CvCascadeWellbeing.cpp:303/722`: the per-unit VALUE folds at gather, the live count
   multiplies at read). Untouched by F4. ⛔ Enforce the hard ban: no unit-authored `percent` deposit to yields/commerce.
 - **⛔ The unit-combat → TAGS/SKILLS distillation (and the keyed "vs classification" modifiers that depend on it) —
-  OUT of #430/F4 scope, needs its own serious grounded plan (owner 2026-07-19: NOT "giga rollerskating in").** Design
+  REQUIRED BEFORE #430 completes (owner 2026-07-19), out of the F4 modifier-plane build itself; the serious grounded
+  plan is [unitcombat-distillation.md](unitcombat-distillation.md) (owner: NOT "giga rollerskating in").** Design
   direction (owner): a **UnitCombat is a "general unit-group"** — a unit with no strength / unitdata of its own,
   **just pure modifiers** applied to a group of member units. Two axes distill from it, and only ONE is in F4's
   scope: (1) the **modifier-VALUE half** — the group depositing its stat modifiers onto its members — IS the
