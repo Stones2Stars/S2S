@@ -1110,20 +1110,13 @@ public:
 	// cascadeRefreshUnitPackages); the mid-combat suppress is a transient flag honored by withdrawalProbability().
 
 	//TB Combat Mods Start
+	// #430 F4 (strength situational group): getters read the cascade self-accumulator (UPK_STRENGTH); the change*
+	// changers are RETIRED (gathered on-dirty from the held-set via processPromotion/processUnitCombat markDirty).
 	int getExtraAttackCombatModifier (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	void changeExtraAttackCombatModifier (int iChange);
-
 	int getExtraDefenseCombatModifier (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	void changeExtraDefenseCombatModifier (int iChange);
-
 	int getExtraVSBarbs (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	void changeExtraVSBarbs (int iChange);
-
 	int getExtraReligiousCombatModifier(bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	void changeExtraReligiousCombatModifier(int iChange);
-
 	int getExtraDamageModifier (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	void changeExtraDamageModifier (int iChange);
 
 	void changeExtraUpkeep100(const int iChange);
 	void changeUpkeepModifier(const int iChange);
@@ -1156,17 +1149,11 @@ public:
 	void changeFliesToMoveCount(int iChange);
 
 
+	// #430 F4 (strength situational group): getters read the cascade self-accumulator (UPK_STRENGTH); changers retired.
 	int getExtraUnnerve (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	void changeExtraUnnerve (int iChange);
-
 	int getExtraEnclose (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	void changeExtraEnclose (int iChange);
-
 	int getExtraLunge (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	void changeExtraLunge (int iChange);
-
 	int getExtraDynamicDefense (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	void changeExtraDynamicDefense (int iChange);
 
 	int getExtraStrength () const;
 	void changeExtraStrength (int iChange);
@@ -1202,20 +1189,16 @@ public:
 
 	int getAdjacentTileHeal() const;
 
+	// getExtraCombatPercent (general strength.unit.percent) stays a LEGACY stored member -- it carries a cross-unit
+	// loaded-special-unit transient (processLoadedSpecialUnit) the held-set gather can't represent; NOT migrated.
 	int getExtraCombatPercent() const;
 	void changeExtraCombatPercent(int iChange);
 
+	// #430 F4 (strength situational group): getters read the cascade self-accumulator (UPK_STRENGTH); changers retired.
 	int getExtraCityAttackPercent() const;
-	void changeExtraCityAttackPercent(int iChange);
-
 	int getExtraCityDefensePercent() const;
-	void changeExtraCityDefensePercent(int iChange);
-
 	int getExtraHillsAttackPercent() const;
-	void changeExtraHillsAttackPercent(int iChange);
-
 	int getExtraHillsDefensePercent() const;
-	void changeExtraHillsDefensePercent(int iChange);
 
 	// WorkRateMod
 	int getWorkModifier() const;
@@ -1583,19 +1566,13 @@ protected:
 	// withdrawalProbability(); NOT serialized -- pure transient).
 	bool m_bSuppressWithdrawal;
 	//TB Combat Mods Begin
-	int m_iExtraAttackCombatModifier;
-	int m_iExtraDefenseCombatModifier;
-	int m_iExtraVSBarbs;
-	int m_iExtraReligiousCombatModifier;
+	// #430 F4: m_iExtra{AttackCombatModifier,DefenseCombatModifier,VSBarbs,ReligiousCombatModifier} removed -- strength situational cascade self-accumulators (UPK_STRENGTH).
 	int m_iStampedeCount;
 	int m_iAttackOnlyCitiesCount;
 	int m_iIgnoreNoEntryLevelCount;
 	int m_iIgnoreZoneofControlCount;
 	int m_iFliesToMoveCount;
-	int m_iExtraUnnerve;
-	int m_iExtraEnclose;
-	int m_iExtraLunge;
-	int m_iExtraDynamicDefense;
+	// #430 F4: m_iExtra{Unnerve,Enclose,Lunge,DynamicDefense} removed -- strength situational cascade self-accumulators (UPK_STRENGTH).
 	int m_iExtraStrength;
 	int m_iSMStrength;
 	int m_iOnslaughtCount;
@@ -1614,7 +1591,7 @@ protected:
 	int m_iDebugCount;
 	int m_iAssassinCount;
 	int m_iExtraStealthStrikes;
-	int m_iExtraStealthCombatModifier;
+	// #430 F4: m_iExtraStealthCombatModifier removed -- strength situational cascade self-accumulator (UPK_STRENGTH).
 	int m_iStealthDefenseCount;
 	int m_iOnlyDefensiveCount;
 	int m_iNoInvisibilityCount;
@@ -1656,7 +1633,7 @@ protected:
 	int m_iExtraCombatModifierPerVolumeLess;
 	int m_iExtraMaxHP;
 	int m_iExtraStrengthModifier;
-	int m_iExtraDamageModifier;
+	// #430 F4: m_iExtraDamageModifier removed -- strength situational cascade self-accumulator (UPK_STRENGTH).
 
 	int m_iExtraUpkeep100;
 	int m_iUpkeepModifier;
@@ -1688,10 +1665,7 @@ protected:
 	// #430 F4: m_iExtraEnemyHeal / m_iExtraNeutralHeal / m_iExtraFriendlyHeal / m_iSameTileHeal / m_iAdjacentTileHeal
 	// removed -- the heal territory family is a cascade self-accumulator (m_cascadeUnitPackages, gather-on-dirty).
 	int m_iExtraCombatPercent;
-	int m_iExtraCityAttackPercent;
-	int m_iExtraCityDefensePercent;
-	int m_iExtraHillsAttackPercent;
-	int m_iExtraHillsDefensePercent;
+	// #430 F4: m_iExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent removed -- strength situational cascade self-accumulators (UPK_STRENGTH).
 
 	int m_iRevoltProtection;
 	int m_iCollateralDamageProtection;
@@ -2254,8 +2228,8 @@ public:
 	void changeExtraStealthStrikes(int iChange);
 
 	int stealthCombatModifierTotal() const;
+	// #430 F4 (strength situational group): reads the cascade self-accumulator (UPK_STRENGTH); changer retired.
 	int getExtraStealthCombatModifier() const;
-	void changeExtraStealthCombatModifier(int iChange);
 
 	bool hasStealthDefense() const;
 	int getStealthDefenseCount() const;

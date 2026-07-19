@@ -517,6 +517,71 @@ void CascadeAccumulator::refreshUnitPackages(const CvUnit* pUnit, int iMask)
 		st.captureProb = iProb;
 		st.captureResist = iResist;
 	}
+
+	if (iMask & UPK_STRENGTH)
+	{
+		// contract rule 2: zero-then-sum. The SCALAR SITUATIONAL combat percents, HUMAN int. DELTA-ONLY: held
+		// promotions + held unit-combats, NO unit-type base (the *Modifier()/*Total() composites add the type base
+		// once + keep their commander/commodore fold + clamps/gates). Each is strength.unit.<situation>.percent.
+		// ⛔ The GENERAL strength.unit.percent is NOT gathered here -- m_iExtraCombatPercent stays legacy (it carries a
+		// loaded-special-unit transient the held-set can't represent; see CvCascadeScopePackages.h UPK_STRENGTH note).
+		int iCityAtk = 0, iCityDef = 0, iHillAtk = 0, iHillDef = 0, iAtk = 0, iDef = 0, iVsB = 0, iRel = 0,
+			iStealth = 0, iDmg = 0, iUnnerve = 0, iEnclose = 0, iLunge = 0, iDynDef = 0;
+		for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
+		{
+			if (!pUnit->isHasPromotion((PromotionTypes)i)) continue;
+			const CvInfo* jP = InfoRepo<CvPromotionInfo>::get().get(i);
+			if (jP == NULL) continue;
+			iCityAtk += MMKernel::sumUnit(jP, "strength.unit.cityAttack", "percent", ec);
+			iCityDef += MMKernel::sumUnit(jP, "strength.unit.cityDefense", "percent", ec);
+			iHillAtk += MMKernel::sumUnit(jP, "strength.unit.hillsAttack", "percent", ec);
+			iHillDef += MMKernel::sumUnit(jP, "strength.unit.hillsDefense", "percent", ec);
+			iAtk     += MMKernel::sumUnit(jP, "strength.unit.attack", "percent", ec);
+			iDef     += MMKernel::sumUnit(jP, "strength.unit.defense", "percent", ec);
+			iVsB     += MMKernel::sumUnit(jP, "strength.unit.vsBarbs", "percent", ec);
+			iRel     += MMKernel::sumUnit(jP, "strength.unit.religious", "percent", ec);
+			iStealth += MMKernel::sumUnit(jP, "strength.unit.stealth", "percent", ec);
+			iDmg     += MMKernel::sumUnit(jP, "strength.unit.damageModifier", "percent", ec);
+			iUnnerve += MMKernel::sumUnit(jP, "strength.unit.unnerve", "percent", ec);
+			iEnclose += MMKernel::sumUnit(jP, "strength.unit.enclose", "percent", ec);
+			iLunge   += MMKernel::sumUnit(jP, "strength.unit.lunge", "percent", ec);
+			iDynDef  += MMKernel::sumUnit(jP, "strength.unit.dynamicDefense", "percent", ec);
+		}
+		for (int i = 0; i < GC.getNumUnitCombatInfos(); ++i)
+		{
+			if (!pUnit->isHasUnitCombat((UnitCombatTypes)i)) continue;
+			const CvInfo* jC = InfoRepo<CvUnitCombatInfo>::get().get(i);
+			if (jC == NULL) continue;
+			iCityAtk += MMKernel::sumUnit(jC, "strength.unit.cityAttack", "percent", ec);
+			iCityDef += MMKernel::sumUnit(jC, "strength.unit.cityDefense", "percent", ec);
+			iHillAtk += MMKernel::sumUnit(jC, "strength.unit.hillsAttack", "percent", ec);
+			iHillDef += MMKernel::sumUnit(jC, "strength.unit.hillsDefense", "percent", ec);
+			iAtk     += MMKernel::sumUnit(jC, "strength.unit.attack", "percent", ec);
+			iDef     += MMKernel::sumUnit(jC, "strength.unit.defense", "percent", ec);
+			iVsB     += MMKernel::sumUnit(jC, "strength.unit.vsBarbs", "percent", ec);
+			iRel     += MMKernel::sumUnit(jC, "strength.unit.religious", "percent", ec);
+			iStealth += MMKernel::sumUnit(jC, "strength.unit.stealth", "percent", ec);
+			iDmg     += MMKernel::sumUnit(jC, "strength.unit.damageModifier", "percent", ec);
+			iUnnerve += MMKernel::sumUnit(jC, "strength.unit.unnerve", "percent", ec);
+			iEnclose += MMKernel::sumUnit(jC, "strength.unit.enclose", "percent", ec);
+			iLunge   += MMKernel::sumUnit(jC, "strength.unit.lunge", "percent", ec);
+			iDynDef  += MMKernel::sumUnit(jC, "strength.unit.dynamicDefense", "percent", ec);
+		}
+		st.strCityAttack = iCityAtk;
+		st.strCityDefense = iCityDef;
+		st.strHillsAttack = iHillAtk;
+		st.strHillsDefense = iHillDef;
+		st.strAttack = iAtk;
+		st.strDefense = iDef;
+		st.strVsBarbs = iVsB;
+		st.strReligious = iRel;
+		st.strStealth = iStealth;
+		st.strDamageModifier = iDmg;
+		st.strUnnerve = iUnnerve;
+		st.strEnclose = iEnclose;
+		st.strLunge = iLunge;
+		st.strDynamicDefense = iDynDef;
+	}
 }
 
 // ===================== the COMBINES (bare fetches + the channel formula + live gates) =====================

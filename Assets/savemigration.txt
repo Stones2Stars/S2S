@@ -84,6 +84,37 @@ CvUnit::m_iExtraCaptureResistanceModifier (int)
 ========================
 
 ========================
+2026-07-19 — #430 F4 unit-plane (strength SITUATIONAL combat-% group): the 14 stored per-unit scalar situational
+combat-percent accumulators are removed. CvUnit::getExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent /
+getExtra{AttackCombatModifier,DefenseCombatModifier,VSBarbs,ReligiousCombatModifier,DamageModifier,Unnerve,Enclose,
+Lunge,DynamicDefense} / getExtraStealthCombatModifier now read the cascade unit self-accumulator
+(m_cascadeUnitPackages.str*, gathered on-dirty from the held-set: held promotions + held unit-combats, DELTA-ONLY --
+the m_pUnitInfo type base is added ONCE by the *Modifier()/*Total() composites, NOT the cascade) via
+MMKernel::sumUnit "strength.unit.<situation>"."percent". The 14 changers + their apply-loop folds (processPromotion /
+processUnitCombat) are gone -- consolidated into the existing markDirty(UPK_ALL) per apply loop; the never-serialized
+cache re-derives at load. The getters keep their LIVE commander/commodore fold (stealth had none) + consumer-side
+gates/clamps (noDefensiveBonus zero, religious sign, COMBAT_WITHOUT_WARNING, max(0,·)/max(-95,·)). ⛔ NOTE: the GENERAL
+strength.unit.percent (CvUnit::m_iExtraCombatPercent) is DELIBERATELY NOT migrated -- it also carries a cross-unit
+loaded-special-unit transient (processLoadedSpecialUnit folds SPECIALUNIT_CAPTIVE's -5 onto the transport) the held-set
+gather cannot represent; it stays a legacy stored member (still read/written).
+
+CvUnit::m_iExtraCityAttackPercent          (int)
+CvUnit::m_iExtraCityDefensePercent         (int)
+CvUnit::m_iExtraHillsAttackPercent         (int)
+CvUnit::m_iExtraHillsDefensePercent        (int)
+CvUnit::m_iExtraAttackCombatModifier       (int)
+CvUnit::m_iExtraDefenseCombatModifier      (int)
+CvUnit::m_iExtraVSBarbs                    (int)
+CvUnit::m_iExtraReligiousCombatModifier    (int)
+CvUnit::m_iExtraDamageModifier             (int)
+CvUnit::m_iExtraUnnerve                    (int)
+CvUnit::m_iExtraEnclose                    (int)
+CvUnit::m_iExtraLunge                      (int)
+CvUnit::m_iExtraDynamicDefense             (int)
+CvUnit::m_iExtraStealthCombatModifier      (int)
+========================
+
+========================
 2026-07-18 — #430 two-part free-specialist seam (modifier.md par.6): the cascade owns the AMOUNT (fsAmountAny /
 fsAmountByType -- the summed building/civic/trait freeSpecialists deposits), the engine owns PLACEMENT, consumers
 read the OUTPUT (getSpecialistCount + getFreeSpecialistCount). The derivable CvCity free-specialist AMOUNT ledgers

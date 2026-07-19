@@ -118,8 +118,20 @@ load-time re-derive path.
    (owner ruling 2026-07) honored by `withdrawalProbability()`, set/cleared around the pillage attack (live runtime
    override on top, never an accumulator).
 2. **Core strength + combat-percent** groups (the largest consumer — `maxCombatStr`'s situational calc reads these
-   aggregates; validate against it early). Several combat-percent members carry `enabled` predicates (IS_CITY /
-   IS_HILLS) — the ordinary `cascadeEvalCondition` gate.
+   aggregates). ✅ **Design resolved (map 2026-07-19): this is the step-1 standing-accumulator pattern with more
+   fields — NO combat-time gating.** The situational percents are authored as SEPARATE address families
+   (`strength.unit.cityAttack.percent`, `strength.unit.hillsDefense.percent`, `strength.unit.{attack,defense,vsBarbs,
+   religious,stealth}.percent`, …), NOT gated `strength` deposits — **verified 0 of ~1230 promotion/unitcombat
+   strength deposits carry any `enabled`/`disabled`**. The situation is carried by the address NAME and applied by
+   `maxCombatStr`'s EXISTING plot guards (`isCity`/`isHills`/attacked-plot), so the gather needs no combat context:
+   each situation is a plain `Σ sumUnit("strength.unit.<situation>","percent")` over the held-set, one cache field
+   per situation; the consumers (`maxCombatStr`/`airMaxCombatStr`/the `*Modifier()`/`*Total()` composites) are
+   UNTOUCHED (they keep the info-base add, the situational guards, and the commander/commodore fold). ⚠ Preserve the
+   changers' one rider — `setInfoBarDirty(true)` — at the promotion/unitcombat change site. *(The doc's earlier
+   "IS_CITY/IS_HILLS enabled predicates" line was an assumption about the spec's predicate model; the curated data
+   uses separate families instead.)* Base-strength FLATS (`strength.unit.flat` → `m_iExtraStrength`, feeding
+   `baseCombatStr`) are a separable follow-in of the same shape (verifiable via `/computed/units/combat` `combatEff`);
+   the KEYED terrain/feature/unitcombat/domain percents are step 3.
 3. **Keyed groups** — terrain/feature attack-defense-work percent, unitcombat/domain modifiers, trap-target, and
    the largest sub-surface, vision/invisibility (15 setters, carries `updateSpotIntensity` plot side-effects to
    preserve). Reuses `sumKeyed4U`/`sumKeyed4F`; sequence vision/invisibility after the keyed mechanism proves on a
