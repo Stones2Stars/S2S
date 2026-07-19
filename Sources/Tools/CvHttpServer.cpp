@@ -3629,8 +3629,8 @@ namespace
 				h["extraHealth"]             = picojson::value((double)pCity->getExtraHealth());
 				h["improvementGoodHealth"]   = picojson::value((double)pCity->getImprovementGoodHealth());
 				h["improvementBadHealth"]    = picojson::value((double)pCity->getImprovementBadHealth());
-				h["specialistGoodHealth"]    = picojson::value((double)pCity->getSpecialistGoodHealth());
-				h["specialistBadHealth"]     = picojson::value((double)pCity->getSpecialistBadHealth());
+				h["specialistGoodHealth"]    = picojson::value((double)pCity->getSpecialistGoodHealth() / 100);  // ×100 getter -> ÷100 human (sibling fields are already human)
+				h["specialistBadHealth"]     = picojson::value((double)pCity->getSpecialistBadHealth() / 100);
 				h["corporationHealth"]       = picojson::value((double)pCity->calculateCorporationHealth());
 				h["extraTechHealth"]         = picojson::value((double)pCity->getExtraTechHealthTotal());
 				h["espionageHealthCounter"]  = picojson::value((double)pCity->getEspionageHealthCounter());
@@ -3664,8 +3664,8 @@ namespace
 				hp["celebrityHappiness"]    = picojson::value((double)pCity->getCelebrityHappiness()); // unit-derived (§10.4 "must be dumped")
 				hp["commerceHappiness"]     = picojson::value((double)pCity->getCommerceHappiness());
 				hp["stateReligionHappiness"]= picojson::value((double)pCity->getCurrentStateReligionHappiness());
-				hp["specialistHappiness"]   = picojson::value((double)pCity->getSpecialistHappiness());
-				hp["specialistUnhappiness"] = picojson::value((double)pCity->getSpecialistUnhappiness());
+				hp["specialistHappiness"]   = picojson::value((double)pCity->getSpecialistHappiness() / 100);  // ×100 getter -> ÷100 human (sibling fields are already human)
+				hp["specialistUnhappiness"] = picojson::value((double)pCity->getSpecialistUnhappiness() / 100);
 				hp["largestCityHappiness"]  = picojson::value((double)pCity->getLargestCityHappiness());
 				hp["extraHappiness"]        = picojson::value((double)pCity->getExtraHappiness());
 				// anger-percent sources (sum × pop / PERCENT_ANGER_DIVISOR):

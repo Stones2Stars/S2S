@@ -9921,33 +9921,9 @@ void CvPlayer::changeUnitUpgradePriceModifier(int iChange)
 
 bool CvPlayer::canFoundReligion() const
 {
-	// #430 THE ENABLER FLIP: serves the cascade's player-state predicate (EnablerKernel::canFoundReligion)
-	if (GC.getGame().isFinalInitialized())
-	{
-		return CascadeAccumulator::enFoundReligion(this);
-	}
-	return canFoundReligionLegacy();
-}
-
-bool CvPlayer::canFoundReligionLegacy() const
-{
-	if( getNumCities() < 1 || isNPC()
-	|| (GC.getGame().isGameStart() && GC.getGame().getElapsedGameTurns() < 3) )
-	{
-		return false;
-	}
-
-	if(GC.getGame().isOption(GAMEOPTION_RELIGION_LIMITED))
-	{
-		if( ((getNumCities() > 1) && !(isRebel())) || !GC.isLIMITED_RELIGIONS_EXCEPTIONS() )
-		{
-			if(hasHolyCity())
-			{
-				return false;
-			}
-		}
-	}
-	return true;
+	// #430 THE ENABLER FLIP: pure cascade player-state predicate (EnablerKernel::canFoundReligion) -- no pre-init
+	// guard, no legacy fallback (DEC-no-legacy-masking; matches the six canonical enabler gates).
+	return CascadeAccumulator::enFoundReligion(this);
 }
 
 
@@ -13564,17 +13540,9 @@ int CvPlayer::getHurryCount(HurryTypes eIndex) const
 
 bool CvPlayer::canHurry(HurryTypes eIndex) const
 {
-	// #430 THE ENABLER FLIP: serves the cascade frontier (generate->gateSet hurries)
-	if (GC.getGame().isFinalInitialized())
-	{
-		return CascadeAccumulator::enHurry(this, (int)eIndex);
-	}
-	return canHurryLegacy(eIndex);
-}
-
-bool CvPlayer::canHurryLegacy(HurryTypes eIndex) const
-{
-	return (getHurryCount(eIndex) > 0);
+	// #430 THE ENABLER FLIP: pure cascade frontier read (generate->gateSet hurries) -- no pre-init guard, no
+	// legacy fallback (DEC-no-legacy-masking).
+	return CascadeAccumulator::enHurry(this, (int)eIndex);
 }
 
 
