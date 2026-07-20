@@ -32,6 +32,7 @@ not a reverse-engineered guess.
 - **[reference/special-systems.md](reference/special-systems.md)** — espionage, great people, promotions/XP, vision, trade, diplomacy, victory.
 - **[reference/mission-outcome-system.md](reference/mission-outcome-system.md)** — the `CvOutcome` mission/outcome system (feeds the json.md §8 `missions` block).
 - **[reference/observability.md](reference/observability.md)** — the operational tag registry / gate knobs / live server / field census / PlotSnapshot.
+- **[reference/memory-footprint.md](reference/memory-footprint.md)** — where the RAM goes under the 32-bit ceiling: the static clusters (info classes, per-object arrays, cascade caches) vs the per-turn churn; textures/icons are loaded once (shared).
 - **[reference/external-tools-and-workflows.md](reference/external-tools-and-workflows.md)** — crash-dump symbolization, FpkBuilder.
 
 ## `architecture/` — the design compass

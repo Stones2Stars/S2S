@@ -10,6 +10,9 @@
 > the curators do the *verification*; these docs are the *deletion plan*, never a result set.
 
 ## Contents
+- **legacy-cut-worklist.md** — 🔝 the TOP of the worklist: the grounded, ordered list of remaining legacy
+  accumulators to cut (A cuttable-now / B blocked-on-channel / C blocked-on-tags) + the corrected #430 F0–F8 status
+  + the F5 flammability `/5` scope. The roadmap-refresh input.
 - **cutover.md** — the cutover roadmap: the gates (StoneBase-completeness / shadow-parity / classification consumption),
   the prerequisites, and the sequencing from shadow to `main`.
 - **code-cut-map.md** — ✅ the master **CODE-CUT MAP** (built 2026-07-02, two-pass adversarial): every legacy
