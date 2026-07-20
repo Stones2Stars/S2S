@@ -26724,7 +26724,6 @@ void CvGameTextMgr::buildCityBillboardIconString( CvWStringBuffer& szBuffer, CvC
 	}
 
 	// religion icons
-	logging::logMsg("CvGameTextMgr_buildCityBillboardString.log", "=== City %S religion icons ===", pCity->getName().GetCString());
 	for (int iI = 0; iI < GC.getNumReligionInfos(); ++iI)
 	{
 		if (pCity->isHasReligion((ReligionTypes)iI))
@@ -26732,14 +26731,12 @@ void CvGameTextMgr::buildCityBillboardIconString( CvWStringBuffer& szBuffer, CvC
 			if (pCity->isHolyCity((ReligionTypes)iI))
 			{
 				const CvReligionInfo& pInfo = GC.getReligionInfo((ReligionTypes) iI);
-				logging::logMsg("CvGameTextMgr_buildCityBillboardString.log", "Religion %s, TGA index %i.", pInfo.getType(), pInfo.getTGAIndex());
 				szBuffer.append(CvWString::format(L"%c", pInfo.getHolyCityChar()));
 			}
 			else
 			{
 				const CvReligionInfo& pInfo = GC.getReligionInfo((ReligionTypes) iI);
 				szBuffer.append(CvWString::format(L"%c", pInfo.getChar()));
-				logging::logMsg("CvGameTextMgr_buildCityBillboardString.log", "Religion %s, TGA index %i.", pInfo.getType(), pInfo.getTGAIndex());
 			}
 		}
 	}

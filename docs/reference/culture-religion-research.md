@@ -65,6 +65,15 @@
   Going inactive: yields/commerce → 0; `getPrereqCorporation` buildings disabled. **Maintenance** = `Σ
   HeadquarterCommerce·100 + getMaintenance·numBonuses·worldSize/100`, × `(17+pop)/18`, × handicap (²/8000 Advanced);
   rebels pay 50%.
+  > **⚖ Cascade boundary (owner ruling): corp active/dormant is ENGINE-DRIVEN SPREAD STATE — an engine-owned INPUT the
+  > modifier cascade READS, never a cascade-computed dormancy verdict.** Corporations spawn and spread themselves per
+  > turn like religion (autonomously under `GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS`), so "is this corp active in
+  > this city?" is asked of the engine (`isActiveCorporation`) — the same sanctioned class as religion presence and the
+  > connected-bonus network, NOT the [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in) trap
+  > (which bans reading a *cascade-owned* computed verdict — above all a BUILDING's active/dormant, which the cascade
+  > DOES own via `cascadeIsBuildingActive`). Hence `{HAS_CORPORATION:X}` = ACTIVE ([enabler §3](../specs/enabler.md),
+  > [json §3.5](../specs/json.md)), and the corp-commerce deposit gate reading `isActiveCorporation` is correct, not
+  > interim debt.
 
 ## See also
 

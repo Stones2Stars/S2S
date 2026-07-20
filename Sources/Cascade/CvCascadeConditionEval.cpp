@@ -337,6 +337,8 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 		return ctx.player != NULL && ctx.player->getStateReligion() != NO_RELIGION
 		    && ctx.city != NULL && ctx.city->isHasReligion(ctx.player->getStateReligion());
 	case CASC_PRED_HAS_RELIGION:          return ctx.city != NULL && pr->id >= 0 && ctx.city->isHasReligion((ReligionTypes)pr->id);
+	// {HAS_CORPORATION:X} = corp ACTIVE (json §3.5 / enabler §3), distinct from a bare CORPORATION_ presence atom.
+	// isActiveCorporation is a SANCTIONED engine-owned input (engine-driven spread state like religion), NOT a ride-in.
 	case CASC_PRED_HAS_CORPORATION:       return ctx.city != NULL && pr->id >= 0 && ctx.city->isActiveCorporation((CorporationTypes)pr->id);
 	case CASC_PRED_IS_HOLY_CITY:
 		return ctx.city != NULL && (pr->id < 0 ? ctx.city->isHolyCity() : ctx.city->isHolyCity((ReligionTypes)pr->id));

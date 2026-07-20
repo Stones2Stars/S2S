@@ -119,13 +119,22 @@ the (shared) Info, and per instance an index into the shared Info array.
   **pooled/dynamic**: `ENABLE_DYNAMIC_UNIT_ENTITIES=1` gives a real entity only to on-screen units (plot center /
   active player), otherwise a shared `g_dummyEntity`; even a real entity references shared assets by path. It is
   counted + probed (`[PERF/entity]`).
-- **EXE render side** (Gamebryo) shares meshes/textures across instances by file path — **reasoned from the standard
-  engine model, not verified** (closed EXE, no symbols); observable only via `[EXE]` trace + the `workingSetMB` gauge.
+- **EXE render side** (Gamebryo): **empirical evidence points to PER-INSTANCE texture memory, NOT a path-shared store**
+  (owner observation) — graphics **PAGING** (unloading off-screen scene regions) yields **significant working-set
+  reductions**, which a fully path-shared texture cache would *not* give (paging one instance wouldn't free a texture
+  others still reference). So a spawned texture — **even a copy of the same art — appears to inhabit its own EXE-side
+  memory**. This makes the EXE scene's per-instance texture/model footprint a **real memory lever** (it scales with
+  live instance count + revealed tiles), and is the concrete mechanism behind §5's ⭐ prime-grower attribution. (Still
+  closed-EXE / no-symbols: the mechanism is inferred from the paging delta, not a symbol read — but the paging delta is
+  a real measurement, no longer pure reasoning.) The **DLL art surface is a separate question and stays shared-once**
+  (the DLL holds only the tag string, above) — per-instance texture memory lives on the EXE side.
 - **FPK:** art is delivered as packed `C2C*.fpk` archives via the external `FpkBuilder` — a packaging container,
   orthogonal to the once-vs-per-instance question ([external-tools-and-workflows.md](external-tools-and-workflows.md)).
 
-**Implication:** art is shared once, so a per-turn working-set climb is **not** art re-instantiation. The DLL art
-surface is flat after load.
+**Implication:** the **DLL art surface is flat after load** (shared once — tag strings only), so a per-turn
+working-set climb is not DLL art re-instantiation. But on the **EXE side** the per-instance texture evidence (above)
+means scene texture/model memory **does** scale with live instance count + revealed tiles — so instance/texture count
+IS a memory lever *there*, which is exactly §5's ⭐ grower.
 
 ---
 

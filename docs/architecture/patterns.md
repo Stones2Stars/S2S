@@ -78,7 +78,11 @@ needs a fact FEEDS it to the one function, it never re-derives it.
    `isActiveBuilding`. Vicinity-`provides` (an active building providing a bonus ⇒ in-vicinity, json §5a) is
    likewise computed — `vicinityProvidedBonuses`, filled with `activeBuildings` in one
    `recomputeOperatingBuildingsInto` pass feeding both machines.
-   Only the route/trade `CONNECTED` "obtained" case stays raw state — the network we don't model.)*
+   Two active-states stay ENGINE-OWNED inputs the modifier reads (not cascade-computed), because the engine drives
+   them and the cascade does not model the driver: the route/trade `CONNECTED` "obtained" case (the network we don't
+   model), and **CORPORATION active/dormant** (engine-driven per-turn spread state, like religion — `isActiveCorporation`,
+   owner ruling; [culture-religion-research.md](../reference/culture-religion-research.md) Corporations). These are the
+   sanctioned-input class, distinct from the BUILDING dormancy verdict the cascade owns.)*
 7. **No duplication is sanctioned.** During the migration the legacy shadow was the one sanctioned duplication (the
    cascade running *alongside* legacy, diffed, with a defined death — [DEC-map-before-delete](decisions.md#dec-map-before-delete));
    **the shadow phase has ended** ([validation](../specs/validation.md)), so no duplication is sanctioned at all.

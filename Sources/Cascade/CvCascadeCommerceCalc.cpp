@@ -245,8 +245,12 @@ long CommerceCalc::doubleExtra(const std::string& channel, const CvCity* pCity, 
 
 // §2 BASE: corporation commerce -- Σ active corps' getCorporationCommerceByCorporation (engine CvCity:12752): per corp,
 // iC = getCommerceChange(c)×100 + Σ prereq-bonus(getCommerceProduced(c) × city bonus-count × worldCorpMaintPct/100),
-// team-revenue-modified, ceil(÷100). Returns human (the §2 bucket ×100s it). ⏳ INTERIM config read (corp config + bonus
-// counts + isActiveCorporation -- config + raw state, not a computed output).
+// team-revenue-modified, ceil(÷100). Returns human (the §2 bucket ×100s it). The `isActiveCorporation` gate is a
+// SANCTIONED engine-owned INPUT, NOT a cascade ride-in to fix (owner ruling): a corporation's presence/activity in a
+// city is ENGINE-DRIVEN SPREAD STATE -- corps spawn + spread themselves per turn like religion (autonomously under
+// Advanced Realistic Corporations), so "is this corp active here?" is ASKED of the engine, never a cascade-computed
+// dormancy verdict (unlike buildings -> cascadeIsBuildingActive). Same class as religion presence / the bonus network.
+// See culture-religion-research.md (Corporations) + json.md §3.5 ({HAS_CORPORATION:X} = active).
 int CommerceCalc::corporation(const std::string& channel, const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
 	if (pCity->isDisorder()) return 0;

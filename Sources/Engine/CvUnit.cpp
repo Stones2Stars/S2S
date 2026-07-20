@@ -11558,10 +11558,17 @@ int CvUnit::maxCombatStr(const CvPlot* pPlot, const CvUnit* pAttacker, CombatDet
 	{
 		return 0;
 	}
+	// The combat-strength cache is bypassed ONLY for a human whose tooltip must show the LIVE Surround-and-Destroy
+	// surrounded-modifier (the AI never reads/acts on that term, so a cache-stale surround is harmless for it). But
+	// when GAMEOPTION_COMBAT_SURROUND_DESTROY is OFF the surrounded term is a hard 0 (surroundedDefenseModifier
+	// early-returns, :24103), so cached == live for EVERYONE -- humans included. Widening the cache to humans in that
+	// (common) case kills the per-frame ~700-line combat-str walk that hit the player's own on-screen units without a
+	// cache (DllExport render audit). S&D-ON humans still bypass; the full "cache base + live-surround on top" seam is
+	// the follow-up for that case.
 	else if (bSurroundedModifier
-	// And doesn't involve a human player
-	&& !GET_PLAYER(getOwner()).isHumanPlayer()
-	&& (pAttacker == NULL || !GET_PLAYER(pAttacker->getOwner()).isHumanPlayer()))
+	&& (!GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY)
+	    || (!GET_PLAYER(getOwner()).isHumanPlayer()
+	        && (pAttacker == NULL || !GET_PLAYER(pAttacker->getOwner()).isHumanPlayer()))))
 	{
 		PROFILE("maxCombatStr.Cachable");
 

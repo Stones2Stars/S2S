@@ -207,6 +207,13 @@ clamp(unhappy − happy, 0, pop)`. The channel oracle is **`/computed/cities/wel
   **city-over-limit**, and **vassal** terms. These are saved/derived-from-saved state (legitimate inputs per the
   [http-endpoints](http-endpoints.md) hard rule) — the calc folds them at the level combine exactly where the
   engine does.
+  ⚖ **The `extraHappiness`/`extraHealth` accumulators are EVENT-GRANTED persisted state (owner ruling), a
+  SANCTIONED read, not a ride-in:** the CITY `getExtraHappiness`/`getExtraHealth` are written ONLY by `applyEvent`
+  (an event granting extra happiness/health) — genuine one-shot non-derivable state (the event-store class,
+  [state-repositories.md](../architecture/state-repositories.md)); the PLAYER accumulator additionally bundles the
+  DERIVABLE trait+tech, which the calc NETS OUT (− engine trait/tech + the cascade nets), keeping only the
+  event/unattributed residual. Wiring these as proper cascade event grants is **event-rework scope** (#425 events
+  stay Python / the F3 grants apply-loop), NOT a modifier-cut ride-in to fix here.
 - **GATE FLAGS** — `isNoUnhappiness` / `isNoCapitalUnhappiness` / `isNoUnhealthyPopulation` /
   `isBuildingOnlyHealthy` zero their side wholesale; building `attributes` (json §8) carry them
   post-classification-wiring; until then they are read as state.

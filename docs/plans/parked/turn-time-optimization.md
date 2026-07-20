@@ -782,6 +782,58 @@ those three blocks if desired.
   hammers). Measurable now via `[CIT/cancel] progressLost` in CityAI.log. Own fix; improves AI
   quality too.
 
+## FPS during the HUMAN turn — the render-path DllExport audit (distinct from AI turn time)
+
+Everything above is **AI turn time** (the `doTurn`/CABV compute chain). A SEPARATE axis is **per-frame FPS
+while the human plays** — the EXE polls the DLL through the ~1,214 `DllExport` functions every frame during
+render, so any `DllExport` doing **uncached live compute** is a per-frame tax. Diagnostic tell (owner): the drop
+appears **only after end-turn, never on load** — which EXONERATES EXE-intrinsic drawing (the scene draws
+identically from the first loaded frame) and points at DLL compute the EXE re-polls. Bare-map removing the
+stutter is consistent: it strips the drawn instances (unit models / city billboards / fog) the DLL is polled about.
+
+**Audit result (all 1,214 DllExports classified).** The static/config/info surface (~577: CvGlobals proxies,
+CvInitCore, all Infos, CvDeal/Fractal/Random) is trivial member returns — clean. **Fog visibility is CACHED**
+(`CvPlot::isActiveVisible` → `isVisible` → `m_aiVisibilityCount[team] > 0`, two array reads) — the fog cost is
+the EXE REPAINT, not a DLL recompute. The city banner's heavy reads are already CvDerivedCache O(1) (#430:
+`getYieldRate100`→`yieldRate100`, wellbeing→`CascadeAccumulator::wellbeing`). The genuine uncached per-frame
+compute concentrated in three spots, all scaling with on-screen units/cities:
+
+1. **★ City-billboard debug log write (FIXED).** `CvGameTextMgr::buildCityBillboardIconString` wrote to
+   `CvGameTextMgr_buildCityBillboardString.log` **unconditionally** (3 lines, incl. per holy-city religion) on
+   every billboard rebuild — leftover debug logging doing disk I/O. Cadence is per-DIRTY (billboards rebuild on
+   a dirty flag, not per-frame — the log settled at ~3 MB, not GB, and does not grow on a static loaded map),
+   so it was a per-turn burst + wasteful I/O, not the sustained per-frame drop. Removed.
+2. **★ Combat-strength walk, cache-bypassed for the human's own units (FIXED for the common case).**
+   `maxCombatStrFloat`/`currCombatStrFloat` (the unit health-bar) dispatch into `maxCombatStr` — a ~700-line
+   modifier walk — and the `CombatStrCache` was deliberately skipped for HUMAN-owned units. Reason (owner):
+   the cache can't keep the live **Surround-and-Destroy** surrounded-modifier fresh, and the AI never
+   reads/acts on that term (it doesn't understand S&D) so a stale-surround cache is harmless for AI — but the
+   human tooltip must be correct. `surroundedDefenseModifier` hard-returns 0 when
+   `GAMEOPTION_COMBAT_SURROUND_DESTROY` is OFF, so the cache is EXACT for humans in that (common) case → the
+   bypass now only triggers for a human with S&D ON. Kills the per-frame ~700-line walk on the player's own
+   on-screen units for every game without S&D. **Follow-up (S&D-ON case):** cache the pre-surround intermediate
+   (base + non-surround modifiers) for everyone and fold the live `surroundedDefenseModifier` delta on top — the
+   "cache the stable core, add the volatile term live" seam (the same shape as unit-happiness-on-top,
+   [DEC-unit-modifiers-on-top](../../architecture/decisions.md#dec-unit-modifiers-on-top)). NOTE S&D is still
+   LIVE (removal is only PARKED — [surround-destroy-removal-map.md](surround-destroy-removal-map.md)); if it is
+   removed, the bypass + the whole `surroundedDefenseModifier` term delete and the cache serves everyone.
+3. **Unit-stack walks per plot (OPEN — separate pass).** `CvPlot::isFighting`/`isVisibleEnemyUnit`/
+   `getNumVisibleUnits` (EXE-polled, they carry `exeIn(...)` markers) + `CvGame::getPlotUnits` (O(n²) over one
+   stack) walk a plot's unit list uncached — cheap per plot, real when summed over stacked plots × visible plots
+   × frames. Fix: reinstate the **event-driven-on-plot maintained counts** (increment/decrement on unit
+   enter/leave/battle-start/end) so the query is a stored read. ⚠ Carries the same drift risk as the fog
+   "stickytape": a maintained count that misses ANY mutation site goes stale and corrupts combat/visibility —
+   needs a complete emit-site trace (the event-completeness discipline), NOT a rushed add.
+
+Second-tier per-frame minor (uncollapsed redundant calls in the billboard bar fns — `foodDifference()` ×3-4,
+`getCurrentProductionDifference()` ×2; the CvSelectionGroup interface cluster `isBusy`/`readyToSelect`
+bypassing their own cache; `canBeSelected`'s foreign-city espionage loop) are cheap-but-tidy, not the driver.
+
+**Measured outcome:** #1 + #2 shipped → owner reports FPS "significantly better," with a smaller residual left
+for a separate pass (candidates: #3, and the S&D-ON combat-str follow-up). The fog compute (per-turn full
+`clearVisibilityCounts` + `updateSight` rebuild, `CvGame::doTurn`) is CORRECT to run per-turn (owner: "the
+nature of the beast") — the concern was only MID-turn per-frame compute, which is the three items above.
+
 ## Cross-references
 
 - Memory: `ai-unit-movement-to-player-level`, `hunter-move-reinvocation`,

@@ -618,7 +618,13 @@ CascadeWellbeingVerdicts CascadeWellbeing::assemble(const CvCity* pCity,
 	int iCommerceHappy = 0;
 	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
 		iCommerceHappy += aiCommercePer[c] * owner.getCommercePercent((CommerceTypes)c) / 100;
-	// the EXTRA nets (×100): stored inputs ×100 − the engine trait/tech parts (×100) + the cascade nets (×100)
+	// the EXTRA nets (×100). The getExtra{Happiness,Health} reads are SANCTIONED persisted EVENT state, NOT a cascade
+	// ride-in (owner ruling): the CITY accumulators are written ONLY by applyEvent (CvCity.cpp:18035/18040 -- an event
+	// granting extra happiness/health), genuine one-shot non-derivable state (the event-store class,
+	// state-repositories.md). The PLAYER accumulator also bundles the DERIVABLE trait/tech parts, so those are NETTED
+	// OUT here (− engine trait/tech, + the cascade nets), leaving only the event/unattributed residual -- the
+	// "recompute the derivable, keep the persisted event remainder" split. Wiring these as proper cascade event grants
+	// is EVENT-rework scope (#425 / F3 grants), not this modifier cut.
 	const int iExtraHappy = (pCity->getExtraHappiness() + owner.getExtraHappiness()) * 100
 		- iTraitHappyPart - iTechHappyPart + hap.iTraitNet + hap.iTechNet;
 	const int iExtraHealthCity = pCity->getExtraHealth() * 100;
