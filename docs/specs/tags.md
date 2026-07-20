@@ -13,6 +13,9 @@ The catalogue of a unit's **immutable, accounting-only classification tags** (th
 - **Accounting-only** — pure membership, **no behaviour or modifiers**; read by `IS_<TAG>` predicates for
   counting/gating.
 - **Overlapping** — a unit holds several at once.
+- **Represented as an ALWAYS-PRESENT ARRAY OF STRINGS** (owner 2026-07-20) — `"tags": ["military","landUnit"]`,
+  never `{name:true}` (a tag carries no value, like a skill). The array is **mandatory even when empty** (`[]`):
+  there is no real unit with zero tags, but the schema keeps it present (the unitcombat→tag pass fills the rest).
 
 ## Tags (first pass)
 
@@ -27,6 +30,17 @@ The catalogue of a unit's **immutable, accounting-only classification tags** (th
 | `missionary` | spreads religion | `UNITAI_MISSIONARY` → `missionary` + `civilian` |
 | `merchant` | trade-mission unit | `UNITAI_MERCHANT` → `merchant` + `civilian` |
 | `spy` | runs espionage missions (only spies do) | `UNITAI_SPY` → `spy` (not civilian, not military) |
+
+### Domain — from the unit's `DOMAIN_*` (owner 2026-07-20)
+
+| tag | meaning | derivation |
+|---|---|---|
+| `landUnit` | a land unit | `DOMAIN_LAND` → `landUnit` (read by `IS_LAND`) |
+| `seaUnit` | a sea unit | `DOMAIN_SEA` → `seaUnit` (read by `IS_WATER`) |
+| `airUnit` | an air unit | `DOMAIN_AIR` → `airUnit` (read by `IS_AIR`) |
+
+The domain is membership of what the unit *is* → a tag. The `DOMAIN_*` **enum stays engine-side** (movement/stacking
+are wired to it deeply); the tag is the classification view, and `IS_LAND`/`IS_WATER`/`IS_AIR` read it.
 
 ### Tech / equipment class — PERMANENT carve-out (from unitcombats, unitcombat→tag pass)
 

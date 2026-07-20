@@ -33,6 +33,13 @@ The catalogue of a unit's **innate boolean abilities** — the `blitz`/`amphibio
 > spellings, not the output key): **every unit / promotion / unit-combat ability block is
 > `skills`** (`capabilities` is reserved for the empire block). There is no pending rename.
 
+> **⚖ REPRESENTATION — pure boolean enablers, so the shape differs by carrier (owner 2026-07-20).** A skill is a
+> **pure boolean ENABLER** ("can walk over river", "can pass peaks") — the direct mirror of empire `capabilities`,
+> carrying no value; it cannot be `false` (absent ⇒ not held). So a **UNIT authors `skills` as an ARRAY OF STRINGS**
+> (`["pillage","blitz"]`), never `{name:true}`. The **object form** (`{name:true|false}`) is used **only where
+> revoke is real — a PROMOTION** granting *or removing* a skill (the grant/revoke plane, §4). Anything that carries a
+> value is not a skill (§1's per-type keyed abilities → modifier families).
+
 **Grounding:** entries come from the curator capability tables (`CAP_BOOL`/`CAP_PAIR`/`CAP_COUNT`/`CAP_LIST` in
 `curate_promotion.py`/`curate_unit.py`/`curate_unitcombat.py`) and owner rulings. Meanings are **not** asserted
 from general game knowledge — anything unconfirmed sits in §2, not §1.
@@ -102,18 +109,24 @@ Owner-ruled or curator-grounded with a clear meaning.
 | `upgradeAnywhere` | can upgrade regardless of location |
 | `zoneOfControl` | exerts a zone of control |
 
-### Per-type keyed (`skill: { TYPE: true }`)
+### Per-type keyed abilities are NOT skills (owner 2026-07-20)
 
-| skill | what it does |
-|---|---|
-| `terrainDoubleMove` | double movement on the listed `TERRAIN_*` |
-| `featureDoubleMove` | double movement on the listed `FEATURE_*` |
-| `trapImmunity` | ❌ **DEAD** (traps removed) — drop |
-| `trapTarget` | ❌ **DEAD** (traps removed) — drop |
-| `trapSetWith` | ❌ **DEAD** (traps removed) — drop |
-| `targets` | preferentially targets the listed `UNITCOMBAT_*` |
-| `collateralImmune` | immune to collateral damage from the listed `UNITCOMBAT_*` |
-| `unitTargets` | specifically targets the listed `UNIT_*` |
+**A skill is a pure boolean ENABLER** (§0 / json.md §8) — it carries no value. An ability **keyed by a type** carries a
+value (*which* type), so it is not a skill; it lives in a modifier family:
+
+| ability | new home | what it does |
+|---|---|---|
+| `targets` | combat — `strength.unit.targets.{UNITCOMBAT_*}` | preferentially targets those combat classes (this is what defines flanking — narrow per-target, "cannot be fucked with" granularity) |
+| `unitTargets` | combat — `strength.unit.unitTargets.{UNIT_*}` | targets those specific units |
+| `defenders` | combat — `strength.unit.defenders.{UNITCOMBAT_*}` | is a valid target for attackers of those combat classes |
+| `terrainDoubleMove` / `featureDoubleMove` | movement (per `TERRAIN_*`/`FEATURE_*`) | double movement on the listed terrain/feature |
+| `trapImmunity` / `trapTarget` / `trapSetWith` | ❌ **DEAD** (traps removed) — drop |
+
+**The one that STAYS a skill: `collateralImmune`** — its legacy per-source keying (`UNITCOMBAT_SIEGE`/`ASSAULT_MECH`/
+`ROBOT`, all the siege variant, never mounted-flanking) **collapses to one boolean** (immune to the siege-variant
+collateral; the narrow granularity is deliberately not preserved). So it is a pure enabler → an ordinary `skills`
+string. `flankImmune` is not needed (siege units are the flankable ones). (Collateral has two flavours: flanking —
+mounted vs siege — and siege/ranged.)
 
 ---
 
@@ -125,7 +138,7 @@ consuming code (high confidence unless noted), not general knowledge.
 | skill | what it does |
 |---|---|
 | `counterSpy` | espionage counter-agent — cuts enemy spy-mission success on/near its plot, intercepts spies (+XP) |
-| `dcmAirBomb` | DCM air-strike capability (5 legacy tiers → a tier count); each tier gates an air-strike mission |
+| `dcmAirBomb` | ❌ **DEAD** (owner 2026-07-20) — DCM air bombing is slated for removal; **dropped** by `curate_unit.py`, not emitted. It also carried a COUNT (a tier), and a skill that carries a value is not a skill. |
 | `dcmFighterEngage` | can fly the DCM fighter-intercept (FEngage) mission (option-gated) |
 | `defenders` | per-`UnitCombat` list — unit is a valid target for attackers of those combat types (+ AI value) |
 | `defenseOnly` | stackable count feeding `isOnlyDefensive()` (with the static `onlyDefensive` bool) — blocks initiating attacks |
