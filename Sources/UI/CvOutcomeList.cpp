@@ -217,41 +217,25 @@ int CvOutcomeList::AI_getValueInPlot(const CvUnit& kUnit, const CvPlot& kPlot, b
 	return iValue / 100;
 }
 
-bool CvOutcomeList::read(CvXMLLoadUtility* pXML, const wchar_t* szTagName)
+// #430: JSON intake. `v` is an ARRAY of outcome entries (outcomes.kill[] / an action's outcomes[]) -- one CvOutcome
+// each; or a single OBJECT (an action whose lone outcome is inlined onto it). The XML read() path is dead.
+void CvOutcomeList::mapFrom(const picojson::value& v)
 {
-	PROFILE_EXTRA_FUNC();
-	if(pXML->TryMoveToXmlFirstChild(szTagName))
+	if (v.is<picojson::array>())
 	{
-		if(pXML->TryMoveToXmlFirstChild())
+		const picojson::array& a = v.get<picojson::array>();
+		for (size_t i = 0; i < a.size(); ++i)
 		{
-			if (pXML->TryMoveToXmlFirstOfSiblings(L"Outcome"))
-			{
-				do
-				{
-					CvOutcome* pOutcome = new CvOutcome();
-					pOutcome->read(pXML);
-					m_aOutcome.push_back(pOutcome);
-				} while(pXML->TryMoveToXmlNextSibling());
-			}
-			pXML->MoveToXmlParent();
+			CvOutcome* pOutcome = new CvOutcome();
+			pOutcome->mapFrom(a[i]);
+			m_aOutcome.push_back(pOutcome);
 		}
-		pXML->MoveToXmlParent();
 	}
-
-	return true;
-}
-
-void CvOutcomeList::copyNonDefaults(CvOutcomeList* pOutcomeList)
-{
-	PROFILE_EXTRA_FUNC();
-	if (isEmpty())
+	else if (v.is<picojson::object>())
 	{
-		const int num = pOutcomeList->getNumOutcomes();
-		for (int index = 0; index < num; index++)
-		{
-			m_aOutcome.push_back(pOutcomeList->getOutcome(index));
-		}
-		pOutcomeList->m_aOutcome.clear();
+		CvOutcome* pOutcome = new CvOutcome();
+		pOutcome->mapFrom(v);
+		m_aOutcome.push_back(pOutcome);
 	}
 }
 

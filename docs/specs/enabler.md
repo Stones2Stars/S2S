@@ -519,7 +519,16 @@ toggle stay live checks at the gate); promotions ← team techs only (the §7.1 
 the per-unit level-up gate `enPromotionValid` OVERLAYS the unit's held-promo/unitcombat planes on the domain's
 planes via the raw plane reads, membership = Σenable > 0 ∧ Σremove == 0; the old "no tech edge ⇒
 always-unlocked" whitelist is dead, superseded-ideas #14 — start promotions ride the root's
-`enables.promotions`). The old recompute paths are deleted (`enResearch`/`enResearchable`,
+`enables.promotions`). **The promotion gate runs its `requires` + APPLICABILITY on demand, not via the domain's
+`setGateFailed`** (§7.1's promotions exception — no per-unit maintained gate flag): `enPromotionValid` ANDs the
+overlaid membership with `EnablerKernel::requiresMet` (the promotion-prereq chain) AND an engine-side
+**unit-state gate leg** (`acc_promoUnitStateOk`, `CvCascadeAccumulator.cpp`) that mirrors the deleted
+`isPromotionValidLegacy`'s unit-state half exactly (DEC-mirror-then-redesign), reading STATIC promo info + RAW
+unit state only (DEC-calc-zero-ride-in) — the QUALIFIED/DISQUALIFIED unitcombat applicability (the unit must
+belong to ≥1 qualified combat and none disqualified — the check the domain planes do not model), the game-option
+gates, the promotion-line prereq tech, and the runtime gates (spy / pillage / commander / commodore / blend +
+the intercept/evasion/XP probability caps). The verdict memo keys on the volatile unit-state (XP / commander /
+commodore / blend) it reads. The old recompute paths are deleted (`enResearch`/`enResearchable`,
 `enConstruct`/`enTrain`/`enCreate`/`enMaintain` + the whole `CPK_FRONT_B/U/PP` city-box slice,
 `enBuildUnlocked`/`enBuildUnlockedFast` + the `enBuildRem` rem-set, the `PSC_FRONT_PROMO` tech-halves fill,
 `unitCountChanged`, `canResearchLegacy`).
@@ -650,9 +659,12 @@ sweep of that small list in `CvCity::doTurn`, never a blanket. `verifyCity`'s or
 (the fresh build is enable-side only), keeping it the event-maintenance tripwire. **The requires-gate is wired
 for four of the eight domains — techs, buildings, units, projects** (`CvTechEnabler`/`CvBuildingEnabler`/
 `CvUnitEnabler`/`CvProjectEnabler`, each calling `EnablerDomain::setGateFailed` off `EnablerKernel::requiresMet`/
-`allowedOk`); **civics, processes, builds, and promotions have no gate logic** (`CvCivicEnabler`/
-`CvProcessEnabler`/`CvBuildEnabler`/`CvPromotionEnabler` never call `setGateFailed`) — their members stay
-enable-side LISTED per §7.1's "a domain whose gate stage has not landed never sets the flag" rule.
+`allowedOk`); **civics, processes, and builds have no gate logic** (`CvCivicEnabler`/`CvProcessEnabler`/
+`CvBuildEnabler` never call `setGateFailed`) — their members stay enable-side LISTED per §7.1's "a domain whose
+gate stage has not landed never sets the flag" rule. **Promotions are the exception to that over-offer:**
+`CvPromotionEnabler` likewise never calls `setGateFailed` (no maintained gate flag — the §7.1 promotions
+carve-out), but the gate is enforced ON DEMAND in `enPromotionValid` (`requires` + the unit-state applicability
+leg above), so the promotion offer is NOT enable-side over-inclusive the way the other three flagless domains are.
 
 ### Resolved forks (owner-ruled — now part of the §7 model)
 

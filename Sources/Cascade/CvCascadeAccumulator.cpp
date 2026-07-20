@@ -36,8 +36,9 @@
 #include "Infos/CvWorldInfo.h"
 #include "CvTechInfo.h"          // the frontier fills (obsoletes.builds rem-set + promo tech halves)
 #include "CvPromotionInfo.h"     // enPromotionValid
+#include "CvPromotionLineInfo.h" // enPromotionValid (the promotion-line game-option + prereq-tech leg)
 #include "CvUnitCombatInfo.h"    // enPromotionValid (the unitcombat HAVE leg)
-#include "Engine/CvUnit.h"             // enPromotionValid (held promotions + isPromotionValidLegacy)
+#include "Engine/CvUnit.h"             // enPromotionValid (the unit's held promotions + unitcombat)
 #include "AI/CvPlayerAI.h"            // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM
 #include <string>
@@ -808,10 +809,75 @@ bool CascadeAccumulator::enFoundReligion(const CvPlayer* pPlayer)
 }
 
 
-// The promotion COMPOSITE (the harness's cascade side verbatim, single source -- the harness now consumes
-// this): the frontier half (tech halves cached player-wide + the unit's held promos + its unitcombat) +
-// the event-injection-only mirror + requires, over the bespoke legacy half (isPromotionValidLegacy(...,
-// bFree=true) -- exactly the tech-gate-skipping ride parity was proven with).
+// The promotion UNIT-STATE gate leg -- mirrors the (deleted) isPromotionValidLegacy's unit-state half EXACTLY
+// (DEC-mirror-then-redesign; the enPromotionValid dispatch is the bFree=false / bKeepCheck=false path), MINUS the
+// two STRUCTURAL checks the cascade domain already owns: the promo's own TechPrereq (-> the granting tech's
+// enables.promotions == the domain enable plane) and its ObsoleteTech (-> the tech's obsoletes.promotions == the
+// domain remove plane). Everything read here is STATIC promo info + RAW unit state -- never a legacy COMPUTED
+// output (DEC-calc-zero-ride-in), so this is an engine LEG, not a legacy read: the game-option gates, the
+// QUALIFIED/DISQUALIFIED unitcombat applicability (the actual over-offer -- the old bEventOnly count-checked the
+// qualified list yet never tested the unit's MEMBERSHIP in it), the promotion-line prereq tech, the runtime
+// unit-state gates (spy / pillage / commander / commodore / blend), and the intercept/evasion/XP probability caps.
+static bool acc_promoUnitStateOk(const CvUnit* pUnit, const CvPromotionInfo& promo, PromotionTypes ePromo,
+                                 const CvPlayer& kPlayer, const CvTeam& kTeam)
+{
+	// game-option gates (these bar even a would-be-free promotion -- legacy order)
+	if (pUnit->getUnitInfo().isSpy() && !GC.isSS_ENABLED()) return false;
+	for (int i = 0; i < promo.getNumNotOnGameOptions(); ++i)
+		if (GC.getGame().isOption((GameOptionTypes)promo.getNotOnGameOption(i))) return false;
+	for (int i = 0; i < promo.getNumOnGameOptions(); ++i)
+		if (!GC.getGame().isOption((GameOptionTypes)promo.getOnGameOption(i))) return false;
+	const PromotionLineTypes eLine = promo.getPromotionLine();
+	if (eLine != NO_PROMOTIONLINE)
+	{
+		const CvPromotionLineInfo& kLine = GC.getPromotionLineInfo(eLine);
+		for (int i = 0; i < kLine.getNumNotOnGameOptions(); ++i)
+			if (GC.getGame().isOption((GameOptionTypes)kLine.getNotOnGameOption(i))) return false;
+	}
+	// a promotion authored FREE for this unit bypasses the applicability + unit-state checks (legacy early-out)
+	if (pUnit->getUnitInfo().getFreePromotions(ePromo) || kPlayer.isFreePromotion(pUnit->getUnitType(), ePromo))
+		return true;
+	// a unit-type with no combat class takes no promotions
+	if (pUnit->getUnitInfo().getUnitCombatType() == NO_UNITCOMBAT) return false;
+	// the promotion-LINE prereq tech (the promo's OWN TechPrereq/ObsoleteTech are the domain's job, not here)
+	if (eLine != NO_PROMOTIONLINE)
+	{
+		const TechTypes eLineTech = GC.getPromotionLineInfo(eLine).getPrereqTech();
+		if (eLineTech != NO_TECH && !kTeam.isHasTech(eLineTech)) return false;
+	}
+	// DISQUALIFIED unitcombats: the unit must belong to NONE of them
+	for (int i = 0; i < promo.getNumDisqualifiedUnitCombatTypes(); ++i)
+		if (pUnit->isHasUnitCombat((UnitCombatTypes)promo.getDisqualifiedUnitCombatType(i))) return false;
+	// QUALIFIED unitcombats: the unit must belong to AT LEAST ONE (the membership test the broken bEventOnly
+	// count-only check skipped -- the over-offer). ForOffset/ZeroesXP promos are event-injected only and carry
+	// no qualified list; an EMPTY qualified list on a non-event promo therefore fails closed (legacy bValid=false)
+	// -- exactly the old event-only refusal, now folded into the same check.
+	if (!promo.isForOffset() && !promo.isZeroesXP())
+	{
+		bool bQualified = false;
+		for (int i = 0; i < promo.getNumQualifiedUnitCombatTypes(); ++i)
+			if (pUnit->isHasUnitCombat((UnitCombatTypes)promo.getQualifiedUnitCombatType(i))) { bQualified = true; break; }
+		if (!bQualified) return false;
+	}
+	// a spy passes the remaining combat-state gates (legacy short-circuit)
+	if (pUnit->isSpy()) return true;
+	// runtime unit-state gates: raw unit state x the promo's static change
+	if (promo.getPillageChange() > 0 && !pUnit->getUnitInfo().isPillage()) return false;
+	if (pUnit->isCommander() && (promo.getGroupChange() != 0 || promo.getQualityChange() != 0)) return false;
+	if (pUnit->isCommodore() && (promo.getGroupChange() != 0 || promo.getQualityChange() != 0)) return false;
+	if (pUnit->isBlendIntoCity() && promo.getCityDefensePercent() != 0) return false;
+	// the intercept/evasion probability caps + the quality-vs-XP gate
+	if (promo.getInterceptChange() + pUnit->maxInterceptionProbability(true) > GC.getDefineINT("MAX_INTERCEPTION_PROBABILITY")
+	 || promo.getEvasionChange() + pUnit->evasionProbability(true) > GC.getDefineINT("MAX_EVASION_PROBABILITY")
+	 || (promo.getQualityChange() > 0 && pUnit->getExperience() >= pUnit->experienceNeeded(1)))
+		return false;
+	return true;
+}
+
+// The promotion COMPOSITE: the domain frontier (the tech-enable chain cached player-wide + the unit's held promos
+// + its unitcombat, overlaid -- enabler.md par.7.1) + the entity `requires` + the unit-state gate leg
+// (acc_promoUnitStateOk -- the applicability + runtime checks the domain does not model). No legacy getter is
+// read: static promo info + raw unit state only (DEC-calc-zero-ride-in).
 bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 {
 	if (pUnit == NULL || ePromo < 0) return false;
@@ -840,6 +906,14 @@ bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 		if (pUnit->isHasPromotion((PromotionTypes)pr)) sig += (pr + 1) * 3 + 1;
 	const UnitCombatTypes eUC = pUnit->getUnitCombatType();
 	sig = sig * 131 + (long)eUC * 7;
+	// fold the VOLATILE unit-state the gate leg reads (XP / commander / commodore / blend) into the memo key, so a
+	// mid-turn change (combat XP crossing a level, a unit becoming a commander) invalidates the cached verdict --
+	// the leg reads live unit state, so the per-candidate verdict cache MUST key on it (the fold already covers
+	// held promotions + the unitcombat, which is what the intercept/evasion caps read).
+	sig = sig * 1000003 + (long)pUnit->getExperience();
+	sig = sig * 7 + (pUnit->isCommander() ? 1 : 0);
+	sig = sig * 7 + (pUnit->isCommodore() ? 1 : 0);
+	sig = sig * 7 + (pUnit->isBlendIntoCity() ? 1 : 0);
 
 	const long lKey = ((long)pUnit->getOwner() << 24) ^ (long)pUnit->getID();
 	AccEnPromoMemo& memo = s_memo[lKey];
@@ -871,18 +945,16 @@ bool CascadeAccumulator::enPromotionValid(const CvUnit* pUnit, int ePromo)
 	const bool bInRem = d.removeCount(ePromo) > 0 || uRem.count(ePromo) != 0;
 	const bool bInCand = d.enableCount(ePromo) > 0 || uCand.count(ePromo) != 0;
 	const bool bUnlocked = !bInRem && bInCand;
-	// the event-injection-only mirror (no qualified-unitcombat list => legacy refuses unless FREE)
 	const CvPromotionInfo& kPromo = GC.getPromotionInfo((PromotionTypes)ePromo);
-	const bool bEventOnly = kPromo.getNumQualifiedUnitCombatTypes() == 0
-		&& !kPromo.isForOffset() && !kPromo.isZeroesXP()
-		&& !pUnit->getUnitInfo().getFreePromotions(ePromo)
-		&& !kPlayer.isFreePromotion(pUnit->getUnitType(), (PromotionTypes)ePromo);
-
 	CvCascadeEvalCtx ec;
 	ec.unit = pUnit; ec.player = &kPlayer; ec.team = &kTeam; ec.plot = pUnit->plot();
-	const bool bVerdict = bUnlocked && !bEventOnly
+	// #430 verdict: the domain frontier (bUnlocked) AND the entity `requires` (the promotion-prereq chain -- the
+	// cascade's structural half) AND the unit-state gate leg (applicability + runtime checks the domain does not
+	// model). The leg SUBSUMES the old broken `bEventOnly` -- which count-checked the qualified list but never the
+	// unit's MEMBERSHIP in it (the actual over-offer) -- with the real legacy check, reading static info + raw state.
+	const bool bVerdict = bUnlocked
 		&& EnablerKernel::requiresMet(InfoRepo<CvPromotionInfo>::get().get(ePromo), ec)
-		&& pUnit->isPromotionValidLegacy((PromotionTypes)ePromo, true);
+		&& acc_promoUnitStateOk(pUnit, kPromo, (PromotionTypes)ePromo, kPlayer, kTeam);
 	memo.verdicts[ePromo] = bVerdict;
 	return bVerdict;
 }

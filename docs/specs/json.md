@@ -665,17 +665,23 @@ provides the slider to the empire).
 - **`missions`** *(PERMANENT carve-out — missions/CvOutcome ground-up rework)* — the actions a unit **performs**, each
   producing an **outcome**; **a mission carries its `grants`** — the outcome (what lands) IS the mission's grant payload.
   Unifies the hardcoded mission-abilities (MISSION_CONSTRUCT/DISCOVER/GOLDEN_AGE — mis-filed today as `grants.buildings` /
-  `greatPersonAction` / `goldenAge`) AND the un-migrated **`CvOutcome`** system (`CvUnitInfo` `KillOutcomes` +
-  `m_aOutcomeMissions` — data-driven MISSION→outcome-list with cost/conditions/kill; *"outcome system (no wrapper)"*).
+  `greatPersonAction` / `goldenAge`) with the **`CvOutcome`** system (`CvUnitInfo` `KillOutcomes` + `m_aOutcomeMissions`
+  — data-driven MISSION→outcome-list with cost/conditions/kill). The CvOutcome DATA is ALREADY JSON-migrated into the
+  `outcomes` block below (owner 2026-07-20); what this future `missions` block adds is the CONCEPT unification with the
+  hardcoded abilities.
   The distinction from `skills`: a **skill** is a standing/permanent property; a **mission** is an action (often
   consuming the unit). `grants` is therefore BOTH an entity-level handout AND a mission's outcome payload.
-  > **⚖ OUTCOME PAYLOAD VOCABULARY (owner 2026-07-20) — the `actions` block uses clean VERB-PER-PAYLOAD keys, not the
-  > raw XML→JSON dump it carries today.** Each effect an outcome produces is a verb, each collision-checked against the
-  > spec's reserved words (avoiding `builds` = worker repertoire, `provides` = continuous supply, `grants` = direct
-  > handout, and the singular `construct` = inside `canConstruct`/`notConstructible`): **`constructs`** a building
-  > (LOCKED) · **`spawns`** a unit · **`places`** a bonus on the plot · **`discovers`** a tech · … The CvOutcome
-  > **engine stays XML** (the ground-up rework is post-#430); this is the DATA-shape target the curator emits for the
-  > `actions`/outcome payload — the engine does not consume the JSON `actions` yet.
+  > **⚖ OUTCOME PAYLOAD VOCABULARY (owner 2026-07-20) — the `outcomes` block uses clean VERB-PER-PAYLOAD keys.**
+  > `outcomes.kill[]` (combat-kill) / `outcomes.actions[]` (missions), each entry
+  > `{ requires:{outcome:OUTCOME_*, plot?, unit?}, chance, <reward verbs> }`. Each effect is a verb, collision-checked
+  > against the reserved words (avoiding `builds`/`provides`/`grants`/`construct`): **`constructs`** a building
+  > (LOCKED) · **`spawns`** `{unit,toCity?}` · **`places`** a bonus · **`promotes`** · **`triggers`** an event ·
+  > **`consumes`** the unit · reused families for one-shot yields (`food`/`production`/`commerce`/`gold`/…),
+  > `greatPeople`/`population`/`revolution`, `happiness:{duration}`, `PROPERTY_*`; `{python}` for Python-authoritative
+  > outcomes. **The engine CONSUMES this** — the `CvOutcome` classes are fed from it via `mapFrom` (the CvOutcome
+  > engine/dispatch is unchanged, just JSON-loaded; conditions eval through `cascadeEvalCondition`, no BoolExpr
+  > round-trip). `Adapt*` gamespeed scaling is pure-engine, applied at grant time — never in the data. See
+  > [mission-outcome-system.md](../reference/mission-outcome-system.md).
 
 A **building's** `grants.traits` (a whole trait conferred on the **OWNER** empire *while the building is active*, reverting
 on loss — `owner.setHasTrait`, civ-traits only, `CvCity.cpp:4614`) is the same grantor-**provides** / empire-**holds**

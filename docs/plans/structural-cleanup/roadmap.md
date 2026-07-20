@@ -121,7 +121,9 @@ derived-from-deposit-index invalidation the rest of the consumer already uses.
   contract. Per [DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed) this info-field surface changes
   shape with the Cy\* redesign (F8) — not immutably done.
 - **DllExport EXE-bound accessor proxy layer** — narrow but it blocks compile.
-- **`enPromotionValid`** + the property cascade reads still on the legacy path.
+- **`enPromotionValid`** is a pure cascade verdict (domain frontier + entity `requires` + an engine-side
+  unit-state gate leg reading static promo info + raw unit state, DEC-calc-zero-ride-in — no legacy getter); the
+  property cascade reads are the remaining F1 legacy-path item.
 - **11 uniformity `CvJson<X>Info` pocos** (civilizations/eras/handicaps/gamespeeds/specialbuildings/leaderheads/
   specialunits/victories/votes/hurries/bonusclasses) are populated but have **zero readers anywhere in `Sources/`**
   outside their own definition + `Repos/InfoRepo.h` registration — dead code pending a consumer (or a park decision).
@@ -204,15 +206,20 @@ the same fix.
 
 ### F7 — Data tail (curator/JSON). [data-migration-remaining.md](data-migration-remaining.md).
 IN SCOPE (failures): NPC civs / `stronglyRestricted`, unitcombat→`tags` pass, `state`/paralyze, corporation rework,
-leaderhead trait remap, ranked-target-selection. NOT failures — deliberate correct scoping: unit `missions`/
-`CvOutcome` + random EVENTS + Revolution are Python-authoritative gameplay, deliberately NOT JSON-migrated; they stay
-Python. ✅ VERIFIED PRESENT (not gaps): golden-age LENGTH + anarchy-reduction timers + golden-age GRANTS all curated.
+leaderhead trait remap, ranked-target-selection. ✅ DONE — the `CvOutcome` DATA is migrated to clean JSON (owner ruling
+2026-07-20, [mission-outcome-system.md](../../reference/mission-outcome-system.md)): the OUTCOME_* infos + the
+per-carrier reward payloads (`outcomes.kill[]`/`actions[]`) load via `mapFrom`, conditions eval through
+`cascadeEvalCondition`, and the running game reads no outcome XML. What STAYS Python (correct scoping): the
+mission-CONCEPT unification (the future ground-up `missions` rework), the Python-authoritative outcome hooks
+(`{python:fn}` gates + inline `<Python>` bodies), random EVENTS, and Revolution. ✅ VERIFIED PRESENT (not gaps):
+golden-age LENGTH + anarchy-reduction timers + golden-age GRANTS all curated.
 
 ### F8 — Python layer rework. RESOLVED: boundary + fix-values only ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
 Breakage is silent wrong-VALUE, not compile fail (pocos mirror legacy signatures; curator-gap stubs feed defaults —
 e.g. `getTotalModifiedCombatStrength100` stubbed 0 → PediaUnit shows zero combat strength). **In scope:** redesign the
 Cy\* info-binding contract around the cascade/JSON model; rewire the Python info-CONSUMERS (Pedia/Advisors/display);
-fix the stub-fed wrong values. **Out of scope (stays Python):** Revolution, random events, outcomes, missions.
+fix the stub-fed wrong values. **Out of scope (stays Python):** Revolution, random events, the mission-CONCEPT rework +
+the Python outcome hooks (the outcome DATA itself is JSON-migrated — F7).
 
 ### F-DOCS — doc reconciliation (part of every item, per repo rule).
 A doc gap that bit you bites the next contributor; close it in the same change. Stale done-claims → reconcile to code.
@@ -267,8 +274,9 @@ Two acceptance pillars, per item, verified LIVE in-game ([validation.md](../../s
    - the golden-age YIELD-EFFECT member-mirror (PERMANENT engine-core carve-out —
      [golden-age.md](../../reference/golden-age.md), [DEC-conditions-are-predicates](../../architecture/decisions.md#dec-conditions-are-predicates));
    - `validation.md` POLICY-deferrals (out-of-scope validation shown-not-dropped; balance redesign post-migration);
-   - unit `missions`/`CvOutcome` + random EVENTS + Revolution — Python-authoritative gameplay, deliberately NOT
-     JSON-migrated. Stay Python; out of #430.
+   - the mission-CONCEPT unification (the future `missions` rework) + the Python-authoritative outcome hooks
+     (`{python:fn}` gates + inline `<Python>`) + random EVENTS + Revolution — stay Python; out of #430. (The
+     `CvOutcome` DATA itself IS migrated to JSON — owner ruling 2026-07-20, F7.)
 
 ## Verification (end-to-end)
 

@@ -14,17 +14,20 @@
 #include "Defines/CvEnums.h"    // EraTypes/UnitArtStyleTypes/MissionTypes/UnitCombatTypes/UnitAITypes/DomainTypes/...
 #include "Defines/CvStructs.h"  // GroupSpawnUnitCombat / HealUnitCombat / Invisible*Changes / EnabledCivilizations / *ModifierArray
 #include "Engine/ConstructRequirement.h"  // getTrainRequirements ref type
+#include "UI/CvOutcomeList.h"              // m_KillOutcomeList value member (CvOutcome fed from the unit's `outcomes` JSON, #430)
 #include <vector>
 #include <map>
 #include <set>
 #include <string>
 
 class CvArtInfoUnit;
+class CvOutcomeMission;   // the <Actions>/actions[] outcome-missions (heap-owned pointer members)
 
 class CvUnitInfo : public CvInfo
 {
 public:
 	CvUnitInfo();
+	virtual ~CvUnitInfo();   // frees the heap-owned m_aOutcomeMissions
 	bool spawnOnly, unlimitedException;
 	std::vector<int> builds;        // top-level `builds`: the unit type's build REPERTOIRE (resolved BUILD_* ids)
 	virtual void mapFrom(const picojson::value& entity);
@@ -327,14 +330,15 @@ public:
 	// ============================================================================================================
 	//  DEFERRED SYSTEMS + CURATOR-GAPS -- documented, not silently stubbed. (See the report for the full list.)
 	// ============================================================================================================
-	// CvOutcome system stays XML (curator emits `outcomes` faithfully; the CvOutcome defs are Tier-G, deferred):
-	int getNumActionOutcomes() const { return 0; }
-	const CvOutcomeList* getActionOutcomeList(int /*index*/) const { return NULL; }
-	const CvOutcomeList* getActionOutcomeListByMission(MissionTypes /*eMission*/) const { return NULL; }
-	MissionTypes getActionOutcomeMission(int /*index*/) const { return NO_MISSION; }
-	const CvOutcomeMission* getOutcomeMission(int /*index*/) const { return NULL; }
-	const CvOutcomeMission* getOutcomeMissionByMission(MissionTypes /*eMission*/) const { return NULL; }
-	const CvOutcomeList* getKillOutcomeList() const { return NULL; }
+	// CvOutcome kill/action-mission system -- fed from the unit's `outcomes` JSON block in mapFrom (#430; the CvOutcome
+	// engine itself is unchanged, just JSON-loaded). Getters mirror the archived surface (SourceArchive:1230-1270).
+	int getNumActionOutcomes() const { return (int)m_aOutcomeMissions.size(); }
+	const CvOutcomeList* getActionOutcomeList(int index) const;                       // CvOutcomeMission deref -> .cpp
+	const CvOutcomeList* getActionOutcomeListByMission(MissionTypes eMission) const;
+	MissionTypes getActionOutcomeMission(int index) const;                           // CvOutcomeMission deref -> .cpp
+	const CvOutcomeMission* getOutcomeMission(int index) const { return m_aOutcomeMissions[index]; }
+	const CvOutcomeMission* getOutcomeMissionByMission(MissionTypes eMission) const;
+	const CvOutcomeList* getKillOutcomeList() const { return &m_KillOutcomeList; }
 
 	// strength.unit.vsUnit.{U}.attack/defense.percent -> IDValueMap (populated via setValue in mapFrom):
 	const IDValueMap<UnitTypes, int>& getUnitAttackModifiers() const { return m_unitAttackModifiers; }
@@ -523,6 +527,7 @@ protected:
 
 private:
 	void reconstructPrereqs();   // walk the composed requires.build into the typed prereq members (mapFrom-time)
+	void mapOutcomes(const picojson::object& o);   // #430: parse the `outcomes` block into the CvOutcome engine objects
 
 	bool skill(const char* szName) const { const CvJsonBoolBlock* s = getSkills(); return s && s->has(szName); }   // cold/oracle read only -- hot getters use CLS_HAS
 
@@ -551,6 +556,10 @@ private:
 	mutable int  m_iBaseCargoVolumeCache; // derived SM cargo volume (>= 1)
 	void ensureSMBase() const;            // fill the three above in one combat-class pass
 	CvPropertyManipulators m_PropertyManipulators;   // empty (property engine; XML-era manip data deferred)
+
+	// CvOutcome system -- parsed from the unit's `outcomes` JSON block in mapFrom (#430).
+	CvOutcomeList m_KillOutcomeList;                    // outcomes.kill[]
+	std::vector<CvOutcomeMission*> m_aOutcomeMissions;  // outcomes.actions[] (heap-owned; freed in the dtor)
 
 	// identity.base + identity scalars + cost + cargo
 	int m_iCombat, m_iMoves, m_iWorkRate, m_iAirCombat, m_iCombatLimit, m_iAirCombatLimit, m_iAirUnitCap;

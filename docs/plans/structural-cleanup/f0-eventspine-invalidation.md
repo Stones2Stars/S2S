@@ -22,17 +22,20 @@ build. Load's events come from the read, play's from live state-changes; there i
 per-turn blanket**: `doTurn` never does a full per-player rebuild; only dirty packages ensure. Building the proper,
 COMPLETE spine FIRST is what makes both safe — no unhooked mutation, so nothing stales and no self-heal is needed.
 
-## Current state — the top-line divergence
+## Current state
 
-The target is **not implemented**. The spine and the invalidation machinery are two disjoint systems:
+**F0 is landed (pending the crutch-removal playtest).** The cache-invalidation `IEventConsumer`
+(`CvCacheInvalidationConsumer`, `CvCascadeInvalidation.cpp`) is built, registered (`cascadeRegisterInvalidation`),
+and is now the **SOLE play-time invalidation path** — the R3-duplicated hand-wired `CascadeAccumulator::` marks at
+the `Cv*` mutation sites are removed (the crutch-removal pass; §CRUTCH-REMOVAL RECIPE). The spine's DOMAIN emit
+surface + the load reseed (R6) build the cascade; the consumer invalidates during play, routed by the per-source
+mask.
 
-- `CvEventSpine` emits DOMAIN events but its ONLY registered consumers are logging + grants
-  (`CvEventSpine.cpp:297-313`). **No cache-invalidation consumer exists.**
-- Invalidation is a parallel hand-wired path: direct static calls `CascadeAccumulator::buildingProcessed /
-  dirtyCity / markPlayerScopeAndCities / cityHaveChanged` wired straight into the `Cv*` mutation choke points —
-  never through `emit`/`onEvent`.
-
-F0 collapses these into one.
+**Remaining:** the live crutch-removal PLAYTEST (a missed invalidation now shows as a wrong `/computed` value — no
+double-mark backstop); the R2b conditioner narrowing (a perf follow-on — the condition-reverse-index); and the
+team-scope tech component (the proper home for the tech fan-out — fork-resolved, owner-deferred to post-playtest;
+§TEAM-SCOPE TECH). The kept hand-wired exceptions (R3 carries no event for them): the `CPK_YRATE` worked-plot/
+citizen marks (`CvCity`/`CvPlot`) + `CvPlayer::changeLeader`'s `markPlayerScopeAndCities` (G5, bypasses the trait emit).
 
 ## Reusable as-is (spec-conformant — keep)
 
@@ -97,6 +100,37 @@ gated on it`), a NEW compiled index that intersects the predicate registry + the
 bonus/religion/GA already emit) — squarely the "real hard look at the cascades" (the consumer/invalidation runtime),
 sequenced AFTER nailing the deposits. It must also keep the frontier + operate ripple + policy re-arm (which ride the
 enables/requires index, not the deposit index). Correctness-gated at crutch-removal (playtest), never a blind flip.
+
+### TEAM-SCOPE TECH — the proper home for the tech fan-out (fork-resolved, owner-deferred to post-playtest)
+
+Tech is TEAM-held, so the R3 `SEVT_TECH_CHANGED` fan-out (mark every alive team member's player packages) is a
+transitional shim ([DEC-proper-once]). The proper structure is a **team-scope cascade component** on `CvTeam`
+(scope-packages.md `CvTeam` "team-scope deposits when a channel first needs one" — tech is that channel; enabler.md's
+tech-domain end-state is likewise "a team-scope cascade component"). It mirrors the existing `CvTeam::m_cascadeTeamCaps`
+precedent (a `CvDerivedCacheSet<CvTeam>`: member + ctor bind + reset-mark + `setHasTech`-mark + thin refresh delegate +
+ensure-on-read). Two parts:
+
+- **Enabler side (re-home):** move the tech `EnablerDomain` from `PlayerEnabler::techs` (per-player, N byte-identical
+  copies) to one `CvTeam`-owned `TeamEnabler::techs`; collapse `TechEnabler::onTechChanged`'s member-fan-out loop to
+  one apply; gate against a representative alive team member (the `refreshPlayerScope`-representative-city pattern);
+  re-point `canResearch` (and every `m_enabler.techs` reader) through `GET_TEAM(getTeam())`; the reseed seeds the team
+  once (the per-player emits stay idempotent on the team domain). `initDomain` relocates to `CvTeam` lifecycle
+  (init + read-start, before the reseed emits — teams read before players).
+- **Modifier side (cache the tech-authored sums):** a `CascadeTeamScope` package caches the UNGATED tech deposits the
+  four hot fills currently re-scan `GC.getNumTechInfos()` for on EVERY city/player refresh (`CvCascadeWellbeing.cpp`
+  `iTechNet` ×2 + `CvCascadeScalarChannels.cpp` maintenance/tradeRoutes ×4); those fills pull the cached team value
+  (ensure-then-read) instead of re-walking.
+
+**Fork resolutions (settled from spec + data):**
+1. **Which tech deposits are team-cacheable** — ALL of them: zero tech JSON authors an `enabled`/`disabled` on any
+   deposit, so every tech modifier deposit is ungated (none is a city-realized join).
+2. **Where team sits in the read-up-chain** — read UP-CHAIN at combine (like player/world), NOT folded into player
+   scope ([modifier.md §1]: "a lower scope never STORES an upper scope's sums… the roll is realized at read time").
+3. **Does it kill the conditioner fan-out?** NO — the `enabled:{TECH_X}`-on-other-infos half needs the R2b
+   condition-reverse-index (separate work); the broad per-member mark stays for that half. This component eliminates
+   the enabler-storage duplication + the O(techs) per-refresh re-walks, not the conditioner floor.
+4. **Read idiom** — explicit `.set.ensure(mask)` before read (the widen-rule is proven only city↔player, never
+   team↔).
 
 **⚠ Latent gap the R2 grounding exposed (crutch-removal completeness, not an R2 regression):** `buildingProcessed`'s
 FLAT branch marks siblings only for `buildings`-keyed (`CPK_CBASE|WB`) / `specialist` (`CPK_YSPEC|CSPEC`) empire flats
@@ -173,14 +207,15 @@ live in `productionModifier`/`acc_brSelf`); the `unit:IS_MILITARY` ×count milit
 operating-buildings ripple where relevant. Registered in `cascadeRegisterConsumers()`. This REPLACES the hand-wired
 choke-point calls and both blankets.
 
-**STATUS (built, STAGED — `CvCacheInvalidationConsumer` in `CvCascadeInvalidation.cpp`).** The consumer is built + registered,
-routing every play-time DOMAIN event to the per-source mask (masks lifted VERBATIM from the `CvCity.cpp` mutation
-sites, so it is mask-equivalent to the hand-wiring; R2's derived masks are the follow-up). It is **load-inert**
+**STATUS (LIVE — the SOLE play-time invalidation path; `CvCacheInvalidationConsumer` in `CvCascadeInvalidation.cpp`).**
+The consumer is built + registered, routing every play-time DOMAIN event to the per-source mask. It is **load-inert**
 (`spineGameLoadInProgress()` → return): mid-reseed the targeted ripples are invalid because the frontier/operating-
-building reverse indices aren't built until `onFinalInitialized`; the load warm-up builds the cascade. Registered
-**ADDITIVELY** — the hand-wired mutation-site marks AND the per-turn self-heal remain in place, so R3 currently
-double-marks (harmless) and changes no behaviour; this lets the routing be verified firing live with zero corruption
-risk.
+building reverse indices aren't built until `onFinalInitialized`; the load warm-up builds the cascade. **The
+hand-wired mutation-site marks are REMOVED (the crutch-removal pass landed) — R3 no longer double-marks; it is the
+sole play-time invalidation.** The masks were lifted verbatim from the former `CvCity.cpp` marks, so it is
+mask-equivalent to the hand-wiring it replaced (R2's derived masks are the perf follow-up); the per-turn self-heal
+was already deleted. What stays hand-wired (R3 carries no event for them): the `CPK_YRATE` worked-plot/citizen marks
++ `changeLeader` (G5).
 
 **⛔ THERE IS NO "FLIP" — it already happened (owner correction).** The getters are ALREADY on the cascade. The flip
 was done, and it went **catastrophically wrong** (bad rollerskating built a broken invalidation), so the owner
@@ -211,12 +246,14 @@ the pieces can be VERIFIED, not assumed.**
    inflation) are RAW-STATE **live-at-read** wellbeing inputs (modifier §2b), folded at the combine and never stored —
    they stale NO package and need NO emit. The `[CASCADE] invalidate` stream stays the live instrument to confirm the
    fixes as they land.
-3. **Remove the hand-wired play-time marks** now duplicated by R3 — the `CascadeAccumulator::` mark calls still at the
-   `CvCity`/`CvPlayer`/`CvTeam` mutation sites (line numbers drift; grep `CascadeAccumulator::(dirtyCity|buildingProcessed|
-   markPlayerScopeAndCities|cityHaveChanged)` in `Sources/Engine`). ⚠ Per-site check required: a mark whose choke does
-   NOT emit must STAY — e.g. `CvPlayer::changeLeader`'s `markPlayerScopeAndCities` (G5) is the ONLY invalidation on that
-   path (it bypasses `setHasTrait`'s emit), and the `CPK_YRATE` worked-plot/citizen-churn marks (`CvCity`/`CvPlot`) are
-   NOT R3-duplicated (no event carries them) — both KEEP until they get their own events or a KEEP ruling.
+3. ✅ **The hand-wired play-time marks are REMOVED.** The R3-duplicated `CascadeAccumulator::` marks at the `CvCity`/
+   `CvPlayer`/`CvTeam` mutation sites are cut — `buildingProcessed`, population, power, specialist (×2), religion,
+   corporation (+ its `m_operatingBuildings.markAllDirty` blanket), golden-age, civic, and the `CvTeam::setHasTech`
+   member fan-out loop. The per-site emit-vs-mark check confirmed each choke emits the event R3 consumes (co-located
+   `emit*` calls). **KEPT** (R3 carries no event for them): the `CPK_YRATE` worked-plot/citizen-churn marks (`CvCity`/
+   `CvPlot`) and `CvPlayer::changeLeader`'s `markPlayerScopeAndCities` (G5, bypasses `setHasTrait`'s emit). The tech
+   member-loop's coverage re-homed onto R3's `SEVT_TECH_CHANGED` case, which now fans to the whole team — the interim
+   until the team-scope tech component lands (§TEAM-SCOPE TECH).
 4. **Verify LIVE + PLAYTEST** — `/computed` oracle values stay correct across many turns; **the owner plays** to
    confirm no drift the oracle can't see.
 
@@ -356,13 +393,13 @@ changes, tiered:
 - **area split/merge** — `CvMap::recalculateAreas` (via `CvPlot::setPlotType`) → area-scoped deposits
   (`maintAreaPct`/`wbAreaByFam`); ALSO needs an `area` scope added to the invalidation surface (only `0=city/1=empire/2=world` today).
 
-- **⛔ FEATURE change → cached CPK_WB (adversarial-audit GAP, was MISSED entirely).** `CvPlot::setFeatureType`
-  (`emitFeatureChanged`) routes to `default:` in BOTH switches, yet feature presence in a city's workable radius feeds
-  the **cached** wellbeing term (`CvCascadeWellbeing.cpp` builds `featureCounts` over the radius plots and folds each
-  feature's `health.plot.percent` — e.g. `FEATURE_SWAMP` health −50 — into the CPK_WB-cached verdict). A routine
-  worker-clear / feature spread / `popDestroys` removal stales the radius cities' cached health/happiness with nothing
-  to invalidate it. This is a PLOT event needing a plot→radius-cities fan-out for CPK_WB (the same shape as vicinity,
-  but features have NO city-local event analog — DESIGN CALL, not yet wired; see the note below).
+- ✅ **FEATURE change → cached CPK_WB is WIRED.** `CvPlot::setFeatureType` (`emitFeatureChanged`) → R3's
+  `SEVT_FEATURE_CHANGED` case (`CvCascadeInvalidation.cpp`) fans out to the plot's radius cities and marks each
+  `CPK_WB` — because feature presence in a city's workable radius feeds the **cached** wellbeing term
+  (`CvCascadeWellbeing.cpp` builds `featureCounts` over the radius plots and folds each feature's `health.plot.percent`,
+  e.g. `FEATURE_SWAMP` −50). A worker-clear / feature spread / `popDestroys` removal now invalidates the radius cities'
+  cached health/happiness. (The plot→radius-cities fan-out is the same shape as vicinity; features have no city-local
+  event analog, so it rides the plot event directly.)
 
 *Tier 2 — literal-bar-only (yield CAUSES feeding the PULL-computed plot-yield cache — `updateYield` self-dirties, city
 reads live; so gaps only against the OOS/observability bar, NOT cache correctness):* `setPlotType`, river

@@ -91,7 +91,7 @@ public:
 	static bool enFoundReligion(const CvPlayer* pPlayer);
 	// (the canBuild UNLOCK half is the standardized enabler's builds domain -- CvPlayer::m_enabler.builds,
 	// a bare member read at the gate; the plot-validity half stays engine, enabler.md par.7.1)
-	// the promotion composite: the cascade frontier half over the bespoke legacy half (isPromotionValidLegacy(...,true))
+	// the promotion composite: the cascade frontier + entity requires (the legacy unit-state half is dead)
 	static bool enPromotionValid(const CvUnit* pUnit, int ePromo);
 
 	// ===== the boundaries =====

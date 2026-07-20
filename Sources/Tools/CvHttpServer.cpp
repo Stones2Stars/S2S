@@ -2201,8 +2201,6 @@ namespace
 					sc["gpNationalCasc"] = picojson::value((double)CascadeAccumulator::scGpNational(&kWbOwner));
 					sc["gpModCasc"] = picojson::value((double)CascadeScalarChannels::gpRateModifier(pCity, wbec));
 					// the gpMod legacy PARTS + the cascade-side split (attribute, don't guess)
-					sc["gpModCityLeg"] = picojson::value((double)pCity->getGreatPeopleRateModifier());
-					sc["gpModPlayerLeg"] = picojson::value((double)kWbOwner.getGreatPeopleRateModifier());
 					{
 						int iWbGpBld, iWbGpCivTrait, iWbGpSr;
 						CascadeScalarChannels::gpModParts(pCity, wbec, iWbGpBld, iWbGpCivTrait, iWbGpSr);
@@ -2214,12 +2212,9 @@ namespace
 					// the L13 wired members (2026-07-05): each pair = the cascade member vs its legacy
 					// accumulator -- the pre-flip attribution for the bombard/min/player defense getters
 					sc["defBombardCasc"] = picojson::value((double)CascadeAccumulator::scBuildingBombardDefense(pCity));
-					sc["defBombardLeg"] = picojson::value((double)pCity->getBuildingBombardDefense());
 					sc["defBombardBuildingCasc"] = picojson::value((double)CascadeAccumulator::scDefenseBombard(pCity));  // the raw building leg (pre national+cap)
 					sc["defMinCasc"] = picojson::value((double)CascadeAccumulator::scDefenseMin(pCity));
-					sc["defMinLeg"] = picojson::value((double)pCity->getExtraMinDefense());
 					sc["defPlayerCasc"] = picojson::value((double)CascadeAccumulator::scDefensePlayer(&kWbOwner));
-					sc["defPlayerLeg"] = picojson::value((double)kWbOwner.getCityDefenseModifier());
 					// the freeSpecialists AMOUNT pairs (the ruled two-part seam): the cascade's derivable sums
 					// vs the legacy accumulators -- the legacy side ALSO holds the non-derivable classes
 					// (events / settled GPs / era-advance pulses), so a delta attributes to those by name
@@ -2227,35 +2222,15 @@ namespace
 					// #430 two-part seam: the derivable city "any" free-specialist ledger is cut; fsAmountAny is
 					// now the sole source (the *Leg oracle pair is tautological -- removed per DEC-oracle-tautology).
 					{
-						int iFsTypeDiv = 0, iFsCascTot = 0, iFsLegTot = 0;
+						int iFsCascTot = 0;
 						for (int iFs = 0; iFs < GC.getNumSpecialistInfos(); ++iFs)
 						{
 							const int iC = CascadeAccumulator::fsAmountByType(pCity, iFs);
-							const int iL = pCity->getFreeSpecialistCount((SpecialistTypes)iFs);
-							iFsCascTot += iC; iFsLegTot += iL;
-							if (iC != iL) ++iFsTypeDiv;
+							iFsCascTot += iC;
 						}
 						sc["fsTypeCascTotal"] = picojson::value((double)iFsCascTot);
-						sc["fsTypeLegTotal"] = picojson::value((double)iFsLegTot);
-						sc["fsTypeDiverging"] = picojson::value((double)iFsTypeDiv);
-					}
-					// the defense DRIFT meter: the stored m_iBuildingDefense vs a current-state recompute
-					{
-						int iWbDefRe = 0;
-						foreach_(const BuildingTypes eWbBt, pCity->getHasBuildings())
-						{
-							if (pCity->isReligiouslyLimitedBuilding(eWbBt) || pCity->isDisabledBuilding(eWbBt)) continue;
-							iWbDefRe += GC.getBuildingInfo(eWbBt).getDefenseModifier();
-						}
-						sc["defenseLegRecompute"] = picojson::value((double)iWbDefRe);
 					}
 					sc["maintModCasc"] = picojson::value((double)CascadeScalarChannels::maintenanceModifier(pCity, wbec));
-					// the legacy PARTS (the getEffectiveMaintenanceModifier decomposition -- attribute, don't guess)
-					sc["maintCityLeg"] = picojson::value((double)pCity->getMaintenanceModifier());
-					sc["maintPlayerLeg"] = picojson::value((double)const_cast<CvPlayer&>(kWbOwner).getMaintenanceModifier());
-					sc["maintAreaLeg"] = picojson::value((double)pCity->area()->getTotalAreaMaintenanceModifier(pCity->getOwner()));
-					sc["maintConnLeg"] = picojson::value((double)((pCity->isConnectedToCapital() && !pCity->isCapital())
-						? const_cast<CvPlayer&>(kWbOwner).getConnectedCityMaintenanceModifier() : 0));
 					// buildRate: the HEAD-ORDER item's production modifier, cascade vs legacy (skip orderless cities)
 					{
 						bool bWbHasOrder = false;
@@ -2279,87 +2254,20 @@ namespace
 							sc["brSrCasc"] = picojson::value((double)wbBrParts.iStateReligion);
 							// the head-order identity + the legacy PARTS (each named getter of the
 							// CvCity::getProductionModifier overloads -- calc-map §9.5)
-							const bool bWbBrSr = kWbOwner.getStateReligion() != NO_RELIGION && pCity->isHasReligion(kWbOwner.getStateReligion());
 							if (eWbBrU != NO_UNIT)
 							{
 								const CvUnitInfo& kWbBrUnit = GC.getUnitInfo(eWbBrU);
 								sc["buildRateOrder"] = picojson::value(std::string(kWbBrUnit.getType()));
-								// player-generic = trait unit/special-unit keyed + (military) the player military mod
-								sc["brPlayerGenericLeg"] = picojson::value((double)kWbOwner.getProductionModifier(eWbBrU));
-								sc["brPlayerMilitaryLeg"] = picojson::value((double)((!kWbBrUnit.isNoNonTypeProdMods() && kWbBrUnit.isMilitaryProduction()) ? kWbOwner.getMilitaryProductionModifier() : 0));
-								sc["brCityUnitLeg"] = picojson::value((double)pCity->getUnitProductionModifier(eWbBrU));
-								sc["brPlayerUnitLeg"] = picojson::value((double)kWbOwner.getUnitProductionModifier(eWbBrU));
-								if (!kWbBrUnit.isNoNonTypeProdMods())
-								{
-									sc["brCityDomainLeg"] = picojson::value((double)pCity->getDomainProductionModifier(kWbBrUnit.getDomainType()));
-									// the stored unitCombat maps, main + subs, city/player split (the DRIFT-class suspects)
-									int iWbBrCombCity = 0, iWbBrCombPlayer = 0;
-									picojson::object wbBrByCombat;
-									if (kWbBrUnit.getUnitCombatType() != NO_UNITCOMBAT)
-									{
-										const UnitCombatTypes eWbBrMain = (UnitCombatTypes)kWbBrUnit.getUnitCombatType();
-										const int iWbC = pCity->getUnitCombatProductionModifier(eWbBrMain);
-										const int iWbP = kWbOwner.getUnitCombatProductionModifier(eWbBrMain);
-										iWbBrCombCity += iWbC; iWbBrCombPlayer += iWbP;
-										if (iWbC != 0 || iWbP != 0)
-										{
-											picojson::object cp;
-											cp["city"] = picojson::value((double)iWbC);
-											cp["player"] = picojson::value((double)iWbP);
-											wbBrByCombat[GC.getUnitCombatInfo(eWbBrMain).getType()] = picojson::value(cp);
-										}
-										foreach_(const UnitCombatTypes eWbBrSub, kWbBrUnit.getSubCombatTypes())
-										{
-											const int iWbCs = pCity->getUnitCombatProductionModifier(eWbBrSub);
-											const int iWbPs = kWbOwner.getUnitCombatProductionModifier(eWbBrSub);
-											iWbBrCombCity += iWbCs; iWbBrCombPlayer += iWbPs;
-											if (iWbCs != 0 || iWbPs != 0)
-											{
-												picojson::object cp;
-												cp["city"] = picojson::value((double)iWbCs);
-												cp["player"] = picojson::value((double)iWbPs);
-												wbBrByCombat[GC.getUnitCombatInfo(eWbBrSub).getType()] = picojson::value(cp);
-											}
-										}
-									}
-									sc["brCombatCityLeg"] = picojson::value((double)iWbBrCombCity);
-									sc["brCombatPlayerLeg"] = picojson::value((double)iWbBrCombPlayer);
-									sc["brCombatByTypeLeg"] = picojson::value(wbBrByCombat);
-									sc["brCityMilitaryLeg"] = picojson::value((double)(kWbBrUnit.isMilitaryProduction() ? pCity->getMilitaryProductionModifier() : 0));
-									sc["brSrLeg"] = picojson::value((double)(bWbBrSr ? kWbOwner.getStateReligionUnitProductionModifier() : 0));
-								}
-								int iWbBrBonus = 0;
-								for (int iWbBn = 0; iWbBn < GC.getNumBonusInfos(); iWbBn++)
-									if (pCity->hasBonus((BonusTypes)iWbBn))
-										iWbBrBonus += kWbBrUnit.getBonusProductionModifier(iWbBn);
-								sc["brBonusLeg"] = picojson::value((double)iWbBrBonus);
 							}
 							else if (eWbBrB != NO_BUILDING)
 							{
 								const CvBuildingInfo& kWbBrBld = GC.getBuildingInfo(eWbBrB);
 								sc["buildRateOrder"] = picojson::value(std::string(kWbBrBld.getType()));
-								// player-generic = trait building/special-building keyed + the wonder max-mods
-								sc["brPlayerGenericLeg"] = picojson::value((double)kWbOwner.getProductionModifier(eWbBrB));
-								sc["brCityBuildingLeg"] = picojson::value((double)pCity->getBuildingProductionModifier(eWbBrB));
-								sc["brPlayerBuildingLeg"] = picojson::value((double)kWbOwner.getBuildingProductionModifier(eWbBrB));
-								sc["brSrLeg"] = picojson::value((double)(bWbBrSr ? kWbOwner.getStateReligionBuildingProductionModifier() : 0));
-								int iWbBrBonus = 0;
-								for (int iWbBn = 0; iWbBn < GC.getNumBonusInfos(); iWbBn++)
-									if (pCity->hasBonus((BonusTypes)iWbBn))
-										iWbBrBonus += kWbBrBld.getBonusProductionModifier(iWbBn);
-								sc["brBonusLeg"] = picojson::value((double)iWbBrBonus);
 							}
 							else if (eWbBrPr != NO_PROJECT)
 							{
 								const CvProjectInfo& kWbBrPrj = GC.getProjectInfo(eWbBrPr);
 								sc["buildRateOrder"] = picojson::value(std::string(kWbBrPrj.getType()));
-								sc["brPlayerGenericLeg"] = picojson::value((double)kWbOwner.getProductionModifier(eWbBrPr));
-								sc["brCitySpaceLeg"] = picojson::value((double)(kWbBrPrj.isSpaceship() ? pCity->getSpaceProductionModifier() : 0));
-								int iWbBrBonus = 0;
-								for (int iWbBn = 0; iWbBn < GC.getNumBonusInfos(); iWbBn++)
-									if (pCity->hasBonus((BonusTypes)iWbBn))
-										iWbBrBonus += kWbBrPrj.getBonusProductionModifier(iWbBn);
-								sc["brBonusLeg"] = picojson::value((double)iWbBrBonus);
 							}
 						}
 					}
@@ -2367,10 +2275,6 @@ namespace
 					sc["tradeRoutesCasc"] = picojson::value((double)CascadeScalarChannels::tradeRouteCount(pCity, wbec));
 					sc["tradeRoutesGameBase"] = picojson::value((double)GC.getGame().getTradeRoutes());
 					sc["tradeRoutesInitial"] = picojson::value((double)GC.getINITIAL_TRADE_ROUTES());   // the :28712 config put-back
-					// the legacy PARTS (attribute, don't guess)
-					sc["tradeRoutesPlayerLeg"] = picojson::value((double)kWbOwner.getTradeRoutes());
-					sc["tradeRoutesCityExtraLeg"] = picojson::value((double)pCity->getExtraTradeRoutes());
-					sc["tradeRoutesCoastalLeg"] = picojson::value((double)kWbOwner.getCoastalTradeRoutes());
 					sc["tradeRoutesMax"] = picojson::value((double)pCity->getMaxTradeRoutes());
 					o["scalars"] = picojson::value(sc);
 				}
@@ -2440,58 +2344,6 @@ namespace
 				// the PLAYER religion-happiness accumulators feeding the per-religion terms (attribution: which half diverges)
 				h["stateReligionHappinessPlayer"] = picojson::value((double)kWbOwner.getStateReligionHappiness());
 				h["nonStateReligionHappinessPlayer"] = picojson::value((double)kWbOwner.getNonStateReligionHappiness());
-				// bonusGood/Bad RECOMPUTED from current state (the exact processBonus shape: per PRESENT bonus, own
-				// happiness + active-building BonusHappinessChanges, sign-split per contribution) — diffing the stored
-				// m_iBonusGood/BadHappiness against this exposes STALE-SERIALIZED-ACCUMULATOR drift (the tech-wellbeing
-				// / improvement-yield species) without touching the stored values.
-				{
-					int iWbBonusGoodRe = 0, iWbBonusBadRe = 0;
-					for (int iWbB = 0; iWbB < GC.getNumBonusInfos(); ++iWbB)
-					{
-						if (!pCity->hasBonus((BonusTypes)iWbB)) continue;
-						const int iWbOwn = GC.getBonusInfo((BonusTypes)iWbB).getHappiness();
-						if (iWbOwn >= 0) iWbBonusGoodRe += iWbOwn; else iWbBonusBadRe += iWbOwn;
-						foreach_(const BuildingTypes eWbBt, pCity->getHasBuildings())
-						{
-							if (pCity->isReligiouslyLimitedBuilding(eWbBt) || pCity->isDisabledBuilding(eWbBt)) continue;
-							const int iWbV = GC.getBuildingInfo(eWbBt).getBonusHappinessChanges().getValue((BonusTypes)iWbB);
-							if (iWbV >= 0) iWbBonusGoodRe += iWbV; else iWbBonusBadRe += iWbV;
-						}
-						// the TRAIT per-bonus loop (processBonus :4479, same iterate-and-break shape) — per held trait
-						for (int iWbT = 0; iWbT < GC.getNumTraitInfos(); ++iWbT)
-						{
-							if (!kWbOwner.hasTrait((TraitTypes)iWbT)) continue;
-							int iWbTv = 0;
-							foreach_(const BonusModifier& kWbPair, GC.getTraitInfo((TraitTypes)iWbT).getBonusHappinessChanges())
-							{
-								if (kWbPair.first == (BonusTypes)iWbB) { iWbTv = kWbPair.second; break; }
-							}
-							if (iWbTv >= 0) iWbBonusGoodRe += iWbTv; else iWbBonusBadRe += iWbTv;
-						}
-					}
-					h["bonusGoodRecomputed"] = picojson::value((double)iWbBonusGoodRe);
-					h["bonusBadRecomputed"] = picojson::value((double)iWbBonusBadRe);
-				}
-				// buildingGood/Bad + stateReligion RECOMPUTED (the remaining incremental city accumulators:
-				// processBuilding's per-building sign-split of getHappiness() + the event ledger; the state-religion
-				// keyed feed :4692) — the drift meters' twins.
-				{
-					int iWbBldGoodRe = 0, iWbBldBadRe = 0, iWbSRRe = 0;
-					const ReligionTypes eWbState = kWbOwner.getStateReligion();
-					foreach_(const BuildingTypes eWbBt, pCity->getHasBuildings())
-					{
-						if (pCity->isReligiouslyLimitedBuilding(eWbBt) || pCity->isDisabledBuilding(eWbBt)) continue;
-						const CvBuildingInfo& kWbB = GC.getBuildingInfo(eWbBt);
-						if (kWbB.getHappiness() > 0) iWbBldGoodRe += kWbB.getHappiness(); else iWbBldBadRe += kWbB.getHappiness();
-						const int iWbLedger = pCity->getBuildingHappyChange(eWbBt);
-						if (iWbLedger > 0) iWbBldGoodRe += iWbLedger; else iWbBldBadRe += iWbLedger;
-						if (eWbState != NO_RELIGION && kWbB.getReligionType() == eWbState)
-							iWbSRRe += kWbB.getStateReligionHappiness();
-					}
-					h["buildingGoodRecomputed"] = picojson::value((double)iWbBldGoodRe);
-					h["buildingBadRecomputed"] = picojson::value((double)iWbBldBadRe);
-					h["stateReligionRecomputed"] = picojson::value((double)iWbSRRe);
-				}
 				h["commerce"] = picojson::value((double)pCity->getCommerceHappiness());
 				h["areaBuilding"] = picojson::value((double)pCity->area()->getBuildingHappiness(pCity->getOwner()));
 				h["playerBuilding"] = picojson::value((double)kWbOwner.getBuildingHappiness());
@@ -2538,38 +2390,6 @@ namespace
 				hl["featureBad"] = picojson::value((double)pCity->getFeatureBadHealth());
 				hl["bonusGood"] = picojson::value((double)pCity->getBonusGoodHealth());
 				hl["bonusBad"] = picojson::value((double)pCity->getBonusBadHealth());
-				// the health twin of the happiness bonus RECOMPUTE (stale-serialized-accumulator attribution)
-				{
-					int iWbBonusGoodHRe = 0, iWbBonusBadHRe = 0;
-					for (int iWbB = 0; iWbB < GC.getNumBonusInfos(); ++iWbB)
-					{
-						if (!pCity->hasBonus((BonusTypes)iWbB)) continue;
-						const int iWbOwn = GC.getBonusInfo((BonusTypes)iWbB).getHealth();
-						if (iWbOwn >= 0) iWbBonusGoodHRe += iWbOwn; else iWbBonusBadHRe += iWbOwn;
-						foreach_(const BuildingTypes eWbBt, pCity->getHasBuildings())
-						{
-							if (pCity->isReligiouslyLimitedBuilding(eWbBt) || pCity->isDisabledBuilding(eWbBt)) continue;
-							const int iWbV = GC.getBuildingInfo(eWbBt).getBonusHealthChanges().getValue((BonusTypes)iWbB);
-							if (iWbV >= 0) iWbBonusGoodHRe += iWbV; else iWbBonusBadHRe += iWbV;
-						}
-					}
-					hl["bonusGoodRecomputed"] = picojson::value((double)iWbBonusGoodHRe);
-					hl["bonusBadRecomputed"] = picojson::value((double)iWbBonusBadHRe);
-				}
-				// the buildingGood/BadHealth recomputed twins (processBuilding's sign-split of getHealth() + ledger)
-				{
-					int iWbBldGoodHRe = 0, iWbBldBadHRe = 0;
-					foreach_(const BuildingTypes eWbBt, pCity->getHasBuildings())
-					{
-						if (pCity->isReligiouslyLimitedBuilding(eWbBt) || pCity->isDisabledBuilding(eWbBt)) continue;
-						const CvBuildingInfo& kWbB = GC.getBuildingInfo(eWbBt);
-						if (kWbB.getHealth() > 0) iWbBldGoodHRe += kWbB.getHealth(); else iWbBldBadHRe += kWbB.getHealth();
-						const int iWbLedger = pCity->getBuildingHealthChange(eWbBt);
-						if (iWbLedger > 0) iWbBldGoodHRe += iWbLedger; else iWbBldBadHRe += iWbLedger;
-					}
-					hl["buildingGoodRecomputed"] = picojson::value((double)iWbBldGoodHRe);
-					hl["buildingBadRecomputed"] = picojson::value((double)iWbBldBadHRe);
-				}
 				// the building health composites + their parts (totalGood/BadBuildingHealth, CvCity.cpp:5827/5837)
 				hl["totalGoodBuilding"] = picojson::value((double)pCity->totalGoodBuildingHealth());
 				hl["totalBadBuilding"] = picojson::value((double)pCity->totalBadBuildingHealth());
@@ -4520,7 +4340,6 @@ namespace
 					return CvString(picojson::value(o).serialize().c_str());
 				}
 				o["composite"] = picojson::value(CascadeAccumulator::enPromotionValid(pU, iIdx));
-				o["legacyLeg"] = picojson::value(pU->isPromotionValidLegacy((PromotionTypes)iIdx, true));
 				o["canPromote"] = picojson::value(pU->canPromote((PromotionTypes)iIdx, 0));
 				o["promotionReady"] = picojson::value(pU->isPromotionReady());
 				// the per-leg canPromote/canAcquire DECOMPOSITION (a diagnostic mirror of CvUnit::canAcquirePromotion's

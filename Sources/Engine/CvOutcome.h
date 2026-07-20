@@ -16,8 +16,9 @@ class CvPlot;
 class CvProperties;
 class CvUnit;
 class CvXMLLoadUtility;
-class BoolExpr;
 class IntExpr;
+class CvJsonCondition;                 // #430: conditions are cascade CvJsonCondition trees (eval via cascadeEvalCondition), not BoolExpr
+namespace picojson { class value; }    // mapFrom -- the JSON intake (replaces the XML read path)
 
 class CvOutcome
 {
@@ -53,8 +54,7 @@ public:
 
 	void buildDisplayString(CvWStringBuffer& szBuffer, const CvUnit& kUnit) const;
 
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(CvOutcome* pOutcome);
+	void mapFrom(const picojson::value& v);   // #430: JSON intake of ONE outcome entry (outcomes.kill[]/actions[]); XML read path is dead
 	void getCheckSum(uint32_t& iSum) const;
 
 protected:
@@ -64,7 +64,8 @@ protected:
 	const IntExpr* m_aiYield[NUM_YIELD_TYPES];
 	const IntExpr* m_aiCommerce[NUM_COMMERCE_TYPES];
 	UnitTypes m_eUnitType;
-	const BoolExpr* m_bUnitToCity;
+	bool m_bToCity;                          // spawns.toCity present (send the spawned unit to a city)
+	const CvJsonCondition* m_pToCityCond;    // spawns.toCity gate (NULL = unconditional to-city; e.g. a tech requirement)
 	PromotionTypes m_ePromotionType;
 	BonusTypes m_eBonusType;
 	int m_iGPP;
@@ -74,8 +75,10 @@ protected:
 	int m_iPopulationBoost;
 	const IntExpr* m_iReduceAnarchyLength;
 	EventTriggerTypes m_eEventTrigger;
-	const BoolExpr* m_pPlotCondition;
-	const BoolExpr* m_pUnitCondition;
+	const CvJsonCondition* m_pPlotCondition;   // requires.plot -- cascade condition, eval via cascadeEvalCondition
+	const CvJsonCondition* m_pUnitCondition;   // requires.unit
+	CvString m_szPlotPythonGate;               // requires.plot {python:fn} -- a Python-authoritative plot gate (called, not cascade-eval'd)
+	CvString m_szUnitPythonGate;               // requires.unit {python:fn}
 	CvString m_szPythonCallback;
 	bool m_bKill;
 	CvString m_szPythonCode;

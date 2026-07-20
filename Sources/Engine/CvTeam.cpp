@@ -4912,15 +4912,8 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 	// This is the ADDITIONAL broad emit; the existing SEVT_TECH_ACQUIRED first-discoverer emit stays separate.
 	emitTechChanged((int)ePlayer, (int)eTech, bNewValue);
 	m_cascadeTeamCaps.set.markAllDirty();   // the derived capability union is f(held techs) -- the ONE mutation point
-	// #430: a researched tech marks THIS team's players' packages + their cities' directly (conditions on
-	// city-scope deposits reference techs -- the fan-out is the event's real footprint)
-	for (int iAccP = 0; iAccP < MAX_PLAYERS; iAccP++)
-	{
-		if (GET_PLAYER((PlayerTypes)iAccP).isAliveAndTeam(getID()))
-		{
-			CascadeAccumulator::markPlayerScopeAndCities((PlayerTypes)iAccP);
-		}
-	}
+	// #430: the cascade package fan-out (this team's players + their cities) is owned by the SEVT_TECH_CHANGED emit
+	// above -> the invalidation consumer, which fans to the whole team (CvCascadeInvalidation.cpp).
 
 	for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
 	{

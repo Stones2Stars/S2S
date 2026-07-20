@@ -18,6 +18,7 @@
 #include "CvPromotionInfo.h"    // GC.getPromotionInfo(i).getUnitCombat() -- the canAcquireExperience derivation
 #include "CvJsonModifiers.h"    // getModifiers() walk -> the unit's PROPERTY_* emission sources
 #include "CvCascadePropertyBridge.h" // the JSON->BoolExpr translator (property-audit.md increment 4)
+#include "Engine/CvOutcomeMission.h" // #430: CvOutcomeMission new/mapFrom/getMission/getOutcomeList (outcomes JSON intake)
 
 CvUnitInfo::CvUnitInfo()
 	: spawnOnly(false), unlimitedException(false)
@@ -53,6 +54,57 @@ CvUnitInfo::CvUnitInfo()
 	// Non-XML runtime map-hash value, drawn from the synced RNG at info construction EXACTLY as the archived
 	// CvUnitInfo ctor did (SourceArchive/Infos/CvUnitInfo.cpp:88). CvUnit seeds m_movementCharacteristicsHash from it.
 	m_iZobristValue = GC.getGame().getSorenRand().getInt();
+}
+
+CvUnitInfo::~CvUnitInfo()
+{
+	// m_KillOutcomeList is a value member (its dtor frees its CvOutcome*); the action-missions are heap-owned here.
+	for (size_t i = 0; i < m_aOutcomeMissions.size(); ++i)
+		SAFE_DELETE(m_aOutcomeMissions[i]);
+}
+
+// #430: parse the unit's `outcomes` block { kill:[...], actions:[...] } into the CvOutcome engine objects
+// (m_KillOutcomeList + m_aOutcomeMissions). Called from mapFrom; idempotent (clears first -- the full-registry re-map).
+void CvUnitInfo::mapOutcomes(const picojson::object& o)
+{
+	m_KillOutcomeList.clear();
+	for (size_t i = 0; i < m_aOutcomeMissions.size(); ++i) SAFE_DELETE(m_aOutcomeMissions[i]);
+	m_aOutcomeMissions.clear();
+
+	const picojson::object* oc = jsonChildObj(o, "outcomes");
+	if (oc == NULL) return;
+	picojson::object::const_iterator it = oc->find("kill");
+	if (it != oc->end()) m_KillOutcomeList.mapFrom(it->second);
+	it = oc->find("actions");
+	if (it != oc->end() && it->second.is<picojson::array>())
+	{
+		const picojson::array& a = it->second.get<picojson::array>();
+		for (size_t i = 0; i < a.size(); ++i)
+		{
+			CvOutcomeMission* pMission = new CvOutcomeMission();
+			pMission->mapFrom(a[i]);
+			m_aOutcomeMissions.push_back(pMission);
+		}
+	}
+}
+
+const CvOutcomeList* CvUnitInfo::getActionOutcomeList(int index) const { return m_aOutcomeMissions[index]->getOutcomeList(); }
+MissionTypes CvUnitInfo::getActionOutcomeMission(int index) const { return m_aOutcomeMissions[index]->getMission(); }
+
+const CvOutcomeList* CvUnitInfo::getActionOutcomeListByMission(MissionTypes eMission) const
+{
+	for (size_t i = 0; i < m_aOutcomeMissions.size(); ++i)
+		if (m_aOutcomeMissions[i]->getMission() == eMission)
+			return m_aOutcomeMissions[i]->getOutcomeList();
+	return NULL;
+}
+
+const CvOutcomeMission* CvUnitInfo::getOutcomeMissionByMission(MissionTypes eMission) const
+{
+	for (size_t i = 0; i < m_aOutcomeMissions.size(); ++i)
+		if (m_aOutcomeMissions[i]->getMission() == eMission)
+			return m_aOutcomeMissions[i];
+	return NULL;
 }
 
 const CvArtInfoUnit* CvUnitInfo::getArtInfo(int /*i*/, EraTypes /*eEra*/, UnitArtStyleTypes /*eStyle*/) const
@@ -709,6 +761,8 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 	// --- requires-tree prereqs (walk the composed requires.build the base just parsed) ---
 	reconstructPrereqs();
 
+	// --- CvOutcome kill/action-mission intake (outcomes.kill[] / actions[]) ---
+	mapOutcomes(o);
 }
 
 // ===================== game-option-gated getters (archive mirror -- SourceArchive/Infos/CvUnitInfo.cpp

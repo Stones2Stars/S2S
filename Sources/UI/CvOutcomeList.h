@@ -15,6 +15,7 @@ class CvPlot;
 class CvOutcome;
 class CvUnit;
 class CvXMLLoadUtility;
+namespace picojson { class value; }
 
 class CvOutcomeList
 {
@@ -36,8 +37,7 @@ public:
 
 	void buildDisplayString(CvWStringBuffer& szBuffer, const CvUnit& kUnit) const;
 
-	bool read(CvXMLLoadUtility* pXML, const wchar_t* szTagName = L"Outcomes");
-	void copyNonDefaults(CvOutcomeList* pOutcomeList);
+	void mapFrom(const picojson::value& v);   // #430: build the list from an outcomes.kill[] array (or a single inline outcome object)
 	void getCheckSum(uint32_t& iSum) const;
 
 protected:

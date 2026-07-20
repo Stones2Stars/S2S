@@ -5,6 +5,8 @@
 
 #include "CvInfoBase.h"
 
+namespace picojson { class value; }   // #430: mapFrom -- JSON intake (replaces the XML read path)
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
 //  class : CvOutcomeInfo
@@ -40,8 +42,7 @@ public:
 	const std::vector<OutcomeTypes>& getReplaceOutcomes() const { return m_aeReplaceOutcomes; }
 
 	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(const CvOutcomeInfo* pClassInfo);
+	void mapFrom(const picojson::value& v);   // #430: JSON intake from Assets/Data/outcomes/*.json (the XML read is dead)
 	void getCheckSum(uint32_t& iSum) const;
 
 protected:

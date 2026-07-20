@@ -829,7 +829,7 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 	LoadGlobalClassInfoJson(GC.m_paCivicInfo, "civics");
 	LoadGlobalClassInfo(GC.m_paPlayerColorInfo, "CIV4PlayerColorInfos", "Interface", L"/Civ4PlayerColorInfos/PlayerColorInfos/PlayerColorInfo", false);
 	LoadGlobalClassInfoJson(GC.m_buildTable.rows(), "builds");
-	LoadGlobalClassInfo(GC.m_paOutcomeInfo, "CIV4OutcomeInfos", "GameInfo", L"/Civ4OutcomeInfos/OutcomeInfos/OutcomeInfo", false);
+	LoadGlobalClassInfoJson(GC.m_paOutcomeInfo, "outcomes");   // #430: OUTCOME_* from Assets/Data/outcomes (was CIV4OutcomeInfos.xml) -- stop reading XML
 
 	//	AlbertS2: Register mission types
 	GC.registerMissions();

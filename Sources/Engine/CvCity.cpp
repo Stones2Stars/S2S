@@ -4148,9 +4148,8 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 {
 	PROFILE_FUNC();
 	FAssert(iChange == 1 || iChange == -1);
-	// #430: the building event -- conservative city mask (the operate/provides fixpoint can flip OTHER
-	// buildings' active state) + the DERIVED cross-scope masks from this building's compiled deposits + operating buildings
-	CascadeAccumulator::buildingProcessed(this, eBuilding);
+	// #430: cascade invalidation (city mask + derived cross-scope masks + operating-building ripple) rides the
+	// SEVT_BUILDING_PROCESSED emit (emitBuildingProcessed, below) -> the invalidation consumer. No hand-wired mark here.
 
 	// Toffer - Sanity control
 	if (iChange == -1)
@@ -6319,13 +6318,8 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 		return;
 	}
 	m_iPopulation = iNewValue;
-	// #430: perPop terms. Pop-gated availability is a REQUIRES atom (the gate stage re-gates it via the reverse
-	// index); the enabler frontiers are event-maintained domains, nothing to mark here. WB deliberately NOT
-	// dirtied (the wb pop terms fold LIVE pop at read; end-turn cadence).
-	CascadeAccumulator::dirtyCity(this, CPK_YEXTRA | CPK_CBASE);
-	CascadeAccumulator::cityHaveChanged(this, CascadeAccumulator::CASC_HAVE_POP);
-
-	// #430 event spine: announce the population change (past the no-change guard above).
+	// #430 event spine: announce the population change (past the no-change guard). The cascade invalidation
+	// (perPop packages + the pop-operate building-active ripple) rides this emit -> the invalidation consumer.
 	emitPopulationChanged(getID(), getOwner(), iNewValue);
 
 	FASSERT_NOT_NEGATIVE(iNewValue);
@@ -9171,12 +9165,8 @@ void CvCity::changePowerCount(int iChange)
 		// cppcheck-suppress knownConditionTrueFalse
 		if (wasPower != isPower())
 		{
-			// enabler-frontier-perf.md Part C: a power flip re-checks ONLY the power-gated frontier entities (units/
-			// buildings whose requires carries a HAS_POWER predicate), in place. HAS_POWER is a LIVE predicate
-			// (ctx.city->isPower()), so the re-check needs no operating buildings dirty. This was previously UNHOOKED (frontier
-			// stale until the slice net) -- consuming the s_bcPower/s_ucPower buckets makes it event-correct.
-			CascadeAccumulator::cityHaveChanged(this, CascadeAccumulator::CASC_HAVE_POWER);
-
+			// #430: the power-flip cascade invalidation (power-operate building-active ripple + the power-gated
+			// frontier re-check) rides the SEVT_POWER_CHANGED emit (above) -> the invalidation consumer.
 			GET_PLAYER(getOwner()).invalidateYieldRankCache();
 
 			setCommerceDirty();
@@ -12493,8 +12483,8 @@ void CvCity::endCitizenJuggling()
 	{
 		// the whole-set recomputes processSpecialist skipped per probe, run ONCE for the run
 		updateExtraSpecialistCommerce();
-		CascadeAccumulator::dirtyCity(this, CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC);
-		// the NET specialist deltas announce (converged probes cancel to nothing)
+		// the NET specialist deltas announce (converged probes cancel to nothing); the cascade invalidation
+		// (specialist packages + WB) rides the SEVT_SPECIALIST_CHANGED emits below -> the invalidation consumer
 		const int iNumSpec = std::min((int)m_juggleSpecStart.size(), GC.getNumSpecialistInfos());
 		for (int i = 0; i < iNumSpec; ++i)
 		{
@@ -13064,8 +13054,8 @@ void CvCity::setSpecialistCount(SpecialistTypes eIndex, int iNewValue)
 		}
 		else
 		{
-			CascadeAccumulator::dirtyCity(this, CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC);   // #430: specialist packages (incl. the gpBase specialist scalar); WB deliberately NOT dirtied (end-turn cadence -- governor churn is automation-frequency)
-			// #430 event spine: announce the specialist change (delta from the captured old count; inside the change guard).
+			// #430 event spine: announce the specialist change (delta from the captured old count; inside the change
+			// guard). The cascade invalidation (specialist packages + WB) rides this emit -> the invalidation consumer.
 			emitSpecialistChanged(getID(), getOwner(), (int)eIndex, iNewValue - iOldValue);
 		}
 
@@ -14202,12 +14192,9 @@ void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce
 		}
 
 		m_pabHasReligion[eIndex] = bNewValue;
-		// #430: religion presence feeds the commerce base terms (religion/shrine/SR match) + operate
-		// conditions + SR-conditioned percents; the SR-gated PLAYER sums apply through live gates (no mark)
-		// (the enabler frontiers are event-maintained domains fed by the emit below; nothing frontier to mark here)
-		CascadeAccumulator::dirtyCity(this, CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT);
-		CascadeAccumulator::cityHaveChanged(this, CascadeAccumulator::CASC_HAVE_RELIGION);   // operating buildings: the targeted active-set ripple rides here (onHaveChangedActive)
-		// #430 event spine: announce the religion change (past the isHasReligion != bNewValue guard).
+		// #430 event spine: announce the religion change (past the isHasReligion != bNewValue guard). The cascade
+		// invalidation (commerce base/SR/operate-conditioned packages + the religion operate-active ripple) rides
+		// this emit -> the invalidation consumer.
 		emitReligionChanged(getID(), getOwner(), (int)eIndex, bNewValue);
 
 		for (int iVoteSource = 0; iVoteSource < GC.getNumVoteSourceInfos(); ++iVoteSource)
@@ -14407,12 +14394,9 @@ void CvCity::setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAn
 
 	if (isHasCorporation(eIndex) != bNewValue)
 	{
-		// #430: corporation presence feeds the commerce base terms (corporation/corp-HQ) + operate conditions
-		// (corp-conditioned deposits ride along) + the buildRate military member (the L10 corp fold 2026-07-05)
-		// (the enabler frontiers are event-maintained domains fed by the corp emit -- which fires past the
-		// commit, so the domain delta reads committed state; nothing frontier to mark here)
-		CascadeAccumulator::dirtyCity(this, CPK_YPCT | CPK_CBASE | CPK_CPCT | CPK_WB | CPK_SCPCT | CPK_BR);
-		m_operatingBuildings.set.markAllDirty();
+		// #430: the corporation cascade invalidation (commerce base/corp-HQ/operate-conditioned packages + buildRate
+		// + the operate-active ripple) rides the SEVT_CORPORATION_CHANGED emit (emitCorporationChanged, below) ->
+		// the invalidation consumer.
 		if (bNewValue)
 		{
 			bool bReplacedHeadquarters = false;

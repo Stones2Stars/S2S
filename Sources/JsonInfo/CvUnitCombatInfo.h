@@ -29,16 +29,17 @@
 #include "CvInfo.h"
 #include "Defines/CvEnums.h"     // MissionTypes/NO_MISSION, ReligionTypes/BonusTypes/EraTypes + NO_*, NUM_DOMAIN_TYPES
 #include "Defines/CvStructs.h"   // TerrainModifier/FeatureModifier/BuildModifier/UnitCombatModifier/Invisible*Changes
+#include "UI/CvOutcomeList.h"    // m_KillOutcomeList value member (CvOutcome fed from the unitcombat's `outcomes` JSON, #430)
 #include <map>
 #include <vector>
 
-class CvOutcomeList;      // Sources/UI/CvOutcomeList.h -- CvOutcome system deferred (stays XML); pointer-only use
-class CvOutcomeMission;   // Sources/Engine/CvOutcomeMission.h -- ditto
+class CvOutcomeMission;   // Sources/Engine/CvOutcomeMission.h -- the actions[] outcome-missions (pointer members)
 
 class CvUnitCombatInfo : public CvInfo
 {
 public:
 	CvUnitCombatInfo();
+	virtual ~CvUnitCombatInfo();   // frees the heap-owned m_aOutcomeMissions
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- textual refs (identity.{religion,era} FKs; NO_* when unauthored) ---
@@ -234,14 +235,15 @@ public:
 	int getDomainModifierPercent(int i) const { return (i >= 0 && i < NUM_DOMAIN_TYPES) ? m_aiDomainModifierPercent[i] : 0; }
 	bool isAnyDomainModifierPercent() const { return m_bAnyDomainModifierPercent; }
 
-	// ===================== CvOutcome kill/action-mission system -- genuinely-deferred SYSTEM (stays XML) =====================
-	const CvOutcomeList* getKillOutcomeList() const { return NULL; }
-	int getNumActionOutcomes() const { return 0; }
-	const CvOutcomeList* getActionOutcomeList(int /*index*/) const { return NULL; }
-	MissionTypes getActionOutcomeMission(int /*index*/) const { return NO_MISSION; }
-	const CvOutcomeList* getActionOutcomeListByMission(MissionTypes /*eMission*/) const { return NULL; }
-	const CvOutcomeMission* getOutcomeMission(int /*index*/) const { return NULL; }
-	const CvOutcomeMission* getOutcomeMissionByMission(MissionTypes /*eMission*/) const { return NULL; }
+	// ===================== CvOutcome kill/action-mission system -- fed from the unitcombat's `outcomes` JSON in
+	// mapFrom (#430); the runtime merges these with the unit's lists. Getters mirror the archived surface. =====================
+	const CvOutcomeList* getKillOutcomeList() const { return &m_KillOutcomeList; }
+	int getNumActionOutcomes() const { return (int)m_aOutcomeMissions.size(); }
+	const CvOutcomeList* getActionOutcomeList(int index) const;                       // CvOutcomeMission deref -> .cpp
+	MissionTypes getActionOutcomeMission(int index) const;                           // CvOutcomeMission deref -> .cpp
+	const CvOutcomeList* getActionOutcomeListByMission(MissionTypes eMission) const;
+	const CvOutcomeMission* getOutcomeMission(int index) const { return m_aOutcomeMissions[index]; }
+	const CvOutcomeMission* getOutcomeMissionByMission(MissionTypes eMission) const;
 
 	// ===================== revoke side of grant/revoke pairs (flat bool block cannot carry a false) =====================
 	bool isRemoveStampede() const { return false; }
@@ -387,6 +389,11 @@ private:
 	std::vector<InvisibleImprovementChanges> m_aInvisibleImprovementChanges, m_aVisibleImprovementChanges, m_aVisibleImprovementRangeChanges;
 
 	CvPropertyManipulators m_PropertyManipulators;   // property engine, XML-era manipulator data deferred
+
+	// CvOutcome system -- parsed from the unitcombat's `outcomes` JSON block in mapFrom (#430).
+	CvOutcomeList m_KillOutcomeList;                    // outcomes.kill[]
+	std::vector<CvOutcomeMission*> m_aOutcomeMissions;  // outcomes.actions[] (heap-owned; freed in the dtor)
+	void mapOutcomes(const picojson::object& o);       // parse the `outcomes` block into the CvOutcome engine objects
 };
 
 #endif // CV_JSON_UNITCOMBAT_INFO_H

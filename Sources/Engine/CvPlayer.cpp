@@ -9213,9 +9213,10 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 
 		if (bWasGoldenAge != isGoldenAge())
 		{
-			// #430 event spine: announce ONLY on the golden-age flip (on<->off), after the turns field commit.
+			// #430 event spine: announce ONLY on the golden-age flip (on<->off), after the turns field commit. The
+			// cascade invalidation (IS_GOLDEN_AGE-conditioned deposits; the GA flats gate LIVE at read) rides this
+			// emit -> the invalidation consumer.
 			emitGoldenAgeChanged(getID(), isGoldenAge());
-			CascadeAccumulator::markPlayerScopeAndCities(getID());   // #430: GA flip -- the flats gate LIVE; this mark covers IS_GOLDEN_AGE-conditioned deposits
 			if (!bWasGoldenAge)
 			{
 				changeAnarchyTurns(-getAnarchyTurns());
@@ -13963,7 +13964,8 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 	if (eOldCivic != eNewValue)
 	{
 		m_paeCivics[eIndex] = eNewValue;
-		CascadeAccumulator::markPlayerScopeAndCities(getID());   // #430: a civic swap marks the player packages + the cities' (conditions reference civics)
+		// #430: the civic-swap cascade invalidation (player packages + the cities' civic-conditioned deposits) rides
+		// the SEVT_CIVIC_ADOPTED emit (emitCivicAdopted, below) -> the invalidation consumer.
 		if (isNPC()) return;
 
 		if (eOldCivic != NO_CIVIC)

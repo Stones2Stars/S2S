@@ -29,6 +29,7 @@ static CvCascPredKind cp_predKind(const std::string& s)
 	if (s == "IS_CAPITAL") return CASC_PRED_IS_CAPITAL;   if (s == "IS_GOVERNMENT_CENTER") return CASC_PRED_IS_GOVERNMENT_CENTER;
 	if (s == "HAS_POWER") return CASC_PRED_HAS_POWER;     if (s == "HAS_STATE_RELIGION") return CASC_PRED_HAS_STATE_RELIGION;
 	if (s == "STATE_RELIGION_IN_CITY") return CASC_PRED_STATE_RELIGION_IN_CITY; if (s == "IS_GOLDEN_AGE") return CASC_PRED_IS_GOLDEN_AGE;
+	if (s == "IS_ANARCHY") return CASC_PRED_IS_ANARCHY;   if (s == "IS_OWNED") return CASC_PRED_IS_OWNED;
 	if (s == "IS_HOLY_CITY") return CASC_PRED_IS_HOLY_CITY; if (s == "IS_STATE_RELIGION_HOLY_CITY") return CASC_PRED_IS_STATE_RELIGION_HOLY_CITY;
 	return CASC_PRED_UNKNOWN;
 }

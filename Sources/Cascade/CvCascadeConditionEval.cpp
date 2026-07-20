@@ -329,6 +329,8 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	case CASC_PRED_IS_GOVERNMENT_CENTER:  return ctx.city != NULL && ctx.city->isGovernmentCenter();
 	case CASC_PRED_HAS_POWER:             return ctx.city != NULL && ctx.city->isPower();
 	case CASC_PRED_IS_GOLDEN_AGE:         return ctx.player != NULL && ctx.player->isGoldenAge();
+	case CASC_PRED_IS_ANARCHY:            return ctx.player != NULL && ctx.player->isAnarchy();       // #430 outcome gate
+	case CASC_PRED_IS_OWNED:              return ctx.plot   != NULL && ctx.plot->isOwned();           // #430 outcome gate (plot in owned territory)
 	case CASC_PRED_NO_NUKES:              return GC.getGame().isNoNukes();
 	case CASC_PRED_HAS_STATE_RELIGION:    return ctx.player != NULL && ctx.player->getStateReligion() != NO_RELIGION;
 	case CASC_PRED_STATE_RELIGION_IN_CITY:

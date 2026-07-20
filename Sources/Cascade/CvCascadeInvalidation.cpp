@@ -368,11 +368,27 @@ private:
 		// obsoletes/enables/waiver edges the deposit index does not reverse-map -- the deliberate correctness floor;
 		// trait / state-religion / project ride it as R4 gaps, self-heal-backstopped) ----
 		case SEVT_TECH_CHANGED:
+			// tech is TEAM-held: every alive team member's cities carry conditions on team techs, so a tech fans to
+			// the WHOLE team. The play-time emit fires ONCE per setHasTech (carrying the triggering player); the reseed
+			// fires per-member. (R3 owns this fan-out -- it replaces the CvTeam::setHasTech hand-wired member loop.)
+			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+			{
+				const TeamTypes eTeam = GET_PLAYER((PlayerTypes)kEvent.iC).getTeam();
+				for (int iP = 0; iP < MAX_PLAYERS; iP++)
+				{
+					if (GET_PLAYER((PlayerTypes)iP).isAliveAndTeam(eTeam))
+					{
+						CascadeAccumulator::markPlayerScopeAndCities((PlayerTypes)iP);
+						emitCacheInvalidate(1, iP, iP, PSC_ALL, szSource);
+					}
+				}
+			}
+			break;
 		case SEVT_CIVIC_ADOPTED:
 		case SEVT_PROJECT_CHANGED:
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{
-				CascadeAccumulator::markPlayerScopeAndCities((PlayerTypes)kEvent.iC);   // the broad conditioner mark (unchanged)
+				CascadeAccumulator::markPlayerScopeAndCities((PlayerTypes)kEvent.iC);   // the broad conditioner mark
 				emitCacheInvalidate(1, kEvent.iC, kEvent.iC, PSC_ALL, szSource);
 			}
 			break;

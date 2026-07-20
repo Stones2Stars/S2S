@@ -2,7 +2,7 @@
 //
 //  FILE:    CvOutcomeMission.h
 //
-//  PURPOSE: A mission that has a cost and a result depending on an outcome list
+//  PURPOSE: A mission that has a result depending on an outcome list
 //
 //------------------------------------------------------------------------------------------------
 #pragma once
@@ -14,9 +14,7 @@
 #include "CvProperties.h"
 
 class CvUnit;
-class CvXMLLoadUtility;
-class BoolExpr;
-class IntExpr;
+namespace picojson { class value; }
 
 class CvOutcomeMission
 {
@@ -27,15 +25,13 @@ public:
 	const CvOutcomeList* getOutcomeList() const;
 	const CvProperties* getPropertyCost() const;
 	bool isKill() const;
-//	const IntExpr* getCost() const;
 	GameObjectTypes getPayerType() const;
 
 	bool isPossible(const CvUnit* pUnit, bool bTestVisible = false) const;
 	void buildDisplayString(CvWStringBuffer& szBuffer, const CvUnit* pUnit) const;
 	void execute(CvUnit* pUnit) const;
 
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(CvOutcomeMission* pOutcomeMission);
+	void mapFrom(const picojson::value& v);   // #430: build from an outcomes.actions[] entry {mission, consumes?, <outcome(s)>}
 
 	void getCheckSum(uint32_t& iSum) const;
 
@@ -45,9 +41,6 @@ protected:
 	CvProperties m_PropertyCost;
 	GameObjectTypes m_ePayerType;
 	bool m_bKill;
-	const IntExpr* m_iCost;
-	const BoolExpr* m_pPlotCondition;
-	const BoolExpr* m_pUnitCondition;
 };
 
 #endif
