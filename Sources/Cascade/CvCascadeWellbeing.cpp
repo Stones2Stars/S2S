@@ -787,6 +787,81 @@ static void wb_fillCityCtx(const CvCity* pCity, CvCascadeEvalCtx& ec)
 	ec.activeBuildings = &ob.active; ec.vicinityProvidedBonuses = &ob.provided; ec.obsoleteBuildings = &ob.obsolete;
 }
 
+// ===================== the player-scope civic/trait/project/world wellbeing feeders =====================
+// Fresh deposit-derived recomputes for the retired CvPlayer wellbeing accumulators. civic/trait reproduce the
+// verdict's iCivicNet/iTraitNet EXACTLY (wb_memberSource with a bare player/team ctx -- pCity is unused in
+// wb_memberSource, so NULL is fine); project/world mirror the wb_gather empire/world project legs.
+
+void CascadeWellbeing::civicWellbeing(const CvPlayer& player, int& iHap, int& iHea)
+{
+	CvCascadeEvalCtx rec;
+	rec.player = &player; rec.team = &GET_TEAM(player.getTeam());
+	const std::map<int, int> noCounts;
+	const int famHap = DepositIndex::lookupSegment("happiness");
+	const int famHea = DepositIndex::lookupSegment("health");
+	CascadeWbTerms hap, hea;
+	for (int i = 0; i < GC.getNumCivicOptionInfos(); ++i)
+	{
+		const CivicTypes eCivic = player.getCivics((CivicOptionTypes)i);
+		if (eCivic == NO_CIVIC) continue;
+		const CvInfo* d = InfoRepo<CvCivicInfo>::get().get(eCivic);
+		if (d == NULL) continue;
+		if (famHap >= 0) wb_memberSource(famHap, d, false, false, false, NULL, rec, noCounts, noCounts, false, hap);
+		if (famHea >= 0) wb_memberSource(famHea, d, false, false, false, NULL, rec, noCounts, noCounts, false, hea);
+	}
+	iHap = hap.iCivicNet / 100; iHea = hea.iCivicNet / 100;
+}
+
+int CascadeWellbeing::civilizationHealth(const CvPlayer& player)
+{
+	CvCascadeEvalCtx rec;
+	rec.player = &player; rec.team = &GET_TEAM(player.getTeam());
+	const std::map<int, int> noCounts;
+	const int famHea = DepositIndex::lookupSegment("health");
+	if (famHea < 0) return 0;
+	const bool bPure = GC.getGame().isOption(GAMEOPTION_LEADER_PURE_TRAITS);
+	CascadeWbTerms hea;
+	for (int i = 0; i < GC.getNumTraitInfos(); ++i)
+	{
+		if (!player.hasTrait((TraitTypes)i)) continue;
+		const CvTraitInfo* td = MMKernel::traitData(i);
+		if (td == NULL) continue;
+		wb_memberSource(famHea, td, true, bPure, td->negativeTrait, NULL, rec, noCounts, noCounts, false, hea);
+	}
+	return hea.iTraitNet / 100;
+}
+
+static void wb_projectScope(const CvPlayer& player, bool bWorld, int& iHap, int& iHea)
+{
+	CvCascadeEvalCtx rec;
+	rec.player = &player; rec.team = &GET_TEAM(player.getTeam());
+	const CvTeam& team = GET_TEAM(player.getTeam());
+	const std::string hAddr = bWorld ? std::string("happiness.world") : std::string("happiness.empire");
+	const std::string eAddr = bWorld ? std::string("health.world")    : std::string("health.empire");
+	int h = 0, e = 0;
+	for (int i = 0; i < GC.getNumProjectInfos(); ++i)
+	{
+		const bool bHave = bWorld ? (GC.getGame().getProjectCreatedCount((ProjectTypes)i) > 0)
+		                          : (team.getProjectCount((ProjectTypes)i) > 0);
+		if (!bHave) continue;
+		const CvInfo* d = InfoRepo<CvProjectInfo>::get().get(i);
+		if (d == NULL) continue;
+		h += (int)MMKernel::sumUnit100(d, hAddr, "flat", rec);
+		e += (int)MMKernel::sumUnit100(d, eAddr, "flat", rec);
+	}
+	iHap = h / 100; iHea = e / 100;
+}
+void CascadeWellbeing::projectWellbeing(const CvPlayer& player, int& iHap, int& iHea) { wb_projectScope(player, false, iHap, iHea); }
+void CascadeWellbeing::worldWellbeing(const CvPlayer& player, int& iHap, int& iHea) { wb_projectScope(player, true, iHap, iHea); }
+
+int CascadeWellbeing::largestCityWellbeing(const CvCity* pCity)
+{
+	CvCascadeEvalCtx ec; wb_fillCityCtx(pCity, ec);
+	CascadeWbTerms hap, hea; int aiCommercePer[NUM_COMMERCE_TYPES];
+	CascadeWellbeing::gatherCityTerms(pCity, ec, hap, hea, aiCommercePer);
+	return hap.iLargest / 100;
+}
+
 // Per-source terms for the legacy sub-getters -- a live city gather (the verdict is the cached path). Perf is not a
 // gate now; UI/AI decomposition reads are cold. The bonus term maps 1:1 to the retired m_iBonus* accumulators
 // (sign convention identical: iGood = positives, iBad = negatives).

@@ -4316,8 +4316,6 @@ void CvTeam::processProjectChange(ProjectTypes eIndex, int iChange, int iOldProj
 							}
 						}
 					}
-					player.changeProjectHappiness(kProject.getGlobalHappiness());
-					player.changeProjectHealth(kProject.getGlobalHealth());
 					player.changeProjectInflation(kProject.getInflationModifier());
 					player.changeMaintenanceModifier(kProject.getGlobalMaintenanceModifier());
 					player.changeDistanceMaintenanceModifier(kProject.getDistanceMaintenanceModifier());
@@ -4329,8 +4327,6 @@ void CvTeam::processProjectChange(ProjectTypes eIndex, int iChange, int iOldProj
 						player.changeCommerceRateModifierfromBuildings(((CommerceTypes)iJ), kProject.getCommerceModifier(iJ));
 					}
 				}
-				player.changeWorldHappiness(kProject.getWorldHappiness());
-				player.changeWorldHealth(kProject.getWorldHealth());
 				player.changeTradeRoutes(kProject.getWorldTradeRoutes());
 			}
 		}

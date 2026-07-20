@@ -5126,11 +5126,8 @@ int CvCity::getRevSuccessHappiness() const
 
 int CvCity::getLargestCityHappiness() const
 {
-	if (findPopulationRank() <= GC.getWorldInfo(GC.getMap().getWorldSize()).getTargetNumCities())
-	{
-		return GET_PLAYER(getOwner()).getLargestCityHappiness();
-	}
-	return 0;
+	// the rank gate is baked into the cascade hap.iLargest term at fill (findPopulationRank <= targetNumCities)
+	return CascadeWellbeing::largestCityWellbeing(this);
 }
 
 int CvCity::getVassalHappiness() const

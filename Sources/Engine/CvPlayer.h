@@ -719,7 +719,6 @@ public:
 
 	int getExtraHealth() const;
 	void changeExtraHealth(int iChange);
-	void changeCivicHealth(const int iChange, const bool bLimited = false);
 
 	int getCivicHealth() const; // Included in getExtraHealth() but split off to aid hover text displays
 
@@ -730,9 +729,6 @@ public:
 	void changeExtraHappiness(int iChange, bool bUnattributed = false);
 
 	int getBuildingHappiness() const;
-
-	int getLargestCityHappiness() const;
-	void changeLargestCityHappiness(int iChange, bool bLimited = false);
 
 	int getWarWearinessPercentAnger() const;
 	void updateWarWearinessPercentAnger();
@@ -1314,25 +1310,20 @@ public:
 	void changePopulationgrowthratepercentage(int iChange, bool bAdd);
 
 	int getWorldHappiness() const;
-	void changeWorldHappiness(int iChange);
 
 	int getWorldHealth() const;
-	void changeWorldHealth(int iChange);
 
 	int getProjectHappiness() const;
-	void changeProjectHappiness(int iChange);
 
 	int getForceAllTradeRoutes() const;
 	void changeForceAllTradeRoutes(int iChange);
 
 	int getProjectHealth() const;
-	void changeProjectHealth(int iChange);
 
 	inline bool isNoCapitalUnhappiness() const { return m_iNoCapitalUnhappiness > 0; }
 	void changeNoCapitalUnhappiness(int iChange);
 
 	int getCivilizationHealth() const;
-	void changeCivilizationHealth(int iChange);
 
 	int getTaxRateUnhappiness() const;
 	void changeTaxRateUnhappiness(int iChange);
@@ -1393,7 +1384,6 @@ public:
 	int getForeignTradeRouteModifier() const;
 	void changeForeignTradeRouteModifier(int iChange);
 	int getCivicHappiness() const;
-	void changeCivicHappiness(int iChange);
 
 	bool hasEnemyDefenderUnit(const CvPlot* pPlot) const;
 
@@ -1593,20 +1583,14 @@ protected:
 	TeamTypes m_eSecretaryGeneralVote;
 	UnitTypes m_eGreatGeneralTypetoAssign;
 	int m_iForeignTradeRouteModifier;
-	int m_iCivicHappiness;
 	int m_iNoLandmarkAngerCount;
 	int m_iLandmarkHappiness;
 	int m_iExtraCityDefense;
 	int m_iDistantUnitSupportCostModifier;
 	int m_iReligionSpreadRate;
 	int m_iTaxRateUnhappiness;
-	int m_iCivilizationHealth;
 	int m_iNoCapitalUnhappiness;
-	int m_iProjectHealth;
 	int m_iForceAllTradeRoutes;
-	int m_iProjectHappiness;
-	int m_iWorldHealth;
-	int m_iWorldHappiness;
 	float m_fPopulationgrowthratepercentageLog;
 	int m_iCorporationSpreadModifier;
 	// @SAVEBREAK - delete
@@ -1879,10 +1863,8 @@ protected:
 	int m_iUpkeepModifier;
 	int m_iLevelExperienceModifier;
 	int m_iExtraHealth;
-	int m_iCivicHealth;
 	int m_iExtraHappiness;
 	int m_iExtraHappinessUnattributed;
-	int m_iLargestCityHappiness;
 	int m_iWarWearinessPercentAnger;
 	int m_iWarWearinessModifier;
 	int m_iNoForeignTradeCount;

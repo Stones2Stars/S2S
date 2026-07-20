@@ -857,10 +857,8 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iUpkeepModifier = 0;
 	m_iLevelExperienceModifier = 0;
 	m_iExtraHealth = 0;
-	m_iCivicHealth = 0;
 	m_iExtraHappiness = 0;
 	m_iExtraHappinessUnattributed = 0;
-	m_iLargestCityHappiness = 0;
 	m_iWarWearinessPercentAnger = 0;
 	m_iWarWearinessModifier = 0;
 	m_iNoForeignTradeCount = 0;
@@ -1000,7 +998,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iEnslavementChance = 0;
 	m_iForeignTradeRouteModifier = 0;
 	m_iTaxRateUnhappiness = 0;
-	m_iCivicHappiness = 0;
 	m_iUnitUpgradePriceModifier = 0;
 
 	// Afforess Food Threshold Modifier 08/16/09
@@ -1010,13 +1007,8 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iDistantUnitSupportCostModifier = 0;
 	m_iReligionSpreadRate = 0;
 
-	m_iWorldHappiness = 0;
-	m_iProjectHappiness = 0;
-	m_iWorldHealth = 0;
-	m_iProjectHealth = 0;
 	m_iForceAllTradeRoutes = 0;
 	m_iNoCapitalUnhappiness = 0;
-	m_iCivilizationHealth = 0;
 
 	m_bShowLandmarks = true;
 
@@ -10606,25 +10598,13 @@ void CvPlayer::changeLevelExperienceModifier(int iChange)
 
 int CvPlayer::getCivicHealth() const
 {
+	int h, e; CascadeWellbeing::civicWellbeing(*this, h, e);
 	// AIAndy: Barbarians do not get player wide unhealthiness
-	if (isNPC() && m_iCivicHealth < 0)
+	if (isNPC() && e < 0)
 	{
 		return 0;
 	}
-	return m_iCivicHealth;
-}
-
-void CvPlayer::changeCivicHealth(const int iChange, const bool bLimited)
-{
-	if (iChange != 0)
-	{
-		m_iCivicHealth += iChange;
-
-		if (!bLimited)
-		{
-			AI_makeAssignWorkDirty();
-		}
-	}
+	return e;
 }
 
 int CvPlayer::getExtraHealth() const
@@ -10695,26 +10675,6 @@ void CvPlayer::changeExtraHappiness(int iChange, bool bUnattributed)
 int CvPlayer::getBuildingHappiness() const
 {
 	return CascadeWellbeing::buildingHappinessEmpire(*this) / 100;   // ÷100: cascade term ×100, human decomposition getter
-}
-
-
-int CvPlayer::getLargestCityHappiness() const
-{
-	return m_iLargestCityHappiness;
-}
-
-
-void CvPlayer::changeLargestCityHappiness(int iChange, bool bLimited)
-{
-	if (iChange != 0)
-	{
-		m_iLargestCityHappiness += iChange;
-
-		if (!bLimited)
-		{
-			AI_makeAssignWorkDirty();
-		}
-	}
 }
 
 
@@ -17927,13 +17887,10 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 		changeExtraNationalCaptureResistanceModifier(kCivic.getNationalCaptureResistanceModifier() * iChange);
 	}
 
-	changeCivicHappiness(kCivic.getCivicHappiness() * iChange);
-	changeLargestCityHappiness(kCivic.getLargestCityHappiness() * iChange, bLimited);
 	changeNoCapitalUnhappiness(kCivic.isNoCapitalUnhappiness() * iChange);
 	changeTaxRateUnhappiness(kCivic.getTaxRateUnhappiness() * iChange);
 	changeHappyPerMilitaryUnit(kCivic.getHappyPerMilitaryUnit() * iChange,  bLimited);
 
-	changeCivicHealth(kCivic.getExtraHealth() * iChange,  bLimited);
 	changeNoUnhealthyPopulationCount(kCivic.isNoUnhealthyPopulation() * iChange, bLimited);
 	changeBuildingOnlyHealthyCount(kCivic.isBuildingOnlyHealthy() * iChange, bLimited);
 
@@ -18090,7 +18047,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iUpkeepModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iLevelExperienceModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHealth);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivicHealth);
 		// #430: player global building-health rides the cascade (playerAreaEmpire fold); drain old tags. savemigration.txt.
 		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_iBuildingGoodHealth, SAVE_VALUE_ANY);
 		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_iBuildingBadHealth, SAVE_VALUE_ANY);
@@ -18098,7 +18054,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappinessUnattributed);
 		// #430: player global building-happiness rides the cascade (playerAreaEmpire fold); drain old tag. savemigration.txt.
 		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_iBuildingHappiness, SAVE_VALUE_ANY);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iLargestCityHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iWarWearinessPercentAnger);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iWarWearinessModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoForeignTradeCount);
@@ -18247,7 +18202,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_fPopulationgrowthratepercentageLog);
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iReligionSpreadRate);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivicHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iDistantUnitSupportCostModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraCityDefense);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iEnslavementChance);
@@ -18255,12 +18209,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLandmarkYield);
 
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iWorldHealth);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iWorldHappiness);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iProjectHealth);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iProjectHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iForceAllTradeRoutes);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivilizationHealth);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingInflation);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iProjectInflation);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iTechInflation);
@@ -19529,10 +19478,8 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUpkeepModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLevelExperienceModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHealth);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivicHealth);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappinessUnattributed);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLargestCityHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWarWearinessPercentAnger);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWarWearinessModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoForeignTradeCount);
@@ -19622,7 +19569,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTaxRateUnhappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_fPopulationgrowthratepercentageLog);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iReligionSpreadRate);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivicHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iDistantUnitSupportCostModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraCityDefense);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iEnslavementChance);
@@ -19630,12 +19576,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLandmarkYield);
 
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWorldHealth);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWorldHappiness);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iProjectHealth);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iProjectHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iForceAllTradeRoutes);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivilizationHealth);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingInflation);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iProjectInflation);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTechInflation);
@@ -26228,17 +26169,7 @@ bool CvPlayer::hasEnemyDefenderUnit(const CvPlot* pPlot) const
 
 int CvPlayer::getCivicHappiness() const
 {
-	return m_iCivicHappiness;
-}
-
-void CvPlayer::changeCivicHappiness(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iCivicHappiness = (m_iCivicHappiness + iChange);
-
-		AI_makeAssignWorkDirty();
-	}
+	int h, e; CascadeWellbeing::civicWellbeing(*this, h, e); return h;
 }
 
 int CvPlayer::getForeignTradeRouteModifier() const
@@ -26419,42 +26350,22 @@ void CvPlayer::changeExtraCityDefense(int iChange)
 
 int CvPlayer::getWorldHappiness() const
 {
-	return m_iWorldHappiness;
-}
-
-void CvPlayer::changeWorldHappiness(int iChange)
-{
-	m_iWorldHappiness += iChange;
+	int h, e; CascadeWellbeing::worldWellbeing(*this, h, e); return h;
 }
 
 int CvPlayer::getWorldHealth() const
 {
-	return m_iWorldHealth;
-}
-
-void CvPlayer::changeWorldHealth(int iChange)
-{
-	m_iWorldHealth += iChange;
+	int h, e; CascadeWellbeing::worldWellbeing(*this, h, e); return e;
 }
 
 int CvPlayer::getProjectHappiness() const
 {
-	return m_iProjectHappiness;
-}
-
-void CvPlayer::changeProjectHappiness(int iChange)
-{
-	m_iProjectHappiness += iChange;
+	int h, e; CascadeWellbeing::projectWellbeing(*this, h, e); return h;
 }
 
 int CvPlayer::getProjectHealth() const
 {
-	return m_iProjectHealth;
-}
-
-void CvPlayer::changeProjectHealth(int iChange)
-{
-	m_iProjectHealth += iChange;
+	int h, e; CascadeWellbeing::projectWellbeing(*this, h, e); return e;
 }
 
 int CvPlayer::getForceAllTradeRoutes() const
@@ -26568,18 +26479,7 @@ int CvPlayer::doMultipleResearch(int iOverflow)
 
 int CvPlayer::getCivilizationHealth() const
 {
-	return m_iCivilizationHealth;
-}
-
-
-void CvPlayer::changeCivilizationHealth(int iChange)
-{
-	if (iChange != 0)
-	{
-		m_iCivilizationHealth += iChange;
-
-		AI_makeAssignWorkDirty();
-	}
+	return CascadeWellbeing::civilizationHealth(*this);
 }
 
 int CvPlayer::getNoLandmarkAngerCount() const
@@ -27813,18 +27713,12 @@ void CvPlayer::clearModifierTotals()
 	algo::for_each(cities(), CvCity::fn::clearModifierTotals());
 
 	//	Project stuff
-	m_iWorldHappiness = 0;
-	m_iProjectHappiness = 0;
-	m_iWorldHealth = 0;
-	m_iProjectHealth = 0;
 
 	m_iForceAllTradeRoutes = 0;
 	m_iNoCapitalUnhappiness = 0;
-	m_iCivilizationHealth = 0;
 
 	m_iForeignTradeRouteModifier = 0;
 	m_iTaxRateUnhappiness = 0;
-	m_iCivicHappiness = 0;
 	m_iUnitUpgradePriceModifier = 0;
 	m_iAnarchyModifier = 0;
 	m_iGoldenAgeModifier = 0;
@@ -27886,9 +27780,7 @@ void CvPlayer::clearModifierTotals()
 	m_iUpkeepModifier = 0;
 	m_iLevelExperienceModifier = 0;
 	m_iExtraHealth = 0;
-	m_iCivicHealth = 0;
 	m_iExtraHappiness = 0;
-	m_iLargestCityHappiness = 0;
 	m_iWarWearinessModifier = 0;
 	m_iNoForeignTradeCount = 0;
 	m_iNoCorporationsCount = 0;
@@ -28126,7 +28018,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeRevIdxBadReligionMod(iChange*GC.getTraitInfo(eTrait).getRevIdxBadReligionMod());
 	changeRevIdxGoodReligionMod(iChange*GC.getTraitInfo(eTrait).getRevIdxGoodReligionMod());
 
-	changeCivilizationHealth(iChange*GC.getTraitInfo(eTrait).getHealth());
 	changeExtraHappiness(iChange*GC.getTraitInfo(eTrait).getHappiness());
 
 	foreach_(const BuildingModifier2& pair, GC.getTraitInfo(eTrait).getBuildingHappinessModifiersFiltered())
@@ -28206,7 +28097,6 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeCivilianUnitUpkeepMod(iChange*GC.getTraitInfo(eTrait).getCivilianUnitUpkeepMod());
 	changeMilitaryUnitUpkeepMod(iChange*GC.getTraitInfo(eTrait).getMilitaryUnitUpkeepMod());
 	changeHappyPerMilitaryUnit(iChange*GC.getTraitInfo(eTrait).getHappyPerMilitaryUnit());
-	changeLargestCityHappiness(iChange*GC.getTraitInfo(eTrait).getLargestCityHappiness());
 	// #430 two-part seam: trait free specialists ride the cascade AMOUNT (fsEmpireAny).
 	changeTradeRoutes(iChange*GC.getTraitInfo(eTrait).getTradeRoutes());
 	// #430 cut: state/non-state religion happiness is a cascade term (playerReligionAcc reads active traits)

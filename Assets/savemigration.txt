@@ -27,6 +27,34 @@
 |-------------------------------------------------------------------|
 
 ========================
+2026-07-20 — #430 delete-driven legacy cut (CvPlayer civic/trait/project/world wellbeing feeders): the 8 stored
+player-scope wellbeing accumulators fully removed (no member, no read, no write). The getters now read fresh
+deposit-derived cascade recomputes: getCivicHappiness/getCivicHealth -> CascadeWellbeing::civicWellbeing (civic
+happiness.empire/health.empire flats, reproducing the verdict iCivicNet via a bare player ctx);
+getCivilizationHealth -> CascadeWellbeing::civilizationHealth (active-trait health.empire flats = iTraitNet,
+PURE_TRAITS-filtered, matching the verdict -- the legacy accumulator was unfiltered, a documented
+stored-accumulator-drift correction); getProjectHappiness/getProjectHealth -> projectWellbeing (own-team
+completed projects' happiness/health.empire = getGlobalHappiness/Health); getWorldHappiness/getWorldHealth ->
+worldWellbeing (game-created projects' happiness/health.world = getWorldHappiness/Health). CvPlayer::getCivicHealth
+keeps its NPC (barbarian) negative-clamp. CvPlayer::getLargestCityHappiness is DELETED ENTIRELY (its sole consumer
+was CvCity::getLargestCityHappiness, re-pointed to CascadeWellbeing::largestCityWellbeing -> hap.iLargest, which
+already applies the population-rank gate at fill). The 8 change* changers + their processCivics / processTrait /
+CvTeam::changeProjectCount trigger sites are gone; the four AI_makeAssignWorkDirty riders drop (the value is read
+fresh, and the broad civic/trait/project recompute re-dirties via sibling change*/AI_makeProductionDirty). The
+CvHttpServer /computed wellbeing/health/happiness decomposition rows are KEPT (they now read the re-pointed
+cascade getters). Old-save tags drain by name below (no WRAPPER_SKIP_ELEMENT).
+
+CvPlayer::m_iCivicHappiness              (int)
+CvPlayer::m_iCivicHealth                 (int)
+CvPlayer::m_iCivilizationHealth          (int)
+CvPlayer::m_iLargestCityHappiness        (int)
+CvPlayer::m_iProjectHappiness            (int)
+CvPlayer::m_iProjectHealth               (int)
+CvPlayer::m_iWorldHappiness              (int)
+CvPlayer::m_iWorldHealth                 (int)
+========================
+
+========================
 2026-07-19 — #430 F4 unit-plane pilot (withdrawal group): the stored per-unit extra-withdrawal accumulator is
 removed. CvUnit::getExtraWithdrawal now reads the cascade unit self-accumulator (m_cascadeUnitPackages.withdrawal,
 gathered on-dirty from the unit's held-set: held promotions + held unit-combat classes via MMKernel::sumUnit

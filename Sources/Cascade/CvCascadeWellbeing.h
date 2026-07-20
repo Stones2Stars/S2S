@@ -70,6 +70,18 @@ public:
 	// m_i{State,NonState}ReligionHappiness): INITIAL + Σ adopted civics + Σ active traits (PURE-filtered). Human.
 	static int playerStateReligionHappiness(const CvPlayer& player);
 	static int playerNonStateReligionHappiness(const CvPlayer& player);
+	// The player-scope civic / trait / project / world wellbeing feeders (for the retired CvPlayer
+	// m_iCivic{Happiness,Health} / m_iCivilizationHealth / m_i{Project,World}{Happiness,Health}). Fresh
+	// deposit-derived recomputes reproducing the verdict terms (civic/trait -> iCivicNet/iTraitNet via a
+	// bare ctx; project/world mirror the wb_gather empire/world legs). Signed human (÷100); the consumers
+	// do their own max(0)/min(0) split.
+	static void civicWellbeing(const CvPlayer& player, int& iHap, int& iHea);      // A1,A2
+	static int  civilizationHealth(const CvPlayer& player);                        // A3
+	static void projectWellbeing(const CvPlayer& player, int& iHap, int& iHea);    // A5,A6 (own-team getProjectCount>0)
+	static void worldWellbeing(const CvPlayer& player, int& iHap, int& iHea);      // A7,A8 (game getProjectCreatedCount>0)
+	// The rank-gated CITY largest-city happiness (for the retired CvPlayer m_iLargestCityHappiness, read
+	// via CvCity::getLargestCityHappiness): hap.iLargest already applies the population-rank gate at fill.
+	static int  largestCityWellbeing(const CvCity* pCity);                         // A4
 	// The per-religion CITY building-sourced state-religion happiness (for the retired m_paiStateReligionHappiness):
 	// Σ over the city's ACTIVE buildings whose religion == eReligion of the building's stateReligionHappiness. Human
 	// (the building info getter is human; the member was human) -- keyed by an ARBITRARY religion (the civic what-if
