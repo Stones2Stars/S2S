@@ -1,0 +1,15 @@
+{
+ "type": "OUTCOME_EXPLORE_EXOPLANET",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_EXOPLANET",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_EXOPLANET_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_MOLECULAR_SCANNING"
+  ]
+ },
+ "territory": [
+  "neutral"
+ ]
+}

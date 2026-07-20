@@ -81,13 +81,7 @@
      "outcome": "OUTCOME_HURRY_PRODUCTION_CARAVAN"
     },
     "chance": 100,
-    "production": {
-     "expr": {
-      "AdaptHammerCost": {
-       "Constant": 104
-      }
-     }
-    }
+    "production": 104
    },
    {
     "mission": "MISSION_ENTERTAIN_CITY",
@@ -99,13 +93,7 @@
       "chance": 80,
       "consumes": true,
       "revolution": 2,
-      "culture": {
-       "expr": {
-        "Adapt": {
-         "Constant": 5
-        }
-       }
-      }
+      "culture": 5
      },
      {
       "requires": {
@@ -114,13 +102,7 @@
       "chance": 20,
       "promotes": "PROMOTION_EXPERIENCED_ARTIST",
       "revolution": 3,
-      "culture": {
-       "expr": {
-        "Adapt": {
-         "Constant": 10
-        }
-       }
-      }
+      "culture": 10
      }
     ]
    }

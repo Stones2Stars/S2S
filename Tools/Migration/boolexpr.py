@@ -75,26 +75,52 @@ def _is_pred(tag):
     """`Is TAG` -> a bare predicate."""
     if tag == "TAG_COASTAL":
         return "HAS_COAST"   # city-context (TAG_COASTAL = CvCity::isCoastal); HAS_COAST resolves per target
+    # NEW predicates (outcome plot/unit gates; owner to confirm names + the applier's cascadeEvalCondition implements):
+    if tag == "TAG_OWNED":
+        return "IS_OWNED"    # the plot is in owned territory (mission plot gate)
+    if tag == "TAG_ANARCHY":
+        return "IS_ANARCHY"  # the (target's) player is in anarchy -- sibling of the existing IS_GOLDEN_AGE
     raise ValueError("boolexpr: unhandled <Is> tag %s — extend the converter or hand-recreate" % tag)
 
 
-def _int_compare(tag, elem):
-    """Integer-comparison nodes -> a count atom at CITY scope. Subject is an ATTRIBUTE (e.g. POPULATION, the
-    UNIT_IMMIGRANT case) OR a PROPERTY (e.g. PROPERTY_CRIME — a threshold band, the pseudobuilding/PropertyEffect
+def _int_compare(tag, elem, scope="city"):
+    """Integer-comparison nodes -> a count atom at `scope` (default CITY). Subject is an ATTRIBUTE (e.g. POPULATION,
+    the UNIT_IMMIGRANT case) OR a PROPERTY (e.g. PROPERTY_CRIME — a threshold band, the pseudobuilding/PropertyEffect
     case). Greater=> min N+1, GreaterEqual=> min N, Less=> max N-1, LessEqual=> max N, Equal=> min=max=N."""
     cnode = elem.find("Constant")
     const = int(engine.text(cnode)) if cnode is not None and engine.is_int(engine.text(cnode)) else None
     prop = engine.text(elem.find("PropertyType"))
     attr = engine.text(elem.find("AttributeType"))
+    # Python-callback gate: `Greater(Python(fn), 0)` -> a clean {python: fn} condition. These outcome gates are
+    # Python-authoritative (owner: outcomes' Python stays Python); the applier evaluates by calling the callback.
+    pynode = elem.find("Python")
+    if pynode is not None and engine.text(pynode):
+        return OrderedDict([("python", engine.text(pynode))])
     if const is not None and (prop or attr):
         typ = prop if prop else ("POPULATION" if attr == "ATTRIBUTE_POPULATION" else attr.replace("ATTRIBUTE_", ""))
-        if tag == "Greater":      return _atom(typ, "city", min=const + 1)
-        if tag == "GreaterEqual": return _atom(typ, "city", min=const)
-        if tag == "Less":         return _atom(typ, "city", max=const - 1)
-        if tag == "LessEqual":    return _atom(typ, "city", max=const)
-        if tag == "Equal":        return _atom(typ, "city", min=const, max=const)
+        if tag == "Greater":      return _atom(typ, scope, min=const + 1)
+        if tag == "GreaterEqual": return _atom(typ, scope, min=const)
+        if tag == "Less":         return _atom(typ, scope, max=const - 1)
+        if tag == "LessEqual":    return _atom(typ, scope, max=const)
+        if tag == "Equal":        return _atom(typ, scope, min=const, max=const)
     raise ValueError("boolexpr: unhandled integer comparison <%s> attr=%s const=%s "
                      "— extend the converter or hand-recreate" % (tag, attr, const))
+
+
+# IntegrateOr GameObjectType -> the scope the integrated comparison resolves at (navigate the relation to that object).
+_GOBJ_SCOPE = {"GAMEOBJECT_CITY": "city", "GAMEOBJECT_PLOT": "plot", "GAMEOBJECT_UNIT": "unit"}
+
+
+def _integrate_or(node):
+    """`IntegrateOr RelationType GameObjectType <compare>` -> the inner count atom AT the navigated object's scope.
+    The only live shape is the UNIT_IMMIGRANT join-city gate: integrate over the plot's ASSOCIATED CITY, OR the
+    population comparison -> `{type:POPULATION, scope:city, min:N}` (the relation navigation IS the scope)."""
+    gobj = engine.text(node.find("GameObjectType"))
+    scope = _GOBJ_SCOPE.get(gobj)
+    comp = next((c for c in node if c.tag in ("Greater", "GreaterEqual", "Less", "LessEqual", "Equal")), None)
+    if scope and comp is not None:
+        return _int_compare(comp.tag, comp, scope)
+    raise ValueError("boolexpr: unhandled IntegrateOr (GameObjectType=%s) — extend or hand-recreate" % gobj)
 
 
 def convert(node):
@@ -125,6 +151,8 @@ def convert(node):
         return _is_pred(engine.text(node))
     if tag in ("Greater", "GreaterEqual", "Less", "LessEqual", "Equal"):
         return _int_compare(tag, node)
+    if tag == "IntegrateOr":
+        return _integrate_or(node)
     raise ValueError("boolexpr: unhandled node <%s> — extend the converter or hand-recreate" % tag)
 
 

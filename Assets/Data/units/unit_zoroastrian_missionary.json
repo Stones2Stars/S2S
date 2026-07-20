@@ -40,11 +40,7 @@
     "mission": "MISSION_REMOVE_WV_SLAVERY",
     "requires": {
      "outcome": "OUTCOME_REMOVE_WV_SLAVERY",
-     "plot": {
-      "expr": {
-       "Is": "TAG_OWNED"
-      }
-     }
+     "plot": "IS_OWNED"
     },
     "chance": 100,
     "python": {

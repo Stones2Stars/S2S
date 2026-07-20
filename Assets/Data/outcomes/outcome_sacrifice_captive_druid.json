@@ -1,0 +1,16 @@
+{
+ "type": "OUTCOME_SACRIFICE_CAPTIVE_DRUID",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_SACRIFICE_CAPTIVE_RELIGION",
+  "message": "TXT_KEY_OUTCOME_SACRIFICE_CAPTIVE_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE"
+  ]
+ },
+ "in": "city",
+ "replaces": [
+  "OUTCOME_SACRIFICE_CAPTIVE"
+ ]
+}

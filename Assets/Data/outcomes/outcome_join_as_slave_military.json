@@ -1,0 +1,13 @@
+{
+ "type": "OUTCOME_JOIN_AS_SLAVE_MILITARY",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_JOIN_AS_SLAVE_MILITARY",
+  "message": "TXT_KEY_OUTCOME_JOIN_AS_SLAVE_MILITARY_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "BUILDING_SLAVE_COMPOUND_MILITARY_SUPPORT"
+  ]
+ },
+ "in": "city"
+}

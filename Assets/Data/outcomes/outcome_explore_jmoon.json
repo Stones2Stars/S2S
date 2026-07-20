@@ -1,0 +1,15 @@
+{
+ "type": "OUTCOME_EXPLORE_JMOON",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_JMOON",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_JMOON_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_JOVIAN_EXPLORATION"
+  ]
+ },
+ "territory": [
+  "neutral"
+ ]
+}

@@ -1,0 +1,16 @@
+{
+ "type": "OUTCOME_ANIMAL_RECORD_TALE_ORAL_CAVE",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_ANIMAL_RECORD_TALE_CAVE",
+  "message": "TXT_KEY_OUTCOME_ANIMAL_RECORD_TALE_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "BUILDING_CAVE_PAINTINGS"
+  ]
+ },
+ "in": "city",
+ "replaces": [
+  "OUTCOME_ANIMAL_RECORD_TALE_ORAL"
+ ]
+}

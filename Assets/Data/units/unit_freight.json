@@ -51,13 +51,7 @@
      "outcome": "OUTCOME_HURRY_PRODUCTION_CARAVAN"
     },
     "chance": 100,
-    "production": {
-     "expr": {
-      "AdaptHammerCost": {
-       "Constant": 594
-      }
-     }
-    }
+    "production": 594
    }
   ]
  },

@@ -1,0 +1,15 @@
+{
+ "type": "OUTCOME_EXPLORE_MULTIVERSE",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_MULTIVERSE",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_MULTIVERSE_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_MULTIVERSE_TRAVERSAL"
+  ]
+ },
+ "territory": [
+  "neutral"
+ ]
+}

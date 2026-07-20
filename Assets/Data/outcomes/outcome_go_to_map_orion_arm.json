@@ -1,0 +1,16 @@
+{
+ "type": "OUTCOME_GO_TO_MAP_ORION_ARM",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_ORION_ARM",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_ORION_ARM"
+ },
+ "requires": {
+  "all": [
+   "TECH_ACNP_PROPULSION"
+  ]
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

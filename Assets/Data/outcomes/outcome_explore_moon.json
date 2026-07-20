@@ -1,0 +1,15 @@
+{
+ "type": "OUTCOME_EXPLORE_MOON",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_MOON",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_MOON_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_LUNAR_EXPLORATION"
+  ]
+ },
+ "territory": [
+  "neutral"
+ ]
+}

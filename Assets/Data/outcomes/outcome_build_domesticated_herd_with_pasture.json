@@ -1,0 +1,15 @@
+{
+ "type": "OUTCOME_BUILD_DOMESTICATED_HERD_WITH_PASTURE",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_BUILD_DOMESTICATED_PASTURE",
+  "message": "TXT_KEY_OUTCOME_BUILD_DOMESTICATED_PASTURE_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_IRON_WORKING"
+  ]
+ },
+ "replaces": [
+  "OUTCOME_BUILD_DOMESTICATED_HERD"
+ ]
+}

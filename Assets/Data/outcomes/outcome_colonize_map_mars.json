@@ -1,0 +1,16 @@
+{
+ "type": "OUTCOME_COLONIZE_MAP_MARS",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_MARS",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_MARS"
+ },
+ "requires": {
+  "all": [
+   "TECH_PLANETARY_COLONIZATION"
+  ]
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

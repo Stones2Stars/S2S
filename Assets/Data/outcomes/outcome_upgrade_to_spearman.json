@@ -1,0 +1,14 @@
+{
+ "type": "OUTCOME_UPGRADE_TO_SPEARMAN",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_UPGRADE_TO_SPEARMAN",
+  "message": "TXT_KEY_OUTCOME_UPGRADE_TO_SPEARMAN_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_SPEAR_MAKING",
+   "BUILDING_BARRACKS"
+  ]
+ },
+ "in": "city"
+}

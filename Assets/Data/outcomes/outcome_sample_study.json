@@ -1,0 +1,13 @@
+{
+ "type": "OUTCOME_SAMPLE_STUDY",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_SAMPLE_STUDY",
+  "message": "TXT_KEY_OUTCOME_SAMPLE_STUDY_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_SATELLITES"
+  ]
+ },
+ "in": "city"
+}

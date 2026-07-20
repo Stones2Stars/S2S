@@ -37,13 +37,7 @@
      "outcome": "OUTCOME_JOIN_CITY_FREED_SLAVE"
     },
     "chance": 100,
-    "food": {
-     "expr": {
-      "Adapt": {
-       "Constant": 100
-      }
-     }
-    }
+    "food": 100
    }
   ]
  },

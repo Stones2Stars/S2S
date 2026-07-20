@@ -1,0 +1,8 @@
+{
+ "type": "OUTCOME_ENTERTAIN_CITY",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_ENTERTAIN_CITY",
+  "message": "TXT_KEY_OUTCOME_ENTERTAIN_CITY_MESSAGE"
+ },
+ "in": "city"
+}

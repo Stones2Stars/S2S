@@ -1,0 +1,16 @@
+{
+ "type": "OUTCOME_ANIMAL_COMBAT4",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_ANIMAL_COMBAT4",
+  "message": "TXT_KEY_OUTCOME_ANIMAL_COMBAT_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "BUILDING_MINOR_LEAGUE_STADIUM"
+  ]
+ },
+ "in": "city",
+ "replaces": [
+  "OUTCOME_ANIMAL_COMBAT1"
+ ]
+}

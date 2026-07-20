@@ -1,0 +1,16 @@
+{
+ "type": "OUTCOME_COLONIZE_MAP_DISTANT_COSMOS",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_DISTANT_COSMOS",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_DISTANT_COSMOS"
+ },
+ "requires": {
+  "all": [
+   "TECH_HORIZON_BREAKING"
+  ]
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

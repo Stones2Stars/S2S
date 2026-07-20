@@ -1,0 +1,17 @@
+{
+ "type": "OUTCOME_UPGRADE_TO_ARCHER_REPLACEMENT1",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_UPGRADE_TO_ARCHER",
+  "message": "TXT_KEY_OUTCOME_UPGRADE_TO_ARCHER_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_ARCHERY",
+   "BUILDING_EFFECT_TRADITION_ARCHERY"
+  ]
+ },
+ "in": "city",
+ "replaces": [
+  "OUTCOME_UPGRADE_TO_ARCHER"
+ ]
+}

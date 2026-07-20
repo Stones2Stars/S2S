@@ -81,6 +81,7 @@ ENTITIES = {
     "TerrainInfo":       "*CIV4TerrainInfos.xml",        # plot-leaf TARGET (forms the plot's base yields); enables nothing
     "FeatureInfo":       "*CIV4FeatureInfos.xml",        # plot-leaf TARGET / deliveryguy (modifies the plot it sits on); enables nothing
     "YieldInfo":         "*CIV4YieldInfos.xml",          # the 3 yields' config; source of the hills/peak/river plot-yield deltas (migrated onto terrains)
+    "OutcomeInfo":       "*CIV4OutcomeInfos.xml",        # the OUTCOME_* gate/tier infos (name/message/requirements/odds) -- #430 outcome-subsystem migration
 }
 
 # Enabler reverse-index config: a record of <sourceEntity> that references type X via <fieldPath> means

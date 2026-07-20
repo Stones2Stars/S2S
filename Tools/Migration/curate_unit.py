@@ -523,16 +523,29 @@ def _raw(node):
     return out
 
 
+# Adapt* is PURE ENGINE (owner 2026-07-20): a gamespeed scaler the applier calculates from the reward's context
+# (a kill-yield gets the unit-yield scale, a hurry-production the hammer-cost scale) -- NEVER data. So the curator
+# UNWRAPS it and emits only the plain inner value; no scale marker survives into the JSON.
+_ADAPT_TAGS = ("AdaptUnitYield", "Adapt", "AdaptHammerCost")
+
+
 def _intexpr(elem, typ):
     """A CvOutcome IntExpr element (iChance / an iYield|iCommerce item / iReduceAnarchyLength) ->
-    a clean int  |  {base, random}  |  {expr:<raw>} (FLAGGED). Per the approved handling:
-    bare Constant -> int; Plus{Constant[,Random]} -> base(+random); any richer node
-    (Adapt/AdaptUnitYield/AdaptHammerCost/Mult/Property/Python) -> structured expr + flag."""
+    a clean int  |  {base, random}. `Adapt*` wrappers are pure-engine gamespeed scalers (unwrapped, applier
+    scales at grant time); `Constant`/`Plus{Constant[,Random]}` map directly. A genuinely richer node (Mult/
+    Property/Python etc.) still falls to {expr:<raw>} + flag -- but after the Adapt unwrap none remain in the data."""
     if elem is None:
         return None
     kids = list(elem)
     if not kids:
         t = engine.text(elem)
+        return int(t) if engine.is_int(t) else None
+    # pure-engine gamespeed scaler -> transparently unwrap and recurse into the inner expression.
+    if len(kids) == 1 and kids[0].tag in _ADAPT_TAGS:
+        return _intexpr(kids[0], typ)
+    # a bare Constant child (e.g. the unwrapped AdaptHammerCost{Constant:216}) -> the plain int.
+    if len(kids) == 1 and kids[0].tag == "Constant":
+        t = engine.text(kids[0])
         return int(t) if engine.is_int(t) else None
     if len(kids) == 1 and kids[0].tag == "Plus":
         p = kids[0]
@@ -574,7 +587,7 @@ _OC_HANDLED = {
 }
 # key order for a rendered outcome payload (meta first, then verbs).
 _OC_ORDER = ["requires", "chance", "chancePerPop", "consumes", "spawns", "promotes", "places",
-             "greatPeople", "triggers", "population", "revolution", "happinessTimer",
+             "greatPeople", "triggers", "population", "revolution", "happiness",
              "food", "production", "commerce", "gold", "research", "culture", "espionage",
              "properties", "python"]
 
@@ -644,11 +657,12 @@ def _outcome_payload(oc, typ):
     ral = _intexpr(oc.find("iReduceAnarchyLength"), typ)
     if ral:
         p["revolution"] = ral
-    # iHappinessTimer: NO approved verb -> clean flagged key (common in the data; reported, never dropped)
+    # iHappinessTimer -> `happiness: {duration: N}` (owner 2026-07-20): a timed happiness pulse lasting N turns.
+    # `duration` is the generic timed-effect term (NOT pre-specced -- establishes it; the greenfield unit-`state`
+    # timer model, state.md, should reuse it).
     ht = _int(oc, "iHappinessTimer")
     if ht:
-        p["happinessTimer"] = ht
-        _flag("field_no_verb:iHappinessTimer->happinessTimer", typ)
+        p["happiness"] = OrderedDict([("duration", ht)])
     # Yields (index -> food/production/commerce) + Commerces (index -> gold/research/culture/espionage)
     for tag, names in (("Yields", engine.YIELDS), ("Commerces", engine.COMMERCES)):
         node = oc.find(tag)

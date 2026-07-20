@@ -1,0 +1,15 @@
+{
+ "type": "OUTCOME_EXPLORE_HYPERSPACE",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_HYPERSPACE",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_HYPERSPACE_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_ENDLESS_EXPLORATION"
+  ]
+ },
+ "territory": [
+  "neutral"
+ ]
+}

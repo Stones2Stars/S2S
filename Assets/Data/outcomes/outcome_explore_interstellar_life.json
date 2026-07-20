@@ -1,0 +1,15 @@
+{
+ "type": "OUTCOME_EXPLORE_INTERSTELLAR_LIFE",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_INTERSTELLAR_LIFE",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_INTERSTELLAR_LIFE_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_PLANET_SCOUTING"
+  ]
+ },
+ "territory": [
+  "neutral"
+ ]
+}

@@ -1,0 +1,16 @@
+{
+ "type": "OUTCOME_COLONIZE_MAP_TITAN",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_TITAN",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_TITAN"
+ },
+ "requires": {
+  "all": [
+   "TECH_ABYSS_COLONIZATION"
+  ]
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

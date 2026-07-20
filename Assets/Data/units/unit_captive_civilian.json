@@ -29,16 +29,9 @@
     "requires": {
      "outcome": "OUTCOME_JOIN_CITY_POPULATION",
      "plot": {
-      "expr": {
-       "IntegrateOr": {
-        "RelationType": "RELATION_ASSOCIATED",
-        "GameObjectType": "GAMEOBJECT_CITY",
-        "GreaterEqual": {
-         "Constant": 7,
-         "AttributeType": "ATTRIBUTE_POPULATION"
-        }
-       }
-      }
+      "type": "POPULATION",
+      "scope": "city",
+      "min": 7
      }
     },
     "chance": 100,
@@ -50,11 +43,9 @@
     "requires": {
      "outcome": "OUTCOME_UPGRADE_TO_IMMIGRANT",
      "plot": {
-      "expr": {
-       "Not": {
-        "Is": "TAG_ANARCHY"
-       }
-      }
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
      }
     },
     "chance": 100,
@@ -67,11 +58,9 @@
     "requires": {
      "outcome": "OUTCOME_UPGRADE_TO_SETTLER",
      "plot": {
-      "expr": {
-       "Not": {
-        "Is": "TAG_ANARCHY"
-       }
-      }
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
      }
     },
     "chance": 100,
@@ -85,102 +74,38 @@
      {
       "requires": {
        "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "food": {
-       "expr": {
-        "Adapt": {
-         "Constant": 40
-        }
-       }
-      },
-      "production": {
-       "expr": {
-        "Adapt": {
-         "Constant": 10
-        }
-       }
-      }
+      "food": 40,
+      "production": 10
      },
      {
       "requires": {
        "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "food": {
-       "expr": {
-        "Adapt": {
-         "Constant": 50
-        }
-       }
-      },
-      "production": {
-       "expr": {
-        "Adapt": {
-         "Constant": 15
-        }
-       }
-      }
+      "food": 50,
+      "production": 15
      },
      {
       "requires": {
        "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT1",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "food": {
-       "expr": {
-        "Adapt": {
-         "Constant": 50
-        }
-       }
-      },
-      "production": {
-       "expr": {
-        "Adapt": {
-         "Constant": 15
-        }
-       }
-      }
+      "food": 50,
+      "production": 15
      },
      {
       "requires": {
        "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT2",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "food": {
-       "expr": {
-        "Adapt": {
-         "Constant": 50
-        }
-       }
-      },
-      "production": {
-       "expr": {
-        "Adapt": {
-         "Constant": 15
-        }
-       }
-      }
+      "food": 50,
+      "production": 15
      }
     ]
    }

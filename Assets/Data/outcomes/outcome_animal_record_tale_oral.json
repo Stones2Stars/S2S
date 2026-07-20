@@ -1,0 +1,8 @@
+{
+ "type": "OUTCOME_ANIMAL_RECORD_TALE_ORAL",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_ANIMAL_RECORD_TALE_ORAL",
+  "message": "TXT_KEY_OUTCOME_ANIMAL_RECORD_TALE_MESSAGE"
+ },
+ "in": "city"
+}

@@ -1,0 +1,15 @@
+{
+ "type": "OUTCOME_EXPLORE_SEDNOID",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_SEDNOID",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_SEDNOID_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_MAGNETIC_SAILS"
+  ]
+ },
+ "territory": [
+  "neutral"
+ ]
+}

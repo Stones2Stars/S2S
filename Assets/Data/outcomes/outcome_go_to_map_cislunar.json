@@ -1,0 +1,16 @@
+{
+ "type": "OUTCOME_GO_TO_MAP_CISLUNAR",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_CISLUNAR",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_CISLUNAR"
+ },
+ "requires": {
+  "all": [
+   "TECH_SATELLITES"
+  ]
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

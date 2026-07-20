@@ -1,0 +1,15 @@
+{
+ "type": "OUTCOME_EXPLORE_PLANET",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_PLANET",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_PLANET_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_PLANETARY_EXPLORATION"
+  ]
+ },
+ "territory": [
+  "neutral"
+ ]
+}

@@ -1,0 +1,16 @@
+{
+ "type": "OUTCOME_GO_TO_MAP_UNIVERSE",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_UNIVERSE",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_UNIVERSE"
+ },
+ "requires": {
+  "all": [
+   "TECH_FOLDING_SPACE"
+  ]
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

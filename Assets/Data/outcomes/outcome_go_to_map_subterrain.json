@@ -1,0 +1,11 @@
+{
+ "type": "OUTCOME_GO_TO_MAP_SUBTERRAIN",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_SUBTERRAIN",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_SUBTERRAIN"
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

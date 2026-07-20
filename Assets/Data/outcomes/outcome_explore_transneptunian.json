@@ -1,0 +1,15 @@
+{
+ "type": "OUTCOME_EXPLORE_TRANSNEPTUNIAN",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_TRANSNEPTUNIAN",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_TRANSNEPTUNIAN_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_MAGNETIC_SAILS"
+  ]
+ },
+ "territory": [
+  "neutral"
+ ]
+}

@@ -1,0 +1,13 @@
+{
+ "type": "OUTCOME_JOIN_AS_SLAVE_COMMERCE",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_JOIN_AS_SLAVE_COMMERCE",
+  "message": "TXT_KEY_OUTCOME_JOIN_AS_SLAVE_COMMERCE_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "BUILDING_SLAVE_COMPOUND_COMMERCE"
+  ]
+ },
+ "in": "city"
+}

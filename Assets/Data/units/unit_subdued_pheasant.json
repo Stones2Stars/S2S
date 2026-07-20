@@ -44,105 +44,55 @@
        "outcome": "OUTCOME_ANIMAL_COMBAT1"
       },
       "chance": 100,
-      "happinessTimer": 5,
-      "gold": {
-       "expr": {
-        "AdaptUnitYield": {
-         "Constant": 1
-        }
-       }
+      "happiness": {
+       "duration": 5
       },
-      "culture": {
-       "expr": {
-        "AdaptUnitYield": {
-         "Constant": 5
-        }
-       }
-      }
+      "gold": 1,
+      "culture": 5
      },
      {
       "requires": {
        "outcome": "OUTCOME_ANIMAL_COMBAT2"
       },
       "chance": 100,
-      "happinessTimer": 5,
-      "gold": {
-       "expr": {
-        "AdaptUnitYield": {
-         "Constant": 2
-        }
-       }
+      "happiness": {
+       "duration": 5
       },
-      "culture": {
-       "expr": {
-        "AdaptUnitYield": {
-         "Constant": 5
-        }
-       }
-      }
+      "gold": 2,
+      "culture": 5
      },
      {
       "requires": {
        "outcome": "OUTCOME_ANIMAL_COMBAT3"
       },
       "chance": 100,
-      "happinessTimer": 5,
-      "gold": {
-       "expr": {
-        "AdaptUnitYield": {
-         "Constant": 3
-        }
-       }
+      "happiness": {
+       "duration": 5
       },
-      "culture": {
-       "expr": {
-        "AdaptUnitYield": {
-         "Constant": 5
-        }
-       }
-      }
+      "gold": 3,
+      "culture": 5
      },
      {
       "requires": {
        "outcome": "OUTCOME_ANIMAL_COMBAT4"
       },
       "chance": 100,
-      "happinessTimer": 5,
-      "gold": {
-       "expr": {
-        "AdaptUnitYield": {
-         "Constant": 4
-        }
-       }
+      "happiness": {
+       "duration": 5
       },
-      "culture": {
-       "expr": {
-        "AdaptUnitYield": {
-         "Constant": 5
-        }
-       }
-      }
+      "gold": 4,
+      "culture": 5
      },
      {
       "requires": {
        "outcome": "OUTCOME_ANIMAL_COMBAT5"
       },
       "chance": 100,
-      "happinessTimer": 5,
-      "gold": {
-       "expr": {
-        "AdaptUnitYield": {
-         "Constant": 5
-        }
-       }
+      "happiness": {
+       "duration": 5
       },
-      "culture": {
-       "expr": {
-        "AdaptUnitYield": {
-         "Constant": 5
-        }
-       }
-      }
+      "gold": 5,
+      "culture": 5
      }
     ]
    }

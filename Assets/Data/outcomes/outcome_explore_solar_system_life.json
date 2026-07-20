@@ -1,0 +1,15 @@
+{
+ "type": "OUTCOME_EXPLORE_SOLAR_SYSTEM_LIFE",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_SOLAR_SYSTEM_LIFE",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_SOLAR_SYSTEM_LIFE_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_PROTOTYPED_PATHOGENS"
+  ]
+ },
+ "territory": [
+  "neutral"
+ ]
+}

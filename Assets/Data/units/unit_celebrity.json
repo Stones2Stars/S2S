@@ -46,13 +46,7 @@
       "chance": 70,
       "consumes": true,
       "revolution": 6,
-      "culture": {
-       "expr": {
-        "Adapt": {
-         "Constant": 8
-        }
-       }
-      }
+      "culture": 8
      },
      {
       "requires": {
@@ -61,13 +55,7 @@
       "chance": 30,
       "promotes": "PROMOTION_EXPERIENCED_ARTIST",
       "revolution": 7,
-      "culture": {
-       "expr": {
-        "Adapt": {
-         "Constant": 16
-        }
-       }
-      }
+      "culture": 16
      }
     ]
    }

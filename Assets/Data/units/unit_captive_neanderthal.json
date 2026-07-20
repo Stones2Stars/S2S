@@ -29,11 +29,9 @@
     "requires": {
      "outcome": "OUTCOME_UPGRADE_TO_WORKER",
      "plot": {
-      "expr": {
-       "Not": {
-        "Is": "TAG_ANARCHY"
-       }
-      }
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
      }
     },
     "chance": 100,
@@ -46,11 +44,9 @@
     "requires": {
      "outcome": "OUTCOME_UPGRADE_TO_NEANDERTHAL_GATHERER",
      "plot": {
-      "expr": {
-       "Not": {
-        "Is": "TAG_ANARCHY"
-       }
-      }
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
      }
     },
     "chance": 100,
@@ -63,15 +59,12 @@
     "requires": {
      "outcome": "OUTCOME_JOIN_AS_SLAVE_FOOD",
      "plot": {
-      "expr": {
-       "And": {
-        "Greater": {
-         "Python": "getNumNonSpecialistSlavesFood",
-         "Constant": 0
-        },
-        "Is": "TAG_OWNED"
-       }
-      }
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesFood"
+       },
+       "IS_OWNED"
+      ]
      }
     },
     "chance": 100,
@@ -84,15 +77,12 @@
     "requires": {
      "outcome": "OUTCOME_JOIN_AS_SLAVE_PRODUCTION",
      "plot": {
-      "expr": {
-       "And": {
-        "Greater": {
-         "Python": "getNumNonSpecialistSlavesProduction",
-         "Constant": 0
-        },
-        "Is": "TAG_OWNED"
-       }
-      }
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesProduction"
+       },
+       "IS_OWNED"
+      ]
      }
     },
     "chance": 100,
@@ -105,15 +95,12 @@
     "requires": {
      "outcome": "OUTCOME_JOIN_AS_SLAVE_ENTERTAINMENT",
      "plot": {
-      "expr": {
-       "And": {
-        "Greater": {
-         "Python": "getNumNonSpecialistSlavesEntertainment",
-         "Constant": 0
-        },
-        "Is": "TAG_OWNED"
-       }
-      }
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesEntertainment"
+       },
+       "IS_OWNED"
+      ]
      }
     },
     "chance": 100,
@@ -126,15 +113,12 @@
     "requires": {
      "outcome": "OUTCOME_JOIN_AS_SLAVE_MILITARY",
      "plot": {
-      "expr": {
-       "And": {
-        "Greater": {
-         "Python": "getNumNonSpecialistSlavesMilitary",
-         "Constant": 0
-        },
-        "Is": "TAG_OWNED"
-       }
-      }
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesMilitary"
+       },
+       "IS_OWNED"
+      ]
      }
     },
     "chance": 100,
@@ -147,11 +131,9 @@
     "requires": {
      "outcome": "OUTCOME_UPGRADE_TO_NEANDERTHAL_WARRIOR",
      "plot": {
-      "expr": {
-       "Not": {
-        "Is": "TAG_ANARCHY"
-       }
-      }
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
      }
     },
     "chance": 100,
@@ -164,11 +146,9 @@
     "requires": {
      "outcome": "OUTCOME_UPGRADE_TO_NEANDERTHAL_TRACKER",
      "plot": {
-      "expr": {
-       "Not": {
-        "Is": "TAG_ANARCHY"
-       }
-      }
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
      }
     },
     "chance": 100,
@@ -180,20 +160,10 @@
     "mission": "MISSION_SELL_CAPTIVE",
     "requires": {
      "outcome": "OUTCOME_SLAVE_SALE_NOT_SLAVERY",
-     "plot": {
-      "expr": {
-       "Is": "TAG_OWNED"
-      }
-     }
+     "plot": "IS_OWNED"
     },
     "chance": 100,
-    "commerce": {
-     "expr": {
-      "Adapt": {
-       "Constant": 2
-      }
-     }
-    }
+    "commerce": 2
    },
    {
     "mission": "MISSION_BUTCHER_HUMAN",
@@ -203,90 +173,34 @@
        "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY"
       },
       "chance": 100,
-      "food": {
-       "expr": {
-        "Adapt": {
-         "Constant": 8
-        }
-       }
-      },
-      "production": {
-       "expr": {
-        "Adapt": {
-         "Constant": 2
-        }
-       }
-      }
+      "food": 8,
+      "production": 2
      },
      {
       "requires": {
        "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST"
       },
       "chance": 100,
-      "food": {
-       "expr": {
-        "Adapt": {
-         "Constant": 10
-        }
-       }
-      },
-      "production": {
-       "expr": {
-        "Adapt": {
-         "Constant": 4
-        }
-       }
-      }
+      "food": 10,
+      "production": 4
      },
      {
       "requires": {
        "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT1",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "food": {
-       "expr": {
-        "Adapt": {
-         "Constant": 10
-        }
-       }
-      },
-      "production": {
-       "expr": {
-        "Adapt": {
-         "Constant": 4
-        }
-       }
-      }
+      "food": 10,
+      "production": 4
      },
      {
       "requires": {
        "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT2",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "food": {
-       "expr": {
-        "Adapt": {
-         "Constant": 10
-        }
-       }
-      },
-      "production": {
-       "expr": {
-        "Adapt": {
-         "Constant": 4
-        }
-       }
-      }
+      "food": 10,
+      "production": 4
      }
     ]
    }

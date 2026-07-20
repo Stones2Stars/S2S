@@ -1,0 +1,16 @@
+{
+ "type": "OUTCOME_GO_TO_MAP_MILKY_WAY",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_MILKY_WAY",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_MILKY_WAY"
+ },
+ "requires": {
+  "all": [
+   "TECH_ACNP_PROPULSION"
+  ]
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

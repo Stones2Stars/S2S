@@ -41,16 +41,9 @@
     "requires": {
      "outcome": "OUTCOME_JOIN_CITY_POPULATION",
      "plot": {
-      "expr": {
-       "IntegrateOr": {
-        "RelationType": "RELATION_ASSOCIATED",
-        "GameObjectType": "GAMEOBJECT_CITY",
-        "GreaterEqual": {
-         "Constant": 7,
-         "AttributeType": "ATTRIBUTE_POPULATION"
-        }
-       }
-      }
+      "type": "POPULATION",
+      "scope": "city",
+      "min": 7
      }
     },
     "chance": 100,

@@ -26,19 +26,14 @@
     "requires": {
      "outcome": "OUTCOME_JOIN_CITY_POPULATION",
      "plot": {
-      "expr": {
-       "And": {
-        "IntegrateOr": {
-         "RelationType": "RELATION_ASSOCIATED",
-         "GameObjectType": "GAMEOBJECT_CITY",
-         "GreaterEqual": {
-          "Constant": 7,
-          "AttributeType": "ATTRIBUTE_POPULATION"
-         }
-        },
-        "Is": "TAG_OWNED"
-       }
-      }
+      "all": [
+       {
+        "type": "POPULATION",
+        "scope": "city",
+        "min": 7
+       },
+       "IS_OWNED"
+      ]
      }
     },
     "chance": 100,

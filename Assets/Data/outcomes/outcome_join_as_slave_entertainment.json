@@ -1,0 +1,13 @@
+{
+ "type": "OUTCOME_JOIN_AS_SLAVE_ENTERTAINMENT",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_JOIN_AS_SLAVE_ENTERTAINMENT",
+  "message": "TXT_KEY_OUTCOME_JOIN_AS_SLAVE_ENTERTAINMENT_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT"
+  ]
+ },
+ "in": "city"
+}

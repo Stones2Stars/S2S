@@ -1,0 +1,15 @@
+{
+ "type": "OUTCOME_UPGRADE_TO_WORKER",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_UPGRADE_TO_WORKER",
+  "message": "TXT_KEY_OUTCOME_UPGRADE_TO_WORKER_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
+ "replaces": [
+  "OUTCOME_UPGRADE_TO_GATHERER"
+ ]
+}

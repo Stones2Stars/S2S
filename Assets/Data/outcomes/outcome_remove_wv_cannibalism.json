@@ -1,0 +1,13 @@
+{
+ "type": "OUTCOME_REMOVE_WV_CANNIBALISM",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_REMOVE_WV_CANNIBALISM",
+  "message": "TXT_KEY_OUTCOME_REMOVE_WV_CANNIBALISM_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE"
+  ]
+ },
+ "in": "city"
+}

@@ -1,0 +1,16 @@
+{
+ "type": "OUTCOME_ANIMAL_RECORD_TALE_LIBRARY",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_ANIMAL_RECORD_TALE_LIBRARY",
+  "message": "TXT_KEY_OUTCOME_ANIMAL_RECORD_TALE_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "BUILDING_LIBRARY"
+  ]
+ },
+ "in": "city",
+ "replaces": [
+  "OUTCOME_ANIMAL_RECORD_TALE_ORAL"
+ ]
+}

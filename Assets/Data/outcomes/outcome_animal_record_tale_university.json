@@ -1,0 +1,16 @@
+{
+ "type": "OUTCOME_ANIMAL_RECORD_TALE_UNIVERSITY",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_ANIMAL_RECORD_TALE_UNI",
+  "message": "TXT_KEY_OUTCOME_ANIMAL_RECORD_TALE_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "BUILDING_UNIVERSITY"
+  ]
+ },
+ "in": "city",
+ "replaces": [
+  "OUTCOME_ANIMAL_RECORD_TALE_ORAL"
+ ]
+}

@@ -1,0 +1,12 @@
+{
+  "entity": "OutcomeInfo",
+  "rootElement": "OutcomeInfo",
+  "glob": "**/*CIV4OutcomeInfos.xml",
+  "channels": {},
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": [],
+  "cost": [],
+  "art": [],
+  "identity": []
+}

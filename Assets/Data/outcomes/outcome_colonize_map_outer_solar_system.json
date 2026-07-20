@@ -1,0 +1,16 @@
+{
+ "type": "OUTCOME_COLONIZE_MAP_OUTER_SOLAR_SYSTEM",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_OUTER_SOLAR_SYSTEM",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_OUTER_SOLAR_SYSTEM"
+ },
+ "requires": {
+  "all": [
+   "TECH_DEEP_SPACE_COLONIES"
+  ]
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

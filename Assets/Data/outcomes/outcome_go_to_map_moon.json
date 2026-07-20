@@ -1,0 +1,16 @@
+{
+ "type": "OUTCOME_GO_TO_MAP_MOON",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_MOON",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_MOON"
+ },
+ "requires": {
+  "all": [
+   "TECH_LUNAR_EXPLORATION"
+  ]
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

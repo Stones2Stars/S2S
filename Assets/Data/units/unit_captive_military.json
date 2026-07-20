@@ -30,43 +30,25 @@
      "outcome": "OUTCOME_SET_CAPTIVE_FREE"
     },
     "chance": 100,
-    "food": {
-     "expr": {
-      "Adapt": {
-       "Constant": 55
-      }
-     }
-    }
+    "food": 55
    },
    {
     "mission": "MISSION_SELL_CAPTIVE",
     "requires": {
      "outcome": "OUTCOME_SLAVE_SALE_NOT_SLAVERY",
-     "plot": {
-      "expr": {
-       "Is": "TAG_OWNED"
-      }
-     }
+     "plot": "IS_OWNED"
     },
     "chance": 100,
-    "commerce": {
-     "expr": {
-      "Adapt": {
-       "Constant": 3
-      }
-     }
-    }
+    "commerce": 3
    },
    {
     "mission": "MISSION_CAPTIVE_UPGRADE_TO_GATHERER",
     "requires": {
      "outcome": "OUTCOME_UPGRADE_TO_GATHERER",
      "plot": {
-      "expr": {
-       "Not": {
-        "Is": "TAG_ANARCHY"
-       }
-      }
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
      }
     },
     "chance": 100,
@@ -79,11 +61,9 @@
     "requires": {
      "outcome": "OUTCOME_UPGRADE_TO_WORKER",
      "plot": {
-      "expr": {
-       "Not": {
-        "Is": "TAG_ANARCHY"
-       }
-      }
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
      }
     },
     "chance": 100,
@@ -96,11 +76,9 @@
     "requires": {
      "outcome": "OUTCOME_UPGRADE_TO_STONE_THROWER",
      "plot": {
-      "expr": {
-       "Not": {
-        "Is": "TAG_ANARCHY"
-       }
-      }
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
      }
     },
     "chance": 100,
@@ -115,11 +93,9 @@
       "requires": {
        "outcome": "OUTCOME_UPGRADE_TO_ARCHER",
        "plot": {
-        "expr": {
-         "Not": {
-          "Is": "TAG_ANARCHY"
-         }
-        }
+        "noneOf": [
+         "IS_ANARCHY"
+        ]
        }
       },
       "chance": 100,
@@ -131,11 +107,9 @@
       "requires": {
        "outcome": "OUTCOME_UPGRADE_TO_ARCHER_REPLACEMENT1",
        "plot": {
-        "expr": {
-         "Not": {
-          "Is": "TAG_ANARCHY"
-         }
-        }
+        "noneOf": [
+         "IS_ANARCHY"
+        ]
        }
       },
       "chance": 100,
@@ -152,11 +126,9 @@
       "requires": {
        "outcome": "OUTCOME_UPGRADE_TO_AXEMAN",
        "plot": {
-        "expr": {
-         "Not": {
-          "Is": "TAG_ANARCHY"
-         }
-        }
+        "noneOf": [
+         "IS_ANARCHY"
+        ]
        }
       },
       "chance": 100,
@@ -168,11 +140,9 @@
       "requires": {
        "outcome": "OUTCOME_UPGRADE_TO_AXEMAN_REPLACEMENT1",
        "plot": {
-        "expr": {
-         "Not": {
-          "Is": "TAG_ANARCHY"
-         }
-        }
+        "noneOf": [
+         "IS_ANARCHY"
+        ]
        }
       },
       "chance": 100,
@@ -184,11 +154,9 @@
       "requires": {
        "outcome": "OUTCOME_UPGRADE_TO_AXEMAN_REPLACEMENT2",
        "plot": {
-        "expr": {
-         "Not": {
-          "Is": "TAG_ANARCHY"
-         }
-        }
+        "noneOf": [
+         "IS_ANARCHY"
+        ]
        }
       },
       "chance": 100,
@@ -205,11 +173,9 @@
       "requires": {
        "outcome": "OUTCOME_UPGRADE_TO_SPEARMAN",
        "plot": {
-        "expr": {
-         "Not": {
-          "Is": "TAG_ANARCHY"
-         }
-        }
+        "noneOf": [
+         "IS_ANARCHY"
+        ]
        }
       },
       "chance": 100,
@@ -221,11 +187,9 @@
       "requires": {
        "outcome": "OUTCOME_UPGRADE_TO_SPEARMAN_REPLACEMENT1",
        "plot": {
-        "expr": {
-         "Not": {
-          "Is": "TAG_ANARCHY"
-         }
-        }
+        "noneOf": [
+         "IS_ANARCHY"
+        ]
        }
       },
       "chance": 100,
@@ -237,11 +201,9 @@
       "requires": {
        "outcome": "OUTCOME_UPGRADE_TO_SPEARMAN_REPLACEMENT2",
        "plot": {
-        "expr": {
-         "Not": {
-          "Is": "TAG_ANARCHY"
-         }
-        }
+        "noneOf": [
+         "IS_ANARCHY"
+        ]
        }
       },
       "chance": 100,
@@ -256,15 +218,12 @@
     "requires": {
      "outcome": "OUTCOME_JOIN_AS_SLAVE",
      "plot": {
-      "expr": {
-       "And": {
-        "Greater": {
-         "Python": "hasSufficientPopulation",
-         "Constant": 0
-        },
-        "Is": "TAG_OWNED"
-       }
-      }
+      "all": [
+       {
+        "python": "hasSufficientPopulation"
+       },
+       "IS_OWNED"
+      ]
      }
     },
     "chance": 100,
@@ -277,15 +236,12 @@
     "requires": {
      "outcome": "OUTCOME_JOIN_AS_SLAVE_FOOD",
      "plot": {
-      "expr": {
-       "And": {
-        "Greater": {
-         "Python": "getNumNonSpecialistSlavesFood",
-         "Constant": 0
-        },
-        "Is": "TAG_OWNED"
-       }
-      }
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesFood"
+       },
+       "IS_OWNED"
+      ]
      }
     },
     "chance": 100,
@@ -298,15 +254,12 @@
     "requires": {
      "outcome": "OUTCOME_JOIN_AS_SLAVE_PRODUCTION",
      "plot": {
-      "expr": {
-       "And": {
-        "Greater": {
-         "Python": "getNumNonSpecialistSlavesProduction",
-         "Constant": 0
-        },
-        "Is": "TAG_OWNED"
-       }
-      }
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesProduction"
+       },
+       "IS_OWNED"
+      ]
      }
     },
     "chance": 100,
@@ -319,15 +272,12 @@
     "requires": {
      "outcome": "OUTCOME_JOIN_AS_SLAVE_COMMERCE",
      "plot": {
-      "expr": {
-       "And": {
-        "Greater": {
-         "Python": "getNumNonSpecialistSlavesCommerce",
-         "Constant": 0
-        },
-        "Is": "TAG_OWNED"
-       }
-      }
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesCommerce"
+       },
+       "IS_OWNED"
+      ]
      }
     },
     "chance": 100,
@@ -340,15 +290,12 @@
     "requires": {
      "outcome": "OUTCOME_JOIN_AS_SLAVE_HEALTH",
      "plot": {
-      "expr": {
-       "And": {
-        "Greater": {
-         "Python": "getNumNonSpecialistSlavesHealth",
-         "Constant": 0
-        },
-        "Is": "TAG_OWNED"
-       }
-      }
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesHealth"
+       },
+       "IS_OWNED"
+      ]
      }
     },
     "chance": 100,
@@ -361,15 +308,12 @@
     "requires": {
      "outcome": "OUTCOME_JOIN_AS_SLAVE_ENTERTAINMENT",
      "plot": {
-      "expr": {
-       "And": {
-        "Greater": {
-         "Python": "getNumNonSpecialistSlavesEntertainment",
-         "Constant": 0
-        },
-        "Is": "TAG_OWNED"
-       }
-      }
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesEntertainment"
+       },
+       "IS_OWNED"
+      ]
      }
     },
     "chance": 100,
@@ -384,15 +328,12 @@
       "requires": {
        "outcome": "OUTCOME_JOIN_AS_SLAVE_TUTOR",
        "plot": {
-        "expr": {
-         "And": {
-          "Greater": {
-           "Python": "getNumNonSpecialistSlavesTutor",
-           "Constant": 0
-          },
-          "Is": "TAG_OWNED"
-         }
-        }
+        "all": [
+         {
+          "python": "getNumNonSpecialistSlavesTutor"
+         },
+         "IS_OWNED"
+        ]
        }
       },
       "chance": 100,
@@ -404,15 +345,12 @@
       "requires": {
        "outcome": "OUTCOME_JOIN_AS_SLAVE_TUTOR_REPLACEMENT1",
        "plot": {
-        "expr": {
-         "And": {
-          "Greater": {
-           "Python": "getNumNonSpecialistSlavesTutor",
-           "Constant": 0
-          },
-          "Is": "TAG_OWNED"
-         }
-        }
+        "all": [
+         {
+          "python": "getNumNonSpecialistSlavesTutor"
+         },
+         "IS_OWNED"
+        ]
        }
       },
       "chance": 100,
@@ -427,15 +365,12 @@
     "requires": {
      "outcome": "OUTCOME_JOIN_AS_SLAVE_MILITARY",
      "plot": {
-      "expr": {
-       "And": {
-        "Greater": {
-         "Python": "getNumNonSpecialistSlavesMilitary",
-         "Constant": 0
-        },
-        "Is": "TAG_OWNED"
-       }
-      }
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesMilitary"
+       },
+       "IS_OWNED"
+      ]
      }
     },
     "chance": 100,
@@ -449,38 +384,18 @@
      {
       "requires": {
        "outcome": "OUTCOME_SLAVE_SALE_SLAVERY",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "commerce": {
-       "expr": {
-        "Adapt": {
-         "Constant": 6
-        }
-       }
-      }
+      "commerce": 6
      },
      {
       "requires": {
        "outcome": "OUTCOME_SLAVE_SALE_SLAVE_MARKET",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "commerce": {
-       "expr": {
-        "Adapt": {
-         "Constant": 12
-        }
-       }
-      }
+      "commerce": 12
      }
     ]
    },
@@ -490,102 +405,38 @@
      {
       "requires": {
        "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "food": {
-       "expr": {
-        "Adapt": {
-         "Constant": 8
-        }
-       }
-      },
-      "production": {
-       "expr": {
-        "Adapt": {
-         "Constant": 2
-        }
-       }
-      }
+      "food": 8,
+      "production": 2
      },
      {
       "requires": {
        "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "food": {
-       "expr": {
-        "Adapt": {
-         "Constant": 10
-        }
-       }
-      },
-      "production": {
-       "expr": {
-        "Adapt": {
-         "Constant": 4
-        }
-       }
-      }
+      "food": 10,
+      "production": 4
      },
      {
       "requires": {
        "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT1",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "food": {
-       "expr": {
-        "Adapt": {
-         "Constant": 10
-        }
-       }
-      },
-      "production": {
-       "expr": {
-        "Adapt": {
-         "Constant": 4
-        }
-       }
-      }
+      "food": 10,
+      "production": 4
      },
      {
       "requires": {
        "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT2",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "food": {
-       "expr": {
-        "Adapt": {
-         "Constant": 10
-        }
-       }
-      },
-      "production": {
-       "expr": {
-        "Adapt": {
-         "Constant": 4
-        }
-       }
-      }
+      "food": 10,
+      "production": 4
      }
     ]
    },
@@ -595,173 +446,101 @@
      {
       "requires": {
        "outcome": "OUTCOME_SACRIFICE_CAPTIVE",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "happinessTimer": 1,
-      "culture": {
-       "expr": {
-        "Adapt": {
-         "Constant": 3
-        }
-       }
-      }
+      "happiness": {
+       "duration": 1
+      },
+      "culture": 3
      },
      {
       "requires": {
        "outcome": "OUTCOME_SACRIFICE_CAPTIVE_ALTER_I",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "happinessTimer": 2,
-      "culture": {
-       "expr": {
-        "Adapt": {
-         "Constant": 6
-        }
-       }
-      }
+      "happiness": {
+       "duration": 2
+      },
+      "culture": 6
      },
      {
       "requires": {
        "outcome": "OUTCOME_SACRIFICE_CAPTIVE_ALTER_II",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "happinessTimer": 3,
-      "culture": {
-       "expr": {
-        "Adapt": {
-         "Constant": 12
-        }
-       }
-      }
+      "happiness": {
+       "duration": 3
+      },
+      "culture": 12
      },
      {
       "requires": {
        "outcome": "OUTCOME_SACRIFICE_CAPTIVE_DRUID",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "happinessTimer": 2,
-      "culture": {
-       "expr": {
-        "Adapt": {
-         "Constant": 6
-        }
-       }
-      }
+      "happiness": {
+       "duration": 2
+      },
+      "culture": 6
      },
      {
       "requires": {
        "outcome": "OUTCOME_SACRIFICE_CAPTIVE_DRUID_ALTER_I",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "happinessTimer": 4,
-      "culture": {
-       "expr": {
-        "Adapt": {
-         "Constant": 12
-        }
-       }
-      }
+      "happiness": {
+       "duration": 4
+      },
+      "culture": 12
      },
      {
       "requires": {
        "outcome": "OUTCOME_SACRIFICE_CAPTIVE_DRUID_ALTER_II",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "happinessTimer": 6,
-      "culture": {
-       "expr": {
-        "Adapt": {
-         "Constant": 24
-        }
-       }
-      }
+      "happiness": {
+       "duration": 6
+      },
+      "culture": 24
      },
      {
       "requires": {
        "outcome": "OUTCOME_SACRIFICE_CAPTIVE_MESOAMERICAN",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "happinessTimer": 2,
-      "culture": {
-       "expr": {
-        "Adapt": {
-         "Constant": 6
-        }
-       }
-      }
+      "happiness": {
+       "duration": 2
+      },
+      "culture": 6
      },
      {
       "requires": {
        "outcome": "OUTCOME_SACRIFICE_CAPTIVE_MESOAMERICAN_ALTER_I",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "happinessTimer": 4,
-      "culture": {
-       "expr": {
-        "Adapt": {
-         "Constant": 12
-        }
-       }
-      }
+      "happiness": {
+       "duration": 4
+      },
+      "culture": 12
      },
      {
       "requires": {
        "outcome": "OUTCOME_SACRIFICE_CAPTIVE_MESOAMERICAN_ALTER_II",
-       "plot": {
-        "expr": {
-         "Is": "TAG_OWNED"
-        }
-       }
+       "plot": "IS_OWNED"
       },
       "chance": 100,
-      "happinessTimer": 6,
-      "culture": {
-       "expr": {
-        "Adapt": {
-         "Constant": 24
-        }
-       }
-      }
+      "happiness": {
+       "duration": 6
+      },
+      "culture": 24
      }
     ]
    }

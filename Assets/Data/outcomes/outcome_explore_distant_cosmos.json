@@ -1,0 +1,15 @@
+{
+ "type": "OUTCOME_EXPLORE_DISTANT_COSMOS",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_DISTANT_COSMOS",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_DISTANT_COSMOS_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_QUANTUM_RAMJET"
+  ]
+ },
+ "territory": [
+  "neutral"
+ ]
+}

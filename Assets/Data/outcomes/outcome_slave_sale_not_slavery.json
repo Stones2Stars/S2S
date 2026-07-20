@@ -1,0 +1,13 @@
+{
+ "type": "OUTCOME_SLAVE_SALE_NOT_SLAVERY",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_SELL_CAPTIVE_NOT_SLAVERY",
+  "message": "TXT_KEY_OUTCOME_SELL_CAPTIVE_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_TRADE"
+  ]
+ },
+ "in": "city"
+}

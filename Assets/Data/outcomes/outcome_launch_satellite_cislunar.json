@@ -1,0 +1,15 @@
+{
+ "type": "OUTCOME_LAUNCH_SATELLITE_CISLUNAR",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_LAUNCH_SATELLITE_CISLUNAR",
+  "message": "TXT_KEY_OUTCOME_LAUNCH_SATELLITE_CISLUNAR_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_ION_PROPULSION"
+  ]
+ },
+ "territory": [
+  "neutral"
+ ]
+}

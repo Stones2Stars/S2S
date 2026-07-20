@@ -1,0 +1,15 @@
+{
+ "type": "OUTCOME_EXPLORE_VON_NEUMANN",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_INTERGALACTIC",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_INTERGALACTIC_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_FOLDING_SPACE"
+  ]
+ },
+ "territory": [
+  "neutral"
+ ]
+}

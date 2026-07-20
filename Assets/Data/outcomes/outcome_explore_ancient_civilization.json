@@ -1,0 +1,15 @@
+{
+ "type": "OUTCOME_EXPLORE_ANCIENT_CIVILIZATION",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_ANCIENT_CIVILIZATION",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_ANCIENT_CIVILIZATION_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "TECH_ASTROIMPERIALISM"
+  ]
+ },
+ "territory": [
+  "neutral"
+ ]
+}

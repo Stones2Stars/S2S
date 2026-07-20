@@ -1,0 +1,13 @@
+{
+ "type": "OUTCOME_JOIN_AS_SLAVE_FOOD",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_JOIN_AS_SLAVE_FOOD",
+  "message": "TXT_KEY_OUTCOME_JOIN_AS_SLAVE_FOOD_MESSAGE"
+ },
+ "requires": {
+  "all": [
+   "BUILDING_SLAVE_COMPOUND_FOOD"
+  ]
+ },
+ "in": "city"
+}

@@ -77,12 +77,7 @@
       "requires": {
        "outcome": "OUTCOME_BUILD_DOMESTICATED_HERD",
        "plot": {
-        "expr": {
-         "Greater": {
-          "Python": "canBuildSheepBonus",
-          "Constant": 0
-         }
-        }
+        "python": "canBuildSheepBonus"
        }
       },
       "chance": 50,
@@ -94,12 +89,7 @@
       "requires": {
        "outcome": "OUTCOME_BUILD_DOMESTICATED_HERD_WITH_PASTURE",
        "plot": {
-        "expr": {
-         "Greater": {
-          "Python": "canBuildSheepBonusAndPasture",
-          "Constant": 0
-         }
-        }
+        "python": "canBuildSheepBonusAndPasture"
        }
       },
       "chance": 100,
