@@ -45,14 +45,14 @@ public:
 	bool hasBuild(BuildTypes e) const { for (size_t i = 0; i < builds.size(); ++i) if (builds[i] == (int)e) return true; return false; }
 
 	// --- identity.base (create-unit foundation) ---
-	int getCombat() const { return m_iCombat; }                                  // identity.base.combat
-	int getMoves() const { return m_iMoves; }                                    // identity.base.moves
+	int getCombat() const { return m_iCombat; }                                  // strength.unit.flat (0 when absent)
+	int getMoves() const { return m_iMoves; }                                    // movement.unit.flat
 	int getWorkRate() const { return m_iWorkRate; }                              // identity.base.workRate
 	int getAirCombat() const { return m_iAirCombat; }                            // identity.base.airCombat
 	int getCombatLimit() const { return m_iCombatLimit; }                        // identity.base.combatLimit
 	int getAirCombatLimit() const { return m_iAirCombatLimit; }                  // identity.base.airCombatLimit
 	int getAirUnitCap() const { return m_iAirUnitCap; }                          // identity.base.airUnitCap
-	int getUnitCombatType() const { return m_iUnitCombatType; }                  // identity.base.combatClass (primary FK)
+	int getUnitCombatType() const { return m_iUnitCombatType; }                  // root `combatClass` (primary FK)
 
 	// --- identity scalars ---
 	int getAssetValue() const { return m_iAssetValue; }                          // identity.worth
@@ -146,10 +146,12 @@ public:
 	bool isFlankingStrikebyUnitCombatType(int i) const { return m_flankingByUnitCombat.count(i) != 0; }
 
 	// --- section 8 keyed skill-extras (targeting / immunity) ---
-	bool getTargetUnitCombat(int i) const { return m_targetUnitCombat.count(i) != 0; }      // skills.targets.{UC}
-	bool getDefenderUnitCombat(int i) const { return m_defenderUnitCombat.count(i) != 0; }  // skills.defenders.{UC}
-	int getUnitCombatCollateralImmune(int i) const { return m_collateralImmune.count(i) != 0 ? 1 : 0; }  // skills.collateralImmune.{UC}
-	int getTargetUnit(int i) const { return (i >= 0 && i < (int)m_targetUnits.size()) ? m_targetUnits[i] : -1; }  // skills.unitTargets
+	bool getTargetUnitCombat(int i) const { return m_targetUnitCombat.count(i) != 0; }      // strength.unit.targets.{UC}
+	bool getDefenderUnitCombat(int i) const { return m_defenderUnitCombat.count(i) != 0; }  // strength.unit.defenders.{UC}
+	// collateralImmune is now a BLANKET `skills` bit (curator reclassification), not a per-unitCombat keyed set: the
+	// unit is collateral-immune against ALL unitCombats or none, so the arg is ignored (behaviour change vs legacy per-UC).
+	int getUnitCombatCollateralImmune(int /*i*/) const { return skill("collateralImmune") ? 1 : 0; }  // skills[collateralImmune]
+	int getTargetUnit(int i) const { return (i >= 0 && i < (int)m_targetUnits.size()) ? m_targetUnits[i] : -1; }  // strength.unit.unitTargets
 	int getNumTargetUnits() const { return (int)m_targetUnits.size(); }
 	bool isTargetUnit(int i) const { return contains(m_targetUnits, i); }
 
@@ -240,7 +242,7 @@ public:
 	// --- identity lists ---
 	bool getUnitAIType(int i) const { return contains(m_unitAIs, i); }              // identity.unitAIs
 	bool getNotUnitAIType(int i) const { return contains(m_notUnitAIs, i); }        // identity.notUnitAIs
-	UnitCombatTypes getSubCombatType(int i) const { return (i >= 0 && i < (int)m_subCombatTypes.size()) ? (UnitCombatTypes)m_subCombatTypes[i] : NO_UNITCOMBAT; }  // identity.combatClasses
+	UnitCombatTypes getSubCombatType(int i) const { return (i >= 0 && i < (int)m_subCombatTypes.size()) ? (UnitCombatTypes)m_subCombatTypes[i] : NO_UNITCOMBAT; }  // root `combatClasses`
 	int getNumSubCombatTypes() const { return (int)m_subCombatTypes.size(); }
 	bool isSubCombatType(UnitCombatTypes e) const { return contains(m_subCombatTypes, (int)e); }
 	const std::vector<UnitCombatTypes>& getSubCombatTypes() const { return reinterpret_cast<const std::vector<UnitCombatTypes>&>(m_subCombatTypes); }
@@ -591,7 +593,7 @@ private:
 	std::map<int, int> m_featurePassableTech, m_terrainPassableTech;   // identity.{feature|terrain}PassableTechs -> typeId->techId
 	std::map<int, int> m_religionSpreads, m_corporationSpreads;   // spread.religion / spread.corporation -- per-type spread strength
 	// keyed skill-extra sets
-	std::set<int> m_targetUnitCombat, m_defenderUnitCombat, m_collateralImmune;
+	std::set<int> m_targetUnitCombat, m_defenderUnitCombat;
 	// struct-bearing populated data
 	std::vector<HealUnitCombat> m_healUnitCombat;
 	std::vector<EnabledCivilizations> m_enabledCivs;

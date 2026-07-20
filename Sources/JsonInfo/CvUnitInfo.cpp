@@ -205,20 +205,23 @@ namespace
 			if (lv != leafParent->end() && lv->second.is<double>()) out[id] = (int)lv->second.get<double>();
 		}
 	}
-	// o[section][key] = { TYPE: true } -> resolved ids inserted into out (a section-8 keyed skill extra).
-	void readKeyedSet(const picojson::object& o, const char* section, const char* key, std::set<int>& out)
+	// o[family][scope][keyword] = { TYPE: true } -> resolved ids inserted into out. A 3-level (family/scope/keyword)
+	// keyed-set reader -- the curator moved the targets/defenders classification blocks under strength.unit.*.
+	void readFamKeyedSet(const picojson::object& o, const char* family, const char* scope, const char* keyword, std::set<int>& out)
 	{
-		const picojson::object* s = jsonChildObj(o, section); if (!s) return;
-		const picojson::object* kv = jsonChildObj(*s, key);   if (!kv) return;
-		for (picojson::object::const_iterator it = kv->begin(); it != kv->end(); ++it)
+		const picojson::object* f  = jsonChildObj(o, family);    if (!f)  return;
+		const picojson::object* sc = jsonChildObj(*f, scope);    if (!sc) return;
+		const picojson::object* kw = jsonChildObj(*sc, keyword); if (!kw) return;
+		for (picojson::object::const_iterator it = kw->begin(); it != kw->end(); ++it)
 		{ const int id = jsonResolveId(it->first); if (id >= 0) out.insert(id); }
 	}
-	// same shape, into a vector (deterministic sorted order -- picojson::object is a std::map) for indexed access.
-	void readKeyedList(const picojson::object& o, const char* section, const char* key, std::vector<int>& out)
+	// same 3-level shape, into a vector (deterministic sorted order) for indexed access (strength.unit.unitTargets).
+	void readFamKeyedList(const picojson::object& o, const char* family, const char* scope, const char* keyword, std::vector<int>& out)
 	{
-		const picojson::object* s = jsonChildObj(o, section); if (!s) return;
-		const picojson::object* kv = jsonChildObj(*s, key);   if (!kv) return;
-		for (picojson::object::const_iterator it = kv->begin(); it != kv->end(); ++it)
+		const picojson::object* f  = jsonChildObj(o, family);    if (!f)  return;
+		const picojson::object* sc = jsonChildObj(*f, scope);    if (!sc) return;
+		const picojson::object* kw = jsonChildObj(*sc, keyword); if (!kw) return;
+		for (picojson::object::const_iterator it = kw->begin(); it != kw->end(); ++it)
 		{ const int id = jsonResolveId(it->first); if (id >= 0) out.push_back(id); }
 	}
 	// o[section][key] = { TYPE: N } -> out[id] = N (a FLAT keyed-int map -- e.g. spread.religion / spread.corporation).
@@ -372,6 +375,10 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 			if (a[i].is<std::string>()) { const int bid = jsonResolveId(a[i].get<std::string>()); if (bid >= 0) builds.push_back(bid); }
 	}
 
+	// --- combat classes (ROOT-level after the curator restructure) ---
+	m_iUnitCombatType = jsonIdFk(o, "combatClass");        // the PRIMARY combat class (root `combatClass`)
+	readIdArray(o, "combatClasses", m_subCombatTypes);     // the SubCombatTypes list (root `combatClasses`)
+
 	// --- identity (scalars + base + lists) ---
 	if (const picojson::object* id = jsonChildObj(o, "identity"))
 	{
@@ -398,23 +405,20 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 		m_iReligionType      = jsonIdFk(*id, "religion");
 		m_iUnitCaptureType   = jsonIdFk(*id, "captures");
 		jsonIdStr(*id, "formationType", m_szFormationType);
-		// identity.base (the create-unit foundation)
+		// identity.base (the create-unit foundation) -- combat/moves/combatClass RELOCATED to root (read below);
+		// workRate/airCombat/combatLimit/airCombatLimit/airUnitCap still live here.
 		if (const picojson::object* base = jsonChildObj(*id, "base"))
 		{
-			m_iCombat         = jsonIdInt(*base, "combat");
-			m_iMoves          = jsonIdInt(*base, "moves");
 			m_iWorkRate       = jsonIdInt(*base, "workRate");
 			m_iAirCombat      = jsonIdInt(*base, "airCombat");
 			m_iCombatLimit    = childInt(*base, "combatLimit", 100);  // legacy load default 100 (archive .add:2691) -- 0 reads
 			                                                          // every undamaged defender as combat-limit-reached (no attacks)
 			m_iAirCombatLimit = jsonIdInt(*base, "airCombatLimit");
 			m_iAirUnitCap     = jsonIdInt(*base, "airUnitCap");
-			m_iUnitCombatType = jsonIdFk(*base, "combatClass");   // the PRIMARY combat class
 		}
 		// identity lists
 		readIdArray(*id, "unitAIs",           m_unitAIs);
 		readIdArray(*id, "notUnitAIs",        m_notUnitAIs);
-		readIdArray(*id, "combatClasses",     m_subCombatTypes);       // SubCombatTypes
 		readIdArray(*id, "mapCategories",     m_mapCategories);
 		readIdArray(*id, "featureImpassable", m_impassableFeatures);
 		readIdArray(*id, "terrainImpassable", m_impassableTerrains);
@@ -449,6 +453,12 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 		if (const picojson::object* emp = jsonChildObj(*costs, "empire"))
 			if (const picojson::object* pi = jsonChildObj(*emp, "perInstance"))
 				m_iInstanceCostModifier = childInt(*pi, "percent", 0);
+
+	// --- base combat strength + base moves: the FLAT scalar of the strength/movement families (curator restructure).
+	// strength.unit ALSO carries cityAttack/targets/etc; read the base scalar specifically at .flat (0 when the whole
+	// block is absent -- a non-combatant with no strength block reads combat 0, never a crash).
+	m_iCombat                      = jsonFamVal(o, "strength", "unit", "flat");
+	m_iMoves                       = jsonFamVal(o, "movement", "unit", "flat");
 
 	// --- section 5 unit-scope combat-trait families (raw human values; curate_unit.py UNIT_FAMILIES) ---
 	m_iCityAttackModifier          = jsonFamMemberVal(o, "strength", "unit", "cityAttack", "percent");
@@ -568,12 +578,14 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 		for (std::map<int, int>::const_iterator i = def.begin(); i != def.end(); ++i) if (i->second != 0) m_unitDefenseModifiers.setValue((UnitTypes)i->first, i->second);
 	}
 
-	// --- section 8 keyed skill-extras (skills.<name>.{TYPE:true}) ---
-	readKeyedSet(o, "skills", "targets",          m_targetUnitCombat);
-	readKeyedSet(o, "skills", "defenders",        m_defenderUnitCombat);
-	readKeyedSet(o, "skills", "collateralImmune", m_collateralImmune);
-	readKeyedList(o, "skills", "unitTargets",     m_targetUnits);
-	// skills.dcmAirBomb is an INT tier (not a bool; CvJsonBoolBlock drops it) -> read raw.
+	// --- keyed skill-extras: the curator moved targets/defenders/unitTargets under strength.unit.<keyword>.{TYPE:true}
+	// (3-level path). collateralImmune became a blanket `skills` bit (read in getUnitCombatCollateralImmune), not a
+	// per-unitCombat keyed set, so it is no longer parsed here.
+	readFamKeyedSet(o, "strength", "unit", "targets",     m_targetUnitCombat);
+	readFamKeyedSet(o, "strength", "unit", "defenders",   m_defenderUnitCombat);
+	readFamKeyedList(o, "strength", "unit", "unitTargets", m_targetUnits);
+	// skills.dcmAirBomb was an INT tier read from the (former) skills OBJECT; `skills` is now a pure string array and
+	// NO current unit authors a dcmAirBomb tier, so this stays 0 (jsonChildObj on the array yields NULL). See report.
 	if (const picojson::object* sk = jsonChildObj(o, "skills")) m_iDcmAirBombTier = childInt(*sk, "dcmAirBomb", 0);
 	unlimitedException = skill("unlimitedException");   // skills.unlimitedException (the enabler's per-unit exception)
 

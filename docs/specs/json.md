@@ -616,12 +616,23 @@ A unit's classification splits into **three blocks, distinguished by lifecycle**
 promotion grant it?***
 
 - **`skills`** — **mutable** unit abilities, gained/lost via promotions (`blitz`, amphibious, walk-on-mountains,
-  fly-over-water, …). *Promotion-grantable ⇒ skill.* Glossary: [skills.md](skills.md).
+  fly-over-water, …). *Promotion-grantable ⇒ skill.* **A skill is a PURE BOOLEAN ENABLER — the unit mirror of empire
+  [`capabilities`](capabilities.md)** ("can walk over river", "can fly over water", "can pass peaks"): it carries
+  **no value**, so a **UNIT authors `skills` as an ARRAY OF STRINGS** (`["pillage","blitz"]`), never `{name:true}` —
+  a skill cannot be `false` (absent ⇒ not held). Anything that carries a value is **not a skill**: keyed
+  targeting/immunity (`targets`/`unitTargets`/`defenders`) → the combat (`strength`) family; a per-type variant that
+  collapses to one enabler stays a skill (`collateralImmune` = immune to the siege-variant collateral). Only where
+  **revoke** is real — a **PROMOTION** granting *or removing* a skill — is the object form (`{name:true|false}`) used
+  (the grant/revoke plane, skills.md §4). Glossary: [skills.md](skills.md).
 - **`tags`** — **immutable, type-derived** membership: set at creation, re-set on **upgrade**, **purely for
-  accounting** — overlapping (`military`/`civilian`/`worker`/`spy`/`gunpowder`/`mechanized`/…), counted by the
-  engine/tally, **no behaviour or modifiers**. A tag is **queried via its `IS_<TAG>` predicate** — a unit
-  `IS_MILITARY` ⟺ it has the `military` tag (§3.5) — while the *generic* `IS_*` predicates (`IS_WATER`) read game
-  state, not a tag. *Not* promotion-grantable (a swordsman must upgrade to a rifleman to gain `gunpowder`).
+  accounting** — overlapping (`military`/`civilian`/`worker`/`spy`/`landUnit`/`gunpowder`/`mechanized`/…), counted by
+  the engine/tally, **no behaviour or modifiers**. Like skills, a tag is pure membership with **no value**, so a unit
+  authors `tags` as an **ARRAY OF STRINGS that is ALWAYS PRESENT** (empty `[]` until the unitcombat→tags distillation
+  fills it — never optional/absent; there is no real unit with zero tags, but the schema keeps the array mandatory).
+  A tag is **queried via its `IS_<TAG>` predicate** — a unit `IS_MILITARY` ⟺ it has the `military` tag (§3.5), a unit
+  `IS_LAND` ⟺ `landUnit` (the domain `DOMAIN_*` is a tag: `landUnit`/`seaUnit`/`airUnit`; the enum stays engine-side
+  for movement/stacking) — while the *generic* `IS_*` predicates (`IS_WATER`) read game state, not a tag. *Not*
+  promotion-grantable (a swordsman must upgrade to a rifleman to gain `gunpowder`).
 - **`state`** — **transient** conditions (fired → counted down → over: `paralyze`/immobilise). **Greenfield** —
   never first-class; historically faked via pseudo-promotions + Python events.
 
@@ -666,8 +677,12 @@ pattern as `capabilities` — but the held thing is a full **trait** (effect-bun
 NOT `grants` (it is held-while-active, not a one-shot handout).
 
 ```jsonc
-"skills": { "amphibious": true, "blitz": true },   // UNIT, mutable
-"tags":   { "military": true, "gunpowder": true }, // UNIT, immutable (type)
+"skills": [ "amphibious", "blitz" ],                        // UNIT skills: pure boolean ENABLERS -> array of strings
+"tags":   [ "military", "gunpowder", "landUnit" ],          // UNIT tags: immutable membership -> always-present string array
+"combatClass":  "UNITCOMBAT_GUN",                           // UNIT: primary combat class -> ROOT (not identity)
+"combatClasses": [ "UNITCOMBAT_SPECIES_HUMAN", "…" ],       // UNIT: sub combat classes -> ROOT
+"strength": { "unit": { "flat": 26 } },                     // UNIT base STRENGTH (a modifier family, not identity.base; absent if it can't attack/defend)
+"movement": { "unit": { "flat": 1 } },                      // UNIT base MOVES (the movement subsystem, not identity.base)
 "attributes":   { "nukeImmune": true, "zoneOfControl": true }, // BUILDING, held city-scope intrinsic
 "capabilities": { "moveOnWater": true, "setCultureRate": true } // empire-HELD, grantor-PROVIDED (tech/civic/building)
 ```

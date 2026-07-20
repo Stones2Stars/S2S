@@ -9,6 +9,17 @@
 
 void CvJsonBoolBlock::parse(const picojson::value& v)
 {
+	// ARRAY form (unit skills/tags after the curator restructure): a plain list of enabler names -- name present
+	// == held (grant plane only; a pure-boolean list carries no revoke). Additive: the OBJECT form below is kept
+	// verbatim for the sections that still author {name:bool} grant/revoke pairs (promotion skills, building
+	// attributes, tech capabilities, empire policies).
+	if (v.is<picojson::array>())
+	{
+		const picojson::array& a = v.get<picojson::array>();
+		for (size_t i = 0; i < a.size(); ++i)
+			if (a[i].is<std::string>()) m_names.insert(a[i].get<std::string>());
+		return;
+	}
 	if (!v.is<picojson::object>()) return;
 	const picojson::object& o = v.get<picojson::object>();
 	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)

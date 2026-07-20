@@ -39,7 +39,9 @@ from store import Store, REPO
 
 # ---- identity.base: the create-unit FOUNDATION (§0.6) ----
 BASE = {
-    "iCombat": "combat", "iMoves": "moves", "iWorkRate": "workRate", "iAirCombat": "airCombat",
+    # iCombat -> strength family, iMoves -> movement family (owner 2026-07-20: identity.base grab-bag dissolves;
+    # base combat is the unit's base STRENGTH, base moves belong to the movement subsystem). Handled in curate().
+    "iWorkRate": "workRate", "iAirCombat": "airCombat",
     "iCombatLimit": "combatLimit", "iAirCombatLimit": "airCombatLimit",
     "iAirUnitCap": "airUnitCap",
 }
@@ -159,9 +161,10 @@ ID_SCALAR = {"iAsset": "worth", "iPower": "militaryWorth", "iXPValueAttack": "xp
              "Domain": "domain", "DefaultUnitAI": "defaultUnitAI", "FormationType": "formationType",
              "Special": "special", "Advisor": "advisor", "LeaderPromotion": "leaderPromotion",
              "ReligionType": "religion", "iEspionagePoints": "espionagePoints", "Capture": "captures"}
-ID_LIST = {"UnitAIs": "unitAIs", "NotUnitAIs": "notUnitAIs", "SubCombatTypes": "combatClasses",
+ID_LIST = {"UnitAIs": "unitAIs", "NotUnitAIs": "notUnitAIs",
            "MapCategoryTypes": "mapCategories", "UniqueNames": "uniqueNames", "FeatureImpassableTypes": "featureImpassable",
            "TerrainImpassableTypes": "terrainImpassable", "DefendAgainstUnit": "defendAgainstUnit"}
+# SubCombatTypes -> ROOT `combatClasses` (owner 2026-07-20), NOT identity -- read directly in curate() into sub_combats.
 ID_BOOL_GP = {}  # placeholder
 
 # requires-feeding (read by requires_unit; listed for coverage)
@@ -446,9 +449,12 @@ VS_KEYED = {
 # targeting/immunity capability LISTS -> capabilities.<name>: {TYPE: true}
 CAP_LIST = {
     "UnitCombatTargets": "targets", "UnitCombatDefenders": "defenders",
-    "UnitCombatCollateralImmunes": "collateralImmune", "UnitTargets": "unitTargets",
+    "UnitTargets": "unitTargets",
     "FeatureImpassableTypes": None, "TerrainImpassableTypes": None,  # handled as identity lists already
 }
+# UnitCombatCollateralImmunes -> the boolean SKILL `collateralImmune` (owner 2026-07-20): immune to the siege-VARIANT
+# collateral (keyed only to SIEGE/ASSAULT_MECH/ROBOT sources, never MOUNTED-flanking) -> collapses to one pure
+# enabler; flankImmune is not needed (siege units are the flankable ones). Emitted in curate(), NOT this CAP_LIST.
 VISION_STRUCTS = {
     "InvisibleTerrainChanges": ("invisibleTerrain", ["InvisibleType", "TerrainType", "iIntensity"]),
     "InvisibleFeatureChanges": ("invisibleFeature", ["InvisibleType", "FeatureType", "iIntensity"]),
@@ -491,13 +497,17 @@ def pass2(typ, rec, store, fams, caps, grants, vision, identity):
             if member:
                 base = base.setdefault(member, OrderedDict())
             base["percent"] = v
-    # targeting/immunity capability lists
+    # targeting/immunity per-type lists are NOT skills (they carry a value -- the TYPE): owner 2026-07-20, skills are
+    # pure boolean ENABLERS. Route to the strength (combat) family, keyed by type -- combat data, not a skill.
+    # FLAG: this family placement is a reasonable combat home pending owner confirmation of the exact shape.
     for tag, name in CAP_LIST.items():
         if name is None:
             continue
         lst = _typelist(rec, tag)
         if lst:
-            caps.setdefault(name, OrderedDict()).update((x, True) for x in lst)
+            node = fams.setdefault("strength", OrderedDict()).setdefault("unit", OrderedDict()).setdefault(name, OrderedDict())
+            for x in lst:
+                node[x] = True
     # vision: the unit's own invisibility + see-invisible + intensity pairs + struct tables
     inv = _txt(rec, "Invisible")
     if inv:
@@ -641,10 +651,17 @@ def curate(typ, rec, store):
         v = _int(rec, tag)
         if v is not None and v != 0:
             base[key] = v
-    # the unit's combat CLASS (Combat tag) + domain
+    # base STRENGTH + base MOVES are MODIFIER FAMILIES (owner 2026-07-20), not identity.base scalars. A unit that
+    # cannot attack/defend has NO strength block at all (absent, never combat:0 -- membership, like skills/tags).
+    ic = _int(rec, "iCombat")
+    if ic:
+        _set_fam(fams, "strength", None, "flat", ic)
+    im = _int(rec, "iMoves")
+    if im:
+        _set_fam(fams, "movement", None, "flat", im)
+    # the unit's combat CLASSES -> ROOT, not identity (owner 2026-07-20): primary <Combat> + <SubCombatTypes>.
     combat_class = _txt(rec, "Combat")
-    if combat_class:
-        base["combatClass"] = combat_class
+    sub_combats = _typelist(rec, "SubCombatTypes")
     # --- §5 combat-trait families (unit scope) ---
     for tag, (family, member, unit) in UNIT_FAMILIES.items():
         v = _int(rec, tag)
@@ -658,9 +675,13 @@ def curate(typ, rec, store):
         v = _int(rec, tag)
         if v:
             caps[name] = True
-    dcm = [t for t in DCM_AIRBOMB if _bool(rec, t)]
-    if dcm:
-        caps["dcmAirBomb"] = len(dcm)   # the tier = count of set levels
+    # collateralImmune -> boolean SKILL (owner 2026-07-20): immune to the siege-variant collateral. The legacy
+    # UnitCombatCollateralImmunes keys the source (SIEGE/ASSAULT_MECH/ROBOT -- all the siege variant, never
+    # MOUNTED-flanking), so it collapses to one pure enabler; flankImmune is not needed.
+    if _typelist_struct(rec, "UnitCombatCollateralImmunes", "UnitCombatType"):
+        caps["collateralImmune"] = True
+    # dcmAirBomb: DEAD (owner 2026-07-20 -- DCM air bombing is slated for removal); DROPPED, not emitted. It also
+    # carried a COUNT, and a skill that carries a value is not a skill (skills are pure boolean enablers).
     # --- tags (derived classification; greenfield first pass — see TAG_BY_UNITAI) ---
     # A specific DefaultUnitAI role (worker/spy/merchant/…) classifies the unit and SUPPRESSES `military` (owner:
     # a spy just needs `spy`, not military — bMilitarySupport over-fires on non-combat roles). `military` (the
@@ -676,6 +697,11 @@ def curate(typ, rec, store):
     # identity.combatClasses. Independent of (and additive to) the role/military tags above.
     if combat_class == CRIMINAL_COMBAT or CRIMINAL_COMBAT in _typelist(rec, "SubCombatTypes"):
         tags["outlaw"] = True
+    # domain -> a membership TAG (owner 2026-07-20): landUnit/seaUnit/airUnit. The DOMAIN_* enum stays in
+    # identity.domain for the engine (movement/stacking); the tag is the classification view.
+    dom_tag = {"DOMAIN_LAND": "landUnit", "DOMAIN_SEA": "seaUnit", "DOMAIN_AIR": "airUnit"}.get(_txt(rec, "Domain"))
+    if dom_tag:
+        tags[dom_tag] = True
     # --- grants (lists) ---
     for tag, key in GRANT_LIST.items():
         lst = _typelist(rec, tag)
@@ -843,9 +869,13 @@ def curate(typ, rec, store):
     for f in ordered:
         out[f] = fams[f]
     if caps:
-        out["skills"] = caps
-    if tags:
-        out["tags"] = tags
+        out["skills"] = list(caps.keys())    # pure boolean ENABLERS only (the unit mirror of capabilities) -> array
+                                             # of strings; a skill carries no value. Valued/keyed abilities are NOT skills.
+    out["tags"] = list(tags.keys())          # ALWAYS present (json.md §8): immutable membership, empty array if none
+    if combat_class:
+        out["combatClass"] = combat_class    # PRIMARY combat class -> ROOT (owner 2026-07-20), not identity
+    if sub_combats:
+        out["combatClasses"] = sub_combats   # SUB combat classes -> ROOT, not identity
     if vision:
         out["vision"] = vision
     if outcomes:
@@ -887,7 +917,9 @@ def curate_special_unit(typ, rec, store):
 
 HANDLED = (set(BASE) | set(UNIT_FAMILIES) | set(CAP_BOOL) | set(CAP_COUNT) | set(DCM_AIRBOMB) | set(GRANT_LIST)
            | set(COST) | set(ID_SCALAR) | set(ID_LIST) | set(TEXT) | set(ART) | REQUIRES_TAGS | STORE_TAGS
-           | PASS2_TAGS | {"Type", "Combat", "Flavors", "iAIWeight", "iInstanceCostModifier", "bGoldenAge",
+           | PASS2_TAGS | {"Type", "Combat", "SubCombatTypes",   # -> root combatClass / combatClasses (owner 2026-07-20)
+                           "iCombat", "iMoves",   # -> strength / movement families (owner 2026-07-20)
+                           "Flavors", "iAIWeight", "iInstanceCostModifier", "bGoldenAge",
                            "DefaultUnitAI", "UnitMeshGroups", "FreePromotions", "Builds",
                            "ReligionSpreads", "CorporationSpreads",   # -> spread.religion / spread.corporation (own block)
                            "GroupSpawnUnitCombatTypes",   # -> groupSpawn (own block, struct rows)
