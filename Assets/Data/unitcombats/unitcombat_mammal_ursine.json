@@ -22,101 +22,62 @@
  "outcomes": {
   "actions": [
    {
-    "MISSION_ANIMAL_COMBAT": [
+    "mission": "MISSION_ANIMAL_COMBAT",
+    "outcomes": [
      {
-      "OutcomeType": "OUTCOME_ANIMAL_COMBAT1",
-      "iChance": 100,
-      "Commerces": [
-       [
-        [
-         1
-        ]
-       ],
-       0,
-       [
-        [
-         5
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 5
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT1"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 5
+      },
+      "gold": 1,
+      "culture": 5
      },
      {
-      "OutcomeType": "OUTCOME_ANIMAL_COMBAT2",
-      "iChance": 100,
-      "Commerces": [
-       [
-        [
-         2
-        ]
-       ],
-       0,
-       [
-        [
-         5
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 5
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT2"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 5
+      },
+      "gold": 2,
+      "culture": 5
      },
      {
-      "OutcomeType": "OUTCOME_ANIMAL_COMBAT3",
-      "iChance": 100,
-      "Commerces": [
-       [
-        [
-         3
-        ]
-       ],
-       0,
-       [
-        [
-         5
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 5
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT3"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 5
+      },
+      "gold": 3,
+      "culture": 5
      },
      {
-      "OutcomeType": "OUTCOME_ANIMAL_COMBAT4",
-      "iChance": 100,
-      "Commerces": [
-       [
-        [
-         4
-        ]
-       ],
-       0,
-       [
-        [
-         5
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 5
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT4"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 5
+      },
+      "gold": 4,
+      "culture": 5
      },
      {
-      "OutcomeType": "OUTCOME_ANIMAL_COMBAT5",
-      "iChance": 100,
-      "Commerces": [
-       [
-        [
-         5
-        ]
-       ],
-       0,
-       [
-        [
-         5
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 5
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT5"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 5
+      },
+      "gold": 5,
+      "culture": 5
      }
     ]
    }

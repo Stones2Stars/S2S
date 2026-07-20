@@ -10,130 +10,66 @@
  "outcomes": {
   "actions": [
    {
-    "MISSION_RECORD_TALE": [
+    "mission": "MISSION_RECORD_TALE",
+    "outcomes": [
      {
-      "OutcomeType": "OUTCOME_ANIMAL_RECORD_TALE_ORAL",
-      "iChance": 100,
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         8
-        ]
-       ],
-       0
-      ]
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_RECORD_TALE_ORAL"
+      },
+      "chance": 100,
+      "culture": 8
      },
      {
-      "OutcomeType": "OUTCOME_ANIMAL_RECORD_TALE_ORAL_STORY",
-      "iChance": 100,
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         9
-        ]
-       ],
-       0
-      ]
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_RECORD_TALE_ORAL_STORY"
+      },
+      "chance": 100,
+      "culture": 9
      },
      {
-      "OutcomeType": "OUTCOME_ANIMAL_RECORD_TALE_ORAL_CAVE",
-      "iChance": 100,
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         10
-        ]
-       ],
-       0
-      ]
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_RECORD_TALE_ORAL_CAVE"
+      },
+      "chance": 100,
+      "culture": 10
      },
      {
-      "OutcomeType": "OUTCOME_ANIMAL_RECORD_TALE_LASCAUX",
-      "iChance": 100,
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         11
-        ]
-       ],
-       0
-      ]
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_RECORD_TALE_LASCAUX"
+      },
+      "chance": 100,
+      "culture": 11
      },
      {
-      "OutcomeType": "OUTCOME_ANIMAL_RECORD_TALE_FRESCO",
-      "iChance": 100,
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         12
-        ]
-       ],
-       0
-      ]
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_RECORD_TALE_FRESCO"
+      },
+      "chance": 100,
+      "culture": 12
      },
      {
-      "OutcomeType": "OUTCOME_ANIMAL_RECORD_TALE_SCRIBE",
-      "iChance": 100,
-      "Commerces": [
-       0,
-       [
-        [
-         9
-        ]
-       ],
-       [
-        [
-         12
-        ]
-       ],
-       0
-      ]
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_RECORD_TALE_SCRIBE"
+      },
+      "chance": 100,
+      "research": 9,
+      "culture": 12
      },
      {
-      "OutcomeType": "OUTCOME_ANIMAL_RECORD_TALE_LIBRARY",
-      "iChance": 100,
-      "Commerces": [
-       0,
-       [
-        [
-         11
-        ]
-       ],
-       [
-        [
-         10
-        ]
-       ],
-       0
-      ]
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_RECORD_TALE_LIBRARY"
+      },
+      "chance": 100,
+      "research": 11,
+      "culture": 10
      },
      {
-      "OutcomeType": "OUTCOME_ANIMAL_RECORD_TALE_UNIVERSITY",
-      "iChance": 100,
-      "Commerces": [
-       0,
-       [
-        [
-         13
-        ]
-       ],
-       [
-        [
-         8
-        ]
-       ],
-       0
-      ]
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_RECORD_TALE_UNIVERSITY"
+      },
+      "chance": 100,
+      "research": 13,
+      "culture": 8
      }
     ]
    }

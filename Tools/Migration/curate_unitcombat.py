@@ -192,12 +192,11 @@ def curate(typ, rec, store):
                 else:
                     node[unit] = value
 
-    # --- outcomes (KillOutcomes + Actions): the CvOutcomeList system, carried faithfully ---
-    outcomes = OrderedDict()
-    for tag, key in (("KillOutcomes", "kill"), ("Actions", "actions")):
-        node = rec.find(tag)
-        if node is not None and list(node):
-            outcomes[key] = engine.generic(node)
+    # --- outcomes (KillOutcomes + Actions) -> the CLEAN verb-per-payload schema, shared with curate_unit (#430).
+    # A unitcombat is the second CvOutcome carrier; the runtime merges its lists with the unit's, so it emits the
+    # identical shape the unit poco parses (curate_unit.emit_outcomes -- adapt-unwrap, cascade conditions, verbs).
+    from curate_unit import emit_outcomes
+    outcomes = emit_outcomes(typ, rec) or OrderedDict()
 
     # --- entity-level enabled/disabled gate (game options; owner 2026-07-08) ---
     gate_on, gate_off = [], []   # entity-level enabled/disabled (owner 2026-07-08)
