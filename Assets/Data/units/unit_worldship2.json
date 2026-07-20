@@ -46,7 +46,7 @@
     "chance": 100,
     "python": {
      "module": "BuildCityInterstellar2",
-     "code": "from CvPythonExtensions import CyGlobalContext\n\t\t\t\t\t\t\t\tdef isPossible(unit,plot):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\t\t\t\t\t\t\t\t\treturn False\n\t\t\t\t\t\t\t\t\tvalid_terrain_strings = ['ORION_ARM','NEUTRON_STAR','NEBULA','STAR_CLUSTER','MILKY_WAY','GALACTIC_CORE']\n\t\t\t\t\t\t\t\t\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\t\t\t\t\t\t\t\t\treturn plot.getTerrainType() in valid_terrains\n\t\t\t\t\t\t\t\tdef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\t\t\t\t\t\t\t\t\tgc = CyGlobalContext()\n\t\t\t\t\t\t\t\t\tgc.getPlayer(unit.getOwner()).found(plot.getX(),plot.getY())\n\t\t\t\t\t\t\t\tdef getDisplay(unit,plot):\n\t\t\t\t\t\t\t\t\treturn u\"Build a city on this plot.\"\n\t\t\t\t\t\t\t\tdef getAIValue(unit, plot):\n\t\t\t\t\t\t\t\t\treturn 1"
+     "code": "from CvPythonExtensions import CyGlobalContext\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\treturn False\n\tvalid_terrain_strings = ['ORION_ARM','NEUTRON_STAR','NEBULA','STAR_CLUSTER','MILKY_WAY','GALACTIC_CORE']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tgc.getPlayer(unit.getOwner()).found(plot.getX(),plot.getY())\ndef getDisplay(unit,plot):\n\treturn u\"Build a city on this plot.\"\ndef getAIValue(unit, plot):\n\treturn 1"
     }
    }
   ]

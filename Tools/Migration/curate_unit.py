@@ -592,6 +592,32 @@ _OC_ORDER = ["requires", "chance", "chancePerPop", "consumes", "spawns", "promot
              "properties", "python"]
 
 
+def _python_code(elem):
+    """The inline <Python> body -> a compilable snippet. The XML nests the code, so lines 2+ carry the element's
+    indentation tabs while line 1 (inline right after <Python>) lost its own -- inconsistent indentation that the
+    engine's preparePython (which strips only the FIRST line's prefix) cannot fix, so it SyntaxErrors. We dedent
+    here: drop blank edge lines, then strip the COMMON leading whitespace of the indented (2nd+) lines from them,
+    leaving line 1 at column 0. Result: every top-level statement at 0, bodies relatively indented -- compiles clean."""
+    if elem is None:
+        return None
+    raw = elem.text if elem.text is not None else ""
+    lines = raw.split("\n")
+    while lines and not lines[0].strip():
+        lines.pop(0)
+    while lines and not lines[-1].strip():
+        lines.pop()
+    if not lines:
+        return None
+    # The XML author indents only line 1 (to sit under <Python>) and writes the rest at column 0, relying on the
+    # engine's preparePython to strip line 1's prefix. Reproduce that OFFLINE so the JSON is already-clean Python:
+    # strip line 1's leading-whitespace prefix from every line that carries it (line 1 -> col 0; lines already at 0
+    # are unchanged). The consumer then compiles it directly (no preparePython needed).
+    prefix = lines[0][:len(lines[0]) - len(lines[0].lstrip("\t "))]
+    if prefix:
+        lines = [(l[len(prefix):] if l.startswith(prefix) else l) for l in lines]
+    return "\n".join(lines)
+
+
 def _outcome_payload(oc, typ):
     """One <Outcome> -> {requires?, chance?, <verb payloads>}. The OUTCOME_* id + plot/unit gates fold
     into `requires` (the gate/tier). Every CvOutcome::read() field is mapped or flag-emitted."""
@@ -688,10 +714,13 @@ def _outcome_payload(oc, typ):
         _flag("properties_block", typ)
     # Python escape hatch (callback / module / code) -> preserved + flagged
     py = OrderedDict()
-    for tag, key in (("PythonCallback", "callback"), ("PythonName", "module"), ("Python", "code")):
+    for tag, key in (("PythonCallback", "callback"), ("PythonName", "module")):
         t = _txt(oc, tag)
         if t:
             py[key] = t
+    code = _python_code(oc.find("Python"))   # inline <Python> body -- dedented so it compiles (see helper)
+    if code:
+        py["code"] = code
     if py:
         p["python"] = py
         _flag("python_escape", typ)
