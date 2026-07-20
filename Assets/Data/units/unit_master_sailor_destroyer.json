@@ -28,6 +28,24 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 9
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 63,
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 100
+    },
+    "UNITCOMBAT_STEAM_SHIPS": {
+     "percent": 20
+    }
+   }
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 40
@@ -47,30 +65,38 @@
    }
   }
  },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_WOODEN_SHIPS": {
-     "percent": 100
-    },
-    "UNITCOMBAT_STEAM_SHIPS": {
-     "percent": 20
-    }
-   }
-  }
- },
- "skills": {
-  "pillage": true,
-  "ignoreBuildingDefense": true,
-  "ignoreTerrainCost": true,
-  "mechanized": true,
-  "noBadGoodies": true,
-  "renderBelowWater": true,
-  "militaryTrade": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "mechanized",
+  "noBadGoodies",
+  "renderBelowWater",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_DIESEL_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_DESTROYER",
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_TORPEDO",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_GARGANTUAN",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_NAVIGATION1",
@@ -110,24 +136,6 @@
    "UNITAI_EXPLORE_SEA",
    "UNITAI_MISSILE_CARRIER_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_DESTROYER",
-   "UNITCOMBAT_NAVAL_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
-   "UNITCOMBAT_WEAPON_DIST_TORPEDO",
-   "UNITCOMBAT_ARMOR_NAVAL",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_GARGANTUAN",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_NAVAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -137,11 +145,6 @@
   ],
   "cargo": {
    "special": "SPECIALUNIT_MISSILE"
-  },
-  "base": {
-   "combat": 63,
-   "moves": 9,
-   "combatClass": "UNITCOMBAT_DIESEL_SHIPS"
   }
  }
 }

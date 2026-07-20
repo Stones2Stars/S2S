@@ -158,6 +158,11 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
  "costs": {
   "empire": {
    "perInstance": {
@@ -169,13 +174,25 @@
    }
   }
  },
- "skills": {
-  "workerTrade": true
- },
- "tags": {
-  "worker": true,
-  "civilian": true
- },
+ "skills": [
+  "workerTrade"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_ROBOT",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_WORKER_MODERN"
@@ -202,23 +219,11 @@
   "unitAIs": [
    "UNITAI_WORKER"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_ROBOT",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_AI",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "base": {
-   "moves": 3,
-   "workRate": 155,
-   "combatClass": "UNITCOMBAT_WORKER"
+   "workRate": 155
   }
  }
 }

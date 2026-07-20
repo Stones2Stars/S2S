@@ -27,6 +27,30 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 7,
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE_WOODEN": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 25
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 25
+    }
+   }
+  }
+ },
  "bombard": {
   "unit": {
    "rate": {
@@ -47,32 +71,34 @@
    }
   }
  },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_SIEGE_WOODEN": {
-     "percent": 50
-    },
-    "UNITCOMBAT_MOUNTED": {
-     "percent": 50
-    },
-    "UNITCOMBAT_ARCHER": {
-     "percent": 25
-    },
-    "UNITCOMBAT_MELEE": {
-     "percent": 25
-    }
-   }
-  }
- },
- "skills": {
-  "noDefensiveBonus": true,
-  "pillage": true,
-  "mechanized": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "mechanized",
+  "collateralImmune"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SIEGE",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SIEGE_FIELD",
+  "UNITCOMBAT_SIEGE_WOODEN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_BALLISTA",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_BALLISTA"
@@ -103,31 +129,11 @@
    "UNITAI_ATTACK_CITY",
    "UNITAI_COLLATERAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SIEGE_FIELD",
-   "UNITCOMBAT_SIEGE_WOODEN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
-   "UNITCOMBAT_WEAPON_DIST_BALLISTA",
-   "UNITCOMBAT_ARMOR_LIGHT",
-   "UNITCOMBAT_SPEED_SLOW",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "base": {
-   "combat": 7,
-   "moves": 1,
-   "combatLimit": 70,
-   "combatClass": "UNITCOMBAT_SIEGE"
+   "combatLimit": 70
   }
  }
 }

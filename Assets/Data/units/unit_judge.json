@@ -11,6 +11,11 @@
  "allowed": {
   "empire": 5
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "costs": {
   "empire": {
    "perInstance": {
@@ -22,10 +27,22 @@
    }
   }
  },
- "tags": {
-  "merchant": true,
-  "civilian": true
- },
+ "tags": [
+  "merchant",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ADMINISTRATOR",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_PATHETIC",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -122,25 +139,11 @@
   "notUnitAIs": [
    "UNITAI_EXPLORE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_PATHETIC",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "advancedStart": {
    "cost": 1
-  },
-  "base": {
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_ADMINISTRATOR"
   }
  }
 }

@@ -22,8 +22,14 @@
  "allowed": {
   "empire": 5
  },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 8,
    "cityDefense": {
     "percent": 50
    },
@@ -97,14 +103,37 @@
    }
   }
  },
- "skills": {
-  "noDefensiveBonus": true,
-  "pillage": true,
-  "militaryTrade": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_MOUNTED",
+ "combatClasses": [
+  "UNITCOMBAT_ARCHER",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_SHORTBOW",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+  "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+  "UNITCOMBAT_ANIMAL_COMBAT_HEAD_BUTT",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_RIDING",
+  "UNITCOMBAT_MOUNT_GIRAFFE",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_GIRAFFE_CUIRASSIER"
@@ -133,34 +162,8 @@
    "UNITAI_ATTACK",
    "UNITAI_PILLAGE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_ARCHER",
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
-   "UNITCOMBAT_WEAPON_DIST_SHORTBOW",
-   "UNITCOMBAT_ARMOR_LIGHT",
-   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
-   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
-   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
-   "UNITCOMBAT_ANIMAL_COMBAT_HEAD_BUTT",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_RIDING",
-   "UNITCOMBAT_MOUNT_GIRAFFE",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 8,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_MOUNTED"
-  }
+  ]
  }
 }

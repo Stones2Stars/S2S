@@ -40,6 +40,16 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 8
+  }
+ },
  "bombard": {
   "unit": {
    "rate": {
@@ -58,15 +68,33 @@
    }
   }
  },
- "skills": {
-  "pillage": true,
-  "mechanized": true,
-  "renderBelowWater": true,
-  "militaryTrade": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage",
+  "mechanized",
+  "renderBelowWater",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WOODEN_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_POLEARM",
+  "UNITCOMBAT_WEAPON_DIST_BLOWGUN",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_SHIELD_TOWER",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_COASTAL_ASSAULT1",
@@ -106,22 +134,6 @@
    "UNITAI_MISSIONARY_SEA",
    "UNITAI_SPY_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_NAVAL_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_LONG_POLEARM",
-   "UNITCOMBAT_WEAPON_DIST_BLOWGUN",
-   "UNITCOMBAT_ARMOR_NAVAL",
-   "UNITCOMBAT_SHIELD_TOWER",
-   "UNITCOMBAT_SPEED_SLOW",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_NAVAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -132,11 +144,6 @@
    "TERRAIN_TRENCH",
    "TERRAIN_TRENCH_POLAR",
    "TERRAIN_TRENCH_TROPICAL"
-  ],
-  "base": {
-   "combat": 8,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_WOODEN_SHIPS"
-  }
+  ]
  }
 }

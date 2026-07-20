@@ -91,14 +91,33 @@
    }
   }
  },
- "skills": {
-  "food": true,
-  "workerTrade": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
- "tags": {
-  "worker": true,
-  "civilian": true
- },
+ "skills": [
+  "food",
+  "workerTrade"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_ANIMAL_DRAWN",
+  "UNITCOMBAT_ASSISTED_DOG",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_WORKER_INDUSTRIAL"
@@ -125,25 +144,11 @@
   "unitAIs": [
    "UNITAI_WORKER"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_ANIMAL_DRAWN",
-   "UNITCOMBAT_ASSISTED_DOG",
-   "UNITCOMBAT_QUALITY_MEDIOCRE",
-   "UNITCOMBAT_GROUP_COMPANY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "base": {
-   "moves": 2,
-   "workRate": 112,
-   "combatClass": "UNITCOMBAT_WORKER"
+   "workRate": 112
   }
  }
 }

@@ -22,15 +22,47 @@
    "title": "TXT_KEY_GROUPTITLE_TRIBE"
   }
  ],
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 45
   }
  },
- "skills": {
-  "blendIntoCity": true,
-  "onlyDefensive": true
- },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_MAMMAL_ANTELOPE",
+  "UNITCOMBAT_ATTACK_FORM_COLLISION_PIERCING",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_HEAD_BUTT",
+  "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_HORNED",
+  "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -87,24 +119,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_MAMMAL",
-   "UNITCOMBAT_RECKLESS_ANIMAL",
-   "UNITCOMBAT_MAMMAL_ANTELOPE",
-   "UNITCOMBAT_ATTACK_FORM_COLLISION_PIERCING",
-   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
-   "UNITCOMBAT_ANIMAL_COMBAT_HEAD_BUTT",
-   "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_HORNED",
-   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -124,11 +138,6 @@
    "TERRAIN_SALT_FLATS",
    "TERRAIN_TAIGA",
    "TERRAIN_TUNDRA"
-  ],
-  "base": {
-   "combat": 3,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

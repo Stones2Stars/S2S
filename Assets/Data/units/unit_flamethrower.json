@@ -22,8 +22,14 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 37,
    "cityAttack": {
     "percent": 20
    },
@@ -73,13 +79,30 @@
    }
   }
  },
- "skills": {
-  "noDefensiveBonus": true,
-  "pillage": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SIEGE",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SIEGE_FIELD",
+  "UNITCOMBAT_SIEGE_ENERGY",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_FLAMETHROWER",
+  "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+  "UNITCOMBAT_ARMOR_MODERN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_MODERN_FLAMETHROWER"
@@ -112,28 +135,8 @@
    "UNITAI_COLLATERAL",
    "UNITAI_CITY_COUNTER"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SIEGE_FIELD",
-   "UNITCOMBAT_SIEGE_ENERGY",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
-   "UNITCOMBAT_WEAPON_H2H_FLAMETHROWER",
-   "UNITCOMBAT_WEAPON_DIST_HANDGUN",
-   "UNITCOMBAT_ARMOR_MODERN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_COMPANY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 37,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_SIEGE"
-  }
+  ]
  }
 }

@@ -27,6 +27,11 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "bombard": {
   "unit": {
    "airBombRate": {
@@ -77,16 +82,30 @@
    }
   }
  },
- "skills": {
-  "ignoreBuildingDefense": true,
-  "mechanized": true,
-  "dcmFighterEngage": true,
-  "militaryTrade": true,
-  "dcmAirBomb": 5
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "ignoreBuildingDefense",
+  "mechanized",
+  "dcmFighterEngage",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "airUnit"
+ ],
+ "combatClass": "UNITCOMBAT_EARLY_BOMBERS",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_A2G_BOMBS",
+  "UNITCOMBAT_ARMOR_AIRCRAFT",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_A10_BOMBER"
@@ -118,28 +137,13 @@
    "UNITAI_DEFENSE_AIR",
    "UNITAI_CARRIER_AIR"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_WEAPON_A2G_BOMBS",
-   "UNITCOMBAT_ARMOR_AIRCRAFT",
-   "UNITCOMBAT_MOTILITY_PILOTING",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "base": {
-   "moves": 1,
    "airCombat": 35,
    "airCombatLimit": 50,
-   "airUnitCap": 1,
-   "combatClass": "UNITCOMBAT_EARLY_BOMBERS"
+   "airUnitCap": 1
   }
  }
 }

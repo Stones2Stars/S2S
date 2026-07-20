@@ -29,6 +29,24 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 54,
+   "unitCombat": {
+    "UNITCOMBAT_HELICOPTER": {
+     "percent": 75
+    }
+   },
+   "targets": {
+    "UNITCOMBAT_HELICOPTER": true
+   }
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 35
@@ -46,25 +64,28 @@
    }
   }
  },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_HELICOPTER": {
-     "percent": 75
-    }
-   }
-  }
- },
- "skills": {
-  "pillage": true,
-  "ignoreBuildingDefense": true,
-  "targets": {
-   "UNITCOMBAT_HELICOPTER": true
-  }
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ROCKET_LAUNCHER",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_HANDGUN",
+  "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_ARMOR_MODERN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_MOBILE_SAM"
@@ -97,26 +118,8 @@
    "UNITAI_CITY_SPECIAL",
    "UNITAI_ESCORT"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_HANDGUN",
-   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
-   "UNITCOMBAT_ARMOR_MODERN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_COMPANY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 54,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_ROCKET_LAUNCHER"
-  }
+  ]
  }
 }

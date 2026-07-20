@@ -60,8 +60,14 @@
  "allowed": {
   "empire": 5
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 6,
    "cityAttack": {
     "percent": 25
    },
@@ -115,13 +121,27 @@
    }
   }
  },
- "skills": {
-  "pillage": true,
-  "ignoreBuildingDefense": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_THROWING",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_EXPLOSIVE_FLASK",
+  "UNITCOMBAT_WEAPON_H2H_CLUB",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_GRENADIER",
@@ -154,25 +174,8 @@
    "UNITAI_RESERVE",
    "UNITAI_CITY_COUNTER"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_DIST_EXPLOSIVE_FLASK",
-   "UNITCOMBAT_WEAPON_H2H_CLUB",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_COMPANY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 6,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_THROWING"
-  }
+  ]
  }
 }

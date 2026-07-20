@@ -26,6 +26,26 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 10
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 72,
+   "vsUnit": {
+    "UNIT_SUBMARINE": {
+     "attack": {
+      "percent": 50
+     },
+     "defense": {
+      "percent": 50
+     }
+    }
+   }
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 35
@@ -52,29 +72,35 @@
    }
   }
  },
- "strength": {
-  "unit": {
-   "vsUnit": {
-    "UNIT_SUBMARINE": {
-     "attack": {
-      "percent": 50
-     },
-     "defense": {
-      "percent": 50
-     }
-    }
-   }
-  }
- },
- "skills": {
-  "pillage": true,
-  "ignoreBuildingDefense": true,
-  "mechanized": true,
-  "renderBelowWater": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense",
+  "mechanized",
+  "renderBelowWater"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_DIESEL_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_DESTROYER",
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_TORPEDO",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_GARGANTUAN",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
  "cost": {
   "production": 1765,
   "upkeep": 1
@@ -102,31 +128,8 @@
    "UNITAI_ESCORT_SEA",
    "UNITAI_EXPLORE_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_DESTROYER",
-   "UNITCOMBAT_NAVAL_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
-   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
-   "UNITCOMBAT_WEAPON_DIST_TORPEDO",
-   "UNITCOMBAT_ARMOR_NAVAL",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_GARGANTUAN",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_NAVAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 72,
-   "moves": 10,
-   "combatClass": "UNITCOMBAT_DIESEL_SHIPS"
-  }
+  ]
  }
 }

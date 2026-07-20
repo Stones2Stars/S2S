@@ -12,15 +12,14 @@
    ]
   }
  },
- "heal": {
+ "movement": {
   "unit": {
-   "support": {
-    "flat": 100
-   }
+   "flat": 8
   }
  },
  "strength": {
   "unit": {
+   "flat": 75,
    "terrain": {
     "TERRAIN_COAST": {
      "attack": {
@@ -63,6 +62,13 @@
    }
   }
  },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 100
+   }
+  }
+ },
  "cargo": {
   "unit": {
    "space": {
@@ -71,17 +77,39 @@
    }
   }
  },
- "skills": {
-  "pillage": true,
-  "ignoreBuildingDefense": true,
-  "ignoreTerrainCost": true,
-  "mechanized": true,
-  "renderBelowWater": true,
-  "militaryTrade": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "mechanized",
+  "renderBelowWater",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_NUCLEAR_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_TRANSPORT",
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_LASER",
+  "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_SHIELD_ENERGY",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_COLOSSAL",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL",
+  "UNITCOMBAT_HEALS_AIRCRAFT",
+  "UNITCOMBAT_HEALS_TECH"
+ ],
  "vision": {
   "invisible": "INVISIBLE_STEALTH"
  },
@@ -109,37 +137,12 @@
   "unitAIs": [
    "UNITAI_CARRIER_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_TRANSPORT",
-   "UNITCOMBAT_NAVAL_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_LASER",
-   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
-   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
-   "UNITCOMBAT_ARMOR_NAVAL",
-   "UNITCOMBAT_SHIELD_ENERGY",
-   "UNITCOMBAT_SPEED_SLOW",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_COLOSSAL",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_NAVAL",
-   "UNITCOMBAT_HEALS_AIRCRAFT",
-   "UNITCOMBAT_HEALS_TECH"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
    "special": "SPECIALUNIT_FIGHTER",
    "smNotSpecial": "SPECIALUNIT_MISSILE"
-  },
-  "base": {
-   "combat": 75,
-   "moves": 8,
-   "combatClass": "UNITCOMBAT_NUCLEAR_SHIPS"
   }
  }
 }

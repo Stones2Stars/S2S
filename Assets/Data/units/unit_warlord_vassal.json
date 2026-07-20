@@ -20,9 +20,27 @@
  "allowed": {
   "empire": 1
  },
- "skills": {
-  "unlimitedException": true
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
  },
+ "skills": [
+  "unlimitedException"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_CAPTAIN",
+ "combatClasses": [
+  "UNITCOMBAT_ATTACHE",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_LORD"
@@ -51,21 +69,8 @@
   "unitAIs": [
    "UNITAI_GENERAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_ATTACHE",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_CAPTAIN"
-  }
+  ]
  }
 }

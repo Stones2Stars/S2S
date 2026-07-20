@@ -48,6 +48,16 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 14
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 30
@@ -78,16 +88,34 @@
    "flat": -10
   }
  },
- "skills": {
-  "ignoreTerrainCost": true,
-  "mechanized": true,
-  "onlyDefensive": true,
-  "renderBelowWater": true,
-  "militaryTrade": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "ignoreTerrainCost",
+  "mechanized",
+  "onlyDefensive",
+  "renderBelowWater",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_STEAM_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_HEALTH_CARE",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL",
+  "UNITCOMBAT_HEALS_PEOPLE",
+  "UNITCOMBAT_HEALS_NAVAL"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_HOSPITAL_SHIP_2"
@@ -118,29 +146,8 @@
    "UNITAI_HEALER_SEA",
    "UNITAI_PROPERTY_CONTROL_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_HEALTH_CARE",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
-   "UNITCOMBAT_ARMOR_NAVAL",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_MEDIOCRE",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_NAVAL",
-   "UNITCOMBAT_HEALS_PEOPLE",
-   "UNITCOMBAT_HEALS_NAVAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 14,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_STEAM_SHIPS"
-  }
+  ]
  }
 }

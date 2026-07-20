@@ -36,20 +36,14 @@
    }
   }
  },
- "withdrawal": {
+ "movement": {
   "unit": {
-   "percent": 25
-  }
- },
- "firstStrike": {
-  "unit": {
-   "strikes": {
-    "flat": 1
-   }
+   "flat": 5
   }
  },
  "strength": {
   "unit": {
+   "flat": 40,
    "terrain": {
     "TERRAIN_COAST": {
      "attack": {
@@ -86,15 +80,44 @@
    }
   }
  },
- "skills": {
-  "pillage": true,
-  "canMoveImpassable": true,
-  "mechanized": true,
-  "renderBelowWater": true
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
  },
- "tags": {
-  "military": true
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
  },
+ "skills": [
+  "pillage",
+  "canMoveImpassable",
+  "mechanized",
+  "renderBelowWater"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_STEAM_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_DESTROYER",
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_TORPEDO",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_STEALTH_DESTROYER"
@@ -133,28 +156,8 @@
    "UNITAI_RESERVE_SEA",
    "UNITAI_ATTACK_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_DESTROYER",
-   "UNITCOMBAT_NAVAL_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_TORPEDO",
-   "UNITCOMBAT_ARMOR_NAVAL",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_NAVAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 40,
-   "moves": 5,
-   "combatClass": "UNITCOMBAT_STEAM_SHIPS"
-  }
+  ]
  }
 }

@@ -26,6 +26,21 @@
  "allowed": {
   "empire": 5
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 6,
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 15
+    }
+   }
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -44,21 +59,28 @@
    }
   }
  },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_MELEE": {
-     "percent": 15
-    }
-   }
-  }
- },
- "skills": {
-  "pillage": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ARCHER",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_HEAVY_CROSSBOW",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_SHIELD_LARGE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_BATTALION",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_COMBAT1",
@@ -98,27 +120,8 @@
    "UNITAI_COUNTER",
    "UNITAI_CITY_COUNTER"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
-   "UNITCOMBAT_WEAPON_DIST_HEAVY_CROSSBOW",
-   "UNITCOMBAT_ARMOR_LIGHT",
-   "UNITCOMBAT_SHIELD_LARGE",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_BATTALION",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 6,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_ARCHER"
-  }
+  ]
  }
 }

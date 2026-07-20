@@ -31,6 +31,16 @@
  "allowed": {
   "empire": 5
  },
+ "movement": {
+  "unit": {
+   "flat": 5
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 25
+  }
+ },
  "costs": {
   "empire": {
    "perInstance": {
@@ -42,16 +52,33 @@
    }
   }
  },
- "skills": {
-  "noCapture": true,
-  "mechanized": true,
-  "onlyDefensive": true,
-  "rivalTerritory": true,
-  "renderBelowWater": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "noCapture",
+  "mechanized",
+  "onlyDefensive",
+  "rivalTerritory",
+  "renderBelowWater"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_TRADE",
+ "combatClasses": [
+  "UNITCOMBAT_DIESEL_SHIPS",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_HANDGUN",
+  "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_GARGANTUAN",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
  "grants": {
   "greatPersonAction": {
    "trade": {
@@ -93,28 +120,8 @@
    "UNITAI_MERCHANT",
    "UNITAI_EXPLORE_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_DIESEL_SHIPS",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_HANDGUN",
-   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
-   "UNITCOMBAT_ARMOR_NAVAL",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_MEDIOCRE",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_GARGANTUAN",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_NAVAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 25,
-   "moves": 5,
-   "combatClass": "UNITCOMBAT_TRADE"
-  }
+  ]
  }
 }

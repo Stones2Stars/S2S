@@ -17,15 +17,14 @@
    ]
   }
  },
- "air": {
+ "movement": {
   "unit": {
-   "intercept": {
-    "percent": 30
-   }
+   "flat": 3
   }
  },
  "strength": {
   "unit": {
+   "flat": 140,
    "feature": {
     "FEATURE_FOREST": {
      "attack": {
@@ -40,6 +39,13 @@
    }
   }
  },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 30
+   }
+  }
+ },
  "cargo": {
   "unit": {
    "space": {
@@ -48,12 +54,31 @@
    }
   }
  },
- "skills": {
-  "pillage": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HITECH",
+ "combatClasses": [
+  "UNITCOMBAT_WHEELED",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_TRANSPORT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_LASER",
+  "UNITCOMBAT_WEAPON_DIST_HEAT",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_MARCH",
@@ -88,33 +113,11 @@
    "UNITAI_CITY_SPECIAL",
    "UNITAI_ESCORT"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WHEELED",
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_TRANSPORT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_WEAPON_DIST_LASER",
-   "UNITCOMBAT_WEAPON_DIST_HEAT",
-   "UNITCOMBAT_ARMOR_VEHICULAR",
-   "UNITCOMBAT_MOTILITY_DRIVING",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
    "special": "SPECIALUNIT_TROOP"
-  },
-  "base": {
-   "combat": 140,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_HITECH"
   }
  }
 }

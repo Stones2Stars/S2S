@@ -7,9 +7,38 @@
    ]
   }
  },
- "skills": {
-  "blendIntoCity": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
+ "strength": {
+  "unit": {
+   "flat": 5
+  }
+ },
+ "skills": [
+  "blendIntoCity"
+ ],
+ "tags": [
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_FISH",
+  "UNITCOMBAT_FISH_SHARK",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+  "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+  "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -91,21 +120,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_FISH",
-   "UNITCOMBAT_FISH_SHARK",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
-   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
-   "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
-   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
-   "UNITCOMBAT_SPEED_SLOW",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -116,11 +130,6 @@
    "TERRAIN_SEA_POLAR",
    "TERRAIN_OCEAN_POLAR",
    "TERRAIN_TRENCH_POLAR"
-  ],
-  "base": {
-   "combat": 5,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_SEA_ANIMAL"
-  }
+  ]
  }
 }

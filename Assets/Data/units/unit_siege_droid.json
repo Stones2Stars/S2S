@@ -26,8 +26,14 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 195,
    "cityAttack": {
     "percent": 40
    },
@@ -56,16 +62,40 @@
    }
   }
  },
- "skills": {
-  "noDefensiveBonus": true,
-  "pillage": true,
-  "ignoreBuildingDefense": true,
-  "ignoreTerrainCost": true,
-  "militaryTrade": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ROBOT",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_HYDRAULIC_APPENDAGE",
+  "UNITCOMBAT_WEAPON_H2H_FLAMETHROWER",
+  "UNITCOMBAT_WEAPON_H2H_LASER",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_LASER",
+  "UNITCOMBAT_WEAPON_DIST_ION",
+  "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_SHIELD_ENERGY",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "cost": {
   "production": 5000,
   "upkeep": 16
@@ -93,38 +123,11 @@
    "UNITAI_COLLATERAL",
    "UNITAI_CITY_COUNTER"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_AI",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_HYDRAULIC_APPENDAGE",
-   "UNITCOMBAT_WEAPON_H2H_FLAMETHROWER",
-   "UNITCOMBAT_WEAPON_H2H_LASER",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_WEAPON_DIST_LASER",
-   "UNITCOMBAT_WEAPON_DIST_ION",
-   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
-   "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
-   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
-   "UNITCOMBAT_ARMOR_VEHICULAR",
-   "UNITCOMBAT_SHIELD_ENERGY",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_TECH",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "advancedStart": {
    "cost": 500
-  },
-  "base": {
-   "combat": 195,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_ROBOT"
   }
  }
 }

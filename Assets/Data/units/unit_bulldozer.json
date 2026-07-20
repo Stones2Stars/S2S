@@ -48,15 +48,43 @@
    }
   }
  },
- "skills": {
-  "food": true,
-  "onlyDefensive": true,
-  "workerTrade": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
- "tags": {
-  "worker": true,
-  "civilian": true
+ "strength": {
+  "unit": {
+   "flat": 20
+  }
  },
+ "skills": [
+  "food",
+  "onlyDefensive",
+  "workerTrade"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_TRACKED",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_H2H_HYDRAULIC_APPENDAGE",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_CLONES"
@@ -83,30 +111,11 @@
   "unitAIs": [
    "UNITAI_WORKER"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_TRACKED",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
-   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
-   "UNITCOMBAT_WEAPON_H2H_HYDRAULIC_APPENDAGE",
-   "UNITCOMBAT_ARMOR_VEHICULAR",
-   "UNITCOMBAT_MOTILITY_DRIVING",
-   "UNITCOMBAT_QUALITY_MEDIOCRE",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "base": {
-   "combat": 20,
-   "moves": 2,
-   "workRate": 200,
-   "combatClass": "UNITCOMBAT_WORKER"
+   "workRate": 200
   }
  }
 }

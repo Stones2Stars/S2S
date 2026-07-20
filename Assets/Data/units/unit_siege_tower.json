@@ -23,6 +23,21 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 8,
+   "unitCombat": {
+    "UNITCOMBAT_ARCHER": {
+     "percent": 50
+    }
+   }
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -37,25 +52,38 @@
    }
   }
  },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_ARCHER": {
-     "percent": 50
-    }
-   }
-  }
- },
- "skills": {
-  "noCapture": true,
-  "noDefensiveBonus": true,
-  "mechanized": true,
-  "onlyDefensive": true,
-  "militaryTrade": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "noCapture",
+  "noDefensiveBonus",
+  "mechanized",
+  "onlyDefensive",
+  "militaryTrade",
+  "collateralImmune"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SIEGE",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SIEGE_DEFENSIVE",
+  "UNITCOMBAT_SIEGE_URBAN",
+  "UNITCOMBAT_SIEGE_WOODEN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_BALLISTA",
+  "UNITCOMBAT_ARMOR_MEDIUM",
+  "UNITCOMBAT_SHIELD_TOWER",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_SENTRY"
@@ -93,32 +121,8 @@
   "notUnitAIs": [
    "UNITAI_CITY_DEFENSE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SIEGE_DEFENSIVE",
-   "UNITCOMBAT_SIEGE_URBAN",
-   "UNITCOMBAT_SIEGE_WOODEN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
-   "UNITCOMBAT_WEAPON_DIST_BALLISTA",
-   "UNITCOMBAT_ARMOR_MEDIUM",
-   "UNITCOMBAT_SHIELD_TOWER",
-   "UNITCOMBAT_SPEED_SLOW",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 8,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_SIEGE"
-  }
+  ]
  }
 }

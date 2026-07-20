@@ -67,8 +67,14 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 40,
    "cityDefense": {
     "percent": 25
    },
@@ -90,12 +96,27 @@
    }
   }
  },
- "skills": {
-  "pillage": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_GUN",
+ "combatClasses": [
+  "UNITCOMBAT_ROBOT",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
+  "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "cost": {
   "production": 1080,
   "upkeep": 1
@@ -122,26 +143,8 @@
    "UNITAI_CITY_DEFENSE",
    "UNITAI_ESCORT"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_ROBOT",
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_AI",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
-   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_COMPANY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 40,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_GUN"
-  }
+  ]
  }
 }

@@ -20,42 +20,15 @@
  },
  "movement": {
   "unit": {
+   "flat": 7,
    "dropRange": {
     "flat": 20
    }
   }
  },
- "withdrawal": {
-  "unit": {
-   "percent": 50
-  }
- },
- "firstStrike": {
-  "unit": {
-   "strikes": {
-    "flat": 1
-   }
-  }
- },
- "collateral": {
-  "unit": {
-   "limit": {
-    "flat": 100
-   },
-   "maxUnits": {
-    "flat": 8
-   }
-  }
- },
- "air": {
-  "unit": {
-   "evasion": {
-    "percent": 30
-   }
-  }
- },
  "strength": {
   "unit": {
+   "flat": 150,
    "unitCombat": {
     "UNITCOMBAT_TRACKED": {
      "percent": 100
@@ -100,18 +73,67 @@
    }
   }
  },
- "skills": {
-  "noCapture": true,
-  "noDefensiveBonus": true,
-  "pillage": true,
-  "canMoveAllTerrain": true,
-  "ignoreBuildingDefense": true,
-  "ignoreTerrainCost": true,
-  "militaryTrade": true
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
  },
- "tags": {
-  "military": true
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
  },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 8
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "evasion": {
+    "percent": 30
+   }
+  }
+ },
+ "skills": [
+  "noCapture",
+  "noDefensiveBonus",
+  "pillage",
+  "canMoveAllTerrain",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HELICOPTER",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_GUNSHIP",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_LASER",
+  "UNITCOMBAT_ARMOR_AIRCRAFT",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL",
+  "UNITCOMBAT_HEALS_AS_TECH"
+ ],
  "cost": {
   "production": 4300,
   "upkeep": 14
@@ -137,33 +159,12 @@
    "UNITAI_PARADROP",
    "UNITAI_PILLAGE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_GUNSHIP",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
-   "UNITCOMBAT_WEAPON_DIST_LASER",
-   "UNITCOMBAT_ARMOR_AIRCRAFT",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_PILOTING",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL",
-   "UNITCOMBAT_HEALS_AS_TECH"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "base": {
-   "combat": 150,
-   "moves": 7,
    "airCombat": 100,
-   "airCombatLimit": 100,
-   "combatClass": "UNITCOMBAT_HELICOPTER"
+   "airCombatLimit": 100
   }
  }
 }

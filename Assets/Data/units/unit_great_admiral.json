@@ -12,9 +12,29 @@
    }
   }
  },
- "skills": {
-  "greatGeneral": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
+ "skills": [
+  "greatGeneral"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_PRODIGY",
+ "combatClasses": [
+  "UNITCOMBAT_CAPTAIN",
+  "UNITCOMBAT_COMMODORE",
+  "UNITCOMBAT_ATTACHE",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -110,17 +130,6 @@
   "unitAIs": [
    "UNITAI_GREAT_ADMIRAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_CAPTAIN",
-   "UNITCOMBAT_COMMODORE",
-   "UNITCOMBAT_ATTACHE",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -194,10 +203,6 @@
    "TXT_KEY_GREAT_PERSON_WILLIAM_HALSEY",
    "TXT_KEY_GREAT_PERSON_WU_SHENGLI",
    "TXT_KEY_GREAT_PERSON_ZHENG_HE"
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_PRODIGY"
-  }
+  ]
  }
 }

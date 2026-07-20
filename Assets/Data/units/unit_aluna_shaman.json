@@ -20,6 +20,11 @@
  "allowed": {
   "empire": 5
  },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
  "costs": {
   "empire": {
    "perInstance": {
@@ -36,9 +41,22 @@
    "flat": 5
   }
  },
- "skills": {
-  "rivalTerritory": true
- },
+ "skills": [
+  "rivalTerritory"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ENTERTAINER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -118,21 +136,8 @@
   "unitAIs": [
    "UNITAI_PROPERTY_CONTROL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_INFERIOR",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_ENTERTAINER"
-  }
+  ]
  }
 }

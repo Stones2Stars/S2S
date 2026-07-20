@@ -18,22 +18,14 @@
    }
   }
  },
- "firstStrike": {
+ "movement": {
   "unit": {
-   "strikes": {
-    "flat": 1
-   }
-  }
- },
- "air": {
-  "unit": {
-   "intercept": {
-    "percent": 18
-   }
+   "flat": 1
   }
  },
  "strength": {
   "unit": {
+   "flat": 35,
    "unitCombat": {
     "UNITCOMBAT_GUN": {
      "percent": 50
@@ -53,14 +45,46 @@
    }
   }
  },
- "skills": {
-  "pillage": true,
-  "onlyDefensive": true,
-  "militaryTrade": true
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
  },
- "tags": {
-  "military": true
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 18
+   }
+  }
  },
+ "skills": [
+  "pillage",
+  "onlyDefensive",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SIEGE",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SIEGE_DEFENSIVE",
+  "UNITCOMBAT_SIEGE_GUNPOWDER",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_MACHINE_GUN",
@@ -92,29 +116,8 @@
    "UNITAI_CITY_SPECIAL",
    "UNITAI_ESCORT"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SIEGE_DEFENSIVE",
-   "UNITCOMBAT_SIEGE_GUNPOWDER",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_SPEED_SLOW",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 35,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_SIEGE"
-  }
+  ]
  }
 }

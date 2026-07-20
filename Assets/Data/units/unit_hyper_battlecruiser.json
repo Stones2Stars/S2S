@@ -13,8 +13,14 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 4
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 480,
    "cityAttack": {
     "percent": 10
    }
@@ -45,10 +51,14 @@
    }
   }
  },
- "skills": {
-  "canMoveAllTerrain": true,
-  "canMoveImpassable": true
- },
+ "skills": [
+  "canMoveAllTerrain",
+  "canMoveImpassable"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WORMHOLE_SPACESHIP",
  "cost": {
   "production": 4850,
   "upkeep": 11,
@@ -93,10 +103,7 @@
    "cost": 100
   },
   "base": {
-   "combat": 480,
-   "moves": 4,
-   "combatLimit": 100,
-   "combatClass": "UNITCOMBAT_WORMHOLE_SPACESHIP"
+   "combatLimit": 100
   }
  }
 }

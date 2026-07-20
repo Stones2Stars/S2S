@@ -42,6 +42,16 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 6
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 160
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 85
@@ -100,12 +110,28 @@
    "flat": -36
   }
  },
- "skills": {
-  "onlyDefensive": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "onlyDefensive"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_NANITE",
+ "combatClasses": [
+  "UNITCOMBAT_SWARM",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_ANIMAL_COMBAT_DEVOUR",
+  "UNITCOMBAT_NANOMORPHIC",
+  "UNITCOMBAT_MOTILITY_AERIAL",
+  "UNITCOMBAT_QUALITY_PATHETIC",
+  "UNITCOMBAT_GROUP_TRILLIONS",
+  "UNITCOMBAT_SIZE_MICROSCOPIC",
+  "UNITCOMBAT_HEALS_AS_NANOMORPH",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_ALL"
+ ],
  "cost": {
   "production": 6500,
   "upkeep": 19,
@@ -130,27 +156,8 @@
    "UNITAI_HEALER",
    "UNITAI_PROPERTY_CONTROL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_SWARM",
-   "UNITCOMBAT_SPECIES_AI",
-   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
-   "UNITCOMBAT_ANIMAL_COMBAT_DEVOUR",
-   "UNITCOMBAT_NANOMORPHIC",
-   "UNITCOMBAT_MOTILITY_AERIAL",
-   "UNITCOMBAT_QUALITY_PATHETIC",
-   "UNITCOMBAT_GROUP_TRILLIONS",
-   "UNITCOMBAT_SIZE_MICROSCOPIC",
-   "UNITCOMBAT_HEALS_AS_NANOMORPH",
-   "UNITCOMBAT_HEALS_AS_TECH",
-   "UNITCOMBAT_HEALS_ALL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 160,
-   "moves": 6,
-   "combatClass": "UNITCOMBAT_NANITE"
-  }
+  ]
  }
 }

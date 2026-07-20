@@ -31,30 +31,14 @@
    }
   }
  },
- "withdrawal": {
+ "movement": {
   "unit": {
-   "percent": 10
-  }
- },
- "firstStrike": {
-  "unit": {
-   "strikes": {
-    "flat": 1
-   }
-  }
- },
- "collateral": {
-  "unit": {
-   "limit": {
-    "flat": 100
-   },
-   "maxUnits": {
-    "flat": 6
-   }
+   "flat": 2
   }
  },
  "strength": {
   "unit": {
+   "flat": 36,
    "feature": {
     "FEATURE_FOREST": {
      "attack": {
@@ -104,12 +88,50 @@
    }
   }
  },
- "skills": {
-  "noDefensiveBonus": true
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
  },
- "tags": {
-  "military": true
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
  },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 6
+   }
+  }
+ },
+ "skills": [
+  "noDefensiveBonus"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WHEELED",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_RIDING",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_BTR80"
@@ -143,27 +165,8 @@
    "UNITAI_CITY_COUNTER",
    "UNITAI_ESCORT"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_ARMOR_VEHICULAR",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_RIDING",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 36,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_WHEELED"
-  }
+  ]
  }
 }

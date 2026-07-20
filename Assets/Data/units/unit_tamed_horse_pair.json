@@ -29,6 +29,11 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
  "strength": {
   "unit": {
    "cityDefense": {
@@ -52,10 +57,31 @@
    }
   }
  },
- "skills": {
-  "onlyDefensive": true,
-  "militaryTrade": true
- },
+ "skills": [
+  "onlyDefensive",
+  "militaryTrade"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_TAMED",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_MAMMAL_EQUINE",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+  "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -127,29 +153,8 @@
    "UNITAI_WORKER",
    "UNITAI_EXPLORE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_TAMED",
-   "UNITCOMBAT_ANIMAL_MAMMAL",
-   "UNITCOMBAT_MAMMAL_EQUINE",
-   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
-   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
-   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
-   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
-   "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
-   "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

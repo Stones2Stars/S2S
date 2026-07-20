@@ -24,6 +24,24 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 48,
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 50
+    }
+   }
+  }
+ },
  "bombard": {
   "unit": {
    "rate": {
@@ -44,28 +62,37 @@
    }
   }
  },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_SIEGE": {
-     "percent": 50
-    },
-    "UNITCOMBAT_MOUNTED": {
-     "percent": 50
-    }
-   }
-  }
- },
- "skills": {
-  "noDefensiveBonus": true,
-  "pillage": true,
-  "ignoreBuildingDefense": true,
-  "mechanized": true,
-  "militaryTrade": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "ignoreBuildingDefense",
+  "mechanized",
+  "militaryTrade",
+  "collateralImmune"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SIEGE",
+ "combatClasses": [
+  "UNITCOMBAT_WHEELED",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SIEGE_URBAN",
+  "UNITCOMBAT_SIEGE_FIELD",
+  "UNITCOMBAT_SIEGE_GUNPOWDER",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_ROCKET_ARTILLERY"
@@ -96,32 +123,11 @@
    "UNITAI_COLLATERAL",
    "UNITAI_CITY_COUNTER"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WHEELED",
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SIEGE_URBAN",
-   "UNITCOMBAT_SIEGE_FIELD",
-   "UNITCOMBAT_SIEGE_GUNPOWDER",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_ARMOR_VEHICULAR",
-   "UNITCOMBAT_MOTILITY_DRIVING",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "base": {
-   "combat": 48,
-   "moves": 2,
-   "combatLimit": 85,
-   "combatClass": "UNITCOMBAT_SIEGE"
+   "combatLimit": 85
   }
  }
 }

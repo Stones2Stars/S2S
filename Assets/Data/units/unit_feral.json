@@ -17,12 +17,40 @@
    ]
   }
  },
- "skills": {
-  "ignoreBuildingDefense": true
+ "movement": {
+  "unit": {
+   "flat": 4
+  }
  },
- "tags": {
-  "military": true
+ "strength": {
+  "unit": {
+   "flat": 220
+  }
  },
+ "skills": [
+  "ignoreBuildingDefense"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_CLONES",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_LASER",
+  "UNITCOMBAT_WEAPON_H2H_FLAMETHROWER",
+  "UNITCOMBAT_WEAPON_DIST_ION",
+  "UNITCOMBAT_WEAPON_DIST_FLAME",
+  "UNITCOMBAT_ARMOR_MODERN",
+  "UNITCOMBAT_SHIELD_ENERGY",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "vision": {
   "invisible": "INVISIBLE_CAMOUFLAGE"
  },
@@ -54,29 +82,8 @@
    "UNITAI_CITY_DEFENSE",
    "UNITAI_ESCORT"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_LASER",
-   "UNITCOMBAT_WEAPON_H2H_FLAMETHROWER",
-   "UNITCOMBAT_WEAPON_DIST_ION",
-   "UNITCOMBAT_WEAPON_DIST_FLAME",
-   "UNITCOMBAT_ARMOR_MODERN",
-   "UNITCOMBAT_SHIELD_ENERGY",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 220,
-   "moves": 4,
-   "combatClass": "UNITCOMBAT_CLONES"
-  }
+  ]
  }
 }

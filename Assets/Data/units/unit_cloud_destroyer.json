@@ -26,31 +26,14 @@
  "allowed": {
   "empire": 5
  },
- "withdrawal": {
+ "movement": {
   "unit": {
-   "percent": 25
-  }
- },
- "bombard": {
-  "unit": {
-   "airBombRate": {
-    "flat": 12
-   }
-  }
- },
- "costs": {
-  "empire": {
-   "perInstance": {
-    "percent": 5,
-    "per": {
-     "type": "SELF",
-     "scope": "empire"
-    }
-   }
+   "flat": 3
   }
  },
  "strength": {
   "unit": {
+   "flat": 35,
    "vsUnit": {
     "UNIT_BALLOON": {
      "attack": {
@@ -87,18 +70,57 @@
    }
   }
  },
- "skills": {
-  "noCapture": true,
-  "noDefensiveBonus": true,
-  "canMoveAllTerrain": true,
-  "ignoreBuildingDefense": true,
-  "ignoreTerrainCost": true,
-  "mechanized": true,
-  "militaryTrade": true
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
  },
- "tags": {
-  "military": true
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 12
+   }
+  }
  },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
+ },
+ "skills": [
+  "noCapture",
+  "noDefensiveBonus",
+  "canMoveAllTerrain",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "mechanized",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_BALLOON",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_WEAPON_A2G_BOMBS",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_GARGANTUAN",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_SENTRY"
@@ -132,20 +154,6 @@
   "unitAIs": [
    "UNITAI_ATTACK"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
-   "UNITCOMBAT_WEAPON_A2G_BOMBS",
-   "UNITCOMBAT_SPEED_SLOW",
-   "UNITCOMBAT_MOTILITY_PILOTING",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_GARGANTUAN",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -153,11 +161,6 @@
    "TERRAIN_OCEAN",
    "TERRAIN_OCEAN_POLAR",
    "TERRAIN_OCEAN_TROPICAL"
-  ],
-  "base": {
-   "combat": 35,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_BALLOON"
-  }
+  ]
  }
 }

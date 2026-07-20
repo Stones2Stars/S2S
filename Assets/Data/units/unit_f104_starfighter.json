@@ -39,6 +39,11 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "bombard": {
   "unit": {
    "airBombRate": {
@@ -61,16 +66,33 @@
    }
   }
  },
- "skills": {
-  "ignoreBuildingDefense": true,
-  "mechanized": true,
-  "dcmFighterEngage": true,
-  "militaryTrade": true,
-  "dcmAirBomb": 2
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "ignoreBuildingDefense",
+  "mechanized",
+  "dcmFighterEngage",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "airUnit"
+ ],
+ "combatClass": "UNITCOMBAT_JET_FIGHTERS",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_A2G_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_ARMOR_AIRCRAFT",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_STRIKE_FIGHTER"
@@ -99,31 +121,13 @@
   "unitAIs": [
    "UNITAI_ATTACK_AIR"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
-   "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
-   "UNITCOMBAT_WEAPON_A2G_SHORT_RANGE_MISSILE",
-   "UNITCOMBAT_ARMOR_AIRCRAFT",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_PILOTING",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "base": {
-   "moves": 1,
    "airCombat": 80,
    "airCombatLimit": 50,
-   "airUnitCap": 1,
-   "combatClass": "UNITCOMBAT_JET_FIGHTERS"
+   "airUnitCap": 1
   }
  }
 }

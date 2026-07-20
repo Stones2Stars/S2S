@@ -37,10 +37,38 @@
    "title": "TXT_KEY_GROUPTITLE_ROOKERY_LARGE"
   }
  ],
- "skills": {
-  "blendIntoCity": true,
-  "onlyDefensive": true
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
  },
+ "strength": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_BIRD",
+  "UNITCOMBAT_BIRD_PENGUIN",
+  "UNITCOMBAT_ANIMAL_COMBAT_PECK",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+  "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_TINY",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -91,20 +119,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_BIRD",
-   "UNITCOMBAT_BIRD_PENGUIN",
-   "UNITCOMBAT_ANIMAL_COMBAT_PECK",
-   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
-   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
-   "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_INFERIOR",
-   "UNITCOMBAT_GROUP_COMPANY",
-   "UNITCOMBAT_SIZE_TINY",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -127,11 +141,6 @@
    "TERRAIN_SALT_FLATS",
    "TERRAIN_SCRUB",
    "TERRAIN_PEAK"
-  ],
-  "base": {
-   "combat": 1,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

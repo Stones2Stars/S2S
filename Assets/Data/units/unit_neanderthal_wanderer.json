@@ -20,18 +20,46 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 2
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 10
   }
  },
- "skills": {
-  "blendIntoCity": true,
-  "barbCoExist": true,
-  "noBadGoodies": true,
-  "rivalTerritory": true,
-  "upgradeAnywhere": true
- },
+ "skills": [
+  "blendIntoCity",
+  "barbCoExist",
+  "noBadGoodies",
+  "rivalTerritory",
+  "upgradeAnywhere"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_RECON",
+ "combatClasses": [
+  "UNITCOMBAT_EXPLORER",
+  "UNITCOMBAT_SPECIES_NEANDERTHAL",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_STAFF",
+  "UNITCOMBAT_WEAPON_DIST_ROCK",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_NEANDERTHAL_SCOUT",
@@ -65,30 +93,11 @@
    "UNITAI_HUNTER",
    "UNITAI_HUNTER_ESCORT"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_EXPLORER",
-   "UNITCOMBAT_SPECIES_NEANDERTHAL",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
-   "UNITCOMBAT_WEAPON_H2H_STAFF",
-   "UNITCOMBAT_WEAPON_DIST_ROCK",
-   "UNITCOMBAT_ARMOR_LIGHT",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
-  "base": {
-   "combat": 2,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_RECON"
-  }
+  ]
  }
 }

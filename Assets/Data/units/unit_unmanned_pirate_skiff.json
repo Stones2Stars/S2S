@@ -41,6 +41,24 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 12
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 100,
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 100
+    },
+    "UNITCOMBAT_STEAM_SHIPS": {
+     "percent": 100
+    }
+   }
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 60
@@ -56,25 +74,36 @@
    }
   }
  },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_WOODEN_SHIPS": {
-     "percent": 100
-    },
-    "UNITCOMBAT_STEAM_SHIPS": {
-     "percent": 100
-    }
-   }
-  }
- },
- "skills": {
-  "alwaysHostile": true,
-  "hiddenNationality": true,
-  "pillage": true,
-  "mechanized": true,
-  "renderBelowWater": true
- },
+ "skills": [
+  "alwaysHostile",
+  "hiddenNationality",
+  "pillage",
+  "mechanized",
+  "renderBelowWater"
+ ],
+ "tags": [
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_NUCLEAR_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_PIRATE",
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_SPRAY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_FROST",
+  "UNITCOMBAT_WEAPON_DIST_SONIC",
+  "UNITCOMBAT_WEAPON_DIST_TORPEDO",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_SENTRY"
@@ -111,32 +140,8 @@
    "UNITAI_RESERVE_SEA",
    "UNITAI_ATTACK_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_PIRATE",
-   "UNITCOMBAT_NAVAL_COMBATANT",
-   "UNITCOMBAT_SPECIES_AI",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
-   "UNITCOMBAT_WEAPON_H2H_SPRAY",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_WEAPON_DIST_FROST",
-   "UNITCOMBAT_WEAPON_DIST_SONIC",
-   "UNITCOMBAT_WEAPON_DIST_TORPEDO",
-   "UNITCOMBAT_ARMOR_NAVAL",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_TECH",
-   "UNITCOMBAT_HEALS_AS_NAVAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 100,
-   "moves": 12,
-   "combatClass": "UNITCOMBAT_NUCLEAR_SHIPS"
-  }
+  ]
  }
 }

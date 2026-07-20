@@ -36,22 +36,14 @@
    }
   }
  },
- "bombard": {
+ "movement": {
   "unit": {
-   "rate": {
-    "percent": 30
-   }
-  }
- },
- "air": {
-  "unit": {
-   "intercept": {
-    "percent": 20
-   }
+   "flat": 11
   }
  },
  "strength": {
   "unit": {
+   "flat": 110,
    "unitCombat": {
     "UNITCOMBAT_WOODEN_SHIPS": {
      "percent": 100
@@ -87,6 +79,20 @@
    }
   }
  },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 30
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 20
+   }
+  }
+ },
  "cargo": {
   "unit": {
    "space": {
@@ -95,17 +101,38 @@
    }
   }
  },
- "skills": {
-  "pillage": true,
-  "ignoreBuildingDefense": true,
-  "ignoreTerrainCost": true,
-  "mechanized": true,
-  "renderBelowWater": true,
-  "militaryTrade": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "mechanized",
+  "renderBelowWater",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_NUCLEAR_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_CRUISER",
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_ELECTRICAL",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_LONG_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_TORPEDO",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_GARGANTUAN",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_FUSION_CRUISER"
@@ -138,35 +165,11 @@
    "UNITAI_EXPLORE_SEA",
    "UNITAI_MISSILE_CARRIER_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_CRUISER",
-   "UNITCOMBAT_NAVAL_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_ELECTRICAL",
-   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
-   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
-   "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
-   "UNITCOMBAT_WEAPON_DIST_LONG_RANGE_MISSILE",
-   "UNITCOMBAT_WEAPON_DIST_TORPEDO",
-   "UNITCOMBAT_ARMOR_NAVAL",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_GARGANTUAN",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_NAVAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
    "special": "SPECIALUNIT_MISSILE"
-  },
-  "base": {
-   "combat": 110,
-   "moves": 11,
-   "combatClass": "UNITCOMBAT_NUCLEAR_SHIPS"
   }
  }
 }

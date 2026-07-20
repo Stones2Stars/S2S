@@ -18,15 +18,46 @@
    "chance": 1
   }
  ],
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 50
   }
  },
- "skills": {
-  "blendIntoCity": true,
-  "onlyDefensive": true
- },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_MAMMAL_EQUINE",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+  "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
+  "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+  "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -83,23 +114,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_MAMMAL",
-   "UNITCOMBAT_RECKLESS_ANIMAL",
-   "UNITCOMBAT_MAMMAL_EQUINE",
-   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
-   "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
-   "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
-   "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
-   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -116,11 +130,6 @@
    "TERRAIN_TAIGA",
    "TERRAIN_TUNDRA",
    "TERRAIN_ICE"
-  ],
-  "base": {
-   "combat": 3,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

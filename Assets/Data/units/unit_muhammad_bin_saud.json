@@ -15,6 +15,16 @@
  "allowed": {
   "world": 1
  },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 24
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 10
@@ -27,12 +37,29 @@
    }
   }
  },
- "skills": {
-  "pillage": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HERO",
+ "combatClasses": [
+  "UNITCOMBAT_ARCHER",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_AXE",
+  "UNITCOMBAT_WEAPON_H2H_HAMMER",
+  "UNITCOMBAT_WEAPON_DIST_RIFLE",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EPIC",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_RETINUE_MESSENGER",
@@ -93,28 +120,8 @@
    "UNITAI_COUNTER",
    "UNITAI_CITY_COUNTER"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_ARCHER",
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_AXE",
-   "UNITCOMBAT_WEAPON_H2H_HAMMER",
-   "UNITCOMBAT_WEAPON_DIST_RIFLE",
-   "UNITCOMBAT_ARMOR_LIGHT",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_EPIC",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 24,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_HERO"
-  }
+  ]
  }
 }

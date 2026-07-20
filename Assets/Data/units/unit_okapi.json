@@ -1,14 +1,44 @@
 {
  "type": "UNIT_OKAPI",
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 50
   }
  },
- "skills": {
-  "blendIntoCity": true,
-  "onlyDefensive": true
- },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_MAMMAL_GIRAFFE",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_HEAD_BUTT",
+  "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -65,22 +95,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_MAMMAL",
-   "UNITCOMBAT_RECKLESS_ANIMAL",
-   "UNITCOMBAT_MAMMAL_GIRAFFE",
-   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
-   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
-   "UNITCOMBAT_ANIMAL_COMBAT_HEAD_BUTT",
-   "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -96,11 +110,6 @@
    "TERRAIN_SALT_FLATS",
    "TERRAIN_TAIGA",
    "TERRAIN_TUNDRA"
-  ],
-  "base": {
-   "combat": 3,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

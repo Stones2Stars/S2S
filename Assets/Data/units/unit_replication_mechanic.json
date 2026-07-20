@@ -42,6 +42,16 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 5
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 40
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 25
@@ -66,13 +76,32 @@
    }
   }
  },
- "skills": {
-  "mechanized": true,
-  "onlyDefensive": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "mechanized",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HELICOPTER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_AIRCRAFT",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL",
+  "UNITCOMBAT_HEALS_MECHANICAL",
+  "UNITCOMBAT_HEALS_AIRCRAFT",
+  "UNITCOMBAT_HEALS_TECH"
+ ],
  "cost": {
   "production": 1654,
   "upkeep": 9,
@@ -97,30 +126,8 @@
   "unitAIs": [
    "UNITAI_HEALER"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_ARMOR_AIRCRAFT",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_PILOTING",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL",
-   "UNITCOMBAT_HEALS_MECHANICAL",
-   "UNITCOMBAT_HEALS_AIRCRAFT",
-   "UNITCOMBAT_HEALS_TECH"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 40,
-   "moves": 5,
-   "combatClass": "UNITCOMBAT_HELICOPTER"
-  }
+  ]
  }
 }

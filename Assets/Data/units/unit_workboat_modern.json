@@ -27,16 +27,34 @@
    }
   }
  },
- "skills": {
-  "canMoveImpassable": true,
-  "ignoreTerrainCost": true,
-  "mechanized": true,
-  "renderBelowWater": true
+ "movement": {
+  "unit": {
+   "flat": 4
+  }
  },
- "tags": {
-  "worker": true,
-  "civilian": true
- },
+ "skills": [
+  "canMoveImpassable",
+  "ignoreTerrainCost",
+  "mechanized",
+  "renderBelowWater"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_CONSTRUCT_SHIP"
@@ -69,24 +87,11 @@
    "UNITAI_ATTACK_SEA",
    "UNITAI_ASSAULT_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_INFERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_NAVAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "base": {
-   "moves": 4,
-   "workRate": 150,
-   "combatClass": "UNITCOMBAT_SEA_WORKER"
+   "workRate": 150
   }
  }
 }

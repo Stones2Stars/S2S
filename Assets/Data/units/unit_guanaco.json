@@ -22,15 +22,46 @@
    "title": "TXT_KEY_GROUPTITLE_FLOCK"
   }
  ],
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 2
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 15
   }
  },
- "skills": {
-  "blendIntoCity": true,
-  "onlyDefensive": true
- },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_MAMMAL_CAMELID",
+  "UNITCOMBAT_ANIMAL_COMBAT_CONSTRICT",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+  "UNITCOMBAT_ANIMAL_COMBAT_REPELLENT",
+  "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -111,23 +142,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_MAMMAL",
-   "UNITCOMBAT_RECKLESS_ANIMAL",
-   "UNITCOMBAT_MAMMAL_CAMELID",
-   "UNITCOMBAT_ANIMAL_COMBAT_CONSTRICT",
-   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
-   "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
-   "UNITCOMBAT_ANIMAL_COMBAT_REPELLENT",
-   "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_MEDIOCRE",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -154,11 +168,6 @@
    {
     "FEATURE_SAVANNA": "NONE"
    }
-  ],
-  "base": {
-   "combat": 2,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

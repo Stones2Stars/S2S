@@ -36,8 +36,14 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 140,
    "cityAttack": {
     "percent": 25
    },
@@ -70,17 +76,32 @@
    }
   }
  },
- "skills": {
-  "noDefensiveBonus": true,
-  "pillage": true,
-  "ignoreBuildingDefense": true,
-  "ignoreTerrainCost": true,
-  "mechanized": true,
-  "militaryTrade": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "mechanized",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_DREADNOUGHT",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_ELECTRICAL",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_BLITZ"
@@ -116,26 +137,8 @@
    "UNITAI_ATTACK_CITY",
    "UNITAI_PILLAGE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_DIST_ELECTRICAL",
-   "UNITCOMBAT_ARMOR_VEHICULAR",
-   "UNITCOMBAT_MOTILITY_DRIVING",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 140,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_DREADNOUGHT"
-  }
+  ]
  }
 }

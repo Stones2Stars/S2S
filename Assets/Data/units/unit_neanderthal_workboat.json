@@ -28,15 +28,33 @@
    }
   }
  },
- "skills": {
-  "canMoveImpassable": true,
-  "mechanized": true,
-  "renderBelowWater": true
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
  },
- "tags": {
-  "worker": true,
-  "civilian": true
- },
+ "skills": [
+  "canMoveImpassable",
+  "mechanized",
+  "renderBelowWater"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_NEANDERTHAL",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_POOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_WORKBOAT_CLASSIC"
@@ -70,17 +88,6 @@
    "UNITAI_ATTACK_SEA",
    "UNITAI_ASSAULT_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_NEANDERTHAL",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_POOR",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_NAVAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -105,9 +112,7 @@
    "CIVILIZATION_NPC_NEANDERTHAL"
   ],
   "base": {
-   "moves": 1,
-   "workRate": 200,
-   "combatClass": "UNITCOMBAT_SEA_WORKER"
+   "workRate": 200
   }
  }
 }

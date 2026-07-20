@@ -32,19 +32,47 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 18
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 80
   }
  },
- "skills": {
-  "noDefensiveBonus": true,
-  "barbCoExist": true,
-  "ignoreTerrainCost": true,
-  "noBadGoodies": true,
-  "passage": true,
-  "upgradeAnywhere": true
- },
+ "skills": [
+  "noDefensiveBonus",
+  "barbCoExist",
+  "ignoreTerrainCost",
+  "noBadGoodies",
+  "passage",
+  "upgradeAnywhere"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_RECON",
+ "combatClasses": [
+  "UNITCOMBAT_WHEELED",
+  "UNITCOMBAT_EXPLORER",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_RIDING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_GUERILLA1",
@@ -82,27 +110,8 @@
    "UNITAI_EXPLORE",
    "UNITAI_ESCORT"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WHEELED",
-   "UNITCOMBAT_EXPLORER",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_RIDING",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 18,
-   "moves": 4,
-   "combatClass": "UNITCOMBAT_RECON"
-  }
+  ]
  }
 }

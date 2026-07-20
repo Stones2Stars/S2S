@@ -37,15 +37,14 @@
    ]
   }
  },
- "firstStrike": {
+ "movement": {
   "unit": {
-   "strikes": {
-    "flat": 1
-   }
+   "flat": 1
   }
  },
  "strength": {
   "unit": {
+   "flat": 6,
    "unitCombat": {
     "UNITCOMBAT_SIEGE_WOODEN": {
      "percent": 50
@@ -62,12 +61,35 @@
    }
   }
  },
- "skills": {
-  "pillage": true
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
  },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ROCKET_LAUNCHER",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_FIREWORKS",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+  "UNITCOMBAT_ARMOR_HEAVY",
+  "UNITCOMBAT_SHIELD_LARGE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_ANCIENT_HAND_CANNON"
@@ -100,27 +122,8 @@
    "UNITAI_CITY_DEFENSE",
    "UNITAI_PILLAGE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_DIST_FIREWORKS",
-   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
-   "UNITCOMBAT_ARMOR_HEAVY",
-   "UNITCOMBAT_SHIELD_LARGE",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_COMPANY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 6,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_ROCKET_LAUNCHER"
-  }
+  ]
  }
 }

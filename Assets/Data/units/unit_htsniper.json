@@ -15,6 +15,7 @@
  },
  "movement": {
   "unit": {
+   "flat": 3,
    "dropRange": {
     "flat": 10
    }
@@ -22,6 +23,7 @@
  },
  "strength": {
   "unit": {
+   "flat": 150,
    "cityAttack": {
     "percent": 15
    },
@@ -36,6 +38,12 @@
    },
    "stealth": {
     "percent": 90
+   },
+   "targets": {
+    "UNITCOMBAT_EXPLORER": true,
+    "UNITCOMBAT_CIVILIAN": true,
+    "UNITCOMBAT_CANINE": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
    }
   }
  },
@@ -76,25 +84,35 @@
    }
   }
  },
- "skills": {
-  "assassin": true,
-  "counterSpy": true,
-  "destroy": true,
-  "ignoreTerrainCost": true,
-  "ignoreZoneOfControl": true,
-  "rivalTerritory": true,
-  "sabotage": true,
-  "stealPlans": true,
-  "targets": {
-   "UNITCOMBAT_EXPLORER": true,
-   "UNITCOMBAT_CIVILIAN": true,
-   "UNITCOMBAT_CANINE": true,
-   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
-  }
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "assassin",
+  "counterSpy",
+  "destroy",
+  "ignoreTerrainCost",
+  "ignoreZoneOfControl",
+  "rivalTerritory",
+  "sabotage",
+  "stealPlans"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_STRIKE_TEAM",
+ "combatClasses": [
+  "UNITCOMBAT_HITECH",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_ENERGY_GLOVES",
+  "UNITCOMBAT_WEAPON_DIST_COILGUN",
+  "UNITCOMBAT_ARMOR_MODERN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "vision": {
   "invisible": "INVISIBLE_CAMOUFLAGE",
   "visibilityIntensity": {
@@ -155,27 +173,8 @@
   "notUnitAIs": [
    "UNITAI_CITY_DEFENSE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_HITECH",
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_ENERGY_GLOVES",
-   "UNITCOMBAT_WEAPON_DIST_COILGUN",
-   "UNITCOMBAT_ARMOR_MODERN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 150,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_STRIKE_TEAM"
-  }
+  ]
  }
 }

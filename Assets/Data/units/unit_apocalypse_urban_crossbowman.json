@@ -12,15 +12,14 @@
    }
   }
  },
- "firstStrike": {
+ "movement": {
   "unit": {
-   "strikes": {
-    "flat": 1
-   }
+   "flat": 1
   }
  },
  "strength": {
   "unit": {
+   "flat": 15,
    "unitCombat": {
     "UNITCOMBAT_MELEE": {
      "percent": 75
@@ -28,12 +27,35 @@
    }
   }
  },
- "skills": {
-  "pillage": true
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
  },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ARCHER",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
+  "UNITCOMBAT_WEAPON_DIST_HEAVY_CROSSBOW",
+  "UNITCOMBAT_ARMOR_MODERN",
+  "UNITCOMBAT_MOTILITY_RIDING",
+  "UNITCOMBAT_MOUNT_HORSE",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_MUSKETMAN"
@@ -66,27 +88,8 @@
    "UNITAI_CITY_COUNTER",
    "UNITAI_ESCORT"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
-   "UNITCOMBAT_WEAPON_DIST_HEAVY_CROSSBOW",
-   "UNITCOMBAT_ARMOR_MODERN",
-   "UNITCOMBAT_MOTILITY_RIDING",
-   "UNITCOMBAT_MOUNT_HORSE",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_COMPANY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 15,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_ARCHER"
-  }
+  ]
  }
 }

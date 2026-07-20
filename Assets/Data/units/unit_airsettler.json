@@ -23,15 +23,33 @@
    ]
   }
  },
- "skills": {
-  "canMoveAllTerrain": true,
-  "food": true,
-  "found": true
+ "movement": {
+  "unit": {
+   "flat": 24
+  }
  },
- "tags": {
-  "settler": true,
-  "civilian": true
- },
+ "skills": [
+  "canMoveAllTerrain",
+  "food",
+  "found"
+ ],
+ "tags": [
+  "settler",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SETTLER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_POOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+ ],
  "grants": {
   "foundBuildings": [
    {
@@ -137,23 +155,8 @@
   "unitAIs": [
    "UNITAI_SETTLE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_PILOTING",
-   "UNITCOMBAT_QUALITY_POOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_AIRCRAFT"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "moves": 24,
-   "combatClass": "UNITCOMBAT_SETTLER"
-  }
+  ]
  }
 }

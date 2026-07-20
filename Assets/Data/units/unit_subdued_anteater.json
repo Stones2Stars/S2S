@@ -1,9 +1,29 @@
 {
  "type": "UNIT_SUBDUED_ANTEATER",
- "skills": {
-  "onlyDefensive": true,
-  "militaryTrade": true
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
  },
+ "skills": [
+  "onlyDefensive",
+  "militaryTrade"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SUBDUED",
+ "combatClasses": [
+  "UNITCOMBAT_SUBDUED_LARGE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -65,26 +85,11 @@
   "unitAIs": [
    "UNITAI_SUBDUED_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_SUBDUED_LARGE",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_ANIMALS",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "heritage": [
    "HERITAGE_FOLKLORE_ANTEATER"
-  ],
-  "base": {
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_SUBDUED"
-  }
+  ]
  }
 }

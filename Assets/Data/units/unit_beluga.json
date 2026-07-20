@@ -39,22 +39,55 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3,
+   "targets": {
+    "UNITCOMBAT_FISH_BONEY": true,
+    "UNITCOMBAT_INVERTEBRATE_CRUSTACEAN": true
+   }
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 20
   }
  },
- "skills": {
-  "assassin": true,
-  "noDefensiveBonus": true,
-  "blendIntoCity": true,
-  "canMoveImpassable": true,
-  "onlyDefensive": true,
-  "targets": {
-   "UNITCOMBAT_FISH_BONEY": true,
-   "UNITCOMBAT_INVERTEBRATE_CRUSTACEAN": true
-  }
- },
+ "skills": [
+  "assassin",
+  "noDefensiveBonus",
+  "blendIntoCity",
+  "canMoveImpassable",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_MAMMAL_WHALE",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+  "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
+  "UNITCOMBAT_ANIMAL_COMBAT_PACK_HUNTER",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+  "UNITCOMBAT_ANIMAL_COMBAT_TAIL",
+  "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -136,25 +169,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_MAMMAL",
-   "UNITCOMBAT_RECKLESS_ANIMAL",
-   "UNITCOMBAT_MAMMAL_WHALE",
-   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
-   "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
-   "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
-   "UNITCOMBAT_ANIMAL_COMBAT_PACK_HUNTER",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
-   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
-   "UNITCOMBAT_ANIMAL_COMBAT_TAIL",
-   "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_MEDIOCRE",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -165,11 +179,6 @@
    "TERRAIN_OCEAN_TROPICAL",
    "TERRAIN_TRENCH",
    "TERRAIN_TRENCH_TROPICAL"
-  ],
-  "base": {
-   "combat": 3,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_SEA_ANIMAL"
-  }
+  ]
  }
 }

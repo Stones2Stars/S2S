@@ -31,8 +31,14 @@
  "allowed": {
   "empire": 5
  },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 13,
    "cityAttack": {
     "percent": 100
    },
@@ -101,14 +107,35 @@
    }
   }
  },
- "skills": {
-  "noDefensiveBonus": true,
-  "pillage": true,
-  "firstStrikeImmune": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "firstStrikeImmune"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_MOUNTED",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+  "UNITCOMBAT_ARMOR_MEDIUM",
+  "UNITCOMBAT_SHIELD_SMALL",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+  "UNITCOMBAT_MOTILITY_RIDING",
+  "UNITCOMBAT_MOUNT_HORSE",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_COMMANDO"
@@ -143,32 +170,8 @@
    "UNITAI_ATTACK",
    "UNITAI_PILLAGE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
-   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
-   "UNITCOMBAT_ARMOR_MEDIUM",
-   "UNITCOMBAT_SHIELD_SMALL",
-   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
-   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
-   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
-   "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
-   "UNITCOMBAT_MOTILITY_RIDING",
-   "UNITCOMBAT_MOUNT_HORSE",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 13,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_MOUNTED"
-  }
+  ]
  }
 }

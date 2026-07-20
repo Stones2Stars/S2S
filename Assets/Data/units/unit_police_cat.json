@@ -39,8 +39,14 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 36,
    "lunge": {
     "percent": 40
    },
@@ -69,6 +75,11 @@
     "UNITCOMBAT_STRIKE_TEAM": {
      "percent": 50
     }
+   },
+   "targets": {
+    "UNITCOMBAT_STRIKE_TEAM": true,
+    "UNITCOMBAT_CRIMINAL": true,
+    "UNITCOMBAT_RUFFIAN": true
    }
   }
  },
@@ -120,25 +131,43 @@
    "flat": -5
   }
  },
- "skills": {
-  "alwaysHostile": true,
-  "hiddenNationality": true,
-  "noCapture": true,
-  "noDefensiveBonus": true,
-  "counterSpy": true,
-  "ignoreTerrainCost": true,
-  "ignoreZoneOfControl": true,
-  "noNonOwnedCityEntry": true,
-  "ignoreNoEntryLevel": true,
-  "targets": {
-   "UNITCOMBAT_STRIKE_TEAM": true,
-   "UNITCOMBAT_CRIMINAL": true,
-   "UNITCOMBAT_RUFFIAN": true
-  }
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "alwaysHostile",
+  "hiddenNationality",
+  "noCapture",
+  "noDefensiveBonus",
+  "counterSpy",
+  "ignoreTerrainCost",
+  "ignoreZoneOfControl",
+  "noNonOwnedCityEntry",
+  "ignoreNoEntryLevel"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_FELINE",
+ "combatClasses": [
+  "UNITCOMBAT_LAW_ENFORCEMENT",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_ANIMAL",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_ROARING",
+  "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+  "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "vision": {
   "invisible": "INVISIBLE_CAMOUFLAGE",
   "invisibilityIntensity": {
@@ -179,34 +208,8 @@
   "notUnitAIs": [
    "UNITAI_CITY_DEFENSE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_LAW_ENFORCEMENT",
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_ANIMAL",
-   "UNITCOMBAT_ANIMAL_MAMMAL",
-   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
-   "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
-   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
-   "UNITCOMBAT_ANIMAL_COMBAT_ROARING",
-   "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
-   "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
-   "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 36,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_FELINE"
-  }
+  ]
  }
 }

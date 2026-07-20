@@ -1,9 +1,27 @@
 {
  "type": "UNIT_CAPTIVE_CIVILIAN",
- "skills": {
-  "onlyDefensive": true,
-  "workerTrade": true
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
  },
+ "skills": [
+  "onlyDefensive",
+  "workerTrade"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_CAPTIVE",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_PATHETIC",
+  "UNITCOMBAT_GROUP_BATTALION",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -190,21 +208,8 @@
   "unitAIs": [
    "UNITAI_SUBDUED_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_PATHETIC",
-   "UNITCOMBAT_GROUP_BATTALION",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_CAPTIVE"
-  }
+  ]
  }
 }

@@ -45,8 +45,14 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 4,
    "enclose": {
     "percent": 4
    },
@@ -55,6 +61,12 @@
    },
    "stealth": {
     "percent": 5
+   },
+   "targets": {
+    "UNITCOMBAT_CRIMINAL": true
+   },
+   "defenders": {
+    "UNITCOMBAT_CRIMINAL": true
    }
   }
  },
@@ -66,18 +78,28 @@
    "flat": -2
   }
  },
- "skills": {
-  "noCapture": true,
-  "counterSpy": true,
-  "passage": true,
-  "militaryTrade": true,
-  "targets": {
-   "UNITCOMBAT_CRIMINAL": true
-  },
-  "defenders": {
-   "UNITCOMBAT_CRIMINAL": true
-  }
- },
+ "skills": [
+  "noCapture",
+  "counterSpy",
+  "passage",
+  "militaryTrade"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",
+ "combatClasses": [
+  "UNITCOMBAT_MELEE",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_NEANDERTHAL",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_CLUB",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_DISGUISED": 2
@@ -119,28 +141,11 @@
    "UNITAI_INVESTIGATOR",
    "UNITAI_SEE_INVISIBLE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_MELEE",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_NEANDERTHAL",
-   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
-   "UNITCOMBAT_WEAPON_H2H_CLUB",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
-  "base": {
-   "combat": 4,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT"
-  }
+  ]
  }
 }

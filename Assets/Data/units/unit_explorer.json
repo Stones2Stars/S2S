@@ -12,17 +12,46 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 6
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 60
   }
  },
- "skills": {
-  "ignoreTerrainCost": true,
-  "noBadGoodies": true,
-  "passage": true,
-  "upgradeAnywhere": true
- },
+ "skills": [
+  "ignoreTerrainCost",
+  "noBadGoodies",
+  "passage",
+  "upgradeAnywhere"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_RECON",
+ "combatClasses": [
+  "UNITCOMBAT_EXPLORER",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_LIGHT_CROSSBOW",
+  "UNITCOMBAT_ARMOR_MEDIUM",
+  "UNITCOMBAT_SHIELD_BUCKLER",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_GUERILLA1",
@@ -63,28 +92,8 @@
   "notUnitAIs": [
    "UNITAI_HUNTER"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_EXPLORER",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
-   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
-   "UNITCOMBAT_WEAPON_DIST_LIGHT_CROSSBOW",
-   "UNITCOMBAT_ARMOR_MEDIUM",
-   "UNITCOMBAT_SHIELD_BUCKLER",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 6,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_RECON"
-  }
+  ]
  }
 }

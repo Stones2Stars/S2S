@@ -24,13 +24,41 @@
    }
   }
  },
- "skills": {
-  "pillage": true,
-  "food": true
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
  },
- "tags": {
-  "military": true
+ "strength": {
+  "unit": {
+   "flat": 200
+  }
  },
+ "skills": [
+  "pillage",
+  "food"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HITECH",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
+  "UNITCOMBAT_WEAPON_DIST_LASER",
+  "UNITCOMBAT_ARMOR_MODERN",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_BATTALION",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_TECH"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_BLITZ"
@@ -69,29 +97,8 @@
    "UNITAI_CITY_SPECIAL",
    "UNITAI_ESCORT"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_SPECIES_AI",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
-   "UNITCOMBAT_WEAPON_DIST_LASER",
-   "UNITCOMBAT_ARMOR_MODERN",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_BATTALION",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_TECH"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 200,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_HITECH"
-  }
+  ]
  }
 }

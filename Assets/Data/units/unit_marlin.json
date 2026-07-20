@@ -24,15 +24,41 @@
    ]
   }
  },
- "skills": {
-  "assassin": true,
-  "noDefensiveBonus": true,
-  "blendIntoCity": true,
-  "onlyDefensive": true,
-  "targets": {
-   "UNITCOMBAT_FISH_BONEY": true
+ "movement": {
+  "unit": {
+   "flat": 4
   }
  },
+ "strength": {
+  "unit": {
+   "flat": 3,
+   "targets": {
+    "UNITCOMBAT_FISH_BONEY": true
+   }
+  }
+ },
+ "skills": [
+  "assassin",
+  "noDefensiveBonus",
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_FISH",
+  "UNITCOMBAT_FISH_BONEY",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -159,25 +185,8 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_FISH",
-   "UNITCOMBAT_FISH_BONEY",
-   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
-   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 3,
-   "moves": 4,
-   "combatClass": "UNITCOMBAT_SEA_ANIMAL"
-  }
+  ]
  }
 }

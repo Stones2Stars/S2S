@@ -22,23 +22,14 @@
    }
   }
  },
- "withdrawal": {
+ "movement": {
   "unit": {
-   "percent": 35
-  }
- },
- "collateral": {
-  "unit": {
-   "limit": {
-    "flat": 100
-   },
-   "maxUnits": {
-    "flat": 8
-   }
+   "flat": 6
   }
  },
  "strength": {
   "unit": {
+   "flat": 110,
    "unitCombat": {
     "UNITCOMBAT_TRACKED": {
      "percent": 100
@@ -80,18 +71,51 @@
    }
   }
  },
- "skills": {
-  "noCapture": true,
-  "noDefensiveBonus": true,
-  "pillage": true,
-  "canMoveAllTerrain": true,
-  "ignoreBuildingDefense": true,
-  "ignoreTerrainCost": true,
-  "militaryTrade": true
+ "withdrawal": {
+  "unit": {
+   "percent": 35
+  }
  },
- "tags": {
-  "military": true
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 8
+   }
+  }
  },
+ "skills": [
+  "noCapture",
+  "noDefensiveBonus",
+  "pillage",
+  "canMoveAllTerrain",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HELICOPTER",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_GUNSHIP",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_ARMOR_AIRCRAFT",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_DROID_HELICOPTER"
@@ -121,22 +145,6 @@
    "UNITAI_ATTACK",
    "UNITAI_PILLAGE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_AI",
-   "UNITCOMBAT_GUNSHIP",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
-   "UNITCOMBAT_ARMOR_AIRCRAFT",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_PILOTING",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_TECH",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -150,11 +158,6 @@
   ],
   "advancedStart": {
    "cost": 150
-  },
-  "base": {
-   "combat": 110,
-   "moves": 6,
-   "combatClass": "UNITCOMBAT_HELICOPTER"
   }
  }
 }

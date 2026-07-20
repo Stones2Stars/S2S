@@ -41,6 +41,26 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 14,
+   "vsUnit": {
+    "UNIT_CARRACK_MERCHANT": {
+     "attack": {
+      "percent": 50
+     },
+     "defense": {
+      "percent": 50
+     }
+    }
+   }
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 25
@@ -64,28 +84,34 @@
    }
   }
  },
- "strength": {
-  "unit": {
-   "vsUnit": {
-    "UNIT_CARRACK_MERCHANT": {
-     "attack": {
-      "percent": 50
-     },
-     "defense": {
-      "percent": 50
-     }
-    }
-   }
-  }
- },
- "skills": {
-  "alwaysHostile": true,
-  "hiddenNationality": true,
-  "pillage": true,
-  "mechanized": true,
-  "rivalTerritory": true,
-  "renderBelowWater": true
- },
+ "skills": [
+  "alwaysHostile",
+  "hiddenNationality",
+  "pillage",
+  "mechanized",
+  "rivalTerritory",
+  "renderBelowWater"
+ ],
+ "tags": [
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WOODEN_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_PIRATE",
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_CANNONBALL",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_PRIVATEER"
@@ -124,29 +150,8 @@
    "UNITAI_RESERVE_SEA",
    "UNITAI_ATTACK_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_PIRATE",
-   "UNITCOMBAT_NAVAL_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
-   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
-   "UNITCOMBAT_WEAPON_DIST_CANNONBALL",
-   "UNITCOMBAT_ARMOR_NAVAL",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_NAVAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 14,
-   "moves": 4,
-   "combatClass": "UNITCOMBAT_WOODEN_SHIPS"
-  }
+  ]
  }
 }

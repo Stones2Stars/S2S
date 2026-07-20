@@ -19,6 +19,11 @@
   }
  },
  "enabled": "GAMEOPTION_ADVANCED_NUKES",
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "air": {
   "unit": {
    "nukeRange": {
@@ -26,16 +31,28 @@
    }
   }
  },
- "skills": {
-  "ignoreBuildingDefense": true,
-  "mechanized": true,
-  "nukeImmune": true,
-  "suicide": true,
-  "militaryTrade": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "ignoreBuildingDefense",
+  "mechanized",
+  "nukeImmune",
+  "suicide",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "airUnit"
+ ],
+ "combatClass": "UNITCOMBAT_DOOM",
+ "combatClasses": [
+  "UNITCOMBAT_BALLISTIC",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_WARHEAD",
+  "UNITCOMBAT_WEAPON_DETONATE_RADIOACTIVE",
+  "UNITCOMBAT_MOTILITY_UNMANNED",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE"
+ ],
  "cost": {
   "production": 1843,
   "upkeep": 11
@@ -57,25 +74,11 @@
   "unitAIs": [
    "UNITAI_ICBM"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_BALLISTIC",
-   "UNITCOMBAT_SPECIES_AI",
-   "UNITCOMBAT_WEAPON_METHOD_WARHEAD",
-   "UNITCOMBAT_WEAPON_DETONATE_RADIOACTIVE",
-   "UNITCOMBAT_MOTILITY_UNMANNED",
-   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_HUGE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "advancedStart": {
    "cost": 150
-  },
-  "base": {
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_DOOM"
   }
  }
 }

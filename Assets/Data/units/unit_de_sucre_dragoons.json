@@ -36,24 +36,14 @@
  "allowed": {
   "empire": 5
  },
- "withdrawal": {
+ "movement": {
   "unit": {
-   "percent": 20
-  }
- },
- "costs": {
-  "empire": {
-   "perInstance": {
-    "percent": 5,
-    "per": {
-     "type": "SELF",
-     "scope": "empire"
-    }
-   }
+   "flat": 2
   }
  },
  "strength": {
   "unit": {
+   "flat": 19,
    "terrain": {
     "TERRAIN_GRASSLAND": {
      "attack": {
@@ -95,12 +85,50 @@
    }
   }
  },
- "skills": {
-  "pillage": true
+ "withdrawal": {
+  "unit": {
+   "percent": 20
+  }
  },
- "tags": {
-  "military": true
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
  },
+ "skills": [
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_MOUNTED",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+  "UNITCOMBAT_ARMOR_MEDIUM",
+  "UNITCOMBAT_SHIELD_SMALL",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_RIDING",
+  "UNITCOMBAT_MOUNT_HORSE",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_COMMANDO",
@@ -142,33 +170,8 @@
    "UNITAI_CITY_DEFENSE",
    "UNITAI_CITY_SPECIAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
-   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
-   "UNITCOMBAT_ARMOR_MEDIUM",
-   "UNITCOMBAT_SHIELD_SMALL",
-   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
-   "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
-   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
-   "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_RIDING",
-   "UNITCOMBAT_MOUNT_HORSE",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_COMPANY",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 19,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_MOUNTED"
-  }
+  ]
  }
 }

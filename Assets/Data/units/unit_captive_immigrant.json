@@ -1,5 +1,24 @@
 {
  "type": "UNIT_CAPTIVE_IMMIGRANT",
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SETTLER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_BATTALION",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -47,22 +66,8 @@
   "unitAIs": [
    "UNITAI_CITY_SPECIAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_INFERIOR",
-   "UNITCOMBAT_GROUP_BATTALION",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_SETTLER"
-  }
+  ]
  }
 }

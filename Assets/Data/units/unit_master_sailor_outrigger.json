@@ -22,22 +22,49 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 4
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 35
   }
  },
- "skills": {
-  "pillage": true,
-  "mechanized": true,
-  "noBadGoodies": true,
-  "rivalTerritory": true,
-  "renderBelowWater": true,
-  "militaryTrade": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage",
+  "mechanized",
+  "noBadGoodies",
+  "rivalTerritory",
+  "renderBelowWater",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WOODEN_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_RECON",
+  "UNITCOMBAT_EXPLORER",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_OAR",
+  "UNITCOMBAT_WEAPON_DIST_JAVELIN",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_NAVIGATION1",
@@ -76,21 +103,6 @@
    "UNITAI_ESCORT_SEA",
    "UNITAI_EXPLORE_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_RECON",
-   "UNITCOMBAT_EXPLORER",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
-   "UNITCOMBAT_WEAPON_H2H_OAR",
-   "UNITCOMBAT_WEAPON_DIST_JAVELIN",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_NAVAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -127,11 +139,6 @@
    {
     "TERRAIN_SEA_DEEP_TROPICAL": "TECH_SEAFARING"
    }
-  ],
-  "base": {
-   "combat": 4,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_WOODEN_SHIPS"
-  }
+  ]
  }
 }

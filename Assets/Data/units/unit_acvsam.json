@@ -38,25 +38,14 @@
    }
   }
  },
- "withdrawal": {
+ "movement": {
   "unit": {
-   "percent": 45
-  }
- },
- "range": {
-  "unit": {
-   "flat": 2
-  }
- },
- "air": {
-  "unit": {
-   "intercept": {
-    "percent": 70
-   }
+   "flat": 3
   }
  },
  "strength": {
   "unit": {
+   "flat": 100,
    "unitCombat": {
     "UNITCOMBAT_GUN": {
      "percent": -25
@@ -76,20 +65,58 @@
     "UNITCOMBAT_HELICOPTER": {
      "percent": 75
     }
+   },
+   "targets": {
+    "UNITCOMBAT_HELICOPTER": true
    }
   }
  },
- "skills": {
-  "pillage": true,
-  "ignoreBuildingDefense": true,
-  "militaryTrade": true,
-  "targets": {
-   "UNITCOMBAT_HELICOPTER": true
+ "withdrawal": {
+  "unit": {
+   "percent": 45
   }
  },
- "tags": {
-  "military": true
+ "range": {
+  "unit": {
+   "flat": 2
+  }
  },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 70
+   }
+  }
+ },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HITECH",
+ "combatClasses": [
+  "UNITCOMBAT_ROCKET_LAUNCHER",
+  "UNITCOMBAT_WHEELED",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_SPACE_SAM_INFANTRY"
@@ -123,32 +150,8 @@
    "UNITAI_RESERVE",
    "UNITAI_ESCORT"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_ROCKET_LAUNCHER",
-   "UNITCOMBAT_WHEELED",
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
-   "UNITCOMBAT_ARMOR_VEHICULAR",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_DRIVING",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_TECH",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 100,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_HITECH"
-  }
+  ]
  }
 }

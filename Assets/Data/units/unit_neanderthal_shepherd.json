@@ -103,6 +103,16 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
+  }
+ },
  "heal": {
   "unit": {
    "support": {
@@ -126,9 +136,26 @@
    "flat": -1
   }
  },
- "skills": {
-  "onlyDefensive": true
- },
+ "skills": [
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HEALTH_CARE",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_NEANDERTHAL",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_STAFF",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_ANIMALS",
+  "UNITCOMBAT_HEALS_PEOPLE"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_VET"
@@ -159,29 +186,11 @@
    "UNITAI_HEALER",
    "UNITAI_PROPERTY_CONTROL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_NEANDERTHAL",
-   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
-   "UNITCOMBAT_WEAPON_H2H_STAFF",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_ANIMALS",
-   "UNITCOMBAT_HEALS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "enabledCivilizations": [
    "CIVILIZATION_NPC_NEANDERTHAL"
-  ],
-  "base": {
-   "combat": 3,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_HEALTH_CARE"
-  }
+  ]
  }
 }

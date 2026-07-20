@@ -35,6 +35,7 @@
  },
  "movement": {
   "unit": {
+   "flat": 2,
    "dropRange": {
     "flat": 7
    }
@@ -42,6 +43,7 @@
  },
  "strength": {
   "unit": {
+   "flat": 75,
    "cityAttack": {
     "percent": 25
    },
@@ -78,6 +80,12 @@
     "UNITCOMBAT_SIEGE_ROCKETRY": {
      "percent": 50
     }
+   },
+   "targets": {
+    "UNITCOMBAT_EXPLORER": true,
+    "UNITCOMBAT_CANINE": true,
+    "UNITCOMBAT_SIEGE_GUNPOWDER": true,
+    "UNITCOMBAT_SIEGE_ROCKETRY": true
    }
   }
  },
@@ -131,28 +139,38 @@
    }
   }
  },
- "skills": {
-  "assassin": true,
-  "pillage": true,
-  "counterSpy": true,
-  "destroy": true,
-  "ignoreBuildingDefense": true,
-  "ignoreTerrainCost": true,
-  "ignoreZoneOfControl": true,
-  "rivalTerritory": true,
-  "sabotage": true,
-  "stealPlans": true,
-  "ignoreNoEntryLevel": true,
-  "targets": {
-   "UNITCOMBAT_EXPLORER": true,
-   "UNITCOMBAT_CANINE": true,
-   "UNITCOMBAT_SIEGE_GUNPOWDER": true,
-   "UNITCOMBAT_SIEGE_ROCKETRY": true
-  }
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "assassin",
+  "pillage",
+  "counterSpy",
+  "destroy",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "ignoreZoneOfControl",
+  "rivalTerritory",
+  "sabotage",
+  "stealPlans",
+  "ignoreNoEntryLevel"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_STRIKE_TEAM",
+ "combatClasses": [
+  "UNITCOMBAT_GUN",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_MODERN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "vision": {
   "invisible": "INVISIBLE_CAMOUFLAGE",
   "visibilityIntensity": {
@@ -208,27 +226,8 @@
   "notUnitAIs": [
    "UNITAI_CITY_DEFENSE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_GUN",
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_ARMOR_MODERN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 75,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_STRIKE_TEAM"
-  }
+  ]
  }
 }

@@ -12,15 +12,45 @@
    "title": "TXT_KEY_GROUPTITLE_HERD"
   }
  ],
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 2
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 40
   }
  },
- "skills": {
-  "blendIntoCity": true,
-  "onlyDefensive": true
- },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_MAMMAL_TAPIR",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+  "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -77,22 +107,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_MAMMAL",
-   "UNITCOMBAT_RECKLESS_ANIMAL",
-   "UNITCOMBAT_MAMMAL_TAPIR",
-   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
-   "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
-   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
-   "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -125,11 +139,6 @@
    {
     "FEATURE_SWAMP": "NONE"
    }
-  ],
-  "base": {
-   "combat": 2,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

@@ -1,8 +1,28 @@
 {
  "type": "UNIT_DOCTOR",
- "skills": {
-  "goldenAge": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
+ "skills": [
+  "goldenAge"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_PRODIGY",
+ "combatClasses": [
+  "UNITCOMBAT_HEALTH_CARE",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -87,17 +107,6 @@
   "unitAIs": [
    "UNITAI_PROPHET"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_HEALTH_CARE",
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_INFERIOR",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -162,10 +171,6 @@
    "TXT_KEY_GREAT_PERSON_WILLIAM_OSLER",
    "TXT_KEY_GREAT_PERSON_WILLIAM_WORRALL_MAYO",
    "TXT_KEY_GREAT_PERSON_ZAKARIA_AL_RAZI"
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_PRODIGY"
-  }
+  ]
  }
 }

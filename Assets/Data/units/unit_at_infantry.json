@@ -22,15 +22,14 @@
    }
   }
  },
- "air": {
+ "movement": {
   "unit": {
-   "intercept": {
-    "percent": 15
-   }
+   "flat": 1
   }
  },
  "strength": {
   "unit": {
+   "flat": 55,
    "unitCombat": {
     "UNITCOMBAT_GUN": {
      "percent": -50
@@ -41,20 +40,43 @@
     "UNITCOMBAT_WHEELED": {
      "percent": 50
     }
+   },
+   "targets": {
+    "UNITCOMBAT_WHEELED": true,
+    "UNITCOMBAT_TRACKED": true
    }
   }
  },
- "skills": {
-  "pillage": true,
-  "ignoreBuildingDefense": true,
-  "targets": {
-   "UNITCOMBAT_WHEELED": true,
-   "UNITCOMBAT_TRACKED": true
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 15
+   }
   }
  },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ROCKET_LAUNCHER",
+ "combatClasses": [
+  "UNITCOMBAT_GUN",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_WEAPON_H2H_HANDGUN",
+  "UNITCOMBAT_ARMOR_MODERN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_AMBUSH"
@@ -93,27 +115,8 @@
    "UNITAI_CITY_SPECIAL",
    "UNITAI_ESCORT"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_GUN",
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
-   "UNITCOMBAT_WEAPON_H2H_HANDGUN",
-   "UNITCOMBAT_ARMOR_MODERN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_COMPANY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 55,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_ROCKET_LAUNCHER"
-  }
+  ]
  }
 }

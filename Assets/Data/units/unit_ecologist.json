@@ -25,6 +25,16 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 15
+  }
+ },
  "heal": {
   "unit": {
    "support": {
@@ -53,15 +63,30 @@
    "flat": -10
   }
  },
- "skills": {
-  "food": true,
-  "onlyDefensive": true,
-  "workerTrade": true
- },
- "tags": {
-  "worker": true,
-  "civilian": true
- },
+ "skills": [
+  "food",
+  "onlyDefensive",
+  "workerTrade"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
+  "UNITCOMBAT_WEAPON_DIST_RIFLE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_ANIMALS"
+ ],
  "cost": {
   "production": 1075,
   "upkeep": 5,
@@ -87,27 +112,11 @@
    "UNITAI_HEALER",
    "UNITAI_PROPERTY_CONTROL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
-   "UNITCOMBAT_WEAPON_DIST_RIFLE",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "base": {
-   "combat": 15,
-   "moves": 1,
-   "workRate": 175,
-   "combatClass": "UNITCOMBAT_WORKER"
+   "workRate": 175
   }
  }
 }

@@ -12,16 +12,48 @@
    "title": "TXT_KEY_GROUPTITLE_PACK"
   }
  ],
- "skills": {
-  "assassin": true,
-  "blendIntoCity": true,
-  "onlyDefensive": true,
-  "targets": {
-   "UNITCOMBAT_SIZE_FINE": true,
-   "UNITCOMBAT_SIZE_DIMINUTIVE": true,
-   "UNITCOMBAT_SIZE_TINY": true
+ "movement": {
+  "unit": {
+   "flat": 1
   }
  },
+ "strength": {
+  "unit": {
+   "flat": 2,
+   "targets": {
+    "UNITCOMBAT_SIZE_FINE": true,
+    "UNITCOMBAT_SIZE_DIMINUTIVE": true,
+    "UNITCOMBAT_SIZE_TINY": true
+   }
+  }
+ },
+ "skills": [
+  "assassin",
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_REPTILE",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_REPTILE_LIZARD",
+  "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+  "UNITCOMBAT_ANIMAL_COMBAT_SCRATCH",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+  "UNITCOMBAT_ANIMAL_COMBAT_TREECLIMBING",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_SMALL",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -78,24 +110,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_REPTILE",
-   "UNITCOMBAT_RECKLESS_ANIMAL",
-   "UNITCOMBAT_REPTILE_LIZARD",
-   "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
-   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
-   "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
-   "UNITCOMBAT_ANIMAL_COMBAT_SCRATCH",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
-   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
-   "UNITCOMBAT_ANIMAL_COMBAT_TREECLIMBING",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_SMALL",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -118,11 +132,6 @@
    {
     "FEATURE_SAVANNA": "NONE"
    }
-  ],
-  "base": {
-   "combat": 2,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

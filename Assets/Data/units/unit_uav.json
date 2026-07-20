@@ -31,6 +31,11 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "bombard": {
   "unit": {
    "airBombRate": {
@@ -81,16 +86,31 @@
    }
   }
  },
- "skills": {
-  "ignoreBuildingDefense": true,
-  "mechanized": true,
-  "dcmFighterEngage": true,
-  "militaryTrade": true,
-  "dcmAirBomb": 5
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "ignoreBuildingDefense",
+  "mechanized",
+  "dcmFighterEngage",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "airUnit"
+ ],
+ "combatClass": "UNITCOMBAT_STEALTH",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_A2G_MEDIUM_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_AIRCRAFT",
+  "UNITCOMBAT_MOTILITY_UNMANNED",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_AIRCRAFT",
+  "UNITCOMBAT_HEALS_AS_TECH"
+ ],
  "cost": {
   "production": 1925,
   "upkeep": 11
@@ -115,29 +135,13 @@
   "unitAIs": [
    "UNITAI_ATTACK_AIR"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_AI",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_A2G_MEDIUM_RANGE_MISSILE",
-   "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
-   "UNITCOMBAT_ARMOR_AIRCRAFT",
-   "UNITCOMBAT_MOTILITY_UNMANNED",
-   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_AIRCRAFT",
-   "UNITCOMBAT_HEALS_AS_TECH"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "base": {
-   "moves": 1,
    "airCombat": 70,
    "airCombatLimit": 70,
-   "airUnitCap": 1,
-   "combatClass": "UNITCOMBAT_STEALTH"
+   "airUnitCap": 1
   }
  }
 }

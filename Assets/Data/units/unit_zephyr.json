@@ -32,6 +32,21 @@
  "allowed": {
   "empire": 5
  },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 25,
+   "unitCombat": {
+    "UNITCOMBAT_GUN": {
+     "percent": -50
+    }
+   }
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 25
@@ -55,28 +70,36 @@
    }
   }
  },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_GUN": {
-     "percent": -50
-    }
-   }
-  }
- },
- "skills": {
-  "noCapture": true,
-  "noDefensiveBonus": true,
-  "canMoveAllTerrain": true,
-  "ignoreBuildingDefense": true,
-  "ignoreTerrainCost": true,
-  "mechanized": true,
-  "dcmFighterEngage": true,
-  "militaryTrade": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "noCapture",
+  "noDefensiveBonus",
+  "canMoveAllTerrain",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "mechanized",
+  "dcmFighterEngage",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_BALLOON",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_LAUNCHED_STONE",
+  "UNITCOMBAT_WEAPON_DIST_BALLISTA",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_SENTRY"
@@ -109,21 +132,6 @@
   "unitAIs": [
    "UNITAI_ATTACK"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_LAUNCHED_STONE",
-   "UNITCOMBAT_WEAPON_DIST_BALLISTA",
-   "UNITCOMBAT_ARMOR_NAVAL",
-   "UNITCOMBAT_SPEED_SLOW",
-   "UNITCOMBAT_MOTILITY_PILOTING",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -133,10 +141,7 @@
    "TERRAIN_OCEAN_TROPICAL"
   ],
   "base": {
-   "combat": 25,
-   "moves": 3,
-   "airUnitCap": 1,
-   "combatClass": "UNITCOMBAT_BALLOON"
+   "airUnitCap": 1
   }
  }
 }

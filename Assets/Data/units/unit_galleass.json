@@ -34,15 +34,14 @@
    ]
   }
  },
- "bombard": {
+ "movement": {
   "unit": {
-   "rate": {
-    "percent": 4
-   }
+   "flat": 3
   }
  },
  "strength": {
   "unit": {
+   "flat": 9,
    "unitCombat": {
     "UNITCOMBAT_WOODEN_SHIPS": {
      "percent": 50
@@ -68,14 +67,37 @@
    }
   }
  },
- "skills": {
-  "pillage": true,
-  "mechanized": true,
-  "renderBelowWater": true
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 4
+   }
+  }
  },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage",
+  "mechanized",
+  "renderBelowWater"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WOODEN_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_CANNONBALL",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_SLOOP",
@@ -110,20 +132,6 @@
    "UNITAI_EXPLORE_SEA",
    "UNITAI_ASSAULT_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_NAVAL_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
-   "UNITCOMBAT_WEAPON_DIST_CANNONBALL",
-   "UNITCOMBAT_ARMOR_NAVAL",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_NAVAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -154,11 +162,6 @@
    {
     "TERRAIN_TRENCH_POLAR": "TECH_ASTRONOMY"
    }
-  ],
-  "base": {
-   "combat": 9,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_WOODEN_SHIPS"
-  }
+  ]
  }
 }

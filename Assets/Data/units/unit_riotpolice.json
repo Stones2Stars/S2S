@@ -42,8 +42,14 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 40,
    "enclose": {
     "percent": 16
    },
@@ -55,6 +61,12 @@
    },
    "stealth": {
     "percent": 40
+   },
+   "targets": {
+    "UNITCOMBAT_CRIMINAL": true
+   },
+   "defenders": {
+    "UNITCOMBAT_CRIMINAL": true
    }
   }
  },
@@ -80,18 +92,31 @@
    "flat": -10
   }
  },
- "skills": {
-  "noCapture": true,
-  "counterSpy": true,
-  "passage": true,
-  "militaryTrade": true,
-  "targets": {
-   "UNITCOMBAT_CRIMINAL": true
-  },
-  "defenders": {
-   "UNITCOMBAT_CRIMINAL": true
-  }
- },
+ "skills": [
+  "noCapture",
+  "counterSpy",
+  "passage",
+  "militaryTrade"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",
+ "combatClasses": [
+  "UNITCOMBAT_GUN",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_CLUB",
+  "UNITCOMBAT_WEAPON_DIST_GRENADE",
+  "UNITCOMBAT_ARMOR_MODERN",
+  "UNITCOMBAT_SHIELD_TOWER",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_DISGUISED": 8
@@ -133,28 +158,8 @@
    "UNITAI_INVESTIGATOR",
    "UNITAI_SEE_INVISIBLE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_GUN",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
-   "UNITCOMBAT_WEAPON_H2H_CLUB",
-   "UNITCOMBAT_WEAPON_DIST_GRENADE",
-   "UNITCOMBAT_ARMOR_MODERN",
-   "UNITCOMBAT_SHIELD_TOWER",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 40,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT"
-  }
+  ]
  }
 }

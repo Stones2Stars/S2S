@@ -31,18 +31,14 @@
    }
   }
  },
- "collateral": {
+ "movement": {
   "unit": {
-   "limit": {
-    "flat": 60
-   },
-   "maxUnits": {
-    "flat": 5
-   }
+   "flat": 4
   }
  },
  "strength": {
   "unit": {
+   "flat": 40,
    "unitCombat": {
     "UNITCOMBAT_MOUNTED": {
      "percent": 25
@@ -62,16 +58,42 @@
    }
   }
  },
- "skills": {
-  "noDefensiveBonus": true,
-  "pillage": true,
-  "ignoreBuildingDefense": true,
-  "mechanized": true,
-  "militaryTrade": true
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 60
+   },
+   "maxUnits": {
+    "flat": 5
+   }
+  }
  },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "ignoreBuildingDefense",
+  "mechanized",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_TRACKED",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_BLITZ"
@@ -107,27 +129,8 @@
    "UNITAI_ATTACK_CITY",
    "UNITAI_PILLAGE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
-   "UNITCOMBAT_ARMOR_VEHICULAR",
-   "UNITCOMBAT_MOTILITY_DRIVING",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 40,
-   "moves": 4,
-   "combatClass": "UNITCOMBAT_TRACKED"
-  }
+  ]
  }
 }

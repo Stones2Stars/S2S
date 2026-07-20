@@ -60,15 +60,34 @@
    ]
   }
  },
- "skills": {
-  "canMoveAllTerrain": true,
-  "canMoveImpassable": true,
-  "ignoreTerrainCost": true
+ "movement": {
+  "unit": {
+   "flat": 24
+  }
  },
- "tags": {
-  "worker": true,
-  "civilian": true
- },
+ "skills": [
+  "canMoveAllTerrain",
+  "canMoveImpassable",
+  "ignoreTerrainCost"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SPACE_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_WORMHOLE_SPACESHIP",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "cost": {
   "production": 5000,
   "upkeep": 1,
@@ -90,18 +109,6 @@
   "captures": "UNIT_COSMIC_WORKER",
   "unitAIs": [
    "UNITAI_WORKER"
-  ],
-  "combatClasses": [
-   "UNITCOMBAT_WORMHOLE_SPACESHIP",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_SPECIES_AI",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_COMPANY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_TECH",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
   ],
   "mapCategories": [
    "MAPCATEGORY_CISLUNAR",
@@ -151,9 +158,7 @@
    "cost": 100
   },
   "base": {
-   "moves": 24,
-   "workRate": 350,
-   "combatClass": "UNITCOMBAT_SPACE_WORKER"
+   "workRate": 350
   }
  }
 }

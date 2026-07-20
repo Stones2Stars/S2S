@@ -34,17 +34,49 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 5
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 60
   }
  },
- "skills": {
-  "noDefensiveBonus": true,
-  "blendIntoCity": true,
-  "canMoveImpassable": true,
-  "onlyDefensive": true
- },
+ "skills": [
+  "noDefensiveBonus",
+  "blendIntoCity",
+  "canMoveImpassable",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_MAMMAL_WHALE",
+  "UNITCOMBAT_ATTACK_FORM_COLLISION_PIERCING",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+  "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_HORNED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -126,24 +158,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_MAMMAL",
-   "UNITCOMBAT_RECKLESS_ANIMAL",
-   "UNITCOMBAT_MAMMAL_WHALE",
-   "UNITCOMBAT_ATTACK_FORM_COLLISION_PIERCING",
-   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
-   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
-   "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
-   "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_HORNED",
-   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -153,11 +167,6 @@
    "TERRAIN_SEA_DEEP",
    "TERRAIN_OCEAN",
    "TERRAIN_TRENCH"
-  ],
-  "base": {
-   "combat": 5,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_SEA_ANIMAL"
-  }
+  ]
  }
 }

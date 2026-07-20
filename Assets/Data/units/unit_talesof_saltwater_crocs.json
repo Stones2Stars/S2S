@@ -7,9 +7,21 @@
    ]
   }
  },
- "skills": {
-  "militaryTrade": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
+ "skills": [
+  "militaryTrade"
+ ],
+ "tags": [
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_ANIMAL_TALE",
+ "combatClasses": [
+  "UNITCOMBAT_IDEA"
+ ],
  "grants": {
   "buildings": [
    "BUILDING_FOLKLORE_E_SEA"
@@ -32,9 +44,6 @@
   "captures": "UNIT_TALESOF_SALTWATER_CROCS",
   "unitAIs": [
    "UNITAI_SUBDUED_ANIMAL"
-  ],
-  "combatClasses": [
-   "UNITCOMBAT_IDEA"
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
@@ -93,10 +102,6 @@
   ],
   "heritage": [
    "HERITAGE_FOLKLORE_CROCODILE_SALTWATER"
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_SEA_ANIMAL_TALE"
-  }
+  ]
  }
 }

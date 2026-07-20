@@ -1,33 +1,60 @@
 {
  "type": "UNIT_HORNEDOWL",
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1,
+   "targets": {
+    "UNITCOMBAT_BIRD_GAMEBIRD": true,
+    "UNITCOMBAT_BIRD_CORVID": true,
+    "UNITCOMBAT_BIRD_RAPTOR": true,
+    "UNITCOMBAT_BIRD_SEABIRD": true,
+    "UNITCOMBAT_BIRD_SONGBIRD": true,
+    "UNITCOMBAT_BIRD_WATERFOWL": true,
+    "UNITCOMBAT_MAMMAL_RODENT": true,
+    "UNITCOMBAT_REPTILE_SNAKE": true
+   },
+   "unitTargets": {
+    "UNIT_ARMADILLO": true,
+    "UNIT_CRAB": true,
+    "UNIT_OPOSSUM": true,
+    "UNIT_SKUNK": true,
+    "UNIT_JUNGLE_TARANTULA": true,
+    "UNIT_DESERT_TARANTULA": true
+   }
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 60
   }
  },
- "skills": {
-  "assassin": true,
-  "blendIntoCity": true,
-  "onlyDefensive": true,
-  "targets": {
-   "UNITCOMBAT_BIRD_GAMEBIRD": true,
-   "UNITCOMBAT_BIRD_CORVID": true,
-   "UNITCOMBAT_BIRD_RAPTOR": true,
-   "UNITCOMBAT_BIRD_SEABIRD": true,
-   "UNITCOMBAT_BIRD_SONGBIRD": true,
-   "UNITCOMBAT_BIRD_WATERFOWL": true,
-   "UNITCOMBAT_MAMMAL_RODENT": true,
-   "UNITCOMBAT_REPTILE_SNAKE": true
-  },
-  "unitTargets": {
-   "UNIT_ARMADILLO": true,
-   "UNIT_CRAB": true,
-   "UNIT_OPOSSUM": true,
-   "UNIT_SKUNK": true,
-   "UNIT_JUNGLE_TARANTULA": true,
-   "UNIT_DESERT_TARANTULA": true
-  }
- },
+ "skills": [
+  "assassin",
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_BIRD",
+  "UNITCOMBAT_BIRD_RAPTOR",
+  "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+  "UNITCOMBAT_ANIMAL_COMBAT_PECK",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+  "UNITCOMBAT_MOTILITY_AERIAL",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_SMALL",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -69,19 +96,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_BIRD",
-   "UNITCOMBAT_BIRD_RAPTOR",
-   "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
-   "UNITCOMBAT_ANIMAL_COMBAT_PECK",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
-   "UNITCOMBAT_MOTILITY_AERIAL",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_SMALL",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -97,11 +111,6 @@
    "TERRAIN_SEA_POLAR",
    "TERRAIN_SEA_TROPICAL",
    "TERRAIN_PEAK"
-  ],
-  "base": {
-   "combat": 1,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

@@ -35,8 +35,14 @@
  "allowed": {
   "empire": 5
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 14,
    "cityAttack": {
     "percent": 50
    },
@@ -93,9 +99,28 @@
    }
   }
  },
- "skills": {
-  "renderBelowWater": true
- },
+ "skills": [
+  "renderBelowWater"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_MELEE",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+  "UNITCOMBAT_WEAPON_H2H_AXE",
+  "UNITCOMBAT_WEAPON_H2H_HAMMER",
+  "UNITCOMBAT_WEAPON_DIST_REPEATING_CROSSBOW",
+  "UNITCOMBAT_ARMOR_HEAVY",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "cost": {
   "production": 350
  },
@@ -121,31 +146,11 @@
    "UNITAI_CITY_DEFENSE",
    "UNITAI_ESCORT"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_AI",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
-   "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
-   "UNITCOMBAT_WEAPON_H2H_AXE",
-   "UNITCOMBAT_WEAPON_H2H_HAMMER",
-   "UNITCOMBAT_WEAPON_DIST_REPEATING_CROSSBOW",
-   "UNITCOMBAT_ARMOR_HEAVY",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "advancedStart": {
    "cost": -1
-  },
-  "base": {
-   "combat": 14,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_MELEE"
   }
  }
 }

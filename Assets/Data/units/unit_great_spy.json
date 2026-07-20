@@ -1,14 +1,31 @@
 {
  "type": "UNIT_GREAT_SPY",
- "skills": {
-  "goldenAge": true,
-  "alwaysInvisible": true,
-  "rivalTerritory": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
- "tags": {
-  "merchant": true,
-  "civilian": true
- },
+ "skills": [
+  "goldenAge",
+  "alwaysInvisible",
+  "rivalTerritory"
+ ],
+ "tags": [
+  "merchant",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_PRODIGY",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -89,16 +106,6 @@
   "notUnitAIs": [
    "UNITAI_EXPLORE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -135,10 +142,6 @@
    "TXT_KEY_GREAT_PERSON_SPY_VS_SPY",
    "TXT_KEY_GREAT_PERSON_WILLIAM_DONOVAN",
    "TXT_KEY_GREAT_PERSON_WILLIAM_MELVILLE"
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_PRODIGY"
-  }
+  ]
  }
 }

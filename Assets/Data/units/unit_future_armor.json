@@ -31,25 +31,14 @@
    ]
   }
  },
- "firstStrike": {
+ "movement": {
   "unit": {
-   "strikes": {
-    "flat": 1
-   }
-  }
- },
- "collateral": {
-  "unit": {
-   "limit": {
-    "flat": 80
-   },
-   "maxUnits": {
-    "flat": 8
-   }
+   "flat": 3
   }
  },
  "strength": {
   "unit": {
+   "flat": 150,
    "unitCombat": {
     "UNITCOMBAT_WHEELED": {
      "percent": 50
@@ -84,17 +73,50 @@
    }
   }
  },
- "skills": {
-  "noDefensiveBonus": true,
-  "pillage": true,
-  "ignoreBuildingDefense": true,
-  "ignoreTerrainCost": true,
-  "mechanized": true,
-  "militaryTrade": true
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
  },
- "tags": {
-  "military": true
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 80
+   },
+   "maxUnits": {
+    "flat": 8
+   }
+  }
  },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "mechanized",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_DREADNOUGHT",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_ION",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_SHIELD_ENERGY",
+  "UNITCOMBAT_MOTILITY_HOVERING",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_BLITZ"
@@ -125,27 +147,8 @@
    "UNITAI_ATTACK_CITY",
    "UNITAI_PILLAGE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_DIST_ION",
-   "UNITCOMBAT_ARMOR_VEHICULAR",
-   "UNITCOMBAT_SHIELD_ENERGY",
-   "UNITCOMBAT_MOTILITY_HOVERING",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 150,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_DREADNOUGHT"
-  }
+  ]
  }
 }

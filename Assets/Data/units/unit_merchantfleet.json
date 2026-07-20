@@ -8,13 +8,37 @@
   }
  },
  "disabled": "GAMEOPTION_NO_EVENTS",
- "skills": {
-  "rivalTerritory": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
- "tags": {
-  "merchant": true,
-  "civilian": true
- },
+ "skills": [
+  "rivalTerritory"
+ ],
+ "tags": [
+  "merchant",
+  "civilian",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_TRADE",
+ "combatClasses": [
+  "UNITCOMBAT_WOODEN_SHIPS",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+  "UNITCOMBAT_WEAPON_DIST_JAVELIN",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_SHIELD_SMALL",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
  "grants": {
   "greatPersonAction": {
    "trade": {
@@ -42,23 +66,6 @@
   "advisor": "ADVISOR_GROWTH",
   "unitAIs": [
    "UNITAI_MERCHANT"
-  ],
-  "combatClasses": [
-   "UNITCOMBAT_WOODEN_SHIPS",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
-   "UNITCOMBAT_WEAPON_DIST_JAVELIN",
-   "UNITCOMBAT_ARMOR_NAVAL",
-   "UNITCOMBAT_SHIELD_SMALL",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_MEDIOCRE",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_NAVAL"
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
@@ -114,10 +121,6 @@
    {
     "TERRAIN_TRENCH_POLAR": "TECH_ASTRONOMY"
    }
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_TRADE"
-  }
+  ]
  }
 }

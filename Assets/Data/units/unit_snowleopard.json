@@ -1,12 +1,13 @@
 {
  "type": "UNIT_SNOWLEOPARD",
- "withdrawal": {
+ "movement": {
   "unit": {
-   "percent": 20
+   "flat": 2
   }
  },
  "strength": {
   "unit": {
+   "flat": 4,
    "terrain": {
     "TERRAIN_JAGGED": {
      "attack": {
@@ -48,25 +49,55 @@
       "percent": 10
      }
     }
+   },
+   "targets": {
+    "UNITCOMBAT_MAMMAL_MONKEY": true,
+    "UNITCOMBAT_MAMMAL_RODENT": true,
+    "UNITCOMBAT_MAMMAL_SWINE": true
+   },
+   "unitTargets": {
+    "UNIT_IBEX": true,
+    "UNIT_MOUFLON": true,
+    "UNIT_REDPANDA": true,
+    "UNIT_STAG_DEER": true
    }
   }
  },
- "skills": {
-  "assassin": true,
-  "blendIntoCity": true,
-  "onlyDefensive": true,
-  "targets": {
-   "UNITCOMBAT_MAMMAL_MONKEY": true,
-   "UNITCOMBAT_MAMMAL_RODENT": true,
-   "UNITCOMBAT_MAMMAL_SWINE": true
-  },
-  "unitTargets": {
-   "UNIT_IBEX": true,
-   "UNIT_MOUFLON": true,
-   "UNIT_REDPANDA": true,
-   "UNIT_STAG_DEER": true
+ "withdrawal": {
+  "unit": {
+   "percent": 20
   }
  },
+ "skills": [
+  "assassin",
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_FELINE",
+  "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
+  "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_SMALL",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -123,27 +154,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_MAMMAL",
-   "UNITCOMBAT_RECKLESS_ANIMAL",
-   "UNITCOMBAT_FELINE",
-   "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
-   "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
-   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
-   "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
-   "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
-   "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
-   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_SMALL",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -163,11 +173,6 @@
    "TERRAIN_BADLAND",
    "TERRAIN_SALT_FLATS",
    "TERRAIN_SCRUB"
-  ],
-  "base": {
-   "combat": 4,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

@@ -40,13 +40,23 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 2,
    "lunge": {
     "percent": 2
    },
    "unnerve": {
     "percent": 2
+   },
+   "targets": {
+    "UNITCOMBAT_TRADE": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
    }
   }
  },
@@ -74,25 +84,36 @@
    "flat": 2
   }
  },
- "skills": {
-  "alwaysHostile": true,
-  "hiddenNationality": true,
-  "noCapture": true,
-  "noDefensiveBonus": true,
-  "pillage": true,
-  "blendIntoCity": true,
-  "counterSpy": true,
-  "destroy": true,
-  "ignoreTerrainCost": true,
-  "stealPlans": true,
-  "targets": {
-   "UNITCOMBAT_TRADE": true,
-   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
-  }
- },
- "tags": {
-  "outlaw": true
- },
+ "skills": [
+  "alwaysHostile",
+  "hiddenNationality",
+  "noCapture",
+  "noDefensiveBonus",
+  "pillage",
+  "blendIntoCity",
+  "counterSpy",
+  "destroy",
+  "ignoreTerrainCost",
+  "stealPlans"
+ ],
+ "tags": [
+  "outlaw",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_CRIMINAL",
+ "combatClasses": [
+  "UNITCOMBAT_MELEE",
+  "UNITCOMBAT_THROWING",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_ROCK",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_EXILE"
+ ],
  "vision": {
   "invisible": "INVISIBLE_CAMOUFLAGE",
   "invisibilityIntensity": {
@@ -147,26 +168,8 @@
    "UNITAI_CITY_DEFENSE",
    "UNITAI_PROPERTY_CONTROL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_MELEE",
-   "UNITCOMBAT_THROWING",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
-   "UNITCOMBAT_WEAPON_H2H_ROCK",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_EXILE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 2,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_CRIMINAL"
-  }
+  ]
  }
 }

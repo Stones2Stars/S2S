@@ -70,8 +70,14 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 17,
    "cityAttack": {
     "percent": 15
    },
@@ -86,6 +92,12 @@
    },
    "stealth": {
     "percent": 30
+   },
+   "targets": {
+    "UNITCOMBAT_EXPLORER": true,
+    "UNITCOMBAT_CIVILIAN": true,
+    "UNITCOMBAT_CANINE": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
    }
   }
  },
@@ -126,25 +138,34 @@
    }
   }
  },
- "skills": {
-  "assassin": true,
-  "counterSpy": true,
-  "destroy": true,
-  "ignoreTerrainCost": true,
-  "ignoreZoneOfControl": true,
-  "rivalTerritory": true,
-  "sabotage": true,
-  "stealPlans": true,
-  "targets": {
-   "UNITCOMBAT_EXPLORER": true,
-   "UNITCOMBAT_CIVILIAN": true,
-   "UNITCOMBAT_CANINE": true,
-   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
-  }
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "assassin",
+  "counterSpy",
+  "destroy",
+  "ignoreTerrainCost",
+  "ignoreZoneOfControl",
+  "rivalTerritory",
+  "sabotage",
+  "stealPlans"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_STRIKE_TEAM",
+ "combatClasses": [
+  "UNITCOMBAT_GUN",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
+  "UNITCOMBAT_WEAPON_DIST_RIFLE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "vision": {
   "invisible": "INVISIBLE_CAMOUFLAGE",
   "visibilityIntensity": {
@@ -211,26 +232,8 @@
   "notUnitAIs": [
    "UNITAI_CITY_DEFENSE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_GUN",
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
-   "UNITCOMBAT_WEAPON_DIST_RIFLE",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 17,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_STRIKE_TEAM"
-  }
+  ]
  }
 }

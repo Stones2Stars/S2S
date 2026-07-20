@@ -29,11 +29,41 @@
    ]
   }
  },
- "skills": {
-  "noDefensiveBonus": true,
-  "blendIntoCity": true,
-  "onlyDefensive": true
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
  },
+ "strength": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_INVERTEBRATE",
+  "UNITCOMBAT_INVERTEBRATE_CRUSTACEAN",
+  "UNITCOMBAT_ANIMAL_COMBAT_BURROWING",
+  "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
+  "UNITCOMBAT_ANIMAL_COMBAT_NIP",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHELLED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_INCAPABLE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_DIMINUTIVE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -95,22 +125,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_INVERTEBRATE",
-   "UNITCOMBAT_INVERTEBRATE_CRUSTACEAN",
-   "UNITCOMBAT_ANIMAL_COMBAT_BURROWING",
-   "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
-   "UNITCOMBAT_ANIMAL_COMBAT_NIP",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHELLED",
-   "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
-   "UNITCOMBAT_SPEED_SLOW",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_INCAPABLE",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_DIMINUTIVE",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -124,11 +138,6 @@
    "TERRAIN_SEA_DEEP",
    "TERRAIN_SEA_DEEP_POLAR",
    "TERRAIN_SEA_DEEP_TROPICAL"
-  ],
-  "base": {
-   "combat": 1,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_SEA_ANIMAL"
-  }
+  ]
  }
 }

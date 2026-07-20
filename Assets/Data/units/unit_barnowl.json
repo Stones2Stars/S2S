@@ -1,14 +1,41 @@
 {
  "type": "UNIT_BARNOWL",
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 60
   }
  },
- "skills": {
-  "blendIntoCity": true,
-  "onlyDefensive": true
- },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_BIRD",
+  "UNITCOMBAT_BIRD_RAPTOR",
+  "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
+  "UNITCOMBAT_ANIMAL_COMBAT_PECK",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+  "UNITCOMBAT_MOTILITY_AERIAL",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_SMALL",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -49,19 +76,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_BIRD",
-   "UNITCOMBAT_BIRD_RAPTOR",
-   "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
-   "UNITCOMBAT_ANIMAL_COMBAT_PECK",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
-   "UNITCOMBAT_MOTILITY_AERIAL",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_SMALL",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -85,11 +99,6 @@
    "TERRAIN_SEA_TROPICAL",
    "TERRAIN_TAIGA",
    "TERRAIN_TUNDRA"
-  ],
-  "base": {
-   "combat": 1,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

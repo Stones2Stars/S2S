@@ -48,8 +48,14 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 3,
    "cityAttack": {
     "percent": -25
    },
@@ -72,6 +78,12 @@
     "UNITCOMBAT_MELEE": {
      "percent": 10
     }
+   },
+   "targets": {
+    "UNITCOMBAT_EXPLORER": true,
+    "UNITCOMBAT_CIVILIAN": true,
+    "UNITCOMBAT_CANINE": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
    }
   }
  },
@@ -98,28 +110,39 @@
    }
   }
  },
- "skills": {
-  "alwaysHostile": true,
-  "hiddenNationality": true,
-  "counterSpy": true,
-  "destroy": true,
-  "ignoreTerrainCost": true,
-  "ignoreZoneOfControl": true,
-  "noNonOwnedCityEntry": true,
-  "sabotage": true,
-  "stealPlans": true,
-  "ignoreNoEntryLevel": true,
-  "militaryTrade": true,
-  "targets": {
-   "UNITCOMBAT_EXPLORER": true,
-   "UNITCOMBAT_CIVILIAN": true,
-   "UNITCOMBAT_CANINE": true,
-   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
-  }
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "alwaysHostile",
+  "hiddenNationality",
+  "counterSpy",
+  "destroy",
+  "ignoreTerrainCost",
+  "ignoreZoneOfControl",
+  "noNonOwnedCityEntry",
+  "sabotage",
+  "stealPlans",
+  "ignoreNoEntryLevel",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_STRIKE_TEAM",
+ "combatClasses": [
+  "UNITCOMBAT_MELEE",
+  "UNITCOMBAT_THROWING",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_BLOWGUN",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "vision": {
   "invisible": "INVISIBLE_CAMOUFLAGE",
   "visibilityIntensity": {
@@ -168,28 +191,8 @@
   "notUnitAIs": [
    "UNITAI_CITY_DEFENSE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_MELEE",
-   "UNITCOMBAT_THROWING",
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
-   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
-   "UNITCOMBAT_WEAPON_DIST_BLOWGUN",
-   "UNITCOMBAT_ARMOR_LIGHT",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 3,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_STRIKE_TEAM"
-  }
+  ]
  }
 }

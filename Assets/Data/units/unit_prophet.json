@@ -33,9 +33,29 @@
    "RELIGION_YORUBA": 100
   }
  },
- "skills": {
-  "goldenAge": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
+ "skills": [
+  "goldenAge"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_PRODIGY",
+ "combatClasses": [
+  "UNITCOMBAT_MISSIONARY",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_POOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -149,17 +169,6 @@
   "advisor": "ADVISOR_RELIGION",
   "unitAIs": [
    "UNITAI_PROPHET"
-  ],
-  "combatClasses": [
-   "UNITCOMBAT_MISSIONARY",
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_POOR",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
@@ -295,10 +304,6 @@
    "TXT_KEY_GREAT_PERSON_YI_HWANG",
    "TXT_KEY_GREAT_PERSON_ZARATHUSTRA",
    "TXT_KEY_GREAT_PERSON_ZENO_OF_CITIUM"
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_PRODIGY"
-  }
+  ]
  }
 }

@@ -26,24 +26,14 @@
  "allowed": {
   "empire": 5
  },
- "withdrawal": {
+ "movement": {
   "unit": {
-   "percent": 30
-  }
- },
- "costs": {
-  "empire": {
-   "perInstance": {
-    "percent": 5,
-    "per": {
-     "type": "SELF",
-     "scope": "empire"
-    }
-   }
+   "flat": 4
   }
  },
  "strength": {
   "unit": {
+   "flat": 45,
    "unitCombat": {
     "UNITCOMBAT_TRACKED": {
      "percent": 75
@@ -62,18 +52,50 @@
    }
   }
  },
- "skills": {
-  "noCapture": true,
-  "noDefensiveBonus": true,
-  "pillage": true,
-  "canMoveAllTerrain": true,
-  "ignoreBuildingDefense": true,
-  "ignoreTerrainCost": true,
-  "militaryTrade": true
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
  },
- "tags": {
-  "military": true
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
+   }
+  }
  },
+ "skills": [
+  "noCapture",
+  "noDefensiveBonus",
+  "pillage",
+  "canMoveAllTerrain",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HELICOPTER",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_AIRCRAFT",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_GUNSHIP"
@@ -103,20 +125,6 @@
    "UNITAI_ATTACK",
    "UNITAI_PILLAGE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_ARMOR_AIRCRAFT",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_PILOTING",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -124,11 +132,6 @@
    "TERRAIN_OCEAN",
    "TERRAIN_OCEAN_POLAR",
    "TERRAIN_OCEAN_TROPICAL"
-  ],
-  "base": {
-   "combat": 45,
-   "moves": 4,
-   "combatClass": "UNITCOMBAT_HELICOPTER"
-  }
+  ]
  }
 }

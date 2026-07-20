@@ -1,8 +1,28 @@
 {
  "type": "UNIT_SCIENTIST",
- "skills": {
-  "goldenAge": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
+ "skills": [
+  "goldenAge"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_PRODIGY",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_TECH"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -88,17 +108,6 @@
   "advisor": "ADVISOR_SCIENCE",
   "unitAIs": [
    "UNITAI_SCIENTIST"
-  ],
-  "combatClasses": [
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_INFERIOR",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_TECH"
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
@@ -257,10 +266,6 @@
    "TXT_KEY_GREAT_PERSON_YUAN_TSEH_LEE",
    "TXT_KEY_GREAT_PERSON_ZAKARIYA_MASAWAIYH",
    "TXT_KEY_GREAT_PERSON_ZU_CHONGZHI"
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_PRODIGY"
-  }
+  ]
  }
 }

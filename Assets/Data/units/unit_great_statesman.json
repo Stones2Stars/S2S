@@ -1,13 +1,30 @@
 {
  "type": "UNIT_GREAT_STATESMAN",
- "skills": {
-  "goldenAge": true,
-  "ignoreBuildingDefense": true,
-  "rivalTerritory": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
- "tags": {
-  "spy": true
- },
+ "skills": [
+  "goldenAge",
+  "ignoreBuildingDefense",
+  "rivalTerritory"
+ ],
+ "tags": [
+  "spy",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_PRODIGY",
+ "combatClasses": [
+  "UNITCOMBAT_ADMINISTRATOR",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -94,16 +111,6 @@
   "notUnitAIs": [
    "UNITAI_EXPLORE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_ADMINISTRATOR",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_INFERIOR",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -152,10 +159,6 @@
    "TXT_KEY_GREAT_PERSON_KIMON",
    "TXT_KEY_GREAT_PERSON_ARISTIDES",
    "TXT_KEY_GREAT_PERSON_MARK_ANTONY"
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_PRODIGY"
-  }
+  ]
  }
 }

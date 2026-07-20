@@ -22,6 +22,11 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -70,15 +75,34 @@
    }
   }
  },
- "skills": {
-  "ignoreBuildingDefense": true,
-  "mechanized": true,
-  "militaryTrade": true,
-  "dcmAirBomb": 5
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "ignoreBuildingDefense",
+  "mechanized",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "airUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ORBITAL_AIRCRAFT",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_LASER",
+  "UNITCOMBAT_WEAPON_A2G_GUIDED",
+  "UNITCOMBAT_WEAPON_A2G_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_A2G_MEDIUM_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_A2G_LONG_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_A2G_TORPEDO",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_AIRCRAFT",
+  "UNITCOMBAT_HEALS_AS_TECH"
+ ],
  "vision": {
   "invisible": "INVISIBLE_STEALTH",
   "visibilityIntensity": {
@@ -111,33 +135,13 @@
   "unitAIs": [
    "UNITAI_ATTACK_AIR"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_LASER",
-   "UNITCOMBAT_WEAPON_A2G_GUIDED",
-   "UNITCOMBAT_WEAPON_A2G_SHORT_RANGE_MISSILE",
-   "UNITCOMBAT_WEAPON_A2G_MEDIUM_RANGE_MISSILE",
-   "UNITCOMBAT_WEAPON_A2G_LONG_RANGE_MISSILE",
-   "UNITCOMBAT_WEAPON_A2G_TORPEDO",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_PILOTING",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_AIRCRAFT",
-   "UNITCOMBAT_HEALS_AS_TECH"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "base": {
-   "moves": 1,
    "airCombat": 150,
    "airCombatLimit": 75,
-   "airUnitCap": 1,
-   "combatClass": "UNITCOMBAT_ORBITAL_AIRCRAFT"
+   "airUnitCap": 1
   }
  }
 }

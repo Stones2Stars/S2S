@@ -7,9 +7,21 @@
    ]
   }
  },
- "skills": {
-  "militaryTrade": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
+ "skills": [
+  "militaryTrade"
+ ],
+ "tags": [
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_ANIMAL_TALE",
+ "combatClasses": [
+  "UNITCOMBAT_IDEA"
+ ],
  "grants": {
   "buildings": [
    "BUILDING_FOLKLORE_T_TALES_OF_FISH",
@@ -35,9 +47,6 @@
   "captures": "UNIT_TALESOF_GREATWHITE",
   "unitAIs": [
    "UNITAI_SUBDUED_ANIMAL"
-  ],
-  "combatClasses": [
-   "UNITCOMBAT_IDEA"
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
@@ -93,10 +102,6 @@
    {
     "TERRAIN_TRENCH_POLAR": "TECH_ASTRONOMY"
    }
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_SEA_ANIMAL_TALE"
-  }
+  ]
  }
 }

@@ -17,6 +17,23 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 150,
+   "targets": {
+    "UNITCOMBAT_GUN": true,
+    "UNITCOMBAT_MOUNTED": true,
+    "UNITCOMBAT_CLONES": true,
+    "UNITCOMBAT_MELEE": true,
+    "UNITCOMBAT_RECON": true
+   }
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 25
@@ -29,20 +46,36 @@
    }
   }
  },
- "skills": {
-  "pillage": true,
-  "ignoreBuildingDefense": true,
-  "targets": {
-   "UNITCOMBAT_GUN": true,
-   "UNITCOMBAT_MOUNTED": true,
-   "UNITCOMBAT_CLONES": true,
-   "UNITCOMBAT_MELEE": true,
-   "UNITCOMBAT_RECON": true
-  }
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ASSAULT_MECH",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_LASER",
+  "UNITCOMBAT_WEAPON_DIST_HEAT",
+  "UNITCOMBAT_WEAPON_H2H_LASER",
+  "UNITCOMBAT_WEAPON_H2H_HYDRAULIC_APPENDAGE",
+  "UNITCOMBAT_WEAPON_H2H_SPRAY",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_SHIELD_ENERGY",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_BLITZ"
@@ -80,37 +113,11 @@
    "UNITAI_CITY_COUNTER",
    "UNITAI_ESCORT"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_WEAPON_DIST_LASER",
-   "UNITCOMBAT_WEAPON_DIST_HEAT",
-   "UNITCOMBAT_WEAPON_H2H_LASER",
-   "UNITCOMBAT_WEAPON_H2H_HYDRAULIC_APPENDAGE",
-   "UNITCOMBAT_WEAPON_H2H_SPRAY",
-   "UNITCOMBAT_ARMOR_VEHICULAR",
-   "UNITCOMBAT_SHIELD_ENERGY",
-   "UNITCOMBAT_MOTILITY_DRIVING",
-   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_TECH",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "advancedStart": {
    "cost": 450
-  },
-  "base": {
-   "combat": 150,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_ASSAULT_MECH"
   }
  }
 }

@@ -24,8 +24,14 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 12,
    "dynamicDefense": {
     "percent": 50
    },
@@ -72,12 +78,32 @@
    "flat": -3
   }
  },
- "skills": {
-  "noCapture": true,
-  "pillage": true,
-  "onlyDefensive": true,
-  "ignoreNoEntryLevel": true
- },
+ "skills": [
+  "noCapture",
+  "pillage",
+  "onlyDefensive",
+  "ignoreNoEntryLevel"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_MELEE",
+ "combatClasses": [
+  "UNITCOMBAT_HEALTH_CARE",
+  "UNITCOMBAT_LAW_ENFORCEMENT",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_MARTIAL_ART",
+  "UNITCOMBAT_WEAPON_DIST_MARTIAL_ART",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_PEOPLE"
+ ],
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_CAMOUFLAGE": 3
@@ -129,29 +155,8 @@
    "UNITAI_PROPERTY_CONTROL",
    "UNITAI_ESCORT"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_HEALTH_CARE",
-   "UNITCOMBAT_LAW_ENFORCEMENT",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
-   "UNITCOMBAT_WEAPON_H2H_MARTIAL_ART",
-   "UNITCOMBAT_WEAPON_DIST_MARTIAL_ART",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 12,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_MELEE"
-  }
+  ]
  }
 }

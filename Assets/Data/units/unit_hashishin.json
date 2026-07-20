@@ -41,8 +41,14 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 12,
    "cityAttack": {
     "percent": 15
    },
@@ -57,6 +63,14 @@
    },
    "stealth": {
     "percent": 20
+   },
+   "targets": {
+    "UNITCOMBAT_TRADE": true,
+    "UNITCOMBAT_EXPLORER": true,
+    "UNITCOMBAT_CANINE": true,
+    "UNITCOMBAT_HEALTH_CARE": true,
+    "UNITCOMBAT_ENTERTAINER": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
    }
   }
  },
@@ -101,33 +115,42 @@
    "flat": 12
   }
  },
- "skills": {
-  "alwaysHostile": true,
-  "assassin": true,
-  "hiddenNationality": true,
-  "noCapture": true,
-  "noDefensiveBonus": true,
-  "pillage": true,
-  "blendIntoCity": true,
-  "counterSpy": true,
-  "destroy": true,
-  "ignoreTerrainCost": true,
-  "ignoreZoneOfControl": true,
-  "stealPlans": true,
-  "upgradeAnywhere": true,
-  "targets": {
-   "UNITCOMBAT_TRADE": true,
-   "UNITCOMBAT_EXPLORER": true,
-   "UNITCOMBAT_CANINE": true,
-   "UNITCOMBAT_HEALTH_CARE": true,
-   "UNITCOMBAT_ENTERTAINER": true,
-   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
-  }
- },
- "tags": {
-  "military": true,
-  "outlaw": true
- },
+ "skills": [
+  "alwaysHostile",
+  "assassin",
+  "hiddenNationality",
+  "noCapture",
+  "noDefensiveBonus",
+  "pillage",
+  "blendIntoCity",
+  "counterSpy",
+  "destroy",
+  "ignoreTerrainCost",
+  "ignoreZoneOfControl",
+  "stealPlans",
+  "upgradeAnywhere"
+ ],
+ "tags": [
+  "military",
+  "outlaw",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_STRIKE_TEAM",
+ "combatClasses": [
+  "UNITCOMBAT_CRIMINAL",
+  "UNITCOMBAT_MELEE",
+  "UNITCOMBAT_THROWING",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_KNIFE",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "vision": {
   "invisible": "INVISIBLE_CAMOUFLAGE",
   "visibilityIntensity": {
@@ -194,28 +217,8 @@
    "UNITAI_CITY_DEFENSE",
    "UNITAI_PROPERTY_CONTROL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_CRIMINAL",
-   "UNITCOMBAT_MELEE",
-   "UNITCOMBAT_THROWING",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
-   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
-   "UNITCOMBAT_WEAPON_DIST_KNIFE",
-   "UNITCOMBAT_ARMOR_LIGHT",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 12,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_STRIKE_TEAM"
-  }
+  ]
  }
 }

@@ -27,8 +27,14 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 4
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 150,
    "enclose": {
     "percent": 30
    },
@@ -40,6 +46,12 @@
    },
    "stealth": {
     "percent": 80
+   },
+   "targets": {
+    "UNITCOMBAT_CRIMINAL": true
+   },
+   "defenders": {
+    "UNITCOMBAT_CRIMINAL": true
    }
   }
  },
@@ -85,19 +97,39 @@
    }
   }
  },
- "skills": {
-  "noCapture": true,
-  "counterSpy": true,
-  "mechanized": true,
-  "passage": true,
-  "militaryTrade": true,
-  "targets": {
-   "UNITCOMBAT_CRIMINAL": true
-  },
-  "defenders": {
-   "UNITCOMBAT_CRIMINAL": true
-  }
- },
+ "skills": [
+  "noCapture",
+  "counterSpy",
+  "mechanized",
+  "passage",
+  "militaryTrade"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",
+ "combatClasses": [
+  "UNITCOMBAT_ASSAULT_MECH",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_HYDRAULIC_APPENDAGE",
+  "UNITCOMBAT_WEAPON_H2H_TASER",
+  "UNITCOMBAT_WEAPON_H2H_SPRAY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_HEAT",
+  "UNITCOMBAT_WEAPON_DIST_SONIC",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_SHIELD_ENERGY",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL",
+  "UNITCOMBAT_HEALS_AS_TECH"
+ ],
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_DISGUISED": 5,
@@ -137,39 +169,12 @@
    "UNITAI_INVESTIGATOR",
    "UNITAI_SEE_INVISIBLE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_ASSAULT_MECH",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_HYDRAULIC_APPENDAGE",
-   "UNITCOMBAT_WEAPON_H2H_TASER",
-   "UNITCOMBAT_WEAPON_H2H_SPRAY",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_WEAPON_DIST_HEAT",
-   "UNITCOMBAT_WEAPON_DIST_SONIC",
-   "UNITCOMBAT_ARMOR_VEHICULAR",
-   "UNITCOMBAT_SHIELD_ENERGY",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_DRIVING",
-   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL",
-   "UNITCOMBAT_HEALS_AS_TECH"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
    "special": "SPECIALUNIT_PEOPLE",
    "smNotSpecial": "SPECIALUNIT_VTOL"
-  },
-  "base": {
-   "combat": 150,
-   "moves": 4,
-   "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT"
   }
  }
 }

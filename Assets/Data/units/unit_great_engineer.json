@@ -1,8 +1,28 @@
 {
  "type": "UNIT_GREAT_ENGINEER",
- "skills": {
-  "goldenAge": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
+ "skills": [
+  "goldenAge"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_PRODIGY",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_POOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_MECHANICAL"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -95,17 +115,6 @@
   "advisor": "ADVISOR_ECONOMY",
   "unitAIs": [
    "UNITAI_ENGINEER"
-  ],
-  "combatClasses": [
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_POOR",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_MECHANICAL"
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
@@ -220,10 +229,6 @@
    "TXT_KEY_GREAT_PERSON_ZHANG_HENG",
    "TXT_KEY_GREAT_PERSON_ZHORES_ALFEROV",
    "TXT_KEY_GREAT_PERSON_LOUIS_RENAULT"
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_PRODIGY"
-  }
+  ]
  }
 }

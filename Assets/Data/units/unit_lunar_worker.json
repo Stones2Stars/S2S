@@ -23,13 +23,31 @@
    ]
   }
  },
- "skills": {
-  "ignoreTerrainCost": true
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
  },
- "tags": {
-  "worker": true,
-  "civilian": true
- },
+ "skills": [
+  "ignoreTerrainCost"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SPACE_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "cost": {
   "production": 2000,
   "upkeep": 1
@@ -51,24 +69,11 @@
   "unitAIs": [
    "UNITAI_WORKER"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_SPECIES_AI",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_COMPANY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_TECH",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_LUNAR"
   ],
   "base": {
-   "moves": 3,
-   "workRate": 250,
-   "combatClass": "UNITCOMBAT_SPACE_WORKER"
+   "workRate": 250
   }
  }
 }

@@ -1,20 +1,50 @@
 {
  "type": "UNIT_HAWK",
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1,
+   "targets": {
+    "UNITCOMBAT_BIRD_GAMEBIRD": true,
+    "UNITCOMBAT_BIRD_SONGBIRD": true,
+    "UNITCOMBAT_REPTILE_SNAKE": true
+   }
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 45
   }
  },
- "skills": {
-  "assassin": true,
-  "blendIntoCity": true,
-  "onlyDefensive": true,
-  "targets": {
-   "UNITCOMBAT_BIRD_GAMEBIRD": true,
-   "UNITCOMBAT_BIRD_SONGBIRD": true,
-   "UNITCOMBAT_REPTILE_SNAKE": true
-  }
- },
+ "skills": [
+  "assassin",
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_BIRD",
+  "UNITCOMBAT_BIRD_RAPTOR",
+  "UNITCOMBAT_ANIMAL_COMBAT_PECK",
+  "UNITCOMBAT_ANIMAL_COMBAT_SCRATCH",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
+  "UNITCOMBAT_MOTILITY_AERIAL",
+  "UNITCOMBAT_QUALITY_EPIC",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_TINY",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -60,22 +90,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_BIRD",
-   "UNITCOMBAT_BIRD_RAPTOR",
-   "UNITCOMBAT_ANIMAL_COMBAT_PECK",
-   "UNITCOMBAT_ANIMAL_COMBAT_SCRATCH",
-   "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
-   "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
-   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
-   "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
-   "UNITCOMBAT_MOTILITY_AERIAL",
-   "UNITCOMBAT_QUALITY_EPIC",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_TINY",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -94,11 +108,6 @@
    "TERRAIN_TRENCH_POLAR",
    "TERRAIN_TRENCH_TROPICAL",
    "TERRAIN_PEAK"
-  ],
-  "base": {
-   "combat": 1,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

@@ -75,8 +75,14 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 5,
    "enclose": {
     "percent": 6
    },
@@ -88,6 +94,12 @@
    },
    "stealth": {
     "percent": 15
+   },
+   "targets": {
+    "UNITCOMBAT_CRIMINAL": true
+   },
+   "defenders": {
+    "UNITCOMBAT_CRIMINAL": true
    }
   }
  },
@@ -117,21 +129,31 @@
    "flat": -3
   }
  },
- "skills": {
-  "noCapture": true,
-  "counterSpy": true,
-  "passage": true,
-  "militaryTrade": true,
-  "targets": {
-   "UNITCOMBAT_CRIMINAL": true
-  },
-  "defenders": {
-   "UNITCOMBAT_CRIMINAL": true
-  }
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "noCapture",
+  "counterSpy",
+  "passage",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",
+ "combatClasses": [
+  "UNITCOMBAT_MELEE",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_MACE",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_SHIELD_LARGE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_DISGUISED": 2
@@ -174,27 +196,8 @@
   "unitAIs": [
    "UNITAI_PROPERTY_CONTROL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_MELEE",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
-   "UNITCOMBAT_WEAPON_H2H_MACE",
-   "UNITCOMBAT_ARMOR_LIGHT",
-   "UNITCOMBAT_SHIELD_LARGE",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 5,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT"
-  }
+  ]
  }
 }

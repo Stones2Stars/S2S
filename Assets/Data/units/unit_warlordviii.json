@@ -48,8 +48,14 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 4
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 160,
    "cityAttack": {
     "percent": 25
    }
@@ -91,16 +97,30 @@
    }
   }
  },
- "skills": {
-  "alwaysHostile": true,
-  "hiddenNationality": true,
-  "noCapture": true,
-  "pillage": true,
-  "unlimitedException": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "alwaysHostile",
+  "hiddenNationality",
+  "noCapture",
+  "pillage",
+  "unlimitedException"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_GUN",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_HANDGUN",
+  "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_LEADER"
@@ -130,18 +150,6 @@
   "unitAIs": [
    "UNITAI_GENERAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_HANDGUN",
-   "UNITCOMBAT_WEAPON_DIST_HANDGUN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -149,10 +157,7 @@
    "cost": 100
   },
   "base": {
-   "combat": 160,
-   "moves": 4,
-   "combatLimit": 100,
-   "combatClass": "UNITCOMBAT_GUN"
+   "combatLimit": 100
   }
  }
 }

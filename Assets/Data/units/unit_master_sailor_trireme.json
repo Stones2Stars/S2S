@@ -22,16 +22,42 @@
    }
   }
  },
- "skills": {
-  "pillage": true,
-  "mechanized": true,
-  "noBadGoodies": true,
-  "renderBelowWater": true,
-  "militaryTrade": true
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
  },
- "tags": {
-  "military": true
+ "strength": {
+  "unit": {
+   "flat": 7
+  }
  },
+ "skills": [
+  "pillage",
+  "mechanized",
+  "noBadGoodies",
+  "renderBelowWater",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WOODEN_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_OAR",
+  "UNITCOMBAT_WEAPON_DIST_SHORTBOW",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_NAVIGATION1",
@@ -71,20 +97,6 @@
    "UNITAI_EXPLORE_SEA",
    "UNITAI_ASSAULT_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_NAVAL_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_OAR",
-   "UNITCOMBAT_WEAPON_DIST_SHORTBOW",
-   "UNITCOMBAT_ARMOR_NAVAL",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_NAVAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -95,11 +107,6 @@
    "TERRAIN_TRENCH",
    "TERRAIN_TRENCH_TROPICAL",
    "TERRAIN_TRENCH_POLAR"
-  ],
-  "base": {
-   "combat": 7,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_WOODEN_SHIPS"
-  }
+  ]
  }
 }

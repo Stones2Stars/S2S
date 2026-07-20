@@ -8,8 +8,14 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 6
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 240,
    "cityAttack": {
     "percent": 10
    }
@@ -40,10 +46,14 @@
    }
   }
  },
- "skills": {
-  "canMoveAllTerrain": true,
-  "canMoveImpassable": true
- },
+ "skills": [
+  "canMoveAllTerrain",
+  "canMoveImpassable"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANTIMATTER_SPACESHIP",
  "cost": {
   "production": 4850,
   "upkeep": 11,
@@ -74,10 +84,7 @@
    "cost": 100
   },
   "base": {
-   "combat": 240,
-   "moves": 6,
-   "combatLimit": 100,
-   "combatClass": "UNITCOMBAT_ANTIMATTER_SPACESHIP"
+   "combatLimit": 100
   }
  }
 }

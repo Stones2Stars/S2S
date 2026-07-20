@@ -1,8 +1,28 @@
 {
  "type": "UNIT_GREAT_GENERAL",
- "skills": {
-  "greatGeneral": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
+ "skills": [
+  "greatGeneral"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_PRODIGY",
+ "combatClasses": [
+  "UNITCOMBAT_CAPTAIN",
+  "UNITCOMBAT_COMMANDER",
+  "UNITCOMBAT_ATTACHE",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -91,17 +111,6 @@
   "leaderPromotion": "PROMOTION_LEADER",
   "unitAIs": [
    "UNITAI_GENERAL"
-  ],
-  "combatClasses": [
-   "UNITCOMBAT_CAPTAIN",
-   "UNITCOMBAT_COMMANDER",
-   "UNITCOMBAT_ATTACHE",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
@@ -363,10 +372,6 @@
    "TXT_KEY_GREAT_PERSON_ZHANG_ZUOLIN",
    "TXT_KEY_GREAT_PERSON_ZHUGE_LIANG",
    "TXT_KEY_GREAT_PERSON_ZULU_KANTOMBHELA"
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_PRODIGY"
-  }
+  ]
  }
 }

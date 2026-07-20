@@ -17,15 +17,34 @@
  "allowed": {
   "empire": 1
  },
- "skills": {
-  "canMoveAllTerrain": true,
-  "canMoveImpassable": true,
-  "food": true
+ "movement": {
+  "unit": {
+   "flat": 24
+  }
  },
- "tags": {
-  "settler": true,
-  "civilian": true
- },
+ "skills": [
+  "canMoveAllTerrain",
+  "canMoveImpassable",
+  "food"
+ ],
+ "tags": [
+  "settler",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SETTLER",
+ "combatClasses": [
+  "UNITCOMBAT_WORMHOLE_SPACESHIP",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_SPACECRAFT"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -69,18 +88,6 @@
   "unitAIs": [
    "UNITAI_SETTLE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WORMHOLE_SPACESHIP",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_PILOTING",
-   "UNITCOMBAT_QUALITY_INFERIOR",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_SPACECRAFT"
-  ],
   "mapCategories": [
    "MAPCATEGORY_UNIVERSAL",
    "MAPCATEGORY_DISTANT",
@@ -96,10 +103,6 @@
   ],
   "advancedStart": {
    "cost": 100
-  },
-  "base": {
-   "moves": 24,
-   "combatClass": "UNITCOMBAT_SETTLER"
   }
  }
 }

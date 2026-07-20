@@ -18,17 +18,42 @@
    }
   }
  },
- "skills": {
-  "noCapture": true,
-  "noNonTypeProdMods": true,
-  "onlyDefensive": true,
-  "rivalTerritory": true,
-  "militaryTrade": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
- "tags": {
-  "merchant": true,
-  "civilian": true
+ "strength": {
+  "unit": {
+   "flat": 2
+  }
  },
+ "skills": [
+  "noCapture",
+  "noNonTypeProdMods",
+  "onlyDefensive",
+  "rivalTerritory",
+  "militaryTrade"
+ ],
+ "tags": [
+  "merchant",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_TRADE",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_STAFF",
+  "UNITCOMBAT_MOTILITY_ANIMAL_DRAWN",
+  "UNITCOMBAT_ASSISTED_MULE",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "grants": {
   "greatPersonAction": {
    "food": {
@@ -80,26 +105,8 @@
   "notUnitAIs": [
    "UNITAI_EXPLORE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
-   "UNITCOMBAT_WEAPON_H2H_STAFF",
-   "UNITCOMBAT_MOTILITY_ANIMAL_DRAWN",
-   "UNITCOMBAT_ASSISTED_MULE",
-   "UNITCOMBAT_QUALITY_MEDIOCRE",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 2,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_TRADE"
-  }
+  ]
  }
 }

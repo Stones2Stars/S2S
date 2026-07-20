@@ -22,6 +22,24 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_CAPTAIN",
+ "combatClasses": [
+  "UNITCOMBAT_ATTACHE",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "grants": {
   "greatPeople": [
    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR"
@@ -56,21 +74,8 @@
   "unitAIs": [
    "UNITAI_GENERAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_ATTACHE",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_CAPTAIN"
-  }
+  ]
  }
 }

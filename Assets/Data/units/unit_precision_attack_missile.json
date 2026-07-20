@@ -17,6 +17,11 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "strength": {
   "unit": {
    "cityAttack": {
@@ -46,17 +51,28 @@
    }
   }
  },
- "skills": {
-  "noDefensiveBonus": true,
-  "ignoreBuildingDefense": true,
-  "mechanized": true,
-  "suicide": true,
-  "militaryTrade": true,
-  "dcmAirBomb": 3
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "noDefensiveBonus",
+  "ignoreBuildingDefense",
+  "mechanized",
+  "suicide",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "airUnit"
+ ],
+ "combatClass": "UNITCOMBAT_MISSILE",
+ "combatClasses": [
+  "UNITCOMBAT_BALLISTIC",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_WARHEAD",
+  "UNITCOMBAT_WEAPON_DETONATE_GUIDED",
+  "UNITCOMBAT_MOTILITY_UNMANNED",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_LARGE"
+ ],
  "cost": {
   "production": 2865,
   "upkeep": 1
@@ -81,24 +97,12 @@
   "unitAIs": [
    "UNITAI_MISSILE_AIR"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_BALLISTIC",
-   "UNITCOMBAT_SPECIES_AI",
-   "UNITCOMBAT_WEAPON_METHOD_WARHEAD",
-   "UNITCOMBAT_WEAPON_DETONATE_GUIDED",
-   "UNITCOMBAT_MOTILITY_UNMANNED",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_LARGE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "base": {
-   "moves": 1,
    "airCombat": 80,
-   "airCombatLimit": 100,
-   "combatClass": "UNITCOMBAT_MISSILE"
+   "airCombatLimit": 100
   }
  }
 }

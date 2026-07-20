@@ -1,5 +1,10 @@
 {
  "type": "UNIT_SUBDUED_ZEBRA",
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "strength": {
   "unit": {
    "cityDefense": {
@@ -12,9 +17,24 @@
    "percent": 70
   }
  },
- "skills": {
-  "onlyDefensive": true
- },
+ "skills": [
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SUBDUED",
+ "combatClasses": [
+  "UNITCOMBAT_SUBDUED_LARGE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -176,23 +196,8 @@
   "unitAIs": [
    "UNITAI_SUBDUED_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_SUBDUED_LARGE",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_ANIMALS",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_SUBDUED"
-  }
+  ]
  }
 }

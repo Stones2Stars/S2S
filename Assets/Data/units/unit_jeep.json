@@ -31,23 +31,14 @@
    }
   }
  },
- "withdrawal": {
+ "movement": {
   "unit": {
-   "percent": 30
-  }
- },
- "collateral": {
-  "unit": {
-   "limit": {
-    "flat": 100
-   },
-   "maxUnits": {
-    "flat": 6
-   }
+   "flat": 3
   }
  },
  "strength": {
   "unit": {
+   "flat": 38,
    "feature": {
     "FEATURE_FOREST": {
      "attack": {
@@ -97,12 +88,43 @@
    }
   }
  },
- "skills": {
-  "noDefensiveBonus": true
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
  },
- "tags": {
-  "military": true
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 6
+   }
+  }
  },
+ "skills": [
+  "noDefensiveBonus"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WHEELED",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "succession": {
   "upgradesTo": [
    "UNIT_HUMVEE"
@@ -136,27 +158,8 @@
    "UNITAI_CITY_COUNTER",
    "UNITAI_ESCORT"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
-   "UNITCOMBAT_ARMOR_VEHICULAR",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_DRIVING",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 38,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_WHEELED"
-  }
+  ]
  }
 }

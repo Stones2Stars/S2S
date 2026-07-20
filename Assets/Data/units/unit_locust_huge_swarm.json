@@ -1,9 +1,37 @@
 {
  "type": "UNIT_LOCUST_HUGE_SWARM",
- "skills": {
-  "pillage": true,
-  "onlyDefensive": true
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
  },
+ "strength": {
+  "unit": {
+   "flat": 17
+  }
+ },
+ "skills": [
+  "pillage",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_SWARM",
+  "UNITCOMBAT_ANIMAL_INVERTEBRATE",
+  "UNITCOMBAT_ANIMAL_INSECT",
+  "UNITCOMBAT_ANIMAL_COMBAT_DEVOUR",
+  "UNITCOMBAT_ANIMAL_COMBAT_REPELLENT",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_MOTILITY_AERIAL",
+  "UNITCOMBAT_QUALITY_INCAPABLE",
+  "UNITCOMBAT_GROUP_COUNTLESS",
+  "UNITCOMBAT_SIZE_FINE",
+  "UNITCOMBAT_HEALS_AS_SWARM"
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_UNIT_LOCUST_HUGE_SWARM"
@@ -24,20 +52,6 @@
   "notUnitAIs": [
    "UNITAI_ATTACK_CITY"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_SWARM",
-   "UNITCOMBAT_ANIMAL_INVERTEBRATE",
-   "UNITCOMBAT_ANIMAL_INSECT",
-   "UNITCOMBAT_ANIMAL_COMBAT_DEVOUR",
-   "UNITCOMBAT_ANIMAL_COMBAT_REPELLENT",
-   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
-   "UNITCOMBAT_MOTILITY_AERIAL",
-   "UNITCOMBAT_QUALITY_INCAPABLE",
-   "UNITCOMBAT_GROUP_COUNTLESS",
-   "UNITCOMBAT_SIZE_FINE",
-   "UNITCOMBAT_HEALS_AS_SWARM"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -57,11 +71,6 @@
    "TERRAIN_SALT_FLATS",
    "TERRAIN_TAIGA",
    "TERRAIN_TUNDRA"
-  ],
-  "base": {
-   "combat": 17,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

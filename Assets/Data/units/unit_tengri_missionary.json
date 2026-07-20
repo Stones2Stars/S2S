@@ -13,10 +13,27 @@
    ]
   }
  },
- "tags": {
-  "missionary": true,
-  "civilian": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
+ "tags": [
+  "missionary",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_MISSIONARY",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "cost": {
   "production": 110
  },
@@ -38,25 +55,11 @@
   "unitAIs": [
    "UNITAI_MISSIONARY"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_MEDIOCRE",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "advancedStart": {
    "cost": -1
-  },
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_MISSIONARY"
   }
  }
 }

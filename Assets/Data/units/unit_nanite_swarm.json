@@ -17,6 +17,16 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 5
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 160
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 30
@@ -42,14 +52,27 @@
    }
   }
  },
- "skills": {
-  "canMoveAllTerrain": true,
-  "ignoreBuildingDefense": true,
-  "ignoreTerrainCost": true
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "canMoveAllTerrain",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_NANITE",
+ "combatClasses": [
+  "UNITCOMBAT_SWARM",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_ANIMAL_COMBAT_DEVOUR",
+  "UNITCOMBAT_MOTILITY_AERIAL",
+  "UNITCOMBAT_QUALITY_POOR",
+  "UNITCOMBAT_GROUP_BILLIONS",
+  "UNITCOMBAT_SIZE_MICROSCOPIC",
+  "UNITCOMBAT_HEALS_AS_NANOMORPH"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_SENSORS",
@@ -87,26 +110,12 @@
    "UNITAI_ATTACK",
    "UNITAI_CITY_SPECIAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_SWARM",
-   "UNITCOMBAT_SPECIES_AI",
-   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
-   "UNITCOMBAT_ANIMAL_COMBAT_DEVOUR",
-   "UNITCOMBAT_MOTILITY_AERIAL",
-   "UNITCOMBAT_QUALITY_POOR",
-   "UNITCOMBAT_GROUP_BILLIONS",
-   "UNITCOMBAT_SIZE_MICROSCOPIC",
-   "UNITCOMBAT_HEALS_AS_NANOMORPH"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "base": {
-   "combat": 160,
-   "moves": 5,
    "airCombat": 100,
-   "airCombatLimit": 100,
-   "combatClass": "UNITCOMBAT_NANITE"
+   "airCombatLimit": 100
   }
  }
 }

@@ -1,9 +1,38 @@
 {
  "type": "UNIT_DESERT_TARANTULA",
- "skills": {
-  "blendIntoCity": true,
-  "onlyDefensive": true
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
  },
+ "strength": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_INSECT",
+  "UNITCOMBAT_ANIMAL_COMBAT_BURROWING",
+  "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+  "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
+  "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+  "UNITCOMBAT_ANIMAL_COMBAT_SCRATCH",
+  "UNITCOMBAT_ANIMAL_COMBAT_VENEMOUS",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_DIVINE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_DIMINUTIVE",
+  "UNITCOMBAT_HEALS_AS_SWARM"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -43,21 +72,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_INSECT",
-   "UNITCOMBAT_ANIMAL_COMBAT_BURROWING",
-   "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
-   "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
-   "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
-   "UNITCOMBAT_ANIMAL_COMBAT_SCRATCH",
-   "UNITCOMBAT_ANIMAL_COMBAT_VENEMOUS",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_DIVINE",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_DIMINUTIVE",
-   "UNITCOMBAT_HEALS_AS_SWARM"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -78,11 +92,6 @@
    "TERRAIN_SALT_FLATS",
    "TERRAIN_TAIGA",
    "TERRAIN_TUNDRA"
-  ],
-  "base": {
-   "combat": 1,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

@@ -12,15 +12,31 @@
    }
   }
  },
- "skills": {
-  "counterSpy": true,
-  "investigate": true,
-  "alwaysInvisible": true,
-  "rivalTerritory": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
- "tags": {
-  "spy": true
- },
+ "skills": [
+  "counterSpy",
+  "investigate",
+  "alwaysInvisible",
+  "rivalTerritory"
+ ],
+ "tags": [
+  "spy",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SPY",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_COMMANDO",
@@ -60,21 +76,8 @@
   "unitAIs": [
    "UNITAI_SPY"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_SPY"
-  }
+  ]
  }
 }

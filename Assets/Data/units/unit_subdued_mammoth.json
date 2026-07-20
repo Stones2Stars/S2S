@@ -1,8 +1,28 @@
 {
  "type": "UNIT_SUBDUED_MAMMOTH",
- "skills": {
-  "militaryTrade": true
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
  },
+ "skills": [
+  "militaryTrade"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SUBDUED",
+ "combatClasses": [
+  "UNITCOMBAT_SUBDUED_HUGE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -166,27 +186,12 @@
   "unitAIs": [
    "UNITAI_SUBDUED_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_SUBDUED_HUGE",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_ANIMALS",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "heritage": [
    "HERITAGE_FOLKLORE_MAMMOTH",
    "HERITAGE_TAXON_ELEPHANTIDAE"
-  ],
-  "base": {
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_SUBDUED"
-  }
+  ]
  }
 }

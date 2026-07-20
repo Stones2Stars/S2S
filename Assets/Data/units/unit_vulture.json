@@ -22,15 +22,44 @@
    "title": "TXT_KEY_GROUPTITLE_VENUE_LARGE"
   }
  ],
+ "movement": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 40
   }
  },
- "skills": {
-  "blendIntoCity": true,
-  "onlyDefensive": true
- },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_BIRD",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_BIRD_RAPTOR",
+  "UNITCOMBAT_ANIMAL_COMBAT_PECK",
+  "UNITCOMBAT_ANIMAL_COMBAT_REPELLENT",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+  "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
+  "UNITCOMBAT_MOTILITY_AERIAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_SMALL",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -72,21 +101,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_BIRD",
-   "UNITCOMBAT_RECKLESS_ANIMAL",
-   "UNITCOMBAT_BIRD_RAPTOR",
-   "UNITCOMBAT_ANIMAL_COMBAT_PECK",
-   "UNITCOMBAT_ANIMAL_COMBAT_REPELLENT",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
-   "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
-   "UNITCOMBAT_MOTILITY_AERIAL",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_SMALL",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -111,11 +125,6 @@
    "TERRAIN_TRENCH_TROPICAL",
    "TERRAIN_TUNDRA",
    "TERRAIN_PEAK"
-  ],
-  "base": {
-   "combat": 1,
-   "moves": 4,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

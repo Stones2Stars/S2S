@@ -15,6 +15,11 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
  "costs": {
   "empire": {
    "perInstance": {
@@ -26,10 +31,22 @@
    }
   }
  },
- "tags": {
-  "missionary": true,
-  "civilian": true
- },
+ "tags": [
+  "missionary",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_EXECUTIVE",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_PATHETIC",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "cost": {
   "production": 275,
   "upkeep": 1
@@ -51,22 +68,8 @@
   "unitAIs": [
    "UNITAI_MISSIONARY"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_PATHETIC",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_EXECUTIVE"
-  }
+  ]
  }
 }

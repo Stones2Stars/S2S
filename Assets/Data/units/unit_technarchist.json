@@ -29,8 +29,14 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 150,
    "lunge": {
     "percent": 30
    },
@@ -53,6 +59,11 @@
     "UNITCOMBAT_ASSAULT_MECH": {
      "percent": 100
     }
+   },
+   "targets": {
+    "UNITCOMBAT_SPECIES_AI": true,
+    "UNITCOMBAT_HITECH": true,
+    "UNITCOMBAT_ASSAULT_MECH": true
    }
   }
  },
@@ -94,28 +105,39 @@
    "flat": 50
   }
  },
- "skills": {
-  "alwaysHostile": true,
-  "assassin": true,
-  "hiddenNationality": true,
-  "noCapture": true,
-  "noDefensiveBonus": true,
-  "blendIntoCity": true,
-  "counterSpy": true,
-  "destroy": true,
-  "ignoreZoneOfControl": true,
-  "sabotage": true,
-  "stealPlans": true,
-  "upgradeAnywhere": true,
-  "targets": {
-   "UNITCOMBAT_SPECIES_AI": true,
-   "UNITCOMBAT_HITECH": true,
-   "UNITCOMBAT_ASSAULT_MECH": true
-  }
- },
- "tags": {
-  "outlaw": true
- },
+ "skills": [
+  "alwaysHostile",
+  "assassin",
+  "hiddenNationality",
+  "noCapture",
+  "noDefensiveBonus",
+  "blendIntoCity",
+  "counterSpy",
+  "destroy",
+  "ignoreZoneOfControl",
+  "sabotage",
+  "stealPlans",
+  "upgradeAnywhere"
+ ],
+ "tags": [
+  "outlaw",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_CRIMINAL",
+ "combatClasses": [
+  "UNITCOMBAT_HITECH",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_SPRAY",
+  "UNITCOMBAT_WEAPON_DIST_LASER",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_TECH"
+ ],
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_DISGUISED": 1,
@@ -170,27 +192,8 @@
    "UNITAI_CITY_DEFENSE",
    "UNITAI_PROPERTY_CONTROL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_HITECH",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_SPRAY",
-   "UNITCOMBAT_WEAPON_DIST_LASER",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_TECH"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 150,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_CRIMINAL"
-  }
+  ]
  }
 }

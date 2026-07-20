@@ -60,8 +60,14 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 4
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 60,
    "lunge": {
     "percent": 24
    },
@@ -73,6 +79,12 @@
    },
    "stealth": {
     "percent": 60
+   },
+   "targets": {
+    "UNITCOMBAT_RECON": true,
+    "UNITCOMBAT_TRADE": true,
+    "UNITCOMBAT_CRIMINAL": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
    }
   }
  },
@@ -115,29 +127,39 @@
    }
   }
  },
- "skills": {
-  "alwaysHostile": true,
-  "assassin": true,
-  "hiddenNationality": true,
-  "noCapture": true,
-  "noDefensiveBonus": true,
-  "pillage": true,
-  "blendIntoCity": true,
-  "counterSpy": true,
-  "destroy": true,
-  "ignoreZoneOfControl": true,
-  "stealPlans": true,
-  "upgradeAnywhere": true,
-  "targets": {
-   "UNITCOMBAT_RECON": true,
-   "UNITCOMBAT_TRADE": true,
-   "UNITCOMBAT_CRIMINAL": true,
-   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
-  }
- },
- "tags": {
-  "outlaw": true
- },
+ "skills": [
+  "alwaysHostile",
+  "assassin",
+  "hiddenNationality",
+  "noCapture",
+  "noDefensiveBonus",
+  "pillage",
+  "blendIntoCity",
+  "counterSpy",
+  "destroy",
+  "ignoreZoneOfControl",
+  "stealPlans",
+  "upgradeAnywhere"
+ ],
+ "tags": [
+  "outlaw",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_CRIMINAL",
+ "combatClasses": [
+  "UNITCOMBAT_WHEELED",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_RIFLE",
+  "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_DISGUISED": 4,
@@ -198,31 +220,12 @@
    "UNITAI_CITY_DEFENSE",
    "UNITAI_PROPERTY_CONTROL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WHEELED",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_DIST_RIFLE",
-   "UNITCOMBAT_WEAPON_DIST_HANDGUN",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_DRIVING",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
    "special": "SPECIALUNIT_PEOPLE",
    "smNotSpecial": "SPECIALUNIT_VTOL"
-  },
-  "base": {
-   "combat": 60,
-   "moves": 4,
-   "combatClass": "UNITCOMBAT_CRIMINAL"
   }
  }
 }

@@ -49,8 +49,14 @@
    ]
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 26,
    "lunge": {
     "percent": 15
    },
@@ -82,6 +88,9 @@
     "UNITCOMBAT_MOUNTED": {
      "percent": 50
     }
+   },
+   "targets": {
+    "UNITCOMBAT_MOUNTED": true
    }
   }
  },
@@ -113,25 +122,38 @@
    "flat": 10
   }
  },
- "skills": {
-  "alwaysHostile": true,
-  "hiddenNationality": true,
-  "pillage": true,
-  "destroy": true,
-  "ignoreTerrainCost": true,
-  "ignoreZoneOfControl": true,
-  "noNonOwnedCityEntry": true,
-  "sabotage": true,
-  "stealPlans": true,
-  "upgradeAnywhere": true,
-  "ignoreNoEntryLevel": true,
-  "targets": {
-   "UNITCOMBAT_MOUNTED": true
-  }
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "alwaysHostile",
+  "hiddenNationality",
+  "pillage",
+  "destroy",
+  "ignoreTerrainCost",
+  "ignoreZoneOfControl",
+  "noNonOwnedCityEntry",
+  "sabotage",
+  "stealPlans",
+  "upgradeAnywhere",
+  "ignoreNoEntryLevel"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_RUFFIAN",
+ "combatClasses": [
+  "UNITCOMBAT_STRIKE_TEAM",
+  "UNITCOMBAT_GUN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_AXE",
+  "UNITCOMBAT_WEAPON_DIST_RIFLE",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_CAMOUFLAGE": 3
@@ -184,27 +206,8 @@
    "UNITAI_CITY_DEFENSE",
    "UNITAI_PROPERTY_CONTROL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_STRIKE_TEAM",
-   "UNITCOMBAT_GUN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
-   "UNITCOMBAT_WEAPON_H2H_AXE",
-   "UNITCOMBAT_WEAPON_DIST_RIFLE",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
-   "UNITCOMBAT_GROUP_COMPANY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 26,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_RUFFIAN"
-  }
+  ]
  }
 }

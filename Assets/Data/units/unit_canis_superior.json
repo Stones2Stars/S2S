@@ -20,8 +20,14 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 90,
    "lunge": {
     "percent": 25
    },
@@ -39,6 +45,9 @@
    },
    "stealth": {
     "percent": 50
+   },
+   "targets": {
+    "UNITCOMBAT_CRIMINAL": true
    }
   }
  },
@@ -64,17 +73,42 @@
    "flat": -5
   }
  },
- "skills": {
-  "noCapture": true,
-  "noDefensiveBonus": true,
-  "counterSpy": true,
-  "ignoreTerrainCost": true,
-  "passage": true,
-  "militaryTrade": true,
-  "targets": {
-   "UNITCOMBAT_CRIMINAL": true
-  }
- },
+ "skills": [
+  "noCapture",
+  "noDefensiveBonus",
+  "counterSpy",
+  "ignoreTerrainCost",
+  "passage",
+  "militaryTrade"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_CLONES",
+  "UNITCOMBAT_LAW_ENFORCEMENT",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_CANINE",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+  "UNITCOMBAT_ARMOR_MODERN",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+  "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+  "UNITCOMBAT_ANIMAL_COMBAT_PACK_HUNTER",
+  "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "vision": {
   "visibilityIntensity": {
    "INVISIBLE_CAMOUFLAGE": 6,
@@ -110,37 +144,8 @@
    "UNITAI_PROPERTY_CONTROL",
    "UNITAI_SEE_INVISIBLE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_CLONES",
-   "UNITCOMBAT_LAW_ENFORCEMENT",
-   "UNITCOMBAT_COMBATANT",
-   "UNITCOMBAT_ANIMAL_MAMMAL",
-   "UNITCOMBAT_CANINE",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
-   "UNITCOMBAT_WEAPON_DIST_HANDGUN",
-   "UNITCOMBAT_ARMOR_MODERN",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
-   "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
-   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
-   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
-   "UNITCOMBAT_ANIMAL_COMBAT_PACK_HUNTER",
-   "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
-   "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_ELITE",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 90,
-   "moves": 3,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

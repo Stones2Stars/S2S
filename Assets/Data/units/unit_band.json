@@ -17,15 +17,36 @@
  "allowed": {
   "empire": 0
  },
- "skills": {
-  "found": true,
-  "onlyDefensive": true,
-  "unlimitedException": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
- "tags": {
-  "settler": true,
-  "civilian": true
+ "strength": {
+  "unit": {
+   "flat": 1
+  }
  },
+ "skills": [
+  "found",
+  "onlyDefensive",
+  "unlimitedException"
+ ],
+ "tags": [
+  "settler",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SETTLER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EPIC",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_SENTRY",
@@ -133,22 +154,8 @@
   "unitAIs": [
    "UNITAI_SETTLE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_EPIC",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "combat": 1,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_SETTLER"
-  }
+  ]
  }
 }

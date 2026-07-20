@@ -10,6 +10,11 @@
   }
  },
  "enabled": "GAMEOPTION_RELIGION_INQUISITIONS",
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
  "costs": {
   "empire": {
    "perInstance": {
@@ -21,14 +26,27 @@
    }
   }
  },
- "skills": {
-  "inquisitor": true,
-  "stateReligion": true
- },
- "tags": {
-  "merchant": true,
-  "civilian": true
- },
+ "skills": [
+  "inquisitor",
+  "stateReligion"
+ ],
+ "tags": [
+  "merchant",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_MISSIONARY",
+ "combatClasses": [
+  "UNITCOMBAT_LAW_ENFORCEMENT",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "cost": {
   "production": 233,
   "upkeep": 1
@@ -55,26 +73,11 @@
   "notUnitAIs": [
    "UNITAI_EXPLORE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_LAW_ENFORCEMENT",
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "advancedStart": {
    "cost": 80
-  },
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_MISSIONARY"
   }
  }
 }

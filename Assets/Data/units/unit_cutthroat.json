@@ -43,8 +43,14 @@
    }
   }
  },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
  "strength": {
   "unit": {
+   "flat": 12,
    "lunge": {
     "percent": 12
    },
@@ -59,6 +65,14 @@
    },
    "stealth": {
     "percent": 20
+   },
+   "targets": {
+    "UNITCOMBAT_EXPLORER": true,
+    "UNITCOMBAT_HEALTH_CARE": true,
+    "UNITCOMBAT_CANINE": true,
+    "UNITCOMBAT_TRADE": true,
+    "UNITCOMBAT_ENTERTAINER": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
    }
   }
  },
@@ -107,31 +121,40 @@
    }
   }
  },
- "skills": {
-  "alwaysHostile": true,
-  "assassin": true,
-  "hiddenNationality": true,
-  "pillage": true,
-  "blendIntoCity": true,
-  "barbCoExist": true,
-  "counterSpy": true,
-  "destroy": true,
-  "ignoreTerrainCost": true,
-  "ignoreZoneOfControl": true,
-  "stealPlans": true,
-  "upgradeAnywhere": true,
-  "targets": {
-   "UNITCOMBAT_EXPLORER": true,
-   "UNITCOMBAT_HEALTH_CARE": true,
-   "UNITCOMBAT_CANINE": true,
-   "UNITCOMBAT_TRADE": true,
-   "UNITCOMBAT_ENTERTAINER": true,
-   "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
-  }
- },
- "tags": {
-  "outlaw": true
- },
+ "skills": [
+  "alwaysHostile",
+  "assassin",
+  "hiddenNationality",
+  "pillage",
+  "blendIntoCity",
+  "barbCoExist",
+  "counterSpy",
+  "destroy",
+  "ignoreTerrainCost",
+  "ignoreZoneOfControl",
+  "stealPlans",
+  "upgradeAnywhere"
+ ],
+ "tags": [
+  "outlaw",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_CRIMINAL",
+ "combatClasses": [
+  "UNITCOMBAT_RUFFIAN",
+  "UNITCOMBAT_THROWING",
+  "UNITCOMBAT_MELEE",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_KNIFE",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "vision": {
   "invisible": "INVISIBLE_CAMOUFLAGE",
   "visibilityIntensity": {
@@ -202,31 +225,11 @@
    "UNITAI_CITY_DEFENSE",
    "UNITAI_PROPERTY_CONTROL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_RUFFIAN",
-   "UNITCOMBAT_THROWING",
-   "UNITCOMBAT_MELEE",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
-   "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
-   "UNITCOMBAT_WEAPON_DIST_KNIFE",
-   "UNITCOMBAT_ARMOR_LIGHT",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_COMPANY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
    "special": "SPECIALUNIT_CAPTIVE"
-  },
-  "base": {
-   "combat": 12,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_CRIMINAL"
   }
  }
 }

@@ -21,17 +21,42 @@
  "allowed": {
   "empire": 1
  },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 30
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 20
   }
  },
- "skills": {
-  "noDefensiveBonus": true,
-  "pillage": true,
-  "mechanized": true,
-  "onlyDefensive": true
- },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "mechanized",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_RECON",
+ "combatClasses": [
+  "UNITCOMBAT_EXPLORER",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -93,25 +118,9 @@
    "UNITAI_EXPLORE",
    "UNITAI_PILLAGE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_EXPLORER",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
-   "UNITCOMBAT_MOTILITY_DRIVING",
-   "UNITCOMBAT_QUALITY_MEDIOCRE",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_LARGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_MECHANICAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH",
    "MAPCATEGORY_LUNAR"
-  ],
-  "base": {
-   "combat": 30,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_RECON"
-  }
+  ]
  }
 }

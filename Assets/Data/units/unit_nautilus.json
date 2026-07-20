@@ -40,24 +40,14 @@
  "allowed": {
   "empire": 5
  },
- "withdrawal": {
+ "movement": {
   "unit": {
-   "percent": 50
-  }
- },
- "costs": {
-  "empire": {
-   "perInstance": {
-    "percent": 5,
-    "per": {
-     "type": "SELF",
-     "scope": "empire"
-    }
-   }
+   "flat": 5
   }
  },
  "strength": {
   "unit": {
+   "flat": 34,
    "unitCombat": {
     "UNITCOMBAT_WOODEN_SHIPS": {
      "percent": 100
@@ -79,6 +69,28 @@
     "UNIT_LANDING_SHIP": {
      "percent": 50
     }
+   },
+   "unitTargets": {
+    "UNIT_FLUYT": true,
+    "UNIT_GALLEON": true,
+    "UNIT_TRANSPORT": true,
+    "UNIT_LANDING_SHIP": true
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "costs": {
+  "empire": {
+   "perInstance": {
+    "percent": 5,
+    "per": {
+     "type": "SELF",
+     "scope": "empire"
+    }
    }
   }
  },
@@ -90,25 +102,36 @@
    }
   }
  },
- "skills": {
-  "pillage": true,
-  "canMoveImpassable": true,
-  "ignoreBuildingDefense": true,
-  "ignoreTerrainCost": true,
-  "mechanized": true,
-  "rivalTerritory": true,
-  "renderBelowWater": true,
-  "militaryTrade": true,
-  "unitTargets": {
-   "UNIT_FLUYT": true,
-   "UNIT_GALLEON": true,
-   "UNIT_TRANSPORT": true,
-   "UNIT_LANDING_SHIP": true
-  }
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage",
+  "canMoveImpassable",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "mechanized",
+  "rivalTerritory",
+  "renderBelowWater",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SUBMARINE",
+ "combatClasses": [
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_TRANSPORT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_TORPEDO",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
  "vision": {
   "invisible": "INVISIBLE_SUBMARINE"
  },
@@ -145,31 +168,11 @@
    "UNITAI_SPY_SEA",
    "UNITAI_SEE_INVISIBLE_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_NAVAL_COMBATANT",
-   "UNITCOMBAT_TRANSPORT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_TORPEDO",
-   "UNITCOMBAT_ARMOR_NAVAL",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_NAVAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
    "special": "SPECIALUNIT_PEOPLE"
-  },
-  "base": {
-   "combat": 34,
-   "moves": 5,
-   "combatClass": "UNITCOMBAT_SUBMARINE"
   }
  }
 }

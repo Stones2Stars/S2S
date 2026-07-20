@@ -1,8 +1,28 @@
 {
  "type": "UNIT_ARTIST",
- "skills": {
-  "goldenAge": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
+ "skills": [
+  "goldenAge"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_PRODIGY",
+ "combatClasses": [
+  "UNITCOMBAT_ENTERTAINER",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -93,17 +113,6 @@
   "advisor": "ADVISOR_CULTURE",
   "unitAIs": [
    "UNITAI_ARTIST"
-  ],
-  "combatClasses": [
-   "UNITCOMBAT_ENTERTAINER",
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_INFERIOR",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
@@ -322,10 +331,6 @@
    "TXT_KEY_GREAT_PERSON_YUN_DUSEO",
    "TXT_KEY_GREAT_PERSON_YUNUS_EMRE",
    "TXT_KEY_GREAT_PERSON_YUNY"
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_PRODIGY"
-  }
+  ]
  }
 }

@@ -7,10 +7,30 @@
    ]
   }
  },
- "skills": {
-  "onlyDefensive": true,
-  "militaryTrade": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
+ "skills": [
+  "onlyDefensive",
+  "militaryTrade"
+ ],
+ "tags": [
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SUBDUED",
+ "combatClasses": [
+  "UNITCOMBAT_SUBDUED_DIMINUTIVE",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS",
+  "UNITCOMBAT_HEALS_AS_NAVAL",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -54,17 +74,6 @@
   "captures": "UNIT_SUBDUED_CRAB",
   "unitAIs": [
    "UNITAI_SUBDUED_ANIMAL"
-  ],
-  "combatClasses": [
-   "UNITCOMBAT_SUBDUED_DIMINUTIVE",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_STANDARD",
-   "UNITCOMBAT_GROUP_PARTY",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_ANIMALS",
-   "UNITCOMBAT_HEALS_AS_NAVAL",
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN"
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
@@ -120,10 +129,6 @@
    {
     "TERRAIN_TRENCH_POLAR": "TECH_ASTRONOMY"
    }
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_SUBDUED"
-  }
+  ]
  }
 }

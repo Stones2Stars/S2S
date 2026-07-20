@@ -27,13 +27,14 @@
    }
   }
  },
- "withdrawal": {
+ "movement": {
   "unit": {
-   "percent": 70
+   "flat": 7
   }
  },
  "strength": {
   "unit": {
+   "flat": 80,
    "unitCombat": {
     "UNITCOMBAT_WOODEN_SHIPS": {
      "percent": 200
@@ -68,7 +69,19 @@
     "UNIT_LANDING_SHIP": {
      "percent": 50
     }
+   },
+   "unitTargets": {
+    "UNIT_FLUYT": true,
+    "UNIT_GALLEON": true,
+    "UNIT_TRANSPORT": true,
+    "UNIT_LANDING_SHIP": true,
+    "UNIT_FUSION_TRANSPORT": true
    }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 70
   }
  },
  "cargo": {
@@ -79,26 +92,36 @@
    }
   }
  },
- "skills": {
-  "pillage": true,
-  "canMoveImpassable": true,
-  "ignoreBuildingDefense": true,
-  "ignoreTerrainCost": true,
-  "mechanized": true,
-  "rivalTerritory": true,
-  "renderBelowWater": true,
-  "militaryTrade": true,
-  "unitTargets": {
-   "UNIT_FLUYT": true,
-   "UNIT_GALLEON": true,
-   "UNIT_TRANSPORT": true,
-   "UNIT_LANDING_SHIP": true,
-   "UNIT_FUSION_TRANSPORT": true
-  }
- },
- "tags": {
-  "military": true
- },
+ "skills": [
+  "pillage",
+  "canMoveImpassable",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "mechanized",
+  "rivalTerritory",
+  "renderBelowWater",
+  "militaryTrade"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SUBMARINE",
+ "combatClasses": [
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_TORPEDO",
+  "UNITCOMBAT_WEAPON_DIST_LONG_RANGE_MISSILE",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_GARGANTUAN",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
  "vision": {
   "invisible": "INVISIBLE_SUBMARINE"
  },
@@ -133,31 +156,11 @@
    "UNITAI_EXPLORE_SEA",
    "UNITAI_MISSILE_CARRIER_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_NAVAL_COMBATANT",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_TORPEDO",
-   "UNITCOMBAT_WEAPON_DIST_LONG_RANGE_MISSILE",
-   "UNITCOMBAT_ARMOR_NAVAL",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_SUPERIOR",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_GARGANTUAN",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_NAVAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
    "special": "SPECIALUNIT_MISSILE"
-  },
-  "base": {
-   "combat": 80,
-   "moves": 7,
-   "combatClass": "UNITCOMBAT_SUBMARINE"
   }
  }
 }

@@ -1,13 +1,31 @@
 {
  "type": "UNIT_MERCHANT",
- "skills": {
-  "goldenAge": true,
-  "rivalTerritory": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
- "tags": {
-  "merchant": true,
-  "civilian": true
- },
+ "skills": [
+  "goldenAge",
+  "rivalTerritory"
+ ],
+ "tags": [
+  "merchant",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_PRODIGY",
+ "combatClasses": [
+  "UNITCOMBAT_TRADE",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
  "outcomes": {
   "actions": [
    {
@@ -110,17 +128,6 @@
   ],
   "notUnitAIs": [
    "UNITAI_EXPLORE"
-  ],
-  "combatClasses": [
-   "UNITCOMBAT_TRADE",
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_MEDIOCRE",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_PEOPLE"
   ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
@@ -228,10 +235,6 @@
    "TXT_KEY_GREAT_PERSON_YERMAK_TIMOFEYEVICH",
    "TXT_KEY_GREAT_PERSON_ZHANG_QIAN",
    "TXT_KEY_GREAT_PERSON_ZHOU_ZHENGYI"
-  ],
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_PRODIGY"
-  }
+  ]
  }
 }

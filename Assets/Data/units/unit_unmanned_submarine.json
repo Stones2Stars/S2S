@@ -37,23 +37,14 @@
    ]
   }
  },
- "withdrawal": {
+ "movement": {
   "unit": {
-   "percent": 80
-  }
- },
- "firstStrike": {
-  "unit": {
-   "strikes": {
-    "flat": 1
-   },
-   "chance": {
-    "flat": 1
-   }
+   "flat": 9
   }
  },
  "strength": {
   "unit": {
+   "flat": 125,
    "unitCombat": {
     "UNITCOMBAT_WOODEN_SHIPS": {
      "percent": 100
@@ -88,6 +79,27 @@
     "UNIT_LANDING_SHIP": {
      "percent": 50
     }
+   },
+   "unitTargets": {
+    "UNIT_FLUYT": true,
+    "UNIT_GALLEON": true,
+    "UNIT_TRANSPORT": true,
+    "UNIT_LANDING_SHIP": true
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 80
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   },
+   "chance": {
+    "flat": 1
    }
   }
  },
@@ -99,22 +111,36 @@
    }
   }
  },
- "skills": {
-  "pillage": true,
-  "canMoveImpassable": true,
-  "ignoreBuildingDefense": true,
-  "ignoreTerrainCost": true,
-  "mechanized": true,
-  "rivalTerritory": true,
-  "renderBelowWater": true,
-  "militaryTrade": true,
-  "unitTargets": {
-   "UNIT_FLUYT": true,
-   "UNIT_GALLEON": true,
-   "UNIT_TRANSPORT": true,
-   "UNIT_LANDING_SHIP": true
-  }
- },
+ "skills": [
+  "pillage",
+  "canMoveImpassable",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "mechanized",
+  "rivalTerritory",
+  "renderBelowWater",
+  "militaryTrade"
+ ],
+ "tags": [
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SUBMARINE",
+ "combatClasses": [
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_TORPEDO",
+  "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_LONG_RANGE_MISSILE",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
  "vision": {
   "invisible": "INVISIBLE_SUBMARINE"
  },
@@ -145,32 +171,11 @@
    "UNITAI_MISSIONARY_SEA",
    "UNITAI_SPY_SEA"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_NAVAL_COMBATANT",
-   "UNITCOMBAT_SPECIES_AI",
-   "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
-   "UNITCOMBAT_WEAPON_DIST_TORPEDO",
-   "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
-   "UNITCOMBAT_WEAPON_DIST_LONG_RANGE_MISSILE",
-   "UNITCOMBAT_ARMOR_NAVAL",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_NAVAL",
-   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_TECH",
-   "UNITCOMBAT_HEALS_AS_NAVAL"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
   "cargo": {
    "special": "SPECIALUNIT_PEOPLE"
-  },
-  "base": {
-   "combat": 125,
-   "moves": 9,
-   "combatClass": "UNITCOMBAT_SUBMARINE"
   }
  }
 }

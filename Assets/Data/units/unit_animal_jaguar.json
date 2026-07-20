@@ -17,13 +17,14 @@
    "title": "TXT_KEY_GROUPTITLE_PROWL"
   }
  ],
- "withdrawal": {
+ "movement": {
   "unit": {
-   "percent": 25
+   "flat": 2
   }
  },
  "strength": {
   "unit": {
+   "flat": 5,
    "feature": {
     "FEATURE_JUNGLE": {
      "attack": {
@@ -33,20 +34,48 @@
       "percent": 25
      }
     }
+   },
+   "targets": {
+    "UNITCOMBAT_GROUP_SOLO": true,
+    "UNITCOMBAT_GROUP_PARTY": true,
+    "UNITCOMBAT_MAMMAL_CERVID": true,
+    "UNITCOMBAT_MAMMAL_RODENT": true,
+    "UNITCOMBAT_MAMMAL_TAPIR": true
    }
   }
  },
- "skills": {
-  "assassin": true,
-  "blendIntoCity": true,
-  "targets": {
-   "UNITCOMBAT_GROUP_SOLO": true,
-   "UNITCOMBAT_GROUP_PARTY": true,
-   "UNITCOMBAT_MAMMAL_CERVID": true,
-   "UNITCOMBAT_MAMMAL_RODENT": true,
-   "UNITCOMBAT_MAMMAL_TAPIR": true
+ "withdrawal": {
+  "unit": {
+   "percent": 25
   }
  },
+ "skills": [
+  "assassin",
+  "blendIntoCity"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_FELINE",
+  "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
+  "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+  "UNITCOMBAT_ANIMAL_COMBAT_ROARING",
+  "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EPIC",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -103,25 +132,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_MAMMAL",
-   "UNITCOMBAT_FELINE",
-   "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
-   "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
-   "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
-   "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
-   "UNITCOMBAT_ANIMAL_COMBAT_ROARING",
-   "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
-   "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
-   "UNITCOMBAT_SPEED_FAST",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_EPIC",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -136,11 +146,6 @@
    "TERRAIN_SCRUB",
    "TERRAIN_TAIGA",
    "TERRAIN_TUNDRA"
-  ],
-  "base": {
-   "combat": 5,
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

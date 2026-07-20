@@ -27,21 +27,52 @@
    "title": "TXT_KEY_GROUPTITLE_COMMUNITY_LARGE"
   }
  ],
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3,
+   "targets": {
+    "UNITCOMBAT_MAMMAL_MONKEY": true,
+    "UNITCOMBAT_MAMMAL_PROSIMIAN": true,
+    "UNITCOMBAT_MAMMAL_RODENT": true,
+    "UNITCOMBAT_MAMMAL_SWINE": true
+   }
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 10
   }
  },
- "skills": {
-  "assassin": true,
-  "blendIntoCity": true,
-  "targets": {
-   "UNITCOMBAT_MAMMAL_MONKEY": true,
-   "UNITCOMBAT_MAMMAL_PROSIMIAN": true,
-   "UNITCOMBAT_MAMMAL_RODENT": true,
-   "UNITCOMBAT_MAMMAL_SWINE": true
-  }
- },
+ "skills": [
+  "assassin",
+  "blendIntoCity"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_MAMMAL_APE",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+  "UNITCOMBAT_ANIMAL_COMBAT_FECAL_FLINGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_PACK_HUNTER",
+  "UNITCOMBAT_ANIMAL_COMBAT_PUMMEL",
+  "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+  "UNITCOMBAT_ANIMAL_COMBAT_TREECLIMBING",
+  "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
  "outcomes": {
   "kill": [
    {
@@ -93,23 +124,6 @@
   "unitAIs": [
    "UNITAI_ANIMAL"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_WILD",
-   "UNITCOMBAT_ANIMAL_MAMMAL",
-   "UNITCOMBAT_MAMMAL_APE",
-   "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
-   "UNITCOMBAT_ANIMAL_COMBAT_FECAL_FLINGING",
-   "UNITCOMBAT_ANIMAL_COMBAT_PACK_HUNTER",
-   "UNITCOMBAT_ANIMAL_COMBAT_PUMMEL",
-   "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
-   "UNITCOMBAT_ANIMAL_COMBAT_TREECLIMBING",
-   "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
-   "UNITCOMBAT_MOTILITY_FOOT",
-   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
-   "UNITCOMBAT_GROUP_SQUAD",
-   "UNITCOMBAT_SIZE_MEDIUM",
-   "UNITCOMBAT_HEALS_AS_ANIMALS"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ],
@@ -129,11 +143,6 @@
    {
     "FEATURE_SAVANNA": "NONE"
    }
-  ],
-  "base": {
-   "combat": 3,
-   "moves": 1,
-   "combatClass": "UNITCOMBAT_ANIMAL"
-  }
+  ]
  }
 }

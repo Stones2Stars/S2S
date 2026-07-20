@@ -14,25 +14,40 @@
  },
  "movement": {
   "unit": {
+   "flat": 4,
    "dropRange": {
     "flat": 20
    }
   }
  },
- "skills": {
-  "counterSpy": true,
-  "destroy": true,
-  "flatMovementCost": true,
-  "ignoreTerrainCost": true,
-  "investigate": true,
-  "alwaysInvisible": true,
-  "rivalTerritory": true,
-  "sabotage": true,
-  "stealPlans": true
- },
- "tags": {
-  "spy": true
- },
+ "skills": [
+  "counterSpy",
+  "destroy",
+  "flatMovementCost",
+  "ignoreTerrainCost",
+  "investigate",
+  "alwaysInvisible",
+  "rivalTerritory",
+  "sabotage",
+  "stealPlans"
+ ],
+ "tags": [
+  "spy",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SPY",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_NANITE",
+  "UNITCOMBAT_SWARM",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_MOTILITY_AERIAL",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_MILLIONS",
+  "UNITCOMBAT_SIZE_MICROSCOPIC",
+  "UNITCOMBAT_HEALS_AS_NANOMORPH"
+ ],
  "grants": {
   "promotions": [
    "PROMOTION_COMMANDO",
@@ -71,24 +86,8 @@
   "unitAIs": [
    "UNITAI_SPY"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_NANITE",
-   "UNITCOMBAT_SWARM",
-   "UNITCOMBAT_SPECIES_AI",
-   "UNITCOMBAT_MOTILITY_AERIAL",
-   "UNITCOMBAT_QUALITY_MEDIOCRE",
-   "UNITCOMBAT_GROUP_MILLIONS",
-   "UNITCOMBAT_SIZE_MICROSCOPIC",
-   "UNITCOMBAT_HEALS_AS_NANOMORPH"
-  ],
   "mapCategories": [
    "MAPCATEGORY_EARTH"
-  ],
-  "base": {
-   "moves": 4,
-   "combatClass": "UNITCOMBAT_SPY"
-  }
+  ]
  }
 }

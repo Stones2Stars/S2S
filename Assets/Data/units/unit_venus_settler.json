@@ -8,14 +8,32 @@
    ]
   }
  },
- "skills": {
-  "food": true,
-  "found": true
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
  },
- "tags": {
-  "settler": true,
-  "civilian": true
- },
+ "skills": [
+  "food",
+  "found"
+ ],
+ "tags": [
+  "settler",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SETTLER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_SPACECRAFT"
+ ],
  "grants": {
   "foundBuildings": [
    {
@@ -122,26 +140,11 @@
   "unitAIs": [
    "UNITAI_SETTLE"
   ],
-  "combatClasses": [
-   "UNITCOMBAT_CIVILIAN",
-   "UNITCOMBAT_PACIFIST",
-   "UNITCOMBAT_SPECIES_HUMAN",
-   "UNITCOMBAT_MOTILITY_PILOTING",
-   "UNITCOMBAT_QUALITY_INFERIOR",
-   "UNITCOMBAT_GROUP_SOLO",
-   "UNITCOMBAT_SIZE_HUGE",
-   "UNITCOMBAT_HEALS_AS_PEOPLE",
-   "UNITCOMBAT_HEALS_AS_SPACECRAFT"
-  ],
   "mapCategories": [
    "MAPCATEGORY_VENUSIAN"
   ],
   "advancedStart": {
    "cost": 100
-  },
-  "base": {
-   "moves": 2,
-   "combatClass": "UNITCOMBAT_SETTLER"
   }
  }
 }
