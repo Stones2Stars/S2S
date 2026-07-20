@@ -189,18 +189,6 @@ int CommerceCalc::stateReligionMatch(const CvCity* pCity, const CvCascadeEvalCtx
 	return match;
 }
 
-long CommerceCalc::stateReligion(const std::string& channel, const CvCity* pCity)
-{
-	const CvPlayer& player = GET_PLAYER(pCity->getOwner());
-	if (player.getStateReligion() == NO_RELIGION) return 0;
-	CvCascadeEvalCtx ec;   // local eval ctx (this package takes no ec) -- the standing operating buildings serve the match test
-	ec.city = pCity; ec.plot = pCity->plot(); ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
-	EnablerKernel::wireOperatingBuildings(pCity, ec);
-	const long pool = stateReligionPool(channel, player);
-	if (pool == 0) return 0;
-	return 100L * pool * stateReligionMatch(pCity, ec);
-}
-
 // §2 BASE: CommerceChangeDoubleTime whole-building doubling ×100 -- for each active building older than its double-time
 // threshold (game-years), ANOTHER copy of its WHOLE per-building commerce (own un-conditioned city.flat + shrine + corpHQ)
 // (DoubleExtraPackage; engine CvCity:12290). ⏳ INTERIM config read; own-flat via the un-conditioned deposit (×100, integer).

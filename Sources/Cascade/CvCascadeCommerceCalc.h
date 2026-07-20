@@ -49,7 +49,6 @@ public:
 	// §2 BASE: state-religion commerce ×100 -- 100 × POOL × matchCount (StateReligionPackage; engine CvCity:12266-73). POOL =
 	// Σ player building TYPES of count × building.getStateReligionCommerce(c); matchCount = the city's active buildings whose
 	// religion == the owner's state religion. COMPUTED from building counts + config (NOT the engine pool accumulator).
-	static long stateReligion(const std::string& channel, const CvCity* pCity);
 
 	// §2 BASE: CommerceChangeDoubleTime whole-building doubling ×100 -- for each active building older than its double-time
 	// threshold (game-years), ANOTHER copy of its WHOLE per-building commerce (own un-conditioned city.flat + shrine + corpHQ)

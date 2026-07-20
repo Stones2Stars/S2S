@@ -86,7 +86,6 @@ public:
 	// cities (unit caps are empire-scoped). A no-op for an uncapped, unreferenced unit (the combat common case).
 
 	// ===== the ENABLER frontier reads (#430 THE FLIP -- ensure-on-read, the operating buildings idiom) =====
-	static bool enTrainVisible(const CvCity* pCity, int eUnit);          // the VISIBLE build-list frontier (bTestVisible)
 	static bool enHurry(const CvPlayer* pPlayer, int eHurry);
 	static bool enFoundReligion(const CvPlayer* pPlayer);
 	// (the canBuild UNLOCK half is the standardized enabler's builds domain -- CvPlayer::m_enabler.builds,

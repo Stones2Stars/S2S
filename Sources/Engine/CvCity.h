@@ -988,7 +988,6 @@ public:
 	void refreshEffectiveBonus(BonusTypes eIndex);          // one bonus: gate x total + corp -> store
 	void refreshAllEffectiveBonuses();                      // gate sweep (tech/minted/corp changed; totals kept)
 	void seedEffectiveBonuses();                            // full pull from the group (join/load/reconcile)
-	int getNumBonusesOracle(BonusTypes eIndex) const;       // the retired per-read calculation -- VALIDATION ORACLE ONLY
 	void endDeferredBonusProcessing();
 	void startDeferredBonusProcessing();
 	bool isDeferringBonusProcessing() const { return m_deferringBonusProcessingCount > 0; }

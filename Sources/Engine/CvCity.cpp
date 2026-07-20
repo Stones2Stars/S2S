@@ -12347,20 +12347,6 @@ int CvCity::getNumBonuses(BonusTypes eIndex) const
 	return m_aiEffectiveBonusCount[eIndex];
 }
 
-// The retired per-read calculation -- VALIDATION ORACLE ONLY (the maintained-vs-fresh drift tripwire; the
-// enabler-oracle precedent). Never a read path.
-int CvCity::getNumBonusesOracle(BonusTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eIndex);
-
-	if (!GET_TEAM(getTeam()).isHasTech((TechTypes)GC.getBonusInfo(eIndex).getTechCityTrade()))
-	{
-		return 0;
-	}
-	const CvPlotGroup* pGroup = plotGroup(getOwner());
-	return getNumBonusesFromBase(eIndex, pGroup != NULL ? pGroup->getNumBonuses(eIndex) : 0) + getCorpBonusProduction(eIndex);
-}
-
 void CvCity::refreshEffectiveBonus(BonusTypes eIndex)
 {
 	int iValue = 0;
