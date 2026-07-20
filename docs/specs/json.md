@@ -669,6 +669,13 @@ provides the slider to the empire).
   `m_aOutcomeMissions` — data-driven MISSION→outcome-list with cost/conditions/kill; *"outcome system (no wrapper)"*).
   The distinction from `skills`: a **skill** is a standing/permanent property; a **mission** is an action (often
   consuming the unit). `grants` is therefore BOTH an entity-level handout AND a mission's outcome payload.
+  > **⚖ OUTCOME PAYLOAD VOCABULARY (owner 2026-07-20) — the `actions` block uses clean VERB-PER-PAYLOAD keys, not the
+  > raw XML→JSON dump it carries today.** Each effect an outcome produces is a verb, each collision-checked against the
+  > spec's reserved words (avoiding `builds` = worker repertoire, `provides` = continuous supply, `grants` = direct
+  > handout, and the singular `construct` = inside `canConstruct`/`notConstructible`): **`constructs`** a building
+  > (LOCKED) · **`spawns`** a unit · **`places`** a bonus on the plot · **`discovers`** a tech · … The CvOutcome
+  > **engine stays XML** (the ground-up rework is post-#430); this is the DATA-shape target the curator emits for the
+  > `actions`/outcome payload — the engine does not consume the JSON `actions` yet.
 
 A **building's** `grants.traits` (a whole trait conferred on the **OWNER** empire *while the building is active*, reverting
 on loss — `owner.setHasTrait`, civ-traits only, `CvCity.cpp:4614`) is the same grantor-**provides** / empire-**holds**
