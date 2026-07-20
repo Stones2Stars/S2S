@@ -65,63 +65,51 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
-    "iChance": 2,
-    "BonusType": "BONUS_WALRUS",
-    "Yields": [
-     [
-      {
-       "Constant": 200,
-       "Random": 625
-      }
-     ],
-     [
-      {
-       "Constant": 40,
-       "Random": 10
-      }
-     ],
-     [
-      {
-       "Constant": 8,
-       "Random": 12
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_BONUS_SPAWNED"
+    },
+    "chance": 2,
+    "places": "BONUS_WALRUS",
+    "food": {
+     "base": 200,
+     "random": 625
+    },
+    "production": {
+     "base": 40,
+     "random": 10
+    },
+    "commerce": {
+     "base": 8,
+     "random": 12
+    }
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 3,
-    "UnitType": "UNIT_SUBDUED_WALRUS",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 3,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_WALRUS",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 200,
-       "Random": 625
-      }
-     ],
-     [
-      {
-       "Constant": 40,
-       "Random": 10
-      }
-     ],
-     [
-      {
-       "Constant": 8,
-       "Random": 12
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 200,
+     "random": 625
+    },
+    "production": {
+     "base": 40,
+     "random": 10
+    },
+    "commerce": {
+     "base": 8,
+     "random": 12
+    }
    }
   ]
  },

@@ -25,260 +25,268 @@
  "outcomes": {
   "actions": [
    {
-    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_WORKER",
-    "iCost": [
-     [
-      30
-     ]
-    ],
-    "ActionOutcomes": [
-     {
-      "OutcomeType": "OUTCOME_UPGRADE_TO_WORKER",
-      "iChance": 100,
-      "UnitType": "UNIT_WORKER",
-      "bUnitToCity": [
-       0
-      ],
-      "PlotCondition": [
-       [
-        "TAG_ANARCHY"
-       ]
-      ]
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_WORKER",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_WORKER",
+     "plot": {
+      "expr": {
+       "Not": {
+        "Is": "TAG_ANARCHY"
+       }
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_WORKER"
+    }
    },
    {
-    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_NEANDERTHAL_GATHERER",
-    "iCost": [
-     [
-      15
-     ]
-    ],
-    "ActionOutcomes": [
-     {
-      "OutcomeType": "OUTCOME_UPGRADE_TO_NEANDERTHAL_GATHERER",
-      "iChance": 100,
-      "UnitType": "UNIT_NEANDERTHAL_GATHERER",
-      "bUnitToCity": [
-       0
-      ],
-      "PlotCondition": [
-       [
-        "TAG_ANARCHY"
-       ]
-      ]
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_NEANDERTHAL_GATHERER",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_NEANDERTHAL_GATHERER",
+     "plot": {
+      "expr": {
+       "Not": {
+        "Is": "TAG_ANARCHY"
+       }
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_NEANDERTHAL_GATHERER"
+    }
    },
    {
-    "MISSION_JOIN_CITY_AS_SLAVE_FOOD": [
-     {
-      "OutcomeType": "OUTCOME_JOIN_AS_SLAVE_FOOD",
-      "iChance": 100,
-      "PlotCondition": [
-       {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_FOOD",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_FOOD",
+     "plot": {
+      "expr": {
+       "And": {
         "Greater": {
          "Python": "getNumNonSpecialistSlavesFood",
          "Constant": 0
         },
         "Is": "TAG_OWNED"
        }
-      ],
-      "PythonCallback": "doAddSettledSlaveFood"
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveFood"
+    }
    },
    {
-    "MISSION_JOIN_CITY_AS_SLAVE_PRODUCTION": [
-     {
-      "OutcomeType": "OUTCOME_JOIN_AS_SLAVE_PRODUCTION",
-      "iChance": 100,
-      "PlotCondition": [
-       {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_PRODUCTION",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_PRODUCTION",
+     "plot": {
+      "expr": {
+       "And": {
         "Greater": {
          "Python": "getNumNonSpecialistSlavesProduction",
          "Constant": 0
         },
         "Is": "TAG_OWNED"
        }
-      ],
-      "PythonCallback": "doAddSettledSlaveProduction"
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveProduction"
+    }
    },
    {
-    "MISSION_JOIN_CITY_AS_SLAVE_ENTERTAINMENT": [
-     {
-      "OutcomeType": "OUTCOME_JOIN_AS_SLAVE_ENTERTAINMENT",
-      "iChance": 100,
-      "PlotCondition": [
-       {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_ENTERTAINMENT",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_ENTERTAINMENT",
+     "plot": {
+      "expr": {
+       "And": {
         "Greater": {
          "Python": "getNumNonSpecialistSlavesEntertainment",
          "Constant": 0
         },
         "Is": "TAG_OWNED"
        }
-      ],
-      "PythonCallback": "doAddSettledSlaveEntertainment"
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveEntertainment"
+    }
    },
    {
-    "MISSION_JOIN_CITY_AS_SLAVE_MILITARY": [
-     {
-      "OutcomeType": "OUTCOME_JOIN_AS_SLAVE_MILITARY",
-      "iChance": 100,
-      "PlotCondition": [
-       {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_MILITARY",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_MILITARY",
+     "plot": {
+      "expr": {
+       "And": {
         "Greater": {
          "Python": "getNumNonSpecialistSlavesMilitary",
          "Constant": 0
         },
         "Is": "TAG_OWNED"
        }
-      ],
-      "PythonCallback": "doAddSettledSlaveMilitary"
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveMilitary"
+    }
    },
    {
-    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_NEANDERTHAL_WARRIOR",
-    "iCost": [
-     [
-      15
-     ]
-    ],
-    "ActionOutcomes": [
-     {
-      "OutcomeType": "OUTCOME_UPGRADE_TO_NEANDERTHAL_WARRIOR",
-      "iChance": 100,
-      "UnitType": "UNIT_NEANDERTHAL",
-      "bUnitToCity": [
-       0
-      ],
-      "PlotCondition": [
-       [
-        "TAG_ANARCHY"
-       ]
-      ]
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_NEANDERTHAL_WARRIOR",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_NEANDERTHAL_WARRIOR",
+     "plot": {
+      "expr": {
+       "Not": {
+        "Is": "TAG_ANARCHY"
+       }
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_NEANDERTHAL"
+    }
    },
    {
-    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_NEANDERTHAL_TRACKER",
-    "iCost": [
-     [
-      15
-     ]
-    ],
-    "ActionOutcomes": [
-     {
-      "OutcomeType": "OUTCOME_UPGRADE_TO_NEANDERTHAL_TRACKER",
-      "iChance": 100,
-      "UnitType": "UNIT_NEANDERTHAL_CHASER",
-      "bUnitToCity": [
-       0
-      ],
-      "PlotCondition": [
-       [
-        "TAG_ANARCHY"
-       ]
-      ]
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_NEANDERTHAL_TRACKER",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_NEANDERTHAL_TRACKER",
+     "plot": {
+      "expr": {
+       "Not": {
+        "Is": "TAG_ANARCHY"
+       }
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_NEANDERTHAL_CHASER"
+    }
    },
    {
-    "MISSION_SELL_CAPTIVE": [
-     {
-      "OutcomeType": "OUTCOME_SLAVE_SALE_NOT_SLAVERY",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Yields": [
-       0,
-       0,
-       [
-        [
-         2
-        ]
-       ]
-      ]
+    "mission": "MISSION_SELL_CAPTIVE",
+    "requires": {
+     "outcome": "OUTCOME_SLAVE_SALE_NOT_SLAVERY",
+     "plot": {
+      "expr": {
+       "Is": "TAG_OWNED"
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "commerce": {
+     "expr": {
+      "Adapt": {
+       "Constant": 2
+      }
+     }
+    }
    },
    {
-    "MISSION_BUTCHER_HUMAN": [
+    "mission": "MISSION_BUTCHER_HUMAN",
+    "outcomes": [
      {
-      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY",
-      "iChance": 100,
-      "Yields": [
-       [
-        [
-         8
-        ]
-       ],
-       [
-        [
-         2
-        ]
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY"
+      },
+      "chance": 100,
+      "food": {
+       "expr": {
+        "Adapt": {
+         "Constant": 8
+        }
+       }
+      },
+      "production": {
+       "expr": {
+        "Adapt": {
+         "Constant": 2
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST",
-      "iChance": 100,
-      "Yields": [
-       [
-        [
-         10
-        ]
-       ],
-       [
-        [
-         4
-        ]
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST"
+      },
+      "chance": 100,
+      "food": {
+       "expr": {
+        "Adapt": {
+         "Constant": 10
+        }
+       }
+      },
+      "production": {
+       "expr": {
+        "Adapt": {
+         "Constant": 4
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT1",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Yields": [
-       [
-        [
-         10
-        ]
-       ],
-       [
-        [
-         4
-        ]
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT1",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "food": {
+       "expr": {
+        "Adapt": {
+         "Constant": 10
+        }
+       }
+      },
+      "production": {
+       "expr": {
+        "Adapt": {
+         "Constant": 4
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT2",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Yields": [
-       [
-        [
-         10
-        ]
-       ],
-       [
-        [
-         4
-        ]
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT2",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "food": {
+       "expr": {
+        "Adapt": {
+         "Constant": 10
+        }
+       }
+      },
+      "production": {
+       "expr": {
+        "Adapt": {
+         "Constant": 4
+        }
+       }
+      }
      }
     ]
    }

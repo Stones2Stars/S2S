@@ -50,38 +50,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_GROUNDSLOTH",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_GROUNDSLOTH",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 300,
-       "Random": 300
-      }
-     ],
-     [
-      {
-       "Constant": 70,
-       "Random": 120
-      }
-     ],
-     [
-      {
-       "Constant": 18,
-       "Random": 8
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 300,
+     "random": 300
+    },
+    "production": {
+     "base": 70,
+     "random": 120
+    },
+    "commerce": {
+     "base": 18,
+     "random": 8
+    }
    }
   ]
  },

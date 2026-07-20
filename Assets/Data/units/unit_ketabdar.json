@@ -60,38 +60,37 @@
  "outcomes": {
   "actions": [
    {
-    "MissionType": "MISSION_ENTERTAIN_CITY",
-    "bKill": 0,
-    "ActionOutcomes": [
+    "mission": "MISSION_ENTERTAIN_CITY",
+    "outcomes": [
      {
-      "OutcomeType": "OUTCOME_ENTERTAIN_CITY",
-      "iChance": 80,
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         6
-        ]
-       ]
-      ],
-      "iReduceAnarchyLength": 4,
-      "bKill": 1
+      "requires": {
+       "outcome": "OUTCOME_ENTERTAIN_CITY"
+      },
+      "chance": 80,
+      "consumes": true,
+      "revolution": 4,
+      "culture": {
+       "expr": {
+        "Adapt": {
+         "Constant": 6
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_ENTERTAIN_CITY_EXALTED",
-      "iChance": 20,
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         12
-        ]
-       ]
-      ],
-      "PromotionType": "PROMOTION_EXPERIENCED_ARTIST",
-      "iReduceAnarchyLength": 5
+      "requires": {
+       "outcome": "OUTCOME_ENTERTAIN_CITY_EXALTED"
+      },
+      "chance": 20,
+      "promotes": "PROMOTION_EXPERIENCED_ARTIST",
+      "revolution": 5,
+      "culture": {
+       "expr": {
+        "Adapt": {
+         "Constant": 12
+        }
+       }
+      }
      }
     ]
    }

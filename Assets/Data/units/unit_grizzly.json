@@ -40,38 +40,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_GRIZZLY",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_GRIZZLY",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 90,
-       "Random": 90
-      }
-     ],
-     [
-      {
-       "Constant": 9,
-       "Random": 9
-      }
-     ],
-     [
-      {
-       "Constant": 14,
-       "Random": 10
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 90,
+     "random": 90
+    },
+    "production": {
+     "base": 9,
+     "random": 9
+    },
+    "commerce": {
+     "base": 14,
+     "random": 10
+    }
    }
   ]
  },

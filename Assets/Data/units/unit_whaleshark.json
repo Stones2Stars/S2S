@@ -42,64 +42,53 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_TALES_SEA",
-    "iChance": 5,
-    "UnitType": "UNIT_TALESOF_WHALESHARK",
-    "bUnitToCity": [
-     1
-    ],
-    "Yields": [
-     [
-      {
-       "Constant": 10000,
-       "Random": 7000
-      }
-     ],
-     [
-      {
-       "Constant": 1000,
-       "Random": 700
-      }
-     ],
-     [
-      {
-       "Constant": 30,
-       "Random": 10
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_TALESOF_WHALESHARK",
+     "toCity": true
+    },
+    "food": {
+     "base": 10000,
+     "random": 7000
+    },
+    "production": {
+     "base": 1000,
+     "random": 700
+    },
+    "commerce": {
+     "base": 30,
+     "random": 10
+    }
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE_SEA_LARGE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_WHALESHARK",
-    "bUnitToCity": [
-     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_LARGE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_WHALESHARK"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 80,
-    "Yields": [
-     [
-      {
-       "Constant": 10000,
-       "Random": 7000
-      }
-     ],
-     [
-      {
-       "Constant": 100,
-       "Random": 70
-      }
-     ],
-     [
-      {
-       "Constant": 30,
-       "Random": 10
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 80,
+    "food": {
+     "base": 10000,
+     "random": 7000
+    },
+    "production": {
+     "base": 100,
+     "random": 70
+    },
+    "commerce": {
+     "base": 30,
+     "random": 10
+    }
    }
   ]
  },

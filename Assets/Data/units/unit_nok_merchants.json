@@ -76,54 +76,51 @@
  "outcomes": {
   "actions": [
    {
-    "MISSION_HURRY_PRODUCTION_CARAVAN": [
-     {
-      "OutcomeType": "OUTCOME_HURRY_PRODUCTION_CARAVAN",
-      "iChance": 100,
-      "Yields": [
-       0,
-       [
-        [
-         104
-        ]
-       ]
-      ]
+    "mission": "MISSION_HURRY_PRODUCTION_CARAVAN",
+    "requires": {
+     "outcome": "OUTCOME_HURRY_PRODUCTION_CARAVAN"
+    },
+    "chance": 100,
+    "production": {
+     "expr": {
+      "AdaptHammerCost": {
+       "Constant": 104
+      }
      }
-    ]
+    }
    },
    {
-    "MissionType": "MISSION_ENTERTAIN_CITY",
-    "bKill": 0,
-    "ActionOutcomes": [
+    "mission": "MISSION_ENTERTAIN_CITY",
+    "outcomes": [
      {
-      "OutcomeType": "OUTCOME_ENTERTAIN_CITY",
-      "iChance": 80,
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         5
-        ]
-       ]
-      ],
-      "iReduceAnarchyLength": 2,
-      "bKill": 1
+      "requires": {
+       "outcome": "OUTCOME_ENTERTAIN_CITY"
+      },
+      "chance": 80,
+      "consumes": true,
+      "revolution": 2,
+      "culture": {
+       "expr": {
+        "Adapt": {
+         "Constant": 5
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_ENTERTAIN_CITY_EXALTED",
-      "iChance": 20,
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         10
-        ]
-       ]
-      ],
-      "PromotionType": "PROMOTION_EXPERIENCED_ARTIST",
-      "iReduceAnarchyLength": 3
+      "requires": {
+       "outcome": "OUTCOME_ENTERTAIN_CITY_EXALTED"
+      },
+      "chance": 20,
+      "promotes": "PROMOTION_EXPERIENCED_ARTIST",
+      "revolution": 3,
+      "culture": {
+       "expr": {
+        "Adapt": {
+         "Constant": 10
+        }
+       }
+      }
      }
     ]
    }

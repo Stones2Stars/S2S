@@ -65,63 +65,51 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
-    "iChance": 2,
-    "BonusType": "BONUS_LLAMA",
-    "Yields": [
-     [
-      {
-       "Constant": 40,
-       "Random": 30
-      }
-     ],
-     [
-      {
-       "Constant": 5,
-       "Random": 2
-      }
-     ],
-     [
-      {
-       "Constant": 4,
-       "Random": 5
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_BONUS_SPAWNED"
+    },
+    "chance": 2,
+    "places": "BONUS_LLAMA",
+    "food": {
+     "base": 40,
+     "random": 30
+    },
+    "production": {
+     "base": 5,
+     "random": 2
+    },
+    "commerce": {
+     "base": 4,
+     "random": 5
+    }
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 3,
-    "UnitType": "UNIT_SUBDUED_LLAMA",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 3,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_LLAMA",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 40,
-       "Random": 30
-      }
-     ],
-     [
-      {
-       "Constant": 5,
-       "Random": 2
-      }
-     ],
-     [
-      {
-       "Constant": 4,
-       "Random": 5
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 40,
+     "random": 30
+    },
+    "production": {
+     "base": 5,
+     "random": 2
+    },
+    "commerce": {
+     "base": 4,
+     "random": 5
+    }
    }
   ]
  },

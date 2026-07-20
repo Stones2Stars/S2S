@@ -32,19 +32,18 @@
  "outcomes": {
   "actions": [
    {
-    "MISSION_JOIN_CITY_FREED_SLAVE": [
-     {
-      "OutcomeType": "OUTCOME_JOIN_CITY_FREED_SLAVE",
-      "iChance": 100,
-      "Yields": [
-       [
-        [
-         100
-        ]
-       ]
-      ]
+    "mission": "MISSION_JOIN_CITY_FREED_SLAVE",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_CITY_FREED_SLAVE"
+    },
+    "chance": 100,
+    "food": {
+     "expr": {
+      "Adapt": {
+       "Constant": 100
+      }
      }
-    ]
+    }
    }
   ]
  },

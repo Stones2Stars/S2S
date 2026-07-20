@@ -63,38 +63,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_BEAR",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_BEAR",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 45,
-       "Random": 135
-      }
-     ],
-     [
-      {
-       "Constant": 4,
-       "Random": 18
-      }
-     ],
-     [
-      {
-       "Constant": 26,
-       "Random": 30
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 45,
+     "random": 135
+    },
+    "production": {
+     "base": 4,
+     "random": 18
+    },
+    "commerce": {
+     "base": 26,
+     "random": 30
+    }
    }
   ]
  },

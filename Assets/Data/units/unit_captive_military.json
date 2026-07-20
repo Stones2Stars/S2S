@@ -25,680 +25,743 @@
  "outcomes": {
   "actions": [
    {
-    "MISSION_FREE_CAPTIVE": [
-     {
-      "OutcomeType": "OUTCOME_SET_CAPTIVE_FREE",
-      "iChance": 100,
-      "Yields": [
-       [
-        [
-         55
-        ]
-       ]
-      ]
+    "mission": "MISSION_FREE_CAPTIVE",
+    "requires": {
+     "outcome": "OUTCOME_SET_CAPTIVE_FREE"
+    },
+    "chance": 100,
+    "food": {
+     "expr": {
+      "Adapt": {
+       "Constant": 55
+      }
      }
-    ]
+    }
    },
    {
-    "MISSION_SELL_CAPTIVE": [
-     {
-      "OutcomeType": "OUTCOME_SLAVE_SALE_NOT_SLAVERY",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Yields": [
-       0,
-       0,
-       [
-        [
-         3
-        ]
-       ]
-      ]
+    "mission": "MISSION_SELL_CAPTIVE",
+    "requires": {
+     "outcome": "OUTCOME_SLAVE_SALE_NOT_SLAVERY",
+     "plot": {
+      "expr": {
+       "Is": "TAG_OWNED"
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "commerce": {
+     "expr": {
+      "Adapt": {
+       "Constant": 3
+      }
+     }
+    }
    },
    {
-    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_GATHERER",
-    "iCost": [
-     [
-      15
-     ]
-    ],
-    "ActionOutcomes": [
-     {
-      "OutcomeType": "OUTCOME_UPGRADE_TO_GATHERER",
-      "iChance": 100,
-      "UnitType": "UNIT_GATHERER",
-      "bUnitToCity": [
-       0
-      ],
-      "PlotCondition": [
-       [
-        "TAG_ANARCHY"
-       ]
-      ]
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_GATHERER",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_GATHERER",
+     "plot": {
+      "expr": {
+       "Not": {
+        "Is": "TAG_ANARCHY"
+       }
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_GATHERER"
+    }
    },
    {
-    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_WORKER",
-    "iCost": [
-     [
-      30
-     ]
-    ],
-    "ActionOutcomes": [
-     {
-      "OutcomeType": "OUTCOME_UPGRADE_TO_WORKER",
-      "iChance": 100,
-      "UnitType": "UNIT_WORKER",
-      "bUnitToCity": [
-       0
-      ],
-      "PlotCondition": [
-       [
-        "TAG_ANARCHY"
-       ]
-      ]
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_WORKER",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_WORKER",
+     "plot": {
+      "expr": {
+       "Not": {
+        "Is": "TAG_ANARCHY"
+       }
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_WORKER"
+    }
    },
    {
-    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_STONE_THROWER",
-    "iCost": [
-     [
-      5
-     ]
-    ],
-    "ActionOutcomes": [
-     {
-      "OutcomeType": "OUTCOME_UPGRADE_TO_STONE_THROWER",
-      "iChance": 100,
-      "UnitType": "UNIT_STONE_THROWER",
-      "bUnitToCity": [
-       0
-      ],
-      "PlotCondition": [
-       [
-        "TAG_ANARCHY"
-       ]
-      ]
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_STONE_THROWER",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_STONE_THROWER",
+     "plot": {
+      "expr": {
+       "Not": {
+        "Is": "TAG_ANARCHY"
+       }
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_STONE_THROWER"
+    }
    },
    {
-    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_ARCHER",
-    "iCost": [
-     [
-      20
-     ]
-    ],
-    "ActionOutcomes": [
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_ARCHER",
+    "outcomes": [
      {
-      "OutcomeType": "OUTCOME_UPGRADE_TO_ARCHER",
-      "iChance": 100,
-      "UnitType": "UNIT_ARCHER",
-      "bUnitToCity": [
-       0
-      ],
-      "PlotCondition": [
-       [
-        "TAG_ANARCHY"
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_UPGRADE_TO_ARCHER",
+       "plot": {
+        "expr": {
+         "Not": {
+          "Is": "TAG_ANARCHY"
+         }
+        }
+       }
+      },
+      "chance": 100,
+      "spawns": {
+       "unit": "UNIT_ARCHER"
+      }
      },
      {
-      "OutcomeType": "OUTCOME_UPGRADE_TO_ARCHER_REPLACEMENT1",
-      "iChance": 100,
-      "UnitType": "UNIT_ARCHER",
-      "bUnitToCity": [
-       0
-      ],
-      "PlotCondition": [
-       [
-        "TAG_ANARCHY"
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_UPGRADE_TO_ARCHER_REPLACEMENT1",
+       "plot": {
+        "expr": {
+         "Not": {
+          "Is": "TAG_ANARCHY"
+         }
+        }
+       }
+      },
+      "chance": 100,
+      "spawns": {
+       "unit": "UNIT_ARCHER"
+      }
      }
     ]
    },
    {
-    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_AXEMAN",
-    "iCost": [
-     [
-      30
-     ]
-    ],
-    "ActionOutcomes": [
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_AXEMAN",
+    "outcomes": [
      {
-      "OutcomeType": "OUTCOME_UPGRADE_TO_AXEMAN",
-      "iChance": 100,
-      "UnitType": "UNIT_AXEMAN",
-      "bUnitToCity": [
-       0
-      ],
-      "PlotCondition": [
-       [
-        "TAG_ANARCHY"
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_UPGRADE_TO_AXEMAN",
+       "plot": {
+        "expr": {
+         "Not": {
+          "Is": "TAG_ANARCHY"
+         }
+        }
+       }
+      },
+      "chance": 100,
+      "spawns": {
+       "unit": "UNIT_AXEMAN"
+      }
      },
      {
-      "OutcomeType": "OUTCOME_UPGRADE_TO_AXEMAN_REPLACEMENT1",
-      "iChance": 100,
-      "UnitType": "UNIT_AXEMAN",
-      "bUnitToCity": [
-       0
-      ],
-      "PlotCondition": [
-       [
-        "TAG_ANARCHY"
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_UPGRADE_TO_AXEMAN_REPLACEMENT1",
+       "plot": {
+        "expr": {
+         "Not": {
+          "Is": "TAG_ANARCHY"
+         }
+        }
+       }
+      },
+      "chance": 100,
+      "spawns": {
+       "unit": "UNIT_AXEMAN"
+      }
      },
      {
-      "OutcomeType": "OUTCOME_UPGRADE_TO_AXEMAN_REPLACEMENT2",
-      "iChance": 100,
-      "UnitType": "UNIT_AXEMAN",
-      "bUnitToCity": [
-       0
-      ],
-      "PlotCondition": [
-       [
-        "TAG_ANARCHY"
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_UPGRADE_TO_AXEMAN_REPLACEMENT2",
+       "plot": {
+        "expr": {
+         "Not": {
+          "Is": "TAG_ANARCHY"
+         }
+        }
+       }
+      },
+      "chance": 100,
+      "spawns": {
+       "unit": "UNIT_AXEMAN"
+      }
      }
     ]
    },
    {
-    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_SPEARMAN",
-    "iCost": [
-     [
-      25
-     ]
-    ],
-    "ActionOutcomes": [
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_SPEARMAN",
+    "outcomes": [
      {
-      "OutcomeType": "OUTCOME_UPGRADE_TO_SPEARMAN",
-      "iChance": 100,
-      "UnitType": "UNIT_SPEARMAN",
-      "bUnitToCity": [
-       0
-      ],
-      "PlotCondition": [
-       [
-        "TAG_ANARCHY"
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_UPGRADE_TO_SPEARMAN",
+       "plot": {
+        "expr": {
+         "Not": {
+          "Is": "TAG_ANARCHY"
+         }
+        }
+       }
+      },
+      "chance": 100,
+      "spawns": {
+       "unit": "UNIT_SPEARMAN"
+      }
      },
      {
-      "OutcomeType": "OUTCOME_UPGRADE_TO_SPEARMAN_REPLACEMENT1",
-      "iChance": 100,
-      "UnitType": "UNIT_SPEARMAN",
-      "bUnitToCity": [
-       0
-      ],
-      "PlotCondition": [
-       [
-        "TAG_ANARCHY"
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_UPGRADE_TO_SPEARMAN_REPLACEMENT1",
+       "plot": {
+        "expr": {
+         "Not": {
+          "Is": "TAG_ANARCHY"
+         }
+        }
+       }
+      },
+      "chance": 100,
+      "spawns": {
+       "unit": "UNIT_SPEARMAN"
+      }
      },
      {
-      "OutcomeType": "OUTCOME_UPGRADE_TO_SPEARMAN_REPLACEMENT2",
-      "iChance": 100,
-      "UnitType": "UNIT_SPEARMAN",
-      "bUnitToCity": [
-       0
-      ],
-      "PlotCondition": [
-       [
-        "TAG_ANARCHY"
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_UPGRADE_TO_SPEARMAN_REPLACEMENT2",
+       "plot": {
+        "expr": {
+         "Not": {
+          "Is": "TAG_ANARCHY"
+         }
+        }
+       }
+      },
+      "chance": 100,
+      "spawns": {
+       "unit": "UNIT_SPEARMAN"
+      }
      }
     ]
    },
    {
-    "MISSION_JOIN_CITY_AS_SETTLED_SLAVE": [
-     {
-      "OutcomeType": "OUTCOME_JOIN_AS_SLAVE",
-      "iChance": 100,
-      "PlotCondition": [
-       {
+    "mission": "MISSION_JOIN_CITY_AS_SETTLED_SLAVE",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE",
+     "plot": {
+      "expr": {
+       "And": {
         "Greater": {
          "Python": "hasSufficientPopulation",
          "Constant": 0
         },
         "Is": "TAG_OWNED"
        }
-      ],
-      "PythonCallback": "doAddSettledSlave"
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlave"
+    }
    },
    {
-    "MISSION_JOIN_CITY_AS_SLAVE_FOOD": [
-     {
-      "OutcomeType": "OUTCOME_JOIN_AS_SLAVE_FOOD",
-      "iChance": 100,
-      "PlotCondition": [
-       {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_FOOD",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_FOOD",
+     "plot": {
+      "expr": {
+       "And": {
         "Greater": {
          "Python": "getNumNonSpecialistSlavesFood",
          "Constant": 0
         },
         "Is": "TAG_OWNED"
        }
-      ],
-      "PythonCallback": "doAddSettledSlaveFood"
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveFood"
+    }
    },
    {
-    "MISSION_JOIN_CITY_AS_SLAVE_PRODUCTION": [
-     {
-      "OutcomeType": "OUTCOME_JOIN_AS_SLAVE_PRODUCTION",
-      "iChance": 100,
-      "PlotCondition": [
-       {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_PRODUCTION",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_PRODUCTION",
+     "plot": {
+      "expr": {
+       "And": {
         "Greater": {
          "Python": "getNumNonSpecialistSlavesProduction",
          "Constant": 0
         },
         "Is": "TAG_OWNED"
        }
-      ],
-      "PythonCallback": "doAddSettledSlaveProduction"
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveProduction"
+    }
    },
    {
-    "MISSION_JOIN_CITY_AS_SLAVE_COMMERCE": [
-     {
-      "OutcomeType": "OUTCOME_JOIN_AS_SLAVE_COMMERCE",
-      "iChance": 100,
-      "PlotCondition": [
-       {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_COMMERCE",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_COMMERCE",
+     "plot": {
+      "expr": {
+       "And": {
         "Greater": {
          "Python": "getNumNonSpecialistSlavesCommerce",
          "Constant": 0
         },
         "Is": "TAG_OWNED"
        }
-      ],
-      "PythonCallback": "doAddSettledSlaveCommerce"
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveCommerce"
+    }
    },
    {
-    "MISSION_JOIN_CITY_AS_SLAVE_HEALTH": [
-     {
-      "OutcomeType": "OUTCOME_JOIN_AS_SLAVE_HEALTH",
-      "iChance": 100,
-      "PlotCondition": [
-       {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_HEALTH",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_HEALTH",
+     "plot": {
+      "expr": {
+       "And": {
         "Greater": {
          "Python": "getNumNonSpecialistSlavesHealth",
          "Constant": 0
         },
         "Is": "TAG_OWNED"
        }
-      ],
-      "PythonCallback": "doAddSettledSlaveHealth"
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveHealth"
+    }
    },
    {
-    "MISSION_JOIN_CITY_AS_SLAVE_ENTERTAINMENT": [
-     {
-      "OutcomeType": "OUTCOME_JOIN_AS_SLAVE_ENTERTAINMENT",
-      "iChance": 100,
-      "PlotCondition": [
-       {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_ENTERTAINMENT",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_ENTERTAINMENT",
+     "plot": {
+      "expr": {
+       "And": {
         "Greater": {
          "Python": "getNumNonSpecialistSlavesEntertainment",
          "Constant": 0
         },
         "Is": "TAG_OWNED"
        }
-      ],
-      "PythonCallback": "doAddSettledSlaveEntertainment"
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveEntertainment"
+    }
    },
    {
-    "MISSION_JOIN_CITY_AS_SLAVE_TUTOR": [
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_TUTOR",
+    "outcomes": [
      {
-      "OutcomeType": "OUTCOME_JOIN_AS_SLAVE_TUTOR",
-      "iChance": 100,
-      "PlotCondition": [
-       {
-        "Greater": {
-         "Python": "getNumNonSpecialistSlavesTutor",
-         "Constant": 0
-        },
-        "Is": "TAG_OWNED"
+      "requires": {
+       "outcome": "OUTCOME_JOIN_AS_SLAVE_TUTOR",
+       "plot": {
+        "expr": {
+         "And": {
+          "Greater": {
+           "Python": "getNumNonSpecialistSlavesTutor",
+           "Constant": 0
+          },
+          "Is": "TAG_OWNED"
+         }
+        }
        }
-      ],
-      "PythonCallback": "doAddSettledSlaveTutor"
+      },
+      "chance": 100,
+      "python": {
+       "callback": "doAddSettledSlaveTutor"
+      }
      },
      {
-      "OutcomeType": "OUTCOME_JOIN_AS_SLAVE_TUTOR_REPLACEMENT1",
-      "iChance": 100,
-      "PlotCondition": [
-       {
-        "Greater": {
-         "Python": "getNumNonSpecialistSlavesTutor",
-         "Constant": 0
-        },
-        "Is": "TAG_OWNED"
+      "requires": {
+       "outcome": "OUTCOME_JOIN_AS_SLAVE_TUTOR_REPLACEMENT1",
+       "plot": {
+        "expr": {
+         "And": {
+          "Greater": {
+           "Python": "getNumNonSpecialistSlavesTutor",
+           "Constant": 0
+          },
+          "Is": "TAG_OWNED"
+         }
+        }
        }
-      ],
-      "PythonCallback": "doAddSettledSlaveTutor"
+      },
+      "chance": 100,
+      "python": {
+       "callback": "doAddSettledSlaveTutor"
+      }
      }
     ]
    },
    {
-    "MISSION_JOIN_CITY_AS_SLAVE_MILITARY": [
-     {
-      "OutcomeType": "OUTCOME_JOIN_AS_SLAVE_MILITARY",
-      "iChance": 100,
-      "PlotCondition": [
-       {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_MILITARY",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_MILITARY",
+     "plot": {
+      "expr": {
+       "And": {
         "Greater": {
          "Python": "getNumNonSpecialistSlavesMilitary",
          "Constant": 0
         },
         "Is": "TAG_OWNED"
        }
-      ],
-      "PythonCallback": "doAddSettledSlaveMilitary"
+      }
+     }
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveMilitary"
+    }
+   },
+   {
+    "mission": "MISSION_SELL_CAPTIVE",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_SLAVE_SALE_SLAVERY",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "commerce": {
+       "expr": {
+        "Adapt": {
+         "Constant": 6
+        }
+       }
+      }
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_SLAVE_SALE_SLAVE_MARKET",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "commerce": {
+       "expr": {
+        "Adapt": {
+         "Constant": 12
+        }
+       }
+      }
      }
     ]
    },
    {
-    "MISSION_SELL_CAPTIVE": [
+    "mission": "MISSION_BUTCHER_HUMAN",
+    "outcomes": [
      {
-      "OutcomeType": "OUTCOME_SLAVE_SALE_SLAVERY",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Yields": [
-       0,
-       0,
-       [
-        [
-         6
-        ]
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "food": {
+       "expr": {
+        "Adapt": {
+         "Constant": 8
+        }
+       }
+      },
+      "production": {
+       "expr": {
+        "Adapt": {
+         "Constant": 2
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_SLAVE_SALE_SLAVE_MARKET",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Yields": [
-       0,
-       0,
-       [
-        [
-         12
-        ]
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "food": {
+       "expr": {
+        "Adapt": {
+         "Constant": 10
+        }
+       }
+      },
+      "production": {
+       "expr": {
+        "Adapt": {
+         "Constant": 4
+        }
+       }
+      }
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT1",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "food": {
+       "expr": {
+        "Adapt": {
+         "Constant": 10
+        }
+       }
+      },
+      "production": {
+       "expr": {
+        "Adapt": {
+         "Constant": 4
+        }
+       }
+      }
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT2",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "food": {
+       "expr": {
+        "Adapt": {
+         "Constant": 10
+        }
+       }
+      },
+      "production": {
+       "expr": {
+        "Adapt": {
+         "Constant": 4
+        }
+       }
+      }
      }
     ]
    },
    {
-    "MISSION_BUTCHER_HUMAN": [
+    "mission": "MISSION_SACRIFICE_CAPTIVE",
+    "outcomes": [
      {
-      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Yields": [
-       [
-        [
-         8
-        ]
-       ],
-       [
-        [
-         2
-        ]
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "happinessTimer": 1,
+      "culture": {
+       "expr": {
+        "Adapt": {
+         "Constant": 3
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Yields": [
-       [
-        [
-         10
-        ]
-       ],
-       [
-        [
-         4
-        ]
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE_ALTER_I",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "happinessTimer": 2,
+      "culture": {
+       "expr": {
+        "Adapt": {
+         "Constant": 6
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT1",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Yields": [
-       [
-        [
-         10
-        ]
-       ],
-       [
-        [
-         4
-        ]
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE_ALTER_II",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "happinessTimer": 3,
+      "culture": {
+       "expr": {
+        "Adapt": {
+         "Constant": 12
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT2",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Yields": [
-       [
-        [
-         10
-        ]
-       ],
-       [
-        [
-         4
-        ]
-       ]
-      ]
-     }
-    ]
-   },
-   {
-    "MISSION_SACRIFICE_CAPTIVE": [
-     {
-      "OutcomeType": "OUTCOME_SACRIFICE_CAPTIVE",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         3
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 1
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE_DRUID",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "happinessTimer": 2,
+      "culture": {
+       "expr": {
+        "Adapt": {
+         "Constant": 6
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_SACRIFICE_CAPTIVE_ALTER_I",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         6
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 2
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE_DRUID_ALTER_I",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "happinessTimer": 4,
+      "culture": {
+       "expr": {
+        "Adapt": {
+         "Constant": 12
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_SACRIFICE_CAPTIVE_ALTER_II",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         12
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 3
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE_DRUID_ALTER_II",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "happinessTimer": 6,
+      "culture": {
+       "expr": {
+        "Adapt": {
+         "Constant": 24
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_SACRIFICE_CAPTIVE_DRUID",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         6
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 2
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE_MESOAMERICAN",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "happinessTimer": 2,
+      "culture": {
+       "expr": {
+        "Adapt": {
+         "Constant": 6
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_SACRIFICE_CAPTIVE_DRUID_ALTER_I",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         12
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 4
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE_MESOAMERICAN_ALTER_I",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "happinessTimer": 4,
+      "culture": {
+       "expr": {
+        "Adapt": {
+         "Constant": 12
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_SACRIFICE_CAPTIVE_DRUID_ALTER_II",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         24
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 6
-     },
-     {
-      "OutcomeType": "OUTCOME_SACRIFICE_CAPTIVE_MESOAMERICAN",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         6
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 2
-     },
-     {
-      "OutcomeType": "OUTCOME_SACRIFICE_CAPTIVE_MESOAMERICAN_ALTER_I",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         12
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 4
-     },
-     {
-      "OutcomeType": "OUTCOME_SACRIFICE_CAPTIVE_MESOAMERICAN_ALTER_II",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Commerces": [
-       0,
-       0,
-       [
-        [
-         24
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 6
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE_MESOAMERICAN_ALTER_II",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "happinessTimer": 6,
+      "culture": {
+       "expr": {
+        "Adapt": {
+         "Constant": 24
+        }
+       }
+      }
      }
     ]
    }

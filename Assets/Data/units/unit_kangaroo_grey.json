@@ -61,63 +61,51 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
-    "iChance": 2,
-    "BonusType": "BONUS_KANGAROO",
-    "Yields": [
-     [
-      {
-       "Constant": 15,
-       "Random": 15
-      }
-     ],
-     [
-      {
-       "Constant": 2,
-       "Random": 3
-      }
-     ],
-     [
-      {
-       "Constant": 5,
-       "Random": 3
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_BONUS_SPAWNED"
+    },
+    "chance": 2,
+    "places": "BONUS_KANGAROO",
+    "food": {
+     "base": 15,
+     "random": 15
+    },
+    "production": {
+     "base": 2,
+     "random": 3
+    },
+    "commerce": {
+     "base": 5,
+     "random": 3
+    }
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 3,
-    "UnitType": "UNIT_SUBDUED_KANGAROO_GREY",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 3,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_KANGAROO_GREY",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 15,
-       "Random": 15
-      }
-     ],
-     [
-      {
-       "Constant": 2,
-       "Random": 3
-      }
-     ],
-     [
-      {
-       "Constant": 5,
-       "Random": 3
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 15,
+     "random": 15
+    },
+    "production": {
+     "base": 2,
+     "random": 3
+    },
+    "commerce": {
+     "base": 5,
+     "random": 3
+    }
    }
   ]
  },

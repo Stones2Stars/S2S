@@ -61,84 +61,65 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_TALES_SEA",
-    "iChance": 5,
-    "UnitType": "UNIT_TALESOF_GREATWHITE",
-    "bUnitToCity": [
-     1
-    ],
-    "Yields": [
-     [
-      {
-       "Constant": 80,
-       "Random": 20
-      }
-     ],
-     [
-      {
-       "Constant": 58,
-       "Random": 42
-      }
-     ],
-     [
-      {
-       "Constant": 20,
-       "Random": 20
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_TALESOF_GREATWHITE",
+     "toCity": true
+    },
+    "food": {
+     "base": 80,
+     "random": 20
+    },
+    "production": {
+     "base": 58,
+     "random": 42
+    },
+    "commerce": {
+     "base": 20,
+     "random": 20
+    }
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE_SEA_LARGE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_GREATWHITE",
-    "bUnitToCity": [
-     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
-    ],
-    "Yields": [
-     [
-      {
-       "Constant": 80,
-       "Random": 20
-      }
-     ],
-     [
-      {
-       "Constant": 58,
-       "Random": 42
-      }
-     ],
-     [
-      {
-       "Constant": 20,
-       "Random": 20
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_LARGE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_GREATWHITE"
+    },
+    "food": {
+     "base": 80,
+     "random": 20
+    },
+    "production": {
+     "base": 58,
+     "random": 42
+    },
+    "commerce": {
+     "base": 20,
+     "random": 20
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 90,
-    "Yields": [
-     [
-      {
-       "Constant": 80,
-       "Random": 20
-      }
-     ],
-     [
-      {
-       "Constant": 58,
-       "Random": 42
-      }
-     ],
-     [
-      {
-       "Constant": 20,
-       "Random": 20
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 90,
+    "food": {
+     "base": 80,
+     "random": 20
+    },
+    "production": {
+     "base": 58,
+     "random": 42
+    },
+    "commerce": {
+     "base": 20,
+     "random": 20
+    }
    }
   ]
  },

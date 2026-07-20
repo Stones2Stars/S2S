@@ -73,64 +73,53 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_TALES_SEA",
-    "iChance": 5,
-    "UnitType": "UNIT_TALESOF_REEF_SHARK",
-    "bUnitToCity": [
-     1
-    ],
-    "Yields": [
-     [
-      {
-       "Constant": 5,
-       "Random": 25
-      }
-     ],
-     [
-      {
-       "Constant": 1,
-       "Random": 6
-      }
-     ],
-     [
-      {
-       "Constant": 2,
-       "Random": 8
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_TALESOF_REEF_SHARK",
+     "toCity": true
+    },
+    "food": {
+     "base": 5,
+     "random": 25
+    },
+    "production": {
+     "base": 1,
+     "random": 6
+    },
+    "commerce": {
+     "base": 2,
+     "random": 8
+    }
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE_SEA_LARGE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_REEF_SHARK",
-    "bUnitToCity": [
-     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_LARGE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_REEF_SHARK"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 90,
-    "Yields": [
-     [
-      {
-       "Constant": 5,
-       "Random": 25
-      }
-     ],
-     [
-      {
-       "Constant": 1,
-       "Random": 6
-      }
-     ],
-     [
-      {
-       "Constant": 2,
-       "Random": 12
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 90,
+    "food": {
+     "base": 5,
+     "random": 25
+    },
+    "production": {
+     "base": 1,
+     "random": 6
+    },
+    "commerce": {
+     "base": 2,
+     "random": 12
+    }
    }
   ]
  },

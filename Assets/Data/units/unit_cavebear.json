@@ -51,38 +51,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_CAVEBEAR",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_CAVEBEAR",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 200,
-       "Random": 300
-      }
-     ],
-     [
-      {
-       "Constant": 20,
-       "Random": 30
-      }
-     ],
-     [
-      {
-       "Constant": 20,
-       "Random": 12
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 200,
+     "random": 300
+    },
+    "production": {
+     "base": 20,
+     "random": 30
+    },
+    "commerce": {
+     "base": 20,
+     "random": 12
+    }
    }
   ]
  },

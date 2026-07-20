@@ -34,32 +34,23 @@
  "outcomes": {
   "actions": [
    {
-    "MISSION_SLAY_ANIMAL": [
-     {
-      "OutcomeType": "OUTCOME_SLAY_ANIMAL",
-      "iChance": 100,
-      "Yields": [
-       [
-        {
-         "Constant": 15,
-         "Random": 185
-        }
-       ],
-       [
-        {
-         "Constant": 2,
-         "Random": 70
-        }
-       ],
-       [
-        {
-         "Constant": 5,
-         "Random": 18
-        }
-       ]
-      ]
-     }
-    ]
+    "mission": "MISSION_SLAY_ANIMAL",
+    "requires": {
+     "outcome": "OUTCOME_SLAY_ANIMAL"
+    },
+    "chance": 100,
+    "food": {
+     "base": 15,
+     "random": 185
+    },
+    "production": {
+     "base": 2,
+     "random": 70
+    },
+    "commerce": {
+     "base": 5,
+     "random": 18
+    }
    }
   ]
  },

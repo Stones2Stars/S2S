@@ -62,38 +62,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_CHEETAH",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_CHEETAH",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 10,
-       "Random": 26
-      }
-     ],
-     [
-      {
-       "Constant": 1,
-       "Random": 2
-      }
-     ],
-     [
-      {
-       "Constant": 25,
-       "Random": 64
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 10,
+     "random": 26
+    },
+    "production": {
+     "base": 1,
+     "random": 2
+    },
+    "commerce": {
+     "base": 25,
+     "random": 64
+    }
    }
   ]
  },

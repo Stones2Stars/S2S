@@ -66,38 +66,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_GEMSBOK",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_GEMSBOK",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 40,
-       "Random": 60
-      }
-     ],
-     [
-      {
-       "Constant": 6,
-       "Random": 8
-      }
-     ],
-     [
-      {
-       "Constant": 6,
-       "Random": 6
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 40,
+     "random": 60
+    },
+    "production": {
+     "base": 6,
+     "random": 8
+    },
+    "commerce": {
+     "base": 6,
+     "random": 6
+    }
    }
   ]
  },

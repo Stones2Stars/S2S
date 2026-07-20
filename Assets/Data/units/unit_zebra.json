@@ -61,38 +61,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_ZEBRA",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_ZEBRA",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 90,
-       "Random": 110
-      }
-     ],
-     [
-      {
-       "Constant": 11,
-       "Random": 14
-      }
-     ],
-     [
-      {
-       "Constant": 7,
-       "Random": 5
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 90,
+     "random": 110
+    },
+    "production": {
+     "base": 11,
+     "random": 14
+    },
+    "commerce": {
+     "base": 7,
+     "random": 5
+    }
    }
   ]
  },

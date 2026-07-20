@@ -207,20 +207,18 @@
  "outcomes": {
   "actions": [
    {
-    "MISSION_HURRY_PRODUCTION_CARAVAN": [
-     {
-      "OutcomeType": "OUTCOME_HURRY_PRODUCTION_CARAVAN",
-      "iChance": 100,
-      "Yields": [
-       0,
-       [
-        [
-         72
-        ]
-       ]
-      ]
+    "mission": "MISSION_HURRY_PRODUCTION_CARAVAN",
+    "requires": {
+     "outcome": "OUTCOME_HURRY_PRODUCTION_CARAVAN"
+    },
+    "chance": 100,
+    "production": {
+     "expr": {
+      "AdaptHammerCost": {
+       "Constant": 72
+      }
      }
-    ]
+    }
    }
   ]
  },

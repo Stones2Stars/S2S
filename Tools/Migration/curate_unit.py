@@ -17,7 +17,7 @@ THE BASE/DEPOSIT SPLIT (owner §0.6 + ranking #34: "base -> identity, deltas are
 PASS 1 (this file): identity.base + the §5 scalar families + requires.build + store enables/obsoletes + cost
 (+iInstanceCostModifier -> costs.empire.perInstance per:{SELF}) + grants + succession (upgradesTo) + capabilities + ai +
 COVERAGE CHECK. PASS 2 (deferred, shows as UNHANDLED): vs-keyed combat (Terrain/Feature/UnitCombat/Domain/Unit mods),
-the vision/LOS resolver, KillOutcomes/Actions -> `outcomes` (faithful, like UnitCombat; defs = CvOutcome Tier-G),
+the vision/LOS resolver, KillOutcomes/Actions -> `outcomes` (the clean VERB-PER-PAYLOAD vocabulary, emit_outcomes),
 GP-action magnitudes (discover/hurry/trade/greatWork -> grants/outcomes), PropertyManipulators, BonusProductionModifiers.
 
 SpecialUnit #33 (curate_special_unit): cargo-load rules (bValid/bCityLoad/bSMLoadSame) + any combat deposits onto the
@@ -484,6 +484,256 @@ def _pairs(node):
             yield key, val
 
 
+# ============================================================================
+# OUTCOME / ACTION emission -- the VERB-PER-PAYLOAD vocabulary (owner-approved).
+# Re-models KillOutcomes + Actions/Action from the raw XML mirror into a clean
+# {kill:[...], actions:[...]} where each outcome is {requires?, chance?, <verb payloads>}.
+# DATA-SHAPE ONLY: the CvOutcome ENGINE stays XML and does NOT read this block yet.
+# Field inventory is the LIVE data (probed): every CvOutcome::read() field is mapped;
+# anything that cannot map cleanly is emitted under a clearly-FLAGGED key + reported
+# (silent loss is the anti-pattern this rework kills).
+# ============================================================================
+# Aggregated FLAG ledger (category -> [count, {sample unit types}]); printed by main().
+_FLAGS = {}
+
+
+def _flag(cat, typ):
+    e = _FLAGS.setdefault(cat, [0, set()])
+    e[0] += 1
+    if len(e[1]) < 8:
+        e[1].add(typ)
+
+
+def _raw(node):
+    """TAG-PRESERVING faithful dump (unlike engine.generic, which de-asses uniform lists and DROPS the
+    operator name). Used only for the flagged `expr`/`_unmapped` escape hatches so no structure is lost."""
+    kids = list(node)
+    if not kids:
+        t = engine.text(node)
+        return int(t) if engine.is_int(t) else (t or None)
+    out = OrderedDict()
+    for k in kids:
+        v = _raw(k)
+        if k.tag in out:
+            if not isinstance(out[k.tag], list):
+                out[k.tag] = [out[k.tag]]
+            out[k.tag].append(v)
+        else:
+            out[k.tag] = v
+    return out
+
+
+def _intexpr(elem, typ):
+    """A CvOutcome IntExpr element (iChance / an iYield|iCommerce item / iReduceAnarchyLength) ->
+    a clean int  |  {base, random}  |  {expr:<raw>} (FLAGGED). Per the approved handling:
+    bare Constant -> int; Plus{Constant[,Random]} -> base(+random); any richer node
+    (Adapt/AdaptUnitYield/AdaptHammerCost/Mult/Property/Python) -> structured expr + flag."""
+    if elem is None:
+        return None
+    kids = list(elem)
+    if not kids:
+        t = engine.text(elem)
+        return int(t) if engine.is_int(t) else None
+    if len(kids) == 1 and kids[0].tag == "Plus":
+        p = kids[0]
+        if set(c.tag for c in p) <= {"Constant", "Random"}:
+            c = engine.text(p.find("Constant")) if p.find("Constant") is not None else ""
+            r = engine.text(p.find("Random")) if p.find("Random") is not None else ""
+            c = int(c) if engine.is_int(c) else 0
+            r = int(r) if engine.is_int(r) else 0
+            return OrderedDict([("base", c), ("random", r)]) if r else c
+    _flag("intexpr_richer:%s" % kids[0].tag, typ)
+    return OrderedDict([("expr", _raw(elem))])
+
+
+def _condition(elem, typ, ctx):
+    """A CvOutcome BoolExpr wrapper (bUnitToCity / PlotCondition / UnitCondition) -> bool | clean
+    condition (via the shared boolexpr converter; e.g. Has GOM_TECH -> a tech requirement) |
+    {expr:<raw>} (FLAGGED when the converter cannot map it -- e.g. Is/IntegrateOr/Greater plot preds)."""
+    if elem is None:
+        return None
+    kids = list(elem)
+    if not kids:
+        return None
+    if len(kids) == 1 and kids[0].tag == "Constant":   # a BoolExpr literal -> plain bool
+        t = engine.text(kids[0])
+        return bool(int(t)) if engine.is_int(t) else None
+    try:
+        return boolexpr.convert_field(elem)
+    except ValueError:
+        _flag("boolexpr_richer:%s" % ctx, typ)
+        return OrderedDict([("expr", _raw(elem))])
+
+
+# outcome child tags this emitter consumes -- anything else on an <Outcome> is FLAGGED as _unmapped.
+_OC_HANDLED = {
+    "OutcomeType", "iChance", "iChancePerPop", "UnitType", "bUnitToCity", "PromotionType", "BonusType",
+    "iGPP", "GPUnitType", "iHappinessTimer", "iPopulationBoost", "iReduceAnarchyLength", "EventTrigger",
+    "PythonCallback", "PythonName", "Python", "bKill", "Yields", "Commerces", "PlotCondition",
+    "UnitCondition", "Properties",
+}
+# key order for a rendered outcome payload (meta first, then verbs).
+_OC_ORDER = ["requires", "chance", "chancePerPop", "consumes", "spawns", "promotes", "places",
+             "greatPeople", "triggers", "population", "revolution", "happinessTimer",
+             "food", "production", "commerce", "gold", "research", "culture", "espionage",
+             "properties", "python"]
+
+
+def _outcome_payload(oc, typ):
+    """One <Outcome> -> {requires?, chance?, <verb payloads>}. The OUTCOME_* id + plot/unit gates fold
+    into `requires` (the gate/tier). Every CvOutcome::read() field is mapped or flag-emitted."""
+    p = OrderedDict()
+    # requires: the OUTCOME_* id (gate/tier) + plot/unit BoolExpr gates
+    req = OrderedDict()
+    ot = _txt(oc, "OutcomeType")
+    if ot:
+        req["outcome"] = ot
+    plot = _condition(oc.find("PlotCondition"), typ, "plot")
+    if plot is not None:
+        req["plot"] = plot
+    ucond = _condition(oc.find("UnitCondition"), typ, "unit")
+    if ucond is not None:
+        req["unit"] = ucond
+    if req:
+        p["requires"] = req
+    # META: chance (+ the rarer per-pop scaler, no approved verb -> flagged clean key)
+    ch = _intexpr(oc.find("iChance"), typ)
+    if ch is not None:
+        p["chance"] = ch
+    cpp = _int(oc, "iChancePerPop")
+    if cpp:
+        p["chancePerPop"] = cpp
+        _flag("field_no_verb:iChancePerPop->chancePerPop", typ)
+    # consumes (bKill)
+    if _bool(oc, "bKill"):
+        p["consumes"] = True
+    # spawns {unit, toCity?}
+    u = _txt(oc, "UnitType")
+    if u:
+        sp = OrderedDict([("unit", u)])
+        tc = _condition(oc.find("bUnitToCity"), typ, "toCity")
+        if tc is True:
+            sp["toCity"] = True
+        elif tc not in (None, False):
+            sp["toCity"] = tc          # conditional to-city (e.g. a tech requirement)
+        p["spawns"] = sp
+    # promotes / places
+    pr = _txt(oc, "PromotionType")
+    if pr:
+        p["promotes"] = pr
+    bo = _txt(oc, "BonusType")
+    if bo:
+        p["places"] = bo
+    # greatPeople {points, unit?}
+    gpp = _int(oc, "iGPP")
+    gpu = _txt(oc, "GPUnitType")
+    if gpp or gpu:
+        gp = OrderedDict()
+        if gpp:
+            gp["points"] = gpp
+        if gpu:
+            gp["unit"] = gpu
+        p["greatPeople"] = gp
+    # triggers (event) / population / revolution (reduceAnarchyLength)
+    ev = _txt(oc, "EventTrigger")
+    if ev:
+        p["triggers"] = ev
+    pb = _int(oc, "iPopulationBoost")
+    if pb:
+        p["population"] = pb
+    ral = _intexpr(oc.find("iReduceAnarchyLength"), typ)
+    if ral:
+        p["revolution"] = ral
+    # iHappinessTimer: NO approved verb -> clean flagged key (common in the data; reported, never dropped)
+    ht = _int(oc, "iHappinessTimer")
+    if ht:
+        p["happinessTimer"] = ht
+        _flag("field_no_verb:iHappinessTimer->happinessTimer", typ)
+    # Yields (index -> food/production/commerce) + Commerces (index -> gold/research/culture/espionage)
+    for tag, names in (("Yields", engine.YIELDS), ("Commerces", engine.COMMERCES)):
+        node = oc.find(tag)
+        if node is None:
+            continue
+        for i, item in enumerate(list(node)):
+            if i >= len(names):
+                _flag("extra_index:%s" % tag, typ)
+                continue
+            v = _intexpr(item, typ)
+            if v not in (None, 0):
+                p[names[i]] = v
+    # Properties (CvProperties block; absent in unit data -> defensive raw+flag)
+    props = oc.find("Properties")
+    if props is not None and list(props):
+        pp = OrderedDict()
+        for c in props:
+            k = _txt(c, "PropertyType")
+            val = next((int(engine.text(cc)) for cc in c if cc.tag != "PropertyType" and engine.is_int(engine.text(cc))), None)
+            if k:
+                pp[k] = val
+        p["properties"] = pp or OrderedDict([("expr", _raw(props))])
+        _flag("properties_block", typ)
+    # Python escape hatch (callback / module / code) -> preserved + flagged
+    py = OrderedDict()
+    for tag, key in (("PythonCallback", "callback"), ("PythonName", "module"), ("Python", "code")):
+        t = _txt(oc, tag)
+        if t:
+            py[key] = t
+    if py:
+        p["python"] = py
+        _flag("python_escape", typ)
+    # LEFTOVER detection: any unconsumed <Outcome> child -> _unmapped + flag (no silent loss)
+    for c in oc:
+        if c.tag not in _OC_HANDLED:
+            p.setdefault("_unmapped", OrderedDict())[c.tag] = _raw(c)
+            _flag("unmapped_outcome_tag:%s" % c.tag, typ)
+    ordered = OrderedDict((k, p[k]) for k in _OC_ORDER if k in p)
+    for k in p:
+        if k not in ordered:
+            ordered[k] = p[k]
+    return ordered
+
+
+def emit_outcomes(typ, rec):
+    """KillOutcomes -> `kill` (array of outcome payloads); Actions/Action -> `actions` (array of
+    {mission, requires?, chance?, <verb payloads>} -- the {MISSION_X:[...]} nesting flattened to a
+    `mission` key). A single ActionOutcomes/Outcome merges onto the action; multiple -> `outcomes:[...]`."""
+    out = OrderedDict()
+    ko = rec.find("KillOutcomes")
+    if ko is not None:
+        kills = [_outcome_payload(oc, typ) for oc in ko.findall("Outcome")]
+        if kills:
+            out["kill"] = kills
+    acts = rec.find("Actions")
+    if acts is not None:
+        arr = []
+        for a in acts.findall("Action"):
+            ao = OrderedDict()
+            m = _txt(a, "MissionType")
+            if m:
+                ao["mission"] = m
+            if _bool(a, "bKill"):                 # Action-level: performing the mission kills the unit
+                ao["consumes"] = True
+            ic = _int(a, "iCost")                 # Action-level cost (no approved verb -> flagged clean key)
+            if ic is not None and ic != 0:
+                ao["cost"] = ic
+                _flag("action_field_no_verb:iCost->cost", typ)
+            for c in a:                           # action-level leftover tags -> _unmapped + flag
+                if c.tag not in ("MissionType", "ActionOutcomes", "bKill", "iCost"):
+                    ao.setdefault("_unmapped", OrderedDict())[c.tag] = _raw(c)
+                    _flag("unmapped_action_tag:%s" % c.tag, typ)
+            aon = a.find("ActionOutcomes")
+            payloads = [_outcome_payload(oc, typ) for oc in aon.findall("Outcome")] if aon is not None else []
+            if len(payloads) == 1:
+                for k, v in payloads[0].items():
+                    ao[k] = v
+            elif len(payloads) > 1:
+                ao["outcomes"] = payloads
+            arr.append(ao)
+        if arr:
+            out["actions"] = arr
+    return out or None
+
+
 def pass2(typ, rec, store, fams, caps, grants, vision, identity):
     """vs-keyed combat, vision/LOS, outcomes, GP-action grants, properties, BonusProductionModifiers, cargo."""
     su = fams.setdefault  # noqa
@@ -540,14 +790,11 @@ def pass2(typ, rec, store, fams, caps, grants, vision, identity):
                 rows.append(row)
         if rows:
             vision[name] = rows
-    # outcomes (KillOutcomes / Actions) -> faithful (CvOutcome system; defs = CvOutcome Tier-G)
-    outcomes = OrderedDict()
-    for tag, key in (("KillOutcomes", "kill"), ("Actions", "actions")):
-        node = rec.find(tag)
-        if node is not None and list(node):
-            outcomes[key] = engine.generic(node)
-    if outcomes:
-        identity["_outcomes"] = outcomes   # placed under a top-level `outcomes` in curate()
+    # outcomes (KillOutcomes / Actions) -> the clean VERB-PER-PAYLOAD vocabulary (owner-approved; emit_outcomes
+    # above). DATA-SHAPE ONLY -- the CvOutcome ENGINE stays XML and does NOT read this block yet.
+    oc = emit_outcomes(typ, rec)
+    if oc:
+        identity["_outcomes"] = oc   # placed under a top-level `outcomes` in curate()
     # GP-action grants (one-time great-person action magnitudes)
     gp = OrderedDict()
     for act, (base_tag, mult_tag) in GP_ACTIONS.items():
@@ -955,6 +1202,12 @@ def main():
         print("UNHANDLED tags (count): %s" % ", ".join("%s=%d" % (t, c) for t, c in leftover.most_common()))
     else:
         print("COVERAGE: all XML tags handled or deferred (pass 2).")
+
+    if _FLAGS:
+        print("\nOUTCOME/ACTION FLAGGED (emitted under a flagged key -- NOT dropped):")
+        for cat in sorted(_FLAGS):
+            cnt, samp = _FLAGS[cat]
+            print("  %-45s %6d  e.g. %s" % (cat, cnt, ", ".join(sorted(samp)[:3])))
 
     has = lambda k: sum(1 for o in results.values() if k in o)
     STRUCT = {"type", "description", "civilopedia", "help", "enables", "obsoletes", "requires", "allowed", "skills", "tags",

@@ -65,63 +65,51 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
-    "iChance": 2,
-    "BonusType": "BONUS_SEA_LION_AND_SEAL",
-    "Yields": [
-     [
-      {
-       "Constant": 20,
-       "Random": 80
-      }
-     ],
-     [
-      {
-       "Constant": 5,
-       "Random": 20
-      }
-     ],
-     [
-      {
-       "Constant": 8,
-       "Random": 10
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_BONUS_SPAWNED"
+    },
+    "chance": 2,
+    "places": "BONUS_SEA_LION_AND_SEAL",
+    "food": {
+     "base": 20,
+     "random": 80
+    },
+    "production": {
+     "base": 5,
+     "random": 20
+    },
+    "commerce": {
+     "base": 8,
+     "random": 10
+    }
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 3,
-    "UnitType": "UNIT_SUBDUED_SEALION_LAND",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 3,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_SEALION_LAND",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 20,
-       "Random": 80
-      }
-     ],
-     [
-      {
-       "Constant": 5,
-       "Random": 20
-      }
-     ],
-     [
-      {
-       "Constant": 3,
-       "Random": 2
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 20,
+     "random": 80
+    },
+    "production": {
+     "base": 5,
+     "random": 20
+    },
+    "commerce": {
+     "base": 3,
+     "random": 2
+    }
    }
   ]
  },

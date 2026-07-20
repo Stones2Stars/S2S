@@ -27,129 +27,131 @@
  "outcomes": {
   "actions": [
    {
-    "MISSION_SLAY_ANIMAL": [
-     {
-      "OutcomeType": "OUTCOME_SLAY_ANIMAL",
-      "iChance": 100,
-      "Yields": [
-       [
-        {
-         "Constant": 200,
-         "Random": 200
-        }
-       ],
-       [
-        {
-         "Constant": 2,
-         "Random": 24
-        }
-       ],
-       [
-        {
-         "Constant": 5,
-         "Random": 5
-        }
-       ]
-      ]
-     }
-    ]
+    "mission": "MISSION_SLAY_ANIMAL",
+    "requires": {
+     "outcome": "OUTCOME_SLAY_ANIMAL"
+    },
+    "chance": 100,
+    "food": {
+     "base": 200,
+     "random": 200
+    },
+    "production": {
+     "base": 2,
+     "random": 24
+    },
+    "commerce": {
+     "base": 5,
+     "random": 5
+    }
    },
    {
-    "MISSION_ANIMAL_COMBAT": [
+    "mission": "MISSION_ANIMAL_COMBAT",
+    "outcomes": [
      {
-      "OutcomeType": "OUTCOME_ANIMAL_COMBAT1",
-      "iChance": 100,
-      "Commerces": [
-       [
-        [
-         1
-        ]
-       ],
-       0,
-       [
-        [
-         5
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 5
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT1"
+      },
+      "chance": 100,
+      "happinessTimer": 5,
+      "gold": {
+       "expr": {
+        "AdaptUnitYield": {
+         "Constant": 1
+        }
+       }
+      },
+      "culture": {
+       "expr": {
+        "AdaptUnitYield": {
+         "Constant": 5
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_ANIMAL_COMBAT2",
-      "iChance": 100,
-      "Commerces": [
-       [
-        [
-         2
-        ]
-       ],
-       0,
-       [
-        [
-         5
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 5
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT2"
+      },
+      "chance": 100,
+      "happinessTimer": 5,
+      "gold": {
+       "expr": {
+        "AdaptUnitYield": {
+         "Constant": 2
+        }
+       }
+      },
+      "culture": {
+       "expr": {
+        "AdaptUnitYield": {
+         "Constant": 5
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_ANIMAL_COMBAT3",
-      "iChance": 100,
-      "Commerces": [
-       [
-        [
-         3
-        ]
-       ],
-       0,
-       [
-        [
-         5
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 5
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT3"
+      },
+      "chance": 100,
+      "happinessTimer": 5,
+      "gold": {
+       "expr": {
+        "AdaptUnitYield": {
+         "Constant": 3
+        }
+       }
+      },
+      "culture": {
+       "expr": {
+        "AdaptUnitYield": {
+         "Constant": 5
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_ANIMAL_COMBAT4",
-      "iChance": 100,
-      "Commerces": [
-       [
-        [
-         4
-        ]
-       ],
-       0,
-       [
-        [
-         5
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 5
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT4"
+      },
+      "chance": 100,
+      "happinessTimer": 5,
+      "gold": {
+       "expr": {
+        "AdaptUnitYield": {
+         "Constant": 4
+        }
+       }
+      },
+      "culture": {
+       "expr": {
+        "AdaptUnitYield": {
+         "Constant": 5
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_ANIMAL_COMBAT5",
-      "iChance": 100,
-      "Commerces": [
-       [
-        [
-         5
-        ]
-       ],
-       0,
-       [
-        [
-         5
-        ]
-       ],
-       0
-      ],
-      "iHappinessTimer": 5
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT5"
+      },
+      "chance": 100,
+      "happinessTimer": 5,
+      "gold": {
+       "expr": {
+        "AdaptUnitYield": {
+         "Constant": 5
+        }
+       }
+      },
+      "culture": {
+       "expr": {
+        "AdaptUnitYield": {
+         "Constant": 5
+        }
+       }
+      }
      }
     ]
    }

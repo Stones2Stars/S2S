@@ -49,64 +49,53 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_TALES_SEA",
-    "iChance": 5,
-    "UnitType": "UNIT_TALESOF_GIANT_SQUID",
-    "bUnitToCity": [
-     1
-    ],
-    "Yields": [
-     [
-      {
-       "Constant": 50,
-       "Random": 50
-      }
-     ],
-     [
-      {
-       "Constant": 1,
-       "Random": 1
-      }
-     ],
-     [
-      {
-       "Constant": 5,
-       "Random": 2
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_TALESOF_GIANT_SQUID",
+     "toCity": true
+    },
+    "food": {
+     "base": 50,
+     "random": 50
+    },
+    "production": {
+     "base": 1,
+     "random": 1
+    },
+    "commerce": {
+     "base": 5,
+     "random": 2
+    }
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE_SEA_LARGE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_GIANT_SQUID",
-    "bUnitToCity": [
-     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_LARGE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_GIANT_SQUID"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 90,
-    "Yields": [
-     [
-      {
-       "Constant": 50,
-       "Random": 50
-      }
-     ],
-     [
-      {
-       "Constant": 1,
-       "Random": 1
-      }
-     ],
-     [
-      {
-       "Constant": 5,
-       "Random": 2
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 90,
+    "food": {
+     "base": 50,
+     "random": 50
+    },
+    "production": {
+     "base": 1,
+     "random": 1
+    },
+    "commerce": {
+     "base": 5,
+     "random": 2
+    }
    }
   ]
  },

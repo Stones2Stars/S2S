@@ -64,38 +64,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_ELASMOTHERIUM",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_ELASMOTHERIUM",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 500,
-       "Random": 500
-      }
-     ],
-     [
-      {
-       "Constant": 200,
-       "Random": 150
-      }
-     ],
-     [
-      {
-       "Constant": 32,
-       "Random": 16
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 500,
+     "random": 500
+    },
+    "production": {
+     "base": 200,
+     "random": 150
+    },
+    "commerce": {
+     "base": 32,
+     "random": 16
+    }
    }
   ]
  },

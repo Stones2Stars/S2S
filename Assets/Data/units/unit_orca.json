@@ -69,64 +69,53 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_TALES_SEA",
-    "iChance": 5,
-    "UnitType": "UNIT_TALESOF_ORCA",
-    "bUnitToCity": [
-     1
-    ],
-    "Yields": [
-     [
-      {
-       "Constant": 2000,
-       "Random": 2000
-      }
-     ],
-     [
-      {
-       "Constant": 300,
-       "Random": 300
-      }
-     ],
-     [
-      {
-       "Constant": 100,
-       "Random": 30
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_TALESOF_ORCA",
+     "toCity": true
+    },
+    "food": {
+     "base": 2000,
+     "random": 2000
+    },
+    "production": {
+     "base": 300,
+     "random": 300
+    },
+    "commerce": {
+     "base": 100,
+     "random": 30
+    }
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE_SEA_LARGE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_ORCA",
-    "bUnitToCity": [
-     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_LARGE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_ORCA"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 90,
-    "Yields": [
-     [
-      {
-       "Constant": 2000,
-       "Random": 2000
-      }
-     ],
-     [
-      {
-       "Constant": 300,
-       "Random": 300
-      }
-     ],
-     [
-      {
-       "Constant": 100,
-       "Random": 30
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 90,
+    "food": {
+     "base": 2000,
+     "random": 2000
+    },
+    "production": {
+     "base": 300,
+     "random": 300
+    },
+    "commerce": {
+     "base": 100,
+     "random": 30
+    }
    }
   ]
  },

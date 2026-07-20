@@ -50,43 +50,39 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
-    "iChance": 2,
-    "BonusType": "BONUS_POULTRY",
-    "Yields": [
-     [
-      {
-       "Constant": 1,
-       "Random": 1
-      }
-     ],
-     1,
-     5
-    ]
+    "requires": {
+     "outcome": "OUTCOME_BONUS_SPAWNED"
+    },
+    "chance": 2,
+    "places": "BONUS_POULTRY",
+    "food": {
+     "base": 1,
+     "random": 1
+    },
+    "production": 1,
+    "commerce": 5
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 3,
-    "UnitType": "UNIT_SUBDUED_PEACOCK",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 3,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_PEACOCK",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 1,
-       "Random": 1
-      }
-     ],
-     1,
-     6
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 1,
+     "random": 1
+    },
+    "production": 1,
+    "commerce": 6
    }
   ]
  },

@@ -48,38 +48,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_PYGMYHIPPO",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_PYGMYHIPPO",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 60,
-       "Random": 40
-      }
-     ],
-     [
-      {
-       "Constant": 12,
-       "Random": 5
-      }
-     ],
-     [
-      {
-       "Constant": 5,
-       "Random": 4
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 60,
+     "random": 40
+    },
+    "production": {
+     "base": 12,
+     "random": 5
+    },
+    "commerce": {
+     "base": 5,
+     "random": 4
+    }
    }
   ]
  },

@@ -78,44 +78,42 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
-    "iChance": 2,
-    "BonusType": "BONUS_FISH",
-    "Yields": [
-     5,
-     0,
-     2
-    ]
+    "requires": {
+     "outcome": "OUTCOME_BONUS_SPAWNED"
+    },
+    "chance": 2,
+    "places": "BONUS_FISH",
+    "food": 5,
+    "commerce": 2
    },
    {
-    "OutcomeType": "OUTCOME_TALES_SEA",
-    "iChance": 8,
-    "UnitType": "UNIT_TALESOF_COD",
-    "bUnitToCity": [
-     1
-    ],
-    "Yields": [
-     5,
-     0,
-     2
-    ]
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 8,
+    "spawns": {
+     "unit": "UNIT_TALESOF_COD",
+     "toCity": true
+    },
+    "food": 5,
+    "commerce": 2
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE_SEA_SMALL",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_COD",
-    "bUnitToCity": [
-     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_SMALL"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_COD"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 90,
-    "Yields": [
-     5,
-     0,
-     2
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 90,
+    "food": 5,
+    "commerce": 2
    }
   ]
  },

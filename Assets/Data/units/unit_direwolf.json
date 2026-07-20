@@ -63,38 +63,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_DIREWOLF",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_DIREWOLF",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 25,
-       "Random": 15
-      }
-     ],
-     [
-      {
-       "Constant": 2,
-       "Random": 1
-      }
-     ],
-     [
-      {
-       "Constant": 7,
-       "Random": 7
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 25,
+     "random": 15
+    },
+    "production": {
+     "base": 2,
+     "random": 1
+    },
+    "commerce": {
+     "base": 7,
+     "random": 7
+    }
    }
   ]
  },

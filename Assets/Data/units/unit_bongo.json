@@ -63,38 +63,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_BONGO",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_BONGO",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 75,
-       "Random": 50
-      }
-     ],
-     [
-      {
-       "Constant": 7,
-       "Random": 5
-      }
-     ],
-     [
-      {
-       "Constant": 7,
-       "Random": 6
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 75,
+     "random": 50
+    },
+    "production": {
+     "base": 7,
+     "random": 5
+    },
+    "commerce": {
+     "base": 7,
+     "random": 6
+    }
    }
   ]
  },

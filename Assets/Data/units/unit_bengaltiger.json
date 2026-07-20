@@ -70,38 +70,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_BENGALTIGER",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_BENGALTIGER",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 45,
-       "Random": 85
-      }
-     ],
-     [
-      {
-       "Constant": 4,
-       "Random": 9
-      }
-     ],
-     [
-      {
-       "Constant": 82,
-       "Random": 125
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 45,
+     "random": 85
+    },
+    "production": {
+     "base": 4,
+     "random": 9
+    },
+    "commerce": {
+     "base": 82,
+     "random": 125
+    }
    }
   ]
  },

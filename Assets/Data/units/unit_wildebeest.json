@@ -73,38 +73,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_WILDEBEEST",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_WILDEBEEST",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 60,
-       "Random": 100
-      }
-     ],
-     [
-      {
-       "Constant": 6,
-       "Random": 11
-      }
-     ],
-     [
-      {
-       "Constant": 8,
-       "Random": 8
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 60,
+     "random": 100
+    },
+    "production": {
+     "base": 6,
+     "random": 11
+    },
+    "commerce": {
+     "base": 8,
+     "random": 8
+    }
    }
   ]
  },

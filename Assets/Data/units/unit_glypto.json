@@ -52,38 +52,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_GLYPTO",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_GLYPTO",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 250,
-       "Random": 250
-      }
-     ],
-     [
-      {
-       "Constant": 15,
-       "Random": 15
-      }
-     ],
-     [
-      {
-       "Constant": 22,
-       "Random": 12
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 250,
+     "random": 250
+    },
+    "production": {
+     "base": 15,
+     "random": 15
+    },
+    "commerce": {
+     "base": 22,
+     "random": 12
+    }
    }
   ]
  },

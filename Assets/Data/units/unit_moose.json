@@ -45,38 +45,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_MOOSE",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_MOOSE",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 180,
-       "Random": 160
-      }
-     ],
-     [
-      {
-       "Constant": 20,
-       "Random": 16
-      }
-     ],
-     [
-      {
-       "Constant": 10,
-       "Random": 8
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 180,
+     "random": 160
+    },
+    "production": {
+     "base": 20,
+     "random": 16
+    },
+    "commerce": {
+     "base": 10,
+     "random": 8
+    }
    }
   ]
  },

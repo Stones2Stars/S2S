@@ -37,16 +37,19 @@
  "outcomes": {
   "actions": [
    {
-    "MISSION_REMOVE_WV_SLAVERY": [
-     {
-      "OutcomeType": "OUTCOME_REMOVE_WV_SLAVERY",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "PythonCallback": "doRemoveWVSlavery"
+    "mission": "MISSION_REMOVE_WV_SLAVERY",
+    "requires": {
+     "outcome": "OUTCOME_REMOVE_WV_SLAVERY",
+     "plot": {
+      "expr": {
+       "Is": "TAG_OWNED"
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doRemoveWVSlavery"
+    }
    }
   ]
  },

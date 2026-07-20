@@ -58,38 +58,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_MUSKOX",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_MUSKOX",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 90,
-       "Random": 110
-      }
-     ],
-     [
-      {
-       "Constant": 9,
-       "Random": 11
-      }
-     ],
-     [
-      {
-       "Constant": 9,
-       "Random": 10
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 90,
+     "random": 110
+    },
+    "production": {
+     "base": 9,
+     "random": 11
+    },
+    "commerce": {
+     "base": 9,
+     "random": 10
+    }
    }
   ]
  },

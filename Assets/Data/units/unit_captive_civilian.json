@@ -25,147 +25,162 @@
  "outcomes": {
   "actions": [
    {
-    "MISSION_JOIN_CITY_POPULATION": [
-     {
-      "OutcomeType": "OUTCOME_JOIN_CITY_POPULATION",
-      "iChance": 100,
-      "iPopulationBoost": 1,
-      "bKill": 1,
-      "PlotCondition": [
-       {
+    "mission": "MISSION_JOIN_CITY_POPULATION",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_CITY_POPULATION",
+     "plot": {
+      "expr": {
+       "IntegrateOr": {
         "RelationType": "RELATION_ASSOCIATED",
         "GameObjectType": "GAMEOBJECT_CITY",
         "GreaterEqual": {
-         "ATTRIBUTE_POPULATION": 7
+         "Constant": 7,
+         "AttributeType": "ATTRIBUTE_POPULATION"
         }
        }
-      ]
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "consumes": true,
+    "population": 1
    },
    {
-    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_IMMIGRANT",
-    "iCost": [
-     [
-      10
-     ]
-    ],
-    "ActionOutcomes": [
-     {
-      "OutcomeType": "OUTCOME_UPGRADE_TO_IMMIGRANT",
-      "iChance": 100,
-      "UnitType": "UNIT_CAPTIVE_IMMIGRANT",
-      "bUnitToCity": [
-       0
-      ],
-      "PlotCondition": [
-       [
-        "TAG_ANARCHY"
-       ]
-      ]
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_IMMIGRANT",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_IMMIGRANT",
+     "plot": {
+      "expr": {
+       "Not": {
+        "Is": "TAG_ANARCHY"
+       }
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_CAPTIVE_IMMIGRANT"
+    }
    },
    {
-    "MissionType": "MISSION_CAPTIVE_UPGRADE_TO_SETTLER",
-    "iCost": [
-     [
-      20
-     ]
-    ],
-    "ActionOutcomes": [
-     {
-      "OutcomeType": "OUTCOME_UPGRADE_TO_SETTLER",
-      "iChance": 100,
-      "UnitType": "UNIT_SETTLER",
-      "bUnitToCity": [
-       0
-      ],
-      "PlotCondition": [
-       [
-        "TAG_ANARCHY"
-       ]
-      ]
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_SETTLER",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_SETTLER",
+     "plot": {
+      "expr": {
+       "Not": {
+        "Is": "TAG_ANARCHY"
+       }
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_SETTLER"
+    }
    },
    {
-    "MISSION_BUTCHER_HUMAN": [
+    "mission": "MISSION_BUTCHER_HUMAN",
+    "outcomes": [
      {
-      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Yields": [
-       [
-        [
-         40
-        ]
-       ],
-       [
-        [
-         10
-        ]
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "food": {
+       "expr": {
+        "Adapt": {
+         "Constant": 40
+        }
+       }
+      },
+      "production": {
+       "expr": {
+        "Adapt": {
+         "Constant": 10
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Yields": [
-       [
-        [
-         50
-        ]
-       ],
-       [
-        [
-         15
-        ]
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "food": {
+       "expr": {
+        "Adapt": {
+         "Constant": 50
+        }
+       }
+      },
+      "production": {
+       "expr": {
+        "Adapt": {
+         "Constant": 15
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT1",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Yields": [
-       [
-        [
-         50
-        ]
-       ],
-       [
-        [
-         15
-        ]
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT1",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "food": {
+       "expr": {
+        "Adapt": {
+         "Constant": 50
+        }
+       }
+      },
+      "production": {
+       "expr": {
+        "Adapt": {
+         "Constant": 15
+        }
+       }
+      }
      },
      {
-      "OutcomeType": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT2",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "Yields": [
-       [
-        [
-         50
-        ]
-       ],
-       [
-        [
-         15
-        ]
-       ]
-      ]
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT2",
+       "plot": {
+        "expr": {
+         "Is": "TAG_OWNED"
+        }
+       }
+      },
+      "chance": 100,
+      "food": {
+       "expr": {
+        "Adapt": {
+         "Constant": 50
+        }
+       }
+      },
+      "production": {
+       "expr": {
+        "Adapt": {
+         "Constant": 15
+        }
+       }
+      }
      }
     ]
    }

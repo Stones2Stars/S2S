@@ -71,64 +71,53 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_TALES_SEA",
-    "iChance": 5,
-    "UnitType": "UNIT_TALESOF_SEALION_SEA",
-    "bUnitToCity": [
-     1
-    ],
-    "Yields": [
-     [
-      {
-       "Constant": 20,
-       "Random": 80
-      }
-     ],
-     [
-      {
-       "Constant": 5,
-       "Random": 20
-      }
-     ],
-     [
-      {
-       "Constant": 8,
-       "Random": 10
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_TALESOF_SEALION_SEA",
+     "toCity": true
+    },
+    "food": {
+     "base": 20,
+     "random": 80
+    },
+    "production": {
+     "base": 5,
+     "random": 20
+    },
+    "commerce": {
+     "base": 8,
+     "random": 10
+    }
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE_SEA_LARGE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_SEALION_SEA",
-    "bUnitToCity": [
-     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_LARGE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_SEALION_SEA"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 90,
-    "Yields": [
-     [
-      {
-       "Constant": 20,
-       "Random": 80
-      }
-     ],
-     [
-      {
-       "Constant": 5,
-       "Random": 20
-      }
-     ],
-     [
-      {
-       "Constant": 8,
-       "Random": 10
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 90,
+    "food": {
+     "base": 20,
+     "random": 80
+    },
+    "production": {
+     "base": 5,
+     "random": 20
+    },
+    "commerce": {
+     "base": 8,
+     "random": 10
+    }
    }
   ]
  },

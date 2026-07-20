@@ -57,63 +57,51 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
-    "iChance": 2,
-    "BonusType": "BONUS_PIG",
-    "Yields": [
-     [
-      {
-       "Constant": 20,
-       "Random": 230
-      }
-     ],
-     [
-      {
-       "Constant": 3,
-       "Random": 12
-      }
-     ],
-     [
-      {
-       "Constant": 2,
-       "Random": 3
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_BONUS_SPAWNED"
+    },
+    "chance": 2,
+    "places": "BONUS_PIG",
+    "food": {
+     "base": 20,
+     "random": 230
+    },
+    "production": {
+     "base": 3,
+     "random": 12
+    },
+    "commerce": {
+     "base": 2,
+     "random": 3
+    }
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 3,
-    "UnitType": "UNIT_SUBDUED_PIG_NEW",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 3,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_PIG_NEW",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 20,
-       "Random": 230
-      }
-     ],
-     [
-      {
-       "Constant": 3,
-       "Random": 12
-      }
-     ],
-     [
-      {
-       "Constant": 2,
-       "Random": 3
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 20,
+     "random": 230
+    },
+    "production": {
+     "base": 3,
+     "random": 12
+    },
+    "commerce": {
+     "base": 2,
+     "random": 3
+    }
    }
   ]
  },

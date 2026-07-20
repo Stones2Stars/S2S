@@ -63,64 +63,53 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_TALES_SEA",
-    "iChance": 5,
-    "UnitType": "UNIT_TALESOF_MINKIE_WHALE",
-    "bUnitToCity": [
-     1
-    ],
-    "Yields": [
-     [
-      {
-       "Constant": 2000,
-       "Random": 2000
-      }
-     ],
-     [
-      {
-       "Constant": 300,
-       "Random": 300
-      }
-     ],
-     [
-      {
-       "Constant": 100,
-       "Random": 100
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_TALESOF_MINKIE_WHALE",
+     "toCity": true
+    },
+    "food": {
+     "base": 2000,
+     "random": 2000
+    },
+    "production": {
+     "base": 300,
+     "random": 300
+    },
+    "commerce": {
+     "base": 100,
+     "random": 100
+    }
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE_SEA_LARGE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_MINKIE_WHALE",
-    "bUnitToCity": [
-     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_LARGE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_MINKIE_WHALE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 85,
-    "Yields": [
-     [
-      {
-       "Constant": 2000,
-       "Random": 2000
-      }
-     ],
-     [
-      {
-       "Constant": 300,
-       "Random": 300
-      }
-     ],
-     [
-      {
-       "Constant": 100,
-       "Random": 100
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 85,
+    "food": {
+     "base": 2000,
+     "random": 2000
+    },
+    "production": {
+     "base": 300,
+     "random": 300
+    },
+    "commerce": {
+     "base": 100,
+     "random": 100
+    }
    }
   ]
  },

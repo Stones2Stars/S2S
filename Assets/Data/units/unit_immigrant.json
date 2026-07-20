@@ -37,23 +37,25 @@
  "outcomes": {
   "actions": [
    {
-    "MISSION_JOIN_CITY_POPULATION": [
-     {
-      "OutcomeType": "OUTCOME_JOIN_CITY_POPULATION",
-      "iChance": 100,
-      "iPopulationBoost": 1,
-      "bKill": 1,
-      "PlotCondition": [
-       {
+    "mission": "MISSION_JOIN_CITY_POPULATION",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_CITY_POPULATION",
+     "plot": {
+      "expr": {
+       "IntegrateOr": {
         "RelationType": "RELATION_ASSOCIATED",
         "GameObjectType": "GAMEOBJECT_CITY",
         "GreaterEqual": {
-         "ATTRIBUTE_POPULATION": 7
+         "Constant": 7,
+         "AttributeType": "ATTRIBUTE_POPULATION"
         }
        }
-      ]
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "consumes": true,
+    "population": 1
    }
   ]
  },

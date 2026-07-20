@@ -63,63 +63,51 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
-    "iChance": 2,
-    "Yields": [
-     [
-      {
-       "Constant": 1000,
-       "Random": 1000
-      }
-     ],
-     [
-      {
-       "Constant": 300,
-       "Random": 350
-      }
-     ],
-     [
-      {
-       "Constant": 82,
-       "Random": 55
-      }
-     ]
-    ],
-    "BonusType": "BONUS_ELEPHANTS"
+    "requires": {
+     "outcome": "OUTCOME_BONUS_SPAWNED"
+    },
+    "chance": 2,
+    "places": "BONUS_ELEPHANTS",
+    "food": {
+     "base": 1000,
+     "random": 1000
+    },
+    "production": {
+     "base": 300,
+     "random": 350
+    },
+    "commerce": {
+     "base": 82,
+     "random": 55
+    }
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 3,
-    "UnitType": "UNIT_SUBDUED_AFRICANELEPHANT",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 3,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_AFRICANELEPHANT",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 1000,
-       "Random": 1000
-      }
-     ],
-     [
-      {
-       "Constant": 300,
-       "Random": 350
-      }
-     ],
-     [
-      {
-       "Constant": 82,
-       "Random": 55
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 1000,
+     "random": 1000
+    },
+    "production": {
+     "base": 300,
+     "random": 350
+    },
+    "commerce": {
+     "base": 82,
+     "random": 55
+    }
    }
   ]
  },

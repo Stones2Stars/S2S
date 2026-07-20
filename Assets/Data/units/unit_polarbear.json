@@ -103,38 +103,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_POLARBEAR",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_POLARBEAR",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 100,
-       "Random": 100
-      }
-     ],
-     [
-      {
-       "Constant": 25,
-       "Random": 35
-      }
-     ],
-     [
-      {
-       "Constant": 16,
-       "Random": 8
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 100,
+     "random": 100
+    },
+    "production": {
+     "base": 25,
+     "random": 35
+    },
+    "commerce": {
+     "base": 16,
+     "random": 8
+    }
    }
   ]
  },

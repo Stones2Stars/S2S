@@ -41,64 +41,53 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_TALES_SEA",
-    "iChance": 5,
-    "UnitType": "UNIT_TALESOF_RAY_EAGLE",
-    "bUnitToCity": [
-     1
-    ],
-    "Yields": [
-     [
-      {
-       "Constant": 10,
-       "Random": 15
-      }
-     ],
-     [
-      {
-       "Constant": 2,
-       "Random": 2
-      }
-     ],
-     [
-      {
-       "Constant": 4,
-       "Random": 1
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_TALESOF_RAY_EAGLE",
+     "toCity": true
+    },
+    "food": {
+     "base": 10,
+     "random": 15
+    },
+    "production": {
+     "base": 2,
+     "random": 2
+    },
+    "commerce": {
+     "base": 4,
+     "random": 1
+    }
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE_SEA_SMALL",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_RAY_EAGLE",
-    "bUnitToCity": [
-     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_SMALL"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_RAY_EAGLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 90,
-    "Yields": [
-     [
-      {
-       "Constant": 10,
-       "Random": 15
-      }
-     ],
-     [
-      {
-       "Constant": 2,
-       "Random": 2
-      }
-     ],
-     [
-      {
-       "Constant": 4,
-       "Random": 1
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 90,
+    "food": {
+     "base": 10,
+     "random": 15
+    },
+    "production": {
+     "base": 2,
+     "random": 2
+    },
+    "commerce": {
+     "base": 4,
+     "random": 1
+    }
    }
   ]
  },

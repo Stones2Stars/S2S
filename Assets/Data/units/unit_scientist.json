@@ -26,40 +26,49 @@
  "outcomes": {
   "actions": [
    {
-    "MISSION_REMOVE_WV_SLAVERY": [
-     {
-      "OutcomeType": "OUTCOME_REMOVE_WV_SLAVERY",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "PythonCallback": "doRemoveWVSlavery"
+    "mission": "MISSION_REMOVE_WV_SLAVERY",
+    "requires": {
+     "outcome": "OUTCOME_REMOVE_WV_SLAVERY",
+     "plot": {
+      "expr": {
+       "Is": "TAG_OWNED"
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doRemoveWVSlavery"
+    }
    },
    {
-    "MISSION_REMOVE_WV_CANNIBALISM": [
-     {
-      "OutcomeType": "OUTCOME_REMOVE_WV_CANNIBALISM",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "PythonCallback": "doRemoveWVCannibalism"
+    "mission": "MISSION_REMOVE_WV_CANNIBALISM",
+    "requires": {
+     "outcome": "OUTCOME_REMOVE_WV_CANNIBALISM",
+     "plot": {
+      "expr": {
+       "Is": "TAG_OWNED"
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doRemoveWVCannibalism"
+    }
    },
    {
-    "MISSION_REMOVE_WV_HUMAN_SACRIFICE": [
-     {
-      "OutcomeType": "OUTCOME_REMOVE_WV_HUMAN_SACRIFICE",
-      "iChance": 100,
-      "PlotCondition": [
-       "TAG_OWNED"
-      ],
-      "PythonCallback": "doRemoveWVHumanSacrifice"
+    "mission": "MISSION_REMOVE_WV_HUMAN_SACRIFICE",
+    "requires": {
+     "outcome": "OUTCOME_REMOVE_WV_HUMAN_SACRIFICE",
+     "plot": {
+      "expr": {
+       "Is": "TAG_OWNED"
+      }
      }
-    ]
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doRemoveWVHumanSacrifice"
+    }
    }
   ]
  },

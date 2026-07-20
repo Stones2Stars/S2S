@@ -71,28 +71,41 @@
  "outcomes": {
   "actions": [
    {
-    "MISSION_BUILD_DOMESTICATED_HERD": [
+    "mission": "MISSION_BUILD_DOMESTICATED_HERD",
+    "outcomes": [
      {
-      "OutcomeType": "OUTCOME_BUILD_DOMESTICATED_HERD",
-      "iChance": 50,
-      "PlotCondition": [
-       {
-        "Python": "canBuildSheepBonus",
-        "Constant": 0
+      "requires": {
+       "outcome": "OUTCOME_BUILD_DOMESTICATED_HERD",
+       "plot": {
+        "expr": {
+         "Greater": {
+          "Python": "canBuildSheepBonus",
+          "Constant": 0
+         }
+        }
        }
-      ],
-      "PythonCallback": "doBuildSheepBonus"
+      },
+      "chance": 50,
+      "python": {
+       "callback": "doBuildSheepBonus"
+      }
      },
      {
-      "OutcomeType": "OUTCOME_BUILD_DOMESTICATED_HERD_WITH_PASTURE",
-      "iChance": 100,
-      "PlotCondition": [
-       {
-        "Python": "canBuildSheepBonusAndPasture",
-        "Constant": 0
+      "requires": {
+       "outcome": "OUTCOME_BUILD_DOMESTICATED_HERD_WITH_PASTURE",
+       "plot": {
+        "expr": {
+         "Greater": {
+          "Python": "canBuildSheepBonusAndPasture",
+          "Constant": 0
+         }
+        }
        }
-      ],
-      "PythonCallback": "doBuildSheepBonusAndPasture"
+      },
+      "chance": 100,
+      "python": {
+       "callback": "doBuildSheepBonusAndPasture"
+      }
      }
     ]
    }

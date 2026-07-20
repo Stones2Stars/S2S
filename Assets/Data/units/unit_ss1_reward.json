@@ -38,17 +38,12 @@
  "outcomes": {
   "actions": [
    {
-    "MISSION_SAMPLE_STUDY": [
-     {
-      "OutcomeType": "OUTCOME_SAMPLE_STUDY",
-      "iChance": 100,
-      "Yields": [
-       0,
-       0,
-       5000
-      ]
-     }
-    ]
+    "mission": "MISSION_SAMPLE_STUDY",
+    "requires": {
+     "outcome": "OUTCOME_SAMPLE_STUDY"
+    },
+    "chance": 100,
+    "commerce": 5000
    }
   ]
  },

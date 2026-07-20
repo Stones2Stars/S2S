@@ -53,38 +53,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_SIBERIANTIGER",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_SIBERIANTIGER",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 70,
-       "Random": 50
-      }
-     ],
-     [
-      {
-       "Constant": 11,
-       "Random": 12
-      }
-     ],
-     [
-      {
-       "Constant": 74,
-       "Random": 70
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 70,
+     "random": 50
+    },
+    "production": {
+     "base": 11,
+     "random": 12
+    },
+    "commerce": {
+     "base": 74,
+     "random": 70
+    }
    }
   ]
  },

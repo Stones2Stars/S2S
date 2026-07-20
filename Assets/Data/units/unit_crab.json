@@ -67,44 +67,42 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
-    "iChance": 2,
-    "BonusType": "BONUS_CRAB",
-    "Yields": [
-     2,
-     0,
-     1
-    ]
+    "requires": {
+     "outcome": "OUTCOME_BONUS_SPAWNED"
+    },
+    "chance": 2,
+    "places": "BONUS_CRAB",
+    "food": 2,
+    "commerce": 1
    },
    {
-    "OutcomeType": "OUTCOME_TALES_SEA",
-    "iChance": 8,
-    "UnitType": "UNIT_TALESOF_CRAB",
-    "bUnitToCity": [
-     1
-    ],
-    "Yields": [
-     2,
-     0,
-     1
-    ]
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 8,
+    "spawns": {
+     "unit": "UNIT_TALESOF_CRAB",
+     "toCity": true
+    },
+    "food": 2,
+    "commerce": 1
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE_SEA_SMALL",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_CRAB",
-    "bUnitToCity": [
-     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_SMALL"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_CRAB"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 85,
-    "Yields": [
-     2,
-     0,
-     1
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 85,
+    "food": 2,
+    "commerce": 1
    }
   ]
  },

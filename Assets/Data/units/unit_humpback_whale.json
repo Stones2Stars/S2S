@@ -57,89 +57,72 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_BONUS_SPAWNED",
-    "iChance": 2,
-    "BonusType": "BONUS_WHALE",
-    "Yields": [
-     [
-      {
-       "Constant": 10000,
-       "Random": 5000
-      }
-     ],
-     [
-      {
-       "Constant": 1000,
-       "Random": 500
-      }
-     ],
-     [
-      {
-       "Constant": 80,
-       "Random": 220
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_BONUS_SPAWNED"
+    },
+    "chance": 2,
+    "places": "BONUS_WHALE",
+    "food": {
+     "base": 10000,
+     "random": 5000
+    },
+    "production": {
+     "base": 1000,
+     "random": 500
+    },
+    "commerce": {
+     "base": 80,
+     "random": 220
+    }
    },
    {
-    "OutcomeType": "OUTCOME_TALES_SEA",
-    "iChance": 8,
-    "UnitType": "UNIT_TALESOF_HUMPBACK_WHALE",
-    "bUnitToCity": [
-     1
-    ],
-    "Yields": [
-     [
-      {
-       "Constant": 10000,
-       "Random": 5000
-      }
-     ],
-     [
-      {
-       "Constant": 1000,
-       "Random": 500
-      }
-     ],
-     [
-      {
-       "Constant": 80,
-       "Random": 220
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 8,
+    "spawns": {
+     "unit": "UNIT_TALESOF_HUMPBACK_WHALE",
+     "toCity": true
+    },
+    "food": {
+     "base": 10000,
+     "random": 5000
+    },
+    "production": {
+     "base": 1000,
+     "random": 500
+    },
+    "commerce": {
+     "base": 80,
+     "random": 220
+    }
    },
    {
-    "OutcomeType": "OUTCOME_SUBDUE_SEA_LARGE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_HUMPBACK_WHALE",
-    "bUnitToCity": [
-     "DONT_ESCORT_SUBDUED_SEA_ANIMAL"
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_LARGE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_HUMPBACK_WHALE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 85,
-    "Yields": [
-     [
-      {
-       "Constant": 10000,
-       "Random": 5000
-      }
-     ],
-     [
-      {
-       "Constant": 1000,
-       "Random": 500
-      }
-     ],
-     [
-      {
-       "Constant": 80,
-       "Random": 220
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 85,
+    "food": {
+     "base": 10000,
+     "random": 5000
+    },
+    "production": {
+     "base": 1000,
+     "random": 500
+    },
+    "commerce": {
+     "base": 80,
+     "random": 220
+    }
    }
   ]
  },

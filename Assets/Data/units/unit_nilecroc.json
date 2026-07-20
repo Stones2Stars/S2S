@@ -57,38 +57,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_NILECROC",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_NILECROC",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 50,
-       "Random": 150
-      }
-     ],
-     [
-      {
-       "Constant": 17,
-       "Random": 18
-      }
-     ],
-     [
-      {
-       "Constant": 11,
-       "Random": 13
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 50,
+     "random": 150
+    },
+    "production": {
+     "base": 17,
+     "random": 18
+    },
+    "commerce": {
+     "base": 11,
+     "random": 13
+    }
    }
   ]
  },

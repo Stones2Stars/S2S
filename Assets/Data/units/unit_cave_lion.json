@@ -64,38 +64,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_CAVE_LION",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_CAVE_LION",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 125,
-       "Random": 75
-      }
-     ],
-     [
-      {
-       "Constant": 12,
-       "Random": 7
-      }
-     ],
-     [
-      {
-       "Constant": 50,
-       "Random": 56
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 125,
+     "random": 75
+    },
+    "production": {
+     "base": 12,
+     "random": 7
+    },
+    "commerce": {
+     "base": 50,
+     "random": 56
+    }
    }
   ]
  },

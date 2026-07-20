@@ -61,38 +61,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_RIVER_CROC_SMALL",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_RIVER_CROC_SMALL",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 10,
-       "Random": 40
-      }
-     ],
-     [
-      {
-       "Constant": 4,
-       "Random": 16
-      }
-     ],
-     [
-      {
-       "Constant": 8,
-       "Random": 18
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 10,
+     "random": 40
+    },
+    "production": {
+     "base": 4,
+     "random": 16
+    },
+    "commerce": {
+     "base": 8,
+     "random": 18
+    }
    }
   ]
  },

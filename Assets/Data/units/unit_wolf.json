@@ -61,38 +61,32 @@
  "outcomes": {
   "kill": [
    {
-    "OutcomeType": "OUTCOME_SUBDUE",
-    "iChance": 5,
-    "UnitType": "UNIT_SUBDUED_WOLF",
-    "bUnitToCity": [
-     {
-      "GOM_TECH": "TECH_SEDENTARY_LIFESTYLE"
-     }
-    ]
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_WOLF",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
    },
    {
-    "OutcomeType": "OUTCOME_HUNTING_KILL",
-    "iChance": 95,
-    "Yields": [
-     [
-      {
-       "Constant": 12,
-       "Random": 28
-      }
-     ],
-     [
-      {
-       "Constant": 1,
-       "Random": 6
-      }
-     ],
-     [
-      {
-       "Constant": 8,
-       "Random": 5
-      }
-     ]
-    ]
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 12,
+     "random": 28
+    },
+    "production": {
+     "base": 1,
+     "random": 6
+    },
+    "commerce": {
+     "base": 8,
+     "random": 5
+    }
    }
   ]
  },
