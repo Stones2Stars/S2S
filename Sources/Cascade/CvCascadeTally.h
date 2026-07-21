@@ -38,6 +38,10 @@ public:
 	// common call (a count atom's owner-scope read) unchanged.
 	int buildingCount(int iEntity, int iBuilding, CascadeCountScope eScope = CASCADE_COUNT_EMPIRE) const;
 	int unitCount(int iEntity, int iUnit, CascadeCountScope eScope = CASCADE_COUNT_EMPIRE) const;
+	// "How many units carry classification TAG at SCOPE?" -- ITERATE-ON-READ (owner ruling 2026-07-20): unlike a
+	// unit-TYPE count there is no O(1) object aggregate for a tag, so this walks each in-scope alive player's units
+	// testing the unit-info tag bitset (tally.md read-not-store). iTagId = the resolved TAG_* classification id.
+	int countUnitsWithTag(int iEntity, int iTagId, CascadeCountScope eScope = CASCADE_COUNT_EMPIRE) const;
 };
 
 //	The single engine-wide aggregate-count surface (a stateless service; the count sibling of eventSpine()).

@@ -51,7 +51,10 @@ enum CvCascPredKind
 	// parameterized (Type param in `param`)
 	CASC_PRED_HAS_TERRAIN, CASC_PRED_HAS_IMPROVEMENT, CASC_PRED_HAS_BONUS, CASC_PRED_HAS_RELIGION, CASC_PRED_STATE_RELIGION, CASC_PRED_IS_HOLY_CITY, CASC_PRED_HAS_CORPORATION,
 	// numeric-parameterized
-	CASC_PRED_LATITUDE, CASC_PRED_EXISTED_FOR
+	CASC_PRED_LATITUDE, CASC_PRED_EXISTED_FOR,
+	// classification-TAG membership: IS_<TAG> against a UNIT target (json §8/§3.5). `param` holds the full
+	// TAG_<SUFFIX> type name; the id is resolved lazily at eval (the TAG_* infotypes are minted AFTER condition parse).
+	CASC_PRED_IS_TAG
 };
 
 // The node discriminator (StoneBase's three Condition subtypes).

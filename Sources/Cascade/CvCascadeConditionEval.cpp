@@ -20,6 +20,9 @@
 #include "Engine/CvGame.h"
 #include "Engine/CvArea.h"
 #include "Engine/CvProperties.h"
+#include "Engine/CvUnit.h"           // ctx.unit->getUnitInfo() (the IS_<TAG> predicate)
+#include "CvUnitInfo.h"              // getTags() (the unit tag bitset)
+#include "CvJsonBoolBlock.h"         // hasId (the classification bitset O(1) test)
 #include "CvCascadeMMKernel.h"        // traitData -- the active-set trait resolver (the L1 policy read)
 #include "CvCivicInfo.h"          // the civic §9 policies block (the L1 policy read)
 #include "CvTraitInfo.h"          // the trait §9 policies block
@@ -365,6 +368,15 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	case CASC_PRED_VICINITY:   return p != NULL;
 	case CASC_PRED_WORKABLE:   return p != NULL && ctx.city != NULL && p->getOwner() == ctx.city->getOwner();
 	case CASC_PRED_IS_WORKED:  return p != NULL && p->isBeingWorked();
+	// IS_<TAG> -- classification-tag membership against the UNIT target (json §8). The tag id resolves lazily: the
+	// TAG_* infotypes are minted after condition parse, so `param` carries the TAG_<SUFFIX> type name. An UNMINTED
+	// tag (undefined/retired) is an unknown predicate -> IGNORED (true, json §3.5); a minted tag the unit lacks -> false.
+	case CASC_PRED_IS_TAG:
+	{
+		if (ctx.unit == NULL) return false;   // a unit predicate with no unit target cannot match (the PROMOTION_ precedent)
+		const int iTagId = pr->id >= 0 ? pr->id : GC.getInfoTypeForString(pr->param.c_str(), /*bHideAssert*/true);
+		return iTagId < 0 ? true : ctx.unit->getUnitInfo().getTags()->hasId(iTagId);
+	}
 	default:                   return true;   // UNKNOWN / ExistedFor / unmodelled domain -> IGNORED (json §3.5)
 	}
 }

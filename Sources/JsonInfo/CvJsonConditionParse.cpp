@@ -203,6 +203,10 @@ static CvJsonCondition* cp_parseBareString(const std::string& s)
 	const CvCascPredKind k = cp_predKind(s);
 	if (k != CASC_PRED_UNKNOWN) return cp_predicate(k, "", -1, -1);
 	if (cp_isTypeRef(s)) return cp_presence(s, cp_impliedScope(s), 1, -1, CASC_CONN_NONE, CASC_VIC_NONE);
+	// an unrecognized IS_<SUFFIX> is a classification-TAG test against a unit target (json §8): IS_MILITARY ->
+	// the `military` tag. Store the full TAG_<SUFFIX> type name in `param`; eval resolves the id lazily (the TAG_*
+	// infotypes are minted AFTER condition parse, so it cannot FK-resolve here).
+	if (cp_starts(s, "IS_")) return cp_predicate(CASC_PRED_IS_TAG, "TAG_" + s.substr(3), -1, -1);
 	return cp_predicate(CASC_PRED_UNKNOWN, "", -1, -1);   // unknown -> IGNORED at eval (§3.5)
 }
 

@@ -7,6 +7,9 @@
 #include "CvGameCoreDLL.h"
 #include "CvCascadeTally.h"
 #include "AI/CvPlayerAI.h"   // GET_PLAYER + getBuildingCount/getUnitCount (the object-owned aggregate) + getTeam/isAlive
+#include "Engine/CvUnit.h"   // countUnitsWithTag -- the per-player unit iterate + getUnitInfo()
+#include "CvUnitInfo.h"      // getTags() (the unit tag bitset)
+#include "CvJsonBoolBlock.h" // hasId (the classification bitset O(1) test)
 
 CvCascadeTally& cascadeTally()
 {
@@ -73,6 +76,32 @@ int CvCascadeTally::unitCount(int iEntity, int iUnit, CascadeCountScope eScope) 
 		if (tallyPlayerInScope(kP, eScope, iEntity))
 		{
 			iSum += kP.getUnitCount(eUnit);
+		}
+	}
+	return iSum;
+}
+
+int CvCascadeTally::countUnitsWithTag(int iEntity, int iTagId, CascadeCountScope eScope) const
+{
+	if (iTagId < 0)
+	{
+		return 0;
+	}
+	// No O(1) object aggregate exists for a tag (unlike the building/unit-TYPE counts above), so this iterates
+	// on read (tally.md read-not-store): each in-scope alive player's units, testing the unit-info tag bitset.
+	int iSum = 0;
+	for (int iP = 0; iP < MAX_PLAYERS; ++iP)
+	{
+		const CvPlayer& kP = GET_PLAYER((PlayerTypes)iP);
+		if (tallyPlayerInScope(kP, eScope, iEntity))
+		{
+			foreach_(CvUnit* pLoopUnit, kP.units())
+			{
+				if (pLoopUnit->getUnitInfo().getTags()->hasId(iTagId))
+				{
+					++iSum;
+				}
+			}
 		}
 	}
 	return iSum;
