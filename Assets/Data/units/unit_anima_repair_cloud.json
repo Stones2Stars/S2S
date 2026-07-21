@@ -116,6 +116,7 @@
  "tags": [
   "military",
   "landUnit",
+  "synthetic",
   "air"
  ],
  "combatClass": "UNITCOMBAT_NANITE",

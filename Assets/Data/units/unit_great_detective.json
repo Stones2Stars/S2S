@@ -13,7 +13,8 @@
  "tags": [
   "merchant",
   "civilian",
-  "landUnit"
+  "landUnit",
+  "police"
  ],
  "combatClass": "UNITCOMBAT_PRODIGY",
  "combatClasses": [

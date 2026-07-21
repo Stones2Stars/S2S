@@ -71,7 +71,8 @@
   "military",
   "landUnit",
   "mechanized",
-  "armored"
+  "armored",
+  "synthetic"
  ],
  "combatClass": "UNITCOMBAT_TRACKED",
  "combatClasses": [

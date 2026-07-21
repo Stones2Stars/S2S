@@ -9,7 +9,8 @@
   "greatGeneral"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "naval"
  ],
  "combatClass": "UNITCOMBAT_PRODIGY",
  "combatClasses": [

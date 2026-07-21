@@ -79,7 +79,8 @@
  "tags": [
   "military",
   "landUnit",
-  "gunpowder"
+  "gunpowder",
+  "recon"
  ],
  "combatClass": "UNITCOMBAT_GUN",
  "combatClasses": [

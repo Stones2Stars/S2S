@@ -34,7 +34,8 @@
   "merchant",
   "civilian",
   "landUnit",
-  "missionary"
+  "missionary",
+  "police"
  ],
  "combatClass": "UNITCOMBAT_MISSIONARY",
  "combatClasses": [

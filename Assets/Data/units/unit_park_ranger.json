@@ -81,7 +81,8 @@
  "tags": [
   "worker",
   "civilian",
-  "landUnit"
+  "landUnit",
+  "recon"
  ],
  "combatClass": "UNITCOMBAT_WORKER",
  "combatClasses": [

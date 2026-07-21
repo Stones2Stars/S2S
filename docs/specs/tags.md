@@ -59,6 +59,12 @@ fold is complete. Only the OBVIOUS identities map; the size/species/motility/wea
   `air`.
 - **NEW vocabulary (owner-approved 2026-07-21):** `hero` (hero-unit identity, `UNITCOMBAT_HERO`) · `animal`
   (`UNITCOMBAT_ANIMAL`/`SEA_ANIMAL`) · `space` (spacecraft + space workers, `UNITCOMBAT_*_SPACESHIP`/`SPACE_WORKER`).
+- **NEW functional/role vocabulary (owner-approved 2026-07-21, flagged-remainder 2nd pass):** `police`
+  (`UNITCOMBAT_LAW_ENFORCEMENT`) · `medic` (`UNITCOMBAT_HEALTH_CARE`) · `missile` (`UNITCOMBAT_MISSILE`/`BALLISTIC`) ·
+  `synthetic` (hi-tech artificial troops — `UNITCOMBAT_ROBOT`/`HITECH`/`CLONES`/`NANITE`/`NANOMORPHIC`) · `diplomat`
+  (`UNITCOMBAT_DIPLOMAT`) · `entertainer` (`UNITCOMBAT_ENTERTAINER`). Plus more units folded onto EXISTING tags:
+  `recon` (`HUNTER`/`STRIKE_TEAM`) · `naval` (`COMMODORE`/`CAPTAIN`) · `merchant` (`EXECUTIVE`) · `civilian`
+  (`PACIFIST`) · `siege` (`ROCKET_LAUNCHER`).
 
 **Queryable now:** the `IS_<TAG>` predicate ([json.md §3.5/§8](json.md)) reads the unit's folded tag bitset —
 `{unit: IS_MOUNTED}` / `IS_GUNPOWDER` / `IS_NAVAL` / … evaluate live (`cascadeEvalCondition`), and the per-tag

@@ -38,7 +38,8 @@
   "militaryTrade"
  ],
  "tags": [
-  "military"
+  "military",
+  "missile"
  ],
  "combatClass": "UNITCOMBAT_DOOM",
  "combatClasses": [

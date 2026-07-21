@@ -145,6 +145,7 @@
  "tags": [
   "military",
   "landUnit",
+  "police",
   "animal"
  ],
  "combatClass": "UNITCOMBAT_FELINE",

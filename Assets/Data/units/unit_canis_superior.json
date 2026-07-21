@@ -83,7 +83,9 @@
  ],
  "tags": [
   "landUnit",
-  "animal"
+  "animal",
+  "synthetic",
+  "police"
  ],
  "combatClass": "UNITCOMBAT_ANIMAL",
  "combatClasses": [

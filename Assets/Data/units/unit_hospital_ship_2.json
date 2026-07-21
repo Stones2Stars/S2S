@@ -102,6 +102,7 @@
   "military",
   "seaUnit",
   "naval",
+  "medic",
   "civilian"
  ],
  "combatClass": "UNITCOMBAT_DIESEL_SHIPS",

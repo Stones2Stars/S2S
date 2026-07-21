@@ -42,6 +42,7 @@
  "tags": [
   "military",
   "landUnit",
+  "police",
   "melee"
  ],
  "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",

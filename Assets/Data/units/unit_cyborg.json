@@ -40,7 +40,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "synthetic"
  ],
  "combatClass": "UNITCOMBAT_HITECH",
  "combatClasses": [

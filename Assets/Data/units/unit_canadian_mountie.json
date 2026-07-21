@@ -163,7 +163,8 @@
  "tags": [
   "military",
   "landUnit",
-  "mounted"
+  "mounted",
+  "police"
  ],
  "combatClass": "UNITCOMBAT_MOUNTED",
  "combatClasses": [

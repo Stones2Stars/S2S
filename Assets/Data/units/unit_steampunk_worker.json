@@ -180,7 +180,8 @@
  "tags": [
   "worker",
   "civilian",
-  "landUnit"
+  "landUnit",
+  "synthetic"
  ],
  "combatClass": "UNITCOMBAT_WORKER",
  "combatClasses": [

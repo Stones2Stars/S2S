@@ -157,7 +157,8 @@
  ],
  "tags": [
   "outlaw",
-  "landUnit"
+  "landUnit",
+  "synthetic"
  ],
  "combatClass": "UNITCOMBAT_CRIMINAL",
  "combatClasses": [

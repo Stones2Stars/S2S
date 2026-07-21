@@ -59,6 +59,7 @@
  "tags": [
   "landUnit",
   "hero",
+  "medic",
   "civilian"
  ],
  "combatClass": "UNITCOMBAT_HERO",

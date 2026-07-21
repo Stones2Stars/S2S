@@ -90,7 +90,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "recon"
  ],
  "combatClass": "UNITCOMBAT_THROWING",
  "combatClasses": [

@@ -87,6 +87,8 @@
  "tags": [
   "landUnit",
   "melee",
+  "medic",
+  "police",
   "civilian"
  ],
  "combatClass": "UNITCOMBAT_MELEE",

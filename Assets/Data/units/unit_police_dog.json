@@ -79,6 +79,7 @@
  "tags": [
   "landUnit",
   "animal",
+  "police",
   "gunpowder"
  ],
  "combatClass": "UNITCOMBAT_ANIMAL",

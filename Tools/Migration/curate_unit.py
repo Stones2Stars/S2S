@@ -186,6 +186,17 @@ TAG_BY_UNITCOMBAT = {
     "UNITCOMBAT_EARLY_SPACESHIP": ["space"], "UNITCOMBAT_WORMHOLE_SPACESHIP": ["space"],
     "UNITCOMBAT_SOLAR_SAIL_SPACESHIP": ["space"], "UNITCOMBAT_ANTIMATTER_SPACESHIP": ["space"],
     "UNITCOMBAT_NUCLEAR_SPACESHIP": ["space"],
+    # --- flagged-remainder second pass (owner-approved 2026-07-21, unitcombat-tag-mapping.md §FLAGGED) ---
+    # map-to-existing vocabulary:
+    "UNITCOMBAT_HUNTER": ["recon"], "UNITCOMBAT_STRIKE_TEAM": ["recon"],   # (STRIKE_TEAM also -> outlaw via its CRIMINAL subcombat)
+    "UNITCOMBAT_EXECUTIVE": ["merchant"], "UNITCOMBAT_PACIFIST": ["civilian"],
+    "UNITCOMBAT_COMMODORE": ["naval"], "UNITCOMBAT_CAPTAIN": ["naval"], "UNITCOMBAT_ROCKET_LAUNCHER": ["siege"],
+    # NEW vocabulary (owner-approved 2026-07-21): police / medic / missile / synthetic / diplomat / entertainer
+    "UNITCOMBAT_LAW_ENFORCEMENT": ["police"], "UNITCOMBAT_HEALTH_CARE": ["medic"],
+    "UNITCOMBAT_MISSILE": ["missile"], "UNITCOMBAT_BALLISTIC": ["missile"],
+    "UNITCOMBAT_ROBOT": ["synthetic"], "UNITCOMBAT_HITECH": ["synthetic"], "UNITCOMBAT_CLONES": ["synthetic"],
+    "UNITCOMBAT_NANITE": ["synthetic"], "UNITCOMBAT_NANOMORPHIC": ["synthetic"],
+    "UNITCOMBAT_DIPLOMAT": ["diplomat"], "UNITCOMBAT_ENTERTAINER": ["entertainer"],
 }
 
 # ---- grants (one-shot, lists) ----

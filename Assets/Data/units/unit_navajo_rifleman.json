@@ -138,6 +138,7 @@
  "tags": [
   "military",
   "landUnit",
+  "recon",
   "gunpowder"
  ],
  "combatClass": "UNITCOMBAT_RUFFIAN",

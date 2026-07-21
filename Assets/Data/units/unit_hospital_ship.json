@@ -99,6 +99,7 @@
   "military",
   "seaUnit",
   "naval",
+  "medic",
   "civilian"
  ],
  "combatClass": "UNITCOMBAT_STEAM_SHIPS",

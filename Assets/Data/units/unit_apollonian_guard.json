@@ -111,7 +111,8 @@
  "tags": [
   "military",
   "landUnit",
-  "melee"
+  "melee",
+  "police"
  ],
  "combatClass": "UNITCOMBAT_MELEE",
  "combatClasses": [

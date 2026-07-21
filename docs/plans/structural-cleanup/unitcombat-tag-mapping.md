@@ -149,6 +149,16 @@
 
 ## FLAGGED (unsure / not-an-identity / needs owner)
 
+> **2ND PASS RESOLVED (owner 2026-07-21) — the individual ambiguous classes are ruled; `curate_unit.py`
+> `TAG_BY_UNITCOMBAT` carries them.** NEW vocabulary added: `police` (LAW_ENFORCEMENT) · `medic` (HEALTH_CARE) ·
+> `missile` (MISSILE/BALLISTIC) · `synthetic` (ROBOT/HITECH/CLONES/NANITE/NANOMORPHIC) · `diplomat` · `entertainer`.
+> Folded onto EXISTING tags: HUNTER/STRIKE_TEAM→`recon`, EXECUTIVE→`merchant`, PACIFIST→`civilian`,
+> COMMODORE/CAPTAIN→`naval`, ROCKET_LAUNCHER→`siege`. Ruled NOT tags (left excluded): COMBATANT, SPEED_FAST/SLOW,
+> ATTACK_FORM_*, STEALTH, SWARM (movement/attack-form/generic taxonomy); the animal sub-states/species WILD, TAMED,
+> CAPTIVE, RECKLESS_ANIMAL, CANINE, FELINE (base `animal` covers them). STILL FLAGGED (genuinely unclear, no tag this
+> pass): IDEA, DOOM, NOMAD, THROWING, HOVERCRAFT, PIRATE, RUFFIAN, EXILE, ATTACHE, PRODIGY, ADMINISTRATOR, COMMANDER.
+> The taxonomy FAMILIES below stay data (sizeMatters), unchanged.
+
 ### Taxonomy families — NOT identity tags (each family = one reason)
 
 These are the size/species/motility/weapon taxonomy the distillation plan (§3.A.1) keeps as `sizeMatters` /

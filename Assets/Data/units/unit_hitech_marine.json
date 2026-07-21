@@ -58,6 +58,7 @@
  "tags": [
   "military",
   "landUnit",
+  "synthetic",
   "gunpowder"
  ],
  "combatClass": "UNITCOMBAT_HITECH",

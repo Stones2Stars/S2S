@@ -140,7 +140,9 @@
  "tags": [
   "military",
   "landUnit",
-  "animal"
+  "police",
+  "animal",
+  "synthetic"
  ],
  "combatClass": "UNITCOMBAT_FELINE",
  "combatClasses": [

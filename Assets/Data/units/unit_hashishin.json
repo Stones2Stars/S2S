@@ -134,6 +134,7 @@
   "military",
   "outlaw",
   "landUnit",
+  "recon",
   "melee"
  ],
  "combatClass": "UNITCOMBAT_STRIKE_TEAM",

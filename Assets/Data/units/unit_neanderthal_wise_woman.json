@@ -70,6 +70,7 @@
  ],
  "tags": [
   "landUnit",
+  "medic",
   "civilian"
  ],
  "combatClass": "UNITCOMBAT_HEALTH_CARE",
