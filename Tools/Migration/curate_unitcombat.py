@@ -259,6 +259,19 @@ def curate(typ, rec, store):
     return out
 
 
+# The genuinely-dead unit-combats: verified 0-reference everywhere (Assets/Data JSON beyond each class's own file,
+# all module/legacy XML unit/promotion assignments, Python, Sources) AND no runtime attr (era/religion/culture) --
+# re-verified 2026-07-21 (owner-approved conservative purge, merge-candidates.md §3). Dropped outright: every
+# CvUnitCombatInfo is loaded resident whether referenced or not, so under the 32-bit ~3.2GB ceiling this is a direct
+# memory win. 9 empty taxonomy stubs + 6 orphaned payload classes whose content a referenced sibling already carries.
+DROP_DEAD_UNITCOMBATS = {
+    "UNITCOMBAT_DISASSEMBLY", "UNITCOMBAT_HOLOGRAPHIC_DIVERSIONS", "UNITCOMBAT_IMPROVED_HOLOGRAPHIC_DIVERSIONS",
+    "UNITCOMBAT_MAMMAL_BAT", "UNITCOMBAT_MOUNT_MULE", "UNITCOMBAT_REPTILE_DINOSAUR", "UNITCOMBAT_SEA_LARGE",
+    "UNITCOMBAT_SEA_SMALL", "UNITCOMBAT_WHALE", "UNITCOMBAT_AMPHIBIAN_SALAMANDER", "UNITCOMBAT_ANTIGRAV_CRAFT",
+    "UNITCOMBAT_CARRIER", "UNITCOMBAT_CORVETTE", "UNITCOMBAT_CUTTER", "UNITCOMBAT_SWARMSHIP",
+}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sample", nargs="*", help="print these types (default: first 1)")
@@ -274,7 +287,11 @@ def main():
     # bug -- guarded below, never silently dropped.
     results = OrderedDict()
     dropped_culture = []
+    dropped_dead = []
     for typ, rec in table.items():
+        if typ in DROP_DEAD_UNITCOMBATS:   # the owner-approved conservative purge (merge-candidates.md §3)
+            dropped_dead.append(typ)
+            continue
         out = curate(typ, rec, store)
         if out.get("identity", {}).get("culture"):
             extra = [k for k in out if k not in ("type", "ui", "identity")]
@@ -288,6 +305,9 @@ def main():
     n = len(results)
     if dropped_culture:
         print("DROPPED %d culture unit-combats (redundant double-data; owner 2026-07-19)" % len(dropped_culture))
+    if dropped_dead:
+        print("DROPPED %d genuinely-dead unit-combats (0-ref conservative purge; owner 2026-07-21): %s"
+              % (len(dropped_dead), ", ".join(dropped_dead)))
     # COVERAGE CHECK
     handled = (set(STRENGTH) | set(FAMILIES) | set(VS_KEYED) | set(CAP_BOOL) | set(CAP_BOOL_X)
                | set(CAP_PAIR) | set(CAP_COUNT) | set(CAP_COUNT_X) | set(CAP_LIST) | set(VISION_PAIRS)
