@@ -1652,11 +1652,6 @@ int CyCity::getLiberationPlayer(bool bConquest) const
 	return m_pCity->getLiberationPlayer(bConquest);
 }
 
-int CyCity::getBonusCommerceRateModifier(int /*CommerceTypes*/ eIndex) const
-{
-	return m_pCity->getBonusCommerceRateModifier((CommerceTypes)eIndex);
-}
-
 int CyCity::getArea() const
 {
 	return m_pCity->getArea();

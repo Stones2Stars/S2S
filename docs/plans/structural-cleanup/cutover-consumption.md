@@ -119,9 +119,10 @@ A legacy accumulator's recompute is NOT uniformly a pure read-cache warm. Two ki
    correct **recompute-on-load**, not a premature serialization retirement that duplicates the cut. Only caches that
    are purely derived and NOT owned by a pending cascade cut (the `m_paiFreeBonus` class) get the full two-stage
    retirement now.
-3. **Retire each retiring cache's serialization TWO-STAGE** ([engine.md §Save/load](../../reference/engine.md)): drop the
-   `WRAPPER_WRITE`, replace the read with a named `WRAPPER_SKIP_ELEMENT(...)` (drains the stale tag from old saves so
-   nothing desyncs — removing a read is NOT soft), and ledger the field in `savemigration.txt`.
+3. **Retire each retiring cache's serialization** ([save.md §3](../../specs/save.md)): FULL-DELETE the `WRAPPER_WRITE`
+   AND the read (no `WRAPPER_SKIP_ELEMENT`) and name the field's tag in `savemigration.txt`, which drains the orphan
+   tag from old saves so nothing desyncs. Removing a read *without* the ledger entry is the one hard desync — the tag
+   MUST be listed.
 4. **Recompute each on load** from live state at the load-safe hook its side-effect profile allows (step ⚠), sequenced
    BEFORE any consumer (the plot-group trade network, the operating/dormancy set — "the operating-buildings set should
    not be computed until the has-list is loaded").

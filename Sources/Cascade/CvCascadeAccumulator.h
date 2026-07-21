@@ -42,6 +42,8 @@ public:
 	// ===== the realized reads (bare fetches + the combine; O(1) integer arithmetic) =====
 	static long yieldRate100(const CvCity* pCity, YieldTypes eY);          // §2a: (plots+trade+BASE)×pct + EXTRA
 	static long commerceRate100(const CvCity* pCity, CommerceTypes eC);    // the §2 CombineSplit over the packages
+	static int yieldModifier(const CvCity* pCity, YieldTypes eY, int iExtra); // §2a: max(0,100+iExtra+Σpct) -- the whole city-realized modifier (replaces the legacy getBaseYieldRateModifier hand-sum)
+	static int commerceModifier(const CvCity* pCity, CommerceTypes eC);       // the commerce twin: max(1,100+Σpct) -- replaces the legacy getTotalCommerceRateModifier hand-sum
 	static int wellbeing(const CvCity* pCity, int iVerdict);               // §2b: 0=happy 1=unhappy 2=good 3=bad
 	static int scGpBase(const CvCity* pCity);                              // gp building + specialist flats
 	static int scGpNational(const CvPlayer* pPlayer);                      // max(0, trait national GP flats) -- the L6 fold

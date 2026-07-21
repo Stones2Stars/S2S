@@ -542,3 +542,22 @@ CvPlayer::m_iArrestingUnit
 CvPlayer::m_iTraitDisplayCount
 CvPlot::m_aiYield
 CvUnit::m_bCombatFocus
+
+========================
+2026-07-21 -- WRAPPER_SKIP_ELEMENT -> central soft-remove, wave 2 (derived caches only): the lingering per-object
+skips + KEPT writes for the CvCity bonus-fed derived caches (power + the bonus yield/commerce-rate modifiers) and the
+CvPlotGroup network bonus-count cache (with its bonusesPresent guard) are BOTH dropped -- rebuilt at load by the
+bonus-network fold (rebuildBonusPowerAtLoad + the onFinalInitialized recolor), never trusted from a save. NOT event
+stores: the event-granted bonus half is the SEPARATE m_paiFreeBonusEvents store, untouched. Plain named scalar/array
+tags, drained by exact name below.
+(The dead per-Type DECORATED accumulators -- CvPlayer/CvTeam m_ppaai* read in a loop under an [iI]/[newIndex] element
+tag -- are NOT converted: a BRACKETED decorated tag does NOT match a savemigration entry (the normalized dictionary
+name differs from the source literal -- verified live: it silently fails to drain and guts CvPlayer::read), so their
+enum-remapping drain LOOPS stay in read(). Only plain named fields soft-remove; bracketed per-element tags cannot.)
+CvCity::m_iPowerCount
+CvCity::m_aiBonusYieldRateModifier
+CvCity::m_aiBonusCommerceRateModifier
+CvCity::m_aiBonusCommercePercentChanges
+CvPlotGroup::bonusesPresent
+CvPlotGroup::m_paiNumBonuses
+========================

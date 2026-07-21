@@ -106,11 +106,11 @@ Removing a serialized field is soft via `Assets/savemigration.txt`: FULL-DELETE 
 the tag there — the save reader (`CvTaggedSaveFormatWrapper::sm_isCut`) drains the orphan tag transparently at load,
 so **no `WRAPPER_SKIP_ELEMENT`** (a lingering skip still names the dead member — a rollerskate target) and **no
 save-break-flush** (save-breaking is obsolete; the old two-stage model is retired). The one hard case: an UNLISTED
-deleted-read orphan desyncs the whole downstream read. **Home:** [engine.md](../reference/engine.md).
+deleted-read orphan desyncs the whole downstream read. **Home:** [save.md](../specs/save.md).
 
 ### DEC-derived-never-trusted
 
-Derived data is never trusted from a save — `reset()` marks it dirty on load and recomputes from live state. **Home:** [engine.md](../reference/engine.md).
+Derived data is never trusted from a save — `reset()` marks it dirty on load and recomputes from live state. **Home:** [save.md](../specs/save.md).
 
 ### DEC-obs-scale
 

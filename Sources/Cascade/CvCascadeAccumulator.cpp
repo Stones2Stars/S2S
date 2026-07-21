@@ -667,6 +667,26 @@ long CascadeAccumulator::commerceRate100(const CvCity* pCity, CommerceTypes eC)
 	return CommerceCalc::combineSplit(eC, pCity, yc100, prate, baseExtra, (int)pct);
 }
 
+// §2a: the WHOLE city-realized percent modifier (max(0, 100 + Σpercent)) -- the exact stack getYieldRate100 applies
+// (acc_yieldCombine's `100 + yPctCity`), now the ONE authority. Replaces the legacy getBaseYieldRateModifier hand-sum
+// of bonus/building/event/power/area/capital modifiers (all fold into yPctCity as scope/conditioned deposits).
+int CascadeAccumulator::yieldModifier(const CvCity* pCity, YieldTypes eY, int iExtra)
+{
+	if (pCity == NULL || eY < 0 || eY >= NUM_YIELD_TYPES) return std::max(0, 100 + iExtra);
+	pCity->m_cascadeCityPackages.set.ensure(CPK_YRATE);
+	return std::max(0, 100 + iExtra + (int)pCity->m_cascadeCityPackages.yPctCity[eY]);
+}
+
+// The commerce twin of yieldModifier: the whole city-realized commerce percent modifier (max(1, 100 + cPct)) -- the
+// same stack commerceRate100 applies. Replaces the legacy getTotalCommerceRateModifier hand-sum (bonus/building/
+// event/player/capital) + its m_totalCommerceRateModifier cache. max(1,·) matches the legacy floor.
+int CascadeAccumulator::commerceModifier(const CvCity* pCity, CommerceTypes eC)
+{
+	if (pCity == NULL || eC < 0 || eC >= NUM_COMMERCE_TYPES) return 100;
+	pCity->m_cascadeCityPackages.set.ensure(CPK_YRATE);
+	return std::max(1, 100 + (int)pCity->m_cascadeCityPackages.cPct[eC]);
+}
+
 int CascadeAccumulator::wellbeing(const CvCity* pCity, int iVerdict)
 {
 	if (pCity == NULL || iVerdict < 0 || iVerdict > 3) return 0;

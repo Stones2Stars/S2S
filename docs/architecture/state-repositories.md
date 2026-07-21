@@ -33,10 +33,12 @@ A derived cache in this model is:
    expensive recompute runs **once per change-then-read**, never per change and never per read.
 2. **Recompute-only, NOT serialized** — the [DEC-derived-never-trusted](decisions.md#dec-derived-never-trusted) rule,
    applied per-field. Neither the value nor the flag is saved; on load the flag is dirty by default, so the first read
-   recomputes from current state — **never stale-from-save**. Drop serialization
-   via `WRAPPER_SKIP_ELEMENT` (the soft-remove of [DEC-save-remove-is-soft](decisions.md#dec-save-remove-is-soft)):
-   it consumes a removed field's bytes from an *old* save by name so nothing after it shifts, and is a no-op on a new
-   save that never wrote it. *Just deleting the read/write breaks the save layout.*
+   recomputes from current state — **never stale-from-save**. Drop serialization by the **soft-remove**
+   ([DEC-save-remove-is-soft](decisions.md#dec-save-remove-is-soft), [save.md §3](../specs/save.md)): FULL-DELETE the
+   read + write and NAME the tag in `Assets/savemigration.txt`, which drains an old save's orphan bytes by name so
+   nothing after it shifts (a no-op on a new save that never wrote it). **No `WRAPPER_SKIP_ELEMENT`** (it leaves the
+   dead member named — a rollerskate target); and just deleting the read/write *without* the `savemigration.txt` entry
+   desyncs the whole downstream read.
    **This is UNIVERSAL, not per-field-optional (owner ruling): NO cache is ever serialized.** `CvGame::
    recalculateModifiers()` existed to purge drifted serialized derived data; with derived data never read from a
    save there is nothing to purge — **the recalc is RETIRED as a concept** (never invoke it, never extend it, never
@@ -109,8 +111,9 @@ public:
 
 - **It is a DATA MEMBER** on `CvCity`/`CvPlot` — fine: the [patterns](patterns.md) guardrail bars adding vtable
   *bases* to EXE-bound classes, **not** data members.
-- **Never serialized.** The owner's `read()` does `WRAPPER_SKIP_ELEMENT` for the legacy field; dirty-on-construct
-  means a loaded game recomputes on first read.
+- **Never serialized.** The owner's `read()`/`write()` drop the legacy field entirely and name its tag in
+  `Assets/savemigration.txt` (the soft-remove, [save.md §3](../specs/save.md)); dirty-on-construct means a loaded game
+  recomputes on first read.
 - **Converged onto the component:** the plot-yield cache; `CascadeCityPackages` (a mutable `CvCity` member, the cascade
   math module-side behind the one `cascadeRefreshPackages` delegate — the pattern every modifier channel reuses); the
   operating-building set (event-invalidated via targeted propagation; the epoch-stamp + turn-roll self-heal are

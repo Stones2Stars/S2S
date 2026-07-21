@@ -15,6 +15,7 @@ not a reverse-engineered guess.
 - **[specs/modifier.md](specs/modifier.md)** — the **"how much?"** machine (deposit-down, combine, the deliveryguy ownership rule).
 - **[specs/tally.md](specs/tally.md)** — the **"how many?"** machine (counts roll up, serializes nothing).
 - **[specs/event-spine.md](specs/event-spine.md)** — the one dispatch primitive consumers draw events from (the KIND firewall).
+- **[specs/save.md](specs/save.md)** — the name-keyed save format + the **soft-remove** discipline (`savemigration.txt` drain, no `WRAPPER_SKIP_ELEMENT`, derived-serializes-nothing).
 - **[specs/logging.md](specs/logging.md)** — **what to log** (the Orwell observability bar, hook shapes, the coverage scale).
 - **[specs/validation.md](specs/validation.md)** — the dry-calc test + the **parity** bar (the shadow phase has ended).
 - **[specs/http-endpoints.md](specs/http-endpoints.md)** — the endpoint catalogue (`/state`, `/computed`, `/events`).

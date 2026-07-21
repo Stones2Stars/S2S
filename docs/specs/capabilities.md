@@ -26,8 +26,8 @@ runtime-generated **`CAPABILITY_*` info** ([DEC-classification-infos](../archite
 [json.md §8](json.md)) with the grantor-side getters reading O(1) id bitsets — and the CvTeam capability
 getters **run on the cascade**: `CascadeCapabilities` (per-team cached derived-on-query union — O(1) precomputed
 flags + a per-terrain bit vector, invalidated at `setHasTech`/`reset`) is the **sole** union; the legacy counters
-are deleted, their serialization retired via named `WRAPPER_SKIP_ELEMENT`s ledgered in `savemigration.txt`
-(the two-stage retirement, [engine.md](../reference/engine.md) §Save/load). NPC guards + game-option compositions
+are deleted, their serialization retired by the soft-remove — the read + write dropped and the tags named in
+`Assets/savemigration.txt` ([save.md §3](save.md)). NPC guards + game-option compositions
 live in the getters; the side effects the deleted changers carried (the trade-network recompute
 `updatePlotGroups` + `MarkBridgesDirty`, the improvement-validity cache round, `updateYield`) survive in
 `processTech`. **The shadow phase has ended** ([validation.md](validation.md)) — the `[CAPSHADOW]` net no longer

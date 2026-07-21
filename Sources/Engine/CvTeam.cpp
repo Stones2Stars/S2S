@@ -6275,6 +6275,8 @@ void CvTeam::read(FDataStreamBase* pStream)
 	// #430 reseed NOTE: tech is reseeded from CvPlayer::read (per-self, once per member player), NOT here -- the EXE
 	// reads teams BEFORE players are set up, so a per-member emit from this point finds no alive members (verified: 0).
 
+	// Dead accumulator (member long gone): the drain loop STAYS -- a decorated [iI]/[newIndex] per-element tag does
+	// NOT match a savemigration entry (normalized dictionary name differs), so the loop is the drain.
 	for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_IMPROVEMENTS); ++i)
 	{
 		int	newIndex = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_IMPROVEMENTS, i, true);
@@ -6286,7 +6288,6 @@ void CvTeam::read(FDataStreamBase* pStream)
 		}
 		else
 		{
-			//	Consume the values
 			WRAPPER_SKIP_ELEMENT(wrapper, "CvTeam", m_ppaaiImprovementYieldChange[i], SAVE_VALUE_ANY);
 		}
 	}

@@ -16,39 +16,14 @@ across the process boundary — **not** style choices: **C++03, 32-bit, Python 2
 - **PCH footgun:** never `using namespace boost*` — a bare `bind`/`function` can silently resolve to `boost::`
   through the PCH (bit `CvHttpServer`). The cascade event-spine deliberately names no Boost type.
 
-## Save / load — name-keyed, soft for ADDS only
+## Save / load
 
-Format is **name-keyed, not positional** — `(id, type-code, value)` tuples; no save-version number; compatibility
-resolves dynamically by name.
-
-- **Adding** a field is SOFT (old save, new code): the new read mismatches the stream's next element, no-ops, and
-  keeps its default — `Expect()` returns false and leaves the stream untouched
-  (`Sources/Infrastructure/CvTaggedSaveFormatWrapper.cpp:3830`).
-- **⛔ Removing a field: FULL-DELETE the member + read + write, and NAME the tag in `Assets/savemigration.txt`.**
-  The save reader (`CvTaggedSaveFormatWrapper::Expect` → `sm_isCut`, `CvTaggedSaveFormatWrapper.cpp:~3944`) parses
-  that file ONCE at load and drains any listed orphan tag **transparently, wherever it sits in the stream** — so the
-  field is FULLY GONE from the object: no member, no read, no write, and **no `WRAPPER_SKIP_ELEMENT`** (a lingering
-  skip still names the dead member in the read path — a rollerskating target,
-  [DEC-no-rollerskate-evidence](../architecture/decisions.md#dec-no-rollerskate-evidence)). This makes
-  save-breaking **OBSOLETE**: old saves load clean as long as the tag is listed, forever — there is **no** "flush at
-  the next compat break" (that two-stage `SKIP_ELEMENT`+flush model is RETIRED). The tag name is the normalized
-  `"ClassName::memberName"` (the same the dictionary stores); `savemigration.txt` also does RENAME
-  (`Class::m_old -> Class::m_new`). ⛔ The one hard rule survives: an **UNLISTED** orphan (a deleted read with NO
-  `savemigration.txt` entry) makes `Expect()` treat *any* mismatch as "code ahead of stream", never consume the
-  element, and desync **every subsequent read in that object** into silent defaults — the load guts wholesale
-  (proven live: empty tech lists, buildingless cities). So the `.txt` entry is **MANDATORY** on delete.
-- **Enum/Type drift** is name-remapped on load (`getInfoTypeForString`); XML reorder/insert is free. A removed Type
-  is SOFT only if its read site uses `WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING` (else HARD: message box + throw).
-- **The genuinely HARD save-breaks:** (1) a same-tag field whose *meaning* changed (silent wrong load); (2) a
-  deleted Type read without `_ALLOW_MISSING`; (3) a legacy raw enum-indexed int array that shrinks; (4) a type-code
-  change under a reused name; (5) a deleted field with NO `Assets/savemigration.txt` entry (the stale-tag desync
-  above — list the tag and it is soft). *Hardening path:* flip a Type's read site to `_ALLOW_MISSING`, then delete.
-- **Derived data serializes nothing** — `reset()` + mark-dirty-on-load is the pattern; the cascade [tally](../specs/tally.md) never serializes.
-- **⛔ When deleting a legacy changer/apply function, audit its whole BODY for side effects — an apply-site audit
-  alone misses them.** Legacy changers carry non-obvious riders (`changeTerrainTradeCount`/`changeRiverTradeCount`
-  call `updatePlotGroups()` — the trade-network recompute — per team player; `changeBridgeBuildingCount` marks
-  bridges dirty; others fire UI dirty bits). Post-cut, the surviving trigger site (e.g. `setHasTech`/`processTech`)
-  must still fire those effects, or derived engine state goes progressively stale.
+The name-keyed save format, the soft-add / soft-remove rules, the `Assets/savemigration.txt` drain, the two kinds of
+`WRAPPER_SKIP_ELEMENT`, derived-serializes-nothing, and the changer-body side-effect audit now live in their own core
+spec — **[../specs/save.md](../specs/save.md)** (home of [DEC-save-remove-is-soft](../architecture/decisions.md#dec-save-remove-is-soft)
++ [DEC-derived-never-trusted](../architecture/decisions.md#dec-derived-never-trusted)). The one-line reminders that
+matter for engine work: field removal is a soft `savemigration.txt` drain (**never** a `WRAPPER_SKIP_ELEMENT`, never a
+save-break); derived data serializes nothing; deleting a changer means auditing its whole body for riders.
 
 ## Pathfinding — two systems
 

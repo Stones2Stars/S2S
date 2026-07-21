@@ -856,9 +856,6 @@ public:
 	int getPowerYieldRateModifier(YieldTypes eIndex) const;
 	void changePowerYieldRateModifier(YieldTypes eIndex, int iChange);
 
-	int getBonusYieldRateModifier(YieldTypes eIndex) const;
-	void changeBonusYieldRateModifier(YieldTypes eIndex, int iChange);
-
 	int getTradeYield(YieldTypes eIndex) const;
 	int totalTradeModifier(const CvCity* pOtherCity = NULL) const;
 	int getPopulationTradeModifier() const;
@@ -1235,8 +1232,6 @@ public:
 	int getBonusDefenseChanges(const BonusTypes eIndex) const;
 	void changeBonusDefenseChanges(const BonusTypes eIndex, const int iChange);
 
-	int getBonusCommerceRateModifier(CommerceTypes eIndex) const;
-	void changeBonusCommerceRateModifier(CommerceTypes eIndex, int iChange);
 	bool isBuiltFoodProducedUnit() const;
 	void setBuiltFoodProducedUnit(bool bNewValue);
 	int getSpecialistGoodHealth() const;   // #430 cut: cascade-computed (CascadeWellbeing::specialistWellbeing)
@@ -1265,7 +1260,6 @@ public:
 	BuildTypes findChopBuild(FeatureTypes eFeature) const;
 	int getLineOfSight() const;
 	void changeLineOfSight(int iChange);
-	int calculateBonusCommerceRateModifier(CommerceTypes eIndex) const;
 	int getLandmarkAngerTimer() const;
 	void changeLandmarkAngerTimer(int iChange);
 	int getLandmarkAnger() const;
@@ -1350,7 +1344,6 @@ public:
 
 	int getAssignedSpecialistCount() const;
 
-	int getBonusCommercePercentChanges(CommerceTypes eIndex) const;
 	int getBonusCommercePercentChanges(CommerceTypes eIndex, BonusTypes eBonus) const;
 	int getBonusCommercePercentChanges(CommerceTypes eIndex, BuildingTypes eType) const;
 	void changeBonusCommercePercentChanges(CommerceTypes eIndex, int iChange);
@@ -1619,9 +1612,6 @@ protected:
 
 	int m_iFreshWater;
 
-	int* m_aiBonusCommerceRateModifier;
-	int* m_aiBonusCommercePercentChanges;
-
 	mutable int* m_cachedPropertyNeeds;
 	bool* m_pabHadVicinityBonus;
 	bool* m_pabHadRawVicinityBonus;
@@ -1739,7 +1729,6 @@ protected:
 	int* m_buildingYieldMod;
 	int* m_aiYieldRateModifier;
 	int* m_aiPowerYieldRateModifier;
-	int* m_aiBonusYieldRateModifier;
 	int* m_aiTradeYield;
 	int* m_aiProductionToCommerceModifier;
 	// STREAMLINED 2026-06-28: getBuildingCommerce100 is now a RECOMPUTE-ONLY, dirty-flagged cache (the plot/specialist

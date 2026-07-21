@@ -69,7 +69,6 @@ CvCity::CvCity()
 	m_buildingYieldMod = new int[NUM_YIELD_TYPES];
 	m_aiYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiPowerYieldRateModifier = new int[NUM_YIELD_TYPES];
-	m_aiBonusYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiTradeYield = new int[NUM_YIELD_TYPES];
 	m_aiProductionToCommerceModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiBuildingCommerce100 = new int[NUM_COMMERCE_TYPES];
@@ -107,9 +106,6 @@ CvCity::CvCity()
 	m_pabWorkingPlot = NULL;
 	m_pabHasReligion = NULL;
 	m_pabHasCorporation = NULL;
-
-	m_aiBonusCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
-	m_aiBonusCommercePercentChanges = new int[NUM_COMMERCE_TYPES];
 
 	m_cachedPropertyNeeds = NULL;
 	m_pabHadVicinityBonus = NULL;
@@ -176,7 +172,6 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_buildingYieldMod);
 	SAFE_DELETE_ARRAY(m_aiYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiPowerYieldRateModifier);
-	SAFE_DELETE_ARRAY(m_aiBonusYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiTradeYield);
 
 	SAFE_DELETE_ARRAY(m_aiProductionToCommerceModifier);
@@ -192,8 +187,6 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_abTradeRoute);
 	SAFE_DELETE_ARRAY(m_abRevealed);
 	SAFE_DELETE_ARRAY(m_abEspionageVisibility);
-	SAFE_DELETE_ARRAY(m_aiBonusCommerceRateModifier);
-	SAFE_DELETE_ARRAY(m_aiBonusCommercePercentChanges);
 
 	SAFE_DELETE_ARRAY(m_bHasBuildings);
 	SAFE_DELETE_ARRAY(m_pabReligiouslyDisabledBuilding);
@@ -609,7 +602,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		m_buildingYieldMod[iI] = 0;
 		m_aiYieldRateModifier[iI] = 0;
 		m_aiPowerYieldRateModifier[iI] = 0;
-		m_aiBonusYieldRateModifier[iI] = 0;
 		m_aiTradeYield[iI] = 0;
 		m_abBaseYieldRankValid[iI] = false;
 		m_abYieldRankValid[iI] = false;
@@ -624,8 +616,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		m_abBuildingCommerce100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
 		m_aiCommerceRateModifier[iI] = 0;
 		m_aiCommerceHappinessPer[iI] = 0;
-		m_aiBonusCommerceRateModifier[iI] = 0;
-		m_aiBonusCommercePercentChanges[iI] = 0;
 		m_abCommerceRankValid[iI] = false;
 		m_aiCommerceRank[iI] = -1;
 	}
@@ -4103,17 +4093,8 @@ void CvCity::processBonus(BonusTypes eBonus, int iChange)
 	// per-bonus apply + the m_iBonus*Health/Happiness accumulators are cut; getBonus* stand on the cascade term.
 
 	changePowerCount(getBonusPower(eBonus) * iChange);
-
-	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
-	{
-		changeBonusYieldRateModifier(((YieldTypes)iI), (getBonusYieldRateModifier(((YieldTypes)iI), eBonus) * iChange));
-	}
-
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		changeBonusCommerceRateModifier(((CommerceTypes)iI), (getBonusCommerceRateModifier(((CommerceTypes)iI), eBonus) * iChange));
-		changeBonusCommercePercentChanges(((CommerceTypes)iI), (getBonusCommercePercentChanges(((CommerceTypes)iI), eBonus) * iChange));
-	}
+	// #430: bonus yield/commerce RATE modifiers are cascade channels (enabled:{BONUS} deposits in yPctCity/cPct),
+	// read via getBaseYieldRateModifier/getTotalCommerceRateModifier; the legacy m_aiBonus* folds are CUT.
 	// LOAD-SUPPRESSED: m_aBuildingYieldChange is the still-serialized bonus-fed store (mixed with event/vote grants
 	// -- split awaits the modifier cut), so the load fold must not re-apply what the save already carries. Play-time
 	// crossings apply as always.
@@ -4530,19 +4511,14 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 
 			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 			{
-				changeBonusYieldRateModifier((YieldTypes)iJ, kBuilding.getBonusYieldModifier(iI, iJ) * iChange);
-
+				// #430: the bonus yield/commerce RATE modifiers are cascade channels now; only the per-building
+				// bonus-yield CHANGE ledger (m_aBuildingYieldChange) stays maintained here.
 				int iBonusChange = kBuilding.getBonusYieldChanges(iI, iJ);
 				if (hasVicinityBonus((BonusTypes)iI))
 				{
 					iBonusChange += kBuilding.getVicinityBonusYieldChanges(iI, iJ);
 				}
 				updateYieldRate(eBuilding, (YieldTypes)iJ, (getBuildingYieldChange(eBuilding, (YieldTypes)iJ) + iBonusChange) * iChange);
-			}
-			for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-			{
-				changeBonusCommerceRateModifier((CommerceTypes)iJ, kBuilding.getBonusCommerceModifier(iI, iJ) * iChange);
-				changeBonusCommercePercentChanges((CommerceTypes)iJ, kBuilding.getBonusCommercePercentChanges(iI, iJ) * iChange);
 			}
 		}
 	}
@@ -10209,26 +10185,11 @@ int CvCity::getYieldBySpecialist(YieldTypes eIndex, SpecialistTypes eSpecialist)
 // so if any extra checked things are added here, the cache needs to be invalidated
 int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra) const
 {
-	int iModifier = (
-		100 + iExtra
-		+ getBonusYieldRateModifier(eIndex)
-		+ getBuildingYieldModifier(eIndex)
-		// Event modifiers
-		+ getYieldRateModifier(eIndex) + GET_PLAYER(getOwner()).getYieldRateModifier(eIndex)
-	);
-	if (isPower())
-	{
-		iModifier += getPowerYieldRateModifier(eIndex);
-	}
-	if (area() != NULL)
-	{
-		iModifier += area()->getYieldRateModifier(getOwner(), eIndex);
-	}
-	if (isCapital())
-	{
-		iModifier += GET_PLAYER(getOwner()).getCapitalYieldRateModifier(eIndex);
-	}
-	return std::max(0, iModifier);
+	// #430: the WHOLE percent modifier is the cascade's city-realized stack (the same yPctCity getYieldRate100
+	// applies) -- bonus/building/event/power/area/capital all fold in as scope/conditioned deposits. The legacy
+	// hand-sum + its m_aiBonusYieldRateModifier accumulator are CUT; reading legacy here would mask cascade gaps
+	// (DEC-no-legacy-masking).
+	return CascadeAccumulator::yieldModifier(this, eIndex, iExtra);
 }
 
 int CvCity::getYieldRate(const YieldTypes eYield) const
@@ -10537,38 +10498,6 @@ void CvCity::changePowerYieldRateModifier(YieldTypes eIndex, int iChange)
 	}
 }
 
-
-int CvCity::getBonusYieldRateModifier(YieldTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	return m_aiBonusYieldRateModifier[eIndex];
-}
-
-
-void CvCity::changeBonusYieldRateModifier(YieldTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiBonusYieldRateModifier[eIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(getYieldRate100(eIndex));
-
-		GET_PLAYER(getOwner()).invalidateYieldRankCache(eIndex);
-
-		if (eIndex == YIELD_COMMERCE)
-		{
-			setCommerceDirty();
-		}
-
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
 
 void CvCity::setTradeYield(YieldTypes eIndex, int iNewValue)
 {
@@ -11008,38 +10937,11 @@ int CvCity::getTotalCommerceRateModifier(CommerceTypes eIndex) const
 {
 	PROFILE_FUNC();
 
-	if (m_totalCommerceRateModifier[eIndex] == MIN_INT)
-	{
-		int iTotal = 100;
-		//STEP 1 : Bonus Commerce Rate Modifier
-		iTotal += calculateBonusCommerceRateModifier(eIndex);
-		//STEP 2 : Buildings
-		iTotal += getBuildingCommerceModifier(eIndex);
-
-		//STEP 2.5 : Player level building effects
-		iTotal += GET_PLAYER(getOwner()).getCommerceRateModifierfromBuildings(eIndex);
-
-		//STEP 3 : Events
-		iTotal += getCommerceRateModifier(eIndex) + GET_PLAYER(getOwner()).getCommerceRateModifierfromEvents(eIndex);
-
-		//STEP 4 : Player level
-		//(Noting subtractions so it's easier to follow in comparison to the Text Manager.)
-		//Aside from those noted, Player level modifiers also include Civics, Traits, and Techs
-		//Events and buildings were isolated out so they could be expressed in the above categories
-		iTotal += (
-			GET_PLAYER(getOwner()).getCommerceRateModifier(eIndex)
-			- GET_PLAYER(getOwner()).getCommerceRateModifierfromEvents(eIndex)
-			- GET_PLAYER(getOwner()).getCommerceRateModifierfromBuildings(eIndex)
-		);
-		//STEP 5 : Capital Modifier
-		if (isCapital())
-		{
-			iTotal += GET_PLAYER(getOwner()).getCapitalCommerceRateModifier(eIndex);
-		}
-		m_totalCommerceRateModifier[eIndex] = std::max(1, iTotal);
-	}
-
-	return m_totalCommerceRateModifier[eIndex];
+	// #430: the WHOLE commerce percent modifier is the cascade's city-realized stack (100 + cPct, the same
+	// commerceRate100 applies) -- bonus/building/event/player/capital all fold in as scope/conditioned deposits. The
+	// legacy hand-sum + the m_aiBonusCommerce* accumulators are CUT; reading legacy would mask cascade gaps
+	// (DEC-no-legacy-masking).
+	return CascadeAccumulator::commerceModifier(this, eIndex);
 }
 
 
@@ -16274,9 +16176,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iAirModifier);
 	WRAPPER_READ(wrapper, "CvCity", &m_iAirUnitCapacity);
 	WRAPPER_READ(wrapper, "CvCity", &m_iNukeModifier);
-	// rebuilt at load: building half via rebuildBonusPowerAtLoad, bonus halves via the network fold
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_iPowerCount, SAVE_VALUE_ANY);
-
 	WRAPPER_READ(wrapper, "CvCity", &m_iDefenseDamage);
 	WRAPPER_READ(wrapper, "CvCity", &m_iLastDefenseDamage);
 	WRAPPER_READ(wrapper, "CvCity", &m_iOccupationTimer);
@@ -16314,7 +16213,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiYieldRateModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiPowerYieldRateModifier);
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_aiBonusYieldRateModifier, SAVE_VALUE_TYPE_INT_ARRAY);   // rebuilt by the load fold
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
@@ -16387,9 +16285,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iEventAnger);
 
 	WRAPPER_READ(wrapper, "CvCity", &m_fPopulationgrowthratepercentageLog);
-
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_aiBonusCommerceRateModifier, SAVE_VALUE_TYPE_INT_ARRAY);    // rebuilt by the load fold
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvCity", m_aiBonusCommercePercentChanges, SAVE_VALUE_TYPE_INT_ARRAY);  // rebuilt by the load fold
 
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadVicinityBonus);
 	WRAPPER_READ_CLASS_ENUM(wrapper, "CvCity", REMAPPED_CLASS_TYPE_CIVILIZATIONS, &m_iCiv);
@@ -16971,7 +16866,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iAirModifier);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iAirUnitCapacity);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iNukeModifier);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iPowerCount);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iDefenseDamage);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iLastDefenseDamage);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iOccupationTimer);
@@ -17003,7 +16897,6 @@ void CvCity::write(FDataStreamBase* pStream)
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiYieldRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiPowerYieldRateModifier);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiBonusYieldRateModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
@@ -17043,8 +16936,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iImprovementBadHealth);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iEventAnger);
 	WRAPPER_WRITE(wrapper, "CvCity", m_fPopulationgrowthratepercentageLog);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBonusCommerceRateModifier);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiBonusCommercePercentChanges);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_pabHadVicinityBonus);
 	WRAPPER_WRITE_CLASS_ENUM(wrapper, "CvCity", REMAPPED_CLASS_TYPE_CIVILIZATIONS, m_iCiv);
 
@@ -19120,33 +19011,6 @@ void CvCity::setBuiltFoodProducedUnit(bool bNewValue)
 	m_bBuiltFoodProducedUnit = bNewValue;
 }
 
-int CvCity::getBonusCommerceRateModifier(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiBonusCommerceRateModifier[eIndex];
-}
-
-void CvCity::changeBonusCommerceRateModifier(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiBonusCommerceRateModifier[eIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(getCommerceRate(eIndex));
-
-		GET_PLAYER(getOwner()).invalidateCommerceRankCache(eIndex);
-
-		setCommerceModifierDirty(eIndex);
-		AI_setAssignWorkDirty(true);
-
-		if (getTeam() == GC.getGame().getActiveTeam())
-		{
-			setInfoDirty(true);
-		}
-	}
-}
-
 int CvCity::getBonusCommerceRateModifier(CommerceTypes eIndex, BonusTypes eBonus) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -19161,23 +19025,6 @@ int CvCity::getBonusCommerceRateModifier(CommerceTypes eIndex, BonusTypes eBonus
 	return iModifier;
 }
 
-
-void CvCity::changeBonusCommercePercentChanges(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiBonusCommercePercentChanges[eIndex] += iChange;
-		setCommerceDirty(eIndex);
-	}
-}
-
-int CvCity::getBonusCommercePercentChanges(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiBonusCommercePercentChanges[eIndex];
-}
 
 int CvCity::getBonusCommercePercentChanges(CommerceTypes eIndex, BonusTypes eBonus) const
 {
@@ -19903,21 +19750,6 @@ BuildTypes CvCity::findChopBuild(FeatureTypes eFeature) const
 	return NO_BUILD;
 }
 
-
-int CvCity::calculateBonusCommerceRateModifier(CommerceTypes eIndex) const
-{
-	PROFILE_EXTRA_FUNC();
-	int iMod = getBonusCommerceRateModifier(eIndex);
-
-	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
-	{
-		if (hasBonus((BonusTypes)iI))
-		{
-			iMod += GET_PLAYER(getOwner()).getBonusCommerceModifier((BonusTypes)iI, eIndex);//from Player level
-		}
-	}
-	return iMod;
-}
 
 static bool bonusAvailableFromBuildings(BonusTypes eBonus)
 {
@@ -21152,7 +20984,6 @@ void CvCity::clearModifierTotals()
 	{
 		m_aiYieldRateModifier[iI] = 0;
 		m_aiPowerYieldRateModifier[iI] = 0;
-		m_aiBonusYieldRateModifier[iI] = 0;
 		m_aiTradeYield[iI] = 0;
 		m_aiBuildingBonusVicinityYield100[iI] = 0;
 		m_aiBuildingExtraYield100Cache[iI] = 0;
@@ -21167,8 +20998,6 @@ void CvCity::clearModifierTotals()
 		m_abBuildingCommerce100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
 		m_aiCommerceRateModifier[iI] = 0;
 		m_aiCommerceHappinessPer[iI] = 0;
-		m_aiBonusCommerceRateModifier[iI] = 0;
-		m_aiBonusCommercePercentChanges[iI] = 0;
 	}
 
 	for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)

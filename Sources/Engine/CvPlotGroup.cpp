@@ -705,14 +705,8 @@ void CvPlotGroup::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvPlotGroup", (int*)&m_eOwner);
 
 	// #430 no-serialized-caches: the group's bonus counts are DERIVED state -- built by the load-end network
-	// fold (extracted plots + city provides + capital import/export) and maintained by live crossings; the old
-	// save's array is drained, never read. Still WRITTEN for save-format compat.
-	bool arrayPresent = true;
-	WRAPPER_READ_DECORATED(wrapper, "CvPlotGroup", &arrayPresent, "bonusesPresent");
-	if ( arrayPresent )
-	{
-		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlotGroup", m_paiNumBonuses, SAVE_VALUE_TYPE_CLASS_INT_ARRAY);
-	}
+	// fold (extracted plots + city provides + capital import/export) and maintained by live crossings; an old
+	// save's orphan array is drained by savemigration.txt.
 	SAFE_DELETE_ARRAY(m_paiNumBonuses);
 	SAFE_DELETE_ARRAY(m_paiTradedBonuses);   // never serialized -- rebuilt by the load fold's capital leg
 	WRAPPER_READ(wrapper, "CvPlotGroup", &m_numPlots);
@@ -735,13 +729,7 @@ void CvPlotGroup::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvPlotGroup", m_iID);
 	WRAPPER_WRITE(wrapper, "CvPlotGroup", m_eOwner);
 
-	WRAPPER_WRITE_DECORATED(wrapper, "CvPlotGroup", (bool)(m_paiNumBonuses != NULL), "bonusesPresent");
-
-	if (m_paiNumBonuses != NULL)
-	{
-		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlotGroup", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiNumBonuses);
-	}
-
+	// m_paiNumBonuses is a derived cache -- never serialized (rebuilt by the load-end network fold).
 	WRAPPER_WRITE(wrapper, "CvPlotGroup", m_numPlots);
 	WRAPPER_WRITE(wrapper, "CvPlotGroup", m_seedPlotX);
 	WRAPPER_WRITE(wrapper, "CvPlotGroup", m_seedPlotY);

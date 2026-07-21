@@ -395,7 +395,6 @@ void CvPythonCityLoader::CyCityPythonInterface2(boost::python::class_<CyCity>& i
 		.def("isWeLoveTheKingDay", &CyCity::isWeLoveTheKingDay, "bool ()")
 		.def("setWeLoveTheKingDay", &CyCity::setWeLoveTheKingDay, "void (bool bWeLoveTheKingDay)")
 		.def("calcCorporateMaintenance", &CyCity::calcCorporateMaintenance, "int64_t ()")
-		.def("getBonusCommerceRateModifier", &CyCity::getBonusCommerceRateModifier, "int (int /*CommerceTypes*/)")
 		.def("changePowerCount", &CyCity::changePowerCount, "void (int iChange)")
 
 		.def("changeEventAnger", &CyCity::changeEventAnger, "void (int iChange)")

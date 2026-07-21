@@ -18390,6 +18390,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		for (int iCiv = 0; iCiv < GC.getNumCivicOptionInfos(); ++iCiv)
 			if (m_paeCivics[iCiv] != NO_CIVIC) { emitCivicAdopted(getID(), (int)m_paeCivics[iCiv], (int)NO_CIVIC); }
 
+		// Dead per-Type accumulators (member long gone): the drain loops STAY -- a decorated [iI] per-element tag
+		// does NOT match a savemigration entry (the normalized dictionary name differs), so the loop is the drain.
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
 		{
 			int	iI = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_SPECIALISTS, i, true);
@@ -18401,7 +18403,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			}
 			else
 			{
-				//	Consume the values
 				WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppaaiSpecialistExtraYield[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 			}
 		}
@@ -18417,7 +18418,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			}
 			else
 			{
-				//	Consume the values (removed improvement -- drain the decorated element so the stream stays aligned)
 				WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppaaiImprovementYieldChange[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 			}
 		}
@@ -18917,7 +18917,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			}
 			else
 			{
-				//	Consume the values
 				WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppaaiSpecialistExtraCommerce[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 			}
 		}

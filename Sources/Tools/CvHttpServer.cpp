@@ -2687,7 +2687,6 @@ namespace
 				// MODIFIER BREAKDOWN (getBaseYieldRateModifier components, CvCity.cpp:11217) -- so the emulator
 				// attributes the percent gap to the missing source (bonus/power/area/capital/player-trait), since
 				// StoneBase only sums building + civic %.
-				e["modBonus"]    = picojson::value((double)pCity->getBonusYieldRateModifier(eY));
 				e["modBuilding"] = picojson::value((double)pCity->getBuildingYieldModifier(eY));
 				e["modPlayer"]   = picojson::value((double)kPlayer.getYieldRateModifier(eY));
 				e["modEvent"]    = picojson::value((double)pCity->getYieldRateModifier(eY));
@@ -3073,7 +3072,6 @@ namespace
 				// buildingCommerce100 4-way decomposition (getBuildingCommerce100, CvCity.cpp:12131) -- so the missing
 				// building-commerce sub-source names itself (e.g. the espionage -80 = a bonus/tech/perPop sub-source):
 				e["bldgCommercePure100"]   = picojson::value((double)(100 * pCity->getBuildingCommerce(eC)));    // pure per-building flat ×100
-				e["bldgCommerceBonus100"]  = picojson::value((double)pCity->getBonusCommercePercentChanges(eC)); // bonus-gated building commerce ×100
 				e["bldgCommerceTech100"]   = picojson::value((double)pCity->getBuildingCommerceTechChange(eC));  // tech-gated building commerce ×100
 				e["bldgCommercePerPop100"] = picojson::value((double)(pCity->getCommercePerPopFromBuildings(eC) * pCity->getPopulation())); // per-pop building commerce ×100
 				// PURE (getBuildingCommerce) per-SOURCE decomposition (no-guessing rule): mirror getBuildingCommerceByBuilding's
@@ -3152,8 +3150,7 @@ namespace
 				e["playerExtraCommerce100"]  = picojson::value((double)kPlayer.getExtraCommerce100(eC));        // x100
 				// MODIFIER decomposition (getTotalCommerceRateModifier, base 100; §2 -- event/from-buildings are added
 				// then subtracted into modPlayer, the double-count the emulator must mirror) -- at parity with the yield mods:
-				e["totalModifier"]   = picojson::value((double)pCity->getTotalCommerceRateModifier(eC)); // realized base 100
-				e["modBonus"]        = picojson::value((double)pCity->getBonusCommerceRateModifier(eC)); // city, bonus-sourced
+				e["totalModifier"]   = picojson::value((double)pCity->getTotalCommerceRateModifier(eC)); // realized base 100 (cascade)
 				e["modBuilding"]     = picojson::value((double)pCity->getBuildingCommerceModifier(eC));  // city, building-sourced
 				e["modCity"]         = picojson::value((double)pCity->getCommerceRateModifier(eC));      // city own
 				e["modPlayer"]       = picojson::value((double)kPlayer.getCommerceRateModifier(eC));     // player (incl. the - subtractions)

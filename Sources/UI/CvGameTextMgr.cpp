@@ -25803,16 +25803,7 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 	//In the city coding the final modifier value appears to be processed in and out and stored on m_totalCommerceRateModifier[eIndex]
 	int iModifier = 100;
 
-	//STEP 1 : Bonus Commerce Rate Modifier
-	{
-		const int iBonusCommerce = city.calculateBonusCommerceRateModifier(eCommerceType);
-		if (0 != iBonusCommerce)
-		{
-			szBuffer.append(NEWLINE);
-			szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_BONUS_COMMERCE", iBonusCommerce, info.getChar()));
-			iModifier += iBonusCommerce;
-		}
-	}
+	// #430: bonus commerce rate modifier folds into the cascade total (getTotalCommerceRateModifier); no separate line.
 	//STEP 2 : Buildings (split into projects and everything else)
 	{
 		const int iBuildingMod = city.getBuildingCommerceModifier(eCommerceType);
@@ -26130,16 +26121,7 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 				iBaseModifier += iMod;
 			}
 		}
-		// Resources
-		{
-			const int iMod = city.getBonusYieldRateModifier(eYieldType);
-			if (0 != iMod)
-			{
-				szBuffer.append(gDLL->getText("TXT_KEY_MISC_HELP_YIELD_BONUS", iMod, info.getChar()));
-				szBuffer.append(NEWLINE);
-				iBaseModifier += iMod;
-			}
-		}
+		// #430: resource (bonus) yield rate modifier folds into the cascade total (getBaseYieldRateModifier); no separate line.
 		// Power
 		if (city.isPower())
 		{

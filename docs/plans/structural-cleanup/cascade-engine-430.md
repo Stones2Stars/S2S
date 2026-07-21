@@ -374,16 +374,13 @@ count itself (`getBuildingCount` = `m_paiBuildingCount` `:7329`, `getUnitCount`,
 ## 5. HARD BOUNDARIES (cannot rewire)
 
 - **EXE ABI** (§3) — the closed Firaxis `.exe` binds the DllExport surface + base classes.
-- **Save format** — name-tagged (`CvTaggedSaveFormatWrapper.h:14-17`); intentional breaks → `@SAVEBREAK`.
-  Derived/accumulator state serializes nothing (recomputed on load). **⛔ "Removing a serialized member is soft"
-  is NOT reliably true (proven 2026-07-02):** deleting the CvTeam capability counters' `WRAPPER_READ` entries
-  DESYNCED loading a save that carried the tags — the whole downstream state read wrong (empty tech lists,
-  gutted cities). Root cause (grounded): `Expect()` treats any mismatch as "code ahead of stream" and never
-  consumes the unexpected element (`CvTaggedSaveFormatWrapper.cpp:3830`), so a stale tag stalls every later read
-  in the object at its default. Retire serialized members in TWO STAGES: drop the `WRAPPER_WRITE` + replace the
-  read with a **named `WRAPPER_SKIP_ELEMENT(wrapper, "ClassName", memberName, SAVE_VALUE_ANY)`** (drains the tag
-  on old saves, no-ops on new) + ledger the field in `savemigration.txt`; flush skips + ledger at the next
-  save-compat break. Full mechanism: [engine.md](../../reference/engine.md) §Save/load.
+- **Save format** — name-tagged (`CvTaggedSaveFormatWrapper.h:14-17`). Derived/accumulator state serializes nothing
+  (recomputed on load). Removing a serialized member is a **soft** change PROVIDED its tag is listed in
+  `Assets/savemigration.txt`: FULL-DELETE the member + read + write (**no** `WRAPPER_SKIP_ELEMENT`) and name the tag,
+  which the reader drains transparently from old saves — no version bump, no `@SAVEBREAK`. The one hard rule: an
+  **UNLISTED** deleted-read orphan makes `Expect()` treat the mismatch as "code ahead of stream" and stall every
+  later read in the object at its default (the 2026-07-02 CvTeam capability-counter gutting — empty tech lists,
+  gutted cities — was exactly this: reads deleted with no ledger entry). Full mechanism: [save.md](../../specs/save.md).
 - **OOS / lockstep determinism** — integer math only; synced Soren RNG. `readJson` **will convert** readable→`int×100`
   ONCE at load (deterministic). No runtime float. Canonical: [DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100).
 - **Toolchain** — C++03, 32-bit/x86, vendored VC7.1, Python 2.4, Boost 1.32/1.55, raw Win32 (no `std::thread`/C++11+).
