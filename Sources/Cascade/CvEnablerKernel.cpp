@@ -376,6 +376,8 @@ namespace {
 
 static bool s_opIdxBuilt = false;
 static std::vector<int> s_opPop, s_opPower, s_opReligion, s_opCorp, s_opGolden, s_opStateRel, s_opCivic, s_opTechAny, s_opDynamic;
+static std::map<int, std::vector<int> > s_opPropBandConsumers;   // F5: PROPERTY_ id -> buildings whose requires.operate has a band on it
+static std::map<int, std::set<int> > s_opPropThresholds;         // F5: PROPERTY_ id -> the sorted union of its band thresholds (the watermark's window boundaries)
 static std::vector<int> s_opAnyBonus;                         // {buildings whose operate references ANY bonus} -- the whole-set re-check (plot-group membership change)
 static std::map<int, std::vector<int> > s_opBonusConsumers;   // BONUS_ id -> {buildings whose operate consumes it}
 static std::map<int, std::vector<int> > s_opBuildingDeps;     // BUILDING_ id -> {buildings whose operate references it}
@@ -483,6 +485,7 @@ void EnablerKernel::scanCondDeps(const CvJsonCondition* c, CascadeCondDeps& d, b
 		else if (t.compare(0, 12, "CORPORATION_") == 0) d.corp = true;
 		else if (t.compare(0, 9, "BUILDING_") == 0) { if (c->id >= 0) d.buildings.insert(c->id); }
 		else if (bTrackUnits && t.compare(0, 5, "UNIT_") == 0) { if (c->id >= 0) d.units.insert(c->id); }
+		else if (t.compare(0, 9, "PROPERTY_") == 0) { if (c->id >= 0) d.propertyBands[c->id] = std::make_pair(c->min, c->max); }  // F5: a property OPERATE band -- NOT dynamic; the watermark emits a targeted band-hit on a threshold crossing
 		else if (bMarkDynamic) d.dynamic = true;
 		return;
 	}
@@ -530,6 +533,12 @@ void EnablerKernel::buildActiveIndex()
 		if (!d.bonuses.empty()) s_opAnyBonus.push_back(b);   // #430 G3: the whole-set bucket (a plot-group membership shift may move any of them)
 		for (std::set<int>::const_iterator it = d.bonuses.begin(); it != d.bonuses.end(); ++it) s_opBonusConsumers[*it].push_back(b);
 		for (std::set<int>::const_iterator it = d.buildings.begin(); it != d.buildings.end(); ++it) s_opBuildingDeps[*it].push_back(b);
+		for (std::map<int, std::pair<int, int> >::const_iterator it = d.propertyBands.begin(); it != d.propertyBands.end(); ++it)
+		{
+			s_opPropBandConsumers[it->first].push_back(b);                       // F5: the property-band operate reverse-index
+			if (it->second.first  != -1) s_opPropThresholds[it->first].insert(it->second.first);   // min boundary
+			if (it->second.second != -1) s_opPropThresholds[it->first].insert(it->second.second);   // max boundary
+		}
 		const std::vector<int>& dorm = j->dormantTriggers();
 		for (size_t i = 0; i < dorm.size(); ++i) s_opDormBy[dorm[i]].push_back(b);
 		// obsolescence is tech-driven (obsoletedBy.techs): index the obsoletable buildings for the player-scope re-check.
@@ -582,6 +591,24 @@ void EnablerKernel::onBonusAccessChangedActive(const CvCity* pCity, int eBonus)
 	if (pCity == NULL || eBonus < 0) return;
 	std::map<int, std::vector<int> >::const_iterator it = s_opBonusConsumers.find(eBonus);
 	if (it != s_opBonusConsumers.end()) ek_recheckActiveSet(pCity, it->second);
+}
+
+// F5: a property crossed one of its operate-band thresholds in pCity (the property-engine watermark detected it) ->
+// re-check ONLY the buildings whose requires.operate consumes THAT property's band into the authoritative operating
+// set. Direction-less by design: ek_classifyBuilding re-reads the live value against the band, so high/low is
+// redundant. Mirrors onBonusAccessChangedActive; the per-turn checkBuildings then applies the flip via setDisabledBuilding.
+void EnablerKernel::onPropertyBandHitActive(const CvCity* pCity, int eProperty)
+{
+	buildActiveIndex();
+	if (pCity == NULL || eProperty < 0) return;
+	std::map<int, std::vector<int> >::const_iterator it = s_opPropBandConsumers.find(eProperty);
+	if (it != s_opPropBandConsumers.end()) ek_recheckActiveSet(pCity, it->second);
+}
+
+const std::map<int, std::set<int> >& EnablerKernel::propertyBandThresholds()
+{
+	buildActiveIndex();
+	return s_opPropThresholds;
 }
 
 void EnablerKernel::onPlayerScopeChangedActive(const CvCity* pCity)

@@ -1161,6 +1161,18 @@ void CascadeAccumulator::cityBonusAccessChanged(const CvCity* pCity, int eBonus)
 	EnablerKernel::onBonusAccessChangedActive(pCity, eBonus);
 }
 
+// F5: a property crossed an operate-band threshold in pCity (the property-engine watermark) -> the targeted operate
+// ripple over that property's band consumers + the building-active footprint mask. Mirrors the G3 power-operate case:
+// (1) re-check flips any band-membership change into the authoritative operating set (checkBuildings then applies it);
+// (2) a flipped building's modifier deposits change, so the city packages re-check (they read cascadeIsBuildingActive
+// on recompute). Property-band consumers are city-local, so a city-scope mark is the full footprint. Crossings are RARE.
+void CascadeAccumulator::cityPropertyBandChanged(const CvCity* pCity, int eProperty)
+{
+	if (pCity == NULL || eProperty < 0) return;
+	EnablerKernel::onPropertyBandHitActive(pCity, eProperty);
+	pCity->m_cascadeCityPackages.set.markDirty(CPK_ALL & ~(CPK_YSPEC | CPK_CSPEC | CPK_SCSPEC));
+}
+
 // ===================== the BOUNDARIES =====================
 //
 // The per-turn / load SELF-HEAL blankets (playerSliceRebuild, worldRebuild -- markAll + eager ensure of ALL

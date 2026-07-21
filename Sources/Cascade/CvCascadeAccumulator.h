@@ -82,6 +82,8 @@ public:
 	// operate-dormancy ripple over ONLY that bonus's operate consumers (reverse-FK; the whole-set variant is
 	// cityHaveChanged(pCity, CASC_HAVE_BONUS), used when plot-group MEMBERSHIP shifts the entire resource set).
 	static void cityBonusAccessChanged(const CvCity* pCity, int eBonus);
+	// F5: a property crossed an operate-band threshold in pCity -> the targeted operate ripple + building-active footprint.
+	static void cityPropertyBandChanged(const CvCity* pCity, int eProperty);
 	// Part B: a unit's EMPIRE count changed (trained / lost) -> TARGETED trainable re-check across the player's
 	// cities (unit caps are empire-scoped). A no-op for an uncapped, unreferenced unit (the combat common case).
 

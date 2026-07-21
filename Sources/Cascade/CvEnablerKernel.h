@@ -47,6 +47,7 @@ struct CascadeCondDeps
 	std::set<int> bonuses;    // specific BONUS_ ids referenced (presence or HAS_BONUS predicate)
 	std::set<int> buildings;  // specific BUILDING_ ids referenced
 	std::set<int> units;      // specific UNIT_ ids referenced -- only collected under bTrackUnits
+	std::map<int, std::pair<int, int> > propertyBands;  // PROPERTY_ id -> the operate band [min,max] (F5: -1 = unset)
 	CascadeCondDeps() : pop(false), power(false), religion(false), corp(false), goldenAge(false),
 		stateReligion(false), civicAny(false), dynamic(false) {}
 };
@@ -122,6 +123,8 @@ public:
 	static void onBuildingChangedActive(const CvCity* pCity, int eBuilding);   // a building built/lost in pCity
 	static void onHaveChangedActive(const CvCity* pCity, int eHaveKind);       // pop/religion/corp/power/bonus-whole-set (CASC_HAVE_*)
 	static void onBonusAccessChangedActive(const CvCity* pCity, int eBonus);   // #430 G3: a SINGLE bonus's access (trade/vicinity) flipped -> re-check its operate consumers (reverse-FK targeted)
+	static void onPropertyBandHitActive(const CvCity* pCity, int eProperty);   // F5: a property crossed a band threshold in pCity -> re-check its operate-band consumers (reverse-FK targeted)
+	static const std::map<int, std::set<int> >& propertyBandThresholds();      // F5: PROPERTY_ id -> the sorted union of its operate-band thresholds (the property-engine watermark reads this)
 	static void onPlayerScopeChangedActive(const CvCity* pCity);              // tech/civic/golden-age (player scope)
 	static void seedOperatingBuildings(const CvCity* pCity);                          // the LOAD seed: full recompute + the provider ref-count
 
