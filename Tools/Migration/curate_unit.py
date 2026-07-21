@@ -1041,13 +1041,16 @@ def curate(typ, rec, store):
     # carried a COUNT, and a skill that carries a value is not a skill (skills are pure boolean enablers).
     # --- tags (derived classification; greenfield first pass — see TAG_BY_UNITAI) ---
     # A specific DefaultUnitAI role (worker/spy/merchant/…) classifies the unit and SUPPRESSES `military` (owner:
-    # a spy just needs `spy`, not military — bMilitarySupport over-fires on non-combat roles). `military` (the
+    # a spy just needs `spy`, not military — the military flags over-fire on non-combat roles). `military` (the
     # IS_MILITARY signal) is the fallback for combat units that have no specific role.
+    # The signal is ANY of the three legacy military flags (support/production/happiness) -- skills.md §3 unifies all
+    # three onto the ONE `military` tag / IS_MILITARY predicate (the 1276/1325/1007 sets DIFFER: ~69 units carry
+    # production/happiness but NOT support, so deriving from support alone dropped their military membership entirely).
     uai = _txt(rec, "DefaultUnitAI")
     if uai in TAG_BY_UNITAI:
         for t in TAG_BY_UNITAI[uai]:
             tags[t] = True
-    elif _bool(rec, "bMilitarySupport"):
+    elif _bool(rec, "bMilitarySupport") or _bool(rec, "bMilitaryProduction") or _bool(rec, "bMilitaryHappiness"):
         tags["military"] = True
     # `outlaw` = the criminal COMBAT CLASS (owner 2026-06-23): primary <Combat> == UNITCOMBAT_CRIMINAL OR it appears
     # in <SubCombatTypes>. combat_class is the primary read above; SubCombatTypes is the same list curated to
@@ -1275,6 +1278,15 @@ def curate_special_unit(typ, rec, store):
             identity[key] = True
     if identity:
         out["identity"] = identity
+    # combat modifiers a special-unit group confers on its members (e.g. SPECIALUNIT_CAPTIVE -5% combat / -10 withdrawal
+    # -- a transport carrying a captive fights worse). Previously dropped (only the bools were read); the strength/
+    # withdrawal unit families are the faithful home (matching the unit curator).
+    cp = engine.text(rec.find("iCombatPercent"))
+    if cp and engine.is_int(cp) and int(cp) != 0:
+        out["strength"] = OrderedDict([("unit", OrderedDict([("percent", int(cp))]))])
+    wc = engine.text(rec.find("iWithdrawalChange"))
+    if wc and engine.is_int(wc) and int(wc) != 0:
+        out["withdrawal"] = OrderedDict([("unit", OrderedDict([("percent", int(wc))]))])
     fold_text_to_identity(out)   # TEXT -> identity (json.md §7) -- the special-unit path too
     return out
 

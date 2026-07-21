@@ -204,6 +204,9 @@ def property_source_v3(src):
             per_type = text(mult.find("AttributeType"))
             c = text(mult.find("Constant"))
             value = int(c) if is_int(c) else None
+        elif amt is not None and amt.find("AttributeType") is not None:  # iAmountPerTurn = a bare AttributeType -> 1 per that attribute
+            per_type = text(amt.find("AttributeType"))                   # (e.g. HANDICAP_SETTLER crime: 1 per POPULATION)
+            value = 1
         else:                                                  # plain scalar per-turn amount
             value = int(text(amt)) if (amt is not None and is_int(text(amt))) else None
     if value is None or value == 0:

@@ -1,5 +1,15 @@
 {
  "type": "SPECIALUNIT_CAPTIVE",
+ "strength": {
+  "unit": {
+   "percent": -5
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": -10
+  }
+ },
  "identity": {
   "description": "TXT_KEY_SPECIALUNIT_CAPTIVE"
  }
