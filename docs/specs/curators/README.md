@@ -25,6 +25,20 @@ to its legacy field, with the why**, and the code right below implements it. Can
 The mechanical de-Hungarianization (`iX` → `x`) lives in `engine.py`; the per-entity semantic renames live in each
 curator's docstring + body. To read the map for an entity, **read its curator.**
 
+## Post-curation additions (`curate_additions.py`) — the hand-authored layer
+
+> **Entity curation is complete (owner 2026-07-21), so new GAMEPLAY data no longer goes in the legacy XML
+> (curator input) — it is a POST-CURATION ADDITION.** Additions author in `Assets/Data/_additions/<type>.json`
+> (an entity id → a partial object) and `curate_additions.py` DEEP-MERGES them into the curated
+> `Assets/Data/<type>/**` JSON as the **final offline step** (dicts recurse; leaves/lists override). It matches the
+> curators' exact `indent=1` serialization, so an addition is a minimal additive diff, never a reformat.
+>
+> **The GAME never knows curation OR additions exist** (owner: *"the c++ should not know or care that the json is
+> now different from xml; the game does not, and should not know that there is such a thing as curation"*) — the
+> whole Python pipeline (curators + additions re-apply) is a **separate offline entity** that merely PRODUCES the
+> `Assets/Data` JSON the engine loads. The `_additions` files are the reviewable/revertible source layer; **re-run
+> `curate_additions.py --write` after ANY re-curate** so the additions always land last.
+
 ## Contents
 - **fixed-point-and-scales.md** — the curator de-scale registry: which Info fields are ×100 vs ×1 (the closed set of
   `…100()` accessors + the blind-spot fields). The fixed-point *model* lives in [json.md §3.6](../json.md).
