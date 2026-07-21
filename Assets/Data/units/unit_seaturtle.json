@@ -50,7 +50,9 @@
   "onlyDefensive"
  ],
  "tags": [
-  "seaUnit"
+  "seaUnit",
+  "animal",
+  "naval"
  ],
  "combatClass": "UNITCOMBAT_SEA_ANIMAL",
  "combatClasses": [

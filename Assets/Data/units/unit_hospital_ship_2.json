@@ -100,7 +100,9 @@
  ],
  "tags": [
   "military",
-  "seaUnit"
+  "seaUnit",
+  "naval",
+  "civilian"
  ],
  "combatClass": "UNITCOMBAT_DIESEL_SHIPS",
  "combatClasses": [

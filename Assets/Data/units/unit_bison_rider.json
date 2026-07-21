@@ -128,7 +128,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "mounted"
  ],
  "combatClass": "UNITCOMBAT_MOUNTED",
  "combatClasses": [

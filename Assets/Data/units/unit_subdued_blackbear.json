@@ -10,7 +10,8 @@
   "militaryTrade"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "civilian"
  ],
  "combatClass": "UNITCOMBAT_SUBDUED",
  "combatClasses": [

@@ -64,7 +64,9 @@
   "onlyDefensive"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "mounted",
+  "civilian"
  ],
  "combatClass": "UNITCOMBAT_HEALTH_CARE",
  "combatClasses": [

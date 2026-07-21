@@ -60,7 +60,9 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "recon",
+  "mounted"
  ],
  "combatClass": "UNITCOMBAT_RECON",
  "combatClasses": [

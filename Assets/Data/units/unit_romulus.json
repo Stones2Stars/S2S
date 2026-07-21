@@ -36,7 +36,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "hero"
  ],
  "combatClass": "UNITCOMBAT_HERO",
  "combatClasses": [

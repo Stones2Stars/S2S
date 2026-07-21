@@ -57,7 +57,9 @@
   "onlyDefensive"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "hero",
+  "civilian"
  ],
  "combatClass": "UNITCOMBAT_HERO",
  "combatClasses": [

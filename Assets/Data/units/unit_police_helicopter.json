@@ -99,7 +99,9 @@
   "militaryTrade"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "air",
+  "civilian"
  ],
  "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",
  "combatClasses": [

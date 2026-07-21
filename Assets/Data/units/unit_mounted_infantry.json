@@ -94,7 +94,9 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "mounted",
+  "melee"
  ],
  "combatClass": "UNITCOMBAT_MOUNTED",
  "combatClasses": [

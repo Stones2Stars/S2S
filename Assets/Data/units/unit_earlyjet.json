@@ -60,7 +60,8 @@
  ],
  "tags": [
   "military",
-  "airUnit"
+  "airUnit",
+  "air"
  ],
  "combatClass": "UNITCOMBAT_JET_FIGHTERS",
  "combatClasses": [

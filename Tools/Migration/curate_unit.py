@@ -139,6 +139,55 @@ TAG_BY_UNITAI = {
 # (~21-24 total). Emitted from the combat signal beside the role tags (see curate()).
 CRIMINAL_COMBAT = "UNITCOMBAT_CRIMINAL"
 
+# ---- unitcombat -> identity TAG mapping (first pass, owner-approved 2026-07-21; worklist:
+# docs/plans/structural-cleanup/unitcombat-tag-mapping.md). A tag is a unit's IDENTITY ("what it IS"); a UnitCombat
+# is a stat-holding modifier GROUP. The mapping is ADDITIVE: a unit carrying UNITCOMBAT_X ALSO gets tag Y (the
+# UnitCombat is KEPT as the stat source). Applied to the unit's combat classes (primary <Combat> + <SubCombatTypes>)
+# — tags are creation/upgrade-set (not promotion-grantable), so this static fold is complete; getTags() reads the
+# unit's OWN block (no runtime combat-class fold), so the tag must land ON the unit here. Only the OBVIOUS identities
+# are mapped; the taxonomy/size/species families stay FLAGGED (sizeMatters/data), never forced. hero/animal/space are
+# owner-approved NEW vocabulary (2026-07-21).
+TAG_BY_UNITCOMBAT = {
+    # tech / equipment
+    "UNITCOMBAT_GUN": ["gunpowder"], "UNITCOMBAT_SIEGE_GUNPOWDER": ["siege", "gunpowder"],
+    "UNITCOMBAT_MOUNTED": ["mounted"], "UNITCOMBAT_MOTILITY_RIDING": ["mounted"],
+    "UNITCOMBAT_MOUNT_HORSE": ["mounted"], "UNITCOMBAT_MOUNT_ELEPHANT": ["mounted"], "UNITCOMBAT_MOUNT_CAMEL": ["mounted"],
+    "UNITCOMBAT_MOUNT_GIRAFFE": ["mounted"], "UNITCOMBAT_MOUNT_MAMMOTH": ["mounted"], "UNITCOMBAT_MOUNT_ZEBRA": ["mounted"],
+    "UNITCOMBAT_MOUNT_DEER": ["mounted"], "UNITCOMBAT_MOUNT_BEAR": ["mounted"], "UNITCOMBAT_MOUNT_LLAMA": ["mounted"],
+    "UNITCOMBAT_MOUNT_BISON": ["mounted"], "UNITCOMBAT_MOUNT_RHINO": ["mounted"],
+    "UNITCOMBAT_ARMOR_VEHICULAR": ["mechanized", "armored"], "UNITCOMBAT_WHEELED": ["mechanized"],
+    "UNITCOMBAT_MOTILITY_DRIVING": ["mechanized"], "UNITCOMBAT_TRACKED": ["mechanized", "armored"],
+    "UNITCOMBAT_ASSAULT_MECH": ["mechanized", "armored"],
+    # domain — naval
+    "UNITCOMBAT_MOTILITY_NAVAL": ["naval"], "UNITCOMBAT_ARMOR_NAVAL": ["naval"], "UNITCOMBAT_NAVAL_COMBATANT": ["naval"],
+    "UNITCOMBAT_WOODEN_SHIPS": ["naval"], "UNITCOMBAT_TRANSPORT": ["naval"], "UNITCOMBAT_DIESEL_SHIPS": ["naval"],
+    "UNITCOMBAT_STEAM_SHIPS": ["naval"], "UNITCOMBAT_NUCLEAR_SHIPS": ["naval"], "UNITCOMBAT_DESTROYER": ["naval"],
+    "UNITCOMBAT_SUBMARINE": ["naval"], "UNITCOMBAT_BATTLESHIP": ["naval"], "UNITCOMBAT_CRUISER": ["naval"],
+    "UNITCOMBAT_DREADNOUGHT": ["naval"], "UNITCOMBAT_DROID_SHIPS": ["naval"], "UNITCOMBAT_GRAVITY_DRIVE_SHIPS": ["naval"],
+    "UNITCOMBAT_JET_SHIPS": ["naval"], "UNITCOMBAT_LEVITATION_SHIPS": ["naval"], "UNITCOMBAT_SHOCKWAVE_SHIPS": ["naval"],
+    "UNITCOMBAT_TROID_SHIPS": ["naval"],
+    # domain — air
+    "UNITCOMBAT_ARMOR_AIRCRAFT": ["air"], "UNITCOMBAT_MOTILITY_AERIAL": ["air"], "UNITCOMBAT_HELICOPTER": ["air"],
+    "UNITCOMBAT_GUNSHIP": ["air"], "UNITCOMBAT_JET_FIGHTERS": ["air"], "UNITCOMBAT_BALLOON": ["air"],
+    "UNITCOMBAT_EARLY_FIGHTERS": ["air"], "UNITCOMBAT_BOMBERS": ["air"], "UNITCOMBAT_EARLY_BOMBERS": ["air"],
+    "UNITCOMBAT_SUPERSONIC_PLANES": ["air"], "UNITCOMBAT_ORBITAL_AIRCRAFT": ["air", "space"], "UNITCOMBAT_AIR_RECON": ["air", "recon"],
+    # type / combat
+    "UNITCOMBAT_MELEE": ["melee"], "UNITCOMBAT_ARCHER": ["archery"], "UNITCOMBAT_SIEGE": ["siege"],
+    "UNITCOMBAT_SIEGE_FIELD": ["siege"], "UNITCOMBAT_SIEGE_URBAN": ["siege"], "UNITCOMBAT_SIEGE_WOODEN": ["siege"],
+    "UNITCOMBAT_SIEGE_DEFENSIVE": ["siege"], "UNITCOMBAT_SIEGE_ROCKETRY": ["siege"], "UNITCOMBAT_SIEGE_ENERGY": ["siege"],
+    "UNITCOMBAT_SIEGE_GATECRASHER": ["siege"], "UNITCOMBAT_RECON": ["recon"], "UNITCOMBAT_EXPLORER": ["recon"],
+    # role (folds onto existing role tags; outlaw is also handled by the CRIMINAL_COMBAT block above)
+    "UNITCOMBAT_CIVILIAN": ["civilian"], "UNITCOMBAT_MISSIONARY": ["missionary"], "UNITCOMBAT_WORKER": ["worker"],
+    "UNITCOMBAT_TRADE": ["merchant"], "UNITCOMBAT_CRIMINAL": ["outlaw"], "UNITCOMBAT_SETTLER": ["settler"],
+    "UNITCOMBAT_SEA_WORKER": ["worker"], "UNITCOMBAT_SPY": ["spy"], "UNITCOMBAT_COMBAT_WORKER": ["worker"],
+    # NEW vocabulary (owner-approved 2026-07-21): hero / animal / space
+    "UNITCOMBAT_HERO": ["hero"], "UNITCOMBAT_ANIMAL": ["animal"], "UNITCOMBAT_SEA_ANIMAL": ["animal"],
+    "UNITCOMBAT_SEA_ANIMAL_TALE": ["animal"], "UNITCOMBAT_SPACE_WORKER": ["worker", "space"],
+    "UNITCOMBAT_EARLY_SPACESHIP": ["space"], "UNITCOMBAT_WORMHOLE_SPACESHIP": ["space"],
+    "UNITCOMBAT_SOLAR_SAIL_SPACESHIP": ["space"], "UNITCOMBAT_ANTIMATTER_SPACESHIP": ["space"],
+    "UNITCOMBAT_NUCLEAR_SPACESHIP": ["space"],
+}
+
 # ---- grants (one-shot, lists) ----
 GRANT_LIST = {"FreePromotions": "promotions", "GreatPeoples": "greatPeople",
               "Buildings": "buildings"}
@@ -992,6 +1041,13 @@ def curate(typ, rec, store):
     dom_tag = {"DOMAIN_LAND": "landUnit", "DOMAIN_SEA": "seaUnit", "DOMAIN_AIR": "airUnit"}.get(_txt(rec, "Domain"))
     if dom_tag:
         tags[dom_tag] = True
+    # fold the unit's COMBAT CLASSES -> identity tags (unitcombat->tag first pass, owner 2026-07-21). Every unit
+    # carrying UNITCOMBAT_X ALSO gets its mapped tag(s); ADDITIVE (the unit keeps UNITCOMBAT_X, the stat source).
+    # Applied to primary <Combat> + <SubCombatTypes> — the static creation/upgrade set is complete for tags, and
+    # getTags() reads the unit's OWN block so the tag must live here. Only the OBVIOUS identities map (TAG_BY_UNITCOMBAT).
+    for uc in ([combat_class] + sub_combats):
+        for t in TAG_BY_UNITCOMBAT.get(uc, ()):
+            tags[t] = True
     # --- grants (lists) ---
     for tag, key in GRANT_LIST.items():
         lst = _typelist(rec, tag)

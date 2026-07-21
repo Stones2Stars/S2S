@@ -85,7 +85,9 @@
   "ignoreNoEntryLevel"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "melee",
+  "civilian"
  ],
  "combatClass": "UNITCOMBAT_MELEE",
  "combatClasses": [

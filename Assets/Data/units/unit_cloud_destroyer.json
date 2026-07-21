@@ -104,7 +104,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "air"
  ],
  "combatClass": "UNITCOMBAT_BALLOON",
  "combatClasses": [

@@ -51,7 +51,8 @@
   "canMoveImpassable"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "space"
  ],
  "combatClass": "UNITCOMBAT_ANTIMATTER_SPACESHIP",
  "cost": {

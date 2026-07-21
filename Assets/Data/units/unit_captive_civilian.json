@@ -10,7 +10,8 @@
   "workerTrade"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "civilian"
  ],
  "combatClass": "UNITCOMBAT_CAPTIVE",
  "combatClasses": [

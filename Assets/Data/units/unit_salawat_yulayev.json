@@ -30,7 +30,10 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "hero",
+  "mounted",
+  "gunpowder"
  ],
  "combatClass": "UNITCOMBAT_HERO",
  "combatClasses": [

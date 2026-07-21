@@ -70,7 +70,9 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "gunpowder",
+  "melee"
  ],
  "combatClass": "UNITCOMBAT_GUN",
  "combatClasses": [

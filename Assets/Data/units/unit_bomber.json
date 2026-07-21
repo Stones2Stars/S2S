@@ -68,7 +68,8 @@
  ],
  "tags": [
   "military",
-  "airUnit"
+  "airUnit",
+  "air"
  ],
  "combatClass": "UNITCOMBAT_BOMBERS",
  "combatClasses": [

@@ -133,7 +133,9 @@
  "tags": [
   "military",
   "outlaw",
-  "landUnit"
+  "landUnit",
+  "mechanized",
+  "armored"
  ],
  "combatClass": "UNITCOMBAT_CRIMINAL",
  "combatClasses": [

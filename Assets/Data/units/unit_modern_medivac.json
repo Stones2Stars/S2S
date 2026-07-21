@@ -93,7 +93,9 @@
   "militaryTrade"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "air",
+  "civilian"
  ],
  "combatClass": "UNITCOMBAT_HEALTH_CARE",
  "combatClasses": [

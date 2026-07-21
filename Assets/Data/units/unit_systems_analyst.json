@@ -52,7 +52,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "civilian"
  ],
  "combatClass": "UNITCOMBAT_HITECH",
  "combatClasses": [

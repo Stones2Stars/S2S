@@ -72,7 +72,8 @@
  ],
  "tags": [
   "military",
-  "airUnit"
+  "airUnit",
+  "air"
  ],
  "combatClass": "UNITCOMBAT_SUPERSONIC_PLANES",
  "combatClasses": [

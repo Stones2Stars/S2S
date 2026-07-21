@@ -73,7 +73,8 @@
  ],
  "tags": [
   "military",
-  "airUnit"
+  "airUnit",
+  "air"
  ],
  "combatClass": "UNITCOMBAT_STEALTH",
  "combatClasses": [

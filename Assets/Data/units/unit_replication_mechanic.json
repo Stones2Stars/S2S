@@ -82,7 +82,9 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "air",
+  "civilian"
  ],
  "combatClass": "UNITCOMBAT_HELICOPTER",
  "combatClasses": [

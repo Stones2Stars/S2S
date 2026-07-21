@@ -54,7 +54,10 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "recon",
+  "mechanized",
+  "armored"
  ],
  "combatClass": "UNITCOMBAT_ROBOT",
  "combatClasses": [

@@ -136,7 +136,8 @@
  ],
  "tags": [
   "outlaw",
-  "landUnit"
+  "landUnit",
+  "gunpowder"
  ],
  "combatClass": "UNITCOMBAT_CRIMINAL",
  "combatClasses": [

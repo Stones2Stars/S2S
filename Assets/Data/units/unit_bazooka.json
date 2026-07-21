@@ -61,7 +61,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "gunpowder"
  ],
  "combatClass": "UNITCOMBAT_ROCKET_LAUNCHER",
  "combatClasses": [

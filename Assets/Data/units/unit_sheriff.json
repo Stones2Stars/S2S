@@ -122,7 +122,9 @@
   "militaryTrade"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "gunpowder",
+  "civilian"
  ],
  "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",
  "combatClasses": [

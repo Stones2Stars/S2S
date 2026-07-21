@@ -33,7 +33,8 @@
   "militaryTrade"
  ],
  "tags": [
-  "military"
+  "military",
+  "gunpowder"
  ],
  "combatClass": "UNITCOMBAT_ROBOT",
  "combatClasses": [

@@ -130,7 +130,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "mounted"
  ],
  "combatClass": "UNITCOMBAT_RUFFIAN",
  "combatClasses": [

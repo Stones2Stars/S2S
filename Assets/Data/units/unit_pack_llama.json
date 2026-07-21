@@ -41,7 +41,8 @@
   "militaryTrade"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "recon"
  ],
  "combatClass": "UNITCOMBAT_RECON",
  "combatClasses": [

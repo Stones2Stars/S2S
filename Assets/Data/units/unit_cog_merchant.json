@@ -57,7 +57,10 @@
  ],
  "tags": [
   "military",
-  "seaUnit"
+  "seaUnit",
+  "merchant",
+  "naval",
+  "civilian"
  ],
  "combatClass": "UNITCOMBAT_TRADE",
  "combatClasses": [

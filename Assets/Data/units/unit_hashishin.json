@@ -133,7 +133,8 @@
  "tags": [
   "military",
   "outlaw",
-  "landUnit"
+  "landUnit",
+  "melee"
  ],
  "combatClass": "UNITCOMBAT_STRIKE_TEAM",
  "combatClasses": [

@@ -97,7 +97,9 @@
  ],
  "tags": [
   "military",
-  "seaUnit"
+  "seaUnit",
+  "naval",
+  "civilian"
  ],
  "combatClass": "UNITCOMBAT_STEAM_SHIPS",
  "combatClasses": [

@@ -37,7 +37,8 @@
   "pillage"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "melee"
  ],
  "combatClass": "UNITCOMBAT_MELEE",
  "combatClasses": [

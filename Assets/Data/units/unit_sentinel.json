@@ -137,7 +137,9 @@
   "collateralImmune"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "mechanized",
+  "armored"
  ],
  "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",
  "combatClasses": [

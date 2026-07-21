@@ -21,7 +21,9 @@
   "food"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "settler",
+  "civilian"
  ],
  "combatClass": "UNITCOMBAT_SETTLER",
  "combatClasses": [

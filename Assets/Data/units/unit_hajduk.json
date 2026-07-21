@@ -164,7 +164,9 @@
  "tags": [
   "military",
   "outlaw",
-  "landUnit"
+  "landUnit",
+  "gunpowder",
+  "melee"
  ],
  "combatClass": "UNITCOMBAT_CRIMINAL",
  "combatClasses": [

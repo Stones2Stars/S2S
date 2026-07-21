@@ -59,7 +59,8 @@
   "noBadGoodies"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "recon"
  ],
  "combatClass": "UNITCOMBAT_HUNTER",
  "combatClasses": [

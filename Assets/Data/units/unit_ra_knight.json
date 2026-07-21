@@ -66,7 +66,8 @@
   "unlimitedException"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "mounted"
  ],
  "combatClass": "UNITCOMBAT_MOUNTED",
  "combatClasses": [

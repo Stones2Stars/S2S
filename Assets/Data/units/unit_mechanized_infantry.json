@@ -63,7 +63,10 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "mechanized",
+  "armored",
+  "naval"
  ],
  "combatClass": "UNITCOMBAT_TRACKED",
  "combatClasses": [

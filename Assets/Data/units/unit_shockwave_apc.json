@@ -59,7 +59,10 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "mechanized",
+  "naval",
+  "armored"
  ],
  "combatClass": "UNITCOMBAT_HITECH",
  "combatClasses": [

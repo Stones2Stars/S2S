@@ -35,7 +35,10 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "hero",
+  "mounted",
+  "mechanized"
  ],
  "combatClass": "UNITCOMBAT_HERO",
  "combatClasses": [

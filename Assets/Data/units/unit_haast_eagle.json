@@ -25,7 +25,9 @@
   "blendIntoCity"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "animal",
+  "air"
  ],
  "combatClass": "UNITCOMBAT_ANIMAL",
  "combatClasses": [

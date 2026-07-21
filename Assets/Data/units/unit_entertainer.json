@@ -26,7 +26,8 @@
   "rivalTerritory"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "civilian"
  ],
  "combatClass": "UNITCOMBAT_ENTERTAINER",
  "combatClasses": [

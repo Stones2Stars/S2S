@@ -115,7 +115,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "air"
  ],
  "combatClass": "UNITCOMBAT_NANITE",
  "combatClasses": [

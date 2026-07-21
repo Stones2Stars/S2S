@@ -62,7 +62,9 @@
  ],
  "tags": [
   "military",
-  "airUnit"
+  "airUnit",
+  "air",
+  "space"
  ],
  "combatClass": "UNITCOMBAT_ORBITAL_AIRCRAFT",
  "combatClasses": [

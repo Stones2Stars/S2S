@@ -128,7 +128,9 @@
   "militaryTrade"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "mechanized",
+  "civilian"
  ],
  "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",
  "combatClasses": [

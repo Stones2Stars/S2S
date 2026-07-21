@@ -56,7 +56,8 @@
   "canMoveImpassable"
  ],
  "tags": [
-  "landUnit"
+  "landUnit",
+  "space"
  ],
  "combatClass": "UNITCOMBAT_WORMHOLE_SPACESHIP",
  "cost": {

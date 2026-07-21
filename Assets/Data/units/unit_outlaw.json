@@ -152,7 +152,9 @@
  ],
  "tags": [
   "outlaw",
-  "landUnit"
+  "landUnit",
+  "mounted",
+  "gunpowder"
  ],
  "combatClass": "UNITCOMBAT_RUFFIAN",
  "combatClasses": [

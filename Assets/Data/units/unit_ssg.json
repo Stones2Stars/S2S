@@ -154,7 +154,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "gunpowder"
  ],
  "combatClass": "UNITCOMBAT_STRIKE_TEAM",
  "combatClasses": [

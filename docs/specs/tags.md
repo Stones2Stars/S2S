@@ -42,12 +42,27 @@ The catalogue of a unit's **immutable, accounting-only classification tags** (th
 The domain is membership of what the unit *is* → a tag. The `DOMAIN_*` **enum stays engine-side** (movement/stacking
 are wired to it deeply); the tag is the classification view, and `IS_LAND`/`IS_WATER`/`IS_AIR` read it.
 
-### Tech / equipment class — PERMANENT carve-out (from unitcombats, unitcombat→tag pass)
+### Tech / equipment / type / domain identity — derived from unitcombats (first pass DONE)
 
-`gunpowder` (uses gunpowder) · `mechanized` (mechanical/motorised) · `mounted` (cavalry) · … — these are *type*
-classes a unit gains/loses on upgrade (a swordsman → rifleman gains `gunpowder`; a `mounted` horseman *loses*
-`mounted` upgrading to a helicopter). To be derived from **unitcombats** in the unitcombat→tag pass (a PERMANENT carve-out),
-not the first cut.
+Derived by folding a unit's **combat classes** (primary `<Combat>` + `<SubCombatTypes>`) through the
+unitcombat→tag mapping (`TAG_BY_UNITCOMBAT` in `curate_unit.py`): every unit carrying `UNITCOMBAT_X` also gets
+its mapped identity tag(s). ADDITIVE — the unit keeps `UNITCOMBAT_X` (the stat-holding modifier source); the tag
+is its queryable identity. Tags are creation/upgrade-set (not promotion-grantable), so the static primary+subs
+fold is complete. Only the OBVIOUS identities map; the size/species/motility/weapon taxonomy stays FLAGGED
+(`sizeMatters`/data), never forced ([unitcombat-tag-mapping.md](../plans/structural-cleanup/unitcombat-tag-mapping.md)):
+
+- **tech / equipment:** `gunpowder` (uses gunpowder) · `mechanized` (mechanical/motorised) · `mounted` (cavalry) ·
+  `armored` (vehicular/tank armour). *Type classes a unit gains/loses on upgrade — a swordsman → rifleman gains
+  `gunpowder`; a `mounted` horseman loses `mounted` upgrading to a helicopter.*
+- **type / combat:** `melee` · `archery` · `siege` · `recon`.
+- **domain (from a combat class, complementing the `DOMAIN_*`-derived `landUnit`/`seaUnit`/`airUnit`):** `naval` ·
+  `air`.
+- **NEW vocabulary (owner-approved 2026-07-21):** `hero` (hero-unit identity, `UNITCOMBAT_HERO`) · `animal`
+  (`UNITCOMBAT_ANIMAL`/`SEA_ANIMAL`) · `space` (spacecraft + space workers, `UNITCOMBAT_*_SPACESHIP`/`SPACE_WORKER`).
+
+**Queryable now:** the `IS_<TAG>` predicate ([json.md §3.5/§8](json.md)) reads the unit's folded tag bitset —
+`{unit: IS_MOUNTED}` / `IS_GUNPOWDER` / `IS_NAVAL` / … evaluate live (`cascadeEvalCondition`), and the per-tag
+tally (`CvCascadeTally::countUnitsWithTag`) counts them at empire/team/world scope.
 
 ### Criminal-type — `outlaw`
 
@@ -71,8 +86,11 @@ covers **22** units, adding the ones INFILTRATOR missed — `OUTLAW` (primary `R
 
 ## Open
 
-- `gunpowder`/`mechanized`/… from **unitcombats** (PERMANENT carve-out — unitcombat→tag pass).
-- **Completeness** — most units untagged for now (fine).
+- **The FLAGGED unitcombat remainder** — the 318 unitcombats left FLAGGED in the first-pass mapping
+  ([unitcombat-tag-mapping.md](../plans/structural-cleanup/unitcombat-tag-mapping.md)): the taxonomy families
+  (weapon/size/species/quality/group — stay `sizeMatters`/data) + the ambiguous individual classes
+  (`COMBATANT`/`PACIFIST`/`HITECH`/`ROBOT`/`LAW_ENFORCEMENT`/… — need owner calls, e.g. a `police`/`medic`/`missile`
+  tag). Editable follow-up; map-the-obvious-flag-the-unsure, no completeness gate.
 - The **bSpy skill → `spy` tag** reconciliation (the spy notion is mis-filed as a skill too — drop the skill).
 - `IS_*` predicates are **independent queries** (not tag-membership), but **may be defined to encompass tags**;
   JSON-definable + predicate groups come post-migration ([json](json.md) §3.7).

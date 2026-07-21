@@ -78,7 +78,8 @@
   "renderBelowWater"
  ],
  "tags": [
-  "seaUnit"
+  "seaUnit",
+  "naval"
  ],
  "combatClass": "UNITCOMBAT_SUBMARINE",
  "combatClasses": [

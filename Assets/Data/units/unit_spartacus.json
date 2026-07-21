@@ -20,7 +20,9 @@
   }
  },
  "tags": [
-  "landUnit"
+  "landUnit",
+  "hero",
+  "melee"
  ],
  "combatClass": "UNITCOMBAT_HERO",
  "combatClasses": [

@@ -99,7 +99,9 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "melee",
+  "archery"
  ],
  "combatClass": "UNITCOMBAT_STRIKE_TEAM",
  "combatClasses": [

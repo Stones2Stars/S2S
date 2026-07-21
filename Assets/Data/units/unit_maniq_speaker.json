@@ -94,7 +94,8 @@
  ],
  "tags": [
   "military",
-  "landUnit"
+  "landUnit",
+  "civilian"
  ],
  "combatClass": "UNITCOMBAT_HEALTH_CARE",
  "combatClasses": [

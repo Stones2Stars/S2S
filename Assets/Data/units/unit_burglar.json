@@ -115,7 +115,8 @@
  ],
  "tags": [
   "outlaw",
-  "landUnit"
+  "landUnit",
+  "melee"
  ],
  "combatClass": "UNITCOMBAT_CRIMINAL",
  "combatClasses": [
