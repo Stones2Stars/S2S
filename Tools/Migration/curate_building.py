@@ -829,7 +829,10 @@ def _extra_free_bonuses(rec):
     for efb in node.findall("ExtraFreeBonus"):
         b = _txt(efb, "FreeBonus")
         if b:
-            out.append(b)
+            n = _int(efb, "iNumFreeBonuses")   # the supply COUNT (HOLLYWOOD = 6, wine = 3, ...)
+            # a bare string infers count 1; carry an explicit {BONUS_X: N} only when N > 1 (json §5a) so the
+            # count-1 common case stays the clean list form and the tradeable-supply count is not lost.
+            out.append({b: n} if (n and n > 1) else b)
     return out
 
 

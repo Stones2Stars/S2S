@@ -45,7 +45,9 @@
  },
  "provides": {
   "bonuses": [
-   "BONUS_FAKE_GEMS"
+   {
+    "BONUS_FAKE_GEMS": 6
+   }
   ]
  },
  "commerce": {

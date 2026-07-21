@@ -50,7 +50,9 @@
  },
  "provides": {
   "bonuses": [
-   "BONUS_TERRA_SIGILLATA"
+   {
+    "BONUS_TERRA_SIGILLATA": 6
+   }
   ]
  },
  "commerce": {

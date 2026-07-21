@@ -45,7 +45,9 @@
  },
  "provides": {
   "bonuses": [
-   "BONUS_MING_VASE"
+   {
+    "BONUS_MING_VASE": 6
+   }
   ]
  },
  "commerce": {

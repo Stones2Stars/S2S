@@ -27,7 +27,9 @@
  },
  "provides": {
   "bonuses": [
-   "BONUS_WINE_VINTAGE_RED"
+   {
+    "BONUS_WINE_VINTAGE_RED": 3
+   }
   ]
  },
  "cost": {

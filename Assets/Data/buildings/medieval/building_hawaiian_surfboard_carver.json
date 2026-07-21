@@ -17,7 +17,9 @@
  },
  "provides": {
   "bonuses": [
-   "BONUS_HAWAIIAN_SURFBOARDS"
+   {
+    "BONUS_HAWAIIAN_SURFBOARDS": 6
+   }
   ]
  },
  "gold": {

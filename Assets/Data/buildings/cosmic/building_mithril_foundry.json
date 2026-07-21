@@ -23,7 +23,9 @@
  },
  "provides": {
   "bonuses": [
-   "BONUS_MITHRIL"
+   {
+    "BONUS_MITHRIL": 3
+   }
   ]
  },
  "production": {

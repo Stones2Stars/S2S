@@ -27,7 +27,9 @@
  },
  "provides": {
   "bonuses": [
-   "BONUS_WINE_VINTAGE_WHITE"
+   {
+    "BONUS_WINE_VINTAGE_WHITE": 3
+   }
   ]
  },
  "hurryCost": {

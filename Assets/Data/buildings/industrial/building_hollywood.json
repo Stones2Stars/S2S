@@ -31,7 +31,9 @@
  },
  "provides": {
   "bonuses": [
-   "BONUS_HIT_MOVIES"
+   {
+    "BONUS_HIT_MOVIES": 6
+   }
   ]
  },
  "culture": {

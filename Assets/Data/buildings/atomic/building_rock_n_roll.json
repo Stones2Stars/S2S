@@ -30,7 +30,9 @@
  },
  "provides": {
   "bonuses": [
-   "BONUS_HIT_SINGLES"
+   {
+    "BONUS_HIT_SINGLES": 6
+   }
   ]
  },
  "culture": {

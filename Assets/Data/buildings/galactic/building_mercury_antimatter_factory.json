@@ -22,7 +22,9 @@
  },
  "provides": {
   "bonuses": [
-   "BONUS_ANTIMATTER"
+   {
+    "BONUS_ANTIMATTER": 3
+   }
   ]
  },
  "production": {

@@ -27,7 +27,9 @@
  },
  "provides": {
   "bonuses": [
-   "BONUS_NOK_SCULPTURES"
+   {
+    "BONUS_NOK_SCULPTURES": 6
+   }
   ]
  },
  "culture": {

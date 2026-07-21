@@ -34,7 +34,9 @@
  },
  "provides": {
   "bonuses": [
-   "BONUS_JADE_DEATH_MASKS"
+   {
+    "BONUS_JADE_DEATH_MASKS": 6
+   }
   ]
  },
  "commerce": {

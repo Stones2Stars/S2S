@@ -24,7 +24,9 @@
  },
  "provides": {
   "bonuses": [
-   "BONUS_CARVED_EMU_EGGS"
+   {
+    "BONUS_CARVED_EMU_EGGS": 6
+   }
   ]
  },
  "commerce": {

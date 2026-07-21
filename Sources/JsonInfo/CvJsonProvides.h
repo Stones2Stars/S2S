@@ -10,21 +10,31 @@
 //
 
 #include <vector>
+#include <map>
 
 namespace picojson { class value; }
 
 class CvJsonProvides
 {
 public:
-	std::vector<int> bonuses;   // provides.bonuses -> BONUS_* FK ids
+	std::vector<int> bonuses;      // provides.bonuses -> BONUS_* FK ids (the presence union; count-agnostic consumers read this)
+	std::map<int, int> bonusCount; // id -> supply COUNT for entries that carry one (json §5a {BONUS_X:N}); ABSENT = 1 (HOLLYWOOD etc.)
 
 	CvJsonProvides() {}
 
-	// The unit's single load-time writer: parse the `provides` object ({bonuses:[BONUS_ids]}).
+	// The unit's single load-time writer: parse the `provides` object. `bonuses` is a list whose entry is a bare
+	// BONUS_* string (count INFERRED 1) or a single-key object {BONUS_X: N} (an explicit supply count).
 	void parse(const picojson::value& v);
 
+	// The supply count for a provided bonus id (1 unless the entry carried an explicit count).
+	int countOf(int iBonusId) const
+	{
+		std::map<int, int>::const_iterator it = bonusCount.find(iBonusId);
+		return it != bonusCount.end() ? it->second : 1;
+	}
+
 	bool isEmpty() const { return bonuses.empty(); }
-	void clearParsed() { bonuses.clear(); }   // the clear-first half of the full-registry section re-map
+	void clearParsed() { bonuses.clear(); bonusCount.clear(); }   // the clear-first half of the full-registry section re-map
 
 private:
 	CvJsonProvides(const CvJsonProvides&);            // noncopyable (held by-value on the noncopyable info)

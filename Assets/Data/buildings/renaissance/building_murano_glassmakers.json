@@ -31,7 +31,9 @@
  },
  "provides": {
   "bonuses": [
-   "BONUS_CRYSTAL_GLASSWARE"
+   {
+    "BONUS_CRYSTAL_GLASSWARE": 6
+   }
   ]
  },
  "commerce": {

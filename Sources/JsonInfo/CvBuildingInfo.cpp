@@ -792,13 +792,13 @@ void CvBuildingInfo::reconstructFromComposed()
 	// AND clears the vicinity caches (hasVicinityBonus). Sourced from provides.bonuses (BOTH are the legacy
 	// ExtraFreeBonuses); with the poco's getFreeBonuses stubbed empty the free bonus was vicinity-only (cascade provides)
 	// and never entered the trade network -- so anything needing it via `trade` (tanks/helicopters) couldn't be built,
-	// and culture buildings' free bonus vanished. count 1 (the provides model dropped iNumFreeBonuses; a count-carrying
-	// provides is a data follow-up if a building ever grants >1).
+	// and culture buildings' free bonus vanished. The supply COUNT rides provides.bonuses ({BONUS_X:N}; absent = 1)
+	// -- e.g. HOLLYWOOD supplies 6 (the legacy iNumFreeBonuses), restoring tradeable-luxury supply that a flat count-1 cut.
 	{
 		const CvJsonProvides* pv = getProvides();
 		if (pv != NULL)
 			for (size_t i = 0; i < pv->bonuses.size(); ++i)
-				if (pv->bonuses[i] >= 0) m_freeBonuses.setValue((BonusTypes)pv->bonuses[i], 1);
+				if (pv->bonuses[i] >= 0) m_freeBonuses.setValue((BonusTypes)pv->bonuses[i], pv->countOf(pv->bonuses[i]));
 	}
 
 	// -------------------- GROUP 2: the keyed modifier families --------------------
