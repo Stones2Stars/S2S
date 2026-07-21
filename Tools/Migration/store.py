@@ -223,6 +223,29 @@ REPLACE_FIELDS = []
 DISABLE_FIELDS = []
 
 
+# --- CUT SYSTEMS (owner ruling 2026-07-21) -----------------------------------------------------------------
+# The astrological-influence + ancient-way trait/wonder/promotion system is unfleshed past the Renaissance, so it
+# is CUT WHOLE and documented for reimplementation (docs/plans/parked/astrological-ancient-way-traits.md). The
+# cut is applied HERE, at the store, so it is invisible to EVERY curator AND to the enable/obsolete inversion below
+# -- i.e. the granting wonders' `PrereqTech` never inverts into a tech's `enables`, so no dangling FK is produced
+# (a per-curator output drop would leave exactly that dangle). Art defines are KEPT (owner). The source XML is left
+# in place as the reimplementation reference; git history + the park doc are the record.
+DROPPED_TYPE_PREFIXES = (
+    "TRAIT_ASTROLOGICAL_INFLUENCE_OF_", "TRAIT_ANCIENT_WAY_OF_THE_",
+    "BUILDING_ASTROLOGICAL_INFLUENCE_OF_", "BUILDING_ANCIENT_WAY_OF_THE_",
+    "PROMOTION_INFLUENCE_OF_", "PROMOTION_WAY_OF_THE_",
+)
+DROPPED_TYPES = frozenset((
+    "SPECIALBUILDING_GROUP_ASTROLOGICAL_INFLUENCES",
+    "SPECIALBUILDING_GROUP_ANCIENT_WAYS",
+))
+
+
+def is_dropped_type(typ):
+    """A Type cut whole at the store (see CUT SYSTEMS above) -- no curator or inversion ever sees it."""
+    return typ in DROPPED_TYPES or typ.startswith(DROPPED_TYPE_PREFIXES)
+
+
 def _refs(rec, path):
     """Collect referenced Type-strings at fieldPath ('PrereqTech' or nested 'TechTypes/PrereqTech')."""
     nodes = [rec]
@@ -298,6 +321,8 @@ class Store:
                 typ = engine.text(rec.find("Type"))
                 if not typ:
                     continue
+                if is_dropped_type(typ):
+                    continue   # CUT SYSTEM (see DROPPED_TYPE_PREFIXES) -- invisible to every curator + the inversion
                 # Conditional replacement (AIAndy's CvInfoReplacements): a record carrying <ReplacementID> is NOT
                 # a module override of `typ`. The engine keeps it apart and swaps it in FOR `typ` only when the
                 # <ReplacementCondition> holds — read as a FRESH full Info, no base merge

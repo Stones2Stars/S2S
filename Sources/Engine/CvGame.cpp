@@ -240,8 +240,6 @@ void CvGame::init(HandicapTypes eHandicap)
 		else setOption(GAMEOPTION_NO_WORLDBUILDER, false);
 	}
 
-	// Alberts2: Recalculate which info class replacements are currently active
-	GC.updateReplacements();
 
 	//establish improvement costs
 	//for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
@@ -1424,10 +1422,8 @@ void CvGame::reset(HandicapTypes eHandicap, bool bConstructorCall)
 
 	m_Properties.clear();
 
-	// Alberts2: Recalculate which info class replacements are currently active
 	if (!bConstructorCall)
 	{
-		GC.updateReplacements();
 	}
 
 	// Only spot identified where game-options have been set before scenarios starts initiating cities on the map
@@ -11987,7 +11983,6 @@ void CvGame::recalculateModifiers()
 	}
 
 	// AIAndy: Recalculate which info class replacements are currently active
-	GC.updateReplacements();
 
 	for (int iI = 0; iI < GC.getNumVoteSourceInfos(); iI++)
 	{

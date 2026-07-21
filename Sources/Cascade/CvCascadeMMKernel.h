@@ -67,7 +67,7 @@ public:
 
 	// The active trait set's CvTraitInfo for trait t -- COMPLEX if GAMEOPTION_LEADER_COMPLEX_TRAITS, else SIMPLE
 	// (StoneBase ActiveTraitSet). The two sets collide on the engine id, so they live in separate repos; this picks by the
-	// live option (asserted from /state in StoneBase). NEVER the engine CvTraitInfo (its CvInfoReplacements swap is the catastrophe).
+	// live option (asserted from /state in StoneBase). NEVER a runtime swap of a single shared engine CvTraitInfo.
 	static const CvTraitInfo* traitData(int t);
 
 	// Σ a TRAIT's deposits (addr, unit) with the PURE_TRAITS sign filter (StoneBase PureFilter: under GAMEOPTION_LEADER_PURE_TRAITS

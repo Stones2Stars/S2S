@@ -51,7 +51,7 @@ from collections import OrderedDict
 
 import engine
 from curate_common import (put_art, emit_art, FAMILY_ORDER, de_i, descale100, fold_text_to_identity, gate_entity,
-                           emit_sizematters, SM_FLAT_CHANGE, SM_COMBATMOD_CHANGE, SM_CARGO_CHANGE)
+                           emit_sizematters, SM_FLAT_CHANGE, SM_COMBATMOD_CHANGE, SM_CARGO_CHANGE, wipe_entity_json)
 from store import Store, REPO
 
 # ---- scalar deposits: tag -> (family, member|None, unit). All at `unit` scope (self-accumulator, §5). ----
@@ -582,6 +582,7 @@ def main():
     if args.write:
         base = os.path.join(REPO, "Assets", "Data", "promotions")
         os.makedirs(base, exist_ok=True)
+        wipe_entity_json(base, recurse=False)   # drop-before-rewrite (keeps _order.json)
         for typ, obj in results.items():
             with open(os.path.join(base, typ.lower() + ".json"), "w") as fp:
                 json.dump(obj, fp, indent=1, ensure_ascii=False)

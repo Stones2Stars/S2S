@@ -2,7 +2,6 @@
  "type": "TECH_CONSCIOUSNESS",
  "enables": {
   "buildings": [
-   "BUILDING_ANCIENT_WAY_OF_THE_SHADOWS",
    "BUILDING_TRANCE_HUT"
   ],
   "promotions": [

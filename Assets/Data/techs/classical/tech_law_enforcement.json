@@ -2,8 +2,6 @@
  "type": "TECH_LAW_ENFORCEMENT",
  "enables": {
   "buildings": [
-   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_ARIES",
-   "BUILDING_ASTROLOGICAL_INFLUENCE_OF_SCORPIO",
    "BUILDING_TOWN_PATROL"
   ],
   "promotions": [

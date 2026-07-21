@@ -862,56 +862,6 @@ CvModLoadControlInfo& cvInternalGlobals::getModLoadControlInfos(int iIndex) cons
 	return *(m_paModLoadControls[iIndex]);
 }
 
-void cvInternalGlobals::updateReplacements()
-{
-//ReplacementStep
-	m_WorldInfoReplacements.updateReplacements(m_paWorldInfo);
-	m_UnitInfoReplacements.updateReplacements(m_paUnitInfo);
-	m_TechInfoReplacements.updateReplacements(m_paTechInfo);
-	m_TraitInfoReplacements.updateReplacements(m_paTraitInfo);
-	m_PromotionInfoReplacements.updateReplacements(m_paPromotionInfo);
-	m_BonusClassInfoReplacements.updateReplacements(m_paBonusClassInfo);
-	m_BonusInfoReplacements.updateReplacements(m_paBonusInfo);
-	m_ImprovementInfoReplacements.updateReplacements(m_paImprovementInfo);
-	m_BuildingInfoReplacements.updateReplacements(m_paBuildingInfo);
-	m_CivicInfoReplacements.updateReplacements(m_paCivicInfo);
-	m_LeaderHeadInfoReplacements.updateReplacements(m_paLeaderHeadInfo);
-
-	m_CivilizationInfoReplacements.updateReplacements(m_paCivilizationInfo);
-
-	m_CultureLevelInfoReplacements.updateReplacements(m_paCultureLevelInfo);
-
-	m_EventInfoReplacements.updateReplacements(m_paEventInfo);
-	m_EventTriggerInfoReplacements.updateReplacements(m_paEventTriggerInfo);
-	m_ProcessInfoReplacements.updateReplacements(m_paProcessInfo);
-	m_TerrainInfoReplacements.updateReplacements(m_paTerrainInfo);
-
-	m_SpecialistInfoReplacements.updateReplacements(m_paSpecialistInfo);
-
-	m_FeatureInfoReplacements.updateReplacements(m_paFeatureInfo);
-
-	m_ReligionInfoReplacements.updateReplacements(m_paReligionInfo);
-	m_CorporationInfoReplacements.updateReplacements(m_paCorporationInfo);
-
-	m_RouteInfoReplacements.updateReplacements(m_paRouteInfo);
-
-	m_ProjectInfoReplacements.updateReplacements(m_paProjectInfo);
-
-	m_BuildInfoReplacements.updateReplacements(m_buildTable.rows());
-
-	m_SpawnInfoReplacements.updateReplacements(m_paSpawnInfo);
-	m_GameSpeedInfoReplacements.updateReplacements(m_paGameSpeedInfo);
-	m_EraInfoReplacements.updateReplacements(m_aEraInfo);
-
-	m_SpecialBuildingInfoReplacements.updateReplacements(m_paSpecialBuildingInfo);
-
-	m_HandicapInfoReplacements.updateReplacements(m_paHandicapInfo);
-//ReplacementStep: search down here for 'CvInfoReplacements'
-
-	// Rebuild repository indices after pointer swaps in the Info vectors.
-	BuildingsRepo::get().rebuild();
-	BuildsRepo::get().rebuild();
-}
 
 /************************************************************************************************/
 /* MODULAR_LOADING_CONTROL                 END                                                  */
@@ -1211,12 +1161,18 @@ int cvInternalGlobals::getNumTraitInfos() const
 CvTraitInfo& cvInternalGlobals::getTraitInfo(TraitTypes eTraitNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumTraitInfos(), eTraitNum);
-	// #430: the ACTIVE trait set -- COMPLEX when GAMEOPTION_LEADER_COMPLEX_TRAITS is on AND the id exists in the
-	// complex repo, else the SIMPLE set (mirrors MMKernel::traitData; the two sets collide on the engine id so they
-	// live in separate repos -- cascade-engine-430.md §6). The engine CvInfoReplacements trait swap is demolition fodder.
-	if (getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS) && InfoRepo<CvComplexTraitTag>::get().get(eTraitNum) != NULL)
+	// The ACTIVE trait set is chosen PURELY by GAMEOPTION_LEADER_COMPLEX_TRAITS (the two sets share the engine id, so
+	// they live in separate repos -- cascade-engine-430.md §6 / modifier.md §4). complex/ is SELF-COMPLETE (a SUPERSET
+	// of simple/), so under the complex option EVERY id MUST resolve in the complex repo -- a miss is a CURATION defect
+	// (a trait absent from complex/), asserted LOUD and NEVER silently served from the simple set (owner ruling
+	// 2026-07-21: a simple trait must never reach a complex game). The FASSERT fires in dev; the self-complete data
+	// means it cannot fire on shipped content, and the Release fall-through is a crash-avoidance floor, not a fallback.
+	if (getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS))
 	{
-		return *static_cast<CvComplexTraitInfo*>(InfoRepo<CvComplexTraitTag>::get().editPtr(eTraitNum));
+		const bool bHasComplex = InfoRepo<CvComplexTraitTag>::get().get(eTraitNum) != NULL;
+		FAssertMsg(bHasComplex, CvString::format("TRAIT %d absent from the self-complete complex set (curation gap)", (int)eTraitNum).c_str());
+		if (bHasComplex)
+			return *static_cast<CvComplexTraitInfo*>(InfoRepo<CvComplexTraitTag>::get().editPtr(eTraitNum));
 	}
 	return *static_cast<CvSimpleTraitInfo*>(InfoRepo<CvTraitInfo>::get().editPtr(eTraitNum));
 }

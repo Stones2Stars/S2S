@@ -686,6 +686,15 @@ def main():
                 merged["type"] = typ
                 _write("complex", typ, merged)
                 nwritten += 1
+            elif folders[typ] == "simple":
+                # SELF-COMPLETE COMPLEX (owner ruling 2026-07-21): a simple trait with NO complex replacement is ALSO
+                # base-filled into complex/ (its whole def, identical) so the complex folder is a SUPERSET of simple.
+                # The option-gated active-set read (getTraitInfo / MMKernel::traitData) then NEVER falls back to a
+                # simple record under GAMEOPTION_LEADER_COMPLEX_TRAITS -- ② can make that read fail-loud with nothing
+                # to fall back to. Distinct from the whole-swap above: there is no replacement to swap to, so the base
+                # IS the complex version (e.g. TRAIT_BARBARIAN, the NPC-civ trait -- the only such case today).
+                _write("complex", typ, obj)
+                nwritten += 1
         print("\nwrote %d TraitInfo JSON files under Assets/Data/traits/{simple,complex}/" % nwritten)
 
 

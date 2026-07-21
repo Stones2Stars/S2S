@@ -178,7 +178,7 @@ int MMKernel::sumUnconditioned(const CvInfo* d, const std::string& wantAddress, 
 
 // The active trait set's CvTraitInfo for trait t -- COMPLEX if GAMEOPTION_LEADER_COMPLEX_TRAITS, else SIMPLE
 // (StoneBase ActiveTraitSet). The two sets collide on the engine id, so they live in separate repos; this picks by the
-// live option (asserted from /state in StoneBase). NEVER the engine CvTraitInfo (its CvInfoReplacements swap is the catastrophe).
+// live option (asserted from /state in StoneBase). NEVER a runtime swap of a single shared engine CvTraitInfo.
 const CvTraitInfo* MMKernel::traitData(int t)
 {
 	if (GC.getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS))

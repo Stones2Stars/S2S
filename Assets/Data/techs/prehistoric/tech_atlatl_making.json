@@ -1,9 +1,6 @@
 {
  "type": "TECH_ATLATL_MAKING",
  "enables": {
-  "buildings": [
-   "BUILDING_ANCIENT_WAY_OF_THE_WIND"
-  ],
   "promotions": [
    "PROMOTION_SIDESTEP2"
   ],

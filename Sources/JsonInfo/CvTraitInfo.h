@@ -8,8 +8,8 @@
 //	pure-empire-STATE set a civic enacts; a trait grants them permanently while held). Extension: the `negativeTrait`
 //	alignment flag (the PURE_TRAITS gate). The two DISTINCT trait sets are CvSimpleTraitInfo /
 //	CvComplexTraitInfo (their ids collide; the active set is chosen by GAMEOPTION_LEADER_COMPLEX_TRAITS). The
-//	cascade NEVER reads the engine CvTraitInfo for trait values (its runtime CvInfoReplacements swap can't represent
-//	this clean split).
+//	cascade reads trait values from these two poco sets, selected by the live option -- never a runtime swap of a
+//	single shared info (which cannot represent the clean split).
 //
 //	STUB Note (owner 2026-07-01): the legacy `freeSpecialistPer{World,National,Team}Wonder` keys under a trait `policies`
 //	block are EFFECTS (free specialists scaled per wonder, CvCity:5764), not pure states -> they reclassify to a

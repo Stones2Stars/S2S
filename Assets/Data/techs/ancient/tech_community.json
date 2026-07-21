@@ -2,7 +2,6 @@
  "type": "TECH_COMMUNITY",
  "enables": {
   "buildings": [
-   "BUILDING_ANCIENT_WAY_OF_THE_FIST",
    "BUILDING_TOWN_HALL"
   ],
   "civics": [

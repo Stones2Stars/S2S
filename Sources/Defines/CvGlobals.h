@@ -1,7 +1,6 @@
 #pragma once
 
 // cvGlobals.h
-//ReplacementStep: search down here for 'CvInfoReplacements'
 
 #ifndef CIV4_GLOBALS_H
 #define CIV4_GLOBALS_H
@@ -132,7 +131,6 @@ class CvModLoadControlInfo;
 class CvMapInfo;
 
 #include "CvInfoClassTraits.h"
-#include "CvInfoReplacements.h"
 #include "GlobalDefines.h"
 #include <stack>
 #include <vector>
@@ -413,7 +411,6 @@ public:
 
 	int getNumTraitInfos() const;
 	CvTraitInfo& getTraitInfo(TraitTypes eTraitNum) const;
-	const std::vector<CvTraitInfo*>& getTraitInfos() const { return m_paTraitInfo; }
 
 	int getNumCursorInfos() const;
 	CvCursorInfo& getCursorInfo(CursorTypes eCursorNum) const;
@@ -464,7 +461,6 @@ public:
 	int iStuckUnitID;
 	int iStuckUnitCount;
 
-	void updateReplacements();
 
 	int getNumCityTabInfos() const;
 	CvInfoBase& getCityTabInfo(CityTabTypes e) const;
@@ -961,41 +957,28 @@ protected:
 /* MODULAR_LOADING_CONTROL                 END                                                  */
 /************************************************************************************************/
 	std::vector<CvTerrainInfo*> m_paTerrainInfo;
-	CvInfoReplacements<CvTerrainInfo> m_TerrainInfoReplacements;
 	std::vector<CvLandscapeInfo*> m_paLandscapeInfo;
 	int m_iActiveLandscapeID;
 	std::vector<CvWorldInfo*> m_paWorldInfo;
-	CvInfoReplacements<CvWorldInfo> m_WorldInfoReplacements;
 	std::vector<CvClimateInfo*> m_paClimateInfo;
 	std::vector<CvSeaLevelInfo*> m_paSeaLevelInfo;
 	std::vector<CvYieldInfo*> m_paYieldInfo;
 	std::vector<CvCommerceInfo*> m_paCommerceInfo;
 	std::vector<CvRouteInfo*> m_paRouteInfo;
-	CvInfoReplacements<CvRouteInfo> m_RouteInfoReplacements;
 	std::vector<CvFeatureInfo*> m_paFeatureInfo;
-	CvInfoReplacements<CvFeatureInfo> m_FeatureInfoReplacements;
 	std::vector<CvBonusClassInfo*> m_paBonusClassInfo;
-	CvInfoReplacements<CvBonusClassInfo> m_BonusClassInfoReplacements;
 	std::vector<CvBonusInfo*> m_paBonusInfo;
-	CvInfoReplacements<CvBonusInfo> m_BonusInfoReplacements;
 	std::vector<CvImprovementInfo*> m_paImprovementInfo;
-	CvInfoReplacements<CvImprovementInfo> m_ImprovementInfoReplacements;
 	std::vector<CvGoodyInfo*> m_paGoodyInfo;
 	InfoTable<CvBuildInfo> m_buildTable;   // catalog for BuildTypes (was: std::vector<CvBuildInfo*> m_paBuildInfo)
-	CvInfoReplacements<CvBuildInfo> m_BuildInfoReplacements;
 	std::vector<CvHandicapInfo*> m_paHandicapInfo;
-	CvInfoReplacements<CvHandicapInfo> m_HandicapInfoReplacements;
 	std::vector<CvGameSpeedInfo*> m_paGameSpeedInfo;
-	CvInfoReplacements<CvGameSpeedInfo> m_GameSpeedInfoReplacements;
 	std::vector<CvTurnTimerInfo*> m_paTurnTimerInfo;
 	std::vector<CvCivilizationInfo*> m_paCivilizationInfo;
-	CvInfoReplacements<CvCivilizationInfo> m_CivilizationInfoReplacements;
 	int m_iNumPlayableCivilizationInfos;
 	int m_iNumAIPlayableCivilizationInfos;
 	std::vector<CvLeaderHeadInfo*> m_paLeaderHeadInfo;
-	CvInfoReplacements<CvLeaderHeadInfo> m_LeaderHeadInfoReplacements;
 	std::vector<CvTraitInfo*> m_paTraitInfo;
-	CvInfoReplacements<CvTraitInfo> m_TraitInfoReplacements;
 	std::vector<CvCursorInfo*> m_paCursorInfo;
 	std::vector<CvThroneRoomCamera*> m_paThroneRoomCamera;
 	std::vector<CvThroneRoomInfo*> m_paThroneRoomInfo;
@@ -1005,22 +988,16 @@ protected:
 	std::vector<CvWorldPickerInfo*> m_paWorldPickerInfo;
 	std::vector<CvSpaceShipInfo*> m_paSpaceShipInfo;
 	std::vector<CvProcessInfo*> m_paProcessInfo;
-	CvInfoReplacements<CvProcessInfo> m_ProcessInfoReplacements;
 	std::vector<CvVoteInfo*> m_paVoteInfo;
 	std::vector<CvProjectInfo*> m_paProjectInfo;
-	CvInfoReplacements<CvProjectInfo> m_ProjectInfoReplacements;
 	std::vector<CvBuildingInfo*> m_paBuildingInfo;
-	CvInfoReplacements<CvBuildingInfo> m_BuildingInfoReplacements;
 	// #195 constructibility enabler reverse-indices, indexed by enabler BuildingTypes.
 	std::vector< std::vector<BuildingTypes> > m_buildingEnablerIndex;
 	std::vector< std::vector<UnitTypes> > m_buildingToUnitsEnabledIndex;
 	std::vector< std::vector<UnitTypes> > m_invisibleSeerUnits;
 	std::vector<CvSpecialBuildingInfo*> m_paSpecialBuildingInfo;
-	CvInfoReplacements<CvSpecialBuildingInfo> m_SpecialBuildingInfoReplacements;
 	std::vector<CvUnitInfo*> m_paUnitInfo;
-	CvInfoReplacements<CvUnitInfo> m_UnitInfoReplacements;
 	std::vector<CvSpawnInfo*> m_paSpawnInfo;
-	CvInfoReplacements<CvSpawnInfo> m_SpawnInfoReplacements;
 	std::vector<CvSpecialUnitInfo*> m_paSpecialUnitInfo;
 	std::vector<CvInfoBase*> m_paConceptInfo;
 	std::vector<CvInfoBase*> m_paNewConceptInfo;
@@ -1049,30 +1026,22 @@ protected:
 	std::vector<CvPlayerOptionInfo*> m_paPlayerOptionInfos;
 	std::vector<CvGraphicOptionInfo*> m_paGraphicOptionInfos;
 	std::vector<CvSpecialistInfo*> m_paSpecialistInfo;
-	CvInfoReplacements<CvSpecialistInfo> m_SpecialistInfoReplacements;
 	std::vector<CvEmphasizeInfo*> m_paEmphasizeInfo;
 	std::vector<CvUpkeepInfo*> m_paUpkeepInfo;
 	std::vector<CvCultureLevelInfo*> m_paCultureLevelInfo;
-	CvInfoReplacements<CvCultureLevelInfo> m_CultureLevelInfoReplacements;
 	std::vector<CvReligionInfo*> m_paReligionInfo;
-	CvInfoReplacements<CvReligionInfo> m_ReligionInfoReplacements;
 	std::vector<CvCorporationInfo*> m_paCorporationInfo;
-	CvInfoReplacements<CvCorporationInfo> m_CorporationInfoReplacements;
 	std::vector<CvActionInfo*> m_paActionInfo;
 	std::vector<CvMissionInfo*> m_paMissionInfo;
 	std::vector<CvControlInfo*> m_paControlInfo;
 	std::vector<CvCommandInfo*> m_paCommandInfo;
 	std::vector<CvAutomateInfo*> m_paAutomateInfo;
 	std::vector<CvPromotionInfo*> m_paPromotionInfo;
-	CvInfoReplacements<CvPromotionInfo> m_PromotionInfoReplacements;
 	std::vector<CvTechInfo*> m_paTechInfo;
-	CvInfoReplacements<CvTechInfo> m_TechInfoReplacements;
 	std::vector<CvCivicOptionInfo*> m_paCivicOptionInfo;
 	std::vector<CvCivicInfo*> m_paCivicInfo;
-	CvInfoReplacements<CvCivicInfo> m_CivicInfoReplacements;
 	std::vector<CvDiplomacyInfo*> m_paDiplomacyInfo;
 	std::vector<CvEraInfo*> m_aEraInfo;	// [NUM_ERA_TYPES];
-	CvInfoReplacements<CvEraInfo> m_EraInfoReplacements;
 	std::vector<CvHurryInfo*> m_paHurryInfo;
 	std::vector<CvVictoryInfo*> m_paVictoryInfo;
 	std::vector<CvRouteModelInfo*> m_paRouteModelInfo;
@@ -1087,9 +1056,7 @@ protected:
 	std::vector<CvEffectInfo*> m_paEffectInfo;
 	std::vector<CvAttachableInfo*> m_paAttachableInfo;
 	std::vector<CvEventTriggerInfo*> m_paEventTriggerInfo;
-	CvInfoReplacements<CvEventTriggerInfo> m_EventTriggerInfoReplacements;
 	std::vector<CvEventInfo*> m_paEventInfo;
-	CvInfoReplacements<CvEventInfo> m_EventInfoReplacements;
 	std::vector<CvEspionageMissionInfo*> m_paEspionageMissionInfo;
 	std::vector<CvUnitArtStyleTypeInfo*> m_paUnitArtStyleTypeInfo;
 	std::vector<CvPropertyInfo*> m_paPropertyInfo;

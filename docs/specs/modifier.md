@@ -368,8 +368,18 @@ authored shape.
 > - **CRAZY → curator (`curate_trait`), offline, once.** The replacement/promotion-line machinery is dissolved into
 >   sensible JSON:
 >   - **Simple/complex split** by `COMPLEX_TRAITS` — the two `DefaultTraits`/`DefaultComplexTraits` sets become
->     `traits/simple/` + `traits/complex/`, each self-complete (base overwritten by its `Has(COMPLEX_TRAITS)`-gated
->     replacement, blanks filled from base). The active set is chosen by the live option (callout above).
+>     `traits/simple/` + `traits/complex/`. **`complex/` is SELF-COMPLETE = a SUPERSET of `simple/` (owner ruling
+>     2026-07-21):** every trait is present, so the option-gated active-set read (`getTraitInfo`/`MMKernel::traitData`)
+>     NEVER falls back to a simple record under `COMPLEX_TRAITS` — the read can be made fail-loud with nothing to fall
+>     back to. Each id's complex def is its `Has(COMPLEX_TRAITS)`-gated **replacement** where one exists (WHOLE-SWAP, no
+>     base-fill — a field the replacement omits is absent, mirroring the engine's `CvInfoReplacements`); a simple trait
+>     with **no** replacement is base-filled into `complex/` whole (its base IS the complex version — e.g.
+>     `TRAIT_BARBARIAN`, the NPC-civ trait). **Folder classification** keys on the `OnGameOptions: COMPLEX` gate /
+>     replacement-variant; a developing-line (`PromotionLine`) member that UNIQUELY lacks the gate its siblings carry is
+>     a SOURCE-data bug to fix (restore the tag), not a classifier change (the `TRAIT_TIMID1` case). **Traits are
+>     content-LOCKED** — `curate_trait` + `curate_leaderhead` are excluded from the full regen; the folders are
+>     hand-maintained from here (the community owns trait assignments post-launch). The active set is chosen by the live
+>     option (callout above).
 >   - **Developing line — do NOT auto-develop (engine-verified).** A `PromotionLine` is a chain of trait *levels*
 >     (`TRAIT_NOMAD1`→`TRAIT_NOMADIC2`→`…`, ordered by `iLinePriority`, each with a `PrereqTech`+`TraitPrereq`), but
 >     **researching a level's `PrereqTech` does NOT advance the held trait**. The **held trait `/state` reports IS

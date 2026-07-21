@@ -57,9 +57,8 @@
 //	`GC.m_pa<X>Info`, indexed by the SAME id -> O(1) access.
 //
 //	Why a separate parallel layer (not on the info objects): it keeps the migration boundary clean (the engine's XML
-//	info stays pure; the XML-vs-JSON shadow is two structures, swapped cleanly at cutover), it is immune to the
-//	`CvInfoReplacements` info-pointer swap (an array indexed by id stays put), the access is standardized, and it never
-//	touches `CvInfoBase`. The repo OWNS its `CvInfo` entries (frees on `clear()` / at shutdown).
+//	info stays pure; the XML-vs-JSON shadow is two structures, swapped cleanly at cutover), the access is standardized,
+//	and it never touches `CvInfoBase`. The repo OWNS its `CvInfo` entries (frees on `clear()` / at shutdown).
 //
 //	Scope (for now): the home for the JSON info data. Retrofitting the existing engine arrays+loops onto this pattern is
 //	a separate, later initiative.

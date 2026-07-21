@@ -3496,6 +3496,9 @@
 			<Button>art/Buttons/Traits/TraitTimid.dds</Button>
 			<PromotionLine>PROMOTIONLINE_TIMID</PromotionLine>
 			<iLinePriority>-1</iLinePriority>
+			<OnGameOptions>
+				<OnGameOption>GAMEOPTION_LEADER_COMPLEX_TRAITS</OnGameOption>
+			</OnGameOptions>
 			<DisallowedTraitTypes>
 				<DisallowedTraitType>
 					<TraitType>TRAIT_AGGRESSIVE1</TraitType>

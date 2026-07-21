@@ -10,9 +10,6 @@
   "promotions": [
    "PROMOTION_MIGHT3"
   ],
-  "specialBuildings": [
-   "SPECIALBUILDING_GROUP_ASTROLOGICAL_INFLUENCES"
-  ],
   "techs": [
    "TECH_ALPHABET",
    "TECH_BRASS_WORKING",

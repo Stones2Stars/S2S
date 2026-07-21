@@ -572,6 +572,24 @@ def run(cfg, boosts_config, store=None, post_process=None):
     return store, result
 
 
+def wipe_entity_json(dir_path, recurse=False):
+    """Drop-before-rewrite (owner ruling 2026-07-21): clear an entity folder's generated JSON before a --write so a
+    type no longer emitted (dropped at the store, renamed, or merged away) does NOT linger as a stale file. PRESERVES
+    any side/manifest file whose name starts with '_' (e.g. _order.json, the _additions overlay dir). recurse=True
+    also clears one level of subfolders -- the era-foldered layout (buildings/<era>/, and any thin curator with eras)."""
+    if not os.path.isdir(dir_path):
+        return
+    for name in os.listdir(dir_path):
+        p = os.path.join(dir_path, name)
+        if os.path.isdir(p):
+            if recurse:
+                for fn in os.listdir(p):
+                    if fn.endswith(".json") and not fn.startswith("_"):
+                        os.remove(os.path.join(p, fn))
+        elif name.endswith(".json") and not name.startswith("_"):
+            os.remove(p)
+
+
 def main(cfg, boosts_config, out_dir, post_process=None, synthesize=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--sample", nargs="*", help="print these types (default: first 1)")
@@ -600,6 +618,7 @@ def main(cfg, boosts_config, out_dir, post_process=None, synthesize=None):
             else:
                 print("\n(%s not found)" % nm)
     if args.write:
+        wipe_entity_json(out_dir, recurse=True)   # drop-before-rewrite (all thin curators route through here)
         for typ, (obj, era) in result.items():
             folder = os.path.join(out_dir, era) if era else out_dir
             os.makedirs(folder, exist_ok=True)

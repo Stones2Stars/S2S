@@ -9672,41 +9672,6 @@
 		<Russian>[ICON_BULLET]Êðàäåò 4% [ICON_RESEARCH] èç çàïàñîâ ïðîòèâíèêà ïîñëå ïîáåäû â ñðàæåíèè</Russian>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_INFLUENCE_OF_JUPITER</Tag>
-		<English>Influence of Jupiter</English>
-		<French>Influence de Jupiter</French>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_INFLUENCE_OF_MARS</Tag>
-		<English>Influence of Mars</English>
-		<French>Influence de Mars</French>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_INFLUENCE_OF_MERCURY</Tag>
-		<English>Influence of Mercury</English>
-		<French>Influence de Mercure</French>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_INFLUENCE_OF_SATURN</Tag>
-		<English>Influence of Saturn</English>
-		<French>Influence de Saturne</French>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_INFLUENCE_OF_THE_MOON</Tag>
-		<English>Influence of the Moon</English>
-		<French>Influence de la Lune</French>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_INFLUENCE_OF_THE_SUN</Tag>
-		<English>Influence of the Sun</English>
-		<French>Influence du Soleil</French>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_INFLUENCE_OF_VENUS</Tag>
-		<English>Influence of Venus</English>
-		<French>Influence de Vénus</French>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_PROMOTION_INITIATIVE1</Tag>
 		<English>Initiative I</English>
 		<Italian>Iniziativa I</Italian>
@@ -15256,76 +15221,6 @@
 		<French>Détournement V</French>
 		<German>Wegelagerer V</German>
 		<Russian>Слежение V</Russian>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_WAY_OF_THE_CENTAUR</Tag>
-		<English>Way of the Centaur</English>
-		<French>Voie du Centaure</French>
-		<German>Weg des Zentauren</German>
-		<Russian>Путь Кентавра</Russian>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_WAY_OF_THE_FEATHER</Tag>
-		<English>Way of the Feather</English>
-		<French>Voie de la plume</French>
-		<German>Weg der Feder</German>
-		<Russian>Путь Пера</Russian>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_WAY_OF_THE_FIST</Tag>
-		<English>Way of the Fist</English>
-		<French>Voie du Poing</French>
-		<German>Weg der Faust</German>
-		<Russian>Путь Кулака</Russian>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_WAY_OF_THE_LEECH</Tag>
-		<English>Way of the Leech</English>
-		<French>Voie de la Goule</French>
-		<German>Weg des Blutegels</German>
-		<Russian>Путь Пиявки</Russian>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_WAY_OF_THE_SHADOWS</Tag>
-		<English>Way of the Shadows</English>
-		<French>Voie des Ombres</French>
-		<German>Weg der Schatten</German>
-		<Russian>Путь Теней</Russian>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_WAY_OF_THE_WARRIOR</Tag>
-		<English>Way of the Warrior</English>
-		<French>Voie du Guerrier</French>
-		<German>Weg des Kriegers</German>
-		<Russian>Путь Воина</Russian>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_WAY_OF_THE_WAVES</Tag>
-		<English>Way of the Waves</English>
-		<French>Voie des Vagues</French>
-		<German>Weg der Wellen</German>
-		<Russian>Путь Волн</Russian>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_WAY_OF_THE_WILD</Tag>
-		<English>Way of the Wild</English>
-		<French>Voie de la Nature</French>
-		<German>Weg der Wildnis</German>
-		<Russian>Путь Дикаря</Russian>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_WAY_OF_THE_WIND</Tag>
-		<English>Way of the Wind</English>
-		<French>Voie du Vent</French>
-		<German>Weg des Windes</German>
-		<Russian>Путь Ветра</Russian>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_PROMOTION_WAY_OF_THE_WOLF</Tag>
-		<English>Way of the Wolf</English>
-		<French>Voie du Loup</French>
-		<German>Weg des Wolfes</German>
-		<Russian>Путь Волка</Russian>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_PROMOTION_WEAPON_UPGRADE1</Tag>

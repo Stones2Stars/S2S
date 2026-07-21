@@ -5,9 +5,7 @@
 
 // Named lookups over the global CvBuildInfo array.
 //
-// Mirrors BuildingsRepo: rebuilt after XML load and after every
-// cvInternalGlobals::updateReplacements() (replacement pointer swaps can
-// change CvBuildInfo fields for a given BuildTypes id).
+// Mirrors BuildingsRepo: rebuilt after XML load.
 
 class BuildsRepo
 	: private bst::noncopyable

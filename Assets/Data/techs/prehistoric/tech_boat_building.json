@@ -2,7 +2,6 @@
  "type": "TECH_BOAT_BUILDING",
  "enables": {
   "buildings": [
-   "BUILDING_ANCIENT_WAY_OF_THE_WAVES",
    "BUILDING_CANOE_BUILDER",
    "BUILDING_RIVER_PORT"
   ],
