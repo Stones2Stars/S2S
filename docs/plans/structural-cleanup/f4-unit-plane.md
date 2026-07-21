@@ -1,14 +1,18 @@
 # F4 — the unit-plane modifier machine (the unit-scope self-accumulator)
 
-> **Status:** build doc (owner-approved design 2026-07). The realization of [roadmap §F4](roadmap.md) — the last
-> unbuilt modifier scope. Brings the unit stat plane onto the ONE modifier machine
-> ([DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield)); today it is the biggest surface
-> still on legacy per-unit accumulators.
+> **Status:** build doc (owner-approved design 2026-07); PARTIALLY REALIZED. The SCALAR unit self-accumulator
+> (`CascadeUnitPackages`, `UPK_*`: strength/combat-percent, withdrawal, firstStrike, heal, evasion, intercept,
+> collateral-damage, capture, upkeep) is BUILT and wired to the getters. Still on legacy per-unit accumulators: the
+> KEYED channels (terrain/feature/unit-combat), SizeMatters, invisibility/visibility, espionage, bombard, movement,
+> and the empire civic/trait/tech CONDITIONED apply-loops onto units. Brings the unit stat plane onto the ONE modifier
+> machine ([DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield)); this doc states the design the
+> remaining channels execute against.
 
-## 1. The situation — data built, consumer absent
+## 1. The situation — data built, scalar consumer built, keyed/tail channels remain
 
-The **data side is complete**; the **self-accumulator consumer does not exist**. This is a greenfield build, not an
-unpick:
+The **data side is complete**; the **scalar self-accumulator consumer is BUILT** (`CascadeUnitPackages`), and the
+KEYED/SizeMatters/invisibility/espionage/bombard/movement channels + the empire conditioned apply-loops remain. This
+was a greenfield build, not an unpick:
 
 - `CvPromotionInfo` / `CvUnitCombatInfo` / `CvUnitInfo` each carry the address-keyed `CvJsonModifiers m_modifiers`
   (the deposit form) **and** the materialized `get*Change()` scalar mirrors. `DepositIndex::pushInfo` already
@@ -18,7 +22,8 @@ unpick:
   folding `kX.getYChange() * iChange` into ~91 `changeExtra*` sinks (`grep '^void CvUnit::changeExtra'` = exactly
   91, span `:11386…:30937`).
 - `Sources/Cascade/CvCascadeScopePackages.h` defines `CascadeCityPackages` / `CascadePlayerScope` /
-  `CascadeWorldScope` — **no unit scope**. That absence IS F4.
+  `CascadeWorldScope` **and now `CascadeUnitPackages`** (the `UPK_*` scalar channels — `refreshUnitPackages`,
+  `CvCascadeAccumulator.cpp`). The keyed/tail channels are what remain of F4.
 
 The full channel inventory (24 groups, adversarially verified) lives in
 [code-cut-map.md](code-cut-map.md) (§ the unit-plane BLOCKED inventory) — this doc does not duplicate it; it states
@@ -138,8 +143,9 @@ load-time re-derive path.
    - **Unit-classification "vs" modifiers (unitcombat / domain)** — a "vs mounted" / "vs land" combat modifier is the
      spec's `strength` deposit qualified by a `unit:` PREDICATE reading a TAG (`{unit: IS_MOUNTED}`, `{unit: IS_LAND}`),
      NOT a raw `strength.unit.unitCombat.{X}.percent` keyed channel. The `mounted`/`gunpowder`/`mechanized` tags come
-     from the **unitcombat→tags distillation** — a BLOCKED data-migration tail (`curate_unitcombat.py` emits no tags
-     today, [data-migration-remaining.md](data-migration-remaining.md); code-cut-map §51/§group 34). So these are
+     from the **unitcombat→tags distillation** — the obvious-identity tags (`mounted`/`gunpowder`/`mechanized`) are
+     emitted (`curate_unit.py` folds a unit's combat classes to tags); the fuller distillation remains
+     ([data-migration-remaining.md](data-migration-remaining.md); code-cut-map §51/§group 34). So these are
      **double-blocked**: they need the tag (the distillation pass) AND the `unit:` predicate wiring. Building them as
      raw unit-combat/domain keyed channels REINSTATES exactly the legacy class-targeting the tag model dissolves — do NOT.
    - **Plot-substrate keyed (terrain/feature attack/defense/work)** — keyed by real `TERRAIN_`/`FEATURE_` entities (not
@@ -190,8 +196,9 @@ load-time re-derive path.
   self-accumulator SOURCE the scalar plane (steps 1–2) already uses correctly ([modifier.md §6](../../specs/modifier.md),
   code-cut-map §group 18); (2) the **classification half** — extracting the `mounted`/`gunpowder`/`mechanized`
   **tags** and the ability **skills** out of the ~150-field UnitCombat, and re-expressing every "vs unit-combat-class"
-  modifier as a `{unit: IS_<TAG>}` PREDICATE deposit — is a **separate data-migration + design pass**
-  (`curate_unitcombat.py` emits no tags today; [tags.md](../../specs/tags.md), [skills.md](../../specs/skills.md),
+  modifier as a `{unit: IS_<TAG>}` PREDICATE deposit — is a **separate data-migration + design pass** (the
+  first-pass identity tags are emitted; the ability `skills` + vs-class-modifier re-expression remain;
+  [tags.md](../../specs/tags.md), [skills.md](../../specs/skills.md),
   [data-migration-remaining.md](data-migration-remaining.md)). Until that pass has its own grounded plan and lands,
   the keyed unit-classification modifiers (step 3, above) stay BLOCKED — never built as raw unit-combat/domain keyed
   channels.

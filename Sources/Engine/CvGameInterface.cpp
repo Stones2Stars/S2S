@@ -2,7 +2,6 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "Engine/CvExeTrace.h"
 #include "CvBuildingInfo.h"
 #include "Infrastructure/CvBugOptions.h"
 #include "CvCity.h"
@@ -32,17 +31,17 @@ void CvGame::updateColoredPlots()
 {
 	PROFILE_FUNC();
 
-	exeEng(EXEK_CLEAR_COLORED), gDLL->getEngineIFace()->clearColoredPlots(PLOT_LANDSCAPE_LAYER_BASE);
-	exeEng(EXEK_CLEAR_BORDER), gDLL->getEngineIFace()->clearAreaBorderPlots(AREA_BORDER_LAYER_CITY_RADIUS);
-	exeEng(EXEK_CLEAR_BORDER), gDLL->getEngineIFace()->clearAreaBorderPlots(AREA_BORDER_LAYER_RANGED);
-	exeEng(EXEK_CLEAR_BORDER), gDLL->getEngineIFace()->clearAreaBorderPlots(AREA_BORDER_LAYER_BLOCKADING);
-	exeEng(EXEK_CLEAR_BORDER), gDLL->getEngineIFace()->clearAreaBorderPlots(AREA_BORDER_LAYER_COMMAND_FIELD);
+	gDLL->getEngineIFace()->clearColoredPlots(PLOT_LANDSCAPE_LAYER_BASE);
+	gDLL->getEngineIFace()->clearAreaBorderPlots(AREA_BORDER_LAYER_CITY_RADIUS);
+	gDLL->getEngineIFace()->clearAreaBorderPlots(AREA_BORDER_LAYER_RANGED);
+	gDLL->getEngineIFace()->clearAreaBorderPlots(AREA_BORDER_LAYER_BLOCKADING);
+	gDLL->getEngineIFace()->clearAreaBorderPlots(AREA_BORDER_LAYER_COMMAND_FIELD);
 
 	const NiColorA cHighlightText(GC.getColorInfo(GC.getCOLOR_HIGHLIGHT_TEXT()).getColor());
 
 	if (!gDLL->GetWorldBuilderMode() || gDLL->getInterfaceIFace()->isInAdvancedStart())
 	{
-		exeEng(EXEK_CLEAR_COLORED), gDLL->getEngineIFace()->clearColoredPlots(PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS);
+		gDLL->getEngineIFace()->clearColoredPlots(PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS);
 	}
 	CvPlayerAI& player = GET_PLAYER(getActivePlayer());
 
@@ -58,7 +57,7 @@ void CvGame::updateColoredPlots()
 					// AI city sites circles
 					if (GET_PLAYER((PlayerTypes)iI).isAlive() && GET_PLAYER((PlayerTypes)iI).AI_isPlotCitySite(plotX))
 					{
-						exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(
+						gDLL->getEngineIFace()->addColoredPlot(
 							plotX->getViewportX(), plotX->getViewportY(),
 							GC.getColorInfo((ColorTypes)GC.getPlayerColorInfo(GET_PLAYER((PlayerTypes)iI).getPlayerColor()).getColorTypePrimary()).getColor(),
 							PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_BASE
@@ -75,7 +74,7 @@ void CvGame::updateColoredPlots()
 						&& GC.getBuildInfo(eBestBuild).getImprovement() != NO_IMPROVEMENT
 						&& GC.getBuildInfo(eBestBuild).getImprovement() != plotX->getImprovementType())
 						{
-							exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(
+							gDLL->getEngineIFace()->addColoredPlot(
 								plotX->getViewportX(), plotX->getViewportY(),
 								GC.getColorInfo(GC.getCOLOR_RED()).getColor(),
 								PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_BASE
@@ -108,7 +107,7 @@ void CvGame::updateColoredPlots()
 				}
 				if (bStartingPlot)
 				{
-					exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(
+					gDLL->getEngineIFace()->addColoredPlot(
 						plotX->getViewportX(), plotX->getViewportY(),
 						GC.getColorInfo(GC.getCOLOR_WARNING_TEXT()).getColor(),
 						PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS
@@ -116,7 +115,7 @@ void CvGame::updateColoredPlots()
 				}
 				else if (player.AI_isPlotCitySite(plotX))
 				{
-					exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(
+					gDLL->getEngineIFace()->addColoredPlot(
 						plotX->getViewportX(), plotX->getViewportY(), cHighlightText,
 						PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS
 					);
@@ -125,7 +124,7 @@ void CvGame::updateColoredPlots()
 				{
 					NiColorA color(GC.getColorInfo(GC.getCOLOR_WHITE()).getColor()); color.a = 0.4f;
 
-					exeEng(EXEK_AREA_BORDER), gDLL->getEngineIFace()->fillAreaBorderPlot(plotX->getViewportX(), plotX->getViewportY(), color, AREA_BORDER_LAYER_CITY_RADIUS);
+					gDLL->getEngineIFace()->fillAreaBorderPlot(plotX->getViewportX(), plotX->getViewportY(), color, AREA_BORDER_LAYER_CITY_RADIUS);
 				}
 			}
 		}
@@ -149,7 +148,7 @@ void CvGame::updateColoredPlots()
 					{
 						NiColorA color(GC.getColorInfo(GC.getCOLOR_WHITE()).getColor()); color.a = 0.7f;
 
-						exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(plotX->getViewportX(), plotX->getViewportY(), color, PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_BASE);
+						gDLL->getEngineIFace()->addColoredPlot(plotX->getViewportX(), plotX->getViewportY(), color, PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_BASE);
 					}
 				}
 			}
@@ -330,7 +329,7 @@ void CvGame::updateColoredPlots()
 							{
 								if (bShowWorkingImprovedTile)
 								{
-									exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(
+									gDLL->getEngineIFace()->addColoredPlot(
 										plotX->getViewportX(), plotX->getViewportY(), workingImprovedTile,
 										PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS
 									);
@@ -340,7 +339,7 @@ void CvGame::updateColoredPlots()
 							{
 								if (bShowWorkingImprovableBonusTile)
 								{
-									exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(
+									gDLL->getEngineIFace()->addColoredPlot(
 										plotX->getViewportX(), plotX->getViewportY(), workingImprovableBonusTile,
 										PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS
 									);
@@ -350,7 +349,7 @@ void CvGame::updateColoredPlots()
 							{
 								if (bShowWorkingImprovableTile)
 								{
-									exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(
+									gDLL->getEngineIFace()->addColoredPlot(
 										plotX->getViewportX(), plotX->getViewportY(), workingImprovableTile,
 										PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS
 									);
@@ -358,7 +357,7 @@ void CvGame::updateColoredPlots()
 							}
 							else if (bShowWorkingUnimprovableTile)
 							{
-								exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(
+								gDLL->getEngineIFace()->addColoredPlot(
 									plotX->getViewportX(), plotX->getViewportY(), workingUnimprovableTile,
 									PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS
 								);
@@ -370,7 +369,7 @@ void CvGame::updateColoredPlots()
 							{
 								if (bShowNotWorkingImprovedTile)
 								{
-									exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(
+									gDLL->getEngineIFace()->addColoredPlot(
 										plotX->getViewportX(), plotX->getViewportY(), notWorkingImprovedTile,
 										PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS
 									);
@@ -380,7 +379,7 @@ void CvGame::updateColoredPlots()
 							{
 								if (bShowNotWorkingImprovableBonusTile)
 								{
-									exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(
+									gDLL->getEngineIFace()->addColoredPlot(
 										plotX->getViewportX(), plotX->getViewportY(), notWorkingImprovableBonusTile,
 										PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS
 									);
@@ -390,7 +389,7 @@ void CvGame::updateColoredPlots()
 							{
 								if (bShowNotWorkingImprovableTile)
 								{
-									exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(
+									gDLL->getEngineIFace()->addColoredPlot(
 										plotX->getViewportX(), plotX->getViewportY(), notWorkingImprovableTile,
 										PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS
 									);
@@ -398,7 +397,7 @@ void CvGame::updateColoredPlots()
 							}
 							else if (bShowNotWorkingUnimprovableTile)
 							{
-								exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(
+								gDLL->getEngineIFace()->addColoredPlot(
 									plotX->getViewportX(), plotX->getViewportY(), notWorkingUnimprovableTile,
 									PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS
 								);
@@ -431,13 +430,13 @@ void CvGame::updateColoredPlots()
 
 					if (plotX && plotX->getWorkingCity() == pSelectedCity)
 					{
-						exeEng(EXEK_AREA_BORDER), gDLL->getEngineIFace()->fillAreaBorderPlot(plotX->getX(), plotX->getY(), cHighlightText, AREA_BORDER_LAYER_CITY_RADIUS);
+						gDLL->getEngineIFace()->fillAreaBorderPlot(plotX->getX(), plotX->getY(), cHighlightText, AREA_BORDER_LAYER_CITY_RADIUS);
 					}
 				}
 				const CvPlot* pRallyPlot = pSelectedCity->getRallyPlot();
 				if (pRallyPlot)
 				{
-					exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(
+					gDLL->getEngineIFace()->addColoredPlot(
 						pRallyPlot->getViewportX(), pRallyPlot->getViewportY(),
 						GC.getColorInfo(GC.getCOLOR_BLUE()).getColor(),
 						PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_BASE
@@ -460,7 +459,7 @@ void CvGame::updateColoredPlots()
 
 				if (plotX->getOwner() == eOwner && plotX->getWorkingCity())
 				{
-					exeEng(EXEK_AREA_BORDER), gDLL->getEngineIFace()->fillAreaBorderPlot(plotX->getX(), plotX->getY(), cHighlightText, AREA_BORDER_LAYER_CITY_RADIUS);
+					gDLL->getEngineIFace()->fillAreaBorderPlot(plotX->getX(), plotX->getY(), cHighlightText, AREA_BORDER_LAYER_CITY_RADIUS);
 				}
 			}
 		}
@@ -475,7 +474,7 @@ void CvGame::updateColoredPlots()
 
 			foreach_(const CvPlot* plotX, player.getCommandFieldPlots())
 			{
-				exeEng(EXEK_AREA_BORDER), gDLL->getEngineIFace()->fillAreaBorderPlot(plotX->getX(), plotX->getY(), cField, AREA_BORDER_LAYER_COMMAND_FIELD);
+				gDLL->getEngineIFace()->fillAreaBorderPlot(plotX->getX(), plotX->getY(), cField, AREA_BORDER_LAYER_COMMAND_FIELD);
 			}
 		}
 
@@ -486,7 +485,7 @@ void CvGame::updateColoredPlots()
             // ERROR IS HERE FOR NOW maybe
         	foreach_(const CvPlot* plotX, player.getCommodoreFieldPlots())
         	{
-        		exeEng(EXEK_AREA_BORDER), gDLL->getEngineIFace()->fillAreaBorderPlot(plotX->getX(), plotX->getY(), cmField, AREA_BORDER_LAYER_COMMAND_FIELD);
+        		gDLL->getEngineIFace()->fillAreaBorderPlot(plotX->getX(), plotX->getY(), cmField, AREA_BORDER_LAYER_COMMAND_FIELD);
         	}
         }
 
@@ -523,7 +522,7 @@ void CvGame::updateColoredPlots()
 						}
 						else color.a = 0.33f;
 
-						exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(plotX->getViewportX(), plotX->getViewportY(), color, PLOT_STYLE_TARGET, PLOT_LANDSCAPE_LAYER_BASE);
+						gDLL->getEngineIFace()->addColoredPlot(plotX->getViewportX(), plotX->getViewportY(), color, PLOT_STYLE_TARGET, PLOT_LANDSCAPE_LAYER_BASE);
 					}
 				}
 			}
@@ -549,7 +548,7 @@ void CvGame::updateColoredPlots()
 					{
 						NiColorA color(GC.getColorInfo(GC.getCOLOR_YELLOW()).getColor()); color.a = 0.5f;
 
-						exeEng(EXEK_AREA_BORDER), gDLL->getEngineIFace()->fillAreaBorderPlot(plotX->getX(), plotX->getY(), color, AREA_BORDER_LAYER_RANGED);
+						gDLL->getEngineIFace()->fillAreaBorderPlot(plotX->getX(), plotX->getY(), color, AREA_BORDER_LAYER_RANGED);
 					}
 				}
 			}
@@ -565,7 +564,7 @@ void CvGame::updateColoredPlots()
 				{
 					NiColorA color(GC.getColorInfo(GC.getCOLOR_YELLOW()).getColor()); color.a = 0.5f;
 
-					exeEng(EXEK_AREA_BORDER), gDLL->getEngineIFace()->fillAreaBorderPlot(pTargetPlot->getX(), pTargetPlot->getY(), color, AREA_BORDER_LAYER_RANGED);
+					gDLL->getEngineIFace()->fillAreaBorderPlot(pTargetPlot->getX(), pTargetPlot->getY(), color, AREA_BORDER_LAYER_RANGED);
 				}
 			}
 		}
@@ -582,7 +581,7 @@ void CvGame::updateColoredPlots()
 				{
 					FAssert(pBestPlot);
 
-					exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(
+					gDLL->getEngineIFace()->addColoredPlot(
 						pBestPlot->getViewportX(), pBestPlot->getViewportY(), cHighlightText,
 						PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS
 					);
@@ -592,7 +591,7 @@ void CvGame::updateColoredPlots()
 					{
 						FAssert(pNextBestPlot);
 
-						exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(
+						gDLL->getEngineIFace()->addColoredPlot(
 							pNextBestPlot->getViewportX(), pNextBestPlot->getViewportY(), cHighlightText,
 							PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS
 						);
@@ -608,7 +607,7 @@ void CvGame::updateColoredPlots()
 				{
 					if (pHeadSelectedUnit->canFound(plotX) && player.AI_isPlotCitySite(plotX))
 					{
-						exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(
+						gDLL->getEngineIFace()->addColoredPlot(
 							plotX->getX(), plotX->getY(), cHighlightText,
 							PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS
 						);
@@ -617,7 +616,7 @@ void CvGame::updateColoredPlots()
 					&& plotX->isVisible(pHeadSelectedUnit->getTeam(), false) && pHeadSelectedUnit->isNoBadGoodies()
 					&& plotX->isRevealedGoody(pHeadSelectedUnit->getTeam()))
 					{
-						exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(
+						gDLL->getEngineIFace()->addColoredPlot(
 							plotX->getViewportX(), plotX->getViewportY(), cHighlightText,
 							PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS
 						);
@@ -650,7 +649,7 @@ void CvGame::updateColoredPlots()
 							{
 								NiColorA color(GC.getColorInfo((ColorTypes)GC.getPlayerColorInfo(player.getPlayerColor()).getColorTypePrimary()).getColor());
 								color.a = 0.5f;
-								exeEng(EXEK_AREA_BORDER), gDLL->getEngineIFace()->fillAreaBorderPlot(plotX->getX(), plotX->getY(), color, AREA_BORDER_LAYER_BLOCKADING);
+								gDLL->getEngineIFace()->fillAreaBorderPlot(plotX->getX(), plotX->getY(), color, AREA_BORDER_LAYER_BLOCKADING);
 							}
 						}
 					}
@@ -665,7 +664,7 @@ void CvGame::updateBlockadedPlots()
 {
 	PROFILE_FUNC();
 
-	exeEng(EXEK_CLEAR_BORDER), gDLL->getEngineIFace()->clearAreaBorderPlots(AREA_BORDER_LAYER_BLOCKADED);
+	gDLL->getEngineIFace()->clearAreaBorderPlots(AREA_BORDER_LAYER_BLOCKADED);
 
 	const int iNumPlots = GC.getMap().numPlots();
 	for (int i = 0; i < iNumPlots; ++i)
@@ -678,7 +677,7 @@ void CvGame::updateBlockadedPlots()
 		{
 			NiColorA color(GC.getColorInfo(GC.getCOLOR_BLACK()).getColor());
 			color.a = 0.35f;
-			exeEng(EXEK_AREA_BORDER), gDLL->getEngineIFace()->fillAreaBorderPlot(pLoopPlot->getX(), pLoopPlot->getY(), color, AREA_BORDER_LAYER_BLOCKADED);
+			gDLL->getEngineIFace()->fillAreaBorderPlot(pLoopPlot->getX(), pLoopPlot->getY(), color, AREA_BORDER_LAYER_BLOCKADED);
 		}
 	}
 }
@@ -1950,7 +1949,7 @@ void CvGame::doControl(ControlTypes eControl)
 				else
 				{
 					setGameState(GAMESTATE_OVER);
-					exeSetUIDirty(Soundtrack_DIRTY_BIT, true);
+					gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Soundtrack_DIRTY_BIT), true);
 				}
 			}
 			else if (isNetworkMultiPlayer())

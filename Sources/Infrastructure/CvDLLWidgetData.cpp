@@ -2,7 +2,6 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "Engine/CvExeTrace.h"
 #include "Engine/CvArea.h"
 #include "CvBuildingInfo.h"
 #include "CvImprovementInfo.h"
@@ -1390,7 +1389,7 @@ void CvDLLWidgetData::doContactCiv(CvWidgetDataStruct &widgetDataStruct)
 				{
 					GET_TEAM(GC.getGame().getActiveTeam()).AI_setWarPlan(GET_PLAYER((PlayerTypes)widgetDataStruct.m_iData1).getTeam(), WARPLAN_PREPARING_TOTAL);
 				}
-				exeSetUIDirty(Score_DIRTY_BIT, true);
+				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
 			}
 		}
 		else
@@ -1466,7 +1465,7 @@ void CvDLLWidgetData::doBuildingFilter(CvWidgetDataStruct &widgetDataStruct)
 			bool bActive = pHeadSelectedCity->getBuildingListFilterActive(eFilter);
 			pHeadSelectedCity->setBuildingListFilterActive(eFilter, !bActive);
 			//gDLL->getInterfaceIFace()->setCityTabSelectionRow(CITYTAB_BUILDINGS);
-			exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
 		}
 	}
 	else
@@ -1487,7 +1486,7 @@ void CvDLLWidgetData::doBuildingGrouping(CvWidgetDataStruct &widgetDataStruct)
 	{
 		BuildingGroupingTypes eGrouping = (BuildingGroupingTypes)(widgetDataStruct.m_iData1);
 		pHeadSelectedCity->setBuildingListGrouping(eGrouping);
-		exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
 	}
 }
 
@@ -1500,7 +1499,7 @@ void CvDLLWidgetData::doBuildingSort(CvWidgetDataStruct &widgetDataStruct)
 	{
 		BuildingSortTypes eSort = (BuildingSortTypes)(widgetDataStruct.m_iData1);
 		pHeadSelectedCity->setBuildingListSorting(eSort);
-		exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
 	}
 }
 
@@ -1516,7 +1515,7 @@ void CvDLLWidgetData::doUnitFilter(CvWidgetDataStruct &widgetDataStruct)
 		{
 			bool bActive = pHeadSelectedCity->getUnitListFilterActive(eFilter);
 			pHeadSelectedCity->setUnitListFilterActive(eFilter, !bActive);
-			exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
 		}
 	}
 	else
@@ -1536,7 +1535,7 @@ void CvDLLWidgetData::doUnitGrouping(CvWidgetDataStruct &widgetDataStruct)
 	{
 		UnitGroupingTypes eGrouping = (UnitGroupingTypes)(widgetDataStruct.m_iData1);
 		pHeadSelectedCity->setUnitListGrouping(eGrouping);
-		exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
 	}
 }
 
@@ -1549,7 +1548,7 @@ void CvDLLWidgetData::doUnitSort(CvWidgetDataStruct &widgetDataStruct)
 	{
 		UnitSortTypes eSort = (UnitSortTypes)(widgetDataStruct.m_iData1);
 		pHeadSelectedCity->setUnitListSorting(eSort);
-		exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
 	}
 }
 

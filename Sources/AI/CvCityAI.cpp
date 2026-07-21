@@ -1,7 +1,6 @@
 // cityAI.cpp
 
 #include "CvGameCoreDLL.h"
-#include "Engine/CvExeTrace.h"
 #include "BetterBTSAI.h"
 
 #include "Tools/FProfiler.h"
@@ -743,8 +742,8 @@ void CvCityAI::AI_assignWorkingPlots()
 
 	if (isCitySelected())
 	{
-		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
-		exeSetUIDirty(CitizenButtons_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CitizenButtons_DIRTY_BIT), true);
 	}
 }
 

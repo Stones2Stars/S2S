@@ -697,7 +697,7 @@ public:
 	int getForeignTradeRouteModifier() const;
 	void changeForeignTradeRouteModifier(int iChange);
 
-	int getBuildingDefense() const;          // #430: the cascade scalar slot (the legacy m_iBuildingDefense drift-store is cut)
+	int getBuildingDefense() const;          // #430: the cascade scalar slot
 
 	int getBuildingBombardDefense() const;
 	int getAdditionalBombardDefenseByBuilding(BuildingTypes eType) const;
@@ -879,7 +879,7 @@ public:
 	int getExtraSpecialistCommerceTotal(CommerceTypes eIndex) const;
 	int getExtraSpecialistCommerce(CommerceTypes eIndex, SpecialistTypes eSpecialist) const;
 	void updateExtraSpecialistCommerce();
-	void updateSpecialistCommerce(CommerceTypes eCommerce);   // fires the commerce-dirty trigger; getSpecialistCommerce recomputes on read (m_aiSpecialistCommerce100 removed, #430 sweep)
+	void updateSpecialistCommerce(CommerceTypes eCommerce);   // fires the commerce-dirty trigger; getSpecialistCommerce recomputes on read
 	void updateSpecialistCommerce();
 
 	int getCommerceRate(CommerceTypes eIndex) const;
@@ -1834,8 +1834,7 @@ protected:
 	std::vector<EventTypes> m_aEventsOccured;
 	std::vector<BuildingYieldChange> m_aBuildingYieldChange;   // MIXED store (event/vote grants + the bonus-conditioned
 	// building yield term) -- the ONE bonus-fed member still serialized; its split awaits the modifier cut's extra-yield
-	// rework. Its building-yield leg fed the removed m_aiExtraYield accumulator (#430 sweep; getExtraYield100 no longer
-	// reads it). The load fold SUPPRESSES processBonus's yield leg so nothing double-applies.
+	// rework. The load fold SUPPRESSES processBonus's yield leg so nothing double-applies.
 	std::vector<BuildingCommerceChange> m_aBuildingCommerceChange;           // RETIRED (empire part moved to the player recompute ledger); read consume-don't-keep, no writers
 	std::vector<BuildingCommerceChange> m_aBuildingCommerceChangeEvents;     // event/vote-granted per-building commerce: SEPARATELY PERSISTED genuine state, outside the recompute-from-source empire path
 	BuildingChangeArray m_aBuildingHappyChange;

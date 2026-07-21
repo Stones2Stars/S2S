@@ -234,10 +234,13 @@ genuine needs). **Home:** [json.md §2](../specs/json.md) (the Applicability row
 ### DEC-no-rollerskate-evidence
 
 Leave NO evidence of a previous rollerskate — dead / commented-out old code, superseded dual surfaces, transitional
-shims, and `renamed from X` / `was Y` / `(formerly …)` trails are all REMOVED, in CODE as well as docs. Code and docs
-read as if built right the first time. The rule is load-bearing, not tidiness: leftover evidence of the abandoned
-path is exactly what the next agent finds and rollerskates off — it caused much of the drift this project is digging
-out of. The delete-don't-annotate half of [DEC-docs-current-truth](#dec-docs-current-truth) extended to code;
+shims, and `renamed from X` / `was Y` / `(formerly …)` trails are all REMOVED, in CODE as well as docs. **This
+includes a comment that NARRATES a deletion** (`// m_iX removed`, `// X is cut`, `// … no longer …`, `// was m_iX`):
+naming the dead member is itself the bait — the next agent reads the name and re-treads the very thing you killed
+("comments about dead things just lead to rollerskating about the same dead things", owner). Keep the forward,
+current-behavior statement; strip the dead name. Code and docs read as if built right the first time. The rule is
+load-bearing, not tidiness: leftover evidence of the abandoned path is exactly what the next agent finds and
+rollerskates off — it caused much of the drift this project is digging out of. The delete-don't-annotate half of [DEC-docs-current-truth](#dec-docs-current-truth) extended to code;
 strengthens [DEC-proper-once](#dec-proper-once). **Home:** [AGENTS.md](../../AGENTS.md) Conventions.
 
 ### DEC-no-deferred
@@ -377,9 +380,11 @@ carve-out. **Home:** [cutover.md](../plans/structural-cleanup/cutover.md).
 
 ### DEC-red-ratchet
 
-The tree deliberately does NOT compile: the XML `CvXInfo` classes are archived (`SourceArchive/Infos/`) as a
-fallback-proof ratchet — never restore them, never re-add a `CvXInfo`; green is reached ONLY by finishing the
-JsonInfo structure + the full getter/consumer wiring. **Home:** [AGENTS.md](../../AGENTS.md) Build And Test.
+The XML `CvXInfo` classes are archived (`SourceArchive/Infos/`) as a fallback-proof ratchet: **never restore them,
+never re-add a `CvXInfo`, never treat a red build as a defect to fix by reviving one.** Green is reached ONLY by
+finishing the JsonInfo structure + the full getter/consumer wiring — never by re-adding the legacy fallback. (The
+tree currently LINKS green via that correct path; the ratchet rule stands regardless of build state.) **Home:**
+[AGENTS.md](../../AGENTS.md) Build And Test.
 
 ### DEC-no-xml-into-game
 

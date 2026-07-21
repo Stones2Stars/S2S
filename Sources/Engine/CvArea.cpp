@@ -4,7 +4,6 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "Engine/CvExeTrace.h"
 #include "CvArea.h"
 #include "CvBonusInfo.h"
 #include "CvCity.h"
@@ -231,10 +230,6 @@ void CvArea::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiAnimalsPerPlayer);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiCitiesPerPlayer);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPopulationPerPlayer);
-	// #430: area building health+happiness ride the cascade (playerAreaEmpire fold); drain the old arrays. savemigration.txt.
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvArea", m_aiBuildingGoodHealth, SAVE_VALUE_TYPE_INT_ARRAY);
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvArea", m_aiBuildingBadHealth, SAVE_VALUE_TYPE_INT_ARRAY);
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvArea", m_aiBuildingHappiness, SAVE_VALUE_TYPE_INT_ARRAY);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPower);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBestFoundValue);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiMaintenanceModifier);
@@ -876,7 +871,7 @@ void CvArea::changeCleanPowerCount(TeamTypes eIndex, int iChange)
 		{
 			if (eIndex == GC.getGame().getActiveTeam())
 			{
-				exeSetUIDirty(CityInfo_DIRTY_BIT, true);
+				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
 			}
 		}
 	}
@@ -969,7 +964,7 @@ void CvArea::changeYieldRateModifier(PlayerTypes eIndex1, YieldTypes eIndex2, in
 
 		if (GET_PLAYER(eIndex1).getTeam() == GC.getGame().getActiveTeam())
 		{
-			exeSetUIDirty(CityInfo_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
 		}
 	}
 }

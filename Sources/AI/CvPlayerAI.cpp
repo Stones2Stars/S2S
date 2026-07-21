@@ -1,7 +1,6 @@
 // playerAI.cpp
 
 #include "CvGameCoreDLL.h"
-#include "Engine/CvExeTrace.h"
 #include "Engine/CvArea.h"
 #include "CvBonusInfo.h"
 #include "CvBuildingInfo.h"
@@ -16493,7 +16492,7 @@ void CvPlayerAI::AI_changeMemoryCount(PlayerTypes eIndex1, MemoryTypes eIndex2, 
 	if (eIndex1 == GC.getGame().getActivePlayer())
 	{
 		// BUG - Update Attitude Icons
-		exeSetUIDirty(Score_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
 	}
 	FASSERT_NOT_NEGATIVE(AI_getMemoryCount(eIndex1, eIndex2));
 }

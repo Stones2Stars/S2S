@@ -50,28 +50,25 @@ public:
 	// per-building event ledger (getBuildingHappy/HealthChange). The area/empire building rollups are the
 	// SEPARATE playerAreaEmpire fold (CvArea/CvPlayer getters), not this term.
 	static void buildingWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad);
-	// The FEATURE terms for the retired m_iFeatureGood/Bad{Health,Happiness} accumulators. ASYMMETRIC to match
+	// The FEATURE happiness/health terms. ASYMMETRIC to match
 	// legacy: HAPPINESS = featMember + featSubstrate (civic-per-feature + civic-per-improvement + intrinsic
 	// improvement, the legacy getFeatureGoodHappiness bundle); HEALTH = featSubstrate only (feature's own
 	// plot.percent -- legacy calculateFeatureHealthPercent is feature-own, civic-per-feature health rides civic).
 	static void featureWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad);
-	// The SPECIALIST terms (hap.spec/hea.spec) for the retired m_iSpecialist{Happiness,Unhappiness,GoodHealth,
-	// BadHealth} accumulators. ×100 sign-split (iGood = positives, iBad = negatives) matching the legacy signs;
+	// The SPECIALIST terms (hap.spec/hea.spec). ×100 sign-split (iGood = positives, iBad = negatives) matching the legacy signs;
 	// these getters stay ×100 (their consumers ÷100 at use).
 	static void specialistWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad);
-	// The extraBuilding terms (hap.extraB/hea.extraB) for the retired m_iExtraBuilding{Good,Bad}{Happiness,Health}
-	// accumulators (civic/trait per-building + the building-keyed "Royal Tomb" leg). Needs the FULL path
-	// (gather + playerAreaEmpire + foldBuildingKeyed). ×100 sign-split; the human-scale getters ÷100.
+	// The extraBuilding terms (hap.extraB/hea.extraB): civic/trait per-building + the building-keyed "Royal Tomb" leg.
+	// Needs the FULL path (gather + playerAreaEmpire + foldBuildingKeyed). ×100 sign-split; the human-scale getters ÷100.
 	static void extraBuildingWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad);
-	// The CITY religion-happiness split (for the retired m_iReligionGood/BadHappiness): each present religion
+	// The CITY religion-happiness split: each present religion
 	// contributes the player state/non-state acc, sign-split. Human (÷100 at the accessor). INITIAL + civics + TRAITS.
 	static void religionWellbeing(const CvCity* pCity, int& iGood, int& iBad);
-	// The player-scope state / non-state religion-happiness accumulators (for the retired CvPlayer
-	// m_i{State,NonState}ReligionHappiness): INITIAL + Σ adopted civics + Σ active traits (PURE-filtered). Human.
+	// The player-scope state / non-state religion-happiness values: INITIAL + Σ adopted civics + Σ active traits
+	// (PURE-filtered). Human.
 	static int playerStateReligionHappiness(const CvPlayer& player);
 	static int playerNonStateReligionHappiness(const CvPlayer& player);
-	// The player-scope civic / trait / project / world wellbeing feeders (for the retired CvPlayer
-	// m_iCivic{Happiness,Health} / m_iCivilizationHealth / m_i{Project,World}{Happiness,Health}). Fresh
+	// The player-scope civic / trait / project / world wellbeing feeders. Fresh
 	// deposit-derived recomputes reproducing the verdict terms (civic/trait -> iCivicNet/iTraitNet via a
 	// bare ctx; project/world mirror the wb_gather empire/world legs). Signed human (÷100); the consumers
 	// do their own max(0)/min(0) split.
@@ -79,22 +76,21 @@ public:
 	static int  civilizationHealth(const CvPlayer& player);                        // A3
 	static void projectWellbeing(const CvPlayer& player, int& iHap, int& iHea);    // A5,A6 (own-team getProjectCount>0)
 	static void worldWellbeing(const CvPlayer& player, int& iHap, int& iHea);      // A7,A8 (game getProjectCreatedCount>0)
-	// The rank-gated CITY largest-city happiness (for the retired CvPlayer m_iLargestCityHappiness, read
-	// via CvCity::getLargestCityHappiness): hap.iLargest already applies the population-rank gate at fill.
+	// The rank-gated CITY largest-city happiness (read via CvCity::getLargestCityHappiness): hap.iLargest already
+	// applies the population-rank gate at fill.
 	static int  largestCityWellbeing(const CvCity* pCity);                         // A4
-	// The per-religion CITY building-sourced state-religion happiness (for the retired m_paiStateReligionHappiness):
+	// The per-religion CITY building-sourced state-religion happiness:
 	// Σ over the city's ACTIVE buildings whose religion == eReligion of the building's stateReligionHappiness. Human
-	// (the building info getter is human; the member was human) -- keyed by an ARBITRARY religion (the civic what-if
+	// (the building info getter is human) -- keyed by an ARBITRARY religion (the civic what-if
 	// reads a non-state religion's slot), so NOT the ×100 verdict term (hap.iSrNet is the CURRENT state religion's
 	// building happiness, gathered live). eReligion is an int (ReligionTypes) -- NO_RELIGION returns 0.
 	static int cityStateReligionHappiness(const CvCity* pCity, int eReligion);
-	// The BUILDING tech-gated wellbeing net (for the retired m_iExtraBuilding{Happiness,Health}FromTech): the
+	// The BUILDING tech-gated wellbeing net: the
 	// signed iTechGatedNet term (active buildings' TECH-gated happiness/health deposits). Human (÷100). Specialist
 	// tech-happiness is NOT here -- it rides the specialist bucket (hap.spec), per the owner "specialist is its own
 	// bucket regardless of source" ruling.
 	static void techGatedWellbeing(const CvCity* pCity, int& iHapNet, int& iHeaNet);
-	// The AREA/EMPIRE building-HEALTH rollups (the playerAreaEmpire fold, health family) for the retired
-	// CvArea/CvPlayer m_iBuildingGood/BadHealth accumulators. iBad is negative (WbSplit convention).
+	// The AREA/EMPIRE building-HEALTH rollups (the playerAreaEmpire fold, health family). iBad is negative (WbSplit convention).
 	static void buildingHealthArea(const CvPlayer& player, int iAreaId, int& iGood, int& iBad);
 	static void buildingHealthEmpire(const CvPlayer& player, int& iGood, int& iBad);
 	// The AREA/EMPIRE building-HAPPINESS rollups (happiness family). Returns the NET signed value (iGood + iBad)

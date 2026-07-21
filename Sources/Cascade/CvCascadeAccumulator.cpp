@@ -809,7 +809,7 @@ bool CascadeAccumulator::enFoundReligion(const CvPlayer* pPlayer)
 }
 
 
-// The promotion UNIT-STATE gate leg -- mirrors the (deleted) isPromotionValidLegacy's unit-state half EXACTLY
+// The promotion UNIT-STATE gate leg -- mirrors the legacy unit-state gate EXACTLY
 // (DEC-mirror-then-redesign; the enPromotionValid dispatch is the bFree=false / bKeepCheck=false path), MINUS the
 // two STRUCTURAL checks the cascade domain already owns: the promo's own TechPrereq (-> the granting tech's
 // enables.promotions == the domain enable plane) and its ObsoleteTech (-> the tech's obsoletes.promotions == the

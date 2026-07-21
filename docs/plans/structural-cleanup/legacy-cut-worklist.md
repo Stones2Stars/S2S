@@ -74,10 +74,11 @@ them out as a distinct, lower-priority rework.)
 
 ---
 
-## C — BLOCKED on unitcombat→tags (F2) + the unit-plane (F4)
+## C — BLOCKED on the KEYED unit-combat cascade step (F4 step-3)
 
-CvCity per-unitcombat-keyed accumulators — depend on the `IS_<TAG>` predicate surface (F2, unbuilt) AND the
-unit-plane strength/combat channels (F4 empire apply-loops, blocked):
+CvCity per-unitcombat-keyed accumulators — the `IS_<TAG>` predicate surface (F2) is now BUILT (`CASC_PRED_IS_TAG`
++ `CvCascadeTally::countUnitsWithTag`, with the curator emitting tags) and the unit-plane SCALAR channels (F4) are
+cut; these remain blocked on the KEYED unit-combat cascade consumer (F4 step-3 keyed vs-class), still unbuilt:
 `m_paiUnitCombatExtraStrength` (1636), `m_paiUnitCombatProductionModifier` (1710),
 `m_paiUnitCombatDefenseAgainstModifier` (1711), `m_paiUnitCombatFreeExperience` (1780),
 `m_paiDamageAttackingUnitCombatCount` (1725), `m_paiHealUnitCombatTypeVolume` (1726) — all CvCity.h.
@@ -93,7 +94,7 @@ input package); the rank memo caches (`m_ai*Rank`, not a magnitude channel).
 2. **A9** after a `getCommerceHappiness`-consumer census.
 3. **B2** (`m_aiSeaPlotYield` via `plots {IS_WATER}`; `m_aiLandmarkYield` rides #448).
 4. **B1** — the §2a percent-stack unification (its own larger channel).
-5. **C** — with F4/F2.
+5. **C** — with the keyed F4 step-3 (F2 + the scalar F4 channels are already done).
 
 ---
 
@@ -106,13 +107,13 @@ current status:
 |---|---|---|:--:|
 | **F0** foundation | mostly landed; one gap = broad `markPlayerScopeAndCities` at civic/tech sites | accurate — 3 broad-mark sites remain to narrow | OPEN |
 | **F1** reach green | 11 uniformity pocos dead; DllExport proxy, `enPromotionValid`, gate consumers | unchanged — accurate | OPEN |
-| **F2** classification + `IS_<TAG>` | unbuilt; every rewire blocks on it | confirmed **BLOCKED** — no unit-classification predicate exists; curator emits no `tags` | **BLOCKED** |
+| **F2** classification + `IS_<TAG>` | unbuilt; every rewire blocks on it | **BUILT** — `CASC_PRED_IS_TAG` predicate + `countUnitsWithTag` tally exist; the curator emits 30 tags (incl. unitcombat-derived mechanized/gunpowder/mounted). Consumer rewires now UNBLOCKED, still to do | rewires open |
 | **F2b** consumer-iteration | "262 whole-database loops remain" | **mostly LANDED** — hot path done (frontier getters + 12 AI loops + `AI_chooseProduction` collapse); only non-hot residual loops open | mostly done |
 | **F3** grants apply-loop | unbuilt (shadows only) | confirmed — `[GRANTS]` diff-shadow only, ~30 prereq rows unbuilt | OPEN |
-| **F4** unit-plane | **NOT BUILT** | **mostly BUILT** — withdrawal/firstStrike/heal/evasion/…/13 combat-percent groups/base-strength/upkeep landed; **keyed "vs-class" step-3 BLOCKED** on unitcombat→tags | mostly built |
-| **F5** property feed | over-applies; operate-dormancy invalidation BLOCKING | feed **DONE**; remaining: **(a)** flammability `/5` data rebalance; **(b)** the operate-dormancy watermark **still nil** — `s_opDynamic` write-only, no crossing-detector module exists (**owner's "maybe resolved" = NO**) | OPEN |
+| **F4** unit-plane | **NOT BUILT** | **mostly BUILT** — withdrawal/firstStrike/heal/evasion/intercept/collateral-damage/capture/13 combat-percent groups/base-strength/StrengthModifier/DamageModifier/upkeep landed (UPK_*, legacy m_iExtra* removed); the keyed "vs-class" step-3 is now UNBLOCKED (unitcombat→tags landed) but its keyed cascade consumer is still to be built; MaxHP + SizeMatters + movement + espionage + bombard channels remain legacy | mostly built |
+| **F5** property feed | over-applies; operate-dormancy invalidation BLOCKING | feed **DONE**; the operate-dormancy watermark is now **BUILT** — `CvPropertySolver::doTurnBandWatch()` (CvPropertySolver.cpp:487) is the crossing-detector, routing bands to `propertyBands` via `EnablerKernel::onPropertyBandHitActive` (the dead write-only `s_opDynamic` is a small dead-code cleanup left). Remaining: **(a)** the flammability `/5` data rebalance | (a) open |
 | **F6** manifestation (free XP/promo) | `isApplyFreePromotionOnMove` hardcoded false | unchanged — coupled to F3 | OPEN |
-| **F7** data tail | unitcombat→tags, state, corp, leaderhead, NPC | partial — **344 culture unitcombats purged**; tags pass still blocked; rest open | OPEN |
+| **F7** data tail | unitcombat→tags, state, corp, leaderhead, NPC | partial — **344 culture unitcombats purged**; the unitcombat→`tags` pass has LANDED (curator folds combat classes to unit tags; 30 tags emitted); state/corp/leaderhead/NPC tails still open | OPEN |
 | **F8** Python/Cy wrapper | redesign contract + rewire consumers | **entirely untouched** — ~899 legacy `.def` bindings, zero cascade rewire | OPEN (unstarted) |
 
 ### F5(a) — the flammability `/5` rebalance (located; NO change made)
@@ -124,11 +125,12 @@ rule (positive-flammability only) → recurate + regen** ([DEC-recurate-on-decis
 hand-editing the 313 derived JSONs is banned.
 
 ### Critical path
-1. **The unitcombat→tags distillation is THE keystone** — one pass ([unitcombat-distillation.md](unitcombat-distillation.md))
-   unblocks **four** fronts: F2 (`IS_<TAG>` predicate), F4 step-3 (keyed vs-class), F7 (tags pass), and F4-upkeep
-   military/civilian bucketing. Highest leverage; do first.
+1. **The unitcombat→tags distillation (THE keystone) has LANDED** — the curator folds combat classes to unit
+   `tags` ([unitcombat-distillation.md](unitcombat-distillation.md)), unblocking the four fronts it gated: F2
+   (`IS_<TAG>` predicate — built), F4 step-3 (keyed vs-class — keyed consumer still to build), F7 (tags pass —
+   done), and F4-upkeep military/civilian bucketing. The consumer rewires that ride on it remain.
 2. **F3 grants apply-loop** → unblocks **F6**. Independent; parallelizable.
-3. **F5:** (a) flammability `/5` is cheap; (b) the operate-dormancy watermark module is a real build (still nil).
+3. **F5:** (a) flammability `/5` is cheap; (b) the operate-dormancy watermark module is BUILT (`doTurnBandWatch`) — only the dead-`s_opDynamic` cleanup remains.
 4. **F0** — narrow the 3 broad-mark sites (small).
 5. **F8** — large + independent (Cy contract redesign + Python consumer rewire); parallelizable.
 6. The **legacy-cut §A** above — cheap, high-purge, do alongside 1–2.

@@ -526,3 +526,19 @@ deposits per the deliveryguy own-output ruling), so the wonder/building speciali
 output. Converted to recompute-from-source CvDerivedCacheVec (never serialized; sources: the specialist's own
 conditioned empire deposits evaluated via MMKernel::sumUnit + the active traits' keyed rows). Reads DRAINED
 under the original tags; writes dropped. Flush at the next save-compat break.
+
+========================
+2026-07-21 -- WRAPPER_SKIP_ELEMENT -> central soft-remove conversion (owner ruling): the lingering per-object skips
+are replaced by the central drain here so the variables go fully dead. The bonus-fed wellbeing scalars, arresting-unit,
+trait-display and combat-focus are fully-removed members (no member, no read, no write). m_paiNumBonuses (city) and
+m_aiYield (plot) are recompute-only derived caches (CvDerivedCache, never serialized, rebuilt on load) -- their old
+serialized tags are drained here.
+CvCity::m_iBonusGoodHealth
+CvCity::m_iBonusBadHealth
+CvCity::m_iBonusGoodHappiness
+CvCity::m_iBonusBadHappiness
+CvCity::m_paiNumBonuses
+CvPlayer::m_iArrestingUnit
+CvPlayer::m_iTraitDisplayCount
+CvPlot::m_aiYield
+CvUnit::m_bCombatFocus

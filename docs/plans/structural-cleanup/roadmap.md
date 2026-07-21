@@ -116,11 +116,11 @@ invalidation. The remaining gap is the broad `markPlayerScopeAndCities` conditio
 event-derived path at a handful of sites (civic/tech-driven empire-wide conditioner changes) — narrow those to the
 derived-from-deposit-index invalidation the rest of the consumer already uses.
 
-### F1 — Reach GREEN (the RED build is a by-design ratchet — [DEC-red-ratchet](../../architecture/decisions.md#dec-red-ratchet); NEVER restore an archived `CvXInfo`).
+### F1 — GREEN reached (the RED-ratchet RULE stands — [DEC-red-ratchet](../../architecture/decisions.md#dec-red-ratchet); NEVER restore an archived `CvXInfo`).
 - The 23 archived-replacing pocos are defined + populated via `LoadGlobalClassInfoJson`, mirroring the legacy getter
   contract. Per [DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed) this info-field surface changes
   shape with the Cy\* redesign (F8) — not immutably done.
-- **DllExport EXE-bound accessor proxy layer** — narrow but it blocks compile.
+- **DllExport EXE-bound accessor proxy layer** — BUILT: the 5 EXE-bound `GC.get*Info()` getters (`CvGlobals.cpp`) return the `InfoRepo<X>` JSON shim; no longer a compile blocker.
 - **`enPromotionValid`** is a pure cascade verdict (domain frontier + entity `requires` + an engine-side
   unit-state gate leg reading static promo info + raw unit state, DEC-calc-zero-ride-in — no legacy getter); the
   property cascade reads are the remaining F1 legacy-path item.
@@ -128,13 +128,17 @@ derived-from-deposit-index invalidation the rest of the consumer already uses.
   specialunits/victories/votes/hurries/bonusclasses) are populated but have **zero readers anywhere in `Sources/`**
   outside their own definition + `Repos/InfoRepo.h` registration — dead code pending a consumer (or a park decision).
   The live engine/AI surface for these types still reads the legacy `CvLeaderHeadInfo`/`CvGameSpeedInfo`/etc. classes
-  via `GC.get*Info()`.
-- Gate consumers for culturelevels/unitcombats/promotionlines.
+  via `GC.get*Info()` (the engine arrays stay legacy-typed and XML-loaded). **This SECOND-WAVE info-class cutover
+  (curation done, engine cutover pending) is the single largest PURGE remainder** — the "purge complete" work waits
+  chiefly on wiring these 11 types' engine consumers onto the pocos and cutting the legacy XML load.
+- Gate consumers for culturelevels/unitcombats/promotionlines — BUILT (consumed live in the enabler + accumulator + `CvGameTextMgr`).
 
 ### F2 — Gate 3 classification consumption (the long pole). [cutover.md](cutover.md) §Gate 3.
 Hundreds of engine/AI/UI call-sites still read scattered legacy XML fields instead of
-`getSkills()/getTags()/getCapabilities()/getAttributes()/getPolicies()`. `skills`/`tags`/`state` not yet mapped; the
-`IS_<TAG>` predicate surface is unbuilt and every rewire blocks on it.
+`getSkills()/getTags()/getCapabilities()/getAttributes()/getPolicies()`. **`tags` ARE mapped and the `IS_<TAG>`
+predicate surface is BUILT and live** — `CvCascadeConditionEval.cpp` (`CASC_PRED_IS_TAG` over the unit tag bitset),
+`CvCascadeTally::countUnitsWithTag`, the unit poco `m_tags` block — so tag-backed rewires are unblocked. What remains
+is the `skills`/`state` mapping and the hundreds of legacy-XML-field consumer rewires onto the classification getters.
 
 ### F2b — The CONSUMER ITERATION sweep the getter flip skipped (whole-database loops → the enabler frontier).
 Spec authority: [enabler.md §6](../../specs/enabler.md) — the AI's decisions iterate ONLY the frontier, never the
@@ -159,29 +163,33 @@ grants, free techs/gold/units/civics/population, trait freePromotions, building 
 foundBuildings, per-turn spawn/heal). **Prime suspect for "free promotions load but don't show"** — attribute via
 endpoint, do not assume.
 
-### F4 — Unit-plane modifier machine NOT BUILT. [code-cut-map.md](code-cut-map.md) §BLOCKED unit-plane. Build doc (owner-approved design, gather-on-dirty unit-scope `CvDerivedCache`): [f4-unit-plane.md](f4-unit-plane.md).
-strength/combat-percent/withdrawal/heal/bombard/movement/espionage/keyed-terrain/invisibility/**upkeep**/SizeMatters/
-promotion/unitcombat apply-loops + serialization. City channels maintenance (`scMaintenanceModifier`), defense
-(`scDefense`/`scDefenseBombard`/`scDefenseMin`/`scDefensePlayer`), health/happiness (`CvCascadeWellbeing.cpp`), GP rate
-(`scGpModifier`), trade routes (`scTradeRoutes`), and buildRate (`buildRateUnit`/`buildRateBuilding`/`buildRateProject`)
-are BUILT and wired — the legacy `m_iBuildingDefense` accumulator is physically removed in favor of the cascade scalar
-slot. Empire civic/trait/tech apply-loops BLOCKED. Under universal-yield each is a channel
-through the uniform machine. **The upkeep accumulator cut is COUPLED here** ([fixed-point-conformance.md](fixed-point-conformance.md)):
-`CvPlayer::m_iUnitUpkeep{Civilian,Military}100` + the per-unit `CvUnit::m_iUpkeep100` push-accumulator retire together
-once upkeep is a real unit-plane channel — the cascade owns no unit upkeep today, so they are NOT a base-magnitude cut.
+### F4 — Unit-plane modifier machine BUILT (self-accumulator); empire conditioned apply-loops + tail channels remain. [f4-unit-plane.md](f4-unit-plane.md) (owner-approved design, gather-on-dirty unit-scope `CvDerivedCache`).
+The unit self-accumulator (`CascadeUnitPackages`, `UPK_*` channels — `refreshUnitPackages`) is BUILT, wired to the
+getters, and committed: **strength/combat-percent, withdrawal, firstStrike, heal, evasion, intercept, collateral,
+capture, and `upkeep`** gather from the unit's held promotions + unit-combats (dirty-on-construct re-derive, no
+serialization). Still to migrate: **bombard, movement, espionage, keyed-terrain, invisibility** (unit channels), the
+**SizeMatters %** (stays legacy), and the **empire civic/trait/tech CONDITIONED apply-loops onto units** (land later).
+City channels maintenance (`scMaintenanceModifier`), defense (`scDefense`/`scDefenseBombard`/`scDefenseMin`/`scDefensePlayer`),
+health/happiness (`CvCascadeWellbeing.cpp`), GP rate (`scGpModifier`), trade routes (`scTradeRoutes`), and buildRate
+(`buildRateUnit`/`buildRateBuilding`/`buildRateProject`) are BUILT and wired — the legacy `m_iBuildingDefense`
+accumulator is physically removed in favor of the cascade scalar slot. Under universal-yield each is a channel through
+the uniform machine. **The upkeep accumulator cut is DONE** ([fixed-point-conformance.md](fixed-point-conformance.md)):
+`CvUnit::m_iUpkeep100`/`m_iExtraUpkeep100` are removed and `getUpkeep100` is a cascade read (`UPK_UPKEEP`);
+`CvPlayer::m_iUnitUpkeep{Civilian,Military}100` are recompute-Σ caches (`ensureUnitUpkeepBuckets`) — the cascade now
+owns unit upkeep.
 
-### F5 — Property feed mangled. [property-audit.md](property-audit.md) (locked, owner-approved).
+### F5 — Property feed BUILT + operate-dormancy invalidation BUILT (largely closed). [property-audit.md](property-audit.md) (locked, owner-approved).
 Engine math is intact (KEEP-legacy); the JSON→engine feed side is built (`CvProperties::propagateChange` reads
 `CvPropertyInfo::getChangePropagator` live off the curated `changePropagation` map, and `CvCascadePropertyBridge`
-translates the increment-4 gated/conditioned entries' BoolExpr/IntExpr trees) but **over-applies**: one-shot
-`<Properties>` are replayed every turn (crime-spike/education-crash runaway). Scoped clean redo against the locked spec.
-- **⛔ BLOCKING (couples here from F0, adversarial-audit-confirmed LIVE gap): property-`operate` dormancy is never
-  invalidated.** A building's `requires.operate` `{PROPERTY_*, min/max}` band (crime/disease/education/pollution;
-  `operate`+`PROPERTY_` in 1735 files) falls to the **write-only `s_opDynamic` bucket** (`CvEnablerKernel.cpp:378/529`
-  — pushed, never read), and the solver mutates `m_Properties` emit-free, so `m_operatingBuildings` is never dirtied on
-  a band crossing and `checkBuildings` applies STALE dormancy (verified: `doTurn`'s `ensure()` is a no-op on the clean
-  set). MUST be fixed IN this F5 work: a property-band operate reverse-index (`scanCondDeps` collects the `PROPERTY_`
-  id + thresholds) driving a **moving-watermark crossing detector (owner-ruled mechanism)** — per city, per property
+translates the increment-4 gated/conditioned entries' BoolExpr/IntExpr trees). The one-shot-`<Properties>`-per-turn
+replay is the **DECIDED-CORRECT model** ([property-audit.md](property-audit.md), owner ruling): every one-shot is a
+per-turn source and the HELD one-shot path returns EMPTY by ruling — the earlier "crime-spike/education-crash runaway"
+concern is RESOLVED, not open.
+- **✅ BUILT — property-`operate` dormancy invalidation via the moving-watermark crossing detector.** A building's
+  `requires.operate` `{PROPERTY_*, min/max}` band (crime/disease/education/pollution) now routes to `propertyBands`
+  (NOT the dead `s_opDynamic` bucket — `CvEnablerKernel.cpp:378/529`, still write-only, a small dead-code cleanup).
+  The as-built mechanism: a property-band operate reverse-index (`scanCondDeps` collects the `PROPERTY_`
+  id + thresholds) driving the **moving-watermark crossing detector** (`CvPropertySolver::doTurnBandWatch`) — per city, per property
   with operate consumers, hold the window `[min,max]` = the nearest band thresholds BRACKETING the current value; each
   property tick is an O(1) in-window test that does NOTHING until the value reaches `min` or `max`, and only THEN
   re-check that property's operate consumers + RESET the window to the new bracketing thresholds. This is the ONLY
@@ -192,8 +200,8 @@ translates the increment-4 gated/conditioned entries' BoolExpr/IntExpr trees) bu
   "property band hit" (city + property id ONLY — no high/low)**, because the enabler re-evaluation reads the current
   value against the bands anyway, so direction is redundant and the property engine never needs to know WHICH buildings
   care. The enabler receives it → re-evaluates that property's operate consumers → `cityHaveChanged(CASC_HAVE_PROPERTY)`
-  + the building-active footprint mask (the G3 bonus-operate pattern). Here, not after F5: crossing-detection on the
-  still-mangled feed would fire on wrong values — fix the feed + wire this together.
+  + the building-active footprint mask (the G3 bonus-operate pattern). The feed and this detector were built together
+  and wired end-to-end through `EnablerKernel::onPropertyBandHitActive`.
 
 ### F6 — Data that loads but does not manifest. Free XP / promotions case.
 Free XP + free promotions load end-to-end; the break is in APPLY/DISPLAY, not load. Real drops:
@@ -205,7 +213,7 @@ cross-curator promise (`BonusCommerceModifiers` dropped by both curators). Recon
 the same fix.
 
 ### F7 — Data tail (curator/JSON). [data-migration-remaining.md](data-migration-remaining.md).
-IN SCOPE (failures): NPC civs / `stronglyRestricted`, unitcombat→`tags` pass, `state`/paralyze, corporation rework,
+IN SCOPE (failures): NPC civs / `stronglyRestricted`, `state`/paralyze, corporation rework,
 leaderhead trait remap, ranked-target-selection. ✅ DONE — the `CvOutcome` DATA is migrated to clean JSON (owner ruling
 2026-07-20, [mission-outcome-system.md](../../reference/mission-outcome-system.md)): the OUTCOME_* infos + the
 per-carrier reward payloads (`outcomes.kill[]`/`actions[]`) load via `mapFrom`, conditions eval through
@@ -216,7 +224,8 @@ golden-age LENGTH + anarchy-reduction timers + golden-age GRANTS all curated.
 
 ### F8 — Python layer rework. RESOLVED: boundary + fix-values only ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
 Breakage is silent wrong-VALUE, not compile fail (pocos mirror legacy signatures; curator-gap stubs feed defaults —
-e.g. `getTotalModifiedCombatStrength100` stubbed 0 → PediaUnit shows zero combat strength). **In scope:** redesign the
+e.g. `getBonusCommerceModifier` stubbed 0 (curator gap) yet read live by AI valuation; the property-manipulator +
+dead-system stubs across `CvTechInfo`/`CvReligionInfo`/`CvRouteInfo`/`CvTerrainInfo`/`CvCorporationInfo`). **In scope:** redesign the
 Cy\* info-binding contract around the cascade/JSON model; rewire the Python info-CONSUMERS (Pedia/Advisors/display);
 fix the stub-fed wrong values. **Out of scope (stays Python):** Revolution, random events, the mission-CONCEPT rework +
 the Python outcome hooks (the outcome DATA itself is JSON-migrated — F7).
@@ -253,11 +262,14 @@ Two acceptance pillars, per item, verified LIVE in-game ([validation.md](../../s
    invalidates only dirty packages during play (derived from the deposit index); delete the blankets +
    `refreshOperatingBuildings` reseed + the recompute-on-load recalc. Prove LIVE via the 50k gate (millions →
    thousands) + manifestation polls green. This completes F0.
-4. **F1 reach green** — DllExport proxy, `enPromotionValid`, 11 uniformity dispatch rows, gate consumers (the
-   getter-flip cut strategy for computed getters; NEVER restore an archived `CvXInfo`).
-5. **F2 classification consumption** (the long pole) + the `IS_<TAG>` predicate surface; cut each machine's legacy
-   once its consumers read the cascade AND the live game manifests correctly.
-6. **F3 grants apply-loop**, **F4 unit-plane + remaining city channels**, **F5 property clean redo** (against the
+4. **F1 GREEN reached** (DllExport proxy + `enPromotionValid` + gate consumers all built; NEVER restore an archived
+   `CvXInfo`). The remaining F1 leg is the 11-uniformity SECOND-WAVE cutover (wire the pocos' engine consumers + cut
+   the legacy XML load) — the main PURGE remainder.
+5. **F2 classification consumption** (the long pole) — the `IS_<TAG>` predicate surface is BUILT; what remains is the
+   `skills`/`state` mapping + the consumer rewires. Cut each machine's legacy once its consumers read the cascade AND
+   the live game manifests correctly.
+6. **F3 grants apply-loop** (still UNBUILT — the biggest feature gap), **F4 remaining unit channels + empire
+   conditioned apply-loops** (the self-accumulator is built), **F5 residual cleanup** (largely closed — against the
    locked [property-audit.md](property-audit.md)). Each channel = a yield in the uniform machine; free specialists via
    the output-seam.
 7. **F6 manifestation fixes** (reproduce "doesn't show" as a failing poll → attribute → fix → re-poll green), **F7

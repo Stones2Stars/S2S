@@ -1830,8 +1830,7 @@ protected:
 	int m_iCivilianUnitUpkeepMod;
 	int m_iMilitaryUnitUpkeepMod;
 
-	//#430 F4: the raw per-unit-upkeep buckets are a recompute-Sigma over live units (was the serialized push-accumulators
-	// m_iUnitUpkeep{Civilian,Military}100 -- drained by name in Assets/savemigration.txt). Never serialized: re-derives
+	//#430 F4: the raw per-unit-upkeep buckets are a recompute-Sigma over live units. Never serialized: re-derives
 	// on the first read after load. m_bUnitUpkeepBucketsDirty gates the units-walk; m_bUnitUpkeepDirty gates the FINAL cache.
 	mutable int64_t m_iUnitUpkeepCivilian100Cache;
 	mutable int64_t m_iUnitUpkeepMilitary100Cache;

@@ -550,8 +550,8 @@ int CascadeWellbeing::playerNonStateReligionHappiness(const CvPlayer& player)
 // wb_fillCityCtx is defined below with the other decomposition accessors -- forward-declare it for techGatedWellbeing.
 static void wb_fillCityCtx(const CvCity* pCity, CvCascadeEvalCtx& ec);
 
-// The BUILDING tech-gated wellbeing net (iTechGatedNet, signed) for the retired m_iExtraBuilding{Happiness,Health}
-// FromTech accumulators. Active buildings' TECH-gated happiness/health deposits (wb_foldBuildingDeposits ->
+// The BUILDING tech-gated wellbeing net (iTechGatedNet, signed): active buildings' TECH-gated happiness/health
+// deposits (wb_foldBuildingDeposits ->
 // WB_TECH_GATED). Human (÷100). Specialist tech-happiness is NOT counted here -- it is in the specialist bucket
 // (hap.spec/hea.spec), per the owner "specialist is its own bucket regardless of source" ruling.
 void CascadeWellbeing::techGatedWellbeing(const CvCity* pCity, int& iHapNet, int& iHeaNet)
@@ -565,10 +565,10 @@ void CascadeWellbeing::techGatedWellbeing(const CvCity* pCity, int& iHapNet, int
 	iHeaNet = hea.iTechGatedNet / 100;
 }
 
-// The per-religion CITY building-sourced state-religion happiness (for the retired m_paiStateReligionHappiness):
+// The per-religion CITY building-sourced state-religion happiness:
 // Σ over the city's ACTIVE buildings whose religion == eReligion of the building's stateReligionHappiness -- the
-// recompute-from-source of the legacy per-religion accumulator (legacy fed it building-keyed by getReligionType(),
-// CvCity processBuilding). HUMAN-scale (the building info getter is human; the member was human), keyed by an
+// recompute-from-source of the legacy per-religion value (legacy fed it building-keyed by getReligionType(),
+// CvCity processBuilding). HUMAN-scale (the building info getter is human), keyed by an
 // ARBITRARY religion -- so NOT the ×100 gather path (hap.iSrNet is the CURRENT state religion's building term,
 // gated live; this getter serves the civic what-if that asks a NON-state religion's slot).
 int CascadeWellbeing::cityStateReligionHappiness(const CvCity* pCity, int eReligion)
@@ -869,7 +869,7 @@ int CascadeWellbeing::largestCityWellbeing(const CvCity* pCity)
 }
 
 // Per-source terms for the legacy sub-getters -- a live city gather (the verdict is the cached path). Perf is not a
-// gate now; UI/AI decomposition reads are cold. The bonus term maps 1:1 to the retired m_iBonus* accumulators
+// gate now; UI/AI decomposition reads are cold. The bonus term maps 1:1 to the legacy bonus happiness/health
 // (sign convention identical: iGood = positives, iBad = negatives).
 void CascadeWellbeing::bonusWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad)
 {
@@ -884,7 +884,7 @@ void CascadeWellbeing::bonusWellbeing(const CvCity* pCity, int& iHapGood, int& i
 	iHeaBad  = hea.bonus.iBad;
 }
 
-// The CITY building term (hap.bld/hea.bld) for the retired m_iBuildingGood/Bad{Happiness,Health} accumulators.
+// The CITY building term (hap.bld/hea.bld).
 // Same live-gather shape as bonusWellbeing; the term already folds the event ledger (getBuildingHappy/HealthChange).
 void CascadeWellbeing::buildingWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad)
 {
@@ -913,10 +913,9 @@ void CascadeWellbeing::featureWellbeing(const CvCity* pCity, int& iHapGood, int&
 	iHeaBad  = hea.featSubstrate.iBad;
 }
 
-// The SPECIALIST terms (hap.spec/hea.spec) for the retired m_iSpecialist{Happiness,Unhappiness,GoodHealth,BadHealth}
-// accumulators. Same live-gather shape as bonus/building; the spec term is ×100 sign-split (iGood = positives,
-// iBad = negatives), matching the legacy accumulator signs (m_iSpecialistHappiness/GoodHealth positive,
-// m_iSpecialistUnhappiness/BadHealth negative). The getters stay ×100 -- their display consumers ÷100 at use.
+// The SPECIALIST terms (hap.spec/hea.spec). Same live-gather shape as bonus/building; the spec term is ×100 sign-split
+// (iGood = positives, iBad = negatives), matching the legacy signs (happiness/good-health positive,
+// unhappiness/bad-health negative). The getters stay ×100 -- their display consumers ÷100 at use.
 void CascadeWellbeing::specialistWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad)
 {
 	CvCascadeEvalCtx ec;
@@ -930,8 +929,8 @@ void CascadeWellbeing::specialistWellbeing(const CvCity* pCity, int& iHapGood, i
 	iHeaBad  = hea.spec.iBad;
 }
 
-// The extraBuilding terms (hap.extraB/hea.extraB) for the retired m_iExtraBuilding{Good,Bad}{Happiness,Health}
-// accumulators. The extraB term needs the FULL path: gatherCityTerms fills the civic/trait per-building keyed leg,
+// The extraBuilding terms (hap.extraB/hea.extraB). The extraB term needs the FULL path: gatherCityTerms fills the
+// civic/trait per-building keyed leg,
 // playerAreaEmpire + foldBuildingKeyed the building-keyed "Royal Tomb" leg. ×100 sign-split (iGood/iBad); the
 // human-scale legacy getters ÷100.
 void CascadeWellbeing::extraBuildingWellbeing(const CvCity* pCity, int& iHapGood, int& iHapBad, int& iHeaGood, int& iHeaBad)

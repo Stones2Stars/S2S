@@ -441,8 +441,9 @@ played turns) clean BEFORE the flip — never an offline/endpoint parity alone. 
 [DEC-structure-before-shadow]: the nets verify each step's *behaviour*; the *structure* is verified once, here,
 against this document and the specs it cites.
 
-> The full legacy↔cascade DUPLICATE-SURFACE index (every legacy↔cascade pair still standing, who serves, the
-> nets, the cut homes) is its own document: [duplicate-surface.md](duplicate-surface.md).
+> The legacy↔cascade oracle DUPLICATE surface has been cut — the `*Legacy` oracle getters are removed
+> ([DEC-oracle-tautology](../../architecture/decisions.md#dec-oracle-tautology)); the remaining cut rows live in
+> [code-cut-map.md](code-cut-map.md).
 
 ## 3b. The caching-surface census (one surface, enforced)
 

@@ -133,20 +133,15 @@ riders (trade-network recompute, UI-dirty, power) the surviving trigger site mus
 > rate, free XP, insidiousness, investigation) ride the still-legacy `processSpecialist` push and retire with the F4
 > unit/specialist apply-loop; their YIELDS already follow the cascade (recompute over `getFreeSpecialistCount`).
 
-> **⛔ Unit UPKEEP is NOT a base-magnitude cut — it retires with the F4 unit-plane build.** `CvPlayer::
-> m_iUnitUpkeep{Civilian,Military}100` are the player-scope civilian/military sums of per-unit upkeep, push-maintained
-> by `CvUnit::calcUpkeep100` → `changeUnitUpkeep`. **The cascade computes NO unit upkeep** — the cascade `maintenance`
-> channel is CITY maintenance (a separate gold-expense component, [economy.md](../../reference/economy.md),
-> [DEC-maintenance-bookkeeping](../../architecture/decisions.md#dec-maintenance-bookkeeping)); unit upkeep is a
-> **unit-plane channel** (per-unit `100·getBaseUpkeep + m_iExtraUpkeep100` × modifier × SM), and the unit-plane
-> modifier machine is **NOT BUILT** ([roadmap](roadmap.md) §F4). So these accumulators FAIL the three-part test's
-> criterion (3) "a per-turn quantity the cascade NOW OWNS": there is no `Cascade*` accessor to re-point to. The only cut
-> available now — Σ over `unit->getUpkeep100()` bucketed by `isMilitaryBranch()` — is an object-recompute that produces
-> the IDENTICAL value (nothing exposed, zero cascade progress), keeps the per-unit `m_iUpkeep100` push-accumulator, and
-> forces restructuring the marginal-cost what-if (`getFinalUnitUpkeepChange`, read by the AI disband valuations) + the
-> dirty trigger that rides the deleted push. The PROPER-ONCE cut is at **F4**, when upkeep becomes a real unit-plane
-> channel: `getUnitUpkeepCivilian100`/`Military100` re-point to a cascade accessor and BOTH the player sums AND the
-> per-unit `m_iUpkeep100` retire together. (The upkeep *percent* modifier `m_iUpkeepModifier` is the separate
+> **⛔ Unit UPKEEP retired with the F4 unit-plane build — DONE.** Per-unit extra-upkeep is a cascade self-accumulator
+> (`UPK_UPKEEP`, gathered on-dirty from held promotions + unit-combats) and `CvUnit::getUpkeep100` is the computed
+> per-unit read; the legacy per-unit `m_iUpkeep100`/`m_iExtraUpkeep100` push-accumulators are REMOVED.
+> `CvPlayer::getUnitUpkeep{Civilian,Military}100` read recompute-Σ caches (`ensureUnitUpkeepBuckets` — Σ over live
+> units' `getUpkeep100()` bucketed by `isMilitaryBranch()`), replacing the `changeUnitUpkeep` push. Unit upkeep is a
+> **unit-plane channel**, distinct from the cascade `maintenance` channel (CITY maintenance, a separate gold-expense
+> component — [economy.md](../../reference/economy.md),
+> [DEC-maintenance-bookkeeping](../../architecture/decisions.md#dec-maintenance-bookkeeping)). (The upkeep *percent*
+> modifier `m_iUpkeepModifier` + the SizeMatters multiplier stay legacy — `getUpkeep100` applies them live; the
 > percent-stack carve-out below.)
 
 The yield channel additionally carries a `getYieldRate100` + `getYield` (÷100) **SPLIT** — the exact "×100 variant"

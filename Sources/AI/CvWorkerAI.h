@@ -212,12 +212,6 @@ public:
 	void markOuterRejected(int plotIdx, UnitTypes unitType, OuterRejectReason reason);
 	static const char* outerRejectReasonName(OuterRejectReason reason);
 
-	// ---- target claim ledger (cross-unit dedup; reserved for future paths) ----
-	bool tryClaim(int plotIdx, int unitId);
-	bool isClaimedByOther(int plotIdx, int unitId) const;
-	void releaseClaim(int plotIdx, int unitId);
-	void releaseAllClaimsBy(int unitId);
-
 private:
 	// Shared mission-push tail for improveBonus / improveCity. Static because
 	// it has no per-instance state; lives on the class so the friend access
@@ -237,7 +231,6 @@ private:
 	std::map<EvalKey, BonusEval>          m_bonusEvalCache;
 	std::map<EvalKey, CityPlotEval>       m_cityEvalCache;
 	std::map<EvalKey, OuterRejectReason>  m_outerRejected;
-	std::map<int, int>                    m_claims; // plotIdx -> unitId
 
 	// per-worker path-unreachable memo context (see isPathKnownUnreachable)
 	int                                   m_pathMemoUnitId;

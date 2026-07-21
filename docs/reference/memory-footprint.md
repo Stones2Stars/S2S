@@ -7,7 +7,7 @@
 > sits at **~2.2–2.4 GB working set** and **climbs ~+150–230 MB per turn-end**, and **the climb resets on reload**.
 > This doc attributes that number to structures, and answers "are textures loaded once or per-instance?".
 > The only live EXE-side window is the `workingSetMB`/`peakWorkingSetMB`/`pagefileMB` gauge on `/computed/perf`
-> (`GetProcessMemoryInfo`) + the `[EXE]` render-call trace ([observability.md](observability.md)).
+> (`GetProcessMemoryInfo`, [observability.md](observability.md)).
 
 ## The big picture — three FLAT static clusters (~140 MB), and a per-turn GROWER
 
@@ -25,7 +25,7 @@
 > (1) the **EXE-side Gamebryo scene/graphics** (the biggest; grows as the map is revealed early→late — §5),
 > (2) the **Python 2.4 heap** (Revolution/events/UI — entirely uncounted here), (3) **save/serialization buffers**,
 > (4) **heap fragmentation**. Attributing the ~800 MB→2 GB early→late growth needs a **delta MEASUREMENT**
-> (working-set at an early-game state vs the late save + the `[EXE]`/gauge counters), NOT more struct estimation —
+> (working-set at an early-game state vs the late save, via the `/computed/perf` memory gauge), NOT more struct estimation —
 > that is the honest open question this static audit does not answer.
 
 **Headline:** none of the big *DLL* structures is the per-turn climb. The three static clusters sum to **~140 MB
@@ -147,8 +147,8 @@ The static clusters (§1–§4) are flat, so the climb is elsewhere. There are T
   Early game most of the 9,600 tiles are *unexplored* and not in the Gamebryo scene; late game the whole map is
   revealed → the EXE holds terrain/feature/improvement/route/river scene nodes for all 9,600 tiles **plus** the 3D
   models for 185 cities (each with hundreds of buildings) and thousands of unit models. This scales exactly with
-  exploration + city/unit count and is almost certainly the bulk of the 800 MB→2 GB. Only observable via
-  `workingSetMB` + the `[EXE]` render-call trace (`symbols`/`centerUnit`/`minimapColor`/`cityLayout`/`flagDirty`).
+  exploration + city/unit count and is almost certainly the bulk of the 800 MB→2 GB. Only observable via the
+  `workingSetMB` process gauge (`/computed/perf`) — the DLL cannot see inside the EXE scene.
 - **Python 2.4 heap (uncounted).** Revolution, random events, the EventManager, and the UI hold Python state that
   grows with game state. Not measured by any DLL probe — a real blind spot.
 - **Per-turn allocation churn + heap fragmentation (reload-resetting).** Pathfinding vectors
@@ -172,6 +172,6 @@ against the cascade rather than a legacy/cascade mix.
 
 ## See also
 - [engine.md](engine.md) — the 32-bit/VC7.1 toolchain + the closed-EXE ABI that fixes the ceiling.
-- [observability.md](observability.md) — the `/computed/perf` memory gauge + `[EXE]` render trace.
+- [observability.md](observability.md) — the `/computed/perf` memory gauge.
 - [../architecture/state-repositories.md](../architecture/state-repositories.md) — the derived-cache model (§3).
 - [../plans/structural-cleanup/roadmap.md](../plans/structural-cleanup/roadmap.md) — the parked memory hunt + the legacy cut it waits on.

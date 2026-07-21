@@ -818,7 +818,7 @@ compute concentrated in three spots, all scaling with on-screen units/cities:
    LIVE (removal is only PARKED — [surround-destroy-removal-map.md](surround-destroy-removal-map.md)); if it is
    removed, the bypass + the whole `surroundedDefenseModifier` term delete and the cache serves everyone.
 3. **Unit-stack walks per plot (OPEN — separate pass).** `CvPlot::isFighting`/`isVisibleEnemyUnit`/
-   `getNumVisibleUnits` (EXE-polled, they carry `exeIn(...)` markers) + `CvGame::getPlotUnits` (O(n²) over one
+   `getNumVisibleUnits` (EXE-polled every frame) + `CvGame::getPlotUnits` (O(n²) over one
    stack) walk a plot's unit list uncached — cheap per plot, real when summed over stacked plots × visible plots
    × frames. Fix: reinstate the **event-driven-on-plot maintained counts** (increment/decrement on unit
    enter/leave/battle-start/end) so the query is a stored read. ⚠ Carries the same drift risk as the fog

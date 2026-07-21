@@ -5,7 +5,6 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "Engine/CvExeTrace.h"
 #include "AI/BetterBTSAI.h"
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
@@ -599,8 +598,8 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 
 	// Toffer - We have some issues with signs disappearing,
 	//	not sure if these are really needed, commented out as a test.
-	//exeEng(EXEK_SIGNS), gDLL->getEngineIFace()->clearSigns();
-	exeEng(EXEK_RESOURCE_LAYER), gDLL->getEngineIFace()->setResourceLayer(GC.getResourceLayer());
+	//gDLL->getEngineIFace()->clearSigns();
+	gDLL->getEngineIFace()->setResourceLayer(GC.getResourceLayer());
 	//gDLL->getInterfaceIFace()->setEndTurnCounter(2 * getBugOptionINT("MainInterface__AutoEndTurnDelay", 2));
 
 	// Capture a CSV reference of every plot's state for cross-referencing with
@@ -1067,7 +1066,7 @@ void CvGame::regenerateMap()
 		}
 	}
 
-	exeEng(EXEK_SIGNS), gDLL->getEngineIFace()->clearSigns();
+	gDLL->getEngineIFace()->clearSigns();
 
 	GC.getMap().erasePlots();
 
@@ -1076,7 +1075,7 @@ void CvGame::regenerateMap()
 	CvMapGenerator::GetInstance().generateRandomMap();
 	CvMapGenerator::GetInstance().addGameElements();
 
-	exeEng(EXEK_REBUILD_ALL), gDLL->getEngineIFace()->RebuildAllPlots();
+	gDLL->getEngineIFace()->RebuildAllPlots();
 
 	CvEventReporter::getInstance().resetStatistics();
 
@@ -1085,12 +1084,12 @@ void CvGame::regenerateMap()
 	initScoreCalculation();
 
 	GC.getMap().setupGraphical();
-	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
-	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
-	exeSetUIDirty(ColoredPlots_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(ColoredPlots_DIRTY_BIT), true);
+	gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
+	gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
 	if (isInAdvancedStart())
 	{
-		exeSetUIDirty(Advanced_Start_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Advanced_Start_DIRTY_BIT), true);
 	}
 	CvEventReporter::getInstance().mapRegen();
 
@@ -2598,8 +2597,8 @@ void CvGame::update()
 		if (m_lastGraphicUpdateRequestTickCount > 0 && GetTickCount() - m_lastGraphicUpdateRequestTickCount > 500)
 		{
 			m_lastGraphicUpdateRequestTickCount = 0;
-			exeEng(EXEK_REBUILD_ALL), gDLL->getEngineIFace()->RebuildAllPlots();
-			exeSetUIDirty(GlobeLayer_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GlobeLayer_DIRTY_BIT), true);
+			gDLL->getEngineIFace()->RebuildAllPlots();
 		}
 	}
 	{
@@ -3743,8 +3742,8 @@ void CvGame::setGameTurn(int iNewValue)
 
 		setScoreDirty(true);
 
-		exeSetUIDirty(TurnTimer_DIRTY_BIT, true);
-		exeSetUIDirty(GameData_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(TurnTimer_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
 	}
 }
 
@@ -4778,7 +4777,7 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 {
 	m_bDebugMode = !m_bDebugMode;
 
-	exeEng(EXEK_REBUILD_ALL), gDLL->getEngineIFace()->RebuildAllPlots();
+	gDLL->getEngineIFace()->RebuildAllPlots();
 
 	GC.getMap().setupGraphical();
 	GC.getMap().updateVisibility();
@@ -4786,16 +4785,16 @@ bool CvGame::isValidVoteSelection(VoteSourceTypes eVoteSource, const VoteSelecti
 	GC.getMap().updateFlagSymbols();
 	GC.getMap().updateMinimapColor();
 
-	exeSetUIDirty(GameData_DIRTY_BIT, true);
-	exeSetUIDirty(Score_DIRTY_BIT, true);
-	exeSetUIDirty(MinimapSection_DIRTY_BIT, true);
-	exeSetUIDirty(UnitInfo_DIRTY_BIT, true);
-	exeSetUIDirty(CityInfo_DIRTY_BIT, true);
-	exeSetUIDirty(GlobeLayer_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
+	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
+	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(MinimapSection_DIRTY_BIT), true);
+	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(UnitInfo_DIRTY_BIT), true);
+	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
+	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GlobeLayer_DIRTY_BIT), true);
 
-	//exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
-	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
-	exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
+	//gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
+	gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
+	gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
 
 	if (m_bDebugMode)
 	{
@@ -4986,17 +4985,17 @@ void CvGame::setActivePlayer(PlayerTypes eNewValue, bool bForceHotSeat)
 			gDLL->getInterfaceIFace()->clearSelectedCities();
 			gDLL->getInterfaceIFace()->clearSelectionList();
 
-			exeSetUIDirty(PercentButtons_DIRTY_BIT, true);
-			exeSetUIDirty(ResearchButtons_DIRTY_BIT, true);
-			exeSetUIDirty(GameData_DIRTY_BIT, true);
-			exeSetUIDirty(MinimapSection_DIRTY_BIT, true);
-			exeSetUIDirty(CityInfo_DIRTY_BIT, true);
-			exeSetUIDirty(UnitInfo_DIRTY_BIT, true);
-			exeSetUIDirty(Flag_DIRTY_BIT, true);
-			exeSetUIDirty(GlobeLayer_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(PercentButtons_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(ResearchButtons_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(MinimapSection_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(UnitInfo_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Flag_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GlobeLayer_DIRTY_BIT), true);
 
-			exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
-			exeSetUIDirty(BlockadedPlots_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(BlockadedPlots_DIRTY_BIT), true);
+			gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
 		}
 	}
 }
@@ -5112,7 +5111,7 @@ void CvGame::setBestLandUnit(UnitTypes eNewValue)
 	{
 		m_eBestLandUnit = eNewValue;
 
-		exeSetUIDirty(UnitInfo_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(UnitInfo_DIRTY_BIT), true);
 	}
 }
 
@@ -5158,8 +5157,8 @@ void CvGame::setWinner(TeamTypes eNewWinner, VictoryTypes eNewVictory)
 			}
 			else setGameState(GAMESTATE_OVER);
 		}
-		exeSetUIDirty(Center_DIRTY_BIT, true);
-		exeSetUIDirty(Soundtrack_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Center_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Soundtrack_DIRTY_BIT), true);
 	}
 }
 
@@ -5196,7 +5195,7 @@ void CvGame::setGameState(GameStateTypes eNewValue)
 				}
 			}
 		}
-		exeSetUIDirty(Cursor_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Cursor_DIRTY_BIT), true);
 	}
 }
 
@@ -5234,7 +5233,7 @@ void CvGame::setRankPlayer(int iRank, PlayerTypes ePlayer)
 	{
 		m_aiRankPlayer[iRank] = ePlayer;
 
-		exeSetUIDirty(Score_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
 	}
 }
 
@@ -5284,7 +5283,7 @@ void CvGame::setPlayerScore(PlayerTypes ePlayer, int iScore)
 		m_aiPlayerScore[ePlayer] = iScore;
 		FASSERT_NOT_NEGATIVE(getPlayerScore(ePlayer));
 
-		exeSetUIDirty(Score_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
 	}
 }
 
@@ -5304,7 +5303,7 @@ void CvGame::setRankTeam(int iRank, TeamTypes eTeam)
 	{
 		m_aiRankTeam[iRank] = eTeam;
 
-		exeSetUIDirty(Score_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
 	}
 }
 
@@ -6442,7 +6441,7 @@ void CvGame::doTurn()
 
 	{
 		PERF_SCOPE("game.engineDoTurn", -1);
-		exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(GlobePartialTexture_DIRTY_BIT, true);
+		gDLL->getEngineIFace()->SetDirty(GlobePartialTexture_DIRTY_BIT, true);
 		gDLL->getEngineIFace()->DoTurn();
 	}
 
@@ -8421,7 +8420,7 @@ CvDeal* CvGame::addDeal()
 void CvGame::deleteDeal(int iID)
 {
 	m_deals.removeAt(iID);
-	exeSetUIDirty(Foreign_Screen_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Foreign_Screen_DIRTY_BIT), true);
 }
 
 CvRandom& CvGame::getMapRand()
@@ -9105,8 +9104,6 @@ void CvGame::read(FDataStreamBase* pStream)
 
 	m_Properties.readWrapper(pStream);
 
-	//Example of how to skip element
-	//WRAPPER_SKIP_ELEMENT(wrapper,"CvGame",m_bCircumnavigated, SAVE_VALUE_ANY);
 	WRAPPER_READ_CLASS_ARRAY(wrapper,"CvGame", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementCount);
 	WRAPPER_READ_CLASS_ARRAY(wrapper,"CvGame", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiTechGameTurnDiscovered);
 	WRAPPER_READ_OBJECT_END(wrapper);
@@ -12092,7 +12089,7 @@ void CvGame::recalculateModifiers()
 	GC.getMap().updateSight(true, false);
 	S2S_LOAD_PHASE("updateSight");
 
-	exeEng(EXEK_REBUILD_ALL), gDLL->getEngineIFace()->RebuildAllPlots();
+	gDLL->getEngineIFace()->RebuildAllPlots();
 	S2S_LOAD_PHASE("RebuildAllPlots");
 
 	GC.getMap().setupGraphical();

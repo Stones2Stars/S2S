@@ -2,7 +2,6 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "Engine/CvExeTrace.h"
 #include "Engine/CvCity.h"
 #include "Infrastructure/CvDLLEngineIFaceBase.h"
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"
@@ -455,9 +454,9 @@ void CvViewport::processActionState()
 		setActionState(VIEWPORT_ACTION_STATE_NONE);
 		break;
 	case VIEWPORT_ACTION_STATE_AFTER_SWITCH:
-		exeEng(EXEK_ENG_SETDIRTY), gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
-		exeSetUIDirty(MinimapSection_DIRTY_BIT, true);
-		exeSetUIDirty(Fog_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(MinimapSection_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Fog_DIRTY_BIT), true);
+		gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
 		Cy::call("CvAppInterface", "resetCameraZoom");
 		setActionState(VIEWPORT_ACTION_STATE_NONE);
 		break;

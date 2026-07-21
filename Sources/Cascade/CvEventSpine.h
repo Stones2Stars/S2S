@@ -99,7 +99,6 @@ enum SpineDomainTag
 	SD_MODIFIER,   // [MODIFIER] the perf + repo census (CvCascadeModifierMath)
 	SD_GRANTS,     // [GRANTS] the "provisions" consumer (CvCascadeGrants) -- resolves an entity's genuine grants on a DOMAIN event
 	SD_SPINE,      // [SPINE] spine lifecycle signals (game-load started/finished) -- rendered via the registered prefix, not inline
-	SD_EXE,        // [EXE] the DLL->EXE graphics/dirty call trace (CvExeTrace) -- every render-relevant call into the closed EXE
 	NUM_SPINE_DOMAINS
 };
 

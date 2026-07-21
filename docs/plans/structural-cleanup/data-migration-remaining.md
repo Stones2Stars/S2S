@@ -373,8 +373,9 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
 
 - **`paralyze`** → `state` block — a failure-to-close: it blocks on the greenfield `state` model (state.md), which is
   in-scope migration work to BUILD (not a park). No data is lost or moved meanwhile; it closes when the `state` model is built.
-- **`mechanized`/`gunpowder`/`mounted` tags** — derived from unitcombats in the **unitcombat→tag pass** (a PERMANENT carve-out, owner-ruled)
-  (`curate_unitcombat.py` emits no tags yet).
+- **`mechanized`/`gunpowder`/`mounted` tags** — derived from unitcombats in the **unitcombat→tag pass**; the
+  obvious-identity first pass is LANDED (`curate_unit.py` folds a unit's combat classes to tags — mechanized/
+  gunpowder/mounted + ~30 others emitted). The flagged-remainder taxonomy folds remain.
 - **`stronglyRestricted`** (NPC build-lockdown) → a `requires.build` civ-membership gate (paired with
   `EnabledCivilization`) — a PERMANENT carve-out (owner-ruled), pending **NPC civilizations being wired**. **⚖ NOT a flip/cutover constraint
   (owner ruling 2026-07-02):** losing the NPC lockdown during the enabler flip is **accepted** — *"I truly don't

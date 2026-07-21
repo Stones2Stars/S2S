@@ -4,7 +4,6 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "Engine/CvExeTrace.h"
 #include "CvArea.h"
 #include "UI/CvArtFileMgr.h"
 #include "CvCity.h"
@@ -4599,8 +4598,8 @@ void CvSelectionGroup::setActivityType(ActivityTypes eNewValue, MissionTypes eSl
 
 	if (pPlot == gDLL->getInterfaceIFace()->getSelectionPlot())
 	{
-		exeSetUIDirty(PlotListButtons_DIRTY_BIT, true);
-		exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(PlotListButtons_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
 	}
 }
 
@@ -5558,9 +5557,9 @@ void CvSelectionGroup::clearMissionQueue()
 
 	if (getOwner() == GC.getGame().getActivePlayer() && IsSelected())
 	{
-		exeSetUIDirty(Waypoints_DIRTY_BIT, true);
-		exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
-		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Waypoints_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
 	}
 }
 
@@ -5570,9 +5569,9 @@ void CvSelectionGroup::setMissionPaneDirty()
 
 	if (IsSelected())
 	{
-		exeSetUIDirty(Waypoints_DIRTY_BIT, true);
-		exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
-		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Waypoints_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
 	}
 }
 
@@ -5607,9 +5606,9 @@ bool CvSelectionGroup::insertAtEndMissionQueue(MissionData mission, bool bStart)
 
 	if ((getOwner() == GC.getGame().getActivePlayer()) && IsSelected())
 	{
-		exeSetUIDirty(Waypoints_DIRTY_BIT, true);
-		exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
-		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Waypoints_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
 	}
 
 	return true;
@@ -5636,9 +5635,9 @@ CLLNode<MissionData>* CvSelectionGroup::deleteMissionQueueNode(CLLNode<MissionDa
 
 	if ((getOwner() == GC.getGame().getActivePlayer()) && IsSelected())
 	{
-		exeSetUIDirty(Waypoints_DIRTY_BIT, true);
-		exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
-		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Waypoints_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
 	}
 
 	return pNextMissionNode;

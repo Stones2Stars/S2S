@@ -282,8 +282,7 @@ struct CascadeWorldScope
 // is a handful, so the fold is effectively O(1) and reuses the retiring push-accumulator's shape for nothing.
 //
 // NEVER serialized: dirty-on-construct re-derives from the DESERIALIZED held-promotion set at load -- no reseed
-// emit needed (the held set IS the source, already on the unit). The retired m_iExtra* serialized accumulators
-// drain via Assets/savemigration.txt (DEC-save-remove-is-soft), per-group as each channel migrates.
+// emit needed (the held set IS the source, already on the unit).
 //
 // SCALE: these unit stats are DISCRETE whole quantities (withdrawal %, first-strike COUNTS, heal points), so they
 // reduce ÷100 AT THE GATHER (MMKernel::sumUnit is the human ÷100 summer) and store HUMAN -- the discrete-count

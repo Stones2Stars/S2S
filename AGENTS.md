@@ -53,14 +53,17 @@ architecture rules that apply to DLL source.
 > toolchain is locked to stay ABI/STL-compatible with the closed VC7.1 game `.exe`), **not** a style convention.
 > In-process threading means raw Win32 only. Do not modernize or replace the build chain/toolchain.
 >
-> **⛔ HARD RULE — THE TREE DELIBERATELY DOES NOT COMPILE ([DEC-red-ratchet](docs/architecture/decisions.md#dec-red-ratchet)).
-> NEVER "fix" it by restoring old Infos.** The 23 XML engine info classes (`CvBuildingInfo`, `CvUnitInfo`,
+> **⛔ HARD RULE — THE RED-RATCHET: NEVER "fix" a build by restoring old Infos ([DEC-red-ratchet](docs/architecture/decisions.md#dec-red-ratchet)).**
+> The 23 XML engine info classes (`CvBuildingInfo`, `CvUnitInfo`,
 > `CvTechInfo`, … — 46 files) were moved to `SourceArchive/Infos/` ON PURPOSE: parity is past, the JSON-fed
 > `CvJson<X>Info` pocos are their replacements, and the missing classes are a RATCHET — during the cutover,
 > consecutive agents "finished" by quietly wiring old Infos back in wherever the JsonInfos didn't pan out, so the
 > fallback was removed. **Never restore anything from `SourceArchive/`, never re-add a `CvXInfo` class, never treat
-> the RED build as a defect.** The ONLY road to green: build the JsonInfo structure, wire it up, and wire up/replace
-> ALL the getters (the engine/AI/UI consumer surface onto the JSON-fed infos).
+> a red build as a defect to fix by reviving one.** The ONLY road to green: build the JsonInfo structure, wire it up,
+> and wire up/replace ALL the getters (the engine/AI/UI consumer surface onto the JSON-fed infos). **The tree
+> currently LINKS green via that correct path** (the DllExport proxy + the replacement pocos are wired) — but the
+> ratchet rule is permanent and holds regardless of build state: a future red build is still fixed by finishing
+> JsonInfo wiring, never by reviving a `CvXInfo`.
 >
 > **⛔ HARD RULE — READING A REPLACED INFO'S XML **INTO THE GAME** IS HARD BANNED ([DEC-no-xml-into-game](docs/architecture/decisions.md#dec-no-xml-into-game)).**
 > The legacy info XMLs (`Assets/XML/**/CIV4<X>Infos.xml`) for every type we have replaced with a `CvJson<X>Info`
@@ -134,18 +137,19 @@ not findings to re-discover.
 ### Worker AI
 
 - **Workers evaluate builds individually** — there is no per-player coordination
-  layer. Each `CvUnit` worker independently calls `CvUnitAI` evaluation methods
-  (`AI_irrigateTerritory`, `AI_improveBonus`, `AI_fortTerritory`, `AI_findBestFort`),
-  re-scoring the same plots/builds as other workers of the same owner. This is
-  BTS-era behavior carried through C2C. Future TODO: a `CvPlayer`-level coordination
-  layer (potential homes: `CvPlayerAI`, `CvWorkerService`, contract-broker).
-- **`CvWorkerAI` is the per-player cache + claim ledger** (one per `CvPlayer`,
-  turn-scoped). Holds a BonusEval cache keyed on `(BonusEvalSource, plotIdx, unitType)`
-  and a claim ledger (`plotIdx -> unitId`). The ledger is **only** used by
-  `CvWorkerService::ImproveBonus`; the legacy `AI_improveBonus`/`AI_bestCityBuild`
-  paths already dedup via `AI_plotTargetMissionAIs(plot, MISSIONAI_BUILD, group) < iMaxWorkers`
-  (the canonical cross-worker dedup). Don't double up — adding the ledger to the
-  legacy path forces `iMaxWorkers=1` and breaks team builds.
+  layer that prevents re-scoring. Each `CvUnit` worker independently runs the worker
+  scorers — `CvWorkerAI::improveBonus` / `improveCity` (bonus + city builds) and
+  `CvUnitAI::AI_irrigateTerritory` / `AI_fortTerritory` — re-scoring the same
+  plots/builds as other workers of the same owner. This is BTS-era behavior carried
+  through C2C. Future TODO: a real `CvPlayer`-level coordination layer (potential
+  homes: `CvPlayerAI`, contract-broker).
+- **`CvWorkerAI` is the per-player BonusEval cache** (one per `CvPlayer`, turn-scoped),
+  keyed on `(BonusEvalSource, plotIdx, unitType)`. **Bonus improvement is
+  `CvWorkerAI::improveBonus`** (the consolidated path). Cross-worker dedup is
+  `AI_plotTargetMissionAIs(plot, MISSIONAI_BUILD, group) < iMaxWorkers` — the canonical
+  count-based dedup, which allows team builds. ⛔ Do NOT dedup via a per-plot
+  single-claim scheme: one-unit-per-plot forces `iMaxWorkers=1` and breaks team builds,
+  which is exactly why the dedup is the `AI_plotTargetMissionAIs` count.
 - **Observability:** `CvWorkerAI::improveBonus` emits `[WAI/*]`-tagged lines into
   `BuildEvaluation.log`, gated by `gPlayerLogLevel` (1=headline, 2=per-plot, 3=per-candidate).
   The class doc comment in `Sources/CvWorkerAI.h` is the authoritative tag reference.

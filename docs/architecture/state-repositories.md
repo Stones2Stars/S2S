@@ -132,8 +132,10 @@ public:
   On LOAD the cascade is stood up by the **event reseed** — the save read fires the DOMAIN events for every fact as it
   deserializes, and each package builds from its own deposits ([event-spine.md](../specs/event-spine.md) /
   [DEC-spine-reseed](decisions.md#dec-spine-reseed)); the old recompute-on-load / warm-up recalc
-  (`playerSliceRebuild` + `worldRebuild` + the `recalculateModifiers` content) was a stabilize-the-drift STOPGAP and
-  is REMOVED. Post-load, an event marks only the package(s) its deposits touch, and **ONLY marked (dirty) packages
+  (`playerSliceRebuild` + `worldRebuild`) was a stabilize-the-drift STOPGAP and is REMOVED, and the cascade no longer
+  uses `recalculateModifiers` as a heal. (The legacy `recalculateModifiers` FUNCTION still exists in
+  `CvGame`/`CvTeam`/`CvPlayer`/`CvCity`, invoked only by the WorldBuilder / asset-checksum-mismatch popup path
+  (`CvMessageData.cpp`) — it is never the cascade's population path.) Post-load, an event marks only the package(s) its deposits touch, and **ONLY marked (dirty) packages
   rebuild** — there is NO full per-player rebuild on `doTurn`, NO mark-all, NO per-slice blanket, and NO turn-roll
   self-heal ([DEC-no-self-heal](decisions.md#dec-no-self-heal)): those blankets (`playerSliceRebuild`, the EPOCH
   bump, the RATE turn-roll) are REMOVED, each replaced by targeted, spine-routed per-source-mask invalidation. A

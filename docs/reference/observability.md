@@ -22,18 +22,9 @@
 passes when `mismatches=0`. `[INIT/*]` was renamed from `[GAME/*]` to avoid clashing with the `[STATE/game]` cascade
 feed. Call-site census exists (WAI 43 sites, HAI 54, CTB 66, …). Dead sinks: `CB.log`, `C2C.log` (ruled DELETE).
 
-**`[EXE]` — the DLL→EXE graphics/dirty call trace** (`Engine/CvExeTrace.{h,cpp}` → `ExeTrace.log`). Every DLL
-call that can make the closed EXE re-render emits a DIAGNOSTIC spine event naming the api (kind), its arguments,
-and the CALLER's RVA (`ln CvGameCoreDLL+<rva>` against the PDB): the whole `getInterfaceIFace()->setDirty` surface
-(routed through `exeSetUIDirty`), the engine-iface scene mutators (`SetDirty`/`addColoredPlot`/`RebuildPlot`/
-`fillAreaBorderPlot`/visibility/…, prefixed with `exeEng(EXEK_*)`), and the `CvPlot`/`CvCity` graphics wrappers
-(symbols/minimap/flag/center-unit/layout — `exeEngFrom` passing the wrapper's caller). Per-kind cumulative
-counters ride `/computed/perf` `exeCalls` (double-sample for rates). Rationale: the EXE render pipeline is a
-black box; an FPS drop with an idle DLL is attributed from what we TOLD the EXE to do, never hypothesized.
-`/computed/perf` also carries the process **`memory`** gauge (`workingSetMB`/`peakWorkingSetMB`/`pagefileMB`,
-the CvPlotPaging `GetProcessMemoryInfo` mechanism) — poll across turns to split a per-turn RAM climb (leak)
-from a one-time step (retained structure); load-bearing in the 32-bit ~3.2GB address-space ceiling.
-Excluded (interaction, not render churn): popups, sounds, selection, camera/fog/layer toggles.
+**The process `memory` gauge rides `/computed/perf`** (`workingSetMB`/`peakWorkingSetMB`/`pagefileMB`, the
+CvPlotPaging `GetProcessMemoryInfo` mechanism) — poll across turns to split a per-turn RAM climb (leak) from a
+one-time step (retained structure); load-bearing in the 32-bit ~3.2GB address-space ceiling.
 
 ## The live HTTP server (today)
 

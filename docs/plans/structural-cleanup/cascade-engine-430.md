@@ -2,8 +2,8 @@
 
 > ## ⛔ THE XML SEAM IS GONE (owner ruling 2026-07-08) — read this before ANY §3 seam line below.
 >
-> The XML info classes are ARCHIVED (`SourceArchive/Infos/`, deliberately removed as a fallback-proof ratchet);
-> HEAD does not compile BY DESIGN until the JsonInfo structure + the full getter wiring land. Every §3/§2 line
+> The XML info classes are ARCHIVED (`SourceArchive/Infos/`, removed as a fallback-proof ratchet); the JsonInfo
+> structure + the full getter wiring were the road to green — now reached (the tree links green). Every §3/§2 line
 > saying "the XML load stays authoritative until the atomic cutover" is SUPERSEDED — never restore the archive,
 > never re-add a `CvXInfo` (root `AGENTS.md` Build And Test ⛔).
 >
@@ -229,10 +229,10 @@ the running game** — the retired `/shadow/*` endpoint surface (a rollerskating
 >   the empty exemplar, owner ruling 2026-07-07); a type never falls back to the bare base.
 > - The cascade builds its RUNTIME (the DepositIndex, the packages, the frontier) by its OWN setup **reading those
 >   pocos** — never off a vector on the info object.
-> - **In-flight (RED build BY DESIGN):** the pocos are being generated (the plot-substrate set done); the cascade side
->   (`CvCascadeReadJson` census, `DepositIndex`, `MMKernel`, `PercentStack`) still references the removed
->   `CvJsonInfo.deposits`, so it does not compile — rewiring it to read typed poco members is the pending cascade-side
->   rework. Read every "`CvJsonInfo` holds deposits / a flat deposit vector" phrasing below with this split applied.
+> - **Realized:** the pocos are generated, and the cascade side (`CvCascadeReadJson` census, `DepositIndex`, `MMKernel`,
+>   `PercentStack`) reads the typed poco members (the `CvJsonInfo.deposits` vector is gone; `DepositIndex` is the
+>   compiled deposit index). Read every "`CvJsonInfo` holds deposits / a flat deposit vector" phrasing below with this
+>   split applied — the runtime deposits live in the `DepositIndex`, not on the info object.
 
 - **`readJson` will be a FRESH reader** (picojson → fresh runtime structures), NOT a reuse of `CvInfoUtil`/`CvXMLLoadUtility`/
   the old `read()` path. It runs IN ADDITION to the XML load during the migration; at cutover the XML path (`SetGlobalClassInfo`

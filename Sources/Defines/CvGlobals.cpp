@@ -2,7 +2,6 @@
 // globals.cpp
 //
 #include "CvGameCoreDLL.h"
-#include "Engine/CvExeTrace.h"
 #include "Infrastructure/BoolExpr.h"
 #include "CvBuildingInfo.h"
 #include "AI/CvGameAI.h"
@@ -746,7 +745,7 @@ void cvInternalGlobals::setResourceLayer(bool bOn)
 {
 	m_bResourceLayerOn = bOn;
 
-	exeEng(EXEK_RESOURCE_LAYER), gDLL->getEngineIFace()->setResourceLayer(bOn);
+	gDLL->getEngineIFace()->setResourceLayer(bOn);
 }
 
 bool cvInternalGlobals::getResourceLayer() const
@@ -2931,7 +2930,7 @@ CvMap& cvInternalGlobals::getMapByIndex(MapTypes eIndex) const
 
 void cvInternalGlobals::clearSigns()
 {
-	exeEng(EXEK_SIGNS), gDLL->getEngineIFace()->clearSigns();
+	gDLL->getEngineIFace()->clearSigns();
 
 	m_bSignsCleared = true;
 }

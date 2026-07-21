@@ -26150,8 +26150,6 @@ void CvUnitAI::read(FDataStreamBase* pStream)
 	//	m_aiWaitingOnUnitAITypes.push_back(iIndex);
 	//}
 
-	//Example of how to Skip Element
-	//WRAPPER_SKIP_ELEMENT(wrapper, "CvUnitAI", m_iLastUnitUpdated, SAVE_VALUE_TYPE_INT);
 }
 
 

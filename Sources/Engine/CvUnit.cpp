@@ -4,7 +4,6 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "Engine/CvExeTrace.h"
 #include "AI/BetterBTSAI.h"
 #include "CvEventSpine.h" // #430: name-change DOMAIN event on setName (Cascade/ is on /I)
 #include "CvCascadeAccumulator.h" // #430 THE ENABLER FLIP: enPromotionValid (isPromotionValid serves the cascade composite)
@@ -457,7 +456,7 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 
 		if (eOwner == GC.getGame().getActivePlayer())
 		{
-			exeSetUIDirty(GameData_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
 		}
 
 		if (isWorldUnit(eUnit))
@@ -580,22 +579,16 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iExtraMoveDiscount = 0;
 	m_iExtraAirRange = 0;
 	// #430 F4: withdrawal / firstStrike / heal / evasion / intercept / collateralDamage / capture are cascade
-	// self-accumulators now (m_iExtra{Intercept,Evasion,CollateralDamage,CaptureProbabilityModifier,
-	// CaptureResistanceModifier} removed alongside the withdrawal/firstStrike/heal set below)
-	// #430 F4: withdrawal / firstStrike / heal are cascade self-accumulators now (m_iExtra{FirstStrikes,
-	// ChanceFirstStrikes,Withdrawal,EnemyHeal,NeutralHeal,FriendlyHeal}/m_iSameTileHeal/m_iAdjacentTileHeal removed)
-	// -- re-derive from the held-set (mark all-dirty on a reused/re-identitied unit); the mid-combat suppress starts clear.
+	// self-accumulators now -- re-derive from the held-set (mark all-dirty on a reused/re-identitied unit);
+	// the mid-combat suppress starts clear.
 	m_bSuppressWithdrawal = false;
 	m_cascadeUnitPackages.set.markAllDirty();
 	//TB Combat Mods Begin
-	//#430 F4: m_iExtra{AttackCombatModifier,DefenseCombatModifier,VSBarbs,ReligiousCombatModifier} removed -- cascade self-accumulators (UPK_STRENGTH), re-derived via markAllDirty above
 	m_iStampedeCount = 0;
 	m_iAttackOnlyCitiesCount = 0;
 	m_iIgnoreNoEntryLevelCount = 0;
 	m_iIgnoreZoneofControlCount = 0;
 	m_iFliesToMoveCount = 0;
-	//#430 F4: m_iExtra{Unnerve,Enclose,Lunge,DynamicDefense} removed -- cascade self-accumulators (UPK_STRENGTH), re-derived via markAllDirty above
-	//#430 F4: m_iExtraStrength removed -- base-strength cascade self-accumulator (UPK_STRENGTH), re-derived via markAllDirty above
 	m_iSMStrength = 0;
 	m_iOnslaughtCount = 0;
 	m_iExtraEndurance = 0;
@@ -620,9 +613,8 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iExtraCombatModifierPerVolumeMore = 0;
 	m_iExtraCombatModifierPerVolumeLess = 0;
 	m_iExtraMaxHP = 0;
-	//#430 F4: m_iExtraStrengthModifier + m_iExtraDamageModifier removed -- cascade self-accumulators (UPK_STRENGTH), re-derived via markAllDirty above
-	//#430 F4: m_iExtraUpkeep100 + m_iUpkeep100 removed -- extra-upkeep is a cascade self-accumulator (UPK_UPKEEP,
-	// re-derived via markAllDirty above); per-unit upkeep is now the computed getUpkeep100. Percent modifier + SM stay legacy.
+	//#430 F4: extra-upkeep is a cascade self-accumulator (UPK_UPKEEP, re-derived via markAllDirty above);
+	// per-unit upkeep is now the computed getUpkeep100. Percent modifier + SM stay legacy.
 	m_iUpkeepModifier = 0;
 	m_iUpkeepMultiplierSM = 0;
 	m_iSMAssetValue = 0;
@@ -645,7 +637,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iSMAirBombBaseRate = 0;
 	m_iSMBaseWorkRate = 0;
 	m_iSMRevoltProtection = 0;
-	//#430 F4: m_iExtraCombatPercent + m_iExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent removed -- cascade self-accumulators (UPK_STRENGTH), re-derived via markAllDirty above
 
 	m_iRevoltProtection = 0;
 	m_iCollateralDamageProtection = 0;
@@ -736,7 +727,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	m_iDebugCount = 0;
 	m_iAssassinCount = 0;
 	m_iExtraStealthStrikes = 0;
-	//#430 F4: m_iExtraStealthCombatModifier removed -- cascade self-accumulator (UPK_STRENGTH), re-derived via markAllDirty above
 	m_iStealthDefenseCount = 0;
 	m_iOnlyDefensiveCount = 0;
 	m_iNoInvisibilityCount = 0;
@@ -874,14 +864,11 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	// the target re-derives from its own copied promotions/unitcombats; carry the within-frame suppress transient.
 	m_bSuppressWithdrawal = other.m_bSuppressWithdrawal;
 	m_cascadeUnitPackages.set.markDirty(UPK_ALL);
-	//#430 F4: m_iExtra{AttackCombatModifier,DefenseCombatModifier,VSBarbs,ReligiousCombatModifier} not copied -- cascade self-accumulators (UPK_STRENGTH), re-derived via markDirty(UPK_ALL) above
 	m_iStampedeCount = other.m_iStampedeCount;
 	m_iAttackOnlyCitiesCount = other.m_iAttackOnlyCitiesCount;
 	m_iIgnoreNoEntryLevelCount = other.m_iIgnoreNoEntryLevelCount;
 	m_iIgnoreZoneofControlCount = other.m_iIgnoreZoneofControlCount;
 	m_iFliesToMoveCount = other.m_iFliesToMoveCount;
-	//#430 F4: m_iExtra{Unnerve,Enclose,Lunge,DynamicDefense} not copied -- cascade self-accumulators (UPK_STRENGTH), re-derived via markDirty(UPK_ALL) above
-	//#430 F4: m_iExtraStrength not copied -- base-strength cascade self-accumulator (UPK_STRENGTH), re-derived via markDirty(UPK_ALL) above
 	m_iSMStrength = other.m_iSMStrength;
 	m_iOnslaughtCount = other.m_iOnslaughtCount;
 	m_iExtraEndurance = other.m_iExtraEndurance;
@@ -905,8 +892,7 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iExtraCombatModifierPerVolumeMore = other.m_iExtraCombatModifierPerVolumeMore;
 	m_iExtraCombatModifierPerVolumeLess = other.m_iExtraCombatModifierPerVolumeLess;
 	m_iExtraMaxHP = other.m_iExtraMaxHP;
-	//#430 F4: m_iExtraStrengthModifier + m_iExtraDamageModifier not copied -- cascade self-accumulators (UPK_STRENGTH), re-derived via markDirty(UPK_ALL) above
-	//#430 F4: m_iExtraUpkeep100 + m_iUpkeep100 not copied -- cascade self-accumulator (UPK_UPKEEP) + computed getUpkeep100,
+	//#430 F4: extra-upkeep is a cascade self-accumulator (UPK_UPKEEP) + computed getUpkeep100,
 	// re-derived via markDirty(UPK_ALL) above. Percent modifier + SM stay legacy.
 	m_iUpkeepModifier = other.m_iUpkeepModifier;
 	m_iUpkeepMultiplierSM = other.m_iUpkeepMultiplierSM;
@@ -930,7 +916,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iSMBaseWorkRate = other.m_iSMBaseWorkRate;
 	m_iSMRevoltProtection = other.m_iSMRevoltProtection;
 	// #430 F4: heal accumulators gathered from the held-set (never copied) -- covered by the markDirty(UPK_ALL) above.
-	//#430 F4: m_iExtraCombatPercent + m_iExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent not copied -- cascade self-accumulators (UPK_STRENGTH), re-derived via markDirty(UPK_ALL) above
 	m_iRevoltProtection = other.m_iRevoltProtection;
 	m_iCollateralDamageProtection = other.m_iCollateralDamageProtection;
 	m_iPillageChange = other.m_iPillageChange;
@@ -1003,7 +988,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iDebugCount = other.m_iDebugCount;
 	m_iAssassinCount = other.m_iAssassinCount;
 	m_iExtraStealthStrikes = other.m_iExtraStealthStrikes;
-	//#430 F4: m_iExtraStealthCombatModifier not copied -- cascade self-accumulator (UPK_STRENGTH), re-derived via markDirty(UPK_ALL) above
 	m_iStealthDefenseCount = other.m_iStealthDefenseCount;
 	m_iOnlyDefensiveCount = other.m_iOnlyDefensiveCount;
 	m_iNoInvisibilityCount = other.m_iNoInvisibilityCount;
@@ -1336,12 +1320,6 @@ void CvUnit::killUnconditional(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 	const PlayerTypes eOwner = getOwner();
 	CvPlayerAI& owner = GET_PLAYER(eOwner);
 
-	// Release any worker plot claims held by this unit. CvUnit::kill does not
-	// route through AI_setMissionAI for the dying unit, so explicit release is
-	// required (not merely defensive) -- combat losses, disbands, and drowned
-	// cargo all bypass that hook.
-	owner.getWorkerAI().releaseAllClaimsBy(getID());
-
 	CvPlot* pPlot = plot();
 
 	if (pPlot)
@@ -1604,7 +1582,6 @@ void CvUnit::killUnconditional(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 
 void CvUnit::NotifyEntity(MissionTypes eMission)
 {
-	exeIn(EXIN_UNIT_NOTIFY_ENTITY);
 	if ( !isUsingDummyEntities() && isInViewport() )
 	{
 		gDLL->getEntityIFace()->NotifyEntity(getUnitEntity(), eMission);
@@ -1663,7 +1640,7 @@ void CvUnit::doTurn()
 	{
 		m_commodore->restoreControlPoints();
 	}
-	exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
 
 	m_bRevealed = false;
 	if (m_bHasHNCapturePromotion && getOwner() == plot()->getOwner())
@@ -5010,7 +4987,7 @@ void CvUnit::move(CvPlot* pPlot, bool bShow)
 		&& GC.getASyncRand().get(100) < GC.getFeatureInfo(featureType).getEffectProbability())
 		{
 			EffectTypes eEffect = (EffectTypes)GC.getInfoTypeForString(GC.getFeatureInfo(featureType).getEffectType());
-			exeEng(EXEK_EFFECT), gDLL->getEngineIFace()->TriggerEffect(eEffect, pPlot->getPoint(), (float)(GC.getASyncRand().get(360)));
+			gDLL->getEngineIFace()->TriggerEffect(eEffect, pPlot->getPoint(), (float)(GC.getASyncRand().get(360)));
 			gDLL->getInterfaceIFace()->playGeneralSound("AS3D_UN_BIRDS_SCATTER", pPlot->getPoint());
 		}
 	}
@@ -5424,7 +5401,7 @@ void CvUnit::automate(AutomateTypes eAutomate)
 		}
 		if (IsSelected())
 		{
-			exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
 		}
 		return;
 	}
@@ -5436,7 +5413,7 @@ void CvUnit::automate(AutomateTypes eAutomate)
 		}
 		if (IsSelected())
 		{
-			exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
 		}
 		return;
 	}
@@ -6807,7 +6784,7 @@ bool CvUnit::nuke(int iX, int iY, bool bTrap)
 
 			if (GC.getInfoTypeForString("EFFECT_JETFIGHTER_NUKE_EXPLODE") != -1)
 			{
-				exeEng(EXEK_EFFECT), gDLL->getEngineIFace()->TriggerEffect((EffectTypes)GC.getInfoTypeForString("EFFECT_JETFIGHTER_NUKE_EXPLODE"), nukePlot->getPoint(), 0);
+				gDLL->getEngineIFace()->TriggerEffect((EffectTypes)GC.getInfoTypeForString("EFFECT_JETFIGHTER_NUKE_EXPLODE"), nukePlot->getPoint(), 0);
 				gDLL->getInterfaceIFace()->playGeneralSound("AS2D_NUKE_EXPLODES", nukePlot->getPoint());
 			}
 		}
@@ -7912,7 +7889,7 @@ void CvUnit::updatePlunder(int iChange, bool bUpdatePlotGroups)
 
 	if (bChanged)
 	{
-		exeSetUIDirty(BlockadedPlots_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(BlockadedPlots_DIRTY_BIT), true);
 
 		if (bUpdatePlotGroups)
 		{
@@ -10172,10 +10149,10 @@ bool CvUnit::promote(PromotionTypes ePromotion, int iLeaderUnitId)
 	{
 		gDLL->getInterfaceIFace()->playGeneralSound(GC.getPromotionInfo(ePromotion).getSound());
 
-		exeSetUIDirty(UnitInfo_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(UnitInfo_DIRTY_BIT), true);
 
 // BUG - Update Plot List - start
-		exeSetUIDirty(PlotListButtons_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(PlotListButtons_DIRTY_BIT), true);
 // BUG - Update Plot List - end
 	}
 	else
@@ -10830,13 +10807,11 @@ int CvUnit::movesLeft() const
 
 bool CvUnit::canMove() const
 {
-	exeIn(EXIN_UNIT_CAN_MOVE);
 	return !isDead() && getMoves() < maxMoves() && getImmobileTimer() < 1;
 }
 
 bool CvUnit::hasMoved()	const
 {
-	exeIn(EXIN_UNIT_HAS_MOVED);
 	return getMoves() > 0;
 }
 
@@ -11262,7 +11237,6 @@ bool CvUnit::canUnitCoexistWithArrivingUnit(const CvUnit& enemyUnit) const
 
 /*DllExport*/ bool CvUnit::isFighting() const
 {
-	exeIn(EXIN_UNIT_IS_FIGHTING);
 #ifdef _DEBUG
 	OutputDebugString("exe is asking if this unit is in battle\n");
 #endif
@@ -11322,9 +11296,7 @@ bool CvUnit::isHurt() const
 
 bool CvUnit::isDead() const
 {
-	exeIn(EXIN_UNIT_IS_DEAD);
 	const bool bAnswer = isDelayedDeath() || (getDamage() >= getMaxHP());
-	exeInAnswer(EXIN_UNIT_IS_DEAD, (getOwner() << 24) | getID(), bAnswer ? 1 : 0);
 	return bAnswer;
 }
 
@@ -12678,7 +12650,6 @@ bool CvUnit::isAutomated() const
 
 bool CvUnit::isWaiting() const
 {
-	exeIn(EXIN_UNIT_IS_WAITING);
 	return getGroup()->isWaiting();
 }
 
@@ -12890,7 +12861,6 @@ void CvUnit::changeNoInvisibilityCount(int iChange)
 
 bool CvUnit::isInvisible(TeamTypes eTeam, bool bDebug, bool bCheckCargo) const
 {
-	exeIn(EXIN_UNIT_IS_INVISIBLE);
 	PROFILE_EXTRA_FUNC();
 	if (bDebug && GC.getGame().isDebugMode())
 	{
@@ -13641,7 +13611,7 @@ void CvUnit::joinGroup(CvSelectionGroup* pSelectionGroup, bool bRemoveSelected, 
 
 			if (pPlot == gDLL->getInterfaceIFace()->getSelectionPlot())
 			{
-				exeSetUIDirty(PlotListButtons_DIRTY_BIT, true);
+				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(PlotListButtons_DIRTY_BIT), true);
 			}
 		}
 
@@ -13681,7 +13651,7 @@ void CvUnit::setHotKeyNumber(int iNewValue)
 
 		if (IsSelected())
 		{
-			exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
 		}
 	}
 }
@@ -13689,7 +13659,6 @@ void CvUnit::setHotKeyNumber(int iNewValue)
 
 int CvUnit::getViewportX() const
 {
-	exeIn(EXIN_UNIT_VIEWPORT_XY);
 	const CvViewport* pCurrentViewPort = GC.getCurrentViewport();
 	FAssert(pCurrentViewPort != NULL);
 
@@ -13699,7 +13668,6 @@ int CvUnit::getViewportX() const
 
 int CvUnit::getViewportY() const
 {
-	exeIn(EXIN_UNIT_VIEWPORT_XY);
 	const CvViewport* pCurrentViewPort = GC.getCurrentViewport();
 	FAssert(pCurrentViewPort != NULL);
 
@@ -13936,7 +13904,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 		{
 			gDLL->getInterfaceIFace()->verifyPlotListColumn();
 
-			exeSetUIDirty(PlotListButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(PlotListButtons_DIRTY_BIT), true);
 		}
 	}
 
@@ -14126,7 +14094,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 		if (pNewPlot == gDLL->getInterfaceIFace()->getSelectionPlot())
 		{
 			gDLL->getInterfaceIFace()->verifyPlotListColumn();
-			exeSetUIDirty(PlotListButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(PlotListButtons_DIRTY_BIT), true);
 		}
 
 		// Pillage on move: Only if unowned tile, or at war
@@ -14212,14 +14180,14 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 	{
 		if (isFound())
 		{
-			exeSetUIDirty(GlobeLayer_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GlobeLayer_DIRTY_BIT), true);
 
 			if (!isUsingDummyEntities() && isInViewport())
 			{
-				exeEng(EXEK_FOUNDING_BORDER), gDLL->getEngineIFace()->updateFoundingBorder();
+				gDLL->getEngineIFace()->updateFoundingBorder();
 			}
 		}
-		exeSetUIDirty(ColoredPlots_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(ColoredPlots_DIRTY_BIT), true);
 	}
 
 	//update glow
@@ -14239,7 +14207,6 @@ bool CvUnit::at(int iX, int iY) const
 
 bool CvUnit::atPlot(const CvPlot* pPlot) const
 {
-	exeIn(EXIN_UNIT_AT_PLOT);
 	return plot() == pPlot;
 }
 
@@ -14254,7 +14221,6 @@ CvPlot* CvUnit::plot() const
 
 /*DllExport*/ CvPlot* CvUnit::plotExternal() const
 {
-	exeIn(EXIN_UNIT_PLOT_EXTERNAL);
 #ifdef _DEBUG
 	OutputDebugString("exe is asking for the plot of this unit\n");
 #endif
@@ -14341,8 +14307,6 @@ void CvUnit::setGameTurnCreated(int iNewValue)
 
 int CvUnit::getDamage() const
 {
-	exeIn(EXIN_UNIT_GET_DAMAGE);
-	exeInAnswer(EXIN_UNIT_GET_DAMAGE, (getOwner() << 24) | getID(), m_iDamage);
 	return m_iDamage;
 }
 
@@ -14442,12 +14406,12 @@ void CvUnit::setDamage(int iNewValue, PlayerTypes ePlayer, bool bNotifyEntity, U
 
 			if (IsSelected())
 			{
-				exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
 			}
 
 			if (plot() == gDLL->getInterfaceIFace()->getSelectionPlot())
 			{
-				exeSetUIDirty(PlotListButtons_DIRTY_BIT, true);
+				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(PlotListButtons_DIRTY_BIT), true);
 			}
 		}
 	}
@@ -14509,7 +14473,7 @@ void CvUnit::setMoves(int iNewValue)
 			if (canMove())
 			{
 				gDLL->getFAStarIFace()->ForceReset(&GC.getInterfacePathFinder());
-				exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
 			}
 			/* Toffer - make it a bug option - Unselect units upon expending all movement points.
 			else if (getGroup()->canAnyMove())
@@ -14521,7 +14485,7 @@ void CvUnit::setMoves(int iNewValue)
 
 		if (pPlot == gDLL->getInterfaceIFace()->getSelectionPlot())
 		{
-			exeSetUIDirty(PlotListButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(PlotListButtons_DIRTY_BIT), true);
 		}
 	}
 }
@@ -14554,7 +14518,7 @@ void CvUnit::setExperience100(int iNewValue)
 
 		if (IsSelected())
 		{
-			exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
 		}
 	}
 }
@@ -14666,7 +14630,7 @@ void CvUnit::setLevel(int iNewValue)
 
 		if (IsSelected())
 		{
-			exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
 		}
 	}
 }
@@ -15459,7 +15423,7 @@ void CvUnit::changeExtraAirRange(int iChange)
 
 int CvUnit::getExtraIntercept(bool bIgnoreCommanders, bool bIgnoreCommodores) const
 {
-	// #430 F4: the OWN accumulated intercept DELTA is the cascade self-gathered value (was m_iExtraIntercept); the LIVE
+	// #430 F4: the OWN accumulated intercept DELTA is the cascade self-gathered value; the LIVE
 	// commander/commodore fold rides ON TOP at read (DEC-unit-modifiers-on-top). The MAX_INTERCEPTION_PROBABILITY clamp
 	// lives in the maxInterceptionProbability() composite (base + extra), unchanged.
 	m_cascadeUnitPackages.set.ensure();
@@ -15487,7 +15451,7 @@ int CvUnit::getExtraIntercept(bool bIgnoreCommanders, bool bIgnoreCommodores) co
 
 int CvUnit::getExtraEvasion(bool bIgnoreCommanders, bool bIgnoreCommodores) const
 {
-	// #430 F4: the OWN accumulated evasion DELTA is the cascade self-gathered value (was m_iExtraEvasion); the LIVE
+	// #430 F4: the OWN accumulated evasion DELTA is the cascade self-gathered value; the LIVE
 	// commander/commodore inheritance fold rides ON TOP at read (DEC-unit-modifiers-on-top). The MAX_EVASION_PROBABILITY
 	// clamp lives in the evasionProbability() composite (base + extra), unchanged.
 	m_cascadeUnitPackages.set.ensure();
@@ -15515,7 +15479,7 @@ int CvUnit::getExtraEvasion(bool bIgnoreCommanders, bool bIgnoreCommodores) cons
 
 int CvUnit::getExtraFirstStrikes() const
 {
-	// #430 F4: the OWN accumulated first-strike COUNT is the cascade self-gathered value (was m_iExtraFirstStrikes);
+	// #430 F4: the OWN accumulated first-strike COUNT is the cascade self-gathered value;
 	// the LIVE commander/commodore inheritance fold + the std::max(0,·) clamp ride ON TOP at read
 	// (DEC-unit-modifiers-on-top), reading the commander's OWN gathered field one level, as withdrawal does.
 	m_cascadeUnitPackages.set.ensure();
@@ -15570,7 +15534,7 @@ int CvUnit::getExtraChanceFirstStrikes() const
 
 int CvUnit::getExtraWithdrawal(bool bIgnoreCommanders, bool bIgnoreCommodores) const
 {
-	// #430 F4: the OWN accumulated withdrawal is the cascade self-gathered value (was m_iExtraWithdrawal); the
+	// #430 F4: the OWN accumulated withdrawal is the cascade self-gathered value; the
 	// LIVE commander/commodore inheritance fold rides ON TOP at read (DEC-unit-modifiers-on-top), reading the
 	// commander's OWN gathered value exactly as it read the commander's raw member before.
 	m_cascadeUnitPackages.set.ensure();
@@ -15796,8 +15760,8 @@ void CvUnit::calcUpkeepMultiplierSM(const int iGroupOffset)
 int CvUnit::getUpkeep100() const
 {
 	// #430 F4: computed accessor -- max(0, 100*getBaseUpkeep + cascade extra) x still-legacy percent modifier x SizeMatters
-	// (economy.md). The old m_iUpkeep100 push into CvPlayer::m_iUnitUpkeep{Civilian,Military}100 retired: the player
-	// buckets recompute-Sigma over live units' getUpkeep100() bucketed by isMilitaryBranch().
+	// (economy.md). The player per-unit-upkeep buckets recompute-Sigma over live units' getUpkeep100() bucketed by
+	// isMilitaryBranch().
 	if (isNPC())
 	{
 		return 0;
@@ -15889,9 +15853,9 @@ void CvUnit::changeFliesToMoveCount(int iChange)
 	m_iFliesToMoveCount += iChange;
 }
 
-// #430 F4 (strength situational group): cascade self-gathered deltas (were m_iExtra{Unnerve,Enclose,Lunge,
-// DynamicDefense}, gathered from held promotions + held unit-combats via strength.unit.{unnerve,enclose,lunge,
-// dynamicDefense}.percent); the LIVE commander/commodore fold rides ON TOP at read (DEC-unit-modifiers-on-top). The
+// #430 F4 (strength situational group): cascade self-gathered deltas gathered from held promotions + held unit-combats
+// via strength.unit.{unnerve,enclose,lunge,dynamicDefense}.percent; the LIVE commander/commodore fold rides ON TOP at
+// read (DEC-unit-modifiers-on-top). The
 // {unnerve,enclose,lunge,dynamicDefense}Total() composites add the m_pUnitInfo type base once + keep their max(0,·)
 // clamp (dynamicDefense also adds the city-local term). The retired changers' FASSERT_NOT_NEGATIVE is subsumed by
 // those max(0,·) clamps.
@@ -16000,8 +15964,7 @@ short CvUnit::getAnimalIgnoresBordersCount() const
 	// A BITMASK (short) of the boundaries an animal ignores under the current options (owner 2026-07-11): each bit is
 	// independent (ANIMAL_IGNORE_BORDERS / _IMPROVEMENTS / _CITIES), NOT a cumulative tier. STAY_OUT clears all;
 	// RECKLESS -> borders; DANGEROUS -> borders|improvements (OR'd). Purely game-option-driven -- no curated/promotion
-	// data (the ability is option-derived; the old m_iAnimalIgnoresBordersCount accumulator + changer + serialized
-	// field were REMOVED 2026-07-11 -- the field is drained from old saves via WRAPPER_SKIP_ELEMENT, savemigration.txt).
+	// data.
 	if (GC.getGame().isOption(GAMEOPTION_ANIMAL_STAY_OUT)) return 0;
 	short mask = 0;
 	if (GC.getGame().isOption(GAMEOPTION_ANIMAL_RECKLESS))  mask |= ANIMAL_IGNORE_BORDERS;
@@ -16112,7 +16075,7 @@ int CvUnit::getExtraCollateralDamage() const
 
 int CvUnit::getExtraEnemyHeal() const
 {
-	// #430 F4: OWN accumulated enemy-territory heal is the cascade self-gathered value (was m_iExtraEnemyHeal); the
+	// #430 F4: OWN accumulated enemy-territory heal is the cascade self-gathered value; the
 	// LIVE commander/commodore inheritance fold rides ON TOP at read (DEC-unit-modifiers-on-top), one level, as
 	// withdrawal does. NO max() clamp (legacy had none). Also consumed as a spy-mission strength -- transparent here.
 	m_cascadeUnitPackages.set.ensure();
@@ -16140,7 +16103,7 @@ int CvUnit::getExtraEnemyHeal() const
 
 int CvUnit::getExtraNeutralHeal() const
 {
-	// #430 F4: OWN accumulated neutral-territory heal, cascade self-gathered (was m_iExtraNeutralHeal); LIVE
+	// #430 F4: OWN accumulated neutral-territory heal, cascade self-gathered; LIVE
 	// commander/commodore fold on top, no max() clamp. Also consumed as a spy-mission strength -- transparent here.
 	m_cascadeUnitPackages.set.ensure();
 	const int iOwn = m_cascadeUnitPackages.healNeutral;
@@ -16167,7 +16130,7 @@ int CvUnit::getExtraNeutralHeal() const
 
 int CvUnit::getExtraFriendlyHeal() const
 {
-	// #430 F4: OWN accumulated friendly-territory heal, cascade self-gathered (was m_iExtraFriendlyHeal); LIVE
+	// #430 F4: OWN accumulated friendly-territory heal, cascade self-gathered; LIVE
 	// commander/commodore fold on top, no max() clamp. Also consumed as a spy-mission strength -- transparent here.
 	m_cascadeUnitPackages.set.ensure();
 	const int iOwn = m_cascadeUnitPackages.healFriendly;
@@ -16194,14 +16157,14 @@ int CvUnit::getExtraFriendlyHeal() const
 
 int CvUnit::getSameTileHeal() const
 {
-	// #430 F4: cascade self-gathered (was m_iSameTileHeal) -- RAW read, no commander inheritance (legacy had none).
+	// #430 F4: cascade self-gathered -- RAW read, no commander inheritance (legacy had none).
 	m_cascadeUnitPackages.set.ensure();
 	return m_cascadeUnitPackages.healSameTile;
 }
 
 int CvUnit::getAdjacentTileHeal() const
 {
-	// #430 F4: cascade self-gathered (was m_iAdjacentTileHeal) -- RAW read, no commander inheritance.
+	// #430 F4: cascade self-gathered -- RAW read, no commander inheritance.
 	m_cascadeUnitPackages.set.ensure();
 	return m_cascadeUnitPackages.healAdjacent;
 }
@@ -16679,7 +16642,7 @@ void CvUnit::setPromotionReady(bool bNewValue)
 
 		if (IsSelected())
 		{
-			exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
 		}
 	}
 }
@@ -16933,12 +16896,12 @@ void CvUnit::setCombatUnit(CvUnit* pCombatUnit, bool bAttacking, bool bQuick, bo
 
 		if (IsSelected())
 		{
-			exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
 		}
 
 		if (plot() == gDLL->getInterfaceIFace()->getSelectionPlot())
 		{
-			exeSetUIDirty(PlotListButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(PlotListButtons_DIRTY_BIT), true);
 		}
 
 		if (!isUsingDummyEntities() && isInViewport())
@@ -17167,7 +17130,7 @@ void CvUnit::setName(CvWString szNewValue)
 
 	if (IsSelected())
 	{
-		exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
 	}
 }
 
@@ -18174,7 +18137,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeExtraMoves(kUnitCombat.getMovesChange() * iChange);//no merge/split diff
 	changeExtraMoveDiscount(kUnitCombat.getMoveDiscountChange() * iChange);//no merge/split diff
 	changeExtraAirRange(kUnitCombat.getAirRangeChange() * iChange);//no merge/split diff
-	m_cascadeUnitPackages.set.markDirty(UPK_ALL);//#430 F4: a unit-combat change invalidates EVERY migrated unit-plane channel (withdrawal/firstStrike/heal/evasion/intercept/collateral/capture) -- gathered on-dirty from the held-set (was changeExtra{Withdrawal,FirstStrikes,ChanceFirstStrikes,*Heal,Evasion,Intercept,CollateralDamage,Capture*})
+	m_cascadeUnitPackages.set.markDirty(UPK_ALL);//#430 F4: a unit-combat change invalidates EVERY migrated unit-plane channel (withdrawal/firstStrike/heal/evasion/intercept/collateral/capture) -- gathered on-dirty from the held-set
 	changeCargoSpace(kUnitCombat.getCargoChange() * iChange);//no merge/split diff (since this mechanism is either a base setter or is for non-SM or non-player on SM.
 
 	changeSMCargoSpace(kUnitCombat.getSMCargoChange() * iChange);//merge/split volumetric
@@ -18182,7 +18145,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeCargoVolumeModifier(kUnitCombat.getSMCargoVolumeModifierChange() * iChange);//merge/split volumetric
 
 	changeExtraBombardRate(kUnitCombat.getBombardRateChange() * iChange);//no merge/split (affect this volumetrically on the final value)
-	//#430 F4: firstStrike + heal + evasion + intercept + collateralDamage + capture folds retired -- gathered on-dirty via the markDirty(UPK_ALL) above
 	// The strength combat percents (general strength.unit.percent + the situational cityAttack/cityDefense/hillsAttack/
 	// hillsDefense/... families) are cascade held-set sums, gathered on-dirty (UPK_STRENGTH) via the markDirty(UPK_ALL) above.
 	// Assume only worker units can get the relevant unit combats, if not then we'll need a retroactive unitComp late init function.
@@ -18229,11 +18191,9 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeVictoryAdjacentHeal((kUnitCombat.getVictoryAdjacentHeal()) * iChange);//no merge/split
 	changeVictoryHeal((kUnitCombat.getVictoryHeal()) * iChange);//no merge/split
 	changeVictoryStackHeal((kUnitCombat.getVictoryStackHeal()) * iChange);//no merge/split
-	//#430 F4: attack/defense/vsBarbs/religious/damageModifier/unnerve/enclose/lunge/dynamicDefense combat-% folds retired -- gathered on-dirty (UPK_STRENGTH) via the markDirty(UPK_ALL) above
 	// strength.unit.flat (base strength) is a cascade held-set sum, gathered on-dirty (UPK_STRENGTH) via the markDirty(UPK_ALL) above.
 	changeExtraEndurance(kUnitCombat.getEnduranceChange() * iChange);//no merge/split
 	changeExtraPoisonProbabilityModifier(kUnitCombat.getPoisonProbabilityModifierChange() * iChange);//no merge/split
-	//#430 F4: capture probability/resistance folds retired -- gathered on-dirty via the markDirty(UPK_ALL) above
 
 	changeExtraBreakdownChance(kUnitCombat.getBreakdownChanceChange() * iChange);//no merge/split (larger/smaller just more/less survivable)
 	changeExtraBreakdownDamage(kUnitCombat.getBreakdownDamageChange() * iChange);//no merge/split
@@ -18305,7 +18265,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	changeExtraInsidiousness(kUnitCombat.getInsidiousnessChange() * iChange);
 	changeExtraInvestigation(kUnitCombat.getInvestigationChange() * iChange);
 	changeExtraStealthStrikes(kUnitCombat.getStealthStrikesChange() * iChange);
-	//#430 F4: stealth combat-% fold retired -- gathered on-dirty (UPK_STRENGTH) via the markDirty(UPK_ALL) above
 	changeStealthDefenseCount(kUnitCombat.getStealthDefenseChange() * iChange);
 	changeOnlyDefensiveCount(kUnitCombat.getDefenseOnlyChange() * iChange);
 	changeNoInvisibilityCount(kUnitCombat.getNoInvisibilityChange() * iChange);
@@ -18446,7 +18405,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 		defineReligion();
 	}
 
-	// #430 F4: extra-upkeep fold retired -- gathered on-dirty (UPK_UPKEEP) via the markDirty(UPK_ALL) above; a unit-combat
+	// #430 F4: extra-upkeep is gathered on-dirty (UPK_UPKEEP) via the markDirty(UPK_ALL) above; a unit-combat
 	// change also invalidates the owner's per-unit-upkeep Sigma. The percent modifier stays legacy (changeUpkeepModifier).
 	GET_PLAYER(getOwner()).markUnitUpkeepDirty();
 	changeUpkeepModifier(kUnitCombat.getUpkeepModifier() * iChange);
@@ -18492,8 +18451,8 @@ void CvUnit::setHasUnitCombat(UnitCombatTypes eIndex, bool bNewValue, bool bByPr
 			//  Not entirely sure this will be necessary?  Koshling what say you?
 			if (IsSelected())
 			{
-				exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
-				exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
+				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
 			}
 
 			//update graphics
@@ -18636,11 +18595,10 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeExtraMoves(kPromotion.getMovesChange() * iChange);
 	changeExtraMoveDiscount(kPromotion.getMoveDiscountChange() * iChange);
 	changeExtraAirRange(kPromotion.getAirRangeChange() * iChange);
-	m_cascadeUnitPackages.set.markDirty(UPK_ALL);//#430 F4: a promotion change invalidates EVERY migrated unit-plane channel (withdrawal/firstStrike/heal/evasion/intercept/collateral/capture) -- gathered on-dirty from the held-set (was changeExtra{Withdrawal,FirstStrikes,ChanceFirstStrikes,*Heal,Evasion,Intercept,CollateralDamage,Capture*})
+	m_cascadeUnitPackages.set.markDirty(UPK_ALL);//#430 F4: a promotion change invalidates EVERY migrated unit-plane channel (withdrawal/firstStrike/heal/evasion/intercept/collateral/capture) -- gathered on-dirty from the held-set
 	//TB Combat Mods Begin
-	//#430 F4: attack/defense/vsBarbs/religious/damageModifier combat-% folds retired -- gathered on-dirty (UPK_STRENGTH) via the markDirty(UPK_ALL) above
 
-	// #430 F4: extra-upkeep fold retired -- gathered on-dirty (UPK_UPKEEP) via the markDirty(UPK_ALL) above; a promotion
+	// #430 F4: extra-upkeep is gathered on-dirty (UPK_UPKEEP) via the markDirty(UPK_ALL) above; a promotion
 	// change also invalidates the owner's per-unit-upkeep Sigma. The percent modifier stays legacy (changeUpkeepModifier).
 	GET_PLAYER(getOwner()).markUnitUpkeepDirty();
 	changeUpkeepModifier(kPromotion.getUpkeepModifier() * iChange);
@@ -18655,7 +18613,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeIgnoreZoneofControlCount((kPromotion.isIgnoreZoneofControlSubtract()) ? -iChange : 0);
 	changeFliesToMoveCount((kPromotion.isFliesToMoveAdd()) ? iChange : 0);
 	changeFliesToMoveCount((kPromotion.isFliesToMoveSubtract()) ? -iChange : 0);
-	//#430 F4: unnerve/enclose/lunge/dynamicDefense combat-% folds retired -- gathered on-dirty (UPK_STRENGTH) via the markDirty(UPK_ALL) above
 	if (kPromotion.getStrengthChange() != 0)
 	{
 		// base strength (strength.unit.flat) is a cascade held-set sum (UPK_STRENGTH, via markDirty(UPK_ALL) above);
@@ -18665,7 +18622,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeOnslaughtCount((kPromotion.isOnslaughtChange()) ? iChange : 0);
 	changeExtraEndurance(kPromotion.getEnduranceChange() * iChange);
 	changeExtraPoisonProbabilityModifier(kPromotion.getPoisonProbabilityModifierChange() * iChange);
-	//#430 F4: capture probability/resistance folds retired -- gathered on-dirty via the markDirty(UPK_ALL) above
 
 	changeExtraBreakdownChance(kPromotion.getBreakdownChanceChange() * iChange);
 	changeExtraBreakdownDamage(kPromotion.getBreakdownDamageChange() * iChange);
@@ -18689,13 +18645,11 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 		bSMrecalc = true;
 	}
 	//TB Combat Mods End
-	//#430 F4: collateralDamage fold retired -- gathered on-dirty via the markDirty(UPK_ALL) above
 	if (kPromotion.getBombardRateChange() != 0)
 	{
 		changeExtraBombardRate(kPromotion.getBombardRateChange() * iChange);
 		bSMrecalc = true;
 	}
-	//#430 F4: heal (enemy/neutral/friendly/sameTile/adjacentTile) folds retired -- gathered on-dirty via the markDirty(UPK_ALL) above
 	// The strength combat percents (general strength.unit.percent + the situational cityAttack/cityDefense/hillsAttack/
 	// hillsDefense/... families) are cascade held-set sums, gathered on-dirty (UPK_STRENGTH) via the markDirty(UPK_ALL) above.
 	// Assume only worker units can get the relevant promotions, if not then we'll need a retroactive unitComp late init function.
@@ -18771,7 +18725,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeExtraInvestigation(kPromotion.getInvestigationChange() * iChange);
 	changeAssassinCount(kPromotion.getAssassinChange() * iChange);
 	changeExtraStealthStrikes(kPromotion.getStealthStrikesChange() * iChange);
-	//#430 F4: stealth combat-% fold retired -- gathered on-dirty (UPK_STRENGTH) via the markDirty(UPK_ALL) above
 	changeStealthDefenseCount(kPromotion.getStealthDefenseChange() * iChange);
 	changeOnlyDefensiveCount(kPromotion.getDefenseOnlyChange() * iChange);
 	changeNoInvisibilityCount(kPromotion.getNoInvisibilityChange() * iChange);
@@ -19061,8 +19014,8 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue, bool bFree, 
 			//	Updates the grpahics last after everything is calculated
 			if (IsSelected())
 			{
-				exeSetUIDirty(SelectionButtons_DIRTY_BIT, true);
-				exeSetUIDirty(InfoPane_DIRTY_BIT, true);
+				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
+				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
 			}
 
 			//update graphics
@@ -19266,14 +19219,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraMoves);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraMoveDiscount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraAirRange);
-	// #430 F4: m_iExtraIntercept / m_iExtraEvasion / m_iExtraFirstStrikes / m_iExtraChanceFirstStrikes /
-	// m_iExtraWithdrawal / m_iExtraCollateralDamage / m_iExtraCapture{Probability,Resistance}Modifier drained
-	// (soft-remove, DEC-save-remove-is-soft) -- the reader skips the orphan tags transparently; all re-derive from
-	// the held-set at load. Tags named in Assets/savemigration.txt.
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraBombardRate);
-	// #430 F4: the five heal accumulators (enemy/neutral/friendly/sameTile/adjacentTile) drained (soft-remove) --
-	// heal re-derives from the held-set at load. Tags named in Assets/savemigration.txt.
-	//#430 F4: m_iExtraCombatPercent + m_iExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent reads removed (UPK_STRENGTH; drained via savemigration.txt)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iRevoltProtection);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iCollateralDamageProtection);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iPillageChange);
@@ -19288,7 +19234,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_bMadeInterception);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bPromotionReady);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bDeathDelay);
-	WRAPPER_SKIP_ELEMENT(wrapper,"CvUnit", m_bCombatFocus, SAVE_VALUE_ANY);
 	// m_bInfoBarDirty not saved...
 	WRAPPER_READ(wrapper, "CvUnit", &m_bBlockading);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bAirCombat);
@@ -19448,11 +19393,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	m_Properties.readWrapper(pStream);
 
 	//TB Combat Mods Begin  TB SubCombat Mods Begin
-	//#430 F4: m_iExtraVSBarbs read removed (UPK_STRENGTH; drained via savemigration.txt)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iStampedeCount);
-	//#430 F4: m_iExtra{Unnerve,Enclose,Lunge,DynamicDefense} reads removed (UPK_STRENGTH; drained via savemigration.txt)
-	//#430 F4: m_iExtraStrength read removed (UPK_STRENGTH; drained via savemigration.txt)
-	WRAPPER_SKIP_ELEMENT(wrapper, "CvUnit", m_iAnimalIgnoresBordersCount, SAVE_VALUE_ANY);   // retired 2026-07-11 -- animal-ignore is game-option-derived, not a stored count (savemigration.txt)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iOnslaughtCount);
 
 	// Read compressed data format
@@ -19590,7 +19531,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 			info->m_bValidBuildUp = g_pabTempValidBuildUp[iI];
 		}
 	}
-	//#430 F4: m_iExtra{AttackCombatModifier,DefenseCombatModifier} reads removed (UPK_STRENGTH; drained via savemigration.txt)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iRetrainsAvailable);
 	//TB Combat Mods End  TB SubCombat Mods End
 
@@ -19616,7 +19556,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iVictoryStackHeal);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bSurvivor);
 
-	// #430 F4: m_iExtraCapture{Probability,Resistance}Modifier drained (soft-remove) -- re-derive from the held-set.
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraBreakdownChance);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraBreakdownDamage);
 
@@ -19661,7 +19600,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iGroupBaseTotal);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iSizeBaseTotal);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iCannotMergeSplitCount);
-	//#430 F4: m_iExtraStrengthModifier + m_iExtraDamageModifier reads removed (UPK_STRENGTH; drained via savemigration.txt)
 
 	WRAPPER_READ_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, (int*)&m_eGGExperienceEarnedTowardsType);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iSMCargo);
@@ -19965,7 +19903,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", (int*)&m_pPlayerInvestigated);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iAssassinCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraStealthStrikes);
-	//#430 F4: m_iExtraStealthCombatModifier read removed (UPK_STRENGTH; drained via savemigration.txt)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iStealthDefenseCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bRevealed);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iOnlyDefensiveCount);
@@ -20006,12 +19943,9 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iYOrigin);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraNoDefensiveBonusCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraGatherHerdCount);
-	//#430 F4: m_iExtraReligiousCombatModifier read removed (UPK_STRENGTH; drained via savemigration.txt)
 	WRAPPER_READ_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_RELIGIONS, (int*)&m_eReligionType);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bIsReligionLocked);
 
-	//#430 F4: m_iExtraUpkeep100 + m_iUpkeep100 reads gone -- cascade self-accumulator + computed getUpkeep100 (old tags
-	// drained by name in Assets/savemigration.txt). Percent modifier + SizeMatters stay serialized (legacy carve-outs).
 	WRAPPER_READ(wrapper, "CvUnit", &m_iUpkeepModifier);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iUpkeepMultiplierSM);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iBuildUpTurns);
@@ -20247,12 +20181,7 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraMoves);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraMoveDiscount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraAirRange);
-	// #430 F4: m_iExtraIntercept / m_iExtraEvasion / m_iExtraFirstStrikes / m_iExtraChanceFirstStrikes /
-	// m_iExtraWithdrawal / m_iExtraCollateralDamage / m_iExtraCapture{Probability,Resistance}Modifier no longer
-	// serialized (soft-remove) -- all re-derive from the held-set.
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraBombardRate);
-	// #430 F4: the five heal accumulators no longer serialized (soft-remove) -- heal re-derives from the held-set.
-	//#430 F4: m_iExtraCombatPercent + m_iExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent writes removed (UPK_STRENGTH)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iRevoltProtection);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iCollateralDamageProtection);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iPillageChange);
@@ -20331,10 +20260,7 @@ void CvUnit::write(FDataStreamBase* pStream)
 	m_Properties.writeWrapper(pStream);
 
 	//TB Combat Mods Begin
-	//#430 F4: m_iExtraVSBarbs write removed (UPK_STRENGTH)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iStampedeCount);
-	//#430 F4: m_iExtra{Unnerve,Enclose,Lunge,DynamicDefense} writes removed (UPK_STRENGTH)
-	//#430 F4: m_iExtraStrength write removed (UPK_STRENGTH)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iOnslaughtCount);
 
 
@@ -20368,7 +20294,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraPoisonProbabilityModifier);
 
-	//#430 F4: m_iExtra{AttackCombatModifier,DefenseCombatModifier} writes removed (UPK_STRENGTH)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iRetrainsAvailable);
 	//TB Combat Mods end
 
@@ -20394,7 +20319,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iVictoryStackHeal);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bSurvivor);
 
-	// #430 F4: m_iExtraCapture{Probability,Resistance}Modifier no longer serialized (soft-remove) -- re-derive from held-set.
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraBreakdownChance);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraBreakdownDamage);
 
@@ -20417,7 +20341,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iGroupBaseTotal);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSizeBaseTotal);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iCannotMergeSplitCount);
-	//#430 F4: m_iExtraStrengthModifier + m_iExtraDamageModifier writes removed (UPK_STRENGTH)
 	WRAPPER_WRITE_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, m_eGGExperienceEarnedTowardsType);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSMCargo);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSMCargoCapacity);
@@ -20650,7 +20573,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", (int)m_pPlayerInvestigated);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iAssassinCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraStealthStrikes);
-	//#430 F4: m_iExtraStealthCombatModifier write removed (UPK_STRENGTH)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iStealthDefenseCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bRevealed);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iOnlyDefensiveCount);
@@ -20681,11 +20603,9 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iYOrigin);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraNoDefensiveBonusCount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraGatherHerdCount);
-	//#430 F4: m_iExtraReligiousCombatModifier write removed (UPK_STRENGTH)
 	WRAPPER_WRITE_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_RELIGIONS, m_eReligionType);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_bIsReligionLocked);
 
-	//#430 F4: m_iExtraUpkeep100 + m_iUpkeep100 writes gone -- cascade self-accumulator + computed getUpkeep100.
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iUpkeepModifier);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iUpkeepMultiplierSM);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iBuildUpTurns);
@@ -24002,7 +23922,7 @@ void CvUnit::spyNuke(int iX, int iY, bool bCaught)
 	//This is just so the espionage mission makes the cool explosion effect.
 	if (GC.getInfoTypeForString("EFFECT_ICBM_NUCLEAR_EXPLOSION") != -1)
 	{
-		exeEng(EXEK_EFFECT), gDLL->getEngineIFace()->TriggerEffect((EffectTypes)GC.getInfoTypeForString("EFFECT_ICBM_NUCLEAR_EXPLOSION"), pPlot->getPoint(), 0);
+		gDLL->getEngineIFace()->TriggerEffect((EffectTypes)GC.getInfoTypeForString("EFFECT_ICBM_NUCLEAR_EXPLOSION"), pPlot->getPoint(), 0);
 		gDLL->getInterfaceIFace()->playGeneralSound("AS2D_NUKE_EXPLODES", pPlot->getPoint());
 	}
 	pPlot->nukeExplosion(0);
@@ -25855,10 +25775,10 @@ void CvUnit::statusUpdate(PromotionTypes eStatus)
 	{
 		gDLL->getInterfaceIFace()->playGeneralSound(GC.getPromotionInfo(eStatus).getSound());
 
-		exeSetUIDirty(UnitInfo_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(UnitInfo_DIRTY_BIT), true);
 
 // BUG - Update Plot List - start
-		exeSetUIDirty(PlotListButtons_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(PlotListButtons_DIRTY_BIT), true);
 // BUG - Update Plot List - end
 	}
 	else
@@ -30039,7 +29959,7 @@ int CvUnit::stealthCombatModifierTotal() const
 
 int CvUnit::getExtraStealthCombatModifier() const
 {
-	// #430 F4 (strength situational group): cascade self-gathered delta (was m_iExtraStealthCombatModifier, gathered
+	// #430 F4 (strength situational group): cascade self-gathered delta (gathered
 	// from held promotions + held unit-combats via strength.unit.stealth.percent). No commander/commodore fold (legacy
 	// had none); the COMBAT_WITHOUT_WARNING game-option gate is preserved at read.
 	if (!GC.getGame().isOption(GAMEOPTION_COMBAT_WITHOUT_WARNING))

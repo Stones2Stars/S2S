@@ -282,7 +282,6 @@ void CvWorkerAI::onTurnBegin(int gameTurn)
 	m_bonusEvalCache.clear();
 	m_cityEvalCache.clear();
 	m_outerRejected.clear();
-	m_claims.clear();
 	m_pathUnreachable.clear();
 	m_pathMemoUnitId = -1;
 	m_pathMemoUnitPlot = -1;
@@ -371,47 +370,6 @@ const CvWorkerAI::CityPlotEval* CvWorkerAI::lookupCity(int plotIdx, UnitTypes un
 void CvWorkerAI::recordCity(int plotIdx, UnitTypes unitType, const CityPlotEval& eval)
 {
 	m_cityEvalCache[EvalKey(plotIdx, (int)unitType)] = eval;
-}
-
-bool CvWorkerAI::tryClaim(int plotIdx, int unitId)
-{
-	std::map<int, int>::iterator it = m_claims.find(plotIdx);
-	if (it == m_claims.end())
-	{
-		m_claims[plotIdx] = unitId;
-		return true;
-	}
-	return it->second == unitId;
-}
-
-bool CvWorkerAI::isClaimedByOther(int plotIdx, int unitId) const
-{
-	std::map<int, int>::const_iterator it = m_claims.find(plotIdx);
-	return it != m_claims.end() && it->second != unitId;
-}
-
-void CvWorkerAI::releaseClaim(int plotIdx, int unitId)
-{
-	std::map<int, int>::iterator it = m_claims.find(plotIdx);
-	if (it != m_claims.end() && it->second == unitId)
-	{
-		m_claims.erase(it);
-	}
-}
-
-void CvWorkerAI::releaseAllClaimsBy(int unitId)
-{
-	for (std::map<int, int>::iterator it = m_claims.begin(); it != m_claims.end(); )
-	{
-		if (it->second == unitId)
-		{
-			m_claims.erase(it++);
-		}
-		else
-		{
-			++it;
-		}
-	}
 }
 
 // ---------------------------------------------------------------------------

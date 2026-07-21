@@ -5,7 +5,6 @@
 //
 
 #include "CvGameCoreDLL.h"
-#include "Engine/CvExeTrace.h"
 #include "Engine/CvCity.h"
 #include "Defines/CvGlobals.h"
 #include "Infrastructure/CvInitCore.h"
@@ -52,35 +51,30 @@ void CvMapExternal::erasePlots()
 
 void CvMapExternal::updateFlagSymbols()
 {
-	exeIn(EXIN_MAPX_UPDATE_FLAG_SYMBOLS);
 	m_proxiedMap->updateFlagSymbols();
 }
 
 
 void CvMapExternal::updateFog()
 {
-	exeIn(EXIN_MAPX_UPDATE_FOG);
 	m_proxiedMap->updateFog();
 }
 
 
 void CvMapExternal::updateSymbolVisibility()
 {
-	exeIn(EXIN_MAPX_UPDATE_SYMBOL_VIS);
 	m_proxiedMap->updateSymbolVisibility();
 }
 
 
 void CvMapExternal::updateMinimapColor()
 {
-	exeIn(EXIN_MAPX_UPDATE_MINIMAP);
 	m_proxiedMap->updateMinimapColor();
 }
 
 
 void CvMapExternal::updateCenterUnit()
 {
-	exeIn(EXIN_MAPX_UPDATE_CENTER_UNIT);
 	m_proxiedMap->updateCenterUnit();
 }
 
@@ -105,14 +99,12 @@ int CvMapExternal::numPlots() const
 
 float CvMapExternal::plotXToPointX(int iX)
 {
-	exeIn(EXIN_MAPX_PLOT_TO_POINT);
 	return m_proxiedMap->plotXToPointX(iX);
 }
 
 
 float CvMapExternal::plotYToPointY(int iY)
 {
-	exeIn(EXIN_MAPX_PLOT_TO_POINT);
 	return m_proxiedMap->plotYToPointY(iY);
 }
 
@@ -155,7 +147,6 @@ WorldSizeTypes CvMapExternal::getWorldSize()
 
 CvPlot* CvMapExternal::plotByIndex(int iIndex) const
 {
-	exeIn(EXIN_MAPX_PLOT_BY_INDEX);
 	FASSERT_BOUNDS(0, numPlots(), iIndex);
 	CvPlot* result = m_proxiedMap->plotByIndex(iIndex);
 
@@ -169,14 +160,12 @@ CvPlot* CvMapExternal::plotByIndex(int iIndex) const
 
 CvPlot* CvMapExternal::plot(int iX, int iY) const
 {
-	exeIn(EXIN_MAPX_PLOT_XY);
 	return m_proxiedMap->plot(iX, iY);
 }
 
 
 CvPlot* CvMapExternal::pointToPlot(float fX, float fY)
 {
-	exeIn(EXIN_MAPX_POINT_TO_PLOT);
 	return m_proxiedMap->pointToPlot(fX, fY);
 }
 

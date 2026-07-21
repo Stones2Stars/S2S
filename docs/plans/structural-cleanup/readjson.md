@@ -2,8 +2,8 @@
 
 > **⛔ SUPERSEDED — THE XML SEAM IS GONE (owner ruling 2026-07-08).** Every line below saying the XML path
 > "stays authoritative until the atomic cutover" predates the ratchet: the XML info classes are ARCHIVED
-> (`SourceArchive/Infos/`), HEAD deliberately does not compile, and the JsonInfos + getter wiring are the only
-> road to green (root `AGENTS.md` Build And Test ⛔). Never restore the archive.
+> (`SourceArchive/Infos/`), and the JsonInfos + getter wiring are the road to green — now reached (the tree links
+> green). The ratchet forbids ever restoring the archive (root `AGENTS.md` Build And Test ⛔).
 >
 > **⛔ SUPERSEDED IN PART — JSON-vs-CASCADE SEPARATION ([DEC-json-not-cascade](../../architecture/decisions.md#dec-json-not-cascade), owner ruling 2026-07-07).** Below, `readJson`
 > is described as mapping into a `CvJsonInfo` that holds the **deposit tree** + the `CvCascadeCondition`. The 2026-07-07

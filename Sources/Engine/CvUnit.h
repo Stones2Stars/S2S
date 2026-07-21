@@ -1100,14 +1100,12 @@ public:
 	int getExtraEvasion(bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;   // #430 F4: cascade DELTA (changer retired)
 
 	int getExtraFirstStrikes() const;
-	// #430 F4: changeExtraFirstStrikes retired -- gathered on-dirty from the held-set (cascadeRefreshUnitPackages).
 
 	int getExtraChanceFirstStrikes() const;
-	// #430 F4: changeExtraChanceFirstStrikes retired -- gathered on-dirty from the held-set.
 
 	int getExtraWithdrawal(bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	// #430 F4: changeExtraWithdrawal retired -- withdrawal is now gathered on-dirty from the held-set (see
-	// cascadeRefreshUnitPackages); the mid-combat suppress is a transient flag honored by withdrawalProbability().
+	// #430 F4: withdrawal is gathered on-dirty from the held-set (see cascadeRefreshUnitPackages); the mid-combat
+	// suppress is a transient flag honored by withdrawalProbability().
 
 	//TB Combat Mods Start
 	// #430 F4 (strength situational group): getters read the cascade self-accumulator (UPK_STRENGTH); the change*
@@ -1551,21 +1549,15 @@ protected:
 	int m_iExtraMoves;
 	int m_iExtraMoveDiscount;
 	int m_iExtraAirRange;
-	// #430 F4: m_iExtraIntercept / m_iExtraEvasion removed -- intercept + evasion are cascade self-accumulators
-	// (m_cascadeUnitPackages, gather-on-dirty; DELTA-only, the *Probability() composites add the type base + clamp).
-	// #430 F4: m_iExtraFirstStrikes / m_iExtraChanceFirstStrikes / m_iExtraWithdrawal removed -- firstStrike +
-	// withdrawal are cascade self-accumulators (m_cascadeUnitPackages, gather-on-dirty). m_bSuppressWithdrawal is
-	// the within-frame transient forcing 0 withdrawal during the sea-pillage counter-attack (honored by
-	// withdrawalProbability(); NOT serialized -- pure transient).
+	// #430 F4: m_bSuppressWithdrawal is the within-frame transient forcing 0 withdrawal during the sea-pillage
+	// counter-attack (honored by withdrawalProbability(); NOT serialized -- pure transient).
 	bool m_bSuppressWithdrawal;
 	//TB Combat Mods Begin
-	// #430 F4: m_iExtra{AttackCombatModifier,DefenseCombatModifier,VSBarbs,ReligiousCombatModifier} removed -- strength situational cascade self-accumulators (UPK_STRENGTH).
 	int m_iStampedeCount;
 	int m_iAttackOnlyCitiesCount;
 	int m_iIgnoreNoEntryLevelCount;
 	int m_iIgnoreZoneofControlCount;
 	int m_iFliesToMoveCount;
-	// #430 F4: m_iExtra{Unnerve,Enclose,Lunge,DynamicDefense} + m_iExtraStrength removed -- strength cascade self-accumulators (UPK_STRENGTH).
 	int m_iSMStrength;
 	int m_iOnslaughtCount;
 	int m_iExtraSelfHealModifier;
@@ -1583,7 +1575,6 @@ protected:
 	int m_iDebugCount;
 	int m_iAssassinCount;
 	int m_iExtraStealthStrikes;
-	// #430 F4: m_iExtraStealthCombatModifier removed -- strength situational cascade self-accumulator (UPK_STRENGTH).
 	int m_iStealthDefenseCount;
 	int m_iOnlyDefensiveCount;
 	int m_iNoInvisibilityCount;
@@ -1614,8 +1605,6 @@ protected:
 	int m_iSMExtraCargoVolume;
 	int m_iSMCargoVolumeModifier;
 
-	// #430 F4: m_iExtraCapture{Probability,Resistance}Modifier removed -- capture is a cascade self-accumulator
-	// (m_cascadeUnitPackages, DELTA-only; captureProbabilityTotal/captureResistanceTotal add base + folds on top).
 	int m_iExtraBreakdownChance;
 	int m_iExtraBreakdownDamage;
 	int m_iExtraTaunt;
@@ -1624,10 +1613,9 @@ protected:
 	int m_iExtraCombatModifierPerVolumeMore;
 	int m_iExtraCombatModifierPerVolumeLess;
 	int m_iExtraMaxHP;
-	// #430 F4: m_iExtraStrengthModifier + m_iExtraDamageModifier removed -- strength cascade self-accumulators (UPK_STRENGTH).
 
-	//#430 F4: m_iExtraUpkeep100 removed -- cascade self-accumulator (m_cascadeUnitPackages.extraUpkeep100, UPK_UPKEEP);
-	//         m_iUpkeep100 removed -- getUpkeep100 is a computed accessor. Percent modifier + SizeMatters stay legacy.
+	// #430 F4: extra-upkeep is a cascade self-accumulator (m_cascadeUnitPackages.extraUpkeep100, UPK_UPKEEP) and
+	// getUpkeep100 is a computed accessor. Percent modifier + SizeMatters stay legacy.
 	int m_iUpkeepModifier;
 	int m_iUpkeepMultiplierSM;
 
@@ -1646,16 +1634,13 @@ protected:
 	int m_iBaseDCMBombAccuracy;
 	int m_iBombardDirectCount;
 	//TB Combat Mods End
-	// #430 F4: m_iExtraCollateralDamage removed -- collateral damage is a cascade self-accumulator (DELTA-only;
-	// collateralDamage() adds the type base on top). limit/maxUnits/protection siblings stay legacy members.
+	// #430 F4: collateral damage is a cascade self-accumulator (DELTA-only; collateralDamage() adds the type base on
+	// top). limit/maxUnits/protection siblings stay legacy members.
 	int m_iExtraBombardRate;
 	int m_iSMBombardRate;
 	int m_iSMAirBombBaseRate;
 	int m_iSMBaseWorkRate;
 	int m_iSMRevoltProtection;
-	// #430 F4: m_iExtraEnemyHeal / m_iExtraNeutralHeal / m_iExtraFriendlyHeal / m_iSameTileHeal / m_iAdjacentTileHeal
-	// removed -- the heal territory family is a cascade self-accumulator (m_cascadeUnitPackages, gather-on-dirty).
-	// #430 F4: m_iExtraCombatPercent + m_iExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent removed -- strength cascade self-accumulators (UPK_STRENGTH).
 
 	int m_iRevoltProtection;
 	int m_iCollateralDamageProtection;

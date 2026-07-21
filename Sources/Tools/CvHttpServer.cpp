@@ -1,5 +1,4 @@
 #include "CvGameCoreDLL.h"
-#include "Engine/CvExeTrace.h"
 #include "Infrastructure/CvDLLEntityIFaceBase.h"
 #include "CvHttpServer.h"
 #include "CvBuildingInfo.h"
@@ -1739,61 +1738,6 @@ namespace
 			}
 			o["billboardFns"] = picojson::value(fns);
 		}
-		{
-			// The [EXE] DLL->EXE call trace: per-kind cumulative counters (CvExeTrace). Sample twice for rates.
-			picojson::object exeCalls;
-			const long* aiCalls = exeTraceCounters();
-			for (int iKind = 0; iKind < NUM_EXE_TRACE_KINDS; iKind++)
-			{
-				exeCalls[exeTraceKindName(iKind)] = picojson::value((double)aiCalls[iKind]);
-			}
-			o["exeCalls"] = picojson::value(exeCalls);
-		}
-		{
-			// The plot-yield read surface (EXE->DLL; the cache-death hypothesis): cumulative, sample twice for rates.
-			picojson::object py;
-			py["getYieldCalls"]   = picojson::value((double)gExePlotGetYieldCalls);
-			py["yieldRecomputes"] = picojson::value((double)gExePlotYieldRecomputes);
-			py["calcYieldCalls"]  = picojson::value((double)gExePlotCalcYieldCalls);
-			py["cyCityBarReads"]  = picojson::value((double)gExeCyCityBarReads);   // the PYTHON boundary rate
-			o["plotYieldReads"] = picojson::value(py);
-		}
-		{
-			// The EXE->DLL entry counters (the exeIn mirror of exeCalls): cumulative, sample twice for rates.
-			picojson::object in;
-			const long* aiIn = exeInCounters();
-			for (int iKind = 0; iKind < NUM_EXE_IN_KINDS; iKind++)
-			{
-				in[exeInKindName(iKind)] = picojson::value((double)aiIn[iKind]);
-			}
-			o["exeIn"] = picojson::value(in);
-		}
-		{
-			// The answer-stability detector: per-getter poll + FLIP counts (an unstable answer drives EXE re-render).
-			picojson::object flips;
-			const long* aiPolls = exeFlipPolls();
-			const long* aiFlips = exeFlipFlips();
-			for (int iKind = 0; iKind < NUM_EXE_IN_KINDS; iKind++)
-			{
-				if (aiPolls[iKind] == 0) continue;
-				picojson::object one;
-				one["polls"] = picojson::value((double)aiPolls[iKind]);
-				one["flips"] = picojson::value((double)aiFlips[iKind]);
-				flips[exeInKindName(iKind)] = picojson::value(one);
-			}
-			o["exeFlips"] = picojson::value(flips);
-		}
-		{
-			// The getYield caller census (sampled 1/65536; rva resolves via the linker map: ln CvGameCoreDLL+<rva>).
-			picojson::object yc;
-			int iSlots = 0;
-			const ExeRvaCount* aCallers = exeYieldCallerTable(&iSlots);
-			for (int i = 0; i < iSlots && aCallers[i].iRva != 0; i++)
-			{
-				yc[CvString::format("%d", aCallers[i].iRva).GetCString()] = picojson::value((double)aCallers[i].iCount);
-			}
-			o["yieldCallers"] = picojson::value(yc);
-		}
 		o["notes"] = picojson::value(std::string(
 			"(scope,channel) package-recompute count this turn; reset at the next [MODIFIER/perf] census flush; "
 			">50k is near-certainly a blanket-recompute failure. NB city/empire/world instrumented; "
@@ -3261,7 +3205,7 @@ namespace
 				picojson::value::object d;
 				d["totalDefense"]              = picojson::value((double)pCity->getTotalDefense(false));
 				d["defenseModifier"]           = picojson::value((double)pCity->getDefenseModifier(false)); // realized
-				d["buildingDefense"]           = picojson::value((double)pCity->getBuildingDefense());   // the cascade building-defense (the legacy drift-store is cut)
+				d["buildingDefense"]           = picojson::value((double)pCity->getBuildingDefense());   // the cascade building-defense
 				d["naturalDefense"]            = picojson::value((double)pCity->getNaturalDefense());
 				d["playerCityDefenseModifier"] = picojson::value((double)kPlayer.getCityDefenseModifier()); // aggregate (split below)
 				d["playerExtraCityDefense"]    = picojson::value((double)kPlayer.getExtraCityDefense());      // leaf of getCityDefenseModifier
@@ -4745,37 +4689,6 @@ namespace
 		if (strcmp(szTarget, "/") == 0)
 		{
 			sendResponse(sock, "200 OK", "text/plain", CvString("hello world\n"), snapshotTurn());
-			return false;
-		}
-		// The EIP sampler (CvExeTrace) is SERVER-thread served deliberately -- it must arm/report while the game
-		// thread is buried mid-wall (the exact moment worth profiling). ?arm=SECONDS starts/extends, ?stop stops,
-		// bare = report the top-96 EIP histogram (resolve: DLL base 0x10000000 via the linker map; EXE ~0x00400000).
-		if (strcmp(szTarget, "/computed/sampler") == 0)
-		{
-			CvString szBody;
-			if (szQuery != NULL && strncmp(szQuery, "arm=", 4) == 0)
-			{
-				exeSamplerArm(atoi(szQuery + 4));
-				szBody = CvString::format("{\"sampler\":\"armed\",\"running\":%s}\n", exeSamplerRunning() ? "true" : "false");
-			}
-			else if (szQuery != NULL && strncmp(szQuery, "stop", 4) == 0)
-			{
-				exeSamplerStop();
-				szBody = "{\"sampler\":\"stopped\"}\n";
-			}
-			else
-			{
-				ExeEipCount aTop[96];
-				long iTotal = 0;
-				const int iN = exeSamplerTop(aTop, 96, &iTotal);
-				szBody = CvString::format("{\"running\":%s,\"totalSamples\":%d,\"top\":{", exeSamplerRunning() ? "true" : "false", iTotal);
-				for (int i = 0; i < iN; i++)
-				{
-					szBody += CvString::format("%s\"%u\":%d", i > 0 ? "," : "", aTop[i].uiEip, aTop[i].iCount);
-				}
-				szBody += "}}\n";
-			}
-			sendResponse(sock, "200 OK", "application/json", szBody, snapshotTurn());
 			return false;
 		}
 		if (strcmp(szTarget, "/events") == 0)

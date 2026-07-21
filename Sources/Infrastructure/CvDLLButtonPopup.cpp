@@ -4,7 +4,6 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "Engine/CvExeTrace.h"
 #include "Engine/CvArea.h"
 #include "UI/CvArtFileMgr.h"
 #include "CvBuildingInfo.h"
@@ -2439,7 +2438,7 @@ bool CvDLLButtonPopup::launchEventPopup(CvPopup* pPopup, CvPopupInfo &info)
 		const CvPlot* pPlot = GC.getMap().plot(pTriggeredData->m_iPlotX, pTriggeredData->m_iPlotY);
 		if (pPlot && pPlot->isInViewport())
 		{
-			exeEng(EXEK_COLORED_PLOT), gDLL->getEngineIFace()->addColoredPlot(pPlot->getViewportX(), pPlot->getViewportY(), GC.getColorInfo(GC.getCOLOR_WARNING_TEXT()).getColor(), PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS);
+			gDLL->getEngineIFace()->addColoredPlot(pPlot->getViewportX(), pPlot->getViewportY(), GC.getColorInfo(GC.getCOLOR_WARNING_TEXT()).getColor(), PLOT_STYLE_CIRCLE, PLOT_LANDSCAPE_LAYER_RECOMMENDED_PLOTS);
 			gDLL->getInterfaceIFace()->lookAt(pPlot->getPoint(), CAMERALOOKAT_NORMAL);
 		}
 	}
@@ -3017,7 +3016,7 @@ bool CvDLLButtonPopup::launchImprovementUpgradeOptionsPopup(CvPopup* pPopup, CvP
 	{
 		gDLL->getInterfaceIFace()->lookAt(pPlot->getPoint(), CAMERALOOKAT_IMMEDIATE);
 		EffectTypes eEffect = (EffectTypes)GC.getInfoTypeForString("EFFECT_CREATION");
-		exeEng(EXEK_EFFECT), gDLL->getEngineIFace()->TriggerEffect(eEffect, pPlot->getPoint(), (float)(GC.getASyncRand().get(360)));
+		gDLL->getEngineIFace()->TriggerEffect(eEffect, pPlot->getPoint(), (float)(GC.getASyncRand().get(360)));
 		gDLL->getInterfaceIFace()->playGeneralSound("AS2D_UNIT_BUILD_WORKER", pPlot->getPoint());
 	}
 	const int iCurrentImprovement = info.getData1();
