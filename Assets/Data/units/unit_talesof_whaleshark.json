@@ -23,14 +23,32 @@
  "combatClasses": [
   "UNITCOMBAT_IDEA"
  ],
- "grants": {
-  "buildings": [
-   "BUILDING_FOLKLORE_T_TALES_OF_FISH",
-   "BUILDING_FOLKLORE_E_SEA",
-   "BUILDING_FOLKLORE_E_SEA",
-   "BUILDING_FOLKLORE_WHALE_SHARK",
-   "BUILDING_FOLKLORE_T_SHARKS",
-   "BUILDING_FOLKLORE_T_LEVIATHAN"
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_T_TALES_OF_FISH"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_E_SEA"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_E_SEA"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_WHALE_SHARK"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_T_SHARKS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_T_LEVIATHAN"
+   }
   ]
  },
  "world": {

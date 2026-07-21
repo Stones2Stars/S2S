@@ -53,23 +53,55 @@
      "base": 25,
      "random": 25
     }
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MASTER_SEA_HUNTER"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_WONDERS_OF_THE_DEEP"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_T_FISH"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_E_SEA"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_NARWHAL"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_T_LEVIATHAN"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_CAMP_NARWHAL"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_AQUARIUM"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MARINE_INSTITUTE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_CENTER_FOR_WHALE_STUDIES"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_TAXIDERMIST"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
-   "BUILDING_MASTER_SEA_HUNTER",
-   "BUILDING_WONDERS_OF_THE_DEEP",
-   "BUILDING_FOLKLORE_T_FISH",
-   "BUILDING_FOLKLORE_E_SEA",
-   "BUILDING_FOLKLORE_NARWHAL",
-   "BUILDING_FOLKLORE_T_LEVIATHAN",
-   "BUILDING_CAMP_NARWHAL",
-   "BUILDING_AQUARIUM",
-   "BUILDING_MARINE_INSTITUTE",
-   "BUILDING_CENTER_FOR_WHALE_STUDIES",
-   "BUILDING_TAXIDERMIST"
   ]
  },
  "world": {

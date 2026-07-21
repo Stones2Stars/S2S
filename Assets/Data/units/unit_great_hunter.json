@@ -63,20 +63,36 @@
     "python": {
      "callback": "doRemoveWVHumanSacrifice"
     }
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_TRADITION_HUNTER"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_TRADITION_SEA_HUNTING"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_TRADITION_MILITARY_STANDARD_MASCOT"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_TRADITION_NAVAL_MASCOT"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_TRADITION_ARCHERY"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_GREAT_HOLMEGAARD_HUNT"
    }
   ]
  },
  "grants": {
   "greatPeople": [
    "SPECIALIST_GREAT_HUNTER"
-  ],
-  "buildings": [
-   "BUILDING_TRADITION_HUNTER",
-   "BUILDING_TRADITION_SEA_HUNTING",
-   "BUILDING_TRADITION_MILITARY_STANDARD_MASCOT",
-   "BUILDING_TRADITION_NAVAL_MASCOT",
-   "BUILDING_TRADITION_ARCHERY",
-   "BUILDING_GREAT_HOLMEGAARD_HUNT"
   ]
  },
  "succession": {

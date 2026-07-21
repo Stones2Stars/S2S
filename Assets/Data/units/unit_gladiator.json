@@ -60,15 +60,20 @@
   "UNITCOMBAT_SIZE_MEDIUM",
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_GLADIATORIAL_SCHOOL"
+   }
+  ]
+ },
  "grants": {
   "promotions": [
    "PROMOTION_DRILL1"
   ],
   "greatPeople": [
    "SPECIALIST_SETTLED_GLADIATOR"
-  ],
-  "buildings": [
-   "BUILDING_GLADIATORIAL_SCHOOL"
   ]
  },
  "succession": {

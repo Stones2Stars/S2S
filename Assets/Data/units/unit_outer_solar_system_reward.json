@@ -45,13 +45,15 @@
     },
     "chance": 100,
     "commerce": 10000
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HOLOGRAPHIC_SOLAR_SYSTEM"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MISSION_TO_CALLISTO"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_HOLOGRAPHIC_SOLAR_SYSTEM",
-   "BUILDING_MISSION_TO_CALLISTO"
   ]
  },
  "cost": {

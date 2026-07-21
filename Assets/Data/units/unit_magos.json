@@ -82,6 +82,34 @@
       "culture": 10
      }
     ]
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_RAIN_DANCE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_WAR_DANCE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FIRE_DANCE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_NATURE_DANCE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MOON_DANCE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FERTILITY_DANCE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_BLOOD_DANCE"
    }
   ]
  },
@@ -90,15 +118,6 @@
    "PROMOTION_EDUCATE1",
    "PROMOTION_EDUCATE2",
    "PROMOTION_EDUCATE3"
-  ],
-  "buildings": [
-   "BUILDING_RAIN_DANCE",
-   "BUILDING_WAR_DANCE",
-   "BUILDING_FIRE_DANCE",
-   "BUILDING_NATURE_DANCE",
-   "BUILDING_MOON_DANCE",
-   "BUILDING_FERTILITY_DANCE",
-   "BUILDING_BLOOD_DANCE"
   ]
  },
  "succession": {

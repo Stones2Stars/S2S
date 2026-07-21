@@ -105,27 +105,71 @@
       "culture": 5
      }
     ]
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_DOG_BREEDER"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HERDING_DOG_TRAINER"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HUNTING_DOG_TRAINER"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_SLED_DOG_TRAINER"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_WAR_DOG_TRAINER"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_GUARD_DOG_TRAINER"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_DOG_KENNELS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ENCLOSURE_WOLF"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_GOVERNORS_PETS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_GOVERNORS_MENAGERIE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MILITARY_STANDARD_CANINES"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MASTER_HUNTER"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_REMAINS_DIRE_WOLF"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ZOO"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_TAXIDERMIST"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_DOG_BREEDER",
-   "BUILDING_HERDING_DOG_TRAINER",
-   "BUILDING_HUNTING_DOG_TRAINER",
-   "BUILDING_SLED_DOG_TRAINER",
-   "BUILDING_WAR_DOG_TRAINER",
-   "BUILDING_GUARD_DOG_TRAINER",
-   "BUILDING_DOG_KENNELS",
-   "BUILDING_ENCLOSURE_WOLF",
-   "BUILDING_GOVERNORS_PETS",
-   "BUILDING_GOVERNORS_MENAGERIE",
-   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
-   "BUILDING_MILITARY_STANDARD_CANINES",
-   "BUILDING_MASTER_HUNTER",
-   "BUILDING_REMAINS_DIRE_WOLF",
-   "BUILDING_ZOO",
-   "BUILDING_TAXIDERMIST"
   ]
  },
  "world": {

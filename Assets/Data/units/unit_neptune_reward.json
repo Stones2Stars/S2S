@@ -45,13 +45,15 @@
     },
     "chance": 100,
     "commerce": 10000
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_VOYAGER_PROGRAM"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_NEPTUNE_ATMOSPHERIC_PROBE"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_VOYAGER_PROGRAM",
-   "BUILDING_NEPTUNE_ATMOSPHERIC_PROBE"
   ]
  },
  "cost": {

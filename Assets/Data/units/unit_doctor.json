@@ -58,16 +58,20 @@
     "python": {
      "callback": "doRemoveWVHumanSacrifice"
     }
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HEALTH_SPA"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_UNIVERSAL_HEALTH_CARE"
    }
   ]
  },
  "grants": {
   "greatPeople": [
    "SPECIALIST_GREAT_DOCTOR"
-  ],
-  "buildings": [
-   "BUILDING_HEALTH_SPA",
-   "BUILDING_UNIVERSAL_HEALTH_CARE"
   ],
   "goldenAge": true,
   "greatPersonAction": {

@@ -45,18 +45,35 @@
      "base": 1,
      "random": 2
     }
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_GOVERNORS_PETS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_GOVERNORS_MENAGERIE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_E_DRAGON"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ENCLOSURE_REPTILE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ZOO"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_TAXIDERMIST"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_GOVERNORS_PETS",
-   "BUILDING_GOVERNORS_MENAGERIE",
-   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
-   "BUILDING_FOLKLORE_E_DRAGON",
-   "BUILDING_ENCLOSURE_REPTILE",
-   "BUILDING_ZOO",
-   "BUILDING_TAXIDERMIST"
   ]
  },
  "world": {

@@ -45,12 +45,11 @@
     },
     "chance": 100,
     "commerce": 10000
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_VOYAGE_TO_ANDROMEDA"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_VOYAGE_TO_ANDROMEDA"
   ]
  },
  "cost": {

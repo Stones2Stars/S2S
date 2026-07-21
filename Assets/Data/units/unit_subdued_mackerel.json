@@ -42,20 +42,43 @@
     },
     "chance": 100,
     "food": 1
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_T_FISH"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_E_SEA"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_MACKEREL"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FISH_PENS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_COASTAL_FISH_FARM"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_AQUARIUM"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MARINE_INSTITUTE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_TAXIDERMIST"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
-   "BUILDING_FOLKLORE_T_FISH",
-   "BUILDING_FOLKLORE_E_SEA",
-   "BUILDING_FOLKLORE_MACKEREL",
-   "BUILDING_FISH_PENS",
-   "BUILDING_COASTAL_FISH_FARM",
-   "BUILDING_AQUARIUM",
-   "BUILDING_MARINE_INSTITUTE",
-   "BUILDING_TAXIDERMIST"
   ]
  },
  "world": {

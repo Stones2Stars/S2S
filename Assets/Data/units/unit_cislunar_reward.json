@@ -45,17 +45,31 @@
     },
     "chance": 100,
     "commerce": 6000
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_COMMUNICATIONS_SATELLITE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_SOLAR_POWER_SATELLITE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MILITARY_SATELLITES"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_GLOBAL_POSITIONING_SYSTEM"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_PROPAGANDA_SATELLITES"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_DIGITAL_GLOBE"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_COMMUNICATIONS_SATELLITE",
-   "BUILDING_SOLAR_POWER_SATELLITE",
-   "BUILDING_MILITARY_SATELLITES",
-   "BUILDING_GLOBAL_POSITIONING_SYSTEM",
-   "BUILDING_PROPAGANDA_SATELLITES",
-   "BUILDING_DIGITAL_GLOBE"
   ]
  },
  "cost": {

@@ -55,6 +55,58 @@
   "UNITCOMBAT_SIZE_MEDIUM",
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ACHIEVEMENT_AGRICULTURAL"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ACHIEVEMENT_COMMERCIAL"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ACHIEVEMENT_CULTURAL"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ACHIEVEMENT_ENVIRONMENTAL"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ACHIEVEMENT_INDUSTRIAL"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ACHIEVEMENT_MEDICAL"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ACHIEVEMENT_MILITARY"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ACHIEVEMENT_POLITICAL"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ACHIEVEMENT_SAFETY"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ACHIEVEMENT_SCIENTIFIC"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ACHIEVEMENT_SEAFARING"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ACHIEVEMENT_TOURISTIC"
+   }
+  ]
+ },
  "grants": {
   "promotions": [
    "PROMOTION_RETINUE_SCHOLAR"
@@ -65,20 +117,6 @@
    "SPECIALIST_NOBLE",
    "SPECIALIST_GREAT_MILITARY_INSTRUCTOR",
    "SPECIALIST_CELEBRITY"
-  ],
-  "buildings": [
-   "BUILDING_ACHIEVEMENT_AGRICULTURAL",
-   "BUILDING_ACHIEVEMENT_COMMERCIAL",
-   "BUILDING_ACHIEVEMENT_CULTURAL",
-   "BUILDING_ACHIEVEMENT_ENVIRONMENTAL",
-   "BUILDING_ACHIEVEMENT_INDUSTRIAL",
-   "BUILDING_ACHIEVEMENT_MEDICAL",
-   "BUILDING_ACHIEVEMENT_MILITARY",
-   "BUILDING_ACHIEVEMENT_POLITICAL",
-   "BUILDING_ACHIEVEMENT_SAFETY",
-   "BUILDING_ACHIEVEMENT_SCIENTIFIC",
-   "BUILDING_ACHIEVEMENT_SEAFARING",
-   "BUILDING_ACHIEVEMENT_TOURISTIC"
   ]
  },
  "cost": {

@@ -105,24 +105,59 @@
       "culture": 5
      }
     ]
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_GOVERNORS_PETS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_GOVERNORS_MENAGERIE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ENCLOSURE_BIRD"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FEATHER_WORKER"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_CAMP_OSTRICH"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HERD_RATITE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ZOO"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_T_BIRDS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_OSTRICH"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_T_FLIGHTLESS_BIRDS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_TAXIDERMIST"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_GOVERNORS_PETS",
-   "BUILDING_GOVERNORS_MENAGERIE",
-   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
-   "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
-   "BUILDING_ENCLOSURE_BIRD",
-   "BUILDING_FEATHER_WORKER",
-   "BUILDING_CAMP_OSTRICH",
-   "BUILDING_HERD_RATITE",
-   "BUILDING_ZOO",
-   "BUILDING_FOLKLORE_T_BIRDS",
-   "BUILDING_FOLKLORE_OSTRICH",
-   "BUILDING_FOLKLORE_T_FLIGHTLESS_BIRDS",
-   "BUILDING_TAXIDERMIST"
   ]
  },
  "world": {

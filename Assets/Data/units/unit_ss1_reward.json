@@ -45,13 +45,15 @@
     },
     "chance": 100,
     "commerce": 5000
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MIR"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_SKYLAB"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_MIR",
-   "BUILDING_SKYLAB"
   ]
  },
  "cost": {

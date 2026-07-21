@@ -45,13 +45,15 @@
     },
     "chance": 100,
     "commerce": 10000
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_EUROPA_PROBE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ASTROBIOLOGY_LAB"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_EUROPA_PROBE",
-   "BUILDING_ASTROBIOLOGY_LAB"
   ]
  },
  "cost": {

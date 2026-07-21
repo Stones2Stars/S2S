@@ -43,16 +43,27 @@
     "chance": 100,
     "food": 2,
     "commerce": 1
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_T_FISH"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_E_SEA"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_CRAB"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_CRAB_NETS"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
-   "BUILDING_FOLKLORE_T_FISH",
-   "BUILDING_FOLKLORE_E_SEA",
-   "BUILDING_FOLKLORE_CRAB",
-   "BUILDING_CRAB_NETS"
   ]
  },
  "world": {

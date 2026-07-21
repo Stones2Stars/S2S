@@ -45,13 +45,15 @@
     },
     "chance": 100,
     "commerce": 10000
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_SEDNA_PROBE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ASTRONOMICAL_DATABASE"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_SEDNA_PROBE",
-   "BUILDING_ASTRONOMICAL_DATABASE"
   ]
  },
  "cost": {

@@ -29,11 +29,19 @@
   "UNITCOMBAT_HEALS_AS_PEOPLE",
   "UNITCOMBAT_HEALS_AS_MECHANICAL"
  ],
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_TREASURY"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MUSEUM"
+   }
+  ]
+ },
  "grants": {
-  "buildings": [
-   "BUILDING_TREASURY",
-   "BUILDING_MUSEUM"
-  ],
   "greatPersonAction": {
    "hurry": {
     "base": 100,

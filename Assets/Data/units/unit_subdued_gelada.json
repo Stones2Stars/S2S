@@ -45,21 +45,47 @@
      "base": 1,
      "random": 1
     }
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_GOVERNORS_PETS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_GOVERNORS_MENAGERIE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_T_OLD_MAN_OF_THE_FOREST"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ENCLOSURE_PRIMATE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MONKEY_BREEDER"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ZOO"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_TAXIDERMIST"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_GELADA_MONKEY"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_T_OLD_WORLD_MONKEYS"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_GOVERNORS_PETS",
-   "BUILDING_GOVERNORS_MENAGERIE",
-   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
-   "BUILDING_FOLKLORE_T_OLD_MAN_OF_THE_FOREST",
-   "BUILDING_ENCLOSURE_PRIMATE",
-   "BUILDING_MONKEY_BREEDER",
-   "BUILDING_ZOO",
-   "BUILDING_TAXIDERMIST",
-   "BUILDING_FOLKLORE_GELADA_MONKEY",
-   "BUILDING_FOLKLORE_T_OLD_WORLD_MONKEYS"
   ]
  },
  "world": {

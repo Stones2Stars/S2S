@@ -45,12 +45,11 @@
     },
     "chance": 100,
     "commerce": 10000
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MARINER_PROGRAM"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_MARINER_PROGRAM"
   ]
  },
  "cost": {

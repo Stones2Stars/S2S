@@ -58,20 +58,36 @@
     "python": {
      "callback": "doRemoveWVHumanSacrifice"
     }
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HEROIC_EPIC"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_NATIONAL_EPIC"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HQ_CIVILIZED_JEWELERS_INC"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HQ_EMPERORS_CLOTHING"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HQ_RED_CURTAINS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_TRADITION_AESTHETIC_APPRECIATION"
    }
   ]
  },
  "grants": {
   "greatPeople": [
    "SPECIALIST_GREAT_ARTIST"
-  ],
-  "buildings": [
-   "BUILDING_HEROIC_EPIC",
-   "BUILDING_NATIONAL_EPIC",
-   "BUILDING_HQ_CIVILIZED_JEWELERS_INC",
-   "BUILDING_HQ_EMPERORS_CLOTHING",
-   "BUILDING_HQ_RED_CURTAINS",
-   "BUILDING_TRADITION_AESTHETIC_APPRECIATION"
   ],
   "goldenAge": true,
   "greatPersonAction": {

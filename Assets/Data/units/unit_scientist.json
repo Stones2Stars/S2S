@@ -58,18 +58,28 @@
     "python": {
      "callback": "doRemoveWVHumanSacrifice"
     }
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HQ_STANDARD_ETHANOL"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HQ_ALUMINUM_CO"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ACADEMY"
    }
   ]
  },
  "grants": {
   "greatPeople": [
    "SPECIALIST_GREAT_SCIENTIST"
-  ],
-  "buildings": [
-   "BUILDING_HQ_STANDARD_ETHANOL",
-   "BUILDING_HQ_ALUMINUM_CO",
-   "BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT",
-   "BUILDING_ACADEMY"
   ],
   "goldenAge": true,
   "greatPersonAction": {

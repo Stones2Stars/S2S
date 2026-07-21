@@ -45,12 +45,11 @@
     },
     "chance": 100,
     "commerce": 10000
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MISSION_TO_THE_GALACTIC_CORE"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_MISSION_TO_THE_GALACTIC_CORE"
   ]
  },
  "cost": {

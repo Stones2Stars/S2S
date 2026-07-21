@@ -113,20 +113,43 @@
       "culture": 5
      }
     ]
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_GOVERNORS_PETS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_GOVERNORS_MENAGERIE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MASTER_SEA_HUNTER"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_WONDERS_OF_THE_DEEP"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ENCLOSURE_BAD_BOYS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ENCLOSURE_REPTILE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ZOO"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_TAXIDERMIST"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_GOVERNORS_PETS",
-   "BUILDING_GOVERNORS_MENAGERIE",
-   "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
-   "BUILDING_MASTER_SEA_HUNTER",
-   "BUILDING_WONDERS_OF_THE_DEEP",
-   "BUILDING_ENCLOSURE_BAD_BOYS",
-   "BUILDING_ENCLOSURE_REPTILE",
-   "BUILDING_ZOO",
-   "BUILDING_TAXIDERMIST"
   ]
  },
  "world": {

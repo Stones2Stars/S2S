@@ -105,21 +105,47 @@
       "culture": 5
      }
     ]
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_INDIAN_RHINOCEROS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_T_RHINOCEROSES"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_GOVERNORS_MENAGERIE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_GOVERNORS_PETS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MASTER_HUNTER"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_CAMP_RHINO"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_TAXIDERMIST"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ZOO"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
-   "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
-   "BUILDING_FOLKLORE_INDIAN_RHINOCEROS",
-   "BUILDING_FOLKLORE_T_RHINOCEROSES",
-   "BUILDING_GOVERNORS_MENAGERIE",
-   "BUILDING_GOVERNORS_PETS",
-   "BUILDING_MASTER_HUNTER",
-   "BUILDING_CAMP_RHINO",
-   "BUILDING_TAXIDERMIST",
-   "BUILDING_ZOO"
   ]
  },
  "world": {

@@ -23,10 +23,16 @@
  "combatClasses": [
   "UNITCOMBAT_IDEA"
  ],
- "grants": {
-  "buildings": [
-   "BUILDING_FOLKLORE_E_MERMAID",
-   "BUILDING_FOLKLORE_DUGONG"
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_E_MERMAID"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_DUGONG"
+   }
   ]
  },
  "world": {

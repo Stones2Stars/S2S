@@ -45,13 +45,15 @@
     },
     "chance": 100,
     "commerce": 10000
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ASTRONOMICAL_DATABASE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_NEW_HORIZONS"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_ASTRONOMICAL_DATABASE",
-   "BUILDING_NEW_HORIZONS"
   ]
  },
  "cost": {

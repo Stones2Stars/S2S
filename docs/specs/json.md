@@ -437,7 +437,10 @@ declare the number. Enforcement reads the [tally](tally.md) count.
 One-shot or recurring things an entity hands out (not per-turn modifiers).
 
 > **`grants` is ONLY genuine provisions handed out on a trigger.** What does NOT belong here (and where it lives
-> instead): unit `buildings` (MISSION_CONSTRUCT) / `greatPersonAction` / `goldenAge` → **`missions`** (§8 — PERMANENT carve-out: missions/CvOutcome ground-up rework);
+> instead): unit `buildings` (MISSION_CONSTRUCT) → the **`constructs`** outcome verb under `outcomes.actions[]` (§8,
+> one action per building — a construct is a mission-action producing an outcome, not a provision; emitted by
+> `curate_unit.py`, no longer `grants.buildings`); `greatPersonAction` / `goldenAge` → **`missions`** (§8 — the rest of
+> the mission-CONCEPT unification is a PERMANENT carve-out: missions/CvOutcome ground-up rework);
 > `builds` → the **`builds`** block (§8); promotion `unitCombats`/`removesUnitCombats` → **`skills`**; project
 > `grantsSpecialBuilding` → **`enables.specialBuildings`** (flips SpecialBuildingValid — unlocks, hands out nothing);
 > corp `bonusProduced` → **`provides.bonuses`** (continuous supply, §5a); building `holyCity` → **`requires.build`**

@@ -45,16 +45,27 @@
     },
     "chance": 100,
     "commerce": 5000
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_SPUTNIK"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_PROJECT_GEMINI"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_PROJECT_MERCURY"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_WILKINSON_MICROWAVE_ANISOTROPY_PROBE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_CLIMATE_SATELLITE"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_SPUTNIK",
-   "BUILDING_PROJECT_GEMINI",
-   "BUILDING_PROJECT_MERCURY",
-   "BUILDING_WILKINSON_MICROWAVE_ANISOTROPY_PROBE",
-   "BUILDING_CLIMATE_SATELLITE"
   ]
  },
  "cost": {

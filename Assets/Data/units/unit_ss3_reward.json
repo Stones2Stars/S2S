@@ -45,17 +45,31 @@
     },
     "chance": 100,
     "commerce": 5000
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MIR"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_SKYLAB"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_SPACE_STATION_TOURS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ORBITAL_HOTEL"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ASTEROID_MINE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_ASTEROID_MINE_RARE_MINERALS"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_MIR",
-   "BUILDING_SKYLAB",
-   "BUILDING_SPACE_STATION_TOURS",
-   "BUILDING_ORBITAL_HOTEL",
-   "BUILDING_ASTEROID_MINE",
-   "BUILDING_ASTEROID_MINE_RARE_MINERALS"
   ]
  },
  "cost": {

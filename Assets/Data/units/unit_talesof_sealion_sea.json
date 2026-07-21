@@ -23,10 +23,16 @@
  "combatClasses": [
   "UNITCOMBAT_IDEA"
  ],
- "grants": {
-  "buildings": [
-   "BUILDING_FOLKLORE_SEA_LION",
-   "BUILDING_FOLKLORE_E_SEA"
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_SEA_LION"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_E_SEA"
+   }
   ]
  },
  "world": {

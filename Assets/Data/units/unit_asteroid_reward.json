@@ -45,12 +45,11 @@
     },
     "chance": 100,
     "commerce": 10000
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_DAWN"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_DAWN"
   ]
  },
  "cost": {

@@ -60,28 +60,68 @@
     "python": {
      "callback": "doRemoveWVHumanSacrifice"
     }
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_CENTRAL_BANK"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_WALL_STREET"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HQ_CEREAL_MILLS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HQ_SIDS_SUSHI_CO"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HQ_ADVENTURE_TOURS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HQ_BURGERWORLD"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HQ_EAST_WEST_TRADERS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HQ_FASHION_HOUSE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HQ_MALLWART"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HQ_MAPSTER"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HQ_BIG_MCDOWELLS"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HQ_MOONBEAN_COFFEE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_HQ_WONKA_CONFECTIONERIES"
    }
   ]
  },
  "grants": {
   "greatPeople": [
    "SPECIALIST_GREAT_MERCHANT"
-  ],
-  "buildings": [
-   "BUILDING_CENTRAL_BANK",
-   "BUILDING_WALL_STREET",
-   "BUILDING_HQ_CEREAL_MILLS",
-   "BUILDING_HQ_SIDS_SUSHI_CO",
-   "BUILDING_HQ_ADVENTURE_TOURS",
-   "BUILDING_HQ_BURGERWORLD",
-   "BUILDING_HQ_EAST_WEST_TRADERS",
-   "BUILDING_HQ_FASHION_HOUSE",
-   "BUILDING_HQ_MALLWART",
-   "BUILDING_HQ_MAPSTER",
-   "BUILDING_HQ_BIG_MCDOWELLS",
-   "BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL",
-   "BUILDING_HQ_MOONBEAN_COFFEE",
-   "BUILDING_HQ_WONKA_CONFECTIONERIES"
   ],
   "goldenAge": true,
   "greatPersonAction": {

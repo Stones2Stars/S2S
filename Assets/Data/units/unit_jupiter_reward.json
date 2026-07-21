@@ -45,12 +45,11 @@
     },
     "chance": 100,
     "commerce": 10000
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_GALILEO"
    }
-  ]
- },
- "grants": {
-  "buildings": [
-   "BUILDING_GALILEO"
   ]
  },
  "cost": {

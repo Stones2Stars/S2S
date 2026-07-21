@@ -61,15 +61,16 @@
     "python": {
      "callback": "doRemoveWVHumanSacrifice"
     }
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_SCOTLAND_YARD"
    }
   ]
  },
  "grants": {
   "greatPeople": [
    "SPECIALIST_GREAT_SLEUTH"
-  ],
-  "buildings": [
-   "BUILDING_SCOTLAND_YARD"
   ],
   "goldenAge": true
  },

@@ -204,24 +204,58 @@
       "production": 4
      }
     ]
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_WORLDVIEW_SLAVERY"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_SLAVE_MARKET"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_SLAVE_COMPOUND"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_SLAVE_COMPOUND_MILITARY_SUPPORT"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_SLAVE_COMPOUND_FOOD"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_SLAVE_COMPOUND_INDUSTRY"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_SLAVE_COMPOUND_COMMERCE"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_SLAVE_COMPOUND_SANITATION"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_WORLDVIEW_CANNIBALISM"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_WORLDVIEW_HUMAN_SACRIFICE"
    }
   ]
  },
  "grants": {
-  "buildings": [
-   "BUILDING_WORLDVIEW_SLAVERY",
-   "BUILDING_SLAVE_MARKET",
-   "BUILDING_SLAVE_COMPOUND",
-   "BUILDING_SLAVE_COMPOUND_MILITARY_SUPPORT",
-   "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT",
-   "BUILDING_SLAVE_COMPOUND_FOOD",
-   "BUILDING_SLAVE_COMPOUND_INDUSTRY",
-   "BUILDING_SLAVE_COMPOUND_COMMERCE",
-   "BUILDING_SLAVE_COMPOUND_SANITATION",
-   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION",
-   "BUILDING_WORLDVIEW_CANNIBALISM",
-   "BUILDING_WORLDVIEW_HUMAN_SACRIFICE"
-  ],
   "greatPersonAction": {
    "hurry": {
     "base": 20,

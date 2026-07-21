@@ -189,8 +189,10 @@ TAG_BY_UNITCOMBAT = {
 }
 
 # ---- grants (one-shot, lists) ----
-GRANT_LIST = {"FreePromotions": "promotions", "GreatPeoples": "greatPeople",
-              "Buildings": "buildings"}
+# NB `Buildings` is NOT here: the unit's <Buildings> (MISSION_CONSTRUCT -- buildings it can construct via a mission)
+# is NOT a grant. It emits as the `constructs` OUTCOME verb under outcomes.actions[] (owner 2026-07-21, json.md §8),
+# in emit_outcomes() -- moved off the off-grammar grants.buildings.
+GRANT_LIST = {"FreePromotions": "promotions", "GreatPeoples": "greatPeople"}
 # GroupSpawnUnitCombatTypes is NOT a grant (handout) -- it is the unit's own group-SPAWN config (pack combat class +
 # chance + title). It emits to its OWN top-level `groupSpawn` block as struct rows (owner principle 2026-07-11: config
 # data gets its own self-documenting block, not `grants`); a flat _typelist would drop iChance + Title.
@@ -823,6 +825,11 @@ def emit_outcomes(typ, rec):
             arr.append(ao)
         if arr:
             out["actions"] = arr
+    # MISSION_CONSTRUCT: the unit's <Buildings> = the buildings it can construct via a mission. Emitted as the
+    # `constructs` OUTCOME verb (owner 2026-07-21, json.md §8) -- ONE action per building -- NOT grants.buildings
+    # (a construct is a mission-action producing an outcome, not a one-shot provision).
+    for b in _typelist(rec, "Buildings"):
+        out.setdefault("actions", []).append(OrderedDict([("mission", "MISSION_CONSTRUCT"), ("constructs", b)]))
     return out or None
 
 
@@ -1263,7 +1270,8 @@ def curate_special_unit(typ, rec, store):
 
 HANDLED = (set(BASE) | set(UNIT_FAMILIES) | set(CAP_BOOL) | set(CAP_COUNT) | set(DCM_AIRBOMB) | set(GRANT_LIST)
            | set(COST) | set(ID_SCALAR) | set(ID_LIST) | set(TEXT) | set(ART) | REQUIRES_TAGS | STORE_TAGS
-           | PASS2_TAGS | {"Type", "Combat", "SubCombatTypes",   # -> root combatClass / combatClasses (owner 2026-07-20)
+           | PASS2_TAGS | {"Buildings",   # -> outcomes.actions[] `constructs` verb (MISSION_CONSTRUCT, owner 2026-07-21)
+                           "Type", "Combat", "SubCombatTypes",   # -> root combatClass / combatClasses (owner 2026-07-20)
                            "iCombat", "iMoves",   # -> strength / movement families (owner 2026-07-20)
                            "Flavors", "iAIWeight", "iInstanceCostModifier", "bGoldenAge",
                            "DefaultUnitAI", "UnitMeshGroups", "FreePromotions", "Builds",

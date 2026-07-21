@@ -23,11 +23,20 @@
  "combatClasses": [
   "UNITCOMBAT_IDEA"
  ],
- "grants": {
-  "buildings": [
-   "BUILDING_FOLKLORE_T_TALES_OF_FISH",
-   "BUILDING_FOLKLORE_E_SEA",
-   "BUILDING_FOLKLORE_MACKEREL"
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_T_TALES_OF_FISH"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_E_SEA"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_FOLKLORE_MACKEREL"
+   }
   ]
  },
  "world": {

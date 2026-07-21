@@ -40,14 +40,31 @@
   "UNITCOMBAT_HEALS_AS_TECH",
   "UNITCOMBAT_HEALS_AS_MECHANICAL"
  ],
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_CAPTURED_ASTEROID"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MARTIAN_AMMONIA_BOMBARDMENT"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_VENUS_HYDROGEN_BOMBARDMENT"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MERCURY_COMETARY_BOMBARDMENT"
+   },
+   {
+    "mission": "MISSION_CONSTRUCT",
+    "constructs": "BUILDING_MARTIAN_ASTEROID_MINE"
+   }
+  ]
+ },
  "grants": {
-  "buildings": [
-   "BUILDING_CAPTURED_ASTEROID",
-   "BUILDING_MARTIAN_AMMONIA_BOMBARDMENT",
-   "BUILDING_VENUS_HYDROGEN_BOMBARDMENT",
-   "BUILDING_MERCURY_COMETARY_BOMBARDMENT",
-   "BUILDING_MARTIAN_ASTEROID_MINE"
-  ],
   "greatPersonAction": {
    "hurry": {
     "base": 1500
