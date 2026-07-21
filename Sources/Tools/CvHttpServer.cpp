@@ -12,6 +12,8 @@
 #include <psapi.h>                           // /computed/perf memory gauge: GetProcessMemoryInfo (the CvPlotPaging mechanism)
 #include "AI/BetterBTSAI.h"                  // /computed/perf frameAccumMs: the whole-turn frame-span ms accumulators
 #include "Cascade/CvCascadeReadJson.h"       // /state/info: rjInfoForType -- the info-object edge dump (DEC-one-reverse-view)
+#include "Cascade/CvCascadeTally.h"          // /computed/tally TAG_ routing -> countUnitsWithTag (the per-tag unit count)
+#include "JsonInfo/CvJsonBoolBlock.h"        // /state/info classification exposure: the loaded tags/skills held-key sets
 #include "Cascade/CvBuildingEnabler.h"       // /computed/enabler/buildings: the per-city domain's oracle verification
 #include "Cascade/CvUnitEnabler.h"           // /computed/enabler/units: the per-unit verdict decomposition
 #include "CvBonusInfo.h" // bonus-name resolution in the /diagnostic/whyNot trace
@@ -4458,6 +4460,24 @@ namespace
 				}
 				if (!typed.empty()) o["typed"] = picojson::value(typed);
 			}
+			// classification blocks (json §8): the loaded bitset held-keys, exposed by name so /state/info stays the
+			// "loaded == authored" check for tags/skills/attributes/capabilities/policies exactly as it is for the edges.
+			{
+				picojson::value::object cls;
+				const char* aNames[5] = { "tags", "skills", "attributes", "capabilities", "policies" };
+				const CvJsonBoolBlock* aBlk[5] = { jInfo->getTags(), jInfo->getSkills(), jInfo->getAttributes(),
+				                                   jInfo->getCapabilities(), jInfo->getPolicies() };
+				for (int ci = 0; ci < 5; ++ci)
+				{
+					const CvJsonBoolBlock* b = aBlk[ci];
+					if (b == NULL || b->all().empty()) continue;
+					picojson::value::array a;
+					for (std::set<std::string>::const_iterator it = b->all().begin(); it != b->all().end(); ++it)
+						a.push_back(picojson::value(*it));
+					cls[aNames[ci]] = picojson::value(a);
+				}
+				if (!cls.empty()) o["classification"] = picojson::value(cls);
+			}
 			return CvString(picojson::value(o).serialize().c_str());
 		}
 
@@ -4553,8 +4573,17 @@ namespace
 			// Engine COUNT ground-truth for this BUILDING_/UNIT_: the per-empire live count + the world lifetime-created
 			// count, plus (buildings) the engine's own maxed-out flags at empire/team/world -- the cap-gate inputs.
 			const bool bUnit = (strncmp(szType, "UNIT_", 5) == 0);
+			const bool bTag  = (strncmp(szType, "TAG_", 4) == 0);
 			picojson::value::object t;
-			if (bUnit)
+			if (bTag)
+			{
+				// per-tag UNIT count (iterate-on-read, tally.md): how many units carry this classification tag at
+				// empire/team/world. iIdx is the TAG_* infotype id (== the CLSD_TAG per-domain id countUnitsWithTag reads).
+				t["empire"] = picojson::value((double)cascadeTally().countUnitsWithTag((int)kPlayer.getID(), iIdx, CASCADE_COUNT_EMPIRE));
+				t["team"]   = picojson::value((double)cascadeTally().countUnitsWithTag(iTeam, iIdx, CASCADE_COUNT_TEAM));
+				t["world"]  = picojson::value((double)cascadeTally().countUnitsWithTag(0, iIdx, CASCADE_COUNT_WORLD));
+			}
+			else if (bUnit)
 			{
 				t["empire"]       = picojson::value((double)kPlayer.getUnitCount((UnitTypes)iIdx));
 				t["worldCreated"] = picojson::value((double)GC.getGame().getUnitCreatedCount((UnitTypes)iIdx));
@@ -4567,9 +4596,10 @@ namespace
 				t["maxedTeam"]    = picojson::value(GET_TEAM((TeamTypes)iTeam).isBuildingMaxedOut((BuildingTypes)iIdx));
 				t["maxedWorld"]   = picojson::value(GC.getGame().isBuildingMaxedOut((BuildingTypes)iIdx));
 			}
-			o["domain"] = picojson::value(std::string(bUnit ? "unit" : "building"));
+			o["domain"] = picojson::value(std::string(bTag ? "tag" : (bUnit ? "unit" : "building")));
 			o["tally"] = picojson::value(t);
-			sNotes = "engine counts: empire live count + world lifetime-created (+ building maxed-out flags)";
+			sNotes = bTag ? "per-tag unit count (iterate-on-read) at empire/team/world"
+			              : "engine counts: empire live count + world lifetime-created (+ building maxed-out flags)";
 		}
 		else
 		{
@@ -4680,7 +4710,7 @@ namespace
 			{ "/state/cities",  "stateCities",  "raw city substrate: plots/buildings/specialists/bonuses (no yields)" },
 			{ "/state/plots",   "statePlots",   "every map plot by global index: contents/facts + workingCity link (no yields)" },
 			{ "/state/units",   "stateUnits",   "raw unit facts (type/ai/pos/group/damage/level/promotions)" },
-			{ "/state/info",    "infoEdges",    "an info object's edge unit: authored + load-derived (related/requiredBy) families (type=ANY_INFOTYPE)" },
+			{ "/state/info",    "infoEdges",    "an info object's edge unit: authored + load-derived (related/requiredBy) families + classification blocks (tags/skills/attributes/capabilities/policies) (type=ANY_INFOTYPE)" },
 			{ "/computed/cities/yields",   "cityInput",      "getYieldRate100 per channel + full per-source decomposition" },
 			{ "/computed/cities/wellbeing","cityWellbeing",  "health + happiness: realized levels + the FULL per-source decomposition (anger percents, signed sources, gate flags)" },
 			{ "/computed/cities/buildable","cityBuildable",  "the engine's canConstruct TRUE-set for the city (the buildable oracle)" },
@@ -4698,7 +4728,7 @@ namespace
 			{ "/computed/availableTechs",  "availableTechs", "engine canResearch set for the player" },
 			{ "/computed/availableCivics", "availableCivics","engine canDoCivics set for the player" },
 			{ "/computed/availableBuilds", "availableBuilds","engine build-unlock set for the player" },
-			{ "/computed/tally",           "tally",          "engine counts (type=BUILDING_X|UNIT_X)" },
+			{ "/computed/tally",           "tally",          "engine counts (type=BUILDING_X|UNIT_X); per-tag unit count (type=TAG_X, iterate-on-read empire/team/world)" },
 			{ "/computed/whyNot",          "whyNot",         "canTrain decision inputs (type=UNIT_X)" },
 			{ "/computed/teamFlags",       "teamFlags",      "engine capability flags by canonical name (+canTrade/canTradeOn/canWorkOn) — the capabilities-parity oracle" },
 			{ "/computed/unitSkills",      "unitSkills",     "per-unit EFFECTIVE skill booleans (unit+promotion composite getters) — the skills-parity oracle" },
