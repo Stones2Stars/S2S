@@ -111,11 +111,6 @@
    "percent": 100
   }
  },
- "PROPERTY_FLAMMABILITY": {
-  "city": {
-   "flat": 2
-  }
- },
  "cost": {
   "production": 332,
   "sizeModifier": 1,

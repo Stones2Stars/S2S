@@ -574,6 +574,11 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, capabili
             for c in node:
                 p = engine.text(c.find("PropertyType")) if c.find("PropertyType") is not None else None
                 amt = _intval(c)
+                # PROPERTY_FLAMMABILITY rebalance (owner 2026-07-21): positive flammability values are divided by 5
+                # (rounded to nearest); negative values pass through unchanged. Only this property, only the positive
+                # side. A value that rounds to 0 (was 1-2) drops out via the `and amt` guard below.
+                if p == "PROPERTY_FLAMMABILITY" and amt and amt > 0:
+                    amt = int(round(amt / 5.0))
                 if p and p != "NONE" and amt:
                     fams.setdefault(p, OrderedDict()).setdefault(scope, OrderedDict())["flat"] = amt
     pm = rec.find("PropertyManipulators")

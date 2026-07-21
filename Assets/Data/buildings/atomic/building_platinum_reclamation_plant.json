@@ -59,7 +59,7 @@
  },
  "PROPERTY_FLAMMABILITY": {
   "city": {
-   "flat": 15
+   "flat": 3
   }
  },
  "PROPERTY_AIR_POLLUTION": {

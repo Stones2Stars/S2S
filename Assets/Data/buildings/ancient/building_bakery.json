@@ -111,11 +111,6 @@
    "percent": 100
   }
  },
- "PROPERTY_FLAMMABILITY": {
-  "city": {
-   "flat": 1
-  }
- },
  "allowedSpecialists": {
   "city": {
    "SPECIALIST_MERCHANT": 1

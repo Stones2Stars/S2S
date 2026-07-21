@@ -115,7 +115,7 @@
  },
  "PROPERTY_FLAMMABILITY": {
   "city": {
-   "flat": 20
+   "flat": 4
   }
  },
  "grants": {

@@ -77,11 +77,6 @@
    "percent": 100
   }
  },
- "PROPERTY_FLAMMABILITY": {
-  "city": {
-   "flat": 2
-  }
- },
  "PROPERTY_WATER_POLLUTION": {
   "city": {
    "flat": 2

@@ -35,7 +35,7 @@
  },
  "PROPERTY_FLAMMABILITY": {
   "city": {
-   "flat": 50
+   "flat": 10
   }
  },
  "PROPERTY_WATER_POLLUTION": {

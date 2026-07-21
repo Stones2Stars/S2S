@@ -48,11 +48,6 @@
    "percent": 100
   }
  },
- "PROPERTY_FLAMMABILITY": {
-  "city": {
-   "flat": 2
-  }
- },
  "PROPERTY_AIR_POLLUTION": {
   "city": {
    "flat": 2

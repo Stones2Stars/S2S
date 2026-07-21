@@ -66,11 +66,6 @@
    "percent": 100
   }
  },
- "PROPERTY_FLAMMABILITY": {
-  "city": {
-   "flat": 1
-  }
- },
  "PROPERTY_CRIME": {
   "city": {
    "flat": -5
