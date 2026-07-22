@@ -12,24 +12,21 @@ CvSpecialBuildingInfo::CvSpecialBuildingInfo()
 	: m_iObsoleteTech(NO_TECH)        // DATA GAP: no tech key in the JSON -- stays NO_TECH (fail-loud)
 	, m_iTechPrereq(NO_TECH)          //   ""
 	, m_iTechPrereqAnyone(NO_TECH)    //   "" (int-typed tech FK; -1 == NO_TECH)
-	, m_iMaxPlayerInstances(-1)       // legacy default (archived .add(iMaxPlayerInstances, -1))
 	, m_bValid(true)                  // legacy default TRUE (curator elides valid:true; only explicit valid:false overrides)
 {
 }
 
 
-// #430: allowed.empire -> iMaxPlayerInstances; identity.valid overrides the true default only when explicitly present.
-// ⛔ DATA GAP (accepted, fail-loud): specialbuildings/*.json carry NO tech data (curator missing), so
-// techPrereq / obsoleteTech / techPrereqAnyone are NOT mapped and stay NO_TECH -- tech-gating + the cascade
-// EDGEB_SPECIAL_BUILDINGS edges drop until the curator is written. Do NOT invent a mapping.
+// #430: `allowed` is parsed by the BASE section dispatch into the composed m_allowed unit (getMaxPlayerInstances
+// reads it) -- never hand-parsed here: a private int left getAllowed() NULL, and the enabler's group gate
+// (bd_groupCapOk) reads getAllowed(), so the cap silently never applied.
+// techPrereq is RECONSTRUCTED at load from the tech-side inversion (tech.enables.specialBuildings -> setTechPrereq,
+// cascadeLoadJson); obsoleteTech / techPrereqAnyone stay NO_TECH by design (verified unused across all groups).
 void CvSpecialBuildingInfo::mapFrom(const picojson::value& entity)
 {
-	CvInfo::mapFrom(entity);   // core reading (type / text keys / button) + availability
+	CvInfo::mapFrom(entity);   // core reading (type / text keys / button) + availability + the composed sections
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
-
-	if (const picojson::object* a = jsonChildObj(o, "allowed"))
-		m_iMaxPlayerInstances = jsonIdInt(*a, "empire", -1);
 
 	if (const picojson::object* io = jsonChildObj(o, "identity"))
 	{

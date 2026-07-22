@@ -24,15 +24,21 @@ void jsonResetDiag()                                    { s_unresolved.clear(); 
 const std::set<std::string>& jsonUnresolvedIds()        { return s_unresolved; }
 const std::set<std::string>& jsonUnconsumedSections()   { return s_unconsumed; }
 
+// The bound is a runaway guard, not a display cap: at 64 a single flooding class (every CIVILIZATION_ dropping
+// `grants`) filled the census by itself and HID every other miss behind it -- the diagnostic silently truncated
+// exactly where it was most needed. Sized to hold the whole census instead (a std::set of a few thousand short
+// strings is nothing beside the 13k entities being mapped); the reader aggregates.
+static const size_t JSON_DIAG_MAX = 4096;
+
 void jsonNoteUnconsumed(const std::string& szType, const std::string& szSection)
 {
-	if (s_unconsumed.size() < 64) s_unconsumed.insert(szType + ":" + szSection);   // bounded -- the distinct misses
+	if (s_unconsumed.size() < JSON_DIAG_MAX) s_unconsumed.insert(szType + ":" + szSection);
 }
 
 int jsonResolveId(const std::string& id)
 {
 	const int rid = GC.getInfoTypeForString(id.c_str(), true);
-	if (rid < 0 && s_unresolved.size() < 64) s_unresolved.insert(id);   // bounded -- surface the distinct misses
+	if (rid < 0 && s_unresolved.size() < JSON_DIAG_MAX) s_unresolved.insert(id);
 	return rid;
 }
 

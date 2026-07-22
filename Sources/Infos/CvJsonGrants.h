@@ -105,6 +105,13 @@ public:
 	const std::map<std::string, std::vector<int> >& lists() const { return m_lists; }
 	const std::vector<CvJsonFoundBuilding*>& foundBuildings() const { return m_foundBuildings; }
 	const std::vector<CvJsonGrantRepeatable*>& repeatables() const { return m_repeatables; }
+	// The per-entry condition for bucket[i] (NULL = unconditional). Index-parallel to list(bucket).
+	const CvJsonCondition* listCond(const std::string& szBucket, size_t i) const
+	{
+		std::map<std::string, std::vector<CvJsonCondition*> >::const_iterator it = m_listConds.find(szBucket);
+		if (it == m_listConds.end() || i >= it->second.size()) return NULL;
+		return it->second[i];
+	}
 
 	bool isEmpty() const
 	{
@@ -117,6 +124,10 @@ private:
 	void parseFoundBuildings(const picojson::value& v);  // the "foundBuildings" array
 
 	std::map<std::string, std::vector<int> > m_lists;              // bucket -> FK ids (techs/units/freePromotions/…)
+	// A list entry may be the CONDITIONED object form ({promotion: X, enabled: <cond>}, json §3.9 -- every grant
+	// entry takes `enabled`). Its id still lands in m_lists (so every count/consumer keeps working); the condition
+	// rides here, keyed by bucket, parallel to the ids. Empty = the plain always-on string form.
+	std::map<std::string, std::vector<CvJsonCondition*> > m_listConds;
 	std::map<std::string, int> m_pulses100;                        // channel -> value ×100 (population/revolution/…)
 	std::map<std::string, std::map<std::string, int> > m_scopedPulses100;   // channel -> {scope -> value ×100}
 	std::set<std::string> m_flags;                                 // bool flags ("goldenAge")

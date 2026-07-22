@@ -13966,6 +13966,10 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 			else
 			{
 				pNewCity->noteUnitMoved(this);
+				// The unit entered a FRIENDLY city: the targeted trigger for what the city hands to units present
+				// in it (building free promotions). Emitted here rather than at CvPlot::addUnit so the stream
+				// carries a rare fact (a city entry) instead of every unit move.
+				emitUnitEnteredCity((int)getUnitType(), getID(), (int)getOwner(), pNewCity->getID());
 			}
 		}
 

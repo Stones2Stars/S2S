@@ -85,6 +85,18 @@ DOMAIN event through a clean endpoint (`emitBuildingChanged`, `emitTechChanged`,
 each interested consumer's `onEvent` inline at the mutation site. So nothing else in the engine detects changes: the
 hand-wired per-site invalidation is retired in favour of this one surface.
 
+**TURN BOUNDARIES are spine events, not a side-channel.** `SEVT_TURN_STARTED` / `SEVT_TURN_ENDED` (DOMAIN — the
+turn counter advancing is a genuine synced state change) carry `iType` = the game turn and `iC` = the player, with
+**`-1` marking the GAME-scope boundary**. The game pair straddles the counter advance in `CvGame::doTurn`
+(`ended` = the closing turn, `started` = the incremented one); the player pair rides `CvPlayer::setTurnActive`.
+They **replaced** the bespoke `CvHttpServer::publishEvent("turnStart"/"turnEnd"/"playerTurnStart"/"playerTurnEnd")`
+publishes — a happening lives on the spine ONCE and the file + `/events` consumers carry it for free, rather than
+each surface growing its own emitter ([observability.md](../reference/observability.md): the server SERVES, it does
+not accumulate). The player pair emits for **every** player, not just humans: a turn going active/inactive is a
+state mutation, and the spine's contract is that every mutation emits while CONSUMERS filter (a consumer wanting
+humans only tests the player field) — a deliberately partial emit surface is what defeats the missed-emit tripwire.
+Turn DURATION analytics remain the `[PERF]` phase logs' job, not these facts'.
+
 **Events are FACTS, not causal steps.** "This building is here", "this tech is held" — order-independent,
 prerequisite-free. Prerequisites are evaluated ONLY by the enabler (`canConstruct`/`canTrain`/`canResearch` — the
 "*can* I?" question), never by a has-been-done fact; so the emit stream carries no ordering and no prereq logic.

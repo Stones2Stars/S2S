@@ -32,7 +32,18 @@
 #include "CvPromotionInfo.h"
 #include "CvSpecialistInfo.h"      // /state/info typed-member dispatch (rjInfoForType)
 #include "CvUnitCombatInfo.h"      // /state/info typed-member dispatch (rjInfoForType)
-#include "CvInfos.h"               // legacy CvSpecialBuildingInfo (XML-loaded uniformity set) -- scanned by the reverse view
+// the JSON-fed uniformity set -- complete types for the RJ_REPO_TYPES dispatch (re-map + DepositIndex + /state/info)
+#include "CvSpecialBuildingInfo.h"
+#include "CvSpecialUnitInfo.h"
+#include "CvEraInfo.h"
+#include "CvHandicapInfo.h"
+#include "CvGameSpeedInfo.h"
+#include "CvLeaderHeadInfo.h"
+#include "CvVictoryInfo.h"
+#include "CvVoteInfo.h"
+#include "CvHurryInfo.h"
+#include "CvBonusClassInfo.h"
+#include "CvInfos.h"               // the umbrella -- remaining legacy infos scanned by the reverse view
 #include "CvJsonCondition.h"       // the typed requires tree -- walked by the REQUIRED_BY inversion
 #include "CvEnablerKernel.h"       // EnablerKernel::jsonFor -- the one per-bucket InfoRepo dispatch (single-source)
 #include "Repos/InfoRepo.h"            // the per-info-type home (InfoRepo<CvXInfo>) -- readJson edit()s, mapFrom populates;
@@ -106,23 +117,6 @@ static void rvRequiresWalk(const CvJsonCondition* c, EnEdgeBucket eDepKind, int 
 	if (c->kind == CASC_COND_PRESENCE) jr = rvRefInfo(c->type, c->id);
 	else if (c->kind == CASC_COND_PREDICATE && !c->param.empty()) jr = rvRefInfo(c->param, c->id);
 	if (jr != NULL) { jr->addReverseEdge(EDGEF_REQUIRED_BY, eDepKind, iDepId); ++s_rvRequiredBy; }
-}
-
-// The ONE INFOTYPE-prefix -> InfoRepo dispatch (exported; header decl). Broader than rvRefInfo above, which
-// deliberately keeps only the HAVE-axis re-gate kinds.
-CvInfo* rjInfoForType(const std::string& t, int iId)
-{
-	if (CvInfo* j = rvRefInfo(t, iId)) return j;
-	if (!t.compare(0, 10, "PROMOTION_"))    return InfoRepo<CvPromotionInfo>::get().editPtr(iId);
-	if (!t.compare(0, 8, "PROCESS_"))       return InfoRepo<CvProcessInfo>::get().editPtr(iId);
-	if (!t.compare(0, 6, "BUILD_"))         return InfoRepo<CvBuildInfo>::get().editPtr(iId);
-	if (!t.compare(0, 12, "IMPROVEMENT_"))  return InfoRepo<CvImprovementInfo>::get().editPtr(iId);
-	if (!t.compare(0, 14, "PROMOTIONLINE_")) return InfoRepo<CvPromotionLineInfo>::get().editPtr(iId);
-	if (!t.compare(0, 11, "SPECIALIST_"))   return InfoRepo<CvSpecialistInfo>::get().editPtr(iId);
-	if (!t.compare(0, 11, "UNITCOMBAT_"))   return InfoRepo<CvUnitCombatInfo>::get().editPtr(iId);
-	// the runtime-GENERATED classification categories (SKILL_/TAG_/ATTRIBUTE_/CAPABILITY_/POLICY_) -- referenceable
-	// like any authored info ([DEC-classification-infos]); cold-path const view, cast for the shared return type.
-	return const_cast<CvInfo*>(ClassificationRegistry::infoForType(t));
 }
 
 static int rvNumFor(EnEdgeBucket b)
@@ -377,6 +371,7 @@ enum RjEvt
 	RJE_UNRESOLVED = 1, RJE_MOD, RJE_EDGE, RJE_GRANT, RJE_DIR, RJE_PROBE, RJE_COND_SURVEY, RJE_MOD_SURVEY,
 	RJE_EDGE_SURVEY, RJE_EDGE_UNRES, RJE_GRANT_SURVEY, RJE_GRANT_UNRES, RJE_KEY, RJE_MAP, RJE_CAP_SURVEY,
 	RJE_CAP, RJE_MAP_SUMMARY,
+	RJE_SECTION_UNCONSUMED,  // an AUTHORED section the type composes no unit for -- the data never reaches a getter
 	RJE_REMAPPED,      // one aliased entity's full-registry section re-map: what it maps (type + edge/family counts)
 	RJE_MAP_DONE,      // the initial JSON map (PASS 1+2) is DONE -- entities/resolved/remapped/ms
 	RJE_REVERSE_DONE   // the reverse-view build (RELATED + REQUIRED_BY) is DONE -- add counts/ms
@@ -409,6 +404,7 @@ static const char* rj_prefix(int evt)
 	case RJE_MOD_SURVEY:   return "[READJSON/mod-survey]";
 	case RJE_EDGE_SURVEY:  return "[READJSON/edge-survey]";
 	case RJE_EDGE_UNRES:   return "[READJSON/unresolved-fk]";
+	case RJE_SECTION_UNCONSUMED: return "[READJSON/unconsumed-section]";
 	case RJE_GRANT_SURVEY: return "[READJSON/grant-survey]";
 	case RJE_GRANT_UNRES:  return "[READJSON/grant-unresolved]";
 	case RJE_KEY:          return "[READJSON/key]";
@@ -536,7 +532,9 @@ static void rj_find(const std::string& dir, std::vector<std::string>& out)
 // The cascade info-type table (X-macro): (type-prefix, CvXInfo class) -- ONE source of truth for the per-type InfoRepo
 // selection (edit + clear-all), so a new cascade info type is added in exactly ONE place (cascade-engine-430.md §3
 // care-point (d)). Order MATTERS: longer/more-specific prefixes FIRST (UNITCOMBAT_ before UNIT_, CIVICOPTION_ before
-// CIVIC_, PROMOTIONLINE_ before PROMOTION_; TRAIT_ covers TRAIT_COMPLEX_). Unlisted types -> NULL (no cascade home).
+// CIVIC_, PROMOTIONLINE_ before PROMOTION_, BONUSCLASS_ before BONUS_; TRAIT_ covers TRAIT_COMPLEX_). Unlisted types
+// -> NULL (no cascade home): no full-registry re-map (so any FK naming a later-loading category stays dropped), no
+// DepositIndex push, and no /state/info home -- listing a JSON-loaded category here is what makes it verifiable.
 #define RJ_REPO_TYPES(X)                     \
 	X("BUILDING_",      CvBuildingInfo)       \
 	X("UNITCOMBAT_",    CvUnitCombatInfo)     \
@@ -547,7 +545,16 @@ static void rj_find(const std::string& dir, std::vector<std::string>& out)
 	X("CIVILIZATION_",  CvCivilizationInfo)   \
 	X("TRAIT_",         CvTraitInfo)          \
 	X("SPECIALBUILDING_", CvSpecialBuildingInfo) \
+	X("SPECIALUNIT_",   CvSpecialUnitInfo)    \
 	X("SPECIALIST_",    CvSpecialistInfo)     \
+	X("C2C_ERA_",       CvEraInfo)            \
+	X("HANDICAP_",      CvHandicapInfo)       \
+	X("GAMESPEED_",     CvGameSpeedInfo)      \
+	X("LEADER_",        CvLeaderHeadInfo)     \
+	X("VICTORY_",       CvVictoryInfo)        \
+	X("VOTE_",          CvVoteInfo)           \
+	X("HURRY_",         CvHurryInfo)          \
+	X("BONUSCLASS_",    CvBonusClassInfo)     \
 	X("BONUS_",         CvBonusInfo)          \
 	X("RELIGION_",      CvReligionInfo)       \
 	X("CORPORATION_",   CvCorporationInfo)    \
@@ -584,6 +591,23 @@ static bool rj_isAliased(const std::string& t)
 	RJ_REPO_TYPES(X)
 #undef X
 	return false;
+}
+
+// The ONE INFOTYPE-prefix -> InfoRepo dispatch (exported; header decl) -- the /state/info observability read's
+// resolver. It routes through RJ_REPO_TYPES so a category is registered in exactly ONE place
+// ([DEC-single-implementation]): a second hand-maintained prefix list here is what silently drifted from the table
+// and left a whole cutover wave unresolvable by the standing /state/info verification. Broader than rvRefInfo, which
+// deliberately keeps only the HAVE-axis re-gate kinds, and than the table itself, which carries no generated infos.
+CvInfo* rjInfoForType(const std::string& t, int iId)
+{
+	// the synthetic root's cascade data lives OFF the InfoRepo (cascadeStartNode) -- route it there, never the GC poco
+	if (t == "TECH_GAME_START") return &cascadeStartNode();
+#define X(PFX, T) if (rj_starts(t, PFX)) return InfoRepo<T>::get().editPtr(iId);
+	RJ_REPO_TYPES(X)
+#undef X
+	// the runtime-GENERATED classification categories (SKILL_/TAG_/ATTRIBUTE_/CAPABILITY_/POLICY_) -- referenceable
+	// like any authored info ([DEC-classification-infos]); cold-path const view, cast for the shared return type.
+	return const_cast<CvInfo*>(ClassificationRegistry::infoForType(t));
 }
 
 // PASS-1 id lookup -- REUSE-ONLY (owner ruling 2026-07-08). readJson mirrors the XML's premenu/postmenu load PHASING:
@@ -779,6 +803,15 @@ void cascadeLoadJson()
 	const std::set<std::string>& unres = jsonUnresolvedIds();
 	for (std::set<std::string>::const_iterator it = unres.begin(); it != unres.end(); ++it)
 		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_EDGE_UNRES, 1).addStr(RJF_ID, it->c_str()));
+
+	// AUTHORED-BUT-UNCONSUMED sections (the same Orwell bar, the other half): a section the type composes NO unit
+	// for is recorded by jsonNoteUnconsumed -- "never silently dropped" (CvInfo.h) only holds if someone READS the
+	// census, and nothing did, so the misses sat dark. They are REAL data losses: the authored value never reaches
+	// any getter (the SpecialBuilding group cap -- `allowed` authored, no CvJsonAllowed composed -- was invisible
+	// this way, leaving every group member offered at once). Surfaced beside the FK misses so the next one is loud.
+	const std::set<std::string>& unc = jsonUnconsumedSections();
+	for (std::set<std::string>::const_iterator it = unc.begin(); it != unc.end(); ++it)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_SECTION_UNCONSUMED, 1).addStr(RJF_ID, it->c_str()));
 
 	// READ-BACK survey: reconstruct the modifier stats + per-entity structure counts from the MAPPED data (the
 	// home) -- the §6 families on getModifiers(), the spec model ([DEC-json-not-cascade]; the retired generic

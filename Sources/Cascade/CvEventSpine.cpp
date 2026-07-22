@@ -301,7 +301,7 @@ enum SpineDomainField
 	SPF_NAME_KIND, SPF_ENTITY_ID, SPF_NAME,
 	// the [CASCADE] invalidate observability fields
 	SPF_SCOPE, SPF_ID, SPF_PKG, SPF_SRC,
-	SPF_HERITAGE, SPF_ERA,
+	SPF_HERITAGE, SPF_ERA, SPF_TAGS,
 	// the load-pipeline diagnostic fields (SEVT_LOAD_PIPELINE)
 	SPF_MS_REBUILD, SPF_MS_FIXPOINT, SPF_PASSES, SPF_MS_PLOTWARM, SPF_MS_PKGWARM,
 	SPF_FLIPS, SPF_CONVERGED, SPF_VERIFY_CATCH, SPF_MS_FIX_ENSURE, SPF_MS_FIX_PROCESS
@@ -323,6 +323,9 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_BUILDING_CHANGED:       return "[SPINE] buildingChanged";
 	case SEVT_BUILDING_PROCESSED:     return "[SPINE] buildingProcessed";
 	case SEVT_LOAD_PIPELINE:          return "[SPINE] loadPipeline";
+	case SEVT_TURN_STARTED:           return "[SPINE] turnStarted";
+	case SEVT_TURN_ENDED:             return "[SPINE] turnEnded";
+	case SEVT_UNIT_ENTERED_CITY:      return "[SPINE] unitEnteredCity";
 	case SEVT_RELIGION_CHANGED:       return "[SPINE] religionChanged";
 	case SEVT_CORPORATION_CHANGED:    return "[SPINE] corporationChanged";
 	case SEVT_BONUS_CHANGED:          return "[SPINE] bonusChanged";
@@ -398,6 +401,7 @@ static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
 	case SPF_SRC:         *peType = SFT_STR;         return "src";
 	case SPF_HERITAGE:    *peType = SFT_INT;         return "heritage";
 	case SPF_ERA:         *peType = SFT_INT;         return "era";
+	case SPF_TAGS:        *peType = SFT_STR;         return "tags";
 	case SPF_MS_REBUILD:  *peType = SFT_INT;         return "networkRebuildMs";
 	case SPF_MS_FIXPOINT: *peType = SFT_INT;         return "dormancyFixpointMs";
 	case SPF_PASSES:      *peType = SFT_INT;         return "passes";
@@ -555,9 +559,14 @@ void emitNameChange(int iKind, int iOwner, int iEntityId)
 // are kept for grants/cache; the addI fields are the readable render twin. The interest-guard makes an emit ~free
 // when no consumer wants DOMAIN. Ctor order is (kind, eventId, iType, iA, iB, iC, iSrcLoc). Call AFTER the state
 // field is updated.
-void emitBuildingChanged(int iCity, int iOwner, int iBuilding, int iDelta)
+// iA carries bFIRST -- whether this is a GENUINE first acquisition (1) or a transfer/restore (0). The engine's
+// own grant gate is exactly this bit: CvCity::setupBuilding runs its first-build block only when bFirst, and
+// CvPlayer::acquireCity re-adds every captured building with bFirst=false precisely so conquest does NOT re-fire
+// the grants. A consumer that acts on building acquisition MUST see it, or capturing a city re-grants the whole
+// city's first-build bonuses. The reseed passes 0 for the same reason: a save load is a restore, not a build.
+void emitBuildingChanged(int iCity, int iOwner, int iBuilding, int iDelta, bool bFirst)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_BUILDING_CHANGED, iBuilding, 0, iDelta, iOwner, iCity);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_BUILDING_CHANGED, iBuilding, bFirst ? 1 : 0, iDelta, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_BUILDING, iBuilding).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_DELTA, iDelta);
 	eventSpine().emit(e);
@@ -760,6 +769,48 @@ void emitCityOwnerChanged(int iCity, int iOldOwner, int iNewOwner)
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_CITY, iCity).addI(SPF_OLD_OWNER, iOldOwner).addI(SPF_NEW_OWNER, iNewOwner);
 	eventSpine().emit(e);
+}
+//	The turn boundaries. The rendered line already carries the game turn as its first field, so the VALUE field
+//	is the turn the boundary belongs to (identical on the game pair, and the turn a player's phase sat in).
+void emitTurnStarted(int iTurn, int iPlayer)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TURN_STARTED, iTurn, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer).addI(SPF_VALUE, iTurn);
+	eventSpine().emit(e);
+}
+void emitTurnEnded(int iTurn, int iPlayer)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TURN_ENDED, iTurn, 0, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer).addI(SPF_VALUE, iTurn);
+	eventSpine().emit(e);
+}
+void emitUnitEnteredCity(int iUnitType, int iUnitId, int iOwner, int iCity)
+{
+	// The unit's TAGS ride the event (json §8 -- immutable, type-derived membership). A consumer can then act on
+	// WHAT ENTERED without a second lookup: a Riding School only cares about `mounted`, so it filters on the tag
+	// instead of probing every arrival. Resolved LIVE and passed as a render field -- the emit renders
+	// synchronously on the game thread, so the local string outlives it (the emitNameChange precedent).
+	std::string szTags;
+	if (iUnitType >= 0 && iUnitType < GC.getNumUnitInfos())
+	{
+		const CvJsonBoolBlock* pTags = GC.getUnitInfo((UnitTypes)iUnitType).getTags();
+		if (pTags != NULL)
+		{
+			const std::set<std::string>& names = pTags->all();
+			for (std::set<std::string>::const_iterator it = names.begin(); it != names.end(); ++it)
+			{
+				if (!szTags.empty()) szTags += ",";
+				szTags += *it;
+			}
+		}
+	}
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_ENTERED_CITY, iUnitType, iUnitId, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_UNIT, iUnitType).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity)
+	 .addStr(SPF_TAGS, szTags.c_str());
+	eventSpine().emit(e);   // synchronous render -> szTags still in scope
 }
 void emitPlotOwnerChanged(int iPlot, int iOldOwner, int iNewOwner)
 {

@@ -193,6 +193,10 @@ TAG_BY_UNITCOMBAT = {
     "UNITCOMBAT_COMMODORE": ["naval"], "UNITCOMBAT_CAPTAIN": ["naval"], "UNITCOMBAT_ROCKET_LAUNCHER": ["siege"],
     # NEW vocabulary (owner-approved 2026-07-21): police / medic / missile / synthetic / diplomat / entertainer
     "UNITCOMBAT_LAW_ENFORCEMENT": ["police"], "UNITCOMBAT_HEALTH_CARE": ["medic"],
+    # bureaucrat (owner-approved): the legal / civil-service professions -- JUDGE + LAWYER (primary) and
+    # GREAT_STATESMAN (sub-combat). Read by the university free-promotion conditions (POLICING1), which key on
+    # this class rather than on law enforcement.
+    "UNITCOMBAT_ADMINISTRATOR": ["bureaucrat"],
     "UNITCOMBAT_MISSILE": ["missile"], "UNITCOMBAT_BALLISTIC": ["missile"],
     "UNITCOMBAT_ROBOT": ["synthetic"], "UNITCOMBAT_HITECH": ["synthetic"], "UNITCOMBAT_CLONES": ["synthetic"],
     "UNITCOMBAT_NANITE": ["synthetic"], "UNITCOMBAT_NANOMORPHIC": ["synthetic"],

@@ -201,7 +201,8 @@ enum SpineDomainEvent
 	// The per-source STATE-CHANGE events -- the COMPLETE emit surface (event-spine.md: a DOMAIN event on EVERY state
 	// change a package can depend on). iType = source type index; iC = owner / triggering player; iSrcLoc = cityId
 	// (per-city) | plotId (per-plot) | -1 (empire/team/world); iA/iB carry has/new-value/delta where meaningful.
-	SEVT_BUILDING_CHANGED       = 8,  // CvCity::processBuilding: iType=Building, iC=owner, iSrcLoc=cityId, iB=+1/-1
+	SEVT_BUILDING_CHANGED       = 8,  // CvCity::setHasBuilding: iType=Building, iC=owner, iSrcLoc=cityId, iB=+1/-1,
+	                                  // iA=bFirst (1 = genuine first acquisition, 0 = conquest transfer / load restore)
 	SEVT_RELIGION_CHANGED       = 9,  // CvCity::setHasReligion: iType=Religion, iC=owner, iSrcLoc=cityId, iA=has
 	SEVT_CORPORATION_CHANGED    = 10, // CvCity::setHasCorporation: iType=Corp, iC=owner, iSrcLoc=cityId, iA=has
 	SEVT_BONUS_CHANGED          = 11, // CvCity::processBonus/doVicinityBonus: iType=Bonus, iC=owner, iSrcLoc=cityId, iB=change
@@ -295,7 +296,22 @@ enum SpineDomainEvent
 	// a dequeue restores it -- the event triggers the one-id re-gate; the gate itself reads the live queue
 	// (object-owned state, the resolved-fork rule). iType = the ordered item id, iA = OrderTypes,
 	// iB = +1 push / -1 pop, iC = owner, iSrcLoc = cityId. DOMAIN.
-	SEVT_CITY_ORDER_CHANGED     = 42
+	SEVT_CITY_ORDER_CHANGED     = 42,
+	// TURN BOUNDARIES. The turn counter advancing is a genuine synced state change, so both are DOMAIN. They
+	// bracket the real boundary: the GAME pair straddles CvGame::incrementGameTurn (ended = the closing turn,
+	// started = the incremented one); the PLAYER pair rides CvPlayer::setTurnActive. iType = the game turn,
+	// iC = the player (-1 = the GAME-scope boundary). Consumers filter on iC; the emit surface stays complete.
+	SEVT_TURN_STARTED           = 43,
+	SEVT_TURN_ENDED             = 44,
+	// A unit ENTERED a friendly city's plot (CvUnit::setXY's new-city branch). The targeted trigger for anything
+	// a city hands to units PRESENT in it -- above all building free promotions, which are otherwise a per-turn
+	// rescan of (promo buildings x every unit on the plot). NOT emitted on every move: only on a city entry, so
+	// the stream stays proportional to a rare fact rather than to unit traffic.
+	// ⚠ This must never grow into cache invalidation -- unit movement invalidating cache is a standing owner
+	// "full stop" ([DEC-unit-modifiers-on-top]; the per-move clear caused an automation storm). A GRANT is
+	// one-shot state, not a recompute, which is why it may ride here.
+	// iType = unit TYPE, iA = unit id, iC = owner, iSrcLoc = city id. DOMAIN.
+	SEVT_UNIT_ENTERED_CITY      = 45
 };
 
 //	Which entity's display name changed (the iType of a SEVT_NAME_CHANGE event). The logging consumer resolves the
@@ -318,7 +334,7 @@ void emitNameChange(int iKind, int iOwner, int iEntityId);
 // event on every state change"). Each builds a source-carrying DOMAIN event and hands it to eventSpine().emit().
 // Call AFTER the state field is updated. Source-carrying: the event names WHAT (iType) + WHO (iOwner) + WHERE
 // (iSrcLoc), so a consumer can route it -- but the endpoints themselves only emit (no consumer/routing here). =====
-void emitBuildingChanged(int iCity, int iOwner, int iBuilding, int iDelta);
+void emitBuildingChanged(int iCity, int iOwner, int iBuilding, int iDelta, bool bFirst);
 void emitBuildingProcessed(int iCity, int iOwner, int iBuilding, int iDelta);
 void emitLoadPipeline(int iRebuildMs, int iFixpointMs, int iFixEnsureMs, int iFixProcessMs, int iPasses, int iFlips, int iConverged, int iVerifyCatches, int iPlotWarmMs, int iPackageWarmMs);
 void emitReligionChanged(int iCity, int iOwner, int iReligion, bool bHas);
@@ -350,6 +366,13 @@ void emitCultureLevelChanged(int iCity, int iOwner, int iNewLevel, int iOldLevel
 void emitHolyCityChanged(int iCity, int iOwner, int iReligion, bool bIsHoly);   // a city gained(true)/lost(false) a religion's holy-city designation
 void emitCityOrderChanged(int iCity, int iOwner, int iOrderType, int iItem, int iDelta);   // production queue push(+1)/pop(-1) of an order (iOrderType = OrderTypes)
 void emitCityOwnerChanged(int iCity, int iOldOwner, int iNewOwner);
+//	Turn boundaries. iPlayer = -1 for the GAME-scope boundary, else the player whose turn opened/closed. These
+//	REPLACE the bespoke CvHttpServer::publishEvent("turnStart"/"turnEnd"/"playerTurnStart"/"playerTurnEnd")
+//	side-channel: a happening lives on the spine ONCE, and the file + /events stream consumers carry it for free.
+void emitTurnStarted(int iTurn, int iPlayer);
+void emitTurnEnded(int iTurn, int iPlayer);
+//	A unit entered a friendly city's plot. Call from the new-city branch, AFTER the move is committed.
+void emitUnitEnteredCity(int iUnitType, int iUnitId, int iOwner, int iCity);
 void emitPlotOwnerChanged(int iPlot, int iOldOwner, int iNewOwner);
 void emitWorkingCityChanged(int iPlot, int iOwner, int iOldCity, int iNewCity);
 

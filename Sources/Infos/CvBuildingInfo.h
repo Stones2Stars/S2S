@@ -89,6 +89,8 @@ public:
 		m_iBuildingDefenseRecoverySpeedModifier = m_iCityDefenseRecoverySpeedModifier = m_iAdjacentDamagePercent = 0;
 		m_iNationalCaptureProbabilityModifier = m_iNationalCaptureResistanceModifier = m_iLocalCaptureProbabilityModifier = m_iLocalCaptureResistanceModifier = 0;
 		m_bGrantsGoldenAge = false;
+		m_iGrantPopulationCity = m_iGrantPopulationEmpire = m_iGrantFreeTechs = 0;
+		m_iGrantFreeSpecialTech = -1;   // NO_TECH
 	}
 
 	bool notConstructible, governmentCenter, forceNoPrereqScaling;   // notConstructible/forceNoPrereqScaling <- identity; governmentCenter <- `attributes` (IS_GOVERNMENT_CENTER)
@@ -342,8 +344,8 @@ public:
 	int getPrereqReligion() const          { return m_iPrereqReligion; }       // REAL requires.operate PRESENCE (RELIGION_X, city)
 	int getPrereqCorporation() const       { return m_iPrereqCorporation; }    // REAL requires.operate PRESENCE (CORPORATION_X)
 	int getPrereqAndBonus() const          { return m_iPrereqAndBonus; }       // REAL requires.operate BONUS (trade|vicinity, no discriminator); NB may be the PowerBonus if present (role lost, see getPowerBonus)
-	int getGlobalPopulationChange() const  { return getGrants()->scopedPulse100("population", "empire") / 100; }   // REAL grants.population.empire
-	int getFreeTechs() const               { return getGrants()->pulse100("freeTechs") / 100; }                    // REAL grants.freeTechs
+	int getGlobalPopulationChange() const  { return m_iGrantPopulationEmpire; }   // REAL grants.population.empire
+	int getFreeTechs() const               { return m_iGrantFreeTechs; }          // REAL grants.freeTechs
 	int getPrereqVicinityBonus() const     { return m_iPrereqVicinityBonus; }  // REAL requires.operate BONUS (vicinity, connected)
 	int getPrereqRawVicinityBonus() const  { return m_iPrereqRawVicinityBonus; } // REAL requires.operate BONUS (vicinity, owned)
 	int getPillageGoldModifier() const     { return 0; }    // CURATOR-GAP: dead field (DROP_DEAD)
@@ -354,9 +356,9 @@ public:
 	int getMaxPopulationAllowed() const    { return -1; }   // CURATOR-GAP: DROP_DEAD -- -1 is the UNSET sentinel (no cap);
 	                                                        // 0 rendered "Sets base max population at 0" help text on EVERY building (getMaxPopulationAllowed > -1 gate)
 	int getMaxPopulationChange() const     { return 0; }    // CURATOR-GAP: DROP_DEAD
-	int getPopulationChange() const        { return getGrants()->scopedPulse100("population", "city") / 100; }   // REAL grants.population.city
+	int getPopulationChange() const        { return m_iGrantPopulationCity; }   // REAL grants.population.city
 	int getMaxPopAllowed() const           { return 0; }    // CURATOR-GAP: DROP_DEAD
-	TechTypes getFreeSpecialTech() const   { return (TechTypes)getGrants()->firstListId("techs"); }   // REAL grants.techs (FreeSpecialTech)
+	TechTypes getFreeSpecialTech() const   { return (TechTypes)m_iGrantFreeSpecialTech; }   // REAL grants.techs (FreeSpecialTech)
 	UnitTypes getPropertySpawnUnit() const     { return (UnitTypes)m_iPropertySpawnUnit; }        // REAL grants.repeatable[].unit (property-spawn)
 	PropertyTypes getPropertySpawnProperty() const { return (PropertyTypes)m_iPropertySpawnProperty; }  // REAL grants.repeatable[].chance.per property FK
 	int getVictoryPrereq() const           { return m_iVictoryPrereq; }        // REAL requires.build PRESENCE (VICTORY_X, world)
@@ -639,6 +641,7 @@ private:
 	int m_iBuildingDefenseRecoverySpeedModifier, m_iCityDefenseRecoverySpeedModifier, m_iAdjacentDamagePercent;
 	int m_iNationalCaptureProbabilityModifier, m_iNationalCaptureResistanceModifier, m_iLocalCaptureProbabilityModifier, m_iLocalCaptureResistanceModifier;
 	bool m_bGrantsGoldenAge;   // grants.goldenAge flag (materialized at mapFrom)
+	int m_iGrantPopulationCity, m_iGrantPopulationEmpire, m_iGrantFreeTechs, m_iGrantFreeSpecialTech;   // the first-build provisions (materialized at mapFrom)
 
 	// --- backing members for the reference-returning getters (populated in reconstructFromComposed where REAL;
 	//     a few remain empty for documented curator-gaps -- HARD CONSTRAINT: always return a real member) ---

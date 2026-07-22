@@ -560,4 +560,9 @@ CvCity::m_aiBonusCommerceRateModifier
 CvCity::m_aiBonusCommercePercentChanges
 CvPlotGroup::bonusesPresent
 CvPlotGroup::m_paiNumBonuses
+
+The per-turn PROVISIONS cut (the grants machine owns the per-turn apply): the full-heal ledger was a pure sum over
+the city's buildings (maintained only by processBuilding), so it is DERIVED -- the machine reads the composed
+grants.repeatable[] off the operating buildings instead. Plain named scalar, drained by exact name.
+CvCity::m_iNumUnitFullHeal
 ========================

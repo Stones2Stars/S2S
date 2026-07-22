@@ -413,7 +413,9 @@ public:
 
 
 
-	void assignPromotionsFromBuildingChecked(const CvBuildingInfo& kBuilding, CvUnit* pLoopUnit) const;
+	// Returns the number of promotions ACTUALLY granted (a unit that already holds them scores 0) -- the honest
+	// observability count: buildings VISITED says nothing about whether anything landed.
+	int assignPromotionsFromBuildingChecked(const CvBuildingInfo& kBuilding, CvUnit* pLoopUnit) const;
 
 	//TB Combat Mods (Buildings) end
 	//TB Traits begin
@@ -1298,11 +1300,7 @@ public:
 	bool isProtectedCulture() const;
 	void changeProtectedCultureCount(int iChange);
 
-	int getNumUnitFullHeal() const;
-	void changeNumUnitFullHeal(int iChange);
-
 	void doAttack();
-	void doHeal();
 
 	void doCorporation();
 	int getCorporationInfluence(CorporationTypes eCorporation) const;
@@ -1599,7 +1597,6 @@ protected:
 	int m_iAdjacentDamagePercent;
 	int m_iWorkableRadiusOverride;
 	int m_iProtectedCultureCount;
-	int m_iNumUnitFullHeal;
 	int m_iDisabledPowerTimer;
 	int m_iWarWearinessTimer;
 	int m_iMinimumDefenseLevel;
@@ -1625,6 +1622,13 @@ protected:
 	int* m_paiUnitCombatExtraStrength;
 	bool* m_pabAutomatedCanBuild;
 
+	// SERIALIZATION-ONLY, never populated: the per-turn spawn apply is the grants machine's (it reads the composed
+	// grants.repeatable[] off the operating buildings). This cannot be soft-removed via savemigration.txt -- its
+	// stream shape is a COUNT tag named "iNumElts", SHARED by 23 variable-length blocks in read(), followed by N
+	// RAW UNTAGGED records. Naming that tag would drain whichever block comes first, and dropping the write would
+	// orphan a tag old saves still carry, leaving iNumElts holding the previous block's value and reading garbage.
+	// So the read/write pair STAYS as the stream drain (save.md §4's drain-loop case) until the variable-length
+	// blocks get per-block tags.
 	std::vector<PropertySpawns> m_aPropertySpawns;
 	std::vector<BuildingTypes> m_hasBuildings;
 
@@ -1854,7 +1858,6 @@ protected:
 	void doGreatPeople();
 	void doMeltdown();
 	bool doCheckProduction();
-	void doPromotion();
 
 	int getHurryCostModifier(UnitTypes eUnit) const;
 	int getHurryCostModifier(BuildingTypes eType) const;
@@ -1970,10 +1973,6 @@ public:
 	void changeSpecialistInvestigation(int iChange);
 
 	int getPropertyNeed(PropertyTypes eProperty) const;
-	int getNumPropertySpawns() const;
-	PropertySpawns& getPropertySpawn(int iIndex);
-	void changePropertySpawn(int iChange, PropertyTypes eProperty, UnitTypes eUnit);
-	void doPropertyUnitSpawn();
 
 	void AI_setPropertyControlBuildingQueued(bool bSet);
 	bool AI_isPropertyControlBuildingQueued() const;

@@ -346,38 +346,47 @@ void CvCivilizationInfo::mapFrom(const picojson::value& entity)
 		}
 
 	// --- grants.*: buildings + techs are FK lists (curator already drops BUILDING_PALACE and prepends TECH_GAME_START);
-	//     civics fill the CivicOption-slot InitialCivics array (each civic dropped in its own option slot) ---
-	if (const picojson::object* grants = jsonChildObj(o, "grants"))
+	//     civics fill the CivicOption-slot InitialCivics array (each civic dropped in its own option slot).
+	//     Read off the COMPOSED unit (the base dispatch already parsed + FK-resolved it), never a second
+	// walk of the raw JSON: ONE representation, so these engine-side members are a pure VIEW of the same data the
+	// grants machine resolves. They exist only because the apply still runs at the scattered legacy sites; when the
+	// grants machine owns the apply, they and those sites delete together with nothing else reading a private copy.
 	{
-		jsonAppendResolvedIds(*grants, "buildings", m_aiCivilizationBuildings);
-		jsonAppendResolvedIds(*grants, "techs", m_aeCivilizationFreeTechs);
+		const std::vector<int>* pB = m_grants.list("buildings");
+		if (pB != NULL) m_aiCivilizationBuildings.insert(m_aiCivilizationBuildings.end(), pB->begin(), pB->end());
+		const std::vector<int>* pT = m_grants.list("techs");
+		if (pT != NULL)
+			for (size_t i = 0; i < pT->size(); ++i) m_aeCivilizationFreeTechs.push_back((TechTypes)(*pT)[i]);
 
-		if (const picojson::array* civics = jsonChildArr(*grants, "civics"))
-			if (!civics->empty())
+		const std::vector<int>* pC = m_grants.list("civics");
+		if (pC != NULL && !pC->empty())
+		{
+			const int iNumOptions = GC.getNumCivicOptionInfos();
+			m_piCivilizationInitialCivics = new int[iNumOptions];
+			for (int i = 0; i < iNumOptions; i++)
 			{
-				const int iNumOptions = GC.getNumCivicOptionInfos();
-				m_piCivilizationInitialCivics = new int[iNumOptions];
-				for (int i = 0; i < iNumOptions; i++)
+				m_piCivilizationInitialCivics[i] = -1;
+			}
+			for (size_t i = 0; i < pC->size(); ++i)
+			{
+				const int iCivic = (*pC)[i];   // already FK-resolved by the section parse
+				const int iOption = GC.getCivicInfo((CivicTypes)iCivic).getCivicOptionType();
+				if (iOption >= 0 && iOption < iNumOptions)   // NO_CIVICOPTION / out-of-range -- skip
 				{
-					m_piCivilizationInitialCivics[i] = -1;
-				}
-				for (size_t i = 0; i < civics->size(); ++i)
-				{
-					if (!(*civics)[i].is<std::string>()) continue;
-					const int iCivic = jsonResolveId((*civics)[i].get<std::string>());
-					if (iCivic < 0) continue;   // NO_CIVIC (unresolved) -- skip
-					const int iOption = GC.getCivicInfo((CivicTypes)iCivic).getCivicOptionType();
-					if (iOption >= 0 && iOption < iNumOptions)   // NO_CIVICOPTION / out-of-range -- skip
-					{
-						m_piCivilizationInitialCivics[iOption] = iCivic;
-					}
+					m_piCivilizationInitialCivics[iOption] = iCivic;
 				}
 			}
+		}
 	}
 
-	// --- disables.techs -> the per-civ research ban (canEverResearch=false while active) ---
-	if (const picojson::object* dis = jsonChildObj(o, "disables"))
-		jsonAppendResolvedIds(*dis, "techs", m_aeCivilizationDisableTechs);
+	// --- disables.techs -> the per-civ research ban (canEverResearch=false while active). Read off the COMPOSED
+	//     edges unit (parsed + FK-resolved by the base dispatch), so the engine-side view and the enabler's
+	//     generic edge surface are the same data, never two parses that can drift. ---
+	{
+		const std::vector<int>* pD = m_edges.find(EDGEF_DISABLES, EDGEB_TECHS);
+		if (pD != NULL)
+			for (size_t i = 0; i < pD->size(); ++i) m_aeCivilizationDisableTechs.push_back((TechTypes)(*pD)[i]);
+	}
 
 	// --- identity.*: the short-desc / adjective text keys, the leaders + cityNames pools, the derivative-civ FK ---
 	if (const picojson::object* io = jsonChildObj(o, "identity"))

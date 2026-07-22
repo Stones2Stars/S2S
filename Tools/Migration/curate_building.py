@@ -45,6 +45,7 @@ from collections import OrderedDict
 import engine
 import boolexpr
 from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, descale100, fold_text_to_identity, gate_entity, wipe_entity_json
+from curate_unit import TAG_BY_UNITCOMBAT   # the ONE unitcombat->tag map (a building's free-promotion condition keys on it)
 from store import Store, REPO
 
 # ---- scalar/percent modifier families: tag -> (family, scope, member|None, unit). Corrected scopes from the
@@ -666,7 +667,40 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, capabili
     # mid-turn/on-move re-apply) is DROPPED as redundant -- all freePromotions are end-turn-stay by definition.
     # NB FreePromoTypes is a STRUCT-list (<FreePromoType><PromotionType>...); read the PromotionType child (a bare
     # _typelist yielded '' and silently dropped every promo -- a pre-existing latent bug, fixed here 2026-07-01).
-    promos = _typelist_struct(rec, "FreePromoTypes", "PromotionType")
+    # Each <FreePromoType> may carry a sibling <FreePromotionCondition> -- the building declaring WHICH UNITS it can
+    # deal with (a Riding School deals with `mounted`). Every shipped one is a single
+    # <Has><GOMType>GOM_UNITCOMBAT</GOMType><ID>UNITCOMBAT_X</ID></Has>, which maps through TAG_BY_UNITCOMBAT onto the
+    # unit's TAG -- so the four MOUNT_HORSE/CAMEL/DEER/BISON variants all collapse to one `mounted` predicate.
+    # Emitted as the ordinary conditioned-entry shape (json §3.9: every grant entry takes `enabled`), read live by
+    # cascadeEvalCondition's IS_<TAG> predicate. Dropping these made a targeted promotion apply to EVERY unit.
+    fpn = rec.find("FreePromoTypes")
+    promos = []
+    if fpn is not None:
+        for fp in fpn.findall("FreePromoType"):
+            pt = fp.find("PromotionType")
+            if pt is None or not (pt.text or "").strip():
+                continue
+            promo = pt.text.strip()
+            tags = []
+            for has in fp.iter("Has"):
+                gom = has.find("GOMType")
+                idn = has.find("ID")
+                if gom is not None and (gom.text or "").strip() == "GOM_UNITCOMBAT" and idn is not None:
+                    for t in TAG_BY_UNITCOMBAT.get((idn.text or "").strip(), ()):
+                        if t not in tags:
+                            tags.append(t)
+            if not tags:
+                entry = promo
+            elif len(tags) == 1:
+                entry = {"promotion": promo, "enabled": "IS_" + tags[0].upper()}
+            else:
+                entry = {"promotion": promo, "enabled": {"any": ["IS_" + t.upper() for t in tags]}}
+            # DEDUPE: the legacy authored one entry per unitcombat VARIANT (Riding School carries four --
+            # MOUNT_HORSE/CAMEL/DEER/BISON -- all granting PROMOTION_SPEED). They map to the SAME tag predicate,
+            # so the tag-level model collapses them to a single entry; keeping four identical copies would just
+            # make the apply do the same work four times.
+            if entry not in promos:
+                promos.append(entry)
     if promos:
         grants["freePromotions"] = promos
     # SpecialistCounts (capacity/slots) -> allowedSpecialists COUNT family, keyed by specialist type (the cap on

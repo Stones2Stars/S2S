@@ -105,7 +105,10 @@
  },
  "grants": {
   "freePromotions": [
-   "PROMOTION_INSPIRE1"
+   {
+    "promotion": "PROMOTION_INSPIRE1",
+    "enabled": "IS_ENTERTAINER"
+   }
   ]
  },
  "cost": {

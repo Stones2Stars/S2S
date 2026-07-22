@@ -134,7 +134,10 @@
  },
  "grants": {
   "freePromotions": [
-   "PROMOTION_CULTURE_NEANDERTHAL"
+   {
+    "promotion": "PROMOTION_CULTURE_NEANDERTHAL",
+    "enabled": "IS_SETTLER"
+   }
   ]
  },
  "cost": {

@@ -29,6 +29,9 @@ open remainder is the live item.
   `global-warming-mod` (the #436 vestige-removal scope).
 - **Performance / other** — `turn-time-optimization`, `codebase-bug-hunt`, `worker-stranded-tiles-reachability`,
   `surround-destroy-removal-map`, `multimap-zone-rework`, `unified-civilopedia`.
+- **Modules** — `module-system-rework` (the inherited C2C module mechanism is not the future one; also records
+  why the curator's module exclusions are an intentional boundary, so the dangling refs they leave are not
+  chased as curator gaps).
 
 ## See also
 - [`../README.md`](../README.md) — the active roadmap.

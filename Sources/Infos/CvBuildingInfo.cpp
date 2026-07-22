@@ -222,11 +222,12 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	}
 
 	// --- REAL vectors backed by the composed grants/edges units (populated by CvInfo::mapFrom, called above) ---
-	// grants.freePromotions -> getFreePromoTypes (a plain PROMOTION_* FK list; no per-entry condition curated -> NULL).
+	// grants.freePromotions -> getFreePromoTypes. Each entry may carry the building's unit filter (json §3.9's
+	// `enabled`, e.g. IS_MOUNTED on a Riding School), curated from the legacy <FreePromotionCondition>; NULL = all.
 	if (const std::vector<int>* fp = getGrants()->list("freePromotions"))
 		for (size_t i = 0; i < fp->size(); ++i)
 		{
-			FreePromoTypes f = { (PromotionTypes)(*fp)[i], NULL };
+			FreePromoTypes f = { (PromotionTypes)(*fp)[i], getGrants()->listCond("freePromotions", i) };
 			m_aFreePromoTypes.push_back(f);
 		}
 	// enables.traits -> getFreeTraitTypes (TraitTypes FK ids; whole civ-trait conferred while active).
@@ -349,6 +350,14 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 		m_iLocalCaptureProbabilityModifier    = JsonModScan::sum(mods, "cityCapture.city.probability", CASC_UNIT_PERCENT);
 		m_iLocalCaptureResistanceModifier     = JsonModScan::sum(mods, "cityCapture.city.resistance", CASC_UNIT_PERCENT);
 		m_bGrantsGoldenAge           = grantFlag("goldenAge");
+		// The first-build provisions. These were per-call string-keyed reads straight off getGrants() on the
+		// getter -- the shape [DEC-materialize-at-mapfrom] bans -- and they sit in the building VALUATION loops
+		// (CvCityAI.cpp:6236-6266 / :14041, run over the whole building database per city per turn), so every
+		// probe was building std::strings and walking maps. Materialized once here; the getters are bare reads.
+		m_iGrantPopulationCity   = getGrants() ? getGrants()->scopedPulse100("population", "city")   / 100 : 0;
+		m_iGrantPopulationEmpire = getGrants() ? getGrants()->scopedPulse100("population", "empire") / 100 : 0;
+		m_iGrantFreeTechs        = getGrants() ? getGrants()->pulse100("freeTechs") / 100 : 0;
+		m_iGrantFreeSpecialTech  = getGrants() ? getGrants()->firstListId("techs") : -1;
 	}
 }
 

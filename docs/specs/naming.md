@@ -37,6 +37,7 @@ not yet ported (still authored in `Assets/XML`, referenced from JSON by id). Ver
 | `HURRY_` | a production-rush (hurry) type | ✅ `hurries/` |
 | `IMPROVEMENT_` | a tile improvement | ✅ `improvements/` |
 | `LEADER_` | a leader (leaderhead) | ✅ `leaderheads/` |
+| `OUTCOME_` | a mission / combat-kill outcome (the `CvOutcome` gate + identity + replace-tier tag — [mission-outcome-system.md](../reference/mission-outcome-system.md)) | ✅ `outcomes/` |
 | `PROCESS_` | a process | ✅ `processes/` |
 | `PROJECT_` | a project | ✅ `projects/` |
 | `PROMOTION_` | a unit promotion | ✅ `promotions/` |

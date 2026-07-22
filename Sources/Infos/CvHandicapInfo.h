@@ -86,14 +86,19 @@ public:
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
 	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
+	// `grants` (§5 numeric pulses + the `ai` scoped overrides) was NOT composed: the section reached only the
+	// private scalars, so the grants machine's game-start resolution read 0 for every handicap pulse and no-op'd.
+	virtual const CvJsonGrants* getGrants() const { return &m_grants; }
 
 protected:
 	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvJsonGrants*    mutGrants()    { return &m_grants; }
 
 	//----------------------PRIVATE MEMBER VARIABLES------------------------------
 private:
 
 	CvJsonModifiers m_modifiers;                 // §6 families (the base dispatch fills this; feeds the PROPERTY_* bridge)
+	CvJsonGrants    m_grants;                    // §5 game-start pulses (startingGold/units + the `ai` overrides)
 	CvPropertyManipulators m_PropertyManipulators;  // fed from the PROPERTY_* families (CascadePropertyBridge::bridgeFamilies)
 
 	int m_iFreeWinsVsBarbs;

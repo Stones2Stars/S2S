@@ -43,7 +43,10 @@
  },
  "grants": {
   "freePromotions": [
-   "PROMOTION_HUNTER1"
+   {
+    "promotion": "PROMOTION_HUNTER1",
+    "enabled": "IS_RECON"
+   }
   ]
  },
  "cost": {

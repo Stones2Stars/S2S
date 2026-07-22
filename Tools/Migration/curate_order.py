@@ -77,6 +77,10 @@ FOLDERS = {
     "SpecialBuildingInfo": "specialbuildings",
     "SpecialUnitInfo": "specialunits",
     "LeaderHeadInfo": "leaderheads",
+    # #430: the OUTCOME_* gate/tier infos are JSON-loaded too (Assets/Data/outcomes), so they take the manifest on
+    # the same rule -- no OutcomeTypes is save-serialized, but the loader registers their ids like any other
+    # category and legacy document order is the id order every other category keeps.
+    "OutcomeInfo": "outcomes",
 }
 
 

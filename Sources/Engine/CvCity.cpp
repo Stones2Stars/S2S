@@ -538,7 +538,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_iLostProduction = 0;
 	m_iWorkableRadiusOverride = 0;
 	m_iProtectedCultureCount = 0;
-	m_iNumUnitFullHeal = 0;
 	m_iDisabledPowerTimer = 0;
 	m_iWarWearinessTimer = 0;
 	m_iEventAnger = 0;
@@ -1262,7 +1261,6 @@ void CvCity::doTurn()
 	setAirliftTargeted(false);
 	setBuiltFoodProducedUnit(false);
 	//Promotes Units if there is a building that allows it
-	{ PERF_SCOPE("city.doPromotion", getOwner()); doPromotion(); }
 	//Does vicinity bonus checks
 	{ PERF_SCOPE("city.doVicinityBonus", getOwner()); doVicinityBonus(); }
 	//Checks conditions of buildings, may disable or enable some
@@ -1271,8 +1269,6 @@ void CvCity::doTurn()
 
 	//Damages enemy units around the city, if applicable
 	{ PERF_SCOPE("city.doAttack", getOwner()); doAttack(); }
-	//Heals friendly units in the city extra, if applicable
-	{ PERF_SCOPE("city.doHeal", getOwner()); doHeal(); }
 	//Spreads corporations
 	{ PERF_SCOPE("city.doCorporation", getOwner()); doCorporation(); }
 	//Counts down the disable power timer
@@ -1316,8 +1312,6 @@ void CvCity::doTurn()
 	updateEspionageVisibility(true);
 
 	setCurrAirlift(0);
-
-	doPropertyUnitSpawn();
 
 
 	//TB Combat Mod (Buildings) end
@@ -4246,15 +4240,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 		}
 
 
-		if (kBuilding.getPropertySpawnProperty() != NO_PROPERTY && kBuilding.getPropertySpawnUnit() != NO_UNIT)
-		{
-			FAssertMsg(GC.getUnitInfo(kBuilding.getPropertySpawnUnit()).isBlendIntoCity(),
-				CvString::format("Building %s wants to add property spawner with unit class %s, but this unit doesn't have bBlendIntoCity enabled, which is a requirement",
-					kBuilding.getType(), GC.getUnitInfo(kBuilding.getPropertySpawnUnit()).getType()).c_str());
-
-			changePropertySpawn(iChange, kBuilding.getPropertySpawnProperty(), kBuilding.getPropertySpawnUnit());
-		}
-
 		changeEspionageDefenseModifier(kBuilding.getEspionageDefenseModifier() * iChange);
 
 		changePopulationgrowthratepercentage(kBuilding.getPopulationgrowthratepercentage(), iChange == 1);
@@ -4367,7 +4352,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 			changeLineOfSight(kBuilding.getLineOfSight() * iChange);
 		}
 		changeAdjacentDamagePercent(kBuilding.getAdjacentDamagePercent() * iChange);
-		changeNumUnitFullHeal(kBuilding.getNumUnitFullHeal() * iChange);
 		changeNumPopulationEmployed(kBuilding.getNumPopulationEmployed() * iChange);
 		changeHealthPercentPerPopulation(kBuilding.getHealthPercentPerPopulation() * iChange);
 		changeHappinessPercentPerPopulation(kBuilding.getHappinessPercentPerPopulation() * iChange);
@@ -13498,7 +13482,7 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 		// #430 event spine: the PRESENCE fact, at the presence choke point -- fires on EVERY genuine has-flip,
 		// including a building removed while disabled (which skips processBuilding entirely). The processed
 		// (operating) flip is the separate SEVT_BUILDING_PROCESSED from processBuilding.
-		emitBuildingChanged(getID(), getOwner(), (int)eType, bNewValue ? 1 : -1);
+		emitBuildingChanged(getID(), getOwner(), (int)eType, bNewValue ? 1 : -1, bFirst);
 
 		// Disable\Enable buildings replaced by this one.
 		for (int iI = 0; iI < kBuilding.getNumReplacedBuilding(); iI++)
@@ -13587,9 +13571,6 @@ void CvCity::setupBuilding(const CvBuildingInfo& kBuilding, const BuildingTypes 
 			}
 		}
 
-		if (bFirst)
-		{
-		}
 		if (kBuilding.isAllowsNukes())
 		{
 			GET_PLAYER(getOwner()).makeNukesValid(true);
@@ -13598,29 +13579,6 @@ void CvCity::setupBuilding(const CvBuildingInfo& kBuilding, const BuildingTypes 
 		// Toffer: Certain things should only apply when the building is built the very first time.
 		if (bFirst) // Not city copy on owner change, actually built.
 		{
-			{
-				const int iPopChange = kBuilding.getPopulationChange();
-				if (iPopChange != 0)
-				{
-					if (iPopChange > 0)
-					{
-						for (int iI = 0; iI < iPopChange; iI++)
-						{
-							changeFood(growthThreshold(), true);
-						}
-					}
-					else
-					{
-						for (int iI = 0; iI < -iPopChange; iI++)
-						{
-							changeFood(-std::max(growthThreshold(-1), getFood() + 1), true);
-						}
-					}
-					// Don't starve with the extra citizen working nothing
-					AI_updateAssignWork();
-				}
-			}
-
 			if (kBuilding.isCapital())
 			{
 				GET_PLAYER(getOwner()).setCapitalCity(this);
@@ -13632,70 +13590,8 @@ void CvCity::setupBuilding(const CvBuildingInfo& kBuilding, const BuildingTypes 
 				setHeadquarters((CorporationTypes)kBuilding.getFoundsCorporation());
 			}
 
-			if (kBuilding.getFreeSpecialTech() != NO_TECH && !GET_TEAM(getTeam()).isHasTech(kBuilding.getFreeSpecialTech()))
-			{
-				GET_TEAM(getTeam()).setHasTech(kBuilding.getFreeSpecialTech(), true, getOwner(), true, true);
-			}
-
 			if (GC.getGame().isFinalInitialized() && !gDLL->GetWorldBuilderMode())
 			{
-				if (kBuilding.isGoldenAge())
-				{
-					GET_PLAYER(getOwner()).changeGoldenAgeTurns(1 + GET_PLAYER(getOwner()).getGoldenAgeLength());
-				}
-
-				if (kBuilding.getGlobalPopulationChange() > 0)
-				{
-					if (kBuilding.isTeamShare())
-					{
-						for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
-						{
-							if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getTeam()))
-							{
-								foreach_(CvCity* pLoopCity, GET_PLAYER((PlayerTypes)iI).cities())
-								{
-									for (int iI = kBuilding.getGlobalPopulationChange() - 1; iI > -1; iI--)
-									{
-										pLoopCity->changeFood(pLoopCity->growthThreshold());
-									}
-									// so subsequent cities don't starve with the extra citizen working nothing
-									pLoopCity->AI_updateAssignWork();
-								}
-							}
-						}
-					}
-					else
-					{
-						foreach_(CvCity* pLoopCity, GET_PLAYER(getOwner()).cities())
-						{
-							for (int iI = kBuilding.getGlobalPopulationChange() - 1; iI > -1; iI--)
-							{
-								pLoopCity->changeFood(pLoopCity->growthThreshold());
-							}
-							// so subsequent cities don't starve with the extra citizen working nothing
-							pLoopCity->AI_updateAssignWork();
-						}
-					}
-				}
-
-				if (kBuilding.getFreeTechs() > 0)
-				{
-					if (isHuman())
-					{
-						GET_PLAYER(getOwner()).chooseTech(
-							kBuilding.getFreeTechs(),
-							gDLL->getText("TXT_KEY_MISC_COMPLETED_WONDER_CHOOSE_TECH", kBuilding.getTextKeyWide())
-						);
-					}
-					else
-					{
-						for (int iI = 0; iI < kBuilding.getFreeTechs(); iI++)
-						{
-							GET_PLAYER(getOwner()).AI_chooseFreeTech();
-						}
-					}
-				}
-
 				if (isWorldWonder(eType))
 				{
 					GC.getGame().addReplayMessage(
@@ -16296,7 +16192,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iAdjacentDamagePercent);
 	WRAPPER_READ(wrapper, "CvCity", &m_iWorkableRadiusOverride);
 	WRAPPER_READ(wrapper, "CvCity", &m_iProtectedCultureCount);
-	WRAPPER_READ(wrapper, "CvCity", &m_iNumUnitFullHeal);
 	WRAPPER_READ(wrapper, "CvCity", &m_iDisabledPowerTimer);
 	WRAPPER_READ(wrapper, "CvCity", &m_iWarWearinessTimer);
 
@@ -16749,7 +16644,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 				// building deserializes off the ledger stream, INSIDE the read loop -- the genuine per-element read
 				// (not a later walk over a populated array, superseded-ideas #13). Feeds the cache-build consumer's
 				// per-city operating-building set + building packages. m_iID / m_eOwner are read earlier in read().
-				emitBuildingChanged(m_iID, (int)m_eOwner, (int)eType, 1);
+				emitBuildingChanged(m_iID, (int)m_eOwner, (int)eType, 1, /*bFirst*/false);   // a load RESTORES; it is not a first acquisition
 				// compressed data all buildings have
 				BuiltBuildingData data;
 				data.eBuiltBy = (PlayerTypes)iPlayer;
@@ -16946,7 +16841,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iAdjacentDamagePercent);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iWorkableRadiusOverride);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iProtectedCultureCount);
-	WRAPPER_WRITE(wrapper, "CvCity", m_iNumUnitFullHeal);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iDisabledPowerTimer);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iWarWearinessTimer);
 
@@ -19304,38 +19198,6 @@ void CvCity::changePopulationgrowthratepercentage(int iChange, bool bAdd)
 	m_fPopulationgrowthratepercentageLog += (bAdd ? 1 : -1) * log((100 + (float)iChange) / 100);
 }
 
-void CvCity::doPromotion()
-{
-	PROFILE_FUNC();
-
-	if (isDisorder())
-	{
-		return;
-	}
-
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-	{
-		const BuildingTypes eBuilding = static_cast<BuildingTypes>(iI);
-		if (!isActiveBuilding(eBuilding))
-		{
-			continue;
-		}
-		const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
-
-		if (kBuilding.isApplyFreePromotionOnMove() && !kBuilding.getFreePromoTypes().empty())
-		{
-			foreach_(CvUnit* pLoopUnit, plot()->units())
-			{
-				if (pLoopUnit->getTeam() == GET_PLAYER(getOwner()).getTeam())
-				{
-					assignPromotionsFromBuildingChecked(kBuilding, pLoopUnit);
-				}
-			}
-		}
-	}
-}
-
-
 bool CvCity::isValidTerrainForBuildings(BuildingTypes eBuilding) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -20147,16 +20009,6 @@ void CvCity::changeProtectedCultureCount(int iChange)
 	m_iProtectedCultureCount += iChange;
 }
 
-int CvCity::getNumUnitFullHeal() const
-{
-	return m_iNumUnitFullHeal;
-}
-
-void CvCity::changeNumUnitFullHeal(int iChange)
-{
-	m_iNumUnitFullHeal += iChange;
-}
-
 
 void CvCity::doAttack()
 {
@@ -20195,29 +20047,6 @@ void CvCity::doAttack()
 					}
 				}
 			}
-		}
-	}
-}
-
-void CvCity::doHeal()
-{
-	PROFILE_FUNC();
-
-	if (getNumUnitFullHeal() > 0)
-	{
-		UnitVector damagedUnits;
-		// Get the damaged units on our team
-		algo::push_back(
-			damagedUnits,
-			plot()->units() | filtered(CvUnit::fn::getTeam() == getTeam() && CvUnit::fn::getDamage() > 0)
-		);
-		// Randomize them
-		algo::random_shuffle(damagedUnits, CvGame::SorenRand("Unit Full Heals"));
-		// Heal as many as we are able
-		const int maxHeals = std::min<int>(getNumUnitFullHeal(), damagedUnits.size());
-		foreach_(CvUnit * unit, damagedUnits | sliced(0, maxHeals))
-		{
-			unit->setDamage(0, getOwner(), false);
 		}
 	}
 }
@@ -20928,7 +20757,6 @@ void CvCity::clearModifierTotals()
 	m_iAdjacentDamagePercent = 0;
 	m_iWorkableRadiusOverride = 0;
 	m_iProtectedCultureCount = 0;
-	m_iNumUnitFullHeal = 0;
 	m_iMinimumDefenseLevel = 0;
 	m_iHealthPercentPerPopulation = 0;
 	m_iHappinessPercentPerPopulation = 0;
@@ -21482,20 +21310,33 @@ void CvCity::changeUnitCombatDefenseAgainstModifierTotal(UnitCombatTypes eIndex,
 }
 
 
-void CvCity::assignPromotionsFromBuildingChecked(const CvBuildingInfo& building, CvUnit* unit) const
+int CvCity::assignPromotionsFromBuildingChecked(const CvBuildingInfo& building, CvUnit* unit) const
 {
 	PROFILE_EXTRA_FUNC();
+	int iGranted = 0;
 	foreach_(const FreePromoTypes& freePromoType, building.getFreePromoTypes())
 	{
 		if (unit->canAcquirePromotion(freePromoType.ePromotion, PromotionRequirements::Promote | PromotionRequirements::ForFree)
 		) {
-			if (!freePromoType.m_pExprFreePromotionCondition ||
-				freePromoType.m_pExprFreePromotionCondition->evaluate(unit->getGameObject()))
+			// The building's unit filter, through the ONE evaluator with the RECEIVING unit in context (so an
+			// IS_<TAG> predicate reads that unit's tags). NULL = the building deals with everyone.
+			bool bOk = true;
+			if (freePromoType.m_pExprFreePromotionCondition != NULL)
+			{
+				CvCascadeEvalCtx ec;
+				ec.city = this; ec.plot = plot(); ec.unit = unit;
+				ec.player = &GET_PLAYER(getOwner()); ec.team = &GET_TEAM(getTeam());
+				const CvCascadeEvalFlags kFlags;
+				bOk = cascadeEvalCondition(freePromoType.m_pExprFreePromotionCondition, ec, kFlags);
+			}
+			if (bOk)
 			{
 				unit->setHasPromotion(freePromoType.ePromotion, true);
+				++iGranted;
 			}
 		}
 	}
+	return iGranted;
 }
 
 
@@ -21977,143 +21818,6 @@ int CvCity::getPropertyNeed(PropertyTypes eProperty) const
 	int iIndex = (int)eProperty;
 
 	return (m_cachedPropertyNeeds[iIndex]);
-}
-
-int CvCity::getNumPropertySpawns() const
-{
-	return (int)m_aPropertySpawns.size();
-}
-
-PropertySpawns& CvCity::getPropertySpawn(int iIndex)
-{
-	FASSERT_BOUNDS(0, getNumPropertySpawns(), iIndex);
-	return m_aPropertySpawns[iIndex];
-}
-
-void CvCity::changePropertySpawn(int iChange, PropertyTypes eProperty, UnitTypes eUnit)
-{
-	PROFILE_EXTRA_FUNC();
-	const bool bAdding = (iChange > 0);
-	if (bAdding)
-	{
-		if (NO_PROPERTY != eProperty && NO_UNIT != eUnit)
-		{
-			PropertySpawns kChange;
-			kChange.eProperty = eProperty;
-			kChange.eUnit = eUnit;
-			m_aPropertySpawns.push_back(kChange);
-		}
-	}
-	else
-	{
-		std::vector<PropertySpawns> m_aTempPropertySpawns;
-		foreach_(const PropertySpawns& it, m_aPropertySpawns)
-		{
-			if (it.eProperty != eProperty || it.eUnit != eUnit)
-			{
-				PropertySpawns kChange;
-				kChange.eProperty = it.eProperty;
-				kChange.eUnit = it.eUnit;
-				m_aTempPropertySpawns.push_back(kChange);
-			}
-		}
-		m_aPropertySpawns.clear();
-		foreach_(const PropertySpawns& it, m_aTempPropertySpawns)
-		{
-			PropertySpawns kChange;
-			kChange.eProperty = it.eProperty;
-			kChange.eUnit = it.eUnit;
-			m_aPropertySpawns.push_back(kChange);
-		}
-		m_aTempPropertySpawns.clear();
-	}
-}
-
-void CvCity::doPropertyUnitSpawn()
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < GC.getNumPropertyInfos(); iI++)
-	{
-		const PropertyTypes eProperty = (PropertyTypes)iI;
-		int iCurrentValue = std::max(0, getPropertiesConst()->getValueByProperty(eProperty));
-		if (eProperty == 0)
-		{
-			// TB - SHOULD be crime, but this is subject to flaw if the first property type ever changes.
-			//	There's a faster way than getvisual but it takes some setup.
-			//	If it becomes necessary to move off of hard coding, use the examples for peaks and hills.
-			const int iNumCriminals = plot()->getNumCriminals();
-			if (iNumCriminals >= getPopulation() / 2)
-			{
-				continue;
-			}
-			iCurrentValue -= iNumCriminals * iCurrentValue / 10;
-		}
-		const bool bPositiveProperty = GC.getPropertyInfo(eProperty).getAIWeight() >= 0;
-
-		iCurrentValue = std::max(0, iCurrentValue);
-		iCurrentValue /= 2;
-		const PlayerTypes eSpawnOwner = bPositiveProperty ? getOwner() : (PlayerTypes)BARBARIAN_PLAYER;
-
-		foreach_(const PropertySpawns& it, m_aPropertySpawns)
-		{
-			if (it.eProperty == eProperty
-			&& GC.getGame().getSorenRandNum(10000, "Property Unit Spawn Check") < iCurrentValue)
-			{
-				const UnitTypes eUnit = it.eUnit;
-				if (!GET_PLAYER(getOwner()).canTrain(eUnit, false, false, true, true))
-				{
-					continue;
-				}
-				//TBNote:Saving this brilliant example...
-				//std::vector<int> aiUnitAIIndex;
-				//for (int iJ = 0; iJ < NUM_UNITAI_TYPES; iJ++)
-				//{
-				//	if (GC.getUnitInfo(eUnit).getUnitAIType(iJ))
-				//	{
-				//		aiUnitAIIndex.push_back(iJ);
-				//	}
-				//}
-				//int iAIRoll = GC.getGame().getSorenRandNum(aiUnitAIIndex.size(), "Property Unit Spawn AI Check");
-				//UnitAITypes eUnitAI = (UnitAITypes)aiUnitAIIndex[iAIRoll];
-
-				FAssertMsg(bPositiveProperty || GC.getUnitInfo(eUnit).isBlendIntoCity(), CvString::format("Trying to spawn %s from property spawn, but it doesn't have bBlendIntoCity enabled, which is a requirement", GC.getUnitInfo(eUnit).getType()).c_str());
-
-				CvUnit* pUnit = GET_PLAYER(eSpawnOwner).initUnit(eUnit, getX(), getY(), UNITAI_BARB_CRIMINAL, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
-
-				if (pUnit != NULL)
-				{
-					FAssertMsg(pUnit != NULL, "pUnit is expected to be assigned a valid unit object");
-					if (pUnit->isExcile())
-					{
-						pUnit->jumpToNearestValidPlot(false);
-					}
-					pUnit->finishMoves();
-
-					addProductionExperience(pUnit);
-
-					if (!GET_PLAYER(getOwner()).isModderOption(MODDEROPTION_IGNORE_DISABLED_ALERTS))
-					{
-						if (bPositiveProperty)
-						{
-							AddDLLMessage(
-								getOwner(), false, GC.getEVENT_MESSAGE_TIME(),
-								gDLL->getText("TXT_KEY_CITY_PROPERTY_SPAWN_FRIENDLY", GC.getUnitInfo(eUnit).getDescription(), getNameKey()),
-								NULL, MESSAGE_TYPE_MINOR_EVENT, GC.getUnitInfo(eUnit).getButton(), GC.getCOLOR_HIGHLIGHT_TEXT(), getX(), getY(), true, true
-							);
-						}
-						else
-						{
-							AddDLLMessage(
-								getOwner(), false, GC.getEVENT_MESSAGE_TIME(),
-								gDLL->getText("TXT_KEY_CITY_PROPERTY_SPAWN_BARB", GC.getUnitInfo(eUnit).getDescription(), getNameKey()),
-								NULL, MESSAGE_TYPE_MINOR_EVENT, GC.getUnitInfo(eUnit).getButton(), GC.getCOLOR_WARNING_TEXT(), getX(), getY(), true, true
-							);
-						}
-					}
-				}
-			}
-		}
-	}
 }
 
 bool CvCity::isQuarantined() const

@@ -39,6 +39,15 @@ curator's docstring + body. To read the map for an entity, **read its curator.**
 > `Assets/Data` JSON the engine loads. The `_additions` files are the reviewable/revertible source layer; **re-run
 > `curate_additions.py --write` after ANY re-curate** so the additions always land last.
 
+## Modules — the curator folds in the ones we want
+
+The store enumerates `Assets/XML` **and** `Assets/Modules`, so a wanted module's records merge into the curated
+output exactly like base XML. Unwanted modules are named in `store.py`'s `EXCLUDED_MODULE_SUBPATHS` and are never
+ingested — **an intentional content boundary, not a coverage gap.** An excluded module's records in
+still-XML-loaded categories (event triggers, spawns) can therefore name ids that no longer exist; that is expected
+and is not fixed by re-admitting the module. Rationale + the known instances + the intended replacement:
+[plans/parked/module-system-rework.md](../../plans/parked/module-system-rework.md).
+
 ## Contents
 - **fixed-point-and-scales.md** — the curator de-scale registry: which Info fields are ×100 vs ×1 (the closed set of
   `…100()` accessors + the blind-spot fields). The fixed-point *model* lives in [json.md §3.6](../json.md).

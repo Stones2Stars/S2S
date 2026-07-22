@@ -109,16 +109,15 @@ void CvEraInfo::mapFrom(const picojson::value& entity)
 	if (m_iInitialCityMaintenancePercent < 0)   // read() clamp preserved
 		m_iInitialCityMaintenancePercent = 0;
 
-	// grants.* -- the one-shot starting grants (flat ints, zero-dropped by the curator; default 0).
-	if (const picojson::object* g = jsonChildObj(o, "grants"))
-	{
-		m_iStartingGold           = jsonIdInt(*g, "startingGold");
-		m_iStartingUnitMultiplier = jsonIdInt(*g, "startingUnitMultiplier");
-		m_iStartingDefenseUnits   = jsonIdInt(*g, "startingDefenseUnits");
-		m_iStartingWorkerUnits    = jsonIdInt(*g, "startingWorkerUnits");
-		m_iStartingExploreUnits   = jsonIdInt(*g, "startingExploreUnits");
-		m_iFreePopulation         = jsonIdInt(*g, "freePopulation");
-	}
+	// grants.* -- the one-shot starting grants, read off the COMPOSED unit (§5 numeric pulses, stored ×100 by the
+	// section parse; /100 back to the human count). ONE representation: these scalars and the grants machine both
+	// read the same parsed pulses, so they cannot drift and the scalars retire with the legacy apply sites.
+	m_iStartingGold           = m_grants.pulse100("startingGold") / 100;
+	m_iStartingUnitMultiplier = m_grants.pulse100("startingUnitMultiplier") / 100;
+	m_iStartingDefenseUnits   = m_grants.pulse100("startingDefenseUnits") / 100;
+	m_iStartingWorkerUnits    = m_grants.pulse100("startingWorkerUnits") / 100;
+	m_iStartingExploreUnits   = m_grants.pulse100("startingExploreUnits") / 100;
+	m_iFreePopulation         = m_grants.pulse100("freePopulation") / 100;
 
 	// identity.* -- pacing inputs + the advanced-start budget (plain ints, may be negative; default 0).
 	if (const picojson::object* id = jsonChildObj(o, "identity"))

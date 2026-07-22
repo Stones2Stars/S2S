@@ -16,6 +16,16 @@
 		<DefineName>CIV4_VERSION</DefineName>
 		<iDefineIntVal>319</iDefineIntVal>
 	</Define>
+	<!-- Brings the dev HTTP server (127.0.0.1:7227) up at the MAIN MENU instead of at first game start. The BUG
+	     option Autolog__HttpServer cannot do this: it is read from setIsBug(), which by its own contract runs only
+	     the first time a game is started or loaded - so /events did not exist during the XML/JSON load, and the
+	     load-time streams (the readJson census, the grant resolutions the load bracket suppresses) had no consumer
+	     to reach. A global define is readable at SetGlobalDefines, before any info loads. 1 = force the server on
+	     from the menu; the BUG option can still enable it later, and never disables what this turned on. -->
+	<Define>
+		<DefineName>HTTP_SERVER_FROM_MENU</DefineName>
+		<iDefineIntVal>1</iDefineIntVal>
+	</Define>
 	<Define>
 		<DefineName>MIN_VERSION</DefineName>
 		<iDefineIntVal>000</iDefineIntVal>

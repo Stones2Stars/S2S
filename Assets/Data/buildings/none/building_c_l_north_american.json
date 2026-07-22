@@ -143,7 +143,10 @@
  },
  "grants": {
   "freePromotions": [
-   "PROMOTION_CULTURE_NORTH_AMERICAN"
+   {
+    "promotion": "PROMOTION_CULTURE_NORTH_AMERICAN",
+    "enabled": "IS_SETTLER"
+   }
   ]
  },
  "cost": {

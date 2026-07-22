@@ -3180,7 +3180,12 @@ void cvInternalGlobals::refreshOptionsBUG()
 	// Dev live-state HTTP endpoint PoC (#387): GET-only hello-world server on
 	// 127.0.0.1:7227, own Win32 thread, zero game-state access. Starts/stops live
 	// when the option is toggled (this refresh runs on closing the BUG screen).
-	CvHttpServer::setEnabled(getBugOptionBOOL("Autolog__HttpServer", false));
+	// OR'd with the global define: the server may already be up from the MAIN MENU (HTTP_SERVER_FROM_MENU, read at
+	// SetGlobalDefines -- long before BUG exists). This refresh runs at first game start and on closing the BUG
+	// screen, so a plain assignment here would TEAR DOWN the menu-started server the moment a game loaded, killing
+	// the stream mid-load. The BUG option still enables it independently.
+	CvHttpServer::setEnabled(getBugOptionBOOL("Autolog__HttpServer", false)
+		|| getDefineINT("HTTP_SERVER_FROM_MENU") != 0);
 
 #ifdef _DEBUG
 	gPlayerLogLevel = 4;

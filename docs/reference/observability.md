@@ -41,6 +41,13 @@ one-time step (retained structure); load-bearing in the 32-bit ~3.2GB address-sp
   ~5 s) for response metadata + the `/events` hello. A second concurrent data request gets `503` — retry once.
 - The single **route table** in `CvHttpServer.cpp::handleRequest` is the one place every endpoint is declared
   (path → mailbox action → doc); the `/state` and `/computed` index pages are generated from it.
+- ⛔ **The server SERVES state; it does not ACCUMULATE it.** `CvHttpServer.cpp` has long accreted per-feature
+  counters/accumulators added to answer one question each (known debt, owner — a cleanup in its own right). Do not
+  add more: there are exactly **two** observability surfaces, and a new counter is neither. A live question is
+  answered by the **`/events` stream** (connect before the burst — the server now comes up at the MAIN MENU via the
+  `HTTP_SERVER_FROM_MENU` define, so the whole XML/JSON load is capturable); a post-hoc question is answered by the
+  **`.log` files once the game has closed**. If a fact is not on either surface, EMIT it as a spine event — the
+  file consumer and the stream then carry it for free — rather than growing a side-counter behind an endpoint.
 - The dropped predecessors (`/units`/`/players`/`/cities`, the `/diagnostic/*` grab-bag, the cascade-vs-legacy
   `/shadow` sweeps) and the rationale are in [http-endpoints](../specs/http-endpoints.md) "What was dropped".
 
@@ -75,9 +82,17 @@ direct `gDLL->logMsg` inside Engine files is likewise unwanted**; each domain mi
 consumer, and the off-thread writer for free. Every DOMAIN event gets an assigned importance LEVEL as it
 migrates (levels today are only meaningful on the DIAGNOSTIC side; DOMAIN defaults to 1). The multiplayer
 **OOS special logger is deliberately KEPT** — a synchronization-debugging surface in its own right, and a
-natural future consumer of the synced DOMAIN stream. Old anomalies slated for removal: dead
+natural future consumer of the synced DOMAIN stream. ✅ **DONE — the turn-boundary side-channel is consolidated onto the spine.** The four bespoke
+`CvHttpServer::publishEvent("turnStart"/"turnEnd"/"playerTurnStart"/"playerTurnEnd")` publishes are replaced by
+`SEVT_TURN_STARTED`/`SEVT_TURN_ENDED` DOMAIN events ([event-spine.md](../specs/event-spine.md)), so the file
+consumer and the `/events` stream carry them for free instead of each surface growing its own emitter. This is the
+worked example of the rule above: a fact that is not on a surface is EMITTED as a spine event, never published
+directly. ⚠ Consumer-visible break, accepted (owner): the wire form is now the standardized `[SPINE] turnStarted`/
+`turnEnded` rendered line, not a named SSE frame carrying `{"turn","gameId"}`.
+Old anomalies slated for removal: dead
 `logCB`/`logToFile` Python exports (an arbitrary-file-write surface), the `C2C.log` firehose, the `rjLogLine`
-split gate (a hardcoded level-1 tee).
+split gate (a hardcoded level-1 tee), and the `BetterBTSAI.cpp:31` `publishEvent("log")` tee (the retired
+BetterBTSAI log-helper family).
 
 **The FILE sink is the off-thread `CvLogWriter`** (`Infrastructure/CvLogWriter.{h,cpp}`): the game thread
 renders + enqueues; a dedicated Win32 thread does all disk I/O and flushes per batch — so spine-written log

@@ -124,7 +124,10 @@
  },
  "grants": {
   "freePromotions": [
-   "PROMOTION_CULTURE_OCEANIAN"
+   {
+    "promotion": "PROMOTION_CULTURE_OCEANIAN",
+    "enabled": "IS_SETTLER"
+   }
   ]
  },
  "cost": {

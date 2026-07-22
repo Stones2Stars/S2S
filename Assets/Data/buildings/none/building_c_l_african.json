@@ -142,7 +142,10 @@
  },
  "grants": {
   "freePromotions": [
-   "PROMOTION_CULTURE_AFRICAN"
+   {
+    "promotion": "PROMOTION_CULTURE_AFRICAN",
+    "enabled": "IS_SETTLER"
+   }
   ]
  },
  "cost": {

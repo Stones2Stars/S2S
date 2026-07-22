@@ -10,6 +10,8 @@
 #include "CvBuildingInfo.h"
 #include "UI/CvGameTextMgr.h"
 #include "Defines/CvGlobals.h"
+#include "Tools/CvHttpServer.h"        // the dev HTTP server -- brought up at the MENU (see LoadPreMenuGlobals)
+#include "Cascade/CvEventSpine.h"      // spineRegisterConsumers -- the /events + file consumers, registered before the load
 #include "CvImprovementInfo.h"
 #include "CvUnitCombatInfo.h"
 #include "CvBonusInfo.h"
@@ -751,6 +753,21 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 {
 	PROFILE_EXTRA_FUNC();
 	OutputDebugString("Loading PreMenu Infos: Start\n");
+
+	// ===== THE OBSERVABILITY SURFACE COMES UP HERE, BEFORE ANY DATA LOADS =====
+	// Both halves used to wait for a game to exist, which made the entire load invisible:
+	//   - spineRegisterConsumers() ran in the CvGame ctor, so the [READJSON] census + every load-time spine event
+	//     was emitted with NO consumer registered and simply went nowhere (it reads as "logging is off", which is
+	//     the wrong diagnosis and the reason the unconsumed-section census looked empty);
+	//   - CvHttpServer::setEnabled ran from refreshOptionsBUG <- setIsBug(), which fires only at the first game
+	//     start/load, so /events could never be connected BEFORE the load burst it is meant to carry.
+	// SetGlobalDefines has already run at this point, so the define is readable. Registration is idempotent (a
+	// static guard), so the later CvGame call is a no-op. The BUG option still enables the server on its own.
+	spineRegisterConsumers();
+	if (GC.getDefineINT("HTTP_SERVER_FROM_MENU") != 0)
+	{
+		CvHttpServer::setEnabled(true);
+	}
 
 	GC.registerNPCPlayers();
 

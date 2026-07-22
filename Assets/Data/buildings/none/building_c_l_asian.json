@@ -149,7 +149,10 @@
  },
  "grants": {
   "freePromotions": [
-   "PROMOTION_CULTURE_ASIAN"
+   {
+    "promotion": "PROMOTION_CULTURE_ASIAN",
+    "enabled": "IS_SETTLER"
+   }
   ]
  },
  "cost": {

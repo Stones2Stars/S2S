@@ -94,6 +94,14 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
     performance hunting**, where its optimizations are the thing under test. `Assert` stays the quick compile-check;
     `Release`/`FinalRelease` are for actually running.
 - **Verbs (composable, in order):** `clean`, `build` (incremental), `rebuild` (clean+build), `deploy` (xcopy DLL/PDB into `Assets/`).
+  - **⛔ HARD RULE — KILL THE GAME BEFORE `deploy`.** A running game holds `Assets/CvGameCoreDLL.dll` OPEN, so the
+    xcopy fails — but the build still reports `FBuild: OK`, so **the deploy failure is SILENT**. `Assets/` keeps
+    the OLD DLL, the game then loads that OLD DLL, and you verify a binary that does not contain your change
+    (this has burned agents repeatedly: a "green build" says nothing about what is RUNNING). Close the game, run
+    `deploy`, and **verify the deployed artifact itself** — compare `Assets/CvGameCoreDLL.dll`'s timestamp against
+    `Build/<Config>/`, or grep the binary for a string your change introduced. Never infer deployment from build
+    output. (`agentstart.bat` closes the game too, but it runs AFTER deploy — it cannot rescue a copy that already
+    failed.)
 - **Quick compile check after an edit:** `Assert build` from `Sources/`.
   Incremental is ~30s; a clean rebuild is several minutes (~25 unity batches × ~30s).
 - The `Tools/MakeDLL*.bat` shortcuts (`MakeDLLAssert.bat`, `MakeDLLRelease.bat`, …)
@@ -121,7 +129,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
 2. (IDE display only) regenerate the project with `python Tools/regen_project.py` (rebuilds
    `S2S.vcxproj` + `S2S.vcxproj.filters` from disk), or add the entries by hand. **⚠ CURRENTLY BROKEN:**
    the script was the one-time C2C→S2S rename migration — it reads the deleted `C2C (VS2019).vcxproj` as input and
-   only re-paths EXISTING items (it never adds new files), and no `python` runner is installed on the dev box. The
+   only re-paths EXISTING items (it never adds new files). The
    `S2S.vcxproj` listing is wholesale-stale. Since the files are DEAD for build purposes this blocks nothing — a
    working regen (read the S2S files as input, add-from-disk) is a parked standalone fix; don't piecemeal-patch
    entries into the stale listing.
@@ -212,18 +220,32 @@ the total-observability bar below.)
 
 ### Cascade observability — the total-observability ("Orwell") bar
 
-- **⛔ The running game holds its `.log` files OPEN — NEVER try to live-read them (this trips agents EVERY time).**
-  While the game is running, `Documents/My Games/Beyond The Sword/Logs/*.log` (incl. `Cascade.log`,
-  `BuildEvaluation.log`, …) are held open by the process, so tailing/reading them mid-session gives
-  stale/empty/partial results — do **not** do it, and do **not** infer "logging is off" from a quiet log file. The
-  live reads are: **(1) the `/events` SSE stream** (`curl -sN http://127.0.0.1:7227/events`) — the gated per-turn
-  `[TAG]` lines — which **burst at the TOP of `doTurn`, so you must be CONNECTED BEFORE the turn ticks**
-  (connect-then-end-turn); and **(2) the on-demand mailbox-snapshot endpoints `/state/*` + `/computed/*`**, which
-  compute a game-thread snapshot via the single-slot mailbox and depend on no log file or gate — the most reliable
-  read (see `docs/specs/http-endpoints.md`). Gates are separate and INDEPENDENT: `gPlayerLogLevel` gates the per-domain `.log` files;
-  the `/events` stream is its OWN spine consumer — spine DOMAIN facts stream unconditionally, DIAGNOSTIC/TRACE
-  at `gStreamLogLevel` — so a line can be in either surface without the other. When in doubt about a
-  magnitude/state, hit the endpoint, not the log.
+- **⛔ Which logs are live-readable is decided by the SINK, not by the file.** Two different mechanisms write into
+  `Documents/My Games/Beyond The Sword/Logs/`, and conflating them wastes hours in BOTH directions:
+  - **SPINE-written domain logs are READABLE WHILE THE GAME RUNS** — a domain registered via
+    `spineRegisterDomain` renders on the game thread and enqueues to the off-thread `CvLogWriter`, which owns the
+    disk I/O and flushes per batch (`Infrastructure/CvLogWriter.{h,cpp}`, [observability.md](docs/reference/observability.md)).
+    `Cascade.log` (incl. every `[SPINE]`/`[GRANTS]`/`[CASCADE]` line) and the other registered domains are this
+    kind: **just read the file.**
+  - **⛔ LEGACY `gDLL->logMsg` sinks (the not-yet-migrated domains) ARE held open** by the process, so tailing
+    those mid-session gives stale/empty/partial results. Never infer "logging is off" from a quiet legacy log.
+  - **⚑ For post-turn analysis the SPINE LOG BEATS `/events`, and not marginally.** An SSE attach can only ever
+    capture from the moment it connects, so it **structurally misses the entire LOAD RESEED** (~5.9k
+    `[GRANTS/building]` lines, the whole in-read emit stream) — the exact data needed to verify load-time
+    suppression and any full-population tripwire. The log has it all, needs no connect-before-the-turn timing
+    dance, and cannot be lost to a dropped stream. Reach for `/events` when you need to watch something LIVE;
+    reach for the log when you want to know what happened.
+  - **⚠ The `/events` SSE endpoint has a bounded number of stream slots.** A capture loop left running (or one
+    that respawns `curl` in a `while` loop) holds them; once exhausted the endpoint returns
+    `{"error":"too many event streams"}` and your capture silently records NOTHING. Verify the first frames are
+    `event: hello` and not that error, and kill every loop when done — an empty capture reads exactly like "the
+    feature did not fire."
+  - **(3) The on-demand mailbox-snapshot endpoints `/state/*` + `/computed/*`** compute a game-thread snapshot via
+    the single-slot mailbox and depend on no log file or gate — the most reliable read for a POINT-IN-TIME value
+    (see `docs/specs/http-endpoints.md`). When in doubt about a magnitude/state, hit the endpoint.
+  Gates are separate and INDEPENDENT: `gPlayerLogLevel` gates the per-domain `.log` files; the `/events` stream is
+  its OWN spine consumer — spine DOMAIN facts stream unconditionally, DIAGNOSTIC/TRACE at `gStreamLogLevel` — so a
+  line can be in either surface without the other.
 - **The events + logging + diagnostics must make the running game FULLY surveilled.** The bar: *map an accurate game
   state purely from the endpoints + `/events` + the gated logs — open the game, but never look at the SCREEN.* This
   is **non-negotiable and load-bearing**, not polish: it is the ONLY way to reliably verify the state logic on the
@@ -383,6 +405,13 @@ the total-observability bar below.)
   `Asserts.log` entries. Known pre-existing assert families on mature saves (filter, already filed):
   `CvContractBroker::makeContract` NULL pJoinUnit (#336), `AI_formArmies` army-ID format (#364), unit stuck-in-loop
   short-circuit (#189 family).
+- **⛔ `agentstart.bat` is FIRE-AND-FORGET, and MUST be launched from PowerShell — NEVER from the Bash tool.**
+  Invoking it through Bash/Git-Bash (`cmd //c agentstart.bat`, backgrounding it inside a shell script, …) **mangles
+  the paths and the game does not start** — while the shell still reports success, so it reads as launched and the
+  agent then polls a surface that will never come up. Use
+  `Start-Process -FilePath 'C:\code\s2s\s2s\agentstart.bat' -WorkingDirectory 'C:\code\s2s\s2s'`, and do **not** wait
+  on or block the call. Confirm the launch ONLY by polling the HTTP surface (`/` → `hello world`) — never by the
+  launcher's exit code. *(Repeat offence — agents keep re-learning this one the hard way.)*
 - **Keep quirky/intermediate commits — do NOT push to squash them (owner taste).** Mention squashing exists at most
   once; default to preserving history as-is.
 - **PG-13 public quotes.** When quoting the owner in public artifacts (issues, PR bodies, commits, repo docs), keep

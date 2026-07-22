@@ -129,10 +129,10 @@
  },
  "grants": {
   "freePromotions": [
-   "PROMOTION_SPEED",
-   "PROMOTION_SPEED",
-   "PROMOTION_SPEED",
-   "PROMOTION_SPEED"
+   {
+    "promotion": "PROMOTION_SPEED",
+    "enabled": "IS_MOUNTED"
+   }
   ]
  },
  "cost": {

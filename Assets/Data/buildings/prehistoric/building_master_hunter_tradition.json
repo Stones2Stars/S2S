@@ -216,7 +216,10 @@
  },
  "grants": {
   "freePromotions": [
-   "PROMOTION_ENTRAPMENT1"
+   {
+    "promotion": "PROMOTION_ENTRAPMENT1",
+    "enabled": "IS_RECON"
+   }
   ]
  },
  "world": {

@@ -472,8 +472,12 @@ One-shot or recurring things an entity hands out (not per-turn modifiers).
 - **numeric pulses** — `grants.<channel>: value` (`grants.revolution: -100`, `grants.goldenAge`).
 - **`foundBuildings`** — entry shape `{ "building": BUILDING_X, "enabled"?: <condition> }` (absent `enabled` =
   always placed). Lives on the **settler-type unit** (the founder), NOT on the civ. ⚠ Tolerated sugar, not
-  load-bearing — plain `grants.buildings` on the settler would suffice (the engine iterates the founder's buildings
-  at settle-time). **Curator follow-up:** `BUILDING_PALACE` (+ the other founder buildings) is currently *also* in
+  load-bearing — plain `grants.buildings` on the settler would suffice. **A settler granting buildings at settle
+  time is a NEW mechanic coined for this rework (owner) — there is no legacy engine apply to port.** Do not go
+  looking for one: the legacy `bNewCityFree` path (`CvPlayer::found`, gated on `isNewCityFree()`) is a DIFFERENT,
+  now-dead mechanic that merely sits at the same call site. This lands with the grants machine's apply-loop
+  ([grants-machine.md](../plans/structural-cleanup/grants-machine.md) increment 5); the data is authored and
+  waiting. **Curator follow-up:** `BUILDING_PALACE` (+ the other founder buildings) is currently *also* in
   ~48 **civilizations'** `grants.buildings` — the **wrong/redundant** placement; the settler's `foundBuildings`
   already carries it, so the civ-grant duplicate should be dropped. (Does NOT affect the enabler: the engine realizes
   the palace into the capital regardless, so the cascade's HAVE sees it either way.)

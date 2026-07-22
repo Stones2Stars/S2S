@@ -142,7 +142,10 @@
  },
  "grants": {
   "freePromotions": [
-   "PROMOTION_CULTURE_MIDDLE_EASTERN"
+   {
+    "promotion": "PROMOTION_CULTURE_MIDDLE_EASTERN",
+    "enabled": "IS_SETTLER"
+   }
   ]
  },
  "cost": {

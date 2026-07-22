@@ -154,21 +154,18 @@ void CvHandicapInfo::mapFrom(const picojson::value& entity)
 	m_iBarbarianCityCreationProb         = jsonFamMemberVal(o, "barbarians", "world", "cityCreationProb",  "percent");
 	m_iBarbarianInitialDefenders         = jsonFamMemberVal(o, "barbarians", "world", "defenders",         "flat");
 
-	// --- grants: one-shot GAME-START provisioning (bespoke SCALAR shape -- NOT the CvJsonGrants unit; base under
-	//     grants.<key>, the AI override under grants.ai.<key>; humans and AIs split entirely, own vs game handicap) ---
-	if (const picojson::object* g = jsonChildObj(o, "grants"))
-	{
-		m_iStartingGold         = jsonIdInt(*g, "startingGold");
-		m_iStartingDefenseUnits = jsonIdInt(*g, "startingDefenseUnits");
-		m_iStartingWorkerUnits  = jsonIdInt(*g, "startingWorkerUnits");
-		m_iStartingExploreUnits = jsonIdInt(*g, "startingExploreUnits");
-		if (const picojson::object* ga = jsonChildObj(*g, "ai"))
-		{
-			m_iAIStartingDefenseUnits = jsonIdInt(*ga, "startingDefenseUnits");
-			m_iAIStartingWorkerUnits  = jsonIdInt(*ga, "startingWorkerUnits");
-			m_iAIStartingExploreUnits = jsonIdInt(*ga, "startingExploreUnits");
-		}
-	}
+	// --- grants: one-shot GAME-START provisioning, read off the COMPOSED unit. The base keys are §5 numeric PULSES
+	//     (stored ×100 by the section parse); the AI override rides `grants.ai.<key>`, which the same parse captures
+	//     as a SCOPED pulse under scope "ai" (humans and AIs split entirely, own vs game handicap). ONE
+	//     representation, so the grants machine reads the same parsed data these scalars view. ---
+	m_iStartingGold         = m_grants.pulse100("startingGold") / 100;
+	m_iStartingDefenseUnits = m_grants.pulse100("startingDefenseUnits") / 100;
+	m_iStartingWorkerUnits  = m_grants.pulse100("startingWorkerUnits") / 100;
+	m_iStartingExploreUnits = m_grants.pulse100("startingExploreUnits") / 100;
+	//     (the nested object parses as channel "ai" -> {key -> value}, so "ai" is the CHANNEL argument here)
+	m_iAIStartingDefenseUnits = m_grants.scopedPulse100("ai", "startingDefenseUnits") / 100;
+	m_iAIStartingWorkerUnits  = m_grants.scopedPulse100("ai", "startingWorkerUnits")  / 100;
+	m_iAIStartingExploreUnits = m_grants.scopedPulse100("ai", "startingExploreUnits") / 100;
 
 	// --- identity: the parked advanced-start POINTS BUDGET mods + the goody-hut roster (GOODY_* FK strings -> ids) ---
 	if (const picojson::object* io = jsonChildObj(o, "identity"))

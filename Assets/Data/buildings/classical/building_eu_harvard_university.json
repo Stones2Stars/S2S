@@ -113,7 +113,10 @@
  },
  "grants": {
   "freePromotions": [
-   "PROMOTION_POLICING1"
+   {
+    "promotion": "PROMOTION_POLICING1",
+    "enabled": "IS_BUREAUCRAT"
+   }
   ]
  },
  "cost": {

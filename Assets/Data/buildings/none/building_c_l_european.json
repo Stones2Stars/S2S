@@ -167,7 +167,10 @@
  },
  "grants": {
   "freePromotions": [
-   "PROMOTION_CULTURE_EUROPEAN"
+   {
+    "promotion": "PROMOTION_CULTURE_EUROPEAN",
+    "enabled": "IS_SETTLER"
+   }
   ]
  },
  "cost": {

@@ -142,7 +142,10 @@
  },
  "grants": {
   "freePromotions": [
-   "PROMOTION_CULTURE_SOUTH_AMERICAN"
+   {
+    "promotion": "PROMOTION_CULTURE_SOUTH_AMERICAN",
+    "enabled": "IS_SETTLER"
+   }
   ]
  },
  "cost": {

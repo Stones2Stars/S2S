@@ -11699,17 +11699,14 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 	{
 		m_bTurnActive = bNewValue;
 
-		// #407: human turn boundaries for the dev SSE stream -- the live "human is
-		// thinking vs AI/engine is processing" phase signal (e.g. tooling polls during
-		// the human phase instead of competing with AI compute). HUMAN ONLY by design:
-		// per-AI-player events would be 40+ frames/turn of noise, and turn DURATION
-		// analytics belong to the [PERF] logs (turn.wall / update.accum / per-phase),
-		// not to this stream.
-		if (isHuman() && CvHttpServer::isEnabled())
-		{
-			CvHttpServer::publishEvent(bNewValue ? "playerTurnStart" : "playerTurnEnd",
-				CvString::format("{\"player\":%d,\"turn\":%d}", getID(), GC.getGame().getGameTurn()).c_str());
-		}
+		// The PLAYER turn boundary -- the live "who is on the clock" phase signal (tooling can poll during the
+		// human phase instead of competing with AI compute). Emitted for EVERY player, not just humans: a turn
+		// going active/inactive is a genuine state mutation, and the spine's contract is that every mutation
+		// emits while CONSUMERS filter -- a deliberately partial emit surface is exactly what defeats the
+		// missed-emit tripwire. Turn DURATION analytics still belong to the [PERF] phase logs, not to this fact.
+		// Both carry the player, so a consumer wanting humans only tests it.
+		if (bNewValue) emitTurnStarted(GC.getGame().getGameTurn(), getID());
+		else           emitTurnEnded(GC.getGame().getGameTurn(), getID());
 
 		if (bNewValue)
 		{

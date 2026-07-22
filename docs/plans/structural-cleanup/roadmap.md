@@ -132,8 +132,10 @@ derived-from-deposit-index invalidation the rest of the consumer already uses.
   engine class, and the parallel `CvJson<X>Info` poco DELETED — so `GC.get*Info()` and the cascade read ONE
   JSON-fed object. `mapFrom` reads raw human values via `CvJsonParse.h` helpers (`jsonFamVal`/`jsonIdInt` with the
   legacy default), audio-tag arrays are resolved through `gDLL->getAudioTagIndex` as `read()` did, and each `.cpp`
-  re-adds `CvInfos.h` + `AI/CvGameAI.h` to preserve unity-batch include leakage. Civilization is in `RJ_REPO_TYPES`
-  so readJson's full-registry re-map re-resolves `derivativeCiv` after the post-load alpha re-sort. **Follow-ups
+  re-adds `CvInfos.h` + `AI/CvGameAI.h` to preserve unity-batch include leakage. **All 11 are listed in
+  `RJ_REPO_TYPES`** — the ONE per-type `InfoRepo` dispatch — so each gets readJson's full-registry re-map (the
+  cross-category FK resolve, e.g. Civilization's `derivativeCiv` after the post-load alpha re-sort), its
+  DepositIndex push, and a `/state/info` home for the standing loaded≡authored verification. **Follow-ups
   (data, not blockers — fail loud in-game):** `curate_specialbuilding.py` is MISSING so SpecialBuilding
   `getTechPrereq`/`getObsoleteTech` return `NO_TECH` (tech-gating + the cascade `EDGEB_SPECIAL_BUILDINGS` edges drop);
   Handicap `PROPERTY_*` is the #429 shape mismatch (empty manipulators). **Leaders ship TRAITLESS** (owner ruling

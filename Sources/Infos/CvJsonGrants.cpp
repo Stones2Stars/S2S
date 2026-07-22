@@ -27,9 +27,12 @@ void CvJsonGrants::clearParsed()
 {
 	for (size_t i = 0; i < m_foundBuildings.size(); ++i) delete m_foundBuildings[i];
 	for (size_t i = 0; i < m_repeatables.size(); ++i) delete m_repeatables[i];
+	for (std::map<std::string, std::vector<CvJsonCondition*> >::iterator ci = m_listConds.begin(); ci != m_listConds.end(); ++ci)
+		for (size_t i = 0; i < ci->second.size(); ++i) delete ci->second[i];
 	m_foundBuildings.clear();
 	m_repeatables.clear();
 	m_lists.clear();
+	m_listConds.clear();
 	m_pulses100.clear();
 	m_scopedPulses100.clear();
 	m_flags.clear();
@@ -153,7 +156,29 @@ void CvJsonGrants::parse(const picojson::value& v)
 		{
 			const picojson::array& a = val.get<picojson::array>();
 			for (size_t i = 0; i < a.size(); ++i)
-				if (a[i].is<std::string>()) { const int id = jsonResolveId(a[i].get<std::string>()); if (id >= 0) m_lists[k].push_back(id); }
+			{
+				if (a[i].is<std::string>())
+				{
+					const int id = jsonResolveId(a[i].get<std::string>());
+					if (id >= 0) { m_lists[k].push_back(id); m_listConds[k].push_back(NULL); }
+				}
+				else if (a[i].is<picojson::object>())
+				{
+					// The CONDITIONED entry form ({<kind>: ID, enabled: <cond>}, json §3.9). Skipping it -- which a
+					// string-only reader does SILENTLY -- drops the grant entirely, so a targeted provision reaches
+					// nobody. The id goes into m_lists as usual; the condition rides index-parallel.
+					const picojson::object& e = a[i].get<picojson::object>();
+					int id = -1;
+					CvJsonCondition* pCond = NULL;
+					for (picojson::object::const_iterator eit = e.begin(); eit != e.end(); ++eit)
+					{
+						if (eit->first == "enabled") { delete pCond; pCond = cascadeParseCondition(eit->second); }
+						else if (eit->second.is<std::string>() && id < 0) id = jsonResolveId(eit->second.get<std::string>());
+					}
+					if (id >= 0) { m_lists[k].push_back(id); m_listConds[k].push_back(pCond); }
+					else delete pCond;
+				}
+			}
 		}
 		else if (val.is<double>())      m_pulses100[k] = jsonX100(val.get<double>());
 		else if (val.is<std::string>()) { const int id = jsonResolveId(val.get<std::string>()); if (id >= 0) m_lists[k].push_back(id); }
