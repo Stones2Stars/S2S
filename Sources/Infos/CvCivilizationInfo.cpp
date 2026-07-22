@@ -1,23 +1,13 @@
 //------------------------------------------------------------------------------------------------
 //  FILE:    CvCivilizationInfo.cpp
 //------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "UI/CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson, CvString/CvWString, gDLL, SAFE_DELETE_ARRAY
+#include "CvInfos.h"              // umbrella: CvCivicInfo (getCivicOptionType) + CvArtInfoCivilization + leakage guard
 #include "AI/CvGameAI.h"
-#include "UI/CvGameTextMgr.h"
-#include "Defines/CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "AI/CvPlayerAI.h"
-#include "Infrastructure/CvPython.h"
-#include "Infrastructure/CvXMLLoadUtility.h"
-#include "Infrastructure/CvXMLLoadUtilityModTools.h"
-#include "Tools/CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
 #include "CvCivilizationInfo.h"
+#include "CvJsonParse.h"          // jsonChildObj / jsonIdInt / jsonIdStr / jsonResolveId
+#include "UI/CvArtFileMgr.h"      // ARTFILEMGR -- getFlagTexture / getArtInfo / getButton
+#include "Defines/CvGlobals.h"    // GC (getNumCivicOptionInfos / getCivicInfo)
 
 
 //======================================================================================================
@@ -25,64 +15,35 @@
 //======================================================================================================
 
 //------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvCivilizationInfo()
-//
-//  PURPOSE :   Default constructor
-//
+//  FUNCTION:   CvCivilizationInfo()  -- default constructor (all members at their legacy load defaults)
 //------------------------------------------------------------------------------------------------------
-CvCivilizationInfo::CvCivilizationInfo():
-m_iNumCityNames(0),
-m_iNumLeaders(0),
-m_iSelectionSoundScriptId(0),
-m_iActionSoundScriptId(0),
-m_piCivilizationInitialCivics(NULL),
-m_paszCityNames(NULL)
+CvCivilizationInfo::CvCivilizationInfo()
+	: m_iDefaultPlayerColor(-1)     // NO_PLAYERCOLOR (enum-as-int default)
+	, m_iArtStyleType(-1)
+	, m_iUnitArtStyleType(-1)
+	, m_iNumCityNames(0)
+	, m_iNumLeaders(0)
+	, m_iSelectionSoundScriptId(0)
+	, m_iActionSoundScriptId(0)
+	, m_iDerivativeCiv(NO_CIVILIZATION)
+	, m_iSpawnRateModifier(0)
+	, m_iSpawnRateNPCPeaceModifier(0)
+	, m_bStronglyRestricted(false)
+	, m_bAIPlayable(false)
+	, m_bPlayable(false)
+	, m_piCivilizationInitialCivics(NULL)
+	, m_paszCityNames(NULL)
 {
-	CvInfoUtil(this).initDataMembers();
 }
 
 
 //------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvCivilizationInfo()
-//
-//  PURPOSE :   Default destructor
-//
+//  FUNCTION:   ~CvCivilizationInfo()  -- default destructor
 //------------------------------------------------------------------------------------------------------
 CvCivilizationInfo::~CvCivilizationInfo()
 {
 	SAFE_DELETE_ARRAY(m_piCivilizationInitialCivics);
 	SAFE_DELETE_ARRAY(m_paszCityNames);
-	// m_iDerivativeCiv's pending delayed-resolution entry is removed by its wrapper's uninitVar.
-	CvInfoUtil(this).uninitDataMembers();
-}
-
-
-// Fields declared here are read/copied by CvInfoUtil (#196). Still hand-written:
-// - m_szShortDescriptionKey / m_szAdjectiveKey: CvWString members (wrappers only support CvString);
-// - m_szArtDefineTag: its modular merge must run BEFORE CvInfoBase::copyNonDefaults (see there);
-// - m_iSelectionSoundScriptId / m_iActionSoundScriptId: resolved via the runtime audio-tag table;
-// - Cities string list (m_paszCityNames + m_iNumCityNames);
-// - InitialCivics: bespoke read keyed into a fixed CivicOption-length array;
-// - getCheckSum: explicit, because the legacy checksum omits several read fields (see there).
-void CvCivilizationInfo::getDataMembers(CvInfoUtil& util)
-{
-	util
-		.addEnumAsInt(m_iDefaultPlayerColor, L"DefaultPlayerColor")
-		.addEnumAsInt(m_iArtStyleType, L"ArtStyleType")
-		.addEnumAsInt(m_iUnitArtStyleType, L"UnitArtStyleType")
-		.add(m_bPlayable, L"bPlayable")
-		.add(m_bAIPlayable, L"bAIPlayable")
-		.add(m_aiCivilizationBuildings, L"FreeBuildings")
-		.add(m_aeCivilizationFreeTechs, L"FreeTechs")
-		.add(m_aeCivilizationDisableTechs, L"DisableTechs")
-		.add(m_aeLeaders, L"Leaders")
-		.add(m_iSpawnRateModifier, L"iSpawnRateModifier")
-		.add(m_iSpawnRateNPCPeaceModifier, L"iSpawnRateNPCPeaceModifier")
-		.add(m_bStronglyRestricted, L"bStronglyRestricted")
-		.addEnum(m_iDerivativeCiv, L"DerivativeCiv")
-	;
 }
 
 
@@ -92,7 +53,6 @@ void CvCivilizationInfo::reset()
 	m_aszAdjective.clear();
 	m_aszShortDescription.clear();
 }
-
 
 
 int CvCivilizationInfo::getDefaultPlayerColor() const
@@ -212,7 +172,12 @@ void CvCivilizationInfo::setCivilizationInitialCivics(int iCivicOption, int iCiv
 
 	if ( NULL == m_piCivilizationInitialCivics )
 	{
-		CvXMLLoadUtility::InitList(&m_piCivilizationInitialCivics,GC.getNumCivicOptionInfos(),-1);
+		const int iNum = GC.getNumCivicOptionInfos();
+		m_piCivilizationInitialCivics = new int[iNum];
+		for (int i = 0; i < iNum; i++)
+		{
+			m_piCivilizationInitialCivics[i] = -1;
+		}
 	}
 
 	m_piCivilizationInitialCivics[iCivicOption] = iCivic;
@@ -296,159 +261,158 @@ bool CvCivilizationInfo::isStronglyRestricted() const
 }
 
 
-// Explicit, NOT delegated to CvInfoUtil (#196): the legacy checksum omits several read fields
-// (m_iDefaultPlayerColor, m_iArtStyleType, m_iUnitArtStyleType), and the hand-written
-// InitialCivics array sits mid-order; delegating would change the savegame asset checksum.
-void CvCivilizationInfo::getCheckSum(uint32_t& iSum) const
+// ------------------------------------------------------------------------------------------------------
+// JSON mapping helpers (file-local -- the shared CvJsonParse.h has no array walker; these keep it there).
+// ------------------------------------------------------------------------------------------------------
+
+// o[key] as a JSON array child, or NULL.
+static const picojson::array* jsonChildArr(const picojson::object& o, const char* key)
 {
-	CheckSum(iSum, m_iDerivativeCiv);
-	CheckSum(iSum, m_bAIPlayable);
-	CheckSum(iSum, m_bPlayable);
-	CheckSum(iSum, m_iSpawnRateModifier);
-	CheckSum(iSum, m_iSpawnRateNPCPeaceModifier);
-	CheckSum(iSum, m_bStronglyRestricted);
-	CheckSumI(iSum, GC.getNumCivicOptionInfos(), m_piCivilizationInitialCivics);
-	CheckSumC(iSum, m_aeLeaders);
-	CheckSumC(iSum, m_aeCivilizationFreeTechs);
-	CheckSumC(iSum, m_aeCivilizationDisableTechs);
-	CheckSumC(iSum, m_aiCivilizationBuildings);
+	picojson::object::const_iterator it = o.find(key);
+	return (it != o.end() && it->second.is<picojson::array>()) ? &it->second.get<picojson::array>() : NULL;
+}
+
+// Append every RESOLVED (>=0) FK id from a string array parent[key] into out (unresolved ids skipped, as the
+// archived wrapper did). Templated so the int / TechTypes / LeaderHeadTypes vectors share one walk (C++03-safe).
+template <class T>
+static void jsonAppendResolvedIds(const picojson::object& parent, const char* key, std::vector<T>& out)
+{
+	const picojson::array* a = jsonChildArr(parent, key);
+	if (a == NULL) return;
+	for (size_t i = 0; i < a->size(); ++i)
+	{
+		if (!(*a)[i].is<std::string>()) continue;
+		const int iId = jsonResolveId((*a)[i].get<std::string>());
+		if (iId >= 0) out.push_back(static_cast<T>(iId));
+	}
 }
 
 
-bool CvCivilizationInfo::read(CvXMLLoadUtility* pXML)
+// #430: the civilization's typed consumer surface from Assets/Data/civilizations/*.json. Base reads type +
+// identity.description/civilopedia text keys + the section DISPATCH (grants/enables/disables are recorded as
+// unconsumed-census here -- this class reads them as typed members below, not composed section units). This class then maps the getCivilizationInfo(...) members:
+// world.art.* colors/style + ART_DEF tag, sound.* audio-tag indices, spawnRate.* modifiers, the grants.* game-start
+// grants (buildings/techs, and civics keyed into the CivicOption-slot InitialCivics array), disables.techs, and the
+// identity.* text keys / leaders / cityNames / derivativeCiv. IDEMPOTENT (CvInfo.h): mapFrom re-runs once the FK
+// registry is complete, so every owned array is rebuilt and every vector cleared-then-refilled each call.
+void CvCivilizationInfo::mapFrom(const picojson::value& entity)
 {
-	PROFILE_EXTRA_FUNC();
-	CvString szTextVal;
-	if (!CvInfoBase::read(pXML))
-	{
-		return false;
-	}
+	CvInfo::mapFrom(entity);   // core reading (type / description / civilopedia) + the base section dispatch
+	if (!entity.is<picojson::object>()) return;
+	const picojson::object& o = entity.get<picojson::object>();
 
-	CvInfoUtil(this).readXml(pXML);
+	// reset owned/accumulating members so the re-run cannot double-append or leak
+	SAFE_DELETE_ARRAY(m_piCivilizationInitialCivics);
+	SAFE_DELETE_ARRAY(m_paszCityNames);
+	m_iNumCityNames = 0;
+	m_iNumLeaders = 0;
+	m_aeLeaders.clear();
+	m_aeCivilizationFreeTechs.clear();
+	m_aeCivilizationDisableTechs.clear();
+	m_aiCivilizationBuildings.clear();
+	m_aszShortDescription.clear();
+	m_aszAdjective.clear();
 
-	// CvWString members are not wrapper-expressible (only CvString is)
-	pXML->GetOptionalChildXmlValByName(m_szShortDescriptionKey, L"ShortDescription");
-	pXML->GetOptionalChildXmlValByName(m_szAdjectiveKey, L"Adjective");
-	// Hand-written because its modular merge must run before the base copy (see copyNonDefaults)
-	pXML->GetOptionalChildXmlValByName(m_szArtDefineTag, L"ArtDefineTag");
+	std::string s;
 
-	// Audio script ids resolve through the runtime audio-tag table, not the info-type registry
-	pXML->GetOptionalChildXmlValByName(szTextVal, L"CivilizationSelectionSound");
-	m_iSelectionSoundScriptId = (szTextVal.GetLength() > 0) ? gDLL->getAudioTagIndex( szTextVal.GetCString(), AUDIOTAG_3DSCRIPT ) : -1;
-	pXML->GetOptionalChildXmlValByName(szTextVal, L"CivilizationActionSound");
-	m_iActionSoundScriptId = (szTextVal.GetLength() > 0) ? gDLL->getAudioTagIndex( szTextVal.GetCString(), AUDIOTAG_3DSCRIPT ) : -1;
-
-	if (pXML->TryMoveToXmlFirstChild(L"Cities"))
-	{
-		pXML->SetStringList(&m_paszCityNames, &m_iNumCityNames);
-		pXML->MoveToXmlParent();
-	}
-
-	if (pXML->TryMoveToXmlFirstChild(L"InitialCivics"))
-	{
-		if (const int iNumSibs = pXML->GetXmlChildrenNumber())
+	// --- world.art.*: playerColor/style/unitStyle are FK strings; icon is the ART_DEF tag kept as a string ---
+	if (const picojson::object* world = jsonChildObj(o, "world"))
+		if (const picojson::object* art = jsonChildObj(*world, "art"))
 		{
-			CvXMLLoadUtility::InitList(&m_piCivilizationInitialCivics, GC.getNumCivicOptionInfos());
-			if (pXML->GetChildXmlVal(szTextVal))
+			if (jsonIdStr(*art, "playerColor", s)) m_iDefaultPlayerColor = jsonResolveId(s);
+			if (jsonIdStr(*art, "style", s))       m_iArtStyleType       = jsonResolveId(s);
+			if (jsonIdStr(*art, "unitStyle", s))   m_iUnitArtStyleType   = jsonResolveId(s);
+			if (jsonIdStr(*art, "icon", s))        m_szArtDefineTag      = s.c_str();
+		}
+
+	// --- sound.selection / sound.action -> RUNTIME audio-tag indices (NOT info-type ids), reproducing the archived
+	//     read()'s gDLL->getAudioTagIndex(tag, AUDIOTAG_3DSCRIPT); absent/empty -> -1 (AUDIOTAG_NONE) ---
+	m_iSelectionSoundScriptId = -1;
+	m_iActionSoundScriptId = -1;
+	if (const picojson::object* snd = jsonChildObj(o, "sound"))
+	{
+		if (jsonIdStr(*snd, "selection", s) && !s.empty())
+			m_iSelectionSoundScriptId = gDLL->getAudioTagIndex(s.c_str(), AUDIOTAG_3DSCRIPT);
+		if (jsonIdStr(*snd, "action", s) && !s.empty())
+			m_iActionSoundScriptId = gDLL->getAudioTagIndex(s.c_str(), AUDIOTAG_3DSCRIPT);
+	}
+
+	// --- spawnRate.empire.{general,npcPeace}.percent -> the two spawn-rate modifiers (RAW percents; curator wrote int()) ---
+	if (const picojson::object* sr = jsonChildObj(o, "spawnRate"))
+		if (const picojson::object* emp = jsonChildObj(*sr, "empire"))
+		{
+			if (const picojson::object* g = jsonChildObj(*emp, "general"))  m_iSpawnRateModifier         = jsonIdInt(*g, "percent");
+			if (const picojson::object* n = jsonChildObj(*emp, "npcPeace")) m_iSpawnRateNPCPeaceModifier = jsonIdInt(*n, "percent");
+		}
+
+	// --- grants.*: buildings + techs are FK lists (curator already drops BUILDING_PALACE and prepends TECH_GAME_START);
+	//     civics fill the CivicOption-slot InitialCivics array (each civic dropped in its own option slot) ---
+	if (const picojson::object* grants = jsonChildObj(o, "grants"))
+	{
+		jsonAppendResolvedIds(*grants, "buildings", m_aiCivilizationBuildings);
+		jsonAppendResolvedIds(*grants, "techs", m_aeCivilizationFreeTechs);
+
+		if (const picojson::array* civics = jsonChildArr(*grants, "civics"))
+			if (!civics->empty())
 			{
-				for (int j = 0; j < iNumSibs; j++)
+				const int iNumOptions = GC.getNumCivicOptionInfos();
+				m_piCivilizationInitialCivics = new int[iNumOptions];
+				for (int i = 0; i < iNumOptions; i++)
 				{
-					const CivicTypes eCivic = (CivicTypes)pXML->GetInfoClass(szTextVal);//, true);
-					if ( eCivic != NO_CIVIC )
+					m_piCivilizationInitialCivics[i] = -1;
+				}
+				for (size_t i = 0; i < civics->size(); ++i)
+				{
+					if (!(*civics)[i].is<std::string>()) continue;
+					const int iCivic = jsonResolveId((*civics)[i].get<std::string>());
+					if (iCivic < 0) continue;   // NO_CIVIC (unresolved) -- skip
+					const int iOption = GC.getCivicInfo((CivicTypes)iCivic).getCivicOptionType();
+					if (iOption >= 0 && iOption < iNumOptions)   // NO_CIVICOPTION / out-of-range -- skip
 					{
-						const CivicOptionTypes eCivicOption = (CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOptionType();
-
-						if ( eCivicOption != NO_CIVICOPTION )
-						{
-							FAssertMsg((eCivicOption < GC.getNumCivicOptionInfos()),"Bad default civic");
-							m_piCivilizationInitialCivics[eCivicOption] = eCivic;
-						}
-					}
-
-					if (!pXML->GetNextXmlVal(szTextVal))
-					{
-						break;
+						m_piCivilizationInitialCivics[iOption] = iCivic;
 					}
 				}
-
-				pXML->MoveToXmlParent();
 			}
-		}
-		else
+	}
+
+	// --- disables.techs -> the per-civ research ban (canEverResearch=false while active) ---
+	if (const picojson::object* dis = jsonChildObj(o, "disables"))
+		jsonAppendResolvedIds(*dis, "techs", m_aeCivilizationDisableTechs);
+
+	// --- identity.*: the short-desc / adjective text keys, the leaders + cityNames pools, the derivative-civ FK ---
+	if (const picojson::object* io = jsonChildObj(o, "identity"))
+	{
+		// selectability + the NPC build-lockdown (curator emits each only when true; absent -> false)
+		m_bPlayable           = jsonIdBool(*io, "playable");
+		m_bAIPlayable         = jsonIdBool(*io, "aiPlayable");
+		m_bStronglyRestricted = jsonIdBool(*io, "stronglyRestricted");
+		// NOTE: identity.isNpc is authored by the curator but has NO CvCivilizationInfo member (no engine consumer
+		// on this class) -- deliberately unmapped.
+
+		if (jsonIdStr(*io, "shortDescription", s)) m_szShortDescriptionKey = CvWString(s.c_str());
+		if (jsonIdStr(*io, "adjective", s))        m_szAdjectiveKey        = CvWString(s.c_str());
+		if (jsonIdStr(*io, "derivativeCiv", s))    m_iDerivativeCiv        = (CivilizationTypes)jsonResolveId(s);
+
+		// leaders (FK list) -- and the (formerly latent-dead, always-0) leader count off its size
+		jsonAppendResolvedIds(*io, "leaders", m_aeLeaders);
+		m_iNumLeaders = (int)m_aeLeaders.size();
+
+		// cityNames -- a TEXT-KEY pool (stored as strings, NOT resolved to ids); count -> m_iNumCityNames
+		if (const picojson::array* ca = jsonChildArr(*io, "cityNames"))
 		{
-			SAFE_DELETE_ARRAY(m_piCivilizationInitialCivics);
-		}
-
-		pXML->MoveToXmlParent();
-	}
-	else
-	{
-		SAFE_DELETE_ARRAY(m_piCivilizationInitialCivics);
-	}
-
-	return true;
-}
-
-
-void CvCivilizationInfo::copyNonDefaults(const CvCivilizationInfo* pClassInfo)
-{
-	PROFILE_EXTRA_FUNC();
-	const CvString cDefault = CvString::format("").GetCString();
-	const CvWString wDefault = CvWString::format(L"").GetCString();
-
-	// must be before we set the InfoBaseClass else it can't find the button to to corresponding arttag
-	if ( getArtDefineTag() == cDefault ) // "ArtDefineTag"
-	{
-		m_szArtDefineTag = pClassInfo->getArtDefineTag();
-	}
-
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-
-	if ( getShortDescriptionKey() == wDefault )
-	{
-		m_szShortDescriptionKey = pClassInfo->getShortDescriptionKey();
-	}
-
-	if ( getAdjectiveKey() == wDefault ) // "Adjective"
-	{
-		m_szAdjectiveKey = pClassInfo->getAdjectiveKey();
-	}
-
-	if ( getSelectionSoundScriptId() == AUDIOTAG_NONE ) // "CivilizationSelectionSound"
-	{
-		m_iSelectionSoundScriptId = (pClassInfo->getSelectionSoundScriptId());
-	}
-	if ( getActionSoundScriptId() == AUDIOTAG_NONE ) // "CivilizationActionSound"
-	{
-		m_iActionSoundScriptId = (pClassInfo->getActionSoundScriptId());
-	}
-
-	for ( int i = 0; i < GC.getNumCivicOptionInfos(); i++)
-	{
-		if ( getCivilizationInitialCivics(i) == -1 && pClassInfo->getCivilizationInitialCivics(i) != -1 )
-		{
-			if ( NULL == m_piCivilizationInitialCivics )
+			const int iNum = (int)ca->size();
+			if (iNum > 0)
 			{
-				CvXMLLoadUtility::InitList(&m_piCivilizationInitialCivics,GC.getNumCivicOptionInfos(),-1);
+				m_paszCityNames = new CvString[iNum];
+				for (int i = 0; i < iNum; i++)
+				{
+					if ((*ca)[i].is<std::string>())
+					{
+						m_paszCityNames[i] = (*ca)[i].get<std::string>().c_str();
+					}
+				}
+				m_iNumCityNames = iNum;
 			}
-			m_piCivilizationInitialCivics[i] = pClassInfo->getCivilizationInitialCivics(i);
 		}
-	}
-
-	// First we check if there are different Unique Names in the Modules(we want to keep all of them)
-	// So we have to set the Arraysize properly, knowing the amount of Unique Names
-	if ( pClassInfo->getNumCityNames() != 0 )
-	{
-		CvString* m_paszOldNames = new CvString[pClassInfo->getNumCityNames()];
-		for ( int i = 0; i < pClassInfo->getNumCityNames(); i++)
-		{
-			m_paszOldNames[i] = pClassInfo->getCityNames(i);
-		}
-
-		CvXMLLoadUtilityModTools::StringArrayExtend(&m_paszCityNames, &m_iNumCityNames, &m_paszOldNames, pClassInfo->getNumCityNames());
-		SAFE_DELETE_ARRAY(m_paszOldNames)
 	}
 }
-

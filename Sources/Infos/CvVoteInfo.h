@@ -3,51 +3,52 @@
 #ifndef CV_VOTE_INFO_H
 #define CV_VOTE_INFO_H
 
-#include "CvInfoBase.h"
+#include "CvInfo.h"   // JSON-info base (mapFrom); on /I -> bare include
+
+namespace picojson { class value; }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
 //  class : CvVoteInfo
 //
-//  DESC:
+//  DESC:   A diplomatic proposal / resolution. #430: JSON-fed (Assets/Data/votes/*.json
+//          via mapFrom); no XML read. Carries ZERO cascade modifiers -- its effect
+//          payload feeds CvGame::processVote directly (curate_vote.py).
 //
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class CvVoteInfo
-	: public CvInfoBase
-	, private bst::noncopyable
+class CvVoteInfo : public CvInfo
 {
+	//---------------------------PUBLIC INTERFACE---------------------------------
 public:
+
 	CvVoteInfo();
-	virtual ~CvVoteInfo();
 
-	int getPopulationThreshold() const;
-	int getStateReligionVotePercent() const;
-	int getTradeRoutes() const;
-	int getMinVoters() const;
+	int getPopulationThreshold() const { return m_iPopulationThreshold; }
+	int getStateReligionVotePercent() const { return m_iStateReligionVotePercent; }
+	int getTradeRoutes() const { return m_iTradeRoutes; }
+	int getMinVoters() const { return m_iMinVoters; }
 
-	bool isSecretaryGeneral() const;
-	bool isVictory() const;
-	bool isFreeTrade() const;
-	bool isNoNukes() const;
-	bool isCityVoting() const;
-	bool isCivVoting() const;
-	bool isDefensivePact() const;
-	bool isOpenBorders() const;
-	bool isForcePeace() const;
-	bool isForceNoTrade() const;
-	bool isForceWar() const;
-	bool isAssignCity() const;
+	bool isSecretaryGeneral() const { return m_bSecretaryGeneral; }
+	bool isVictory() const { return m_bVictory; }
+	bool isFreeTrade() const { return m_bFreeTrade; }
+	bool isNoNukes() const { return m_bNoNukes; }
+	bool isCityVoting() const { return m_bCityVoting; }
+	bool isCivVoting() const { return m_bCivVoting; }
+	bool isDefensivePact() const { return m_bDefensivePact; }
+	bool isOpenBorders() const { return m_bOpenBorders; }
+	bool isForcePeace() const { return m_bForcePeace; }
+	bool isForceNoTrade() const { return m_bForceNoTrade; }
+	bool isForceWar() const { return m_bForceWar; }
+	bool isAssignCity() const { return m_bAssignCity; }
 
 	// Arrays
 
 	bool isForceCivic(int i) const;
 	bool isVoteSourceType(int i) const;
 
-	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(const CvVoteInfo* pClassInfo);
-	void getCheckSum(uint32_t& iSum) const;
+	virtual void mapFrom(const picojson::value& entity);
 
+	//----------------------PROTECTED MEMBER VARIABLES----------------------------
 protected:
 
 	int m_iPopulationThreshold;

@@ -4,6 +4,7 @@
 //
 
 #include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
+#include "AI/CvGameAI.h"   // #430 folder-consolidation: self-sufficient (unity batch changed on the move to Infos/)
 #include "CvSpecialistInfo.h"
 #include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonFamVal/...) + jsonX100
 #include "CvCascadePropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk

@@ -1,147 +1,32 @@
 //------------------------------------------------------------------------------------------------
 //  FILE:    CvVoteInfo.cpp
 //------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "UI/CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
+#include "CvInfos.h"              // umbrella: keeps the unity batch's info-type defs whole (leakage guard)
 #include "AI/CvGameAI.h"
-#include "UI/CvGameTextMgr.h"
-#include "Defines/CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "AI/CvPlayerAI.h"
-#include "Infrastructure/CvPython.h"
-#include "Infrastructure/CvXMLLoadUtility.h"
-#include "Infrastructure/CvXMLLoadUtilityModTools.h"
-#include "Tools/CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
+#include "Defines/CvGlobals.h"    // GC -- the bounds asserts in the array getters
 #include "CvVoteInfo.h"
+#include "CvJsonParse.h"          // jsonChildObj / jsonIdInt / jsonIdBool / jsonIdStr / jsonResolveId
 
 
-//======================================================================================================
-//					CvVoteInfo
-//======================================================================================================
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvVoteInfo()
-//
-//  PURPOSE :   Default constructor
-//
-//------------------------------------------------------------------------------------------------------
 CvVoteInfo::CvVoteInfo()
+	: m_iPopulationThreshold(0)
+	, m_iStateReligionVotePercent(0)
+	, m_iTradeRoutes(0)
+	, m_iMinVoters(0)
+	, m_bSecretaryGeneral(false)
+	, m_bVictory(false)
+	, m_bFreeTrade(false)
+	, m_bNoNukes(false)
+	, m_bCityVoting(false)
+	, m_bCivVoting(false)
+	, m_bDefensivePact(false)
+	, m_bOpenBorders(false)
+	, m_bForcePeace(false)
+	, m_bForceNoTrade(false)
+	, m_bForceWar(false)
+	, m_bAssignCity(false)
 {
-	CvInfoUtil(this).initDataMembers();
-}
-
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvVoteInfo()
-//
-//  PURPOSE :   Default destructor
-//
-//------------------------------------------------------------------------------------------------------
-CvVoteInfo::~CvVoteInfo()
-{
-}
-
-
-int CvVoteInfo::getPopulationThreshold() const
-{
-	return m_iPopulationThreshold;
-}
-
-
-int CvVoteInfo::getStateReligionVotePercent() const
-{
-	return m_iStateReligionVotePercent;
-}
-
-
-int CvVoteInfo::getTradeRoutes() const
-{
-	return m_iTradeRoutes;
-}
-
-
-int CvVoteInfo::getMinVoters() const
-{
-	return m_iMinVoters;
-}
-
-
-bool CvVoteInfo::isSecretaryGeneral() const
-{
-	return m_bSecretaryGeneral;
-}
-
-
-bool CvVoteInfo::isVictory() const
-{
-	return m_bVictory;
-}
-
-
-bool CvVoteInfo::isFreeTrade() const
-{
-	return m_bFreeTrade;
-}
-
-
-bool CvVoteInfo::isNoNukes() const
-{
-	return m_bNoNukes;
-}
-
-
-bool CvVoteInfo::isCityVoting() const
-{
-	return m_bCityVoting;
-}
-
-
-bool CvVoteInfo::isCivVoting() const
-{
-	return m_bCivVoting;
-}
-
-
-bool CvVoteInfo::isDefensivePact() const
-{
-	return m_bDefensivePact;
-}
-
-
-bool CvVoteInfo::isOpenBorders() const
-{
-	return m_bOpenBorders;
-}
-
-
-bool CvVoteInfo::isForcePeace() const
-{
-	return m_bForcePeace;
-}
-
-
-bool CvVoteInfo::isForceNoTrade() const
-{
-	return m_bForceNoTrade;
-}
-
-
-bool CvVoteInfo::isForceWar() const
-{
-	return m_bForceWar;
-}
-
-
-bool CvVoteInfo::isAssignCity() const
-{
-	return m_bAssignCity;
 }
 
 
@@ -159,55 +44,67 @@ bool CvVoteInfo::isVoteSourceType(int i) const
 }
 
 
-void CvVoteInfo::getDataMembers(CvInfoUtil& util)
+// #430: threshold.* -> the pass rules; role -> the two class bools (SG XOR victory); effect.* -> the on-pass
+// outcome payload (bool toggles + tradeRoutes + forceCivics[] civic FKs); voteSource[] -> the DiploVote source
+// FKs; mode.* -> the tally-mode bools. All scalars carry a legacy default of 0 (the curator elides zeros).
+void CvVoteInfo::mapFrom(const picojson::value& entity)
 {
-	// Declared in the legacy getCheckSum order so the delegated checksum stays byte-identical.
-	util
-		.add(m_iPopulationThreshold, L"iPopulationThreshold")
-		.add(m_iStateReligionVotePercent, L"iStateReligionVotePercent")
-		.add(m_iTradeRoutes, L"iTradeRoutes")
-		.add(m_iMinVoters, L"iMinVoters")
-		.add(m_bSecretaryGeneral, L"bSecretaryGeneral")
-		.add(m_bVictory, L"bVictory")
-		.add(m_bFreeTrade, L"bFreeTrade")
-		.add(m_bNoNukes, L"bNoNukes")
-		.add(m_bCityVoting, L"bCityVoting")
-		.add(m_bCivVoting, L"bCivVoting")
-		.add(m_bDefensivePact, L"bDefensivePact")
-		.add(m_bOpenBorders, L"bOpenBorders")
-		.add(m_bForcePeace, L"bForcePeace")
-		.add(m_bForceNoTrade, L"bForceNoTrade")
-		.add(m_bForceWar, L"bForceWar")
-		.add(m_bAssignCity, L"bAssignCity")
-		.add(m_aeForceCivic, L"ForceCivics")
-		.add(m_aeVoteSourceTypes, L"DiploVotes")
-	;
-}
+	CvInfo::mapFrom(entity);   // core reading (type / text keys) + section dispatch
+	if (!entity.is<picojson::object>()) return;
+	const picojson::object& o = entity.get<picojson::object>();
 
+	// Idempotency -- the full-registry pass re-runs mapFrom, so clear the accumulating vectors first.
+	m_aeVoteSourceTypes.clear();
+	m_aeForceCivic.clear();
 
-bool CvVoteInfo::read(CvXMLLoadUtility* pXML)
-{
-	if (!CvInfoBase::read(pXML))
+	picojson::object::const_iterator it = o.find("voteSource");
+	if (it != o.end() && it->second.is<picojson::array>())
 	{
-		return false;
+		const picojson::array& a = it->second.get<picojson::array>();
+		for (size_t i = 0; i < a.size(); ++i)
+			if (a[i].is<std::string>()) { const int rid = jsonResolveId(a[i].get<std::string>()); if (rid >= 0) m_aeVoteSourceTypes.push_back((VoteSourceTypes)rid); }
 	}
 
-	CvInfoUtil(this).readXml(pXML);
+	if (const picojson::object* t = jsonChildObj(o, "threshold"))
+	{
+		m_iPopulationThreshold       = jsonIdInt(*t, "population");
+		m_iMinVoters                 = jsonIdInt(*t, "minVoters");
+		m_iStateReligionVotePercent  = jsonIdInt(*t, "stateReligionPercent");
+	}
 
-	return true;
+	// role (SG / victory) XOR effect (outcome) -- mutually exclusive in the data (curate_vote.py). Decode the
+	// single `role` string back into the two engine bools; the JSON carries NO bSecretaryGeneral/bVictory keys.
+	std::string role;
+	if (jsonIdStr(o, "role", role))
+	{
+		m_bSecretaryGeneral = (role == "secretaryGeneral");
+		m_bVictory          = (role == "victory");
+	}
+
+	if (const picojson::object* e = jsonChildObj(o, "effect"))
+	{
+		m_bFreeTrade     = jsonIdBool(*e, "freeTrade");
+		m_bNoNukes       = jsonIdBool(*e, "noNukes");
+		m_bDefensivePact = jsonIdBool(*e, "defensivePact");
+		m_bOpenBorders   = jsonIdBool(*e, "openBorders");
+		m_bForcePeace    = jsonIdBool(*e, "forcePeace");
+		m_bForceNoTrade  = jsonIdBool(*e, "forceNoTrade");
+		m_bForceWar      = jsonIdBool(*e, "forceWar");
+		m_bAssignCity    = jsonIdBool(*e, "assignCity");
+		m_iTradeRoutes   = jsonIdInt(*e, "tradeRoutes");
+
+		it = e->find("forceCivics");
+		if (it != e->end() && it->second.is<picojson::array>())
+		{
+			const picojson::array& a = it->second.get<picojson::array>();
+			for (size_t i = 0; i < a.size(); ++i)
+				if (a[i].is<std::string>()) { const int rid = jsonResolveId(a[i].get<std::string>()); if (rid >= 0) m_aeForceCivic.push_back((CivicTypes)rid); }
+		}
+	}
+
+	if (const picojson::object* m = jsonChildObj(o, "mode"))
+	{
+		m_bCityVoting = jsonIdBool(*m, "cityVoting");
+		m_bCivVoting  = jsonIdBool(*m, "civVoting");
+	}
 }
-
-
-void CvVoteInfo::copyNonDefaults(const CvVoteInfo* pClassInfo)
-{
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-}
-
-
-void CvVoteInfo::getCheckSum(uint32_t& iSum) const
-{
-	CvInfoUtil(this).checkSum(iSum);
-}
-

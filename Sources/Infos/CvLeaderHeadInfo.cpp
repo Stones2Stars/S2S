@@ -1,23 +1,13 @@
 //------------------------------------------------------------------------------------------------
 //  FILE:    CvLeaderHeadInfo.cpp
 //------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "UI/CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson, CvString/CvWString, gDLL, SAFE_DELETE_ARRAY, algo
+#include "CvInfos.h"              // umbrella: keeps the unity batch's info-type defs whole (leakage guard)
 #include "AI/CvGameAI.h"
-#include "UI/CvGameTextMgr.h"
-#include "Defines/CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "AI/CvPlayerAI.h"
-#include "Infrastructure/CvPython.h"
-#include "Infrastructure/CvXMLLoadUtility.h"
-#include "Infrastructure/CvXMLLoadUtilityModTools.h"
-#include "Tools/CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
 #include "CvLeaderHeadInfo.h"
+#include "CvJsonParse.h"          // jsonChildObj / jsonIdInt / jsonIdBool / jsonIdStr / jsonResolveId
+#include "UI/CvArtFileMgr.h"      // ARTFILEMGR -- getLeaderheadArtInfo / CvArtInfoLeaderhead getters
+#include "Defines/CvGlobals.h"    // GC (getNumFlavorTypes / getNumImprovementInfos / getNumEraInfos)
 
 
 //======================================================================================================
@@ -25,20 +15,97 @@
 //======================================================================================================
 
 //------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvLeaderHeadInfo()
-//
-//  PURPOSE :   Default constructor
-//
+//  FUNCTION:   CvLeaderHeadInfo()  -- default constructor (all members at their legacy load defaults)
 //------------------------------------------------------------------------------------------------------
 CvLeaderHeadInfo::CvLeaderHeadInfo()
-	// Only the hand-written-loaded fields are initialized here; everything declared in
-	// getDataMembers() is initialized by initDataMembers() (ints/bools to 0/false,
-	// enum-as-int FKs to -1 == NO_ATTITUDE/NO_CIVIC/NO_RELIGION, matching the legacy defaults).
+	// The four "other" refuse thresholds carry NON-(-1) string defaults (the archived read()'s
+	// GetOptionalChildXmlValByName third argument): no leaderhead JSON authors them, so they always
+	// keep these seeds. ATTITUDE_ANNOYED / ATTITUDE_CAUTIOUS are the AttitudeTypes enum ids.
 	: m_iMilitaryUnitRefuseAttitudeThreshold(ATTITUDE_ANNOYED)
 	, m_iWorkerRefuseAttitudeThreshold(ATTITUDE_ANNOYED)
 	, m_iCorporationRefuseAttitudeThreshold(ATTITUDE_CAUTIOUS)
 	, m_iSecretaryGeneralVoteRefuseAttitudeThreshold(ATTITUDE_ANNOYED)
+	, m_bNPC(false)
+	, m_iWonderConstructRand(0)
+	, m_iBaseAttitude(0)
+	, m_iBasePeaceWeight(0)
+	, m_iPeaceWeightRand(0)
+	, m_iWarmongerRespect(0)
+	, m_iEspionageWeight(0)
+	, m_iRefuseToTalkWarThreshold(0)
+	, m_iNoTechTradeThreshold(0)
+	, m_iTechTradeKnownPercent(0)
+	, m_iMaxGoldTradePercent(0)
+	, m_iMaxGoldPerTurnTradePercent(0)
+	, m_iCultureVictoryWeight(0)
+	, m_iSpaceVictoryWeight(0)
+	, m_iConquestVictoryWeight(0)
+	, m_iDominationVictoryWeight(0)
+	, m_iDiplomacyVictoryWeight(0)
+	, m_iMaxWarRand(0)
+	, m_iMaxWarNearbyPowerRatio(0)
+	, m_iMaxWarDistantPowerRatio(0)
+	, m_iMaxWarMinAdjacentLandPercent(0)
+	, m_iLimitedWarRand(0)
+	, m_iLimitedWarPowerRatio(0)
+	, m_iDogpileWarRand(0)
+	, m_iMakePeaceRand(0)
+	, m_iDeclareWarTradeRand(0)
+	, m_iDemandRebukedSneakProb(0)
+	, m_iDemandRebukedWarProb(0)
+	, m_iRazeCityProb(0)
+	, m_iBuildUnitProb(0)
+	, m_iBaseAttackOddsChange(0)
+	, m_iAttackOddsChangeRand(0)
+	, m_iWorseRankDifferenceAttitudeChange(0)
+	, m_iBetterRankDifferenceAttitudeChange(0)
+	, m_iCloseBordersAttitudeChange(0)
+	, m_iLostWarAttitudeChange(0)
+	, m_iAtWarAttitudeDivisor(0)
+	, m_iAtWarAttitudeChangeLimit(0)
+	, m_iAtPeaceAttitudeDivisor(0)
+	, m_iAtPeaceAttitudeChangeLimit(0)
+	, m_iSameReligionAttitudeChange(0)
+	, m_iSameReligionAttitudeDivisor(0)
+	, m_iSameReligionAttitudeChangeLimit(0)
+	, m_iDifferentReligionAttitudeChange(0)
+	, m_iDifferentReligionAttitudeDivisor(0)
+	, m_iDifferentReligionAttitudeChangeLimit(0)
+	, m_iBonusTradeAttitudeDivisor(0)
+	, m_iBonusTradeAttitudeChangeLimit(0)
+	, m_iOpenBordersAttitudeDivisor(0)
+	, m_iOpenBordersAttitudeChangeLimit(0)
+	, m_iDefensivePactAttitudeDivisor(0)
+	, m_iDefensivePactAttitudeChangeLimit(0)
+	, m_iShareWarAttitudeChange(0)
+	, m_iShareWarAttitudeDivisor(0)
+	, m_iShareWarAttitudeChangeLimit(0)
+	, m_iFavoriteCivicAttitudeChange(0)
+	, m_iFavoriteCivicAttitudeDivisor(0)
+	, m_iFavoriteCivicAttitudeChangeLimit(0)
+	// The 17 *RefuseAttitudeThreshold FKs, FavoriteCivic and FavoriteReligion are enum-as-int type ids
+	// that default to -1 (NO_ATTITUDE / NO_CIVIC / NO_RELIGION -- the archived addEnumAsInt init).
+	, m_iDemandTributeAttitudeThreshold(-1)
+	, m_iNoGiveHelpAttitudeThreshold(-1)
+	, m_iTechRefuseAttitudeThreshold(-1)
+	, m_iStrategicBonusRefuseAttitudeThreshold(-1)
+	, m_iHappinessBonusRefuseAttitudeThreshold(-1)
+	, m_iHealthBonusRefuseAttitudeThreshold(-1)
+	, m_iMapRefuseAttitudeThreshold(-1)
+	, m_iDeclareWarRefuseAttitudeThreshold(-1)
+	, m_iDeclareWarThemRefuseAttitudeThreshold(-1)
+	, m_iStopTradingRefuseAttitudeThreshold(-1)
+	, m_iStopTradingThemRefuseAttitudeThreshold(-1)
+	, m_iAdoptCivicRefuseAttitudeThreshold(-1)
+	, m_iConvertReligionRefuseAttitudeThreshold(-1)
+	, m_iOpenBordersRefuseAttitudeThreshold(-1)
+	, m_iDefensivePactRefuseAttitudeThreshold(-1)
+	, m_iPermanentAllianceRefuseAttitudeThreshold(-1)
+	, m_iVassalRefuseAttitudeThreshold(-1)
+	, m_iVassalPowerModifier(0)
+	, m_iFreedomAppreciation(0)
+	, m_iFavoriteCivic(-1)
+	, m_iFavoriteReligion(-1)
 	, m_piFlavorValue(NULL)
 	, m_piContactRand(NULL)
 	, m_piContactDelay(NULL)
@@ -52,16 +119,11 @@ CvLeaderHeadInfo::CvLeaderHeadInfo()
 	, m_piDiploWarIntroMusicScriptIds(NULL)
 	, m_piDiploWarMusicScriptIds(NULL)
 {
-	CvInfoUtil(this).initDataMembers();
 }
 
 
 //------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvLeaderHeadInfo()
-//
-//  PURPOSE :   Default destructor
-//
+//  FUNCTION:   ~CvLeaderHeadInfo()  -- default destructor
 //------------------------------------------------------------------------------------------------------
 CvLeaderHeadInfo::~CvLeaderHeadInfo()
 {
@@ -757,404 +819,305 @@ bool CvLeaderHeadInfo::isDefaultComplexTrait(int i) const
 }
 
 
-
-// Kept explicit (NOT delegated to CvInfoUtil::checkSum): hand-written fields sit mid-order in
-// the legacy checksum — the SetVariableListTagPair arrays come after m_aeTraits but before the
-// four ATTITUDE_*-defaulted refuse thresholds and the Default*Traits vectors. This reproduces
-// the legacy stream byte-identically; keep it in sync with getDataMembers() + the hand-written
-// reads if fields are added.
-void CvLeaderHeadInfo::getCheckSum(uint32_t& iSum) const
-{
-	CheckSum(iSum, m_bNPC);
-	CheckSum(iSum, m_iWonderConstructRand);
-	CheckSum(iSum, m_iBaseAttitude);
-	CheckSum(iSum, m_iBasePeaceWeight);
-	CheckSum(iSum, m_iPeaceWeightRand);
-	CheckSum(iSum, m_iWarmongerRespect);
-	CheckSum(iSum, m_iEspionageWeight);
-	CheckSum(iSum, m_iRefuseToTalkWarThreshold);
-	CheckSum(iSum, m_iNoTechTradeThreshold);
-	CheckSum(iSum, m_iTechTradeKnownPercent);
-	CheckSum(iSum, m_iMaxGoldTradePercent);
-	CheckSum(iSum, m_iMaxGoldPerTurnTradePercent);
-
-	CheckSum(iSum, m_iCultureVictoryWeight);
-	CheckSum(iSum, m_iSpaceVictoryWeight);
-	CheckSum(iSum, m_iConquestVictoryWeight);
-	CheckSum(iSum, m_iDominationVictoryWeight);
-	CheckSum(iSum, m_iDiplomacyVictoryWeight);
-
-	CheckSum(iSum, m_iMaxWarRand);
-	CheckSum(iSum, m_iMaxWarNearbyPowerRatio);
-	CheckSum(iSum, m_iMaxWarDistantPowerRatio);
-	CheckSum(iSum, m_iMaxWarMinAdjacentLandPercent);
-	CheckSum(iSum, m_iLimitedWarRand);
-	CheckSum(iSum, m_iLimitedWarPowerRatio);
-	CheckSum(iSum, m_iDogpileWarRand);
-	CheckSum(iSum, m_iMakePeaceRand);
-	CheckSum(iSum, m_iDeclareWarTradeRand);
-	CheckSum(iSum, m_iDemandRebukedSneakProb);
-	CheckSum(iSum, m_iDemandRebukedWarProb);
-	CheckSum(iSum, m_iRazeCityProb);
-	CheckSum(iSum, m_iBuildUnitProb);
-	CheckSum(iSum, m_iBaseAttackOddsChange);
-	CheckSum(iSum, m_iAttackOddsChangeRand);
-	CheckSum(iSum, m_iWorseRankDifferenceAttitudeChange);
-	CheckSum(iSum, m_iBetterRankDifferenceAttitudeChange);
-	CheckSum(iSum, m_iCloseBordersAttitudeChange);
-	CheckSum(iSum, m_iLostWarAttitudeChange);
-	CheckSum(iSum, m_iAtWarAttitudeDivisor);
-	CheckSum(iSum, m_iAtWarAttitudeChangeLimit);
-	CheckSum(iSum, m_iAtPeaceAttitudeDivisor);
-	CheckSum(iSum, m_iAtPeaceAttitudeChangeLimit);
-	CheckSum(iSum, m_iSameReligionAttitudeChange);
-	CheckSum(iSum, m_iSameReligionAttitudeDivisor);
-	CheckSum(iSum, m_iSameReligionAttitudeChangeLimit);
-	CheckSum(iSum, m_iDifferentReligionAttitudeChange);
-	CheckSum(iSum, m_iDifferentReligionAttitudeDivisor);
-	CheckSum(iSum, m_iDifferentReligionAttitudeChangeLimit);
-	CheckSum(iSum, m_iBonusTradeAttitudeDivisor);
-	CheckSum(iSum, m_iBonusTradeAttitudeChangeLimit);
-	CheckSum(iSum, m_iOpenBordersAttitudeDivisor);
-	CheckSum(iSum, m_iOpenBordersAttitudeChangeLimit);
-	CheckSum(iSum, m_iDefensivePactAttitudeDivisor);
-	CheckSum(iSum, m_iDefensivePactAttitudeChangeLimit);
-	CheckSum(iSum, m_iShareWarAttitudeChange);
-	CheckSum(iSum, m_iShareWarAttitudeDivisor);
-	CheckSum(iSum, m_iShareWarAttitudeChangeLimit);
-	CheckSum(iSum, m_iFavoriteCivicAttitudeChange);
-	CheckSum(iSum, m_iFavoriteCivicAttitudeDivisor);
-	CheckSum(iSum, m_iFavoriteCivicAttitudeChangeLimit);
-	CheckSum(iSum, m_iDemandTributeAttitudeThreshold);
-	CheckSum(iSum, m_iNoGiveHelpAttitudeThreshold);
-	CheckSum(iSum, m_iTechRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iStrategicBonusRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iHappinessBonusRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iHealthBonusRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iMapRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iDeclareWarRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iDeclareWarThemRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iStopTradingRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iStopTradingThemRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iAdoptCivicRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iConvertReligionRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iOpenBordersRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iDefensivePactRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iPermanentAllianceRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iVassalRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iVassalPowerModifier);
-	CheckSum(iSum, m_iFreedomAppreciation);
-	CheckSum(iSum, m_iFavoriteCivic);
-	CheckSum(iSum, m_iFavoriteReligion);
-
-	// Arrays
-
-	CheckSumC(iSum, m_aeTraits);
-
-	CheckSumI(iSum, GC.getNumFlavorTypes(), m_piFlavorValue);
-	CheckSumI(iSum, NUM_CONTACT_TYPES, m_piContactRand);
-	CheckSumI(iSum, NUM_CONTACT_TYPES, m_piContactDelay);
-	CheckSumI(iSum, NUM_MEMORY_TYPES, m_piMemoryDecayRand);
-	CheckSumI(iSum, NUM_MEMORY_TYPES, m_piMemoryAttitudePercent);
-	CheckSumI(iSum, NUM_ATTITUDE_TYPES, m_piNoWarAttitudeProb);
-	CheckSumI(iSum, NUM_UNITAI_TYPES, m_piUnitAIWeightModifier);
-	CheckSumI(iSum, GC.getNumImprovementInfos(), m_piImprovementWeightModifier);
-
-	CheckSum(iSum, m_iMilitaryUnitRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iWorkerRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iCorporationRefuseAttitudeThreshold);
-	CheckSum(iSum, m_iSecretaryGeneralVoteRefuseAttitudeThreshold);
-
-
-	//Int list Vector without delayed resolution
-
-	CheckSumC(iSum, m_aiDefaultTraits);
-	CheckSumC(iSum, m_aiDefaultComplexTraits);
-
-
-}
-
-
 const CvArtInfoLeaderhead* CvLeaderHeadInfo::getArtInfo() const
 {
 	return ARTFILEMGR.getLeaderheadArtInfo( getArtDefineTag());
 }
 
 
-void CvLeaderHeadInfo::getDataMembers(CvInfoUtil& util)
+// ------------------------------------------------------------------------------------------------------
+// JSON mapping helpers (file-local, uniquely prefixed -- these translation units unity-batch together,
+// so a bare jsonChildArr/etc. would collide with a sibling info's file-local of the same signature).
+// ------------------------------------------------------------------------------------------------------
+
+// o[key] as a JSON array child, or NULL.
+static const picojson::array* lhChildArr(const picojson::object& o, const char* key)
 {
-	// Declared in the legacy getCheckSum order (stylistic only here: this class keeps its explicit
-	// getCheckSum because hand-written fields — the SetVariableListTagPair arrays and the four
-	// non-(-1)-defaulted refuse-attitude thresholds — sit mid-order in the legacy checksum).
-	// The 17 *AttitudeThreshold FKs, FavoriteCivic and FavoriteReligion are int-typed type indices
-	// resolved immediately via GetInfoClass => addEnumAsInt (init -1, copy-if -1), byte-identical
-	// to the legacy reads (absent tag => GetInfoClass("") == -1).
-	// m_szArtDefineTag is NOT declared: CvInfoBase::copyNonDefaults calls the virtual getButton(),
-	// which resolves through getArtDefineTag(), so the art tag must merge BEFORE the base copy
-	// ("art files must be reread first") — it stays hand-written in read()/copyNonDefaults().
-	util
-		.add(m_bNPC, L"bNPC")
-		.add(m_iWonderConstructRand, L"iWonderConstructRand")
-		.add(m_iBaseAttitude, L"iBaseAttitude")
-		.add(m_iBasePeaceWeight, L"iBasePeaceWeight")
-		.add(m_iPeaceWeightRand, L"iPeaceWeightRand")
-		.add(m_iWarmongerRespect, L"iWarmongerRespect")
-		.add(m_iEspionageWeight, L"iEspionageWeight")
-		.add(m_iRefuseToTalkWarThreshold, L"iRefuseToTalkWarThreshold")
-		.add(m_iNoTechTradeThreshold, L"iNoTechTradeThreshold")
-		.add(m_iTechTradeKnownPercent, L"iTechTradeKnownPercent")
-		.add(m_iMaxGoldTradePercent, L"iMaxGoldTradePercent")
-		.add(m_iMaxGoldPerTurnTradePercent, L"iMaxGoldPerTurnTradePercent")
-		.add(m_iCultureVictoryWeight, L"iCultureVictoryWeight")
-		.add(m_iSpaceVictoryWeight, L"iSpaceVictoryWeight")
-		.add(m_iConquestVictoryWeight, L"iConquestVictoryWeight")
-		.add(m_iDominationVictoryWeight, L"iDominationVictoryWeight")
-		.add(m_iDiplomacyVictoryWeight, L"iDiplomacyVictoryWeight")
-		.add(m_iMaxWarRand, L"iMaxWarRand")
-		.add(m_iMaxWarNearbyPowerRatio, L"iMaxWarNearbyPowerRatio")
-		.add(m_iMaxWarDistantPowerRatio, L"iMaxWarDistantPowerRatio")
-		.add(m_iMaxWarMinAdjacentLandPercent, L"iMaxWarMinAdjacentLandPercent")
-		.add(m_iLimitedWarRand, L"iLimitedWarRand")
-		.add(m_iLimitedWarPowerRatio, L"iLimitedWarPowerRatio")
-		.add(m_iDogpileWarRand, L"iDogpileWarRand")
-		.add(m_iMakePeaceRand, L"iMakePeaceRand")
-		.add(m_iDeclareWarTradeRand, L"iDeclareWarTradeRand")
-		.add(m_iDemandRebukedSneakProb, L"iDemandRebukedSneakProb")
-		.add(m_iDemandRebukedWarProb, L"iDemandRebukedWarProb")
-		.add(m_iRazeCityProb, L"iRazeCityProb")
-		.add(m_iBuildUnitProb, L"iBuildUnitProb")
-		.add(m_iBaseAttackOddsChange, L"iBaseAttackOddsChange")
-		.add(m_iAttackOddsChangeRand, L"iAttackOddsChangeRand")
-		.add(m_iWorseRankDifferenceAttitudeChange, L"iWorseRankDifferenceAttitudeChange")
-		.add(m_iBetterRankDifferenceAttitudeChange, L"iBetterRankDifferenceAttitudeChange")
-		.add(m_iCloseBordersAttitudeChange, L"iCloseBordersAttitudeChange")
-		.add(m_iLostWarAttitudeChange, L"iLostWarAttitudeChange")
-		.add(m_iAtWarAttitudeDivisor, L"iAtWarAttitudeDivisor")
-		.add(m_iAtWarAttitudeChangeLimit, L"iAtWarAttitudeChangeLimit")
-		.add(m_iAtPeaceAttitudeDivisor, L"iAtPeaceAttitudeDivisor")
-		.add(m_iAtPeaceAttitudeChangeLimit, L"iAtPeaceAttitudeChangeLimit")
-		.add(m_iSameReligionAttitudeChange, L"iSameReligionAttitudeChange")
-		.add(m_iSameReligionAttitudeDivisor, L"iSameReligionAttitudeDivisor")
-		.add(m_iSameReligionAttitudeChangeLimit, L"iSameReligionAttitudeChangeLimit")
-		.add(m_iDifferentReligionAttitudeChange, L"iDifferentReligionAttitudeChange")
-		.add(m_iDifferentReligionAttitudeDivisor, L"iDifferentReligionAttitudeDivisor")
-		.add(m_iDifferentReligionAttitudeChangeLimit, L"iDifferentReligionAttitudeChangeLimit")
-		.add(m_iBonusTradeAttitudeDivisor, L"iBonusTradeAttitudeDivisor")
-		.add(m_iBonusTradeAttitudeChangeLimit, L"iBonusTradeAttitudeChangeLimit")
-		.add(m_iOpenBordersAttitudeDivisor, L"iOpenBordersAttitudeDivisor")
-		.add(m_iOpenBordersAttitudeChangeLimit, L"iOpenBordersAttitudeChangeLimit")
-		.add(m_iDefensivePactAttitudeDivisor, L"iDefensivePactAttitudeDivisor")
-		.add(m_iDefensivePactAttitudeChangeLimit, L"iDefensivePactAttitudeChangeLimit")
-		.add(m_iShareWarAttitudeChange, L"iShareWarAttitudeChange")
-		.add(m_iShareWarAttitudeDivisor, L"iShareWarAttitudeDivisor")
-		.add(m_iShareWarAttitudeChangeLimit, L"iShareWarAttitudeChangeLimit")
-		.add(m_iFavoriteCivicAttitudeChange, L"iFavoriteCivicAttitudeChange")
-		.add(m_iFavoriteCivicAttitudeDivisor, L"iFavoriteCivicAttitudeDivisor")
-		.add(m_iFavoriteCivicAttitudeChangeLimit, L"iFavoriteCivicAttitudeChangeLimit")
-		.addEnumAsInt(m_iDemandTributeAttitudeThreshold, L"DemandTributeAttitudeThreshold")
-		.addEnumAsInt(m_iNoGiveHelpAttitudeThreshold, L"NoGiveHelpAttitudeThreshold")
-		.addEnumAsInt(m_iTechRefuseAttitudeThreshold, L"TechRefuseAttitudeThreshold")
-		.addEnumAsInt(m_iStrategicBonusRefuseAttitudeThreshold, L"StrategicBonusRefuseAttitudeThreshold")
-		.addEnumAsInt(m_iHappinessBonusRefuseAttitudeThreshold, L"HappinessBonusRefuseAttitudeThreshold")
-		.addEnumAsInt(m_iHealthBonusRefuseAttitudeThreshold, L"HealthBonusRefuseAttitudeThreshold")
-		.addEnumAsInt(m_iMapRefuseAttitudeThreshold, L"MapRefuseAttitudeThreshold")
-		.addEnumAsInt(m_iDeclareWarRefuseAttitudeThreshold, L"DeclareWarRefuseAttitudeThreshold")
-		.addEnumAsInt(m_iDeclareWarThemRefuseAttitudeThreshold, L"DeclareWarThemRefuseAttitudeThreshold")
-		.addEnumAsInt(m_iStopTradingRefuseAttitudeThreshold, L"StopTradingRefuseAttitudeThreshold")
-		.addEnumAsInt(m_iStopTradingThemRefuseAttitudeThreshold, L"StopTradingThemRefuseAttitudeThreshold")
-		.addEnumAsInt(m_iAdoptCivicRefuseAttitudeThreshold, L"AdoptCivicRefuseAttitudeThreshold")
-		.addEnumAsInt(m_iConvertReligionRefuseAttitudeThreshold, L"ConvertReligionRefuseAttitudeThreshold")
-		.addEnumAsInt(m_iOpenBordersRefuseAttitudeThreshold, L"OpenBordersRefuseAttitudeThreshold")
-		.addEnumAsInt(m_iDefensivePactRefuseAttitudeThreshold, L"DefensivePactRefuseAttitudeThreshold")
-		.addEnumAsInt(m_iPermanentAllianceRefuseAttitudeThreshold, L"PermanentAllianceRefuseAttitudeThreshold")
-		.addEnumAsInt(m_iVassalRefuseAttitudeThreshold, L"VassalRefuseAttitudeThreshold")
-		.add(m_iVassalPowerModifier, L"iVassalPowerModifier")
-		.add(m_iFreedomAppreciation, L"iFreedomAppreciation")
-		.addEnumAsInt(m_iFavoriteCivic, L"FavoriteCivic")
-		.addEnumAsInt(m_iFavoriteReligion, L"FavoriteReligion")
-		.add(m_aeTraits, L"Traits")
-		.add(m_aiDefaultTraits, L"DefaultTraits")
-		.add(m_aiDefaultComplexTraits, L"DefaultComplexTraits")
-	;
+	picojson::object::const_iterator it = o.find(key);
+	return (it != o.end() && it->second.is<picojson::array>()) ? &it->second.get<picojson::array>() : NULL;
+}
+
+// Allocate an int[iLen] filled with iDefault (>=0 lengths only; new int[0] is valid). The mid-registry
+// first mapFrom may see a 0 count for GC-sized arrays -- the full-registry re-run reallocates correctly.
+static int* lhAllocList(int iLen, int iDefault)
+{
+	if (iLen < 0) iLen = 0;
+	int* p = new int[iLen];
+	for (int i = 0; i < iLen; ++i) p[i] = iDefault;
+	return p;
+}
+
+// parent[key] = { "INFOTYPE_X": n } -> arr[jsonResolveId("INFOTYPE_X")] = n (bounded; unresolved keys skipped,
+// mirroring the archived SetVariableListTagPair GetInfoClass()!=-1 guard).
+static void lhFillKeyed(const picojson::object& parent, const char* key, int* arr, int iLen)
+{
+	const picojson::object* m = jsonChildObj(parent, key);
+	if (m == NULL) return;
+	for (picojson::object::const_iterator it = m->begin(); it != m->end(); ++it)
+	{
+		if (!it->second.is<double>()) continue;
+		const int iId = jsonResolveId(it->first);
+		if (iId >= 0 && iId < iLen) arr[iId] = (int)it->second.get<double>();
+	}
+}
+
+// ai.flavours -- an ARRAY of single-key { FLAVOR_X: n } objects -> arr[flavorId] = n.
+static void lhFillFlavours(const picojson::object& ai, int* arr, int iLen)
+{
+	const picojson::array* a = lhChildArr(ai, "flavours");
+	if (a == NULL) return;
+	for (size_t i = 0; i < a->size(); ++i)
+	{
+		if (!(*a)[i].is<picojson::object>()) continue;
+		const picojson::object& e = (*a)[i].get<picojson::object>();
+		for (picojson::object::const_iterator it = e.begin(); it != e.end(); ++it)
+		{
+			if (!it->second.is<double>()) continue;
+			const int iId = jsonResolveId(it->first);
+			if (iId >= 0 && iId < iLen) arr[iId] = (int)it->second.get<double>();
+		}
+	}
+}
+
+// sound.diplo* -> the era-indexed audio-script array, EXACTLY the archived SetVariableListTagPairForAudioScripts:
+// full music is a { era: AS2D_* } map (resolve era, store gDLL->getAudioTagIndex(script)); intro music is an
+// [era,...] LIST carrying no script (each slot resolves to -1 == the default, so the list form is a no-op).
+static void lhFillDiploMusic(const picojson::object& snd, const char* key, int* arr, int iLen)
+{
+	picojson::object::const_iterator it = snd.find(key);
+	if (it == snd.end() || !it->second.is<picojson::object>()) return;   // list form -> nothing to set (all -1)
+	const picojson::object& m = it->second.get<picojson::object>();
+	for (picojson::object::const_iterator e = m.begin(); e != m.end(); ++e)
+	{
+		const int iEra = jsonResolveId(e->first);
+		if (iEra < 0 || iEra >= iLen) continue;
+		if (e->second.is<std::string>() && !e->second.get<std::string>().empty())
+			arr[iEra] = gDLL->getAudioTagIndex(e->second.get<std::string>().c_str());
+	}
 }
 
 
-bool CvLeaderHeadInfo::read(CvXMLLoadUtility* pXML)
+// #430: the AI leader's personality/diplomacy/strategy surface from Assets/Data/leaderheads/*.json. Base reads
+// type + identity text keys + the section census (the whole `ai` tree lands there as an unconsumed modifier-family
+// diagnostic -- this class reads it as typed members below, not composed section units). TRAITLESS BY DESIGN: the
+// curator strips every leader<->trait assignment (owner 2026-07-01), so m_aeTraits / m_aiDefault*Traits stay empty
+// and are never read here. IDEMPOTENT (CvInfo.h): every owned array is deleted + reallocated each call, so the
+// full-registry re-run cannot leak or double.
+void CvLeaderHeadInfo::mapFrom(const picojson::value& entity)
 {
-	if (!CvInfoBase::read(pXML))
+	CvInfo::mapFrom(entity);   // core reading (type / identity text) + the base section dispatch/census
+	if (!entity.is<picojson::object>()) return;
+	const picojson::object& o = entity.get<picojson::object>();
+
+	std::string s;
+
+	// --- world.art.icon -> the EXE-bound leaderhead portrait ArtDefineTag ---
+	if (const picojson::object* world = jsonChildObj(o, "world"))
+		if (const picojson::object* art = jsonChildObj(*world, "art"))
+			if (jsonIdStr(*art, "icon", s)) m_szArtDefineTag = s.c_str();
+
+	// --- reset + (re)allocate the owned arrays (idempotency). The four contact/memory arrays MUST be non-NULL:
+	//     their getters deref without a guard, and the default tables below index them directly. ---
+	SAFE_DELETE_ARRAY(m_piFlavorValue);
+	SAFE_DELETE_ARRAY(m_piContactRand);
+	SAFE_DELETE_ARRAY(m_piContactDelay);
+	SAFE_DELETE_ARRAY(m_piMemoryDecayRand);
+	SAFE_DELETE_ARRAY(m_piMemoryAttitudePercent);
+	SAFE_DELETE_ARRAY(m_piNoWarAttitudeProb);
+	SAFE_DELETE_ARRAY(m_piUnitAIWeightModifier);
+	SAFE_DELETE_ARRAY(m_piImprovementWeightModifier);
+	SAFE_DELETE_ARRAY(m_piDiploPeaceIntroMusicScriptIds);
+	SAFE_DELETE_ARRAY(m_piDiploPeaceMusicScriptIds);
+	SAFE_DELETE_ARRAY(m_piDiploWarIntroMusicScriptIds);
+	SAFE_DELETE_ARRAY(m_piDiploWarMusicScriptIds);
+
+	m_piContactRand           = lhAllocList(NUM_CONTACT_TYPES, 0);
+	m_piContactDelay          = lhAllocList(NUM_CONTACT_TYPES, 0);
+	m_piMemoryDecayRand       = lhAllocList(NUM_MEMORY_TYPES, 0);
+	m_piMemoryAttitudePercent = lhAllocList(NUM_MEMORY_TYPES, 0);
+	m_piNoWarAttitudeProb     = lhAllocList(NUM_ATTITUDE_TYPES, 0);
+	m_piUnitAIWeightModifier  = lhAllocList(NUM_UNITAI_TYPES, 0);
+	m_piFlavorValue           = lhAllocList(GC.getNumFlavorTypes(), 0);
+	m_piImprovementWeightModifier = lhAllocList(GC.getNumImprovementInfos(), 0);
+	m_piDiploPeaceIntroMusicScriptIds = lhAllocList(GC.getNumEraInfos(), -1);
+	m_piDiploPeaceMusicScriptIds      = lhAllocList(GC.getNumEraInfos(), -1);
+	m_piDiploWarIntroMusicScriptIds   = lhAllocList(GC.getNumEraInfos(), -1);
+	m_piDiploWarMusicScriptIds        = lhAllocList(GC.getNumEraInfos(), -1);
+
+	// --- ai.* : the whole personality/diplomacy tree (all raw ints; curator emitted int() with NO x100) ---
+	if (const picojson::object* ai = jsonChildObj(o, "ai"))
 	{
-		return false;
-	}
-	CvInfoUtil(this).readXml(pXML);
+		m_bNPC = jsonIdBool(*ai, "npc");
 
-	if (!m_piMemoryDecayRand)
+		lhFillFlavours(*ai, m_piFlavorValue, GC.getNumFlavorTypes());
+
+		if (const picojson::object* p = jsonChildObj(*ai, "personality"))
+		{
+			m_iBaseAttitude        = jsonIdInt(*p, "baseAttitude");
+			m_iBasePeaceWeight     = jsonIdInt(*p, "basePeaceWeight");
+			m_iPeaceWeightRand     = jsonIdInt(*p, "peaceWeightRand");
+			m_iWarmongerRespect    = jsonIdInt(*p, "warmongerRespect");
+			m_iEspionageWeight     = jsonIdInt(*p, "espionageWeight");
+			m_iWonderConstructRand = jsonIdInt(*p, "wonderConstructRand");
+			m_iBuildUnitProb       = jsonIdInt(*p, "buildUnitProb");
+			m_iFreedomAppreciation = jsonIdInt(*p, "freedomAppreciation");
+			m_iVassalPowerModifier = jsonIdInt(*p, "vassalPowerModifier");
+		}
+
+		if (const picojson::object* w = jsonChildObj(*ai, "war"))
+		{
+			m_iMaxWarRand                  = jsonIdInt(*w, "maxWarRand");
+			m_iMaxWarNearbyPowerRatio      = jsonIdInt(*w, "maxWarNearbyPowerRatio");
+			m_iMaxWarDistantPowerRatio     = jsonIdInt(*w, "maxWarDistantPowerRatio");
+			m_iMaxWarMinAdjacentLandPercent = jsonIdInt(*w, "maxWarMinAdjacentLandPercent");
+			m_iLimitedWarRand              = jsonIdInt(*w, "limitedWarRand");
+			m_iLimitedWarPowerRatio        = jsonIdInt(*w, "limitedWarPowerRatio");
+			m_iDogpileWarRand              = jsonIdInt(*w, "dogpileWarRand");
+			m_iMakePeaceRand               = jsonIdInt(*w, "makePeaceRand");
+			m_iDeclareWarTradeRand         = jsonIdInt(*w, "declareWarTradeRand");
+			m_iDemandRebukedSneakProb      = jsonIdInt(*w, "demandRebukedSneakProb");
+			m_iDemandRebukedWarProb        = jsonIdInt(*w, "demandRebukedWarProb");
+			m_iRefuseToTalkWarThreshold    = jsonIdInt(*w, "refuseToTalkWarThreshold");
+			m_iBaseAttackOddsChange        = jsonIdInt(*w, "baseAttackOddsChange");
+			m_iAttackOddsChangeRand        = jsonIdInt(*w, "attackOddsChangeRand");
+			m_iRazeCityProb                = jsonIdInt(*w, "razeCityProb");
+		}
+
+		if (const picojson::object* v = jsonChildObj(*ai, "victory"))
+		{
+			m_iCultureVictoryWeight    = jsonIdInt(*v, "culture");
+			m_iSpaceVictoryWeight      = jsonIdInt(*v, "space");
+			m_iConquestVictoryWeight   = jsonIdInt(*v, "conquest");
+			m_iDominationVictoryWeight = jsonIdInt(*v, "domination");
+			m_iDiplomacyVictoryWeight  = jsonIdInt(*v, "diplomacy");
+		}
+
+		if (const picojson::object* t = jsonChildObj(*ai, "trade"))
+		{
+			m_iMaxGoldTradePercent       = jsonIdInt(*t, "maxGoldPercent");
+			m_iMaxGoldPerTurnTradePercent = jsonIdInt(*t, "maxGoldPerTurnPercent");
+			m_iNoTechTradeThreshold      = jsonIdInt(*t, "noTechTradeThreshold");
+			m_iTechTradeKnownPercent     = jsonIdInt(*t, "techTradeKnownPercent");
+		}
+
+		// ai.attitude.<relation>.{change,divisor,changeLimit} -- each relation is its own object.
+		if (const picojson::object* at = jsonChildObj(*ai, "attitude"))
+		{
+			if (const picojson::object* r = jsonChildObj(*at, "worseRankDifference")) m_iWorseRankDifferenceAttitudeChange = jsonIdInt(*r, "change");
+			if (const picojson::object* r = jsonChildObj(*at, "betterRankDifference")) m_iBetterRankDifferenceAttitudeChange = jsonIdInt(*r, "change");
+			if (const picojson::object* r = jsonChildObj(*at, "closeBorders")) m_iCloseBordersAttitudeChange = jsonIdInt(*r, "change");
+			if (const picojson::object* r = jsonChildObj(*at, "lostWar")) m_iLostWarAttitudeChange = jsonIdInt(*r, "change");
+			if (const picojson::object* r = jsonChildObj(*at, "atWar"))
+			{
+				m_iAtWarAttitudeDivisor    = jsonIdInt(*r, "divisor");
+				m_iAtWarAttitudeChangeLimit = jsonIdInt(*r, "changeLimit");
+			}
+			if (const picojson::object* r = jsonChildObj(*at, "atPeace"))
+			{
+				m_iAtPeaceAttitudeDivisor    = jsonIdInt(*r, "divisor");
+				m_iAtPeaceAttitudeChangeLimit = jsonIdInt(*r, "changeLimit");
+			}
+			if (const picojson::object* r = jsonChildObj(*at, "sameReligion"))
+			{
+				m_iSameReligionAttitudeChange     = jsonIdInt(*r, "change");
+				m_iSameReligionAttitudeDivisor    = jsonIdInt(*r, "divisor");
+				m_iSameReligionAttitudeChangeLimit = jsonIdInt(*r, "changeLimit");
+			}
+			if (const picojson::object* r = jsonChildObj(*at, "differentReligion"))
+			{
+				m_iDifferentReligionAttitudeChange     = jsonIdInt(*r, "change");
+				m_iDifferentReligionAttitudeDivisor    = jsonIdInt(*r, "divisor");
+				m_iDifferentReligionAttitudeChangeLimit = jsonIdInt(*r, "changeLimit");
+			}
+			if (const picojson::object* r = jsonChildObj(*at, "bonusTrade"))
+			{
+				m_iBonusTradeAttitudeDivisor    = jsonIdInt(*r, "divisor");
+				m_iBonusTradeAttitudeChangeLimit = jsonIdInt(*r, "changeLimit");
+			}
+			if (const picojson::object* r = jsonChildObj(*at, "openBorders"))
+			{
+				m_iOpenBordersAttitudeDivisor    = jsonIdInt(*r, "divisor");
+				m_iOpenBordersAttitudeChangeLimit = jsonIdInt(*r, "changeLimit");
+			}
+			if (const picojson::object* r = jsonChildObj(*at, "defensivePact"))
+			{
+				m_iDefensivePactAttitudeDivisor    = jsonIdInt(*r, "divisor");
+				m_iDefensivePactAttitudeChangeLimit = jsonIdInt(*r, "changeLimit");
+			}
+			if (const picojson::object* r = jsonChildObj(*at, "shareWar"))
+			{
+				m_iShareWarAttitudeChange     = jsonIdInt(*r, "change");
+				m_iShareWarAttitudeDivisor    = jsonIdInt(*r, "divisor");
+				m_iShareWarAttitudeChangeLimit = jsonIdInt(*r, "changeLimit");
+			}
+			if (const picojson::object* r = jsonChildObj(*at, "favoriteCivic"))
+			{
+				m_iFavoriteCivicAttitudeChange     = jsonIdInt(*r, "change");
+				m_iFavoriteCivicAttitudeDivisor    = jsonIdInt(*r, "divisor");
+				m_iFavoriteCivicAttitudeChangeLimit = jsonIdInt(*r, "changeLimit");
+			}
+		}
+
+		// ai.refuse.<key> = "ATTITUDE_*" FK string -> the min-attitude thresholds (absent -> -1 == NO_ATTITUDE).
+		if (const picojson::object* rf = jsonChildObj(*ai, "refuse"))
+		{
+			if (jsonIdStr(*rf, "demandTribute", s))    m_iDemandTributeAttitudeThreshold        = jsonResolveId(s);
+			if (jsonIdStr(*rf, "noGiveHelp", s))       m_iNoGiveHelpAttitudeThreshold           = jsonResolveId(s);
+			if (jsonIdStr(*rf, "tech", s))             m_iTechRefuseAttitudeThreshold           = jsonResolveId(s);
+			if (jsonIdStr(*rf, "strategicBonus", s))   m_iStrategicBonusRefuseAttitudeThreshold = jsonResolveId(s);
+			if (jsonIdStr(*rf, "happinessBonus", s))   m_iHappinessBonusRefuseAttitudeThreshold = jsonResolveId(s);
+			if (jsonIdStr(*rf, "healthBonus", s))      m_iHealthBonusRefuseAttitudeThreshold    = jsonResolveId(s);
+			if (jsonIdStr(*rf, "map", s))              m_iMapRefuseAttitudeThreshold            = jsonResolveId(s);
+			if (jsonIdStr(*rf, "declareWar", s))       m_iDeclareWarRefuseAttitudeThreshold     = jsonResolveId(s);
+			if (jsonIdStr(*rf, "declareWarThem", s))   m_iDeclareWarThemRefuseAttitudeThreshold = jsonResolveId(s);
+			if (jsonIdStr(*rf, "stopTrading", s))      m_iStopTradingRefuseAttitudeThreshold    = jsonResolveId(s);
+			if (jsonIdStr(*rf, "stopTradingThem", s))  m_iStopTradingThemRefuseAttitudeThreshold = jsonResolveId(s);
+			if (jsonIdStr(*rf, "adoptCivic", s))       m_iAdoptCivicRefuseAttitudeThreshold     = jsonResolveId(s);
+			if (jsonIdStr(*rf, "convertReligion", s))  m_iConvertReligionRefuseAttitudeThreshold = jsonResolveId(s);
+			if (jsonIdStr(*rf, "openBorders", s))      m_iOpenBordersRefuseAttitudeThreshold    = jsonResolveId(s);
+			if (jsonIdStr(*rf, "defensivePact", s))    m_iDefensivePactRefuseAttitudeThreshold  = jsonResolveId(s);
+			if (jsonIdStr(*rf, "permanentAlliance", s)) m_iPermanentAllianceRefuseAttitudeThreshold = jsonResolveId(s);
+			if (jsonIdStr(*rf, "vassal", s))           m_iVassalRefuseAttitudeThreshold         = jsonResolveId(s);
+		}
+
+		// ai.memory.{decay,attitudePercent} keyed by MEMORY_*; ai.contact.{rand,delay} keyed by CONTACT_*.
+		if (const picojson::object* mem = jsonChildObj(*ai, "memory"))
+		{
+			lhFillKeyed(*mem, "decay", m_piMemoryDecayRand, NUM_MEMORY_TYPES);
+			lhFillKeyed(*mem, "attitudePercent", m_piMemoryAttitudePercent, NUM_MEMORY_TYPES);
+		}
+		if (const picojson::object* ct = jsonChildObj(*ai, "contact"))
+		{
+			lhFillKeyed(*ct, "rand", m_piContactRand, NUM_CONTACT_TYPES);
+			lhFillKeyed(*ct, "delay", m_piContactDelay, NUM_CONTACT_TYPES);
+		}
+
+		// flat keyed maps directly under ai: noWarProb (ATTITUDE_*), unitWeights (UNITAI_*), improvementWeights (IMPROVEMENT_*).
+		lhFillKeyed(*ai, "noWarProb", m_piNoWarAttitudeProb, NUM_ATTITUDE_TYPES);
+		lhFillKeyed(*ai, "unitWeights", m_piUnitAIWeightModifier, NUM_UNITAI_TYPES);
+		lhFillKeyed(*ai, "improvementWeights", m_piImprovementWeightModifier, GC.getNumImprovementInfos());
+
+		// ai.favorites.{civic,religion} -- FK strings (CIVIC_* / RELIGION_*); absent -> -1.
+		if (const picojson::object* fav = jsonChildObj(*ai, "favorites"))
+		{
+			if (jsonIdStr(*fav, "civic", s))    m_iFavoriteCivic    = jsonResolveId(s);
+			if (jsonIdStr(*fav, "religion", s)) m_iFavoriteReligion = jsonResolveId(s);
+		}
+	}
+
+	// --- sound.diplo* -> era-indexed audio-script indices (RUNTIME audio-tag indices, NOT info ids) ---
+	if (const picojson::object* snd = jsonChildObj(o, "sound"))
 	{
-		CvXMLLoadUtility::InitList(&m_piMemoryDecayRand, NUM_MEMORY_TYPES, 0);
-		CvXMLLoadUtility::InitList(&m_piMemoryAttitudePercent, NUM_MEMORY_TYPES, 0);
-		CvXMLLoadUtility::InitList(&m_piContactRand, NUM_CONTACT_TYPES, 0);
-		CvXMLLoadUtility::InitList(&m_piContactDelay, NUM_CONTACT_TYPES, 0);
+		lhFillDiploMusic(*snd, "diploIntroMusicPeace", m_piDiploPeaceIntroMusicScriptIds, GC.getNumEraInfos());
+		lhFillDiploMusic(*snd, "diploMusicPeace",      m_piDiploPeaceMusicScriptIds,      GC.getNumEraInfos());
+		lhFillDiploMusic(*snd, "diploIntroMusicWar",   m_piDiploWarIntroMusicScriptIds,   GC.getNumEraInfos());
+		lhFillDiploMusic(*snd, "diploMusicWar",        m_piDiploWarMusicScriptIds,        GC.getNumEraInfos());
 	}
-	CvString szTextVal;
 
-	// Hand-written remainder — see getDataMembers() for why each group stays manual:
-	// the art tag (must merge pre-base-copy), the SetVariableListTagPair fixed-length keyed
-	// arrays (no wrapper), the audio-script arrays (runtime audio-tag resolution), and the
-	// four attitude thresholds with non-(-1) string defaults (addEnumAsInt is -1-default only).
-	pXML->GetOptionalChildXmlValByName(m_szArtDefineTag, L"ArtDefineTag");
-
-	pXML->SetVariableListTagPair(&m_piFlavorValue, L"Flavors", GC.getNumFlavorTypes());
-	pXML->SetVariableListTagPair(&m_piContactRand, L"ContactRands", NUM_CONTACT_TYPES);
-	pXML->SetVariableListTagPair(&m_piContactDelay, L"ContactDelays", NUM_CONTACT_TYPES);
-	pXML->SetVariableListTagPair(&m_piMemoryDecayRand, L"MemoryDecays", NUM_MEMORY_TYPES);
-	pXML->SetVariableListTagPair(&m_piMemoryAttitudePercent, L"MemoryAttitudePercents", NUM_MEMORY_TYPES);
-	pXML->SetVariableListTagPair(&m_piNoWarAttitudeProb, L"NoWarAttitudeProbs", NUM_ATTITUDE_TYPES);
-	pXML->SetVariableListTagPair(&m_piUnitAIWeightModifier, L"UnitAIWeightModifiers", NUM_UNITAI_TYPES);
-	pXML->SetVariableListTagPair(&m_piImprovementWeightModifier, L"ImprovementWeightModifiers", GC.getNumImprovementInfos());
-	pXML->SetVariableListTagPairForAudioScripts(&m_piDiploPeaceIntroMusicScriptIds, L"DiplomacyIntroMusicPeace", GC.getNumEraInfos());
-	pXML->SetVariableListTagPairForAudioScripts(&m_piDiploPeaceMusicScriptIds, L"DiplomacyMusicPeace", GC.getNumEraInfos());
-	pXML->SetVariableListTagPairForAudioScripts(&m_piDiploWarIntroMusicScriptIds, L"DiplomacyIntroMusicWar", GC.getNumEraInfos());
-	pXML->SetVariableListTagPairForAudioScripts(&m_piDiploWarMusicScriptIds, L"DiplomacyMusicWar", GC.getNumEraInfos());
-
-	pXML->GetOptionalChildXmlValByName(szTextVal, L"MilitaryUnitRefuseAttitudeThreshold", "ATTITUDE_ANNOYED");
-	m_iMilitaryUnitRefuseAttitudeThreshold = pXML->GetInfoClass(szTextVal);
-
-	pXML->GetOptionalChildXmlValByName(szTextVal, L"WorkerRefuseAttitudeThreshold", "ATTITUDE_ANNOYED");
-	m_iWorkerRefuseAttitudeThreshold = pXML->GetInfoClass(szTextVal);
-
-	pXML->GetOptionalChildXmlValByName(szTextVal, L"CorporationRefuseAttitudeThreshold", "ATTITUDE_CAUTIOUS");
-	m_iCorporationRefuseAttitudeThreshold = pXML->GetInfoClass(szTextVal);
-
-	pXML->GetOptionalChildXmlValByName(szTextVal, L"SecretaryGeneralVoteRefuseAttitudeThreshold", "ATTITUDE_ANNOYED");
-	m_iSecretaryGeneralVoteRefuseAttitudeThreshold = pXML->GetInfoClass(szTextVal);
-
+	// --- overlay the legacy NON-ZERO memory/contact default tables onto slots still 0 (the archived read()
+	//     post-pass; the curator emits only the values authored in XML, so omitted slots need these) ---
 	setDefaultMemoryInfo();
 	setDefaultContactInfo();
-
-	return true;
-}
-
-
-void CvLeaderHeadInfo::copyNonDefaults(const CvLeaderHeadInfo* pClassInfo)
-{
-	PROFILE_EXTRA_FUNC();
-	CvString cDefault = CvString::format("").GetCString();
-
-	// Art files must be reread first! CvInfoBase::copyNonDefaults calls the virtual getButton(),
-	// which resolves through this class's getArtDefineTag(), so the art tag must be merged
-	// before the base copy — which is why it is not declared in getDataMembers().
-	if (getArtDefineTag() == cDefault) m_szArtDefineTag = pClassInfo->getArtDefineTag();
-
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-
-	for (int j = 0; j < GC.getNumFlavorTypes(); j++)
-	{
-		if (getFlavorValue(j) == 0 && pClassInfo->getFlavorValue(j) != 0)
-		{
-			if (!m_piFlavorValue)
-			{
-				CvXMLLoadUtility::InitList(&m_piFlavorValue,GC.getNumFlavorTypes(),0);
-			}
-			m_piFlavorValue[j] = pClassInfo->getFlavorValue(j);
-		}
-	}
-	for (int j = 0; j < NUM_CONTACT_TYPES; j++)
-	{
-		if (m_piContactRand[j] == 0 && pClassInfo->getContactRand(j) != 0)
-		{
-			m_piContactRand[j] = pClassInfo->getContactRand(j);
-		}
-		if (m_piContactDelay[j] == 0 && pClassInfo->getContactDelay(j) != 0)
-		{
-			m_piContactDelay[j] = pClassInfo->getContactDelay(j);
-		}
-	}
-	for (int j = 0; j < NUM_MEMORY_TYPES; j++)
-	{
-		if (m_piMemoryDecayRand[j] == 0 && pClassInfo->getMemoryDecayRand(j) != 0)
-		{
-			m_piMemoryDecayRand[j] = pClassInfo->getMemoryDecayRand(j);
-		}
-		if (m_piMemoryAttitudePercent[j] == 0 && pClassInfo->getMemoryAttitudePercent(j) != 0)
-		{
-			m_piMemoryAttitudePercent[j] = pClassInfo->getMemoryAttitudePercent(j);
-		}
-	}
-	for (int j = 0; j < NUM_ATTITUDE_TYPES; j++)
-	{
-		if (getNoWarAttitudeProb(j) == 0 && pClassInfo->getNoWarAttitudeProb(j) != 0)
-		{
-			if (!m_piNoWarAttitudeProb)
-			{
-				CvXMLLoadUtility::InitList(&m_piNoWarAttitudeProb,NUM_ATTITUDE_TYPES,0);
-			}
-			m_piNoWarAttitudeProb[j] = pClassInfo->getNoWarAttitudeProb(j);
-		}
-	}
-	for (int j = 0; j < NUM_UNITAI_TYPES; j++)
-	{
-		if (getUnitAIWeightModifier(j) == 0 && pClassInfo->getUnitAIWeightModifier(j) != 0)
-		{
-			if (!m_piUnitAIWeightModifier)
-			{
-				CvXMLLoadUtility::InitList(&m_piUnitAIWeightModifier,NUM_UNITAI_TYPES,0);
-			}
-			m_piUnitAIWeightModifier[j] = pClassInfo->getUnitAIWeightModifier(j);
-		}
-	}
-	for (int j = 0; j < GC.getNumImprovementInfos(); j++)
-	{
-		if (getImprovementWeightModifier(j) == 0 && pClassInfo->getImprovementWeightModifier(j) != 0)
-		{
-			if (!m_piImprovementWeightModifier)
-			{
-				CvXMLLoadUtility::InitList(&m_piImprovementWeightModifier, GC.getNumImprovementInfos(),0);
-			}
-			m_piImprovementWeightModifier[j] = pClassInfo->getImprovementWeightModifier(j);
-		}
-	}
-
-	for (int j = 0; j < GC.getNumEraInfos(); j++)
-	{
-		if (getDiploPeaceIntroMusicScriptIds(j) == -1 && pClassInfo->getDiploPeaceIntroMusicScriptIds(j) != -1)
-		{
-			if (!m_piDiploPeaceIntroMusicScriptIds)
-			{
-				CvXMLLoadUtility::InitList(&m_piDiploPeaceIntroMusicScriptIds, GC.getNumEraInfos(), -1);
-			}
-			m_piDiploPeaceIntroMusicScriptIds[j] = pClassInfo->getDiploPeaceIntroMusicScriptIds(j);
-		}
-		if (getDiploPeaceMusicScriptIds(j) == -1 && pClassInfo->getDiploPeaceMusicScriptIds(j) != -1)
-		{
-			if (!m_piDiploPeaceMusicScriptIds)
-			{
-				CvXMLLoadUtility::InitList(&m_piDiploPeaceMusicScriptIds, GC.getNumEraInfos(), -1);
-			}
-			m_piDiploPeaceMusicScriptIds[j] = pClassInfo->getDiploPeaceMusicScriptIds(j);
-		}
-		if (getDiploWarIntroMusicScriptIds(j) == -1 && pClassInfo->getDiploWarIntroMusicScriptIds(j) != -1)
-		{
-			if (!m_piDiploWarIntroMusicScriptIds)
-			{
-				CvXMLLoadUtility::InitList(&m_piDiploWarIntroMusicScriptIds, GC.getNumEraInfos(), -1);
-			}
-			m_piDiploWarIntroMusicScriptIds[j] = pClassInfo->getDiploWarIntroMusicScriptIds(j);
-		}
-		if (getDiploWarMusicScriptIds(j) == -1 && pClassInfo->getDiploWarMusicScriptIds(j) != -1)
-		{
-			if (!m_piDiploWarMusicScriptIds)
-			{
-				CvXMLLoadUtility::InitList(&m_piDiploWarMusicScriptIds, GC.getNumEraInfos(), -1);
-			}
-			m_piDiploWarMusicScriptIds[j] = pClassInfo->getDiploWarMusicScriptIds(j);
-		}
-	}
-
-	if (getMilitaryUnitRefuseAttitudeThreshold() == ATTITUDE_ANNOYED) m_iMilitaryUnitRefuseAttitudeThreshold = pClassInfo->getMilitaryUnitRefuseAttitudeThreshold();
-	if (getWorkerRefuseAttitudeThreshold() == ATTITUDE_ANNOYED) m_iWorkerRefuseAttitudeThreshold = pClassInfo->getWorkerRefuseAttitudeThreshold();
-	if (getCorporationRefuseAttitudeThreshold() == ATTITUDE_CAUTIOUS) m_iCorporationRefuseAttitudeThreshold = pClassInfo->getCorporationRefuseAttitudeThreshold();
-	if (getSecretaryGeneralVoteRefuseAttitudeThreshold() == ATTITUDE_ANNOYED) m_iSecretaryGeneralVoteRefuseAttitudeThreshold = pClassInfo->getSecretaryGeneralVoteRefuseAttitudeThreshold();
 }
 
 
@@ -1321,4 +1284,3 @@ void CvLeaderHeadInfo::setDefaultContactInfo()
 		}
 	}
 }
-

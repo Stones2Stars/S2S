@@ -12,7 +12,7 @@
 #include "AI/BetterBTSAI.h"                  // /computed/perf frameAccumMs: the whole-turn frame-span ms accumulators
 #include "Cascade/CvCascadeReadJson.h"       // /state/info: rjInfoForType -- the info-object edge dump (DEC-one-reverse-view)
 #include "Cascade/CvCascadeTally.h"          // /computed/tally TAG_ routing -> countUnitsWithTag (the per-tag unit count)
-#include "JsonInfo/CvJsonBoolBlock.h"        // /state/info classification exposure: the loaded tags/skills held-key sets
+#include "CvJsonBoolBlock.h"        // /state/info classification exposure: the loaded tags/skills held-key sets
 #include "Cascade/CvBuildingEnabler.h"       // /computed/enabler/buildings: the per-city domain's oracle verification
 #include "Cascade/CvUnitEnabler.h"           // /computed/enabler/units: the per-unit verdict decomposition
 #include "CvBonusInfo.h" // bonus-name resolution in the /diagnostic/whyNot trace

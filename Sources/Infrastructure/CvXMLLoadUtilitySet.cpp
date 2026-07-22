@@ -763,7 +763,7 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 	LoadGlobalClassInfo(GC.m_paInvisibleInfo, "CIV4InvisibleInfos", "Units", L"/Civ4InvisibleInfos/InvisibleInfos/InvisibleInfo", false);
 	LoadGlobalClassInfo(GC.m_paMapCategoryInfo, "CIV4MapCategoryInfos", "Terrain", L"/Civ4MapCategoryInfos/MapCategoryInfos/MapCategoryInfo", false);
 	LoadGlobalClassInfo(GC.m_paMapInfo, "CIV4MapInfo", "GameInfo", L"/Civ4MapInfos/MapInfos/MapInfo", false);
-	LoadGlobalClassInfo(GC.m_paGameSpeedInfo, "CIV4GameSpeedInfo", "GameInfo", L"/Civ4GameSpeedInfo/GameSpeedInfos/GameSpeedInfo", false);
+	LoadGlobalClassInfoJson(GC.m_paGameSpeedInfo, "gamespeeds");   // #430: JSON-fed (was CIV4GameSpeedInfo.xml) -- stop reading XML
 	LoadGlobalClassInfo(GC.m_paGameOptionInfos, "CIV4GameOptionInfos", "GameInfo", L"/Civ4GameOptionInfos/GameOptionInfos/GameOptionInfo", false);
 	LoadGlobalClassInfo(GC.m_paColorInfo, "CIV4ColorVals", "Interface", L"/Civ4ColorVals/ColorVals/ColorVal", false);
 	LoadGlobalClassInfo(GC.m_paTurnTimerInfo, "CIV4TurnTimerInfo", "GameInfo", L"/Civ4TurnTimerInfo/TurnTimerInfos/TurnTimerInfo", false);
@@ -776,15 +776,15 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 	LoadGlobalClassInfoJson(GC.m_paTerrainInfo, "terrains");
 	LoadGlobalClassInfo(GC.m_paYieldInfo, "CIV4YieldInfos", "Terrain", L"/Civ4YieldInfos/YieldInfos/YieldInfo", false);
 	LoadGlobalClassInfo(GC.m_paCommerceInfo, "CIV4CommerceInfo", "GameInfo", L"/Civ4CommerceInfo/CommerceInfos/CommerceInfo", false);
-	LoadGlobalClassInfo(GC.m_aEraInfo, "CIV4EraInfos", "GameInfo", L"/Civ4EraInfos/EraInfos/EraInfo", false);
+	LoadGlobalClassInfoJson(GC.m_aEraInfo, "eras");   // #430: JSON-fed (was CIV4EraInfos.xml)
 	LoadGlobalClassInfo(GC.m_paAnimationCategoryInfo, "CIV4AnimationInfos", "Units", L"/Civ4AnimationInfos/AnimationCategories/AnimationCategory", false);
 	LoadGlobalClassInfo(GC.m_paAnimationPathInfo, "CIV4AnimationPathInfos", "Units", L"/Civ4AnimationPathInfos/AnimationPaths/AnimationPath", false);
 	LoadGlobalClassInfo(GC.m_paCursorInfo, "CIV4CursorInfo", "GameInfo", L"/Civ4CursorInfo/CursorInfos/CursorInfo", false);
 	LoadGlobalClassInfoJson(GC.m_paCivicOptionInfo, "civicoptions");
 	LoadGlobalClassInfo(GC.m_paUpkeepInfo, "CIV4UpkeepInfo", "GameInfo", L"/Civ4UpkeepInfo/UpkeepInfos/UpkeepInfo", false);
 	LoadGlobalClassInfoJson(GC.m_paCultureLevelInfo, "culturelevels");
-	LoadGlobalClassInfo(GC.m_paBonusClassInfo, "CIV4BonusClassInfos", "Terrain", L"/Civ4BonusClassInfos/BonusClassInfos/BonusClassInfo", false);
-	LoadGlobalClassInfo(GC.m_paVictoryInfo, "CIV4VictoryInfo", "GameInfo", L"/Civ4VictoryInfo/VictoryInfos/VictoryInfo", false);
+	LoadGlobalClassInfoJson(GC.m_paBonusClassInfo, "bonusclasses");   // #430: JSON-fed (was CIV4BonusClassInfos.xml)
+	LoadGlobalClassInfoJson(GC.m_paVictoryInfo, "victories");   // #430: JSON-fed (was CIV4VictoryInfo.xml)
 	LoadGlobalClassInfo(GC.m_paEffectInfo, "CIV4EffectInfos", "Misc", L"/Civ4EffectInfos/EffectInfos/EffectInfo", false);
 	LoadGlobalClassInfo(GC.m_paEntityEventInfo, "CIV4EntityEventInfos", "Units", L"/Civ4EntityEventInfos/EntityEventInfos/EntityEventInfo", false);
 	LoadGlobalClassInfoJson(GC.m_paPropertyInfo, "properties");
@@ -803,7 +803,7 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 
 	LoadGlobalClassInfoJson(GC.m_heritageInfo, "heritages");
 	LoadGlobalClassInfoJson(GC.m_paBonusInfo, "bonuses");
-	LoadGlobalClassInfo(GC.m_paSpecialUnitInfo, "CIV4SpecialUnitInfos", "Units", L"/Civ4SpecialUnitInfos/SpecialUnitInfos/SpecialUnitInfo", false);
+	LoadGlobalClassInfoJson(GC.m_paSpecialUnitInfo, "specialunits");   // #430: JSON-fed (was CIV4SpecialUnitInfos.xml)
 	shouldHaveType = true;
 	LoadGlobalClassInfoJson(GC.m_paRouteInfo, "routes");
 	shouldHaveType = false;
@@ -813,7 +813,7 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 	LoadGlobalClassInfoJson(GC.m_paPromotionLineInfo, "promotionlines");
 	//TB Promotion Line Mod begin
 	LoadGlobalClassInfoJson(GC.m_paPromotionInfo, "promotions");
-	LoadGlobalClassInfo(GC.m_paHurryInfo, "CIV4HurryInfo", "GameInfo", L"/Civ4HurryInfo/HurryInfos/HurryInfo", false);
+	LoadGlobalClassInfoJson(GC.m_paHurryInfo, "hurries");   // #430: JSON-fed (was CIV4HurryInfo.xml)
 	LoadGlobalClassInfoJson(GC.m_paCorporationInfo, "corporations");
 	// TGA indexation - important must do before anything else
 	std::vector<CvCorporationInfo*>& aCorporationInfos = GC.m_paCorporationInfo;
@@ -823,7 +823,7 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 		GC.setInfoTypeFromString(aCorporationInfos.at(i)->getType(), i);
 	}
 
-	LoadGlobalClassInfo(GC.m_paSpecialBuildingInfo, "CIV4SpecialBuildingInfos", "Buildings", L"/Civ4SpecialBuildingInfos/SpecialBuildingInfos/SpecialBuildingInfo", false);
+	LoadGlobalClassInfoJson(GC.m_paSpecialBuildingInfo, "specialbuildings");   // #430: JSON-fed (was CIV4SpecialBuildingInfos.xml)
 	LoadGlobalClassInfoJson(GC.m_paBuildingInfo, "buildings");
 	LoadGlobalClassInfoJson(GC.m_paCivicInfo, "civics");
 	LoadGlobalClassInfo(GC.m_paPlayerColorInfo, "CIV4PlayerColorInfos", "Interface", L"/Civ4PlayerColorInfos/PlayerColorInfos/PlayerColorInfo", false);
@@ -840,7 +840,7 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 	// GAMEOPTION_LEADER_COMPLEX_TRAITS is the separate deferred active-set step (modifier.md §4 / cascade-engine-430 §6).
 	LoadGlobalClassInfoJson(GC.m_paTraitInfo, "traits\\simple");
 	LoadGlobalClassInfoJson(GC.m_paTraitInfo, "traits\\complex");
-	LoadGlobalClassInfo(GC.m_paLeaderHeadInfo, "CIV4LeaderHeadInfos", "Civilizations", L"/Civ4LeaderHeadInfos/LeaderHeadInfos/LeaderHeadInfo", false);
+	LoadGlobalClassInfoJson(GC.m_paLeaderHeadInfo, "leaderheads");   // #430: JSON-fed (was CIV4LeaderHeadInfos.xml). Leaders ship TRAITLESS (owner ruling 2026-07-21; community re-adds post-merge). Post-load alpha re-sort below stays.
 
 	OutputDebugString("Pre leaderhead sort\n");
 	std::sort(GC.m_paLeaderHeadInfo.begin(), GC.m_paLeaderHeadInfo.end(), cmpInfoByAlphabet);
@@ -851,7 +851,7 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 	OutputDebugString("Post leaderhead sort\n");
 
 	LoadGlobalClassInfo(GC.m_paUnitArtStyleTypeInfo, "CIV4UnitArtStyleTypeInfos", "Civilizations", L"/Civ4UnitArtStyleTypeInfos/UnitArtStyleTypeInfos/UnitArtStyleTypeInfo", false);
-	LoadGlobalClassInfo(GC.m_paCivilizationInfo, "CIV4CivilizationInfos", "Civilizations", L"/Civ4CivilizationInfos/CivilizationInfos/CivilizationInfo", false);
+	LoadGlobalClassInfoJson(GC.m_paCivilizationInfo, "civilizations");   // #430: JSON-fed (was CIV4CivilizationInfos.xml). The post-load alpha re-sort + setInfoTypeFromString below re-register civ ids; readJson's full-registry re-map (CIVILIZATION_ in RJ_REPO_TYPES) then re-resolves derivativeCiv against the final ids.
 
 	LoadGlobalClassInfoJson(GC.m_paProjectInfo, "projects");
 
@@ -872,7 +872,7 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 
 	shouldHaveType = true;
 	LoadGlobalClassInfo(GC.m_paGoodyInfo, "CIV4GoodyInfo", "GameInfo", L"/Civ4GoodyInfo/GoodyInfos/GoodyInfo", false);
-	LoadGlobalClassInfo(GC.m_paHandicapInfo, "CIV4HandicapInfo", "GameInfo", L"/Civ4HandicapInfo/HandicapInfos/HandicapInfo", false);
+	LoadGlobalClassInfoJson(GC.m_paHandicapInfo, "handicaps");   // #430: JSON-fed (was CIV4HandicapInfo.xml)
 	shouldHaveType = false;
 
 	LoadGlobalClassInfo(GC.m_paMPOptionInfos, "CIV4MPOptionInfos", "GameInfo", L"/Civ4MPOptionInfos/MPOptionInfos/MPOptionInfo", false);
@@ -1034,7 +1034,7 @@ bool CvXMLLoadUtility::LoadPostMenuGlobals()
 
 	UpdateProgressCB("Global Vote");
 
-	LoadGlobalClassInfo(GC.m_paVoteInfo, "CIV4VoteInfo", "GameInfo", L"/Civ4VoteInfo/VoteInfos/VoteInfo", false);
+	LoadGlobalClassInfoJson(GC.m_paVoteInfo, "votes");   // #430: JSON-fed (was CIV4VoteInfo.xml)
 
 	UpdateProgressCB("Global Interface");
 

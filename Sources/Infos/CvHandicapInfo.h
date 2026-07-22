@@ -3,95 +3,98 @@
 #ifndef CV_HANDICAP_INFO_H
 #define CV_HANDICAP_INFO_H
 
-#include "CvInfoBase.h"
+#include "CvInfo.h"   // JSON-info base (mapFrom); on /I -> bare include
+
+namespace picojson { class value; }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
 //  class : CvHandicapInfo
 //
-//  DESC:
+//  DESC:   A difficulty level. #430: JSON-fed (Assets/Data/handicaps/*.json via
+//          mapFrom); no XML read. A CONFIG entity (enables nothing) -- modifiers only,
+//          carrying the pervasive human/AI dual-leaf duality (handicaps.md / curate_handicap.py).
 //
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class CvHandicapInfo
-	: public CvInfoBase
-	, private bst::noncopyable
+class CvHandicapInfo : public CvInfo
 {
 	//---------------------------PUBLIC INTERFACE---------------------------------
 public:
 
 	CvHandicapInfo();
-	virtual ~CvHandicapInfo();
 
-	int getFreeWinsVsBarbs() const;
-	int getAnimalAttackProb() const;
-	int getAdvancedStartPointsMod() const;
-	int getStartingGold() const;
-	int getUnitUpkeepPercent() const;
-	int getDistanceMaintenancePercent() const;
-	int getNumCitiesMaintenancePercent() const;
-	int getColonyMaintenancePercent() const;
-	int getMaxColonyMaintenance() const;
-	int getCorporationMaintenancePercent() const;
-	int getCivicUpkeepPercent() const;
-	int getInflationPercent() const;
-	/*** REVOLUTION 09/25/09 by DPII ***/
-	int getRevolutionIndexPercent() const;
-	/***********************************/
-	int getHealthBonus() const;
-	int getHappyBonus() const;
-	int getAttitudeChange() const;
-	int getNoTechTradeModifier() const;
-	int getTechTradeKnownModifier() const;
-	int getUnownedWaterTilesPerBarbarianUnit() const;
-	int getUnownedTilesPerBarbarianCity() const;
-	int getBarbarianCityCreationTurnsElapsed() const;
-	int getBarbarianCityCreationProb() const;
-	int getAnimalCombatModifier() const;
-	int getBarbarianCombatModifier() const;
-	int getAIAnimalCombatModifier() const;
-	inline int getSubdueAnimalBonusAI() const { return m_iSubdueAnimalBonusAI; }
-	int getAIBarbarianCombatModifier() const;
+	int getFreeWinsVsBarbs() const { return m_iFreeWinsVsBarbs; }
+	int getAnimalAttackProb() const { return m_iAnimalAttackProb; }
+	int getAdvancedStartPointsMod() const { return m_iAdvancedStartPointsMod; }
+	int getStartingGold() const { return m_iStartingGold; }
+	int getUnitUpkeepPercent() const { return m_iUnitUpkeepPercent; }
+	int getDistanceMaintenancePercent() const { return m_iDistanceMaintenancePercent; }
+	int getNumCitiesMaintenancePercent() const { return m_iNumCitiesMaintenancePercent; }
+	int getColonyMaintenancePercent() const { return m_iColonyMaintenancePercent; }
+	int getMaxColonyMaintenance() const { return m_iMaxColonyMaintenance; }
+	int getCorporationMaintenancePercent() const { return m_iCorporationMaintenancePercent; }
+	int getCivicUpkeepPercent() const { return m_iCivicUpkeepPercent; }
+	int getInflationPercent() const { return m_iInflationPercent; }
+	int getRevolutionIndexPercent() const { return m_iRevolutionIndexPercent; }
+	int getHealthBonus() const { return m_iHealthBonus; }
+	int getHappyBonus() const { return m_iHappyBonus; }
+	int getAttitudeChange() const { return m_iAttitudeChange; }
+	int getNoTechTradeModifier() const { return m_iNoTechTradeModifier; }
+	int getTechTradeKnownModifier() const { return m_iTechTradeKnownModifier; }
+	int getUnownedWaterTilesPerBarbarianUnit() const { return m_iUnownedWaterTilesPerBarbarianUnit; }
+	int getUnownedTilesPerBarbarianCity() const { return m_iUnownedTilesPerBarbarianCity; }
+	int getBarbarianCityCreationTurnsElapsed() const { return m_iBarbarianCityCreationTurnsElapsed; }
+	int getBarbarianCityCreationProb() const { return m_iBarbarianCityCreationProb; }
+	int getAnimalCombatModifier() const { return m_iAnimalCombatModifier; }
+	int getBarbarianCombatModifier() const { return m_iBarbarianCombatModifier; }
+	int getAIAnimalCombatModifier() const { return m_iAIAnimalCombatModifier; }
+	int getSubdueAnimalBonusAI() const { return m_iSubdueAnimalBonusAI; }
+	int getAIBarbarianCombatModifier() const { return m_iAIBarbarianCombatModifier; }
 
-	int getStartingDefenseUnits() const;
-	int getStartingWorkerUnits() const;
-	int getStartingExploreUnits() const;
-	int getAIStartingDefenseUnits() const;
-	int getAIStartingWorkerUnits() const;
-	int getAIStartingExploreUnits() const;
-	int getBarbarianInitialDefenders() const;
-	int getAIDeclareWarProb() const;
-	int getAIWorkRateModifier() const;
-	int getAIGrowthPercent() const;
-	int getAITrainPercent() const;
-	int getAIWorldTrainPercent() const;
-	int getAIConstructPercent() const;
-	int getAIWorldConstructPercent() const;
-	int getAICreatePercent() const;
-	int getAIResearchPercent() const;
-	int getAIWorldCreatePercent() const;
-	int getAICivicUpkeepPercent() const;
-	int getAIUnitUpkeepPercent() const;
-	int getAIUnitSupplyPercent() const;
-	int getAIUnitUpgradePercent() const;
-	int getAIInflationPercent() const;
-	int getAIWarWearinessPercent() const;
-	int getAIPerEraModifier() const;
-	int getAIAdvancedStartPercent() const;
-	int getNumGoodies() const;
+	int getStartingDefenseUnits() const { return m_iStartingDefenseUnits; }
+	int getStartingWorkerUnits() const { return m_iStartingWorkerUnits; }
+	int getStartingExploreUnits() const { return m_iStartingExploreUnits; }
+	int getAIStartingDefenseUnits() const { return m_iAIStartingDefenseUnits; }
+	int getAIStartingWorkerUnits() const { return m_iAIStartingWorkerUnits; }
+	int getAIStartingExploreUnits() const { return m_iAIStartingExploreUnits; }
+	int getBarbarianInitialDefenders() const { return m_iBarbarianInitialDefenders; }
+	int getAIDeclareWarProb() const { return m_iAIDeclareWarProb; }
+	int getAIWorkRateModifier() const { return m_iAIWorkRateModifier; }
+	int getAIGrowthPercent() const { return m_iAIGrowthPercent; }
+	int getAITrainPercent() const { return m_iAITrainPercent; }
+	int getAIWorldTrainPercent() const { return m_iAIWorldTrainPercent; }
+	int getAIConstructPercent() const { return m_iAIConstructPercent; }
+	int getAIWorldConstructPercent() const { return m_iAIWorldConstructPercent; }
+	int getAICreatePercent() const { return m_iAICreatePercent; }
+	int getAIResearchPercent() const { return m_iAIResearchPercent; }
+	int getAIWorldCreatePercent() const { return m_iAIWorldCreatePercent; }
+	int getAICivicUpkeepPercent() const { return m_iAICivicUpkeepPercent; }
+	int getAIUnitUpkeepPercent() const { return m_iAIUnitUpkeepPercent; }
+	int getAIUnitSupplyPercent() const { return m_iAIUnitSupplyPercent; }
+	int getAIUnitUpgradePercent() const { return m_iAIUnitUpgradePercent; }
+	int getAIInflationPercent() const { return m_iAIInflationPercent; }
+	int getAIWarWearinessPercent() const { return m_iAIWarWearinessPercent; }
+	int getAIPerEraModifier() const { return m_iAIPerEraModifier; }
+	int getAIAdvancedStartPercent() const { return m_iAIAdvancedStartPercent; }
+
+	int getNumGoodies() const { return (int)m_piGoodies.size(); }
+	int getGoodies(int i) const { return (i >= 0 && i < (int)m_piGoodies.size()) ? m_piGoodies[i] : -1; }
 
 	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
 
-	// Arrays
+	virtual void mapFrom(const picojson::value& entity);
 
-	int getGoodies(int i) const;
+	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
+	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
 
-	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(const CvHandicapInfo* pClassInfo);
-	void getCheckSum(uint32_t& iSum) const;
+protected:
+	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
 
+	//----------------------PRIVATE MEMBER VARIABLES------------------------------
 private:
-	CvPropertyManipulators m_PropertyManipulators;
+
+	CvJsonModifiers m_modifiers;                 // §6 families (the base dispatch fills this; feeds the PROPERTY_* bridge)
+	CvPropertyManipulators m_PropertyManipulators;  // fed from the PROPERTY_* families (CascadePropertyBridge::bridgeFamilies)
 
 	int m_iFreeWinsVsBarbs;
 	int m_iAnimalAttackProb;
@@ -147,9 +150,7 @@ private:
 	int m_iAIPerEraModifier;
 	int m_iAIAdvancedStartPercent;
 
-	CvString m_szHandicapName;
-
-	std::vector<int> m_piGoodies;
+	std::vector<int> m_piGoodies;   // identity.goodies -> resolved GOODY_* ids
 };
 
 #endif // CV_HANDICAP_INFO_H

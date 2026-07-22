@@ -476,7 +476,7 @@ class CvFinanceAdvisor:
 				else:
 					fPlayerGoldModifierEffect += fCityTotal * playerGoldModifier / 100.0
 
-				fBonusGoldModifierEffect += fCityTotal * CyCity.getBonusCommerceRateModifier(eComGold) / 100.0
+				# #430 STOPGAP: CyCity.getBonusCommerceRateModifier was removed (m_aiBonus* cut); the bonus commerce-rate modifier is folded into the cascade's total commerce rate. This breakdown row is dropped until a cascade commerce-BREAKDOWN output exists (roadmap F8) -- DISPLAY-only, actual gold unaffected. (fBonusGoldModifierEffect stays 0.0.)
 
 				for entry in multipliers:
 					if CyCity.isActiveBuilding(entry[0]):

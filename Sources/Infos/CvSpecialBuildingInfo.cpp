@@ -1,118 +1,39 @@
 //------------------------------------------------------------------------------------------------
 //  FILE:    CvSpecialBuildingInfo.cpp
 //------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "UI/CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
+#include "CvInfos.h"              // umbrella: keeps the unity batch's info-type defs whole (leakage guard)
 #include "AI/CvGameAI.h"
-#include "UI/CvGameTextMgr.h"
-#include "Defines/CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "AI/CvPlayerAI.h"
-#include "Infrastructure/CvPython.h"
-#include "Infrastructure/CvXMLLoadUtility.h"
-#include "Infrastructure/CvXMLLoadUtilityModTools.h"
-#include "Tools/CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
 #include "CvSpecialBuildingInfo.h"
+#include "CvJsonParse.h"          // jsonChildObj / jsonIdInt
 
 
-//======================================================================================================
-//					CvSpecialBuildingInfo
-//======================================================================================================
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvSpecialBuildingInfo()
-//
-//  PURPOSE :   Default constructor
-//
-//------------------------------------------------------------------------------------------------------
 CvSpecialBuildingInfo::CvSpecialBuildingInfo()
+	: m_iObsoleteTech(NO_TECH)        // DATA GAP: no tech key in the JSON -- stays NO_TECH (fail-loud)
+	, m_iTechPrereq(NO_TECH)          //   ""
+	, m_iTechPrereqAnyone(NO_TECH)    //   "" (int-typed tech FK; -1 == NO_TECH)
+	, m_iMaxPlayerInstances(-1)       // legacy default (archived .add(iMaxPlayerInstances, -1))
+	, m_bValid(true)                  // legacy default TRUE (curator elides valid:true; only explicit valid:false overrides)
 {
-	CvInfoUtil(this).initDataMembers();
 }
 
 
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvSpecialBuildingInfo()
-//
-//  PURPOSE :   Default destructor
-//
-//------------------------------------------------------------------------------------------------------
-CvSpecialBuildingInfo::~CvSpecialBuildingInfo()
+// #430: allowed.empire -> iMaxPlayerInstances; identity.valid overrides the true default only when explicitly present.
+// ⛔ DATA GAP (accepted, fail-loud): specialbuildings/*.json carry NO tech data (curator missing), so
+// techPrereq / obsoleteTech / techPrereqAnyone are NOT mapped and stay NO_TECH -- tech-gating + the cascade
+// EDGEB_SPECIAL_BUILDINGS edges drop until the curator is written. Do NOT invent a mapping.
+void CvSpecialBuildingInfo::mapFrom(const picojson::value& entity)
 {
-	CvInfoUtil(this).uninitDataMembers();
-}
+	CvInfo::mapFrom(entity);   // core reading (type / text keys / button) + availability
+	if (!entity.is<picojson::object>()) return;
+	const picojson::object& o = entity.get<picojson::object>();
 
+	if (const picojson::object* a = jsonChildObj(o, "allowed"))
+		m_iMaxPlayerInstances = jsonIdInt(*a, "empire", -1);
 
-void CvSpecialBuildingInfo::getDataMembers(CvInfoUtil& util)
-{
-	// Declared in the legacy getCheckSum order so the delegated checksum stays byte-identical.
-	// NOTE: the legacy hand-written copyNonDefaults compared the three tech FKs against 0 instead of
-	// the type-correct -1 (NO_TECH), so a modular merge could never inherit them; the wrappers use -1,
-	// fixing that latent modular-merge bug.
-	util
-		.addEnum(m_iObsoleteTech, L"ObsoleteTech")
-		.addEnum(m_iTechPrereq, L"TechPrereq")
-		.addEnumAsInt(m_iTechPrereqAnyone, L"TechPrereqAnyone")
-		.add(m_iMaxPlayerInstances, L"iMaxPlayerInstances", -1)
-		.add(m_bValid, L"bValid")
-	;
-}
-
-
-TechTypes CvSpecialBuildingInfo::getObsoleteTech() const
-{
-	return m_iObsoleteTech;
-}
-
-
-int CvSpecialBuildingInfo::getTechPrereqAnyone() const
-{
-	return m_iTechPrereqAnyone;
-}
-
-
-int CvSpecialBuildingInfo::getMaxPlayerInstances() const
-{
-	return m_iMaxPlayerInstances;
-}
-
-
-bool CvSpecialBuildingInfo::isValid() const
-{
-	return m_bValid;
-}
-
-
-bool CvSpecialBuildingInfo::read(CvXMLLoadUtility* pXML)
-{
-	if (!CvInfoBase::read(pXML))
+	if (const picojson::object* io = jsonChildObj(o, "identity"))
 	{
-		return false;
+		picojson::object::const_iterator it = io->find("valid");
+		if (it != io->end() && it->second.is<bool>()) m_bValid = it->second.get<bool>();
 	}
-
-	CvInfoUtil(this).readXml(pXML);
-
-	return true;
 }
-
-
-void CvSpecialBuildingInfo::copyNonDefaults(const CvSpecialBuildingInfo* pClassInfo)
-{
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-}
-
-
-void CvSpecialBuildingInfo::getCheckSum(uint32_t& iSum) const
-{
-	CvInfoUtil(this).checkSum(iSum);
-}
-

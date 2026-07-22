@@ -51,7 +51,6 @@ Settings
                     + ' /I"$SOURCE_DIR$"'
                     + ' /I"$SOURCE_DIR$/Infos"'
                     + ' /I"$SOURCE_DIR$/Cascade"'
-                    + ' /I"$SOURCE_DIR$/JsonInfo"'
 
 .INCS               = '$PROJECT_INCS$ $GLOBAL_INCS$'
 

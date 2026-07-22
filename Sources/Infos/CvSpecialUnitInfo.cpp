@@ -1,128 +1,39 @@
 //------------------------------------------------------------------------------------------------
 //  FILE:    CvSpecialUnitInfo.cpp
 //------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "UI/CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
+#include "CvInfos.h"              // umbrella: keeps the unity batch's info-type defs whole (leakage guard)
 #include "AI/CvGameAI.h"
-#include "UI/CvGameTextMgr.h"
-#include "Defines/CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "AI/CvPlayerAI.h"
-#include "Infrastructure/CvPython.h"
-#include "Infrastructure/CvXMLLoadUtility.h"
-#include "Infrastructure/CvXMLLoadUtilityModTools.h"
-#include "Tools/CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
 #include "CvSpecialUnitInfo.h"
+#include "CvJsonParse.h"          // jsonFamVal / jsonChildObj / jsonIdBool
 
 
-
-//======================================================================================================
-//					CvSpecialUnitInfo
-//======================================================================================================
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvSpecialUnitInfo()
-//
-//  PURPOSE :   Default constructor
-//
-//------------------------------------------------------------------------------------------------------
 CvSpecialUnitInfo::CvSpecialUnitInfo()
-{
-	CvInfoUtil(this).initDataMembers();
-}
-
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvSpecialUnitInfo()
-//
-//  PURPOSE :   Default destructor
-//
-//------------------------------------------------------------------------------------------------------
-CvSpecialUnitInfo::~CvSpecialUnitInfo()
+	: m_bValid(true)          // legacy default TRUE (curator elides valid:true; only an explicit valid:false overrides)
+	, m_bCityLoad(false)
+	, m_bSMLoadSame(false)
+	, m_iCombatPercent(0)
+	, m_iWithdrawalChange(0)
 {
 }
 
 
-bool CvSpecialUnitInfo::isValid() const
+// #430: strength.unit.percent -> iCombatPercent, withdrawal.unit.percent -> iWithdrawalChange (raw percents);
+// identity.{cityLoad,smLoadSame} flags; identity.valid overrides the true default only when explicitly present.
+void CvSpecialUnitInfo::mapFrom(const picojson::value& entity)
 {
-	return m_bValid;
-}
+	CvInfo::mapFrom(entity);   // core reading (type / text keys) + availability
+	if (!entity.is<picojson::object>()) return;
+	const picojson::object& o = entity.get<picojson::object>();
 
+	m_iCombatPercent    = jsonFamVal(o, "strength", "unit", "percent");
+	m_iWithdrawalChange = jsonFamVal(o, "withdrawal", "unit", "percent");
 
-bool CvSpecialUnitInfo::isCityLoad() const
-{
-	return m_bCityLoad;
-}
-
-
-bool CvSpecialUnitInfo::isSMLoadSame() const
-{
-	return m_bSMLoadSame;
-}
-
-
-int CvSpecialUnitInfo::getCombatPercent() const
-{
-	return m_iCombatPercent;
-}
-
-
-int CvSpecialUnitInfo::getWithdrawalChange() const
-{
-	return m_iWithdrawalChange;
-}
-
-
-// Arrays
-
-
-void CvSpecialUnitInfo::getDataMembers(CvInfoUtil& util)
-{
-	util
-		.add(m_bValid, L"bValid")
-		.add(m_bCityLoad, L"bCityLoad")
-		.add(m_bSMLoadSame, L"bSMLoadSame")
-		.add(m_iCombatPercent, L"iCombatPercent")
-		.add(m_iWithdrawalChange, L"iWithdrawalChange")
-	;
-}
-
-
-bool CvSpecialUnitInfo::read(CvXMLLoadUtility* pXML)
-{
-	if (!CvInfoBase::read(pXML))
+	if (const picojson::object* io = jsonChildObj(o, "identity"))
 	{
-		return false;
+		m_bCityLoad   = jsonIdBool(*io, "cityLoad");
+		m_bSMLoadSame = jsonIdBool(*io, "smLoadSame");
+		picojson::object::const_iterator it = io->find("valid");
+		if (it != io->end() && it->second.is<bool>()) m_bValid = it->second.get<bool>();
 	}
-
-	CvInfoUtil(this).readXml(pXML);
-
-	return true;
 }
-
-
-void CvSpecialUnitInfo::copyNonDefaults(const CvSpecialUnitInfo* pClassInfo)
-{
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-}
-
-
-void CvSpecialUnitInfo::getCheckSum(uint32_t& iSum) const
-{
-	// NOTE: kept explicit (not delegated to CvInfoUtil) to preserve the exact legacy checksum, which
-	// historically omits m_bCityLoad. Folding it in would change the value.
-	CheckSum(iSum, m_bValid);
-	CheckSum(iSum, m_bSMLoadSame);
-	CheckSum(iSum, m_iCombatPercent);
-	CheckSum(iSum, m_iWithdrawalChange);
-}
-

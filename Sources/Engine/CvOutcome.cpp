@@ -29,9 +29,9 @@
 #include "Tools/CheckSum.h"
 #include "AI/CvGameAI.h"
 #include "Infrastructure/IntExpr.h"
-#include "JsonInfo/CvJsonCondition.h"            // #430: cascade condition tree (replaces the BoolExpr gates)
-#include "JsonInfo/CvJsonConditionParse.h"       // cascadeParseCondition -- JSON -> CvJsonCondition
-#include "JsonInfo/CvJsonParse.h"                 // jsonResolveId / jsonChildObj / picojson helpers
+#include "CvJsonCondition.h"            // #430: cascade condition tree (replaces the BoolExpr gates)
+#include "CvJsonConditionParse.h"       // cascadeParseCondition -- JSON -> CvJsonCondition
+#include "CvJsonParse.h"                 // jsonResolveId / jsonChildObj / picojson helpers
 #include "Cascade/CvCascadeConditionEval.h"       // cascadeEvalCondition + CvCascadeEvalCtx
 
 namespace

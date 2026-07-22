@@ -3,19 +3,22 @@
 #ifndef CV_CIVILIZATION_INFO_H
 #define CV_CIVILIZATION_INFO_H
 
-#include "CvInfoBase.h"
+#include "CvInfo.h"   // JSON-info base (mapFrom); on /I -> bare include
+
+namespace picojson { class value; }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
 //  class : CvCivilizationInfo
 //
-//  DESC:
+//  DESC:   A civilization (game-start grants + per-civ art/identity). #430: JSON-fed
+//          (Assets/Data/civilizations/*.json via mapFrom); no XML read. This ONE engine
+//          class is both the typed getCivilizationInfo(...) consumer surface AND the JSON
+//          payload (InfoRepo aliases GC.m_paCivilizationInfo); there is no separate poco.
 //
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class CvArtInfoCivilization;
-class CvCivilizationInfo
-	: public CvInfoBase
-	, private bst::noncopyable
+class CvCivilizationInfo : public CvInfo
 {
 	//---------------------------PUBLIC INTERFACE---------------------------------
 public:
@@ -76,10 +79,7 @@ public:
 	// as allowed in Unit or Building Info by the EnabledCivilization tag.  Generally used for NPC players.
 	bool isStronglyRestricted() const;
 
-	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(const CvCivilizationInfo* pClassInfo);
-	void getCheckSum(uint32_t& iSum) const;
+	virtual void mapFrom(const picojson::value& entity);
 
 	//----------------------PROTECTED MEMBER VARIABLES----------------------------
 protected:

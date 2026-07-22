@@ -3,43 +3,35 @@
 #ifndef CV_SPECIAL_UNIT_INFO_H
 #define CV_SPECIAL_UNIT_INFO_H
 
-#include "CvInfoBase.h"
+#include "CvInfo.h"   // JSON-info base (mapFrom); on /I -> bare include
+
+namespace picojson { class value; }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
 //  class : CvSpecialUnitInfo
 //
-//  DESC:
+//  DESC:   A special-unit class (captive / people / missile / fighter / ...).
+//          #430: JSON-fed (Assets/Data/specialunits/*.json via mapFrom); no XML read.
 //
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class CvSpecialUnitInfo
-	: public CvInfoBase
-	, private bst::noncopyable
+class CvSpecialUnitInfo : public CvInfo
 {
 	//---------------------------PUBLIC INTERFACE---------------------------------
 public:
 
 	CvSpecialUnitInfo();
-	virtual ~CvSpecialUnitInfo();
 
-	bool isValid() const;
-	bool isCityLoad() const;
-	bool isSMLoadSame() const;
+	bool isValid() const { return m_bValid; }
+	bool isCityLoad() const { return m_bCityLoad; }
+	bool isSMLoadSame() const { return m_bSMLoadSame; }
 
-	// Arrays
+	int getCombatPercent() const { return m_iCombatPercent; }
+	int getWithdrawalChange() const { return m_iWithdrawalChange; }
 
-	int getCombatPercent() const;
-	int getWithdrawalChange() const;
-
-	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-
-	void copyNonDefaults(const CvSpecialUnitInfo* pClassInfo);
-
-	void getCheckSum(uint32_t& iSum) const;
+	virtual void mapFrom(const picojson::value& entity);
 
 	//----------------------PROTECTED MEMBER VARIABLES----------------------------
-
 protected:
 
 	bool m_bValid;

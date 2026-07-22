@@ -66,17 +66,17 @@ CASCADE_INFOREPO_ALIAS(CvPropertyInfo,      m_paPropertyInfo)
 CASCADE_INFOREPO_ALIAS(CvHeritageInfo, m_heritageInfo)       // #430: loaded into the GC array by LoadGlobalClassInfoJson
 CASCADE_INFOREPO_ALIAS(CvBuildInfo,        m_buildTable.rows())  // #430: the BuildInfo catalog's row vector
 CASCADE_INFOREPO_OWNED(CvComplexTraitTag)    // the complex-trait set -- JSON-only, no XML shell
-CASCADE_INFOREPO_OWNED(CvCivilizationInfo)
-CASCADE_INFOREPO_OWNED(CvEraInfo)
-CASCADE_INFOREPO_OWNED(CvHandicapInfo)
-CASCADE_INFOREPO_OWNED(CvSpecialBuildingInfo)
-CASCADE_INFOREPO_OWNED(CvGameSpeedInfo)
-CASCADE_INFOREPO_OWNED(CvLeaderHeadInfo)
-CASCADE_INFOREPO_OWNED(CvSpecialUnitInfo)
-CASCADE_INFOREPO_OWNED(CvVictoryInfo)
-CASCADE_INFOREPO_OWNED(CvVoteInfo)
-CASCADE_INFOREPO_OWNED(CvHurryInfo)
-CASCADE_INFOREPO_OWNED(CvBonusClassInfo)
+CASCADE_INFOREPO_ALIAS(CvCivilizationInfo,  m_paCivilizationInfo) // #430: consolidated onto the JSON-fed engine class (re-mapped for post-sort derivativeCiv)
+CASCADE_INFOREPO_ALIAS(CvEraInfo,           m_aEraInfo)            // #430: consolidated onto the JSON-fed engine class (note: m_aEraInfo)
+CASCADE_INFOREPO_ALIAS(CvHandicapInfo,      m_paHandicapInfo)     // #430: consolidated onto the JSON-fed engine class
+CASCADE_INFOREPO_ALIAS(CvSpecialBuildingInfo, m_paSpecialBuildingInfo) // #430: consolidated onto the JSON-fed engine class
+CASCADE_INFOREPO_ALIAS(CvGameSpeedInfo,     m_paGameSpeedInfo)   // #430: consolidated onto the JSON-fed engine class
+CASCADE_INFOREPO_ALIAS(CvLeaderHeadInfo,    m_paLeaderHeadInfo)   // #430: consolidated onto the JSON-fed engine class
+CASCADE_INFOREPO_ALIAS(CvSpecialUnitInfo,   m_paSpecialUnitInfo)   // #430: consolidated onto the JSON-fed engine class
+CASCADE_INFOREPO_ALIAS(CvVictoryInfo,       m_paVictoryInfo)       // #430: consolidated onto the JSON-fed engine class
+CASCADE_INFOREPO_ALIAS(CvVoteInfo,          m_paVoteInfo)         // #430: consolidated onto the JSON-fed engine class
+CASCADE_INFOREPO_ALIAS(CvHurryInfo,         m_paHurryInfo)        // #430: consolidated onto the JSON-fed engine class
+CASCADE_INFOREPO_ALIAS(CvBonusClassInfo,    m_paBonusClassInfo)   // #430: consolidated onto the JSON-fed engine class
 CASCADE_INFOREPO_OWNED(CvSkillClsTag)        // the five generated classification categories (ClassificationRegistry)
 CASCADE_INFOREPO_OWNED(CvTagClsTag)
 CASCADE_INFOREPO_OWNED(CvAttributeClsTag)

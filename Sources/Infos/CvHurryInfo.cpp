@@ -1,105 +1,33 @@
 //------------------------------------------------------------------------------------------------
 //  FILE:    CvHurryInfo.cpp
 //------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "UI/CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
+#include "CvInfos.h"              // umbrella: keeps the unity batch's info-type defs whole (leakage guard)
 #include "AI/CvGameAI.h"
-#include "UI/CvGameTextMgr.h"
-#include "Defines/CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "AI/CvPlayerAI.h"
-#include "Infrastructure/CvPython.h"
-#include "Infrastructure/CvXMLLoadUtility.h"
-#include "Infrastructure/CvXMLLoadUtilityModTools.h"
-#include "Tools/CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
 #include "CvHurryInfo.h"
+#include "CvJsonParse.h"          // jsonChildObj / jsonIdInt / jsonIdBool
 
 
-//======================================================================================================
-//					CvHurryInfo
-//======================================================================================================
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvHurryInfo()
-//
-//  PURPOSE :   Default constructor
-//
-//------------------------------------------------------------------------------------------------------
 CvHurryInfo::CvHurryInfo()
-{
-	CvInfoUtil(this).initDataMembers();
-}
-
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvHurryInfo()
-//
-//  PURPOSE :   Default destructor
-//
-//------------------------------------------------------------------------------------------------------
-CvHurryInfo::~CvHurryInfo()
+	: m_iGoldPerProduction(0)
+	, m_iProductionPerPopulation(0)
+	, m_bAnger(false)
 {
 }
 
 
-int CvHurryInfo::getGoldPerProduction() const
+// #430: conversion.{goldPerProduction,productionPerPopulation} (mutually exclusive rush rates, raw ints,
+// each absent -> 0); causesAnger top-level flag -> bAnger.
+void CvHurryInfo::mapFrom(const picojson::value& entity)
 {
-	return m_iGoldPerProduction;
-}
+	CvInfo::mapFrom(entity);   // core reading (type / text keys) + availability
+	if (!entity.is<picojson::object>()) return;
+	const picojson::object& o = entity.get<picojson::object>();
 
-
-int CvHurryInfo::getProductionPerPopulation() const
-{
-	return m_iProductionPerPopulation;
-}
-
-
-bool CvHurryInfo::isAnger() const
-{
-	return m_bAnger;
-}
-
-
-void CvHurryInfo::getDataMembers(CvInfoUtil& util)
-{
-	util
-		.add(m_iGoldPerProduction, L"iGoldPerProduction")
-		.add(m_iProductionPerPopulation, L"iProductionPerPopulation")
-		.add(m_bAnger, L"bAnger")
-	;
-}
-
-
-bool CvHurryInfo::read(CvXMLLoadUtility* pXML)
-{
-	if (!CvInfoBase::read(pXML))
+	if (const picojson::object* c = jsonChildObj(o, "conversion"))
 	{
-		return false;
+		m_iGoldPerProduction       = jsonIdInt(*c, "goldPerProduction");
+		m_iProductionPerPopulation = jsonIdInt(*c, "productionPerPopulation");
 	}
-
-	CvInfoUtil(this).readXml(pXML);
-
-	return true;
+	m_bAnger = jsonIdBool(o, "causesAnger");
 }
-
-
-void CvHurryInfo::copyNonDefaults(const CvHurryInfo* pClassInfo)
-{
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-}
-
-
-void CvHurryInfo::getCheckSum(uint32_t& iSum) const
-{
-	CvInfoUtil(this).checkSum(iSum);
-}
-

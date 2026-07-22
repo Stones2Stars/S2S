@@ -327,10 +327,12 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
   - DROP (confirmed DEAD): the aid mechanic (`BonusAidModifiers`/`AidRateChanges` — city arrays saved but ZERO
     write-from-building + ZERO read-for-effect; only AI-valuation/pedia read the raw Info) + the `DROP_DEAD`/`DROP_MODULE` set.
   - `EnabledCivilizationTypes` → identity interim (→ `requires.build` when NPC civs wired); `bAllowsNukes` → `requires.build.disabled` (done).
-- **leaderhead — DONE (owner ruling 2026-07-01): ALL traits stripped.** Every leader trait assignment (`Traits`,
-  `DefaultTraits`, `DefaultComplexTraits` — simple AND complex) is dropped from the JSON; **no leader carries traits**.
-  The leader↔trait mapping (incl. simple→complex) goes to a dedicated PERMANENT carve-out (owner-ruled) pass (which re-adds a
-  `grants.traits` emit). Safe pre-cutover (the game runs traits off XML meanwhile). 118 leaderheads regenerated.
+- **leaderhead — DONE (owner rulings 2026-07-01 / 2026-07-21): ALL traits stripped; leaders ship TRAITLESS.** Every
+  leader trait assignment (`Traits`, `DefaultTraits`, `DefaultComplexTraits` — simple AND complex) is dropped from the
+  JSON; **no leader carries traits**. The engine `CvLeaderHeadInfo` is now JSON-fed (its trait members stay empty), so
+  with the leaderhead XML cut the leaders run **traitless** — this is intended: **re-adding traits is a COMMUNITY task
+  post-merge** (owner 2026-07-21: "it is supposed to be traitless, this is something for community to add after
+  merge"), NOT a carve-out we build. 118 leaderheads regenerated.
 - **era — DONE (owner ruling 2026-07-01):** `bNoGoodies`/`bNoBarbUnits`/`bNoBarbCities` → a bespoke **`worldGen`** block
   (LIVE C++ world-RULE gates: goody/barb placement — "bespoke worldgen works better", not identity/modifiers). All-false
   in every era today → mapping migrated, 0 output change (zero-drop).

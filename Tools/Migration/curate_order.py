@@ -63,6 +63,20 @@ FOLDERS = {
     "PropertyInfo": "properties",
     "TerrainInfo": "terrains",
     "FeatureInfo": "features",
+    # #430: the 11 uniformity types are now JSON-loaded (LoadGlobalClassInfoJson) too, so they need the manifest
+    # to keep the legacy XML document order. Handicap/Era especially are INDEX-referenced (not name-remapped in
+    # saves), so alphabetical load-order corrupts the save's difficulty/era index -> wrong values applied.
+    "GameSpeedInfo": "gamespeeds",
+    "EraInfo": "eras",
+    "HandicapInfo": "handicaps",
+    "CivilizationInfo": "civilizations",
+    "VictoryInfo": "victories",
+    "VoteInfo": "votes",
+    "HurryInfo": "hurries",
+    "BonusClassInfo": "bonusclasses",
+    "SpecialBuildingInfo": "specialbuildings",
+    "SpecialUnitInfo": "specialunits",
+    "LeaderHeadInfo": "leaderheads",
 }
 
 

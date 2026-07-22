@@ -16,7 +16,7 @@
 #include "AI/CvPlayerAI.h"
 #include "CvUnit.h"
 #include "Tools/CheckSum.h"
-#include "JsonInfo/CvJsonParse.h"   // jsonResolveId -- the MISSION_ FK
+#include "CvJsonParse.h"   // jsonResolveId -- the MISSION_ FK
 
 CvOutcomeMission::CvOutcomeMission() :
 m_eMission(NO_MISSION),

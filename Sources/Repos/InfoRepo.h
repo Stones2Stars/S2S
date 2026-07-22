@@ -26,18 +26,18 @@
 #include "CvProjectInfo.h"
 #include "CvHeritageInfo.h"
 #include "CvPromotionLineInfo.h"
-#include "CvJsonCivilizationInfo.h"   // the uniformity set (owner ruling: every type gets its own subclass)
-#include "CvJsonEraInfo.h"
-#include "CvJsonHandicapInfo.h"
-#include "CvJsonGameSpeedInfo.h"
-#include "CvJsonSpecialBuildingInfo.h"
+#include "CvCivilizationInfo.h"   // #430: consolidated onto the engine class (Infos/), JSON-fed; poco retired
+#include "CvEraInfo.h"          // #430: consolidated onto the engine class (Infos/), JSON-fed; poco retired
+#include "CvHandicapInfo.h"     // #430: consolidated onto the engine class (Infos/), JSON-fed; poco retired
+#include "CvGameSpeedInfo.h"   // #430: consolidated onto the engine class (Infos/), JSON-fed via mapFrom; poco retired
+#include "CvSpecialBuildingInfo.h" // #430: consolidated onto the engine class (Infos/), JSON-fed; poco retired
 #include "CvPropertyInfo.h"
-#include "CvJsonLeaderHeadInfo.h"
-#include "CvJsonSpecialUnitInfo.h"
-#include "CvJsonVictoryInfo.h"
-#include "CvJsonVoteInfo.h"
-#include "CvJsonHurryInfo.h"
-#include "CvJsonBonusClassInfo.h"
+#include "CvLeaderHeadInfo.h"   // #430: consolidated onto the engine class (Infos/), JSON-fed; poco retired
+#include "CvSpecialUnitInfo.h"   // #430: consolidated onto the engine class (Infos/), JSON-fed; poco retired
+#include "CvVictoryInfo.h"       // #430: consolidated onto the engine class (Infos/), JSON-fed; poco retired
+#include "CvVoteInfo.h"         // #430: consolidated onto the engine class (Infos/), JSON-fed; poco retired
+#include "CvHurryInfo.h"        // #430: consolidated onto the engine class (Infos/), JSON-fed; poco retired
+#include "CvBonusClassInfo.h"   // #430: consolidated onto the engine class (Infos/), JSON-fed; poco retired
 // The FIVE EXE-bound shim leaves (cascade-engine-430.md §3): the payload IS the shim so the engine getters return
 // it directly. The shim headers are thin (just their CvJson<X>Info poco, already included above + the art-info fwd decl).
 #include "CvBonusInfo.h"
@@ -104,18 +104,18 @@ template <> struct JsonPayload<CvCultureLevelInfo> { typedef CvCultureLevelInfo 
 template <> struct JsonPayload<CvProjectInfo>      { typedef CvProjectInfo      type; };
 template <> struct JsonPayload<CvHeritageInfo>     { typedef CvHeritageInfo     type; };
 template <> struct JsonPayload<CvPromotionLineInfo>{ typedef CvPromotionLineInfo type; };
-template <> struct JsonPayload<CvCivilizationInfo> { typedef CvJsonCivilizationInfo type; };
-template <> struct JsonPayload<CvEraInfo>          { typedef CvJsonEraInfo          type; };
-template <> struct JsonPayload<CvHandicapInfo>     { typedef CvJsonHandicapInfo     type; };
-template <> struct JsonPayload<CvGameSpeedInfo>    { typedef CvJsonGameSpeedInfo    type; };
-template <> struct JsonPayload<CvSpecialBuildingInfo> { typedef CvJsonSpecialBuildingInfo type; };
+template <> struct JsonPayload<CvCivilizationInfo> { typedef CvCivilizationInfo     type; };
+template <> struct JsonPayload<CvEraInfo>          { typedef CvEraInfo              type; };
+template <> struct JsonPayload<CvHandicapInfo>     { typedef CvHandicapInfo         type; };
+template <> struct JsonPayload<CvGameSpeedInfo>    { typedef CvGameSpeedInfo        type; };
+template <> struct JsonPayload<CvSpecialBuildingInfo> { typedef CvSpecialBuildingInfo type; };
 template <> struct JsonPayload<CvPropertyInfo>     { typedef CvPropertyInfo     type; };
-template <> struct JsonPayload<CvLeaderHeadInfo>   { typedef CvJsonLeaderHeadInfo   type; };
-template <> struct JsonPayload<CvSpecialUnitInfo>  { typedef CvJsonSpecialUnitInfo  type; };
-template <> struct JsonPayload<CvVictoryInfo>      { typedef CvJsonVictoryInfo      type; };
-template <> struct JsonPayload<CvVoteInfo>         { typedef CvJsonVoteInfo         type; };
-template <> struct JsonPayload<CvHurryInfo>        { typedef CvJsonHurryInfo        type; };
-template <> struct JsonPayload<CvBonusClassInfo>   { typedef CvJsonBonusClassInfo   type; };
+template <> struct JsonPayload<CvLeaderHeadInfo>   { typedef CvLeaderHeadInfo       type; };
+template <> struct JsonPayload<CvSpecialUnitInfo>  { typedef CvSpecialUnitInfo      type; };
+template <> struct JsonPayload<CvVictoryInfo>      { typedef CvVictoryInfo          type; };
+template <> struct JsonPayload<CvVoteInfo>         { typedef CvVoteInfo             type; };
+template <> struct JsonPayload<CvHurryInfo>        { typedef CvHurryInfo            type; };
+template <> struct JsonPayload<CvBonusClassInfo>   { typedef CvBonusClassInfo       type; };
 
 template <class TTag>
 class InfoRepo

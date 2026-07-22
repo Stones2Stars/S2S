@@ -209,6 +209,23 @@ static void rj_buildReverseView()
 		rvAddTech((TechTypes)k.getTechReveal(), EDGEB_BONUSES, i);
 		rvAddTech((TechTypes)k.getTechObsolete(), EDGEB_BONUSES, i);
 	}
+	// #430: reconstruct SpecialBuildingInfo::getTechPrereq from the tech-side inversion. The curator stores the
+	// special-building tech-gate as tech.enables.specialBuildings (store.py:181); the special-building JSON carries
+	// none. The legacy building-group gate reads GC.getSpecialBuildingInfo(x).getTechPrereq() (CvPlayer.cpp:6533),
+	// so un-invert it HERE, before the reverse-view below reads it. (getTechPrereqAnyone is unused across all
+	// groups; no tech obsoletes a special building -- both correctly stay NO_TECH.)
+	for (int t = 0; t < nTech; ++t)
+	{
+		const CvInfo* jt = InfoRepo<CvTechInfo>::get().get(t);
+		const std::vector<int>* sbs = jt ? jt->edge(EDGEF_ENABLES, EDGEB_SPECIAL_BUILDINGS) : NULL;
+		if (sbs != NULL)
+			for (size_t j = 0; j < sbs->size(); ++j)
+			{
+				CvSpecialBuildingInfo* sb = static_cast<CvSpecialBuildingInfo*>(
+					InfoRepo<CvSpecialBuildingInfo>::get().editPtr((*sbs)[j]));
+				if (sb != NULL) sb->setTechPrereq((TechTypes)t);
+			}
+	}
 	for (int i = 0; i < GC.getNumSpecialBuildingInfos(); ++i)
 	{
 		const CvSpecialBuildingInfo& k = GC.getSpecialBuildingInfo((SpecialBuildingTypes)i);
@@ -527,6 +544,7 @@ static void rj_find(const std::string& dir, std::vector<std::string>& out)
 	X("TECH_",          CvTechInfo)           \
 	X("CIVICOPTION_",   CvCivicOptionInfo)    \
 	X("CIVIC_",         CvCivicInfo)          \
+	X("CIVILIZATION_",  CvCivilizationInfo)   \
 	X("TRAIT_",         CvTraitInfo)          \
 	X("SPECIALBUILDING_", CvSpecialBuildingInfo) \
 	X("SPECIALIST_",    CvSpecialistInfo)     \

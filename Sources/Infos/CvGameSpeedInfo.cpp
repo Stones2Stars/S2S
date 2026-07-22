@@ -1,14 +1,13 @@
 //------------------------------------------------------------------------------------------------
 //  FILE:    CvGameSpeedInfo.cpp
 //------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
+#include "CvInfos.h"              // umbrella: keeps the unity batch's info-type defs whole (leakage guard)
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "Infrastructure/CvXMLLoadUtility.h"
 #include "CvEraInfo.h"
 #include "CvGameSpeedInfo.h"
+#include "CvJsonParse.h"          // jsonFamVal (raw human value; the ×100 lives only in the cascade deposit tree)
 
 
 //======================================================================================================
@@ -16,18 +15,9 @@
 //======================================================================================================
 
 CvGameSpeedInfo::CvGameSpeedInfo()
+	: m_iSpeedPercent(0)
+	, m_iUnitYieldScalePercent(100)
 {
-	CvInfoUtil(this).initDataMembers();
-}
-
-
-// Every XML-backed field is declared here (#196); read/copy/checksum all derive from it.
-void CvGameSpeedInfo::getDataMembers(CvInfoUtil& util)
-{
-	util
-		.add(m_iSpeedPercent, L"iSpeedPercent")
-		.add(m_iUnitYieldScalePercent, L"iUnitYieldScalePercent", 100)
-	;
 }
 
 
@@ -96,26 +86,18 @@ int CvGameSpeedInfo::getTicksPerTurnInEra(int iEra) const
 }
 
 
-bool CvGameSpeedInfo::read(CvXMLLoadUtility* pXML)
+// #430: the JSON load hook. speed.world.percent -> iSpeedPercent (raw percent, Normal=100);
+// missionYieldMultiplier.world.percent -> iUnitYieldScalePercent (raw percent, curator elides the
+// 100-default). jsonFamVal returns the RAW human value -- the ×100 fixed-point lives only in the
+// cascade deposit tree, never on these engine-getter members.
+void CvGameSpeedInfo::mapFrom(const picojson::value& entity)
 {
-	if (!CvInfoBase::read(pXML))
-	{
-		return false;
-	}
-	CvInfoUtil(this).readXml(pXML);
+	CvInfo::mapFrom(entity);   // core reading (type / text keys / button) + availability
+	if (!entity.is<picojson::object>()) return;
+	const picojson::object& o = entity.get<picojson::object>();
 
-	return true;
-}
-
-
-void CvGameSpeedInfo::copyNonDefaults(const CvGameSpeedInfo* pClassInfo)
-{
-	CvInfoBase::copyNonDefaults(pClassInfo);
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-}
-
-
-void CvGameSpeedInfo::getCheckSum(uint32_t& iSum) const
-{
-	CvInfoUtil(this).checkSum(iSum);
+	m_iSpeedPercent = jsonFamVal(o, "speed", "world", "percent");
+	// legacy default 100 when the key is absent (curator elides values equal to the legacy load default).
+	const int iUnitYield = jsonFamVal(o, "missionYieldMultiplier", "world", "percent");
+	m_iUnitYieldScalePercent = (iUnitYield != 0) ? iUnitYield : 100;
 }

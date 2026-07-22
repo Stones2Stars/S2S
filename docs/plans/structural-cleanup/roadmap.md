@@ -124,13 +124,26 @@ derived-from-deposit-index invalidation the rest of the consumer already uses.
 - **`enPromotionValid`** is a pure cascade verdict (domain frontier + entity `requires` + an engine-side
   unit-state gate leg reading static promo info + raw unit state, DEC-calc-zero-ride-in — no legacy getter); the
   property cascade reads are the remaining F1 legacy-path item.
-- **11 uniformity `CvJson<X>Info` pocos** (civilizations/eras/handicaps/gamespeeds/specialbuildings/leaderheads/
-  specialunits/victories/votes/hurries/bonusclasses) are populated but have **zero readers anywhere in `Sources/`**
-  outside their own definition + `Repos/InfoRepo.h` registration — dead code pending a consumer (or a park decision).
-  The live engine/AI surface for these types still reads the legacy `CvLeaderHeadInfo`/`CvGameSpeedInfo`/etc. classes
-  via `GC.get*Info()` (the engine arrays stay legacy-typed and XML-loaded). **This SECOND-WAVE info-class cutover
-  (curation done, engine cutover pending) is the single largest PURGE remainder** — the "purge complete" work waits
-  chiefly on wiring these 11 types' engine consumers onto the pocos and cutting the legacy XML load.
+- **✅ DONE — the 11 uniformity types are consolidated onto their engine classes and JSON-loaded** (civilizations/
+  eras/handicaps/gamespeeds/specialbuildings/leaderheads/specialunits/victories/votes/hurries/bonusclasses). The
+  SECOND-WAVE cutover followed the 24-type pattern: each engine `Cv<X>Info` (in `Sources/Infos/`) was reparented
+  `CvInfoBase`→`CvInfo`, given a `mapFrom` that fills its typed getters from `Assets/Data/<folder>/*.json`, its
+  loader flipped `LoadGlobalClassInfo`→`LoadGlobalClassInfoJson`, its `InfoRepo` `JsonPayload`/alias retargeted to the
+  engine class, and the parallel `CvJson<X>Info` poco DELETED — so `GC.get*Info()` and the cascade read ONE
+  JSON-fed object. `mapFrom` reads raw human values via `CvJsonParse.h` helpers (`jsonFamVal`/`jsonIdInt` with the
+  legacy default), audio-tag arrays are resolved through `gDLL->getAudioTagIndex` as `read()` did, and each `.cpp`
+  re-adds `CvInfos.h` + `AI/CvGameAI.h` to preserve unity-batch include leakage. Civilization is in `RJ_REPO_TYPES`
+  so readJson's full-registry re-map re-resolves `derivativeCiv` after the post-load alpha re-sort. **Follow-ups
+  (data, not blockers — fail loud in-game):** `curate_specialbuilding.py` is MISSING so SpecialBuilding
+  `getTechPrereq`/`getObsoleteTech` return `NO_TECH` (tech-gating + the cascade `EDGEB_SPECIAL_BUILDINGS` edges drop);
+  Handicap `PROPERTY_*` is the #429 shape mismatch (empty manipulators). **Leaders ship TRAITLESS** (owner ruling
+  2026-07-21; the community re-adds traits post-merge — [data-migration-remaining.md](data-migration-remaining.md)).
+- **✅ DONE (owner ruling): `Sources/JsonInfo/` is ELIMINATED — every info class lives in `Sources/Infos/`.** The
+  folder is gone (its 78 files `git mv`'d into `Infos/`, the `/I"$SOURCE_DIR$/JsonInfo"` line dropped, the 6
+  `JsonInfo/`-qualified includes made bare — both dirs are on `/I` so bare resolves). One folder for all infos, so no
+  future agent infers a spurious JSON-vs-engine split from two folders. The `CvJson<X>` section-unit files
+  (`CvJsonModifiers`/`CvJsonParse`/…) keep their names inside `Infos/`; the base is `CvInfo` (the old `CvJsonInfo`
+  class name is retired in code, stale in some docs — a separate doc-only pass).
 - Gate consumers for culturelevels/unitcombats/promotionlines — BUILT (consumed live in the enabler + accumulator + `CvGameTextMgr`).
 
 ### F2 — Gate 3 classification consumption (the long pole). [cutover.md](cutover.md) §Gate 3.
@@ -229,6 +242,16 @@ dead-system stubs across `CvTechInfo`/`CvReligionInfo`/`CvRouteInfo`/`CvTerrainI
 Cy\* info-binding contract around the cascade/JSON model; rewire the Python info-CONSUMERS (Pedia/Advisors/display);
 fix the stub-fed wrong values. **Out of scope (stays Python):** Revolution, random events, the mission-CONCEPT rework +
 the Python outcome hooks (the outcome DATA itself is JSON-migrated — F7).
+- **⛔ OPEN STOPGAP to restore — `CvFinanceAdvisor.py` commerce breakdown.** The advisor RE-DERIVES the engine's
+  per-city commerce math in Python and read the now-removed `CyCity.getBonusCommerceRateModifier` (deleted by the
+  `m_aiBonus*` cut). It is dropped as a STOPGAP (the bonus-modifier row is gone — DISPLAY only, actual gold
+  unaffected) to stop the `AttributeError` crash. **The PROPER fix needs a cascade commerce-BREAKDOWN output** (per
+  component: base / bonus / player-gold-modifier / building-multipliers) that the advisor READS instead of
+  re-deriving — **that breakdown output is not built yet**, and it is the dependency. **Owner ruling: the cascade must
+  OUTPUT its breakdown the same way combat text already does** — the `/computed` per-source DECOMPOSITION surface
+  ([http-endpoints.md](../../specs/http-endpoints.md), e.g. `/computed/units/combat` attribution): a display screen
+  READS the cascade's named-term decomposition, it does NOT reconstruct the engine math in Python. Build the commerce
+  decomposition on that pattern, then rewire this advisor (and the other breakdown screens) to consume it.
 
 ### F-DOCS — doc reconciliation (part of every item, per repo rule).
 A doc gap that bit you bites the next contributor; close it in the same change. Stale done-claims → reconcile to code.
@@ -263,8 +286,9 @@ Two acceptance pillars, per item, verified LIVE in-game ([validation.md](../../s
    `refreshOperatingBuildings` reseed + the recompute-on-load recalc. Prove LIVE via the 50k gate (millions →
    thousands) + manifestation polls green. This completes F0.
 4. **F1 GREEN reached** (DllExport proxy + `enPromotionValid` + gate consumers all built; NEVER restore an archived
-   `CvXInfo`). The remaining F1 leg is the 11-uniformity SECOND-WAVE cutover (wire the pocos' engine consumers + cut
-   the legacy XML load) — the main PURGE remainder.
+   `CvXInfo`). ✅ The 11-uniformity SECOND-WAVE cutover is DONE — all 11 consolidated onto their engine classes,
+   JSON-loaded, the `CvJson<X>Info` pocos deleted (see F1). The remaining data follow-ups are the missing
+   `curate_specialbuilding.py` (tech-prereq gap) and the Handicap `PROPERTY_*` #429 shape.
 5. **F2 classification consumption** (the long pole) — the `IS_<TAG>` predicate surface is BUILT; what remains is the
    `skills`/`state` mapping + the consumer rewires. Cut each machine's legacy once its consumers read the cascade AND
    the live game manifests correctly.

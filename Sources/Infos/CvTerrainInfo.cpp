@@ -1,7 +1,7 @@
 //
 //	CvTerrainInfo::mapFrom -- base core reading (type + identity text + button) then the terrain's LIVE real members
 //	mapped from JSON: the plot-scope yield families, the plot modifier families, and the `identity` terrain fields.
-//	HUMAN-native values (the cascade ×100s on its own side). FK resolution via jsonResolveId (the JsonInfo-side
+//	HUMAN-native values (the cascade ×100s on its own side). FK resolution via jsonResolveId (the info-side
 //	CvJsonParse primitive over the kept type registry, with the load-time diagnostics). See the header.
 //
 

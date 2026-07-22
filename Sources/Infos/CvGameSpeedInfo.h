@@ -3,7 +3,9 @@
 #ifndef CV_GAME_SPEED_INFO_H
 #define CV_GAME_SPEED_INFO_H
 
-#include "CvInfoBase.h"
+#include "CvInfo.h"   // the JSON-info base (mapFrom); on /I -> bare include
+
+namespace picojson { class value; }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
@@ -12,13 +14,15 @@
 //  DESC:   A game speed scales costs/durations by iSpeedPercent and stretches the
 //          game over proportionally more turns. Turn counts and calendar pacing
 //          are derived per era from CvEraInfo's historical year span and
-//          Normal-speed turn count (see CvDate) — nothing calendar-related is
+//          Normal-speed turn count (see CvDate) -- nothing calendar-related is
 //          stored here.
 //
+//  #430: JSON-fed (Assets/Data/gamespeeds/*.json via mapFrom); no XML read
+//        (DEC-no-xml-into-game). speed.world.percent -> iSpeedPercent;
+//        missionYieldMultiplier.world.percent -> iUnitYieldScalePercent.
+//
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class CvGameSpeedInfo
-	: public CvInfoBase
-	, private bst::noncopyable
+class CvGameSpeedInfo : public CvInfo
 {
 	//---------------------------PUBLIC INTERFACE---------------------------------
 public:
@@ -29,16 +33,13 @@ public:
 	int getHammerCostPercent() const;
 	int getUnitYieldScalePercent() const;
 
-	// Era pacing at this speed, derived from CvEraInfo (not XML-backed).
+	// Era pacing at this speed, derived from CvEraInfo (not JSON-backed).
 	int getTurnsInEra(int iEra) const;
 	int getEraStartTurn(int iEra) const;
 	int getTotalTurns() const;
 	int getTicksPerTurnInEra(int iEra) const;
 
-	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(const CvGameSpeedInfo* pClassInfo);
-	void getCheckSum(uint32_t& iSum) const;
+	virtual void mapFrom(const picojson::value& entity);
 
 	//----------------------PROTECTED MEMBER VARIABLES----------------------------
 protected:

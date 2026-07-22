@@ -2,6 +2,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "CvInfos.h"              // full info-type defs (Specialist/Unit/Color/Yield/Commerce/Civic/Build/Property) -- was reaching via unity leakage
 #include "Engine/CvArea.h"
 #include "CvBuildingInfo.h"
 #include "CvImprovementInfo.h"

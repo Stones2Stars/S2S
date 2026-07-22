@@ -3,7 +3,7 @@
 #define CV_CASCADE_DEPOSIT_INDEX_H
 
 //
-//	DepositIndex -- the #430 COMPILED DEPOSIT INDEX: the load-time strings->ints compile over the JsonInfo modifier
+//	DepositIndex -- the #430 COMPILED DEPOSIT INDEX: the load-time strings->ints compile over the info-side modifier
 //	families (modifier-substrate.md "the compiled deposit index"; cutover.md flip lesson: "the JSON stays
 //	HUMAN-shaped ... and the LOAD step programmatically compiles it into the top-down routing"). The INPUT SOURCE is
 //	the spec model ([DEC-json-not-cascade]): readJson's push walks each mapped info's CvJsonModifiers families

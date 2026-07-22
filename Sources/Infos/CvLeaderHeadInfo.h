@@ -3,19 +3,24 @@
 #ifndef CV_LEADER_HEAD_INFO_H
 #define CV_LEADER_HEAD_INFO_H
 
-#include "CvInfoBase.h"
+#include "CvInfo.h"   // JSON-info base (mapFrom); on /I -> bare include
+
+namespace picojson { class value; }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
 //  class : CvLeaderHeadInfo
 //
-//  DESC:
+//  DESC:   An AI leader personality (the diplomacy/strategy knobs that drive an AI
+//          player all game). #430: JSON-fed (Assets/Data/leaderheads/*.json via
+//          mapFrom); no XML read. TRAITLESS BY DESIGN: the curator strips every
+//          leader<->trait assignment (owner ruling 2026-07-01, re-added by a
+//          post-migration pass), so the trait containers stay at their empty
+//          constructor default and hasTrait/isDefaultTrait always read false.
 //
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class CvArtInfoLeaderhead;
-class CvLeaderHeadInfo
-	: public CvInfoBase
-	, private bst::noncopyable
+class CvLeaderHeadInfo : public CvInfo
 {
 	//---------------------------PUBLIC INTERFACE---------------------------------
 public:
@@ -151,24 +156,22 @@ public:
 	int getNumDefaultComplexTraits() const;
 	bool isDefaultComplexTrait(int i) const;
 
+	virtual void mapFrom(const picojson::value& entity);
+
 protected:
 	int m_iMilitaryUnitRefuseAttitudeThreshold;
 	int m_iWorkerRefuseAttitudeThreshold;
 	int m_iCorporationRefuseAttitudeThreshold;
 	int m_iSecretaryGeneralVoteRefuseAttitudeThreshold;
+	// The legacy NON-ZERO default injection tables (setDefault*Info): the curator emits only the values
+	// authored in XML, so slots it omits must receive these switch-table defaults. Run AFTER the JSON
+	// overlay in mapFrom, filling only slots still 0 -- byte-for-byte the archived read()'s post-pass.
 	void setDefaultMemoryInfo();
 	void setDefaultContactInfo();
 public:
 	DllExport const CvArtInfoLeaderhead* getArtInfo() const;
 	const char* getLeaderHead() const;
 	const char* getButton() const;
-
-	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-
-	void copyNonDefaults(const CvLeaderHeadInfo* pClassInfo);
-
-	void getCheckSum(uint32_t& iSum) const;
 
 	//----------------------PROTECTED MEMBER VARIABLES----------------------------
 protected:
@@ -256,7 +259,7 @@ protected:
 	int m_iFavoriteCivic;
 	int m_iFavoriteReligion;
 
-	//Int list Vector without delayed resolution
+	//Int list Vector without delayed resolution (TRAITLESS by design -- stay empty; see class doc)
 	std::vector<int> m_aiDefaultTraits;
 	std::vector<int> m_aiDefaultComplexTraits;
 
@@ -265,7 +268,7 @@ protected:
 
 	// Arrays
 
-	std::vector<TraitTypes> m_aeTraits;
+	std::vector<TraitTypes> m_aeTraits;   // TRAITLESS by design -- stays empty (no JSON authors it)
 
 	int* m_piFlavorValue;
 	int* m_piContactRand;

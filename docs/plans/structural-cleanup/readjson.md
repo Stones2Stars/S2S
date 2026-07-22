@@ -7,7 +7,7 @@
 >
 > **⛔ SUPERSEDED IN PART — JSON-vs-CASCADE SEPARATION ([DEC-json-not-cascade](../../architecture/decisions.md#dec-json-not-cascade), owner ruling 2026-07-07).** Below, `readJson`
 > is described as mapping into a `CvJsonInfo` that holds the **deposit tree** + the `CvCascadeCondition`. The 2026-07-07
-> split changed both homes: `CvJsonInfo` (relocated `Cascade/` → `Sources/JsonInfo/`) is the JSON-info BASE holding ONLY
+> split changed both homes: `CvJsonInfo` (relocated `Cascade/` → `Sources/Infos/`) is the JSON-info BASE holding ONLY
 > the availability model + the (renamed) info-owned typed **`CvJsonCondition`** — the modifier DATA is now **real typed
 > members on the `CvJson<X>Info` subclasses**, NOT a generic `deposits` vector on `CvJsonInfo`. readJson populates the
 > subclass typed members (virtual `mapFrom`); the cascade builds the DepositIndex/packages by reading those pocos in its

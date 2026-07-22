@@ -1,7 +1,7 @@
 # Fixed-point & the scale registry — the ONE place scales live
 
 > **Status:** reference (canonical scale registry) · **Verified against:** `Sources/Engine/CvCity.cpp`,
-> `Sources/JsonInfo/*.h`.
+> `Sources/Infos/*.h`.
 > **Grounding:** every scale below was figured from the math in the cited accessor, not from the field
 > name. Line numbers drift — confirm the named function, not the integer.
 >
@@ -77,7 +77,7 @@ A legacy field is **per-100 (÷100 to humanize)** iff its value flows **into a �
 | `YieldModifier` / `CommerceModifier` | `getYieldModifier` … | an integer **percent** (emit `percent`) |
 
 ### 4b. The CLOSED per-100 set — ÷100 to humanize
-Verified exhaustive: `grep -rE "get[A-Za-z_]+100 *\(" Sources/JsonInfo/*.h` returns **exactly six** `…100()`
+Verified exhaustive: `grep -rE "get[A-Za-z_]+100 *\(" Sources/Infos/*.h` returns **exactly six** `…100()`
 accessors across all Info headers. That set IS the de-scale list:
 
 | field | accessor | scale | curator action |

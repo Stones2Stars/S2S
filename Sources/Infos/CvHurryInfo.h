@@ -3,41 +3,36 @@
 #ifndef CV_HURRY_INFO_H
 #define CV_HURRY_INFO_H
 
-#include "CvInfoBase.h"
+#include "CvInfo.h"   // JSON-info base (mapFrom); on /I -> bare include
+
+namespace picojson { class value; }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
 //  class : CvHurryInfo
 //
-//  DESC:
+//  DESC:   A rush type (gold-rush / population-rush). #430: JSON-fed
+//          (Assets/Data/hurries/*.json via mapFrom); no XML read.
 //
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class CvHurryInfo
-	: public CvInfoBase
-	, private bst::noncopyable
+class CvHurryInfo : public CvInfo
 {
-//---------------------------PUBLIC INTERFACE---------------------------------
+	//---------------------------PUBLIC INTERFACE---------------------------------
 public:
 
 	CvHurryInfo();
-	virtual ~CvHurryInfo();
 
-	int getGoldPerProduction() const;
-	int getProductionPerPopulation() const;
+	int getGoldPerProduction() const { return m_iGoldPerProduction; }
+	int getProductionPerPopulation() const { return m_iProductionPerPopulation; }
+	bool isAnger() const { return m_bAnger; }
 
-	bool isAnger() const;
+	virtual void mapFrom(const picojson::value& entity);
 
-	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(const CvHurryInfo* pClassInfo);
-	void getCheckSum(uint32_t& iSum) const;
-
-//---------------------------------------PUBLIC MEMBER VARIABLES---------------------------------
+	//---------------------------PROTECTED MEMBER VARIABLES-----------------------
 protected:
 
 	int m_iGoldPerProduction;
 	int m_iProductionPerPopulation;
-
 	bool m_bAnger;
 };
 

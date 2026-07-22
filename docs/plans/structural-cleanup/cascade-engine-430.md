@@ -217,7 +217,7 @@ the running game** — the retired `/shadow/*` endpoint surface (a rollerskating
 > vector the cascade then indexes/compiles). That let the cascade RUNTIME bleed into the JSON data — and **cascade and
 > JSON are not the same.** The corrected split, in force since 2026-07-07:
 >
-> - **`CvJsonInfo` (`Sources/JsonInfo/`, relocated out of `Cascade/`) is the JSON-info BASE** — `CvInfoBase` + the
+> - **`CvJsonInfo` (`Sources/Infos/`, relocated out of `Cascade/`) is the JSON-info BASE** — `CvInfoBase` + the
 >   availability model (`requires`/`enables`/`obsoletes`/`replaces`/`disables`/`allowed`/`grants` + the info-owned
 >   typed `CvJsonCondition`) **ONLY, with ZERO cascade runtime** (no `deposits` vector, no DepositIndex, no evaluator).
 > - The per-type modifier DATA lives as **real typed members on the `CvJson<X>Info` subclasses** (`CvJsonTerrainInfo`/

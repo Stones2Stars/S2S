@@ -3,67 +3,66 @@
 #ifndef CV_ERA_INFO_H
 #define CV_ERA_INFO_H
 
-#include "CvInfoBase.h"
+#include "CvInfo.h"   // JSON-info base (mapFrom); on /I -> bare include
+
+namespace picojson { class value; }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
 //  class : CvEraInfo
 //
-//  DESC:   Used to manage different types of Art Styles
+//  DESC:   A game era (pacing identity + world-scope cost/growth modifiers + one-shot
+//          starting grants + era audio). #430: JSON-fed (Assets/Data/eras/*.json via
+//          mapFrom); no XML read.
 //
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class CvEraInfo
-	: public CvInfoBase
-	, private bst::noncopyable
+class CvEraInfo : public CvInfo
 {
 public:
 
 	CvEraInfo();
 	virtual ~CvEraInfo();
 
-	int getStartingUnitMultiplier() const;
-	int getStartingDefenseUnits() const;
-	int getStartingWorkerUnits() const;
-	int getStartingExploreUnits() const;
-	int getAdvancedStartPoints() const;
-	int getStartingGold() const;
-	int getFreePopulation() const;
-	int getHistoricalStartYear() const;
-	int getHistoricalEndYear() const;
-	int getNormalSpeedTurns() const;
-	int getGrowthPercent() const;
-	int getTrainPercent() const;
-	int getConstructPercent() const;
-	int getCreatePercent() const;
-	int getResearchPercent() const;
-	int getBuildPercent() const;
-	int getImprovementPercent() const;
-	int getGreatPeoplePercent() const;
-	int getAnarchyPercent() const;
-	int getEventChancePerTurn() const;
-	int getSoundtrackSpace() const;
-	int getNumSoundtracks() const;
-	int getCuttingEdgeCutsTechCostModifier() const;
-	int getInitialCityMaintenancePercent() const;
+	int getStartingUnitMultiplier() const { return m_iStartingUnitMultiplier; }
+	int getStartingDefenseUnits() const { return m_iStartingDefenseUnits; }
+	int getStartingWorkerUnits() const { return m_iStartingWorkerUnits; }
+	int getStartingExploreUnits() const { return m_iStartingExploreUnits; }
+	int getAdvancedStartPoints() const { return m_iAdvancedStartPoints; }
+	int getStartingGold() const { return m_iStartingGold; }
+	int getFreePopulation() const { return m_iFreePopulation; }
+	int getHistoricalStartYear() const { return m_iHistoricalStartYear; }
+	int getHistoricalEndYear() const { return m_iHistoricalEndYear; }
+	int getNormalSpeedTurns() const { return m_iNormalSpeedTurns; }
+	int getGrowthPercent() const { return m_iGrowthPercent; }
+	int getTrainPercent() const { return m_iTrainPercent; }
+	int getConstructPercent() const { return m_iConstructPercent; }
+	int getCreatePercent() const { return m_iCreatePercent; }
+	int getResearchPercent() const { return m_iResearchPercent; }
+	int getBuildPercent() const { return m_iBuildPercent; }
+	int getImprovementPercent() const { return m_iImprovementPercent; }
+	int getGreatPeoplePercent() const { return m_iGreatPeoplePercent; }
+	int getAnarchyPercent() const { return m_iAnarchyPercent; }
+	int getEventChancePerTurn() const { return m_iEventChancePerTurn; }
+	int getSoundtrackSpace() const { return m_iSoundtrackSpace; }
+	int getNumSoundtracks() const { return m_iNumSoundtracks; }
+	int getCuttingEdgeCutsTechCostModifier() const { return m_iCuttingEdgeCutsTechCostModifier; }
+	int getInitialCityMaintenancePercent() const { return m_iInitialCityMaintenancePercent; }
 
-	const char* getAudioUnitVictoryScript() const;
-	const char* getAudioUnitDefeatScript() const;
+	const char* getAudioUnitVictoryScript() const { return m_szAudioUnitVictoryScript; }
+	const char* getAudioUnitDefeatScript() const { return m_szAudioUnitDefeatScript; }
 
-	bool isNoGoodies() const;
-	bool isNoAnimals() const;
-	bool isNoBarbUnits() const;
-	bool isNoBarbCities() const;
-	bool isFirstSoundtrackFirst() const;
+	bool isNoGoodies() const { return m_bNoGoodies; }
+	bool isNoAnimals() const { return m_bNoAnimals; }
+	bool isNoBarbUnits() const { return m_bNoBarbUnits; }
+	bool isNoBarbCities() const { return m_bNoBarbCities; }
+	bool isFirstSoundtrackFirst() const { return m_bFirstSoundtrackFirst; }
 
-	// Arrays
+	// Arrays (bounds-checked; kept out-of-line)
 
 	int getSoundtracks(int i) const;
 	int getCitySoundscapeSciptId(int i) const;
 
-	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(const CvEraInfo* pClassInfo);
-	void getCheckSum(uint32_t& iSum) const;
+	virtual void mapFrom(const picojson::value& entity);
 
 protected:
 
@@ -74,10 +73,9 @@ protected:
 	int m_iAdvancedStartPoints;
 	int m_iStartingGold;
 	int m_iFreePopulation;
-	// Calendar pacing (declared in getDataMembers): the era's real-history year span
-	// and how many game turns it lasts at Normal (100%) speed. Other speeds scale the
-	// turn count by CvGameSpeedInfo::getSpeedPercent; CvDate interpolates dates from
-	// the year span. Eras must be contiguous (start == previous era's end).
+	// Calendar pacing: the era's real-history year span and how many game turns it lasts
+	// at Normal (100%) speed. Other speeds scale the turn count by CvGameSpeedInfo::getSpeedPercent;
+	// CvDate interpolates dates from the year span. Eras must be contiguous (start == previous era's end).
 	int m_iHistoricalStartYear;
 	int m_iHistoricalEndYear;
 	int m_iNormalSpeedTurns;

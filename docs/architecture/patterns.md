@@ -109,7 +109,7 @@ why: these getters sit under the EXE frame loop (`unit.isInvisible` ~98M calls/t
 per-step gates, and the AI's per-candidate scans — a heap-string construction + map walk per call was a real
 turn-time/FPS tax.
 
-- **The ONE load-time scan surface is `JsonModScan`** (`Sources/JsonInfo/CvJsonModScan.{h,cpp}`) — the
+- **The ONE load-time scan surface is `JsonModScan`** (`Sources/Infos/CvJsonModScan.{h,cpp}`) — the
   unconditioned/keyed/condition-shape family walkers, shared by every poco's materialization pass (the per-file
   `civSum*`/`sumUnconditioned` duplicates are gone). It is **load-time only**: a getter never calls into it.
 - **Classification blocks read by GENERATED ID** — the §8/§9 bool blocks resolve their keys to the

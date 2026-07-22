@@ -3,50 +3,46 @@
 #ifndef CV_VICTORY_INFO_H
 #define CV_VICTORY_INFO_H
 
-#include "CvInfoBase.h"
+#include "CvInfo.h"   // JSON-info base (mapFrom); on /I -> bare include
+
+namespace picojson { class value; }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
 //  class : CvVictoryInfo
 //
-//  DESC:
+//  DESC:   A victory condition. #430: JSON-fed (Assets/Data/victories/*.json via
+//          mapFrom); no XML read.
 //
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class CvVictoryInfo
-	: public CvInfoBase
-	, private bst::noncopyable
+class CvVictoryInfo : public CvInfo
 {
 	//---------------------------PUBLIC INTERFACE---------------------------------
 public:
 
 	CvVictoryInfo();
-	virtual ~CvVictoryInfo();
 
-	int getPopulationPercentLead() const;
-	int getLandPercent() const;
-	int getMinLandPercent() const;
-	int getReligionPercent() const;
-	int getCityCulture() const;
-	int getNumCultureCities() const;
-	int getTotalCultureRatio() const;
-	int getVictoryDelayTurns() const;
+	int getPopulationPercentLead() const { return m_iPopulationPercentLead; }
+	int getLandPercent() const { return m_iLandPercent; }
+	int getMinLandPercent() const { return m_iMinLandPercent; }
+	int getReligionPercent() const { return m_iReligionPercent; }
+	int getCityCulture() const { return m_iCityCulture; }
+	int getNumCultureCities() const { return m_iNumCultureCities; }
+	int getTotalCultureRatio() const { return m_iTotalCultureRatio; }
+	int getVictoryDelayTurns() const { return m_iVictoryDelayTurns; }
 
-	bool isTotalVictory() const;
-	bool isTargetScore() const;
-	bool isEndScore() const;
-	bool isConquest() const;
-	bool isDiploVote() const;
-	DllExport bool isPermanent() const;
+	bool isTotalVictory() const { return m_bTotalVictory; }
+	bool isTargetScore() const { return m_bTargetScore; }
+	bool isEndScore() const { return m_bEndScore; }
+	bool isConquest() const { return m_bConquest; }
+	bool isDiploVote() const { return m_bDiploVote; }
+	DllExport bool isPermanent() const;   // EXE-bound (DllExport) + Python-bound -- kept out-of-line
 
-	const char* getMovie() const;
+	const char* getMovie() const { return m_szMovie; }
 
-	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(const CvVictoryInfo* pClassInfo);
-	void getCheckSum(uint32_t& iSum) const;
+	virtual void mapFrom(const picojson::value& entity);
 
 	//----------------------PROTECTED MEMBER VARIABLES----------------------------
-
 protected:
 
 	int m_iPopulationPercentLead;

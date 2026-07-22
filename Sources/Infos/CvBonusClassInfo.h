@@ -3,31 +3,28 @@
 #ifndef CV_BONUS_CLASS_INFO_H
 #define CV_BONUS_CLASS_INFO_H
 
-#include "CvInfoBase.h"
+#include "CvInfo.h"   // JSON-info base (mapFrom); on /I -> bare include
+
+namespace picojson { class value; }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //
 //  class : CvBonusClassInfo
 //
-//  DESC:
+//  DESC:   A bonus grouping with a map-generation min-spacing. #430: JSON-fed
+//          (Assets/Data/bonusclasses/*.json via mapFrom); no XML read.
 //
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class CvBonusClassInfo
-	: public CvInfoBase
-	, private bst::noncopyable
+class CvBonusClassInfo : public CvInfo
 {
 	//---------------------------PUBLIC INTERFACE---------------------------------
 public:
 
 	CvBonusClassInfo();
-	virtual ~CvBonusClassInfo();
 
-	int getUniqueRange() const;
+	int getUniqueRange() const { return m_iUniqueRange; }
 
-	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(const CvBonusClassInfo* pClassInfo);
-	void getCheckSum(uint32_t& iSum) const;
+	virtual void mapFrom(const picojson::value& entity);
 
 	//----------------------PROTECTED MEMBER VARIABLES----------------------------
 protected:

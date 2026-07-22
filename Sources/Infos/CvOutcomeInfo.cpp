@@ -18,7 +18,7 @@
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "CvOutcomeInfo.h"
-#include "JsonInfo/CvJsonParse.h"   // #430: jsonChildObj / jsonResolveId -- the JSON intake
+#include "CvJsonParse.h"   // #430: jsonChildObj / jsonResolveId -- the JSON intake
 
 
 

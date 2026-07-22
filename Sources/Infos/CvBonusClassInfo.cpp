@@ -1,91 +1,27 @@
 //------------------------------------------------------------------------------------------------
 //  FILE:    CvBonusClassInfo.cpp
 //------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "UI/CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
+#include "CvInfos.h"              // umbrella: keeps the unity batch's info-type defs whole (leakage guard)
 #include "AI/CvGameAI.h"
-#include "UI/CvGameTextMgr.h"
-#include "Defines/CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "AI/CvPlayerAI.h"
-#include "Infrastructure/CvPython.h"
-#include "Infrastructure/CvXMLLoadUtility.h"
-#include "Infrastructure/CvXMLLoadUtilityModTools.h"
-#include "Tools/CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
 #include "CvBonusClassInfo.h"
+#include "CvJsonParse.h"          // jsonChildObj / jsonIdInt
 
 
-//======================================================================================================
-//					CvBonusClassInfo
-//======================================================================================================
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvBonusClassInfo()
-//
-//  PURPOSE :   Default constructor
-//
-//------------------------------------------------------------------------------------------------------
 CvBonusClassInfo::CvBonusClassInfo()
-{
-	CvInfoUtil(this).initDataMembers();
-}
-
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvBonusClassInfo()
-//
-//  PURPOSE :   Default destructor
-//
-//------------------------------------------------------------------------------------------------------
-CvBonusClassInfo::~CvBonusClassInfo()
+	: m_iUniqueRange(0)
 {
 }
 
 
-int CvBonusClassInfo::getUniqueRange() const
+// #430: mapGeneration.uniqueRange -> iUniqueRange (raw int; absent -> 0). Load-bearing in map gen
+// (CvMapGenerator: min-spacing that prevents same-class bonus stacking).
+void CvBonusClassInfo::mapFrom(const picojson::value& entity)
 {
-	return m_iUniqueRange;
+	CvInfo::mapFrom(entity);   // core reading (type / text keys) + availability
+	if (!entity.is<picojson::object>()) return;
+	const picojson::object& o = entity.get<picojson::object>();
+
+	if (const picojson::object* mg = jsonChildObj(o, "mapGeneration"))
+		m_iUniqueRange = jsonIdInt(*mg, "uniqueRange");
 }
-
-
-void CvBonusClassInfo::getDataMembers(CvInfoUtil& util)
-{
-	util
-		.add(m_iUniqueRange, L"iUniqueRange")
-	;
-}
-
-
-bool CvBonusClassInfo::read(CvXMLLoadUtility* pXML)
-{
-	if (!CvInfoBase::read(pXML))
-	{
-		return false;
-	}
-
-	CvInfoUtil(this).readXml(pXML);
-
-	return true;
-}
-
-
-void CvBonusClassInfo::copyNonDefaults(const CvBonusClassInfo* pClassInfo)
-{
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-}
-
-
-void CvBonusClassInfo::getCheckSum(uint32_t& iSum) const
-{
-	CvInfoUtil(this).checkSum(iSum);
-}
-

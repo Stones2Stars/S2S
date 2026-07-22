@@ -1,4 +1,4 @@
-# Stub census — Sources/JsonInfo constant-return getters (the hidden-debt inventory)
+# Stub census — Sources/Infos constant-return getters (the hidden-debt inventory)
 
 > **Work-state snapshot** (plans-class doc): every getter in the JSON pocos whose body returns a constant where
 > legacy loaded/computed a real value, classified with named consumers. Produced by an exhaustive sweep of all
