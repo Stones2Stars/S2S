@@ -141,6 +141,39 @@ inline bool cascadeIsPercent(CascadePosition p)
 	return (p >= POS_PCT_BUILDING && p <= POS_PCT_CONNECTED);
 }
 
+// ===== THE SCOPE INDEX =====
+// The containment spine (json.md §3.2) as a compact index, so a compiled deposit carries its scope as an int.
+enum CascadeScope
+{
+	CSC_WORLD = 0,
+	CSC_TEAM,
+	CSC_EMPIRE,
+	CSC_AREA,
+	CSC_CITY,
+	CSC_PLOT,
+	CSC_UNIT,
+	CSC_SELF,              // the off-spine `self` scope (buildRate.self)
+	NUM_CASCADE_SCOPES
+};
+
+// ===== LOAD-TIME RESOLUTION (strings -> ints, ONCE) =====
+// Resolve a deposit's dotted address to its (channel, position). Called ONLY from DepositIndex::compile at load;
+// the runtime never sees a string ([DEC-materialize-at-mapfrom] applied to the cascade's own gather).
+//
+//  - `family`  = address segment 0 ("food", "greatPeopleRate", "defense", "stateReligion", ...)
+//  - `member`  = address segment 2 where present ("amount", "bombardDefense", "min", "military", ...), else ""
+//  - `sourcePos` = the position the SOURCE KIND implies (POS_PCT_CIVIC when walking civics, ...). The resolver
+//    OVERRIDES it only where the address itself names a gate (the `stateReligion.*` prefix -> the SR position),
+//    because a gated sum is stored ungated in its own slot and gated at read.
+//
+// Returns false when the address is not a cascade channel (an unmodelled family) -- the caller skips it, which is
+// how a retired system stops depositing without any special-casing.
+bool cascadeResolveAddress(const char* family, const char* member, const char* unit,
+                           CascadeChannel& outChannel, CascadePosition& outGatePos, bool& outIsPercent);
+
+// The scope segment ("world"/"team"/"empire"/"area"/"city"/"plot"/"unit"/"self") -> its index; -1 if unknown.
+int cascadeScopeFromSegment(const char* scope);
+
 // ===== THE ONE PACKAGE TYPE =====
 // Templated on the owner so it is literally the same type at every scope. `instances` is 1 everywhere except
 // CvArea, which is ONE shared map object carrying the sums of EVERY player (the per-player axis is the data's
