@@ -7,24 +7,25 @@
 //	"Sigma flat and Sigma percent each their OWN package per channel").
 //
 //	THE SHAPE (owner): anything that STORES modifiers -- CvPlot, CvCity, CvPlayer, CvArea, CvGame, and anywhere
-//	else -- holds TWO DICTIONARIES: one for percentages, one for flats. Both are keyed by the unified channel
-//	enum below. Each entry is ONE SLOT OBJECT holding that channel's cached number, its OWN dirty flag, and a
-//	straight read.
+//	else -- holds TWO DICTIONARIES keyed by the unified channel enum below: one for percentages, one for flats.
 //
-//	Consequences, all of them simplifications:
-//	 - DIRTINESS IS PER CHANNEL. A slot knows whether it is stale by itself, so there is no shared bitmask, no
-//	   mask vocabulary per scope, and no "which bit covers this field" question. An event marks the channels it
-//	   feeds and nothing else rebuilds.
+//	⛔ THE STORAGE IS THE EXISTING COMPONENT -- do NOT hand-roll a cache here. Each dictionary is a plain
+//	int[NUM_CASCADE_CHANNELS] on the owner plus a CvDerivedCacheSet with ONE DIRTY BIT PER CHANNEL
+//	(NUM_CASCADE_CHANNELS fits a 32-bit mask with room). CvDerivedCacheSet already IS the partial-dirty form --
+//	owner-side storage, the component owning only the dirty protocol -- and it carries the contract rules
+//	(clear-dirty-before-recompute, fully-define-the-output, noncopyable) that a bespoke slot type re-derives
+//	wrongly. state-repositories.md has ONE reusable component precisely so no per-cache variant gets invented.
+//
+//	Consequences:
+//	 - DIRTINESS IS PER CHANNEL: an event marks the channels it feeds (1 << ch) and nothing else refills.
 //	 - VALUE vs PERCENT is the WHOLE type axis (owner: "any yield is an integer, any percentage is an integer --
-//	   as long as we know if the package is value or percentage, we know what to do with it"). Which dictionary
-//	   a slot sits in IS its type; no per-slot type is stored and no position axis exists.
+//	   as long as we know if the package is value or percentage, we know what to do with it"). WHICH DICTIONARY
+//	   a number sits in IS its type; nothing stores a per-value type and no position axis exists.
 //	 - NO CONDITIONS LIVE HERE. Liveness (enabled/disabled/dormancy) is the ENABLER's verdict
 //	   ([DEC-enabler-not-cascade]); the cascade sums the live list it is handed and never asks "is this on?".
-//	   So there are no gated slots and no gate bookkeeping.
-//	 - The slot carries no owner pointer and no recompute callback: it is storage + a flag + a read. The filler
-//	   refills dirty channels; reads are BARE FETCHES.
+//	 - A package holds ONLY its own scope's deposits (modifier.md §1); the downward roll happens at READ.
 //
-//	NEVER serialized; dirty from construction, so the first read after a load recomputes from current state.
+//	NEVER serialized; all-dirty from construction, so the first read after a load refills from current state.
 //
 
 #include "Defines/CvEnums.h"
@@ -84,68 +85,6 @@ enum CascadeScope
 	CSC_UNIT,
 	CSC_SELF,              // the off-spine `self` scope (buildRate.self)
 	NUM_CASCADE_SCOPES
-};
-
-// ===== THE SLOT: one channel's cached number =====
-// Storage + its own dirty flag + a straight read. No owner pointer, no recompute callback, no template: the
-// filler refills what is dirty, readers fetch. Dirty from construction (never trusted from a save).
-struct CascadeSlot
-{
-	int  value;
-	bool dirty;
-
-	CascadeSlot() : value(0), dirty(true) {}
-
-	int  read() const   { return value; }           // the straight read -- never recomputes
-	bool isDirty() const { return dirty; }
-	void markDirty()    { dirty = true; }
-	void store(int v)   { value = v; dirty = false; }
-	void add(int v)     { value += v; }             // during a refill (the filler clears + accumulates)
-	void beginFill()    { value = 0; }              // fully redefine on every refill (CvDerivedCache rule 2)
-	void endFill()      { dirty = false; }
-};
-
-// ===== THE TWO DICTIONARIES =====
-// The one storage shape, identical on every object that holds modifiers. Not templated on the owner -- there is
-// nothing owner-specific left in it, which is what makes "the same object type everywhere" literal.
-struct CascadeModifiers
-{
-	CascadeSlot flat[NUM_CASCADE_CHANNELS];
-	CascadeSlot percent[NUM_CASCADE_CHANNELS];
-
-	// -- straight reads --
-	int  readFlat(CascadeChannel ch) const    { return flat[ch].read(); }
-	int  readPercent(CascadeChannel ch) const { return percent[ch].read(); }
-
-	// -- the dirty protocol, per channel --
-	void markDirty(CascadeChannel ch)        { flat[ch].markDirty(); percent[ch].markDirty(); }
-	void markFlatDirty(CascadeChannel ch)    { flat[ch].markDirty(); }
-	void markPercentDirty(CascadeChannel ch) { percent[ch].markDirty(); }
-	void markAllDirty()
-	{
-		for (int i = 0; i < NUM_CASCADE_CHANNELS; ++i) { flat[i].markDirty(); percent[i].markDirty(); }
-	}
-	bool anyDirty() const
-	{
-		for (int i = 0; i < NUM_CASCADE_CHANNELS; ++i)
-			if (flat[i].dirty || percent[i].dirty) return true;
-		return false;
-	}
-};
-
-// ===== THE INFO-SIDE ARRAYS =====
-// An info's AUTHORED values for one scope, materialized at load ([DEC-materialize-at-mapfrom]). Plain ints:
-// authored data is static, so unlike the object-side CascadeSlot there is no dirty flag and nothing to refresh.
-// This is the "info can have a getFlats and a getPercentages" shape (owner) -- the cascade is then pointed at a
-// LIST of infos and sums these, and the summing needs no knowledge of what kind of source it is walking.
-struct CascadeInfoModifiers
-{
-	int flat[NUM_CASCADE_CHANNELS];
-	int percent[NUM_CASCADE_CHANNELS];
-	CascadeInfoModifiers()
-	{
-		for (int i = 0; i < NUM_CASCADE_CHANNELS; ++i) { flat[i] = 0; percent[i] = 0; }
-	}
 };
 
 // ===== LOAD-TIME ADDRESS RESOLUTION (strings -> ints, ONCE) =====

@@ -32,10 +32,8 @@
 #include "CvJsonGate.h"
 #include "CvJsonModifiers.h"
 #include "CvJsonBoolBlock.h"
-#include "Cascade/CvCascadeChannels.h"   // CascadeInfoModifiers -- POD + enums only, zero cascade runtime
 #include <string>
 #include <vector>
-#include <map>
 
 namespace picojson { class value; }   // mapFrom's input -- full definition via the PCH umbrella in the .cpp
 
@@ -88,19 +86,6 @@ public:
 	// buildAndResolve after minting (LOAD-ONLY; the info touches its own protected mut* blocks).
 	void resolveClassificationIds();
 
-	// --- THE STANDARDIZED DATA READ (owner): "get its data", so the cascade can sum a LIST of infos without
-	// knowing what KIND of source each one is. The info's own authored values for one scope, materialized at
-	// load into plain arrays ([DEC-materialize-at-mapfrom]) -- a bare member read, no string keys, no scan.
-	// Authored data is static, so there is no dirty flag here: the CACHE (with its per-channel dirty slots)
-	// lives on the objects that STORE sums -- CvPlot / CvCity / CvPlayer / CvArea / CvGame -- not on the info.
-	// NULL = this info deposits nothing at that scope.
-	const CascadeInfoModifiers* getCascadeData(int iScope) const;
-
-	// The LOAD-ONLY writer. Filled by the cascade's load-time materialization pass, exactly as
-	// resolveClassificationIds lets the ClassificationRegistry fill the info's own id-planes: the info HOLDS its
-	// data, an outside pass RESOLVES it -- so no cascade runtime lands on the info ([DEC-json-not-cascade]).
-	void mutSetCascadeData(int iScope, const CascadeInfoModifiers& kData);
-
 	// --- terse read-throughs (the cascade's hot query surface; safe when the unit is absent) ---
 	const CvJsonCondition* requiresBuild() const   { const CvJsonRequires* r = getRequires(); return r ? r->build : NULL; }
 	const CvJsonCondition* requiresOperate() const { const CvJsonRequires* r = getRequires(); return r ? r->operate : NULL; }
@@ -139,10 +124,6 @@ protected:
 	virtual CvJsonBoolBlock* mutPolicies()     { return NULL; }
 
 private:
-	// The materialized authored values, SPARSE by scope: an entry exists only for a scope this info
-	// actually deposits at (most infos deposit at one or two), so this costs ~200 bytes per USED scope rather
-	// than a dense [scope][channel] block on every one of ~12,800 infos.
-	std::map<int, CascadeInfoModifiers> m_cascadeData;
 	CvInfo(const CvInfo&);            // noncopyable (the composed units own conditions)
 	CvInfo& operator=(const CvInfo&);
 };

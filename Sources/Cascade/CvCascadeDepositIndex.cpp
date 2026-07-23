@@ -92,6 +92,7 @@ void DepositIndex::compile(CascadeDeposit& d)
 	d.nSeg = 0;
 	for (int i = 0; i < CascadeDeposit::CASC_DEP_SEGS; ++i) d.seg[i] = -1;
 	std::string last;
+	std::string segStrs[3];   // family / scope / member -- kept for the one-time channel resolution below
 	size_t start = 0;
 	for (;;)
 	{
@@ -101,12 +102,28 @@ void DepositIndex::compile(CascadeDeposit& d)
 		if (!segStr.empty())
 		{
 			if (d.nSeg < CascadeDeposit::CASC_DEP_SEGS) d.seg[d.nSeg] = internSegment(segStr);
+			if (d.nSeg < 3) segStrs[d.nSeg] = segStr;
 			++d.nSeg;
 			last = segStr;
 		}
 		if (dot == std::string::npos) break;
 		start = dot + 1;
 	}
+	// THE ONE-TIME SLOT RESOLUTION: (family, member, unit) -> channel + which dictionary, and the scope
+	// segment -> its index. Done HERE so no runtime path ever interprets an address string. An address that is
+	// not a cascade channel leaves chan = -1 and the gather skips it -- how the unit-plane families and any
+	// retired system drop out with no special-casing.
+	{
+		CascadeChannel ch;
+		bool bPct = false;
+		if (cascadeResolveAddress(segStrs[0].c_str(), segStrs[2].c_str(), d.unit.c_str(), ch, bPct))
+		{
+			d.chan = (short)ch;
+			d.isPercent = bPct;
+		}
+		d.scopeIdx = (short)cascadeScopeFromSegment(segStrs[1].c_str());
+	}
+
 	// FK-resolve the LAST segment when it is a keyed deposit's INFOTYPE target ("<chan>.<scope>.<member>.<KEY>").
 	// Hide-assert: a non-key tail (a member name like "goldenAge"/"distance") simply doesn't resolve. Deliberately
 	// NOT routed through jsonResolveId -- a member name must never be reported as an unresolved FK.

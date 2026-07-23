@@ -64,11 +64,19 @@ struct CascadeDeposit
 	int nSeg;                          // dotted segment count (may exceed CASC_DEP_SEGS; extras uncompiled)
 	int seg[CASC_DEP_SEGS];            // interned segment ids (family / scope / member / target), -1 = none
 	int targetFk;                      // FK-resolved engine id of an INFOTYPE tail segment, -1 = not a key
+	// --- the RESOLVED cascade slot, filled once by compile() (CvCascadeChannels) -------------------------
+	// The deposit IS the info's data; resolving its channel + dictionary onto the record is what lets a gather
+	// be ONE pass over an info's deposits (add each into its slot) instead of N per-channel rescans -- and
+	// without materializing a second copy of static info data anywhere.
+	short chan;                        // CascadeChannel; -1 = not a cascade channel (unit-plane / retired family)
+	short scopeIdx;                    // CascadeScope;   -1 = unrecognized scope segment
+	bool  isPercent;                   // WHICH DICTIONARY -- the whole type axis (value vs percent)
 
 	CascadeDeposit()
 		: value100(0), enabled(NULL), disabled(NULL), unitQual(NULL), hasPer(false), perTypeId(-1), perTokenSeg(-1),
 		  perEach(1), perScope(-1), perAnyOf(NULL), perAnyOfTypes(NULL),
-		  addressId(-1), unitId(-1), nSeg(0), targetFk(-1)
+		  addressId(-1), unitId(-1), nSeg(0), targetFk(-1),
+		  chan(-1), scopeIdx(-1), isPercent(false)
 	{ for (int i = 0; i < CASC_DEP_SEGS; ++i) seg[i] = -1; }
 };
 
