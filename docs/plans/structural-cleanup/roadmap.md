@@ -125,6 +125,18 @@ Everything above is settled. What is NOT defined is the boundary every consumer 
   written; (2) rebuild `CvBuildingInfo` to it as the proven pattern (fattest, and it already carries both the
   legacy-scalar defect and the sane `CLS_HAS` cure side by side); (3) roll across the other infos + rewire
   consumers onto the coherent surface ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)).
+  An info holds **only its own side**: cross-entity own-output (a building's improvement/terrain yields) is NOT a
+  building member — the improvement owns its yield, conditioned on the building's presence
+  ([DEC-deliveryguy]). The info is shaped to that NOW; it is not distorted to hold data it shouldn't just because
+  the delivery mechanism isn't built (a red tree loses no live data).
+- **The GENERAL modifier own-output reverse-map — required work (owner: "we will generalize it").** At load, any
+  source's target-keyed own-output deposit (`<yield>.<scope>.{improvements|terrains|…}.{TARGET}`) is reverse-landed
+  on the TARGET as a conditioned own-output ("+X while the source is present"), so a modder authors either side and
+  both carry it. Today the reverse pass (`CvReadJson.cpp`) does this only via **hand-built per-relationship
+  indexes** (route←bonus, improvement←route-yield) plus the edge reverses — NOT a general mechanism, so building→
+  improvement yields are not landed. Generalizing it to one pass over every source's compiled deposits is what
+  makes the own-output model true for every info at once and lets each drop its target-own-output maps for free
+  ([DEC-one-reverse-view], modifier.md §4). Verified live, never on a promise.
   **The cut is FULL (owner): the new coherent surface is built and every consumer rewired onto it in the same
   pass, the legacy getter names disconnected — never a thin-compat layer left breathing.** The red tree makes the
   blast radius free to absorb; a change that left consumers untouched would be the half-migration tell.

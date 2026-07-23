@@ -140,18 +140,48 @@ the JSON model drives the info's shape; the legacy variable set is gone, not for
   address (`m_iDamageToAttacker` ← `defense.city.counterDamage.damage`; `m_aiRiverPlotYieldChange[]` ←
   `<yield>.city.plots` flats). Those are JSON parsed and **scattered into individually-named legacy variables**;
   the sane form holds the JSON structure and reads it, so a new field is DATA, not a new member + getter.
+- **An info holds only ITS OWN side — cross-entity own-output lives on the TARGET (owner).** A building does not
+  project yield onto an improvement; the **improvement** says *"I produce this much now, because a building is
+  present"* — own-output, the building's presence a condition on the improvement's own deposit ([DEC-deliveryguy],
+  modifier.md §4). So `CvBuildingInfo` carries no `improvements`/`terrains` yield map. This needs **no curator
+  re-home**: the **load-time reverse structure** ([DEC-one-reverse-view]) builds cross-entity links both ways at
+  readJson, so a modder may author *either* side and the relationship is landed on the other programmatically — the
+  improvement ends up owning its yield regardless of which side authored it. A target-keyed map survives on the
+  source **only** where the source is the genuine deliverer with no target-owner (governing-deliverer, modifier.md §4).
 
-### Getters are ×100-native and coherent — the scale is never in the name (owner)
+### The coherent surface — grouped storage, parameterized getters (owner: CLARITY AND PREDICTABILITY IS KING)
 
-- **Every getter IS ×100** ([DEC-fixedpoint-x100](decisions.md#dec-fixedpoint-x100)). There is **no `getX`/`getX100`
-  pair and no `100` suffix on any name** — a getter names its VALUE, never its scale, because the scale is
-  universal (the answer is always ×100). The 5 surviving `…100()` names lose the suffix and become the single
-  getter for that value; a reader wanting human does ÷100 at the boundary.
-- **The surface is coherent, not per-field.** Modifier data is handed out **by channel** (the data-out contract
-  above); classification by `CLS_HAS`; intrinsic values by a bare typed-member read. The ~300 hand-named getters on
-  a fat poco ARE the legacy `CvXInfo` contract; the coherent surface replaces them and the consumers rewire onto it
-  ([DEC-new-getter-surface](decisions.md#dec-new-getter-surface)) — the info half of the access surface, not a
-  follow-up to it.
+The numbers and the booleans are **organized into named groups, each read by ONE getter parameterized over the
+group's natural index** — never N individual getters for a groupable set. This is the whole shape of a sane info;
+`getYield(YIELD)` is right, `getFoodYield()`/`getProductionYield()`/… is the disease, and so is
+`isNukeImmune()`/`isZoneOfControl()`/… for the boolean blocks.
+
+- **Storage is grouped and SPLIT so the member name says what you get** (owner): `m_flatYields` / `m_yieldModifiers`,
+  `m_flatCommerce` / `m_commerceModifiers`, `m_wellbeing`, `m_properties` (by property id — the one data-defined,
+  sparse group), and **`m_scalars`** — one enum-indexed group holding the scalar families. Classification stays
+  JSON-derived bitsets (`m_attributes` / `m_capabilities` / `m_skills` / `m_policies`). No scattered legacy
+  scalar-per-field.
+- **Every `m_` is SINGLE-TIERED — one flat slot per concept, so a read is ONE direct index or ONE keyed lookup,
+  never a multi-tier walk** (owner: *"instead of multi-tiered lookups, which increase load/read cost for no
+  reason"*). A scalar family flattens to individual entries — `SCALAR_BASE_DEFENSE`, `SCALAR_DEFENSE_VALUE`,
+  `SCALAR_DEFENSE_BOMBARD` are three scalars, never a `defense{…}` struct to navigate. A target-keyed map
+  (`m_improvementYields[imp]`) is one keyed lookup by the data-defined target id — the same single-tier shape as
+  `m_properties[id]`; the key is data, not a nesting tier. **No member is a map→map→value or a struct-of-fields.**
+- **Getters are parameterized per group and read DIRECTLY** — `getFlatYield(YIELD)` → `m_flatYields[y]`,
+  `getYieldModifier(YIELD)`, `getFlatCommerce(COMMERCE)`, `getWellbeing(KIND)`, `getProperty(id)`,
+  `getScalar(SCALAR)`; booleans by `hasAttribute(id)` / `hasCapability(id)` / `hasSkill(id)` / `hasPolicy(id)`. A
+  read is a bare indexed fetch — **no per-call string address, no map walk, no channel resolution**
+  ([DEC-materialize-at-mapfrom](decisions.md#dec-materialize-at-mapfrom)); we don't pay a lookup we don't have to.
+- **Every getter IS ×100** ([DEC-fixedpoint-x100](decisions.md#dec-fixedpoint-x100)) — no `getX`/`getX100` pair, no
+  `100` suffix; the name says the VALUE, never the scale (always ×100). A reader wanting human does ÷100 at the
+  boundary. The split lives in the flat-vs-modifier member name (`getFlatYield` vs `getYieldModifier`), never a
+  scale suffix.
+- **Extensible by DATA, not by new members/getters.** A new scalar family is a new `m_scalars` enum entry; a new
+  property is a new id in `m_properties`; a new attribute is a new bitset key. The getter surface does not grow.
+- Intrinsic self-description (`getAirlift`, `getMaxStartEra`, the shrine/corpHQ FKs, flavours) stays a bare typed
+  read — genuine lone values, not a groupable set. The ~300 hand-named getters mirroring the legacy `CvXInfo`
+  contract collapse into this surface, and consumers rewire onto it
+  ([DEC-new-getter-surface](decisions.md#dec-new-getter-surface)) — the info half of the access surface.
 
 ## Materialize at mapFrom — no runtime string reads in info getters (the single-source law's load-time sibling)
 
