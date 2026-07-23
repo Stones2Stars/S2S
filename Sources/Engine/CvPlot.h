@@ -7,6 +7,7 @@
 
 #include "Infrastructure/LinkedList.h"
 #include "Infrastructure/CvDerivedCache.h"
+#include "Cascade/CvCascadeChannels.h"
 #include "Tools/copy_iterator.h"
 #include "CvGameObject.h"
 #include "CvProperties.h"
@@ -1019,6 +1020,16 @@ protected:
 	// Super Forts end
 
 	short* m_baseYields;
+public:
+	// #430 THE UNIFORM PACKAGES ([DEC-uniform-cache-shape]): the two dictionaries keyed by the unified channel
+	// enum. PLOT is the yield-only scope (the ORIGIN RULE, modifier.md par.1): its substrate produces yields and
+	// deposits no modifiers, so the percent dictionary simply stays empty -- emptiness is a property of the
+	// origin rule, never a reason to omit a scope's package.
+	mutable CascadePackages<CvPlot> m_cascadeChannels;
+	void cascadeRefillChannels(int iChanMask) const;
+	int getCascadeFlat(CascadeChannel eCh) const    { return m_cascadeChannels.readFlat(eCh); }
+	int getCascadePercent(CascadeChannel eCh) const { return m_cascadeChannels.readPercent(eCh); }
+private:
 	CvDerivedCache<CvPlot, short, NUM_YIELD_TYPES> m_yieldCache;   // the recompute-only yield cache (NOT serialized) --
 	                                                               // the single PULL source for a plot's yield (state-repositories.md)
 	bst::array<short, NUM_YIELD_TYPES> m_aExtraYield;

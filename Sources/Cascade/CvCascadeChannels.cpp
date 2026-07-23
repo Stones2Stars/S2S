@@ -11,6 +11,7 @@
 #include "CvGameCoreDLL.h"
 #include "CvCascadeChannels.h"
 #include "CvCascadeDepositIndex.h"   // the compiled records the sum walks
+#include "CvCascadeMMKernel.h"       // MMKernel::perScale -- THE per resolver (never a second one)
 #include <string>
 
 int cascadeScopeFromSegment(const char* scope)
@@ -129,7 +130,8 @@ void CascadeSum::beginRefill(int iChanMask, int* aFlat, int* aPercent)
 		if (iChanMask & (1 << ch)) { aFlat[ch] = 0; aPercent[ch] = 0; }
 }
 
-void CascadeSum::addInfo(const CvInfo* d, int iScope, int iChanMask, int* aFlat, int* aPercent)
+void CascadeSum::addInfo(const CvInfo* d, int iScope, int iChanMask, int* aFlat, int* aPercent,
+                         const CvCascadeEvalCtx* pCtx)
 {
 	if (d == NULL) return;
 	const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);

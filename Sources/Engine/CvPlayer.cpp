@@ -13,6 +13,8 @@
 #include "AI/CvCityAI.h"
 #include "AI/CvContractBroker.h"
 #include "CvEventSpine.h"   // #430 cascade spine -- first real DOMAIN emit at changeBuildingCount
+#include "Repos/InfoRepo.h"          // the source infos the uniform refill sums
+#include "Cascade/CvCascadeMMKernel.h" // MMKernel::traitData -- the active trait set
 #include "Cascade/CvCascadeCapabilities.h"   // #430 Gate-3: the commerce-slider capability flip (isCommerceFlexible)
 #include "Cascade/CvCascadeWellbeing.h"       // #430 the wellbeing channel -- building-health empire rollup flip
 #include "Cascade/CvCascadeAccumulator.h"    // #430 the modifier scope accumulator -- civic/golden-age epoch bumps
@@ -171,7 +173,8 @@ m_cachedBonusCount(NULL)
 {
 	PROFILE_EXTRA_FUNC();
 	m_dataRepository.init(this);
-	m_cascadePlayerScope.set.bind(this, &CvPlayer::cascadeRefreshPlayerScope);   // #430: the player scope packages (all-dirty from birth)
+	m_cascadePlayerScope.set.bind(this, &CvPlayer::cascadeRefreshPlayerScope);
+	m_cascadeChannels.set.bind(this, &CvPlayer::cascadeRefillChannels);   // #430: the player scope packages (all-dirty from birth)
 	m_aiSeaPlotYield = new int[NUM_YIELD_TYPES];
 	m_aiYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiCapitalYieldRateModifier = new int[NUM_YIELD_TYPES];
@@ -3626,6 +3629,31 @@ const char* CvPlayer::getUnitButton(UnitTypes eUnit) const
 	const CvArtInfoUnit * pUnitArtInfo = GC.getUnitInfo(eUnit).getArtInfo(0, getCurrentEra(), (UnitArtStyleTypes) GC.getCivilizationInfo(getCivilizationType()).getUnitArtStyleType());
 
 	return pUnitArtInfo ? pUnitArtInfo->getButton() : GC.getUnitInfo(eUnit).getArtInfo(0, getCurrentEra(), NO_UNIT_ARTSTYLE)->getButton();
+}
+
+// #430 THE UNIFORM REFILL: this EMPIRE's own-scope deposits, summed from the live sources the player holds.
+// The cascade is pointed at lists and adds them; it asks nothing about liveness ([DEC-enabler-not-cascade]).
+void CvPlayer::cascadeRefillChannels(int iChanMask) const
+{
+	CascadeSum::beginRefill(iChanMask, m_cascadeChannels.flat, m_cascadeChannels.percent);
+	CvCascadeEvalCtx ec;                       // supplied ONLY for `per` count resolution, never for conditions
+	ec.player = this; ec.team = &GET_TEAM(getTeam());
+	for (int i = 0; i < GC.getNumCivicOptionInfos(); ++i)
+	{
+		const CivicTypes eCivic = getCivics((CivicOptionTypes)i);
+		if (eCivic != NO_CIVIC)
+			CascadeSum::addInfo(InfoRepo<CvCivicInfo>::get().get((int)eCivic), CSC_EMPIRE, iChanMask,
+			                    m_cascadeChannels.flat, m_cascadeChannels.percent, &ec);
+	}
+	for (int t = 0; t < GC.getNumTraitInfos(); ++t)
+		if (hasTrait((TraitTypes)t))
+			CascadeSum::addInfo(MMKernel::traitData(t), CSC_EMPIRE, iChanMask,
+			                    m_cascadeChannels.flat, m_cascadeChannels.percent, &ec);
+	const CvTeam& kTeam = GET_TEAM(getTeam());
+	for (int h = 0; h < GC.getNumTechInfos(); ++h)
+		if (kTeam.isHasTech((TechTypes)h))
+			CascadeSum::addInfo(InfoRepo<CvTechInfo>::get().get(h), CSC_EMPIRE, iChanMask,
+			                    m_cascadeChannels.flat, m_cascadeChannels.percent, &ec);
 }
 
 // #430: the CacheSet's refresh delegate -- the package math lives module-side (CascadeAccumulator).

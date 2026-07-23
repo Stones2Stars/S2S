@@ -84,6 +84,13 @@ public:
 	// player's own-scope sums (never serialized; all-dirty from birth). The CascadeAccumulator module is
 	// the query surface; the cache lives ON the object it caches for.
 	mutable CascadePlayerScope m_cascadePlayerScope;
+
+	// #430 THE UNIFORM PACKAGES ([DEC-uniform-cache-shape]): the two dictionaries keyed by the unified channel
+	// enum, on the ONE cache component with a dirty bit per channel. Holds ONLY this EMPIRE-scope sum.
+	mutable CascadePackages<CvPlayer> m_cascadeChannels;
+	void cascadeRefillChannels(int iChanMask) const;
+	int getCascadeFlat(CascadeChannel eCh) const    { return m_cascadeChannels.readFlat(eCh); }
+	int getCascadePercent(CascadeChannel eCh) const { return m_cascadeChannels.readPercent(eCh); }
 	void cascadeRefreshPlayerScope(int iMask) const;   // the CacheSet's refresh delegate -> CascadeAccumulator::refreshPlayerScope
 
 	// #430: the standardized ENABLER object (enabler.md par.7/7.1) -- the player-domain maintained vectors

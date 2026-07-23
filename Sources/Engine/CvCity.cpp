@@ -10184,10 +10184,13 @@ int CvCity::getYieldRate(const YieldTypes eYield) const
 void CvCity::cascadeRefillChannels(int iChanMask) const
 {
 	CascadeSum::beginRefill(iChanMask, m_cascadeChannels.flat, m_cascadeChannels.percent);   // fully define the output
+	CvCascadeEvalCtx ec;                       // supplied ONLY so a `per` scaler can be resolved to a flat number
+	ec.city = this; ec.plot = plot(); ec.player = &GET_PLAYER(getOwner()); ec.team = &GET_TEAM(getTeam());
 	const OperatingBuildings& kOperating = EnablerKernel::operatingBuildings(this);
+	ec.activeBuildings = &kOperating.active; ec.vicinityProvidedBonuses = &kOperating.provided;
 	for (std::set<int>::const_iterator it = kOperating.active.begin(); it != kOperating.active.end(); ++it)
 		CascadeSum::addInfo(InfoRepo<CvBuildingInfo>::get().get(*it), CSC_CITY, iChanMask,
-		                    m_cascadeChannels.flat, m_cascadeChannels.percent);
+		                    m_cascadeChannels.flat, m_cascadeChannels.percent, &ec);
 }
 
 // The CvDerivedCacheSet refresh delegate: the cascade math stays module-side; the city carries only the state.

@@ -37,6 +37,7 @@
 #include "Repos/BuildsRepo.h"
 #include "Infrastructure/FAStarNode.h"
 #include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [ENG] lines through the event spine
+#include "Repos/InfoRepo.h"                 // the substrate infos the uniform refill sums
 #include "Cascade/CvEnablerKernel.h" // EnablerKernel::operatingBuildings -- the cascade active-building verdict (recomputeYieldInto)
 #include "Cascade/CvCascadeAccumulator.h" // dirtyCity(CPK_YRATE) -- a plot-yield change re-marks the working city's realized-rate cache
 
@@ -120,6 +121,7 @@ CvPlot::CvPlot()
 	m_baseYields = new short[NUM_YIELD_TYPES]();
 	// the yield cache: CvDerivedCache (state-repositories.md) -- dirty on construct AND load (never serialized)
 	m_yieldCache.bind(this, &CvPlot::recomputeYieldInto);
+	m_cascadeChannels.set.bind(this, &CvPlot::cascadeRefillChannels);   // #430: the uniform packages
 
 	// Plot danger cache
 	m_borderDangerCache = new bool[MAX_TEAMS];
@@ -8195,6 +8197,27 @@ void CvPlot::updateYield()
 		CascadeAccumulator::dirtyCity(pWorkingCity, CPK_YRATE);
 	}
 	updateSymbols();
+}
+
+// #430 THE UNIFORM REFILL: this PLOT's own-scope deposits, from its substrate infos (terrain / feature /
+// improvement / route / bonus). PLOT is the yield-only scope by the ORIGIN RULE (modifier.md par.1), so the
+// percent dictionary stays empty here -- emptiness is a property of the origin rule, not a missing package.
+void CvPlot::cascadeRefillChannels(int iChanMask) const
+{
+	CascadeSum::beginRefill(iChanMask, m_cascadeChannels.flat, m_cascadeChannels.percent);
+	CvCascadeEvalCtx ec;                       // ONLY for `per` count resolution, never for conditions
+	ec.plot = this;
+	int* f = m_cascadeChannels.flat; int* p = m_cascadeChannels.percent;
+	if (getTerrainType() != NO_TERRAIN)
+		CascadeSum::addInfo(InfoRepo<CvTerrainInfo>::get().get((int)getTerrainType()), CSC_PLOT, iChanMask, f, p, &ec);
+	if (getFeatureType() != NO_FEATURE)
+		CascadeSum::addInfo(InfoRepo<CvFeatureInfo>::get().get((int)getFeatureType()), CSC_PLOT, iChanMask, f, p, &ec);
+	if (getImprovementType() != NO_IMPROVEMENT)
+		CascadeSum::addInfo(InfoRepo<CvImprovementInfo>::get().get((int)getImprovementType()), CSC_PLOT, iChanMask, f, p, &ec);
+	if (getRouteType() != NO_ROUTE)
+		CascadeSum::addInfo(InfoRepo<CvRouteInfo>::get().get((int)getRouteType()), CSC_PLOT, iChanMask, f, p, &ec);
+	if (getBonusType() != NO_BONUS)
+		CascadeSum::addInfo(InfoRepo<CvBonusInfo>::get().get((int)getBonusType()), CSC_PLOT, iChanMask, f, p, &ec);
 }
 
 // The actual fresh yield sum -- run lazily by the CvDerivedCache when dirty (so the expensive sum happens once per

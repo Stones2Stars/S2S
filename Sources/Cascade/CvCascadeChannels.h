@@ -122,6 +122,7 @@ struct CascadePackages
 };
 
 class CvInfo;
+struct CvCascadeEvalCtx;
 
 // ===== THE GENERIC SUM =====
 // The whole gather, for every scope and every source kind. The cascade is POINTED AT A LIST of infos and adds
@@ -133,7 +134,12 @@ class CascadeSum
 public:
 	// Add every deposit `d` makes AT `iScope` into the dictionaries, restricted to the channels in iChanMask
 	// (the dirty set being refilled). aFlat/aPercent are the owner-side int[NUM_CASCADE_CHANNELS] arrays.
-	static void addInfo(const CvInfo* d, int iScope, int iChanMask, int* aFlat, int* aPercent);
+	// pCtx is used ONLY to resolve a `per` count-scaler (the existing MMKernel::perScale -- one implementation,
+	// not a second one here): the caller sends in the counts the deposit cares about and gets a flat number back.
+	// It is NEVER used to evaluate a condition -- liveness is the enabler's ([DEC-enabler-not-cascade]).
+	// NULL = skip per-scaled deposits.
+	static void addInfo(const CvInfo* d, int iScope, int iChanMask, int* aFlat, int* aPercent,
+	                    const CvCascadeEvalCtx* pCtx);
 
 	// Zero the channels in iChanMask in both dictionaries -- a refill must FULLY DEFINE its output
 	// (CvDerivedCache contract rule 2: a partial write leaves stale values behind a clean flag).
