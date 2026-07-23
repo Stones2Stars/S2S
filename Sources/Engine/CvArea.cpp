@@ -1,23 +1,21 @@
 // area.cpp
 
 
-#include "Tools/FProfiler.h"
+#include "FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "Cascade/CvCascadeScalarChannels.h"   // fillAreaScalars -- the AREA package refresh
 #include "CvArea.h"
 #include "CvBonusInfo.h"
 #include "CvCity.h"
-#include "Cascade/CvCascadeWellbeing.h"
-#include "AI/CvGameAI.h"
-#include "Defines/CvGlobals.h"
+#include "CvGameAI.h"
+#include "CvGlobals.h"
 #include "CvMap.h"
 #include "CvInfos.h"
-#include "AI/CvPlayerAI.h"
+#include "CvPlayerAI.h"
 #include "CvPlot.h"
-#include "AI/CvTeamAI.h"
-#include "Infrastructure/CvDLLInterfaceIFaceBase.h"
-#include "Infrastructure/CvDLLUtilityIFaceBase.h"
+#include "CvTeamAI.h"
+#include "CvDLLInterfaceIFaceBase.h"
+#include "CvDLLUtilityIFaceBase.h"
 
 // Public Functions...
 
@@ -28,6 +26,10 @@ CvArea::CvArea()
 	m_aiAnimalsPerPlayer = new int[MAX_PLAYERS];
 	m_aiCitiesPerPlayer = new int[MAX_PLAYERS];
 	m_aiPopulationPerPlayer = new int[MAX_PLAYERS];
+	m_aiBuildingGoodHealth = new int[MAX_PLAYERS];
+	m_aiBuildingBadHealth = new int[MAX_PLAYERS];
+	m_aiBuildingHappiness = new int[MAX_PLAYERS];
+	m_aiFreeSpecialist = new int[MAX_PLAYERS];
 	m_aiPower = new int[MAX_PLAYERS];
 	m_aiBestFoundValue = new int[MAX_PLAYERS];
 	m_aiMaintenanceModifier = new int[MAX_PLAYERS];
@@ -78,6 +80,10 @@ CvArea::~CvArea()
 	SAFE_DELETE_ARRAY(m_aiAnimalsPerPlayer);
 	SAFE_DELETE_ARRAY(m_aiCitiesPerPlayer);
 	SAFE_DELETE_ARRAY(m_aiPopulationPerPlayer);
+	SAFE_DELETE_ARRAY(m_aiBuildingGoodHealth);
+	SAFE_DELETE_ARRAY(m_aiBuildingBadHealth);
+	SAFE_DELETE_ARRAY(m_aiBuildingHappiness);
+	SAFE_DELETE_ARRAY(m_aiFreeSpecialist);
 	SAFE_DELETE_ARRAY(m_aiPower);
 	SAFE_DELETE_ARRAY(m_aiBestFoundValue);
 	SAFE_DELETE_ARRAY(m_aiMaintenanceModifier);
@@ -107,13 +113,6 @@ void CvArea::uninit()
 }
 
 // Initializes data members that are serialized.
-// #430: the AREA scope packages refresh delegate -- the cascade math stays module-side, the area
-// carries only the state (the CvCity/CvGame shape).
-void CvArea::cascadeRefreshArea(int) const
-{
-	CascadeScalarChannels::fillAreaScalars(*this, m_cascadeArea);
-}
-
 void CvArea::reset(int iID, bool bWater, bool bConstructorCall)
 {
 	PROFILE_EXTRA_FUNC();
@@ -130,16 +129,16 @@ void CvArea::reset(int iID, bool bWater, bool bConstructorCall)
 	m_iTotalPopulation = 0;
 	m_iNumStartingPlots = 0;
 
-	// #430: bind the AREA scope packages to this object + mark all dirty (idempotent -- the world-scope shape).
-	m_cascadeArea.set.bind(this, &CvArea::cascadeRefreshArea);
-	m_cascadeArea.set.markAllDirty();
-
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
 		m_aiUnitsPerPlayer[iI] = 0;
 		m_aiAnimalsPerPlayer[iI] = 0;
 		m_aiCitiesPerPlayer[iI] = 0;
 		m_aiPopulationPerPlayer[iI] = 0;
+		m_aiBuildingGoodHealth[iI] = 0;
+		m_aiBuildingBadHealth[iI] = 0;
+		m_aiBuildingHappiness[iI] = 0;
+		m_aiFreeSpecialist[iI] = 0;
 		m_aiPower[iI] = 0;
 		m_aiBestFoundValue[iI] = 0;
 		m_aiMaintenanceModifier[iI] = 0;
@@ -199,6 +198,10 @@ void CvArea::clearModifierTotals()
 	PROFILE_EXTRA_FUNC();
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
+		m_aiBuildingGoodHealth[iI] = 0;
+		m_aiBuildingBadHealth[iI] = 0;
+		m_aiBuildingHappiness[iI] = 0;
+		m_aiFreeSpecialist[iI] = 0;
 		m_aiPower[iI] = 0;
 		m_aiMaintenanceModifier[iI] = 0;
 
@@ -242,6 +245,10 @@ void CvArea::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiAnimalsPerPlayer);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiCitiesPerPlayer);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPopulationPerPlayer);
+	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingGoodHealth);
+	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingBadHealth);
+	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingHappiness);
+	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiFreeSpecialist);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPower);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBestFoundValue);
 	WRAPPER_READ_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiMaintenanceModifier);
@@ -323,6 +330,10 @@ void CvArea::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiAnimalsPerPlayer);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiCitiesPerPlayer);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPopulationPerPlayer);
+	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingGoodHealth);
+	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingBadHealth);
+	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBuildingHappiness);
+	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiFreeSpecialist);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiPower);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiBestFoundValue);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvArea", MAX_PLAYERS, m_aiMaintenanceModifier);
@@ -648,26 +659,82 @@ void CvArea::changePopulationPerPlayer(PlayerTypes eIndex, int iChange)
 int CvArea::getBuildingGoodHealth(PlayerTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-	int g, b; CascadeWellbeing::buildingHealthArea(GET_PLAYER(eIndex), getID(), g, b); return g / 100;   // ÷100: cascade term ×100, human decomposition getter
+	return m_aiBuildingGoodHealth[eIndex];
+}
+
+
+void CvArea::changeBuildingGoodHealth(PlayerTypes eIndex, int iChange)
+{
+	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
+
+	if (iChange != 0)
+	{
+		m_aiBuildingGoodHealth[eIndex] += iChange;
+		FASSERT_NOT_NEGATIVE(getBuildingGoodHealth(eIndex));
+
+		GET_PLAYER(eIndex).AI_makeAssignWorkDirty();
+	}
 }
 
 
 int CvArea::getBuildingBadHealth(PlayerTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-	int g, b; CascadeWellbeing::buildingHealthArea(GET_PLAYER(eIndex), getID(), g, b); return b / 100;   // ÷100: human decomposition getter
+	return m_aiBuildingBadHealth[eIndex];
+}
+
+
+void CvArea::changeBuildingBadHealth(PlayerTypes eIndex, int iChange)
+{
+	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
+
+	if (iChange != 0)
+	{
+		m_aiBuildingBadHealth[eIndex] += iChange;
+		FASSERT_NOT_NEGATIVE(getBuildingBadHealth(eIndex));
+
+		GET_PLAYER(eIndex).AI_makeAssignWorkDirty();
+	}
 }
 
 
 int CvArea::getBuildingHappiness(PlayerTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
-	return CascadeWellbeing::buildingHappinessArea(GET_PLAYER(eIndex), getID()) / 100;   // ÷100: cascade term ×100, human decomposition getter
+	return m_aiBuildingHappiness[eIndex];
 }
 
 
-// #430 two-part seam: the area free-specialist ledger (m_aiFreeSpecialist) is cut; area building free
-// specialists ride the cascade AMOUNT (fsAreaAny -> fsAmountAny), read by CvCity::totalFreeSpecialists.
+void CvArea::changeBuildingHappiness(PlayerTypes eIndex, int iChange)
+{
+	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
+
+	if (iChange != 0)
+	{
+		m_aiBuildingHappiness[eIndex] += iChange;
+
+		GET_PLAYER(eIndex).AI_makeAssignWorkDirty();
+	}
+}
+
+
+int CvArea::getFreeSpecialist(PlayerTypes eIndex) const
+{
+	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
+	return m_aiFreeSpecialist[eIndex];
+}
+
+
+void CvArea::changeFreeSpecialist(PlayerTypes eIndex, int iChange)
+{
+	FASSERT_BOUNDS(0, MAX_PLAYERS, eIndex);
+
+	if (iChange != 0)
+	{
+		m_aiFreeSpecialist[eIndex] += iChange;
+		GET_PLAYER(eIndex).AI_makeAssignWorkDirty();
+	}
+}
 
 
 int CvArea::getPower(PlayerTypes eIndex) const
@@ -881,9 +948,11 @@ void CvArea::changeCleanPowerCount(TeamTypes eIndex, int iChange)
 
 		if (bWasCleanPower != (m_aiCleanPowerCount[eIndex] > 0))
 		{
+			GET_TEAM(eIndex).updateCommerce();
+
 			if (eIndex == GC.getGame().getActiveTeam())
 			{
-				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
+				gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
 			}
 		}
 	}
@@ -976,7 +1045,7 @@ void CvArea::changeYieldRateModifier(PlayerTypes eIndex1, YieldTypes eIndex2, in
 
 		if (GET_PLAYER(eIndex1).getTeam() == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
 		}
 	}
 }

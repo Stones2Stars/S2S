@@ -3,12 +3,12 @@
 #define CV_DERIVED_DATA_H
 
 #include <vector>
-#include "Tools/FAssert.h"
+#include "FAssert.h"
 
 //
 //	Derived-data repositories -- four levels: Game > Team > Player > City.
-//	Architecture: docs/dev/plans/derived-data-repository.md (the read-side of
-//	docs/dev/plans/ai-architecture-north-star.md).
+//	Architecture: Sources/docs/plans/derived-data-repository.md (the read-side of
+//	Sources/docs/plans/ai-architecture-north-star.md).
 //
 //	Each repository holds memoized, CHANGE-DRIVEN derived AI data for its scope: computed lazily and
 //	refreshed only when something that affects it changed, instead of the per-turn "wipe everything

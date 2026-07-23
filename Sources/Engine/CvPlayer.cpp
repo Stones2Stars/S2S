@@ -1,60 +1,44 @@
 // player.cpp
 
 
-#include "Tools/FProfiler.h"
+#include "FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "AI/BetterBTSAI.h"
+#include "BetterBTSAI.h"
 #include "CvArea.h"
-#include "UI/CvArtFileMgr.h"
+#include "CvArtFileMgr.h"
 #include "CvBuildingInfo.h"
 #include "CvBonusInfo.h"
 #include "CvCity.h"
-#include "AI/CvCityAI.h"
-#include "AI/CvContractBroker.h"
-#include "Spine/CvEventSpine.h"   // #430 cascade spine -- first real DOMAIN emit at changeBuildingCount
-#include "Repos/InfoRepo.h"          // the source infos the uniform refill sums
-#include "Cascade/CvCascadeMMKernel.h" // MMKernel::traitData -- the active trait set
-#include "Enabler/CvCapabilities.h"   // #430 Gate-3: the commerce-slider capability flip (isCommerceFlexible)
-#include "Cascade/CvCascadeWellbeing.h"       // #430 the wellbeing channel -- building-health empire rollup flip
-#include "Cascade/CvCascadeAccumulator.h"    // #430 the modifier scope accumulator -- civic/golden-age epoch bumps
-#include "Enabler/CvTechEnabler.h"           // #430 the standardized enabler's tech domain -- canResearch's bare read
-#include "Enabler/CvCivicEnabler.h"          // #430 the standardized enabler's civics domain -- canDoCivics' bare read
-#include "Enabler/CvProjectEnabler.h"        // #430 the projects domain -- the city canCreate's read-through target
-#include "Enabler/CvProcessEnabler.h"        // #430 the processes domain -- the city canMaintain's read-through target
-#include "Enabler/CvBuildEnabler.h"          // #430 the worker-builds domain -- canBuild's unlock-half bare read
-#include "Enabler/CvBuildingEnabler.h"       // #430 the buildings domain -- the HIDE_REPLACED option toggle's re-gate
-#include "Enabler/CvEnablerKernel.h"         // #430 EnablerKernel::operatingBuildings -- the keyed improvement-yield recompute's ACTIVE verdict
-#include "Cascade/CvCascadeMMKernel.h"       // #430 MMKernel::sumUnit -- the specialist recomputes' evaluated conditioned-deposit sums
-#include "Conditions/CvConditionEval.h"  // #430 CvCascadeEvalCtx -- the recomputes' evaluation context
-#include "Enabler/CvPromotionEnabler.h"      // #430 the promotions domain -- the level-up composite's player planes
+#include "CvCityAI.h"
+#include "CvContractBroker.h"
 #include "CvDeal.h"
-#include "UI/CvDiploParameters.h"
-#include "UI/CvEventReporter.h"
-#include "AI/CvGameAI.h"
-#include "UI/CvGameTextMgr.h"
-#include "Defines/CvGlobals.h"
-#include "Tools/CvHttpServer.h"
+#include "CvDiploParameters.h"
+#include "CvEventReporter.h"
+#include "CvGameAI.h"
+#include "CvGameTextMgr.h"
+#include "CvGlobals.h"
+#include "CvHttpServer.h"
 #include "CvImprovementInfo.h"
 #include "CvHeritageInfo.h"
 #include "CvInfos.h"
-#include "Infrastructure/CvInitCore.h"
+#include "CvInitCore.h"
 #include "CvMap.h"
 #include "CvPlot.h"
-#include "Infrastructure/CvPathGenerator.h"
-#include "AI/CvPlayerAI.h"
+#include "CvPathGenerator.h"
+#include "CvPlayerAI.h"
 #include "CvPopupInfo.h"
-#include "Infrastructure/CvPython.h"
-#include "AI/CvSelectionGroupAI.h"
-#include "UI/CvTalkingHeadMessage.h"
-#include "AI/CvTeamAI.h"
+#include "CvPython.h"
+#include "CvSelectionGroupAI.h"
+#include "CvTalkingHeadMessage.h"
+#include "CvTeamAI.h"
 #include "CvUnit.h"
-#include "UI/CvViewport.h"
-#include "Infrastructure/CvDLLEngineIFaceBase.h"
-#include "Infrastructure/CvDLLEntityIFaceBase.h"
-#include "Infrastructure/CvDLLFAStarIFaceBase.h"
-#include "Infrastructure/CvDLLInterfaceIFaceBase.h"
-#include "Infrastructure/CvDLLUtilityIFaceBase.h"
+#include "CvViewport.h"
+#include "CvDLLEngineIFaceBase.h"
+#include "CvDLLEntityIFaceBase.h"
+#include "CvDLLFAStarIFaceBase.h"
+#include "CvDLLInterfaceIFaceBase.h"
+#include "CvDLLUtilityIFaceBase.h"
 #include "Repos/BuildingsRepo.h"
 #include "CvTraitInfo.h"
 #include <boost/scoped_ptr.hpp>
@@ -173,18 +157,24 @@ m_cachedBonusCount(NULL)
 {
 	PROFILE_EXTRA_FUNC();
 	m_dataRepository.init(this);
-	m_cascadePlayerScope.set.bind(this, &CvPlayer::cascadeRefreshPlayerScope);
-	m_cascadeChannels.set.bind(this, &CvPlayer::cascadeRefillChannels);   // #430: the player scope packages (all-dirty from birth)
 	m_aiSeaPlotYield = new int[NUM_YIELD_TYPES];
 	m_aiYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiCapitalYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiExtraYieldThreshold = new int[NUM_YIELD_TYPES];
 	m_aiTradeYieldModifier = new int[NUM_YIELD_TYPES];
+	m_aiFreeCityCommerce = new int[NUM_COMMERCE_TYPES];
+	m_extraCommerce = new int[NUM_COMMERCE_TYPES];
 	m_aiCommercePercent = new int[NUM_COMMERCE_TYPES];
+	m_aiCommerceRate = new int[NUM_COMMERCE_TYPES];
+	m_abCommerceDirty = new bool[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifierfromEvents = new int[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifierfromBuildings = new int[NUM_COMMERCE_TYPES];
 	m_aiCapitalCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
+	m_aiStateReligionBuildingCommerce = new int[NUM_COMMERCE_TYPES];
+	m_aiSpecialistExtraCommerce = new int[NUM_COMMERCE_TYPES];
+	m_aiSpecialistExtraYield = new int[NUM_YIELD_TYPES];
+	m_aiCommerceFlexibleCount = new int[NUM_COMMERCE_TYPES];
 	m_aiGoldPerTurnByPlayer = new int[MAX_PLAYERS];
 	m_aiEspionageSpendingWeightAgainstTeam = new int[MAX_TEAMS];
 
@@ -192,6 +182,7 @@ m_cachedBonusCount(NULL)
 	m_abOptions = new bool[NUM_PLAYEROPTION_TYPES];
 
 	m_paiImprovementCount = NULL;
+	m_paiFeatureHappiness = NULL;
 	m_paiBuildingCount = NULL;
 	m_paiBuildingGroupCount = NULL;
 	m_paiBuildingGroupMaking = NULL;
@@ -212,23 +203,27 @@ m_cachedBonusCount(NULL)
 	m_pabResearchingTech = NULL;
 	m_pabLoyalMember = NULL;
 	m_paeCivics = NULL;
+	m_ppaaiSpecialistExtraYield = NULL;
+	m_ppaaiImprovementYieldChange = NULL;
 	m_pabAutomatedCanBuild = NULL;
 	m_ppaaiTerrainYieldChange = NULL;
 	m_paiResourceConsumption = NULL;
+	m_paiFreeSpecialistCount = NULL;
 	m_ppiBuildingCommerceModifier = NULL;
-	m_buildingCommerceChange.bind(this, &CvPlayer::recomputeBuildingCommerceChange);   // dirty-on-construct; recompute-from-source on first read
-	m_improvementYieldChange.bind(this, &CvPlayer::recomputeImprovementYields);        // ditto (the keyed improvement-yield ledger)
-	m_specialistExtraYield.bind(this, &CvPlayer::recomputeSpecialistExtraYield);       // ditto (per-type specialist empire boosts)
-	m_specialistExtraCommerce.bind(this, &CvPlayer::recomputeSpecialistExtraCommerce); // ditto (the commerce twin)
+	m_ppiBuildingCommerceChange = NULL;
 	m_ppiSpecialistCommercePercentChanges = NULL;
 	m_ppiSpecialistYieldPercentChanges = NULL;
 	m_ppiBonusCommerceModifier = NULL;
 	m_aiLandmarkYield = new int[NUM_YIELD_TYPES];
 	m_aiModderOptions = new int[NUM_MODDEROPTION_TYPES];
 
+	m_bHasLanguage = false;
+
 	//TB Traits begin
 	m_paiImprovementUpgradeRateModifierSpecific = NULL;
 	m_paiBuildWorkerSpeedModifierSpecific = NULL;
+	m_ppaaiSpecialistExtraCommerce = NULL;
+	m_aiFreeCityYield = new int[NUM_YIELD_TYPES];
 	m_pabHasTrait = NULL;
 	m_aiLessYieldThreshold = new int[NUM_YIELD_TYPES];
 
@@ -238,17 +233,19 @@ m_cachedBonusCount(NULL)
 
 	m_paiEraAdvanceFreeSpecialistCount = NULL;
 
+	m_aiGoldenAgeYield = new int[NUM_YIELD_TYPES];
+	m_aiGoldenAgeCommerce = new int[NUM_COMMERCE_TYPES];
 	//TB Traits end
 
 	m_bDisableHuman = false;
 	m_bUnitUpkeepDirty = true;
-	m_bUnitUpkeepBucketsDirty = true; //#430 F4: force the per-unit-upkeep Sigma to recompute on first read
 
 	m_iStabilityIndex = 500;
 	m_iStabilityIndexAverage = 500;
 
 	m_bRebel = false;
 	m_iMotherPlayer = -1;
+	m_iNationalGreatPeopleRate = 0;
 
 	// Used for DynamicCivNames
 	CvWString m_szName;
@@ -303,11 +300,19 @@ CvPlayer::~CvPlayer()
 	SAFE_DELETE_ARRAY(m_aiCapitalYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiExtraYieldThreshold);
 	SAFE_DELETE_ARRAY(m_aiTradeYieldModifier);
+	SAFE_DELETE_ARRAY(m_aiFreeCityCommerce);
+	SAFE_DELETE_ARRAY(m_extraCommerce);
 	SAFE_DELETE_ARRAY(m_aiCommercePercent);
+	SAFE_DELETE_ARRAY(m_aiCommerceRate);
+	SAFE_DELETE_ARRAY(m_abCommerceDirty);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifier);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifierfromEvents);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifierfromBuildings);
 	SAFE_DELETE_ARRAY(m_aiCapitalCommerceRateModifier);
+	SAFE_DELETE_ARRAY(m_aiStateReligionBuildingCommerce);
+	SAFE_DELETE_ARRAY(m_aiSpecialistExtraCommerce);
+	SAFE_DELETE_ARRAY(m_aiSpecialistExtraYield);
+	SAFE_DELETE_ARRAY(m_aiCommerceFlexibleCount);
 	SAFE_DELETE_ARRAY(m_aiGoldPerTurnByPlayer);
 	SAFE_DELETE_ARRAY(m_aiEspionageSpendingWeightAgainstTeam);
 	SAFE_DELETE_ARRAY(m_abFeatAccomplished);
@@ -317,10 +322,13 @@ CvPlayer::~CvPlayer()
 	SAFE_DELETE_ARRAY(m_aiModderOptions);
 
 	//TB Traits begin
+	SAFE_DELETE_ARRAY(m_aiFreeCityYield);
 	SAFE_DELETE_ARRAY(m_aiLessYieldThreshold);
 		//Team Project (6)
 	SAFE_DELETE_ARRAY(m_paiEraAdvanceFreeSpecialistCount);
 	//Team Project (7)
+	SAFE_DELETE_ARRAY(m_aiGoldenAgeYield);
+	SAFE_DELETE_ARRAY(m_aiGoldenAgeCommerce);
 	//TB Traits end
 
 	SAFE_DELETE_ARRAY(m_cachedBonusCount);
@@ -380,7 +388,8 @@ void CvPlayer::initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSet
 	changeFreeUnitUpkeepCivilianPopPercent(GC.getBASE_FREE_UNITS_UPKEEP_CIVILIAN_PER_100_POP());
 	changeFreeUnitUpkeepMilitaryPopPercent(GC.getBASE_FREE_UNITS_UPKEEP_MILITARY_PER_100_POP());
 	changeTradeRoutes(GC.getINITIAL_TRADE_ROUTES());
-	// #430 cut: state/non-state religion happiness is a cascade term (playerReligionAcc seeds INITIAL itself)
+	changeStateReligionHappiness(GC.getINITIAL_STATE_RELIGION_HAPPINESS());
+	changeNonStateReligionHappiness(GC.getINITIAL_NON_STATE_RELIGION_HAPPINESS());
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
@@ -432,7 +441,7 @@ void CvPlayer::initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSet
 			for (int iI = 0; iI < iNumDefaultComplexTraits; ++iI)
 			{
 				const TraitTypes eTrait = TraitTypes(GC.getLeaderHeadInfo(ePersonality).getDefaultComplexTrait(iI));
-				if (GC.getGame().isTraitValid(eTrait, true))
+				if (GC.getTraitInfo(eTrait).isValidTrait(true))
 				{
 					m_pabHasTrait[eTrait] = true;
 					processTrait(eTrait, 1);
@@ -444,7 +453,7 @@ void CvPlayer::initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSet
 			for (int iI = 0; iI < iNumCoreDefaultTraits; ++iI)
 			{
 				const TraitTypes eTrait = TraitTypes(GC.getLeaderHeadInfo(ePersonality).getDefaultTrait(iI));
-				if (GC.getGame().isTraitValid(eTrait, true))
+				if (GC.getTraitInfo(eTrait).isValidTrait(true))
 				{
 					m_pabHasTrait[eTrait] = true;
 					processTrait(eTrait, 1);
@@ -455,7 +464,7 @@ void CvPlayer::initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSet
 		{
 			for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
 			{
-				if (GC.getLeaderHeadInfo(ePersonality).hasTrait((TraitTypes)iI) && GC.getGame().isTraitValid((TraitTypes)iI, true))
+				if (GC.getLeaderHeadInfo(ePersonality).hasTrait((TraitTypes)iI) && GC.getTraitInfo((TraitTypes)iI).isValidTrait(true))
 				{
 					m_pabHasTrait[(TraitTypes)iI] = true;
 					processTrait((TraitTypes)iI, 1);
@@ -513,15 +522,6 @@ void CvPlayer::init(PlayerTypes eID)
 	m_hunterAI.setOwner(eID);
 	m_decisionAI.setOwner(eID);
 	AI_init();
-	// #430: the standardized enabler's lifecycle INIT (sizing + static exclusions, NO content -- never a read
-	// path, enabler.md par.7). The content is built PURELY from DOMAIN events: the real init/grant emits here at
-	// creation, the in-read reseed emits at load (one mechanism, DEC-spine-reseed).
-	TechEnabler::initDomain(*this);
-	CivicEnabler::initDomain(*this);
-	ProjectEnabler::initDomain(*this);
-	ProcessEnabler::initDomain(*this);
-	BuildEnabler::initDomain(*this);
-	PromotionEnabler::initDomain(*this);
 }
 
 //
@@ -619,15 +619,6 @@ void CvPlayer::initInGame(PlayerTypes eID, bool bSetAlive)
 	m_hunterAI.setOwner(eID);
 	m_decisionAI.setOwner(eID);
 	AI_init();
-	// #430: the standardized enabler's lifecycle INIT (sizing + static exclusions, NO content -- never a read
-	// path, enabler.md par.7). The content is built PURELY from DOMAIN events (the mid-game creation's real
-	// grant/state emits populate it).
-	TechEnabler::initDomain(*this);
-	CivicEnabler::initDomain(*this);
-	ProjectEnabler::initDomain(*this);
-	ProcessEnabler::initDomain(*this);
-	BuildEnabler::initDomain(*this);
-	PromotionEnabler::initDomain(*this);
 }
 
 //
@@ -659,6 +650,7 @@ void CvPlayer::uninit()
 {
 	PROFILE_EXTRA_FUNC();
 	SAFE_DELETE_ARRAY(m_paiImprovementCount);
+	SAFE_DELETE_ARRAY(m_paiFeatureHappiness);
 	SAFE_DELETE_ARRAY(m_paiBuildingCount);
 	SAFE_DELETE_ARRAY(m_paiBuildingGroupCount);
 	SAFE_DELETE_ARRAY(m_paiBuildingGroupMaking);
@@ -687,16 +679,21 @@ void CvPlayer::uninit()
 
 	SAFE_DELETE(m_pBuildLists);
 
+	SAFE_DELETE_ARRAY2(m_ppaaiSpecialistExtraYield, GC.getNumSpecialistInfos());
+	SAFE_DELETE_ARRAY2(m_ppaaiImprovementYieldChange, GC.getNumImprovementInfos());
 	SAFE_DELETE_ARRAY(m_pabAutomatedCanBuild);
 	SAFE_DELETE_ARRAY(m_paiResourceConsumption);
+	SAFE_DELETE_ARRAY(m_paiFreeSpecialistCount);
 	SAFE_DELETE_ARRAY(m_paiImprovementUpgradeRateModifierSpecific);
 	SAFE_DELETE_ARRAY(m_paiBuildWorkerSpeedModifierSpecific);
 	SAFE_DELETE_ARRAY(m_pabHasTrait);
 	SAFE_DELETE_ARRAY(m_paiNationalDomainFreeExperience);
 	SAFE_DELETE_ARRAY(m_paiNationalDomainProductionModifier);
 	SAFE_DELETE_ARRAY(m_paiNationalTechResearchModifier);
+	SAFE_DELETE_ARRAY2(m_ppaaiSpecialistExtraCommerce, GC.getNumSpecialistInfos());
 	SAFE_DELETE_ARRAY2(m_ppaaiTerrainYieldChange, GC.getNumTerrainInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBuildingCommerceModifier, GC.getNumBuildingInfos());
+	SAFE_DELETE_ARRAY2(m_ppiBuildingCommerceChange, GC.getNumBuildingInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBonusCommerceModifier, GC.getNumBonusInfos());
 	SAFE_DELETE_ARRAY2(m_ppiSpecialistCommercePercentChanges, GC.getNumSpecialistInfos());
 	SAFE_DELETE_ARRAY2(m_ppiSpecialistYieldPercentChanges, GC.getNumSpecialistInfos());
@@ -762,8 +759,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	int iI, iJ;
 
 	m_dataRepository.reset();
-	m_cascadePlayerScope.set.markAllDirty();   // #430: a reused player object starts with stale packages
-	m_enabler.reset();   // #430: the standardized enabler unseeds -- re-seeded at load warm-up / first read
 
 	//--------------------------------
 	// Uninit class
@@ -829,10 +824,8 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_iCivilianUnitUpkeepMod = 0;
 	m_iMilitaryUnitUpkeepMod = 0;
-	//#430 F4: the raw upkeep buckets recompute-Sigma over live units (dirty-on-reset -> recompute on first read).
-	m_iUnitUpkeepMilitary100Cache = 0;
-	m_iUnitUpkeepCivilian100Cache = 0;
-	m_bUnitUpkeepBucketsDirty = true;
+	m_iUnitUpkeepMilitary100 = 0;
+	m_iUnitUpkeepCivilian100 = 0;
 	m_iFinalUnitUpkeep = 0;
 
 	m_iNumMilitaryUnits = 0;
@@ -859,10 +852,16 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iUpkeepModifier = 0;
 	m_iLevelExperienceModifier = 0;
 	m_iExtraHealth = 0;
+	m_iCivicHealth = 0;
+	m_iBuildingGoodHealth = 0;
+	m_iBuildingBadHealth = 0;
 	m_iExtraHappiness = 0;
 	m_iExtraHappinessUnattributed = 0;
+	m_iBuildingHappiness = 0;
+	m_iLargestCityHappiness = 0;
 	m_iWarWearinessPercentAnger = 0;
 	m_iWarWearinessModifier = 0;
+	m_iFreeSpecialist = 0;
 	m_iNoForeignTradeCount = 0;
 	m_iNoCorporationsCount = 0;
 	m_iNoForeignCorporationsCount = 0;
@@ -872,6 +871,8 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iConversionTimer = 0;
 	m_iStateReligionCount = 0;
 	m_iNoNonStateReligionSpreadCount = 0;
+	m_iStateReligionHappiness = 0;
+	m_iNonStateReligionHappiness = 0;
 	m_iStateReligionUnitProductionModifier = 0;
 	m_iStateReligionBuildingProductionModifier = 0;
 	m_iStateReligionFreeExperience = 0;
@@ -944,6 +945,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_iExtraStateReligionSpreadModifier = 0;
 	m_iExtraNonStateReligionSpreadModifier = 0;
+	m_iNationalGreatPeopleRate = 0;
 	//TB Traits end
 	m_iBaseMergeSelection = FFreeList::INVALID_INDEX;
 	m_iFirstMergeSelection = FFreeList::INVALID_INDEX;
@@ -964,7 +966,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_bDisableHuman = false;
 	m_bUnitUpkeepDirty = true;
-	m_bUnitUpkeepBucketsDirty = true; //#430 F4: force the per-unit-upkeep Sigma to recompute on first read
 
 	m_iStabilityIndex = 500;
 	m_iStabilityIndexAverage = 500;
@@ -1000,7 +1001,9 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iEnslavementChance = 0;
 	m_iForeignTradeRouteModifier = 0;
 	m_iTaxRateUnhappiness = 0;
+	m_iCivicHappiness = 0;
 	m_iUnitUpgradePriceModifier = 0;
+	m_iNationalGreatPeopleRate = 0;
 
 	// Afforess Food Threshold Modifier 08/16/09
 	m_fPopulationgrowthratepercentageLog = 0;
@@ -1009,8 +1012,13 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iDistantUnitSupportCostModifier = 0;
 	m_iReligionSpreadRate = 0;
 
+	m_iWorldHappiness = 0;
+	m_iProjectHappiness = 0;
+	m_iWorldHealth = 0;
+	m_iProjectHealth = 0;
 	m_iForceAllTradeRoutes = 0;
 	m_iNoCapitalUnhappiness = 0;
+	m_iCivilizationHealth = 0;
 
 	m_bShowLandmarks = true;
 
@@ -1041,6 +1049,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_iSelectionRegroup = 0;
 
 	m_iFractionalCombatExperience = 0;
+	m_iNationalGreatPeopleRate = 0;
 
 	m_bInhibitPlotGroupRecalc = false;
 
@@ -1054,17 +1063,28 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		m_aiLandmarkYield[iI] = 0;
 
 		//TB Traits begin
+		m_aiFreeCityYield[iI] = 0;
+		m_aiSpecialistExtraYield[iI] = 0;
 		m_aiLessYieldThreshold[iI] = 0;
+		m_aiGoldenAgeYield[iI] = 0;
 		//TB Traits end
 	}
 
 	for (iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
 		m_aiCommercePercent[iI] = 0;
+		m_aiFreeCityCommerce[iI] = 0;
+		m_extraCommerce[iI] = 0;
+		m_aiCommerceRate[iI] = 0;
+		m_abCommerceDirty[iI] = false;
 		m_aiCommerceRateModifier[iI] = 0;
 		m_aiCommerceRateModifierfromEvents[iI] = 0;
 		m_aiCommerceRateModifierfromBuildings[iI] = 0;
 		m_aiCapitalCommerceRateModifier[iI] = 0;
+		m_aiStateReligionBuildingCommerce[iI] = 0;
+		m_aiSpecialistExtraCommerce[iI] = 0;
+		m_aiCommerceFlexibleCount[iI] = 0;
+		m_aiGoldenAgeCommerce[iI] = 0;
 	}
 
 	for (iI = 0; iI < MAX_PLAYERS; iI++)
@@ -1115,6 +1135,13 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		for (iI = 0; iI < GC.getNumImprovementInfos(); iI++)
 		{
 			m_paiImprovementCount[iI] = 0;
+		}
+
+		FAssertMsg(m_paiFeatureHappiness==NULL, "about to leak memory, CvPlayer::m_paiFeatureHappiness");
+		m_paiFeatureHappiness = new int [GC.getNumFeatureInfos()];
+		for (iI = 0; iI < GC.getNumFeatureInfos(); iI++)
+		{
+			m_paiFeatureHappiness[iI] = 0;
 		}
 
 		FAssertMsg(0 < GC.getNumBuildingInfos(), "GC.getNumBuildingInfos() is not greater than zero but it is used to allocate memory in CvPlayer::reset");
@@ -1242,8 +1269,31 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		}
 
 		FAssertMsg(0 < GC.getNumSpecialistInfos(), "GC.getNumSpecialistInfos() is not greater than zero but it is used to allocate memory in CvPlayer::reset");
-		// (m_specialistExtraYield/m_specialistExtraCommerce need no init-time allocation -- the CvDerivedCacheVec
-		// recomputes size them)
+		FAssertMsg(m_ppaaiSpecialistExtraYield==NULL, "about to leak memory, CvPlayer::m_ppaaiSpecialistExtraYield");
+		m_ppaaiSpecialistExtraYield = new int*[GC.getNumSpecialistInfos()];
+		m_paiFreeSpecialistCount = new int[GC.getNumSpecialistInfos()];
+
+		for (iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+		{
+			m_ppaaiSpecialistExtraYield[iI] = new int[NUM_YIELD_TYPES];
+			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+			{
+				m_ppaaiSpecialistExtraYield[iI][iJ] = 0;
+			}
+			m_paiFreeSpecialistCount[iI] = 0;
+		}
+		//TB Traits begin
+		FAssertMsg(0 < GC.getNumSpecialistInfos(), "GC.getNumSpecialistInfos() is not greater than zero but it is used to allocate memory in CvPlayer::reset");
+		FAssertMsg(m_ppaaiSpecialistExtraCommerce==NULL, "about to leak memory, CvPlayer::m_ppaaiSpecialistExtraCommerce");
+		m_ppaaiSpecialistExtraCommerce = new int*[GC.getNumSpecialistInfos()];
+		for (iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+		{
+			m_ppaaiSpecialistExtraCommerce[iI] = new int[NUM_COMMERCE_TYPES];
+			for (iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
+			{
+				m_ppaaiSpecialistExtraCommerce[iI][iJ] = 0;
+			}
+		}
 
 		FAssertMsg(m_pabHasTrait==NULL, "about to leak memory, CvPlayer::m_pabHasTrait");
 		m_pabHasTrait = new bool[GC.getNumTraitInfos()];
@@ -1253,13 +1303,19 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		}
 
 		//TB Traits end
-		// (m_improvementYieldChange needs no init-time allocation -- the CvDerivedCacheVec recompute sizes it)
+		FAssertMsg(m_ppaaiImprovementYieldChange==NULL, "about to leak memory, CvPlayer::m_ppaaiImprovementYieldChange");
+		m_ppaaiImprovementYieldChange = new int*[GC.getNumImprovementInfos()];
 		//TB Traits begin
 		FAssertMsg(m_paiImprovementUpgradeRateModifierSpecific==NULL, "about to leak memory, CvPlayer::m_paiImprovementUpgradeRateModifierSpecific");
 		m_paiImprovementUpgradeRateModifierSpecific = new int [GC.getNumImprovementInfos()];
 		//TB Traits end
 		for (iI = 0; iI < GC.getNumImprovementInfos(); iI++)
 		{
+			m_ppaaiImprovementYieldChange[iI] = new int[NUM_YIELD_TYPES];
+			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+			{
+				m_ppaaiImprovementYieldChange[iI][iJ] = 0;
+			}
 			//TB Traits begin
 			m_paiImprovementUpgradeRateModifierSpecific[iI] = 0;
 			//TB Traits end
@@ -1323,7 +1379,16 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 				m_ppiBuildingCommerceModifier[iI][iJ] = 0;
 			}
 		}
-		// (m_buildingCommerceChange needs no init-time allocation -- the CvDerivedCacheVec recompute sizes it)
+		FAssertMsg(m_ppiBuildingCommerceChange==NULL, "about to leak memory, CvPlayer::m_ppiBuildingCommerceChange");
+		m_ppiBuildingCommerceChange = new int*[GC.getNumBuildingInfos()];
+		for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+		{
+			m_ppiBuildingCommerceChange[iI] = new int[NUM_COMMERCE_TYPES];
+			for (iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
+			{
+				m_ppiBuildingCommerceChange[iI][iJ] = 0;
+			}
+		}
 
 		FAssertMsg(m_ppiBonusCommerceModifier==NULL, "about to leak memory, CvPlayer::m_ppiBonusCommerceModifier");
 		m_ppiBonusCommerceModifier = new int*[GC.getNumBonusInfos()];
@@ -1522,7 +1587,7 @@ void CvPlayer::changeLeader(LeaderHeadTypes eNewLeader)
 			if (GC.getLeaderHeadInfo(eLeader).isDefaultComplexTrait(iI))
 			{
 				eTrait = TraitTypes(GC.getLeaderHeadInfo(eLeader).getDefaultComplexTrait(iI));
-				if (GC.getGame().isTraitValid(eTrait, true))
+				if (GC.getTraitInfo(eTrait).isValidTrait(true))
 				{
 					m_pabHasTrait[eTrait] = true;
 					processTrait(eTrait, 1);
@@ -1537,7 +1602,7 @@ void CvPlayer::changeLeader(LeaderHeadTypes eNewLeader)
 			if (GC.getLeaderHeadInfo(eLeader).isDefaultTrait(iI))
 			{
 				eTrait = TraitTypes(GC.getLeaderHeadInfo(eLeader).getDefaultTrait(iI));
-				if (GC.getGame().isTraitValid(eTrait, true))
+				if (GC.getTraitInfo(eTrait).isValidTrait(true))
 				{
 					m_pabHasTrait[eTrait] = true;
 					processTrait(eTrait, 1);
@@ -1549,18 +1614,13 @@ void CvPlayer::changeLeader(LeaderHeadTypes eNewLeader)
 	{
 		for (int iI = 0; iI < GC.getNumTraitInfos(); iI++)
 		{
-			if (GC.getLeaderHeadInfo(eLeader).hasTrait((TraitTypes)iI) && GC.getGame().isTraitValid((TraitTypes)iI, true))
+			if (GC.getLeaderHeadInfo(eLeader).hasTrait((TraitTypes)iI) && GC.getTraitInfo((TraitTypes)iI).isValidTrait(true))
 			{
 				m_pabHasTrait[(TraitTypes)iI] = true;
 				processTrait((TraitTypes)iI, 1);
 			}
 		}
 	}
-
-	// #430 G5: changeLeader mutates traits via direct processTrait (clearLeaderTraits + the add loops above),
-	// bypassing setHasTrait's emitTraitChanged -- so no cache invalidation fired. Mark the player scope + cities
-	// (the exact footprint the SEVT_TRAIT_CHANGED route uses) once, after the full leader-trait swap.
-	CascadeAccumulator::markPlayerScopeAndCities(getID());
 
 	if (!isNPC() && canLeaderPromote())
 	{
@@ -1573,14 +1633,14 @@ void CvPlayer::changeLeader(LeaderHeadTypes eNewLeader)
 
 	if (isAlive() || isEverAlive())
 	{
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(HighlightPlot_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(UnitInfo_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Flag_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(MinimapSection_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Foreign_Screen_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(HighlightPlot_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(Flag_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(MinimapSection_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(Foreign_Screen_DIRTY_BIT, true);
 	}
 	AI_init();
 }
@@ -1686,11 +1746,11 @@ void CvPlayer::changeCiv(CivilizationTypes eNewCiv)
 		}
 
 		//update flag eras
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Flag_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(Flag_DIRTY_BIT, true);
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Soundtrack_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(Soundtrack_DIRTY_BIT, true);
 		}
 
 		gDLL->getInterfaceIFace()->makeInterfaceDirty();
@@ -1701,26 +1761,26 @@ void CvPlayer::changeCiv(CivilizationTypes eNewCiv)
 		gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
 		gDLL->getEngineIFace()->SetDirty(GlobePartialTexture_DIRTY_BIT, true);
 
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(ColoredPlots_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(HighlightPlot_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(UnitInfo_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GlobeLayer_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(MinimapSection_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Foreign_Screen_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionSound_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GlobeInfo_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(ColoredPlots_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(HighlightPlot_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(MinimapSection_DIRTY_BIT, true);
 		gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(Foreign_Screen_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(SelectionSound_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(GlobeInfo_DIRTY_BIT, true);
 	}
 	else if( isEverAlive() )
 	{
 		// Not currently alive, but may show on some people's scoreboard
 		// or graphs
 		// change colors
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 	}
 
 	setupGraphical();
@@ -1801,12 +1861,13 @@ void CvPlayer::setupGraphical()
 
 void CvPlayer::initFreeState()
 {
-	// #430: the game-start provisions (civ civics/techs/buildings + era/handicap startingGold) are handed over by
-	// the GRANTS MACHINE off this emit -- emit() dispatches synchronously, so the gold has landed by the time this
-	// returns. ⛔ The trigger lives HERE, not in initFreeUnits: initFreeUnits early-returns on a null starting plot
-	// (so a player could be skipped entirely) and ran AFTER the gold was already applied. initFreeState is called
-	// for every alive player (CvGame::initFreeState) and has no early return.
-	emitPlayerInit((int)getID());
+	setGold(0);
+	int iGold = GC.getHandicapInfo(getHandicapType()).getStartingGold() + GC.getEraInfo(GC.getGame().getStartEra()).getStartingGold();
+
+	iGold *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
+	iGold /= 100;
+
+	changeGold(iGold);
 	clearResearchQueue();
 }
 
@@ -1815,7 +1876,6 @@ void CvPlayer::initFreeUnits()
 {
 	PROFILE_EXTRA_FUNC();
 	if (getStartingPlot() == NULL) return;
-
 
 	if (GC.getGame().isOption(GAMEOPTION_CORE_CUSTOM_START))
 	{
@@ -2300,8 +2360,6 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 		{
 			oldOwner.changeCitiesLost(1);
 		}
-		// The owner-change (raze half) is emitted by CvPlayer::deleteCity, which raze funnels into
-		// (raze -> disband -> CvCity::kill -> deleteCity) -- the ONE choke point for every city removal.
 		raze(pOldCity);
 	}
 	else
@@ -2685,14 +2743,6 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 
 		pNewCity->checkBuildings(false);
 		pNewCity->updateEspionageVisibility(false);
-
-		// #430: the acquisition setup is complete (buildings/religions/corps/timers applied, dormancy
-		// checked) -- realize the new owner's city packages NOW, before the keep/raze evaluation reads
-		// the city (owner ruling 2026-07-04: a new city's yields/caches stand immediately).
-		CascadeAccumulator::cityCreated(pNewCity);
-		// owner change (acquire half): iSrcLoc = the NEW city id (the surviving entity now under the new owner);
-		// old + new owner drive both empires' aggregate change.
-		emitCityOwnerChanged(pNewCity->getID(), (int)eOldOwner, (int)eNewOwner);
 
 		// Don't bother with plot group calculations if they are immediately to be superseded by an auto raze
 		if (bUpdatePlotGroups)
@@ -3297,14 +3347,13 @@ void CvPlayer::setName(std::wstring szNewValue)
 	if (isCityNameValid(CvWString(szNewValue), false))
 	{
 		m_szName = szNewValue;
-		emitNameChange(NAMECHANGE_PLAYER, getID(), getID());
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Foreign_Screen_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Flag_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(MinimapSection_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(UnitInfo_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(Foreign_Screen_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(Flag_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(MinimapSection_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
 	}
 }
 
@@ -3366,13 +3415,12 @@ void CvPlayer::setCivName(std::wstring szNewDesc, std::wstring szNewShort, std::
 	m_szCivDesc = szNewDesc;
 	m_szCivShort = szNewShort;
 	m_szCivAdj = szNewAdj;
-	emitNameChange(NAMECHANGE_CIV, getID(), getID());
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Foreign_Screen_DIRTY_BIT), true);
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Flag_DIRTY_BIT), true);
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
+	gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty(Foreign_Screen_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty(Flag_DIRTY_BIT, true);
 	gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 }
 
 
@@ -3631,45 +3679,10 @@ const char* CvPlayer::getUnitButton(UnitTypes eUnit) const
 	return pUnitArtInfo ? pUnitArtInfo->getButton() : GC.getUnitInfo(eUnit).getArtInfo(0, getCurrentEra(), NO_UNIT_ARTSTYLE)->getButton();
 }
 
-// #430 THE UNIFORM REFILL: this EMPIRE's own-scope deposits, summed from the live sources the player holds.
-// The cascade is pointed at lists and adds them; it asks nothing about liveness ([DEC-enabler-not-cascade]).
-void CvPlayer::cascadeRefillChannels(int iChanMask) const
-{
-	CascadeSum::beginRefill(iChanMask, m_cascadeChannels.flat, m_cascadeChannels.percent);
-	CvCascadeEvalCtx ec;                       // supplied ONLY for `per` count resolution, never for conditions
-	ec.player = this; ec.team = &GET_TEAM(getTeam());
-	for (int i = 0; i < GC.getNumCivicOptionInfos(); ++i)
-	{
-		const CivicTypes eCivic = getCivics((CivicOptionTypes)i);
-		if (eCivic != NO_CIVIC)
-			CascadeSum::addInfo(InfoRepo<CvCivicInfo>::get().get((int)eCivic), CSC_EMPIRE, iChanMask,
-			                    m_cascadeChannels.flat, m_cascadeChannels.percent, &ec);
-	}
-	for (int t = 0; t < GC.getNumTraitInfos(); ++t)
-		if (hasTrait((TraitTypes)t))
-			CascadeSum::addInfo(MMKernel::traitData(t), CSC_EMPIRE, iChanMask,
-			                    m_cascadeChannels.flat, m_cascadeChannels.percent, &ec);
-	const CvTeam& kTeam = GET_TEAM(getTeam());
-	for (int h = 0; h < GC.getNumTechInfos(); ++h)
-		if (kTeam.isHasTech((TechTypes)h))
-			CascadeSum::addInfo(InfoRepo<CvTechInfo>::get().get(h), CSC_EMPIRE, iChanMask,
-			                    m_cascadeChannels.flat, m_cascadeChannels.percent, &ec);
-}
-
-// #430: the CacheSet's refresh delegate -- the package math lives module-side (CascadeAccumulator).
-void CvPlayer::cascadeRefreshPlayerScope(int iMask) const
-{
-	CascadeAccumulator::refreshPlayerScope(this, iMask);
-}
-
 void CvPlayer::doTurn()
 {
 	PROFILE_FUNC();
 	PERF_SCOPE("CvPlayer::doTurn", getID());
-	// #430 the per-turn SELF-HEAL (playerSliceRebuild -- markAll + eager ensure of ALL packages, this player's
-	// and his cities') is REMOVED ([DEC-no-self-heal]). Correctness is the targeted spine-routed marks + LAZY
-	// recalc of ONLY the dirty packages, read as a trivial sum. A missed invalidation now surfaces as a live
-	// divergence instead of being blanket-rebuilt away -- do NOT re-add a slice rebuild here.
 
 	// Only decrement the GA counter at the end of this function if GA started before this point, i.e last turn.
 	const bool bWasGoldenAgeLastTurn = getGoldenAgeTurns() > 0; 
@@ -3693,11 +3706,10 @@ void CvPlayer::doTurn()
 	m_hunterAI.onTurnBegin(GC.getGame().getGameTurn());
 	m_decisionAI.onTurnBegin(GC.getGame().getGameTurn());
 
-	//	#430: clear each city's unit upgrade-availability cache at turn start (the dead canTrain cache is gone).
-	foreach_(CvCity* pLoopCity, cities())
-	{
-		pLoopCity->clearUpgradeCache(NO_UNIT);
-	}
+#ifdef CAN_TRAIN_CACHING
+	//	Clear training caches at the start of each turn
+	algo::for_each(cities(), CvCity::fn::clearCanTrainCache());
+#endif
 
 	m_canHaveBuilder.clear();
 
@@ -3874,7 +3886,7 @@ void CvPlayer::doTurn()
 
 	expireMessages(); // turn log
 
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
+	gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
 
 	{ PERF_SCOPE("doTurn.AI_doTurnPost", getID()); AI_doTurnPost(); }
 
@@ -3910,11 +3922,10 @@ void CvPlayer::doMultiMapTurn()
 	m_hunterAI.onTurnBegin(GC.getGame().getGameTurn());
 	m_decisionAI.onTurnBegin(GC.getGame().getGameTurn());
 
-	//	#430: clear each city's unit upgrade-availability cache at turn start (the dead canTrain cache is gone).
-	foreach_(CvCity* pLoopCity, cities())
-	{
-		pLoopCity->clearUpgradeCache(NO_UNIT);
-	}
+#ifdef CAN_TRAIN_CACHING
+	//	Clear training caches at the start of each turn
+	algo::for_each(cities(), CvCity::fn::clearCanTrainCache());
+#endif
 
 	setBuildingListInvalid();
 
@@ -4054,11 +4065,11 @@ void CvPlayer::doTurnUnits()
 	{
 		gDLL->getFAStarIFace()->ForceReset(&GC.getInterfacePathFinder());
 
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Waypoints_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(Waypoints_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
 	}
 
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(UnitInfo_DIRTY_BIT), true);
+	gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
 
 	AI_doTurnUnitsPost();
 }
@@ -4174,19 +4185,43 @@ void CvPlayer::updateYield()
 }
 
 
-// #430: feature happiness rides the cascade (per-city CascadeWellbeing featMember+featSubstrate); the player-wide
-// updateFeatureHappiness rebuilder is gone.
+void CvPlayer::updateFeatureHappiness(bool bLimited)
+{
+	algo::for_each(cities(), CvCity::fn::updateFeatureHappiness(bLimited));
+}
 
-// #430: religion happiness is a cascade term (no per-city rebuild).
+void CvPlayer::updateReligionHappiness(bool bLimited)
+{
+	algo::for_each(cities(), CvCity::fn::updateReligionHappiness(bLimited));
+}
 
-// #430: the per-city getSpecialistYieldTotal/getExtraSpecialistYield
-// recompute on read, so no player-wide fan-out rebuild is needed.
+void CvPlayer::updateExtraSpecialistYield()
+{
+	algo::for_each(cities(), CvCity::fn::updateExtraSpecialistYield());
+}
+
+
+void CvPlayer::updateCommerce(CommerceTypes eCommerce, bool bForce) const
+{
+	PROFILE_EXTRA_FUNC();
+	if ( eCommerce == NO_COMMERCE )
+	{
+		for(int iI = 0; iI < NUM_COMMERCE_TYPES; iI++ )
+		{
+			updateCommerce((CommerceTypes)iI, bForce);
+		}
+	}
+	else if (bForce || m_abCommerceDirty[eCommerce])
+	{
+		m_abCommerceDirty[eCommerce] = false;
+
+		algo::for_each(cities(), CvCity::fn::updateCommerce(eCommerce, bForce));
+	}
+}
 
 void CvPlayer::setCommerceDirty(CommerceTypes eIndex, bool bPlayerOnly)
 {
 	PROFILE_EXTRA_FUNC();
-	// #430: empire commerce is live-summed (no player accumulator), so there is no player-side dirty to set --
-	// this only forwards the city-side dirties (building-commerce recompute cache + rank invalidation).
 	if (eIndex == NO_COMMERCE)
 	{
 		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
@@ -4194,9 +4229,14 @@ void CvPlayer::setCommerceDirty(CommerceTypes eIndex, bool bPlayerOnly)
 			setCommerceDirty((CommerceTypes)iI, bPlayerOnly);
 		}
 	}
-	else if (!bPlayerOnly)
+	else
 	{
-		algo::for_each(cities(), CvCity::fn::setCommerceDirty(eIndex));
+		m_abCommerceDirty[eIndex] = true;
+
+		if (!bPlayerOnly)
+		{
+			algo::for_each(cities(), CvCity::fn::setCommerceDirty(eIndex));
+		}
 	}
 }
 
@@ -4206,7 +4246,10 @@ void CvPlayer::updateBuildingCommerce()
 }
 
 
-// #430: the per-city getReligionCommerce recomputes on read (no fan-out).
+void CvPlayer::updateReligionCommerce()
+{
+	algo::for_each(cities(), CvCity::fn::updateReligionCommerce());
+}
 
 
 void CvPlayer::updateCorporation()
@@ -5764,12 +5807,6 @@ void CvPlayer::findNewCapital()
 			pBestCity->changeHasBuilding((BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuilding(iI), true);
 		}
 	}
-	// #430: announce the relocation AFTER the replacement is chosen -- consumers need a city to put a capital's
-	// contents into. Above all the PALACE: it is what MAKES a city the capital (setupBuilding's isCapital branch
-	// calls setCapitalCity), and it is no longer in the civilization building list above, so without this fact
-	// nothing re-seeds it and a captured capital never relocates. Emitted even when pBestCity is NULL (iSrcLoc
-	// = -1: the empire has no city left to be a capital) -- absence is a fact too.
-	emitCapitalChanged((int)getID(), (pBestCity != NULL) ? pBestCity->getID() : -1);
 }
 
 
@@ -6241,23 +6278,6 @@ void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 	CvCity* pCity = initCity(iX, iY, true, true);
 	FAssertMsg(pCity, "City is not assigned a valid value");
 
-	// #430: the city now EXISTS -- announce the founding before any settle-time provision runs, so the grants
-	// machine can hand them over. Founding previously emitted no identifiable fact (only side-effects:
-	// populationChanged / plotOwnerChanged / cityNetworkChanged), which is exactly why the settle-time
-	// provisions -- start-era freePopulation, civilization buildings, FreeStartEra, the trait settle keys, and the
-	// founder's grants.foundBuildings -- had no trigger to hang on.
-	if (pCity != NULL)
-	{
-		// OWNERSHIP first, then the founding -- the same order (and the same NO_PLAYER -> owner transition) the load
-		// reseed uses at CvCity::read, which establishes that the city belongs to its owner before its contents.
-		// Without this, a FOUNDED city never announced ownership in live play at all: the only owner emits were
-		// dispose and acquire, so the load path and the play path disagreed about the same fact and a consumer
-		// tracking ownership would only learn of a founded city after a reload.
-		emitCityOwnerChanged(pCity->getID(), (int)NO_PLAYER, (int)getID());
-		emitCityFounded((int)getID(), pCity->getID(),
-			(pUnit != NULL) ? (int)pUnit->getUnitType() : -1, (pUnit != NULL) ? pUnit->getID() : -1);
-	}
-
 	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
 		if (GC.getBuildingInfo((BuildingTypes)iI).isNewCityFree(pCity->getGameObject())
@@ -6305,8 +6325,10 @@ void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 		}
 	}
 
-	// #430 two-part seam: free-specialist AMOUNT is cascade-derived (not a stored per-city ledger), so the
-	// per-specialist reset loop is gone -- nothing to zero.
+	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+	{
+		pCity->setFreeSpecialistCount(((SpecialistTypes)iI), 0);
+	}
 
 	{
 		const int iCulture = getNationalCityStartCulture();
@@ -6335,10 +6357,6 @@ void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 	}
 
 	pCity->doAutobuild();
-
-	// #430: the founding setup is complete -- realize the new city's cascade packages NOW (owner ruling
-	// 2026-07-04: initial yields/caches stand immediately, so time-to-build etc is visible at founding).
-	CascadeAccumulator::cityCreated(pCity);
 
 	if (!isHumanPlayer() || getAdvancedStartPoints() > -1)
 	{
@@ -6781,19 +6799,92 @@ bool CvPlayer::canConstructInternal(BuildingTypes eBuilding, bool bContinue, boo
 
 bool CvPlayer::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisible) const
 {
-	// #430: the player-scope projects gate is a PURE enabler read (enabler.md par.7.1 -- projects are
-	// PLAYER-held), unified with CvCity::canCreate. NOTHING here relies on legacy: no fallback, no pre-init
-	// path, no what-if legacy (DEC-no-legacy-masking) -- a cascade gap returns empty/wrong, exposed. The
-	// bContinue/bTestVisible what-if params are inert (no player-scope caller passes them).
-	return m_enabler.projects.listed((int)eProject);
+	PROFILE_EXTRA_FUNC();
+	if (isNPC())
+	{
+		return false;
+	}
+
+	const CvProjectInfo& kProject = GC.getProjectInfo(eProject);
+	if (kProject.getProductionCost() == -1)
+	{
+		return false;
+	}
+
+	if (!GET_TEAM(getTeam()).isHasTech(kProject.getTechPrereq()))
+	{
+		return false;
+	}
+
+	if (kProject.getVictoryPrereq() != NO_VICTORY)
+	{
+		if (!GC.getGame().isVictoryValid((VictoryTypes)kProject.getVictoryPrereq()))
+		{
+			return false;
+		}
+
+		if (isMinorCiv())
+		{
+			return false;
+		}
+
+		if (GET_TEAM(getTeam()).getVictoryCountdown((VictoryTypes)kProject.getVictoryPrereq()) >= 0)
+		{
+			return false;
+		}
+	}
+
+	if (GC.getGame().isProjectMaxedOut(eProject))
+	{
+		return false;
+	}
+
+	if (GET_TEAM(getTeam()).isProjectMaxedOut(eProject))
+	{
+		return false;
+	}
+
+	if (!bTestVisible)
+	{
+		if (GC.getGame().isProjectMaxedOut(eProject, (GET_TEAM(getTeam()).getProjectMaking(eProject) + ((bContinue) ? -1 : 0))))
+		{
+			return false;
+		}
+
+		if (GET_TEAM(getTeam()).isProjectMaxedOut(eProject, (GET_TEAM(getTeam()).getProjectMaking(eProject) + ((bContinue) ? -1 : 0))))
+		{
+			return false;
+		}
+
+		if (GC.getGame().isNoNukes() && kProject.isAllowsNukes())
+		{
+			return false;
+		}
+
+		if (kProject.getAnyoneProjectPrereq() != NO_PROJECT)
+		{
+			if (GC.getGame().getProjectCreatedCount((ProjectTypes)kProject.getAnyoneProjectPrereq()) == 0)
+			{
+				return false;
+			}
+		}
+
+		for (int iI = 0; iI < GC.getNumProjectInfos(); iI++)
+		{
+			if (GET_TEAM(getTeam()).getProjectCount((ProjectTypes)iI) < kProject.getProjectsNeeded(iI))
+			{
+				return false;
+			}
+		}
+	}
+
+	return true;
 }
 
 
 bool CvPlayer::canMaintain(ProcessTypes eProcess) const
 {
-	// #430: PURE enabler read (enabler.md par.7.1 -- processes are PLAYER-held), unified with CvCity::canMaintain.
-	// Nothing relies on legacy: no fallback, no pre-init path (DEC-no-legacy-masking).
-	return m_enabler.processes.listed((int)eProcess);
+	return GET_TEAM(getTeam()).isHasTech(GC.getProcessInfo(eProcess).getTechPrereq());
 }
 
 
@@ -7297,7 +7388,8 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 	changeHurryModifier(kBuilding.getGlobalHurryModifier() * iChange);
 	changeFreeExperience(kBuilding.getGlobalFreeExperience() * iChange);
 	changeWarWearinessModifier(kBuilding.getGlobalWarWearinessModifier() * iChange);
-	// #430 two-part seam: building area + global free specialists ride the cascade AMOUNT (fsAreaAny / fsEmpireAny).
+	pArea->changeFreeSpecialist(getID(), (kBuilding.getAreaFreeSpecialist() * iChange));
+	changeFreeSpecialist(kBuilding.getGlobalFreeSpecialist() * iChange);
 	changeCoastalTradeRoutes(kBuilding.getCoastalTradeRoutes() * iChange);
 	changeTradeRoutes(kBuilding.getGlobalTradeRoutes() * iChange);
 
@@ -7315,8 +7407,24 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		}
 	}
 
-	// #430: area/global building health + happiness now ride the cascade (playerAreaEmpire fold, read by
-	// CvArea/CvPlayer getBuildingGood/BadHealth + getBuildingHappiness); the retired accumulators are gone.
+	if (kBuilding.getAreaHealth() > 0)
+	{
+		pArea->changeBuildingGoodHealth(getID(), (kBuilding.getAreaHealth() * iChange));
+	}
+	else
+	{
+		pArea->changeBuildingBadHealth(getID(), (kBuilding.getAreaHealth() * iChange));
+	}
+	if (kBuilding.getGlobalHealth() > 0)
+	{
+		changeBuildingGoodHealth(kBuilding.getGlobalHealth() * iChange);
+	}
+	else
+	{
+		changeBuildingBadHealth(kBuilding.getGlobalHealth() * iChange);
+	}
+	pArea->changeBuildingHappiness(getID(), (kBuilding.getAreaHappiness() * iChange));
+	changeBuildingHappiness(kBuilding.getGlobalHappiness() * iChange);
 	changeWorkerSpeedModifier(kBuilding.getWorkerSpeedModifier() * iChange);
 	changeSpaceProductionModifier(kBuilding.getGlobalSpaceProductionModifier() * iChange);
 	changeCityDefenseModifier(kBuilding.getAllCityDefenseModifier() * iChange);
@@ -7346,18 +7454,20 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		changeYieldRateModifier(((YieldTypes)iI), (kBuilding.getGlobalYieldModifier(iI) * iChange));
 	}
 
-	if (!kBuilding.getGlobalImprovementYieldChanges().empty())
+	foreach_(const ImprovementArray& pair, kBuilding.getGlobalImprovementYieldChanges())
 	{
-		// keyed improvement yields are a recompute-from-source ledger now -- mark + fire the trigger the old
-		// per-cell changer fired
-		m_improvementYieldChange.markDirty();
-		updateYield();
+		for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
+		{
+			changeImprovementYieldChange(pair.first, ((YieldTypes)iI), (pair.second[iI] * iChange));
+		}
 	}
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
 		changeCommerceRateModifierfromBuildings(((CommerceTypes)iI), (kBuilding.getGlobalCommerceModifier(iI) * iChange));
-		// #430: specialist-extra + state-religion-building commerce ride the cascade (st.cSpec100 and ps.cSrPool).
+		changeSpecialistExtraCommerce(((CommerceTypes)iI), (kBuilding.getSpecialistExtraCommerce(iI) * iChange));
+		changeStateReligionBuildingCommerce(((CommerceTypes)iI), (kBuilding.getStateReligionCommerce(iI) * iChange));
+		changeCommerceFlexibleCount(((CommerceTypes)iI), (kBuilding.isCommerceFlexible(iI)) ? iChange : 0);
 	}
 
 	foreach_(const BuildingModifier2& pair, kBuilding.getBuildingHappinessChanges())
@@ -7373,13 +7483,17 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 		changeBuildingCostModifier(modifier.first, modifier.second * iChange);
 	}
 
-	// per-type specialist boosts: recompute-from-source ledgers now -- the building-conditioned entries live on
-	// the SPECIALISTS (the deliveryguy own-output home; the old building-side poco getters were stubs). A
-	// building flip can satisfy/unsatisfy those conditions, so mark + fire the triggers the old changers fired.
-	m_specialistExtraYield.markDirty();
-	m_specialistExtraCommerce.markDirty();
-	updateExtraSpecialistCommerce();
-	AI_makeAssignWorkDirty();
+	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+	{
+		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+		{
+			changeExtraSpecialistYield(((SpecialistTypes)iI), ((YieldTypes)iJ), (kBuilding.getSpecialistYieldChange(iI, iJ) * iChange));
+		}
+		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
+		{
+			changeExtraSpecialistCommerce(((SpecialistTypes)iI), ((CommerceTypes)iJ), (kBuilding.getSpecialistCommerceChange(iI, iJ) * iChange));
+		}
+	}
 	//TB Building tags
 	changeExtraNationalCaptureProbabilityModifier(kBuilding.getNationalCaptureProbabilityModifier() * iChange);
 	changeExtraNationalCaptureResistanceModifier(kBuilding.getNationalCaptureResistanceModifier() * iChange);
@@ -7404,20 +7518,7 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestVisibl
 
 	const CvBuildInfo& kBuild = GC.getBuildInfo(eBuild);
 
-	// #430 THE ENABLER READ (owner: no availability list reads legacy) -- the UNLOCK half only (enabler.md
-	// par.7.1: the player maintains the unlocked-builds set; plot-validity + the feature/terrain tech gates +
-	// gold STAY ENGINE below). A BARE member read of the player's builds domain (event-built: enables.builds ->
-	// the enable plane, obsoletes.builds -> the remove plane); isDisabled is a live RUNTIME toggle (Python
-	// settings scripts), never domain state. bTestVisible (the UI greyed list) rides Legacy.
-	const bool bCascadeUnlock = !bTestVisible && GC.getGame().isFinalInitialized();
-	if (bCascadeUnlock)
-	{
-		if (kBuild.isDisabled() || !m_enabler.builds.listed((int)eBuild))
-		{
-			return false;
-		}
-	}
-	else if (kBuild.isDisabled()
+	if (kBuild.isDisabled()
 	||	kBuild.getObsoleteTech() != NO_TECH && GET_TEAM(getTeam()).isHasTech(kBuild.getObsoleteTech()))
 	{
 		return false;
@@ -7436,8 +7537,7 @@ bool CvPlayer::canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestVisibl
 
 		if (!bTestVisible || eTechPrereq != NO_TECH && getCurrentEra() < GC.getTechInfo(eTechPrereq).getEra())
 		{
-			// (the techPrereq check rides the cascade unlock above on the flipped path)
-			if (!bCascadeUnlock && eTechPrereq != NO_TECH && !GET_TEAM(getTeam()).isHasTech(eTechPrereq))
+			if (eTechPrereq != NO_TECH && !GET_TEAM(getTeam()).isHasTech(eTechPrereq))
 			{
 				return false;
 			}
@@ -7691,7 +7791,7 @@ int CvPlayer::calculateTotalYield(YieldTypes eYield) const
 
 int CvPlayer::calculateTotalCityHappiness() const
 {
-	return algo::accumulate(cities() | transformed(CvCity::fn::happyLevel()), 0) / 100;   // ÷100: happyLevel is ×100
+	return algo::accumulate(cities() | transformed(CvCity::fn::happyLevel()), 0);
 }
 
 
@@ -7779,18 +7879,18 @@ int CvPlayer::calculateTotalImports(YieldTypes eYield) const
 
 int CvPlayer::calculateTotalCityUnhappiness() const
 {
-	return algo::accumulate(cities() | transformed(CvCity::fn::unhappyLevel()), 0) / 100;   // ÷100: ×100 verdict
+	return algo::accumulate(cities() | transformed(CvCity::fn::unhappyLevel()), 0);
 }
 
 
 int CvPlayer::calculateTotalCityHealthiness() const
 {
-	return algo::accumulate(cities() | transformed(CvCity::fn::goodHealth()), 0) / 100;   // ÷100: ×100 verdict
+	return algo::accumulate(cities() | transformed(CvCity::fn::goodHealth()), 0);
 }
 
 int CvPlayer::calculateTotalCityUnhealthiness() const
 {
-	return algo::accumulate(cities() | transformed(CvCity::fn::badHealth()), 0) / 100;   // ÷100: ×100 verdict
+	return algo::accumulate(cities() | transformed(CvCity::fn::badHealth()), 0);
 }
 
 int CvPlayer::calculateUnitSupply() const
@@ -8054,6 +8154,7 @@ int CvPlayer::calculateResearchModifier(TechTypes eTech) const
 			//ensure tech diffusion can not hurt research, only help
 			int iTechDiffusion = std::max(0, techDiffMod - (int)(techDiffMod * pow(0.85, knownExp) + 0.5));
 			iModifier += iTechDiffusion;
+			logging::logMsg("C2C.log", "Tech Diffusion base amount for %S: %d\n", getCivilizationDescription(), iTechDiffusion);
 		}
 
 		// Tech flows downhill to those who are far behind
@@ -8083,6 +8184,7 @@ int CvPlayer::calculateResearchModifier(TechTypes eTech) const
 				if (iOurScore > 0 && iOurScore < iBestScore)
 				{
 					float fRatio = iBestScore / ((float)iOurScore);
+					logging::logMsg("C2C.log", "Tech Welfare amount: %d, iOurScore: %d, iBestScore: %d, fRatio: %f, modified welfare amt: %d for civ: %S\n", iWelfareTechDiffusion, iOurScore, iBestScore, fRatio, ((int)(fRatio * iWelfareTechDiffusion)), getCivilizationDescription());
 					iWelfareTechDiffusion = (int)(iWelfareTechDiffusion * fRatio);
 					iModifier += iWelfareTechDiffusion;
 
@@ -8172,9 +8274,8 @@ bool CvPlayer::canEverResearch(TechTypes eTech) const
 	// Religion techs are global and can thus only be invented once by one player in a game.
 	if (GC.getGame().isOption(GAMEOPTION_RELIGION_LIMITED) && !canFoundReligion())
 	{
-		for (int iRI = 0; iRI < GC.getNumReligionInfos(); ++iRI)
+		foreach_(const CvReligionInfo* info, GC.getReligionInfos())
 		{
-			const CvReligionInfo* info = &GC.getReligionInfo((ReligionTypes)iRI);
 			if (info->getTechPrereq() == eTech)
 			{
 				return false;
@@ -8187,11 +8288,46 @@ bool CvPlayer::canEverResearch(TechTypes eTech) const
 
 bool CvPlayer::canResearch(const TechTypes eTech, const bool bRightNow, const bool bSpecialRequirements) const
 {
-	// #430: the STANDARDIZED ENABLER (enabler.md par.7/7.1) -- a BARE member read of the maintained per-player
-	// tech vector, nothing else (owner 2026-07-14: a calculator on a live path is always wrong; seeding is a
-	// lifecycle act -- load warm-up / player init -- never a read-path guard). Unseeded reads HIDDEN -> false.
-	return eTech != NO_TECH && m_enabler.techs.listed((int)eTech);
+	PROFILE_EXTRA_FUNC();
+	if (GET_TEAM(getTeam()).isHasTech(eTech) || !canEverResearch(eTech))
+	{
+		return false;
+	}
+
+	if (bSpecialRequirements && !hasValidBuildings(eTech))
+	{
+		return false;
+	}
+
+	if (bRightNow)
+	{
+		bool bOk = true;
+		foreach_(const TechTypes ePrereq, GC.getTechInfo(eTech).getPrereqOrTechs())
+		{
+			bOk = false;
+
+			if (GET_TEAM(getTeam()).isHasTech(ePrereq))
+			{
+				bOk = true;
+				break;
+			}
+		}
+		if (!bOk)
+		{
+			return false;
+		}
+
+		foreach_(const TechTypes ePrereq, GC.getTechInfo(eTech).getPrereqAndTechs())
+		{
+			if (canEverResearch(ePrereq) && !GET_TEAM(getTeam()).isHasTech(ePrereq))
+			{
+				return false;
+			}
+		}
+	}
+	return true;
 }
+
 
 TechTypes CvPlayer::getCurrentResearch() const
 {
@@ -8203,7 +8339,6 @@ TechTypes CvPlayer::getCurrentResearch() const
 	}
 	return NO_TECH;
 }
-
 
 
 bool CvPlayer::isCurrentResearchRepeat() const
@@ -8311,10 +8446,35 @@ bool CvPlayer::isCivic(CivicTypes eCivic) const
 
 bool CvPlayer::canDoCivics(CivicTypes eCivic) const
 {
-	// #430: PURE enabler read -- no legacy fallback/pre-init/what-if path (legacy is bait, XML removed pre-ship; DEC-no-legacy-masking).
-	// A BARE member read of the per-player civics domain (enabler.md par.7/8) -- deliberately OVER-INCLUSIVE
-	// until the requires gate + city-limit/force-civic overrides land on the gate stage (par.6).
-	return eCivic != NO_CIVIC && m_enabler.civics.listed((int)eCivic);
+	PROFILE_FUNC();
+
+	if (eCivic == NO_CIVIC)
+	{
+		return true;
+	}
+
+	if (GC.getGame().isForceCivicOption((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOptionType()))
+	{
+		return GC.getGame().isForceCivic(eCivic);
+	}
+
+	if (!isNPC()
+	&& (
+		(
+			GC.getCivicInfo(eCivic).getCityLimit(getID()) > 0
+			&& GC.getCivicInfo(eCivic).getCityOverLimitUnhappy() == 0
+			&& GC.getCivicInfo(eCivic).getCityLimit(getID()) < getNumCities()
+		)
+		||
+		(
+			!isHasCivicOption((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOptionType())
+			&& !GET_TEAM(getTeam()).isHasTech(GC.getCivicInfo(eCivic).getTechPrereq())
+		)
+	))
+	{
+		return false;
+	}
+	return true;
 }
 
 
@@ -8334,17 +8494,10 @@ bool CvPlayer::canRevolution(CivicTypes* paeNewCivics) const
 	if (paeNewCivics == NULL)
 	{
 		// XXX is this necessary?
-		// #430 F2b (enabler.md par.6): scan the player's LISTED civics frontier instead of the whole civic
-		// database. canDoCivics((CivicTypes)iI) with no extra args IS the bare read m_enabler.civics.listed(iI)
-		// (CvPlayer.cpp:8353), so listedIds == the canDoCivics-true set. This is a pure existence check (returns
-		// on the first qualifying civic), so iteration order is irrelevant; the "not currently selected in its
-		// option" filter stays in the body unchanged.
-		std::vector<int> vecCivics;
-		m_enabler.civics.listedIds(vecCivics);
-		for (std::vector<int>::const_iterator it = vecCivics.begin(), itEnd = vecCivics.end(); it != itEnd; ++it)
+		for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
 		{
-			const CivicTypes eCivic = (CivicTypes)*it;
-			if (getCivics((CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOptionType()) != eCivic)
+			if (canDoCivics((CivicTypes)iI)
+			&& getCivics((CivicOptionTypes)GC.getCivicInfo((CivicTypes)iI).getCivicOptionType()) != iI)
 			{
 				return true;
 			}
@@ -8415,7 +8568,7 @@ void CvPlayer::revolution(CivicTypes* paeNewCivics, bool bForce)
 
 	if (getID() == GC.getGame().getActivePlayer())
 	{
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Popup_DIRTY_BIT), true); // to force an update of the civic chooser popup
+		gDLL->getInterfaceIFace()->setDirty(Popup_DIRTY_BIT, true); // to force an update of the civic chooser popup
 	}
 }
 
@@ -8607,9 +8760,8 @@ void CvPlayer::foundReligion(ReligionTypes eReligion, ReligionTypes eSlotReligio
 	// AI always clear their entire tech queue when a religion is founded in CvTeam::setHasTech
 	if (GC.getGame().isOption(GAMEOPTION_RELIGION_LIMITED))
 	{
-		for (int iRI = 0; iRI < GC.getNumReligionInfos(); ++iRI)
+		foreach_(const CvReligionInfo* info, GC.getReligionInfos())
 		{
-			const CvReligionInfo* info = &GC.getReligionInfo((ReligionTypes)iRI);
 			if (isResearchingTech(info->getTechPrereq()))
 			{
 				popResearch(info->getTechPrereq());
@@ -8683,9 +8835,18 @@ void CvPlayer::foundReligion(ReligionTypes eReligion, ReligionTypes eSlotReligio
 		// Found religion
 		GC.getGame().setHolyCity(eReligion, pBestCity, true);
 
-		// #430: the founder grants (numFreeUnits from the SLOT, freeUnit from the CHOSEN religion) are handed over
-		// by the GRANTS MACHINE off this emit -- emit() dispatches synchronously, so they land here.
-		emitReligionFounded((int)getID(), (int)eReligion, (int)eSlotReligion, pBestCity->getID(), bAward);
+		if (bAward && GC.getReligionInfo(eSlotReligion).getNumFreeUnits() > 0)
+		{
+			const UnitTypes eFreeUnit = (UnitTypes)GC.getReligionInfo(eReligion).getFreeUnit();
+
+			if (eFreeUnit != NO_UNIT)
+			{
+				for (int i = 0; i < GC.getReligionInfo(eSlotReligion).getNumFreeUnits(); ++i)
+				{
+					initUnit(eFreeUnit, pBestCity->getX(), pBestCity->getY(), NO_UNITAI, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+				}
+			}
+		}
 	}
 }
 
@@ -9174,9 +9335,9 @@ void CvPlayer::setGold(int64_t iNewValue)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(MiscButtons_DIRTY_BIT), true);
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(MiscButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -9206,9 +9367,9 @@ void CvPlayer::setAdvancedStartPoints(int iNewValue)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(MiscButtons_DIRTY_BIT), true);
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(MiscButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -9242,10 +9403,6 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 
 		if (bWasGoldenAge != isGoldenAge())
 		{
-			// #430 event spine: announce ONLY on the golden-age flip (on<->off), after the turns field commit. The
-			// cascade invalidation (IS_GOLDEN_AGE-conditioned deposits; the GA flats gate LIVE at read) rides this
-			// emit -> the invalidation consumer.
-			emitGoldenAgeChanged(getID(), isGoldenAge());
 			if (!bWasGoldenAge)
 			{
 				changeAnarchyTurns(-getAnarchyTurns());
@@ -9294,7 +9451,7 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -9370,18 +9527,18 @@ void CvPlayer::changeAnarchyTurns(int iChange, bool bHideMessages)
 
 			if (getID() == GC.getGame().getActivePlayer())
 			{
-				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(MiscButtons_DIRTY_BIT), true);
+				gDLL->getInterfaceIFace()->setDirty(MiscButtons_DIRTY_BIT, true);
 			}
 
 			if (getTeam() == GC.getGame().getActiveTeam())
 			{
-				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
+				gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
 			}
 		}
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -9749,10 +9906,7 @@ void CvPlayer::changeSpaceProductionModifier(int iChange)
 
 int CvPlayer::getCityDefenseModifier() const
 {
-	// #430: cascade-only (empire defense pcts: building allCityDefense + civic extraCityDefense + trait
-	// cityDefense, curated defense.empire.amount). The pre-init *Legacy fallback is cut -- dirty-on-load
-	// recompute (rate-cut ruling).
-	return CascadeAccumulator::scDefensePlayer(this);
+	return m_iCityDefenseModifier + getExtraCityDefense() + getTraitExtraCityDefense();
 }
 
 
@@ -9775,6 +9929,7 @@ void CvPlayer::changeNonStateReligionCommerce(int iNewValue)
 
 	if(iNewValue != 0)
 	{
+		updateReligionCommerce();
 		AI_makeAssignWorkDirty();
 	}
 }
@@ -9947,9 +10102,23 @@ void CvPlayer::changeUnitUpgradePriceModifier(int iChange)
 
 bool CvPlayer::canFoundReligion() const
 {
-	// #430 THE ENABLER FLIP: pure cascade player-state predicate (EnablerKernel::canFoundReligion) -- no pre-init
-	// guard, no legacy fallback (DEC-no-legacy-masking; matches the six canonical enabler gates).
-	return CascadeAccumulator::enFoundReligion(this);
+	if( getNumCities() < 1 || isNPC()
+	|| (GC.getGame().isGameStart() && GC.getGame().getElapsedGameTurns() < 3) )
+	{
+		return false;
+	}
+
+	if(GC.getGame().isOption(GAMEOPTION_RELIGION_LIMITED))
+	{
+		if( ((getNumCities() > 1) && !(isRebel())) || !GC.isLIMITED_RELIGIONS_EXCEPTIONS() )
+		{
+			if(hasHolyCity())
+			{
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 
@@ -9981,7 +10150,7 @@ void CvPlayer::changeNumOutsideUnits(int iChange)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -10081,52 +10250,33 @@ void CvPlayer::changeMilitaryUnitUpkeepMod(const int iChange)
 	}
 }
 
-void CvPlayer::markUnitUpkeepDirty() const
+void CvPlayer::changeUnitUpkeep(const int iChange, const bool bMilitary)
 {
-	//#430 F4: two-flag routing. The per-unit-upkeep BUCKETS (recompute-Sigma over live units) invalidate here; the
-	// FINAL cache (post empire-mod / free-allowance / handicap) invalidates via setUnitUpkeepDirty. A unit-set or
-	// per-unit-upkeep change trips BOTH (this path); a free-allowance / empire-mod change trips ONLY the final cache
-	// (setUnitUpkeepDirty alone) so it never forces a units-walk.
-	m_bUnitUpkeepBucketsDirty = true;
-	setUnitUpkeepDirty();
-}
+	if (iChange != 0)
+	{
+		FAssertMsg(iChange > 0 || bMilitary && -iChange <= m_iUnitUpkeepMilitary100 || !bMilitary && -iChange <= m_iUnitUpkeepCivilian100, "These should always be positive!");
 
-void CvPlayer::ensureUnitUpkeepBuckets() const
-{
-	if (!m_bUnitUpkeepBucketsDirty)
-	{
-		return;
+		if (bMilitary)
+			m_iUnitUpkeepMilitary100 += iChange;
+		else m_iUnitUpkeepCivilian100 += iChange;
+
+		setUnitUpkeepDirty();
 	}
-	int64_t iCiv = 0, iMil = 0;
-	foreach_(CvUnit* pUnit, units())
-	{
-		if (pUnit->isMilitaryBranch())
-			iMil += pUnit->getUpkeep100();
-		else iCiv += pUnit->getUpkeep100();
-	}
-	m_iUnitUpkeepCivilian100Cache = iCiv;
-	m_iUnitUpkeepMilitary100Cache = iMil;
-	m_bUnitUpkeepBucketsDirty = false;
 }
 
 int64_t CvPlayer::getUnitUpkeepCivilian100() const
 {
-	//#430 F4: the raw civilian bucket is a recompute-Sigma over the live units' computed getUpkeep100 bucketed by
-	// isMilitaryBranch(). Empire mod + free allowances
-	// layer on top unchanged below.
-	ensureUnitUpkeepBuckets();
-	return m_iUnitUpkeepCivilian100Cache;
+	return m_iUnitUpkeepCivilian100;
 }
 
 int64_t CvPlayer::getUnitUpkeepMilitary100() const
 {
-	ensureUnitUpkeepBuckets();
-	return m_iUnitUpkeepMilitary100Cache;
+	return m_iUnitUpkeepMilitary100;
 }
 
-int64_t CvPlayer::applyCivilianUpkeep(const int64_t iRaw100) const
+int64_t CvPlayer::getUnitUpkeepCivilian() const
 {
-	uint64_t iUpkeep = std::max<int64_t>(0, iRaw100);
+	uint64_t iUpkeep = std::max<int64_t>(0, m_iUnitUpkeepCivilian100);
 
 	if (m_iCivilianUnitUpkeepMod > 0)
 	{
@@ -10139,14 +10289,14 @@ int64_t CvPlayer::applyCivilianUpkeep(const int64_t iRaw100) const
 	return static_cast<int64_t>(iUpkeep / 100);
 }
 
-int64_t CvPlayer::applyCivilianUpkeepNet(const int64_t iRaw100) const
+int64_t CvPlayer::getUnitUpkeepCivilianNet() const
 {
-	return std::max<int64_t>(0, applyCivilianUpkeep(iRaw100) - getFreeUnitUpkeepCivilian());
+	return std::max<int64_t>(0, getUnitUpkeepCivilian() - getFreeUnitUpkeepCivilian());
 }
 
-int64_t CvPlayer::applyMilitaryUpkeep(const int64_t iRaw100) const
+int64_t CvPlayer::getUnitUpkeepMilitary() const
 {
-	uint64_t iUpkeep = std::max<int64_t>(0, iRaw100);
+	uint64_t iUpkeep = std::max<int64_t>(0, m_iUnitUpkeepMilitary100);
 
 	if (m_iMilitaryUnitUpkeepMod > 0)
 	{
@@ -10159,29 +10309,9 @@ int64_t CvPlayer::applyMilitaryUpkeep(const int64_t iRaw100) const
 	return static_cast<int64_t>(iUpkeep / 100);
 }
 
-int64_t CvPlayer::applyMilitaryUpkeepNet(const int64_t iRaw100) const
-{
-	return std::max<int64_t>(0, applyMilitaryUpkeep(iRaw100) - getFreeUnitUpkeepMilitary());
-}
-
-int64_t CvPlayer::getUnitUpkeepCivilian() const
-{
-	return applyCivilianUpkeep(getUnitUpkeepCivilian100());
-}
-
-int64_t CvPlayer::getUnitUpkeepCivilianNet() const
-{
-	return applyCivilianUpkeepNet(getUnitUpkeepCivilian100());
-}
-
-int64_t CvPlayer::getUnitUpkeepMilitary() const
-{
-	return applyMilitaryUpkeep(getUnitUpkeepMilitary100());
-}
-
 int64_t CvPlayer::getUnitUpkeepMilitaryNet() const
 {
-	return applyMilitaryUpkeepNet(getUnitUpkeepMilitary100());
+	return std::max<int64_t>(0, getUnitUpkeepMilitary() - getFreeUnitUpkeepMilitary());
 }
 
 int64_t CvPlayer::getUnitUpkeepNet(const bool bMilitary, const int iUnitUpkeep) const
@@ -10198,15 +10328,16 @@ int64_t CvPlayer::getFinalUnitUpkeep() const
 	return m_bUnitUpkeepDirty ? calcFinalUnitUpkeep() : m_iFinalUnitUpkeep;
 }
 
-int64_t CvPlayer::calcFinalUnitUpkeepFrom(const int64_t iCivilian100, const int64_t iMilitary100) const
+int64_t CvPlayer::calcFinalUnitUpkeep(const bool bReal) const
 {
-	//#430 F4: the empire-mod + free-allowance + handicap chain, parametrized on the raw bucket totals so the marginal
-	// what-if (getFinalUnitUpkeepChange) prices a HYPOTHETICAL bucket through the identical math without mutating state.
 	if (isNPC())
 	{
 		return 0;
 	}
-	int64_t iCalc = applyCivilianUpkeepNet(iCivilian100) + applyMilitaryUpkeepNet(iMilitary100);
+	int64_t iCalc = 0;
+
+	iCalc += getUnitUpkeepCivilianNet();
+	iCalc += getUnitUpkeepMilitaryNet();
 
 	if (iCalc > 0)
 	{
@@ -10228,18 +10359,6 @@ int64_t CvPlayer::calcFinalUnitUpkeepFrom(const int64_t iCivilian100, const int6
 		FErrorMsg("Total unit upkeep is negative! You don't earn gold from upkeep costs!");
 		iCalc = 0;
 	}
-	return iCalc;
-}
-
-int64_t CvPlayer::calcFinalUnitUpkeep(const bool bReal) const
-{
-	if (isNPC())
-	{
-		return 0;
-	}
-	//#430 F4: the raw buckets are the recompute-Sigma getters now (getUnitUpkeep{Civilian,Military}100).
-	const int64_t iCalc = calcFinalUnitUpkeepFrom(getUnitUpkeepCivilian100(), getUnitUpkeepMilitary100());
-
 	if (bReal)
 	{
 		m_iFinalUnitUpkeep = iCalc;
@@ -10248,7 +10367,7 @@ int64_t CvPlayer::calcFinalUnitUpkeep(const bool bReal) const
 		// Refresh relevant UI
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 	return iCalc;
@@ -10257,25 +10376,31 @@ int64_t CvPlayer::calcFinalUnitUpkeep(const bool bReal) const
 void CvPlayer::setUnitUpkeepDirty() const
 {
 	m_bUnitUpkeepDirty = true;
-	m_bUnitUpkeepBucketsDirty = true; //#430 F4: force the per-unit-upkeep Sigma to recompute on first read
 
 	// Refresh relevant UI
 	if (getID() == GC.getGame().getActivePlayer() && isTurnActive())
 	{
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 	}
 }
 
-int CvPlayer::getFinalUnitUpkeepChange(const int iExtra, const bool bMilitary) const
+int CvPlayer::getFinalUnitUpkeepChange(const int iExtra, const bool bMilitary)
 {
 	if (iExtra == 0) return 0;
 
-	//#430 F4: NON-MUTATING marginal-cost what-if. Price the hypothetical bucket totals through the shared
-	// final-upkeep math, diff against the real cached total.
-	const int64_t iCivilian100 = getUnitUpkeepCivilian100() + (bMilitary ? 0 : iExtra);
-	const int64_t iMilitary100 = getUnitUpkeepMilitary100() + (bMilitary ? iExtra : 0);
+	// Temporary change
+	if (bMilitary)
+		m_iUnitUpkeepMilitary100 += iExtra;
+	else m_iUnitUpkeepCivilian100 += iExtra;
 
-	return static_cast<int>(calcFinalUnitUpkeepFrom(iCivilian100, iMilitary100) - getFinalUnitUpkeep());
+	const int iChange = static_cast<int>(calcFinalUnitUpkeep(false) - getFinalUnitUpkeep());
+
+	// Very important to restore the real value!
+	if (bMilitary)
+		m_iUnitUpkeepMilitary100 -= iExtra;
+	else m_iUnitUpkeepCivilian100 -= iExtra;
+
+	return iChange;
 }
 // ! Unit Upkeep
 
@@ -10295,7 +10420,7 @@ void CvPlayer::changeNumMilitaryUnits(int iChange)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -10341,7 +10466,7 @@ void CvPlayer::changeMilitaryFoodProductionCount(int iChange, bool bLimited)
 
 		if (!bLimited && getTeam() == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
 		}
 	}
 }
@@ -10628,13 +10753,25 @@ void CvPlayer::changeLevelExperienceModifier(int iChange)
 
 int CvPlayer::getCivicHealth() const
 {
-	int h, e; CascadeWellbeing::civicWellbeing(*this, h, e);
 	// AIAndy: Barbarians do not get player wide unhealthiness
-	if (isNPC() && e < 0)
+	if (isNPC() && m_iCivicHealth < 0)
 	{
 		return 0;
 	}
-	return e;
+	return m_iCivicHealth;
+}
+
+void CvPlayer::changeCivicHealth(const int iChange, const bool bLimited)
+{
+	if (iChange != 0)
+	{
+		m_iCivicHealth += iChange;
+
+		if (!bLimited)
+		{
+			AI_makeAssignWorkDirty();
+		}
+	}
 }
 
 int CvPlayer::getExtraHealth() const
@@ -10659,13 +10796,37 @@ void CvPlayer::changeExtraHealth(int iChange)
 
 int CvPlayer::getBuildingGoodHealth() const
 {
-	int g, b; CascadeWellbeing::buildingHealthEmpire(*this, g, b); return g / 100;   // ÷100: cascade term ×100, human decomposition getter
+	return m_iBuildingGoodHealth;
+}
+
+
+void CvPlayer::changeBuildingGoodHealth(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iBuildingGoodHealth += iChange;
+		FASSERT_NOT_NEGATIVE(getBuildingGoodHealth());
+
+		AI_makeAssignWorkDirty();
+	}
 }
 
 
 int CvPlayer::getBuildingBadHealth() const
 {
-	int g, b; CascadeWellbeing::buildingHealthEmpire(*this, g, b); return b / 100;   // ÷100: human decomposition getter
+	return m_iBuildingBadHealth;
+}
+
+
+void CvPlayer::changeBuildingBadHealth(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iBuildingBadHealth += iChange;
+		FAssert(getBuildingBadHealth() <= 0);
+
+		AI_makeAssignWorkDirty();
+	}
 }
 
 
@@ -10704,7 +10865,38 @@ void CvPlayer::changeExtraHappiness(int iChange, bool bUnattributed)
 
 int CvPlayer::getBuildingHappiness() const
 {
-	return CascadeWellbeing::buildingHappinessEmpire(*this) / 100;   // ÷100: cascade term ×100, human decomposition getter
+	return m_iBuildingHappiness;
+}
+
+
+void CvPlayer::changeBuildingHappiness(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iBuildingHappiness += iChange;
+
+		AI_makeAssignWorkDirty();
+	}
+}
+
+
+int CvPlayer::getLargestCityHappiness() const
+{
+	return m_iLargestCityHappiness;
+}
+
+
+void CvPlayer::changeLargestCityHappiness(int iChange, bool bLimited)
+{
+	if (iChange != 0)
+	{
+		m_iLargestCityHappiness += iChange;
+
+		if (!bLimited)
+		{
+			AI_makeAssignWorkDirty();
+		}
+	}
 }
 
 
@@ -10790,8 +10982,20 @@ void CvPlayer::changeWarWearinessModifier(int iChange, bool bLimited)
 }
 
 
-// #430 two-part seam: the player "any" free-specialist ledger (m_iFreeSpecialist) is cut; empire free
-// specialists ride the cascade AMOUNT (fsEmpireAny -> fsAmountAny), read by CvCity::totalFreeSpecialists.
+int CvPlayer::getFreeSpecialist() const
+{
+	return m_iFreeSpecialist;
+}
+
+
+void CvPlayer::changeFreeSpecialist(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iFreeSpecialist += iChange;
+		AI_makeAssignWorkDirty();
+	}
+}
 
 
 int CvPlayer::getNoForeignTradeCount() const
@@ -10922,7 +11126,7 @@ void CvPlayer::setRevolutionTimer(int iNewValue)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(MiscButtons_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(MiscButtons_DIRTY_BIT, true);
 		}
 	}
 }
@@ -10949,7 +11153,7 @@ void CvPlayer::setConversionTimer(int iNewValue)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(MiscButtons_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(MiscButtons_DIRTY_BIT, true);
 		}
 	}
 }
@@ -10991,13 +11195,15 @@ void CvPlayer::changeStateReligionCount(int iChange, bool bLimited)
 			setMaintenanceDirty(true);
 		}
 
-		// #430 cut: religion happiness is a cascade term (no per-city rebuild trigger)
+		updateReligionHappiness(bLimited);
 
 		if (!bLimited)
 		{
+			updateReligionCommerce();
+
 			GC.getGame().AI_makeAssignWorkDirty();
 
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 		}
 
 		checkReligiousDisablingAllBuildings();
@@ -11024,17 +11230,38 @@ void CvPlayer::changeNoNonStateReligionSpreadCount(int iChange)
 }
 
 
-// #430 accumulator cut: state/non-state religion happiness is the cascade playerReligionAcc (INITIAL + civics +
-// TRAITS -- the trait term is the #430 gap fix), not a stored accumulator. Human getters.
 int CvPlayer::getStateReligionHappiness() const
 {
-	return CascadeWellbeing::playerStateReligionHappiness(*this);
+	return m_iStateReligionHappiness;
+}
+
+
+void CvPlayer::changeStateReligionHappiness(int iChange, bool bLimited)
+{
+	if (iChange != 0)
+	{
+		m_iStateReligionHappiness += iChange;
+
+		updateReligionHappiness(bLimited);
+	}
 }
 
 
 int CvPlayer::getNonStateReligionHappiness() const
 {
-	return CascadeWellbeing::playerNonStateReligionHappiness(*this);
+	return m_iNonStateReligionHappiness;
+}
+
+
+//Fuyu bLimited
+void CvPlayer::changeNonStateReligionHappiness(int iChange, bool bLimited)
+{
+	if (iChange != 0)
+	{
+		m_iNonStateReligionHappiness += iChange;
+
+		updateReligionHappiness(bLimited);
+	}
 }
 
 
@@ -11052,7 +11279,7 @@ void CvPlayer::changeStateReligionUnitProductionModifier(int iChange)
 
 		if (getTeam() == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
 		}
 	}
 }
@@ -11072,7 +11299,7 @@ void CvPlayer::changeStateReligionBuildingProductionModifier(int iChange)
 
 		if (getTeam() == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
 		}
 	}
 }
@@ -11103,11 +11330,6 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 
 	if (pOldCapitalCity != pNewCapitalCity)
 	{
-		// #430: the capital genuinely CHANGED -- this is the choke point for every cause, including a player
-		// deliberately MOVING it by building a palace in another city (setupBuilding's isCapital branch lands
-		// here). Flip-guarded by the enclosing !=, so it announces a real transition only.
-		emitCapitalChanged((int)getID(), (pNewCapitalCity != NULL) ? pNewCapitalCity->getID() : -1);
-
 		const bool bUpdatePlotGroups = pOldCapitalCity == NULL || pNewCapitalCity == NULL || pOldCapitalCity->plot()->getOwnerPlotGroup() != pNewCapitalCity->plot()->getOwnerPlotGroup();
 
 		if (bUpdatePlotGroups)
@@ -11190,6 +11412,7 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 			{
 				pOldCapitalCity->setCommerceModifierDirty((CommerceTypes)iI);
 			}
+			pOldCapitalCity->updateCommerce();
 			pOldCapitalCity->setInfoDirty(true);
 		}
 		if (pNewCapitalCity)
@@ -11198,6 +11421,7 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 			{
 				pNewCapitalCity->setCommerceModifierDirty((CommerceTypes)iI);
 			}
+			pNewCapitalCity->updateCommerce();
 			pNewCapitalCity->setInfoDirty(true);
 		}
 	}
@@ -11738,14 +11962,17 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 	{
 		m_bTurnActive = bNewValue;
 
-		// The PLAYER turn boundary -- the live "who is on the clock" phase signal (tooling can poll during the
-		// human phase instead of competing with AI compute). Emitted for EVERY player, not just humans: a turn
-		// going active/inactive is a genuine state mutation, and the spine's contract is that every mutation
-		// emits while CONSUMERS filter -- a deliberately partial emit surface is exactly what defeats the
-		// missed-emit tripwire. Turn DURATION analytics still belong to the [PERF] phase logs, not to this fact.
-		// Both carry the player, so a consumer wanting humans only tests it.
-		if (bNewValue) emitTurnStarted(GC.getGame().getGameTurn(), getID());
-		else           emitTurnEnded(GC.getGame().getGameTurn(), getID());
+		// #407: human turn boundaries for the dev SSE stream -- the live "human is
+		// thinking vs AI/engine is processing" phase signal (e.g. tooling polls during
+		// the human phase instead of competing with AI compute). HUMAN ONLY by design:
+		// per-AI-player events would be 40+ frames/turn of noise, and turn DURATION
+		// analytics belong to the [PERF] logs (turn.wall / update.accum / per-phase),
+		// not to this stream.
+		if (isHuman() && CvHttpServer::isEnabled())
+		{
+			CvHttpServer::publishEvent(bNewValue ? "playerTurnStart" : "playerTurnEnd",
+				CvString::format("{\"player\":%d,\"turn\":%d}", getID(), GC.getGame().getGameTurn()).c_str());
+		}
 
 		if (bNewValue)
 		{
@@ -11955,7 +12182,7 @@ void CvPlayer::setTurnActive(bool bNewValue, bool bDoTurn)
 			}
 		}
 		gDLL->getInterfaceIFace()->updateCursorType();
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 
 		GC.getMap().invalidateActivePlayerPlotCache();
 	}
@@ -12113,8 +12340,8 @@ void CvPlayer::setFoundedFirstCity(bool bNewValue)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(PercentButtons_DIRTY_BIT), true);
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(ResearchButtons_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(PercentButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(ResearchButtons_DIRTY_BIT, true);
 		}
 	}
 }
@@ -12136,7 +12363,7 @@ void CvPlayer::setStrike(bool bNewValue)
 		{
 			AddDLLMessage(getID(), false, GC.getEVENT_MESSAGE_TIME(), gDLL->getText("TXT_KEY_MISC_UNITS_ON_STRIKE").GetCString(), "AS2D_STRIKE", MESSAGE_TYPE_MINOR_EVENT, NULL, (ColorTypes)GC.getInfoTypeForString("COLOR_WARNING_TEXT"));
 
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -12191,11 +12418,12 @@ void CvPlayer::setCurrentEra(EraTypes eNewValue)
 	{
 		EraTypes eOldEra = m_eCurrentEra;
 		m_eCurrentEra = eNewValue;
-		// #430 event spine: era is a BROAD player-scope cascade input -- PSC_CFLAT (heritage era-stacked commerce,
-		// applied just below), every ERA-counter-gated deposit, and ERA requires atoms (frontier). Announce the fact.
-		emitEraChanged(getID(), (int)eNewValue);
 
-		// #430: heritage era-commerce rides the cascade (ps.cPlayerExtra100).
+		// Toffer - Heritage may change commerce output with era.
+		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
+		{
+			changeExtraCommerce100((CommerceTypes)iI, getHeritageCommerceEraChange((CommerceTypes)iI, eNewValue));
+		}
 
 		if (GC.getGame().getActiveTeam() != NO_TEAM)
 		{
@@ -12236,11 +12464,11 @@ void CvPlayer::setCurrentEra(EraTypes eNewValue)
 		}
 
 		//update flag eras
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Flag_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(Flag_DIRTY_BIT, true);
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Soundtrack_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(Soundtrack_DIRTY_BIT, true);
 		}
 
 		if (isHumanPlayer()
@@ -12281,14 +12509,14 @@ void CvPlayer::setLastStateReligion(const ReligionTypes eNewReligion)
 	if (eOldReligion != eNewReligion)
 	{
 		m_eLastStateReligion = eNewReligion;
-		// #430 event spine: announce the state-religion switch (past the no-change guard, after the field commit).
-		emitStateReligionChanged(getID(), (int)eNewReligion);
 
-		// #430: getReligionCommerce recomputes on read.
+		updateReligionHappiness();
+		updateReligionCommerce();
+
 		GC.getGame().updateSecretaryGeneral();
 		GC.getGame().AI_makeAssignWorkDirty();
 
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 
 		if (GC.getGame().isFinalInitialized())
 		{
@@ -12496,21 +12724,41 @@ void CvPlayer::changeSeaPlotYield(YieldTypes eIndex, int iChange)
 int CvPlayer::getGoldenAgeYield(YieldTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	// #430: golden-age yield is a cascade term (empire.goldenAge member-mirror,
-	// golden-age.md); the cascade computes it independently, this legacy player getter returns 0 (exposed).
-	return 0;
+	return std::max(0,m_aiGoldenAgeYield[eIndex]);
 }
 
-// #430: golden-age yield rides the cascade (empire.goldenAge member-mirror).
+
+void CvPlayer::changeGoldenAgeYield(YieldTypes eIndex, int iChange)
+{
+	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
+
+	if (iChange != 0)
+	{
+		m_aiGoldenAgeYield[eIndex] += iChange;
+
+		updateYield();
+	}
+}
+
 
 int CvPlayer::getGoldenAgeCommerce(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	// #430: golden-age commerce rides the cascade (empire.goldenAge); this getter is 0 (exposed).
-	return 0;
+	return std::max(0,m_aiGoldenAgeCommerce[eIndex]);
 }
 
-// #430: golden-age commerce rides the cascade.
+
+void CvPlayer::changeGoldenAgeCommerce(CommerceTypes eIndex, int iChange)
+{
+	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
+
+	if (iChange != 0)
+	{
+		m_aiGoldenAgeCommerce[eIndex] += iChange;
+
+		setCommerceDirty(eIndex);
+	}
+}
 
 
 int CvPlayer::getYieldRateModifier(YieldTypes eIndex) const
@@ -12538,7 +12786,7 @@ void CvPlayer::changeYieldRateModifier(YieldTypes eIndex, int iChange)
 
 		if (getTeam() == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
 		}
 	}
 }
@@ -12565,6 +12813,11 @@ void CvPlayer::changeCapitalYieldRateModifier(YieldTypes eIndex, int iChange)
 
 		if (pCapitalCity)
 		{
+			if (eIndex == YIELD_COMMERCE)
+			{
+				pCapitalCity->updateCommerce();
+			}
+
 			pCapitalCity->AI_setAssignWorkDirty(true);
 
 			if (pCapitalCity->getTeam() == GC.getGame().getActiveTeam())
@@ -12677,12 +12930,21 @@ void CvPlayer::changeTradeYieldModifier(YieldTypes eIndex, int iChange)
 int CvPlayer::getExtraCommerce100(const CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	// #430: player extra commerce (heritage/trait/tech) is a cascade term
-	// (ps.cPlayerExtra100, CvCascadeAccumulator.cpp:369); this legacy getter returns 0 (exposed).
-	return 0;
+
+	return m_extraCommerce[eIndex];
 }
 
-// #430: player extra commerce rides the cascade (ps.cPlayerExtra100).
+
+void CvPlayer::changeExtraCommerce100(const CommerceTypes eIndex, const int iChange)
+{
+	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
+
+	if (iChange != 0)
+	{
+		m_extraCommerce[eIndex] += iChange;
+		setCommerceDirty(eIndex);
+	}
+}
 
 
 int CvPlayer::getCommercePercent(CommerceTypes eIndex) const
@@ -12703,7 +12965,6 @@ void CvPlayer::setCommercePercent(CommerceTypes eIndex, int iNewValue)
 
 	if (iOldValue != m_aiCommercePercent[eIndex])
 	{
-		// (#430 accumulator: NO hook here -- the slider is read LIVE inside the CombineSplit kernel)
 		int iTotalCommercePercent = 0;
 
 		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
@@ -12732,10 +12993,10 @@ void CvPlayer::setCommercePercent(CommerceTypes eIndex, int iNewValue)
 
 		if (getTeam() == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityScreen_DIRTY_BIT), true);
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Financial_Screen_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(CityScreen_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(Financial_Screen_DIRTY_BIT, true);
 		}
 	}
 }
@@ -12749,10 +13010,12 @@ void CvPlayer::changeCommercePercent(CommerceTypes eIndex, int iChange)
 int CvPlayer::getCommerceRate(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	// #430: empire commerce is the live per-channel sum of the cascade-split city commerce. The cascade feeds the
-	// commerce YIELD; the player sliders split it per channel PER CITY (floored per city, in getCommerceRateTimes100);
-	// the empire total is the plain per-channel sum. No stored accumulator, no lazy-recompute.
-	return algo::accumulate(cities() | transformed(CvCity::fn::getCommerceRateTimes100(eIndex)), 0) / 100;
+
+	if (m_abCommerceDirty[eIndex])
+	{
+		updateCommerce(eIndex, false);
+	}
+	return m_aiCommerceRate[eIndex] / 100;
 }
 
 int CvPlayer::getTotalCityBaseCommerceRate(CommerceTypes eIndex) const
@@ -12766,6 +13029,20 @@ int CvPlayer::getTotalCityBaseCommerceRate(CommerceTypes eIndex) const
 			m_cachedTotalCityBaseCommerceRate[eIndex] = MAX_COMMERCE_RATE_VALUE;
 	}
 	return m_cachedTotalCityBaseCommerceRate[eIndex];
+}
+
+void CvPlayer::changeCommerceRate(CommerceTypes eIndex, int iChange)
+{
+	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
+
+	if (iChange != 0)
+	{
+		m_aiCommerceRate[eIndex] = std::min(m_aiCommerceRate[eIndex]+iChange,MAX_COMMERCE_RATE_VALUE);
+		if (getID() == GC.getGame().getActivePlayer())
+		{
+			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+		}
+	}
 }
 
 int CvPlayer::getCommerceRateModifier(CommerceTypes eIndex) const
@@ -12869,39 +13146,84 @@ void CvPlayer::changeCapitalCommerceRateModifier(CommerceTypes eIndex, int iChan
 int CvPlayer::getStateReligionBuildingCommerce(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	// #430: the state-religion building commerce pool is a
-	// cascade term (ps.cSrPool × st.iCSrMatch, CvCascadeAccumulator.cpp:369); this legacy getter returns 0 (exposed).
-	return 0;
+	return m_aiStateReligionBuildingCommerce[eIndex];
 }
 
-// #430: state-religion commerce pool rides the cascade (ps.cSrPool).
+
+void CvPlayer::changeStateReligionBuildingCommerce(CommerceTypes eIndex, int iChange)
+{
+	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
+
+	if (iChange != 0)
+	{
+		m_aiStateReligionBuildingCommerce[eIndex] += iChange;
+		FASSERT_NOT_NEGATIVE(getStateReligionBuildingCommerce(eIndex));
+
+		setCommerceDirty(eIndex);
+	}
+}
 
 
 int CvPlayer::getSpecialistExtraCommerce(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	// #430: specialist commerce is a cascade term (st.cSpec100); this getter is 0 (exposed).
-	return 0;
+	return m_aiSpecialistExtraCommerce[eIndex];
 }
 
 
-// #430: specialist commerce rides the cascade (st.cSpec100).
+void CvPlayer::changeSpecialistExtraCommerce(CommerceTypes eIndex, int iChange)
+{
+	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
+
+	if (iChange != 0)
+	{
+		m_aiSpecialistExtraCommerce[eIndex] += iChange;
+
+		setCommerceDirty(eIndex);
+
+		AI_makeAssignWorkDirty();
+	}
+}
+
+
+int CvPlayer::getCommerceFlexibleCount(CommerceTypes eIndex) const
+{
+	return m_aiCommerceFlexibleCount[eIndex];
+}
 
 
 bool CvPlayer::isCommerceFlexible(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
 
-	// Runtime gates -- engine-side composition, NOT capability data (capabilities.md): no slider before the
-	// first city; the espionage slider additionally needs a met rival. These stay in the getter, like the
-	// game-option folds on the trade getters.
 	if (!isFoundedFirstCity() || eIndex == COMMERCE_ESPIONAGE && 0 == GET_TEAM(getTeam()).getHasMetCivCount(true))
 	{
 		return false;
 	}
-	// CUT (#430 Gate-3, capabilities.md flip wave #2): the slider unlock derives from CascadeCapabilities via
-	// the team getter (research/espionage ride TECH_GAME_START; culture rides TECH_DRAMA; gold has no slider).
-	return GET_TEAM(getTeam()).isCommerceFlexible(eIndex);
+	return GC.getCommerceInfo(eIndex).isFlexiblePercent() || getCommerceFlexibleCount(eIndex) > 0 || GET_TEAM(getTeam()).isCommerceFlexible(eIndex);
+}
+
+
+void CvPlayer::changeCommerceFlexibleCount(CommerceTypes eIndex, int iChange)
+{
+	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
+
+	if (iChange != 0)
+	{
+		m_aiCommerceFlexibleCount[eIndex] += iChange;
+		FASSERT_NOT_NEGATIVE(getCommerceFlexibleCount(eIndex));
+
+		if (!isCommerceFlexible(eIndex))
+		{
+			setCommercePercent(eIndex, 0);
+		}
+
+		if (getID() == GC.getGame().getActivePlayer())
+		{
+			gDLL->getInterfaceIFace()->setDirty(PercentButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+		}
+	}
 }
 
 
@@ -12923,7 +13245,7 @@ void CvPlayer::changeGoldPerTurnByPlayer(PlayerTypes eIndex, int iChange)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 		}
 
 		if (!isHumanPlayer())
@@ -13002,7 +13324,7 @@ void CvPlayer::changeBonusExport(const BonusTypes eBonus, const int iChange)
 		CvPlotGroup* ownerPlotGroup = pCapitalCity->plotGroup(getID());
 		if (ownerPlotGroup)
 		{
-			ownerPlotGroup->changeTradedBonus(eBonus, -iChange);
+			ownerPlotGroup->changeNumBonuses(eBonus, -iChange);
 		}
 	}
 }
@@ -13037,7 +13359,7 @@ void CvPlayer::changeBonusImport(const BonusTypes eBonus, const int iChange)
 		CvPlotGroup* ownerPlotGroup = pCapitalCity->plotGroup(getID());
 		if (ownerPlotGroup)
 		{
-			ownerPlotGroup->changeTradedBonus(eBonus, iChange);
+			ownerPlotGroup->changeNumBonuses(eBonus, iChange);
 		}
 	}
 }
@@ -13163,7 +13485,7 @@ void CvPlayer::changeExtraBuildingHappiness(const BuildingTypes eIndex, const in
 	{
 		m_extraBuildingHappiness[itr->first] += iChange;
 	}
-	// #430 cut: extraBuilding is a cascade term (hap.extraB) -- no per-city update trigger
+	algo::for_each(cities(), CvCity::fn::updateExtraBuildingHappiness(bLimited));
 }
 
 int CvPlayer::getExtraBuildingHappiness(const BuildingTypes eIndex) const
@@ -13195,7 +13517,7 @@ void CvPlayer::changeExtraBuildingHealth(const BuildingTypes eIndex, const int i
 	{
 		m_extraBuildingHealth[itr->first] += iChange;
 	}
-	// #430 cut: extraBuilding is a cascade term (hea.extraB) -- no per-city update trigger
+	algo::for_each(cities(), CvCity::fn::updateExtraBuildingHealth(bLimited));
 }
 
 int CvPlayer::getExtraBuildingHealth(const BuildingTypes eIndex) const
@@ -13209,9 +13531,7 @@ int CvPlayer::getExtraBuildingHealth(const BuildingTypes eIndex) const
 int CvPlayer::getFeatureHappiness(FeatureTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumFeatureInfos(), eIndex);
-	// #430: civic-per-feature happiness is a cascade wellbeing term
-	// (CascadeWellbeing featureWellbeing / featMember); this legacy player getter returns 0 (exposed).
-	return 0;
+	return m_paiFeatureHappiness[eIndex];
 }
 
 
@@ -13219,7 +13539,17 @@ int CvPlayer::getFeatureHappiness(FeatureTypes eIndex) const
 /* 	New Civic AI						02.08.2010				Fuyu			*/
 /********************************************************************************/
 //Fuyu bLimited
-// #430: civic-per-feature happiness rides the cascade wellbeing (featureWellbeing).
+void CvPlayer::changeFeatureHappiness(FeatureTypes eIndex, int iChange, bool bLimited)
+{
+	FASSERT_BOUNDS(0, GC.getNumFeatureInfos(), eIndex);
+
+	if (iChange != 0)
+	{
+		m_paiFeatureHappiness[eIndex] += iChange;
+
+		updateFeatureHappiness(bLimited);
+	}
+}
 /********************************************************************************/
 /* 	New Civic AI												END 			*/
 /********************************************************************************/
@@ -13276,11 +13606,9 @@ void CvPlayer::recalculateUnitCounts()
 
 	foreach_(CvUnit* unit, units())
 	{
+		unit->recalculateUnitUpkeep();
 		unit->area()->changePower(getID(), unit->getPowerValueTotal());
 	}
-	//#430 F4: per-unit upkeep is the computed getUpkeep100 now (no per-unit recalc/push); one dirty mark recomputes
-	// the per-unit-upkeep Sigma over the live set on next read.
-	markUnitUpkeepDirty();
 }
 
 void CvPlayer::changeUnitCount(const UnitTypes eUnit, const int iChange)
@@ -13308,17 +13636,6 @@ void CvPlayer::changeUnitCount(const UnitTypes eUnit, const int iChange)
 		m_unitCount[itr->first] += iChange;
 	}
 	GET_TEAM(getTeam()).changeUnitCount(eUnit, iChange);
-	// #430 cascade DOMAIN emit (mirror of changeBuildingCount): real per-player unit-count change -> the tally.
-	emitUnitCount((int)getID(), (int)eUnit, getUnitCount(eUnit), iChange);
-	// enabler-frontier-perf.md Part B: the UNIT incremental path (the analogue of buildingProcessed's onBuildingChanged).
-	// A trained/lost unit re-checks its trainability box across this player's cities -- but ONLY when the unit is
-	// instance-capped or referenced by another unit's requires (unit caps are the sole count-driven availability
-	// input), so uncapped combat births/deaths are a cheap no-op. Load-time unit creation is skipped: the boxes are
-	// still all-dirty pre-warm, so onUnitChanged's per-city dirty guard already no-ops it, but the isFinalInitialized
-	// gate makes that explicit and matches the other play-only cascade hooks.
-	if (GC.getGame().isFinalInitialized())
-	{
-	}
 }
 
 int CvPlayer::getUnitCount(const UnitTypes eUnit) const
@@ -13409,18 +13726,6 @@ void CvPlayer::changeBuildingCount(BuildingTypes eIndex, int iChange)
 	m_paiBuildingCount[eIndex] += iChange;
 	FASSERT_NOT_NEGATIVE(getBuildingCount(eIndex));
 
-	// #430 cascade FIRST REAL EMIT (temporary first-pass, beside the original counter): every genuine empire
-	// building gain/loss drives a DOMAIN event through the spine, carrying the real building type + new empire
-	// count + delta. This proves the spine on REAL gameplay input and shadows m_paiBuildingCount -- the exact
-	// counter the tally will replace. DOMAIN = synced state change (tally-eligible). No-op until consumers register.
-	emitBuildingCount((int)getID(), (int)eIndex, getBuildingCount(eIndex), iChange);
-
-	// #430 accumulator: NO epoch bump here (measured 2026-07-03: building completions are the highest-frequency
-	// player event; bumping per completion 5x'd the turn -- pctStack 6.5k->38.5k calls/208s). The sibling-city
-	// empire-scope staleness this leaves (tiny, decision-reads only; realized output computes at slice start on
-	// fresh slots) is the accepted interim -- it dissolves in the turn-end unified rebuild
-	// (state-repositories.md end-state), where completion-driven freshness is batched, not per-event.
-
 	clearCanConstructCache(eIndex, true);
 }
 
@@ -13501,26 +13806,21 @@ bool CvPlayer::isBuildingMaxedOut(BuildingTypes eIndex, int iExtra) const
 
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
 
-	// bNoLimit is the ENFORCEMENT waiver only (identity.noInstanceLimit): the building keeps its national-wonder
-	// CATEGORY (allowed.empire -- the prereq-scaling exemption, the wonder counts) but is never maxed out (the
-	// PALACE relocate case; legacy carried the two axes independently).
-	if (!isNationalWonder(eIndex) || GC.getBuildingInfo(eIndex).isNoLimit())
+	if (!isNationalWonder(eIndex))
 	{
 		return false;
 	}
 
-	// allowed.empire is the curator-FOLDED cap (max + extra in ONE authored number, json §4.4 "author the real
-	// number"); callers wanting the stricter base-cap check pass the extra as iExtra slack (unchanged legacy
-	// arithmetic: count + extra >= max + extra == count >= max).
-	FAssertMsg(getBuildingCount(eIndex) <= GC.getBuildingInfo(eIndex).getMaxPlayerInstances(),
-		CvString::format("BuildingCount for %s is expected to be less than or match the allowed empire cap (%d <= %d)",
+	FAssertMsg(getBuildingCount(eIndex) <= (GC.getBuildingInfo(eIndex).getMaxPlayerInstances() + GC.getBuildingInfo(eIndex).getExtraPlayerInstances()),
+		CvString::format("BuildingCount for %s is expected to be less than or match the number of max player instances plus extra player instances (%d <= %d + %d)",
 			GC.getBuildingInfo(eIndex).getType(),
 			getBuildingCount(eIndex),
-			GC.getBuildingInfo(eIndex).getMaxPlayerInstances()
+			GC.getBuildingInfo(eIndex).getMaxPlayerInstances(),
+			GC.getBuildingInfo(eIndex).getExtraPlayerInstances()
 		).c_str()
 	);
 
-	return ((getBuildingCount(eIndex) + iExtra) >= GC.getBuildingInfo(eIndex).getMaxPlayerInstances());
+	return ((getBuildingCount(eIndex) + iExtra) >= (GC.getBuildingInfo(eIndex).getMaxPlayerInstances() + GC.getBuildingInfo(eIndex).getExtraPlayerInstances()));
 }
 
 bool CvPlayer::isBuildingGroupMaxedOut(SpecialBuildingTypes eIndex, int iExtra) const
@@ -13551,7 +13851,7 @@ void CvPlayer::changeBuildingGroupMaking(SpecialBuildingTypes eIndex, int iChang
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Help_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(Help_DIRTY_BIT, true);
 		}
 
 		clearCanConstructCacheForGroup(eIndex, true);
@@ -13579,9 +13879,7 @@ int CvPlayer::getHurryCount(HurryTypes eIndex) const
 
 bool CvPlayer::canHurry(HurryTypes eIndex) const
 {
-	// #430 THE ENABLER FLIP: pure cascade frontier read (generate->gateSet hurries) -- no pre-init guard, no
-	// legacy fallback (DEC-no-legacy-masking).
-	return CascadeAccumulator::enHurry(this, (int)eIndex);
+	return (getHurryCount(eIndex) > 0);
 }
 
 
@@ -13676,7 +13974,7 @@ void CvPlayer::changeNoCivicUpkeepCount(CivicOptionTypes eIndex, int iChange)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -13812,7 +14110,7 @@ void CvPlayer::changeUpkeepCount(UpkeepTypes eIndex, int iChange)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 		}
 	}
 }
@@ -13874,7 +14172,7 @@ void CvPlayer::setResearchingTech(TechTypes eIndex, bool bNewValue)
 
 		if (getID() == GC.getGame().getActivePlayer())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Popup_DIRTY_BIT), true); // to check whether we still need the tech chooser popup
+			gDLL->getInterfaceIFace()->setDirty(Popup_DIRTY_BIT, true); // to check whether we still need the tech chooser popup
 		}
 	}
 }
@@ -13992,8 +14290,6 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 	if (eOldCivic != eNewValue)
 	{
 		m_paeCivics[eIndex] = eNewValue;
-		// #430: the civic-swap cascade invalidation (player packages + the cities' civic-conditioned deposits) rides
-		// the SEVT_CIVIC_ADOPTED emit (emitCivicAdopted, below) -> the invalidation consumer.
 		if (isNPC()) return;
 
 		if (eOldCivic != NO_CIVIC)
@@ -14003,12 +14299,6 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 		if (getCivics(eIndex) != NO_CIVIC)
 		{
 			processCivics(getCivics(eIndex), 1);
-		}
-
-		// #430 cascade: a civic newly adopted -> emit the DOMAIN trigger for the grants machine (revolution pulse etc.).
-		if (eNewValue != NO_CIVIC)
-		{
-			emitCivicAdopted((int)getID(), (int)eNewValue, (int)eOldCivic);
 		}
 
 		// Afforess - Check Buildings, Clear Caches
@@ -14042,6 +14332,8 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 		foreach_ (CvCity* city, cities())
 		{
 			city->checkBuildings();
+			if (bUpdateHappiness)
+				city->updateFeatureHappiness();
 			if (bUpdateHealth)
 				city->updateImprovementHealth();
 		}
@@ -14105,35 +14397,23 @@ int CvPlayer::getExtraSpecialistYield(SpecialistTypes eIndex1, YieldTypes eIndex
 {
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex1);
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-	return m_specialistExtraYield.get((int)eIndex1 * NUM_YIELD_TYPES + (int)eIndex2);
+	return m_ppaaiSpecialistExtraYield[eIndex1][eIndex2];
 }
 
-// The CvDerivedCacheVec recompute: each specialist's empire-scope boost, summed FRESH from its two source
-// kinds -- the SPECIALIST's own conditioned empire deposits (the wonder/building-enabled entries the
-// deliveryguy own-output inversion homed there, e.g. the engineer's +1 while BUILDING_LEONARDOS_WORKSHOP is
-// held empire-wide; evaluated through the ONE evaluator) + the active traits' keyed specialist rows (the
-// trait governing-deliverer carve-out, modifier.md par.4). The old serialized accumulator's building feeders
-// were poco STUBS returning 0, so these boosts never reached the output at all.
-void CvPlayer::recomputeSpecialistExtraYield(std::vector<int>& aOut) const
+
+void CvPlayer::changeExtraSpecialistYield(SpecialistTypes eIndex1, YieldTypes eIndex2, int iChange)
 {
-	PROFILE_EXTRA_FUNC();
-	static const char* YIELD_CHAN[NUM_YIELD_TYPES] = { "food", "production", "commerce" };
-	aOut.assign(GC.getNumSpecialistInfos() * NUM_YIELD_TYPES, 0);   // rule 2: fully size + define, every call
-	CvCascadeEvalCtx ec;
-	ec.player = this;
-	ec.team = &GET_TEAM(getTeam());
-	for (int iS = 0; iS < GC.getNumSpecialistInfos(); iS++)
+	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex1);
+	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
+
+	if (iChange != 0)
 	{
-		const CvSpecialistInfo& kSpec = GC.getSpecialistInfo((SpecialistTypes)iS);
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			int iSum = MMKernel::sumUnit(&kSpec, std::string(YIELD_CHAN[iJ]) + ".empire", "flat", ec);
-			for (int iT = 0; iT < GC.getNumTraitInfos(); iT++)
-			{
-				if (hasTrait((TraitTypes)iT)) iSum += GC.getTraitInfo((TraitTypes)iT).getSpecialistYieldChange(iS, iJ);
-			}
-			aOut[iS * NUM_YIELD_TYPES + iJ] = iSum;
-		}
+		m_ppaaiSpecialistExtraYield[eIndex1][eIndex2] += iChange;
+		//TB Note: it should be ok to have a negative total Extra Specialist Yield now
+
+		updateExtraSpecialistYield();
+
+		AI_makeAssignWorkDirty();
 	}
 }
 
@@ -14142,45 +14422,19 @@ int CvPlayer::getImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIn
 {
 	FASSERT_BOUNDS(0, GC.getNumImprovementInfos(), eIndex1);
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-	return m_improvementYieldChange.get((int)eIndex1 * NUM_YIELD_TYPES + (int)eIndex2);
+	return m_ppaaiImprovementYieldChange[eIndex1][eIndex2];
 }
 
-// The CvDerivedCacheVec recompute (the m_buildingCommerceChange precedent): the empire's keyed
-// improvement-yield total, summed FRESH from its three source kinds -- adopted civics, active traits, and
-// the cascade-ACTIVE buildings' Global rows (the same active verdict the plot fresh-sum reads,
-// DEC-calc-zero-ride-in) -- from getImprovementYieldChange when dirty (dirty on construct/load => never
-// stale/doubled-from-save). const: writes only the recompute-only ledger + the flag.
-void CvPlayer::recomputeImprovementYields(std::vector<int>& aOut) const
+
+void CvPlayer::changeImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2, int iChange)
 {
-	PROFILE_EXTRA_FUNC();
-	aOut.assign(GC.getNumImprovementInfos() * NUM_YIELD_TYPES, 0);   // rule 2: fully size + define, every call
-	for (int iO = 0; iO < GC.getNumCivicOptionInfos(); iO++)
+	FASSERT_BOUNDS(0, GC.getNumImprovementInfos(), eIndex1);
+	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
+
+	if (iChange != 0)
 	{
-		const CivicTypes eCivic = getCivics((CivicOptionTypes)iO);
-		if (eCivic == NO_CIVIC) continue;
-		const CvCivicInfo& kCivic = GC.getCivicInfo(eCivic);
-		for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-				aOut[iI * NUM_YIELD_TYPES + iJ] += kCivic.getImprovementYieldChanges(iI, iJ);
-	}
-	for (int iT = 0; iT < GC.getNumTraitInfos(); iT++)
-	{
-		if (!hasTrait((TraitTypes)iT)) continue;
-		const CvTraitInfo& kTrait = GC.getTraitInfo((TraitTypes)iT);
-		for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-				aOut[iI * NUM_YIELD_TYPES + iJ] += kTrait.getImprovementYieldChange(iI, iJ);
-	}
-	foreach_(const CvCity* cityX, cities())
-	{
-		const OperatingBuildings& kOps = EnablerKernel::operatingBuildings(cityX);
-		foreach_(const BuildingTypes eB, cityX->getHasBuildings())
-		{
-			if (kOps.active.find((int)eB) == kOps.active.end()) continue;
-			foreach_(const ImprovementArray& pair, GC.getBuildingInfo(eB).getGlobalImprovementYieldChanges())
-				for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-					aOut[(int)pair.first * NUM_YIELD_TYPES + iJ] += pair.second[iJ];
-		}
+		m_ppaaiImprovementYieldChange[eIndex1][eIndex2] += iChange;
+		updateYield();
 	}
 }
 
@@ -14492,9 +14746,9 @@ void CvPlayer::clearResearchQueue()
 
 	if (getTeam() == GC.getGame().getActiveTeam())
 	{
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(ResearchButtons_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(ResearchButtons_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 	}
 }
 
@@ -14582,9 +14836,9 @@ bool CvPlayer::pushResearch(TechTypes eTech, bool bClear)
 
 	if (getTeam() == GC.getGame().getActiveTeam())
 	{
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(ResearchButtons_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(ResearchButtons_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 	}
 
 	CvEventReporter::getInstance().techSelected(eTech, getID());
@@ -14610,9 +14864,9 @@ void CvPlayer::popResearch(TechTypes eTech)
 
 	if (getTeam() == GC.getGame().getActiveTeam())
 	{
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(ResearchButtons_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(ResearchButtons_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 	}
 }
 
@@ -14775,12 +15029,6 @@ CvCity* CvPlayer::addCity()
 
 void CvPlayer::deleteCity(int iID)
 {
-	// #430: a city ceasing to exist is a FACT and must be announced -- the symmetric twin of the founding emit
-	// (NO_PLAYER -> owner). Without it the spine knew about cities APPEARING but never about them disappearing, so
-	// a consumer's city set only shed razed/disbanded cities on the next reload. This is the ONE choke point: both
-	// CvCity::kill (raze / disband) and CvCity::killTestCheap funnel here, so a single emit covers every removal.
-	// ⛔ Emitted BEFORE removeAt -- afterwards the id no longer resolves.
-	emitCityOwnerChanged(iID, (int)getID(), (int)NO_PLAYER);
 	m_cities[CURRENT_MAP]->removeAt(iID);
 }
 
@@ -16518,7 +16766,7 @@ void CvPlayer::setEspionageSpendingWeightAgainstTeam(TeamTypes eIndex, int iValu
 	{
 		m_aiEspionageSpendingWeightAgainstTeam[eIndex] = iValue;
 
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Espionage_Advisor_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(Espionage_Advisor_DIRTY_BIT, true);
 	}
 }
 
@@ -16663,7 +16911,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 
 			if (getID() == GC.getGame().getActivePlayer())
 			{
-				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Advanced_Start_DIRTY_BIT), true);
+				gDLL->getInterfaceIFace()->setDirty(Advanced_Start_DIRTY_BIT, true);
 			}
 		}
 		break;
@@ -16729,7 +16977,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 			}
 			if (getID() == GC.getGame().getActivePlayer())
 			{
-				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Advanced_Start_DIRTY_BIT), true);
+				gDLL->getInterfaceIFace()->setDirty(Advanced_Start_DIRTY_BIT, true);
 			}
 		}
 		break;
@@ -16834,7 +17082,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 
 			if (getID() == GC.getGame().getActivePlayer())
 			{
-				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Advanced_Start_DIRTY_BIT), true);
+				gDLL->getInterfaceIFace()->setDirty(Advanced_Start_DIRTY_BIT, true);
 			}
 		}
 		break;
@@ -16881,7 +17129,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 
 			if (getID() == GC.getGame().getActivePlayer())
 			{
-				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Advanced_Start_DIRTY_BIT), true);
+				gDLL->getInterfaceIFace()->setDirty(Advanced_Start_DIRTY_BIT, true);
 			}
 		}
 		break;
@@ -16941,7 +17189,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 
 			if (getID() == GC.getGame().getActivePlayer())
 			{
-				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Advanced_Start_DIRTY_BIT), true);
+				gDLL->getInterfaceIFace()->setDirty(Advanced_Start_DIRTY_BIT, true);
 			}
 		}
 		break;
@@ -16974,7 +17222,7 @@ void CvPlayer::doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, i
 
 			if (getID() == GC.getGame().getActivePlayer())
 			{
-				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Advanced_Start_DIRTY_BIT), true);
+				gDLL->getInterfaceIFace()->setDirty(Advanced_Start_DIRTY_BIT, true);
 			}
 		}
 		break;
@@ -17750,7 +17998,13 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 		{
 			changeExtraBuildingHealth(change.first, change.second * iChange, bLimited);
 		}
-		// #430: civic-per-feature happiness rides the cascade wellbeing.
+		if (kCivic.isAnyFeatureHappinessChange())
+		{
+			for (int iI = 0; iI < GC.getNumFeatureInfos(); iI++)
+			{
+				changeFeatureHappiness((FeatureTypes)iI, kCivic.getFeatureHappinessChanges(iI) * iChange, bLimited);
+			}
+		}
 		for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 		{
 			changeSpecialistValidCount((SpecialistTypes)iI, kCivic.isSpecialistValid(iI) * iChange, bLimited);
@@ -17779,7 +18033,7 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 		changeCivilianUnitUpkeepMod(kCivic.getCivilianUnitUpkeepMod() * iChange);
 		changeMilitaryUnitUpkeepMod(kCivic.getMilitaryUnitUpkeepMod() * iChange);
 		changeMaxConscript(getWorldSizeMaxConscript(eCivic) * iChange);
-		// #430 two-part seam: civic free specialists ride the cascade AMOUNT (fsEmpireAny).
+		changeFreeSpecialist(kCivic.getFreeSpecialist() * iChange);
 		changeTradeRoutes(kCivic.getTradeRoutes() * iChange);
 		changeStateReligionUnitProductionModifier(kCivic.getStateReligionUnitProductionModifier() * iChange);
 		changeStateReligionBuildingProductionModifier(kCivic.getStateReligionBuildingProductionModifier() * iChange);
@@ -17807,7 +18061,7 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 		{
 			changeCommerceRateModifier(((CommerceTypes)iI), (kCivic.getCommerceModifier(iI) * iChange));
 			changeCapitalCommerceRateModifier(((CommerceTypes)iI), (kCivic.getCapitalCommerceModifier(iI) * iChange));
-			// #430: specialist commerce rides the cascade (st.cSpec100).
+			changeSpecialistExtraCommerce(((CommerceTypes)iI), (kCivic.getSpecialistExtraCommerce(iI) * iChange));
 		}
 
 		foreach_(const BuildingModifier2& modifier, kCivic.getBuildingProductionModifiers())
@@ -17829,17 +18083,24 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 			changeUnitProductionModifier(((UnitTypes)iI), kCivic.getUnitProductionModifier(iI) * iChange);
 		}
 
-		// #430: civic-per-feature happiness rides the cascade wellbeing.
+		for (int iI = 0; iI < GC.getNumFeatureInfos(); iI++)
+		{
+			changeFeatureHappiness(((FeatureTypes)iI), (kCivic.getFeatureHappinessChanges(iI) * iChange));
+		}
 
 		for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 		{
 			changeSpecialistValidCount((SpecialistTypes)iI, kCivic.isSpecialistValid(iI) * iChange);
-			// #430 two-part seam: civic by-type free specialists ride the cascade AMOUNT (fsEmpireByType).
+			changeFreeSpecialistCount((SpecialistTypes)iI, (kCivic.getFreeSpecialistCount(iI) * iChange));
 		}
 
-		// keyed improvement yields: a recompute-from-source ledger -- mark + the trigger the old changer fired
-		m_improvementYieldChange.markDirty();
-		updateYield();
+		for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
+		{
+			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+			{
+				changeImprovementYieldChange(((ImprovementTypes)iI), ((YieldTypes)iJ), (kCivic.getImprovementYieldChanges(iI, iJ) * iChange));
+			}
+		}
 
 		changeForeignTradeRouteModifier(kCivic.getForeignTradeRouteModifier() * iChange);
 		changeReligionSpreadRate(kCivic.getReligionSpreadRate() * iChange);
@@ -17923,10 +18184,13 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 		changeExtraNationalCaptureResistanceModifier(kCivic.getNationalCaptureResistanceModifier() * iChange);
 	}
 
+	changeCivicHappiness(kCivic.getCivicHappiness() * iChange);
+	changeLargestCityHappiness(kCivic.getLargestCityHappiness() * iChange, bLimited);
 	changeNoCapitalUnhappiness(kCivic.isNoCapitalUnhappiness() * iChange);
 	changeTaxRateUnhappiness(kCivic.getTaxRateUnhappiness() * iChange);
 	changeHappyPerMilitaryUnit(kCivic.getHappyPerMilitaryUnit() * iChange,  bLimited);
 
+	changeCivicHealth(kCivic.getExtraHealth() * iChange,  bLimited);
 	changeNoUnhealthyPopulationCount(kCivic.isNoUnhealthyPopulation() * iChange, bLimited);
 	changeBuildingOnlyHealthyCount(kCivic.isBuildingOnlyHealthy() * iChange, bLimited);
 
@@ -17940,13 +18204,14 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 
 	changeStateReligionCount(kCivic.isStateReligion() * iChange, bLimited);
 	changeNoNonStateReligionSpreadCount(kCivic.isNoNonStateReligionSpread() * iChange);
-	// #430 cut: state/non-state religion happiness is a cascade term (playerReligionAcc reads adopted civics)
+	changeStateReligionHappiness(kCivic.getStateReligionHappiness() * iChange, bLimited);
+	changeNonStateReligionHappiness(kCivic.getNonStateReligionHappiness() * iChange, bLimited);
 
 	changeRevIdxLocal(kCivic.getRevIdxLocal() * iChange);
 	changeRevIdxNational(kCivic.getRevIdxNational() * iChange);
 	changeRevIdxDistanceModifier(kCivic.getRevIdxDistanceModifier() * iChange);
 
-	changeCityLimit(GC.getGame().getCivicCityLimit(eCivic) * iChange);
+	changeCityLimit(kCivic.getCityLimit(getID()) * iChange);
 	changeCityOverLimitUnhappy(kCivic.getCityOverLimitUnhappy() * iChange);
 	changeForeignUnhappyPercent(kCivic.getForeignerUnhappyPercent() * iChange);
 
@@ -18023,7 +18288,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iTotalLandScored);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iGoldPerTurn);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iAdvancedStartPoints);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iGoldenAgeTurns);   // #430 reseed: golden-age emit deferred below, after m_eID reads (getID() is NO_PLAYER here)
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iGoldenAgeTurns);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNumUnitGoldenAges);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStrikeTurns);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iAnarchyTurns);
@@ -18083,10 +18348,16 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iUpkeepModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iLevelExperienceModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHealth);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivicHealth);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingGoodHealth);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingBadHealth);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappinessUnattributed);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingHappiness);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iLargestCityHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iWarWearinessPercentAnger);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iWarWearinessModifier);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeSpecialist);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoForeignTradeCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoCorporationsCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoForeignCorporationsCount);
@@ -18096,6 +18367,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iConversionTimer);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNoNonStateReligionSpreadCount);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionHappiness);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iNonStateReligionHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionUnitProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionBuildingProductionModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionFreeExperience);
@@ -18159,51 +18432,23 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eCurrentEra);
 		WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_RELIGIONS, (int*)&m_eLastStateReligion);
-		if (m_eLastStateReligion != NO_RELIGION) { emitStateReligionChanged(getID(), (int)m_eLastStateReligion); }   // #430 reseed
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eParent);
 		updateTeamType(); //m_eTeamType not saved
 		updateHuman();
-
-		// #430: the standardized enabler's lifecycle INIT (sizing + static exclusions, NO content) -- BEFORE the
-		// in-read reseed emits below, which build the content through the same appliers as play (one mechanism,
-		// DEC-spine-reseed). getTeam() is valid (updateTeamType() just ran).
-		TechEnabler::initDomain(*this);
-		CivicEnabler::initDomain(*this);
-		ProjectEnabler::initDomain(*this);
-		ProcessEnabler::initDomain(*this);
-		BuildEnabler::initDomain(*this);
-		PromotionEnabler::initDomain(*this);
-		// #430 reseed: golden-age + TECH, emitted HERE -- getID() is valid only after m_eID was read (above) and
-		// getTeam() only after updateTeamType() just ran (m_eTeamType is NOT saved; reset() cleared it). Tech is
-		// TEAM-held and the EXE reads teams BEFORE players (verified: a per-member emit from CvTeam::read fired 0), so
-		// the team's techs are loaded now -- emit per-self for each held team tech (== the owner's "one per alive
-		// member player" ruling, realized from the player side). m_iGoldenAgeTurns was read earlier and is stored.
-		if (m_iGoldenAgeTurns > 0) { emitGoldenAgeChanged(getID(), true); }
-		emitEraChanged(getID(), (int)m_eCurrentEra);   // #430 reseed: the player's current era (a broad cascade input; m_eCurrentEra read just above)
-		emitNukesChanged(getID(), getNukeState());   // #430 reseed: the player's nuke 3-state (m_bNukesValid read above; isNoNukes is world-loaded)
-		if (getTeam() != NO_TEAM)
-		{
-			const CvTeam& kMyTeam = GET_TEAM(getTeam());
-			for (int iTech = 0; iTech < GC.getNumTechInfos(); ++iTech)
-				if (kMyTeam.isHasTech((TechTypes)iTech)) { emitTechChanged(getID(), iTech, true); }
-			// #430 reseed: the team's completed projects, per-self (the tech-emit precedent -- one emit per alive
-			// member player; the applier scopes to the emitting player, so the reseed is exactly-once per player).
-			// The count IS the delta (old = 0 at load), so the applier's 0-crossing math holds.
-			for (int iProj = 0; iProj < GC.getNumProjectInfos(); ++iProj)
-			{
-				const int iCount = kMyTeam.getProjectCount((ProjectTypes)iProj);
-				if (iCount > 0) { emitProjectChanged(getID(), iProj, iCount); }
-			}
-		}
 
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiSeaPlotYield);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiYieldRateModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiCapitalYieldRateModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiExtraYieldThreshold);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiTradeYieldModifier);
+		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiFreeCityCommerce);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommercePercent);
+		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRate);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCapitalCommerceRateModifier);
+		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiStateReligionBuildingCommerce);
+		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiSpecialistExtraCommerce);
+		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceFlexibleCount);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", MAX_PLAYERS, m_aiGoldPerTurnByPlayer);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", MAX_TEAMS, m_aiEspionageSpendingWeightAgainstTeam);
 
@@ -18213,10 +18458,11 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_STRING(wrapper, "CvPlayer", m_szScriptData);
 
 		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementCount);
+		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_FEATURES, GC.getNumFeatureInfos(), m_paiFeatureHappiness);
 		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiBuildingCount);
 
 		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_HURRIES, GC.getNumHurryInfos(), m_paiHurryCount);
-		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIAL_BUILDINGS, GC.getNumSpecialBuildingInfos(), m_paiSpecialBuildingNotRequiredCount);   // removed special buildings drop from old saves
+		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIAL_BUILDINGS, GC.getNumSpecialBuildingInfos(), m_paiSpecialBuildingNotRequiredCount);
 		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CIVIC_OPTIONS, GC.getNumCivicOptionInfos(), m_paiHasCivicOptionCount);
 		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CIVIC_OPTIONS, GC.getNumCivicOptionInfos(), m_paiNoCivicUpkeepCount);
 		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_paiHasReligionCount);
@@ -18230,6 +18476,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_fPopulationgrowthratepercentageLog);
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iReligionSpreadRate);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivicHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iDistantUnitSupportCostModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraCityDefense);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iEnslavementChance);
@@ -18237,7 +18484,12 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLandmarkYield);
 
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iWorldHealth);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iWorldHappiness);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iProjectHealth);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iProjectHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iForceAllTradeRoutes);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivilizationHealth);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBuildingInflation);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iProjectInflation);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iTechInflation);
@@ -18282,6 +18534,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		FAssertMsg(0 < GC.getNumBonusInfos(), "GC.getNumBonusInfos() is not greater than zero but it is expected to be in CvPlayer::read");
 		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiResourceConsumption);
+		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCount);
 
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_ePledgedVote);
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eSecretaryGeneralVote);
@@ -18339,9 +18592,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 			if ( iI != -1 )
 			{
-				// recompute-from-source cache: SKIP the old serialized accumulator (it double-counted) -- consumes old-save
-				// bytes by name, no-op on a new save. Dirty-on-construct => recomputed fresh on first read.
-				WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppiBuildingCommerceChange[iI], SAVE_VALUE_TYPE_INT_ARRAY);
+				WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppiBuildingCommerceChange[iI]);
 			}
 			else
 			{
@@ -18419,32 +18670,25 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				//	that it processes as a cumulative number, which makes no sense if limits are defined on multiple
 				//	civicOptions.  As such we ASSUME only one civivOption can be defining a limit and therefore it has
 				//	a single source, so we can directly set its value from the currently in-use civic that has a limit (if any)
-				if ( GC.getGame().getCivicCityLimit((CivicTypes)m_paeCivics[i]) != 0 )
+				if ( GC.getCivicInfo(m_paeCivics[i]).getCityLimit(getID()) != 0 )
 				{
-					m_iCityLimit = GC.getGame().getCivicCityLimit((CivicTypes)m_paeCivics[i]);
+					m_iCityLimit = GC.getCivicInfo(m_paeCivics[i]).getCityLimit(getID());
 					m_iCityOverLimitUnhappy = GC.getCivicInfo(m_paeCivics[i]).getCityOverLimitUnhappy();
 				}
 			}
 		}
 
-		// #430 reseed: adopted civics, emitted AFTER the load-time civic validation/fixup above (m_paeCivics is final
-		// here). getID() is this player; a NO_CIVIC slot is no fact.
-		for (int iCiv = 0; iCiv < GC.getNumCivicOptionInfos(); ++iCiv)
-			if (m_paeCivics[iCiv] != NO_CIVIC) { emitCivicAdopted(getID(), (int)m_paeCivics[iCiv], (int)NO_CIVIC); }
-
-		// Dead per-Type accumulators (member long gone): the drain loops STAY -- a decorated [iI] per-element tag
-		// does NOT match a savemigration entry (the normalized dictionary name differs), so the loop is the drain.
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
 		{
 			int	iI = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_SPECIALISTS, i, true);
 
 			if ( iI != -1 )
 			{
-				int aiDrain[NUM_YIELD_TYPES];
-				WRAPPER_READ_ARRAY_DECORATED(wrapper, "CvPlayer", NUM_YIELD_TYPES, aiDrain, "m_ppaaiSpecialistExtraYield[iI]");
+				WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_ppaaiSpecialistExtraYield[iI]);
 			}
 			else
 			{
+				//	Consume the values
 				WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppaaiSpecialistExtraYield[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 			}
 		}
@@ -18455,11 +18699,11 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 			if ( iI != -1 )
 			{
-				int aiDrain[NUM_YIELD_TYPES];
-				WRAPPER_READ_ARRAY_DECORATED(wrapper, "CvPlayer", NUM_YIELD_TYPES, aiDrain, "m_ppaaiImprovementYieldChange[iI]");
+				WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_ppaaiImprovementYieldChange[iI]);
 			}
 			else
 			{
+				//	Consume the values
 				WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppaaiImprovementYieldChange[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 			}
 		}
@@ -18505,9 +18749,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			m_groupCycles[i]->Read(pStream);
 			ReadStreamableFFreeListTrashArray(*m_plotGroups[i], pStream);
-			// #430 TWO-PHASE (the load reseed): register each city by id BEFORE its body streams, so the city's
-			// own in-read DOMAIN emits resolve through the ordinary registry lookup (same bytes, same order).
-			ReadStreamableFFreeListTrashArrayTwoPhase(*m_cities[i], pStream);
+			ReadStreamableFFreeListTrashArray(*m_cities[i], pStream);
 			ReadStreamableFFreeListTrashArray(*m_units[i], pStream);
 			ReadStreamableFFreeListTrashArray(*m_selectionGroups[i], pStream);
 		}
@@ -18791,9 +19033,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				int iUnitCombat;
 				int iPromotion;
 				WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_COMBATINFOS, &iUnitCombat);
-				WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_PROMOTIONS, &iPromotion);
-				if (iPromotion != -1)   // #430: a removed (dropped) promotion resolves to -1 -- skip the free-promotion entry
-					m_aFreeUnitCombatPromotions.push_back(std::make_pair((UnitCombatTypes)iUnitCombat, (PromotionTypes)iPromotion));
+				WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_PROMOTIONS, &iPromotion);
+				m_aFreeUnitCombatPromotions.push_back(std::make_pair((UnitCombatTypes)iUnitCombat, (PromotionTypes)iPromotion));
 			}
 		}
 
@@ -18806,9 +19047,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				int iUnit;
 				int iPromotion;
 				WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_UNITS, &iUnit);
-				WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_PROMOTIONS, &iPromotion);
-				if (iPromotion != -1)   // #430: a removed (dropped) promotion resolves to -1 -- skip the free-promotion entry
-					m_aFreeUnitPromotions.push_back(std::make_pair((UnitTypes)iUnit, (PromotionTypes)iPromotion));
+				WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_PROMOTIONS, &iPromotion);
+				m_aFreeUnitPromotions.push_back(std::make_pair((UnitTypes)iUnit, (PromotionTypes)iPromotion));
 			}
 		}
 
@@ -18956,21 +19196,21 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 			if ( iI != -1 )
 			{
-				int aiDrain[NUM_COMMERCE_TYPES];
-				WRAPPER_READ_ARRAY_DECORATED(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, aiDrain, "m_ppaaiSpecialistExtraCommerce[iI]");
+				WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppaaiSpecialistExtraCommerce[iI]);
 			}
 			else
 			{
+				//	Consume the values
 				WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_ppaaiSpecialistExtraCommerce[iI], SAVE_VALUE_TYPE_INT_ARRAY);
 			}
 		}
+		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiFreeCityYield);
+		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiSpecialistExtraYield);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iTraitExtraCityDefense);
-		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TRAITS, GC.getNumTraitInfos(), m_pabHasTrait);   // removed traits drop from old saves
-		// #430 reseed: the player's held traits (wholesale-array read -> loop HERE, inside read(); getID() is this player).
-		for (int iTr = 0; iTr < GC.getNumTraitInfos(); ++iTr)
-			if (m_pabHasTrait[iTr]) { emitTraitChanged(getID(), iTr, true); }
+		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TRAITS, GC.getNumTraitInfos(), m_pabHasTrait);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iLeaderHeadLevel);
 		// @SAVEBREAK - Delete
+		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_iTraitDisplayCount, SAVE_VALUE_ANY);
 		// !SAVEBREAK
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalEspionageDefense);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iInquisitionCount);
@@ -19009,6 +19249,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeSpecialistperTeamProjectCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraGoodyCount);
 
+		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiGoldenAgeYield);
+		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiGoldenAgeCommerce);
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBaseMergeSelection);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFirstMergeSelection);
@@ -19020,20 +19262,26 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eGreatGeneralTypetoAssign);
 
+		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_abCommerceDirty);
+
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFocusPlotX);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFocusPlotY);
 
-		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIAL_BUILDINGS, GC.getNumSpecialBuildingInfos(), m_paiBuildingGroupCount);   // removed special buildings drop from old saves
-		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIAL_BUILDINGS, GC.getNumSpecialBuildingInfos(), m_paiBuildingGroupMaking);
+		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIAL_BUILDINGS, GC.getNumSpecialBuildingInfos(), m_paiBuildingGroupCount);
+		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIAL_BUILDINGS, GC.getNumSpecialBuildingInfos(), m_paiBuildingGroupMaking);
 
 		// @SAVEBREAK - remove
+		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_iArrestingUnit, SAVE_VALUE_ANY);
 		// !SAVEBREAK
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iUpgradeRoundCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iSelectionRegroup);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreedomFighterCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraFreedomFighters);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalGreatPeopleRate);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivilianUnitUpkeepMod);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMilitaryUnitUpkeepMod);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iUnitUpkeepCivilian100);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_iUnitUpkeepMilitary100);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBaseFreeUnitUpkeepCivilian);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iBaseFreeUnitUpkeepMilitary);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFreeUnitUpkeepCivilianPopPercent);
@@ -19329,11 +19577,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 		}
-		// #430 G1 reseed: fire the present-fact for each held heritage so the load cache build sees PSC_CFLAT
-		// (heritage empire commerce). The emit rides the genuine read; getID()/getTeam() are valid here (well past
-		// m_eID's re-read + updateTeamType), matching the GA/tech reseed placement.
-		for (std::vector<HeritageTypes>::const_iterator itHeritage = m_myHeritage.begin(); itHeritage != m_myHeritage.end(); ++itHeritage)
-			emitHeritageChanged(getID(), (int)*itHeritage, true);
+		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_extraCommerce);
+		WRAPPER_READ(wrapper, "CvPlayer", &m_bHasLanguage);
 		// Read Vector
 		{
 			uint iSize = 0;
@@ -19370,6 +19615,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		m_iCorporateMaintenance += m_iCorporateTaxIncome;
 		// !SAVEBREAK
 
+		//Example of how to skip element
+		//WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_iPopulationgrowthratepercentage, SAVE_VALUE_ANY);
 	}
 	else
 	{
@@ -19495,10 +19742,16 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUpkeepModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLevelExperienceModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHealth);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivicHealth);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingGoodHealth);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingBadHealth);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappinessUnattributed);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingHappiness);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLargestCityHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWarWearinessPercentAnger);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWarWearinessModifier);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeSpecialist);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoForeignTradeCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoCorporationsCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoForeignCorporationsCount);
@@ -19508,6 +19761,8 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iConversionTimer);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNoNonStateReligionSpreadCount);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionHappiness);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNonStateReligionHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionUnitProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionBuildingProductionModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionFreeExperience);
@@ -19560,9 +19815,14 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiCapitalYieldRateModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiExtraYieldThreshold);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiTradeYieldModifier);
+		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiFreeCityCommerce);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommercePercent);
+		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRate);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCapitalCommerceRateModifier);
+		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiStateReligionBuildingCommerce);
+		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiSpecialistExtraCommerce);
+		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceFlexibleCount);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", MAX_PLAYERS, m_aiGoldPerTurnByPlayer);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", MAX_TEAMS, m_aiEspionageSpendingWeightAgainstTeam);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_FEAT_TYPES, m_abFeatAccomplished);
@@ -19571,6 +19831,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_STRING(wrapper, "CvPlayer", m_szScriptData);
 
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementCount);
+		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_FEATURES, GC.getNumFeatureInfos(), m_paiFeatureHappiness);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiBuildingCount);
 
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_HURRIES, GC.getNumHurryInfos(), m_paiHurryCount);
@@ -19586,6 +19847,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTaxRateUnhappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_fPopulationgrowthratepercentageLog);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iReligionSpreadRate);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivicHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iDistantUnitSupportCostModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraCityDefense);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iEnslavementChance);
@@ -19593,7 +19855,12 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiLandmarkYield);
 
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWorldHealth);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWorldHappiness);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iProjectHealth);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iProjectHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iForceAllTradeRoutes);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivilizationHealth);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBuildingInflation);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iProjectInflation);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTechInflation);
@@ -19628,6 +19895,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BUILDS, GC.getNumBuildInfos(), m_pabAutomatedCanBuild);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiResourceConsumption);
+		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCount);
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_ePledgedVote);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_eSecretaryGeneralVote);
@@ -19650,8 +19918,10 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		{
 			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppiBuildingCommerceModifier[i]);
 		}
-		// m_ppiBuildingCommerceChange NOT written: recompute-from-source cache (state-repositories / DEC-derived-never-trusted).
-		// The read SKIPs any old-save bytes by name (no-op on new saves), and it recomputes fresh on first read.
+		for (int i = 0; i < GC.getNumBuildingInfos(); ++i)
+		{
+			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppiBuildingCommerceChange[i]);
+		}
 		for (int i = 0; i < GC.getNumBonusInfos(); ++i)
 		{
 			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppiBonusCommerceModifier[i]);
@@ -19672,6 +19942,15 @@ void CvPlayer::write(FDataStreamBase* pStream)
 			WRAPPER_WRITE_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CIVICS, m_paeCivics[iI]);
 		}
 
+		for (iI=0;iI<GC.getNumSpecialistInfos();iI++)
+		{
+			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_ppaaiSpecialistExtraYield[iI]);
+		}
+
+		for (iI=0;iI<GC.getNumImprovementInfos();iI++)
+		{
+			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_ppaaiImprovementYieldChange[iI]);
+		}
 		m_researchQueue.Write(pStream);
 
 		{
@@ -19930,6 +20209,12 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiBuildWorkerSpeedModifierSpecific);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iAIAttitudeModifier);
 
+		for (iI=0;iI<GC.getNumSpecialistInfos();iI++)
+		{
+			WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_ppaaiSpecialistExtraCommerce[iI]);
+		}
+		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiFreeCityYield);
+		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiSpecialistExtraYield);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iTraitExtraCityDefense);
 		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TRAITS, GC.getNumTraitInfos(), m_pabHasTrait);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iLeaderHeadLevel);
@@ -19970,6 +20255,8 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeSpecialistperTeamProjectCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraGoodyCount);
 
+		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiGoldenAgeYield);
+		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiGoldenAgeCommerce);
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBaseMergeSelection);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFirstMergeSelection);
@@ -19979,6 +20266,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifierfromEvents);
 		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_aiCommerceRateModifierfromBuildings);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_eGreatGeneralTypetoAssign);
+		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_abCommerceDirty);
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFocusPlotX);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFocusPlotY);
@@ -19989,10 +20277,13 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iSelectionRegroup);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreedomFighterCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraFreedomFighters);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNationalGreatPeopleRate);
 		//TB Traits end
 
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iCivilianUnitUpkeepMod);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMilitaryUnitUpkeepMod);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUnitUpkeepCivilian100);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_iUnitUpkeepMilitary100);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBaseFreeUnitUpkeepCivilian);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iBaseFreeUnitUpkeepMilitary);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iFreeUnitUpkeepCivilianPopPercent);
@@ -20128,6 +20419,8 @@ void CvPlayer::write(FDataStreamBase* pStream)
 				WRAPPER_WRITE_CLASS_ENUM_DECORATED(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_HERITAGE, eType, "iType");
 			}
 		}
+		WRAPPER_WRITE_ARRAY(wrapper, "CvPlayer", NUM_COMMERCE_TYPES, m_extraCommerce);
+		WRAPPER_WRITE(wrapper, "CvPlayer", m_bHasLanguage);
 		// Write Vector
 		{
 			uint iSize = m_commandFieldPlots.size();
@@ -21859,7 +22152,7 @@ void CvPlayer::applyEvent(EventTypes eEvent, int iEventTriggeredId, bool bUpdate
 		{
 			foreach_(CvCity* pLoopCity, cities())
 			{
-				pLoopCity->changeBuildingCommerceChangeEvents(cc.eBuilding, cc.eCommerce, cc.iChange);   // event grant -> separately-persisted store, not the recompute cache
+				pLoopCity->changeBuildingCommerceChange(cc.eBuilding, cc.eCommerce, cc.iChange);
 			}
 		}
 
@@ -25977,7 +26270,6 @@ void CvPlayer::changeBonusMintedPercent(const BonusTypes eBonus, const int iChan
 	// Process bonus back into cities after change
 	foreach_(CvCity* city, cities())
 	{
-		city->refreshEffectiveBonus(eBonus);   // the minted gate moved: refresh the maintained answer BEFORE re-reads
 		if (city->getNumBonuses(eBonus) > 0)
 		{
 			city->processBonus(eBonus, 1);
@@ -26181,7 +26473,17 @@ bool CvPlayer::hasEnemyDefenderUnit(const CvPlot* pPlot) const
 
 int CvPlayer::getCivicHappiness() const
 {
-	int h, e; CascadeWellbeing::civicWellbeing(*this, h, e); return h;
+	return m_iCivicHappiness;
+}
+
+void CvPlayer::changeCivicHappiness(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iCivicHappiness = (m_iCivicHappiness + iChange);
+
+		AI_makeAssignWorkDirty();
+	}
 }
 
 int CvPlayer::getForeignTradeRouteModifier() const
@@ -26362,22 +26664,42 @@ void CvPlayer::changeExtraCityDefense(int iChange)
 
 int CvPlayer::getWorldHappiness() const
 {
-	int h, e; CascadeWellbeing::worldWellbeing(*this, h, e); return h;
+	return m_iWorldHappiness;
+}
+
+void CvPlayer::changeWorldHappiness(int iChange)
+{
+	m_iWorldHappiness += iChange;
 }
 
 int CvPlayer::getWorldHealth() const
 {
-	int h, e; CascadeWellbeing::worldWellbeing(*this, h, e); return e;
+	return m_iWorldHealth;
+}
+
+void CvPlayer::changeWorldHealth(int iChange)
+{
+	m_iWorldHealth += iChange;
 }
 
 int CvPlayer::getProjectHappiness() const
 {
-	int h, e; CascadeWellbeing::projectWellbeing(*this, h, e); return h;
+	return m_iProjectHappiness;
+}
+
+void CvPlayer::changeProjectHappiness(int iChange)
+{
+	m_iProjectHappiness += iChange;
 }
 
 int CvPlayer::getProjectHealth() const
 {
-	int h, e; CascadeWellbeing::projectWellbeing(*this, h, e); return e;
+	return m_iProjectHealth;
+}
+
+void CvPlayer::changeProjectHealth(int iChange)
+{
+	m_iProjectHealth += iChange;
 }
 
 int CvPlayer::getForceAllTradeRoutes() const
@@ -26420,9 +26742,31 @@ void CvPlayer::changeNoCapitalUnhappiness(int iChange)
 	}
 }
 
-// #430 two-part seam: the player by-type free-specialist ledger (m_paiFreeSpecialistCount) is cut; empire
-// free specialists ride the cascade AMOUNT (fsEmpireByType -> fsAmountByType), read by
-// CvCity::getFreeSpecialistCount.
+int CvPlayer::getFreeSpecialistCount(SpecialistTypes eIndex) const
+{
+	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
+	return m_paiFreeSpecialistCount[eIndex];
+}
+
+void CvPlayer::setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue)
+{
+	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
+
+	const int iOldValue = getFreeSpecialistCount(eIndex);
+
+	if (iOldValue != iNewValue)
+	{
+		m_paiFreeSpecialistCount[eIndex] = iNewValue;
+		FASSERT_NOT_NEGATIVE(getFreeSpecialistCount(eIndex));
+
+		algo::for_each(cities(), CvCity::fn::changeFreeSpecialistCount(eIndex, iNewValue - iOldValue));
+	}
+}
+
+void CvPlayer::changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange)
+{
+	setFreeSpecialistCount(eIndex, (getFreeSpecialistCount(eIndex) + iChange));
+}
 
 int CvPlayer::getTerrainYieldChange(TerrainTypes eIndex1, YieldTypes eIndex2) const
 {
@@ -26491,7 +26835,18 @@ int CvPlayer::doMultipleResearch(int iOverflow)
 
 int CvPlayer::getCivilizationHealth() const
 {
-	return CascadeWellbeing::civilizationHealth(*this);
+	return m_iCivilizationHealth;
+}
+
+
+void CvPlayer::changeCivilizationHealth(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iCivilizationHealth += iChange;
+
+		AI_makeAssignWorkDirty();
+	}
 }
 
 int CvPlayer::getNoLandmarkAngerCount() const
@@ -27093,7 +27448,7 @@ int CvPlayer::getBuildingCommerceChange(BuildingTypes eType, CommerceTypes Comme
 {
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eType);
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, CommerceType);
-	return m_buildingCommerceChange.get((int)eType * NUM_COMMERCE_TYPES + (int)CommerceType);
+	return m_ppiBuildingCommerceChange[eType][CommerceType];
 }
 
 void CvPlayer::changeBuildingCommerceChange(BuildingTypes eType, CommerceTypes CommerceType, int iChange)
@@ -27102,40 +27457,19 @@ void CvPlayer::changeBuildingCommerceChange(BuildingTypes eType, CommerceTypes C
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eType);
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, CommerceType);
 
-	// TRIGGER ONLY (on the ONE component since 2026-07-05): a granter building change just marks the empire
-	// ledger (recomputed fresh on next read) and the cities' commerce caches, which PULL it. The old
-	// incremental accumulate + per-city push was the build-order double-count (it replayed onto the
-	// serialized accumulator on load/recalc -- DEC-derived-never-trusted).
 	if (iChange != 0)
 	{
-		m_buildingCommerceChange.markDirty();
-		setCommerceDirty();
-	}
-}
+		m_ppiBuildingCommerceChange[eType][CommerceType] += iChange;
 
-// Rebuild the empire per-building commerce-change ledger FRESH from source (the player's buildings'
-// GlobalBuildingExtraCommerces) -- build-order-INDEPENDENT, the deterministic value the cascade computes. Runs lazily
-// from getBuildingCommerceChange when dirty (dirty on construct/load => never stale/doubled-from-save). const: writes
-// only the recompute-only ledger + the flag.
-void CvPlayer::recomputeBuildingCommerceChange(std::vector<int>& aOut) const
-{
-	PROFILE_EXTRA_FUNC();
-	aOut.assign(GC.getNumBuildingInfos() * NUM_COMMERCE_TYPES, 0);   // rule 2: fully size + define, every call
-	foreach_(const CvCity* cityX, cities())
-	{
-		foreach_(const BuildingTypes eG, cityX->getHasBuildings())
+		foreach_(CvCity* cityX, cities())
 		{
-			foreach_(const BuildingCommerce& kChange, GC.getBuildingInfo(eG).getGlobalBuildingCommerceChanges())
+			if (cityX->hasFullyActiveBuilding(eType))
 			{
-				for (int i = 0; i < NUM_COMMERCE_TYPES; i++)
-				{
-					aOut[kChange.first * NUM_COMMERCE_TYPES + i] += kChange.second[i];
-				}
+				cityX->changeBuildingCommerceChange(eType, CommerceType, iChange);
 			}
 		}
+		setCommerceDirty();
 	}
-	// (Civic BuildingCommerceChanges are inert in current data -- no civic uses the tag; if one ever does, sum its
-	//  getBuildingCommerceChange over the player's active civics here, mirroring CvPlayer processing :18154.)
 }
 
 int CvPlayer::getBuildingCommerceModifier(BuildingTypes eType, CommerceTypes eCommerce) const
@@ -27264,17 +27598,17 @@ void CvPlayer::setColor(PlayerColorTypes eColor)
 	gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
 	gDLL->getEngineIFace()->SetDirty(GlobePartialTexture_DIRTY_BIT, true);
 
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(ColoredPlots_DIRTY_BIT), true);
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(HighlightPlot_DIRTY_BIT), true);
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(UnitInfo_DIRTY_BIT), true);
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GlobeLayer_DIRTY_BIT), true);
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(MinimapSection_DIRTY_BIT), true);
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Foreign_Screen_DIRTY_BIT), true);
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GlobeInfo_DIRTY_BIT), true);
+	gDLL->getInterfaceIFace()->setDirty(ColoredPlots_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty(HighlightPlot_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty(MinimapSection_DIRTY_BIT, true);
 	gDLL->getEngineIFace()->SetDirty(MinimapTexture_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty(Foreign_Screen_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty(GlobeInfo_DIRTY_BIT, true);
 
 	setupGraphical();
 }
@@ -27318,20 +27652,13 @@ int CvPlayer::getModderOption(ModderOptionTypes eIndex) const
 void CvPlayer::setModderOption(ModderOptionTypes eIndex, int iNewValue)
 {
 	FASSERT_BOUNDS(0, NUM_MODDEROPTION_TYPES, eIndex);
-	const bool bChanged = m_aiModderOptions[eIndex] != iNewValue;
 	m_aiModderOptions[eIndex] = iNewValue;
-	// HIDE_REPLACED_BUILDINGS feeds the buildings gate verdict (bd_gate's replaced-hidden leg) -- a toggle
-	// re-gates every city so the build list reflects it immediately.
-	if (bChanged && eIndex == MODDEROPTION_HIDE_REPLACED_BUILDINGS)
-	{
-		foreach_(const CvCity* pCity, cities())
-			BuildingEnabler::gateCity(*pCity);
-	}
 }
 
 void CvPlayer::setModderOption(ModderOptionTypes eIndex, bool bNewValue)
 {
-	setModderOption(eIndex, (int)bNewValue);
+	FASSERT_BOUNDS(0, NUM_MODDEROPTION_TYPES, eIndex);
+	m_aiModderOptions[eIndex] = bNewValue;
 }
 
 int CvPlayer::getCorporationSpreadModifier() const
@@ -27552,15 +27879,14 @@ void CvPlayer::changeSpecialistCommercePercentChanges(SpecialistTypes eIndex1, C
 
 	if (iChange != 0)
 	{
+		const int iOldValue = getSpecialistCommercePercentChanges(eIndex1, eIndex2);
 		m_ppiSpecialistCommercePercentChanges[eIndex1][eIndex2] += iChange;
 
-		// STREAMLINED 2026-06-28: recompute the specialist-commerce cache cleanly per city (plot-cache pattern) rather
-		// than the old incremental specialistCount×Δpct delta — which froze the specialist COUNT at civic-change time and
-		// went stale on later reassignment (survived save/load + recalc; the non-deterministic value documented in
-		// docs/specs/validation.md + legacy-value-calc-map §1.5). updateSpecialistCommerce reads the CURRENT count + pct.
 		foreach_(CvCity* pLoopCity, cities())
 		{
-			pLoopCity->updateSpecialistCommerce(eIndex2);
+			const int iExistingValue = (pLoopCity->getFreeSpecialistCount(eIndex1) + pLoopCity->getSpecialistCount(eIndex1)) * (getSpecialistCommercePercentChanges(eIndex1, eIndex2) - iOldValue);
+			// set the new
+			pLoopCity->changeSpecialistCommerceTimes100(eIndex2, iExistingValue);
 		}
 	}
 }
@@ -27580,10 +27906,15 @@ void CvPlayer::changeSpecialistYieldPercentChanges(SpecialistTypes eIndex1, Yiel
 
 	if (iChange != 0)
 	{
+		const int iOldValue = getSpecialistYieldPercentChanges(eIndex1, eIndex2);
 		m_ppiSpecialistYieldPercentChanges[eIndex1][eIndex2] += iChange;
 
-		// #430: the per-city specialist-yield total recomputes on read (getSpecialistYieldTotal/getExtraSpecialistYield),
-		// so no per-city update is needed on a specialist-yield-percent change.
+		foreach_(CvCity* pLoopCity, cities())
+		{
+			const int iExistingValue = pLoopCity->getSpecialistCount(eIndex1) * (getSpecialistYieldPercentChanges(eIndex1, eIndex2) - iOldValue) / 100;
+			// set the new
+			pLoopCity->changeSpecialistYieldTotal(eIndex2, iExistingValue);
+		}
 	}
 }
 
@@ -27657,7 +27988,7 @@ void CvPlayer::changeForeignUnhappyPercent(int iChange) {
 
 
 // BUG - Reminder Mod - start
-#include "UI/CvMessageControl.h"
+#include "CvMessageControl.h"
 void CvPlayer::addReminder(int iGameTurn, CvWString szMessage) const
 {
 	CvMessageControl::getInstance().sendAddReminder(getID(), iGameTurn, szMessage);
@@ -27690,6 +28021,11 @@ void CvPlayer::clearCanConstructCache(BuildingTypes building, bool bIncludeCitie
 		{
 			m_bCanConstructCached[iI] = false;
 			m_bCanConstructCachedDefaultParam[iI] = false;
+
+			if (bIncludeCities)
+			{
+				algo::for_each(cities(), CvCity::fn::FlushCanConstructCache(building));
+			}
 		}
 	}
 
@@ -27712,6 +28048,11 @@ void CvPlayer::clearCanConstructCacheForGroup(SpecialBuildingTypes eSpecialBuild
 		{
 			m_bCanConstructCached[iI] = false;
 			m_bCanConstructCachedDefaultParam[iI] = false;
+
+			if (bIncludeCities)
+			{
+				algo::for_each(cities(), CvCity::fn::FlushCanConstructCache((BuildingTypes)iI));
+			}
 		}
 	}
 
@@ -27725,12 +28066,18 @@ void CvPlayer::clearModifierTotals()
 	algo::for_each(cities(), CvCity::fn::clearModifierTotals());
 
 	//	Project stuff
+	m_iWorldHappiness = 0;
+	m_iProjectHappiness = 0;
+	m_iWorldHealth = 0;
+	m_iProjectHealth = 0;
 
 	m_iForceAllTradeRoutes = 0;
 	m_iNoCapitalUnhappiness = 0;
+	m_iCivilizationHealth = 0;
 
 	m_iForeignTradeRouteModifier = 0;
 	m_iTaxRateUnhappiness = 0;
+	m_iCivicHappiness = 0;
 	m_iUnitUpgradePriceModifier = 0;
 	m_iAnarchyModifier = 0;
 	m_iGoldenAgeModifier = 0;
@@ -27768,10 +28115,8 @@ void CvPlayer::clearModifierTotals()
 	m_iFreeUnitUpkeepMilitaryPopPercent = 0;
 	m_iCivilianUnitUpkeepMod = 0;
 	m_iMilitaryUnitUpkeepMod = 0;
-	//#430 F4: the raw upkeep buckets recompute-Sigma over live units (dirty-on-reset -> recompute on first read).
-	m_iUnitUpkeepMilitary100Cache = 0;
-	m_iUnitUpkeepCivilian100Cache = 0;
-	m_bUnitUpkeepBucketsDirty = true;
+	m_iUnitUpkeepMilitary100 = 0;
+	m_iUnitUpkeepCivilian100 = 0;
 	m_iFinalUnitUpkeep = 0;
 
 	m_iHappyPerMilitaryUnit = 0;
@@ -27792,8 +28137,14 @@ void CvPlayer::clearModifierTotals()
 	m_iUpkeepModifier = 0;
 	m_iLevelExperienceModifier = 0;
 	m_iExtraHealth = 0;
+	m_iCivicHealth = 0;
+	m_iBuildingGoodHealth = 0;
+	m_iBuildingBadHealth = 0;
 	m_iExtraHappiness = 0;
+	m_iBuildingHappiness = 0;
+	m_iLargestCityHappiness = 0;
 	m_iWarWearinessModifier = 0;
+	m_iFreeSpecialist = 0;
 	m_iNoForeignTradeCount = 0;
 	m_iNoCorporationsCount = 0;
 	m_iNoForeignCorporationsCount = 0;
@@ -27801,6 +28152,8 @@ void CvPlayer::clearModifierTotals()
 	m_iTradeRoutes = 0;
 	m_iStateReligionCount = 0;
 	m_iNoNonStateReligionSpreadCount = 0;
+	m_iStateReligionHappiness = 0;
+	m_iNonStateReligionHappiness = 0;
 	m_iStateReligionUnitProductionModifier = 0;
 	m_iStateReligionBuildingProductionModifier = 0;
 	m_iStateReligionFreeExperience = 0;
@@ -27853,6 +28206,9 @@ void CvPlayer::clearModifierTotals()
 
 	m_iExtraStateReligionSpreadModifier = 0;
 	m_iExtraNonStateReligionSpreadModifier = 0;
+	m_iNationalGreatPeopleRate = 0;
+
+	m_bHasLanguage = false;
 
 	m_iBaseMergeSelection = FFreeList::INVALID_INDEX;
 	m_iFirstMergeSelection = FFreeList::INVALID_INDEX;
@@ -27883,6 +28239,7 @@ void CvPlayer::clearModifierTotals()
 
 	for (int iI = 0; iI < GC.getNumFeatureInfos(); iI++)
 	{
+		m_paiFeatureHappiness[iI] = 0;
 	}
 
 	for (int iI = 0; iI < GC.getNumSpecialBuildingInfos(); iI++)
@@ -27906,12 +28263,28 @@ void CvPlayer::clearModifierTotals()
 		m_paiSpecialistValidCount[iI] = 0;
 	}
 
-	m_specialistExtraYield.markDirty();     // recompute-from-source on next read (never serialized)
-	m_specialistExtraCommerce.markDirty();
+	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+	{
+		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+		{
+			m_ppaaiSpecialistExtraYield[iI][iJ] = 0;
+		}
+		//TB Traits begin
+		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
+		{
+			m_ppaaiSpecialistExtraCommerce[iI][iJ] = 0;
+		}
+		//TB Traits end
 
-	m_improvementYieldChange.markDirty();   // recompute-from-source on next read (never serialized)
+		m_paiFreeSpecialistCount[iI] = 0;
+	}
+
 	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
 	{
+		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+		{
+			m_ppaaiImprovementYieldChange[iI][iJ] = 0;
+		}
 		m_paiImprovementUpgradeRateModifierSpecific[iI] = 0;
 	}
 
@@ -27934,8 +28307,12 @@ void CvPlayer::clearModifierTotals()
 	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
 		m_paiBuildingCount[iI] = 0;
+
+		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
+		{
+			m_ppiBuildingCommerceChange[iI][iJ] = 0;
+		}
 	}
-	m_buildingCommerceChange.markDirty();   // recompute-from-source on next read (never serialized; dirty on construct/load)
 
 	for (int iI = 0; iI < GC.getNumSpecialBuildingInfos(); iI++)
 	{
@@ -27989,16 +28366,27 @@ void CvPlayer::clearModifierTotals()
 		m_aiLandmarkYield[iI] = 0;
 
 		//TB Traits begin
+		m_aiFreeCityYield[iI] = 0;
+		m_aiSpecialistExtraYield[iI] = 0;
 		m_aiLessYieldThreshold[iI] = 0;
+		m_aiGoldenAgeYield[iI] = 0;
 		//TB Traits end
 	}
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
+		m_aiFreeCityCommerce[iI] = 0;
+		m_extraCommerce[iI] = 0;
+		m_aiCommerceRate[iI] = 0;
+		m_abCommerceDirty[iI] = false;
 		m_aiCommerceRateModifier[iI] = 0;
 		m_aiCommerceRateModifierfromEvents[iI] = 0;
 		m_aiCommerceRateModifierfromBuildings[iI] = 0;
 		m_aiCapitalCommerceRateModifier[iI] = 0;
+		m_aiStateReligionBuildingCommerce[iI] = 0;
+		m_aiSpecialistExtraCommerce[iI] = 0;
+		m_aiCommerceFlexibleCount[iI] = 0;
+		m_aiGoldenAgeCommerce[iI] = 0;
 	}
 
 	// Reset power to just that due to pop. Other contributions will be re-added during the recalc
@@ -28030,6 +28418,7 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeRevIdxBadReligionMod(iChange*GC.getTraitInfo(eTrait).getRevIdxBadReligionMod());
 	changeRevIdxGoodReligionMod(iChange*GC.getTraitInfo(eTrait).getRevIdxGoodReligionMod());
 
+	changeCivilizationHealth(iChange*GC.getTraitInfo(eTrait).getHealth());
 	changeExtraHappiness(iChange*GC.getTraitInfo(eTrait).getHappiness());
 
 	foreach_(const BuildingModifier2& pair, GC.getTraitInfo(eTrait).getBuildingHappinessModifiersFiltered())
@@ -28054,7 +28443,7 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		// #430: trait extra commerce rides the cascade (ps.cPlayerExtra100).
+		changeExtraCommerce100((CommerceTypes)iI, 100*iChange*GC.getTraitInfo(eTrait).getCommerceChange(iI));
 		changeCommerceRateModifier((CommerceTypes)iI, iChange*GC.getTraitInfo(eTrait).getCommerceModifier(iI));
 	}
 
@@ -28078,9 +28467,13 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	//	}
 	//}
 
-	// keyed improvement yields: a recompute-from-source ledger -- mark + the trigger the old changer fired
-	m_improvementYieldChange.markDirty();
-	updateYield();
+	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
+	{
+		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+		{
+			changeImprovementYieldChange(((ImprovementTypes)iI), ((YieldTypes)iJ), (GC.getTraitInfo(eTrait).getImprovementYieldChange(iI, iJ) * iChange));
+		}
+	}
 
 	//TB Traits begin
 	if (GC.getTraitInfo(eTrait).getMaxAnarchy() > -1)
@@ -28109,9 +28502,11 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 	changeCivilianUnitUpkeepMod(iChange*GC.getTraitInfo(eTrait).getCivilianUnitUpkeepMod());
 	changeMilitaryUnitUpkeepMod(iChange*GC.getTraitInfo(eTrait).getMilitaryUnitUpkeepMod());
 	changeHappyPerMilitaryUnit(iChange*GC.getTraitInfo(eTrait).getHappyPerMilitaryUnit());
-	// #430 two-part seam: trait free specialists ride the cascade AMOUNT (fsEmpireAny).
+	changeLargestCityHappiness(iChange*GC.getTraitInfo(eTrait).getLargestCityHappiness());
+	changeFreeSpecialist(iChange*GC.getTraitInfo(eTrait).getFreeSpecialist());
 	changeTradeRoutes(iChange*GC.getTraitInfo(eTrait).getTradeRoutes());
-	// #430 cut: state/non-state religion happiness is a cascade term (playerReligionAcc reads active traits)
+	changeStateReligionHappiness(iChange*GC.getTraitInfo(eTrait).getStateReligionHappiness());
+	changeNonStateReligionHappiness(iChange*GC.getTraitInfo(eTrait).getNonStateReligionHappiness());
 	changeStateReligionUnitProductionModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionUnitProductionModifier());
 	changeStateReligionBuildingProductionModifier(iChange*GC.getTraitInfo(eTrait).getStateReligionBuildingProductionModifier());
 	changeStateReligionFreeExperience(iChange*GC.getTraitInfo(eTrait).getStateReligionFreeExperience());
@@ -28171,35 +28566,41 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 		changeBuildWorkerSpeedModifierSpecific(pair.first, iChange * pair.second);
 	}
 
-	// per-type specialist boosts: recompute-from-source ledgers -- the trait rows are a recompute source; mark
-	// + fire the triggers the old changers fired.
-	m_specialistExtraYield.markDirty();
-	m_specialistExtraCommerce.markDirty();
-	updateExtraSpecialistCommerce();
-	AI_makeAssignWorkDirty();
-
-	if (GC.getTraitInfo(eTrait).getEraAdvanceFreeSpecialistType() != NO_SPECIALIST)
+	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
-		changeEraAdvanceFreeSpecialistCount((SpecialistTypes)GC.getTraitInfo(eTrait).getEraAdvanceFreeSpecialistType(), iChange);
+		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+		{
+			changeExtraSpecialistYield(((SpecialistTypes)iI), ((YieldTypes)iJ), (GC.getTraitInfo(eTrait).getSpecialistYieldChange(iI, iJ) * iChange));
+		}
+		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
+		{
+			changeExtraSpecialistCommerce(((SpecialistTypes)iI), ((CommerceTypes)iJ), (GC.getTraitInfo(eTrait).getSpecialistCommerceChange(iI, iJ) * iChange));
+		}
+
+		if ((SpecialistTypes)GC.getTraitInfo(eTrait).getEraAdvanceFreeSpecialistType() == ((SpecialistTypes)iI))
+		{
+			changeEraAdvanceFreeSpecialistCount((SpecialistTypes)GC.getTraitInfo(eTrait).getEraAdvanceFreeSpecialistType(), iChange);
+		}
 	}
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
 		const YieldTypes eYield = static_cast<YieldTypes>(iI);
 		changeSeaPlotYield(eYield, GC.getTraitInfo(eTrait).getSeaPlotYieldChanges(iI) * iChange);
-		// #430: free-city yield rides the cascade (ps.yFlatFreeCity).
+		changeFreeCityYield(eYield, GC.getTraitInfo(eTrait).getYieldChange(iI) * iChange);
 		changeYieldRateModifier(eYield, GC.getTraitInfo(eTrait).getYieldModifier(iI) * iChange);
 		changeCapitalYieldRateModifier(eYield, GC.getTraitInfo(eTrait).getCapitalYieldModifier(iI) * iChange);
-		// #430: specialist yield rides the cascade (st.ySpec).
+		changeSpecialistExtraYield(eYield, GC.getTraitInfo(eTrait).getSpecialistExtraYield(iI) * iChange);
 		updateExtraYieldThreshold(eYield);
 		updateLessYieldThreshold(eYield);
-		// #430: golden-age yield rides the cascade (empire.goldenAge member-mirror).
+		changeGoldenAgeYield(eYield, GC.getTraitInfo(eTrait).getGoldenAgeYieldChanges(iI) * iChange);
 	}
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
 		changeCapitalCommerceRateModifier((CommerceTypes)iI, GC.getTraitInfo(eTrait).getCapitalCommerceModifier(iI) * iChange);
-		// #430: specialist + golden-age commerce ride the cascade (st.cSpec100 / empire.goldenAge).
+		changeSpecialistExtraCommerce((CommerceTypes)iI, GC.getTraitInfo(eTrait).getSpecialistExtraCommerce(iI) * iChange);
+		changeGoldenAgeCommerce((CommerceTypes)iI, GC.getTraitInfo(eTrait).getGoldenAgeCommerceChanges(iI) * iChange);
 	}
 
 	int iGPRateChange = GC.getTraitInfo(eTrait).getGreatPeopleRateChange();
@@ -28271,7 +28672,8 @@ void CvPlayer::recalculateModifiers()
 	changeFreeUnitUpkeepCivilianPopPercent(GC.getBASE_FREE_UNITS_UPKEEP_CIVILIAN_PER_100_POP());
 	changeFreeUnitUpkeepMilitaryPopPercent(GC.getBASE_FREE_UNITS_UPKEEP_MILITARY_PER_100_POP());
 	changeTradeRoutes(GC.getINITIAL_TRADE_ROUTES());
-	// #430 cut: state/non-state religion happiness is a cascade term (playerReligionAcc seeds INITIAL itself)
+	changeStateReligionHappiness(GC.getINITIAL_STATE_RELIGION_HAPPINESS());
+	changeNonStateReligionHappiness(GC.getINITIAL_NON_STATE_RELIGION_HAPPINESS());
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
 	{
@@ -28684,22 +29086,9 @@ bool CvPlayer::isNukesValid() const
 }
 
 
-int CvPlayer::getNukeState() const
-{
-	// 0 DISABLED (no nuke-enabling building) / 1 ENABLED (available) / 2 BANNED (world AP-UN no-nukes vote/option).
-	// isNoNukes (world) OVERRIDES -- the option/vote ban trumps per-player availability.
-	if (GC.getGame().isNoNukes()) return 2;
-	return isNukesValid() ? 1 : 0;
-}
-
 void CvPlayer::makeNukesValid(bool bValid)
 {
-	const int iWasState = getNukeState();
 	m_bNukesValid = bValid;
-	// #430 event spine: this player's nuke AVAILABILITY flipped (built the nuke-enabling building). Announce the new
-	// 3-state only if it actually changed (a BANNED player stays 2 -- the ban overrides -- so no spurious emit).
-	if (getNukeState() != iWasState)
-		emitNukesChanged(getID(), getNukeState());
 }
 
 typedef struct buildingCommerceStruct
@@ -28806,30 +29195,24 @@ int CvPlayer::getExtraSpecialistCommerce(SpecialistTypes eIndex1, CommerceTypes 
 {
 	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex1);
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex2);
-	return m_specialistExtraCommerce.get((int)eIndex1 * NUM_COMMERCE_TYPES + (int)eIndex2);
+	return m_ppaaiSpecialistExtraCommerce[eIndex1][eIndex2];
 }
 
-// The commerce twin of recomputeSpecialistExtraYield (see there).
-void CvPlayer::recomputeSpecialistExtraCommerce(std::vector<int>& aOut) const
+
+void CvPlayer::changeExtraSpecialistCommerce(SpecialistTypes eIndex1, CommerceTypes eIndex2, int iChange)
 {
-	PROFILE_EXTRA_FUNC();
-	static const char* COMMERCE_CHAN[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
-	aOut.assign(GC.getNumSpecialistInfos() * NUM_COMMERCE_TYPES, 0);   // rule 2: fully size + define, every call
-	CvCascadeEvalCtx ec;
-	ec.player = this;
-	ec.team = &GET_TEAM(getTeam());
-	for (int iS = 0; iS < GC.getNumSpecialistInfos(); iS++)
+	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex1);
+	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex2);
+
+	if (iChange != 0)
 	{
-		const CvSpecialistInfo& kSpec = GC.getSpecialistInfo((SpecialistTypes)iS);
-		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
-		{
-			int iSum = MMKernel::sumUnit(&kSpec, std::string(COMMERCE_CHAN[iJ]) + ".empire", "flat", ec);
-			for (int iT = 0; iT < GC.getNumTraitInfos(); iT++)
-			{
-				if (hasTrait((TraitTypes)iT)) iSum += GC.getTraitInfo((TraitTypes)iT).getSpecialistCommerceChange(iS, iJ);
-			}
-			aOut[iS * NUM_COMMERCE_TYPES + iJ] = iSum;
-		}
+		m_ppaaiSpecialistExtraCommerce[eIndex1][eIndex2] += iChange;
+		//TB Note: should be allowed to be negative.
+		//FASSERT_NOT_NEGATIVE(getExtraSpecialistCommerce(eIndex1, eIndex2));
+
+		updateExtraSpecialistCommerce();
+
+		AI_makeAssignWorkDirty();
 	}
 }
 
@@ -28841,21 +29224,41 @@ void CvPlayer::updateExtraSpecialistCommerce()
 int CvPlayer::getSpecialistExtraYield(YieldTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	// #430: specialist yield is a cascade term (st.ySpec); this getter is 0 (exposed).
-	return 0;
+	return m_aiSpecialistExtraYield[eIndex];
 }
 
-// #430: specialist yield rides the cascade (st.ySpec).
+void CvPlayer::changeSpecialistExtraYield(YieldTypes eIndex, int iChange)
+{
+	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
+
+	if (iChange != 0)
+	{
+		m_aiSpecialistExtraYield[eIndex] += iChange;
+
+		algo::for_each(cities(), CvCity::fn::onYieldChange());
+
+		AI_makeAssignWorkDirty();
+	}
+}
 
 int CvPlayer::getFreeCityYield(YieldTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	// #430: free-city yield (Σ active traits' YieldChanges) is a cascade term
-	// (ps.yFlatFreeCity, CvCascadeAccumulator.cpp:342); this legacy getter returns 0 (exposed).
-	return 0;
+
+	return m_aiFreeCityYield[eIndex];
 }
 
-// #430: free-city yield rides the cascade (ps.yFlatFreeCity).
+void CvPlayer::changeFreeCityYield(YieldTypes eIndex, int iChange)
+{
+	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
+
+	if (iChange != 0)
+	{
+		m_aiFreeCityYield[eIndex] += iChange;
+
+		algo::for_each(cities(), CvCity::fn::onYieldChange());
+	}
+}
 
 int CvPlayer::getTraitExtraCityDefense() const
 {
@@ -28880,13 +29283,9 @@ void CvPlayer::setHasTrait(TraitTypes eIndex, bool bNewValue)
 		return;
 	}
 
-	if (!bNewValue || (bNewValue && GC.getGame().isTraitValid(eIndex)))
+	if (!bNewValue || (bNewValue && GC.getTraitInfo(eIndex).isValidTrait()))
 	{
 		m_pabHasTrait[eIndex] = bNewValue;
-		// #430 event spine: announce the RUNTIME trait change (past the top-of-function no-change guard, after the
-		// field commit inside the validity gate). Static/initial trait assignment goes through processTrait directly
-		// at init and is covered by PLAYER_INIT + load warm-up, so the emit lives HERE, not in processTrait.
-		emitTraitChanged(getID(), (int)eIndex, bNewValue);
 		processTrait(eIndex, bNewValue ? 1 : -1);
 
 		if (GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eIndex).getLinePriority() != 0)
@@ -28977,7 +29376,7 @@ bool CvPlayer::canLearnTrait(TraitTypes eIndex, bool isSelectingNegative) const
 
 	const CvTraitInfo& kTrait = GC.getTraitInfo(eIndex);
 
-	if (kTrait.getLinePriority() == 0 || !GC.getGame().isTraitValid(eIndex)) return false;
+	if (kTrait.getLinePriority() == 0 || !kTrait.isValidTrait()) return false;
 
 
 	const TraitTypes eTraitPrerequisite = kTrait.getPrereqTrait();
@@ -29423,6 +29822,8 @@ void CvPlayer::changeNationalGreatPeopleUnitRate(const UnitTypes eUnit, const in
 		FErrorMsg("This is not a change!");
 		return;
 	}
+	m_iNationalGreatPeopleRate += iChange;
+
 	if (eUnit == NO_UNIT)
 	{
 		return;
@@ -29452,7 +29853,7 @@ int CvPlayer::getNationalGreatPeopleUnitRate(const UnitTypes eUnit) const
 
 int CvPlayer::getNationalGreatPeopleRate() const
 {
-	return CascadeAccumulator::scGpNational(this);
+	return std::max(0, m_iNationalGreatPeopleRate);
 }
 
 
@@ -30482,7 +30883,10 @@ void CvPlayer::processTech(const TechTypes eTech, const int iChange)
 	changeTechScore(getScoreValueOfTech(eTech) * iChange);
 	changeTechInflation(tech.getInflationModifier() * iChange);
 
-	// (the hasLanguage latch is CUT (#430): the needLanguage gate derives from CascadeCapabilities)
+	if (tech.isLanguage())
+	{
+		m_bHasLanguage = true;
+	}
 
 	for (int i = 0; i < NUM_COMMERCE_TYPES; i++)
 	{
@@ -30507,9 +30911,7 @@ bool CvPlayer::canAddHeritage(const HeritageTypes eType, const bool bTestVisible
 	}
 	const CvHeritageInfo& heritage = GC.getHeritageInfo(eType);
 
-	// CUT (#430 Gate-3, capabilities.md flip wave #2): hasLanguage is the cascade capability (TECH_LANGUAGE's
-	// `capabilities.hasLanguage`).
-	if (heritage.needLanguage() && !CascadeCapabilities::flag(getTeam(), CCF_HAS_LANGUAGE))
+	if (heritage.needLanguage() && !m_bHasLanguage)
 	{
 		return false;
 	}
@@ -30555,7 +30957,6 @@ void CvPlayer::setHeritage(const HeritageTypes eType, const bool bNewValue)
 		{
 			m_myHeritage.push_back(eType);
 			processHeritage(eType, 1);
-			emitHeritageChanged(getID(), (int)eType, true);   // #430 G1: heritage feeds PSC_CFLAT (era-stacked empire commerce)
 		}
 		else FErrorMsg("Tried to add a duplicate vector element!");
 	}
@@ -30563,7 +30964,6 @@ void CvPlayer::setHeritage(const HeritageTypes eType, const bool bNewValue)
 	{
 		m_myHeritage.erase(itr);
 		processHeritage(eType, -1);
-		emitHeritageChanged(getID(), (int)eType, false);   // #430 G1: heritage removal
 	}
 	else FErrorMsg("Vector element to remove was missing!");
 
@@ -30583,7 +30983,10 @@ void CvPlayer::processHeritage(const HeritageTypes eType, const int iChange)
 		const EraCommerceArray& pair = *itEra;
 		if (eEra >= pair.first)
 		{
-			// #430: heritage era-commerce rides the cascade (ps.cPlayerExtra100).
+			for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
+			{
+				changeExtraCommerce100((CommerceTypes)iI, iChange * pair.second[(CommerceTypes)iI]);
+			}
 		}
 	}
 }

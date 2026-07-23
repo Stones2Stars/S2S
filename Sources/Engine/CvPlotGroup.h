@@ -5,7 +5,7 @@
 #ifndef CIV4_PLOT_GROUP_H
 #define CIV4_PLOT_GROUP_H
 
-#include "Infrastructure/LinkedList.h"
+#include "LinkedList.h"
 
 typedef struct
 {
@@ -44,16 +44,9 @@ public:
 
 	inline PlayerTypes getOwner() const { return m_eOwner; }
 
-	// The network's bonus content, two arrays on the group object (the vicinity/network residency split):
-	// m_paiNumBonuses = produced/extracted (vicinity-improved tiles + city provides), m_paiTradedBonuses =
-	// deal import/export, anchored at the capital's group (the capital-plot fold re-homes it through every
-	// merge/split). getNumBonuses reads the SUM; presence crossings test the sum in BOTH changers. Derived,
-	// never serialized -- built by the load fold + live events.
 	int getNumBonuses(const BonusTypes eBonus) const;
-	int getTradedBonuses(const BonusTypes eBonus) const;
 	bool hasBonus(const BonusTypes eBonus) const;
 	void changeNumBonuses(const BonusTypes eBonus, const int iChange);
-	void changeTradedBonus(const BonusTypes eBonus, const int iChange);
 
 	int getNumCities();
 
@@ -72,7 +65,6 @@ public:
 	static void endBulkRecalculate();
 
 private:
-	void applyBonusDelta(int*& paiArray, const BonusTypes eBonus, const int iChange);
 	CvPlot* getRepresentativePlot() const;
 	void plotEnumerator(bool (*pfFunc)(CvPlotGroup* onBehalfOf, CvPlot*, void*), void* param);
 	static CvPlotGroup* colorRegionInternal(CvPlot* pPlot, PlayerTypes eOwner, CvPlotGroup* pPlotGroup, bool bRecalculateBonuses);
@@ -89,8 +81,7 @@ protected:
 
 	PlayerTypes m_eOwner;
 
-	int* m_paiNumBonuses;      // produced/extracted network content (lazily allocated)
-	int* m_paiTradedBonuses;   // deal-traded content, capital-anchored (lazily allocated; may go negative on net export)
+	int* m_paiNumBonuses;
 	mutable int m_seedPlotX;
 	mutable int m_seedPlotY;
 

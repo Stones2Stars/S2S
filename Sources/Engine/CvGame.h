@@ -6,13 +6,12 @@
 #define CIV4_GAME_H
 
 #include "CvDeal.h"
-#include "Cascade/CvCascadeScopePackages.h"   // CascadeWorldScope -- the #430 world scope packages (m_cascadeWorldScope)
-#include "Tools/CvRandom.h"
+#include "CvRandom.h"
 #include "CvGameObject.h"
 #include "CvProperties.h"
 #include "CvPropertySolver.h"
 #include "CvDate.h"
-#include "Infrastructure/CvAllocator.h"
+#include "CvAllocator.h"
 #include "CvDerivedData.h"
 
 class CvArtInfoBuilding;
@@ -41,11 +40,6 @@ public:
 	DllExport void reset(HandicapTypes eHandicap, bool bConstructorCall = false);
 
 	CvGameObjectGame* getGameObject() {return &m_GameObject;};
-
-	// #430: the WORLD scope packages (scope-packages.md) -- a MUTABLE derived cache holding the world-scope
-	// sums (never serialized; all-dirty from birth). The CascadeAccumulator module is the query surface.
-	mutable CascadeWorldScope m_cascadeWorldScope;
-	void cascadeRefreshWorldScope(int iMask) const;   // the CacheSet's refresh delegate -> CascadeAccumulator::refreshWorldScope
 
 	//	Game-level derived-data repository (see CvDerivedData.h). Game-state-derived data; empty for now.
 	CvGameDataRepository&       dataRepository()       { return m_dataRepository; }
@@ -656,12 +650,6 @@ public:
 	void setTeamScore(TeamTypes eTeam, int iScore);
 
 	DllExport bool isOption(GameOptionTypes eIndex) const;
-	// Trait validity under the current game options -- moved off the pure-data CvTraitInfo poco ([DEC-json-not-cascade],
-	// owner 2026-07-11): the poco holds the static flags, this consumer reads them + the live options.
-	bool isTraitValid(TraitTypes eTrait, bool bGameStart = false) const;
-	// Civic city-limit under the current options -- moved off the pure-data CvCivicInfo poco ([DEC-json-not-cascade],
-	// owner 2026-07-11): the option + world-size FORMULA over the civic's raw base (CvCivicInfo::getCityLimitBase).
-	int getCivicCityLimit(CivicTypes eCivic) const;
 	void setOption(GameOptionTypes eIndex, bool bEnabled);
 
 	DllExport bool isMPOption(MultiplayerOptionTypes eIndex) const;
@@ -724,7 +712,6 @@ public:
 	void setTechCanFoundReligion(TechTypes eIndex, bool bUsed);
 
 	CvCity* getHolyCity(ReligionTypes eIndex) const;
-	bool isHolyCityByOwnerId(ReligionTypes eIndex, PlayerTypes eOwner, int iID) const;   // #430: read-safe holy-city check off the loaded IDInfo (no getCity resolution)
 	void setHolyCity(ReligionTypes eIndex, const CvCity* pNewValue, bool bAnnounce);
 
 	int getCorporationGameTurnFounded(CorporationTypes eIndex) const;

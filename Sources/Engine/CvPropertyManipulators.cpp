@@ -8,23 +8,17 @@
 //------------------------------------------------------------------------------------------------
 
 
-#include "Tools/FProfiler.h"
+#include "FProfiler.h"
 
 #include "CvGameCoreDLL.h"
 #include "CvPropertyInteraction.h"
 #include "CvPropertyManipulators.h"
 #include "CvPropertyPropagator.h"
 #include "CvPropertySource.h"
-#include "Infrastructure/CvXMLLoadUtility.h"
-#include "Infrastructure/IntExpr.h"
-#include "Tools/CheckSum.h"
+#include "CvXMLLoadUtility.h"
+#include "CheckSum.h"
 
 CvPropertyManipulators::~CvPropertyManipulators()
-{
-	clear();
-}
-
-void CvPropertyManipulators::clear()
 {
 	PROFILE_EXTRA_FUNC();
 	foreach_(const CvPropertySource* pSource, m_apSources)
@@ -39,9 +33,6 @@ void CvPropertyManipulators::clear()
 	{
 		delete pPropagator;
 	}
-	m_apSources.clear();
-	m_apInteractions.clear();
-	m_apPropagators.clear();
 }
 
 int CvPropertyManipulators::getNumSources() const
@@ -85,52 +76,6 @@ int CvPropertyManipulators::addSource(PropertySourceTypes eType)
 			return (int)m_apSources.size()-1;
 	}
 	return -1;
-}
-
-// --- the JSON->manipulator load bridge (property-audit.md increment A): build fully-configured source/propagator
-// objects directly, mirroring what read() constructs from the XML PropertyManipulators block. ---
-void CvPropertyManipulators::addConstantSource(PropertyTypes eProp, int iAmount, GameObjectTypes eObject,
-	RelationTypes eRelation, int iRelationData, const BoolExpr* pActive)
-{
-	addConstantSource(eProp, new IntExprConstant(iAmount), eObject, eRelation, iRelationData, pActive);
-}
-
-void CvPropertyManipulators::addConstantSource(PropertyTypes eProp, const IntExpr* pAmount, GameObjectTypes eObject,
-	RelationTypes eRelation, int iRelationData, const BoolExpr* pActive)
-{
-	CvPropertySourceConstant* p = new CvPropertySourceConstant(eProp, pAmount);
-	p->setObjectType(eObject);
-	p->setRelation(eRelation);
-	p->setRelationData(iRelationData);
-	if (pActive != NULL) p->setActive(pActive);
-	m_apSources.push_back(p);
-}
-
-void CvPropertyManipulators::addDecaySource(PropertyTypes eProp, int iPercent, int iNoDecayAmount, GameObjectTypes eObject)
-{
-	CvPropertySourceDecay* p = new CvPropertySourceDecay(eProp, iPercent, iNoDecayAmount);
-	p->setObjectType(eObject);
-	m_apSources.push_back(p);
-}
-
-void CvPropertyManipulators::addAttributeConstantSource(PropertyTypes eProp, AttributeTypes eAttribute, int iAmount, GameObjectTypes eObject)
-{
-	CvPropertySourceAttributeConstant* p = new CvPropertySourceAttributeConstant(eProp, eAttribute, iAmount);
-	p->setObjectType(eObject);
-	m_apSources.push_back(p);
-}
-
-void CvPropertyManipulators::addDiffusePropagator(PropertyTypes eProp, int iPercent, GameObjectTypes eObject,
-	GameObjectTypes eTargetObject, RelationTypes eTargetRelation, int iTargetDistance,
-	const BoolExpr* pActive)
-{
-	CvPropertyPropagatorDiffuse* p = new CvPropertyPropagatorDiffuse(eProp, iPercent);
-	p->setObjectType(eObject);
-	p->setTargetObjectType(eTargetObject);
-	p->setTargetRelation(eTargetRelation);
-	p->setTargetRelationData(iTargetDistance);
-	if (pActive != NULL) p->setActive(pActive);
-	m_apPropagators.push_back(p);
 }
 
 int CvPropertyManipulators::getNumInteractions() const

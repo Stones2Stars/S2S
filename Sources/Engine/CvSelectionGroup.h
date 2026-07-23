@@ -3,10 +3,10 @@
 #ifndef CIV4_GROUP_H
 #define CIV4_GROUP_H
 
-#include "Infrastructure/LinkedList.h"
-#include "Tools/copy_iterator.h"
-#include "Infrastructure/CvPathGenerator.h"
-#include "Tools/idinfo_iterator_base.h"
+#include "LinkedList.h"
+#include "copy_iterator.h"
+#include "CvPathGenerator.h"
+#include "idinfo_iterator_base.h"
 
 class CvArea;
 class CvCity;

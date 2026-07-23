@@ -30,13 +30,6 @@ public:
 	int getTargetRelationData() const;
 	GameObjectTypes getTargetObjectType() const;
 
-	// programmatic construction (the JSON->manipulator load bridge) -- set the fields read() fills from XML.
-	void setObjectType(GameObjectTypes e) { m_eObjectType = e; }
-	void setTargetObjectType(GameObjectTypes e) { m_eTargetObjectType = e; }
-	void setTargetRelation(RelationTypes e) { m_eTargetRelation = e; }
-	void setTargetRelationData(int i) { m_iTargetRelationData = i; }
-	void setActive(const BoolExpr* p) { m_pExprActive = p; }   // takes ownership (the dtor deletes)
-
 	bool isActive(const CvGameObject* pObject) const;
 	void getTargetObjects(const CvGameObject* pObject, std::vector<const CvGameObject*>& apGameObjects) const;
 

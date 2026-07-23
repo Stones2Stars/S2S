@@ -13,7 +13,7 @@
 //           This is a READ-ONLY DESCRIPTION, not an evaluator. Evaluation still lives in
 //           CvCity::canConstruct / CvPlayer::canTrain and keeps its probability-hint and
 //           gate-stratification behaviour. (#195 Phase 2 -- unified prerequisite model;
-//           see docs/dev/plans/unified-prerequisites-and-constructibility.md)
+//           see Sources/docs/plans/unified-prerequisites-and-constructibility.md)
 //
 //------------------------------------------------------------------------------------------------
 #ifndef CONSTRUCT_REQUIREMENT_H

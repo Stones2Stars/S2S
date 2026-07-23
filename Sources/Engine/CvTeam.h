@@ -8,7 +8,6 @@
 #include "CvGameObject.h"
 #include "CvProperties.h"
 #include "CvDerivedData.h"
-#include "Enabler/CvCapabilities.h"   // #430: CascadeTeamCaps -- the owner-side capability-union storage
 
 class CvArea;
 
@@ -28,12 +27,6 @@ public:
 	CvTeamDataRepository&       dataRepository()       { return m_dataRepository; }
 	const CvTeamDataRepository& dataRepository() const { return m_dataRepository; }
 
-	// #430: the TEAM capability union (capabilities.md) -- the derived-on-query HAVE union, on the ONE
-	// CvDerivedCacheSet protocol (scope-packages.md §3b: owner-side storage, never serialized; setHasTech/
-	// reset MARK, queries ENSURE). Public by the shadow-phase convention; CascadeCapabilities is the query surface.
-	mutable CascadeTeamCaps m_cascadeTeamCaps;
-	void cascadeRefreshCaps(int iMask) const;   // the CacheSet's refresh delegate -> CascadeCapabilities::refreshInto
-
 protected:
 	CvGameObjectTeam m_GameObject;
 	CvTeamDataRepository m_dataRepository;
@@ -50,6 +43,7 @@ public:
 	void doTurn();
 
 	void updateYield();
+	void updateCommerce();
 
 	bool canChangeWarPeace(TeamTypes eTeam, bool bAllowVassal = false) const;
 	DllExport bool canDeclareWar(TeamTypes eTeam) const;
@@ -168,17 +162,29 @@ public:
 	bool isForceTeamVoteEligible(VoteSourceTypes eVoteSource) const;
 	void changeForceTeamVoteEligibilityCount(VoteSourceTypes eVoteSource, int iChange);
 
+	int getExtraWaterSeeFromCount() const;
 	bool isExtraWaterSeeFrom() const;
+	void changeExtraWaterSeeFromCount(int iChange);
 
+	int getMapTradingCount() const;
 	bool isMapTrading() const;
+	void changeMapTradingCount(int iChange);
 
+	int getCanPassPeaksCount() const;
 	bool isCanPassPeaks() const;
+	void changeCanPassPeaksCount(int iChange);
 
+	int getMoveFastPeaksCount() const;
 	bool isMoveFastPeaks() const;
+	void changeMoveFastPeaksCount(int iChange);
 
+	int getCanFoundOnPeaksCount() const;
 	bool isCanFoundOnPeaks() const;
+	void changeCanFoundOnPeaksCount(int iChange);
 
+	int getRebaseAnywhereCount() const;
 	bool isRebaseAnywhere() const;
+	void changeRebaseAnywhereCount(int iChange);
 
 	int getTradeModifier() const;
 	void changeTradeModifier(int iChange);
@@ -200,7 +206,9 @@ public:
 	void ObsoletePromotions(TechTypes eObsoleteTech);
 	void ObsoleteCorporations(TechTypes eObsoleteTech);
 
+	int getEmbassyTradingCount() const;
 	bool isEmbassyTrading() const;
+	void changeEmbassyTradingCount(int iChange);
 
 	bool isHasEmbassy(TeamTypes eIndex) const;
 	void setHasEmbassy(TeamTypes eIndex, bool bNewValue);
@@ -209,14 +217,21 @@ public:
 	int getBuildingSpecialistChange(BuildingTypes eIndex1, SpecialistTypes eIndex2) const;
 	void changeBuildingSpecialistChange(BuildingTypes eIndex1, SpecialistTypes eIndex2, int iChange);
 
+	int getLimitedBordersTradingCount() const;
 	bool isLimitedBordersTrading() const;
+	void changeLimitedBordersTradingCount(int iChange);
 
+	int getCanFarmDesertCount() const;
 	bool isCanFarmDesert() const;
+	void changeCanFarmDesertCount(int iChange);
 
 	void signLimitedBorders(TeamTypes eTeam);
 	bool canSignOpenBorders(TeamTypes eTeam) const;
 	void sendAmbassador(TeamTypes eTeam);
 
+	int getFreeSpecialistCount(SpecialistTypes eIndex) const;
+	void setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue);
+	void changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange);
 
 	bool isAnyVassal() const;
 	ImprovementTypes getImprovementUpgrade(ImprovementTypes eImprovement) const;
@@ -232,25 +247,45 @@ public:
 
 	void AI_setAssignWorkDirtyInEveryPlayerCityWithActiveBuilding(BuildingTypes eBuilding);
 
+	int getTechTradingCount() const;
 	bool isTechTrading() const;
+	void changeTechTradingCount(int iChange);
 
+	int getGoldTradingCount() const;
 	bool isGoldTrading() const;
+	void changeGoldTradingCount(int iChange);
 
+	int getOpenBordersTradingCount() const;
 	bool isOpenBordersTrading() const;
+	void changeOpenBordersTradingCount(int iChange);
 
+	int getDefensivePactTradingCount() const;
 	bool isDefensivePactTrading() const;
+	void changeDefensivePactTradingCount(int iChange);
 
+	int getPermanentAllianceTradingCount() const;
 	bool isPermanentAllianceTrading() const;
+	void changePermanentAllianceTradingCount(int iChange);
 
+	int getVassalTradingCount() const;
 	bool isVassalStateTrading() const;
+	void changeVassalTradingCount(int iChange);
 
+	int getBridgeBuildingCount() const;
 	bool isBridgeBuilding() const;
+	void changeBridgeBuildingCount(int iChange);
 
+	int getIrrigationCount() const;
 	bool isIrrigation() const;
+	void changeIrrigationCount(int iChange);
 
+	int getIgnoreIrrigationCount() const;
 	bool isIgnoreIrrigation() const;
+	void changeIgnoreIrrigationCount(int iChange);
 
+	int getWaterWorkCount() const;
 	bool isWaterWork() const;
+	void changeWaterWorkCount(int iChange);
 
 	int getVassalPower() const;
 	void setVassalPower(int iPower);
@@ -282,7 +317,9 @@ public:
 	bool isTechShare(int iIndex) const;
 	void changeTechShareCount(int iIndex, int iChange);
 
-	bool isCommerceFlexible(CommerceTypes eIndex) const;   // cascade-backed (#430): CascadeCapabilities CCF_SET_*_RATE
+	int getCommerceFlexibleCount(CommerceTypes eIndex) const;
+	bool isCommerceFlexible(CommerceTypes eIndex) const;
+	void changeCommerceFlexibleCount(CommerceTypes eIndex, int iChange);
 
 	int getExtraMoves(DomainTypes eIndex) const;
 	void changeExtraMoves(DomainTypes eIndex, int iChange);
@@ -340,7 +377,9 @@ public:
 	bool isBuildingMaxedOut(BuildingTypes eIndex, int iExtra = 0) const;
 	void changeBuildingCount(BuildingTypes eIndex, int iChange);
 
+	int getObsoleteBuildingCount(BuildingTypes eIndex) const;
 	bool isObsoleteBuilding(BuildingTypes eIndex) const;
+	void changeObsoleteBuildingCount(BuildingTypes eIndex, int iChange);
 
 	int getResearchProgress(TechTypes eIndex) const;
 	void setResearchProgress(TechTypes eIndex, int iNewValue, PlayerTypes ePlayer);
@@ -350,9 +389,13 @@ public:
 	int getTechCount(TechTypes eIndex) const;
 	int getBestKnownTechScorePercent() const;
 
+	int getTerrainTradeCount(TerrainTypes eIndex) const;
 	bool isTerrainTrade(TerrainTypes eIndex) const;
+	void changeTerrainTradeCount(TerrainTypes eIndex, int iChange);
 
+	int getRiverTradeCount() const;
 	bool isRiverTrade() const;
+	void changeRiverTradeCount(int iChange);
 
 	bool isHasTech(TechTypes eIndex) const;
 	void setHasTech(TechTypes eIndex, bool bNewValue, PlayerTypes ePlayer, bool bFirst, bool bAnnounce);
@@ -361,14 +404,8 @@ public:
 	bool isNoTradeTech(short iTech) const;
 	void setNoTradeTech(short iTech, bool bNewValue);
 
-	// The team keyed improvement-yield total = the recompute-from-source half (held techs x the improvements'
-	// tech rows; never serialized, dirty on construct/load) + the PERSISTED event-grant store (the Python
-	// wonder-event grants, e.g. TSUKIJI's fishing-boat yields -- genuine one-shot state a recompute cannot
-	// reproduce, so it lives in its own serialized map; the freeBonusEvents/building-commerce-events split).
-	// The changer is the EVENT-GRANT entry (the CyTeam Python path); the old serialized accumulator is gone.
 	int getImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2) const;
 	void changeImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2, int iChange);
-	void recomputeImprovementYields(std::vector<int>& aOut) const;   // the CvDerivedCacheVec recompute (flat [improvement x yield])
 
 	int getBuildingYieldTechChange(const YieldTypes eYield, const BuildingTypes eBuilding) const;
 	int getBuildingYieldTechModifier(const YieldTypes eYield, const BuildingTypes eBuilding) const;
@@ -476,15 +513,35 @@ protected:
 	int m_iTotalPopulation;
 	int m_iTotalLand;
 	int m_iNukeInterception;
+	int m_iExtraWaterSeeFromCount;
+	int m_iMapTradingCount;
+	int m_iTechTradingCount;
+	int m_iGoldTradingCount;
+	int m_iCanPassPeaksCount;
+	int m_iMoveFastPeaksCount;
+	int m_iCanFoundOnPeaksCount;
+	int m_iRebaseAnywhereCount;
+	int m_iEmbassyTradingCount;
+	int m_iLimitedBordersTradingCount;
+	int m_iCanFarmDesertCount;
 	int m_iTradeModifier;
 	int m_iForeignTradeModifier;
 	int m_iTradeMissionModifier;
 	int m_iCorporationRevenueModifier;
 	int m_iCorporationMaintenanceModifier;
 	int m_iLastRoundOfValidImprovementCacheUpdate;
+	int m_iOpenBordersTradingCount;
+	int m_iDefensivePactTradingCount;
+	int m_iPermanentAllianceTradingCount;
+	int m_iVassalTradingCount;
+	int m_iBridgeBuildingCount;
+	int m_iIrrigationCount;
+	int m_iIgnoreIrrigationCount;
+	int m_iWaterWorkCount;
 	int m_iVassalPower;
 	int m_iMasterPower;
 	int m_iEnemyWarWearinessModifier;
+	int m_iRiverTradeCount;
 	int m_iEspionagePointsEver;
 
 	bool* m_abEmbassy;
@@ -504,15 +561,13 @@ protected:
 	int** m_ppiBuildingSpecialistChange;
 	int** m_ppiBuildingCommerceModifier;
 	int** m_ppiBuildingYieldModifier;
-	// the team keyed improvement-yield ledger (flat [improvement x yield]; sources: held techs' improvement
-	// rows + the persisted event grants below)
-	mutable CvDerivedCacheVec<CvTeam, int> m_improvementYieldChange;
-	// Python/WB event grants ONLY (persisted one-shot state; folded by the recompute, never wiped by it)
-	std::map<short, YieldArray> m_improvementYieldEvents;
+	int** m_ppaaiImprovementYieldChange;
 
+	int* m_paiFreeSpecialistCount;
 	int* m_aiStolenVisibilityTimer;
 	int* m_aiWarWearinessTimes100;
 	int* m_aiTechShareCount;
+	int* m_aiCommerceFlexibleCount;
 	int* m_aiExtraMoves;
 	int* m_aiForceTeamVoteEligibilityCount;
 	int* m_paiRouteChange;
@@ -520,6 +575,7 @@ protected:
 	int* m_paiProjectDefaultArtTypes;
 	int* m_paiProjectMaking;
 	int* m_paiBuildingCount;
+	int* m_paiObsoleteBuildingCount;
 	int* m_paiResearchProgress;
 	int* m_paiTechCount;
 	int* m_paiTerrainTradeCount;

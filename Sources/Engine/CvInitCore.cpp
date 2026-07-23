@@ -1,19 +1,19 @@
 // game.cpp
 
-#include "Tools/FProfiler.h"
+#include "FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "AI/CvGameAI.h"
-#include "Defines/CvGlobals.h"
+#include "CvGameAI.h"
+#include "CvGlobals.h"
 #include "CvInfos.h"
-#include "Infrastructure/CvInitCore.h"
-#include "AI/CvPlayerAI.h"
+#include "CvInitCore.h"
+#include "CvPlayerAI.h"
 #include "CvPopupInfo.h"
-#include "Infrastructure/CvPython.h"
+#include "CvPython.h"
 #include "CvSelectionGroup.h"
-#include "Infrastructure/CvXMLLoadUtility.h"
-#include "Infrastructure/CvDLLInterfaceIFaceBase.h"
-#include "Infrastructure/CvDLLUtilityIFaceBase.h"
+#include "CvXMLLoadUtility.h"
+#include "CvDLLInterfaceIFaceBase.h"
+#include "CvDLLUtilityIFaceBase.h"
 
 // BUG - EXE/DLL Paths - start
 //#include <shlobj.h>

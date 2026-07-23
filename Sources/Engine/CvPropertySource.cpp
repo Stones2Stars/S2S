@@ -8,15 +8,15 @@
 //------------------------------------------------------------------------------------------------
 
 #include "CvGameCoreDLL.h"
-#include "UI/CvGameTextMgr.h"
+#include "CvGameTextMgr.h"
 #include "CvGameObject.h"
-#include "Defines/CvGlobals.h"
+#include "CvGlobals.h"
 #include "CvInfos.h"
-#include "Infrastructure/CvXMLLoadUtility.h"
-#include "Tools/CheckSum.h"
+#include "CvXMLLoadUtility.h"
+#include "CheckSum.h"
 #include "CvPropertySource.h"
 #include "CvPropertySolver.h"
-#include "Infrastructure/IntExpr.h"
+#include "IntExpr.h"
 
 CvPropertySource::CvPropertySource()
 	: m_eProperty(NO_PROPERTY)

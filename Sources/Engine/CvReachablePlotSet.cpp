@@ -1,11 +1,11 @@
 //	Class representing a set of plots reachable in a fixed number of tiles with given flags
 
-#include "Tools/FProfiler.h"
+#include "FProfiler.h"
 
 #include "CvGameCoreDLL.h"
 #include "CvCity.h"
-#include "AI/CvGameAI.h"
-#include "Defines/CvGlobals.h"
+#include "CvGameAI.h"
+#include "CvGlobals.h"
 #include "CvMap.h"
 #include "CvPlot.h"
 #include "CvReachablePlotSet.h"

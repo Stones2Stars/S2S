@@ -9,16 +9,16 @@
 
 #include "CvGameCoreDLL.h"
 
-#include "Tools/FProfiler.h"
+#include "FProfiler.h"
 
 #include "CvBonusInfo.h"
 #include "CvBuildingInfo.h"
 #include "CvCity.h"
-#include "AI/CvGameAI.h"
+#include "CvGameAI.h"
 #include "CvGameObject.h"
-#include "Defines/CvGlobals.h"
+#include "CvGlobals.h"
 #include "CvMap.h"
-#include "AI/CvPlayerAI.h"
+#include "CvPlayerAI.h"
 #include "CvPlot.h"
 #include "CvProperties.h"
 #include "CvPropertyManipulators.h"
@@ -26,15 +26,15 @@
 #include "CvTraitInfo.h"
 #include "CvImprovementInfo.h"
 #include "CvHeritageInfo.h"
-#include "AI/CvTeamAI.h"
+#include "CvTeamAI.h"
 #include "CvUnit.h"
-#include "Python/CyCity.h"
-#include "Python/CyGame.h"
-#include "Python/CyPlayer.h"
-#include "Python/CyPlot.h"
-#include "Python/CyTeam.h"
-#include "Python/CyUnit.h"
-#include "Infrastructure/BoolExpr.h"
+#include "CyCity.h"
+#include "CyGame.h"
+#include "CyPlayer.h"
+#include "CyPlot.h"
+#include "CyTeam.h"
+#include "CyUnit.h"
+#include "BoolExpr.h"
 
 CvGameObjectGame::CvGameObjectGame()
 {
@@ -671,23 +671,6 @@ void CvGameObjectCity::foreachManipulator(ManipCallbackFn func) const
 		}
 	}
 
-	// Empire-wide building sources (the converted <PropertiesAllCities> one-shots -- property-audit.md one-shot
-	// ruling): every instance the OWNER holds anywhere delivers its all-cities sources in THIS city, once per
-	// instance (mirroring the legacy per-instance add). The load-built index keeps this a walk over the handful
-	// of qualifying types, never all building infos.
-	{
-		const CvPlayer& kOwner = GET_PLAYER(m_pCity->getOwner());
-		const std::vector<BuildingTypes>& aAllCities = GC.getAllCitiesManipBuildings();
-		for (size_t iI = 0; iI < aAllCities.size(); iI++)
-		{
-			const int iCount = kOwner.getBuildingCount(aAllCities[iI]);
-			for (int iJ = 0; iJ < iCount; iJ++)
-			{
-				func(GC.getBuildingInfo(aAllCities[iI]).getPropertyManipulatorsAllCities());
-			}
-		}
-	}
-
 	// Religions
 	for (int i=0; i< GC.getNumReligionInfos(); i++)
 	{
@@ -936,7 +919,7 @@ int CvGameObjectCity::getAttribute(AttributeTypes eAttribute) const
 			return m_pCity->healthRate();
 
 		case ATTRIBUTE_HAPPINESS:
-			return m_pCity->happyLevel() / 100;   // ÷100: happyLevel is ×100; the attribute is a whole happiness
+			return m_pCity->happyLevel();
 	}
 	return 0;
 }

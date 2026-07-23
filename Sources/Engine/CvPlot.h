@@ -5,14 +5,12 @@
 
 // CvPlot.h
 
-#include "Infrastructure/LinkedList.h"
-#include "Infrastructure/CvDerivedCache.h"
-#include "Cascade/CvCascadeChannels.h"
-#include "Tools/copy_iterator.h"
+#include "LinkedList.h"
+#include "copy_iterator.h"
 #include "CvGameObject.h"
 #include "CvProperties.h"
-#include "UI/CvPlotPaging.h"
-#include "Tools/idinfo_iterator_base.h"
+#include "CvPlotPaging.h"
+#include "idinfo_iterator_base.h"
 
 #pragma warning( disable: 4251 )		// needs to have dll-interface to be used by clients of class
 
@@ -755,11 +753,9 @@ public:
 
 	void setExtraYield(YieldTypes eYield, short iExtraYield);
 	short* getYield() const;
-	void updateYield();                          // the TRIGGER: marks the yield cache dirty (+ AI/symbol notify); does NOT recompute
-	void recomputeYieldInto(short* aiOut) const; // the actual fresh yield sum -- run lazily by the CvDerivedCache when dirty
+	void updateYield();
 	int calculateYield(YieldTypes eIndex, bool bDisplay = false) const;
 	DllExport int getYield(YieldTypes eIndex) const;
-	int getExtraYield(YieldTypes eIndex) const { return m_aExtraYield[eIndex]; }  // stored per-plot extra yield (game event/effect state; calculateYield addend)
 	int calculateNatureYield(YieldTypes eIndex, TeamTypes eTeam, bool bIgnoreFeature = false) const;
 	int calculateBestNatureYield(YieldTypes eIndex, TeamTypes eTeam) const;
 	int calculateTotalBestNatureYield(TeamTypes eTeam) const;
@@ -1020,18 +1016,7 @@ protected:
 	// Super Forts end
 
 	short* m_baseYields;
-public:
-	// #430 THE UNIFORM PACKAGES ([DEC-uniform-cache-shape]): the two dictionaries keyed by the unified channel
-	// enum. PLOT is the yield-only scope (the ORIGIN RULE, modifier.md par.1): its substrate produces yields and
-	// deposits no modifiers, so the percent dictionary simply stays empty -- emptiness is a property of the
-	// origin rule, never a reason to omit a scope's package.
-	mutable CascadePackages<CvPlot> m_cascadeChannels;
-	void cascadeRefillChannels(int iChanMask) const;
-	int getCascadeFlat(CascadeChannel eCh) const    { return m_cascadeChannels.readFlat(eCh); }
-	int getCascadePercent(CascadeChannel eCh) const { return m_cascadeChannels.readPercent(eCh); }
-private:
-	CvDerivedCache<CvPlot, short, NUM_YIELD_TYPES> m_yieldCache;   // the recompute-only yield cache (NOT serialized) --
-	                                                               // the single PULL source for a plot's yield (state-repositories.md)
+	short* m_aiYield;
 	bst::array<short, NUM_YIELD_TYPES> m_aExtraYield;
 	std::vector<std::pair<PlayerTypes,int> > m_aiCulture;
 	std::vector<PlotTeamVisibilityIntensity> m_aPlotTeamVisibilityIntensity;

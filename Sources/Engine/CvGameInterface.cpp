@@ -1,31 +1,31 @@
 
-#include "Tools/FProfiler.h"
+#include "FProfiler.h"
 
 #include "CvGameCoreDLL.h"
 #include "CvBuildingInfo.h"
-#include "Infrastructure/CvBugOptions.h"
+#include "CvBugOptions.h"
 #include "CvCity.h"
 #include "CvGame.h"
-#include "UI/CvGameTextMgr.h"
-#include "Defines/CvGlobals.h"
+#include "CvGameTextMgr.h"
+#include "CvGlobals.h"
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "CvInfos.h"
-#include "Infrastructure/CvInitCore.h"
+#include "CvInitCore.h"
 #include "CvMap.h"
-#include "UI/CvMessageControl.h"
-#include "AI/CvPlayerAI.h"
+#include "CvMessageControl.h"
+#include "CvPlayerAI.h"
 #include "CvPlot.h"
 #include "CvPopupInfo.h"
-#include "Infrastructure/CvPython.h"
+#include "CvPython.h"
 #include "CvSelectionGroup.h"
-#include "AI/CvTeamAI.h"
+#include "CvTeamAI.h"
 #include "CvUnit.h"
-#include "Infrastructure/CvDLLEngineIFaceBase.h"
-#include "Infrastructure/CvDLLFAStarIFaceBase.h"
-#include "Infrastructure/CvDLLInterfaceIFaceBase.h"
-#include "Infrastructure/CvDLLUtilityIFaceBase.h"
-#include "AI/CvGameAI.h"
+#include "CvDLLEngineIFaceBase.h"
+#include "CvDLLFAStarIFaceBase.h"
+#include "CvDLLInterfaceIFaceBase.h"
+#include "CvDLLUtilityIFaceBase.h"
+#include "CvGameAI.h"
 
 void CvGame::updateColoredPlots()
 {
@@ -1949,7 +1949,7 @@ void CvGame::doControl(ControlTypes eControl)
 				else
 				{
 					setGameState(GAMESTATE_OVER);
-					gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Soundtrack_DIRTY_BIT), true);
+					gDLL->getInterfaceIFace()->setDirty(Soundtrack_DIRTY_BIT, true);
 				}
 			}
 			else if (isNetworkMultiPlayer())

@@ -1,15 +1,14 @@
 // plotGroup.cpp
 
 
-#include "Tools/FProfiler.h"
+#include "FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "Spine/CvEventSpine.h"   // #430 emitPlotGroupBonusChanged (the NETWORK bonus event)
 #include "CvCity.h"
-#include "Defines/CvGlobals.h"
+#include "CvGlobals.h"
 #include "CvMap.h"
-#include "AI/CvPlayerAI.h"
-#include "Infrastructure/CvDLLFAStarIFaceBase.h"
+#include "CvPlayerAI.h"
+#include "CvDLLFAStarIFaceBase.h"
 
 //#define VALIDATION_FOR_PLOT_GROUPS
 
@@ -23,7 +22,6 @@ CvPlotGroup::CvPlotGroup()
 	, m_iID(0)
 	, m_eOwner(NO_PLAYER)
 	, m_paiNumBonuses(NULL)
-	, m_paiTradedBonuses(NULL)
 	, m_seedPlotX(0)
 	, m_seedPlotY(0)
 	, m_zobristHashes()
@@ -60,7 +58,6 @@ void CvPlotGroup::init(int iID, PlayerTypes eOwner, CvPlot* pPlot, bool bRecalcu
 void CvPlotGroup::uninit()
 {
 	SAFE_DELETE_ARRAY(m_paiNumBonuses);
-	SAFE_DELETE_ARRAY(m_paiTradedBonuses);
 }
 
 // FUNCTION: reset()
@@ -81,7 +78,6 @@ void CvPlotGroup::reset(int iID, PlayerTypes eOwner, bool bConstructorCall)
 	if (!bConstructorCall)
 	{
 		SAFE_DELETE_ARRAY(m_paiNumBonuses);
-		SAFE_DELETE_ARRAY(m_paiTradedBonuses);
 	}
 }
 
@@ -482,14 +478,7 @@ void CvPlotGroup::setID(int iID)
 int CvPlotGroup::getNumBonuses(const BonusTypes eBonus) const
 {
 	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eBonus);
-	return (m_paiNumBonuses == NULL ? 0 : m_paiNumBonuses[eBonus])
-	     + (m_paiTradedBonuses == NULL ? 0 : m_paiTradedBonuses[eBonus]);
-}
-
-int CvPlotGroup::getTradedBonuses(const BonusTypes eBonus) const
-{
-	FASSERT_BOUNDS(0, GC.getNumBonusInfos(), eBonus);
-	return (m_paiTradedBonuses == NULL ? 0 : m_paiTradedBonuses[eBonus]);
+	return (m_paiNumBonuses == NULL ? 0 : m_paiNumBonuses[eBonus]);
 }
 
 
@@ -499,9 +488,7 @@ bool CvPlotGroup::hasBonus(const BonusTypes eBonus) const
 }
 
 
-// The shared delta core: mutate ONE of the two arrays, but announce + fan out on the SUMMED presence (a bonus
-// both produced and imported must not false-cross when one source stops).
-void CvPlotGroup::applyBonusDelta(int*& paiArray, const BonusTypes eBonus, const int iChange)
+void CvPlotGroup::changeNumBonuses(const BonusTypes eBonus, const int iChange)
 {
 	PROFILE_FUNC();
 
@@ -509,45 +496,22 @@ void CvPlotGroup::applyBonusDelta(int*& paiArray, const BonusTypes eBonus, const
 
 	if (iChange != 0)
 	{
-		if (paiArray == NULL)
+		if (m_paiNumBonuses == NULL)
 		{
-			paiArray = new int[GC.getNumBonusInfos()];
-			memset(paiArray, 0, sizeof(int)*GC.getNumBonusInfos());
+			m_paiNumBonuses = new int[GC.getNumBonusInfos()];
+			memset(m_paiNumBonuses, 0, sizeof(int)*GC.getNumBonusInfos());
 		}
 
-		const int iOldTotal = getNumBonuses(eBonus);
-		paiArray[eBonus] += iChange;
-		const int iNewTotal = getNumBonuses(eBonus);
-		// #430 NETWORK bonus event: the plot-group IS the connectivity/network identity (a traded resource enters at
-		// the capital's group and reaches every connected city). On a PRESENCE transition, announce it (owner,
-		// plotGroupId) so the cache-invalidation consumer re-evals connection:trade deposits for the member cities.
-		if ((iOldTotal != 0) != (iNewTotal != 0))
-			emitPlotGroupBonusChanged((int)getOwner(), getID(), (int)eBonus, iChange > 0 ? 1 : -1);
+		m_paiNumBonuses[eBonus] += iChange;
 
-		// The member cities hold NO mirror -- their getNumBonuses RELAYS onto this group -- so the fan-out is
-		// only the legacy crossing EFFECTS (processBonus wellbeing/yield legs, corp update): each member city
-		// reconciles old->new against the group totals. A deferring city (bulk network recalc) skips -- its
-		// deferral snapshot reconciles once at endDeferredBonusProcessing.
 		foreach_(CvCity* pLoopCity, GET_PLAYER(getOwner()).cities())
 		{
-			if (pLoopCity->plotGroup(getOwner()) == this && !pLoopCity->isDeferringBonusProcessing())
+			if (pLoopCity->plotGroup(getOwner()) == this)
 			{
-				pLoopCity->processNumBonusChange(eBonus, iOldTotal, iNewTotal);
+				pLoopCity->changeNumBonuses(eBonus, iChange);
 			}
 		}
 	}
-}
-
-void CvPlotGroup::changeNumBonuses(const BonusTypes eBonus, const int iChange)
-{
-	applyBonusDelta(m_paiNumBonuses, eBonus, iChange);
-}
-
-// Deal-traded content (import +, export -), anchored at the capital's group: the deal wraps and the
-// capital-plot fold are the only writers, so merges/splits re-home it through the ordinary plot re-fold.
-void CvPlotGroup::changeTradedBonus(const BonusTypes eBonus, const int iChange)
-{
-	applyBonusDelta(m_paiTradedBonuses, eBonus, iChange);
 }
 
 void CvPlotGroup::plotEnumerator(bool (*pfFunc)(CvPlotGroup* onBehalfOf, CvPlot*, void*), void* param)
@@ -704,12 +668,37 @@ void CvPlotGroup::read(FDataStreamBase* pStream)
 
 	WRAPPER_READ(wrapper, "CvPlotGroup", (int*)&m_eOwner);
 
-	// #430 no-serialized-caches: the group's bonus counts are DERIVED state -- built by the load-end network
-	// fold (extracted plots + city provides + capital import/export) and maintained by live crossings; an old
-	// save's orphan array is drained by savemigration.txt.
-	SAFE_DELETE_ARRAY(m_paiNumBonuses);
-	SAFE_DELETE_ARRAY(m_paiTradedBonuses);   // never serialized -- rebuilt by the load fold's capital leg
+	bool arrayPresent = true;
+	WRAPPER_READ_DECORATED(wrapper, "CvPlotGroup", &arrayPresent, "bonusesPresent");
+	if ( arrayPresent )
+	{
+		if ( m_paiNumBonuses == NULL )
+		{
+			m_paiNumBonuses = new int[GC.getNumBonusInfos()];
+		}
+		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlotGroup", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiNumBonuses);
+	}
+	else
+	{
+		SAFE_DELETE_ARRAY(m_paiNumBonuses);
+	}
 	WRAPPER_READ(wrapper, "CvPlotGroup", &m_numPlots);
+
+	if ( m_paiNumBonuses != NULL )
+	{
+		for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
+		{
+			if ( m_paiNumBonuses[iI] != 0 )
+			{
+				break;
+			}
+		}
+
+		if ( iI == GC.getNumBonusInfos() )
+		{
+			SAFE_DELETE_ARRAY(m_paiNumBonuses);
+		}
+	}
 
 	WRAPPER_READ(wrapper, "CvPlotGroup", &m_seedPlotX);
 	WRAPPER_READ(wrapper, "CvPlotGroup", &m_seedPlotY);
@@ -729,7 +718,13 @@ void CvPlotGroup::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvPlotGroup", m_iID);
 	WRAPPER_WRITE(wrapper, "CvPlotGroup", m_eOwner);
 
-	// m_paiNumBonuses is a derived cache -- never serialized (rebuilt by the load-end network fold).
+	WRAPPER_WRITE_DECORATED(wrapper, "CvPlotGroup", (bool)(m_paiNumBonuses != NULL), "bonusesPresent");
+
+	if (m_paiNumBonuses != NULL)
+	{
+		WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvPlotGroup", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiNumBonuses);
+	}
+
 	WRAPPER_WRITE(wrapper, "CvPlotGroup", m_numPlots);
 	WRAPPER_WRITE(wrapper, "CvPlotGroup", m_seedPlotX);
 	WRAPPER_WRITE(wrapper, "CvPlotGroup", m_seedPlotY);

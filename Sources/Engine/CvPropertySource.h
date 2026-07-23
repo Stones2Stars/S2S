@@ -29,12 +29,6 @@ public:
 	RelationTypes getRelation() const;
 	int getRelationData() const;
 
-	// programmatic construction (the JSON->manipulator load bridge) -- set the fields read() fills from XML.
-	void setObjectType(GameObjectTypes e) { m_eObjectType = e; }
-	void setRelation(RelationTypes e) { m_eRelation = e; }
-	void setRelationData(int i) { m_iRelationData = i; }
-	void setActive(const BoolExpr* p) { m_pExprActive = p; }   // takes ownership (the dtor deletes)
-
 	virtual bool isActive(const CvGameObject* pObject) const;
 
 	virtual PropertySourceTypes getType() const = 0;

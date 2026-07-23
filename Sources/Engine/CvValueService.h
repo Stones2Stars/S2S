@@ -9,7 +9,7 @@
 #include "CvPlot.h"
 #include "PlotInfo.h"
 #include "CvValueService.h"
-#include "Defines/OutputRatios.h"
+#include "OutputRatios.h"
 
 class CvValueService
 {

@@ -5,10 +5,10 @@
 #ifndef CIV4_GAMECORE_UTILS_H
 #define CIV4_GAMECORE_UTILS_H
 
-#include "Tools/FProfiler.h"
+#include "FProfiler.h"
 
 #include "CvMap.h"
-#include "Defines/CvGlobals.h"
+#include "CvGlobals.h"
 
 class CvCity;
 class CvPathGeneratorBase;

@@ -1,80 +1,41 @@
 // plot.cpp
 
 
-#include "Tools/FProfiler.h"
+#include "FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "AI/BetterBTSAI.h"
+#include "BetterBTSAI.h"
 #include "CvArea.h"
-#include "UI/CvArtFileMgr.h"
+#include "CvArtFileMgr.h"
 #include "CvBonusInfo.h"
 #include "CvBuildingInfo.h"
 #include "CvCity.h"
-#include "UI/CvEventReporter.h"
-#include "AI/CvGameAI.h"
+#include "CvEventReporter.h"
+#include "CvGameAI.h"
 #include "CvGameCoreUtils.h"
-#include "Defines/CvGlobals.h"
+#include "CvGlobals.h"
 #include "CvImprovementInfo.h"
 #include "CvInfos.h"
 #include "CvMap.h"
-#include "AI/CvPlayerAI.h"
+#include "CvPlayerAI.h"
 #include "CvPlot.h"
-#include "UI/CvPlotPaging.h"
-#include "Infrastructure/CvPython.h"
-#include "Tools/CvRandom.h"
+#include "CvPlotPaging.h"
+#include "CvPython.h"
+#include "CvRandom.h"
 #include "CvSelectionGroup.h"
-#include "AI/CvTeamAI.h"
+#include "CvTeamAI.h"
 #include "CvUnit.h"
-#include "UI/CvViewport.h"
-#include "Infrastructure/CvDLLEngineIFaceBase.h"
-#include "Infrastructure/CvDLLEntityIFaceBase.h"
-#include "Infrastructure/CvDLLFAStarIFaceBase.h"
-#include "Infrastructure/CvDLLFlagEntityIFaceBase.h"
-#include "Infrastructure/CvDLLInterfaceIFaceBase.h"
-#include "Infrastructure/CvDLLSymbolIFaceBase.h"
-#include "Infrastructure/CvDLLPlotBuilderIFaceBase.h"
-#include "Infrastructure/CvDLLUtilityIFaceBase.h"
+#include "CvViewport.h"
+#include "CvDLLEngineIFaceBase.h"
+#include "CvDLLEntityIFaceBase.h"
+#include "CvDLLFAStarIFaceBase.h"
+#include "CvDLLFlagEntityIFaceBase.h"
+#include "CvDLLInterfaceIFaceBase.h"
+#include "CvDLLSymbolIFaceBase.h"
+#include "CvDLLPlotBuilderIFaceBase.h"
+#include "CvDLLUtilityIFaceBase.h"
 #include "Repos/BuildsRepo.h"
-#include "Infrastructure/FAStarNode.h"
-#include "Spine/CvEventSpine.h" // #430 logging consolidation: route [ENG] lines through the event spine
-#include "Repos/InfoRepo.h"                 // the substrate infos the uniform refill sums
-#include "Enabler/CvEnablerKernel.h" // EnablerKernel::operatingBuildings -- the cascade active-building verdict (recomputeYieldInto)
-#include "Cascade/CvCascadeAccumulator.h" // dirtyCity(CPK_YRATE) -- a plot-yield change re-marks the working city's realized-rate cache
-
-// #430 logging: [ENG] engine-integrity -> event spine (CvPlot). Self-registers its prefix provider + Engine.log file;
-// the spine stays domain-agnostic (never names ENG). Shadow discipline: emits run ALONGSIDE the legacy logEngine calls.
-namespace
-{
-	enum EngEvent
-	{
-		ENG_VISCAP = 0  // [ENG/viscap] result=negVisCappedToZero
-	};
-	const char* engineLinePrefix(int iEventId)
-	{
-		switch (iEventId)
-		{
-		case ENG_VISCAP: return "[ENG/viscap] result=negVisCappedToZero";
-		default:         return NULL;
-		}
-	}
-	// ENG's LOCAL field tags (all plain ints).
-	enum EngField { ENGF_team = 0, ENGF_x, ENGF_y, ENGF_count, ENGF_change };
-	const char* engineFieldInfo(int iFieldTag, SpineFieldType* peType)
-	{
-		*peType = SFT_INT;
-		switch (iFieldTag)
-		{
-		case ENGF_team:   return "team";
-		case ENGF_x:      return "x";
-		case ENGF_y:      return "y";
-		case ENGF_count:  return "count";
-		case ENGF_change: return "change";
-		default:        return NULL;
-		}
-	}
-	struct EngineLogRegistrar { EngineLogRegistrar() { spineRegisterDomain(SD_ENGINE, &engineLinePrefix, "Engine.log", &engineFieldInfo); } };
-	EngineLogRegistrar s_engineLogRegistrar; // static-init registration; safe (g_domains zero-init first)
-}
+#include "FAStarNode.h"
 
 #define STANDARD_MINIMAP_ALPHA		(0.6f)
 
@@ -119,9 +80,7 @@ CvPlot::CvPlot()
 	}
 
 	m_baseYields = new short[NUM_YIELD_TYPES]();
-	// the yield cache: CvDerivedCache (state-repositories.md) -- dirty on construct AND load (never serialized)
-	m_yieldCache.bind(this, &CvPlot::recomputeYieldInto);
-	m_cascadeChannels.set.bind(this, &CvPlot::cascadeRefillChannels);   // #430: the uniform packages
+	m_aiYield = new short[NUM_YIELD_TYPES]();
 
 	// Plot danger cache
 	m_borderDangerCache = new bool[MAX_TEAMS];
@@ -197,6 +156,7 @@ CvPlot::~CvPlot()
 	uninit();
 
 	SAFE_DELETE_ARRAY(m_baseYields);
+	SAFE_DELETE_ARRAY(m_aiYield);
 	SAFE_DELETE_ARRAY(m_borderDangerCache);
 }
 
@@ -904,6 +864,7 @@ void CvPlot::doBonusDepletion()
 			NULL, MESSAGE_TYPE_MINOR_EVENT, GC.getBonusInfo(eBonus).getButton(),
 			GC.getCOLOR_RED(), getX(), getY(), true, true
 		);
+		logging::logMsg("C2C.log", "Resource Depleted! Resource was %d, The odds were 1 in %d\n", eBonus, iOdds);
 
 		setBonusType(NO_BONUS);
 
@@ -1375,7 +1336,6 @@ void CvPlot::updateSymbolDisplay()
 {
 	PROFILE_FUNC();
 
-
 	if ( !isGraphicsVisible(ECvPlotGraphics::SYMBOLS))
 	{
 		return;
@@ -1436,7 +1396,6 @@ void CvPlot::updateSymbols()
 bool CvPlot::updateSymbolsInternal()
 {
 	PROFILE_FUNC();
-
 
 	deleteAllSymbols();
 	if (!isGraphicsVisible(ECvPlotGraphics::SYMBOLS) || !isRevealed(GC.getGame().getActiveTeam(), true))
@@ -1773,19 +1732,22 @@ void CvPlot::updatePlotGroupBonus(bool bAdd)
 		{
 			PROFILE("CvPlot::updatePlotGroupBonus.PlotCity");
 
-			// the city's computed injection (building provides + event grants), one implementation
-			pPlotCity->addProvidedBonusesToGroup(pPlotGroup, bAdd ? 1 : -1);
+			for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
+			{
+				if (!GET_TEAM(getTeam()).isBonusObsolete((BonusTypes)iI))
+				{
+					pPlotGroup->changeNumBonuses((BonusTypes)iI, (pPlotCity->getFreeBonus((BonusTypes)iI) * (bAdd ? 1 : -1)));
+				}
+			}
 
 			if (pPlotCity->isCapital())
 			{
 				PROFILE("CvPlot::updatePlotGroupBonus.Capital");
 
-				// deal-traded content lands in the group's TRADED array (capital-anchored; this fold point is
-				// what re-homes it through every merge/split/capital move)
 				for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
 				{
-					pPlotGroup->changeTradedBonus((BonusTypes)iI, (GET_PLAYER(getOwner()).getBonusExport((BonusTypes)iI) * (bAdd ? -1 : 1)));
-					pPlotGroup->changeTradedBonus((BonusTypes)iI, (GET_PLAYER(getOwner()).getBonusImport((BonusTypes)iI) * (bAdd ? 1 : -1)));
+					pPlotGroup->changeNumBonuses((BonusTypes)iI, (GET_PLAYER(getOwner()).getBonusExport((BonusTypes)iI) * (bAdd ? -1 : 1)));
+					pPlotGroup->changeNumBonuses((BonusTypes)iI, (GET_PLAYER(getOwner()).getBonusImport((BonusTypes)iI) * (bAdd ? 1 : -1)));
 				}
 			}
 		}
@@ -5170,8 +5132,7 @@ bool CvPlot::isVisible(TeamTypes eTeam, bool bDebug) const
 
 bool CvPlot::isActiveVisible(bool bDebug) const
 {
-	const bool bAnswer = isVisible(GC.getGame().getActiveTeam(), bDebug);
-	return bAnswer;
+	return isVisible(GC.getGame().getActiveTeam(), bDebug);
 }
 
 
@@ -6472,8 +6433,6 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 	{
 		PROFILE("CvPlot::setOwner.changed");
 
-		const PlayerTypes eOldPlotOwner = getOwner(); // #430: capture BEFORE m_eOwner is committed (for the spine emit)
-
 		GC.getGame().addReplayMessage(REPLAY_MESSAGE_PLOT_OWNER_CHANGE, eNewValue, (char*)NULL, getX(), getY());
 
 		CvCity* pOldCity = getPlotCity();
@@ -6596,8 +6555,6 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 			}
 
 			m_eOwner = eNewValue;
-			// #430 event spine: announce the plot owner change (past the no-change guard, after the field commit).
-			emitPlotOwnerChanged(GC.getMap().plotNum(getX(), getY()), (int)eOldPlotOwner, (int)eNewValue);
 
 			setWorkingCityOverride(NULL);
 			updateWorkingCity();
@@ -6685,7 +6642,7 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 			{
 				updateMinimapColor();
 
-				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GlobeLayer_DIRTY_BIT), true);
+				gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
 
 				gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
 			}
@@ -7078,8 +7035,6 @@ void CvPlot::setTerrainType(TerrainTypes eNewValue, bool bRecalculate, bool bReb
 	if (eOldTerrain != eNewValue)
 	{
 		m_eTerrainType = eNewValue;
-		// #430 event spine: announce the terrain change (past the no-change guard). plotId per /state/plots convention.
-		emitTerrainChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
 
 		if (eOldTerrain != NO_TERRAIN)
 		{
@@ -7209,11 +7164,6 @@ void CvPlot::setFeatureType(FeatureTypes eNewValue, int iVariety, bool bImprovem
 		}
 		m_eFeatureType = eNewValue;
 		m_iFeatureVariety = iVariety;
-		// #430 event spine: announce the feature change ONLY on a real feature-type change (not a variety-only reroll).
-		if (eOldFeature != eNewValue)
-		{
-			emitFeatureChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
-		}
 
 		if (bUpdateSight)
 		{
@@ -7258,7 +7208,8 @@ void CvPlot::setFeatureType(FeatureTypes eNewValue, int iVariety, bool bImprovem
 				CvCity* cityX = plotX->getPlotCity();
 				if (cityX)
 				{
-					// #430: feature health/happiness ride the cascade; no accumulator refresh.
+					cityX->updateFeatureHealth();
+					cityX->updateFeatureHappiness();
 				}
 			}
 		}
@@ -7351,7 +7302,6 @@ void CvPlot::setBonusType(BonusTypes eNewValue)
 {
 	if (getBonusType() != eNewValue)
 	{
-		const BonusTypes eOldBonus = getBonusType();   // #430: capture before m_eBonusType is set (getBonusType() returns new after)
 		setImprovementUpgradeCache(-1);
 
 		if (getBonusType() != NO_BONUS)
@@ -7390,14 +7340,6 @@ void CvPlot::setBonusType(BonusTypes eNewValue)
 			updatePlotGroupBonus(true);
 			GET_PLAYER(getOwner()).endDeferredPlotGroupBonusCalculation();
 		}
-		// #430 plot-substrate emit: the plot's RESOURCE changed (a Great-Farmer build / discovery event places or
-		// reveals it, or it is removed). The SAME event the reseed (CvPlot::read) fires. A plot holds at most one
-		// bonus, so a replace emits the old at -1 then the new at +1.
-		{
-			const int iPlotNum = GC.getMap().plotNum(getX(), getY());
-			if (eOldBonus != NO_BONUS) { emitPlotBonusChanged(iPlotNum, (int)getOwner(), (int)eOldBonus, -1); }
-			if (eNewValue != NO_BONUS) { emitPlotBonusChanged(iPlotNum, (int)getOwner(), (int)eNewValue, 1); }
-		}
 
 		if (getBonusType() != NO_BONUS)
 		{
@@ -7417,7 +7359,7 @@ void CvPlot::setBonusType(BonusTypes eNewValue)
 
 		setLayoutDirty(true);
 
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GlobeLayer_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
 	}
 }
 
@@ -7575,8 +7517,6 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 			updatePlotGroupBonus(false);
 		}
 		m_eImprovementType = eNewImprovement;
-		// #430 event spine: announce the improvement change (past the no-change guard, after the field commit).
-		emitImprovementChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewImprovement);
 		if (isOwned())
 		{
 			updatePlotGroupBonus(true);
@@ -7639,6 +7579,7 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 
 				if (pLoopCity != NULL)
 				{
+					pLoopCity->updateFeatureHappiness();
 					pLoopCity->updateImprovementHealth();
 
 					//	Changed improvement status might change city best build opinions
@@ -7647,7 +7588,7 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 			}
 		}
 
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GlobeLayer_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
 
 		if (NO_IMPROVEMENT != eOldImprovement && GC.getImprovementInfo(eOldImprovement).isActsAsCity())
 		{
@@ -7679,7 +7620,7 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 			}
 		}
 		setImprovementCurrentValue();
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CitizenButtons_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(CitizenButtons_DIRTY_BIT, true);
 	}
 }
 
@@ -7719,8 +7660,6 @@ void CvPlot::setRouteType(RouteTypes eNewValue, bool bUpdatePlotGroups)
 	}
 
 	m_eRouteType = eNewValue;
-	// #430 event spine: announce the route change (past the no-change early-return guard, after the field commit).
-	emitRouteChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
 
 	if (isOwned())
 	{
@@ -7817,26 +7756,34 @@ void CvPlot::setPlotCity(CvCity* pNewValue)
 	GET_PLAYER(getOwner()).startDeferredPlotGroupBonusCalculation();
 
 	updatePlotGroupBonus(false);
-	// The city holds NO bonus mirror (getNumBonuses RELAYS onto the plot group), so no count transfer on
-	// assign/unassign. A city UNASSIGNED here is being killed -- its effect state dies with it. A city ASSIGNED
-	// here (founding) applies its initial crossing effects from zero below.
+	if (isCity())
+	{
+		CvPlotGroup* pPlotGroup = getPlotGroup(getOwner());
+
+		if (pPlotGroup)
+		{
+			for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
+			{
+				getPlotCity()->changeNumBonuses((BonusTypes)iI, -pPlotGroup->getNumBonuses((BonusTypes)iI));
+			}
+		}
+	}
 	if (pNewValue)
 	{
 		m_plotCity = pNewValue->getIDInfo();
 	}
 	else m_plotCity.reset();
 
+
 	if (isCity())
 	{
 		CvPlotGroup* pPlotGroup = getPlotGroup(getOwner());
 
-		if (pPlotGroup && !getPlotCity()->isDeferringBonusProcessing())
+		if (pPlotGroup)
 		{
-			// Founding: the new city was not in the player's city list when the deferral bracket above started,
-			// so reconcile its effects explicitly -- the from-zero application of every network bonus it joins.
 			for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
 			{
-				getPlotCity()->processNumBonusChange((BonusTypes)iI, 0, pPlotGroup->getNumBonuses((BonusTypes)iI));
+				getPlotCity()->changeNumBonuses((BonusTypes)iI, pPlotGroup->getNumBonuses((BonusTypes)iI));
 			}
 		}
 	}
@@ -7937,12 +7884,6 @@ void CvPlot::updateWorkingCity()
 		}
 		else m_workingCity.reset();
 
-		// #430 event spine: announce the working-city reassignment (past the pOld != pBest guard, after the commit).
-		// City ids are per-owner; -1 when there is no city on either side.
-		emitWorkingCityChanged(GC.getMap().plotNum(getX(), getY()), getOwner(),
-			pOldWorkingCity != NULL ? pOldWorkingCity->getID() : -1,
-			pBestCity != NULL ? pBestCity->getID() : -1);
-
 
 		if (pOldWorkingCity != NULL)
 		{
@@ -7961,7 +7902,7 @@ void CvPlot::updateWorkingCity()
 		&& gDLL->getGraphicOption(GRAPHICOPTION_CITY_RADIUS)
 		&& gDLL->getInterfaceIFace()->canSelectionListFound())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(ColoredPlots_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(ColoredPlots_DIRTY_BIT, true);
 		}
 	}
 }
@@ -8166,13 +8107,13 @@ void CvPlot::setExtraYield(YieldTypes eYield, short iExtraYield)
 
 short* CvPlot::getYield() const
 {
-	return m_yieldCache.data();
+	return m_aiYield;
 }
 
 int CvPlot::getYield(YieldTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex);
-	return m_yieldCache.get(eIndex);
+	return m_aiYield[eIndex];
 }
 
 void CvPlot::updateYield()
@@ -8181,87 +8122,35 @@ void CvPlot::updateYield()
 
 	if (!area()) return;
 
-	// TRIGGER ONLY (owner ruling 2026-06-27): flag the yield cache dirty; the fresh sum runs lazily in getYield. We no
-	// longer recompute eagerly here, and we no longer PUSH a delta into the working city -- the city PULLs Σ getYield
-	// (the plot cache is the single source of a plot's yield). The cache is never serialized, so a loaded game is
-	// dirty-by-default and recomputes from current state -- never stale-from-save.
-	m_yieldCache.markDirty();
-
+	bool bChange = false;
 	CvCity* pWorkingCity = getWorkingCity();
-	if (pWorkingCity != NULL)
+	const bool bWorked = pWorkingCity ? pWorkingCity->isWorkingPlot(this) : false;
+
+	for (int iI = 0; iI < NUM_YIELD_TYPES; ++iI)
 	{
-		pWorkingCity->AI_setAssignWorkDirty(true);
-		pWorkingCity->onYieldChange();   // downstream (commerce/UI) dirty
-		pWorkingCity->markPlotYieldSumDirty();   // the worked-plot Σ cache: this plot's yield feeds it
-		// the realized-rate cache bakes the worked-plot sum ("cache the sum" ruling) -- a plot-yield change re-marks it
-		CascadeAccumulator::dirtyCity(pWorkingCity, CPK_YRATE);
-	}
-	updateSymbols();
-}
+		const int iNewYield = calculateYield((YieldTypes)iI);
+		const int iOldYield = m_aiYield[iI];
 
-// #430 THE UNIFORM REFILL: this PLOT's own-scope deposits, from its substrate infos (terrain / feature /
-// improvement / route / bonus). PLOT is the yield-only scope by the ORIGIN RULE (modifier.md par.1), so the
-// percent dictionary stays empty here -- emptiness is a property of the origin rule, not a missing package.
-void CvPlot::cascadeRefillChannels(int iChanMask) const
-{
-	CascadeSum::beginRefill(iChanMask, m_cascadeChannels.flat, m_cascadeChannels.percent);
-	CvCascadeEvalCtx ec;                       // ONLY for `per` count resolution, never for conditions
-	ec.plot = this;
-	int* f = m_cascadeChannels.flat; int* p = m_cascadeChannels.percent;
-	if (getTerrainType() != NO_TERRAIN)
-		CascadeSum::addInfo(InfoRepo<CvTerrainInfo>::get().get((int)getTerrainType()), CSC_PLOT, iChanMask, f, p, &ec);
-	if (getFeatureType() != NO_FEATURE)
-		CascadeSum::addInfo(InfoRepo<CvFeatureInfo>::get().get((int)getFeatureType()), CSC_PLOT, iChanMask, f, p, &ec);
-	if (getImprovementType() != NO_IMPROVEMENT)
-		CascadeSum::addInfo(InfoRepo<CvImprovementInfo>::get().get((int)getImprovementType()), CSC_PLOT, iChanMask, f, p, &ec);
-	if (getRouteType() != NO_ROUTE)
-		CascadeSum::addInfo(InfoRepo<CvRouteInfo>::get().get((int)getRouteType()), CSC_PLOT, iChanMask, f, p, &ec);
-	if (getBonusType() != NO_BONUS)
-		CascadeSum::addInfo(InfoRepo<CvBonusInfo>::get().get((int)getBonusType()), CSC_PLOT, iChanMask, f, p, &ec);
-}
-
-// The actual fresh yield sum -- run lazily by the CvDerivedCache when dirty (so the expensive sum happens once per
-// change-then-read, not per change and never per read). const: it writes only the cache's out-array.
-void CvPlot::recomputeYieldInto(short* aiOut) const
-{
-	if (!area()) { for (int i = 0; i < NUM_YIELD_TYPES; ++i) aiOut[i] = 0; return; }
-
-	// The building->improvement keyed buff is summed FRESH over the working city's ACTIVE buildings (the squirrelBanana
-	// treatment for the keyed channel) instead of read from the stale getImprovementYieldChange cache, which the
-	// "buildings buff a yield on an improvement" feature is intentionally not carried by. Everything else = calculateYield.
-	const CvCity* pWC = getWorkingCity();
-	const ImprovementTypes eImp = getImprovementType();
-	const bool bKeyed = pWC != NULL && eImp != NO_IMPROVEMENT && (isRoute() || !isImpassable(pWC->getTeam()));
-
-	int aiFreshImp[NUM_YIELD_TYPES];
-	for (int j = 0; j < NUM_YIELD_TYPES; ++j) aiFreshImp[j] = 0;
-	if (bKeyed)
-	{
-		// ACTIVE per the CASCADE operating-building set (present ∧ non-dormant ∧ non-obsolete) -- the single source
-		// of the dormancy verdict ([DEC-calc-zero-ride-in]: the engine's isDisabledBuilding verdict is the
-		// camouflaged ride-in this replaces; where the two disagree, the cascade's rule-derived verdict is the
-		// ruled-correct one -- the stale-event-state class the cutover repairs).
-		const OperatingBuildings& kOps = EnablerKernel::operatingBuildings(pWC);
-		foreach_(const BuildingTypes eB, pWC->getHasBuildings())
+		if (iOldYield != iNewYield)
 		{
-			if (kOps.active.find((int)eB) == kOps.active.end()) continue;
-			foreach_(const ImprovementArray& pr, GC.getBuildingInfo(eB).getImprovementYieldChanges())
-				if ((ImprovementTypes)pr.first == eImp)
-				{
-					for (int j = 0; j < NUM_YIELD_TYPES; ++j) aiFreshImp[j] += pr.second[j];
-					break;
-				}
+			FASSERT_NOT_NEGATIVE(iNewYield);
+
+			m_aiYield[iI] = iNewYield;
+
+			if (bWorked)
+			{
+				pWorkingCity->changePlotYield((YieldTypes)iI, iNewYield - iOldYield);
+			}
+			bChange = true;
 		}
 	}
-	for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+	if (bChange)
 	{
-		int iY = calculateYield((YieldTypes)i);
-		if (bKeyed)
+		if (pWorkingCity)
 		{
-			iY -= pWC->getImprovementYieldChange(eImp, (YieldTypes)i);   // drop the stale cache contribution
-			iY += aiFreshImp[i];                                         // add the fresh active-buildings sum
+			pWorkingCity->AI_setAssignWorkDirty(true);
 		}
-		aiOut[i] = (short)(iY < 0 ? 0 : iY);
+		updateSymbols();
 	}
 }
 
@@ -8322,12 +8211,7 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 
 	int iYield = GC.getImprovementInfo(eImprovement).getYieldChange(eYield);
 
-	// owner ruling 2026-06-27: an improvement's RiverSideYieldChange ("next to a river" bonus) applies on ANY plot
-	// with a river crossing -- matching the native base river bonus (recalculateBaseYield adds YieldInfo.getRiverChange
-	// when getRiverCrossingCount()>0) -- NOT just the cardinal-edge isRiverSide(). Legacy's isRiverSide gate missed
-	// diagonal-river plots, so the improvement bonus failed to stack on the base river bonus there; this makes it
-	// consistent (the bonus now lands wherever the base river commerce does).
-	if (getRiverCrossingCount() > 0)
+	if (isRiverSide())
 	{
 		iYield += GC.getImprovementInfo(eImprovement).getRiverSideYieldChange(eYield);
 	}
@@ -8401,7 +8285,6 @@ int CvPlot::calculateImprovementYieldChange(ImprovementTypes eImprovement, Yield
 int CvPlot::calculateYield(YieldTypes eYield, bool bDisplay) const
 {
 	PROFILE_FUNC();
-
 
 	if (bDisplay && GC.getGame().isDebugMode())
 	{
@@ -8916,14 +8799,18 @@ void CvPlot::setPlotGroup(PlayerTypes ePlayer, CvPlotGroup* pNewValue, bool bRec
 		{
 			pCity = getPlotCity();
 
-			// The member cities hold NO bonus mirror (getNumBonuses RELAYS onto the group), so a membership change
-			// needs no count transfer -- the relay reads the new group by construction. The legacy crossing EFFECTS
-			// (processBonus) reconcile across the jump via the deferral bracket below: the snapshot captures the OLD
-			// group's totals, endDeferredPlotGroupBonusCalculation reconciles against the NEW group's.
 			if (ePlayer == getOwner())
 			{
 				GET_PLAYER(getOwner()).startDeferredPlotGroupBonusCalculation();
 				updatePlotGroupBonus(false);
+			}
+
+			if (pOldPlotGroup != NULL && pCity != NULL && pCity->getOwner() == ePlayer)
+			{
+				for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
+				{
+					pCity->changeNumBonuses((BonusTypes)iI, -pOldPlotGroup->getNumBonuses((BonusTypes)iI));
+				}
 			}
 		}
 
@@ -8938,11 +8825,13 @@ void CvPlot::setPlotGroup(PlayerTypes ePlayer, CvPlotGroup* pNewValue, bool bRec
 
 		if (bRecalculateEffect)
 		{
-			// #430 NETWORK MEMBERSHIP (trigger #3): this city's OWN center plot moved to a different plot-group
-			// (merge/split), so its whole network resource set changed. Owner-gated -- a group change for a NON-owner
-			// player over this plot doesn't touch the city's network access. Announce it so the cache re-evals connection:trade.
-			if (pCity != NULL && pCity->getOwner() == ePlayer)
-				emitCityNetworkChanged((int)pCity->getOwner(), pCity->getID());
+			if (pCity != NULL && getPlotGroup(ePlayer) != NULL && pCity->getOwner() == ePlayer)
+			{
+				for (int iI = 0; iI < GC.getNumBonusInfos(); ++iI)
+				{
+					pCity->changeNumBonuses((BonusTypes)iI, getPlotGroup(ePlayer)->getNumBonuses((BonusTypes)iI));
+				}
+			}
 			if (ePlayer == getOwner())
 			{
 				updatePlotGroupBonus(true);
@@ -8971,7 +8860,7 @@ void CvPlot::updatePlotGroup()
 				updatePlotGroup((PlayerTypes)iI);
 			}
 		}
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GlobeLayer_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
 		m_bPlotGroupsDirty = false;
 	}
 }
@@ -9252,12 +9141,6 @@ void CvPlot::changeVisibilityCount(TeamTypes eTeam, int iChange, InvisibleTypes 
 			{
 				logEngine(2, "[ENG/viscap] team=%d plot=(%d,%d) count=%d change=%d - negative visibility count capped to 0",
 					eTeam, getX(), getY(), m_aiVisibilityCount[eTeam], iChange);
-				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_ENGINE, ENG_VISCAP, 2)
-					.addI(ENGF_team,   (int)eTeam)
-					.addI(ENGF_x,      getX())
-					.addI(ENGF_y,      getY())
-					.addI(ENGF_count,  m_aiVisibilityCount[eTeam])
-					.addI(ENGF_change, iChange));
 				m_aiVisibilityCount[eTeam] = 0;
 			}
 		}
@@ -9467,7 +9350,7 @@ void CvPlot::setRevealedOwner(TeamTypes eTeam, PlayerTypes eNewValue)
 
 			if (GC.IsGraphicsInitialized())
 			{
-				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GlobeLayer_DIRTY_BIT), true);
+				gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
 
 				gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
 			}
@@ -9751,8 +9634,8 @@ void CvPlot::setRevealed(const TeamTypes eTeam, const bool bNewValue, const bool
 			}
 			updateVisibility();
 
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(MinimapSection_DIRTY_BIT), true);
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GlobeLayer_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(MinimapSection_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
 		}
 
 		if (bNewValue)
@@ -10513,13 +10396,10 @@ void CvPlot::updateFlagSymbol()
 
 CvUnit* CvPlot::getCenterUnit(const bool bForced) const
 {
-	CvUnit* pAnswer = m_pCenterUnit;
-	if (!pAnswer && bForced)
-	{
-		const CLLNode<IDInfo>* pUnitNode = headUnitNode();
-		pAnswer = pUnitNode ? ::getUnit(pUnitNode->m_data) : NULL;
-	}
-	return pAnswer;
+	if (m_pCenterUnit || !bForced) return m_pCenterUnit;
+
+	const CLLNode<IDInfo>* pUnitNode = headUnitNode();
+	return pUnitNode ? ::getUnit(pUnitNode->m_data) : NULL;
 }
 
 void CvPlot::updateCenterUnit()
@@ -10537,11 +10417,6 @@ void CvPlot::updateCenterUnit()
 		m_pCenterUnit = NULL;
 		return;
 	}
-	// Center-unit is PURELY VISUAL and human-only (owner ruling): during the doTurn coalescing bracket the
-	// recompute DEFERS -- the plot is marked, the OLD center pointer is RETAINED (kept valid by removeUnit's
-	// targeted clear), and the bracket flush recomputes each touched plot ONCE. reloadEntity then fires only
-	// on plots whose center genuinely NET-changed across the slice. (The RETENTION is what makes this shape
-	// viable where NULL-then-flush was not: an interim NULL forced a reload on every marked occupied plot.)
 	CvUnit* newCenterUnit = isActiveVisible(true) ? getPreferredCenterUnit() : NULL;
 	if (!newCenterUnit && gDLL->GetWorldBuilderMode())
 	{
@@ -10765,13 +10640,6 @@ void CvPlot::addUnit(CvUnit* pUnit, bool bUpdate)
 void CvPlot::removeUnit(CvUnit* pUnit, bool bUpdate)
 {
 	PROFILE_EXTRA_FUNC();
-	const bool bWasCenter = (m_pCenterUnit == pUnit);
-	if (bWasCenter)
-	{
-		// targeted dangling-guard: the deferred center-unit recompute RETAINS the old pointer across the
-		// doTurn bracket, so it must not outlive its unit -- clear exactly when the center unit leaves.
-		m_pCenterUnit = NULL;
-	}
 	if (pUnit->isCommanderReady())
 	{
 		countCommander(false, pUnit);
@@ -10798,16 +10666,6 @@ void CvPlot::removeUnit(CvUnit* pUnit, bool bUpdate)
 
 	if (bUpdate)
 	{
-		updateCenterUnit();
-		setFlagDirty(true);
-	}
-	else if (bWasCenter)
-	{
-		// The CENTER unit left on a no-update removal (cargo/grouped moves, kill paths): the guard above nulled
-		// m_pCenterUnit, and the exported CvPlot::getCenterUnit() has NO fallback -- a NULL center handed to the
-		// EXE loses the plot's single stack representative and every real entity draws atop the anchor (the
-		// stacked-render regression). ALWAYS re-derive: inside a doTurn coalesce bracket, mark the plot so the
-		// bracket flush recomputes it; outside, recompute immediately.
 		updateCenterUnit();
 		setFlagDirty(true);
 	}
@@ -11126,8 +10984,14 @@ void CvPlot::processArea(CvArea* pArea, int iChange)
 
 			if (!pCity->isReligiouslyLimitedBuilding(eTypeX))
 			{
-				// #430: area building health + happiness + free specialists ride the cascade (playerAreaEmpire /
-				// fsAreaAny fold); accumulators gone.
+				if (building.getAreaHealth() > 0)
+				{
+					pArea->changeBuildingGoodHealth(eOwner, building.getAreaHealth() * iChange);
+				}
+				else pArea->changeBuildingBadHealth(eOwner, building.getAreaHealth() * iChange);
+
+				pArea->changeBuildingHappiness(eOwner, building.getAreaHappiness() * iChange);
+				pArea->changeFreeSpecialist(eOwner, building.getAreaFreeSpecialist() * iChange);
 
 				for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 				{
@@ -11259,32 +11123,11 @@ void CvPlot::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvPlot", &m_eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_ePlotType);
 	WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_TERRAINS, &m_eTerrainType);
-	// #430 PROTOTYPE -- the read-driven reseed (event-spine.md the load-RESEED): the terrain DOMAIN event fires HERE,
-	// as the field deserializes off the stream, INSIDE the read -- never a later pass over already-populated plots
-	// (that pseudo-emit is banned, superseded-ideas #13). Coords (m_iX/m_iY) + owner (m_eOwner) are already read
-	// above. This is the ONE prototyped fact; the remaining reads follow the same in-read pattern.
-	emitTerrainChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eTerrainType);
-	// #430 reseed: plot OWNERSHIP as a change from unowned -> current (owner ruling: reseed change-shaped events as
-	// null -> current, exactly like a real acquisition). Only an OWNED plot has an ownership fact.
-	if (m_eOwner != NO_PLAYER)
-		emitPlotOwnerChanged(GC.getMap().plotNum(m_iX, m_iY), (int)NO_PLAYER, (int)m_eOwner);
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_FEATURES, &m_eFeatureType);
-	// #430 reseed (event-spine.md the load-RESEED): the plot-substrate DOMAIN events fire HERE as each field
-	// deserializes, INSIDE the read -- the same in-read pattern the terrain prototype above proved (never a later pass
-	// over already-populated plots, superseded-ideas #13). Present-gated: a plot with no feature/improvement/route has
-	// no fact to reseed, so nothing fires (emitting NO_* for every empty plot would be pure noise, not a fact).
-	if (m_eFeatureType != NO_FEATURE)
-		emitFeatureChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eFeatureType);
 
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_BONUSES, &m_eBonusType);
-	if (m_eBonusType != NO_BONUS)
-		emitPlotBonusChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eBonusType, 1);   // plot RESOURCE present (+1)
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_IMPROVEMENTS, &m_eImprovementType);
-	if (m_eImprovementType != NO_IMPROVEMENT)
-		emitImprovementChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eImprovementType);
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_ROUTES, &m_eRouteType);
-	if (m_eRouteType != NO_ROUTE)
-		emitRouteChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eRouteType);
 	WRAPPER_READ(wrapper, "CvPlot", &m_eRiverNSDirection);
 	WRAPPER_READ(wrapper, "CvPlot", &m_eRiverWEDirection);
 
@@ -11292,17 +11135,10 @@ void CvPlot::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvPlot", &m_plotCity.iID);
 	WRAPPER_READ(wrapper, "CvPlot", (int*)&m_workingCity.eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_workingCity.iID);
-	// #430 reseed: this plot is WORKED by a city -> the working-city link as a change from none -> current (owner
-	// ruling: null -> current). iOwner = the working city's owner; oldCity = -1 (none); newCity = its id.
-	if (m_workingCity.eOwner != NO_PLAYER)
-		emitWorkingCityChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_workingCity.eOwner, -1, m_workingCity.iID);
 	WRAPPER_READ(wrapper, "CvPlot", (int*)&m_workingCityOverride.eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_workingCityOverride.iID);
 
-	// m_aiYield is a recompute-only cache -- NOT serialized. SkipElement consumes its bytes from an OLD save (by name,
-	// so nothing after it shifts and the save still loads) and is a no-op on a new save that never wrote it. m_bYieldDirty
-	// is itself never serialized and stays true from construction, so the first getYield after load recomputes from
-	// current state -- never stale-from-save.
+	WRAPPER_READ_ARRAY(wrapper, "CvPlot", NUM_YIELD_TYPES, m_aiYield);
 
 	m_iActivePlayerSafeRangeCache = -1;
 	m_iActivePlayerSafeRangeCacheTestMoves = -1;
@@ -11685,6 +11521,8 @@ void CvPlot::read(FDataStreamBase* pStream)
 	}
 	// ! SAVEBREAK
 
+	//Example of how to Skip Element
+	//WRAPPER_SKIP_ELEMENT(wrapper, "CvPlot", m_bPeaks, SAVE_VALUE_ANY);
 	WRAPPER_READ_OBJECT_END(wrapper);
 
 	//	Zobrist characteristic hashes are not serialized so recalculate
@@ -11781,7 +11619,7 @@ void CvPlot::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvPlot", m_workingCityOverride.eOwner);
 	WRAPPER_WRITE(wrapper, "CvPlot", m_workingCityOverride.iID);
 
-	// m_aiYield is NOT written -- recompute-only cache (the read side SkipElements any copy left in an old save).
+	WRAPPER_WRITE_ARRAY(wrapper, "CvPlot", NUM_YIELD_TYPES, m_aiYield);
 
 	if (m_aiCulture.empty())
 	{
@@ -12069,10 +11907,6 @@ void CvPlot::setLayoutDirty(bool bDirty)
 		return;
 	}
 
-	if (bDirty)
-	{
-	}
-
 	if (isLayoutDirty() != bDirty)
 	{
 		m_bPlotLayoutDirty = bDirty;
@@ -12115,15 +11949,6 @@ bool CvPlot::isLayoutDirty() const
 
 bool CvPlot::isLayoutStateDifferent() const
 {
-	// A plot whose graphics CANNOT re-layout right now (paged out / out of viewport / pre-init) reports NO
-	// difference: the EXE's reconcile poll otherwise finds it "different" every frame and re-attempts the
-	// layout forever -- updatePlotBuilder refuses exactly these plots -- which is the measured bars-on FPS
-	// collapse after a turn's worked-flag churn (hundreds of off-screen plots left permanently different,
-	// zero DLL work, retried per frame). The worked state re-bakes when the plot pages back in / re-enters
-	// the viewport (the page-in rebuild renders the CURRENT worked state; the first in-view reconcile then
-	// completes normally).
-	if (!isGraphicsVisible(ECvPlotGraphics::FEATURE)) return false;
-
 	bool bSame = true;
 	// is worked
 	bSame &= m_bLayoutStateWorked == isBeingWorked();

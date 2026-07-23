@@ -39,19 +39,10 @@ worldWellbeing (game-created projects' happiness/health.world = getWorldHappines
 keeps its NPC (barbarian) negative-clamp. CvPlayer::getLargestCityHappiness is DELETED ENTIRELY (its sole consumer
 was CvCity::getLargestCityHappiness, re-pointed to CascadeWellbeing::largestCityWellbeing -> hap.iLargest, which
 already applies the population-rank gate at fill). The 8 change* changers + their processCivics / processTrait /
-CvTeam::changeProjectCount trigger sites are gone; the four AI_makeAssignWorkDirty riders drop (the value is read
 fresh, and the broad civic/trait/project recompute re-dirties via sibling change*/AI_makeProductionDirty). The
 CvHttpServer /computed wellbeing/health/happiness decomposition rows are KEPT (they now read the re-pointed
 cascade getters). Old-save tags drain by name below (no WRAPPER_SKIP_ELEMENT).
 
-CvPlayer::m_iCivicHappiness              (int)
-CvPlayer::m_iCivicHealth                 (int)
-CvPlayer::m_iCivilizationHealth          (int)
-CvPlayer::m_iLargestCityHappiness        (int)
-CvPlayer::m_iProjectHappiness            (int)
-CvPlayer::m_iProjectHealth               (int)
-CvPlayer::m_iWorldHappiness              (int)
-CvPlayer::m_iWorldHealth                 (int)
 
 The per-commerce happiness pool (A9): CvCity::getCommerceHappinessPer -> CascadeAccumulator::commerceHappinessPer,
 a bare fetch of the city package's cascade-gathered pool (CommerceInfo iInitialHappiness seed + the buildings'
@@ -60,16 +51,13 @@ processBuilding feed are deleted (DEC-accumulator-cut-uniform). The changer's AI
 to the surviving processBuilding trigger site. getCommerceHappinessByType/getCommerceHappiness and every AI /
 Python / HTTP consumer are unchanged: the accessor reduces /100, so callers keep their legacy x1 arithmetic.
 
-CvCity::m_aiCommerceHappinessPer         (int array, NUM_COMMERCE_TYPES)
 
 Building obsoletion is DERIVED, not stored (owner ruling): the team already owns the tech list, so
-CvTeam::isObsoleteBuilding computes it -- the team holds the building's own obsoleting tech, OR its
 special-building group's (an OR, so the two sources are idempotent by construction). The stored counter and its
 setHasTech maintenance loop are deleted; every consumer reads the same predicate and is unchanged. The counter
 was double-incremented for a grouped member once the group getter went live, which is precisely the failure a
 stored derived value permits and a computed one cannot ([DEC-accumulator-cut-uniform], [DEC-derived-never-trusted]).
 
-CvTeam::m_paiObsoleteBuildingCount       (int class-array, per BuildingTypes)
 ========================
 
 ========================
@@ -83,7 +71,6 @@ processLoadedSpecialUnit -> markDirty), and the read/write are gone; the never-s
 The mid-combat sea-pillage suppress (was changeExtraWithdrawal(-prob)/restore) is now a within-frame transient flag
 (m_bSuppressWithdrawal, NOT serialized) honored by withdrawalProbability().
 
-CvUnit::m_iExtraWithdrawal                (int)
 ========================
 
 ========================
@@ -99,13 +86,6 @@ markDirty(UPK_ALL) per apply loop; the never-serialized cache re-derives at load
 LIVE commander/commodore fold + std::max(0,·) clamp; the enemy/neutral/friendly heal getters keep the fold (no clamp,
 also reused as spy-mission strengths); sameTile/adjacentTile are raw cache reads.
 
-CvUnit::m_iExtraFirstStrikes             (int)
-CvUnit::m_iExtraChanceFirstStrikes       (int)
-CvUnit::m_iExtraEnemyHeal                (int)
-CvUnit::m_iExtraNeutralHeal              (int)
-CvUnit::m_iExtraFriendlyHeal             (int)
-CvUnit::m_iSameTileHeal                  (int)
-CvUnit::m_iAdjacentTileHeal              (int)
 ========================
 
 ========================
@@ -122,11 +102,6 @@ commander/commodore + national + local-city folds + clamps) via MMKernel::sumUni
 are gone -- consolidated into the existing markDirty(UPK_ALL) per apply loop; the never-serialized cache re-derives
 at load. (Collateral: only the damage member migrated; the limit/maxUnits/protection siblings stay legacy.)
 
-CvUnit::m_iExtraIntercept                 (int)
-CvUnit::m_iExtraEvasion                   (int)
-CvUnit::m_iExtraCollateralDamage          (int)
-CvUnit::m_iExtraCaptureProbabilityModifier (int)
-CvUnit::m_iExtraCaptureResistanceModifier (int)
 ========================
 
 ========================
@@ -146,26 +121,10 @@ applies its combat percent to the transport; SPECIALUNIT is not deposit-ported) 
 getExtraCombatPercent by walking the transport's cargo -- so its changer + processLoadedSpecialUnit fold are gone too
 (the load/unload path refreshes the transport's combat-stat UI via setInfoBarDirty).
 
-CvUnit::m_iExtraCombatPercent              (int)
-CvUnit::m_iExtraCityAttackPercent          (int)
-CvUnit::m_iExtraCityDefensePercent         (int)
-CvUnit::m_iExtraHillsAttackPercent         (int)
-CvUnit::m_iExtraHillsDefensePercent        (int)
-CvUnit::m_iExtraAttackCombatModifier       (int)
-CvUnit::m_iExtraDefenseCombatModifier      (int)
-CvUnit::m_iExtraVSBarbs                    (int)
-CvUnit::m_iExtraReligiousCombatModifier    (int)
-CvUnit::m_iExtraDamageModifier             (int)
-CvUnit::m_iExtraUnnerve                    (int)
-CvUnit::m_iExtraEnclose                    (int)
-CvUnit::m_iExtraLunge                      (int)
-CvUnit::m_iExtraDynamicDefense             (int)
-CvUnit::m_iExtraStealthCombatModifier      (int)
 ========================
 
 ========================
 2026-07-19 — #430 F4 unit-plane (BASE-strength group): the two stored per-unit base-strength accumulators are removed.
-CvUnit::getExtraStrength / getExtraStrengthModifier now read the cascade unit self-accumulator
 (m_cascadeUnitPackages.{strBaseFlat,strSizeMod}, gathered on-dirty from the held-set: held promotions + held
 unit-combats, DELTA-ONLY -- the baseCombatStr*PreCheck consumers add m_iBaseCombat + apply the clamp / ×(100+mod)/100
 size scaling) via MMKernel::sumUnit "strength.unit"."flat" and "strength.unit.sizeModifier"."percent" (the poco load
@@ -177,14 +136,11 @@ has zero authorings today (the curator's emit_sizematters writes it into a `size
 strength.unit.sizeModifier.percent -- a pre-existing curator/loader address mismatch, out of scope here; the gather
 matches the loader address, so it stays 0 = legacy 0 and self-corrects if the curator is fixed).
 
-CvUnit::m_iExtraStrength                   (int)
-CvUnit::m_iExtraStrengthModifier           (int)
 ========================
 
 ========================
 2026-07-19 — #430 F4 unit-plane (UPKEEP, lands WITH F4 per fixed-point-conformance.md): the per-unit base-magnitude
 upkeep chain migrates onto the cascade; the percent modifier + SizeMatters + empire upkeep mods stay legacy.
-CvUnit::getExtraUpkeep100 now reads the cascade unit self-accumulator (m_cascadeUnitPackages.extraUpkeep100,
 UPK_UPKEEP) gathered on-dirty from the held-set (held promotions + held unit-combats) via MMKernel::sumUnit100
 "upkeep.unit.extra"."flat" -- x100-NATIVE (the JSON holds the curator-descaled human; sumUnit100 re-applies the x100
 to match the legacy m_iExtraUpkeep100). CvUnit::getUpkeep100 is now a COMPUTED accessor:
@@ -197,10 +153,6 @@ a player markUnitUpkeepDirty; the percent modifier keeps changeUpkeepModifier). 
 NON-MUTATING (calcFinalUnitUpkeepFrom prices a hypothetical bucket, no temp add/restore). The never-serialized caches
 re-derive at load (dirty-on-construct/reset).
 
-CvUnit::m_iExtraUpkeep100                  (int)
-CvUnit::m_iUpkeep100                       (int)
-CvPlayer::m_iUnitUpkeepCivilian100         (int64_t)
-CvPlayer::m_iUnitUpkeepMilitary100         (int64_t)
 ========================
 
 ========================
@@ -211,12 +163,6 @@ fully removed (no member, no serialization); the changeFreeSpecialist(Count) pro
 non-derivable one-shot store (m_paiFreeSpecialistCountUnattributed -- settled GP / MISSION_JOIN) is KEPT and still
 applies its specialist effects at placement.
 
-CvCity::m_iFreeSpecialist                (int)
-CvCity::m_paiFreeSpecialistCount         (int array, per SpecialistTypes)
-CvArea::m_aiFreeSpecialist               (int array, per player)
-CvPlayer::m_iFreeSpecialist              (int)
-CvPlayer::m_paiFreeSpecialistCount       (int array, per SpecialistTypes)
-CvTeam::m_paiFreeSpecialistCount         (int array, per SpecialistTypes)
 ========================
 
 ========================
@@ -224,8 +170,6 @@ CvTeam::m_paiFreeSpecialistCount         (int array, per SpecialistTypes)
 serialization). m_aiFreeCityCommerce keeps a transitional WRAPPER_SKIP_ELEMENT too (belt-and-suspenders during
 mechanism rollout); m_aiBaseYieldRate is the .txt-ONLY test case (its getter reads the plot-yield sum from source).
 
-CvPlayer::m_aiFreeCityCommerce           (int array, NUM_COMMERCE_TYPES)
-CvCity::m_aiBaseYieldRate                (int array, NUM_YIELD_TYPES)
 ========================
 
 ========================
@@ -235,11 +179,6 @@ getExtraYield100 / getSpecialistYieldTotal / getSpecialistCommerce / getBuilding
 arrays had zero live readers; the cascade owns the value. m_aiSpecialistYieldTotal + m_aiSpecialistCommerce100
 were already skip-read (still written) -- now the writes are gone too. Old-save tags drain by name here.
 
-CvCity::m_aiExtraYield                   (int array, NUM_YIELD_TYPES)
-CvCity::m_aiSpecialistYieldTotal         (int array, NUM_YIELD_TYPES)
-CvCity::m_buildingExtraYield100          (int array, NUM_YIELD_TYPES)
-CvCity::m_aiSpecialistCommerce100        (int array, NUM_COMMERCE_TYPES)
-CvCity::m_buildingCommerceMod            (int array, NUM_COMMERCE_TYPES)
 ========================
 
 ========================
@@ -249,9 +188,6 @@ getBuildingBombardDefense / getExtraMinDefense read the cascade scalar slots (sc
 scBuildingBombardDefense / scDefenseMin) unconditionally; the *Legacy oracles + the processBuilding change*
 writers are gone. The stored building-defense value carried a known drift -- the cascade is the sole source.
 
-CvCity::m_iBuildingDefense               (int)
-CvCity::m_iBuildingBombardDefense        (int)
-CvCity::m_iExtraMinDefense               (int)
 ========================
 
 ========================
@@ -261,8 +197,6 @@ scGpNational; getNationalGreatPeopleRate reads the cascade trait sum (scGpNation
 changeBaseGreatPeopleRate changer + its Cy binding / WorldBuilder callers, and the m_iNationalGreatPeopleRate
 total-write (the per-unit map m_greatPeopleRateforUnit is kept -- no cascade home yet) are gone.
 
-CvCity::m_iBaseGreatPeopleRate           (int)
-CvPlayer::m_iNationalGreatPeopleRate     (int)
 ========================
 
 ========================
@@ -273,9 +207,6 @@ cascade feeds the commerce YIELD, the sliders split per channel per city). Delet
 CvPlayer changeCommerceRate, the city->player push, and the dirty flags. setCommerceDirty keeps the building-commerce
 dirty + rank-cache invalidation. (CvCity::m_abCommerceRateDirty was never serialized -- no ledger entry.)
 
-CvCity::m_aiCommerceRate                 (int array, NUM_COMMERCE_TYPES)
-CvPlayer::m_aiCommerceRate               (int array, NUM_COMMERCE_TYPES)
-CvPlayer::m_abCommerceDirty              (bool array, NUM_COMMERCE_TYPES)
 ========================
 
 ========================
@@ -289,10 +220,6 @@ and the AI_setAssignWorkDirty governor dirty, dropping only the retired accumula
 carried the modifier.md par.2b drift. NOTE: the area/player building-health rollups (CvArea/CvPlayer
 m_iBuildingGood/BadHealth) are a SEPARATE follow-on cut (playerAreaEmpire fold), not this entry.
 
-CvCity::m_iBuildingGoodHealth            (int)
-CvCity::m_iBuildingBadHealth             (int)
-CvCity::m_iBuildingGoodHappiness         (int)
-CvCity::m_iBuildingBadHappiness          (int)
 ========================
 
 ========================
@@ -304,22 +231,15 @@ feeders (CvPlayer + CvPlot ownership re-attribution) are gone. This completes th
 (city cut in the prior entry). The area/player building-HAPPINESS rollups (m_aiBuildingHappiness / player
 m_iBuildingHappiness) are a SEPARATE follow-on cut.
 
-CvArea::m_aiBuildingGoodHealth           (int array, MAX_PLAYERS)
-CvArea::m_aiBuildingBadHealth            (int array, MAX_PLAYERS)
-CvPlayer::m_iBuildingGoodHealth          (int)
-CvPlayer::m_iBuildingBadHealth           (int)
 ========================
 
 ========================
 2026-07-18 — #430 delete-driven legacy cut (area/player building-HAPPINESS rollups): the stored area (per-player)
 and empire building happiness accumulators (single signed) fully removed on both objects.
-CvArea::getBuildingHappiness and CvPlayer::getBuildingHappiness read the cascade playerAreaEmpire fold (happiness
 family, NET = iGood + iBad) via CascadeWellbeing::buildingHappinessArea / buildingHappinessEmpire; the changers and
 the processBuilding + CvPlot area/global-happiness feeders are gone. This COMPLETES the building wellbeing cluster
 (city health+happiness + area/player health + now area/player happiness — all on the cascade).
 
-CvArea::m_aiBuildingHappiness            (int array, MAX_PLAYERS)
-CvPlayer::m_iBuildingHappiness           (int)
 ========================
 
 ========================
@@ -331,10 +251,6 @@ updateFeatureHealth/updateFeatureHappiness rebuilders (city + the CvPlayer twin 
 CvCity/CvPlayer/CvPlot trigger sites are gone; calculateFeatureHealthPercent stays (the getAdditional* what-if reads
 it). Reads drain via WRAPPER_SKIP_ELEMENT; writes dropped.
 
-CvCity::m_iFeatureGoodHealth             (int)
-CvCity::m_iFeatureBadHealth              (int)
-CvCity::m_iFeatureGoodHappiness          (int)
-CvCity::m_iFeatureBadHappiness           (int)
 ========================
 
 ========================
@@ -347,14 +263,6 @@ processSpecialist accumulation, updateExtraBuilding{Happiness,Health} rebuilders
 processBuilding / bulk-flush trigger sites, and the change* changers are gone. The player-side per-building
 m_extraBuildingHappiness/Health map is KEPT (live source: AI/UI/endpoint + the cascade extraB derivation).
 
-CvCity::m_iSpecialistGoodHealth          (int)
-CvCity::m_iSpecialistBadHealth           (int)
-CvCity::m_iSpecialistHappiness           (int)
-CvCity::m_iSpecialistUnhappiness         (int)
-CvCity::m_iExtraBuildingGoodHappiness    (int)
-CvCity::m_iExtraBuildingBadHappiness     (int)
-CvCity::m_iExtraBuildingGoodHealth       (int)
-CvCity::m_iExtraBuildingBadHealth        (int)
 ========================
 
 ========================
@@ -367,10 +275,6 @@ bigot). The city + player updateReligionHappiness rebuilders, the change{State,N
 and all their init/civic/trait/recalc feeders + trigger sites are gone. (The building-fed per-religion
 m_paiStateReligionHappiness -- family b -- is a SEPARATE follow-on, not this entry.)
 
-CvCity::m_iReligionGoodHappiness         (int)
-CvCity::m_iReligionBadHappiness          (int)
-CvPlayer::m_iStateReligionHappiness      (int)
-CvPlayer::m_iNonStateReligionHappiness   (int)
 ========================
 
 ========================
@@ -385,7 +289,6 @@ reads the classType+numInts header, consumes numInts ints; the separate CLASS_MA
 silently regardless). The changer's AI_setAssignWorkDirty rider is dropped (same as the pilot building/specialist
 happiness changers): the value is read fresh, and building add/remove re-dirties via processBuilding's other change*.
 
-CvCity::m_paiStateReligionHappiness      (class int array)
 ========================
 
 ========================
@@ -396,16 +299,6 @@ itself (river = the building HAS_RIVER `plots` deposit, ...) or folds it as an i
 Orphan tags drain as plain int-array elements (SkipElement SAVE_VALUE_TYPE_INT_ARRAY). getTradeYield is NOT cut --
 it is the isolated trade-route input package the cascade folds (modifier.md par.2a), outside cascade derivation scope.
 
-CvCity::m_aiRiverPlotYield                (int array)
-CvCity::m_aiBaseYieldPerPopRate           (int array)
-CvCity::m_aiCorporationYield              (int array)
-CvCity::m_aiExtraSpecialistYield          (int array)
-CvCity::m_aiReligionCommerce              (int array)
-CvCity::m_aiCorporationCommerce           (int array)
-CvCity::m_aiExtraSpecialistCommerce       (int array)
-CvCity::m_aiBuildingCommerce              (int array)
-CvCity::m_aiBuildingCommerceTechChange    (int array)
-CvCity::m_commercePerPopFromBuildings     (int array)
 ========================
 
 ========================
@@ -416,14 +309,6 @@ NONE of these getters (verified); they fed the now-orphaned legacy sub-getters +
 0 (exposed) and the accumulators + changers + trait/civic/building feeders are deleted. Orphans drain as plain
 int-array elements (m_paiFeatureHappiness as a class int array).
 
-CvPlayer::m_aiGoldenAgeYield              (int array)
-CvPlayer::m_aiGoldenAgeCommerce           (int array)
-CvPlayer::m_aiFreeCityYield               (int array)
-CvPlayer::m_aiSpecialistExtraYield        (int array)
-CvPlayer::m_aiSpecialistExtraCommerce     (int array)
-CvPlayer::m_aiStateReligionBuildingCommerce (int array)
-CvPlayer::m_extraCommerce                 (int array)
-CvPlayer::m_paiFeatureHappiness           (class int array)
 ========================
 
 ========================
@@ -436,52 +321,18 @@ its own bucket regardless of source" ruling. getExtraTechHappinessTotal/HealthTo
 (building-tech only -- no double-count with the specialist line). The per-tech maps used a decorated
 variable-length format (Size + N x Type/Value); those decorated tags drain by name below.
 
-CvCity::m_iExtraTechSpecialistHappiness   (int)
-CvCity::m_iExtraTechSpecialistHealth      (int)
-CvCity::m_iExtraBuildingHappinessFromTech (int)
-CvCity::m_iExtraBuildingHealthFromTech    (int)
-CvCity::BuildingHappinessFromTechSize     (decorated short)
-CvCity::BuildingHappinessFromTechType     (decorated short, per entry)
-CvCity::BuildingHappinessFromTechValue    (decorated int, per entry)
-CvCity::BuildingHealthFromTechSize        (decorated short)
-CvCity::BuildingHealthFromTechType        (decorated short, per entry)
-CvCity::BuildingHealthFromTechValue       (decorated int, per entry)
 ========================
 
 ========================
 2026-07-02 — #430 capability cut (CvTeam): the empire-capability counters retired;
 the getters derive from CascadeCapabilities (the cascade union). Skips live in CvTeam::read.
 
-CvTeam::m_iExtraWaterSeeFromCount        (int)
-CvTeam::m_iMapTradingCount               (int)
-CvTeam::m_iTechTradingCount              (int)
-CvTeam::m_iGoldTradingCount              (int)
-CvTeam::m_iCanPassPeaksCount             (int)
-CvTeam::m_iMoveFastPeaksCount            (int)
-CvTeam::m_iCanFoundOnPeaksCount          (int)
-CvTeam::m_iRebaseAnywhereCount           (int)
-CvTeam::m_iEmbassyTradingCount           (int)
-CvTeam::m_iLimitedBordersTradingCount    (int)
-CvTeam::m_iCanFarmDesertCount            (int)
-CvTeam::m_iOpenBordersTradingCount       (int)
-CvTeam::m_iDefensivePactTradingCount     (int)
-CvTeam::m_iPermanentAllianceTradingCount (int)
-CvTeam::m_iVassalTradingCount            (int)
-CvTeam::m_iBridgeBuildingCount           (int)
-CvTeam::m_iIrrigationCount               (int)
-CvTeam::m_iIgnoreIrrigationCount         (int)
-CvTeam::m_iWaterWorkCount                (int)
-CvTeam::m_iRiverTradeCount               (int)
-CvTeam::m_paiTerrainTradeCount           (int class-array, REMAPPED_CLASS_TYPE_TERRAINS)
 ========================
 
 ========================
 2026-07-02 — #430 capability cut, flip wave #2 (commerce sliders + hasLanguage): the sliders and the
 needLanguage heritage gate derive from CascadeCapabilities. Skips live in CvTeam::read / CvPlayer::read.
 
-CvTeam::m_aiCommerceFlexibleCount        (int array, NUM_COMMERCE_TYPES)
-CvPlayer::m_aiCommerceFlexibleCount      (int array, NUM_COMMERCE_TYPES)
-CvPlayer::m_bHasLanguage                 (bool)
 ========================
 
 ========================
@@ -489,10 +340,8 @@ CvPlayer::m_bHasLanguage                 (bool)
 not a stored/promotion-fed count. The accumulator + its changer + the two apply sites were removed; the field's
 read is now a WRAPPER_SKIP_ELEMENT (drains old saves), the write deleted.
 
-CvUnit::m_iAnimalIgnoresBordersCount     (int)
 ========================
 
-CvCity::m_paiFreeBonus                   (class int array, BONUSES)
 ========================
 The old MIXED free-bonus ledger (building provides + Python event/WB grants in one serialized array). Retired
 2026-07-15 (no-serialized-caches): the building part is COMPUTED from the processed buildings' provides; the
@@ -518,14 +367,12 @@ rebuild (CvGame::onFinalInitialized, updatePlotGroups(reInitialize)) discards th
 re-colors from current state. The player plot-group array is a POSITIONAL streamable block (not name-skippable),
 so its bytes are still read-drained and its write KEPT; both retire together at the next save-compat break.
 
-CvCity::m_vDisabledBuildings (dormancy flags)
 ========================
 Still read AND written -- but no longer the verdict: it is the PROCESSED-STATE baseline keying the still-
 serialized legacy effect accumulators. The verdict is the enabler operate fixpoint (checkBuildings applies it;
 the load-end cross-city fixpoint reconciles the baseline). The read retires WITH the legacy effect-accumulator
 cluster at the modifier cut, not before (skipping it alone would double-process building effects at load).
 
-CvPlayer::m_ppaaiImprovementYieldChange (per-improvement yield arrays); CvTeam::m_ppaaiImprovementYieldChange
 ========================
 The keyed improvement-yield accumulators (civic/trait/building-global on the player; tech rows on the team) --
 the stored-accumulator drift class (modifier.md par.2b; the engine under-yielded on every improved plot vs the
@@ -536,7 +383,6 @@ event-grant store m_improvementYieldEvents (new tags ImprovementYieldEvents*, so
 Python wonder-event grants, e.g. TSUKIJI; pre-split grants on old saves are accepted drift, the freeBonusEvents
 precedent). The drains flush at the next save-compat break.
 
-CvPlayer::m_ppaaiSpecialistExtraYield; CvPlayer::m_ppaaiSpecialistExtraCommerce
 ========================
 The per-type specialist empire-boost accumulators -- the stored-accumulator drift class. Their building
 feeders were poco STUBS returning 0 (the boosts were curated onto the SPECIALISTS as conditioned empire
@@ -551,15 +397,6 @@ are replaced by the central drain here so the variables go fully dead. The bonus
 trait-display and combat-focus are fully-removed members (no member, no read, no write). m_paiNumBonuses (city) and
 m_aiYield (plot) are recompute-only derived caches (CvDerivedCache, never serialized, rebuilt on load) -- their old
 serialized tags are drained here.
-CvCity::m_iBonusGoodHealth
-CvCity::m_iBonusBadHealth
-CvCity::m_iBonusGoodHappiness
-CvCity::m_iBonusBadHappiness
-CvCity::m_paiNumBonuses
-CvPlayer::m_iArrestingUnit
-CvPlayer::m_iTraitDisplayCount
-CvPlot::m_aiYield
-CvUnit::m_bCombatFocus
 
 ========================
 2026-07-21 -- WRAPPER_SKIP_ELEMENT -> central soft-remove, wave 2 (derived caches only): the lingering per-object
@@ -572,15 +409,8 @@ tags, drained by exact name below.
 tag -- are NOT converted: a BRACKETED decorated tag does NOT match a savemigration entry (the normalized dictionary
 name differs from the source literal -- verified live: it silently fails to drain and guts CvPlayer::read), so their
 enum-remapping drain LOOPS stay in read(). Only plain named fields soft-remove; bracketed per-element tags cannot.)
-CvCity::m_iPowerCount
-CvCity::m_aiBonusYieldRateModifier
-CvCity::m_aiBonusCommerceRateModifier
-CvCity::m_aiBonusCommercePercentChanges
-CvPlotGroup::bonusesPresent
-CvPlotGroup::m_paiNumBonuses
 
 The per-turn PROVISIONS cut (the grants machine owns the per-turn apply): the full-heal ledger was a pure sum over
 the city's buildings (maintained only by processBuilding), so it is DERIVED -- the machine reads the composed
 grants.repeatable[] off the operating buildings instead. Plain named scalar, drained by exact name.
-CvCity::m_iNumUnitFullHeal
 ========================

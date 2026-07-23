@@ -1,26 +1,11 @@
-#include "CvArmy.h"
+﻿#include "CvArmy.h"
 #include "CvUnit.h"
 #include "CvSelectionGroup.h"
-#include "Defines/CvString.h"
-#include "AI/CvPlayerAI.h"
-#include "AI/BetterBTSAI.h"
-#include "Spine/CvEventSpine.h" // #430 logging consolidation: route GRP lines through the event spine (shadow)
+#include "CvString.h"
+#include "CvPlayerAI.h"
+#include "BetterBTSAI.h"
 
 #define NO_INDEX -1
-
-// ---------------------------------------------------------------------------
-// #430 logging: [GRP] army-level events emitted from CvArmy.cpp.
-// SD_GROUP is registered in CvSelectionGroupAI.cpp (one registrar for the domain).
-// Local integer values MUST match the GrpEvent / GrpField enums in CvSelectionGroupAI.cpp.
-namespace
-{
-	// GrpEvent aliases (must match CvSelectionGroupAI.cpp): GRP_SPLIT=0, GRP_ARMY=1, GRP_LEADER=2
-	enum { GRP_ARMY_ID = 1, GRP_LEADER_ID = 2 };
-	// GrpField aliases (must match CvSelectionGroupAI.cpp):
-	enum { GRPF_OWNER=0, GRPF_GROUP=1, GRPF_SEPARATED=2,
-		GRPF_ARMY=3, GRPF_MISSION=4, GRPF_LEADERUNIT=5, GRPF_X=6, GRPF_Y=7, GRPF_TARGETX=8, GRPF_TARGETY=9,
-		GRPF_LEADERGROUP=10 };
-}
 
 #ifdef CVARMY_BREAKSAVE
 
@@ -248,12 +233,6 @@ void CvArmy::doTurn()
         pLeaderGroup->getHeadUnit() ? pLeaderGroup->getHeadUnit()->getID() : -1,
         pLeaderPlot->getX(), pLeaderPlot->getY(),
         m_pTargetPlot ? m_pTargetPlot->getX() : -1, m_pTargetPlot ? m_pTargetPlot->getY() : -1);
-    eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GROUP, GRP_ARMY_ID, 2)
-        .addI(GRPF_OWNER, (int)getOwner()).addI(GRPF_ARMY, m_iID).addI(GRPF_MISSION, (int)m_eMission)
-        .addI(GRPF_LEADERUNIT, pLeaderGroup->getHeadUnit() ? pLeaderGroup->getHeadUnit()->getID() : -1)
-        .addI(GRPF_X, pLeaderPlot->getX()).addI(GRPF_Y, pLeaderPlot->getY())
-        .addI(GRPF_TARGETX, m_pTargetPlot ? m_pTargetPlot->getX() : -1)
-        .addI(GRPF_TARGETY, m_pTargetPlot ? m_pTargetPlot->getY() : -1));
 
     switch (m_eMission)
     {
@@ -516,8 +495,6 @@ void CvArmy::setLeader(CvSelectionGroup* pLeader)
         // [GRP/leader] -- army leader (group) assignment.
         logGroupAI(2, "[GRP/leader] owner=%d army=%d leaderGroup=%d",
             (int)getOwner(), m_iID, pLeader->getID());
-        eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GROUP, GRP_LEADER_ID, 2)
-            .addI(GRPF_OWNER, (int)getOwner()).addI(GRPF_ARMY, m_iID).addI(GRPF_LEADERGROUP, pLeader->getID()));
     }
     else
     {

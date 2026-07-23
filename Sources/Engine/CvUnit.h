@@ -5,11 +5,10 @@
 #ifndef CIV4_UNIT_H
 #define CIV4_UNIT_H
 
-#include "Infrastructure/CvDLLEntity.h"
+#include "CvDLLEntity.h"
 #include "CvGameObject.h"
 #include "CvProperties.h"
 #include "CvUnitComponents.h"
-#include "Cascade/CvCascadeScopePackages.h"   // #430 F4: CascadeUnitPackages -- the unit scope modifier packages (m_cascadeUnitPackages)
 
 #pragma warning( disable: 4251 )		// needs to have dll-interface to be used by clients of class
 
@@ -20,11 +19,6 @@ class CvSelectionGroup;
 class CvArtInfoUnit;
 class CvUnitInfo;
 class CvUnitSelectionCriteria;
-
-// The /computed/perf unit render-entity census (defined in CvUnit.cpp over its file-static counters): REAL engine
-// unit entities vs units riding the shared dummy -- the stacked-render / entity-accumulation observability read.
-int cvUnitRealEntityCount();
-int cvUnitDummyUsageCount();
 #ifdef USE_OLD_PATH_GENERATOR
 class FAStarNode;
 #endif
@@ -791,9 +785,6 @@ public:
 	int baseCombatStr() const;
 	int baseCombatStrNonGranular() const;
 	int baseCombatStrPreCheck() const;
-	// raw base combat (m_iBaseCombat) -- exposed so the diagnostic dump can decompose baseCombatStrPreCheck
-	// (owner ruling 2026-06-20: visibility never justifies dropping a calc source; zero sensitive data in a game mod).
-	int getBaseCombat() const { return m_iBaseCombat; }
 	int baseAirCombatStrPreCheck() const;
 	float fbaseCombatStr() const;
 	/*** Dexy - Surround and Destroy START ****/
@@ -1095,29 +1086,42 @@ public:
 	int getExtraAirRange() const;
 	void changeExtraAirRange(int iChange);
 
-	int getExtraIntercept(bool bIgnoreCommanders = false,bool bIgnoreCommodores = false) const;   // #430 F4: cascade DELTA (changer retired)
+	int getExtraIntercept(bool bIgnoreCommanders = false,bool bIgnoreCommodores = false) const;
+	void changeExtraIntercept(int iChange);
 
-	int getExtraEvasion(bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;   // #430 F4: cascade DELTA (changer retired)
+	int getExtraEvasion(bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	void changeExtraEvasion(int iChange);
 
 	int getExtraFirstStrikes() const;
+	void changeExtraFirstStrikes(int iChange);
 
 	int getExtraChanceFirstStrikes() const;
+	void changeExtraChanceFirstStrikes(int iChange);
 
 	int getExtraWithdrawal(bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	// #430 F4: withdrawal is gathered on-dirty from the held-set (see cascadeRefreshUnitPackages); the mid-combat
-	// suppress is a transient flag honored by withdrawalProbability().
+	void changeExtraWithdrawal(int iChange);
 
 	//TB Combat Mods Start
-	// #430 F4 (strength situational group): getters read the cascade self-accumulator (UPK_STRENGTH); the change*
-	// changers are RETIRED (gathered on-dirty from the held-set via processPromotion/processUnitCombat markDirty).
 	int getExtraAttackCombatModifier (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	int getExtraDefenseCombatModifier (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	int getExtraVSBarbs (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	int getExtraReligiousCombatModifier(bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	int getExtraDamageModifier (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	void changeExtraAttackCombatModifier (int iChange);
 
+	int getExtraDefenseCombatModifier (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	void changeExtraDefenseCombatModifier (int iChange);
+
+	int getExtraVSBarbs (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	void changeExtraVSBarbs (int iChange);
+
+	int getExtraReligiousCombatModifier(bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	void changeExtraReligiousCombatModifier(int iChange);
+
+	int getExtraDamageModifier (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	void changeExtraDamageModifier (int iChange);
+
+	void changeExtraUpkeep100(const int iChange);
 	void changeUpkeepModifier(const int iChange);
 	void calcUpkeepMultiplierSM(const int iGroupOffset);
+	void calcUpkeep100();
+	void recalculateUnitUpkeep();
 	int getExtraUpkeep100() const;
 	int getUpkeepModifier() const;
 	int getUpkeepMultiplierSM() const;
@@ -1144,19 +1148,26 @@ public:
 	void changeFliesToMoveCount(int iChange);
 
 
-	// #430 F4 (strength situational group): getters read the cascade self-accumulator (UPK_STRENGTH); changers retired.
 	int getExtraUnnerve (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	int getExtraEnclose (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	int getExtraLunge (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
-	int getExtraDynamicDefense (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	void changeExtraUnnerve (int iChange);
 
-	// #430 F4 (base-strength): reads the cascade self-accumulator (UPK_STRENGTH, strength.unit.flat); changer retired.
+	int getExtraEnclose (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	void changeExtraEnclose (int iChange);
+
+	int getExtraLunge (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	void changeExtraLunge (int iChange);
+
+	int getExtraDynamicDefense (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
+	void changeExtraDynamicDefense (int iChange);
+
 	int getExtraStrength () const;
+	void changeExtraStrength (int iChange);
 
 	int getSMStrength () const;
 	void setSMStrength ();
 
-	short getAnimalIgnoresBordersCount() const;   // BITMASK (owner 2026-07-11): ANIMAL_IGNORE_BORDERS|_IMPROVEMENTS|_CITIES bits, game-option-derived (no stored count)
+	int getAnimalIgnoresBordersCount() const;
+	void changeAnimalIgnoresBordersCount(int iChange);
 
 	int getOnslaughtCount() const;
 	bool mayOnslaught() const;
@@ -1170,27 +1181,38 @@ public:
 	void changeExtraPoisonProbabilityModifier (int iChange);
 	//TB Combat Mods End
 
-	int getExtraCollateralDamage() const;   // #430 F4: cascade DELTA (changer retired)
+	int getExtraCollateralDamage() const;
+	void changeExtraCollateralDamage(int iChange);
 
-	// #430 F4: the heal territory family (enemy/neutral/friendly/sameTile/adjacentTile) is cascade self-gathered
-	// on-dirty from the held-set -- the changers are retired; the getters read m_cascadeUnitPackages.
 	int getExtraEnemyHeal() const;
+	void changeExtraEnemyHeal(int iChange);
 
 	int getExtraNeutralHeal() const;
+	void changeExtraNeutralHeal(int iChange);
 
 	int getExtraFriendlyHeal() const;
+	void changeExtraFriendlyHeal(int iChange);
 
 	int getSameTileHeal() const;
+	void changeSameTileHeal(int iChange);
 
 	int getAdjacentTileHeal() const;
+	void changeAdjacentTileHeal(int iChange);
 
-	// #430 F4 (strength group): getters read the cascade self-accumulator (UPK_STRENGTH); changers retired. The general
-	// getExtraCombatPercent folds its loaded-special-unit cargo contribution LIVE at read (combatPercentSelf, private).
 	int getExtraCombatPercent() const;
+	void changeExtraCombatPercent(int iChange);
+
 	int getExtraCityAttackPercent() const;
+	void changeExtraCityAttackPercent(int iChange);
+
 	int getExtraCityDefensePercent() const;
+	void changeExtraCityDefensePercent(int iChange);
+
 	int getExtraHillsAttackPercent() const;
+	void changeExtraHillsAttackPercent(int iChange);
+
 	int getExtraHillsDefensePercent() const;
+	void changeExtraHillsDefensePercent(int iChange);
 
 	// WorkRateMod
 	int getWorkModifier() const;
@@ -1303,11 +1325,9 @@ public:
 
 	int getExtraUnitCombatModifier(UnitCombatTypes eIndex, const bool bCommander = true, const bool bCommodore = true) const;
 	void changeExtraUnitCombatModifier(UnitCombatTypes eIndex, int iChange);
-	bool canAcquirePromotion(PromotionTypes ePromotion, PromotionRequirements::flags requirements, int* piFailLeg = NULL) const;
+	bool canAcquirePromotion(PromotionTypes ePromotion, PromotionRequirements::flags requirements) const;
 	// Deprecated, use the one above that takes enum flags instead for increased readability.
-	// piFailLeg (diagnostic): set to the __LINE__ of the refusing check when the answer is false -- the
-	// /computed/enabler/promotions decomposition names the leg instead of a mirror guessing at the gate order
-	bool canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas = false, bool bEquip = false, bool bForLeader = false, bool bForOffset = false, bool bForFree = false, bool bForBuildUp = false, bool bForStatus = false, int* piFailLeg = NULL) const;
+	bool canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas = false, bool bEquip = false, bool bForLeader = false, bool bForOffset = false, bool bForFree = false, bool bForBuildUp = false, bool bForStatus = false) const;
 	//TB Combat Mods end
 	bool canAcquirePromotionAny() const;
 	bool isPromotionValid(PromotionTypes ePromotion, bool bFree = false, bool bKeepCheck = false) const;
@@ -1549,16 +1569,28 @@ protected:
 	int m_iExtraMoves;
 	int m_iExtraMoveDiscount;
 	int m_iExtraAirRange;
-	// #430 F4: m_bSuppressWithdrawal is the within-frame transient forcing 0 withdrawal during the sea-pillage
-	// counter-attack (honored by withdrawalProbability(); NOT serialized -- pure transient).
-	bool m_bSuppressWithdrawal;
+	int m_iExtraIntercept;
+	int m_iExtraEvasion;
+	int m_iExtraFirstStrikes;
+	int m_iExtraChanceFirstStrikes;
+	int m_iExtraWithdrawal;
 	//TB Combat Mods Begin
+	int m_iExtraAttackCombatModifier;
+	int m_iExtraDefenseCombatModifier;
+	int m_iExtraVSBarbs;
+	int m_iExtraReligiousCombatModifier;
 	int m_iStampedeCount;
 	int m_iAttackOnlyCitiesCount;
 	int m_iIgnoreNoEntryLevelCount;
 	int m_iIgnoreZoneofControlCount;
 	int m_iFliesToMoveCount;
+	int m_iExtraUnnerve;
+	int m_iExtraEnclose;
+	int m_iExtraLunge;
+	int m_iExtraDynamicDefense;
+	int m_iExtraStrength;
 	int m_iSMStrength;
+	int m_iAnimalIgnoresBordersCount;
 	int m_iOnslaughtCount;
 	int m_iExtraSelfHealModifier;
 	int m_iExtraNumHealSupport;
@@ -1575,6 +1607,7 @@ protected:
 	int m_iDebugCount;
 	int m_iAssassinCount;
 	int m_iExtraStealthStrikes;
+	int m_iExtraStealthCombatModifier;
 	int m_iStealthDefenseCount;
 	int m_iOnlyDefensiveCount;
 	int m_iNoInvisibilityCount;
@@ -1605,6 +1638,9 @@ protected:
 	int m_iSMExtraCargoVolume;
 	int m_iSMCargoVolumeModifier;
 
+	int m_iExtraCaptureProbabilityModifier;
+	int m_iExtraCaptureResistanceModifier;
+
 	int m_iExtraBreakdownChance;
 	int m_iExtraBreakdownDamage;
 	int m_iExtraTaunt;
@@ -1613,11 +1649,13 @@ protected:
 	int m_iExtraCombatModifierPerVolumeMore;
 	int m_iExtraCombatModifierPerVolumeLess;
 	int m_iExtraMaxHP;
+	int m_iExtraStrengthModifier;
+	int m_iExtraDamageModifier;
 
-	// #430 F4: extra-upkeep is a cascade self-accumulator (m_cascadeUnitPackages.extraUpkeep100, UPK_UPKEEP) and
-	// getUpkeep100 is a computed accessor. Percent modifier + SizeMatters stay legacy.
+	int m_iExtraUpkeep100;
 	int m_iUpkeepModifier;
 	int m_iUpkeepMultiplierSM;
+	int m_iUpkeep100;
 
 	int m_iSMAssetValue;
 	int m_iSMPowerValue;
@@ -1634,13 +1672,22 @@ protected:
 	int m_iBaseDCMBombAccuracy;
 	int m_iBombardDirectCount;
 	//TB Combat Mods End
-	// #430 F4: collateral damage is a cascade self-accumulator (DELTA-only; collateralDamage() adds the type base on
-	// top). limit/maxUnits/protection siblings stay legacy members.
+	int m_iExtraCollateralDamage;
 	int m_iExtraBombardRate;
 	int m_iSMBombardRate;
 	int m_iSMAirBombBaseRate;
 	int m_iSMBaseWorkRate;
 	int m_iSMRevoltProtection;
+	int m_iExtraEnemyHeal;
+	int m_iExtraNeutralHeal;
+	int m_iExtraFriendlyHeal;
+	int m_iSameTileHeal;
+	int m_iAdjacentTileHeal;
+	int m_iExtraCombatPercent;
+	int m_iExtraCityAttackPercent;
+	int m_iExtraCityDefensePercent;
+	int m_iExtraHillsAttackPercent;
+	int m_iExtraHillsDefensePercent;
 
 	int m_iRevoltProtection;
 	int m_iCollateralDamageProtection;
@@ -1720,10 +1767,6 @@ public:
 protected:
 	// ! Dale
 
-	// #430 F4: this unit's OWN general combat percent -- the UPK_STRENGTH held-set sum + the live loaded-special-unit
-	// cargo fold. getExtraCombatPercent composes self + the one active leader's own value from this.
-	int combatPercentSelf() const;
-
 	int planBattle( CvBattleDefinition & kBattleDefinition ) const;
 	int computeUnitsToDie( const CvBattleDefinition & kDefinition, bool bRanged, BattleUnitTypes iUnit ) const;
 	bool verifyRoundsValid( const CvBattleDefinition & battleDefinition ) const;
@@ -1757,13 +1800,6 @@ protected:
 	// AIAndy: Properties
 	CvProperties m_Properties;
 public:
-	// #430 F4: the unit-scope modifier packages (the self-accumulator: source == target). Backed by
-	// CvDerivedCacheSet, gather-on-dirty, NEVER serialized (re-derives from the held promotion/unitcombat set at
-	// load). Public like CvCity::m_cascadeCityPackages so CascadeAccumulator::refreshUnitPackages can fill it.
-	mutable CascadeUnitPackages m_cascadeUnitPackages;
-	// The CvDerivedCacheSet refresh delegate: the gather math stays module-side (CascadeAccumulator).
-	void cascadeRefreshUnitPackages(int iMask) const;
-
 	CvProperties* getProperties();
 	const CvProperties* getPropertiesConst() const;
 
@@ -1837,9 +1873,11 @@ public:
 
 	int getExperiencefromWithdrawal(const int iWithdrawalProbability) const;
 
-	int captureProbabilityTotal() const;   // #430 F4: reads cascade DELTA + type base + folds (changer retired)
+	void changeExtraCaptureProbabilityModifier(int iChange);
+	int captureProbabilityTotal() const;
 
-	int captureResistanceTotal() const;    // #430 F4: reads cascade DELTA + type base + folds (changer retired)
+	void changeExtraCaptureResistanceModifier(int iChange);
+	int captureResistanceTotal() const;
 	int surroundedCaptureModifier() const;
 
 	void changeExtraBreakdownChance(int iChange);
@@ -1871,9 +1909,9 @@ public:
 	void setExtraCombatModifierPerVolumeLess(int iChange);
 	int combatModifierPerVolumeLessTotal() const;
 
-	// #430 F4 (base-strength): reads the cascade self-accumulator (UPK_STRENGTH, strength.unit.sizeModifier.percent);
-	// changer + setter retired (the setter had no callers).
 	int getExtraStrengthModifier() const;
+	void changeExtraStrengthModifier(int iChange);
+	void setExtraStrengthModifier(int iChange);
 
 	void checkCityAttackDefensesDamage(CvCity* pCity, const std::vector<UnitCombatTypes>& kDamagableUnitCombatTypes);
 
@@ -2207,8 +2245,8 @@ public:
 	void changeExtraStealthStrikes(int iChange);
 
 	int stealthCombatModifierTotal() const;
-	// #430 F4 (strength situational group): reads the cascade self-accumulator (UPK_STRENGTH); changer retired.
 	int getExtraStealthCombatModifier() const;
+	void changeExtraStealthCombatModifier(int iChange);
 
 	bool hasStealthDefense() const;
 	int getStealthDefenseCount() const;

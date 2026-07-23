@@ -1,40 +1,21 @@
 // CvDeal.cpp
 
 
-#include "Tools/FProfiler.h"
+#include "FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "AI/BetterBTSAI.h"
+#include "BetterBTSAI.h"
 #include "CvBuildingInfo.h"
 #include "CvBonusInfo.h"
-#include "CvCivicInfo.h"          // getCivicInfo(...) reads (unity-batch include exposure: own your includes)
-#include "CvCorporationInfo.h"    // getCorporationInfo(...) reads (ditto)
 #include "CvDeal.h"
-#include "UI/CvEventReporter.h"
-#include "AI/CvGameAI.h"
-#include "UI/CvGameTextMgr.h"
-#include "Defines/CvGlobals.h"
+#include "CvEventReporter.h"
+#include "CvGameAI.h"
+#include "CvGameTextMgr.h"
+#include "CvGlobals.h"
 #include "CvMap.h"
-#include "AI/CvPlayerAI.h"
+#include "CvPlayerAI.h"
 #include "CvPlot.h"
-#include "AI/CvTeamAI.h"
-#include "Spine/CvEventSpine.h" // #430 logging consolidation: shadow-emit [DIP/trade] through the event spine
-
-// #430 logging: CvDeal.cpp emits [DIP/trade] lines on the SD_DIPLO domain, which is registered and owns its prefix
-// table in CvPlayerAI.cpp. CvDeal.cpp only EMITS -- it must NOT re-register. DIP_TRADE_ID must match the DIP_TRADE
-// enum value defined in CvPlayerAI.cpp's anonymous namespace (11 = 12th entry, zero-based). Shadow discipline: the
-// legacy logDiploAI call is left intact; the spine emit runs alongside it.
-namespace
-{
-	// Mirror of DIP_TRADE from CvPlayerAI.cpp (must stay in sync if the DipEvent enum grows).
-	const int DIP_TRADE_ID = 11; // DIP_TRADE is the 12th DipEvent (0-based) in CvPlayerAI.cpp
-
-	// Field tags mirror DIPF_from/DIPF_to/DIPF_item/DIPF_data from CvPlayerAI.cpp's DipField enum.
-	const int DIPF_from_id = 1;  // DIPF_from  = 1
-	const int DIPF_to_id   = 15; // DIPF_to    = 15
-	const int DIPF_item_id = 2;  // DIPF_item  = 2
-	const int DIPF_data_id = 3;  // DIPF_data  = 3
-}
+#include "CvTeamAI.h"
 
 // Public Functions...
 
@@ -801,9 +782,6 @@ bool CvDeal::startTrade(TradeData trade, PlayerTypes eFromPlayer, PlayerTypes eT
 	// trace; pairs with the [DIP/cand]/[DIP/decision] valuation in CvPlayerAI).
 	logDiploAI(2, "[DIP/trade] from=%d to=%d item=%d data=%d",
 		(int)eFromPlayer, (int)eToPlayer, (int)trade.m_eItemType, trade.m_iData);
-	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_DIPLO, DIP_TRADE_ID, 2)
-		.addI(DIPF_from_id, (int)eFromPlayer).addI(DIPF_to_id, (int)eToPlayer)
-		.addI(DIPF_item_id, (int)trade.m_eItemType).addI(DIPF_data_id, trade.m_iData));
 
 	switch (trade.m_eItemType)
 	{

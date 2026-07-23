@@ -4,9 +4,9 @@
 #define CIV4_ARMY_H
 
 #include "CvArea.h"
-#include "AI/CvContractBroker.h"
-#include "AI/CvGameAI.h"
-#include "Defines/CvGlobals.h"
+#include "CvContractBroker.h"
+#include "CvGameAI.h"
+#include "CvGlobals.h"
 
 #ifdef CVARMY_BREAKSAVE
 

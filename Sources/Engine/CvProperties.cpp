@@ -7,21 +7,21 @@
 //
 //------------------------------------------------------------------------------------------------
 
-#include "Tools/FProfiler.h"
+#include "FProfiler.h"
 
 #include "CvGameCoreDLL.h"
 #include "CvCity.h"
 #include "CvGame.h"
 #include "CvGameObject.h"
-#include "Defines/CvGlobals.h"
+#include "CvGlobals.h"
 #include "CvInfos.h"
 #include "CvPlayer.h"
 #include "CvPlot.h"
 #include "CvProperties.h"
 #include "CvTeam.h"
 #include "CvUnit.h"
-#include "Infrastructure/CvXMLLoadUtility.h"
-#include "Tools/CheckSum.h"
+#include "CvXMLLoadUtility.h"
+#include "CheckSum.h"
 
 CvProperties::CvProperties()
 {

@@ -3,9 +3,7 @@
 #ifndef CvArea_h__
 #define CvArea_h__
 
-//#include "Defines/CvEnums.h"
-
-#include "Cascade/CvCascadeScopePackages.h"   // CascadeAreaPackages -- the #430 AREA scope packages
+//#include "CvEnums.h"
 
 class CvCity;
 class CvPlot;
@@ -89,11 +87,16 @@ public:
 	void changePopulationPerPlayer(PlayerTypes eIndex, int iChange);
 
 	int getBuildingGoodHealth(PlayerTypes eIndex) const;
+	void changeBuildingGoodHealth(PlayerTypes eIndex, int iChange);
 
 	int getBuildingBadHealth(PlayerTypes eIndex) const;
+	void changeBuildingBadHealth(PlayerTypes eIndex, int iChange);
 
 	int getBuildingHappiness(PlayerTypes eIndex) const;
+	void changeBuildingHappiness(PlayerTypes eIndex, int iChange);
 
+	int getFreeSpecialist(PlayerTypes eIndex) const;
+	void changeFreeSpecialist(PlayerTypes eIndex, int iChange);
 
 	int getPower(PlayerTypes eIndex) const;
 	void changePower(PlayerTypes eIndex, int iChange);
@@ -179,17 +182,14 @@ protected:
 
 	bool m_bWater;
 
-	// #430: the AREA scope's OWN packages (modifier.md 1 -- a scope owns its sums). AREA carries no yields,
-	// only modifiers; never serialized, dirty from birth like every other scope package.
-public:
-	mutable CascadeAreaPackages m_cascadeArea;
-	void cascadeRefreshArea(int iMask) const;   // the CacheSet's refresh delegate
-private:
-
 	int* m_aiUnitsPerPlayer;
 	int* m_aiAnimalsPerPlayer;
 	int* m_aiCitiesPerPlayer;
 	int* m_aiPopulationPerPlayer;
+	int* m_aiBuildingGoodHealth;
+	int* m_aiBuildingBadHealth;
+	int* m_aiBuildingHappiness;
+	int* m_aiFreeSpecialist;
 	int* m_aiPower;
 	int* m_aiBestFoundValue;
 	int* m_aiMaintenanceModifier;

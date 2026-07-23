@@ -8,15 +8,15 @@
 //------------------------------------------------------------------------------------------------
 
 
-#include "Tools/FProfiler.h"
+#include "FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "UI/CvGameTextMgr.h"
-#include "Defines/CvGlobals.h"
+#include "CvGameTextMgr.h"
+#include "CvGlobals.h"
 #include "CvInfos.h"
 #include "CvPropertyPropagator.h"
-#include "Infrastructure/CvXMLLoadUtility.h"
-#include "Tools/CheckSum.h"
+#include "CvXMLLoadUtility.h"
+#include "CheckSum.h"
 
 CvPropertyPropagator::CvPropertyPropagator() :
 									m_eProperty(NO_PROPERTY),

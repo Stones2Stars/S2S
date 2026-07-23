@@ -9,15 +9,11 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvPropertyManipulators.h"
-#include "Tools/FProfiler.h"
-#include "AI/BetterBTSAI.h"
-#include "AI/CvGameAI.h"
-#include "Defines/CvGlobals.h"
+#include "FProfiler.h"
+#include "BetterBTSAI.h"
+#include "CvGameAI.h"
+#include "CvGlobals.h"
 #include "CvInfos.h"
-#include "Enabler/CvEnablerKernel.h"        // F5: the operate-band reverse-index (thresholds + the targeted re-check)
-#include "Cascade/CvCascadeAccumulator.h"   // F5: cityPropertyBandChanged (operate re-check + building-active footprint)
-#include "AI/CvPlayerAI.h"                   // F5: GET_PLAYER (CvPlayerAI::getPlayer) + the per-player city walk
-#include "CvCity.h"                          // F5: pCity->plot()/getPropertiesConst()
 
 PropertySourceContext::PropertySourceContext(CvPropertySource* pSource, const CvGameObject* pObject) : m_pSource(pSource), m_pObject(pObject), m_iData1(0), m_iData2(0)
 {
@@ -461,55 +457,5 @@ void CvPropertySolver::doTurn()
 	gatherAndSolve();
 
 	m_apGlobalManipulators.clear();
-
-	doTurnBandWatch();   // F5: the values have settled -> detect operate-band threshold crossings, fire targeted re-checks
-}
-
-namespace {
-// The bracket of value v between the nearest operate-band thresholds: [largest threshold <= v, smallest threshold > v]
-// (INT_MIN / INT_MAX at the open ends). While v stays inside this bracket, NO band boundary is crossed -> no re-check.
-std::pair<int, int> ps_bracketOf(int v, const std::set<int>& thr)
-{
-	int lo = INT_MIN, hi = INT_MAX;
-	for (std::set<int>::const_iterator it = thr.begin(); it != thr.end(); ++it)
-	{
-		if (*it <= v) lo = *it; else { hi = *it; break; }
-	}
-	return std::make_pair(lo, hi);
-}
-} // namespace
-
-// F5: the WATERMARK tick (ran once, after each solve). For every live city x every property that has a requires.operate
-// band consumer, read the settled value and compare its threshold BRACKET to the stored window. Nothing happens until
-// the bracket CHANGES (the value moved past a band threshold) -- only THEN does it fire the targeted operate re-check
-// and slide the window. The first observation of a (city,property) seeds the window WITHOUT firing (LOAD already
-// established the correct initial dormancy via the full recompute; the watermark only catches subsequent crossings).
-void CvPropertySolver::doTurnBandWatch()
-{
-	const std::map<int, std::set<int> >& thresholds = EnablerKernel::propertyBandThresholds();
-	if (thresholds.empty()) return;   // no building authors a requires.operate PROPERTY band -> nothing to watch
-	for (int iP = 0; iP < MAX_PLAYERS; ++iP)
-	{
-		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iP);
-		if (!kPlayer.isAlive()) continue;
-		int iLoop;
-		for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
-		{
-			std::map<short, std::pair<int, int> >& windows = m_bandWindows[pCity->plot()];   // keyed by the city's stable plot
-			const CvProperties* pProps = pCity->getPropertiesConst();
-			for (std::map<int, std::set<int> >::const_iterator it = thresholds.begin(); it != thresholds.end(); ++it)
-			{
-				const int eProp = it->first;
-				const std::pair<int, int> bkt = ps_bracketOf(pProps->getValueByProperty((PropertyTypes)eProp), it->second);
-				std::map<short, std::pair<int, int> >::iterator w = windows.find((short)eProp);
-				if (w == windows.end()) { windows[(short)eProp] = bkt; continue; }   // first observation -> seed only
-				if (w->second != bkt)                                                // CROSSING
-				{
-					w->second = bkt;
-					CascadeAccumulator::cityPropertyBandChanged(pCity, eProp);
-				}
-			}
-		}
-	}
 }
 

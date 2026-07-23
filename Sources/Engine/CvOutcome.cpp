@@ -7,112 +7,28 @@
 //
 //------------------------------------------------------------------------------------------------
 
-#include "Tools/FProfiler.h"
+#include "FProfiler.h"
 
 #include "CvGameCoreDLL.h"
 #include "CvCity.h"
-#include "AI/CvCityAI.h"
-#include "Defines/CvGlobals.h"
+#include "CvCityAI.h"
+#include "CvGlobals.h"
 #include "CvBonusInfo.h"
 #include "CvInfos.h"
 #include "CvMap.h"
 #include "CvOutcome.h"
 #include "CvProperties.h"
-#include "AI/CvPlayerAI.h"
+#include "CvPlayerAI.h"
 #include "CvPlot.h"
-#include "Infrastructure/CvPython.h"
-#include "AI/CvTeamAI.h"
+#include "CvPython.h"
+#include "CvTeamAI.h"
 #include "CvUnit.h"
-#include "Infrastructure/CvXMLLoadUtility.h"
-#include "Python/CyUnit.h"
-#include "Python/CyPlot.h"
-#include "Tools/CheckSum.h"
-#include "AI/CvGameAI.h"
-#include "Infrastructure/IntExpr.h"
-#include "CvJsonCondition.h"            // #430: cascade condition tree (replaces the BoolExpr gates)
-#include "CvJsonConditionParse.h"       // cascadeParseCondition -- JSON -> CvJsonCondition
-#include "CvJsonParse.h"                 // jsonResolveId / jsonChildObj / picojson helpers
-#include "Conditions/CvConditionEval.h"       // cascadeEvalCondition + CvCascadeEvalCtx
-
-namespace
-{
-	// A clean outcome IntExpr value (json: `int` | `{base, random}`) -> the legacy IntExpr the getters evaluate.
-	// `Adapt*` is GONE from the data (pure-engine gamespeed scaling applied downstream); only Constant / Plus(Constant,Random) remain.
-	const IntExpr* jsonToIntExpr(const picojson::value& v)
-	{
-		if (v.is<double>())
-			return new IntExprConstant((int)v.get<double>());
-		if (v.is<picojson::object>())
-		{
-			const picojson::object& o = v.get<picojson::object>();
-			picojson::object::const_iterator b = o.find("base"), r = o.find("random");
-			const int iBase   = (b != o.end() && b->second.is<double>()) ? (int)b->second.get<double>() : 0;
-			const int iRandom = (r != o.end() && r->second.is<double>()) ? (int)r->second.get<double>() : 0;
-			if (iRandom != 0)
-				return new IntExprPlus(new IntExprConstant(iBase), new IntExprRandom(new IntExprConstant(iRandom)));
-			return new IntExprConstant(iBase);
-		}
-		return NULL;
-	}
-
-	// The eval context for an outcome condition: the acting unit + (optionally) the TARGET plot, with the derived
-	// city/player/team. Mirrors the C# (EvalState, PlotContext?) the ConditionEvaluator reads.
-	CvCascadeEvalCtx outcomeEvalCtx(const CvUnit& kUnit, const CvPlot* pPlot)
-	{
-		CvCascadeEvalCtx ec;
-		ec.unit   = &kUnit;
-		ec.player = &GET_PLAYER(kUnit.getOwner());
-		ec.team   = &GET_TEAM(kUnit.getTeam());
-		ec.plot   = pPlot;
-		ec.city   = pPlot ? pPlot->getPlotCity() : NULL;
-		return ec;
-	}
-
-	bool evalCond(const CvJsonCondition* pCond, const CvUnit& kUnit, const CvPlot* pPlot)
-	{
-		if (pCond == NULL) return true;   // vacuous
-		const CvCascadeEvalCtx ec = outcomeEvalCtx(kUnit, pPlot);
-		const CvCascadeEvalFlags flags;
-		return cascadeEvalCondition(pCond, ec, flags);
-	}
-
-	// A Python-authoritative gate (`requires.plot/unit: {python: fn}`, from the legacy `Greater(Python(fn),0)` plot
-	// BoolExpr). Python-authoritative gameplay stays Python (owner): call fn(unit, plot) via the outcome interface,
-	// hold iff result > 0. Empty = no gate. (~11 domesticate/captive units; module mirrors the m_szPythonCallback path.)
-	bool evalPyGate(const CvString& szFunc, const CvUnit& kUnit)
-	{
-		if (szFunc.empty()) return true;
-		return Cy::call<int>("CvOutcomeInterface", szFunc,
-			Cy::Args() << const_cast<CvUnit*>(&kUnit) << const_cast<CvPlot*>(kUnit.plot())) > 0;
-	}
-
-	// A requires.plot / requires.unit gate: `{python: fn}` -> the Python-gate string; anything else -> a parsed
-	// cascade CvJsonCondition (caller owns it). Only one of the two outputs is set.
-	void parseGate(const picojson::object& req, const char* key, const CvJsonCondition** ppCond, CvString& szPy)
-	{
-		picojson::object::const_iterator g = req.find(key);
-		if (g == req.end()) return;
-		if (g->second.is<picojson::object>())
-		{
-			const picojson::object& go = g->second.get<picojson::object>();
-			picojson::object::const_iterator py = go.find("python");
-			if (py != go.end() && py->second.is<std::string>()) { szPy = py->second.get<std::string>().c_str(); return; }
-		}
-		*ppCond = cascadeParseCondition(g->second);
-	}
-
-	// o[key] as an FK id (-1 if absent / not a string).
-	int fkOf(const picojson::object& o, const char* key)
-	{
-		picojson::object::const_iterator it = o.find(key);
-		return (it != o.end() && it->second.is<std::string>()) ? jsonResolveId(it->second.get<std::string>()) : -1;
-	}
-	int intOf(const picojson::object& o, const char* key, int fallback)
-	{
-		picojson::object::const_iterator it = o.find(key);
-		return (it != o.end() && it->second.is<double>()) ? (int)it->second.get<double>() : fallback;
-	}
-}
+#include "CvXMLLoadUtility.h"
+#include "CyUnit.h"
+#include "CyPlot.h"
+#include "CheckSum.h"
+#include "CvGameAI.h"
+#include "IntExpr.h"
 
 CvOutcome::CvOutcome(): m_eUnitType(NO_UNIT),
 						m_iChance(NULL),
@@ -121,8 +37,7 @@ CvOutcome::CvOutcome(): m_eUnitType(NO_UNIT),
 						m_iGPP(0),
 						m_eGPUnitType(NO_UNIT),
 						m_eBonusType(NO_BONUS),
-						m_bToCity(false),
-						m_pToCityCond(NULL),
+						m_bUnitToCity(NULL),
 						m_eEventTrigger(NO_EVENTTRIGGER),
 						m_pPlotCondition(NULL),
 						m_pUnitCondition(NULL),
@@ -158,7 +73,7 @@ CvOutcome::~CvOutcome()
 	GC.removeDelayedResolution((int*)&m_eGPUnitType);
 	GC.removeDelayedResolution((int*)&m_eEventTrigger);
 	SAFE_DELETE(m_iChance);
-	SAFE_DELETE(m_pToCityCond);
+	SAFE_DELETE(m_bUnitToCity);
 	SAFE_DELETE(m_iReduceAnarchyLength);
 	SAFE_DELETE(m_pPlotCondition);
 	SAFE_DELETE(m_pUnitCondition);
@@ -218,8 +133,12 @@ UnitTypes CvOutcome::getUnitType() const
 
 bool CvOutcome::getUnitToCity(const CvUnit& kUnit) const
 {
-	// spawns.toCity: send the spawned unit to a city iff toCity was authored AND its (optional) gate holds.
-	return m_bToCity && evalCond(m_pToCityCond, kUnit, kUnit.plot());
+	if (m_bUnitToCity)
+	{
+		// evaluate does not actually change the object so const_cast is fine
+		return m_bUnitToCity->evaluate(kUnit.getGameObject());
+	}
+	return false;
 }
 
 PromotionTypes CvOutcome::getPromotionType() const
@@ -640,10 +559,21 @@ bool CvOutcome::isPossible(const CvUnit& kUnit) const
 		}
 	}
 
-	if (!evalCond(m_pPlotCondition, kUnit, kUnit.plot()) || !evalPyGate(m_szPlotPythonGate, kUnit))
-		return false;
-	if (!evalCond(m_pUnitCondition, kUnit, kUnit.plot()) || !evalPyGate(m_szUnitPythonGate, kUnit))
-		return false;
+	if (m_pPlotCondition)
+	{
+		if (!m_pPlotCondition->evaluate(kUnit.plot()->getGameObject()))
+		{
+			return false;
+		}
+	}
+
+	if (m_pUnitCondition)
+	{
+		if (!m_pUnitCondition->evaluate(kUnit.getGameObject()))
+		{
+			return false;
+		}
+	}
 
 	if (m_pPythonPossibleFunc)
 	{
@@ -748,8 +678,13 @@ bool CvOutcome::isPossibleSomewhere(const CvUnit& kUnit) const
 		}
 	}
 
-	if (!evalCond(m_pUnitCondition, kUnit, kUnit.plot()) || !evalPyGate(m_szUnitPythonGate, kUnit))
-		return false;
+	if (m_pUnitCondition)
+	{
+		if (!m_pUnitCondition->evaluate(kUnit.getGameObject()))
+		{
+			return false;
+		}
+	}
 
 	return getChance(kUnit) > 0;
 }
@@ -944,10 +879,21 @@ bool CvOutcome::isPossibleInPlot(const CvUnit& kUnit, const CvPlot& kPlot, bool 
 		}
 	}
 
-	if (!evalCond(m_pPlotCondition, kUnit, &kPlot) || !evalPyGate(m_szPlotPythonGate, kUnit))
-		return false;
-	if (!evalCond(m_pUnitCondition, kUnit, &kPlot) || !evalPyGate(m_szUnitPythonGate, kUnit))
-		return false;
+	if (m_pPlotCondition)
+	{
+		if (!m_pPlotCondition->evaluate(kPlot.getGameObject()))
+		{
+			return false;
+		}
+	}
+
+	if (m_pUnitCondition)
+	{
+		if (!m_pUnitCondition->evaluate(kUnit.getGameObject()))
+		{
+			return false;
+		}
+	}
 
 	if (m_pPythonPossibleFunc)
 	{
@@ -1480,7 +1426,7 @@ int CvOutcome::AI_getValueInPlot(const CvUnit &kUnit, const CvPlot &kPlot, bool 
 
 			if (m_iHappinessTimer)
 			{
-				if (pCity->happyLevel() / 100 - pCity->unhappyLevel(1) / 100 < 0)   // ÷100: verdicts ×100
+				if (pCity->happyLevel() - pCity->unhappyLevel(1) < 0)
 				{
 					iValue += m_iHappinessTimer * 10;
 				}
@@ -1520,73 +1466,236 @@ int CvOutcome::AI_getValueInPlot(const CvUnit &kUnit, const CvPlot &kPlot, bool 
 	return iValue;
 }
 
-// #430: JSON intake of ONE outcome entry (a member of outcomes.kill[] or an action's payload). Mirrors read()
-// field-for-field over the CLEAN curated JSON: numerics -> IntExpr (jsonToIntExpr), FKs resolved directly,
-// conditions -> cascade CvJsonCondition (or a {python} gate). The XML read() path above is dead.
-void CvOutcome::mapFrom(const picojson::value& v)
+bool CvOutcome::read(CvXMLLoadUtility* pXML)
 {
-	if (!v.is<picojson::object>()) return;
-	const picojson::object& o = v.get<picojson::object>();
-	picojson::object::const_iterator it;
-
-	// requires: the OUTCOME_* gate FK + plot/unit conditions (cascade, or a {python} gate)
-	if (const picojson::object* req = jsonChildObj(o, "requires"))
+	PROFILE_EXTRA_FUNC();
+	CvString szTextVal;
+	pXML->GetChildXmlValByName(szTextVal, L"OutcomeType");
+	GC.addDelayedResolution((int*)&m_eType, szTextVal);
+	//m_eType = (OutcomeTypes) pXML->FindInInfoClass(szTextVal);
+	if (pXML->TryMoveToXmlFirstChild(L"iChance"))
 	{
-		const int t = fkOf(*req, "outcome");
-		if (t >= 0) m_eType = (OutcomeTypes)t;
-		parseGate(*req, "plot", &m_pPlotCondition, m_szPlotPythonGate);
-		parseGate(*req, "unit", &m_pUnitCondition, m_szUnitPythonGate);
+		m_iChance = IntExpr::read(pXML);
+		pXML->MoveToXmlParent();
+	}
+	pXML->GetOptionalChildXmlValByName(&m_iChancePerPop, L"iChancePerPop");
+	pXML->GetOptionalChildXmlValByName(szTextVal, L"UnitType");
+	GC.addDelayedResolution((int*)&m_eUnitType, szTextVal);
+	//m_eUnitType = (UnitTypes) pXML->FindInInfoClass(szTextVal);
+	if (pXML->TryMoveToXmlFirstChild(L"bUnitToCity"))
+	{
+		m_bUnitToCity = BoolExpr::read(pXML);
+		pXML->MoveToXmlParent();
+	}
+	pXML->GetOptionalChildXmlValByName(szTextVal, L"PromotionType");
+	GC.addDelayedResolution((int*)&m_ePromotionType, szTextVal);
+	//m_ePromotionType = (PromotionTypes) pXML->FindInInfoClass(szTextVal);
+	pXML->GetOptionalChildXmlValByName(szTextVal, L"BonusType");
+	GC.addDelayedResolution((int*)&m_eBonusType, szTextVal);
+	//m_eBonusType = (BonusTypes) pXML->FindInInfoClass(szTextVal);
+	pXML->GetOptionalChildXmlValByName(&m_iGPP, L"iGPP");
+	pXML->GetOptionalChildXmlValByName(szTextVal, L"GPUnitType");
+	GC.addDelayedResolution((int*)&m_eGPUnitType, szTextVal);
+	//m_eGPUnitType = (UnitTypes) pXML->FindInInfoClass(szTextVal);
+	pXML->GetOptionalChildXmlValByName(&m_iHappinessTimer, L"iHappinessTimer");
+	pXML->GetOptionalChildXmlValByName(&m_iPopulationBoost, L"iPopulationBoost");
+	if (pXML->TryMoveToXmlFirstChild(L"iReduceAnarchyLength"))
+	{
+		m_iReduceAnarchyLength = IntExpr::read(pXML);
+		pXML->MoveToXmlParent();
+	}
+	pXML->GetOptionalChildXmlValByName(szTextVal, L"EventTrigger");
+	GC.addDelayedResolution((int*)&m_eEventTrigger, szTextVal);
+	pXML->GetOptionalChildXmlValByName(m_szPythonCallback, L"PythonCallback");
+	pXML->GetOptionalChildXmlValByName(&m_bKill, L"bKill");
+	pXML->GetOptionalChildXmlValByName(m_szPythonModuleName, L"PythonName");
+	pXML->GetOptionalChildXmlValByName(m_szPythonCode, L"Python");
+
+	if (!m_szPythonCode.empty())
+	{
+		preparePython(m_szPythonCode);
+		compilePython();
 	}
 
-	if ((it = o.find("chance")) != o.end())        m_iChance = jsonToIntExpr(it->second);
-	m_iChancePerPop = intOf(o, "chancePerPop", 0);
-	if ((it = o.find("consumes")) != o.end() && it->second.is<bool>()) m_bKill = it->second.get<bool>();
-
-	// spawns { unit, toCity? }
-	if (const picojson::object* sp = jsonChildObj(o, "spawns"))
+	if(pXML->TryMoveToXmlFirstChild(L"Yields"))
 	{
-		const int u = fkOf(*sp, "unit");
-		if (u >= 0) m_eUnitType = (UnitTypes)u;
-		it = sp->find("toCity");
-		if (it != sp->end())
+		if(pXML->TryMoveToXmlFirstChild())
 		{
-			m_bToCity = true;
-			if (!it->second.is<bool>()) m_pToCityCond = cascadeParseCondition(it->second);   // conditional to-city (e.g. a tech)
+
+			if (pXML->TryMoveToXmlFirstOfSiblings(L"iYield"))
+			{
+				int iI = 0;
+				do
+				{
+					//pXML->GetXmlVal(&m_aiYield[iI]);
+					m_aiYield[iI] = IntExpr::read(pXML);
+					iI++;
+				} while(pXML->TryMoveToXmlNextSibling());
+			}
+			pXML->MoveToXmlParent();
+		}
+		pXML->MoveToXmlParent();
+	}
+
+	if(pXML->TryMoveToXmlFirstChild(L"Commerces"))
+	{
+		if(pXML->TryMoveToXmlFirstChild())
+		{
+
+			if (pXML->TryMoveToXmlFirstOfSiblings(L"iCommerce"))
+			{
+				int iI = 0;
+				do
+				{
+					//pXML->GetXmlVal(&m_aiCommerce[iI]);
+					m_aiCommerce[iI] = IntExpr::read(pXML);
+					iI++;
+				} while(pXML->TryMoveToXmlNextSibling());
+			}
+			pXML->MoveToXmlParent();
+		}
+		pXML->MoveToXmlParent();
+	}
+
+	m_Properties.read(pXML);
+
+	if (pXML->TryMoveToXmlFirstChild(L"PlotCondition"))
+	{
+		m_pPlotCondition = BoolExpr::read(pXML);
+		pXML->MoveToXmlParent();
+	}
+
+	if (pXML->TryMoveToXmlFirstChild(L"UnitCondition"))
+	{
+		m_pUnitCondition = BoolExpr::read(pXML);
+		pXML->MoveToXmlParent();
+	}
+
+	return true;
+}
+
+void CvOutcome::copyNonDefaults(CvOutcome* pOutcome)
+{
+	PROFILE_EXTRA_FUNC();
+	GC.copyNonDefaultDelayedResolution((int*)&m_eType, (int*)&(pOutcome->m_eType));
+	//if (m_eType == NO_OUTCOME)
+	//{
+	//	m_eType = pOutcome->getType();
+	//}
+	if (!m_iChance)
+	{
+		m_iChance = pOutcome->m_iChance;
+		pOutcome->m_iChance = NULL;
+	}
+	GC.copyNonDefaultDelayedResolution((int*)&m_eUnitType, (int*)&(pOutcome->m_eUnitType));
+	//if (m_eUnitType == NO_UNIT)
+	//{
+	//	m_eUnitType = pOutcome->getUnitType();
+	//}
+	if (!m_bUnitToCity)
+	{
+		m_bUnitToCity = pOutcome->m_bUnitToCity;
+		pOutcome->m_bUnitToCity = NULL;
+	}
+	GC.copyNonDefaultDelayedResolution((int*)&m_ePromotionType, (int*)&(pOutcome->m_ePromotionType));
+	//if (m_ePromotionType == NO_PROMOTION)
+	//{
+	//	m_ePromotionType = pOutcome->getPromotionType();
+	//}
+	GC.copyNonDefaultDelayedResolution((int*)&m_eBonusType, (int*)&(pOutcome->m_eBonusType));
+	//if (m_eBonusType == NO_BONUS)
+	//{
+	//	m_eBonusType = pOutcome->getBonusType();
+	//}
+	GC.copyNonDefaultDelayedResolution((int*)&m_eGPUnitType, (int*)&(pOutcome->m_eGPUnitType));
+	if (m_iGPP == 0)
+	{
+		m_iGPP = pOutcome->getGPP();
+		//m_eGPUnitType = pOutcome->getGPUnitType();
+	}
+	if (m_iHappinessTimer == 0)
+	{
+		m_iHappinessTimer = pOutcome->getHappinessTimer();
+	}
+
+	if (m_iPopulationBoost == 0)
+	{
+		m_iPopulationBoost = pOutcome->getPopulationBoost();
+	}
+
+	if (!m_iReduceAnarchyLength)
+	{
+		m_iReduceAnarchyLength = pOutcome->m_iReduceAnarchyLength;
+		pOutcome->m_iReduceAnarchyLength = NULL;
+	}
+
+	GC.copyNonDefaultDelayedResolution((int*)&m_eEventTrigger,(int*)&(pOutcome->m_eEventTrigger));
+
+	bool bDefault = true;
+	for (int i=0; i<NUM_YIELD_TYPES; i++)
+	{
+		bDefault = bDefault && !m_aiYield[i];
+	}
+	if (bDefault)
+	{
+		for (int i=0; i<NUM_YIELD_TYPES; i++)
+		{
+			m_aiYield[i] = pOutcome->m_aiYield[i];
+			pOutcome->m_aiYield[i] = NULL;
+		}
+	}
+	bDefault = true;
+	for (int i=0; i<NUM_COMMERCE_TYPES; i++)
+	{
+		bDefault = bDefault && !m_aiCommerce[i];
+	}
+	if (bDefault)
+	{
+		for (int i=0; i<NUM_COMMERCE_TYPES; i++)
+		{
+			m_aiCommerce[i] = pOutcome->m_aiCommerce[i];
+			pOutcome->m_aiCommerce[i] = NULL;
 		}
 	}
 
-	{ const int p = fkOf(o, "promotes"); if (p >= 0) m_ePromotionType = (PromotionTypes)p; }
-	{ const int b = fkOf(o, "places");   if (b >= 0) m_eBonusType     = (BonusTypes)b; }
-	{ const int e = fkOf(o, "triggers"); if (e >= 0) m_eEventTrigger  = (EventTriggerTypes)e; }
+	m_Properties.copyNonDefaults(pOutcome->getProperties());
 
-	if (const picojson::object* gp = jsonChildObj(o, "greatPeople"))
+	if (!m_pPlotCondition)
 	{
-		m_iGPP = intOf(*gp, "points", 0);
-		const int gu = fkOf(*gp, "unit"); if (gu >= 0) m_eGPUnitType = (UnitTypes)gu;
+		m_pPlotCondition = pOutcome->m_pPlotCondition;
+		pOutcome->m_pPlotCondition = NULL;
 	}
-	m_iPopulationBoost = intOf(o, "population", 0);
-	if ((it = o.find("revolution")) != o.end()) m_iReduceAnarchyLength = jsonToIntExpr(it->second);
-	if (const picojson::object* hp = jsonChildObj(o, "happiness")) m_iHappinessTimer = intOf(*hp, "duration", 0);
 
-	static const char* const YKEY[NUM_YIELD_TYPES]    = { "food", "production", "commerce" };
-	for (int y = 0; y < NUM_YIELD_TYPES; ++y)
-		if ((it = o.find(YKEY[y])) != o.end()) m_aiYield[y] = jsonToIntExpr(it->second);
-	static const char* const CKEY[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
-	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
-		if ((it = o.find(CKEY[c])) != o.end()) m_aiCommerce[c] = jsonToIntExpr(it->second);
-
-	// properties: no unit outcome authors a CvProperties delta today (curator-verified) -> not parsed; add when data appears.
-
-	if (const picojson::object* py = jsonChildObj(o, "python"))
+	if (!m_pUnitCondition)
 	{
-		if ((it = py->find("callback")) != py->end() && it->second.is<std::string>()) m_szPythonCallback   = it->second.get<std::string>().c_str();
-		if ((it = py->find("module"))   != py->end() && it->second.is<std::string>()) m_szPythonModuleName = it->second.get<std::string>().c_str();
-		if ((it = py->find("code"))     != py->end() && it->second.is<std::string>()) m_szPythonCode       = it->second.get<std::string>().c_str();
+		m_pUnitCondition = pOutcome->m_pUnitCondition;
+		pOutcome->m_pUnitCondition = NULL;
 	}
-	// The curator already dedents the inline code to clean, column-0 Python (curate_unit._python_code) -- so compile
-	// it DIRECTLY; preparePython (which strips the first-line prefix AND drops the last line for the XML `</Python>`)
-	// would corrupt already-clean code by removing a real final line.
-	if (!m_szPythonCode.empty()) compilePython();
+
+	if (m_szPythonCallback.empty()) m_szPythonCallback = pOutcome->m_szPythonCallback;
+	if (!m_bKill) m_bKill = pOutcome->m_bKill;
+	if (m_szPythonModuleName.empty()) m_szPythonModuleName = pOutcome->m_szPythonModuleName;
+	if (m_szPythonCode.empty()) m_szPythonCode = pOutcome->m_szPythonCode;
+	if (!m_pPythonAIFunc)
+	{
+		m_pPythonAIFunc = pOutcome->m_pPythonAIFunc;
+		pOutcome->m_pPythonAIFunc = NULL;
+	}
+	if (!m_pPythonDisplayFunc)
+	{
+		m_pPythonDisplayFunc = pOutcome->m_pPythonDisplayFunc;
+		pOutcome->m_pPythonDisplayFunc = NULL;
+	}
+	if (!m_pPythonExecFunc)
+	{
+		m_pPythonExecFunc = pOutcome->m_pPythonExecFunc;
+		pOutcome->m_pPythonExecFunc = NULL;
+	}
+	if (!m_pPythonPossibleFunc)
+	{
+		m_pPythonPossibleFunc = pOutcome->m_pPythonPossibleFunc;
+		pOutcome->m_pPythonPossibleFunc = NULL;
+	}
 }
 
 void CvOutcome::buildDisplayString(CvWStringBuffer &szBuffer, const CvUnit& kUnit) const
@@ -1861,7 +1970,8 @@ void CvOutcome::getCheckSum(uint32_t& iSum) const
 	CheckSum(iSum, m_eType);
 	m_iChance->getCheckSum(iSum);
 	CheckSum(iSum, m_eUnitType);
-	CheckSum(iSum, m_bToCity);
+	if (m_bUnitToCity)
+		m_bUnitToCity->getCheckSum(iSum);
 	CheckSum(iSum, m_ePromotionType);
 	CheckSum(iSum, m_eBonusType);
 	CheckSum(iSum, m_iGPP);
@@ -1881,9 +1991,10 @@ void CvOutcome::getCheckSum(uint32_t& iSum) const
 	if (m_iReduceAnarchyLength)
 		m_iReduceAnarchyLength->getCheckSum(iSum);
 	m_Properties.getCheckSum(iSum);
-	// (plot/unit conditions are CvJsonCondition trees now -- not summed here; the outcome id + payload above cover it)
-	CheckSumC(iSum, m_szPlotPythonGate);
-	CheckSumC(iSum, m_szUnitPythonGate);
+	if (m_pPlotCondition)
+		m_pPlotCondition->getCheckSum(iSum);
+	if (m_pUnitCondition)
+		m_pUnitCondition->getCheckSum(iSum);
 	CheckSumC(iSum, m_szPythonCallback);
 	CheckSum(iSum, m_bKill);
 	CheckSum(iSum, m_szPythonCode);

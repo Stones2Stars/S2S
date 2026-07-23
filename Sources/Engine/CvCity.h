@@ -5,18 +5,14 @@
 #ifndef CIV4_CITY_H
 #define CIV4_CITY_H
 
-#include "Infrastructure/LinkedList.h"
-#include "Infrastructure/CvDLLEntity.h"
-#include "Infrastructure/CvDerivedCache.h"
+#include "LinkedList.h"
+#include "CvDLLEntity.h"
 #include "CvGameObject.h"
 #include "CvProperties.h"
-#include "UI/CvBuildingList.h"
-#include "UI/CvUnitList.h"
+#include "CvBuildingList.h"
+#include "CvUnitList.h"
 #include "CvDerivedData.h"
-#include "Cascade/CvCascadeAccumulator.h"   // CascadeCityPackages -- the #430 city scope packages (m_cascadeCityPackages)
-#include "Enabler/CvOperatingBuildings.h"     // OperatingBuildings -- the standing cascade operating-buildings cache (m_operatingBuildings)
-#include "Enabler/CvEnabler.h"              // CityEnabler -- the standardized enabler's per-city domain vectors (m_enabler)
-#include "UI/CityOutputHistory.h"
+#include "CityOutputHistory.h"
 #include "CvGameObject.h"
 
 class CvArea;
@@ -211,17 +207,13 @@ public:
 
 	bool canConstruct(BuildingTypes eType, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreAmount = false, bool bIgnoreBuildings = false, TechTypes eIgnoreTechReq = NO_TECH, int* probabilityEverConstructable = NULL, bool bExposed = false) const;
 
+	//	KOSHLING - cache can build results
+	void FlushCanConstructCache(BuildingTypes eType = NO_BUILDING);
 	bool canConstructInternal(BuildingTypes eType, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreAmount, BuildingTypes withExtraBuilding = NO_BUILDING, bool bIgnoreBuildings = false, TechTypes eIgnoreTechReq = NO_TECH, int* probabilityEverConstructable = NULL, bool bExposed = false) const;
+	void NoteBuildingNoLongerConstructable(BuildingTypes eType) const;
 
 	bool canCreate(ProjectTypes eProject, bool bContinue = false, bool bTestVisible = false) const;
 	bool canMaintain(ProcessTypes eProcess) const;
-
-	// The set-returning frontier reads (enabler.md par.6) -- the maintained LISTED offer set the AI's
-	// production/decision loops iterate INSTEAD of probing canConstruct/canTrain per id over the whole entity
-	// database (the take-all-and-match anti-pattern). The per-id gates above stay the single-entity + what-if
-	// answer; these return the whole set. `out` is caller-owned (cleared first) so a hot loop reuses one buffer.
-	void getConstructibleFrontier(std::vector<int>& out) const;   // the LISTED buildings set (canConstruct default-args)
-	void getTrainableFrontier(std::vector<int>& out) const;       // the LISTED units set (canTrain default-args)
 
 	int getFoodTurnsLeft() const;
 	bool isProduction() const;
@@ -288,7 +280,6 @@ public:
 
 	bool canHurry(const HurryTypes eHurry, const bool bTestVisible = false) const;
 	int64_t getHurryGold(const HurryTypes eHurry, int iHurryCost = -1) const;
-	int getHurryPopulation(HurryTypes eHurry, int iHurryCost) const; // public so the diagnostic dump can report the whip-pop cost (promoted from protected; non-virtual, no ABI impact)
 	void hurry(HurryTypes eHurry);
 	bool hurryOverflow(HurryTypes eHurry, int* iProduction, int* iGold, bool bCountThisTurn = false) const;
 
@@ -353,7 +344,7 @@ public:
 
 	int getCelebrityHappiness() const;
 
-	int unhappyLevel(int iExtra = 0) const;   // ⛔ CASCADE-ONLY (no *Legacy -- owner: purge legacy, fail loud)
+	int unhappyLevel(int iExtra = 0) const;
 	int happyLevel() const;
 	int angryPopulation(int iExtra = 0) const;
 
@@ -413,9 +404,7 @@ public:
 
 
 
-	// Returns the number of promotions ACTUALLY granted (a unit that already holds them scores 0) -- the honest
-	// observability count: buildings VISITED says nothing about whether anything landed.
-	int assignPromotionsFromBuildingChecked(const CvBuildingInfo& kBuilding, CvUnit* pLoopUnit) const;
+	void assignPromotionsFromBuildingChecked(const CvBuildingInfo& kBuilding, CvUnit* pLoopUnit) const;
 
 	//TB Combat Mods (Buildings) end
 	//TB Traits begin
@@ -486,9 +475,10 @@ public:
 	int getNumGreatPeople() const;
 	void changeNumGreatPeople(int iChange);
 
-	int getBaseGreatPeopleRate() const;          // FLIPPED (#430, 2026-07-04): returns the cascade scalar slot
+	int getBaseGreatPeopleRate() const;
 	int getGreatPeopleRate() const;
-	int getTotalGreatPeopleRateModifier() const;         // FLIPPED (#430, 2026-07-04)
+	int getTotalGreatPeopleRateModifier() const;
+	void changeBaseGreatPeopleRate(int iChange);
 
 	int getGreatPeopleRateModifier() const;
 	void changeGreatPeopleRateModifier(int iChange);
@@ -526,7 +516,7 @@ public:
 
 	int getMaintenance() const;
 	int getMaintenanceTimes100() const;
-	int getEffectiveMaintenanceModifier() const;         // FLIPPED (#430, 2026-07-04): returns the cascade scalar slot
+	int getEffectiveMaintenanceModifier() const;
 	void updateMaintenance() const;
 	void setMaintenanceDirty(const bool bDirty, const bool bPlayer = true) const;
 	int calculateDistanceMaintenance() const;
@@ -566,6 +556,7 @@ public:
 
 	int getFeatureGoodHealth() const;
 	int getFeatureBadHealth() const;
+	void updateFeatureHealth();
 // BUG - Feature Health - start
 	void calculateFeatureHealthPercent(int& iGood, int& iBad) const;
 	void calculateFeatureHealthPercentChange(int& iGood, int& iBad, CvPlot* pIgnorePlot = NULL) const;
@@ -585,9 +576,13 @@ public:
 	int getBuildingHealth(BuildingTypes eType) const;
 	int getBuildingGoodHealth(BuildingTypes eType) const;
 	int getBuildingBadHealth(BuildingTypes eType) const;
+	void changeBuildingGoodHealth(int iChange);
+	void changeBuildingBadHealth(int iChange);
 
 	int getBonusGoodHealth() const;
 	int getBonusBadHealth() const;
+	void changeBonusGoodHealth(int iChange);
+	void changeBonusBadHealth(int iChange);
 
 	int getMilitaryHappiness() const;
 	int getMilitaryHappinessUnits() const;
@@ -596,9 +591,12 @@ public:
 	int getBuildingGoodHappiness() const;
 	int getBuildingBadHappiness() const;
 	int getBuildingHappiness(BuildingTypes eType) const;
+	void changeBuildingGoodHappiness(int iChange);
+	void changeBuildingBadHappiness(int iChange);
 
-	int getExtraBuildingGoodHappiness() const;   // #430 cut: cascade-computed (CascadeWellbeing::extraBuildingWellbeing)
+	int getExtraBuildingGoodHappiness() const;
 	int getExtraBuildingBadHappiness() const;
+	void updateExtraBuildingHappiness(bool bLimited = false);
 
 	int getAdditionalHappinessByCivic(CivicTypes eCivic, bool bDifferenceToCurrent = true, bool bCivicOptionVacuum = false, ReligionTypes eStateReligion = NO_RELIGION, int iExtraPop = 0, int iMilitaryHappinessUnits = -1) const;
 	int getAdditionalHealthByCivic(CivicTypes eCivic, bool bDifferenceToCurrent = true) const;
@@ -611,19 +609,24 @@ public:
 
 	int getExtraBuildingGoodHealth() const;
 	int getExtraBuildingBadHealth() const;
+	void updateExtraBuildingHealth(bool bLimited = false);
 
 	int getAdditionalHealthByBuilding(BuildingTypes eType) const;
 	int getAdditionalHealthByBuilding(BuildingTypes eType, int& iGood, int& iBad, int& iSpoiledFood, int& iStarvation) const;
 
 	int getFeatureGoodHappiness() const;
 	int getFeatureBadHappiness() const;
+	void updateFeatureHappiness(bool bLimited = false);
 
 	int getBonusGoodHappiness() const;
 	int getBonusBadHappiness() const;
+	void changeBonusGoodHappiness(int iChange);
+	void changeBonusBadHappiness(int iChange);
 
-	int getReligionGoodHappiness() const;   // #430 cut: cascade-computed (CascadeWellbeing::religionWellbeing)
+	int getReligionGoodHappiness() const;
 	int getReligionBadHappiness() const;
 	int getReligionHappiness(ReligionTypes eReligion) const;
+	void updateReligionHappiness(bool bLimited = false);
 
 	int getExtraHappiness() const;
 	void changeExtraHappiness(int iChange);
@@ -699,9 +702,11 @@ public:
 	int getForeignTradeRouteModifier() const;
 	void changeForeignTradeRouteModifier(int iChange);
 
-	int getBuildingDefense() const;          // #430: the cascade scalar slot
+	int getBuildingDefense() const;
+	void changeBuildingDefense(int iChange);
 
 	int getBuildingBombardDefense() const;
+	void changeBuildingBombardDefense(int iChange);
 	int getAdditionalBombardDefenseByBuilding(BuildingTypes eType) const;
 
 	int getFreeExperience() const;
@@ -723,6 +728,9 @@ public:
 
 	int getNukeModifier() const;
 	void changeNukeModifier(int iChange);
+
+	int getFreeSpecialist() const;
+	void changeFreeSpecialist(int iChange);
 
 	int getPowerCount() const;
 	bool isPower() const;
@@ -801,6 +809,8 @@ public:
 	void setCultureLevel(CultureLevelTypes eNewValue, bool bUpdatePlotGroups);
 	void updateCultureLevel(bool bUpdatePlotGroups);
 
+	int getRiverPlotYield(YieldTypes eIndex) const;
+	void changeRiverPlotYield(YieldTypes eIndex, int iChange);
 
 	int getTerrainYieldChange(const TerrainTypes eTerrain, const YieldTypes eYield) const;
 	void changeTerrainYieldChanges(const TerrainTypes eTerrain, const YieldArray& yields);
@@ -822,13 +832,9 @@ public:
 	int getYieldBySpecialist(YieldTypes eIndex, SpecialistTypes eSpecialist) const;
 
 	int getPlotYield(YieldTypes eIndex) const;
-	// The worked-plot Σ cache trigger (state-repositories: the city-side sum is a CvDerivedCache, NOT a per-read
-	// walk -- the per-read pull walked all radius plots on the game's hottest read, measured 913M plot reads/turn).
-	void markPlotYieldSumDirty() const { m_plotYieldSum.markDirty(); }
-	void recomputePlotYieldSumInto(int* aiOut) const;
 	int getBaseYieldRateModifier(YieldTypes eIndex, int iExtra = 0) const;
 	int getYieldRate(const YieldTypes eYield) const;
-	int getYieldRate100(const YieldTypes eYield) const;         // #430: cascade-only (the legacy fallback is cut)
+	int getYieldRate100(const YieldTypes eYield) const;
 	void changePlotYield(YieldTypes eIndex, int iChange);
 
 	// Toffer - ToDo - Change all extra yields to be cached with two decimal accuracy.
@@ -851,12 +857,18 @@ public:
 
 	void onYieldChange();
 
+	int getBaseYieldPerPopRate(YieldTypes eIndex) const;
+	void setBaseYieldPerPopRate(YieldTypes eIndex, int iNewValue);
+	void changeBaseYieldPerPopRate(YieldTypes eIndex, int iChange);
 
 	int getYieldRateModifier(YieldTypes eIndex) const;
 	void changeYieldRateModifier(YieldTypes eIndex, int iChange);
 
 	int getPowerYieldRateModifier(YieldTypes eIndex) const;
 	void changePowerYieldRateModifier(YieldTypes eIndex, int iChange);
+
+	int getBonusYieldRateModifier(YieldTypes eIndex) const;
+	void changeBonusYieldRateModifier(YieldTypes eIndex, int iChange);
 
 	int getTradeYield(YieldTypes eIndex) const;
 	int totalTradeModifier(const CvCity* pOtherCity = NULL) const;
@@ -874,15 +886,16 @@ public:
 
 	int getExtraSpecialistYield(YieldTypes eIndex) const;
 	int getExtraSpecialistYield(YieldTypes eIndex, SpecialistTypes eSpecialist) const;
+	void updateExtraSpecialistYield(YieldTypes eYield);
+	void updateExtraSpecialistYield();
 
 	int getExtraSpecialistCommerceTotal(CommerceTypes eIndex) const;
 	int getExtraSpecialistCommerce(CommerceTypes eIndex, SpecialistTypes eSpecialist) const;
+	void updateExtraSpecialistCommerce(CommerceTypes eCommerce);
 	void updateExtraSpecialistCommerce();
-	void updateSpecialistCommerce(CommerceTypes eCommerce);   // fires the commerce-dirty trigger; getSpecialistCommerce recomputes on read
-	void updateSpecialistCommerce();
 
 	int getCommerceRate(CommerceTypes eIndex) const;
-	int getCommerceRateTimes100(CommerceTypes eIndex) const;         // #430: cascade-only (the legacy fallback is cut)
+	int getCommerceRateTimes100(CommerceTypes eIndex) const;
 	int getCommerceFromPercent(CommerceTypes eIndex) const;
 	int getBaseCommerceRate(CommerceTypes eIndex) const;
 	int getBaseCommerceRateTimes100(CommerceTypes eIndex) const;
@@ -891,6 +904,7 @@ public:
 	int getTotalCommerceRateModifier(CommerceTypes eIndex) const;
 	void setCommerceModifierDirty(CommerceTypes eCommerce);
 	void setCommerceDirty(CommerceTypes eCommerce = NO_COMMERCE);
+	void updateCommerce(CommerceTypes eIndex = NO_COMMERCE, bool bForce = true) const;
 
 	int getProductionToCommerceModifier(CommerceTypes eIndex) const;
 	void changeProductionToCommerceModifier(CommerceTypes eIndex, int iChange);
@@ -910,12 +924,17 @@ public:
 
 	int getReligionCommerce(CommerceTypes eIndex) const;
 	int getReligionCommerceByReligion(CommerceTypes eIndex, ReligionTypes eReligion) const;
+	void updateReligionCommerce(CommerceTypes eIndex);
+	void updateReligionCommerce();
 
+	void setCorporationYield(YieldTypes eIndex, int iNewValue);
 	int getCorporationCommerce(CommerceTypes eIndex) const;
 	int getCorporationCommerceByCorporation(CommerceTypes eIndex, CorporationTypes eCorporation) const;
 	int getCorporationYield(YieldTypes eIndex) const;
 	int getCorporationYieldByCorporation(YieldTypes eIndex, CorporationTypes eCorporation) const;
 	void updateCorporation();
+	void updateCorporationCommerce(CommerceTypes eIndex);
+	void updateCorporationYield(YieldTypes eIndex);
 	void updateCorporationBonus();
 
 	int getCommerceRateModifier(CommerceTypes eIndex) const;
@@ -924,7 +943,9 @@ public:
 	int getCommerceHappinessPer(CommerceTypes eIndex) const;
 	int getCommerceHappinessByType(CommerceTypes eIndex) const;
 	int getCommerceHappiness() const;
+	void changeCommerceHappinessPer(CommerceTypes eIndex, int iChange);
 
+	void changeCommercePerPopFromBuildings(const CommerceTypes eIndex, const int iChange);
 	int getCommercePerPopFromBuildings(const CommerceTypes eIndex) const;
 
 	int getDomainFreeExperience(DomainTypes eIndex) const;
@@ -969,54 +990,17 @@ public:
 	std::string getScriptData() const;
 	void setScriptData(std::string szNewValue);
 
-	// The city's bonus injection into its trade network: COMPUTED from the processed buildings' provides
-	// (json §5a) + the persisted event/WB grants -- never a stored ledger (no serialized caches).
 	int getFreeBonus(BonusTypes eIndex) const;
-	int getFreeBonusEvents(BonusTypes eIndex) const;
-	void changeFreeBonusEvent(BonusTypes eIndex, int iChange);   // the Python (random-event / WorldBuilder) grant path
-
-	void rebuildBonusPowerAtLoad();   // the unconditional building-isPower half of m_iPowerCount (read is skipped)
-
-	// The city's whole bonus injection (computed building provides + event/WB grants) applied ± onto a plot
-	// group -- the one implementation updatePlotGroupBonus and the load fold go through.
-	void addProvidedBonusesToGroup(CvPlotGroup* pPlotGroup, int iSign) const;
+	void changeFreeBonus(BonusTypes eIndex, int iChange);
 
 	void processNumBonusChange(BonusTypes eIndex, int iOldValue, int iNewValue);
-	// The maintained-count writers (the ONLY places the read answer changes; see the members' comment):
-	void refreshEffectiveBonus(BonusTypes eIndex);          // one bonus: gate x total + corp -> store
-	void refreshAllEffectiveBonuses();                      // gate sweep (tech/minted/corp changed; totals kept)
-	void seedEffectiveBonuses();                            // full pull from the group (join/load/reconcile)
 	void endDeferredBonusProcessing();
 	void startDeferredBonusProcessing();
-	bool isDeferringBonusProcessing() const { return m_deferringBonusProcessingCount > 0; }
-
-	// Bulk building processing: while the bracket is open, processBuilding SKIPS its wholesale full-city
-	// rescans (extra-building happiness/health, building commerce, religion happiness/commerce) and the
-	// bracket end runs them ONCE for the whole batch -- same end state (they are idempotent recomputes from
-	// current state), one rescan set per BATCH instead of per flip. checkBuildings brackets its flip loop
-	// with it (the load-end dormancy fixpoint's 40k-flip reconcile was paying ~5 full-city rescans per flip).
-	void startBulkBuildingProcessing() { ++m_bulkBuildingProcessingCount; }
-	void endBulkBuildingProcessing(bool bRunWholesale = true);
-	bool isBulkBuildingProcessing() const { return m_bulkBuildingProcessingCount > 0; }
-
-	// The CITIZEN-JUGGLE bracket (the governor-churn fix, owner 2026-07-16): the governor probes by REAL
-	// MUTATION (remove-worst/add-best), so every probe fired the full per-change side-effect layer -- three
-	// whole-set specialist recomputes, package invalidations, spine emits, plot-builder/symbol EXE calls, UI
-	// dirt -- thousands of times per turn (the measured 14k specialistChanged storm + the force->invalidate->
-	// force loop). Inside the bracket the probe mutations keep their SEMANTICS (raw counts, populations, the
-	// cheap +- incrementals the valuations read) while that side-effect layer is DEFERRED; endCitizenJuggling
-	// replays it ONCE as the run's NET (net specialist deltas emit; one package mark; net-changed plots refresh
-	// their symbols). A converged run (remove-then-re-add-the-same) is zero events, zero marks, zero redraws.
-	void startCitizenJuggling();
-	void endCitizenJuggling();
-	bool isCitizenJuggling() const { return m_iCitizenJugglingCount > 0; }
 	int getNumBonusesFromBase(BonusTypes eIndex, int iBaseNum) const;
 
-	// The NETWORK bonus count is a pure RELAY onto the city's plot group (produced/extracted + deal-traded, one
-	// sum) -- the count lives ONCE, on the group; the city stores NO mirror (owner ruling 2026-07-15). Vicinity
-	// stays city-owned and is never a second count (enabler.md par.8 RESIDENCY).
 	int getNumBonuses(BonusTypes eIndex) const;
 	bool hasBonus(BonusTypes eIndex) const;
+	void changeNumBonuses(BonusTypes eIndex, int iChange);
 
 	int getCorpBonusProduction(const BonusTypes eBonus) const;
 	void changeCorpBonusProduction(const BonusTypes eBonus, const int iChange);
@@ -1077,6 +1061,7 @@ public:
 	void setForceSpecialistCount(SpecialistTypes eIndex, int iNewValue);
 
 	int getFreeSpecialistCount(SpecialistTypes eIndex) const;
+	void setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue);
 	void changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange, bool bUnattributed = false);
 	int getAddedFreeSpecialistCount(SpecialistTypes eIndex) const;
 
@@ -1087,7 +1072,8 @@ public:
 	void changeReligionInfluence(ReligionTypes eIndex, int iChange);
 
 	int getCurrentStateReligionHappiness() const;
-	int getStateReligionHappiness(ReligionTypes eIndex) const;   // #430 cut: cascade-computed (CascadeWellbeing::cityStateReligionHappiness)
+	int getStateReligionHappiness(ReligionTypes eIndex) const;
+	void changeStateReligionHappiness(ReligionTypes eIndex, int iChange);
 
 	int getUnitCombatFreeExperience(UnitCombatTypes eIndex) const;
 	void changeUnitCombatFreeExperience(UnitCombatTypes eIndex, int iChange);
@@ -1193,8 +1179,6 @@ public:
 	int getBuildingCommerceChange(BuildingTypes eType, CommerceTypes eCommerce) const;
 	void setBuildingCommerceChange(BuildingTypes eType, CommerceTypes eCommerce, int iChange);
 	void changeBuildingCommerceChange(BuildingTypes eType, CommerceTypes eCommerce, int iChange);
-	int getBuildingCommerceChangeEvents(BuildingTypes eType, CommerceTypes eCommerce) const;       // event/vote store (persisted, NOT cached)
-	void changeBuildingCommerceChangeEvents(BuildingTypes eType, CommerceTypes eCommerce, int iChange);
 	int getBuildingHappyChange(BuildingTypes eType) const;
 	void setBuildingHappyChange(BuildingTypes eType, int iChange);
 	int getBuildingHealthChange(BuildingTypes eType) const;
@@ -1233,12 +1217,18 @@ public:
 	int getBonusDefenseChanges(const BonusTypes eIndex) const;
 	void changeBonusDefenseChanges(const BonusTypes eIndex, const int iChange);
 
+	int getBonusCommerceRateModifier(CommerceTypes eIndex) const;
+	void changeBonusCommerceRateModifier(CommerceTypes eIndex, int iChange);
 	bool isBuiltFoodProducedUnit() const;
 	void setBuiltFoodProducedUnit(bool bNewValue);
-	int getSpecialistGoodHealth() const;   // #430 cut: cascade-computed (CascadeWellbeing::specialistWellbeing)
+	int getSpecialistGoodHealth() const;
 	int getSpecialistBadHealth() const;
 	int getSpecialistHappiness() const;
 	int getSpecialistUnhappiness() const;
+	void changeSpecialistGoodHealth(int iChange);
+	void changeSpecialistBadHealth(int iChange);
+	void changeSpecialistHappiness(int iChange);
+	void changeSpecialistUnhappiness(int iChange);
 	int getImprovementGoodHealth() const;
 	int getImprovementBadHealth() const;
 	void updateImprovementHealth();
@@ -1261,6 +1251,7 @@ public:
 	BuildTypes findChopBuild(FeatureTypes eFeature) const;
 	int getLineOfSight() const;
 	void changeLineOfSight(int iChange);
+	int calculateBonusCommerceRateModifier(CommerceTypes eIndex) const;
 	int getLandmarkAngerTimer() const;
 	void changeLandmarkAngerTimer(int iChange);
 	int getLandmarkAnger() const;
@@ -1268,11 +1259,7 @@ public:
 	bool hasVicinityBonus(BonusTypes eBonus) const;
 	void clearRawVicinityBonusCache(BonusTypes eBonus);
 	bool hasRawVicinityBonus(BonusTypes eBonus) const;
-	// The dormancy verdict apply: the enabler's operate classification + the two engine-side runtime legs
-	// (employed population, banned non-state religion) -> setDisabledBuilding. Returns whether any verdict
-	// flipped (the load-end cross-city fixpoint loops on it); paFlipped, when given, collects the flipped
-	// buildings (the fixpoint's work-list derivation reads their provides/trait carriage).
-	bool checkBuildings(bool bAlertOwner = true, std::vector<BuildingTypes>* paFlipped = NULL);
+	void checkBuildings(bool bAlertOwner = true);
 	void doVicinityBonus();
 	bool isDevelopingCity() const;
 
@@ -1299,7 +1286,11 @@ public:
 	bool isProtectedCulture() const;
 	void changeProtectedCultureCount(int iChange);
 
+	int getNumUnitFullHeal() const;
+	void changeNumUnitFullHeal(int iChange);
+
 	void doAttack();
+	void doHeal();
 
 	void doCorporation();
 	int getCorporationInfluence(CorporationTypes eCorporation) const;
@@ -1322,9 +1313,6 @@ public:
 
 	int getMinimumDefenseLevel() const;
 	void setMinimumDefenseLevel(int iNewValue);
-	// raw member, ungated by REALISTIC_SIEGE -- exposed so the dump can attribute minimumDefenseLevel when the
-	// option is off (owner ruling 2026-06-20: visibility never justifies dropping a calc source).
-	int getMinimumDefenseLevelRaw() const { return m_iMinimumDefenseLevel; }
 
 	SpecialistTypes getBestSpecialist(int iExtra) const;
 
@@ -1341,10 +1329,12 @@ public:
 
 	int getAssignedSpecialistCount() const;
 
+	int getBonusCommercePercentChanges(CommerceTypes eIndex) const;
 	int getBonusCommercePercentChanges(CommerceTypes eIndex, BonusTypes eBonus) const;
 	int getBonusCommercePercentChanges(CommerceTypes eIndex, BuildingTypes eType) const;
 	void changeBonusCommercePercentChanges(CommerceTypes eIndex, int iChange);
 
+	void changeBuildingCommerceTechChange(CommerceTypes eIndex, int iChange);
 	int getBuildingCommerceTechChange(CommerceTypes eIndex) const;
 	int getBuildingCommerceTechChange(CommerceTypes eIndex, TechTypes eTech) const;
 	int getBuildingCommerceTechModifier(CommerceTypes eYield, TechTypes eTech) const;
@@ -1373,12 +1363,6 @@ public:
 	int getHomeAreaMaintenanceSavedTimes100ByCivic(CivicTypes eCivic) const;
 	int getOtherAreaMaintenanceSavedTimes100ByCivic(CivicTypes eCivic) const;
 
-	// The TWO-PHASE stream read (the load reseed): readIdentity deserializes just m_iID (the first element), so
-	// the stream loop can REGISTER the city in its owner's m_cities BEFORE readBody streams the rest -- the
-	// city's own in-read DOMAIN emits then resolve through the ordinary registry lookup. Same bytes, same order
-	// as the old single read() (no save-format change); read() remains the pair for any one-shot caller.
-	void readIdentity(FDataStreamBase* pStream);
-	void readBody(FDataStreamBase* pStream);
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);
 
@@ -1548,6 +1532,7 @@ protected:
 	int m_iWorkingPopulation;
 	int m_iSpecialistPopulation;
 	int m_iNumGreatPeople;
+	int m_iBaseGreatPeopleRate;
 	int m_iGreatPeopleRateModifier;
 	int m_iGreatPeopleProgress;
 	int m_iNumWorldWonders;
@@ -1563,6 +1548,12 @@ protected:
 	int m_iEspionageHealthCounter;
 	int m_iEspionageHappinessCounter;
 	int m_iFreshWaterGoodHealth;
+	int m_iFeatureGoodHealth;
+	int m_iFeatureBadHealth;
+	int m_iBuildingGoodHealth;
+	int m_iBuildingBadHealth;
+	int m_iBonusGoodHealth;
+	int m_iBonusBadHealth;
 	int m_iHurryAngerTimer;
 	int m_iRevRequestAngerTimer;
 	int m_iRevSuccessTimer;
@@ -1570,6 +1561,18 @@ protected:
 	int m_iDefyResolutionAngerTimer;
 	int m_iHappinessTimer;
 	int m_iMilitaryHappinessUnits;
+	int m_iBuildingGoodHappiness;
+	int m_iBuildingBadHappiness;
+	int m_iExtraBuildingGoodHappiness;
+	int m_iExtraBuildingBadHappiness;
+	int m_iExtraBuildingGoodHealth;
+	int m_iExtraBuildingBadHealth;
+	int m_iFeatureGoodHappiness;
+	int m_iFeatureBadHappiness;
+	int m_iBonusGoodHappiness;
+	int m_iBonusBadHappiness;
+	int m_iReligionGoodHappiness;
+	int m_iReligionBadHappiness;
 	int m_iExtraHappiness;
 	int m_iExtraHealth;
 	int m_iNoUnhappinessCount;
@@ -1582,6 +1585,10 @@ protected:
 	int m_iOverflowProduction;
 	int m_iFeatureProduction;
 
+	int m_iSpecialistGoodHealth;
+	int m_iSpecialistBadHealth;
+	int m_iSpecialistHappiness;
+	int m_iSpecialistUnhappiness;
 	int m_iImprovementGoodHealth;
 	int m_iImprovementBadHealth;
 	int m_iLostProductionModified;
@@ -1596,6 +1603,7 @@ protected:
 	int m_iAdjacentDamagePercent;
 	int m_iWorkableRadiusOverride;
 	int m_iProtectedCultureCount;
+	int m_iNumUnitFullHeal;
 	int m_iDisabledPowerTimer;
 	int m_iWarWearinessTimer;
 	int m_iMinimumDefenseLevel;
@@ -1607,6 +1615,10 @@ protected:
 	int m_iEventAnger;
 
 	int m_iFreshWater;
+
+	int* m_aiBonusCommerceRateModifier;
+	int* m_aiBonusCommercePercentChanges;
+	int* m_aiBuildingCommerceTechChange;
 
 	mutable int* m_cachedPropertyNeeds;
 	bool* m_pabHadVicinityBonus;
@@ -1621,13 +1633,6 @@ protected:
 	int* m_paiUnitCombatExtraStrength;
 	bool* m_pabAutomatedCanBuild;
 
-	// SERIALIZATION-ONLY, never populated: the per-turn spawn apply is the grants machine's (it reads the composed
-	// grants.repeatable[] off the operating buildings). This cannot be soft-removed via savemigration.txt -- its
-	// stream shape is a COUNT tag named "iNumElts", SHARED by 23 variable-length blocks in read(), followed by N
-	// RAW UNTAGGED records. Naming that tag would drain whichever block comes first, and dropping the write would
-	// orphan a tag old saves still carry, leaving iNumElts holding the previous block's value and reading garbage.
-	// So the read/write pair STAYS as the stream drain (save.md §4's drain-loop case) until the variable-length
-	// blocks get per-block tags.
 	std::vector<PropertySpawns> m_aPropertySpawns;
 	std::vector<BuildingTypes> m_hasBuildings;
 
@@ -1649,12 +1654,15 @@ protected:
 	int m_iExtraTradeRoutes;
 	int m_iTradeRouteModifier;
 	int m_iForeignTradeRouteModifier;
+	int m_iBuildingDefense;
+	int m_iBuildingBombardDefense;
 	int m_iFreeExperience;
 	int m_iCurrAirlift;
 	int m_iMaxAirlift;
 	int m_iAirModifier;
 	int m_iAirUnitCapacity;
 	int m_iNukeModifier;
+	int m_iFreeSpecialist;
 	int m_iPowerCount;
 	int m_iDefenseDamage;
 	int m_iLastDefenseDamage;
@@ -1706,10 +1714,15 @@ protected:
 	int m_iExtraLocalCaptureResistanceModifier;
 	int m_iExtraLocalDynamicDefense;
 	int m_iExtraRiverDefensePenalty;
+	int m_iExtraMinDefense;
 	int m_iExtraBuildingDefenseRecoverySpeedModifier;
 	int m_iModifiedBuildingDefenseRecoverySpeedCap;
 	int m_iExtraCityDefenseRecoverySpeedModifier;
 
+	int m_iExtraTechSpecialistHappiness;
+	int m_iExtraBuildingHappinessFromTech;
+	int m_iExtraBuildingHealthFromTech;
+	int m_iExtraTechSpecialistHealth;
 	int** m_ppaaiLocalSpecialistExtraYield;
 	int** m_ppaaiLocalSpecialistExtraCommerce;
 	int m_iPrioritySpecialist;
@@ -1719,28 +1732,31 @@ protected:
 	int m_iExtraInsidiousness;
 	int m_iExtraInvestigation;
 
-	// The worked-plot Σ per yield (recompute-only, never serialized; bound in the ctor) -- getPlotYield's O(1) source.
-	CvDerivedCache<CvCity, int, NUM_YIELD_TYPES> m_plotYieldSum;
-	int* m_aiBuildingBonusVicinityYield100; // squirrelBanana: PURE-FUNCTION bonus/vicinity building yield (recomputed every read, NOT serialized) -- #vicinity-build-order fix
-	// STREAMLINED 2026-06-28: getBuildingExtraYield100 (squirrelBanana) is now a RECOMPUTE-ONLY, dirty-flagged cache
-	// (uniform with the building-commerce + plot + specialist caches). Was recompute-EVERY-read (getYieldRate100 is
-	// uncached, so it ran on every yield read — a real hot-path cost). m_abBuildingExtraYield100Dirty is flipped by
-	// onYieldChange (the single yield trigger) so the rebuild point is OBVIOUS; NEITHER is serialized — dirty on
-	// construct/load ⇒ rebuilt fresh. Same build-order-independent fresh sum, now cached between yield changes.
-	mutable int* m_aiBuildingExtraYield100Cache;
-	mutable bool* m_abBuildingExtraYield100Dirty;
+	int* m_aiRiverPlotYield;
+	int* m_aiBaseYieldRate;
+	int* m_buildingExtraYield100;
 	int* m_buildingYieldMod;
+	int* m_buildingCommerceMod;
+	int* m_aiExtraYield;
+	int* m_aiSpecialistYieldTotal;
+	int* m_aiBaseYieldPerPopRate;
 	int* m_aiYieldRateModifier;
 	int* m_aiPowerYieldRateModifier;
+	int* m_aiBonusYieldRateModifier;
 	int* m_aiTradeYield;
+	int* m_aiCorporationYield;
+	int* m_aiExtraSpecialistYield;
+	int* m_aiExtraSpecialistCommerce;
+	mutable int* m_aiCommerceRate;
+	mutable bool* m_abCommerceRateDirty;
 	int* m_aiProductionToCommerceModifier;
-	// STREAMLINED 2026-06-28: getBuildingCommerce100 is now a RECOMPUTE-ONLY, dirty-flagged cache (the plot/specialist
-	// cache-rebuild mechanism, owner ruling). m_aiBuildingCommerce100 holds the fresh ×100 value; m_abBuildingCommerce100Dirty
-	// is flipped by setCommerceDirty (the single trigger) so the rebuild point is OBVIOUS; NEITHER is serialized — dirty on
-	// construct ⇒ rebuilt fresh on load. Kills the build-after-tech / build-after-bonus staleness uniformly with squirrelBanana.
-	mutable int* m_aiBuildingCommerce100;
-	mutable bool* m_abBuildingCommerce100Dirty;
+	int* m_aiBuildingCommerce;
+	int* m_aiSpecialistCommerce100;
+	int* m_aiReligionCommerce;
+	int* m_aiCorporationCommerce;
 	int* m_aiCommerceRateModifier;
+	int* m_aiCommerceHappinessPer;
+	int* m_commercePerPopFromBuildings;
 	int* m_aiDomainFreeExperience;
 	int* m_aiDomainProductionModifier;
 	int* m_aiCulture;
@@ -1754,7 +1770,8 @@ protected:
 	CvWString m_szName;
 	CvString m_szScriptData;
 
-	int* m_paiFreeBonusEvents;   // event/WB-granted free bonuses ONLY (persisted one-shot state); the building part is computed
+	int* m_paiFreeBonus;
+	int* m_paiNumBonuses;
 	int* m_paiProjectProduction;
 	int* m_paiBuildingOriginalOwner;
 	int* m_paiBuildingOriginalTime;
@@ -1764,9 +1781,11 @@ protected:
 	int* m_paiSpecialistCount;
 	int* m_paiMaxSpecialistCount;
 	int* m_paiForceSpecialistCount;
+	int* m_paiFreeSpecialistCount;
 	int* m_paiFreeSpecialistCountUnattributed;
 	int* m_paiImprovementFreeSpecialists;
 	int* m_paiReligionInfluence;
+	int* m_paiStateReligionHappiness;
 	int* m_paiUnitCombatFreeExperience;
 
 	bool* m_pabWorkingPlot;
@@ -1774,52 +1793,11 @@ protected:
 	bool* m_pabHasCorporation;
 
 	int	m_deferringBonusProcessingCount;
-	int	m_bulkBuildingProcessingCount;
 	int* m_paiStartDeferredSectionNumBonuses;
-	// The MAINTAINED bonus counts (owner design: added/subtracted on events, ZERO calculation on read).
-	// m_aiNetworkBonusTotal mirrors the group's per-bonus total AS DELIVERED by the fan-out (assigned, never
-	// summed); m_aiEffectiveBonusCount is the fully-gated read answer (tech gate x minted gate + corp add-on),
-	// refreshed ONLY at the events that move an input. Derived, never serialized; the group stays authoritative.
-	int* m_aiNetworkBonusTotal;
-	int* m_aiEffectiveBonusCount;
-
-	// the citizen-juggle bracket (see startCitizenJuggling): nesting count + the deferred-layer flags + the
-	// run-start snapshots the net replay diffs against
-	int m_iCitizenJugglingCount;
-	bool m_bJuggleDeferredSpec;
-	bool m_bJuggleDeferredWork;
-	std::vector<int> m_juggleSpecStart;
-	std::vector<bool> m_juggleWorkStart;
 
 	CvProperties m_Properties;
 	CvBuildingList m_BuildingList;
 	CvUnitList m_UnitList;
-
-public:
-	// #430: the CITY scope packages (scope-packages.md) -- a MUTABLE derived cache holding ONLY this city's
-	// own-scope sums, one package per field (never serialized; the CvPlot yield-cache idiom). Public by the
-	// shadow-phase convention; the CascadeAccumulator module is the query surface.
-	mutable CascadeCityPackages m_cascadeCityPackages;
-
-	// #430 THE UNIFORM PACKAGES ([DEC-uniform-cache-shape]): the two dictionaries -- flats + percents -- keyed by
-	// the unified channel enum, on the ONE cache component with a dirty bit per channel. Holds ONLY this CITY's
-	// own-scope deposits (modifier.md �1); the downward roll happens at read. Never serialized.
-	mutable CascadePackages<CvCity> m_cascadeChannels;
-	void cascadeRefillChannels(int iChanMask) const;   // the CvDerivedCacheSet refresh delegate
-	// The uniform reads. (Named getCascade* rather than getYield while the 360 legacy channel getters still
-	// exist -- CvPlot::getYield(YieldTypes) would make an enum-to-enum overload ambiguous. The name converges
-	// on getYield as those getters are deleted, [DEC-new-getter-surface].)
-	int getCascadeFlat(CascadeChannel eCh) const    { return m_cascadeChannels.readFlat(eCh); }
-	int getCascadePercent(CascadeChannel eCh) const { return m_cascadeChannels.readPercent(eCh); }
-	void cascadeRefreshPackages(int iMask) const;   // the CacheSet's refresh delegate -> CascadeAccumulator::refreshCityPackages
-	// #430: the standing cascade operating buildings (active set + vicinity provides) -- same derived-cache idiom
-	// (never serialized; event-marked; the slice boundary is the self-heal). Query via EnablerKernel::operatingBuildings/wireOperatingBuildings.
-	mutable OperatingBuildings m_operatingBuildings;
-	// #430: the standardized per-city enabler (enabler.md par.7 -- CvEnabler.h): the city's constructible domain,
-	// seeded once + event-maintained by BuildingEnabler. Never serialized; reset() unseeds (lazy re-seed on read).
-	mutable CityEnabler m_enabler;
-	void refreshOperatingBuildings(int iMask) const;   // the CacheSet's refresh delegate -> EnablerKernel::recomputeOperatingBuildingsInto
-protected:
 
 	std::vector<IDInfo> m_paTradeCities;
 
@@ -1827,6 +1805,8 @@ protected:
 	OrderQueue m_orderQueue;
 
 	std::vector< std::pair<float, float> > m_kWallOverridePoints;
+	std::vector< std::pair<TechTypes, int> > m_buildingHappinessFromTech;
+	std::vector< std::pair<TechTypes, int> > m_buildingHealthFromTech;
 	std::vector< std::pair<BuildingTypes, int> > m_progressOnBuilding;
 	std::vector< std::pair<BuildingTypes, int> > m_delayOnBuilding;
 	std::vector< std::pair<UnitTypes, int> > m_progressOnUnit;
@@ -1834,11 +1814,8 @@ protected:
 	std::vector< std::pair<BonusTypes, int> > m_corpBonusProduction;
 
 	std::vector<EventTypes> m_aEventsOccured;
-	std::vector<BuildingYieldChange> m_aBuildingYieldChange;   // MIXED store (event/vote grants + the bonus-conditioned
-	// building yield term) -- the ONE bonus-fed member still serialized; its split awaits the modifier cut's extra-yield
-	// rework. The load fold SUPPRESSES processBonus's yield leg so nothing double-applies.
-	std::vector<BuildingCommerceChange> m_aBuildingCommerceChange;           // RETIRED (empire part moved to the player recompute ledger); read consume-don't-keep, no writers
-	std::vector<BuildingCommerceChange> m_aBuildingCommerceChangeEvents;     // event/vote-granted per-building commerce: SEPARATELY PERSISTED genuine state, outside the recompute-from-source empire path
+	std::vector<BuildingYieldChange> m_aBuildingYieldChange;
+	std::vector<BuildingCommerceChange> m_aBuildingCommerceChange;
 	BuildingChangeArray m_aBuildingHappyChange;
 	BuildingChangeArray m_aBuildingHealthChange;
 
@@ -1867,6 +1844,7 @@ protected:
 	void doGreatPeople();
 	void doMeltdown();
 	bool doCheckProduction();
+	void doPromotion();
 
 	int getHurryCostModifier(UnitTypes eUnit) const;
 	int getHurryCostModifier(BuildingTypes eType) const;
@@ -1874,6 +1852,7 @@ protected:
 	int getHurryCost(UnitTypes eUnit) const;
 	int getHurryCost(BuildingTypes eType) const;
 	int getHurryCost(int iProductionLeft, int iHurryModifier) const;
+	int getHurryPopulation(HurryTypes eHurry, int iHurryCost) const;
 	bool canHurryUnit(HurryTypes eHurry, UnitTypes eUnit) const;
 	bool canHurryBuilding(HurryTypes eHurry, BuildingTypes eType) const;
 	void recalculateMaxFoodKeptPercent();
@@ -1902,8 +1881,18 @@ public:
 	int getLocalSpecialistExtraYield(SpecialistTypes eSpecialist, YieldTypes eYield) const;
 	int getLocalSpecialistExtraCommerce(SpecialistTypes eSpecialist, CommerceTypes eCommerce) const;
 
-private:   // #430 cut: FromTech accumulator methods removed (cascade iTechGatedNet + specialist bucket)
+private:
+	void updateExtraTechSpecialistHappiness();
 
+	int getBuildingHappinessFromTech(const TechTypes eTech) const;
+	void changeBuildingHappinessFromTech(const TechTypes eTech, const int iChange);
+	int getBuildingHealthFromTech(const TechTypes eTech) const;
+	void changeBuildingHealthFromTech(const TechTypes eTech, const int iChange);
+
+	void updateExtraTechHappiness();
+	void updateExtraTechSpecialistHealth();
+	int getExtraTechSpecialistHealth() const;
+	int getTechHealth(TechTypes eTech) const;
 	void changeLocalSpecialistExtraYield(SpecialistTypes eSpecialist, YieldTypes eYield, int iChange);
 	void changeLocalSpecialistExtraCommerce(SpecialistTypes eSpecialist, CommerceTypes eCommerce, int iChange);
 
@@ -1938,6 +1927,8 @@ public:
 	int getExtraLocalCaptureProbabilityModifier() const;
 	int getExtraLocalCaptureResistanceModifier() const;
 
+	void updateSpecialistHappinessHealthFromTech();
+
 	int getExtraLocalDynamicDefense() const;
 	void setExtraLocalDynamicDefense(int iValue);
 	void changeExtraLocalDynamicDefense(int iChange);
@@ -1947,6 +1938,8 @@ public:
 	void changeExtraRiverDefensePenalty(int iChange);
 
 	int getExtraMinDefense() const;
+	void setExtraMinDefense(int iValue);
+	void changeExtraMinDefense(int iChange);
 
 	int getExtraBuildingDefenseRecoverySpeedModifier() const;
 	void setExtraBuildingDefenseRecoverySpeedModifier(int iValue);
@@ -1982,6 +1975,10 @@ public:
 	void changeSpecialistInvestigation(int iChange);
 
 	int getPropertyNeed(PropertyTypes eProperty) const;
+	int getNumPropertySpawns() const;
+	PropertySpawns& getPropertySpawn(int iIndex);
+	void changePropertySpawn(int iChange, PropertyTypes eProperty, UnitTypes eUnit);
+	void doPropertyUnitSpawn();
 
 	void AI_setPropertyControlBuildingQueued(bool bSet);
 	bool AI_isPropertyControlBuildingQueued() const;
@@ -1989,8 +1986,11 @@ public:
 	const CityOutputHistory* getCityOutputHistory() const;
 
 private:
+	mutable stdext::hash_map<UnitTypes,bool> m_canTrainCacheUnits;
 	mutable stdext::hash_map<UnitTypes,UnitTypes> m_eCachedAllUpgradesResults;
 	mutable stdext::hash_map<UnitTypes,UnitTypes> m_eCachedAllUpgradesResultsRoot;
+	mutable bool m_canTrainCachePopulated;
+	mutable bool m_canTrainCacheDirty;
 	bool m_bPlotWorkingMasked;
 	mutable int m_totalCommerceRateModifier[NUM_COMMERCE_TYPES];
 
@@ -2001,9 +2001,20 @@ private:
 	bool m_bVisibilitySetup;
 	mutable bool m_bMaintenanceDirty;
 
-	//	#430: the unit upgrade-availability cache invalidation; the dead canTrain cache is gone.
+	mutable std::map<int,bool>*	m_bCanConstruct;
+
+
+	//	Koshling - add cache of trainability of units which will be
+	//	populated prior to calculating the city's build choices and
+	//	then invalidated so it is only used within that scope
+#ifdef CAN_TRAIN_CACHING
 public:
+	void populateCanTrainCache(bool bUnconditional = true) const;
+	void clearCanTrainCache() const;
 	void clearUpgradeCache(UnitTypes eUnit) const;
+protected:
+	void invalidateCachedCanTrainForUnit(UnitTypes eUnit) const;
+#endif
 
 public:
 	//
@@ -2013,8 +2024,11 @@ public:
 		DECLARE_MAP_FUNCTOR(CvCity, void, startDeferredBonusProcessing);
 		DECLARE_MAP_FUNCTOR(CvCity, void, endDeferredBonusProcessing);
 		DECLARE_MAP_FUNCTOR(CvCity, void, doTurn);
+		DECLARE_MAP_FUNCTOR(CvCity, void, clearCanTrainCache);
 		DECLARE_MAP_FUNCTOR(CvCity, void, checkReligiousDisablingAllBuildings);
+		DECLARE_MAP_FUNCTOR(CvCity, void, updateExtraSpecialistYield);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateExtraSpecialistCommerce);
+		DECLARE_MAP_FUNCTOR(CvCity, void, updateReligionCommerce);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateBuildingCommerce);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateCorporation);
 		DECLARE_MAP_FUNCTOR(CvCity, void, updateYield);
@@ -2033,9 +2047,14 @@ public:
 		DECLARE_MAP_FUNCTOR(CvCity, void, invalidateYieldRankCache);
 		DECLARE_MAP_FUNCTOR(CvCity, void, invalidateCommerceRankCache);
 
+		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateExtraBuildingHappiness, bool);
+		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateExtraBuildingHealth, bool);
+		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateFeatureHappiness, bool);
+		DECLARE_MAP_FUNCTOR_1(CvCity, void, updateReligionHappiness, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setCommerceModifierDirty, CommerceTypes);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setCommerceDirty, CommerceTypes);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, setLayoutDirty, bool);
+		DECLARE_MAP_FUNCTOR_1(CvCity, void, FlushCanConstructCache, BuildingTypes);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, AI_setAssignWorkDirty, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, AI_setChooseProductionDirty, bool);
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, AI_setMilitaryProductionCity, bool);
@@ -2045,6 +2064,7 @@ public:
 		DECLARE_MAP_FUNCTOR_1(CvCity, void, changeFood, int);
 
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, setBuildingListFilterActive, BuildingFilterTypes, bool);
+		DECLARE_MAP_FUNCTOR_2(CvCity, void, updateCommerce, CommerceTypes, bool);
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, setFreeBuilding, BuildingTypes, bool);
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, changeFreeAreaBuildingCount, BuildingTypes, int);
 		DECLARE_MAP_FUNCTOR_2(CvCity, void, changeFreeSpecialistCount, SpecialistTypes, int);

@@ -5,26 +5,24 @@
 #ifndef CIV4_PLAYER_H
 #define CIV4_PLAYER_H
 
-#include "Tools/copy_iterator.h"
-#include "Cascade/CvCascadeScopePackages.h"   // CascadePlayerScope -- the #430 player scope packages (m_cascadePlayerScope)
-#include "Enabler/CvEnabler.h"                // PlayerEnabler -- the standardized enabler's player-domain vectors (m_enabler)
-#include "UI/CvBuildLists.h"
-#include "AI/CvCityAI.h"
-#include "AI/CvContractBroker.h"
-#include "AI/CvWorkerAI.h"
-#include "AI/CvHunterAI.h"
-#include "AI/CvDecisionAI.h"
+#include "copy_iterator.h"
+#include "CvBuildLists.h"
+#include "CvCityAI.h"
+#include "CvContractBroker.h"
+#include "CvWorkerAI.h"
+#include "CvHunterAI.h"
+#include "CvDecisionAI.h"
 #include "CvGameObject.h"
-#include "UI/CvBuildLists.h"
+#include "CvBuildLists.h"
 #include "CvPlotGroup.h"
 #include "CvProperties.h"
-#include "AI/CvSelectionGroupAI.h"
-#include "UI/CvTalkingHeadMessage.h"
-#include "UI/CvUnitList.h"
-#include "AI/CvUnitAI.h"
+#include "CvSelectionGroupAI.h"
+#include "CvTalkingHeadMessage.h"
+#include "CvUnitList.h"
+#include "CvUnitAI.h"
 #include "CvDerivedData.h"
-#include "Infrastructure/index_iterator_base.h"
-#include "Infrastructure/LinkedList.h"
+#include "index_iterator_base.h"
+#include "LinkedList.h"
 #ifdef CVARMY_BREAKSAVE
 	#include "CvArmy.h"
 #endif
@@ -79,25 +77,6 @@ public:
 
 	CvGameObjectPlayer* getGameObject() { return &m_GameObject; };
 	const CvGameObjectPlayer* getGameObject() const { return &m_GameObject; };
-
-	// #430: the PLAYER scope packages (scope-packages.md) -- a MUTABLE derived cache holding ONLY this
-	// player's own-scope sums (never serialized; all-dirty from birth). The CascadeAccumulator module is
-	// the query surface; the cache lives ON the object it caches for.
-	mutable CascadePlayerScope m_cascadePlayerScope;
-
-	// #430 THE UNIFORM PACKAGES ([DEC-uniform-cache-shape]): the two dictionaries keyed by the unified channel
-	// enum, on the ONE cache component with a dirty bit per channel. Holds ONLY this EMPIRE-scope sum.
-	mutable CascadePackages<CvPlayer> m_cascadeChannels;
-	void cascadeRefillChannels(int iChanMask) const;
-	int getCascadeFlat(CascadeChannel eCh) const    { return m_cascadeChannels.readFlat(eCh); }
-	int getCascadePercent(CascadeChannel eCh) const { return m_cascadeChannels.readPercent(eCh); }
-	void cascadeRefreshPlayerScope(int iMask) const;   // the CacheSet's refresh delegate -> CascadeAccumulator::refreshPlayerScope
-
-	// #430: the standardized ENABLER object (enabler.md par.7/7.1) -- the player-domain maintained vectors
-	// (techs first). The delta-apply SIBLING of CvDerivedCache: seeded once at load, updated in place by the
-	// spine consumer's O(delta) events, read as bare O(1) lookups. Never serialized. Mutable for the one-time
-	// lazy seed guard on const reads (the m_cascadePlayerScope precedent).
-	mutable PlayerEnabler m_enabler;
 
 	void setIdleCity(const int iCityID, const bool bNewValue);
 	bool hasIdleCity() const;
@@ -251,8 +230,14 @@ public:
 	void updateMaintenance() const;
 	void setMaintenanceDirty(const bool bDirty, const bool bCities = true) const;
 
+	void updateFeatureHappiness(bool bLimited = false);
+	void updateReligionHappiness(bool bLimited = false);
+
+	void updateExtraSpecialistYield();
 	void setCommerceDirty(CommerceTypes eIndex = NO_COMMERCE, bool bPlayerOnly = false);
+	void updateCommerce(CommerceTypes eCommerce = NO_COMMERCE, bool bForce = true) const;
 	void updateBuildingCommerce();
+	void updateReligionCommerce();
 	void updateCorporation();
 	void updateCitySight(bool bIncrement, bool bUpdatePlotGroups);
 	void updateTradeRoutes();
@@ -634,9 +619,8 @@ public:
 	int getMilitaryUnitUpkeepMod() const;
 	void changeCivilianUnitUpkeepMod(const int iChange);
 	void changeMilitaryUnitUpkeepMod(const int iChange);
-	void markUnitUpkeepDirty() const; // #430 F4: invalidate the per-unit-upkeep Sigma buckets + the final cache
+	void changeUnitUpkeep(const int iChange, const bool bMilitary);
 	void setUnitUpkeepDirty() const;
-	void ensureUnitUpkeepBuckets() const; // #430 F4: recompute the raw civ/mil buckets over live units when dirty
 
 	int64_t getUnitUpkeepCivilian100() const;
 	int64_t getUnitUpkeepCivilian() const;
@@ -644,15 +628,10 @@ public:
 	int64_t getUnitUpkeepMilitary100() const;
 	int64_t getUnitUpkeepMilitary() const;
 	int64_t getUnitUpkeepMilitaryNet() const;
-	int64_t applyCivilianUpkeep(const int64_t iRaw100) const;    // #430 F4: empire mod + /100 (civilian carve-out)
-	int64_t applyCivilianUpkeepNet(const int64_t iRaw100) const; // #430 F4: applyCivilianUpkeep - free allowance, floor 0
-	int64_t applyMilitaryUpkeep(const int64_t iRaw100) const;    // #430 F4: empire mod + /100 (military carve-out)
-	int64_t applyMilitaryUpkeepNet(const int64_t iRaw100) const; // #430 F4: applyMilitaryUpkeep - free allowance, floor 0
 	int64_t getUnitUpkeepNet(const bool bMilitary, const int iUnitUpkeep = MAX_INT) const;
 	int64_t calcFinalUnitUpkeep(const bool bReal=true) const;
-	int64_t calcFinalUnitUpkeepFrom(const int64_t iCivilian100, const int64_t iMilitary100) const; // #430 F4: pure, for the what-if
 	int64_t getFinalUnitUpkeep() const;
-	int getFinalUnitUpkeepChange(const int iExtra, const bool bMilitary) const;
+	int getFinalUnitUpkeepChange(const int iExtra, const bool bMilitary);
 	// ! Unit Upkeep
 
 	int getNumMilitaryUnits() const;
@@ -726,16 +705,24 @@ public:
 
 	int getExtraHealth() const;
 	void changeExtraHealth(int iChange);
+	void changeCivicHealth(const int iChange, const bool bLimited = false);
 
 	int getCivicHealth() const; // Included in getExtraHealth() but split off to aid hover text displays
 
 	int getBuildingGoodHealth() const;
+	void changeBuildingGoodHealth(int iChange);
+
 	int getBuildingBadHealth() const;
+	void changeBuildingBadHealth(int iChange);
 
 	int getExtraHappiness() const;
 	void changeExtraHappiness(int iChange, bool bUnattributed = false);
 
 	int getBuildingHappiness() const;
+	void changeBuildingHappiness(int iChange);
+
+	int getLargestCityHappiness() const;
+	void changeLargestCityHappiness(int iChange, bool bLimited = false);
 
 	int getWarWearinessPercentAnger() const;
 	void updateWarWearinessPercentAnger();
@@ -744,6 +731,8 @@ public:
 	int getWarWearinessModifier() const;
 	void changeWarWearinessModifier(int iChange, bool bLimited = false);
 
+	int getFreeSpecialist() const;
+	void changeFreeSpecialist(int iChange);
 
 	int getNoForeignTradeCount() const;
 	bool isNoForeignTrade() const;
@@ -779,8 +768,10 @@ public:
 	bool isNoNonStateReligionSpread() const;
 	void changeNoNonStateReligionSpreadCount(int iChange);
 
-	int getStateReligionHappiness() const;   // #430 cut: cascade-computed (CascadeWellbeing::playerStateReligionHappiness)
+	int getStateReligionHappiness() const;
+	void changeStateReligionHappiness(int iChange, bool bLimited = false);
 	int getNonStateReligionHappiness() const;
+	void changeNonStateReligionHappiness(int iChange, bool bLimited = false);
 
 	int getStateReligionUnitProductionModifier() const;
 	void changeStateReligionUnitProductionModifier(int iChange);
@@ -908,8 +899,10 @@ public:
 	void changeSeaPlotYield(YieldTypes eIndex, int iChange);
 
 	int getGoldenAgeYield(YieldTypes eIndex) const;
+	void changeGoldenAgeYield(YieldTypes eIndex, int iChange);
 
 	int getGoldenAgeCommerce(CommerceTypes eIndex) const;
+	void changeGoldenAgeCommerce(CommerceTypes eIndex, int iChange);
 
 	int getYieldRateModifier(YieldTypes eIndex) const;
 	void changeYieldRateModifier(YieldTypes eIndex, int iChange);
@@ -927,6 +920,7 @@ public:
 	void changeTradeYieldModifier(YieldTypes eIndex, int iChange);
 
 	int getExtraCommerce100(const CommerceTypes eIndex) const;
+	void changeExtraCommerce100(const CommerceTypes eIndex, const int iChange);
 
 	int getCommercePercent(CommerceTypes eIndex) const;
 	void setCommercePercent(CommerceTypes eIndex, int iNewValue);
@@ -934,6 +928,7 @@ public:
 
 	int getTotalCityBaseCommerceRate(CommerceTypes eIndex) const;
 	int getCommerceRate(CommerceTypes eIndex) const;
+	void changeCommerceRate(CommerceTypes eIndex, int iChange);
 
 	int getCommerceRateModifier(CommerceTypes eIndex) const;
 	void changeCommerceRateModifier(CommerceTypes eIndex, int iChange);
@@ -948,10 +943,14 @@ public:
 	void changeCapitalCommerceRateModifier(CommerceTypes eIndex, int iChange);
 
 	int getStateReligionBuildingCommerce(CommerceTypes eIndex) const;
+	void changeStateReligionBuildingCommerce(CommerceTypes eIndex, int iChange);
 
 	int getSpecialistExtraCommerce(CommerceTypes eIndex) const;
+	void changeSpecialistExtraCommerce(CommerceTypes eIndex, int iChange);
 
-	bool isCommerceFlexible(CommerceTypes eIndex) const;   // cascade-backed (#430): runtime gates + the team getter
+	int getCommerceFlexibleCount(CommerceTypes eIndex) const;
+	bool isCommerceFlexible(CommerceTypes eIndex) const;
+	void changeCommerceFlexibleCount(CommerceTypes eIndex, int iChange);
 
 	int getGoldPerTurnByPlayer(PlayerTypes eIndex) const;
 	void changeGoldPerTurnByPlayer(PlayerTypes eIndex, int iChange);
@@ -988,6 +987,7 @@ public:
 	void changeExtraBuildingHealth(const BuildingTypes eIndex, const int iChange, const bool bLimited = false);
 
 	int getFeatureHappiness(FeatureTypes eIndex) const;
+	void changeFeatureHappiness(FeatureTypes eIndex, int iChange, bool bLimited = false);
 
 	int getUnitCount(const UnitTypes eUnit) const;
 	void changeUnitCount(const UnitTypes eUnit, const int iChange);
@@ -1062,17 +1062,11 @@ public:
 
 	int64_t getTreasuryUpkeep() const;
 
-	// per-type specialist empire boosts -- recompute-from-source CvDerivedCacheVec reads (never serialized).
-	// Sources: the SPECIALIST's own conditioned empire deposits (wonder/building-enabled, the deliveryguy
-	// own-output home; evaluated) + the active traits' keyed specialist rows. The old serialized accumulators
-	// + their changers are gone (the stub building feeders fed them 0 -- the boosts never landed in output).
 	int getExtraSpecialistYield(SpecialistTypes eIndex1, YieldTypes eIndex2) const;
-	void recomputeSpecialistExtraYield(std::vector<int>& aOut) const;
+	void changeExtraSpecialistYield(SpecialistTypes eIndex1, YieldTypes eIndex2, int iChange);
 
-	// The empire keyed improvement-yield total (civics + active traits + processed buildings' global rows) --
-	// a recompute-from-source CvDerivedCacheVec read (never serialized; dirty on construct/load). The old
-	// serialized accumulator + its changer are gone (the stored-accumulator drift class, modifier.md par.2b).
 	int getImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2) const;
+	void changeImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2, int iChange);
 
 	void updateGroupCycle(CvUnit* pUnit, bool bFarMove);
 	CLLNode<int>* removeGroupCycle(int iID);
@@ -1317,20 +1311,25 @@ public:
 	void changePopulationgrowthratepercentage(int iChange, bool bAdd);
 
 	int getWorldHappiness() const;
+	void changeWorldHappiness(int iChange);
 
 	int getWorldHealth() const;
+	void changeWorldHealth(int iChange);
 
 	int getProjectHappiness() const;
+	void changeProjectHappiness(int iChange);
 
 	int getForceAllTradeRoutes() const;
 	void changeForceAllTradeRoutes(int iChange);
 
 	int getProjectHealth() const;
+	void changeProjectHealth(int iChange);
 
 	inline bool isNoCapitalUnhappiness() const { return m_iNoCapitalUnhappiness > 0; }
 	void changeNoCapitalUnhappiness(int iChange);
 
 	int getCivilizationHealth() const;
+	void changeCivilizationHealth(int iChange);
 
 	int getTaxRateUnhappiness() const;
 	void changeTaxRateUnhappiness(int iChange);
@@ -1358,10 +1357,6 @@ public:
 
 	int getCivicInflation() const;
 	void changeCivicInflation(int iChange);
-
-	// the raw inflation modifier (m_iInflationModifier) -- exposed so the diagnostic dump can decompose
-	// getInflationMod10000 (owner ruling 2026-06-20: visibility never justifies dropping a calc source).
-	int getInflationModifier() const { return m_iInflationModifier; }
 
 	int getHurryCostModifier() const;
 	void changeHurryCostModifier(int iChange);
@@ -1391,6 +1386,7 @@ public:
 	int getForeignTradeRouteModifier() const;
 	void changeForeignTradeRouteModifier(int iChange);
 	int getCivicHappiness() const;
+	void changeCivicHappiness(int iChange);
 
 	bool hasEnemyDefenderUnit(const CvPlot* pPlot) const;
 
@@ -1448,6 +1444,9 @@ public:
 	void setCommodoreFieldPlot(bool bNewValue, CvPlot* aPlot);
 	std::vector<CvPlot*> getCommodoreFieldPlots() const { return m_commodoreFieldPlots; }
 
+	int getFreeSpecialistCount(SpecialistTypes eIndex) const;
+	void setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue);
+	void changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange);
 
 	bool hasValidBuildings(TechTypes eTech) const;
 
@@ -1460,8 +1459,6 @@ public:
 
 	int getBuildingCommerceChange(BuildingTypes building, CommerceTypes CommerceType) const;
 	void changeBuildingCommerceChange(BuildingTypes building, CommerceTypes CommerceType, int iChange);
-	void recomputeBuildingCommerceChange(std::vector<int>& aOut) const;   // the CvDerivedCacheVec recompute (flat [building × commerce])
-	void recomputeImprovementYields(std::vector<int>& aOut) const;        // the CvDerivedCacheVec recompute (flat [improvement × yield])
 
 	int getBonusCommerceModifier(BonusTypes eBonus, CommerceTypes eIndex) const;
 	void changeBonusCommerceModifier(BonusTypes eBonus, CommerceTypes eIndex, int iChange);
@@ -1501,6 +1498,7 @@ public:
 
 
 	bool m_bChoosingReligion;
+	bool m_bHasLanguage;
 
 	int getBuildingCount(BuildingTypes eBuilding, bool bUpgrades) const;
 
@@ -1573,16 +1571,11 @@ protected:
 	int** m_ppiSpecialistCommercePercentChanges;
 	int** m_ppaaiTerrainYieldChange;
 	int** m_ppiBuildingCommerceModifier;
-	// the empire per-building commerce-change ledger on the ONE component (CvDerivedCacheVec -- converged
-	// 2026-07-05 from the hand-rolled int** + dirty-bool pair; flat index = building*NUM_COMMERCE_TYPES + commerce;
-	// never serialized, dirty-on-construct, recompute-from-source)
-	mutable CvDerivedCacheVec<CvPlayer, int> m_buildingCommerceChange;
-	// the empire keyed improvement-yield ledger, same component + shape (flat index = improvement*NUM_YIELD_TYPES
-	// + yield; sources: adopted civics + active traits + cascade-ACTIVE buildings' global rows)
-	mutable CvDerivedCacheVec<CvPlayer, int> m_improvementYieldChange;
+	int** m_ppiBuildingCommerceChange;
 	int** m_ppiBonusCommerceModifier;
 	bool* m_pabAutomatedCanBuild;
 	int* m_paiResourceConsumption;
+	int* m_paiFreeSpecialistCount;
 	int* m_aiLandmarkYield;
 	int* m_aiModderOptions;
 	int m_iEnslavementChance;
@@ -1590,14 +1583,20 @@ protected:
 	TeamTypes m_eSecretaryGeneralVote;
 	UnitTypes m_eGreatGeneralTypetoAssign;
 	int m_iForeignTradeRouteModifier;
+	int m_iCivicHappiness;
 	int m_iNoLandmarkAngerCount;
 	int m_iLandmarkHappiness;
 	int m_iExtraCityDefense;
 	int m_iDistantUnitSupportCostModifier;
 	int m_iReligionSpreadRate;
 	int m_iTaxRateUnhappiness;
+	int m_iCivilizationHealth;
 	int m_iNoCapitalUnhappiness;
+	int m_iProjectHealth;
 	int m_iForceAllTradeRoutes;
+	int m_iProjectHappiness;
+	int m_iWorldHealth;
+	int m_iWorldHappiness;
 	float m_fPopulationgrowthratepercentageLog;
 	int m_iCorporationSpreadModifier;
 	// @SAVEBREAK - delete
@@ -1827,6 +1826,7 @@ protected:
 	bool m_bInquisitionConditions;
 
 	int m_iUnitUpgradePriceModifier;
+	int m_iNationalGreatPeopleRate;
 
 	int m_iNumNukeUnits;
 	int m_iNumOutsideUnits;
@@ -1837,11 +1837,8 @@ protected:
 	int m_iCivilianUnitUpkeepMod;
 	int m_iMilitaryUnitUpkeepMod;
 
-	//#430 F4: the raw per-unit-upkeep buckets are a recompute-Sigma over live units. Never serialized: re-derives
-	// on the first read after load. m_bUnitUpkeepBucketsDirty gates the units-walk; m_bUnitUpkeepDirty gates the FINAL cache.
-	mutable int64_t m_iUnitUpkeepCivilian100Cache;
-	mutable int64_t m_iUnitUpkeepMilitary100Cache;
-	mutable bool m_bUnitUpkeepBucketsDirty;
+	int64_t m_iUnitUpkeepCivilian100;
+	int64_t m_iUnitUpkeepMilitary100;
 	mutable int64_t m_iFinalUnitUpkeep;
 	mutable bool m_bUnitUpkeepDirty;
 
@@ -1869,10 +1866,16 @@ protected:
 	int m_iUpkeepModifier;
 	int m_iLevelExperienceModifier;
 	int m_iExtraHealth;
+	int m_iCivicHealth;
+	int m_iBuildingGoodHealth;
+	int m_iBuildingBadHealth;
 	int m_iExtraHappiness;
 	int m_iExtraHappinessUnattributed;
+	int m_iBuildingHappiness;
+	int m_iLargestCityHappiness;
 	int m_iWarWearinessPercentAnger;
 	int m_iWarWearinessModifier;
+	int m_iFreeSpecialist;
 	int m_iNoForeignTradeCount;
 	int m_iNoCorporationsCount;
 	int m_iNoForeignCorporationsCount;
@@ -1882,6 +1885,8 @@ protected:
 	int m_iConversionTimer;
 	int m_iStateReligionCount;
 	int m_iNoNonStateReligionSpreadCount;
+	int m_iStateReligionHappiness;
+	int m_iNonStateReligionHappiness;
 	int m_iStateReligionUnitProductionModifier;
 	int m_iStateReligionBuildingProductionModifier;
 	int m_iStateReligionFreeExperience;
@@ -1929,8 +1934,11 @@ protected:
 	int m_iAIAttitudeModifier;
 	int m_iFocusPlotX;
 	int m_iFocusPlotY;
+	int* m_aiFreeCityYield;
 	int* m_aiLessYieldThreshold;
 
+	int* m_aiGoldenAgeYield;
+	int* m_aiGoldenAgeCommerce;
 	//TB Traits end
 
 	// Used for DynamicCivNames
@@ -1960,11 +1968,19 @@ protected:
 	int* m_aiCapitalYieldRateModifier;
 	int* m_aiExtraYieldThreshold;
 	int* m_aiTradeYieldModifier;
+	int* m_aiFreeCityCommerce; // @SAVEBREAK remove as it is unused.
+	int* m_extraCommerce;
 	int* m_aiCommercePercent;
+	int* m_aiCommerceRate;
+	bool* m_abCommerceDirty;
 	int* m_aiCommerceRateModifier;
 	int* m_aiCommerceRateModifierfromEvents;
 	int* m_aiCommerceRateModifierfromBuildings;
 	int* m_aiCapitalCommerceRateModifier;
+	int* m_aiStateReligionBuildingCommerce;
+	int* m_aiSpecialistExtraCommerce;
+	int* m_aiSpecialistExtraYield;
+	int* m_aiCommerceFlexibleCount;
 	int* m_aiGoldPerTurnByPlayer;
 	int* m_aiEspionageSpendingWeightAgainstTeam;
 
@@ -1976,6 +1992,7 @@ protected:
 	int* m_paiImprovementCount;
 	int** m_paiExtraBuildingYield;
 	int** m_paiExtraBuildingCommerce;
+	int* m_paiFeatureHappiness;
 	int* m_paiBuildingCount;
 	int* m_paiBuildingGroupCount;
 	int* m_paiBuildingGroupMaking;
@@ -1995,11 +2012,9 @@ protected:
 
 	CivicTypes* m_paeCivics;
 
-	// the per-type specialist empire boosts (flat index = specialist*channels + channel; sources: the
-	// SPECIALIST's own conditioned empire deposits -- the wonder/building-enabled entries the deliveryguy
-	// inversion homed there, evaluated via the ONE evaluator -- + the active traits' keyed specialist rows)
-	mutable CvDerivedCacheVec<CvPlayer, int> m_specialistExtraYield;
-	mutable CvDerivedCacheVec<CvPlayer, int> m_specialistExtraCommerce;
+	int** m_ppaaiSpecialistExtraYield;
+	int** m_ppaaiImprovementYieldChange;
+	int** m_ppaaiSpecialistExtraCommerce;
 
 	CLinkList<TechTypes> m_researchQueue;
 
@@ -2116,13 +2131,15 @@ public:
 	void setAIAttitudeModifier(int iNewValue);
 	void changeAIAttitudeModifier(int iChange);
 
-	int getExtraSpecialistCommerce(SpecialistTypes eIndex1, CommerceTypes eIndex2) const;   // see getExtraSpecialistYield
-	void recomputeSpecialistExtraCommerce(std::vector<int>& aOut) const;
+	int getExtraSpecialistCommerce(SpecialistTypes eIndex1, CommerceTypes eIndex2) const;
+	void changeExtraSpecialistCommerce(SpecialistTypes eIndex1, CommerceTypes eIndex2, int iChange);
 	void updateExtraSpecialistCommerce();
 
 	int getSpecialistExtraYield(YieldTypes eIndex) const;
+	void changeSpecialistExtraYield(YieldTypes eIndex, int iChange);
 
 	int getFreeCityYield(YieldTypes eIndex) const;
+	void changeFreeCityYield(YieldTypes eIndex, int iChange);
 
 	int getTraitExtraCityDefense() const;
 	void setTraitExtraCityDefense(int iNewValue);
@@ -2335,7 +2352,6 @@ public:
 	bool canHaveBuilder(BuildTypes eBuild) const;
 	//TB Nukefix
 	bool isNukesValid() const;
-	int getNukeState() const;   // #430 spine 3-state: 0 disabled / 1 enabled / 2 banned
 	void makeNukesValid(bool bValid = true);
 
 	int getUpgradeRoundCount() const;

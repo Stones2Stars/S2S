@@ -7,32 +7,32 @@
 //-----------------------------------------------------------------------------
 
 
-#include "Tools/FProfiler.h"
+#include "FProfiler.h"
 
 #include "CvGameCoreDLL.h"
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
 #include "CvCity.h"
-#include "Tools/CvFractal.h"
-#include "AI/CvGameAI.h"
-#include "Defines/CvGlobals.h"
+#include "CvFractal.h"
+#include "CvGameAI.h"
+#include "CvGlobals.h"
 #include "CvInfos.h"
-#include "Infrastructure/CvInitCore.h"
+#include "CvInitCore.h"
 #include "CvMap.h"
-#include "Infrastructure/CvMapGenerator.h"
-#include "AI/CvPlayerAI.h"
+#include "CvMapGenerator.h"
+#include "CvPlayerAI.h"
 #include "CvPlot.h"
 #include "CvPlotGroup.h"
-#include "Infrastructure/CvPython.h"
+#include "CvPython.h"
 #include "CvSelectionGroup.h"
-#include "AI/CvUnitAI.h"
-#include "UI/CvViewport.h"
-#include "Infrastructure/CvDLLEngineIFaceBase.h"
-#include "Infrastructure/CvDLLEntityIFaceBase.h"
-#include "Infrastructure/CvDLLFAStarIFaceBase.h"
-#include "Infrastructure/CvDLLInterfaceIFaceBase.h"
-#include "Infrastructure/CvDLLUtilityIFaceBase.h"
-#include "Infrastructure/FAStarNode.h"
+#include "CvUnitAI.h"
+#include "CvViewport.h"
+#include "CvDLLEngineIFaceBase.h"
+#include "CvDLLEntityIFaceBase.h"
+#include "CvDLLFAStarIFaceBase.h"
+#include "CvDLLInterfaceIFaceBase.h"
+#include "CvDLLUtilityIFaceBase.h"
+#include "FAStarNode.h"
 #include <direct.h> // for getcwd()
 #include <stdlib.h> // for MAX_PATH
 
@@ -1481,10 +1481,10 @@ void CvMap::afterSwitch()
 	gDLL->getEngineIFace()->SetDirty(GlobeTexture_DIRTY_BIT, true);
 	gDLL->getEngineIFace()->SetDirty(CultureBorders_DIRTY_BIT, true);
 	gDLL->getInterfaceIFace()->makeSelectionListDirty();
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(ColoredPlots_DIRTY_BIT), true);
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionCamera_DIRTY_BIT), true);
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(HighlightPlot_DIRTY_BIT), true);
-	gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(BlockadedPlots_DIRTY_BIT), true); // Matt: Maybe need this.
+	gDLL->getInterfaceIFace()->setDirty(ColoredPlots_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty(SelectionCamera_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty(HighlightPlot_DIRTY_BIT, true);
+	gDLL->getInterfaceIFace()->setDirty(BlockadedPlots_DIRTY_BIT, true); // Matt: Maybe need this.
 
 	int iWidth = GC.getMapInfo(getType()).getGridWidth();
 	if (iWidth == 0)

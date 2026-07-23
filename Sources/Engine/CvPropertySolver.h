@@ -18,7 +18,6 @@
 
 class CvGameObject;
 class CvPropertyManipulators;
-class CvPlot;
 
 typedef std::map<const CvGameObject*, CvProperties> PropertySolverMapType;
 
@@ -128,14 +127,6 @@ protected:
 	void resetPropertyChanges();
 	void gatherAndSolve();
 
-	// F5: the operate-band WATERMARK -- this little module inside the property engine detects when a city property
-	// crosses a requires.operate band threshold, then fires ONE targeted operate re-check (CascadeAccumulator::
-	// cityPropertyBandChanged). It owns the window state: per city (keyed by its stable plot) x per banded property,
-	// the [lo,hi] bracket of the current value between the nearest band thresholds. Ticked once after each solve;
-	// O(1) in-bracket test per (city,prop), work fires ONLY on a bracket change (an actual crossing) -- no per-turn
-	// poll, no-self-heal-compliant. Derived state, NEVER serialized; a (re)load re-seeds on first tick (no emit).
-	void doTurnBandWatch();
-
 	std::vector<PropertySourceContext> m_aSourceContexts;
 	std::vector<PropertyInteractionContext> m_aInteractionContexts;
 	std::vector<PropertyPropagatorContext> m_aPropagatorContexts;
@@ -144,7 +135,6 @@ protected:
 
 	std::vector<const CvPropertyManipulators*> m_apGlobalManipulators;
 	PropertySolverMap m_mapProperties;
-	std::map<const CvPlot*, std::map<short, std::pair<int, int> > > m_bandWindows;
 };
 
 #endif

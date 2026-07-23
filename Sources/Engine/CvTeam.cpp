@@ -1,35 +1,32 @@
 // team.cpp
 
 
-#include "Tools/FProfiler.h"
+#include "FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "Spine/CvEventSpine.h"   // #430: emit the tech first-discover DOMAIN event (the grants trigger)
-#include "Enabler/CvCapabilities.h"   // #430 Gate-3 wiring step 1: the in-body capability shadow + cache invalidation
-#include "CvCascadeAccumulator.h"    // #430 the modifier scope accumulator -- setHasTech bumps the global epoch
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
 #include "CvBonusInfo.h"
 #include "CvCity.h"
 #include "CvDeal.h"
-#include "UI/CvDiploParameters.h"
-#include "UI/CvEventReporter.h"
-#include "AI/CvGameAI.h"
-#include "Defines/CvGlobals.h"
+#include "CvDiploParameters.h"
+#include "CvEventReporter.h"
+#include "CvGameAI.h"
+#include "CvGlobals.h"
 #include "CvImprovementInfo.h"
 #include "CvInfos.h"
-#include "Infrastructure/CvInitCore.h"
+#include "CvInitCore.h"
 #include "CvMap.h"
-#include "AI/CvPlayerAI.h"
+#include "CvPlayerAI.h"
 #include "CvPlot.h"
 #include "CvPopupInfo.h"
-#include "Infrastructure/CvPython.h"
+#include "CvPython.h"
 #include "CvSelectionGroup.h"
-#include "AI/CvTeamAI.h"
+#include "CvTeamAI.h"
 #include "CvUnit.h"
-#include "Infrastructure/CvDLLEngineIFaceBase.h"
-#include "Infrastructure/CvDLLInterfaceIFaceBase.h"
-#include "Infrastructure/CvDLLUtilityIFaceBase.h"
+#include "CvDLLEngineIFaceBase.h"
+#include "CvDLLInterfaceIFaceBase.h"
+#include "CvDLLUtilityIFaceBase.h"
 
 // Public Functions...
 #pragma warning( disable : 4355 )
@@ -37,11 +34,10 @@ CvTeam::CvTeam() : m_GameObject(this),
 m_Properties(this)
 {
 	m_dataRepository.init(this);
-	m_cascadeTeamCaps.set.bind(this, &CvTeam::cascadeRefreshCaps);   // #430: the capability union on the ONE CacheSet protocol
-	m_improvementYieldChange.bind(this, &CvTeam::recomputeImprovementYields);   // dirty-on-construct; recompute-from-source on first read
 	m_aiStolenVisibilityTimer = new int[MAX_TEAMS];
 	m_aiWarWearinessTimes100 = new int[MAX_TEAMS];
 	m_aiTechShareCount = new int[MAX_TEAMS];
+	m_aiCommerceFlexibleCount = new int[NUM_COMMERCE_TYPES];
 	m_aiExtraMoves = new int[NUM_DOMAIN_TYPES];
 
 	m_aiEspionagePointsAgainstTeam = new int[MAX_TEAMS];
@@ -65,27 +61,25 @@ m_Properties(this)
 	m_pavProjectArtTypes = NULL;
 	m_paiProjectMaking = NULL;
 	m_paiBuildingCount = NULL;
+	m_paiObsoleteBuildingCount = NULL;
 	m_paiResearchProgress = NULL;
 	m_paiTechCount = NULL;
+	m_paiTerrainTradeCount = NULL;
 	m_aiVictoryCountdown = NULL;
 	m_aiForceTeamVoteEligibilityCount = NULL;
 
 	m_pabHasTech = NULL;
+
+	m_ppaaiImprovementYieldChange = NULL;
 
 	m_ppiBuildingSpecialistChange = NULL;
 	m_ppiBuildingCommerceModifier = NULL;
 	m_abEmbassy = new bool[MAX_TEAMS];
 	m_abLimitedBorders = new bool[MAX_TEAMS];
 	m_abFreeTrade = new bool[MAX_TEAMS];
+	m_paiFreeSpecialistCount = NULL;
 
 	reset((TeamTypes)0, true);
-}
-
-// #430: the CacheSet's refresh delegate -- the thin owner-side hop to the module math (the CvCity
-// cascadeRefreshPackages idiom). The union has one component, so the mask is ignored.
-void CvTeam::cascadeRefreshCaps(int /*iMask*/) const
-{
-	CascadeCapabilities::refreshInto(*this, m_cascadeTeamCaps);
 }
 
 
@@ -96,6 +90,7 @@ CvTeam::~CvTeam()
 	SAFE_DELETE_ARRAY(m_aiStolenVisibilityTimer);
 	SAFE_DELETE_ARRAY(m_aiWarWearinessTimes100);
 	SAFE_DELETE_ARRAY(m_aiTechShareCount);
+	SAFE_DELETE_ARRAY(m_aiCommerceFlexibleCount);
 	SAFE_DELETE_ARRAY(m_aiExtraMoves);
 	SAFE_DELETE_ARRAY(m_aiEspionagePointsAgainstTeam);
 	SAFE_DELETE_ARRAY(m_aiCounterespionageTurnsLeftAgainstTeam);
@@ -129,6 +124,7 @@ void CvTeam::init(TeamTypes eID)
 	if (GC.getGame().isFinalInitialized())
 	{
 		cacheAdjacentResearch(); // Mid-game re-initialization
+		//logging::logMsg("C2C.log", "   Checking for declarations of war against reset team %d\n", (int)getID());
 
 		const bool bMinorCiv = isMinorCiv();
 		const bool bNPC = isNPC();
@@ -142,6 +138,7 @@ void CvTeam::init(TeamTypes eID)
 					GET_TEAM((TeamTypes)iI).declareWar(getID(), false, WARPLAN_LIMITED);
 					GET_TEAM((TeamTypes)iI).setHasMet(getID(), false);
 					setHasMet((TeamTypes)iI, false);
+					//logging::logMsg("C2C.log", "   Minor team %d declared war, using war plan %d\n", iI, (int)GET_TEAM((TeamTypes)iI).AI_getWarPlan(getID()));
 				}
 				//TBNOTE: THIS WILL NEED TO BE ADJUSTED so that it's not so patently sweeping for all NPCs IF AN NPC IS
 				//SUPPOSED TO BE FRIENDLY WITH PLAYERS or any other NPC faction!
@@ -152,6 +149,7 @@ void CvTeam::init(TeamTypes eID)
 						continue;
 					}
 					GET_TEAM((TeamTypes)iI).declareWar(getID(), false, WARPLAN_LIMITED);
+					//logging::logMsg("C2C.log", "   Barb team %d declared war, using war plan %d\n", iI, (int)GET_TEAM((TeamTypes)iI).AI_getWarPlan(getID()));
 				}
 			}
 		}
@@ -163,7 +161,6 @@ void CvTeam::uninit()
 {
 	m_vNoTradeTech.clear();
 	m_unitCount.clear();
-	m_improvementYieldEvents.clear();   // persisted event grants -- cleared only here (game teardown), never by a recompute
 
 	SAFE_DELETE_ARRAY(m_abCanLaunch);
 	SAFE_DELETE_ARRAY(m_paiRouteChange);
@@ -172,11 +169,15 @@ void CvTeam::uninit()
 	SAFE_DELETE_ARRAY(m_pavProjectArtTypes);
 	SAFE_DELETE_ARRAY(m_paiProjectMaking);
 	SAFE_DELETE_ARRAY(m_paiBuildingCount);
+	SAFE_DELETE_ARRAY(m_paiObsoleteBuildingCount);
 	SAFE_DELETE_ARRAY(m_paiResearchProgress);
 	SAFE_DELETE_ARRAY(m_paiTechCount);
+	SAFE_DELETE_ARRAY(m_paiTerrainTradeCount);
 	SAFE_DELETE_ARRAY(m_aiVictoryCountdown);
 	SAFE_DELETE_ARRAY(m_aiForceTeamVoteEligibilityCount);
 	SAFE_DELETE_ARRAY(m_pabHasTech);
+	SAFE_DELETE_ARRAY2(m_ppaaiImprovementYieldChange, GC.getNumImprovementInfos());
+	SAFE_DELETE_ARRAY(m_paiFreeSpecialistCount);
 	SAFE_DELETE_ARRAY2(m_ppiBuildingSpecialistChange, GC.getNumBuildingInfos());
 	SAFE_DELETE_ARRAY2(m_ppiBuildingCommerceModifier, GC.getNumBuildingInfos());
 }
@@ -190,7 +191,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	int iI, iJ;
 
 	m_dataRepository.reset();
-	m_cascadeTeamCaps.set.markAllDirty();   // fresh team identity -> the capability union rebuilds on next query
 
 	//--------------------------------
 	// Uninit class
@@ -203,14 +203,34 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	m_iTotalPopulation = 0;
 	m_iTotalLand = 0;
 	m_iNukeInterception = 0;
+	m_iExtraWaterSeeFromCount = 0;
+	m_iMapTradingCount = 0;
+	m_iTechTradingCount = 0;
+	m_iGoldTradingCount = 0;
+	m_iCanPassPeaksCount = 0;
+	m_iMoveFastPeaksCount = 0;
+	m_iCanFoundOnPeaksCount = 0;
+	m_iRebaseAnywhereCount = 0;
 	m_iForeignTradeModifier = 0;
 	m_iTradeModifier = 0;
 	m_iTradeMissionModifier = 0;
 	m_iCorporationRevenueModifier = 0;
 	m_iCorporationMaintenanceModifier = 0;
+	m_iEmbassyTradingCount = 0;
+	m_iLimitedBordersTradingCount = 0;
+	m_iCanFarmDesertCount = 0;
+	m_iOpenBordersTradingCount = 0;
+	m_iDefensivePactTradingCount = 0;
+	m_iPermanentAllianceTradingCount = 0;
+	m_iVassalTradingCount = 0;
+	m_iBridgeBuildingCount = 0;
+	m_iIrrigationCount = 0;
+	m_iIgnoreIrrigationCount = 0;
+	m_iWaterWorkCount = 0;
 	m_iVassalPower = 0;
 	m_iMasterPower = 0;
 	m_iEnemyWarWearinessModifier = 0;
+	m_iRiverTradeCount = 0;
 	m_iEspionagePointsEver = 0;
 	m_iLastRoundOfValidImprovementCacheUpdate = 0;
 
@@ -261,6 +281,11 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 		}
 	}
 
+	for (iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
+	{
+		m_aiCommerceFlexibleCount[iI] = 0;
+	}
+
 	for (iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
 	{
 		m_aiExtraMoves[iI] = 0;
@@ -304,6 +329,13 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 			m_paiBuildingCount[iI] = 0;
 		}
 
+		FAssertMsg(m_paiObsoleteBuildingCount == NULL, "about to leak memory, CvTeam::m_paiObsoleteBuildingCount");
+		m_paiObsoleteBuildingCount = new int[GC.getNumBuildingInfos()];
+		for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+		{
+			m_paiObsoleteBuildingCount[iI] = 0;
+		}
+
 		FAssertMsg(m_paiResearchProgress == NULL, "about to leak memory, CvPlayer::m_paiResearchProgress");
 		m_paiResearchProgress = new int[GC.getNumTechInfos()];
 		FAssertMsg(m_paiTechCount == NULL, "about to leak memory, CvPlayer::m_paiTechCount");
@@ -314,6 +346,12 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 			m_paiTechCount[iI] = 0;
 		}
 
+		FAssertMsg(m_paiTerrainTradeCount == NULL, "about to leak memory, CvTeam::m_paiTerrainTradeCount");
+		m_paiTerrainTradeCount = new int[GC.getNumTerrainInfos()];
+		for (iI = 0; iI < GC.getNumTerrainInfos(); iI++)
+		{
+			m_paiTerrainTradeCount[iI] = 0;
+		}
 
 		FAssertMsg(m_aiVictoryCountdown == NULL, "about to leak memory, CvTeam::m_aiVictoryCountdown");
 		m_aiVictoryCountdown = new int[GC.getNumVictoryInfos()];
@@ -329,7 +367,16 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 			m_pabHasTech[iI] = false;
 		}
 
-		// (m_improvementYieldChange needs no init-time allocation -- the CvDerivedCacheVec recompute sizes it)
+		FAssertMsg(m_ppaaiImprovementYieldChange == NULL, "about to leak memory, CvTeam::m_ppaaiImprovementYieldChange");
+		m_ppaaiImprovementYieldChange = new int* [GC.getNumImprovementInfos()];
+		for (iI = 0; iI < GC.getNumImprovementInfos(); iI++)
+		{
+			m_ppaaiImprovementYieldChange[iI] = new int[NUM_YIELD_TYPES];
+			for (iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+			{
+				m_ppaaiImprovementYieldChange[iI][iJ] = 0;
+			}
+		}
 
 		FAssertMsg(m_aiForceTeamVoteEligibilityCount == NULL, "about to leak memory, CvTeam::m_aiForceTeamVoteEligibilityCount");
 		m_aiForceTeamVoteEligibilityCount = new int[GC.getNumVoteSourceInfos()];
@@ -349,6 +396,12 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 			{
 				m_ppiBuildingSpecialistChange[iI][iJ] = 0;
 			}
+		}
+		FAssertMsg(m_paiFreeSpecialistCount == NULL, "about to leak memory, CvTeam::m_paiFreeSpecialistCount");
+		m_paiFreeSpecialistCount = new int[GC.getNumSpecialistInfos()];
+		for (iJ = 0; iJ < GC.getNumSpecialistInfos(); iJ++)
+		{
+			m_paiFreeSpecialistCount[iJ] = 0;
 		}
 
 		FAssertMsg(m_ppiBuildingCommerceModifier == NULL, "about to leak memory, CvTeam::m_ppiBuildingCommerceModifier");
@@ -1037,6 +1090,18 @@ void CvTeam::updateYield()
 }
 
 
+void CvTeam::updateCommerce()
+{
+	PROFILE_EXTRA_FUNC();
+	for (int iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
+		{
+			GET_PLAYER((PlayerTypes)iI).updateCommerce();
+		}
+	}
+}
+
 
 bool CvTeam::canChangeWarPeace(TeamTypes eTeam, bool bAllowVassal) const
 {
@@ -1266,8 +1331,8 @@ void CvTeam::declareWar(TeamTypes eTeam, bool bNewDiplo, WarPlanTypes eWarPlan)
 
 		if ((getID() == GC.getGame().getActiveTeam()) || (eTeam == GC.getGame().getActiveTeam()))
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
 		}
 
 		if (!isNPC() && !teamFoe.isNPC() && !isMinorCiv() && !teamFoe.isMinorCiv())
@@ -1565,8 +1630,8 @@ void CvTeam::makePeace(TeamTypes eTeam, bool bBumpUnits)
 
 		if ((getID() == GC.getGame().getActiveTeam()) || (eTeam == GC.getGame().getActiveTeam()))
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
 		}
 
 		for (int iI = 0; iI < MAX_PLAYERS; iI++)
@@ -2716,6 +2781,26 @@ void CvTeam::setIsMinorCiv(bool bNewValue)
 	const TeamTypes eTeam = getID();
 	if (bNewValue != isMinorCiv())
 	{
+		if (isAlive())
+		{
+			if (bNewValue)
+			{
+				logging::logMsg("C2C.log", "Switching team %d to minor\n", eTeam);
+			}
+			else
+			{
+				logging::logMsg("C2C.log", "Switching minor team %d to full\n", eTeam);
+			}
+		}
+		else if (bNewValue)
+		{
+			logging::logMsg("C2C.log", "Setting non-alive team %d to minor\n", eTeam);
+		}
+		else
+		{
+			logging::logMsg("C2C.log", "Setting non-alive minor team %d to full\n", eTeam);
+		}
+
 		// Convert all team members
 		for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 		{
@@ -2755,11 +2840,13 @@ void CvTeam::setIsMinorCiv(bool bNewValue)
 						const int iValue = GET_TEAM(eTeam).AI_getBarbarianCivWarVal(eTeamX, 16);
 						if (iValue > iMaxVal)
 						{
+							logging::logMsg("C2C.log", "    BarbCiv team %d is considering declaring war against victim Team %d\n", eTeam, iJ);
 							iMaxVal = iValue;
 							eBarbCivVictim = eTeamX;
 						}
 					}
 				}
+				logging::logMsg("C2C.log", "    BarbCiv team %d will declare war against victim Team %d\n", eTeam, eBarbCivVictim);
 			}
 			// Keep war againt some of those this team has met
 			for (int iI = 0; iI < MAX_PC_TEAMS; iI++)
@@ -2777,6 +2864,7 @@ void CvTeam::setIsMinorCiv(bool bNewValue)
 						if (eBarbCivVictim == eTeamX)
 						{
 							AI_setWarPlan(eBarbCivVictim, WARPLAN_TOTAL, true);
+							logging::logMsg("C2C.log", "    Team %d is the victim of ex-minor\n", iI);
 							continue;
 						}
 
@@ -2792,6 +2880,7 @@ void CvTeam::setIsMinorCiv(bool bNewValue)
 						{
 							AI_setWarPlan(eTeamX, WARPLAN_LIMITED, true);
 							GET_TEAM(eTeamX).AI_setWarPlan(eTeam, WARPLAN_LIMITED, true);
+							logging::logMsg("C2C.log", "    ex-minor decides to keep limited war against Team %d\n", iI);
 						}
 					}
 					else
@@ -2804,14 +2893,14 @@ void CvTeam::setIsMinorCiv(bool bNewValue)
 			}
 		}
 		// Update graphics to reflect changes
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(CityInfo_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(UnitInfo_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(InfoPane_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GlobeLayer_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Flag_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Foreign_Screen_DIRTY_BIT), true);
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GlobeInfo_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(CityInfo_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(UnitInfo_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(InfoPane_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(Flag_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(Foreign_Screen_DIRTY_BIT, true);
+		gDLL->getInterfaceIFace()->setDirty(GlobeInfo_DIRTY_BIT, true);
 	}
 	return;
 }
@@ -3082,71 +3171,234 @@ void CvTeam::changeForceTeamVoteEligibilityCount(VoteSourceTypes eVoteSource, in
 }
 
 
+int CvTeam::getExtraWaterSeeFromCount() const
+{
+	return m_iExtraWaterSeeFromCount;
+}
+
 bool CvTeam::isExtraWaterSeeFrom() const
 {
-	return CascadeCapabilities::capability(getID(), "canSeeFurtherFromWater");
+	return m_iExtraWaterSeeFromCount > 0;
+}
+
+void CvTeam::changeExtraWaterSeeFromCount(int iChange)
+{
+	if (iChange != 0)
+	{
+		GC.getMap().updateSight(false);
+
+		m_iExtraWaterSeeFromCount += iChange;
+		FASSERT_NOT_NEGATIVE(m_iExtraWaterSeeFromCount);
+
+		GC.getMap().updateSight(true);
+	}
+}
+
+
+int CvTeam::getMapTradingCount() const
+{
+	return m_iMapTradingCount;
 }
 
 bool CvTeam::isMapTrading()	const
 {
-	// #430 FLIPPED: the CASCADE verdict is authoritative; the legacy counter is demolition fodder,
-	// unread by the cascade.
-	return CascadeCapabilities::flag(getID(), CCF_TRADE_MAPS);
+	return m_iMapTradingCount > 0;
+}
+
+void CvTeam::changeMapTradingCount(int iChange)
+{
+	m_iMapTradingCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_iMapTradingCount);
+}
+
+
+int CvTeam::getTechTradingCount() const
+{
+	return m_iTechTradingCount;
 }
 
 bool CvTeam::isTechTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "techs");
+	return m_iTechTradingCount > 0;
+}
+
+void CvTeam::changeTechTradingCount(int iChange)
+{
+	m_iTechTradingCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_iTechTradingCount);
+}
+
+
+int CvTeam::getGoldTradingCount() const
+{
+	return m_iGoldTradingCount;
 }
 
 bool CvTeam::isGoldTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "gold");
+	return m_iGoldTradingCount > 0;
+}
+
+void CvTeam::changeGoldTradingCount(int iChange)
+{
+	m_iGoldTradingCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_iGoldTradingCount);
+}
+
+
+int CvTeam::getOpenBordersTradingCount() const
+{
+	return m_iOpenBordersTradingCount;
 }
 
 bool CvTeam::isOpenBordersTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "openBorders");
+	return m_iOpenBordersTradingCount > 0;
+}
+
+void CvTeam::changeOpenBordersTradingCount(int iChange)
+{
+	m_iOpenBordersTradingCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_iOpenBordersTradingCount);
+}
+
+
+int CvTeam::getDefensivePactTradingCount() const
+{
+	return m_iDefensivePactTradingCount;
 }
 
 bool CvTeam::isDefensivePactTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "defensivePact");
+	return m_iDefensivePactTradingCount > 0;
+}
+
+void CvTeam::changeDefensivePactTradingCount(int iChange)
+{
+	m_iDefensivePactTradingCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_iDefensivePactTradingCount);
+}
+
+
+int CvTeam::getPermanentAllianceTradingCount() const
+{
+	return m_iPermanentAllianceTradingCount;
 }
 
 bool CvTeam::isPermanentAllianceTrading() const
 {
-	return GC.getGame().isOption(GAMEOPTION_ENABLE_PERMANENT_ALLIANCES)
-		&& CascadeCapabilities::canTradeItem(getID(), "permanentAlliance");
+	return GC.getGame().isOption(GAMEOPTION_ENABLE_PERMANENT_ALLIANCES) && m_iPermanentAllianceTradingCount > 0;
+}
+
+void CvTeam::changePermanentAllianceTradingCount(int iChange)
+{
+	m_iPermanentAllianceTradingCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_iPermanentAllianceTradingCount);
+}
+
+
+int CvTeam::getVassalTradingCount() const
+{
+	return m_iVassalTradingCount;
 }
 
 bool CvTeam::isVassalStateTrading() const
 {
-	return !GC.getGame().isOption(GAMEOPTION_NO_VASSAL_STATES)
-		&& CascadeCapabilities::canTradeItem(getID(), "vassals");
+	return !GC.getGame().isOption(GAMEOPTION_NO_VASSAL_STATES) && m_iVassalTradingCount > 0;
+}
+
+void CvTeam::changeVassalTradingCount(int iChange)
+{
+	m_iVassalTradingCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_iVassalTradingCount);
+}
+
+
+int CvTeam::getBridgeBuildingCount() const
+{
+	return m_iBridgeBuildingCount;
 }
 
 bool CvTeam::isBridgeBuilding()	const
 {
-	// #430 FLIPPED: the CASCADE verdict is authoritative; the legacy counter is demolition fodder,
-	// unread by the cascade.
-	return CascadeCapabilities::flag(getID(), CCF_BRIDGE_BUILDING);
+	return m_iBridgeBuildingCount > 0;
+}
+
+void CvTeam::changeBridgeBuildingCount(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iBridgeBuildingCount += iChange;
+		FASSERT_NOT_NEGATIVE(m_iBridgeBuildingCount);
+
+		if (GC.IsGraphicsInitialized())
+		{
+			gDLL->getEngineIFace()->MarkBridgesDirty();
+		}
+	}
+}
+
+
+int CvTeam::getIrrigationCount() const
+{
+	return m_iIrrigationCount;
 }
 
 bool CvTeam::isIrrigation() const
 {
-	return CascadeCapabilities::capability(getID(), "canSpreadIrrigation");
+	return m_iIrrigationCount > 0;
+}
+
+void CvTeam::changeIrrigationCount(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iIrrigationCount += iChange;
+		FASSERT_NOT_NEGATIVE(m_iIrrigationCount);
+
+		GC.getMap().updateIrrigated();
+	}
+}
+
+
+int CvTeam::getIgnoreIrrigationCount() const
+{
+	return m_iIgnoreIrrigationCount;
 }
 
 bool CvTeam::isIgnoreIrrigation() const
 {
-	return CascadeCapabilities::capability(getID(), "canIgnoreIrrigation");
+	return m_iIgnoreIrrigationCount > 0;
+}
+
+void CvTeam::changeIgnoreIrrigationCount(int iChange)
+{
+	m_iIgnoreIrrigationCount += iChange;
+	FASSERT_NOT_NEGATIVE(m_iIgnoreIrrigationCount);
+}
+
+
+int CvTeam::getWaterWorkCount() const
+{
+	return m_iWaterWorkCount;
 }
 
 bool CvTeam::isWaterWork() const
 {
-	return CascadeCapabilities::canWorkOn(getID(), "water");
+	return m_iWaterWorkCount > 0;
 }
+
+void CvTeam::changeWaterWorkCount(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iWaterWorkCount += iChange;
+		FASSERT_NOT_NEGATIVE(m_iWaterWorkCount);
+
+		AI_makeAssignWorkDirty();
+	}
+}
+
 
 int CvTeam::getVassalPower() const
 {
@@ -3191,11 +3443,7 @@ void CvTeam::changeEnemyWarWearinessModifier(int iChange)
 
 bool CvTeam::isMapCentering() const
 {
-	// The cascade union serves -- the SOLE live grantor is TECH_GEOMETRY's `hasCenteredMap`, so the
-	// flip-on-encounter latch the owner ruled and the derived union answer identically (techs are never lost;
-	// the building-side bMapCentering tag is schema-only, data-dead). The legacy m_bMapCentering latch awaits
-	// its two-stage save retirement; the Python/WB setMapCentering poke is a dead poke (the hasLanguage class).
-	return CascadeCapabilities::flag(getID(), CCF_HAS_CENTERED_MAP);
+	return m_bMapCentering;
 }
 
 void CvTeam::setMapCentering(bool bNewValue)
@@ -3206,7 +3454,7 @@ void CvTeam::setMapCentering(bool bNewValue)
 
 		if (getID() == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(MinimapSection_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(MinimapSection_DIRTY_BIT, true);
 		}
 	}
 }
@@ -3351,19 +3599,31 @@ void CvTeam::changeTechShareCount(int iIndex, int iChange)
 }
 
 
-// CUT (#430 Gate-3, capabilities.md flip wave #2): the slider unlock derives from CascadeCapabilities --
-// research/espionage ride TECH_GAME_START (the legacy CommerceInfo bFlexiblePercent globals, re-homed),
-// culture rides TECH_DRAMA, gold has no slider. The tech-fed counter + its changer are deleted; the changer's
-// UI-refresh side effect lives on in processTech.
-bool CvTeam::isCommerceFlexible(CommerceTypes eIndex) const
+int CvTeam::getCommerceFlexibleCount(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	switch (eIndex)
+	return m_aiCommerceFlexibleCount[eIndex];
+}
+
+bool CvTeam::isCommerceFlexible(CommerceTypes eIndex) const
+{
+	return getCommerceFlexibleCount(eIndex) > 0;
+}
+
+void CvTeam::changeCommerceFlexibleCount(CommerceTypes eIndex, int iChange)
+{
+	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
+
+	if (iChange != 0)
 	{
-	case COMMERCE_RESEARCH:  return CascadeCapabilities::flag(getID(), CCF_SET_SCIENCE_RATE);
-	case COMMERCE_CULTURE:   return CascadeCapabilities::flag(getID(), CCF_SET_CULTURE_RATE);
-	case COMMERCE_ESPIONAGE: return CascadeCapabilities::flag(getID(), CCF_SET_ESPIONAGE_RATE);
-	default: return false;   // COMMERCE_GOLD: no slider in engine or data
+		m_aiCommerceFlexibleCount[eIndex] += iChange;
+		FASSERT_NOT_NEGATIVE(m_aiCommerceFlexibleCount[eIndex]);
+
+		if (getID() == GC.getGame().getActiveTeam())
+		{
+			gDLL->getInterfaceIFace()->setDirty(PercentButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+		}
 	}
 }
 
@@ -3436,9 +3696,9 @@ void CvTeam::makeHasMet(TeamTypes eIndex, bool bNewDiplo)
 
 		if (getID() == GC.getGame().getActiveTeam() || eIndex == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 			// RevolutionDCM - redraw espionage percent buttons
-			// gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(PercentButtons_DIRTY_BIT), true); // Toffer - don't think this is needed.
+			// gDLL->getInterfaceIFace()->setDirty(PercentButtons_DIRTY_BIT, true); // Toffer - don't think this is needed.
 		}
 		// Move reporting to Python before diplo popup to all war declarations on first contact
 		// report event to Python, along with some other key state
@@ -3587,7 +3847,7 @@ void CvTeam::setOpenBorders(TeamTypes eIndex, bool bNewValue)
 
 		if (getID() == GC.getGame().getActiveTeam() || eIndex == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 		}
 
 		if (bOldFreeTrade != isFreeTrade(eIndex))
@@ -3621,7 +3881,7 @@ void CvTeam::setDefensivePact(TeamTypes eIndex, bool bNewValue)
 
 		if (getID() == GC.getGame().getActiveTeam() || eIndex == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 		}
 
 		if (bNewValue && !GET_TEAM(eIndex).isDefensivePact(getID()))
@@ -4219,16 +4479,6 @@ void CvTeam::changeProjectCount(ProjectTypes eIndex, int iChange)
 
 		processProjectChange(eIndex, iChange, iOldProjectCount);
 
-		// #430 event spine: announce the project count change (inside the iChange != 0 guard, after commit + apply).
-		// PER-MEMBER emits -- one per alive member player (the tech-emit precedent, the owner's "one per alive
-		// member player" ruling): a project is TEAM state consumed per player (the enabler applies to the emitting
-		// player's domain; the modifier mark scopes per player), so a single leader-only emit under-reaches
-		// teammates. Emitted HERE (the count choke point), NOT in processProjectChange, whose other caller
-		// (CvTeam.cpp reapply-projects warm-up) re-applies effects on load and is not a genuine state change.
-		for (int iM = 0; iM < MAX_PLAYERS; iM++)
-			if (GET_PLAYER((PlayerTypes)iM).isAlive() && GET_PLAYER((PlayerTypes)iM).getTeam() == getID())
-				emitProjectChanged(iM, (int)eIndex, iChange);
-
 		if (iChange > 0 && GC.getGame().isFinalInitialized() && !gDLL->GetWorldBuilderMode())
 		{
 			const CvProjectInfo& kProject = GC.getProjectInfo(eIndex);
@@ -4306,6 +4556,8 @@ void CvTeam::processProjectChange(ProjectTypes eIndex, int iChange, int iOldProj
 							}
 						}
 					}
+					player.changeProjectHappiness(kProject.getGlobalHappiness());
+					player.changeProjectHealth(kProject.getGlobalHealth());
 					player.changeProjectInflation(kProject.getInflationModifier());
 					player.changeMaintenanceModifier(kProject.getGlobalMaintenanceModifier());
 					player.changeDistanceMaintenanceModifier(kProject.getDistanceMaintenanceModifier());
@@ -4317,12 +4569,11 @@ void CvTeam::processProjectChange(ProjectTypes eIndex, int iChange, int iOldProj
 						player.changeCommerceRateModifierfromBuildings(((CommerceTypes)iJ), kProject.getCommerceModifier(iJ));
 					}
 				}
+				player.changeWorldHappiness(kProject.getWorldHappiness());
+				player.changeWorldHealth(kProject.getWorldHealth());
 				player.changeTradeRoutes(kProject.getWorldTradeRoutes());
 			}
 		}
-		// #430: a completed project's world-scope deposits (tradeRoutes.world -- the Internet class) enter
-		// the cascade via the world package; mark it (rebuilt at the CvGame::doTurn boundary)
-		GC.getGame().m_cascadeWorldScope.set.markAllDirty();
 	}
 }
 
@@ -4408,31 +4659,64 @@ void CvTeam::changeBuildingCount(BuildingTypes eIndex, int iChange)
 }
 
 
-// Obsoletion is DERIVED, never stored (owner ruling): the team already holds the tech list, so a building is
-// obsolete iff the team holds the obsoleting tech -- named on the building itself, or on its special-building
-// GROUP (the curator also inherits a group's tech onto its members, so for a grouped member both name the same
-// tech). Reading it as an OR makes the two sources idempotent by construction; the stored counter this replaces
-// could be -- and was -- incremented twice for the same fact ([DEC-accumulator-cut-uniform]).
-//
-// #430 obsoletion FLIP (owner 2026-07-07: "legacy obsoletion should only be background"): the flag still answers
-// for the prereq consumers, but legacy does NOT drive obsoletion -- the obsolete building STAYS PRESENT so the
-// cascade operating-buildings obsolete set delivers its `whenObsolete` tree (json §4.2), which also subsumes the
-// getObsoletesToBuilding successor swap.
-bool CvTeam::isObsoleteBuilding(BuildingTypes eIndex) const
+int CvTeam::getObsoleteBuildingCount(BuildingTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eIndex);
+	return m_paiObsoleteBuildingCount[eIndex];
+}
 
-	const TechTypes eObsolete = kBuilding.getObsoleteTech();
-	if (eObsolete != NO_TECH && isHasTech(eObsolete)) return true;
 
-	const SpecialBuildingTypes eSpecial = (SpecialBuildingTypes)kBuilding.getSpecialBuilding();
-	if (eSpecial != NO_SPECIALBUILDING)
+bool CvTeam::isObsoleteBuilding(BuildingTypes eIndex) const
+{
+	return getObsoleteBuildingCount(eIndex) > 0;
+}
+
+
+void CvTeam::changeObsoleteBuildingCount(BuildingTypes eIndex, int iChange)
+{
+	PROFILE_EXTRA_FUNC();
+	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
+
+	if (iChange != 0)
 	{
-		const TechTypes eGroupObsolete = GC.getSpecialBuildingInfo(eSpecial).getObsoleteTech();
-		if (eGroupObsolete != NO_TECH && isHasTech(eGroupObsolete)) return true;
+		const bool bWasObsolete = m_paiObsoleteBuildingCount[eIndex] > 0;
+
+		m_paiObsoleteBuildingCount[eIndex] += iChange;
+		FASSERT_NOT_NEGATIVE(getObsoleteBuildingCount(eIndex));
+
+		if (!bWasObsolete && iChange > 0)
+		{
+			BuildingTypes eObsoletesToBuilding = GC.getBuildingInfo(eIndex).getObsoletesToBuilding();
+
+			while (eObsoletesToBuilding > NO_BUILDING)
+			{
+				if (GC.getBuildingInfo(eObsoletesToBuilding).getObsoleteTech() < 0
+				|| !isHasTech(GC.getBuildingInfo(eObsoletesToBuilding).getObsoleteTech()))
+				{
+					break;
+				}
+				eObsoletesToBuilding = GC.getBuildingInfo(eObsoletesToBuilding).getObsoletesToBuilding();
+			}
+			for (int iI = 0; iI < MAX_PLAYERS; iI++)
+			{
+				if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
+				{
+					foreach_(CvCity * cityX, GET_PLAYER((PlayerTypes)iI).cities())
+					{
+						if (cityX->hasBuilding(eIndex))
+						{
+							cityX->changeHasBuilding(eIndex, false);
+
+							if (eObsoletesToBuilding != NO_BUILDING && !cityX->hasBuilding(eObsoletesToBuilding))
+							{
+								cityX->changeHasBuilding(eObsoletesToBuilding, true);
+							}
+						}
+					}
+				}
+			}
+		}
 	}
-	return false;
 }
 
 
@@ -4458,8 +4742,8 @@ void CvTeam::setResearchProgress(TechTypes eIndex, int iNewValue, PlayerTypes eP
 
 		if (getID() == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 		}
 
 		if (iNewValue >= getResearchCost(eIndex))
@@ -4542,15 +4826,72 @@ int CvTeam::getBestKnownTechScorePercent() const
 }
 
 
+int CvTeam::getTerrainTradeCount(TerrainTypes eIndex) const
+{
+	FASSERT_BOUNDS(0, GC.getNumTerrainInfos(), eIndex);
+	return m_paiTerrainTradeCount[eIndex];
+}
+
+
 bool CvTeam::isTerrainTrade(TerrainTypes eIndex) const
 {
-	return CascadeCapabilities::canTradeOnTerrain(getID(), eIndex);
+	if (isNPC())
+	{
+		return false;
+	}
+	return (getTerrainTradeCount(eIndex) > 0);
+}
+
+
+void CvTeam::changeTerrainTradeCount(TerrainTypes eIndex, int iChange)
+{
+	PROFILE_EXTRA_FUNC();
+	FASSERT_BOUNDS(0, GC.getNumTerrainInfos(), eIndex);
+
+	if (iChange != 0)
+	{
+		m_paiTerrainTradeCount[eIndex] += iChange;
+		FASSERT_NOT_NEGATIVE(getTerrainTradeCount(eIndex));
+
+		for (int iI = 0; iI < MAX_PLAYERS; iI++)
+		{
+			if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
+			{
+				GET_PLAYER((PlayerTypes)iI).updatePlotGroups();
+			}
+		}
+	}
+}
+
+
+int CvTeam::getRiverTradeCount() const
+{
+	return m_iRiverTradeCount;
 }
 
 
 bool CvTeam::isRiverTrade() const
 {
-	return CascadeCapabilities::capability(getID(), "hasRiverTrade");
+	return (getRiverTradeCount() > 0);
+}
+
+
+void CvTeam::changeRiverTradeCount(int iChange)
+{
+	PROFILE_EXTRA_FUNC();
+	if (iChange != 0)
+	{
+		m_iRiverTradeCount += iChange;
+		FASSERT_NOT_NEGATIVE(getRiverTradeCount());
+
+		for (int iI = 0; iI < MAX_PLAYERS; iI++)
+		{
+			if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
+			{
+				GET_PLAYER((PlayerTypes)iI).updatePlotGroups();
+			}
+		}
+	}
 }
 
 
@@ -4869,8 +5210,6 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 			setResearchProgress(eTech, 0, ePlayer);
 		}
 		processTech(eTech, iChange, bAnnounce);
-		// #430 event spine: broad tech-changed event on the repeat-tech (e.g. Future Tech) count change path.
-		emitTechChanged((int)ePlayer, (int)eTech, bNewValue);
 		return;
 	}
 
@@ -4894,12 +5233,6 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 	}
 
 	m_pabHasTech[eTech] = bNewValue;
-	// #430 event spine: broad tech-changed event (any set, gain or loss) -- past the no-change guard, after commit.
-	// This is the ADDITIONAL broad emit; the existing SEVT_TECH_ACQUIRED first-discoverer emit stays separate.
-	emitTechChanged((int)ePlayer, (int)eTech, bNewValue);
-	m_cascadeTeamCaps.set.markAllDirty();   // the derived capability union is f(held techs) -- the ONE mutation point
-	// #430: the cascade package fan-out (this team's players + their cities) is owned by the SEVT_TECH_CHANGED emit
-	// above -> the invalidation consumer, which fans to the whole team (CvCascadeInvalidation.cpp).
 
 	for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
 	{
@@ -4933,9 +5266,7 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 				//	Not part of processTech to avoid it applying twice during recalc, would apply in processBuilding first then in processTech again after.
 				for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 				{
-					// #430: the city m_aiBuildingCommerceTechChange accumulator is cut -- building tech-commerce is
-					// computed fresh in getBuildingCommerce100; just invalidate that cache on the tech change.
-					cityX->setCommerceDirty((CommerceTypes)iJ);
+					cityX->changeBuildingCommerceTechChange((CommerceTypes)iJ, iChange * cityX->getBuildingCommerceTechChange((CommerceTypes)iJ, eTech));
 					cityX->changeBuildingCommerceModifier((CommerceTypes)iJ, iChange * cityX->getBuildingCommerceTechModifier((CommerceTypes)iJ, eTech));
 				}
 				for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
@@ -5145,22 +5476,49 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 
 		if (bFirst && GC.getGame().countKnownTechNumTeams(eTech) == 1)
 		{
-			// #430 cascade: the tech's first-discoverer grants (firstFreeUnit / firstFreeProphet / freeTechs) fire in
-			// this block -> emit the DOMAIN trigger so the grants machine resolves them (synced, deterministic).
-			emitTechAcquired((int)ePlayer, (int)eTech);
-
-			// The first-discoverer PROVISIONS (firstFreeUnit / firstFreeProphet / freeTechs) are handed over by the
-			// GRANTS MACHINE off the emit above -- emit() dispatches synchronously, so they have already landed by
-			// the time control reaches here. What stays is the non-grant residue: the AI research-queue rider (a
-			// free tech invalidates a queued research plan) and the "first to tech" announcements.
-			if (kTech.getFirstFreeUnit() != NO_UNIT || kTech.getFirstFreeTechs() > 0
-			|| (GC.getGame().isOption(GAMEOPTION_RELIGION_DIVINE_PROPHETS)
-				&& GET_PLAYER(ePlayer).getTechFreeProphet(eTech) != NO_UNIT))
+			const UnitTypes eFreeUnit = (UnitTypes)kTech.getFirstFreeUnit();
+			if (eFreeUnit != NO_UNIT)
 			{
 				bClearResearchQueueAI = true;
+				CvCity* pCapitalCity = GET_PLAYER(ePlayer).getCapitalCity();
+
+				if (pCapitalCity != NULL)
+				{
+					pCapitalCity->createGreatPeople(eFreeUnit, false, false);
+				}
 			}
+			//TB Prophet Mod begin
+			if (GC.getGame().isOption(GAMEOPTION_RELIGION_DIVINE_PROPHETS))
+			{
+				const UnitTypes eFreeProphet = GET_PLAYER(ePlayer).getTechFreeProphet(eTech);
+				if (eFreeProphet != NO_UNIT)
+				{
+					bClearResearchQueueAI = true;
+					CvCity* pCapitalCity = GET_PLAYER(ePlayer).getCapitalCity();
+
+					if (pCapitalCity != NULL)
+					{
+						pCapitalCity->createGreatPeople(eFreeProphet, false, false);
+					}
+				}
+			}
+			//TB Prophet Mod end
 			if (kTech.getFirstFreeTechs() > 0)
 			{
+				bClearResearchQueueAI = true;
+
+				if (!isHuman())
+				{
+					for (int iI = 0; iI < kTech.getFirstFreeTechs(); iI++)
+					{
+						GET_PLAYER(ePlayer).AI_chooseFreeTech();
+					}
+				}
+				else
+				{
+					GET_PLAYER(ePlayer).chooseTech(kTech.getFirstFreeTechs(), gDLL->getText("TXT_KEY_MISC_FIRST_TECH_CHOOSE_FREE", kTech.getTextKeyWide()));
+				}
+
 				CvWString szBuffer;
 				for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 				{
@@ -5285,10 +5643,10 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 
 		if (getID() == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(MiscButtons_DIRTY_BIT), true);
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(SelectionButtons_DIRTY_BIT), true);
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(ResearchButtons_DIRTY_BIT), true);
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GlobeLayer_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(MiscButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(SelectionButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(ResearchButtons_DIRTY_BIT, true);
+			gDLL->getInterfaceIFace()->setDirty(GlobeLayer_DIRTY_BIT, true);
 		}
 	}
 	else
@@ -5331,11 +5689,9 @@ int CvTeam::getImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eInde
 {
 	FASSERT_BOUNDS(0, GC.getNumImprovementInfos(), eIndex1);
 	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eIndex2);
-	return m_improvementYieldChange.get((int)eIndex1 * NUM_YIELD_TYPES + (int)eIndex2);
+	return m_ppaaiImprovementYieldChange[eIndex1][eIndex2];
 }
 
-// The EVENT-GRANT entry (the CyTeam Python path -- e.g. the TSUKIJI wonder event's fishing-boat yields):
-// genuine one-shot state, kept in its own PERSISTED store so the recompute can never wipe it.
 void CvTeam::changeImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes eIndex2, int iChange)
 {
 	FASSERT_BOUNDS(0, GC.getNumImprovementInfos(), eIndex1);
@@ -5343,47 +5699,9 @@ void CvTeam::changeImprovementYieldChange(ImprovementTypes eIndex1, YieldTypes e
 
 	if (iChange != 0)
 	{
-		std::map<short, YieldArray>::iterator it = m_improvementYieldEvents.find((short)eIndex1);
-		if (it == m_improvementYieldEvents.end())
-		{
-			YieldArray zero;
-			zero.assign(0);   // bst::array does NOT zero-initialize
-			it = m_improvementYieldEvents.insert(std::make_pair((short)eIndex1, zero)).first;
-		}
-		it->second[eIndex2] += iChange;
-		m_improvementYieldChange.markDirty();
-		updateYield();
-	}
-}
+		m_ppaaiImprovementYieldChange[eIndex1][eIndex2] += iChange;
 
-// The CvDerivedCacheVec recompute: the team's keyed improvement-yield total, summed FRESH from the HELD
-// techs' rows on each improvement (the improvements' TechYieldChanges) + the persisted event grants -- from
-// getImprovementYieldChange when dirty (dirty on construct/load => never stale/doubled-from-save).
-void CvTeam::recomputeImprovementYields(std::vector<int>& aOut) const
-{
-	PROFILE_EXTRA_FUNC();
-	aOut.assign(GC.getNumImprovementInfos() * NUM_YIELD_TYPES, 0);   // rule 2: fully size + define, every call
-	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
-	{
-		const CvImprovementInfo& kImp = GC.getImprovementInfo((ImprovementTypes)iI);
-		for (int iT = 0; iT < GC.getNumTechInfos(); iT++)
-		{
-			if (!isHasTech((TechTypes)iT)) continue;
-			const int* aiRow = kImp.getTechYieldChangesArray(iT);   // NULL when tech iT deposits none here
-			if (aiRow == NULL) continue;
-			for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-			{
-				aOut[iI * NUM_YIELD_TYPES + iJ] += aiRow[iJ];
-			}
-		}
-	}
-	for (std::map<short, YieldArray>::const_iterator it = m_improvementYieldEvents.begin(); it != m_improvementYieldEvents.end(); ++it)
-	{
-		if (it->first < 0 || it->first >= GC.getNumImprovementInfos()) continue;
-		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
-		{
-			aOut[it->first * NUM_YIELD_TYPES + iJ] += it->second[iJ];
-		}
+		updateYield();
 	}
 }
 
@@ -5613,22 +5931,51 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 	PROFILE_FUNC();
 	const CvTechInfo& tech = GC.getTechInfo(eTech);
 
+	if (tech.isExtraWaterSeeFrom())
+	{
+		changeExtraWaterSeeFromCount(iChange);
+	}
+
 	if (iChange > 0 && tech.isMapCentering())
 	{
 		setMapCentering(true);
 	}
 
+	if (tech.isMapTrading())
+	{
+		changeMapTradingCount(iChange);
+	}
+
 	if (tech.isCanPassPeaks())
 	{
-		// #430 Gate-3: the capability itself is derived (CascadeCapabilities); only the SIDE EFFECT remains --
+		changeCanPassPeaksCount(iChange);
 		//	Koshling - makes peaks workable which chnages the yield calculation
 		updateYield();
 	}
+	if (tech.isMoveFastPeaks())
+	{
+		changeMoveFastPeaksCount(iChange);
+	}
+	if (tech.isCanFoundOnPeaks())
+	{
+		changeCanFoundOnPeaksCount(iChange);
+	}
+
 	if (iChange > 0)
 	{
 		ObsoletePromotions(eTech);
 		ObsoleteCorporations(eTech);
 		GC.getGame().makeTechDiscovered(eTech);
+	}
+
+	if (tech.isEmbassyTrading())
+	{
+		changeEmbassyTradingCount(iChange);
+	}
+
+	if (tech.isRebaseAnywhere())
+	{
+		changeRebaseAnywhereCount(iChange);
 	}
 
 	if (tech.getGlobalTradeModifier() != 0)
@@ -5656,42 +6003,64 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		changeCorporationMaintenanceModifier(tech.getCorporationMaintenanceModifier() * iChange);
 	}
 
-	// #430 Gate-3: the capabilities themselves are derived (CascadeCapabilities); only the SIDE EFFECTS remain.
-	// (1) Improvement-validity cache round -- farming/irrigation/water-work abilities gate improvement validity.
-	if (tech.isEnablesDesertFarming() || tech.isIrrigation() || tech.isIgnoreIrrigation() || tech.isWaterWork())
+	if (tech.isEnablesDesertFarming())
 	{
+		changeCanFarmDesertCount(iChange);
 		setLastRoundOfValidImprovementCacheUpdate();
 	}
-	// (2) Trade-NETWORK recompute -- terrain/river trade + bridges change plot-group connectivity. The deleted
-	// changers carried this (changeTerrainTradeCount/changeRiverTradeCount -> updatePlotGroups per team player;
-	// changeBridgeBuildingCount -> MarkBridgesDirty); losing it broke the network progressively (2026-07-02).
+
+	if (tech.isTechTrading())
 	{
-		bool bNetworkChange = tech.isRiverTrade() || tech.isBridgeBuilding();
-		if (!bNetworkChange)
-		{
-			for (int iI = 0; iI < GC.getNumTerrainInfos(); iI++)
-			{
-				if (tech.isTerrainTrade(iI))
-				{
-					bNetworkChange = true;
-					break;
-				}
-			}
-		}
-		if (bNetworkChange)
-		{
-			for (int iI = 0; iI < MAX_PLAYERS; iI++)
-			{
-				if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
-				{
-					GET_PLAYER((PlayerTypes)iI).updatePlotGroups();
-				}
-			}
-			if (tech.isBridgeBuilding() && GC.IsGraphicsInitialized())
-			{
-				gDLL->getEngineIFace()->MarkBridgesDirty();
-			}
-		}
+		changeTechTradingCount(iChange);
+	}
+
+	if (tech.isGoldTrading())
+	{
+		changeGoldTradingCount(iChange);
+	}
+
+	if (tech.isOpenBordersTrading())
+	{
+		changeOpenBordersTradingCount(iChange);
+		changeLimitedBordersTradingCount(iChange);
+	}
+
+	if (tech.isDefensivePactTrading())
+	{
+		changeDefensivePactTradingCount(iChange);
+	}
+
+	if (tech.isPermanentAllianceTrading())
+	{
+		changePermanentAllianceTradingCount(iChange);
+	}
+
+	if (tech.isVassalStateTrading())
+	{
+		changeVassalTradingCount(iChange);
+	}
+
+	if (tech.isBridgeBuilding())
+	{
+		changeBridgeBuildingCount(iChange);
+	}
+
+	if (tech.isIrrigation())
+	{
+		changeIrrigationCount(iChange);
+		setLastRoundOfValidImprovementCacheUpdate();
+	}
+
+	if (tech.isIgnoreIrrigation())
+	{
+		changeIgnoreIrrigationCount(iChange);
+		setLastRoundOfValidImprovementCacheUpdate();
+	}
+
+	if (tech.isWaterWork())
+	{
+		changeWaterWorkCount(iChange);
+		setLastRoundOfValidImprovementCacheUpdate();
 	}
 
 	for (int iI = 0; iI < GC.getNumRouteInfos(); iI++)
@@ -5704,33 +6073,52 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 		changeExtraMoves(((DomainTypes)iI), (tech.getDomainExtraMoves(iI) * iChange));
 	}
 
-	// The commerce-flexible counters are CUT (#430): the sliders derive from CascadeCapabilities. The deleted
-	// changer's side effect survives: refresh the slider UI when a slider-unlocking tech arrives for the
-	// active team.
-	if (getID() == GC.getGame().getActiveTeam())
+	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
+		if (tech.isCommerceFlexible(iI))
 		{
-			if (tech.isCommerceFlexible(iI))
-			{
-				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(PercentButtons_DIRTY_BIT), true);
-				gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(GameData_DIRTY_BIT), true);
-				break;
-			}
+			changeCommerceFlexibleCount(((CommerceTypes)iI), iChange);
 		}
+	}
+
+	for (int iI = 0; iI < GC.getNumTerrainInfos(); iI++)
+	{
+		if (tech.isTerrainTrade(iI))
+		{
+			changeTerrainTradeCount(((TerrainTypes)iI), iChange);
+		}
+	}
+
+	if (tech.isRiverTrade())
+	{
+		changeRiverTradeCount(iChange);
 	}
 
 	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
+		if (GC.getBuildingInfo((BuildingTypes)iI).getObsoleteTech() == eTech)
+		{
+			changeObsoleteBuildingCount((BuildingTypes)iI, iChange);
+		}
+		if (GC.getBuildingInfo((BuildingTypes)iI).getSpecialBuilding() != NO_SPECIALBUILDING
+		&& GC.getSpecialBuildingInfo(GC.getBuildingInfo((BuildingTypes)iI).getSpecialBuilding()).getObsoleteTech() == eTech)
+		{
+			changeObsoleteBuildingCount((BuildingTypes)iI, iChange);
+		}
+
 		for (int iJ = 0; iJ < GC.getNumSpecialistInfos(); iJ++)
 		{
 			changeBuildingSpecialistChange(((BuildingTypes)iI), ((SpecialistTypes)iJ), (GC.getBuildingInfo((BuildingTypes)iI).getTechSpecialistChange(eTech, iJ) * iChange));
 		}
 	}
 
-	// keyed improvement yields: a recompute-from-source ledger -- mark + the trigger the old changer fired
-	m_improvementYieldChange.markDirty();
-	updateYield();
+	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
+	{
+		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+		{
+			changeImprovementYieldChange(((ImprovementTypes)iI), ((YieldTypes)iJ), (GC.getImprovementInfo((ImprovementTypes)iI).getTechYieldChanges(eTech, iJ) * iChange));
+		}
+	}
 
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
@@ -5923,7 +6311,7 @@ void CvTeam::setCounterespionageTurnsLeftAgainstTeam(TeamTypes eIndex, int iValu
 	{
 		m_aiCounterespionageTurnsLeftAgainstTeam[eIndex] = iValue;
 
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Espionage_Advisor_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(Espionage_Advisor_DIRTY_BIT, true);
 	}
 }
 
@@ -5948,7 +6336,7 @@ void CvTeam::setCounterespionageModAgainstTeam(TeamTypes eIndex, int iValue)
 	{
 		m_aiCounterespionageModAgainstTeam[eIndex] = iValue;
 
-		gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Espionage_Advisor_DIRTY_BIT), true);
+		gDLL->getInterfaceIFace()->setDirty(Espionage_Advisor_DIRTY_BIT, true);
 	}
 }
 
@@ -6133,9 +6521,22 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvTeam", &m_iTotalPopulation);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iTotalLand);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iNukeInterception);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iExtraWaterSeeFromCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iMapTradingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iTechTradingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iGoldTradingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iOpenBordersTradingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iDefensivePactTradingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iPermanentAllianceTradingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iVassalTradingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iBridgeBuildingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iIrrigationCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iIgnoreIrrigationCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iWaterWorkCount);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iVassalPower);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iMasterPower);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iEnemyWarWearinessModifier);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iRiverTradeCount);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iEspionagePointsEver);
 
 	WRAPPER_READ(wrapper, "CvTeam", &m_bMapCentering);
@@ -6158,6 +6559,7 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiEspionagePointsAgainstTeam);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiCounterespionageTurnsLeftAgainstTeam);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiCounterespionageModAgainstTeam);
+	WRAPPER_READ_ARRAY(wrapper, "CvTeam", NUM_COMMERCE_TYPES, m_aiCommerceFlexibleCount);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", NUM_DOMAIN_TYPES, m_aiExtraMoves);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VOTE_SOURCES, GC.getNumVoteSourceInfos(), m_aiForceTeamVoteEligibilityCount);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abHasMet);
@@ -6198,62 +6600,25 @@ void CvTeam::read(FDataStreamBase* pStream)
 
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectMaking);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiBuildingCount);
+	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiObsoleteBuildingCount);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiResearchProgress);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiTechCount);
+	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TERRAINS, GC.getNumTerrainInfos(), m_paiTerrainTradeCount);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VICTORIES, GC.getNumVictoryInfos(), m_aiVictoryCountdown);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_pabHasTech);
-	// #430: TECH_GAME_START (the universal no-prereq root, enabler.md par.2) postdates older saves -- upgrade the save
-	// ON READ: the team deserializes as if it had always held it. A RAW flag write on purpose: every consumer of the
-	// root derives from state at load (capabilities are derived-on-query, plot groups recalculate, the enabler seeds,
-	// and the reseed's per-held-tech emits announce it like any saved tech), while the full setHasTech side-effect
-	// chain (map loops, processTech, per-city sweeps) is unsafe mid-deserialization -- players are not set up yet.
-	// Unconditional across ALL teams (dead teams too -- a later revival must not resurrect a rootless team).
-	// New games never pass here; they receive it as a genuine grant (CvGame::onFinalInitialized).
-	{
-		const TechTypes eGameStart = (TechTypes)GC.getInfoTypeForString("TECH_GAME_START", true);
-		FAssertMsg(eGameStart != NO_TECH, "TECH_GAME_START missing from the loaded data -- the enabler root is gone, generation would run empty");
-		if (eGameStart != NO_TECH)
-		{
-			m_pabHasTech[eGameStart] = true;
-		}
-	}
-	// #430 reseed NOTE: tech is reseeded from CvPlayer::read (per-self, once per member player), NOT here -- the EXE
-	// reads teams BEFORE players are set up, so a per-member emit from this point finds no alive members (verified: 0).
 
-	// Dead accumulator (member long gone): the drain loop STAYS -- a decorated [iI]/[newIndex] per-element tag does
-	// NOT match a savemigration entry (normalized dictionary name differs), so the loop is the drain.
 	for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_IMPROVEMENTS); ++i)
 	{
 		int	newIndex = wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_IMPROVEMENTS, i, true);
 
 		if (newIndex != -1)
 		{
-			int aiDrain[NUM_YIELD_TYPES];
-			WRAPPER_READ_ARRAY_DECORATED(wrapper, "CvTeam", NUM_YIELD_TYPES, aiDrain, "m_ppaaiImprovementYieldChange[newIndex]");
+			WRAPPER_READ_ARRAY(wrapper, "CvTeam", NUM_YIELD_TYPES, m_ppaaiImprovementYieldChange[newIndex]);
 		}
 		else
 		{
+			//	Consume the values
 			WRAPPER_SKIP_ELEMENT(wrapper, "CvTeam", m_ppaaiImprovementYieldChange[i], SAVE_VALUE_ANY);
-		}
-	}
-
-	// the PERSISTED event-grant half (Python wonder-event yields, e.g. TSUKIJI) -- genuine one-shot state,
-	// folded by the recompute. Soft-absent on old saves (pre-split grants are accepted drift; savemigration.txt).
-	{
-		short iSize = 0;
-		WRAPPER_READ_DECORATED(wrapper, "CvTeam", &iSize, "ImprovementYieldEventsSize");
-		for (short i = 0; i < iSize; ++i)
-		{
-			short iType = -1;
-			YieldArray yields;
-			yields.assign(0);
-			WRAPPER_READ_DECORATED(wrapper, "CvTeam", &iType, "ImprovementYieldEventsType");
-			WRAPPER_READ_ARRAY_DECORATED(wrapper, "CvTeam", NUM_YIELD_TYPES, yields.elems, "ImprovementYieldEvents");
-			iType = static_cast<short>(wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_IMPROVEMENTS, iType, true));
-			if (iType > -1)
-			{
-				m_improvementYieldEvents.insert(std::make_pair(iType, yields));
-			}
 		}
 	}
 
@@ -6303,6 +6668,15 @@ void CvTeam::read(FDataStreamBase* pStream)
 		WRAPPER_READ_CLASS_ENUM(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BONUSES, (int*)&eBonus);
 		m_aeRevealedBonuses.push_back(eBonus);
 	}
+	WRAPPER_READ(wrapper, "CvTeam", &m_iCanPassPeaksCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iMoveFastPeaksCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iCanFoundOnPeaksCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iEmbassyTradingCount);
+
+	WRAPPER_READ(wrapper, "CvTeam", &m_iLimitedBordersTradingCount);
+	WRAPPER_READ(wrapper, "CvTeam", &m_iCanFarmDesertCount);
+
+	WRAPPER_READ(wrapper, "CvTeam", &m_iRebaseAnywhereCount);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iForeignTradeModifier);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iTradeModifier);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iTradeMissionModifier);
@@ -6312,6 +6686,7 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abEmbassy);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abLimitedBorders);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abFreeTrade);
+	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCount);
 
 	for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_BUILDINGS); ++i)
 	{
@@ -6354,9 +6729,22 @@ void CvTeam::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iTotalPopulation);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iTotalLand);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iNukeInterception);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iExtraWaterSeeFromCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iMapTradingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iTechTradingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iGoldTradingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iOpenBordersTradingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iDefensivePactTradingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iPermanentAllianceTradingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iVassalTradingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iBridgeBuildingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iIrrigationCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iIgnoreIrrigationCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iWaterWorkCount);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iVassalPower);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iMasterPower);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iEnemyWarWearinessModifier);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iRiverTradeCount);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iEspionagePointsEver);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_bMapCentering);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_bCapitulated);
@@ -6380,6 +6768,7 @@ void CvTeam::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiEspionagePointsAgainstTeam);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiCounterespionageTurnsLeftAgainstTeam);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiCounterespionageModAgainstTeam);
+	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", NUM_COMMERCE_TYPES, m_aiCommerceFlexibleCount);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", NUM_DOMAIN_TYPES, m_aiExtraMoves);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VOTE_SOURCES, GC.getNumVoteSourceInfos(), m_aiForceTeamVoteEligibilityCount);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abHasMet);
@@ -6406,19 +6795,16 @@ void CvTeam::write(FDataStreamBase* pStream)
 
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectMaking);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiBuildingCount);
+	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiObsoleteBuildingCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiResearchProgress);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiTechCount);
+	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TERRAINS, GC.getNumTerrainInfos(), m_paiTerrainTradeCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VICTORIES, GC.getNumVictoryInfos(), m_aiVictoryCountdown);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_pabHasTech);
 
-	// Only the persisted EVENT-grant half is written (the rest recomputes from source):
+	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
 	{
-		WRAPPER_WRITE_DECORATED(wrapper, "CvTeam", (short)m_improvementYieldEvents.size(), "ImprovementYieldEventsSize");
-		for (std::map<short, YieldArray>::const_iterator it = m_improvementYieldEvents.begin(); it != m_improvementYieldEvents.end(); ++it)
-		{
-			WRAPPER_WRITE_DECORATED(wrapper, "CvTeam", it->first, "ImprovementYieldEventsType");
-			WRAPPER_WRITE_ARRAY_DECORATED(wrapper, "CvTeam", NUM_YIELD_TYPES, it->second.elems, "ImprovementYieldEvents");
-		}
+		WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", NUM_YIELD_TYPES, m_ppaaiImprovementYieldChange[iI]);
 	}
 
 	// Toffer - Write vectors
@@ -6447,8 +6833,15 @@ void CvTeam::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE_CLASS_ENUM_DECORATED(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BONUSES, eBonus, "eBonus");
 	}
 
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iCanPassPeaksCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iMoveFastPeaksCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iCanFoundOnPeaksCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iEmbassyTradingCount);
 
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iLimitedBordersTradingCount);
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iCanFarmDesertCount);
 
+	WRAPPER_WRITE(wrapper, "CvTeam", m_iRebaseAnywhereCount);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iForeignTradeModifier);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iTradeModifier);
 	WRAPPER_WRITE(wrapper, "CvTeam", m_iTradeMissionModifier);
@@ -6459,6 +6852,7 @@ void CvTeam::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abLimitedBorders);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abFreeTrade);
 
+	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCount);
 
 	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
@@ -6532,23 +6926,67 @@ bool CvTeam::hasLaunched() const
 
 bool CvTeam::isCanPassPeaks() const
 {
-	return CascadeCapabilities::capability(getID(), "canPassPeaks");
+	return (getCanPassPeaksCount() > 0);
+}
+
+int CvTeam::getCanPassPeaksCount() const
+{
+	return m_iCanPassPeaksCount;
+}
+
+void CvTeam::changeCanPassPeaksCount(int iChange)
+{
+	m_iCanPassPeaksCount += iChange;
+	FASSERT_NOT_NEGATIVE(getCanPassPeaksCount());
 }
 
 bool CvTeam::isMoveFastPeaks() const
 {
-	return CascadeCapabilities::capability(getID(), "canMoveFastOnPeaks");
+	return (getMoveFastPeaksCount() > 0);
+}
+
+int CvTeam::getMoveFastPeaksCount() const
+{
+	return m_iMoveFastPeaksCount;
+}
+
+void CvTeam::changeMoveFastPeaksCount(int iChange)
+{
+	m_iMoveFastPeaksCount += iChange;
+	FASSERT_NOT_NEGATIVE(getMoveFastPeaksCount());
 }
 
 bool CvTeam::isCanFoundOnPeaks() const
 {
-	return CascadeCapabilities::capability(getID(), "canFoundOnPeaks");
+	return (getCanFoundOnPeaksCount() > 0);
+}
+
+int CvTeam::getCanFoundOnPeaksCount() const
+{
+	return m_iCanFoundOnPeaksCount;
+}
+
+void CvTeam::changeCanFoundOnPeaksCount(int iChange)
+{
+	m_iCanFoundOnPeaksCount += iChange;
+	FASSERT_NOT_NEGATIVE(getCanFoundOnPeaksCount());
+}
+
+int CvTeam::getRebaseAnywhereCount() const
+{
+	return m_iRebaseAnywhereCount;
 }
 
 bool CvTeam::isRebaseAnywhere() const
 {
-	return CascadeCapabilities::capability(getID(), "canRebaseAnywhere");
+	return m_iRebaseAnywhereCount > 0;
 }
+
+void CvTeam::changeRebaseAnywhereCount(int iChange)
+{
+	m_iRebaseAnywhereCount += iChange;
+}
+
 
 void CvTeam::AI_setAssignWorkDirtyInEveryPlayerCityWithActiveBuilding(BuildingTypes eBuilding)
 {
@@ -6566,14 +7004,36 @@ void CvTeam::AI_setAssignWorkDirtyInEveryPlayerCityWithActiveBuilding(BuildingTy
 }
 
 
+int CvTeam::getCanFarmDesertCount() const
+{
+	return m_iCanFarmDesertCount;
+}
+
 bool CvTeam::isCanFarmDesert() const
 {
-	return CascadeCapabilities::capability(getID(), "canFarmDesert");
+	return (getCanFarmDesertCount() > 0);
+}
+
+void CvTeam::changeCanFarmDesertCount(int iChange)
+{
+	m_iCanFarmDesertCount += iChange;
+	FASSERT_NOT_NEGATIVE(getCanFarmDesertCount());
+}
+
+int CvTeam::getLimitedBordersTradingCount() const
+{
+	return m_iLimitedBordersTradingCount;
 }
 
 bool CvTeam::isLimitedBordersTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "rightOfPassage");
+	return (getLimitedBordersTradingCount() > 0);
+}
+
+void CvTeam::changeLimitedBordersTradingCount(int iChange)
+{
+	m_iLimitedBordersTradingCount += iChange;
+	FASSERT_NOT_NEGATIVE(getLimitedBordersTradingCount());
 }
 
 void CvTeam::signLimitedBorders(TeamTypes eTeam)
@@ -6684,9 +7144,22 @@ void CvTeam::setHasEmbassy(TeamTypes eIndex, bool bNewValue)
 	}
 }
 
+int CvTeam::getEmbassyTradingCount() const
+{
+	return m_iEmbassyTradingCount;
+}
+
 bool CvTeam::isEmbassyTrading() const
 {
-	return CascadeCapabilities::canTradeItem(getID(), "embassy");
+	return (getEmbassyTradingCount() > 0);
+}
+
+void CvTeam::changeEmbassyTradingCount(int iChange)
+{
+	if (iChange != 0)
+	{
+		m_iEmbassyTradingCount += iChange;
+	}
 }
 
 void CvTeam::ObsoletePromotions(TechTypes eObsoleteTech)
@@ -7065,7 +7538,7 @@ void CvTeam::setLimitedBorders(TeamTypes eIndex, bool bNewValue)
 
 		if ((getID() == GC.getGame().getActiveTeam()) || (eIndex == GC.getGame().getActiveTeam()))
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 		}
 
 		if (bOldFreeTrade != isFreeTrade(eIndex))
@@ -7081,9 +7554,38 @@ void CvTeam::setLimitedBorders(TeamTypes eIndex, bool bNewValue)
 	}
 }
 
-// #430 two-part seam: the team by-type free-specialist ledger (m_paiFreeSpecialistCount) is cut. Team-scope
-// free specialists are not in the cascade fsAmount seam today, so they surface as an exposed gap (F7 data)
-// rather than a silent legacy ride-in -- the delete-driven stance.
+int CvTeam::getFreeSpecialistCount(SpecialistTypes eIndex) const
+{
+	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
+	return m_paiFreeSpecialistCount[eIndex];
+}
+
+void CvTeam::setFreeSpecialistCount(SpecialistTypes eIndex, int iNewValue)
+{
+	PROFILE_EXTRA_FUNC();
+	FASSERT_BOUNDS(0, GC.getNumSpecialistInfos(), eIndex);
+
+	const int iOldValue = getFreeSpecialistCount(eIndex);
+
+	if (iOldValue != iNewValue)
+	{
+		m_paiFreeSpecialistCount[eIndex] = iNewValue;
+		FASSERT_NOT_NEGATIVE(getFreeSpecialistCount(eIndex));
+
+		for (int iI = 0; iI < MAX_PLAYERS; iI++)
+		{
+			if (GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getID()))
+			{
+				algo::for_each(GET_PLAYER((PlayerTypes)iI).cities(), CvCity::fn::changeFreeSpecialistCount(eIndex, 0));
+			}
+		}
+	}
+}
+
+void CvTeam::changeFreeSpecialistCount(SpecialistTypes eIndex, int iChange)
+{
+	setFreeSpecialistCount(eIndex, (getFreeSpecialistCount(eIndex) + iChange));
+}
 
 
 bool CvTeam::isAnyVassal() const
@@ -7140,7 +7642,7 @@ void CvTeam::setFreeTradeAgreement(TeamTypes eIndex, bool bNewValue)
 
 		if (getID() == GC.getGame().getActiveTeam() || eIndex == GC.getGame().getActiveTeam())
 		{
-			gDLL->getInterfaceIFace()->setDirty((InterfaceDirtyBits)(Score_DIRTY_BIT), true);
+			gDLL->getInterfaceIFace()->setDirty(Score_DIRTY_BIT, true);
 		}
 
 		if (bOldFreeTrade != isFreeTrade(eIndex))
@@ -7210,21 +7712,43 @@ void CvTeam::recalculateModifiers()
 	}
 
 	//	Clear team level info (from techs)
+	m_iExtraWaterSeeFromCount = 0;
+	m_iCanPassPeaksCount = 0;
+	m_iMoveFastPeaksCount = 0;
+	m_iCanFoundOnPeaksCount = 0;
+	m_iRebaseAnywhereCount = 0;
 	m_iForeignTradeModifier = 0;
 	m_iTradeModifier = 0;
 	m_iTradeMissionModifier = 0;
 	m_iCorporationRevenueModifier = 0;
 	m_iCorporationMaintenanceModifier = 0;
+	m_iCanFarmDesertCount = 0;
+	m_iOpenBordersTradingCount = 0;
+	m_iDefensivePactTradingCount = 0;
+	m_iPermanentAllianceTradingCount = 0;
+	m_iVassalTradingCount = 0;
+	m_iBridgeBuildingCount = 0;
+	m_iIrrigationCount = 0;
+	m_iIgnoreIrrigationCount = 0;
+	m_iWaterWorkCount = 0;
 	m_iVassalPower = 0;
 	m_iMasterPower = 0;
 	m_iEnemyWarWearinessModifier = 0;
+	m_iRiverTradeCount = 0;
 	m_iNukeInterception = 0;
 
-	m_improvementYieldChange.markDirty();   // recompute-from-source on next read (never serialized)
+	for (int iI = 0; iI < GC.getNumImprovementInfos(); iI++)
+	{
+		for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
+		{
+			m_ppaaiImprovementYieldChange[iI][iJ] = 0;
+		}
+	}
 
 	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
 		m_paiBuildingCount[iI] = 0;
+		m_paiObsoleteBuildingCount[iI] = 0;
 
 		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 		{
@@ -7236,6 +7760,10 @@ void CvTeam::recalculateModifiers()
 		}
 	}
 
+	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+	{
+		m_paiFreeSpecialistCount[iI] = 0;
+	}
 
 	for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)
 	{
