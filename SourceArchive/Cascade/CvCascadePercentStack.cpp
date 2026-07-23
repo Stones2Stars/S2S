@@ -7,7 +7,7 @@
 #include "CvGameCoreDLL.h"
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "CvCascadePercentStack.h"
-#include "CvCascadeMMKernel.h"
+#include "Data/CvDepositRead.h"
 #include "CvInfo.h"                // CvInfo (the spec model the DepositIndex compiled from)
 #include "Repos/InfoRepo.h"            // InfoRepo<CvXInfo>::get().get(id)
 #include "Defines/CvGlobals.h"

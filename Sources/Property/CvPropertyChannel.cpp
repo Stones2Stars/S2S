@@ -5,7 +5,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "Property/CvPropertyChannel.h"
-#include "CvCascadeMMKernel.h"
+#include "Data/CvDepositRead.h"
 #include "Data/CvDepositIndex.h"
 #include "CvInfo.h"
 #include "Repos/InfoRepo.h"

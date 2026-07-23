@@ -19,7 +19,6 @@
 #include "Engine/CvTeam.h"
 #include "Conditions/CvConditionEval.h"   // cascadeEvalCondition -- the StoneBase-ported typed-condition evaluator
 #include "CvJsonCondition.h"       // CvJsonCondition tree (CASC_COND_*/CASC_PRED_*) -- scanned for the operate reverse-index
-#include "CvCascadeAccumulator.h"     // the accumulator package surface (the epochs are DELETED -- scope-packages.md phase 3)
 #include "CvBuildingInfo.h"
 #include "CvUnitInfo.h"
 #include "CvTechInfo.h"
@@ -561,10 +560,10 @@ void EnablerKernel::onHaveChangedActive(const CvCity* pCity, int eHaveKind)
 	if (pCity == NULL) return;
 	switch (eHaveKind)
 	{
-	case CascadeAccumulator::CASC_HAVE_POP:   ek_recheckActiveSet(pCity, s_opPop); break;
-	case CascadeAccumulator::CASC_HAVE_POWER: ek_recheckActiveSet(pCity, s_opPower); break;
-	case CascadeAccumulator::CASC_HAVE_CORP:  ek_recheckActiveSet(pCity, s_opCorp); break;
-	case CascadeAccumulator::CASC_HAVE_RELIGION:
+	case CASC_HAVE_POP:   ek_recheckActiveSet(pCity, s_opPop); break;
+	case CASC_HAVE_POWER: ek_recheckActiveSet(pCity, s_opPower); break;
+	case CASC_HAVE_CORP:  ek_recheckActiveSet(pCity, s_opCorp); break;
+	case CASC_HAVE_RELIGION:
 	{
 		std::vector<int> seeds(s_opReligion);
 		seeds.insert(seeds.end(), s_opStateRel.begin(), s_opStateRel.end());
@@ -573,7 +572,7 @@ void EnablerKernel::onHaveChangedActive(const CvCity* pCity, int eHaveKind)
 	}
 	// #430 G3: a plot-group MEMBERSHIP change (the city moved group) can shift its ENTIRE connected-resource set, so
 	// every bonus-operate building re-checks. A single bonus's access flip is the targeted onBonusAccessChangedActive.
-	case CascadeAccumulator::CASC_HAVE_BONUS: ek_recheckActiveSet(pCity, s_opAnyBonus); break;
+	case CASC_HAVE_BONUS: ek_recheckActiveSet(pCity, s_opAnyBonus); break;
 	default: break;
 	}
 }

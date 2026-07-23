@@ -6,7 +6,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeCommerceCalc.h"
-#include "CvCascadeMMKernel.h"
+#include "Data/CvDepositRead.h"
 #include "CvCascadeBuildingPackage.h"    // buildingFlat (reused §1 package)
 #include "CvInfo.h"                // CvInfo + the cascade Json* identity structs
 #include "CvCorporationInfo.h"     // the corp typed members (change/produced/prereqBonuses -- the collapsed corp families)

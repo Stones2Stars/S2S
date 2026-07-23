@@ -22,7 +22,7 @@
 #include "Engine/CvUnit.h"           // ctx.unit->getUnitInfo() (the IS_<TAG> predicate)
 #include "CvUnitInfo.h"              // getTags() (the unit tag bitset)
 #include "CvJsonBoolBlock.h"         // hasId (the classification bitset O(1) test)
-#include "CvCascadeMMKernel.h"        // traitData -- the active-set trait resolver (the L1 policy read)
+#include "Data/CvDepositRead.h"        // traitData -- the active-set trait resolver (the L1 policy read)
 #include "CvCivicInfo.h"          // the civic §9 policies block (the L1 policy read)
 #include "CvTraitInfo.h"          // the trait §9 policies block
 #include "Repos/InfoRepo.h"

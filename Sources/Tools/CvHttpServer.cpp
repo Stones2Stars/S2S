@@ -5,8 +5,6 @@
 #include "Engine/CvPropertySource.h" // property-source completeness oracle: getSource()->getProperty()
 #include "Engine/CvPropertyManipulators.h" // the property CONSTANT-source recompute (the property channel's net)
 #include "Property/CvPropertyChannel.h"     // the §430 property channel's per-city sourced numbers
-#include "Cascade/CvCascadeScalarChannels.h" // the city scalar channels' nets (GP-rate/defense/maintenance)
-#include "Cascade/CvCascadeAccumulator.h"    // CascadeRateSlots -- the increment-F standing slot twins on the wellbeing action
 #include <psapi.h>                           // /computed/perf memory gauge: GetProcessMemoryInfo (the CvPlotPaging mechanism)
 #include "AI/BetterBTSAI.h"                  // /computed/perf frameAccumMs: the whole-turn frame-span ms accumulators
 #include "Data/CvReadJson.h"       // /state/info: rjInfoForType -- the info-object edge dump (DEC-one-reverse-view)
@@ -35,7 +33,6 @@
 #include "Engine/CvUnit.h"
 #include "CvUnitCombatInfo.h" // /computed/cities/yields heal-per-unitcombat decomposition (getUnitCombatInfo().getType())
 #include "Enabler/CvCapabilities.h" // /computed/teamFlags hasLanguage (the legacy latch is cut, #430)
-#include "Cascade/CvCascadeWellbeing.h"    // the §2b wellbeing port's verdicts on /computed/cities/wellbeing
 #include "Enabler/CvEnablerKernel.h" // wireOperatingBuildings for the wellbeing eval ctx
 // NB no Cascade headers: this surface serves RAW state (/state) and the ENGINE's own answers (/computed)
 // only -- the cascade-vs-legacy shadow comparison was retired (the cutover is validated by the external

@@ -6,8 +6,6 @@
 
 #include "CvGameCoreDLL.h"
 #include "Data/CvDepositIndex.h"
-#include "CvCascadeChannels.h"    // the channel index + cascadeResolveAddress (the load-time strings->ints)
-#include "CvCascadeScopePackages.h"   // the CPK_*/PSC_* package-bit vocabulary routeFor maps deposits onto
 #include "CvInfo.h"               // CvInfo::getModifiers()/getWhenObsolete() -- the push's read surface
 #include "Defines/CvGlobals.h"
 #include "CvTerrainInfo.h"

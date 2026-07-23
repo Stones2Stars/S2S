@@ -11,7 +11,7 @@
 #include "CvGameCoreDLL.h"
 #include "CvCascadeChannels.h"
 #include "Data/CvDepositIndex.h"   // the compiled records the sum walks
-#include "CvCascadeMMKernel.h"       // MMKernel::perScale -- THE per resolver (never a second one)
+#include "Data/CvDepositRead.h"       // MMKernel::perScale -- THE per resolver (never a second one)
 #include <string>
 
 int cascadeScopeFromSegment(const char* scope)

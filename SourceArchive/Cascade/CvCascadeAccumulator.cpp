@@ -19,7 +19,7 @@
 #include "CvCascadeScalarChannels.h"  // the scalar city halves + the player fill + the buildRate ledgers
 #include "Enabler/CvOperatingBuildings.h"
 #include "Data/CvDepositIndex.h"    // the compiled segments -- the derived event masks + the ledger keys
-#include "CvCascadeMMKernel.h"        // MMKernel::applies -- the deposit condition gate (acc_brSelf's buildRate.self read)
+#include "Data/CvDepositRead.h"        // MMKernel::applies -- the deposit condition gate (acc_brSelf's buildRate.self read)
 #include "CvInfo.h"
 #include "Repos/InfoRepo.h"
 #include "Defines/CvGlobals.h"

@@ -54,6 +54,12 @@ struct CascadeCondDeps
 
 class EnablerDomain;
 
+
+// The HAVE-axis kinds an operate re-check keys on. These name ENABLER axes (which dependents re-gate when a
+// city gains/loses a have), so they live with the enabler -- they were previously declared inside the modifier
+// accumulator, which is why the enabler carried an include of the cascade it is not part of.
+enum CascadeHaveKind { CASC_HAVE_POP = 0, CASC_HAVE_RELIGION, CASC_HAVE_CORP, CASC_HAVE_POWER, CASC_HAVE_BONUS };
+
 class EnablerKernel
 {
 public:

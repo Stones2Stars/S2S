@@ -6,7 +6,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeYieldBasePackages.h"
-#include "CvCascadeMMKernel.h"
+#include "Data/CvDepositRead.h"
 #include "CvInfo.h"                // CvInfo (the spec model the DepositIndex compiled from)
 #include "Repos/InfoRepo.h"            // InfoRepo<CvXInfo>::get().get(id)
 #include "Defines/CvGlobals.h"

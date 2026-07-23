@@ -18,7 +18,6 @@
 #include "CvBuildingInfo.h"
 #include "CvUnitInfo.h"
 #include "Grants/CvGrantsEngine.h"   // the #430 GRANTS consumer -- registered at the composition root below
-#include "CvCascadeScopePackages.h"  // CPK_*/PSC_*/WSC_* package-bit enums (the invalidate-observability decoder)
 // typeIndex name-resolution in the consumer: the Info headers for each SFT_ kind (so GC.getXInfo(i).getType() compiles).
 // Imported DIRECTLY (no CvInfos.h umbrella -- owner 2026-06-18: that umbrella should be retired, import directly).
 #include "CvBonusInfo.h"

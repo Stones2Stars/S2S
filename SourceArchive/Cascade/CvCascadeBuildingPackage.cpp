@@ -6,7 +6,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeBuildingPackage.h"
-#include "CvCascadeMMKernel.h"
+#include "Data/CvDepositRead.h"
 #include "Data/CvDepositIndex.h"     // DepositIndex::whenObsoleteFor -- the obsolete tree's compiled records
 #include "CvInfo.h"                // CvInfo
 #include "Repos/InfoRepo.h"            // InfoRepo<CvBuildingInfo>::get().get(id)
