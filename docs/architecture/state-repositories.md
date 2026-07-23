@@ -169,6 +169,19 @@ public:
   **Status against this ruling:** city / player / world / unit each sit on a `CvDerivedCacheSet` (their "ONE dirty
   protocol"), plot on the single-flag `CvDerivedCache`. **The two gaps: `CvArea` carries NO cache at all, and
   `CvTeam` carries only `CascadeTeamCaps` (capabilities, not a package).**
+  **Where the AREA sums live instead — two different wrong homes, both cached (so neither is a per-read walk, and
+  both break the scope principle):** the area YIELD percents fold into the CITY package (`yPctCity` — "bonus /
+  building / event / power / area / capital all fold into yPctCity as scope/conditioned deposits",
+  `CvCascadeAccumulator.cpp`), while the area MAINTENANCE percents sit on the PLAYER package as maps keyed by area id
+  (`ps.maintAreaPct` / `ps.maintOtherAreaPct`). So filling the gap is not "add an empty package": it is
+  (1) `CascadeAreaPackages` on a `CvDerivedCacheSet<CvArea>` holding the area's OWN percent Σ per channel,
+  (2) the city read SUMS that package instead of area deposits folding into `yPctCity`, and
+  (3) the player-side area-keyed maintenance maps retire into it. The mechanical pattern is the 6-step world-scope
+  shape: struct + `CvDerivedCacheSet` → owner member → `cascadeRefresh<X>` delegate → `bind` + `markAllDirty` in the
+  owner's reset → the `CascadeAccumulator` gather. `CvTeam` follows the same shape for its team-scope percents
+  (`m_iTradeModifier`, `m_iEnemyWarWearinessModifier`, … — still legacy accumulators, §B1 of
+  [legacy-cut-worklist.md](../plans/structural-cleanup/legacy-cut-worklist.md), which cannot be cut until the package
+  exists to hold their values).
 - **⚖ TWO DISTINCT KINDS OF DERIVED CACHE — do not conflate them:**
   - **The yield + percent packages are an INPUT/OUTPUT (value) cache** — memoize the computed number,
     dirty-invalidate on a source event, recompute from inputs on next read. This is what `CvDerivedCache` is FOR.
