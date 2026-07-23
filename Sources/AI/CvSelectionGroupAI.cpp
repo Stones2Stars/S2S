@@ -15,7 +15,7 @@
 #include "CvTeamAI.h"
 #include "Engine/CvUnit.h"
 #include "CvImprovementInfo.h"
-#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route GRP/COM/UNT lines through the event spine (shadow)
+#include "Spine/CvEventSpine.h" // #430 logging consolidation: route GRP/COM/UNT lines through the event spine (shadow)
 
 // Public Functions...
 

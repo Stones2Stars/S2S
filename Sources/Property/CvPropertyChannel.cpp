@@ -4,9 +4,9 @@
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvCascadeProperty.h"
+#include "Property/CvPropertyChannel.h"
 #include "CvCascadeMMKernel.h"
-#include "CvCascadeDepositIndex.h"
+#include "Data/CvDepositIndex.h"
 #include "CvInfo.h"
 #include "Repos/InfoRepo.h"
 #include "Defines/CvGlobals.h"

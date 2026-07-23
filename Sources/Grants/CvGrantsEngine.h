@@ -2,7 +2,7 @@
 #ifndef CV_CASCADE_GRANTS_H
 #define CV_CASCADE_GRANTS_H
 
-#include "CvEventSpine.h"
+#include "Spine/CvEventSpine.h"
 
 //
 //	CvCascadeGrants -- the #430 GRANTS machine (the "provisions" consumer). An IEventConsumer on the event spine: on a

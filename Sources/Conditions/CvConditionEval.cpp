@@ -5,11 +5,10 @@
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvCascadePerfCount.h"   // per-turn call counters + stopwatches (owner 2026-07-02: repeat-calc hunt)
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer
-#include "CvCascadeConditionEval.h"
+#include "Conditions/CvConditionEval.h"
 #include "CvJsonGate.h"              // cascadeGateOk -- the entity-level enabled/disabled pair
-#include "CvCascadeTally.h"
+#include "Tally/CvTally.h"
 #include "AI/CvPlayerAI.h"          // GET_PLAYER
 #include "AI/CvTeamAI.h"           // GET_TEAM
 #include "Defines/CvGlobals.h"
@@ -464,8 +463,6 @@ bool cascadeIsBuildingObsolete(int eBuilding, const CvCascadeEvalCtx& ec)
 
 bool cascadeEvalCondition(const CvJsonCondition* c, const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& flags)
 {
-	++CascadePerf::condEval;
-	++CascadePerf::condEvalBy[CascadePerf::condCaller];   // the caller-domain split (CascadeCondScope sets the tag)
 	if (c == NULL) return true;                                  // vacuously true
 	if (c->kind == CASC_COND_PRESENCE) return ev_evalPresence(ctx, flags, c);
 	if (c->kind == CASC_COND_PREDICATE) return ev_evalPredicate(ctx, flags, c);

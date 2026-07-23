@@ -10,7 +10,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeChannels.h"
-#include "CvCascadeDepositIndex.h"   // the compiled records the sum walks
+#include "Data/CvDepositIndex.h"   // the compiled records the sum walks
 #include "CvCascadeMMKernel.h"       // MMKernel::perScale -- THE per resolver (never a second one)
 #include <string>
 

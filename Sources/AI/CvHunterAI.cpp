@@ -13,7 +13,7 @@
 #include "Engine/CvSelectionGroup.h"
 #include "CvSelectionGroupAI.h"
 #include "CvUnitAI.h"
-#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route HAI lines through the event spine (pilot domain)
+#include "Spine/CvEventSpine.h" // #430 logging consolidation: route HAI lines through the event spine (pilot domain)
 
 // ---------------------------------------------------------------------------
 // #430 logging pilot: HAI -> the event spine. Each line is a constant PREFIX ([HAI/...] + constant labels) keyed by an

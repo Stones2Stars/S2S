@@ -33,7 +33,7 @@
 #include "PlotInfo.h"
 #include "Engine/CvValueService.h"
 #include "CvWorkerAI.h"
-#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the event spine (shadow)
+#include "Spine/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the event spine (shadow)
 #include "CvCityLogTags.h" // [CIT] tag enums (shared with CvCity.cpp -- defined once, see header)
 
 // The compiler intrinsic behind the [CIT/assign/dirty] caller attribution (VC7.1 supports it; PDB-resolvable

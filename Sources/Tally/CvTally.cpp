@@ -5,7 +5,7 @@
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvCascadeTally.h"
+#include "Tally/CvTally.h"
 #include "AI/CvPlayerAI.h"   // GET_PLAYER + getBuildingCount/getUnitCount (the object-owned aggregate) + getTeam/isAlive
 #include "Engine/CvUnit.h"   // countUnitsWithTag -- the per-player unit iterate + getUnitInfo()
 #include "CvUnitInfo.h"      // getTags() (the unit tag bitset)

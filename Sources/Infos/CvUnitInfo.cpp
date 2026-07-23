@@ -18,7 +18,7 @@
 #include "AI/CvPlayerAI.h"      // GET_PLAYER -- isCivilizationUnit resolves the asking player's civilization
 #include "CvPromotionInfo.h"    // GC.getPromotionInfo(i).getUnitCombat() -- the canAcquireExperience derivation
 #include "CvJsonModifiers.h"    // getModifiers() walk -> the unit's PROPERTY_* emission sources
-#include "CvCascadePropertyBridge.h" // the JSON->BoolExpr translator (property-audit.md increment 4)
+#include "Property/CvPropertyBridge.h" // the JSON->BoolExpr translator (property-audit.md increment 4)
 #include "Engine/CvOutcomeMission.h" // #430: CvOutcomeMission new/mapFrom/getMission/getOutcomeList (outcomes JSON intake)
 
 CvUnitInfo::CvUnitInfo()

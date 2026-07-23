@@ -13,10 +13,9 @@
 #include "Defines/CvGlobals.h"
 #include "CvInfo.h"               // the mapped info (getModifiers/requiresOperate/dormantTriggers) -- the repo census
 #include "Repos/InfoRepo.h"           // InfoRepo<CvBuildingInfo> -- ditto
-#include "CvCascadePerfCount.h"       // CascadePerf -- the [MODIFIER/perf] census
-#include "CvCascadeReadJson.h"        // cascadeReadJsonStats -- re-surface the dark load-time probe stats
+#include "Data/CvReadJson.h"        // cascadeReadJsonStats -- re-surface the dark load-time probe stats
 #include "CvJsonParse.h"              // jsonUnresolvedIds -- re-surface the dark load-time FK misses
-#include "CvEventSpine.h"             // the #430 dispatch spine -- the census rides it (SD_MODIFIER), NOT direct gDLL->logMsg
+#include "Spine/CvEventSpine.h"             // the #430 dispatch spine -- the census rides it (SD_MODIFIER), NOT direct gDLL->logMsg
 #include <set>
 #include <string>
 

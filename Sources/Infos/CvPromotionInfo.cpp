@@ -10,7 +10,7 @@
 #include "CvPromotionInfo.h"
 #include "CvPromotionLineInfo.h"  // GC.getPromotionLineInfo(...) -> the line's unitcombat-prereq / notOnUnitCombat getters
 #include "CvJsonParse.h"            // jsonResolveId + jsonFamVal/jsonFamMemberVal + jsonIdInt/Bool/Fk/Str + jsonChildObj + jsonX100
-#include "CvCascadePropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
+#include "Property/CvPropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 #include "AI/CvGameAI.h"            // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 
 CvPromotionInfo::CvPromotionInfo()

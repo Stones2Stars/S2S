@@ -11,7 +11,7 @@
 //	Purely-organizational static-methods class: NO data members, never instantiated, no per-instance state.
 //
 
-#include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx / CvCascadeEvalFlags -- the eval target for deposit conditions
+#include "Conditions/CvConditionEval.h"   // CvCascadeEvalCtx / CvCascadeEvalFlags -- the eval target for deposit conditions
 #include <string>
 #include <vector>
 

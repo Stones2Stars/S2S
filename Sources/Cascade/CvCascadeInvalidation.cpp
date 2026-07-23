@@ -21,16 +21,16 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeInvalidation.h"
-#include "CvEventSpine.h"          // IEventConsumer, the SEVT_* ids, emitCacheInvalidate / spineEventName, spineGameLoadInProgress
+#include "Spine/CvEventSpine.h"          // IEventConsumer, the SEVT_* ids, emitCacheInvalidate / spineEventName, spineGameLoadInProgress
 #include "CvCascadeAccumulator.h"  // CascadeAccumulator (the mark methods) + the CPK_*/PSC_* package-bit masks
-#include "CvTechEnabler.h"         // TechEnabler::onTechChanged -- the standardized enabler's tech-domain delta
-#include "CvBuildingEnabler.h"     // BuildingEnabler::onCity* -- the standardized per-city building-domain deltas
-#include "CvUnitEnabler.h"         // UnitEnabler::onCity* -- the standardized per-city unit-domain deltas
-#include "CvCivicEnabler.h"        // CivicEnabler::onTechChanged -- the civics domain's tech delta
-#include "CvProjectEnabler.h"      // ProjectEnabler::onTechChanged/onProjectChanged -- the projects domain's deltas
-#include "CvProcessEnabler.h"      // ProcessEnabler::onTechChanged -- the processes domain's tech delta
-#include "CvBuildEnabler.h"        // BuildEnabler::onTechChanged -- the worker-builds domain's tech delta
-#include "CvPromotionEnabler.h"    // PromotionEnabler::onTechChanged -- the promotions domain's tech delta
+#include "Enabler/CvTechEnabler.h"         // TechEnabler::onTechChanged -- the standardized enabler's tech-domain delta
+#include "Enabler/CvBuildingEnabler.h"     // BuildingEnabler::onCity* -- the standardized per-city building-domain deltas
+#include "Enabler/CvUnitEnabler.h"         // UnitEnabler::onCity* -- the standardized per-city unit-domain deltas
+#include "Enabler/CvCivicEnabler.h"        // CivicEnabler::onTechChanged -- the civics domain's tech delta
+#include "Enabler/CvProjectEnabler.h"      // ProjectEnabler::onTechChanged/onProjectChanged -- the projects domain's deltas
+#include "Enabler/CvProcessEnabler.h"      // ProcessEnabler::onTechChanged -- the processes domain's tech delta
+#include "Enabler/CvBuildEnabler.h"        // BuildEnabler::onTechChanged -- the worker-builds domain's tech delta
+#include "Enabler/CvPromotionEnabler.h"    // PromotionEnabler::onTechChanged -- the promotions domain's tech delta
 #include "AI/CvPlayerAI.h"         // GET_PLAYER
 
 // Resolve a per-city event's (owner, cityId) to the live CvCity. A negative owner/id => NULL (an empire/world

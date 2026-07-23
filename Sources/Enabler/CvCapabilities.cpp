@@ -3,7 +3,7 @@
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvCascadeCapabilities.h"
+#include "Enabler/CvCapabilities.h"
 #include "CvInfo.h"
 #include "CvTechInfo.h"
 #include "Repos/InfoRepo.h"

@@ -9,7 +9,7 @@
 #include "CvHeritageInfo.h"
 #include "CvTechInfo.h"       // getPrereqTech reverse scan reads GC.getTechInfo(i).getEdges() -- needs the full type (C2027)
 #include "CvJsonParse.h"          // the shared walkers (jsonChildObj/jsonIdBool)
-#include "CvCascadePropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
+#include "Property/CvPropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 
 // Reverse-scan the FORWARD enables.heritages edges the curator store-inverts the two acquisition prereqs onto
 // (curate_heritage.py DROP + store inversion): the tech that lists THIS heritage in enables.heritages is its

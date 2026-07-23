@@ -15,7 +15,7 @@
 //	(the per-POPULATION attribute source). The property's decay stays a separate PERCENT number.
 //
 
-#include "CvCascadeConditionEval.h"
+#include "Conditions/CvConditionEval.h"
 
 class CvCity;
 

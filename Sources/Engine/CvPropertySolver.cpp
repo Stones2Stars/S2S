@@ -14,7 +14,7 @@
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "CvInfos.h"
-#include "Cascade/CvEnablerKernel.h"        // F5: the operate-band reverse-index (thresholds + the targeted re-check)
+#include "Enabler/CvEnablerKernel.h"        // F5: the operate-band reverse-index (thresholds + the targeted re-check)
 #include "Cascade/CvCascadeAccumulator.h"   // F5: cityPropertyBandChanged (operate re-check + building-active footprint)
 #include "AI/CvPlayerAI.h"                   // F5: GET_PLAYER (CvPlayerAI::getPlayer) + the per-player city walk
 #include "CvCity.h"                          // F5: pCity->plot()/getPropertiesConst()

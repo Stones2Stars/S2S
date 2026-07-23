@@ -28,13 +28,13 @@
 #include "CvUnitSelectionCriteria.h"
 #include "UI/CvViewport.h"
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"
-#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the spine (CvCity side)
+#include "Spine/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the spine (CvCity side)
 #include "Cascade/CvCascadeAccumulator.h"  // #430 the modifier scope accumulator -- DOMAIN dirty hooks (modifier-substrate.md)
 #include "Repos/InfoRepo.h"        // InfoRepo<CvBuildingInfo> -- the source infos the uniform refill sums
-#include "Cascade/CvEnablerKernel.h" // EnablerKernel::recomputeOperatingBuildingsInto -- the operating buildings cache's refresh delegate target
+#include "Enabler/CvEnablerKernel.h" // EnablerKernel::recomputeOperatingBuildingsInto -- the operating buildings cache's refresh delegate target
 #include "Cascade/CvCascadeWellbeing.h" // CascadeWellbeing::bonusWellbeing -- per-source §2b terms for the flipped legacy sub-getters
-#include "Cascade/CvBuildingEnabler.h" // BuildingEnabler::onCityCreated -- the per-city buildings domain (canConstruct reads m_enabler)
-#include "Cascade/CvUnitEnabler.h"     // UnitEnabler::onCityCreated -- the per-city units domain (canTrain reads m_enabler)
+#include "Enabler/CvBuildingEnabler.h" // BuildingEnabler::onCityCreated -- the per-city buildings domain (canConstruct reads m_enabler)
+#include "Enabler/CvUnitEnabler.h"     // UnitEnabler::onCityCreated -- the per-city units domain (canTrain reads m_enabler)
 #include "AI/CvCityLogTags.h" // [CIT] tag enums (shared with CvCityAI.cpp -- defined once, see header)
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "CvTraitInfo.h"

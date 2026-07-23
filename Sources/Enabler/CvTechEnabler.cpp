@@ -4,8 +4,8 @@
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvTechEnabler.h"
-#include "CvEnabler.h"
+#include "Enabler/CvTechEnabler.h"
+#include "Enabler/CvEnabler.h"
 #include "CvInfo.h"
 #include "Repos/InfoRepo.h"
 #include "AI/CvPlayerAI.h"           // GET_PLAYER
@@ -13,8 +13,8 @@
 #include "Defines/CvGlobals.h"
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
-#include "CvEnablerKernel.h"           // EnablerKernel::generate/requiresMet -- the oracle GENERATE + the ONE gate evaluator
-#include "CvCascadeConditionEval.h"    // CvCascadeEvalCtx -- the gate evaluation's context
+#include "Enabler/CvEnablerKernel.h"           // EnablerKernel::generate/requiresMet -- the oracle GENERATE + the ONE gate evaluator
+#include "Conditions/CvConditionEval.h"    // CvCascadeEvalCtx -- the gate evaluation's context
 #include "CvTechInfo.h"                // cascadeStartNode -- the synthetic TECH_GAME_START root (off the InfoRepo)
 
 // The tech's cascade info: the synthetic TECH_GAME_START root lives OFF the InfoRepo (cascadeStartNode) --

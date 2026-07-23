@@ -4,7 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "CvEventSpine.h"   // #430 emitPlotGroupBonusChanged (the NETWORK bonus event)
+#include "Spine/CvEventSpine.h"   // #430 emitPlotGroupBonusChanged (the NETWORK bonus event)
 #include "CvCity.h"
 #include "Defines/CvGlobals.h"
 #include "CvMap.h"

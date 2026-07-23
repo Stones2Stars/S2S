@@ -4,8 +4,8 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
-#include "CvEventSpine.h"   // #430: emit the tech first-discover DOMAIN event (the grants trigger)
-#include "CvCascadeCapabilities.h"   // #430 Gate-3 wiring step 1: the in-body capability shadow + cache invalidation
+#include "Spine/CvEventSpine.h"   // #430: emit the tech first-discover DOMAIN event (the grants trigger)
+#include "Enabler/CvCapabilities.h"   // #430 Gate-3 wiring step 1: the in-body capability shadow + cache invalidation
 #include "CvCascadeAccumulator.h"    // #430 the modifier scope accumulator -- setHasTech bumps the global epoch
 #include "CvArea.h"
 #include "CvBuildingInfo.h"

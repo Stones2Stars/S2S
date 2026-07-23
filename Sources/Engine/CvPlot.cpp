@@ -36,9 +36,9 @@
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "Repos/BuildsRepo.h"
 #include "Infrastructure/FAStarNode.h"
-#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [ENG] lines through the event spine
+#include "Spine/CvEventSpine.h" // #430 logging consolidation: route [ENG] lines through the event spine
 #include "Repos/InfoRepo.h"                 // the substrate infos the uniform refill sums
-#include "Cascade/CvEnablerKernel.h" // EnablerKernel::operatingBuildings -- the cascade active-building verdict (recomputeYieldInto)
+#include "Enabler/CvEnablerKernel.h" // EnablerKernel::operatingBuildings -- the cascade active-building verdict (recomputeYieldInto)
 #include "Cascade/CvCascadeAccumulator.h" // dirtyCity(CPK_YRATE) -- a plot-yield change re-marks the working city's realized-rate cache
 
 // #430 logging: [ENG] engine-integrity -> event spine (CvPlot). Self-registers its prefix provider + Engine.log file;

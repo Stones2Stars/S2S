@@ -14,12 +14,12 @@
 //
 
 #include "CvGameCoreDLL.h"             // PCH umbrella -- picojson, windows.h, gDLL, GC
-#include "CvCascadeReadJson.h"
+#include "Data/CvReadJson.h"
 #include "Defines/CvGlobals.h"         // GC.getInfoTypeForString -- the type registry (entity id resolution)
-#include "CvEventSpine.h"              // the #430 dispatch spine -- the [READJSON] census rides it as a CONSUMER
+#include "Spine/CvEventSpine.h"              // the #430 dispatch spine -- the [READJSON] census rides it as a CONSUMER
 #include "CvJsonParse.h"               // jsonClassifyKey / jsonUnresolvedIds -- shared vocabulary + FK diag
 #include "CvInfo.h"                // CvInfo (+ cascadeStartNode) -- the mapped info data + the TECH_GAME_START root
-#include "CvCascadeDepositIndex.h"     // DepositIndex::pushInfo/clearCompiled -- the compiled deposit index (push-time interning)
+#include "Data/CvDepositIndex.h"     // DepositIndex::pushInfo/clearCompiled -- the compiled deposit index (push-time interning)
 #include "CvClassificationRegistry.h"  // the §8/§9 generated classification categories -- minted + resolved post-map
 #include "CvTechInfo.h"            // CvTechInfo -- for the capabilities read-back survey
 #include "CvImprovementInfo.h"     // CvImprovementInfo -- the reverse-view improvement relations
@@ -45,7 +45,7 @@
 #include "CvBonusClassInfo.h"
 #include "CvInfos.h"               // the umbrella -- remaining legacy infos scanned by the reverse view
 #include "CvJsonCondition.h"       // the typed requires tree -- walked by the REQUIRED_BY inversion
-#include "CvEnablerKernel.h"       // EnablerKernel::jsonFor -- the one per-bucket InfoRepo dispatch (single-source)
+#include "Enabler/CvEnablerKernel.h"       // EnablerKernel::jsonFor -- the one per-bucket InfoRepo dispatch (single-source)
 #include "Repos/InfoRepo.h"            // the per-info-type home (InfoRepo<CvXInfo>) -- readJson edit()s, mapFrom populates;
                                        // the CvXInfo tag types for the RJ_REPO_TYPES prefix dispatch are forward-declared there
 #include <fstream>

@@ -4,7 +4,7 @@
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvEnabler.h"
+#include "Enabler/CvEnabler.h"
 
 void EnablerDomain::init(int iCount)
 {

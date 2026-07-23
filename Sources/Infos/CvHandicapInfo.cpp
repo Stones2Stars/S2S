@@ -6,7 +6,7 @@
 #include "AI/CvGameAI.h"
 #include "CvHandicapInfo.h"
 #include "CvJsonParse.h"          // jsonFamVal / jsonFamMemberVal / jsonChildObj / jsonIdInt / jsonResolveId
-#include "CvCascadePropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
+#include "Property/CvPropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 
 
 CvHandicapInfo::CvHandicapInfo()

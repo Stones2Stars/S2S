@@ -5,13 +5,13 @@
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvUnitEnabler.h"
-#include "CvEnabler.h"            // EnablerDomain/CityEnabler -- the standardized per-city domain (CvCity::m_enabler)
-#include "CvEnablerKernel.h"      // EnablerKernel::applyEdges / obsoletedByHeldTech / scanCondDeps / wireOperatingBuildings
-#include "CvBuildingEnabler.h"    // BuildingEnabler::augmentWaived -- the SHARED AugmentState waiver (one evaluator)
-#include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx/Flags + cascadeEvalCondition + cascadeGateOk
-#include "CvCascadeTally.h"       // cascadeTally -- the empire live-count leg of the instance cap
-#include "CvEventSpine.h"         // spineGameLoadInProgress -- load gates once at GAME_LOAD_FINISHED, never mid-read
+#include "Enabler/CvUnitEnabler.h"
+#include "Enabler/CvEnabler.h"            // EnablerDomain/CityEnabler -- the standardized per-city domain (CvCity::m_enabler)
+#include "Enabler/CvEnablerKernel.h"      // EnablerKernel::applyEdges / obsoletedByHeldTech / scanCondDeps / wireOperatingBuildings
+#include "Enabler/CvBuildingEnabler.h"    // BuildingEnabler::augmentWaived -- the SHARED AugmentState waiver (one evaluator)
+#include "Conditions/CvConditionEval.h"   // CvCascadeEvalCtx/Flags + cascadeEvalCondition + cascadeGateOk
+#include "Tally/CvTally.h"       // cascadeTally -- the empire live-count leg of the instance cap
+#include "Spine/CvEventSpine.h"         // spineGameLoadInProgress -- load gates once at GAME_LOAD_FINISHED, never mid-read
 #include "CvInfo.h"
 #include "CvUnitInfo.h"           // spawnOnly / m_superseding -- the static exclusion + the replacedBy poco read
 #include "CvBuildingInfo.h"

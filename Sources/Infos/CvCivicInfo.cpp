@@ -11,7 +11,7 @@
 #include "CvJsonParse.h"            // jsonChildObj / jsonIdInt / jsonIdFk / jsonIdStr / jsonResolveId / jsonReadFlavours
 #include "CvJsonCondition.h"        // CvCascPredKind / CASC_COND_PREDICATE / CASC_COND_PRESENCE -- condition-shape matching
 #include "CvJsonModScan.h"          // the ONE load-time modifier-family scan (mapFrom materialization)
-#include "CvCascadePropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
+#include "Property/CvPropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 #include "CvBuildingInfo.h"     // getBuildingInfo(...).getType() -- keyed happiness/health/buildRate.empire.buildings
 #include "CvUnitInfo.h"         // getUnitInfo(...).getType() -- keyed buildRate.empire.units lookup (complete type)
 #include "CvUnitCombatInfo.h"   // getUnitCombatInfo(...).getType() -- keyed buildRate.empire.unitCombats

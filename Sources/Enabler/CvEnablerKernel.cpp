@@ -4,21 +4,20 @@
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvCascadePerfCount.h"   // per-turn call counters + stopwatches (owner 2026-07-02: repeat-calc hunt)
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer
-#include "CvEnablerKernel.h"
-#include "CvEnabler.h"            // EnablerDomain -- the standardized domain the applyEdges deltas write
+#include "Enabler/CvEnablerKernel.h"
+#include "Enabler/CvEnabler.h"            // EnablerDomain -- the standardized domain the applyEdges deltas write
 #include "CvInfo.h"
 #include "CvTechInfo.h"        // cascadeStartNode -- the synthetic TECH_GAME_START root
 #include "Repos/InfoRepo.h"
-#include "CvCascadeTally.h"
+#include "Tally/CvTally.h"
 #include "AI/CvPlayerAI.h"            // GET_PLAYER
 #include "AI/CvTeamAI.h"             // GET_TEAM
 #include "Defines/CvGlobals.h"
 #include "Engine/CvCity.h"
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
-#include "CvCascadeConditionEval.h"   // cascadeEvalCondition -- the StoneBase-ported typed-condition evaluator
+#include "Conditions/CvConditionEval.h"   // cascadeEvalCondition -- the StoneBase-ported typed-condition evaluator
 #include "CvJsonCondition.h"       // CvJsonCondition tree (CASC_COND_*/CASC_PRED_*) -- scanned for the operate reverse-index
 #include "CvCascadeAccumulator.h"     // the accumulator package surface (the epochs are DELETED -- scope-packages.md phase 3)
 #include "CvBuildingInfo.h"
@@ -312,9 +311,6 @@ void EnablerKernel::recomputeOperatingBuildingsInto(const CvCity* pCity, std::se
 	providedOut.clear();
 	obsoleteOut.clear();
 	if (pCity == NULL) return;
-	++CascadePerf::operatingBuildingsRecomputed;
-	PerfAccumTimer perfT(CascadePerf::operatingBuildingsRecomputeMs);
-	CascadeCondScope ccs(CC_OPERATING_BUILDINGS);   // the condEval caller split (attributes correctly even nested in a fill)
 	const CvPlayer& kOwner = GET_PLAYER(pCity->getOwner());
 	CvCascadeEvalCtx ecOp;
 	ecOp.city = pCity; ecOp.plot = pCity->plot(); ecOp.player = &kOwner; ecOp.team = &GET_TEAM(kOwner.getTeam());
@@ -648,7 +644,6 @@ const OperatingBuildings& EnablerKernel::operatingBuildings(const CvCity* pCity)
 	// conditions read those; the slice boundary is the self-heal for the unhooked classes) -- no polling.
 	OperatingBuildings& f = pCity->m_operatingBuildings;
 	f.set.ensure();
-	++CascadePerf::operatingBuildingsCacheHits;   // a standing-cache read (the census' "served without a recompute" counter)
 	return f;
 }
 

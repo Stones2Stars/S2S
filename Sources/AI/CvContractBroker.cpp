@@ -15,7 +15,7 @@
 #include "Engine/CvPlot.h"
 #include "Engine/CvSelectionGroup.h"
 #include "Engine/CvUnit.h"
-#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [CTB] lines through the event spine (shadow)
+#include "Spine/CvEventSpine.h" // #430 logging consolidation: route [CTB] lines through the event spine (shadow)
 
 // ---------------------------------------------------------------------------
 // #430 logging: [CTB] contract broker -> event spine (CvContractBroker). Self-registers its prefixes +

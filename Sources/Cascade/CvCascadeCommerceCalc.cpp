@@ -24,9 +24,9 @@
 #include "CvProcessInfo.h"      // InfoRepo<CvProcessInfo> -- the L2 process production->commerce fold
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM
-#include "CvCascadeCapabilities.h"     // corporationRevenueModifier -- the derived-from-tech read (never the legacy accumulator)
-#include "CvEnablerKernel.h"    // EnablerKernel::wireOperatingBuildings (shrine/stateReligion build their own ctx over the standing operating buildings)
-#include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (buildingKeyed matches ints)
+#include "Enabler/CvCapabilities.h"     // corporationRevenueModifier -- the derived-from-tech read (never the legacy accumulator)
+#include "Enabler/CvEnablerKernel.h"    // EnablerKernel::wireOperatingBuildings (shrine/stateReligion build their own ctx over the standing operating buildings)
+#include "Data/CvDepositIndex.h"     // DepositIndex -- the compiled deposit index (buildingKeyed matches ints)
 #include <map>
 #include <set>
 

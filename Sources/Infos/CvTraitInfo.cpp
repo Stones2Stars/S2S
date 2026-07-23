@@ -39,7 +39,7 @@
 #include "CvJsonParse.h"            // jsonChildObj/jsonResolveId/jsonIdBool/jsonIdInt/jsonIdStr/jsonReadFlavours
 #include "CvJsonModScan.h"          // the ONE load-time modifier-family scan (mapFrom materialization)
 #include "CvJsonModEntry.h"         // CvJsonModFamily/CvJsonModEntry/CvCascUnit -- the parsed-modifier live reads (2D)
-#include "CvCascadePropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
+#include "Property/CvPropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 #include "CvSpecialistInfo.h"   // GC.getSpecialistInfo(i).getType() -- the 2D specialist address
 #include "CvImprovementInfo.h" // GC.getImprovementInfo(i).getType() -- the 2D improvement address
 

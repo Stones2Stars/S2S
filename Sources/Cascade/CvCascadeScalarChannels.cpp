@@ -9,10 +9,10 @@
 #include "Infos/CvCommerceInfo.h"
 #include "CvCascadeScalarChannels.h"
 #include "CvCascadeMMKernel.h"
-#include "CvCascadeDepositIndex.h"    // the compiled segment ids the keyed walks match on
+#include "Data/CvDepositIndex.h"    // the compiled segment ids the keyed walks match on
 #include "CvCascadeAccumulator.h"     // the accumulator package surface (the stamps are DELETED -- scope-packages.md phase 3)
-#include "CvEnablerKernel.h"   // operatingBuildings -- the player-wide maintenance walk
-#include "CvCascadeOperatingBuildings.h"
+#include "Enabler/CvEnablerKernel.h"   // operatingBuildings -- the player-wide maintenance walk
+#include "Enabler/CvOperatingBuildings.h"
 #include "CvInfo.h"
 #include "CvTraitInfo.h"
 #include "Repos/InfoRepo.h"

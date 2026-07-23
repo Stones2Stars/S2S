@@ -34,7 +34,7 @@
 #include "BetterBTSAI.h"
 #include "Infrastructure/FAStarNode.h"
 #include "Engine/CvArmy.h"
-#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [DIP]/[ESP] through the event spine (shadow)
+#include "Spine/CvEventSpine.h" // #430 logging consolidation: route [DIP]/[ESP] through the event spine (shadow)
 
 // #430 logging: [DIP] diplomacy/deals + [ESP] espionage -> event spine (CvPlayerAI). Both domains self-register their
 // prefix providers so the spine stays domain-agnostic. Shadow discipline: emits run ALONGSIDE the legacy logDiploAI /

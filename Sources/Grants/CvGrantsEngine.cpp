@@ -6,8 +6,8 @@
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella
-#include "CvCascadeGrants.h"
-#include "CvEventSpine.h"
+#include "Grants/CvGrantsEngine.h"
+#include "Spine/CvEventSpine.h"
 #include "CvInfo.h"             // CvInfo::grantList / grantPulse100 / grantFlag (the CvJsonGrants unit's read-throughs)
 #include "Repos/InfoRepo.h"        // InfoRepo<CvXInfo>::get().get(id) -> the mapped CvInfo*
 #include "CvBuildingInfo.h"        // InfoRepo<CvBuildingInfo>
@@ -26,8 +26,8 @@
 #include "Engine/CvPlot.h"        // the city plot's units (full heal) + the criminal count (crime spawn odds)
 #include "Infos/CvPropertyInfo.h" // getAIWeight -- the positive/negative property split (spawn owner)
 #include "Infos/CvJsonGrants.h"   // CvJsonGrantRepeatable -- the COMPOSED repeatable (interval/chance/enabled)
-#include "CvEnablerKernel.h"      // operatingBuildings/wireOperatingBuildings -- a dormant building grants nothing
-#include "CvCascadeConditionEval.h" // cascadeEvalCondition -- the ONE evaluator for a repeatable's `enabled`
+#include "Enabler/CvEnablerKernel.h"      // operatingBuildings/wireOperatingBuildings -- a dormant building grants nothing
+#include "Conditions/CvConditionEval.h" // cascadeEvalCondition -- the ONE evaluator for a repeatable's `enabled`
 #include "AI/BetterBTSAI.h"        // gPlayerLogLevel -- the slice-1 observe gate
 #include <map>
 #include <string>

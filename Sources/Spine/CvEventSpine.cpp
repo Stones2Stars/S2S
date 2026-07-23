@@ -4,7 +4,7 @@
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvEventSpine.h"
+#include "Spine/CvEventSpine.h"
 #include "Tools/CvHttpServer.h"   // the /events STREAM consumer (isEnabled + publishEvent)
 #include "Infrastructure/CvLogWriter.h"   // the off-thread log file writer (the FILE consumer's sink)
 #include "AI/BetterBTSAI.h"   // gPlayerLogLevel (reused as the slice-1 gate; dedicated gate/BUG option + the live
@@ -16,7 +16,7 @@
                                       // CvPlayer.h; unity builds hide missing includes -- structural-cleanup.md §2)
 #include "CvBuildingInfo.h"
 #include "CvUnitInfo.h"
-#include "CvCascadeGrants.h"   // the #430 GRANTS consumer -- registered at the composition root below
+#include "Grants/CvGrantsEngine.h"   // the #430 GRANTS consumer -- registered at the composition root below
 #include "CvCascadeInvalidation.h"   // the #430 F0 cache-invalidation consumer (R3) -- registered at the composition root below
 #include "CvCascadeScopePackages.h"  // CPK_*/PSC_*/WSC_* package-bit enums (the invalidate-observability decoder)
 // typeIndex name-resolution in the consumer: the Info headers for each SFT_ kind (so GC.getXInfo(i).getType() compiles).

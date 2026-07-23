@@ -8,7 +8,7 @@
 #include "CvGameObject.h"
 #include "CvProperties.h"
 #include "CvDerivedData.h"
-#include "CvCascadeCapabilities.h"   // #430: CascadeTeamCaps -- the owner-side capability-union storage
+#include "Enabler/CvCapabilities.h"   // #430: CascadeTeamCaps -- the owner-side capability-union storage
 
 class CvArea;
 

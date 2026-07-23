@@ -34,7 +34,7 @@
 #include "Infrastructure/FAStarNode.h"
 #endif
 #include "CvWorkerAI.h"
-#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route UNT/COM/FND lines through the event spine (shadow)
+#include "Spine/CvEventSpine.h" // #430 logging consolidation: route UNT/COM/FND lines through the event spine (shadow)
 
 // ---------------------------------------------------------------------------
 // #430 logging: [UNT] unit-AI dispatch -> event spine (CvUnitAI / CvSelectionGroupAI).

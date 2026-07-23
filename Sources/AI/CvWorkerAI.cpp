@@ -17,7 +17,7 @@
 #include "CvTeamAI.h"
 #include "CvUnitAI.h"
 #include "Repos/BuildsRepo.h"
-#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [WAI] lines through the event spine (shadow)
+#include "Spine/CvEventSpine.h" // #430 logging consolidation: route [WAI] lines through the event spine (shadow)
 
 // ---------------------------------------------------------------------------
 // #430 logging: WAI -> event spine (CvWorkerAI). Each distinct log-line template is one event id whose prefix captures

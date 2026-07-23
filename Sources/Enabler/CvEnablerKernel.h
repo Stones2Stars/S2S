@@ -12,8 +12,8 @@
 //	Purely-organizational static-methods class: NO data members, never instantiated, no per-instance state.
 //
 
-#include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx / CvCascadeEvalFlags -- the eval target for requires conditions
-#include "CvCascadeOperatingBuildings.h"       // OperatingBuildings -- the standing per-city operating-buildings cache
+#include "Conditions/CvConditionEval.h"   // CvCascadeEvalCtx / CvCascadeEvalFlags -- the eval target for requires conditions
+#include "Enabler/CvOperatingBuildings.h"       // OperatingBuildings -- the standing per-city operating-buildings cache
 #include "CvJsonEdges.h"              // EnEdgeFamily/EnEdgeBucket -- the interned edge vocabulary (no strings at runtime)
 #include <map>
 #include <set>

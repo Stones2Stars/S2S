@@ -5,11 +5,11 @@
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvBuildingEnabler.h"
-#include "CvEnablerKernel.h"    // EnablerKernel::obsoletedByHeldTech / requiresMet / allowedOk / scanCondDeps / wireOperatingBuildings
-#include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx -- the gate evaluation's city context
-#include "CvEventSpine.h"       // spineGameLoadInProgress -- load gates once at GAME_LOAD_FINISHED, never mid-read
-#include "CvCascadeTally.h"     // cascadeTally -- the group-cap member counts (the buildings count domain)
+#include "Enabler/CvBuildingEnabler.h"
+#include "Enabler/CvEnablerKernel.h"    // EnablerKernel::obsoletedByHeldTech / requiresMet / allowedOk / scanCondDeps / wireOperatingBuildings
+#include "Conditions/CvConditionEval.h"   // CvCascadeEvalCtx -- the gate evaluation's city context
+#include "Spine/CvEventSpine.h"       // spineGameLoadInProgress -- load gates once at GAME_LOAD_FINISHED, never mid-read
+#include "Tally/CvTally.h"     // cascadeTally -- the group-cap member counts (the buildings count domain)
 #include "CvInfo.h"
 #include "CvBuildingInfo.h"       // notConstructible (the enabler's own never-buildable flag; self-containment)
 #include "Repos/InfoRepo.h"
@@ -21,7 +21,7 @@
 #include "Engine/CvTeam.h"
 #include "CvBuildingInfo.h"
 #include "CvCivicInfo.h"
-#include "CvEnabler.h"            // EnablerDomain/CityEnabler -- the standardized per-city domain (CvCity::m_enabler)
+#include "Enabler/CvEnabler.h"            // EnablerDomain/CityEnabler -- the standardized per-city domain (CvCity::m_enabler)
 #include "CvTechInfo.h"           // cascadeStartNode -- the TECH_GAME_START root redirect (the tech HAVE axis)
 #include "CvReligionInfo.h"       // the religion HAVE axis repo
 #include "CvCorporationInfo.h"    // the corporation HAVE axis repo

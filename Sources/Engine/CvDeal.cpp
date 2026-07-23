@@ -18,7 +18,7 @@
 #include "AI/CvPlayerAI.h"
 #include "CvPlot.h"
 #include "AI/CvTeamAI.h"
-#include "Cascade/CvEventSpine.h" // #430 logging consolidation: shadow-emit [DIP/trade] through the event spine
+#include "Spine/CvEventSpine.h" // #430 logging consolidation: shadow-emit [DIP/trade] through the event spine
 
 // #430 logging: CvDeal.cpp emits [DIP/trade] lines on the SD_DIPLO domain, which is registered and owns its prefix
 // table in CvPlayerAI.cpp. CvDeal.cpp only EMITS -- it must NOT re-register. DIP_TRADE_ID must match the DIP_TRADE

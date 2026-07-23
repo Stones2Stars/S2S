@@ -22,9 +22,9 @@
 #include "CvTraitInfo.h"
 #include "CvCivicInfo.h"
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
-#include "CvCascadeConditionEval.h"    // cascadeEvalCondition
-#include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (hot paths match ints)
-#include "CvEnablerKernel.h"    // EnablerKernel::obsoletedByHeldTech -- the obsolescence verdict (isBuildingObsolete)
+#include "Conditions/CvConditionEval.h"    // cascadeEvalCondition
+#include "Data/CvDepositIndex.h"     // DepositIndex -- the compiled deposit index (hot paths match ints)
+#include "Enabler/CvEnablerKernel.h"    // EnablerKernel::obsoletedByHeldTech -- the obsolescence verdict (isBuildingObsolete)
 #include "Engine/CvTeam.h"             // *ec.team for obsoletedByHeldTech
 #include <map>
 

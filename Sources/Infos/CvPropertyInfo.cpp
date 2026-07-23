@@ -8,7 +8,7 @@
 #include "CvPropertyInfo.h"
 #include "CvJsonParse.h"          // jsonChildObj / jsonIdInt / jsonIdBool / jsonIdStr / jsonResolveId
 #include "CvJsonModifiers.h"      // getModifiers() walk -> the property's own decay/per-pop families
-#include "CvCascadePropertyBridge.h" // the JSON->BoolExpr translator (property-audit.md increment 4)
+#include "Property/CvPropertyBridge.h" // the JSON->BoolExpr translator (property-audit.md increment 4)
 #include "Defines/CvGlobals.h"    // GC.getInfoTypeForString (self property id)
 
 // ai.scale -- the curator emits the AIScaleTypes enum name prefix-stripped + lowercased (AISCALE_CITY -> "city";

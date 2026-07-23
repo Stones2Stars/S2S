@@ -11,7 +11,7 @@
 #include "UI/CvGameTextMgr.h"
 #include "Defines/CvGlobals.h"
 #include "Tools/CvHttpServer.h"        // the dev HTTP server -- brought up at the MENU (see LoadPreMenuGlobals)
-#include "Cascade/CvEventSpine.h"      // spineRegisterConsumers -- the /events + file consumers, registered before the load
+#include "Spine/CvEventSpine.h"      // spineRegisterConsumers -- the /events + file consumers, registered before the load
 #include "CvImprovementInfo.h"
 #include "CvUnitCombatInfo.h"
 #include "CvBonusInfo.h"
@@ -26,7 +26,7 @@
 #include "CvXMLLoadUtility.h"
 #include "CvXMLLoadUtilityModTools.h"
 #include "CvXMLLoadUtilitySetMod.h"
-#include "CvCascadeReadJson.h"   // cascadeLoadJson -- the #430 JSON->InfoRepo map, run after the LAST post-menu XML load
+#include "Data/CvReadJson.h"   // cascadeLoadJson -- the #430 JSON->InfoRepo map, run after the LAST post-menu XML load
 #include "Repos/BuildingsRepo.h"
 #include "Repos/BuildsRepo.h"
 #include "Tools/FVariableSystem.h"

@@ -5,7 +5,7 @@
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvCascadePropertyBridge.h"
+#include "Property/CvPropertyBridge.h"
 #include "CvJsonModEntry.h"                 // CvJsonModEntry + CvJsonCondition (JsonInfo, on /I)
 #include "CvJsonModifiers.h"                // the per-poco family map bridgeFamilies walks
 #include "CvJsonGrants.h"                   // the repeatable PROPERTY pulses bridgePulses walks

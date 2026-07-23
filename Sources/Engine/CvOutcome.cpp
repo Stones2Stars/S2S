@@ -32,7 +32,7 @@
 #include "CvJsonCondition.h"            // #430: cascade condition tree (replaces the BoolExpr gates)
 #include "CvJsonConditionParse.h"       // cascadeParseCondition -- JSON -> CvJsonCondition
 #include "CvJsonParse.h"                 // jsonResolveId / jsonChildObj / picojson helpers
-#include "Cascade/CvCascadeConditionEval.h"       // cascadeEvalCondition + CvCascadeEvalCtx
+#include "Conditions/CvConditionEval.h"       // cascadeEvalCondition + CvCascadeEvalCtx
 
 namespace
 {

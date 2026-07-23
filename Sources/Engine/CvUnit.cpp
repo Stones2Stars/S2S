@@ -5,7 +5,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "AI/BetterBTSAI.h"
-#include "CvEventSpine.h" // #430: name-change DOMAIN event on setName (Cascade/ is on /I)
+#include "Spine/CvEventSpine.h" // #430: name-change DOMAIN event on setName (Cascade/ is on /I)
 #include "CvCascadeAccumulator.h" // #430 THE ENABLER FLIP: enPromotionValid (isPromotionValid serves the cascade composite)
 #include "CvArea.h"
 #include "CvBuildingInfo.h"

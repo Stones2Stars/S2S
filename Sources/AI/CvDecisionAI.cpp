@@ -5,7 +5,7 @@
 #include "CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "CvPlayerAI.h"
-#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [DAI] through the event spine (shadow)
+#include "Spine/CvEventSpine.h" // #430 logging consolidation: route [DAI] through the event spine (shadow)
 
 // #430 logging: [DAI] flavour decisions -> event spine (CvDecisionAI). Self-registers its prefixes + DecisionAI.log;
 // the spine never names DAI. Shadow: emits run ALONGSIDE the legacy logDecisionAI calls (diff on /events, then cut).

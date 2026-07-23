@@ -17,7 +17,7 @@
 //	`shrine`/`identity` intrinsic blocks are a readJson-mapping cleanliness follow-up, NOT a correctness gap; flagged per-fn).
 //
 
-#include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx -- the eval target for deposit conditions
+#include "Conditions/CvConditionEval.h"   // CvCascadeEvalCtx -- the eval target for deposit conditions
 #include <string>
 #include <map>
 

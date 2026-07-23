@@ -10,10 +10,10 @@
 #include "CvBuildingInfo.h"
 #include "CvCity.h"
 #include "UI/CvEventReporter.h"
-#include "CvEventSpine.h"
+#include "Spine/CvEventSpine.h"
 #include "CvCascadeAccumulator.h"   // the scalar-slot warm-up read (increment F joins the load-end warm block)
 #include "CvCascadeModifierMath.h"  // cvCascadeModifierPerfCensus -- the per-turn [MODIFIER/perf]+[MODIFIER/repo] census
-#include "CvEnablerKernel.h"        // the load-end dormancy fixpoint's explicit operating-set ensure (stage timing)
+#include "Enabler/CvEnablerKernel.h"        // the load-end dormancy fixpoint's explicit operating-set ensure (stage timing)
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "Tools/CvHttpServer.h"

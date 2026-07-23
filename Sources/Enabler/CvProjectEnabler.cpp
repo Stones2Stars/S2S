@@ -4,10 +4,10 @@
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvProjectEnabler.h"
-#include "CvEnabler.h"            // EnablerDomain/PlayerEnabler -- the standardized domain (CvPlayer::m_enabler)
-#include "CvEnablerKernel.h"      // EnablerKernel::applyEdges/requiresMet/allowedOk -- the one applier + gate surfaces
-#include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx -- the gate evaluation's context
+#include "Enabler/CvProjectEnabler.h"
+#include "Enabler/CvEnabler.h"            // EnablerDomain/PlayerEnabler -- the standardized domain (CvPlayer::m_enabler)
+#include "Enabler/CvEnablerKernel.h"      // EnablerKernel::applyEdges/requiresMet/allowedOk -- the one applier + gate surfaces
+#include "Conditions/CvConditionEval.h"   // CvCascadeEvalCtx -- the gate evaluation's context
 #include "CvInfo.h"
 #include <set>
 #include "CvTechInfo.h"           // cascadeStartNode -- the TECH_GAME_START root redirect

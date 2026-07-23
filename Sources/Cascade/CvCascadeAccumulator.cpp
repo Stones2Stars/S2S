@@ -7,19 +7,18 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeAccumulator.h"
-#include "CvEventSpine.h"   // emitCacheInvalidate -- announce the warm-up / self-heal package marks (observability)
-#include "CvCascadePerfCount.h"       // per-turn call counters (the [MODIFIER/perf] census)
+#include "Spine/CvEventSpine.h"   // emitCacheInvalidate -- announce the warm-up / self-heal package marks (observability)
 #include "AI/BetterBTSAI.h"           // PerfAccumTimer -- the refresh stopwatches
 #include "CvCascadeYieldBasePackages.h"
 #include "CvCascadeBuildingPackage.h"
 #include "CvCascadePercentStack.h"
 #include "CvCascadeCommerceCalc.h"    // baseOwn100 + the CombineSplit kernel + the pools/ledgers
-#include "CvCascadeConditionEval.h"   // CvCascadeEvalCtx
-#include "CvEnablerKernel.h"   // EnablerKernel::wireOperatingBuildings / operatingBuildings -- the standing operating buildings cache
+#include "Conditions/CvConditionEval.h"   // CvCascadeEvalCtx
+#include "Enabler/CvEnablerKernel.h"   // EnablerKernel::wireOperatingBuildings / operatingBuildings -- the standing operating buildings cache
 #include "CvCascadeWellbeing.h"       // the §2b gather + the ONE verdict assembly
 #include "CvCascadeScalarChannels.h"  // the scalar city halves + the player fill + the buildRate ledgers
-#include "CvCascadeOperatingBuildings.h"
-#include "CvCascadeDepositIndex.h"    // the compiled segments -- the derived event masks + the ledger keys
+#include "Enabler/CvOperatingBuildings.h"
+#include "Data/CvDepositIndex.h"    // the compiled segments -- the derived event masks + the ledger keys
 #include "CvCascadeMMKernel.h"        // MMKernel::applies -- the deposit condition gate (acc_brSelf's buildRate.self read)
 #include "CvInfo.h"
 #include "Repos/InfoRepo.h"

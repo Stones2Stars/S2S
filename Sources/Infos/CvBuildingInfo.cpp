@@ -9,7 +9,7 @@
 #include "CvBuildingInfo.h"
 #include "AI/CvGameAI.h"            // GC.getGame().isOption(...) -- was reaching via unity leakage; self-sufficient now
 #include "CvJsonParse.h"            // jsonResolveId / jsonCommerceMap / jsonIdFk / jsonIdInt / jsonIdBool / jsonWorldArt
-#include "CvCascadePropertyBridge.h" // the JSON->BoolExpr/IntExpr translator (property-audit.md increment 4)
+#include "Property/CvPropertyBridge.h" // the JSON->BoolExpr/IntExpr translator (property-audit.md increment 4)
 #include "UI/CvArtFileMgr.h"        // ARTFILEMGR.getBuildingArtInfo / getMovieArtInfo -- the art shims (mirrors CvBonusInfo)
 #include "Infos/CvArtInfoMovie.h"   // CvArtInfoMovie complete type -- getMovie() calls getPath() (via CvAssetInfoBase)
 #include "Infos/CvArtInfoBuilding.h" // CvArtInfoBuilding complete type -- getButton() call needs the full definition

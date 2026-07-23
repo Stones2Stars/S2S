@@ -9,7 +9,7 @@
 #include "UI/CvArtFileMgr.h"      // ARTFILEMGR -- the EXE-shim-merge getArtInfo()
 #include "Infos/CvArtInfoFeature.h"   // complete CvArtInfoFeature -- getButton() needs the full definition
 #include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonFamVal/...)
-#include "CvCascadePropertyBridge.h" // the shared grants.repeatable PROPERTY pulse -> manipulator walk
+#include "Property/CvPropertyBridge.h" // the shared grants.repeatable PROPERTY pulse -> manipulator walk
 #include "AI/CvGameAI.h"          // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 
 CvFeatureInfo::CvFeatureInfo()

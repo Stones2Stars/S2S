@@ -7,7 +7,7 @@
 
 #include "Tools/copy_iterator.h"
 #include "Cascade/CvCascadeScopePackages.h"   // CascadePlayerScope -- the #430 player scope packages (m_cascadePlayerScope)
-#include "Cascade/CvEnabler.h"                // PlayerEnabler -- the standardized enabler's player-domain vectors (m_enabler)
+#include "Enabler/CvEnabler.h"                // PlayerEnabler -- the standardized enabler's player-domain vectors (m_enabler)
 #include "UI/CvBuildLists.h"
 #include "AI/CvCityAI.h"
 #include "AI/CvContractBroker.h"

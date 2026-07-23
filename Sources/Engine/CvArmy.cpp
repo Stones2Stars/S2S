@@ -4,7 +4,7 @@
 #include "Defines/CvString.h"
 #include "AI/CvPlayerAI.h"
 #include "AI/BetterBTSAI.h"
-#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route GRP lines through the event spine (shadow)
+#include "Spine/CvEventSpine.h" // #430 logging consolidation: route GRP lines through the event spine (shadow)
 
 #define NO_INDEX -1
 

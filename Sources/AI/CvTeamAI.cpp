@@ -18,7 +18,7 @@
 #include "Infrastructure/CvPython.h"
 #include "CvTeamAI.h"
 #include "Repos/BuildingsRepo.h"
-#include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [WAR] through the spine (shadow)
+#include "Spine/CvEventSpine.h" // #430 logging consolidation: route [WAR] through the spine (shadow)
 
 // #430 logging: [WAR] team-war -> event spine (CvTeamAI). Self-registers its prefixes + WarAI.log file; the spine never
 // names WAR. Shadow: emits run ALONGSIDE the legacy logWarAI calls (diff on /events, then cut). Constant transitions

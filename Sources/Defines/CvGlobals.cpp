@@ -36,7 +36,7 @@
 #include "Repos/BuildingsRepo.h"
 #include "Repos/BuildsRepo.h"
 #include "Repos/InfoRepo.h"   // #430: the 5 EXE-bound getters return the JSON-mapped shim from the per-type InfoRepo
-#include "CvCascadeReadJson.h"   // #430: map the curated JSON -> InfoRepo at load (doPostLoadCaching, with the XML)
+#include "Data/CvReadJson.h"   // #430: map the curated JSON -> InfoRepo at load (doPostLoadCaching, with the XML)
 #include <time.h>
 #include <sstream>
 

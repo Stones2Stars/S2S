@@ -10,7 +10,7 @@
 #include "UI/CvArtFileMgr.h"      // ARTFILEMGR -- the EXE-shim-merge getArtInfo()
 #include "Infos/CvArtInfoImprovement.h"   // complete CvArtInfoImprovement -- getButton() needs the full definition
 #include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonFamVal/...)
-#include "CvCascadePropertyBridge.h" // the shared grants.repeatable PROPERTY pulse -> manipulator walk
+#include "Property/CvPropertyBridge.h" // the shared grants.repeatable PROPERTY pulse -> manipulator walk
 
 CvImprovementInfo::CvImprovementInfo()
 	: m_iDefenseModifier(0), m_iAirBombDefense(0), m_iHealthPercent(0), m_iHappiness(0), m_iCulture(0),

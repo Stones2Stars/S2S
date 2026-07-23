@@ -17,10 +17,9 @@
 #include "Infos/CvCommerceInfo.h"
 #include "CvCascadeWellbeing.h"
 #include "CvCascadeMMKernel.h"
-#include "CvCascadeDepositIndex.h"
-#include "CvEnablerKernel.h"
+#include "Data/CvDepositIndex.h"
+#include "Enabler/CvEnablerKernel.h"
 #include "CvCascadeAccumulator.h"   // the scope-package types ride its ScopePackages include
-#include "CvCascadePerfCount.h"      // the wbCompute counter/timer (automation-cost attribution)
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "CvJsonCondition.h"
 #include "CvInfo.h"

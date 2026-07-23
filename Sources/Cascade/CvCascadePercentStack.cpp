@@ -5,7 +5,6 @@
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvCascadePerfCount.h"   // per-turn call counters + stopwatches (owner 2026-07-02: repeat-calc hunt)
 #include "AI/BetterBTSAI.h"          // PerfAccumTimer
 #include "CvCascadePercentStack.h"
 #include "CvCascadeMMKernel.h"
@@ -19,10 +18,10 @@
 #include "CvProjectInfo.h"      // InfoRepo<CvProjectInfo> tag + ProjectTypes (the projects empire.percent loop)
 #include "AI/CvPlayerAI.h"             // GET_PLAYER
 #include "AI/CvTeamAI.h"              // GET_TEAM
-#include "CvCascadeConditionEval.h"    // CvCascadeEvalCtx + cascadeIsBuildingActive
-#include "CvEnablerKernel.h"    // EnablerKernel::wireOperatingBuildings (the standing cascade active set + vicinity provides)
-#include "CvCascadeOperatingBuildings.h"        // OperatingBuildings -- the areaPercentByArea player-city walk
-#include "CvCascadeDepositIndex.h"     // DepositIndex -- the compiled deposit index (the candidate prefilter)
+#include "Conditions/CvConditionEval.h"    // CvCascadeEvalCtx + cascadeIsBuildingActive
+#include "Enabler/CvEnablerKernel.h"    // EnablerKernel::wireOperatingBuildings (the standing cascade active set + vicinity provides)
+#include "Enabler/CvOperatingBuildings.h"        // OperatingBuildings -- the areaPercentByArea player-city walk
+#include "Data/CvDepositIndex.h"     // DepositIndex -- the compiled deposit index (the candidate prefilter)
 #include "Engine/CvArea.h"             // area()->getID() -- the area-map grouping
 #include <map>
 #include <vector>

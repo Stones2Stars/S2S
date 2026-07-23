@@ -12,22 +12,22 @@
 #include "CvCity.h"
 #include "AI/CvCityAI.h"
 #include "AI/CvContractBroker.h"
-#include "CvEventSpine.h"   // #430 cascade spine -- first real DOMAIN emit at changeBuildingCount
+#include "Spine/CvEventSpine.h"   // #430 cascade spine -- first real DOMAIN emit at changeBuildingCount
 #include "Repos/InfoRepo.h"          // the source infos the uniform refill sums
 #include "Cascade/CvCascadeMMKernel.h" // MMKernel::traitData -- the active trait set
-#include "Cascade/CvCascadeCapabilities.h"   // #430 Gate-3: the commerce-slider capability flip (isCommerceFlexible)
+#include "Enabler/CvCapabilities.h"   // #430 Gate-3: the commerce-slider capability flip (isCommerceFlexible)
 #include "Cascade/CvCascadeWellbeing.h"       // #430 the wellbeing channel -- building-health empire rollup flip
 #include "Cascade/CvCascadeAccumulator.h"    // #430 the modifier scope accumulator -- civic/golden-age epoch bumps
-#include "Cascade/CvTechEnabler.h"           // #430 the standardized enabler's tech domain -- canResearch's bare read
-#include "Cascade/CvCivicEnabler.h"          // #430 the standardized enabler's civics domain -- canDoCivics' bare read
-#include "Cascade/CvProjectEnabler.h"        // #430 the projects domain -- the city canCreate's read-through target
-#include "Cascade/CvProcessEnabler.h"        // #430 the processes domain -- the city canMaintain's read-through target
-#include "Cascade/CvBuildEnabler.h"          // #430 the worker-builds domain -- canBuild's unlock-half bare read
-#include "Cascade/CvBuildingEnabler.h"       // #430 the buildings domain -- the HIDE_REPLACED option toggle's re-gate
-#include "Cascade/CvEnablerKernel.h"         // #430 EnablerKernel::operatingBuildings -- the keyed improvement-yield recompute's ACTIVE verdict
+#include "Enabler/CvTechEnabler.h"           // #430 the standardized enabler's tech domain -- canResearch's bare read
+#include "Enabler/CvCivicEnabler.h"          // #430 the standardized enabler's civics domain -- canDoCivics' bare read
+#include "Enabler/CvProjectEnabler.h"        // #430 the projects domain -- the city canCreate's read-through target
+#include "Enabler/CvProcessEnabler.h"        // #430 the processes domain -- the city canMaintain's read-through target
+#include "Enabler/CvBuildEnabler.h"          // #430 the worker-builds domain -- canBuild's unlock-half bare read
+#include "Enabler/CvBuildingEnabler.h"       // #430 the buildings domain -- the HIDE_REPLACED option toggle's re-gate
+#include "Enabler/CvEnablerKernel.h"         // #430 EnablerKernel::operatingBuildings -- the keyed improvement-yield recompute's ACTIVE verdict
 #include "Cascade/CvCascadeMMKernel.h"       // #430 MMKernel::sumUnit -- the specialist recomputes' evaluated conditioned-deposit sums
-#include "Cascade/CvCascadeConditionEval.h"  // #430 CvCascadeEvalCtx -- the recomputes' evaluation context
-#include "Cascade/CvPromotionEnabler.h"      // #430 the promotions domain -- the level-up composite's player planes
+#include "Conditions/CvConditionEval.h"  // #430 CvCascadeEvalCtx -- the recomputes' evaluation context
+#include "Enabler/CvPromotionEnabler.h"      // #430 the promotions domain -- the level-up composite's player planes
 #include "CvDeal.h"
 #include "UI/CvDiploParameters.h"
 #include "UI/CvEventReporter.h"

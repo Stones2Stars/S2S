@@ -14,7 +14,7 @@
 //	endpoint (the attribution surface).
 //
 
-#include "CvCascadeConditionEval.h"
+#include "Conditions/CvConditionEval.h"
 #include "CvCascadeScopePackages.h"   // CascadeWbTerms + WbSplit -- the shared §2b term types
 #include <map>
 

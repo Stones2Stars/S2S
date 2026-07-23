@@ -14,8 +14,8 @@
 #include "UI/CvUnitList.h"
 #include "CvDerivedData.h"
 #include "Cascade/CvCascadeAccumulator.h"   // CascadeCityPackages -- the #430 city scope packages (m_cascadeCityPackages)
-#include "Cascade/CvCascadeOperatingBuildings.h"     // OperatingBuildings -- the standing cascade operating-buildings cache (m_operatingBuildings)
-#include "Cascade/CvEnabler.h"              // CityEnabler -- the standardized enabler's per-city domain vectors (m_enabler)
+#include "Enabler/CvOperatingBuildings.h"     // OperatingBuildings -- the standing cascade operating-buildings cache (m_operatingBuildings)
+#include "Enabler/CvEnabler.h"              // CityEnabler -- the standardized enabler's per-city domain vectors (m_enabler)
 #include "UI/CityOutputHistory.h"
 #include "CvGameObject.h"
 

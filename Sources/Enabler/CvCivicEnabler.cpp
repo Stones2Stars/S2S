@@ -5,9 +5,9 @@
 //
 
 #include "CvGameCoreDLL.h"
-#include "CvCivicEnabler.h"
-#include "CvEnabler.h"            // EnablerDomain/PlayerEnabler -- the standardized domain (CvPlayer::m_enabler)
-#include "CvEnablerKernel.h"      // EnablerKernel::applyEdges -- the one domain-refcount edge applier
+#include "Enabler/CvCivicEnabler.h"
+#include "Enabler/CvEnabler.h"            // EnablerDomain/PlayerEnabler -- the standardized domain (CvPlayer::m_enabler)
+#include "Enabler/CvEnablerKernel.h"      // EnablerKernel::applyEdges -- the one domain-refcount edge applier
 #include "CvInfo.h"
 #include "CvTechInfo.h"           // cascadeStartNode -- the TECH_GAME_START root redirect (carries the start civics)
 #include "Repos/InfoRepo.h"
