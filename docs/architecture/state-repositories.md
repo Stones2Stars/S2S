@@ -161,10 +161,26 @@ public:
   forces the read to source that scope some OTHER way, and both ways are defects: a per-read walk (the cost class this
   doc exists to prevent), or an upper scope's sum stored in a lower one (breaking the scope principle,
   [modifier.md §1](../specs/modifier.md), which forces downward invalidation fan-out).
-  **⛔ WORLD, TEAM and AREA carry NO yields directly — they can only apply MODIFIERS (owner ruling).** Yields
-  originate at the scopes that actually produce them (plot / city / empire / unit); the upper three contribute
-  percentage stacks (and, for area, enabler concerns) onto those yields. So their packages are percent-side by
-  design — which is a REASON they still carry packages, not an excuse to omit them.
+  **⛔ THE ORIGIN RULE — THIS IS THE PURE CASCADE DESIGN (owner), not a constraint bolted onto it:**
+  - **YIELDS come from exactly three sources: PLOT, SPECIALISTS, and BUILDINGS (city).** Nowhere else produces a
+    yield. So the flat/yield side of a package exists at **plot** and **city** only.
+  - **MODIFIERS come from everything BUT plot** — city, area, empire, team, world. So the percent side exists at
+    every scope except plot.
+
+  Plot and the upper scopes are therefore mirror images (yield-only vs percent-only), and **CITY is the single
+  scope carrying both**. That is why "whether a scope's packages are empty is irrelevant" is not hand-waving: the
+  shape is uniform, and the origin rule says which half any given scope ever fills.
+
+  **⛔ THE CONSOLIDATION REQUIREMENT (owner): every modifier/yield cache is ONE shape.** Today there are FOUR
+  bespoke structs (`CascadeCityPackages` CPK_* · `CascadePlayerScope` PSC_* · `CascadeWorldScope` ·
+  `CascadeUnitPackages` UPK_*) plus the plot yield cache, each with hand-named per-family members. Yields and
+  commerce are already channel-indexed arrays inside them; the drift is in the SCALAR channels (`scGpBaseBld`,
+  `scDefense`, `scMaintModCity`, `scTradeCity`, `brCityMilitary`, …), hand-added per family per scope. Those
+  collapse into the same Σflat/Σpercent-per-channel form, so a scope's package is the SAME TYPE everywhere and a
+  new scope or channel is data, not a new struct.
+  ⚠ Hand-maintained duplicates DRIFT — that is not theoretical: the maintenance decomposition and its cached fill
+  duplicated five terms, and the L8 home/otherArea overlay landed in one and not the other, so `/computed`
+  under-reported by 39 against the served value until the duplicate was replaced by a delegation.
   Full rebuild of everything = LOAD ONLY.
   **Status against this ruling:** city / player / world / unit each sit on a `CvDerivedCacheSet` (their "ONE dirty
   protocol"), plot on the single-flag `CvDerivedCache`. **The two gaps: `CvArea` carries NO cache at all, and

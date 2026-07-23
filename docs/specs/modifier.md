@@ -33,6 +33,21 @@ each matching worked plot (§5). The target reads a combined value — it never 
 > the principle of the cascade in the first place." The only full rebuild of every package is at LOAD.
 > (Cache mechanics: [state-repositories.md](../architecture/state-repositories.md) — the per-scope package
 > model + the CvDerivedCache component.)
+>
+> **⛔ THE ORIGIN RULE — THE PURE CASCADE DESIGN (owner).** Which half of a package a scope ever fills is not
+> incidental, it IS the model:
+> - **YIELDS come from exactly three sources — PLOT, SPECIALISTS, and BUILDINGS (city).** Nothing else produces a
+>   yield, so the flat/yield side exists at **plot** and **city** only.
+> - **MODIFIERS come from everything BUT plot** — city, area, empire, team, world. The percent side exists at
+>   every scope except plot.
+>
+> Plot and the upper scopes are mirror images (yield-only vs percent-only); **CITY is the one scope carrying
+> both**. This is why every scope can hold the SAME package type while many stay half-empty — emptiness is a
+> property of the origin rule, never a reason to omit a scope's package or to hand-shape a bespoke struct for it.
+> **Consequence (owner requirement): every modifier/yield cache consolidates to ONE shape** — the per-family
+> hand-named scalar members (`scGpBaseBld`, `scDefense`, `scMaintModCity`, …) collapse into the same
+> Σflat/Σpercent-per-channel form the yields and commerce already use, so a new scope or channel is DATA rather
+> than a new struct.
 
 This is purely top-down: a condition *inside* a deposit (`enabled`/`per`) is a forward **read** of state, never
 an upward cascade-walk. **The reverse view ("who references/modifies me") is derived once at load, never on a
