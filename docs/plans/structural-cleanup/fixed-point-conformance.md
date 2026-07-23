@@ -248,3 +248,35 @@ Executed in ONE pass per cluster, verified live — no half-cut state.
 **The tell that a conversion is right:** scale-mismatch fudge factors disappear. While #5 stood, an AI ratio needed
 `angryPopulation() * 10000 / getCommerceHappinessPer(...)`; with both operands ×100 the units cancel and it returns to
 `* 100` with no magic constant. A surviving odd multiplier means two operands are still on different scales.
+
+### ⛔ CONVERT BY ARITHMETIC CLUSTER, NEVER BY GETTER
+
+**A getter cannot be converted alone.** Its co-operands are on the same scale *by arithmetic necessity*: convert one
+side and every mixing site needs a compensating `÷100` — manufacturing the very fudge factor that signals a misplaced
+reduce. Convert the whole cluster and the mixing sites need **no change at all**, because the units already cancel.
+This is why the sweep keeps being re-shoehorned: each getter looks independently convertible, and none is.
+
+**The acceptance gate per cluster: ZERO new fudge factors at the mixing sites.** If a conversion forces compensating
+constants, the cluster boundary was drawn wrong — stop and redraw it.
+
+**The full violation census** — every human twin implemented as `<twin>/100`, both naming conventions
+(`get*100` and `*Times100`), plus the two getters that reduce with no twin:
+
+| cluster | violations | why they are ONE unit |
+|---|---|---|
+| **A — yield / food / wellbeing** (the big one) | `getYieldRate`←`getYieldRate100` · `getExtraYield`←`getExtraYield100` · `foodConsumption` · `getFoodConsumedByPopulation` (its `/10000` → `/100`) · `foodDifference` · **`angryPopulation`** · **`healthRate`** | `foodConsumption = getFoodConsumedByPopulation − angryPopulation − healthRate + foodWastage`, and `getYieldRate(FOOD) − foodConsumption()` appears at ~10 sites. **The two revoked carve-outs are a PREREQUISITE here, not a separate item** — the food chain consumes them directly. `happyLevel`/`unhappyLevel`/`goodHealth`/`badHealth` are already ×100 (the landed pilot), so only the two reducers remain |
+| **B — commerce** | `getCommerceRate`←`…Times100` · `getBaseCommerceRate`←`…Times100` · `CvPlayer::specialistCommerce`←`…Times100` | joins A at the production→commerce term (`getYieldRate(PRODUCTION) × getProductionToCommerceModifier`) and at `getYieldRate(COMMERCE)`; the `…FromBuilding100` / `getExtraCommerce100` / `getMintedCommerceTimes100` feeders ride along |
+| **C — gold / maintenance / upkeep** | `calculateDistanceMaintenance` · `calculateNumCitiesMaintenance` (both ←`…Times100`) · the `calculate{Base,Building,Colony,Corporation}MaintenanceTimes100` family · `getMaintenance`/`…Times100` · `getUnitUpkeep{Civilian,Military}` | **summed GOLD applied after gold is computed (owner)** → gold is a yield ([DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield)), so it converts with B. ⚠ `getFinalExpense` folds `getInflationMod10000` — a **×10000** third scale to reconcile |
+| **D — unit experience** | `getExperience`←`getExperience100` | self-contained (`experienceNeeded` + the level ladder); the one cluster genuinely parallelizable |
+| **E — trade** | `calculateTradeProfit`←`…Times100` | tradeYield is the sanctioned live-yield INPUT the cascade folds ([modifier.md §2a](../../specs/modifier.md)) — joins A at the base package |
+| **F — war weariness** | `getWarWeariness`←`getWarWearinessTimes100` | WW anger feeds the unhappiness term → joins A's wellbeing half |
+| **G — ⚠ NOT a yield: AI counts / plot strength** | `CvArea::getEffNumAIUnits` · `CvPlayerAI::AI_getEffNumAIUnits` · `CvPlot::plotCountSM` · `CvPlot::plotStrength` (all ←`…Times100`) | ×100 here carries **fractional SizeMatters unit counts**, not a modifier channel. Same *shape* as a violation, different *nature* — needs an owner ruling before being swept in with the yields |
+
+**Suggested order:** D (isolated, proves the mechanism on a small surface) → A (the keystone; unblocks the rest) →
+B+C together (gold/commerce share the seam) → E, F (small, fold into A's tail) → G after its ruling.
+
+**Two hazards found while mapping, both pre-existing:**
+- **`CvCity::foodWastage()` returns `float`** — in a deterministic-lockstep engine where float math desyncs MP
+  ([engine.md](../../reference/engine.md)); it is cast `(int)` into `foodConsumption`. Fixed-point exists precisely to
+  prevent this. Fix it with cluster A.
+- **`getInflationMod10000` is ×10000** — a third scale living alongside ×100 and human; reconcile in cluster C.

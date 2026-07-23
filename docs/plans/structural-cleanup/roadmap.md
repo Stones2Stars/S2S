@@ -241,7 +241,11 @@ mission-CONCEPT unification (the future ground-up `missions` rework), the Python
 (`{python:fn}` gates + inline `<Python>` bodies), random EVENTS, and Revolution. ✅ VERIFIED PRESENT (not gaps):
 golden-age LENGTH + anarchy-reduction timers + golden-age GRANTS all curated.
 
-### F8 — Python layer rework. RESOLVED: boundary + fix-values only ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
+### F8 — Python layer rework. DIRECTION SET (owner): a NEW Python surface, the old one COMPLETELY DISCONNECTED ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
+> **⛔ Agents are BANNED from building on the existing bindings** (AGENTS.md Conventions §Design) — *"every time you
+> try, you start shoehorning."* The replacement is a clean cascade/JSON-shaped surface with the legacy `Cy*` surface
+> CUT AWAY, never a widened binding, a shim beside it, or two live surfaces. A conversion that leaves every Python
+> consumer untouched is the half-migration tell, not a success.
 Breakage is silent wrong-VALUE, not compile fail (pocos mirror legacy signatures; curator-gap stubs feed defaults —
 e.g. `getBonusCommerceModifier` stubbed 0 (curator gap) yet read live by AI valuation; the property-manipulator +
 dead-system stubs across `CvTechInfo`/`CvReligionInfo`/`CvRouteInfo`/`CvTerrainInfo`/`CvCorporationInfo`). **In scope:** redesign the

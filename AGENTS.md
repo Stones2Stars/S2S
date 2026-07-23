@@ -334,6 +334,18 @@ the total-observability bar below.)
   tightly-coupled legacy core file stays minimal — don't sprawl it or gratuitously refactor around it. But this is
   no brake on deliberate structural rework (the cascade, the docs rebuild, dissolving the `Cv*AI` god-classes),
   which is large by design and answers to [DEC-proper-once](docs/architecture/decisions.md#dec-proper-once).
+- **⛔ AGENTS ARE BANNED FROM BUILDING ON THE EXISTING PYTHON BINDINGS (owner ruling).** Do NOT treat a `Cy*`
+  binding as a destination, a contract to satisfy, or a place to park a conversion — *"every time you try, you start
+  shoehorning."* Reaching for an existing binding is what makes the ENGINE bend to fit Python instead of the boundary
+  being redesigned around the cascade/JSON model ([DEC-cy-not-fixed](docs/architecture/decisions.md#dec-cy-not-fixed):
+  that `.def` surface is explicitly NOT a fixed contract). The tell is a change that leaves every Python consumer
+  untouched — that is the half-migration, not a clean cut.
+  **What to do INSTEAD (owner): build a NEW Python surface and COMPLETELY DISCONNECT the old one.** Not a widened
+  binding, not a compatibility shim beside it, not a parallel that both remain live — the replacement is a clean
+  surface shaped by the cascade/JSON model, and the legacy `Cy*` surface is cut away rather than left breathing
+  ([DEC-no-legacy-masking](docs/architecture/decisions.md#dec-no-legacy-masking): a legacy path left alive masks the
+  hole; [DEC-proper-once](docs/architecture/decisions.md#dec-proper-once): no transitional shim). Python-authoritative
+  *gameplay* still stays Python — this is about the INFO/state binding surface, not about pulling gameplay into the DLL.
 - **Import Info headers DIRECTLY; do not lean on the `CvInfos.h` umbrella.** New/edited code includes the specific
   header it needs; the umbrella is flagged for retirement.
 - Preserve save compatibility by default; for intentional breaks, coordinate and mark with `@SAVEBREAK`. See
