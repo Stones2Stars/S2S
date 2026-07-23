@@ -30,9 +30,10 @@ hard yields never live in the same package; the unit is part of the slot key, [m
 load-bearing for invalidation: "it's the percentage recalcs that hurt," so a flat-only event must leave every
 percent package structurally untouched — package-level separation makes that free, not mask bookkeeping.
 (`Πmultiplier` would be a third package kind — identity throughout the migration, no yield/commerce source
-authors one.) **The combine mode is FAMILY METADATA, never per-package** (§2: `polarity: signed-split` for
-wellbeing, the `min` member floor for defense, `combine: max|min`) — packages store the sums; the family's
-metadata wires how the read combines them. A package's INTERNAL composition resolves in isolation before it
+authors one.) **The combine mode is FAMILY METADATA, never per-package** (§2: the `min` member
+floor for defense, `combine: max|min`) — packages store the sums; the family's metadata wires how the read
+combines them. There is no `polarity` mode: wellbeing is FOUR ORDINARY CHANNELS (happiness/anger/health/
+unhealth) summed in opposing pairs, so nothing about its storage or combine is wellbeing-specific. A package's INTERNAL composition resolves in isolation before it
 joins the combine (the §2a specialist's own percent layer applied to its intrinsic before joining BASE; the
 §2 plot package fully resolved before any city stack). No other shape exists at any scope.
 
@@ -72,7 +73,7 @@ pure city booleans applied at read.
 
 (the plot base is the `CvPlot` package, pulled — also BASE tier; the player scope splits the same way:
 free-city/GA trait flats = BASE tier, civic/trait/empire-building percents = stack contributions. Every
-channel's combine defines its own positions — wellbeing's signed-split terms, the scalar stacks — and the
+channel's combine defines its own positions — wellbeing's four opposing channels, the scalar stacks — and the
 packages of a scope follow that channel's positions, never a per-scope blob.)
 
 **The PROVIDER axis (the deliveryguy model, [modifier.md](../../specs/modifier.md) §4): PLOTS, SPECIALISTS,
@@ -256,7 +257,7 @@ inputs folded on top. **There are ZERO special channels.** Properties are the sp
 ordinary family whose deposits the cascade sums — that summed per-turn feed is the CASCADE'S job — while the
 **property EVALUATION (the equilibrium engine deciding which way the property moves) sits OUTSIDE the
 cascade**, machinery consuming the feed. What differs per family is pure parameterization: the combine
-metadata (which positions exist, `polarity: signed-split`, the `min` floor, the §2a EXTRA truncation), the
+metadata (which positions exist, the `min` floor, the §2a EXTRA truncation), the
 live-input folds at read (slider, disorder, trade yield, military count, the per-city gates), and — for
 buildRate — target-keyed package selection. **Family metadata's home is settled by the spec itself**
 ([json.md](../../specs/json.md) §6.3 "you author the values; the ENGINE combines them" + modifier.md §1
@@ -387,7 +388,7 @@ freeSpecialists — arrives as an ordinary keyed/conditioned flat deposit the wa
 its gate live at read; freeSpecialists = the spec'd count-family; **no special provider-home exists or is
 needed** — the four-provider law describes what physically produces base yield; a trait's flat is just a
 deposit at its scope and §2a position). What remains per channel is exactly three small items: its **metadata
-row** (positions / `signed-split` / `min`-floor / truncation), its **live-input folds** (slider, disorder,
+row** (positions / `min`-floor / truncation), its **live-input folds** (slider, disorder,
 anger raw-state, military count, the per-city gates), and its **getter flip proof**. The flip list, in
 dependency/risk order, each entry = recompose the getter to the generic combine + in-body net + real played
 turns clean + flip (the capabilities lesson: offline parity alone is insufficient; frozen-save protocol,

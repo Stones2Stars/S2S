@@ -112,10 +112,17 @@ slot does pure integer math and never sees the human boundary.
 > ([DEC-done-is-observable](../architecture/decisions.md#dec-done-is-observable)) + the `(scope,channel)` calc-count
 > gate: [validation](validation.md).
 
-**Three non-additive combine modes, declared as FAMILY metadata (never per-deposit):** a `min` member that floors
+**Two non-additive combine modes, declared as FAMILY metadata (never per-deposit):** a `min` member that floors
 the combined total (e.g. `defense`); `combine: max|min` for worst/best-across-sources (anarchy turns,
-`naturalDefense`); `polarity: signed-split` for good/bad accumulators (health/happiness — positive→good,
-negative→bad). Authors write signed values; the mode wires the combiner.
+`naturalDefense`). Authors write signed values; the mode wires the combiner.
+
+> **⛔ There is NO `polarity` mode — wellbeing is FOUR ORDINARY CHANNELS (owner):** `happiness`, `anger`,
+> `health`, `unhealth`. Happiness sums against anger, health against unhealth, at the verdict (§2b). A negative
+> deposit is routed to the opposing channel **at fill**, so the split is a routing rule, never a storage shape —
+> no good/bad plane, no duplicated positions, no per-family combiner. This is what keeps
+> [DEC-universal-yield](../architecture/decisions.md#dec-universal-yield) literal: wellbeing is four yields like
+> any other, on the one uniform package
+> ([DEC-uniform-cache-shape](../architecture/decisions.md#dec-uniform-cache-shape)).
 
 ---
 
@@ -179,12 +186,14 @@ by the unified percent total, with the building FLATs bolted on **after** — ne
 
 ## 2b. The WELLBEING channels — health + happiness (signed-split, the §2a sibling)
 
-The city's **health** and **happiness** levels are the §2 combine applied with the **`polarity: signed-split`**
-family metadata (§2): every source deposits ONE signed value; the **good/happy side sums `max(0, source)`**, the
-**bad/unhappy side sums `−min(0, source)`** — the same source feeds both accumulators, split by sign at combine
-(the engine's exact shape: `happyLevel`/`unhappyLevel`/`goodHealth`/`badHealth` `CvCity.cpp:5191/5195/5199/5203`,
-each delegating to `CascadeAccumulator::wellbeing(this, N)`). The realized verdicts: `healthRate = min(0, good − bad)`; `angryPopulation =
-clamp(unhappy − happy, 0, pop)`. The channel oracle is **`/computed/cities/wellbeing`**
+The city's **health** and **happiness** levels are the §2 combine over **FOUR ORDINARY CHANNELS (owner)** —
+`happiness`, `anger`, `health`, `unhealth` — summed in **opposing pairs** at the verdict: happiness against anger,
+health against unhealth. They are four yields like any other, carried on the one uniform package with no special
+storage: a source depositing a negative value is routed to the opposing channel **at fill**, so nothing about the
+combine or the cache is wellbeing-specific. The engine's own accumulators ARE these four channels
+(`happyLevel`/`unhappyLevel`/`goodHealth`/`badHealth`, `CvCity.cpp:5191/5195/5199/5203`, each delegating to
+`CascadeAccumulator::wellbeing(this, N)`). The realized verdicts: `healthRate = min(0, health − unhealth)`;
+`angryPopulation = clamp(anger − happiness, 0, pop)`. The channel oracle is **`/computed/cities/wellbeing`**
 ([http-endpoints](http-endpoints.md)) — one field per named engine term.
 
 **The TARGET/INPUT split (the tradeYield precedent, [validation](validation.md) input rules):**

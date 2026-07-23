@@ -27,6 +27,7 @@
 
 #include "Defines/CvEnums.h"
 #include "Infrastructure/CvDerivedCache.h"
+#include "Cascade/CvCascadeChannels.h"   // the channel index + the ONE uniform package type these collapse onto
 #include <map>
 #include <vector>
 
