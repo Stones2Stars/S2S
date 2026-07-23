@@ -94,6 +94,38 @@ struct SourceRoute
 	SourceRoute() : playerBits(0), cityBits(0), world(false) {}
 };
 
+//
+//	THE MATERIALIZED CHANNEL TABLE ([DEC-materialize-at-mapfrom] applied to the cascade's own gather).
+//
+//	One info's deposits, resolved ONCE to (scope, channel, gate-position, value-vs-percent) ints, so a gather is a
+//	SINGLE pass over the info's own entries. This replaces the shape where every channel re-derived its address
+//	(two string lookups) and then rescanned the info's WHOLE deposit vector to find its few matching records --
+//	per info, per channel, per scope, per city, per rebuild.
+//
+//	SPARSE by construction: an entry exists only for an authored deposit. A dense [scope][channel] table would be
+//	~1.6 KB on every one of ~12,800 infos (~20 MB) for data that is almost entirely unauthored -- the mostly-zero
+//	dense-array class memory-footprint.md flags, and unaffordable under the 32-bit ceiling.
+//
+struct CascadeSlotEntry
+{
+	short scope;        // CascadeScope
+	short channel;      // CascadeChannel
+	short gatePos;      // a GATE position (SR / coastal / connected / goldenAge / perPopulation), or
+	                    // NUM_CASCADE_POSITIONS = "no gate -- use the position the SOURCE LIST implies"
+	bool  isPercent;    // the whole type axis: any yield is an int, any percentage is an int (owner)
+	int   value100;
+	CascadeSlotEntry() : scope(-1), channel(-1), gatePos(-1), isPercent(false), value100(0) {}
+};
+
+struct CascadeInfoTable
+{
+	// UNCONDITIONED + per-less deposits: the generic walker adds these straight into slots, no evaluation.
+	std::vector<CascadeSlotEntry> plain;
+	// Everything else -- indices into depositsFor(j). Liveness (enabled/disabled) is the ENABLER's verdict, never
+	// the cascade's ([DEC-enabler-not-cascade]); the `per` count-scaler is a multiply the cascade still resolves.
+	std::vector<int> conditioned;
+};
+
 class DepositIndex
 {
 public:
@@ -123,6 +155,10 @@ public:
 	// The invalidation consumer queries this O(1) to mark exactly the player/sibling/world packages a source feeds,
 	// replacing buildingProcessed's inline per-deposit derivation. NULL / family-less info -> the empty route.
 	static const SourceRoute& routeFor(const CvInfo* j);
+
+	// THE MATERIALIZED TABLE (above): built on first query, cached, dropped with the compiled registry by
+	// clearCompiled(). The generic gather's ONE read surface -- no strings, no per-channel rescan.
+	static const CascadeInfoTable& tableFor(const CvInfo* j);
 
 	// Fill a record's compiled fields from its address/unit strings (push-time; the strings stay for
 	// rendering/diagnostics). Splits the dotted address, interns each segment (the first CASC_DEP_SEGS kept),
