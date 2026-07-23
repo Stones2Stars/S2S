@@ -702,7 +702,7 @@ int CascadeAccumulator::wellbeing(const CvCity* pCity, int iVerdict)
 int CascadeAccumulator::commerceHappinessPer(const CvCity* pCity, int eCommerce)
 {
 	if (pCity == NULL || eCommerce < 0 || eCommerce >= NUM_COMMERCE_TYPES) return 0;
-	return pCity->m_cascadeCityPackages.aiWbCommercePer[eCommerce] / 100;   // bare fetch off the standing snapshot
+	return pCity->m_cascadeCityPackages.aiWbCommercePer[eCommerce];   // ×100; bare fetch off the standing snapshot
 }
 
 int CascadeAccumulator::scGpBase(const CvCity* pCity)

@@ -46,8 +46,9 @@ public:
 	static int commerceModifier(const CvCity* pCity, CommerceTypes eC);       // the commerce twin: max(1,100+Σpct) -- replaces the legacy getTotalCommerceRateModifier hand-sum
 	static int wellbeing(const CvCity* pCity, int iVerdict);               // §2b: 0=happy 1=unhappy 2=good 3=bad
 	// The per-commerce happiness pool (CommerceInfo initial constant + the buildings' commerceHappiness deposits),
-	// gathered into the city package by gatherCityTerms. ÷100 here: happiness is a DISCRETE count, so the reduce
-	// lands at the reader ([DEC-fixedpoint-x100]) and every caller keeps its legacy ×1 arithmetic.
+	// gathered into the city package by gatherCityTerms. Returns ×100 -- the engine's native representation; NO
+	// getter has a ×100 variant and none reduces ([DEC-fixedpoint-x100]). Each READER does its own ÷100 at the
+	// point the value becomes a discrete count (the UI, the /computed fields, the Cy* Python wrappers).
 	static int commerceHappinessPer(const CvCity* pCity, int eCommerce);
 	static int scGpBase(const CvCity* pCity);                              // gp building + specialist flats
 	static int scGpNational(const CvPlayer* pPlayer);                      // max(0, trait national GP flats) -- the L6 fold

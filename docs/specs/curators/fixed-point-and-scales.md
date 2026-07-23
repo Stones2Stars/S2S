@@ -29,7 +29,13 @@ Human numbers exist at exactly **two boundaries** — nobody in between guesses 
 | **JSON** (`Assets/Data/**`) | human numbers only (`7`, `25`, `1.5`) — **no ×100, no scale markers** | NO |
 | **readJson** (the IN boundary) | the **entire** human→×100 conversion + percent semantics, once at load | converts → ×100 |
 | **CASCADE + getters + consumers** (the engine) | pure integer ×100 math; the realized getters return ×100 and every consumer carries it | ×100 throughout |
-| **READERS + DISCRETE quantities** (the OUT boundary) | ×100 → human, once: any READER (UI / the `/computed` HTTP fields / the `Cy*` Python wrappers) does its own trivial `÷100`; a value that becomes a **discrete game count** (whole angry citizens, a whole food modifier) reduces `÷100` there and is human onward | converts ← ×100 |
+| **READERS** (the OUT boundary) | ×100 → human, once: any READER (UI / the `/computed` HTTP fields / the `Cy*` Python wrappers) does its own trivial `÷100`. A value that is physically a **whole game count** (angry citizens, a food modifier) reduces at the **point of use** that consumes it as a whole number — that use is itself a reader | converts ← ×100 |
+
+> **⛔ NO getter reduces, and there are NO discrete carve-outs — every channel works identically (owner ruling).**
+> This uniformity IS the rework: *"then we never have to care about what format inside the structure."* A getter that
+> reduces internally hands every consumer a pre-rounded number whether or not it wants one, and a consumer needing
+> precision cannot get it back — which is the same shoehorn as a `getX`+`getX100` pair, just spelled differently.
+> Discreteness is a property of a USE (the game unassigns whole citizens), not of a getter.
 
 **Why ×100 out to the consumers, not reduced at the getter** ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)):
 reducing at the getter forces a human-variant getter (a `getX`+`getX100` split) the moment anything internal needs

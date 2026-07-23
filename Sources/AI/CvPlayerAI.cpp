@@ -14182,7 +14182,7 @@ int CvPlayerAI::AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum, CivicT
 		{
 			int iCityHappy = pLoopCity->happyLevel() / 100 - pLoopCity->unhappyLevel(iExtraPop) / 100;
 
-			iCityHappy -= std::max(0, pLoopCity->getCommerceHappiness());
+			iCityHappy -= std::max(0, pLoopCity->getCommerceHappiness() / 100);   // ×100 getter -> ÷100 (iCityHappy is a whole-citizen count)
 
 			int iMilitaryHappinessDefenders = 0;
 			if (getHappyPerMilitaryUnit() != 0 || kCivic.getHappyPerMilitaryUnit() != 0)
@@ -16748,7 +16748,8 @@ void CvPlayerAI::AI_doCommerce()
 			{
 				if (pLoopCity->getCommerceHappinessPer(COMMERCE_CULTURE) > 0)
 				{
-					iIdealPercent += pLoopCity->angryPopulation() * 100 / pLoopCity->getCommerceHappinessPer(COMMERCE_CULTURE);
+					// the pool is ×100, so scale the numerator to match rather than reducing the divisor (keeps precision)
+					iIdealPercent += pLoopCity->angryPopulation() * 10000 / pLoopCity->getCommerceHappinessPer(COMMERCE_CULTURE);
 				}
 			}
 			iIdealPercent /= getNumCities();
@@ -25576,7 +25577,7 @@ int CvPlayerAI::AI_getHappinessWeight(int iHappy, int iExtraPop) const
 	int iValue = 0;
 	foreach_(const CvCity * pLoopCity, cities())
 	{
-		const int iCityHappy = pLoopCity->happyLevel() / 100 - pLoopCity->unhappyLevel(iExtraPop) / 100 - std::max(0, pLoopCity->getCommerceHappiness());
+		const int iCityHappy = pLoopCity->happyLevel() / 100 - pLoopCity->unhappyLevel(iExtraPop) / 100 - std::max(0, pLoopCity->getCommerceHappiness() / 100);
 
 		//Fuyu: max happy 5
 		const int iHappyNow = std::min(5, iCityHappy);

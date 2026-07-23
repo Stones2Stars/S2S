@@ -20011,7 +20011,7 @@ void CvGameTextMgr::setAngerHelp(CvWStringBuffer &szBuffer, CvCity& city)
 		iTotal += iAnger;
 	}
 
-	iAnger = -city.getCommerceHappiness();
+	iAnger = -city.getCommerceHappiness() / 100;   // ×100 getter -> ÷100 human
 	if (iAnger > 0)
 	{
 		szBuffer.append(gDLL->getText("TXT_KEY_ANGER_BAD_ENTERTAINMENT", iAnger));
@@ -20220,7 +20220,7 @@ void CvGameTextMgr::setHappyHelp(CvWStringBuffer &szBuffer, CvCity& city)
 			szBuffer.append(NEWLINE);
 		}
 
-		iHappy = city.getCommerceHappiness();
+		iHappy = city.getCommerceHappiness() / 100;    // ×100 getter -> ÷100 human
 		if (iHappy > 0)
 		{
 			iTotalHappy += iHappy;

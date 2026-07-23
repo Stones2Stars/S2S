@@ -2290,7 +2290,7 @@ namespace
 				// the PLAYER religion-happiness accumulators feeding the per-religion terms (attribution: which half diverges)
 				h["stateReligionHappinessPlayer"] = picojson::value((double)kWbOwner.getStateReligionHappiness());
 				h["nonStateReligionHappinessPlayer"] = picojson::value((double)kWbOwner.getNonStateReligionHappiness());
-				h["commerce"] = picojson::value((double)pCity->getCommerceHappiness());
+				h["commerce"] = picojson::value((double)pCity->getCommerceHappiness() / 100);   // ×100 getter -> ÷100 human
 				h["areaBuilding"] = picojson::value((double)pCity->area()->getBuildingHappiness(pCity->getOwner()));
 				h["playerBuilding"] = picojson::value((double)kWbOwner.getBuildingHappiness());
 				h["extra"] = picojson::value((double)(pCity->getExtraHappiness() + kWbOwner.getExtraHappiness()));
@@ -3425,7 +3425,7 @@ namespace
 				hp["religionBadHappiness"]  = picojson::value((double)pCity->getReligionBadHappiness());
 				hp["militaryHappiness"]     = picojson::value((double)pCity->getMilitaryHappiness());
 				hp["celebrityHappiness"]    = picojson::value((double)pCity->getCelebrityHappiness()); // unit-derived (§10.4 "must be dumped")
-				hp["commerceHappiness"]     = picojson::value((double)pCity->getCommerceHappiness());
+				hp["commerceHappiness"]     = picojson::value((double)pCity->getCommerceHappiness() / 100);  // ×100 getter -> ÷100 human
 				hp["stateReligionHappiness"]= picojson::value((double)pCity->getCurrentStateReligionHappiness());
 				hp["specialistHappiness"]   = picojson::value((double)pCity->getSpecialistHappiness() / 100);  // ×100 getter -> ÷100 human (sibling fields are already human)
 				hp["specialistUnhappiness"] = picojson::value((double)pCity->getSpecialistUnhappiness() / 100);
@@ -3503,7 +3503,7 @@ namespace
 				{
 					picojson::value::object kCH;
 					for (int cc = 0; cc < NUM_COMMERCE_TYPES; ++cc)
-						kCH[GC.getCommerceInfo((CommerceTypes)cc).getType()] = picojson::value((double)pCity->getCommerceHappinessPer((CommerceTypes)cc));
+						kCH[GC.getCommerceInfo((CommerceTypes)cc).getType()] = picojson::value((double)pCity->getCommerceHappinessPer((CommerceTypes)cc) / 100);   // ×100 getter -> ÷100 human
 					hp["commerceHappinessPer"] = picojson::value(kCH);
 				}
 				hp["playerNoLandmarkAnger"] = picojson::value(kPlayer.isNoLandmarkAnger());                 // gates landmark anger

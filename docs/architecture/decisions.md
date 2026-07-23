@@ -13,11 +13,15 @@
 
 ×100 fixed-point is the engine's NATIVE representation EVERYWHERE — the cascade, the realized getters, and the
 consumers all carry ×100. JSON is human; human→×100 converts once at readJson (the IN boundary); ×100→human converts
-only at the OUT boundary — any READER (UI / `/computed` HTTP fields / `Cy*` Python) does a trivial `÷100`, and a value
-that becomes a DISCRETE game count (whole angry citizens) reduces there. **No getter has a ×100 "variant"** (never a
-`getX`+`getX100` pair); reducing at the getter forces that split and lets the cascade be shoehorned into legacy-shaped
-getters — the half-migration reflex. **Blast radius never limits the conversion.** **Home:**
-[fixed-point-and-scales.md](../specs/curators/fixed-point-and-scales.md).
+only at the OUT boundary — any READER (UI / `/computed` HTTP fields / `Cy*` Python) does a trivial `÷100`.
+**NO getter reduces, and there are NO discrete carve-outs — EVERY channel works the same way (owner ruling; this
+uniformity is the core of the rework).** A value that is physically a whole game count (angry citizens, a food
+modifier) reduces at the POINT OF USE that consumes it as a whole number, never inside the getter that every other
+consumer reads. **No getter has a ×100 "variant"** (never a `getX`+`getX100` pair); reducing at the getter forces that
+split and lets the cascade be shoehorned into legacy-shaped getters — the half-migration reflex. **Blast radius never
+limits the conversion** — the mapped consumer surface is the worklist, not a warning. **Home:**
+[fixed-point-and-scales.md](../specs/curators/fixed-point-and-scales.md); the standing conversion worklist:
+[fixed-point-conformance.md](../plans/structural-cleanup/fixed-point-conformance.md).
 
 ### DEC-curator-owns-descale
 

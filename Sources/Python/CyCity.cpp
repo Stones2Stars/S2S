@@ -1237,7 +1237,8 @@ int CyCity::getCommerceRateModifier(int /*CommerceTypes*/ eIndex) const
 
 int CyCity::getCommerceHappinessByType(int /*CommerceTypes*/ eIndex) const
 {
-	return m_pCity->getCommerceHappinessByType((CommerceTypes) eIndex);
+	// Cy* is a READER boundary: the engine getter is ×100, Python sees the human count ([DEC-fixedpoint-x100]).
+	return m_pCity->getCommerceHappinessByType((CommerceTypes) eIndex) / 100;
 }
 
 int CyCity::getDomainFreeExperience(int /*DomainTypes*/ eIndex) const

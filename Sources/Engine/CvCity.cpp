@@ -11639,12 +11639,14 @@ int CvCity::getCommerceHappinessPer(CommerceTypes eIndex) const
 }
 
 
+// ×100 (the pool is ×100; the /100 below is the slider PERCENTAGE, not a scale reduce) -- readers ÷100.
 int CvCity::getCommerceHappinessByType(CommerceTypes eCommerce) const
 {
 	return ((getCommerceHappinessPer(eCommerce) * GET_PLAYER(getOwner()).getCommercePercent(eCommerce)) / 100);
 }
 
 
+// ×100, like happyLevel/unhappyLevel -- every reader does its own ÷100 ([DEC-fixedpoint-x100]).
 int CvCity::getCommerceHappiness() const
 {
 	PROFILE_EXTRA_FUNC();

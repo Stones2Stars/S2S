@@ -54,9 +54,11 @@ Wellbeing is the first channel converted, establishing the pattern the other cha
   structs hold ×100.
 - **The verdicts return ×100** (`CvCity::happyLevel/unhappyLevel/goodHealth/badHealth` → the ×100 `aWbVerdict`; the
   pre-init/what-if legacy siblings stay human internally and are ×100'd at the getter dispatch).
-- **The two discrete boundaries** (÷100, the ONLY in-engine reductions): `angryPopulation` (whole angry citizens)
-  and `healthRate` (whole food modifier). Inside `assemble`, `iAngry` is computed whole (÷100) and `unhealthyPop`
-  re-scaled ×100 — citizens are physically discrete.
+- **⛔ The two "discrete boundary" carve-outs are REVOKED (owner ruling): there are NO carve-outs — every channel
+  works the same way, and that uniformity is the core of this rework.** `angryPopulation` and `healthRate` currently
+  reduce `÷100` INSIDE the getter; that is the same shoehorn as a `getX`+`getX100` pair. Both must carry ×100 like
+  every other getter, with the `÷100` moved to each USE that consumes a whole count. Converting them is part of the
+  worklist below (~28 `angryPopulation` sites), not an exception to it.
 - **Readers ÷100**: `Cy*City` (keeps all Python backward-compatible, untouched), the `/computed/cities/wellbeing`
   realized fields, the CityBar + the happiness/health help screens.
 - **Every consumer wired**: the AI happiness/health valuations (`CvCityAI`/`CvPlayerAI` — ÷100 each verdict read,
@@ -216,3 +218,33 @@ renderer** (zero math of its own), coloured by category.
   (like the flipped building/bonus/feature getters). ~106 maintainer/consumer sites across `CvCity`/`CvPlayer`/`CvArea`.
 
 Executed in ONE pass per cluster, verified live — no half-cut state.
+
+---
+
+## The STANDING conversion worklist (the mechanical census)
+
+> **This is the map, kept here so the sweep is a worklist and not a rediscovery.** Every entry is a getter that
+> currently reduces `÷100` internally — the shoehorn [DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)
+> bans. The fix per entry is uniform: **the getter carries ×100 (dissolve any `getX`/`getX100` pair down to ONE
+> getter), and every consumer reduces at its own reader/whole-count use.** Counts are consumer sites of the HUMAN
+> twin — the surface to rewire, mechanically derived, not judgment-filtered ([DEC-all-means-all](../../architecture/decisions.md#dec-all-means-all)).
+
+| # | violation | human twin's body | sites | status |
+|---|---|---|--:|---|
+| 1 | `getYieldRate` / `getYieldRate100` | `getYieldRate100()/100` | 46 | open — the doc names this one explicitly; largest, and upstream of the yield work |
+| 2 | `getExperience` / `getExperience100` | `getExperience100()/100` | 40 | open — self-contained (unit plane), parallelizable |
+| 3 | `calculateDistanceMaintenance` · `calculateNumCitiesMaintenance` · `currInterceptionProbability` (`*Times100` twins) | `…Times100()/100` | 48 | open — same shape under the `Times100` naming |
+| 4 | `getExtraYield` / `getExtraYield100` | `getExtraYield100()/100` | 12 | open |
+| 5 | `angryPopulation` · `healthRate` | internal `÷100` (the revoked carve-out) | ~28 | open — carve-out revoked; convert like any other |
+| — | `getCommerceHappinessPer` → `getCommerceHappinessByType` → `getCommerceHappiness` | was `/100` in the accessor | 9 | ✅ DONE — getters ×100; the 9 readers (2 AI, 2 pedia, 3 `/computed`, `CyCity`) reduce |
+| 6 | `getUnitUpkeep{Civilian,Military}` / `…100` | `apply*Upkeep(raw100)` — applies a percent mod, returns **×100** | — | open, but a DIFFERENT defect: both twins are ×100, so this is a misleading duplicate pair (gross vs modifier-applied), not a reduce. Dissolve by NAMING (one getter, or names that say which), not by moving a `÷100` |
+| — | `getBuildingCommerce` / `getBuildingCommerce100` | recompute-from-source Σ per building | — | NOT a violation (different quantities sharing a stem) |
+
+> **Upkeep + maintenance are IN SCOPE — they are summed GOLD, applied after gold is computed (owner).** Gold is a
+> yield ([DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield)), so it carries ×100 like every
+> other channel; landing late in the expense pipeline is a position in the chain, not an exemption. The treasury
+> subtraction happens in ×100 and only the displayed/stored value reduces.
+
+**The tell that a conversion is right:** scale-mismatch fudge factors disappear. While #5 stood, an AI ratio needed
+`angryPopulation() * 10000 / getCommerceHappinessPer(...)`; with both operands ×100 the units cancel and it returns to
+`* 100` with no magic constant. A surviving odd multiplier means two operands are still on different scales.
