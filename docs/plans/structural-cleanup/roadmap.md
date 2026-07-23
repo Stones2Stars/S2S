@@ -116,10 +116,18 @@ Everything above is settled. What is NOT defined is the boundary every consumer 
   is upstream of re-grafting anything.
 - **How a scope owner carries its cache** — the member, its binding, and its mark derivation, uniform across
   world / team / empire / area / city / plot.
-- **How the INFO side hands its data to the cascade** — the standardized "give me your flats / percents for these
-  channels" surface, so the cascade sums from a list of infos rather than reaching into each info's shape. ⚠ The
-  current info getter surface mirrors the legacy `CvXInfo` field contract, so it carries the same problem one level
-  down: *"the encouraging part is also part of the problem."*
+- **How the INFO side hands its data to the cascade — "make the infos sane" (active).** Today an info IS the legacy
+  variable set (220 members on `CvBuildingInfo`, 247 on `CvUnitInfo`), with JSON force-fed into it and a
+  ~300-getter surface mirroring the legacy `CvXInfo` contract. The target — **an info STYLED FOR THE JSON**:
+  members mirror the JSON anatomy, getters are ×100-native (no `100` in any name) and coherent (data-out by
+  channel), generalizing the in-tree `CLS_HAS`/bitset classification pattern — is
+  [patterns.md § The INFO DATA-OUT contract](../../architecture/patterns.md). The build sequence: (1) target shape
+  written; (2) rebuild `CvBuildingInfo` to it as the proven pattern (fattest, and it already carries both the
+  legacy-scalar defect and the sane `CLS_HAS` cure side by side); (3) roll across the other infos + rewire
+  consumers onto the coherent surface ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)).
+  **The cut is FULL (owner): the new coherent surface is built and every consumer rewired onto it in the same
+  pass, the legacy getter names disconnected — never a thin-compat layer left breathing.** The red tree makes the
+  blast radius free to absorb; a change that left consumers untouched would be the half-migration tell.
 - **The new Python surface** — built from the cascade/JSON model, with the legacy `Cy*` surface CUT AWAY
   ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)). Not a widened binding, not a shim
   beside it, not two live surfaces.

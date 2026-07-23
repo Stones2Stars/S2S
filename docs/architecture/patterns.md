@@ -122,9 +122,36 @@ authored JSON and the compiled deposit index.
 **The failure this closes.** Asking each info type for its data through a DIFFERENT accessor is the same defect as
 a hand-named scalar per channel ([DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape)): it cannot be
 addressed uniformly, so every type needs bespoke read code, and the cascade ends up shaped by the info surface
-instead of the other way round. ⚠ The current poco getter surface still mirrors the legacy `CvXInfo` field
-contract, so it carries exactly that problem one level down — a uniform channel-keyed data-out surface is what
-retires it, and is part of defining the access surface, not a follow-up to it.
+instead of the other way round.
+
+### An info is STYLED FOR THE JSON, not the legacy field set (owner)
+
+The info's MEMBERS mirror the **JSON entity anatomy** ([json.md §2](../specs/json.md): availability ·
+provisions · effects = the modifier families · intrinsic · classification · auxiliary), each held as its proper
+typed structure. It is **not** a scalar-per-legacy-XML-field. The turnaround is the whole of "make the infos sane":
+the JSON model drives the info's shape; the legacy variable set is gone, not force-fed.
+
+- **The realized exemplar is already in-tree — generalize it.** The classification blocks are styled for the JSON:
+  `m_attributes` is a **JSON-derived bitset** (the `ClassificationRegistry` ids minted from the authored
+  `attributes` block, [DEC-classification-infos](decisions.md#dec-classification-infos)), and `isZoneOfControl()`
+  is `CLS_HAS(m_attributes, "zoneOfControl")` — a coherent read over that structure, never a legacy
+  `m_bZoneOfControl`. Every block gets this shape.
+- **The defect the rebuild removes** is the legacy-named scalar-per-field with a comment mapping it back to a JSON
+  address (`m_iDamageToAttacker` ← `defense.city.counterDamage.damage`; `m_aiRiverPlotYieldChange[]` ←
+  `<yield>.city.plots` flats). Those are JSON parsed and **scattered into individually-named legacy variables**;
+  the sane form holds the JSON structure and reads it, so a new field is DATA, not a new member + getter.
+
+### Getters are ×100-native and coherent — the scale is never in the name (owner)
+
+- **Every getter IS ×100** ([DEC-fixedpoint-x100](decisions.md#dec-fixedpoint-x100)). There is **no `getX`/`getX100`
+  pair and no `100` suffix on any name** — a getter names its VALUE, never its scale, because the scale is
+  universal (the answer is always ×100). The 5 surviving `…100()` names lose the suffix and become the single
+  getter for that value; a reader wanting human does ÷100 at the boundary.
+- **The surface is coherent, not per-field.** Modifier data is handed out **by channel** (the data-out contract
+  above); classification by `CLS_HAS`; intrinsic values by a bare typed-member read. The ~300 hand-named getters on
+  a fat poco ARE the legacy `CvXInfo` contract; the coherent surface replaces them and the consumers rewire onto it
+  ([DEC-new-getter-surface](decisions.md#dec-new-getter-surface)) — the info half of the access surface, not a
+  follow-up to it.
 
 ## Materialize at mapFrom — no runtime string reads in info getters (the single-source law's load-time sibling)
 
