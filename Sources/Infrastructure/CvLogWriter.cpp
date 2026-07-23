@@ -24,10 +24,12 @@ namespace
 		HANDLE hWake;              // auto-reset: signaled on enqueue + on stop
 		volatile LONG bStop;
 		DWORD dwStartTicks;        // the [sec.mmm] stamp epoch (process-start-ish: first static init)
+		FILETIME ftSessionStart;   // same epoch as a FILETIME -- the stale-log cutoff (see sweepStaleLogs)
 		std::map<std::string, FILE*> files;   // writer thread only
 
 		LogWriterState() : hThread(NULL), hWake(NULL), bStop(0), dwStartTicks(GetTickCount())
 		{
+			GetSystemTimeAsFileTime(&ftSessionStart);   // DLL load == before anything logs this session
 			InitializeCriticalSection(&lock);   // static init runs single-threaded at DLL load
 		}
 	};
@@ -53,8 +55,46 @@ namespace
 		return fp;
 	}
 
+	// Clear STALE logs once per session. A log file is only truncated by whoever writes it (this writer opens
+	// "w"; the legacy gDLL->logMsg sinks truncate on their first append-false write), so a file that NOTHING
+	// writes this session survives untouched -- and reads as if it were current. That is a live misdiagnosis
+	// hazard, not clutter: a days-old Asserts.log / Xml_MissingTypes.log is indistinguishable from a fresh one.
+	// Only files last written BEFORE this session are cleared, so a log already written this run (XmlLoad.log
+	// during the XML pass, an early assert) is never truncated out from under its writer.
+	void sweepStaleLogs()
+	{
+		const char* szUserProfile = std::getenv("USERPROFILE");
+		if (szUserProfile == NULL) return;
+		char szDir[MAX_PATH];
+		int n = _snprintf(szDir, sizeof(szDir), "%s\\Documents\\My Games\\Beyond The Sword\\Logs", szUserProfile);
+		if (n <= 0 || n >= (int)sizeof(szDir)) return;
+
+		char szGlob[MAX_PATH];
+		n = _snprintf(szGlob, sizeof(szGlob), "%s\\*.log", szDir);
+		if (n <= 0 || n >= (int)sizeof(szGlob)) return;
+
+		WIN32_FIND_DATAA fd;
+		const HANDLE hFind = FindFirstFileA(szGlob, &fd);
+		if (hFind == INVALID_HANDLE_VALUE) return;
+		do
+		{
+			if ((fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0) continue;
+			if (CompareFileTime(&fd.ftLastWriteTime, &g_state.ftSessionStart) >= 0) continue;   // written THIS session
+			char szPath[MAX_PATH];
+			const int k = _snprintf(szPath, sizeof(szPath), "%s\\%s", szDir, fd.cFileName);
+			if (k <= 0 || k >= (int)sizeof(szPath)) continue;
+			// truncate, never delete: gDLL keeps handles open, which blocks remove() (the PlotSnapshot caveat).
+			// A file another handle holds exclusively just fails to open here -- harmless, it stays as it was.
+			FILE* fp = fopen(szPath, "w");
+			if (fp != NULL) fclose(fp);
+		}
+		while (FindNextFileA(hFind, &fd) != 0);
+		FindClose(hFind);
+	}
+
 	DWORD WINAPI writerThread(LPVOID)
 	{
+		sweepStaleLogs();   // once, before any file opens -- the writer thread starts on the first logged line
 		std::vector<std::pair<std::string, std::string> > batch;
 		for (;;)
 		{

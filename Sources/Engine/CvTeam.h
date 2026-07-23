@@ -340,9 +340,7 @@ public:
 	bool isBuildingMaxedOut(BuildingTypes eIndex, int iExtra = 0) const;
 	void changeBuildingCount(BuildingTypes eIndex, int iChange);
 
-	int getObsoleteBuildingCount(BuildingTypes eIndex) const;
 	bool isObsoleteBuilding(BuildingTypes eIndex) const;
-	void changeObsoleteBuildingCount(BuildingTypes eIndex, int iChange);
 
 	int getResearchProgress(TechTypes eIndex) const;
 	void setResearchProgress(TechTypes eIndex, int iNewValue, PlayerTypes ePlayer);
@@ -522,7 +520,6 @@ protected:
 	int* m_paiProjectDefaultArtTypes;
 	int* m_paiProjectMaking;
 	int* m_paiBuildingCount;
-	int* m_paiObsoleteBuildingCount;
 	int* m_paiResearchProgress;
 	int* m_paiTechCount;
 	int* m_paiTerrainTradeCount;

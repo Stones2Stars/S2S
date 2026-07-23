@@ -61,6 +61,15 @@ to the surviving processBuilding trigger site. getCommerceHappinessByType/getCom
 Python / HTTP consumer are unchanged: the accessor reduces /100, so callers keep their legacy x1 arithmetic.
 
 CvCity::m_aiCommerceHappinessPer         (int array, NUM_COMMERCE_TYPES)
+
+Building obsoletion is DERIVED, not stored (owner ruling): the team already owns the tech list, so
+CvTeam::isObsoleteBuilding computes it -- the team holds the building's own obsoleting tech, OR its
+special-building group's (an OR, so the two sources are idempotent by construction). The stored counter and its
+setHasTech maintenance loop are deleted; every consumer reads the same predicate and is unchanged. The counter
+was double-incremented for a grouped member once the group getter went live, which is precisely the failure a
+stored derived value permits and a computed one cannot ([DEC-accumulator-cut-uniform], [DEC-derived-never-trusted]).
+
+CvTeam::m_paiObsoleteBuildingCount       (int class-array, per BuildingTypes)
 ========================
 
 ========================

@@ -65,7 +65,6 @@ m_Properties(this)
 	m_pavProjectArtTypes = NULL;
 	m_paiProjectMaking = NULL;
 	m_paiBuildingCount = NULL;
-	m_paiObsoleteBuildingCount = NULL;
 	m_paiResearchProgress = NULL;
 	m_paiTechCount = NULL;
 	m_aiVictoryCountdown = NULL;
@@ -173,7 +172,6 @@ void CvTeam::uninit()
 	SAFE_DELETE_ARRAY(m_pavProjectArtTypes);
 	SAFE_DELETE_ARRAY(m_paiProjectMaking);
 	SAFE_DELETE_ARRAY(m_paiBuildingCount);
-	SAFE_DELETE_ARRAY(m_paiObsoleteBuildingCount);
 	SAFE_DELETE_ARRAY(m_paiResearchProgress);
 	SAFE_DELETE_ARRAY(m_paiTechCount);
 	SAFE_DELETE_ARRAY(m_aiVictoryCountdown);
@@ -304,13 +302,6 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 		for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 		{
 			m_paiBuildingCount[iI] = 0;
-		}
-
-		FAssertMsg(m_paiObsoleteBuildingCount == NULL, "about to leak memory, CvTeam::m_paiObsoleteBuildingCount");
-		m_paiObsoleteBuildingCount = new int[GC.getNumBuildingInfos()];
-		for (iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-		{
-			m_paiObsoleteBuildingCount[iI] = 0;
 		}
 
 		FAssertMsg(m_paiResearchProgress == NULL, "about to leak memory, CvPlayer::m_paiResearchProgress");
@@ -4417,35 +4408,31 @@ void CvTeam::changeBuildingCount(BuildingTypes eIndex, int iChange)
 }
 
 
-int CvTeam::getObsoleteBuildingCount(BuildingTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
-	return m_paiObsoleteBuildingCount[eIndex];
-}
-
-
+// Obsoletion is DERIVED, never stored (owner ruling): the team already holds the tech list, so a building is
+// obsolete iff the team holds the obsoleting tech -- named on the building itself, or on its special-building
+// GROUP (the curator also inherits a group's tech onto its members, so for a grouped member both name the same
+// tech). Reading it as an OR makes the two sources idempotent by construction; the stored counter this replaces
+// could be -- and was -- incremented twice for the same fact ([DEC-accumulator-cut-uniform]).
+//
+// #430 obsoletion FLIP (owner 2026-07-07: "legacy obsoletion should only be background"): the flag still answers
+// for the prereq consumers, but legacy does NOT drive obsoletion -- the obsolete building STAYS PRESENT so the
+// cascade operating-buildings obsolete set delivers its `whenObsolete` tree (json §4.2), which also subsumes the
+// getObsoletesToBuilding successor swap.
 bool CvTeam::isObsoleteBuilding(BuildingTypes eIndex) const
 {
-	return getObsoleteBuildingCount(eIndex) > 0;
-}
-
-
-void CvTeam::changeObsoleteBuildingCount(BuildingTypes eIndex, int iChange)
-{
-	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eIndex);
+	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eIndex);
 
-	if (iChange != 0)
+	const TechTypes eObsolete = kBuilding.getObsoleteTech();
+	if (eObsolete != NO_TECH && isHasTech(eObsolete)) return true;
+
+	const SpecialBuildingTypes eSpecial = (SpecialBuildingTypes)kBuilding.getSpecialBuilding();
+	if (eSpecial != NO_SPECIALBUILDING)
 	{
-		// #430 obsoletion FLIP (owner 2026-07-07: "legacy obsoletion should only be background"). Keep the team
-		// obsolete FLAG (isObsoleteBuilding still answers -- the prereq consumers + the background record), but legacy
-		// no longer DRIVES obsoletion: the obsolete building STAYS PRESENT so the cascade operating-buildings obsolete
-		// set picks it up and delivers its `whenObsolete` tree (json §4.2) -- which also subsumes the
-		// getObsoletesToBuilding successor swap (the curator folded the successor's families into whenObsolete).
-		// The remove-building + add-successor city loop that lived here is CUT.
-		m_paiObsoleteBuildingCount[eIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(getObsoleteBuildingCount(eIndex));
+		const TechTypes eGroupObsolete = GC.getSpecialBuildingInfo(eSpecial).getObsoleteTech();
+		if (eGroupObsolete != NO_TECH && isHasTech(eGroupObsolete)) return true;
 	}
+	return false;
 }
 
 
@@ -5735,21 +5722,6 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 
 	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
-		// A building obsoletes EXACTLY ONCE, whether the tech is named on the building itself or on its
-		// special-building GROUP -- the two are the same fact reaching the same count. They must stay
-		// mutually exclusive: the curator inherits a group's obsoleting tech onto its member buildings
-		// (store._inherit_group_obsoletes), so for a grouped member BOTH tests match the same tech and a
-		// second increment would double-count it out of existence.
-		if (GC.getBuildingInfo((BuildingTypes)iI).getObsoleteTech() == eTech)
-		{
-			changeObsoleteBuildingCount((BuildingTypes)iI, iChange);
-		}
-		else if (GC.getBuildingInfo((BuildingTypes)iI).getSpecialBuilding() != NO_SPECIALBUILDING
-		&& GC.getSpecialBuildingInfo(GC.getBuildingInfo((BuildingTypes)iI).getSpecialBuilding()).getObsoleteTech() == eTech)
-		{
-			changeObsoleteBuildingCount((BuildingTypes)iI, iChange);
-		}
-
 		for (int iJ = 0; iJ < GC.getNumSpecialistInfos(); iJ++)
 		{
 			changeBuildingSpecialistChange(((BuildingTypes)iI), ((SpecialistTypes)iJ), (GC.getBuildingInfo((BuildingTypes)iI).getTechSpecialistChange(eTech, iJ) * iChange));
@@ -6226,7 +6198,6 @@ void CvTeam::read(FDataStreamBase* pStream)
 
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectMaking);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiBuildingCount);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiObsoleteBuildingCount);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiResearchProgress);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiTechCount);
 	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VICTORIES, GC.getNumVictoryInfos(), m_aiVictoryCountdown);
@@ -6435,7 +6406,6 @@ void CvTeam::write(FDataStreamBase* pStream)
 
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectMaking);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiBuildingCount);
-	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiObsoleteBuildingCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiResearchProgress);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiTechCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VICTORIES, GC.getNumVictoryInfos(), m_aiVictoryCountdown);
@@ -7255,7 +7225,6 @@ void CvTeam::recalculateModifiers()
 	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
 		m_paiBuildingCount[iI] = 0;
-		m_paiObsoleteBuildingCount[iI] = 0;
 
 		for (int iJ = 0; iJ < NUM_COMMERCE_TYPES; iJ++)
 		{
