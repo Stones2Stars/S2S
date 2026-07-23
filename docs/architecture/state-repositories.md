@@ -171,23 +171,45 @@ public:
   scope carrying both**. That is why "whether a scope's packages are empty is irrelevant" is not hand-waving: the
   shape is uniform, and the origin rule says which half any given scope ever fills.
 
-  **⛔ THE CONSOLIDATION REQUIREMENT (owner): every modifier/yield cache is ONE shape.** Today there are FIVE
-  bespoke structs (`CascadeCityPackages` CPK_* · `CascadePlayerScope` PSC_* · `CascadeAreaPackages` ·
-  `CascadeWorldScope` · `CascadeUnitPackages` UPK_*) plus the plot yield cache, each with hand-named per-family
-  members. Yields and commerce are already channel-indexed arrays inside them (15 such arrays across city+player);
-  the drift is the SCALAR channels — 33 hand-named fields across city/player/world (`scGpBaseBld`, `scDefense`,
-  `scDefBombard`, `scMaintModCity`, `scTradeCity`, `scTradeCoastalCiv`, `brCityMilitary`, …), each really a
-  `(family, member, position, gate)` tuple spelled as a field name. Those collapse into the same
-  Σflat/Σpercent-per-channel form, so a scope's package is the SAME TYPE everywhere and a new scope or channel is
-  DATA, not a new struct.
+  **⛔ THE CONSOLIDATION REQUIREMENT (owner): every modifier/yield cache is ONE shape** — TWO DICTIONARIES per
+  scope object, one flats and one percents, each an int keyed by channel. The drift it replaces is the ~33
+  hand-named scalar fields (`scGpBaseBld`, `scDefense`, `scDefBombard`, `scMaintModCity`, `scTradeCity`,
+  `brCityMilitary`, …): a hand-named field cannot be addressed uniformly, so it forces a bespoke invalidation
+  path per field, which is how that many accumulated. A new scope or channel must be DATA, not a new struct.
+
+  **⛔ KEYS ONLY WHERE THEY ARE NEEDED (owner) — the storage is NOT a global dense index.** The channel set is
+  DATA-DEFINED (`PROPERTY_*` is one channel per property info) and no object uses more than a fraction of it, so
+  a dense array over every channel on every object is mostly zeros — on 9,600 plots that is ~7 MB of nothing.
+  Each scope carries ONLY the channels authored AT that scope, both the channel ids and the per-scope sets
+  derived from the data at load (the `ClassificationRegistry` minting precedent), never hand-listed. Measured
+  from `Assets/Data`: plot **13** · city **40** · empire **50** · area **3** · team **3** · self 1 — 76 distinct
+  non-unit channels, but no object carrying more than 50. ⚠ city and empire exceed a 32-bit dirty mask, so the
+  shared `CvDerivedCacheSet` mask widens to 64-bit (every existing user occupies few bits and is unaffected).
+  *Area and team being THREE channels each is also why they never got packages: as a bespoke struct each was a
+  project; as three keys each is trivial.*
+
+  **⛔ TWO SCOPES ARE DELIBERATELY NOT PACKAGES (owner):**
+  - **WORLD is CONFIG** — cost multipliers and the like, carried by eras / gamespeeds / handicaps. It changes
+    essentially never and is read from its sources, not cached behind a dirty protocol. A project granting
+    something to every player is NOT world-scope state: it authors the plural TARGET `world.empires`
+    ([json.md §3.3](../specs/json.md)) and lands in each PLAYER's package. The handful of `health.world` /
+    `happiness.world` / `tradeRoutes.world` project authorings are mis-scoped data, a curator fix
+    ([DEC-recurate-on-decision](decisions.md#dec-recurate-on-decision)).
+  - **UNIT is RESOLVED VALUES, not a package** — "when the number is put on the unit, no more percentages or
+    whatever is involved, the data just IS". The exact set of numbers a unit carries is known, so they are summed
+    and stored individually, and they dirty on a different trigger from everything else: ONLY when a promotion or
+    combat class changes. It is the most static plane in the engine. `CascadeUnitPackages` is therefore NOT a
+    bespoke struct awaiting consolidation — it is correctly its own shape, and the 12 unit-only families
+    (`strength`, `movement`, `withdrawal`, `firstStrike`, `capture`, `collateral`, `heal`, `bombard`, `air`,
+    `cargo`, `range`, `pillage`, …) never enter a scope's channel set.
   ⚠ Hand-maintained duplicates DRIFT — that is not theoretical: the maintenance decomposition and its cached fill
   duplicated five terms, and the L8 home/otherArea overlay landed in one and not the other, so `/computed`
   under-reported by 39 against the served value until the duplicate was replaced by a delegation.
   Full rebuild of everything = LOAD ONLY.
-  **Status against this ruling:** city / player / area / world / unit each sit on a `CvDerivedCacheSet` (their "ONE
-  dirty protocol"), plot on the single-flag `CvDerivedCache`. **The one remaining scope gap: `CvTeam` carries only
-  `CascadeTeamCaps` (capabilities, not a package)** — which is exactly what blocks the team percents in §B1 of
-  [legacy-cut-worklist.md](../plans/structural-cleanup/legacy-cut-worklist.md).
+  **Status against this ruling:** city / player / area each sit on a `CvDerivedCacheSet`, plot on the single-flag
+  `CvDerivedCache`. **`CvTeam` carries only `CascadeTeamCaps` (capabilities, not a package)** — which is what
+  blocks the team percents in §B1 of
+  [legacy-cut-worklist.md](../plans/structural-cleanup/legacy-cut-worklist.md), and is three channels' work.
   **One AREA sum is still mis-homed:** the area YIELD percents fold into the CITY package (`yPctCity` — "bonus /
   building / event / power / area / capital all fold into yPctCity as scope/conditioned deposits",
   `CvCascadeAccumulator.cpp`) instead of the city read SUMMING them from `CascadeAreaPackages`. The area MAINTENANCE
