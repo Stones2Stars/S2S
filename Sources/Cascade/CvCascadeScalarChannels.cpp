@@ -137,6 +137,14 @@ static void sc_maintAreaSplit(const CvPlayer& owner, const CvTeam* pTeam,
 	}
 }
 
+// The player's CROSS-AREA aggregate only ("all my OTHER areas"): a genuine player-scope roll-up, so it stays
+// player-side. The PER-AREA halves moved to the area's own package (CascadeAreaPackages, fillAreaScalars).
+static void sc_maintOtherAreaTotal(const CvPlayer& owner, const CvTeam* pTeam, int& iOtherTotal)
+{
+	std::map<int, int> areaPctUnused, otherAreaPctUnused;
+	sc_maintAreaSplit(owner, pTeam, areaPctUnused, otherAreaPctUnused, iOtherTotal);
+}
+
 int CascadeScalarChannels::gpBaseBuildings(const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
 	// building flats (the player national rate is a live input at the combine)
@@ -472,21 +480,13 @@ int CascadeScalarChannels::maintenanceModifier(const CvCity* pCity, const CvCasc
 	// the effective-modifier stack (:getEffectiveMaintenanceModifier): THIS city's + the player's + the AREA
 	// total + connected-to-capital. The player/area/connectedCity halves are PLAYER-WIDE building accumulators
 	// (any city's active building feeds them), so those walk ALL the player's cities' active sets.
-	int iMod = 0;
-	iMod += sc_buildings("maintenance.city", "percent", pCity, ec);
-	iMod += sc_civicsTraits("maintenance.city", "percent", owner, ec);
-	iMod += sc_civicsTraits("maintenance.empire", "percent", owner, ec);
-	iMod += sc_civicsTraits("maintenance.area", "percent", owner, ec);
-	// TECHS feed the player maintenance modifier too (processTech CvPlayer:30916)
-	{
-		const CvTeam& team = GET_TEAM(owner.getTeam());
-		for (int i = 0; i < GC.getNumTechInfos(); ++i)
-		{
-			if (!team.isHasTech((TechTypes)i)) continue;
-			const CvInfo* d = InfoRepo<CvTechInfo>::get().get(i);
-			if (d != NULL) iMod += MMKernel::sumUnit(d, "maintenance.empire", "percent", ec);
-		}
-	}
+	// The CITY-REALIZED half is maintenanceModifierCity -- DELEGATE, never re-list its terms
+	// ([DEC-single-implementation]). This function used to duplicate that walk (city buildings + civic/trait
+	// city/empire/area + techs), and the two drifted the moment a term landed in only one: the L8 civic
+	// home/otherArea overlay went into the cached fill and not into this decomposition, so the /computed
+	// `maintModCasc` under-reported against the value the game actually serves (`maintModSlot`). Delegating
+	// makes that class of drift unrepresentable.
+	int iMod = maintenanceModifierCity(pCity, ec);
 	// the player-wide building halves: the empire percent; the AREA split -- a city in area A collects A's
 	// own area sums + every OTHER area's otherArea sums; and the connected-to-capital percent when this city
 	// is connected (and not the capital)
@@ -567,18 +567,57 @@ int CascadeScalarChannels::tradeRoutesCoastalCivCity(const CvCity* pCity, const 
 	return sc_civicsTraits("tradeRoutes.empire.coastal", "flat", *ec.player, ec);
 }
 
+// ===================== the AREA scope fill (the scope owns its own sums) =====================
+// modifier.md 1: deposits accumulate at their OWN scope. These previously sat as area-KEYED maps on
+// CascadePlayerScope -- an upper scope's sums parked on a neighbour because AREA had no package at all.
+// CvArea is ONE shared map object, so the package is indexed by player; that is the data's shape, not a
+// reason to keep it player-side. AREA carries MODIFIERS only (owner ruling) -- no yields here, ever.
+void CascadeScalarChannels::fillAreaScalars(const CvArea& area, CascadeAreaPackages& out)
+{
+	PROFILE_EXTRA_FUNC();
+	const int iAreaId = area.getID();
+	out.maintOwnPct.assign(MAX_PLAYERS, 0);     // contract rule 2: fully define the output every call
+	out.maintOtherPct.assign(MAX_PLAYERS, 0);
+	out.fsAny.assign(MAX_PLAYERS, 0);
+
+	for (int iP = 0; iP < MAX_PLAYERS; ++iP)
+	{
+		const CvPlayer& owner = GET_PLAYER((PlayerTypes)iP);
+		if (!owner.isAlive()) continue;
+		const CvTeam* pTeam = &GET_TEAM(owner.getTeam());
+		int iLoop;
+		for (const CvCity* pc = owner.firstCity(&iLoop); pc != NULL; pc = owner.nextCity(&iLoop))
+		{
+			if (pc->area() == NULL || pc->area()->getID() != iAreaId) continue;   // only THIS area's cities
+			const OperatingBuildings& operatingBuildings = EnablerKernel::operatingBuildings(pc);
+			CvCascadeEvalCtx pec;
+			pec.city = pc; pec.plot = pc->plot(); pec.player = &owner; pec.team = pTeam;
+			pec.activeBuildings = &operatingBuildings.active;
+			pec.vicinityProvidedBonuses = &operatingBuildings.provided;
+			for (std::set<int>::const_iterator it = operatingBuildings.active.begin(); it != operatingBuildings.active.end(); ++it)
+			{
+				const CvInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
+				if (d == NULL) continue;
+				out.maintOwnPct[iP]   += MMKernel::sumUnit(d, "maintenance.area", "percent", pec);
+				out.maintOtherPct[iP] += MMKernel::sumUnit(d, "maintenance.area.otherArea", "percent", pec);
+				sc_fsFold(d, sc_fsSegs().area, pec, 0, out.fsAny[iP], NULL);   // area BY-TYPE has no authorings
+			}
+		}
+	}
+}
+
 void CascadeScalarChannels::fillPlayerScalars(const CvPlayer& player, CascadePlayerScope& out)
 {
 	// PLAYER-BUILDING sums only (each walked per SOURCE city with that city's own ctx -- city-agnostic to
 	// the READING city). The civic/trait/tech halves are CITY-REALIZED (the city fills above).
 	out.gpModPlayer = 0; out.maintPlayerAll = 0; out.maintConnPct = 0;
-	out.maintAreaPct.clear(); out.maintOtherAreaPct.clear(); out.maintOtherAreaTotal = 0;
+	out.maintOtherAreaTotal = 0;   // the per-area halves live on CvArea now (its own package)
 	out.tradeEmpireAll = 0; out.tradeCoastalAll = 0; out.tradeWorldMine = 0;
 	const CvTeam* pTeam = &GET_TEAM(player.getTeam());
 	out.gpModPlayer = sc_playerBuildings("greatPeopleRate.empire", "percent", player, pTeam);
 	out.maintPlayerAll = sc_playerBuildings("maintenance.empire", "percent", player, pTeam);
 	out.maintConnPct = sc_playerBuildings("maintenance.empire.connectedCity", "percent", player, pTeam);
-	sc_maintAreaSplit(player, pTeam, out.maintAreaPct, out.maintOtherAreaPct, out.maintOtherAreaTotal);
+	sc_maintOtherAreaTotal(player, pTeam, out.maintOtherAreaTotal);
 	out.tradeEmpireAll = sc_playerBuildings("tradeRoutes.empire", "flat", player, pTeam);
 	out.tradeCoastalAll = sc_playerBuildings("tradeRoutes.empire.coastal", "flat", player, pTeam);
 	out.tradeWorldMine = sc_playerBuildings("tradeRoutes.world", "flat", player, pTeam);
@@ -621,7 +660,6 @@ void CascadeScalarChannels::fillPlayerScalars(const CvPlayer& player, CascadePla
 	// empire-scope buildings; the area.any buildings fold per SOURCE-city area (the maintAreaPct precedent).
 	out.fsEmpireAny = 0;
 	out.fsEmpireByType.assign(GC.getNumSpecialistInfos(), 0);
-	out.fsAreaAny.clear();
 	{
 		CvCascadeEvalCtx fsec;
 		fsec.player = &player; fsec.team = pTeam;
@@ -649,14 +687,11 @@ void CascadeScalarChannels::fillPlayerScalars(const CvPlayer& player, CascadePla
 			CvCascadeEvalCtx pec;
 			pec.city = pc; pec.plot = pc->plot(); pec.player = &player; pec.team = pTeam;
 			pec.activeBuildings = &operatingBuildings.active; pec.vicinityProvidedBonuses = &operatingBuildings.provided;
-			int iAreaAny = 0;
 			for (std::set<int>::const_iterator it = operatingBuildings.active.begin(); it != operatingBuildings.active.end(); ++it)
 			{
 				const CvInfo* d = InfoRepo<CvBuildingInfo>::get().get(*it);
 				sc_fsFold(d, sc_fsSegs().empire, pec, 0, out.fsEmpireAny, &out.fsEmpireByType);
-				sc_fsFold(d, sc_fsSegs().area, pec, 0, iAreaAny, NULL);   // area BY-TYPE has no authorings (census guard)
 			}
-			if (iAreaAny != 0) out.fsAreaAny[pc->area()->getID()] += iAreaAny;
 		}
 	}
 

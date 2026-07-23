@@ -18,6 +18,8 @@ class CvPlayer;
 struct CascadePlayerScope;
 struct CascadeBrLedger;
 
+class CvArea;
+
 class CascadeScalarChannels
 {
 public:
@@ -36,6 +38,10 @@ public:
 	static int tradeRoutesCoastalCivCity(const CvCity* pCity, const CvCascadeEvalCtx& ec); // civic coastal flats (gate live)
 	// The PLAYER scalar fill: the player-BUILDING sums only (per-source-city ctx).
 	static void fillPlayerScalars(const CvPlayer& player, CascadePlayerScope& out);
+	// The AREA scope's own sums (modifier.md 1: a scope owns its sums). Walks the cities IN THIS AREA across
+	// all players -- the area is a shared map object, so the per-player axis is the data's shape, not a reason
+	// to keep the sums on CvPlayer. AREA carries modifiers only, never yields.
+	static void fillAreaScalars(const CvArea& area, CascadeAreaPackages& out);
 	// The buildRate LEDGER fills: DENSE per-kind tables indexed by targetFk -> Σ percents (scope-packages
 	// CascadeBrLedger). City = this city's active buildings + civics/traits (city ctx) + members + the SR
 	// fields; player = all cities' active buildings only.

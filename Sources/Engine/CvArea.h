@@ -5,6 +5,8 @@
 
 //#include "Defines/CvEnums.h"
 
+#include "Cascade/CvCascadeScopePackages.h"   // CascadeAreaPackages -- the #430 AREA scope packages
+
 class CvCity;
 class CvPlot;
 
@@ -176,6 +178,13 @@ protected:
 	int m_iNumStartingPlots;
 
 	bool m_bWater;
+
+	// #430: the AREA scope's OWN packages (modifier.md 1 -- a scope owns its sums). AREA carries no yields,
+	// only modifiers; never serialized, dirty from birth like every other scope package.
+public:
+	mutable CascadeAreaPackages m_cascadeArea;
+	void cascadeRefreshArea(int iMask) const;   // the CacheSet's refresh delegate
+private:
 
 	int* m_aiUnitsPerPlayer;
 	int* m_aiAnimalsPerPlayer;

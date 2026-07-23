@@ -10,8 +10,8 @@
 //	   Flat packages and percent packages are always SEPARATE fields (the unit is part of the slot key,
 //	   modifier.md §2) -- a flat-only event never touches a percent package, structurally.
 //	 - Each scope object holds ONLY its own scope's deposits: CvCity the *.city.* sums, CvPlayer the
-//	   *.empire.* / *.area.* sums (area maps grouped per area -- promoted to CvArea when a second channel
-//	   needs it), CvGame the *.world.* sums. A lower scope never stores an upper scope's sums.
+//	   *.empire.* sums, CvArea its own *.area.* sums, CvGame the *.world.* sums. A lower scope never stores
+//	   an upper scope's sums, and no scope parks its sums on a neighbour that happens to have a struct.
 //	 - Every struct sits on ONE CvDerivedCacheSet bound to its object: events mark, boundaries ensure,
 //	   reads are bare fetches + the channel's combine formula (family positions realized AS the field
 //	   layout below -- the family-metadata table's storage half; polarity/floors live in the combine fns).
@@ -30,6 +30,7 @@
 #include <map>
 #include <vector>
 
+class CvArea;
 class CvCity;
 class CvPlayer;
 class CvGame;
@@ -229,8 +230,6 @@ struct CascadePlayerScope
 	                                     // m_iNationalBombardDefenseModifier; composes into getBuildingBombardDefense
 	int maintPlayerAll;                  // maintenance.empire building pcts
 	int maintConnPct;                    // connectedCity pcts (× connected-and-not-capital gate at read)
-	std::map<int, int> maintAreaPct;     // areaId -> own-area pcts
-	std::map<int, int> maintOtherAreaPct;// areaId -> otherArea pcts CONTRIBUTED BY that area's cities
 	int maintOtherAreaTotal;
 	int tradeEmpireAll;                  // building empire flats
 	int tradeCoastalAll;                 // building coastal flats (× coastal gate at read)
@@ -239,7 +238,6 @@ struct CascadePlayerScope
 	// the area.any buildings fold per SOURCE-city area, the maintAreaPct precedent) --
 	int fsEmpireAny;
 	std::vector<int> fsEmpireByType;     // by SpecialistTypes
-	std::map<int, int> fsAreaAny;        // areaId -> any counts (2 authorings; area BY-TYPE has none -- census guard)
 	// -- buildRate (building-sourced halves only) --
 	CascadeBrLedger brEmpKeyed;          // dense per-kind tables -> Σ pcts (all cities' active buildings)
 	int brEmpMilitary, brEmpSpace;       // empire member pcts (buildings)
@@ -261,6 +259,28 @@ struct CascadePlayerScope
 		fsEmpireAny = 0;
 		brEmpMilitary = 0; brEmpSpace = 0;
 	}
+};
+
+// ===== the AREA packages =====
+// The AREA scope owns its own sums (the scope principle, modifier.md §1) -- previously these lived as
+// area-KEYED maps on CvPlayer, i.e. an upper scope's sums stored in a neighbour because area had no package
+// at all. AREA carries NO yields, only MODIFIERS (owner ruling) -- percents + the freeSpecialist counts.
+//
+// ONE CvArea object holds this package for EVERY player (CvArea is a shared map object; the per-player axis is
+// simply the data's shape, NOT a reason to keep the sums on CvPlayer). Indexed by PlayerTypes, sized at fill.
+// The cross-area aggregate ("all my OTHER areas") is NOT here -- that is genuinely a player-scope roll-up over
+// areas, and it stays on CascadePlayerScope.
+enum CascadeAreaPkg { ASC_ALL = 1 };
+
+struct CascadeAreaPackages
+{
+	std::vector<int> maintOwnPct;      // by PlayerTypes: maintenance.area percents from THIS player's cities here
+	std::vector<int> maintOtherPct;    // by PlayerTypes: the otherArea percents CONTRIBUTED BY this area's cities
+	std::vector<int> fsAny;            // by PlayerTypes: freeSpecialists.area.any counts
+
+	CvDerivedCacheSet<CvArea> set;     // the ONE dirty protocol (bind in CvArea's reset)
+
+	static int at(const std::vector<int>& v, int i) { return (i >= 0 && i < (int)v.size()) ? v[i] : 0; }
 };
 
 // ===== the WORLD packages =====

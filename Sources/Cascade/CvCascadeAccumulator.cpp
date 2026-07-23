@@ -743,7 +743,13 @@ int CascadeAccumulator::fsAmountAny(const CvCity* pCity)
 	owner.m_cascadePlayerScope.set.ensure(PSC_SC);
 	const CascadePlayerScope& ps = owner.m_cascadePlayerScope;
 	int iCount = pCity->m_cascadeCityPackages.fsCityAny + ps.fsEmpireAny;
-	iCount += acc_mapGetI(ps.fsAreaAny, pCity->area()->getID());
+	// the AREA scope owns its own sums -- read the area's package, not a map parked on the player
+	const CvArea* pArea = pCity->area();
+	if (pArea != NULL)
+	{
+		pArea->m_cascadeArea.set.ensure(ASC_ALL);
+		iCount += CascadeAreaPackages::at(pArea->m_cascadeArea.fsAny, (int)pCity->getOwner());
+	}
 	return iCount;
 }
 int CascadeAccumulator::fsAmountByType(const CvCity* pCity, int eSpecialist)
@@ -792,9 +798,16 @@ int CascadeAccumulator::scMaintenanceModifier(const CvCity* pCity)
 	const CascadeCityPackages& st = pCity->m_cascadeCityPackages;
 	const CascadePlayerScope& ps = GET_PLAYER(pCity->getOwner()).m_cascadePlayerScope;
 	int iMod = st.scMaintModCity + ps.maintPlayerAll;
-	const int iArea = pCity->area()->getID();
-	iMod += acc_mapGetI(ps.maintAreaPct, iArea);
-	iMod += ps.maintOtherAreaTotal - acc_mapGetI(ps.maintOtherAreaPct, iArea);
+	// the AREA scope owns the per-area percents; the cross-area aggregate ("all my OTHER areas") is a
+	// genuine player-scope roll-up and stays player-side.
+	const CvArea* pArea = pCity->area();
+	if (pArea != NULL)
+	{
+		pArea->m_cascadeArea.set.ensure(ASC_ALL);
+		const int iP = (int)pCity->getOwner();
+		iMod += CascadeAreaPackages::at(pArea->m_cascadeArea.maintOwnPct, iP);
+		iMod += ps.maintOtherAreaTotal - CascadeAreaPackages::at(pArea->m_cascadeArea.maintOtherPct, iP);
+	}
 	if (pCity->isConnectedToCapital() && !pCity->isCapital()) iMod += ps.maintConnPct;  // the conn gate, live
 	return iMod;
 }
@@ -1141,6 +1154,17 @@ void CascadeAccumulator::buildingProcessed(const CvCity* pCity, BuildingTypes eB
 			for (const CvCity* pc = owner.firstCity(&iLoop); pc != NULL; pc = owner.nextCity(&iLoop))
 				pc->m_cascadeCityPackages.set.markDirty(acc_widenCityBits(route.cityBits));   // the sibling loop includes this city
 		}
+	}
+	// The AREA scope owns its own sums, so it needs its own invalidation -- a package nothing marks refreshes
+	// once and is stale forever. The area-scope channels (maintenance.area / freeSpecialists.area) ride the same
+	// PSC_SC route as their empire siblings, so mark the areas that route can have touched: this building's own
+	// area, plus the other areas the owner holds cities in (an `otherArea` deposit contributes to THEIR sums).
+	if ((route.playerBits & PSC_SC) != 0)
+	{
+		const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
+		int iLoop;
+		for (const CvCity* pc = owner.firstCity(&iLoop); pc != NULL; pc = owner.nextCity(&iLoop))
+			if (pc->area() != NULL) pc->area()->m_cascadeArea.set.markAllDirty();
 	}
 	if (route.world) GC.getGame().m_cascadeWorldScope.set.markAllDirty();
 }

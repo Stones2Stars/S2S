@@ -4,6 +4,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Cascade/CvCascadeScalarChannels.h"   // fillAreaScalars -- the AREA package refresh
 #include "CvArea.h"
 #include "CvBonusInfo.h"
 #include "CvCity.h"
@@ -106,6 +107,13 @@ void CvArea::uninit()
 }
 
 // Initializes data members that are serialized.
+// #430: the AREA scope packages refresh delegate -- the cascade math stays module-side, the area
+// carries only the state (the CvCity/CvGame shape).
+void CvArea::cascadeRefreshArea(int) const
+{
+	CascadeScalarChannels::fillAreaScalars(*this, m_cascadeArea);
+}
+
 void CvArea::reset(int iID, bool bWater, bool bConstructorCall)
 {
 	PROFILE_EXTRA_FUNC();
@@ -121,6 +129,10 @@ void CvArea::reset(int iID, bool bWater, bool bConstructorCall)
 	m_iNumCities = 0;
 	m_iTotalPopulation = 0;
 	m_iNumStartingPlots = 0;
+
+	// #430: bind the AREA scope packages to this object + mark all dirty (idempotent -- the world-scope shape).
+	m_cascadeArea.set.bind(this, &CvArea::cascadeRefreshArea);
+	m_cascadeArea.set.markAllDirty();
 
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
