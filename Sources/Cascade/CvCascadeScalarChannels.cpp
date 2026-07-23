@@ -89,7 +89,10 @@ static int sc_playerBuildings(const std::string& addr, const char* unit, const C
 }
 
 // Σ a unit over the player's adopted civics + held traits (pure-filtered) at an address.
-static int sc_civicsTraits(const std::string& addr, const char* unit, const CvPlayer& owner, const CvCascadeEvalCtx& ec)
+// ⛔ CIVIC and TRAIT are walked SEPARATELY, never as one bundled sum: each is its own deposit SOURCE, and the
+// source IS the slot position ([DEC-uniform-cache-shape]) -- so the slots a consumer sums are the slots an
+// endpoint decomposes. Bundling them would re-bake an attribution the package is required to carry.
+static int sc_civics(const std::string& addr, const char* unit, const CvPlayer& owner, const CvCascadeEvalCtx& ec)
 {
 	int iSum = 0;
 	for (int i = 0; i < GC.getNumCivicOptionInfos(); ++i)
@@ -99,6 +102,12 @@ static int sc_civicsTraits(const std::string& addr, const char* unit, const CvPl
 		const CvInfo* d = InfoRepo<CvCivicInfo>::get().get(eCivic);
 		if (d != NULL) iSum += MMKernel::sumUnit(d, addr, unit, ec);
 	}
+	return iSum;
+}
+
+static int sc_traits(const std::string& addr, const char* unit, const CvPlayer& owner, const CvCascadeEvalCtx& ec)
+{
+	int iSum = 0;
 	for (int i = 0; i < GC.getNumTraitInfos(); ++i)
 	{
 		if (!owner.hasTrait((TraitTypes)i)) continue;
@@ -177,14 +186,14 @@ int CascadeScalarChannels::gpRateModifier(const CvCity* pCity, const CvCascadeEv
 	int iMod = 100;
 	iMod += sc_buildings("greatPeopleRate.city", "percent", pCity, ec);
 	iMod += sc_playerBuildings("greatPeopleRate.empire", "percent", owner, ec.team);   // GLOBAL GP mods feed the player from ANY city
-	iMod += sc_civicsTraits("greatPeopleRate.city", "percent", owner, ec);
-	iMod += sc_civicsTraits("greatPeopleRate.empire", "percent", owner, ec);
+	iMod += (sc_civics("greatPeopleRate.city", "percent", owner, ec) + sc_traits("greatPeopleRate.city", "percent", owner, ec));
+	iMod += (sc_civics("greatPeopleRate.empire", "percent", owner, ec) + sc_traits("greatPeopleRate.empire", "percent", owner, ec));
 	// ...+ the STATE-RELIGION grouped family (civic stateReligion.empire.greatPeopleRate) while the state
 	// religion is PRESENT IN THIS CITY (:7160)...
 	{
 		const ReligionTypes eState = owner.getStateReligion();
 		if (eState != NO_RELIGION && pCity->isHasReligion(eState))
-			iMod += sc_civicsTraits("stateReligion.empire.greatPeopleRate", "percent", owner, ec);
+			iMod += (sc_civics("stateReligion.empire.greatPeopleRate", "percent", owner, ec) + sc_traits("stateReligion.empire.greatPeopleRate", "percent", owner, ec));
 	}
 	// ...+ the golden-age modifier -- a GLOBAL DEFINE, a config input (not data)
 	if (owner.isGoldenAge())
@@ -197,12 +206,12 @@ void CascadeScalarChannels::gpModParts(const CvCity* pCity, const CvCascadeEvalC
 	const CvPlayer& owner = GET_PLAYER(pCity->getOwner());
 	iBld = sc_buildings("greatPeopleRate.city", "percent", pCity, ec);
 	iCivTrait = sc_playerBuildings("greatPeopleRate.empire", "percent", owner, ec.team);   // the player-wide building half
-	iCivTrait += sc_civicsTraits("greatPeopleRate.city", "percent", owner, ec)
-	           + sc_civicsTraits("greatPeopleRate.empire", "percent", owner, ec);
+	iCivTrait += (sc_civics("greatPeopleRate.city", "percent", owner, ec) + sc_traits("greatPeopleRate.city", "percent", owner, ec))
+	           + (sc_civics("greatPeopleRate.empire", "percent", owner, ec) + sc_traits("greatPeopleRate.empire", "percent", owner, ec));
 	iSr = 0;
 	const ReligionTypes eState = owner.getStateReligion();
 	if (eState != NO_RELIGION && pCity->isHasReligion(eState))
-		iSr = sc_civicsTraits("stateReligion.empire.greatPeopleRate", "percent", owner, ec);
+		iSr = (sc_civics("stateReligion.empire.greatPeopleRate", "percent", owner, ec) + sc_traits("stateReligion.empire.greatPeopleRate", "percent", owner, ec));
 }
 
 int CascadeScalarChannels::defenseAmount(const CvCity* pCity, const CvCascadeEvalCtx& ec)
@@ -281,7 +290,7 @@ int CascadeScalarChannels::tradeRouteCount(const CvCity* pCity, const CvCascadeE
 	iCount += sc_buildings("tradeRoutes.city", "flat", pCity, ec);
 	// the player-wide global routes (any city's buildings' empire flats + civics/traits)
 	iCount += sc_playerBuildings("tradeRoutes.empire", "flat", owner, ec.team);
-	iCount += sc_civicsTraits("tradeRoutes.empire", "flat", owner, ec);
+	iCount += (sc_civics("tradeRoutes.empire", "flat", owner, ec) + sc_traits("tradeRoutes.empire", "flat", owner, ec));
 	// TECHS feed the player routes too (processTech :30911)
 	{
 		const CvTeam& team = GET_TEAM(owner.getTeam());
@@ -304,7 +313,7 @@ int CascadeScalarChannels::tradeRouteCount(const CvCity* pCity, const CvCascadeE
 	if (pCity->isCoastal(GC.getWorldInfo(GC.getMap().getWorldSize()).getOceanMinAreaSize()))
 	{
 		iCount += sc_playerBuildings("tradeRoutes.empire.coastal", "flat", owner, ec.team);
-		iCount += sc_civicsTraits("tradeRoutes.empire.coastal", "flat", owner, ec);
+		iCount += (sc_civics("tradeRoutes.empire.coastal", "flat", owner, ec) + sc_traits("tradeRoutes.empire.coastal", "flat", owner, ec));
 	}
 	// the precipice-review completions (2026-07-04): the project world grants + the live raw inputs
 	iCount += tradeRoutesWorldProjects();
@@ -415,7 +424,7 @@ static int sc_buildRateMember(const char* szMember, const CvCity* pCity, const C
 	const std::string empAddr = std::string("buildRate.empire.") + szMember;
 	int iSum = sc_buildings(cityAddr, "percent", pCity, ec);
 	iSum += sc_playerBuildings(empAddr, "percent", owner, ec.team);
-	iSum += sc_civicsTraits(empAddr, "percent", owner, ec);
+	iSum += (sc_civics(empAddr, "percent", owner, ec) + sc_traits(empAddr, "percent", owner, ec));
 	return iSum;
 }
 
@@ -448,7 +457,7 @@ int CascadeScalarChannels::productionModifier(const CvCity* pCity, const CvCasca
 			if (unit.isMilitaryProduction())
 				parts.iMember = sc_buildRateMember("military", pCity, ec);
 			if (bSrInCity)
-				parts.iStateReligion = sc_civicsTraits("stateReligion.empire.unitProduction", "percent", owner, ec);
+				parts.iStateReligion = (sc_civics("stateReligion.empire.unitProduction", "percent", owner, ec) + sc_traits("stateReligion.empire.unitProduction", "percent", owner, ec));
 		}
 	}
 	else if (eB != NO_BUILDING)
@@ -457,7 +466,7 @@ int CascadeScalarChannels::productionModifier(const CvCity* pCity, const CvCasca
 		if (d != NULL) parts.iSelf = MMKernel::sumUnit(d, "buildRate.self", "percent", ec);
 		parts.iKeyed = sc_buildRateKeyed("buildings", GC.getBuildingInfo(eB).getType(), pCity, ec);
 		if (bSrInCity)
-			parts.iStateReligion = sc_civicsTraits("stateReligion.empire.buildingProduction", "percent", owner, ec);
+			parts.iStateReligion = (sc_civics("stateReligion.empire.buildingProduction", "percent", owner, ec) + sc_traits("stateReligion.empire.buildingProduction", "percent", owner, ec));
 	}
 	else if (ePr != NO_PROJECT)
 	{
@@ -515,28 +524,29 @@ int CascadeScalarChannels::gpModifierCity(const CvCity* pCity, const CvCascadeEv
 {
 	const CvPlayer& owner = *ec.player;
 	return sc_buildings("greatPeopleRate.city", "percent", pCity, ec)
-	     + sc_civicsTraits("greatPeopleRate.city", "percent", owner, ec)
-	     + sc_civicsTraits("greatPeopleRate.empire", "percent", owner, ec);
+	     + (sc_civics("greatPeopleRate.city", "percent", owner, ec) + sc_traits("greatPeopleRate.city", "percent", owner, ec))
+	     + (sc_civics("greatPeopleRate.empire", "percent", owner, ec) + sc_traits("greatPeopleRate.empire", "percent", owner, ec));
 }
 
 int CascadeScalarChannels::gpModifierSrCity(const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
-	return sc_civicsTraits("stateReligion.empire.greatPeopleRate", "percent", *ec.player, ec);
+	return (sc_civics("stateReligion.empire.greatPeopleRate", "percent", *ec.player, ec) + sc_traits("stateReligion.empire.greatPeopleRate", "percent", *ec.player, ec));
 }
 
 int CascadeScalarChannels::maintenanceModifierCity(const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
 	const CvPlayer& owner = *ec.player;
 	int iMod = sc_buildings("maintenance.city", "percent", pCity, ec)
-	         + sc_civicsTraits("maintenance.city", "percent", owner, ec)
-	         + sc_civicsTraits("maintenance.empire", "percent", owner, ec)
-	         + sc_civicsTraits("maintenance.area", "percent", owner, ec);
+	         + (sc_civics("maintenance.city", "percent", owner, ec) + sc_traits("maintenance.city", "percent", owner, ec))
+	         + (sc_civics("maintenance.empire", "percent", owner, ec) + sc_traits("maintenance.empire", "percent", owner, ec))
+	         + (sc_civics("maintenance.area", "percent", owner, ec) + sc_traits("maintenance.area", "percent", owner, ec));
 	// The L8 census fold (2026-07-05): the civic HOME/OTHER-AREA maintenance overlays -- curated
 	// maintenance.empire.{homeArea|otherArea}.percent (legacy: the player scalar half of
 	// CvArea::getTotalAreaMaintenanceModifier, picked by isHomeArea). CITY-REALIZED: the home-area gate is
 	// a city fact, so the matching member folds here with the city's own area.
-	iMod += sc_civicsTraits(pCity->area()->isHomeArea(owner.getID()) ? "maintenance.empire.homeArea"
-	                                                                 : "maintenance.empire.otherArea", "percent", owner, ec);
+	iMod += (sc_civics(pCity->area()->isHomeArea(owner.getID()) ? "maintenance.empire.homeArea"
+	                                                                 : "maintenance.empire.otherArea", "percent", owner, ec) + sc_traits(pCity->area()->isHomeArea(owner.getID()) ? "maintenance.empire.homeArea"
+	                                                                 : "maintenance.empire.otherArea", "percent", owner, ec));
 	const CvTeam& team = GET_TEAM(owner.getTeam());
 	for (int i = 0; i < GC.getNumTechInfos(); ++i)
 	{
@@ -551,7 +561,7 @@ int CascadeScalarChannels::tradeRoutesCity(const CvCity* pCity, const CvCascadeE
 {
 	const CvPlayer& owner = *ec.player;
 	int iCount = sc_buildings("tradeRoutes.city", "flat", pCity, ec)
-	           + sc_civicsTraits("tradeRoutes.empire", "flat", owner, ec);
+	           + (sc_civics("tradeRoutes.empire", "flat", owner, ec) + sc_traits("tradeRoutes.empire", "flat", owner, ec));
 	const CvTeam& team = GET_TEAM(owner.getTeam());
 	for (int i = 0; i < GC.getNumTechInfos(); ++i)
 	{
@@ -564,7 +574,7 @@ int CascadeScalarChannels::tradeRoutesCity(const CvCity* pCity, const CvCascadeE
 
 int CascadeScalarChannels::tradeRoutesCoastalCivCity(const CvCity* pCity, const CvCascadeEvalCtx& ec)
 {
-	return sc_civicsTraits("tradeRoutes.empire.coastal", "flat", *ec.player, ec);
+	return (sc_civics("tradeRoutes.empire.coastal", "flat", *ec.player, ec) + sc_traits("tradeRoutes.empire.coastal", "flat", *ec.player, ec));
 }
 
 // ===================== the AREA scope fill (the scope owns its own sums) =====================
@@ -630,12 +640,12 @@ void CascadeScalarChannels::fillPlayerScalars(const CvPlayer& player, CascadePla
 	{
 		CvCascadeEvalCtx pec;
 		pec.player = &player; pec.team = pTeam;
-		out.defPlayerAll += sc_civicsTraits("defense.empire.amount", "percent", player, pec);
+		out.defPlayerAll += (sc_civics("defense.empire.amount", "percent", player, pec) + sc_traits("defense.empire.amount", "percent", player, pec));
 		// L13 national BOMBARD modifier (2026-07-05): legacy m_iNationalBombardDefenseModifier -- sole feeder
 		// is processTrait (CvPlayer.cpp:28613, trait iBombardDefense), curated defense.empire.bombardDefense
 		// .percent (the same-day re-home from the reader-less combat.empire.bombardDefense). Civics author none,
 		// so the civicsTraits fold == the trait sum. Composes into the flipped getBuildingBombardDefense.
-		out.defPlayerBombard = sc_civicsTraits("defense.empire.bombardDefense", "percent", player, pec);
+		out.defPlayerBombard = (sc_civics("defense.empire.bombardDefense", "percent", player, pec) + sc_traits("defense.empire.bombardDefense", "percent", player, pec));
 	}
 
 	// The L9 census fold (2026-07-05): PROJECT maintenance -- curated maintenance.empire.{all|connectedCity}
@@ -828,7 +838,7 @@ void CascadeScalarChannels::fillBuildRateCity(const CvCity* pCity, const CvCasca
 		}
 	}
 	outMilitary = sc_buildings("buildRate.city.military", "percent", pCity, ec)
-	            + sc_civicsTraits("buildRate.empire.military", "percent", *ec.player, ec);
+	            + (sc_civics("buildRate.empire.military", "percent", *ec.player, ec) + sc_traits("buildRate.empire.military", "percent", *ec.player, ec));
 	// The L10 census fold (2026-07-05): CORPORATION military production -- buildRate.city.military.percent
 	// on the corp (own-output; the HAS_CORPORATION gate carries the ACTIVE-in-city semantic, matching the
 	// legacy applyCorporationModifiers apply; the curator's production.city.military mis-address -- the
@@ -839,15 +849,15 @@ void CascadeScalarChannels::fillBuildRateCity(const CvCity* pCity, const CvCasca
 		if (d != NULL) outMilitary += MMKernel::sumUnit(d, "buildRate.city.military", "percent", ec);
 	}
 	outSpace = sc_buildings("buildRate.city.space", "percent", pCity, ec)
-	         + sc_civicsTraits("buildRate.empire.space", "percent", *ec.player, ec);
-	outSrUnit = sc_civicsTraits("stateReligion.empire.unitProduction", "percent", *ec.player, ec);
-	outSrBuilding = sc_civicsTraits("stateReligion.empire.buildingProduction", "percent", *ec.player, ec);
+	         + (sc_civics("buildRate.empire.space", "percent", *ec.player, ec) + sc_traits("buildRate.empire.space", "percent", *ec.player, ec));
+	outSrUnit = (sc_civics("stateReligion.empire.unitProduction", "percent", *ec.player, ec) + sc_traits("stateReligion.empire.unitProduction", "percent", *ec.player, ec));
+	outSrBuilding = (sc_civics("stateReligion.empire.buildingProduction", "percent", *ec.player, ec) + sc_traits("stateReligion.empire.buildingProduction", "percent", *ec.player, ec));
 	// The L11 census fold (2026-07-05): the WONDER-CATEGORY members (trait-authored only in data --
 	// worldWonder 77 / teamWonder 53 / nationalWonder 82 curated entries; the legacy maxGlobal/maxTeam/
 	// maxPlayer accumulator class). Civic/trait city-realized walks, the military/space idiom.
-	outWorldWonder = sc_civicsTraits("buildRate.empire.worldWonder", "percent", *ec.player, ec);
-	outTeamWonder = sc_civicsTraits("buildRate.empire.teamWonder", "percent", *ec.player, ec);
-	outNationalWonder = sc_civicsTraits("buildRate.empire.nationalWonder", "percent", *ec.player, ec);
+	outWorldWonder = (sc_civics("buildRate.empire.worldWonder", "percent", *ec.player, ec) + sc_traits("buildRate.empire.worldWonder", "percent", *ec.player, ec));
+	outTeamWonder = (sc_civics("buildRate.empire.teamWonder", "percent", *ec.player, ec) + sc_traits("buildRate.empire.teamWonder", "percent", *ec.player, ec));
+	outNationalWonder = (sc_civics("buildRate.empire.nationalWonder", "percent", *ec.player, ec) + sc_traits("buildRate.empire.nationalWonder", "percent", *ec.player, ec));
 }
 
 void CascadeScalarChannels::fillBuildRatePlayer(const CvPlayer& player, CascadePlayerScope& out)
