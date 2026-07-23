@@ -1,5 +1,10 @@
 {
  "type": "SPECIALBUILDING_MONASTERY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_PHYSICS"
+  ]
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Buildings/Monastery_Hindu.dds"

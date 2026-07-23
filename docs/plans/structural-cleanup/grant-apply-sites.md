@@ -21,12 +21,14 @@ That is the membership test, and it is deliberately broad: the qualifier is *how
 info class declared it. If something appears in the world and the player did not build, research, train, adopt or
 buy it, the machine owns it. Consequences that settle most of §5:
 
-- **IN** — goody huts, random events, espionage payouts, vote awards (including a whole city), outcome reward
-  payloads, NPC/barbarian spawners, combat loot / pillage / capture units, plot bonus discovery, leader-level-up
-  traits, the trait provisions curated as identity keys (`cityStartCulture`, `bonusPopulationinNewCities`,
-  `citiesStartwithStateReligion`, `draftsOnCityCapture`, `extraGoody`), `barbarianInitialDefenders`, the
-  start-era `freePopulation` / `FreeStartEra` buildings. **A missing `grants` block is not an exemption** — where
-  the curator filed a provision elsewhere, that is a curation question, not a scope question.
+- **IN** — vote awards (including a whole city), NPC/barbarian spawners, combat loot / pillage / capture units,
+  plot bonus discovery, leader-level-up traits, the trait city-founding provisions (`cityStartCulture`,
+  `bonusPopulationinNewCities`), `barbarianInitialDefenders`, the start-era `freePopulation` / `FreeStartEra`
+  buildings. **Being authored outside a `grants` block is not an exemption** — the scope test is how the thing
+  arrived, not which block holds it; where a provision is homed elsewhere that is a HOMING question (§5.4), not
+  a scope one.
+  *(The scope test alone would also catch goody huts, random events, espionage payouts and outcome reward
+  payloads — all four are OWNER-RULED OUT and belong to their own systems; see §2.)*
 - **OUT — normal creation.** A built building, a trained unit, a researched tech, an adopted civic, an
   advanced-start *purchase*. (The advanced-start *budget* is granted; what it buys is normal creation.)
 - **OUT — not an arrival.** A transfer or transformation of something already owned: `CvUnit::convert`
@@ -278,19 +280,36 @@ question [grants-machine.md](grants-machine.md) left open.
    | `m_iNumUnitFullHeal` | discrete per-turn action (fully heals up to N damaged units, `CvCity::doHeal` `:20202`); [json.md §5](../../specs/json.md) names a heal as a `repeatable` payload | **the grants machine** |
    | `m_paiHealUnitCombatTypeVolume` | **continuous heal-RATE contribution**, not a discrete event — consumed at `CvUnit.cpp:6232` (`iTotalHeal += pCity->getHealRate() + pCity->getHealUnitCombatTypeTotal(...)`) and already a named term in the `/computed/units/heal` decomposition | **the MODIFIER heal channel** (alive-with-source ⇒ modifier, the `freeSpecialists` precedent) — F4's unit-side heal channel is built; this is its city-scope deposit |
 4. ~~Scope of "grant".~~ **SETTLED by the §0 scope rule** — arrival-outside-normal-creation decides it. What
-   remains is not scope but CURATION: several in-scope provisions are not authored in a `grants` block at all
-   (the five trait keys, `barbarianInitialDefenders`, the advanced-start budget, `FreeStartEra`), so the machine
-   cannot resolve them off `getGrants()` until the curator emits them there
-   ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)).
+   remains is **HOMING, not a data gap: every one of these provisions IS curated** — verified against
+   `Assets/Data` + the poco readers — just not into a `grants` block, so `getGrants()` resolves nothing and the
+   machine cannot reach them:
+
+   | provision | authored home today | poco reader |
+   |---|---|---|
+   | `cityStartCulture` | `cityFounding.empire.startCulture.flat` | `CvTraitInfo.cpp:303` |
+   | `bonusPopulationinNewCities` | `cityFounding.empire.startPopulation.flat` | `CvTraitInfo.cpp:304` |
+   | `citiesStartWithStateReligion` · `draftsOnCityCapture` · `extraGoody` | `policies` (bitset) | `CvTraitInfo.h:138-140` |
+   | `barbarianInitialDefenders` | `barbarians.world.defenders.flat` | `CvHandicapInfo.cpp:155` |
+   | advanced-start budget | era `identity.advancedStart`; handicap `identity.advancedStart.{pointsMod,aiPercent}` | `curate_era.py:78`, `curate_handicap.py:142` |
+   | `FreeStartEra` | building `identity.freeStartEra` (EraTypes FK) | `CvBuildingInfo.cpp:171` |
+
+   **The ruling needed is which of these RE-HOME into `grants`** — a data-model change, so it triggers the
+   curator update + regen in the same work item
+   ([DEC-recurate-on-decision](../../architecture/decisions.md#dec-recurate-on-decision)). Two are not merely
+   homing: `extraGoody` feeds the goody-hut system that §2 rules OUT, and the advanced-start budget is flagged
+   *"parked in identity … pending review"* by `curate_handicap.py:55` — an open curator question in its own right.
 5. **Start-era grants applied forever.** `freePopulation` and `FreeStartEra` buildings fire at *every* city
    founding, not at game start — both are in scope per §0; the open question is only which TRIGGER owns them
    (city-founded, not player-init). Grounded evidence for the ruling: legacy fires `freePopulation` at
    `CvCity::init` (`:352`, reading `GC.getGame().getStartEra()`) and `FreeStartEra` at `CvPlayer::found` (`:6257`)
-   — both at city-founding. ⛔ **Blocked on a missing EMIT, not only on the ruling:** there is no city-founded
-   DOMAIN event. The three `emitCityOwnerChanged` sites are `CvCity::read:16269` (the load reseed,
-   `NO_PLAYER`→owner), `CvPlayer.cpp:2306` (dispose) and `:2696` (acquire) — a settler founding a city in live play
-   emits nothing, so the machine has no trigger to hang these on. Per
-   [event-spine.md](../../specs/event-spine.md) the fix is to EMIT the fact, never to work around its absence.
+   — both at city-founding. The trigger EXISTS: `SEVT_CITY_FOUNDED` is emitted from `CvPlayer::found`
+   (`CvPlayer.cpp:6229`, carrying the founder unit) and consumed by the machine (`gr_resolveCityFounded`), so
+   these hang on it the moment the data is authored. **The remaining blocker is CURATION (§5.4), not an emit** —
+   neither provision is in a `grants` block, so `getGrants()` resolves nothing.
+
+   Founding also emits `emitCityOwnerChanged` (`NO_PLAYER`→owner, `CvPlayer.cpp:6228`), completing that surface's
+   four sites: founding, `CvCity::read` (the load reseed), `CvPlayer::acquireCity` (`:2692`), and
+   `CvPlayer::deleteCity` (`:14755`) — the single dispose/raze choke point.
 
 ## See also
 - [grants-machine.md](grants-machine.md) — the machine + its build increments (its inventory table is superseded

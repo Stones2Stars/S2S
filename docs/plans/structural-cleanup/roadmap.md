@@ -135,10 +135,14 @@ derived-from-deposit-index invalidation the rest of the consumer already uses.
   re-adds `CvInfos.h` + `AI/CvGameAI.h` to preserve unity-batch include leakage. **All 11 are listed in
   `RJ_REPO_TYPES`** — the ONE per-type `InfoRepo` dispatch — so each gets readJson's full-registry re-map (the
   cross-category FK resolve, e.g. Civilization's `derivativeCiv` after the post-load alpha re-sort), its
-  DepositIndex push, and a `/state/info` home for the standing loaded≡authored verification. **Follow-ups
-  (data, not blockers — fail loud in-game):** `curate_specialbuilding.py` is MISSING so SpecialBuilding
-  `getTechPrereq`/`getObsoleteTech` return `NO_TECH` (tech-gating + the cascade `EDGEB_SPECIAL_BUILDINGS` edges drop);
-  Handicap `PROPERTY_*` is the #429 shape mismatch (empty manipulators). **Leaders ship TRAITLESS** (owner ruling
+  DepositIndex push, and a `/state/info` home for the standing loaded≡authored verification. **Data follow-ups — both CLOSED (verified against `Assets/Data` + the poco readers):** SpecialBuilding needs no
+  `curate_specialbuilding.py` — the JSON is emitted by `curate_building.py:1734`, `techPrereq` rides the tech-side
+  inversion (`store.py:181` → `tech.enables.specialBuildings`, un-inverted at `CvCascadeReadJson.cpp:220`), the group
+  `ObsoleteTech` is inherited onto member buildings by `store.py::_inherit_group_obsoletes` (so MONASTERY's
+  `TECH_MODERN_PHYSICS` reaches all 26 members and fires through `CvTeam.cpp:5741`), and `allowed`/`valid` are curated.
+  *(Residual: the GROUP-level `getObsoleteTech()` stays `NO_TECH`, which only blanks the `CvGameTextMgr.cpp:18170`
+  "obsolete with" line — display, not gameplay.)* Handicap `PROPERTY_*` is curated (`PROPERTY_CRIME`/`PROPERTY_EDUCATION`)
+  and bridged at `CvHandicapInfo.cpp:196`. **Leaders ship TRAITLESS** (owner ruling
   2026-07-21; the community re-adds traits post-merge — [data-migration-remaining.md](data-migration-remaining.md)).
 - **✅ DONE (owner ruling): `Sources/JsonInfo/` is ELIMINATED — every info class lives in `Sources/Infos/`.** The
   folder is gone (its 78 files `git mv`'d into `Infos/`, the `/I"$SOURCE_DIR$/JsonInfo"` line dropped, the 6

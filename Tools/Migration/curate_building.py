@@ -1484,7 +1484,11 @@ def curate(typ, rec, store):
 def curate_special(typ, rec, store):
     """SpecialBuilding (#31) — a per-player-capped building GROUP (getMaxPlayerInstances, enforced by
     isBuildingGroupMaxedOut/getBuildingGroupCount). Buildings join it via their SpecialBuildingType FK
-    (identity.specialBuildingType). TechPrereq/TechPrereqAnyone -> store (tech.enables.specialBuildings), dropped here."""
+    (identity.specialBuildingType). TechPrereq/TechPrereqAnyone -> store (tech.enables.specialBuildings), dropped here.
+    ObsoleteTech -> `obsoletedBy.techs` (the target-side edge, json.md §4.2 — the same shape a BUILDING authors, read
+    off the generic edge dispatch). It is ALSO inherited onto the member buildings by store._inherit_group_obsoletes,
+    which is what drives the gameplay retire (CvTeam::setHasTech); this group-level edge is what the GROUP's own
+    getObsoleteTech reads, so the pedia's "Obsolete with <tech>" line resolves instead of blanking."""
     out = OrderedDict([("type", typ)])
     d = _txt(rec, "Description")
     if d:
@@ -1495,6 +1499,9 @@ def curate_special(typ, rec, store):
     obsoletes = store.obsoletes_of(typ)
     if obsoletes:
         out["obsoletes"] = OrderedDict((k, obsoletes[k]) for k in sorted(obsoletes))
+    obs_tech = engine.text(rec.find("ObsoleteTech"))
+    if obs_tech and obs_tech != "NONE":
+        out["obsoletedBy"] = OrderedDict([("techs", [obs_tech])])
     cap = _int(rec, "iMaxPlayerInstances")
     if cap is not None and cap >= 0:
         out["allowed"] = OrderedDict([("empire", cap)])   # the per-player GROUP cap -> unified `allowed` idiom
