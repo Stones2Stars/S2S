@@ -469,9 +469,9 @@ void CascadeWellbeing::gatherCityTerms(const CvCity* pCity, const CvCascadeEvalC
 	hap.reset();
 	hea.reset();
 	// The per-commerce pool SEEDS at the CommerceInfo iInitialHappiness constant ("the base we start from",
-	// owner 2026-07-04) -- the culture-slider happiness base (culture=10 -> +1 happy per 10% slider; legacy
-	// CvCity::init seeds m_aiCommerceHappinessPer with it). Static system-Info config, not legacy state
-	// (the sanctioned config-read class); the building commerceHappiness deposits then add on top.
+	// owner 2026-07-04) -- the culture-slider happiness base (culture=10 -> +1 happy per 10% slider). Static
+	// system-Info config, not legacy state (the sanctioned config-read class); the building commerceHappiness
+	// deposits then add on top. This pool IS the city's per-commerce happiness (CvCity::getCommerceHappinessPer).
 	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
 		aiCommercePer[c] = GC.getCommerceInfo((CommerceTypes)c).getInitialHappiness() * 100;   // ×100 (building deposits add ×100)
 	// ONE building pass serves both families + the commerce-happiness pools (the wbCompute cost cut)

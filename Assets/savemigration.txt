@@ -52,6 +52,15 @@ CvPlayer::m_iProjectHappiness            (int)
 CvPlayer::m_iProjectHealth               (int)
 CvPlayer::m_iWorldHappiness              (int)
 CvPlayer::m_iWorldHealth                 (int)
+
+The per-commerce happiness pool (A9): CvCity::getCommerceHappinessPer -> CascadeAccumulator::commerceHappinessPer,
+a bare fetch of the city package's cascade-gathered pool (CommerceInfo iInitialHappiness seed + the buildings'
+commerceHappiness deposits, gatherCityTerms) -- the stored Sigma-over-buildings accumulator and its
+processBuilding feed are deleted (DEC-accumulator-cut-uniform). The changer's AI_setAssignWorkDirty rider moved
+to the surviving processBuilding trigger site. getCommerceHappinessByType/getCommerceHappiness and every AI /
+Python / HTTP consumer are unchanged: the accessor reduces /100, so callers keep their legacy x1 arithmetic.
+
+CvCity::m_aiCommerceHappinessPer         (int array, NUM_COMMERCE_TYPES)
 ========================
 
 ========================

@@ -45,6 +45,10 @@ public:
 	static int yieldModifier(const CvCity* pCity, YieldTypes eY, int iExtra); // §2a: max(0,100+iExtra+Σpct) -- the whole city-realized modifier (replaces the legacy getBaseYieldRateModifier hand-sum)
 	static int commerceModifier(const CvCity* pCity, CommerceTypes eC);       // the commerce twin: max(1,100+Σpct) -- replaces the legacy getTotalCommerceRateModifier hand-sum
 	static int wellbeing(const CvCity* pCity, int iVerdict);               // §2b: 0=happy 1=unhappy 2=good 3=bad
+	// The per-commerce happiness pool (CommerceInfo initial constant + the buildings' commerceHappiness deposits),
+	// gathered into the city package by gatherCityTerms. ÷100 here: happiness is a DISCRETE count, so the reduce
+	// lands at the reader ([DEC-fixedpoint-x100]) and every caller keeps its legacy ×1 arithmetic.
+	static int commerceHappinessPer(const CvCity* pCity, int eCommerce);
 	static int scGpBase(const CvCity* pCity);                              // gp building + specialist flats
 	static int scGpNational(const CvPlayer* pPlayer);                      // max(0, trait national GP flats) -- the L6 fold
 	static int scGpModifier(const CvCity* pCity);                          // max(0, 100 + city + player + gated SR/GA)

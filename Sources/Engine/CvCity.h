@@ -924,7 +924,6 @@ public:
 	int getCommerceHappinessPer(CommerceTypes eIndex) const;
 	int getCommerceHappinessByType(CommerceTypes eIndex) const;
 	int getCommerceHappiness() const;
-	void changeCommerceHappinessPer(CommerceTypes eIndex, int iChange);
 
 	int getCommercePerPopFromBuildings(const CommerceTypes eIndex) const;
 
@@ -1742,7 +1741,6 @@ protected:
 	mutable int* m_aiBuildingCommerce100;
 	mutable bool* m_abBuildingCommerce100Dirty;
 	int* m_aiCommerceRateModifier;
-	int* m_aiCommerceHappinessPer;
 	int* m_aiDomainFreeExperience;
 	int* m_aiDomainProductionModifier;
 	int* m_aiCulture;

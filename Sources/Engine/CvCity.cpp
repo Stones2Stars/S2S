@@ -74,7 +74,6 @@ CvCity::CvCity()
 	m_aiBuildingCommerce100 = new int[NUM_COMMERCE_TYPES];
 	m_abBuildingCommerce100Dirty = new bool[NUM_COMMERCE_TYPES];
 	m_aiCommerceRateModifier = new int[NUM_COMMERCE_TYPES];
-	m_aiCommerceHappinessPer = new int[NUM_COMMERCE_TYPES];
 	m_aiDomainFreeExperience = new int[NUM_DOMAIN_TYPES];
 	m_aiDomainProductionModifier = new int[NUM_DOMAIN_TYPES];
 
@@ -178,7 +177,6 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_aiBuildingCommerce100);
 	SAFE_DELETE_ARRAY(m_abBuildingCommerce100Dirty);
 	SAFE_DELETE_ARRAY(m_aiCommerceRateModifier);
-	SAFE_DELETE_ARRAY(m_aiCommerceHappinessPer);
 	SAFE_DELETE_ARRAY(m_aiDomainFreeExperience);
 	SAFE_DELETE_ARRAY(m_aiDomainProductionModifier);
 	SAFE_DELETE_ARRAY(m_aiCulture);
@@ -316,11 +314,6 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 			}
 		}
 		changeMilitaryHappinessUnits(iCount);
-	}
-
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		changeCommerceHappinessPer(((CommerceTypes)iI), GC.getCommerceInfo((CommerceTypes)iI).getInitialHappiness());
 	}
 
 	CvArea* pArea = area();
@@ -614,7 +607,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		m_aiBuildingCommerce100[iI] = 0;
 		m_abBuildingCommerce100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
 		m_aiCommerceRateModifier[iI] = 0;
-		m_aiCommerceHappinessPer[iI] = 0;
 		m_abCommerceRankValid[iI] = false;
 		m_aiCommerceRank[iI] = -1;
 	}
@@ -4303,7 +4295,9 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 
 		changeBuildingCommerceModifier(eCommerceX, iChange * (kBuilding.getCommerceModifier(iI) + owner.getBuildingCommerceModifier(eBuilding, eCommerceX)));
 
-		changeCommerceHappinessPer(eCommerceX, kBuilding.getCommerceHappiness(iI) * iChange);
+		// the commerce-happiness pool is cascade-gathered; the citizen-reassignment rider the old changer
+		// carried stays here, at the surviving trigger site (save.md §6)
+		if (kBuilding.getCommerceHappiness(iI) != 0) AI_setAssignWorkDirty(true);
 	}
 
 	if (!bReligiously)
@@ -11641,7 +11635,7 @@ void CvCity::changeCommerceRateModifier(CommerceTypes eIndex, int iChange)
 int CvCity::getCommerceHappinessPer(CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiCommerceHappinessPer[eIndex];
+	return CascadeAccumulator::commerceHappinessPer(this, eIndex);
 }
 
 
@@ -11664,19 +11658,6 @@ int CvCity::getCommerceHappiness() const
 	return iHappiness;
 }
 
-
-void CvCity::changeCommerceHappinessPer(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiCommerceHappinessPer[eIndex] += iChange;
-		FASSERT_NOT_NEGATIVE(getCommerceHappinessPer(eIndex));
-
-		AI_setAssignWorkDirty(true);
-	}
-}
 
 
 // #430: the building per-pop commerce is computed FRESH in
@@ -16112,7 +16093,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceHappinessPer);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainFreeExperience);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainProductionModifier);
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_aiCulture);
@@ -16795,7 +16775,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiTradeYield);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceRateModifier);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiCommerceHappinessPer);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainFreeExperience);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_DOMAIN_TYPES, m_aiDomainProductionModifier);
 
@@ -20825,7 +20804,6 @@ void CvCity::clearModifierTotals()
 		m_aiBuildingCommerce100[iI] = 0;
 		m_abBuildingCommerce100Dirty[iI] = true;   // recompute-only cache: dirty on construct + load ⇒ rebuilt fresh on first read
 		m_aiCommerceRateModifier[iI] = 0;
-		m_aiCommerceHappinessPer[iI] = 0;
 	}
 
 	for (int iI = 0; iI < NUM_DOMAIN_TYPES; iI++)

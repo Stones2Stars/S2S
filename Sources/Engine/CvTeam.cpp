@@ -5735,11 +5735,16 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 
 	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
+		// A building obsoletes EXACTLY ONCE, whether the tech is named on the building itself or on its
+		// special-building GROUP -- the two are the same fact reaching the same count. They must stay
+		// mutually exclusive: the curator inherits a group's obsoleting tech onto its member buildings
+		// (store._inherit_group_obsoletes), so for a grouped member BOTH tests match the same tech and a
+		// second increment would double-count it out of existence.
 		if (GC.getBuildingInfo((BuildingTypes)iI).getObsoleteTech() == eTech)
 		{
 			changeObsoleteBuildingCount((BuildingTypes)iI, iChange);
 		}
-		if (GC.getBuildingInfo((BuildingTypes)iI).getSpecialBuilding() != NO_SPECIALBUILDING
+		else if (GC.getBuildingInfo((BuildingTypes)iI).getSpecialBuilding() != NO_SPECIALBUILDING
 		&& GC.getSpecialBuildingInfo(GC.getBuildingInfo((BuildingTypes)iI).getSpecialBuilding()).getObsoleteTech() == eTech)
 		{
 			changeObsoleteBuildingCount((BuildingTypes)iI, iChange);

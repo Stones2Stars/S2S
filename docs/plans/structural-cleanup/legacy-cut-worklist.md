@@ -19,33 +19,26 @@ push → Σ-over-live-units recompute cache — the F4 upkeep cut LANDED, supers
 
 ---
 
-## A — CUTTABLE NOW (highest leverage; cascade already computes the term)
+## A — ✅ CUT (the whole section is done)
 
-The wellbeing verdicts are pure cascade delegates (`CvCity::happyLevel/unhappyLevel/goodHealth/badHealth` =
-`CascadeAccumulator::wellbeing(this,N)`), and `CvCascadeWellbeing::assemble()` computes each term below **fresh from
-deposits**. So these **CvPlayer members are dead on the served path** — their only readers are the delegating
-`CvCity` getters + the `/computed` oracle rows (an oracle endpoint is not a real consumer:
-[DEC-oracle-tautology](../../architecture/decisions.md#dec-oracle-tautology) — remove the endpoint *with* the member).
-**These were never in the `fixed-point-conformance.md` inventory** — the pilot cut the CvCity cluster and left the
-CvPlayer feeders standing. **This is the top of the list — one sweep, one shared accessor add, no blocker.**
+The CvPlayer wellbeing feeders (`m_iCivic{Happiness,Health}`, `m_iCivilizationHealth`, `m_iLargestCityHappiness`,
+`m_iProject{Happiness,Health}`, `m_iWorld{Happiness,Health}`) and the CvCity per-commerce pool
+(`m_aiCommerceHappinessPer`) are deleted, their getters re-pointed to `CvCascadeWellbeing` /
+`CascadeAccumulator::commerceHappinessPer`, and every tag named in `Assets/savemigration.txt`. The exposed
+accessors the sweep needed (`civicWellbeing`/`civilizationHealth`/`projectWellbeing`/`worldWellbeing`/
+`largestCityWellbeing`/`commerceHappinessPer`) exist.
 
-| # | member | file:line | maintainer | cascade term (`CvCascadeWellbeing.cpp`) |
-|---|---|---|---|---|
-| A1 | `m_iCivicHappiness` | CvPlayer.h:1596 | `changeCivicHappiness` ← `processCivics` | `hap.iCivicNet` |
-| A2 | `m_iCivicHealth` | CvPlayer.h:1882 | `changeCivicHealth` ← `processCivics` | `hea.iCivicNet` |
-| A3 | `m_iCivilizationHealth` | CvPlayer.h:1603 | `changeCivilizationHealth` ← `processTrait` | `hea.iTraitNet` |
-| A4 | `m_iLargestCityHappiness` | CvPlayer.h:1885 | `changeLargestCityHappiness` ← civics/trait | `hap.iLargest` |
-| A5 | `m_iProjectHappiness` | CvPlayer.h:1607 | `changeProjectHappiness` | `hap.project.iGood` |
-| A6 | `m_iProjectHealth` | CvPlayer.h:1605 | `changeProjectHealth` | `hea.project` |
-| A7 | `m_iWorldHappiness` | CvPlayer.h:1609 | `changeWorldHappiness` ← CvTeam project | `hap.project` (world scope) |
-| A8 | `m_iWorldHealth` | CvPlayer.h:1608 | `changeWorldHealth` ← CvTeam | `hea.project` |
-| A9 | `m_aiCommerceHappinessPer` | CvCity.h:1753 | `changeCommerceHappinessPer` | `aiCommercePer[]` — **lower confidence**, also feeds `getCommerceHappiness`; census its readers first |
+Two things this cut established, worth carrying to the remaining sections:
 
-**Enabling step (once):** add four thin decomposition accessors to `CvCascadeWellbeing`
-(`civicWellbeing`/`projectWellbeing`/`largestCityWellbeing`/`civilizationHealth` — identical shape to the existing
-`bonusWellbeing`/`buildingWellbeing`). The terms already exist inside `assemble`; only the exposed wrapper is missing.
-⚠ The AI `getAdditional*` what-ifs read the `CvCivicInfo`/`CvTraitInfo` **info** getters, NOT the player accumulator —
-those STAY.
+- **The accessor reduces `/100`**, because a wellbeing verdict is a DISCRETE count
+  ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100) reduce-at-the-reader). That keeps
+  every AI / Python / HTTP consumer's legacy ×1 arithmetic intact — a re-point with no blast radius.
+- **Audit the changer body for riders** ([save.md §6](../../specs/save.md)). `changeCommerceHappinessPer` carried an
+  `AI_setAssignWorkDirty(true)` that `processBuilding` does *not* fire itself; it moved to the surviving trigger
+  site. A rider dropped here is a silent citizen-reassignment bug, not a compile error.
+
+⚠ The AI `getAdditional*` what-ifs read the `CvCivicInfo`/`CvTraitInfo` **info** getters, NOT the player
+accumulator — those STAY.
 
 ---
 
@@ -89,12 +82,11 @@ freshwater, anger timers/percents); `m_aiBuildingCommerce100` (kept dirty recomp
 input package); the rank memo caches (`m_ai*Rank`, not a magnitude channel).
 
 ## Execution order
-1. **A1–A8** — one CvPlayer wellbeing-feeder sweep + one shared accessor add. Pure win, no blocker, largest
-   legacy-purge blast radius per unit effort.
-2. **A9** after a `getCommerceHappiness`-consumer census.
-3. **B2** (`m_aiSeaPlotYield` via `plots {IS_WATER}`; `m_aiLandmarkYield` rides #448).
-4. **B1** — the §2a percent-stack unification (its own larger channel).
-5. **C** — with the keyed F4 step-3 (F2 + the scalar F4 channels are already done).
+1. **B2** (`m_aiSeaPlotYield` via the `plots {IS_WATER}` empire-target deposit; `m_aiLandmarkYield` rides #448).
+2. **B1** — the §2a percent-stack unification (its own larger channel, and the biggest remaining legacy surface).
+3. **C** — with the keyed F4 step-3 (F2 + the scalar F4 channels are already done).
+
+§A is cut; the next unblocked legacy purge is B2, and B1 is gated on building the additive percent-stack channel.
 
 ---
 
@@ -109,7 +101,7 @@ current status:
 | **F1** reach green | 11 uniformity pocos dead; DllExport proxy, `enPromotionValid`, gate consumers | unchanged — accurate | OPEN |
 | **F2** classification + `IS_<TAG>` | unbuilt; every rewire blocks on it | **BUILT** — `CASC_PRED_IS_TAG` predicate + `countUnitsWithTag` tally exist; the curator emits 30 tags (incl. unitcombat-derived mechanized/gunpowder/mounted). Consumer rewires now UNBLOCKED, still to do | rewires open |
 | **F2b** consumer-iteration | "262 whole-database loops remain" | **mostly LANDED** — hot path done (frontier getters + 12 AI loops + `AI_chooseProduction` collapse); only non-hot residual loops open | mostly done |
-| **F3** grants apply-loop | unbuilt (shadows only) | confirmed — `[GRANTS]` diff-shadow only, ~30 prereq rows unbuilt | OPEN |
+| **F3** grants apply-loop | unbuilt (shadows only) | **APPLYING** — per-turn provisions, building first-build, free promotions, tech/religion/unit-promotion/game-start gold, and the city-founded/capital-changed lifecycle all apply through the machine. Group-2 sites (votes, NPC spawns, combat loot, leader level-up trait, plot bonus discovery) + the game-start remainder are open | partly built |
 | **F4** unit-plane | **NOT BUILT** | **mostly BUILT** — withdrawal/firstStrike/heal/evasion/intercept/collateral-damage/capture/13 combat-percent groups/base-strength/StrengthModifier/DamageModifier/upkeep landed (UPK_*, legacy m_iExtra* removed); the keyed "vs-class" step-3 is now UNBLOCKED (unitcombat→tags landed) but its keyed cascade consumer is still to be built; MaxHP + SizeMatters + movement + espionage + bombard channels remain legacy | mostly built |
 | **F5** property feed | over-applies; operate-dormancy invalidation BLOCKING | feed **DONE**; the operate-dormancy watermark is now **BUILT** — `CvPropertySolver::doTurnBandWatch()` (CvPropertySolver.cpp:487) is the crossing-detector, routing bands to `propertyBands` via `EnablerKernel::onPropertyBandHitActive` (the dead write-only `s_opDynamic` is a small dead-code cleanup left). Remaining: **(a)** the flammability `/5` data rebalance | (a) open |
 | **F6** manifestation (free XP/promo) | `isApplyFreePromotionOnMove` hardcoded false | unchanged — coupled to F3 | OPEN |
