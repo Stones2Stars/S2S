@@ -176,8 +176,18 @@ public:
   (`ps.maintAreaPct` / `ps.maintOtherAreaPct`). So filling the gap is not "add an empty package": it is
   (1) `CascadeAreaPackages` on a `CvDerivedCacheSet<CvArea>` holding the area's OWN percent Σ per channel,
   (2) the city read SUMS that package instead of area deposits folding into `yPctCity`, and
-  (3) the player-side area-keyed maintenance maps retire into it. The mechanical pattern is the 6-step world-scope
-  shape: struct + `CvDerivedCacheSet` → owner member → `cascadeRefresh<X>` delegate → `bind` + `markAllDirty` in the
+  (3) the player-side area-keyed maintenance maps retire into it.
+  **⛔ BUT THE FIX IS NOT "ADD TWO MORE STRUCTS". The spec says ONE UNIFORM PACKAGE FORMAT instantiated per scope
+  object; the code has FOUR BESPOKE ONES** — `CascadeCityPackages` (CPK_*) · `CascadePlayerScope` (PSC_*) ·
+  `CascadeWorldScope` (a lone `tradeWorldFlat`) · `CascadeUnitPackages` (UPK_*) — each with hand-named per-channel
+  members instead of channel-indexed Σflat/Σpercent. **The missing scopes are a SYMPTOM of that, not the disease:**
+  with one uniform package, giving area and team a scope is a single member each; with bespoke structs every scope is
+  its own project, which is exactly why area and team never got one and why their sums leaked into whichever
+  neighbour already had a struct. So UNIFY the package type first (one owner-templated, channel-indexed package on
+  `CvDerivedCacheSet<TOwner>`), after which every scope — the two gaps included — falls out. Adding a 5th and 6th
+  bespoke struct would deepen the very divergence this is meant to close.
+  The per-scope mechanical wiring is the 6-step world-scope
+  shape: package + `CvDerivedCacheSet` → owner member → `cascadeRefresh<X>` delegate → `bind` + `markAllDirty` in the
   owner's reset → the `CascadeAccumulator` gather. `CvTeam` follows the same shape for its team-scope percents
   (`m_iTradeModifier`, `m_iEnemyWarWearinessModifier`, … — still legacy accumulators, §B1 of
   [legacy-cut-worklist.md](../plans/structural-cleanup/legacy-cut-worklist.md), which cannot be cut until the package
