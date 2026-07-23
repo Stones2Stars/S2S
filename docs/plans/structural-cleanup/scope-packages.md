@@ -42,9 +42,9 @@ joins the combine (the §2a specialist's own percent layer applied to its intrin
 |---|---|---|
 | `CvPlot` | `m_yieldCache` (exists, conforming) | the plot's own base package |
 | `CvCity` | `m_cascadeCityPackages` | this city's `*.city.*` deposits, **as ISOLATED per-component packages** (below) |
-| `CvArea`* | (via the player package's per-area maps, v1) | `*.area.*` sums grouped by area — *promoted to a real `CvArea` member when a second channel needs it* |
+| `CvArea` | `m_cascadeArea` | its own `*.area.*` percent sums + the area free-specialist counts, indexed by player (⚠ the area YIELD percents still fold into the city's `yPctCity` — the one sum not yet homed here) |
 | `CvPlayer` | `m_cascadePlayerScope` | the CITY-AGNOSTIC sums only (the city-realization law below): per-source-city building walks (empire percents/flats, each source evaluated in its OWN city's ctx), trait/heritage flats (free-city / GA ungated / playerExtra), the SR pools, the grantor ledgers, the wb area/empire fold maps; gated sums as separate fields (pure city-boolean gates applied at read) |
-| `CvTeam` | (none yet) | team-scope deposits when a channel first needs one |
+| `CvTeam` | (none yet — the one remaining scope gap) | team-scope percents; blocks the §B1 team accumulator cut until it exists |
 | `CvGame` | `m_cascadeWorldScope` | `*.world.*` sums across all living players |
 
 **⛔ WITHIN a scope, the packages stay ISOLATED per COMBINE POSITION — they never merge into one per-scope
@@ -158,17 +158,20 @@ read composition is a sign the scope/position split was gotten wrong.
   DECOMPOSE. One surface ⇒ the number a city computes and the breakdown an endpoint renders are the **same bytes**;
   the legacy-shadow decomposition (the engine's `modBuilding`/`modPlayer` accumulators masquerading as the cascade's
   answer) becomes structurally impossible, not merely discouraged.
-- **⚖ THE REALIZED SUM IS CACHED (owner ruling 2026-07-16: "CACHE THE SUM" — supersedes the earlier
-  never-cache-the-sum lean).** The reasoning that "the sum is a handful of integer ops" undercounted the live
-  pieces the combine folds — the worked-plot Σ (O(plots) per read) and the live inputs — against consumers that
-  read it hundreds of thousands of times per turn (`foodDifference`: 356k calls/turn measured; legacy served
-  them from the stored `m_aiBaseYieldRate`-class ints). So the city carries the realized §2a combine as its own
-  package (`CPK_YRATE` / `yRate100[]`): filled by the ordinary refresh (last, after its input packages),
-  invalidated by the WIDEN rule (any yield-input mark implies the rate mark) plus the baked live inputs' own
-  sites (worked-plot flips, plot-yield changes, trade-yield refresh; GA/civic/tech ride
-  `markPlayerScopeAndCities`). Reads are stored-int fetches — legacy-equivalent cost with cascade-fed content.
-  The freshness stays entirely write-side; the ensure on the read is the `CvDerivedCache` doctrine's own lazy
-  dirty-check, not version polling.
+- **⚖ THE RECEIVER CACHES THE SUM ([DEC-uniform-cache-shape](../../architecture/state-repositories.md)).** The
+  scope that CONSUMES a channel stores its realized sum as **one variable per channel**, in the same cache beside
+  the packages — `CvCity` production / culture and its other consumed sums, `CvPlayer` research / gold / culture /
+  espionage. "The sum is a handful of integer ops" undercounts what the combine folds (the worked-plot Σ is
+  O(plots) per read) against consumers reading it hundreds of thousands of times per turn (`foodDifference`: 356k
+  calls/turn measured; legacy served those from stored `m_aiBaseYieldRate`-class ints). The city yield rate
+  (`CPK_YRATE` / `yRate100[]`) is the realized shape of this, not a special case: filled by the ordinary refresh
+  (last, after its input packages), invalidated by the same mark derivation that marks those packages plus the
+  baked live inputs' own sites (worked-plot flips, plot-yield changes, trade-yield refresh). Reads are stored-int
+  fetches — legacy-equivalent cost with cascade-fed content. Freshness stays entirely write-side; the ensure on the
+  read is the `CvDerivedCache` doctrine's own lazy dirty-check, not version polling.
+  ⛔ **Rejecting the legacy push accumulator does NOT license a per-read walk in its place** — an empire getter
+  re-walking every city per call (`CvPlayer::getCommerceRate`) is the same cost class one scope up, and is a
+  receiver missing its cached sum.
 - **Plot / specialist / building caches are PROVIDERS on the surface.** Each computes its own output by pulling its
   influences **FROM THE CASCADE**, never from a legacy player accumulator. ⛔ Today the plot base still reads the
   legacy accumulators (`CvPlayer::getTerrainYieldChange` / `getSeaPlotYield` / `getExtraYieldThreshold`, maintained

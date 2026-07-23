@@ -296,6 +296,18 @@ bump, the turn-roll self-heal) papers over a missed invalidation — those blank
 missed invalidation must surface as a live divergence, never be silently rebuilt away. Sharpens the CAPSTONE RULE
 (LOAD is the only full pass). **Home:** [state-repositories.md](state-repositories.md).
 
+### DEC-uniform-cache-shape
+
+Every derived cache on the cascade plane is the **SAME OBJECT TYPE** everywhere and they **ALL INVALIDATE THE SAME
+WAY** — one templated `CvDerivedCacheSet<TOwner>` over a channel-indexed slot table on every owner, driven by ONE
+mark derivation; only WHICH SLOTS carry a value varies by scope. A hand-named scalar field is therefore a DEFECT,
+not untidiness: it cannot be addressed uniformly, so it forces a bespoke invalidation path per field. A **RECEIVER**
+(the scope that consumes a channel) is not a different kind of cache — it caches its realized sum as one variable
+per channel in the same cache beside the packages (`CvPlayer` research/gold/culture/espionage; `CvCity`
+production/culture), so there is no separate receiver mechanism. Rejecting the legacy push accumulator never
+licenses a per-read walk instead. ONE event marks the packages it touches AND the sum slots they feed, so no
+dependency-ordered rebuild pass exists. **Home:** [state-repositories.md](state-repositories.md).
+
 ### DEC-spine-reseed
 
 On load, the cascade is built from events that come from **inside the save read itself** — reading a fact off the

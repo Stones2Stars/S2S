@@ -171,43 +171,68 @@ public:
   scope carrying both**. That is why "whether a scope's packages are empty is irrelevant" is not hand-waving: the
   shape is uniform, and the origin rule says which half any given scope ever fills.
 
-  **⛔ THE CONSOLIDATION REQUIREMENT (owner): every modifier/yield cache is ONE shape.** Today there are FOUR
-  bespoke structs (`CascadeCityPackages` CPK_* · `CascadePlayerScope` PSC_* · `CascadeWorldScope` ·
-  `CascadeUnitPackages` UPK_*) plus the plot yield cache, each with hand-named per-family members. Yields and
-  commerce are already channel-indexed arrays inside them; the drift is in the SCALAR channels (`scGpBaseBld`,
-  `scDefense`, `scMaintModCity`, `scTradeCity`, `brCityMilitary`, …), hand-added per family per scope. Those
-  collapse into the same Σflat/Σpercent-per-channel form, so a scope's package is the SAME TYPE everywhere and a
-  new scope or channel is data, not a new struct.
+  **⛔ THE CONSOLIDATION REQUIREMENT (owner): every modifier/yield cache is ONE shape.** Today there are FIVE
+  bespoke structs (`CascadeCityPackages` CPK_* · `CascadePlayerScope` PSC_* · `CascadeAreaPackages` ·
+  `CascadeWorldScope` · `CascadeUnitPackages` UPK_*) plus the plot yield cache, each with hand-named per-family
+  members. Yields and commerce are already channel-indexed arrays inside them (15 such arrays across city+player);
+  the drift is the SCALAR channels — 33 hand-named fields across city/player/world (`scGpBaseBld`, `scDefense`,
+  `scDefBombard`, `scMaintModCity`, `scTradeCity`, `scTradeCoastalCiv`, `brCityMilitary`, …), each really a
+  `(family, member, position, gate)` tuple spelled as a field name. Those collapse into the same
+  Σflat/Σpercent-per-channel form, so a scope's package is the SAME TYPE everywhere and a new scope or channel is
+  DATA, not a new struct.
   ⚠ Hand-maintained duplicates DRIFT — that is not theoretical: the maintenance decomposition and its cached fill
   duplicated five terms, and the L8 home/otherArea overlay landed in one and not the other, so `/computed`
   under-reported by 39 against the served value until the duplicate was replaced by a delegation.
   Full rebuild of everything = LOAD ONLY.
-  **Status against this ruling:** city / player / world / unit each sit on a `CvDerivedCacheSet` (their "ONE dirty
-  protocol"), plot on the single-flag `CvDerivedCache`. **The two gaps: `CvArea` carries NO cache at all, and
-  `CvTeam` carries only `CascadeTeamCaps` (capabilities, not a package).**
-  **Where the AREA sums live instead — two different wrong homes, both cached (so neither is a per-read walk, and
-  both break the scope principle):** the area YIELD percents fold into the CITY package (`yPctCity` — "bonus /
+  **Status against this ruling:** city / player / area / world / unit each sit on a `CvDerivedCacheSet` (their "ONE
+  dirty protocol"), plot on the single-flag `CvDerivedCache`. **The one remaining scope gap: `CvTeam` carries only
+  `CascadeTeamCaps` (capabilities, not a package)** — which is exactly what blocks the team percents in §B1 of
+  [legacy-cut-worklist.md](../plans/structural-cleanup/legacy-cut-worklist.md).
+  **One AREA sum is still mis-homed:** the area YIELD percents fold into the CITY package (`yPctCity` — "bonus /
   building / event / power / area / capital all fold into yPctCity as scope/conditioned deposits",
-  `CvCascadeAccumulator.cpp`), while the area MAINTENANCE percents sit on the PLAYER package as maps keyed by area id
-  (`ps.maintAreaPct` / `ps.maintOtherAreaPct`). So filling the gap is not "add an empty package": it is
-  (1) `CascadeAreaPackages` on a `CvDerivedCacheSet<CvArea>` holding the area's OWN percent Σ per channel,
-  (2) the city read SUMS that package instead of area deposits folding into `yPctCity`, and
-  (3) the player-side area-keyed maintenance maps retire into it.
-  **⛔ BUT THE FIX IS NOT "ADD TWO MORE STRUCTS". The spec says ONE UNIFORM PACKAGE FORMAT instantiated per scope
-  object; the code has FOUR BESPOKE ONES** — `CascadeCityPackages` (CPK_*) · `CascadePlayerScope` (PSC_*) ·
-  `CascadeWorldScope` (a lone `tradeWorldFlat`) · `CascadeUnitPackages` (UPK_*) — each with hand-named per-channel
-  members instead of channel-indexed Σflat/Σpercent. **The missing scopes are a SYMPTOM of that, not the disease:**
-  with one uniform package, giving area and team a scope is a single member each; with bespoke structs every scope is
-  its own project, which is exactly why area and team never got one and why their sums leaked into whichever
-  neighbour already had a struct. So UNIFY the package type first (one owner-templated, channel-indexed package on
-  `CvDerivedCacheSet<TOwner>`), after which every scope — the two gaps included — falls out. Adding a 5th and 6th
-  bespoke struct would deepen the very divergence this is meant to close.
+  `CvCascadeAccumulator.cpp`) instead of the city read SUMMING them from `CascadeAreaPackages`. The area MAINTENANCE
+  percents and the area free-specialist counts already live on the area package.
+  **⛔ THE FIX IS NOT "ADD ANOTHER STRUCT". The spec says ONE UNIFORM PACKAGE FORMAT instantiated per scope object;
+  the code has FIVE BESPOKE ONES**, each with hand-named per-channel members instead of channel-indexed
+  Σflat/Σpercent. **A missing scope is a SYMPTOM of that, not the disease:** with one uniform package, giving a scope
+  its packages is a single member; with bespoke structs every scope is its own project, which is why area and team
+  never got one and why their sums leaked into whichever neighbour already had a struct. So UNIFY the package type
+  first (one owner-templated, channel-indexed package on `CvDerivedCacheSet<TOwner>`), after which every scope — the
+  team gap included — falls out. Adding a further bespoke struct per scope deepens the very divergence this closes.
   The per-scope mechanical wiring is the 6-step world-scope
   shape: package + `CvDerivedCacheSet` → owner member → `cascadeRefresh<X>` delegate → `bind` + `markAllDirty` in the
   owner's reset → the `CascadeAccumulator` gather. `CvTeam` follows the same shape for its team-scope percents
   (`m_iTradeModifier`, `m_iEnemyWarWearinessModifier`, … — still legacy accumulators, §B1 of
   [legacy-cut-worklist.md](../plans/structural-cleanup/legacy-cut-worklist.md), which cannot be cut until the package
   exists to hold their values).
+- **⚖ THE KEY IS SAMENESS (owner ruling): every cache is the SAME OBJECT TYPE everywhere, and they ALL invalidate
+  the SAME WAY.** That — not the per-scope layout — is the requirement the whole model rests on. One templated
+  cache type (`CvDerivedCacheSet<TOwner>` over a channel-indexed slot table) on every owner, and ONE mark
+  derivation driving all of it. What varies between scopes is only WHICH SLOTS carry a value; the type and the
+  protocol never vary.
+  - **A RECEIVER is not a different kind of cache — it is the same cache holding a different slot (owner).**
+    Whatever scope CONSUMES a channel caches its realized sum as **one variable per channel**, in the same cache
+    beside the packages: `CvPlayer` caches research / gold / culture / espionage; `CvCity` caches production /
+    culture and the other sums it consumes. The city's realized yield rate (`yRate100[]`) is the general shape,
+    not a special case — so there is no separate "receiver mechanism" to build.
+  - **⛔ THIS IS WHY HAND-NAMED SCALAR FIELDS ARE THE DEFECT, not just untidy.** A named field cannot be addressed
+    uniformly, so it forces its own bespoke invalidation path — which is precisely how 33 of them accumulated.
+    Channel-indexed slots invalidate by derived mask with no per-field code.
+  - **The receiving scope is NOT the storing scope.** A package never moves to its consumer (that breaks the scope
+    principle); the consumer stores only its own realized TOTAL — one cheap variable per channel.
+  - **⛔ NOT a push accumulator, and NOT a per-read walk — the cached sum sits between those two failures.**
+    Rejecting the legacy incremental accumulator does not license recomputing on every read: an empire-scope
+    getter that re-walks every city per call (`CvPlayer::getCommerceRate`) is the per-read-walk cost class this
+    doc exists to prevent, merely relocated one scope up.
+  - **ONE EVENT MARKS BOTH LEVELS (owner).** The event's derived mask names the packages it touches **and** the
+    sum slots those packages feed — one mark derivation, two targets (for a cross-scope aggregate, two owners).
+    There is **no** dependency-ordered rebuild pass: both are dirty, and a sum's rebuild reads its packages
+    through their own lazy dirty-check, so the package refreshes first by construction and a sum can never sit
+    stale behind a clean package.
+  - **Which scope receives a channel is spec'd, not chosen per site:** one consuming scope per channel
+    (food/production → city; gold/research/espionage → empire), with **culture the lone dual-consumer** (the city
+    sums it for plot culture + border expansion, the empire for civ culture + traits — two independent sums over
+    the same packages).
 - **⚖ TWO DISTINCT KINDS OF DERIVED CACHE — do not conflate them:**
   - **The yield + percent packages are an INPUT/OUTPUT (value) cache** — memoize the computed number,
     dirty-invalidate on a source event, recompute from inputs on next read. This is what `CvDerivedCache` is FOR.
