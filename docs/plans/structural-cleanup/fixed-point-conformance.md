@@ -275,6 +275,37 @@ constants, the cluster boundary was drawn wrong — stop and redraw it.
 **Suggested order:** D (isolated, proves the mechanism on a small surface) → A (the keystone; unblocks the rest) →
 B+C together (gold/commerce share the seam) → E, F (small, fold into A's tail) → G after its ruling.
 
+### Cluster A — the MECHANIC (set this up to spec FIRST, then wire the consumers)
+
+> **Owner sequencing: "set the mechanic up correctly, to spec, _then_ wire it in."** Do NOT open with 150 consumer
+> edits. Build the value chain so it is internally ×100-consistent, then reduce at the readers. ⚠ A does not compile
+> between the two halves — flipping a getter's scale breaks its consumers until they are wired — so A lands as ONE
+> build, but it is DESIGNED in this order.
+
+**Step 1 — the chain (each becomes ×100; pairs dissolve to ONE getter, [DEC-fixedpoint-x100]):**
+
+| function | today | target |
+|---|---|---|
+| `CvCity::getYieldRate` | `getYieldRate100()/100` | **IS** the ×100 getter; `getYieldRate100` DELETED, its 14 call sites renamed (pure rename — both are ×100) |
+| `CvCity::getExtraYield` | `getExtraYield100()/100` | ditto; `getExtraYield100` DELETED, 5 sites renamed |
+| `CvCity::getFoodConsumedByPopulation` | `pop100 * perPop100 / 10000` | `… / 100` — two ×100 operands yielding ×100 food |
+| `CvCity::foodConsumption` | human | ×100 — body unchanged once its operands are ×100 |
+| `CvCity::foodDifference` | human | ×100 — falls out (`getYieldRate(FOOD) − foodConsumption()`) |
+| `CvCity::angryPopulation` | `(unhappy−happy)/100`, clamped `[0, pop]` | ×100: drop the `/100`, clamp `[0, pop*100]` |
+| `CvCity::healthRate` | `min(0,(good−bad)/100)` | ×100: `min(0, good−bad)` |
+| `CvCity::foodWastage` | **returns `float`** | integer ×100 — see the hazard below; the float is an OOS defect, not a style choice |
+
+**Step 2 — wire the consumers.** Each reduces at its own reader / whole-count use. The mixing sites
+(`getYieldRate(FOOD) − foodConsumption()`, ~10 of them) need **NO change** — both operands are ×100 and the units
+cancel. That is the gate: **if a mixing site needs a new constant, the cluster boundary was drawn wrong.**
+
+Site counts (both names, all files): `getYieldRate` 47 · `getYieldRate100` 14 · `getExtraYield` 13 ·
+`getExtraYield100` 5 · `foodConsumption` 16 · `getFoodConsumedByPopulation` 10 · `foodDifference` 41 ·
+`foodWastage` 7 · `angryPopulation` 29 · `healthRate` 20. Files: `CvCity` · `CvCityAI` · `CvPlayer(AI)` · `CvPlot` ·
+`CvArea` · `CvUnitAI` · `CvContractBroker` · `CvGameObject` · `CvCascadeAccumulator` · `CvHttpServer` ·
+`CvGameTextMgr` · the `Cy*`/loader surfaces (⛔ per AGENTS.md the Python side is a NEW surface with the old
+disconnected — never a `÷100` patched into an existing binding to keep it working).
+
 **Two hazards found while mapping, both pre-existing:**
 - **`CvCity::foodWastage()` returns `float`** — in a deterministic-lockstep engine where float math desyncs MP
   ([engine.md](../../reference/engine.md)); it is cast `(int)` into `foodConsumption`. Fixed-point exists precisely to
