@@ -1800,6 +1800,17 @@ public:
 	// own-scope sums, one package per field (never serialized; the CvPlot yield-cache idiom). Public by the
 	// shadow-phase convention; the CascadeAccumulator module is the query surface.
 	mutable CascadeCityPackages m_cascadeCityPackages;
+
+	// #430 THE UNIFORM PACKAGES ([DEC-uniform-cache-shape]): the two dictionaries -- flats + percents -- keyed by
+	// the unified channel enum, on the ONE cache component with a dirty bit per channel. Holds ONLY this CITY's
+	// own-scope deposits (modifier.md §1); the downward roll happens at read. Never serialized.
+	mutable CascadePackages<CvCity> m_cascadeChannels;
+	void cascadeRefillChannels(int iChanMask) const;   // the CvDerivedCacheSet refresh delegate
+	// The uniform reads. (Named getCascade* rather than getYield while the 360 legacy channel getters still
+	// exist -- CvPlot::getYield(YieldTypes) would make an enum-to-enum overload ambiguous. The name converges
+	// on getYield as those getters are deleted, [DEC-new-getter-surface].)
+	int getCascadeFlat(CascadeChannel eCh) const    { return m_cascadeChannels.readFlat(eCh); }
+	int getCascadePercent(CascadeChannel eCh) const { return m_cascadeChannels.readPercent(eCh); }
 	void cascadeRefreshPackages(int iMask) const;   // the CacheSet's refresh delegate -> CascadeAccumulator::refreshCityPackages
 	// #430: the standing cascade operating buildings (active set + vicinity provides) -- same derived-cache idiom
 	// (never serialized; event-marked; the slice boundary is the self-heal). Query via EnablerKernel::operatingBuildings/wireOperatingBuildings.

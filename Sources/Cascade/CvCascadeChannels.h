@@ -29,6 +29,7 @@
 //
 
 #include "Defines/CvEnums.h"
+#include "Infrastructure/CvDerivedCache.h"   // CvDerivedCacheSet -- THE cache component; never hand-roll another
 
 // ===== THE UNIFIED CHANNEL ENUM =====
 // One index across every modifiable number ("if you have to compute a unified enum for all yields, you do that"
@@ -85,6 +86,58 @@ enum CascadeScope
 	CSC_UNIT,
 	CSC_SELF,              // the off-spine `self` scope (buildRate.self)
 	NUM_CASCADE_SCOPES
+};
+
+// ===== THE PACKAGE: one dictionary =====
+// ⛔ NOT a cache implementation -- CvDerivedCacheSet IS the cache. This only holds the owner-side STORAGE the
+// component's contract requires ("component storage stays owner-side; this class owns only the dirty protocol")
+// next to the set that guards it, so the pair is declared once instead of four loose members per object.
+// ONE DIRTY BIT PER CHANNEL: mark with (1 << ch), read ensures only that channel's bit.
+// An object holds TWO of these -- one flats, one percents -- which is the whole type axis.
+template <class TOwner>
+struct CascadePackages
+{
+	int flat[NUM_CASCADE_CHANNELS];
+	int percent[NUM_CASCADE_CHANNELS];
+	// ONE bit per CHANNEL, covering BOTH dictionaries. Not an oversight: a single pass over a source's deposits
+	// fills a channel's flat AND percent together, so splitting the MASK by dictionary would double the walk to
+	// save nothing. The dictionaries stay separate STORAGE (the type axis); the staleness question -- "is this
+	// channel stale?" -- is genuinely one question.
+	CvDerivedCacheSet<TOwner> set;
+
+	CascadePackages()
+	{
+		for (int i = 0; i < NUM_CASCADE_CHANNELS; ++i) { flat[i] = 0; percent[i] = 0; }
+	}
+
+	// The reads: refill THIS channel if stale, then a bare fetch. Disjoint channels never pay for each other.
+	int readFlat(CascadeChannel ch) const    { set.ensure(1 << (int)ch); return flat[ch]; }
+	int readPercent(CascadeChannel ch) const { set.ensure(1 << (int)ch); return percent[ch]; }
+	// Raw fetches with no ensure -- for a caller that has already ensured (a combine walking many channels).
+	int rawFlat(CascadeChannel ch) const    { return flat[ch]; }
+	int rawPercent(CascadeChannel ch) const { return percent[ch]; }
+
+	void markDirty(CascadeChannel ch) const { set.markDirty(1 << (int)ch); }
+	void markAllDirty() const { set.markAllDirty(); }
+};
+
+class CvInfo;
+
+// ===== THE GENERIC SUM =====
+// The whole gather, for every scope and every source kind. The cascade is POINTED AT A LIST of infos and adds
+// their deposits into the two dictionaries -- it does not know, and must never ask, what KIND of source each
+// info is ([DEC-enabler-not-cascade]: the list is the enabler's answer, the summing is the cascade's job).
+// One pass per info over its own deposits; no address string, no per-channel rescan, no per-source walker.
+class CascadeSum
+{
+public:
+	// Add every deposit `d` makes AT `iScope` into the dictionaries, restricted to the channels in iChanMask
+	// (the dirty set being refilled). aFlat/aPercent are the owner-side int[NUM_CASCADE_CHANNELS] arrays.
+	static void addInfo(const CvInfo* d, int iScope, int iChanMask, int* aFlat, int* aPercent);
+
+	// Zero the channels in iChanMask in both dictionaries -- a refill must FULLY DEFINE its output
+	// (CvDerivedCache contract rule 2: a partial write leaves stale values behind a clean flag).
+	static void beginRefill(int iChanMask, int* aFlat, int* aPercent);
 };
 
 // ===== LOAD-TIME ADDRESS RESOLUTION (strings -> ints, ONCE) =====

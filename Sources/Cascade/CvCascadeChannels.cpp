@@ -10,6 +10,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvCascadeChannels.h"
+#include "CvCascadeDepositIndex.h"   // the compiled records the sum walks
 #include <string>
 
 int cascadeScopeFromSegment(const char* scope)
@@ -116,4 +117,31 @@ bool cascadeResolveAddress(const char* family, const char* member, const char* u
 	if (c == NUM_CASCADE_CHANNELS) return false;   // not a cascade channel (the unit-plane families land here)
 	outChannel = c;
 	return true;
+}
+
+// ===== THE GENERIC SUM =====
+// Pointed at a LIST of infos; adds each one's deposits into the two dictionaries. No knowledge of source kind,
+// no address strings (compile() resolved chan/scopeIdx/isPercent onto every record), and ONE pass per info.
+
+void CascadeSum::beginRefill(int iChanMask, int* aFlat, int* aPercent)
+{
+	for (int ch = 0; ch < NUM_CASCADE_CHANNELS; ++ch)
+		if (iChanMask & (1 << ch)) { aFlat[ch] = 0; aPercent[ch] = 0; }
+}
+
+void CascadeSum::addInfo(const CvInfo* d, int iScope, int iChanMask, int* aFlat, int* aPercent)
+{
+	if (d == NULL) return;
+	const std::vector<CascadeDeposit>& deps = DepositIndex::depositsFor(d);
+	for (size_t i = 0; i < deps.size(); ++i)
+	{
+		const CascadeDeposit& dep = deps[i];
+		if (dep.chan < 0 || dep.scopeIdx != iScope) continue;      // not a channel here / not this scope
+		if ((iChanMask & (1 << dep.chan)) == 0) continue;          // not among the channels being refilled
+		// ⛔ A deposit whose LIVENESS or magnitude is not static is not summed here: liveness is the ENABLER's
+		// verdict, never the cascade's, and `per` is a live count multiply. Both arrive through their own
+		// route; this sum stays a pure add so it can never become a place that decides anything.
+		if (dep.enabled != NULL || dep.disabled != NULL || dep.unitQual != NULL || dep.hasPer) continue;
+		(dep.isPercent ? aPercent : aFlat)[dep.chan] += dep.value100;
+	}
 }

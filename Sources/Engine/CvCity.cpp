@@ -30,6 +30,7 @@
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"
 #include "Cascade/CvEventSpine.h" // #430 logging consolidation: route [CIT] through the spine (CvCity side)
 #include "Cascade/CvCascadeAccumulator.h"  // #430 the modifier scope accumulator -- DOMAIN dirty hooks (modifier-substrate.md)
+#include "Repos/InfoRepo.h"        // InfoRepo<CvBuildingInfo> -- the source infos the uniform refill sums
 #include "Cascade/CvEnablerKernel.h" // EnablerKernel::recomputeOperatingBuildingsInto -- the operating buildings cache's refresh delegate target
 #include "Cascade/CvCascadeWellbeing.h" // CascadeWellbeing::bonusWellbeing -- per-source §2b terms for the flipped legacy sub-getters
 #include "Cascade/CvBuildingEnabler.h" // BuildingEnabler::onCityCreated -- the per-city buildings domain (canConstruct reads m_enabler)
@@ -59,6 +60,7 @@ CvCity::CvCity()
 {
 	m_dataRepository.init(this);
 	m_cascadeCityPackages.set.bind(this, &CvCity::cascadeRefreshPackages);   // #430: the city scope packages (all-dirty from birth)
+	m_cascadeChannels.set.bind(this, &CvCity::cascadeRefillChannels);        // #430: the uniform two-dictionary packages
 	m_operatingBuildings.set.bind(this, &CvCity::refreshOperatingBuildings);       // #430: the standing operating-buildings cache (ditto)
 	m_plotYieldSum.bind(this, &CvCity::recomputePlotYieldSumInto);           // the worked-plot Σ (dirty from birth)
 	m_aiNetworkBonusTotal = NULL;    // allocated in reset() (the per-info array pattern; uninit() frees)
@@ -10173,6 +10175,19 @@ int CvCity::getBaseYieldRateModifier(YieldTypes eIndex, int iExtra) const
 int CvCity::getYieldRate(const YieldTypes eYield) const
 {
 	return getYieldRate100(eYield) / 100;
+}
+
+// #430 THE UNIFORM REFILL ([DEC-uniform-cache-shape]). Refills the masked CHANNELS of both dictionaries from
+// this city's own-scope deposits. The cascade is POINTED AT A LIST and sums it: the list of active buildings is
+// the ENABLER's answer ([DEC-enabler-not-cascade]), never re-derived here, and nothing in this body asks whether
+// anything is on. One pass per source over its compiled deposits -- no address strings, no per-channel rescan.
+void CvCity::cascadeRefillChannels(int iChanMask) const
+{
+	CascadeSum::beginRefill(iChanMask, m_cascadeChannels.flat, m_cascadeChannels.percent);   // fully define the output
+	const OperatingBuildings& kOperating = EnablerKernel::operatingBuildings(this);
+	for (std::set<int>::const_iterator it = kOperating.active.begin(); it != kOperating.active.end(); ++it)
+		CascadeSum::addInfo(InfoRepo<CvBuildingInfo>::get().get(*it), CSC_CITY, iChanMask,
+		                    m_cascadeChannels.flat, m_cascadeChannels.percent);
 }
 
 // The CvDerivedCacheSet refresh delegate: the cascade math stays module-side; the city carries only the state.
