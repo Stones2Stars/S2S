@@ -59,6 +59,21 @@ void CvInfo::resolveClassificationIds()
 	if (CvJsonBoolBlock* u = mutCapabilities()) u->resolveIds(CLSD_CAPABILITY);
 	if (CvJsonBoolBlock* u = mutPolicies())     u->resolveIds(CLSD_POLICY);
 }
+// --- THE STANDARDIZED DATA READ (owner) ---------------------------------------------------------------
+// The info HOLDS its materialized authored values; the cascade's load-time pass RESOLVES them in (the
+// resolveClassificationIds precedent above), so the cascade can sum a LIST of infos with no knowledge of what
+// kind of source each one is. Sparse by scope: an entry exists only where this info actually deposits.
+const CascadeInfoModifiers* CvInfo::getCascadeData(int iScope) const
+{
+	const std::map<int, CascadeInfoModifiers>::const_iterator it = m_cascadeData.find(iScope);
+	return it == m_cascadeData.end() ? NULL : &it->second;
+}
+
+void CvInfo::mutSetCascadeData(int iScope, const CascadeInfoModifiers& kData)
+{
+	m_cascadeData[iScope] = kData;   // LOAD-ONLY; mapFrom is idempotent, so a re-map overwrites cleanly
+}
+
 
 void CvInfo::mapSections(const picojson::value& entity)
 {

@@ -35,10 +35,6 @@ static const std::vector<CascadeDeposit> s_noDeposits;   // the shared empty ans
 // query, dropped with s_compiled by clearCompiled() (its keys are the about-to-be-freed infos).
 static std::map<const CvInfo*, SourceRoute> s_routes;
 
-// The lazy MATERIALIZED-TABLE cache: source info -> its deposits resolved to (scope, channel, position) ints.
-// Same lifecycle as s_routes -- filled on first tableFor query, dropped by clearCompiled() before a re-map.
-static std::map<const CvInfo*, CascadeInfoTable> s_tables;
-static const CascadeInfoTable s_emptyTable;      // the shared answer for NULL / family-less infos
 
 int DepositIndex::internSegment(const std::string& s)
 {
@@ -188,64 +184,6 @@ void DepositIndex::clearCompiled()
 {
 	s_compiled.clear();
 	s_routes.clear();
-	s_tables.clear();
-}
-
-// ===== THE MATERIALIZED CHANNEL TABLE =====
-// Split a dotted address into its (family, scope, member) head segments. The address string is retained at push
-// precisely for this load-time resolution; nothing at runtime re-reads it.
-static void di_splitAddress(const std::string& addr, std::string& family, std::string& scope, std::string& member)
-{
-	family.clear(); scope.clear(); member.clear();
-	const std::string::size_type a = addr.find('.');
-	if (a == std::string::npos) { family = addr; return; }
-	family = addr.substr(0, a);
-	const std::string::size_type b = addr.find('.', a + 1);
-	if (b == std::string::npos) { scope = addr.substr(a + 1); return; }
-	scope = addr.substr(a + 1, b - a - 1);
-	member = addr.substr(b + 1);
-}
-
-const CascadeInfoTable& DepositIndex::tableFor(const CvInfo* j)
-{
-	if (j == NULL) return s_emptyTable;
-	const std::map<const CvInfo*, CascadeInfoTable>::const_iterator it = s_tables.find(j);
-	if (it != s_tables.end()) return it->second;
-
-	CascadeInfoTable t;
-	const std::vector<CascadeDeposit>& deps = depositsFor(j);
-	for (size_t i = 0; i < deps.size(); ++i)
-	{
-		const CascadeDeposit& d = deps[i];
-
-		// A deposit whose liveness or magnitude is not static cannot be pre-summed: liveness is the ENABLER's
-		// verdict and `per` is a live count multiply, so both stay out of the plain table.
-		if (d.enabled != NULL || d.disabled != NULL || d.unitQual != NULL || d.hasPer)
-		{
-			t.conditioned.push_back((int)i);
-			continue;
-		}
-
-		std::string family, scope, member;
-		di_splitAddress(d.address, family, scope, member);
-
-		CascadeChannel ch;
-		CascadePosition gate;
-		bool bPct = false;
-		if (!cascadeResolveAddress(family.c_str(), member.c_str(), d.unit.c_str(), ch, gate, bPct))
-			continue;   // not a cascade channel (the unit-plane families, a retired system) -- silently absent
-		const int iScope = cascadeScopeFromSegment(scope.c_str());
-		if (iScope < 0) continue;
-
-		CascadeSlotEntry e;
-		e.scope = (short)iScope;
-		e.channel = (short)ch;
-		e.gatePos = (short)gate;
-		e.isPercent = bPct;
-		e.value100 = d.value100;
-		t.plain.push_back(e);
-	}
-	return s_tables.insert(std::make_pair(j, t)).first->second;
 }
 
 // THE REVERSE ROUTE (F0 R2). The body is a VERBATIM transcription of CascadeAccumulator::buildingProcessed's former

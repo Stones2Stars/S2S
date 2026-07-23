@@ -85,44 +85,35 @@ static CascadeChannel ch_stateReligionMember(const std::string& m)
 }
 
 bool cascadeResolveAddress(const char* family, const char* member, const char* unit,
-                           CascadeChannel& outChannel, CascadePosition& outGatePos, bool& outIsPercent)
+                           CascadeChannel& outChannel, bool& outIsPercent)
 {
 	if (family == NULL) return false;
 	const std::string f(family);
 	const std::string m(member != NULL ? member : "");
 	const std::string u(unit != NULL ? unit : "");
 
+	// WHICH DICTIONARY -- the whole type axis (owner). Everything else is an int.
 	outIsPercent = (u == "percent");
-	outGatePos = NUM_CASCADE_POSITIONS;   // "no gate" -- the caller uses the source-kind position
 
-	// (1) the state-religion GATED prefix
+	// The state-religion prefix names an ordinary channel in its MEMBER; the state religion itself is a
+	// CONDITION, so it is the ENABLER's business and never appears in this storage
+	// ([DEC-enabler-not-cascade]) -- the cascade sums whatever the enabler says is live.
 	if (f == "stateReligion")
 	{
 		const CascadeChannel c = ch_stateReligionMember(m);
 		if (c == NUM_CASCADE_CHANNELS) return false;
 		outChannel = c;
-		outGatePos = outIsPercent ? POS_PCT_STATE_RELIGION : POS_STATE_RELIGION;
 		return true;
 	}
 
-	// (2) the grouped families (channel = family + member)
+	// The grouped families, whose channel is (family + member) -- json.md §6.
 	CascadeChannel c = ch_groupedFamily(f, m);
 	if (c != NUM_CASCADE_CHANNELS) { outChannel = c; return true; }
 
-	// (3) the plain families (channel = family; the member, where present, selects a GATE)
+	// The plain families: the channel IS the family. A member here (coastal / connectedCity / goldenAge /
+	// homeArea / otherArea / nonStateReligion) is a CONDITION on the deposit, not a storage distinction.
 	c = ch_plainFamily(f);
 	if (c == NUM_CASCADE_CHANNELS) return false;   // not a cascade channel (the unit-plane families land here)
 	outChannel = c;
-
-	if (!m.empty())
-	{
-		if (m == "coastal")         outGatePos = POS_COASTAL;
-		else if (m == "connectedCity") outGatePos = POS_PCT_CONNECTED;
-		else if (m == "goldenAge")  outGatePos = POS_GOLDEN_AGE;
-		else if (m == "perPopulation") outGatePos = POS_PER_POPULATION;
-		// `maintenance.empire.all` is the plain empire sum (no gate); `homeArea`/`otherArea` are AREA-scope
-		// splits the area package owns, and `nonStateReligion` is a policy-conditioned entry -- none of them
-		// select a gate position here, so they fall through to the source-kind position.
-	}
 	return true;
 }
