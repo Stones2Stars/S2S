@@ -154,9 +154,21 @@ public:
   → city → plot); the cascade loads **yield packages in ONE UNIFORM FORMAT** (Σflat and Σpercent each their OWN
   package per channel; the unit is part of the slot key) into each scope's cache; each cache knows its own staleness
   from events at its OWN scope (a world change rebuilds the world package while every other level stands). **The
-  only live calculation is adding the ~5 packages together at read.** The plot and city levels live this way; the
-  player level lands with the freshness consolidation (`CascadePlayerScope`); area/team/world follow per channel
-  (the tradeRoutes world term is the first world-scope tenant). Full rebuild of everything = LOAD ONLY.
+  only live calculation is adding the ~5 packages together at read.**
+  **⛔ EVERY scope carries packages — whether a given scope's packages are EMPTY is IRRELEVANT (owner ruling).**
+  The uniformity IS the design: it is what makes "the only live calc is summing the packages" literally true and keeps
+  the read path identical at every level. A scope is never skipped because its packages look empty — an absent package
+  forces the read to source that scope some OTHER way, and both ways are defects: a per-read walk (the cost class this
+  doc exists to prevent), or an upper scope's sum stored in a lower one (breaking the scope principle,
+  [modifier.md §1](../specs/modifier.md), which forces downward invalidation fan-out).
+  **⛔ WORLD, TEAM and AREA carry NO yields directly — they can only apply MODIFIERS (owner ruling).** Yields
+  originate at the scopes that actually produce them (plot / city / empire / unit); the upper three contribute
+  percentage stacks (and, for area, enabler concerns) onto those yields. So their packages are percent-side by
+  design — which is a REASON they still carry packages, not an excuse to omit them.
+  Full rebuild of everything = LOAD ONLY.
+  **Status against this ruling:** city / player / world / unit each sit on a `CvDerivedCacheSet` (their "ONE dirty
+  protocol"), plot on the single-flag `CvDerivedCache`. **The two gaps: `CvArea` carries NO cache at all, and
+  `CvTeam` carries only `CascadeTeamCaps` (capabilities, not a package).**
 - **⚖ TWO DISTINCT KINDS OF DERIVED CACHE — do not conflate them:**
   - **The yield + percent packages are an INPUT/OUTPUT (value) cache** — memoize the computed number,
     dirty-invalidate on a source event, recompute from inputs on next read. This is what `CvDerivedCache` is FOR.
