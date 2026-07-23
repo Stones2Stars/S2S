@@ -412,6 +412,16 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 
 		doSetUnitCombats();
 		doSetFreePromotions(true);
+		// The unit's OWN grants.promotions are handed over by the GRANTS MACHINE off this emit. Its position is
+		// pinned between two neighbours and is wrong on either side of them:
+		//   AFTER doSetFreePromotions -- a promotion can grant UNIT-COMBATS, and doSetFreePromotions ends with
+		//     checkFreetoCombatClass() which reconciles them. Emitting before that let the machine mutate the
+		//     combat-class set outside its reconciliation; the outcome lists are merged from unit + combat classes,
+		//     which crashed as a wild CvTeam::isHasTech read out of CvOutcome::isPossibleSomewhere.
+		//   BEFORE doSetDefaultStatuses -- that calls statusUpdate(), establishing the unit's status/animation
+		//     state. Emitting after it left promotions landing on an already-computed visual state (units drawn
+		//     only after re-selection; a fortified unit stuck in its run animation).
+		emitUnitCreated((int)getUnitType(), getID(), (int)getOwner());
 		doSetDefaultStatuses();
 
 		// Cache initial healer values
@@ -25946,8 +25956,10 @@ void CvUnit::setFreePromotion(PromotionTypes ePromotion, bool bAdding, TraitType
 
 	if (bAdding && !isHasPromotion(ePromotion))
 	{
-		if (m_pUnitInfo->getFreePromotions((int)ePromotion)
-		|| (NO_UNIT != getUnitType() && pPlayer.isFreePromotion(getUnitType(), ePromotion)))
+		// The unit-info leg (grants.promotions) is the GRANTS MACHINE's and is applied at creation off
+		// SEVT_UNIT_CREATED. What remains here is the player free-promotion REGISTRY, which only
+		// CvPlayer::applyEvent writes (random events -- out of scope).
+		if (NO_UNIT != getUnitType() && pPlayer.isFreePromotion(getUnitType(), ePromotion))
 		{
 			setHasPromotion(ePromotion, true, true);
 			return;

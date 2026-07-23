@@ -15,6 +15,7 @@
 #include "AI/CvGameAI.h"            // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 #include "CvUnitCombatInfo.h"   // GC.getUnitCombatInfo(e).getGroupBase() -- the baseGroupRank derivation
 #include "CvTechInfo.h"         // GC.getTechInfo(...).getEra() -- the era-comparison reads (unity include exposure)
+#include "AI/CvPlayerAI.h"      // GET_PLAYER -- isCivilizationUnit resolves the asking player's civilization
 #include "CvPromotionInfo.h"    // GC.getPromotionInfo(i).getUnitCombat() -- the canAcquireExperience derivation
 #include "CvJsonModifiers.h"    // getModifiers() walk -> the unit's PROPERTY_* emission sources
 #include "CvCascadePropertyBridge.h" // the JSON->BoolExpr translator (property-audit.md increment 4)
@@ -794,4 +795,20 @@ bool CvUnitInfo::isStealthDefense() const
 	if (!GC.getGame().isOption(GAMEOPTION_COMBAT_WITHOUT_WARNING)) return false;
 	static int s_clsId = -1;
 	return m_skills.hasKey(s_clsId, CLSD_SKILL, "stealthDefense");
+}
+
+// identity.enabledCivilizations is a WHITELIST -- empty means the unit is available to every civilization (the
+// overwhelming majority), non-empty restricts it to the listed ones (the Neanderthal / NPC case, the same data
+// CvCity::canTrain gates `stronglyRestricted` NPCs on). See the header for why the two semantics share an overload.
+bool CvUnitInfo::isCivilizationUnit(const PlayerTypes ePlayer) const
+{
+	const int iNum = (int)m_enabledCivs.size();
+	if (ePlayer == NO_PLAYER) return iNum > 0;   // "is this unit civilization-RESTRICTED at all?"
+	if (iNum == 0) return true;                  // unrestricted -> available to every civilization
+	const CivilizationTypes eCiv = GET_PLAYER(ePlayer).getCivilizationType();
+	for (int i = 0; i < iNum; ++i)
+	{
+		if (m_enabledCivs[i].eCivilization == eCiv) return true;
+	}
+	return false;
 }

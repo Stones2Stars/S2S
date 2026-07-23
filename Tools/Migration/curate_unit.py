@@ -490,7 +490,15 @@ def found_buildings(store):
         out.append(entry)
     for b, brec in store.table("BuildingInfo").items():
         if engine.text(brec.find("bCapital")) == "1":
-            out.append(OrderedDict([("building", b), ("enabled", _atom("CITY", "empire", max=0))]))
+            # The capital building seeds a founded city iff the empire HAS NO PALACE -- the building gates on its
+            # OWN absence, not on a city count. Two reasons this is the right atom:
+            #   - a CITY-count proxy is wrong on the case that matters: lose your capital with other cities still
+            #     standing and founding the next one SHOULD re-seed a palace; "first city" refuses it.
+            #   - it has no off-by-one. The grant applies at CvPlayer::found AFTER initCity has registered the new
+            #     city, so a `{CITY, empire, max:0}` gate can never hold at founding and the Palace was silently
+            #     never seeded -- a game with no capital (verified live: appliedFirstBuild=0, palace left unbuilt).
+            #     The palace count is genuinely 0 at that moment.
+            out.append(OrderedDict([("building", b), ("enabled", _atom(b, "empire", max=0))]))
     _FOUND_BUILDINGS = out
     return out
 

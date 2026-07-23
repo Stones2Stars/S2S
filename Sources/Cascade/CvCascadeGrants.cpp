@@ -34,7 +34,7 @@
 #include <vector>
 
 // ===================== [GRANTS] spine domain (logging.md §4: logging is a spine CONSUMER) =====================
-enum GrEvt { GRE_BUILDING = 1, GRE_UNIT, GRE_TECH, GRE_RELIGION, GRE_CIVIC, GRE_GAMESTART, GRE_REPEAT };
+enum GrEvt { GRE_BUILDING = 1, GRE_UNIT, GRE_TECH, GRE_RELIGION, GRE_CIVIC, GRE_GAMESTART, GRE_REPEAT, GRE_FOUND };
 enum GrFld
 {
 	GF_PLAYER = 1, GF_BUILDING, GF_UNIT, GF_TECH, GF_RELIGION, GF_CIVIC,
@@ -61,6 +61,7 @@ static const char* gr_prefix(int evt)
 	case GRE_CIVIC:    return "[GRANTS/civic]";
 	case GRE_GAMESTART: return "[GRANTS/gameStart]";
 	case GRE_REPEAT:   return "[GRANTS/repeat]";
+	case GRE_FOUND:    return "[GRANTS/cityFounded]";
 	default:           return "[GRANTS]";
 	}
 }
@@ -284,15 +285,34 @@ static void gr_resolveBuilding(int iBuilding, int iPlayer, int iCity)
 		.addI(GF_GOLDENAGE, nGoldenAge).addI(GF_POPULATION, nPop));
 }
 
-static void gr_resolveUnit(int iUnit, int iPlayer)
+// The unit's OWN `grants.promotions`, handed to the created INSTANCE. This is the ONLY leg of the legacy
+// CvUnit::setFreePromotion that is a grant: the player free-promotion registry is written solely by
+// CvPlayer::applyEvent (random events -- out of scope) and the trait-derived promotions are refcounted with the
+// trait (a MODIFIER, alive-with-source). See grant-apply-sites.md §4.
+static void gr_resolveUnit(int iUnit, int iPlayer, int iUnitId)
 {
 	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(iUnit);
 	if (j == NULL) return;
 	const int nPromos = gr_listCount(j, "promotions");        // free promotions on creation
 	const int nFound  = gr_listCount(j, "foundBuildings");    // settle-time building seeds (settler)
 	if (nPromos == 0 && nFound == 0) return;
+
+	int nApplied = 0;
+	if (!s_bSuppressed && iUnitId >= 0 && iPlayer >= 0 && nPromos > 0)
+	{
+		CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnitId);
+		const std::vector<int>* promos = (j->getGrants() != NULL) ? j->getGrants()->list("promotions") : NULL;
+		if (pUnit != NULL && promos != NULL)
+		{
+			for (size_t i = 0; i < promos->size(); ++i)
+			{
+				const PromotionTypes eP = (PromotionTypes)(*promos)[i];
+				if (!pUnit->isHasPromotion(eP)) { pUnit->setHasPromotion(eP, true, true); ++nApplied; }
+			}
+		}
+	}
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_UNIT, 1)
-		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0)
+		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, nApplied)
 		.addI(GF_PLAYER, iPlayer).addI(GF_UNIT, iUnit)
 		.addI(GF_PROMOTIONS, nPromos).addI(GF_FOUNDBUILDINGS, nFound));
 }
@@ -300,6 +320,29 @@ static void gr_resolveUnit(int iUnit, int iPlayer)
 static int gr_firstId(const CvInfo* j, const char* szBucket)   // a single-id grant bucket's id (-1 if absent)
 {
 	return (j->getGrants() != NULL) ? j->getGrants()->firstListId(szBucket) : -1;
+}
+
+// The TECH first-discoverer provisions. Mirrors the CvTeam::setHasTech first-discover block, whose apply legs are
+// DELETED -- what stays there is the non-grant residue: the `bClearResearchQueueAI` rider (a free tech invalidates
+// the AI's queued research) and the "first to tech" announcements, both keyed off the same data.
+// The prophet leg is the tech's own `firstFreeProphet` gated on GAMEOPTION_RELIGION_DIVINE_PROPHETS -- exactly what
+// CvPlayer::getTechFreeProphet does (a pure info read + the option), so it moves without changing the resolution.
+static void gr_applyTechFirstDiscover(int iTech, int iPlayer, int iFirstUnit, int iFirstProphet, int nFreeTechs)
+{
+	CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);
+	CvCity* pCapital = player.getCapitalCity();
+
+	if (iFirstUnit >= 0 && pCapital != NULL) pCapital->createGreatPeople((UnitTypes)iFirstUnit, false, false);
+	if (iFirstProphet >= 0 && pCapital != NULL && GC.getGame().isOption(GAMEOPTION_RELIGION_DIVINE_PROPHETS))
+		pCapital->createGreatPeople((UnitTypes)iFirstProphet, false, false);
+
+	if (nFreeTechs > 0)
+	{
+		if (player.isHuman())
+			player.chooseTech(nFreeTechs, gDLL->getText("TXT_KEY_MISC_FIRST_TECH_CHOOSE_FREE",
+				GC.getTechInfo((TechTypes)iTech).getTextKeyWide()));
+		else for (int i = 0; i < nFreeTechs; ++i) player.AI_chooseFreeTech();
+	}
 }
 
 static void gr_resolveTech(int iTech, int iPlayer)
@@ -310,22 +353,42 @@ static void gr_resolveTech(int iTech, int iPlayer)
 	const int iFirstProphet = gr_firstId(j, "firstFreeProphet");  // first-discover free prophet id (option-gated)
 	const int nFreeTechs    = gr_pulse(j, "freeTechs");          // first-discover free tech picks (count)
 	if (iFirstUnit < 0 && iFirstProphet < 0 && nFreeTechs == 0) return;
+	const bool bApplied = !s_bSuppressed && iPlayer >= 0;
+	if (bApplied) gr_applyTechFirstDiscover(iTech, iPlayer, iFirstUnit, iFirstProphet, nFreeTechs);
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_TECH, 1)
-		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0)
+		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, bApplied ? 1 : 0)
 		.addI(GF_PLAYER, iPlayer).addI(GF_TECH, iTech)
 		.addI(GF_FIRSTUNIT, iFirstUnit).addI(GF_FIRSTPROPHET, iFirstProphet).addI(GF_FREETECHS, nFreeTechs));
 }
 
-static void gr_resolveReligion(int iReligion, int iPlayer)
+// The RELIGION FOUNDER provisions. The two religions are DIFFERENT on purpose (CvPlayer::foundReligion): the SLOT
+// being claimed sets the COUNT, the religion the player CHOSE sets the unit TYPE. Legacy's apply is deleted.
+// (Under GAMEOPTION_RELIGION_DIVINE_PROPHETS foundReligion never runs -- founding is an OUTCOME there, a separate
+// system -- so this path simply does not fire, by design.)
+static void gr_resolveReligion(int iReligion, int iSlotReligion, int iPlayer, int iCity, bool bAward)
 {
-	const CvInfo* j = InfoRepo<CvReligionInfo>::get().get(iReligion);
-	if (j == NULL) return;
-	const int nNumFree  = gr_pulse(j, "numFreeUnits");   // count of founder units
-	const int iFreeUnit = gr_firstId(j, "freeUnit");      // the founder unit type
+	const CvInfo* jChosen = InfoRepo<CvReligionInfo>::get().get(iReligion);
+	const CvInfo* jSlot   = InfoRepo<CvReligionInfo>::get().get(iSlotReligion);
+	if (jChosen == NULL || jSlot == NULL) return;
+	const int nNumFree  = gr_pulse(jSlot, "numFreeUnits");   // count of founder units -- from the SLOT
+	const int iFreeUnit = gr_firstId(jChosen, "freeUnit");    // the founder unit type -- from the CHOSEN religion
 	if (nNumFree == 0 && iFreeUnit < 0) return;
+
+	const bool bApplied = !s_bSuppressed && bAward && iFreeUnit >= 0 && nNumFree > 0 && iPlayer >= 0;
+	if (bApplied)
+	{
+		CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);
+		CvCity* pCity = player.getCity(iCity);
+		if (pCity != NULL)
+		{
+			for (int i = 0; i < nNumFree; ++i)
+				player.initUnit((UnitTypes)iFreeUnit, pCity->getX(), pCity->getY(), NO_UNITAI, NO_DIRECTION,
+					GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
+		}
+	}
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_RELIGION, 1)
-		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0)
-		.addI(GF_PLAYER, iPlayer).addI(GF_RELIGION, iReligion)
+		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, bApplied ? 1 : 0)
+		.addI(GF_PLAYER, iPlayer).addI(GF_RELIGION, iReligion).addI(GF_CITY, iCity)
 		.addI(GF_NUMFREEUNITS, nNumFree).addI(GF_FREEUNIT, iFreeUnit));
 }
 
@@ -358,8 +421,19 @@ static void gr_resolvePlayerInit(int iPlayer)
 	const int nBuild  = (jc != NULL) ? gr_listCount(jc, "buildings") : 0;
 	const int nGold   = ((je != NULL) ? gr_pulse(je, "startingGold") : 0) + ((jh != NULL) ? gr_pulse(jh, "startingGold") : 0);
 	if (nCivics == 0 && nTechs == 0 && nBuild == 0 && nGold == 0) return;
+
+	// STARTING GOLD is the machine's: (handicap + era startingGold) x gamespeed, replacing CvPlayer::initFreeState's
+	// apply. The gamespeed scaling is engine pacing, not data ([mission-outcome-system.md]: Adapt* is pure engine),
+	// so it stays here rather than being baked into the grant.
+	const bool bApplied = !s_bSuppressed && nGold > 0;
+	if (bApplied)
+	{
+		CvPlayer& player = GET_PLAYER((PlayerTypes)iPlayer);
+		player.setGold(0);
+		player.changeGold(nGold * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100);
+	}
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_GAMESTART, 1)
-		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0)
+		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, bApplied ? 1 : 0)
 		.addI(GF_PLAYER, iPlayer).addI(GF_CIVICS, nCivics).addI(GF_TECHS, nTechs)
 		.addI(GF_BUILDINGS, nBuild).addI(GF_STARTINGGOLD, nGold));
 }
@@ -522,6 +596,78 @@ static void gr_applyPerTurn(int iPlayer)
 	}
 }
 
+// A CITY WAS FOUNDED -- the settle-time provisions. Today this hands over the FOUNDER's `grants.foundBuildings`
+// (json §5): a settler seeding buildings into the city it founds. That is a NEW mechanic coined for this rework,
+// so there is no legacy apply to mirror -- the data has been authored and inert, waiting for a trigger.
+// ⛔ The other settle-time provisions (start-era freePopulation, civilization buildings, FreeStartEra, the trait
+// settle keys, barbarianInitialDefenders) still apply in CvPlayer::found: several are not authored in a `grants`
+// block at all, so the machine cannot resolve them off getGrants() until the curator emits them
+// (grant-apply-sites.md §5.4). The TRIGGER now exists; the DATA is the remaining blocker.
+static void gr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
+{
+	if (iOwner < 0 || iFounderType < 0) return;
+	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(iFounderType);
+	if (j == NULL || j->getGrants() == NULL) return;
+	const std::vector<CvJsonFoundBuilding*>& seeds = j->getGrants()->foundBuildings();
+	if (seeds.empty()) return;
+
+	CvPlayer& player = GET_PLAYER((PlayerTypes)iOwner);
+	CvCity* pCity = player.getCity(iCity);
+	int nPlaced = 0;
+	if (!s_bSuppressed && pCity != NULL)
+	{
+		CvCascadeEvalCtx ec;
+		ec.city = pCity; ec.plot = pCity->plot(); ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
+		const CvCascadeEvalFlags kFlags;
+		for (size_t i = 0; i < seeds.size(); ++i)
+		{
+			const CvJsonFoundBuilding* s = seeds[i];
+			if (s->building < 0) continue;
+			if (s->enabled != NULL && !cascadeEvalCondition(s->enabled, ec, kFlags)) continue;
+			if (pCity->hasBuilding((BuildingTypes)s->building)) continue;
+			pCity->changeHasBuilding((BuildingTypes)s->building, true);
+			++nPlaced;
+		}
+	}
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_FOUND, 1)
+		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, nPlaced)
+		.addI(GF_PLAYER, iOwner).addI(GF_CITY, iCity).addI(GF_UNIT, iFounderType)
+		.addI(GF_FOUNDBUILDINGS, (int)seeds.size()));
+}
+
+// THE CAPITAL RELOCATED -- re-seed the palace into the new capital. The palace is what MAKES a city the capital
+// (setupBuilding's isCapital branch calls setCapitalCity), so without this a captured capital never relocates:
+// `foundBuildings` covers FOUNDING only, and the civilization building list that used to carry the palace on
+// relocation no longer does. Same gate as the founding case -- the building on its OWN absence -- so an empire
+// that still holds a palace somewhere gets nothing.
+static void gr_resolveCapitalChanged(int iOwner, int iCity)
+{
+	if (iOwner < 0 || iCity < 0) return;   // -1 city = no city left to be a capital
+	CvPlayer& player = GET_PLAYER((PlayerTypes)iOwner);
+	CvCity* pCity = player.getCity(iCity);
+	if (pCity == NULL) return;
+
+	// The capital building is the one flagged isCapital -- the same identity the engine keys setCapitalCity on.
+	static int s_iCapitalBuilding = -2;
+	if (s_iCapitalBuilding == -2)
+	{
+		s_iCapitalBuilding = -1;
+		for (int i = 0; i < GC.getNumBuildingInfos(); ++i)
+		{
+			if (GC.getBuildingInfo((BuildingTypes)i).isCapital()) { s_iCapitalBuilding = i; break; }
+		}
+	}
+	if (s_iCapitalBuilding < 0) return;
+
+	const int nHave = player.getBuildingCount((BuildingTypes)s_iCapitalBuilding);
+	const bool bApplied = !s_bSuppressed && nHave == 0 && !pCity->hasBuilding((BuildingTypes)s_iCapitalBuilding);
+	if (bApplied) pCity->changeHasBuilding((BuildingTypes)s_iCapitalBuilding, true);
+
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_FOUND, 1)
+		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, bApplied ? 1 : 0)
+		.addI(GF_PLAYER, iOwner).addI(GF_CITY, iCity).addI(GF_BUILDING, s_iCapitalBuilding));
+}
+
 void CvCascadeGrants::onEvent(const CvSpineEvent& e)
 {
 	if (e.eKind != EVENTKIND_DOMAIN) return;
@@ -548,9 +694,15 @@ void CvCascadeGrants::onEvent(const CvSpineEvent& e)
 			gr_resolveBuilding(e.iType, e.iC, e.iSrcLoc);   // iSrcLoc = the city the building landed in
 		}
 		break;
-	case SEVT_UNIT_COUNT:     if (e.iB > 0) { gr_resolveUnit(e.iType, e.iC);     } break;  // only on ADD (created)
+	// The per-TYPE tally carries no instance, so it cannot apply -- the instance-aware SEVT_UNIT_CREATED does.
+	case SEVT_UNIT_CREATED:   gr_resolveUnit(e.iType, e.iC, e.iA); break;   // iA = the created unit's id
+	// iType = founding unit's type, iC = owner, iSrcLoc = the new city
+	case SEVT_CITY_FOUNDED:   gr_resolveCityFounded(e.iC, e.iSrcLoc, e.iType); break;
+	// iC = owner, iSrcLoc = the new capital (-1 = none left)
+	case SEVT_CAPITAL_CHANGED: gr_resolveCapitalChanged(e.iC, e.iSrcLoc); break;
 	case SEVT_TECH_ACQUIRED:    gr_resolveTech(e.iType, e.iC);       break;  // first-discover only (iC = discoverer)
-	case SEVT_RELIGION_FOUNDED: gr_resolveReligion(e.iType, e.iC);   break;  // iC = founding player
+	// iType = chosen religion, iA = slot religion, iB = bAward, iC = founding player, iSrcLoc = holy city
+	case SEVT_RELIGION_FOUNDED: gr_resolveReligion(e.iType, e.iA, e.iC, e.iSrcLoc, e.iB != 0); break;
 	case SEVT_CIVIC_ADOPTED:    gr_resolveCivic(e.iType, e.iC);      break;  // iC = adopting player
 	case SEVT_PLAYER_INIT:      gr_resolvePlayerInit(e.iC);          break;  // iC = player (game start)
 	// The per-turn provisions (increment 5). PLAYER-scoped only -- the GAME-scope boundary carries iC = -1 and is

@@ -1798,13 +1798,12 @@ void CvPlayer::setupGraphical()
 
 void CvPlayer::initFreeState()
 {
-	setGold(0);
-	int iGold = GC.getHandicapInfo(getHandicapType()).getStartingGold() + GC.getEraInfo(GC.getGame().getStartEra()).getStartingGold();
-
-	iGold *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
-	iGold /= 100;
-
-	changeGold(iGold);
+	// #430: the game-start provisions (civ civics/techs/buildings + era/handicap startingGold) are handed over by
+	// the GRANTS MACHINE off this emit -- emit() dispatches synchronously, so the gold has landed by the time this
+	// returns. ⛔ The trigger lives HERE, not in initFreeUnits: initFreeUnits early-returns on a null starting plot
+	// (so a player could be skipped entirely) and ran AFTER the gold was already applied. initFreeState is called
+	// for every alive player (CvGame::initFreeState) and has no early return.
+	emitPlayerInit((int)getID());
 	clearResearchQueue();
 }
 
@@ -1814,9 +1813,6 @@ void CvPlayer::initFreeUnits()
 	PROFILE_EXTRA_FUNC();
 	if (getStartingPlot() == NULL) return;
 
-	// #430 cascade: player game start -> emit the DOMAIN trigger so the grants machine resolves this player's game-start
-	// grants (civilization civics/techs/buildings + era/handicap starting*). The player's civ/era/handicap are set here.
-	emitPlayerInit((int)getID());
 
 	if (GC.getGame().isOption(GAMEOPTION_CORE_CUSTOM_START))
 	{
@@ -2301,9 +2297,9 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 		{
 			oldOwner.changeCitiesLost(1);
 		}
+		// The owner-change (raze half) is emitted by CvPlayer::deleteCity, which raze funnels into
+		// (raze -> disband -> CvCity::kill -> deleteCity) -- the ONE choke point for every city removal.
 		raze(pOldCity);
-		// owner change (raze half): the old owner's city is DESTROYED, going to no owner. iSrcLoc = the OLD city id.
-		emitCityOwnerChanged(iOldCityId, (int)eOldOwner, (int)NO_PLAYER);
 	}
 	else
 	{
@@ -5740,6 +5736,12 @@ void CvPlayer::findNewCapital()
 			pBestCity->changeHasBuilding((BuildingTypes)GC.getCivilizationInfo(getCivilizationType()).getCivilizationBuilding(iI), true);
 		}
 	}
+	// #430: announce the relocation AFTER the replacement is chosen -- consumers need a city to put a capital's
+	// contents into. Above all the PALACE: it is what MAKES a city the capital (setupBuilding's isCapital branch
+	// calls setCapitalCity), and it is no longer in the civilization building list above, so without this fact
+	// nothing re-seeds it and a captured capital never relocates. Emitted even when pBestCity is NULL (iSrcLoc
+	// = -1: the empire has no city left to be a capital) -- absence is a fact too.
+	emitCapitalChanged((int)getID(), (pBestCity != NULL) ? pBestCity->getID() : -1);
 }
 
 
@@ -6210,6 +6212,23 @@ void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 
 	CvCity* pCity = initCity(iX, iY, true, true);
 	FAssertMsg(pCity, "City is not assigned a valid value");
+
+	// #430: the city now EXISTS -- announce the founding before any settle-time provision runs, so the grants
+	// machine can hand them over. Founding previously emitted no identifiable fact (only side-effects:
+	// populationChanged / plotOwnerChanged / cityNetworkChanged), which is exactly why the settle-time
+	// provisions -- start-era freePopulation, civilization buildings, FreeStartEra, the trait settle keys, and the
+	// founder's grants.foundBuildings -- had no trigger to hang on.
+	if (pCity != NULL)
+	{
+		// OWNERSHIP first, then the founding -- the same order (and the same NO_PLAYER -> owner transition) the load
+		// reseed uses at CvCity::read, which establishes that the city belongs to its owner before its contents.
+		// Without this, a FOUNDED city never announced ownership in live play at all: the only owner emits were
+		// dispose and acquire, so the load path and the play path disagreed about the same fact and a consumer
+		// tracking ownership would only learn of a founded city after a reload.
+		emitCityOwnerChanged(pCity->getID(), (int)NO_PLAYER, (int)getID());
+		emitCityFounded((int)getID(), pCity->getID(),
+			(pUnit != NULL) ? (int)pUnit->getUnitType() : -1, (pUnit != NULL) ? pUnit->getID() : -1);
+	}
 
 	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
 	{
@@ -8636,22 +8655,9 @@ void CvPlayer::foundReligion(ReligionTypes eReligion, ReligionTypes eSlotReligio
 		// Found religion
 		GC.getGame().setHolyCity(eReligion, pBestCity, true);
 
-		// #430 cascade: religion founded here -> emit the DOMAIN trigger so the grants machine resolves the founder
-		// grants (numFreeUnits / freeUnit). Synced/deterministic.
-		emitReligionFounded((int)getID(), (int)eReligion);
-
-		if (bAward && GC.getReligionInfo(eSlotReligion).getNumFreeUnits() > 0)
-		{
-			const UnitTypes eFreeUnit = (UnitTypes)GC.getReligionInfo(eReligion).getFreeUnit();
-
-			if (eFreeUnit != NO_UNIT)
-			{
-				for (int i = 0; i < GC.getReligionInfo(eSlotReligion).getNumFreeUnits(); ++i)
-				{
-					initUnit(eFreeUnit, pBestCity->getX(), pBestCity->getY(), NO_UNITAI, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
-				}
-			}
-		}
+		// #430: the founder grants (numFreeUnits from the SLOT, freeUnit from the CHOSEN religion) are handed over
+		// by the GRANTS MACHINE off this emit -- emit() dispatches synchronously, so they land here.
+		emitReligionFounded((int)getID(), (int)eReligion, (int)eSlotReligion, pBestCity->getID(), bAward);
 	}
 }
 
@@ -11069,6 +11075,11 @@ void CvPlayer::setCapitalCity(CvCity* pNewCapitalCity)
 
 	if (pOldCapitalCity != pNewCapitalCity)
 	{
+		// #430: the capital genuinely CHANGED -- this is the choke point for every cause, including a player
+		// deliberately MOVING it by building a palace in another city (setupBuilding's isCapital branch lands
+		// here). Flip-guarded by the enclosing !=, so it announces a real transition only.
+		emitCapitalChanged((int)getID(), (pNewCapitalCity != NULL) ? pNewCapitalCity->getID() : -1);
+
 		const bool bUpdatePlotGroups = pOldCapitalCity == NULL || pNewCapitalCity == NULL || pOldCapitalCity->plot()->getOwnerPlotGroup() != pNewCapitalCity->plot()->getOwnerPlotGroup();
 
 		if (bUpdatePlotGroups)
@@ -14736,6 +14747,12 @@ CvCity* CvPlayer::addCity()
 
 void CvPlayer::deleteCity(int iID)
 {
+	// #430: a city ceasing to exist is a FACT and must be announced -- the symmetric twin of the founding emit
+	// (NO_PLAYER -> owner). Without it the spine knew about cities APPEARING but never about them disappearing, so
+	// a consumer's city set only shed razed/disbanded cities on the next reload. This is the ONE choke point: both
+	// CvCity::kill (raze / disband) and CvCity::killTestCheap funnel here, so a single emit covers every removal.
+	// ⛔ Emitted BEFORE removeAt -- afterwards the id no longer resolves.
+	emitCityOwnerChanged(iID, (int)getID(), (int)NO_PLAYER);
 	m_cities[CURRENT_MAP]->removeAt(iID);
 }
 

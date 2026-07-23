@@ -126,14 +126,26 @@ Line numbers verified against the live tree at the time of writing; treat them a
 | holy city religion + influence | `Engine/CvGame.cpp:5855` | `setHolyCity` |
 | civic `revolution` pulse | **Python**, `Revolution/Gameready/Revolution.py:929` | `checkCivics` (polled) |
 
-### Subsystems with NO inventory row at all
-| granted | site | function |
+### ⛔ OUT OF SCOPE — Python-driven subsystems (owner ruling)
+**Goody huts, random events and espionage are Python-based and stay OUT of the machine**, in the same
+compartment as the §5.1 Python-granting boundary. They have C++ apply helpers (listed below) — do NOT read those
+as gaps to close: the C++ is the hand-over mechanism for a Python-driven system, and re-flagging them as
+"unmigrated grants" is a rediscovery loop. They move only if the owner moves the Python boundary.
+
+**⛔ OUTCOMES ARE NOT GRANTS (owner ruling)** — the `outcomes.kill[]`/`actions[]` reward payloads are their OWN
+system, already set up separately: the `CvOutcome`/`CvOutcomeMission`/`CvOutcomeList` classes and their
+`execute()`/dispatch are UNCHANGED, fed from JSON via `mapFrom`
+([mission-outcome-system.md](../../reference/mission-outcome-system.md)). `CvOutcome::execute` (`:1045+`) is that
+system's apply, NOT an unmigrated grant site — do not fold it into this machine.
+
+| granted | C++ helper (NOT a gap) | function |
 |---|---|---|
 | goody huts: gold, research, tech, XP, heal, reveal, free unit, barbarians | `Engine/CvPlayer.cpp:5915-6065` | `receiveGoody` |
 | random events: gold, esp, research, golden age, bonus, religion, units, pop, culture, promotions | `CvPlayer.cpp:21261+`, `CvCity.cpp:17851+`, `CvUnit.cpp:21743`, `CvPlot.cpp:12542` | `applyEvent` |
 | espionage: stolen gold/tech, bribed worker, culture | `Engine/CvPlayer.cpp:16000+` | `doEspionageMission` |
+
+### Subsystems with NO inventory row at all (IN scope)
 | votes: **an entire city**, pacts | `Engine/CvGame.cpp:8275`, `:8389` | `processVote` |
-| outcome reward payloads (`outcomes.kill[]`/`actions[]`) | `Engine/CvOutcome.cpp:1045+` | `execute` |
 | NPC per-turn spawns | `Engine/CvGame.cpp:6653` | `doSpawns` |
 | combat loot / pillage / capture / blockade gold | `CvUnit.cpp:2456`, `:7564`, `:1537`; `CvPlayer.cpp:2279` | various |
 | leader trait granted on culture level-up | `Engine/CvPlayer.cpp:29249` | `doPromoteLeader` |
@@ -170,9 +182,17 @@ buildings (`:2443`, the only *live* settle-time seed), settler population (`:245
 4. **`SEVT_PLAYER_INIT` does not fire for every player who receives grants** — `initFreeUnits` early-returns on
    a null starting plot *before* the emit, and is only called for players with zero units and zero cities.
    Gold is also applied 21 lines *before* the emit (`CvGame.cpp:994` vs `:1015`).
-5. **The religion founder grant is dead under `GAMEOPTION_RELIGION_DIVINE_PROPHETS`** — `foundReligion`
-   early-returns (`CvPlayer.cpp:8543`) and `CvUnit::spread` founds instead, granting nothing and never emitting
-   `emitReligionFounded`. It also mixes `eSlotReligion` (count) with `eReligion` (unit type).
+5. ~~The religion founder grant is dead under `GAMEOPTION_RELIGION_DIVINE_PROPHETS` / mixes slot and religion.~~
+   **NOT A DEFECT — both halves are BY DESIGN (owner):**
+   - Under `GAMEOPTION_RELIGION_DIVINE_PROPHETS`, `foundReligion` early-returns (`CvPlayer.cpp:8543`) because
+     **founding a religion is an OUTCOME** under that option — the outcome system's job, and outcomes are a
+     separate system from this machine (§2). Nothing is missing.
+   - The `eSlotReligion` / `eReligion` split is deliberate, and the signature says so
+     (`foundReligion(eReligion, eSlotReligion, bAward)`): the **SLOT** is what is being claimed (it drives
+     `isReligionSlotTaken` / `getTechPrereq` / `setReligionSlotTaken`) and therefore sets the free-unit **COUNT**;
+     the **CHOSEN** religion sets the free-unit **TYPE**. Slot = reward size, chosen religion = its flavour.
+   ⚑ To MOVE this grant the emit must carry what the apply needs: the chosen religion, the slot religion, `bAward`,
+   and the target city (`pBestCity`) — `emitReligionFounded` carries only player + religion today.
 6. **Both property-band machines have live code and zero data** — `m_aPropertyBuildings` /
    `m_aPropertyPromotions` are never written; the bands are live instead through the F5 watermark →
    `requires.operate` dormancy, a different semantic (operating, not presence).
@@ -180,7 +200,41 @@ buildings (`:2443`, the only *live* settle-time seed), settler population (`:245
    intact); `isApplyFreePromotionOnMove` → `false`, making `CvCity::doPromotion` unreachable so a unit that walks
    into a city never gains the building's promotions.
 
+## 3b. ⚖ THE PALACE: two triggers, not one (owner ruling)
+
+The capital building is placed by **two different events**, and covering only one leaves an empire with no capital:
+
+| event | who places it | status |
+|---|---|---|
+| a city is FOUNDED and the empire has no palace | the settler's `grants.foundBuildings`, gated `{BUILDING_PALACE, empire, max:0}` | ✅ live (the grants machine, off `SEVT_CITY_FOUNDED`) |
+| a capital is CAPTURED and the capital relocates | **OWNER CHANGE must handle it** — not the founding gate | ⛔ nothing places it |
+
+**The gate is "the empire has NO PALACE", never a city count.** A `{CITY, empire, max:0}` proxy is wrong twice: it
+can never hold at founding (the grant applies after `initCity` has registered the new city, so the count is already
+1 — verified live: the Palace was silently never seeded and games started with no capital), and it refuses the case
+that matters — losing your capital while other cities stand should re-seed one. The building gating on its OWN
+absence is correct at both triggers and needs no off-by-one reasoning.
+
+**Why the civ-grant palace was NOT redundant.** `BUILDING_PALACE` used to sit in ~48 civilizations'
+`grants.buildings` and was dropped as a duplicate of the settler's `foundBuildings`. It was not: `foundBuildings`
+covers FOUNDING, while `CvPlayer::findNewCapital` / `setCapitalCity` place the **civilization building list** into
+the newly-chosen capital — that list was the only thing that moved a palace on RELOCATION. Dropping it removed the
+mechanism. (`findNewCapital`'s pick, for reference: `pop*4 + food + production*3 + commerce*2 + cultureLevel +
+religionCount + corporationCount + greatPeople*2`, scaled by `(100 + culturePercent)/100`, excluding the old capital.)
+
 ## 4. Classification results (settled by reading the code)
+
+**⚖ UNIT free promotions SPLIT THREE WAYS — only ONE leg is this machine's.** `CvUnit::setFreePromotion`
+(`CvUnit.cpp:25942`) folds four sources with different LIFETIMES, so it must never be moved wholesale:
+
+| leg | lifetime | owner |
+|---|---|---|
+| the unit info's own `getFreePromotions` — fed from **`grants.promotions`** (`CvUnitInfo.cpp:684`) | set at creation, never removed | **GRANT — this machine** |
+| the player free-promotion registry, keyed by unit type AND by unitcombat (`CvPlayer::isFreePromotion`) | written **ONLY** by `CvPlayer::applyEvent` (`:21245`) | **OUT OF SCOPE — random events** (and genuine one-shot event-store state) |
+| trait `isFreePromotionUnitCombats` | explicitly REMOVED when the trait is lost (`setFreePromotion`'s `!bAdding` branch) | **MODIFIER — alive-with-source** ([modifier.md](../../specs/modifier.md)), the `freeSpecialists` precedent |
+
+Moving the whole function would import a modifier AND an out-of-scope event store into the grants machine — the
+exact §1 mistake. Only the `grants.promotions` leg migrates.
 
 **MODIFIER, not grant** — `getFreeBuilding`/`getFreeAreaBuilding` (refcounted ±1 with source presence);
 building `getFreeTraitTypes` ("conferred while active"); vote `tradeRoutes`/`isFreeTrade`/`isNoNukes`/`forceCivic`
@@ -241,5 +295,5 @@ question [grants-machine.md](grants-machine.md) left open.
 ## See also
 - [grants-machine.md](grants-machine.md) — the machine + its build increments (its inventory table is superseded
   by §2 here). · [json.md §5](../../specs/json.md) — the `grants` vocabulary. ·
-  [mission-outcome-system.md](../../reference/mission-outcome-system.md) — the missions carve-out, which covers
-  the four hardcoded ability keys and **not** the outcome reward payloads.
+  [mission-outcome-system.md](../../reference/mission-outcome-system.md) — the missions carve-out (the four
+  hardcoded ability keys) AND the outcome system, which is separate from this machine entirely (§2).

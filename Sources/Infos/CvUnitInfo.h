@@ -458,7 +458,13 @@ public:
 	const std::vector<ConstructRequirement>& getTrainRequirements() const { return m_trainRequirements; }  // #195: derived post-load (empty)
 
 	// runtime / no-JSON-source flags kept at legacy defaults (fields the curator does not emit):
-	bool isCivilizationUnit(const PlayerTypes /*ePlayer*/ = NO_PLAYER) const { return false; }  // runtime (player-specific)
+	// TWO semantics on one overload, which is how this came to be stubbed `false` -- and a stub here is not a
+	// harmless default: `addStartUnitAI` reads the player form, so a blanket false skips EVERY candidate and a new
+	// game starts with NO UNITS (instant defeat). Backed by identity.enabledCivilizations, a WHITELIST (empty =
+	// available to all), the same data CvCity::canTrain gates NPC `stronglyRestricted` civs on.
+	//   NO_PLAYER -> is this unit RESTRICTED to specific civilizations? (CvGame's "invalidates Neanderthal units")
+	//   a player  -> is it available to THAT player's civilization?
+	bool isCivilizationUnit(const PlayerTypes ePlayer = NO_PLAYER) const;
 	bool isWildAnimal() const { return false; }                  // GAP: bWildAnimal not curated
 	bool canAnimalIgnoresCities() const { return false; }        // GAP: only animalIgnoresBorders emitted
 	bool canAnimalIgnoresImprovements() const { return false; }  // GAP: only animalIgnoresBorders emitted

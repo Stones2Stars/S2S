@@ -115,7 +115,7 @@
    {
     "building": "BUILDING_PALACE",
     "enabled": {
-     "type": "CITY",
+     "type": "BUILDING_PALACE",
      "scope": "empire",
      "max": 0
     }

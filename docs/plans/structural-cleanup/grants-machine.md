@@ -136,6 +136,8 @@ resolved set is observable via `[GRANTS]`, and the apply-loop (increment 5) must
 
 ## See also
 
+- [start-packages.md](start-packages.md) — the GAME-START provisions as authored data (design, not yet built):
+  start packages authored ONCE and stacked, replacing the hardcoded engine unit selection.
 - [json.md](../../specs/json.md) §5 (`grants`) · [event-spine.md](../../specs/event-spine.md) (the `IEventConsumer` front door) ·
   [mission-outcome-system.md](../reference/mission-outcome-system.md) (the carved-out missions-pass keys, NOT grants) ·
   [data-migration-remaining.md](data-migration-remaining.md) (the classification pass).

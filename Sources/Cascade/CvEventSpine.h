@@ -311,7 +311,21 @@ enum SpineDomainEvent
 	// "full stop" ([DEC-unit-modifiers-on-top]; the per-move clear caused an automation storm). A GRANT is
 	// one-shot state, not a recompute, which is why it may ride here.
 	// iType = unit TYPE, iA = unit id, iC = owner, iSrcLoc = city id. DOMAIN.
-	SEVT_UNIT_ENTERED_CITY      = 45
+	SEVT_UNIT_ENTERED_CITY      = 45,
+	// A unit INSTANCE was created (CvUnit::init). Distinct from SEVT_UNIT_COUNT, which is the player's per-TYPE
+	// tally and carries no instance -- the grants machine needs the actual unit to hand its `grants.promotions` to.
+	// iType = unit TYPE, iA = unit id, iC = owner. DOMAIN.
+	SEVT_UNIT_CREATED           = 46,
+	// A city was FOUNDED (CvPlayer::found, once the city object exists and before the settle-time provisions).
+	// ⛔ Distinct from SEVT_CITY_OWNER_CHANGED, which fires on ACQUIRE (conquest/trade) and on the load restore --
+	// founding produced NO identifiable fact before this, only a constellation of side-effects (populationChanged,
+	// plotOwnerChanged, cityNetworkChanged), which is why the settle-time provisions had no trigger to hang on.
+	// iType = the FOUNDING unit's type (-1 if none), iA = that unit's id, iC = owner, iSrcLoc = the new city.
+	SEVT_CITY_FOUNDED           = 47,
+	// The empire's CAPITAL changed -- relocation after the old capital was lost (CvPlayer::findNewCapital, once it
+	// has PICKED the replacement), or a capital being established. The spine carried no capital fact at all, so
+	// nothing could react to a capital moving. iC = owner, iSrcLoc = the new capital city (-1 = none left).
+	SEVT_CAPITAL_CHANGED        = 48
 };
 
 //	Which entity's display name changed (the iType of a SEVT_NAME_CHANGE event). The logging consumer resolves the
@@ -373,6 +387,14 @@ void emitTurnStarted(int iTurn, int iPlayer);
 void emitTurnEnded(int iTurn, int iPlayer);
 //	A unit entered a friendly city's plot. Call from the new-city branch, AFTER the move is committed.
 void emitUnitEnteredCity(int iUnitType, int iUnitId, int iOwner, int iCity);
+//	A unit INSTANCE was created. Call from CvUnit::init once the unit is constructed enough to take a promotion.
+void emitUnitCreated(int iUnitType, int iUnitId, int iOwner);
+//	A city was founded. Call from CvPlayer::found once the city exists, BEFORE the settle-time provisions run.
+//	The founding unit is passed so its `grants.foundBuildings` (json §5) can resolve against the new city.
+void emitCityFounded(int iOwner, int iCity, int iFounderType, int iFounderId);
+//	The empire's capital changed. Call AFTER the replacement city has been chosen -- consumers need somewhere to
+//	put what a capital carries (above all the palace, which is what MAKES a city the capital).
+void emitCapitalChanged(int iOwner, int iCity);
 void emitPlotOwnerChanged(int iPlot, int iOldOwner, int iNewOwner);
 void emitWorkingCityChanged(int iPlot, int iOwner, int iOldCity, int iNewCity);
 
@@ -383,7 +405,10 @@ void emitWorkingCityChanged(int iPlot, int iOwner, int iOldCity, int iNewCity);
 void emitBuildingCount(int iPlayer, int iBuilding, int iNewCount, int iDelta);
 void emitUnitCount(int iPlayer, int iUnit, int iNewCount, int iDelta);
 void emitTechAcquired(int iPlayer, int iTech);
-void emitReligionFounded(int iPlayer, int iReligion);
+//	A religion was FOUNDED. Carries what the founder-grant apply needs: the CHOSEN religion (iReligion -- sets the
+//	free-unit TYPE) and the SLOT being claimed (iSlotReligion -- sets the free-unit COUNT; the two are deliberately
+//	different, see CvPlayer::foundReligion), plus the award flag and the holy city the units spawn in.
+void emitReligionFounded(int iPlayer, int iReligion, int iSlotReligion, int iCity, bool bAward);
 void emitPlayerInit(int iPlayer);
 
 // The load-lifecycle bracket (event-spine.md the load-RESEED): emit STARTED before the save read begins, FINISHED

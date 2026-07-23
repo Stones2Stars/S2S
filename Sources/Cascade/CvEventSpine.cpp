@@ -326,6 +326,9 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_TURN_STARTED:           return "[SPINE] turnStarted";
 	case SEVT_TURN_ENDED:             return "[SPINE] turnEnded";
 	case SEVT_UNIT_ENTERED_CITY:      return "[SPINE] unitEnteredCity";
+	case SEVT_UNIT_CREATED:           return "[SPINE] unitCreated";
+	case SEVT_CITY_FOUNDED:           return "[SPINE] cityFounded";
+	case SEVT_CAPITAL_CHANGED:        return "[SPINE] capitalChanged";
 	case SEVT_RELIGION_CHANGED:       return "[SPINE] religionChanged";
 	case SEVT_CORPORATION_CHANGED:    return "[SPINE] corporationChanged";
 	case SEVT_BONUS_CHANGED:          return "[SPINE] bonusChanged";
@@ -812,6 +815,27 @@ void emitUnitEnteredCity(int iUnitType, int iUnitId, int iOwner, int iCity)
 	 .addStr(SPF_TAGS, szTags.c_str());
 	eventSpine().emit(e);   // synchronous render -> szTags still in scope
 }
+void emitUnitCreated(int iUnitType, int iUnitId, int iOwner)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_CREATED, iUnitType, iUnitId, 0, iOwner, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_UNIT, iUnitType).addI(SPF_OWNER, iOwner);
+	eventSpine().emit(e);
+}
+void emitCityFounded(int iOwner, int iCity, int iFounderType, int iFounderId)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_FOUNDED, iFounderType, iFounderId, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner).addI(SPF_UNIT, iFounderType);
+	eventSpine().emit(e);
+}
+void emitCapitalChanged(int iOwner, int iCity)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CAPITAL_CHANGED, -1, 0, 0, iOwner, iCity);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_CITY, iCity).addI(SPF_OWNER, iOwner);
+	eventSpine().emit(e);
+}
 void emitPlotOwnerChanged(int iPlot, int iOldOwner, int iNewOwner)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_OWNER_CHANGED, -1, iOldOwner, 0, iNewOwner, iPlot);
@@ -851,11 +875,11 @@ void emitTechAcquired(int iPlayer, int iTech)
 	e.addI(SPF_TECH, iTech).addI(SPF_OWNER, iPlayer);
 	eventSpine().emit(e);
 }
-void emitReligionFounded(int iPlayer, int iReligion)
+void emitReligionFounded(int iPlayer, int iReligion, int iSlotReligion, int iCity, bool bAward)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_RELIGION_FOUNDED, iReligion, 0, 0, iPlayer);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_RELIGION_FOUNDED, iReligion, iSlotReligion, bAward ? 1 : 0, iPlayer, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_RELIGION, iReligion).addI(SPF_OWNER, iPlayer);
+	e.addI(SPF_RELIGION, iReligion).addI(SPF_OWNER, iPlayer).addI(SPF_CITY, iCity);
 	eventSpine().emit(e);
 }
 void emitPlayerInit(int iPlayer)
