@@ -288,6 +288,21 @@ boundary around the cascade/JSON model + rewire the Python info-CONSUMERS; fix t
 from the computed-getter flip strategy (which keeps those contracts and rewires bodies, not call sites). Python
 gameplay stays Python. **Home:** [cutover.md](../plans/structural-cleanup/cutover.md).
 
+### DEC-new-getter-surface
+
+**REUSING A LEGACY GETTER IS THE MECHANISM THAT PRODUCES THE HALF-MIGRATED STATE** (owner) — not a shortcut that
+merely risks one. A legacy getter's contract encodes legacy assumptions (its scale, its granularity, its combine,
+its one-channel shape), so pointing the cascade at it forces the CASCADE to bend to that shape; the result is a
+surface that is half cascade and half legacy and reads as nearly done. The 360 channel-shaped getters on
+`CvCity`/`CvPlayer` alone are 360 such contracts. Therefore: **build a NEW uniform, parameterized getter set over
+the channel index, move consumers onto it, and DISCONNECT the old set** — never re-body a legacy getter, never
+keep both surfaces live, and never widen a legacy getter to fit. Python is rewired onto the same uniform set
+(the [DEC-cy-not-fixed](#dec-cy-not-fixed) ban generalized from the `Cy*` bindings to the whole getter surface).
+This SUPERSEDES the computed-getter-flip strategy ("rewire the body, never the call sites"), which was correct
+only while the cascade had no uniform vocabulary to rewire consumers ONTO. The general form of
+[DEC-fixedpoint-x100](#dec-fixedpoint-x100)'s "reducing at the getter lets the cascade be shoehorned into
+legacy-shaped getters — the half-migration reflex". **Home:** [cutover.md](../plans/structural-cleanup/cutover.md).
+
 ### DEC-no-self-heal
 
 Self-heal is NOT a backstop the cascade keeps. No blanket per-turn/per-slice rebuild (`playerSliceRebuild`, the epoch

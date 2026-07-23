@@ -151,8 +151,9 @@ event spine, accumulators, all condition *evaluation*) — dictates *when* each 
 - **END TURN verifies LIVE integration.** Two cases: (1) the engine parts we will not replace can SEE the new cascade
   data; (2) the parts we will replace — `canTrain`/`canConstruct` and the modifier rates — produce the right values in
   the AI's real per-turn calls (end-turn so the AI calls them), observed via `/computed/can*` and the rate endpoints.
-  Under the computed-getter flip ([cutover.md](../plans/structural-cleanup/cutover.md) — the gate BODIES flip,
-  consumers never rewire) the Python layer reads the SAME contracts, so its view is identical by construction.
+  Consumers — engine, AI and Python alike — read the NEW uniform parameterized surface
+  ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)), so every layer observes the same
+  values because it reads the same slots, not because a legacy contract was held stable underneath it.
 - **⛔ An end turn does NOT confirm a STRUCTURE** ([DEC-structure-before-shadow](../architecture/decisions.md#dec-structure-before-shadow)).
   A per-change observation produces false confirmation even on a wrong structure — a gameobject side-table can read
   back green yet be on the wrong structural path. So **stand up the proper, spec-faithful structure FIRST**; the

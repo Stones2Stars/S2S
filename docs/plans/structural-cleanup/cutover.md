@@ -116,9 +116,15 @@ mapping: [`code-cut-map.md`](code-cut-map.md) §Rulings addendum):
       [DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)). These getters are hot paths, so
       the `(scope,channel)` calc-count gate ([DEC-calc-count-gate](../../architecture/decisions.md#dec-calc-count-gate))
       is the standing performance check on each one. Verify each getter this way as its cascade counterpart lands.
-   2. **Flip** — once verified live via `/computed` the getter BODY returns the cascade value; the legacy accumulator
-      behind it is deleted. **Consumers are never rewired** (this IS the answer to the getYieldRate100-vs-its-consumers
-      question: rewire the body, not the call sites).
+   2. **Replace** — once verified live via `/computed`, the value is served by the NEW uniform parameterized read
+      over the channel index; consumers move onto it and the legacy getter is DELETED with its accumulator.
+      ⛔ **The getter is NOT re-bodied and the two surfaces never coexist**
+      ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)): **reusing a legacy getter
+      is the mechanism that produces the half-migrated state** — its contract carries the legacy scale, granularity
+      and combine, so the cascade bends to fit the getter instead of the consumers being rewired through. That is
+      the answer to the getYieldRate100-vs-its-consumers question, and it reverses the earlier
+      "rewire the body, not the call sites" reading, which held only while there was no uniform vocabulary to
+      rewire consumers ONTO.
       **⚡ FLIP ATTEMPT #1 (2026-07-02, commit `71b977e27` → REVERTED `899705ec6`) — the finding that gates the
       real flip: the §1 ACCUMULATOR SUBSTRATE must be built first.** The modifier pair was flipped with a full
       net (a `CascadeRates` service: event-invalidated memo — per-city version + tech/civic/GA epochs + slider
@@ -168,9 +174,10 @@ mapping: [`code-cut-map.md`](code-cut-map.md) §Rulings addendum):
    to reproduce the entire legacy `CvXInfo` field contract — a stub per legacy field, feeding Python silent
    wrong-values. That frozen boundary is a root cause of the drift. The Cy* info bindings are redesigned around the
    cascade/JSON model and the Python info-CONSUMERS (Pedia/Advisors/display) rewired to the new contract; the
-   stub-fed wrong values are fixed (they violate the reproduce-not-default rule). This is DISTINCT from the
-   computed-getter flip strategy (item 5) — that keeps `getYieldRate100`-style contracts stable and rewires the BODY,
-   never the call sites. Python-authoritative GAMEPLAY (Revolution, random events, outcomes, missions) stays Python,
+   stub-fed wrong values are fixed (they violate the reproduce-not-default rule). This is the SAME move as item 5,
+   one level out: both build a new uniform surface and disconnect the old one
+   ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)) rather than preserving a
+   legacy contract. Python-authoritative GAMEPLAY (Revolution, random events, outcomes, missions) stays Python,
    out of scope ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
 
 ## Gate 1 — completeness — CLOSED *(nothing StoneBase mapped is missing)*

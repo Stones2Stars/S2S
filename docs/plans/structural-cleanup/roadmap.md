@@ -93,13 +93,16 @@ cut is NOT one event — each mechanism cuts when ITS verification is clean, ver
 - **Gate 3 — classification consumption** (the long pole): rewire every engine/AI/UI consumer of
   `skills/tags/capabilities/attributes/policies` from legacy XML fields to the cascade classification.
 
-**Two getter families, two strategies:**
-- **Computed-value getters** (`getYieldRate100`, `hasTrait`, `isPower`, classification getters): flip the BODY to
-  return the cascade value → delete the legacy accumulator behind it → engine/AI consumers are NEVER rewired (rewire
-  the body, not the call sites).
+**ONE strategy for BOTH getter families — a NEW uniform surface, the old one disconnected
+([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)):**
+- **Computed-value getters** (`getYieldRate100`, `hasTrait`, `isPower`, classification getters): NOT re-bodied.
+  Reusing a legacy getter is what produces the recurring half-migrated state — its contract encodes the legacy
+  scale/granularity/combine, so the cascade bends to fit it. Build the parameterized read over the channel index,
+  move consumers onto it, delete the legacy getter with its accumulator. **360 channel-shaped getters exist on
+  `CvCity.h` + `CvPlayer.h` alone** — that surface is the target, not a constraint to preserve.
 - **Info-field Cy\* bindings** (`getBuildingInfo(i).getX()`, the ~900 `.def`s):
-  [DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed) — redesign the contract around the
-  cascade/JSON model, rewire the Python info-consumers, fix the stubs.
+  [DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed) — the same move, one level out: redesign the
+  contract around the cascade/JSON model, rewire the Python consumers onto the uniform set, fix the stubs.
 
 **Reproduce-not-default:** a poco getter whose value is NOT curated JSON (runtime-drawn / engine-resolved) MUST
 reproduce legacy's mechanism, never a stand-in default (0/-1/empty). The silent-wrong-value stubs feeding Python
