@@ -3,11 +3,13 @@
 > **Status:** PLAN (owner-approved to plan, 2026-07). **Required before #430 completes** — owner realization
 > 2026-07-19: the `UnitCombat` "general unit-group" must be distilled before the migration can finish, because it
 > is the common blocker under three otherwise-stuck fronts:
-> - the **keyed "vs unit-combat-class" combat modifiers** (F4 step 3 — [f4-unit-plane.md](f4-unit-plane.md) §3);
-> - the **upkeep military/civilian bucketing** refinement (rides on a correct `military` tag —
->   [f4-unit-plane.md](f4-unit-plane.md) §5, the accepted-drift split);
+> - the **keyed "vs unit-combat-class" combat modifiers** — the `strength.unit.targets.{UNITCOMBAT_*}` /
+>   `defenders.{UNITCOMBAT_*}` family ([skills.md §1](../../specs/skills.md), [modifier.md §6](../../specs/modifier.md)),
+>   which cannot be expressed cleanly while the combat-class enum doubles as a size/species/weapon taxonomy;
+> - the **upkeep military/civilian bucketing** refinement (rides on a correct `military` tag — the engine buckets
+>   unit upkeep by `isMilitarySupport()`, [economy.md](../../reference/economy.md));
 > - the **`IS_MILITARY` / `IS_<tag>` predicate + tally surface** that ~a dozen cascade consumers need
->   (code-cut-map §Pass-2 rewire).
+>.
 >
 > This is the grounded plan, NOT implementation. All current-state numbers below are from live code/data
 > (2026-07-19), not the stale engine.md figures — see §7.
@@ -35,27 +37,32 @@ AGAINST" column, keyed by tag.**
   fights). So `strength.unit.percent {unit: IS_MOUNTED}` authored ON the anti-mounted UnitCombat — NOT
   `strength.unit.unitCombat.{UNITCOMBAT_MOUNTED}`; the `UnitCombat` id stops being a modifier *target* entirely.
 
-**⚖ KEEP BOTH the unit-combat AND the tag, for now (owner 2026-07-19).** A tag holds **no stats**; the UnitCombat is
-the **stat-holder** (the modifier-source). So the unitcombat→tag mapping is **ADDITIVE** — a unit that *is* mounted
-KEEPS `UNITCOMBAT_MOUNTED` (its stats/deposits) *and* gains the `mounted` tag (its queryable identity). We do NOT
-delete/replace the unit-combat when we add the tag. Wholesale removal of a statless identity-only UnitCombat (once its
-identity fully lives as a tag) is a **deferred, separate** question — not this pass. The `{unit: IS_<tag>}` "vs"
-modifiers and the cascade queries (upkeep pool, military count) read the TAG; the stat deposits stay on the combat.
+**⚖ A UnitCombat is a definition of a unit's STRENGTHS AND WEAKNESSES — not a definition of the unit TYPE (owner).**
+It goes back to what it originally was: the good/bad-against column. Its stats express how well or poorly a unit
+does **against units of a specific TAG** (`strength vs {IS_MOUNTED}`, `strength vs {IS_ARMORED}`, …), keyed by TAG,
+never by another unit-combat id. This is its reason to exist — a **DRY shared bundle**: author "these stats vs these
+tags" ONCE on a unit-combat and attach it to every unit of a kind, instead of duplicating the same vs-tag stats onto
+each unit. The unit's TYPE — what it IS — is the TAG; its ABILITIES are SKILLS; its STRENGTHS/WEAKNESSES are the
+unit-combat. Three concerns, three homes.
 
-**⚖ The END-STATE (owner 2026-07-19) — a UnitCombat distills to PURELY a "stats vs tag" list.** Target model: a
-UnitCombat carries ONLY the good/bad-against column — its stats express how well/poorly a unit does **against units
-of a specific TAG** (`strength vs {IS_MOUNTED}`, `strength vs {IS_ARMORED}`, …), keyed by TAG, never by another
-unit-combat id. All **identity/accounting** lives in TAGS; all **ability** in SKILLS; the UnitCombat is reduced to the
-vs-tag modifier list. **This IS the UnitCombat's reason to exist — a DRY shared bundle:** author "these stats vs
-these tags" ONCE on a unit-combat and attach it to every unit of a type, instead of manually duplicating the same
-vs-tag stats onto each unit. (The "general unit-group": pure shared modifiers, no stats/identity of its own.) **⛔ Promotion lists reference TAGS, not unit-combats** — a promotion's availability/prereq
-(`enables`/`requires`) and its grants key off tags (`mounted`) instead of `UNITCOMBAT_MOUNTED`; the promotion→
-unitcombat references migrate to promotion→tag. The **"keep both for now"** above is the TRANSITIONAL state toward
-this; reaching the pure stats-vs-tag end-state (unit-combats as vs-TAG lists + promotion lists on tags) is the FULL
-distillation — TAIL, after the minimum (§1a) + the purge.
+**A unit carries both, permanently — they do different jobs.** The unitcombat→tag mapping is **ADDITIVE**: a mounted
+unit KEEPS its unit-combat (the vs-tag stat bundle) *and* has the `mounted` tag (its queryable type). Neither
+replaces the other, because they answer different questions — "how does it fight?" (unit-combat) vs "what is it?"
+(tag). The `{unit: IS_<tag>}` "vs" modifiers and the cascade queries (upkeep pool, military count) read the TAG; the
+stat deposits live on the unit-combat.
 
-Consequently the slim (§E) is scoped to **vestigial (unreferenced) + duplicate** classes ONLY — a memory purge —
-never "referenced classes that map to a tag" (those keep both). The tag mapping and the purge are independent passes.
+**The distillation extracts the NON-STAT content OUT of the unit-combat** — the C2C bloat crammed identity
+(size/species/weapon/motility taxonomies) and abilities into the combat-role enum. That identity moves to TAGS,
+those abilities to SKILLS, leaving the unit-combat as purely the vs-tag strengths/weaknesses list it originally was.
+So `strength.unit.percent {unit: IS_MOUNTED}` is authored ON the anti-mounted unit-combat — never
+`strength.unit.unitCombat.{UNITCOMBAT_MOUNTED}`; the `UnitCombat` id is not a modifier *target*.
+
+**⛔ Promotion lists reference TAGS, not unit-combats** — a promotion's availability/prereq (`enables`/`requires`)
+and its grants key off the tag (`mounted`), the unit's identity, not `UNITCOMBAT_MOUNTED`.
+
+The slim (§E) is a memory purge of **vestigial (unreferenced) + duplicate** classes ONLY — never a referenced class
+that carries real vs-tag stats. The tag mapping (extract identity), the skill extraction (extract ability), and the
+purge (drop dead classes) are independent passes.
 
 ## 1a. Scope (owner-ruled 2026-07-19) — MINIMUM to unblock + a welcomed purge
 
@@ -73,17 +80,17 @@ never "referenced classes that map to a tag" (those keep both). The tag mapping 
   for the minimum, which is `military`-only), the keyed "vs unit-combat-class" modifier re-expression (§3.C / F4
   step 3 — stays parked), and the deep three-axis distillation. These land later, not to complete #430.
 
-So the gating "author the mapping table" decision (§8.1) is **deferred** — the minimum path does not touch it.
+So the "author the mapping table" decision (§8.1) belongs to the full distillation pass — the minimum path does not touch it.
 
 ## 2. Current state — what exists vs what's missing (grounded)
 
 | axis / piece | state |
 |---|---|
 | **modifier-VALUE (poco)** | mapped: `CvUnitCombatInfo.h` carries all ~90 scalars + 11 vs-keyed vectors (`VS_KEYED`, `curate_unitcombat.py:53-65`) + domain array. The scalar SOURCE gather is LANDED for the F4 scalar/combat/upkeep planes. |
-| **modifier-VALUE (keyed consumer)** | **UNBUILT** — the keyed `changeExtra{UnitCombat,Domain,Flanking}Modifier` accumulators have no cascade fold (code-cut-map §34/§group 11, `@SAVEBREAK`). Distilling tags does NOT by itself build these; they also need the self-accumulator + the predicate re-expression (§3.C). |
+| **modifier-VALUE (keyed consumer)** | **UNBUILT** — the keyed `changeExtra{UnitCombat,Domain,Flanking}Modifier` accumulators have no cascade fold. Distilling tags does NOT by itself build these; they also need the self-accumulator + the predicate re-expression (§3.C). |
 | **classification → `tags` (unitcombat)** | **NOT emitted.** `curate_unitcombat.py` emits families/skills/vision/outcomes/sizeMatters/identity — **zero tags** (verified, `curate():240-259`). `mounted`/`gunpowder`/`mechanized` deferred here (`curate_unit.py:117-122`). |
 | **classification → `tags` (unit-level)** | PARTLY DONE: `curate_unit.py:664-678` emits role tags (`worker`/`settler`/`missionary`/`merchant`/`spy`/`civilian`) from `DefaultUnitAI`, `military` from `bMilitarySupport`, `outlaw` from the criminal combat class. 1464/2074 unit files carry a `tags` block. |
-| **ability → `skills`** | PARTLY DONE: `curate_unitcombat.py` emits `skills` from the CAP_* tables (71/815 files); ~48 skill getters in the poco. Runtime feed-rewires (processUnitCombat → source `skills.X`) mostly unbuilt (code-cut-map §consumer-read). |
+| **ability → `skills`** | PARTLY DONE: `curate_unitcombat.py` emits `skills` from the CAP_* tables (71/815 files); ~48 skill getters in the poco. Runtime feed-rewires (processUnitCombat → source `skills.X`) mostly unbuilt. |
 | **tag STORAGE + getter** | DONE: `ClassificationRegistry` mints `TAG_*` infos; readJson loads unit `tags` into a bool-block bitset (`CvUnitInfo.h:509/519/537`); `isMilitarySupport()`/`isSpy()` already `return getTags()->has(...)` (`CvUnitInfo.h:472-474/224`). |
 | **`IS_<TAG>` predicate** | **MISSING** — `CvCascadeConditionEval.cpp` (~:302-363) has only plot/city/player game-state predicates; **no** `IS_MILITARY`/`IS_MOUNTED`/any tag-membership predicate. |
 | **per-tag TALLY** | **MISSING** — `CvCascadeTally.h` counts only by entity-type id (`buildingCount`/`unitCount`); no count-by-tag. |
@@ -110,19 +117,19 @@ that is what blocks every downstream consumer.
 2. **A unit's effective tags = unit-level `tags` ∪ its combat classes' `tags`** (primary + subs + promotion-granted
    `skills.unitCombats`, the [skills.md §3b](../../specs/skills.md) membership rule). The tag-derivation must fold the
    combat-class tags in — this is why `curate_unit.py` defers mounted/gunpowder to "THEN" (`:117-122`).
-3. **Reconcile the double flags:** `bSpy` lives on BOTH `CvUnitInfo` and `CvUnitCombatInfo` (code-cut-map rows 13/19)
+3. **Reconcile the double flags:** `bSpy` lives on BOTH `CvUnitInfo` and `CvUnitCombatInfo`
    — unify onto the `spy` tag together. Same discipline for `outlaw`/criminal.
 
 ### B. Ability → `skills` (finish + wire)
 - The curator emit is mostly there (CAP_* → `skills`); finish any gaps. The runtime CONSUMER rewires (every engine
   read of a legacy unitcombat ability flag → the composite `skills` getter folding unit + promotion + combat-class,
-  [skills.md §3b](../../specs/skills.md)) are the Gate-3 consumption sweep — largely unbuilt, tracked in code-cut-map.
+  [skills.md §3b](../../specs/skills.md)) are the Gate-3 consumption sweep — largely unbuilt.
 
 ### C. Modifier-source — the keyed "vs" re-expression (couples with the unit self-accumulator)
 - **A "vs unit-combat-class" modifier becomes `strength.unit.percent {unit: IS_<tag>}`** (evaluated against the
   opponent), NOT `strength.unit.unitCombat.{X}`. The curator re-expresses the `VS_KEYED` `unitCombat`/`domain`
   entries onto the `{unit: IS_<tag>}` / `{unit: IS_<domain>}` predicate form.
-- ⚠ This ALSO needs the keyed self-accumulator consumer (the `maxCombatStr` opponent-set fold, code-cut-map §34,
+- ⚠ This ALSO needs the keyed self-accumulator consumer (the `maxCombatStr` opponent-set fold
   unbuilt) AND the predicate surface (§D). So it is downstream of BOTH this distillation AND the F4 keyed build — it
   does not land with the tag emit alone. (F4 step 3 stays blocked until §A+§D land; then the keyed consumer can build
   against the predicate form.)
@@ -178,8 +185,8 @@ that is what blocks every downstream consumer.
 
 - **F4 step 3** — the keyed "vs class"/"vs domain" combat modifiers can finally build (as `{unit: IS_<tag>}`
   predicate deposits, once §A+§D land + the keyed self-accumulator).
-- **Upkeep bucketing** — the `military` tag becomes the authoritative, correctly-derived split (refining the
-  accepted-drift bucketing of [f4-unit-plane.md](f4-unit-plane.md) §5).
+- **Upkeep bucketing** — the `military` tag becomes the authoritative, correctly-derived split, replacing the
+  legacy `isMilitarySupport()` bucketing ([economy.md](../../reference/economy.md)).
 - **Military happiness/anger** — `happiness.empire.cities.{unit: IS_MILITARY}` gets a real predicate+tally
   (currently NONE FOUND wired).
 - **Military count/cap, military production, spy/outlaw/missionary/worker gates** — all rewire onto the tag surface.
@@ -228,8 +235,5 @@ combat modifier evaluates against a mounted opponent. The military-flag unificat
    + the keyed-vs re-expression as a tail? The owner's "required before completion" ruling needs this line drawn.
 
 ## See also
-- [f4-unit-plane.md](f4-unit-plane.md) — the unit modifier plane; §3 (keyed, blocked on this) + §4 (the scope
-  boundary) + §5 (upkeep, whose bucketing this refines).
 - [tags.md](../../specs/tags.md) · [skills.md](../../specs/skills.md) · [json.md §8](../../specs/json.md) — the
   classification model. [modifier.md §6](../../specs/modifier.md) — the unit self-accumulator (modifier-source axis).
-- [code-cut-map.md](code-cut-map.md) — the cut inventory (§group 11/18/34, §51, §Pass-2 rewire 1963-2017).

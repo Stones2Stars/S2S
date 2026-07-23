@@ -35,17 +35,17 @@ enumerated list below.
 > **`missions`**/`CvOutcome` migration — a GROUND-UP REWORK kept out of #430) + the **post-migration engine follow-ups**
 > (e.g. the celebrity-skill CvCity scan, the `enables.traits`→HAVE self-containment step — the `IS_HOLY_CITY` eval is
 > already wired). Per [DEC-data-first] the data foundation is complete — the machine backlog proceeds on solid data.
-> **The CUTOVER scope** — what's left before the cascade replaces legacy + pushes to `main` — is written up in
-> [`cutover.md`](cutover.md): live verification of the 3 machines + the **classification-consumption rewiring** (the long
-> pole) + the self-containment audit + the grants apply-loop. **⏳ Leaderhead trait remap is a PERMANENT carve-out (owner-ruled), landing after `main`**
-> (leaders work without traits; another modder does it on the merged cascade — see cutover.md).
+> **What's left before the cascade replaces legacy** — live verification of the 3 machines + the
+> **classification-consumption rewiring** (the long pole) + the grants apply-loop — is tracked in
+> [roadmap.md](roadmap.md). **Leaderhead trait remap is a PERMANENT carve-out (owner-ruled), landing after `main`**
+> (leaders work without traits; another modder does it on the merged cascade).
 
 ---
 
-## ✅ Tier 0 — NEW curator gaps (code-cut-map audit 2026-07-02) — EXECUTED 2026-07-02
+## ✅ Tier 0 — NEW curator gaps (audit 2026-07-02) — EXECUTED 2026-07-02
 
 The cut-map audit falsified the "data foundation is complete" attestation on three counts — each a confirmed
-curator emission gap (proof in [code-cut-map.md](code-cut-map.md), Pass-2 classification-split lens). **All items
+curator emission gap. **All items
 below EXECUTED + regenerated 2026-07-02** (curators + `TechInfo.json` + `apply_channel` block/refList/flexArray
 support + `CJK_INTRINSIC_KEYS` recognition; regen delta: 25 techs, 2 promotions, 0 civics/buildings — the civic
 triple and building sliders are zero-data today, mapping-migrated). Kept for the audit trail:
@@ -101,7 +101,7 @@ triple and building sliders are zero-data today, mapping-migrated). Kept for the
 > not dealt with in XML — they are purely Python.* **#430 migrates the XML-dealt-with surface** (XML data + the DLL
 > machinery that reads it → the cascade). Gameplay that lives **only** in Python and reads **no** XML field is a
 > separate surface the cascade does not touch, so it is **out of migration scope** — not a data gap, not a curator
-> item, not a cutover exposure.
+> item, not a legacy-removal exposure.
 
 An apply-site sweep for **repeatable grants** (per-turn spawn / heal / promotion / property) confirmed the *core*
 building-repeatable machinery is DLL, in `CvCity::doTurn`, all XML-fed and in scope (`doHeal` :21999/:1355 ← building
@@ -118,7 +118,7 @@ wonder island** (grep-confirmed absent from `docs/`), which the ruling above pla
   reactive, event-triggered effect (culture pulse *when a unit dies*) has **no home in the `grants`/modifier/enabler
   vocabulary** — the new model declares provisions on standard triggers (build/create/per-turn/tech/religion/civic),
   not arbitrary event reactions. These are **doubly** out of scope: Python-only AND not representable. They stay
-  Python by necessity, and are never a migration or cutover concern.
+  Python by necessity, and are never a migration or legacy-removal concern.
 
 **Why they never appeared in the cut plan — and why that is CORRECT, not a miss:** the completeness bar is an XML-field
 census + a DLL apply-site map; a purely-Python effect that reads no XML field is, by the ruling, **not in the surface
@@ -127,10 +127,10 @@ the migration owns**, so its absence from the inventory is the scope boundary wo
 **Consequence — no exposure, by construction:** the cascade grants machine only ever applies what is in the
 XML-derived JSON; these effects were never in XML, so they never enter the JSON, so the cascade never applies them →
 **no double-up, no silent loss.** They stay Python, untouched, across the XML drop (they read live game-object state,
-not XML) and across the grants cutover (which cuts only the in-scope DLL appliers). Any future rework of them is its
+not XML) and across the grants machine (which replaces only the in-scope DLL appliers). Any future rework of them is its
 own separate initiative, never a #430 concern.
 
-*(Contrast: the Revolution/RevDCM rebel spawns ARE in the cut plan — code-cut-map rows 54/59/68 — but only because the
+*(Contrast: the Revolution/RevDCM rebel spawns ARE in the cut plan — but only because the
 civic `revolution` grant touches an XML **data** field (`getRevIdxSwitchTo`), which put the civic-side hook in scope;
 the broader revolution mechanic is itself a deferred ground-up rework, not migrated. These wonder effects have no such
 XML data hook, so they are wholly out.)*
@@ -180,8 +180,7 @@ one mechanic:
 
 ("health" in `Sources/Cascade/` is the separate WELLBEING sickness channel — built + consumed by `CvCascadeWellbeing`
 — NOT unit healing.) The whole thing matches the plan's "unit plane lands last" ([modifier.md](../../specs/modifier.md)
-§6) but is **under-tracked** (not in cutover.md ruling-1's channel list, not a Gate-1 item, never modelled by
-StoneBase). Legacy apply (KEEP): `CvUnit::doHeal` (CvUnit.cpp:6467) → `changeDamage(-healRate())` / per-UnitCombat
+§6) but is **under-tracked** (never modelled by StoneBase). Legacy apply (KEEP): `CvUnit::doHeal` (CvUnit.cpp:6467) → `changeDamage(-healRate())` / per-UnitCombat
 `changeHealAsDamage`; building full-heal via `CvCity::doHeal` (:21999); city heal-pool `getHealRate()` fed by building
 `iHealRateChange` via `processBuilding`.
 
@@ -206,7 +205,7 @@ data sits in `CvJsonInfo` (parsed, unconsumed) and **never reaches `CvUnit`/`CvC
   (the getter can't read a repeatable entry) OR emit it in a getter-serveable form — so the double-up cleanup and the
   cut-safety bridge are the SAME fix.
 - **KEEP all heal XML fields + the legacy heal machinery** — mark them KEEP-rows; they are **NOT retired** at the
-  #430 cutover, so units + buildings keep healing units off the surviving legacy path. (Confirmed via the heal-inventory
+  #430 legacy removal, so units + buildings keep healing units off the surviving legacy path. (Confirmed via the heal-inventory
   sweep: no heal field is on an active cut list; the risk is only the wholesale XML-read deletion, gated by the bridge above.)
 
 > **⚖ GENERALIZES — the bridge is the same for EVERY KEEP-legacy DLL per-turn apply that reads XML-backed Info data
@@ -272,8 +271,8 @@ data sits in `CvJsonInfo` (parsed, unconsumed) and **never reaches `CvUnit`/`CvC
   `CASC_PRED_IS_HOLY_CITY` + evaluator `ev_evalPredicate` `CvCascadeConditionEval.cpp:246`), so the `holyCity` gate
   works out of the box. The one remaining follow-up is the self-contained **`enables.traits`→empire-active-trait HAVE**
   computation (today the modifier reads engine `hasTrait`, which already includes the building's `setHasTrait`, so the
-  effect flows; the cascade-computed active-trait set is a cutover self-containment step, not a data gap).
-- **⏳ PERMANENT carve-out (owner-ruled) — unit `missions` + the `CvOutcome` system.** The grants pass found the unit
+  effect flows; the cascade-computed active-trait set is a self-containment step, not a data gap).
+- **PERMANENT carve-out (owner-ruled) — unit `missions` + the `CvOutcome` system.** The grants pass found the unit
   *activated-mission* keys — `buildings` (MISSION_CONSTRUCT), `greatPersonAction`, `goldenAge` — are **missions**, NOT
   grants (a `skill` is a permanent property; a **mission** is an action producing an OUTCOME, often consuming the unit),
   and the engine's **`CvOutcome`** system (`CvUnitInfo` `KillOutcomes` + `m_aOutcomeMissions` — *"outcome system (no
@@ -326,7 +325,7 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
   - STAY in identity (buildability/placement, json §7): `autoBuild`, `noInstanceLimit`, `forceNoPrereqScaling`, `centerInCity`.
   - DROP (confirmed DEAD): the aid mechanic (`BonusAidModifiers`/`AidRateChanges` — city arrays saved but ZERO
     write-from-building + ZERO read-for-effect; only AI-valuation/pedia read the raw Info) + the `DROP_DEAD`/`DROP_MODULE` set.
-  - `EnabledCivilizationTypes` → identity interim (→ `requires.build` when NPC civs wired); `bAllowsNukes` → `requires.build.disabled` (done).
+  - `EnabledCivilizationTypes` → `requires.build` (folded when NPC civs are wired; authored under `identity` until then); `bAllowsNukes` → `requires.build.disabled` (done).
 - **leaderhead — DONE (owner rulings 2026-07-01 / 2026-07-21): ALL traits stripped; leaders ship TRAITLESS.** Every
   leader trait assignment (`Traits`, `DefaultTraits`, `DefaultComplexTraits` — simple AND complex) is dropped from the
   JSON; **no leader carries traits**. The engine `CvLeaderHeadInfo` is now JSON-fed (its trait members stay empty), so
@@ -361,10 +360,10 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
   owner-RULED 2026-07-01, **DO-NOW** (currently UNHANDLED on 90 units). `EnabledCivilizationTypes` is **NOT** the
   unique-unit system (that's UnitClass/CivilizationInfo) — the train gate fires ONLY under
   `isNPC() && isStronglyRestricted()` (`CvCity.cpp:2231`), inert for real civs — so it folds with `stronglyRestricted`
-  (Tier 3, → `requires.build` when NPC civs wired); stays `identity` interim. cargo restriction → `identity`.
+  (Tier 3, → `requires.build` when NPC civs are wired; authored under `identity` until then). cargo restriction → `identity`.
 - **promotion — DONE (owner ruling 2026-07-01):** `iCelebrityHappy` (the numeric per-unit celebrity-happiness stat) →
   a boolean **`skills.celebrity`** (3 promotions: INSPIRE3/6/9; unit-combats carry the same field → `skills.celebrity`
-  too, 0 today). The AMOUNT is dropped ("not a random field on a unit"); ⏳ **failure-to-close (Gate-3 skills work):** `CvCity`
+  too, 0 today). The AMOUNT is dropped ("not a random field on a unit"); **failure-to-close (Gate-3 skills work):** `CvCity`
   scans for celebrity-skilled units and owns the happiness (replacing the `CvCity.cpp:5718` per-unit-stat sum).
   `iPoisonProbabilityModifierChange` inert (kept).
 - **handicap**: `advancedStart` (`iAdvancedStartPointsMod`, `iAIAdvancedStartPercent`) → `identity`, no consumer wired.
@@ -379,7 +378,7 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
   obvious-identity first pass is LANDED (`curate_unit.py` folds a unit's combat classes to tags — mechanized/
   gunpowder/mounted + ~30 others emitted). The flagged-remainder taxonomy folds remain.
 - **`stronglyRestricted`** (NPC build-lockdown) → a `requires.build` civ-membership gate (paired with
-  `EnabledCivilization`) — a PERMANENT carve-out (owner-ruled), pending **NPC civilizations being wired**. **⚖ NOT a flip/cutover constraint
+  `EnabledCivilization`) — a PERMANENT carve-out (owner-ruled), pending **NPC civilizations being wired**. **⚖ NOT a flip/legacy-removal constraint
   (owner ruling 2026-07-02):** losing the NPC lockdown during the enabler flip is **accepted** — *"I truly don't
   care about NPC barbarians or neanderthals being locked down or not… it's something to solve post migration, we
   may after all want to do it in a better manner anyway."* The enabler gates may flip without preserving the
@@ -415,5 +414,5 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
 
 The machine backlog does not start until the data tier is closed: substrate rebuild → full modifier port
 (AFTER/BASE/assembler/commerce) → **A5 wire `skills`/`tags`/`capabilities`/`policies` onto the game object** ("SUPER
-IMPORTANT, easily LOST") → enabler verification pass → grants machine → trait simple/complex engine fix → atomic cutover +
-§4 deletions. Plus the observability dump gaps. Tracked in `cascade-engine-430.md` / `modifier-substrate.md`.
+IMPORTANT, easily LOST") → enabler verification pass → grants machine → trait simple/complex engine fix →
+§4 deletions. Plus the observability dump gaps. Tracked against [modifier.md](../../specs/modifier.md).

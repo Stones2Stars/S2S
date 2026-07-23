@@ -213,7 +213,7 @@ Per assigned specialist of type X, `count[X] ×` the **FIVE** engine terms (`pro
 > which the tweaks curbed. So this is accreted balance cruft, not clean design. The YIELD side is settled (specialist is
 > INSIDE the ×modifier term, #317; yield specialist sweep 555/555 clean); only the COMMERCE pct sub-term is this mess.
 >
-> **⏳ OPEN DESIGN DECISION (cascade cannot mirror a non-deterministic buggy value):** what should the cascade compute?
+> **OPEN DESIGN DECISION (cascade cannot mirror a non-deterministic buggy value):** what should the cascade compute?
 > Candidate clean/deterministic model = `Σ count×intrinsic×(100+pct)/100 + Σ count×pct/100` (current counts) — reproduces
 > the engine's INTENT (priests do gain culture from FREE_CHURCH) deterministically; e.g. p0 c8192 culture → 10 + 14 = 24
 > (oracle 25, the +1 = stale drift). Sub-questions for the owner: (a) mirror the flat-`pct/100`-per-specialist behavior, or

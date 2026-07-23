@@ -157,7 +157,7 @@ gates anything.
 - **`canSeeFurtherFromWater`** — see FROM water plots one level higher (`CvPlot::seeFromLevel`, `CvPlot.cpp:2562`) —
   ships stop being nearsighted; second consumer in AI settle scoring (`CvCity.cpp:6327`). It *could* be modelled in
   the vision system proper, but **stays a capability — solve if/when it is a problem**; expected surfacing point:
-  when the visibility system is modelled properly during the cutover build — whoever builds that system revisits this
+  when the visibility system is modelled properly during the cascade rebuild — whoever builds that system revisits this
   key then (it sits next to the BLOCKED unit visibility/invisibility accumulators and the building `lineOfSight`
   channel).
 - **`hasCenteredMap`** — *"when it arrives, map gets centered, and stays centered"* — an arrive-and-stay latch in

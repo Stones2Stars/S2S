@@ -3,9 +3,9 @@
 > **Status: ACTIVE (unparked 2026-07-06).** Owner ruling 2026-07-06: *"perf-profile-wiring should not be
 > parked; we will not reinstate `PROFILE_FUNC` ever again, but we do want performance wiring — a fair bit of
 > it is in place."* So this is live #430 work: the census-based perf surface is the wiring we build out, and
-> the internal `PROFILE_*` profiler is **never** coming back. This doc is cutover-coupled (the pre-cut
+> the internal `PROFILE_*` profiler is **never** coming back. This doc is coupled to the legacy removal (the pre-cut
 > pair-timing slice below closes at each legacy cut), so it lives with the [structural-cleanup](README.md)
-> bulldozer set and dies with the cascade cutover.
+> bulldozer set and dies when the legacy is gone.
 >
 > **⛔ RULING (owner 2026-07-05, HARDENED 2026-07-06): NEVER use the internal profiler; NEVER reinstate the
 > `PROFILE_*` macro family.** The census / `[MODIFIER/perf]` gated logging suits our purposes better and is
@@ -88,7 +88,7 @@ event-fed accumulator reads + conditions never re-evaluated + serialized warm st
 unbounded-staleness pair is the convicted drift disease and does NOT transfer
 ([DEC-derived-never-trusted](../../architecture/decisions.md#dec-derived-never-trusted)). The
 DELTA-APPLICATION technique DOES transfer in sanctioned form — it is already the spec'd §1 end-state
-([modifier-substrate.md](modifier-substrate.md): domain events apply the source's deposit/withdraw DELTAS; a
+([modifier.md](../../specs/modifier.md) §1: domain events apply the source's deposit/withdraw DELTAS; a
 bounded per-turn pass re-checks CONDITIONED deposits; load-time rebuild replaces serialization, the ruled easy
 trade). The current component-recompute substrate is the coarse-but-honest v1; the delta-apply refinement is
 the legacy speed claimed without the legacy disease, and the pair numbers say where it is worth it.
@@ -98,4 +98,4 @@ the legacy speed claimed without the legacy disease, and the pair numbers say wh
 - [state-repositories.md](../../architecture/state-repositories.md) — the derived-cache model + the turn-end
   unified rebuild end-state this wiring measures.
 - [logging.md](../../specs/logging.md) — the gated `[TAG]`/spine surface the sink rides.
-- [modifier-substrate.md](modifier-substrate.md) — the accumulator whose regression numbers this exists to watch.
+- [modifier.md](../../specs/modifier.md) — the modifier machine whose regression numbers this exists to watch.

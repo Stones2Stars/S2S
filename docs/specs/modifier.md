@@ -191,8 +191,8 @@ The city's **health** and **happiness** levels are the §2 combine over **FOUR O
 health against unhealth. They are four yields like any other, carried on the one uniform package with no special
 storage: a source depositing a negative value is routed to the opposing channel **at fill**, so nothing about the
 combine or the cache is wellbeing-specific. The engine's own accumulators ARE these four channels
-(`happyLevel`/`unhappyLevel`/`goodHealth`/`badHealth`, `CvCity.cpp:5191/5195/5199/5203`, each delegating to
-`CascadeAccumulator::wellbeing(this, N)`). The realized verdicts: `healthRate = min(0, health − unhealth)`;
+(`happyLevel` / `unhappyLevel` / `goodHealth` / `badHealth` on `CvCity`) — four terms, so the four channels map
+one-to-one with no wellbeing-specific plumbing. The realized verdicts: `healthRate = min(0, health − unhealth)`;
 `angryPopulation = clamp(anger − happiness, 0, pop)`. The channel oracle is **`/computed/cities/wellbeing`**
 ([http-endpoints](http-endpoints.md)) — one field per named engine term.
 
@@ -280,7 +280,7 @@ event state to preserve**. The oracle emits a `*Recomputed` twin beside each inc
 (bonus/building/stateReligion, happiness + health; the `extraBuilding`/`feature`/`religion` city accumulators
 self-heal via the engine's `update*()` rebuilders and need no twin). Parity discipline: a verdict diff equal to
 `Σ(stored − recomputed)` is **engine-wrong / cascade-right** — attributed-accepted (the same class as the
-improvement-yield phantoms), repaired wholesale at the cutover when the slots recompute from data.
+improvement-yield phantoms), repaired wholesale when the slots recompute from data.
 
 ---
 

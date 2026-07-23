@@ -66,8 +66,9 @@ A legacy field is **per-100 (÷100 to humanize)** iff its value flows **into a �
 `× 100` on the way in** — i.e. the engine treats the stored integer as already-scaled. It is **normal
 (×1, human)** iff the engine multiplies it by 100 when depositing. The tell is at the consumption site:
 
-- `getYieldRate100` (`CvCity.cpp:10267`) is a one-line delegate to `CascadeAccumulator::yieldRate100`
-  (`CvCascadeAccumulator.cpp:349`) — the tell now lives in the cascade package computation, not the getter.
+- `getYieldRate100` (`CvCity.cpp`) — the tell lives wherever the rate is composed. While the getter computes the
+  legacy two-tier shape in place, read it there; once the channel is on the cascade the tell moves into the package
+  computation. Either way, confirm the SCALE at the site that composes the value, never at the getter's name.
 - `getExtraYield100` (`CvCity.cpp:10408`) just returns `getBuildingExtraYield100` — building-extra only, no
   other term. The tell lives in `getBuildingExtraYield100`
   (`CvCity.cpp:10360`): `100 * kBuilding.getYieldChange(eYield) + kTeam.getBuildingYieldTechChange(eYield, eB)`
@@ -103,7 +104,7 @@ The "`*100` getters mark the scaled fields" rule is INCOMPLETE: some fields are 
 |---|---|---|---|
 | `BonusCommercePercentChanges` (Building) | **×100, and FLAT** | added raw beside `100 * getBuildingCommerce` inside `getBuildingCommerce100` (`CvCity.cpp:12132`); the *rate* modifier is the separate `m_aiBonusCommerceRateModifier` | ÷100 de-scale **+ relabel `percent`→`flat`** (the name's "Percent" is a misnomer) |
 | `YieldPerPopChange` / `CommercePerPopChange` (per-pop) | **×1 human, NOT ×100** | added raw into the ×100-space `getExtraYield100` / `getBuildingCommerce100` (`CvCity.cpp:11323` / `:12132`) — the legacy "latent /100 weakening" | **emit as-is; do NOT de-scale** (÷100 here corrupts `1/pop` → `0.01/pop`) |
-| `YieldsProduced` / `CommercesProduced` (Corporation) | **×100** | `getCorporationYieldByCorporation` (`CvCity.cpp:12594-12602`): `produced × Σ getNumBonuses(prereqBonus) × worldCorpMaintPct / 100`, then the corp result `/100` — so `produced=75` ⇒ 0.75/bonus. NOT the genuinely-×1 `*Changes` twin (`getYieldChange × 100` in-formula) | ÷100 de-scale → human (`curate_corporation`). **TODO (corp rework):** `iMaintenance` is likely ×100 too (`calculateCorporationMaintenanceTimes100`) — verify + de-scale in the dedicated corp pass |
+| `YieldsProduced` / `CommercesProduced` (Corporation) | **×100** | `getCorporationYieldByCorporation` (`CvCity.cpp:12594-12602`): `produced × Σ getNumBonuses(prereqBonus) × worldCorpMaintPct / 100`, then the corp result `/100` — so `produced=75` ⇒ 0.75/bonus. NOT the genuinely-×1 `*Changes` twin (`getYieldChange × 100` in-formula) | ÷100 de-scale → human (`curate_corporation`). The dedicated corp pass also verifies + de-scales `iMaintenance` (`calculateCorporationMaintenanceTimes100`, ×100) |
 | `iHealthPercent` / `iHappinessPercent` (Specialist) | **×100, and FLAT** | `processSpecialist` STORES them raw (`CvCity.cpp:5184/5192`, `change*Health/*Happiness(field × count)`) — the misleading part — but the REALIZED `goodHealth()`/`badHealth()`/`happyLevel()`/`unhappyLevel()` read them `/100` (`CvCity.cpp:5848/5876/5714/5654`). The `/100` is NOT AI-only weighting; it is the actual realized level. | ÷100 de-scale → human (FLAT; the "Percent" is a misnomer). `curate_specialist`. ⚠ Map at the CONSUMER, not the store — the raw `change*` store site is the trap that produces a wrong "it's FLAT ×1" correction |
 
 > The per-pop row is the [DEC-no-guessing](../../architecture/decisions.md#dec-no-guessing) case in miniature:

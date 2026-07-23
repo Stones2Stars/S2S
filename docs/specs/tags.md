@@ -4,8 +4,10 @@ The catalogue of a unit's **immutable, accounting-only classification tags** (th
 **glossary** (the namings); the **system** — what a tag is, the *"can a promotion grant it?"* mutability test, how
 `IS_<TAG>` predicates read tags — is the [json spec](json.md) §8. Sibling of [skills.md](skills.md).
 
-> **Started, not complete** (owner: a glossary needn't be complete to begin). Tags are a first-pass set derived in
-> `curate_unit.py`; many units are untagged and that's fine (low-risk, fixed in validation).
+> **Open by design (owner).** The tag set grows as data is authored — identifying new tags is an ongoing activity
+> for the life of the mod ([json.md §8](json.md): the classification registries mint from authored keys), so this
+> glossary catalogues the tags identified so far and more arriving is the normal state, never a gap to close. A unit
+> carrying no tag yet is fine (low-risk, filled in validation).
 
 ## What a tag is (recap)
 

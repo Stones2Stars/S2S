@@ -63,18 +63,20 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   `SFT_WSTR` name — the emit render is synchronous on the game thread, so the borrowed pointers outlive it). This is
   the one place a spine endpoint does resolution at emit rather than deferring to the gated render — justified because
   a rename is rare (four low-frequency choke points), not a hot-path firehose.
-- **Build status:** the spine primitive + KIND firewall + `IEventConsumer` = DONE; the **DOMAIN emit surface**
-  (source-carrying endpoints + every mutation choke point wired) = DONE, incremental emits verified firing live from
-  **real in-play state-changes**. The **load reseed is BUILT and LIVE**: the in-read emits fire from inside the
-  save read (`CvPlayer::read` per-held-tech/projects/civics/traits, `CvCity::read` per building/religion/corp/
-  bonus/culture, `CvPlot::read` substrate — verified in `Cascade.log`: ~190k DOMAIN events inside the load
-  bracket), wrapped by the **load-lifecycle bracket** `GAME_LOAD_STARTED` / `GAME_LOAD_FINISHED` (also built —
-  `emitGameLoadStarted/Finished`; result-producers suppress inside it via `spineGameLoadInProgress()`). Logging =
-  registered first; the **tally** = a read-only accessor (buildings + units), NOT a spine consumer
-  (`Cascade/CvCascadeTally.{h,cpp}`); grants = resolver built, the apply-loop not built
-  ([grants-machine.md](../plans/structural-cleanup/grants-machine.md)); the **cache-invalidation consumer** =
-  built for routing (`CvCascadeInvalidation.cpp` — the enabler domains consume the reseed through it; the
-  modifier-package reseed build is in flight).
+- **Build status.** The spine primitive + KIND firewall + `IEventConsumer` = BUILT (`Spine/CvEventSpine.{h,cpp}`).
+  The **DOMAIN emit surface** (source-carrying endpoints + every mutation choke point wired) = BUILT. The **load
+  reseed** = BUILT: the in-read emits fire from inside the save read (`CvPlayer::read` per held tech / project /
+  civic / trait, `CvCity::read` per building / religion / corp / bonus / culture, `CvPlot::read` substrate),
+  wrapped by the **load-lifecycle bracket** `GAME_LOAD_STARTED` / `GAME_LOAD_FINISHED`; result-producers suppress
+  inside it via `spineGameLoadInProgress()`.
+  **Registered consumers today:** the broad FILE logging consumer, the `/events` STREAM consumer, the **grants
+  engine** (`Grants/CvGrantsEngine` -- resolver built, the apply-loop NOT built,
+  [grants-machine.md](../plans/structural-cleanup/grants-machine.md)), and the **enabler's own** consumer
+  (`Enabler/CvEnablerConsumer`, load-active).
+  The **tally** is NOT a consumer -- it reads the object-owned counts (`Tally/CvTally.{h,cpp}`).
+  **The MODIFIER has no consumer**: the shared one that routed BOTH machines is dead
+  ([superseded-ideas](../architecture/superseded-ideas.md) #16); the modifier gets its OWN when it is rebuilt.
+  ⛔ **One consumer per system** -- never re-merge them.
 
 ## The DOMAIN emit surface + the load RESEED
 
@@ -109,8 +111,8 @@ side) would have nothing to build from. The reseed fixes this **from inside the 
 the stream is what fires its DOMAIN event (`CvGame::read` → `CvPlayer::read` → `CvCity::read` / `CvPlot::read`; tech
 is team-held but emitted per-self from each member's `CvPlayer::read`, one emit per alive member; projects the same).
 The north-star is that the event itself SETS the state — read → emit → populate, one mechanism for the
-game object AND the cascade; the object-populated-by-events end is a known **step too far** for now, but the events
-come from the genuine read.
+game object AND the cascade; object-populated-by-events is out of the current scope, and the events come from
+the genuine read.
 
 ⛔ What the reseed is **NOT**: a separate pass that walks already-deserialized objects and **fabricates** events from
 their populated state (a "for each building present, emit built"). That pseudo-emit feeds the cascade reconstructed

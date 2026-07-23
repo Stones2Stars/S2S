@@ -1,350 +1,181 @@
-# #430 roadmap — bring `json-data-migration` back into spec conformance
+# #430 roadmap — the cascade rebuild
 
-> **The master plan for the active work.** Mandated session-start reading (root `AGENTS.md`). It states the
-> current shape of the drift, the foundational design the code must conform to, the failure inventory, and the
-> sequencing. Governing rulings are ledgered as `DEC-*`; this doc links them, it does not re-articulate them.
+> **The master plan for the active work.** Mandated session-start reading (root `AGENTS.md`). It states the design
+> the code must conform to, what exists against it today, and what is open. Governing rulings are ledgered as
+> `DEC-*`; this doc links them, it does not re-articulate them.
+>
+> **⚑ Branch `cascade-rebuild` is a deliberate CLEAN SLATE and does not compile. That is the intended state**
+> (owner): *"I could not possibly care less if this compiles; having a clean slate to do this right is the target."*
+> A red tree is NOT a defect to fix by re-attaching what was archived — see §What was archived, and why.
 
-## Context — why this work exists
+## Context — why this rebuild exists
 
-The `json-data-migration` branch (#430 cascade) is the accepted design's implementation, but it **drifted via
-shortcuts**. The curated JSON data is solid (all gameplay entities populated, no placeholders — `Assets/Data/**`,
-`Tools/Migration/curate_*.py`). The C++ consumer surface + cascade runtime is half-implemented: caches computed but
-not spine-invalidated, the cascade recomputing everything every turn, the event spine used as a logging tee instead
-of the dispatch front door, the property feed mangled, the grants apply-loop unbuilt, data that loads but never
-manifests in-game, and tasks marked done that are stubs.
+The #430 design is specced and accepted; the DATA is solid (every gameplay entity curated, no placeholders —
+`Assets/Data/**`, `Tools/Migration/curate_*.py`). What drifted was the C++ runtime, and it drifted in one
+characteristic direction: **each scope, channel, and read site grew its own bespoke shape.** Five per-scope package
+structs with hand-named per-channel members, ~33 hand-named scalar fields, a read-side `ensure()` protocol, one
+shared spine consumer routing two different machines, and a legacy-getter surface the cascade was bent to fit.
 
-**This is NOT a redesign.** The design is specced and accepted. Every gap below is a *shortcut against accepted
-spec*: the work is to make the code match the spec it skipped. Each item cites its spec authority and its code
-divergence.
+Each of those was individually defensible and collectively fatal: a hand-named field cannot be addressed
+uniformly, so every one of them forced its own invalidation path, which is precisely how that many accumulated.
+
+**So the substrate was archived rather than patched.** The proven machines were separated into their own trees, the
+engine game-object classes were reverted to `main`, and the drifted modifier substrate was moved out of the
+codebase entirely. This is not a redesign — the design below is unchanged and still authoritative. It is a rebuild
+of the *implementation* against it, once, properly ([DEC-proper-once](../../architecture/decisions.md#dec-proper-once)).
 
 ## Governing principles (ledgered as DECs)
 
-1. **No "deferred."** Anything marked deferred / parked / not-yet-landed / blocked / post-cutover / "later" / TODO /
-   pending is a **failure to fix**, not a backlog item ([DEC-no-deferred](../../architecture/decisions.md#dec-no-deferred)).
-2. **No self-heal.** No blanket per-turn/per-slice rebuild papers over a missed invalidation; the blankets are
-   REMOVED, not optimized. Correctness comes only from complete, targeted, spine-routed invalidation; a miss surfaces
-   as a live divergence ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)).
-3. **The cascade is built and kept ENTIRELY from events.** Full build ONLY on load (the reseed); post-load only dirty
-   packages rebuild; never a full recompute mid-game. Steady-state per-turn cost tracks *what changed* (thousands),
-   never *what exists* (millions) ([DEC-spine-reseed](../../architecture/decisions.md#dec-spine-reseed),
-   [DEC-calc-count-gate](../../architecture/decisions.md#dec-calc-count-gate)).
-4. **The keystone — self-invalidating per-package caches.** Each yield/modifier package is its own cache; a DOMAIN
-   event marks exactly the packages its source (per the deposit index) feeds. "This is the basis of EVERYTHING."
-5. **Universal yield.** ANY number game mechanics modify — base yields, commerce, free XP, free specialists,
-   properties, any other — is a channel in ONE machine, ONE uniform package format. A number computed by a legacy
-   ad-hoc path outside the machine is a shortcut/failure ([DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield)).
-6. **Done = observable in the running game via an endpoint poll** — never "the code path exists" or "the data loads."
-   "Straight up missing" = does not show in the game even if it loads
-   ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)).
-7. **The 50k `(scope,channel)` calc gate.** Every calculation logs its `(scope, channel)`; >50k/turn for anything is
-   near-certainly a failure ([DEC-calc-count-gate](../../architecture/decisions.md#dec-calc-count-gate)).
-8. **The Cy\* wrapper contract is NOT fixed.** Freezing the `boost::python` `.def` surface forced the JSON pocos to
-   mirror the entire legacy `CvXInfo` getter contract (thousands of getters, curator-gap stubs). Redesign the
-   boundary around the cascade/JSON model; rewire the Python info-consumers; fix the stub-fed wrong values. Python
-   gameplay stays Python ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
+1. **No "deferred."** Anything marked deferred / parked / blocked / "later" / TODO / pending is a
+   **failure to fix**, not a backlog item ([DEC-no-deferred](../../architecture/decisions.md#dec-no-deferred)).
+2. **No self-heal.** No blanket per-turn/per-slice rebuild papers over a missed invalidation; correctness comes only
+   from complete, targeted, spine-routed invalidation, and a miss must surface as a live divergence
+   ([DEC-no-self-heal](../../architecture/decisions.md#dec-no-self-heal)).
+3. **The cascade is built and kept ENTIRELY from events.** Full build ONLY on load (the reseed); post-load only
+   dirty packages rebuild ([DEC-spine-reseed](../../architecture/decisions.md#dec-spine-reseed)). Steady-state
+   per-turn cost tracks *what changed* (thousands), never *what exists* (millions).
+4. **The keystone — self-invalidating per-package caches.** Each package is its own cache; a DOMAIN event marks
+   exactly the packages its source (per the deposit index) feeds. *"This is the basis of EVERYTHING."*
+5. **ONE cache shape everywhere** — the same object type on every owner, all invalidating the same way, only WHICH
+   SLOTS carry a value varying by scope. A hand-named scalar field is a DEFECT
+   ([DEC-uniform-cache-shape](../../architecture/decisions.md#dec-uniform-cache-shape)).
+6. **Universal yield.** ANY number game mechanics modify is a channel in ONE machine in ONE uniform package format
+   ([DEC-universal-yield](../../architecture/decisions.md#dec-universal-yield)).
+7. **A NEW getter surface; the old one disconnected.** Reusing a legacy getter is the MECHANISM that produces the
+   half-migrated state, not a shortcut that merely risks one
+   ([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)).
+8. **One consumer per system.** The enabler and the modifier are two separate machines
+   ([DEC-enabler-not-cascade](../../architecture/decisions.md#dec-enabler-not-cascade)); a shared consumer welds
+   them and forces one load policy onto two that genuinely differ.
+9. **Done = observable in the running game** via an endpoint poll — never "the code path exists" or "the data
+   loads" ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)), and the per-turn
+   `(scope,channel)` calc-count stays under the 50k gate
+   ([DEC-calc-count-gate](../../architecture/decisions.md#dec-calc-count-gate)).
 
-## The accepted foundational design (what the code must conform to)
+## The accepted foundational design (unchanged — the code conforms to this)
 
 Authority: [state-repositories.md](../../architecture/state-repositories.md), [modifier.md](../../specs/modifier.md),
-[enabler.md](../../specs/enabler.md), [event-spine.md](../../specs/event-spine.md),
-[scope-packages.md](scope-packages.md), [f0-eventspine-invalidation.md](f0-eventspine-invalidation.md).
+[enabler.md](../../specs/enabler.md), [event-spine.md](../../specs/event-spine.md).
 
-- **The event spine is the foundation, built proper and FIRST.** One `emit(KIND,…)` fanned by KIND to
-  `IEventConsumer`s; DOMAIN events are consumed by logging + grants + **cache build/invalidation** + the OOS replay.
-  Nothing else in the engine detects changes — the hand-wired per-site invalidation is retired for this one surface.
-- **The EMIT surface comes first; the cache build is the step AFTER.** The caches cannot build from events until the
-  events are actually, completely emitted — during play AND from the load process (the reseed emitting every
-  present-fact). Get the emit surface complete and observable first, then build the consumer that populates from it.
-- **The cascade is rebuilt from events on load (the reseed) — never from the game objects' derived state.** A loaded
-  save deserializes the game objects directly; the incremental setters never fire, so the reseed fires the DOMAIN
-  events from inside the save read as each fact deserializes, and the cascade builds from its own deposits. New game
-  and load are the SAME path (facts are order/prerequisite-independent). This is the ONE full build
-  ([DEC-spine-reseed](../../architecture/decisions.md#dec-spine-reseed)).
-- **Eagerly build ALL caches at load — the policy stands ([DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king)).**
-  Game-object caches (the plot-yield cache) warm from their own state; the cascade warms via the eventspine reseed.
-  What was removed is only the cascade's population MECHANISM — the recompute-from-state recalc
-  (`playerSliceRebuild` + `worldRebuild` + `recalculateModifiers`) — a stabilize-the-drift stopgap; the reseed
-  replaces it.
-- **Post-load, ONLY dirty packages rebuild.** No full per-player rebuild on `doTurn`, no mark-all, no per-slice
-  blanket, no turn-roll self-heal — all REMOVED. Reads are bare fetches; the event→cache routing is DERIVED from the
-  deposit index (source → the channels×scopes×targets it touches → the dirty bits).
-- **Per-scope package cache model** ([state-repositories.md](../../architecture/state-repositories.md),
-  [scope-packages.md](scope-packages.md)): a `CvDerivedCache` on every scoped item at every level
-  (world→team→player→area→city→plot); each level's packages in ONE uniform format (Σflat, Σpercent each their own
-  package per channel; unit is part of the slot key); the only live calc is adding the ~5 packages at read.
-- **A cascade is a cache, two kinds:** yield/percent packages = value cache (memoize, event-invalidate,
-  recompute-from-inputs). The ENABLER's sets (frontier + operating-building set) = maintained by TARGETED
-  PROPAGATION through the reverse index, in place — NEVER blanket-recomputed.
-- **THE OUTPUT-SEAM PATTERN.** Where the engine does placement/application, the cascade owns the two ends and the
-  engine the middle: (1) authored INPUTS → cascade (source-centric deposits); (2) placement/application → engine
-  (free-specialist assignment; the golden-age plot-threshold "+1"); (3) OUTPUT yields → cascade package, consumed
-  like plot yields. Free specialists (amount+forced-type deposits, engine places, output = package) and golden age
-  (LENGTH+grant = JSON inputs; the plot-threshold EFFECT = engine middle carve-out; the extra plot yield = output
-  package) are the exemplars.
+- **The event spine is the foundation.** One `emit(KIND,…)` fanned by KIND to `IEventConsumer`s. Nothing else in the
+  engine detects changes.
+- **The EMIT surface comes first; the cache build is the step AFTER.** Caches cannot build from events until the
+  events are completely emitted — during play AND from inside the save read.
+- **Load and new-game are the SAME path.** Facts are order- and prerequisite-independent; the reseed is the ONE
+  full build.
+- **Per-scope packages, one uniform format** — Σflat / Σpercent per channel, cached at each scope's OWN object,
+  each invalidated at its own scope only. The downward roll is realized AT READ: the realized value is the trivial
+  sum of the ~5 scope packages. A lower scope never STORES an upper scope's sums.
+- **The ORIGIN RULE** — yields come from PLOT, SPECIALISTS and BUILDINGS (city) only; modifiers come from
+  everything BUT plot. Plot and the upper scopes are mirror images; CITY is the one scope carrying both.
+- **KEYS ONLY WHERE NEEDED** — the channel set is data-defined and no object uses more than a fraction of it; each
+  scope carries only the channels authored AT that scope, derived from the data at load, never hand-listed.
+- **A cascade is a cache, two kinds** — the yield/percent packages are a VALUE cache (memoize, event-invalidate,
+  recompute-from-inputs). The ENABLER's sets are maintained by TARGETED PROPAGATION in place, NEVER
+  blanket-recomputed. Do not conflate them.
+- **THE OUTPUT-SEAM** — where the engine does placement/application, the cascade owns the authored INPUTS and the
+  OUTPUT yields; only the middle mechanism is engine-owned (free-specialist assignment; the golden-age plot
+  threshold).
 
-## The accepted CUT STRATEGY
+## What EXISTS on this branch (verified against the tree)
 
-[cutover.md](cutover.md) is the master cutover doc; every cut executes from [code-cut-map.md](code-cut-map.md). The
-cut is NOT one event — each mechanism cuts when ITS verification is clean, verified LIVE in-game.
+| Machine | Home | State |
+|---|---|---|
+| Event spine + KIND firewall + `IEventConsumer` | `Sources/Spine/` | BUILT |
+| DOMAIN emit surface + the in-read load reseed + the load bracket | `Sources/Spine/` + the engine read paths | BUILT |
+| Enabler (8 domains, kernel, own consumer, operating-buildings) | `Sources/Enabler/` | BUILT — **hostless**, see below |
+| Condition evaluator (`cascadeEvalCondition`, eval ctx, predicates) | `Sources/Conditions/` | BUILT |
+| Deposit index + deposit-read calcs (`MMKernel`/`PercentStack`/…) | `Sources/Data/` | BUILT |
+| readJson + the two-pass loader + the full-registry re-map | `Sources/Data/` | BUILT |
+| Info pocos + repos (all 23 replaced types + the 11 uniformity types) | `Sources/Infos/`, `Sources/Repos/` | BUILT |
+| Tally (read-only accessor over object-owned counts) | `Sources/Tally/` | BUILT |
+| Grants engine | `Sources/Grants/` | Resolver BUILT · **apply-loop NOT built** |
+| Property feed + channel | `Sources/Property/` | BUILT (engine math is KEEP-legacy) |
+| Save soft-remove drain (`savemigration.txt` + `sm_isCut`) | `Sources/Infrastructure/` | BUILT |
+| Derived-cache component (`CvDerivedCache`/`Set`/`Vec`) | `Sources/Infrastructure/` | BUILT |
+| HTTP transport (sockets, mailbox, `/events` SSE, `/` liveness) | `Sources/Tools/` | BUILT — **routes purged** |
 
-- **Parity + shadow are CLOSED** ([DEC-verify-in-game-not-reshadow](../../architecture/decisions.md#dec-verify-in-game-not-reshadow)).
-  StoneBase verified the event-spine STRUCTURE; shadow verified the CALCULATIONS. Do NOT re-run either — acceptance is
-  LIVE-game manifestation + the calc-count gate, never a re-shadow.
-- **Gate 3 — classification consumption** (the long pole): rewire every engine/AI/UI consumer of
-  `skills/tags/capabilities/attributes/policies` from legacy XML fields to the cascade classification.
+## What does NOT exist (the deliberate gap)
 
-**ONE strategy for BOTH getter families — a NEW uniform surface, the old one disconnected
-([DEC-new-getter-surface](../../architecture/decisions.md#dec-new-getter-surface)):**
-- **Computed-value getters** (`getYieldRate100`, `hasTrait`, `isPower`, classification getters): NOT re-bodied.
-  Reusing a legacy getter is what produces the recurring half-migrated state — its contract encodes the legacy
-  scale/granularity/combine, so the cascade bends to fit it. Build the parameterized read over the channel index,
-  move consumers onto it, delete the legacy getter with its accumulator. **360 channel-shaped getters exist on
-  `CvCity.h` + `CvPlayer.h` alone** — that surface is the target, not a constraint to preserve.
-- **Info-field Cy\* bindings** (`getBuildingInfo(i).getX()`, the ~900 `.def`s):
-  [DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed) — the same move, one level out: redesign the
-  contract around the cascade/JSON model, rewire the Python consumers onto the uniform set, fix the stubs.
+- **The modifier substrate.** Archived. There is no package storage, no accumulator, no modifier spine consumer.
+- **The graft onto the game objects.** `CvCity` / `CvPlayer` / `CvPlot` / `CvArea` / `CvTeam` are reverted to
+  `main`, so they carry no cache member and no enabler member. **The enabler is complete and hostless** — it is
+  waiting on the access surface, not on enabler work.
+- **The endpoint route table.** Purged wholesale; the transport survives.
+- **The read surface itself** — see below. This is the open item.
 
-**Reproduce-not-default:** a poco getter whose value is NOT curated JSON (runtime-drawn / engine-resolved) MUST
-reproduce legacy's mechanism, never a stand-in default (0/-1/empty). The silent-wrong-value stubs feeding Python
-(F6/F8) already violate this; fixing them is conformance, not new scope. (Curated-field drops are still faithful
-defaults — the complement.)
+## ⛔ THE OPEN ITEM — the ACCESS surface
 
-## Failure inventory (the shortcuts — each cites spec authority + code divergence)
+> *"What we ultimately want is settled in the spec. What is not done is defining what and how things are
+> accessed."* (owner)
 
-### F0 — FOUNDATION: the event-spine-driven single cache build/invalidation. Everything else is downstream.
-The build plan is [f0-eventspine-invalidation.md](f0-eventspine-invalidation.md). `CvCacheInvalidationConsumer`
-(`Sources/Cascade/CvCascadeInvalidation.cpp`) is registered onto the spine via `cascadeRegisterInvalidation()` from
-`spineRegisterConsumers()` and drives most mutation choke points to narrow, event-derived `dirtyCity`/`buildingProcessed`
-invalidation. The remaining gap is the broad `markPlayerScopeAndCities` conditioner floor still standing in for the
-event-derived path at a handful of sites (civic/tech-driven empire-wide conditioner changes) — narrow those to the
-derived-from-deposit-index invalidation the rest of the consumer already uses.
+Everything above is settled. What is NOT defined is the boundary every consumer meets:
 
-### F1 — GREEN reached (the RED-ratchet RULE stands — [DEC-red-ratchet](../../architecture/decisions.md#dec-red-ratchet); NEVER restore an archived `CvXInfo`).
-- The 23 archived-replacing pocos are defined + populated via `LoadGlobalClassInfoJson`, mirroring the legacy getter
-  contract. Per [DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed) this info-field surface changes
-  shape with the Cy\* redesign (F8) — not immutably done.
-- **DllExport EXE-bound accessor proxy layer** — BUILT: the 5 EXE-bound `GC.get*Info()` getters (`CvGlobals.cpp`) return the `InfoRepo<X>` JSON shim; no longer a compile blocker.
-- **`enPromotionValid`** is a pure cascade verdict (domain frontier + entity `requires` + an engine-side
-  unit-state gate leg reading static promo info + raw unit state, DEC-calc-zero-ride-in — no legacy getter); the
-  property cascade reads are the remaining F1 legacy-path item.
-- **✅ DONE — the 11 uniformity types are consolidated onto their engine classes and JSON-loaded** (civilizations/
-  eras/handicaps/gamespeeds/specialbuildings/leaderheads/specialunits/victories/votes/hurries/bonusclasses). The
-  SECOND-WAVE cutover followed the 24-type pattern: each engine `Cv<X>Info` (in `Sources/Infos/`) was reparented
-  `CvInfoBase`→`CvInfo`, given a `mapFrom` that fills its typed getters from `Assets/Data/<folder>/*.json`, its
-  loader flipped `LoadGlobalClassInfo`→`LoadGlobalClassInfoJson`, its `InfoRepo` `JsonPayload`/alias retargeted to the
-  engine class, and the parallel `CvJson<X>Info` poco DELETED — so `GC.get*Info()` and the cascade read ONE
-  JSON-fed object. `mapFrom` reads raw human values via `CvJsonParse.h` helpers (`jsonFamVal`/`jsonIdInt` with the
-  legacy default), audio-tag arrays are resolved through `gDLL->getAudioTagIndex` as `read()` did, and each `.cpp`
-  re-adds `CvInfos.h` + `AI/CvGameAI.h` to preserve unity-batch include leakage. **All 11 are listed in
-  `RJ_REPO_TYPES`** — the ONE per-type `InfoRepo` dispatch — so each gets readJson's full-registry re-map (the
-  cross-category FK resolve, e.g. Civilization's `derivativeCiv` after the post-load alpha re-sort), its
-  DepositIndex push, and a `/state/info` home for the standing loaded≡authored verification. **Data follow-ups — both CLOSED (verified against `Assets/Data` + the poco readers):** SpecialBuilding needs no
-  `curate_specialbuilding.py` — the JSON is emitted by `curate_building.py:1734`, `techPrereq` rides the tech-side
-  inversion (`store.py:181` → `tech.enables.specialBuildings`, un-inverted at `CvCascadeReadJson.cpp:220`), the group
-  `ObsoleteTech` is inherited onto member buildings by `store.py::_inherit_group_obsoletes` (so MONASTERY's
-  `TECH_MODERN_PHYSICS` reaches all 26 members and fires through `CvTeam.cpp:5741`), and `allowed`/`valid` are curated.
-  *(Residual: the GROUP-level `getObsoleteTech()` stays `NO_TECH`, which only blanks the `CvGameTextMgr.cpp:18170`
-  "obsolete with" line — display, not gameplay.)* Handicap `PROPERTY_*` is curated (`PROPERTY_CRIME`/`PROPERTY_EDUCATION`)
-  and bridged at `CvHandicapInfo.cpp:196`. **Leaders ship TRAITLESS** (owner ruling
-  2026-07-21; the community re-adds traits post-merge — [data-migration-remaining.md](data-migration-remaining.md)).
-- **✅ DONE (owner ruling): `Sources/JsonInfo/` is ELIMINATED — every info class lives in `Sources/Infos/`.** The
-  folder is gone (its 78 files `git mv`'d into `Infos/`, the `/I"$SOURCE_DIR$/JsonInfo"` line dropped, the 6
-  `JsonInfo/`-qualified includes made bare — both dirs are on `/I` so bare resolves). One folder for all infos, so no
-  future agent infers a spurious JSON-vs-engine split from two folders. The `CvJson<X>` section-unit files
-  (`CvJsonModifiers`/`CvJsonParse`/…) keep their names inside `Infos/`; the base is `CvInfo` (the old `CvJsonInfo`
-  class name is retired in code, stale in some docs — a separate doc-only pass).
-- Gate consumers for culturelevels/unitcombats/promotionlines — BUILT (consumed live in the enabler + accumulator + `CvGameTextMgr`).
+- **What the uniform getter set looks like** — the parameterized read over the channel index that replaces the 360
+  channel-shaped getters on `CvCity.h` + `CvPlayer.h` alone. Its shape decides what the packages must store, so it
+  is upstream of re-grafting anything.
+- **How a scope owner carries its cache** — the member, its binding, and its mark derivation, uniform across
+  world / team / empire / area / city / plot.
+- **How the INFO side hands its data to the cascade** — the standardized "give me your flats / percents for these
+  channels" surface, so the cascade sums from a list of infos rather than reaching into each info's shape. ⚠ The
+  current info getter surface mirrors the legacy `CvXInfo` field contract, so it carries the same problem one level
+  down: *"the encouraging part is also part of the problem."*
+- **The new Python surface** — built from the cascade/JSON model, with the legacy `Cy*` surface CUT AWAY
+  ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)). Not a widened binding, not a shim
+  beside it, not two live surfaces.
+- **The endpoint route table**, which reads the same uniform getters as everything else.
 
-### F2 — Gate 3 classification consumption (the long pole). [cutover.md](cutover.md) §Gate 3.
-Hundreds of engine/AI/UI call-sites still read scattered legacy XML fields instead of
-`getSkills()/getTags()/getCapabilities()/getAttributes()/getPolicies()`. **`tags` ARE mapped and the `IS_<TAG>`
-predicate surface is BUILT and live** — `CvCascadeConditionEval.cpp` (`CASC_PRED_IS_TAG` over the unit tag bitset),
-`CvCascadeTally::countUnitsWithTag`, the unit poco `m_tags` block — so tag-backed rewires are unblocked. What remains
-is the `skills`/`state` mapping and the hundreds of legacy-XML-field consumer rewires onto the classification getters.
+⛔ **Do not start re-attaching machines to the game objects before this is defined.** A per-site rewire is exactly
+the half-migration this rebuild exists to undo, and it is what every previous attempt did while believing it was
+conforming.
 
-### F2b — The CONSUMER ITERATION sweep the getter flip skipped (whole-database loops → the enabler frontier).
-Spec authority: [enabler.md §6](../../specs/enabler.md) — the AI's decisions iterate ONLY the frontier, never the
-entity database. Divergence: the availability-getter flip rewired what `can*` READS (bare enabler lookup) but the
-CALLERS still iterate whole entity space probing per id — the census counts **262 whole-database iteration loops**
-over building/unit/tech/civic/project space in `AI/` + `Engine/` (CvPlayerAI 53, CvPlayer 42, CvCity 26, CvGame 21,
-CvTeam 19, CvCityAI 13, …). Measured cost of ONE instance (`AI_bestBuildingsThreshold`, called ~7×/city/turn by
-`AI_chooseProduction`'s sequential focus ladder): a 5,202-building `canConstruct` probe scan per attempt ≈ 4.8M
-redundant probes/turn, inside the turn-wall's dominant phase (chooseProduction = 96% of city doTurn; measured live
-2026-07-16, ~917M `CvPlot::getYield` calls in one turn). The sweep: classify each loop (hot per-turn vs load/init/
-UI-rare — full scans are legitimate off the hot path), rewire every hot one to iterate the enabler's LISTED set,
-and collapse `AI_chooseProduction`'s focus ladder to ONE scoring pass read seven ways (the scorer's own designed
-shape). Exhaustive, adversarially verified ([DEC-all-means-all](../../architecture/decisions.md#dec-all-means-all)).
-**Level A landed:** [enabler-finished-set.md](enabler-finished-set.md) — `CvCity::getConstructibleFrontier`/
-`getTrainableFrontier` return the enabler's LISTED frontier; the 12 hot `CvCityAI`/`CvPlayerAI`/`CvUnitAI` call sites
-read the frontier instead of probing the whole database; `AI_chooseProduction` collapses its economic focus stages
-into one `BUILDINGFOCUS_ECONOMY` scored pass. The remaining whole-database loops outside this set are still open.
+## Work that survives the rebuild (unaffected by the substrate archive)
 
-### F3 — Grants apply-loop UNBUILT. [grants-machine.md](grants-machine.md), [event-spine.md](../../specs/event-spine.md).
-The grants machine resolves + shadows only; does NOT apply. ~30 PREREQ rows (religion founder units, game-start
-grants, free techs/gold/units/civics/population, trait freePromotions, building `bFirst` grants, settler
-foundBuildings, per-turn spawn/heal). **Prime suspect for "free promotions load but don't show"** — attribute via
-endpoint, do not assume.
+These are data/curator/audit items whose subject never lived in the archived substrate:
 
-### F4 — Unit-plane modifier machine BUILT (self-accumulator); empire conditioned apply-loops + tail channels remain. [f4-unit-plane.md](f4-unit-plane.md) (owner-approved design, gather-on-dirty unit-scope `CvDerivedCache`).
-The unit self-accumulator (`CascadeUnitPackages`, `UPK_*` channels — `refreshUnitPackages`) is BUILT, wired to the
-getters, and committed: **strength/combat-percent, withdrawal, firstStrike, heal, evasion, intercept, collateral,
-capture, and `upkeep`** gather from the unit's held promotions + unit-combats (dirty-on-construct re-derive, no
-serialization). Still to migrate: **bombard, movement, espionage, keyed-terrain, invisibility** (unit channels), the
-**SizeMatters %** (stays legacy), and the **empire civic/trait/tech CONDITIONED apply-loops onto units** (land later).
-City channels maintenance (`scMaintenanceModifier`), defense (`scDefense`/`scDefenseBombard`/`scDefenseMin`/`scDefensePlayer`),
-health/happiness (`CvCascadeWellbeing.cpp`), GP rate (`scGpModifier`), trade routes (`scTradeRoutes`), and buildRate
-(`buildRateUnit`/`buildRateBuilding`/`buildRateProject`) are BUILT and wired — the legacy `m_iBuildingDefense`
-accumulator is physically removed in favor of the cascade scalar slot. Under universal-yield each is a channel through
-the uniform machine. **The upkeep accumulator cut is DONE** ([fixed-point-conformance.md](fixed-point-conformance.md)):
-`CvUnit::m_iUpkeep100`/`m_iExtraUpkeep100` are removed and `getUpkeep100` is a cascade read (`UPK_UPKEEP`);
-`CvPlayer::m_iUnitUpkeep{Civilian,Military}100` are recompute-Σ caches (`ensureUnitUpkeepBuckets`) — the cascade now
-owns unit upkeep.
+- **F7 — the data tail.** [data-migration-remaining.md](data-migration-remaining.md): NPC civs /
+  `stronglyRestricted`, `state`/paralyze, the corporation rework, the leaderhead trait remap, ranked-target
+  selection. Leaders ship TRAITLESS by owner ruling; the community re-adds traits post-merge.
+- **UnitCombat distillation** — [unitcombat-distillation.md](unitcombat-distillation.md) + the tag-mapping and
+  merge-candidate worklists. Owner realization: the `UnitCombat` god-group must be distilled before the migration
+  can finish, because it is the common blocker under the keyed "vs unit-combat-class" combat modifiers, the upkeep
+  military/civilian bucketing, and the `IS_<tag>` predicate surface.
+- **The grants apply-loop** — [grants-machine.md](grants-machine.md) + [grant-apply-sites.md](grant-apply-sites.md)
+  + [start-packages.md](start-packages.md). Still the biggest feature gap: grants resolves but does not apply.
+- **Poco stubs** — [stub-census.md](stub-census.md). Getters returning a constant where legacy computed a real
+  value, feeding live consumers wrong numbers. **Reproduce-not-default:** a poco getter whose value is not curated
+  JSON must reproduce legacy's mechanism, never a stand-in 0/-1/empty.
+- **The property source data** — [property-audit.md](property-audit.md) (LOCKED, owner-approved). The engine math
+  is intact and must NOT be rewritten.
 
-### F5 — Property feed BUILT + operate-dormancy invalidation BUILT (largely closed). [property-audit.md](property-audit.md) (locked, owner-approved).
-Engine math is intact (KEEP-legacy); the JSON→engine feed side is built (`CvProperties::propagateChange` reads
-`CvPropertyInfo::getChangePropagator` live off the curated `changePropagation` map, and `CvCascadePropertyBridge`
-translates the increment-4 gated/conditioned entries' BoolExpr/IntExpr trees). The one-shot-`<Properties>`-per-turn
-replay is the **DECIDED-CORRECT model** ([property-audit.md](property-audit.md), owner ruling): every one-shot is a
-per-turn source and the HELD one-shot path returns EMPTY by ruling — the earlier "crime-spike/education-crash runaway"
-concern is RESOLVED, not open.
-- **✅ BUILT — property-`operate` dormancy invalidation via the moving-watermark crossing detector.** A building's
-  `requires.operate` `{PROPERTY_*, min/max}` band (crime/disease/education/pollution) now routes to `propertyBands`
-  (NOT the dead `s_opDynamic` bucket — `CvEnablerKernel.cpp:378/529`, still write-only, a small dead-code cleanup).
-  The as-built mechanism: a property-band operate reverse-index (`scanCondDeps` collects the `PROPERTY_`
-  id + thresholds) driving the **moving-watermark crossing detector** (`CvPropertySolver::doTurnBandWatch`) — per city, per property
-  with operate consumers, hold the window `[min,max]` = the nearest band thresholds BRACKETING the current value; each
-  property tick is an O(1) in-window test that does NOTHING until the value reaches `min` or `max`, and only THEN
-  re-check that property's operate consumers + RESET the window to the new bracketing thresholds. This is the ONLY
-  no-self-heal-compliant shape (event-proportional — fires on actual crossings, never a per-turn poll/blanket). **The
-  watermark bookkeeping is ITS OWN LITTLE MODULE INSIDE the property engine (owner-ruled placement)** — consistent with
-  the self-contained property engine ([engine.md](../../reference/engine.md): "what happens inside the property engine
-  stays inside the property engine"): the module owns the window state and, on a crossing, emits a **DIRECTION-LESS
-  "property band hit" (city + property id ONLY — no high/low)**, because the enabler re-evaluation reads the current
-  value against the bands anyway, so direction is redundant and the property engine never needs to know WHICH buildings
-  care. The enabler receives it → re-evaluates that property's operate consumers → `cityHaveChanged(CASC_HAVE_PROPERTY)`
-  + the building-active footprint mask (the G3 bonus-operate pattern). The feed and this detector were built together
-  and wired end-to-end through `EnablerKernel::onPropertyBandHitActive`.
+## Observability / acceptance
 
-### F6 — Data that loads but does not manifest. Free XP / promotions case.
-Free XP + free promotions load end-to-end; the break is in APPLY/DISPLAY, not load. Real drops:
-`isApplyFreePromotionOnMove()` hardcoded `return false` (`CvBuildingInfo.h`) permanently dead-codes `CvCity::doPromotion`'s
-on-move re-apply branch — since F3's grants apply-loop is unbuilt (grants resolves + shadows only; the legacy apply
-paths, `doPromotion` among them, are still the only apply mechanism), this is an unhandled gap, not the redundant
-no-op the getter's own comment claims; consumed stub getters return 0/false and silently eat data; a broken
-cross-curator promise (`BonusCommerceModifiers` dropped by both curators). Reconcile the stale done-claims to code in
-the same fix.
+Unchanged in principle, but note the surface it depends on is currently purged:
 
-### F7 — Data tail (curator/JSON). [data-migration-remaining.md](data-migration-remaining.md).
-IN SCOPE (failures): NPC civs / `stronglyRestricted`, `state`/paralyze, corporation rework,
-leaderhead trait remap, ranked-target-selection. ✅ DONE — the `CvOutcome` DATA is migrated to clean JSON (owner ruling
-2026-07-20, [mission-outcome-system.md](../../reference/mission-outcome-system.md)): the OUTCOME_* infos + the
-per-carrier reward payloads (`outcomes.kill[]`/`actions[]`) load via `mapFrom`, conditions eval through
-`cascadeEvalCondition`, and the running game reads no outcome XML. What STAYS Python (correct scoping): the
-mission-CONCEPT unification (the future ground-up `missions` rework), the Python-authoritative outcome hooks
-(`{python:fn}` gates + inline `<Python>` bodies), random EVENTS, and Revolution. ✅ VERIFIED PRESENT (not gaps):
-golden-age LENGTH + anarchy-reduction timers + golden-age GRANTS all curated.
+1. **The 50k `(scope,channel)` calc gate** — reset at `doTurn` top, exposed on the perf endpoint. Total/turn under
+   50k (thousands steady-state, ~0 on a quiet turn); the histogram names the culprit on a breach.
+2. **Manifestation polls** — PROGRAMMATIC against the `/computed` oracle endpoints, never eyeballing the screen. A
+   blind value is EMITTED first; emitting it is step one of that item's fix.
+3. **StoneBase** — repurposed from offline parity oracle to the user-visible PERFORMANCE layer
+   ([DEC-verify-in-game-not-reshadow](../../architecture/decisions.md#dec-verify-in-game-not-reshadow)). Parity and
+   shadow are CLOSED and are NOT re-run, re-invoked, or used to frame remaining work.
 
-### F8 — Python layer rework. DIRECTION SET (owner): a NEW Python surface, the old one COMPLETELY DISCONNECTED ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)).
-> **⛔ Agents are BANNED from building on the existing bindings** (AGENTS.md Conventions §Design) — *"every time you
-> try, you start shoehorning."* The replacement is a clean cascade/JSON-shaped surface with the legacy `Cy*` surface
-> CUT AWAY, never a widened binding, a shim beside it, or two live surfaces. A conversion that leaves every Python
-> consumer untouched is the half-migration tell, not a success.
-Breakage is silent wrong-VALUE, not compile fail (pocos mirror legacy signatures; curator-gap stubs feed defaults —
-e.g. `getBonusCommerceModifier` stubbed 0 (curator gap) yet read live by AI valuation; the property-manipulator +
-dead-system stubs across `CvTechInfo`/`CvReligionInfo`/`CvRouteInfo`/`CvTerrainInfo`/`CvCorporationInfo`). **In scope:** redesign the
-Cy\* info-binding contract around the cascade/JSON model; rewire the Python info-CONSUMERS (Pedia/Advisors/display);
-fix the stub-fed wrong values. **Out of scope (stays Python):** Revolution, random events, the mission-CONCEPT rework +
-the Python outcome hooks (the outcome DATA itself is JSON-migrated — F7).
-- **⛔ OPEN STOPGAP to restore — `CvFinanceAdvisor.py` commerce breakdown.** The advisor RE-DERIVES the engine's
-  per-city commerce math in Python and read the now-removed `CyCity.getBonusCommerceRateModifier` (deleted by the
-  `m_aiBonus*` cut). It is dropped as a STOPGAP (the bonus-modifier row is gone — DISPLAY only, actual gold
-  unaffected) to stop the `AttributeError` crash. **The PROPER fix needs a cascade commerce-BREAKDOWN output** (per
-  component: base / bonus / player-gold-modifier / building-multipliers) that the advisor READS instead of
-  re-deriving — **that breakdown output is not built yet**, and it is the dependency. **Owner ruling: the cascade must
-  OUTPUT its breakdown the same way combat text already does** — the `/computed` per-source DECOMPOSITION surface
-  ([http-endpoints.md](../../specs/http-endpoints.md), e.g. `/computed/units/combat` attribution): a display screen
-  READS the cascade's named-term decomposition, it does NOT reconstruct the engine math in Python. Build the commerce
-  decomposition on that pattern, then rewire this advisor (and the other breakdown screens) to consume it.
+## Verification targets
 
-### F-DOCS — doc reconciliation (part of every item, per repo rule).
-A doc gap that bit you bites the next contributor; close it in the same change. Stale done-claims → reconcile to code.
-
-## Observability / test layer — the acceptance gates
-
-Two acceptance pillars, per item, verified LIVE in-game ([validation.md](../../specs/validation.md),
-[http-endpoints.md](../../specs/http-endpoints.md)):
-
-1. **The 50k `(scope,channel)` calc-counter** — reset at `doTurn` top, exposed at `/computed/perf` + teed to
-   `/events`. Total/turn < 50k (thousands steady-state, ~0 on a quiet turn); the histogram names the culprit
-   scope/channel on a breach. Standing regression tripwire.
-2. **Manifestation polls** — PROGRAMMATIC against the `/computed` oracle endpoints (yields / wellbeing / tally /
-   unitSkills / heal / unit promotions). Poll-and-assert, never eyeballing the screen. A BLIND value must be EMITTED
-   first — step one of that item's fix.
-3. **StoneBase LIVE dashboard** — repurposed from offline parity oracle to the USER-VISIBLE PERFORMANCE LAYER
-   ([DEC-verify-in-game-not-reshadow](../../architecture/decisions.md#dec-verify-in-game-not-reshadow)): the live
-   `(scope,channel)`/turn-time dashboard (Razor + SignalR) + the `/computed` oracle values in one window — performance
-   and correctness in a single "never look at the screen" surface. StoneBase = `C:\code\s2s\StoneBase` (its own git
-   repo — commit there, NOT the mod repo).
-
-## Sequencing
-
-0. **Owner rulings landed in repo docs** (AGENTS.md / decisions.md / state-repositories.md) — done.
-1. **Observability FIRST** — the `(scope,channel)` counter + `/computed/perf` (the 50k gate), so every later step is
-   provable and the current millions-of-calcs state is measured before touching it.
-2. **The EMIT surface FIRST** — the event spine emits ALL events completely, during play AND from the load process
-   (the reseed emitting every present-fact). Verify observable (every present-fact emitted on load) BEFORE anything
-   consumes it. This is F0's prerequisite half.
-3. **The cache build/invalidation consumer** — the one consumer that builds all caches on load (the reseed) and
-   invalidates only dirty packages during play (derived from the deposit index); delete the blankets +
-   `refreshOperatingBuildings` reseed + the recompute-on-load recalc. Prove LIVE via the 50k gate (millions →
-   thousands) + manifestation polls green. This completes F0.
-4. **F1 GREEN reached** (DllExport proxy + `enPromotionValid` + gate consumers all built; NEVER restore an archived
-   `CvXInfo`). ✅ The 11-uniformity SECOND-WAVE cutover is DONE — all 11 consolidated onto their engine classes,
-   JSON-loaded, the `CvJson<X>Info` pocos deleted (see F1). The remaining data follow-ups are the missing
-   `curate_specialbuilding.py` (tech-prereq gap) and the Handicap `PROPERTY_*` #429 shape.
-5. **F2 classification consumption** (the long pole) — the `IS_<TAG>` predicate surface is BUILT; what remains is the
-   `skills`/`state` mapping + the consumer rewires. Cut each machine's legacy once its consumers read the cascade AND
-   the live game manifests correctly.
-6. **F3 grants apply-loop** (still UNBUILT — the biggest feature gap), **F4 remaining unit channels + empire
-   conditioned apply-loops** (the self-accumulator is built), **F5 residual cleanup** (largely closed — against the
-   locked [property-audit.md](property-audit.md)). Each channel = a yield in the uniform machine; free specialists via
-   the output-seam.
-7. **F6 manifestation fixes** (reproduce "doesn't show" as a failing poll → attribute → fix → re-poll green), **F7
-   data tail**, **F8 Cy\* boundary redesign + Python info-consumer rewire + stub fixes**.
-8. **F-DOCS** folded into each item; each mechanism cuts when ITS gate is clean → push to `main` = endgame of #430.
+- **Turn time (owner): ≤ 2 minutes wall per turn** on the standing late-game test save. The
+  [DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king) objective made concrete. The perf
+  hunt resumes only after the caches are event-wired and the game runs behaviourally as it used to.
+- **The MEMORY hunt stays parked** by the same sequencing ruling: chasing per-turn memory is pointless until legacy
+  is gone and everything runs on the cascade + enabler, because the growth is turn-processing-borne and that
+  processing is what the rebuild replaces ([memory-footprint.md](../../reference/memory-footprint.md)).
+- Build: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <Config> <verb>` from
+  `Sources/` (Release for interactive testing; FinalRelease for perf). Runtime verification needs per-session owner
+  permission and goes through `agentstart.bat` only.
 
 ## Scope decisions
 
-1. **Backlog scope = #430 CRITICAL PATH ONLY.** The `docs/plans/parked/` forward-FEATURE backlog (sea-AI-rework,
-   specialist-rebalance, global-warming-mod, …) is OUT — un-started future features that never claimed to be #430.
-2. **Python = BOUNDARY + FIX VALUES ONLY.** Redesign the Cy\* binding contract + fix the stubbed getters; do NOT pull
-   Python-authoritative gameplay into the DLL.
-3. **NOT failures — deliberate correct scoping (grandfathered out of the no-deferred rule):**
-   - the golden-age YIELD-EFFECT member-mirror (PERMANENT engine-core carve-out —
-     [golden-age.md](../../reference/golden-age.md), [DEC-conditions-are-predicates](../../architecture/decisions.md#dec-conditions-are-predicates));
-   - `validation.md` POLICY-deferrals (out-of-scope validation shown-not-dropped; balance redesign post-migration);
-   - the mission-CONCEPT unification (the future `missions` rework) + the Python-authoritative outcome hooks
-     (`{python:fn}` gates + inline `<Python>`) + random EVENTS + Revolution — stay Python; out of #430. (The
-     `CvOutcome` DATA itself IS migrated to JSON — owner ruling 2026-07-20, F7.)
-
-## Verification (end-to-end)
-
-- **The turn-time TARGET (owner): ≤ 2 minutes wall per turn on the standing late-game test save** (the
-  ~1338-era save; measured baseline `[PERF/phase] turn.wall` ~7min, `updateMoves` 124–197s of it). The
-  [DEC-turn-time-is-king](../../architecture/decisions.md#dec-turn-time-is-king) objective made concrete;
-  the FPS hunt resumes ONLY after F0's caches are event-wired and the game runs behaviorally as it used to
-  (owner sequencing ruling).
-- **The MEMORY hunt is parked by the same sequencing ruling (owner): chasing per-turn memory consumption is
-  pointless until legacy is properly gone and everything runs on the cascade + enabler** — the growth is
-  turn-processing-borne (measured: idle dead-flat, settle-deltas +370/+69/+38MB per cycle with a ~60MB
-  in-processing transient; a 32-bit `bad_alloc` exit near the ceiling), and that processing is what the
-  remaining cutover legs replace. The `[PERF/mem]` phase-boundary probe (doTurn start / pre- / post-autoSave)
-  ships in every build so the eventual hunt starts attributed, but no allocation chase runs before the cut.
-
-- Build: `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <Config> <verb>` from
-  `Sources/` (Release for interactive testing; FinalRelease for perf/turn-lag). Assert build = quick compile check.
-- Runtime (per-session owner permission only): `agentstart.bat` → poll `http://127.0.0.1:7227/` until up → verify via
-  endpoints. Check `XmlLoad.log` counts, no `Xml_MissingTypes.log`, no new `Asserts.log`.
-- The 50k gate + manifestation polls are the standing acceptance tests, verified LIVE. Parity + shadow are CLOSED and
-  NOT re-run. Invalidation completeness is proven live: the `(scope,channel)` count stays event-proportional (not
-  entity-proportional) and manifestation polls stay green with the self-heal gone.
+1. **Backlog scope = the #430 critical path only.** The `docs/plans/parked/` forward-FEATURE backlog is OUT.
+2. **Python = boundary redesign + fix values.** Do NOT pull Python-authoritative gameplay into the DLL.
+3. **NOT failures — deliberate, owner-ruled permanent carve-outs:** the golden-age YIELD-EFFECT member-mirror
+   ([golden-age.md](../../reference/golden-age.md)); the mission-CONCEPT unification and the Python-authoritative
+   outcome hooks; random EVENTS; Revolution. *(The `CvOutcome` DATA itself IS migrated to JSON.)*

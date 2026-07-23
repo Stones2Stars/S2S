@@ -14,7 +14,7 @@
   asks "is this scaled?". The answer is always yes.
 - **The forcing function.** Making the getter ×100 and pushing it out FORCES every consumer to be examined and
   properly wired (a mis-wired consumer is visibly 100× wrong), while dead consumers are discarded. It surfaces
-  remaining legacy the cutover missed and collapses redundant call sites.
+  remaining legacy the earlier passes missed and collapses redundant call sites.
 - **⛔ Blast radius is NEVER a reason to limit scope.** Reducing at the getter to spare the consumers is the exact
   reflex that produced the half-migration — the cascade gets shoehorned into legacy-shaped getters instead of the
   consumers being rewired through. The mapped consumer surface is the worklist, not a warning.

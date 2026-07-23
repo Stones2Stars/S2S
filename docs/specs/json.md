@@ -213,9 +213,10 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
 > `<scope>.<target>` filter layer, so `HAS_COAST`
 > matches **any** coastal-adjacent plot (water *or* land). The **target is the plot**:
 > `HAS_PEAK` = the plot has a peak (a special case — a peak behaves as *both* a feature and a terrain, so a plot
-> could *in theory* carry a terrain **and** a peak, e.g. grassland+peak; it just doesn't happen in practice). ⏳ The
-> `HAS_COAST`/`HAS_RIVER`/`HAS_PEAK`/`HAS_HILLS` target-filters + `MAP_CATEGORY` are **not yet fully fleshed out**
-> (space-map-related, in-flight) — author against them with that caveat.
+> could *in theory* carry a terrain **and** a peak, e.g. grassland+peak; it just doesn't happen in practice). The
+> `HAS_COAST`/`HAS_RIVER`/`HAS_PEAK`/`HAS_HILLS` target-filters follow the §3.5 predicate semantics; `MAPCATEGORY_`
+> is an XML-only Type referenced from `requires.build` ([naming.md](naming.md)). Their space-map extensions are
+> defined by the space-map work.
 
 - **bare** (parameter-free string), four groups:
   - **environment / domain** `IS_<where>` (target-relative): `IS_WATER` · `IS_LAND` · `IS_AIR` · `IS_SPACE` · `IS_LUNAR` · `IS_MARS`
@@ -721,6 +722,14 @@ NOT `grants` (it is held-while-active, not a one-shot handout).
 > bitsets, so the whole classification getter surface is an O(1) bit test — never a per-call string lookup
 > ([DEC-materialize-at-mapfrom](../architecture/decisions.md#dec-materialize-at-mapfrom)). A block authors BOTH
 > planes: `true` = grant, `false` = revoke (the skills.md §4 grant/revoke pairs ride the same two-plane block).
+>
+> **⛔ These registries are OPEN BY DESIGN — the member set grows with authored data, permanently (owner).** Because
+> the categories mint from the union of authored keys, identifying new **tags / skills / capabilities / attributes /
+> policies** is an ONGOING activity expected to continue for the life of the mod — a new one is authored data that
+> mints its info, never an engine change. So a glossary ([tags](tags.md) / [skills](skills.md) /
+> [capabilities](capabilities.md) / [state](state.md)) is **never "incomplete" against a finish line**: it catalogues
+> the members identified so far, and more arriving is the normal state, not a gap to close. The building counterpart
+> of unit skills is **`attributes`** (held city-scope) — same open-registry rule.
 
 Full glossaries: [skills.md](skills.md) · [tags.md](tags.md) · [state.md](state.md) · [capabilities.md](capabilities.md).
 
@@ -740,8 +749,9 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   one meaning; cf. empire `capabilities` vs unit `skills` vs `tags`). *(NOT here: civilization selectability
   `playable`/`aiPlayable` → `identity` §7, load-only; the NPC `stronglyRestricted` build-lockdown is a `requires.build`
   civ-membership gate paired with `EnabledCivilization`, folded into the enabler when civilizations are wired — not a
-  policy. ⏳ Some legacy trait keys under `policies` are EFFECTS not states: `freeSpecialistPer{World,National,Team}Wonder`
-  add free specialists scaled by wonder count (CvCity:5764) → reclassify to a `freeSpecialists` modifier family.
+  policy. Some legacy trait keys under `policies` are EFFECTS, not states: `freeSpecialistPer{World,National,Team}Wonder`
+  (free specialists scaled by wonder count, CvCity:5764) belong to the `freeSpecialists` modifier family, keyed by
+  the `WORLD_WONDER`/`NATIONAL_WONDER`/`TEAM_WONDER` count token (§3.1).
   (NB `nonStateReligionCommerce` was *suspected* an effect but is VERIFIED a pure STATE — a Free-Church permission that
   non-state religions' `stateReligionCommerce` applies — so it correctly STAYS a policy.)*
 - **`succession`** — `{ upgradesTo, promotionLine, priority }` (manual upgrade / promotion-line link).

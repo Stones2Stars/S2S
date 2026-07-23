@@ -44,7 +44,7 @@
   plot/unit conditions collapse onto the OUTCOME's `requires` (`CvOutcome`'s `CvJsonCondition`), so the legacy
   `iCost` (`IntExpr` gold) + `plotCondition`/`unitCondition` (`BoolExpr`) members were REMOVED (no schema verb, no
   current data — the curator flags a stray action `iCost` as an unmapped tripwire). `propertyCost`/`payerType` are
-  RETAINED inert (owner ruling — kept for now; a future `propertyCost` verb wires them).
+  RETAINED inert (owner ruling); a `propertyCost` verb wires them when it lands.
 - **`CvOutcomeList`** (`UI/CvOutcomeList`) — a `vector<CvOutcome*>` that **rolls exactly ONE** weighted outcome
   (chances summed, floored to 100 so a sub-100 sum reads as absolute %), after **recursively removing** any outcome
   listed in a surviving one's `ReplaceOutcomes` (higher tier prunes lower). `CvOutcomeListMerged` merges a unit's list

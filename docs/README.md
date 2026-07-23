@@ -1,11 +1,29 @@
 # Stones2Stars — docs
 
 The condensed spec surface. **Session-start protocol (AGENTS.md banner): read ALL of `specs/`, `architecture/`,
-and `reference/` in full before any work** — these exist so an agent ends up with a correct model of the system,
-not a reverse-engineered guess.
+and `reference/` in full before any work**, plus the #430 [roadmap](plans/structural-cleanup/roadmap.md) — these
+exist so an agent ends up with a correct model of the system, not a reverse-engineered guess.
 
 > Rules & conventions for agents/contributors live in the root **[AGENTS.md](../AGENTS.md)** (the one rule home),
 > never here. This is the *knowledge* map.
+
+## How the three tiers differ — and which one to trust
+
+The tiers are not interchangeable, and the difference decides what a stale line costs you:
+
+- **`specs/` + `architecture/` = the DESIGN and the RULINGS. Timeless, authoritative, and kept free of
+  implementation status.** What is BUILT belongs in `plans/`, not here. This is deliberate: when an
+  implementation is archived or reverted, a spec carrying build-status silently becomes a lie that the next
+  agent conforms to. If you find status prose in a spec, that is a defect — move it, don't extend it.
+- **`reference/` = how the ENGINE behaves today.** Independent of the cascade rework; the legacy mechanics,
+  toolchain constraints, and formulas. Stable.
+- **`plans/` = MUTABLE work state**, and the only tier where "we built X" belongs. Its
+  [structural-cleanup](plans/structural-cleanup/README.md) index marks each doc 🟢 live / 🟡 mixed / 🔴 superseded —
+  **check that mark before trusting a plan doc**, because branch `cascade-rebuild` archived the substrate several
+  of them were written against.
+
+⛔ **Where two docs disagree, the spec wins over the plan, and the LIVE CODE settles a question of what exists.**
+Verify against the tree before acting on any claim that something is built.
 
 ## `specs/` — the data model + the system
 - **[specs/json.md](specs/json.md)** — **THE JSON authoring model**: sections, scopes, conditions
@@ -43,9 +61,13 @@ not a reverse-engineered guess.
 - **[architecture/patterns.md](architecture/patterns.md)** — interface contracts in C++03 (poor-man's DI) + the DRY single-implementation law.
 - **[architecture/state-repositories.md](architecture/state-repositories.md)** — recompute-only derived-state caches (`CvDerivedCache`).
 
-## `plans/`
-- **[plans/structural-cleanup/](plans/structural-cleanup/README.md)** — the bulldozer reference (what gets deleted at the cascade cutover).
-- **[plans/parked/](plans/parked/README.md)** — un-killed forward design intent (the backlog).
+## `plans/` — mutable work state
+- **[plans/structural-cleanup/roadmap.md](plans/structural-cleanup/roadmap.md)** — 🔝 **the master plan** (the only
+  session-start read in this tier): the design, what exists on the branch, and the open access-surface item.
+- **[plans/structural-cleanup/](plans/structural-cleanup/README.md)** — the bulldozer reference, indexed
+  🟢 live / 🟡 mixed / 🔴 superseded. Check a doc's mark before trusting it.
+- **[plans/parked/](plans/parked/README.md)** — un-killed forward design intent (the backlog). Carried AS-IS: stale
+  paths and stale status are expected, and each is re-grounded only when its initiative becomes active.
 
 ## Also at this level
 - **[MOD-README.md](MOD-README.md)** — the mod's front-door / build-pipeline readme (the code repo's mirror).

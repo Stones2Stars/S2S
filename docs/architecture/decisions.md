@@ -197,13 +197,6 @@ conditions/predicates. No duplication is sanctioned — the shadow phase, which 
 alongside legacy, has ended.
 **Home:** [patterns.md § DRY](patterns.md).
 
-### DEC-json-not-cascade
-
-`CvJsonInfo` is the JSON-info BASE (availability model + info-owned typed condition ONLY, zero cascade runtime); the
-per-type modifier DATA lives as real typed members on the `CvJson<X>Info` subclasses; the cascade RUNTIME is built by
-the cascade's own setup reading those pocos — never stored on / mixed into the JSON info. **Home:**
-[cascade-engine-430.md §3](../plans/structural-cleanup/cascade-engine-430.md).
-
 ### DEC-data-first
 
 Data migration (curators + JSON) is NEVER deferred: any known un-migrated field / reclassification / still-emitted
@@ -249,7 +242,7 @@ strengthens [DEC-proper-once](#dec-proper-once). **Home:** [AGENTS.md](../../AGE
 
 ### DEC-no-deferred
 
-Anything marked deferred / parked / not-yet-landed / blocked / post-cutover / "later" / "acceptable for now" / TODO /
+Anything marked deferred / parked / not-yet-landed / blocked / "later" / "acceptable for now" / TODO /
 pending is a FAILURE to fix, not a backlog item — the word agents hide behind to skip hard work hoping it lacks
 impact. The general form of [DEC-data-first](#dec-data-first) (which bans it for data specifically), now extended to
 ALL work. The only exceptions are owner-ruled PERMANENT design carve-outs, recorded as such (e.g. the golden-age
@@ -286,7 +279,7 @@ The `Cy*` info-binding contract (the boost::python `.def` surface) is NOT a fixe
 forced the JSON pocos to mirror the entire legacy `CvXInfo` field contract (a stub per legacy field). Redesign the
 boundary around the cascade/JSON model + rewire the Python info-CONSUMERS; fix the stub-fed wrong values. DISTINCT
 from the computed-getter flip strategy (which keeps those contracts and rewires bodies, not call sites). Python
-gameplay stays Python. **Home:** [cutover.md](../plans/structural-cleanup/cutover.md).
+gameplay stays Python. **Home:** [roadmap.md](../plans/structural-cleanup/roadmap.md).
 
 ### DEC-new-getter-surface
 
@@ -301,7 +294,7 @@ keep both surfaces live, and never widen a legacy getter to fit. Python is rewir
 This SUPERSEDES the computed-getter-flip strategy ("rewire the body, never the call sites"), which was correct
 only while the cascade had no uniform vocabulary to rewire consumers ONTO. The general form of
 [DEC-fixedpoint-x100](#dec-fixedpoint-x100)'s "reducing at the getter lets the cascade be shoehorned into
-legacy-shaped getters — the half-migration reflex". **Home:** [cutover.md](../plans/structural-cleanup/cutover.md).
+legacy-shaped getters — the half-migration reflex". **Home:** [roadmap.md](../plans/structural-cleanup/roadmap.md).
 
 ### DEC-no-self-heal
 
@@ -327,7 +320,7 @@ dependency-ordered rebuild pass exists. **Home:** [state-repositories.md](state-
 
 On load, the cascade is built from events that come from **inside the save read itself** — reading a fact off the
 stream is what fires its DOMAIN event (`CvGame::read` → `CvPlayer`/`CvCity`/`CvPlot::read`); the north-star is
-the event SETTING the state (read → emit → populate), object-populated-by-events being a known step-too-far for now.
+the event SETTING the state (read → emit → populate); object-populated-by-events is out of the current scope.
 It is NOT a separate post-deserialization pass that fabricates events by walking already-populated objects — that
 pseudo-emit is banned ([superseded-ideas](superseded-ideas.md) #13) — and equally NOT a warm-up "seed" that walks
 has-lists into a consumer's cache beside the event stream (an invented second build mechanism that leaves the
@@ -369,11 +362,11 @@ CASCADE ONLY — no `*Legacy` fallback, no pre-init/what-if legacy path; a casca
 (exposed), never a legacy-correct one (masked). Legacy masking a wrong cascade is WORSE than legacy failing: the mask
 hides the defect and defers the fix (the wellbeing panel reading legacy hid a 2× cascade inflation). Purge legacy
 **violently** so what is missing/wrong is immediately visible. Blast radius is never a reason to keep a legacy path
-alive. **Post-cutover the legacy XML is REMOVED, so a legacy fallback cannot even RUN — it is BAIT that substitutes
+alive. **The legacy XML is REMOVED (the red ratchet), so a legacy fallback cannot even RUN — it is BAIT that substitutes
 a nonexistent answer and masks the hole** ([DEC-red-ratchet](#dec-red-ratchet)); a realized gate/getter is therefore
 a PURE cascade read (the six availability gates carry no `*Legacy` fallback, no pre-init guard, no what-if path).
 Corollary of [DEC-playability-not-a-gate](#dec-playability-not-a-gate) + [DEC-oracle-tautology](#dec-oracle-tautology)
-for the READ surface. **Home:** [cutover.md](../plans/structural-cleanup/cutover.md).
+for the READ surface. **Home:** [validation.md](../specs/validation.md).
 
 ### DEC-legacy-decache-poisons-perf
 
@@ -384,7 +377,7 @@ recomputes from scratch on EVERY call — so ANY perf measurement taken while le
 `badHealth(bNoAngry)` what-if re-sums per read; it vanished the instant the getters went cascade-only). All turn-time/
 FPS/lag numbers gathered with legacy on any hot read path are POISONED. Clean perf is only measurable AFTER legacy is
 fully purged — so the violent purge is a PREREQUISITE for the perf hunt, not merely a correctness/tidiness step.
-Sharpens [DEC-turn-time-is-king](#dec-turn-time-is-king). **Home:** [cutover.md](../plans/structural-cleanup/cutover.md).
+Sharpens [DEC-turn-time-is-king](#dec-turn-time-is-king). **Home:** [roadmap.md](../plans/structural-cleanup/roadmap.md).
 
 ### DEC-accumulator-cut-uniform
 
@@ -407,7 +400,7 @@ The `json-data-migration` branch is knowingly not playable, and playability is N
 member (save-safe via `savemigration.txt`), and the COMPILER is the census (every consumer still on it is a compile
 error — un-self-certifiable, so you cannot flip-and-pretend). Done = compiler-complete rewire onto the cascade +
 endpoint-observable correctness on a LOADED save (not *playing*). The only legacy that stays is an owner-ruled
-carve-out. **Home:** [cutover.md](../plans/structural-cleanup/cutover.md).
+carve-out. **Home:** [validation.md](../specs/validation.md).
 
 ### DEC-red-ratchet
 
@@ -450,7 +443,8 @@ hand-authored per category; the registry derives from the data. **Home:** [json.
 
 ### DEC-enabler-not-cascade
 
-The **enabler** ("can I?" — the generate-then-gate availability machine: the frontier + operating-building sets) and
+*(One instance of [EACH IS ITS OWN SYSTEM](north-star.md) — kept as its own entry because the NAMING guard below
+is load-bearing on its own.)* The **enabler** ("can I?" — the generate-then-gate availability machine: the frontier + operating-building sets) and
 the **modifier cascade** ("how much?" — the magnitude machine) are TWO SEPARATE SYSTEMS that agents routinely
 conflate — a top cause of the read-path rollerskates. To kill the ambiguity: **"cascade" names the MODIFIER system
 ONLY**; the availability machine is **"the enabler"**, never "the enabler cascade." Its classes carry no `Cascade`
@@ -458,4 +452,6 @@ prefix (`EnablerKernel` / `BuildingEnabler` / `UnitEnabler` / `TechEnabler`), an
 walk + the `requires` gate.
 Availability getters (`canConstruct`/`canTrain`/`canResearch`/…) read the enabler's OWN cached sets directly (the same
 "read your own cache" shape the modifier getters use for the game-object modifier caches — [DEC-no-self-heal](#dec-no-self-heal),
-[scope-packages.md](../plans/structural-cleanup/scope-packages.md)). **Home:** [enabler.md](../specs/enabler.md).
+[state-repositories.md](state-repositories.md)). **One consumer per system:** the enabler has its own spine consumer;
+a shared one welds the two machines and forces one load policy onto two that differ
+([superseded-ideas](superseded-ideas.md) #16). **Home:** [enabler.md](../specs/enabler.md).

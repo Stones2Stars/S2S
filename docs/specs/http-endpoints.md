@@ -3,6 +3,20 @@
 The local server (`127.0.0.1:7227`) publishes game state for reading. It is a **GET-only** dev server,
 gated by the BUG option `Autolog__HttpServer` (off by default), bound to loopback only.
 
+> **⚑ THE ROUTE SURFACE IS CURRENTLY EMPTY — this doc is the SPEC it is rebuilt to, not a description of what
+> answers today.** The transport survives and works (`Sources/Tools/CvHttpServer.cpp`: sockets, the game-thread
+> single-slot mailbox, the `/events` SSE consumer, `/` liveness); the endpoint BODIES were purged wholesale
+> because they had become a chief source of rollerskating — hundreds of per-feature accumulators and oracle twins
+> grown behind one route each, which is the exact anti-pattern §"the server SERVES, it does not ACCUMULATE"
+> already forbids ([observability.md](../reference/observability.md)). Rebuilding them is part of defining the
+> access surface, not a separate errand: an endpoint reads the same uniform channel-indexed getters every other
+> consumer reads ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)), so the route
+> table cannot be honestly restored before that surface exists. ⛔ Do NOT re-add routes that reach around it into
+> legacy accumulators — that is how the previous surface accreted.
+>
+> The `*Legacy` / `*Recomputed` / `*Leg` comparison fields catalogued nowhere below are **not** to come back:
+> they are tautological ([DEC-oracle-tautology](../architecture/decisions.md#dec-oracle-tautology)).
+
 > **Why this surface exists.** The endpoints + the external drycalc together validate that the C2C→S2S port
 > **lost no mechanic** — that nothing was forgotten when game logic moved to the JSON/cascade model. The method is
 > per-mechanic parity: reproduce **each individual mechanic** from the raw inputs + the `Assets/Data` JSONs and
@@ -182,7 +196,7 @@ Shape: **`/state/<slice>`** for game-wide lists, **`/state/<entity>/...`** for e
 
 ## `/computed/*` — the engine's answers (verification ground-truth)
 
-The engine's computed outputs, **engine-only** (no cascade comparison — the cascade cutover is validated later by
+The engine's computed outputs, **engine-only** (no cascade comparison — the cascade is validated later by
 the external dry-calc + logging, not here).
 
 - **`/computed`** — index.
@@ -267,7 +281,7 @@ This surface is a deliberate **clean rebuild**; the following predecessors were 
 - **The `/diagnostic/*` grab-bag and `/extractor/*`** — split cleanly into `/state` (raw) and `/computed`
   (engine answers). The raw extractor dump used to smuggle computed oracles (`canConstruct`, `availableTechs`)
   into the "raw" document; those now live on `/computed`.
-- **The `/shadow/*` cascade-vs-legacy sweeps** — the cascade cutover is validated by the external dry-calc and by
+- **The `/shadow/*` cascade-vs-legacy sweeps** — the cascade is validated by the external dry-calc and by
   logging (same-calc-same-output), so the in-DLL sweep endpoints were retired rather than carried forward.
 
 ---

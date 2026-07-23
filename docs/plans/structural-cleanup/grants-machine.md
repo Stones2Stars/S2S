@@ -2,11 +2,11 @@
 
 > The cascade's **provisions** consumer: an `IEventConsumer` on the event spine ([event-spine.md](../../specs/event-spine.md))
 > that, on a `DOMAIN` state-change, resolves the **source entity's genuine grants** off the mapped `CvJsonInfo`
-> (`grantLists`/`grantPulses` in the per-type `InfoRepo`) and — at the cutover — applies them; the apply-loop must
+> (`grantLists`/`grantPulses` in the per-type `InfoRepo`) and — when the apply-loop lands — applies them; the apply-loop must
 > MANIFEST in-game ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)). Design authority:
 > [json.md](../../specs/json.md) §5 (`grants`). The **classification pass** (2026-07-01, [data-migration-remaining.md](data-migration-remaining.md))
 > cleaned the surface: `grants` now holds **only genuine provisions handed out on a trigger** — the mis-homed keys
-> moved out, and the unit activated-MISSION keys are a **PERMANENT carve-out (missions pass)** ([mission-outcome-system.md](../reference/mission-outcome-system.md)).
+> moved out, and the unit activated-MISSION keys are a **PERMANENT carve-out (missions pass)** ([mission-outcome-system.md](../../reference/mission-outcome-system.md)).
 
 > ⛔ **The inventory table below is SUPERSEDED as a map of the legacy surface — see
 > [grant-apply-sites.md](grant-apply-sites.md).** Checked domain-by-domain against live code, it understated the
@@ -79,11 +79,11 @@ resolved set is observable via `[GRANTS]`, and the apply-loop (increment 5) must
      the cascade resolves it in one place off `InfoRepo<CvCivilizationInfo>`/`<CvEraInfo>`/`<CvHandicapInfo>`).
    - **All the clean event triggers are now wired** (building/unit/tech/religion/civic/game-start). What remains is NOT
      a resolution trigger: city-founded is minor (`foundBuildings` already resolve on unit-created), and the **per-turn
-     recurring** apply (`repeatable` spawn/heal + `freePromotions`) belongs to increment 5 (the cutover apply-loop).
+     recurring** apply (`repeatable` spawn/heal + `freePromotions`) belongs to increment 5 (the apply-loop).
 4. **Live manifestation check** — grants are event-driven side-effects; the acceptance is that the resolved grant-set is
    observable via the `[GRANTS]` diagnostic, and — once the apply-loop lands (increment 5) — the granted effect MANIFESTS
    in the running game per channel ([DEC-done-is-observable](../../architecture/decisions.md#dec-done-is-observable)); not a re-run of parity/shadow.
-5. **Apply + cutover** — the machine APPLIES, replacing the legacy grant application.
+5. **Apply** — the machine APPLIES, replacing the legacy grant application.
 
    > **⚖ A GRANTED ENTITY IS AN ORDINARY ENTITY (owner ruling).** *"The only difference between a building
    > granted and a building constructed is that we didn't use production if granted."* So the machine does **NOT**
@@ -139,5 +139,5 @@ resolved set is observable via `[GRANTS]`, and the apply-loop (increment 5) must
 - [start-packages.md](start-packages.md) — the GAME-START provisions as authored data (design, not yet built):
   start packages authored ONCE and stacked, replacing the hardcoded engine unit selection.
 - [json.md](../../specs/json.md) §5 (`grants`) · [event-spine.md](../../specs/event-spine.md) (the `IEventConsumer` front door) ·
-  [mission-outcome-system.md](../reference/mission-outcome-system.md) (the carved-out missions-pass keys, NOT grants) ·
+  [mission-outcome-system.md](../../reference/mission-outcome-system.md) (the carved-out missions-pass keys, NOT grants) ·
   [data-migration-remaining.md](data-migration-remaining.md) (the classification pass).

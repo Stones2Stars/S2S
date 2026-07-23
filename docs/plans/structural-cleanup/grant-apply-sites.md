@@ -252,7 +252,7 @@ question [grants-machine.md](grants-machine.md) left open.
 
 1. ~~Python boundary.~~ **SETTLED (owner): Python events do NOT use grants yet.** The first pass of the machine
    is **DLL-scoped**, and the Python granting catalogued in §2 stays where it is — a KNOWN and accepted parallel
-   for now, not an oversight and not a gap to close opportunistically. ⛔ Do NOT wire `CvEventManager` /
+   This is a deliberate boundary, not an oversight or a gap to close opportunistically. ⛔ Do NOT wire `CvEventManager` /
    Revolution / `BarbarianCiv` handouts into the machine, and do not claim "one place" without the DLL
    qualifier. "Yet" is deliberate: the boundary moves when the owner says so, and the map above is what that
    later pass will work from.

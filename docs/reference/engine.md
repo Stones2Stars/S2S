@@ -110,17 +110,23 @@ save-break); derived data serializes nothing; deleting a changer means auditing 
   CIVILIZATION, …) are resolved by the SAME principle one level up: `cascadeLoadJson`'s full-registry pass re-runs
   the complete `mapFrom` on every aliased entity once ALL categories are registered — `mapFrom` is idempotent by
   contract (`CvInfo.h`), and `/state/info?type=X` is the standing loaded≡authored verification
-  ([readjson.md](../plans/structural-cleanup/readjson.md)).
+  verification.
 
 ## UnitCombat — the fat info class + the cascade-migration note
 
 > Ties directly into the [unit-classification](../specs/skills.md) work — `tags` like `gunpowder`/`mounted` come
 > from unitcombats (post-migration).
 
+- **What a UnitCombat IS (owner):** a definition of a unit's **strengths and weaknesses** — the good/bad-against
+  column (a shared vs-tag stat bundle), NOT a definition of the unit's TYPE (that is the [tag](../specs/skills.md))
+  nor its ABILITIES (those are skills). Three concerns, three homes. This is what it originally was in BTS (a
+  vs-based combat grouping); the S2S distillation restores it ([unitcombat-distillation.md](../plans/structural-cleanup/unitcombat-distillation.md)).
 - Vanilla: a thin label. **S2S/C2C:** a fat `CvUnitCombatInfo` (~150 fields, near-mirror of `CvPromotionInfo` — a
   combat class ≈ a free promotion for every member), many-to-many membership, proliferated to **~981 classes (~77%
   attached to no unit — vestigial)**; ~96% of live classes are inert tags (size/species/motility taxonomies crammed
-  into the combat-role enum).
+  into the combat-role enum). **The proliferation came largely from the killed EQUIPMENT mod (owner)** — it minted a
+  combat class per equipment permutation, which is why the enum bloated into a size/species/weapon taxonomy far
+  beyond the strengths/weaknesses role.
 - Combat resolution: **additive-accumulate, multiply-once** — ~40 signed-% layers sum into one `iModifier`, applied
   multiplicatively once; "vs X" folds into the *defender's* number. **Four overlapping "vs" channels** add into the
   same `iModifier` with no precedence (silent stacking; a known live bug swaps the vs-class / vs-unit help labels).
@@ -131,9 +137,10 @@ save-break); derived data serializes nothing; deleting a changer means auditing 
   types. `identity.religion` is read FROM already-attached combats (`CvUnit::getReligion`, `:30868`), NOT an attach
   selector; `identity.culture` has no attach path at all. A blunt 2026-06-14 purge over-reached on the module blind
   spot and was fully reverted.
-- **Cascade migration:** UnitCombat is a **source/enabler** (membership = the enabler axis; the ~150 fields = a
-  modifier deposit) and should share Promotion's modifier-family vocabulary — **do UnitCombat + Promotion together**.
-  Verify live, then cut any dead-class purge.
+- **Cascade migration:** a UnitCombat is a modifier SOURCE — its vs-tag stats deposit onto the units that carry it,
+  sharing Promotion's modifier-family vocabulary (**do UnitCombat + Promotion together**). Its non-stat content
+  distills out: identity → tags, abilities → skills, leaving the pure strengths/weaknesses list. Verify live, then
+  purge only vestigial/duplicate classes.
 
 ## See also
 

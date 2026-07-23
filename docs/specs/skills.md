@@ -194,9 +194,9 @@ city military-production bonus):
 (The legacy sets differed — 1007/1325/1276 — so unifying them onto one `IS_MILITARY` is a deliberate behaviour
 change, expected to show in the shadow, not a bug.)
 
-> **⏳ Needs its own spec — the unit-category system:** the full category list, how membership is authored
-> (overlapping, opt-in), and the `IS_<TAG>` predicate surface. Captured here only as the home the `military*`
-> flags fold into; the tags themselves are not skills.
+> **The unit-category system's home is [tags.md](tags.md)** ([json.md §8](json.md) is the model): the category
+> list, the overlapping opt-in membership, and the `IS_<TAG>` predicate surface. The `military*` flags fold into
+> the `military` tag there; they are not skills.
 
 ---
 
@@ -228,9 +228,8 @@ unit JSON `skills` ∪ combat-class JSON `skills` ∪ held promotions' JSON `ski
 A few skills are authored as **add/remove pairs** — `true` grants, `false` revokes (a promotion can take an
 ability *away*): `stampede`, `attackOnlyCities`, `ignoreNoEntryLevel`, `ignoreZoneOfControl`, `fliesToMove`.
 
-> **⏳ Future (owner) — make skills & capabilities GRANT-ONLY.** These grant/revoke pairs are slated to be
-> transformed so an ability can only be **granted**, never revoked via a `false` — removing this special case.
-> Parked for later.
+> **Owner direction — skills & capabilities are GRANT-ONLY.** An ability is granted, never revoked via a `false`;
+> the grant/revoke pairs listed above collapse to grant-only, removing the special case.
 
 ---
 
@@ -238,4 +237,4 @@ ability *away*): `stampede`, `attackOnlyCities`, `ignoreNoEntryLevel`, `ignoreZo
 - [json.md](json.md) §8 — the **system**: what a skill is, and the unit-`skills` vs empire-`capabilities` split.
 - [naming.md](naming.md) — the sibling glossary (infotype id prefixes); same spec-defines-the-system,
   glossary-lists-the-namings split.
-- [capabilities.md](capabilities.md) — the **empire `capabilities`** glossary (the sibling; started).
+- [capabilities.md](capabilities.md) — the **empire `capabilities`** glossary (the sibling).

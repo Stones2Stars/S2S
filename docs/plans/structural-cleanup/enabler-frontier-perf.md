@@ -123,7 +123,7 @@ committed item, with no blanket recompute sitting behind it.
 > **active building set** (`requiresOperate` holds ∧ no dormant successor ∧ present) + the **in-vicinity provided
 > bonuses**, and it feeds BOTH the enabler frontier AND the modifier packages. Today it is a full least-fixpoint
 > recompute (`recomputeOperatingBuildingsInto`, `CvEnablerKernel.cpp`) on every operating buildings-dirty. Make it a
-> **maintained package** ([modifier-substrate.md](modifier-substrate.md) §1 applied to the operating buildings): reads O(1), a
+> **maintained package** ([modifier.md](../../specs/modifier.md) §1 applied to the operating buildings): reads O(1), a
 > HAVE-change applies a bounded DELTA, no full recompute.
 
 **The active↔provides fixpoint is the hard part** — a building's active state can depend on a bonus another active

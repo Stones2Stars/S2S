@@ -143,9 +143,9 @@ techs are monotonic, no `operate`.
 > `requires.build.all`/`.any` instead — same goal, the two reconstruction sources.)*
 
 **Empire/team-scope constructables need NO new machinery** (the scope spine already has team/empire): stage-gates
-via `enables` (the space line), doctrine bans via `disables` + empire modifiers — replacing the `FreeBuilding`
-autobuild clunk (~345 uses) with one empire-scope building. (INTERIM — a later issue; the per-city machinery
-still works.)
+via `enables` (the space line), doctrine bans via `disables` + empire modifiers. An empire-scope building
+replaces the `FreeBuilding` autobuild (~345 uses); it authors on the existing scope spine (team/empire), so it
+needs no new machinery.
 
 > **The two fates are two mechanisms — nothing to declare.** `disables` = **destroy** (a law/ban
 > removes it; rebuilt on repeal); the target's `requires.operate.dormant` = **dormant** (it stays put,
@@ -168,9 +168,11 @@ So the build-time gate = `build ∧ operate`; the ongoing dormancy gate = `opera
 (dormant-and-reversible vs destroyed-and-rebuilt) and author (the target vs the law).
 
 **Pseudobuilding bands.** Legacy `CvPropertyInfo` `iMinValue`/`iMaxValue`/`BuildingType` + `checkPropertyBuildings`
-(each turn) adds/removes a building as the property value enters/leaves the band. End-state: retire the per-turn
-churn — model the band as uniform `requires.operate` dormancy (enabled once; toggles active/dormant); `notConstructible`
-(an `identity` flag, [json](json.md) §7) is the **interim** until the `requires.operate` dormancy end-state lands.
+(each turn) adds/removes a building as the property value enters/leaves the band. The band models this as uniform
+`requires.operate` dormancy: the building is enabled once, and its `requires.operate` `{PROPERTY_*, min/max}` clause
+toggles it active/dormant as the value crosses the threshold — no per-turn add/remove churn. A band's own
+non-constructibility (it is placed by the property system, not the production queue) authors as `notConstructible`
+(an `identity` flag, [json](json.md) §7).
 Where the bands form a succession chain (the **Education ladder**) a higher band dorms the lower via
 `requires.operate.dormant` (only-highest-active, no stacking) — the **same uniform `ReplacementBuildings → dormant`
 mirror as §2, not a special case** (there is no separate "education" ruling); chainless bands (crime/disease/
@@ -431,291 +433,125 @@ maintains the unlocked-builds set, and the plot-validity half stays a live per-p
 
 ---
 
-## 8. Build state — the event-fed rework (transient: gaps + open forks)
+## 8. Build state — where the enabler stands
 
-> **Project-specific build state** — where the code stands against §7, kept on this one enabler surface (no
-> separate plan doc, owner ruling). Companions: the modifier-side event work
-> ([f0-eventspine-invalidation](../plans/structural-cleanup/f0-eventspine-invalidation.md),
-> [scope-packages](../plans/structural-cleanup/scope-packages.md)), the reverse-index/perf build
-> ([enabler-frontier-perf](../plans/structural-cleanup/enabler-frontier-perf.md)).
+> **Project-specific build state**, kept on this one enabler surface (no separate plan doc, owner ruling). It
+> records only what is BUILT vs NOT, and the forks the §7 model has already resolved — never a narration of how
+> the code got here ([DEC-docs-current-truth](../architecture/decisions.md#dec-docs-current-truth)).
 
-### The current code violates §7 (it reads live state; events only TRIGGER re-reads)
+### What EXISTS
 
-- **Recompute-on-read.** `CascadeAccumulator::enConstruct`/`enResearch` do `ensure(CPK_FRONT_B)`/`ensure(PSC_FRONT_P)`,
-  which on a dirty bit calls the **static calculator** to rebuild the WHOLE set. Events keep marking it dirty, so it
-  recomputes-from-scratch constantly — a memo in front of a full recompute, not a maintained vector.
-- **Only half event-driven.** Targeted propagation (`recheckHave`/`onBuildingChanged`) covers only
-  bonus/religion/corp/pop/power; **tech/civic/golden-age** fall back to the broad `markPlayerScopeAndCities` blanket
-  → full recompute on next read.
-- **Wrong home.** The frontier data + read accessors live on the **modifier cascade** (`m_cascadeCityPackages` /
-  `m_cascadePlayerScope`, `CascadeAccumulator::en*`) — the enabler must own them on its OWN surface.
-- **How it sources data today:** `EnablerKernel::generate` pulls HAVE straight off `GET_TEAM`/`GET_PLAYER`/`CvCity`;
-  the gate's predicates (`hasTech`/`hasBonus`/`isCapital`/…) are live game-state queries via the shared
-  `cascadeEvalCondition`; `recomputeOperatingBuildingsInto` re-reads `city.getHasBuildings` each recompute; counts
-  read the [tally](tally.md), which reads the object-owned counts (by design).
+The enabler machine is built and lives in **`Sources/Enabler/`** — its own tree, carrying no `Cascade` prefix
+([DEC-enabler-not-cascade](../architecture/decisions.md#dec-enabler-not-cascade)):
 
-### The fix (the real enabler-event work) — ✅ REALIZED FOR ALL EIGHT DOMAINS (city: buildings, units; player: techs, civics, projects, processes, builds, promotions)
+- **`EnablerDomain`** (`CvEnabler.{h,cpp}`) — the §7.1 shape: the tri-state array + the two membership refcount
+  planes + the removal-wins formula. One component, instantiated per scope owner.
+- **`EnablerKernel`** (`CvEnablerKernel.{h,cpp}`) — the shared edge-apply (`applyEdges`), the `requires` gate
+  (`requiresMet` → `cascadeEvalCondition`), the `allowed` cap (`allowedOk`), and the operating-building fixpoint.
+- **The eight per-domain enablers** — `CvTechEnabler` / `CvBuildingEnabler` / `CvUnitEnabler` / `CvCivicEnabler` /
+  `CvProjectEnabler` / `CvProcessEnabler` / `CvBuildEnabler` / `CvPromotionEnabler`, each its domain's seed +
+  event-delta calculator, all routed through the ONE `applyEdges`.
+- **`CvEnablerConsumer`** — the enabler's OWN spine consumer, registered by `enablerRegisterConsumer()`. It is
+  **LOAD-ACTIVE**: the reseed's in-read emits BUILD the domains through the same appliers play uses
+  ([DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed)) — there is no warm-up seed walk. One
+  consumer per system; it never routes modifier work.
+- **`OperatingBuildings`** (`CvOperatingBuildings.h`) — the §3.2 set type (`active` + `provided` + `obsolete`).
+- **`CascadeCapabilities`** (`CvCapabilities.{h,cpp}`) — the per-team derived-on-query capability union
+  ([capabilities.md](capabilities.md)).
 
-> **⛔ THE PHASE'S ONLY BAR (owner): every availability surface on the ONE enabler structure** (`EnablerDomain`
-> on its scope owner). Parity/diff checks have NO meaning in this phase (validation.md: parity is closed; the
-> enable-side is deliberately over-inclusive, so there is nothing to mismatch against) — do not build or cite
-> them. The shadow-pass whole-set machinery (`buildable`/`trainable`, `bc_`/`uc_isBuildable`, the
-> `s_bc*`/`s_uc*` buckets, the `CPK_FRONT_*` box fills) was SCAFFOLDING from the closed parity era — never a
-> pattern to build on (it was the vehicle of the live-compute rollerskating). The whole CITY box is DELETED
-> (the `CPK_FRONT_B/U/PP` fills, accessors, members and bits); `CvBuildingEnabler`/`CvUnitEnabler` are now only
-> their domains' seed + event-delta calculators (+ the shared `augmentWaived`).
+### What is NOT wired
 
-**The BUILDINGS domain runs per-city on the component** (`CvCity::m_enabler`, a `CityEnabler`): the §7.1 shape
-exactly — the domain arrays are the ONLY mutable state, and every HAVE-event applies its source's building
-edges (`enables` → the enable plane; `obsoletes`/`replaces`/`disables` → the remove plane) as a DIRECT ±1
-delta. The delta comes from the EVENT (flip-guarded emits carry `has`; the bonus emit carries the count delta,
-applied on the 0-crossing; the civic and culture-level emits carry the swapped-out value — the swap facts were
-added to the emit surface, never worked around with side state); the one broad emit (tech) is flip-guarded by
-the PLAYER tech domain's held flag, so the building tech-delta runs BEFORE `TechEnabler::onTechChanged` in the
-spine route (the ordering contract), and carries the obsolete-present ripple (a present building this tech
-obsoletes stops/resumes enabling, guarded by the other-held-obsoleting-techs counterfactual). At load the SAME
-appliers consume the reseed's in-read emits — one mechanism, no seed walk. Building obsoletion is authored
-target-side, so the tech-side forward view (`tech.obsoletes.buildings`) is reconstructed by the readJson
-reverse pass. **The standing verification is `/computed/enabler/buildings?player=N&city=M`** — the maintained
-vector diffed against a fresh seed from current state (0 mismatches = the event maintenance is exact). **The read is FLIPPED (owner ruling
-2026-07-14): nothing that needs the enabler reads legacy — that is the premise; otherwise we do not see what
-is broken.** `canConstruct`'s gate verdict is the owner's BARE member read (`m_enabler.buildings.listed`) —
-per §7 a static is a PURE CALCULATOR (seed / delta / oracle) and NEVER appears on a live read path (no read
-accessor, no lazy-seed guard; seeding is a lifecycle act — player/city init + the load warm-up). The set is
-deliberately OVER-INCLUSIVE until the requires gate + `allowed` caps land on the component — a wrong offer is
-a VISIBLE enabler defect to fix, never a reason to fall back (the rollerskating this cures was the opposite
-mechanism: a read path that live-calculated EVERYTHING per call with no cache). **The gates are PURE enabler
-reads — NO legacy fallback, NO pre-init guard, NO what-if legacy path; the `*Legacy` gate bodies are DELETED.**
-Legacy cannot even RUN post-ship (its XML is being removed — [DEC-red-ratchet](../architecture/decisions.md#dec-red-ratchet)),
-so a fallback is not a safety net but **BAIT**: it substitutes an answer that will not exist and MASKS the very
-cascade hole we need exposed. The what-if callers (`bContinue`/`bIgnore*`/`bTestVisible`/probability) now receive
-the plain frontier verdict — the enabler models no hypothetical, so a what-if that needs one is itself a hole to
-fix on the component, never a legacy read ([DEC-no-legacy-masking](../architecture/decisions.md#dec-no-legacy-masking)).
+**The enabler has no host on the game objects.** `CvCity` / `CvPlayer` carry no enabler member, so nothing
+instantiates a domain, no availability getter reads one, and the consumer's appliers have no owner to write into.
+The machine is complete and hostless — it is waiting on the access surface, not on enabler work.
 
-The standardized component: **`Sources/Cascade/CvEnabler.{h,cpp}`** (`EnablerDomain` — the §7.1 tri-state
-array + the two membership refcount planes + the removal-wins formula), instantiated per §7.1's owners:
-`PlayerEnabler` (`CvPlayer::m_enabler`: techs, civics, projects, processes — the §7.1 owner-is-where-the-axes-
-live rule; the city `canCreate`/`canMaintain` gates read through `getOwner()`) and `CityEnabler`
-(`CvCity::m_enabler`: buildings, units). Every domain runs
-the same end-to-end shape: a lifecycle `initDomain`/`onCityCreated` (sizing + static exclusions, NO content —
-at the owner's init AND at the start of its save read, before the in-read reseed emits stream; the city-created
-applier additionally folds the one non-event input, the cross-scope HAVE that predates the city — team techs +
-player civics); content built PURELY from DOMAIN events, the load reseed's in-read emits and the play-time
-emits through the SAME O(delta) appliers ([DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed) —
-never a warm-up seed walk beside the event stream), routed by the spine consumer (`CvCascadeInvalidation.cpp`
-— the per-domain
-enablers `TechEnabler`/`CivicEnabler`/`BuildingEnabler`/`UnitEnabler`/`ProjectEnabler`/`ProcessEnabler`, all
-through the ONE `EnablerKernel::applyEdges`); and a bare O(1) member read behind the gate
-(`canResearch`/`canDoCivics`/`canConstruct`/`canTrain`/`canCreate`/`canMaintain`). The project emit is
-PER-MEMBER (one per alive team member — the tech-emit precedent; the applier scopes to the emitting player, so
-load and play are exactly-once per player). Per-domain HAVE axes: techs
-+ civics ← team techs (incl. the root); buildings ← techs/buildings/civics/religions/corporations/bonuses/
-culture-level (+ `notConstructible` → staticExcluded, present-building held flags, the obsolete-present
-ripple); units ← techs/buildings/civics/religions/bonuses (+ `spawnOnly` → staticExcluded; trained units stay
-listed); projects ← team techs + team completed projects (the Apollo chain, the count 0-crossing); processes ←
-team techs only; builds ← team techs only (`enables.builds` → the enable plane, `obsoletes.builds` → the
-remove plane — the §7.1 player unlocked-builds set; `canBuild`'s plot-validity half + the `isDisabled` runtime
-toggle stay live checks at the gate); promotions ← team techs only (the §7.1 player unlocked-promotions set —
-the per-unit level-up gate `enPromotionValid` OVERLAYS the unit's held-promo/unitcombat planes on the domain's
-planes via the raw plane reads, membership = Σenable > 0 ∧ Σremove == 0; the old "no tech edge ⇒
-always-unlocked" whitelist is dead, superseded-ideas #14 — start promotions ride the root's
-`enables.promotions`). **The promotion gate runs its `requires` + APPLICABILITY on demand, not via the domain's
-`setGateFailed`** (§7.1's promotions exception — no per-unit maintained gate flag): `enPromotionValid` ANDs the
-overlaid membership with `EnablerKernel::requiresMet` (the promotion-prereq chain) AND an engine-side
-**unit-state gate leg** (`acc_promoUnitStateOk`, `CvCascadeAccumulator.cpp`) that mirrors the deleted
-`isPromotionValidLegacy`'s unit-state half exactly (DEC-mirror-then-redesign), reading STATIC promo info + RAW
-unit state only (DEC-calc-zero-ride-in) — the QUALIFIED/DISQUALIFIED unitcombat applicability (the unit must
-belong to ≥1 qualified combat and none disqualified — the check the domain planes do not model), the game-option
-gates, the promotion-line prereq tech, and the runtime gates (spy / pillage / commander / commodore / blend +
-the intercept/evasion/XP probability caps). The verdict memo keys on the volatile unit-state (XP / commander /
-commodore / blend) it reads. The old recompute paths are deleted (`enResearch`/`enResearchable`,
-`enConstruct`/`enTrain`/`enCreate`/`enMaintain` + the whole `CPK_FRONT_B/U/PP` city-box slice,
-`enBuildUnlocked`/`enBuildUnlockedFast` + the `enBuildRem` rem-set, the `PSC_FRONT_PROMO` tech-halves fill,
-`unitCountChanged`, `canResearchLegacy`).
+That is the deliberate state: the graft onto the game objects, the getters that read it, and the Python surface
+are all being defined together rather than re-grown per site ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)).
+⛔ Do not re-attach it ad hoc — a per-site `can*` rewire is the half-migration this rebuild exists to avoid.
 
-1. ✅ The enabler OWNS its frontier vectors (all six domains).
-2. ✅ **Built once at load by the RESEED EVENTS** — the in-read emits consumed through the play-time appliers
-   (no warm-up seed walk exists).
-3. ✅ **Iterative update on EVERY HAVE-event** (the `markPlayerScopeAndCities` blanket no longer feeds any
-   availability list — it remains only as the modifier-package conditioner mark).
-4. ✅ Reads are **bare lookups** (all six gates).
+### The gate stages, by domain
 
-**The enable side is COMPLETE across every enabler surface** — no availability list remains off the component.
-(Hurries are deliberately absent — not an enabler concern, §7.1; the box's `enHurryOk` slice serves `canHurry`
-until the civic-ability model consumes it.)
+The gate verdict is a per-id flag (`setGateFailed`): a failed gate flips a tree member LISTED → GREYED, membership
+untouched. **A domain whose gate stage has not landed never sets the flag, so its members stay LISTED** — the
+enable-side over-offer, which is a VISIBLE defect to fix, never a reason to fall back to legacy.
 
-> **The consumer ITERATION sweep (F2b) — the CLEAN subset is done.** The hot AI decision loops whose gate is the
-> plain-verdict `can*` (default args) now iterate the enabler's LISTED frontier via `EnablerDomain::listedIds`
-> instead of scanning the whole entity database (`AI_bestBuildingsThreshold`, `CalculateAllBuildingValues`,
-> `AI_bestUnitAI`/`AI_bestProject`/`AI_bestProcess`, the spread/inquisitor/promotion-value loops, the civic
-> counts, the capital unit-analysis + event-value loops, …). What remains is NOT a frontier swap: a loop that
-> calls a gate with WHAT-IF args cannot iterate the frontier (it answers only the current verdict — and with the
-> `*Legacy` bodies now deleted, that caller receives the plain verdict, exposed), and the `AI_chooseProduction`
-> focus-ladder collapse (§F2b of the [roadmap](../plans/structural-cleanup/roadmap.md)) is an AI-architecture
-> change, not a per-loop rewrite.
+| domain | membership | `requires` gate | `allowed` cap |
+|---|---|---|---|
+| techs | ✅ | ✅ | ✅ (world-unique founder techs) |
+| buildings | ✅ | ✅ | ✅ (world/team/empire self-caps; per-city wonder-CATEGORY caps open) |
+| units | ✅ | ✅ | ✅ (world lifetime-created; empire era-scaled national cap) |
+| projects | ✅ | ✅ | ✅ |
+| civics · processes · builds | ✅ | ✗ — enable-side LISTED | ✗ |
+| promotions | ✅ | on demand (§7.1 carve-out — no maintained flag) | n/a |
 
-**The BONUS axis is GATE-ONLY (owner ruling 2026-07-15): a plot-group-carried bonus NEVER drives tree
-membership.** A bonus you would rely on the trade network for (traded / manufactured / vicinity-supplied) only
-ever gates: the curator keeps authoring the bonus `enables` edges (the reverse-mapped view of the target's
-retained `requires` atom — both views exist in the data), but the runtime consumes bonus events as pure
-stateless gate re-checks over the bonus's `EDGEF_REQUIRED_BY` dependents — no membership edge-applies, and the
-oracle's fresh build folds no bonus axis. Membership rides the tech/building/civic edges + the root; an entity
-whose only inbound edges are bonuses ROOTS (the curator's root derivation ignores `BONUS_` sources), sitting
-visible-GREYED on its bonus requirement — json.md §6's grey-on-resources lean. The one carve-out — a bonus ON a
-plot enabling an improvement's placement (`enables.builds`) — is the live per-plot gate, no domain involvement.
+**Promotions are the exception to the over-offer:** they set no gate flag, but `requires` + the unit-state
+applicability leg (unitcombat QUALIFIED/DISQUALIFIED, game options, promotion-line prereq tech, and the runtime
+spy/pillage/commander/commodore/blend + intercept/evasion/XP caps) are enforced ON DEMAND at level-up, so the
+promotion offer is not over-inclusive.
 
-**RESIDENCY + COUNTING.** The `CvPlotGroup` object holds the NETWORK's bonus content
-in two derived arrays — produced/extracted (vicinity-improved tiles + city `provides`) and deal-TRADED
-(import/export, anchored at the capital's group; the capital-plot fold re-homes it through every merge/split) —
-read as one SUM, presence crossings tested on the sum. **The plot group is the ONLY authoritative list for trade
-resources, own or partner-traded; the CITY holds NO authoritative mirror of it.** The city READ, however, is a
-**maintained number — added and subtracted on spine events, never calculated per read** (the standing
-[state-repositories capstone](../architecture/state-repositories.md) — reads are bare fetches — applied here;
-re-affirmed by the owner 2026-07-16 after the implementation shipped a per-read calculation anyway):
-`CvCity::getNumBonuses` must be a bare fetch of a derived, never-serialized per-city count kept
-current by the crossing fan-out (`processNumBonusChange`) + the tech/minted/corp events that move its gates.
-The per-read calculation it replaces (TechCityTrade gate → two-hop plot-group resolution → group sum → minted
-gate → corp add-on, re-executed on EVERY call) was measured by the EIP sampler as the turn wall's hottest
-cluster under the governor's read volume. Derived-cache discipline applies: the group stays the authority, the
-city count rebuilds from it at load/reconcile, and drift is a defect to surface.
-VICINITY belongs to the CITY and is a plain local-presence fact ("we have it
-here"): it satisfies `connection:"vicinity"` atoms and NOTHING else — it never adds a second owned count (one
-pasture is ONE horse, not vicinity+network=2; count atoms always read the network side). A vicinity-improved
-source — an improved tile in the radius OR an active building providing the bonus (a settled horse herd ≡ a
-horse plot) — is ONE class with ONE group injection each; two counts mean two genuine sources.
+### Resolved forks (part of the §7 model — not open questions)
 
-**NEITHER the counts NOR the plot-group MEMBERSHIP are trusted from a save** ([state-repositories](../architecture/state-repositories.md)
-no-serialized-caches — membership is derived state: routes + terrain-trade capabilities + ownership). The
-deserialized groups are stream-drained and discarded; the load-end rebuild (`CvGame::onFinalInitialized`)
-re-colors membership from current state and folds the counts through the live entry points as each plot joins,
-announcing every bonus fact as a genuine crossing emit before the `GAME_LOAD_FINISHED` gate pass.
+- **HAVE model:** the enabler owns NO HAVE store — it ties into the object-owned has-lists that already exist
+  (city buildings/religions/corps, player civics/traits/heritages, team techs). Presence stays on the objects; the
+  [tally](tally.md) stays the count accessor.
+- **Evaluator depth:** `cascadeEvalCondition` reads raw object-owned state (legitimate live reads). What is
+  event-driven is the MAINTENANCE — which dependents re-gate, when — never the read source.
+- **Component model:** one unified component, instantiated per §7.1 owner; the delta-apply SIBLING of
+  `CvDerivedCache`, which cannot operate the same way (§7 — no dirty→recompute path exists at all).
+- **The root rule:** no implicit "no-edge ⇒ available" engine rule. Start-available entities are authored onto
+  `TECH_GAME_START`'s `enables` (§2, curator-derived), the tree is fully connected, a missing edge fails closed.
+  The load backfill of `TECH_GAME_START` itself is the ONLY engine special case the model needs.
+- **The BONUS axis is GATE-ONLY** (owner ruling): a plot-group-carried bonus NEVER drives tree membership. The
+  curator keeps authoring bonus `enables` edges (the reverse-mapped view of the target's retained `requires`
+  atom), but the runtime consumes bonus events as pure stateless gate re-checks over the bonus's
+  `EDGEF_REQUIRED_BY` dependents. Membership rides tech/building/civic edges + the root; an entity whose only
+  inbound edges are bonuses ROOTS, sitting visible-GREYED on its bonus requirement. The one carve-out — a bonus ON
+  a plot enabling an improvement's placement (`enables.builds`) — is a live per-plot gate, no domain involvement.
 
-**The DORMANCY VERDICT is the operating-building fixpoint** (§3.2; [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)):
-`CvCity::checkBuildings` applies the enabler's classification (active / operate-dormant / dormant-trigger /
-obsolete) through `setDisabledBuilding` — never a hand re-derivation from legacy prereq getters — plus the two
-runtime-state legs the authored data does not carry (the employed-population composition; the
-banned-non-state-religion policy), which stay engine-side compositions at the consumer. The serialized disabled
-flags are read only as the PROCESSED-STATE baseline (they key the still-serialized legacy effect accumulators);
-the load-end cross-city fixpoint — iterate {re-fixpoint each city's operating set → apply flips → the provides
-injections adjust the network} until stable — reconciles them to the computed verdict inside the load bracket
-(a manufactured chain lights tier by tier: ore → wares → firearms). The iteration is WORK-LIST driven (pass 1
-sweeps every city — the one legitimate full build; later passes re-check only the cities the previous pass's
-flips can have touched: self, same-owner group members on a provides flip, the whole player on a free-trait
-building), each flip keeps the FULL per-flip processBuilding semantics (its side-effect surface — power,
-freshwater, employed population, traits, provides — is never mirrored in an overlay), and convergence is
-declared ONLY by a quiet FULL verify pass — an incomplete affected-derivation surfaces as a loud verify catch,
-never a silently wrong end state. The `loadPipeline` spine line carries the stage timings + flip/convergence
-diagnostics. ⛔ BAKED-CONSUMER RE-RUNS: an engine consumer that BAKES state on modifier changes (the
-trade-route ASSIGNMENT — `updateTradeRoutes` fires eagerly off processBuilding) runs during this fixpoint
-against not-yet-warmed packages and its baked result self-heals never; every such consumer is re-run ONCE
-after the load-end package warm (`CvGame::updateTradeRoutes` is the known case). That flag read retires
-together with the legacy accumulator cluster at the modifier cut.
+### Open work
 
-**The REQUIRES-GATE stage (GREYED) — ✅ LIVE FOR TECHS.** The component carries the gate verdict as a per-id
-flag (`setGateFailed` — gate failed flips a tree member LISTED → GREYED, membership untouched; a domain whose
-gate stage has not landed never sets the flag, so its members stay LISTED — the enable-side over-offer).
-`TechEnabler` gates per §7.1 step 2: **gate-on-entry + re-gate over ONLY the touched candidates** of each tech
-event (its `enables`/removal targets + its `EDGEF_REQUIRED_BY` tech dependents — the readJson-populated
-requires-reverse-index, [DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view)), evaluated
-through the ONE evaluator (`EnablerKernel::requiresMet` → `cascadeEvalCondition`) against the object-owned
-team techs. During the load reseed the re-gates apply per event as it arrives (the pure per-event option of
-the §7.1 order rule; the gate's atoms — team techs — are final before any player reads). `canResearch` still
-reads `listed`, so the gate narrows the offer with no read change. The **`allowed` cap** is part of the same
-gate verdict: `EnablerKernel::allowedOk`'s tech branch reads the **engine-owned counts** (the tally
-read-not-store philosophy, the PROJECT-branch precedent — world = `countKnownTechNumTeams`, ever-alive teams
-holding it; techs are monotonic so held == ever-held), covering the 29 world-unique founder techs
-(`allowed:{world:1}`). The cap CROSSING re-gates per §7.1 step 3: a tech event re-gates that one capped tech
-on ALL seeded players' domains (the founder techs vanish from every rival's list the moment one team takes
-them). **The UNITS gate is LIVE** — the parity-proven canTrain legs restored onto the component as the gate
-verdict: the instance caps (world = lifetime-created + in-production `making`; empire = live tally count +
-`making` vs the ERA-SCALED base-5 national cap, waived under `GAMEOPTION_NO_NATIONAL_UNIT_LIMIT` unless
-`unlimitedException`), the entity-level `enabled`/`disabled` gate, `requires.build` (STRICT, the shared
-AugmentState waiver + operating-buildings wiring — vicinity `provides` supply included), the SUPERSEDER
-removal (`replacedBy.units`, read from the poco's superseding list — hidden the moment any superseder is
-available), and the §3 upgrade-tree dormancy (`requires.build.dormant.all` via the cycle-guarded
-`uc_reachable`-class closure — a unit hides only when EVERY direct upgrade is reachable-trainable).
-`SEVT_UNIT_COUNT` drives the step-3 cap/relation crossing (skip-guarded for the uncapped, unreferenced,
-non-upgrade common case, so combat births/deaths stay free); the no-FK classes + the bounded per-turn dynamic
-re-check mirror the buildings shape. **The BUILDINGS gate is LIVE the same way**: the gate verdict = `requiresMet` (build ∧ operate, the
-full city context — waived-prereq set + the standing operating-buildings wiring) ∧ `allowedOk` (the
-world/team/empire self-caps through the tally's buildings domain; the per-city wonder-CATEGORY caps stay the
-marked allowedOk TODO). LOAD takes the §7.1 order rule's **"gate once after the stream ends"** option — no
-gate evaluations inside the load bracket (a mid-read evaluation would ensure the operating-buildings cache
-against half-read state); `GAME_LOAD_FINISHED` runs one full gate pass per city. Play-time takes the pure
-per-event option: gate-on-entry + touched re-gates in every applier (the FK axes via `EDGEF_REQUIRED_BY`), the
-**cap crossing** re-gates a completed capped building on every seeded city (the world wonder vanishing
-everywhere), the **queue leg** (§7.1 step 3) rides `SEVT_CITY_ORDER_CHANGED` (`pushOrder`/`popOrder`) into a
-one-id update whose verdict reads the live queue — a QUEUED building leaves the **fresh offer**
-(`listed`/`listedIds`, the `!bContinue` `getFirstBuildingOrder` exclusion) via a **separate `FLAG_QUEUED`
-read-time overlay, NOT a gate-failure reason**, restored on dequeue. The overlay is split OUT of the gate so
-the **continue verdict** (`canConstruct` `bContinue=true` → `EnablerDomain::listedForContinue`) reads PAST it —
-an in-progress build stays valid to `canContinueProduction`; folding the queue INTO the gate (GREYED) instead
-cancels every in-progress build each turn (`doCheckProduction`'s `!canContinueProduction` → `popOrder` purge, progress lost); the built case is the membership
-leave — the no-FK event classes (population / power / golden-age / state-religion) re-gate their
-load-compiled class lists (`EnablerKernel::scanCondDeps`), and the live non-HAVE clauses (latitude /
-existedFor / IS_CAPITAL / vicinity connection / count tokens) ride the **bounded per-turn dynamic re-check**
-([enabler-frontier-perf](../plans/structural-cleanup/enabler-frontier-perf.md) Stage 2 step 5) — a targeted
-sweep of that small list in `CvCity::doTurn`, never a blanket. `verifyCity`'s oracle diff compares MEMBERSHIP
-(the fresh build is enable-side only), keeping it the event-maintenance tripwire. **The requires-gate is wired
-for four of the eight domains — techs, buildings, units, projects** (`CvTechEnabler`/`CvBuildingEnabler`/
-`CvUnitEnabler`/`CvProjectEnabler`, each calling `EnablerDomain::setGateFailed` off `EnablerKernel::requiresMet`/
-`allowedOk`); **civics, processes, and builds have no gate logic** (`CvCivicEnabler`/`CvProcessEnabler`/
-`CvBuildEnabler` never call `setGateFailed`) — their members stay enable-side LISTED per §7.1's "a domain whose
-gate stage has not landed never sets the flag" rule. **Promotions are the exception to that over-offer:**
-`CvPromotionEnabler` likewise never calls `setGateFailed` (no maintained gate flag — the §7.1 promotions
-carve-out), but the gate is enforced ON DEMAND in `enPromotionValid` (`requires` + the unit-state applicability
-leg above), so the promotion offer is NOT enable-side over-inclusive the way the other three flagless domains are.
+1. **Converge the enabler's PRIVATE reverse buckets onto `EDGEF_REQUIRED_BY`**
+   ([DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view)) — the `s_bc*` / `s_uc*` / operate
+   `s_op*` static indexes inside `CvBuildingEnabler` / `CvUnitEnabler` / `CvEnablerKernel` are pre-existing
+   bespoke-reverse-view remnants; each retires onto the info-homed REQUIRED_BY axis.
+2. **The gate stage for civics, processes, and builds** — the three flagless domains above.
+3. **Per-city wonder-CATEGORY caps** in `allowedOk` (the `CultureLevel` `worldWonders`/`teamWonders`/
+   `nationalWonders` counts, [json.md §4.4](json.md)).
+4. **RESIDENCY + COUNTING.** The `CvPlotGroup` holds the network's bonus content and **is the ONLY authoritative
+   list for trade resources** — the city holds no authoritative mirror. But the CITY read must be a **maintained
+   number, added and subtracted on spine events, never calculated per read** (the state-repositories capstone):
+   `CvCity::getNumBonuses` is a bare fetch of a derived, never-serialized per-city count kept current by the
+   crossing fan-out plus the tech/minted/corp events that move its gates. The per-read calculation it replaces
+   (TechCityTrade gate → two-hop plot-group resolution → group sum → minted gate → corp add-on, re-executed on
+   EVERY call) was the turn wall's hottest cluster under the governor's read volume. VICINITY belongs to the CITY
+   and is a plain local-presence fact: it satisfies `connection:"vicinity"` atoms and NOTHING else — it never adds
+   a second owned count (one pasture is ONE horse, not vicinity+network=2).
+5. **Neither the counts NOR plot-group MEMBERSHIP are trusted from a save** (membership is derived state: routes +
+   terrain-trade capabilities + ownership). The deserialized groups are drained and discarded; a load-end rebuild
+   re-colors membership from current state and folds the counts through the live entry points as each plot joins,
+   announcing every bonus fact as a genuine crossing emit before the `GAME_LOAD_FINISHED` gate pass.
+6. **The DORMANCY VERDICT is the operating-building fixpoint** (§3.2,
+   [DEC-calc-zero-ride-in](../architecture/decisions.md#dec-calc-zero-ride-in)) — applied through the engine's
+   disabled-building flag, never a hand re-derivation from legacy prereq getters, plus the two runtime-state legs
+   the authored data does not carry (employed-population composition; the banned-non-state-religion policy). The
+   load-end cross-city fixpoint — iterate {re-fixpoint each city's operating set → apply flips → the provides
+   injections adjust the network} until stable — reconciles the serialized flags to the computed verdict inside
+   the load bracket (a manufactured chain lights tier by tier: ore → wares → firearms). The iteration is
+   WORK-LIST driven, each flip keeps the FULL per-flip side-effect surface (power, freshwater, employed
+   population, traits, provides), and convergence is declared ONLY by a quiet FULL verify pass.
+   ⛔ **BAKED-CONSUMER RE-RUNS:** an engine consumer that BAKES state on modifier changes (the trade-route
+   ASSIGNMENT) runs during this fixpoint against not-yet-warmed packages and its baked result self-heals never;
+   every such consumer is re-run ONCE after the load-end package warm.
+7. **The dynamic operate axes ride their events** — connectivity via the plot-group/network bonus events,
+   vicinity (radius growth) via the culture-level event — routed into the operate re-check of dependents.
 
-### Resolved forks (owner-ruled — now part of the §7 model)
+### The consumer ITERATION sweep (F2b)
 
-- **HAVE model:** the enabler owns NO HAVE store — it ties directly into the object-owned has-lists that already
-  exist (city buildings/religions/corps, player civics/traits/heritages, team techs). The tally stays the count
-  accessor; presence stays on the objects.
-- **Evaluator depth:** `cascadeEvalCondition` keeps reading raw object-owned state (legitimate live reads — the
-  tally precedent). Event-driven is the MAINTENANCE (which dependents re-gate, when), never the read source.
-- **Component model:** one unified enabler component, per-city instances for buildings+units, the
-  delta-apply sibling of `CvDerivedCache` (§7).
-- **The root rule:** no implicit engine "no-edge ⇒ available" rule — start-available entities are authored onto
-  `TECH_GAME_START`'s `enables` (§2), the tree is fully connected, a missing edge fails closed. The load
-  backfill of `TECH_GAME_START` itself is the ONLY engine special case.
-- **Structure + algorithm:** the §7.1 tri-state arrays + O(delta) event algorithm (delegated to the
-  implementation; inefficiencies get flagged, not silently absorbed).
-
-### Build items
-
-0. ✅ **The root node is CURATOR-DERIVED** (`curate_tech.synthesize_game_start`, the whole-set `synthesize`
-   hook): every `enables` bucket (techs/civics/units/processes/buildings/builds/improvements/promotions) is
-   computed mechanically from the store's no-inbound-edge rule — an entity roots iff NO inbound enables-family
-   ADD edge exists anywhere, minus each kind's never-generated class filtered by the SAME sentinel that kind's
-   own curator translates (unit `spawnOnly`, building `notConstructible`, tech `bDisable`, improvements no
-   build produces, and a ZERO instance cap at any scope — a 0-`allowed` entity is never created by build/train,
-   only granted: UNIT_BAND, the start-only settler). Nothing is hand-listed; the per-kind semantics live in the curator's derivation comment
-   (the old→new map lives in the curators). Verified live via `/state/info?type=TECH_GAME_START` ≡ the
-   authored JSON.
-1. ✅ **The `TECH_GAME_START` load backfill** (§2) — two homes by semantic: an old save is **upgraded ON READ**
-   (`CvTeam::read`, a raw flag write right after the tech array deserializes — all teams, dead ones too; every
-   derived structure rebuilds from that state at load, and the reseed's per-held-tech emits announce it like any
-   saved tech); a NEW game receives it as a **genuine grant** (`CvGame::onFinalInitialized`, `bNewGame`-gated,
-   the full `setHasTech` — the stand-in for the unbuilt grants apply-loop's `grants.techs` row, moving there when
-   grants apply). A missing `TECH_GAME_START` id fails LOUD (assert) at both sites.
-2. **The dynamic operate axes ride their (now-wired) events**: connectivity via
-   `SEVT_PLOTGROUP_BONUS_CHANGED`/`SEVT_CITY_NETWORK_CHANGED`, vicinity (radius growth) via
-   `SEVT_CITY_CULTURE_LEVEL_CHANGED` — routed into the operate re-check of dependents. (The legacy
-   `onSliceRebuildActive` bounded poll died with `playerSliceRebuild` and is NOT resurrected.)
-3. ✅ Event-maintain the operating-building set incrementally (add/remove on building/have events, no re-read) —
-   the frontier-perf targeted-propagation completion (`EnablerKernel::onBuildingChangedActive` /
-   `ek_recheckActiveSet`, `Sources/Cascade/CvEnablerKernel.cpp`).
-3b. **Converge the enabler's PRIVATE reverse buckets onto `EDGEF_REQUIRED_BY`**
-   ([DEC-one-reverse-view](../architecture/decisions.md#dec-one-reverse-view)): the `s_bc*` (lazily built,
-   HAVE-atom buckets mostly built-but-dead), `s_uc*`, and operate `s_op*` static indexes inside
-   `CvBuildingEnabler`/`CvUnitEnabler`/`CvEnablerKernel` are the pre-existing bespoke-reverse-view remnants —
-   each retires onto the info-homed REQUIRED_BY axis as the standardized component's maintenance consumes it.
-4. ✅ **The enabler sets build from the in-read reseed events**
-   ([DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed)): the domains init (sizing + static
-   exclusions) at each owner's read-start/init, the reseed emits stream through the play-time appliers, and the
-   one emit gap it exposed (no in-read `projectChanged`) was fixed by EMITTING it (per-member, from
-   `CvPlayer::read`) — the missed-emit tripwire working as designed, never a seed-walk workaround.
-5. ✅ The breaking step (`canConstruct`/`canResearch`/… read ONLY the enabler) stands on the event-built enabler.
+Spec authority is §6: the AI's decisions iterate ONLY the frontier, never the entity database. The hot AI decision
+loops whose gate is the plain-verdict `can*` read the enabler's LISTED frontier via `EnablerDomain::listedIds`
+instead of scanning the whole entity space. Two things are NOT a frontier swap and stay open: a loop calling a
+gate with WHAT-IF args cannot iterate the frontier (it answers only the current verdict), and the
+`AI_chooseProduction` focus-ladder collapse is an AI-architecture change, not a per-loop rewrite.
 
 ---
 

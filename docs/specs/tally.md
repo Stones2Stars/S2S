@@ -24,7 +24,7 @@ make any cascade-vs-legacy count shadow **tautological** (the same number twice 
 So the tally is the **one standardized, predictable surface** for "how many of TYPE at SCOPE": it **reads** the
 object-owned count and **rolls it UP** the scope spine. Its whole value is that — a single access point with the
 per-domain object accessor + the roll-up in **one place**, collapsing the scattered `getNum*` count loops
-([cascade-engine-430.md §4](../plans/structural-cleanup/cascade-engine-430.md)) — **not** a re-store of data the
+(collapsing the scattered `getNum*` count loops into one surface) — **not** a re-store of data the
 objects already hold ("creating something new when we already have it is pointless").
 
 Reading the object-owned count is reading a **raw INPUT** (saved presence), never a computed output, so it is **not**
@@ -102,12 +102,15 @@ just: the object-side accessor it reads + its type-prefix routing + the roll-up*
 maintenance, rebuild scan, or shadow id (those were the duplicate-store model's burden). Where an object lacks the
 aggregate, give the object the accessor (it "cares about itself"). City/plot reads go direct to the live object regardless.
 
-**No new domain just to replace a same-shaped engine count.** The engine objects already
-carried most of the tally functionality, and the deliberate design is to READ those object-owned counts, never rip
-them up to replace with the same thing. Concretely: `CvPlayer::countNumBuildings` (the cities-having, ≤1/city
-semantic) and `CvTeam::getHasReligionCount`/`getHasCorporationCount` are **KEEP** — engine-owned; a tally accessor
-over them is added only when a cascade consumer actually needs one (they are NOT cutover gaps — see
-[code-cut-map.md](../plans/structural-cleanup/code-cut-map.md) §Rulings addendum).
+**The tally READS the object-owned count; it never re-stores it.** The object already maintains its own count O(1)
+(`getBuildingCount`, `getUnitCount`, …), so the tally's job is to be the standardized accessor over that count and
+its roll-up — a second store would only risk drift. That read-not-store invariant is the design; it is **not** a
+licence to leave a count LOGIC bespoke. Counting is the tally's job ([north-star.md](../architecture/north-star.md)
+EACH IS ITS OWN SYSTEM), so a bespoke engine count-loop a cascade/enabler consumer needs — `CvPlayer::countNumBuildings`
+(the cities-having, ≤1/city semantic), `CvTeam::getHasReligionCount`/`getHasCorporationCount` — is an **UNWIRED
+TALLY DOMAIN (open), not a KEEP**: it goes through the tally, which reads the object's own count. Where the object
+lacks the aggregate the read needs, give the OBJECT the aggregate (it "cares about itself"); the tally never grows
+a side-store to compensate.
 
 The tally's `specialist` count domain (counting specialists, e.g. for `per:specialist` scaling) is DISTINCT from
 [modifier](modifier.md) §6's `freeSpecialists`/`allowedSpecialists` (which GRANT / CAP specialists — a deposit,

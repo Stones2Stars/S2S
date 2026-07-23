@@ -93,7 +93,7 @@ Recomputed in place (dirty-flag → rebuild into fixed-width storage), never gro
 | Structure | Per object | ~total | Note |
 |---|---|--:|---|
 | **CityEnabler** tri-state arrays | ~42.6 KB/city | ~14.6 MB | (5202+2073 ids × 6 B). **~5× the spec's stale "8.5 KB/city" estimate** — the shipped `EnablerDomain` adds two `short` refcount planes + a flags byte per id ([enabler.md §7.1](../specs/enabler.md) budget predates this) |
-| **buildRate dense ledger** (`brCityKeyed`) | ~30.4 KB/city + /player | ~10.4 MB | `assign(5202,0)+assign(2073,0)` unconditionally on `CPK_BR` touch — mostly-zero, a deliberate space-for-time trade (sparse was rejected for hot-read speed); a candidate to revisit under ceiling pressure |
+| **a dense per-building/per-unit keyed ledger** | ~30.4 KB/city + /player | ~10.4 MB | the shape to AVOID re-growing: a full-width `assign(5202,0)+assign(2073,0)` per touch is mostly-zero. Measured here so the space-for-time trade is made deliberately, under the [KEYS ONLY WHERE NEEDED](../architecture/state-repositories.md) ruling, not by default |
 | Operating-building sets | ~6–10 KB/city | ~2.8 MB | scales with buildings-present |
 | Plot yield cache + plot properties | ~150 B/plot | ~2.2 MB | |
 | CvPlayer 8 history hash_maps | ~257 KB/player @T1338 | ~3.9 MB | **GROWING + serialized** (see §5) |
@@ -153,7 +153,7 @@ The static clusters (§1–§4) are flat, so the climb is elsewhere. There are T
   grows with game state. Not measured by any DLL probe — a real blind spot.
 - **Per-turn allocation churn + heap fragmentation (reload-resetting).** Pathfinding vectors
   (`CvReachablePlotSet`/path vectors alloc+free every pathfind), the property-solver full rebuild each `doTurn`, the
-  cascade ledger `.assign(getNumBuildingInfos())` reallocs on `CPK_BR`. **Churn, not net accumulation** — but on a
+  a full-width keyed-ledger `.assign(getNumBuildingInfos())` realloc per touch. **Churn, not net accumulation** — but on a
   fragmenting 32-bit heap freed blocks aren't reused and the working set climbs; **resets on reload** (defrag),
   matching the owner's observation. The likely driver of the *per-turn* +150–230 MB.
 - **Save/serialization buffers** — the whole game state serialized each autosave (large, transient).

@@ -3,9 +3,10 @@
 The catalogue of a unit's **transient states** — fired → counted down → over. This is the **glossary** (the
 namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md](skills.md).
 
-> **Greenfield — started, far from complete.** `state` was **never a first-class concept**: it's been faked via
-> **pseudo-promotions** and **Python event handlers**. This glossary begins the formalization; most states are
-> still to be identified.
+> **Greenfield — open by design.** `state` was **never a first-class concept**: it's been faked via
+> **pseudo-promotions** and **Python event handlers**, and this glossary formalizes it. Like its sibling
+> registries ([json.md §8](json.md)) the member set grows as states are identified from the data — an ongoing
+> activity, not a gap to close.
 
 ## What a state is (recap)
 - **Transient** — fired, then **counts down and is over** (a timer) — unlike a *mutable* skill (persists until

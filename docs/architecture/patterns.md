@@ -62,11 +62,11 @@ needs a fact FEEDS it to the one function, it never re-derives it.
 4. **Exposed, never file-`static`-hidden.** Each calculator/evaluator is a **declared surface** (a header) reachable by
    every consumer. **A file-`static` calculator is a DRY hazard**: the next consumer can't see it, so it reimplements it
    — the exact mechanism of the C2C rot. *(Realized: BOTH data-machines are split into per-package
-   static-methods classes — the **modifier** (`MMKernel` / `PercentStack` / `YieldBasePackages` / `BuildingPackage` /
-   `CascadeAccumulator::yieldRate100` / `CommerceCalc`, mirroring StoneBase `Calc/*`) and the **enabler**
+   static-methods classes — the **deposit-read side** (`MMKernel` / `PercentStack` / `YieldBasePackages` / `BuildingPackage` /
+   `CommerceCalc` -- declared in `Data/CvDepositRead.h`, mirroring StoneBase `Calc/*`) and the **enabler**
    (`EnablerKernel` + `TechEnabler` / `BuildingEnabler` / `UnitEnabler` / `CivicEnabler` / `ProcessEnabler` /
-   `ProjectEnabler` / `PromotionEnabler` / `BuildEnabler`, mirroring StoneBase `CascadingEnabler/*`), each
-   `Cv<X>Enabler.{h,cpp}`.)*
+   `ProjectEnabler` / `PromotionEnabler` / `BuildEnabler`, each `Sources/Enabler/Cv<X>Enabler.{h,cpp}`,
+   mirroring StoneBase `CascadingEnabler/*`).)*
 5. **Harness ≠ calc.** The performance/observability surface (the StoneBase dashboard) and the spine logging are
    **separate consumers** of the calc surface, never folded into the calc functions.
 6. **Single source of "active".** "Is X active / available / connected / non-dormant" is computed **once, by the
@@ -89,11 +89,42 @@ needs a fact FEEDS it to the one function, it never re-derives it.
 8. **Composition root names concretes** ([DEC-interface-contracts](decisions.md#dec-interface-contracts)) — the
    active-set / game-option swaps are picked there; a leaked concrete `#include` into a consumer breaks the single wiring point.
 
-**Enforcement (how to keep certainty).** The `Sources/Cascade/` tree should read like `StoneBase/src` — one unit per
-`Calc` package, one evaluator. To verify: grep for a second implementation of any calc/predicate; confirm every
+**Enforcement (how to keep certainty).** The data-machine trees (`Sources/Data/`, `Sources/Conditions/`,
+`Sources/Enabler/`) should read like `StoneBase/src` — one unit per `Calc` package, one evaluator. To verify: grep for a second implementation of any calc/predicate; confirm every
 machine's condition gate routes through `cascadeEvalCondition`; confirm no calculator holds state. **A new
 "does-the-same-thing" function is the failure** — reuse the existing one, or lift it to the shared surface. This is the
 anti-rollerskate check an agent runs before adding cascade calc/eval code.
+
+## The INFO DATA-OUT contract — what an info hands to the cascade
+
+> The **infos** row of [EACH IS ITS OWN SYSTEM](north-star.md): readJson puts data into infos, infos SERVE that
+> data, the cascade sums, the enabler resolves availability. This section is that row's concrete surface.
+> **It is stated as a CONTRACT, not a prohibition** — a prohibition has to be remembered by every future agent,
+> the enforcement model this project keeps watching fail; a contract makes the violation unsayable rather than
+> forbidden, because there is no member to write to.
+
+**An info is a pure DATA SOURCE with one outbound surface.** It is loaded once, immutable thereafter, and shared
+by every player — so it can carry authored data and nothing else. Concretely:
+
+1. **What an info holds** — the availability model (the `enables` family, `requires`/`allowed`, the load-derived
+   reverse edge families) and its own authored modifier data, resolved to typed members at `mapFrom`.
+2. **What an info hands out** — its data, ASKED FOR BY CHANNEL: *"give me your flats / your percents for these
+   channels."* The cascade points at a LIST of infos and sums what comes back. It never reaches inside an info's
+   per-type shape, and an info never learns what a cascade, a scope, or an owner is.
+3. **What an info CANNOT hold** — per-owner state, a computed total, a dirty flag, a cache. Not by rule: by
+   construction. There is nowhere on the object to put it, because the outbound surface is the only surface.
+
+**Why the boundary is load-bearing, not tidiness.** An info is write-once-at-load and shared; cascade runtime is
+per-owner mutable derived state. Storing the latter on the former silently makes an immutable, shared object
+mutable **per game rather than per load** — and it is the third copy of the same static numbers, after the
+authored JSON and the compiled deposit index.
+
+**The failure this closes.** Asking each info type for its data through a DIFFERENT accessor is the same defect as
+a hand-named scalar per channel ([DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape)): it cannot be
+addressed uniformly, so every type needs bespoke read code, and the cascade ends up shaped by the info surface
+instead of the other way round. ⚠ The current poco getter surface still mirrors the legacy `CvXInfo` field
+contract, so it carries exactly that problem one level down — a uniform channel-keyed data-out surface is what
+retires it, and is part of defining the access surface, not a follow-up to it.
 
 ## Materialize at mapFrom — no runtime string reads in info getters (the single-source law's load-time sibling)
 

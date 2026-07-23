@@ -56,7 +56,29 @@
     inside the read** ([event-spine.md](../specs/event-spine.md) load-RESEED, [DEC-spine-reseed](decisions.md#dec-spine-reseed)):
     reading a fact off the stream is what fires its event. **Never re-add a post-deserialization state-walking emit
     pass.**
-14. **The whole-domain enabler frontier + implicit "no-enabler ⇒ always-available" rules** *(dead as a class)* —
+14. **The bespoke per-scope modifier SUBSTRATE** (`CascadeAccumulator` + `CascadeCityPackages` /
+    `CascadePlayerScope` / `CascadeAreaPackages` / `CascadeTeamCaps` / `CascadeUnitPackages`, the `CPK_*`/`PSC_*`
+    box slices, `CascadeRateSlots` + epochs, `playerSliceRebuild`) *(dead)* — five hand-shaped structs with
+    hand-named per-channel scalar members, each carrying its own bespoke invalidation path, reached through a
+    read-side `ensure()` protocol. Killed by [DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape): every
+    derived cache is the SAME object type on every owner (one channel-indexed `CvDerivedCacheSet<TOwner>`, one mark
+    derivation), so a hand-named scalar field is a DEFECT and a new scope/channel is DATA rather than a new struct.
+    The whole tree is archived (`SourceArchive/Cascade/`). **Never re-add a per-scope package struct, an
+    `ensure`-on-read protocol, or a `*Rebuild` blanket** — the replacement is the uniform channel-indexed cache on
+    each scope owner ([state-repositories.md](state-repositories.md)).
+15. **Re-bodying the legacy getters to read the cascade (the "computed-getter flip")** *(dead)* — keeping each
+    legacy getter's signature and swapping its body to a cascade read, so no call site changed. Killed by
+    [DEC-new-getter-surface](decisions.md#dec-new-getter-surface): a legacy getter's contract encodes legacy
+    scale/granularity/combine, so pointing the cascade at it makes the CASCADE bend to the legacy shape — the
+    mechanism that produces the half-migrated state. **A change that leaves every consumer untouched is the tell,
+    not the win.** The replacement is a NEW uniform parameterized getter set over the channel index, with the old
+    surface disconnected.
+16. **One shared spine consumer routing BOTH machines** (`CvCacheInvalidationConsumer` — enabler deltas and
+    modifier marks in one `onEvent`) *(dead)* — it welded the two systems the docs work hardest to keep apart, and
+    forced one load-suppression policy onto two that genuinely differ (the enabler is load-ACTIVE, the modifier
+    build is not). Killed by [DEC-enabler-not-cascade](decisions.md#dec-enabler-not-cascade): **one consumer per
+    system**. `enablerRegisterConsumer` is the enabler's own; the modifier gets its own when it is rebuilt.
+17. **The whole-domain enabler frontier + implicit "no-enabler ⇒ always-available" rules** *(dead as a class)* —
     workarounds for entities with no inbound `enables` edge (PALACE, PROCESS_IDLE, the COMBAT1-5 promotions):
     making the frontier ALL entities of the domain gated by `requires`, or hardcoded always-unlocked whitelists
     (the promotion "PALACE-whitelist"). Killed: the tree is **fully connected** — start-available entities are

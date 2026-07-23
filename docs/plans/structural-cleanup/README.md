@@ -1,35 +1,76 @@
 # Structural cleanup — the bulldozer reference (transient)
 
-> **Not everyday docs (owner ruling 2026-06-23).** This is what you reach for **when the bulldozer arrives** — the
-> atomic cutover that deletes the legacy machinery the cascade replaces. It is the *destroy map*: which legacy
-> calcs, enabler machinery, and engine functions get deleted, and what they were verified against first. Kept until
-> the cutover; **dropped when the legacy is gone.**
+> **Not everyday docs (owner ruling).** This is what you reach for **when the bulldozer arrives** — the work that
+> deletes the legacy machinery the cascade replaces. It is the *destroy map*, never a result set
+> ([DEC-no-parity-results-in-docs](../../architecture/decisions.md#dec-no-parity-results-in-docs)). Kept until the
+> legacy is gone; **dropped then.**
 >
-> Per [DEC-parity](../../architecture/decisions.md#dec-parity) +
-> [DEC-no-parity-results-in-docs](../../architecture/decisions.md#dec-no-parity-results-in-docs): the live shadow +
-> the curators do the *verification*; these docs are the *deletion plan*, never a result set.
+> Only [roadmap.md](roadmap.md) is session-start reading. Everything else is reached for deliberately, for the one
+> job named below.
 
-## Contents
-- **legacy-cut-worklist.md** — 🔝 the TOP of the worklist: the grounded, ordered list of remaining legacy
-  accumulators to cut (A cuttable-now / B blocked-on-channel / C blocked-on-tags) + the corrected #430 F0–F8 status
-  + the F5 flammability `/5` scope. The roadmap-refresh input.
-- **cutover.md** — the cutover roadmap: the gates (StoneBase-completeness / shadow-parity / classification consumption),
-  the prerequisites, and the sequencing from shadow to `main`.
-- **code-cut-map.md** — ✅ the master **CODE-CUT MAP** (built 2026-07-02, two-pass adversarial): every legacy
-  mechanism/consumer → cascade replacement → cut action, grounded in `file:line`. The line-item plan the cutover works
-  down + the Gate-1 completeness proof (Gate-1 gaps, Gate-3 worklist, BLOCKED tail, divergences with proof).
-- **structural-cleanup.md** — the source-level deletion plan (which `Cv*` files / functions go).
-- **legacy-value-calc-map.md** — the per-calc destroy map: every legacy per-turn value calc traced to its getter +
-  components (what the cascade reproduces, then deletes).
-- **constructibility.md** — the legacy `canConstruct` / `canTrain` + reverse-index machinery the enabler replaces.
-- **cascade-engine-430.md** — the engine-side build / demolition map (function-level deletion targets) + the
-  build-wholesale ruling. (Status table rebuilt 2026-06-29 to post-purge truth.)
-- **readjson.md** — the `readJson` BoolExpr-routed reader build plan (the first #430 build item; the data-feed
-  prerequisite for the modifier + enabler).
-- **perf-profile-wiring.md** — the ACTIVE perf-wiring surface (the `[MODIFIER/perf]` census; unparked 2026-07-06).
-  The internal `PROFILE_*` profiler is permanently dead (never reinstated); the pre-cut cascade-vs-legacy pair
-  timing closes at each legacy cut.
+## The plan
 
-*(Lifted intact — transient bulldozer docs, not condensed. Their internal links still point at pre-move paths;
-part of the reference-sweep follow-up. The build-wholesale ruling inside `cascade-engine-430.md` should also get a
-ledger line — a follow-up.)*
+- **[roadmap.md](roadmap.md)** — 🔝 **the master plan.** The design the code conforms to, what exists on the
+  branch, and the open access-surface item. Mandated session-start reading. How legacy is removed is delete-driven
+  — the compiler is the census, correctness is verified live per mechanism
+  ([DEC-playability-not-a-gate](../../architecture/decisions.md#dec-playability-not-a-gate)); there is no gated
+  phase to treat as holy writ.
+
+## The legacy inventories (what must be replaced, grounded in `file:line`)
+
+The engine game-object classes are back on `main`, so these describe live code again.
+
+- **[legacy-value-calc-map.md](legacy-value-calc-map.md)** — every legacy per-turn value calc traced to its getter
+  and its components. Confirm the named FUNCTION, never the line number.
+- **[legacy-cut-worklist.md](legacy-cut-worklist.md)** — the accumulator-cut MECHANISM
+  ([DEC-accumulator-cut-uniform](../../architecture/decisions.md#dec-accumulator-cut-uniform)), ordered by
+  cut-readiness. The value of the cut is legacy PURGE, not memory reclaimed — rank by leverage.
+- **[reader-inventory.md](reader-inventory.md)** — the reader→(scope, channel) census: which consumer reads the
+  final modifier-influenced value of each channel family.
+- **[constructibility.md](constructibility.md)** — the legacy `canConstruct`/`canTrain` + reverse-index machinery
+  the enabler replaces.
+- **[structural-cleanup.md](structural-cleanup.md)** — the `Sources/` tree reorg (landed) + the dead-code /
+  dead-XML pass (candidate-generation only).
+
+## The data work (unaffected by the runtime rebuild)
+
+- **[data-migration-remaining.md](data-migration-remaining.md)** — the curator/JSON worklist; the #1-priority tier
+  ([DEC-data-first](../../architecture/decisions.md#dec-data-first)).
+- **[property-audit.md](property-audit.md)** — LOCKED, owner-approved. The property SOURCE-data migration; the
+  property ENGINE math is KEEP-legacy and must NOT be rewritten.
+- **[stub-census.md](stub-census.md)** — poco getters returning a constant where legacy computed a real value,
+  with named live consumers. Keep CURRENT: delete rows as they are fixed.
+- **[unitcombat-distillation.md](unitcombat-distillation.md)** — slim the `UnitCombat` god-group into tags /
+  skills / modifier-source. **Required before #430 completes** — the common blocker under three fronts.
+  Worklists: **[unitcombat-tag-mapping.md](unitcombat-tag-mapping.md)** ·
+  **[unitcombat-merge-candidates.md](unitcombat-merge-candidates.md)** (map the obvious, FLAG the unsure — never
+  blunt-purge).
+- **[fixed-point-conformance.md](fixed-point-conformance.md)** — the ×100 conversion worklist
+  ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)).
+
+## The grants machine (resolver built, apply-loop NOT built)
+
+- **[grants-machine.md](grants-machine.md)** — the machine's spec.
+- **[grant-apply-sites.md](grant-apply-sites.md)** — the `file:line` map of where provisions are handed over
+  today. The apply surface accreted over fifteen years across two languages and is not reconstructible from
+  memory; this is what the machine must replace.
+- **[start-packages.md](start-packages.md)** — the game-start provisions as authored data (design, not built).
+
+## The enabler + perf
+
+- **[enabler-finished-set.md](enabler-finished-set.md)** — the AI decides from the enabler's LISTED frontier in
+  ONE unified scoring pass, instead of probing the whole entity database per id.
+- **[enabler-frontier-perf.md](enabler-frontier-perf.md)** — the frontier perf model: the GENERATE walk is a pure
+  function of HAVE and is computed once per HAVE-change; the GATE walk is the dynamic part and stays.
+- **[perf-profile-wiring.md](perf-profile-wiring.md)** — the census-based perf surface. ⛔ The internal
+  `PROFILE_*` profiler is permanently dead and is NEVER reinstated.
+
+---
+
+⛔ **No doc in this tier carries a "superseded — ignore §X" banner, and none may be given one.** A banner asking
+the reader to discount the text beneath it does not work: the body is longer, more specific and more actionable
+than the banner, so the body wins and the marking becomes permission-shaped. Content that no longer holds is
+**DELETED**, its durable part promoted into the owning spec, and — where the dead approach carries revival risk —
+recorded in [superseded-ideas.md](../../architecture/superseded-ideas.md), the ONE tombstone registry
+([DEC-docs-current-truth](../../architecture/decisions.md#dec-docs-current-truth),
+[DEC-no-rollerskate-evidence](../../architecture/decisions.md#dec-no-rollerskate-evidence)).

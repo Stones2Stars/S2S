@@ -4,10 +4,10 @@ The pattern for **derived engine state**: how a domain object's derived data (yi
 computed and kept coherent. `CvPlot` and `CvCity` are **domain objects** — the in-game data entities — and they
 **stay**. This is not about dissolving them (that's `CvCityAI`'s eventual job); it is about the derived layer.
 
-Realized on: the plot-yield cache (`CvPlot::m_yieldCache`, the exemplar), the specialist commerce/yield getters,
-the building commerce + yield caches, the per-building empire commerce-change ledger
-(`CvPlayer::m_buildingCommerceChange`), the cascade city packages (`CvCity::m_cascadeCityPackages`), and the
-operating-building set (`CvCity::m_operatingBuildings`).
+This is the **design the cascade plane is built to**, stated independently of any one implementation of it. The
+component (`CvDerivedCache`, `Sources/Infrastructure/`) is live; the game-object caches that were grafted onto
+`CvCity`/`CvPlot`/`CvPlayer` are not currently present — the cascade plane is being rebuilt against this design
+rather than patched back onto the shapes it drifted into ([superseded-ideas](superseded-ideas.md) #14).
 
 ## The problem: no unified `dataChanged` trigger
 
@@ -59,9 +59,9 @@ A derived cache in this model is:
 `updateYield()` is the **trigger only** (flips dirty, fires the downstream dirties the old push carried — no eager
 recompute, no push); `CvCity::getPlotYield()` reads the CITY-side worked-plot Σ cache (`CvCity::m_plotYieldSum`, a
 `CvDerivedCache` marked by worked-plot flips + working-plot yield changes) — the push-maintained `m_aiBaseYieldRate`
-is dead. ⛔ The pull must be a CACHE at EVERY level, never a per-read walk: the interim shape that re-summed the
-radius on every `getPlotYield` call turned the game's hottest read O(radius) and was measured at 913M plot reads in
-one turn inside the governor's valuation — the cost class this whole doc exists to prevent. The engine's actual base yield thereby equals the build-order-independent value the cascade computes —
+is dead. ⛔ The pull must be a CACHE at EVERY level, never a per-read walk: re-summing the radius on every
+`getPlotYield` call turns the game's hottest read O(radius) — measured at 913M plot reads in one turn inside the
+governor's valuation, the cost class this whole doc exists to prevent. The engine's actual base yield thereby equals the build-order-independent value the cascade computes —
 stale-cache divergences resolved **at the source**, behaviour-preserving
 ([DEC-parity](decisions.md#dec-parity), [DEC-mirror-then-redesign](decisions.md#dec-mirror-then-redesign)).
 
@@ -114,23 +114,18 @@ public:
 - **Never serialized.** The owner's `read()`/`write()` drop the legacy field entirely and name its tag in
   `Assets/savemigration.txt` (the soft-remove, [save.md §3](../specs/save.md)); dirty-on-construct means a loaded game
   recomputes on first read.
-- **Converged onto the component:** the plot-yield cache; `CascadeCityPackages` (a mutable `CvCity` member, the cascade
-  math module-side behind the one `cascadeRefreshPackages` delegate — the pattern every modifier channel reuses); the
-  operating-building set (event-invalidated via targeted propagation; the epoch-stamp + turn-roll self-heal are
-  removed per [DEC-no-self-heal](decisions.md#dec-no-self-heal)); the player building-commerce
-  ledger (Vec form). **Deliberately NOT converged:** the legacy CvCity hand-rolled dirty caches (`m_aiCommerceRate`,
-  `m_aiBuildingCommerce100`, squirrelBanana) — demolition fodder at the modifier cut; polishing them is backwards
-  investment. **Remaining live work:** the specialist getters get the targeted spine-routed invalidation mechanism at the
-  turn-end unified rebuild (the F0 foundation), not the Vec form.
+- **Every derived cache on the cascade plane uses this component** — there is no second cache mechanism, and a
+  hand-rolled dirty-flag pair beside it is a defect ([DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape)).
+  The legacy `CvCity` hand-rolled dirty caches (`m_aiCommerceRate`, `m_aiBuildingCommerce100`, squirrelBanana) are
+  **demolition fodder**, never conversion targets: they are cut when the channel that replaces them lands, not
+  polished on the way.
 
 ## ⚖ Refinements
 
 - **PARTIAL DIRTYING.** A cache whose value composes from several isolated **plugin numbers** (each package a
   standing value; "the rest of the pipe stays the same") carries a **dirty BITMASK, one bit per component**, and a
-  trigger marks only the components its event feeds — the `CvDerivedCacheSet` form; the realized exemplar is
-  `CascadeAccumulator`'s `AccDirty` bits over the modifier packages
-  ([modifier-substrate.md](../plans/structural-cleanup/modifier-substrate.md)). The single-flag form stays for leaf
-  caches.
+  trigger marks only the components its event feeds — the `CvDerivedCacheSet` form. The single-flag form stays for
+  leaf caches.
 - **⚖ THE CAPSTONE RULE: the cascade is built and kept current ENTIRELY from events — no blanket rebuild, ever.**
   On LOAD the cascade is stood up by the **event reseed** — the save read fires the DOMAIN events for every fact as it
   deserializes, and each package builds from its own deposits ([event-spine.md](../specs/event-spine.md) /
@@ -198,7 +193,7 @@ public:
   - **UNIT is RESOLVED VALUES, not a package** — "when the number is put on the unit, no more percentages or
     whatever is involved, the data just IS". The exact set of numbers a unit carries is known, so they are summed
     and stored individually, and they dirty on a different trigger from everything else: ONLY when a promotion or
-    combat class changes. It is the most static plane in the engine. `CascadeUnitPackages` is therefore NOT a
+    combat class changes. It is the most static plane in the engine. The unit's storage is therefore NOT a
     bespoke struct awaiting consolidation — it is correctly its own shape, and the 12 unit-only families
     (`strength`, `movement`, `withdrawal`, `firstStrike`, `capture`, `collateral`, `heal`, `bombard`, `air`,
     `cargo`, `range`, `pillage`, …) never enter a scope's channel set.
@@ -206,27 +201,15 @@ public:
   duplicated five terms, and the L8 home/otherArea overlay landed in one and not the other, so `/computed`
   under-reported by 39 against the served value until the duplicate was replaced by a delegation.
   Full rebuild of everything = LOAD ONLY.
-  **Status against this ruling:** city / player / area each sit on a `CvDerivedCacheSet`, plot on the single-flag
-  `CvDerivedCache`. **`CvTeam` carries only `CascadeTeamCaps` (capabilities, not a package)** — which is what
-  blocks the team percents in §B1 of
-  [legacy-cut-worklist.md](../plans/structural-cleanup/legacy-cut-worklist.md), and is three channels' work.
-  **One AREA sum is still mis-homed:** the area YIELD percents fold into the CITY package (`yPctCity` — "bonus /
-  building / event / power / area / capital all fold into yPctCity as scope/conditioned deposits",
-  `CvCascadeAccumulator.cpp`) instead of the city read SUMMING them from `CascadeAreaPackages`. The area MAINTENANCE
-  percents and the area free-specialist counts already live on the area package.
-  **⛔ THE FIX IS NOT "ADD ANOTHER STRUCT". The spec says ONE UNIFORM PACKAGE FORMAT instantiated per scope object;
-  the code has FIVE BESPOKE ONES**, each with hand-named per-channel members instead of channel-indexed
-  Σflat/Σpercent. **A missing scope is a SYMPTOM of that, not the disease:** with one uniform package, giving a scope
-  its packages is a single member; with bespoke structs every scope is its own project, which is why area and team
-  never got one and why their sums leaked into whichever neighbour already had a struct. So UNIFY the package type
-  first (one owner-templated, channel-indexed package on `CvDerivedCacheSet<TOwner>`), after which every scope — the
-  team gap included — falls out. Adding a further bespoke struct per scope deepens the very divergence this closes.
-  The per-scope mechanical wiring is the 6-step world-scope
-  shape: package + `CvDerivedCacheSet` → owner member → `cascadeRefresh<X>` delegate → `bind` + `markAllDirty` in the
-  owner's reset → the `CascadeAccumulator` gather. `CvTeam` follows the same shape for its team-scope percents
-  (`m_iTradeModifier`, `m_iEnemyWarWearinessModifier`, … — still legacy accumulators, §B1 of
-  [legacy-cut-worklist.md](../plans/structural-cleanup/legacy-cut-worklist.md), which cannot be cut until the package
-  exists to hold their values).
+  **⛔ THE FIX IS NEVER "ADD ANOTHER STRUCT" — that is the failure mode this ruling exists to close.** The previous
+  substrate grew ONE BESPOKE STRUCT PER SCOPE, each with hand-named per-channel members instead of channel-indexed
+  Σflat/Σpercent; it is archived and must not be reconstructed ([superseded-ideas](superseded-ideas.md) #14).
+  **A missing scope is a SYMPTOM of that, not the disease:** with one uniform package, giving a scope its packages
+  is a single member; with bespoke structs every scope is its own project — which is exactly why the small scopes
+  (area, team — three channels each) never got one, and why their sums leaked into whichever neighbour already had
+  a struct. So the package TYPE is unified FIRST (one owner-templated, channel-indexed package on
+  `CvDerivedCacheSet<TOwner>`), after which every scope falls out of the same member. Adding a further per-scope
+  struct deepens the divergence this closes.
 - **⚖ THE KEY IS SAMENESS (owner ruling): every cache is the SAME OBJECT TYPE everywhere, and they ALL invalidate
   the SAME WAY.** That — not the per-scope layout — is the requirement the whole model rests on. One templated
   cache type (`CvDerivedCacheSet<TOwner>` over a channel-indexed slot table) on every owner, and ONE mark
@@ -276,14 +259,15 @@ public:
   one measurable phase. Pairs with the [AI build-queue-parity model](../plans/parked/ai-build-queue-parity.md) — the
   snapshot IS the fairness mechanism; this end-state lands WITH that rework. **The event→cache routing is DERIVED
   FROM THE DATA, never hand-wired:** a DOMAIN event carries its SOURCE; the source's compiled deposits (the
-  load-time strings→ints index, `Cascade/CvCascadeDepositIndex.{h,cpp}` — per-deposit interned segments +
-  FK-resolved target id, compiled at readJson push-time) name exactly the channels × scopes × targets it touches —
-  the dirty flags fall out of the deposit addresses. Today's hand-coded hook masks are the interim shape of that
-  derivation; deriving the routing masks from the index lands with the turn-end unified rebuild.
-- **Mid-turn read freshness:** the scope-packages model runs the per-player-slice SNAPSHOT (*"getting a yield event
-  in the middle of a turn is not retroactive; start of next turn is what is expected"*), with the city-creation
-  eager ensure (`CascadeAccumulator::cityCreated`) the one ruled exception. Full consequences:
-  [scope-packages.md](../plans/structural-cleanup/scope-packages.md) §1.
+  load-time strings→ints index, `Data/CvDepositIndex.{h,cpp}` — per-deposit interned segments + FK-resolved target
+  id + the resolved channel/scope slot, compiled at readJson push-time) name exactly the channels × scopes × targets
+  it touches — **the dirty flags fall out of the deposit addresses.** The routing is a pure function of the index;
+  a hand-coded hook mask per event site is a per-site bespoke path of exactly the kind
+  [DEC-uniform-cache-shape](decisions.md#dec-uniform-cache-shape) forbids. Derive it from the index.
+- **Mid-turn read freshness: the per-player-slice SNAPSHOT** — *"getting a yield event in the middle of a turn is
+  not retroactive; start of next turn is what is expected"*. A newly-founded city is the one ruled exception (it
+  must read correct values the turn it exists, so its packages build eagerly at creation rather than waiting for
+  the next slice).
 - **EAGERLY BUILD ALL CACHES AT LOAD — the general policy stands.** *"I am happy to add even MINUTES to load time
   in order to have caches eagerly built on load in general."* ALL caches are warmed at load: a game-object's own
   derived cache (the plot-yield cache) eagerly from that object's own state, and the **cascade** eagerly by the

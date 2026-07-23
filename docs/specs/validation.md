@@ -2,7 +2,7 @@
 
 > **Project-specific (owner).** Validation is how a migration work item is proven DONE: its effect is observed in the
 > running game, through the endpoints, on a real save and a real turn. It is not a separate test suite you run on the
-> side — it is the acceptance discipline the cutover work answers to. Most of it retires when the migration is done;
+> side — it is the acceptance discipline the legacy-removal work answers to. Most of it retires when the migration is done;
 > StoneBase's spec-compliance role for modders is the part that outlives it. (Specs aren't permanent; they exist so
 > agents don't get yoinked. This one lives in the **one** specs surface, never a siloed project folder — that concept
 > failed catastrophically.)
