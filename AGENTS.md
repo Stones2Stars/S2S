@@ -287,6 +287,28 @@ the total-observability bar below.)
   "keep going" authorizes work, never a vote on an open decision. **A question you have posed to the owner is a HARD
   STOP: do not act past it until they answer.** At a gap the only moves are VERIFY or ASK. Every minion you spawn
   must be told this rule explicitly.
+- **⛔ THE THREE DRIFT DETECTORS — mechanical checks, not vigilance. Each caught a real defect; each was
+  BELIEVED CONFORMING at the time.**
+  1. **A change that leaves every consumer untouched is the TELL, not the win.** "No blast radius" means the
+     ENGINE bent to fit the old shape instead of the consumers being rewired — the half-migration reflex
+     ([DEC-fixedpoint-x100](docs/architecture/decisions.md#dec-fixedpoint-x100),
+     [DEC-cy-not-fixed](docs/architecture/decisions.md#dec-cy-not-fixed)). Blast radius is the SIGNAL that the cut
+     reached. *(Caught: a cascade accessor reducing ÷100 internally so nine readers — incl. a `Cy*` binding —
+     would not have to change.)*
+  2. **A surviving FUDGE FACTOR means two operands are on different scales**, i.e. the conversion landed in the
+     wrong place. When a cluster converts correctly the magic constants DISAPPEAR and the mixing sites need no
+     edit at all. If you find yourself ADDING a compensating multiplier, stop and redraw the cluster boundary —
+     do not push through. *(Caught: an AI ratio needing `×10000` because one operand was ×100 and the other human.)*
+  3. **For CACHE/PACKAGE work the acceptance test is CACHED-vs-FRESH, not "it builds and the value looks sane."**
+     Pit the stored slot against its own fresh recompute and require agreement. *(Caught: `/computed`'s
+     maintenance decomposition under-reporting by 39 against the served value for want of one duplicated term —
+     with a green compiler, a plausible total, and a load-time endpoint poll that proved nothing.)*
+  ⚠ **The COMPILER is the census ONLY for a deleted MEMBER.** A changed VALUE or SCALE compiles silently on the
+  same type — those sweeps are driven by the mapped site list and surface only at RUNTIME.
+- **⛔ A DOC THAT DESCRIBES A HALF-STATE READS LIKE A DESIGN — treat "pilot", "X follows per channel", "promoted
+  when needed" as GAPS, not as sanctioned shapes.** An agent conforming to such a line does the wrong thing while
+  believing it is conforming, which is how drift survives review. If a spec sentence licenses stopping partway,
+  it is the sentence that is wrong: fix it in the same change ([DEC-docs-current-truth](docs/architecture/decisions.md#dec-docs-current-truth)).
 - **"ALL" means EXHAUSTIVE — locust mode, never judgment-filtered**
   ([DEC-all-means-all](docs/architecture/decisions.md#dec-all-means-all)). Enumerate EVERY item mechanically,
   recursing every aggregate to its leaf sources; a single agent's "do I need this?" is systematically biased toward
