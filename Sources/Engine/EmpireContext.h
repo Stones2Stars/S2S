@@ -23,8 +23,11 @@ public:
 	EmpireContext() : m_player(NULL) {}
 	void bind(const CvPlayer* p) { m_player = p; }   // set once by the owning CvPlayer
 
-	// --- STORED aggregate: POLICY id -> the empire ENACTS this policy (json §9). Rebuilt on civic/trait change. ---
+	// --- STORED aggregate: POLICY id -> the empire ENACTS this policy (json §9), keyed by the ClassificationRegistry
+	// domain-local POLICY id (the CvJsonBoolBlock::hasId space). The derived UNION over the player's LIVE grantors --
+	// adopted civics + held (active-set) traits -- rebuilt WHOLE on civic/trait change + at load, never per read. ---
 	ContextDict policies;
+	void rebuildPolicies();   // walk m_player's live civics + traits, refill `policies` (out-of-line, EmpireContext.cpp)
 	void clear() { policies.clear(); }
 
 	// --- FORWARDED: the empire's state religion (single enum), read through the bound player. Out-of-line (.cpp). ---

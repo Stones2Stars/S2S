@@ -89,10 +89,6 @@ bool cascadeIsBuildingObsolete(int eBuilding, const CvCascadeEvalCtx& ec);
 // scopes (tally.md); a type naming no countable domain falls back to presence 0/1.
 int cascadeCountOf(int iTypeId, const std::string& sType, CvCascScope eScope, const CvCascadeEvalCtx& ec);
 
-// The §9 policy memo's invalidation hook (the 2026-07-05 grind fix): call on civic/trait state changes
-// (wired into markPlayerScopeAndCities -- the event fan-in); the per-player policy verdict recomputes lazily.
-void cascadePolicyStateChanged(int ePlayer);
-
 // Evaluate the condition tree against the live engine. `c == NULL` -> true (vacuous).
 bool cascadeEvalCondition(const CvJsonCondition* c, const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& flags);
 

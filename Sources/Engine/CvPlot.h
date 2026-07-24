@@ -11,6 +11,7 @@
 #include "CvProperties.h"
 #include "CvPlotPaging.h"
 #include "idinfo_iterator_base.h"
+#include "PlotContext.h"
 
 #pragma warning( disable: 4251 )		// needs to have dll-interface to be used by clients of class
 
@@ -157,6 +158,11 @@ public:
 
 	void clearModifierTotals();
 	void recalculateBaseYield();
+
+	// The per-plot ISOLATED live-state read surface -- the plot-scope sibling of CvCity::getCityContext /
+	// CvPlayer::getEmpireContext (plot state here; city state on CityContext; empire state on EmpireContext). Forwards
+	// the HAS_/IS_ plot facts to this plot; stores no aggregate yet (a plot has no state lacking a CvPlot home today).
+	const PlotContext& getPlotContext() const { return m_plotContext; }
 
 /*********************************/
 /***** Parallel Maps - Begin *****/
@@ -1116,6 +1122,8 @@ private:
 	//	Koshling - add Zobrist hashing of plotGroups to reduce recalculation.
 	//	Each plot has a contribution value to any hash it is included in
 private:
+	// per-plot ISOLATED live-state read surface (see getPlotContext); forwards plot facts, stores no aggregate yet
+	PlotContext m_plotContext;
 	int	m_zobristContribution;
 	int m_movementCharacteristicsHash;
 	bool m_bPlotGroupsDirty;

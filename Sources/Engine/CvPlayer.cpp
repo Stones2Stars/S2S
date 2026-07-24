@@ -14291,6 +14291,7 @@ void CvPlayer::setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue)
 	if (eOldCivic != eNewValue)
 	{
 		m_paeCivics[eIndex] = eNewValue;
+		m_empireContext.rebuildPolicies();   // the enacted-policy union tracks adopted civics (json §9)
 		if (isNPC()) return;
 
 		if (eOldCivic != NO_CIVIC)
@@ -19615,6 +19616,11 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		// @SAVEBREAK - delete
 		m_iCorporateMaintenance += m_iCorporateTaxIncome;
 		// !SAVEBREAK
+
+		// LOAD rebuild of the enacted-policy union: civics + traits were deserialized directly (the in-play setters
+		// that maintain it never fired), so rebuild it from the loaded grantors -- the derived aggregate recomputes
+		// from source on load (DEC-derived-never-trusted), never trusted from a save.
+		m_empireContext.rebuildPolicies();
 
 		//Example of how to skip element
 		//WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_iPopulationgrowthratepercentage, SAVE_VALUE_ANY);
@@ -29288,6 +29294,7 @@ void CvPlayer::setHasTrait(TraitTypes eIndex, bool bNewValue)
 	{
 		m_pabHasTrait[eIndex] = bNewValue;
 		processTrait(eIndex, bNewValue ? 1 : -1);
+		m_empireContext.rebuildPolicies();   // the enacted-policy union tracks held traits (json §9)
 
 		if (GC.getGame().isOption(GAMEOPTION_LEADER_DEVELOPING) && GC.getTraitInfo(eIndex).getLinePriority() != 0)
 		{

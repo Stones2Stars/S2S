@@ -27,6 +27,8 @@
 #include "CvTraitInfo.h"          // the trait §9 policies block
 #include "Repos/InfoRepo.h"
 #include "CvCivicInfo.h"
+#include "CvClassificationRegistry.h"   // cachedKeyId(CLSD_POLICY) -- resolve a policy key to its minted id
+#include "Engine/EmpireContext.h"       // the prebuilt enacted-policy union (getEmpireContext().policies)
 #include <string>
 
 static bool ev_playerHasPolicy(const CvPlayer* pPlayer, const char* szKey);   // defined below (the L1 policy read)
@@ -392,57 +394,20 @@ static bool ev_isWaivedPrereq(const CvCascadeEvalCtx& ctx, const CvJsonCondition
 	return ctx.waivedPrereqBuildings != NULL && ctx.waivedPrereqBuildings->count(c->id) != 0;
 }
 
-// The §9 POLICY read (derived-on-query over the LIVE grantors -- adopted civics + active traits; the L1
-// ruling: the SR-commerce waiver "is in essence a civic-instated POLICY"). Reads the CvJson*Info policies
-// sets, never a legacy counter (DEC-calc-zero-ride-in). Sole data grantors today: complex traits
-// (bigot/progressive/spiritual); the civic half is model headroom the walk carries for free.
-// ⛔ MEMOIZED PER PLAYER (the 2026-07-05 grind fix, mapped by the condEval caller split): the naive walk
-// (~1200 traits × a std::string construction + set lookup EACH) ran per {STATE_RELIGION:X} LEAF -- the
-// operating buildings fixpoint + frontier fills evaluate those lenient leaves millions of times per turn (ceFacts 2.58M +
-// ceFrontB 2.15M), which ground the first verification turn to a crawl. The verdict changes only on
-// civic/trait events, so it memoizes on a version bumped by cascadePolicyStateChanged (wired into
-// markPlayerScopeAndCities, the civic/trait/tech event fan-in; a tech bump is a harmless extra recompute).
-// Game-thread statics (the established census/memo idiom).
-static int s_policyVer[MAX_PLAYERS];        // bumped on civic/trait/tech events (0 = pristine)
-static int s_policyMemoVer[MAX_PLAYERS];    // the memoized verdict's version (-1 = never computed)
-static bool s_policyMemoNSRC[MAX_PLAYERS];  // the nonStateReligionCommerce verdict
-static bool s_policyInit = false;
-
-void cascadePolicyStateChanged(int ePlayer)
-{
-	if (!s_policyInit) return;   // pristine arrays -- the first read initializes
-	if (ePlayer >= 0 && ePlayer < MAX_PLAYERS) ++s_policyVer[ePlayer];
-}
-
+// The §9 POLICY read (json §9): resolve the policy key to its minted POLICY_* id and read the player's PREBUILT
+// enacted-policy UNION on its EmpireContext (rebuilt on civic/trait change + at load, EmpireContext::rebuildPolicies),
+// so the per-leaf read is O(1) with NO walk. The union IS the single source (DEC-single-implementation): it reads the
+// CvJson*Info policies sets, never a legacy counter (DEC-calc-zero-ride-in). Sole data grantors today: complex traits
+// (bigot/progressive/spiritual); the civic half is model headroom the union carries for free. (The naive per-leaf walk
+// -- ~1200 traits × a string+set lookup EACH, evaluated on millions of {STATE_RELIGION:X} leaves per turn -- is what
+// the prebuilt union eliminates; it also retired a per-player version memo whose invalidation trigger had been orphaned.)
 static bool ev_playerHasPolicy(const CvPlayer* pPlayer, const char* szKey)
 {
 	if (pPlayer == NULL) return false;
-	if (!s_policyInit)
-	{
-		for (int i = 0; i < MAX_PLAYERS; ++i) { s_policyVer[i] = 0; s_policyMemoVer[i] = -1; s_policyMemoNSRC[i] = false; }
-		s_policyInit = true;
-	}
-	const int p = (int)pPlayer->getID();
-	if (p < 0 || p >= MAX_PLAYERS) return false;
-	if (s_policyMemoVer[p] == s_policyVer[p]) return s_policyMemoNSRC[p];   // the O(1) hot path
-
-	bool bHas = false;
-	for (int i = 0; i < GC.getNumCivicOptionInfos() && !bHas; ++i)
-	{
-		const CivicTypes eCivic = pPlayer->getCivics((CivicOptionTypes)i);
-		if (eCivic == NO_CIVIC) continue;
-		const CvCivicInfo* d = static_cast<const CvCivicInfo*>(InfoRepo<CvCivicInfo>::get().get(eCivic));
-		if (d != NULL && d->getPolicies() != NULL && d->getPolicies()->has(szKey)) bHas = true;
-	}
-	for (int t = 0; t < GC.getNumTraitInfos() && !bHas; ++t)
-	{
-		if (!pPlayer->hasTrait((TraitTypes)t)) continue;
-		const CvTraitInfo* d = MMKernel::traitData(t);
-		if (d != NULL && d->getPolicies() != NULL && d->getPolicies()->has(szKey)) bHas = true;
-	}
-	s_policyMemoNSRC[p] = bHas;
-	s_policyMemoVer[p] = s_policyVer[p];
-	return bHas;
+	// ONE call site, one literal key -> a per-call-site memoized id (the CLS_HAS idiom; a second key would need its own).
+	static int s_pid = -1;
+	const int iPolicy = ClassificationRegistry::cachedKeyId(s_pid, CLSD_POLICY, szKey);
+	return iPolicy >= 0 && pPlayer->getEmpireContext().policies.has(iPolicy);
 }
 
 // Reads the cascade-computed ACTIVE set, or -- absent it -- falls back to raw PRESENCE (hasBuilding, a raw

@@ -123,8 +123,12 @@ Everything above is settled. What is NOT defined is the boundary every consumer 
   `CityContext.plotAttrs`, `EmpireContext.policies`) and FORWARDS everything already O(1) on the bound game object;
   maintained EVENT-DRIVEN, no recompute. **BUILT:** `ContextDict` + `CityContext` (on `CvCity`, forwarding; its
   `plotAttrs` wired via `CvPlot::updateWorkingCity` → `CvCity::onCityPlotChanged`) + `EmpireContext` (on `CvPlayer`,
-  forwarding `stateReligion`), both bound in `reset()`. **OPEN:** `PlotContext`; the `EmpireContext.policies` union
-  maintenance; the load reseed of both; and the `(cityContext, plotGroup)` getter bodies that read them.
+  forwarding `stateReligion`) + `PlotContext` (on `CvPlot`, pure-forwarding every HAS_/IS_ plot fact to the same
+  `CvPlot` accessors the evaluator reads — no stored aggregate yet), all bound in `reset()`; and
+  `EmpireContext.policies` maintained as the derived UNION over live civics + held traits (rebuilt on
+  `setCivics`/`setHasTrait` + at load via `CvPlayer::read`), now the single source the one policy read
+  (`ev_playerHasPolicy`) uses — the orphaned per-player version memo it replaced is deleted. **OPEN:** the unified
+  event-driven load reseed of `CityContext.plotAttrs`; and the `(cityContext, plotGroup)` getter bodies that read them.
 - **How the INFO side hands its data to the cascade — "make the infos sane" (active).** Today an info IS the legacy
   variable set (220 members on `CvBuildingInfo`, 247 on `CvUnitInfo`), with JSON force-fed into it and a
   ~300-getter surface mirroring the legacy `CvXInfo` contract. The target — **an info STYLED FOR THE JSON**:

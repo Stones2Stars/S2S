@@ -233,6 +233,7 @@ void CvPlot::reset(int iX, int iY, bool bConstructorCall)
 /*******************************/
 	m_iX = iX;
 	m_iY = iY;
+	m_plotContext.bind(this);   // bind the per-plot context to its owner (the pointer IS this plot; forwarding reads it)
 	m_iArea = FFreeList::INVALID_INDEX;
 	m_pPlotArea = NULL;
 	m_iFeatureVariety = 0;

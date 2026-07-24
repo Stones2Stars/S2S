@@ -27,7 +27,7 @@ pointer), never copied. Duplicating already-available state is the exact anti-pa
 |---|---|---|---|
 | **CityContext** | `CvCity` | `plotAttrs` — per-predicate plot COUNTS (how many river/water/hills/… plots); no `CvCity` accessor provides it | population, power, religion presence, holy-city, corporation, vicinity bonus (→ `CvCity`); state religion, policies (→ owner `CvPlayer`) |
 | **EmpireContext** | `CvPlayer` | `policies` — the empire's enacted-policy set (the derived UNION over live civics'/traits' policy blocks, stored nowhere else) | state religion (single enum → `CvPlayer::getStateReligion`) |
-| **PlotContext** | `CvPlot` | plot-scope aggregate — *defined when built* | plot facts already on `CvPlot` |
+| **PlotContext** | `CvPlot` | *(none yet — a plot owns no state lacking a `CvPlot` home; the aggregate slot is defined WHEN one appears)* | every HAS_/IS_ plot fact — water/land/relief/river/coast/freshwater/irrigation/landmark/feature/terrain/improvement/bonus/worked/city (→ `CvPlot`) |
 
 **Pass by reference/pointer, never by value (owner).** Passing a bound context is far cheaper than snapshotting
 values; a context is never a value copy — that is *why* it forwards rather than mirrors.
@@ -52,10 +52,15 @@ context-specific weakness. There is **no blanket per-turn rebuild** and no recom
 
 - **`CityContext.plotAttrs`** ← `CvPlot::updateWorkingCity`: a plot entering/leaving the city's owned worked-radius
   set fires `CvCity::onCityPlotChanged(plot, ±1)`, which folds the plot's stable HAS_/IS_ attributes.
-- **`EmpireContext.policies`** ← the civic/trait change event (rebuild the union).
+- **`EmpireContext.policies`** ← the civic/trait change choke points (`CvPlayer::setCivics` / `setHasTrait` →
+  `EmpireContext::rebuildPolicies`), which refills the WHOLE union over the player's live civics + held (active-set)
+  traits. It is the single source the one policy read (`ev_playerHasPolicy`) uses — reads never re-walk the grantors.
 - **Forwarded** fields need no maintenance — they read the live source.
-- **Load** builds the contexts from the **reseed**: the same events fire from inside the save read
-  ([DEC-spine-reseed](decisions.md#dec-spine-reseed)); never a post-load recompute.
+- **Load** — `EmpireContext.policies` rebuilds from the loaded civics/traits at the end of `CvPlayer::read` (a derived
+  aggregate recomputes from source on load, [DEC-derived-never-trusted](decisions.md#dec-derived-never-trusted), never
+  trusted from a save). The unified event-driven reseed of the remaining stored aggregate (`CityContext.plotAttrs`) —
+  the same DOMAIN events firing from inside the save read ([DEC-spine-reseed](decisions.md#dec-spine-reseed)) — is the
+  tracked next step; there is never a blanket per-turn recompute.
 
 ## Scope set — plot / city / player now; units FUTURE (role-specific); no AreaContext (owner)
 
