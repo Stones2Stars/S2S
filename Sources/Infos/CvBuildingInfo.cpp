@@ -26,18 +26,8 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom (incl. reconstructFromComposed below),
 	// whose writers ACCUMULATE (push_back / mod_addScalar / mod_addYield / +=) -- fully define every output.
 	m_aeMapCategoryTypes.clear(); m_enabledCivTypes.clear();
-	m_aFreePromoTypes.clear(); m_aiFreeTraitTypes.clear(); m_healUnitCombats.clear(); m_consumptionRelevantBonuses.clear();
-	m_piPrereqAndTechs.clear(); m_prereqOrImprovement.clear(); m_prereqOrHeritage.clear();
-	m_aePrereqOrBonuses.clear(); m_piPrereqOrVicinityBonuses.clear(); m_aePrereqOrRawVicinityBonuses.clear();
-	m_techSpecialistChange.clear();
-	m_aBuildingHappinessChanges.clear(); m_religionChange.clear();
-	m_bonusDefenseChanges.clear(); m_unitCombatDefenseAgainst.clear(); m_aUnitCombatFreeExperience.clear();
-	m_domainFreeExperience.clear(); m_aUnitCombatExtraStrength.clear(); m_aUnitProductionModifier.clear();
-	m_unitCombatProdModifier.clear(); m_domainProductionModifier.clear(); m_aBuildingProductionModifier.clear();
-	m_aGlobalBuildingProductionModifier.clear(); m_specialistCount.clear(); m_improvementFreeSpecialists.clear();
-	m_freeSpecialistCount.clear();
-	m_bonusProductionModifier.clear(); m_aGlobalBuildingCostModifier.clear();
-	m_aGlobalBuildingCommerceChanges.clear();
+	m_aFreePromoTypes.clear(); m_aiFreeTraitTypes.clear(); m_healUnitCombats.clear();
+	m_freeBonuses.clear();
 	m_cond.clear(); m_counterDamage = CounterDamage();
 	m_iNumUnitFullHeal = 0; m_wellbeing[WELLBEING_STATE_RELIGION_HAPPINESS] = 0;
 
@@ -204,8 +194,10 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 		}
 	}
 
-	// GROUP 1 (requires condition tree) + GROUP 2 (keyed modifiers) -- the legacy-shaped members.
-	reconstructFromComposed();
+	// Materialize the typed members that read the composed units ONCE at load ([DEC-materialize-at-mapfrom]):
+	// the provides-bonus supply, the property manipulators, and the conditioned own-output index m_cond the
+	// per-group valuation endpoints sum.
+	materializeFromComposed();
 
 	// ===== the MATERIALIZATION pass: every legacy scalar / positional getter value is scanned ONCE here
 	// (JsonModScan over the composed m_modifiers; same address table the getters carried); the getters are bare
@@ -442,25 +434,6 @@ const EnabledCivilizations& CvBuildingInfo::getEnabledCivilizationType(int iInde
 	static const EnabledCivilizations s = { (CivilizationTypes)-1 }; return s;
 }
 
-// --- Python-binding list wrappers (CyInfoInterface1 .def-binds these). The backing IDValueMaps ARE populated by
-// reconstructFromComposed, and IDValueMap is foreach_-iterable with value_type == the archived pair typedef
-// (TechArray = pair<TechTypes,YieldArray>, etc.), so these mirror the archived CvBuildingInfo bodies verbatim. ---
-const python::list CvBuildingInfo::cyGetGlobalBuildingCommerceChanges() const
-{
-	python::list pyList = python::list();
-	foreach_(const BuildingCommerce& pair, m_aGlobalBuildingCommerceChanges)
-		for (int i = 0; i < NUM_COMMERCE_TYPES; i++)
-			if (pair.second[i] != 0) pyList.append(BuildingCommerceChange(pair.first, (CommerceTypes)i, pair.second[i]));
-	return pyList;
-}
-const python::list CvBuildingInfo::cyGetFreePromoTypes() const
-{
-	python::list pyList = python::list();
-	foreach_(const FreePromoTypes& pChange, m_aFreePromoTypes)
-		pyList.append(pChange);
-	return pyList;
-}
-
 // obsoletedBy = the obsoleting tech (ObsoleteTech) + the superseding building (ObsoletesToBuilding), authored
 // directly off THIS building's own fields (curate_building.py, "no store inversion"), composed into m_edges by
 // the base dispatch. NB a RELIC-SHELL supersession (a non-constructible ObsoletesToBuilding target -- the 6 wonder
@@ -497,184 +470,21 @@ const char* CvBuildingInfo::getMovie() const
 	return pArt ? pArt->getPath() : NULL;
 }
 
-// =========================================================================================================
-//  #430 GROUP 1 (requires condition-tree) + GROUP 2 (keyed m_modifiers) reconstruction into legacy members.
-//  Grounded in curate_building.py (requires_building + the SCALAR/TARGET/COND_KEYED tables) and the parsed
-//  CvJsonCondition / CvJsonModEntry shapes. Every address here is a curator emission site, not a guess.
-// =========================================================================================================
+// ============================ materialize the typed members that read the composed units ============================
+//  ONE load-time pass ([DEC-materialize-at-mapfrom]): the provides-bonus supply, the KEEP-legacy property
+//  manipulators, and the CONDITIONED own-output index m_cond the per-group valuation endpoints sum. The composed
+//  units (m_requires / m_edges / m_modifiers) stay the authoritative data -- nothing is re-flattened into a
+//  legacy-shaped scalar mirror; the cascade reads m_modifiers directly and consumers read the coherent surface.
 
-// ---- condition-tree helpers (walk getRequires()->build / operate) ----
-static bool cnd_prefix(const CvJsonCondition* c, const char* p) { return c->type.compare(0, strlen(p), p) == 0; }
-
-static bool cnd_hasPredicate(const CvJsonCondition* c, CvCascPredKind k)
-{
-	if (!c) return false;
-	if (c->kind == CASC_COND_PREDICATE) return c->predKind == k;
-	size_t i;
-	for (i = 0; i < c->all.size(); ++i)    if (cnd_hasPredicate(c->all[i], k)) return true;
-	for (i = 0; i < c->anyOf.size(); ++i)  if (cnd_hasPredicate(c->anyOf[i], k)) return true;
-	for (i = 0; i < c->noneOf.size(); ++i) if (cnd_hasPredicate(c->noneOf[i], k)) return true;
-	return false;   // NB does NOT descend into enabled/disabled -- those are queried separately
-}
-static const CvJsonCondition* cnd_findPredicate(const CvJsonCondition* c, CvCascPredKind k)
-{
-	if (!c) return NULL;
-	if (c->kind == CASC_COND_PREDICATE && c->predKind == k) return c;
-	size_t i; const CvJsonCondition* r;
-	for (i = 0; i < c->all.size(); ++i)    { r = cnd_findPredicate(c->all[i], k); if (r) return r; }
-	for (i = 0; i < c->anyOf.size(); ++i)  { r = cnd_findPredicate(c->anyOf[i], k); if (r) return r; }
-	for (i = 0; i < c->noneOf.size(); ++i) { r = cnd_findPredicate(c->noneOf[i], k); if (r) return r; }
-	return NULL;
-}
-static void cnd_andPresence(const CvJsonCondition* c, const char* prefix, int scope, std::vector<int>& out)
-{
-	if (!c) return;
-	for (size_t i = 0; i < c->all.size(); ++i)
-	{
-		const CvJsonCondition* e = c->all[i];
-		if (e->kind == CASC_COND_PRESENCE && cnd_prefix(e, prefix) && (scope < 0 || (int)e->scope == scope) && e->id >= 0)
-			out.push_back(e->id);
-	}
-}
-static void cnd_orPresence(const CvJsonCondition* c, const char* prefix, int scope, std::vector<int>& out)
-{
-	if (!c) return;
-	for (size_t i = 0; i < c->all.size(); ++i)
-	{
-		const CvJsonCondition* g = c->all[i];
-		if (g->kind != CASC_COND_GROUP) continue;
-		for (size_t j = 0; j < g->anyOf.size(); ++j)
-		{
-			const CvJsonCondition* e = g->anyOf[j];
-			if (e->kind == CASC_COND_PRESENCE && cnd_prefix(e, prefix) && (scope < 0 || (int)e->scope == scope) && e->id >= 0)
-				out.push_back(e->id);
-		}
-	}
-}
-static void cnd_nonePresence(const CvJsonCondition* c, const char* prefix, int scope, std::vector<int>& out)
-{
-	if (!c) return;
-	for (size_t i = 0; i < c->noneOf.size(); ++i)
-	{
-		const CvJsonCondition* e = c->noneOf[i];
-		if (e->kind == CASC_COND_PRESENCE && cnd_prefix(e, prefix) && (scope < 0 || (int)e->scope == scope) && e->id >= 0)
-			out.push_back(e->id);
-	}
-}
-static int cnd_firstAnd(const CvJsonCondition* c, const char* prefix, int scope)
-{ std::vector<int> v; cnd_andPresence(c, prefix, scope, v); return v.empty() ? -1 : v[0]; }
-static int cnd_andMin(const CvJsonCondition* c, const char* type)
-{
-	if (!c) return 0;
-	for (size_t i = 0; i < c->all.size(); ++i)
-	{ const CvJsonCondition* e = c->all[i]; if (e->kind == CASC_COND_PRESENCE && e->type == type) return e->min > 0 ? e->min : 0; }
-	return 0;
-}
-static bool cnd_matchCV(const CvJsonCondition* e, const char* prefix, CvCascConnection conn, CvCascVicinity vic)
-{ return e->kind == CASC_COND_PRESENCE && cnd_prefix(e, prefix) && e->connection == conn && e->vicinity == vic && e->id >= 0; }
-static int cnd_firstAndCV(const CvJsonCondition* c, const char* prefix, CvCascConnection conn, CvCascVicinity vic)
-{ if (!c) return -1; for (size_t i = 0; i < c->all.size(); ++i) if (cnd_matchCV(c->all[i], prefix, conn, vic)) return c->all[i]->id; return -1; }
-static void cnd_orCV(const CvJsonCondition* c, const char* prefix, CvCascConnection conn, CvCascVicinity vic, std::vector<int>& out)
-{ if (!c) return; for (size_t i = 0; i < c->all.size(); ++i) { const CvJsonCondition* g = c->all[i]; if (g->kind == CASC_COND_GROUP) for (size_t j = 0; j < g->anyOf.size(); ++j) if (cnd_matchCV(g->anyOf[j], prefix, conn, vic)) out.push_back(g->anyOf[j]->id); } }
-
-// ---- modifier `enabled` inspection + array accumulation ----
-static int mod_enabledId(const CvJsonModEntry* e, const char* prefix, int conn, int vic)
-{
-	const CvJsonCondition* c = e->enabled;
-	if (!c || c->kind != CASC_COND_PRESENCE) return -1;
-	if (c->type.compare(0, strlen(prefix), prefix) != 0) return -1;
-	if (conn >= 0 && (int)c->connection != conn) return -1;
-	if (vic >= 0 && (int)c->vicinity != vic) return -1;
-	return c->id;
-}
+// mod `enabled` predicate check -- the STATE_RELIGION happiness gate detection (a fixed engine gate).
 static bool mod_enabledPred(const CvJsonModEntry* e, CvCascPredKind k)
 { return e->enabled && e->enabled->kind == CASC_COND_PREDICATE && e->enabled->predKind == k; }
 
-// Array-valued maps: accumulate via addArrayValue (element-wise, insert-or-add) -- NOT getValue/setValue, since
-// IDValueMap::getValue returns the scalar defaultValue and would not convert to a Yield/CommerceArray.
-template <class MapT, class KeyT> static void mod_addYield(MapT& m, KeyT id, int slot, int val)
-{ YieldArray a; a.fill(0); a[slot] = val; m.addArrayValue(id, a); }
-template <class MapT, class KeyT> static void mod_addComm(MapT& m, KeyT id, int slot, int val)
-{ CommerceArray a; a.fill(0); a[slot] = val; m.addArrayValue(id, a); }
-// Scalar (int) maps: getValue/setValue are safe (defaultValue is int 0).
-template <class MapT, class KeyT> static void mod_addScalar(MapT& m, KeyT id, int val)
-{ m.setValue(id, m.getValue(id) + val); }
-
-static void mod_split(const std::string& s, std::vector<std::string>& out)
+void CvBuildingInfo::materializeFromComposed()
 {
-	size_t start = 0, dot;
-	while ((dot = s.find('.', start)) != std::string::npos) { out.push_back(s.substr(start, dot - start)); start = dot + 1; }
-	out.push_back(s.substr(start));
-}
-// the ONE unconditioned-family sum (JsonModScan; [DEC-single-implementation]) -- kept as a local alias for the walk below
-static int fam_uncond100(const CvJsonModFamily* f, CvCascUnit unit)
-{ return JsonModScan::familyUnconditioned100(f, unit); }
-static int bldNameIndex(const char* const* names, int n, const std::string& s)
-{ for (int i = 0; i < n; ++i) if (s == names[i]) return i; return -1; }
-
-void CvBuildingInfo::reconstructFromComposed()
-{
-	// -------------------- GROUP 1: the requires condition tree --------------------
-	const CvJsonRequires* req = getRequires();
-	const CvJsonCondition* build = req ? req->build : NULL;
-	const CvJsonCondition* op    = req ? req->operate : NULL;
-
-	m_iMinAreaSize = cnd_andMin(build, "AREA_SIZE");
-	if (m_iMinAreaSize == 0) { const CvJsonCondition* hc = cnd_findPredicate(build, CASC_PRED_HAS_COAST); if (hc && hc->min > 0) m_iMinAreaSize = hc->min; }
-	{ const CvJsonCondition* lat = cnd_findPredicate(build, CASC_PRED_LATITUDE);
-	  if (lat) { if (lat->min >= 0) m_iMinLatitude = lat->min; if (lat->max >= 0) m_iMaxLatitude = lat->max; } }
-	m_iNumCitiesPrereq   = cnd_andMin(build, "CITY");
-	m_iNumTeamsPrereq    = cnd_andMin(build, "TEAM");
-	m_iPrereqPopulation  = cnd_andMin(op, "POPULATION");   // engine DORMANCY leg -> authored on OPERATE (curator 2026-07-15)
-	m_iVictoryPrereq     = cnd_firstAnd(build, "VICTORY_", -1);
-	{ const CvJsonCondition* p = cnd_findPredicate(build, CASC_PRED_IS_HOLY_CITY);   if (p) m_iHolyCity = p->id; }
-	{ const CvJsonCondition* p = cnd_findPredicate(build, CASC_PRED_STATE_RELIGION); if (p) m_iPrereqStateReligion = p->id; }
-	m_iPrereqReligion     = cnd_firstAnd(op, "RELIGION_", CASC_SCOPE_CITY);
-	m_iPrereqCorporation  = cnd_firstAnd(op, "CORPORATION_", -1);
-	m_iPrereqCultureLevel = cnd_firstAnd(build, "CULTURELEVEL_", -1);
-	m_iPrereqAnyoneBuilding = cnd_firstAnd(build, "BUILDING_", CASC_SCOPE_WORLD);
-	{ std::vector<int> techs; cnd_andPresence(build, "TECH_", CASC_SCOPE_TEAM, techs);
-	  for (size_t i = 0; i < techs.size(); ++i) m_piPrereqAndTechs.push_back((TechTypes)techs[i]);
-	  m_iPrereqAndTech = techs.empty() ? -1 : techs[0]; }
-	m_bNeedStateReligionInCity = cnd_hasPredicate(build, CASC_PRED_STATE_RELIGION_IN_CITY);
-	m_bWater      = cnd_hasPredicate(build, CASC_PRED_HAS_COAST);
-	m_bRiver      = cnd_hasPredicate(build, CASC_PRED_HAS_RIVER);
-	// NEEDS-power / NEEDS-freshwater are engine DORMANCY legs -> authored on OPERATE (curator 2026-07-15).
-	// PROVIDES-power is attributes.providesPower, read directly by isPower() -- never a requires atom.
-	m_bFreshWater = cnd_hasPredicate(op, CASC_PRED_HAS_FRESHWATER);
-	m_bNoHolyCity = build && cnd_hasPredicate(build->disabled, CASC_PRED_IS_HOLY_CITY);
-	m_bPower      = cnd_hasPredicate(op, CASC_PRED_HAS_POWER);
-	m_iPrereqAndBonus         = cnd_firstAndCV(op, "BONUS_", CASC_CONN_TRADE_OR_VICINITY, CASC_VIC_NONE);
-	m_iPrereqVicinityBonus    = cnd_firstAndCV(op, "BONUS_", CASC_CONN_VICINITY, CASC_VIC_CONNECTED);
-	m_iPrereqRawVicinityBonus = cnd_firstAndCV(op, "BONUS_", CASC_CONN_VICINITY, CASC_VIC_OWNED);
-
-	cnd_andPresence(build, "BUILDING_", CASC_SCOPE_CITY, m_prereqInCityBuildings);
-	cnd_nonePresence(build, "BUILDING_", -1, m_prereqNotInCityBuildings);
-	cnd_orPresence(build, "BUILDING_", CASC_SCOPE_CITY, m_prereqOrBuildings);
-	cnd_andPresence(op, "CIVIC_", CASC_SCOPE_EMPIRE, m_prereqAndCivics);
-	cnd_orPresence(op, "CIVIC_", CASC_SCOPE_EMPIRE, m_prereqOrCivics);
-	cnd_andPresence(build, "TERRAIN_", CASC_SCOPE_PLOT, m_prereqAndTerrains);
-	cnd_orPresence(build, "TERRAIN_", CASC_SCOPE_PLOT, m_prereqOrTerrains);
-	cnd_orPresence(build, "FEATURE_", CASC_SCOPE_PLOT, m_prereqOrFeatures);
-	{ std::vector<int> t; cnd_orPresence(build, "IMPROVEMENT_", CASC_SCOPE_PLOT, t); for (size_t i = 0; i < t.size(); ++i) m_prereqOrImprovement.push_back((ImprovementTypes)t[i]); }
-	{ std::vector<int> t; cnd_orPresence(build, "HERITAGE_", CASC_SCOPE_EMPIRE, t); for (size_t i = 0; i < t.size(); ++i) m_prereqOrHeritage.push_back((HeritageTypes)t[i]); }
-	{ std::vector<int> t; cnd_orCV(op, "BONUS_", CASC_CONN_TRADE_OR_VICINITY, CASC_VIC_NONE, t); for (size_t i = 0; i < t.size(); ++i) m_aePrereqOrBonuses.push_back((BonusTypes)t[i]); }
-	{ std::vector<int> t; cnd_orCV(op, "BONUS_", CASC_CONN_VICINITY, CASC_VIC_CONNECTED, t); for (size_t i = 0; i < t.size(); ++i) m_piPrereqOrVicinityBonuses.push_back((BonusTypes)t[i]); }
-	{ std::vector<int> t; cnd_orCV(op, "BONUS_", CASC_CONN_VICINITY, CASC_VIC_OWNED, t); for (size_t i = 0; i < t.size(); ++i) m_aePrereqOrRawVicinityBonuses.push_back((BonusTypes)t[i]); }
-	// PrereqAmountBuildings: BUILDING (empire scope) with a min -> building->count map.
-	if (build) for (size_t i = 0; i < build->all.size(); ++i)
-	{ const CvJsonCondition* e = build->all[i]; if (e->kind == CASC_COND_PRESENCE && cnd_prefix(e, "BUILDING_") && e->scope == CASC_SCOPE_EMPIRE && e->id >= 0)
-	      m_aPrereqNumOfBuilding.setValue((BuildingTypes)e->id, e->min > 0 ? e->min : 0); }
-
-	// getFreeBonuses -- the manufactured-resource (and culture-building) TRADE-NETWORK + vicinity supply (owner ruling
-	// 2026-07-11: manufactured resources are trade + vicinity, not vicinity-only). The engine's processBuilding
-	// injects the provides delta straight into the city's plot group (getFreeBonus is COMPUTED from the processed
-	// buildings + the persisted event grants -- no ledger) -> getNumBonuses/hasBonus (TRADE)
-	// AND clears the vicinity caches (hasVicinityBonus). Sourced from provides.bonuses (BOTH are the legacy
-	// ExtraFreeBonuses); with the poco's getFreeBonuses stubbed empty the free bonus was vicinity-only (cascade provides)
-	// and never entered the trade network -- so anything needing it via `trade` (tanks/helicopters) couldn't be built,
-	// and culture buildings' free bonus vanished. The supply COUNT rides provides.bonuses ({BONUS_X:N}; absent = 1)
-	// -- e.g. HOLLYWOOD supplies 6 (the legacy iNumFreeBonuses), restoring tradeable-luxury supply that a flat count-1 cut.
+	// getFreeBonuses -- the provides-bonus TRADE-NETWORK + vicinity supply (owner ruling 2026-07-11: manufactured
+	// resources are trade + vicinity). The supply COUNT rides provides.bonuses ({BONUS_X:N}; absent = 1) -- e.g.
+	// HOLLYWOOD supplies 6 (the legacy iNumFreeBonuses). Feeds getNumBonuses/hasBonus (trade) + hasVicinityBonus.
 	{
 		const CvJsonProvides* pv = getProvides();
 		if (pv != NULL)
@@ -682,88 +492,19 @@ void CvBuildingInfo::reconstructFromComposed()
 				if (pv->bonuses[i] >= 0) m_freeBonuses.setValue((BonusTypes)pv->bonuses[i], pv->countOf(pv->bonuses[i]));
 	}
 
-	// -------------------- GROUP 2: the keyed modifier families --------------------
 	const CvJsonModifiers* mods = getModifiers();
 	if (!mods) return;
 	static const char* YN[NUM_YIELD_TYPES]   = { "food", "production", "commerce" };
 	static const char* CN[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
 
-	// PROPERTY_* per-turn SOURCES (property-audit.md increments B+4 + the one-shot ruling): city/plot flats ->
+	// PROPERTY_* per-turn SOURCES (property-audit.md B+4 + the one-shot ruling): city/plot flats ->
 	// m_PropertyManipulators (KEEP-legacy solver); empire flats (the converted <PropertiesAllCities>) -> the
-	// all-cities container, delivered per owner city by the CvGameObjectCity gather. The ONE shared walk
-	// (clear-and-refill inside -- the CvInfo.h idempotency contract).
+	// all-cities container. The ONE shared walk (clear-and-refill inside -- the CvInfo.h idempotency contract).
 	CascadePropertyBridge::bridgeFamilies(mods, m_PropertyManipulators, NO_RELATION, 0, &m_PropertyManipulatorsAllCities);
 
-	// Part A: TARGET-KEYED (unconditioned) -- iterate every family, dispatch by dotted address.
-	const std::map<std::string, CvJsonModFamily*>& all = mods->all();
-	for (std::map<std::string, CvJsonModFamily*>::const_iterator it = all.begin(); it != all.end(); ++it)
-	{
-		std::vector<std::string> s; mod_split(it->first, s);
-		const CvJsonModFamily* f = it->second;
-		if (s.size() < 2) continue;
-		// the trailing FK segment: resolve ONLY when it looks like an INFOTYPE id (contains '_'), so scope/member
-		// words (city/empire/terrains/buildings/...) never hit jsonResolveId and pollute the unresolved-id census.
-		const std::string& last = s[s.size() - 1];
-		const int fk = (last.find('_') != std::string::npos) ? jsonResolveId(last) : -1;
-		const std::string& f0 = s[0];
-
-		// commerces: <commerce>.empire.buildings.<B>  (GlobalBuildingExtraCommerces)
-		const int ci = bldNameIndex(CN, NUM_COMMERCE_TYPES, f0);
-		if (ci >= 0 && s.size() == 4 && fk >= 0 && s[1] == "empire" && s[2] == "buildings")
-		{ mod_addComm(m_aGlobalBuildingCommerceChanges, (BuildingTypes)fk, ci, fam_uncond100(f, CASC_UNIT_FLAT)); continue; }
-
-		if (f0 == "happiness" && s.size() == 4 && fk >= 0 && s[1] == "empire" && s[2] == "buildings")
-		{ mod_addScalar(m_aBuildingHappinessChanges, (BuildingTypes)fk, fam_uncond100(f, CASC_UNIT_FLAT)); continue; }
-		if (f0 == "religion" && s.size() == 3 && fk >= 0 && s[1] == "city")
-		{ mod_addScalar(m_religionChange, (ReligionTypes)fk, fam_uncond100(f, CASC_UNIT_FLAT)); continue; }
-		if (f0 == "defense" && s.size() == 4 && fk >= 0 && s[1] == "city")
-		{ if (s[2] == "bonuses")     mod_addScalar(m_bonusDefenseChanges, (BonusTypes)fk, fam_uncond100(f, CASC_UNIT_FLAT));
-		  else if (s[2] == "unitCombats") mod_addScalar(m_unitCombatDefenseAgainst, (UnitCombatTypes)fk, fam_uncond100(f, CASC_UNIT_FLAT));
-		  continue; }
-		if (f0 == "experience" && s.size() == 4 && fk >= 0 && s[1] == "city")
-		{ if (s[2] == "unitCombats") mod_addScalar(m_aUnitCombatFreeExperience, (UnitCombatTypes)fk, fam_uncond100(f, CASC_UNIT_FLAT));
-		  else if (s[2] == "domains") mod_addScalar(m_domainFreeExperience, (DomainTypes)fk, fam_uncond100(f, CASC_UNIT_FLAT));
-		  continue; }
-		if (f0 == "strength" && s.size() == 4 && fk >= 0 && s[1] == "city" && s[2] == "unitCombats")
-		{ mod_addScalar(m_aUnitCombatExtraStrength, (UnitCombatTypes)fk, fam_uncond100(f, CASC_UNIT_FLAT)); continue; }
-		if (f0 == "buildRate" && s.size() == 4 && fk >= 0)
-		{ const int v = fam_uncond100(f, CASC_UNIT_PERCENT);
-		  if (s[1] == "city" && s[2] == "units")            mod_addScalar(m_aUnitProductionModifier, (UnitTypes)fk, v);
-		  else if (s[1] == "city" && s[2] == "unitCombats") mod_addScalar(m_unitCombatProdModifier, (UnitCombatTypes)fk, v);
-		  else if (s[1] == "city" && s[2] == "domains")     mod_addScalar(m_domainProductionModifier, (DomainTypes)fk, v);
-		  else if (s[1] == "city" && s[2] == "buildings")   mod_addScalar(m_aBuildingProductionModifier, (BuildingTypes)fk, v);
-		  else if (s[1] == "empire" && s[2] == "buildings") mod_addScalar(m_aGlobalBuildingProductionModifier, (BuildingTypes)fk, v);
-		  continue; }
-		// specialist capacity families -- allowedSpecialists.city.<S> (SpecialistCounts + TechSpecialistChanges) /
-		// freeSpecialists.city.<S> (FreeSpecialistCounts); freeSpecialists.city.any per:{IMPROVEMENT}.
-		if (f0 == "allowedSpecialists" && s.size() == 3 && fk >= 0 && s[1] == "city")
-		{
-			for (int i = 0; i < f->size(); ++i)
-			{
-				const CvJsonModEntry* e = f->entries[i];
-				if (e->unit != CASC_UNIT_COUNT || e->disabled) continue;
-				if (e->enabled == NULL) mod_addScalar(m_specialistCount, (SpecialistTypes)fk, e->value100);
-				else { const int tech = mod_enabledId(e, "TECH_", -1, -1); if (tech >= 0) m_techSpecialistChange[tech][fk] += e->value100; }
-			}
-			continue;
-		}
-		if (f0 == "freeSpecialists" && s.size() == 3 && s[1] == "city")
-		{
-			if (s[2] == "any")
-			{
-				for (int i = 0; i < f->size(); ++i)
-				{ const CvJsonModEntry* e = f->entries[i]; if (e->hasPer && e->perTypeId >= 0) mod_addScalar(m_improvementFreeSpecialists, (ImprovementTypes)e->perTypeId, e->value100); }
-			}
-			else if (fk >= 0) mod_addScalar(m_freeSpecialistCount, (SpecialistTypes)fk, fam_uncond100(f, CASC_UNIT_COUNT));
-			continue;
-		}
-		// (PROPERTY_* families are bridged by the ONE shared CascadePropertyBridge::bridgeFamilies walk above.)
-		if (f0.compare(0, 9, "PROPERTY_") == 0) continue;
-	}
-
-	// Part B: CONDITIONED own-output -> m_cond (typed pointers into m_modifiers; the (cityContext, plotGroup) getters sum value x
-	// count(predicate) over the entries whose condition holds). City-scope AND plots-target both fold here; the
-	// STATE_RELIGION-gated happiness stays the materialized wellbeing scalar (a fixed engine gate, not data-varying).
+	// The CONDITIONED own-output index -> m_cond (typed pointers into m_modifiers' owned entries; the per-group
+	// valuation endpoints sum value100 over the entries whose condition holds). City-scope AND plots-target both fold
+	// here; the STATE_RELIGION-gated happiness stays the materialized wellbeing scalar (a fixed engine gate).
 	for (int y = 0; y < NUM_YIELD_TYPES; ++y)
 	{
 		const CvJsonModFamily* f = mods->find(std::string(YN[y]) + ".city");
@@ -793,23 +534,5 @@ void CvBuildingInfo::reconstructFromComposed()
 			{ m_wellbeing[WELLBEING_STATE_RELIGION_HAPPINESS] += e->value100; continue; }
 			CondDeposit d; d.family = (unsigned char)(h == 0 ? COND_HAPPINESS : COND_HEALTH); d.index = 0; d.unit = (unsigned char)e->unit; d.target = COND_TGT_CITY; d.pred = 0xFF; d.e = e; m_cond.push_back(d);
 		}
-	}
-	// buildRate.self percent enabled BONUS -> bonus production modifier
-	{ const CvJsonModFamily* f = mods->find("buildRate.self");
-	  if (f) for (int i = 0; i < f->size(); ++i) { const CvJsonModEntry* e = f->entries[i]; if (e->enabled && !e->disabled && e->unit == CASC_UNIT_PERCENT) { const int b = mod_enabledId(e, "BONUS_", -1, -1); if (b >= 0) mod_addScalar(m_bonusProductionModifier, (BonusTypes)b, e->value100); } } }
-	// costs.empire percent enabled BUILDING -> global building cost modifier
-	{ const CvJsonModFamily* f = mods->find("costs.empire");
-	  if (f) for (int i = 0; i < f->size(); ++i) { const CvJsonModEntry* e = f->entries[i]; if (e->enabled && !e->disabled && e->unit == CASC_UNIT_PERCENT) { const int b = mod_enabledId(e, "BUILDING_", -1, -1); if (b >= 0) mod_addScalar(m_aGlobalBuildingCostModifier, (BuildingTypes)b, e->value100); } } }
-
-	// getConsumptionRelevantBonuses -- archive buildConsumptionRelevantBonuses: the deduped UNION of every BONUS keyed
-	// by this building's bonus-conditioned modifier maps (health/happiness/defense/yield-change/yield-modifier), all
-	// filled above. Consumers test membership only, so a plain key-union reproduces it (the load-derived view of wired data).
-	m_consumptionRelevantBonuses.clear();
-	{
-		std::vector<bool> seen(GC.getNumBonusInfos(), false);
-		for (IDValueMap<BonusTypes, int>::const_iterator it = m_bonusDefenseChanges.begin(); it != m_bonusDefenseChanges.end(); ++it)
-			{ const int b = it->first; if (b >= 0 && b < (int)seen.size() && !seen[b]) { seen[b] = true; m_consumptionRelevantBonuses.push_back((BonusTypes)b); } }
-		for (size_t i = 0; i < m_cond.size(); ++i)
-			{ const int b = mod_enabledId(m_cond[i].e, "BONUS_", -1, -1); if (b >= 0 && b < (int)seen.size() && !seen[b]) { seen[b] = true; m_consumptionRelevantBonuses.push_back((BonusTypes)b); } }
 	}
 }
