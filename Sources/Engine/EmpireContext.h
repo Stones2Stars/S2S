@@ -16,6 +16,7 @@
 #include "ContextDict.h"
 
 class CvPlayer;
+struct CvCascadeEvalCtx;
 
 class EmpireContext
 {
@@ -32,6 +33,10 @@ public:
 
 	// --- FORWARDED: the empire's state religion (single enum), read through the bound player. Out-of-line (.cpp). ---
 	int stateReligion() const;   // CvPlayer::getStateReligion (-1 = NO_RELIGION)
+
+	// Fill the EMPIRE half of a condition-eval context (ec.player + ec.team) from the bound player -- paired with
+	// CityContext::fillEvalCtx (city/plot); together they are the eval state the ONE evaluator reads.
+	void fillEvalCtx(CvCascadeEvalCtx& ec) const;
 
 private:
 	const CvPlayer* m_player;    // the bound game object; the forward reads it -- never a value copy

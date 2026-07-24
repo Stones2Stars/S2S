@@ -73,23 +73,37 @@ not a context.
 goal is that a unit no longer carries ALL the data (the ~247-field fat-unit problem) — each unit holds only the state
 its role needs. Working out that role-partitioning is *why* it waits, rather than wiring a fat unit context now.
 
-## The read — `(cityContext, plotGroup)`: vicinity vs traded
+## The read — the per-GROUP valuation: `(CityContext, EmpireContext, CvPlotGroup)` → the group's values
 
-A building-output getter takes `(const CityContext& cityContext, const CvPlotGroup& plotGroup)`: `cityContext`
-supplies **vicinity + local** state, `plotGroup` (the existing trade-network object, already engine-event-maintained)
-supplies the **traded** bonuses. This is the json `connection: "vicinity"` vs `"trade"` split
-([json.md §3.4](../specs/json.md)), resolved by default from whichever context owns the fact — **traded state is
-NEVER mirrored into `CityContext`**. Empire facts a city getter needs (state religion, policies) forward through
-`cityContext` to the owner's `EmpireContext`; an empire-scope getter takes an `EmpireContext` directly.
+An info's ACTUAL contextual output is read **one endpoint per GROUP of channels** (owner), never per single channel:
+`expectedFlatYields` / `expectedYieldModifiers` / `expectedPlotYields` / `expectedFlatCommerce` / `expectedWellbeing`.
+Each takes the three live contexts and fills that group's ×100 array — **you pass the contexts in, you get the group's
+expected values out**:
 
-> **Naming — no abbreviated parameters (owner).** The parameters are spelled in full (`cityContext`, `plotGroup`),
-> never `cx`/`pg`: short names are only defensible inside a tightly-scoped lambda, which the C++03 toolchain does not
-> have. Index parameters likewise name the enum they key (`getFlatYield(YieldTypes eYield)`,
-> `getDefense(DefenseKind eKind)`), reusing the existing engine + family enums — a new family mints one typed enum,
-> the member array and its getter both key off it.
+- **CityContext** — vicinity + local state AND the river/water/… plot-attr COUNTS (`plotAttrs`). A building reads the
+  CITY context for "how many river tiles", **never a PlotContext directly** (owner) — the plot-count sums live in the
+  city context. It also answers the city's **traded** bonuses (through the city's own plot-group-backed reads).
+- **EmpireContext** — the empire-scope state (civics/traits/policies/state religion).
+- **CvPlotGroup** — the trade-network object; the reserved explicit **traded**-bonus source (`connection:"trade"` vs
+  `"vicinity"`, [json.md §3.4](../specs/json.md)). Traded state is **NEVER mirrored into `CityContext`**.
+
+Each endpoint returns the UNCONDITIONED ×100 base PLUS every conditioned `m_cond` deposit whose condition holds — summed
+via the **one** evaluator (`MMKernel::applies`) over a `CvCascadeEvalCtx` the contexts fill (`CityContext::fillEvalCtx`
+= city/plot, `EmpireContext::fillEvalCtx` = player/team) — so the contexts ARE the eval state, not a raw-pointer ctx
+built beside them. `expectedPlotYields` scales each plots-target deposit by `cityContext.plotAttrs.count(predicate)`.
+
+> **Everything an info holds is ×100** ([DEC-fixedpoint-x100](decisions.md#dec-fixedpoint-x100)) — readJson converts
+> human→×100 once at load; the info never de-scales; a reader `÷100`s at the point of use. So these endpoints add
+> `value100` directly, and the materialized base members are `value100`.
+
+> **Naming — no abbreviated parameters (owner).** Parameters are spelled in full (`cityContext`, `empireContext`,
+> `plotGroup`), never `cx`/`pg`: short names are only defensible inside a tightly-scoped lambda, which C++03 lacks.
+> Index parameters likewise name the enum they key (`getFlatYield(YieldTypes eYield)`, `getDefense(DefenseKind eKind)`),
+> reusing the existing engine + family enums — a new family mints one typed enum, the member array and its getter both
+> key off it.
 
 ## See also
-- [patterns.md](patterns.md) — the INFO DATA-OUT contract + the `(cityContext, plotGroup)` getter surface that reads these contexts.
+- [patterns.md](patterns.md) — the INFO DATA-OUT contract + the per-group valuation surface that reads these contexts.
 - [state-repositories.md](state-repositories.md) — the derived-cache (OUTPUT-value) plane; the contexts are the
   INPUT-state read surface (distinct: contexts hold input facts the getters/evaluator read, not cached output values).
 - [../specs/modifier.md](../specs/modifier.md) — the deposits the getters sum; [../specs/enabler.md](../specs/enabler.md)

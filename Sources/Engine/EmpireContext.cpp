@@ -1,6 +1,8 @@
 #include "CvGameCoreDLL.h"
 #include "EmpireContext.h"
 #include "CvPlayer.h"
+#include "AI/CvTeamAI.h"                 // GET_TEAM -- fillEvalCtx
+#include "Conditions/CvConditionEval.h"  // CvCascadeEvalCtx -- fillEvalCtx
 #include "Defines/CvGlobals.h"          // GC -- civic-option / trait counts
 #include "Repos/InfoRepo.h"             // InfoRepo<CvCivicInfo> (the same civic read the L1 policy walk uses)
 #include "CvCivicInfo.h"                // the civic §9 policies block
@@ -11,6 +13,13 @@
 
 // forwarding accessor: the empire's state religion is already O(1) on CvPlayer -- read it through, no stored copy.
 int EmpireContext::stateReligion() const { return m_player != NULL ? (int)m_player->getStateReligion() : -1; }
+
+// Fill the EMPIRE half of the eval ctx (player/team) from the bound player; CityContext::fillEvalCtx fills city/plot.
+void EmpireContext::fillEvalCtx(CvCascadeEvalCtx& ec) const
+{
+	ec.player = m_player;
+	ec.team = (m_player != NULL) ? &GET_TEAM(m_player->getTeam()) : NULL;
+}
 
 // Rebuild the enacted-policy UNION from the player's LIVE grantors -- adopted civics + held (active-set) traits --
 // exactly the grantor set the one policy read walks (CvConditionEval ev_playerHasPolicy). This is a WHOLE rebuild,

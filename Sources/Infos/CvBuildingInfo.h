@@ -30,8 +30,9 @@ class CvArtInfoBuilding;
 class CvArtInfoMovie;
 class CvGameObject;
 class BoolExpr;
-class CityContext;      // the per-city live VICINITY/local state the (ctx) output getters evaluate against (owned by CvCity)
-class CvPlotGroup;      // the existing trade-network context -- passed alongside CityContext, supplies the TRADED bonuses
+class CityContext;      // the per-city live VICINITY/local state the valuation endpoints evaluate against (owned by CvCity)
+class EmpireContext;    // the per-player empire-scope live state -- passed alongside CityContext (owned by CvPlayer)
+class CvPlotGroup;      // the existing trade-network context -- passed alongside the contexts, supplies the TRADED bonuses
 class CvJsonModEntry;   // one parsed §3.9 conditioned deposit (value100 + enabled/disabled) -- m_cond points at these
 
 // ============================ the sane-info GROUPED SCALAR vocabulary (patterns.md § coherent surface) ============
@@ -162,6 +163,7 @@ struct CondDeposit
 	unsigned char index;     // YieldTypes / CommerceTypes (0 for the wellbeing families)
 	unsigned char unit;      // CvCascUnit (FLAT / PERCENT)
 	unsigned char target;    // CondTarget
+	unsigned char pred;      // plots-target ONLY: the single CvCascPredKind of the deposit's condition (0xFF = none/compound) -- the plotAttrs.count() key
 	const CvJsonModEntry* e; // -> the owned m_modifiers entry (value100 + enabled/disabled); never copied
 };
 
@@ -334,7 +336,6 @@ public:
 	int getBuildRate(BuildRateKind eKind) const       { return (eKind >= 0 && eKind < NUM_BUILD_RATE_KINDS)      ? m_buildRate[eKind]    : 0; }
 	int getScalar(BuildingScalarKind eKind) const     { return (eKind >= 0 && eKind < NUM_BUILDING_SCALAR_KINDS) ? m_scalars[eKind]      : 0; }
 	int getWellbeing(WellbeingKind eKind) const       { return (eKind >= 0 && eKind < NUM_WELLBEING_KINDS)       ? m_wellbeing[eKind]    : 0; }
-	int getWellbeing(WellbeingKind eKind, const CityContext& cityContext, const CvPlotGroup& plotGroup) const;   // + conditioned happiness/health (HAS_TECH/HAS_BONUS gated)
 
 	// --- classification (json.md §8): the NAME encodes direction (owner) -- an attribute is something the building
 	// HAS; a capability is something it PROVIDES to the empire. Singular parameterized check (O(1) id bit test) +
@@ -348,27 +349,31 @@ public:
 	int getDamageAttackerChance() const { return m_counterDamage.chance; }   // defense.city.counterDamage.chance
 	int getDamageToAttacker() const     { return m_counterDamage.damage; }   // defense.city.counterDamage.damage
 
-	// per-YIELD / per-COMMERCE indexed family reads. The plain form is the UNCONDITIONED base (bare materialized read);
-	// the (cityContext, plotGroup) overload adds every conditioned deposit (m_cond) whose predicate holds -- the
-	// building's ACTUAL output in that city -- summed via the ONE cascadeEvalCondition. The two live contexts give the
-	// clean source split: the CityContext supplies VICINITY (+ river/coast/power/state-religion/...), the CvPlotGroup
-	// supplies the TRADED (trade-network-connected) bonuses -- so `connection: vicinity` vs `trade` resolve by default
-	// from the right one. x100-native throughout.
+	// per-YIELD / per-COMMERCE indexed family reads -- the UNCONDITIONED base (bare materialized ×100 read). The
+	// building's ACTUAL contextual output (base + conditioned deposits) is the per-GROUP valuation block below.
 	int getFlatYield(YieldTypes eYield) const;
-	int getFlatYield(YieldTypes eYield, const CityContext& cityContext, const CvPlotGroup& plotGroup) const;
 	int getYieldModifier(YieldTypes eYield) const;
-	int getYieldModifier(YieldTypes eYield, const CityContext& cityContext, const CvPlotGroup& plotGroup) const;
 	int getAreaYieldModifier(YieldTypes eYield) const;
 	int getGlobalYieldModifier(YieldTypes eYield) const;
 	int getSeaPlotYield(YieldTypes eYield) const;
-	int getPlotYield(YieldTypes eYield, const CityContext& cityContext, const CvPlotGroup& plotGroup) const;   // <yield>.city.plots output here = sum of flat x cityContext.count(predicate) (HAS_RIVER / IS_WATER / ...)
 	int getFlatCommerce(CommerceTypes eCommerce) const;
-	int getFlatCommerce(CommerceTypes eCommerce, const CityContext& cityContext, const CvPlotGroup& plotGroup) const;
 	int getCommerceModifier(CommerceTypes eCommerce) const;
 	int getGlobalCommerceModifier(CommerceTypes eCommerce) const;
 	int getSpecialistCommerce(CommerceTypes eCommerce) const;
 	int getCommerceDoubleTime(CommerceTypes eCommerce) const;   // commerceDoubleTime map (REAL)
 	int getStateReligionCommerce(CommerceTypes eCommerce) const;      // stateReligionCommerce map (REAL)
+
+	// --- VALUATION: the building's ACTUAL per-turn output in a given city, ONE endpoint per GROUP (owner). Pass the
+	// live contexts -- CityContext (vicinity/local + the river/water/... plot-attr COUNTS), EmpireContext (empire-scope
+	// state), CvPlotGroup (traded bonuses) -- and get the whole group's ×100 values: the UNCONDITIONED base PLUS every
+	// conditioned m_cond deposit whose condition holds, via the ONE evaluator (MMKernel::applies over the ctx the
+	// contexts fill). Fills aiOut. (Traded bonuses resolve through the bound city's plot-group; the CvPlotGroup arg is
+	// the reserved explicit source for when the evaluator reads it directly.) ---
+	void expectedFlatYields(const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup& plotGroup, int aiOut[NUM_YIELD_TYPES]) const;
+	void expectedYieldModifiers(const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup& plotGroup, int aiOut[NUM_YIELD_TYPES]) const;
+	void expectedPlotYields(const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup& plotGroup, int aiOut[NUM_YIELD_TYPES]) const;   // <yield>.city.plots = flat × cityContext.plotAttrs.count(predicate)
+	void expectedFlatCommerce(const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup& plotGroup, int aiOut[NUM_COMMERCE_TYPES]) const;
+	void expectedWellbeing(const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup& plotGroup, int aiOut[NUM_WELLBEING_KINDS]) const;
 
 	// ai.flavours -- REAL data.
 	int getFlavorValue(FlavorTypes eFlavor) const { return mapGet(m_flavours, eFlavor); }

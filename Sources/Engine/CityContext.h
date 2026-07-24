@@ -19,6 +19,7 @@
 
 class CvPlot;
 class CvCity;
+struct CvCascadeEvalCtx;
 
 class CityContext
 {
@@ -43,6 +44,10 @@ public:
 	bool hasVicinityBonus(int eBonus) const;  // CvCity::hasVicinityBonus (connection:"vicinity"; traded stays on CvPlotGroup)
 	int  stateReligion() const;               // owner CvPlayer::getStateReligion  (STATE_RELIGION_IN_CITY = hasReligion(stateReligion()))
 	bool hasPolicy(int ePolicy) const;        // owner EmpireContext::policies.has  (empire aggregate, not mirrored here)
+
+	// Fill the CITY half of a condition-eval context (ec.city + ec.plot) from the bound city -- the context IS the
+	// eval state (the evaluator reads through the ctx it fills). Paired with EmpireContext::fillEvalCtx (player/team).
+	void fillEvalCtx(CvCascadeEvalCtx& ec) const;
 
 private:
 	const CvCity* m_city;   // the bound game object; forwarding accessors read it -- never a value copy

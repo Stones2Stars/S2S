@@ -5,6 +5,7 @@
 #include "AI/CvPlayerAI.h"      // GET_PLAYER (the owner forward: state religion / policies)
 #include "EmpireContext.h"      // the owner's empire aggregate (policies)
 #include "CvJsonCondition.h"    // CASC_PRED_* -- the shared HAS_/IS_ plot predicate ids plotAttrs keys on
+#include "Conditions/CvConditionEval.h"   // CvCascadeEvalCtx -- fillEvalCtx
 
 void CityContext::onPlotChanged(const CvPlot* plot, int sign)
 {
@@ -35,3 +36,11 @@ bool CityContext::hasCorporation(int eCorp) const    { return m_city != NULL && 
 bool CityContext::hasVicinityBonus(int eBonus) const { return m_city != NULL && m_city->hasVicinityBonus((BonusTypes)eBonus); }
 int  CityContext::stateReligion() const        { return m_city != NULL ? (int)GET_PLAYER(m_city->getOwner()).getStateReligion() : -1; }
 bool CityContext::hasPolicy(int ePolicy) const { return m_city != NULL && GET_PLAYER(m_city->getOwner()).getEmpireContext().policies.has(ePolicy); }
+
+// Fill the CITY half of the eval ctx from the bound city (the context IS the eval state -- no raw pointer leaks to
+// the caller; the ctx it fills is what the ONE evaluator reads). EmpireContext::fillEvalCtx fills player/team.
+void CityContext::fillEvalCtx(CvCascadeEvalCtx& ec) const
+{
+	ec.city = m_city;
+	ec.plot = (m_city != NULL) ? m_city->plot() : NULL;
+}
