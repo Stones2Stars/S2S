@@ -741,11 +741,9 @@ public:
 	// enter/leave, vicinity bonuses on vicinity-supply events, religions/holyCity/corporations on their own events.
 	// Vicinity/local only -- traded stays on CvPlotGroup.
 	const CityContext& getCityContext() const { return m_cityContext; }
-	// Plot ENTER (+1) / LEAVE (-1) -- fold the plot's HAS_/IS_ attributes into this city's context. Fired from
-	// CvPlot::updateWorkingCity as a plot joins/leaves the city's worked set (event-driven; no recompute).
+	// Plot ENTER (+1) / LEAVE (-1) -- fold the plot's HAS_/IS_ attributes into this city's context (plotAttrs, the one
+	// stored aggregate). Fired from CvPlot::updateWorkingCity as a plot joins/leaves the city's worked set.
 	void onCityPlotChanged(const CvPlot* pPlot, int iSign) { m_cityContext.onPlotChanged(pPlot, iSign); }
-	// This city became (true) / stopped being (false) the HOLY CITY of eReligion. Fired from CvGame::setHolyCity.
-	void onHolyCityChanged(ReligionTypes eReligion, bool bIsHolyCity) { m_cityContext.holyCity.set((int)eReligion, bIsHolyCity ? 1 : 0); }
 	bool isAreaCleanPower() const;
 	void changePowerCount(int iChange);
 

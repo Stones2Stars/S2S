@@ -3,38 +3,35 @@
 #define CV_EMPIRE_CONTEXT_H
 
 //
-//	EmpireContext -- the per-PLAYER ISOLATED live-state object, the empire-scope sibling of CityContext. Owned by
-//	CvPlayer, kept current by events. Holds the EMPIRE-scope facts so they are NOT mirrored into every city (owner):
-//	a city's eval reaches its owner's EmpireContext up the scope chain for these, rather than each CityContext
-//	carrying a copy.
+//	EmpireContext -- the per-PLAYER READ SURFACE, the empire-scope sibling of CityContext (same rules, kept symmetric
+//	so a reader always knows where to go: city state on CityContext, empire state here). Bound to its CvPlayer by
+//	pointer (never a value copy).
 //
-//	Same shape rules as CityContext: COUNTS not objects, self-contained (a raw pointer passed directly), and the
-//	same ContextDict for anything keyed. First cut carries the empire facts we have a use for:
-//	  - stateReligion -- a SINGLE enum (there is exactly one), not a dictionary (owner);
-//	  - policies       -- the empire policy dict (json §9): POLICY id -> the empire ENACTS this policy.
-//	Team-scope facts (techs, team wonders, ...) are the TeamContext sibling when needed.
+//	⛔ STORES only the uniquely-owned AGGREGATE -- `policies`: the empire's enacted-policy set, a derived UNION over
+//	the live civics'/traits' policy blocks that lives nowhere else (the empire analog of CityContext::plotAttrs),
+//	event-maintained on civic/trait change. `stateReligion` FORWARDS (a single enum already on CvPlayer -- not
+//	duplicated).
 //
 
 #include "ContextDict.h"
 
+class CvPlayer;
+
 class EmpireContext
 {
 public:
-	EmpireContext() : m_stateReligion(-1) {}
+	EmpireContext() : m_player(NULL) {}
+	void bind(const CvPlayer* p) { m_player = p; }   // set once by the owning CvPlayer
 
-	// The empire STATE RELIGION -- a SINGLE enum (a RELIGION id; -1 = NO_RELIGION), not a dictionary. {STATE_RELIGION: R}
-	// = stateReligion() == R; a city's STATE_RELIGION_IN_CITY = cityCtx.religions.has(empireCtx.stateReligion()).
-	int  stateReligion() const { return m_stateReligion; }
-	void setStateReligion(int r) { m_stateReligion = r; }
-
-	// Empire POLICIES (json §9): POLICY id -> the empire enacts this policy. Enacted by a civic (while adopted) or a
-	// trait (while held) -- fed by those events, read via policies.has(POLICY_X).
+	// --- STORED aggregate: POLICY id -> the empire ENACTS this policy (json §9). Rebuilt on civic/trait change. ---
 	ContextDict policies;
+	void clear() { policies.clear(); }
 
-	void clear() { policies.clear(); m_stateReligion = -1; }
+	// --- FORWARDED: the empire's state religion (single enum), read through the bound player. Out-of-line (.cpp). ---
+	int stateReligion() const;   // CvPlayer::getStateReligion (-1 = NO_RELIGION)
 
 private:
-	int m_stateReligion;   // the empire's state religion -- a SINGLE RELIGION enum id (-1 = NO_RELIGION)
+	const CvPlayer* m_player;    // the bound game object; the forward reads it -- never a value copy
 };
 
 #endif // CV_EMPIRE_CONTEXT_H

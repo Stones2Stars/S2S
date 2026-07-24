@@ -5515,7 +5515,6 @@ void CvGame::setHolyCity(ReligionTypes eIndex, const CvCity* pNewValue, bool bAn
 
 	if (pOldValue != NULL)
 	{
-		pOldValue->onHolyCityChanged(eIndex, false);   // event-driven: no longer the holy city of eIndex
 		pOldValue->changeReligionInfluence(eIndex, -GC.getHOLY_CITY_INFLUENCE());
 		pOldValue->updateReligionCommerce();
 		pOldValue->setInfoDirty(true);
@@ -5525,7 +5524,6 @@ void CvGame::setHolyCity(ReligionTypes eIndex, const CvCity* pNewValue, bool bAn
 	{
 		CvCity* pHolyCity = getHolyCity(eIndex);
 
-		pHolyCity->onHolyCityChanged(eIndex, true);   // event-driven: now the holy city of eIndex
 		pHolyCity->setHasReligion(eIndex, true, bAnnounce, true);
 		pHolyCity->changeReligionInfluence(eIndex, GC.getHOLY_CITY_INFLUENCE());
 		pHolyCity->updateReligionCommerce();

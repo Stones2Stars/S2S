@@ -116,6 +116,15 @@ Everything above is settled. What is NOT defined is the boundary every consumer 
   is upstream of re-grafting anything.
 - **How a scope owner carries its cache** — the member, its binding, and its mark derivation, uniform across
   world / team / empire / area / city / plot.
+- **The per-scope live-state CONTEXTS the getters + evaluator read** ([contexts.md](../../architecture/contexts.md),
+  [DEC-scope-contexts](../../architecture/decisions.md#dec-scope-contexts)) — one per scope that needs it
+  (plot / city / player; NO area — a bare id whose effects map to the player; units are a FUTURE role-specific
+  scope). Each STORES only its uniquely-owned aggregate (COUNTS via the shared `ContextDict` —
+  `CityContext.plotAttrs`, `EmpireContext.policies`) and FORWARDS everything already O(1) on the bound game object;
+  maintained EVENT-DRIVEN, no recompute. **BUILT:** `ContextDict` + `CityContext` (on `CvCity`, forwarding; its
+  `plotAttrs` wired via `CvPlot::updateWorkingCity` → `CvCity::onCityPlotChanged`) + `EmpireContext` (on `CvPlayer`,
+  forwarding `stateReligion`), both bound in `reset()`. **OPEN:** `PlotContext`; the `EmpireContext.policies` union
+  maintenance; the load reseed of both; and the `(cx, pg)` getter bodies that read them.
 - **How the INFO side hands its data to the cascade — "make the infos sane" (active).** Today an info IS the legacy
   variable set (220 members on `CvBuildingInfo`, 247 on `CvUnitInfo`), with JSON force-fed into it and a
   ~300-getter surface mirroring the legacy `CvXInfo` contract. The target — **an info STYLED FOR THE JSON**:

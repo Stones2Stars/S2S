@@ -455,3 +455,15 @@ Availability getters (`canConstruct`/`canTrain`/`canResearch`/…) read the enab
 [state-repositories.md](state-repositories.md)). **One consumer per system:** the enabler has its own spine consumer;
 a shared one welds the two machines and forces one load policy onto two that differ
 ([superseded-ideas](superseded-ideas.md) #16). **Home:** [enabler.md](../specs/enabler.md).
+
+### DEC-scope-contexts
+
+Each game-object scope a cascade reader needs — **plot / city / player** (NEVER area: a bare id, "a really big plot,"
+whose effects map to the player; units are a FUTURE role-specific scope) — owns ONE per-scope live-state CONTEXT
+(`PlotContext` / `CityContext` / `EmpireContext`), the single home a getter/evaluator reads for that scope's
+changeable state. A context STORES only its uniquely-owned AGGREGATE (COUNTS keyed by id via the shared
+`ContextDict`; state with no home elsewhere — `CityContext.plotAttrs`, `EmpireContext.policies`) and FORWARDS
+everything already O(1) on the bound game object — never duplicated. Bound by pointer, passed by reference (never a
+value copy); maintained EVENT-DRIVEN (no per-turn recompute; load builds via the reseed). Isolation is for
+RESPONSIBILITY + reader symmetry, not decoupling. The building getter's `(cx, pg)` reads `cx` for vicinity/local,
+`pg` (`CvPlotGroup`) for traded. **Home:** [contexts.md](contexts.md).

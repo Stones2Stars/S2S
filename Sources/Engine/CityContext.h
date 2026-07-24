@@ -3,54 +3,49 @@
 #define CV_CITY_CONTEXT_H
 
 //
-//	CityContext -- the per-city ISOLATED live state a building's output getters (and the one condition evaluator)
-//	read to compute the ACTUAL benefit in this city. Owned by CvCity, kept current EVENT-DRIVEN (never a per-turn
-//	recompute).
+//	CityContext -- the per-city READ SURFACE the (cx, pg) building-output getters + the one condition evaluator use.
+//	Bound to its CvCity by pointer (never a value copy -- passing a bound reference is far cheaper than snapshotting
+//	values, owner). The CITY-scope half of the symmetric per-scope contexts (EmpireContext = empire scope), so a
+//	reader always knows where to go: city state here, empire state on the owner's EmpireContext.
 //
-//	⛔ It holds COUNTS, never the objects themselves (owner): the building cares HOW MANY river plots / religions /
-//	vicinity bonuses it has, never WHICH. A plots-target (or per-keyed) deposit's output is `flat x count(id)`; a
-//	gate is just `has(id)`. Self-contained -- a raw pointer is passed directly into an info getter, no copy.
-//
-//	CITY-scope only. EMPIRE-scope facts (state religion, policies) are NOT mirrored here -- they live on the owner's
-//	EmpireContext, which the city eval reaches up the scope chain (owner: don't duplicate empire data per city).
-//	TRADED bonuses stay on CvPlotGroup, passed alongside; CityContext carries VICINITY + local only, never traded.
-//	Everything keyed uses the shared ContextDict, so the read is uniform and each family's key set is OPEN.
+//	⛔ It STORES only the uniquely-owned AGGREGATE -- `plotAttrs`, the per-predicate plot COUNTS (how many river /
+//	water / ... plots), which no CvCity accessor provides and which would otherwise be recomputed by every reader.
+//	Everything already O(1) on the game object is FORWARDED, never duplicated: population / power / religion /
+//	holy-city / corporation / vicinity read through the bound CvCity; state religion + policies through its owner.
+//	COUNTS not objects; a keyed/plots-target deposit's output = flat x count, a gate = has.
 //
 
 #include "ContextDict.h"
 
 class CvPlot;
+class CvCity;
 
 class CityContext
 {
 public:
-	CityContext() : m_population(0), m_power(0) {}
+	CityContext() : m_city(NULL) {}
+	void bind(const CvCity* c) { m_city = c; }   // set once by the owning CvCity; the pointer IS the owner (never dangles)
 
-	// --- always-present city SCALARS (every city has one) -- ints, volumetric-ready ---
-	int  population() const { return m_population; }   void setPopulation(int n) { m_population = n; }
-	int  power() const      { return m_power; }        void setPower(int n)      { m_power = n; }   // HAS_POWER = power() > 0 (int for future volumetric)
-
-	// --- the keyed CITY dictionaries (shared ContextDict) -- the info reads cx.<dict>.has(id) / .count(id) directly ---
-	ContextDict plotAttrs;        // CASC_PRED_* HAS_/IS_ plot predicate -> plot count (event-populated via onPlotChanged)
-	ContextDict religions;        // RELIGION id    -> INFLUENCE (presence(1) today; active at/above its threshold when a consumer needs the magnitude). HAS_RELIGION; STATE_RELIGION_IN_CITY = religions.has(empireCtx.stateReligion())
-	ContextDict holyCity;         // RELIGION id    -> this city is its HOLY CITY (IS_HOLY_CITY = !holyCity.empty(); {IS_HOLY_CITY: R} = holyCity.has(R))
-	ContextDict vicinityBonuses;  // BONUS id       -> supplied in the city's VICINITY (map bonuses + active buildings' provides); connection:"vicinity" -- NOT traded (that is CvPlotGroup)
-	ContextDict corporations;     // CORPORATION id -> present in the city (HAS_CORPORATION; active/dormancy gating is a refinement)
-
-	// EVENT population of plotAttrs -- a plot ENTERED (sign +1) / LEFT (sign -1) the city's owned worked-radius set:
-	// fold its stable HAS_/IS_ attributes (+/-1). COUNTS only, the plot is never stored. Vicinity is NOT folded here --
-	// a vicinity event is its own thing, disconnected from plot state (rides vicinityBonuses via its own event).
+	// --- STORED: the uniquely-owned aggregate -- the HAS_/IS_ plot-predicate COUNTS, event-maintained (onPlotChanged) ---
+	ContextDict plotAttrs;
+	// A plot ENTERED (sign +1) / LEFT (sign -1) the city's owned worked-radius set: fold its stable HAS_/IS_ attributes
+	// (+/-1) into plotAttrs. COUNTS only; the plot is never stored.
 	void onPlotChanged(const CvPlot* plot, int sign);
+	void clear() { plotAttrs.clear(); }   // m_city is a binding, not cleared
 
-	void clear()
-	{
-		plotAttrs.clear(); religions.clear(); holyCity.clear(); vicinityBonuses.clear(); corporations.clear();
-		m_population = 0; m_power = 0;
-	}
+	// --- FORWARDED: read through the bound CvCity / its owner -- no stored copy. Defined out-of-line (CityContext.cpp) ---
+	int  population() const;                  // CvCity::getPopulation
+	int  power() const;                       // CvCity::getPowerCount (HAS_POWER = power() > 0)
+	bool hasReligion(int eReligion) const;    // CvCity::isHasReligion
+	bool isHolyCityOf(int eReligion) const;   // CvCity::isHolyCity(eReligion)   ({IS_HOLY_CITY: R})
+	bool isHolyCityAny() const;               // CvCity::isHolyCity()            (bare IS_HOLY_CITY)
+	bool hasCorporation(int eCorp) const;     // CvCity::isHasCorporation
+	bool hasVicinityBonus(int eBonus) const;  // CvCity::hasVicinityBonus (connection:"vicinity"; traded stays on CvPlotGroup)
+	int  stateReligion() const;               // owner CvPlayer::getStateReligion  (STATE_RELIGION_IN_CITY = hasReligion(stateReligion()))
+	bool hasPolicy(int ePolicy) const;        // owner EmpireContext::policies.has  (empire aggregate, not mirrored here)
 
 private:
-	int m_population;   // always-present city scalar (POPULATION atoms / per:{POPULATION})
-	int m_power;        // always-present city scalar, INT for future volumetric power (HAS_POWER = power() > 0)
+	const CvCity* m_city;   // the bound game object; forwarding accessors read it -- never a value copy
 };
 
 #endif // CV_CITY_CONTEXT_H

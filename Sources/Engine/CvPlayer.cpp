@@ -759,6 +759,7 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	int iI, iJ;
 
 	m_dataRepository.reset();
+	m_empireContext.bind(this);   // bind the per-player empire context to its owner (forwarding reads it)
 
 	//--------------------------------
 	// Uninit class
@@ -12509,7 +12510,6 @@ void CvPlayer::setLastStateReligion(const ReligionTypes eNewReligion)
 	if (eOldReligion != eNewReligion)
 	{
 		m_eLastStateReligion = eNewReligion;
-		m_empireContext.setStateReligion((int)eNewReligion);   // event-driven: the empire's single state-religion enum
 
 		updateReligionHappiness();
 		updateReligionCommerce();

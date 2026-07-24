@@ -458,6 +458,7 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 {
 	PROFILE_EXTRA_FUNC();
 	m_dataRepository.reset();
+	m_cityContext.bind(this);   // bind the per-city context to its owner (the pointer IS this city; forwarding reads it)
 
 	//--------------------------------
 	// Uninit class
@@ -6883,7 +6884,6 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 		return;
 	}
 	m_iPopulation = iNewValue;
-	m_cityContext.setPopulation(iNewValue);   // event-driven: the serialized population mirrored into the city context
 
 	FASSERT_NOT_NEGATIVE(iNewValue);
 
@@ -10103,7 +10103,6 @@ void CvCity::changePowerCount(int iChange)
 		// cppcheck-suppress knownConditionTrueFalse
 		if (wasPower != isPower())
 		{
-			m_cityContext.setPower(isPower() ? 1 : 0);   // event-driven; int 0/1 for now (the field stays int for future volumetric)
 			GET_PLAYER(getOwner()).invalidateYieldRankCache();
 
 			setCommerceDirty();
@@ -15020,7 +15019,6 @@ void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce
 		}
 
 		m_pabHasReligion[eIndex] = bNewValue;
-		m_cityContext.religions.set((int)eIndex, bNewValue ? 1 : 0);   // event-driven: religion presence (influence magnitude added when a consumer needs it)
 
 		for (int iVoteSource = 0; iVoteSource < GC.getNumVoteSourceInfos(); ++iVoteSource)
 		{
@@ -15245,7 +15243,6 @@ void CvCity::setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAn
 		}
 
 		m_pabHasCorporation[eIndex] = bNewValue;
-		m_cityContext.corporations.set((int)eIndex, bNewValue ? 1 : 0);   // event-driven: corp presence (active/dormancy gating is a refinement)
 
 		GET_PLAYER(getOwner()).changeHasCorporationCount(eIndex, ((isHasCorporation(eIndex)) ? 1 : -1));
 
@@ -21200,30 +21197,12 @@ void CvCity::doVicinityBonus()
 {
 	PROFILE_FUNC();
 
+	// Per-turn cache refresh: hasVicinityBonus recomputes on demand after the clear. Vicinity is a FORWARDED read on
+	// the city (the cascade reads it via cx.hasVicinityBonus) -- no stored context copy, so no transition to apply here.
 	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 	{
-		//	Clear the cache each turn before performing this calculation
 		clearVicinityBonusCache((BonusTypes)iI);
 		clearRawVicinityBonusCache((BonusTypes)iI);
-
-		int iChange = 0;
-		const bool bHadVicinityBonus = hadVicinityBonus((BonusTypes)iI);
-		const bool bHasVicinityBonus = hasVicinityBonus((BonusTypes)iI);
-		if (bHadVicinityBonus && !bHasVicinityBonus)
-		{
-			iChange = -1;
-		}
-		else if (bHasVicinityBonus && !bHadVicinityBonus)
-		{
-			iChange = 1;
-		}
-		if (iChange != 0)
-		{
-			// The vicinity event -- source-agnostic (hasVicinityBonus already unions map bonuses + active-building
-			// provides + connection). Fold the gain(+1)/loss(-1) into the city context; the cascade reads vicinity-
-			// conditioned yields from m_cond x cx.vicinityBonuses, replacing the legacy per-building updateYieldRate apply.
-			m_cityContext.vicinityBonuses.add(iI, iChange);
-		}
 	}
 }
 
