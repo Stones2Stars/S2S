@@ -16,6 +16,7 @@
 #include "CvBuildLists.h"
 #include "CvPlotGroup.h"
 #include "CvProperties.h"
+#include "EmpireContext.h"
 #include "CvSelectionGroupAI.h"
 #include "CvTalkingHeadMessage.h"
 #include "CvUnitList.h"
@@ -878,6 +879,9 @@ public:
 
 	ReligionTypes getLastStateReligion() const;
 	ReligionTypes getStateReligion() const;
+	// The per-player ISOLATED empire-scope live state (EmpireContext) -- state religion, policies. The city eval reaches
+	// it up the scope chain for empire facts (not mirrored per city). Maintained event-driven.
+	const EmpireContext& getEmpireContext() const { return m_empireContext; }
 	void setLastStateReligion(const ReligionTypes eNewReligion);
 
 	PlayerTypes getParent() const;
@@ -1955,6 +1959,7 @@ protected:
 	LeaderHeadTypes m_ePersonalityType;
 	EraTypes m_eCurrentEra;
 	ReligionTypes m_eLastStateReligion;
+	EmpireContext m_empireContext;   // per-player empire-scope live state (see getEmpireContext); maintained event-driven
 	PlayerTypes m_eParent;
 	TeamTypes m_eTeamType;
 

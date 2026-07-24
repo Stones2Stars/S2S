@@ -7884,6 +7884,10 @@ void CvPlot::updateWorkingCity()
 		}
 		else m_workingCity.reset();
 
+		// CityContext plot enter/leave (event-driven, no recompute): this plot left pOldWorkingCity's worked set and
+		// joined pBestCity's -- fold its HAS_/IS_ attributes out of the old city's context and into the new one's.
+		if (pOldWorkingCity != NULL) pOldWorkingCity->onCityPlotChanged(this, -1);
+		if (pBestCity != NULL)       pBestCity->onCityPlotChanged(this, +1);
 
 		if (pOldWorkingCity != NULL)
 		{

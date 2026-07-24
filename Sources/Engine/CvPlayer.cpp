@@ -12509,6 +12509,7 @@ void CvPlayer::setLastStateReligion(const ReligionTypes eNewReligion)
 	if (eOldReligion != eNewReligion)
 	{
 		m_eLastStateReligion = eNewReligion;
+		m_empireContext.setStateReligion((int)eNewReligion);   // event-driven: the empire's single state-religion enum
 
 		updateReligionHappiness();
 		updateReligionCommerce();

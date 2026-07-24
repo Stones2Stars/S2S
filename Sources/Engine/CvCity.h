@@ -14,6 +14,7 @@
 #include "CvDerivedData.h"
 #include "CityOutputHistory.h"
 #include "CvGameObject.h"
+#include "CityContext.h"
 
 class CvArea;
 class CvArtInfoBuilding;
@@ -734,6 +735,17 @@ public:
 
 	int getPowerCount() const;
 	bool isPower() const;
+
+	// The per-city ISOLATED live-state object -- the (cx, pg) building-output getters + the evaluator read it.
+	// Maintained EVENT-DRIVEN (never a per-turn recompute): population on setPopulation, plot attributes on plot
+	// enter/leave, vicinity bonuses on vicinity-supply events, religions/holyCity/corporations on their own events.
+	// Vicinity/local only -- traded stays on CvPlotGroup.
+	const CityContext& getCityContext() const { return m_cityContext; }
+	// Plot ENTER (+1) / LEAVE (-1) -- fold the plot's HAS_/IS_ attributes into this city's context. Fired from
+	// CvPlot::updateWorkingCity as a plot joins/leaves the city's worked set (event-driven; no recompute).
+	void onCityPlotChanged(const CvPlot* pPlot, int iSign) { m_cityContext.onPlotChanged(pPlot, iSign); }
+	// This city became (true) / stopped being (false) the HOLY CITY of eReligion. Fired from CvGame::setHolyCity.
+	void onHolyCityChanged(ReligionTypes eReligion, bool bIsHolyCity) { m_cityContext.holyCity.set((int)eReligion, bIsHolyCity ? 1 : 0); }
 	bool isAreaCleanPower() const;
 	void changePowerCount(int iChange);
 
@@ -1528,6 +1540,7 @@ protected:
 	int m_iGameTurnFounded;
 	int m_iGameTurnAcquired;
 	int m_iPopulation;
+	CityContext m_cityContext;   // per-city isolated live state (see getCityContext); recomputed each turn from live state
 	int m_iHighestPopulation;
 	int m_iWorkingPopulation;
 	int m_iSpecialistPopulation;

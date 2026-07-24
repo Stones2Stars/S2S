@@ -6883,6 +6883,7 @@ void CvCity::setPopulation(int iNewValue, bool bNormal)
 		return;
 	}
 	m_iPopulation = iNewValue;
+	m_cityContext.setPopulation(iNewValue);   // event-driven: the serialized population mirrored into the city context
 
 	FASSERT_NOT_NEGATIVE(iNewValue);
 
@@ -10102,6 +10103,7 @@ void CvCity::changePowerCount(int iChange)
 		// cppcheck-suppress knownConditionTrueFalse
 		if (wasPower != isPower())
 		{
+			m_cityContext.setPower(isPower() ? 1 : 0);   // event-driven; int 0/1 for now (the field stays int for future volumetric)
 			GET_PLAYER(getOwner()).invalidateYieldRankCache();
 
 			setCommerceDirty();
@@ -15018,6 +15020,7 @@ void CvCity::setHasReligion(ReligionTypes eIndex, bool bNewValue, bool bAnnounce
 		}
 
 		m_pabHasReligion[eIndex] = bNewValue;
+		m_cityContext.religions.set((int)eIndex, bNewValue ? 1 : 0);   // event-driven: religion presence (influence magnitude added when a consumer needs it)
 
 		for (int iVoteSource = 0; iVoteSource < GC.getNumVoteSourceInfos(); ++iVoteSource)
 		{
@@ -15242,6 +15245,7 @@ void CvCity::setHasCorporation(CorporationTypes eIndex, bool bNewValue, bool bAn
 		}
 
 		m_pabHasCorporation[eIndex] = bNewValue;
+		m_cityContext.corporations.set((int)eIndex, bNewValue ? 1 : 0);   // event-driven: corp presence (active/dormancy gating is a refinement)
 
 		GET_PLAYER(getOwner()).changeHasCorporationCount(eIndex, ((isHasCorporation(eIndex)) ? 1 : -1));
 
@@ -21215,23 +21219,10 @@ void CvCity::doVicinityBonus()
 		}
 		if (iChange != 0)
 		{
-			for (int iJ = 0; iJ < GC.getNumBuildingInfos(); iJ++)
-			{
-				const CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iJ);
-
-				if (kBuilding.getVicinityBonusYieldChanges(NO_BONUS, NO_YIELD) != 0 && isActiveBuilding((BuildingTypes)iJ))
-				{
-					for (int iK = 0; iK < NUM_YIELD_TYPES; iK++)
-					{
-						const int iYieldChange = kBuilding.getVicinityBonusYieldChanges((BonusTypes)iI, iK);
-
-						if (iYieldChange != 0)
-						{
-							updateYieldRate((BuildingTypes)iJ, (YieldTypes)iK, (getBuildingYieldChange((BuildingTypes)iJ, (YieldTypes)iK) + (iYieldChange * iChange)));
-						}
-					}
-				}
-			}
+			// The vicinity event -- source-agnostic (hasVicinityBonus already unions map bonuses + active-building
+			// provides + connection). Fold the gain(+1)/loss(-1) into the city context; the cascade reads vicinity-
+			// conditioned yields from m_cond x cx.vicinityBonuses, replacing the legacy per-building updateYieldRate apply.
+			m_cityContext.vicinityBonuses.add(iI, iChange);
 		}
 	}
 }
