@@ -124,7 +124,7 @@ Everything above is settled. What is NOT defined is the boundary every consumer 
   maintained EVENT-DRIVEN, no recompute. **BUILT:** `ContextDict` + `CityContext` (on `CvCity`, forwarding; its
   `plotAttrs` wired via `CvPlot::updateWorkingCity` → `CvCity::onCityPlotChanged`) + `EmpireContext` (on `CvPlayer`,
   forwarding `stateReligion`), both bound in `reset()`. **OPEN:** `PlotContext`; the `EmpireContext.policies` union
-  maintenance; the load reseed of both; and the `(cx, pg)` getter bodies that read them.
+  maintenance; the load reseed of both; and the `(cityContext, plotGroup)` getter bodies that read them.
 - **How the INFO side hands its data to the cascade — "make the infos sane" (active).** Today an info IS the legacy
   variable set (220 members on `CvBuildingInfo`, 247 on `CvUnitInfo`), with JSON force-fed into it and a
   ~300-getter surface mirroring the legacy `CvXInfo` contract. The target — **an info STYLED FOR THE JSON**:

@@ -3,7 +3,7 @@
 #define CV_CITY_CONTEXT_H
 
 //
-//	CityContext -- the per-city READ SURFACE the (cx, pg) building-output getters + the one condition evaluator use.
+//	CityContext -- the per-city READ SURFACE the (cityContext, plotGroup) building-output getters + the one condition evaluator use.
 //	Bound to its CvCity by pointer (never a value copy -- passing a bound reference is far cheaper than snapshotting
 //	values, owner). The CITY-scope half of the symmetric per-scope contexts (EmpireContext = empire scope), so a
 //	reader always knows where to go: city state here, empire state on the owner's EmpireContext.

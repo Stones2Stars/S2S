@@ -6,7 +6,7 @@
 //	ContextDict -- the ONE uniform keyed dictionary the per-scope live-state contexts share (CityContext /
 //	EmpireContext / ... ): an id -> count/value map. `has` is the plain gate; `count` is the scale (a keyed or
 //	plots-target deposit's output = flat x count). A dictionary, not a fixed struct, so each family's key set is
-//	OPEN -- a new key, never a reshape. The info reads it directly: cx.<dict>.has(id) / .count(id).
+//	OPEN -- a new key, never a reshape. The info reads it directly: cityContext.<dict>.has(id) / .count(id).
 //
 
 #include <map>

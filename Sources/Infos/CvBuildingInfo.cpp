@@ -324,35 +324,35 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 // never walk string addresses.
 
 
-int CvBuildingInfo::getFlatYield(int i) const             { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_flatYields[i] : 0; }
-int CvBuildingInfo::getYieldModifier(int i) const           { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_yieldModifiers[i] : 0; }
-int CvBuildingInfo::getAreaYieldModifier(int i) const       { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_areaYieldModifiers[i] : 0; }
-int CvBuildingInfo::getGlobalYieldModifier(int i) const     { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_globalYieldModifiers[i] : 0; }
-int CvBuildingInfo::getSeaPlotYield(int i) const{ return (i >= 0 && i < NUM_YIELD_TYPES) ? m_seaPlotYields[i] : 0; }
+int CvBuildingInfo::getFlatYield(YieldTypes eYield) const             { return (eYield >= 0 && eYield < NUM_YIELD_TYPES) ? m_flatYields[eYield] : 0; }
+int CvBuildingInfo::getYieldModifier(YieldTypes eYield) const           { return (eYield >= 0 && eYield < NUM_YIELD_TYPES) ? m_yieldModifiers[eYield] : 0; }
+int CvBuildingInfo::getAreaYieldModifier(YieldTypes eYield) const       { return (eYield >= 0 && eYield < NUM_YIELD_TYPES) ? m_areaYieldModifiers[eYield] : 0; }
+int CvBuildingInfo::getGlobalYieldModifier(YieldTypes eYield) const     { return (eYield >= 0 && eYield < NUM_YIELD_TYPES) ? m_globalYieldModifiers[eYield] : 0; }
+int CvBuildingInfo::getSeaPlotYield(YieldTypes eYield) const{ return (eYield >= 0 && eYield < NUM_YIELD_TYPES) ? m_seaPlotYields[eYield] : 0; }
 
-int CvBuildingInfo::getFlatCommerce(int i) const          { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_flatCommerce[i] : 0; }
-int CvBuildingInfo::getCommerceModifier(int i) const        { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_commerceModifiers[i] : 0; }
-int CvBuildingInfo::getGlobalCommerceModifier(int i) const  { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_globalCommerceModifiers[i] : 0; }
-int CvBuildingInfo::getSpecialistCommerce(int i) const { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_specialistCommerce[i] : 0; }
+int CvBuildingInfo::getFlatCommerce(CommerceTypes eCommerce) const          { return (eCommerce >= 0 && eCommerce < NUM_COMMERCE_TYPES) ? m_flatCommerce[eCommerce] : 0; }
+int CvBuildingInfo::getCommerceModifier(CommerceTypes eCommerce) const        { return (eCommerce >= 0 && eCommerce < NUM_COMMERCE_TYPES) ? m_commerceModifiers[eCommerce] : 0; }
+int CvBuildingInfo::getGlobalCommerceModifier(CommerceTypes eCommerce) const  { return (eCommerce >= 0 && eCommerce < NUM_COMMERCE_TYPES) ? m_globalCommerceModifiers[eCommerce] : 0; }
+int CvBuildingInfo::getSpecialistCommerce(CommerceTypes eCommerce) const { return (eCommerce >= 0 && eCommerce < NUM_COMMERCE_TYPES) ? m_specialistCommerce[eCommerce] : 0; }
 
 
 // commerceHappiness.city.<commerce>.flat -- happiness gained per unit of each commerce produced (grouped family).
-int CvBuildingInfo::getCommerceHappiness(int i) const
-{ return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_commerceHappiness[i] : 0; }
+int CvBuildingInfo::getCommerceHappiness(CommerceTypes eCommerce) const
+{ return (eCommerce >= 0 && eCommerce < NUM_COMMERCE_TYPES) ? m_commerceHappiness[eCommerce] : 0; }
 
 // commerce double-time / state-religion commerce -- materialized positional arrays (REAL data).
 // CULTURE branch mirrors the archive's GAMEOPTION_CULTURE_EQUILIBRIUM default (SourceArchive :238): an
 // UNAUTHORED double-time block reads 1000 for culture under the option (NULL-array legacy semantics), so every
 // building's culture halves at the equilibrium pace; an authored block keeps its values.
-int CvBuildingInfo::getCommerceDoubleTime(int i) const
+int CvBuildingInfo::getCommerceDoubleTime(CommerceTypes eCommerce) const
 {
-	if (i < 0 || i >= NUM_COMMERCE_TYPES) return 0;
-	if (i == COMMERCE_CULTURE && commerceDoubleTime.empty() && GC.getGame().isOption(GAMEOPTION_CULTURE_EQUILIBRIUM))
+	if (eCommerce < 0 || eCommerce >= NUM_COMMERCE_TYPES) return 0;
+	if (eCommerce == COMMERCE_CULTURE && commerceDoubleTime.empty() && GC.getGame().isOption(GAMEOPTION_CULTURE_EQUILIBRIUM))
 		return 1000;
-	return m_commerceDoubleTime[i];
+	return m_commerceDoubleTime[eCommerce];
 }
-int CvBuildingInfo::getStateReligionCommerce(int i) const
-{ return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_stateReligionCommerce[i] : 0; }
+int CvBuildingInfo::getStateReligionCommerce(CommerceTypes eCommerce) const
+{ return (eCommerce >= 0 && eCommerce < NUM_COMMERCE_TYPES) ? m_stateReligionCommerce[eCommerce] : 0; }
 
 // commerce sliders this building unlocks (`capabilities` block -- canSet{Science|Culture|Espionage}Rate; gold has no
 
@@ -361,17 +361,12 @@ int CvBuildingInfo::getFoundsCorporation() const
 { const std::vector<int>* v = edge(EDGEF_ENABLES, EDGEB_CORPORATIONS); return (v != NULL && !v->empty()) ? (*v)[0] : -1; }
 
 // REAL: grants.repeatable[] unitCombat heal (getHealUnitCombatType) + identity.enabledCivilizations
-// (getEnabledCivilizationType). getBonusAidModifier / getAidRateChange stay zero-filled statics (CURATOR-GAP: both
-// AidRateChanges + BonusAidModifiers are DROPPED as dead by curate_building.py, so getNum*() returns 0 -> unreached).
+// (getEnabledCivilizationType).
 const HealUnitCombat& CvBuildingInfo::getHealUnitCombatType(int iIndex) const
 {
 	if (iIndex >= 0 && iIndex < (int)m_healUnitCombats.size()) return m_healUnitCombats[iIndex];
 	static const HealUnitCombat s = { (UnitCombatTypes)-1, 0, 0 }; return s;
 }
-const BonusAidModifiers& CvBuildingInfo::getBonusAidModifier(int /*iIndex*/) const
-{ static const BonusAidModifiers s = { (BonusTypes)-1, (PropertyTypes)-1, 0 }; return s; }
-const AidRateChanges& CvBuildingInfo::getAidRateChange(int /*iIndex*/) const
-{ static const AidRateChanges s = { (PropertyTypes)-1, 0 }; return s; }
 const EnabledCivilizations& CvBuildingInfo::getEnabledCivilizationType(int iIndex) const
 {
 	if (iIndex >= 0 && iIndex < (int)m_enabledCivTypes.size()) return m_enabledCivTypes[iIndex];
@@ -697,7 +692,7 @@ void CvBuildingInfo::reconstructFromComposed()
 		if (f0.compare(0, 9, "PROPERTY_") == 0) continue;
 	}
 
-	// Part B: CONDITIONED own-output -> m_cond (typed pointers into m_modifiers; the (cx,pg) getters sum value x
+	// Part B: CONDITIONED own-output -> m_cond (typed pointers into m_modifiers; the (cityContext, plotGroup) getters sum value x
 	// count(predicate) over the entries whose condition holds). City-scope AND plots-target both fold here; the
 	// STATE_RELIGION-gated happiness stays the materialized wellbeing scalar (a fixed engine gate, not data-varying).
 	for (int y = 0; y < NUM_YIELD_TYPES; ++y)

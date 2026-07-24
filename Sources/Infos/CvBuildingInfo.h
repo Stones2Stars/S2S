@@ -258,10 +258,6 @@ public:
 	bool isAllowsNukes() const             { return m_bAllowsNukes; }
 	// requires-derived flags (reconstructed in reconstructFromComposed) + documented curator-gaps.
 	bool isPrereqPower() const             { return m_bPower; }   // REAL requires.operate HAS_POWER (NEEDS power; the engine dorms on power loss)
-	bool isApplyFreePromotionOnMove() const{ return false; }   // CURATOR-GAP: dropped as redundant (all freePromotions are end-turn-stay)
-	bool isNoEnemyPillagingIncome() const  { return false; }   // CURATOR-GAP: dead field (DROP_DEAD)
-	bool isPrereqWar() const               { return false; }   // DEAD: ZERO buildings author bPrereqWar=1 (verified 2026-07-11); the engine war-dormancy path (CvCity.cpp:21374) has no data. A future war-gated building = requires.operate predicate, not this bool.
-	bool isRequiresActiveCivics() const    { return false; }   // DEAD-as-getter: its meaning (build-vs-operate for civic prereqs) is FULLY captured -- all 144 civic-prereq buildings ARE RequiresActiveCivics, so curate_building emits PrereqOr/AndCivics -> requires.operate (exact); NO build-only civic building exists (verified 2026-07-11). No consumer needs the standalone bool.
 	bool isWater() const                   { return m_bWater; }   // REAL requires.build HAS_COAST
 	bool isRiver() const                   { return m_bRiver; }   // REAL requires.build HAS_RIVER
 	bool isFreshWater() const              { return m_bFreshWater; } // REAL requires.operate HAS_FRESHWATER (NEEDS fresh water; the engine dorms on loss)
@@ -270,7 +266,6 @@ public:
 	bool needStateReligionInCity() const   { return m_bNeedStateReligionInCity; }   // REAL requires.build STATE_RELIGION_IN_CITY
 	bool isDamageAllAttackers() const      { return m_counterDamage.allAttackers; }   // counterDamage with NO `units` selector
 	bool isDamageAttackerCapable() const   { return m_counterDamage.present; }        // a defense.city.counterDamage object exists
-	bool getNotShowInCity() const          { return false; }   // CURATOR-GAP: derived display flag, not emitted
 	bool EnablesOtherBuildings() const     { const std::vector<int>* v = getEdges()->find(EDGEF_ENABLES, EDGEB_BUILDINGS); return v != NULL && !v->empty(); }   // REAL enables.buildings edge
 	bool EnablesUnits() const              { const std::vector<int>* v = getEdges()->find(EDGEF_ENABLES, EDGEB_UNITS); return v != NULL && !v->empty(); }         // REAL enables.units edge
 
@@ -328,18 +323,18 @@ public:
 
 	// --- grouped SCALAR reads: ONE parameterized getter per family, x100-native, one direct index (patterns.md
 	// § coherent surface). Replaces the ~60 scattered legacy scalar getters below. ---
-	int getDefense(int k) const      { return (k >= 0 && k < NUM_DEFENSE_KINDS)      ? m_defense[k]      : 0; }   // gate COMBAT_REALISTIC_SIEGE at the consumer
-	int getMaintenance(int k) const  { return (k >= 0 && k < NUM_MAINTENANCE_KINDS)  ? m_maintenance[k]  : 0; }
-	int getTradeRoutes(int k) const  { return (k >= 0 && k < NUM_TRADE_ROUTE_KINDS)  ? m_tradeRoutes[k]  : 0; }
-	int getGreatPeople(int k) const  { return (k >= 0 && k < NUM_GREAT_PEOPLE_KINDS)  ? m_greatPeople[k]  : 0; }
-	int getWarWeariness(int k) const { return (k >= 0 && k < NUM_WAR_WEARINESS_KINDS) ? m_warWeariness[k] : 0; }
-	int getHurry(int k) const        { return (k >= 0 && k < NUM_HURRY_KINDS)        ? m_hurry[k]        : 0; }
-	int getCapture(int k) const      { return (k >= 0 && k < NUM_CITY_CAPTURE_KINDS) ? m_capture[k]      : 0; }
-	int getRevolution(int k) const   { return (k >= 0 && k < NUM_REVOLUTION_KINDS)   ? m_revolution[k]   : 0; }
-	int getBuildRate(int k) const    { return (k >= 0 && k < NUM_BUILD_RATE_KINDS)   ? m_buildRate[k]    : 0; }
-	int getScalar(int k) const       { return (k >= 0 && k < NUM_BUILDING_SCALAR_KINDS) ? m_scalars[k]   : 0; }
-	int getWellbeing(int k) const    { return (k >= 0 && k < NUM_WELLBEING_KINDS)       ? m_wellbeing[k] : 0; }
-	int getWellbeing(int k, const CityContext& cx, const CvPlotGroup& pg) const;   // + conditioned happiness/health (HAS_TECH/HAS_BONUS gated)
+	int getDefense(DefenseKind eKind) const           { return (eKind >= 0 && eKind < NUM_DEFENSE_KINDS)         ? m_defense[eKind]      : 0; }   // gate COMBAT_REALISTIC_SIEGE at the consumer
+	int getMaintenance(MaintenanceKind eKind) const   { return (eKind >= 0 && eKind < NUM_MAINTENANCE_KINDS)     ? m_maintenance[eKind]  : 0; }
+	int getTradeRoutes(TradeRouteKind eKind) const    { return (eKind >= 0 && eKind < NUM_TRADE_ROUTE_KINDS)     ? m_tradeRoutes[eKind]  : 0; }
+	int getGreatPeople(GreatPeopleKind eKind) const   { return (eKind >= 0 && eKind < NUM_GREAT_PEOPLE_KINDS)    ? m_greatPeople[eKind]  : 0; }
+	int getWarWeariness(WarWearinessKind eKind) const { return (eKind >= 0 && eKind < NUM_WAR_WEARINESS_KINDS)   ? m_warWeariness[eKind] : 0; }
+	int getHurry(HurryKind eKind) const               { return (eKind >= 0 && eKind < NUM_HURRY_KINDS)           ? m_hurry[eKind]        : 0; }
+	int getCapture(CityCaptureKind eKind) const       { return (eKind >= 0 && eKind < NUM_CITY_CAPTURE_KINDS)    ? m_capture[eKind]      : 0; }
+	int getRevolution(RevolutionKind eKind) const     { return (eKind >= 0 && eKind < NUM_REVOLUTION_KINDS)      ? m_revolution[eKind]   : 0; }
+	int getBuildRate(BuildRateKind eKind) const       { return (eKind >= 0 && eKind < NUM_BUILD_RATE_KINDS)      ? m_buildRate[eKind]    : 0; }
+	int getScalar(BuildingScalarKind eKind) const     { return (eKind >= 0 && eKind < NUM_BUILDING_SCALAR_KINDS) ? m_scalars[eKind]      : 0; }
+	int getWellbeing(WellbeingKind eKind) const       { return (eKind >= 0 && eKind < NUM_WELLBEING_KINDS)       ? m_wellbeing[eKind]    : 0; }
+	int getWellbeing(WellbeingKind eKind, const CityContext& cityContext, const CvPlotGroup& plotGroup) const;   // + conditioned happiness/health (HAS_TECH/HAS_BONUS gated)
 
 	// --- classification (json.md §8): the NAME encodes direction (owner) -- an attribute is something the building
 	// HAS; a capability is something it PROVIDES to the empire. Singular parameterized check (O(1) id bit test) +
@@ -354,56 +349,40 @@ public:
 	int getDamageToAttacker() const     { return m_counterDamage.damage; }   // defense.city.counterDamage.damage
 
 	// per-YIELD / per-COMMERCE indexed family reads. The plain form is the UNCONDITIONED base (bare materialized read);
-	// the (cx, pg) overload adds every conditioned deposit (m_cond) whose predicate holds -- the building's ACTUAL output
-	// in that city -- summed via the ONE cascadeEvalCondition. The two live contexts give the clean source split: the
-	// CityContext supplies VICINITY (+ river/coast/power/state-religion/...), the CvPlotGroup supplies the TRADED
-	// (trade-network-connected) bonuses -- so `connection: vicinity` vs `trade` resolve by default from the right one.
-	// x100-native throughout.
-	int getFlatYield(int i) const;
-	int getFlatYield(int i, const CityContext& cx, const CvPlotGroup& pg) const;
-	int getYieldModifier(int i) const;
-	int getYieldModifier(int i, const CityContext& cx, const CvPlotGroup& pg) const;
-	int getAreaYieldModifier(int i) const;
-	int getGlobalYieldModifier(int i) const;
-	int getSeaPlotYield(int i) const;
-	int getPlotYield(int i, const CityContext& cx, const CvPlotGroup& pg) const;   // <yield>.city.plots output here = sum of flat x cx.count(predicate) (HAS_RIVER / IS_WATER / ...)
-	int getFlatCommerce(int i) const;
-	int getFlatCommerce(int i, const CityContext& cx, const CvPlotGroup& pg) const;
-	int getCommerceModifier(int i) const;
-	int getGlobalCommerceModifier(int i) const;
-	int getSpecialistCommerce(int i) const;
-	int getCommerceDoubleTime(int i) const;   // commerceDoubleTime map (REAL)
-	int getStateReligionCommerce(int i) const;      // stateReligionCommerce map (REAL)
+	// the (cityContext, plotGroup) overload adds every conditioned deposit (m_cond) whose predicate holds -- the
+	// building's ACTUAL output in that city -- summed via the ONE cascadeEvalCondition. The two live contexts give the
+	// clean source split: the CityContext supplies VICINITY (+ river/coast/power/state-religion/...), the CvPlotGroup
+	// supplies the TRADED (trade-network-connected) bonuses -- so `connection: vicinity` vs `trade` resolve by default
+	// from the right one. x100-native throughout.
+	int getFlatYield(YieldTypes eYield) const;
+	int getFlatYield(YieldTypes eYield, const CityContext& cityContext, const CvPlotGroup& plotGroup) const;
+	int getYieldModifier(YieldTypes eYield) const;
+	int getYieldModifier(YieldTypes eYield, const CityContext& cityContext, const CvPlotGroup& plotGroup) const;
+	int getAreaYieldModifier(YieldTypes eYield) const;
+	int getGlobalYieldModifier(YieldTypes eYield) const;
+	int getSeaPlotYield(YieldTypes eYield) const;
+	int getPlotYield(YieldTypes eYield, const CityContext& cityContext, const CvPlotGroup& plotGroup) const;   // <yield>.city.plots output here = sum of flat x cityContext.count(predicate) (HAS_RIVER / IS_WATER / ...)
+	int getFlatCommerce(CommerceTypes eCommerce) const;
+	int getFlatCommerce(CommerceTypes eCommerce, const CityContext& cityContext, const CvPlotGroup& plotGroup) const;
+	int getCommerceModifier(CommerceTypes eCommerce) const;
+	int getGlobalCommerceModifier(CommerceTypes eCommerce) const;
+	int getSpecialistCommerce(CommerceTypes eCommerce) const;
+	int getCommerceDoubleTime(CommerceTypes eCommerce) const;   // commerceDoubleTime map (REAL)
+	int getStateReligionCommerce(CommerceTypes eCommerce) const;      // stateReligionCommerce map (REAL)
 
 	// ai.flavours -- REAL data.
-	int getFlavorValue(int i) const { return mapGet(m_flavours, i); }
+	int getFlavorValue(FlavorTypes eFlavor) const { return mapGet(m_flavours, eFlavor); }
 
 
-	// per-pop getters. The yield/commerce pair is FAITHFUL-0: zero authorings in any building XML (census
-	// 2026-07-17), nothing to serve. The wellbeing pair serves the curated {happiness|health}.city
-	// perPopulation UNIT entries -- the RAW legacy number (the registry's specialist-iHealthPercent class:
-	// the CONSUMER divides by 100, CvCity.cpp getBuildingGoodHealth "(...PerPopulation() * pop) / 100"), so
-	// no de-scale here reproduces legacy exactly. No new ruling was needed: fixed-point-and-scales.md's
-	// map-at-the-consumption-site method decides it.
-	int getYieldPerPopChange(int /*i*/) const        { return 0; }
-	int getCommercePerPopChange(int /*i*/) const     { return 0; }
 
 	// GROUP 1 (requires condition-tree) + clean grant/repeatable reads -- REAL, reconstructed in reconstructFromComposed().
 	int getPrereqAndTech() const           { return m_iPrereqAndTech; }        // REAL requires.build first TECH atom
-	int getPowerBonus() const              { return -1; }   // CURATOR-GAP: PowerBonus emitted as an operate BONUS atom with role="power", but `role` is not a CvJsonCondition field (dropped) -> indistinguishable from a plain bonus prereq
-	BuildingTypes getFreeBuilding() const     { return (BuildingTypes)-1; }   // CURATOR-GAP: FreeBuilding is in STORE_TAGS (dropped building-side) and no store.py/curator path emits it -> unrecoverable
-	BuildingTypes getFreeAreaBuilding() const { return (BuildingTypes)-1; }   // CURATOR-GAP: FreeAreaBuilding likewise dropped, never emitted
-	int getCivicOption() const             { return -1; }   // CURATOR-GAP: iCivicOption/CivicOption not emitted by curate_building.py at all
 	int getAIWeight() const                { return m_iAIWeight; }             // REAL ai.behaviour.weight
 	int getMinAreaSize() const             { return m_iMinAreaSize; }          // REAL requires.build AREA_SIZE min (or HAS_COAST.minArea for water)
 	int getNumCitiesPrereq() const         { return m_iNumCitiesPrereq; }      // REAL requires.build CITY min
 	int getNumTeamsPrereq() const          { return m_iNumTeamsPrereq; }       // REAL requires.build TEAM min
-	int getUnitLevelPrereq() const         { return 0; }    // CURATOR-GAP: iLevelPrereq intentionally dropped by owner (curate_building.py:911)
 	int getMinLatitude() const             { return m_iMinLatitude; }          // REAL requires.build latitude.min
 	int getMaxLatitude() const             { return m_iMaxLatitude; }          // REAL requires.build latitude.max (90 default)
-	int getNukeExplosionRand() const       { return 0; }    // CURATOR-GAP: excluded-module-only data, not emitted
-	int getPrereqGameOption() const        { return -1; }   // CURATOR-GAP: PrereqGameOption feeds the entity-level enabled/disabled gate (CvJsonGate), which this poco does not compose
-	int getNotGameOption() const           { return -1; }   // CURATOR-GAP: NotGameOption -> the entity gate (not composed)
 	int getHolyCity() const                { return m_iHolyCity; }             // REAL requires.build predicate {IS_HOLY_CITY: RELIGION_X}
 	int getPrereqStateReligion() const     { return m_iPrereqStateReligion; }  // REAL requires.build predicate {STATE_RELIGION: RELIGION_X}
 	int getPrereqReligion() const          { return m_iPrereqReligion; }       // REAL requires.operate PRESENCE (RELIGION_X, city)
@@ -413,16 +392,11 @@ public:
 	int getFreeTechs() const               { return m_iGrantFreeTechs; }          // REAL grants.freeTechs
 	int getPrereqVicinityBonus() const     { return m_iPrereqVicinityBonus; }  // REAL requires.operate BONUS (vicinity, connected)
 	int getPrereqRawVicinityBonus() const  { return m_iPrereqRawVicinityBonus; } // REAL requires.operate BONUS (vicinity, owned)
-	int getPillageGoldModifier() const     { return 0; }    // CURATOR-GAP: dead field (DROP_DEAD)
 	int getPrereqPopulation() const        { return m_iPrereqPopulation; }     // REAL requires.build POPULATION min
 	int getPrereqCultureLevel() const      { return m_iPrereqCultureLevel; }   // REAL requires.build PRESENCE (CULTURELEVEL_X)
 	BuildingTypes getPrereqAnyoneBuilding() const { return (BuildingTypes)m_iPrereqAnyoneBuilding; }  // REAL requires.build BUILDING atom (world scope)
 	int getNumUnitFullHeal() const         { return m_iNumUnitFullHeal; }      // REAL grants.repeatable[] heal:"full" count
-	int getMaxPopulationAllowed() const    { return -1; }   // CURATOR-GAP: DROP_DEAD -- -1 is the UNSET sentinel (no cap);
-	                                                        // 0 rendered "Sets base max population at 0" help text on EVERY building (getMaxPopulationAllowed > -1 gate)
-	int getMaxPopulationChange() const     { return 0; }    // CURATOR-GAP: DROP_DEAD
 	int getPopulationChange() const        { return m_iGrantPopulationCity; }   // REAL grants.population.city
-	int getMaxPopAllowed() const           { return 0; }    // CURATOR-GAP: DROP_DEAD
 	TechTypes getFreeSpecialTech() const   { return (TechTypes)m_iGrantFreeSpecialTech; }   // REAL grants.techs (FreeSpecialTech)
 	UnitTypes getPropertySpawnUnit() const     { return (UnitTypes)m_iPropertySpawnUnit; }        // REAL grants.repeatable[].unit (property-spawn)
 	PropertyTypes getPropertySpawnProperty() const { return (PropertyTypes)m_iPropertySpawnProperty; }  // REAL grants.repeatable[].chance.per property FK
@@ -463,7 +437,6 @@ public:
 	// PROPERTY_X.empire.flat): delivered in EVERY city of the owner by the CvGameObjectCity::foreachManipulator
 	// all-cities walk, count-scaled (property-audit.md one-shot ruling / revived increment 5).
 	const CvPropertyManipulators* getPropertyManipulatorsAllCities() const { return &m_PropertyManipulatorsAllCities; }
-	const BoolExpr* getConstructCondition() const { return NULL; }   // CURATOR-GAP (by design): ConstructCondition dissolved into requires.build atoms (boolexpr.merge_into); no standalone BoolExpr emitted
 
 	// --- Python-binding list wrappers (CyInfoInterface1 .def-binds these). Each returns a boost::python::list built
 	// from the matching keyed getter; every such backing is STUB-empty on this poco, so each wrapper yields an empty
@@ -471,27 +444,6 @@ public:
 	// boost::python come from the PCH). Exact archived signatures so the .def(&CvBuildingInfo::cyGet...) binds. ---
 	const python::list cyGetGlobalBuildingCommerceChanges() const;
 	const python::list cyGetFreePromoTypes() const;
-
-	// --- STUB int* array getters -- NULL is the idiomatic "no data" sentinel these C2C accessors already use
-	// (consumers guard via the isAny*/getNum* companions), never a live pointer here. ---
-	int* getYieldChangeArray() const { return NULL; }
-	int* getYieldPerPopChangeArray() const { return NULL; }
-	int* getYieldModifierArray() const { return NULL; }
-	int* getAreaYieldModifierArray() const { return NULL; }
-	int* getGlobalYieldModifierArray() const { return NULL; }
-	int* getGlobalSeaPlotYieldChangeArray() const { return NULL; }
-	int* getCommerceChangeArray() const { return NULL; }
-	int* getCommercePerPopChangeArray() const { return NULL; }
-	int* getCommerceModifierArray() const { return NULL; }
-	int* getGlobalCommerceModifierArray() const { return NULL; }
-	int* getSpecialistExtraCommerceArray() const { return NULL; }
-	int* getStateReligionCommerceArray() const { return NULL; }
-	int* getSpecialistYieldChangeArray(int /*i*/) const { return NULL; }
-	int* getSpecialistCommerceChangeArray(int /*i*/) const { return NULL; }
-	int* getBonusCommerceModifierArray(int /*i*/) const { return NULL; }
-	int* getTechSpecialistChangeArray(int /*i*/) const { return NULL; }
-	int* getLocalSpecialistYieldChangeArray(int /*i*/) const { return NULL; }
-	int* getLocalSpecialistCommerceChangeArray(int /*i*/) const { return NULL; }
 
 	// --- 2-D / paired scalar accessors -- REAL from the keyed maps where emitted; CURATOR-GAP (0/false) where dropped ---
 	int getBonusProductionModifier(int i) const     { return m_bonusProductionModifier.getValue((BonusTypes)i); }   // REAL buildRate.self percent enabled BONUS
@@ -501,21 +453,11 @@ public:
 	int getBonusDefenseChanges(int i) const         { return m_bonusDefenseChanges.getValue((BonusTypes)i); }       // REAL defense.city.bonuses.<BONUS>
 	int getSpecialistCount(int i) const             { return m_specialistCount.getValue((SpecialistTypes)i); }      // REAL allowedSpecialists.city.<SPECIALIST> (unconditioned)
 	int getFreeSpecialistCount(int i) const         { return m_freeSpecialistCount.getValue((SpecialistTypes)i); }  // REAL freeSpecialists.city.<SPECIALIST>
-	int getCommerceHappiness(int i) const;                              // REAL commerceHappiness.city.<commerce>.flat
+	int getCommerceHappiness(CommerceTypes eCommerce) const;                              // REAL commerceHappiness.city.<commerce>.flat
 	int getVictoryThreshold(int i) const { return mapGet(m_victoryThresholds, i); }   // REAL identity.victoryThresholds {VICTORY_X:n}
-	int getSpecialistYieldChange(int /*i*/, int /*j*/) const   { return 0; }   // CURATOR-GAP: SpecialistYieldChanges dropped building-side (specialist-owned, curate_specialist)
-	int getSpecialistCommerceChange(int /*i*/, int /*j*/) const { return 0; }   // CURATOR-GAP: SpecialistCommerceChanges dropped building-side
-	int getBonusCommerceModifier(int /*i*/, int /*j*/) const   { return 0; }   // CURATOR-GAP: BonusCommerceModifiers (the rate modifier) not emitted by curate_building.py
 	int getTechSpecialistChange(int i, int j) const    { return nestedGet(m_techSpecialistChange, i, j); }   // REAL allowedSpecialists.city.<SPECIALIST> enabled TECH
-	int getLocalSpecialistYieldChange(int /*i*/, int /*j*/) const  { return 0; }   // CURATOR-GAP: LocalSpecialistYieldChanges dropped building-side
-	int getLocalSpecialistCommerceChange(int /*i*/, int /*j*/) const { return 0; } // CURATOR-GAP: LocalSpecialistCommerceChanges dropped building-side
 	int getGlobalBuildingCommerceChange(BuildingTypes eB, CommerceTypes eC) const { return arrSlot(m_aGlobalBuildingCommerceChanges, (int)eB, (int)eC, NUM_COMMERCE_TYPES); }   // REAL <commerce>.empire.buildings.<BUILDING>
-	bool isAnySpecialistYieldChanges() const        { return false; }   // CURATOR-GAP (dropped building-side)
-	bool isAnySpecialistCommerceChanges() const     { return false; }   // CURATOR-GAP
 	bool isAnyTechSpecialistChanges() const         { return !m_techSpecialistChange.empty(); }
-	bool isAnyBonusCommerceModifiers() const        { return false; }   // CURATOR-GAP (rate modifier not emitted)
-	bool isAnyLocalSpecialistYieldChanges() const   { return false; }   // CURATOR-GAP
-	bool isAnyLocalSpecialistCommerceChanges() const { return false; }  // CURATOR-GAP
 
 	// --- prereq/replacement/category/unitCombat list accessors -- REAL from requires/grants where emitted ---
 	int getPrereqOrBuilding(int i) const            { return vecAt(m_prereqOrBuildings, i); }        // REAL requires.build OR BUILDING (city)
@@ -531,12 +473,6 @@ public:
 	void setReplacedBuilding(int i)                 { m_replacedBuildings.push_back(i); }   // RUNTIME reverse index (set post-load by the replacers)
 	int getReplacedBuilding(int i) const            { return vecAt(m_replacedBuildings, i); }
 	short getNumReplacedBuilding() const            { return (short)m_replacedBuildings.size(); }
-	int getCategory(int /*i*/) const                { return -1; }   // CURATOR-GAP zero-corpus: ID_LIST emits identity.categories, but no building in the corpus authors Categories
-	int getNumCategories() const                    { return 0; }
-	bool isCategory(int /*i*/) const                { return false; }
-	int getUnitCombatRetrainType(int /*i*/) const   { return -1; }   // CURATOR-GAP zero-corpus: identity.unitCombatRetrainTypes emitted by ID_LIST, no building authors it
-	int getNumUnitCombatRetrainTypes() const        { return 0; }
-	bool isUnitCombatRetrainType(int /*i*/) const   { return false; }
 	int getMayDamageAttackingUnitCombatType(int i) const { return (i >= 0 && i < (int)m_counterDamage.unitCombats.size()) ? m_counterDamage.unitCombats[i] : -1; }   // defense.city.counterDamage.units.unitCombats[]
 	int getNumMayDamageAttackingUnitCombatTypes() const  { return (int)m_counterDamage.unitCombats.size(); }
 	bool isMayDamageAttackingUnitCombatType(int i) const { for (size_t j = 0; j < m_counterDamage.unitCombats.size(); ++j) if (m_counterDamage.unitCombats[j] == i) return true; return false; }
@@ -546,10 +482,6 @@ public:
 	int getUnitCombatProdModifier(int i) const      { return m_unitCombatProdModifier.getValue((UnitCombatTypes)i); }   // REAL buildRate.city.unitCombats.<UC>
 	int getNumHealUnitCombatTypes() const           { return (int)m_healUnitCombats.size(); }   // REAL grants.repeatable[] unitCombat heal
 	const HealUnitCombat& getHealUnitCombatType(int iIndex) const;
-	int getNumBonusAidModifiers() const             { return 0; }   // CURATOR-GAP: BonusAidModifiers dropped as DEAD (curate_building.py:758)
-	const BonusAidModifiers& getBonusAidModifier(int iIndex) const;
-	int getNumAidRateChanges() const                { return 0; }   // CURATOR-GAP: AidRateChanges dropped as DEAD
-	const AidRateChanges& getAidRateChange(int iIndex) const;
 	int getNumEnabledCivilizationTypes() const      { return (int)m_enabledCivTypes.size(); }   // REAL identity.enabledCivilizations
 	const EnabledCivilizations& getEnabledCivilizationType(int iIndex) const;
 
@@ -562,7 +494,6 @@ public:
 	bool isHurry(int i) const   // REAL enables.hurries edge (HURRY_* FK ids)
 	{ const std::vector<int>* v = getEdges()->find(EDGEF_ENABLES, EDGEB_HURRIES); if (!v) return false;
 	  for (std::size_t k = 0; k < v->size(); ++k) if ((*v)[k] == i) return true; return false; }
-	bool isNewCityFree(const CvGameObject* /*pObject*/) const { return false; }  // CURATOR-GAP (by design): NewCityFree relocated onto settler grants.foundBuildings (curate_unit); nothing emitted building-side
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
 	virtual const CvJsonRequires*  getRequires()     const { return &m_requires; }

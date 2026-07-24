@@ -465,5 +465,7 @@ changeable state. A context STORES only its uniquely-owned AGGREGATE (COUNTS key
 `ContextDict`; state with no home elsewhere — `CityContext.plotAttrs`, `EmpireContext.policies`) and FORWARDS
 everything already O(1) on the bound game object — never duplicated. Bound by pointer, passed by reference (never a
 value copy); maintained EVENT-DRIVEN (no per-turn recompute; load builds via the reseed). Isolation is for
-RESPONSIBILITY + reader symmetry, not decoupling. The building getter's `(cx, pg)` reads `cx` for vicinity/local,
-`pg` (`CvPlotGroup`) for traded. **Home:** [contexts.md](contexts.md).
+RESPONSIBILITY + reader symmetry, not decoupling. The building getter's `(cityContext, plotGroup)` reads
+`cityContext` for vicinity/local, `plotGroup` (`CvPlotGroup`) for traded — parameters spelled in full (no `cx`/`pg`
+abbreviations; short names are only for scoped lambdas, which C++03 lacks), index params named for the enum they key
+(`getFlatYield(YieldTypes eYield)`). **Home:** [contexts.md](contexts.md).

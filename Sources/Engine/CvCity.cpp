@@ -21198,7 +21198,7 @@ void CvCity::doVicinityBonus()
 	PROFILE_FUNC();
 
 	// Per-turn cache refresh: hasVicinityBonus recomputes on demand after the clear. Vicinity is a FORWARDED read on
-	// the city (the cascade reads it via cx.hasVicinityBonus) -- no stored context copy, so no transition to apply here.
+	// the city (the cascade reads it via cityContext.hasVicinityBonus) -- no stored context copy, so no transition to apply here.
 	for (int iI = 0; iI < GC.getNumBonusInfos(); iI++)
 	{
 		clearVicinityBonusCache((BonusTypes)iI);

@@ -2,8 +2,8 @@
 
 > The live-state object a cascade getter and the one condition evaluator read to compute an entity's ACTUAL value in
 > a given place. One per game-object scope that needs it: **PlotContext** (`CvPlot`), **CityContext** (`CvCity`),
-> **EmpireContext** (`CvPlayer`). Owner rulings; this is the concrete shape the "make the infos sane" `(cx, pg)`
-> getters ([patterns.md § INFO DATA-OUT](patterns.md)) read.
+> **EmpireContext** (`CvPlayer`). Owner rulings; this is the concrete shape the "make the infos sane"
+> `(cityContext, plotGroup)` getters ([patterns.md § INFO DATA-OUT](patterns.md)) read.
 
 ## The one idea — isolate the CHANGEABLE state a reader needs, per scope, in ONE understandable place
 
@@ -68,17 +68,23 @@ not a context.
 goal is that a unit no longer carries ALL the data (the ~247-field fat-unit problem) — each unit holds only the state
 its role needs. Working out that role-partitioning is *why* it waits, rather than wiring a fat unit context now.
 
-## The read — `(cx, pg)`: vicinity vs traded
+## The read — `(cityContext, plotGroup)`: vicinity vs traded
 
-A building-output getter takes `(const CityContext& cx, const CvPlotGroup& pg)`: `cx` supplies **vicinity + local**
-state, `pg` (the existing trade-network object, already engine-event-maintained) supplies the **traded** bonuses.
-This is the json `connection: "vicinity"` vs `"trade"` split ([json.md §3.4](../specs/json.md)), resolved by default
-from whichever context owns the fact — **traded state is NEVER mirrored into `CityContext`**. Empire facts a city
-getter needs (state religion, policies) forward through `cx` to the owner's `EmpireContext`; an empire-scope getter
-takes an `EmpireContext` directly.
+A building-output getter takes `(const CityContext& cityContext, const CvPlotGroup& plotGroup)`: `cityContext`
+supplies **vicinity + local** state, `plotGroup` (the existing trade-network object, already engine-event-maintained)
+supplies the **traded** bonuses. This is the json `connection: "vicinity"` vs `"trade"` split
+([json.md §3.4](../specs/json.md)), resolved by default from whichever context owns the fact — **traded state is
+NEVER mirrored into `CityContext`**. Empire facts a city getter needs (state religion, policies) forward through
+`cityContext` to the owner's `EmpireContext`; an empire-scope getter takes an `EmpireContext` directly.
+
+> **Naming — no abbreviated parameters (owner).** The parameters are spelled in full (`cityContext`, `plotGroup`),
+> never `cx`/`pg`: short names are only defensible inside a tightly-scoped lambda, which the C++03 toolchain does not
+> have. Index parameters likewise name the enum they key (`getFlatYield(YieldTypes eYield)`,
+> `getDefense(DefenseKind eKind)`), reusing the existing engine + family enums — a new family mints one typed enum,
+> the member array and its getter both key off it.
 
 ## See also
-- [patterns.md](patterns.md) — the INFO DATA-OUT contract + the `(cx, pg)` getter surface that reads these contexts.
+- [patterns.md](patterns.md) — the INFO DATA-OUT contract + the `(cityContext, plotGroup)` getter surface that reads these contexts.
 - [state-repositories.md](state-repositories.md) — the derived-cache (OUTPUT-value) plane; the contexts are the
   INPUT-state read surface (distinct: contexts hold input facts the getters/evaluator read, not cached output values).
 - [../specs/modifier.md](../specs/modifier.md) — the deposits the getters sum; [../specs/enabler.md](../specs/enabler.md)

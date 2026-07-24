@@ -736,7 +736,7 @@ public:
 	int getPowerCount() const;
 	bool isPower() const;
 
-	// The per-city ISOLATED live-state object -- the (cx, pg) building-output getters + the evaluator read it.
+	// The per-city ISOLATED live-state object -- the (cityContext, plotGroup) building-output getters + the evaluator read it.
 	// Maintained EVENT-DRIVEN (never a per-turn recompute): population on setPopulation, plot attributes on plot
 	// enter/leave, vicinity bonuses on vicinity-supply events, religions/holyCity/corporations on their own events.
 	// Vicinity/local only -- traded stays on CvPlotGroup.
