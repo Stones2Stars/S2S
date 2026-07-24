@@ -20,25 +20,21 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 {
 	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom (incl. reconstructFromComposed below),
 	// whose writers ACCUMULATE (push_back / mod_addScalar / mod_addYield / +=) -- fully define every output.
-	m_aiMayDamageUnitCombats.clear(); m_aeMapCategoryTypes.clear(); m_enabledCivTypes.clear();
+	m_aeMapCategoryTypes.clear(); m_enabledCivTypes.clear();
 	m_aFreePromoTypes.clear(); m_aiFreeTraitTypes.clear(); m_healUnitCombats.clear(); m_consumptionRelevantBonuses.clear();
 	m_piPrereqAndTechs.clear(); m_prereqOrImprovement.clear(); m_prereqOrHeritage.clear();
 	m_aePrereqOrBonuses.clear(); m_piPrereqOrVicinityBonuses.clear(); m_aePrereqOrRawVicinityBonuses.clear();
 	m_techSpecialistChange.clear();
-	m_aPlotYieldChanges.clear(); m_aTerrainYieldChanges.clear(); m_aImprovementYieldChanges.clear();
-	m_aGlobalImprovementYieldChanges.clear(); m_aBuildingHappinessChanges.clear(); m_religionChange.clear();
+	m_aBuildingHappinessChanges.clear(); m_religionChange.clear();
 	m_bonusDefenseChanges.clear(); m_unitCombatDefenseAgainst.clear(); m_aUnitCombatFreeExperience.clear();
 	m_domainFreeExperience.clear(); m_aUnitCombatExtraStrength.clear(); m_aUnitProductionModifier.clear();
 	m_unitCombatProdModifier.clear(); m_domainProductionModifier.clear(); m_aBuildingProductionModifier.clear();
 	m_aGlobalBuildingProductionModifier.clear(); m_specialistCount.clear(); m_improvementFreeSpecialists.clear();
-	m_freeSpecialistCount.clear(); m_techYieldChanges.clear(); m_techYieldModifiers.clear();
-	m_vicinityBonusYieldChanges.clear(); m_bonusYieldChanges.clear(); m_bonusYieldModifier.clear();
-	m_aTechHappinessChanges.clear(); m_piBonusHappinessChanges.clear(); m_aTechHealthChanges.clear();
-	m_piBonusHealthChanges.clear(); m_bonusProductionModifier.clear(); m_aGlobalBuildingCostModifier.clear();
-	m_techCommerceChanges.clear(); m_techCommerceModifiers.clear(); m_bonusCommercePercentChanges.clear();
+	m_freeSpecialistCount.clear();
+	m_bonusProductionModifier.clear(); m_aGlobalBuildingCostModifier.clear();
 	m_aGlobalBuildingCommerceChanges.clear();
-	m_iNumUnitFullHeal = 0; m_iStateReligionHappiness = 0;
-	for (int y = 0; y < NUM_YIELD_TYPES; ++y) { m_aiRiverPlotYieldChange[y] = 0; m_powerYieldModifier[y] = 0; }
+	m_cond.clear(); m_counterDamage = CounterDamage();
+	m_iNumUnitFullHeal = 0; m_wellbeing[WELLBEING_STATE_RELIGION_HAPPINESS] = 0;
 
 	CvInfo::mapFrom(entity);
 	if (!entity.is<picojson::object>()) return;
@@ -77,11 +73,11 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 		if (const picojson::object* dcity = jsonChildObj(*def, "city"))
 			if (const picojson::object* cd = jsonChildObj(*dcity, "counterDamage"))
 			{
-				m_bHasCounterDamage = true;
-				m_iDamageToAttacker = jsonIdInt(*cd, "damage");
-				m_iDamageAttackerChance = jsonIdInt(*cd, "chance");
+				m_counterDamage.present = true;
+				m_counterDamage.damage = jsonIdInt(*cd, "damage");
+				m_counterDamage.chance = jsonIdInt(*cd, "chance");
 				const picojson::object* un = jsonChildObj(*cd, "units");
-				m_bDamageAllAttackers = (un == NULL);   // no `units` selector => all attackers
+				m_counterDamage.allAttackers = (un == NULL);   // no `units` selector => all attackers
 				if (un)
 				{
 					picojson::object::const_iterator uc = un->find("unitCombats");
@@ -89,53 +85,10 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 					{
 						const picojson::array& ua = uc->second.get<picojson::array>();
 						for (size_t i = 0; i < ua.size(); ++i)
-							if (ua[i].is<std::string>()) { const int uid = jsonResolveId(ua[i].get<std::string>()); if (uid >= 0) m_aiMayDamageUnitCombats.push_back(uid); }
+							if (ua[i].is<std::string>()) { const int uid = jsonResolveId(ua[i].get<std::string>()); if (uid >= 0) m_counterDamage.unitCombats.push_back(uid); }
 					}
 				}
 			}
-	// <yield>.city.plots predicate-gated flats -> the legacy per-plot-TYPE arrays. HAS_RIVER entries feed the
-	// RiverPlotYieldChanges array; IS_WATER/HAS_HILLS/HAS_PEAK/IS_LAND(|IS_FLATLANDS) feed getPlotYieldChanges keyed
-	// by PlotType. Read raw here (the modifier parser stores conditioned plots-target entries differently). Values are
-	// ×1 yields. Non-plot-type predicates (VICINITY/IS_WORKED, nested trees) are the general per-plot yield -- skipped.
-	{
-		static const char* YFAM[NUM_YIELD_TYPES] = { "food", "production", "commerce" };   // YIELD_* order
-		for (int y = 0; y < NUM_YIELD_TYPES; ++y) m_aiRiverPlotYieldChange[y] = 0;
-		YieldArray plotAccum[NUM_PLOT_TYPES];
-		for (int p = 0; p < NUM_PLOT_TYPES; ++p) plotAccum[p].fill(0);
-		for (int y = 0; y < NUM_YIELD_TYPES; ++y)
-		{
-			const picojson::object* fo = jsonChildObj(o, YFAM[y]);   if (!fo) continue;
-			const picojson::object* cyo = jsonChildObj(*fo, "city"); if (!cyo) continue;
-			const picojson::object* plo = jsonChildObj(*cyo, "plots"); if (!plo) continue;
-			picojson::object::const_iterator fit = plo->find("flat");
-			if (fit == plo->end() || !fit->second.is<picojson::array>()) continue;
-			const picojson::array& fa = fit->second.get<picojson::array>();
-			for (size_t i = 0; i < fa.size(); ++i)
-			{
-				if (!fa[i].is<picojson::object>()) continue;
-				const picojson::object& e = fa[i].get<picojson::object>();
-				picojson::object::const_iterator ve = e.find("value");
-				if (ve == e.end() || !ve->second.is<double>()) continue;
-				const int val = (int)ve->second.get<double>();
-				picojson::object::const_iterator en = e.find("enabled");
-				if (en == e.end() || !en->second.is<std::string>()) continue;   // only bare-string plot predicates
-				const std::string& pred = en->second.get<std::string>();
-				if (pred == "HAS_RIVER") { m_aiRiverPlotYieldChange[y] += val; continue; }
-				int pt = -1;
-				if      (pred == "IS_WATER")  pt = PLOT_OCEAN;
-				else if (pred == "HAS_HILLS") pt = PLOT_HILLS;
-				else if (pred == "HAS_PEAK")  pt = PLOT_PEAK;
-				else if (pred == "IS_LAND" || pred == "IS_FLATLANDS") pt = PLOT_LAND;
-				if (pt >= 0) plotAccum[pt][y] += val;
-			}
-		}
-		for (int p = 0; p < NUM_PLOT_TYPES; ++p)
-		{
-			bool bAny = false;
-			for (int y = 0; y < NUM_YIELD_TYPES && !bAny; ++y) if (plotAccum[p][y] != 0) bAny = true;
-			if (bAny) m_aPlotYieldChanges.addArrayValue((PlotTypes)p, plotAccum[p]);
-		}
-	}
 	// enables.votes may carry the non-INFOTYPE marker "FORCE_TEAM_ELIGIBLE" (legacy bForceTeamVoteEligible); the edge
 	// parser drops it as unresolvable, so read the marker raw here.
 	if (const picojson::object* en = jsonChildObj(o, "enables"))
@@ -254,101 +207,103 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 	// member reads -- per-call string-address walks are banned from getters. =====
 	{
 		const CvJsonModifiers* mods = getModifiers();
-		m_iHappinessPercentPerPopulation = JsonModScan::sum(mods, "happiness.city", CASC_UNIT_PER_POPULATION);
-		m_iHealthPercentPerPopulation    = JsonModScan::sum(mods, "health.city",    CASC_UNIT_PER_POPULATION);
-		m_iHappiness       = JsonModScan::sum(mods, "happiness.city", CASC_UNIT_FLAT);
-		m_iAreaHappiness   = JsonModScan::sum(mods, "happiness.area", CASC_UNIT_FLAT);
-		m_iGlobalHappiness = JsonModScan::sum(mods, "happiness.empire", CASC_UNIT_FLAT);
-		m_iHealth          = JsonModScan::sum(mods, "health.city", CASC_UNIT_FLAT);
-		m_iAreaHealth      = JsonModScan::sum(mods, "health.area", CASC_UNIT_FLAT);
-		m_iGlobalHealth    = JsonModScan::sum(mods, "health.empire", CASC_UNIT_FLAT);
+		m_wellbeing[WELLBEING_HAPPINESS_PER_POPULATION] = JsonModScan::sum(mods, "happiness.city", CASC_UNIT_PER_POPULATION);
+		m_wellbeing[WELLBEING_HEALTH_PER_POPULATION]    = JsonModScan::sum(mods, "health.city",    CASC_UNIT_PER_POPULATION);
+		m_wellbeing[WELLBEING_HAPPINESS]        = JsonModScan::sum(mods, "happiness.city", CASC_UNIT_FLAT);
+		m_wellbeing[WELLBEING_AREA_HAPPINESS]   = JsonModScan::sum(mods, "happiness.area", CASC_UNIT_FLAT);
+		m_wellbeing[WELLBEING_GLOBAL_HAPPINESS] = JsonModScan::sum(mods, "happiness.empire", CASC_UNIT_FLAT);
+		m_wellbeing[WELLBEING_HEALTH]           = JsonModScan::sum(mods, "health.city", CASC_UNIT_FLAT);
+		m_wellbeing[WELLBEING_AREA_HEALTH]      = JsonModScan::sum(mods, "health.area", CASC_UNIT_FLAT);
+		m_wellbeing[WELLBEING_GLOBAL_HEALTH]    = JsonModScan::sum(mods, "health.empire", CASC_UNIT_FLAT);
 		static const char* MZ_YIELD[NUM_YIELD_TYPES]   = { "food", "production", "commerce" };
 		static const char* MZ_COMM[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
 		for (int y = 0; y < NUM_YIELD_TYPES; ++y)
 		{
-			m_aiYieldChange[y]             = JsonModScan::sum(mods, std::string(MZ_YIELD[y]) + ".city", CASC_UNIT_FLAT);
-			m_aiYieldModifier[y]           = JsonModScan::sum(mods, std::string(MZ_YIELD[y]) + ".city", CASC_UNIT_PERCENT);
-			m_aiAreaYieldModifier[y]       = JsonModScan::sum(mods, std::string(MZ_YIELD[y]) + ".area", CASC_UNIT_PERCENT);
-			m_aiGlobalYieldModifier[y]     = JsonModScan::sum(mods, std::string(MZ_YIELD[y]) + ".empire", CASC_UNIT_PERCENT);
-			m_aiGlobalSeaPlotYieldChange[y] = JsonModScan::sumAll(mods, std::string(MZ_YIELD[y]) + ".empire.plots", CASC_UNIT_FLAT);
+			m_flatYields[y]             = JsonModScan::sum(mods, std::string(MZ_YIELD[y]) + ".city", CASC_UNIT_FLAT);
+			m_yieldModifiers[y]           = JsonModScan::sum(mods, std::string(MZ_YIELD[y]) + ".city", CASC_UNIT_PERCENT);
+			m_areaYieldModifiers[y]       = JsonModScan::sum(mods, std::string(MZ_YIELD[y]) + ".area", CASC_UNIT_PERCENT);
+			m_globalYieldModifiers[y]     = JsonModScan::sum(mods, std::string(MZ_YIELD[y]) + ".empire", CASC_UNIT_PERCENT);
+			m_seaPlotYields[y] = JsonModScan::sumAll(mods, std::string(MZ_YIELD[y]) + ".empire.plots", CASC_UNIT_FLAT);
 		}
 		for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
 		{
-			m_aiCommerceChange[c]          = JsonModScan::sum(mods, std::string(MZ_COMM[c]) + ".city", CASC_UNIT_FLAT);
-			m_aiCommerceModifier[c]        = JsonModScan::sum(mods, std::string(MZ_COMM[c]) + ".city", CASC_UNIT_PERCENT);
-			m_aiGlobalCommerceModifier[c]  = JsonModScan::sum(mods, std::string(MZ_COMM[c]) + ".empire", CASC_UNIT_PERCENT);
-			m_aiSpecialistExtraCommerce[c] = JsonModScan::sum(mods, std::string(MZ_COMM[c]) + ".empire.specialist", CASC_UNIT_PER_SPECIALIST);
-			m_aiCommerceHappiness[c]       = JsonModScan::sum(mods, std::string("commerceHappiness.city.") + MZ_COMM[c], CASC_UNIT_FLAT);
+			m_flatCommerce[c]          = JsonModScan::sum(mods, std::string(MZ_COMM[c]) + ".city", CASC_UNIT_FLAT);
+			m_commerceModifiers[c]        = JsonModScan::sum(mods, std::string(MZ_COMM[c]) + ".city", CASC_UNIT_PERCENT);
+			m_globalCommerceModifiers[c]  = JsonModScan::sum(mods, std::string(MZ_COMM[c]) + ".empire", CASC_UNIT_PERCENT);
+			m_specialistCommerce[c] = JsonModScan::sum(mods, std::string(MZ_COMM[c]) + ".empire.specialist", CASC_UNIT_PER_SPECIALIST);
+			m_commerceHappiness[c]       = JsonModScan::sum(mods, std::string("commerceHappiness.city.") + MZ_COMM[c], CASC_UNIT_FLAT);
 			std::map<std::string, int>::const_iterator dt = commerceDoubleTime.find(MZ_COMM[c]);
-			m_aiCommerceChangeDoubleTime[c] = dt != commerceDoubleTime.end() ? dt->second : 0;
+			m_commerceDoubleTime[c] = dt != commerceDoubleTime.end() ? dt->second : 0;
 			std::map<std::string, int>::const_iterator sr = stateReligionCommerce.find(MZ_COMM[c]);
-			m_aiStateReligionCommerce[c]    = sr != stateReligionCommerce.end() ? sr->second : 0;
+			m_stateReligionCommerce[c]    = sr != stateReligionCommerce.end() ? sr->second : 0;
 		}
-		m_iEnemyWarWearinessModifier = JsonModScan::sum(mods, "warWeariness.city.enemy", CASC_UNIT_PERCENT);
-		m_iOccupationTimeModifier    = JsonModScan::sum(mods, "occupationTime.city", CASC_UNIT_PERCENT);
-		m_iHealRateChange            = JsonModScan::sum(mods, "healing.city", CASC_UNIT_FLAT);
-		m_iFoodKept                  = JsonModScan::sum(mods, "foodKept.city", CASC_UNIT_PERCENT);
-		m_iGreatPeopleRateChange     = JsonModScan::sum(mods, "greatPeopleRate.city", CASC_UNIT_FLAT);
-		m_iGreatPeopleRateModifier   = JsonModScan::sum(mods, "greatPeopleRate.city", CASC_UNIT_PERCENT);
-		m_iGlobalGreatPeopleRateModifier = JsonModScan::sum(mods, "greatPeopleRate.empire", CASC_UNIT_PERCENT);
-		m_iGreatGeneralRateModifier  = JsonModScan::sum(mods, "greatGeneralRate.city", CASC_UNIT_PERCENT);
-		m_iDomesticGreatGeneralRateModifier = JsonModScan::sum(mods, "greatGeneralRate.city.domestic", CASC_UNIT_PERCENT);
-		m_iMaintenanceModifier       = JsonModScan::sum(mods, "maintenance.city", CASC_UNIT_PERCENT);
-		m_iGlobalMaintenanceModifier = JsonModScan::sum(mods, "maintenance.empire", CASC_UNIT_PERCENT);
-		m_iAreaMaintenanceModifier   = JsonModScan::sum(mods, "maintenance.area", CASC_UNIT_PERCENT);
-		m_iOtherAreaMaintenanceModifier = JsonModScan::sum(mods, "maintenance.area.otherArea", CASC_UNIT_PERCENT);
-		m_iDistanceMaintenanceModifier  = JsonModScan::sum(mods, "maintenance.empire.distance", CASC_UNIT_PERCENT);
-		m_iNumCitiesMaintenanceModifier = JsonModScan::sum(mods, "maintenance.empire.numCities", CASC_UNIT_PERCENT);
-		m_iCoastalDistanceMaintenanceModifier = JsonModScan::sum(mods, "maintenance.empire.coastalDistance", CASC_UNIT_PERCENT);
-		m_iConnectedCityMaintenanceModifier   = JsonModScan::sum(mods, "maintenance.empire.connectedCity", CASC_UNIT_PERCENT);
-		m_iInflationModifier         = JsonModScan::sum(mods, "inflation.empire", CASC_UNIT_PERCENT);
-		m_iWarWearinessModifier      = JsonModScan::sum(mods, "warWeariness.city", CASC_UNIT_PERCENT);
-		m_iGlobalWarWearinessModifier = JsonModScan::sum(mods, "warWeariness.empire", CASC_UNIT_PERCENT);
-		m_iHurryCostModifier         = JsonModScan::sum(mods, "hurryCost.city", CASC_UNIT_PERCENT);
-		m_iGlobalHurryModifier       = JsonModScan::sum(mods, "hurryCost.empire", CASC_UNIT_PERCENT);
-		m_iHurryAngerModifier        = JsonModScan::sum(mods, "hurryAnger.city", CASC_UNIT_PERCENT);
-		m_iMilitaryProductionModifier = JsonModScan::sum(mods, "buildRate.city.military", CASC_UNIT_PERCENT);
-		m_iSpaceProductionModifier   = JsonModScan::sum(mods, "buildRate.city.space", CASC_UNIT_PERCENT);
-		m_iGlobalSpaceProductionModifier = JsonModScan::sum(mods, "buildRate.empire.space", CASC_UNIT_PERCENT);
-		m_iWorkerSpeedModifier       = JsonModScan::sum(mods, "workRate.empire", CASC_UNIT_PERCENT);
-		m_iTradeRoutes               = JsonModScan::sum(mods, "tradeRoutes.city", CASC_UNIT_FLAT);
-		m_iCoastalTradeRoutes        = JsonModScan::sum(mods, "tradeRoutes.empire.coastal", CASC_UNIT_FLAT);
-		m_iGlobalTradeRoutes         = JsonModScan::sum(mods, "tradeRoutes.empire", CASC_UNIT_FLAT);
-		m_iWorldTradeRoutes          = JsonModScan::sum(mods, "tradeRoutes.world", CASC_UNIT_FLAT);
-		m_iTradeRouteModifier        = JsonModScan::sum(mods, "tradeRoutes.city.modifier", CASC_UNIT_PERCENT);
-		m_iForeignTradeRouteModifier = JsonModScan::sum(mods, "tradeRoutes.city.foreignModifier", CASC_UNIT_PERCENT);
-		m_iFreeExperience            = JsonModScan::sum(mods, "experience.city", CASC_UNIT_FLAT);
-		m_iGlobalFreeExperience      = JsonModScan::sum(mods, "experience.empire", CASC_UNIT_FLAT);
-		m_iFreeSpecialist            = JsonModScan::sum(mods, "freeSpecialists.city.any", CASC_UNIT_COUNT);
-		m_iAreaFreeSpecialist        = JsonModScan::sum(mods, "freeSpecialists.area.any", CASC_UNIT_COUNT);
-		m_iGlobalFreeSpecialist      = JsonModScan::sum(mods, "freeSpecialists.empire.any", CASC_UNIT_COUNT);
-		m_iAnarchyModifier           = JsonModScan::sum(mods, "anarchy.city", CASC_UNIT_PERCENT);
-		m_iGoldenAgeModifier         = JsonModScan::sum(mods, "goldenAge.empire", CASC_UNIT_PERCENT);
-		m_iPopulationgrowthratepercentage       = JsonModScan::sum(mods, "populationGrowthRate.city", CASC_UNIT_PERCENT);
-		m_iGlobalPopulationgrowthratepercentage = JsonModScan::sum(mods, "populationGrowthRate.empire", CASC_UNIT_PERCENT);
-		m_iRevIdxLocal               = JsonModScan::sum(mods, "revolution.city", CASC_UNIT_FLAT);
-		m_iRevIdxNational            = JsonModScan::sum(mods, "revolution.empire", CASC_UNIT_FLAT);
-		m_iRevIdxDistanceModifier    = JsonModScan::sum(mods, "revolution.city.distanceModifier", CASC_UNIT_PERCENT);
-		m_iInsidiousness             = JsonModScan::sum(mods, "copsAndRobbers.city.insidiousness", CASC_UNIT_FLAT);
-		m_iInvestigation             = JsonModScan::sum(mods, "copsAndRobbers.city.investigation", CASC_UNIT_FLAT);
-		m_iEspionageDefenseModifier  = JsonModScan::sum(mods, "espionageDefense.city", CASC_UNIT_FLAT);
-		m_iUnitUpgradePriceModifier  = JsonModScan::sum(mods, "unitUpgradePrice.empire", CASC_UNIT_PERCENT);
-		m_iDefenseModifier           = JsonModScan::sum(mods, "defense.city.amount", CASC_UNIT_PERCENT);
-		m_iBombardDefenseModifier    = JsonModScan::sum(mods, "defense.city.bombardDefense", CASC_UNIT_PERCENT);
-		m_iAllCityDefenseModifier    = JsonModScan::sum(mods, "defense.empire.amount", CASC_UNIT_PERCENT);
-		m_iNukeModifier              = JsonModScan::sum(mods, "defense.city.nukeDefense", CASC_UNIT_PERCENT);
-		m_iAirModifier               = JsonModScan::sum(mods, "defense.city.airDefense", CASC_UNIT_PERCENT);
-		m_iMinDefense                = JsonModScan::sum(mods, "defense.city.min", CASC_UNIT_FLAT);
-		m_iNoEntryDefenseLevel       = JsonModScan::sum(mods, "defense.city.noEntryLevel", CASC_UNIT_FLAT);
-		m_iLocalDynamicDefense       = JsonModScan::sum(mods, "defense.city.dynamicDefense", CASC_UNIT_FLAT);
-		m_iRiverDefensePenalty       = JsonModScan::sum(mods, "defense.city.riverDefensePenalty", CASC_UNIT_FLAT);
-		m_iBuildingDefenseRecoverySpeedModifier = JsonModScan::sum(mods, "defense.city.buildingDefenseRecovery", CASC_UNIT_PERCENT);
-		m_iCityDefenseRecoverySpeedModifier     = JsonModScan::sum(mods, "defense.city.cityDefenseRecovery", CASC_UNIT_PERCENT);
-		m_iAdjacentDamagePercent     = JsonModScan::sum(mods, "defense.city.adjacentDamage", CASC_UNIT_PERCENT);
-		m_iNationalCaptureProbabilityModifier = JsonModScan::sum(mods, "cityCapture.empire.probability", CASC_UNIT_PERCENT);
-		m_iNationalCaptureResistanceModifier  = JsonModScan::sum(mods, "cityCapture.empire.resistance", CASC_UNIT_PERCENT);
-		m_iLocalCaptureProbabilityModifier    = JsonModScan::sum(mods, "cityCapture.city.probability", CASC_UNIT_PERCENT);
-		m_iLocalCaptureResistanceModifier     = JsonModScan::sum(mods, "cityCapture.city.resistance", CASC_UNIT_PERCENT);
+		// --- grouped SCALAR population (patterns.md coherent surface): one direct slot per string, x100-native;
+		//     replaces the scattered m_i* assignments. Read via getDefense(DEFENSE_*)/getScalar(SCALAR_*)/... ---
+		m_defense[DEFENSE_AMOUNT] = JsonModScan::sum(mods, "defense.city.amount", CASC_UNIT_PERCENT);
+		m_defense[DEFENSE_BOMBARD] = JsonModScan::sum(mods, "defense.city.bombardDefense", CASC_UNIT_PERCENT);
+		m_defense[DEFENSE_ALL_CITY] = JsonModScan::sum(mods, "defense.empire.amount", CASC_UNIT_PERCENT);
+		m_defense[DEFENSE_NUKE] = JsonModScan::sum(mods, "defense.city.nukeDefense", CASC_UNIT_PERCENT);
+		m_defense[DEFENSE_AIR] = JsonModScan::sum(mods, "defense.city.airDefense", CASC_UNIT_PERCENT);
+		m_defense[DEFENSE_MIN] = JsonModScan::sum(mods, "defense.city.min", CASC_UNIT_FLAT);
+		m_defense[DEFENSE_NO_ENTRY_LEVEL] = JsonModScan::sum(mods, "defense.city.noEntryLevel", CASC_UNIT_FLAT);
+		m_defense[DEFENSE_LOCAL_DYNAMIC] = JsonModScan::sum(mods, "defense.city.dynamicDefense", CASC_UNIT_FLAT);
+		m_defense[DEFENSE_RIVER_PENALTY] = JsonModScan::sum(mods, "defense.city.riverDefensePenalty", CASC_UNIT_FLAT);
+		m_defense[DEFENSE_BUILDING_RECOVERY] = JsonModScan::sum(mods, "defense.city.buildingDefenseRecovery", CASC_UNIT_PERCENT);
+		m_defense[DEFENSE_CITY_RECOVERY] = JsonModScan::sum(mods, "defense.city.cityDefenseRecovery", CASC_UNIT_PERCENT);
+		m_defense[DEFENSE_ADJACENT_DAMAGE] = JsonModScan::sum(mods, "defense.city.adjacentDamage", CASC_UNIT_PERCENT);
+		m_maintenance[MAINTENANCE_CITY] = JsonModScan::sum(mods, "maintenance.city", CASC_UNIT_PERCENT);
+		m_maintenance[MAINTENANCE_GLOBAL] = JsonModScan::sum(mods, "maintenance.empire", CASC_UNIT_PERCENT);
+		m_maintenance[MAINTENANCE_AREA] = JsonModScan::sum(mods, "maintenance.area", CASC_UNIT_PERCENT);
+		m_maintenance[MAINTENANCE_OTHER_AREA] = JsonModScan::sum(mods, "maintenance.area.otherArea", CASC_UNIT_PERCENT);
+		m_maintenance[MAINTENANCE_DISTANCE] = JsonModScan::sum(mods, "maintenance.empire.distance", CASC_UNIT_PERCENT);
+		m_maintenance[MAINTENANCE_NUM_CITIES] = JsonModScan::sum(mods, "maintenance.empire.numCities", CASC_UNIT_PERCENT);
+		m_maintenance[MAINTENANCE_COASTAL_DISTANCE] = JsonModScan::sum(mods, "maintenance.empire.coastalDistance", CASC_UNIT_PERCENT);
+		m_maintenance[MAINTENANCE_CONNECTED_CITY] = JsonModScan::sum(mods, "maintenance.empire.connectedCity", CASC_UNIT_PERCENT);
+		m_tradeRoutes[TRADE_ROUTE_CITY] = JsonModScan::sum(mods, "tradeRoutes.city", CASC_UNIT_FLAT);
+		m_tradeRoutes[TRADE_ROUTE_COASTAL] = JsonModScan::sum(mods, "tradeRoutes.empire.coastal", CASC_UNIT_FLAT);
+		m_tradeRoutes[TRADE_ROUTE_GLOBAL] = JsonModScan::sum(mods, "tradeRoutes.empire", CASC_UNIT_FLAT);
+		m_tradeRoutes[TRADE_ROUTE_WORLD] = JsonModScan::sum(mods, "tradeRoutes.world", CASC_UNIT_FLAT);
+		m_tradeRoutes[TRADE_ROUTE_MODIFIER] = JsonModScan::sum(mods, "tradeRoutes.city.modifier", CASC_UNIT_PERCENT);
+		m_tradeRoutes[TRADE_ROUTE_FOREIGN_MODIFIER] = JsonModScan::sum(mods, "tradeRoutes.city.foreignModifier", CASC_UNIT_PERCENT);
+		m_greatPeople[GREAT_PEOPLE_RATE_CHANGE] = JsonModScan::sum(mods, "greatPeopleRate.city", CASC_UNIT_FLAT);
+		m_greatPeople[GREAT_PEOPLE_RATE_MODIFIER] = JsonModScan::sum(mods, "greatPeopleRate.city", CASC_UNIT_PERCENT);
+		m_greatPeople[GREAT_PEOPLE_GLOBAL_RATE_MODIFIER] = JsonModScan::sum(mods, "greatPeopleRate.empire", CASC_UNIT_PERCENT);
+		m_greatPeople[GREAT_GENERAL_RATE] = JsonModScan::sum(mods, "greatGeneralRate.city", CASC_UNIT_PERCENT);
+		m_greatPeople[GREAT_GENERAL_DOMESTIC_RATE] = JsonModScan::sum(mods, "greatGeneralRate.city.domestic", CASC_UNIT_PERCENT);
+		m_warWeariness[WAR_WEARINESS_CITY] = JsonModScan::sum(mods, "warWeariness.city", CASC_UNIT_PERCENT);
+		m_warWeariness[WAR_WEARINESS_GLOBAL] = JsonModScan::sum(mods, "warWeariness.empire", CASC_UNIT_PERCENT);
+		m_warWeariness[WAR_WEARINESS_ENEMY] = JsonModScan::sum(mods, "warWeariness.city.enemy", CASC_UNIT_PERCENT);
+		m_hurry[HURRY_COST] = JsonModScan::sum(mods, "hurryCost.city", CASC_UNIT_PERCENT);
+		m_hurry[HURRY_GLOBAL_COST] = JsonModScan::sum(mods, "hurryCost.empire", CASC_UNIT_PERCENT);
+		m_hurry[HURRY_ANGER] = JsonModScan::sum(mods, "hurryAnger.city", CASC_UNIT_PERCENT);
+		m_capture[CITY_CAPTURE_NATIONAL_PROBABILITY] = JsonModScan::sum(mods, "cityCapture.empire.probability", CASC_UNIT_PERCENT);
+		m_capture[CITY_CAPTURE_NATIONAL_RESISTANCE] = JsonModScan::sum(mods, "cityCapture.empire.resistance", CASC_UNIT_PERCENT);
+		m_capture[CITY_CAPTURE_LOCAL_PROBABILITY] = JsonModScan::sum(mods, "cityCapture.city.probability", CASC_UNIT_PERCENT);
+		m_capture[CITY_CAPTURE_LOCAL_RESISTANCE] = JsonModScan::sum(mods, "cityCapture.city.resistance", CASC_UNIT_PERCENT);
+		m_revolution[REVOLUTION_LOCAL] = JsonModScan::sum(mods, "revolution.city", CASC_UNIT_FLAT);
+		m_revolution[REVOLUTION_NATIONAL] = JsonModScan::sum(mods, "revolution.empire", CASC_UNIT_FLAT);
+		m_revolution[REVOLUTION_DISTANCE_MODIFIER] = JsonModScan::sum(mods, "revolution.city.distanceModifier", CASC_UNIT_PERCENT);
+		m_buildRate[BUILD_RATE_MILITARY] = JsonModScan::sum(mods, "buildRate.city.military", CASC_UNIT_PERCENT);
+		m_buildRate[BUILD_RATE_SPACE] = JsonModScan::sum(mods, "buildRate.city.space", CASC_UNIT_PERCENT);
+		m_buildRate[BUILD_RATE_GLOBAL_SPACE] = JsonModScan::sum(mods, "buildRate.empire.space", CASC_UNIT_PERCENT);
+		m_scalars[SCALAR_HEAL_RATE] = JsonModScan::sum(mods, "healing.city", CASC_UNIT_FLAT);
+		m_scalars[SCALAR_FOOD_KEPT] = JsonModScan::sum(mods, "foodKept.city", CASC_UNIT_PERCENT);
+		m_scalars[SCALAR_ANARCHY] = JsonModScan::sum(mods, "anarchy.city", CASC_UNIT_PERCENT);
+		m_scalars[SCALAR_GOLDEN_AGE] = JsonModScan::sum(mods, "goldenAge.empire", CASC_UNIT_PERCENT);
+		m_scalars[SCALAR_INFLATION] = JsonModScan::sum(mods, "inflation.empire", CASC_UNIT_PERCENT);
+		m_scalars[SCALAR_OCCUPATION_TIME] = JsonModScan::sum(mods, "occupationTime.city", CASC_UNIT_PERCENT);
+		m_scalars[SCALAR_WORKER_SPEED] = JsonModScan::sum(mods, "workRate.empire", CASC_UNIT_PERCENT);
+		m_scalars[SCALAR_POP_GROWTH] = JsonModScan::sum(mods, "populationGrowthRate.city", CASC_UNIT_PERCENT);
+		m_scalars[SCALAR_GLOBAL_POP_GROWTH] = JsonModScan::sum(mods, "populationGrowthRate.empire", CASC_UNIT_PERCENT);
+		m_scalars[SCALAR_ESPIONAGE_DEFENSE] = JsonModScan::sum(mods, "espionageDefense.city", CASC_UNIT_FLAT);
+		m_scalars[SCALAR_UNIT_UPGRADE_PRICE] = JsonModScan::sum(mods, "unitUpgradePrice.empire", CASC_UNIT_PERCENT);
+		m_scalars[SCALAR_FREE_EXPERIENCE] = JsonModScan::sum(mods, "experience.city", CASC_UNIT_FLAT);
+		m_scalars[SCALAR_GLOBAL_FREE_EXPERIENCE] = JsonModScan::sum(mods, "experience.empire", CASC_UNIT_FLAT);
+		m_scalars[SCALAR_FREE_SPECIALIST] = JsonModScan::sum(mods, "freeSpecialists.city.any", CASC_UNIT_COUNT);
+		m_scalars[SCALAR_AREA_FREE_SPECIALIST] = JsonModScan::sum(mods, "freeSpecialists.area.any", CASC_UNIT_COUNT);
+		m_scalars[SCALAR_GLOBAL_FREE_SPECIALIST] = JsonModScan::sum(mods, "freeSpecialists.empire.any", CASC_UNIT_COUNT);
+		m_scalars[SCALAR_INSIDIOUSNESS] = JsonModScan::sum(mods, "copsAndRobbers.city.insidiousness", CASC_UNIT_FLAT);
+		m_scalars[SCALAR_INVESTIGATION] = JsonModScan::sum(mods, "copsAndRobbers.city.investigation", CASC_UNIT_FLAT);
 		m_bGrantsGoldenAge           = grantFlag("goldenAge");
 		// The first-build provisions. These were per-call string-keyed reads straight off getGrants() on the
 		// getter -- the shape [DEC-materialize-at-mapfrom] bans -- and they sit in the building VALUATION loops
@@ -368,122 +323,38 @@ void CvBuildingInfo::mapFrom(const picojson::value& entity)
 // mapFrom MATERIALIZATION pass (JsonModScan) recovers each legacy field by condition shape ONCE at load. Getters
 // never walk string addresses.
 
-int CvBuildingInfo::getHappiness() const       { return m_iHappiness; }
-int CvBuildingInfo::getAreaHappiness() const   { return m_iAreaHappiness; }
-int CvBuildingInfo::getGlobalHappiness() const { return m_iGlobalHappiness; }
-int CvBuildingInfo::getHealth() const          { return m_iHealth; }
-int CvBuildingInfo::getAreaHealth() const      { return m_iAreaHealth; }
-int CvBuildingInfo::getGlobalHealth() const    { return m_iGlobalHealth; }
 
-int CvBuildingInfo::getYieldChange(int i) const             { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiYieldChange[i] : 0; }
-int CvBuildingInfo::getYieldModifier(int i) const           { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiYieldModifier[i] : 0; }
-int CvBuildingInfo::getAreaYieldModifier(int i) const       { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiAreaYieldModifier[i] : 0; }
-int CvBuildingInfo::getGlobalYieldModifier(int i) const     { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiGlobalYieldModifier[i] : 0; }
-int CvBuildingInfo::getGlobalSeaPlotYieldChange(int i) const{ return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiGlobalSeaPlotYieldChange[i] : 0; }
+int CvBuildingInfo::getFlatYield(int i) const             { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_flatYields[i] : 0; }
+int CvBuildingInfo::getYieldModifier(int i) const           { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_yieldModifiers[i] : 0; }
+int CvBuildingInfo::getAreaYieldModifier(int i) const       { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_areaYieldModifiers[i] : 0; }
+int CvBuildingInfo::getGlobalYieldModifier(int i) const     { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_globalYieldModifiers[i] : 0; }
+int CvBuildingInfo::getSeaPlotYield(int i) const{ return (i >= 0 && i < NUM_YIELD_TYPES) ? m_seaPlotYields[i] : 0; }
 
-int CvBuildingInfo::getCommerceChange(int i) const          { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_aiCommerceChange[i] : 0; }
-int CvBuildingInfo::getCommerceModifier(int i) const        { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_aiCommerceModifier[i] : 0; }
-int CvBuildingInfo::getGlobalCommerceModifier(int i) const  { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_aiGlobalCommerceModifier[i] : 0; }
-int CvBuildingInfo::getSpecialistExtraCommerce(int i) const { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_aiSpecialistExtraCommerce[i] : 0; }
+int CvBuildingInfo::getFlatCommerce(int i) const          { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_flatCommerce[i] : 0; }
+int CvBuildingInfo::getCommerceModifier(int i) const        { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_commerceModifiers[i] : 0; }
+int CvBuildingInfo::getGlobalCommerceModifier(int i) const  { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_globalCommerceModifiers[i] : 0; }
+int CvBuildingInfo::getSpecialistCommerce(int i) const { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_specialistCommerce[i] : 0; }
 
-int CvBuildingInfo::getEnemyWarWearinessModifier() const { return m_iEnemyWarWearinessModifier; }
-int CvBuildingInfo::getOccupationTimeModifier() const    { return m_iOccupationTimeModifier; }
 
-int CvBuildingInfo::getHealRateChange() const               { return m_iHealRateChange; }
-int CvBuildingInfo::getFoodKept() const                     { return m_iFoodKept; }
-int CvBuildingInfo::getGreatPeopleRateChange() const        { return m_iGreatPeopleRateChange; }
-int CvBuildingInfo::getGreatPeopleRateModifier() const      { return m_iGreatPeopleRateModifier; }
-int CvBuildingInfo::getGlobalGreatPeopleRateModifier() const{ return m_iGlobalGreatPeopleRateModifier; }
-int CvBuildingInfo::getGreatGeneralRateModifier() const     { return m_iGreatGeneralRateModifier; }
-int CvBuildingInfo::getDomesticGreatGeneralRateModifier() const { return m_iDomesticGreatGeneralRateModifier; }
-int CvBuildingInfo::getMaintenanceModifier() const          { return m_iMaintenanceModifier; }
-int CvBuildingInfo::getGlobalMaintenanceModifier() const    { return m_iGlobalMaintenanceModifier; }
-int CvBuildingInfo::getAreaMaintenanceModifier() const      { return m_iAreaMaintenanceModifier; }
-int CvBuildingInfo::getOtherAreaMaintenanceModifier() const { return m_iOtherAreaMaintenanceModifier; }
-int CvBuildingInfo::getDistanceMaintenanceModifier() const  { return m_iDistanceMaintenanceModifier; }
-int CvBuildingInfo::getNumCitiesMaintenanceModifier() const { return m_iNumCitiesMaintenanceModifier; }
-int CvBuildingInfo::getCoastalDistanceMaintenanceModifier() const { return m_iCoastalDistanceMaintenanceModifier; }
-int CvBuildingInfo::getConnectedCityMaintenanceModifier() const { return m_iConnectedCityMaintenanceModifier; }
-int CvBuildingInfo::getInflationModifier() const            { return m_iInflationModifier; }
-int CvBuildingInfo::getWarWearinessModifier() const         { return m_iWarWearinessModifier; }
-int CvBuildingInfo::getGlobalWarWearinessModifier() const   { return m_iGlobalWarWearinessModifier; }
-int CvBuildingInfo::getHurryCostModifier() const            { return m_iHurryCostModifier; }
-int CvBuildingInfo::getGlobalHurryModifier() const          { return m_iGlobalHurryModifier; }
-int CvBuildingInfo::getHurryAngerModifier() const           { return m_iHurryAngerModifier; }
-int CvBuildingInfo::getMilitaryProductionModifier() const   { return m_iMilitaryProductionModifier; }
-int CvBuildingInfo::getSpaceProductionModifier() const      { return m_iSpaceProductionModifier; }
-int CvBuildingInfo::getGlobalSpaceProductionModifier() const{ return m_iGlobalSpaceProductionModifier; }
-int CvBuildingInfo::getWorkerSpeedModifier() const          { return m_iWorkerSpeedModifier; }
-int CvBuildingInfo::getTradeRoutes() const                  { return m_iTradeRoutes; }
-int CvBuildingInfo::getCoastalTradeRoutes() const           { return m_iCoastalTradeRoutes; }
-int CvBuildingInfo::getGlobalTradeRoutes() const            { return m_iGlobalTradeRoutes; }
-int CvBuildingInfo::getWorldTradeRoutes() const             { return m_iWorldTradeRoutes; }
-int CvBuildingInfo::getTradeRouteModifier() const           { return m_iTradeRouteModifier; }
-int CvBuildingInfo::getForeignTradeRouteModifier() const    { return m_iForeignTradeRouteModifier; }
-int CvBuildingInfo::getFreeExperience() const               { return m_iFreeExperience; }
-int CvBuildingInfo::getGlobalFreeExperience() const         { return m_iGlobalFreeExperience; }
-int CvBuildingInfo::getFreeSpecialist() const               { return m_iFreeSpecialist; }
-int CvBuildingInfo::getAreaFreeSpecialist() const           { return m_iAreaFreeSpecialist; }
-int CvBuildingInfo::getGlobalFreeSpecialist() const         { return m_iGlobalFreeSpecialist; }
-int CvBuildingInfo::getAnarchyModifier() const              { return m_iAnarchyModifier; }
-int CvBuildingInfo::getGoldenAgeModifier() const            { return m_iGoldenAgeModifier; }
-int CvBuildingInfo::getPopulationgrowthratepercentage() const       { return m_iPopulationgrowthratepercentage; }
-int CvBuildingInfo::getGlobalPopulationgrowthratepercentage() const { return m_iGlobalPopulationgrowthratepercentage; }
-int CvBuildingInfo::getRevIdxLocal() const                  { return m_iRevIdxLocal; }
-int CvBuildingInfo::getRevIdxNational() const               { return m_iRevIdxNational; }
-int CvBuildingInfo::getRevIdxDistanceModifier() const       { return m_iRevIdxDistanceModifier; }
-int CvBuildingInfo::getInsidiousness() const                { return m_iInsidiousness; }
-int CvBuildingInfo::getInvestigation() const                { return m_iInvestigation; }
-int CvBuildingInfo::getEspionageDefenseModifier() const     { return m_iEspionageDefenseModifier; }
-int CvBuildingInfo::getUnitUpgradePriceModifier() const     { return m_iUnitUpgradePriceModifier; }
-int CvBuildingInfo::getDefenseModifier() const              { return m_iDefenseModifier; }
-int CvBuildingInfo::getBombardDefenseModifier() const       { return m_iBombardDefenseModifier; }
-int CvBuildingInfo::getAllCityDefenseModifier() const       { return m_iAllCityDefenseModifier; }
-int CvBuildingInfo::getNukeModifier() const                 { return m_iNukeModifier; }
-int CvBuildingInfo::getAirModifier() const                  { return m_iAirModifier; }
-// GAMEOPTION_COMBAT_REALISTIC_SIEGE-gated (archive mirror -- SourceArchive/Infos/CvBuildingInfo.cpp:695/:880)
-int CvBuildingInfo::getMinDefense() const
-{ return GC.getGame().isOption(GAMEOPTION_COMBAT_REALISTIC_SIEGE) ? m_iMinDefense : 0; }
-int CvBuildingInfo::getNoEntryDefenseLevel() const
-{ return GC.getGame().isOption(GAMEOPTION_COMBAT_REALISTIC_SIEGE) ? m_iNoEntryDefenseLevel : 0; }
-int CvBuildingInfo::getLocalDynamicDefense() const          { return m_iLocalDynamicDefense; }
-int CvBuildingInfo::getRiverDefensePenalty() const          { return m_iRiverDefensePenalty; }
-int CvBuildingInfo::getBuildingDefenseRecoverySpeedModifier() const { return m_iBuildingDefenseRecoverySpeedModifier; }
-int CvBuildingInfo::getCityDefenseRecoverySpeedModifier() const     { return m_iCityDefenseRecoverySpeedModifier; }
-int CvBuildingInfo::getDamageAttackerChance() const         { return m_iDamageAttackerChance; }   // defense.city.counterDamage.chance (bespoke object, parsed in mapFrom)
-int CvBuildingInfo::getDamageToAttacker() const             { return m_iDamageToAttacker; }        // defense.city.counterDamage.damage
-int CvBuildingInfo::getAdjacentDamagePercent() const        { return m_iAdjacentDamagePercent; }
-int CvBuildingInfo::getNationalCaptureProbabilityModifier() const { return m_iNationalCaptureProbabilityModifier; }
-int CvBuildingInfo::getNationalCaptureResistanceModifier() const  { return m_iNationalCaptureResistanceModifier; }
-int CvBuildingInfo::getLocalCaptureProbabilityModifier() const    { return m_iLocalCaptureProbabilityModifier; }
-int CvBuildingInfo::getLocalCaptureResistanceModifier() const     { return m_iLocalCaptureResistanceModifier; }
 // commerceHappiness.city.<commerce>.flat -- happiness gained per unit of each commerce produced (grouped family).
 int CvBuildingInfo::getCommerceHappiness(int i) const
-{ return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_aiCommerceHappiness[i] : 0; }
+{ return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_commerceHappiness[i] : 0; }
 
 // commerce double-time / state-religion commerce -- materialized positional arrays (REAL data).
 // CULTURE branch mirrors the archive's GAMEOPTION_CULTURE_EQUILIBRIUM default (SourceArchive :238): an
 // UNAUTHORED double-time block reads 1000 for culture under the option (NULL-array legacy semantics), so every
 // building's culture halves at the equilibrium pace; an authored block keeps its values.
-int CvBuildingInfo::getCommerceChangeDoubleTime(int i) const
+int CvBuildingInfo::getCommerceDoubleTime(int i) const
 {
 	if (i < 0 || i >= NUM_COMMERCE_TYPES) return 0;
 	if (i == COMMERCE_CULTURE && commerceDoubleTime.empty() && GC.getGame().isOption(GAMEOPTION_CULTURE_EQUILIBRIUM))
 		return 1000;
-	return m_aiCommerceChangeDoubleTime[i];
+	return m_commerceDoubleTime[i];
 }
 int CvBuildingInfo::getStateReligionCommerce(int i) const
-{ return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_aiStateReligionCommerce[i] : 0; }
+{ return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_stateReligionCommerce[i] : 0; }
 
 // commerce sliders this building unlocks (`capabilities` block -- canSet{Science|Culture|Espionage}Rate; gold has no
-// slider). Mirror of CvTechInfo::isCommerceFlexible (capabilities.md key mapping) -- REAL data, O(1) id bit tests.
-bool CvBuildingInfo::isCommerceFlexible(int i) const
-{
-	static int s_r = -1, s_c = -1, s_e = -1;
-	return (i == COMMERCE_RESEARCH  && m_capabilities.hasKey(s_r, CLSD_CAPABILITY, "canSetScienceRate"))
-	    || (i == COMMERCE_CULTURE   && m_capabilities.hasKey(s_c, CLSD_CAPABILITY, "canSetCultureRate"))
-	    || (i == COMMERCE_ESPIONAGE && m_capabilities.hasKey(s_e, CLSD_CAPABILITY, "canSetEspionageRate"));
-}
 
 // FoundsCorporation -> the building's `enables.corporations` edge (curate_building.py, owner 2026-07-01) -- REAL data.
 int CvBuildingInfo::getFoundsCorporation() const
@@ -516,70 +387,6 @@ const python::list CvBuildingInfo::cyGetGlobalBuildingCommerceChanges() const
 	foreach_(const BuildingCommerce& pair, m_aGlobalBuildingCommerceChanges)
 		for (int i = 0; i < NUM_COMMERCE_TYPES; i++)
 			if (pair.second[i] != 0) pyList.append(BuildingCommerceChange(pair.first, (CommerceTypes)i, pair.second[i]));
-	return pyList;
-}
-const python::list CvBuildingInfo::cyGetTechYieldChanges100() const
-{
-	python::list pyList = python::list();
-	foreach_(const TechArray& pair, m_techYieldChanges)
-		for (int i = 0; i < NUM_YIELD_TYPES; i++)
-			if (pair.second[i] != 0) pyList.append(TechYieldChange(pair.first, (YieldTypes)i, pair.second[i]));
-	return pyList;
-}
-const python::list CvBuildingInfo::cyGetTechYieldModifiers() const
-{
-	python::list pyList = python::list();
-	foreach_(const TechArray& pair, m_techYieldModifiers)
-		for (int i = 0; i < NUM_YIELD_TYPES; i++)
-			if (pair.second[i] != 0) pyList.append(TechYieldChange(pair.first, (YieldTypes)i, pair.second[i]));
-	return pyList;
-}
-const python::list CvBuildingInfo::cyGetTechCommerceChanges100() const
-{
-	python::list pyList = python::list();
-	foreach_(const TechCommerceArray& pair, m_techCommerceChanges)
-		for (int i = 0; i < NUM_COMMERCE_TYPES; i++)
-			if (pair.second[i] != 0) pyList.append(TechCommerceChange(pair.first, (CommerceTypes)i, pair.second[i]));
-	return pyList;
-}
-const python::list CvBuildingInfo::cyGetTechCommerceModifiers() const
-{
-	python::list pyList = python::list();
-	foreach_(const TechCommerceArray& pair, m_techCommerceModifiers)
-		for (int i = 0; i < NUM_COMMERCE_TYPES; i++)
-			if (pair.second[i] != 0) pyList.append(TechCommerceChange(pair.first, (CommerceTypes)i, pair.second[i]));
-	return pyList;
-}
-const python::list CvBuildingInfo::cyGetTerrainYieldChanges() const
-{
-	python::list pyList = python::list();
-	foreach_(const TerrainArray& pair, m_aTerrainYieldChanges)
-		for (int i = 0; i < NUM_YIELD_TYPES; i++)
-			if (pair.second[i] != 0) pyList.append(TerrainYieldChange(pair.first, (YieldTypes)i, pair.second[i]));
-	return pyList;
-}
-const python::list CvBuildingInfo::cyGetPlotYieldChanges() const   // empty until getPlotYieldChanges() populates m_aPlotYieldChanges (the plot-yields fix)
-{
-	python::list pyList = python::list();
-	foreach_(const PlotArray& pair, m_aPlotYieldChanges)
-		for (int i = 0; i < NUM_YIELD_TYPES; i++)
-			if (pair.second[i] != 0) pyList.append(GenericTrippleInt((int)pair.first, i, pair.second[i]));
-	return pyList;
-}
-const python::list CvBuildingInfo::cyGetImprovementYieldChanges() const
-{
-	python::list pyList = python::list();
-	foreach_(const ImprovementArray& pair, m_aImprovementYieldChanges)
-		for (int i = 0; i < NUM_YIELD_TYPES; i++)
-			if (pair.second[i] != 0) pyList.append(GenericTrippleInt((int)pair.first, i, pair.second[i]));
-	return pyList;
-}
-const python::list CvBuildingInfo::cyGetGlobalImprovementYieldChanges() const
-{
-	python::list pyList = python::list();
-	foreach_(const ImprovementArray& pair, m_aGlobalImprovementYieldChanges)
-		for (int i = 0; i < NUM_YIELD_TYPES; i++)
-			if (pair.second[i] != 0) pyList.append(GenericTrippleInt((int)pair.first, i, pair.second[i]));
 	return pyList;
 }
 const python::list CvBuildingInfo::cyGetFreePromoTypes() const
@@ -836,16 +643,6 @@ void CvBuildingInfo::reconstructFromComposed()
 		const int fk = (last.find('_') != std::string::npos) ? jsonResolveId(last) : -1;
 		const std::string& f0 = s[0];
 
-		// yields: <yield>.city.terrains.<T> / <yield>.city.improvements.<I> / <yield>.empire.improvements.<I>
-		const int yi = bldNameIndex(YN, NUM_YIELD_TYPES, f0);
-		if (yi >= 0 && s.size() == 4 && fk >= 0)
-		{
-			const int v = fam_uncond100(f, CASC_UNIT_FLAT) / 100;
-			if (s[1] == "city" && s[2] == "terrains")          mod_addYield(m_aTerrainYieldChanges, (TerrainTypes)fk, yi, v);
-			else if (s[1] == "city" && s[2] == "improvements") mod_addYield(m_aImprovementYieldChanges, (ImprovementTypes)fk, yi, v);
-			else if (s[1] == "empire" && s[2] == "improvements") mod_addYield(m_aGlobalImprovementYieldChanges, (ImprovementTypes)fk, yi, v);
-			continue;
-		}
 		// commerces: <commerce>.empire.buildings.<B>  (GlobalBuildingExtraCommerces)
 		const int ci = bldNameIndex(CN, NUM_COMMERCE_TYPES, f0);
 		if (ci >= 0 && s.size() == 4 && fk >= 0 && s[1] == "empire" && s[2] == "buildings")
@@ -900,68 +697,37 @@ void CvBuildingInfo::reconstructFromComposed()
 		if (f0.compare(0, 9, "PROPERTY_") == 0) continue;
 	}
 
-	// Part B: COND-KEYED (base address; the entry `enabled` carries the key).
+	// Part B: CONDITIONED own-output -> m_cond (typed pointers into m_modifiers; the (cx,pg) getters sum value x
+	// count(predicate) over the entries whose condition holds). City-scope AND plots-target both fold here; the
+	// STATE_RELIGION-gated happiness stays the materialized wellbeing scalar (a fixed engine gate, not data-varying).
 	for (int y = 0; y < NUM_YIELD_TYPES; ++y)
 	{
 		const CvJsonModFamily* f = mods->find(std::string(YN[y]) + ".city");
-		if (!f) continue;
-		for (int i = 0; i < f->size(); ++i)
-		{
-			const CvJsonModEntry* e = f->entries[i];
-			if (e->enabled == NULL || e->disabled) continue;
-			const int tech = mod_enabledId(e, "TECH_", -1, -1);
-			if (tech >= 0)
-			{
-				if (e->unit == CASC_UNIT_FLAT)         mod_addYield(m_techYieldChanges, (TechTypes)tech, y, e->value100);       // PER100: raw x100
-				else if (e->unit == CASC_UNIT_PERCENT) mod_addYield(m_techYieldModifiers, (TechTypes)tech, y, e->value100 / 100);
-				continue;
-			}
-			const int vbon = mod_enabledId(e, "BONUS_", CASC_CONN_VICINITY, CASC_VIC_CONNECTED);
-			if (vbon >= 0 && e->unit == CASC_UNIT_FLAT) { mod_addYield(m_vicinityBonusYieldChanges, (BonusTypes)vbon, y, e->value100 / 100); continue; }
-			const int bon = mod_enabledId(e, "BONUS_", CASC_CONN_NONE, CASC_VIC_NONE);
-			if (bon >= 0)
-			{
-				if (e->unit == CASC_UNIT_FLAT)         mod_addYield(m_bonusYieldChanges, (BonusTypes)bon, y, e->value100 / 100);
-				else if (e->unit == CASC_UNIT_PERCENT) mod_addYield(m_bonusYieldModifier, (BonusTypes)bon, y, e->value100 / 100);
-				continue;
-			}
-			if (e->unit == CASC_UNIT_PERCENT && mod_enabledPred(e, CASC_PRED_HAS_POWER)) m_powerYieldModifier[y] += e->value100 / 100;
-		}
+		if (f) for (int i = 0; i < f->size(); ++i)
+		{ const CvJsonModEntry* e = f->entries[i]; if (e->enabled || e->disabled) { CondDeposit d; d.family = COND_YIELD; d.index = (unsigned char)y; d.unit = (unsigned char)e->unit; d.target = COND_TGT_CITY; d.e = e; m_cond.push_back(d); } }
+		const CvJsonModFamily* fp = mods->find(std::string(YN[y]) + ".city.plots");
+		if (fp) for (int i = 0; i < fp->size(); ++i)
+		{ const CvJsonModEntry* e = fp->entries[i]; CondDeposit d; d.family = COND_YIELD; d.index = (unsigned char)y; d.unit = (unsigned char)e->unit; d.target = COND_TGT_PLOTS; d.e = e; m_cond.push_back(d); }
 	}
 	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
 	{
 		const CvJsonModFamily* f = mods->find(std::string(CN[c]) + ".city");
-		if (!f) continue;
-		for (int i = 0; i < f->size(); ++i)
-		{
-			const CvJsonModEntry* e = f->entries[i];
-			if (e->enabled == NULL || e->disabled) continue;
-			const int tech = mod_enabledId(e, "TECH_", -1, -1);
-			if (tech >= 0)
-			{
-				if (e->unit == CASC_UNIT_FLAT)         mod_addComm(m_techCommerceChanges, (TechTypes)tech, c, e->value100);   // PER100: raw x100
-				else if (e->unit == CASC_UNIT_PERCENT) mod_addComm(m_techCommerceModifiers, (TechTypes)tech, c, e->value100 / 100);
-				continue;
-			}
-			const int bon = mod_enabledId(e, "BONUS_", CASC_CONN_NONE, CASC_VIC_NONE);
-			if (bon >= 0 && e->unit == CASC_UNIT_FLAT) mod_addComm(m_bonusCommercePercentChanges, (BonusTypes)bon, c, e->value100);   // PER100: raw x100
-		}
+		if (f) for (int i = 0; i < f->size(); ++i)
+		{ const CvJsonModEntry* e = f->entries[i]; if (e->enabled || e->disabled) { CondDeposit d; d.family = COND_COMMERCE; d.index = (unsigned char)c; d.unit = (unsigned char)e->unit; d.target = COND_TGT_CITY; d.e = e; m_cond.push_back(d); } }
 	}
-	// happiness.city / health.city flat, keyed by TECH or BONUS
 	for (int h = 0; h < 2; ++h)
 	{
-		const char* fam = (h == 0) ? "happiness.city" : "health.city";
-		const CvJsonModFamily* f = mods->find(fam);
+		const CvJsonModFamily* f = mods->find((h == 0) ? "happiness.city" : "health.city");
 		if (!f) continue;
 		for (int i = 0; i < f->size(); ++i)
 		{
 			const CvJsonModEntry* e = f->entries[i];
-			if (e->enabled == NULL || e->disabled || e->unit != CASC_UNIT_FLAT) continue;
-			const int tech = mod_enabledId(e, "TECH_", -1, -1);
-			const int bon  = (tech < 0) ? mod_enabledId(e, "BONUS_", -1, -1) : -1;
-			if (h == 0) { if (tech >= 0) mod_addScalar(m_aTechHappinessChanges, (TechTypes)tech, e->value100 / 100); else if (bon >= 0) mod_addScalar(m_piBonusHappinessChanges, (BonusTypes)bon, e->value100 / 100);
-			              else if (mod_enabledPred(e, CASC_PRED_STATE_RELIGION) || mod_enabledPred(e, CASC_PRED_HAS_STATE_RELIGION) || mod_enabledPred(e, CASC_PRED_STATE_RELIGION_IN_CITY)) m_iStateReligionHappiness += e->value100 / 100; }
-			else        { if (tech >= 0) mod_addScalar(m_aTechHealthChanges, (TechTypes)tech, e->value100 / 100); else if (bon >= 0) mod_addScalar(m_piBonusHealthChanges, (BonusTypes)bon, e->value100 / 100); }
+			if (e->enabled == NULL && e->disabled == NULL) continue;
+			// STATE_RELIGION-gated happiness -> the materialized wellbeing scalar (a fixed engine gate, kept)
+			if (h == 0 && e->unit == CASC_UNIT_FLAT &&
+			    (mod_enabledPred(e, CASC_PRED_STATE_RELIGION) || mod_enabledPred(e, CASC_PRED_HAS_STATE_RELIGION) || mod_enabledPred(e, CASC_PRED_STATE_RELIGION_IN_CITY)))
+			{ m_wellbeing[WELLBEING_STATE_RELIGION_HAPPINESS] += e->value100 / 100; continue; }
+			CondDeposit d; d.family = (unsigned char)(h == 0 ? COND_HAPPINESS : COND_HEALTH); d.index = 0; d.unit = (unsigned char)e->unit; d.target = COND_TGT_CITY; d.e = e; m_cond.push_back(d);
 		}
 	}
 	// buildRate.self percent enabled BONUS -> bonus production modifier
@@ -977,13 +743,9 @@ void CvBuildingInfo::reconstructFromComposed()
 	m_consumptionRelevantBonuses.clear();
 	{
 		std::vector<bool> seen(GC.getNumBonusInfos(), false);
-		const IDValueMap<BonusTypes, int>* intMaps[3] = { &m_piBonusHealthChanges, &m_piBonusHappinessChanges, &m_bonusDefenseChanges };
-		for (int m = 0; m < 3; ++m)
-			for (IDValueMap<BonusTypes, int>::const_iterator it = intMaps[m]->begin(); it != intMaps[m]->end(); ++it)
+		for (IDValueMap<BonusTypes, int>::const_iterator it = m_bonusDefenseChanges.begin(); it != m_bonusDefenseChanges.end(); ++it)
 			{ const int b = it->first; if (b >= 0 && b < (int)seen.size() && !seen[b]) { seen[b] = true; m_consumptionRelevantBonuses.push_back((BonusTypes)b); } }
-		const IDValueMap<BonusTypes, YieldArray>* yaMaps[2] = { &m_bonusYieldChanges, &m_bonusYieldModifier };
-		for (int m = 0; m < 2; ++m)
-			for (IDValueMap<BonusTypes, YieldArray>::const_iterator it = yaMaps[m]->begin(); it != yaMaps[m]->end(); ++it)
-			{ const int b = it->first; if (b >= 0 && b < (int)seen.size() && !seen[b]) { seen[b] = true; m_consumptionRelevantBonuses.push_back((BonusTypes)b); } }
+		for (size_t i = 0; i < m_cond.size(); ++i)
+			{ const int b = mod_enabledId(m_cond[i].e, "BONUS_", -1, -1); if (b >= 0 && b < (int)seen.size() && !seen[b]) { seen[b] = true; m_consumptionRelevantBonuses.push_back((BonusTypes)b); } }
 	}
 }

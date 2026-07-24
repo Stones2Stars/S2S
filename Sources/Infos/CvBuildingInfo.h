@@ -7,7 +7,7 @@
 //	section units a building authors (requires / edges / allowed / grants / provides / modifier families /
 //	whenObsolete / attributes / capabilities -- the data-grounded table); this adds the typed flags + the curator
 //	`identity` block, SELF-CONTAINED (the engine getGlobalReligionCommerce / getReligionType /
-//	getGlobalCorporationCommerce / getStateReligionCommerce / getCommerceChangeDoubleTime reads are RETIRED).
+//	getGlobalCorporationCommerce / getStateReligionCommerce / getCommerceDoubleTime reads are RETIRED).
 //	shrine/corpHQ/religion are FK ids (-1 none); the commerce blocks are {channel:value} maps.
 //
 //	#430 legacy-getter mirror: the ENTIRE archived CvBuildingInfo consumer surface (SourceArchive/Infos/CvBuildingInfo.h)
@@ -30,6 +30,150 @@ class CvArtInfoBuilding;
 class CvArtInfoMovie;
 class CvGameObject;
 class BoolExpr;
+class CityContext;      // the per-city live VICINITY/local state the (ctx) output getters evaluate against (owned by CvCity)
+class CvPlotGroup;      // the existing trade-network context -- passed alongside CityContext, supplies the TRADED bonuses
+class CvJsonModEntry;   // one parsed §3.9 conditioned deposit (value100 + enabled/disabled) -- m_cond points at these
+
+// ============================ the sane-info GROUPED SCALAR vocabulary (patterns.md § coherent surface) ============
+// Each multi-entry scalar FAMILY is its own single-tier group: a flat int[] indexed by a small kind-enum, read by
+// ONE parameterized getter (getDefense(DEFENSE_BOMBARD)), x100-native, one direct index -- never N individual
+// getters, never a bundling struct. 1-2-entry stragglers with no family live in m_scalars (SCALAR_*). Extensible:
+// a new scalar family is a new enum + member; a new straggler is a new SCALAR_* entry. These kind-enums are
+// GENERAL (a defense/maintenance modifier is not building-specific); they live here for the building build and
+// lift to a shared vocabulary header when the pattern generalizes across infos.
+enum DefenseKind {                     // m_defense -- COMBAT_REALISTIC_SIEGE-gated at the consumer
+	DEFENSE_AMOUNT = 0,                // defense.city.amount %
+	DEFENSE_BOMBARD,                   // defense.city.bombardDefense %
+	DEFENSE_ALL_CITY,                  // defense.empire.amount %
+	DEFENSE_NUKE,                      // defense.city.nukeDefense %
+	DEFENSE_AIR,                       // defense.city.airDefense %
+	DEFENSE_MIN,                       // defense.city.min flat (the defense FLOOR)
+	DEFENSE_NO_ENTRY_LEVEL,            // defense.city.noEntryLevel flat (the no-entry THRESHOLD -- distinct, owner)
+	DEFENSE_LOCAL_DYNAMIC,             // defense.city.dynamicDefense flat
+	DEFENSE_RIVER_PENALTY,             // defense.city.riverDefensePenalty flat
+	DEFENSE_BUILDING_RECOVERY,         // defense.city.buildingDefenseRecovery %
+	DEFENSE_CITY_RECOVERY,             // defense.city.cityDefenseRecovery %
+	DEFENSE_ADJACENT_DAMAGE,           // defense.city.adjacentDamage %
+	NUM_DEFENSE_KINDS
+};
+enum MaintenanceKind {                 // m_maintenance (all %)
+	MAINTENANCE_CITY = 0,              // maintenance.city
+	MAINTENANCE_GLOBAL,                // maintenance.empire
+	MAINTENANCE_AREA,                  // maintenance.area
+	MAINTENANCE_OTHER_AREA,            // maintenance.area.otherArea
+	MAINTENANCE_DISTANCE,              // maintenance.empire.distance
+	MAINTENANCE_NUM_CITIES,            // maintenance.empire.numCities
+	MAINTENANCE_COASTAL_DISTANCE,      // maintenance.empire.coastalDistance
+	MAINTENANCE_CONNECTED_CITY,        // maintenance.empire.connectedCity
+	NUM_MAINTENANCE_KINDS
+};
+enum TradeRouteKind {                  // m_tradeRoutes
+	TRADE_ROUTE_CITY = 0,             // tradeRoutes.city flat
+	TRADE_ROUTE_COASTAL,              // tradeRoutes.empire.coastal flat
+	TRADE_ROUTE_GLOBAL,               // tradeRoutes.empire flat
+	TRADE_ROUTE_WORLD,                // tradeRoutes.world flat
+	TRADE_ROUTE_MODIFIER,             // tradeRoutes.city.modifier %
+	TRADE_ROUTE_FOREIGN_MODIFIER,     // tradeRoutes.city.foreignModifier %
+	NUM_TRADE_ROUTE_KINDS
+};
+enum GreatPeopleKind {                 // m_greatPeople
+	GREAT_PEOPLE_RATE_CHANGE = 0,     // greatPeopleRate.city flat
+	GREAT_PEOPLE_RATE_MODIFIER,       // greatPeopleRate.city %
+	GREAT_PEOPLE_GLOBAL_RATE_MODIFIER,// greatPeopleRate.empire %
+	GREAT_GENERAL_RATE,               // greatGeneralRate.city %
+	GREAT_GENERAL_DOMESTIC_RATE,      // greatGeneralRate.city.domestic %
+	NUM_GREAT_PEOPLE_KINDS
+};
+enum WarWearinessKind {                // m_warWeariness (all %)
+	WAR_WEARINESS_CITY = 0,           // warWeariness.city
+	WAR_WEARINESS_GLOBAL,             // warWeariness.empire
+	WAR_WEARINESS_ENEMY,              // warWeariness.city.enemy
+	NUM_WAR_WEARINESS_KINDS
+};
+enum HurryKind {                       // m_hurry (all %)
+	HURRY_COST = 0,                   // hurryCost.city
+	HURRY_GLOBAL_COST,                // hurryCost.empire
+	HURRY_ANGER,                      // hurryAnger.city
+	NUM_HURRY_KINDS
+};
+enum CityCaptureKind {                 // m_capture (all %)
+	CITY_CAPTURE_NATIONAL_PROBABILITY = 0, // cityCapture.empire.probability
+	CITY_CAPTURE_NATIONAL_RESISTANCE,      // cityCapture.empire.resistance
+	CITY_CAPTURE_LOCAL_PROBABILITY,        // cityCapture.city.probability
+	CITY_CAPTURE_LOCAL_RESISTANCE,         // cityCapture.city.resistance
+	NUM_CITY_CAPTURE_KINDS
+};
+enum RevolutionKind {                  // m_revolution
+	REVOLUTION_LOCAL = 0,             // revolution.city flat
+	REVOLUTION_NATIONAL,              // revolution.empire flat
+	REVOLUTION_DISTANCE_MODIFIER,     // revolution.city.distanceModifier %
+	NUM_REVOLUTION_KINDS
+};
+enum BuildRateKind {                   // m_buildRate -- buildRate CATEGORY cost modifiers (all %); NOT production yield
+	BUILD_RATE_MILITARY = 0,          // buildRate.city.military
+	BUILD_RATE_SPACE,                 // buildRate.city.space
+	BUILD_RATE_GLOBAL_SPACE,          // buildRate.empire.space
+	NUM_BUILD_RATE_KINDS
+};
+enum BuildingScalarKind {              // m_scalars -- the 1-2-entry stragglers with no family
+	SCALAR_HEAL_RATE = 0,             // healing.city flat
+	SCALAR_FOOD_KEPT,                 // foodKept.city %
+	SCALAR_ANARCHY,                   // anarchy.city %
+	SCALAR_GOLDEN_AGE,                // goldenAge.empire %
+	SCALAR_INFLATION,                 // inflation.empire %
+	SCALAR_OCCUPATION_TIME,           // occupationTime.city %
+	SCALAR_WORKER_SPEED,              // workRate.empire %
+	SCALAR_POP_GROWTH,                // populationGrowthRate.city %
+	SCALAR_GLOBAL_POP_GROWTH,         // populationGrowthRate.empire %
+	SCALAR_ESPIONAGE_DEFENSE,         // espionageDefense.city flat
+	SCALAR_UNIT_UPGRADE_PRICE,        // unitUpgradePrice.empire %
+	SCALAR_FREE_EXPERIENCE,           // experience.city flat
+	SCALAR_GLOBAL_FREE_EXPERIENCE,    // experience.empire flat
+	SCALAR_FREE_SPECIALIST,           // freeSpecialists.city.any count
+	SCALAR_AREA_FREE_SPECIALIST,      // freeSpecialists.area.any count
+	SCALAR_GLOBAL_FREE_SPECIALIST,    // freeSpecialists.empire.any count
+	SCALAR_INSIDIOUSNESS,             // copsAndRobbers.city.insidiousness flat
+	SCALAR_INVESTIGATION,             // copsAndRobbers.city.investigation flat
+	NUM_BUILDING_SCALAR_KINDS
+};
+enum WellbeingKind {                   // m_wellbeing -- the building's happiness/health contributions (flat)
+	WELLBEING_HAPPINESS = 0,          // happiness.city flat
+	WELLBEING_AREA_HAPPINESS,         // happiness.area flat
+	WELLBEING_GLOBAL_HAPPINESS,       // happiness.empire flat
+	WELLBEING_HEALTH,                 // health.city flat
+	WELLBEING_AREA_HEALTH,            // health.area flat
+	WELLBEING_GLOBAL_HEALTH,          // health.empire flat
+	WELLBEING_HAPPINESS_PER_POPULATION, // happiness.city perPopulation (raw legacy scale; consumer /100s)
+	WELLBEING_HEALTH_PER_POPULATION,    // health.city perPopulation
+	WELLBEING_STATE_RELIGION_HAPPINESS, // happiness.city flat gated STATE_RELIGION (not yet materialized -- mirrors legacy stub)
+	NUM_WELLBEING_KINDS
+};
+
+// The CONDITIONED own-output deposits (patterns.md § coherent surface). A building yield/commerce/wellbeing gated by a
+// PREDICATE (HAS_POWER / HAS_RIVER / HAS_TECH / HAS_BONUS / vicinity, ...) is NOT a bespoke member per predicate: every
+// conditioned deposit is ONE typed index entry pointing at its already-parsed m_modifiers entry (value100 x100-native +
+// its enabled/disabled tree). The (CityContext) getters sum the entries whose condition holds, via the ONE
+// cascadeEvalCondition -- no copy, no per-map scale fudge, one evaluator.
+enum CondFamily { COND_YIELD = 0, COND_COMMERCE, COND_HAPPINESS, COND_HEALTH };
+enum CondTarget { COND_TGT_CITY = 0, COND_TGT_PLOTS };
+struct CondDeposit
+{
+	unsigned char family;    // CondFamily
+	unsigned char index;     // YieldTypes / CommerceTypes (0 for the wellbeing families)
+	unsigned char unit;      // CvCascUnit (FLAT / PERCENT)
+	unsigned char target;    // CondTarget
+	const CvJsonModEntry* e; // -> the owned m_modifiers entry (value100 + enabled/disabled); never copied
+};
+
+// defense.city.counterDamage -- the trap counter-damage effect, a STRUCTURED member of the DEFENSE family (not a
+// scalar): damage + chance + who (all attackers, else the unitCombats list). damageTarget.{UNITCOMBAT} fills unitCombats.
+struct CounterDamage
+{
+	int damage, chance;
+	bool allAttackers, present;
+	std::vector<int> unitCombats;
+	CounterDamage() : damage(0), chance(0), allAttackers(false), present(false) {}
+};
 
 class CvBuildingInfo : public CvInfo
 {
@@ -37,8 +181,6 @@ public:
 	CvBuildingInfo()
 		: notConstructible(false), governmentCenter(false), forceNoPrereqScaling(false),
 		  shrineReligion(-1), corpHQ(-1), religion(-1), freeStartEra(-1), conquestProbability(50), maxPlayerInstancesExtra(0),
-		  m_iHappinessPercentPerPopulation(0), m_iHealthPercentPerPopulation(0),
-		  m_iDamageToAttacker(0), m_iDamageAttackerChance(0), m_bHasCounterDamage(false), m_bDamageAllAttackers(false),
 		  m_bForceTeamVoteEligible(false),
 		  voteSourceType(-1),
 		  autoBuild(false),
@@ -53,41 +195,34 @@ public:
 		  m_iMinAreaSize(0), m_iMinLatitude(0), m_iMaxLatitude(90), m_iNumCitiesPrereq(0), m_iNumTeamsPrereq(0), m_iPrereqPopulation(0),
 		  m_iVictoryPrereq(-1), m_iHolyCity(-1), m_iPrereqStateReligion(-1), m_iPrereqReligion(-1), m_iPrereqCorporation(-1),
 		  m_iPrereqCultureLevel(-1), m_iPrereqAnyoneBuilding(-1), m_iPrereqAndTech(-1), m_iPrereqAndBonus(-1),
-		  m_iPrereqVicinityBonus(-1), m_iPrereqRawVicinityBonus(-1), m_iStateReligionHappiness(0),
+		  m_iPrereqVicinityBonus(-1), m_iPrereqRawVicinityBonus(-1),
 		  m_bNeedStateReligionInCity(false), m_bWater(false), m_bRiver(false), m_bFreshWater(false), m_bNoHolyCity(false), m_bPower(false),
 		  m_iNumUnitFullHeal(0), m_iPropertySpawnUnit(-1), m_iPropertySpawnProperty(-1)
 	{
 		for (int i = 0; i < NUM_YIELD_TYPES; ++i)
 		{
-			m_powerYieldModifier[i] = 0;
-			m_aiYieldChange[i] = m_aiYieldModifier[i] = m_aiAreaYieldModifier[i] = 0;
-			m_aiGlobalYieldModifier[i] = m_aiGlobalSeaPlotYieldChange[i] = 0;
+			m_flatYields[i] = m_yieldModifiers[i] = m_areaYieldModifiers[i] = 0;
+			m_globalYieldModifiers[i] = m_seaPlotYields[i] = 0;
 		}
 		for (int i = 0; i < NUM_COMMERCE_TYPES; ++i)
 		{
-			m_aiCommerceChange[i] = m_aiCommerceModifier[i] = m_aiGlobalCommerceModifier[i] = 0;
-			m_aiSpecialistExtraCommerce[i] = m_aiCommerceHappiness[i] = 0;
-			m_aiCommerceChangeDoubleTime[i] = m_aiStateReligionCommerce[i] = 0;
+			m_flatCommerce[i] = m_commerceModifiers[i] = m_globalCommerceModifiers[i] = 0;
+			m_specialistCommerce[i] = m_commerceHappiness[i] = 0;
+			m_commerceDoubleTime[i] = m_stateReligionCommerce[i] = 0;
 		}
-		// zero the materialized scalars (mapFrom fully redefines them on a real entity)
-		m_iHappiness = m_iAreaHappiness = m_iGlobalHappiness = m_iHealth = m_iAreaHealth = m_iGlobalHealth = 0;
-		m_iEnemyWarWearinessModifier = m_iOccupationTimeModifier = m_iHealRateChange = m_iFoodKept = 0;
-		m_iGreatPeopleRateChange = m_iGreatPeopleRateModifier = m_iGlobalGreatPeopleRateModifier = 0;
-		m_iGreatGeneralRateModifier = m_iDomesticGreatGeneralRateModifier = 0;
-		m_iMaintenanceModifier = m_iGlobalMaintenanceModifier = m_iAreaMaintenanceModifier = m_iOtherAreaMaintenanceModifier = 0;
-		m_iDistanceMaintenanceModifier = m_iNumCitiesMaintenanceModifier = m_iCoastalDistanceMaintenanceModifier = m_iConnectedCityMaintenanceModifier = 0;
-		m_iInflationModifier = m_iWarWearinessModifier = m_iGlobalWarWearinessModifier = 0;
-		m_iHurryCostModifier = m_iGlobalHurryModifier = m_iHurryAngerModifier = 0;
-		m_iMilitaryProductionModifier = m_iSpaceProductionModifier = m_iGlobalSpaceProductionModifier = m_iWorkerSpeedModifier = 0;
-		m_iTradeRoutes = m_iCoastalTradeRoutes = m_iGlobalTradeRoutes = m_iWorldTradeRoutes = m_iTradeRouteModifier = m_iForeignTradeRouteModifier = 0;
-		m_iFreeExperience = m_iGlobalFreeExperience = m_iFreeSpecialist = m_iAreaFreeSpecialist = m_iGlobalFreeSpecialist = 0;
-		m_iAnarchyModifier = m_iGoldenAgeModifier = m_iPopulationgrowthratepercentage = m_iGlobalPopulationgrowthratepercentage = 0;
-		m_iRevIdxLocal = m_iRevIdxNational = m_iRevIdxDistanceModifier = m_iInsidiousness = m_iInvestigation = 0;
-		m_iEspionageDefenseModifier = m_iUnitUpgradePriceModifier = 0;
-		m_iDefenseModifier = m_iBombardDefenseModifier = m_iAllCityDefenseModifier = m_iNukeModifier = m_iAirModifier = 0;
-		m_iMinDefense = m_iNoEntryDefenseLevel = m_iLocalDynamicDefense = m_iRiverDefensePenalty = 0;
-		m_iBuildingDefenseRecoverySpeedModifier = m_iCityDefenseRecoverySpeedModifier = m_iAdjacentDamagePercent = 0;
-		m_iNationalCaptureProbabilityModifier = m_iNationalCaptureResistanceModifier = m_iLocalCaptureProbabilityModifier = m_iLocalCaptureResistanceModifier = 0;
+		// zero the grouped scalar arrays -- mapFrom `=`-assigns every slot on a real entity (STATE_RELIGION_HAPPINESS
+		// is reset at mapFrom start + accumulated in reconstructFromComposed); this is the defensive floor.
+		for (int i = 0; i < NUM_DEFENSE_KINDS; ++i)         m_defense[i]      = 0;
+		for (int i = 0; i < NUM_MAINTENANCE_KINDS; ++i)     m_maintenance[i]  = 0;
+		for (int i = 0; i < NUM_TRADE_ROUTE_KINDS; ++i)     m_tradeRoutes[i]  = 0;
+		for (int i = 0; i < NUM_GREAT_PEOPLE_KINDS; ++i)    m_greatPeople[i]  = 0;
+		for (int i = 0; i < NUM_WAR_WEARINESS_KINDS; ++i)   m_warWeariness[i] = 0;
+		for (int i = 0; i < NUM_HURRY_KINDS; ++i)           m_hurry[i]        = 0;
+		for (int i = 0; i < NUM_CITY_CAPTURE_KINDS; ++i)    m_capture[i]      = 0;
+		for (int i = 0; i < NUM_REVOLUTION_KINDS; ++i)      m_revolution[i]   = 0;
+		for (int i = 0; i < NUM_BUILD_RATE_KINDS; ++i)      m_buildRate[i]    = 0;
+		for (int i = 0; i < NUM_BUILDING_SCALAR_KINDS; ++i) m_scalars[i]      = 0;
+		for (int i = 0; i < NUM_WELLBEING_KINDS; ++i)       m_wellbeing[i]    = 0;
 		m_bGrantsGoldenAge = false;
 		m_iGrantPopulationCity = m_iGrantPopulationEmpire = m_iGrantFreeTechs = 0;
 		m_iGrantFreeSpecialTech = -1;   // NO_TECH
@@ -102,13 +237,9 @@ public:
 	std::map<std::string, int> commerceDoubleTime;       // identity.commerceDoubleTime {channel:years}
 	int freeStartEra;         // identity.freeStartEra -> EraTypes FK
 	int conquestProbability;  // identity.conquestProbability
-	int m_iHappinessPercentPerPopulation, m_iHealthPercentPerPopulation;  // {happiness|health}.city perPopulation entries, materialized at mapFrom (raw legacy scale; consumer /100s)
 	int maxPlayerInstancesExtra;  // identity.maxPlayerInstancesExtra -- the extra-per-player instance-cap component (only PALACE authors it)
-	int m_iDamageToAttacker, m_iDamageAttackerChance;   // defense.city.counterDamage.{damage,chance} (bespoke object the modifier parser skips)
-	bool m_bHasCounterDamage, m_bDamageAllAttackers;    // counterDamage present / no `units` selector => all attackers
+	CounterDamage m_counterDamage;                      // defense.city.counterDamage.{damage,chance} + damageTarget.{UNITCOMBAT}
 	bool m_bForceTeamVoteEligible;                      // enables.votes marker "FORCE_TEAM_ELIGIBLE" (non-INFOTYPE, edge-dropped)
-	std::vector<int> m_aiMayDamageUnitCombats;          // defense.city.counterDamage.units.unitCombats FK list
-	int m_aiRiverPlotYieldChange[NUM_YIELD_TYPES];      // HAS_RIVER-gated <yield>.city.plots flats (legacy RiverPlotYieldChanges)
 	int voteSourceType;       // identity.diploVoteType -> VoteSourceTypes FK
 	bool autoBuild;           // identity.autoBuild
 	virtual void mapFrom(const picojson::value& entity);
@@ -118,29 +249,13 @@ public:
 
 	// --- bool flags: REAL where the `attributes` block / identity carry them; else STUB false ---
 	// attribute flags: O(1) generated-id bit tests (CLS_HAS; ATTRIBUTE_* ids from the ClassificationRegistry)
-	bool isProvidesFreshWater() const      CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "providesFreshWater")
-	bool isForceAllTradeRoutes() const     CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "forceAllTradeRoutes")
 	bool isForceNoPrereqScaling() const    { return forceNoPrereqScaling; }
-	bool isZoneOfControl() const           CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "zoneOfControl")
-	bool isProtectedCulture() const        CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "protectedCulture")
 	bool isNoLimit() const                 { return m_bNoLimit; }
-	bool isTeamShare() const               CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "teamShare")
 	bool isAutoBuild() const               { return autoBuild; }
-	bool isOrbital() const                 CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "orbital")
-	bool isOrbitalInfrastructure() const   CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "orbitalInfrastructure")
-	bool isAreaBorderObstacle() const      CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "borderObstacle")
 	bool isForceTeamVoteEligible() const   { return m_bForceTeamVoteEligible; }   // enables.votes marker "FORCE_TEAM_ELIGIBLE" (read raw in mapFrom -- the edge parser drops the non-INFOTYPE id)
-	bool isCapital() const                 CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "capital")
 	bool isGovernmentCenter() const        { return governmentCenter; }
-	bool isMapCentering() const            CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "mapCentering")
-	bool isNoUnhappiness() const           CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "noUnhappiness")
-	bool isNoUnhealthyPopulation() const   CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "noUnhealthyPopulation")
-	bool isBuildingOnlyHealthy() const     CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "buildingOnlyHealthy")
-	bool isNeverCapture() const            CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "destroyedOnCapture")  // curator RENAMED bNeverCapture -> attributes.destroyedOnCapture (owner ruling 2026-07-01)
-	bool isNukeImmune() const              CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "nukeImmune")
 	bool isCenterInCity() const            { return m_bCenterInCity; }
 	bool isAllowsNukes() const             { return m_bAllowsNukes; }
-	bool isQuarantine() const              CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "quarantine")
 	// requires-derived flags (reconstructed in reconstructFromComposed) + documented curator-gaps.
 	bool isPrereqPower() const             { return m_bPower; }   // REAL requires.operate HAS_POWER (NEEDS power; the engine dorms on power loss)
 	bool isApplyFreePromotionOnMove() const{ return false; }   // CURATOR-GAP: dropped as redundant (all freePromotions are end-turn-stay)
@@ -150,12 +265,11 @@ public:
 	bool isWater() const                   { return m_bWater; }   // REAL requires.build HAS_COAST
 	bool isRiver() const                   { return m_bRiver; }   // REAL requires.build HAS_RIVER
 	bool isFreshWater() const              { return m_bFreshWater; } // REAL requires.operate HAS_FRESHWATER (NEEDS fresh water; the engine dorms on loss)
-	bool isPower() const                   CLS_HAS(m_attributes, CLSD_ATTRIBUTE, "providesPower")   // REAL attributes.providesPower: the building PROVIDES power (the power-plant flag feeding changePowerCount)
 	bool isNoHolyCity() const              { return m_bNoHolyCity; } // REAL requires.build.disabled IS_HOLY_CITY
 	bool isGoldenAge() const               { return m_bGrantsGoldenAge; }   // REAL grants.goldenAge (materialized at mapFrom)
 	bool needStateReligionInCity() const   { return m_bNeedStateReligionInCity; }   // REAL requires.build STATE_RELIGION_IN_CITY
-	bool isDamageAllAttackers() const      { return m_bDamageAllAttackers; }   // defense.city.counterDamage present with NO `units` selector
-	bool isDamageAttackerCapable() const   { return m_bHasCounterDamage; }     // a defense.city.counterDamage object exists
+	bool isDamageAllAttackers() const      { return m_counterDamage.allAttackers; }   // counterDamage with NO `units` selector
+	bool isDamageAttackerCapable() const   { return m_counterDamage.present; }        // a defense.city.counterDamage object exists
 	bool getNotShowInCity() const          { return false; }   // CURATOR-GAP: derived display flag, not emitted
 	bool EnablesOtherBuildings() const     { const std::vector<int>* v = getEdges()->find(EDGEF_ENABLES, EDGEB_BUILDINGS); return v != NULL && !v->empty(); }   // REAL enables.buildings edge
 	bool EnablesUnits() const              { const std::vector<int>* v = getEdges()->find(EDGEF_ENABLES, EDGEB_UNITS); return v != NULL && !v->empty(); }         // REAL enables.units edge
@@ -212,102 +326,58 @@ public:
 	int getMissionType() const               { return m_iMissionType; }
 	void setMissionType(int iType)           { m_iMissionType = iType; }
 
-	// --- §6 modifier-family reads over the composed m_modifiers unit -- REAL data (see the .cpp: sumUnconditioned
-	// recovers the legacy plain scalar by summing only the UN-conditioned, non-per entries at the deposit address) ---
-	int getHappiness() const;
-	int getAreaHappiness() const;
-	int getGlobalHappiness() const;
-	int getHealth() const;
-	int getAreaHealth() const;
-	int getGlobalHealth() const;
-	int getHealRateChange() const;
-	int getFoodKept() const;
-	int getGreatPeopleRateChange() const;
-	int getGreatPeopleRateModifier() const;
-	int getGlobalGreatPeopleRateModifier() const;
-	int getGreatGeneralRateModifier() const;
-	int getDomesticGreatGeneralRateModifier() const;
-	int getMaintenanceModifier() const;
-	int getGlobalMaintenanceModifier() const;
-	int getAreaMaintenanceModifier() const;
-	int getOtherAreaMaintenanceModifier() const;
-	int getDistanceMaintenanceModifier() const;
-	int getNumCitiesMaintenanceModifier() const;
-	int getCoastalDistanceMaintenanceModifier() const;
-	int getConnectedCityMaintenanceModifier() const;
-	int getInflationModifier() const;
-	int getWarWearinessModifier() const;
-	int getGlobalWarWearinessModifier() const;
-	int getEnemyWarWearinessModifier() const;
-	int getHurryCostModifier() const;
-	int getGlobalHurryModifier() const;
-	int getHurryAngerModifier() const;
-	int getMilitaryProductionModifier() const;
-	int getSpaceProductionModifier() const;
-	int getGlobalSpaceProductionModifier() const;
-	int getWorkerSpeedModifier() const;
-	int getTradeRoutes() const;
-	int getCoastalTradeRoutes() const;
-	int getGlobalTradeRoutes() const;
-	int getWorldTradeRoutes() const;
-	int getTradeRouteModifier() const;
-	int getForeignTradeRouteModifier() const;
-	int getFreeExperience() const;
-	int getGlobalFreeExperience() const;
-	int getFreeSpecialist() const;
-	int getAreaFreeSpecialist() const;
-	int getGlobalFreeSpecialist() const;
-	int getAnarchyModifier() const;
-	int getGoldenAgeModifier() const;
-	int getOccupationTimeModifier() const;
-	int getPopulationgrowthratepercentage() const;
-	int getGlobalPopulationgrowthratepercentage() const;
-	int getRevIdxLocal() const;
-	int getRevIdxNational() const;
-	int getRevIdxDistanceModifier() const;
-	int getInsidiousness() const;
-	int getInvestigation() const;
-	int getEspionageDefenseModifier() const;
-	int getUnitUpgradePriceModifier() const;
-	int getDefenseModifier() const;
-	int getBombardDefenseModifier() const;
-	int getAllCityDefenseModifier() const;
-	int getNukeModifier() const;
-	int getAirModifier() const;
-	int getMinDefense() const;
-	int getNoEntryDefenseLevel() const;
-	int getLocalDynamicDefense() const;
-	int getRiverDefensePenalty() const;
-	int getBuildingDefenseRecoverySpeedModifier() const;
-	int getCityDefenseRecoverySpeedModifier() const;
-	int getDamageAttackerChance() const;
-	int getDamageToAttacker() const;
-	int getAdjacentDamagePercent() const;
-	int getNationalCaptureProbabilityModifier() const;
-	int getNationalCaptureResistanceModifier() const;
-	int getLocalCaptureProbabilityModifier() const;
-	int getLocalCaptureResistanceModifier() const;
+	// --- grouped SCALAR reads: ONE parameterized getter per family, x100-native, one direct index (patterns.md
+	// § coherent surface). Replaces the ~60 scattered legacy scalar getters below. ---
+	int getDefense(int k) const      { return (k >= 0 && k < NUM_DEFENSE_KINDS)      ? m_defense[k]      : 0; }   // gate COMBAT_REALISTIC_SIEGE at the consumer
+	int getMaintenance(int k) const  { return (k >= 0 && k < NUM_MAINTENANCE_KINDS)  ? m_maintenance[k]  : 0; }
+	int getTradeRoutes(int k) const  { return (k >= 0 && k < NUM_TRADE_ROUTE_KINDS)  ? m_tradeRoutes[k]  : 0; }
+	int getGreatPeople(int k) const  { return (k >= 0 && k < NUM_GREAT_PEOPLE_KINDS)  ? m_greatPeople[k]  : 0; }
+	int getWarWeariness(int k) const { return (k >= 0 && k < NUM_WAR_WEARINESS_KINDS) ? m_warWeariness[k] : 0; }
+	int getHurry(int k) const        { return (k >= 0 && k < NUM_HURRY_KINDS)        ? m_hurry[k]        : 0; }
+	int getCapture(int k) const      { return (k >= 0 && k < NUM_CITY_CAPTURE_KINDS) ? m_capture[k]      : 0; }
+	int getRevolution(int k) const   { return (k >= 0 && k < NUM_REVOLUTION_KINDS)   ? m_revolution[k]   : 0; }
+	int getBuildRate(int k) const    { return (k >= 0 && k < NUM_BUILD_RATE_KINDS)   ? m_buildRate[k]    : 0; }
+	int getScalar(int k) const       { return (k >= 0 && k < NUM_BUILDING_SCALAR_KINDS) ? m_scalars[k]   : 0; }
+	int getWellbeing(int k) const    { return (k >= 0 && k < NUM_WELLBEING_KINDS)       ? m_wellbeing[k] : 0; }
+	int getWellbeing(int k, const CityContext& cx, const CvPlotGroup& pg) const;   // + conditioned happiness/health (HAS_TECH/HAS_BONUS gated)
 
-	// per-YIELD / per-COMMERCE indexed family reads -- REAL data (unconditioned scalar at the deposit address).
-	int getYieldChange(int i) const;
+	// --- classification (json.md §8): the NAME encodes direction (owner) -- an attribute is something the building
+	// HAS; a capability is something it PROVIDES to the empire. Singular parameterized check (O(1) id bit test) +
+	// plural collection. ---
+	bool hasAttribute(int iAttributeId) const           { return m_attributes.hasId(iAttributeId); }
+	const CvJsonBoolBlock* hasAttributes() const        { return &m_attributes; }
+	bool providesCapability(int iCapabilityId) const    { return m_capabilities.hasId(iCapabilityId); }
+	const CvJsonBoolBlock* providesCapabilities() const { return &m_capabilities; }
+
+	// --- defense counter-damage (the trap effect) -- REAL data (materialized into m_counterDamage at mapFrom) ---
+	int getDamageAttackerChance() const { return m_counterDamage.chance; }   // defense.city.counterDamage.chance
+	int getDamageToAttacker() const     { return m_counterDamage.damage; }   // defense.city.counterDamage.damage
+
+	// per-YIELD / per-COMMERCE indexed family reads. The plain form is the UNCONDITIONED base (bare materialized read);
+	// the (cx, pg) overload adds every conditioned deposit (m_cond) whose predicate holds -- the building's ACTUAL output
+	// in that city -- summed via the ONE cascadeEvalCondition. The two live contexts give the clean source split: the
+	// CityContext supplies VICINITY (+ river/coast/power/state-religion/...), the CvPlotGroup supplies the TRADED
+	// (trade-network-connected) bonuses -- so `connection: vicinity` vs `trade` resolve by default from the right one.
+	// x100-native throughout.
+	int getFlatYield(int i) const;
+	int getFlatYield(int i, const CityContext& cx, const CvPlotGroup& pg) const;
 	int getYieldModifier(int i) const;
+	int getYieldModifier(int i, const CityContext& cx, const CvPlotGroup& pg) const;
 	int getAreaYieldModifier(int i) const;
 	int getGlobalYieldModifier(int i) const;
-	int getGlobalSeaPlotYieldChange(int i) const;
-	int getCommerceChange(int i) const;
+	int getSeaPlotYield(int i) const;
+	int getPlotYield(int i, const CityContext& cx, const CvPlotGroup& pg) const;   // <yield>.city.plots output here = sum of flat x cx.count(predicate) (HAS_RIVER / IS_WATER / ...)
+	int getFlatCommerce(int i) const;
+	int getFlatCommerce(int i, const CityContext& cx, const CvPlotGroup& pg) const;
 	int getCommerceModifier(int i) const;
 	int getGlobalCommerceModifier(int i) const;
-	int getSpecialistExtraCommerce(int i) const;
-	int getCommerceChangeDoubleTime(int i) const;   // commerceDoubleTime map (REAL)
+	int getSpecialistCommerce(int i) const;
+	int getCommerceDoubleTime(int i) const;   // commerceDoubleTime map (REAL)
 	int getStateReligionCommerce(int i) const;      // stateReligionCommerce map (REAL)
-	int getPowerYieldModifier(int i) const          { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_powerYieldModifier[i] : 0; }  // REAL <yield>.city percent enabled HAS_POWER
-	int getRiverPlotYieldChange(int i) const    { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiRiverPlotYieldChange[i] : 0; }   // HAS_RIVER-gated <yield>.city.plots flats
 
 	// ai.flavours -- REAL data.
 	int getFlavorValue(int i) const { return mapGet(m_flavours, i); }
 
-	// commerce sliders this building UNLOCKS (`capabilities` block) -- REAL data (mirror of tech isCommerceFlexible).
-	bool isCommerceFlexible(int i) const;
 
 	// per-pop getters. The yield/commerce pair is FAITHFUL-0: zero authorings in any building XML (census
 	// 2026-07-17), nothing to serve. The wellbeing pair serves the curated {happiness|health}.city
@@ -317,10 +387,6 @@ public:
 	// map-at-the-consumption-site method decides it.
 	int getYieldPerPopChange(int /*i*/) const        { return 0; }
 	int getCommercePerPopChange(int /*i*/) const     { return 0; }
-	// materialized at mapFrom (the hot-path rule: no per-call string-address resolution; the sumUnconditioned
-	// string-idiom getters above predate the rule and await the same materialization pass)
-	int getHappinessPercentPerPopulation() const     { return m_iHappinessPercentPerPopulation; }
-	int getHealthPercentPerPopulation() const        { return m_iHealthPercentPerPopulation; }
 
 	// GROUP 1 (requires condition-tree) + clean grant/repeatable reads -- REAL, reconstructed in reconstructFromComposed().
 	int getPrereqAndTech() const           { return m_iPrereqAndTech; }        // REAL requires.build first TECH atom
@@ -336,7 +402,6 @@ public:
 	int getMinLatitude() const             { return m_iMinLatitude; }          // REAL requires.build latitude.min
 	int getMaxLatitude() const             { return m_iMaxLatitude; }          // REAL requires.build latitude.max (90 default)
 	int getNukeExplosionRand() const       { return 0; }    // CURATOR-GAP: excluded-module-only data, not emitted
-	int getStateReligionHappiness() const  { return m_iStateReligionHappiness; }   // REAL happiness.city flat gated STATE_RELIGION / HAS_STATE_RELIGION
 	int getPrereqGameOption() const        { return -1; }   // CURATOR-GAP: PrereqGameOption feeds the entity-level enabled/disabled gate (CvJsonGate), which this poco does not compose
 	int getNotGameOption() const           { return -1; }   // CURATOR-GAP: NotGameOption -> the entity gate (not composed)
 	int getHolyCity() const                { return m_iHolyCity; }             // REAL requires.build predicate {IS_HOLY_CITY: RELIGION_X}
@@ -367,11 +432,7 @@ public:
 	const std::vector<ConstructRequirement>& getConstructRequirements() const { return m_constructRequirements; }  // STUB empty -- #195 GOM derivation deferred (cascade-level)
 	const std::vector<BonusTypes>& getConsumptionRelevantBonuses() const { return m_consumptionRelevantBonuses; }  // deduped UNION of the 5 bonus-keyed modifier maps (reconstructFromComposed), archive buildConsumptionRelevantBonuses
 	const IDValueMap<BonusTypes, int>& getFreeBonuses() const                { return m_freeBonuses; }             // REAL -- reconstructFromComposed populates m_freeBonuses from provides.bonuses (owner ruling 2026-07-11); count 1
-	const IDValueMap<PlotTypes, YieldArray>& getPlotYieldChanges() const     { return m_aPlotYieldChanges; }       // STUB empty -- plots-target fold (getGlobalSeaPlotYieldChange path); not the keyed legacy shape
-	const IDValueMap<TerrainTypes, YieldArray>& getTerrainYieldChanges() const { return m_aTerrainYieldChanges; }  // REAL <yield>.city.terrains.<TERRAIN>
 	const IDValueMap<ReligionTypes, int>& getReligionChanges() const         { return m_religionChange; }          // REAL religion.city.<RELIGION>
-	const IDValueMap<BonusTypes, int>& getBonusHealthChanges() const         { return m_piBonusHealthChanges; }    // REAL health.city flat enabled BONUS
-	const IDValueMap<BonusTypes, int>& getBonusHappinessChanges() const      { return m_piBonusHappinessChanges; } // REAL happiness.city flat enabled BONUS
 	const IDValueMap<UnitCombatTypes, int>& getUnitCombatFreeExperience() const { return m_aUnitCombatFreeExperience; }  // REAL experience.city.unitCombats.<UC>
 	const IDValueMap<BuildingTypes, int>& getBuildingHappinessChanges() const { return m_aBuildingHappinessChanges; }   // REAL happiness.empire.buildings.<BUILDING>
 	const IDValueMap<ImprovementTypes, int>& getImprovementFreeSpecialists() const { return m_improvementFreeSpecialists; } // REAL freeSpecialists.city.any per:{IMPROVEMENT}
@@ -379,21 +440,9 @@ public:
 	const IDValueMap<UnitCombatTypes, int>& getUnitCombatExtraStrength() const { return m_aUnitCombatExtraStrength; }   // REAL strength.city.unitCombats.<UC>
 	const IDValueMap<UnitTypes, int>& getUnitProductionModifiers() const     { return m_aUnitProductionModifier; } // REAL buildRate.city.units.<UNIT>
 	const IDValueMap<BuildingTypes, CommerceArray>& getGlobalBuildingCommerceChanges() const { return m_aGlobalBuildingCommerceChanges; }  // REAL <commerce>.empire.buildings.<BUILDING>
-	const IDValueMap<TechTypes, YieldArray>& getTechYieldChanges100() const  { return m_techYieldChanges; }        // REAL <yield>.city flat enabled TECH (x100)
-	const IDValueMap<TechTypes, YieldArray>& getTechYieldModifiers() const   { return m_techYieldModifiers; }      // REAL <yield>.city percent enabled TECH
-	const IDValueMap<TechTypes, CommerceArray>& getTechCommerceChanges100() const { return m_techCommerceChanges; }// REAL <commerce>.city flat enabled TECH (x100)
-	const IDValueMap<TechTypes, CommerceArray>& getTechCommerceModifiers() const { return m_techCommerceModifiers; }// REAL <commerce>.city percent enabled TECH
-	const IDValueMap<ImprovementTypes, YieldArray>& getImprovementYieldChanges() const { return m_aImprovementYieldChanges; }  // REAL <yield>.city.improvements.<IMP>
-	const IDValueMap<ImprovementTypes, YieldArray>& getGlobalImprovementYieldChanges() const { return m_aGlobalImprovementYieldChanges; } // REAL <yield>.empire.improvements.<IMP>
-	// the doPostLoadCaching upgrade-chain expansion's writers (a building yield keyed to an improvement also
-	// lands on its upgrade DESCENDANTS -- the authored row keys the ancestor only)
-	void addImprovementYieldRow(ImprovementTypes eImp, const YieldArray& yields)       { m_aImprovementYieldChanges.addArrayValue(eImp, yields); }
-	void addGlobalImprovementYieldRow(ImprovementTypes eImp, const YieldArray& yields) { m_aGlobalImprovementYieldChanges.addArrayValue(eImp, yields); }
 	const IDValueMap<BuildingTypes, int>& getBuildingProductionModifiers() const { return m_aBuildingProductionModifier; }       // REAL buildRate.city.buildings.<BUILDING>
 	const IDValueMap<BuildingTypes, int>& getGlobalBuildingProductionModifiers() const { return m_aGlobalBuildingProductionModifier; } // REAL buildRate.empire.buildings.<BUILDING>
 	const IDValueMap<BuildingTypes, int>& getGlobalBuildingCostModifiers() const { return m_aGlobalBuildingCostModifier; }       // REAL costs.empire percent enabled BUILDING
-	const IDValueMap<TechTypes, int>& getTechHappinessChanges() const        { return m_aTechHappinessChanges; }   // REAL happiness.city flat enabled TECH
-	const IDValueMap<TechTypes, int>& getTechHealthChanges() const           { return m_aTechHealthChanges; }      // REAL health.city flat enabled TECH
 	const std::vector<ImprovementTypes>& getPrereqOrImprovements() const     { return m_prereqOrImprovement; }     // REAL requires.build OR IMPROVEMENT (plot)
 	const std::vector<BonusTypes>& getPrereqOrBonuses() const                { return m_aePrereqOrBonuses; }       // REAL requires.operate OR BONUS (trade|vicinity)
 	const std::vector<BonusTypes>& getPrereqOrVicinityBonuses() const        { return m_piPrereqOrVicinityBonuses; } // REAL requires.operate OR BONUS (vicinity connected)
@@ -421,14 +470,6 @@ public:
 	// list (behaviour-equivalent to the archived body over empty data). Bodies live in the .cpp (the `python` alias +
 	// boost::python come from the PCH). Exact archived signatures so the .def(&CvBuildingInfo::cyGet...) binds. ---
 	const python::list cyGetGlobalBuildingCommerceChanges() const;
-	const python::list cyGetTechYieldChanges100() const;
-	const python::list cyGetTechYieldModifiers() const;
-	const python::list cyGetTechCommerceChanges100() const;
-	const python::list cyGetTechCommerceModifiers() const;
-	const python::list cyGetTerrainYieldChanges() const;
-	const python::list cyGetPlotYieldChanges() const;
-	const python::list cyGetImprovementYieldChanges() const;
-	const python::list cyGetGlobalImprovementYieldChanges() const;
 	const python::list cyGetFreePromoTypes() const;
 
 	// --- STUB int* array getters -- NULL is the idiomatic "no data" sentinel these C2C accessors already use
@@ -436,10 +477,8 @@ public:
 	int* getYieldChangeArray() const { return NULL; }
 	int* getYieldPerPopChangeArray() const { return NULL; }
 	int* getYieldModifierArray() const { return NULL; }
-	int* getPowerYieldModifierArray() const { return NULL; }
 	int* getAreaYieldModifierArray() const { return NULL; }
 	int* getGlobalYieldModifierArray() const { return NULL; }
-	int* getRiverPlotYieldChangeArray() const { return NULL; }
 	int* getGlobalSeaPlotYieldChangeArray() const { return NULL; }
 	int* getCommerceChangeArray() const { return NULL; }
 	int* getCommercePerPopChangeArray() const { return NULL; }
@@ -449,11 +488,7 @@ public:
 	int* getStateReligionCommerceArray() const { return NULL; }
 	int* getSpecialistYieldChangeArray(int /*i*/) const { return NULL; }
 	int* getSpecialistCommerceChangeArray(int /*i*/) const { return NULL; }
-	int* getBonusYieldModifierArray(int /*i*/) const { return NULL; }
 	int* getBonusCommerceModifierArray(int /*i*/) const { return NULL; }
-	int* getBonusYieldChangesArray(int /*i*/) const { return NULL; }
-	int* getVicinityBonusYieldChangesArray(int /*i*/) const { return NULL; }
-	int* getBonusCommercePercentChangesArray(int /*i*/) const { return NULL; }
 	int* getTechSpecialistChangeArray(int /*i*/) const { return NULL; }
 	int* getLocalSpecialistYieldChangeArray(int /*i*/) const { return NULL; }
 	int* getLocalSpecialistCommerceChangeArray(int /*i*/) const { return NULL; }
@@ -468,28 +503,17 @@ public:
 	int getFreeSpecialistCount(int i) const         { return m_freeSpecialistCount.getValue((SpecialistTypes)i); }  // REAL freeSpecialists.city.<SPECIALIST>
 	int getCommerceHappiness(int i) const;                              // REAL commerceHappiness.city.<commerce>.flat
 	int getVictoryThreshold(int i) const { return mapGet(m_victoryThresholds, i); }   // REAL identity.victoryThresholds {VICTORY_X:n}
-	int getImprovementYieldChanges(int i, int j) const { return arrSlot(m_aImprovementYieldChanges, i, j, NUM_YIELD_TYPES); }   // REAL <yield>.city.improvements.<IMP>
 	int getSpecialistYieldChange(int /*i*/, int /*j*/) const   { return 0; }   // CURATOR-GAP: SpecialistYieldChanges dropped building-side (specialist-owned, curate_specialist)
 	int getSpecialistCommerceChange(int /*i*/, int /*j*/) const { return 0; }   // CURATOR-GAP: SpecialistCommerceChanges dropped building-side
-	int getBonusYieldModifier(int i, int j) const      { return arrSlot(m_bonusYieldModifier, i, j, NUM_YIELD_TYPES); }       // REAL <yield>.city percent enabled BONUS
 	int getBonusCommerceModifier(int /*i*/, int /*j*/) const   { return 0; }   // CURATOR-GAP: BonusCommerceModifiers (the rate modifier) not emitted by curate_building.py
-	int getBonusYieldChanges(int i, int j) const       { return arrSlot(m_bonusYieldChanges, i, j, NUM_YIELD_TYPES); }         // REAL <yield>.city flat enabled BONUS
-	int getVicinityBonusYieldChanges(int i, int j) const { return arrSlot(m_vicinityBonusYieldChanges, i, j, NUM_YIELD_TYPES); } // REAL <yield>.city flat enabled BONUS(vicinity connected)
-	int getBonusCommercePercentChanges(int i, int j) const { return arrSlot(m_bonusCommercePercentChanges, i, j, NUM_COMMERCE_TYPES); } // REAL <commerce>.city flat enabled BONUS (x100)
 	int getTechSpecialistChange(int i, int j) const    { return nestedGet(m_techSpecialistChange, i, j); }   // REAL allowedSpecialists.city.<SPECIALIST> enabled TECH
 	int getLocalSpecialistYieldChange(int /*i*/, int /*j*/) const  { return 0; }   // CURATOR-GAP: LocalSpecialistYieldChanges dropped building-side
 	int getLocalSpecialistCommerceChange(int /*i*/, int /*j*/) const { return 0; } // CURATOR-GAP: LocalSpecialistCommerceChanges dropped building-side
 	int getGlobalBuildingCommerceChange(BuildingTypes eB, CommerceTypes eC) const { return arrSlot(m_aGlobalBuildingCommerceChanges, (int)eB, (int)eC, NUM_COMMERCE_TYPES); }   // REAL <commerce>.empire.buildings.<BUILDING>
-	int getTechHappiness(TechTypes eTech) const { return m_aTechHappinessChanges.getValue(eTech); }   // REAL happiness.city flat enabled TECH
-	int getTechHealth(TechTypes eTech) const    { return m_aTechHealthChanges.getValue(eTech); }      // REAL health.city flat enabled TECH
 	bool isAnySpecialistYieldChanges() const        { return false; }   // CURATOR-GAP (dropped building-side)
 	bool isAnySpecialistCommerceChanges() const     { return false; }   // CURATOR-GAP
-	bool isAnyBonusYieldModifiers() const           { return !m_bonusYieldModifier.empty(); }
 	bool isAnyTechSpecialistChanges() const         { return !m_techSpecialistChange.empty(); }
 	bool isAnyBonusCommerceModifiers() const        { return false; }   // CURATOR-GAP (rate modifier not emitted)
-	bool isAnyBonusYieldChanges() const             { return !m_bonusYieldChanges.empty(); }
-	bool isAnyVicinityBonusYieldChanges() const     { return !m_vicinityBonusYieldChanges.empty(); }
-	bool isAnyBonusCommercePercentChanges() const   { return !m_bonusCommercePercentChanges.empty(); }
 	bool isAnyLocalSpecialistYieldChanges() const   { return false; }   // CURATOR-GAP
 	bool isAnyLocalSpecialistCommerceChanges() const { return false; }  // CURATOR-GAP
 
@@ -513,9 +537,9 @@ public:
 	int getUnitCombatRetrainType(int /*i*/) const   { return -1; }   // CURATOR-GAP zero-corpus: identity.unitCombatRetrainTypes emitted by ID_LIST, no building authors it
 	int getNumUnitCombatRetrainTypes() const        { return 0; }
 	bool isUnitCombatRetrainType(int /*i*/) const   { return false; }
-	int getMayDamageAttackingUnitCombatType(int i) const { return (i >= 0 && i < (int)m_aiMayDamageUnitCombats.size()) ? m_aiMayDamageUnitCombats[i] : -1; }   // defense.city.counterDamage.units.unitCombats[]
-	int getNumMayDamageAttackingUnitCombatTypes() const  { return (int)m_aiMayDamageUnitCombats.size(); }
-	bool isMayDamageAttackingUnitCombatType(int i) const { for (size_t j = 0; j < m_aiMayDamageUnitCombats.size(); ++j) if (m_aiMayDamageUnitCombats[j] == i) return true; return false; }
+	int getMayDamageAttackingUnitCombatType(int i) const { return (i >= 0 && i < (int)m_counterDamage.unitCombats.size()) ? m_counterDamage.unitCombats[i] : -1; }   // defense.city.counterDamage.units.unitCombats[]
+	int getNumMayDamageAttackingUnitCombatTypes() const  { return (int)m_counterDamage.unitCombats.size(); }
+	bool isMayDamageAttackingUnitCombatType(int i) const { for (size_t j = 0; j < m_counterDamage.unitCombats.size(); ++j) if (m_counterDamage.unitCombats[j] == i) return true; return false; }
 	int getNumUnitCombatDefenseAgainstModifiers() const { return idvCount(m_unitCombatDefenseAgainst); }
 	int getUnitCombatDefenseAgainstModifier(int i) const { return m_unitCombatDefenseAgainst.getValue((UnitCombatTypes)i); }   // REAL defense.city.unitCombats.<UC>
 	int getNumUnitCombatProdModifiers() const       { return idvCount(m_unitCombatProdModifier); }
@@ -598,6 +622,20 @@ private:
 	CvJsonBoolBlock m_attributes;
 	CvJsonBoolBlock m_capabilities;
 
+	// --- the grouped SCALAR storage (patterns.md § coherent surface): single-tier flat arrays, one direct index
+	// per read, x100-native; materialized once at mapFrom. Replaces the ~60 scattered legacy scalar members. ---
+	int m_defense[NUM_DEFENSE_KINDS];
+	int m_maintenance[NUM_MAINTENANCE_KINDS];
+	int m_tradeRoutes[NUM_TRADE_ROUTE_KINDS];
+	int m_greatPeople[NUM_GREAT_PEOPLE_KINDS];
+	int m_warWeariness[NUM_WAR_WEARINESS_KINDS];
+	int m_hurry[NUM_HURRY_KINDS];
+	int m_capture[NUM_CITY_CAPTURE_KINDS];
+	int m_revolution[NUM_REVOLUTION_KINDS];
+	int m_buildRate[NUM_BUILD_RATE_KINDS];
+	int m_scalars[NUM_BUILDING_SCALAR_KINDS];
+	int m_wellbeing[NUM_WELLBEING_KINDS];
+
 	// --- typed members mapped from the JSON (REAL data) ---
 	std::string m_szArtDefineTag;   // world.art.icon (ART_DEF_* tag; the ARTFILEMGR lookup key)
 	std::string m_szMovieDefineTag; // ui.art.movie.defineTag (ART_DEF_MOVIE_* tag)
@@ -617,29 +655,11 @@ private:
 
 	// --- MATERIALIZED §6 scalar/positional members (mapFrom-filled via JsonModScan, same address table as the old
 	// per-call reads; the getters are bare member reads -- per-call string-address walks are banned from getters) ---
-	int m_iHappiness, m_iAreaHappiness, m_iGlobalHappiness, m_iHealth, m_iAreaHealth, m_iGlobalHealth;
-	int m_aiYieldChange[NUM_YIELD_TYPES], m_aiYieldModifier[NUM_YIELD_TYPES], m_aiAreaYieldModifier[NUM_YIELD_TYPES];
-	int m_aiGlobalYieldModifier[NUM_YIELD_TYPES], m_aiGlobalSeaPlotYieldChange[NUM_YIELD_TYPES];
-	int m_aiCommerceChange[NUM_COMMERCE_TYPES], m_aiCommerceModifier[NUM_COMMERCE_TYPES], m_aiGlobalCommerceModifier[NUM_COMMERCE_TYPES];
-	int m_aiSpecialistExtraCommerce[NUM_COMMERCE_TYPES], m_aiCommerceHappiness[NUM_COMMERCE_TYPES];
-	int m_aiCommerceChangeDoubleTime[NUM_COMMERCE_TYPES], m_aiStateReligionCommerce[NUM_COMMERCE_TYPES];
-	int m_iEnemyWarWearinessModifier, m_iOccupationTimeModifier, m_iHealRateChange, m_iFoodKept;
-	int m_iGreatPeopleRateChange, m_iGreatPeopleRateModifier, m_iGlobalGreatPeopleRateModifier;
-	int m_iGreatGeneralRateModifier, m_iDomesticGreatGeneralRateModifier;
-	int m_iMaintenanceModifier, m_iGlobalMaintenanceModifier, m_iAreaMaintenanceModifier, m_iOtherAreaMaintenanceModifier;
-	int m_iDistanceMaintenanceModifier, m_iNumCitiesMaintenanceModifier, m_iCoastalDistanceMaintenanceModifier, m_iConnectedCityMaintenanceModifier;
-	int m_iInflationModifier, m_iWarWearinessModifier, m_iGlobalWarWearinessModifier;
-	int m_iHurryCostModifier, m_iGlobalHurryModifier, m_iHurryAngerModifier;
-	int m_iMilitaryProductionModifier, m_iSpaceProductionModifier, m_iGlobalSpaceProductionModifier, m_iWorkerSpeedModifier;
-	int m_iTradeRoutes, m_iCoastalTradeRoutes, m_iGlobalTradeRoutes, m_iWorldTradeRoutes, m_iTradeRouteModifier, m_iForeignTradeRouteModifier;
-	int m_iFreeExperience, m_iGlobalFreeExperience, m_iFreeSpecialist, m_iAreaFreeSpecialist, m_iGlobalFreeSpecialist;
-	int m_iAnarchyModifier, m_iGoldenAgeModifier, m_iPopulationgrowthratepercentage, m_iGlobalPopulationgrowthratepercentage;
-	int m_iRevIdxLocal, m_iRevIdxNational, m_iRevIdxDistanceModifier, m_iInsidiousness, m_iInvestigation;
-	int m_iEspionageDefenseModifier, m_iUnitUpgradePriceModifier;
-	int m_iDefenseModifier, m_iBombardDefenseModifier, m_iAllCityDefenseModifier, m_iNukeModifier, m_iAirModifier;
-	int m_iMinDefense, m_iNoEntryDefenseLevel, m_iLocalDynamicDefense, m_iRiverDefensePenalty;
-	int m_iBuildingDefenseRecoverySpeedModifier, m_iCityDefenseRecoverySpeedModifier, m_iAdjacentDamagePercent;
-	int m_iNationalCaptureProbabilityModifier, m_iNationalCaptureResistanceModifier, m_iLocalCaptureProbabilityModifier, m_iLocalCaptureResistanceModifier;
+	int m_flatYields[NUM_YIELD_TYPES], m_yieldModifiers[NUM_YIELD_TYPES], m_areaYieldModifiers[NUM_YIELD_TYPES];
+	int m_globalYieldModifiers[NUM_YIELD_TYPES], m_seaPlotYields[NUM_YIELD_TYPES];
+	int m_flatCommerce[NUM_COMMERCE_TYPES], m_commerceModifiers[NUM_COMMERCE_TYPES], m_globalCommerceModifiers[NUM_COMMERCE_TYPES];
+	int m_specialistCommerce[NUM_COMMERCE_TYPES], m_commerceHappiness[NUM_COMMERCE_TYPES];
+	int m_commerceDoubleTime[NUM_COMMERCE_TYPES], m_stateReligionCommerce[NUM_COMMERCE_TYPES];
 	bool m_bGrantsGoldenAge;   // grants.goldenAge flag (materialized at mapFrom)
 	int m_iGrantPopulationCity, m_iGrantPopulationEmpire, m_iGrantFreeTechs, m_iGrantFreeSpecialTech;   // the first-build provisions (materialized at mapFrom)
 
@@ -648,11 +668,7 @@ private:
 	std::vector<ConstructRequirement> m_constructRequirements;
 	std::vector<BonusTypes> m_consumptionRelevantBonuses;
 	IDValueMap<BonusTypes, int> m_freeBonuses;
-	IDValueMap<PlotTypes, YieldArray> m_aPlotYieldChanges;
-	IDValueMap<TerrainTypes, YieldArray> m_aTerrainYieldChanges;
 	IDValueMap<ReligionTypes, int> m_religionChange;
-	IDValueMap<BonusTypes, int> m_piBonusHealthChanges;
-	IDValueMap<BonusTypes, int> m_piBonusHappinessChanges;
 	IDValueMap<UnitCombatTypes, int> m_aUnitCombatFreeExperience;
 	IDValueMap<BuildingTypes, int> m_aBuildingHappinessChanges;
 	IDValueMap<ImprovementTypes, int> m_improvementFreeSpecialists;
@@ -660,17 +676,9 @@ private:
 	IDValueMap<UnitCombatTypes, int> m_aUnitCombatExtraStrength;
 	IDValueMap<UnitTypes, int> m_aUnitProductionModifier;
 	IDValueMap<BuildingTypes, CommerceArray> m_aGlobalBuildingCommerceChanges;
-	IDValueMap<TechTypes, YieldArray> m_techYieldChanges;
-	IDValueMap<TechTypes, YieldArray> m_techYieldModifiers;
-	IDValueMap<TechTypes, CommerceArray> m_techCommerceChanges;
-	IDValueMap<TechTypes, CommerceArray> m_techCommerceModifiers;
-	IDValueMap<ImprovementTypes, YieldArray> m_aImprovementYieldChanges;
-	IDValueMap<ImprovementTypes, YieldArray> m_aGlobalImprovementYieldChanges;
 	IDValueMap<BuildingTypes, int> m_aBuildingProductionModifier;
 	IDValueMap<BuildingTypes, int> m_aGlobalBuildingProductionModifier;
 	IDValueMap<BuildingTypes, int> m_aGlobalBuildingCostModifier;
-	IDValueMap<TechTypes, int> m_aTechHappinessChanges;
-	IDValueMap<TechTypes, int> m_aTechHealthChanges;
 	std::vector<ImprovementTypes> m_prereqOrImprovement;
 	std::vector<BonusTypes> m_aePrereqOrBonuses;
 	std::vector<BonusTypes> m_piPrereqOrVicinityBonuses;
@@ -692,7 +700,6 @@ private:
 	int m_iMinAreaSize, m_iMinLatitude, m_iMaxLatitude, m_iNumCitiesPrereq, m_iNumTeamsPrereq, m_iPrereqPopulation;
 	int m_iVictoryPrereq, m_iHolyCity, m_iPrereqStateReligion, m_iPrereqReligion, m_iPrereqCorporation;
 	int m_iPrereqCultureLevel, m_iPrereqAnyoneBuilding, m_iPrereqAndTech, m_iPrereqAndBonus, m_iPrereqVicinityBonus, m_iPrereqRawVicinityBonus;
-	int m_iStateReligionHappiness;
 	bool m_bNeedStateReligionInCity, m_bWater, m_bRiver, m_bFreshWater, m_bNoHolyCity, m_bPower;
 	std::vector<int> m_prereqInCityBuildings, m_prereqNotInCityBuildings, m_prereqOrBuildings, m_replacedBuildings;
 	std::vector<int> m_prereqAndCivics, m_prereqOrCivics, m_prereqAndTerrains, m_prereqOrTerrains, m_prereqOrFeatures;
@@ -702,10 +709,6 @@ private:
 	std::vector<HealUnitCombat> m_healUnitCombats;         // grants.repeatable[] unitCombat heal
 
 	// ===== GROUP 2: keyed-modifier reconstruction (new backing maps; the reused maps are declared above) =====
-	IDValueMap<BonusTypes, YieldArray> m_bonusYieldChanges;        // <yield>.city flat enabled BONUS
-	IDValueMap<BonusTypes, YieldArray> m_bonusYieldModifier;       // <yield>.city percent enabled BONUS
-	IDValueMap<BonusTypes, YieldArray> m_vicinityBonusYieldChanges;// <yield>.city flat enabled BONUS(vicinity connected)
-	IDValueMap<BonusTypes, CommerceArray> m_bonusCommercePercentChanges; // <commerce>.city flat enabled BONUS (x100)
 	IDValueMap<BonusTypes, int> m_bonusDefenseChanges;            // defense.city.bonuses.<BONUS>
 	IDValueMap<BonusTypes, int> m_bonusProductionModifier;        // buildRate.self percent enabled BONUS
 	IDValueMap<DomainTypes, int> m_domainFreeExperience;          // experience.city.domains.<DOMAIN>
@@ -714,8 +717,12 @@ private:
 	IDValueMap<UnitCombatTypes, int> m_unitCombatDefenseAgainst;  // defense.city.unitCombats.<UC>
 	IDValueMap<SpecialistTypes, int> m_specialistCount;          // allowedSpecialists.city.<SPECIALIST>
 	IDValueMap<SpecialistTypes, int> m_freeSpecialistCount;     // freeSpecialists.city.<SPECIALIST>
-	int m_powerYieldModifier[NUM_YIELD_TYPES];                    // <yield>.city percent enabled HAS_POWER
 	std::map<int, std::map<int, int> > m_techSpecialistChange;    // tech -> specialist -> count (allowedSpecialists enabled TECH)
+
+	// the CONDITIONED own-output index (patterns.md § coherent surface): every predicate-gated yield/commerce/wellbeing
+	// deposit as a typed pointer into m_modifiers' owned entries (materialized at mapFrom). The (CityContext) getters
+	// sum the entries whose condition holds -- folds the legacy power/river/tech/bonus-gated maps, x100-native.
+	std::vector<CondDeposit> m_cond;
 };
 
 #endif // CV_JSON_BUILDING_INFO_H

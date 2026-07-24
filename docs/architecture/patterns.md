@@ -169,8 +169,11 @@ group's natural index** — never N individual getters for a groupable set. This
   `m_properties[id]`; the key is data, not a nesting tier. **No member is a map→map→value or a struct-of-fields.**
 - **Getters are parameterized per group and read DIRECTLY** — `getFlatYield(YIELD)` → `m_flatYields[y]`,
   `getYieldModifier(YIELD)`, `getFlatCommerce(COMMERCE)`, `getWellbeing(KIND)`, `getProperty(id)`,
-  `getScalar(SCALAR)`; booleans by `hasAttribute(id)` / `hasCapability(id)` / `hasSkill(id)` / `hasPolicy(id)`. A
-  read is a bare indexed fetch — **no per-call string address, no map walk, no channel resolution**
+  `getScalar(SCALAR)`; classification booleans by a singular id check + a plural collection, the **name encoding
+  hold-vs-provide** (owner, json.md §8): what the entity HAS is `hasAttribute(id)`/`hasAttributes()` (building) and
+  `hasSkill(id)`/`hasTag(id)` (unit); what it PROVIDES to something else is `providesCapability(id)`/
+  `providesCapabilities()` (to the empire) and `providesSkill(id)` (a grantor handing a skill on). A read is a bare
+  indexed fetch — **no per-call string address, no map walk, no channel resolution**
   ([DEC-materialize-at-mapfrom](decisions.md#dec-materialize-at-mapfrom)); we don't pay a lookup we don't have to.
 - **Every getter IS ×100** ([DEC-fixedpoint-x100](decisions.md#dec-fixedpoint-x100)) — no `getX`/`getX100` pair, no
   `100` suffix; the name says the VALUE, never the scale (always ×100). A reader wanting human does ÷100 at the
