@@ -99,11 +99,13 @@ SCALAR_FAMILIES = {
     "iSpaceProductionModifier": ("buildRate", "city", "space", "percent"),
     "iGlobalSpaceProductionModifier": ("buildRate", "empire", "space", "percent"),
     "iWorkerSpeedModifier": ("workRate", "empire", None, "percent"),
-    # trade routes -- ONE family with conditions (ruling 11): kinds routes (flat count) / modifier (route-yield %)
-    # / max (cap). The coastal/foreign variants are CONDITIONS -> handled in curate() as conditioned deposits.
-    "iTradeRoutes": ("tradeRoutes", "city", "routes", "flat"),
-    "iGlobalTradeRoutes": ("tradeRoutes", "empire", "routes", "flat"),
-    "iWorldTradeRoutes": ("tradeRoutes", "world", "routes", "flat"),
+    # trade routes -- ONE family with conditions (ruling 11): the route COUNT is the MEMBERLESS scope-wide
+    # amount (kind 0 IS the count -- the reconciliation micro-fix; the transient `routes` member collided with
+    # the ROUTE_*-keyed target-container token); kinds modifier (route-yield %) / max (cap). The coastal/
+    # foreign variants are CONDITIONS -> handled in curate() as conditioned deposits.
+    "iTradeRoutes": ("tradeRoutes", "city", None, "flat"),
+    "iGlobalTradeRoutes": ("tradeRoutes", "empire", None, "flat"),
+    "iWorldTradeRoutes": ("tradeRoutes", "world", None, "flat"),
     "iTradeRouteModifier": ("tradeRoutes", "city", "modifier", "percent"),
     # experience / free specialists
     "iExperience": ("experience", "city", None, "flat"),
@@ -1377,11 +1379,12 @@ def curate(typ, rec, store):
     oam = _int(rec, "iOtherAreaMaintenanceModifier")
     if oam:
         _inject_cond(fams, "maintenance", "empire", "percent", oam, "!IS_HOME_AREA")
-    # tradeRoutes conditioned variants (ruling 11): coastal routes -> routes kind gated HAS_COAST; the foreign
-    # route-yield % -> modifier kind gated IS_FOREIGN (engine: getTeam() != other team, CvCity.cpp:11539-11541).
+    # tradeRoutes conditioned variants (ruling 11): coastal routes -> the MEMBERLESS route count gated
+    # HAS_COAST; the foreign route-yield % -> modifier kind gated IS_FOREIGN (engine: getTeam() != other team,
+    # CvCity.cpp:11539-11541).
     ctr = _int(rec, "iCoastalTradeRoutes")
     if ctr:
-        _inject_cond(fams, "tradeRoutes", "empire", "flat", ctr, "HAS_COAST", "routes")
+        _inject_cond(fams, "tradeRoutes", "empire", "flat", ctr, "HAS_COAST")
     ftr = _int(rec, "iForeignTradeRouteModifier")
     if ftr:
         _inject_cond(fams, "tradeRoutes", "city", "percent", ftr, "IS_FOREIGN", "modifier")

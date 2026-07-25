@@ -136,9 +136,7 @@
  },
  "tradeRoutes": {
   "city": {
-   "routes": {
-    "flat": 2
-   }
+   "flat": 2
   }
  },
  "PROPERTY_EDUCATION": {

@@ -27,9 +27,7 @@
  },
  "tradeRoutes": {
   "world": {
-   "routes": {
-    "flat": 1
-   }
+   "flat": 1
   }
  },
  "research": {

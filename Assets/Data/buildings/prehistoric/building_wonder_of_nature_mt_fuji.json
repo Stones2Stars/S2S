@@ -57,9 +57,7 @@
  },
  "tradeRoutes": {
   "city": {
-   "routes": {
-    "flat": 1
-   }
+   "flat": 1
   }
  },
  "PROPERTY_TOURISM": {

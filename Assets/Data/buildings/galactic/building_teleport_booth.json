@@ -109,9 +109,7 @@
  },
  "tradeRoutes": {
   "city": {
-   "routes": {
-    "flat": 5
-   },
+   "flat": 5,
    "modifier": {
     "percent": 60
    }

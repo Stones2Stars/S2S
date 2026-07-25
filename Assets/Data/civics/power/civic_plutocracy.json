@@ -88,9 +88,7 @@
  },
  "tradeRoutes": {
   "empire": {
-   "routes": {
-    "flat": 2
-   }
+   "flat": 2
   }
  },
  "revolution": {

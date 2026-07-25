@@ -26,9 +26,7 @@
  },
  "tradeRoutes": {
   "empire": {
-   "routes": {
-    "flat": 3
-   }
+   "flat": 3
   }
  },
  "cost": {

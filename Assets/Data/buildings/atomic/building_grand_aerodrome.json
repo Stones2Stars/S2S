@@ -45,9 +45,7 @@
  },
  "tradeRoutes": {
   "city": {
-   "routes": {
-    "flat": 3
-   }
+   "flat": 3
   }
  },
  "PROPERTY_AIR_POLLUTION": {

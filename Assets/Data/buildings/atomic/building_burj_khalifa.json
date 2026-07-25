@@ -57,14 +57,12 @@
  },
  "tradeRoutes": {
   "empire": {
-   "routes": {
-    "flat": [
-     {
-      "value": 1,
-      "enabled": "HAS_COAST"
-     }
-    ]
-   }
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_COAST"
+    }
+   ]
   }
  },
  "PROPERTY_TOURISM": {

@@ -90,9 +90,7 @@
  },
  "tradeRoutes": {
   "empire": {
-   "routes": {
-    "flat": 1
-   },
+   "flat": 1,
    "max": {
     "flat": 2
    },

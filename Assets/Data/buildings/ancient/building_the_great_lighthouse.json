@@ -51,14 +51,12 @@
  },
  "tradeRoutes": {
   "empire": {
-   "routes": {
-    "flat": [
-     {
-      "value": 2,
-      "enabled": "HAS_COAST"
-     }
-    ]
-   }
+   "flat": [
+    {
+     "value": 2,
+     "enabled": "HAS_COAST"
+    }
+   ]
   }
  },
  "PROPERTY_FLAMMABILITY": {

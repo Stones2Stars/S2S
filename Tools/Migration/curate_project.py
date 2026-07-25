@@ -64,7 +64,7 @@ FAMILIES = {
     "iGlobalHealth":                  ("health",      "empire", None,               "flat"),
     "iWorldHappiness":                ("happiness",   "world",  None,               "flat"),
     "iWorldHealth":                   ("health",      "world",  None,               "flat"),
-    "iWorldTradeRoutes":              ("tradeRoutes", "world",  "routes",           "flat"),   # ruling 11: the flat count kind is `routes`
+    "iWorldTradeRoutes":              ("tradeRoutes", "world",  None,               "flat"),   # ruling 11: kind 0 IS the route count (memberless -- the reconciliation micro-fix)
 }
 # CommerceModifiers: SPLIT per-identifier commerce families (gold/research/culture/espionage), empire/percent.
 SPLIT_COMMERCE = {"CommerceModifiers": ("empire", "percent")}

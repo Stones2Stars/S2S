@@ -72,9 +72,10 @@ SCALAR = {
     # iFreeUnitUpkeep{Military,Civilian}PopPercent are NOT here: converted per the batch-4 owner ruling to
     # subtractive per-population deposits on the same kinds -- handled explicitly in curate(). See the
     # docstring note "free-upkeep model change".
-    # tradeRoutes is ONE family with conditions (ruling 11): kinds routes/modifier/max; the foreign/sharedCivic
+    # tradeRoutes is ONE family with conditions (ruling 11): the route COUNT is the MEMBERLESS scope-wide
+    # amount (kind 0 IS the count -- the reconciliation micro-fix); kinds modifier/max; the foreign/sharedCivic
     # variants are CONDITIONS -> SCALAR_COND below.
-    "iTradeRoutes":                    ("tradeRoutes", "empire", "routes",     "flat"),
+    "iTradeRoutes":                    ("tradeRoutes", "empire", "",           "flat"),
     "iHurryCostModifier":              ("costs", "empire", "hurry",     "percent"),   # ruling 18: hurry.cost -> costs.hurry (CvCity::getHurryCostModifier leg)
     "iHurryInflationModifier":         ("hurry", "empire", "inflation", "percent"),
     "iWorkerSpeedModifier":            ("workRate", "empire", "", "percent"),
