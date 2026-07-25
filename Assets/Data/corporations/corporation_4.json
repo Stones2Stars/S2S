@@ -67,7 +67,7 @@
    "corporation": {
     "flat": [
      {
-      "value": 100,
+      "value": 1,
       "enabled": {
        "HAS_CORPORATION": "CORPORATION_4"
       },

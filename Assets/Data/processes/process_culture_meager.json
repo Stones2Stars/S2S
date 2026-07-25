@@ -1,10 +1,5 @@
 {
  "type": "PROCESS_CULTURE_MEAGER",
- "culture": {
-  "city": {
-   "percent": 30
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Process/processculturemeagre.dds"
@@ -12,6 +7,9 @@
  },
  "identity": {
   "description": "TXT_KEY_PROCESS_MEAGER_CULTURE"
+ },
+ "conversion": {
+  "culture": 30
  },
  "obsoletedBy": {
   "techs": [

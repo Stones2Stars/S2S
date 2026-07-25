@@ -1,10 +1,5 @@
 {
  "type": "PROCESS_RESEARCH_MEAGER",
- "research": {
-  "city": {
-   "percent": 30
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Process/processresearchmeagre.dds"
@@ -12,6 +7,9 @@
  },
  "identity": {
   "description": "TXT_KEY_PROCESS_MEAGER_RESEARCH"
+ },
+ "conversion": {
+  "research": 30
  },
  "obsoletedBy": {
   "techs": [

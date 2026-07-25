@@ -1,10 +1,5 @@
 {
  "type": "PROCESS_SPY",
- "espionage": {
-  "city": {
-   "percent": 50
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Process/SpyProcess.dds"
@@ -12,5 +7,8 @@
  },
  "identity": {
   "description": "TXT_KEY_PROCESS_SPY"
+ },
+ "conversion": {
+  "espionage": 50
  }
 }

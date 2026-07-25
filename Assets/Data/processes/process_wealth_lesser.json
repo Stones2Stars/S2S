@@ -1,10 +1,5 @@
 {
  "type": "PROCESS_WEALTH_LESSER",
- "gold": {
-  "city": {
-   "percent": 40
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/Process/processwealthlesser.dds"
@@ -12,6 +7,9 @@
  },
  "identity": {
   "description": "TXT_KEY_PROCESS_LESSER_WEALTH"
+ },
+ "conversion": {
+  "gold": 40
  },
  "obsoletedBy": {
   "techs": [

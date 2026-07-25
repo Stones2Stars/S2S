@@ -136,7 +136,13 @@ def _apply_family(fam, spec, c, typ, per_bonus):
     else:
         t = engine.text(c)
         if engine.is_int(t) and int(t) != 0:
-            _put_entry(fam, family, scope, member, unit, _entry(int(t), typ, per))
+            # The one perbonus SCALAR row is iMaintenance, and it is x100 in the legacy XML: the engine lands
+            # getMaintenance() * numBonuses * worldSize% / 100 DIRECTLY in the Times100 accumulator
+            # (calculateCorporationMaintenanceTimes100, CvCity.cpp:7824-7830, beside 100*HeadquarterCommerce),
+            # so XML 100 = 1.00 gold per prereq bonus. De-scale to human (readJson re-applies x100); leaving it
+            # raw double-scaled the compiled deposit to 10000 (json.md par.3.6: a x100 value in JSON is a bug).
+            vv = descale100(int(t)) if perbonus else int(t)
+            _put_entry(fam, family, scope, member, unit, _entry(vv, typ, per))
 
 
 def _excludes(node):

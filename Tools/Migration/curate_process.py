@@ -63,6 +63,19 @@ def _tech_prereq(store, typ):
 
 
 def post_process(typ, obj, rec, store):
+    # Item-18 re-home (OWNER CONFIRMED, reconciliation pass): a process is a hammers->commerce CONVERSION (the
+    # idle-production fallback), NOT a commerce-modifier deposit -- the shared-family authoring (the 2026-06-15
+    # option-b deferral above) moves to the json.md par.9 `conversion` section, hurry's existing home (keys per
+    # commerce channel, human values: PROCESS_WEALTH -> conversion:{gold:50}). The mapping channel row still
+    # CLASSIFIES the XML tag; this hook relocates the emitted split families into the bespoke block.
+    conversion = OrderedDict()
+    for channel in ("gold", "research", "culture", "espionage"):
+        fam = obj.get(channel)
+        if isinstance(fam, dict) and isinstance(fam.get("city"), dict) and "percent" in fam["city"]:
+            conversion[channel] = fam["city"]["percent"]
+            del obj[channel]
+    if conversion:
+        obj["conversion"] = conversion
     for chain in CHAINS:
         if typ in chain:
             later = [_tech_prereq(store, p) for p in chain[chain.index(typ) + 1:]]

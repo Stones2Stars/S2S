@@ -48,7 +48,7 @@
    "corporation": {
     "flat": [
      {
-      "value": 50,
+      "value": 0.5,
       "enabled": {
        "HAS_CORPORATION": "CORPORATION_MAPSTER"
       },
