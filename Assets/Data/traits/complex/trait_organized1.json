@@ -81,7 +81,7 @@
     "flat": [
      5,
      {
-      "value": -15,
+      "value": 15,
       "per": {
        "type": "POPULATION",
        "each": 100

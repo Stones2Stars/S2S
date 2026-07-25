@@ -100,7 +100,7 @@
    "freeCivilian": {
     "flat": [
      {
-      "value": 15,
+      "value": -15,
       "per": {
        "type": "POPULATION",
        "each": 100
@@ -111,7 +111,7 @@
    "freeMilitary": {
     "flat": [
      {
-      "value": 15,
+      "value": -15,
       "per": {
        "type": "POPULATION",
        "each": 100

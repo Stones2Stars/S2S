@@ -38,7 +38,7 @@
    "freeMilitary": {
     "flat": [
      {
-      "value": -30,
+      "value": 30,
       "per": {
        "type": "POPULATION",
        "each": 100

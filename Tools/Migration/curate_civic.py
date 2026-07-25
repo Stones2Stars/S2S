@@ -25,11 +25,13 @@ Curator batch 4 (info-rebuild.md rulings 25/26/27 + the free-upkeep owner ruling
   blocked constant-pair; see the SCALAR note for the engine math).
 - R27 route yields: TradeYieldModifiers -> tradeRoutes.empire.modifier.<channel>.percent for ALL channels
   (the channel axis on the modifier kind; channel-agnostic totalTradeModifier legs stay bare).
-- FREE-UPKEEP MODEL CHANGE (owner ruling, batch 4): iFreeUnitUpkeep{Military,Civilian}PopPercent convert
-  UNCONDITIONALLY to subtractive per-population deposits {-P, per:{POPULATION, each:100}} on the existing
-  freeMilitary/freeCivilian kinds, floored at 0 via family-combine floor metadata (modifier.md 2 min-member
-  mechanism, C++ leg pending) -- an INTENTIONAL divergence from the legacy getModifiedIntValue rounding
-  (its asymmetric mod<0 branch is not chased; do NOT try to restore bit-parity with the old helper).
+- FREE-UPKEEP MODEL CHANGE (owner rulings, batch 4 + 4b sign normalization): the freeMilitary/freeCivilian
+  kinds carry ONE FREE-AMOUNT CONVENTION -- positive = free upkeep granted, negative = free allowance
+  reduced; entries sum and the engine nets max(0, upkeep - SUMfree) with the >=0 floors as family-combine
+  floor metadata (modifier.md 2 min-member mechanism, C++ leg pending). iFreeUnitUpkeep*PopPercent convert
+  UNCONDITIONALLY to per-population deposits {P, per:{POPULATION, each:100}} keeping P's own sign -- an
+  INTENTIONAL divergence from the legacy getModifiedIntValue rounding (its asymmetric mod<0 branch is not
+  chased; do NOT try to restore bit-parity with the old helper).
 
 Other: TechPrereq -> DROP (store inverts to tech.enables.civics). SpecialistYield/CommercePercentChanges ->
 DROP (already folded onto the specialist by curate_specialist — double-author). Entity-keyed maps
@@ -413,19 +415,20 @@ def curate(typ, rec, store):
         elif tag in ("iFreeUnitUpkeepMilitaryPopPercent", "iFreeUnitUpkeepCivilianPopPercent"):
             v = _num(t)
             if v not in (None, 0, 0.0):
-                # batch-4 owner ruling (free-upkeep model change): the pop-scaled free unit upkeep converts
-                # UNCONDITIONALLY as a subtractive per-population deposit on the existing freeMilitary/
-                # freeCivilian kinds: {-P, per:{POPULATION, each:100}} (engine PER_100_POP semantics --
-                # the civic's marginal free upkeep is pop x P / 100, CvPlayer.cpp:10218-10226 via
-                # getModifiedIntValue(totalPopulation, P)). This is an INTENTIONAL model change from the
-                # legacy getModifiedIntValue rounding (the asymmetric mod<0 branch v x 100/(100-mod) is NOT
-                # chased -- the additive linear model is the ruled shape; validation.md attributed-
-                # intentional class). The engine's max(0, .) floors (free >= 0, net upkeep >= 0) live as
-                # FAMILY-COMBINE FLOOR METADATA (the modifier.md 2 min-member mechanism), never in the
-                # data -- the combine-side floor leg is on the C++ worklist.
+                # batch-4/4b owner ruling (free-upkeep model change + sign convention): the pop-scaled free
+                # unit upkeep converts UNCONDITIONALLY as a per-population deposit on the freeMilitary/
+                # freeCivilian kinds under the ONE FREE-AMOUNT CONVENTION -- positive = free upkeep GRANTED,
+                # negative = free allowance REDUCED, entries sum, the engine nets max(0, upkeep - SUMfree)
+                # with the >=0 floors as FAMILY-COMBINE FLOOR METADATA (the modifier.md 2 min-member
+                # mechanism; combine-side C++ leg pending). So the entry carries the legacy P's OWN sign:
+                # {P, per:{POPULATION, each:100}} (engine PER_100_POP semantics -- the source's marginal
+                # free upkeep is pop x P / 100, CvPlayer.cpp:10218-10226 via
+                # getModifiedIntValue(totalPopulation, P): P>0 grants, P<0 shrinks). INTENTIONAL model
+                # change from the legacy getModifiedIntValue rounding (the asymmetric mod<0 branch
+                # v x 100/(100-mod) is NOT chased -- additive linear is the ruled shape).
                 kind = "freeMilitary" if tag == "iFreeUnitUpkeepMilitaryPopPercent" else "freeCivilian"
                 node = fam.setdefault("upkeep", {}).setdefault("empire", {}).setdefault(kind, {})
-                entry = OrderedDict([("value", -v),
+                entry = OrderedDict([("value", v),
                                      ("per", OrderedDict([("type", "POPULATION"), ("each", 100)]))])
                 cur = node.get("flat")
                 node["flat"] = [entry] if cur is None else (cur + [entry] if isinstance(cur, list) else [cur, entry])
