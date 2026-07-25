@@ -5,7 +5,7 @@
 juncture (out of scope for #428). Because of that, the documentation below is deliberately VERBOSE about WHAT
 EACH FIELD CURRENTLY MEANS, so a later structural pass has the full picture. This migration only faithfully
 carries the present meaning into the locked shape; it does NOT fix the awkward parts (the human/AI duality, the
-own-vs-game-handicap sourcing, the meta `perEra` ramp, the provisional AI-economy family names). Treat the
+own-vs-game-handicap sourcing, the provisional AI-economy family names). Treat the
 current structure as a faithful snapshot to improve later, not as a settled design.
 
 FLAT FAMILY structure: there is NO `modifiers` wrapper. Each modifier FAMILY — the *kind* of thing modified —
@@ -37,9 +37,10 @@ WHAT EACH FAMILY MEANS (current behaviour — the meanings that must survive the
 - the ONE `costs` family (ruling 18, info-rebuild.md): `costs.empire.{research,train,construct,create,upgrade}
   .ai.percent` + `costs.world.{train,construct,create}.ai.percent` (the retired world*-prefixed kinds on the
   scope axis -- the engine applies them to world-class targets). All AI-only, raw 100-based knobs.
-- `perEra.empire.ai.percent` — META: a per-era ramp applied to the WHOLE AI-economy family (× current era). A
-  modifier-of-modifiers — LEFT AS-IS (ruling-14 verify: it ramps ~10 kinds across costs/upkeep/growth/
-  warWeariness and is SUBTRACTED from workRate — not the single-family per:"ERA" shape; reported). AI-only.
+- the per-era AI ramp (legacy `iAIPerEraModifier`) — DECOMPOSED per ruling 14 (info-rebuild.md): no `perEra`
+  family exists; the ramp lands as `ai`-sibling deposit entries beside each affected AI knob (PER_ERA_SITES
+  below — one deposit per affected (family, kind), `{value, per: "ERA"}` + a flat opposite-sign companion,
+  the workRate deposit NEGATIVE). The clamped unit-upkeep site is NOT authored (see PER_ERA_SITES).
 - `revolution.empire.percent` — % into the Revolution index. INCOMPLETE mechanic (WIP, tracked), NOT dead — kept.
 - `diplomacy.empire.attitude.flat` (AI attitude shift, via the TARGET's handicap); `diplomacy.empire.declareWar`
   / `warWeariness` (AI behaviour); `diplomacy.team.{noTechTrade,techTradeKnown}.percent` (tech-trade thresholds).
@@ -56,7 +57,7 @@ WHAT EACH FAMILY MEANS (current behaviour — the meanings that must survive the
   modifier, poorly supported in the DLL → parked in identity pending an advanced-start review.
 
 Verified against Sources/Infos/CvHandicapInfo.h + docs/dev/reference/handicaps.md (read-sites, sourcing,
-the maintenance computation, the no-dead-fields verdict). PROVISIONAL family names: growth/workRate/perEra
+the maintenance computation, the no-dead-fields verdict). PROVISIONAL family names: growth/workRate
 (kept until the future rework). Manual renames logged in migration-renames.md.
 
   python3 curate_handicap.py --sample HANDICAP_CHIEFTAIN
@@ -107,12 +108,7 @@ FAMILIES = {
     "iAIWorldConstructPercent":       ("costs", "world",  "construct", "percent", "ai"),
     "iAICreatePercent":               ("costs", "empire", "create",    "percent", "ai"),
     "iAIWorldCreatePercent":          ("costs", "world",  "create",    "percent", "ai"),
-    # perEra: LEFT AS-IS (ruling 14 verify FAILED its premise: the ramp is NOT confined to the costs AI
-    # modifiers -- it also rides upkeep.unit/civic/inflation/supply (CvPlayer.cpp:10354/14244/7993/7934),
-    # growth (:24453), war weariness (:10955), the upgrade price (CvUnit.cpp:10362) and is SUBTRACTED from
-    # the AI work-rate bonus (CvPlayer.cpp:9860, CvUnit.cpp:27949). A per:"ERA" fan-out over ~10 kinds with a
-    # sign flip is not the ruling's single-family shape -- left unchanged and reported).
-    "iAIPerEraModifier":              ("perEra",        "empire", None, "percent", "ai"),  # meta: ramps the AI family per era
+    # iAIPerEraModifier is NOT in this table -- ruling 14 decomposes it per consumption site (PER_ERA_SITES).
     "iRevolutionIndexPercent":        ("revolution",    "empire", None, "percent", None),  # INCOMPLETE (WIP mechanic, tracked issue) — keep, NOT dead
     # --- diplomacy ---
     "iAttitudeChange":                ("diplomacy", "empire", "attitude",       "flat",    None),  # via TARGET player's handicap
@@ -136,6 +132,44 @@ FAMILIES = {
     "iBarbarianDefenders":                ("barbarians", "world", "defenders",         "flat", None),
 }
 
+# Ruling 14 (info-rebuild.md): legacy `iAIPerEraModifier` DECOMPOSES per engine consumption site -- ONE
+# `ai`-sibling deposit per affected (family, kind), each `{"value": V, "per": "ERA"}` (json.md 3.7 bare-string
+# per; 3.1 ERA = the 1-based era counter over the ordered era sequence). EVERY site multiplies by
+# getCurrentEra() -- the 0-BASED EraTypes index, i.e. (ERA - 1) -- so every deposit carries a flat companion
+# entry of the OPPOSITE sign in the same slot list: V*(ERA-1) == V*ERA - V. Sign -1 = the engine SUBTRACTS the
+# ramp there (the workRate sites), making the deposit value the negation of the authored XML value.
+# The 13 mapped consumption sites (11 deposits -- workRate has two sites feeding ONE (family, kind)):
+#   costs.train       CvPlayer::getProductionNeeded(unit)      CvPlayer.cpp:6988   (+; era term rides the world-class branch too)
+#   costs.construct   CvPlayer::getProductionNeeded(building)  CvPlayer.cpp:7111   (+; idem)
+#   costs.create      CvPlayer::getProductionNeeded(project)   CvPlayer.cpp:7174   (+; idem)
+#   costs.research    CvTeam::getResearchCost                  CvTeam.cpp:2656     (+; leader's era)
+#   costs.upgrade     CvUnit::upgradePrice                     CvUnit.cpp:10362    (+)
+#   upkeep.supply     CvPlayer::calculateUnitSupply            CvPlayer.cpp:7934   (+)
+#   upkeep.inflation  CvPlayer::getInflationMod10000           CvPlayer.cpp:7993   (+)
+#   upkeep.civic      CvPlayer::getSingleCivicUpkeep           CvPlayer.cpp:14244  (+)
+#   growth            CvPlayer::getGrowthThreshold             CvPlayer.cpp:24453  (+)
+#   workRate          CvPlayer::getWorkRate(BuildTypes)        CvPlayer.cpp:9860   (-; subtracted)
+#   workRate          CvUnit::workRate(bool)                   CvUnit.cpp:27949    (-; subtracted; same deposit)
+#   diplomacy.warWeariness  CvPlayer::getModifiedWarWearinessPercentAnger  CvPlayer.cpp:10955  (+)
+# NOT AUTHORED -- the 13th site, CvPlayer::calcFinalUnitUpkeep (CvPlayer.cpp:10354, upkeep.unit): its era term
+# is a CLAMPED standalone multiplicative stage `iCalc *= std::max(0, 100 + perEra*era); iCalc /= 100;` -- not
+# an additive mod summand -- so a plain deposit would approximate away both the clamp and the multiplicative
+# stacking. Left undone per ruling 14 (report clamps verbatim rather than approximate).
+# (family, scope, member, sign)
+PER_ERA_SITES = [
+    ("costs",     "empire", "train",        +1),
+    ("costs",     "empire", "construct",    +1),
+    ("costs",     "empire", "create",       +1),
+    ("costs",     "empire", "research",     +1),
+    ("costs",     "empire", "upgrade",      +1),
+    ("upkeep",    "empire", "supply",       +1),
+    ("upkeep",    "empire", "inflation",    +1),
+    ("upkeep",    "empire", "civic",        +1),
+    ("growth",    "empire", None,           +1),
+    ("workRate",  "empire", None,           -1),
+    ("diplomacy", "empire", "warWeariness", +1),
+]
+
 # one-shot game-start grants: tag -> (grantKey, audience). AI overrides under grants.ai.
 GRANTS = {
     "iGold":                   ("startingGold",         None),
@@ -157,7 +191,7 @@ GAMEOBJECT_SCOPE = {"GAMEOBJECT_CITY": "city", "GAMEOBJECT_PLOT": "plot", "GAMEO
 SOURCE_UNIT = {"CONSTANT": "perTurn", "DECAY": "decay"}
 # output order of the family sections (those present)
 FAMILY_ORDER = ["maintenance", "upkeep", "happiness", "health", "growth", "costs", "workRate",
-                "perEra", "revolution", "diplomacy", "combat", "barbarians"]   # PROPERTY_* families fall in after
+                "revolution", "diplomacy", "combat", "barbarians"]   # PROPERTY_* families fall in after
 
 
 def _put(fam, family, scope, member, unit, audience, val):
@@ -170,12 +204,37 @@ def _put(fam, family, scope, member, unit, audience, val):
     node[unit] = val
 
 
+def _deposit_per_era_ramp(fam, per_era_value):
+    """Ruling-14 decomposition: land the era ramp beside each affected AI knob as extra entries in the SAME
+    `ai.percent` slot (json.md 3.9 list-of-entries): `{"value": V, "per": "ERA"}` plus the flat opposite-sign
+    companion (the engine factor is getCurrentEra() = ERA - 1, so V*ERA - V). Runs AFTER the tag loop so the
+    plain knob scalar (when present) stays the first entry of the list."""
+    for family, scope, member, sign in PER_ERA_SITES:
+        node = fam.setdefault(family, {}).setdefault(scope, {})
+        if member:
+            node = node.setdefault(member, {})
+        node = node.setdefault("ai", {})
+        ramp_value = sign * per_era_value
+        new_entries = [OrderedDict([("value", ramp_value), ("per", "ERA")]), -ramp_value]
+        existing = node.get("percent")
+        if existing is None:
+            node["percent"] = new_entries
+        elif isinstance(existing, list):
+            node["percent"] = existing + new_entries
+        else:
+            node["percent"] = [existing] + new_entries
+
+
 def curate(typ, rec):
     text_fields, fam, grants, identity, leftover = {}, {}, {}, {}, []
+    per_era_value = 0
     for c in rec:
         tag, t = c.tag, engine.text(c)
         if tag == "Type":
             continue
+        elif tag == "iAIPerEraModifier":              # ruling 14: decomposed AFTER the loop (PER_ERA_SITES)
+            if engine.is_int(t) and int(t) != 0:
+                per_era_value = int(t)
         elif tag in HOIST_TEXT:
             if t:
                 text_fields[HOIST_TEXT[tag]] = t
@@ -207,6 +266,9 @@ def curate(typ, rec):
             if list(c) or t:
                 leftover.append(tag)
                 identity[engine.FIELD_RENAME.get(tag, de_i(tag))] = engine.generic(c)
+
+    if per_era_value:
+        _deposit_per_era_ramp(fam, per_era_value)
 
     out = OrderedDict()
     out["type"] = typ

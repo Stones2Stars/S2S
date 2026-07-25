@@ -28,18 +28,39 @@
    "civic": {
     "percent": 240,
     "ai": {
-     "percent": 30
+     "percent": [
+      30,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
     }
    },
    "inflation": {
     "percent": 170,
     "ai": {
-     "percent": 30
+     "percent": [
+      30,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
     }
    },
    "supply": {
     "ai": {
-     "percent": 10
+     "percent": [
+      10,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
     }
    }
   }
@@ -52,7 +73,14 @@
  "growth": {
   "empire": {
    "ai": {
-    "percent": 50
+    "percent": [
+     50,
+     {
+      "value": -5,
+      "per": "ERA"
+     },
+     5
+    ]
    }
   }
  },
@@ -60,27 +88,62 @@
   "empire": {
    "train": {
     "ai": {
-     "percent": 44
+     "percent": [
+      44,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
     }
    },
    "construct": {
     "ai": {
-     "percent": 30
+     "percent": [
+      30,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
     }
    },
    "create": {
     "ai": {
-     "percent": 65
+     "percent": [
+      65,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
     }
    },
    "research": {
     "ai": {
-     "percent": 79
+     "percent": [
+      79,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
     }
    },
    "upgrade": {
     "ai": {
-     "percent": 10
+     "percent": [
+      10,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
     }
    }
   },
@@ -105,14 +168,14 @@
  "workRate": {
   "empire": {
    "ai": {
-    "percent": 70
-   }
-  }
- },
- "perEra": {
-  "empire": {
-   "ai": {
-    "percent": -5
+    "percent": [
+     70,
+     {
+      "value": 5,
+      "per": "ERA"
+     },
+     -5
+    ]
    }
   }
  },
@@ -133,7 +196,14 @@
    },
    "warWeariness": {
     "ai": {
-     "percent": 30
+     "percent": [
+      30,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
     }
    }
   },
