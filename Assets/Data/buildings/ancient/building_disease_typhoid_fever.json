@@ -51,6 +51,13 @@
    "flat": [
     -6,
     {
+     "value": -50,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    },
+    {
      "value": 1,
      "enabled": "TECH_SANITATION"
     },
@@ -58,8 +65,7 @@
      "value": 2,
      "enabled": "TECH_MODERN_SANITATION"
     }
-   ],
-   "perPopulation": -50
+   ]
   }
  },
  "PROPERTY_TOURISM": {

@@ -22,19 +22,53 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_CITY_RAIDER1": [
-    "UNITCOMBAT_MELEE"
-   ],
-   "PROMOTION_IMPROVISE1": [
-    "UNITCOMBAT_SPY"
-   ],
-   "PROMOTION_IMPROVISE2": [
-    "UNITCOMBAT_SPY"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_CITY_RAIDER1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_MELEE"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_IMPROVISE1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_SPY"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_IMPROVISE2"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_SPY"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_EXCESSIVE",
   "priority": -1

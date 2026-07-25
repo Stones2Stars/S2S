@@ -5,19 +5,19 @@
    "PROMOTION_LAND_WARRIOR2"
   ]
  },
- "firstStrike": {
-  "unit": {
-   "strikes": {
-    "flat": 1
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "domain": {
     "DOMAIN_LAND": {
      "percent": 10
     }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
    }
   }
  },

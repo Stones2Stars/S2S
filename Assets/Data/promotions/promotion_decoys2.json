@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_DECOYS2",
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_STRIKE_TEAM": {

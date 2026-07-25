@@ -5,6 +5,15 @@
    "PROMOTION_FUSION_SHELLS"
   ]
  },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_TRACKED": {
+     "percent": 25
+    }
+   }
+  }
+ },
  "collateral": {
   "unit": {
    "damage": {
@@ -16,15 +25,6 @@
   "unit": {
    "probability": {
     "flat": -20
-   }
-  }
- },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_TRACKED": {
-     "percent": 25
-    }
    }
   }
  },

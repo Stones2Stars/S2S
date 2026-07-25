@@ -236,7 +236,13 @@
  },
  "research": {
   "empire": {
-   "flat": 6,
+   "flat": [
+    6,
+    {
+     "value": 1,
+     "per": "SPECIALIST"
+    }
+   ],
    "percent": [
     5,
     {
@@ -254,9 +260,6 @@
     "SPECIALIST_ANDROID_WORKER": {
      "flat": 1
     }
-   },
-   "specialist": {
-    "perSpecialist": 1
    }
   }
  },
@@ -282,14 +285,16 @@
    }
   }
  },
- "combat": {
+ "air": {
   "empire": {
-   "missileRange": {
-    "flat": 2
-   },
-   "flightRange": {
+   "range": {
     "flat": 1
    }
+  }
+ },
+ "range": {
+  "empire": {
+   "flat": 2
   }
  },
  "workRate": {

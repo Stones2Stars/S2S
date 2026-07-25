@@ -52,8 +52,16 @@
  },
  "health": {
   "city": {
-   "flat": 1,
-   "perPopulation": 5
+   "flat": [
+    1,
+    {
+     "value": 5,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
   }
  },
  "hurryCost": {
@@ -71,11 +79,19 @@
    "SPECIALIST_PRIEST": 2
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_GUERILLA1"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_GUERILLA1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 104,
   "sizeModifier": 3,

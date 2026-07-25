@@ -62,9 +62,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 26,
    "lunge": {
     "percent": 15
    },
@@ -91,6 +90,11 @@
     "UNITCOMBAT_GUN": true,
     "UNITCOMBAT_CANINE": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 26
   }
  },
  "firstStrike": {

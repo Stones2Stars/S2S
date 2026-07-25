@@ -5,9 +5,8 @@
    "flat": 3
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 1,
    "targets": {
     "UNITCOMBAT_BIRD_GAMEBIRD": true,
     "UNITCOMBAT_BIRD_CORVID": true,
@@ -26,6 +25,11 @@
     "UNIT_JUNGLE_TARANTULA": true,
     "UNIT_DESERT_TARANTULA": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1
   }
  },
  "withdrawal": {

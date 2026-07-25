@@ -17,14 +17,18 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 6,
    "targets": {
     "UNITCOMBAT_SIZE_MEDIUM": true,
     "UNITCOMBAT_SIZE_LARGE": true,
     "UNITCOMBAT_SIZE_HUGE": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 6
   }
  },
  "withdrawal": {

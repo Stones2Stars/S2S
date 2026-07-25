@@ -44,9 +44,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 36,
    "lunge": {
     "percent": 40
    },
@@ -81,6 +80,11 @@
     "UNITCOMBAT_CRIMINAL": true,
     "UNITCOMBAT_RUFFIAN": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 36
   }
  },
  "withdrawal": {

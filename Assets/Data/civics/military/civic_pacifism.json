@@ -165,12 +165,12 @@
    "percent": 10
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "captureProbability": {
+   "probability": {
     "percent": 50
    },
-   "captureResistance": {
+   "resistance": {
     "percent": -50
    }
   }

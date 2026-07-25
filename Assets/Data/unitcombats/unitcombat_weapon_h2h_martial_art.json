@@ -1,18 +1,18 @@
 {
  "type": "UNITCOMBAT_WEAPON_H2H_MARTIAL_ART",
- "capture": {
-  "unit": {
-   "probability": {
-    "flat": 35
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_MELEE": {
      "percent": 10
     }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 35
    }
   }
  },

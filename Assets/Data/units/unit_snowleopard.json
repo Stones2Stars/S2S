@@ -5,9 +5,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 4,
    "terrain": {
     "TERRAIN_JAGGED": {
      "attack": {
@@ -61,6 +60,11 @@
     "UNIT_REDPANDA": true,
     "UNIT_STAG_DEER": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 4
   }
  },
  "withdrawal": {

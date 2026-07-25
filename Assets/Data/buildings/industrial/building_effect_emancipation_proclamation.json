@@ -34,8 +34,16 @@
  },
  "happiness": {
   "city": {
-   "flat": 1,
-   "perPopulation": 5
+   "flat": [
+    1,
+    {
+     "value": 5,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
   }
  },
  "health": {

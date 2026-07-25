@@ -42,8 +42,14 @@
  },
  "health": {
   "city": {
-   "perPopulation": 10,
    "flat": [
+    {
+     "value": 10,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    },
     {
      "value": 2,
      "enabled": "TECH_NEW_URBANISM"

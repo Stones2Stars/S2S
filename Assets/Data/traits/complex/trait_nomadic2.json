@@ -786,18 +786,28 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_NOMADIC2": [
-    "UNITCOMBAT_ANIMAL",
-    "UNITCOMBAT_EXPLORER",
-    "UNITCOMBAT_MOUNTED",
-    "UNITCOMBAT_NOMAD",
-    "UNITCOMBAT_TRADE",
-    "UNITCOMBAT_WHEELED"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_NOMADIC2"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_ANIMAL",
+       "UNITCOMBAT_EXPLORER",
+       "UNITCOMBAT_MOUNTED",
+       "UNITCOMBAT_NOMAD",
+       "UNITCOMBAT_TRADE",
+       "UNITCOMBAT_WHEELED"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_NOMADIC",
   "priority": 2

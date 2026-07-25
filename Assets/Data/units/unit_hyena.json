@@ -17,14 +17,18 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 2,
    "unitTargets": {
     "UNIT_BOAR": true,
     "UNIT_DESERT_TORTOISE": true,
     "UNIT_DONKEY": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 2
   }
  },
  "withdrawal": {

@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_BRAZIL",
-   "icon": "ART_DEF_CIVILIZATION_BRAZIL",
+   "define": "ART_DEF_CIVILIZATION_BRAZIL",
    "style": "ARTSTYLE_IBERIA",
    "unitStyle": "UNIT_ARTSTYLE_SOUTH_AMERICA"
   }

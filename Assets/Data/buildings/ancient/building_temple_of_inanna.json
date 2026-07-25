@@ -70,11 +70,19 @@
    "SPECIALIST_PRIEST": 1
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_INANNA"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_INANNA"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 160,
   "sizeModifier": 1,

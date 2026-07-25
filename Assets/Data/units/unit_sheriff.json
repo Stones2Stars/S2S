@@ -70,9 +70,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 23,
    "enclose": {
     "percent": 14
    },
@@ -91,6 +90,11 @@
    "defenders": {
     "UNITCOMBAT_CRIMINAL": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 23
   }
  },
  "firstStrike": {

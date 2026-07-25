@@ -30,9 +30,12 @@
  "research": {
   "empire": {
    "percent": 5,
-   "specialist": {
-    "perSpecialist": 1
-   }
+   "flat": [
+    {
+     "value": 1,
+     "per": "SPECIALIST"
+    }
+   ]
   }
  },
  "culture": {
@@ -65,9 +68,9 @@
    "SPECIALIST_SCIENTIST": 2
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "captureResistance": {
+   "resistance": {
     "percent": 10
    }
   }
@@ -80,12 +83,16 @@
    "numCities": {
     "percent": 10
    },
-   "homeArea": {
-    "percent": 15
-   },
-   "otherArea": {
-    "percent": 10
-   },
+   "percent": [
+    {
+     "value": 15,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 10,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
    "corporation": {
     "percent": 10
    }

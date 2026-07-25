@@ -75,11 +75,19 @@
    "SPECIALIST_PRIEST": 1
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_ENLIL"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_ENLIL"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 160,
   "sizeModifier": 1,

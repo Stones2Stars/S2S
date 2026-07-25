@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_CYAN",
-   "icon": "ART_DEF_CIVILIZATION_PERSIA",
+   "define": "ART_DEF_CIVILIZATION_PERSIA",
    "style": "ARTSTYLE_CRESCENT",
    "unitStyle": "UNIT_ARTSTYLE_MIDDLE_EAST"
   }

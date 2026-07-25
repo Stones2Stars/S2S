@@ -59,11 +59,19 @@
    "flat": 6
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_MORALE"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_MORALE"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 1860,
   "sizeModifier": 2,

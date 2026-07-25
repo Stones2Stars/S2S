@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_MEEK3",
- "strength": {
+ "combat": {
   "unit": {
    "cityDefense": {
     "percent": -15

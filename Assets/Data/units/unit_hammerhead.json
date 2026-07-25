@@ -12,14 +12,18 @@
    "flat": 3
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 2,
    "targets": {
     "UNITCOMBAT_ANIMAL_INVERTEBRATE": true,
     "UNITCOMBAT_FISH_BONEY": true,
     "UNITCOMBAT_FISH_RAY": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 2
   }
  },
  "withdrawal": {

@@ -1,16 +1,6 @@
 {
  "type": "PROMOTION_RETINUE_WAR_VETERAN",
- "capture": {
-  "unit": {
-   "probability": {
-    "flat": 5
-   },
-   "resistance": {
-    "flat": 25
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_ARCHER": {
@@ -22,6 +12,16 @@
     "UNITCOMBAT_RECON": {
      "percent": 33
     }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": 25
    }
   }
  },

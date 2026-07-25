@@ -64,11 +64,19 @@
    "percent": 50
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_NAVIGATION2"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_NAVIGATION2"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 3930
  },

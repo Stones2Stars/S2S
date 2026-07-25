@@ -55,14 +55,18 @@
    "flat": 5
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 30,
    "unitCombat": {
     "UNITCOMBAT_WOODEN_SHIPS": {
      "percent": 25
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 30
   }
  },
  "withdrawal": {

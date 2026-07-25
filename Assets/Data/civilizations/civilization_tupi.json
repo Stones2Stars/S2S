@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_TUPI",
-   "icon": "ART_DEF_CIVILIZATION_TUPI",
+   "define": "ART_DEF_CIVILIZATION_TUPI",
    "style": "ARTSTYLE_MESO_AMERICA",
    "unitStyle": "UNIT_ARTSTYLE_MESO_AMERICA"
   }

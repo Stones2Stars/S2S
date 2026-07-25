@@ -98,11 +98,19 @@
    "percent": 100
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_HAKA"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_HAKA"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 60,
   "complexityModifier": 1

@@ -35,9 +35,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 9,
    "hillsDefense": {
     "percent": 50
    },
@@ -49,6 +48,11 @@
      "percent": 100
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 9
   }
  },
  "skills": [

@@ -32,6 +32,26 @@
    "flat": 1
   }
  },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_STEAM_SHIPS": {
+     "percent": -20
+    },
+    "UNITCOMBAT_DIESEL_SHIPS": {
+     "percent": -40
+    },
+    "UNITCOMBAT_NUCLEAR_SHIPS": {
+     "percent": -80
+    }
+   },
+   "domain": {
+    "DOMAIN_SEA": {
+     "percent": 100
+    }
+   }
+  }
+ },
  "bombard": {
   "unit": {
    "airBombRate": {
@@ -55,26 +75,6 @@
  "range": {
   "unit": {
    "flat": 4
-  }
- },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_STEAM_SHIPS": {
-     "percent": -20
-    },
-    "UNITCOMBAT_DIESEL_SHIPS": {
-     "percent": -40
-    },
-    "UNITCOMBAT_NUCLEAR_SHIPS": {
-     "percent": -80
-    }
-   },
-   "domain": {
-    "DOMAIN_SEA": {
-     "percent": 100
-    }
-   }
   }
  },
  "skills": [

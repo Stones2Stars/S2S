@@ -5,7 +5,7 @@
    "PROMOTION_TRANSPORT_FIGHTERS1"
   ]
  },
- "strength": {
+ "combat": {
   "unit": {
    "percent": -15
   }

@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_POLYNESIA",
-   "icon": "ART_DEF_CIVILIZATION_POLYNESIA",
+   "define": "ART_DEF_CIVILIZATION_POLYNESIA",
    "style": "ARTSTYLE_SOUTH_EAST_ASIA",
    "unitStyle": "UNIT_ARTSTYLE_POLYNESIA"
   }

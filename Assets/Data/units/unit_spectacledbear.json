@@ -5,9 +5,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 4,
    "targets": {
     "UNITCOMBAT_BIRD_GAMEBIRD": true,
     "UNITCOMBAT_MAMMAL_EQUINE": true,
@@ -19,6 +18,11 @@
     "UNIT_GUANACO": true,
     "UNIT_STAG_DEER": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 4
   }
  },
  "skills": [

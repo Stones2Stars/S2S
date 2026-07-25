@@ -43,6 +43,26 @@
    "flat": 1
   }
  },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 80
+    },
+    "UNITCOMBAT_STEAM_SHIPS": {
+     "percent": 55
+    },
+    "UNITCOMBAT_DIESEL_SHIPS": {
+     "percent": 20
+    }
+   },
+   "domain": {
+    "DOMAIN_SEA": {
+     "percent": 25
+    }
+   }
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -69,26 +89,6 @@
    },
    "evasion": {
     "percent": 10
-   }
-  }
- },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_WOODEN_SHIPS": {
-     "percent": 80
-    },
-    "UNITCOMBAT_STEAM_SHIPS": {
-     "percent": 55
-    },
-    "UNITCOMBAT_DIESEL_SHIPS": {
-     "percent": 20
-    }
-   },
-   "domain": {
-    "DOMAIN_SEA": {
-     "percent": 25
-    }
    }
   }
  },

@@ -28,9 +28,12 @@
    "flat": 10
   },
   "empire": {
-   "specialist": {
-    "perSpecialist": 2
-   }
+   "flat": [
+    {
+     "value": 2,
+     "per": "SPECIALIST"
+    }
+   ]
   }
  },
  "buildRate": {

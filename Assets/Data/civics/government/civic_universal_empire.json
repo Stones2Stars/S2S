@@ -26,9 +26,12 @@
  "espionage": {
   "empire": {
    "percent": 25,
-   "specialist": {
-    "perSpecialist": 1
-   }
+   "flat": [
+    {
+     "value": 1,
+     "per": "SPECIALIST"
+    }
+   ]
   }
  },
  "happiness": {
@@ -46,12 +49,12 @@
    "flat": 5
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "captureProbability": {
+   "probability": {
     "percent": -10
    },
-   "captureResistance": {
+   "resistance": {
     "percent": -10
    }
   }
@@ -64,12 +67,16 @@
    "numCities": {
     "percent": 25
    },
-   "homeArea": {
-    "percent": 10
-   },
-   "otherArea": {
-    "percent": 20
-   },
+   "percent": [
+    {
+     "value": 10,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 20,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
    "corporation": {
     "percent": 10
    }

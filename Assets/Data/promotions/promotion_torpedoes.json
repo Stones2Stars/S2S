@@ -1,19 +1,6 @@
 {
  "type": "PROMOTION_TORPEDOES",
- "air": {
-  "unit": {
-   "range": {
-    "flat": -1
-   },
-   "intercept": {
-    "percent": -10
-   },
-   "evasion": {
-    "percent": -15
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_WOODEN_SHIPS": {
@@ -31,6 +18,19 @@
     "UNITCOMBAT_SUBMARINE": {
      "percent": 25
     }
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": -1
+   },
+   "intercept": {
+    "percent": -10
+   },
+   "evasion": {
+    "percent": -15
    }
   }
  },

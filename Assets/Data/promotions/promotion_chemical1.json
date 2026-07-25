@@ -5,21 +5,7 @@
    "PROMOTION_CHEMICAL2"
   ]
  },
- "collateral": {
-  "unit": {
-   "damage": {
-    "percent": 10
-   }
-  }
- },
- "capture": {
-  "unit": {
-   "probability": {
-    "flat": -5
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_MELEE": {
@@ -43,6 +29,20 @@
     "UNITCOMBAT_RECON": {
      "percent": 20
     }
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -5
    }
   }
  },

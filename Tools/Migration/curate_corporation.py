@@ -9,9 +9,9 @@ FOUR distinct commerce/yield families that must NOT merge (the first-pass mappin
 - CommercesProduced / YieldsProduced -> the SAME split families, CITY scope, member `produced`, unit
   `perBonus`: scaled by getNumBonuses(prereqBonus) x world CorporationMaintenancePercent (a per-owned-resource
   output), distinct from the flat add.
-- HeadquarterCommerces -> split commerce families, EMPIRE scope, member `headquarters`, unit
-  `perCorporationLevel`: the HQ-revenue lever (feeds corp maintenance, corp tax, and a HQ building's
-  globalCorporationCommerce x countCorporationLevels) — empire-wide, not a per-city add.
+- HeadquarterCommerces -> split commerce families, EMPIRE scope, member `headquarters`, flat with
+  `per:"CORPORATION_LEVEL"` (ruling 4, §3.7 per-scaler): the HQ-revenue lever (feeds corp maintenance, corp
+  tax, and a HQ building's globalCorporationCommerce x countCorporationLevels) — empire-wide, not a per-city add.
 
 Other modifiers (all city scope unless noted): iMaintenance -> maintenance.city.corporation.perBonus (per-owned
 -bonus maintenance rate); iHealth/iHappiness -> health/happiness flat; iFreeXP -> experience flat;
@@ -57,8 +57,8 @@ from store import Store, REPO
 # HAS_RELIGION). The `*Produced` output scales by the corp's PrereqBonuses set (C++: YieldProduced x SUM
 # getNumBonuses over the prereq bonuses) -> `per:{anyOf:[prereqBonuses], scope:city}`. The FOUND requirement
 # (PrereqBonuses needed to establish the corp) is authored on the HQ `FoundsCorporation` building at the Building
-# pass, NOT here. (FIRST PASS — corps clearly need a dedicated rework pass: the HQ-revenue HeadquarterCommerces /
-# perCorporationLevel modeling + the spread mechanics are deferred to it.)
+# pass, NOT here. (FIRST PASS — corps clearly need a dedicated rework pass: the HQ-city modeling + the spread
+# mechanics land there; HeadquarterCommerces already authors as the CORPORATION_LEVEL per-scaler, ruling 4.)
 # tag -> (family, scope, member, unit, valueKeys, perBonus). valueKeys => SPLIT base family; perBonus => add the
 # prereq-bonus `per` scaling.
 FAMILIES = {
@@ -72,8 +72,10 @@ FAMILIES = {
     "CommercesProduced":          (None,          "city",   None,           "flat",    engine.COMMERCES, True),
     "YieldsProduced":             (None,          "city",   None,           "flat",    engine.YIELDS,    True),
 }
-# DEFERRED to the corp rework pass (HQ revenue, scaled by countCorporationLevels): kept in its current
-# headquarters/perCorporationLevel form, ungated, pending the per-corp-level token + HQ-city modeling.
+# HQ revenue, scaled by countCorporationLevels: a §3.7 per-scaler (ruling 4, info-rebuild.md) --
+# <c>.empire.headquarters.flat = {value, per:"CORPORATION_LEVEL"} (the minted §3.1 count token, bare-string
+# sugar). NB the engine count is the WORLD-wide corporation-level tally (CvCity.cpp countCorporationLevels);
+# the `headquarters` member itself is still on the ruling-4 triage (suspected corp-HQ FK value plane).
 HQ_COMMERCE = "HeadquarterCommerces"
 TEXT = {"Description": "description", "Civilopedia": "civilopedia"}
 # art tags -> ui/world/sound via the canonical curate_common.ART_BLOCK.
@@ -167,9 +169,10 @@ def curate(typ, rec, store):
                 text[TEXT[tag]] = t
         elif tag in FAMILIES:
             _apply_family(fam, FAMILIES[tag], c, typ, per_bonus)
-        elif tag == HQ_COMMERCE:                               # DEFERRED HQ revenue (corp rework pass)
+        elif tag == HQ_COMMERCE:                               # HQ revenue -> per-scaler (ruling 4; see HQ_COMMERCE note)
             for ident, v in engine.named_array(c, engine.COMMERCES).items():
-                _put(fam, ident, "empire", "headquarters", "perCorporationLevel", v)
+                _put(fam, ident, "empire", "headquarters", "flat",
+                     OrderedDict([("value", v), ("per", "CORPORATION_LEVEL")]))
         elif tag == "iSpreadCost":
             if engine.is_int(t) and int(t) != 0:
                 cost["spread"] = int(t)

@@ -107,12 +107,16 @@
    "numCities": {
     "percent": 15
    },
-   "homeArea": {
-    "percent": 3
-   },
-   "otherArea": {
-    "percent": 3
-   }
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 3,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ]
   }
  },
  "upkeep": {

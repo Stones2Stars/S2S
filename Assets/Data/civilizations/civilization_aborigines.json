@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_ABORIGINES",
-   "icon": "ART_DEF_CIVILIZATION_ABORIGINES",
+   "define": "ART_DEF_CIVILIZATION_ABORIGINES",
    "style": "ARTSTYLE_AFRICA",
    "unitStyle": "UNIT_ARTSTYLE_AFRICAN"
   }

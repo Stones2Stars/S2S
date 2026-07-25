@@ -5,7 +5,7 @@
    "PROMOTION_SAVAGE_BEAST2"
   ]
  },
- "strength": {
+ "combat": {
   "unit": {
    "attack": {
     "percent": 15

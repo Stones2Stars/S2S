@@ -40,13 +40,23 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_LOYALTY": [
-    "UNITCOMBAT_SPY"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_LOYALTY"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_SPY"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_FOREIGN"
  },

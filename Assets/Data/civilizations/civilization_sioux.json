@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_LIGHT_BROWN",
-   "icon": "ART_DEF_CIVILIZATION_SIOUX",
+   "define": "ART_DEF_CIVILIZATION_SIOUX",
    "style": "ARTSTYLE_NATIVE_AMERICA",
    "unitStyle": "UNIT_ARTSTYLE_NATIVE_AMERICA"
   }

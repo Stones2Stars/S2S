@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DARK_INDIGO",
-   "icon": "ART_DEF_CIVILIZATION_SUMERIA",
+   "define": "ART_DEF_CIVILIZATION_SUMERIA",
    "style": "ARTSTYLE_CRESCENT",
    "unitStyle": "UNIT_ARTSTYLE_BABYLON"
   }

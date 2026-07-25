@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_NEGLIGENT",
- "strength": {
+ "combat": {
   "unit": {
    "cityDefense": {
     "percent": -20

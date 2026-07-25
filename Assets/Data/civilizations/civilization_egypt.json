@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_YELLOW",
-   "icon": "ART_DEF_CIVILIZATION_EGYPT",
+   "define": "ART_DEF_CIVILIZATION_EGYPT",
    "style": "ARTSTYLE_EGYPT",
    "unitStyle": "UNIT_ARTSTYLE_EGYPT"
   }

@@ -22,13 +22,17 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 1,
    "targets": {
     "UNITCOMBAT_BIRD_SEABIRD": true,
     "UNITCOMBAT_BIRD_WATERFOWL": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1
   }
  },
  "skills": [

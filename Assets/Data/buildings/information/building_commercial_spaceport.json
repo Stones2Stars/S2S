@@ -78,15 +78,15 @@
    }
   }
  },
- "grants": {
-  "repeatable": [
-   {
-    "unitCombat": "UNITCOMBAT_HEALS_AS_SPACECRAFT",
-    "interval": "perTurn",
-    "heal": 4
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 4,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_SPACECRAFT"
    }
-  ]
- },
+  }
+ ],
  "cost": {
   "production": 2405,
   "sizeModifier": 3,

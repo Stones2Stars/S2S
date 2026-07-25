@@ -52,14 +52,24 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_PACIFIST1": [
-    "UNITCOMBAT_COMBATANT",
-    "UNITCOMBAT_NAVAL_COMBATANT"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_PACIFIST1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_COMBATANT",
+       "UNITCOMBAT_NAVAL_COMBATANT"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_PACIFIST",
   "priority": -1

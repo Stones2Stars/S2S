@@ -5,7 +5,7 @@
    "PROMOTION_NON_LETHAL_FORCE2"
   ]
  },
- "strength": {
+ "combat": {
   "unit": {
    "percent": -10
   }

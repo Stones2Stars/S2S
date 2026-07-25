@@ -5,7 +5,7 @@
    "PROMOTION_MARTIAL_ARTS2"
   ]
  },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_MELEE": {

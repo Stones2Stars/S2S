@@ -5,12 +5,14 @@ Curated from `classifications/building-classification.json` (the adversarial cla
 + the owner rulings (handover-2026-06-16-6). Building is the most-targeted entity; the SOURCE->building enabler edges
 (tech/bonus/civic/religion/corp/cultureLevel `enables`, ObsoleteTech, ReplacementBuildings) are ALREADY store-wired,
 so on the building side they DROP — the building authors only its OWN: ~70 modifier families, a `requires` MEANS gate,
-`grants` (incl. the NEW `grants.repeatable`), cost, properties, identity. EXE-link: 0 DllExport -> UNCONSTRAINED.
+`grants` (pure payload) + `triggers` (trigger -> chance -> action, json.md §5), cost, properties, identity.
+EXE-link: 0 DllExport -> UNCONSTRAINED.
 
 OWNER RULINGS folded in (handover #6):
 - §6.1 DELIVERYGUY: the 22 "inversions" KEEP-ON-BUILDING keyed by target (NOT inverted). Tech/Bonus/Building gated via
   `enabled`; Improvement/Terrain/Plot yields target-keyed (food.city.improvements.{IMP}.flat). Tech ones PROVISIONAL (Phase F).
-- `grants.repeatable[]` + `interval` (modifier-spec §4.1): PropertySpawn (chance via `per`) + iNumUnitFullHeal/HealUnitCombat.
+- top-level `triggers[]` (json.md §5, ruling 8): PropertySpawn (onTurn, chance via `per`) + iNumUnitFullHeal/
+  HealUnitCombat (onTurn heal actions) + FreePromoTypes (onTurnEnd promote-present).
 - shrine (GlobalReligionCommerce, a RELIGION FK) -> the TOP-LEVEL `shrine` bespoke section (values live on the religion);
   headquarters (GlobalCorporationCommerce, a CORPORATION FK) -> the TOP-LEVEL `headquarters` bespoke section (json §9,
   owner 2026-07-01, un-nested from identity).
@@ -44,7 +46,7 @@ from collections import OrderedDict
 
 import engine
 import boolexpr
-from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, descale100, fold_text_to_identity, gate_entity, wipe_entity_json
+from curate_common import put_art, emit_art, FAMILY_ORDER, de_i, fold_text_to_identity, gate_entity, wipe_entity_json
 from curate_unit import TAG_BY_UNITCOMBAT   # the ONE unitcombat->tag map (a building's free-promotion condition keys on it)
 from store import Store, REPO
 
@@ -55,14 +57,14 @@ SCALAR_FAMILIES = {
     "iHealth": ("health", "city", None, "flat"),
     "iAreaHealth": ("health", "area", None, "flat"),
     "iGlobalHealth": ("health", "empire", None, "flat"),
-    # perPopulation is UNIT-form (a raw percent-of-pop; the consumer does ×pop÷100, the engine's exact math) --
-    # the earlier member-form {perPopulation:{percent:N}} collided with the reserved unit word and parsed to a
-    # LOST 0-magnitude in BOTH readers (wellbeing parity find 2026-07-03).
+    # per-pop rows author as §3.7 per-scalers (ruling 4, info-rebuild.md): flat + per{POPULATION, each:100}.
+    # Engine math verified ×pop÷100 (CvCity.cpp:22017/22031 `m_i… * getPopulation() / 100`), so the RAW XML
+    # value is human per-100-pop. The unit token below routes the curate() loop to _inject_per.
     "iHealthPercentPerPopulation": ("health", "city", None, "perPopulation"),
     "iHappiness": ("happiness", "city", None, "flat"),
     "iAreaHappiness": ("happiness", "area", None, "flat"),
     "iGlobalHappiness": ("happiness", "empire", None, "flat"),
-    "iHappinessPercentPerPopulation": ("happiness", "city", None, "perPopulation"),   # unit-form, see health above
+    "iHappinessPercentPerPopulation": ("happiness", "city", None, "perPopulation"),   # per-scaler, see health above
     "iHealRateChange": ("healing", "city", None, "flat"),
     "iFoodKept": ("foodKept", "city", None, "percent"),
     # great people / great general
@@ -75,7 +77,8 @@ SCALAR_FAMILIES = {
     "iMaintenanceModifier": ("maintenance", "city", None, "percent"),
     "iGlobalMaintenanceModifier": ("maintenance", "empire", None, "percent"),
     "iAreaMaintenanceModifier": ("maintenance", "area", None, "percent"),
-    "iOtherAreaMaintenanceModifier": ("maintenance", "area", "otherArea", "percent"),
+    # iOtherAreaMaintenanceModifier is NOT here: it re-authors as a conditioned deposit on the IS_HOME_AREA
+    # predicate (ruling 2, info-rebuild.md) -- handled explicitly in curate().
     "iDistanceMaintenanceModifier": ("maintenance", "empire", "distance", "percent"),
     "iNumCitiesMaintenanceModifier": ("maintenance", "empire", "numCities", "percent"),
     "iCoastalDistanceMaintenanceModifier": ("maintenance", "empire", "coastalDistance", "percent"),
@@ -117,11 +120,13 @@ SCALAR_FAMILIES = {
     "iRevIdxLocal": ("revolution", "city", None, "flat"),
     "iRevIdxNational": ("revolution", "empire", None, "flat"),
     "iRevIdxDistanceModifier": ("revolution", "city", "distanceModifier", "percent"),
-    # cops-and-robbers (owner ruling 2026-06-20): criminal stealth (insidiousness) vs city catch (investigation)
-    # -> the makeWanted/arrest mechanic (verified CvUnit::doInsidiousnessVSInvestigationCheck). Dedicated block,
-    # NOT espionage (one stat, one name -- espionage never "becomes" insidiousness). iPillageGoldModifier dropped (dead).
-    "iInsidiousness": ("copsAndRobbers", "city", "insidiousness", "flat"),
-    "iInvestigation": ("copsAndRobbers", "city", "investigation", "flat"),
+    # underworld (renamed from copsAndRobbers, ruling 3 info-rebuild.md): the in-city criminal game -- criminal
+    # stealth (insidiousness) vs city catch (investigation) -> the makeWanted/arrest mechanic (verified
+    # CvUnit::doInsidiousnessVSInvestigationCheck). Dedicated block, NOT espionage (one stat, one name -- espionage
+    # never "becomes" insidiousness); `detection` stays reserved for map-level hide-and-seek. iPillageGoldModifier
+    # dropped (dead).
+    "iInsidiousness": ("underworld", "city", "insidiousness", "flat"),
+    "iInvestigation": ("underworld", "city", "investigation", "flat"),
     "iEspionageDefense": ("espionageDefense", "city", None, "flat"),
     # cityCapture (NEW family — capturing CITIES, distinct from §5 unit capture)
     "iNationalCaptureProbabilityModifier": ("cityCapture", "empire", "probability", "percent"),
@@ -159,9 +164,7 @@ YIELD_FAMILIES = {
     "CommerceModifiers": ("city", engine.COMMERCES, "percent"),
     "CommercePerPopChanges": ("city", engine.COMMERCES, "perPopulation"),
     "GlobalCommerceModifiers": ("empire", engine.COMMERCES, "percent"),
-    # +commerce per specialist (ALL types) -> <c>.empire.specialist.perSpecialist, UNIFORM with civic/trait
-    # (legacy getSpecialistExtraCommerce, scaled x total specialist count -- a flat would mis-count by ~count-1).
-    "SpecialistExtraCommerces": ("empire", engine.COMMERCES, "perSpecialist", "specialist"),
+    # SpecialistExtraCommerces is NOT here: it re-authors as a §3.7 per-scaler (ruling 4) -- handled in curate().
 }
 
 # building `attributes` block (json §8, owner ruling 2026-07-01): the building's OWN HELD, immutable, city-scope
@@ -258,7 +261,7 @@ PASS2_TAGS = {
     "SpecialistYieldChanges", "SpecialistCommerceChanges", "LocalSpecialistCommerceChanges",
     # properties:
     "Properties", "PropertiesAllCities", "PropertyManipulators",
-    # repeatable grants:
+    # triggers entries (json.md §5):
     "PropertySpawnUnit", "PropertySpawnProperty", "iNumUnitFullHeal", "HealUnitCombatTypes",
     # one-shot grants / pulses:
     "ExtraFreeBonuses", "FreeTraitTypes", "FreeSpecialTech", "iFreeTechs", "NewCityFree", "HolyCity",
@@ -325,7 +328,7 @@ TARGET_KEYED = {
     "ReligionChanges":               ("religion", "city", None, None, "flat"),
     "UnitCombatFreeExperiences":     ("experience", "city", "unitCombats", None, "flat"),
     "DomainFreeExperiences":         ("experience", "city", "domains", None, "flat"),
-    "UnitCombatExtraStrengths":      ("strength", "city", "unitCombats", None, "flat"),
+    "UnitCombatExtraStrengths":      ("combat", "city", "unitCombats", None, "flat"),   # strength-MODIFYING -> combat (ruling 5)
     "UnitProductionModifiers":       ("buildRate", "city", "units", None, "percent"),
     "UnitCombatProdModifiers":       ("buildRate", "city", "unitCombats", None, "percent"),
     "DomainProductionModifiers":     ("buildRate", "city", "domains", None, "percent"),
@@ -457,10 +460,11 @@ def _inject_plots(fams, family, scope, unit, value, enabled):
         node[unit] = [cur, entry]
 
 
-def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, capabilities, bespoke):
-    """The custom-shape layer: keyed inversions (§6.1), properties, repeatable grants, one-shot grants/pulses,
-    enables-from-XML, the conditional/temporal deposits. Mutates the passed-in collections. `capabilities` collects
-    empire-PROVIDED bools (commerce sliders); `bespoke` collects top-level sections (shrine/headquarters)."""
+def pass2(typ, rec, store, fams, grants, triggers, identity, enables, capabilities, bespoke):
+    """The custom-shape layer: keyed inversions (§6.1), properties, `triggers` entries (ruling 8, json.md §5:
+    trigger -> chance -> action), one-shot grants/pulses, enables-from-XML, the conditional/temporal deposits.
+    Mutates the passed-in collections. `capabilities` collects empire-PROVIDED bools (commerce sliders);
+    `bespoke` collects top-level sections (shrine/headquarters)."""
     # --- CONDITION-gated keyed deposits (Tech/Bonus/Building/Power conditioners) ---
     for tag, (family, scope, vkeys, unit, kind) in COND_KEYED.items():
         node = rec.find(tag)
@@ -604,27 +608,37 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, capabili
                         node[unit].extend(value)
                     else:
                         node[unit].append(value)
-    # --- repeatable grants (modifier-spec §4.1): PropertySpawn + the per-turn heal generalization ---
+    # --- `triggers` entries (ruling 8, json.md §5: trigger -> chance -> action; the old repeatable+interval
+    # wrapper dissolves into the trigger): PropertySpawn + the per-turn heal generalization. ---
     sp_prop = _txt(rec, "PropertySpawnProperty")
     sp_unit = _txt(rec, "PropertySpawnUnit")
     if sp_prop and sp_unit:
-        repeatable.append(OrderedDict([("unit", sp_unit), ("interval", "perTurn"),
-                                       ("chance", OrderedDict([("per", _atom(sp_prop, "city"))]))]))
+        # the §5 exemplar: per-turn roll, odds scaled by the city's property value, granting the unit on success.
+        triggers.append(OrderedDict([
+            ("trigger", "onTurn"),
+            ("chance", OrderedDict([("per", _atom(sp_prop, "city"))])),
+            ("action", OrderedDict([("grant", OrderedDict([("units", [sp_unit])]))])),
+        ]))
     fh = _int(rec, "iNumUnitFullHeal")
     if fh:
-        repeatable.append(OrderedDict([("heal", "full"), ("count", fh), ("interval", "perTurn")]))
+        # heal-verb payload keys carried over from the legacy entry (verb vocabulary is OPEN, json.md §5).
+        triggers.append(OrderedDict([
+            ("trigger", "onTurn"),
+            ("action", OrderedDict([("heal", "full"), ("count", fh)])),
+        ]))
     hnode = rec.find("HealUnitCombatTypes")
     if hnode is not None:
         for item in list(hnode):
             uc = _txt(item, "UnitCombatType")
             heal, adj = _int(item, "iHeal"), _int(item, "iAdjacentHeal")
             if uc and (heal or adj):
-                g = OrderedDict([("unitCombat", uc), ("interval", "perTurn")])
+                action = OrderedDict()
                 if heal:
-                    g["heal"] = heal
+                    action["heal"] = heal
                 if adj:
-                    g["adjacentHeal"] = adj
-                repeatable.append(g)
+                    action["adjacentHeal"] = adj
+                action["unitCombat"] = uc
+                triggers.append(OrderedDict([("trigger", "onTurn"), ("action", action)]))
     # --- one-shot grants / pulses --- (ExtraFreeBonuses is NOT a one-shot grant: it's a continuous while-active
     # bonus supply -> provides.bonuses, handled in curate().)
     # FreeTraitTypes -> enables.traits (owner ruling 2026-07-01, json §5/§8): a whole civ-trait conferred on the
@@ -661,7 +675,8 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, capabili
         for k, v in _pairs_generic(fsc):
             if v:
                 node[k] = v
-    # FreePromoTypes -> grants.freePromotions (the §5 grant bucket). ONE mechanism (owner ruling 2026-07-01): the
+    # FreePromoTypes -> a `triggers` end-turn-presence entry (ruling 8, json.md §5: the old grants.freePromotions
+    # dissolves -- promoting is not the source's considered action). ONE mechanism (owner ruling 2026-07-01): the
     # promotions are granted at END-TURN to units PRESENT in the city -- a unit trained there is present at end-turn;
     # a unit that walks in and stays is covered the same way. The legacy bApplyFreePromotionOnMove flag (a funky/racy
     # mid-turn/on-move re-apply) is DROPPED as redundant -- all freePromotions are end-turn-stay by definition.
@@ -702,7 +717,13 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, capabili
             if entry not in promos:
                 promos.append(entry)
     if promos:
-        grants["freePromotions"] = promos
+        # `promote` verb shape (curator-chosen minimal form; json.md §5 names the verb but does not pin the
+        # payload): promotions = the entry list (a bare promotion string, or {promotion, enabled:<unit predicate>}
+        # -- the §3.9 entry form), units:"present" = every unit present in the city at end-turn.
+        triggers.append(OrderedDict([
+            ("trigger", "onTurnEnd"),
+            ("action", OrderedDict([("promote", OrderedDict([("promotions", promos), ("units", "present")]))])),
+        ]))
     # SpecialistCounts (capacity/slots) -> allowedSpecialists COUNT family, keyed by specialist type (the cap on
     # manual assignment, modifier.md §6.7 (A)).
     scn = rec.find("SpecialistCounts")
@@ -744,7 +765,7 @@ def pass2(typ, rec, store, fams, grants, repeatable, identity, enables, capabili
     if _bool(rec, "bForceTeamVoteEligible"):
         enables.setdefault("votes", []).append("FORCE_TEAM_ELIGIBLE")
     # ObsoletesToBuilding is authored TARGET-side as `obsoletedBy` in the main emit (not here) — owner 2026-06-22.
-    # --- NewCityFree: RELOCATED off the building onto the FOUNDER units as grants.foundBuildings (owner 2026-06-16:
+    # --- NewCityFree: RELOCATED off the building onto the FOUNDER units as plain grants.buildings (owner 2026-06-16:
     # the settler "carries buildings into settling"; gated by each building's NewCityFree BoolExpr -> a tech-gated
     # building unavailable at settle time is not pre-built). curate_unit.found_buildings() reads NewCityFree off the
     # store's BuildingInfo table + the boolexpr converter; nothing is emitted building-side now. (renames §Unit.) ---
@@ -1279,7 +1300,7 @@ def _gold_cost_to_maintenance(fams):
 _RESERVED_TOPLEVEL = frozenset((
     "type", "identity", "cost", "ui", "world", "sound", "ai",
     "enables", "obsoletes", "obsoletedBy", "replaces", "disables",
-    "requires", "allowed", "grants", "provides",
+    "requires", "allowed", "grants", "triggers", "provides",
     "skills", "tags", "state", "attributes", "capabilities",
     "shrine", "headquarters", "enabled", "disabled", "whenObsolete",
     "description", "help", "civilopedia", "strategy", "adjective",
@@ -1306,24 +1327,45 @@ def curate(typ, rec, store):
     art_blocks = OrderedDict()
     ai = OrderedDict()
 
+    # per-pop per-scaler (ruling 4, info-rebuild.md): the verified ×pop÷100 fields author as flat + this per
+    # (fixed-point-and-scales.md §4c: the raw legacy value is human per-100-pop; each:100 carries the quantum).
+    per_100_pop = OrderedDict([("type", "POPULATION"), ("each", 100)])
     # --- scalar/percent families ---
     for tag, (family, scope, member, unit) in SCALAR_FAMILIES.items():
         v = _int(rec, tag)
         if v:
-            _set_fam(fams, family, scope, member, unit, v)
+            if unit == "perPopulation":
+                _inject_per(fams, family, scope, "flat", v, per_100_pop)
+            else:
+                _set_fam(fams, family, scope, member, unit, v)
     # --- yield/commerce split families ---
     for tag, spec in YIELD_FAMILIES.items():
         node = rec.find(tag)
         if node is None:
             continue
         scope, keys, unit = spec[0], spec[1], spec[2]
-        submember = spec[3] if len(spec) > 3 else None     # optional sub-scope (e.g. 'specialist' for perSpecialist)
         for member, v in engine.named_array(node, keys).items():
-            # per-pop (Yield/CommercePerPopChanges) is x100-scaled in XML (100 = 1/pop) -> de-scale to human (1),
-            # so the JSON carries human per-pop numbers (cascade-fixed-point: curator emits human, readJson re-x100s).
+            # per-pop (Yield/CommercePerPopChanges): engine adds the RAW value ×pop into the ×100-space rate
+            # (CvCity.cpp:12346 / getExtraYield100) -> human effect = value × pop / 100 -> a §3.7 per-scaler
+            # {flat: value, per:{POPULATION, each:100}} (ruling 4; replaces the old descale100+perPopulation unit).
             if unit == "perPopulation":
-                v = descale100(v)
-            _set_fam(fams, member, scope, submember, unit, v)   # member IS the family (split)
+                _inject_per(fams, member, scope, "flat", v, per_100_pop)
+            else:
+                _set_fam(fams, member, scope, None, unit, v)   # member IS the family (split)
+    # +commerce per specialist of ALL types (legacy getSpecialistExtraCommerce; each city multiplies by ITS total
+    # specialist count, CvCity.cpp:11810) -> <c>.empire.flat {value, per:"SPECIALIST"} (ruling 4 + json.md §3.7
+    # bare-string sugar). UNIFORM with civic/trait. NB the count the engine takes is CITY-local.
+    sec_node = rec.find("SpecialistExtraCommerces")
+    if sec_node is not None:
+        for member, v in engine.named_array(sec_node, engine.COMMERCES).items():
+            _inject_per(fams, member, "empire", "flat", v, "SPECIALIST")
+    # iOtherAreaMaintenanceModifier -> ordinary conditioned percent deposit on the IS_HOME_AREA predicate
+    # (ruling 2; json.md §3.5: "other areas" = the plain negation). NB the legacy engine apply is "every area
+    # other than the BUILDING's own" (CvPlayer.cpp:7440-7448); zero buildings author the field today, and the
+    # owner-ruled shape is the capital-relative predicate.
+    oam = _int(rec, "iOtherAreaMaintenanceModifier")
+    if oam:
+        _inject_cond(fams, "maintenance", "empire", "percent", oam, "!IS_HOME_AREA")
 
     # --- enables / obsoletes / replaces (store-derived; COPIED so pass2 can extend FoundsCorporation/ObsoletesToBuilding) ---
     enables = OrderedDict((k, list(v)) for k, v in (store.enabled_by(typ) or {}).items())
@@ -1362,7 +1404,7 @@ def curate(typ, rec, store):
             obsoleted_by.setdefault("techs", []).append(_grp_ot)
 
     grants = OrderedDict()
-    repeatable = []
+    triggers = []   # top-level `triggers` array (ruling 8, json.md §5): trigger -> chance -> action entries
     # provides: bonuses this building SUPPLIES while active (XML ExtraFreeBonuses) -- a vicinity-bonus source,
     # uniform with a map bonus that provides itself. The cascade's vicinity check unions plot bonuses + active
     # buildings' provides.bonuses.
@@ -1378,11 +1420,9 @@ def curate(typ, rec, store):
     if _civs:
         identity["enabledCivilizations"] = _civs
 
-    # --- PASS 2: keyed inversions (§6.1), properties, repeatable grants, one-shot grants, enables-from-XML ---
+    # --- PASS 2: keyed inversions (§6.1), properties, triggers entries, one-shot grants, enables-from-XML ---
     bespoke = OrderedDict()   # top-level bespoke sections (shrine/headquarters, json §9)
-    pass2(typ, rec, store, fams, grants, repeatable, identity, enables, capabilities, bespoke)
-    if repeatable:
-        grants["repeatable"] = repeatable
+    pass2(typ, rec, store, fams, grants, triggers, identity, enables, capabilities, bespoke)
 
     # gold UPKEEP -> maintenance (DEC-maintenance-bookkeeping): a building's unconditional negative gold-commerce is
     # its gold COST, which legacy charges to MAINTENANCE (TREAT_NEGATIVE_GOLD_AS_MAINTENANCE), not gold commerce.
@@ -1462,6 +1502,8 @@ def curate(typ, rec, store):
         out[f] = fams[f]
     if grants:
         out["grants"] = grants
+    if triggers:
+        out["triggers"] = triggers                # trigger -> chance -> action entries (json §5)
     for k in ("shrine", "headquarters"):          # top-level bespoke FK sections (json §9)
         if k in bespoke:
             out[k] = bespoke[k]
@@ -1534,8 +1576,10 @@ HANDLED = (set(SCALAR_FAMILIES) | set(YIELD_FAMILIES) | set(CAP_ATTRIBUTES) | se
            | PASS2_TAGS | {"Type", "Flavors", "iAIWeight"}
            # consciously routed/dropped, not in a bool table: noHolyCity -> requires.build.disabled;
            # damageAllAttackers -> defense.counterDamage; applyFreePromotionOnMove -> DROPPED (redundant, all
-           # freePromotions are end-turn-stay; owner 2026-07-01).
-           | {"bNoHolyCity", "bApplyFreePromotionOnMove", "bDamageAllAttackers"})
+           # freePromotions are end-turn-stay; owner 2026-07-01). SpecialistExtraCommerces + the otherArea
+           # maintenance modifier are handled explicitly in curate() (rulings 4 + 2).
+           | {"bNoHolyCity", "bApplyFreePromotionOnMove", "bDamageAllAttackers",
+              "SpecialistExtraCommerces", "iOtherAreaMaintenanceModifier"})
 
 
 # ============================ PROPERTY-BAND REALIGNMENT (owner 2026-06-23) ============================
@@ -1561,8 +1605,8 @@ HANDLED = (set(SCALAR_FAMILIES) | set(YIELD_FAMILIES) | set(CAP_ATTRIBUTES) | se
 PROPERTY_INFOS_XML = os.path.join(REPO, "Assets", "XML", "GameInfo", "CIV4PropertyInfos.xml")
 # top-level reserved (non-family) keys -- everything else on a band object is a modifier family to increment.
 RESERVED_NONFAMILY = {"type", "description", "civilopedia", "help", "enables", "obsoletedBy", "replacedBy", "requires",
-                      "allowed", "provides", "grants", "cost", "ai", "enabled", "disabled", "ui", "world", "sound", "identity",
-                      "attributes", "capabilities", "shrine", "headquarters"}
+                      "allowed", "provides", "grants", "triggers", "cost", "ai", "enabled", "disabled", "ui", "world",
+                      "sound", "identity", "attributes", "capabilities", "shrine", "headquarters"}
 
 
 def property_band_buildings():
@@ -1714,7 +1758,7 @@ def main():
     has = lambda k: sum(1 for o in results.values() if k in o)
     STRUCT = {"type", "description", "civilopedia", "help", "enables", "obsoletes", "replaces", "requires",
               "allowed", "provides", "cost", "ai", "enabled", "disabled", "ui", "world", "sound", "identity",
-              "attributes", "capabilities", "shrine", "headquarters", "grants", "obsoletedBy"}
+              "attributes", "capabilities", "shrine", "headquarters", "grants", "triggers", "obsoletedBy"}
     seen = sorted({f for o in results.values() for f in o if f not in STRUCT})
     print("BuildingInfo curated: %d" % n)
     for k in ("enables", "obsoletes", "replaces", "requires", "allowed", "cost", "ai", "identity"):

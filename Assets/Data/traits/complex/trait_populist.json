@@ -17,9 +17,6 @@
  },
  "commerce": {
   "empire": {
-   "specialist": {
-    "perSpecialist": -1
-   },
    "specialists": {
     "SPECIALIST_LAWYER": {
      "flat": -1
@@ -42,7 +39,13 @@
     "SPECIALIST_ANDROID_WORKER": {
      "flat": 1
     }
-   }
+   },
+   "flat": [
+    {
+     "value": -1,
+     "per": "SPECIALIST"
+    }
+   ]
   }
  },
  "gold": {

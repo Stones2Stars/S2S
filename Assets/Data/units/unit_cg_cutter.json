@@ -27,9 +27,8 @@
    "flat": 6
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 43,
    "vsUnit": {
     "UNIT_ASSAULT_SHIP": {
      "attack": {
@@ -40,6 +39,11 @@
      }
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 43
   }
  },
  "bombard": {

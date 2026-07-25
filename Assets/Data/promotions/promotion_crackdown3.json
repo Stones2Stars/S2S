@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_CRACKDOWN3",
- "strength": {
+ "combat": {
   "unit": {
    "stealth": {
     "percent": 15

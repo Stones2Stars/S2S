@@ -1,12 +1,5 @@
 {
  "type": "PROPERTY_DISEASE",
- "text": {
-  "value": "TXT_KEY_PROPERTY_DISEASE_DISPLAY",
-  "change": "TXT_KEY_PROPERTY_DISEASE_CHANGE",
-  "changeAllCities": "TXT_KEY_PROPERTY_DISEASE_CHANGE_ALL_CITIES",
-  "prereqMin": "TXT_KEY_PROPERTY_DISEASE_PREREQ_MIN",
-  "prereqMax": "TXT_KEY_PROPERTY_DISEASE_PREREQ_MAX"
- },
  "PROPERTY_DISEASE": {
   "city": {
    "percent": 5,
@@ -81,6 +74,13 @@
   "description": "TXT_KEY_PROPERTY_DISEASE",
   "sourceDrain": true,
   "oaType": true,
-  "fontButtonIndex": 4
+  "fontButtonIndex": 4,
+  "text": {
+   "value": "TXT_KEY_PROPERTY_DISEASE_DISPLAY",
+   "change": "TXT_KEY_PROPERTY_DISEASE_CHANGE",
+   "changeAllCities": "TXT_KEY_PROPERTY_DISEASE_CHANGE_ALL_CITIES",
+   "prereqMin": "TXT_KEY_PROPERTY_DISEASE_PREREQ_MIN",
+   "prereqMax": "TXT_KEY_PROPERTY_DISEASE_PREREQ_MAX"
+  }
  }
 }

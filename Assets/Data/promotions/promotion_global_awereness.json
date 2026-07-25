@@ -12,21 +12,7 @@
    ]
   }
  },
- "firstStrike": {
-  "unit": {
-   "strikes": {
-    "flat": 3
-   }
-  }
- },
- "capture": {
-  "unit": {
-   "probability": {
-    "flat": 5
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_HELICOPTER": {
@@ -38,6 +24,20 @@
     "UNITCOMBAT_DREADNOUGHT": {
      "percent": 10
     }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 3
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
    }
   }
  },

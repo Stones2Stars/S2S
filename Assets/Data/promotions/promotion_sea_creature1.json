@@ -5,14 +5,7 @@
    "PROMOTION_SEA_CREATURE2"
   ]
  },
- "firstStrike": {
-  "unit": {
-   "chance": {
-    "flat": 1
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "terrain": {
     "TERRAIN_OCEAN_TROPICAL": {
@@ -63,6 +56,13 @@
       "percent": 10
      }
     }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
    }
   }
  },

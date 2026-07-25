@@ -5,7 +5,7 @@
    "PROMOTION_STEALTH2"
   ]
  },
- "strength": {
+ "combat": {
   "unit": {
    "stealth": {
     "percent": 10

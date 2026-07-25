@@ -54,9 +54,11 @@ from curate_common import (put_art, emit_art, FAMILY_ORDER, de_i, descale100, fo
                            emit_sizematters, SM_FLAT_CHANGE, SM_COMBATMOD_CHANGE, SM_CARGO_CHANGE, wipe_entity_json)
 from store import Store, REPO
 
-# ---- scalar deposits: tag -> (family, member|None, unit). All at `unit` scope (self-accumulator, §5). ----
-# strength = the combat family (general % + flat + SM mods + situational + the TB/S&D sub-stats).
-STRENGTH = {
+# ---- scalar deposits: tag -> (member|None, unit). All at `unit` scope (self-accumulator, §5). ----
+# The `combat` family = everything that MODIFIES the unit's base strength (ruling 5, info-rebuild.md):
+# general % + flat + situational members + the TB/S&D sub-stats. A promotion never authors `strength`
+# (that family holds ONLY a unit's base value, strength.unit.flat).
+COMBAT_MODS = {
     "iCombatPercent":               (None, "percent"),        # general combat strength %
     "iStrengthChange":              (None, "flat"),           # flat strength points
     "iAttackCombatModifierChange":  ("attack", "percent"),
@@ -129,13 +131,13 @@ FAMILIES = {
 }
 # vs-keyed pair-lists: tag -> (family, "<keyword>.{TYPE}.<member>", unit). member None => family.unit.<kw>.{TYPE}.<unit>.
 VS_KEYED = {
-    "TerrainAttacks":   ("strength", "terrain", "attack", "percent"),
-    "TerrainDefenses":  ("strength", "terrain", "defense", "percent"),
-    "FeatureAttacks":   ("strength", "feature", "attack", "percent"),
-    "FeatureDefenses":  ("strength", "feature", "defense", "percent"),
-    "UnitCombatMods":   ("strength", "unitCombat", None, "percent"),
-    "DomainMods":       ("strength", "domain", None, "percent"),
-    "FlankingStrikesbyUnitCombatChange": ("strength", "flanking", None, "percent"),
+    "TerrainAttacks":   ("combat", "terrain", "attack", "percent"),
+    "TerrainDefenses":  ("combat", "terrain", "defense", "percent"),
+    "FeatureAttacks":   ("combat", "feature", "attack", "percent"),
+    "FeatureDefenses":  ("combat", "feature", "defense", "percent"),
+    "UnitCombatMods":   ("combat", "unitCombat", None, "percent"),
+    "DomainMods":       ("combat", "domain", None, "percent"),
+    "FlankingStrikesbyUnitCombatChange": ("combat", "flanking", None, "percent"),
     "TerrainWorks":     ("workRate", "terrain", None, "percent"),
     "FeatureWorks":     ("workRate", "feature", None, "percent"),
     "BuildWorkRateModifierChangeTypes": ("workRate", "build", None, "percent"),
@@ -290,11 +292,11 @@ def curate(typ, rec, store):
     def fam_unit(family):
         return fams.setdefault(family, OrderedDict()).setdefault("unit", OrderedDict())
 
-    # --- scalar strength members ---
-    for tag, (member, unit) in STRENGTH.items():
+    # --- scalar combat-modifier members (strength MODIFIERS -> the combat family, ruling 5) ---
+    for tag, (member, unit) in COMBAT_MODS.items():
         v = _int(rec, tag)
         if v:
-            node = fam_unit("strength")
+            node = fam_unit("combat")
             if member:
                 node = node.setdefault(member, OrderedDict())
             node[unit] = v
@@ -546,7 +548,7 @@ def main():
     results = OrderedDict((typ, curate(typ, rec, store)) for typ, rec in table.items())
     n = len(results)
     # COVERAGE CHECK (verify = nothing silently dropped): report XML tags handled by NO table/special-case.
-    handled = (set(STRENGTH) | set(FAMILIES) | set(VS_KEYED) | set(CAP_BOOL) | set(CAP_PAIR)
+    handled = (set(COMBAT_MODS) | set(FAMILIES) | set(VS_KEYED) | set(CAP_BOOL) | set(CAP_PAIR)
                | set(CAP_COUNT) | set(CAP_LIST) | set(SKILL_UNITCOMBAT_LIST) | set(VISION_PAIRS) | set(VISION_STRUCTS)
                | set(GRANT_LIST) | set(ID_SCALAR) | set(ID_LIST) | set(ID_BOOL) | DROP
                | set(SM_FLAT_CHANGE) | set(SM_COMBATMOD_CHANGE) | set(SM_CARGO_CHANGE)   # consumed by emit_sizematters (json.md §9) -- were mis-reported UNHANDLED

@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DARK_PURPLE",
-   "icon": "ART_DEF_CIVILIZATION_ROME",
+   "define": "ART_DEF_CIVILIZATION_ROME",
    "style": "ARTSTYLE_GRECO_ROMAN",
    "unitStyle": "UNIT_ARTSTYLE_ROME"
   }

@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DARK_GRAY",
-   "icon": "ART_DEF_CIVILIZATION_BYZANTIUM",
+   "define": "ART_DEF_CIVILIZATION_BYZANTIUM",
    "style": "ARTSTYLE_GRECO_ROMAN",
    "unitStyle": "UNIT_ARTSTYLE_BYZANTIUM"
   }

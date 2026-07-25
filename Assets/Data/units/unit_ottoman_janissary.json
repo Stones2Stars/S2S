@@ -57,9 +57,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 20,
    "unitCombat": {
     "UNITCOMBAT_MELEE": {
      "percent": 25
@@ -71,6 +70,11 @@
      "percent": 25
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 20
   }
  },
  "costs": {

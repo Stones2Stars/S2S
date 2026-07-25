@@ -8,19 +8,19 @@
    "PROMOTION_HUNTING_SIGHT1"
   ]
  },
- "firstStrike": {
-  "unit": {
-   "chance": {
-    "flat": 1
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_ANIMAL": {
      "percent": 25
     }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
    }
   }
  },

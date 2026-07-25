@@ -104,16 +104,38 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_DECEPTION1": [
-    "UNITCOMBAT_SPY"
-   ],
-   "PROMOTION_SECURITY1": [
-    "UNITCOMBAT_SPY"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_DECEPTION1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_SPY"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_SECURITY1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_SPY"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_DECEIVER",
   "priority": 1

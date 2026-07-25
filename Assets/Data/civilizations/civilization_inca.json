@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DARK_YELLOW",
-   "icon": "ART_DEF_CIVILIZATION_INCA",
+   "define": "ART_DEF_CIVILIZATION_INCA",
    "style": "ARTSTYLE_SOUTH_AMERICA",
    "unitStyle": "UNIT_ARTSTYLE_SOUTH_AMERICA"
   }

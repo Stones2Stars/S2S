@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_FUEL_TANK",
- "strength": {
+ "combat": {
   "unit": {
    "percent": -15
   }

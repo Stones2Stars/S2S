@@ -7,7 +7,7 @@
    "PROMOTION_CARAVAN_MOVEMENT_I"
   ]
  },
- "strength": {
+ "combat": {
   "unit": {
    "percent": 5,
    "terrain": {

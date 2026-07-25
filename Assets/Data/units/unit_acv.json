@@ -31,14 +31,18 @@
    "flat": 3
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 80,
    "unitCombat": {
     "UNITCOMBAT_CLONES": {
      "percent": 50
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 80
   }
  },
  "withdrawal": {

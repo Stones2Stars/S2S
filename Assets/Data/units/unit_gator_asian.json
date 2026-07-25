@@ -5,14 +5,18 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 3,
    "targets": {
     "UNITCOMBAT_SIZE_DIMINUTIVE": true,
     "UNITCOMBAT_SIZE_TINY": true,
     "UNITCOMBAT_SIZE_SMALL": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
   }
  },
  "skills": [

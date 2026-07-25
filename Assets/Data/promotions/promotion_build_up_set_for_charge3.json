@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_BUILD_UP_SET_FOR_CHARGE3",
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_MOUNTED": {

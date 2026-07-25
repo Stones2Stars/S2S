@@ -34,13 +34,21 @@
    "percent": 100
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_WEATHER_FORECAST_LAND",
-   "PROMOTION_WEATHER_FORECAST_AIR",
-   "PROMOTION_WEATHER_FORECAST_NAVAL"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_WEATHER_FORECAST_LAND",
+      "PROMOTION_WEATHER_FORECAST_AIR",
+      "PROMOTION_WEATHER_FORECAST_NAVAL"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 1475,
   "sizeModifier": 1,

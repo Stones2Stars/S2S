@@ -64,12 +64,16 @@
  },
  "maintenance": {
   "empire": {
-   "homeArea": {
-    "percent": 4
-   },
-   "otherArea": {
-    "percent": 5
-   },
+   "percent": [
+    {
+     "value": 4,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 5,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
    "corporation": {
     "percent": -10
    }

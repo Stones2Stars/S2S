@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_JIVARO",
-   "icon": "ART_DEF_CIVILIZATION_JIVARO",
+   "define": "ART_DEF_CIVILIZATION_JIVARO",
    "style": "ARTSTYLE_SOUTH_AMERICA",
    "unitStyle": "UNIT_ARTSTYLE_MESO_AMERICA"
   }

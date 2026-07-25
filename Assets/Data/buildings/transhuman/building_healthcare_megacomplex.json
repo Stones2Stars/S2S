@@ -329,28 +329,40 @@
    "SPECIALIST_DOCTOR": 15
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_SELF_HEAL1"
-  ],
-  "repeatable": [
-   {
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
     "heal": "full",
-    "count": 1,
-    "interval": "perTurn"
-   },
-   {
-    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE",
-    "interval": "perTurn",
-    "heal": 40
-   },
-   {
-    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS",
-    "interval": "perTurn",
-    "heal": 30
+    "count": 1
    }
-  ]
- },
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 40,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE"
+   }
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 30,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS"
+   }
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_SELF_HEAL1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 7805,
   "sizeModifier": 1,

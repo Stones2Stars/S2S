@@ -28,9 +28,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 15,
    "lunge": {
     "percent": 20
    },
@@ -46,6 +45,11 @@
    "stealth": {
     "percent": 30
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 15
   }
  },
  "collateral": {

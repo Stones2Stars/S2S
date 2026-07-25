@@ -1,13 +1,6 @@
 {
  "type": "PROMOTION_GRAPE_SHOT",
- "capture": {
-  "unit": {
-   "probability": {
-    "flat": -20
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_MELEE": {
@@ -22,6 +15,13 @@
     "UNITCOMBAT_SIEGE": {
      "percent": 15
     }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -20
    }
   }
  },

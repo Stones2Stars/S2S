@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_HITTITES",
-   "icon": "ART_DEF_CIVILIZATION_HITTITES",
+   "define": "ART_DEF_CIVILIZATION_HITTITES",
    "style": "ARTSTYLE_EGYPT",
    "unitStyle": "UNIT_ARTSTYLE_BABYLON"
   }

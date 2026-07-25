@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_BLUE",
-   "icon": "ART_DEF_CIVILIZATION_AMERICA",
+   "define": "ART_DEF_CIVILIZATION_AMERICA",
    "style": "ARTSTYLE_ANGLO_AMERICA",
    "unitStyle": "UNIT_ARTSTYLE_AMERICAN"
   }

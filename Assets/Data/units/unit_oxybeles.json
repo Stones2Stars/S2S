@@ -33,9 +33,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 6,
    "unitCombat": {
     "UNITCOMBAT_SIEGE_WOODEN": {
      "percent": 50
@@ -50,6 +49,11 @@
      "percent": 25
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 6
   }
  },
  "bombard": {

@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DENMARK",
-   "icon": "ART_DEF_CIVILIZATION_DENMARK",
+   "define": "ART_DEF_CIVILIZATION_DENMARK",
    "style": "ARTSTYLE_EUROPE",
    "unitStyle": "UNIT_ARTSTYLE_DENMARK"
   }

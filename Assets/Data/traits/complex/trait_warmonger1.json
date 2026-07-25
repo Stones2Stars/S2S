@@ -65,14 +65,24 @@
  "policies": {
   "militaryFoodProduction": true
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_COMBAT1": [
-    "UNITCOMBAT_COMBATANT",
-    "UNITCOMBAT_NAVAL_COMBATANT"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_COMBAT1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_COMBATANT",
+       "UNITCOMBAT_NAVAL_COMBATANT"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_WARMONGER",
   "priority": 1

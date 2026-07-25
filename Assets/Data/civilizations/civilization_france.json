@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DARK_BLUE",
-   "icon": "ART_DEF_CIVILIZATION_FRANCE",
+   "define": "ART_DEF_CIVILIZATION_FRANCE",
    "style": "ARTSTYLE_EUROPE",
    "unitStyle": "UNIT_ARTSTYLE_FRANCE"
   }

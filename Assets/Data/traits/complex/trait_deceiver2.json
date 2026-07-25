@@ -123,7 +123,13 @@
  },
  "espionage": {
   "empire": {
-   "flat": 4,
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "per": "SPECIALIST"
+    }
+   ],
    "percent": [
     5,
     {
@@ -138,9 +144,6 @@
     "SPECIALIST_GREAT_SPY": {
      "flat": 2
     }
-   },
-   "specialist": {
-    "perSpecialist": 1
    }
   }
  },
@@ -167,14 +170,16 @@
    }
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "espionageDefense": {
-    "percent": 20
-   },
-   "captureResistance": {
+   "resistance": {
     "percent": -20
    }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": 20
   }
  },
  "durations": {
@@ -206,13 +211,23 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_DECEIVER2": [
-    "UNITCOMBAT_SPY"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_DECEIVER2"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_SPY"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_DECEIVER",
   "priority": 2

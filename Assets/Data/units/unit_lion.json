@@ -22,14 +22,18 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 5,
    "unitTargets": {
     "UNIT_BUFFALO_CAPE": true,
     "UNIT_WILDEBEEST": true,
     "UNIT_ZEBRA": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 5
   }
  },
  "withdrawal": {

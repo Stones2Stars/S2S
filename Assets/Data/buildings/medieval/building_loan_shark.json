@@ -46,17 +46,21 @@
    "flat": 5
   }
  },
- "grants": {
-  "repeatable": [
-   {
-    "unit": "UNIT_CUTTHROAT",
-    "interval": "perTurn",
-    "chance": {
-     "per": "PROPERTY_CRIME"
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "chance": {
+    "per": "PROPERTY_CRIME"
+   },
+   "action": {
+    "grant": {
+     "units": [
+      "UNIT_CUTTHROAT"
+     ]
     }
    }
-  ]
- },
+  }
+ ],
  "cost": {
   "production": 332,
   "countModifier": 1

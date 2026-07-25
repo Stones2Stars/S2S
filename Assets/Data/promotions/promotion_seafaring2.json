@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_SEAFARING2",
- "strength": {
+ "combat": {
   "unit": {
    "percent": 10
   }

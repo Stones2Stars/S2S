@@ -1,12 +1,5 @@
 {
  "type": "PROPERTY_EDUCATION",
- "text": {
-  "value": "TXT_KEY_PROPERTY_EDUCATION_DISPLAY",
-  "change": "TXT_KEY_PROPERTY_EDUCATION_CHANGE",
-  "changeAllCities": "TXT_KEY_PROPERTY_EDUCATION_CHANGE_ALL_CITIES",
-  "prereqMin": "TXT_KEY_PROPERTY_EDUCATION_PREREQ_MIN",
-  "prereqMax": "TXT_KEY_PROPERTY_EDUCATION_PREREQ_MAX"
- },
  "PROPERTY_EDUCATION": {
   "city": {
    "percent": 4
@@ -98,6 +91,13 @@
  "identity": {
   "description": "TXT_KEY_PROPERTY_EDUCATION",
   "sourceDrain": true,
-  "fontButtonIndex": 12
+  "fontButtonIndex": 12,
+  "text": {
+   "value": "TXT_KEY_PROPERTY_EDUCATION_DISPLAY",
+   "change": "TXT_KEY_PROPERTY_EDUCATION_CHANGE",
+   "changeAllCities": "TXT_KEY_PROPERTY_EDUCATION_CHANGE_ALL_CITIES",
+   "prereqMin": "TXT_KEY_PROPERTY_EDUCATION_PREREQ_MIN",
+   "prereqMax": "TXT_KEY_PROPERTY_EDUCATION_PREREQ_MAX"
+  }
  }
 }

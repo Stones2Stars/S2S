@@ -49,12 +49,12 @@
    "flat": -8
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "captureProbability": {
+   "probability": {
     "percent": 20
    },
-   "captureResistance": {
+   "resistance": {
     "percent": -40
    }
   }
@@ -174,14 +174,24 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_COWARDLY3": [
-    "UNITCOMBAT_COMBATANT",
-    "UNITCOMBAT_NAVAL_COMBATANT"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_COWARDLY3"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_COMBATANT",
+       "UNITCOMBAT_NAVAL_COMBATANT"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_COWARDLY",
   "priority": -3

@@ -53,12 +53,12 @@
    }
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "captureProbability": {
+   "probability": {
     "percent": 10
    },
-   "captureResistance": {
+   "resistance": {
     "percent": 10
    }
   }
@@ -71,12 +71,16 @@
    "numCities": {
     "percent": 12
    },
-   "homeArea": {
-    "percent": 6
-   },
-   "otherArea": {
-    "percent": 5
-   },
+   "percent": [
+    {
+     "value": 6,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 5,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
    "corporation": {
     "percent": 3
    }

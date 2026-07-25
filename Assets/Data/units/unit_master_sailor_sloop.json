@@ -33,9 +33,8 @@
    "flat": 5
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 13,
    "vsUnit": {
     "UNIT_GALLEON": {
      "attack": {
@@ -46,6 +45,11 @@
      }
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 13
   }
  },
  "withdrawal": {

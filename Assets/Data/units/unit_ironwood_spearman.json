@@ -55,14 +55,18 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 5,
    "unitCombat": {
     "UNITCOMBAT_MELEE": {
      "percent": 100
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 5
   }
  },
  "costs": {

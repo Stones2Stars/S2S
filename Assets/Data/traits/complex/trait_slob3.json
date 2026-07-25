@@ -5,9 +5,12 @@
  ],
  "food": {
   "empire": {
-   "specialist": {
-    "perSpecialist": -1
-   }
+   "flat": [
+    {
+     "value": -1,
+     "per": "SPECIALIST"
+    }
+   ]
   }
  },
  "commerce": {
@@ -85,14 +88,24 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_SLOB3": [
-    "UNITCOMBAT_SPECIES_HUMAN",
-    "UNITCOMBAT_SPECIES_NEANDERTHAL"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_SLOB3"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_SPECIES_HUMAN",
+       "UNITCOMBAT_SPECIES_NEANDERTHAL"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_SLOB",
   "priority": -3

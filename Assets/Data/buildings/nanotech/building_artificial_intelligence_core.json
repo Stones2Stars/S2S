@@ -84,15 +84,15 @@
    "percent": 100
   }
  },
- "grants": {
-  "repeatable": [
-   {
-    "unitCombat": "UNITCOMBAT_HEALS_AS_TECH",
-    "interval": "perTurn",
-    "heal": 7
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 7,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_TECH"
    }
-  ]
- },
+  }
+ ],
  "cost": {
   "production": 4315,
   "sizeModifier": 1,

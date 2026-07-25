@@ -17,14 +17,7 @@
    ]
   }
  },
- "firstStrike": {
-  "unit": {
-   "strikes": {
-    "flat": 1
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "feature": {
     "FEATURE_JUNGLE": {
@@ -80,6 +73,13 @@
     "UNITCOMBAT_ANIMAL": {
      "percent": 20
     }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
    }
   }
  },

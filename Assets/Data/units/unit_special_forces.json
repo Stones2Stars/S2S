@@ -41,9 +41,8 @@
    }
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 75,
    "cityAttack": {
     "percent": 25
    },
@@ -88,6 +87,11 @@
     "UNITCOMBAT_SIEGE_ROCKETRY": true,
     "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 75
   }
  },
  "withdrawal": {

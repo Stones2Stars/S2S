@@ -1,13 +1,6 @@
 {
  "type": "UNITCOMBAT_WEAPON_H2H_STAFF",
- "capture": {
-  "unit": {
-   "probability": {
-    "flat": 30
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_MELEE": {
@@ -19,6 +12,13 @@
     "UNITCOMBAT_MOUNTED": {
      "percent": 15
     }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 30
    }
   }
  },

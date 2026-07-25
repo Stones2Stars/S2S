@@ -39,17 +39,17 @@
    }
   }
  },
- "grants": {
-  "repeatable": [
-   {
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
     "PROPERTY_WATER_POLLUTION": -5,
-    "interval": "perTurn",
     "on": "plot",
     "relation": "near",
     "distance": 1
    }
-  ]
- },
+  }
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_SWAMP"

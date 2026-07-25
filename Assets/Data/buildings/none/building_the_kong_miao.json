@@ -35,11 +35,19 @@
    "SPECIALIST_PRIEST": 3
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_MORALE"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_MORALE"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "shrine": "RELIGION_CONFUCIANISM",
  "attributes": {
   "nukeImmune": true

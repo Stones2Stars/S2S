@@ -30,9 +30,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 27,
    "lunge": {
     "percent": 20
    },
@@ -51,6 +50,11 @@
    "targets": {
     "UNITCOMBAT_CRIMINAL": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 27
   }
  },
  "capture": {

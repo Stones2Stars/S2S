@@ -1,5 +1,14 @@
 {
  "type": "UNITCOMBAT_CIVILIAN",
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_COMBATANT": {
+     "percent": -25
+    }
+   }
+  }
+ },
  "capture": {
   "unit": {
    "probability": {
@@ -7,15 +16,6 @@
    },
    "resistance": {
     "flat": -30
-   }
-  }
- },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_COMBATANT": {
-     "percent": -25
-    }
    }
   }
  },

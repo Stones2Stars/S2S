@@ -42,14 +42,18 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 2,
    "unitCombat": {
     "UNITCOMBAT_MELEE": {
      "percent": 25
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 2
   }
  },
  "skills": [

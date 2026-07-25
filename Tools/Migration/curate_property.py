@@ -27,7 +27,8 @@ DEFINITION, and it participates in BOTH cascades. Owner decomposition (2026-06-1
   equilibrium the decay pulls toward. Kept top-level as `targetLevel`.
 - AI: `iAIWeight`/`AIScaleType`/`iTrainReluctance` + `iOperationalRangeMin/Max` (the AI value-normalization band
   read by `CvCityAI` decision-scoring — owner 2026-07-01: AI-only, not the #429 propagation mechanic) -> `ai`.
-  Display texts -> `text`; FontButtonIndex -> identity.
+  Display texts -> `identity.text` (ruling 6: `text` is not a family; all TEXT lives in identity, json.md §7);
+  FontButtonIndex -> identity.
 - DROPPED -> #429 (the obsolete LEAKING mechanic, owner): every `PropertyPropagator`
   (DIFFUSE, incl. plot->city SAME_PLOT — the unit->city emission re-homes as a containment deposit on the
   unit/building at their passes), and `ChangePropagators`.
@@ -183,9 +184,9 @@ def curate(typ, rec):
     desc = engine.text(rec.find("Description"))
     if desc:
         out["description"] = desc
+    # display TXT_KEYs + their template parameters -> identity (ruling 6, info-rebuild.md / json.md §7: `text`
+    # is NOT a family -- all TEXT lives in identity). Merged into the identity block below.
     text = OrderedDict((k, engine.text(rec.find(tag))) for tag, k in TEXT.items() if engine.text(rec.find(tag)))
-    if text:
-        out["text"] = text
     out.update(_modifiers(rec, typ))                         # <PROPERTY>.<scope>.<unit> basic modifiers (decay)
     out.update(_propagators(rec))                            # `properties` block: diffuse + changePropagation (owner: keep spread)
     gb = _granted_buildings(rec)
@@ -223,6 +224,8 @@ def curate(typ, rec):
     fb = engine.text(rec.find("FontButtonIndex"))
     if engine.is_int(fb):
         identity["fontButtonIndex"] = int(fb)
+    if text:
+        identity["text"] = text                              # display TXT_KEY block (json.md §7: TEXT -> identity)
     if identity:
         out["identity"] = identity
     fold_text_to_identity(out)   # TEXT -> identity (json.md §7)

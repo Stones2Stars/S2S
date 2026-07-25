@@ -29,9 +29,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 34,
    "cityDefense": {
     "percent": 25
    },
@@ -40,6 +39,11 @@
      "percent": 25
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 34
   }
  },
  "skills": [

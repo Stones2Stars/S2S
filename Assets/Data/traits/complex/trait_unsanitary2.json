@@ -245,15 +245,25 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_UNSANITARY2": [
-    "UNITCOMBAT_ANIMAL",
-    "UNITCOMBAT_CRIMINAL",
-    "UNITCOMBAT_RUFFIAN"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_UNSANITARY2"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_ANIMAL",
+       "UNITCOMBAT_CRIMINAL",
+       "UNITCOMBAT_RUFFIAN"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_UNSANITARY",
   "priority": -2

@@ -1,12 +1,5 @@
 {
  "type": "PROPERTY_AIR_POLLUTION",
- "text": {
-  "value": "TXT_KEY_PROPERTY_AIR_POLLUTION_DISPLAY",
-  "change": "TXT_KEY_PROPERTY_AIR_POLLUTION_CHANGE",
-  "changeAllCities": "TXT_KEY_PROPERTY_AIR_POLLUTION_CHANGE_ALL_CITIES",
-  "prereqMin": "TXT_KEY_PROPERTY_AIR_POLLUTION_PREREQ_MIN",
-  "prereqMax": "TXT_KEY_PROPERTY_AIR_POLLUTION_PREREQ_MAX"
- },
  "PROPERTY_AIR_POLLUTION": {
   "city": {
    "percent": 6,
@@ -76,6 +69,13 @@
  "identity": {
   "description": "TXT_KEY_PROPERTY_AIR_POLLUTION",
   "sourceDrain": true,
-  "fontButtonIndex": 3
+  "fontButtonIndex": 3,
+  "text": {
+   "value": "TXT_KEY_PROPERTY_AIR_POLLUTION_DISPLAY",
+   "change": "TXT_KEY_PROPERTY_AIR_POLLUTION_CHANGE",
+   "changeAllCities": "TXT_KEY_PROPERTY_AIR_POLLUTION_CHANGE_ALL_CITIES",
+   "prereqMin": "TXT_KEY_PROPERTY_AIR_POLLUTION_PREREQ_MIN",
+   "prereqMax": "TXT_KEY_PROPERTY_AIR_POLLUTION_PREREQ_MAX"
+  }
  }
 }

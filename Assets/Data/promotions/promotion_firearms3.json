@@ -13,19 +13,19 @@
    ]
   }
  },
- "firstStrike": {
-  "unit": {
-   "strikes": {
-    "flat": 1
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_WOODEN_SHIPS": {
      "percent": 20
     }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
    }
   }
  },

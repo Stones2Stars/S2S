@@ -29,9 +29,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 12,
    "dynamicDefense": {
     "percent": 50
    },
@@ -41,6 +40,11 @@
    "stealth": {
     "percent": 50
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 12
   }
  },
  "capture": {

@@ -32,11 +32,19 @@
    }
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_ARCHER_TRADITION"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_ARCHER_TRADITION"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "attributes": {
   "nukeImmune": true,
   "destroyedOnCapture": true

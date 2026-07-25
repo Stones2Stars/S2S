@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_DEFENSIVE",
- "strength": {
+ "combat": {
   "unit": {
    "attack": {
     "percent": -5

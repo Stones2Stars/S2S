@@ -169,6 +169,18 @@
    }
   }
  },
+ "combat": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ARCHER": {
+     "flat": 50
+    },
+    "UNITCOMBAT_GUN": {
+     "flat": 25
+    }
+   }
+  }
+ },
  "healing": {
   "city": {
    "flat": 5
@@ -195,18 +207,6 @@
  "espionageDefense": {
   "city": {
    "flat": 5
-  }
- },
- "strength": {
-  "city": {
-   "unitCombats": {
-    "UNITCOMBAT_ARCHER": {
-     "flat": 50
-    },
-    "UNITCOMBAT_GUN": {
-     "flat": 25
-    }
-   }
   }
  },
  "PROPERTY_CRIME": {

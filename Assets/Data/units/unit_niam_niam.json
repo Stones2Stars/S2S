@@ -75,9 +75,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 17,
    "cityAttack": {
     "percent": 15
    },
@@ -99,6 +98,11 @@
     "UNITCOMBAT_CANINE": true,
     "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 17
   }
  },
  "withdrawal": {

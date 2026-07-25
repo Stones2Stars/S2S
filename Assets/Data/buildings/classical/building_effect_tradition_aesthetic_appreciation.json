@@ -26,11 +26,19 @@
    "flat": -2
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_TRADITION_ASTHETIC_APPRECIATION"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_TRADITION_ASTHETIC_APPRECIATION"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "attributes": {
   "nukeImmune": true,
   "destroyedOnCapture": true

@@ -44,6 +44,26 @@
    "flat": 1
   }
  },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 30
+    },
+    "UNITCOMBAT_STEAM_SHIPS": {
+     "percent": 10
+    },
+    "UNITCOMBAT_DIESEL_SHIPS": {
+     "percent": -5
+    }
+   },
+   "domain": {
+    "DOMAIN_SEA": {
+     "percent": 50
+    }
+   }
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -67,26 +87,6 @@
   "unit": {
    "intercept": {
     "percent": 100
-   }
-  }
- },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_WOODEN_SHIPS": {
-     "percent": 30
-    },
-    "UNITCOMBAT_STEAM_SHIPS": {
-     "percent": 10
-    },
-    "UNITCOMBAT_DIESEL_SHIPS": {
-     "percent": -5
-    }
-   },
-   "domain": {
-    "DOMAIN_SEA": {
-     "percent": 50
-    }
    }
   }
  },

@@ -111,14 +111,22 @@
    "SPECIALIST_LAWYER": 3
   }
  },
- "grants": {
-  "freePromotions": [
-   {
-    "promotion": "PROMOTION_POLICING1",
-    "enabled": "IS_BUREAUCRAT"
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_POLICING1",
+       "enabled": "IS_BUREAUCRAT"
+      }
+     ],
+     "units": "present"
+    }
    }
-  ]
- },
+  }
+ ],
  "cost": {
   "production": 1472,
   "sizeModifier": 3,

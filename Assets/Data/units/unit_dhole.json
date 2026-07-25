@@ -27,9 +27,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 3,
    "targets": {
     "UNITCOMBAT_MAMMAL_ANTELOPE": true,
     "UNITCOMBAT_MAMMAL_BOVINE": true,
@@ -37,6 +36,11 @@
     "UNITCOMBAT_MAMMAL_EQUINE": true,
     "UNITCOMBAT_MAMMAL_SWINE": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
   }
  },
  "skills": [

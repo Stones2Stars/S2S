@@ -7,19 +7,19 @@
    }
   }
  },
- "firstStrike": {
-  "unit": {
-   "strikes": {
-    "flat": 1
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "domain": {
     "DOMAIN_SEA": {
      "percent": 25
     }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
    }
   }
  },

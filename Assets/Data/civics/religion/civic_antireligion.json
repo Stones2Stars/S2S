@@ -51,24 +51,28 @@
    "flat": -1
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "captureProbability": {
+   "probability": {
     "percent": -10
    },
-   "captureResistance": {
+   "resistance": {
     "percent": -10
    }
   }
  },
  "maintenance": {
   "empire": {
-   "homeArea": {
-    "percent": 5
-   },
-   "otherArea": {
-    "percent": 5
-   }
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 5,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ]
   }
  },
  "diplomacy": {

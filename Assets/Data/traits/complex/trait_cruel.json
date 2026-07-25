@@ -205,18 +205,28 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_CRUEL": [
-    "UNITCOMBAT_CRIMINAL",
-    "UNITCOMBAT_GUN",
-    "UNITCOMBAT_MELEE",
-    "UNITCOMBAT_MOUNTED",
-    "UNITCOMBAT_STRIKE_TEAM",
-    "UNITCOMBAT_THROWING"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_CRUEL"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_CRIMINAL",
+       "UNITCOMBAT_GUN",
+       "UNITCOMBAT_MELEE",
+       "UNITCOMBAT_MOUNTED",
+       "UNITCOMBAT_STRIKE_TEAM",
+       "UNITCOMBAT_THROWING"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_CRUEL"
  },

@@ -45,11 +45,19 @@
    "percent": -5
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_WAR_CRY"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_WAR_CRY"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "attributes": {
   "nukeImmune": true
  },

@@ -131,7 +131,13 @@
  },
  "research": {
   "empire": {
-   "flat": 2,
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "per": "SPECIALIST"
+    }
+   ],
    "percent": [
     5,
     {
@@ -152,9 +158,6 @@
     "SPECIALIST_SETTLED_SLAVE": {
      "flat": 1
     }
-   },
-   "specialist": {
-    "perSpecialist": 1
    }
   }
  },

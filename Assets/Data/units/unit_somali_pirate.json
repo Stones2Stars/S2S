@@ -30,9 +30,8 @@
    "flat": 6
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 55,
    "vsUnit": {
     "UNIT_CARGO_SHIP": {
      "attack": {
@@ -51,6 +50,11 @@
      }
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 55
   }
  },
  "withdrawal": {

@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_MIDDLE_GREEN",
-   "icon": "ART_DEF_CIVILIZATION_ETHIOPIA",
+   "define": "ART_DEF_CIVILIZATION_ETHIOPIA",
    "style": "ARTSTYLE_AFRICA",
    "unitStyle": "UNIT_ARTSTYLE_NUBIA"
   }

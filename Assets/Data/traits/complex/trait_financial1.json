@@ -275,7 +275,13 @@
  },
  "gold": {
   "empire": {
-   "flat": 2,
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "per": "SPECIALIST"
+    }
+   ],
    "percent": [
     5,
     {
@@ -296,9 +302,6 @@
     "SPECIALIST_SETTLED_SLAVE": {
      "flat": 1
     }
-   },
-   "specialist": {
-    "perSpecialist": 1
    }
   }
  },
@@ -327,11 +330,9 @@
    "flat": -1
   }
  },
- "combat": {
+ "espionageDefense": {
   "empire": {
-   "espionageDefense": {
-    "percent": -5
-   }
+   "percent": -5
   }
  },
  "maintenance": {

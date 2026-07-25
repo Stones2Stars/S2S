@@ -33,26 +33,7 @@
    "flat": 1
   }
  },
- "bombard": {
-  "unit": {
-   "airBombRate": {
-    "flat": 10
-   }
-  }
- },
- "range": {
-  "unit": {
-   "flat": 6
-  }
- },
- "air": {
-  "unit": {
-   "intercept": {
-    "percent": 20
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_NUCLEAR_SHIPS": {
@@ -69,6 +50,25 @@
     "DOMAIN_SEA": {
      "percent": 100
     }
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 10
+   }
+  }
+ },
+ "range": {
+  "unit": {
+   "flat": 6
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 20
    }
   }
  },

@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DARK_CYAN",
-   "icon": "ART_DEF_CIVILIZATION_KOREA",
+   "define": "ART_DEF_CIVILIZATION_KOREA",
    "style": "ARTSTYLE_ASIA",
    "unitStyle": "UNIT_ARTSTYLE_KOREAN"
   }

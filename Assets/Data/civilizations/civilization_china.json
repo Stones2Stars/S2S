@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DARK_PINK",
-   "icon": "ART_DEF_CIVILIZATION_CHINA",
+   "define": "ART_DEF_CIVILIZATION_CHINA",
    "style": "ARTSTYLE_ASIA",
    "unitStyle": "UNIT_ARTSTYLE_ASIAN"
   }

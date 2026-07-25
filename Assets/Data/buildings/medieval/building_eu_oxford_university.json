@@ -112,14 +112,22 @@
    "SPECIALIST_MERCHANT": 3
   }
  },
- "grants": {
-  "freePromotions": [
-   {
-    "promotion": "PROMOTION_INSPIRE1",
-    "enabled": "IS_ENTERTAINER"
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_INSPIRE1",
+       "enabled": "IS_ENTERTAINER"
+      }
+     ],
+     "units": "present"
+    }
    }
-  ]
- },
+  }
+ ],
  "cost": {
   "production": 1472,
   "sizeModifier": 3,

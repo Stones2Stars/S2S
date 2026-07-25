@@ -69,9 +69,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 7,
    "vsUnit": {
     "UNIT_ELEPHANT_RIDER": {
      "attack": {
@@ -102,6 +101,11 @@
      "percent": 100
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 7
   }
  },
  "withdrawal": {

@@ -5,13 +5,17 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 2,
    "targets": {
     "UNITCOMBAT_SIZE_DIMINUTIVE": true,
     "UNITCOMBAT_SIZE_TINY": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 2
   }
  },
  "withdrawal": {

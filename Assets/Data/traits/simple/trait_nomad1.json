@@ -189,39 +189,133 @@
  "policies": {
   "upgradeAnywhere": true
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_FLANKING1": [
-    "UNITCOMBAT_ANIMAL",
-    "UNITCOMBAT_MOUNTED",
-    "UNITCOMBAT_RECON",
-    "UNITCOMBAT_TRACKED",
-    "UNITCOMBAT_WHEELED"
-   ],
-   "PROMOTION_PACK_HUNTER1": [
-    "UNITCOMBAT_CANINE"
-   ],
-   "PROMOTION_HUNTING_DOG1": [
-    "UNITCOMBAT_CANINE"
-   ],
-   "PROMOTION_HUNTING_DOG2": [
-    "UNITCOMBAT_CANINE"
-   ],
-   "PROMOTION_RACING_DOG1": [
-    "UNITCOMBAT_CANINE"
-   ],
-   "PROMOTION_RACING_DOG2": [
-    "UNITCOMBAT_CANINE"
-   ],
-   "PROMOTION_WOODSMAN1": [
-    "UNITCOMBAT_HUNTER",
-    "UNITCOMBAT_RECON"
-   ],
-   "PROMOTION_PACK_HUNTER2": [
-    "UNITCOMBAT_CANINE"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_FLANKING1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_ANIMAL",
+       "UNITCOMBAT_MOUNTED",
+       "UNITCOMBAT_RECON",
+       "UNITCOMBAT_TRACKED",
+       "UNITCOMBAT_WHEELED"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_PACK_HUNTER1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_CANINE"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_HUNTING_DOG1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_CANINE"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_HUNTING_DOG2"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_CANINE"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_RACING_DOG1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_CANINE"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_RACING_DOG2"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_CANINE"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_WOODSMAN1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_HUNTER",
+       "UNITCOMBAT_RECON"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_PACK_HUNTER2"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_CANINE"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_NOMAD",
   "priority": 1

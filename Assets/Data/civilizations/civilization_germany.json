@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_GRAY",
-   "icon": "ART_DEF_CIVILIZATION_GERMANY",
+   "define": "ART_DEF_CIVILIZATION_GERMANY",
    "style": "ARTSTYLE_EUROPE",
    "unitStyle": "UNIT_ARTSTYLE_GERMAN"
   }

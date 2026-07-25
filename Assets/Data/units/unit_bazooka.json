@@ -28,9 +28,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 50,
    "unitCombat": {
     "UNITCOMBAT_GUN": {
      "percent": -50
@@ -46,6 +45,11 @@
     "UNITCOMBAT_WHEELED": true,
     "UNITCOMBAT_TRACKED": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 50
   }
  },
  "withdrawal": {

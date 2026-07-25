@@ -30,12 +30,7 @@
    ]
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
- "strength": {
+ "combat": {
   "city": {
    "unitCombats": {
     "UNITCOMBAT_ARCHER": {
@@ -45,6 +40,11 @@
      "flat": 25
     }
    }
+  }
+ },
+ "hurryCost": {
+  "city": {
+   "percent": 100
   }
  },
  "cost": {

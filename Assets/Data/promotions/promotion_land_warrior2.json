@@ -12,19 +12,19 @@
    ]
   }
  },
- "firstStrike": {
-  "unit": {
-   "chance": {
-    "flat": 2
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "domain": {
     "DOMAIN_LAND": {
      "percent": 15
     }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 2
    }
   }
  },

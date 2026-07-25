@@ -18,9 +18,12 @@
  "research": {
   "empire": {
    "percent": 10,
-   "specialist": {
-    "perSpecialist": 1
-   }
+   "flat": [
+    {
+     "value": 1,
+     "per": "SPECIALIST"
+    }
+   ]
   }
  },
  "espionage": {
@@ -46,12 +49,16 @@
    "numCities": {
     "percent": 15
    },
-   "homeArea": {
-    "percent": 10
-   },
-   "otherArea": {
-    "percent": 10
-   },
+   "percent": [
+    {
+     "value": 10,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 10,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
    "corporation": {
     "percent": 7
    }

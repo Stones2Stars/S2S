@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DARK_RED",
-   "icon": "ART_DEF_CIVILIZATION_RUSSIA",
+   "define": "ART_DEF_CIVILIZATION_RUSSIA",
    "style": "ARTSTYLE_RUSSIA",
    "unitStyle": "UNIT_ARTSTYLE_RUSSIA"
   }

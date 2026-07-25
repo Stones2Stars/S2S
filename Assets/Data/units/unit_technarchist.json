@@ -34,9 +34,8 @@
    "flat": 3
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 150,
    "lunge": {
     "percent": 30
    },
@@ -65,6 +64,11 @@
     "UNITCOMBAT_HITECH": true,
     "UNITCOMBAT_ASSAULT_MECH": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 150
   }
  },
  "withdrawal": {

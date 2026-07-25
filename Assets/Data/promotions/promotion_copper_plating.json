@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_COPPER_PLATING",
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_WOODEN_SHIPS": {

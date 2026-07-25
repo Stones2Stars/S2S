@@ -223,7 +223,13 @@
  },
  "research": {
   "empire": {
-   "flat": -4,
+   "flat": [
+    -4,
+    {
+     "value": -1,
+     "per": "SPECIALIST"
+    }
+   ],
    "percent": [
     -5,
     {
@@ -238,9 +244,6 @@
     "SPECIALIST_GREAT_SCIENTIST": {
      "flat": -2
     }
-   },
-   "specialist": {
-    "perSpecialist": -1
    }
   }
  },

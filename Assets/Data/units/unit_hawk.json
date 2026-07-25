@@ -5,14 +5,18 @@
    "flat": 3
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 1,
    "targets": {
     "UNITCOMBAT_BIRD_GAMEBIRD": true,
     "UNITCOMBAT_BIRD_SONGBIRD": true,
     "UNITCOMBAT_REPTILE_SNAKE": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1
   }
  },
  "withdrawal": {

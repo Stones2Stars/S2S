@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_LIGHT_GREEN",
-   "icon": "ART_DEF_CIVILIZATION_ARABIA",
+   "define": "ART_DEF_CIVILIZATION_ARABIA",
    "style": "ARTSTYLE_ARABIA",
    "unitStyle": "UNIT_ARTSTYLE_MIDDLE_EAST"
   }

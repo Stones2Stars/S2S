@@ -66,11 +66,19 @@
    }
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_COMBAT1"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_COMBAT1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 2460,
   "sizeModifier": 3,

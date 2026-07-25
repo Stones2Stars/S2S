@@ -1,6 +1,6 @@
 {
  "type": "UNITCOMBAT_SIZE_MICROSCOPIC",
- "strength": {
+ "combat": {
   "unit": {
    "damageModifier": {
     "percent": -60

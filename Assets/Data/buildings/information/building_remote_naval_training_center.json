@@ -46,18 +46,26 @@
    "percent": 100
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_PROJECTION1"
-  ],
-  "repeatable": [
-   {
-    "unitCombat": "UNITCOMBAT_HEALS_AS_NAVAL",
-    "interval": "perTurn",
-    "heal": 2
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 2,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_NAVAL"
    }
-  ]
- },
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_PROJECTION1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 2005,
   "sizeModifier": 2,

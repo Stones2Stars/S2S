@@ -13,7 +13,7 @@
    ]
   }
  },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_TRACKED": {

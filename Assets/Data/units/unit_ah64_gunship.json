@@ -28,9 +28,8 @@
    "flat": 5
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 85,
    "unitCombat": {
     "UNITCOMBAT_TRACKED": {
      "percent": 100
@@ -70,6 +69,11 @@
      "percent": 100
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 85
   }
  },
  "withdrawal": {

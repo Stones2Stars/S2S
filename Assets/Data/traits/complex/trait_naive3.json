@@ -142,7 +142,13 @@
  },
  "espionage": {
   "empire": {
-   "flat": -6,
+   "flat": [
+    -6,
+    {
+     "value": -1,
+     "per": "SPECIALIST"
+    }
+   ],
    "percent": [
     -5,
     {
@@ -160,9 +166,6 @@
     "SPECIALIST_ANDROID_WORKER": {
      "flat": -1
     }
-   },
-   "specialist": {
-    "perSpecialist": -1
    }
   }
  },
@@ -180,11 +183,9 @@
    }
   }
  },
- "combat": {
+ "espionageDefense": {
   "empire": {
-   "espionageDefense": {
-    "percent": -25
-   }
+   "percent": -25
   }
  },
  "durations": {
@@ -228,13 +229,23 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_NAIVE3": [
-    "UNITCOMBAT_SPY"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_NAIVE3"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_SPY"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_NAIVE",
   "priority": -3

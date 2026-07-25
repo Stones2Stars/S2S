@@ -5,9 +5,8 @@
    "flat": 3
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 1,
    "targets": {
     "UNITCOMBAT_BIRD_PARROT": true,
     "UNITCOMBAT_MAMMAL_MONKEY": true,
@@ -21,6 +20,11 @@
     "UNIT_IGUANA": true,
     "UNIT_TREESLOTH": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1
   }
  },
  "withdrawal": {

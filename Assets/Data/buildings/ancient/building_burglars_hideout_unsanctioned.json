@@ -33,7 +33,15 @@
  },
  "happiness": {
   "city": {
-   "perPopulation": -25
+   "flat": [
+    {
+     "value": -25,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
   }
  },
  "revolution": {
@@ -41,24 +49,28 @@
    "flat": 3
   }
  },
- "copsAndRobbers": {
+ "underworld": {
   "city": {
    "insidiousness": {
     "flat": 15
    }
   }
  },
- "grants": {
-  "repeatable": [
-   {
-    "unit": "UNIT_BURGLAR",
-    "interval": "perTurn",
-    "chance": {
-     "per": "PROPERTY_CRIME"
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "chance": {
+    "per": "PROPERTY_CRIME"
+   },
+   "action": {
+    "grant": {
+     "units": [
+      "UNIT_BURGLAR"
+     ]
     }
    }
-  ]
- },
+  }
+ ],
  "attributes": {
   "nukeImmune": true
  },

@@ -1,12 +1,5 @@
 {
  "type": "PROPERTY_TOURISM",
- "text": {
-  "value": "TXT_KEY_PROPERTY_TOURISM_DISPLAY",
-  "change": "TXT_KEY_PROPERTY_TOURISM_CHANGE",
-  "changeAllCities": "TXT_KEY_PROPERTY_TOURISM_CHANGE_ALL_CITIES",
-  "prereqMin": "TXT_KEY_PROPERTY_TOURISM_PREREQ_MIN",
-  "prereqMax": "TXT_KEY_PROPERTY_TOURISM_PREREQ_MAX"
- },
  "PROPERTY_TOURISM": {
   "city": {
    "percent": 3
@@ -37,6 +30,13 @@
  "identity": {
   "description": "TXT_KEY_PROPERTY_TOURISM",
   "sourceDrain": true,
-  "fontButtonIndex": 14
+  "fontButtonIndex": 14,
+  "text": {
+   "value": "TXT_KEY_PROPERTY_TOURISM_DISPLAY",
+   "change": "TXT_KEY_PROPERTY_TOURISM_CHANGE",
+   "changeAllCities": "TXT_KEY_PROPERTY_TOURISM_CHANGE_ALL_CITIES",
+   "prereqMin": "TXT_KEY_PROPERTY_TOURISM_PREREQ_MIN",
+   "prereqMax": "TXT_KEY_PROPERTY_TOURISM_PREREQ_MAX"
+  }
  }
 }

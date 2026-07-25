@@ -34,11 +34,19 @@
    "flat": 5
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_PATRIOTIC1"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_PATRIOTIC1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 10110,
   "sizeModifier": 3,

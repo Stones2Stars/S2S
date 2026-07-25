@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_BARBARIC1",
- "strength": {
+ "combat": {
   "unit": {
    "attack": {
     "percent": 10

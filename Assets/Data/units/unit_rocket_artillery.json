@@ -30,9 +30,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 65,
    "unitCombat": {
     "UNITCOMBAT_SIEGE": {
      "percent": 50
@@ -41,6 +40,11 @@
      "percent": 50
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 65
   }
  },
  "bombard": {

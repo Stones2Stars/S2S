@@ -24,24 +24,26 @@
    }
   }
  },
- "grants": {
-  "repeatable": [
-   {
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
     "PROPERTY_AIR_POLLUTION": -2,
-    "interval": "perTurn",
-    "on": "plot",
-    "relation": "near",
-    "distance": 1
-   },
-   {
-    "PROPERTY_WATER_POLLUTION": -1,
-    "interval": "perTurn",
     "on": "plot",
     "relation": "near",
     "distance": 1
    }
-  ]
- },
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_WATER_POLLUTION": -1,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  }
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_VERY_TALL_GRASS"

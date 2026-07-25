@@ -279,7 +279,7 @@
    }
   }
  },
- "combat": {
+ "cargo": {
   "empire": {
    "navalCargo": {
     "flat": 1
@@ -353,28 +353,50 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_AMPHIBIOUS": [
-    "UNITCOMBAT_EXPLORER",
-    "UNITCOMBAT_MELEE",
-    "UNITCOMBAT_MOUNTED",
-    "UNITCOMBAT_THROWING"
-   ],
-   "PROMOTION_SEAFARING1": [
-    "UNITCOMBAT_DIESEL_SHIPS",
-    "UNITCOMBAT_DROID_SHIPS",
-    "UNITCOMBAT_GRAVITY_DRIVE_SHIPS",
-    "UNITCOMBAT_JET_SHIPS",
-    "UNITCOMBAT_LEVITATION_SHIPS",
-    "UNITCOMBAT_NUCLEAR_SHIPS",
-    "UNITCOMBAT_SHOCKWAVE_SHIPS",
-    "UNITCOMBAT_STEAM_SHIPS",
-    "UNITCOMBAT_TROID_SHIPS",
-    "UNITCOMBAT_WOODEN_SHIPS"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_AMPHIBIOUS"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_EXPLORER",
+       "UNITCOMBAT_MELEE",
+       "UNITCOMBAT_MOUNTED",
+       "UNITCOMBAT_THROWING"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_SEAFARING1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_DIESEL_SHIPS",
+       "UNITCOMBAT_DROID_SHIPS",
+       "UNITCOMBAT_GRAVITY_DRIVE_SHIPS",
+       "UNITCOMBAT_JET_SHIPS",
+       "UNITCOMBAT_LEVITATION_SHIPS",
+       "UNITCOMBAT_NUCLEAR_SHIPS",
+       "UNITCOMBAT_SHOCKWAVE_SHIPS",
+       "UNITCOMBAT_STEAM_SHIPS",
+       "UNITCOMBAT_TROID_SHIPS",
+       "UNITCOMBAT_WOODEN_SHIPS"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_SEAFARING",
   "priority": 1

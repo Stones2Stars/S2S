@@ -46,7 +46,15 @@
    "flat": 2
   },
   "city": {
-   "perPopulation": 5
+   "flat": [
+    {
+     "value": 5,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
   }
  },
  "maintenance": {

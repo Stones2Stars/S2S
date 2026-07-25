@@ -40,11 +40,19 @@
    "percent": 100
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_SELF_HEAL1"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_SELF_HEAL1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 5455,
   "sizeModifier": 1,

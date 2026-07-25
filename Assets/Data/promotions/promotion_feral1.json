@@ -5,7 +5,7 @@
    "PROMOTION_FERAL2"
   ]
  },
- "strength": {
+ "combat": {
   "unit": {
    "attack": {
     "percent": 20

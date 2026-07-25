@@ -106,7 +106,7 @@ def curate(typ, rec):
         vals = _list(rec, container, child)
         if key == "buildings":
             # BUILDING_PALACE is redundant in grants.buildings (json.md §5, owner 2026-06-30): the settler unit's
-            # foundBuildings already seeds it and the engine realizes it into the capital regardless. Drop only it.
+            # grants.buildings already seeds it and the engine realizes it into the capital regardless. Drop only it.
             vals = [v for v in vals if v != "BUILDING_PALACE"]
         if vals:
             grants[key] = vals

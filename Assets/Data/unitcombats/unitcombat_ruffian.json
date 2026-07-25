@@ -1,6 +1,6 @@
 {
  "type": "UNITCOMBAT_RUFFIAN",
- "strength": {
+ "combat": {
   "unit": {
    "stealth": {
     "percent": 10

@@ -5,14 +5,7 @@
    "PROMOTION_SEA_HUNTER2"
   ]
  },
- "firstStrike": {
-  "unit": {
-   "chance": {
-    "flat": 1
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_SEA_ANIMAL": {
@@ -21,6 +14,13 @@
     "UNITCOMBAT_MOTILITY_AERIAL": {
      "percent": 15
     }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
    }
   }
  },

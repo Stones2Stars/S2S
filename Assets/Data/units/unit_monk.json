@@ -36,12 +36,16 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 9,
    "dynamicDefense": {
     "percent": 20
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 9
   }
  },
  "heal": {

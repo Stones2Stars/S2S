@@ -34,9 +34,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 16,
    "terrain": {
     "TERRAIN_GRASSLAND": {
      "attack": {
@@ -116,6 +115,11 @@
      "percent": 100
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 16
   }
  },
  "withdrawal": {

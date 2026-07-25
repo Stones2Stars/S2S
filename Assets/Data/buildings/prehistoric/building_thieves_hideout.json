@@ -52,8 +52,16 @@
  },
  "happiness": {
   "city": {
-   "flat": -1,
-   "perPopulation": -25
+   "flat": [
+    -1,
+    {
+     "value": -25,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
   }
  },
  "revolution": {
@@ -66,7 +74,7 @@
    "percent": 100
   }
  },
- "copsAndRobbers": {
+ "underworld": {
   "city": {
    "insidiousness": {
     "flat": 5
@@ -78,20 +86,32 @@
    "flat": 5
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_LOOTER"
-  ],
-  "repeatable": [
-   {
-    "unit": "UNIT_THIEF",
-    "interval": "perTurn",
-    "chance": {
-     "per": "PROPERTY_CRIME"
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "chance": {
+    "per": "PROPERTY_CRIME"
+   },
+   "action": {
+    "grant": {
+     "units": [
+      "UNIT_THIEF"
+     ]
     }
    }
-  ]
- },
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_LOOTER"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 56,
   "sizeModifier": 1,

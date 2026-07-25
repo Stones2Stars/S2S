@@ -1,6 +1,6 @@
 {
  "type": "UNITCOMBAT_ANIMAL_COMBAT_VENEMOUS",
- "strength": {
+ "combat": {
   "unit": {
    "stealthStrikes": {
     "flat": 1

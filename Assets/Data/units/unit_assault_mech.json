@@ -17,9 +17,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 220,
    "cityAttack": {
     "percent": 10
    },
@@ -30,6 +29,11 @@
     "UNITCOMBAT_MELEE": true,
     "UNITCOMBAT_RECON": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 220
   }
  },
  "withdrawal": {

@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_RED_BLUE",
-   "icon": "ART_DEF_CIVILIZATION_SIAM",
+   "define": "ART_DEF_CIVILIZATION_SIAM",
    "style": "ARTSTYLE_SOUTH_EAST_ASIA",
    "unitStyle": "UNIT_ARTSTYLE_KHMER"
   }

@@ -47,12 +47,15 @@
  },
  "espionage": {
   "empire": {
-   "specialist": {
-    "perSpecialist": -1
-   },
    "goldenAge": {
     "flat": 4
-   }
+   },
+   "flat": [
+    {
+     "value": -1,
+     "per": "SPECIALIST"
+    }
+   ]
   }
  },
  "happiness": {
@@ -65,11 +68,9 @@
    "any": 1
   }
  },
- "combat": {
+ "espionageDefense": {
   "empire": {
-   "espionageDefense": {
-    "percent": -20
-   }
+   "percent": -20
   }
  },
  "tradeRoutes": {

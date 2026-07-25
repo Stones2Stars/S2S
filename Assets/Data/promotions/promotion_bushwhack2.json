@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_BUSHWHACK2",
- "strength": {
+ "combat": {
   "unit": {
    "stealthStrikes": {
     "flat": 2

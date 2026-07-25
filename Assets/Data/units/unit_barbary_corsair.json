@@ -46,9 +46,8 @@
    "flat": 4
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 14,
    "vsUnit": {
     "UNIT_CARRACK_MERCHANT": {
      "attack": {
@@ -59,6 +58,11 @@
      }
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 14
   }
  },
  "withdrawal": {

@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_TRANSPORT_PEOPLE2",
- "strength": {
+ "combat": {
   "unit": {
    "percent": -5
   }

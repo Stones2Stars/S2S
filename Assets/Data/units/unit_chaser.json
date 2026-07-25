@@ -28,9 +28,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 2,
    "cityAttack": {
     "percent": -75
    },
@@ -55,6 +54,11 @@
     "UNITCOMBAT_ANIMAL": true,
     "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 2
   }
  },
  "skills": [

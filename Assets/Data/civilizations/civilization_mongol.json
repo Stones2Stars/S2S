@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_BROWN",
-   "icon": "ART_DEF_CIVILIZATION_MONGOL",
+   "define": "ART_DEF_CIVILIZATION_MONGOL",
    "style": "ARTSTYLE_MONGOLIA",
    "unitStyle": "UNIT_ARTSTYLE_MONGOL"
   }

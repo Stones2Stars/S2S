@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_SOPHISTICATION4",
- "strength": {
+ "combat": {
   "unit": {
    "percent": 10,
    "vsBarbs": {

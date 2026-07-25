@@ -26,9 +26,12 @@
  "culture": {
   "empire": {
    "percent": 3,
-   "specialist": {
-    "perSpecialist": 5
-   }
+   "flat": [
+    {
+     "value": 5,
+     "per": "SPECIALIST"
+    }
+   ]
   }
  },
  "health": {
@@ -49,12 +52,16 @@
    "numCities": {
     "percent": 20
    },
-   "homeArea": {
-    "percent": 10
-   },
-   "otherArea": {
-    "percent": 10
-   },
+   "percent": [
+    {
+     "value": 10,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 10,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
    "corporation": {
     "percent": 10
    }

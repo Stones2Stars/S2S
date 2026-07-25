@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_LIGHT_PURPLE",
-   "icon": "ART_DEF_CIVILIZATION_SCANDINAVIAS",
+   "define": "ART_DEF_CIVILIZATION_SCANDINAVIAS",
    "style": "ARTSTYLE_NORSE",
    "unitStyle": "UNIT_ARTSTYLE_VIKING"
   }

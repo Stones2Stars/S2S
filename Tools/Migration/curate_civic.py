@@ -46,8 +46,8 @@ SCALAR = {
     # maintenance / upkeep / trade / hurry / workrate
     "iDistanceMaintenanceModifier":    ("maintenance", "empire", "distance",    "percent"),
     "iNumCitiesMaintenanceModifier":   ("maintenance", "empire", "numCities",   "percent"),
-    "iHomeAreaMaintenanceModifier":    ("maintenance", "empire", "homeArea",    "percent"),
-    "iOtherAreaMaintenanceModifier":   ("maintenance", "empire", "otherArea",   "percent"),
+    # iHomeArea/iOtherAreaMaintenanceModifier are NOT here: home/other-area is WHEN/WHERE, not a calc component
+    # (ruling 2, info-rebuild.md) -> conditioned deposits on IS_HOME_AREA in SCALAR_COND below.
     "iCorporationMaintenanceModifier": ("maintenance", "empire", "corporation", "percent"),
     "iInflation":                      ("inflation", "empire", None,       "percent"),
     "iCivilianUnitUpkeepMod":          ("upkeep", "empire", "unitCivilian","percent"),
@@ -69,8 +69,10 @@ SCALAR = {
     # L13 re-home (2026-07-05): the spec'd DEFENSE family (modifier.md §6: `amount` = the additive defense %),
     # matching the buildings' defense.empire.amount -- the old combat.empire.cityDefense had NO reader.
     "iExtraCityDefense":               ("defense", "empire", "amount",             "percent"),
-    "iNationalCaptureProbabilityModifier": ("combat", "empire", "captureProbability", "percent"),
-    "iNationalCaptureResistanceModifier":  ("combat", "empire", "captureResistance",  "percent"),
+    # capture is its own concept family (ruling 5, info-rebuild.md): the old combat.capture* members redistribute
+    # to `capture` kinds probability/resistance (matching the unit-plane capture family), empire scope.
+    "iNationalCaptureProbabilityModifier": ("capture", "empire", "probability", "percent"),
+    "iNationalCaptureResistanceModifier":  ("capture", "empire", "resistance",  "percent"),
     "iFreeExperience":                 ("experience", "empire", "",        "flat"),
     "iExpInBorderModifier":            ("experience", "empire", "inBorder","percent"),
     "iGreatGeneralRateModifier":       ("greatGeneralRate", "empire", "",        "percent"),
@@ -125,7 +127,13 @@ SPLIT_ARRAY = {
     "YieldModifiers":          ("empire", "",           "percent",      YIELDS),
     "TradeYieldModifiers":     ("empire", "tradeRoute", "percent",      YIELDS),
     "CommerceModifiers":       ("empire", "",           "percent",      COMMERCES),
-    "SpecialistExtraCommerces":("empire", "specialist", "perSpecialist",COMMERCES),
+}
+# --- per-scaler split arrays (ruling 4, info-rebuild.md + json.md §3.7): the value deposits flat, scaled by a
+# count -- {value, per:"SPECIALIST"} (bare-string sugar, each=1). Legacy getSpecialistExtraCommerce: each city
+# multiplies by ITS total specialist count of ALL types (CvCity.cpp:11810; NB the engine count is CITY-local).
+# tag -> (scope, unit, valueKeys, perToken). ---
+SPLIT_ARRAY_PER = {
+    "SpecialistExtraCommerces": ("empire", "flat", COMMERCES, "SPECIALIST"),
 }
 # --- CONDITIONED split arrays: emit {family}.<scope>.<unit> as a list entry {value, enabled:<predicate>} instead of a
 # bespoke sub-scope member ([DEC-conditions-are-predicates], owner 2026-06-28). Capital-only modifiers were the legacy
@@ -141,6 +149,11 @@ SCALAR_COND = {
     # Landmark happiness: BOTH signs gated on GAMEOPTION_MAP_PERSONALIZED (engine CvCity.cpp:5718 happy + :5665-5671
     # unhappy, same option block) — signed-split handles +/-. Retires the bespoke `landmark` member.
     "iLandmarkHappiness": ("happiness", "empire", "flat", "GAMEOPTION_MAP_PERSONALIZED"),
+    # Home/other-area maintenance (ruling 2, info-rebuild.md): IS_HOME_AREA = the city's area is the capital's
+    # area (engine CvArea::getTotalAreaMaintenanceModifier gates on isHomeArea, CvArea.cpp:828-835); "other
+    # areas" is the plain negation. Retires the homeArea/otherArea condition-as-member authoring.
+    "iHomeAreaMaintenanceModifier":  ("maintenance", "empire", "percent", "IS_HOME_AREA"),
+    "iOtherAreaMaintenanceModifier": ("maintenance", "empire", "percent", "!IS_HOME_AREA"),
 }
 
 # --- entity-keyed (target-keyed) maps: tag -> (family, scope, targetType, unit, valueKeys|None). ---
@@ -185,7 +198,7 @@ DROP = {"TechPrereq", "BonusCommerceModifiers", "SpecialistCommercePercentChange
         "Categories", "isAnyImprovementYieldChange"}
 FAMILY_ORDER = ["food", "production", "commerce", "gold", "research", "culture", "espionage", "yield",
                 "happiness", "health", "growth", "experience", "greatPeopleRate", "greatGeneralRate",
-                "freeSpecialists", "conscript", "combat", "unitProduction", "maintenance", "upkeep",
+                "freeSpecialists", "conscript", "capture", "unitProduction", "maintenance", "upkeep",
                 "tradeRoutes", "hurry", "workRate", "improvementUpgradeRate", "diplomacy", "stateReligion",
                 "revolution"]
 
@@ -225,6 +238,20 @@ def _put_cond(fam, family, scope, unit, value, enabled):
     empire.capital member — the cascade's normal scope walk evaluates the predicate per-city."""
     node = fam.setdefault(family, {}).setdefault(scope, {})
     entry = OrderedDict([("value", value), ("enabled", enabled)])
+    cur = node.get(unit)
+    if cur is None:
+        node[unit] = [entry]
+    elif isinstance(cur, list):
+        cur.append(entry)
+    else:
+        node[unit] = [cur, entry]
+
+
+def _put_per(fam, family, scope, unit, value, per):
+    """Append a PER-SCALED deposit {value, per:<count token>} (json §3.7) to a scope-wide leaf, list-merging like
+    _put_cond so it coexists with a plain scalar on the same leaf."""
+    node = fam.setdefault(family, {}).setdefault(scope, {})
+    entry = OrderedDict([("value", value), ("per", per)])
     cur = node.get(unit)
     if cur is None:
         node[unit] = [entry]
@@ -331,6 +358,10 @@ def curate(typ, rec, store):
             scope, unit, keys, pred = SPLIT_ARRAY_COND[tag]
             for ident, v in engine.named_array(c, keys).items():   # ident IS the family (split); predicate-gated deposit
                 _put_cond(fam, ident, scope, unit, v, pred)
+        elif tag in SPLIT_ARRAY_PER:
+            scope, unit, keys, per_token = SPLIT_ARRAY_PER[tag]
+            for ident, v in engine.named_array(c, keys).items():   # ident IS the family (split); count-scaled deposit
+                _put_per(fam, ident, scope, unit, v, per_token)
         elif tag in KEYED:
             family, scope, tt, unit, keys = KEYED[tag]
             for target, val in _keyed_entries(c, keys).items():

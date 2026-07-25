@@ -50,9 +50,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 4,
    "enclose": {
     "percent": 4
    },
@@ -68,6 +67,11 @@
    "defenders": {
     "UNITCOMBAT_CRIMINAL": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 4
   }
  },
  "PROPERTY_CRIME": {

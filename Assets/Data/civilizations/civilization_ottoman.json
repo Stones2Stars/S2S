@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DARK_GREEN",
-   "icon": "ART_DEF_CIVILIZATION_OTTOMANS",
+   "define": "ART_DEF_CIVILIZATION_OTTOMANS",
    "style": "ARTSTYLE_CRESCENT",
    "unitStyle": "UNIT_ARTSTYLE_OTTOMAN"
   }

@@ -122,14 +122,22 @@
    ]
   }
  },
- "grants": {
-  "freePromotions": [
-   {
-    "promotion": "PROMOTION_CULTURE_OCEANIAN",
-    "enabled": "IS_SETTLER"
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_CULTURE_OCEANIAN",
+       "enabled": "IS_SETTLER"
+      }
+     ],
+     "units": "present"
+    }
    }
-  ]
- },
+  }
+ ],
  "cost": {
   "production": 100
  },

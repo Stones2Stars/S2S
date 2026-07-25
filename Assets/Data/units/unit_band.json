@@ -52,7 +52,7 @@
    "PROMOTION_SENTRY",
    "PROMOTION_GUARDIAN_TRIBAL"
   ],
-  "foundBuildings": [
+  "buildings": [
    {
     "building": "BUILDING_STABLE",
     "enabled": "TECH_STEAM_POWER"

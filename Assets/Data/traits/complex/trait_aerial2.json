@@ -328,13 +328,17 @@
    }
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "flightRange": {
-    "flat": 1
-   },
-   "captureResistance": {
+   "resistance": {
     "percent": -20
+   }
+  }
+ },
+ "air": {
+  "empire": {
+   "range": {
+    "flat": 1
    }
   }
  },
@@ -418,16 +422,26 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_AERIAL_WEAPONRY": [
-    "UNITCOMBAT_GUN",
-    "UNITCOMBAT_HITECH",
-    "UNITCOMBAT_ROCKET_LAUNCHER",
-    "UNITCOMBAT_SIEGE"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_AERIAL_WEAPONRY"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_GUN",
+       "UNITCOMBAT_HITECH",
+       "UNITCOMBAT_ROCKET_LAUNCHER",
+       "UNITCOMBAT_SIEGE"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_AERIAL",
   "priority": 2

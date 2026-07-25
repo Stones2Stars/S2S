@@ -54,9 +54,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 7,
    "vsUnit": {
     "UNIT_COG_MERCHANT": {
      "attack": {
@@ -67,6 +66,11 @@
      }
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 7
   }
  },
  "withdrawal": {

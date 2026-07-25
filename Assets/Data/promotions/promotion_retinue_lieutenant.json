@@ -1,5 +1,17 @@
 {
  "type": "PROMOTION_RETINUE_LIEUTENANT",
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 33
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 33
+    }
+   }
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 10
@@ -12,18 +24,6 @@
    },
    "resistance": {
     "flat": 15
-   }
-  }
- },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_MELEE": {
-     "percent": 33
-    },
-    "UNITCOMBAT_GUN": {
-     "percent": 33
-    }
    }
   }
  },

@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_DEVOTION1",
- "strength": {
+ "combat": {
   "unit": {
    "religious": {
     "percent": 15

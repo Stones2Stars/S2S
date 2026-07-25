@@ -249,12 +249,12 @@
    "flat": 4
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "captureProbability": {
+   "probability": {
     "percent": 20
    },
-   "captureResistance": {
+   "resistance": {
     "percent": 10
    }
   }
@@ -301,13 +301,23 @@
  "policies": {
   "draftsOnCityCapture": true
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_IMPERIALIST": [
-    "UNITCOMBAT_COMBATANT"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_IMPERIALIST"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_COMBATANT"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_IMPERIALIST"
  },

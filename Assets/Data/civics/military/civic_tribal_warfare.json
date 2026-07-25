@@ -61,9 +61,9 @@
    "flat": 1
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "captureResistance": {
+   "resistance": {
     "percent": 30
    }
   }
@@ -76,9 +76,12 @@
    "numCities": {
     "percent": 10
    },
-   "homeArea": {
-    "percent": 1
-   }
+   "percent": [
+    {
+     "value": 1,
+     "enabled": "IS_HOME_AREA"
+    }
+   ]
   }
  },
  "upkeep": {

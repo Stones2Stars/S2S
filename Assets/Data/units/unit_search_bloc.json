@@ -63,9 +63,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 60,
    "enclose": {
     "percent": 20
    },
@@ -84,6 +83,11 @@
    "defenders": {
     "UNITCOMBAT_CRIMINAL": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 60
   }
  },
  "withdrawal": {

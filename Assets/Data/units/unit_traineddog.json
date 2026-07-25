@@ -33,9 +33,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 4,
    "lunge": {
     "percent": 5
    },
@@ -51,6 +50,11 @@
    "stealth": {
     "percent": 10
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 4
   }
  },
  "skills": [

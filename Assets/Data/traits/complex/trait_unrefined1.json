@@ -324,7 +324,13 @@
  },
  "culture": {
   "empire": {
-   "flat": -2,
+   "flat": [
+    -2,
+    {
+     "value": -1,
+     "per": "SPECIALIST"
+    }
+   ],
    "percent": [
     -5,
     {
@@ -345,9 +351,6 @@
     "SPECIALIST_SETTLED_CITIZEN": {
      "flat": -1
     }
-   },
-   "specialist": {
-    "perSpecialist": -1
    }
   }
  },
@@ -381,9 +384,9 @@
    "flat": 1
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "captureProbability": {
+   "probability": {
     "percent": 10
    }
   }

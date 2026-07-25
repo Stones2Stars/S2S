@@ -140,14 +140,22 @@
    ]
   }
  },
- "grants": {
-  "freePromotions": [
-   {
-    "promotion": "PROMOTION_CULTURE_MIDDLE_EASTERN",
-    "enabled": "IS_SETTLER"
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_CULTURE_MIDDLE_EASTERN",
+       "enabled": "IS_SETTLER"
+      }
+     ],
+     "units": "present"
+    }
    }
-  ]
- },
+  }
+ ],
  "cost": {
   "production": 100
  },

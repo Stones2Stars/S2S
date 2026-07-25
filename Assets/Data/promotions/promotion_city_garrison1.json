@@ -6,7 +6,7 @@
    "PROMOTION_URBAN_TACTICS1"
   ]
  },
- "strength": {
+ "combat": {
   "unit": {
    "cityDefense": {
     "percent": 20

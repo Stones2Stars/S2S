@@ -220,16 +220,26 @@
  "policies": {
   "citiesStartWithStateReligion": true
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_DEVOTION2": [
-    "UNITCOMBAT_CIVILIAN",
-    "UNITCOMBAT_COMBATANT",
-    "UNITCOMBAT_EXPLORER",
-    "UNITCOMBAT_NAVAL_COMBATANT"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_DEVOTION2"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_CIVILIAN",
+       "UNITCOMBAT_COMBATANT",
+       "UNITCOMBAT_EXPLORER",
+       "UNITCOMBAT_NAVAL_COMBATANT"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_PIOUS",
   "priority": 2

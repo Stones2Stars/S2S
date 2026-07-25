@@ -12,13 +12,17 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 4,
    "targets": {
     "UNITCOMBAT_SIZE_SMALL": true,
     "UNITCOMBAT_SIZE_MEDIUM": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 4
   }
  },
  "skills": [

@@ -184,7 +184,7 @@
    "percent": 100
   }
  },
- "copsAndRobbers": {
+ "underworld": {
   "city": {
    "insidiousness": {
     "flat": 25
@@ -196,22 +196,28 @@
    "flat": 25
   }
  },
- "grants": {
-  "repeatable": [
-   {
-    "unit": "UNIT_BIKER_GANG",
-    "interval": "perTurn",
-    "chance": {
-     "per": "PROPERTY_CRIME"
-    }
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "chance": {
+    "per": "PROPERTY_CRIME"
    },
-   {
-    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL",
-    "interval": "perTurn",
-    "heal": 6
+   "action": {
+    "grant": {
+     "units": [
+      "UNIT_BIKER_GANG"
+     ]
+    }
    }
-  ]
- },
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 6,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL"
+   }
+  }
+ ],
  "cost": {
   "production": 1180,
   "sizeModifier": 2,

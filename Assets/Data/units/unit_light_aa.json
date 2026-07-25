@@ -24,14 +24,18 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 35,
    "unitCombat": {
     "UNITCOMBAT_TRACKED": {
      "percent": -25
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 35
   }
  },
  "range": {

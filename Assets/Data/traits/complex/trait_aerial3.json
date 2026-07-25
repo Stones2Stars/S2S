@@ -281,19 +281,29 @@
    }
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "missileRange": {
+   "resistance": {
+    "percent": -20
+   }
+  }
+ },
+ "air": {
+  "empire": {
+   "range": {
     "flat": 2
-   },
-   "flightRange": {
-    "flat": 2
-   },
+   }
+  }
+ },
+ "range": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "cargo": {
+  "empire": {
    "missileCargo": {
     "flat": 2
-   },
-   "captureResistance": {
-    "percent": -20
    }
   }
  },
@@ -358,24 +368,34 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_AERIAL_SUPERIORITY": [
-    "UNITCOMBAT_ANTIMATTER_SPACESHIP",
-    "UNITCOMBAT_BOMBERS",
-    "UNITCOMBAT_EARLY_BOMBERS",
-    "UNITCOMBAT_EARLY_FIGHTERS",
-    "UNITCOMBAT_EARLY_SPACESHIP",
-    "UNITCOMBAT_JET_FIGHTERS",
-    "UNITCOMBAT_NUCLEAR_SPACESHIP",
-    "UNITCOMBAT_ORBITAL_AIRCRAFT",
-    "UNITCOMBAT_SOLAR_SAIL_SPACESHIP",
-    "UNITCOMBAT_STEALTH",
-    "UNITCOMBAT_SUPERSONIC_PLANES",
-    "UNITCOMBAT_WORMHOLE_SPACESHIP"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_AERIAL_SUPERIORITY"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_ANTIMATTER_SPACESHIP",
+       "UNITCOMBAT_BOMBERS",
+       "UNITCOMBAT_EARLY_BOMBERS",
+       "UNITCOMBAT_EARLY_FIGHTERS",
+       "UNITCOMBAT_EARLY_SPACESHIP",
+       "UNITCOMBAT_JET_FIGHTERS",
+       "UNITCOMBAT_NUCLEAR_SPACESHIP",
+       "UNITCOMBAT_ORBITAL_AIRCRAFT",
+       "UNITCOMBAT_SOLAR_SAIL_SPACESHIP",
+       "UNITCOMBAT_STEALTH",
+       "UNITCOMBAT_SUPERSONIC_PLANES",
+       "UNITCOMBAT_WORMHOLE_SPACESHIP"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_AERIAL",
   "priority": 3

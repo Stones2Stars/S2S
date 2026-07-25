@@ -29,24 +29,26 @@
    }
   }
  },
- "grants": {
-  "repeatable": [
-   {
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
     "PROPERTY_AIR_POLLUTION": -5,
-    "interval": "perTurn",
-    "on": "plot",
-    "relation": "near",
-    "distance": 1
-   },
-   {
-    "PROPERTY_WATER_POLLUTION": -4,
-    "interval": "perTurn",
     "on": "plot",
     "relation": "near",
     "distance": 1
    }
-  ]
- },
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_WATER_POLLUTION": -4,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  }
+ ],
  "cost": {
   "advancedStartRemoveCost": 40
  },

@@ -49,7 +49,15 @@
  },
  "happiness": {
   "city": {
-   "perPopulation": 50
+   "flat": [
+    {
+     "value": 50,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
   }
  },
  "maintenance": {

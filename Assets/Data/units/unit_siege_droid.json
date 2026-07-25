@@ -31,15 +31,19 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 195,
    "cityAttack": {
     "percent": 40
    },
    "hillsAttack": {
     "percent": 25
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 195
   }
  },
  "bombard": {

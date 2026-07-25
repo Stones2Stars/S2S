@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_LIGHT_ORANGE",
-   "icon": "ART_DEF_CIVILIZATION_CELTS",
+   "define": "ART_DEF_CIVILIZATION_CELTS",
    "style": "ARTSTYLE_EUROPE",
    "unitStyle": "UNIT_ARTSTYLE_CELTIC"
   }

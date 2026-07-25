@@ -173,14 +173,24 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_HUMANITARIAN2": [
-    "UNITCOMBAT_HEALTH_CARE",
-    "UNITCOMBAT_RECON"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_HUMANITARIAN2"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_HEALTH_CARE",
+       "UNITCOMBAT_RECON"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_HUMANITARIAN",
   "priority": 2

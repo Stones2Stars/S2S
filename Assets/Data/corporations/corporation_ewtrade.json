@@ -8,14 +8,20 @@
  "gold": {
   "empire": {
    "headquarters": {
-    "perCorporationLevel": 2
+    "flat": {
+     "value": 2,
+     "per": "CORPORATION_LEVEL"
+    }
    }
   }
  },
  "culture": {
   "empire": {
    "headquarters": {
-    "perCorporationLevel": 2
+    "flat": {
+     "value": 2,
+     "per": "CORPORATION_LEVEL"
+    }
    }
   },
   "city": {

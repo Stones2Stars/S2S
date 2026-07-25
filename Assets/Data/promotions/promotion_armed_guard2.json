@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_ARMED_GUARD2",
- "strength": {
+ "combat": {
   "unit": {
    "defense": {
     "percent": 10

@@ -97,26 +97,72 @@
  "policies": {
   "upgradeAnywhere": true
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_COMBAT_AI1": [
-    "UNITCOMBAT_ASSAULT_MECH",
-    "UNITCOMBAT_DREADNOUGHT",
-    "UNITCOMBAT_NANITE",
-    "UNITCOMBAT_ROBOT"
-   ],
-   "PROMOTION_DEFENSIVE_PROTOCOLS1": [
-    "UNITCOMBAT_ROBOT"
-   ],
-   "PROMOTION_REINFORCED_STRUCTURE": [
-    "UNITCOMBAT_ASSAULT_MECH",
-    "UNITCOMBAT_ROBOT"
-   ],
-   "PROMOTION_IMPROVED_RADAR": [
-    "UNITCOMBAT_STEALTH"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_COMBAT_AI1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_ASSAULT_MECH",
+       "UNITCOMBAT_DREADNOUGHT",
+       "UNITCOMBAT_NANITE",
+       "UNITCOMBAT_ROBOT"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_DEFENSIVE_PROTOCOLS1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_ROBOT"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_REINFORCED_STRUCTURE"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_ASSAULT_MECH",
+       "UNITCOMBAT_ROBOT"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_IMPROVED_RADAR"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_STEALTH"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_PROGRESSIST",
   "priority": 1

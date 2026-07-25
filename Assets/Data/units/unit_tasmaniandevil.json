@@ -17,9 +17,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 2,
    "targets": {
     "UNITCOMBAT_BIRD_GAMEBIRD": true,
     "UNITCOMBAT_BIRD_WATERFOWL": true,
@@ -28,6 +27,11 @@
    "unitTargets": {
     "UNIT_WOMBAT": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 2
   }
  },
  "withdrawal": {

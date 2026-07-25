@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_TRANSPORT_FIGHTERS2",
- "strength": {
+ "combat": {
   "unit": {
    "percent": -15
   }

@@ -23,8 +23,8 @@ NEW KEY -> LEGACY FIELD (the old->new map IS this curator, curators/README):
   greatPeopleRate.city.flat                  = `iGreatPeopleRateChange`
   health.city.flat                           = `iHealthPercent`     (÷100)
   happiness.city.flat                        = `iHappinessPercent`  (÷100)
-  investigation.city.flat                    = `iInvestigation`
-  insidiousness.city.flat                    = `iInsidiousness`     (module-rare; absent in current data)
+  underworld.city.investigation.flat         = `iInvestigation`    (merged into the shared underworld family, ruling 3)
+  underworld.city.insidiousness.flat         = `iInsidiousness`    (module-rare; absent in current data)
   experience.city.flat                       = `iExperience`        (free unit XP; module-rare; absent today)
   experience.city.unitCombats.{UC}.flat      = `UnitCombatExperienceTypes` (the UNITCOMBAT is the TARGET that
                                                gets free XP, kept on the source keyed by target — modifier §5)
@@ -80,10 +80,12 @@ FAMILIES = {
     "iGreatPeopleRateChange": ("greatPeopleRate", None,             False),
     "iHealthPercent":         ("health",          None,             True),   # ÷100 (latent /100)
     "iHappinessPercent":      ("happiness",       None,             True),   # ÷100 (latent /100)
-    "iInvestigation":         ("investigation",   None,             False),
-    "iInsidiousness":         ("insidiousness",   None,             False),
     "iExperience":            ("experience",      None,             False),
 }
+# iInvestigation/iInsidiousness -> members of the shared `underworld` family (ruling 3, info-rebuild.md: the
+# stray singleton investigation/insidiousness families MERGE into underworld -- the in-city criminal game,
+# kinds insidiousness + investigation, city scope; uniform with curate_building).
+UNDERWORLD = {"iInvestigation": "investigation", "iInsidiousness": "insidiousness"}
 TEXT = {"Description": "description", "Civilopedia": "civilopedia", "Help": "help"}
 ART = {"Texture", "Button"}                                   # ui.art.texture / ui.art.icon (kept DISTINCT)
 IDENTITY = {"GreatPeopleUnitType": "greatPeopleUnit", "Categories": "categories"}
@@ -91,7 +93,7 @@ BOOL_ID = {"bSlave": "slave", "bVisible": "visible"}
 # Tech keep-on-self + the dead structure: skipped by the default loop, TechHappiness/Health handled explicitly below.
 DROP = {"TechHappinessTypes", "TechHealthTypes", "YieldChanges"}
 FAMILY_ORDER = ["food", "production", "commerce", "gold", "research", "culture", "espionage",
-                "greatPeopleRate", "health", "happiness", "experience", "investigation", "insidiousness"]
+                "greatPeopleRate", "health", "happiness", "experience", "underworld"]
 
 # Inbound conditioned boosts folded onto this specialist (accumulate_conditioned 7/8-tuple:
 # src_ent, field, _ttype, family, valueKeys, unit, deposit_scope[, cond_scope]). The cond_scope 8th element
@@ -186,6 +188,9 @@ def curate(typ, rec, boosts):
                 text[TEXT[tag]] = t
         elif tag in FAMILIES:
             _apply_family(fam, tag, c)
+        elif tag in UNDERWORLD:
+            if engine.is_int(t) and int(t) != 0:
+                _put(fam, "underworld", UNDERWORLD[tag], "flat", int(t))
         elif tag == "UnitCombatExperienceTypes":
             _unit_combat_xp(c, fam)
         elif tag == "PropertyManipulators":

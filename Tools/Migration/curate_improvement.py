@@ -60,8 +60,9 @@ DROPPED: iHealthPercent -> drop, BALANCE-CUT as a source from improvements (capa
 root iDepletionRand / Button (no improvement button — it lives on the worker Build) / MapCategoryTypes (0/266) -> drop.
 iAirBombDefense -> defense.plot.air.flat (owner 2026-07-01; the air-bomb defense magnitude). RNG: iFeatureGrowth /
 iCultureRange -> identity (intrinsic improvement mechanics read by their OWN CvPlot systems -- feature-regrowth /
-culture-seed vestige -- NOT cascade modifiers; owner 2026-07-01 "leave them in identity"). PropertyManipulators -> grants.repeatable (json.md §5; owner
-2026-07-01): the RELATION_NEAR pollution pulse becomes a per-turn spatial property grant (#429 reads its target).
+culture-seed vestige -- NOT cascade modifiers; owner 2026-07-01 "leave them in identity"). PropertyManipulators ->
+top-level `triggers` entries (json.md §5, ruling 8): the RELATION_NEAR pollution pulse becomes an onTurn trigger
+whose action carries the spatial intent (#429 reads its target from the action).
 
 EXE-link: 3 DllExport (isGoody, isRequiresRiverSide, getArtInfo) -> bGoody + bRequiresRiverSide EXE-constrained.
 
@@ -111,7 +112,7 @@ ID_RENAME = {
 HAS_RIVER, HAS_IRRIGATION = "HAS_RIVER", "HAS_IRRIGATION"
 _PREFIX = ["type", "description", "civilopedia", "help", "quote", "strategy",
            "enables", "obsoletes", "replaces", "disables", "requires"]
-_SUFFIX = ["grants", "properties", "cost", "ai", "ui", "world", "sound", "mapGeneration", "identity"]
+_SUFFIX = ["grants", "triggers", "properties", "cost", "ai", "ui", "world", "sound", "mapGeneration", "identity"]
 
 
 def _bool(node, tag):
@@ -278,14 +279,14 @@ def post_process(typ, obj, rec, store):
                 bonuses[b] = rb
         if bonuses:
             obj.setdefault("identity", OrderedDict()).setdefault("bonuses", OrderedDict()).update(bonuses)
-    # PropertyManipulators -> grants.repeatable (json.md §5; owner 2026-07-01 "property pulses are repeatable grants").
-    # The improvement's RELATION_NEAR pollution pulse becomes a §5 spatial repeatable grant carrying on/relation/
-    # distance; the (#429) spatial-distribution engine reads its target from there. No longer a parked raw block.
+    # PropertyManipulators -> top-level `triggers` entries (json.md §5, ruling 8: trigger -> chance -> action).
+    # The improvement's RELATION_NEAR pollution pulse becomes an onTurn trigger whose ACTION carries the spatial
+    # intent (on/relation/distance); the (#429) spatial-distribution engine reads its target from there.
     pm = rec.find("PropertyManipulators")
     if pm is not None:
-        pulses = [g for g in (engine.property_source_repeatable(s) for s in pm if s.tag == "PropertySource") if g]
+        pulses = [g for g in (engine.property_source_trigger(s) for s in pm if s.tag == "PropertySource") if g]
         if pulses:
-            obj.setdefault("grants", OrderedDict()).setdefault("repeatable", []).extend(pulses)
+            obj.setdefault("triggers", []).extend(pulses)
     _reorder(obj)
 
 

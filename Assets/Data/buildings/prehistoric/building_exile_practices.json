@@ -41,17 +41,21 @@
    "flat": -2
   }
  },
- "grants": {
-  "repeatable": [
-   {
-    "unit": "UNIT_EXILE",
-    "interval": "perTurn",
-    "chance": {
-     "per": "PROPERTY_CRIME"
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "chance": {
+    "per": "PROPERTY_CRIME"
+   },
+   "action": {
+    "grant": {
+     "units": [
+      "UNIT_EXILE"
+     ]
     }
    }
-  ]
- },
+  }
+ ],
  "cost": {
   "production": 15
  },

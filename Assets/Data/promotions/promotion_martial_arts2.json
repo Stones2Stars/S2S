@@ -12,6 +12,21 @@
    ]
   }
  },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 15
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 10
+    },
+    "UNITCOMBAT_THROWING": {
+     "percent": 10
+    }
+   }
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -26,21 +41,6 @@
    },
    "resistance": {
     "flat": 10
-   }
-  }
- },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_MELEE": {
-     "percent": 15
-    },
-    "UNITCOMBAT_ARCHER": {
-     "percent": 10
-    },
-    "UNITCOMBAT_THROWING": {
-     "percent": 10
-    }
    }
   }
  },

@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_AGGRESSIVE1",
- "strength": {
+ "combat": {
   "unit": {
    "attack": {
     "percent": 15

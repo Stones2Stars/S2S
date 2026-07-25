@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_TRANSPORT_TROOPS2",
- "strength": {
+ "combat": {
   "unit": {
    "percent": -20
   }

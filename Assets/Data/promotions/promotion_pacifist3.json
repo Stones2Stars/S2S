@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_PACIFIST3",
- "strength": {
+ "combat": {
   "unit": {
    "percent": -10
   }

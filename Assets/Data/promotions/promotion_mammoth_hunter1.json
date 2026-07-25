@@ -5,7 +5,7 @@
    "PROMOTION_MAMMOTH_HUNTER2"
   ]
  },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_MAMMAL_PACHYDERM": {

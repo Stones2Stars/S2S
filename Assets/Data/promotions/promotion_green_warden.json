@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_GREEN_WARDEN",
- "strength": {
+ "combat": {
   "unit": {
    "feature": {
     "FEATURE_JUNGLE": {

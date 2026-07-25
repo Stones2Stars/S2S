@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_AUSTRALIA",
-   "icon": "ART_DEF_CIVILIZATION_AUSTRALIA",
+   "define": "ART_DEF_CIVILIZATION_AUSTRALIA",
    "style": "ARTSTYLE_SOUTH_PACIFIC",
    "unitStyle": "UNIT_ARTSTYLE_AUSTRALIA"
   }

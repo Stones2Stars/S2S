@@ -108,14 +108,24 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_SLOB1": [
-    "UNITCOMBAT_SPECIES_HUMAN",
-    "UNITCOMBAT_SPECIES_NEANDERTHAL"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_SLOB1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_SPECIES_HUMAN",
+       "UNITCOMBAT_SPECIES_NEANDERTHAL"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_SLOB",
   "priority": -1

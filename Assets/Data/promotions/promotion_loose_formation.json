@@ -7,6 +7,18 @@
    ]
   }
  },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 15
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 15
+    }
+   }
+  }
+ },
  "withdrawal": {
   "unit": {
    "percent": 5
@@ -19,18 +31,6 @@
    },
    "resistance": {
     "flat": -10
-   }
-  }
- },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_MOUNTED": {
-     "percent": 15
-    },
-    "UNITCOMBAT_ARCHER": {
-     "percent": 15
-    }
    }
   }
  },

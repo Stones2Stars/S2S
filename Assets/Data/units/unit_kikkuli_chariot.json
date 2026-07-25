@@ -70,9 +70,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 6,
    "feature": {
     "FEATURE_FOREST": {
      "attack": {
@@ -90,6 +89,11 @@
      "percent": 100
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 6
   }
  },
  "withdrawal": {

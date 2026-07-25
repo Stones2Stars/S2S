@@ -32,7 +32,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_NEANDERTHAL_EMPIRE",
-   "icon": "ART_DEF_CIVILIZATION_NEANDERTHAL_EMPIRE",
+   "define": "ART_DEF_CIVILIZATION_NEANDERTHAL_EMPIRE",
    "style": "ARTSTYLE_NEANDERTHAL",
    "unitStyle": "UNIT_ARTSTYLE_VIKING"
   }

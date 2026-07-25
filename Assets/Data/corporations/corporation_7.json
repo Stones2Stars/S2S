@@ -8,7 +8,10 @@
  "gold": {
   "empire": {
    "headquarters": {
-    "perCorporationLevel": 4
+    "flat": {
+     "value": 4,
+     "per": "CORPORATION_LEVEL"
+    }
    }
   },
   "city": {

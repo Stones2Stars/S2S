@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_PEACH",
-   "icon": "ART_DEF_CIVILIZATION_MALI",
+   "define": "ART_DEF_CIVILIZATION_MALI",
    "style": "ARTSTYLE_AFRICA",
    "unitStyle": "UNIT_ARTSTYLE_MALI"
   }

@@ -22,14 +22,18 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 20,
    "unitCombat": {
     "UNITCOMBAT_GUN": {
      "percent": -50
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 20
   }
  },
  "withdrawal": {

@@ -45,13 +45,23 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_INSTIGATOR1": [
-    "UNITCOMBAT_SPY"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_INSTIGATOR1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_SPY"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_REVOLUTIONARY"
  },

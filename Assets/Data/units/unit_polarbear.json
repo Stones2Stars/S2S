@@ -5,9 +5,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 6,
    "terrain": {
     "TERRAIN_JAGGED": {
      "attack": {
@@ -50,6 +49,11 @@
      }
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 6
   }
  },
  "skills": [

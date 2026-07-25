@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_LEO",
- "strength": {
+ "combat": {
   "unit": {
    "percent": 10
   }

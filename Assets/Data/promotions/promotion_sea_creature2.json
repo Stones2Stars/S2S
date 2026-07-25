@@ -7,14 +7,7 @@
    ]
   }
  },
- "firstStrike": {
-  "unit": {
-   "chance": {
-    "flat": 1
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "terrain": {
     "TERRAIN_OCEAN_TROPICAL": {
@@ -65,6 +58,13 @@
       "percent": 20
      }
     }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
    }
   }
  },

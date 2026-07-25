@@ -16,11 +16,19 @@
    ]
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_TRADITION_WORK_ETHIC"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_TRADITION_WORK_ETHIC"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "attributes": {
   "nukeImmune": true,
   "destroyedOnCapture": true

@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_DARK_LEMON",
-   "icon": "ART_DEF_CIVILIZATION_HOLY_ROMAN",
+   "define": "ART_DEF_CIVILIZATION_HOLY_ROMAN",
    "style": "ARTSTYLE_EUROPE",
    "unitStyle": "UNIT_ARTSTYLE_GERMAN"
   }

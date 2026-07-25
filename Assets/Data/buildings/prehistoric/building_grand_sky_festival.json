@@ -233,11 +233,19 @@
    "flat": 4
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_TACTICS"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_TACTICS"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 570,
   "sizeModifier": 1,

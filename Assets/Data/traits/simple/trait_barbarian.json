@@ -20,13 +20,23 @@
  "policies": {
   "upgradeAnywhere": true
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_AGGRESSIVE": [
-    "UNITCOMBAT_MELEE"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_AGGRESSIVE"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_MELEE"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "ui": {
   "art": {
    "icon": "art/Buttons/Traits/TraitBarbarian.dds"

@@ -5,14 +5,18 @@
    "flat": 3
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 2,
    "targets": {
     "UNITCOMBAT_BIRD_RATITE": true,
     "UNITCOMBAT_MAMMAL_ANTELOPE": true,
     "UNITCOMBAT_MAMMAL_SWINE": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 2
   }
  },
  "withdrawal": {

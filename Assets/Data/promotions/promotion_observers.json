@@ -7,12 +7,7 @@
    ]
   }
  },
- "withdrawal": {
-  "unit": {
-   "percent": 5
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_EXPLORER": {
@@ -22,6 +17,11 @@
      "percent": 15
     }
    }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
   }
  },
  "ui": {

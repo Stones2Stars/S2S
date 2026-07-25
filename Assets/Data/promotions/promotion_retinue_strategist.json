@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_RETINUE_STRATEGIST",
- "strength": {
+ "combat": {
   "unit": {
    "percent": 5,
    "unitCombat": {

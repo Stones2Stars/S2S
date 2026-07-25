@@ -36,6 +36,24 @@
    "flat": 1
   }
  },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_TRACKED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_WHEELED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 50
+    },
+    "UNITCOMBAT_SIEGE": {
+     "percent": 50
+    }
+   }
+  }
+ },
  "bombard": {
   "unit": {
    "airBombRate": {
@@ -65,24 +83,6 @@
   "unit": {
    "evasion": {
     "percent": 50
-   }
-  }
- },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_TRACKED": {
-     "percent": 50
-    },
-    "UNITCOMBAT_WHEELED": {
-     "percent": 50
-    },
-    "UNITCOMBAT_GUN": {
-     "percent": 50
-    },
-    "UNITCOMBAT_SIEGE": {
-     "percent": 50
-    }
    }
   }
  },

@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_MIDDLE_PURPLE",
-   "icon": "ART_DEF_CIVILIZATION_BABYLON",
+   "define": "ART_DEF_CIVILIZATION_BABYLON",
    "style": "ARTSTYLE_CRESCENT",
    "unitStyle": "UNIT_ARTSTYLE_BABYLON"
   }

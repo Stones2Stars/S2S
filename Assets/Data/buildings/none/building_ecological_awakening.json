@@ -22,7 +22,15 @@
  },
  "health": {
   "city": {
-   "perPopulation": 10
+   "flat": [
+    {
+     "value": 10,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
   }
  },
  "foodKept": {

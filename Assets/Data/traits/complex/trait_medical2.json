@@ -248,13 +248,23 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_MEDICAL2": [
-    "UNITCOMBAT_HEALTH_CARE"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_MEDICAL2"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_HEALTH_CARE"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_MEDICAL",
   "priority": 2

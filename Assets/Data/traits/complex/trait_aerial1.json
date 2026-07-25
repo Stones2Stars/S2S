@@ -295,9 +295,9 @@
    }
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "captureResistance": {
+   "resistance": {
     "percent": -20
    }
   }
@@ -356,17 +356,27 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_AERIAL_STRATEGIES": [
-    "UNITCOMBAT_ARCHER",
-    "UNITCOMBAT_BALLOON",
-    "UNITCOMBAT_GUN",
-    "UNITCOMBAT_HELICOPTER",
-    "UNITCOMBAT_THROWING"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_AERIAL_STRATEGIES"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_ARCHER",
+       "UNITCOMBAT_BALLOON",
+       "UNITCOMBAT_GUN",
+       "UNITCOMBAT_HELICOPTER",
+       "UNITCOMBAT_THROWING"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_AERIAL",
   "priority": 1

@@ -32,9 +32,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 15,
    "cityAttack": {
     "percent": 25
    },
@@ -46,6 +45,11 @@
      "percent": 50
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 15
   }
  },
  "costs": {

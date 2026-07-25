@@ -17,9 +17,8 @@
    "flat": 5
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 170,
    "cityAttack": {
     "percent": 50
    },
@@ -28,6 +27,11 @@
      "percent": 50
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 170
   }
  },
  "bombard": {

@@ -45,8 +45,16 @@
  },
  "health": {
   "city": {
-   "flat": -1,
-   "perPopulation": -15
+   "flat": [
+    -1,
+    {
+     "value": -15,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
   }
  },
  "hurryCost": {

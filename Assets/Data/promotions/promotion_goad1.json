@@ -5,7 +5,7 @@
    "PROMOTION_GOAD2"
   ]
  },
- "strength": {
+ "combat": {
   "unit": {
    "taunt": {
     "flat": 25

@@ -62,7 +62,7 @@
    "percent": 100
   }
  },
- "copsAndRobbers": {
+ "underworld": {
   "city": {
    "insidiousness": {
     "flat": 15
@@ -74,17 +74,21 @@
    "flat": 10
   }
  },
- "grants": {
-  "repeatable": [
-   {
-    "unit": "UNIT_ASSASSIN",
-    "interval": "perTurn",
-    "chance": {
-     "per": "PROPERTY_CRIME"
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "chance": {
+    "per": "PROPERTY_CRIME"
+   },
+   "action": {
+    "grant": {
+     "units": [
+      "UNIT_ASSASSIN"
+     ]
     }
    }
-  ]
- },
+  }
+ ],
  "cost": {
   "production": 225,
   "sizeModifier": 1,

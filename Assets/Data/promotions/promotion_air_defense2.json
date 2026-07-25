@@ -12,19 +12,19 @@
    ]
   }
  },
- "air": {
-  "unit": {
-   "intercept": {
-    "percent": 10
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_HELICOPTER": {
      "percent": 15
     }
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 10
    }
   }
  },

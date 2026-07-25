@@ -134,7 +134,13 @@
  },
  "gold": {
   "empire": {
-   "flat": -6,
+   "flat": [
+    -6,
+    {
+     "value": -1,
+     "per": "SPECIALIST"
+    }
+   ],
    "percent": [
     -5,
     {
@@ -149,9 +155,6 @@
     "SPECIALIST_ANDROID_WORKER": {
      "flat": -1
     }
-   },
-   "specialist": {
-    "perSpecialist": -1
    }
   }
  },

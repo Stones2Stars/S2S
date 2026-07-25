@@ -5,7 +5,7 @@
    "PROMOTION_TRANSPORT_TROOPS1"
   ]
  },
- "strength": {
+ "combat": {
   "unit": {
    "percent": -20
   }

@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_LONG_ARM2",
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_CRIMINAL": {

@@ -1,13 +1,6 @@
 {
  "type": "UNITCOMBAT_TRADE",
- "capture": {
-  "unit": {
-   "resistance": {
-    "flat": -50
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "feature": {
     "FEATURE_FOREST": {
@@ -40,6 +33,13 @@
       "percent": -10
      }
     }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": -50
    }
   }
  },

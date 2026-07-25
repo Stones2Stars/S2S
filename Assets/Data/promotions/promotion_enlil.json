@@ -1,5 +1,14 @@
 {
  "type": "PROMOTION_ENLIL",
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ARCHER": {
+     "percent": 25
+    }
+   }
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -11,15 +20,6 @@
   "unit": {
    "resistance": {
     "flat": 5
-   }
-  }
- },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_ARCHER": {
-     "percent": 25
-    }
    }
   }
  },

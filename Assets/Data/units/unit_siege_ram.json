@@ -46,15 +46,19 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 5,
    "breakdownChance": {
     "flat": 30
    },
    "breakdownDamage": {
     "flat": 5
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 5
   }
  },
  "withdrawal": {

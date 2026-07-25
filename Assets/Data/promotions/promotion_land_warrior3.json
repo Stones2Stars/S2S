@@ -7,6 +7,15 @@
    ]
   }
  },
+ "combat": {
+  "unit": {
+   "domain": {
+    "DOMAIN_LAND": {
+     "percent": 25
+    }
+   }
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -14,15 +23,6 @@
    },
    "chance": {
     "flat": 1
-   }
-  }
- },
- "strength": {
-  "unit": {
-   "domain": {
-    "DOMAIN_LAND": {
-     "percent": 25
-    }
    }
   }
  },

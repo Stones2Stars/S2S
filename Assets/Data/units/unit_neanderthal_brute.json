@@ -23,9 +23,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 2,
    "vsBarbs": {
     "percent": 75
    },
@@ -37,6 +36,11 @@
      "percent": -50
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 2
   }
  },
  "skills": [

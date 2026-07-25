@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_PURPLE",
-   "icon": "ART_DEF_CIVILIZATION_INDIA",
+   "define": "ART_DEF_CIVILIZATION_INDIA",
    "style": "ARTSTYLE_INDIA",
    "unitStyle": "UNIT_ARTSTYLE_INDIA"
   }

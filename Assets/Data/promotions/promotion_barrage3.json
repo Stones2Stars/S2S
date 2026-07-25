@@ -7,19 +7,19 @@
    ]
   }
  },
- "collateral": {
-  "unit": {
-   "damage": {
-    "percent": 25
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_GUN": {
      "percent": 10
     }
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 25
    }
   }
  },

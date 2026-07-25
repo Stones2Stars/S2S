@@ -107,14 +107,22 @@
    "SPECIALIST_DOCTOR": 3
   }
  },
- "grants": {
-  "freePromotions": [
-   {
-    "promotion": "PROMOTION_DISEASE_CONTROL1",
-    "enabled": "IS_MEDIC"
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_DISEASE_CONTROL1",
+       "enabled": "IS_MEDIC"
+      }
+     ],
+     "units": "present"
+    }
    }
-  ]
- },
+  }
+ ],
  "cost": {
   "production": 1520,
   "sizeModifier": 3,

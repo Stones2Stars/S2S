@@ -49,9 +49,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 22,
    "feature": {
     "FEATURE_JUNGLE": {
      "attack": {
@@ -62,6 +61,11 @@
      }
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 22
   }
  },
  "costs": {

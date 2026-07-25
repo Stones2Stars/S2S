@@ -41,9 +41,8 @@
    "flat": 6
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 36,
    "vsUnit": {
     "UNIT_LIBERTY_MERCHANT": {
      "attack": {
@@ -54,6 +53,11 @@
      }
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 36
   }
  },
  "withdrawal": {

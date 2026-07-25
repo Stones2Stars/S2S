@@ -4,7 +4,7 @@ stat SOURCE like Promotion: it deposits onto a unit via CvUnit::processUnitComba
 stack (the §5 self-accumulator). **REUSES the Promotion #28 unit-stat vocabulary VERBATIM** (imported tables) —
 this is the entity that, with Promotion, DEFINES that vocabulary (modifier-spec §5). EXE-link 0 DllExport.
 
-SAME as Promotion (imported): the `*Change` stat fields -> the same families (strength/withdrawal/firstStrike/
+SAME as Promotion (imported): the `*Change` stat fields -> the same families (combat/withdrawal/firstStrike/
 air/collateral/heal/movement/experience/workRate/cargo/upkeep/vision/capture/poison/espionage/trap/...), the
 CAPABILITIES boolean group, the vision/LOS resolver, properties -> scoped deposits (property_source_v3), the
 vs-keyed combat modifiers (under DIFFERENT XML container names: TerrainAttackChangeModifiers vs Promotion's
@@ -40,7 +40,7 @@ from store import Store, REPO
 from curate_common import (FAMILY_ORDER, put_art, emit_art, descale100, fold_text_to_identity, gate_entity,
                            emit_sizematters, SM_FLAT_CHANGE, SM_COMBATMOD_CHANGE, SM_CARGO_CHANGE)
 # REUSE the Promotion unit-stat vocabulary (the shared §5 definition) + helpers.
-from curate_promotion import (STRENGTH, FAMILIES, CAP_BOOL, CAP_PAIR, CAP_COUNT, VISION_PAIRS,
+from curate_promotion import (COMBAT_MODS, FAMILIES, CAP_BOOL, CAP_PAIR, CAP_COUNT, VISION_PAIRS,
                               VISION_STRUCTS, _txt, _int, _simple_list, _pairs)
 
 # UnitCombat-specific extensions to the shared tables.
@@ -51,13 +51,13 @@ VISION_PAIRS_X = {"VisibilityIntensitySameTileChangeTypes": "visibilityIntensity
 # vs-keyed combat modifiers — UnitCombat's container names (struct-vectors {Type, iModifier}); same homes as
 # Promotion's VS_KEYED. (family, keyword, member|None, unit)
 VS_KEYED = {
-    "TerrainAttackChangeModifiers":   ("strength", "terrain", "attack", "percent"),
-    "TerrainDefenseChangeModifiers":  ("strength", "terrain", "defense", "percent"),
-    "FeatureAttackChangeModifiers":   ("strength", "feature", "attack", "percent"),
-    "FeatureDefenseChangeModifiers":  ("strength", "feature", "defense", "percent"),
-    "UnitCombatChangeModifiers":      ("strength", "unitCombat", None, "percent"),
-    "DomainMods":                     ("strength", "domain", None, "percent"),
-    "FlankingStrengthbyUnitCombatTypesChanges": ("strength", "flanking", None, "percent"),  # true XML container (CvUnitCombatInfo.cpp:1804 reader); child iModifier keyed by UnitCombat. Zero authorings today.
+    "TerrainAttackChangeModifiers":   ("combat", "terrain", "attack", "percent"),
+    "TerrainDefenseChangeModifiers":  ("combat", "terrain", "defense", "percent"),
+    "FeatureAttackChangeModifiers":   ("combat", "feature", "attack", "percent"),
+    "FeatureDefenseChangeModifiers":  ("combat", "feature", "defense", "percent"),
+    "UnitCombatChangeModifiers":      ("combat", "unitCombat", None, "percent"),
+    "DomainMods":                     ("combat", "domain", None, "percent"),
+    "FlankingStrengthbyUnitCombatTypesChanges": ("combat", "flanking", None, "percent"),  # true XML container (CvUnitCombatInfo.cpp:1804 reader); child iModifier keyed by UnitCombat. Zero authorings today.
     "TerrainWorkChangeModifiers":     ("workRate", "terrain", None, "percent"),
     "FeatureWorkChangeModifiers":     ("workRate", "feature", None, "percent"),
     "BuildWorkChangeModifiers":       ("workRate", "build", None, "percent"),
@@ -99,11 +99,12 @@ def curate(typ, rec, store):
     def fam_unit(family):
         return fams.setdefault(family, OrderedDict()).setdefault("unit", OrderedDict())
 
-    # --- shared scalar strength members + other families (imported tables; UC-absent tags skip) ---
-    for tag, (member, unit) in STRENGTH.items():
+    # --- shared scalar combat-modifier members + other families (imported tables; UC-absent tags skip).
+    # Strength MODIFIERS -> the combat family (ruling 5); `strength` holds only a unit's base value. ---
+    for tag, (member, unit) in COMBAT_MODS.items():
         v = _int(rec, tag)
         if v:
-            node = fam_unit("strength")
+            node = fam_unit("combat")
             if member:
                 node = node.setdefault(member, OrderedDict())
             node[unit] = v
@@ -309,7 +310,7 @@ def main():
         print("DROPPED %d genuinely-dead unit-combats (0-ref conservative purge; owner 2026-07-21): %s"
               % (len(dropped_dead), ", ".join(dropped_dead)))
     # COVERAGE CHECK
-    handled = (set(STRENGTH) | set(FAMILIES) | set(VS_KEYED) | set(CAP_BOOL) | set(CAP_BOOL_X)
+    handled = (set(COMBAT_MODS) | set(FAMILIES) | set(VS_KEYED) | set(CAP_BOOL) | set(CAP_BOOL_X)
                | set(CAP_PAIR) | set(CAP_COUNT) | set(CAP_COUNT_X) | set(CAP_LIST) | set(VISION_PAIRS)
                | set(VISION_PAIRS_X) | set(VISION_STRUCTS) | set(BASE_SENTINEL10) | set(BASE_PLAIN)
                | set(ID_REF) | set(ID_BOOL) | set(ID_LIST) | DROP

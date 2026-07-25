@@ -68,15 +68,19 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 5,
    "cityDefense": {
     "percent": 50
    },
    "hillsDefense": {
     "percent": 25
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 5
   }
  },
  "firstStrike": {

@@ -71,11 +71,19 @@
    "SPECIALIST_PRIEST": 2
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_WIND_HORSE2"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_WIND_HORSE2"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 98,
   "sizeModifier": 1,

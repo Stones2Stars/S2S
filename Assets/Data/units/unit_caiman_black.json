@@ -22,15 +22,19 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 5,
    "targets": {
     "UNITCOMBAT_ANIMAL_BIRD": true,
     "UNITCOMBAT_MAMMAL_CERVID": true,
     "UNITCOMBAT_MAMMAL_RODENT": true,
     "UNITCOMBAT_MAMMAL_TAPIR": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 5
   }
  },
  "skills": [

@@ -27,6 +27,15 @@
    "flat": 1
   }
  },
+ "combat": {
+  "unit": {
+   "domain": {
+    "DOMAIN_AIR": {
+     "percent": -50
+    }
+   }
+  }
+ },
  "firstStrike": {
   "unit": {
    "strikes": {
@@ -63,15 +72,6 @@
   "unit": {
    "evasion": {
     "percent": 50
-   }
-  }
- },
- "strength": {
-  "unit": {
-   "domain": {
-    "DOMAIN_AIR": {
-     "percent": -50
-    }
    }
   }
  },

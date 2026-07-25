@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_ORANGE",
-   "icon": "ART_DEF_CIVILIZATION_CARTHAGE",
+   "define": "ART_DEF_CIVILIZATION_CARTHAGE",
    "style": "ARTSTYLE_GRECO_ROMAN",
    "unitStyle": "UNIT_ARTSTYLE_CARTHAGE"
   }

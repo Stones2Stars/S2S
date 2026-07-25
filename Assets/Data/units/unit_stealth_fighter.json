@@ -42,6 +42,15 @@
    "flat": 1
   }
  },
+ "combat": {
+  "unit": {
+   "domain": {
+    "DOMAIN_AIR": {
+     "percent": -50
+    }
+   }
+  }
+ },
  "bombard": {
   "unit": {
    "airBombRate": {
@@ -74,15 +83,6 @@
    },
    "evasion": {
     "percent": 40
-   }
-  }
- },
- "strength": {
-  "unit": {
-   "domain": {
-    "DOMAIN_AIR": {
-     "percent": -50
-    }
    }
   }
  },

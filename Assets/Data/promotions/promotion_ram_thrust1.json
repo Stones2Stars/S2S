@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_RAM_THRUST1",
- "strength": {
+ "combat": {
   "unit": {
    "breakdownChance": {
     "flat": 15

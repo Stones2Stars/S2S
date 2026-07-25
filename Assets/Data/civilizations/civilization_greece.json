@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_LIGHT_BLUE",
-   "icon": "ART_DEF_CIVILIZATION_GREECE",
+   "define": "ART_DEF_CIVILIZATION_GREECE",
    "style": "ARTSTYLE_GRECO_ROMAN",
    "unitStyle": "UNIT_ARTSTYLE_GREEK"
   }

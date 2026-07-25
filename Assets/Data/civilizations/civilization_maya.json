@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_MIDDLE_CYAN",
-   "icon": "ART_DEF_CIVILIZATION_MAYA",
+   "define": "ART_DEF_CIVILIZATION_MAYA",
    "style": "ARTSTYLE_MESO_AMERICA",
    "unitStyle": "UNIT_ARTSTYLE_MESO_AMERICA"
   }

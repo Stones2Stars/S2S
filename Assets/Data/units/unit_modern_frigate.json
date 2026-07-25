@@ -31,9 +31,8 @@
    "flat": 10
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 72,
    "vsUnit": {
     "UNIT_SUBMARINE": {
      "attack": {
@@ -44,6 +43,11 @@
      }
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 72
   }
  },
  "withdrawal": {

@@ -37,7 +37,15 @@
  },
  "happiness": {
   "city": {
-   "perPopulation": 20
+   "flat": [
+    {
+     "value": 20,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {

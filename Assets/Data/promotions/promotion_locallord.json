@@ -14,7 +14,7 @@
    }
   }
  },
- "strength": {
+ "combat": {
   "unit": {
    "cityDefense": {
     "percent": 10

@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_BUILD_UP_RESTFUL_RECOVERY1",
- "strength": {
+ "combat": {
   "unit": {
    "percent": -5
   }

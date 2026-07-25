@@ -20,12 +20,16 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 10,
    "unnerve": {
     "percent": 100
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 10
   }
  },
  "withdrawal": {

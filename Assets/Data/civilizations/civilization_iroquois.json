@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_IROQUOIS",
-   "icon": "ART_DEF_CIVILIZATION_IROQUOIS",
+   "define": "ART_DEF_CIVILIZATION_IROQUOIS",
    "style": "ARTSTYLE_NATIVE_AMERICA",
    "unitStyle": "UNIT_ARTSTYLE_IROQUOIS"
   }

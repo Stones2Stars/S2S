@@ -32,7 +32,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_BLACK",
-   "icon": "ART_DEF_CIVILIZATION_NPC_BARBARIAN",
+   "define": "ART_DEF_CIVILIZATION_NPC_BARBARIAN",
    "style": "ARTSTYLE_BARBARIAN",
    "unitStyle": "UNIT_ARTSTYLE_BARBARIAN"
   }

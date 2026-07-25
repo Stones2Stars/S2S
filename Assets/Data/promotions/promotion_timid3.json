@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_TIMID3",
- "strength": {
+ "combat": {
   "unit": {
    "attack": {
     "percent": -15

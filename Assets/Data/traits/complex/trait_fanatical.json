@@ -258,16 +258,26 @@
   "allowInquisitions": true,
   "bansNonStateReligions": true
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_DEVOTION": [
-    "UNITCOMBAT_CIVILIAN",
-    "UNITCOMBAT_COMBATANT",
-    "UNITCOMBAT_EXPLORER",
-    "UNITCOMBAT_NAVAL_COMBATANT"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_DEVOTION"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_CIVILIAN",
+       "UNITCOMBAT_COMBATANT",
+       "UNITCOMBAT_EXPLORER",
+       "UNITCOMBAT_NAVAL_COMBATANT"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_ZEALOUS"
  },

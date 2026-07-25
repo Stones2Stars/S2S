@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_ASSYRIA",
-   "icon": "ART_DEF_CIVILIZATION_ASSYRIA",
+   "define": "ART_DEF_CIVILIZATION_ASSYRIA",
    "style": "ARTSTYLE_CRESCENT",
    "unitStyle": "UNIT_ARTSTYLE_BABYLON"
   }

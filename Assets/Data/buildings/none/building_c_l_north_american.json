@@ -141,14 +141,22 @@
    ]
   }
  },
- "grants": {
-  "freePromotions": [
-   {
-    "promotion": "PROMOTION_CULTURE_NORTH_AMERICAN",
-    "enabled": "IS_SETTLER"
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_CULTURE_NORTH_AMERICAN",
+       "enabled": "IS_SETTLER"
+      }
+     ],
+     "units": "present"
+    }
    }
-  ]
- },
+  }
+ ],
  "cost": {
   "production": 100
  },

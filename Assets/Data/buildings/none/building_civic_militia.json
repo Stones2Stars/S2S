@@ -15,11 +15,19 @@
    ]
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_CITY_GARRISON1"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_CITY_GARRISON1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "attributes": {
   "nukeImmune": true,
   "destroyedOnCapture": true

@@ -64,20 +64,22 @@
    "flat": -10
   }
  },
- "grants": {
-  "repeatable": [
-   {
-    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE",
-    "interval": "perTurn",
-    "heal": 5
-   },
-   {
-    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS",
-    "interval": "perTurn",
-    "heal": 5
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 5,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE"
    }
-  ]
- },
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 5,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS"
+   }
+  }
+ ],
  "cost": {
   "production": 440,
   "sizeModifier": 1,

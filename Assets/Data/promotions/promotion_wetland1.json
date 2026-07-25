@@ -12,7 +12,7 @@
    ]
   }
  },
- "strength": {
+ "combat": {
   "unit": {
    "terrain": {
     "TERRAIN_LUSH": {

@@ -10,9 +10,6 @@
  ],
  "commerce": {
   "empire": {
-   "specialist": {
-    "perSpecialist": -1
-   },
    "specialists": {
     "SPECIALIST_LAWYER": {
      "flat": -1
@@ -20,7 +17,13 @@
     "SPECIALIST_GREAT_STATESMAN": {
      "flat": -1
     }
-   }
+   },
+   "flat": [
+    {
+     "value": -1,
+     "per": "SPECIALIST"
+    }
+   ]
   }
  },
  "gold": {

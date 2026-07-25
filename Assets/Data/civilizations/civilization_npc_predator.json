@@ -32,7 +32,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_ANIMAL",
-   "icon": "ART_DEF_CIVILIZATION_NPC_PREDATOR",
+   "define": "ART_DEF_CIVILIZATION_NPC_PREDATOR",
    "style": "ARTSTYLE_BARBARIAN",
    "unitStyle": "UNIT_ARTSTYLE_BARBARIAN"
   }

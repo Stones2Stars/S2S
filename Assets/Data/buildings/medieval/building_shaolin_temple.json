@@ -53,13 +53,21 @@
    "flat": 6
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_MARTIAL_ARTS",
-   "PROMOTION_MARTIAL_ARTS2",
-   "PROMOTION_MARTIAL_ARTS3"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_MARTIAL_ARTS",
+      "PROMOTION_MARTIAL_ARTS2",
+      "PROMOTION_MARTIAL_ARTS3"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 2064,
   "sizeModifier": 2,

@@ -28,9 +28,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 20,
    "unitCombat": {
     "UNITCOMBAT_ANIMAL": {
      "percent": 100
@@ -45,6 +44,11 @@
      "percent": 25
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 20
   }
  },
  "firstStrike": {

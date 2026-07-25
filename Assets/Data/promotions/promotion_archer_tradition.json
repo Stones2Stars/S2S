@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_ARCHER_TRADITION",
- "strength": {
+ "combat": {
   "unit": {
    "percent": 5
   }

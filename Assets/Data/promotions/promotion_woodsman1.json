@@ -5,7 +5,7 @@
    "PROMOTION_WOODSMAN2"
   ]
  },
- "strength": {
+ "combat": {
   "unit": {
    "feature": {
     "FEATURE_JUNGLE": {

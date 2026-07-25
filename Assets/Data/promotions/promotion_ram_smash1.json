@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_RAM_SMASH1",
- "strength": {
+ "combat": {
   "unit": {
    "breakdownDamage": {
     "flat": 2

@@ -32,9 +32,8 @@
    "flat": 5
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 32,
    "terrain": {
     "TERRAIN_COAST": {
      "attack": {
@@ -69,6 +68,11 @@
      "percent": 20
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 32
   }
  },
  "cargo": {

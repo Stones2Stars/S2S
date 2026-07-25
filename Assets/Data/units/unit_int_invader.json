@@ -13,12 +13,16 @@
    "flat": 6
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 240,
    "cityAttack": {
     "percent": 10
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 240
   }
  },
  "withdrawal": {

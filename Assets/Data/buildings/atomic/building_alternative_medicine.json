@@ -92,25 +92,29 @@
    "SPECIALIST_PRIEST": 1
   }
  },
- "grants": {
-  "repeatable": [
-   {
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
     "heal": "full",
-    "count": 1,
-    "interval": "perTurn"
-   },
-   {
-    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE",
-    "interval": "perTurn",
-    "heal": 2
-   },
-   {
-    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS",
-    "interval": "perTurn",
-    "heal": 2
+    "count": 1
    }
-  ]
- },
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 2,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE"
+   }
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 2,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS"
+   }
+  }
+ ],
  "cost": {
   "production": 1410,
   "sizeModifier": 1,

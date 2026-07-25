@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_RETINUE_BANDIT",
- "strength": {
+ "combat": {
   "unit": {
    "hillsAttack": {
     "percent": 15

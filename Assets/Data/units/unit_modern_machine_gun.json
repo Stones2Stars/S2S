@@ -22,9 +22,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 55,
    "unitCombat": {
     "UNITCOMBAT_GUN": {
      "percent": 50
@@ -42,6 +41,11 @@
      "percent": 100
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 55
   }
  },
  "firstStrike": {

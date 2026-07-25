@@ -49,9 +49,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 55,
    "unitCombat": {
     "UNITCOMBAT_WHEELED": {
      "percent": 25
@@ -74,6 +73,11 @@
      }
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 55
   }
  },
  "firstStrike": {

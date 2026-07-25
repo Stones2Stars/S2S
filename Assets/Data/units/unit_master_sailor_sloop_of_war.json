@@ -27,9 +27,8 @@
    "flat": 5
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 15,
    "vsUnit": {
     "UNIT_BARBARY_CORSAIR": {
      "attack": {
@@ -40,6 +39,11 @@
      }
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 15
   }
  },
  "bombard": {

@@ -12,21 +12,7 @@
    ]
   }
  },
- "collateral": {
-  "unit": {
-   "protection": {
-    "percent": 10
-   }
-  }
- },
- "capture": {
-  "unit": {
-   "resistance": {
-    "flat": -20
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "terrain": {
     "TERRAIN_GRASSLAND": {
@@ -151,6 +137,20 @@
     "UNITCOMBAT_MISSILE": {
      "percent": 20
     }
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "protection": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": -20
    }
   }
  },

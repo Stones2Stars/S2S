@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_CHAIN_SHOT",
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_WOODEN_SHIPS": {

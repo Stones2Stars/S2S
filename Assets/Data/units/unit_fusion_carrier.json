@@ -17,9 +17,8 @@
    "flat": 8
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 75,
    "terrain": {
     "TERRAIN_COAST": {
      "attack": {
@@ -60,6 +59,11 @@
      "percent": 20
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 75
   }
  },
  "heal": {

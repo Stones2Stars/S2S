@@ -47,7 +47,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_NEANDERTHAL",
-   "icon": "ART_DEF_CIVILIZATION_NEANDERTHAL",
+   "define": "ART_DEF_CIVILIZATION_NEANDERTHAL",
    "style": "ARTSTYLE_EUROPE",
    "unitStyle": "UNIT_ARTSTYLE_VIKING"
   }

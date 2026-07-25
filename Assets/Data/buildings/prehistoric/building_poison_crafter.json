@@ -56,11 +56,19 @@
    "flat": 3
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_POISON_TIPS"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_POISON_TIPS"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 40,
   "sizeModifier": 1,

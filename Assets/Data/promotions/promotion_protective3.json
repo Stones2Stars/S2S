@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_PROTECTIVE3",
- "strength": {
+ "combat": {
   "unit": {
    "cityDefense": {
     "percent": 15

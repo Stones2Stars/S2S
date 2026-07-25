@@ -41,9 +41,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 140,
    "unitCombat": {
     "UNITCOMBAT_TRACKED": {
      "percent": 50
@@ -52,6 +51,11 @@
      "percent": 50
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 140
   }
  },
  "firstStrike": {

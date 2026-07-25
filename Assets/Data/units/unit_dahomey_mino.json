@@ -57,14 +57,18 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 20,
    "unitCombat": {
     "UNITCOMBAT_MOUNTED": {
      "percent": 25
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 20
   }
  },
  "costs": {

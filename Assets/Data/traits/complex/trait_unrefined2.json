@@ -231,7 +231,13 @@
  },
  "culture": {
   "empire": {
-   "flat": -4,
+   "flat": [
+    -4,
+    {
+     "value": -1,
+     "per": "SPECIALIST"
+    }
+   ],
    "percent": [
     -5,
     {
@@ -246,9 +252,6 @@
     "SPECIALIST_GREAT_ARTIST": {
      "flat": -2
     }
-   },
-   "specialist": {
-    "perSpecialist": -1
    }
   }
  },
@@ -282,9 +285,9 @@
    "flat": 1
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "captureProbability": {
+   "probability": {
     "percent": 5
    }
   }

@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_FIRE_SHIP",
- "strength": {
+ "combat": {
   "unit": {
    "kamikaze": {
     "percent": 50

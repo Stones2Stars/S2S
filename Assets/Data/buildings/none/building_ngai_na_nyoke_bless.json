@@ -60,11 +60,19 @@
    "SPECIALIST_PRIEST": 1
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_VENGEANCE"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_VENGEANCE"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 176,
   "sizeModifier": 1,

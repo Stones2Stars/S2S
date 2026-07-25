@@ -54,9 +54,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 26,
    "lunge": {
     "percent": 15
    },
@@ -92,6 +91,11 @@
    "targets": {
     "UNITCOMBAT_MOUNTED": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 26
   }
  },
  "withdrawal": {

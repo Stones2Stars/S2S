@@ -7,21 +7,7 @@
    ]
   }
  },
- "collateral": {
-  "unit": {
-   "damage": {
-    "percent": 10
-   }
-  }
- },
- "capture": {
-  "unit": {
-   "probability": {
-    "flat": -15
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_MELEE": {
@@ -45,6 +31,20 @@
     "UNITCOMBAT_RECON": {
      "percent": 30
     }
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -15
    }
   }
  },

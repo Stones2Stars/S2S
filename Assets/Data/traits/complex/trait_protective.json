@@ -533,11 +533,9 @@
    "flat": 4
   }
  },
- "combat": {
+ "espionageDefense": {
   "empire": {
-   "espionageDefense": {
-    "percent": 20
-   }
+   "percent": 20
   }
  },
  "maintenance": {
@@ -579,13 +577,23 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_PROTECTIVE": [
-    "UNITCOMBAT_COMBATANT"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_PROTECTIVE"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_COMBATANT"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_PROTECTIVE"
  },

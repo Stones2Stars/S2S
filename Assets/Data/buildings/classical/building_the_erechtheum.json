@@ -101,11 +101,19 @@
    "SPECIALIST_PRIEST": 2
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_COASTAL_GUARD1"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_COASTAL_GUARD1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 1566,
   "sizeModifier": 2,

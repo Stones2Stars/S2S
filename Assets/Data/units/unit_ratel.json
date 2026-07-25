@@ -5,9 +5,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 3,
    "targets": {
     "UNITCOMBAT_ANIMAL_AMPHIBIAN": true,
     "UNITCOMBAT_MAMMAL_RODENT": true,
@@ -19,6 +18,11 @@
     "UNIT_LIZARD": true,
     "UNIT_MONITOR": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
   }
  },
  "withdrawal": {

@@ -14,14 +14,7 @@
    }
   }
  },
- "collateral": {
-  "unit": {
-   "protection": {
-    "percent": 10
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "terrain": {
     "TERRAIN_GRASSLAND": {
@@ -59,6 +52,13 @@
     "UNITCOMBAT_MISSILE": {
      "percent": 20
     }
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "protection": {
+    "percent": 10
    }
   }
  },

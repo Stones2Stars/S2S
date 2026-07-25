@@ -79,9 +79,12 @@
    "numCities": {
     "percent": 10
    },
-   "otherArea": {
-    "percent": 1
-   }
+   "percent": [
+    {
+     "value": 1,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ]
   }
  },
  "tradeRoutes": {

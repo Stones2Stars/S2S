@@ -1,16 +1,6 @@
 {
  "type": "PROMOTION_POISON_TIPS",
- "capture": {
-  "unit": {
-   "probability": {
-    "flat": -15
-   },
-   "resistance": {
-    "flat": 10
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_ANIMAL": {
@@ -31,6 +21,16 @@
     "UNITCOMBAT_THROWING": {
      "percent": 25
     }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -15
+   },
+   "resistance": {
+    "flat": 10
    }
   }
  },

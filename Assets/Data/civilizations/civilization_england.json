@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_WHITE",
-   "icon": "ART_DEF_CIVILIZATION_ENGLAND",
+   "define": "ART_DEF_CIVILIZATION_ENGLAND",
    "style": "ARTSTYLE_ANGLO_AMERICA",
    "unitStyle": "UNIT_ARTSTYLE_ENGLAND"
   }

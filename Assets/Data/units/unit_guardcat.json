@@ -56,9 +56,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 20,
    "lunge": {
     "percent": 30
    },
@@ -89,6 +88,11 @@
     "UNITCOMBAT_STRIKE_TEAM": true,
     "UNITCOMBAT_RUFFIAN": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 20
   }
  },
  "withdrawal": {

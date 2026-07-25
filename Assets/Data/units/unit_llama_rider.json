@@ -28,9 +28,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 5,
    "terrain": {
     "TERRAIN_SCRUB": {
      "attack": {
@@ -88,6 +87,11 @@
      "percent": 50
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 5
   }
  },
  "withdrawal": {

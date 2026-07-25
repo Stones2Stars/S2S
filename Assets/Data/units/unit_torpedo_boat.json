@@ -41,9 +41,8 @@
    "flat": 5
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 40,
    "terrain": {
     "TERRAIN_COAST": {
      "attack": {
@@ -78,6 +77,11 @@
      }
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 40
   }
  },
  "withdrawal": {

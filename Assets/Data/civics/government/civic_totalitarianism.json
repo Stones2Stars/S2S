@@ -71,9 +71,12 @@
      "enabled": "IS_CAPITAL"
     }
    ],
-   "specialist": {
-    "perSpecialist": 1
-   }
+   "flat": [
+    {
+     "value": 1,
+     "per": "SPECIALIST"
+    }
+   ]
   }
  },
  "happiness": {
@@ -125,12 +128,12 @@
    "flat": 5
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "captureProbability": {
+   "probability": {
     "percent": -10
    },
-   "captureResistance": {
+   "resistance": {
     "percent": -10
    }
   }
@@ -143,12 +146,16 @@
    "numCities": {
     "percent": 15
    },
-   "homeArea": {
-    "percent": 10
-   },
-   "otherArea": {
-    "percent": 8
-   },
+   "percent": [
+    {
+     "value": 10,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 8,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
    "corporation": {
     "percent": 20
    }

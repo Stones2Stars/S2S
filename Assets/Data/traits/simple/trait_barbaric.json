@@ -51,14 +51,24 @@
    }
   }
  },
- "grants": {
-  "freePromotions": {
-   "PROMOTION_COMBAT1": [
-    "UNITCOMBAT_GUN",
-    "UNITCOMBAT_MELEE"
-   ]
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_COMBAT1"
+     ],
+     "units": {
+      "unitCombats": [
+       "UNITCOMBAT_GUN",
+       "UNITCOMBAT_MELEE"
+      ]
+     }
+    }
+   }
   }
- },
+ ],
  "succession": {
   "promotionLine": "PROMOTIONLINE_BARBARIC"
  },

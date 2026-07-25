@@ -86,11 +86,19 @@
    "SPECIALIST_ENGINEER": 1
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_WARMTH1"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_WARMTH1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 1038,
   "sizeModifier": 3,

@@ -12,9 +12,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 100,
    "cityAttack": {
     "percent": 25
    },
@@ -32,6 +31,11 @@
      "percent": 50
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 100
   }
  },
  "collateral": {

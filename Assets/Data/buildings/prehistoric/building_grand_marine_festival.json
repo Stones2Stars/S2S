@@ -277,11 +277,19 @@
    "flat": 4
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_SEA_HUNTER1"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_SEA_HUNTER1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 570,
   "sizeModifier": 1,

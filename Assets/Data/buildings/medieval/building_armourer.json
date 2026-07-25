@@ -85,11 +85,19 @@
    "SPECIALIST_ENGINEER": 1
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_BAMBOO_ARMOR"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_BAMBOO_ARMOR"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 300,
   "sizeModifier": 2,

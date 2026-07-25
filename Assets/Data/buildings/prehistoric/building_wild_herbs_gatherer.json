@@ -48,15 +48,15 @@
    "percent": 100
   }
  },
- "grants": {
-  "repeatable": [
-   {
-    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE",
-    "interval": "perTurn",
-    "heal": 1
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 1,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE"
    }
-  ]
- },
+  }
+ ],
  "cost": {
   "production": 40,
   "countModifier": 1,

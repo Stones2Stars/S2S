@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_BUILD_UP_LIE_IN_WAIT1",
- "strength": {
+ "combat": {
   "unit": {
    "stealth": {
     "percent": 5

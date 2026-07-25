@@ -27,9 +27,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 55,
    "vsUnit": {
     "UNIT_MACHINE_GUN": {
      "attack": {
@@ -42,6 +41,11 @@
      }
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 55
   }
  },
  "firstStrike": {

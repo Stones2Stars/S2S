@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_PINK",
-   "icon": "ART_DEF_CIVILIZATION_SPAIN",
+   "define": "ART_DEF_CIVILIZATION_SPAIN",
    "style": "ARTSTYLE_IBERIA",
    "unitStyle": "UNIT_ARTSTYLE_SPANISH"
   }

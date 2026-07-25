@@ -33,11 +33,19 @@
    }
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_SEA_HUNTER1"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_SEA_HUNTER1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_BUILDING_MASTER_SEA_HUNTER"

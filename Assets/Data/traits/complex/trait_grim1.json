@@ -72,12 +72,12 @@
    "flat": -2
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "captureProbability": {
+   "probability": {
     "percent": -5
    },
-   "captureResistance": {
+   "resistance": {
     "percent": -10
    }
   }

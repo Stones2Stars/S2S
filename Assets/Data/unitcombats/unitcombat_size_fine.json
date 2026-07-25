@@ -1,6 +1,6 @@
 {
  "type": "UNITCOMBAT_SIZE_FINE",
- "strength": {
+ "combat": {
   "unit": {
    "damageModifier": {
     "percent": -40

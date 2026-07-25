@@ -1,6 +1,6 @@
 {
  "type": "SPECIALUNIT_CAPTIVE",
- "strength": {
+ "combat": {
   "unit": {
    "percent": -5
   }

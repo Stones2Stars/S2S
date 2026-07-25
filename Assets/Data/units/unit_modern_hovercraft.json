@@ -41,9 +41,8 @@
    "flat": 4
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 75,
    "terrain": {
     "TERRAIN_MARSH": {
      "attack": {
@@ -68,6 +67,11 @@
      }
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 75
   }
  },
  "cargo": {

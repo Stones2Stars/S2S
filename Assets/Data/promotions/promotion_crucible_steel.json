@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_CRUCIBLE_STEEL",
- "strength": {
+ "combat": {
   "unit": {
    "percent": 15
   }

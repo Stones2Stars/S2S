@@ -5,9 +5,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 3,
    "targets": {
     "UNITCOMBAT_MAMMAL_CERVID": true,
     "UNITCOMBAT_MAMMAL_MUSTELIDAE": true,
@@ -18,6 +17,11 @@
     "UNIT_LYNX": true,
     "UNIT_REDFOX": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
   }
  },
  "skills": [

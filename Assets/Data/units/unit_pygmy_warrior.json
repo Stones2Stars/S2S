@@ -52,9 +52,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 3,
    "feature": {
     "FEATURE_JUNGLE": {
      "attack": {
@@ -70,6 +69,11 @@
      "percent": 25
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
   }
  },
  "costs": {

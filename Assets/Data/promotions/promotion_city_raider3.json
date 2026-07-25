@@ -12,7 +12,7 @@
    ]
   }
  },
- "strength": {
+ "combat": {
   "unit": {
    "cityAttack": {
     "percent": 20

@@ -45,23 +45,25 @@ BASE = {
     "iCombatLimit": "combatLimit", "iAirCombatLimit": "airCombatLimit",
     "iAirUnitCap": "airUnitCap",
 }
-# ---- §5 unit-scope combat-trait families (tag -> (family, member|None, unit)). REUSES the Promotion §5 vocab. ----
+# ---- §5 unit-scope combat-trait families (tag -> (family, member|None, unit)). REUSES the Promotion §5 vocab.
+# `strength` holds ONLY the unit's BASE value (strength.unit.flat, ruling 5 info-rebuild.md); everything that
+# MODIFIES that base lives in the `combat` family (the semantic modifier kinds + the type-keyed vs-entries). ----
 UNIT_FAMILIES = {
-    "iCityAttack": ("strength", "cityAttack", "percent"),
-    "iCityDefense": ("strength", "cityDefense", "percent"),
-    "iHillsAttack": ("strength", "hillsAttack", "percent"),
-    "iHillsDefense": ("strength", "hillsDefense", "percent"),
-    "iVSBarbs": ("strength", "vsBarbs", "percent"),
-    "iAttackCombatModifier": ("strength", "attack", "percent"),
-    "iDefenseCombatModifier": ("strength", "defense", "percent"),
-    "iLunge": ("strength", "lunge", "percent"),
-    "iEnclose": ("strength", "enclose", "percent"),
-    "iUnnerve": ("strength", "unnerve", "percent"),
-    "iDynamicDefense": ("strength", "dynamicDefense", "percent"),
-    "iStealthStrikes": ("strength", "stealthStrikes", "flat"),
-    "iStealthCombatModifier": ("strength", "stealth", "percent"),
-    "iBreakdownChance": ("strength", "breakdownChance", "flat"),
-    "iBreakdownDamage": ("strength", "breakdownDamage", "flat"),
+    "iCityAttack": ("combat", "cityAttack", "percent"),
+    "iCityDefense": ("combat", "cityDefense", "percent"),
+    "iHillsAttack": ("combat", "hillsAttack", "percent"),
+    "iHillsDefense": ("combat", "hillsDefense", "percent"),
+    "iVSBarbs": ("combat", "vsBarbs", "percent"),
+    "iAttackCombatModifier": ("combat", "attack", "percent"),
+    "iDefenseCombatModifier": ("combat", "defense", "percent"),
+    "iLunge": ("combat", "lunge", "percent"),
+    "iEnclose": ("combat", "enclose", "percent"),
+    "iUnnerve": ("combat", "unnerve", "percent"),
+    "iDynamicDefense": ("combat", "dynamicDefense", "percent"),
+    "iStealthStrikes": ("combat", "stealthStrikes", "flat"),
+    "iStealthCombatModifier": ("combat", "stealth", "percent"),
+    "iBreakdownChance": ("combat", "breakdownChance", "flat"),
+    "iBreakdownDamage": ("combat", "breakdownDamage", "flat"),
     "iWithdrawalProb": ("withdrawal", None, "percent"),
     "iFirstStrikes": ("firstStrike", "strikes", "flat"),
     "iChanceFirstStrikes": ("firstStrike", "chance", "flat"),
@@ -273,10 +275,11 @@ def _bool(rec, tag):
     return engine.text(rec.find(tag)) in ("1", "true", "True")
 
 # ✅ DONE (owner 2026-06-16; GitHub #7): the SETTLER-grants-buildings edge — bFound units carry the NewCityFree set
-# "into settling" as grants.foundBuildings (see found_buildings() below), each gated by its NewCityFree BoolExpr via the
+# "into settling" as plain grants.buildings (see found_buildings() below; ruling 8 / json.md §5 -- the settler's
+# considered action IS founding, so no bespoke foundBuildings key), each gated by its NewCityFree BoolExpr via the
 # shared converter `boolexpr.py`. That same converter retrofits the parked building ConstructCondition + unit
-# TrainCondition into requires.build. The capital (bCapital -> Palace) is a foundBuildings entry gated {type:CITY,
-# scope:empire, max:0} (first city only). Map + rationale: migration-renames "BoolExpr converter + settler-grants".
+# TrainCondition into requires.build. The capital (bCapital -> Palace) is an entry gated on the Palace's own
+# absence. Map + rationale: migration-renames "BoolExpr converter + settler-grants".
 
 
 def _typelist(rec, wrapper):
@@ -511,7 +514,8 @@ def _set_fam(fams, family, member, unit, value):
 
 
 # ---- PASS 2 tables ----
-# vs-keyed combat: tag -> (keyword, member|None). All -> strength.unit.<keyword>.{TYPE}[.member].percent.
+# vs-keyed combat: tag -> (keyword, member|None). All -> combat.unit.<keyword>.{TYPE}[.member].percent
+# (the type-keyed vs-entries are strength MODIFIERS -> the combat family, ruling 5).
 VS_KEYED = {
     "TerrainAttacks": ("terrain", "attack"), "TerrainDefenses": ("terrain", "defense"),
     "FeatureAttacks": ("feature", "attack"), "FeatureDefenses": ("feature", "defense"),
@@ -859,25 +863,25 @@ def emit_outcomes(typ, rec):
 def pass2(typ, rec, store, fams, caps, grants, vision, identity):
     """vs-keyed combat, vision/LOS, outcomes, GP-action grants, properties, BonusProductionModifiers, cargo."""
     su = fams.setdefault  # noqa
-    # vs-keyed combat -> strength.unit.<kw>.{TYPE}[.member].percent
+    # vs-keyed combat -> combat.unit.<kw>.{TYPE}[.member].percent (strength MODIFIERS -> combat, ruling 5)
     for tag, (kw, member) in VS_KEYED.items():
         node = rec.find(tag)
         if node is None:
             continue
         for k, v in _pairs(node):
-            base = fams.setdefault("strength", OrderedDict()).setdefault("unit", OrderedDict()).setdefault(kw, OrderedDict()).setdefault(k, OrderedDict())
+            base = fams.setdefault("combat", OrderedDict()).setdefault("unit", OrderedDict()).setdefault(kw, OrderedDict()).setdefault(k, OrderedDict())
             if member:
                 base = base.setdefault(member, OrderedDict())
             base["percent"] = v
     # targeting/immunity per-type lists are NOT skills (they carry a value -- the TYPE): owner 2026-07-20, skills are
-    # pure boolean ENABLERS. Route to the strength (combat) family, keyed by type -- combat data, not a skill.
+    # pure boolean ENABLERS. Route to the combat family, keyed by type -- combat data, not a skill.
     # FLAG: this family placement is a reasonable combat home pending owner confirmation of the exact shape.
     for tag, name in CAP_LIST.items():
         if name is None:
             continue
         lst = _typelist(rec, tag)
         if lst:
-            node = fams.setdefault("strength", OrderedDict()).setdefault("unit", OrderedDict()).setdefault(name, OrderedDict())
+            node = fams.setdefault("combat", OrderedDict()).setdefault("unit", OrderedDict()).setdefault(name, OrderedDict())
             for x in lst:
                 node[x] = True
     # vision: the unit's own invisibility + see-invisible + intensity pairs + struct tables
@@ -1021,7 +1025,8 @@ def curate(typ, rec, store):
         if v is not None and v != 0:
             base[key] = v
     # base STRENGTH + base MOVES are MODIFIER FAMILIES (owner 2026-07-20), not identity.base scalars. A unit that
-    # cannot attack/defend has NO strength block at all (absent, never combat:0 -- membership, like skills/tags).
+    # cannot attack/defend has NO strength block at all (absent, never 0 -- membership, like skills/tags).
+    # `strength` = ONLY this base value (ruling 5); every strength MODIFIER authors in the `combat` family.
     ic = _int(rec, "iCombat")
     if ic:
         _set_fam(fams, "strength", None, "flat", ic)
@@ -1125,7 +1130,9 @@ def curate(typ, rec, store):
     # --- settler-grants-buildings: a FOUNDER (bFound) seeds its new city with the NewCityFree set (+ Palace),
     # each gated by its condition; relocated off the buildings (owner 2026-06-16; GitHub #7). ---
     if _bool(rec, "bFound"):
-        grants["foundBuildings"] = found_buildings(store)
+        # plain grants.buildings (ruling 8 / json.md §5): the settler's considered action IS founding, so no
+        # bespoke foundBuildings key -- entry form {building, enabled?} unchanged.
+        grants["buildings"] = found_buildings(store)
     # --- succession (upgrade chain; manual, NOT replaces) ---
     ups = _typelist_struct(rec, "UnitUpgrades", "UnitType") or _typelist(rec, "UnitUpgrades")
     if ups:
@@ -1291,11 +1298,12 @@ def curate_special_unit(typ, rec, store):
     if identity:
         out["identity"] = identity
     # combat modifiers a special-unit group confers on its members (e.g. SPECIALUNIT_CAPTIVE -5% combat / -10 withdrawal
-    # -- a transport carrying a captive fights worse). Previously dropped (only the bools were read); the strength/
-    # withdrawal unit families are the faithful home (matching the unit curator).
+    # -- a transport carrying a captive fights worse). Previously dropped (only the bools were read); the combat/
+    # withdrawal unit families are the faithful home (matching the unit curator; ruling 5).
     cp = engine.text(rec.find("iCombatPercent"))
     if cp and engine.is_int(cp) and int(cp) != 0:
-        out["strength"] = OrderedDict([("unit", OrderedDict([("percent", int(cp))]))])
+        # a percent MODIFIER on member strength -> the combat family (ruling 5; strength = base value only)
+        out["combat"] = OrderedDict([("unit", OrderedDict([("percent", int(cp))]))])
     wc = engine.text(rec.find("iWithdrawalChange"))
     if wc and engine.is_int(wc) and int(wc) != 0:
         out["withdrawal"] = OrderedDict([("unit", OrderedDict([("percent", int(wc))]))])

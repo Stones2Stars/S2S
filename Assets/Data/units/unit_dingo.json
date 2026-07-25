@@ -17,12 +17,16 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 3,
    "targets": {
     "UNITCOMBAT_MAMMAL_MARSUPIAL": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
   }
  },
  "skills": [

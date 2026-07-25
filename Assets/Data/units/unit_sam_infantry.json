@@ -34,9 +34,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 54,
    "unitCombat": {
     "UNITCOMBAT_HELICOPTER": {
      "percent": 75
@@ -45,6 +44,11 @@
    "targets": {
     "UNITCOMBAT_HELICOPTER": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 54
   }
  },
  "withdrawal": {

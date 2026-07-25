@@ -29,17 +29,17 @@
    }
   }
  },
- "grants": {
-  "repeatable": [
-   {
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
     "PROPERTY_AIR_POLLUTION": -5,
-    "interval": "perTurn",
     "on": "plot",
     "relation": "near",
     "distance": 1
    }
-  ]
- },
+  }
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_FEATURE_FOREST",

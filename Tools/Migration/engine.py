@@ -161,7 +161,7 @@ def property_source_v3(src):
     # containment, so the relation is dropped and scope comes from GameObjectType (owner 2026-06-16: "scoped like
     # other property yields, like a modifier").
     # RELATION_NEAR (spatial leakage) is NOT a self-deposit modifier — it is a SPATIAL PROPERTY PULSE, handled by the
-    # sibling property_source_repeatable() -> grants.repeatable (json.md §5; owner 2026-07-01). Return None here so a
+    # sibling property_source_trigger() -> a top-level `triggers` entry (json.md §5; ruling 8). Return None here so a
     # caller that homes self-deposits (building/unit/property) skips it; the spatial caller reads it via the sibling.
     if rel in PROP_RELATION:
         return None
@@ -237,18 +237,19 @@ def property_source_v3(src):
     return prop, scope, unit, value
 
 
-# --- spatial property-pulse converter (#430, owner 2026-07-01 "property pulses are in essence repeatable grants") ---
+# --- spatial property-pulse converter (#430, ruling 8 info-rebuild.md: property pulses are `triggers` entries) ---
 # The SPATIAL SIBLING of property_source_v3. A PropertySource that LEAKS onto NEARBY objects (RELATION_NEAR — a
 # feature/improvement depositing pollution onto plots within iDistance) is NOT a self-deposit modifier; it is a
-# per-turn PROPERTY PULSE carrying a SPATIAL INTENT, authored as a `grants.repeatable` entry (json.md §5):
-#   { "PROPERTY_AIR_POLLUTION": -5, "interval": "perTurn", "on": "plot", "relation": "near", "distance": 1 }
-# The (#429) spatial-distribution engine reads its target (on/relation/distance) from HERE — properties are
+# per-turn PROPERTY PULSE carrying a SPATIAL INTENT, authored as a top-level `triggers` entry (json.md §5):
+#   { "trigger": "onTurn", "action": { "PROPERTY_AIR_POLLUTION": -5, "on": "plot", "relation": "near", "distance": 1 } }
+# The (#429) spatial-distribution engine reads its target (on/relation/distance) from the ACTION — properties are
 # first-class, never a parked raw block. A flat (CONSTANT) source is the bare amount; a scaling (non-CONSTANT/
-# attribute-scaled) source carries a `per` count-scaler (same reduce-to-lowest-terms rule as property_source_v3).
+# attribute-scaled) source carries a `per` count-scaler beside the amount (same reduce-to-lowest-terms rule as
+# property_source_v3).
 #
 # LEGACY -> §5 mapping (faithful; the exact map this migration used):
-#   PropertyType         -> the entry KEY (PROPERTY_X: amount)
-#   iAmountPerTurn        -> the amount (the value; per-turn is inherent -> interval:"perTurn")
+#   PropertyType         -> the action KEY (PROPERTY_X: amount)
+#   iAmountPerTurn        -> the amount (the value; per-turn is inherent -> trigger:"onTurn")
 #   GameObjectType        -> `on`       (GAMEOBJECT_PLOT->"plot", _CITY->"city", _UNIT->"unit", _AREA->"area", _PLAYER->"empire")
 #   RelationType          -> `relation` (RELATION_NEAR->"near"; the ONLY spatial relation in the data)
 #   iDistance             -> `distance` (the radius in plots; all current data = 1)
@@ -258,10 +259,12 @@ def property_source_v3(src):
 PROP_RELATION = {"RELATION_NEAR": "near"}   # extend as further spatial relations are modelled (#429)
 
 
-def property_source_repeatable(src):
-    """Convert one <PropertySource> that LEAKS spatially (RELATION_NEAR) to a §5 `grants.repeatable` dict, else None.
-    Returns an OrderedDict { PROPERTY_X: amount, interval, on, relation, distance } (+ `per` when attribute-scaled),
-    or None when the source is not a spatial pulse (NONE/ASSOCIATED/SAME_PLOT containment-default, or empty/zero)."""
+def property_source_trigger(src):
+    """Convert one <PropertySource> that LEAKS spatially (RELATION_NEAR) to a §5 `triggers` entry, else None.
+    Returns an OrderedDict { trigger:"onTurn", enabled?, action:{ PROPERTY_X: amount, per?, on, relation,
+    distance } }, or None when the source is not a spatial pulse (NONE/ASSOCIATED/SAME_PLOT containment-default,
+    or empty/zero). The Active BoolExpr gate emits as the entry-level `enabled` (the §3.9 sibling); a scaled
+    amount carries its `per` count-scaler beside the amount inside the action."""
     prop = text(src.find("PropertyType"))
     if not prop or prop == "NONE":
         return None
@@ -303,14 +306,7 @@ def property_source_repeatable(src):
         value = int(text(amt)) if (amt is not None and is_int(text(amt))) else None
     if value is None or value == 0:
         return None
-    out = OrderedDict()
-    out[prop] = value                                       # PROPERTY_X: amount  (the pulse magnitude)
-    out["interval"] = "perTurn"                             # iAmountPerTurn is inherently per-turn
-    out["on"] = on
-    out["relation"] = relation
-    dist = text(src.find("iDistance"))
-    if is_int(dist):
-        out["distance"] = int(dist)
+    action = OrderedDict()
     if per_type:                                            # scaling source -> a `per` count-scaler (reduce to lowest terms)
         if each < 0:
             value, each = -value, -each
@@ -318,16 +314,25 @@ def property_source_repeatable(src):
             from math import gcd
             g = gcd(abs(value), each) or 1
             value, each = value // g, each // g
-        out[prop] = value
-        out["per"] = OrderedDict([("type", per_type.replace("ATTRIBUTE_", "")), ("each", each), ("scope", on)])
-    # Active gate (a BoolExpr the source fires under) -> `enabled` (uniform with property_source_v3).
+        action[prop] = value                                # PROPERTY_X: amount  (the pulse magnitude)
+        action["per"] = OrderedDict([("type", per_type.replace("ATTRIBUTE_", "")), ("each", each), ("scope", on)])
+    else:
+        action[prop] = value
+    action["on"] = on
+    action["relation"] = relation
+    dist = text(src.find("iDistance"))
+    if is_int(dist):
+        action["distance"] = int(dist)
+    entry = OrderedDict([("trigger", "onTurn")])            # iAmountPerTurn is inherently per-turn
+    # Active gate (a BoolExpr the source fires under) -> entry-level `enabled` (uniform with property_source_v3).
     active = src.find("Active")
     if active is not None and len(active):
         import boolexpr
         gate = boolexpr.convert_field(active)
         if gate is not None:
-            out["enabled"] = gate
-    return out
+            entry["enabled"] = gate
+    entry["action"] = action
+    return entry
 
 
 def named_array(elem, keys):

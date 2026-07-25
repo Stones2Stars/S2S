@@ -31,9 +31,9 @@
    }
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "captureResistance": {
+   "resistance": {
     "percent": 100
    }
   }

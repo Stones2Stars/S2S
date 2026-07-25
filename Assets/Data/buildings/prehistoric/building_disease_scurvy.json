@@ -46,6 +46,13 @@
    "flat": [
     -1,
     {
+     "value": -15,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    },
+    {
      "value": 1,
      "enabled": {
       "type": "BONUS_LEMONS",
@@ -53,8 +60,7 @@
       "min": 1
      }
     }
-   ],
-   "perPopulation": -15
+   ]
   }
  },
  "attributes": {

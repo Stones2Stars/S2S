@@ -41,14 +41,22 @@
    "flat": 1
   }
  },
- "grants": {
-  "freePromotions": [
-   {
-    "promotion": "PROMOTION_HUNTER1",
-    "enabled": "IS_RECON"
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_HUNTER1",
+       "enabled": "IS_RECON"
+      }
+     ],
+     "units": "present"
+    }
    }
-  ]
- },
+  }
+ ],
  "cost": {
   "production": 20,
   "countModifier": 1,

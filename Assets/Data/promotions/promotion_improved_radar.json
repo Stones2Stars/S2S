@@ -6,6 +6,15 @@
    "PROMOTION_CHAFF"
   ]
  },
+ "combat": {
+  "unit": {
+   "domain": {
+    "DOMAIN_AIR": {
+     "percent": 20
+    }
+   }
+  }
+ },
  "air": {
   "unit": {
    "intercept": {
@@ -23,15 +32,6 @@
    },
    "resistance": {
     "flat": 5
-   }
-  }
- },
- "strength": {
-  "unit": {
-   "domain": {
-    "DOMAIN_AIR": {
-     "percent": 20
-    }
    }
   }
  },

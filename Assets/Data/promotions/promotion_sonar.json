@@ -5,7 +5,7 @@
    "PROMOTION_DEPTH_CHARGES"
   ]
  },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_SUBMARINE": {

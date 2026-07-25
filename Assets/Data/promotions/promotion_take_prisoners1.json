@@ -5,7 +5,7 @@
    "PROMOTION_TAKE_PRISONERS2"
   ]
  },
- "strength": {
+ "combat": {
   "unit": {
    "percent": -10
   }

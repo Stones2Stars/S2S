@@ -12,19 +12,19 @@
    ]
   }
  },
- "collateral": {
-  "unit": {
-   "damage": {
-    "percent": 20
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_MELEE": {
      "percent": 10
     }
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 20
    }
   }
  },

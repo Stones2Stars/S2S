@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_CRACKDOWN1",
- "strength": {
+ "combat": {
   "unit": {
    "stealthStrikes": {
     "flat": 2

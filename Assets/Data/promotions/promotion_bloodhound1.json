@@ -5,7 +5,7 @@
    "PROMOTION_BLOODHOUND2"
   ]
  },
- "strength": {
+ "combat": {
   "unit": {
    "percent": 5,
    "unitCombat": {

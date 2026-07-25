@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_ISRAEL",
-   "icon": "ART_DEF_CIVILIZATION_ISRAEL",
+   "define": "ART_DEF_CIVILIZATION_ISRAEL",
    "style": "ARTSTYLE_EGYPT",
    "unitStyle": "UNIT_ARTSTYLE_MIDDLE_EAST"
   }

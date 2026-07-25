@@ -10,7 +10,7 @@
    }
   }
  },
- "strength": {
+ "combat": {
   "unit": {
    "percent": -50,
    "breakdownChance": {

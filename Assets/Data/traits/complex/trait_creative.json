@@ -566,7 +566,13 @@
  },
  "culture": {
   "empire": {
-   "flat": 2,
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "per": "SPECIALIST"
+    }
+   ],
    "percent": [
     10,
     {
@@ -599,9 +605,6 @@
     "SPECIALIST_ANDROID_WORKER": {
      "flat": 1
     }
-   },
-   "specialist": {
-    "perSpecialist": 1
    }
   }
  },
@@ -916,9 +919,9 @@
    "flat": -2
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "captureResistance": {
+   "resistance": {
     "percent": -20
    }
   }

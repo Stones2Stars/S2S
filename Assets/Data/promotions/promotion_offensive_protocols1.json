@@ -12,14 +12,7 @@
    ]
   }
  },
- "capture": {
-  "unit": {
-   "probability": {
-    "flat": -5
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_GUN": {
@@ -34,6 +27,13 @@
     "UNITCOMBAT_HITECH": {
      "percent": 20
     }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -5
    }
   }
  },

@@ -18,7 +18,7 @@
    ]
   }
  },
- "strength": {
+ "combat": {
   "unit": {
    "hillsAttack": {
     "percent": 10

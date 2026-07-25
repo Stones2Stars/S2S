@@ -40,9 +40,12 @@
      "enabled": "IS_CAPITAL"
     }
    ],
-   "specialist": {
-    "perSpecialist": 1
-   }
+   "flat": [
+    {
+     "value": 1,
+     "per": "SPECIALIST"
+    }
+   ]
   }
  },
  "research": {

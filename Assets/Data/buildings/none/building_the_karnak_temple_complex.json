@@ -18,9 +18,12 @@
    "flat": 4
   },
   "empire": {
-   "specialist": {
-    "perSpecialist": 1
-   }
+   "flat": [
+    {
+     "value": 1,
+     "per": "SPECIALIST"
+    }
+   ]
   }
  },
  "greatPeopleRate": {

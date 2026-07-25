@@ -45,9 +45,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 3,
    "cityDefense": {
     "percent": 20
    },
@@ -62,6 +61,11 @@
      "percent": 25
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
   }
  },
  "withdrawal": {

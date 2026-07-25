@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_IMPERIALIST1",
- "strength": {
+ "combat": {
   "unit": {
    "cityAttack": {
     "percent": 15

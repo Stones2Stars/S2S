@@ -22,9 +22,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 5,
    "feature": {
     "FEATURE_JUNGLE": {
      "attack": {
@@ -42,6 +41,11 @@
     "UNITCOMBAT_MAMMAL_RODENT": true,
     "UNITCOMBAT_MAMMAL_TAPIR": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 5
   }
  },
  "withdrawal": {

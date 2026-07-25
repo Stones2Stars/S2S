@@ -7,6 +7,15 @@
    ]
   }
  },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_TRACKED": {
+     "percent": 40
+    }
+   }
+  }
+ },
  "collateral": {
   "unit": {
    "damage": {
@@ -18,15 +27,6 @@
   "unit": {
    "probability": {
     "flat": -10
-   }
-  }
- },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_TRACKED": {
-     "percent": 40
-    }
    }
   }
  },

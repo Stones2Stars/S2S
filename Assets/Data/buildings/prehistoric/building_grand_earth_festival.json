@@ -275,11 +275,19 @@
    "flat": 4
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_SENTRY"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_SENTRY"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 570,
   "sizeModifier": 2,

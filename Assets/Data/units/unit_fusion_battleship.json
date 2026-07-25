@@ -17,9 +17,8 @@
    "flat": 11
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 150,
    "unitCombat": {
     "UNITCOMBAT_WOODEN_SHIPS": {
      "percent": 100
@@ -34,6 +33,11 @@
      "percent": 25
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 150
   }
  },
  "bombard": {

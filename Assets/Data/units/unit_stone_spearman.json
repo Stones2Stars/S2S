@@ -65,14 +65,18 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 4,
    "unitCombat": {
     "UNITCOMBAT_MOUNTED": {
      "percent": 50
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 4
   }
  },
  "skills": [

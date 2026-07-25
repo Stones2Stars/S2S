@@ -15,11 +15,19 @@
    ]
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_MARAUDER"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_MARAUDER"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "attributes": {
   "nukeImmune": true,
   "destroyedOnCapture": true

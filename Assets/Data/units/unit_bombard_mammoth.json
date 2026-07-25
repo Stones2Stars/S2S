@@ -43,9 +43,8 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 23,
    "cityAttack": {
     "percent": 40
    },
@@ -60,6 +59,11 @@
    "unitTargets": {
     "UNIT_MOUNTED_INFANTRY": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 23
   }
  },
  "costs": {

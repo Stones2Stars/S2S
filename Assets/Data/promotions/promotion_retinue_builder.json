@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_RETINUE_BUILDER",
- "strength": {
+ "combat": {
   "unit": {
    "cityAttack": {
     "percent": 33

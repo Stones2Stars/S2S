@@ -48,8 +48,16 @@
  },
  "health": {
   "city": {
-   "flat": -9,
-   "perPopulation": -25
+   "flat": [
+    -9,
+    {
+     "value": -25,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
   }
  },
  "PROPERTY_TOURISM": {

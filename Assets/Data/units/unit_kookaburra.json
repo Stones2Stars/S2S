@@ -22,14 +22,18 @@
    "flat": 3
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 1,
    "targets": {
     "UNITCOMBAT_ANIMAL_AMPHIBIAN": true,
     "UNITCOMBAT_ANIMAL_INSECT": true,
     "UNITCOMBAT_REPTILE_SNAKE": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1
   }
  },
  "withdrawal": {

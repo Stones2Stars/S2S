@@ -38,7 +38,7 @@
   "UNITCOMBAT_HEALS_AS_PEOPLE"
  ],
  "grants": {
-  "foundBuildings": [
+  "buildings": [
    {
     "building": "BUILDING_STABLE",
     "enabled": "TECH_STEAM_POWER"

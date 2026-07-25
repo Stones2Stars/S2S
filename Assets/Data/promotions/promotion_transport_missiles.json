@@ -5,7 +5,7 @@
    "PROMOTION_TRANSPORT_MISSILES1"
   ]
  },
- "strength": {
+ "combat": {
   "unit": {
    "percent": -5
   }

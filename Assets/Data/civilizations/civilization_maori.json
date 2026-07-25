@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_MAORI",
-   "icon": "ART_DEF_CIVILIZATION_MAORI",
+   "define": "ART_DEF_CIVILIZATION_MAORI",
    "style": "ARTSTYLE_SOUTH_EAST_ASIA",
    "unitStyle": "UNIT_ARTSTYLE_POLYNESIA"
   }

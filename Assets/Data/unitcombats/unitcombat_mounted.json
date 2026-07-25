@@ -1,5 +1,14 @@
 {
  "type": "UNITCOMBAT_MOUNTED",
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_THROWING": {
+     "percent": 25
+    }
+   }
+  }
+ },
  "capture": {
   "unit": {
    "probability": {
@@ -7,15 +16,6 @@
    },
    "resistance": {
     "flat": 20
-   }
-  }
- },
- "strength": {
-  "unit": {
-   "unitCombat": {
-    "UNITCOMBAT_THROWING": {
-     "percent": 25
-    }
    }
   }
  },

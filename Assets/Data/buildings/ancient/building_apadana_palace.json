@@ -60,11 +60,19 @@
    "flat": 5
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_ORDER_OF_ORMAZD"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_ORDER_OF_ORMAZD"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 1152,
   "sizeModifier": 3,

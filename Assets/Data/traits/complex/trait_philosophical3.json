@@ -5,9 +5,12 @@
  ],
  "commerce": {
   "empire": {
-   "specialist": {
-    "perSpecialist": 1
-   }
+   "flat": [
+    {
+     "value": 1,
+     "per": "SPECIALIST"
+    }
+   ]
   }
  },
  "gold": {

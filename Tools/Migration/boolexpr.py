@@ -4,7 +4,7 @@
 Converts the XML `BoolExpr` machinery (And/Or/Not/Has[GOM]/Is[TAG]/integer-compare; Sources/BoolExpr.{h,cpp})
 into the LOCKED requires-condition vocabulary (enabler-spec §3): `all`/`any`/`noneOf` over `requires` atoms
 ({type,scope,...}) + bare / parameterized predicates. Used to retrofit the parked building `ConstructCondition`
-+ `NewCityFree` and unit `TrainCondition` BoolExprs into `requires` / `grants.foundBuildings`.
++ `NewCityFree` and unit `TrainCondition` BoolExprs into `requires` / the settler's `grants.buildings`.
 
 COVERAGE — verified against the live, module-INCLUDED data (Tools/Migration/_survey_boolexpr.py): the three
 fields use ONLY And/Or of Has over GOM_{TECH,BONUS,BUILDING,FEATURE,TERRAIN}, `Is TAG_COASTAL`, and a single

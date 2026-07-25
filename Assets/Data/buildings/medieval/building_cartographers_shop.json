@@ -81,11 +81,19 @@
    "SPECIALIST_SCIENTIST": 1
   }
  },
- "grants": {
-  "freePromotions": [
-   "PROMOTION_MOBILITY"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_MOBILITY"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 356,
   "sizeModifier": 1,

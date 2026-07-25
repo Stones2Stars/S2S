@@ -37,9 +37,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 8,
    "hillsDefense": {
     "percent": 10
    },
@@ -82,6 +81,11 @@
      "percent": 50
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 8
   }
  },
  "withdrawal": {

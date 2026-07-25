@@ -72,9 +72,8 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 23,
    "lunge": {
     "percent": 16
    },
@@ -100,6 +99,11 @@
     "UNITCOMBAT_CRIMINAL": true,
     "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 23
   }
  },
  "withdrawal": {

@@ -37,8 +37,16 @@
  },
  "happiness": {
   "city": {
-   "flat": -2,
-   "perPopulation": -15
+   "flat": [
+    -2,
+    {
+     "value": -15,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
   }
  },
  "hurryCost": {

@@ -83,6 +83,13 @@
    "flat": [
     5,
     {
+     "value": 10,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    },
+    {
      "value": 2,
      "enabled": {
       "type": "BONUS_OIL",
@@ -90,8 +97,7 @@
       "min": 1
      }
     }
-   ],
-   "perPopulation": 10
+   ]
   }
  },
  "defense": {
@@ -114,7 +120,7 @@
    }
   }
  },
- "copsAndRobbers": {
+ "underworld": {
   "city": {
    "investigation": {
     "flat": 10

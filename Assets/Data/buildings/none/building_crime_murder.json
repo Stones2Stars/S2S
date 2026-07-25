@@ -32,14 +32,30 @@
  },
  "happiness": {
   "city": {
-   "flat": -6,
-   "perPopulation": -30
+   "flat": [
+    -6,
+    {
+     "value": -30,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
   }
  },
  "health": {
   "city": {
-   "flat": -6,
-   "perPopulation": -10
+   "flat": [
+    -6,
+    {
+     "value": -10,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
   }
  },
  "experience": {
@@ -56,7 +72,7 @@
    "flat": 100
   }
  },
- "copsAndRobbers": {
+ "underworld": {
   "city": {
    "insidiousness": {
     "flat": 40

@@ -12,14 +12,7 @@
    ]
   }
  },
- "firstStrike": {
-  "unit": {
-   "strikes": {
-    "flat": 1
-   }
-  }
- },
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_SEA_ANIMAL": {
@@ -31,6 +24,13 @@
     "UNITCOMBAT_WOODEN_SHIPS": {
      "percent": -5
     }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
    }
   }
  },

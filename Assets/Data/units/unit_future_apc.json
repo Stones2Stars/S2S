@@ -36,9 +36,8 @@
    "flat": 3
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 100,
    "feature": {
     "FEATURE_FOREST": {
      "attack": {
@@ -51,6 +50,11 @@
      }
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 100
   }
  },
  "air": {

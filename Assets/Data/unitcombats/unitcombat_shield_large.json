@@ -1,6 +1,6 @@
 {
  "type": "UNITCOMBAT_SHIELD_LARGE",
- "strength": {
+ "combat": {
   "unit": {
    "unitCombat": {
     "UNITCOMBAT_MELEE": {

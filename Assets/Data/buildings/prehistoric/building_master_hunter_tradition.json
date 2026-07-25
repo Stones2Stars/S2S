@@ -214,14 +214,22 @@
    "flat": 1
   }
  },
- "grants": {
-  "freePromotions": [
-   {
-    "promotion": "PROMOTION_ENTRAPMENT1",
-    "enabled": "IS_RECON"
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_ENTRAPMENT1",
+       "enabled": "IS_RECON"
+      }
+     ],
+     "units": "present"
+    }
    }
-  ]
- },
+  }
+ ],
  "world": {
   "art": {
    "define": "ART_DEF_BUILDING_MASTER_HUNTER"

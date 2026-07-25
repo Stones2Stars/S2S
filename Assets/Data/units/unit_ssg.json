@@ -41,9 +41,8 @@
    }
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 75,
    "cityAttack": {
     "percent": 25
    },
@@ -87,6 +86,11 @@
     "UNITCOMBAT_SIEGE_GUNPOWDER": true,
     "UNITCOMBAT_SIEGE_ROCKETRY": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 75
   }
  },
  "withdrawal": {

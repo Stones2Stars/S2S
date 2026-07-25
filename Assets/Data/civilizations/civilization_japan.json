@@ -30,7 +30,7 @@
  "world": {
   "art": {
    "playerColor": "PLAYERCOLOR_RED",
-   "icon": "ART_DEF_CIVILIZATION_JAPAN",
+   "define": "ART_DEF_CIVILIZATION_JAPAN",
    "style": "ARTSTYLE_JAPAN",
    "unitStyle": "UNIT_ARTSTYLE_JAPAN"
   }

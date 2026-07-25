@@ -1,5 +1,20 @@
 {
  "type": "PROMOTION_GPS",
+ "combat": {
+  "unit": {
+   "domain": {
+    "DOMAIN_AIR": {
+     "percent": 15
+    },
+    "DOMAIN_LAND": {
+     "percent": 15
+    },
+    "DOMAIN_SEA": {
+     "percent": 15
+    }
+   }
+  }
+ },
  "bombard": {
   "unit": {
    "rate": {
@@ -14,21 +29,6 @@
    },
    "resistance": {
     "flat": 5
-   }
-  }
- },
- "strength": {
-  "unit": {
-   "domain": {
-    "DOMAIN_AIR": {
-     "percent": 15
-    },
-    "DOMAIN_LAND": {
-     "percent": 15
-    },
-    "DOMAIN_SEA": {
-     "percent": 15
-    }
    }
   }
  },

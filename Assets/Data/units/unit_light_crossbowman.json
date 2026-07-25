@@ -22,14 +22,18 @@
    "flat": 1
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 7,
    "unitCombat": {
     "UNITCOMBAT_MELEE": {
      "percent": 25
     }
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 7
   }
  },
  "firstStrike": {

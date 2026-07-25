@@ -60,15 +60,23 @@
    "percent": 100
   }
  },
- "grants": {
-  "freePromotions": [
-   {
-    "promotion": "PROMOTION_HUNTER1",
-    "enabled": "IS_RECON"
-   },
-   "PROMOTION_HUNTER2"
-  ]
- },
+ "triggers": [
+  {
+   "trigger": "onTurnEnd",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_HUNTER1",
+       "enabled": "IS_RECON"
+      },
+      "PROMOTION_HUNTER2"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
  "cost": {
   "production": 236,
   "sizeModifier": 1,

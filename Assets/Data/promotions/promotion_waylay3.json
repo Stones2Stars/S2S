@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_WAYLAY3",
- "strength": {
+ "combat": {
   "unit": {
    "stealth": {
     "percent": 20

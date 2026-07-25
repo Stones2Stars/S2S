@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_SAND_DEVIL",
- "strength": {
+ "combat": {
   "unit": {
    "terrain": {
     "TERRAIN_DESERT": {

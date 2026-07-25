@@ -22,15 +22,19 @@
    "flat": 2
   }
  },
- "strength": {
+ "combat": {
   "unit": {
-   "flat": 6,
    "targets": {
     "UNITCOMBAT_MAMMAL_ANTELOPE": true,
     "UNITCOMBAT_MAMMAL_BOVINE": true,
     "UNITCOMBAT_MAMMAL_CERVID": true,
     "UNITCOMBAT_MAMMAL_SWINE": true
    }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 6
   }
  },
  "withdrawal": {

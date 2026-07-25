@@ -63,14 +63,16 @@
    "percent": -10
   }
  },
- "combat": {
+ "capture": {
   "empire": {
-   "espionageDefense": {
-    "percent": 10
-   },
-   "captureResistance": {
+   "resistance": {
     "percent": -10
    }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": 10
   }
  },
  "upkeep": {

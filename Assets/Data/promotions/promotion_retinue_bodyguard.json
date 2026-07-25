@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_RETINUE_BODYGUARD",
- "strength": {
+ "combat": {
   "unit": {
    "percent": 20
   }
