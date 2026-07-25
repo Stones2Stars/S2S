@@ -16,10 +16,7 @@
      "value": 2,
      "enabled": "IS_CAPITAL"
     }
-   ],
-   "tradeRoute": {
-    "percent": 5
-   }
+   ]
   }
  },
  "production": {
@@ -30,10 +27,7 @@
      "value": 2,
      "enabled": "IS_CAPITAL"
     }
-   ],
-   "tradeRoute": {
-    "percent": 5
-   }
+   ]
   }
  },
  "commerce": {
@@ -124,8 +118,16 @@
     "flat": 1
    },
    "modifier": {
+    "food": {
+     "percent": 5
+    },
+    "production": {
+     "percent": 5
+    },
+    "commerce": {
+     "percent": 5
+    },
     "percent": [
-     5,
      {
       "value": 10,
       "enabled": "IS_FOREIGN"

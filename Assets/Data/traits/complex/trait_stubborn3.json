@@ -3,13 +3,6 @@
  "excludes": [
   "TRAIT_DYNAMIC1"
  ],
- "production": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 10
-   }
-  }
- },
  "buildRate": {
   "empire": {
    "worldWonder": {
@@ -116,7 +109,24 @@
  "upkeep": {
   "empire": {
    "freeCivilian": {
-    "perPopulation": 15
+    "flat": [
+     {
+      "value": -15,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "production": {
+     "percent": 10
+    }
    }
   }
  },

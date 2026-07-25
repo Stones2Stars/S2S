@@ -18,10 +18,7 @@
      "value": 3,
      "enabled": "IS_CAPITAL"
     }
-   ],
-   "tradeRoute": {
-    "percent": 1
-   }
+   ]
   }
  },
  "production": {
@@ -32,10 +29,7 @@
      "value": 2,
      "enabled": "IS_CAPITAL"
     }
-   ],
-   "tradeRoute": {
-    "percent": 1
-   }
+   ]
   }
  },
  "commerce": {
@@ -94,12 +88,16 @@
  },
  "happiness": {
   "empire": {
-   "cityLimit": {
-    "flat": 5
-   },
-   "cityOverLimit": {
-    "flat": 5
-   },
+   "flat": [
+    {
+     "value": -5,
+     "per": {
+      "type": "CITY",
+      "above": "CITY_LIMIT"
+     },
+     "enabled": "GAMEOPTION_EXP_OVEREXPANSION_PENALTIES"
+    }
+   ],
    "cities": {
     "flat": 1,
     "max": "TARGET_NUM_CITIES",
@@ -144,7 +142,27 @@
  "upkeep": {
   "empire": {
    "freeMilitary": {
-    "perPopulation": 10
+    "flat": [
+     {
+      "value": -10,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 1
+    },
+    "production": {
+     "percent": 1
+    }
    }
   }
  },
@@ -195,6 +213,7 @@
   "civicOption": "CIVICOPTION_GOVERNMENT",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_LOW",
+  "cityLimit": 5,
   "weLoveTheKing": "TXT_KEY_CIVIC_WE_LOVE_CHEIF"
  }
 }

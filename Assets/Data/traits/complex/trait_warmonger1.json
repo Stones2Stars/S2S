@@ -36,7 +36,15 @@
     "percent": 10
    },
    "freeMilitary": {
-    "perPopulation": 15
+    "flat": [
+     {
+      "value": -15,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
    }
   }
  },

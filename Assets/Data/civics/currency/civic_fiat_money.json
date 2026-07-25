@@ -12,10 +12,7 @@
      "value": 1,
      "enabled": "IS_CAPITAL"
     }
-   ],
-   "tradeRoute": {
-    "percent": 2
-   }
+   ]
   }
  },
  "production": {
@@ -26,10 +23,7 @@
      "value": 2,
      "enabled": "IS_CAPITAL"
     }
-   ],
-   "tradeRoute": {
-    "percent": 2
-   }
+   ]
   }
  },
  "commerce": {
@@ -106,6 +100,12 @@
  "tradeRoutes": {
   "empire": {
    "modifier": {
+    "food": {
+     "percent": 2
+    },
+    "production": {
+     "percent": 2
+    },
     "percent": [
      {
       "value": -2,

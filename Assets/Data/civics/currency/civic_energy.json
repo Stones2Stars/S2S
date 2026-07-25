@@ -12,10 +12,7 @@
  },
  "production": {
   "empire": {
-   "percent": 10,
-   "tradeRoute": {
-    "percent": 3
-   }
+   "percent": 10
   }
  },
  "commerce": {
@@ -51,6 +48,9 @@
  "tradeRoutes": {
   "empire": {
    "modifier": {
+    "production": {
+     "percent": 3
+    },
     "percent": [
      {
       "value": 20,

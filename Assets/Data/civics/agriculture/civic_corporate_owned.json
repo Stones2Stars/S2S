@@ -8,9 +8,6 @@
  "food": {
   "empire": {
    "percent": 5,
-   "tradeRoute": {
-    "percent": 7
-   },
    "improvements": {
     "IMPROVEMENT_FARM": {
      "flat": 2
@@ -23,10 +20,7 @@
  },
  "production": {
   "empire": {
-   "percent": 5,
-   "tradeRoute": {
-    "percent": 3
-   }
+   "percent": 5
   }
  },
  "commerce": {
@@ -75,7 +69,15 @@
  "tradeRoutes": {
   "empire": {
    "modifier": {
-    "percent": 5
+    "food": {
+     "percent": 7
+    },
+    "production": {
+     "percent": 3
+    },
+    "commerce": {
+     "percent": 5
+    }
    }
   }
  },

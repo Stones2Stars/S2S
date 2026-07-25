@@ -29,20 +29,6 @@
    "UNIT_UNMANNED_PIRATE_SKIFF"
   ]
  },
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 3
-   }
-  }
- },
- "production": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 4
-   }
-  }
- },
  "gold": {
   "empire": {
    "percent": [
@@ -113,7 +99,15 @@
  "tradeRoutes": {
   "empire": {
    "modifier": {
-    "percent": 5
+    "food": {
+     "percent": 3
+    },
+    "production": {
+     "percent": 4
+    },
+    "commerce": {
+     "percent": 5
+    }
    }
   }
  },

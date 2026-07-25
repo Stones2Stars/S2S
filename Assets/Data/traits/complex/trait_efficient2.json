@@ -95,7 +95,9 @@
     "flat": 1
    },
    "modifier": {
-    "percent": 10
+    "commerce": {
+     "percent": 10
+    }
    }
   }
  },

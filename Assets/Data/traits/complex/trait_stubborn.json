@@ -3,20 +3,6 @@
  "excludes": [
   "TRAIT_DYNAMIC"
  ],
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 10
-   }
-  }
- },
- "production": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 10
-   }
-  }
- },
  "buildRate": {
   "empire": {
    "worldWonder": {
@@ -390,7 +376,15 @@
  "upkeep": {
   "empire": {
    "freeCivilian": {
-    "perPopulation": 15
+    "flat": [
+     {
+      "value": -15,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
    }
   }
  },
@@ -475,7 +469,15 @@
  "tradeRoutes": {
   "empire": {
    "modifier": {
-    "percent": 10
+    "food": {
+     "percent": 10
+    },
+    "production": {
+     "percent": 10
+    },
+    "commerce": {
+     "percent": 10
+    }
    }
   }
  },

@@ -2,9 +2,6 @@
  "type": "TRAIT_HUNTER_GATHERER",
  "food": {
   "empire": {
-   "tradeRoute": {
-    "percent": -50
-   },
    "improvements": {
     "IMPROVEMENT_SCAVENGING_CAMP": {
      "flat": 1
@@ -58,6 +55,15 @@
   "empire": {
    "civic": {
     "percent": 10
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": -50
+    }
    }
   }
  },

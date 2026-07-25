@@ -8,9 +8,6 @@
  "food": {
   "empire": {
    "percent": 2,
-   "tradeRoute": {
-    "percent": 4
-   },
    "improvements": {
     "IMPROVEMENT_FARM": {
      "flat": 1
@@ -27,9 +24,6 @@
  "production": {
   "empire": {
    "percent": 5,
-   "tradeRoute": {
-    "percent": 4
-   },
    "improvements": {
     "IMPROVEMENT_PASTURE": {
      "flat": 1
@@ -117,7 +111,15 @@
  "upkeep": {
   "empire": {
    "freeMilitary": {
-    "perPopulation": 9
+    "flat": [
+     {
+      "value": -9,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
    }
   }
  },
@@ -127,7 +129,15 @@
     "flat": 1
    },
    "modifier": {
-    "percent": 4
+    "food": {
+     "percent": 4
+    },
+    "production": {
+     "percent": 4
+    },
+    "commerce": {
+     "percent": 4
+    }
    }
   }
  },

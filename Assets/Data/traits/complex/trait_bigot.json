@@ -43,12 +43,17 @@
   "empire": {
    "flat": -1,
    "cities": {
-    "flat": -1,
-    "max": "TARGET_NUM_CITIES",
-    "orderedByDescending": "CITY_SIZE"
-   },
-   "nonStateReligion": {
-    "flat": -1
+    "flat": [
+     {
+      "value": -1,
+      "max": "TARGET_NUM_CITIES",
+      "orderedByDescending": "CITY_SIZE"
+     },
+     {
+      "value": -1,
+      "religion": "!IS_STATE_RELIGION"
+     }
+    ]
    }
   }
  },

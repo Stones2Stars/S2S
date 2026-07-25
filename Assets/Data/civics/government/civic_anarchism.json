@@ -52,12 +52,16 @@
  },
  "happiness": {
   "empire": {
-   "cityLimit": {
-    "flat": 2
-   },
-   "cityOverLimit": {
-    "flat": 6
-   }
+   "flat": [
+    {
+     "value": -6,
+     "per": {
+      "type": "CITY",
+      "above": "CITY_LIMIT"
+     },
+     "enabled": "GAMEOPTION_EXP_OVEREXPANSION_PENALTIES"
+    }
+   ]
   }
  },
  "maintenance": {
@@ -108,6 +112,7 @@
   "civilopedia": "TXT_KEY_CIVIC_ANARCHISM_PEDIA",
   "strategy": "TXT_KEY_CIVIC_ANARCHISM_STRATEGY",
   "civicOption": "CIVICOPTION_GOVERNMENT",
+  "cityLimit": 2,
   "weLoveTheKing": "TXT_KEY_CIVIC_WE_LOVE_ANARCHY"
  }
 }

@@ -6,20 +6,6 @@
    "BUILDING_SEASTEAD"
   ]
  },
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 2
-   }
-  }
- },
- "production": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 3
-   }
-  }
- },
  "happiness": {
   "empire": {
    "buildings": {
@@ -44,7 +30,15 @@
     "flat": 2
    },
    "modifier": {
-    "percent": 4
+    "food": {
+     "percent": 2
+    },
+    "production": {
+     "percent": 3
+    },
+    "commerce": {
+     "percent": 4
+    }
    }
   }
  },

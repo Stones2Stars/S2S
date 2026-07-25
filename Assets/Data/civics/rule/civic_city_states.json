@@ -7,18 +7,12 @@
  },
  "food": {
   "empire": {
-   "percent": 1,
-   "tradeRoute": {
-    "percent": 2
-   }
+   "percent": 1
   }
  },
  "production": {
   "empire": {
-   "percent": 1,
-   "tradeRoute": {
-    "percent": 2
-   }
+   "percent": 1
   }
  },
  "commerce": {
@@ -106,15 +100,31 @@
  "upkeep": {
   "empire": {
    "freeMilitary": {
-    "flat": 5,
-    "perPopulation": 15
+    "flat": [
+     5,
+     {
+      "value": -15,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
    }
   }
  },
  "tradeRoutes": {
   "empire": {
    "modifier": {
-    "percent": 2
+    "food": {
+     "percent": 2
+    },
+    "production": {
+     "percent": 2
+    },
+    "commerce": {
+     "percent": 2
+    }
    }
   }
  },

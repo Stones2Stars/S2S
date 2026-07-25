@@ -19,6 +19,18 @@ workflow (9 field-slice agents + dead/double-author auditors + adversarial verif
 - BonusCommerceModifiers: NOT YET CAPTURED — dropped here and not picked up by curate_bonus either (known
   live gap; no inversion table exists for it).
 
+Curator batch 4 (info-rebuild.md rulings 25/26/27 + the free-upkeep owner ruling):
+- R26 city limits: iCityLimit -> identity.cityLimit config; iCityOverLimitUnhappy -> ONE happiness entry
+  {-V, per:{CITY, above:"CITY_LIMIT"}, enabled:GAMEOPTION_EXP_OVEREXPANSION_PENALTIES} (supersedes the R21
+  blocked constant-pair; see the SCALAR note for the engine math).
+- R27 route yields: TradeYieldModifiers -> tradeRoutes.empire.modifier.<channel>.percent for ALL channels
+  (the channel axis on the modifier kind; channel-agnostic totalTradeModifier legs stay bare).
+- FREE-UPKEEP MODEL CHANGE (owner ruling, batch 4): iFreeUnitUpkeep{Military,Civilian}PopPercent convert
+  UNCONDITIONALLY to subtractive per-population deposits {-P, per:{POPULATION, each:100}} on the existing
+  freeMilitary/freeCivilian kinds, floored at 0 via family-combine floor metadata (modifier.md 2 min-member
+  mechanism, C++ leg pending) -- an INTENTIONAL divergence from the legacy getModifiedIntValue rounding
+  (its asymmetric mod<0 branch is not chased; do NOT try to restore bit-parity with the old helper).
+
 Other: TechPrereq -> DROP (store inverts to tech.enables.civics). SpecialistYield/CommercePercentChanges ->
 DROP (already folded onto the specialist by curate_specialist — double-author). Entity-keyed maps
 (Building*/Feature*/Improvement*/Terrain*/Unit*/UnitCombat*) STAY target-keyed on the civic. Capability LISTS
@@ -54,9 +66,10 @@ SCALAR = {
     "iMilitaryUnitUpkeepMod":          ("upkeep", "empire", "unitMilitary","percent"),
     "iDistantUnitSupportCostModifier": ("upkeep", "empire", "supply",      "percent"),
     "iFreeUnitUpkeepMilitary":         ("upkeep", "empire", "freeMilitary","flat"),
-    "iFreeUnitUpkeepMilitaryPopPercent":("upkeep","empire", "freeMilitary","perPopulation"),
     "iFreeUnitUpkeepCivilian":         ("upkeep", "empire", "freeCivilian","flat"),
-    "iFreeUnitUpkeepCivilianPopPercent":("upkeep","empire", "freeCivilian","perPopulation"),
+    # iFreeUnitUpkeep{Military,Civilian}PopPercent are NOT here: converted per the batch-4 owner ruling to
+    # subtractive per-population deposits on the same kinds -- handled explicitly in curate(). See the
+    # docstring note "free-upkeep model change".
     # tradeRoutes is ONE family with conditions (ruling 11): kinds routes/modifier/max; the foreign/sharedCivic
     # variants are CONDITIONS -> SCALAR_COND below.
     "iTradeRoutes":                    ("tradeRoutes", "empire", "routes",     "flat"),
@@ -84,20 +97,19 @@ SCALAR = {
     "iCivicHappiness":                 ("happiness", "empire", "",            "flat"),
     # iNonStateReligionHappiness / iForeignerUnhappyPercent / iTaxRateUnhappiness are NOT here: converted per
     # rulings 20/22/23 (info-rebuild.md) -- handled explicitly in curate() with their engine sites transcribed.
-    # cityLimit/cityOverLimit: LEFT AS-IS (ruling-21 execution check FAILED the constant-limit premise): the
-    # ruled telescoping pair {V, per:"CITY", enabled:{all:[GAMEOPTION, {type:CITY, min:limit+1}]}} + {-V*limit}
-    # assumes the per-civic limit is a curation-time CONSTANT, but the engine limit is WORLD-SIZE-SCALED at
-    # runtime -- CvCivicInfo::getCityLimit (SourceArchive/Infos/CvCivicInfo.cpp:1015-1022):
-    #   if (ePlayer > NO_PLAYER && GC.getGame().isOption(GAMEOPTION_EXP_OVEREXPANSION_PENALTIES))
-    #       return m_iCityLimit * GC.getWorldInfo(GC.getMap().getWorldSize()).getCityLimitsScalePercent() / 100;
-    #   return 0;
-    # with CityLimitsScalePercent = 50/75/90/100/110/125/150/200 by world size (CIV4WorldInfo.xml), feeding
-    # V x (numCities - scaledLimit) at CvCity.cpp:5665-5674 (what-if twin CvCity.cpp:8659-8662; hard-limit
-    # found block CvPlayer.cpp:6210 when the unhappy half is 0 = enabler data, separate). A curation-time
-    # `min:` atom cannot transcribe the world-size scale -> left undone and reported verbatim (the binding:
-    # transcribe exactly or leave undone), members kept as-is below.
-    "iCityLimit":                      ("happiness", "empire", "cityLimit",    "flat"),
-    "iCityOverLimitUnhappy":           ("happiness", "empire", "cityOverLimit","flat"),
+    # iCityLimit/iCityOverLimitUnhappy are NOT here either: converted per ruling 26 (info-rebuild.md), which
+    # supersedes the blocked ruling-21 constant-pair shape with the first-class per.above scaler -- handled
+    # explicitly in curate(). Engine math (CvCity.cpp:5665-5674 live, :8659-8662 what-if twin):
+    #   unhappiness += V x max(0, numCities - scaledLimit)
+    # where scaledLimit = m_iCityLimit x CvWorldInfo::getCityLimitsScalePercent()/100 (50..200 by world size)
+    # under GAMEOPTION_EXP_OVEREXPANSION_PENALTIES, else 0 (archived CvCivicInfo::getCityLimit,
+    # SourceArchive/Infos/CvCivicInfo.cpp:1015-1022). Authored as ONE entry
+    #   {-V, per:{type:CITY, above:"CITY_LIMIT"}, enabled:"GAMEOPTION_EXP_OVEREXPANSION_PENALTIES"}
+    # with the SOURCE-resolved CITY_LIMIT token (json.md 3.1/3.7) = the civic's own identity.cityLimit config
+    # x the world-size scale (token resolution + the per-resolver `above` leg are on the C++ worklist).
+    # The BASE limit itself is emitted as config data: identity.cityLimit (the anarchyLength convention --
+    # a scalar rule parameter of the civic). The hard found-block when the unhappy half is 0
+    # (CvPlayer.cpp:6210) is enabler data, separate -- identity.cityLimit is its datum too.
     # iCivicPercentAnger IS convertible (ruling 12): unhappiness = V×10 × pop / 1000 = V per 100 city-pop
     # (CvPlayer.cpp:8577 ×10, CvCity.cpp:5624 /PERCENT_ANGER_DIVISOR=1000) -> a per-scaler, handled in curate().
     "iExtraHealth":                    ("health", "empire", "", "flat"),
@@ -338,6 +350,11 @@ def _properties(node, props):
 def curate(typ, rec, store):
     text, fam, props, policies, enables, grants, art_blocks, identity, ai = {}, {}, {}, {}, {}, {}, {}, {}, {}
     leftover = []
+    # ruling 26 pre-read: the over-limit deposit needs to know whether THIS civic carries a base limit (the
+    # SOURCE-resolved CITY_LIMIT token reads the depositing civic's own limit; a V with no own limit has no
+    # transcription under the per-source model -> left on the legacy member + warned).
+    _cl = rec.find("iCityLimit")
+    _city_limit = int(engine.text(_cl)) if _cl is not None and engine.is_int(engine.text(_cl)) else 0
     for c in rec:
         tag, t = c.tag, engine.text(c)
         if tag == "Type" or tag in DROP:
@@ -356,15 +373,62 @@ def curate(typ, rec, store):
                 node = fam.setdefault("happiness", {}).setdefault("empire", {}).setdefault("cities", {})  # population),
                 node["flat"] = v; node["max"] = "TARGET_NUM_CITIES"; node["orderedByDescending"] = "CITY_SIZE"  # json §3.3, retires the bespoke `largestCity` member ([DEC-conditions-are-predicates])
         elif tag == "TradeYieldModifiers":
-            # ruling 11: the route-yield % merges into tradeRoutes.modifier (ALL routes -- the engine applies
-            # the player trade-yield modifier to every route). Trade routes produce the COMMERCE yield; a
-            # food/production authoring would be dead data -- keep it visible under the OLD member + warn.
+            # rulings 11 + 27: ALL channels author as tradeRoutes.modifier carrying the CHANNEL axis
+            # (tradeRoutes.<scope>.modifier.<channel>.<unit>, channel = the YieldTypes family word -- the
+            # shrine:{gold:N} / experience.city.domains.{DOMAIN_X} keyed-axis convention). Engine: the
+            # per-channel player accumulator m_aiTradeYieldModifier (civic feeder CvPlayer.cpp:18058) applied
+            # at CvCity::calculateTradeYield (CvCity.cpp:11645-11648): tradeYield[ch] = profit x mod[ch]/100,
+            # identity 100 carried by the base CvYieldInfo TradeModifier (commerce 100, food/production 0) --
+            # the deposits ride ON TOP of the engine's incoming route yield per channel (the modifier.md 2a
+            # tradeYield input fold). The channel-AGNOSTIC route modifiers (building iTradeRouteModifier,
+            # the IS_FOREIGN/SHARES_CIVIC conditioned entries below -- the CvCity::totalTradeModifier stage)
+            # stay channel-less on modifier.percent: they scale the route PROFIT before the channel split.
             for ident, v in engine.named_array(c, YIELDS).items():
-                if ident == "commerce":
-                    _put(fam, "tradeRoutes", "empire", "modifier", "percent", v)
+                (fam.setdefault("tradeRoutes", {}).setdefault("empire", {}).setdefault("modifier", {})
+                 .setdefault(ident, {}))["percent"] = v
+        elif tag == "iCityLimit":
+            v = _num(t)
+            if v not in (None, 0, 0.0):
+                # ruling 26: the civic's BASE LIMIT is config data -- identity.cityLimit (the anarchyLength
+                # convention: a scalar rule parameter of the civic). The CITY_LIMIT token resolver reads it
+                # x CvWorldInfo::getCityLimitsScalePercent()/100 (C++ worklist); the CvPlayer.cpp:6210 hard
+                # found-block (V == 0 case) reads the same datum as enabler data.
+                identity["cityLimit"] = int(v)
+        elif tag == "iCityOverLimitUnhappy":
+            v = _num(t)
+            if v not in (None, 0, 0.0):
+                # ruling 26: V unhappiness per city OVER the civic's (world-size-scaled) limit -- engine
+                # CvCity.cpp:5665-5674: unhappiness += V x max(0, numCities - scaledLimit), option-gated
+                # (see the SCALAR note above). ONE entry on the first-class per.above scaler:
+                if _city_limit:
+                    node = fam.setdefault("happiness", {}).setdefault("empire", {})
+                    entry = OrderedDict([("value", -v),
+                                         ("per", OrderedDict([("type", "CITY"), ("above", "CITY_LIMIT")])),
+                                         ("enabled", "GAMEOPTION_EXP_OVEREXPANSION_PENALTIES")])
+                    cur = node.get("flat")
+                    node["flat"] = [entry] if cur is None else (cur + [entry] if isinstance(cur, list) else [cur, entry])
                 else:
-                    leftover.append("TradeYieldModifiers." + ident)
-                    _put(fam, ident, "empire", "tradeRoute", "percent", v)
+                    leftover.append("iCityOverLimitUnhappy(V without own iCityLimit -- no per-source transcription)")
+                    _put(fam, "happiness", "empire", "cityOverLimit", "flat", v)
+        elif tag in ("iFreeUnitUpkeepMilitaryPopPercent", "iFreeUnitUpkeepCivilianPopPercent"):
+            v = _num(t)
+            if v not in (None, 0, 0.0):
+                # batch-4 owner ruling (free-upkeep model change): the pop-scaled free unit upkeep converts
+                # UNCONDITIONALLY as a subtractive per-population deposit on the existing freeMilitary/
+                # freeCivilian kinds: {-P, per:{POPULATION, each:100}} (engine PER_100_POP semantics --
+                # the civic's marginal free upkeep is pop x P / 100, CvPlayer.cpp:10218-10226 via
+                # getModifiedIntValue(totalPopulation, P)). This is an INTENTIONAL model change from the
+                # legacy getModifiedIntValue rounding (the asymmetric mod<0 branch v x 100/(100-mod) is NOT
+                # chased -- the additive linear model is the ruled shape; validation.md attributed-
+                # intentional class). The engine's max(0, .) floors (free >= 0, net upkeep >= 0) live as
+                # FAMILY-COMBINE FLOOR METADATA (the modifier.md 2 min-member mechanism), never in the
+                # data -- the combine-side floor leg is on the C++ worklist.
+                kind = "freeMilitary" if tag == "iFreeUnitUpkeepMilitaryPopPercent" else "freeCivilian"
+                node = fam.setdefault("upkeep", {}).setdefault("empire", {}).setdefault(kind, {})
+                entry = OrderedDict([("value", -v),
+                                     ("per", OrderedDict([("type", "POPULATION"), ("each", 100)]))])
+                cur = node.get("flat")
+                node["flat"] = [entry] if cur is None else (cur + [entry] if isinstance(cur, list) else [cur, entry])
         elif tag == "iCivicPercentAnger":
             v = _num(t)
             if v not in (None, 0, 0.0):   # V unhappiness per 100 CITY population (engine V×10×pop/1000) ->

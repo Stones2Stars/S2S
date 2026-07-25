@@ -6,13 +6,6 @@
    "BUILDING_ALPHA_MALE"
   ]
  },
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 1
-   }
-  }
- },
  "gold": {
   "empire": {
    "percent": [
@@ -79,7 +72,12 @@
  "tradeRoutes": {
   "empire": {
    "modifier": {
-    "percent": -2
+    "food": {
+     "percent": 1
+    },
+    "commerce": {
+     "percent": -2
+    }
    }
   }
  },

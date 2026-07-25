@@ -5,13 +5,6 @@
    "TRAIT_POPULIST2"
   ]
  },
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 60
-   }
-  }
- },
  "production": {
   "empire": {
    "percent": -5
@@ -85,7 +78,12 @@
  "tradeRoutes": {
   "empire": {
    "modifier": {
-    "percent": -30
+    "food": {
+     "percent": 60
+    },
+    "commerce": {
+     "percent": -30
+    }
    }
   }
  }

@@ -73,8 +73,16 @@
     "percent": 50
    },
    "freeCivilian": {
-    "flat": -10,
-    "perPopulation": -30
+    "flat": [
+     -10,
+     {
+      "value": 30,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
    }
   }
  },

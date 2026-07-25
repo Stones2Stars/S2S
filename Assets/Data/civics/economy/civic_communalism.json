@@ -5,13 +5,6 @@
    "BUILDING_WET_NURSE"
   ]
  },
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 2
-   }
-  }
- },
  "commerce": {
   "empire": {
    "improvements": {
@@ -91,6 +84,11 @@
   "empire": {
    "routes": {
     "flat": -1
+   },
+   "modifier": {
+    "food": {
+     "percent": 2
+    }
    }
   }
  },

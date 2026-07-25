@@ -87,8 +87,16 @@
  "upkeep": {
   "empire": {
    "freeMilitary": {
-    "flat": 7,
-    "perPopulation": 10
+    "flat": [
+     7,
+     {
+      "value": -10,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
    }
   }
  },

@@ -11,9 +11,6 @@
  "food": {
   "empire": {
    "percent": 3,
-   "tradeRoute": {
-    "percent": 1
-   },
    "improvements": {
     "IMPROVEMENT_TREEFARM": {
      "flat": 1
@@ -131,6 +128,15 @@
    ],
    "corporation": {
     "percent": 30
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 1
+    }
    }
   }
  },

@@ -1,19 +1,5 @@
 {
  "type": "CIVIC_INTERSTELLAR",
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 5
-   }
-  }
- },
- "production": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 5
-   }
-  }
- },
  "commerce": {
   "empire": {
    "percent": 5
@@ -57,7 +43,15 @@
     "flat": 2
    },
    "modifier": {
-    "percent": 10
+    "food": {
+     "percent": 5
+    },
+    "production": {
+     "percent": 5
+    },
+    "commerce": {
+     "percent": 10
+    }
    }
   }
  },

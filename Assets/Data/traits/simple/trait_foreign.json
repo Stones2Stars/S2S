@@ -33,11 +33,11 @@
      {
       "value": 30,
       "enabled": "IS_FOREIGN"
-     },
-     {
-      "value": 10
      }
-    ]
+    ],
+    "commerce": {
+     "percent": 10
+    }
    }
   }
  },

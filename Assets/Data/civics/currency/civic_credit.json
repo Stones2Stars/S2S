@@ -5,19 +5,9 @@
    "HURRY_GOLD"
   ]
  },
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 2
-   }
-  }
- },
  "production": {
   "empire": {
-   "percent": 2,
-   "tradeRoute": {
-    "percent": 2
-   }
+   "percent": 2
   }
  },
  "commerce": {
@@ -48,8 +38,16 @@
  "tradeRoutes": {
   "empire": {
    "modifier": {
+    "food": {
+     "percent": 2
+    },
+    "production": {
+     "percent": 2
+    },
+    "commerce": {
+     "percent": 2
+    },
     "percent": [
-     2,
      {
       "value": 10,
       "enabled": "IS_FOREIGN"

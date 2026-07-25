@@ -3,18 +3,8 @@
  "excludes": [
   "TRAIT_ISOLATIONIST1"
  ],
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 20
-   }
-  }
- },
  "production": {
   "empire": {
-   "tradeRoute": {
-    "percent": 20
-   },
    "specialists": {
     "SPECIALIST_MERCHANT": {
      "flat": 1
@@ -87,11 +77,17 @@
      {
       "value": 30,
       "enabled": "IS_FOREIGN"
-     },
-     {
-      "value": 20
      }
-    ]
+    ],
+    "food": {
+     "percent": 20
+    },
+    "production": {
+     "percent": 20
+    },
+    "commerce": {
+     "percent": 20
+    }
    }
   }
  },

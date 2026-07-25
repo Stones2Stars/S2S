@@ -2,10 +2,7 @@
  "type": "CIVIC_LAB_GROWN_FOOD",
  "food": {
   "empire": {
-   "percent": 5,
-   "tradeRoute": {
-    "percent": 5
-   }
+   "percent": 5
   }
  },
  "gold": {
@@ -36,6 +33,15 @@
   "empire": {
    "numCities": {
     "percent": 5
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 5
+    }
    }
   }
  },

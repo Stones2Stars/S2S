@@ -95,12 +95,16 @@
  },
  "happiness": {
   "empire": {
-   "cityLimit": {
-    "flat": 8
-   },
-   "cityOverLimit": {
-    "flat": 5
-   },
+   "flat": [
+    {
+     "value": -5,
+     "per": {
+      "type": "CITY",
+      "above": "CITY_LIMIT"
+     },
+     "enabled": "GAMEOPTION_EXP_OVEREXPANSION_PENALTIES"
+    }
+   ],
    "cities": {
     "flat": [
      {
@@ -141,7 +145,15 @@
  "upkeep": {
   "empire": {
    "freeMilitary": {
-    "perPopulation": 10
+    "flat": [
+     {
+      "value": -10,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
    }
   }
  },
@@ -212,6 +224,7 @@
   "civicOption": "CIVICOPTION_GOVERNMENT",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_LOW",
+  "cityLimit": 8,
   "weLoveTheKing": "TXT_KEY_CIVIC_WE_LOVE_DESPOT"
  }
 }

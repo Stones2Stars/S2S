@@ -139,10 +139,26 @@
     "percent": -10
    },
    "freeCivilian": {
-    "perPopulation": -15
+    "flat": [
+     {
+      "value": 15,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
    },
    "freeMilitary": {
-    "perPopulation": -15
+    "flat": [
+     {
+      "value": 15,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
    },
    "unitCivilian": {
     "percent": 10

@@ -15,10 +15,7 @@
      "value": 5,
      "enabled": "IS_CAPITAL"
     }
-   ],
-   "tradeRoute": {
-    "percent": 3
-   }
+   ]
   }
  },
  "production": {
@@ -29,10 +26,7 @@
      "value": 5,
      "enabled": "IS_CAPITAL"
     }
-   ],
-   "tradeRoute": {
-    "percent": 3
-   }
+   ]
   }
  },
  "commerce": {
@@ -162,15 +156,31 @@
  "upkeep": {
   "empire": {
    "freeCivilian": {
-    "flat": 10,
-    "perPopulation": 45
+    "flat": [
+     10,
+     {
+      "value": -45,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
    }
   }
  },
  "tradeRoutes": {
   "empire": {
    "modifier": {
-    "percent": 3
+    "food": {
+     "percent": 3
+    },
+    "production": {
+     "percent": 3
+    },
+    "commerce": {
+     "percent": 3
+    }
    }
   }
  },

@@ -45,7 +45,15 @@
     "flat": 10
    },
    "freeCivilian": {
-    "perPopulation": 30
+    "flat": [
+     {
+      "value": -30,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
    }
   }
  },
@@ -55,7 +63,9 @@
     "flat": 2
    },
    "modifier": {
-    "percent": 5
+    "commerce": {
+     "percent": 5
+    }
    }
   }
  },

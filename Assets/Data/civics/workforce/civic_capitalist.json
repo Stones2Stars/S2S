@@ -2,18 +2,12 @@
  "type": "CIVIC_CAPITALIST",
  "food": {
   "empire": {
-   "percent": 4,
-   "tradeRoute": {
-    "percent": 3
-   }
+   "percent": 4
   }
  },
  "production": {
   "empire": {
-   "percent": 4,
-   "tradeRoute": {
-    "percent": 3
-   }
+   "percent": 4
   }
  },
  "commerce": {
@@ -87,7 +81,15 @@
     "flat": 1
    },
    "modifier": {
-    "percent": 3
+    "food": {
+     "percent": 3
+    },
+    "production": {
+     "percent": 3
+    },
+    "commerce": {
+     "percent": 3
+    }
    }
   }
  },

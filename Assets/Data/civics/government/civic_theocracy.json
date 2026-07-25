@@ -219,13 +219,17 @@
  },
  "happiness": {
   "empire": {
-   "cityLimit": {
-    "flat": 15
-   },
-   "cityOverLimit": {
-    "flat": 3
-   },
-   "flat": 2
+   "flat": [
+    2,
+    {
+     "value": -3,
+     "per": {
+      "type": "CITY",
+      "above": "CITY_LIMIT"
+     },
+     "enabled": "GAMEOPTION_EXP_OVEREXPANSION_PENALTIES"
+    }
+   ]
   }
  },
  "capture": {
@@ -345,6 +349,7 @@
   "civicOption": "CIVICOPTION_GOVERNMENT",
   "anarchyLength": 1,
   "upkeepLevel": "UPKEEP_MEDIUM",
+  "cityLimit": 15,
   "weLoveTheKing": "TXT_KEY_CIVIC_WE_LOVE_THE_HIGH_PRIEST"
  }
 }

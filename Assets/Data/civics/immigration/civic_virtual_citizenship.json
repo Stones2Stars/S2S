@@ -2,10 +2,7 @@
  "type": "CIVIC_VIRTUAL_CITIZENSHIP",
  "production": {
   "empire": {
-   "percent": 5,
-   "tradeRoute": {
-    "percent": 5
-   }
+   "percent": 5
   }
  },
  "gold": {
@@ -26,7 +23,12 @@
  "tradeRoutes": {
   "empire": {
    "modifier": {
-    "percent": 5
+    "production": {
+     "percent": 5
+    },
+    "commerce": {
+     "percent": 5
+    }
    }
   }
  },

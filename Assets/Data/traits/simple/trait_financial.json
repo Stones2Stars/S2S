@@ -119,7 +119,9 @@
  "tradeRoutes": {
   "empire": {
    "modifier": {
-    "percent": 10
+    "commerce": {
+     "percent": 10
+    }
    }
   }
  }

@@ -7,18 +7,12 @@
  },
  "food": {
   "empire": {
-   "percent": 3,
-   "tradeRoute": {
-    "percent": 2
-   }
+   "percent": 3
   }
  },
  "production": {
   "empire": {
-   "percent": 3,
-   "tradeRoute": {
-    "percent": 2
-   }
+   "percent": 3
   }
  },
  "commerce": {
@@ -66,8 +60,16 @@
  "tradeRoutes": {
   "empire": {
    "modifier": {
+    "food": {
+     "percent": 2
+    },
+    "production": {
+     "percent": 2
+    },
+    "commerce": {
+     "percent": 5
+    },
     "percent": [
-     5,
      {
       "value": 20,
       "enabled": "IS_FOREIGN"

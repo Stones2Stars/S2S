@@ -3,20 +3,6 @@
  "excludes": [
   "TRAIT_NEGOTIATOR1"
  ],
- "food": {
-  "empire": {
-   "tradeRoute": {
-    "percent": -20
-   }
-  }
- },
- "production": {
-  "empire": {
-   "tradeRoute": {
-    "percent": -20
-   }
-  }
- },
  "buildRate": {
   "empire": {
    "nationalWonder": {
@@ -93,11 +79,17 @@
      {
       "value": 10,
       "enabled": "IS_FOREIGN"
-     },
-     {
-      "value": -20
      }
-    ]
+    ],
+    "food": {
+     "percent": -20
+    },
+    "production": {
+     "percent": -20
+    },
+    "commerce": {
+     "percent": -20
+    }
    }
   }
  },

@@ -2,18 +2,12 @@
  "type": "CIVIC_MATRIARCHY",
  "food": {
   "empire": {
-   "percent": 4,
-   "tradeRoute": {
-    "percent": 4
-   }
+   "percent": 4
   }
  },
  "production": {
   "empire": {
-   "percent": 2,
-   "tradeRoute": {
-    "percent": 2
-   }
+   "percent": 2
   }
  },
  "commerce": {
@@ -85,7 +79,15 @@
  "tradeRoutes": {
   "empire": {
    "modifier": {
-    "percent": 1
+    "food": {
+     "percent": 4
+    },
+    "production": {
+     "percent": 2
+    },
+    "commerce": {
+     "percent": 1
+    }
    }
   }
  },

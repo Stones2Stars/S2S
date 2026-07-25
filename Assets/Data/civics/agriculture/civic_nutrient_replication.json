@@ -2,10 +2,7 @@
  "type": "CIVIC_NUTRIENT_REPLICATION",
  "food": {
   "empire": {
-   "percent": 10,
-   "tradeRoute": {
-    "percent": 7
-   }
+   "percent": 10
   }
  },
  "gold": {
@@ -17,6 +14,15 @@
   "empire": {
    "numCities": {
     "percent": 5
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 7
+    }
    }
   }
  },

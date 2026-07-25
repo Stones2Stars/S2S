@@ -205,7 +205,15 @@
  "upkeep": {
   "empire": {
    "freeCivilian": {
-    "perPopulation": -15
+    "flat": [
+     {
+      "value": 15,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
    }
   }
  },
