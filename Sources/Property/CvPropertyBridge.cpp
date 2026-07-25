@@ -6,9 +6,9 @@
 
 #include "CvGameCoreDLL.h"
 #include "Property/CvPropertyBridge.h"
-#include "CvJsonModEntry.h"                 // CvJsonModEntry + CvJsonCondition (JsonInfo, on /I)
-#include "CvJsonModifiers.h"                // the per-poco family map bridgeFamilies walks
-#include "CvJsonGrants.h"                   // the repeatable PROPERTY pulses bridgePulses walks
+#include "CvModEntry.h"                 // CvModEntry + CvCondition (JsonInfo, on /I)
+#include "CvModifiers.h"                // the per-poco family map bridgeFamilies walks
+#include "CvTriggers.h"                     // the `triggers` PROPERTY pulses bridgePulses walks
 #include "CvJsonParse.h"                    // jsonResolveId -- the PROPERTY_X family-key FK
 #include "Engine/CvPropertyManipulators.h"
 #include "Infrastructure/BoolExpr.h"
@@ -32,7 +32,7 @@ namespace
 	// Fold a child list with a binary combiner. Returns NULL (and cleans up) if ANY child fails to translate --
 	// a partially-represented AND/OR would apply the source under the WRONG condition, so the whole group fails.
 	template <class COMBINE>
-	const BoolExpr* foldChildren(const std::vector<CvJsonCondition*>& children)
+	const BoolExpr* foldChildren(const std::vector<CvCondition*>& children)
 	{
 		const BoolExpr* pAcc = NULL;
 		for (size_t i = 0; i < children.size(); ++i)
@@ -49,7 +49,7 @@ namespace
 	}
 }
 
-const BoolExpr* CascadePropertyBridge::condToBoolExpr(const CvJsonCondition* pCond)
+const BoolExpr* CascadePropertyBridge::condToBoolExpr(const CvCondition* pCond)
 {
 	if (pCond == NULL) return NULL;
 
@@ -119,7 +119,7 @@ const BoolExpr* CascadePropertyBridge::condToBoolExpr(const CvJsonCondition* pCo
 	return NULL;
 }
 
-const BoolExpr* CascadePropertyBridge::entryActiveExpr(const CvJsonModEntry* pEntry, bool* pbUntranslatable)
+const BoolExpr* CascadePropertyBridge::entryActiveExpr(const CvModEntry* pEntry, bool* pbUntranslatable)
 {
 	*pbUntranslatable = false;
 	const BoolExpr* pActive = NULL;
@@ -159,71 +159,63 @@ const IntExpr* CascadePropertyBridge::perPopulationAmount(int iValue, int iEach)
 	return pAmount;
 }
 
-void CascadePropertyBridge::bridgeFamilies(const CvJsonModifiers* pMods, CvPropertyManipulators& kTarget,
+void CascadePropertyBridge::bridgeFamilies(const CvModifiers* pMods, CvPropertyManipulators& kTarget,
 	RelationTypes eRelation, int iRelationData, CvPropertyManipulators* pEmpireTarget)
 {
 	kTarget.clear();
 	if (pEmpireTarget != NULL) pEmpireTarget->clear();
 	if (pMods == NULL) return;
 
-	const std::map<std::string, CvJsonModFamily*>& all = pMods->all();
-	for (std::map<std::string, CvJsonModFamily*>::const_iterator mit = all.begin(); mit != all.end(); ++mit)
+	const std::vector<CvModEntry*>& entries = pMods->entries();
+	for (size_t i = 0; i < entries.size(); ++i)
 	{
-		const std::string& addr = mit->first;
-		if (addr.compare(0, 9, "PROPERTY_") != 0) continue;
-		const size_t dot = addr.find('.');
-		if (dot == std::string::npos) continue;
-		const std::string scope = addr.substr(dot + 1);
-		if (scope != "city" && scope != "plot" && scope != "empire") continue;
-		if (scope == "empire" && pEmpireTarget == NULL) continue;   // no empire entries authored off buildings
-		const int eProp = jsonResolveId(addr.substr(0, dot));
-		if (eProp < 0) continue;
-		const GameObjectTypes eObj = (scope == "plot") ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
-		CvPropertyManipulators& manip = (scope == "empire") ? *pEmpireTarget : kTarget;
-		const CvJsonModFamily* f = mit->second;
-		for (int i = 0; i < f->size(); ++i)
+		const CvModEntry* e = entries[i];
+		if (e->family != MODFAM_PROPERTY || e->propertyFk < 0) continue;
+		if (e->nSeg != 2) continue;   // PROPERTY_X.<scope> exactly -- a deeper/targeted address is not an own-source
+		if (e->scope != CASC_SCOPE_CITY && e->scope != CASC_SCOPE_PLOT && e->scope != CASC_SCOPE_EMPIRE) continue;
+		if (e->scope == CASC_SCOPE_EMPIRE && pEmpireTarget == NULL) continue;   // no empire entries authored off buildings
+		if (e->unit != CASC_UNIT_FLAT) continue;
+		const GameObjectTypes eObj = (e->scope == CASC_SCOPE_PLOT) ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
+		CvPropertyManipulators& manip = (e->scope == CASC_SCOPE_EMPIRE) ? *pEmpireTarget : kTarget;
+		bool bUntranslatable = false;
+		const BoolExpr* pActive = entryActiveExpr(e, &bUntranslatable);
+		if (bUntranslatable) continue;
+		if (e->hasPer)
 		{
-			const CvJsonModEntry* e = f->entries[i];
-			if (e->unit != CASC_UNIT_FLAT) continue;
-			bool bUntranslatable = false;
-			const BoolExpr* pActive = entryActiveExpr(e, &bUntranslatable);
-			if (bUntranslatable) continue;
-			if (e->hasPer)
-			{
-				if (e->perType != "POPULATION") { delete pActive; continue; }   // no non-POPULATION per authored
-				if (e->perEach <= 1 && pActive == NULL)
-					manip.addAttributeConstantSource((PropertyTypes)eProp, ATTRIBUTE_POPULATION, e->value100 / 100, eObj);
-				else
-					manip.addConstantSource((PropertyTypes)eProp,
-						perPopulationAmount(e->value100 / 100, e->perEach), eObj, eRelation, iRelationData, pActive);
-			}
-			else manip.addConstantSource((PropertyTypes)eProp, e->value100 / 100, eObj, eRelation, iRelationData, pActive);
+			if (e->perType != "POPULATION") { delete pActive; continue; }   // no non-POPULATION per authored
+			if (e->perEach <= 1 && pActive == NULL)
+				manip.addAttributeConstantSource((PropertyTypes)e->propertyFk, ATTRIBUTE_POPULATION, e->value100 / 100, eObj);
+			else
+				manip.addConstantSource((PropertyTypes)e->propertyFk,
+					perPopulationAmount(e->value100 / 100, e->perEach), eObj, eRelation, iRelationData, pActive);
 		}
+		else manip.addConstantSource((PropertyTypes)e->propertyFk, e->value100 / 100, eObj, eRelation, iRelationData, pActive);
 	}
 }
 
-void CascadePropertyBridge::bridgePulses(const CvJsonGrants* pGrants, CvPropertyManipulators& kTarget)
+void CascadePropertyBridge::bridgePulses(const CvTriggers* pTriggers, CvPropertyManipulators& kTarget)
 {
 	kTarget.clear();
-	if (pGrants == NULL) return;
+	if (pTriggers == NULL) return;
 
-	const std::vector<CvJsonGrantRepeatable*>& reps = pGrants->repeatables();
-	for (size_t i = 0; i < reps.size(); ++i)
+	const std::vector<CvTriggerEntry*>& entries = pTriggers->entries();
+	for (size_t i = 0; i < entries.size(); ++i)
 	{
-		const CvJsonGrantRepeatable* r = reps[i];
-		if (r->propertyId < 0) continue;
-		// plain per-turn pulses only -- a chance-rolled or interval>1 pulse is not a constant source (none
-		// authored on features/improvements); fail closed.
-		if (r->intervalPerTurn != 1 || r->chanceValue100 != 0 || r->chancePerId >= 0 || !r->chancePerToken.empty()) continue;
+		const CvTriggerEntry* pEntry = entries[i];
+		if (pEntry->propertyId < 0) continue;
+		// plain per-turn pulses only -- a chance-rolled, interval>1, or non-turn entry is not a constant
+		// source (none authored on features/improvements); fail closed.
+		if (pEntry->happening != "onTurn" || pEntry->happeningInterval != 1) continue;
+		if (pEntry->chanceValue100 != 0 || pEntry->chancePerTypeId >= 0 || !pEntry->chancePerToken.empty()) continue;
 		const BoolExpr* pActive = NULL;
-		if (r->enabled != NULL)
+		if (pEntry->condition != NULL)
 		{
-			pActive = condToBoolExpr(r->enabled);
+			pActive = condToBoolExpr(pEntry->condition);
 			if (pActive == NULL) continue;
 		}
-		const GameObjectTypes eObj = (r->on == "plot") ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
-		const RelationTypes eRel = (r->relation == "near") ? RELATION_NEAR
-			: (r->relation == "same" || r->relation == "samePlot") ? RELATION_SAME_PLOT : NO_RELATION;
-		kTarget.addConstantSource((PropertyTypes)r->propertyId, r->amount100 / 100, eObj, eRel, r->distance, pActive);
+		const GameObjectTypes eObj = (pEntry->spatialOn == "plot") ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
+		const RelationTypes eRel = (pEntry->spatialRelation == "near") ? RELATION_NEAR
+			: (pEntry->spatialRelation == "same" || pEntry->spatialRelation == "samePlot") ? RELATION_SAME_PLOT : NO_RELATION;
+		kTarget.addConstantSource((PropertyTypes)pEntry->propertyId, pEntry->propertyAmount100 / 100, eObj, eRel, pEntry->spatialDistance, pActive);
 	}
 }

@@ -1,9 +1,9 @@
 #pragma once
-#ifndef CV_JSON_EDGES_H
-#define CV_JSON_EDGES_H
+#ifndef CV_EDGES_H
+#define CV_EDGES_H
 
 //
-//	CvJsonEdges -- the `enables`-family edges as ONE composable unit (json.md par.4.1/par.4.2): the source-side
+//	CvEdges -- the `enables`-family edges as ONE composable unit (json.md par.4.1/par.4.2): the source-side
 //	enables/obsoletes/replaces/disables buckets + the target-side obsoletedBy, each a per-kind FK id list.
 //	Composed BY VALUE on the derived infos that author any edge (the data-grounded table). WRITE-ONCE AT LOAD.
 //
@@ -78,10 +78,10 @@ enum EnEdgeBucket
 	NO_EDGEB = -1
 };
 
-class CvJsonEdges
+class CvEdges
 {
 public:
-	CvJsonEdges() {}
+	CvEdges() {}
 
 	// The unit's single load-time writer: parse ONE edge section ("enables"/"obsoletes"/"replaces"/"disables"/
 	// "obsoletedBy") -- a per-kind bucket object {bucket:[INFOTYPE_ids]} -- FK-resolving each id and INTERNING
@@ -112,8 +112,8 @@ private:
 	static short key(EnEdgeFamily eFamily, EnEdgeBucket eBucket) { return (short)(((int)eFamily << 5) | (int)eBucket); }
 
 	std::map<short, std::vector<int> > m_edges;         // (family,bucket) -> FK ids
-	CvJsonEdges(const CvJsonEdges&);                    // noncopyable (held by-value on the noncopyable info)
-	CvJsonEdges& operator=(const CvJsonEdges&);
+	CvEdges(const CvEdges&);                    // noncopyable (held by-value on the noncopyable info)
+	CvEdges& operator=(const CvEdges&);
 };
 
-#endif // CV_JSON_EDGES_H
+#endif // CV_EDGES_H

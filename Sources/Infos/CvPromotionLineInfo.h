@@ -6,7 +6,7 @@
 //	CvPromotionLineInfo -- the JSON real poco for PROMOTION LINES (an ordered promotion chain / grouping axis,
 //	units-only). It is NOT a modifier source and enables nothing; its tech prereq rides the base as
 //	tech.enables.promotionLines, and its game-option gates are the composed entity-level `enabled`/`disabled` gate
-//	(CvJsonGate). The member promotions are a RUNTIME reverse index (rebuilt post-load from
+//	(CvGate). The member promotions are a RUNTIME reverse index (rebuilt post-load from
 //	CvPromotionInfo::getPromotionLine), NOT JSON data. No cascade here.
 //
 //	Live callers (verified 2026-07-07): isBuildUp / getNumPromotions / getPromotion / isNotOnDomainType -> CvUnit
@@ -27,14 +27,14 @@ public:
 	// --- mirrored legacy CvPromotionLineInfo getters ---
 	// tech FKs: curate_promotionline.py DROPs PrereqTech, store-inverting it onto tech.enables.promotionLines (a lone
 	// tech -> no `requires`); ObsoleteTech is 0/unregistered but the store-invert path exists. Reconstructed at LOAD by
-	// the cascadeLoadJson tech-FK reverse-index pass (CvCascadeReadJson.cpp enables/obsoletes.promotionLines), which
+	// the loadJson tech-FK reverse-index pass (CvReadJson.cpp enables/obsoletes.promotionLines), which
 	// calls the setters below. Consumers: CvPlayer/CvUnit promotion-line availability gates.
 	TechTypes getPrereqTech() const { return m_eTechPrereq; }
 	TechTypes getObsoleteTech() const { return m_eObsoleteTech; }
-	void setTechPrereq(TechTypes e) { m_eTechPrereq = e; }       // load-time reverse-index writers (cascadeLoadJson)
+	void setTechPrereq(TechTypes e) { m_eTechPrereq = e; }       // load-time reverse-index writers (loadJson)
 	void setObsoleteTech(TechTypes e) { m_eObsoleteTech = e; }
 
-	// entity-level game-option gate -> the flat NotOnGameOption list, walked out of the composed CvJsonGate `disabled`
+	// entity-level game-option gate -> the flat NotOnGameOption list, walked out of the composed CvGate `disabled`
 	// condition tree in mapFrom (the GAMEOPTION_ presence-atom ids -- the exact CvPromotionInfo idiom).
 	// curate_promotionline.py: NotOnGameOptions -> entity-level `disabled` (0 populated in shipped data; walk faithful).
 	int getNotOnGameOption(int i) const { return (i >= 0 && i < (int)m_aiNotOnGameOptions.size()) ? m_aiNotOnGameOptions[i] : -1; }
@@ -64,10 +64,10 @@ public:
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonGate* getGate() const { return &m_gate; }
+	virtual const CvGate* getGate() const { return &m_gate; }
 
 protected:
-	virtual CvJsonGate* mutGate() { return &m_gate; }
+	virtual CvGate* mutGate() { return &m_gate; }
 
 private:
 	bool m_bBuildUp;                     // buildUp.active
@@ -76,9 +76,9 @@ private:
 	std::vector<int> m_aiNotOnUnitCombats;   // identity.notOnUnitCombats (NotOnUnitCombatTypes) -- excluded unit-combats
 	std::vector<int> m_aiNotOnGameOptions;   // walked from m_gate.disabled in mapFrom (GAMEOPTION_ presence ids)
 	std::vector<int> m_aiPromotions;     // RUNTIME reverse index (not JSON)
-	CvJsonGate m_gate;                   // entity-level enabled/disabled (the game-option gates)
-	TechTypes m_eTechPrereq;             // store-inverted tech.enables.promotionLines, reconstructed at load (cascadeLoadJson)
-	TechTypes m_eObsoleteTech;           // store-inverted tech.obsoletes.promotionLines, reconstructed at load (cascadeLoadJson)
+	CvGate m_gate;                   // entity-level enabled/disabled (the game-option gates)
+	TechTypes m_eTechPrereq;             // store-inverted tech.enables.promotionLines, reconstructed at load (loadJson)
+	TechTypes m_eObsoleteTech;           // store-inverted tech.obsoletes.promotionLines, reconstructed at load (loadJson)
 };
 
 #endif // CV_JSON_PROMOTION_LINE_INFO_H

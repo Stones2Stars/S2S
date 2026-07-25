@@ -184,7 +184,7 @@ static bool bd_groupCapOk(int iB, const CvPlayer& kPlayer)
 	const SpecialBuildingTypes sb = GC.getBuildingInfo((BuildingTypes)iB).getSpecialBuilding();
 	if (sb == NO_SPECIALBUILDING) return true;
 	const CvInfo* jg = InfoRepo<CvSpecialBuildingInfo>::get().get((int)sb);
-	const CvJsonAllowed* a = (jg != NULL) ? jg->getAllowed() : NULL;
+	const CvAllowed* a = (jg != NULL) ? jg->getAllowed() : NULL;
 	if (a == NULL) return true;
 	const std::vector<int>& mem = bd_sbMembers((int)sb);
 	for (std::map<std::string, int>::const_iterator it = a->all().begin(); it != a->all().end(); ++it)

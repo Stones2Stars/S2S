@@ -57,15 +57,15 @@ public:
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
 protected:
-	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
 	static int mapGet(const std::map<int, int>& m, int k) { std::map<int, int>::const_iterator it = m.find(k); return it != m.end() ? it->second : 0; }
 
-	CvJsonModifiers m_modifiers;
+	CvModifiers m_modifiers;
 	int m_aiYieldChange[NUM_YIELD_TYPES];       // food/production/commerce .city.flat
 	int m_aiCommerceChange[NUM_COMMERCE_TYPES]; // gold/research/culture/espionage .city.flat
 	int m_iGreatPeopleRateChange;               // greatPeopleRate.city.flat

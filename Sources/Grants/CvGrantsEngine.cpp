@@ -1,14 +1,14 @@
 //
 //	CvCascadeGrants -- the #430 GRANTS machine consumer + the [GRANTS] spine domain. See the header + grants-machine.md.
 //	Slice-1: on a building-built / unit-created DOMAIN event, resolve the source entity's GENUINE grants off its mapped
-//	CvJson<X>Info (the composed CvJsonGrants unit in the InfoRepo, minus the deferred mission-keys) and emit a [GRANTS]
+//	CvJson<X>Info (the composed CvGrants unit in the InfoRepo, minus the deferred mission-keys) and emit a [GRANTS]
 //	diagnostic. Resolution only -- it does NOT apply (legacy applies); un-run parity (owner: no live parity until everything is in).
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella
 #include "Grants/CvGrantsEngine.h"
 #include "Spine/CvEventSpine.h"
-#include "CvInfo.h"             // CvInfo::grantList / grantPulse100 / grantFlag (the CvJsonGrants unit's read-throughs)
+#include "CvInfo.h"             // CvInfo::grantList / grantPulse100 / grantFlag (the CvGrants unit's read-throughs)
 #include "Repos/InfoRepo.h"        // InfoRepo<CvXInfo>::get().get(id) -> the mapped CvInfo*
 #include "CvBuildingInfo.h"        // InfoRepo<CvBuildingInfo>
 #include "CvUnitInfo.h"            // InfoRepo<CvUnitInfo>
@@ -25,9 +25,9 @@
 #include "Engine/CvUnit.h"        // the spawned unit + the full-heal targets
 #include "Engine/CvPlot.h"        // the city plot's units (full heal) + the criminal count (crime spawn odds)
 #include "Infos/CvPropertyInfo.h" // getAIWeight -- the positive/negative property split (spawn owner)
-#include "Infos/CvJsonGrants.h"   // CvJsonGrantRepeatable -- the COMPOSED repeatable (interval/chance/enabled)
+#include "Infos/CvTriggers.h"     // CvTriggerEntry -- the COMPOSED `triggers` entries (trigger/chance/action)
 #include "Enabler/CvEnablerKernel.h"      // operatingBuildings/wireOperatingBuildings -- a dormant building grants nothing
-#include "Conditions/CvConditionEval.h" // cascadeEvalCondition -- the ONE evaluator for a repeatable's `enabled`
+#include "Conditions/CvConditionEval.h" // cascadeEvalCondition -- the ONE evaluator for a trigger entry's condition
 #include "AI/BetterBTSAI.h"        // gPlayerLogLevel -- the slice-1 observe gate
 #include <map>
 #include <string>
@@ -38,8 +38,8 @@ enum GrEvt { GRE_BUILDING = 1, GRE_UNIT, GRE_TECH, GRE_RELIGION, GRE_CIVIC, GRE_
 enum GrFld
 {
 	GF_PLAYER = 1, GF_BUILDING, GF_UNIT, GF_TECH, GF_RELIGION, GF_CIVIC,
-	GF_PROMOTIONS, GF_FOUNDBUILDINGS,                        // unit genuine grants
-	GF_REPEATABLE, GF_FREEPROMOS, GF_FREETECHS,              // building genuine grants
+	GF_PROMOTIONS, GF_GRANTBUILDINGS,                        // unit genuine grants (promotions + settle-time buildings)
+	GF_TRIGGERENTRIES, GF_FREEPROMOS, GF_FREETECHS,          // building triggers + genuine grants
 	GF_GOLDENAGE, GF_POPULATION,                             // building flag + scoped-pulse grants (increment 2)
 	GF_FIRSTUNIT, GF_FIRSTPROPHET,                           // tech first-discover grants (increment 3a)
 	GF_NUMFREEUNITS, GF_FREEUNIT, GF_REVOLUTION,             // religion + civic grants (increment 3b)
@@ -88,8 +88,8 @@ static const char* gr_field(int tag, SpineFieldType* peType)
 	case GF_SUPPRESSED:     return "suppressed";
 	case GF_FIRSTACQUIRE:   return "firstAcquire";
 	case GF_PROMOTIONS:     return "promotions";
-	case GF_FOUNDBUILDINGS: return "foundBuildings";
-	case GF_REPEATABLE:     return "repeatable";
+	case GF_GRANTBUILDINGS: return "grantBuildings";
+	case GF_TRIGGERENTRIES: return "triggerEntries";
 	case GF_FREEPROMOS:     return "freePromotions";
 	case GF_FREETECHS:      return "freeTechs";
 	case GF_GOLDENAGE:      return "goldenAge";
@@ -139,8 +139,19 @@ static int gr_flag(const CvInfo* j, const char* szFlag)   // a bool grant presen
 }
 static int gr_scopedPulseSum(const CvInfo* j, const char* szChannel)   // sum a scoped pulse over its scopes (×100 -> /100)
 {
-	const CvJsonGrants* g = j->getGrants();
+	const CvGrants* g = j->getGrants();
 	return g ? g->scopedPulseSumAllScopes100(szChannel) / 100 : 0;
+}
+static int gr_promoteEntryCount(const CvInfo* j)   // `triggers` promote entries (the end-turn free-promotion plane)
+{
+	const CvTriggers* pTriggers = j->getTriggers();
+	if (pTriggers == NULL) return 0;
+	int iCount = 0;
+	for (size_t i = 0; i < pTriggers->entries().size(); ++i)
+	{
+		if (!pTriggers->entries()[i]->promotePromotions.empty()) ++iCount;
+	}
+	return iCount;
 }
 
 // ===== FREE PROMOTIONS (json §5) -- TARGETED PROPAGATION, never a per-turn rescan =====
@@ -254,8 +265,8 @@ static void gr_resolveBuilding(int iBuilding, int iPlayer, int iCity)
 {
 	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(iBuilding);
 	if (j == NULL) return;
-	const int nRepeat    = (j->getGrants() != NULL) ? (int)j->getGrants()->repeatables().size() : 0;   // per-turn spawn/heal (recurring) -- the structured set (2b)
-	const int nFreePromo = gr_listCount(j, "freePromotions");   // end-turn promotions to units in the city (recurring)
+	const int nRepeat    = (j->getTriggers() != NULL) ? (int)j->getTriggers()->entries().size() : 0;   // the `triggers` entries (per-turn spawn/heal/promote)
+	const int nFreePromo = gr_promoteEntryCount(j);   // end-turn promotions to units in the city (triggers promote entries)
 	const int nFreeTech  = gr_pulse(j, "freeTechs");            // one-shot on first build
 	const int nGoldenAge = gr_flag(j, "goldenAge");            // one-shot golden age (bool grant, increment 2)
 	const int nPop       = gr_scopedPulseSum(j, "population");  // one-shot population boost (scoped pulse, increment 2)
@@ -281,7 +292,7 @@ static void gr_resolveBuilding(int iBuilding, int iPlayer, int iCity)
 		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_FIRSTACQUIRE, s_bFirstAcquire ? 1 : 0)
 		.addI(GF_APPLIED, bApplied ? 1 : 0).addI(GF_MATMISMATCH, bMatMismatch ? 1 : 0)
 		.addI(GF_PLAYER, iPlayer).addI(GF_BUILDING, iBuilding)
-		.addI(GF_REPEATABLE, nRepeat).addI(GF_FREEPROMOS, nFreePromo).addI(GF_FREETECHS, nFreeTech)
+		.addI(GF_TRIGGERENTRIES, nRepeat).addI(GF_FREEPROMOS, nFreePromo).addI(GF_FREETECHS, nFreeTech)
 		.addI(GF_GOLDENAGE, nGoldenAge).addI(GF_POPULATION, nPop));
 }
 
@@ -293,8 +304,8 @@ static void gr_resolveUnit(int iUnit, int iPlayer, int iUnitId)
 {
 	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(iUnit);
 	if (j == NULL) return;
-	const int nPromos = gr_listCount(j, "promotions");        // free promotions on creation
-	const int nFound  = gr_listCount(j, "foundBuildings");    // settle-time building seeds (settler)
+	const int nPromos = gr_listCount(j, "promotions");   // free promotions on creation
+	const int nFound  = gr_listCount(j, "buildings");    // settle-time building seeds (grants.buildings on the settler)
 	if (nPromos == 0 && nFound == 0) return;
 
 	int nApplied = 0;
@@ -314,7 +325,7 @@ static void gr_resolveUnit(int iUnit, int iPlayer, int iUnitId)
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_UNIT, 1)
 		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, nApplied)
 		.addI(GF_PLAYER, iPlayer).addI(GF_UNIT, iUnit)
-		.addI(GF_PROMOTIONS, nPromos).addI(GF_FOUNDBUILDINGS, nFound));
+		.addI(GF_PROMOTIONS, nPromos).addI(GF_GRANTBUILDINGS, nFound));
 }
 
 static int gr_firstId(const CvInfo* j, const char* szBucket)   // a single-id grant bucket's id (-1 if absent)
@@ -457,9 +468,8 @@ static void gr_resolvePlayerInit(int iPlayer)
 // are DELETED with the serialized ledgers that fed them (m_aPropertySpawns / m_iNumUnitFullHeal: pure sums over the
 // city's buildings, so DERIVED -- soft-removed via Assets/savemigration.txt, save.md §3, NOT a save break).
 //
-// It reads the COMPOSED getGrants()->repeatables(), never the legacy collapse members on CvBuildingInfo (which drop
-// interval/enabled/chance at mapFrom -- those members stay only for the AI/pedia READ consumers). Gated on the
-// enabler's operating-building set: a DORMANT building grants nothing.
+// It reads the COMPOSED getTriggers() entries (json.md §5 trigger -> chance -> action), never any legacy collapse
+// member. Gated on the enabler's operating-building set: a DORMANT building grants nothing.
 //
 // A granted unit is an ORDINARY unit (owner ruling): placed through initUnit exactly as a trained one, so it fires
 // the ordinary DOMAIN events and nothing downstream can tell the difference -- only the production debit is skipped.
@@ -486,9 +496,9 @@ static int gr_applyFullHeal(CvCity* pCity, int iCount)
 // property value, halved, is the per-10000 chance; PROPERTY index 0 (crime) additionally backs off by the plot's
 // criminal count and bails once criminals reach half the population. A NEGATIVE-weight property spawns for the
 // BARBARIAN player (the crime/disease case), a positive one for the city owner.
-static int gr_applySpawn(CvCity* pCity, const CvJsonGrantRepeatable* r)
+static int gr_applySpawn(CvCity* pCity, int iChancePerProperty, int iSpawnUnit)
 {
-	const PropertyTypes eProperty = (PropertyTypes)r->chancePerId;
+	const PropertyTypes eProperty = (PropertyTypes)iChancePerProperty;
 	if (eProperty < 0 || eProperty >= GC.getNumPropertyInfos()) return -1;
 
 	int iCurrentValue = std::max(0, pCity->getPropertiesConst()->getValueByProperty(eProperty));
@@ -503,7 +513,7 @@ static int gr_applySpawn(CvCity* pCity, const CvJsonGrantRepeatable* r)
 
 	if (GC.getGame().getSorenRandNum(10000, "Property Unit Spawn Check") >= iCurrentValue) return -1;
 
-	const UnitTypes eUnit = (UnitTypes)r->unitId;
+	const UnitTypes eUnit = (UnitTypes)iSpawnUnit;
 	if (!GET_PLAYER(pCity->getOwner()).canTrain(eUnit, false, false, true, true)) return -1;
 
 	const PlayerTypes eSpawnOwner = bPositiveProperty ? pCity->getOwner() : (PlayerTypes)BARBARIAN_PLAYER;
@@ -545,23 +555,29 @@ static void gr_applyCityPerTurn(CvCity* pCity)
 	for (std::set<int>::const_iterator it = ob.active.begin(); it != ob.active.end(); ++it)
 	{
 		pAny = InfoRepo<CvBuildingInfo>::get().get(*it);
-		if (pAny == NULL || pAny->getGrants() == NULL) continue;
-		const std::vector<CvJsonGrantRepeatable*>& reps = pAny->getGrants()->repeatables();
-		for (size_t i = 0; i < reps.size(); ++i)
+		if (pAny == NULL || pAny->getTriggers() == NULL) continue;
+		const std::vector<CvTriggerEntry*>& entries = pAny->getTriggers()->entries();
+		for (size_t i = 0; i < entries.size(); ++i)
 		{
-			const CvJsonGrantRepeatable* r = reps[i];
-			// RECURRENCE (json §3.8): "perTurn" = every turn; {"perTurn": N} = every Nth. The legacy collapse
-			// members carried NO interval, so every repeatable fired every turn -- the defect this replaces.
-			if (r->intervalPerTurn > 1 && (iTurn % r->intervalPerTurn) != 0) continue;
-			// The per-entry gate, through the ONE evaluator (DEC-single-implementation).
-			if (r->enabled != NULL && !cascadeEvalCondition(r->enabled, ec, kFlags)) continue;
+			const CvTriggerEntry* pEntry = entries[i];
+			// This is the onTurn plane only -- the onTurnEnd promote entries ride the targeted-propagation
+			// free-promotion path (SEVT_BUILDING_PROCESSED / SEVT_UNIT_ENTERED_CITY), never a per-turn rescan.
+			if (pEntry->happening != "onTurn") continue;
+			// RECURRENCE (json §3.8 / §5): "onTurn" = every turn; {"onTurn": N} = every Nth.
+			if (pEntry->happeningInterval > 1 && (iTurn % pEntry->happeningInterval) != 0) continue;
+			// The per-entry state condition, through the ONE evaluator (DEC-single-implementation).
+			if (pEntry->condition != NULL && !cascadeEvalCondition(pEntry->condition, ec, kFlags)) continue;
 
-			if (r->healFull) { iFullHeal += (r->count > 0 ? r->count : 1); continue; }
-			if (r->unitCombatId >= 0) continue;   // the heal-RATE term -- the modifier plane's, not a grant
-			if (r->unitId >= 0)
+			if (pEntry->healFull) { iFullHeal += (pEntry->healCount > 0 ? pEntry->healCount : 1); continue; }
+			if (pEntry->healUnitCombatId >= 0) continue;   // the heal-RATE term -- the modifier plane's, not a grant
+			if (pEntry->grant != NULL)
 			{
-				const int iUnit = gr_applySpawn(pCity, r);
-				if (iUnit >= 0) { iSpawned = iUnit; ++iSpawnCount; }
+				const std::vector<int>* pSpawnUnits = pEntry->grant->list("units");
+				if (pSpawnUnits != NULL && !pSpawnUnits->empty())
+				{
+					const int iUnit = gr_applySpawn(pCity, pEntry->chancePerTypeId, (*pSpawnUnits)[0]);
+					if (iUnit >= 0) { iSpawned = iUnit; ++iSpawnCount; }
+				}
 			}
 		}
 
@@ -596,9 +612,10 @@ static void gr_applyPerTurn(int iPlayer)
 	}
 }
 
-// A CITY WAS FOUNDED -- the settle-time provisions. Today this hands over the FOUNDER's `grants.foundBuildings`
-// (json §5): a settler seeding buildings into the city it founds. That is a NEW mechanic coined for this rework,
-// so there is no legacy apply to mirror -- the data has been authored and inert, waiting for a trigger.
+// A CITY WAS FOUNDED -- the settle-time provisions. Today this hands over the FOUNDER's `grants.buildings`
+// (json §5: the settler's considered action IS founding): a settler seeding buildings into the city it founds.
+// That is a NEW mechanic coined for this rework, so there is no legacy apply to mirror -- the data has been
+// authored and inert, waiting for a trigger.
 // ⛔ The other settle-time provisions (start-era freePopulation, civilization buildings, FreeStartEra, the trait
 // settle keys, barbarianInitialDefenders) still apply in CvPlayer::found: several are not authored in a `grants`
 // block at all, so the machine cannot resolve them off getGrants() until the curator emits them
@@ -608,8 +625,8 @@ static void gr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 	if (iOwner < 0 || iFounderType < 0) return;
 	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(iFounderType);
 	if (j == NULL || j->getGrants() == NULL) return;
-	const std::vector<CvJsonFoundBuilding*>& seeds = j->getGrants()->foundBuildings();
-	if (seeds.empty()) return;
+	const std::vector<int>* pSeeds = j->getGrants()->list("buildings");
+	if (pSeeds == NULL || pSeeds->empty()) return;
 
 	CvPlayer& player = GET_PLAYER((PlayerTypes)iOwner);
 	CvCity* pCity = player.getCity(iCity);
@@ -619,25 +636,27 @@ static void gr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 		CvCascadeEvalCtx ec;
 		ec.city = pCity; ec.plot = pCity->plot(); ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
 		const CvCascadeEvalFlags kFlags;
-		for (size_t i = 0; i < seeds.size(); ++i)
+		for (size_t i = 0; i < pSeeds->size(); ++i)
 		{
-			const CvJsonFoundBuilding* s = seeds[i];
-			if (s->building < 0) continue;
-			if (s->enabled != NULL && !cascadeEvalCondition(s->enabled, ec, kFlags)) continue;
-			if (pCity->hasBuilding((BuildingTypes)s->building)) continue;
-			pCity->changeHasBuilding((BuildingTypes)s->building, true);
+			const int iBuilding = (*pSeeds)[i];
+			if (iBuilding < 0) continue;
+			// the entry's own `enabled` condition (the §3.9 conditioned object form), index-parallel to the ids
+			const CvCondition* pEnabled = j->getGrants()->listCond("buildings", i);
+			if (pEnabled != NULL && !cascadeEvalCondition(pEnabled, ec, kFlags)) continue;
+			if (pCity->hasBuilding((BuildingTypes)iBuilding)) continue;
+			pCity->changeHasBuilding((BuildingTypes)iBuilding, true);
 			++nPlaced;
 		}
 	}
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_FOUND, 1)
 		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, nPlaced)
 		.addI(GF_PLAYER, iOwner).addI(GF_CITY, iCity).addI(GF_UNIT, iFounderType)
-		.addI(GF_FOUNDBUILDINGS, (int)seeds.size()));
+		.addI(GF_GRANTBUILDINGS, (int)pSeeds->size()));
 }
 
 // THE CAPITAL RELOCATED -- re-seed the palace into the new capital. The palace is what MAKES a city the capital
 // (setupBuilding's isCapital branch calls setCapitalCity), so without this a captured capital never relocates:
-// `foundBuildings` covers FOUNDING only, and the civilization building list that used to carry the palace on
+// the settler's `grants.buildings` covers FOUNDING only, and the civilization building list that used to carry the palace on
 // relocation no longer does. Same gate as the founding case -- the building on its OWN absence -- so an empire
 // that still holds a palace somewhere gets nothing.
 static void gr_resolveCapitalChanged(int iOwner, int iCity)

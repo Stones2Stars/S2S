@@ -4,13 +4,13 @@
 
 //
 //	CvCascadeConditionEval -- the PORT of StoneBase `CascadingEnabler/ConditionEvaluator.cs`. Walks a typed
-//	[CvJsonCondition] tree and returns whether it holds, reading the LIVE engine (`CvCity`/`CvPlayer`/`CvPlot`/
+//	[CvCondition] tree and returns whether it holds, reading the LIVE engine (`CvCity`/`CvPlayer`/`CvPlot`/
 //	`CvTeam`) wherever the C# reads its `EvalState`/`PlotContext` snapshot. The LOGIC is a faithful transcription
 //	(StoneBase is the validated reference; owner ruling 2026-06-30) -- only the state reads differ. A NULL condition
 //	is vacuously true; an UNKNOWN predicate is IGNORED (true), never false (json §3.5).
 //
 
-#include "CvJsonCondition.h"
+#include "CvCondition.h"
 #include <set>
 
 class CvCity;
@@ -90,11 +90,11 @@ bool cascadeIsBuildingObsolete(int eBuilding, const CvCascadeEvalCtx& ec);
 int cascadeCountOf(int iTypeId, const std::string& sType, CvCascScope eScope, const CvCascadeEvalCtx& ec);
 
 // Evaluate the condition tree against the live engine. `c == NULL` -> true (vacuous).
-bool cascadeEvalCondition(const CvJsonCondition* c, const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& flags);
+bool cascadeEvalCondition(const CvCondition* c, const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& flags);
 
 // The ENTITY-LEVEL applicability gate (json.md §2 Applicability; owner 2026-07-08): the entity applies only
 // while `enabled` holds (NULL = always) and `disabled` does not (NULL = never). Same evaluator, §3.9 order.
-class CvJsonGate;
-bool cascadeGateOk(const CvJsonGate* pGate, const CvCascadeEvalCtx& ec, const CvCascadeEvalFlags& flags);
+class CvGate;
+bool cascadeGateOk(const CvGate* pGate, const CvCascadeEvalCtx& ec, const CvCascadeEvalFlags& flags);
 
 #endif // CV_CASCADE_CONDITION_EVAL_H

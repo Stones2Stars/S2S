@@ -14,20 +14,20 @@
 
 #include "Conditions/CvConditionEval.h"   // CvCascadeEvalCtx / CvCascadeEvalFlags -- the eval target for requires conditions
 #include "Enabler/CvOperatingBuildings.h"       // OperatingBuildings -- the standing per-city operating-buildings cache
-#include "CvJsonEdges.h"              // EnEdgeFamily/EnEdgeBucket -- the interned edge vocabulary (no strings at runtime)
+#include "CvEdges.h"              // EnEdgeFamily/EnEdgeBucket -- the interned edge vocabulary (no strings at runtime)
 #include <map>
 #include <set>
 #include <string>
 #include <vector>
 
 class CvInfo;
-class CvJsonCondition;
+class CvCondition;
 class CvPlayer;
 class CvCity;
 class CvTeam;
 
 // The per-bucket candidate/removal sets one HAVE traversal fills -- indexed by the INTERNED bucket enum
-// (CvJsonEdges.h; no strings at runtime). Shared by the kernel + the per-domain enablers + the accumulator's
+// (CvEdges.h; no strings at runtime). Shared by the kernel + the per-domain enablers + the accumulator's
 // frontier fills (promotions included).
 struct EnBucketSets
 {
@@ -107,7 +107,7 @@ public:
 	// requires-another-unit's-count leg); bMarkDynamic marks every untracked atom -- plus every BONUS_ reference
 	// (trade/map/vicinity shifts aren't a discrete event) -- DYNAMIC, routing its entity to the bounded per-turn
 	// re-check (the operate index). Over-inclusion is safe (a few extra re-checks).
-	static void scanCondDeps(const CvJsonCondition* c, CascadeCondDeps& d, bool bTrackUnits, bool bMarkDynamic);
+	static void scanCondDeps(const CvCondition* c, CascadeCondDeps& d, bool bTrackUnits, bool bMarkDynamic);
 
 	// The PURE operating buildings recompute: the two per-city operating buildings in ONE fixpoint pass. `activeOut` = the ACTIVE
 	// (present ∧ operate-holds ∧ ¬dormant-trigger) building ids for pCity. DORMANCY is DERIVED from

@@ -64,7 +64,7 @@ namespace
 	}
 
 	// domain -> the entity's authored block (const view; NULL = the type does not carry the section)
-	const CvJsonBoolBlock* clsBlockOf(const CvInfo* d, int eDomain)
+	const CvClassificationBlock* clsBlockOf(const CvInfo* d, int eDomain)
 	{
 		switch (eDomain)
 		{
@@ -161,7 +161,7 @@ void ClassificationRegistry::buildAndResolve(const std::vector<CvInfo*>& infos)
 	{
 		for (int d = 0; d < NUM_CLS_DOMAINS; ++d)
 		{
-			const CvJsonBoolBlock* b = clsBlockOf(infos[s], d);
+			const CvClassificationBlock* b = clsBlockOf(infos[s], d);
 			if (b == NULL) continue;
 			for (std::set<std::string>::const_iterator it = b->all().begin(); it != b->all().end(); ++it)
 				mint(d, *it);

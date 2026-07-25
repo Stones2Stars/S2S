@@ -81,7 +81,7 @@ public:
 	bool isGlobal() const { return false; }                      // CURATOR-GAP (verified): bGlobal  authored by 0 improvements (grep CIV4ImprovementInfos.xml)
 
 	// --- placement/validity predicates -- PLACEMENT DOMAIN (curate_improvement.py requires_fn), real data walked
-	// from `requires.build` (the CvJsonCondition tree the base already parses via mutRequires()/CJK_REQUIRES
+	// from `requires.build` (the CvCondition tree the base already parses via mutRequires()/CJK_REQUIRES
 	// dispatch). A length-1 "MakesValid" OR-alternative collapses to a bare token sitting DIRECTLY in `all` --
 	// indistinguishable by shape alone from the true AND-mandatory token of the same name (HAS_PEAK, HAS_RIVER); the
 	// .cpp tree-walk disambiguates these two using a direct-vs-nested occurrence count, verified against the live
@@ -145,7 +145,7 @@ public:
 	// RouteYieldChanges live ROUTE-side in the data (deliveryguy, modifier.md §4: the route governs the
 	// improvements it upgrades -- curate_route.py authors {food|production|commerce}.plot.improvements.{IMP});
 	// the legacy improvement-side readers (CvPlot::calculateImprovementYieldChange + the widget help) still ask
-	// the IMPROVEMENT, so the rows are RECONSTRUCTED at load by the CvCascadeReadJson reverse pass (the
+	// the IMPROVEMENT, so the rows are RECONSTRUCTED at load by the loadJson reverse pass (the
 	// route<-bonus prereq pattern). Same row/NULL semantics as TechYieldChanges above.
 	int getRouteYieldChanges(int i, int j) const;       // per-route (i = ROUTE id, j = yield)
 	int* getRouteYieldChangesArray(int i) const;        // row for ROUTE i, or NULL when it deposits none
@@ -158,9 +158,9 @@ public:
 	// getImprovement()==this rebuilds it at load (mirrors the legacy cache). Worker AI reads it.
 	const std::vector<BuildTypes>& getBuildTypes() const { return m_aeBuildTypes; }
 	void addBuildType(BuildTypes eBuild) { m_aeBuildTypes.push_back(eBuild); }   // load-time reverse-index writer (doPostLoadCaching)
-	// The improvement's property sources are authored as grants.repeatable pulses (curate_improvement.py
-	// post_process; owner 2026-07-01 "property pulses are repeatable grants") and BRIDGED back into this object
-	// in mapFrom (CascadePropertyBridge::bridgePulses) so the KEEP-legacy plot gather delivers them.
+	// The improvement's property sources are authored as `triggers` property-delta entries (json.md §5) and
+	// BRIDGED back into this object in mapFrom (CascadePropertyBridge::bridgePulses) so the KEEP-legacy plot
+	// gather delivers them.
 	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
 
 	const std::vector<MapCategoryTypes>& getMapCategories() const { return m_aeMapCategories; }
@@ -174,21 +174,24 @@ private:
 
 public:
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonRequires*  getRequires()  const { return &m_requires; }
-	virtual const CvJsonGrants*    getGrants()    const { return &m_grants; }
-	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvRequires*  getRequires()  const { return &m_requires; }
+	virtual const CvGrants*    getGrants()    const { return &m_grants; }
+	virtual const CvTriggers*      getTriggers()  const { return &m_triggers; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
 protected:
-	virtual CvJsonRequires*  mutRequires()  { return &m_requires; }
-	virtual CvJsonGrants*    mutGrants()    { return &m_grants; }
-	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvRequires*  mutRequires()  { return &m_requires; }
+	virtual CvGrants*    mutGrants()    { return &m_grants; }
+	virtual CvTriggers*      mutTriggers()  { return &m_triggers; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
 	static int mapGet(const std::map<int, int>& m, int k) { std::map<int, int>::const_iterator it = m.find(k); return it != m.end() ? it->second : 0; }
 
-	CvJsonRequires  m_requires;
-	CvJsonGrants    m_grants;
-	CvJsonModifiers m_modifiers;
+	CvRequires  m_requires;
+	CvGrants    m_grants;
+	CvTriggers      m_triggers;
+	CvModifiers m_modifiers;
 	int m_aiYieldChange[NUM_YIELD_TYPES];  // food/production/commerce .plot.flat
 	int m_iDefenseModifier;                // defense.plot.amount.percent
 	int m_iAirBombDefense;                 // defense.plot.air.flat (data-migration ruling)
@@ -232,7 +235,7 @@ private:
 	std::map<int, std::vector<int> > m_bonusYieldChanges;  // BONUS id -> NUM_YIELD_TYPES row ({HAS_BONUS:B}-gated)
 
 	std::vector<BuildTypes> m_aeBuildTypes;          // CURATOR-GAP always empty -- see getBuildTypes
-	CvPropertyManipulators m_PropertyManipulators;   // CURATOR-GAP always empty (relocated to grants.repeatable) -- see getPropertyManipulators
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the triggers PROPERTY pulses (CascadePropertyBridge::bridgePulses)
 };
 
 #endif // CV_JSON_IMPROVEMENT_INFO_H

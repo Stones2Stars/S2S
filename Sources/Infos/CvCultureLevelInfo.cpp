@@ -15,7 +15,7 @@
 // NO_GAMEOPTION made the 12 gated tiers apply unconditionally regardless of the option.
 int CvCultureLevelInfo::getPrereqGameOption() const
 {
-	const CvJsonCondition* e = m_gate.enabled;
+	const CvCondition* e = m_gate.enabled;
 	if (e != NULL && e->kind == CASC_COND_PRESENCE && e->type.compare(0, 11, "GAMEOPTION_") == 0)
 		return GC.getInfoTypeForString(e->type.c_str(), true);
 	return NO_GAMEOPTION;

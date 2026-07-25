@@ -14,7 +14,7 @@ namespace picojson { class value; }
 //  DESC:   A special-building class (cathedral / monastery / corporation / ...).
 //          #430: JSON-fed (Assets/Data/specialbuildings/*.json via mapFrom); no XML read.
 //          getTechPrereq is RECONSTRUCTED at load from the tech-side inversion
-//          (tech.enables.specialBuildings; cascadeLoadJson) via setTechPrereq -- the curator
+//          (tech.enables.specialBuildings; loadJson) via setTechPrereq -- the curator
 //          stores it there (store.py), not on the special building.
 //          getObsoleteTech reads the `obsoletedBy.techs` EDGE (the CvBuildingInfo shape, off the
 //          base dispatch). The group's obsoleting tech is ALSO inherited onto its member buildings
@@ -34,7 +34,7 @@ public:
 	TechTypes getObsoleteTech() const   // obsoletedBy.techs -- the same edge read as CvBuildingInfo
 	{ const std::vector<int>* v = edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS); return (TechTypes)((v != NULL && !v->empty()) ? (*v)[0] : NO_TECH); }
 	TechTypes getTechPrereq() const { return m_iTechPrereq; }
-	void setTechPrereq(TechTypes eTech) { m_iTechPrereq = eTech; }   // #430: un-inversion from tech.enables.specialBuildings (cascadeLoadJson, LOAD-ONLY)
+	void setTechPrereq(TechTypes eTech) { m_iTechPrereq = eTech; }   // #430: un-inversion from tech.enables.specialBuildings (loadJson, LOAD-ONLY)
 	int getTechPrereqAnyone() const { return m_iTechPrereqAnyone; }
 	// The GROUP cap (json §4.4: the member authors identity.specialBuildingType, the GROUP holds allowed:{empire:N}).
 	// Reads the COMPOSED allowed unit -- the CvBuildingInfo shape -- so the cap has ONE representation: the enabler's
@@ -44,13 +44,13 @@ public:
 
 	bool isValid() const { return m_bValid; }
 
-	virtual const CvJsonAllowed* getAllowed() const { return &m_allowed; }
-	virtual CvJsonAllowed*       mutAllowed()       { return &m_allowed; }
+	virtual const CvAllowed* getAllowed() const { return &m_allowed; }
+	virtual CvAllowed*       mutAllowed()       { return &m_allowed; }
 
 	// §4.1/§4.2 edge storage -- without it the base dispatch has nowhere to put an authored
 	// `obsoletedBy`/`enables` and routes the key to jsonNoteUnconsumed instead.
-	virtual const CvJsonEdges*   getEdges() const   { return &m_edges; }
-	virtual CvJsonEdges*         mutEdges()         { return &m_edges; }
+	virtual const CvEdges*   getEdges() const   { return &m_edges; }
+	virtual CvEdges*         mutEdges()         { return &m_edges; }
 
 	virtual void mapFrom(const picojson::value& entity);
 
@@ -60,8 +60,8 @@ protected:
 	TechTypes m_iTechPrereq;
 	int m_iTechPrereqAnyone;
 
-	CvJsonAllowed m_allowed;   // §4.4 -- the composed section unit (parsed by the base dispatch)
-	CvJsonEdges   m_edges;     // §4.1/§4.2 -- ditto
+	CvAllowed m_allowed;   // §4.4 -- the composed section unit (parsed by the base dispatch)
+	CvEdges   m_edges;     // §4.1/§4.2 -- ditto
 
 	bool m_bValid;
 };

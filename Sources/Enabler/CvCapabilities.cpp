@@ -45,7 +45,7 @@ static const CcapKeyRow CCAP_KEYS[] =
 static void ccap_union(const CvTechInfo* j, CascadeTeamCaps& c)
 {
 	if (j == NULL) return;
-	const CvJsonBoolBlock* caps = j->getCapabilities();
+	const CvClassificationBlock* caps = j->getCapabilities();
 	if (caps != NULL) c.caps.insert(caps->all().begin(), caps->all().end());
 	c.trade.insert(j->canTrade.begin(), j->canTrade.end());
 	c.tradeTerrains.insert(j->canTradeOnTerrains.begin(), j->canTradeOnTerrains.end());

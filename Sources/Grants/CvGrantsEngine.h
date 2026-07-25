@@ -6,7 +6,7 @@
 
 //
 //	CvCascadeGrants -- the #430 GRANTS machine (the "provisions" consumer). An IEventConsumer on the event spine: on a
-//	DOMAIN state-change it resolves the SOURCE entity's GENUINE grants (the CvJsonGrants unit composed on its
+//	DOMAIN state-change it resolves the SOURCE entity's GENUINE grants (the CvGrants unit composed on its
 //	CvJson<X>Info in the InfoRepo, minus the deferred mission-keys) and emits a [GRANTS] shadow diagnostic of what it
 //	WOULD hand out. It does NOT apply -- legacy still applies; this is the resolution + observability surface.
 //
@@ -14,7 +14,7 @@
 //	and unit-created (SEVT_UNIT_COUNT, delta>0) -> the on-build / on-create grants. Un-run parity (owner: no
 //	live parity until everything is in). Follow-on increments (grants-machine.md): the remaining triggers
 //	(per-turn recurring, tech first-discover, civ/religion/civic/game-start -- each needs a new DOMAIN event), the
-//	richer grant mapping (the per-type mapFrom / CvJsonGrants unit skips bool/dict grants + drops the repeatable interval/chance), and the true
+//	richer grant mapping (the per-type mapFrom / CvGrants unit skips bool/dict grants), and the true
 //	diff-vs-legacy shadow. Registered at the composition root (spineRegisterConsumers -> cascadeRegisterGrants).
 //
 class CvCascadeGrants : public IEventConsumer

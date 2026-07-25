@@ -25,26 +25,26 @@ public:
 	int getProductionToCommerceModifier(int i) const
 	{ return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_aiProductionToCommerce[i] : 0; }
 
-	// store-inverted onto the tech (tech.enables.processes); reconstructed at LOAD by the cascadeLoadJson tech-FK
+	// store-inverted onto the tech (tech.enables.processes); reconstructed at LOAD by the loadJson tech-FK
 	// reverse-index pass (the Route<-bonus pattern), which calls setTechPrereq.
 	TechTypes getTechPrereq() const { return m_eTechPrereq; }
-	void setTechPrereq(TechTypes e) { m_eTechPrereq = e; }   // load-time reverse-index writer (cascadeLoadJson)
+	void setTechPrereq(TechTypes e) { m_eTechPrereq = e; }   // load-time reverse-index writer (loadJson)
 
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonEdges*     getEdges()     const { return &m_edges; }
-	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvEdges*     getEdges()     const { return &m_edges; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
 protected:
-	virtual CvJsonEdges*     mutEdges()     { return &m_edges; }
-	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvEdges*     mutEdges()     { return &m_edges; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
-	CvJsonEdges     m_edges;
-	CvJsonModifiers m_modifiers;
+	CvEdges     m_edges;
+	CvModifiers m_modifiers;
 	int m_aiProductionToCommerce[NUM_COMMERCE_TYPES];   // gold/research/culture/espionage .city.percent (natural %, ×1)
-	TechTypes m_eTechPrereq;   // store-inverted tech.enables.processes, reconstructed at load (cascadeLoadJson)
+	TechTypes m_eTechPrereq;   // store-inverted tech.enables.processes, reconstructed at load (loadJson)
 };
 
 #endif // CV_JSON_PROCESS_INFO_H

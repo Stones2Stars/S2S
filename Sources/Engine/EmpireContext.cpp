@@ -9,7 +9,7 @@
 #include "CvTraitInfo.h"                // the trait §9 policies block
 #include "Data/CvDepositRead.h"         // MMKernel::traitData -- the active-set (simple/complex) trait resolver
 #include "CvClassificationRegistry.h"   // count(CLSD_POLICY) -- the minted POLICY id space
-#include "CvJsonBoolBlock.h"            // CLSD_POLICY + hasId (the O(1) policy bitset)
+#include "CvClassificationBlock.h"            // CLSD_POLICY + hasId (the O(1) policy bitset)
 
 // forwarding accessor: the empire's state religion is already O(1) on CvPlayer -- read it through, no stored copy.
 int EmpireContext::stateReligion() const { return m_player != NULL ? (int)m_player->getStateReligion() : -1; }
@@ -24,7 +24,7 @@ void EmpireContext::fillEvalCtx(CvCascadeEvalCtx& ec) const
 // Rebuild the enacted-policy UNION from the player's LIVE grantors -- adopted civics + held (active-set) traits --
 // exactly the grantor set the one policy read walks (CvConditionEval ev_playerHasPolicy). This is a WHOLE rebuild,
 // called on civic/trait change and at load (never per read); the union is then an O(1) `policies.has(pid)` for every
-// consumer. Keyed by the ClassificationRegistry domain-local POLICY id (CvJsonBoolBlock::hasId space).
+// consumer. Keyed by the ClassificationRegistry domain-local POLICY id (CvClassificationBlock::hasId space).
 void EmpireContext::rebuildPolicies()
 {
 	policies.clear();
@@ -41,7 +41,7 @@ void EmpireContext::rebuildPolicies()
 		if (eCivic == NO_CIVIC)
 			continue;
 		const CvCivicInfo* d = static_cast<const CvCivicInfo*>(InfoRepo<CvCivicInfo>::get().get(eCivic));
-		const CvJsonBoolBlock* b = (d != NULL) ? d->getPolicies() : NULL;
+		const CvClassificationBlock* b = (d != NULL) ? d->getPolicies() : NULL;
 		if (b == NULL)
 			continue;
 		for (int pid = 0; pid < nPolicies; ++pid)
@@ -54,7 +54,7 @@ void EmpireContext::rebuildPolicies()
 		if (!m_player->hasTrait((TraitTypes)t))
 			continue;
 		const CvTraitInfo* d = MMKernel::traitData(t);
-		const CvJsonBoolBlock* b = (d != NULL) ? d->getPolicies() : NULL;
+		const CvClassificationBlock* b = (d != NULL) ? d->getPolicies() : NULL;
 		if (b == NULL)
 			continue;
 		for (int pid = 0; pid < nPolicies; ++pid)

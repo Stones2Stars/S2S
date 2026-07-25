@@ -18,7 +18,7 @@
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
 #include "Conditions/CvConditionEval.h"   // cascadeEvalCondition -- the StoneBase-ported typed-condition evaluator
-#include "CvJsonCondition.h"       // CvJsonCondition tree (CASC_COND_*/CASC_PRED_*) -- scanned for the operate reverse-index
+#include "CvCondition.h"       // CvCondition tree (CASC_COND_*/CASC_PRED_*) -- scanned for the operate reverse-index
 #include "CvBuildingInfo.h"
 #include "CvUnitInfo.h"
 #include "CvTechInfo.h"
@@ -170,7 +170,7 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 	// PROJECTS (parity find 2026-07-02): the tally has NO project domain, so the cap check read buildingCount(projectId)
 	// = 0 and every already-built world project stayed offered (canCreate casc=1 leg=0 on ENCYCLOPEDIA/IMF/EVOLUTION).
 	// Projects read the engine-owned counts (the tally read-not-store philosophy): world = created-ever, team = held.
-	const CvJsonAllowed* a = j->getAllowed();
+	const CvAllowed* a = j->getAllowed();
 	if (a == NULL) return true;
 	if (eBucket == EDGEB_PROJECTS)
 	{
@@ -271,7 +271,7 @@ static const std::vector<int>* ek_provides(int b)
 {
 	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(b);
 	if (j == NULL) return NULL;
-	const CvJsonProvides* pv = j->getProvides();
+	const CvProvides* pv = j->getProvides();
 	return (pv != NULL && !pv->bonuses.empty()) ? &pv->bonuses : NULL;
 }
 
@@ -457,7 +457,7 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 
 // The ONE requires-tree HAVE-atom scanner (see the header) -- was three near-identical file-static copies
 // (bc_scanCond / uc_scanCond / ek_scanOp); the legs that differed are the two flags.
-void EnablerKernel::scanCondDeps(const CvJsonCondition* c, CascadeCondDeps& d, bool bTrackUnits, bool bMarkDynamic)
+void EnablerKernel::scanCondDeps(const CvCondition* c, CascadeCondDeps& d, bool bTrackUnits, bool bMarkDynamic)
 {
 	if (c == NULL) return;
 	if (c->kind == CASC_COND_GROUP)

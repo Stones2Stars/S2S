@@ -42,7 +42,7 @@ static int s_segFlat = -1, s_segPercent = -1, s_segEmpire = -1, s_segBuildings =
 // A deposit applies iff enabled holds (or is absent) AND disabled does NOT hold (json.md §3.9), evaluated through the
 // typed-condition evaluator against the live engine ctx. MODIFIER context = the lenient flags (default): a
 // {STATE_RELIGION:X} compound matches loosely (the strict-match form is the enabler's requires.build only).
-bool MMKernel::applies(const CvJsonCondition* enabled, const CvJsonCondition* disabled, const CvCascadeEvalCtx& ec)
+bool MMKernel::applies(const CvCondition* enabled, const CvCondition* disabled, const CvCascadeEvalCtx& ec)
 {
 	static const CvCascadeEvalFlags kFlags;   // default: strictStateReligionForBuild=false (the modifier reading)
 	if (enabled != NULL && !cascadeEvalCondition(enabled, ec, kFlags)) return false;
@@ -95,7 +95,7 @@ int MMKernel::sumPercent(const CvInfo* d, const std::string& wantAddress, const 
 
 // ===================== StoneBase Calc PORT -- leaf helpers (ModifierMath.cs over the flat-deposit model) =====================
 // The C++ flat-deposit model: each compiled CascadeDeposit's `address` IS the dotted "<channel>.<scope>[.<member>[.<KEY>]]"
-// path (the CvJsonModifiers family key, compiled by the DepositIndex push), `unit` the leaf kind, `value100` the ×100
+// path (the CvModifiers family key, compiled by the DepositIndex push), `unit` the leaf kind, `value100` the ×100
 // magnitude. So a StoneBase tree-walk (fam.Root.Children[scope]...Magnitudes) is an address match here. These mirror ModifierMath.cs.
 // The active trait set IS option-gated (traitData() picks the SIMPLE vs COMPLEX repo by GAMEOPTION_LEADER_COMPLEX_TRAITS,
 // StoneBase ActiveTraitSet) and PURE_TRAITS IS applied (sumTrait/sumTrait100 drop off-alignment values, StoneBase PureFilter).

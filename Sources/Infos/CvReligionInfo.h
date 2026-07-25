@@ -40,7 +40,7 @@ public:
 	const char* getTechButton() const { return m_szTechButton.c_str(); }               // ui.art.techButton
 	const char* getGenericTechButton() const { return m_szGenericTechButton.c_str(); } // ui.art.genericTechButton
 
-	// grant thin accessors (grants.freeUnit / grants.numFreeUnits ride the composed CvJsonGrants unit)
+	// grant thin accessors (grants.freeUnit / grants.numFreeUnits ride the composed CvGrants unit)
 	int getFreeUnit() const;
 	int getNumFreeUnits() const;
 
@@ -64,26 +64,26 @@ public:
 	const char* getButtonDisabled() const;   // derived: base button (ui.art.icon) with the "_D.dds" disabled suffix (mirrors legacy)
 
 	// curate_religion.py DROPs TechPrereq, store-inverting it onto tech.enables.religions. Reconstructed at LOAD by the
-	// cascadeLoadJson tech-FK reverse-index pass (the Route<-bonus pattern), which calls setTechPrereq.
+	// loadJson tech-FK reverse-index pass (the Route<-bonus pattern), which calls setTechPrereq.
 	TechTypes getTechPrereq() const { return m_eTechPrereq; }
-	void setTechPrereq(TechTypes e) { m_eTechPrereq = e; }   // load-time reverse-index writer (cascadeLoadJson)
+	void setTechPrereq(TechTypes e) { m_eTechPrereq = e; }   // load-time reverse-index writer (loadJson)
 
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonEdges*     getEdges()     const { return &m_edges; }
-	virtual const CvJsonGrants*    getGrants()    const { return &m_grants; }
-	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvEdges*     getEdges()     const { return &m_edges; }
+	virtual const CvGrants*    getGrants()    const { return &m_grants; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
 protected:
-	virtual CvJsonEdges*     mutEdges()     { return &m_edges; }
-	virtual CvJsonGrants*    mutGrants()    { return &m_grants; }
-	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvEdges*     mutEdges()     { return &m_edges; }
+	virtual CvGrants*    mutGrants()    { return &m_grants; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
-	CvJsonEdges     m_edges;
-	CvJsonGrants    m_grants;
-	CvJsonModifiers m_modifiers;
+	CvEdges     m_edges;
+	CvGrants    m_grants;
+	CvModifiers m_modifiers;
 	int m_aiStateReligionCommerce[NUM_COMMERCE_TYPES];   // {c}.city.flat entries enabled:{STATE_RELIGION:self}
 	int m_aiHolyCityCommerce[NUM_COMMERCE_TYPES];        // {c}.city.flat entries enabled:{IS_HOLY_CITY:self}
 	int m_aiGlobalReligionCommerce[NUM_COMMERCE_TYPES];  // shrine per-commerce, materialized from shrineCommerce at load
@@ -94,7 +94,7 @@ private:
 	std::map<int, int> m_flavours;
 	std::string m_szSound, m_szTechButton, m_szGenericTechButton, m_szMovieFile, m_szMovieSound;
 	int m_iMissionType, m_iChar, m_iHolyCityChar;   // runtime (not JSON)
-	TechTypes m_eTechPrereq;   // store-inverted tech.enables.religions, reconstructed at load (cascadeLoadJson)
+	TechTypes m_eTechPrereq;   // store-inverted tech.enables.religions, reconstructed at load (loadJson)
 	std::vector<int> m_aeShrineBuildings;           // runtime (buildings self-register at load)
 	CvPropertyManipulators m_PropertyManipulators;  // STUB empty -- property engine, XML-era manipulator data deferred
 };

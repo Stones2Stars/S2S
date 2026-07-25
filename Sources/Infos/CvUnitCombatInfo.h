@@ -322,14 +322,14 @@ public:
 	const InvisibleImprovementChanges& getVisibleImprovementRangeChange(int i) const { return m_aVisibleImprovementRangeChanges[i]; }
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
-	virtual const CvJsonBoolBlock* getSkills()    const { return &m_skills; }
-	virtual const CvJsonGate*      getGate()      const { return &m_gate; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvClassificationBlock* getSkills()    const { return &m_skills; }
+	virtual const CvGate*      getGate()      const { return &m_gate; }
 
 protected:
-	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
-	virtual CvJsonBoolBlock* mutSkills()    { return &m_skills; }
-	virtual CvJsonGate*      mutGate()      { return &m_gate; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvClassificationBlock* mutSkills()    { return &m_skills; }
+	virtual CvGate*      mutGate()      { return &m_gate; }
 
 private:
 	// small readers for the FK-list / intensity-map getters (mirrors the Promotion poco)
@@ -337,9 +337,9 @@ private:
 	static int vecGet(const std::vector<int>& v, int i) { return (i >= 0 && i < (int)v.size()) ? v[i] : -1; }
 	static bool vecHas(const std::vector<int>& v, int id) { for (size_t j = 0; j < v.size(); ++j) if (v[j] == id) return true; return false; }
 
-	CvJsonModifiers m_modifiers;
-	CvJsonBoolBlock m_skills;
-	CvJsonGate      m_gate;
+	CvModifiers m_modifiers;
+	CvClassificationBlock m_skills;
+	CvGate      m_gate;
 
 	// identity scalars
 	ReligionTypes m_eReligion;

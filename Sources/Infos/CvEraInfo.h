@@ -65,13 +65,13 @@ public:
 	// The COMPOSED grants unit: `grants.<channel>: N` is a §5 numeric PULSE, so the base dispatch parses it here and
 	// the scalars below are a view of it. Without this the section reached only those private scalars, and the grants
 	// machine's game-start resolution read 0 for every era pulse and silently no-op'd.
-	virtual const CvJsonGrants* getGrants() const { return &m_grants; }
-	virtual CvJsonGrants*       mutGrants()       { return &m_grants; }
+	virtual const CvGrants* getGrants() const { return &m_grants; }
+	virtual CvGrants*       mutGrants()       { return &m_grants; }
 
 	virtual void mapFrom(const picojson::value& entity);
 
 protected:
-	CvJsonGrants m_grants;   // §5 -- the game-start starting-gold/units pulses
+	CvGrants m_grants;   // §5 -- the game-start starting-gold/units pulses
 
 
 	int m_iStartingUnitMultiplier;

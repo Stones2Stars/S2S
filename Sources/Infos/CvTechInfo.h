@@ -5,7 +5,7 @@
 //
 //	CvTechInfo -- the per-type cascade info for TECHS. TWO parts:
 //	(1) the empire-ability blocks this tech PROVIDES when held (json.md §8; capabilities.md): the flat `capabilities`
-//	    (the composed CvJsonBoolBlock unit) + the siblings `canTrade` (trade-table items/agreements), `canTradeOn`
+//	    (the composed CvClassificationBlock unit) + the siblings `canTrade` (trade-table items/agreements), `canTradeOn`
 //	    (tradable TERRAIN_ FK refs), `canWorkOn`.
 //	(2) the tech's OWN typed values (research cost, era, the empire modifiers it deposits, flags, AI, art/sound/quote).
 //	A tech's UNLOCK surface (units/buildings/…/other techs) is store-inverted onto those entities' `enables.*` / this
@@ -139,30 +139,30 @@ public:
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonRequires*  getRequires()     const { return &m_requires; }
-	virtual const CvJsonEdges*     getEdges()        const { return &m_edges; }
-	virtual const CvJsonAllowed*   getAllowed()      const { return &m_allowed; }
-	virtual const CvJsonGrants*    getGrants()       const { return &m_grants; }
-	virtual const CvJsonModifiers* getModifiers()    const { return &m_modifiers; }
-	virtual const CvJsonBoolBlock* getCapabilities() const { return &m_capabilities; }
+	virtual const CvRequires*  getRequires()     const { return &m_requires; }
+	virtual const CvEdges*     getEdges()        const { return &m_edges; }
+	virtual const CvAllowed*   getAllowed()      const { return &m_allowed; }
+	virtual const CvGrants*    getGrants()       const { return &m_grants; }
+	virtual const CvModifiers* getModifiers()    const { return &m_modifiers; }
+	virtual const CvClassificationBlock* getCapabilities() const { return &m_capabilities; }
 
 protected:
-	virtual CvJsonRequires*  mutRequires()     { return &m_requires; }
-	virtual CvJsonEdges*     mutEdges()        { return &m_edges; }
-	virtual CvJsonAllowed*   mutAllowed()      { return &m_allowed; }
-	virtual CvJsonGrants*    mutGrants()       { return &m_grants; }
-	virtual CvJsonModifiers* mutModifiers()    { return &m_modifiers; }
-	virtual CvJsonBoolBlock* mutCapabilities() { return &m_capabilities; }
+	virtual CvRequires*  mutRequires()     { return &m_requires; }
+	virtual CvEdges*     mutEdges()        { return &m_edges; }
+	virtual CvAllowed*   mutAllowed()      { return &m_allowed; }
+	virtual CvGrants*    mutGrants()       { return &m_grants; }
+	virtual CvModifiers* mutModifiers()    { return &m_modifiers; }
+	virtual CvClassificationBlock* mutCapabilities() { return &m_capabilities; }
 
 private:
 	static int mapGet(const std::map<int, int>& m, int k) { std::map<int, int>::const_iterator it = m.find(k); return it != m.end() ? it->second : 0; }
 
-	CvJsonRequires  m_requires;
-	CvJsonEdges     m_edges;
-	CvJsonAllowed   m_allowed;
-	CvJsonGrants    m_grants;
-	CvJsonModifiers m_modifiers;
-	CvJsonBoolBlock m_capabilities;
+	CvRequires  m_requires;
+	CvEdges     m_edges;
+	CvAllowed   m_allowed;
+	CvGrants    m_grants;
+	CvModifiers m_modifiers;
+	CvClassificationBlock m_capabilities;
 
 	int m_iResearchCost, m_iEra, m_iAdvisorType, m_iTradeRoutes, m_iFeatureProductionModifier, m_iWorkerSpeedModifier;
 	int m_iInflationModifier;

@@ -9,7 +9,7 @@
 #include "UI/CvArtFileMgr.h"      // ARTFILEMGR -- the EXE-shim-merge getArtInfo()
 #include "Infos/CvArtInfoFeature.h"   // complete CvArtInfoFeature -- getButton() needs the full definition
 #include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonFamVal/...)
-#include "Property/CvPropertyBridge.h" // the shared grants.repeatable PROPERTY pulse -> manipulator walk
+#include "Property/CvPropertyBridge.h" // the shared `triggers` PROPERTY pulse -> manipulator walk
 #include "AI/CvGameAI.h"          // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 
 CvFeatureInfo::CvFeatureInfo()
@@ -78,10 +78,10 @@ void CvFeatureInfo::mapFrom(const picojson::value& entity)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
 
-	// PROPERTY_* per-turn SOURCES: the feature's grants.repeatable property pulses (bamboo/jungle air-pollution
+	// PROPERTY_* per-turn SOURCES: the feature's `triggers` property pulses (bamboo/jungle air-pollution
 	// sinks, reef water-pollution sinks -- authored per json §5) feed the KEEP-legacy solver via the plot gather,
 	// mirroring the legacy PLOT+NEAR shape. The ONE shared pulse walk (clear-and-refill inside).
-	CascadePropertyBridge::bridgePulses(getGrants(), m_PropertyManipulators);
+	CascadePropertyBridge::bridgePulses(getTriggers(), m_PropertyManipulators);
 
 	// plot yield families -- split each channel's flat entries into the unconditional base (YieldChange) and the
 	// HAS_RIVER-gated extra (RiverYieldChange). Handles both the scalar and the mixed-array authored shapes.

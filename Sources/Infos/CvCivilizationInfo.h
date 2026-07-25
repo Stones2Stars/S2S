@@ -83,17 +83,17 @@ public:
 	// class's own typed members (so the grants machine's game-start resolution counted 0 and silently no-op'd), and
 	// the `enables`-family edges reached nothing at all (the NPC research ban). Composing them puts the civ on the
 	// generic surface every cross-cutting reader uses (the grants machine, the enabler, /state/info).
-	virtual const CvJsonGrants* getGrants() const { return &m_grants; }
-	virtual CvJsonGrants*       mutGrants()       { return &m_grants; }
-	virtual const CvJsonEdges*  getEdges()  const { return &m_edges; }
-	virtual CvJsonEdges*        mutEdges()        { return &m_edges; }
+	virtual const CvGrants* getGrants() const { return &m_grants; }
+	virtual CvGrants*       mutGrants()       { return &m_grants; }
+	virtual const CvEdges*  getEdges()  const { return &m_edges; }
+	virtual CvEdges*        mutEdges()        { return &m_edges; }
 
 	virtual void mapFrom(const picojson::value& entity);
 
 	//----------------------PROTECTED MEMBER VARIABLES----------------------------
 protected:
-	CvJsonGrants m_grants;   // §5 -- the game-start provisions (civics/techs/buildings)
-	CvJsonEdges  m_edges;    // §4.1/4.2 -- the enables-family edges (the NPC `disables` research ban)
+	CvGrants m_grants;   // §5 -- the game-start provisions (civics/techs/buildings)
+	CvEdges  m_edges;    // §4.1/4.2 -- the enables-family edges (the NPC `disables` research ban)
 
 	int m_iDefaultPlayerColor;
 	int m_iArtStyleType;

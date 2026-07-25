@@ -62,10 +62,10 @@ public:
 	const char* getMovieFile() const { return m_szMovieFile.c_str(); }   // ui.art.movie.file
 	const char* getMovieSound() const { return m_szMovieSound.c_str(); } // ui.art.movie.sound
 	// store-inverted onto the tech (tech.enables.corporations / tech.obsoletes.corporations); reconstructed at LOAD by
-	// the cascadeLoadJson tech-FK reverse-index pass (the Route<-bonus pattern), which calls the setters below.
+	// the loadJson tech-FK reverse-index pass (the Route<-bonus pattern), which calls the setters below.
 	TechTypes getTechPrereq() const { return m_eTechPrereq; }
 	TechTypes getObsoleteTech() const { return m_eObsoleteTech; }
-	void setTechPrereq(TechTypes e) { m_eTechPrereq = e; }       // load-time reverse-index writers (cascadeLoadJson)
+	void setTechPrereq(TechTypes e) { m_eTechPrereq = e; }       // load-time reverse-index writers (loadJson)
 	void setObsoleteTech(TechTypes e) { m_eObsoleteTech = e; }
 	// curator-gap (curate_corporation.py DROP={TechPrereq,PrereqBonuses,PrereqBuildings}): PrereqBuildings is
 	// the corp's per-building COUNT prereq for SPREADING (legacy PrereqBuildings; the CvUnit executive-spread gate
@@ -93,25 +93,25 @@ public:
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonEdges*     getEdges()     const { return &m_edges; }
-	virtual const CvJsonProvides*  getProvides()  const { return &m_provides; }
-	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
-	virtual const CvJsonGrants*    getGrants()    const { return &m_grants; }   // grants.freeUnit (getFreeUnit)
-	virtual const CvJsonRequires*  getRequires()  const { return &m_requires; } // requires.spread (getPrereqBuilding)
+	virtual const CvEdges*     getEdges()     const { return &m_edges; }
+	virtual const CvProvides*  getProvides()  const { return &m_provides; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvGrants*    getGrants()    const { return &m_grants; }   // grants.freeUnit (getFreeUnit)
+	virtual const CvRequires*  getRequires()  const { return &m_requires; } // requires.spread (getPrereqBuilding)
 
 protected:
-	virtual CvJsonEdges*     mutEdges()     { return &m_edges; }
-	virtual CvJsonProvides*  mutProvides()  { return &m_provides; }
-	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
-	virtual CvJsonGrants*    mutGrants()    { return &m_grants; }
-	virtual CvJsonRequires*  mutRequires()  { return &m_requires; }
+	virtual CvEdges*     mutEdges()     { return &m_edges; }
+	virtual CvProvides*  mutProvides()  { return &m_provides; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvGrants*    mutGrants()    { return &m_grants; }
+	virtual CvRequires*  mutRequires()  { return &m_requires; }
 
 private:
-	CvJsonEdges     m_edges;
-	CvJsonProvides  m_provides;
-	CvJsonModifiers m_modifiers;
-	CvJsonGrants    m_grants;
-	CvJsonRequires  m_requires;
+	CvEdges     m_edges;
+	CvProvides  m_provides;
+	CvModifiers m_modifiers;
+	CvGrants    m_grants;
+	CvRequires  m_requires;
 	std::map<int, int> m_prereqBuildingCounts;   // requires.spread BUILDING count atoms, materialized at mapFrom
 	int m_aiYieldChange[NUM_YIELD_TYPES];
 	int m_aiYieldProduced[NUM_YIELD_TYPES];
@@ -126,7 +126,7 @@ private:
 	int m_iTGAIndex;                          // ui.art.tgaIndex
 	std::vector<int> m_aeExcludes;            // top-level `excludes` -- CompetingCorporations FKs (isCompetingCorporation)
 	int m_iHeadquarterChar, m_iMissionType, m_iChar;   // runtime (m_iChar: display glyph assigned by the symbol pass via setChar)
-	TechTypes m_eTechPrereq, m_eObsoleteTech; // store-inverted tech FKs, reconstructed at load (cascadeLoadJson)
+	TechTypes m_eTechPrereq, m_eObsoleteTech; // store-inverted tech FKs, reconstructed at load (loadJson)
 	CvPropertyManipulators m_PropertyManipulators;   // STUB empty -- property engine, XML-era manipulator data deferred
 };
 

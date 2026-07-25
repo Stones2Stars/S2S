@@ -3825,7 +3825,7 @@ void CvTaggedSaveFormatWrapper::ReadEndObject()
 // (lazily, first Expect of a load), it lets a retired serialized field be FULLY removed from the object -- no member,
 // no read/write, no per-object WRAPPER_SKIP_ELEMENT: an orphan CUT tag is drained transparently wherever it appears
 // (so it never desyncs the downstream reads), and a RENAMED tag matches its new member. The file is deployed under
-// Assets/ so the runtime DLL reads it via gDLL->getModName (mirrors CvCascadeReadJson's Assets\Data path). Load-only,
+// Assets/ so the runtime DLL reads it via gDLL->getModName (mirrors readJson's Assets\Data path). Load-only,
 // read-only; an absent/empty file => zero drains (exactly the pre-mechanism behaviour). Format + rules: the file header.
 namespace {
 	struct SaveMigrationTable

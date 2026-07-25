@@ -124,7 +124,7 @@ public:
 	// ⛔ DECLARED here, DEFINED per-tag as explicit specializations in InfoRepo.cpp (fix 2026-07-02). The original
 	// header-inline body (`static InfoRepo s_instance;` in an inline template member) hit the classic VC7.1
 	// inline-static DUPLICATION defect under unity batching: each unity TU inlined its OWN s_instance, so
-	// CvCascadeReadJson populated one instance while the machines (a different batch) read another, EMPTY one --
+	// readJson populated one instance while the machines (a different batch) read another, EMPTY one --
 	// proven live by [MODIFIER/repo] probeFiles=13444 / mapped=0. Out-of-line specializations give exactly ONE
 	// instance per tag; a NEW tag use without an InfoRepo.cpp entry fails at LINK (add it there -- one line).
 	static InfoRepo& get();

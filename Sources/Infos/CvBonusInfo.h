@@ -58,12 +58,12 @@ public:
 	// techReveal/techCityTrade/techObsolete are DROPPED from the bonus and STORE-INVERTED onto the tech: reveal +
 	// cityTrade both -> tech.enables.bonuses (deliberately merged, curate_bonus.py:26 -- indistinguishable, so both
 	// read the SAME reconstructed tech), obsolete -> tech.obsoletes.bonuses (verified e.g.
-	// TECH_SIMULATION_AWARENESS.enables.bonuses = [BONUS_UNOBTAINIUM]). Reconstructed at LOAD by the cascadeLoadJson
+	// TECH_SIMULATION_AWARENESS.enables.bonuses = [BONUS_UNOBTAINIUM]). Reconstructed at LOAD by the loadJson
 	// tech-FK reverse-index pass (the Route<-bonus pattern), which walks every tech's edges and calls the setters below.
 	int getTechReveal() const { return m_eTechReveal; }
 	int getTechCityTrade() const { return m_eTechCityTrade; }
 	int getTechObsolete() const { return m_eTechObsolete; }
-	void setTechReveal(TechTypes e) { m_eTechReveal = e; }         // load-time reverse-index writers (cascadeLoadJson)
+	void setTechReveal(TechTypes e) { m_eTechReveal = e; }         // load-time reverse-index writers (loadJson)
 	void setTechCityTrade(TechTypes e) { m_eTechCityTrade = e; }
 	void setTechObsolete(TechTypes e) { m_eTechObsolete = e; }
 
@@ -114,16 +114,16 @@ public:
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonEdges*     getEdges()     const { return &m_edges; }
-	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvEdges*     getEdges()     const { return &m_edges; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
 protected:
-	virtual CvJsonEdges*     mutEdges()     { return &m_edges; }
-	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvEdges*     mutEdges()     { return &m_edges; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
-	CvJsonEdges     m_edges;
-	CvJsonModifiers m_modifiers;
+	CvEdges     m_edges;
+	CvModifiers m_modifiers;
 	CvPropertyManipulators m_PropertyManipulators;   // empty -- no bonus authors PropertyManipulators (0 across source XML + JSON); property-engine migration deferred (mirrors CvCorporationInfo)
 	int m_aiYieldChange[NUM_YIELD_TYPES];  // food/production/commerce .plot.flat
 	int m_iBonusClassType;                 // identity.bonusClassType (BONUSCLASS_ id)
@@ -138,7 +138,7 @@ private:
 	int m_iConstAppearance, m_iRandAppearance1, m_iRandAppearance2, m_iRandAppearance3, m_iRandAppearance4;  // mapGeneration.constAppearance + rands.iRandApp1-4 (randAppearance/isMapBonus)
 	int m_iMinLandPercent;                 // mapGeneration.minLandPercent
 	int m_iPercentPerPlayer;               // identity.player (legacy iPlayer); 0 -- no bonus authors it
-	TechTypes m_eTechReveal, m_eTechCityTrade, m_eTechObsolete;   // store-inverted tech FKs, reconstructed at load (cascadeLoadJson)
+	TechTypes m_eTechReveal, m_eTechCityTrade, m_eTechObsolete;   // store-inverted tech FKs, reconstructed at load (loadJson)
 	std::vector<int> m_aiCategories;       // identity.categories -- empty (no bonus authors Categories); see getCategory
 	bool m_bOneArea, m_bHills, m_bPeaks, m_bFlatlands, m_bBonusCoastalOnly, m_bNoRiverSide, m_bNormalize;
 	std::vector<MapCategoryTypes> m_aeMapCategories;

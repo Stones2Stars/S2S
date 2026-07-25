@@ -69,11 +69,11 @@ public:
 	{ const std::vector<int>* v = edge(EDGEF_ENABLES, EDGEB_SPECIAL_BUILDINGS); return (v && !v->empty()) ? (*v)[0] : -1; }
 	// TechPrereq and PrereqProjects are store-INVERTED onto the OTHER entity (tech.enables.projects / the prerequisite
 	// project's enables.projects, set-based -- the per-edge iNeeded count is dropped, all 1 today, curate_project.py:27).
-	// The project's own JSON carries NO back-reference, so they are reconstructed at LOAD by the cascadeLoadJson tech-FK
+	// The project's own JSON carries NO back-reference, so they are reconstructed at LOAD by the loadJson tech-FK
 	// reverse-index pass (the Route<-bonus pattern), which calls the setters below.
 	TechTypes getTechPrereq() const { return m_eTechPrereq; }
 	int getProjectsNeeded(int i) const { return m_projectsNeeded.count(i) ? 1 : 0; }   // 1 if project i is a prereq (count dropped)
-	void setTechPrereq(TechTypes e) { m_eTechPrereq = e; }               // load-time reverse-index writers (cascadeLoadJson)
+	void setTechPrereq(TechTypes e) { m_eTechPrereq = e; }               // load-time reverse-index writers (loadJson)
 	void addProjectNeeded(int iProject) { m_projectsNeeded.insert(iProject); }
 
 	// instance caps -- materialized at mapFrom from the composed `allowed` unit; -1 = unlimited (absent,
@@ -84,21 +84,21 @@ public:
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonEdges*     getEdges()     const { return &m_edges; }
-	virtual const CvJsonAllowed*   getAllowed()   const { return &m_allowed; }
-	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvEdges*     getEdges()     const { return &m_edges; }
+	virtual const CvAllowed*   getAllowed()   const { return &m_allowed; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
 protected:
-	virtual CvJsonEdges*     mutEdges()     { return &m_edges; }
-	virtual CvJsonAllowed*   mutAllowed()   { return &m_allowed; }
-	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvEdges*     mutEdges()     { return &m_edges; }
+	virtual CvAllowed*   mutAllowed()   { return &m_allowed; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
 	static int mapGet(const std::map<int, int>& m, int k) { std::map<int, int>::const_iterator it = m.find(k); return it != m.end() ? it->second : 0; }
 
-	CvJsonEdges     m_edges;
-	CvJsonAllowed   m_allowed;
-	CvJsonModifiers m_modifiers;
+	CvEdges     m_edges;
+	CvAllowed   m_allowed;
+	CvModifiers m_modifiers;
 	int m_iProductionCost;
 	int m_iNukeInterception, m_iTechShare;
 	int m_iGlobalMaintenanceModifier, m_iDistanceMaintenanceModifier, m_iNumCitiesMaintenanceModifier, m_iConnectedCityMaintenanceModifier;
@@ -116,7 +116,7 @@ private:
 	int m_iEveryoneSpecialUnit;       // grants.grantsSpecialUnit (NO_SPECIALUNIT default)
 	int m_iAnyoneProjectPrereq;       // requires.build{type,scope:world} (NO_PROJECT default)
 	int m_iMaxGlobalInstances, m_iMaxTeamInstances;   // `allowed` caps, materialized at mapFrom (-1 = absent/unlimited)
-	TechTypes m_eTechPrereq;          // store-inverted tech.enables.projects, reconstructed at load (cascadeLoadJson)
+	TechTypes m_eTechPrereq;          // store-inverted tech.enables.projects, reconstructed at load (loadJson)
 	std::set<int> m_projectsNeeded;   // store-inverted PrereqProjects (prereq project's enables.projects), reconstructed at load
 };
 

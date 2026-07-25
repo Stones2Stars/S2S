@@ -1,13 +1,13 @@
 //
-//	CvJsonBoolBlock -- see the header. One shape, five sections (skills/tags/attributes/capabilities/policies),
+//	CvClassificationBlock -- see the header. One shape, five sections (skills/tags/attributes/capabilities/policies),
 //	two planes (grant/revoke), plus the generated-id bitsets the getter surface reads O(1).
 //
 
 #include "CvGameCoreDLL.h"   // PCH umbrella -- picojson
-#include "CvJsonBoolBlock.h"
+#include "CvClassificationBlock.h"
 #include "CvClassificationRegistry.h"
 
-void CvJsonBoolBlock::parse(const picojson::value& v)
+void CvClassificationBlock::parse(const picojson::value& v)
 {
 	// ARRAY form (unit skills/tags after the curator restructure): a plain list of enabler names -- name present
 	// == held (grant plane only; a pure-boolean list carries no revoke). Additive: the OBJECT form below is kept
@@ -30,7 +30,7 @@ void CvJsonBoolBlock::parse(const picojson::value& v)
 	}
 }
 
-void CvJsonBoolBlock::resolveIds(int eDomain)
+void CvClassificationBlock::resolveIds(int eDomain)
 {
 	const int n = ClassificationRegistry::count(eDomain);
 	m_byId.assign(n, 0);
@@ -47,19 +47,19 @@ void CvJsonBoolBlock::resolveIds(int eDomain)
 	}
 }
 
-bool CvJsonBoolBlock::hasKey(int& iIdCache, int eDomain, const char* szKey) const
+bool CvClassificationBlock::hasKey(int& iIdCache, int eDomain, const char* szKey) const
 {
 	if (!m_byId.empty()) return hasId(ClassificationRegistry::cachedKeyId(iIdCache, eDomain, szKey));
 	return !m_names.empty() && m_names.count(szKey) != 0;   // pre-resolve load window -- string fallback
 }
 
-bool CvJsonBoolBlock::hasFalseKey(int& iIdCache, int eDomain, const char* szKey) const
+bool CvClassificationBlock::hasFalseKey(int& iIdCache, int eDomain, const char* szKey) const
 {
 	if (!m_falseById.empty()) return hasFalseId(ClassificationRegistry::cachedKeyId(iIdCache, eDomain, szKey));
 	return !m_falseNames.empty() && m_falseNames.count(szKey) != 0;
 }
 
-int CvJsonBoolBlock::countKey(int& iIdCache, int eDomain, const char* szKey) const
+int CvClassificationBlock::countKey(int& iIdCache, int eDomain, const char* szKey) const
 {
 	if (!m_byId.empty() || !m_falseById.empty())
 	{

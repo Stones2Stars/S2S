@@ -5,7 +5,7 @@
 //
 //	CvCultureLevelInfo -- the JSON real poco for CULTURE LEVELS (a city's culture tier). Carries the tier's own
 //	city-scope values + the per-city wonder-category caps (which ride the composed `allowed` unit, json.md §4.4). The
-//	prereq game option is the composed entity-level `enabled`/`disabled` gate (CvJsonGate); the alternate-Info swap
+//	prereq game option is the composed entity-level `enabled`/`disabled` gate (CvGate); the alternate-Info swap
 //	rides the composed `edges`. HUMAN-native. No cascade here.
 //
 //	Live callers (verified 2026-07-07): getCityDefenseModifier -> CvCity defense; getCityRadius -> CvCity workable
@@ -45,16 +45,16 @@ public:
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonEdges*     getEdges()     const { return &m_edges; }
-	virtual const CvJsonAllowed*   getAllowed()   const { return &m_allowed; }
-	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
-	virtual const CvJsonGate*      getGate()      const { return &m_gate; }
+	virtual const CvEdges*     getEdges()     const { return &m_edges; }
+	virtual const CvAllowed*   getAllowed()   const { return &m_allowed; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvGate*      getGate()      const { return &m_gate; }
 
 protected:
-	virtual CvJsonEdges*     mutEdges()     { return &m_edges; }
-	virtual CvJsonAllowed*   mutAllowed()   { return &m_allowed; }
-	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
-	virtual CvJsonGate*      mutGate()      { return &m_gate; }
+	virtual CvEdges*     mutEdges()     { return &m_edges; }
+	virtual CvAllowed*   mutAllowed()   { return &m_allowed; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvGate*      mutGate()      { return &m_gate; }
 
 private:
 	// mapFrom-time wonder-cap read with the legacy 0-for-absent convention (the base allowedCap returns -1 = absent).
@@ -66,10 +66,10 @@ private:
 	int m_iCultureThreshold;      // identity.cultureThreshold (raw culture points)
 	int m_iLevel;                 // runtime tier ordinal (not JSON)
 	int m_iMaxWorldWonders, m_iMaxTeamWonders, m_iMaxNationalWonders;   // §4.4 category caps, materialized at mapFrom
-	CvJsonEdges     m_edges;
-	CvJsonAllowed   m_allowed;
-	CvJsonModifiers m_modifiers;
-	CvJsonGate      m_gate;
+	CvEdges     m_edges;
+	CvAllowed   m_allowed;
+	CvModifiers m_modifiers;
+	CvGate      m_gate;
 };
 
 #endif // CV_JSON_CULTURE_LEVEL_INFO_H

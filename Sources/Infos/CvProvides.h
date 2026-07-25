@@ -1,9 +1,9 @@
 #pragma once
-#ifndef CV_JSON_PROVIDES_H
-#define CV_JSON_PROVIDES_H
+#ifndef CV_PROVIDES_H
+#define CV_PROVIDES_H
 
 //
-//	CvJsonProvides -- the `provides` section as ONE composable unit (json.md §5a): the BONUS_* ids this entity
+//	CvProvides -- the `provides` section as ONE composable unit (json.md §5a): the BONUS_* ids this entity
 //	supplies in-vicinity WHILE ACTIVE (a herd building supplying its animal bonus). Composed BY VALUE on the derived
 //	infos that author it (buildings, corporations). WRITE-ONCE AT LOAD. The enabler's operating-building fixpoint
 //	unions active providers' bonuses into the city's vicinity supply.
@@ -14,13 +14,13 @@
 
 namespace picojson { class value; }
 
-class CvJsonProvides
+class CvProvides
 {
 public:
 	std::vector<int> bonuses;      // provides.bonuses -> BONUS_* FK ids (the presence union; count-agnostic consumers read this)
 	std::map<int, int> bonusCount; // id -> supply COUNT for entries that carry one (json §5a {BONUS_X:N}); ABSENT = 1 (HOLLYWOOD etc.)
 
-	CvJsonProvides() {}
+	CvProvides() {}
 
 	// The unit's single load-time writer: parse the `provides` object. `bonuses` is a list whose entry is a bare
 	// BONUS_* string (count INFERRED 1) or a single-key object {BONUS_X: N} (an explicit supply count).
@@ -37,8 +37,8 @@ public:
 	void clearParsed() { bonuses.clear(); bonusCount.clear(); }   // the clear-first half of the full-registry section re-map
 
 private:
-	CvJsonProvides(const CvJsonProvides&);            // noncopyable (held by-value on the noncopyable info)
-	CvJsonProvides& operator=(const CvJsonProvides&);
+	CvProvides(const CvProvides&);            // noncopyable (held by-value on the noncopyable info)
+	CvProvides& operator=(const CvProvides&);
 };
 
-#endif // CV_JSON_PROVIDES_H
+#endif // CV_PROVIDES_H

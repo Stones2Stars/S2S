@@ -86,7 +86,7 @@ void CvEraInfo::mapFrom(const picojson::value& entity)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
 
-	// idempotent re-run (cascadeLoadJson re-runs mapFrom once the registry is complete): drop any prior arrays.
+	// idempotent re-run (loadJson re-runs mapFrom once the registry is complete): drop any prior arrays.
 	SAFE_DELETE_ARRAY(m_paiSoundtracks);
 	SAFE_DELETE_ARRAY(m_paiCitySoundscapeSciptIds);
 	m_iNumSoundtracks = 0;

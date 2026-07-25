@@ -66,13 +66,13 @@ public:
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
 protected:
-	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
-	CvJsonModifiers m_modifiers;
+	CvModifiers m_modifiers;
 	int m_aiYields[NUM_YIELD_TYPES];   // food/production/commerce .plot.flat
 	int m_iMovementCost;               // identity.movementCost
 	int m_iBuildModifier;              // buildTime.plot.percent

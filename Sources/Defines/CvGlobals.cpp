@@ -3346,7 +3346,7 @@ void cvInternalGlobals::doPostLoadCaching()
 	for (int iI = 0; iI < getNumTraitInfos(); iI++)
 	{
 		const TraitTypes ePrereq = static_cast<TraitTypes>(iI);
-		const CvJsonEdges* pEdges = getTraitInfo(ePrereq).getEdges();
+		const CvEdges* pEdges = getTraitInfo(ePrereq).getEdges();
 		if (pEdges == NULL) continue;
 		if (const std::vector<int>* andT = pEdges->find(EDGEF_ENABLES, EDGEB_TRAITS_AND))
 			for (size_t j = 0; j < andT->size(); ++j)
@@ -3359,7 +3359,7 @@ void cvInternalGlobals::doPostLoadCaching()
 	for (int iI = 0; iI < getNumTechInfos(); iI++)
 	{
 		const TechTypes eTech2 = static_cast<TechTypes>(iI);
-		const CvJsonEdges* pEdges = getTechInfo(eTech2).getEdges();
+		const CvEdges* pEdges = getTechInfo(eTech2).getEdges();
 		if (pEdges == NULL) continue;
 		if (const std::vector<int>* traits = pEdges->find(EDGEF_ENABLES, EDGEB_TRAITS))
 			for (size_t j = 0; j < traits->size(); ++j)
@@ -3376,7 +3376,7 @@ void cvInternalGlobals::doPostLoadCaching()
 	}
 
 	// (Building improvement-keyed yield upgrade-chain expansion: lives in the readJson reverse pass
-	// (CvCascadeReadJson.cpp) -- it must run AFTER the post-menu full-registry mapFrom, which clears and
+	// (CvReadJson.cpp) -- it must run AFTER the post-menu full-registry mapFrom, which clears and
 	// re-populates the poco maps; this function fires PRE-menu on empty maps.)
 
 	{

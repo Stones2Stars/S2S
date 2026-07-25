@@ -1,21 +1,21 @@
 //
-//	CvJsonRequires -- see the header. The parse is a faithful relocation of the former base walk_requires (json §4.3):
-//	build/operate -> the info-owned typed CvJsonCondition (via the ONE human->data boundary, cascadeParseCondition);
+//	CvRequires -- see the header. The parse is a faithful relocation of the former base walk_requires (json §4.3):
+//	build/operate -> the info-owned typed CvCondition (via the ONE human->data boundary, cascadeParseCondition);
 //	the structural `dormant` key -- which the condition parser drops -- extracted separately into trigger ids.
 //	Building operate.dormant = [BUILDING_…]; unit build.dormant = {all:[UNIT_…]}.
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson
-#include "CvJsonRequires.h"
+#include "CvRequires.h"
 #include "CvJsonConditionParse.h"   // cascadeParseCondition -- curated JSON -> the typed condition tree
 #include "CvJsonParse.h"            // jsonResolveId + jsonNoteUnconsumed
 
-CvJsonRequires::~CvJsonRequires()
+CvRequires::~CvRequires()
 {
 	clearParsed();
 }
 
-void CvJsonRequires::clearParsed()
+void CvRequires::clearParsed()
 {
 	delete build;   build = NULL;
 	delete operate; operate = NULL;
@@ -23,13 +23,13 @@ void CvJsonRequires::clearParsed()
 	dormantTriggers.clear();
 }
 
-void CvJsonRequires::parse(const picojson::value& v)
+void CvRequires::parse(const picojson::value& v)
 {
 	if (!v.is<picojson::object>()) return;
 	const picojson::object& ro = v.get<picojson::object>();
 	for (picojson::object::const_iterator sub = ro.begin(); sub != ro.end(); ++sub)
 	{
-		CvJsonCondition* c = cascadeParseCondition(sub->second);
+		CvCondition* c = cascadeParseCondition(sub->second);
 		if (sub->first == "build")        { delete build;   build = c; }
 		else if (sub->first == "operate") { delete operate; operate = c; }
 		else if (sub->first == "spread")  { delete spread;  spread = c; }   // corp spread-time needs (json §4.3)

@@ -67,16 +67,16 @@ public:
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonGrants*    getGrants()    const { return &m_grants; }
-	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvGrants*    getGrants()    const { return &m_grants; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
 protected:
-	virtual CvJsonGrants*    mutGrants()    { return &m_grants; }
-	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvGrants*    mutGrants()    { return &m_grants; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
-	CvJsonGrants    m_grants;
-	CvJsonModifiers m_modifiers;
+	CvGrants    m_grants;
+	CvModifiers m_modifiers;
 	int  m_iAIWeight;                                       // ai.weight
 	AIScaleTypes m_eAIScaleType;                            // ai.scale
 	int  m_iFontButtonIndex;                               // identity.fontButtonIndex

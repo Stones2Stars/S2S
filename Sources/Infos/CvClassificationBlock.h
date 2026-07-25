@@ -1,9 +1,9 @@
 #pragma once
-#ifndef CV_JSON_BOOL_BLOCK_H
-#define CV_JSON_BOOL_BLOCK_H
+#ifndef CV_CLASSIFICATION_BLOCK_H
+#define CV_CLASSIFICATION_BLOCK_H
 
 //
-//	CvJsonBoolBlock -- the shared `{name:true}` boolean-flag block as ONE composable unit: the §8/§9 classification
+//	CvClassificationBlock -- the shared `{name:true}` boolean-flag block as ONE composable unit: the §8/§9 classification
 //	sections (unit `skills`/`tags`, building `attributes`, tech `capabilities`, civic/trait `policies`) all share
 //	this exact shape, so ONE class serves all five -- instantiated per section on the derived infos that author it.
 //	KEYED skill extras (terrainDoubleMove:{TERRAIN_X:true}, targets:[…]) are NOT this block -- they stay typed
@@ -44,10 +44,10 @@ enum ClsDomain
 #define CLS_HAS_FALSE(block, domain, key) { static int s_clsId = -1; return (block).hasFalseKey(s_clsId, domain, key); }
 #define CLS_COUNT(block, domain, key) { static int s_clsId = -1; return (block).countKey(s_clsId, domain, key); }
 
-class CvJsonBoolBlock
+class CvClassificationBlock
 {
 public:
-	CvJsonBoolBlock() {}
+	CvClassificationBlock() {}
 
 	// The unit's single load-time writer: parse the section's {name:bool} object (true -> grant plane, false ->
 	// revoke plane; non-bool ignored).
@@ -81,8 +81,8 @@ private:
 	std::set<std::string> m_falseNames;   // FALSE-valued (revoke)
 	std::vector<char> m_byId;             // [generated id] -> carried (grant plane)
 	std::vector<char> m_falseById;        // [generated id] -> carried (revoke plane)
-	CvJsonBoolBlock(const CvJsonBoolBlock&);              // noncopyable (held by-value on the noncopyable info)
-	CvJsonBoolBlock& operator=(const CvJsonBoolBlock&);
+	CvClassificationBlock(const CvClassificationBlock&);              // noncopyable (held by-value on the noncopyable info)
+	CvClassificationBlock& operator=(const CvClassificationBlock&);
 };
 
-#endif // CV_JSON_BOOL_BLOCK_H
+#endif // CV_CLASSIFICATION_BLOCK_H

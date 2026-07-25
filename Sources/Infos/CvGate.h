@@ -1,9 +1,9 @@
 #pragma once
-#ifndef CV_JSON_GATE_H
-#define CV_JSON_GATE_H
+#ifndef CV_GATE_H
+#define CV_GATE_H
 
 //
-//	CvJsonGate -- the ENTITY-LEVEL `enabled`/`disabled` applicability pair as ONE composable unit (json.md §3.9
+//	CvGate -- the ENTITY-LEVEL `enabled`/`disabled` applicability pair as ONE composable unit (json.md §3.9
 //	applied at entity level; owner ruling 2026-07-08: `enabled: GAMEOPTION_SIZE_MATTERS` "is literally what it is
 //	supposed to be" -- the loadPrune invention's replacement). The whole entity applies only while `enabled` holds
 //	and `disabled` does not (enabled read first, disabled overrides -- §3.9). Same condition vocabulary as
@@ -12,18 +12,18 @@
 //	(promotions, unitcombats, promotionlines, culturelevels, units). WRITE-ONCE AT LOAD. Owns its trees.
 //
 
-#include "CvJsonCondition.h"
+#include "CvCondition.h"
 
 namespace picojson { class value; }
 
-class CvJsonGate
+class CvGate
 {
 public:
-	CvJsonCondition* enabled;    // applies only while this holds  -- NULL = always-on
-	CvJsonCondition* disabled;   // suppressed while this holds    -- NULL = never-suppressed
+	CvCondition* enabled;    // applies only while this holds  -- NULL = always-on
+	CvCondition* disabled;   // suppressed while this holds    -- NULL = never-suppressed
 
-	CvJsonGate() : enabled(NULL), disabled(NULL) {}
-	~CvJsonGate();
+	CvGate() : enabled(NULL), disabled(NULL) {}
+	~CvGate();
 
 	// The unit's load-time writers: parse the entity's top-level "enabled" / "disabled" value (a condition --
 	// bare GAMEOPTION_X string, atom, or all/any/noneOf tree) through the ONE condition boundary.
@@ -34,8 +34,8 @@ public:
 	void clearParsed();   // frees the trees + resets (the dtor body; the clear-first half of the section re-map)
 
 private:
-	CvJsonGate(const CvJsonGate&);            // noncopyable -- owns the condition trees
-	CvJsonGate& operator=(const CvJsonGate&);
+	CvGate(const CvGate&);            // noncopyable -- owns the condition trees
+	CvGate& operator=(const CvGate&);
 };
 
-#endif // CV_JSON_GATE_H
+#endif // CV_GATE_H

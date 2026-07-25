@@ -4,7 +4,7 @@
 //	grants/edges/modifier families); this subclass then reads identity.base + the identity scalars/lists + cost + the
 //	section 5 unit-scope combat families + vision + succession/replacedBy + ai + the requires-tree prereqs into typed
 //	members the getters return. Values are read RAW (human-native) via the shared jsonFam*/jsonId* walkers -- the x100
-//	boundary lives only in the CvJsonModifiers family path, which we do not read here. Curator addresses noted inline.
+//	boundary lives only in the CvModifiers family path, which we do not read here. Curator addresses noted inline.
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson
@@ -17,7 +17,7 @@
 #include "CvTechInfo.h"         // GC.getTechInfo(...).getEra() -- the era-comparison reads (unity include exposure)
 #include "AI/CvPlayerAI.h"      // GET_PLAYER -- isCivilizationUnit resolves the asking player's civilization
 #include "CvPromotionInfo.h"    // GC.getPromotionInfo(i).getUnitCombat() -- the canAcquireExperience derivation
-#include "CvJsonModifiers.h"    // getModifiers() walk -> the unit's PROPERTY_* emission sources
+#include "CvModifiers.h"    // getModifiers() walk -> the unit's PROPERTY_* emission sources
 #include "Property/CvPropertyBridge.h" // the JSON->BoolExpr translator (property-audit.md increment 4)
 #include "Engine/CvOutcomeMission.h" // #430: CvOutcomeMission new/mapFrom/getMission/getOutcomeList (outcomes JSON intake)
 
@@ -340,12 +340,12 @@ namespace
 // ------------------------------------------------------------------------------------------------------------------
 void CvUnitInfo::reconstructPrereqs()
 {
-	const CvJsonRequires* r = getRequires();
+	const CvRequires* r = getRequires();
 	if (r == NULL || r->build == NULL) return;
-	const CvJsonCondition* b = r->build;
+	const CvCondition* b = r->build;
 	for (size_t i = 0; i < b->all.size(); ++i)
 	{
-		const CvJsonCondition* c = b->all[i];
+		const CvCondition* c = b->all[i];
 		if (c == NULL) continue;
 		if (c->kind == CASC_COND_PRESENCE)
 		{
@@ -370,12 +370,12 @@ void CvUnitInfo::reconstructPrereqs()
 		else if (c->kind == CASC_COND_GROUP && !c->anyOf.empty())
 		{
 			// OR group: classify by the first member's kind/type; append every member's id to the matching bucket.
-			const CvJsonCondition* first = c->anyOf[0];
+			const CvCondition* first = c->anyOf[0];
 			if (first == NULL || first->kind != CASC_COND_PRESENCE) continue;
 			const std::string& ft = first->type;
 			for (size_t j = 0; j < c->anyOf.size(); ++j)
 			{
-				const CvJsonCondition* m = c->anyOf[j];
+				const CvCondition* m = c->anyOf[j];
 				if (m == NULL || m->kind != CASC_COND_PRESENCE) continue;
 				if (prefix(ft, "BONUS_"))
 				{
@@ -752,8 +752,8 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 		}
 	}
 
-	// --- entity gate game-options (top-level enabled/disabled -> the composed CvJsonGate the base parsed) ---
-	if (const CvJsonGate* g = getGate())
+	// --- entity gate game-options (top-level enabled/disabled -> the composed CvGate the base parsed) ---
+	if (const CvGate* g = getGate())
 	{
 		if (g->enabled  && g->enabled->kind  == CASC_COND_PRESENCE && prefix(g->enabled->type,  "GAMEOPTION_")) m_iPrereqGameOption = g->enabled->id;
 		if (g->disabled && g->disabled->kind == CASC_COND_PRESENCE && prefix(g->disabled->type, "GAMEOPTION_")) m_iNotGameOption = g->disabled->id;

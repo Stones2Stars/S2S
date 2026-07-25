@@ -7,7 +7,7 @@
 #include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
 #include "CvPropertyInfo.h"
 #include "CvJsonParse.h"          // jsonChildObj / jsonIdInt / jsonIdBool / jsonIdStr / jsonResolveId
-#include "CvJsonModifiers.h"      // getModifiers() walk -> the property's own decay/per-pop families
+#include "CvModifiers.h"      // getModifiers() walk -> the property's own decay/per-pop families
 #include "Property/CvPropertyBridge.h" // the JSON->BoolExpr translator (property-audit.md increment 4)
 #include "Defines/CvGlobals.h"    // GC.getInfoTypeForString (self property id)
 
@@ -117,23 +117,21 @@ void CvPropertyInfo::mapFrom(const picojson::value& entity)
 		m_PropertyManipulators.clear();
 		m_changePropagation.clear();
 		const int iTarget = getTargetLevel();
-		static const char* const SC[2] = { "city", "plot" };
-		static const GameObjectTypes SG[2] = { GAMEOBJECT_CITY, GAMEOBJECT_PLOT };
-		for (int si = 0; si < 2; ++si)
+		const std::vector<CvModEntry*>& ownEntries = getModifiers()->entries();
+		for (size_t i = 0; i < ownEntries.size(); ++i)
 		{
-			const CvJsonModFamily* f = getModifiers()->find(std::string(getType()) + "." + SC[si]);
-			if (f == NULL) continue;
-			for (int i = 0; i < f->size(); ++i)
-			{
-				const CvJsonModEntry* e = f->entries[i];
-				if (e->enabled != NULL || e->disabled != NULL) continue;   // no property authors a conditioned own-source; fail-closed skip
-				if (e->unit == CASC_UNIT_PERCENT)
-					m_PropertyManipulators.addDecaySource(eSelf, e->value100 / 100, iTarget, SG[si]);
-				else if (e->unit == CASC_UNIT_FLAT && e->hasPer && e->perType == "POPULATION")
-					m_PropertyManipulators.addAttributeConstantSource(eSelf, ATTRIBUTE_POPULATION, e->value100 / 100, SG[si]);
-				else if (e->unit == CASC_UNIT_FLAT && !e->hasPer)
-					m_PropertyManipulators.addConstantSource(eSelf, e->value100 / 100, SG[si]);
-			}
+			const CvModEntry* e = ownEntries[i];
+			if (e->family != MODFAM_PROPERTY || e->propertyFk != (int)eSelf) continue;
+			if (e->nSeg != 2) continue;   // <self>.{city|plot} exactly
+			if (e->scope != CASC_SCOPE_CITY && e->scope != CASC_SCOPE_PLOT) continue;
+			if (e->enabled != NULL || e->disabled != NULL) continue;   // no property authors a conditioned own-source; fail-closed skip
+			const GameObjectTypes eObj = (e->scope == CASC_SCOPE_PLOT) ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
+			if (e->unit == CASC_UNIT_PERCENT)
+				m_PropertyManipulators.addDecaySource(eSelf, e->value100 / 100, iTarget, eObj);
+			else if (e->unit == CASC_UNIT_FLAT && e->hasPer && e->perType == "POPULATION")
+				m_PropertyManipulators.addAttributeConstantSource(eSelf, ATTRIBUTE_POPULATION, e->value100 / 100, eObj);
+			else if (e->unit == CASC_UNIT_FLAT && !e->hasPer)
+				m_PropertyManipulators.addConstantSource(eSelf, e->value100 / 100, eObj);
 		}
 		if (const picojson::object* po = jsonChildObj(o, "properties"))
 		{

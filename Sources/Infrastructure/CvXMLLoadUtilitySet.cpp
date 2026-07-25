@@ -26,7 +26,7 @@
 #include "CvXMLLoadUtility.h"
 #include "CvXMLLoadUtilityModTools.h"
 #include "CvXMLLoadUtilitySetMod.h"
-#include "Data/CvReadJson.h"   // cascadeLoadJson -- the #430 JSON->InfoRepo map, run after the LAST post-menu XML load
+#include "Data/CvReadJson.h"   // loadJson / loadJsonCategory -- the ONE JSON reader ([DEC-one-json-reader])
 #include "Repos/BuildingsRepo.h"
 #include "Repos/BuildsRepo.h"
 #include "Tools/FVariableSystem.h"
@@ -985,13 +985,14 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 
 	DestroyFXml();
 
-	// #430 (owner ruling 2026-07-08): readJson must map at XML-READ TIME, not deferred -- otherwise InfoRepo is empty
-	// through the whole menu window and getXInfo() hands back empty pocos, so getType() returns NULL (the menu-time
-	// onWindowActivation crash). Every PRE-MENU XML info (units/buildings/techs/... -- 63 of the 81 types) is
-	// registered in getInfoTypeForString by now, so map them into InfoRepo HERE. It re-runs at the end of
-	// LoadPostMenuGlobals (idempotent -- rj_clearAllRepos frees first) once the 18 post-menu types
-	// (processes/votes/espionage-missions/spawns) are registered too, completing THEIR FK edges (the §7 fix stays).
-	cascadeLoadJson();
+	// #430: readJson must map at XML-READ TIME, not deferred -- otherwise InfoRepo is empty through the whole
+	// menu window and getXInfo() hands back empty pocos, so getType() returns NULL (the menu-time
+	// onWindowActivation crash). Every PRE-MENU info (units/buildings/techs/... -- 63 of the 81 types) is
+	// registered in getInfoTypeForString by now, so the premenu full pass maps them into InfoRepo HERE. It
+	// re-runs at the end of LoadPostMenuGlobals from the RETAINED parse store (idempotent -- rj_clearAllRepos
+	// frees first) once the 18 post-menu types (processes/votes/espionage-missions/spawns) are registered too,
+	// completing THEIR FK edges.
+	loadJson(JSON_LOAD_PREMENU);
 
 	OutputDebugString("Loading PreMenu Infos: End\n");
 
@@ -1081,12 +1082,13 @@ bool CvXMLLoadUtility::LoadPostMenuGlobals()
 	BuildingsRepo::get().rebuild();
 	BuildsRepo::get().rebuild();
 
-	// #430 cascade: map the curated Assets/Data JSON into the per-type InfoRepo. This MUST run after the LAST
-	// LoadGlobalClassInfo of the post-menu stage: doPostLoadCaching (the previous home) fires pre-menu, BEFORE
-	// processes/votes/espionage-missions/spawns are registered, so every FK edge referencing those types silently
-	// dropped (the canMaintain empty-frontier bug, 2026-07-02). Here EVERY info type is in getInfoTypeForString.
-	// Static data, built once; the [READJSON/*] survey rides the event spine.
-	cascadeLoadJson();
+	// #430: the postmenu full pass -- re-map EVERYTHING from readJson's retained parse store. This MUST run after
+	// the LAST LoadGlobalClassInfo of the post-menu stage: doPostLoadCaching (the previous home) fires pre-menu,
+	// BEFORE processes/votes/espionage-missions/spawns are registered, so every FK edge referencing those types
+	// silently dropped (the canMaintain empty-frontier bug). Here EVERY info type is in getInfoTypeForString.
+	// Static data, built once; the [READJSON/*] survey rides the event spine. This pass ends by FREEING the
+	// retained store -- after load, no JSON-shaped object survives ([DEC-one-json-reader]).
+	loadJson(JSON_LOAD_POSTMENU);
 
 	OutputDebugString("Loading PostMenu Infos: End\n");
 
@@ -1727,104 +1729,26 @@ void CvXMLLoadUtility::SetDiplomacyInfo(std::vector<CvDiplomacyInfo*>& DiploInfo
 }
 
 // ================= #430: JSON-sourced info loading (the replaced-XML shell reads are GONE) =================
-// The 23 cascade-replaced info types load their data from Assets/Data/<folder>/*.json, NOT the archived legacy
+// The replaced info types load their data from Assets/Data/<folder>/*.json, NOT the archived legacy
 // CIV4<X>Infos.xml. Reading a replaced info's XML into the running game is HARD BANNED (AGENTS.md / DEC-no-xml-into-game):
-// the legacy XMLs are CURATOR INPUT ONLY. This mirrors LoadGlobalClassInfo's enumerate->create->read flow, sourced
-// from JSON: scan the folder, register each entity's type->id, create the poco, and mapFrom() its curated JSON
-// (mapFrom IS the poco's JSON read -- the XML half of CvInfo::read is not used on this path). Foreign keys are
-// wired AFTER loading, in cascadeLoadJson (its reverse-index tail), so a source category loading before its target
-// still drops forward FKs at mapFrom and the tail rebuilds them -- identical timing to the XML load this replaces.
-// Files are SORTED BY TYPE so id assignment is deterministic + machine-independent (MP OOS: every client must agree
-// on the type->id map).
-static void s2sFindJsonFiles(const std::string& dir, std::vector<std::string>& out)
-{
-	const std::string pattern = dir + "\\*";
-	WIN32_FIND_DATAA fd;
-	HANDLE h = FindFirstFileA(pattern.c_str(), &fd);
-	if (h == INVALID_HANDLE_VALUE) return;
-	do
-	{
-		const std::string name = fd.cFileName;
-		if (name == "." || name == "..") continue;
-		const std::string full = dir + "\\" + name;
-		if ((fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0) s2sFindJsonFiles(full, out);
-		else if (name.size() > 5 && name.substr(name.size() - 5) == ".json") out.push_back(full);
-	} while (FindNextFileA(h, &fd) != 0);
-	FindClose(h);
-}
-
-// The category ORDER MANIFEST sort (`_order.json`, curator-derived -- Tools/Migration/curate_order.py): entities
-// sort by their legacy XML document position, so the registered engine ids reproduce the LEGACY id order and every
-// id-ordered UI surface keeps its familiar layout (the unit level-up promotion popup grouped each line's tiers
-// adjacently because the XML did). A type ABSENT from the manifest (the synthetic TECH_GAME_START, future
-// additions, a category with no manifest) sorts AFTER every listed one, alphabetically -- the legacy
-// new-stuff-appends-last behaviour.
-struct S2sJsonEntityOrder
-{
-	const std::map<std::string, int>* pOrder;
-	explicit S2sJsonEntityOrder(const std::map<std::string, int>* p) : pOrder(p) {}
-	int idx(const std::string& t) const
-	{
-		std::map<std::string, int>::const_iterator it = pOrder->find(t);
-		return it != pOrder->end() ? it->second : MAX_INT;
-	}
-	bool operator()(const std::pair<std::string, picojson::value>& a, const std::pair<std::string, picojson::value>& b) const
-	{
-		const int ia = idx(a.first);
-		const int ib = idx(b.first);
-		if (ia != ib) return ia < ib;
-		return a.first < b.first;
-	}
-};
-
+// the legacy XMLs are CURATOR INPUT ONLY. This is a THIN REGISTRATION against the ONE reader ([DEC-one-json-reader]):
+// loadJsonCategory serves the folder's already-parsed entities from readJson's retained store in `_order.json`
+// manifest order (deterministic + machine-independent id assignment -- MP OOS: every client must agree on the
+// type->id map), and this function registers ids, creates the pocos, and mapFrom()s each (mapFrom IS the poco's
+// JSON read -- the XML half of CvInfo::read is not used on this path). Foreign keys are wired AFTER loading, in
+// loadJson's full pass (its reverse-index tail), so a source category loading before its target still drops
+// forward FKs at mapFrom and the full pass rebuilds them -- identical timing to the XML load this replaces.
 template <class T>
-void CvXMLLoadUtility::LoadGlobalClassInfoJson(std::vector<T*>& aInfos, const char* szDataFolder, bool bSkipComplex)
+void CvXMLLoadUtility::LoadGlobalClassInfoJson(std::vector<T*>& aInfos, const char* szDataFolder)
 {
 	PROFILE_EXTRA_FUNC();
 	const DWORD s2sT0 = GetTickCount();
 	GC.addToInfosVectors(&aInfos, InfoClassTraits<T>::InfoClassEnum);
 
-	std::string base = gDLL->getModName(true);
-	if (!base.empty() && base[base.size() - 1] != '\\' && base[base.size() - 1] != '/') base += "\\";
-	const std::string dir = base + "Assets\\Data\\" + szDataFolder;
-
-	std::vector<std::string> files;
-	s2sFindJsonFiles(dir, files);
-
-	// Parse + collect (type, value); drop non-entities and (for traits) the option-selected complex set.
-	// `_order.json` is the category's ORDER MANIFEST (legacy XML document order, curator-derived), consumed into
-	// the sort below instead of the entity list.
-	std::vector<std::pair<std::string, picojson::value> > entities;
-	std::map<std::string, int> order;
-	for (size_t i = 0; i < files.size(); ++i)
-	{
-		if (bSkipComplex && files[i].find("\\complex\\") != std::string::npos) continue;
-		std::ifstream f(files[i].c_str(), std::ios::binary);
-		if (!f.is_open()) continue;
-		std::ostringstream ss; ss << f.rdbuf();
-		picojson::value v;
-		if (!picojson::parse(v, ss.str()).empty()) continue;
-		if (files[i].size() >= 11 && files[i].substr(files[i].size() - 11) == "_order.json")
-		{
-			if (v.is<picojson::array>())
-			{
-				const picojson::array& a = v.get<picojson::array>();
-				for (size_t j = 0; j < a.size(); ++j)
-				{
-					if (!a[j].is<std::string>()) continue;
-					const int n = (int)order.size();
-					order[a[j].get<std::string>()] = n;
-				}
-			}
-			continue;
-		}
-		if (!v.is<picojson::object>()) continue;
-		const picojson::object& o = v.get<picojson::object>();
-		picojson::object::const_iterator t = o.find("type");
-		if (t == o.end() || !t->second.is<std::string>()) continue;
-		entities.push_back(std::make_pair(t->second.get<std::string>(), v));
-	}
-	std::sort(entities.begin(), entities.end(), S2sJsonEntityOrder(&order));
+	// The category's parsed entities, manifest-ordered, from the ONE reader's retained store -- no disk walk,
+	// no parse here.
+	std::vector<std::pair<std::string, const picojson::value*> > entities;
+	loadJsonCategory(szDataFolder, entities);
 
 	// TWO-PASS load: register EVERY type->id (pass 1), THEN create + mapFrom (pass 2). A mapFrom resolves its FKs
 	// (jsonResolveId -> getInfoTypeForString) at parse time, so it must see EVERY sibling type in this category
@@ -1849,7 +1773,7 @@ void CvXMLLoadUtility::LoadGlobalClassInfoJson(std::vector<T*>& aInfos, const ch
 	for (size_t k = 0; k < load.size(); ++k)
 	{
 		T* pInfo = new T();
-		pInfo->mapFrom(entities[load[k]].second);
+		pInfo->mapFrom(*entities[load[k]].second);
 		aInfos.push_back(pInfo);
 	}
 

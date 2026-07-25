@@ -165,7 +165,7 @@ static void readImprovementChanges(const picojson::object& vision, const char* n
 // flatten the entity-level gate condition into the flat GAMEOPTION id list the legacy On/NotOnGameOption getters
 // expose. The curator authors a single option as a bare GAMEOPTION_ string (-> PRESENCE atom) and several as an
 // {all}/{anyOf} tree (-> GROUP); recurse the group vectors and collect the resolved GAMEOPTION_ presence ids.
-static void collectGameOptions(const CvJsonCondition* c, std::vector<int>& out)
+static void collectGameOptions(const CvCondition* c, std::vector<int>& out)
 {
 	if (!c) return;
 	if (c->kind == CASC_COND_PRESENCE)

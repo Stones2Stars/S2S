@@ -1,12 +1,12 @@
 //
-//	CvJsonProvides -- see the header. The §5a continuous in-vicinity supply: {bonuses:[BONUS_ids]}.
+//	CvProvides -- see the header. The §5a continuous in-vicinity supply: {bonuses:[BONUS_ids]}.
 //
 
 #include "CvGameCoreDLL.h"   // PCH umbrella -- picojson
-#include "CvJsonProvides.h"
+#include "CvProvides.h"
 #include "CvJsonParse.h"     // jsonResolveId
 
-void CvJsonProvides::parse(const picojson::value& v)
+void CvProvides::parse(const picojson::value& v)
 {
 	if (!v.is<picojson::object>()) return;
 	const picojson::object& o = v.get<picojson::object>();

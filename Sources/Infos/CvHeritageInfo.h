@@ -58,16 +58,16 @@ public:
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonEdges*     getEdges()     const { return &m_edges; }
-	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvEdges*     getEdges()     const { return &m_edges; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
 protected:
-	virtual CvJsonEdges*     mutEdges()     { return &m_edges; }
-	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvEdges*     mutEdges()     { return &m_edges; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
-	CvJsonEdges     m_edges;
-	CvJsonModifiers m_modifiers;
+	CvEdges     m_edges;
+	CvModifiers m_modifiers;
 	struct EraBand { int eraMin; int value; };
 	std::vector<EraBand> m_aEraCommerce[NUM_COMMERCE_TYPES];   // {gold/research/culture/espionage}.empire.flat, era-gated
 	bool m_bNeedsLanguage;

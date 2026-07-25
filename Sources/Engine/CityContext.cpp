@@ -4,7 +4,7 @@
 #include "CvCity.h"
 #include "AI/CvPlayerAI.h"      // GET_PLAYER (the owner forward: state religion / policies)
 #include "EmpireContext.h"      // the owner's empire aggregate (policies)
-#include "CvJsonCondition.h"    // CASC_PRED_* -- the shared HAS_/IS_ plot predicate ids plotAttrs keys on
+#include "CvCondition.h"    // CASC_PRED_* -- the shared HAS_/IS_ plot predicate ids plotAttrs keys on
 #include "Conditions/CvConditionEval.h"   // CvCascadeEvalCtx -- fillEvalCtx
 
 void CityContext::onPlotChanged(const CvPlot* plot, int sign)

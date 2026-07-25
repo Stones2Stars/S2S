@@ -1,11 +1,11 @@
 //
-//	CvJsonAllowed -- see the header. A faithful relocation of the former base walk_allowed (json §4.4).
+//	CvAllowed -- see the header. A faithful relocation of the former base walk_allowed (json §4.4).
 //
 
 #include "CvGameCoreDLL.h"   // PCH umbrella -- picojson
-#include "CvJsonAllowed.h"
+#include "CvAllowed.h"
 
-void CvJsonAllowed::parse(const picojson::value& v)
+void CvAllowed::parse(const picojson::value& v)
 {
 	if (!v.is<picojson::object>()) return;
 	const picojson::object& o = v.get<picojson::object>();

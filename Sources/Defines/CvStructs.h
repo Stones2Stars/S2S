@@ -61,7 +61,7 @@ struct PlotTeamVisibilityIntensity
 	operator int() const {return (int)eTeam;}
 	bool operator< (const PlotTeamVisibilityIntensity& rhs) const {return (int)eTeam < (int)rhs.eTeam;}
 };
-class CvJsonCondition;
+class CvCondition;
 
 struct FreePromoTypes
 {
@@ -69,7 +69,7 @@ struct FreePromoTypes
 	// The building declaring WHICH UNITS it can deal with (a Riding School deals with `mounted`). Curated from the
 	// legacy <FreePromotionCondition> onto the cascade's condition vocabulary -- evaluated by the ONE evaluator
 	// (cascadeEvalCondition) with the receiving unit in context, never a BoolExpr round-trip. NULL = applies to all.
-	const CvJsonCondition* m_pExprFreePromotionCondition;
+	const CvCondition* m_pExprFreePromotionCondition;
 	operator int() const {return (int)ePromotion;}
 	bool operator< (const FreePromoTypes& rhs) const {return (int)ePromotion < (int)rhs.ePromotion;}
 };

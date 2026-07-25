@@ -797,7 +797,7 @@ void emitUnitEnteredCity(int iUnitType, int iUnitId, int iOwner, int iCity)
 	std::string szTags;
 	if (iUnitType >= 0 && iUnitType < GC.getNumUnitInfos())
 	{
-		const CvJsonBoolBlock* pTags = GC.getUnitInfo((UnitTypes)iUnitType).getTags();
+		const CvClassificationBlock* pTags = GC.getUnitInfo((UnitTypes)iUnitType).getTags();
 		if (pTags != NULL)
 		{
 			const std::set<std::string>& names = pTags->all();

@@ -28,7 +28,7 @@ static void pl_readIdList(const picojson::object& parent, const char* key, std::
 // flatten the entity-level gate condition into the flat GAMEOPTION id list the legacy NotOnGameOption getter exposes.
 // The curator authors a single option as a bare GAMEOPTION_ string (-> PRESENCE atom) and several as an {all}/{anyOf}
 // tree (-> GROUP); recurse the group vectors and collect the resolved GAMEOPTION_ presence ids. (CvPromotionInfo idiom.)
-static void pl_collectGameOptions(const CvJsonCondition* c, std::vector<int>& out)
+static void pl_collectGameOptions(const CvCondition* c, std::vector<int>& out)
 {
 	if (!c) return;
 	if (c->kind == CASC_COND_PRESENCE)

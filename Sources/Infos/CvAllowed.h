@@ -1,9 +1,9 @@
 #pragma once
-#ifndef CV_JSON_ALLOWED_H
-#define CV_JSON_ALLOWED_H
+#ifndef CV_ALLOWED_H
+#define CV_ALLOWED_H
 
 //
-//	CvJsonAllowed -- the `allowed` caps as ONE composable unit (json.md §4.4): scope self-caps (world/team/empire =
+//	CvAllowed -- the `allowed` caps as ONE composable unit (json.md §4.4): scope self-caps (world/team/empire =
 //	"at most N of me at that scope") + the wonder-category per-city caps (worldWonders/teamWonders/nationalWonders,
 //	on CultureLevel). Composed BY VALUE on the derived infos that author it (buildings, culturelevels, projects,
 //	specialbuildings, techs, units). WRITE-ONCE AT LOAD. The enabler's cap gate compares count(me, scope) < cap.
@@ -14,10 +14,10 @@
 
 namespace picojson { class value; }
 
-class CvJsonAllowed
+class CvAllowed
 {
 public:
-	CvJsonAllowed() {}
+	CvAllowed() {}
 
 	// The unit's single load-time writer: parse the `allowed` object ({capKind: N}).
 	void parse(const picojson::value& v);
@@ -34,8 +34,8 @@ public:
 
 private:
 	std::map<std::string, int> m_caps;
-	CvJsonAllowed(const CvJsonAllowed&);              // noncopyable (held by-value on the noncopyable info)
-	CvJsonAllowed& operator=(const CvJsonAllowed&);
+	CvAllowed(const CvAllowed&);              // noncopyable (held by-value on the noncopyable info)
+	CvAllowed& operator=(const CvAllowed&);
 };
 
-#endif // CV_JSON_ALLOWED_H
+#endif // CV_ALLOWED_H

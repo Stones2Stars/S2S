@@ -37,7 +37,7 @@ public:
 
 	// Route<-bonus prerequisite (compat surface for the getRouteInfo(...) callers -- CvPlot route validity,
 	// CvPlayerAI/CvDLLWidgetData). Both relationships are stored INVERTED onto the bonus and reverse-mapped at load
-	// (cascadeLoadJson): the single AND-prereq via the bonus's `enables.routesAnd` (-> getPrereqBonus, the CvPlot.cpp
+	// (loadJson): the single AND-prereq via the bonus's `enables.routesAnd` (-> getPrereqBonus, the CvPlot.cpp
 	// build gate), the OR-list via `enables.routes` (-> getPrereqOrBonuses). The two buckets keep AND vs OR distinct
 	// (a route needs its single AND bonus AND one of its OR bonuses -- e.g. railroad needs steel-wares AND coal/oil).
 	int getPrereqBonus() const { return m_ePrereqBonus; }
@@ -52,13 +52,13 @@ public:
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
 protected:
-	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
-	CvJsonModifiers m_modifiers;
+	CvModifiers m_modifiers;
 	int m_iValue;                        // identity.value
 	int m_iAdvancedStartCost;            // identity.advancedStart.cost
 	int m_iMovementCost;                 // identity.movementCost

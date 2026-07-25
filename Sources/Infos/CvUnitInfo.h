@@ -173,7 +173,7 @@ public:
 	int getFlavorValue(int i) const { return mapGet(m_flavours, i); }            // ai.flavours
 
 	// --- skills (section-8 flat bools) + the goldenAge grant flag + the spy tag ---
-	// O(1) generated-id bit tests (CLS_HAS -> CvJsonBoolBlock::hasKey; SKILL_* ids from the ClassificationRegistry).
+	// O(1) generated-id bit tests (CLS_HAS -> CvClassificationBlock::hasKey; SKILL_* ids from the ClassificationRegistry).
 	// These sit on the render/AI hot paths (the EXE polls unit.isInvisible ~98M calls/turn-window; the pathfinder
 	// reads the movement gates per step) -- never a per-call string lookup.
 	bool isAlwaysHostile() const CLS_HAS(m_skills, CLSD_SKILL, "alwaysHostile")
@@ -225,8 +225,8 @@ public:
 	bool isMilitaryTrade() const CLS_HAS(m_skills, CLSD_SKILL, "militaryTrade")
 	bool isNoSelfHeal() const CLS_HAS(m_skills, CLSD_SKILL, "noSelfHeal")
 	bool canAnimalIgnoresBorders() const { return false; }  // DEAD (owner 2026-07-11): animal border-ignoring is PURE game-option runtime (CvUnit::canAnimalIgnoresBorders), not curated unit data
-	bool isGoldenAge() const { const CvJsonGrants* g = getGrants(); return g && g->flag("goldenAge"); }  // grants.goldenAge
-	bool isSpy() const { const CvJsonBoolBlock* t = getTags(); return t && t->has("spy"); }               // tags.spy
+	bool isGoldenAge() const { const CvGrants* g = getGrants(); return g && g->flag("goldenAge"); }  // grants.goldenAge
+	bool isSpy() const { const CvClassificationBlock* t = getTags(); return t && t->has("spy"); }               // tags.spy
 
 	// --- DCM air-bomb tier (skills.dcmAirBomb = count of set levels) ---
 	bool getDCMAirBomb1() const { return m_iDcmAirBombTier >= 1; }
@@ -276,11 +276,11 @@ public:
 	void addUnitToUpgradeChain(int i) { m_upgradeChain.push_back(i); }
 
 	// --- allowed (instance caps) ---
-	int getMaxGlobalInstances() const { const CvJsonAllowed* a = getAllowed(); return a ? a->cap("world") : -1; }   // allowed.world
-	int getMaxPlayerInstances() const { const CvJsonAllowed* a = getAllowed(); return a ? a->cap("empire") : -1; }  // allowed.empire
+	int getMaxGlobalInstances() const { const CvAllowed* a = getAllowed(); return a ? a->cap("world") : -1; }   // allowed.world
+	int getMaxPlayerInstances() const { const CvAllowed* a = getAllowed(); return a ? a->cap("empire") : -1; }  // allowed.empire
 
 	// --- edges (target-side obsolete) ---
-	int getObsoleteTech() const { const CvJsonEdges* e = getEdges(); const std::vector<int>* l = e ? e->find(EDGEF_OBSOLETED_BY, EDGEB_TECHS) : NULL; return (l && !l->empty()) ? (*l)[0] : -1; }  // obsoletedBy.techs
+	int getObsoleteTech() const { const CvEdges* e = getEdges(); const std::vector<int>* l = e ? e->find(EDGEF_OBSOLETED_BY, EDGEB_TECHS) : NULL; return (l && !l->empty()) ? (*l)[0] : -1; }  // obsoletedBy.techs
 
 	// --- requires-tree reconstructed prereqs ---
 	int getPrereqAndTech() const { return m_iPrereqAndTech; }                     // requires.build.all TECH_ (first)
@@ -481,9 +481,9 @@ public:
 	bool canMergeSplit() const { return false; }                 // GAP: bCanMergeSplit not curated
 	// The three legacy military* flags UNIFY onto the `military` tag / IS_MILITARY (skills.md §3; owner-confirmed
 	// 2026-07-11 -- a deliberate behaviour change, the differing legacy corpora collapse to one verdict).
-	bool isMilitaryProduction() const { const CvJsonBoolBlock* t = getTags(); return t && t->has("military"); }
-	bool isMilitaryHappiness() const  { const CvJsonBoolBlock* t = getTags(); return t && t->has("military"); }
-	bool isMilitarySupport() const    { const CvJsonBoolBlock* t = getTags(); return t && t->has("military"); }
+	bool isMilitaryProduction() const { const CvClassificationBlock* t = getTags(); return t && t->has("military"); }
+	bool isMilitaryHappiness() const  { const CvClassificationBlock* t = getTags(); return t && t->has("military"); }
+	bool isMilitarySupport() const    { const CvClassificationBlock* t = getTags(); return t && t->has("military"); }
 	// RUNTIME command-type (not curated; CvHotkeyInfo has no command-type member) -- SetGlobalActionInfo assigns
 	// COMMAND_UPGRADE via setCommandType at load and reads it back (getCommandInfo(getCommandType())), so it MUST be
 	// stored, not a -1 stub (a -1 stub -> getCommandInfo(-1) -> garbage-string crash in SetGlobalActionInfo).
@@ -512,43 +512,46 @@ public:
 	void updateArtDefineButton() {}
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonRequires*  getRequires()  const { return &m_requires; }
-	virtual const CvJsonEdges*     getEdges()     const { return &m_edges; }
-	virtual const CvJsonAllowed*   getAllowed()   const { return &m_allowed; }
-	virtual const CvJsonGrants*    getGrants()    const { return &m_grants; }
-	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
-	virtual const CvJsonBoolBlock* getSkills()    const { return &m_skills; }
-	virtual const CvJsonBoolBlock* getTags()      const { return &m_tags; }
-	virtual const CvJsonGate*      getGate()      const { return &m_gate; }
+	virtual const CvRequires*  getRequires()  const { return &m_requires; }
+	virtual const CvEdges*     getEdges()     const { return &m_edges; }
+	virtual const CvAllowed*   getAllowed()   const { return &m_allowed; }
+	virtual const CvGrants*    getGrants()    const { return &m_grants; }
+	virtual const CvTriggers*      getTriggers()  const { return &m_triggers; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvClassificationBlock* getSkills()    const { return &m_skills; }
+	virtual const CvClassificationBlock* getTags()      const { return &m_tags; }
+	virtual const CvGate*      getGate()      const { return &m_gate; }
 
 protected:
-	virtual CvJsonRequires*  mutRequires()  { return &m_requires; }
-	virtual CvJsonEdges*     mutEdges()     { return &m_edges; }
-	virtual CvJsonAllowed*   mutAllowed()   { return &m_allowed; }
-	virtual CvJsonGrants*    mutGrants()    { return &m_grants; }
-	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
-	virtual CvJsonBoolBlock* mutSkills()    { return &m_skills; }
-	virtual CvJsonBoolBlock* mutTags()      { return &m_tags; }
-	virtual CvJsonGate*      mutGate()      { return &m_gate; }
+	virtual CvRequires*  mutRequires()  { return &m_requires; }
+	virtual CvEdges*     mutEdges()     { return &m_edges; }
+	virtual CvAllowed*   mutAllowed()   { return &m_allowed; }
+	virtual CvGrants*    mutGrants()    { return &m_grants; }
+	virtual CvTriggers*      mutTriggers()  { return &m_triggers; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvClassificationBlock* mutSkills()    { return &m_skills; }
+	virtual CvClassificationBlock* mutTags()      { return &m_tags; }
+	virtual CvGate*      mutGate()      { return &m_gate; }
 
 private:
 	void reconstructPrereqs();   // walk the composed requires.build into the typed prereq members (mapFrom-time)
 	void mapOutcomes(const picojson::object& o);   // #430: parse the `outcomes` block into the CvOutcome engine objects
 
-	bool skill(const char* szName) const { const CvJsonBoolBlock* s = getSkills(); return s && s->has(szName); }   // cold/oracle read only -- hot getters use CLS_HAS
+	bool skill(const char* szName) const { const CvClassificationBlock* s = getSkills(); return s && s->has(szName); }   // cold/oracle read only -- hot getters use CLS_HAS
 
 	static bool contains(const std::vector<int>& v, int id) { for (size_t i = 0; i < v.size(); ++i) if (v[i] == id) return true; return false; }
 	static int mapGet(const std::map<int, int>& m, int k) { std::map<int, int>::const_iterator it = m.find(k); return it != m.end() ? it->second : 0; }
 
 	// composed section units
-	CvJsonRequires  m_requires;
-	CvJsonEdges     m_edges;
-	CvJsonAllowed   m_allowed;
-	CvJsonGrants    m_grants;
-	CvJsonModifiers m_modifiers;
-	CvJsonBoolBlock m_skills;
-	CvJsonBoolBlock m_tags;
-	CvJsonGate      m_gate;
+	CvRequires  m_requires;
+	CvEdges     m_edges;
+	CvAllowed   m_allowed;
+	CvGrants    m_grants;
+	CvTriggers      m_triggers;
+	CvModifiers m_modifiers;
+	CvClassificationBlock m_skills;
+	CvClassificationBlock m_tags;
+	CvGate      m_gate;
 
 	std::string m_szArtDefineTag;      // world.art.icon
 	std::string m_szFormationType;     // identity.formationType

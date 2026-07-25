@@ -8,7 +8,7 @@
 //	any Info is -- so we have clear data to refer to, even if they are only in essence a boolean switch"; the two
 //	sibling §8 blocks -- attributes, tags -- ride the same mechanism for uniformity).
 //
-//	At the end of each cascadeLoadJson pass, one generated info is MINTED per distinct authored block key across
+//	At the end of each loadJson pass, one generated info is MINTED per distinct authored block key across
 //	all entities: the camelCase key ("setScienceRate") becomes an INFOTYPE_NAME id ("CAPABILITY_SET_SCIENCE_RATE",
 //	naming.md convention), registered in the global infotype map (GC.setInfoTypeFromString) and created as a CvInfo
 //	in its domain's InfoRepo -- referenceable exactly like any authored info. Minting is APPEND-ONLY process-wide
@@ -16,10 +16,10 @@
 //	stay valid). Nothing serializes -- ids are derived, re-minted deterministically per load.
 //
 //	After minting, every entity's blocks resolve their names to by-id bitsets (CvInfo::resolveClassificationIds ->
-//	CvJsonBoolBlock::resolveIds), making the whole classification getter surface an O(1) bit test.
+//	CvClassificationBlock::resolveIds), making the whole classification getter surface an O(1) bit test.
 //
 
-#include "CvJsonBoolBlock.h"   // ClsDomain
+#include "CvClassificationBlock.h"   // ClsDomain
 #include <string>
 #include <vector>
 
@@ -29,7 +29,7 @@ class ClassificationRegistry
 {
 public:
 	// Mint every authored block key across `infos` (append-only), re-register the GC infotype entries, then
-	// resolve every info's blocks to the id plane. Called from cascadeLoadJson after PASS 2 (both load passes).
+	// resolve every info's blocks to the id plane. Called from loadJson after PASS 2 (both load passes).
 	static void buildAndResolve(const std::vector<CvInfo*>& infos);
 
 	static int count(int eDomain);                                  // minted keys in the domain
@@ -38,7 +38,7 @@ public:
 	static const char* prefix(int eDomain);                         // "SKILL_" / "TAG_" / ...
 	static std::string typeName(int eDomain, const std::string& szKey);   // PREFIX + UPPER_SNAKE(key)
 
-	// The getter-side memo behind CvJsonBoolBlock::hasKey: returns the cached id, resolving on first call.
+	// The getter-side memo behind CvClassificationBlock::hasKey: returns the cached id, resolving on first call.
 	// A miss is memoized (-2 -> -1) only once BOTH load passes have run, so a not-yet-minted key keeps retrying
 	// during the load window but a genuinely-absent key costs nothing at runtime.
 	static int cachedKeyId(int& iCache, int eDomain, const char* szKey);

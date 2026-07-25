@@ -94,7 +94,7 @@ enum SpineDomainTag
 	// #430 cascade diagnostic domains (per-emitter, one file -- all tee to Cascade.log). Each self-registers in its
 	// own .cpp (spineRegisterDomain); the [TAG] sub-area lives in the per-domain prefix fn ([READJSON/*],
 	// [MODIFIER/*]). Diagnostic lines (EVENTKIND_DIAGNOSTIC) -- census/diagnostic traces, logging only.
-	SD_READJSON,   // [READJSON] the JSON->InfoRepo load census (CvCascadeReadJson)
+	SD_READJSON,   // [READJSON] the JSON->InfoRepo load census (CvReadJson)
 	SD_ENABLER,    // [ENABLER] reserved (historical tag; no live registrant)
 	SD_MODIFIER,   // [MODIFIER] the perf + repo census (CvCascadeModifierMath)
 	SD_GRANTS,     // [GRANTS] the "provisions" consumer (CvCascadeGrants) -- resolves an entity's genuine grants on a DOMAIN event
@@ -390,7 +390,7 @@ void emitUnitEnteredCity(int iUnitType, int iUnitId, int iOwner, int iCity);
 //	A unit INSTANCE was created. Call from CvUnit::init once the unit is constructed enough to take a promotion.
 void emitUnitCreated(int iUnitType, int iUnitId, int iOwner);
 //	A city was founded. Call from CvPlayer::found once the city exists, BEFORE the settle-time provisions run.
-//	The founding unit is passed so its `grants.foundBuildings` (json §5) can resolve against the new city.
+//	The founding unit is passed so its `grants.buildings` (json §5) can resolve against the new city.
 void emitCityFounded(int iOwner, int iCity, int iFounderType, int iFounderId);
 //	The empire's capital changed. Call AFTER the replacement city has been chosen -- consumers need somewhere to
 //	put what a capital carries (above all the palace, which is what MAKES a city the capital).

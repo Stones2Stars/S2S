@@ -19,7 +19,7 @@ namespace {
 	// _requires(): {type:PrereqTech, scope:"team"}, sitting alongside any plot-scoped bonus-connectivity clauses in
 	// the SAME "all" list) -- so the team-scoped presence node's resolved id IS the tech prereq. Faithful, not a
 	// guess: it is the exact shape the curator writes, and the only TEAM-scoped clause a build ever authors.
-	TechTypes findBuildTechPrereq(const CvJsonCondition* c)
+	TechTypes findBuildTechPrereq(const CvCondition* c)
 	{
 		if (c == NULL) return NO_TECH;
 		if (c->kind == CASC_COND_PRESENCE && c->scope == CASC_SCOPE_TEAM)
@@ -40,7 +40,7 @@ namespace {
 	// so they ride the AND-list, exactly like the tech clause). Collect every BONUS_ presence id in the all-tree ->
 	// the legacy positive-prereq view. Filter on the BONUS_ type prefix (the semantically exact test): a build's
 	// only other all-clause is the team-scoped tech, so this never mis-collects.
-	void collectPrereqBonuses(const CvJsonCondition* c, std::vector<BonusTypes>& out)
+	void collectPrereqBonuses(const CvCondition* c, std::vector<BonusTypes>& out)
 	{
 		if (c == NULL) return;
 		if (c->kind == CASC_COND_PRESENCE)

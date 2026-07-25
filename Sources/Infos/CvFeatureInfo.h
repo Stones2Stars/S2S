@@ -68,7 +68,7 @@ public:
 	DllExport const CvArtInfoFeature* getArtInfo() const;   // EXE map-gen art (merged from the removed shim leaf)
 	const char* getButton() const;                          // art-define button (else CvInfoBase's empty m_szButton)
 
-	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }   // fed from the grants.repeatable PROPERTY pulses in mapFrom (plot gather)
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }   // fed from the triggers PROPERTY pulses in mapFrom (plot gather)
 
 	// --- arrays / art / audio wired to their real curator addresses (see mapFrom for the reads) ---
 	int getRiverYieldChange(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiRiverYieldChange[i] : 0; }  // the HAS_RIVER-gated yield.plot.flat entries
@@ -105,16 +105,19 @@ public:
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonGrants*    getGrants()    const { return &m_grants; }
-	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvGrants*    getGrants()    const { return &m_grants; }
+	virtual const CvTriggers*      getTriggers()  const { return &m_triggers; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
 protected:
-	virtual CvJsonGrants*    mutGrants()    { return &m_grants; }
-	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvGrants*    mutGrants()    { return &m_grants; }
+	virtual CvTriggers*      mutTriggers()  { return &m_triggers; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
-	CvJsonGrants    m_grants;
-	CvJsonModifiers m_modifiers;
+	CvGrants    m_grants;
+	CvTriggers      m_triggers;
+	CvModifiers m_modifiers;
 	int m_aiYieldChange[NUM_YIELD_TYPES];       // food/production/commerce .plot.flat (unconditional entries)
 	int m_aiRiverYieldChange[NUM_YIELD_TYPES];  // the same families' HAS_RIVER-gated entries (legacy RiverYieldChange)
 	int m_iMovementCost;                   // identity.movementCost
@@ -142,7 +145,7 @@ private:
 	std::string m_szOnUnitChangeTo;        // grants.onUnitChangeTo
 	std::vector<TerrainTypes> m_aeValidTerrains;   // identity.validTerrains (resolved TERRAIN_ ids)
 	std::vector<MapCategoryTypes> m_aeMapCategories;
-	CvPropertyManipulators m_PropertyManipulators;   // fed from the grants.repeatable PROPERTY pulses (CascadePropertyBridge::bridgePulses)
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the triggers PROPERTY pulses (CascadePropertyBridge::bridgePulses)
 };
 
 #endif // CV_JSON_FEATURE_INFO_H

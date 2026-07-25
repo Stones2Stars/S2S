@@ -122,7 +122,7 @@ void UnitEnabler::onCityBuildingChanged(const CvCity& kCity, int iBuilding, bool
 		// unit bucket names its dependents)
 		std::set<int> touched;
 		ud_touched(jb, touched);
-		const CvJsonProvides* prov = (jb != NULL) ? jb->getProvides() : NULL;
+		const CvProvides* prov = (jb != NULL) ? jb->getProvides() : NULL;
 		if (prov != NULL)
 			for (size_t i = 0; i < prov->bonuses.size(); ++i)
 			{

@@ -53,17 +53,17 @@ public:
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonModifiers* getModifiers() const { return &m_modifiers; }
-	virtual const CvJsonBoolBlock* getSkills()    const { return &m_skills; }
-	virtual const CvJsonGate*      getGate()      const { return &m_gate; }
-	virtual const CvJsonGrants*    getGrants()    const { return &m_grants; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvClassificationBlock* getSkills()    const { return &m_skills; }
+	virtual const CvGate*      getGate()      const { return &m_gate; }
+	virtual const CvGrants*    getGrants()    const { return &m_grants; }
 	// the promotion->promotion chain edges (store-inverted enables.promotions, owner 2026-07-17): without this
 	// opt-in the base's CJK_EDGE dispatch hit mutEdges()==NULL and DROPPED every authored enables block at load
 	// (loaded edgeIds=0 vs authored 18 on PROMOTION_LEADER -- the /state/info loaded!=authored oracle catch).
-	virtual const CvJsonEdges*     getEdges()     const { return &m_edges; }
+	virtual const CvEdges*     getEdges()     const { return &m_edges; }
 	// the chain's AND-half: requires.build retention (the tech multi-parent pattern) -- confirmed by
 	// EnablerKernel::requiresMet inside enPromotionValid (the evaluator's PROMOTION_ atom reads ctx.unit).
-	virtual const CvJsonRequires*  getRequires()  const { return &m_requires; }
+	virtual const CvRequires*  getRequires()  const { return &m_requires; }
 
 	// =========================================================================================================
 	//  strength family (general combat % + named members)
@@ -189,7 +189,7 @@ public:
 	// =========================================================================================================
 	//  section-8 boolean SKILLS block
 	// =========================================================================================================
-	// O(1) generated-id bit tests (CLS_HAS -> CvJsonBoolBlock::hasKey; the SKILL_* ids are the
+	// O(1) generated-id bit tests (CLS_HAS -> CvClassificationBlock::hasKey; the SKILL_* ids are the
 	// ClassificationRegistry's runtime-minted infos -- never a per-call string lookup).
 	bool isBlitz() const CLS_HAS(m_skills, CLSD_SKILL, "blitz")
 	bool isAmphib() const CLS_HAS(m_skills, CLSD_SKILL, "amphib")
@@ -391,7 +391,7 @@ public:
 			|| getDefenseOnlyChange() > 0 || getNoInvisibilityChange() > 0 || getHiddenNationalityChange() != 0;
 	}
 
-	// entity-level gate -> the OnGameOptions/NotOnGameOptions flat lists (walked out of the composed CvJsonGate
+	// entity-level gate -> the OnGameOptions/NotOnGameOptions flat lists (walked out of the composed CvGate
 	// condition tree in mapFrom: enabled = required-ON options, disabled = suppress-if-ON options).
 	int getOnGameOption(int i) const { return vecGet(m_aiOnGameOptions, i); }
 	int getNumOnGameOptions() const { return (int)m_aiOnGameOptions.size(); }
@@ -404,10 +404,10 @@ public:
 	//  NAMED GAPS -- see the class-header note. Genuinely NOT emitted by curate_promotion.py; NOT silent stubs.
 	// =========================================================================================================
 	// store-inverted onto tech.enables.promotions / tech.obsoletes.promotions; reconstructed at LOAD by the
-	// cascadeLoadJson tech-FK reverse-index pass (the Route<-bonus pattern), which calls the setters below.
+	// loadJson tech-FK reverse-index pass (the Route<-bonus pattern), which calls the setters below.
 	TechTypes getTechPrereq() const { return m_eTechPrereq; }
 	TechTypes getObsoleteTech() const { return m_eObsoleteTech; }
-	void setTechPrereq(TechTypes e) { m_eTechPrereq = e; }       // load-time reverse-index writers (cascadeLoadJson)
+	void setTechPrereq(TechTypes e) { m_eTechPrereq = e; }       // load-time reverse-index writers (loadJson)
 	void setObsoleteTech(TechTypes e) { m_eObsoleteTech = e; }
 	PromotionTypes getPrereqPromotion() const { return NO_PROMOTION; }        // curator DROP: line + priority + tech carry the chain
 	PromotionTypes getPrereqOrPromotion1() const { return NO_PROMOTION; }     // curator DROP (as above)
@@ -452,24 +452,24 @@ public:
 	bool isTrapTriggerUnitCombatType(int /*iUnitCombat*/) const { return false; }
 
 protected:
-	virtual CvJsonModifiers* mutModifiers() { return &m_modifiers; }
-	virtual CvJsonBoolBlock* mutSkills()    { return &m_skills; }
-	virtual CvJsonGate*      mutGate()      { return &m_gate; }
-	virtual CvJsonGrants*    mutGrants()    { return &m_grants; }
-	virtual CvJsonEdges*     mutEdges()     { return &m_edges; }
-	virtual CvJsonRequires*  mutRequires()  { return &m_requires; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvClassificationBlock* mutSkills()    { return &m_skills; }
+	virtual CvGate*      mutGate()      { return &m_gate; }
+	virtual CvGrants*    mutGrants()    { return &m_grants; }
+	virtual CvEdges*     mutEdges()     { return &m_edges; }
+	virtual CvRequires*  mutRequires()  { return &m_requires; }
 
 private:
 	static int mapGet(const std::map<int, int>& m, int k) { std::map<int, int>::const_iterator it = m.find(k); return it != m.end() ? it->second : 0; }
 	static int vecGet(const std::vector<int>& v, int i) { return (i >= 0 && i < (int)v.size()) ? v[i] : -1; }
 	static bool vecHas(const std::vector<int>& v, int id) { for (size_t j = 0; j < v.size(); ++j) if (v[j] == id) return true; return false; }
 
-	CvJsonModifiers m_modifiers;
-	CvJsonBoolBlock m_skills;
-	CvJsonGate      m_gate;
-	CvJsonGrants    m_grants;
-	CvJsonEdges     m_edges;     // enables.promotions chains (see the getEdges opt-in note)
-	CvJsonRequires  m_requires;  // the chain's requires.build AND-half (see the getRequires opt-in note)
+	CvModifiers m_modifiers;
+	CvClassificationBlock m_skills;
+	CvGate      m_gate;
+	CvGrants    m_grants;
+	CvEdges     m_edges;     // enables.promotions chains (see the getEdges opt-in note)
+	CvRequires  m_requires;  // the chain's requires.build AND-half (see the getRequires opt-in note)
 
 	// strength family scalars
 	int m_iCombatPercent, m_iStrengthChange, m_iStrengthModifier, m_iAttackCombatModifierChange, m_iDefenseCombatModifierChange;
@@ -518,7 +518,7 @@ private:
 	std::vector<MapCategoryTypes> m_aeMapCategories;   // empty -- no curator table
 	// gate flat-lists (walked from m_gate in mapFrom)
 	std::vector<int> m_aiOnGameOptions, m_aiNotOnGameOptions;
-	TechTypes m_eTechPrereq, m_eObsoleteTech;   // store-inverted tech FKs, reconstructed at load (cascadeLoadJson)
+	TechTypes m_eTechPrereq, m_eObsoleteTech;   // store-inverted tech FKs, reconstructed at load (loadJson)
 	int m_iZobristValue;               // non-XML runtime map-hash (drawn from the synced RNG in the ctor, mirrors the archive)
 	// vision
 	std::vector<int> m_aiNegatesInvisibility;

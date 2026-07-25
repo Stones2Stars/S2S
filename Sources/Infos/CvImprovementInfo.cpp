@@ -10,7 +10,7 @@
 #include "UI/CvArtFileMgr.h"      // ARTFILEMGR -- the EXE-shim-merge getArtInfo()
 #include "Infos/CvArtInfoImprovement.h"   // complete CvArtInfoImprovement -- getButton() needs the full definition
 #include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonFamVal/...)
-#include "Property/CvPropertyBridge.h" // the shared grants.repeatable PROPERTY pulse -> manipulator walk
+#include "Property/CvPropertyBridge.h" // the shared `triggers` PROPERTY pulse -> manipulator walk
 
 CvImprovementInfo::CvImprovementInfo()
 	: m_iDefenseModifier(0), m_iAirBombDefense(0), m_iHealthPercent(0), m_iHappiness(0), m_iCulture(0),
@@ -43,10 +43,10 @@ void CvImprovementInfo::mapFrom(const picojson::value& entity)
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();
 
-	// PROPERTY_* per-turn SOURCES: the improvement's grants.repeatable property pulses (polluting mines/wells --
+	// PROPERTY_* per-turn SOURCES: the improvement's `triggers` property pulses (polluting mines/wells --
 	// authored per json §5) feed the KEEP-legacy solver via the plot gather, mirroring the legacy PLOT+NEAR
 	// shape. The ONE shared pulse walk (clear-and-refill inside).
-	CascadePropertyBridge::bridgePulses(getGrants(), m_PropertyManipulators);
+	CascadePropertyBridge::bridgePulses(getTriggers(), m_PropertyManipulators);
 
 	// plot yield families (the improvement's own tile output): base + condition-gated deposits, all folded into the
 	// `<yield>.plot.flat` arrays by the curator. readConditionalYields sets m_aiYieldChange (base) AND the RiverSide/
@@ -80,7 +80,7 @@ void CvImprovementInfo::mapFrom(const picojson::value& entity)
 		m_iUpgradeTime              = jsonIdInt(*io, "upgradeTime");          // iUpgradeTime -> identity
 		// upgradesTo/pillageTo are improvement->improvement self-FKs -- direct resolution: LoadGlobalClassInfoJson
 		// registers the whole category BEFORE any mapFrom (two-pass, engine.md), and the full-registry re-run
-		// (cascadeLoadJson PASS 2) re-resolves against the complete id space regardless.
+		// (loadJson PASS 2) re-resolves against the complete id space regardless.
 		m_eImprovementUpgrade = (ImprovementTypes)jsonIdFk(*io, "upgradesTo");
 		m_eImprovementPillage = (ImprovementTypes)jsonIdFk(*io, "pillageTo");
 		m_eBonusChange              = (BonusTypes)jsonIdFk(*io, "bonusChange");         // BonusChange -> identity.bonusChange
@@ -172,7 +172,7 @@ void CvImprovementInfo::mapFrom(const picojson::value& entity)
 }
 
 //
-//	Placement/validity condition-tree helpers -- read-only walks of `requires.build` (the CvJsonCondition tree the
+//	Placement/validity condition-tree helpers -- read-only walks of `requires.build` (the CvCondition tree the
 //	base already parses via mutRequires()/CJK_REQUIRES; CvJsonConditionParse.cpp). curate_improvement.py's
 //	requires_improvement() shapes:
 //	  - a bare token (IS_WATER/HAS_PEAK/HAS_IRRIGATION/IS_FLATLANDS/HAS_FEATURE/IS_LAND/HAS_COAST/HAS_RIVER/
@@ -196,7 +196,7 @@ void CvImprovementInfo::mapFrom(const picojson::value& entity)
 //	already contributes when true.
 //
 
-static bool condHasPredicate(const CvJsonCondition* c, CvCascPredKind k, int id)
+static bool condHasPredicate(const CvCondition* c, CvCascPredKind k, int id)
 {
 	if (!c) return false;
 	if (c->kind == CASC_COND_PREDICATE && c->predKind == k && c->id == id) return true;
@@ -210,7 +210,7 @@ static bool condHasPredicate(const CvJsonCondition* c, CvCascPredKind k, int id)
 
 // The {bonus:[...]} membership atom is a PRESENCE node, not a predicate; filter on the retained `type` string
 // (BONUS_ prefix) so a numerically-coincident id from another FK space (e.g. the PrereqTech PRESENCE) can't collide.
-static bool condHasBonusPresence(const CvJsonCondition* c, int id)
+static bool condHasBonusPresence(const CvCondition* c, int id)
 {
 	if (!c) return false;
 	if (c->kind == CASC_COND_PRESENCE && c->id == id && c->type.compare(0, 6, "BONUS_") == 0) return true;
@@ -224,7 +224,7 @@ static bool condHasBonusPresence(const CvJsonCondition* c, int id)
 
 // direct = occurrences of the bare predicate `k` reached WITHOUT ever crossing an anyOf hop; nested = occurrences
 // reached through at least one anyOf hop (the "MakesValid" OR-alternative position). See the block comment above.
-static void condCountPred(const CvJsonCondition* c, CvCascPredKind k, bool viaAny, int& direct, int& nested)
+static void condCountPred(const CvCondition* c, CvCascPredKind k, bool viaAny, int& direct, int& nested)
 {
 	if (!c) return;
 	if (c->kind == CASC_COND_PREDICATE && c->predKind == k) { if (viaAny) ++nested; else ++direct; return; }
@@ -240,7 +240,7 @@ TechTypes CvImprovementInfo::getPrereqTech() const
 	if (m_requires.build)
 		for (size_t i = 0; i < m_requires.build->all.size(); ++i)
 		{
-			const CvJsonCondition* c = m_requires.build->all[i];
+			const CvCondition* c = m_requires.build->all[i];
 			if (c && c->kind == CASC_COND_PRESENCE && c->type.compare(0, 5, "TECH_") == 0) return (TechTypes)c->id;
 		}
 	return NO_TECH;
@@ -279,7 +279,7 @@ bool CvImprovementInfo::isNoFreshWater() const
 	if (!m_requires.build) return false;
 	for (size_t i = 0; i < m_requires.build->noneOf.size(); ++i)
 	{
-		const CvJsonCondition* c = m_requires.build->noneOf[i];
+		const CvCondition* c = m_requires.build->noneOf[i];
 		if (c && c->kind == CASC_COND_PREDICATE && c->predKind == CASC_PRED_HAS_FRESHWATER) return true;
 	}
 	return false;
@@ -328,7 +328,7 @@ void CvImprovementInfo::readConditionalYields(const picojson::value& entity)
 	}
 	m_bonusYieldChanges.clear();
 	m_techYieldChanges.clear();
-	m_routeYieldChanges.clear();   // refilled by the CvCascadeReadJson reverse pass, which runs after every re-map
+	m_routeYieldChanges.clear();   // refilled by the loadJson reverse pass, which runs after every re-map
 
 	if (!entity.is<picojson::object>()) return;
 	const picojson::object& o = entity.get<picojson::object>();

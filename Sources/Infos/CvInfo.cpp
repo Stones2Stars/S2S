@@ -20,7 +20,7 @@ CvInfo::~CvInfo() {}
 const std::vector<int>& CvInfo::dormantTriggers() const
 {
 	static const std::vector<int> s_empty;
-	const CvJsonRequires* r = getRequires();
+	const CvRequires* r = getRequires();
 	return r ? r->dormantTriggers : s_empty;
 }
 
@@ -34,30 +34,31 @@ void CvInfo::mapFrom(const picojson::value& entity)
 // clearParsed is its dtor body -- single-sourced), so the full-registry re-run cannot double-accumulate.
 void CvInfo::clearSections()
 {
-	if (CvJsonEdges* u = mutEdges())            u->clearParsed();
-	if (CvJsonProvides* u = mutProvides())      u->clearParsed();
-	if (CvJsonAllowed* u = mutAllowed())        u->clearParsed();
-	if (CvJsonGrants* u = mutGrants())          u->clearParsed();
-	if (CvJsonRequires* u = mutRequires())      u->clearParsed();
-	if (CvJsonGate* u = mutGate())              u->clearParsed();
-	if (CvJsonModifiers* u = mutModifiers())    u->clearParsed();
-	if (CvJsonModifiers* u = mutWhenObsolete()) u->clearParsed();
-	if (CvJsonBoolBlock* u = mutSkills())       u->clearParsed();
-	if (CvJsonBoolBlock* u = mutTags())         u->clearParsed();
-	if (CvJsonBoolBlock* u = mutAttributes())   u->clearParsed();
-	if (CvJsonBoolBlock* u = mutCapabilities()) u->clearParsed();
-	if (CvJsonBoolBlock* u = mutPolicies())     u->clearParsed();
+	if (CvEdges* u = mutEdges())            u->clearParsed();
+	if (CvProvides* u = mutProvides())      u->clearParsed();
+	if (CvAllowed* u = mutAllowed())        u->clearParsed();
+	if (CvGrants* u = mutGrants())          u->clearParsed();
+	if (CvTriggers* u = mutTriggers())          u->clearParsed();
+	if (CvRequires* u = mutRequires())      u->clearParsed();
+	if (CvGate* u = mutGate())              u->clearParsed();
+	if (CvModifiers* u = mutModifiers())    u->clearParsed();
+	if (CvModifiers* u = mutWhenObsolete()) u->clearParsed();
+	if (CvClassificationBlock* u = mutSkills())       u->clearParsed();
+	if (CvClassificationBlock* u = mutTags())         u->clearParsed();
+	if (CvClassificationBlock* u = mutAttributes())   u->clearParsed();
+	if (CvClassificationBlock* u = mutCapabilities()) u->clearParsed();
+	if (CvClassificationBlock* u = mutPolicies())     u->clearParsed();
 }
 
 // §8/§9 classification id-plane resolve -- each carried block fills its by-id bitsets from the generated
 // ClassificationRegistry. LOAD-ONLY (called by ClassificationRegistry::buildAndResolve after minting).
 void CvInfo::resolveClassificationIds()
 {
-	if (CvJsonBoolBlock* u = mutSkills())       u->resolveIds(CLSD_SKILL);
-	if (CvJsonBoolBlock* u = mutTags())         u->resolveIds(CLSD_TAG);
-	if (CvJsonBoolBlock* u = mutAttributes())   u->resolveIds(CLSD_ATTRIBUTE);
-	if (CvJsonBoolBlock* u = mutCapabilities()) u->resolveIds(CLSD_CAPABILITY);
-	if (CvJsonBoolBlock* u = mutPolicies())     u->resolveIds(CLSD_POLICY);
+	if (CvClassificationBlock* u = mutSkills())       u->resolveIds(CLSD_SKILL);
+	if (CvClassificationBlock* u = mutTags())         u->resolveIds(CLSD_TAG);
+	if (CvClassificationBlock* u = mutAttributes())   u->resolveIds(CLSD_ATTRIBUTE);
+	if (CvClassificationBlock* u = mutCapabilities()) u->resolveIds(CLSD_CAPABILITY);
+	if (CvClassificationBlock* u = mutPolicies())     u->resolveIds(CLSD_POLICY);
 }
 
 void CvInfo::mapSections(const picojson::value& entity)
@@ -87,46 +88,52 @@ void CvInfo::mapSections(const picojson::value& entity)
 		const picojson::value& v = it->second;
 
 		// the §8/§9 flat-bool classification blocks (keyed extras stay subclass-parsed from the same section)
-		if (k == "skills")            { if (CvJsonBoolBlock* u = mutSkills())       u->parse(v); continue; }
-		if (k == "tags")              { if (CvJsonBoolBlock* u = mutTags())         u->parse(v); continue; }
-		if (k == "attributes")        { if (CvJsonBoolBlock* u = mutAttributes())   u->parse(v); continue; }
-		if (k == "capabilities")      { if (CvJsonBoolBlock* u = mutCapabilities()) u->parse(v); continue; }
-		if (k == "policies")          { if (CvJsonBoolBlock* u = mutPolicies())     u->parse(v); continue; }
+		if (k == "skills")            { if (CvClassificationBlock* u = mutSkills())       u->parse(v); continue; }
+		if (k == "tags")              { if (CvClassificationBlock* u = mutTags())         u->parse(v); continue; }
+		if (k == "attributes")        { if (CvClassificationBlock* u = mutAttributes())   u->parse(v); continue; }
+		if (k == "capabilities")      { if (CvClassificationBlock* u = mutCapabilities()) u->parse(v); continue; }
+		if (k == "policies")          { if (CvClassificationBlock* u = mutPolicies())     u->parse(v); continue; }
 
 		switch (jsonClassifyKey(k, v.is<picojson::object>()))
 		{
 		case CJK_EDGE:
-			if (CvJsonEdges* u = mutEdges()) u->parse(k, v); else jsonNoteUnconsumed(m_szType.GetCString(), k);
+			if (CvEdges* u = mutEdges()) u->parse(k, v); else jsonNoteUnconsumed(m_szType.GetCString(), k);
 			break;
 		case CJK_PROVIDES:
-			if (CvJsonProvides* u = mutProvides()) u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k);
+			if (CvProvides* u = mutProvides()) u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k);
 			break;
 		case CJK_ALLOWED:
-			if (CvJsonAllowed* u = mutAllowed()) u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k);
+			if (CvAllowed* u = mutAllowed()) u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k);
 			break;
 		case CJK_GRANTS:
-			if (CvJsonGrants* u = mutGrants()) u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k);
+			if (CvGrants* u = mutGrants()) u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k);
+			break;
+		case CJK_TRIGGERS:
+			if (CvTriggers* u = mutTriggers()) u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k);
 			break;
 		case CJK_REQUIRES:
-			if (CvJsonRequires* u = mutRequires()) u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k);
+			if (CvRequires* u = mutRequires()) u->parse(v); else jsonNoteUnconsumed(m_szType.GetCString(), k);
 			break;
 		case CJK_WHEN_OBSOLETE:
-			if (CvJsonModifiers* u = mutWhenObsolete())
+			if (CvModifiers* u = mutWhenObsolete())
 			{
 				if (v.is<picojson::object>()) u->parseEntity(v.get<picojson::object>());
 			}
 			else jsonNoteUnconsumed(m_szType.GetCString(), k);
 			break;
 		case CJK_GATE:
-			if (CvJsonGate* u = mutGate()) { if (k == "enabled") u->parseEnabled(v); else u->parseDisabled(v); }
+			if (CvGate* u = mutGate()) { if (k == "enabled") u->parseEnabled(v); else u->parseDisabled(v); }
 			else jsonNoteUnconsumed(m_szType.GetCString(), k);
 			break;
 		case CJK_FAMILY:
-			bHasFamilyKeys = true;   // parsed in ONE pass below (CvJsonModifiers::parseEntity self-skips reserved keys)
+			bHasFamilyKeys = true;   // parsed in ONE pass below (CvModifiers::parseEntity self-skips reserved keys)
 			break;
 		case CJK_RETIRED:
 			jsonNoteUnconsumed(m_szType.GetCString(), k);   // purged vocabulary (loadPrune) -- a straggler must SURFACE
 			break;
+		case CJK_UNKNOWN:
+			jsonNoteUnknownKey(m_szType.GetCString(), k);   // outside the closed family vocabulary -- surfaces as a
+			break;                                          // LOUD [READJSON] ERROR unknown-key line, never family-walked
 		case CJK_INTRINSIC:
 		case CJK_FLAG:
 		default:
@@ -137,7 +144,7 @@ void CvInfo::mapSections(const picojson::value& entity)
 	// --- the §6 modifier families: one walk over the whole entity (parseEntity self-skips the reserved keys) ---
 	if (bHasFamilyKeys)
 	{
-		if (CvJsonModifiers* u = mutModifiers()) u->parseEntity(o);
+		if (CvModifiers* u = mutModifiers()) u->parseEntity(o);
 		else jsonNoteUnconsumed(m_szType.GetCString(), "(modifier families)");
 	}
 }

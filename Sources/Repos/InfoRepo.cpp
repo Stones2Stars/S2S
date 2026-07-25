@@ -3,7 +3,7 @@
 //
 //	WHY THIS FILE EXISTS: get() used to be header-inline with a function-local static. Under the vendored VC7.1
 //	toolchain + FastBuild unity batching, a local static in an INLINED template member is DUPLICATED per translation
-//	unit (the classic VC7.x defect) -- CvCascadeReadJson.cpp mapped 13,444 JSON entities into ITS copy of each
+//	unit (the classic VC7.x defect) -- CvReadJson.cpp mapped 13,444 JSON entities into ITS copy of each
 //	singleton while the calc/shadow TUs (a different unity batch) read a DIFFERENT, EMPTY copy: the live signature was
 //	[MODIFIER/repo] probeFiles=13444 probeEntities=13444 mapped=0, which silently zeroed the whole modifier building
 //	tier and the dormancy derivation. Explicit per-tag specializations in this single TU guarantee ONE instance per
@@ -34,7 +34,7 @@ class CvSkillClsTag; class CvTagClsTag; class CvAttributeClsTag; class CvCapabil
 		return s_instance; \
 	}
 // OWNED: JSON-only tags with no XML shell array (Heritage/Build/complex-traits) + the uniformity set (consumed via
-// their legacy arrays, not this repo). The repo owns its m_data; cascadeLoadJson maps the JSON-only ones into it.
+// their legacy arrays, not this repo). The repo owns its m_data; loadJson maps the JSON-only ones into it.
 #define CASCADE_INFOREPO_OWNED(TAG) \
 	template <> InfoRepo<TAG>& InfoRepo<TAG>::get() \
 	{ \

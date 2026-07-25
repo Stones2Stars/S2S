@@ -17,10 +17,10 @@
 
 class BoolExpr;
 class IntExpr;
-class CvJsonCondition;
-class CvJsonModEntry;
-class CvJsonModifiers;
-class CvJsonGrants;
+class CvCondition;
+class CvModEntry;
+class CvModifiers;
+class CvTriggers;
 class CvPropertyManipulators;
 
 class CascadePropertyBridge
@@ -30,15 +30,15 @@ public:
 	// map by type prefix (TECH_/BONUS_/BUILDING_/CIVIC_/RELIGION_/CORPORATION_ -> BoolExprHas(GOM_*, id), plain
 	// presence only); groups fold (all -> And, anyOf -> Or, noneOf -> Not(Or)). NULL = untranslatable (a count
 	// threshold, a connection, an unmapped kind) -- the caller skips the source. Caller owns the returned tree.
-	static const BoolExpr* condToBoolExpr(const CvJsonCondition* pCond);
+	static const BoolExpr* condToBoolExpr(const CvCondition* pCond);
 
 	// An entry's ACTIVE gate: enabled AND NOT disabled, composed from the entry's condition fields. Returns NULL
 	// for an unconditioned entry (apply always) AND for an untranslatable one (skip) -- *pbUntranslatable tells
 	// them apart. Caller owns the returned tree.
-	static const BoolExpr* entryActiveExpr(const CvJsonModEntry* pEntry, bool* pbUntranslatable);
+	static const BoolExpr* entryActiveExpr(const CvModEntry* pEntry, bool* pbUntranslatable);
 
 	// A bare predicate STRING (the `properties.diffuse[].enabled` gate -- these strings deliberately do not parse
-	// into CvJsonCondition) -> BoolExprIs on the matching legacy tag. NULL = unknown string (caller skips).
+	// into CvCondition) -> BoolExprIs on the matching legacy tag. NULL = unknown string (caller skips).
 	static const BoolExpr* predStringToBoolExpr(const std::string& szPred);
 
 	// A per-POPULATION amount: value x POPULATION / each (the each==1 divide is elided). Caller owns the tree.
@@ -55,14 +55,14 @@ public:
 	// associated city). PROPERTY_X.empire.flat routes to pEmpireTarget when given (the buildings' all-cities
 	// container), else skips. Conditioned entries ride entryActiveExpr; untranslatable ones skip (fail closed).
 	// Clears kTarget (and pEmpireTarget) first — the CvInfo.h mapFrom idempotency contract.
-	static void bridgeFamilies(const CvJsonModifiers* pMods, CvPropertyManipulators& kTarget,
+	static void bridgeFamilies(const CvModifiers* pMods, CvPropertyManipulators& kTarget,
 		RelationTypes eRelation, int iRelationData = 0, CvPropertyManipulators* pEmpireTarget = 0);
 
-	// The grants.repeatable PROPERTY pulse walk (features/improvements — json §5 property pulses, curated from
-	// the legacy plot manipulators): every plain per-turn pulse becomes a Constant source with its authored
-	// spatial intent (on/relation/distance). Chance-rolled or interval>1 pulses skip (fail closed — none
-	// authored). Clears kTarget first (idempotency).
-	static void bridgePulses(const CvJsonGrants* pGrants, CvPropertyManipulators& kTarget);
+	// The `triggers` PROPERTY pulse walk (features/improvements — json §5 property-delta actions, curated from
+	// the legacy plot manipulators): every plain per-turn onTurn pulse becomes a Constant source with its
+	// authored spatial intent (on/relation/distance). Chance-rolled, interval>1, or non-turn entries skip
+	// (fail closed — none authored). Clears kTarget first (idempotency).
+	static void bridgePulses(const CvTriggers* pTriggers, CvPropertyManipulators& kTarget);
 
 private:
 	CascadePropertyBridge();   // purely-organizational static-methods class -- never instantiated

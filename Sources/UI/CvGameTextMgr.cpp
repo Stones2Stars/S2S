@@ -16679,7 +16679,7 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 			{
 				szBuffer.append(gDLL->getText("TXT_KEY_BUILDINGHELP_FREE_PROMO_CONDITION_ADDON"));
 			}
-			// The building's unit filter is a CvJsonCondition (a boolean tree with no prose renderer). The
+			// The building's unit filter is a CvCondition (a boolean tree with no prose renderer). The
 			// promotion's QUALIFIED unitcombats describe the same restriction from the other side and read better
 			// than a rendered expression, so both the filtered and unfiltered cases list them.
 			{

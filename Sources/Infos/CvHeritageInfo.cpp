@@ -27,7 +27,7 @@ void CvHeritageInfo::resolvePrereqs() const
 	// PrereqTech: the (single, legacy) tech whose enables.heritages includes this heritage.
 	for (int t = 0; t < GC.getNumTechInfos() && m_iPrereqTech == NO_TECH; ++t)
 	{
-		const CvJsonEdges* pEdges = GC.getTechInfo((TechTypes)t).getEdges();
+		const CvEdges* pEdges = GC.getTechInfo((TechTypes)t).getEdges();
 		if (pEdges == NULL) continue;
 		const std::vector<int>* pList = pEdges->find(EDGEF_ENABLES, EDGEB_HERITAGES);
 		if (pList == NULL) continue;
@@ -39,7 +39,7 @@ void CvHeritageInfo::resolvePrereqs() const
 	for (int h = 0; h < GC.getNumHeritageInfos(); ++h)
 	{
 		if (h == iThis) continue;
-		const CvJsonEdges* pEdges = GC.getHeritageInfo((HeritageTypes)h).getEdges();
+		const CvEdges* pEdges = GC.getHeritageInfo((HeritageTypes)h).getEdges();
 		if (pEdges == NULL) continue;
 		const std::vector<int>* pList = pEdges->find(EDGEF_ENABLES, EDGEB_HERITAGES);
 		if (pList == NULL) continue;

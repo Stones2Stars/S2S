@@ -116,7 +116,7 @@ static int sumFlatAsIs(const picojson::value* flat)
 
 // Collect requires.spread BUILDING count atoms (json §4.3) into the per-building-id count map -- the legacy
 // PrereqBuildings semantics the executive-spread gate reads (min absent = presence = 1).
-static void corpCollectSpreadBuildings(const CvJsonCondition* c, std::map<int, int>& out)
+static void corpCollectSpreadBuildings(const CvCondition* c, std::map<int, int>& out)
 {
 	if (c == NULL) return;
 	if (c->kind == CASC_COND_PRESENCE)

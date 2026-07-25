@@ -6,8 +6,8 @@
 //	DepositIndex -- the #430 COMPILED DEPOSIT INDEX: the load-time strings->ints compile over the info-side modifier
 //	families (modifier-substrate.md "the compiled deposit index"; cutover.md flip lesson: "the JSON stays
 //	HUMAN-shaped ... and the LOAD step programmatically compiles it into the top-down routing"). The INPUT SOURCE is
-//	the spec model ([DEC-json-not-cascade]): readJson's push walks each mapped info's CvJsonModifiers families
-//	(`j->getModifiers()` / `j->getWhenObsolete()`) -- per (address, CvJsonModEntry) pair, the address + the entry's
+//	the spec model ([DEC-json-not-cascade]): readJson's push walks each mapped info's compiled CvModifiers entries
+//	(`j->getModifiers()` / `j->getWhenObsolete()`) -- per CvModEntry, the spelled-back address + the entry's
 //	unit are interned ONCE into a cascade-side compiled record; the hot-path matchers (MMKernel et al.) then compare
 //	INTS, and a query address that was never authored anywhere answers 0 without touching a single deposit.
 //
@@ -23,17 +23,17 @@
 //	negative (a miss can turn into a hit after a re-map introduces new data).
 //
 
-#include "CvJsonModEntry.h"   // CvCascUnit -- the entry's unit enum (the unit segment the push interns)
+#include "CvModEntry.h"   // CvCascUnit -- the entry's unit enum (the unit segment the push interns)
 #include <string>
 #include <vector>
 
 class CvInfo;
-class CvJsonCondition;
+class CvCondition;
 
 //
 //	The COMPILED DEPOSIT RECORD -- cascade-side ONLY ([DEC-json-not-cascade]: the retired info-side generic vector
 //	and its struct are gone; this equivalent record lives in the cascade's own index and is populated from the spec
-//	model's (address, CvJsonModEntry) pairs at push time). The matchers read: addressId/unitId (whole-address +
+//	model's (address, CvModEntry) pairs at push time). The matchers read: addressId/unitId (whole-address +
 //	unit-segment ids), nSeg + seg[] (the compiled dotted segments), targetFk (the FK-resolved INFOTYPE tail),
 //	value100, enabled/disabled (borrowed pointers into the info-owned condition trees -- the InfoRepo-owned info
 //	outlives the registry entry; clearCompiled() runs before any repo clear). The address/unit strings stay for
@@ -42,12 +42,12 @@ class CvJsonCondition;
 struct CascadeDeposit
 {
 	enum { CASC_DEP_SEGS = 4 };
-	std::string address;               // dotted address MINUS the unit (the CvJsonModifiers family key)
+	std::string address;               // dotted address MINUS the unit (the CvModifiers family key)
 	std::string unit;                  // the unit segment string (the entry's unit, spelled)
-	int value100;                      // x100 fixed-point magnitude (CvJsonModEntry::value100)
-	const CvJsonCondition* enabled;    // NULL = always-on (borrowed, never owned)
-	const CvJsonCondition* disabled;   // NULL = never-suppressed (borrowed, never owned)
-	const CvJsonCondition* unitQual;   // the §3.7 `unit:` predicate qualifier (borrowed; NULL = unqualified) --
+	int value100;                      // x100 fixed-point magnitude (CvModEntry::value100)
+	const CvCondition* enabled;    // NULL = always-on (borrowed, never owned)
+	const CvCondition* disabled;   // NULL = never-suppressed (borrowed, never owned)
+	const CvCondition* unitQual;   // the §3.7 `unit:` predicate qualifier (borrowed; NULL = unqualified) --
 	                                   // evaluated at the CONSUMER per candidate unit; plain sums must filter it
 	bool hasPer;                       // the §3.7 per count-scaler rides the entry (borrowed detail below)
 	std::string perType;               // the per's type/token string (kept like address/unit; a SELF token is
@@ -112,9 +112,9 @@ public:
 	static int lookupSegment(const std::string& s);
 	static int lookupAddress(const std::string& s);
 
-	// THE PUSH (readJson load, once per mapped info): walk j->getModifiers()->all() (+ j->getWhenObsolete()) and
-	// compile every (address, entry) pair into this index's registry -- the spec-model input seam of the compiled
-	// index (the runtime shape below it is unchanged). NULL / family-less infos no-op.
+	// THE PUSH (readJson load, once per mapped info): walk j->getModifiers()->entries() (+ j->getWhenObsolete())
+	// and compile every entry into this index's registry -- the spec-model input seam of the compiled index (the
+	// runtime shape below it is unchanged). NULL / family-less infos no-op.
 	static void pushInfo(const CvInfo* j);
 
 	// Re-map safety (rj_clearAllRepos): drop the compiled registry -- its keys are the about-to-be-freed infos.

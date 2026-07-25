@@ -56,9 +56,9 @@ public:
 	const std::vector<BonusTypes>& getPrereqBonuses() const { return m_aePrereqBonusTypes; }
 	// ObsoleteTech is store-inverted to tech.obsoletes.builds (curate_build.py:50; the obsolete gate itself rides the
 	// builds domain's REMOVE plane -- the tech events apply it, enabler.md par.7.1). The compat getter FK is reconstructed at LOAD
-	// by the cascadeLoadJson tech-FK reverse-index pass (the Route<-bonus pattern), which calls setObsoleteTech.
+	// by the loadJson tech-FK reverse-index pass (the Route<-bonus pattern), which calls setObsoleteTech.
 	TechTypes getObsoleteTech() const { return m_eObsoleteTech; }
-	void setObsoleteTech(TechTypes e) { m_eObsoleteTech = e; }   // load-time reverse-index writer (cascadeLoadJson)
+	void setObsoleteTech(TechTypes e) { m_eObsoleteTech = e; }   // load-time reverse-index writer (loadJson)
 	// CURATOR-GAP (deliberate) -- PlaceBonusTypes is DROPPED by curate_build.py (0/304 builds author it; owner
 	// 2026-06-16: the place-a-bonus capability becomes canonical #430 outcome tooling, not this XML-era struct). No
 	// build-JSON field to map; the member stays a real empty vector so reference-returning callers see "no bonuses placed".
@@ -84,13 +84,13 @@ public:
 	virtual void mapFrom(const picojson::value& entity);
 
 	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvJsonRequires* getRequires() const { return &m_requires; }
+	virtual const CvRequires* getRequires() const { return &m_requires; }
 
 protected:
-	virtual CvJsonRequires* mutRequires() { return &m_requires; }
+	virtual CvRequires* mutRequires() { return &m_requires; }
 
 private:
-	CvJsonRequires m_requires;
+	CvRequires m_requires;
 	ImprovementTypes m_eImprovement;   // produces.improvement
 	RouteTypes m_eRoute;               // produces.route
 	TerrainTypes m_eTerrainChange;     // produces.terrainChange (NO_TERRAIN default)
@@ -102,7 +102,7 @@ private:
 	bool m_bKill;                      // identity.consumesUnit
 	bool m_bDisabled;                  // RUNTIME toggle (default false; never JSON-authored)
 	TechTypes m_eTechPrereq;           // reconstructed from requires.build's team-scoped PRESENCE clause at load
-	TechTypes m_eObsoleteTech;         // store-inverted tech.obsoletes.builds, reconstructed at load (cascadeLoadJson)
+	TechTypes m_eObsoleteTech;         // store-inverted tech.obsoletes.builds, reconstructed at load (loadJson)
 	std::vector<FeatureStruct> m_aFeatureStructs;      // produces.features[] {feature, tech?, time?, production?, remove?}
 	std::vector<TerrainStructs> m_aTerrainStructs;     // produces.terraform[] {terrain, tech?, time?}
 	std::vector<PlaceBonusTypes> m_aPlaceBonusTypes;   // curator-gap: PlaceBonusTypes dropped (0/304) -- always empty

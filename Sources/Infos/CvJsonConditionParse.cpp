@@ -1,12 +1,12 @@
 //
 //	cascadeParseCondition -- see the header. A faithful port of StoneBase ConditionParser.cs: the curated JSON ->
-//	the typed CvJsonCondition tree, FK-resolving each type/param to its engine id. Mirrors the C# control flow
+//	the typed CvCondition tree, FK-resolving each type/param to its engine id. Mirrors the C# control flow
 //	method-for-method (ParseBareString / ParseObject / TryMembership / the string->typed maps).
 //
 
 #include "CvGameCoreDLL.h"
 #include "CvJsonConditionParse.h"
-#include "CvJsonCondition.h"
+#include "CvCondition.h"
 #include "CvJsonParse.h"   // jsonResolveId (FK diagnostics) + jsonParseScope (the ONE scope-token vocabulary)
 #include <string>
 
@@ -68,22 +68,22 @@ static bool cp_isTypeRef(const std::string& n)
 
 // ---- node builders (FK resolution via jsonResolveId -- unresolved ids land in the load-time diagnostics) --------
 
-static CvJsonCondition* cp_presence(const std::string& type, CvCascScope scope, int min, int max,
+static CvCondition* cp_presence(const std::string& type, CvCascScope scope, int min, int max,
                                        CvCascConnection conn, CvCascVicinity vic)
 {
-	CvJsonCondition* c = new CvJsonCondition();
+	CvCondition* c = new CvCondition();
 	c->kind = CASC_COND_PRESENCE; c->type = type; c->scope = scope; c->min = min; c->max = max;
 	c->connection = conn; c->vicinity = vic; c->id = jsonResolveId(type);
 	return c;
 }
-static CvJsonCondition* cp_predicate(CvCascPredKind k, const std::string& param, int min, int max)
+static CvCondition* cp_predicate(CvCascPredKind k, const std::string& param, int min, int max)
 {
-	CvJsonCondition* c = new CvJsonCondition();
+	CvCondition* c = new CvCondition();
 	c->kind = CASC_COND_PREDICATE; c->predKind = k; c->param = param; c->min = min; c->max = max;
 	if (!param.empty()) c->id = jsonResolveId(param);
 	return c;
 }
-static CvJsonCondition* cp_group() { CvJsonCondition* c = new CvJsonCondition(); c->kind = CASC_COND_GROUP; return c; }
+static CvCondition* cp_group() { CvCondition* c = new CvCondition(); c->kind = CASC_COND_GROUP; return c; }
 
 // ---- picojson helpers ------------------------------------------------------------------------------------------
 
@@ -97,23 +97,23 @@ static int po_int(const picojson::object& o, const char* k, int dflt)
 
 // ---- the parse (ConditionParser.cs) ----------------------------------------------------------------------------
 
-static CvJsonCondition* cp_parseBareString(const std::string& s);
+static CvCondition* cp_parseBareString(const std::string& s);
 
-static CvJsonCondition* cp_parseObject(const picojson::object& o)
+static CvCondition* cp_parseObject(const picojson::object& o)
 {
 	// 1) combinator node
 	if (po_has(o, "all") || po_has(o, "any") || po_has(o, "noneOf") || po_has(o, "enabled") || po_has(o, "disabled"))
 	{
-		CvJsonCondition* g = cp_group();
+		CvCondition* g = cp_group();
 		const char* lists[3] = { "all", "any", "noneOf" };
-		std::vector<CvJsonCondition*>* dst[3] = { &g->all, &g->anyOf, &g->noneOf };
+		std::vector<CvCondition*>* dst[3] = { &g->all, &g->anyOf, &g->noneOf };
 		for (int i = 0; i < 3; ++i)
 		{
 			const picojson::value* v = po_get(o, lists[i]);
 			if (v && v->is<picojson::array>())
 			{
 				const picojson::array& a = v->get<picojson::array>();
-				for (size_t j = 0; j < a.size(); ++j) { CvJsonCondition* c = cascadeParseCondition(a[j]); if (c) dst[i]->push_back(c); }
+				for (size_t j = 0; j < a.size(); ++j) { CvCondition* c = cascadeParseCondition(a[j]); if (c) dst[i]->push_back(c); }
 			}
 		}
 		const picojson::value* en = po_get(o, "enabled");  if (en) g->enabled = cascadeParseCondition(*en);
@@ -143,7 +143,7 @@ static CvJsonCondition* cp_parseObject(const picojson::object& o)
 			if (arr && arr->is<picojson::array>())
 			{
 				const picojson::array& a = arr->get<picojson::array>();
-				CvJsonCondition* g = cp_group();
+				CvCondition* g = cp_group();
 				for (size_t j = 0; j < a.size(); ++j)
 				{
 					if (!a[j].is<std::string>()) continue;
@@ -190,13 +190,13 @@ static CvJsonCondition* cp_parseObject(const picojson::object& o)
 	return cp_predicate(CASC_PRED_UNKNOWN, "", -1, -1);
 }
 
-static CvJsonCondition* cp_parseBareString(const std::string& s)
+static CvCondition* cp_parseBareString(const std::string& s)
 {
 	if (s.size() > 1 && s[0] == '!')
 	{
 		std::string inner = s.substr(1);
 		while (!inner.empty() && (inner[0] == ' ' || inner[0] == '\t')) inner.erase(0, 1);
-		CvJsonCondition* g = cp_group();
+		CvCondition* g = cp_group();
 		g->noneOf.push_back(cp_parseBareString(inner));
 		return g;
 	}
@@ -210,7 +210,7 @@ static CvJsonCondition* cp_parseBareString(const std::string& s)
 	return cp_predicate(CASC_PRED_UNKNOWN, "", -1, -1);   // unknown -> IGNORED at eval (§3.5)
 }
 
-CvJsonCondition* cascadeParseCondition(const picojson::value& v)
+CvCondition* cascadeParseCondition(const picojson::value& v)
 {
 	if (v.is<std::string>()) return cp_parseBareString(v.get<std::string>());
 	if (v.is<picojson::object>()) return cp_parseObject(v.get<picojson::object>());

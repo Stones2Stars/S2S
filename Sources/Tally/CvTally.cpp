@@ -9,7 +9,7 @@
 #include "AI/CvPlayerAI.h"   // GET_PLAYER + getBuildingCount/getUnitCount (the object-owned aggregate) + getTeam/isAlive
 #include "Engine/CvUnit.h"   // countUnitsWithTag -- the per-player unit iterate + getUnitInfo()
 #include "CvUnitInfo.h"      // getTags() (the unit tag bitset)
-#include "CvJsonBoolBlock.h" // hasId (the classification bitset O(1) test)
+#include "CvClassificationBlock.h" // hasId (the classification bitset O(1) test)
 
 CvCascadeTally& cascadeTally()
 {

@@ -12,7 +12,7 @@
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson + GC (getGame().getSorenRand())
 #include "CvUnitCombatInfo.h"
 #include "CvJsonParse.h"            // jsonChildObj / jsonFamVal / jsonFamMemberVal / jsonIdInt / jsonIdFk / jsonIdBool / jsonResolveId / jsonX100
-#include "CvJsonCondition.h"        // CvJsonCondition + CASC_COND_* -- the entity-gate tree walk for the game-option lists
+#include "CvCondition.h"        // CvCondition + CASC_COND_* -- the entity-gate tree walk for the game-option lists
 #include "AI/CvGameAI.h"            // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist seed)
 #include "Engine/CvOutcomeMission.h" // #430: CvOutcomeMission new/mapFrom/getMission/getOutcomeList (outcomes JSON intake)
 
@@ -40,7 +40,7 @@ static void collectKeyed(const picojson::object* keyed, const char* member, cons
 // Flatten the entity-level gate condition into the flat GAMEOPTION id list the legacy On/NotOnGameOption getters
 // expose (the pattern the Promotion poco uses): a single option is a bare GAMEOPTION_ string (-> PRESENCE atom),
 // several are an {all}/{anyOf} tree (-> GROUP); recurse the group vectors and collect the resolved GAMEOPTION_ ids.
-static void uc_collectGameOptions(const CvJsonCondition* c, std::vector<int>& out)
+static void uc_collectGameOptions(const CvCondition* c, std::vector<int>& out)
 {
 	if (c == NULL) return;
 	if (c->kind == CASC_COND_PRESENCE)

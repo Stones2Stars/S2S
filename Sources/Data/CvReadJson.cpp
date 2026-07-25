@@ -1,16 +1,16 @@
 //
-//	CvCascadeReadJson -- the fresh reader of the curated Assets/Data JSON. See the header for the build plan + scope.
+//	readJson -- the ONE JSON reader of the curated Assets/Data set. See the header for the pipeline contract.
 //
-//	AUDIT 2026-07-01 (owner): the reader is now a THIN ORCHESTRATOR, not a god-function that knows every type. It:
-//	  (1) finds + parses each Assets/Data/*.json,
-//	  (2) resolves the entity's type id + selects its per-type InfoRepo (prefix dispatch, RJ_REPO_TYPES),
-//	  (3) calls `data->mapFrom(v)` -- VIRTUAL dispatch: the info "loads itself" (the base parses the common cascade
-//	      sections; each per-type CvJson*Info subclass adds its ONE extension block -- skills/tags/capabilities/policies/
-//	      identity), drawing shared primitives from JsonInfo/CvJsonParse,
-//	  (4) runs a SEPARATE generic CENSUS that classifies every top-level key (jsonClassifyKey) to prove 0
-//	      UNCLASSIFIED, surfaces every unresolved FK id (jsonUnresolvedIds), and reads the mapped data back for
-//	      the survey counts. The per-type parsing that used to live here (rj_walk{Capabilities,Policies,Identity,Shrine,
-//	      Mod,EnableEdge,...} + s_rjData) has MOVED onto the types -- the reader no longer re-hand-rolls it.
+//	The reader is a THIN ORCHESTRATOR, not a god-function that knows every type. It:
+//	  (1) enumerates + parses each Assets/Data/*.json ONCE into the retained store (loadJsonEnsureStore),
+//	  (2) serves each category's entities to the per-category registration (loadJsonCategory -- manifest-ordered
+//	      id assignment at that category's load point in CvXMLLoadUtility::LoadGlobalClassInfoJson),
+//	  (3) at each phase end (loadJson), resolves every entity's type id (prefix dispatch, RJ_REPO_TYPES) and
+//	      calls `data->mapFrom(v)` -- VIRTUAL dispatch: the info "loads itself" (the base parses the common
+//	      sections; each per-type subclass adds its own typed members), drawing shared primitives from CvJsonParse,
+//	  (4) runs a SEPARATE generic CENSUS that classifies every top-level key (jsonClassifyKey), surfaces every
+//	      unresolved FK id (jsonUnresolvedIds), every unconsumed section, and every unknown key -- the three
+//	      failure counts print UNCONDITIONALLY in the Loading.log coverage summary.
 //
 
 #include "CvGameCoreDLL.h"             // PCH umbrella -- picojson, windows.h, gDLL, GC
@@ -21,9 +21,9 @@
 #include "CvInfo.h"                // CvInfo (+ cascadeStartNode) -- the mapped info data + the TECH_GAME_START root
 #include "Data/CvDepositIndex.h"     // DepositIndex::pushInfo/clearCompiled -- the compiled deposit index (push-time interning)
 #include "CvClassificationRegistry.h"  // the §8/§9 generated classification categories -- minted + resolved post-map
-#include "CvTechInfo.h"            // CvTechInfo -- for the capabilities read-back survey
-#include "CvImprovementInfo.h"     // CvImprovementInfo -- the reverse-view improvement relations
-#include "CvBuildingInfo.h"        // the REVERSE-VIEW build pass (rj_buildReverseView) -- the tech-referencing relations
+#include "CvTechInfo.h"            // CvTechInfo -- for the capabilities read-back survey (+ cascadeStartNode)
+#include "CvImprovementInfo.h"     // complete type for the RJ_REPO_TYPES dispatch
+#include "CvBuildingInfo.h"        // complete type for the RJ_REPO_TYPES dispatch
 #include "CvUnitInfo.h"
 #include "CvBonusInfo.h"
 #include "CvCivicInfo.h"
@@ -43,9 +43,8 @@
 #include "CvVoteInfo.h"
 #include "CvHurryInfo.h"
 #include "CvBonusClassInfo.h"
-#include "CvInfos.h"               // the umbrella -- remaining legacy infos scanned by the reverse view
-#include "CvJsonCondition.h"       // the typed requires tree -- walked by the REQUIRED_BY inversion
-#include "Enabler/CvEnablerKernel.h"       // EnablerKernel::jsonFor -- the one per-bucket InfoRepo dispatch (single-source)
+#include "CvInfos.h"               // the umbrella -- the remaining RJ_REPO_TYPES complete types with no own header
+#include "Data/CvReversePass.h"        // reversePassRun/reversePassCounts -- the ONE general reverse pass ([DEC-one-reverse-view])
 #include "Repos/InfoRepo.h"            // the per-info-type home (InfoRepo<CvXInfo>) -- readJson edit()s, mapFrom populates;
                                        // the CvXInfo tag types for the RJ_REPO_TYPES prefix dispatch are forward-declared there
 #include <fstream>
@@ -55,272 +54,8 @@
 #include <map>
 #include <string>
 
-// ==================== THE REVERSE VIEW (built at JSON read -- modifier.md par.1) ====================
-// The info objects ALREADY CARRY their reverse lookups after load: this pass inverts, onto each referenced
-// TECH's own edges (EDGEF_RELATED, per kind), every tech-referencing relation the consumers check --
-// prereqs, obsoletes, tech-keyed value tables, secondary gates -- exactly the getters setTechHelp et al.
-// evaluate, so a consumer keeps its exact predicate and iterates the (tiny) candidate list instead of the
-// whole database. ⛔ EDGEF_RELATED is DISPLAY-ONLY (a candidate SUPERSET): the enabler's GENERATE/GATE
-// never reads it; the gate's own axis is EDGEF_REQUIRED_BY, populated here when the requires-gate stage
-// lands -- NEVER as a bespoke index inside an enabler.
-
-// The reverse-build observability counters + timing (emitted as RJE_REVERSE_DONE at the call site -- the
-// SD_READJSON enums are declared below this block).
-static int s_rvRelated = 0, s_rvRequiredBy = 0;
-static DWORD s_rvMs = 0;
-
-// Add iId under the referenced tech's RELATED bucket (skips NO_TECH).
-static void rvAddTech(TechTypes eTech, EnEdgeBucket eBucket, int iId)
-{
-	if (eTech <= NO_TECH || (int)eTech >= GC.getNumTechInfos()) return;
-	CvInfo* jt = InfoRepo<CvTechInfo>::get().editPtr((int)eTech);
-	if (jt != NULL) { jt->addReverseEdge(EDGEF_RELATED, eBucket, iId); ++s_rvRelated; }
-}
-
-// --- the requires -> EDGEF_REQUIRED_BY inversion (the enabler's requires-reverse-index; enabler.md par.7.1
-// step 2, DEC-one-reverse-view): every HAVE-axis atom a dependent's requires references gains that dependent
-// under the dependent's kind bucket, ON THE REFERENCED INFO -- the gate stage re-gates exactly these
-// dependents when the atom's HAVE-event fires, never a database sweep. ---
-
-// The referenced HAVE-axis info by its INFOTYPE prefix (naming.md routes by prefix). NULL = not a HAVE-axis
-// re-gate target: engine tokens (TURN/POPULATION/ERA), the plot substrate (terrain/feature/improvement --
-// the dynamic plot axis with its own event routing), and PROPERTY_ bands (the property engine's axis).
-static CvInfo* rvRefInfo(const std::string& t, int id)
-{
-	// the synthetic root's cascade data lives OFF the InfoRepo (cascadeStartNode) -- route it there, never the
-	// GC poco (the split-brain the /state/info read exposed)
-	if (t == "TECH_GAME_START")            return &cascadeStartNode();
-	if (!t.compare(0, 5, "TECH_"))         return InfoRepo<CvTechInfo>::get().editPtr(id);
-	if (!t.compare(0, 9, "BUILDING_"))     return InfoRepo<CvBuildingInfo>::get().editPtr(id);
-	if (!t.compare(0, 6, "BONUS_"))        return InfoRepo<CvBonusInfo>::get().editPtr(id);
-	if (!t.compare(0, 6, "CIVIC_"))        return InfoRepo<CvCivicInfo>::get().editPtr(id);
-	if (!t.compare(0, 5, "UNIT_"))         return InfoRepo<CvUnitInfo>::get().editPtr(id);
-	if (!t.compare(0, 9, "RELIGION_"))     return InfoRepo<CvReligionInfo>::get().editPtr(id);
-	if (!t.compare(0, 12, "CORPORATION_")) return InfoRepo<CvCorporationInfo>::get().editPtr(id);
-	if (!t.compare(0, 9, "HERITAGE_"))     return InfoRepo<CvHeritageInfo>::get().editPtr(id);
-	if (!t.compare(0, 8, "PROJECT_"))      return InfoRepo<CvProjectInfo>::get().editPtr(id);
-	return NULL;
-}
-
-// Recurse one requires tree: every FK-resolved PRESENCE atom + parameterized PREDICATE lands the dependent on
-// the referenced info's REQUIRED_BY bucket.
-static void rvRequiresWalk(const CvJsonCondition* c, EnEdgeBucket eDepKind, int iDepId)
-{
-	if (c == NULL) return;
-	for (size_t i = 0; i < c->all.size(); ++i)    rvRequiresWalk(c->all[i], eDepKind, iDepId);
-	for (size_t i = 0; i < c->anyOf.size(); ++i)  rvRequiresWalk(c->anyOf[i], eDepKind, iDepId);
-	for (size_t i = 0; i < c->noneOf.size(); ++i) rvRequiresWalk(c->noneOf[i], eDepKind, iDepId);
-	rvRequiresWalk(c->enabled, eDepKind, iDepId);
-	rvRequiresWalk(c->disabled, eDepKind, iDepId);
-	if (c->id < 0) return;
-	CvInfo* jr = NULL;
-	if (c->kind == CASC_COND_PRESENCE) jr = rvRefInfo(c->type, c->id);
-	else if (c->kind == CASC_COND_PREDICATE && !c->param.empty()) jr = rvRefInfo(c->param, c->id);
-	if (jr != NULL) { jr->addReverseEdge(EDGEF_REQUIRED_BY, eDepKind, iDepId); ++s_rvRequiredBy; }
-}
-
-static int rvNumFor(EnEdgeBucket b)
-{
-	switch (b)
-	{
-	case EDGEB_BUILDINGS:  return GC.getNumBuildingInfos();
-	case EDGEB_UNITS:      return GC.getNumUnitInfos();
-	case EDGEB_TECHS:      return GC.getNumTechInfos();
-	case EDGEB_CIVICS:     return GC.getNumCivicInfos();
-	case EDGEB_PROJECTS:   return GC.getNumProjectInfos();
-	case EDGEB_PROCESSES:  return GC.getNumProcessInfos();
-	case EDGEB_PROMOTIONS: return GC.getNumPromotionInfos();
-	case EDGEB_BUILDS:     return GC.getNumBuildInfos();
-	default:               return 0;
-	}
-}
-
-static void rj_buildReverseView()
-{
-	const DWORD rvT0 = GetTickCount();
-	s_rvRelated = 0; s_rvRequiredBy = 0;
-	const int nTech = GC.getNumTechInfos();
-
-	for (int i = 0; i < GC.getNumBuildingInfos(); ++i)
-	{
-		const CvBuildingInfo& k = GC.getBuildingInfo((BuildingTypes)i);
-		rvAddTech(k.getObsoleteTech(), EDGEB_BUILDINGS, i);
-		rvAddTech((TechTypes)k.getPrereqAndTech(), EDGEB_BUILDINGS, i);
-		// The tech-side FORWARD obsoletion view (building obsoletion is authored TARGET-side, obsoletedBy.techs;
-		// nothing authors tech.obsoletes.buildings) -- reconstructed here so the enabler's O(delta) tech
-		// application can find "which buildings does this tech obsolete" without a candidate scan
-		// (the leadsTo/getPrereqBonus reconstruction class, readjson.md).
-		{
-			const CvInfo* jb = InfoRepo<CvBuildingInfo>::get().get(i);
-			const std::vector<int>* obs = jb ? jb->edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS) : NULL;
-			if (obs != NULL)
-				for (size_t j = 0; j < obs->size(); ++j)
-				{
-					CvInfo* jt = InfoRepo<CvTechInfo>::get().editPtr((*obs)[j]);
-					if (jt != NULL) jt->addReverseEdge(EDGEF_OBSOLETES, EDGEB_BUILDINGS, i);
-				}
-		}
-		for (size_t j = 0; j < k.getPrereqAndTechs().size(); ++j)
-			rvAddTech(k.getPrereqAndTechs()[j], EDGEB_BUILDINGS, i);
-		foreach_(const TechArray& p, k.getTechYieldChanges100())    rvAddTech(p.first, EDGEB_BUILDINGS, i);
-		foreach_(const TechArray& p, k.getTechYieldModifiers())     rvAddTech(p.first, EDGEB_BUILDINGS, i);
-		foreach_(const TechCommerceArray& p, k.getTechCommerceChanges100()) rvAddTech(p.first, EDGEB_BUILDINGS, i);
-		foreach_(const TechCommerceArray& p, k.getTechCommerceModifiers())  rvAddTech(p.first, EDGEB_BUILDINGS, i);
-		for (int t = 0; t < nTech; ++t)
-		{
-			const TechTypes eT = (TechTypes)t;
-			if (k.getTechHappiness(eT) != 0 || k.getTechHealth(eT) != 0) { rvAddTech(eT, EDGEB_BUILDINGS, i); continue; }
-			if (k.isAnyTechSpecialistChanges())
-				for (int s = 0; s < GC.getNumSpecialistInfos(); ++s)
-					if (k.getTechSpecialistChange(t, s) != 0) { rvAddTech(eT, EDGEB_BUILDINGS, i); break; }
-		}
-	}
-	for (int i = 0; i < GC.getNumUnitInfos(); ++i)
-	{
-		const CvUnitInfo& k = GC.getUnitInfo((UnitTypes)i);
-		rvAddTech((TechTypes)k.getPrereqAndTech(), EDGEB_UNITS, i);
-		for (size_t j = 0; j < k.getPrereqAndTechs().size(); ++j)
-			rvAddTech((TechTypes)k.getPrereqAndTechs()[j], EDGEB_UNITS, i);
-	}
-	// The tech-side FORWARD obsoletion view for PROCESSES (authored TARGET-side, obsoletedBy.techs -- the
-	// lesser/meager process tiers; "processes is pure enabler gate, with replace": the obsoleting tech drops
-	// the tier from the TREE) -- reconstructed exactly like the buildings one above, so the processes domain's
-	// O(delta) tech application feeds its REMOVE plane.
-	for (int i = 0; i < GC.getNumProcessInfos(); ++i)
-	{
-		const CvInfo* jp = InfoRepo<CvProcessInfo>::get().get(i);
-		const std::vector<int>* obs = jp ? jp->edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS) : NULL;
-		if (obs != NULL)
-			for (size_t j = 0; j < obs->size(); ++j)
-			{
-				CvInfo* jt = InfoRepo<CvTechInfo>::get().editPtr((*obs)[j]);
-				if (jt != NULL) jt->addReverseEdge(EDGEF_OBSOLETES, EDGEB_PROCESSES, i);
-			}
-	}
-	for (int i = 0; i < GC.getNumBonusInfos(); ++i)
-	{
-		const CvBonusInfo& k = GC.getBonusInfo((BonusTypes)i);
-		rvAddTech((TechTypes)k.getTechReveal(), EDGEB_BONUSES, i);
-		rvAddTech((TechTypes)k.getTechObsolete(), EDGEB_BONUSES, i);
-	}
-	// #430: reconstruct SpecialBuildingInfo::getTechPrereq from the tech-side inversion. The curator stores the
-	// special-building tech-gate as tech.enables.specialBuildings (store.py:181); the special-building JSON carries
-	// none. The legacy building-group gate reads GC.getSpecialBuildingInfo(x).getTechPrereq() (CvPlayer.cpp:6533),
-	// so un-invert it HERE, before the reverse-view below reads it. (getTechPrereqAnyone is unused across all
-	// groups; no tech obsoletes a special building -- both correctly stay NO_TECH.)
-	for (int t = 0; t < nTech; ++t)
-	{
-		const CvInfo* jt = InfoRepo<CvTechInfo>::get().get(t);
-		const std::vector<int>* sbs = jt ? jt->edge(EDGEF_ENABLES, EDGEB_SPECIAL_BUILDINGS) : NULL;
-		if (sbs != NULL)
-			for (size_t j = 0; j < sbs->size(); ++j)
-			{
-				CvSpecialBuildingInfo* sb = static_cast<CvSpecialBuildingInfo*>(
-					InfoRepo<CvSpecialBuildingInfo>::get().editPtr((*sbs)[j]));
-				if (sb != NULL) sb->setTechPrereq((TechTypes)t);
-			}
-	}
-	for (int i = 0; i < GC.getNumSpecialBuildingInfos(); ++i)
-	{
-		const CvSpecialBuildingInfo& k = GC.getSpecialBuildingInfo((SpecialBuildingTypes)i);
-		rvAddTech((TechTypes)k.getTechPrereq(), EDGEB_SPECIAL_BUILDINGS, i);
-		rvAddTech((TechTypes)k.getTechPrereqAnyone(), EDGEB_SPECIAL_BUILDINGS, i);
-		rvAddTech((TechTypes)k.getObsoleteTech(), EDGEB_SPECIAL_BUILDINGS, i);
-	}
-	for (int i = 0; i < GC.getNumImprovementInfos(); ++i)
-	{
-		const CvImprovementInfo& k = GC.getImprovementInfo((ImprovementTypes)i);
-		rvAddTech(k.getPrereqTech(), EDGEB_IMPROVEMENTS, i);
-		for (int t = 0; t < nTech; ++t)
-			if (k.getTechYieldChangesArray(t) != NULL) rvAddTech((TechTypes)t, EDGEB_IMPROVEMENTS, i);
-	}
-	for (int i = 0; i < GC.getNumBuildInfos(); ++i)
-	{
-		const CvBuildInfo& k = GC.getBuildInfo((BuildTypes)i);
-		rvAddTech(k.getTechPrereq(), EDGEB_BUILDS, i);
-		foreach_(const TerrainStructs& ts, k.getTerrainStructs())
-			rvAddTech(ts.ePrereqTech, EDGEB_BUILDS, i);
-		for (int f = 0; f < GC.getNumFeatureInfos(); ++f)
-			rvAddTech(k.getFeatureTech((FeatureTypes)f), EDGEB_BUILDS, i);
-	}
-	for (int i = 0; i < GC.getNumCivicInfos(); ++i)
-		rvAddTech((TechTypes)GC.getCivicInfo((CivicTypes)i).getTechPrereq(), EDGEB_CIVICS, i);
-	for (int i = 0; i < GC.getNumHeritageInfos(); ++i)
-		rvAddTech((TechTypes)GC.getHeritageInfo((HeritageTypes)i).getPrereqTech(), EDGEB_HERITAGES, i);
-	for (int i = 0; i < GC.getNumProjectInfos(); ++i)
-		rvAddTech((TechTypes)GC.getProjectInfo((ProjectTypes)i).getTechPrereq(), EDGEB_PROJECTS, i);
-	for (int i = 0; i < GC.getNumProcessInfos(); ++i)
-		rvAddTech((TechTypes)GC.getProcessInfo((ProcessTypes)i).getTechPrereq(), EDGEB_PROCESSES, i);
-	for (int i = 0; i < GC.getNumReligionInfos(); ++i)
-		rvAddTech((TechTypes)GC.getReligionInfo((ReligionTypes)i).getTechPrereq(), EDGEB_RELIGIONS, i);
-	for (int i = 0; i < GC.getNumCorporationInfos(); ++i)
-		rvAddTech((TechTypes)GC.getCorporationInfo((CorporationTypes)i).getTechPrereq(), EDGEB_CORPORATIONS, i);
-	for (int i = 0; i < GC.getNumPromotionInfos(); ++i)
-	{
-		const CvPromotionInfo& k = GC.getPromotionInfo((PromotionTypes)i);
-		rvAddTech((TechTypes)k.getTechPrereq(), EDGEB_PROMOTIONS, i);
-		rvAddTech((TechTypes)k.getObsoleteTech(), EDGEB_PROMOTIONS, i);
-	}
-	// requires -> EDGEF_REQUIRED_BY (the enabler's requires-reverse-index): every dependent kind's
-	// requires.build + requires.operate trees + its dormant triggers, inverted onto the referenced infos.
-	static const EnEdgeBucket DEP_KINDS[] =
-	{
-		EDGEB_BUILDINGS, EDGEB_UNITS, EDGEB_TECHS, EDGEB_CIVICS,
-		EDGEB_PROJECTS, EDGEB_PROCESSES, EDGEB_PROMOTIONS, EDGEB_BUILDS, NO_EDGEB
-	};
-	for (int k = 0; DEP_KINDS[k] != NO_EDGEB; ++k)
-	{
-		const EnEdgeBucket eKind = DEP_KINDS[k];
-		const int n = rvNumFor(eKind);
-		for (int i = 0; i < n; ++i)
-		{
-			const CvInfo* j = EnablerKernel::jsonFor(eKind, i);
-			if (j == NULL) continue;
-			rvRequiresWalk(j->requiresBuild(), eKind, i);
-			rvRequiresWalk(j->requiresOperate(), eKind, i);
-			// dormant triggers reference same-kind successors (building ReplacementBuildings; unit upgrades)
-			const std::vector<int>& dorm = j->dormantTriggers();
-			for (size_t d = 0; d < dorm.size(); ++d)
-			{
-				CvInfo* jr = (CvInfo*)EnablerKernel::jsonFor(eKind, dorm[d]);
-				if (jr != NULL) { jr->addReverseEdge(EDGEF_REQUIRED_BY, eKind, i); ++s_rvRequiredBy; }
-			}
-		}
-	}
-	// improvements + heritages carry requires too (no jsonFor bucket dispatch -- repo-direct)
-	for (int i = 0; i < GC.getNumImprovementInfos(); ++i)
-	{
-		const CvInfo* j = InfoRepo<CvImprovementInfo>::get().get(i);
-		if (j == NULL) continue;
-		rvRequiresWalk(j->requiresBuild(), EDGEB_IMPROVEMENTS, i);
-		rvRequiresWalk(j->requiresOperate(), EDGEB_IMPROVEMENTS, i);
-	}
-	for (int i = 0; i < GC.getNumHeritageInfos(); ++i)
-	{
-		const CvInfo* j = InfoRepo<CvHeritageInfo>::get().get(i);
-		if (j == NULL) continue;
-		rvRequiresWalk(j->requiresBuild(), EDGEB_HERITAGES, i);
-		rvRequiresWalk(j->requiresOperate(), EDGEB_HERITAGES, i);
-	}
-
-	// dedup the derived lists (sortUnique touches ONLY the RELATED/REQUIRED_BY families) -- every kind that
-	// can carry reverse edges: techs (RELATED + REQUIRED_BY) + the HAVE-axis referenced kinds (REQUIRED_BY)
-	for (int t = 0; t < nTech; ++t)
-	{
-		CvInfo* jt = InfoRepo<CvTechInfo>::get().editPtr(t);
-		if (jt != NULL) jt->sortUniqueEdges();
-	}
-	for (int i = 0; i < GC.getNumBuildingInfos(); ++i)    { CvInfo* j = InfoRepo<CvBuildingInfo>::get().editPtr(i);    if (j) j->sortUniqueEdges(); }
-	for (int i = 0; i < GC.getNumUnitInfos(); ++i)        { CvInfo* j = InfoRepo<CvUnitInfo>::get().editPtr(i);        if (j) j->sortUniqueEdges(); }
-	for (int i = 0; i < GC.getNumBonusInfos(); ++i)       { CvInfo* j = InfoRepo<CvBonusInfo>::get().editPtr(i);       if (j) j->sortUniqueEdges(); }
-	for (int i = 0; i < GC.getNumCivicInfos(); ++i)       { CvInfo* j = InfoRepo<CvCivicInfo>::get().editPtr(i);       if (j) j->sortUniqueEdges(); }
-	for (int i = 0; i < GC.getNumReligionInfos(); ++i)    { CvInfo* j = InfoRepo<CvReligionInfo>::get().editPtr(i);    if (j) j->sortUniqueEdges(); }
-	for (int i = 0; i < GC.getNumCorporationInfos(); ++i) { CvInfo* j = InfoRepo<CvCorporationInfo>::get().editPtr(i); if (j) j->sortUniqueEdges(); }
-	for (int i = 0; i < GC.getNumHeritageInfos(); ++i)    { CvInfo* j = InfoRepo<CvHeritageInfo>::get().editPtr(i);    if (j) j->sortUniqueEdges(); }
-	for (int i = 0; i < GC.getNumProjectInfos(); ++i)     { CvInfo* j = InfoRepo<CvProjectInfo>::get().editPtr(i);     if (j) j->sortUniqueEdges(); }
-
-	s_rvMs = GetTickCount() - rvT0;   // announced as RJE_REVERSE_DONE at the call site (the enums live below)
-}
+// The REVERSE VIEW (RELATED / REQUIRED_BY / the own-output landing / the forward compat reconstructions) is
+// the ONE general pass in Data/CvReversePass.cpp ([DEC-one-reverse-view]) -- called from loadJson below.
 
 // ===================== [READJSON] spine domain (logging.md §4: logging is a spine CONSUMER) =====================
 enum RjEvt
@@ -329,9 +64,10 @@ enum RjEvt
 	RJE_EDGE_SURVEY, RJE_EDGE_UNRES, RJE_GRANT_SURVEY, RJE_GRANT_UNRES, RJE_KEY, RJE_MAP, RJE_CAP_SURVEY,
 	RJE_CAP, RJE_MAP_SUMMARY,
 	RJE_SECTION_UNCONSUMED,  // an AUTHORED section the type composes no unit for -- the data never reaches a getter
+	RJE_KEY_UNKNOWN,   // a non-reserved object key outside the closed family vocabulary ("<type>:<key>")
 	RJE_REMAPPED,      // one aliased entity's full-registry section re-map: what it maps (type + edge/family counts)
 	RJE_MAP_DONE,      // the initial JSON map (PASS 1+2) is DONE -- entities/resolved/remapped/ms
-	RJE_REVERSE_DONE   // the reverse-view build (RELATED + REQUIRED_BY) is DONE -- add counts/ms
+	RJE_REVERSE_DONE   // the general reverse pass (RELATED + REQUIRED_BY + own-output landing) is DONE -- add counts/ms
 };
 
 // DOMAIN-LOCAL field tags, shared by name across lines where a field recurs.
@@ -344,7 +80,7 @@ enum RjFld
 	RJF_LISTENTRIES, RJF_LISTKINDS, RJF_PULSES, RJF_PULSECHANNELS, RJF_FLAGS, RJF_ENTRYARRAYS, RJF_OBJECTS,
 	RJF_KEY, RJF_COUNT, RJF_CLASS, RJF_DEPOSITS, RJF_REQBUILD, RJF_REQOPERATE, RJF_ALLOWED, RJF_GRANTLISTS,
 	RJF_GRANTPULSES, RJF_GRANTING, RJF_CAPGRANTS, RJF_DISTINCTNAMES, RJF_NAME, RJF_WITHDATA,
-	RJF_MS, RJF_REMAPPED, RJF_RELATED, RJF_REQUIREDBY
+	RJF_MS, RJF_REMAPPED, RJF_RELATED, RJF_REQUIREDBY, RJF_OWNOUTPUT
 };
 
 static const char* rj_prefix(int evt)
@@ -362,6 +98,7 @@ static const char* rj_prefix(int evt)
 	case RJE_EDGE_SURVEY:  return "[READJSON/edge-survey]";
 	case RJE_EDGE_UNRES:   return "[READJSON/unresolved-fk]";
 	case RJE_SECTION_UNCONSUMED: return "[READJSON/unconsumed-section]";
+	case RJE_KEY_UNKNOWN:  return "[READJSON/unknown-key]";
 	case RJE_GRANT_SURVEY: return "[READJSON/grant-survey]";
 	case RJE_GRANT_UNRES:  return "[READJSON/grant-unresolved]";
 	case RJE_KEY:          return "[READJSON/key]";
@@ -440,6 +177,7 @@ static const char* rj_field(int tag, SpineFieldType* peType)
 	case RJF_REMAPPED:      return "remapped";
 	case RJF_RELATED:       return "relatedIds";
 	case RJF_REQUIREDBY:    return "requiredByIds";
+	case RJF_OWNOUTPUT:     return "ownOutputLanded";
 	default:                return NULL;
 	}
 }
@@ -483,14 +221,11 @@ static void rj_find(const std::string& dir, std::vector<std::string>& out)
 	FindClose(h);
 }
 
-// (cascadeJsonForType removed -- the #430 load no longer rides SetGlobalClassInfo->read(); LoadGlobalClassInfoJson
-//  scans Assets/Data per category and mapFrom's each entity directly. No XML read on the replaced-info path.)
-
-// The cascade info-type table (X-macro): (type-prefix, CvXInfo class) -- ONE source of truth for the per-type InfoRepo
-// selection (edit + clear-all), so a new cascade info type is added in exactly ONE place (cascade-engine-430.md §3
-// care-point (d)). Order MATTERS: longer/more-specific prefixes FIRST (UNITCOMBAT_ before UNIT_, CIVICOPTION_ before
+// The JSON info-type table (X-macro): (type-prefix, CvXInfo class) -- ONE source of truth for the per-type InfoRepo
+// selection (edit + clear-all), so a new JSON-fed info type is added in exactly ONE place. Order MATTERS:
+// longer/more-specific prefixes FIRST (UNITCOMBAT_ before UNIT_, CIVICOPTION_ before
 // CIVIC_, PROMOTIONLINE_ before PROMOTION_, BONUSCLASS_ before BONUS_; TRAIT_ covers TRAIT_COMPLEX_). Unlisted types
-// -> NULL (no cascade home): no full-registry re-map (so any FK naming a later-loading category stays dropped), no
+// -> NULL (no repo home): no full-registry re-map (so any FK naming a later-loading category stays dropped), no
 // DepositIndex push, and no /state/info home -- listing a JSON-loaded category here is what makes it verifiable.
 #define RJ_REPO_TYPES(X)                     \
 	X("BUILDING_",      CvBuildingInfo)       \
@@ -528,7 +263,7 @@ static void rj_find(const std::string& dir, std::vector<std::string>& out)
 	X("BUILD_",         CvBuildInfo)          \
 	X("PROPERTY_",      CvPropertyInfo)
 
-// get-or-create the entity's CvInfo (the reader calls mapFrom on it); NULL for non-cascade types.
+// get-or-create the entity's CvInfo (the reader calls mapFrom on it); NULL for types with no repo home.
 static CvInfo* rj_jsonEdit(const std::string& t, int id)
 {
 	if (id < 0) return NULL;
@@ -538,10 +273,10 @@ static CvInfo* rj_jsonEdit(const std::string& t, int id)
 	return NULL;
 }
 
-// #430 collapse: is this type's repo ALIASED over GC.m_pa<X>Info? An aliased type's JSON is loaded by CvInfo::read()
-// (per entity, at its SetGlobalClassInfo moment) straight into the GC object this repo views -- so cascadeLoadJson must
-// NOT mapFrom it a second time (mapFrom accumulates edges/deposits; a re-map would double-count). The JSON-only OWNED
-// types (Heritage/Build/complex) have no XML shell / no read(), so they stay cascadeLoadJson's to map.
+// Is this type's repo ALIASED over GC.m_pa<X>Info? An aliased type's poco is created + mapFrom'd by its
+// category's registration (LoadGlobalClassInfoJson) straight into the GC array this repo views; the full pass
+// re-runs the idempotent mapFrom against the complete registry. The JSON-only OWNED types (Heritage/Build/
+// complex traits) have no GC array home, so the full pass gives them their only map.
 static bool rj_isAliased(const std::string& t)
 {
 #define X(PFX, T) if (rj_starts(t, PFX)) return InfoRepo<T>::get().isAliased();
@@ -553,8 +288,8 @@ static bool rj_isAliased(const std::string& t)
 // The ONE INFOTYPE-prefix -> InfoRepo dispatch (exported; header decl) -- the /state/info observability read's
 // resolver. It routes through RJ_REPO_TYPES so a category is registered in exactly ONE place
 // ([DEC-single-implementation]): a second hand-maintained prefix list here is what silently drifted from the table
-// and left a whole cutover wave unresolvable by the standing /state/info verification. Broader than rvRefInfo, which
-// deliberately keeps only the HAVE-axis re-gate kinds, and than the table itself, which carries no generated infos.
+// and left a whole cutover wave unresolvable by the standing /state/info verification. Broader than the reverse
+// pass's REQUIRED_BY router (HAVE-axis re-gate kinds only), and than the table itself, which carries no generated infos.
 CvInfo* rjInfoForType(const std::string& t, int iId)
 {
 	// the synthetic root's cascade data lives OFF the InfoRepo (cascadeStartNode) -- route it there, never the GC poco
@@ -579,8 +314,8 @@ static int rj_registerId(const std::string& t)
 	return GC.getInfoTypeForString(t.c_str(), true);   // >=0 reuse the XML shell's id; -1 defer to the phase that loads it
 }
 
-// Clear every cascade InfoRepo (free all CvInfo) BEFORE (re)mapping, so a re-run can't DOUBLE the deposit vectors
-// (cascade-engine-430.md §3 care-point (a)). No-op on the one-shot first run; makes the map re-run-safe at cutover.
+// Clear every InfoRepo (free all CvInfo) BEFORE (re)mapping, so a re-run can't DOUBLE the deposit vectors.
+// No-op on the first run; the postmenu full pass relies on it to re-map cleanly.
 static void rj_clearAllRepos()
 {
 	DepositIndex::clearCompiled();                // the compiled registry keys the about-to-be-freed infos -- drop it
@@ -593,94 +328,211 @@ static void rj_clearAllRepos()
 	                                              // reset-RECREATE (write-once discipline; a re-map gets a fresh node)
 }
 
-// One walked entity: its type string, engine id, and the CvInfo it mapped into (a stable pointer -- the InfoRepo /
-// start node / complex repo own it and outlive this call -- so the census reads it straight back).
-struct RjEntity { std::string type; int typeId; CvInfo* data; picojson::value value; std::string path; };   // value+path stashed in PASS 1 for the PASS-2 map
-
-// Probe-stat stash (set=true stores; set=false reads). Lets a post-load emitter surface what the DARK load-time
-// burst saw: how many files the dataDir scan found + how many entities parsed, and the dataDir string itself.
-const std::string& cascadeReadJsonStats(bool bSet, int& iFiles, int& iEntities, const std::string& sDir)
+// ==================== THE RETAINED PARSE STORE (parse ONCE -- [DEC-one-json-reader]) ====================
+// One record per *.json file under Assets/Data, built on FIRST use (the one disk read + one picojson parse of
+// the whole set) and RETAINED across the premenu->postmenu load window: the per-category registrations and
+// both full passes read from here, never from disk. Retention budget: ~21 MB of JSON text parses to an
+// estimated ~70 MB of picojson structures on the 32-bit heap (node-count model over the full corpus) -- well
+// inside the load-window budget; the store frees COMPLETELY when the postmenu pass ends, so no JSON-shaped
+// object survives the load.
+struct JsonFileRecord
 {
-	static int s_files = -1, s_entities = -1;   // -1 = the probe never ran
-	static std::string s_dir;
-	if (bSet) { s_files = iFiles; s_entities = iEntities; s_dir = sDir; }
-	else { iFiles = s_files; iEntities = s_entities; }
-	return s_dir;
+	std::string path;          // absolute file path (diagnostics + the trait \complex\ discriminator)
+	std::string relDir;        // directory relative to Assets\Data ("buildings\ancient", "traits\simple", ...)
+	std::string type;          // the entity's "type" id ("" = not an entity)
+	bool isOrderManifest;      // an _order.json category manifest (value = the ordered type array)
+	picojson::value value;     // the ONE parse of this file
+	int typeId;                // engine id resolved by the CURRENT full pass (-1 = deferred to a later phase)
+	CvInfo* data;              // the info the CURRENT full pass mapped into (NULL = none)
+	JsonFileRecord() : isOrderManifest(false), typeId(-1), data(NULL) {}
+};
+
+static std::vector<JsonFileRecord>* s_jsonStore = NULL;
+static int s_jsonFilesFound = 0;      // every *.json the one walk saw (entities + manifests + failures)
+static int s_jsonParseFailed = 0;     // unreadable / unparseable files (never stored)
+static std::string s_jsonDataDir;
+
+// Build the store on first use: the ONE Assets/Data walk, the ONE read + parse per file.
+static void loadJsonEnsureStore()
+{
+	if (s_jsonStore != NULL) return;
+	const DWORD scanT0 = GetTickCount();
+	std::string base = gDLL->getModName(true);
+	if (!base.empty() && base[base.size() - 1] != '\\' && base[base.size() - 1] != '/') base += "\\";
+	s_jsonDataDir = base + "Assets\\Data";
+
+	std::vector<std::string> files;
+	rj_find(s_jsonDataDir, files);
+	s_jsonFilesFound = (int)files.size();
+
+	s_jsonStore = new std::vector<JsonFileRecord>();
+	s_jsonStore->reserve(files.size());   // exact reserve: records are filled in place, values swapped in
+	s_jsonParseFailed = 0;
+	int iEntities = 0;
+	int iManifests = 0;
+	for (size_t i = 0; i < files.size(); ++i)
+	{
+		std::string text;
+		if (!rj_readFile(files[i], text)) { ++s_jsonParseFailed; continue; }
+		picojson::value parsed;
+		const std::string err = picojson::parse(parsed, text);
+		if (!err.empty()) { ++s_jsonParseFailed; continue; }
+		s_jsonStore->push_back(JsonFileRecord());
+		JsonFileRecord& rec = s_jsonStore->back();
+		rec.path = files[i];
+		const std::string rel = (files[i].size() > s_jsonDataDir.size() + 1) ? files[i].substr(s_jsonDataDir.size() + 1) : std::string();
+		const std::string::size_type lastSlash = rel.find_last_of('\\');
+		rec.relDir = (lastSlash != std::string::npos) ? rel.substr(0, lastSlash) : std::string();
+		rec.isOrderManifest = files[i].size() >= 11 && files[i].substr(files[i].size() - 11) == "_order.json";
+		rec.value.swap(parsed);
+		if (rec.isOrderManifest) { ++iManifests; continue; }
+		if (rec.value.is<picojson::object>())
+		{
+			const picojson::object& o = rec.value.get<picojson::object>();
+			picojson::object::const_iterator t = o.find("type");
+			if (t != o.end() && t->second.is<std::string>()) { rec.type = t->second.get<std::string>(); ++iEntities; }
+		}
+	}
+	gDLL->logMsg("Loading.log", CvString::format(
+		"[READJSON] store scan dir=%s files=%d entities=%d manifests=%d failed=%d ms=%u",
+		s_jsonDataDir.c_str(), s_jsonFilesFound, iEntities, iManifests, s_jsonParseFailed,
+		(unsigned)(GetTickCount() - scanT0)).c_str(), true, false);
 }
 
-void cascadeLoadJson()
+// Free the store COMPLETELY (the postmenu pass end -- patterns.md: every JSON-shaped object is freed before
+// load ends).
+static void loadJsonFreeStore()
 {
-	// TWO-PHASE, mirroring the XML's premenu/postmenu load phasing + DELAYED READ (owner ruling 2026-07-08). readJson
-	// runs at the END of BOTH LoadPreMenuGlobals and LoadPostMenuGlobals. rj_registerId is REUSE-ONLY, so each pass maps
-	// exactly the types whose XML shell has registered by then: the premenu pass maps the premenu-XML set (all the
-	// terrain/plot/mapscript infos + the other premenu types); the postmenu pass -- once processes/votes/espionage/
-	// spawns are XML-registered too -- rj_clearAllRepos-frees the premenu pass and re-maps EVERYTHING with FULL FK
-	// resolution (readJson's equivalent of the XML delayed read: FKs resolve only when every target is loaded; a
-	// premenu-only map drops the edges to not-yet-loaded types -- the canMaintain empty-frontier bug). NOT one-shot: the
-	// postmenu re-run is what completes the FK edges. UNCONDITIONAL: no gPlayerLogLevel dependency (cold this early) --
-	// the [READJSON/*] census rides the event spine (SD_READJSON; the log consumer gates per level).
+	delete s_jsonStore;
+	s_jsonStore = NULL;
+}
+
+// Does the record's directory sit under the category folder (equal, or a subdirectory of it)?
+static bool rj_inCategory(const std::string& szRelDir, const std::string& szFolder)
+{
+	if (szRelDir.size() < szFolder.size()) return false;
+	if (szRelDir.compare(0, szFolder.size(), szFolder) != 0) return false;
+	return szRelDir.size() == szFolder.size() || szRelDir[szFolder.size()] == '\\';
+}
+
+// The category ORDER-MANIFEST sort (`_order.json`, curator-derived -- Tools/Migration/curate_order.py): entities
+// sort by their legacy XML document position, so the registered engine ids reproduce the LEGACY id order and every
+// id-ordered UI surface keeps its familiar layout (the unit level-up promotion popup grouped each line's tiers
+// adjacently because the XML did). A type ABSENT from the manifest (the synthetic TECH_GAME_START, future
+// additions, a category with no manifest) sorts AFTER every listed one, alphabetically -- the legacy
+// new-stuff-appends-last behaviour.
+struct JsonCategoryEntityOrder
+{
+	const std::map<std::string, int>* pOrder;
+	explicit JsonCategoryEntityOrder(const std::map<std::string, int>* p) : pOrder(p) {}
+	int idx(const std::string& t) const
+	{
+		std::map<std::string, int>::const_iterator it = pOrder->find(t);
+		return it != pOrder->end() ? it->second : MAX_INT;
+	}
+	bool operator()(const std::pair<std::string, const picojson::value*>& a, const std::pair<std::string, const picojson::value*>& b) const
+	{
+		const int ia = idx(a.first);
+		const int ib = idx(b.first);
+		if (ia != ib) return ia < ib;
+		return a.first < b.first;
+	}
+};
+
+// The per-category registration feed (header contract): the folder's parsed entities in manifest order,
+// straight from the retained store.
+void loadJsonCategory(const char* szDataFolder,
+	std::vector<std::pair<std::string, const picojson::value*> >& aOutEntities)
+{
+	loadJsonEnsureStore();
+	aOutEntities.clear();
+	const std::string folder(szDataFolder);
+	std::map<std::string, int> order;
+	for (size_t i = 0; i < s_jsonStore->size(); ++i)
+	{
+		const JsonFileRecord& rec = (*s_jsonStore)[i];
+		if (!rj_inCategory(rec.relDir, folder)) continue;
+		if (rec.isOrderManifest)
+		{
+			if (rec.value.is<picojson::array>())
+			{
+				const picojson::array& orderedTypes = rec.value.get<picojson::array>();
+				for (size_t j = 0; j < orderedTypes.size(); ++j)
+				{
+					if (!orderedTypes[j].is<std::string>()) continue;
+					const int iPosition = (int)order.size();
+					order[orderedTypes[j].get<std::string>()] = iPosition;
+				}
+			}
+			continue;
+		}
+		if (rec.type.empty()) continue;
+		aOutEntities.push_back(std::make_pair(rec.type, (const picojson::value*)&rec.value));
+	}
+	std::sort(aOutEntities.begin(), aOutEntities.end(), JsonCategoryEntityOrder(&order));
+}
+
+void loadJson(JsonLoadPhase eLoadPhase)
+{
+	// TWO-PHASE, mirroring the XML's premenu/postmenu load phasing + DELAYED READ. loadJson runs at the END of
+	// BOTH LoadPreMenuGlobals and LoadPostMenuGlobals. rj_registerId is REUSE-ONLY, so each pass maps exactly
+	// the types whose registration has landed by then: the premenu pass maps the premenu set (all the
+	// terrain/plot/mapscript infos + the other premenu types); the postmenu pass -- once processes/votes/
+	// espionage/spawns are registered too -- rj_clearAllRepos-frees the premenu pass and re-maps EVERYTHING
+	// from the RETAINED store with FULL FK resolution (readJson's equivalent of the XML delayed read: FKs
+	// resolve only when every target is loaded; a premenu-only map drops the edges to not-yet-loaded types --
+	// the canMaintain empty-frontier bug). NOT one-shot: the postmenu re-run is what completes the FK edges,
+	// and it ends by FREEING the store. UNCONDITIONAL: no gPlayerLogLevel dependency (cold this early) -- the
+	// [READJSON/*] census rides the event spine (SD_READJSON; the log consumer gates per level).
 	spineRegisterConsumers();   // register the spine's logging CONSUMER (idempotent) before the census emits
 	rj_registerDomain();
-	rj_clearAllRepos();           // care-point (a): re-map-safe (no-op first run)
+	rj_clearAllRepos();           // re-map-safe (no-op first run)
 	jsonResetDiag();              // reset the FK-unresolved accumulator (surfaced below)
+	infoResetKindDiag();          // reset the kind-coverage accumulator (CvInfoKinds; surfaced below)
 
 	// Always-on load timing (the spine census above is DARK at load -- gPlayerLogLevel 0). Grep `[READJSON]` in
 	// Loading.log to SEE the JSON read progress + per-phase ms, so a slow/stuck load is diagnosable from the log.
 	const DWORD s2sT0 = GetTickCount();
-	gDLL->logMsg("Loading.log", "[READJSON] BEGIN cascadeLoadJson", true, false);
+	gDLL->logMsg("Loading.log", CvString::format("[READJSON] BEGIN loadJson phase=%s",
+		eLoadPhase == JSON_LOAD_PREMENU ? "premenu" : "postmenu").c_str(), true, false);
 
-	std::string base = gDLL->getModName(true);
-	if (!base.empty() && base[base.size() - 1] != '\\' && base[base.size() - 1] != '/') base += "\\";
-	const std::string dataDir = base + "Assets\\Data";
+	loadJsonEnsureStore();   // normally already built by the first category registration -- a no-op then
+	std::vector<JsonFileRecord>& store = *s_jsonStore;
 
-	std::vector<std::string> files;
-	rj_find(dataDir, files);
-	gDLL->logMsg("Loading.log", CvString::format("[READJSON] scan dir=%s files=%u ms=%u", dataDir.c_str(), (unsigned)files.size(), (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
-
-	int iFailed = 0, iEntities = 0, iResolved = 0, iUnresolved = 0, iShownUnres = 0, iRemapped = 0;
+	int iEntities = 0, iResolved = 0, iUnresolved = 0, iShownUnres = 0, iRemapped = 0;
 	std::set<std::string> familyKinds, flagKinds;
 	std::map<std::string, int> topKeys;                       // FULL-COVERAGE census: every top-level key kind -> count
 	std::map<std::string, JsonKeyClass> keyClass;             // key -> its class (for the RJE_KEY completeness line)
-	std::vector<RjEntity> store;
 
-	// ===== PASS 1 -- REGISTER: readJson OWNS the enum now (XML archived). Assign each entity a PER-CATEGORY id in
-	// LOAD ORDER + register type->id; the registry must be COMPLETE before ANY mapFrom, else a FORWARD FK reference
-	// would drop. Parse ONCE -- the parsed value + path are stashed on the RjEntity for PASS 2. TECH_GAME_START is the
-	// synthetic no-engine-id root (id -1, off the InfoRepo).
-	for (size_t i = 0; i < files.size(); ++i)
+	// ===== PASS 1 -- REGISTER: resolve every store entity's engine id BEFORE any mapFrom (the registry must be
+	// COMPLETE first, else a FORWARD FK reference would drop). The parse already happened ONCE, at store build.
+	// TECH_GAME_START is the synthetic no-engine-id root (id -1, off the InfoRepo).
+	// COMPLEX traits (the `\complex\` folder) are keyed by the SAME ENGINE id as their type string. The simple and
+	// complex sets live in SEPARATE repos (CvTraitInfo vs CvComplexTraitTag), so they never collide even sharing an
+	// id. The active-set consumers (getTraitInfo / MMKernel::traitData) index the complex repo BY THE ENGINE id, so
+	// it MUST be keyed that way; the category registration registers EVERY trait type (simple / complex-only
+	// developing levels / shared) in m_paTraitInfo, so rj_registerId resolves the engine id for complex traits too.
+	for (size_t i = 0; i < store.size(); ++i)
 	{
-		std::string text;
-		if (!rj_readFile(files[i], text)) { ++iFailed; continue; }
-		picojson::value v;
-		const std::string err = picojson::parse(v, text);
-		if (!err.empty() || !v.is<picojson::object>()) { ++iFailed; continue; }
-		const picojson::object& o = v.get<picojson::object>();
-		picojson::object::const_iterator t = o.find("type");
-		if (t == o.end() || !t->second.is<std::string>()) continue;
+		JsonFileRecord& rec = store[i];
+		rec.typeId = -1;
+		rec.data = NULL;
+		if (rec.isOrderManifest || rec.type.empty()) continue;
 		++iEntities;
-		const std::string type = t->second.get<std::string>();
-		// COMPLEX traits (the `\complex\` folder) are keyed by the SAME ENGINE id as their type string. The simple and
-		// complex sets live in SEPARATE repos (CvTraitInfo vs CvComplexTraitTag), so they never collide even sharing an id.
-		// The active-set consumers (getTraitInfo / MMKernel::traitData) index the complex repo BY THE ENGINE id, so it MUST
-		// be keyed that way. LoadGlobalClassInfoJson registers EVERY trait type (simple / complex-only developing levels /
-		// shared) in m_paTraitInfo, so rj_registerId resolves the engine id for complex traits too. (PASS-2 still routes the
-		// \complex\ files into the complex repo -- only the id changed from a private counter to the engine id.)
-		const int typeId = (type == "TECH_GAME_START") ? -1 : rj_registerId(type);   // engine id (or -1 = DEFER to its load phase)
-		if (typeId >= 0) ++iResolved;
-		else { ++iUnresolved; if (iShownUnres < 16) { eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_UNRESOLVED, 1).addStr(RJF_TYPE, type.c_str())); ++iShownUnres; } }
-		RjEntity rec; rec.type = type; rec.typeId = typeId; rec.data = NULL; rec.value = v; rec.path = files[i];
-		store.push_back(rec);
+		rec.typeId = (rec.type == "TECH_GAME_START") ? -1 : rj_registerId(rec.type);   // engine id (or -1 = DEFER to its load phase)
+		if (rec.typeId >= 0) ++iResolved;
+		else { ++iUnresolved; if (iShownUnres < 16) { eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_UNRESOLVED, 1).addStr(RJF_TYPE, rec.type.c_str())); ++iShownUnres; } }
 	}
-	gDLL->logMsg("Loading.log", CvString::format("[READJSON] PASS1-register parsed=%d entities=%d resolved=%d deferred=%d failed=%d ms=%u",
-		(int)files.size() - iFailed, iEntities, iResolved, iUnresolved, iFailed, (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
+	gDLL->logMsg("Loading.log", CvString::format("[READJSON] PASS1-register entities=%d resolved=%d deferred=%d ms=%u",
+		iEntities, iResolved, iUnresolved, (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 
 	// ===== PASS 2 -- MAP: registry complete -> each entity loads itself (mapFrom resolves its FKs against the FULL id
 	// space). Complex traits collide on the engine id with the simple set -> their OWN repo (`\complex\` path is the
-	// discriminator). The 0-UNCLASSIFIED census rides here. (The XML shadow-diff is GONE -- the legacy poco is archived;
-	// readJson no longer proves against it.)
+	// discriminator). The key-coverage census rides here.
 	for (size_t s = 0; s < store.size(); ++s)
 	{
-		RjEntity& rec = store[s];
+		JsonFileRecord& rec = store[s];
+		if (rec.isOrderManifest || rec.type.empty()) continue;
 		if (!rec.value.is<picojson::object>()) continue;
 		const picojson::object& o = rec.value.get<picojson::object>();
 		const bool bComplexTrait = rec.typeId >= 0 && rj_starts(rec.type, "TRAIT_") && rec.path.find("\\complex\\") != std::string::npos;
@@ -694,7 +546,7 @@ void cascadeLoadJson()
 			// THE FULL-REGISTRY LINK RE-REGISTRATION (owner constraint: FK links register AFTER all JSONs are
 			// loaded). An ALIASED poco (rj_jsonEdit -> GC.m_pa<X>Info) was mapFrom'd by its category's loader
 			// MID-registry -- any FK naming a later-loading category silently dropped (the cross-category drop
-			// defect, readjson.md: section edges AND subclass typed members alike). The registry is complete HERE,
+			// defect: section edges AND subclass typed members alike). The registry is complete HERE,
 			// so the FULL virtual mapFrom re-runs -- mapFrom is IDEMPOTENT BY CONTRACT (CvInfo.h: sections clear via
 			// clearSections, subclass typed containers clear at their parse top), so every link (composed sections +
 			// typed FK members) resolves against the full id space, no mismatch, no double-accumulation. The OWNED
@@ -709,10 +561,10 @@ void cascadeLoadJson()
 				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_REMAPPED, 1)
 					.addStr(RJF_TYPE, rec.type.c_str())
 					.addI(RJF_EDGES, data->getEdges() ? data->getEdges()->count() : 0)
-					.addI(RJF_DEPOSITS, data->getModifiers() ? (int)data->getModifiers()->all().size() : 0));
+					.addI(RJF_DEPOSITS, data->getModifiers() ? (int)data->getModifiers()->entries().size() : 0));
 			}
-			DepositIndex::pushInfo(data);   // the compiled deposit index PUSH: the info's §6 families (+ whenObsolete)
-			                                // intern + compile HERE, at readJson push-time (modifier-substrate.md)
+			// the compiled deposit index PUSH runs AFTER the general reverse pass (below), so the reverse-landed
+			// own-output entries compile into the index exactly like authored ones
 		}
 		for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
 		{
@@ -723,7 +575,7 @@ void cascadeLoadJson()
 			else if (c == CJK_FLAG) flagKinds.insert(it->first);
 		}
 	}
-	gDLL->logMsg("Loading.log", CvString::format("[READJSON] PASS2-map (mapFrom+DepositIndex) remapped=%d ms=%u", iRemapped, (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
+	gDLL->logMsg("Loading.log", CvString::format("[READJSON] PASS2-map (mapFrom) remapped=%d ms=%u", iRemapped, (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 
 	// ===== the §8/§9 CLASSIFICATION registries -- generated infos (SKILL_/TAG_/ATTRIBUTE_/CAPABILITY_/POLICY_)
 	// minted from the union of authored block keys (append-only ids, stable across both load passes), then every
@@ -744,14 +596,9 @@ void cascadeLoadJson()
 		.addI(RJF_ENTITIES, iEntities).addI(RJF_RESOLVED, iResolved).addI(RJF_REMAPPED, iRemapped)
 		.addI(RJF_MS, (int)(GetTickCount() - s2sT0)));
 
-	// STASH the probe stats for post-load re-emission (the load-time burst is dark: gPlayerLogLevel is 0 here, so
-	// the log consumer drops these lines -- the [MODIFIER/repo] census re-emits them per turn where logging is live).
-	int iStashFiles = (int)files.size(), iStashEntities = iEntities;
-	cascadeReadJsonStats(true, iStashFiles, iStashEntities, dataDir);
-
-	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_DIR, 1).addStr(RJF_DIR, dataDir.c_str()));
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_DIR, 1).addStr(RJF_DIR, s_jsonDataDir.c_str()));
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_PROBE, 1)
-		.addI(RJF_FILES, (int)files.size()).addI(RJF_PARSED, (int)files.size() - iFailed).addI(RJF_FAILED, iFailed)
+		.addI(RJF_FILES, s_jsonFilesFound).addI(RJF_PARSED, s_jsonFilesFound - s_jsonParseFailed).addI(RJF_FAILED, s_jsonParseFailed)
 		.addI(RJF_ENTITIES, iEntities).addI(RJF_RESOLVED, iResolved).addI(RJF_UNRESOLVED, iUnresolved)
 		.addI(RJF_FAMILYKINDS, (int)familyKinds.size()).addI(RJF_FLAGKINDS, (int)flagKinds.size()));
 
@@ -764,15 +611,21 @@ void cascadeLoadJson()
 	// AUTHORED-BUT-UNCONSUMED sections (the same Orwell bar, the other half): a section the type composes NO unit
 	// for is recorded by jsonNoteUnconsumed -- "never silently dropped" (CvInfo.h) only holds if someone READS the
 	// census, and nothing did, so the misses sat dark. They are REAL data losses: the authored value never reaches
-	// any getter (the SpecialBuilding group cap -- `allowed` authored, no CvJsonAllowed composed -- was invisible
+	// any getter (the SpecialBuilding group cap -- `allowed` authored, no CvAllowed composed -- was invisible
 	// this way, leaving every group member offered at once). Surfaced beside the FK misses so the next one is loud.
 	const std::set<std::string>& unc = jsonUnconsumedSections();
 	for (std::set<std::string>::const_iterator it = unc.begin(); it != unc.end(); ++it)
 		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_SECTION_UNCONSUMED, 1).addStr(RJF_ID, it->c_str()));
 
+	// UNKNOWN top-level keys, per authoring entity ("<type>:<key>", recorded by the mapFrom dispatch): the spine
+	// detail beside the unconditional Loading.log ERROR lines below -- WHO authored the stray key, not just which.
+	const std::set<std::string>& unknownKeys = jsonUnknownKeys();
+	for (std::set<std::string>::const_iterator it = unknownKeys.begin(); it != unknownKeys.end(); ++it)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_KEY_UNKNOWN, 1).addStr(RJF_ID, it->c_str()));
+
 	// READ-BACK survey: reconstruct the modifier stats + per-entity structure counts from the MAPPED data (the
-	// home) -- the §6 families on getModifiers(), the spec model ([DEC-json-not-cascade]; the retired generic
-	// vector is gone) -- proving the map round-trips (values ×100'd, requires/edges/allowed/grants populated).
+	// home) -- the compiled §6 entries on getModifiers(), the spec model ([DEC-json-not-cascade]) -- proving the
+	// compile round-trips (values ×100'd, addresses interned, requires/edges/allowed/grants populated).
 	int iAttached = 0, iMapSample = 0, iModSample = 0;
 	int mMag = 0, mFlat = 0, mPercent = 0, mMult = 0, mOther = 0, mCond = 0, mPer = 0;
 	for (size_t s = 0; s < store.size(); ++s)
@@ -780,37 +633,32 @@ void cascadeLoadJson()
 		const CvInfo* cd = store[s].data;
 		if (cd == NULL) continue;
 		++iAttached;
-		const CvJsonModifiers* mods = cd->getModifiers();
+		const CvModifiers* mods = cd->getModifiers();
 		if (mods != NULL)
 		{
-			const std::map<std::string, CvJsonModFamily*>& fams = mods->all();
-			for (std::map<std::string, CvJsonModFamily*>::const_iterator fit = fams.begin(); fit != fams.end(); ++fit)
+			const std::vector<CvModEntry*>& modEntries = mods->entries();
+			for (size_t e = 0; e < modEntries.size(); ++e)
 			{
-				if (fit->second == NULL) continue;
-				const std::vector<CvJsonModEntry*>& entries = fit->second->entries;
-				for (size_t e = 0; e < entries.size(); ++e)
+				const CvModEntry* en = modEntries[e];
+				if (en == NULL) continue;
+				++mMag;
+				if (en->unit == CASC_UNIT_FLAT) ++mFlat; else if (en->unit == CASC_UNIT_PERCENT) ++mPercent;
+				else if (en->unit == CASC_UNIT_MULTIPLIER) ++mMult; else ++mOther;
+				if (en->enabled != NULL || en->disabled != NULL) ++mCond;
+				if (en->hasPer) ++mPer;   // the §3.7 per count-scaler
+				if (iModSample < 10)   // concrete value samples -- proves the single human->×100 conversion at the leaf
 				{
-					const CvJsonModEntry* en = entries[e];
-					if (en == NULL) continue;
-					++mMag;
-					if (en->unit == CASC_UNIT_FLAT) ++mFlat; else if (en->unit == CASC_UNIT_PERCENT) ++mPercent;
-					else if (en->unit == CASC_UNIT_MULTIPLIER) ++mMult; else ++mOther;
-					if (en->enabled != NULL || en->disabled != NULL) ++mCond;
-					if (en->hasPer) ++mPer;   // the §3.7 per count-scaler (represented since 2026-07-08)
-					if (iModSample < 10)   // concrete value samples -- proves the single human->×100 conversion at the leaf
-					{
-						eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MOD, 1)
-							.addStr(RJF_TYPE, store[s].type.c_str()).addStr(RJF_ADDR, fit->first.c_str())
-							.addStr(RJF_UNIT, DepositIndex::unitSegment(en->unit)).addI(RJF_VAL, en->value100));
-						++iModSample;
-					}
+					eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MOD, 1)
+						.addStr(RJF_TYPE, store[s].type.c_str()).addStr(RJF_ADDR, en->address().c_str())
+						.addStr(RJF_UNIT, DepositIndex::unitSegment(en->unit)).addI(RJF_VAL, en->value100));
+					++iModSample;
 				}
 			}
 		}
 		if (iMapSample < 8)
 		{
 			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MAP, 1)
-				.addStr(RJF_TYPE, store[s].type.c_str()).addI(RJF_DEPOSITS, cd->getModifiers() ? (int)cd->getModifiers()->all().size() : 0)
+				.addStr(RJF_TYPE, store[s].type.c_str()).addI(RJF_DEPOSITS, cd->getModifiers() ? (int)cd->getModifiers()->entries().size() : 0)
 				.addI(RJF_REQBUILD, cd->requiresBuild() ? 1 : 0).addI(RJF_REQOPERATE, cd->requiresOperate() ? 1 : 0)
 				.addI(RJF_EDGES, cd->getEdges() ? cd->getEdges()->count() : 0)
 				.addI(RJF_ALLOWED, cd->getAllowed() ? (int)cd->getAllowed()->all().size() : 0)
@@ -830,7 +678,7 @@ void cascadeLoadJson()
 	{
 		if (store[s].data == NULL || !rj_starts(store[s].type, "TECH_")) continue;
 		const CvTechInfo* tech = static_cast<const CvTechInfo*>(store[s].data);
-		const CvJsonBoolBlock* caps = tech->getCapabilities();
+		const CvClassificationBlock* caps = tech->getCapabilities();
 		if (caps == NULL || caps->isEmpty()) continue;
 		++capEntities;
 		for (std::set<std::string>::const_iterator it = caps->all().begin(); it != caps->all().end(); ++it)
@@ -848,147 +696,68 @@ void cascadeLoadJson()
 			.addStr(RJF_KEY, it->first.c_str()).addI(RJF_COUNT, it->second)
 			.addStr(RJF_CLASS, jsonKeyClassName(keyClass[it->first])));
 
-	// Route<-bonus prereq REVERSE INDEX. curate_route.py inverts a route's PrereqOrBonuses to the bonus's
-	// `enables.routes` (the enabler GENERATE edge), so no route JSON carries the relationship. The getRouteInfo(...)
-	// callers (CvPlot route validity, CvPlayerAI, CvDLLWidgetData) still ask the route "which bonuses do I need?",
-	// so reconstruct each route's OR-list here, once, after every entity is mapped. (getPrereqBonus -- the legacy
-	// single AND-prereq -- is authored by NO route, so it stays a NO_BONUS constant on the poco.)
+	// THE GENERAL REVERSE PASS ([DEC-one-reverse-view]) -- the forward compat reconstructions, the
+	// EDGEF_RELATED display inversion, the EDGEF_REQUIRED_BY re-gate index, and the own-output reverse
+	// landing, in ONE pass over the compiled surfaces (Data/CvReversePass.cpp). Runs after every entity is
+	// mapped so it inverts the final compiled state.
+	reversePassRun();
+	const ReversePassCounts& reverseCounts = reversePassCounts();
+
+	// The compiled deposit index PUSH: every mapped info's §6 families (+ whenObsolete) intern + compile here,
+	// AFTER the reverse pass, so the reverse-landed own-output entries enter the index like authored ones.
+	for (size_t s = 0; s < store.size(); ++s)
 	{
-		const int nBonus = GC.getNumBonusInfos();
-		for (int b = 0; b < nBonus; ++b)
+		if (store[s].data != NULL)
 		{
-			const CvInfo* jb = InfoRepo<CvBonusInfo>::get().get(b);
-			if (jb == NULL || jb->getEdges() == NULL) continue;
-			const std::vector<int>* routes = jb->getEdges()->find(EDGEF_ENABLES, EDGEB_ROUTES);
-			if (routes != NULL)
-				for (size_t r = 0; r < routes->size(); ++r)
-					static_cast<CvRouteInfo*>(InfoRepo<CvRouteInfo>::get().editPtr((*routes)[r]))->addPrereqOrBonus((BonusTypes)b);
-			// the single AND-prereq bonus rides a DISTINCT bucket (store.py routesAnd) so it stays out of the OR-list --
-			// getPrereqBonus (the CvPlot build gate), not getPrereqOrBonuses. A route has at most one single AND bonus.
-			const std::vector<int>* routesAnd = jb->getEdges()->find(EDGEF_ENABLES, EDGEB_ROUTES_AND);
-			if (routesAnd != NULL)
-				for (size_t r = 0; r < routesAnd->size(); ++r)
-					static_cast<CvRouteInfo*>(InfoRepo<CvRouteInfo>::get().editPtr((*routesAnd)[r]))->setPrereqBonus((BonusTypes)b);
+			DepositIndex::pushInfo(store[s].data);
 		}
 	}
+	gDLL->logMsg("Loading.log", CvString::format("[READJSON] deposit-index push done ms=%u",
+		(unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 
-	// Improvement<-route YIELD REVERSE INDEX. RouteYieldChanges live ROUTE-side (deliveryguy, modifier.md §4:
-	// "a route upgrading improvements -> on the route, keyed by improvement" -- curate_route.py authors
-	// {food|production|commerce}.plot.improvements.{IMP}.flat), but the legacy improvement-side readers
-	// (CvPlot::calculateImprovementYieldChange:8354/8370/12357 + the CvDLLWidgetData help) still ask the
-	// IMPROVEMENT "what does route R add on me?" -- a stub 0 under-yielded every improved+routed plot and fed
-	// the AI wrong tile values. Reconstruct each improvement's route rows here, once, after every entity is
-	// mapped (flat unconditioned entries only -- the data authors nothing else on this address).
-	{
-		static const struct { const char* szFam; int iYield; } YFAMS[] = {
-			{ "food.plot.improvements.",       YIELD_FOOD },
-			{ "production.plot.improvements.", YIELD_PRODUCTION },
-			{ "commerce.plot.improvements.",   YIELD_COMMERCE } };
-		const int nRoute = GC.getNumRouteInfos();
-		for (int r = 0; r < nRoute; ++r)
-		{
-			const CvInfo* jr = InfoRepo<CvRouteInfo>::get().get(r);
-			if (jr == NULL || jr->getModifiers() == NULL) continue;
-			const std::map<std::string, CvJsonModFamily*>& fams = jr->getModifiers()->all();
-			for (std::map<std::string, CvJsonModFamily*>::const_iterator it = fams.begin(); it != fams.end(); ++it)
-			{
-				for (int f = 0; f < 3; ++f)
-				{
-					const size_t iLen = strlen(YFAMS[f].szFam);
-					if (it->first.compare(0, iLen, YFAMS[f].szFam) != 0) continue;
-					const int iImp = jsonResolveId(it->first.substr(iLen));
-					if (iImp < 0) break;
-					const CvJsonModFamily* fam = it->second;
-					for (int e = 0; e < fam->size(); ++e)
-					{
-						const CvJsonModEntry* en = fam->entries[e];
-						if (en->unit != CASC_UNIT_FLAT || en->hasPer || en->enabled != NULL || en->disabled != NULL) continue;
-						static_cast<CvImprovementInfo*>(InfoRepo<CvImprovementInfo>::get().editPtr(iImp))
-							->addRouteYieldChange(r, YFAMS[f].iYield, en->value100 / 100);
-					}
-					break;
-				}
-			}
-		}
-	}
-
-	// STORE-INVERTED TECH-FK REVERSE INDEX -- the Route<-bonus pattern above, generalized. curate_*.py DROP each
-	// entity's tech prereq/obsolete FK and store-invert it onto the TECH's enables/obsoletes buckets (bonus reveal +
-	// cityTrade both -> enables.bonuses, deliberately merged/indistinguishable; corp/project/religion/process/promotion
-	// -> enables.<bucket>; bonus/build/corp/promotion obsolete -> obsoletes.<bucket>). The getXInfo(...) compat getters
-	// still ask "which tech do I need?" -- a REVERSE lookup -- so reconstruct each target's FK here, once, after every
-	// entity is mapped. Forward reads only on the hot path (enabler.md §2); this cold reverse view is derived once at
-	// load (modifier.md §1). getProjectsNeeded is the project<-project variant (off the prereq project's enables.projects).
-	{
-		const int nTech = GC.getNumTechInfos();
-		for (int t = 0; t < nTech; ++t)
-		{
-			const CvInfo* jt = InfoRepo<CvTechInfo>::get().get(t);
-			if (jt == NULL || jt->getEdges() == NULL) continue;
-			const CvJsonEdges* e = jt->getEdges();
-			const TechTypes eTech = (TechTypes)t;
-			if (const std::vector<int>* v = e->find(EDGEF_ENABLES, EDGEB_BONUSES))
-				for (size_t k = 0; k < v->size(); ++k)
-				{
-					CvBonusInfo* p = static_cast<CvBonusInfo*>(InfoRepo<CvBonusInfo>::get().editPtr((*v)[k]));
-					if (p->getTechReveal() == NO_TECH) { p->setTechReveal(eTech); p->setTechCityTrade(eTech); }   // first (lowest-id) tech wins -- merged/indistinguishable
-				}
-			if (const std::vector<int>* v = e->find(EDGEF_OBSOLETES, EDGEB_BONUSES))
-				for (size_t k = 0; k < v->size(); ++k)
-					static_cast<CvBonusInfo*>(InfoRepo<CvBonusInfo>::get().editPtr((*v)[k]))->setTechObsolete(eTech);
-			if (const std::vector<int>* v = e->find(EDGEF_OBSOLETES, EDGEB_BUILDS))
-				for (size_t k = 0; k < v->size(); ++k)
-					static_cast<CvBuildInfo*>(InfoRepo<CvBuildInfo>::get().editPtr((*v)[k]))->setObsoleteTech(eTech);
-			if (const std::vector<int>* v = e->find(EDGEF_ENABLES, EDGEB_PROJECTS))
-				for (size_t k = 0; k < v->size(); ++k)
-					static_cast<CvProjectInfo*>(InfoRepo<CvProjectInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
-			if (const std::vector<int>* v = e->find(EDGEF_ENABLES, EDGEB_CORPORATIONS))
-				for (size_t k = 0; k < v->size(); ++k)
-					static_cast<CvCorporationInfo*>(InfoRepo<CvCorporationInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
-			if (const std::vector<int>* v = e->find(EDGEF_OBSOLETES, EDGEB_CORPORATIONS))
-				for (size_t k = 0; k < v->size(); ++k)
-					static_cast<CvCorporationInfo*>(InfoRepo<CvCorporationInfo>::get().editPtr((*v)[k]))->setObsoleteTech(eTech);
-			if (const std::vector<int>* v = e->find(EDGEF_ENABLES, EDGEB_RELIGIONS))
-				for (size_t k = 0; k < v->size(); ++k)
-					static_cast<CvReligionInfo*>(InfoRepo<CvReligionInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
-			if (const std::vector<int>* v = e->find(EDGEF_ENABLES, EDGEB_PROCESSES))
-				for (size_t k = 0; k < v->size(); ++k)
-					static_cast<CvProcessInfo*>(InfoRepo<CvProcessInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
-			if (const std::vector<int>* v = e->find(EDGEF_ENABLES, EDGEB_PROMOTIONS))
-				for (size_t k = 0; k < v->size(); ++k)
-					static_cast<CvPromotionInfo*>(InfoRepo<CvPromotionInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
-			if (const std::vector<int>* v = e->find(EDGEF_OBSOLETES, EDGEB_PROMOTIONS))
-				for (size_t k = 0; k < v->size(); ++k)
-					static_cast<CvPromotionInfo*>(InfoRepo<CvPromotionInfo>::get().editPtr((*v)[k]))->setObsoleteTech(eTech);
-			if (const std::vector<int>* v = e->find(EDGEF_ENABLES, EDGEB_PROMOTION_LINES))
-				for (size_t k = 0; k < v->size(); ++k)
-					static_cast<CvPromotionLineInfo*>(InfoRepo<CvPromotionLineInfo>::get().editPtr((*v)[k]))->setTechPrereq(eTech);
-			if (const std::vector<int>* v = e->find(EDGEF_OBSOLETES, EDGEB_PROMOTION_LINES))
-				for (size_t k = 0; k < v->size(); ++k)
-					static_cast<CvPromotionLineInfo*>(InfoRepo<CvPromotionLineInfo>::get().editPtr((*v)[k]))->setObsoleteTech(eTech);
-		}
-		// project <- project: PrereqProjects store-inverted onto the prerequisite project's enables.projects.
-		const int nProj = GC.getNumProjectInfos();
-		for (int pr = 0; pr < nProj; ++pr)
-		{
-			const CvInfo* jp = InfoRepo<CvProjectInfo>::get().get(pr);
-			if (jp == NULL || jp->getEdges() == NULL) continue;
-			if (const std::vector<int>* v = jp->getEdges()->find(EDGEF_ENABLES, EDGEB_PROJECTS))
-				for (size_t k = 0; k < v->size(); ++k)
-					static_cast<CvProjectInfo*>(InfoRepo<CvProjectInfo>::get().editPtr((*v)[k]))->addProjectNeeded(pr);
-		}
-	}
-
-	// THE REVERSE VIEW -- inverted onto the referenced infos' own edges, so every consumer reads its info
-	// directly (the pedia/tooltip candidate lists; modifier.md par.1). Runs after every FK/compat view above
-	// so it inverts the final reconstructed getters.
-	rj_buildReverseView();
-	// The reverse-view build is DONE -- the spine announcement (counts pre-dedup: the raw inversion volume).
+	// The general reverse pass is DONE -- the spine announcement (counts pre-dedup: the raw inversion volume).
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_REVERSE_DONE, 1)
-		.addI(RJF_RELATED, s_rvRelated).addI(RJF_REQUIREDBY, s_rvRequiredBy).addI(RJF_MS, (int)s_rvMs));
-	gDLL->logMsg("Loading.log", CvString::format("[READJSON] reverse-view related=%d requiredBy=%d ms=%u",
-		s_rvRelated, s_rvRequiredBy, (unsigned)s_rvMs).c_str(), true, false);
+		.addI(RJF_RELATED, reverseCounts.relatedAdds).addI(RJF_REQUIREDBY, reverseCounts.requiredByAdds)
+		.addI(RJF_OWNOUTPUT, reverseCounts.ownOutputLanded).addI(RJF_MS, (int)reverseCounts.milliseconds));
+	gDLL->logMsg("Loading.log", CvString::format(
+		"[READJSON] reverse-view related=%d requiredBy=%d ownOutputLanded=%d ownOutputSkipped=%d ms=%u",
+		reverseCounts.relatedAdds, reverseCounts.requiredByAdds, reverseCounts.ownOutputLanded,
+		reverseCounts.ownOutputSkipped, (unsigned)reverseCounts.milliseconds).c_str(), true, false);
 
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MAP_SUMMARY, 1).addI(RJF_WITHDATA, iAttached));
+
+	// ===== THE FAIL-LOUD COVERAGE SUMMARY -- UNCONDITIONAL (patterns.md § The ONE reader). The three failure
+	// counts print to Loading.log on EVERY load, no log-level gate: unresolved FK ids, authored-but-unconsumed
+	// sections, and unknown top-level keys (non-reserved object keys outside the closed family vocabulary).
+	// Every unknown key additionally gets its own LOUD ERROR line -- a typo'd section name must never load as
+	// silent garbage family data. The per-item detail for the first two rides the SD_READJSON spine events above.
+	int iUnknownKeyKinds = 0;
+	for (std::map<std::string, int>::const_iterator it = topKeys.begin(); it != topKeys.end(); ++it)
+	{
+		if (keyClass[it->first] != CJK_UNKNOWN) continue;
+		++iUnknownKeyKinds;
+		gDLL->logMsg("Loading.log", CvString::format("[READJSON] ERROR unknown-key key=%s entities=%d",
+			it->first.c_str(), it->second).c_str(), true, false);
+	}
+	gDLL->logMsg("Loading.log", CvString::format("[READJSON] coverage unresolvedFk=%d unconsumedSections=%d unknownKeys=%d",
+		(int)jsonUnresolvedIds().size(), (int)jsonUnconsumedSections().size(), iUnknownKeyKinds).c_str(), true, false);
+
+	// The kind-coverage half of the same bar (CvInfoKinds): every authored member the vocabulary does not carry
+	// flowed through the compile pass as an interned segment -- surfaced per distinct family.member so a
+	// batch-pending re-authoring (or a data typo) is visible on every load, never silently unkinded.
+	const std::set<std::string>& unkindedMembers = infoUnkindedMembers();
+	for (std::set<std::string>::const_iterator it = unkindedMembers.begin(); it != unkindedMembers.end(); ++it)
+		gDLL->logMsg("Loading.log", CvString::format("[READJSON] unkinded-member %s", it->c_str()).c_str(), true, false);
+	gDLL->logMsg("Loading.log", CvString::format("[READJSON] kind-coverage unkindedMembers=%d",
+		(int)unkindedMembers.size()).c_str(), true, false);
+
 	gDLL->logMsg("Loading.log", CvString::format("[READJSON] END withData=%d reverseIndex+survey done totalMs=%u", iAttached, (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
+
+	// The postmenu pass is the LAST reader of the retained parse: free the store completely -- after load, no
+	// JSON-shaped object survives ([DEC-one-json-reader]).
+	if (eLoadPhase == JSON_LOAD_POSTMENU)
+	{
+		loadJsonFreeStore();
+		gDLL->logMsg("Loading.log", "[READJSON] retained parse store freed", true, false);
+	}
 }

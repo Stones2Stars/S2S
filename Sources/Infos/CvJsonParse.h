@@ -6,7 +6,7 @@
 //	CvJsonParse -- the SHARED, composable JSON parse primitives the JsonInfo layer reuses (relocated out of the
 //	retired Cascade-side parse-helper home, owner ruling 2026-07-08: parsing the info data is INFO-side, not cascade --
 //	[DEC-json-not-cascade]). The tiny reused primitives live here so the base CvInfo::mapFrom, every section
-//	UNIT (CvJsonRequires/Edges/Allowed/Grants/...), AND each per-type subclass's mapFrom draw from ONE place --
+//	UNIT (CvRequires/Edges/Allowed/Grants/...), AND each per-type subclass's mapFrom draw from ONE place --
 //	no walker is re-hand-rolled per type. Behaviour is a faithful relocation of the spec/StoneBase-proven logic
 //	(json.md; the ×100 rule is fixed-point-and-scales.md §1).
 //
@@ -17,7 +17,7 @@
 //
 
 #include "picojson.h"          // picojson::value/object -- the walker signatures below take objects
-#include "CvJsonCondition.h"   // CvCascScope -- the shared scope-token vocabulary (jsonParseScope)
+#include "CvCondition.h"   // CvCascScope -- the shared scope-token vocabulary (jsonParseScope)
 #include <string>
 #include <set>
 #include <map>
@@ -67,17 +67,23 @@ void jsonReadFkMap(const picojson::object& parent, const char* key, std::map<int
 void jsonReadFlavours(const picojson::object& aiObj, std::map<int, int>& out);
 // The §3.2 scope-token vocabulary -> CvCascScope; an unknown token falls back to the CALLER's default.
 CvCascScope jsonParseScope(const std::string& s, CvCascScope defaultScope);
+// Is `s` one of the §3.2 scope tokens? (the address-decode discriminator: a second segment that is NOT a scope
+// token stays part of the deposit's tail -- e.g. a count-by-type key directly under the family).
+bool jsonIsScopeToken(const std::string& s);
 
-// --- top-level key classification (json.md §1) -- the ONE home for the reserved/intrinsic vocabulary ---
+// --- top-level key classification (json.md §1/§11) -- the ONE home for the reserved/intrinsic vocabulary ---
 // Shared by the base CvInfo::mapFrom (dispatch the section units / skip the rest) and the reader's completeness
-// CENSUS (prove 0 UNCLASSIFIED). An unknown OBJECT key is a modifier family; an unknown SCALAR is a flag/text -- so
-// EVERY key gets a class, never "unclassified". (The intrinsic/auxiliary/classification blocks are CJK_INTRINSIC:
-// the base skips them; the owning subclass / another system parses them.) CJK_GATE is the entity-level
-// `enabled`/`disabled` applicability pair (json §3.9 at entity level -- the loadPrune replacement, owner 2026-07-08).
+// CENSUS. The family vocabulary is CLOSED: a non-reserved OBJECT key classifies CJK_FAMILY only when it is in
+// the known-family table (or the open PROPERTY_* plane); otherwise it is CJK_UNKNOWN -- a LOUD load error the
+// reader prints unconditionally, never a silently-minted family. A non-reserved SCALAR key stays CJK_FLAG (the
+// §8 classification registries are open by design). (The intrinsic/auxiliary/classification blocks are
+// CJK_INTRINSIC: the base skips them; the owning subclass / another system parses them.) CJK_GATE is the
+// entity-level `enabled`/`disabled` applicability pair (json §3.9 at entity level). CJK_TRIGGERS is the §5
+// trigger->chance->action section (array-valued; dispatched to the composing type's CvTriggers unit).
 // CJK_RETIRED is the tombstone class for purged vocabulary ("loadPrune") -- dispatched to the unconsumed census,
 // NEVER parsed (superseded-ideas.md).
-enum JsonKeyClass { CJK_EDGE, CJK_PROVIDES, CJK_ALLOWED, CJK_GRANTS, CJK_REQUIRES, CJK_WHEN_OBSOLETE, CJK_GATE,
-                    CJK_INTRINSIC, CJK_FAMILY, CJK_FLAG, CJK_RETIRED };
+enum JsonKeyClass { CJK_EDGE, CJK_PROVIDES, CJK_ALLOWED, CJK_GRANTS, CJK_TRIGGERS, CJK_REQUIRES, CJK_WHEN_OBSOLETE,
+                    CJK_GATE, CJK_INTRINSIC, CJK_FAMILY, CJK_FLAG, CJK_RETIRED, CJK_UNKNOWN };
 JsonKeyClass jsonClassifyKey(const std::string& key, bool valueIsObject);
 const char* jsonKeyClassName(JsonKeyClass c);   // the census label ("edge"/"family"/"flag"/…)
 
@@ -89,5 +95,9 @@ const std::set<std::string>& jsonUnresolvedIds();
 // "didn't pan out" gap class that bred the old-Info fallbacks).
 void jsonNoteUnconsumed(const std::string& szType, const std::string& szSection);
 const std::set<std::string>& jsonUnconsumedSections();
+// A CJK_UNKNOWN top-level key (a non-reserved object key outside the closed family vocabulary): recorded as
+// "<typeId>:<key>" -- the reader prints each as an unconditional [READJSON] ERROR unknown-key line.
+void jsonNoteUnknownKey(const std::string& szType, const std::string& szKey);
+const std::set<std::string>& jsonUnknownKeys();
 
 #endif // CV_JSON_PARSE_H

@@ -19,10 +19,12 @@ int jsonX100(double h)
 // --- load-time diagnostics (Orwell bar): the accumulators every miss lands in, surfaced by the reader ---
 static std::set<std::string> s_unresolved;
 static std::set<std::string> s_unconsumed;
+static std::set<std::string> s_unknownKeys;
 
-void jsonResetDiag()                                    { s_unresolved.clear(); s_unconsumed.clear(); }
+void jsonResetDiag()                                    { s_unresolved.clear(); s_unconsumed.clear(); s_unknownKeys.clear(); }
 const std::set<std::string>& jsonUnresolvedIds()        { return s_unresolved; }
 const std::set<std::string>& jsonUnconsumedSections()   { return s_unconsumed; }
+const std::set<std::string>& jsonUnknownKeys()          { return s_unknownKeys; }
 
 // The bound is a runaway guard, not a display cap: at 64 a single flooding class (every CIVILIZATION_ dropping
 // `grants`) filled the census by itself and HID every other miss behind it -- the diagnostic silently truncated
@@ -33,6 +35,11 @@ static const size_t JSON_DIAG_MAX = 4096;
 void jsonNoteUnconsumed(const std::string& szType, const std::string& szSection)
 {
 	if (s_unconsumed.size() < JSON_DIAG_MAX) s_unconsumed.insert(szType + ":" + szSection);
+}
+
+void jsonNoteUnknownKey(const std::string& szType, const std::string& szKey)
+{
+	if (s_unknownKeys.size() < JSON_DIAG_MAX) s_unknownKeys.insert(szType + ":" + szKey);
 }
 
 int jsonResolveId(const std::string& id)
@@ -152,12 +159,19 @@ CvCascScope jsonParseScope(const std::string& s, CvCascScope defaultScope)
 	return defaultScope;
 }
 
+bool jsonIsScopeToken(const std::string& s)
+{
+	// the two probes bracket the vocabulary: a token resolves identically under both defaults; a non-token
+	// falls back to whichever default it was given.
+	return jsonParseScope(s, CASC_SCOPE_WORLD) == jsonParseScope(s, CASC_SCOPE_CITY);
+}
+
 // ===================== top-level key classification (json.md §1) -- the ONE vocabulary home =====================
 // The enables-family source + target-side edges (§4.1/§4.2). `provides` (§5a) is a sibling edge dispatched separately.
 static const char* CJK_EDGES[] = { "enables", "obsoletes", "replaces", "disables", "obsoletedBy", 0 };
 // Intrinsic (§7) + auxiliary/bespoke (§9) + the §8 classification blocks -- everything the base's DISPATCH does not
 // route to a section unit (a subclass / another system owns it). `policies`/`capabilities`/`skills`/`tags`/`state`/
-// `attributes` sit here because their FLAT-BOOL halves are dispatched to the subclass's CvJsonBoolBlock units by the
+// `attributes` sit here because their FLAT-BOOL halves are dispatched to the subclass's CvClassificationBlock units by the
 // subclass itself (keyed skill extras stay typed subclass members); the bespoke `shrine`/`headquarters` FK sections +
 // era `worldGen` likewise.
 static const char* CJK_INTRINSIC_KEYS[] = {
@@ -170,6 +184,29 @@ static const char* CJK_INTRINSIC_KEYS[] = {
 	"canTrade", "canTradeOn", "canWorkOn",   // tech bespoke blocks (owner 2026-07-02, json.md §2 / capabilities.md)
 	"spread",   // UNIT spread strength block: spread.religion/spread.corporation keyed maps (owner 2026-07-11 -- clearer than burying under timed `grants`)
 	"groupSpawn",   // UNIT group-spawn config: struct rows {unitCombat, chance, title} (owner 2026-07-11 -- config, not a grant)
+	"sizeMatters",      // the Size-Matters own-block (json.md §9 -- game-option system data, never a family)
+	"missions",         // the future missions block (json.md §8 -- the missions/CvOutcome carve-out)
+	"combatClass", "combatClasses",   // UNIT primary/sub combat classes -- ROOT keys (json.md §8)
+	0
+};
+
+// The CLOSED modifier-family vocabulary -- the classification authority for a non-reserved OBJECT-valued
+// top-level key (json.md §1/§11). Source: the post-batch family census over Assets/Data -- regenerate with
+// `python Tools/Migration/family_census.py` and mirror its family list here whenever the authored vocabulary
+// moves. The PROPERTY_* plane stays OPEN by design (one family per property info, keyed by the data) and is
+// matched by prefix in jsonClassifyKey, not listed here. A non-reserved object key in NEITHER is CJK_UNKNOWN --
+// a LOUD load error, never a silently-minted family.
+static const char* CJK_FAMILY_KEYS[] = {
+	"air", "allowedSpecialists", "anarchy", "barbarians", "bombard", "buildRate", "capture", "cargo",
+	"cityCapture", "collateral", "combat", "commerce", "commerceHappiness", "conscript", "costs", "culture",
+	"cultureDistance", "defense", "diplomacy", "domainMoves", "durations", "espionage", "espionageDefense",
+	"eventChance", "experience", "extraYieldThreshold", "featureProduction", "firstStrike", "food", "foodKept",
+	"freeSpecialists", "gold", "goldenAge", "greatGeneralRate", "greatPeopleRate", "growth", "happiness",
+	"heal", "health", "hurry", "hurryAnger", "improvementUpgradeRate", "inflation", "lessYieldThreshold",
+	"maintenance", "missionYieldMultiplier", "movement", "occupationTime", "odds", "perEra", "pillage",
+	"populationGrowthRate", "production", "range", "religion", "research", "researchRate", "revoltProtection",
+	"revolution", "spawnRate", "speed", "stateReligion", "strength", "survivor", "tradeMission", "tradeRoutes",
+	"underworld", "upkeep", "warWeariness", "withdrawal", "workRate",
 	0
 };
 // Purged vocabulary -- keys that must NEVER be parsed again; a straggler in the data surfaces in the unconsumed
@@ -189,12 +226,16 @@ JsonKeyClass jsonClassifyKey(const std::string& key, bool valueIsObject)
 	if (key == "provides")                 return CJK_PROVIDES;
 	if (key == "allowed")                  return CJK_ALLOWED;
 	if (key == "grants")                   return CJK_GRANTS;
+	if (key == "triggers")                 return CJK_TRIGGERS;        // §5 trigger -> chance -> action entries
 	if (key == "requires")                 return CJK_REQUIRES;
 	if (key == "whenObsolete")             return CJK_WHEN_OBSOLETE;   // §4.2 the obsolete-state modifier tree
 	if (key == "enabled" || key == "disabled") return CJK_GATE;        // entity-level applicability (§3.9 at entity level)
 	if (jsonInList(CJK_RETIRED_KEYS, key)) return CJK_RETIRED;
 	if (jsonInList(CJK_INTRINSIC_KEYS, key)) return CJK_INTRINSIC;
-	return valueIsObject ? CJK_FAMILY : CJK_FLAG;   // unknown object = modifier family; unknown scalar = flag/text
+	if (!valueIsObject)                    return CJK_FLAG;            // non-reserved scalar = flag/text (§8 open registries)
+	if (key.compare(0, 9, "PROPERTY_") == 0) return CJK_FAMILY;        // the open per-property family plane
+	// the CLOSED family vocabulary: in the table = a family; otherwise a LOUD unknown, never a minted family
+	return jsonInList(CJK_FAMILY_KEYS, key) ? CJK_FAMILY : CJK_UNKNOWN;
 }
 
 const char* jsonKeyClassName(JsonKeyClass c)
@@ -205,6 +246,7 @@ const char* jsonKeyClassName(JsonKeyClass c)
 	case CJK_PROVIDES:  return "provides";
 	case CJK_ALLOWED:   return "allowed";
 	case CJK_GRANTS:    return "grants";
+	case CJK_TRIGGERS:  return "triggers";
 	case CJK_REQUIRES:  return "requires";
 	case CJK_WHEN_OBSOLETE: return "whenObsolete";
 	case CJK_GATE:      return "gate";
@@ -212,6 +254,7 @@ const char* jsonKeyClassName(JsonKeyClass c)
 	case CJK_FAMILY:    return "family";
 	case CJK_FLAG:      return "flag";
 	case CJK_RETIRED:   return "RETIRED";
+	case CJK_UNKNOWN:   return "UNKNOWN";
 	default:            return "UNCLASSIFIED";
 	}
 }

@@ -23,7 +23,7 @@ class CvPlayer;
 class CvCity;
 
 // The C++ flat-deposit model: each compiled CascadeDeposit's `address` IS the dotted "<channel>.<scope>[.<member>[.<KEY>]]"
-// path (the CvJsonModifiers family key, compiled by the DepositIndex push), `unit` the leaf kind, `value100` the ×100
+// path (the CvModifiers family key, compiled by the DepositIndex push), `unit` the leaf kind, `value100` the ×100
 // magnitude. So a StoneBase tree-walk (fam.Root.Children[scope]...Magnitudes) is an address match here. These mirror ModifierMath.cs.
 class MMKernel
 {
@@ -31,7 +31,7 @@ public:
 	// A deposit applies iff enabled holds (or is absent) AND disabled does NOT hold (json.md §3.9), evaluated through the
 	// typed-condition evaluator against the live engine ctx. MODIFIER context = the lenient flags (default): a
 	// {STATE_RELIGION:X} compound matches loosely (the strict-match form is the enabler's requires.build only).
-	static bool applies(const CvJsonCondition* enabled, const CvJsonCondition* disabled, const CvCascadeEvalCtx& ec);
+	static bool applies(const CvCondition* enabled, const CvCondition* disabled, const CvCascadeEvalCtx& ec);
 
 	// THE generic §3.7 `per` count-scaler resolver (json.md §3.7; owner semantics: resolved value =
 	// value × (count / each), the count INTEGER-divided by `each` FIRST -- deterministic integer math only).

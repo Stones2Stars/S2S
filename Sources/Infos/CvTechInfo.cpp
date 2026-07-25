@@ -146,13 +146,13 @@ void CvTechInfo::mapFrom(const picojson::value& entity)
 	// CvBuildInfo). curate_tech.requires_fn builds ONE `all` list holding: team-scope TECH_ presence atoms
 	// (AND prereqs -- AndPreReqs + folded 1-member OrPreReqs), empire-scope BUILDING_ AND atoms (no tech data today),
 	// and nested {any} OR-groups (each homogeneous: a multi-member tech OR-group, or the building OR-group with min).
-	const CvJsonRequires* r = getRequires();
+	const CvRequires* r = getRequires();
 	if (r != NULL && r->build != NULL)
 	{
-		const CvJsonCondition* b = r->build;
+		const CvCondition* b = r->build;
 		for (size_t i = 0; i < b->all.size(); ++i)
 		{
-			const CvJsonCondition* c = b->all[i];
+			const CvCondition* c = b->all[i];
 			if (c == NULL) continue;
 			if (c->kind == CASC_COND_PRESENCE)
 			{
@@ -161,7 +161,7 @@ void CvTechInfo::mapFrom(const picojson::value& entity)
 			}
 			else if (c->kind == CASC_COND_GROUP && !c->anyOf.empty())
 			{
-				const CvJsonCondition* first = c->anyOf[0];
+				const CvCondition* first = c->anyOf[0];
 				if (first == NULL || first->kind != CASC_COND_PRESENCE) continue;
 				const bool bTech     = first->type.compare(0, 5, "TECH_") == 0;
 				const bool bBuilding = first->type.compare(0, 9, "BUILDING_") == 0;
@@ -174,7 +174,7 @@ void CvTechInfo::mapFrom(const picojson::value& entity)
 				{
 					for (size_t j = 0; j < c->anyOf.size(); ++j)
 					{
-						const CvJsonCondition* m = c->anyOf[j];
+						const CvCondition* m = c->anyOf[j];
 						if (m != NULL && m->kind == CASC_COND_PRESENCE && m->id >= 0 && m->type.compare(0, 5, "TECH_") == 0)
 							m_aePrereqOrTechs.push_back((TechTypes)m->id);
 					}
@@ -183,7 +183,7 @@ void CvTechInfo::mapFrom(const picojson::value& entity)
 				{
 					for (size_t j = 0; j < c->anyOf.size(); ++j)
 					{
-						const CvJsonCondition* m = c->anyOf[j];
+						const CvCondition* m = c->anyOf[j];
 						if (m != NULL && m->kind == CASC_COND_PRESENCE && m->id >= 0 && m->type.compare(0, 9, "BUILDING_") == 0)
 						{
 							PrereqBuilding pb;
