@@ -82,35 +82,57 @@ save-break); derived data serializes nothing; deleting a changer means auditing 
 - Traps: score multiplies by the raw handicap **enum index** (reordering XML rows silently shifts score); barb spawn
   is **inverted** (a *lower* `getBarbarianCityCreationProb` = a *higher* spawn chance).
 
-## Info loading — `CvInfoUtil` (current), superseded forward by `readJson`
+## Info loading — `readJson` (the ONE JSON reader) + `CvInfoUtil` (XML residue)
 
-- **`CvInfoUtil`** is the active XML loader: one `getDataMembers()` declaration derives
-  read/copyNonDefaults/checkSum/init (`CvBuildInfo` is the reference). **But the forward direction is top-down JSON
-  via `readJson` (#428/#430), which bypasses `CvInfoUtil` entirely** — do NOT chase the old "migrate remaining infos
-  to declarative XML" goal.
+- **The ONE JSON reader ([DEC-one-json-reader]) is the load pipeline in `Sources/Data/CvReadJson.{h,cpp}`, entry
+  point `loadJson()`.** `Assets/Data` is walked, read, and parsed exactly ONCE per process, on first use, into a
+  RETAINED in-memory store (~21 MB of JSON text → ~70 MB of picojson structures on the 32-bit heap); every
+  downstream step reads the store, never the disk:
+  - **Per-category registration** — `CvXMLLoadUtility::LoadGlobalClassInfoJson` is a thin registration against
+    the pipeline: at each category's load point in `LoadPreMenuGlobals`/`LoadPostMenuGlobals`,
+    `loadJsonCategory` serves the folder's parsed entities in `_order.json` manifest order, and the
+    registration assigns ids two-pass (below), dedup-first-wins on colliding types (the trait simple/complex
+    share), creates the pocos, and `mapFrom`s each.
+  - **The full pass** — `loadJson(JSON_LOAD_PREMENU)` / `loadJson(JSON_LOAD_POSTMENU)` at the END of each XML
+    phase: clears the repos, re-registers every store entity (REUSE-ONLY ids — a type is mapped only after its
+    registration has landed; pre-registering a postmenu type crashed the load), re-runs the idempotent
+    `mapFrom` on EVERY entity against the complete registry, mints + resolves the classification registries,
+    compiles the DepositIndex, and runs the FK/reverse passes. The premenu/postmenu PHASING is load-bearing:
+    premenu consumers need premenu categories mapped before the menu; the postmenu types
+    (processes/votes/espionage-missions/spawns) register late, so the postmenu re-run is what completes every
+    cross-category FK edge. The postmenu pass ends by FREEING the store — after load, no JSON-shaped object
+    survives.
+  - **Fail-loud coverage** — the three failure counts print UNCONDITIONALLY to `Loading.log` on every pass
+    (`[READJSON] coverage unresolvedFk=N unconsumedSections=N unknownKeys=N`), plus one
+    `[READJSON] ERROR unknown-key` line per non-reserved object key outside the CLOSED family vocabulary
+    (`CvJsonParse.cpp` `CJK_FAMILY_KEYS`, mirrored from `Tools/Migration/family_census.py`); the per-item
+    detail rides the `SD_READJSON` spine events.
+- **`CvInfoUtil`** is the XML loader for the not-yet-replaced info types: one `getDataMembers()` declaration
+  derives read/copyNonDefaults/checkSum/init (`CvBuildInfo` is the reference). **The forward direction is
+  top-down JSON via `readJson`, which bypasses `CvInfoUtil` entirely** — do NOT chase the old "migrate remaining
+  infos to declarative XML" goal.
 - The asset **checksum** only triggers the modifier-recalc popup on mismatch — it does NOT gate MP OOS or block
   loading; full parity is not required when restructuring data (cost = one spurious popup per existing save).
 - **Category id ORDER comes from the `_order.json` manifest** (`Assets/Data/<cat>/_order.json`, curator-derived —
-  `Tools/Migration/curate_order.py`): the loader sorts a category's entities by manifest position before
-  registering ids, so the engine ids reproduce the LEGACY id order (base XML document order, then module
-  additions) and every id-ordered UI surface keeps its familiar layout (the level-up promotion popup groups each
-  line's tiers adjacently because the XML did). A type absent from the manifest (synthetic `TECH_GAME_START`,
+  `Tools/Migration/curate_order.py`): `loadJsonCategory` sorts a category's entities by manifest position before
+  the registration assigns ids, so the engine ids reproduce the LEGACY id order (base XML document order, then
+  module additions) and every id-ordered UI surface keeps its familiar layout (the level-up promotion popup groups
+  each line's tiers adjacently because the XML did). A type absent from the manifest (synthetic `TECH_GAME_START`,
   future additions, a manifest-less category) sorts AFTER every listed one, alphabetically — the legacy
   new-stuff-appends-last behaviour. Manifests are derived artifacts: regenerate + commit freely, never hand-edit.
-- **`LoadGlobalClassInfoJson` is TWO-PASS by requirement, never one.** Each JSON category loads by (1) registering
+- **The per-category registration is TWO-PASS by requirement, never one.** Each JSON category loads by (1) registering
   **every** type→id (`setInfoTypeFromString`), then (2) running `mapFrom` on each entity. `mapFrom` resolves its FKs
   at parse time (`jsonResolveId` → `getInfoTypeForString(id, /*bHideAssert*/true)`), so a single register-then-map
-  pass silently DROPS any **same-category forward reference** — an id naming a sibling that sorts *after* its owner
-  (entities load sorted by type name). The miss is invisible (`bHideAssert` writes no `Xml_MissingTypes.log` line);
-  it only shows in the cascade FK census (`jsonUnresolvedIds`, capped at 64). This severed ~47% of unit
+  pass silently DROPS any **same-category forward reference** — an id naming a sibling that sorts *after* its owner.
+  The miss is invisible (`bHideAssert` writes no `Xml_MissingTypes.log` line);
+  it only shows in the FK census (`jsonUnresolvedIds`). This severed ~47% of unit
   `requires.build.dormant`/`replacedBy.units` edges — the entire upgrade/dormancy chain
   (machete→musketman→rifleman→trench_infantry, every trigger sorted after its owner), so no old unit went
   dormant/replaced and the build list showed everything. The two-pass load is the fix; **do NOT collapse it back**.
   Cross-category forward refs (an earlier-loaded category naming a later one — specialist→UNIT, building/unit→
-  CIVILIZATION, …) are resolved by the SAME principle one level up: `cascadeLoadJson`'s full-registry pass re-runs
-  the complete `mapFrom` on every aliased entity once ALL categories are registered — `mapFrom` is idempotent by
-  contract (`CvInfo.h`), and `/state/info?type=X` is the standing loaded≡authored verification
-  verification.
+  CIVILIZATION, …) are resolved by the SAME principle one level up: `loadJson`'s full pass re-runs
+  the complete `mapFrom` on every entity once ALL categories are registered — `mapFrom` is idempotent by
+  contract (`CvInfo.h`), and `/state/info?type=X` is the standing loaded≡authored verification.
 
 ## UnitCombat — the fat info class + the cascade-migration note
 

@@ -136,7 +136,7 @@ techs are monotonic, no `operate`.
 > `enables`). But many legacy consumers still read the **forward** view off the child — a route's `getPrereqBonus`
 > (the `CvPlot` build gate), a trait's `getPrereqTrait`, a tech's `leadsTo`. These are **reconstructed AT LOAD from
 > the inverted `enables`** (never stubbed, never re-authored on the child): the tech `leadsTo` + trait prereqs in
-> `CvGlobals::doPostLoadCaching`, the route bonus prereqs in `CvCascadeReadJson`. **The inversion must keep AND vs OR
+> `CvGlobals::doPostLoadCaching`, the route bonus prereqs in the general reverse pass (`Data/CvReversePass.cpp`). **The inversion must keep AND vs OR
 > in DISTINCT buckets** or the reverse map loses the distinction — a single AND prereq inverts to its own bucket
 > (`enables.routesAnd` / `enables.traitsAnd`), the OR-list to another (`enables.routes` / `enables.traitsOr`), and
 > the load pass rebuilds each forward getter separately. *(The tech case reconstructs from the child's retained
@@ -224,7 +224,7 @@ Every `requires` resolves the same way, so it's cacheable as a pure function of 
 1. **combinator** — the `all`/`any`/`noneOf` structure ([json](json.md) §3.4): **`all` = AND** (`&&`), **`any` = OR**
    (`||`), **`noneOf` = NONE**, each over its **direct children** (a leaf, or a nested `all`/`any`/`noneOf` node — a
    recursive boolean tree). Parsing routes through the ONE typed-condition parser (`cascadeParseCondition` →
-   `CvJsonCondition`, the StoneBase `ConditionParser` port) and evaluation through the ONE evaluator
+   `CvCondition`, the StoneBase `ConditionParser` port) and evaluation through the ONE evaluator
    (`cascadeEvalCondition`) — never reinvent and/or ([superseded-ideas](../architecture/superseded-ideas.md) #5:
    the AND-of-ORs `any:[[…]]` shape and hand-rolled `vector<vector<leaf>>` were exactly that mistake).
 2. **conditions** — each leaf: a presence/count **atom** (`min`/`max` at a scope) or a **predicate**. A count at
@@ -343,13 +343,16 @@ the events of ALREADY-HAS** — each HAVE-event applies its `enables`/removal ed
 events are the one full build, and no dirty→recompute path exists at all. A component's `requires` gate resolves
 cross-scope atoms by reading its parent scope's state up the chain (§5's upward callback, realized).
 
-**HAVE is NOT a new store — the enabler ties directly into the object-owned has-lists that ALREADY EXIST** (the
-city's buildings-present / religions / corporations, the player's civics / traits / heritages, the team's
-techs). The object owns its presence state — the [tally](tally.md) rule ("let an object care about itself")
-applied to presence — the DOMAIN event carries the delta that triggers the in-place list update, and the enabler
-stores only what it **derives** (the lists + the operating-building set). Predicates/atoms keep reading that raw
-object-owned state; what is event-driven is the **maintenance** (which dependents re-gate, when), never a
-read-side recompute.
+**HAVE is NOT a new store — and its READ SURFACE is the per-scope CONTEXTS**
+([contexts.md](../architecture/contexts.md), owner). The object-owned has-lists that ALREADY EXIST (the city's
+buildings-present / religions / corporations, the player's civics / traits / heritages, the team's techs) stay
+where they are — the object owns its presence state, the [tally](tally.md) rule ("let an object care about
+itself") applied to presence — and each scope's CONTEXT forwards them (storing only a homeless aggregate, e.g.
+`policies`), so every reader — the evaluator's atoms, the gates — asks the context, never reaches into the game
+object ad hoc. The DOMAIN event carries the delta that triggers the in-place list update, and the enabler stores
+only what it **derives** (the lists + the operating-building set). Predicates/atoms read HAVE through the
+contexts; what is event-driven is the **maintenance** (which dependents re-gate, when), never a read-side
+recompute.
 
 **Event-fed, the end-state:** the enabler's derived sets — the **domain lists**, the **operating-building set**
 — are built by the **load reseed** (the in-read DOMAIN events populate them,

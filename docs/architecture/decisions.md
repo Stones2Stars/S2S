@@ -428,10 +428,25 @@ and never a bespoke reverse view or side index of its own (especially not inside
 
 ### DEC-materialize-at-mapfrom
 
-A `CvJson<X>Info` getter NEVER does a per-call string-keyed read (modifier-address sums, bool-block string walks,
+An info getter NEVER does a per-call string-keyed read (modifier-address sums, bool-block string walks,
 grants/allowed bucket fetches, raw JSON re-reads) — every such value materializes ONCE at mapFrom into a typed
-member and the getter is a bare member read. `JsonModScan` is the ONE load-time scan surface; classification blocks
-read by generated id (`CLS_HAS`). **Home:** [patterns.md § Materialize at mapFrom](patterns.md).
+member and the getter is a bare member read. The compiled `CvModifiers` entry list is the one load-time scan
+source; classification blocks read by generated id (`CLS_HAS`). **Home:** [patterns.md § Materialize at mapFrom](patterns.md).
+
+### DEC-one-json-reader
+
+Exactly ONE JSON reader exists — the single load-time pipeline in `Sources/Data` (enumerate once, parse each file
+once, register→mapFrom→retained-parse FK/reverse pass→routing compile, fail-loud key coverage) — and JSON is read
+at GAME LOAD ONLY: every JSON-shaped object is freed before load ends. Inventing a second reader/parse site is the
+defect (it has happened repeatedly). The `Json` name-fragment is reserved for the load-time parse surface; a
+runtime-resident `Json*`-named type is misnamed or misplaced. **Home:** [patterns.md § The ONE reader](patterns.md).
+
+### DEC-scope-is-an-axis
+
+A kind/scalar/yield enum names its CONCEPT only; the SCOPE a value is authored at is a separate axis of the deposit
+address and a spelled-out getter parameter — never a fragment of an enum/member/getter name (no `_GLOBAL`,
+`_ALL_CITY`, `_WORLD` kinds). Kind and scope separate in storage and API exactly as the JSON's
+`<family>.<scope>.<member>` separates them. **Home:** [patterns.md § coherent surface](patterns.md).
 
 ### DEC-classification-infos
 
@@ -465,7 +480,9 @@ changeable state. A context STORES only its uniquely-owned AGGREGATE (COUNTS key
 `ContextDict`; state with no home elsewhere — `CityContext.plotAttrs`, `EmpireContext.policies`) and FORWARDS
 everything already O(1) on the bound game object — never duplicated. Bound by pointer, passed by reference (never a
 value copy); maintained EVENT-DRIVEN (no per-turn recompute; load builds via the reseed). Isolation is for
-RESPONSIBILITY + reader symmetry, not decoupling. The building getter's `(cityContext, plotGroup)` reads
+RESPONSIBILITY + reader symmetry, not decoupling. **The HAVE axis reads through the contexts**: each scope's
+possession state is asked of its context (forwarded from the owning object; stored only where homeless), never
+reached ad hoc off the game object. The building getter's `(cityContext, plotGroup)` reads
 `cityContext` for vicinity/local, `plotGroup` (`CvPlotGroup`) for traded — parameters spelled in full (no `cx`/`pg`
 abbreviations; short names are only for scoped lambdas, which C++03 lacks), index params named for the enum they key
 (`getFlatYield(YieldTypes eYield)`). **Home:** [contexts.md](contexts.md).

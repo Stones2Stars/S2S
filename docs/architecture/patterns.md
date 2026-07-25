@@ -156,25 +156,101 @@ group's natural index** — never N individual getters for a groupable set. This
 `getYield(YIELD)` is right, `getFoodYield()`/`getProductionYield()`/… is the disease, and so is
 `isNukeImmune()`/`isZoneOfControl()`/… for the boolean blocks.
 
-- **Storage is grouped and SPLIT so the member name says what you get** (owner): `m_flatYields` / `m_yieldModifiers`,
-  `m_flatCommerce` / `m_commerceModifiers`, `m_wellbeing`, `m_properties` (by property id — the one data-defined,
-  sparse group), and **`m_scalars`** — one enum-indexed group holding the scalar families. Classification stays
-  JSON-derived bitsets (`m_attributes` / `m_capabilities` / `m_skills` / `m_policies`). No scattered legacy
-  scalar-per-field.
-- **Every `m_` is SINGLE-TIERED — one flat slot per concept, so a read is ONE direct index or ONE keyed lookup,
-  never a multi-tier walk** (owner: *"instead of multi-tiered lookups, which increase load/read cost for no
-  reason"*). A scalar family flattens to individual entries — `SCALAR_BASE_DEFENSE`, `SCALAR_DEFENSE_VALUE`,
-  `SCALAR_DEFENSE_BOMBARD` are three scalars, never a `defense{…}` struct to navigate. A target-keyed map
-  (`m_improvementYields[imp]`) is one keyed lookup by the data-defined target id — the same single-tier shape as
-  `m_properties[id]`; the key is data, not a nesting tier. **No member is a map→map→value or a struct-of-fields.**
-- **Getters are parameterized per group and read DIRECTLY** — `getFlatYield(YIELD)` → `m_flatYields[y]`,
-  `getYieldModifier(YIELD)`, `getFlatCommerce(COMMERCE)`, `getWellbeing(KIND)`, `getProperty(id)`,
-  `getScalar(SCALAR)`; classification booleans by a singular id check + a plural collection, the **name encoding
-  hold-vs-provide** (owner, json.md §8): what the entity HAS is `hasAttribute(id)`/`hasAttributes()` (building) and
-  `hasSkill(id)`/`hasTag(id)` (unit); what it PROVIDES to something else is `providesCapability(id)`/
-  `providesCapabilities()` (to the empire) and `providesSkill(id)` (a grantor handing a skill on). A read is a bare
-  indexed fetch — **no per-call string address, no map walk, no channel resolution**
-  ([DEC-materialize-at-mapfrom](decisions.md#dec-materialize-at-mapfrom)); we don't pay a lookup we don't have to.
+- **The AUTHORED form is the JSON anatomy; the ANATOMY WALK IS LOAD-ONLY.** The [json.md §6](../specs/json.md)
+  deposit model — per family, the [§3.9](../specs/json.md) entries under their FULL five-axis address
+  `<family>.<scope>[.<target>|.<targetType>.{TARGET}][.<member>].<unit>` — is what the reader parses, with
+  **every string key interned to a typed id** (family/member → the shared kind-enum vocabulary, scope → the
+  scope enum, named-entity targets → FK-resolved ids, conditions → parsed trees;
+  [DEC-materialize-at-mapfrom](decisions.md#dec-materialize-at-mapfrom)), nothing flattened away, the §3.9
+  mechanism UNREDUCED (`per`, the `ai` sibling, the `enabled`/`disabled` twin trees in their spec'd order —
+  `enabled` first, a holding `disabled` OVERRIDES; a plural-target filter is the entry's own `enabled`
+  predicate, [json.md §6.1](../specs/json.md)).
+- **The ONE load COMPILE pass walks those entries ONCE and produces the runtime forms — after load, nothing
+  ever walks the anatomy.** A **null-condition entry's value folds STRAIGHT into its group's compiled member
+  array** — the enum-keyed `[kind × family-scope-set]` unconditioned ×100 sums, the grouped member pattern,
+  scope-free kind names (Σflat vs Σpercent separate slots — the unit is part of the slot key,
+  [modifier.md §2](../specs/modifier.md)). A **conditioned entry** lands in the group's compiled conditioned
+  list, its condition tree prebuilt, evaluated ONLY at event-driven package rebuild and the per-decision
+  `expected*` read — never re-parsed, never re-derived. Classification compiles to JSON-derived bitsets
+  (`m_attributes` / `m_capabilities` / `m_skills` / `m_policies`); edges to the load-populated forward/reverse
+  families ([DEC-one-reverse-view](decisions.md#dec-one-reverse-view)); intrinsic lone values to plain typed
+  members. No string, no parse node, and no anatomy tree survives into a runtime read path.
+- **⛔ THE SCOPE AXIS — a kind-enum names its CONCEPT ONLY; scope is a separate dimension**
+  ([DEC-scope-is-an-axis](decisions.md#dec-scope-is-an-axis)). Scope is its own axis of the deposit address + a
+  spelled-out getter parameter, NEVER a fragment of an enum, member, or getter name — a scope word (`GLOBAL`,
+  `ALL_CITY`, `WORLD`, `AREA`, …) inside a kind name collapses two of the address's axes into bespoke per-pair
+  entries. `getDefense(DEFENSE_AMOUNT, SCOPE_CITY)` — kind and scope are separate arguments, exactly as the
+  JSON's own `<family>.<scope>.<member>` separates them.
+- **THE WHAT-IF DRIVER — the AI's planning asks are STRAIGHT RESPONSES, 0 calculation (owner).** The two
+  most-asked questions in the engine both answer from compiled structures: *"what can I do next after getting
+  this?"* is the FUNDAMENTAL enabler-tree read — the info's load-compiled `enables`/reverse edge families + the
+  enabler's maintained domain vectors, a pure list fetch ([enabler.md §7](../specs/enabler.md): every read is an
+  O(1) lookup that never calls a calculator; the tree is conditional-free by design). **The ONE calculation in
+  that whole flow is the `requires` gate** — very few things have a single prerequisite, so a newly-proposed
+  candidate is confirmed against its remaining prerequisites — **and it runs at HAVE-CHANGE time**, over only the
+  affected candidates via the `EDGEF_REQUIRED_BY` re-gate ([enabler.md §7.1](../specs/enabler.md)), never at ask
+  time: when the AI asks, the verdict already sits in the tri-state vector. *"What do I gain from building
+  this?"* fetches the compiled unconditioned sums straight — one load per slot — and only the compiled
+  CONDITIONED tail is ever evaluated (through the ONE evaluator against the contexts,
+  [contexts.md](contexts.md)), at per-decision cadence in the `expected*` read. The entity-level active/dormant
+  verdict stays the ENABLER's, fed in via the precomputed operating set — a what-if read never re-evaluates
+  `requires`.
+- **THE GETTER SETUP — one exemplar shape for every info (the aim). Four read categories, nothing else:**
+  1. **Sections** — whole typed objects the enabler + grants/provides machinery read: `getRequires()` /
+     `getEdges()` / `getAllowed()` / `getGrants()` / `getProvides()` / `getWhenObsolete()`.
+  2. **Classification** — O(1) bitset tests, the **name encoding hold-vs-provide** (owner, json.md §8): what the
+     entity HAS is `hasAttribute(id)`/`hasAttributes()` (building) and `hasSkill(id)`/`hasTag(id)` (unit); what it
+     PROVIDES to something else is `providesCapability(id)`/`providesCapabilities()` (to the empire) and
+     `providesSkill(id)` (a grantor handing a skill on).
+  3. **Modifier groups — three reads per group, all over the LOAD-COMPILED forms:**
+     - the **straight point read** over the compiled unconditioned sum — `getDefense(DefenseKind eKind,
+       ScopeKind eScope)` → one array load, **0 calculation** (kind and scope separate arguments,
+       [DEC-scope-is-an-axis](decisions.md#dec-scope-is-an-axis));
+     - the **compiled conditioned list** (`defenseConditioned()` / `yieldConditioned()` / … — the typed entries
+       with prebuilt condition trees; what the package rebuild, the pedia, and the valuation walk);
+     - the **what-if valuation** — the [contexts.md](contexts.md) per-GROUP endpoints
+       (`expectedFlatYields(cityContext, empireContext, plotGroup, flatYields100)` and siblings): the compiled
+       sums fetched straight PLUS the group's conditioned tail through the ONE evaluator, `plots`-targets scaled
+       by `cityContext.plotAttrs`, scopes folded into the experienced-here answer, the active/dormant verdict fed
+       from the enabler. This IS the AI's *"what do I gain from building this?"* read.
+  4. **Intrinsic** — bare typed reads (`getAirlift`, the shrine/corpHQ FKs, flavours), plus `getScalar(SCALAR_X)`
+     for the 1–2-entry stragglers (genuinely lone unconditioned values).
+
+  ```cpp
+  // SECTIONS — whole typed objects
+  const CvRequires*  getRequires() const;
+  const CvProvides*  getProvides() const;
+  // CLASSIFICATION — O(1) bitset, hold-vs-provide in the name
+  bool hasAttribute(int attributeId) const;
+  bool providesCapability(int capabilityId) const;
+  // MODIFIER GROUPS — straight compiled reads, the conditioned list, the what-if valuation
+  int getDefense(DefenseKind eKind, ScopeKind eScope) const;      // one load, 0 calculation
+  const CvModEntries& defenseConditioned() const;                 // prebuilt trees; walked at bounded cadences
+  void expectedFlatYields(const CityContext& cityContext, const EmpireContext& empireContext,
+                          const CvPlotGroup* plotGroup, int (&flatYields100)[NUM_YIELD_TYPES]) const;
+  // INTRINSIC — bare typed reads (×100 where a magnitude)
+  int getAirlift() const;
+  ```
+
+  **A point getter reads the LOAD-COMPILED sum and nothing else** — compiled once from the anatomy by the one
+  compile pass, never runtime-summed, never a second hand-maintained store beside it. And no read anywhere on
+  the surface does a per-call string address, map walk, or channel resolution
+  ([DEC-materialize-at-mapfrom](decisions.md#dec-materialize-at-mapfrom)).
+- **THE SINGLE-THREAD BUDGET — why this shape is efficient on the one game thread.** The layering is the
+  efficiency: (1) repeated hot reads (a BUILT thing's realized value) hit the package caches on the game objects
+  ([state-repositories.md](state-repositories.md)) — O(1) bare fetches, never an info read; (2) **the anatomy
+  walk is LOAD-ONLY** — every runtime ask is a straight fetch of a compiled structure: the point reads over the
+  compiled sums, the edge-family lists, the enabler's maintained frontier vectors — **0 calculation on the
+  straight asks**; (3) the ONLY thing ever evaluated is the compiled CONDITIONED tail — condition evaluation is
+  irreducible (the answer depends on the asking city) and runs at exactly two bounded cadences: event-driven
+  package rebuild (EVENT volume), and the per-decision `expected*` read, bounded by **frontier × cities**
+  ([enabler.md §6](../specs/enabler.md)), never database × cities; (4) every evaluator predicate is an O(1)
+  CONTEXT fetch (`plotAttrs` counts, the `policies` union, the operating set) — a predicate that walks
+  plots/units per call is the efficiency defect to reject in review. **Consumer call discipline:** `expected*` is
+  a per-DECISION read — once per (city, candidate) per pass; an AI needing repeated score access caches its OWN
+  scores (the sanctioned AI-heuristic residual, [superseded-ideas #1](superseded-ideas.md)) — it never re-asks the
+  what-if in an inner loop. Regressions surface live via the `(scope,channel)` calc counts + `/computed/perf`
+  ([DEC-calc-count-gate](decisions.md#dec-calc-count-gate)).
 - **Every getter IS ×100** ([DEC-fixedpoint-x100](decisions.md#dec-fixedpoint-x100)) — no `getX`/`getX100` pair, no
   `100` suffix; the name says the VALUE, never the scale (always ×100). A reader wanting human does ÷100 at the
   boundary. The split lives in the flat-vs-modifier member name (`getFlatYield` vs `getYieldModifier`), never a
@@ -200,9 +276,10 @@ why: these getters sit under the EXE frame loop (`unit.isInvisible` ~98M calls/t
 per-step gates, and the AI's per-candidate scans — a heap-string construction + map walk per call was a real
 turn-time/FPS tax.
 
-- **The ONE load-time scan surface is `JsonModScan`** (`Sources/Infos/CvJsonModScan.{h,cpp}`) — the
-  unconditioned/keyed/condition-shape family walkers, shared by every poco's materialization pass (the per-file
-  `civSum*`/`sumUnconditioned` duplicates are gone). It is **load-time only**: a getter never calls into it.
+- **The ONE load-time scan source is the compiled `CvModifiers` entry list** (`entries()` — every §3.9 deposit
+  as a typed `CvModEntry` with interned family/kind/scope/unit/target axes). A load-time pass (the DepositIndex
+  push, the reverse passes, a poco materialization) iterates the typed entries; a getter never walks them — it
+  reads the compiled `(family, kind, scope, unit)` slot sums (`sum100`) or its own materialized members.
 - **Classification blocks read by GENERATED ID** — the §8/§9 bool blocks resolve their keys to the
   `ClassificationRegistry`'s runtime-minted ids ([DEC-classification-infos](decisions.md#dec-classification-infos)),
   and the getters are `CLS_HAS`/`CLS_COUNT` bit tests (memoized id + O(1) bitset read; the pre-resolve load window
@@ -211,3 +288,26 @@ turn-time/FPS tax.
   clear-first for accumulating containers, unconditional assignment for scalars.
 - The cascade's own gated sums are NOT this surface — they are `MMKernel` over the compiled `DepositIndex`,
   running at dirty-rebuild cadence, not per read.
+
+## The ONE reader — the load pipeline law
+
+> Binding: [DEC-one-json-reader](decisions.md#dec-one-json-reader). Owner rulings: exactly one JsonReader exists;
+> JSON is read at GAME LOAD only; no string matching on any read path.
+
+- **Exactly ONE JSON reader exists** — the load pipeline in `Sources/Data`, entry point `loadJson()`. The
+  reader is **readJson**, the first of the four systems ([north-star.md](north-star.md)) — it is NOT the
+  cascade, and no reader name carries a `cascade` prefix ([DEC-enabler-not-cascade](decisions.md#dec-enabler-not-cascade)'s
+  naming guard, applied one system over). It enumerates `Assets/Data` once,
+  parses each file ONCE into memory, registers every type→id before any `mapFrom` (the two-pass rule), maps every
+  entity, runs the full-registry FK/reverse pass over the RETAINED in-memory parse (never a disk re-read), and
+  compiles the routing index. **Every JSON-shaped object is freed before load ends.** A second parse call site
+  anywhere in the tree is a defect, whatever it is named.
+- **Fail-loud key coverage.** The reader accounts EVERY top-level key of every entity to exactly one consumer (a
+  reserved-section parser or the modifier-family walk); an unconsumed key is a loud load-time report. "The info
+  matches the JSON structure" is thereby a mechanical check, never an agent's self-assertion.
+- **The `Json` name-fragment is reserved for the load-time parse surface** (the reader + the parse walkers). A
+  runtime-resident type carries no `Json` in its name — so a `Json*`-named type living past load is, by its own
+  name, misnamed or misplaced.
+- **After load, nothing string-shaped remains readable** — the reader's half of
+  [DEC-materialize-at-mapfrom](decisions.md#dec-materialize-at-mapfrom): every served value is typed, id-resolved,
+  and ×100 before the first turn runs.

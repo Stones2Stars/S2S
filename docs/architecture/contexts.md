@@ -32,6 +32,24 @@ pointer), never copied. Duplicating already-available state is the exact anti-pa
 **Pass by reference/pointer, never by value (owner).** Passing a bound context is far cheaper than snapshotting
 values; a context is never a value copy — that is *why* it forwards rather than mirrors.
 
+**⚖ THE TWO PASS-IN SCENARIOS (owner) — a context crosses a call boundary in exactly TWO places, the two
+condition-evaluation sites:** (1) **the VALUATION** — the `expected*` per-group reads and the package rebuild's
+conditioned-deposit evaluation (the same machinery at event cadence); (2) **the `requires` edge** — the
+enabler's build/operate gate incl. the operating-set fixpoint, re-run at HAVE-change over the affected
+candidates. Both go through the ONE evaluator over the eval ctx the contexts fill. Every other read on every
+surface is a straight compiled fetch and NEVER takes a context parameter — a context in any other signature is
+the mechanical smell that condition evaluation (or an ad-hoc state reach) is happening where it doesn't belong.
+
+**⚖ THE HAVE AXIS LIVES IN THE CONTEXTS (owner).** What a scope POSSESSES — the city's buildings-present /
+religions / corporations / bonuses, the empire's civics / traits / heritages, the team-held techs (read through
+the player's team — team is deliberately not a context) — is read through that scope's context, never by an
+ad-hoc reach into the game object. The STORES-vs-FORWARDS discipline above is unchanged: possession state the
+object already owns O(1) is FORWARDED, and only a homeless aggregate is stored (`policies` is the realized
+exemplar). The context is the RESPONSIBILITY home — the one place every reader (the evaluator's atoms, the
+enabler's gates, the `expected*` valuations) goes for HAVE. The enabler's DERIVED sets (the domain vectors, the
+operating-building set) remain enabler-owned ([enabler.md §7](../specs/enabler.md)); the contexts serve the raw
+possession facts those machines gate against.
+
 ## COUNTS, not objects — "how many, not which" (owner)
 
 An aggregate holds **counts keyed by id**, never the objects themselves. A building cares HOW MANY river plots /
@@ -98,9 +116,9 @@ built beside them. `expectedPlotYields` scales each plots-target deposit by `cit
 
 > **Naming — no abbreviated parameters (owner).** Parameters are spelled in full (`cityContext`, `empireContext`,
 > `plotGroup`), never `cx`/`pg`: short names are only defensible inside a tightly-scoped lambda, which C++03 lacks.
-> Index parameters likewise name the enum they key (`getFlatYield(YieldTypes eYield)`, `getDefense(DefenseKind eKind)`),
-> reusing the existing engine + family enums — a new family mints one typed enum, the member array and its getter both
-> key off it.
+> Index parameters likewise name the enum they key (`YieldTypes eYield`, `DefenseKind eKind`), reusing the
+> existing engine + family enums — a new family mints one typed enum, and the group's entries + its `expected*`
+> array both key off it ([patterns.md § THE GETTER SETUP](patterns.md)).
 
 ## See also
 - [patterns.md](patterns.md) — the INFO DATA-OUT contract + the per-group valuation surface that reads these contexts.

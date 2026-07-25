@@ -159,8 +159,12 @@ The EXTRA is held ×100; the `100 × ⌊EXTRA100⁄100⌋` **truncates it to who
 > For **§2 commerce** the same two-tier shape holds with the channel's own pieces: BASE = the COMMERCE-yield
 > (`getYieldRate100(COMMERCE)`) × the channel slider + the §2 baseExtra sub-terms (religion, corporation, golden-age,
 > state-religion pool, player-extra, the building-commerce block); EXTRA (post-modifier) = `production × prodToCommerce`.
-> The building-commerce block is itself a pure per-building sum (own-flat + tech + bonus + perPop + shrine + corp-HQ +
-> the `CommerceChangeDoubleTime` whole-doubling). Civil disorder forces the whole rate to 0 before any of this.
+> The building-commerce block is itself a pure per-building sum over the building's OWN entries (own-flat + tech +
+> bonus + perPop + shrine + corp-HQ + the `CommerceChangeDoubleTime` whole-doubling) — and the building-keyed boosts
+> (a wonder/civic/tech granting a channel to a building TYPE, `{c}.<scope>.buildings.{B}`) are part of that sum as
+> the TARGET building's own reverse-landed conditioned entries: authored deliverer-side (§4), landed at CITY scope
+> by the readJson reverse pass, gated on the source's presence at the authored scope. Civil disorder forces the
+> whole rate to 0 before any of this.
 
 ### How the percentages "smash together" — ONE additive stack
 
@@ -200,9 +204,12 @@ one-to-one with no wellbeing-specific plumbing. The realized verdicts: `healthRa
 
 - **DEPOSIT-COMPUTED (the cascade's targets)** — everything a live source's `health`/`happiness` family deposits
   produce: **buildings** (city `flat`/`perPopulation` + the area/empire-scope rollups + conditioned entries incl.
-  `HAS_STATE_RELIGION`-gated), **civics** (empire flats + the keyed/heterogeneous members: `buildings.{B}`,
+  `HAS_STATE_RELIGION`-gated and the reverse-landed source-keyed boosts — a wonder/civic/tech `buildings.{B}`
+  wellbeing deposit is authored deliverer-side (§4) but the readJson reverse pass lands it on the TARGET building
+  as a CITY-scope conditioned entry gated on the source's presence at the authored scope, so it reads
+  building-side under this term), **civics** (empire flats + the keyed/heterogeneous members read civic-side:
   `features.{F}`, `nonStateReligion`, the `cities.{unit: IS_MILITARY}` per-unit scaler, the ranked `cities`
-  scaler), **traits** (same member
+  scaler — the civic's `buildings.{B}` member lands building-side per the above), **traits** (same member
   vocabulary), **features** (`health.plot.percent` — summed over radius plots, ÷100 — the fallout class),
   **bonuses** (empire flats, presence-gated), **specialists** (city flats; the fractional values are the
   curator's ÷100 de-scale of the legacy latent-×100 — the engine `…/100` at use), **corporations**

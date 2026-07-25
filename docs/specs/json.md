@@ -66,7 +66,14 @@ modifier targets — **not separate shapes.** Learn them once.
   simple trait, `TRAIT_COMPLEX_` = complex, …) is the **[naming spec](naming.md)**.
 - **Catch-all tokens** — engine concepts that aren't data Types: `TURN`, `POPULATION`, `MILITARY`, `CITY`,
   `TEAM`, `UNIT_LEVEL`, `AREA_SIZE`, **`ERA`** (the player's current era as a plain **counter 1…X** — the era
-  sequence; eras are ordered data defined in `Assets/Data/eras/`), **`TARGET_NUM_CITIES`** (the world-size's
+  sequence; eras are ordered data defined in `Assets/Data/eras/`), **the commerce slider rates** `GOLD_RATE` /
+  `RESEARCH_RATE` / `CULTURE_RATE` / `ESPIONAGE_RATE` (the player's current slider percents as plain counters —
+  a wellbeing deposit per-scaled on one is "happiness per 10% culture rate" / "anger per gold rate"),
+  **`CULTURE_PERCENTAGE`** (the city's OWN-culture percent of its plot — the city-scope culture-share driver;
+  foreign share authors as the `100 −` telescoping pair, never an inverse unit),
+  **`CITY_LIMIT`** (SOURCE-resolved: the depositing civic's own city limit — its base-limit config × the
+  world-size scale percent; the `per.above` threshold for the over-limit unhappiness class),
+  **`TARGET_NUM_CITIES`** (the world-size's
   expected city count — `CvWorldInfo.getTargetNumCities`, e.g. 2/3/4/6/8/11/14/18 per world size; a runtime-resolved
   world constant, used as a `max:` in ranked selection §3.3), **`WORLD_WONDER`** / **`NATIONAL_WONDER`** /
   **`TEAM_WONDER`** (the count of wonders of that category in the scope — `city` = `CvCity::getNum{World,National,Team}Wonders`;
@@ -296,6 +303,11 @@ A bare string is the common case collapsed (the §3.4 bare-atom sugar, applied h
 `{ "type": "SPECIALIST", "each": 1 }` at the deposit's own scope. Keep the object form only when a real `each`
 quantum or a non-default scope forces it.
 
+**`above:` — the over-threshold scaler (owner).** `"per": { "type": "CITY", "above": N }` scales by the count
+EXCEEDING the threshold — `value × max(0, count − above)` — for the "per city over the limit" formula class.
+The threshold is a literal or a **token** (the §3.3 threshold-token rule): `"above": "CITY_LIMIT"` reads the
+depositing civic's own resolved limit. Composes with `each` (`(count − above) / each`) and the §3.9 gates.
+
 `each` is the quantum ("per 5 population" → `each: 5`); state it explicitly. `scope` defaults to the deposit's own
 scope; cross-city scopes (empire/team/world) resolve via the [tally](tally.md), `city`/`plot` are local.
 
@@ -313,9 +325,10 @@ The qualifier generalizes by counted kind — the field NAMES what is counted an
 > **Post-migration:** make predicates **definable as JSON objects** and support **predicate groups** (compose
 > them); for **migration they are HARDCODED** (`IS_MILITARY`/`IS_LAND`/`IS_AIR` baked into the curator).
 
-### 3.8 `interval` — recurrence (for repeatable grants)
+### 3.8 Recurrence lives on the TRIGGER plane
 
-`interval: { perTurn: N }` = every N turns; bare `interval: "perTurn"` = every turn.
+There is no `interval` field. Anything recurring is a `triggers` entry (§5): the cadence is the trigger
+(`"onTurn"`, `{ "onTurn": N }` = every N turns), the odds are its `chance`, the payload its `action`.
 
 ### 3.9 The one entry shape
 
@@ -331,12 +344,23 @@ Every deposit, grant, or conditioned value is the same shape:
 - **`scope`** default = the containing scope · **`per`** default ×1 · **`enabled`** default true (applies only
   while the condition holds) · **`disabled`** default false (suppressed while it holds) · **`ai`** an optional
   sibling block applied for AI players only (same inner shape).
+- **Target qualifiers ride the ENTRY too** — the §3.3 ranked-subset qualifiers (`max:` / `orderedBy` /
+  `orderedByDescending`) and a counted-kind filter (`religion:` / `unit:` §3.7) may sit on an individual entry;
+  a qualifier written at the target-node level is shorthand applying to every entry that carries none of its
+  own. This is what lets ONE plural-target node hold differently-qualified deposits side by side (a largest-
+  cities entry beside an every-city per-religion entry on the same `cities` node) — the entry is the universal
+  carrier.
 - **`enabled` is read before `disabled`** — the enable is evaluated first, the disable second; a `disabled`
   that holds **overrides** (the deposit is suppressed even if `enabled` was satisfied). Author them in that
   order: `enabled` first in the list, then `disabled`.
 - **There is no `enabled: false`** — to conditionally SUPPRESS a deposit use `disabled` (its twin); an absent
   `enabled` means always-on.
-- A leaf is a single entry **or a LIST of entries** (several conditioned values into one slot):
+- A leaf is a single entry **or a LIST of entries** (several conditioned values into one slot). **The list IS
+  the formula mechanism (owner):** a composite formula authors as the SUM of its entries — a base term, `per`
+  terms, negative companions, threshold-gated bands — composed side by side; there is deliberately NO
+  expression syntax. The telescoping pair is the canonical idiom: `V × (count − N)` = `{V, per: <counter>}` +
+  the flat companion `{−V×N}`, both under the same gate. What entry sums cannot express is a separate
+  MULTIPLICATIVE stage — that is an engine-formula parameter (a config value), never forced into entries:
 
 ```jsonc
 "production": { "city": { "percent": [
@@ -481,7 +505,9 @@ declare the number. Enforcement reads the [tally](tally.md) count.
 >   `on*` happening may be ANOTHER entity's moment in scope (a building acting `onCreation` of a unit in its
 >   city; a trait acting `onFound` of each new city) — that is exactly what distinguishes a trigger from a
 >   grant (the source's OWN considered action, implicit, never written).
-> - **`chance`** — the odds, always here on the trigger, never inside a payload; scalable by the §3.7 `per`.
+> - **`chance`** — the odds, always here on the trigger, never inside a payload; scalable by the §3.7 `per`. A
+>   `chance` carrying ONLY a `per` (no `value`) means the scaled count IS the odds — the roll is
+>   per-count-derived (the property-spawn shape the data authors).
 > - **`action`** — an OPEN verb registry: **`destroy`** · **`grant`** (the §5 payload vocabulary nested whole) ·
 >   `spawn` / `place` / `promote` / property deltas / anything else the data needs — one verb vocabulary shared
 >   with the §8 outcome plane (the outcome verb `triggers` renames to **`fires`** to clear this section's name).

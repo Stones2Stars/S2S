@@ -19,7 +19,7 @@
 > - **`Adapt*` is pure engine, NOT data** (owner) — the gamespeed-scaling wrapper is unwrapped by the curator; the
 >   engine scales the plain value at grant time. **Conditions → cascade `requires` vocabulary**, evaluated by the ONE
 >   `cascadeEvalCondition` ([DEC-single-implementation](../architecture/decisions.md#dec-single-implementation)) — **no
->   BoolExpr round-trip** (`m_pPlotCondition`/`m_pUnitCondition`/`toCity` are `CvJsonCondition*`). Numerics build the
+>   BoolExpr round-trip** (`m_pPlotCondition`/`m_pUnitCondition`/`toCity` are `CvCondition*`). Numerics build the
 >   existing `IntExpr` (`int`→`Constant`, `{base,random}`→`Plus(Constant,Random)`). Python-authoritative gates
 >   (`{python:fn}`) + inline `<Python>` bodies stay Python.
 >
@@ -41,7 +41,7 @@
   (those are semantic labels + the replace-tier handle only).
 - **`CvOutcomeMission`** (`Engine/CvOutcomeMission`) — binds a `MISSION_*` to an outcome list. JSON-fed via `mapFrom`
   from an `outcomes.actions[]` entry: `mission`, `outcomeList`, `consumes` (`bKill`, **defaults TRUE**). The action's
-  plot/unit conditions collapse onto the OUTCOME's `requires` (`CvOutcome`'s `CvJsonCondition`), so the legacy
+  plot/unit conditions collapse onto the OUTCOME's `requires` (`CvOutcome`'s `CvCondition`), so the legacy
   `iCost` (`IntExpr` gold) + `plotCondition`/`unitCondition` (`BoolExpr`) members were REMOVED (no schema verb, no
   current data — the curator flags a stray action `iCost` as an unmapped tripwire). `propertyCost`/`payerType` are
   RETAINED inert (owner ruling); a `propertyCost` verb wires them when it lands.

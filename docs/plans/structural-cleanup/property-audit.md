@@ -142,7 +142,7 @@ the ONLY engine touch (plus B3, C3 below). Does not touch `read()`, `CvPropertyS
 ### B. Pocos — `mapFrom` bridge (after `CvInfo::mapFrom` has parsed `m_modifiers`)
 
 1. **Building** (`CvBuildingInfo.cpp:336`-ish, mirror the river/plot-type array bridge at `:71-90`) + **Unit**
-   (`CvUnitInfo.cpp:336`): walk `getModifiers()->all()`; for each `PROPERTY_*.{city|plot}.flat` `CvJsonModEntry`,
+   (`CvUnitInfo.cpp:336`): walk `getModifiers()->entries()`; for each `PROPERTY_*.{city|plot}.flat` `CvModEntry`,
    `jsonResolveId` the property, then:
    - plain (`!hasPer && !enabled && !disabled`) → `addConstantSource(prop, value100/100, [unit: GAMEOBJECT_CITY|PLOT +
      RELATION_SAME_PLOT])`.
@@ -153,7 +153,7 @@ the ONLY engine touch (plus B3, C3 below). Does not touch `read()`, `CvPropertyS
    population baseline (`.city.flat` +`per:POPULATION`→`addAttributeConstantSource`); + read the new
    `properties.diffuse[]`→`addDiffusePropagator` and `properties.changePropagation[]`→the `getChangePropagator` table.
 3. **JSON→legacy-BoolExpr translator** (NEW, small, scoped — owner-decision #1/#2 APPROVED): translate a
-   `CvJsonCondition` (the pocos' `enabled`/`disabled`) into a legacy `const BoolExpr*` for the known predicate set
+   `CvCondition` (the pocos' `enabled`/`disabled`) into a legacy `const BoolExpr*` for the known predicate set
    (the 4 diffuse tag-gates + the building tech-gates). One `BoolExprIs`-shaped node type; NOT a general bridge.
 
 ### C. Curator + data
@@ -181,9 +181,9 @@ The source/propagator bridge DEFERS-and-COUNTS three conditioned classes; this i
    predicate STRING in the `properties.diffuse` entry. Map string→`TagTypes` → `BoolExprIs` → `pp->setActive(...)`:
    `IS_OWNED→TAG_OWNED`, `HAS_PEAK→TAG_PEAK`, `IS_WATER→TAG_WATER`, `IS_CITY→TAG_CITY` (verify the `TagTypes` names +
    how a tag string resolves — `BoolExprIs::read`/the tag registry). 4 tags, ~20 lines. (These strings do NOT parse
-   into `CvJsonCondition` — `CASC_PRED_IS_OWNED`/`IS_CITY` aren't in the predicate enum — so translate the raw string.)
+   into `CvCondition` — `CASC_PRED_IS_OWNED`/`IS_CITY` aren't in the predicate enum — so translate the raw string.)
 2. **Tech-gated building flats** (~35 files, `jsonBuildPropertyManipulators` conditioned branch): the `enabled` IS a
-   `CvJsonCondition*` (from the modifier-family parse). Write `cascadeJsonCondToBoolExpr(const CvJsonCondition*)`:
+   `CvCondition*` (from the modifier-family parse). Write `cascadeJsonCondToBoolExpr(const CvCondition*)`:
    - `CASC_COND_PRESENCE` `TECH_*` → `BoolExprHas(GOM_TECH, cond->id)` (confirm the `GOMTypes` for tech/bonus/building —
      grep `GOM_`); `BONUS_*`/`BUILDING_*` likewise if any appear.
    - `CASC_COND_PREDICATE` → `BoolExprIs`/other per the predKind (only if a building gate uses one).

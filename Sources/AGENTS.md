@@ -12,6 +12,12 @@ root `AGENTS.md`.
 - Keep one primary class per file.
 - Keep include guards and `#pragma once` for headers.
 - Follow formatting/style from `Sources/.editorconfig`.
+- **One statement per line; one variable declaration per statement (owner).** Never smash multiple declarations
+  or statements onto one line (`std::ostringstream ss; ss << f.rdbuf();` is the banned shape) — code is written
+  for the human reading it.
+- **No 2-letter or cryptic-abbreviation identifiers (owner)** — no `ss`, `fd`, `cx`, `pg`; names are spelled out
+  in full for locals, parameters, members, and enum entries alike (the no-abbreviated-parameters ruling in
+  [contexts.md](../docs/architecture/contexts.md), generalized to every identifier).
 - The DLL must remain compliant with the existing build chain.
 - Do not update, replace, or modernize the build chain/toolchain.
 

@@ -45,7 +45,7 @@ buy it, the machine owns it. Consequences that settle most of §5:
 > into the legacy collapse members (`m_iNumUnitFullHeal`, `m_iPropertySpawnUnit`/`Property`, `m_healUnitCombats`).
 > **It does not.** Those members are the legacy shape being deleted; the machine reads the composed
 > `getGrants()->repeatables()` — which already carries interval, chance, the spatial intent and the `enabled`
-> condition in full ([CvJsonGrants.h](../../../Sources/Infos/CvJsonGrants.h) `CvJsonGrantRepeatable`) — and the
+> condition in full ([CvGrants.h](../../../Sources/Infos/CvGrants.h) `CvJsonGrantRepeatable`) — and the
 > collapse members die with the city ledgers. Widening them would be the transitional shim
 > [DEC-proper-once](../../architecture/decisions.md#dec-proper-once) bans, applied to a member already condemned.
 > ⚠ Do NOT confuse the two `getNumUnitFullHeal`s: the **info-side** `CvBuildingInfo::getNumUnitFullHeal()` is
