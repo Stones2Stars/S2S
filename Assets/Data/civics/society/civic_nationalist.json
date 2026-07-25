@@ -104,6 +104,14 @@
     {
      "value": 1,
      "enabled": "GAMEOPTION_MAP_PERSONALIZED"
+    },
+    -10,
+    {
+     "value": 10,
+     "per": {
+      "type": "CULTURE_PERCENTAGE",
+      "each": 100
+     }
     }
    ],
    "buildings": {
@@ -146,9 +154,6 @@
     "BUILDING_MAGINOT_LINE": {
      "flat": 2
     }
-   },
-   "foreignerUnhappy": {
-    "percent": 10
    }
   }
  },

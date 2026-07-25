@@ -62,15 +62,15 @@
       "scope": "city",
       "min": 1
      }
+    },
+    {
+     "value": 10,
+     "per": {
+      "type": "CULTURE_RATE",
+      "each": 100
+     }
     }
    ]
-  }
- },
- "commerceHappiness": {
-  "city": {
-   "culture": {
-    "flat": 10
-   }
   }
  },
  "PROPERTY_EDUCATION": {

@@ -561,11 +561,17 @@ def pass2(typ, rec, store, fams, grants, triggers, identity, enables, capabiliti
         dbl = OrderedDict((member, turns) for member, turns in engine.named_array(cdt, engine.COMMERCES).items() if turns)
         if dbl:
             identity["commerceDoubleTime"] = dbl
-    # --- CommerceHappinesses: happiness GAINED per unit of each commerce produced -> a grouped commerceHappiness family ---
+    # --- CommerceHappinesses: legacy "+V happiness at 100% on the <commerce> slider" -> ordinary happiness
+    # deposits per-scaled on the json.md §3.1 slider-rate tokens (ruling 20, info-rebuild.md: the whole
+    # commerceHappiness family DISSOLVES -- wellbeing mints zero kinds). Engine site (shared by all channels):
+    # CvCity.cpp:12803 getCommerceHappinessByType = per * getCommercePercent(commerce) / 100 (what-ifs
+    # CvCity.cpp:8462 + :8938 transcribe the same math) -> value V, per {<CHANNEL>_RATE, each: 100}. ---
     ch = rec.find("CommerceHappinesses")
     if ch is not None:
         for member, v in engine.named_array(ch, engine.COMMERCES).items():
-            fams.setdefault("commerceHappiness", OrderedDict()).setdefault("city", OrderedDict()).setdefault(member, OrderedDict())["flat"] = v
+            if v:
+                _inject_per(fams, "happiness", "city", "flat", v,
+                            OrderedDict([("type", member.upper() + "_RATE"), ("each", 100)]))
     # --- shrine (GlobalReligionCommerce = a single RELIGION FK, addEnumAsInt): the building is the SHRINE for that
     # religion. The per-commerce VALUES live on the Religion (ReligionInfo::getGlobalReligionCommerce, parked
     # religion.shrine #15); the full modifier = religion.shrine.{commerce} x countReligionLevels(religion) is

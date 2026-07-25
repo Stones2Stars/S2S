@@ -483,6 +483,13 @@
     {
      "value": 2,
      "enabled": "HAS_STATE_RELIGION"
+    },
+    {
+     "value": 20,
+     "per": {
+      "type": "CULTURE_RATE",
+      "each": 100
+     }
     }
    ]
   }
@@ -554,13 +561,6 @@
  "warWeariness": {
   "city": {
    "percent": -5
-  }
- },
- "commerceHappiness": {
-  "city": {
-   "culture": {
-    "flat": 20
-   }
   }
  },
  "PROPERTY_CRIME": {

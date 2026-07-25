@@ -40,7 +40,8 @@ WHAT EACH FAMILY MEANS (current behaviour — the meanings that must survive the
 - the per-era AI ramp (legacy `iAIPerEraModifier`) — DECOMPOSED per ruling 14 (info-rebuild.md): no `perEra`
   family exists; the ramp lands as `ai`-sibling deposit entries beside each affected AI knob (PER_ERA_SITES
   below — one deposit per affected (family, kind), `{value, per: "ERA"}` + a flat opposite-sign companion,
-  the workRate deposit NEGATIVE). The clamped unit-upkeep site is NOT authored (see PER_ERA_SITES).
+  the workRate deposit NEGATIVE). The clamped unit-upkeep site is CONFIG, not a deposit: `ai.unitUpkeepEraModifier`
+  (ruling 24; see PER_ERA_SITES).
 - `revolution.empire.percent` — % into the Revolution index. INCOMPLETE mechanic (WIP, tracked), NOT dead — kept.
 - `diplomacy.empire.attitude.flat` (AI attitude shift, via the TARGET's handicap); `diplomacy.empire.declareWar`
   / `warWeariness` (AI behaviour); `diplomacy.team.{noTechTrade,techTradeKnown}.percent` (tech-trade thresholds).
@@ -151,10 +152,13 @@ FAMILIES = {
 #   workRate          CvPlayer::getWorkRate(BuildTypes)        CvPlayer.cpp:9860   (-; subtracted)
 #   workRate          CvUnit::workRate(bool)                   CvUnit.cpp:27949    (-; subtracted; same deposit)
 #   diplomacy.warWeariness  CvPlayer::getModifiedWarWearinessPercentAnger  CvPlayer.cpp:10955  (+)
-# NOT AUTHORED -- the 13th site, CvPlayer::calcFinalUnitUpkeep (CvPlayer.cpp:10354, upkeep.unit): its era term
-# is a CLAMPED standalone multiplicative stage `iCalc *= std::max(0, 100 + perEra*era); iCalc /= 100;` -- not
-# an additive mod summand -- so a plain deposit would approximate away both the clamp and the multiplicative
-# stacking. Left undone per ruling 14 (report clamps verbatim rather than approximate).
+# The 13th site, CvPlayer::calcFinalUnitUpkeep (CvPlayer.cpp:10354, upkeep.unit): its era term is a CLAMPED
+# standalone multiplicative stage `iCalc *= std::max(0, 100 + perEra*era); iCalc /= 100;` -- not an additive
+# mod summand -- so it is NEVER a deposit (a deposit would approximate away both the clamp and the
+# multiplicative stacking). Ruling 24 (info-rebuild.md): it ships as a PLAIN CONFIG VALUE on the handicap's
+# §7 `ai` metadata plane instead -- `ai.unitUpkeepEraModifier` = the legacy iAIPerEraModifier, the formula's
+# own parameter; clamp + stacking stay in the engine formula. The C++ read re-point rides the next Sources
+# pass (today CvHandicapInfo.cpp:121 reads the dissolved perEra.empire.ai.percent slot -> 0).
 # (family, scope, member, sign)
 PER_ERA_SITES = [
     ("costs",     "empire", "train",        +1),
@@ -226,7 +230,7 @@ def _deposit_per_era_ramp(fam, per_era_value):
 
 
 def curate(typ, rec):
-    text_fields, fam, grants, identity, leftover = {}, {}, {}, {}, []
+    text_fields, fam, grants, identity, ai, leftover = {}, {}, {}, {}, {}, []
     per_era_value = 0
     for c in rec:
         tag, t = c.tag, engine.text(c)
@@ -269,6 +273,9 @@ def curate(typ, rec):
 
     if per_era_value:
         _deposit_per_era_ramp(fam, per_era_value)
+        # Ruling 24: the clamped AI unit-upkeep era stage (CvPlayer.cpp:10354) keeps its parameter as PLAIN
+        # CONFIG on the §7 `ai` plane -- never a deposit (see the PER_ERA_SITES note above).
+        ai["unitUpkeepEraModifier"] = per_era_value
 
     out = OrderedDict()
     out["type"] = typ
@@ -283,6 +290,8 @@ def curate(typ, rec):
             out[family] = fam[family]
     if grants:
         out["grants"] = grants
+    if ai:
+        out["ai"] = ai
     if identity:
         out["identity"] = identity
     fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
@@ -301,7 +310,7 @@ def main():
         obj, leftover = curate(typ, rec)
         results[typ] = obj
         all_leftover.update(leftover)
-        families_seen.update(k for k in obj if k not in ("type", "description", "help", "grants", "identity"))
+        families_seen.update(k for k in obj if k not in ("type", "description", "help", "grants", "ai", "identity"))
     print("HandicapInfo curated: %d" % len(results))
     print("  families: %s" % ", ".join(sorted(families_seen)))
     if all_leftover:

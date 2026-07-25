@@ -7,10 +7,16 @@
  },
  "happiness": {
   "empire": {
-   "flat": 1,
-   "taxRate": {
-    "percent": 10
-   }
+   "flat": [
+    1,
+    {
+     "value": -10,
+     "per": {
+      "type": "GOLD_RATE",
+      "each": 100
+     }
+    }
+   ]
   }
  },
  "greatPeopleRate": {

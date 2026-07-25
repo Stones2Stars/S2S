@@ -82,18 +82,22 @@ SCALAR = {
     "iFreeSpecialist":                 ("freeSpecialists", "empire", "", "any"),
     # wellbeing
     "iCivicHappiness":                 ("happiness", "empire", "",            "flat"),
-    "iNonStateReligionHappiness":      ("happiness", "empire", "nonStateReligion", "flat"),
+    # iNonStateReligionHappiness / iForeignerUnhappyPercent / iTaxRateUnhappiness are NOT here: converted per
+    # rulings 20/22/23 (info-rebuild.md) -- handled explicitly in curate() with their engine sites transcribed.
+    # cityLimit/cityOverLimit: LEFT AS-IS (ruling-21 execution check FAILED the constant-limit premise): the
+    # ruled telescoping pair {V, per:"CITY", enabled:{all:[GAMEOPTION, {type:CITY, min:limit+1}]}} + {-V*limit}
+    # assumes the per-civic limit is a curation-time CONSTANT, but the engine limit is WORLD-SIZE-SCALED at
+    # runtime -- CvCivicInfo::getCityLimit (SourceArchive/Infos/CvCivicInfo.cpp:1015-1022):
+    #   if (ePlayer > NO_PLAYER && GC.getGame().isOption(GAMEOPTION_EXP_OVEREXPANSION_PENALTIES))
+    #       return m_iCityLimit * GC.getWorldInfo(GC.getMap().getWorldSize()).getCityLimitsScalePercent() / 100;
+    #   return 0;
+    # with CityLimitsScalePercent = 50/75/90/100/110/125/150/200 by world size (CIV4WorldInfo.xml), feeding
+    # V x (numCities - scaledLimit) at CvCity.cpp:5665-5674 (what-if twin CvCity.cpp:8659-8662; hard-limit
+    # found block CvPlayer.cpp:6210 when the unhappy half is 0 = enabler data, separate). A curation-time
+    # `min:` atom cannot transcribe the world-size scale -> left undone and reported verbatim (the binding:
+    # transcribe exactly or leave undone), members kept as-is below.
     "iCityLimit":                      ("happiness", "empire", "cityLimit",    "flat"),
     "iCityOverLimitUnhappy":           ("happiness", "empire", "cityOverLimit","flat"),
-    # foreignerUnhappy / taxRate / cityLimit / cityOverLimit / nonStateReligion: LEFT AS-IS (ruling-12 verify:
-    # their engine math does not map onto the existing condition/per vocabulary -- foreignerUnhappy is an
-    # INVERSE 100/V scaling on foreign-culture % (CvCity.cpp:5650-5654); taxRate scales by the gold-slider
-    # percent (CvPlayer.cpp:26526, needs a TAX_RATE counter token); cityLimit/cityOverLimit scale by the
-    # count of cities ABOVE the limit and carry a found-block interplay when the unhappy half is 0
-    # (CvCity.cpp:5665-5674, CvPlayer.cpp:6210); nonStateReligion is per NON-state religion present
-    # (CvCity.cpp:9407-9418). Reported, not re-shaped.)
-    "iForeignerUnhappyPercent":        ("happiness", "empire", "foreignerUnhappy","percent"),
-    "iTaxRateUnhappiness":             ("happiness", "empire", "taxRate",      "percent"),
     # iCivicPercentAnger IS convertible (ruling 12): unhappiness = V×10 × pop / 1000 = V per 100 city-pop
     # (CvPlayer.cpp:8577 ×10, CvCity.cpp:5624 /PERCENT_ANGER_DIVISOR=1000) -> a per-scaler, handled in curate().
     "iExtraHealth":                    ("health", "empire", "", "flat"),
@@ -366,6 +370,42 @@ def curate(typ, rec, store):
             if v not in (None, 0, 0.0):   # V unhappiness per 100 CITY population (engine V×10×pop/1000) ->
                 _put_per(fam, "happiness", "empire", "flat", -v,   # a NEGATIVE happiness per-scaler (ruling 12);
                          OrderedDict([("type", "POPULATION"), ("each", 100), ("scope", "city")]))  # count is city-local
+        elif tag == "iTaxRateUnhappiness":
+            v = _num(t)
+            if v not in (None, 0, 0.0):   # V unhappiness x goldRate/100 in every city (CvPlayer.cpp:26526
+                # calculateTaxRateUnhappiness = getCommercePercent(COMMERCE_GOLD) * V / 100, consumed per city at
+                # CvCity.cpp:5645) -> a NEGATIVE happiness deposit per GOLD_RATE, each=100 (ruling 20). Retires
+                # the taxRate condition-as-member.
+                _put_per(fam, "happiness", "empire", "flat", -v,
+                         OrderedDict([("type", "GOLD_RATE"), ("each", 100)]))
+        elif tag == "iForeignerUnhappyPercent":
+            v = _num(t)
+            if v not in (None, 0, 0.0):
+                # V is a DIVISOR: engine anger = (100/V) * (100 - ownCulturePct) / 100 (CvCity.cpp:5650-5654 live,
+                # :8664-8667 what-if twin, same math). Reciprocal precompute R = 100/V (ruling 22; exact only when
+                # 100 % V == 0 -- holds for the single authored value, CIVIC_NATIONALIST V=10 -> R=10), then the
+                # telescoping pair on the CULTURE_PERCENTAGE city counter: flat -R + {+R, per each 100} ==
+                # -R*(100-ownPct)/100. An inexact V is NOT convertible -> kept on the legacy member + warned.
+                if isinstance(v, int) and v > 0 and 100 % v == 0:
+                    r = 100 // v
+                    node = fam.setdefault("happiness", {}).setdefault("empire", {})
+                    pair = [-r, OrderedDict([("value", r),
+                                             ("per", OrderedDict([("type", "CULTURE_PERCENTAGE"), ("each", 100)]))])]
+                    cur = node.get("flat")
+                    node["flat"] = pair if cur is None else (cur + pair if isinstance(cur, list) else [cur] + pair)
+                else:
+                    leftover.append("iForeignerUnhappyPercent(100/V inexact: %s)" % v)
+                    _put(fam, "happiness", "empire", "foreignerUnhappy", "percent", v)
+        elif tag == "iNonStateReligionHappiness":
+            v = _num(t)
+            if v not in (None, 0, 0.0):   # +/-V per city religion that is NOT the state religion (engine
+                # CvCity.cpp:9407-9418 getReligionHappiness per present religion; what-if twin :8689-8705) ->
+                # the §3.7 predicate-filtered count in the `unit:`-qualifier pattern, religion-typed: the field
+                # names the counted kind and holds the filter (ruling 23; "!IS_STATE_RELIGION" = §3.4 `!` sugar).
+                node = fam.setdefault("happiness", {}).setdefault("empire", {}).setdefault("cities", {})
+                entry = OrderedDict([("value", v), ("religion", "!IS_STATE_RELIGION")])
+                cur = node.get("flat")
+                node["flat"] = [entry] if cur is None else (cur + [entry] if isinstance(cur, list) else [cur, entry])
         elif tag == "iHappyPerMilitaryUnit":
             v = _num(t)
             if v not in (None, 0, 0.0):   # per stationed MILITARY unit -> the SPEC form: a `unit: IS_MILITARY`-

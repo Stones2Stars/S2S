@@ -299,6 +299,9 @@
    "startingWorkerUnits": 1
   }
  },
+ "ai": {
+  "unitUpkeepEraModifier": -1
+ },
  "identity": {
   "description": "TXT_KEY_HANDICAP_EMPEROR",
   "help": "TXT_KEY_HANDICAP_EMPEROR_HELP",

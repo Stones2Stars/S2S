@@ -283,6 +283,9 @@
    "startingWorkerUnits": 1
   }
  },
+ "ai": {
+  "unitUpkeepEraModifier": -3
+ },
  "identity": {
   "description": "TXT_KEY_HANDICAP_DEITY",
   "help": "TXT_KEY_HANDICAP_DEITY_HELP",

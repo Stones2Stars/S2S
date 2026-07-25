@@ -24,16 +24,22 @@
    }
   }
  },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 10,
+     "per": {
+      "type": "ESPIONAGE_RATE",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
  "warWeariness": {
   "city": {
    "percent": -10
-  }
- },
- "commerceHappiness": {
-  "city": {
-   "espionage": {
-    "flat": 10
-   }
   }
  },
  "cost": {

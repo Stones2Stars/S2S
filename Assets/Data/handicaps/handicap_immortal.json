@@ -299,6 +299,9 @@
    "startingWorkerUnits": 2
   }
  },
+ "ai": {
+  "unitUpkeepEraModifier": -2
+ },
  "identity": {
   "description": "TXT_KEY_HANDICAP_IMMORTAL",
   "help": "TXT_KEY_HANDICAP_IMMORTAL_HELP",

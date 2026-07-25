@@ -288,6 +288,9 @@
    "startingWorkerUnits": 4
   }
  },
+ "ai": {
+  "unitUpkeepEraModifier": -5
+ },
  "identity": {
   "description": "TXT_KEY_HANDICAP_NIGHTMARE_PLUS",
   "help": "TXT_KEY_HANDICAP_NIGHTMARE_PLUS_HELP",

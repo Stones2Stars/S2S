@@ -38,19 +38,29 @@
    "flat": 2
   }
  },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 5,
+     "per": {
+      "type": "RESEARCH_RATE",
+      "each": 100
+     }
+    },
+    {
+     "value": 5,
+     "per": {
+      "type": "CULTURE_RATE",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
  "maintenance": {
   "city": {
    "flat": 4
-  }
- },
- "commerceHappiness": {
-  "city": {
-   "research": {
-    "flat": 5
-   },
-   "culture": {
-    "flat": 5
-   }
   }
  },
  "PROPERTY_EDUCATION": {

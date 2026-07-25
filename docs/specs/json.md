@@ -303,6 +303,9 @@ scope; cross-city scopes (empire/team/world) resolve via the [tally](tally.md), 
 (`cargo.space.{unit: IS_AIR, …}`, [modifier](modifier.md) §6). On a count-scaling family it reads **per unit
 matching**: `happiness.empire.cities.{unit: IS_MILITARY, flat: N}` = "N happiness per *military unit* stationed" —
 the unit-presence effect lives on the civic/trait that grants it, targeting each city.
+The qualifier generalizes by counted kind — the field NAMES what is counted and holds the filtering predicate:
+`happiness.empire.cities.{religion: "!IS_STATE_RELIGION", flat: N}` = "N happiness per city religion matching"
+(here: per non-state religion present in the city).
 
 > **Predicates vs tags.** `IS_*` predicates are **independent queries**, *not* tag-membership: `IS_LAND`
 > (used by cargo above) matches an intrinsic *domain*, not a `tag`. But a predicate **may be defined to encompass

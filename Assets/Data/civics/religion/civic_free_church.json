@@ -48,8 +48,13 @@
  },
  "happiness": {
   "empire": {
-   "nonStateReligion": {
-    "flat": 1
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "religion": "!IS_STATE_RELIGION"
+     }
+    ]
    },
    "buildings": {
     "BUILDING_APOSTOLIC_PALACE": {
