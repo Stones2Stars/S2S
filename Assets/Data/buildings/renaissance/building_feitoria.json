@@ -62,8 +62,13 @@
  },
  "tradeRoutes": {
   "city": {
-   "foreignModifier": {
-    "percent": 50
+   "modifier": {
+    "percent": [
+     {
+      "value": 50,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
    }
   }
  },

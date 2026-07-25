@@ -49,11 +49,6 @@
    "flat": 20
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "PROPERTY_FLAMMABILITY": {
   "city": {
    "flat": 10
@@ -63,7 +58,8 @@
   "production": 2405,
   "sizeModifier": 3,
   "materialsModifier": 1,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "attributes": {
   "providesPower": true

@@ -85,11 +85,6 @@
    }
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "triggers": [
   {
    "trigger": "onTurn",
@@ -104,7 +99,8 @@
   "sizeModifier": 1,
   "countModifier": 1,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

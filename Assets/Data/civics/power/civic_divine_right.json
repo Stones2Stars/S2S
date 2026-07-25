@@ -35,10 +35,7 @@
      "value": 3,
      "enabled": "IS_CAPITAL"
     }
-   ],
-   "tradeRoute": {
-    "percent": 3
-   }
+   ]
   }
  },
  "espionage": {
@@ -95,6 +92,13 @@
   "empire": {
    "freeMilitary": {
     "perPopulation": 15
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": 3
    }
   }
  },

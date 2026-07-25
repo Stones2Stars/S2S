@@ -47,11 +47,6 @@
  "allowed": {
   "world": 1
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "grants": {
   "population": {
    "empire": -30
@@ -59,7 +54,8 @@
   "goldenAge": true
  },
  "cost": {
-  "production": 167130
+  "production": 167130,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

@@ -33,13 +33,9 @@
    "flat": 80
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "cost": {
-  "production": 1485
+  "production": 1485,
+  "hurryModifier": 10000
  },
  "world": {
   "art": {

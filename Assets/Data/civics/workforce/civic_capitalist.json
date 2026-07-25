@@ -18,10 +18,7 @@
  },
  "commerce": {
   "empire": {
-   "percent": 4,
-   "tradeRoute": {
-    "percent": 3
-   }
+   "percent": 4
   }
  },
  "gold": {
@@ -86,7 +83,12 @@
  },
  "tradeRoutes": {
   "empire": {
-   "flat": 1
+   "routes": {
+    "flat": 1
+   },
+   "modifier": {
+    "percent": 3
+   }
   }
  },
  "workRate": {

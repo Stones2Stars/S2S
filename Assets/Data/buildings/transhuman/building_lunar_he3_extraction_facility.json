@@ -37,18 +37,14 @@
    "flat": 2000
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "allowedSpecialists": {
   "city": {
    "SPECIALIST_MERCHANT": 1
   }
  },
  "cost": {
-  "production": 2000
+  "production": 2000,
+  "hurryModifier": 10000
  },
  "ai": {
   "flavours": [

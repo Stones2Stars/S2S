@@ -58,18 +58,14 @@
    "flat": 2
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "grants": {
   "freeTechs": 1
  },
  "cost": {
   "production": 1104,
   "materialsModifier": 1,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "ui": {
   "art": {

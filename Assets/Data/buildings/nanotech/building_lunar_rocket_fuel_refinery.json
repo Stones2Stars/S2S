@@ -40,18 +40,14 @@
    ]
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "PROPERTY_FLAMMABILITY": {
   "city": {
    "flat": 2
   }
  },
  "cost": {
-  "production": 1300
+  "production": 1300,
+  "hurryModifier": 10000
  },
  "ai": {
   "flavours": [

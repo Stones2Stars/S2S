@@ -59,11 +59,6 @@
    "flat": 25
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "PROPERTY_CRIME": {
   "city": {
    "flat": 15
@@ -72,7 +67,8 @@
  "cost": {
   "production": 680,
   "sizeModifier": 1,
-  "countModifier": 1
+  "countModifier": 1,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

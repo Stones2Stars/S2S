@@ -48,17 +48,13 @@
    }
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "cost": {
   "production": 1605,
   "sizeModifier": 2,
   "countModifier": 1,
   "materialsModifier": 2,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

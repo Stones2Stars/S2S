@@ -16,11 +16,6 @@
    "flat": 2
   }
  },
- "buildTime": {
-  "plot": {
-   "percent": 25
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/baseterrain/DuneSalt.dds"
@@ -134,6 +129,7 @@
   "civilopedia": "TXT_KEY_TERRAIN_SALT_FLATS_PEDIA",
   "foundCoast": true,
   "foundFreshWater": true,
+  "buildTimeModifier": 25,
   "movementCost": 1,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -46,11 +46,6 @@
    "flat": 1
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "allowedSpecialists": {
   "city": {
    "SPECIALIST_MERCHANT": 3
@@ -60,7 +55,8 @@
   "production": 2850,
   "sizeModifier": 3,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

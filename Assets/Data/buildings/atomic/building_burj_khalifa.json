@@ -55,15 +55,15 @@
    "flat": 2
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 200
-  }
- },
  "tradeRoutes": {
   "empire": {
-   "coastal": {
-    "flat": 1
+   "routes": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "HAS_COAST"
+     }
+    ]
    }
   }
  },
@@ -81,7 +81,8 @@
   "production": 7380,
   "sizeModifier": 3,
   "materialsModifier": 2,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 200
  },
  "ai": {
   "flavours": [

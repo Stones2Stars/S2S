@@ -35,16 +35,12 @@
    "flat": 500
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "grants": {
   "freeTechs": 1
  },
  "cost": {
-  "production": 38840
+  "production": 38840,
+  "hurryModifier": 10000
  },
  "ui": {
   "art": {

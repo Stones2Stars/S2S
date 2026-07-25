@@ -96,11 +96,6 @@
    "flat": 1
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "PROPERTY_DISEASE": {
   "city": {
    "flat": -15
@@ -120,7 +115,8 @@
   "sizeModifier": 1,
   "countModifier": 1,
   "materialsModifier": 2,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

@@ -33,18 +33,14 @@
    "flat": 10
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "PROPERTY_TOURISM": {
   "city": {
    "flat": 1
   }
  },
  "cost": {
-  "production": 5111
+  "production": 5111,
+  "hurryModifier": 10000
  },
  "world": {
   "art": {

@@ -54,21 +54,21 @@
    "percent": 5
   }
  },
- "hurryCost": {
+ "espionageDefense": {
   "city": {
-   "percent": 100
+   "flat": 4
   }
  },
  "tradeRoutes": {
   "city": {
-   "foreignModifier": {
-    "percent": -15
+   "modifier": {
+    "percent": [
+     {
+      "value": -15,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
    }
-  }
- },
- "espionageDefense": {
-  "city": {
-   "flat": 4
   }
  },
  "PROPERTY_CRIME": {
@@ -80,7 +80,8 @@
   "production": 252,
   "sizeModifier": 2,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

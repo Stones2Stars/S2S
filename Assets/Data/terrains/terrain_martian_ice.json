@@ -10,11 +10,6 @@
    "flat": 3
   }
  },
- "buildTime": {
-  "plot": {
-   "percent": 75
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Ice.dds"
@@ -33,6 +28,7 @@
   "civilopedia": "TXT_KEY_TERRAIN_MARTIAN_ICE_PEDIA",
   "foundCoast": true,
   "foundFreshWater": true,
+  "buildTimeModifier": 75,
   "movementCost": 4,
   "mapCategories": [
    "MAPCATEGORY_MARTIAN"

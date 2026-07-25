@@ -22,13 +22,6 @@
    }
   }
  },
- "commerce": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 1
-   }
-  }
- },
  "research": {
   "empire": {
    "percent": 3
@@ -51,10 +44,17 @@
     "max": "TARGET_NUM_CITIES",
     "orderedByDescending": "CITY_SIZE"
    },
-   "flat": -2,
-   "civicAnger": {
-    "percent": 75
-   }
+   "flat": [
+    -2,
+    {
+     "value": -75,
+     "per": {
+      "type": "POPULATION",
+      "each": 100,
+      "scope": "city"
+     }
+    }
+   ]
   }
  },
  "growth": {
@@ -95,6 +95,13 @@
      "enabled": "!IS_HOME_AREA"
     }
    ]
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": 1
+   }
   }
  },
  "workRate": {

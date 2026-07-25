@@ -77,14 +77,11 @@
    "flat": 2
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "tradeRoutes": {
   "city": {
-   "flat": 2,
+   "routes": {
+    "flat": 2
+   },
    "modifier": {
     "percent": 25
    }
@@ -99,7 +96,8 @@
   "production": 1038,
   "sizeModifier": 3,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

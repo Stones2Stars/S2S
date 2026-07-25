@@ -43,13 +43,6 @@
    }
   }
  },
- "commerce": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 5
-   }
-  }
- },
  "gold": {
   "empire": {
    "percent": [
@@ -117,11 +110,15 @@
    }
   }
  },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": 5
+   }
+  }
+ },
  "hurry": {
   "empire": {
-   "cost": {
-    "percent": -50
-   },
    "inflation": {
     "percent": 20
    }
@@ -146,6 +143,13 @@
  "inflation": {
   "empire": {
    "percent": 20
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": -50
+   }
   }
  },
  "policies": {

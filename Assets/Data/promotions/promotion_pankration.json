@@ -1,12 +1,5 @@
 {
  "type": "PROMOTION_PANKRATION",
- "upkeep": {
-  "unit": {
-   "upgradeDiscount": {
-    "percent": 20
-   }
-  }
- },
  "combat": {
   "unit": {
    "percent": 5,
@@ -26,6 +19,13 @@
     "UNITCOMBAT_GUN": {
      "percent": 10
     }
+   }
+  }
+ },
+ "costs": {
+  "unit": {
+   "upgrade": {
+    "percent": -20
    }
   }
  },

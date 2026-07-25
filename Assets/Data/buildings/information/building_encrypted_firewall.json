@@ -40,11 +40,6 @@
    "flat": 5
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "PROPERTY_CRIME": {
   "city": {
    "flat": -10
@@ -52,7 +47,8 @@
  },
  "cost": {
   "production": 2005,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "attributes": {
   "nukeImmune": true

@@ -49,11 +49,6 @@
    "flat": 1
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": 15
@@ -68,7 +63,8 @@
   "production": 1260,
   "sizeModifier": 3,
   "materialsModifier": 1,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "attributes": {
   "destroyedOnCapture": true

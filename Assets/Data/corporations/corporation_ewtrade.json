@@ -10,6 +10,9 @@
    "headquarters": {
     "flat": {
      "value": 2,
+     "enabled": {
+      "IS_HEADQUARTERS": "CORPORATION_EWTRADE"
+     },
      "per": "CORPORATION_LEVEL"
     }
    }
@@ -20,6 +23,9 @@
    "headquarters": {
     "flat": {
      "value": 2,
+     "enabled": {
+      "IS_HEADQUARTERS": "CORPORATION_EWTRADE"
+     },
      "per": "CORPORATION_LEVEL"
     }
    }

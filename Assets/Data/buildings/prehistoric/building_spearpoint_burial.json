@@ -46,11 +46,6 @@
    ]
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "triggers": [
   {
    "trigger": "onTurnEnd",
@@ -66,7 +61,8 @@
  ],
  "cost": {
   "production": 86,
-  "countModifier": 1
+  "countModifier": 1,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

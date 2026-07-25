@@ -34,14 +34,10 @@
    "flat": 2
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "cost": {
   "production": 50,
-  "sizeModifier": 1
+  "sizeModifier": 1,
+  "hurryModifier": 100
  },
  "world": {
   "art": {

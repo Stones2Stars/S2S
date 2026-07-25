@@ -22,13 +22,9 @@
    "flat": 1
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "cost": {
-  "production": 1421
+  "production": 1421,
+  "hurryModifier": 10000
  },
  "attributes": {
   "providesPower": true

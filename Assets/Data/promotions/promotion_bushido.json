@@ -1,9 +1,9 @@
 {
  "type": "PROMOTION_BUSHIDO",
- "upkeep": {
+ "costs": {
   "unit": {
-   "upgradeDiscount": {
-    "percent": 25
+   "upgrade": {
+    "percent": -25
    }
   }
  },

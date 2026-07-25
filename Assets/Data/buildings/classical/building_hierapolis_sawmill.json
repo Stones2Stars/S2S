@@ -58,11 +58,6 @@
    "flat": 1
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "allowedSpecialists": {
   "city": {
    "SPECIALIST_ENGINEER": 2
@@ -72,7 +67,8 @@
   "production": 1680,
   "sizeModifier": 2,
   "materialsModifier": 1,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "ui": {
   "art": {

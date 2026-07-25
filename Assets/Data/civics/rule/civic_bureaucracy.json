@@ -29,10 +29,7 @@
      "value": 3,
      "enabled": "IS_CAPITAL"
     }
-   ],
-   "tradeRoute": {
-    "percent": 2
-   }
+   ]
   }
  },
  "gold": {
@@ -93,6 +90,13 @@
    ],
    "corporation": {
     "percent": 3
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": 2
    }
   }
  },

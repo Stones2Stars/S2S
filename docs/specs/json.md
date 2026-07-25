@@ -43,7 +43,7 @@ of them.
 | group | sections | what they are |
 |---|---|---|
 | **Availability** | `enables` · `obsoletes` · `replaces` · `disables` · `requires` · `allowed` | what this unlocks/removes; what it needs to be built & to keep running; the cap on how many may exist |
-| **Provisions** | `grants` · `provides` | `grants` = one-shot / recurring things this hands out (units, buildings, pulses); `provides` = a continuous in-vicinity SUPPLY while active (e.g. a building or map bonus that makes a `BONUS_*` available in the city) |
+| **Provisions** | `grants` · `triggers` · `provides` | `grants` = pure payload on the source's considered action; `triggers` = trigger → chance → action (happening-fired / rolled / state-conditioned effects); `provides` = a continuous in-vicinity SUPPLY while active (e.g. a building or map bonus that makes a `BONUS_*` available in the city) |
 | **Effects** | every **modifier family** key (`food`, `production`, `happiness`, …, one per `PROPERTY_*`) | per-turn magnitudes this deposits onto targets |
 | **Intrinsic** ("what am I") | `identity` (incl. all TEXT) · `cost` · `ui` · `world` · `sound` · `ai` | empire-agnostic self-description, art, audio, AI metadata |
 | **Classification** | `skills` (UNIT, mutable abilities) · `tags` (UNIT, immutable type membership) · `state` (UNIT, transient) · `attributes` (BUILDING, held city-scope intrinsics) · `capabilities` (TEAM, grantor-provided) | §8 — the classification model; scope carried by the section name |
@@ -236,6 +236,10 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
     — it can't be built while nukes are forbidden.
   - **city / player:** `IS_CAPITAL` · `IS_GOVERNMENT_CENTER` · `HAS_POWER` · `HAS_STATE_RELIGION` · `STATE_RELIGION_IN_CITY` ·
     `IS_GOLDEN_AGE` (the player is in a golden age) ·
+    **`IS_HOME_AREA`** (the city's area is the player's capital's area — the home-continent test; "other areas" is
+    the plain negation `"!IS_HOME_AREA"`, never a second predicate. Retires the `homeArea`/`otherArea`
+    condition-as-member authoring on `maintenance` — a maintenance modifier scoped to home/other areas authors as an
+    ordinary conditioned deposit on this predicate) ·
     **`IS_HOLY_CITY`** (the *bare* form = the city is a holy city of **any** religion — `CvCity::isHolyCity()`; the
     parameterized `{IS_HOLY_CITY: RELIGION_X}` below keys a specific religion) · **`IS_STATE_RELIGION_HOLY_CITY`** (the
     city is the holy city **of the player's state religion** — `isHolyCity(stateReligion)`; distinct from
@@ -245,9 +249,15 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
     holds a government-center building (Palace or a pseudo-palace), runtime-evaluated. Government-center buildings gate
     on `requires.build.disabled: "IS_GOVERNMENT_CENTER"` (one can't be built where a government center already exists —
     a gov-center test, not an `IS_CAPITAL` one).
+  - **trade route** (evaluated against the ROUTE/its partner city): **`IS_FOREIGN`** (the route's partner belongs to
+    another team — the engine's foreign-trade gate, `CvCity::totalTradeModifier`; domestic routes are the plain
+    negation `"!IS_FOREIGN"`, never a second predicate) · **`SHARES_CIVIC`** (the route partner's owner runs the
+    deposit's SOURCE civic — the shared-civic trade bonus; only meaningful on a deposit a civic authors).
 - **parameterized** `{ PREDICATE: param }`: `{HAS_FEATURE: FEATURE_X}` · `{HAS_TERRAIN: TERRAIN_X}` ·
   `{HAS_IMPROVEMENT: IMPROVEMENT_X}` (the plot carries that improvement — the plots-filter twin of terrain/feature) ·
   `{HAS_BONUS: BONUS_X}` · `{HAS_RELIGION: RELIGION_X}` · `{STATE_RELIGION: RELIGION_X}` · `{IS_HOLY_CITY: RELIGION_X}` ·
+  `{IS_HEADQUARTERS: CORPORATION_X}` (the city is that corporation's HQ — the corp analog of `{IS_HOLY_CITY: …}`;
+  carries the corp-HQ revenue condition) ·
   `{HAS_CORPORATION: CORPORATION_X}` · `{latitude:{min,max}}` · `{existedFor:{min:N}}` (turns since built) ·
   `{HAS_COAST:{minArea:N}}` (the city is adjacent to a water body of **≥ N tiles**; a bare `HAS_COAST` is coastal at
   the default threshold, so an entity needing a *larger* sea body carries the size here).
@@ -277,9 +287,14 @@ unless porting a specific engine quirk.)
 ### 3.7 `per` — count-scaling
 
 ```jsonc
+"per": "SPECIALIST"                                              // bare-string sugar: × count, each:1, own scope
 "per": { "type": "POPULATION", "each": 5, "scope": "city" }      // value × (count / 5)
 "per": { "anyOf": ["BONUS_COW","BONUS_PIG"], "scope": "city" }   // value × (summed count of any listed)
 ```
+
+A bare string is the common case collapsed (the §3.4 bare-atom sugar, applied here): `"per": "SPECIALIST"` ≡
+`{ "type": "SPECIALIST", "each": 1 }` at the deposit's own scope. Keep the object form only when a real `each`
+quantum or a non-default scope forces it.
 
 `each` is the quantum ("per 5 population" → `each: 5`); state it explicitly. `scope` defaults to the deposit's own
 scope; cross-city scopes (empire/team/world) resolve via the [tally](tally.md), `city`/`plot` are local.
@@ -433,11 +448,44 @@ declare the number. Enforcement reads the [tally](tally.md) count.
 
 ---
 
-## 5. `grants` — provisions
+## 5. `grants` — pure payload on the considered action · `triggers` — when/why → odds → effect
 
-One-shot or recurring things an entity hands out (not per-turn modifiers).
+> **The split (owner).** **`grants` holds ONLY what is given on the CONSIDERED ACTION** — the source's own
+> realization moment, whatever that is: a building's construction, a tech's research, a civic's adoption, a
+> settler's FOUNDING, a mission's execution. No trigger field, no odds, no recurrence — "acquiring/doing me
+> gives this," full stop. **Everything that fires on anything ELSE is a `triggers` entry**: the WHEN/WHY comes
+> FIRST (`per` — the cadence/happening: a turn, a population growth, …— plus `chance`, the odds), THEN what it
+> does if successful — and the effect plane is wider than granting (burn down a building, spawn a unit, move a
+> property, grant something). Odds live on the trigger, never inside a payload.
+>
+> **The entry anatomy is three named parts, in reading order: `trigger` → `chance` → `action`.**
+>
+> ```jsonc
+> "triggers": [
+>   { "trigger": { "type": "PROPERTY_FLAMMABILITY", "min": 200 },      // WHEN/WHY -- the shared §3 vocabulary
+>     "chance": 5,                                                      // the odds (percent; may carry a per-scaler)
+>     "action": { "destroy": { "building": "random" } } },              // WHAT IT DOES if successful
+>   { "trigger": "onTurn",
+>     "chance": { "value": 5, "per": { "type": "PROPERTY_CRIME", "scope": "city" } },
+>     "action": { "grant": { "units": ["UNIT_PROPERTY_CRIMINAL"] } } }
+> ]
+> ```
+>
+> - **`trigger`** — the when/why, two composable forms and no bespoke dialect: an **`on<Happening>` token** —
+>   the spine's DOMAIN events in authoring form (`onCreation`, `onFound`, `onTurn`, `onPopulationGrowth`, … an
+>   OPEN registry, one name per spine fact) — and/or a **state condition** in the shared §3 vocabulary
+>   (atoms/predicates/combinators — the fire band above); a state-only trigger is evaluated each turn. An
+>   `on*` happening may be ANOTHER entity's moment in scope (a building acting `onCreation` of a unit in its
+>   city; a trait acting `onFound` of each new city) — that is exactly what distinguishes a trigger from a
+>   grant (the source's OWN considered action, implicit, never written).
+> - **`chance`** — the odds, always here on the trigger, never inside a payload; scalable by the §3.7 `per`.
+> - **`action`** — an OPEN verb registry: **`destroy`** · **`grant`** (the §5 payload vocabulary nested whole) ·
+>   `spawn` / `place` / `promote` / property deltas / anything else the data needs — one verb vocabulary shared
+>   with the §8 outcome plane (the outcome verb `triggers` renames to **`fires`** to clear this section's name).
+> - The OUTCOME plane already conforms — a mission's roll (`chance` + the per-promotion `odds` table) is the
+>   trigger, its verbs the action; nothing re-homes there.
 
-> **`grants` is ONLY genuine provisions handed out on a trigger.** What does NOT belong here (and where it lives
+> **`grants` is ONLY genuine provisions handed out on the considered action.** What does NOT belong here (and where it lives
 > instead): unit `buildings` (MISSION_CONSTRUCT) → the **`constructs`** outcome verb under `outcomes.actions[]` (§8,
 > one action per building — a construct is a mission-action producing an outcome, not a provision; emitted by
 > `curate_unit.py`, no longer `grants.buildings`); `greatPersonAction` / `goldenAge` → **`missions`** (§8 — the rest of
@@ -447,51 +495,48 @@ One-shot or recurring things an entity hands out (not per-turn modifiers).
 > corp `bonusProduced` → **`provides.bonuses`** (continuous supply, §5a); building `holyCity` → **`requires.build`**
 > (a read-only "only in RELIGION_X's holy city" gate — `canConstruct`, `CvCity.cpp:2728`; the holy city is set by
 > religion FOUNDING, never a building); building `traits` → **`enables.traits`** (held-trait, §8).
-> **`freePromotions`** (building-list + trait-dict) folds into **`repeatable`**. And a **mission carries its
-> `grants`** as its outcome (§8), so `grants` is both an entity-level handout and a mission's outcome payload.
+> **`freePromotions`** (building-list + trait-dict) is a **`triggers`** entry (end-turn presence → promote). And a
+> **mission carries its `grants`** as its outcome (§8), so `grants` is both an entity-level handout and a
+> mission's outcome payload.
 
 ```jsonc
 "grants": {
   "techs": ["TECH_POTTERY"], "units": ["UNIT_WARRIOR"],   // entity lists
   "population": 1, "revolution": -100,                     // numeric pulses: grants.<channel>: value
-  "foundBuildings": [ {"building":"BUILDING_PALACE"} ],    // a founder's settle-time building seed
-  "repeatable": [                                          // recurring, optionally chance-rolled
-    { "unit": "UNIT_PROPERTY_CRIMINAL", "interval": "perTurn",
-      "chance": { "per": { "type": "PROPERTY_CRIME", "scope": "city" } } } ]
+  "buildings": [ { "building": "BUILDING_PALACE" } ]       // on a SETTLER: the considered action IS founding
 }
 ```
 
-- **lists** — `buildings · units · techs · civics · promotions · traits · bonuses · freePromotions ·
-  foundBuildings`. ⛔ **`specialists` is NOT in the grants vocabulary:** free specialists never fit the grants
+- **lists** — `buildings · units · techs · civics · promotions · traits · bonuses`. ⛔ **`specialists` is NOT
+  in the grants vocabulary:** free specialists never fit the grants
   model — they are the `freeSpecialists` MODIFIER family ([modifier.md §6](modifier.md), alive-with-source + the
   two-part amount/placement seam). *If anything is ever found that genuinely GRANTS permanent free specialists —
   surviving the destruction of its wonder/building/source — we deal with it then*; no machinery is built for the
   hypothetical.
-- **`freePromotions`** (a building) — promotions granted at **END-TURN to every unit present in the city**.
-  One mechanism, no on-move flag: a unit trained there is present at end-turn, and a unit that
-  walks in and stays is covered the **same** way — there is no separate mid-turn/on-move trigger.
 - **numeric pulses** — `grants.<channel>: value` (`grants.revolution: -100`, `grants.goldenAge`).
-- **`foundBuildings`** — entry shape `{ "building": BUILDING_X, "enabled"?: <condition> }` (absent `enabled` =
-  always placed). Lives on the **settler-type unit** (the founder), NOT on the civ. ⚠ Tolerated sugar, not
-  load-bearing — plain `grants.buildings` on the settler would suffice. **A settler granting buildings at settle
-  time is a NEW mechanic coined for this rework (owner) — there is no legacy engine apply to port.** Do not go
-  looking for one: the legacy `bNewCityFree` path (`CvPlayer::found`, gated on `isNewCityFree()`) is a DIFFERENT,
-  now-dead mechanic that merely sits at the same call site. This lands with the grants machine's apply-loop
+- **Founder buildings are PLAIN `grants.buildings` on the settler** — the settler's considered action IS
+  founding, so no bespoke section exists; an entry may carry `enabled` (`{ "building": BUILDING_X, "enabled"?:
+  <condition> }`). **A settler granting buildings at settle time is a NEW mechanic coined for this rework
+  (owner) — there is no legacy engine apply to port.** Do not go looking for one: the legacy `bNewCityFree` path
+  (`CvPlayer::found`, gated on `isNewCityFree()`) is a DIFFERENT, now-dead mechanic that merely sits at the same
+  call site. This lands with the grants machine's apply-loop
   ([grants-machine.md](../plans/structural-cleanup/grants-machine.md) increment 5); the data is authored and
   waiting. **Curator follow-up:** `BUILDING_PALACE` (+ the other founder buildings) is currently *also* in
-  ~48 **civilizations'** `grants.buildings` — the **wrong/redundant** placement; the settler's `foundBuildings`
-  already carries it, so the civ-grant duplicate should be dropped. (Does NOT affect the enabler: the engine realizes
-  the palace into the capital regardless, so the cascade's HAVE sees it either way.)
-- **`repeatable`** — `[ { <payload>, interval, chance?, enabled? } ]`: fires each interval (a spawned unit, a
-  heal), optionally gated by a rolled `chance` (which may scale with a `per`).
-- **property pulses** — a per-turn `PROPERTY_*` change an entity emits (the engine's `PropertyManipulator`) is a
-  `repeatable` entry carrying its **spatial intent**:
-  `{ "PROPERTY_AIR_POLLUTION": -5, "interval": "perTurn", "on": "plot", "relation": "near", "distance": 1 }`.
-  **Properties are first-class** (early design decision) — a property source is **never a parked raw block**; the
-  grant carries the `on`/`relation`/`distance` so the (#429) spatial distribution reads its target from here. A
-  scaling (non-`CONSTANT`) source carries a `per` count-scaler; a flat (`CONSTANT`) source is the bare amount.
-  *(Curator migration from the legacy parked `properties` array — `curate_improvement.py` et al. via the shared
-  property-source cleaner — is pending; tracked as curator-to-spec.)*
+  ~48 **civilizations'** `grants.buildings` — the **wrong/redundant** placement; the settler already carries it,
+  so the civ-grant duplicate should be dropped. (Does NOT affect the enabler: the engine realizes the palace into
+  the capital regardless, so the cascade's HAVE sees it either way.)
+- **Recurring / chance-rolled / state-conditioned handouts are NOT grants — they are `triggers` entries**
+  (trigger → chance → `action.grant`): the old `repeatable` wrapper and its `interval` field dissolve into the
+  trigger; the old building `freePromotions` (promotions to every unit present at end-turn — one mechanism, no
+  on-move flag) is a `triggers` entry whose action promotes the units present.
+- **Property pulses are `triggers` entries carrying spatial intent in the action** — a per-turn `PROPERTY_*`
+  change an entity emits (the engine's `PropertyManipulator`):
+  `{ "trigger": "onTurn", "action": { "PROPERTY_AIR_POLLUTION": -5, "on": "plot", "relation": "near",
+  "distance": 1 } }`. **Properties are first-class** (early design decision) — a property source is **never a
+  parked raw block**; the action carries the `on`/`relation`/`distance` so the (#429) spatial distribution reads
+  its target from here. A scaling (non-`CONSTANT`) source carries a `per` count-scaler in its `chance`/value; a
+  flat (`CONSTANT`) source is the bare amount. *(Curator migration from the legacy parked `properties` array —
+  `curate_improvement.py` et al. via the shared property-source cleaner — is pending; tracked as curator-to-spec.)*
 
 ---
 
@@ -856,8 +901,8 @@ marble; +10 culture, doubling after it has stood 1000 turns.*
 ## 11. Quick reference
 
 **Top-level keys** — `type` · `identity` · `cost` · `ui` · `world` · `sound` · `ai` · `enables` · `obsoletes` ·
-`replaces` · `disables` · `requires` · `allowed` · `grants` · `skills` · `tags` · `state` · `attributes` · `capabilities` ·
-`shrine` · `headquarters` · *(modifier families)* · *(auxiliary/bespoke, §9)*
+`replaces` · `disables` · `requires` · `allowed` · `grants` · `triggers` · `skills` · `tags` · `state` · `attributes` ·
+`capabilities` · `shrine` · `headquarters` · *(modifier families)* · *(auxiliary/bespoke, §9)*
 
 **Scope (singular)** — `world › team › empire › area › city › plot{improvement|feature|terrain|route} › building|specialist|unit` · off-spine `self` = the entity's own build
 **Target (plural)** — `plots · units · cities · areas · empires` = all of that kind in the scope, predicate-filtered

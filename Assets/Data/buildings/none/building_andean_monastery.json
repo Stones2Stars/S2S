@@ -47,11 +47,6 @@
    "flat": 1
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "religion": {
   "city": {
    "RELIGION_ANDEANISM": {
@@ -69,7 +64,8 @@
   "sizeModifier": 2,
   "countModifier": 1,
   "materialsModifier": 2,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

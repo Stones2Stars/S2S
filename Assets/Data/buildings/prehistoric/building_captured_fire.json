@@ -53,16 +53,12 @@
    "flat": 1
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "grants": {
   "goldenAge": true
  },
  "cost": {
-  "production": 40
+  "production": 40,
+  "hurryModifier": 100
  },
  "attributes": {
   "destroyedOnCapture": true

@@ -49,11 +49,6 @@
    "percent": -10
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 200
-  }
- },
  "anarchy": {
   "city": {
    "percent": -25
@@ -68,7 +63,8 @@
   "production": 7080,
   "sizeModifier": 3,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 200
  },
  "ai": {
   "flavours": [

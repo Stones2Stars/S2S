@@ -38,11 +38,6 @@
    }
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "populationGrowthRate": {
   "city": {
    "percent": -25
@@ -51,7 +46,8 @@
  "cost": {
   "production": 310,
   "sizeModifier": 2,
-  "countModifier": 1
+  "countModifier": 1,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

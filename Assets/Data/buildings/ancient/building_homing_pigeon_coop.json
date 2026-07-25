@@ -72,11 +72,6 @@
    "flat": 5
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "allowedSpecialists": {
   "city": {
    "SPECIALIST_SPY": 1
@@ -86,7 +81,8 @@
   "production": 176,
   "sizeModifier": 1,
   "countModifier": 1,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

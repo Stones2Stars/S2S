@@ -70,11 +70,6 @@
    "flat": 1
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "espionageDefense": {
   "city": {
    "flat": 1
@@ -89,7 +84,8 @@
   "production": 2505,
   "sizeModifier": 3,
   "materialsModifier": 2,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

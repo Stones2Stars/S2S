@@ -41,16 +41,12 @@
    }
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "grants": {
   "goldenAge": true
  },
  "cost": {
-  "production": 18220
+  "production": 18220,
+  "hurryModifier": 10000
  },
  "ui": {
   "art": {

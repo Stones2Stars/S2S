@@ -37,18 +37,14 @@
    "flat": 5
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "PROPERTY_FLAMMABILITY": {
   "city": {
    "flat": -10
   }
  },
  "cost": {
-  "production": 100
+  "production": 100,
+  "hurryModifier": 10000
  },
  "attributes": {
   "providesFreshWater": true

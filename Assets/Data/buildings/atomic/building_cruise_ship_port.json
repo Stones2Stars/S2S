@@ -62,11 +62,6 @@
    "percent": 5
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "PROPERTY_WATER_POLLUTION": {
   "city": {
    "flat": 5
@@ -76,7 +71,8 @@
   "production": 1280,
   "sizeModifier": 3,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

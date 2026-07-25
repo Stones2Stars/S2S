@@ -22,10 +22,7 @@
  },
  "commerce": {
   "empire": {
-   "percent": 2,
-   "tradeRoute": {
-    "percent": 2
-   }
+   "percent": 2
   }
  },
  "gold": {
@@ -50,8 +47,14 @@
  },
  "tradeRoutes": {
   "empire": {
-   "foreign": {
-    "percent": 10
+   "modifier": {
+    "percent": [
+     2,
+     {
+      "value": 10,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
    }
   }
  },

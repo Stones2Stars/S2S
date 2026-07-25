@@ -34,18 +34,16 @@
    "percent": 30
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "tradeRoutes": {
   "city": {
-   "flat": 2
+   "routes": {
+    "flat": 2
+   }
   }
  },
  "cost": {
-  "production": 11110
+  "production": 11110,
+  "hurryModifier": 10000
  },
  "world": {
   "art": {

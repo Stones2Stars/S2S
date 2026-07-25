@@ -74,7 +74,9 @@
  },
  "tradeRoutes": {
   "empire": {
-   "flat": 2
+   "routes": {
+    "flat": 2
+   }
   }
  },
  "workRate": {

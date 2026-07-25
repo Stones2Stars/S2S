@@ -38,11 +38,6 @@
    "flat": 2
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "PROPERTY_AIR_POLLUTION": {
   "city": {
    "flat": -5
@@ -62,7 +57,8 @@
  "cost": {
   "production": 800,
   "sizeModifier": 3,
-  "materialsModifier": 1
+  "materialsModifier": 1,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

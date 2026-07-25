@@ -27,11 +27,6 @@
    ]
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "allowedSpecialists": {
   "city": {
    "SPECIALIST_SCIENTIST": 1
@@ -47,7 +42,8 @@
   }
  ],
  "cost": {
-  "production": 5455
+  "production": 5455,
+  "hurryModifier": 100
  },
  "world": {
   "art": {

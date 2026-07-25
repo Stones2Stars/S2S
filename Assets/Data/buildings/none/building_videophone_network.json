@@ -73,14 +73,11 @@
    "percent": 2
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "tradeRoutes": {
   "city": {
-   "flat": 2
+   "routes": {
+    "flat": 2
+   }
   }
  },
  "PROPERTY_EDUCATION": {
@@ -89,7 +86,8 @@
   }
  },
  "cost": {
-  "production": 1345
+  "production": 1345,
+  "hurryModifier": 100
  },
  "world": {
   "art": {

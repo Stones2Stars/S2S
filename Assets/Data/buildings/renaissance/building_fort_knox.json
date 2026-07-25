@@ -50,12 +50,11 @@
    "flat": 2
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 50
-  },
+ "costs": {
   "empire": {
-   "percent": -25
+   "hurry": {
+    "percent": -25
+   }
   }
  },
  "PROPERTY_TOURISM": {
@@ -67,7 +66,8 @@
   "production": 3480,
   "sizeModifier": 3,
   "materialsModifier": 1,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 50
  },
  "ai": {
   "flavours": [

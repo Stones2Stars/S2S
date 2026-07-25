@@ -49,9 +49,11 @@
    "percent": -75
   }
  },
- "unitUpgradePrice": {
+ "costs": {
   "empire": {
-   "percent": -50
+   "upgrade": {
+    "percent": -50
+   }
   }
  },
  "PROPERTY_TOURISM": {

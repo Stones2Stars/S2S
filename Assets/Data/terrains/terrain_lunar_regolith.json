@@ -10,11 +10,6 @@
    "flat": 3
   }
  },
- "buildTime": {
-  "plot": {
-   "percent": 25
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\lunarbarren.dds"
@@ -32,6 +27,7 @@
   "description": "TXT_KEY_TERRAIN_LUNAR_REGOLITH",
   "civilopedia": "TXT_KEY_TERRAIN_LUNAR_REGOLITH_PEDIA",
   "found": true,
+  "buildTimeModifier": 25,
   "movementCost": 1,
   "mapCategories": [
    "MAPCATEGORY_LUNAR"

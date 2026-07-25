@@ -1,15 +1,15 @@
 {
  "type": "PROMOTION_WAIDAN",
- "upkeep": {
-  "unit": {
-   "upgradeDiscount": {
-    "percent": 25
-   }
-  }
- },
  "combat": {
   "unit": {
    "percent": 20
+  }
+ },
+ "costs": {
+  "unit": {
+   "upgrade": {
+    "percent": -25
+   }
   }
  },
  "ui": {

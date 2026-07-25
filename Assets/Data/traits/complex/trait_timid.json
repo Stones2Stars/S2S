@@ -72,9 +72,6 @@
    },
    "unitMilitary": {
     "percent": 10
-   },
-   "upgradePrice": {
-    "percent": -20
    }
   }
  },
@@ -157,5 +154,12 @@
   "civilopedia": "TXT_KEY_TRAIT_TIMID_PEDIA",
   "strategy": "TXT_KEY_TRAIT_TIMID_STRATEGY",
   "negativeTrait": true
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": -20
+   }
+  }
  }
 }

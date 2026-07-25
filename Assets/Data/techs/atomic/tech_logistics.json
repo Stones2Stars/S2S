@@ -47,7 +47,9 @@
  },
  "tradeRoutes": {
   "city": {
-   "flat": 1
+   "routes": {
+    "flat": 1
+   }
   }
  },
  "cost": {

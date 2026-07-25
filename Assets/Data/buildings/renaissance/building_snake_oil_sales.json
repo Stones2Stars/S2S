@@ -55,11 +55,6 @@
    }
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "PROPERTY_DISEASE": {
   "city": {
    "flat": 5
@@ -87,7 +82,8 @@
  "cost": {
   "production": 535,
   "sizeModifier": 1,
-  "countModifier": 1
+  "countModifier": 1,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

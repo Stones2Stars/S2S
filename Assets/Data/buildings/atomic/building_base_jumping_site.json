@@ -53,14 +53,10 @@
    "SPECIALIST_CELEBRITY": 1
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "cost": {
   "production": 1605,
-  "countModifier": 1
+  "countModifier": 1,
+  "hurryModifier": 100
  },
  "world": {
   "art": {

@@ -22,11 +22,6 @@
    "flat": 5
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "PROPERTY_CRIME": {
   "city": {
    "flat": -5
@@ -34,7 +29,8 @@
  },
  "cost": {
   "production": 2405,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "world": {
   "art": {

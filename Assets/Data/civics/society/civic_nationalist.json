@@ -94,13 +94,18 @@
    "flat": [
     -2,
     {
+     "value": 20,
+     "per": {
+      "type": "POPULATION",
+      "each": 100,
+      "scope": "city"
+     }
+    },
+    {
      "value": 1,
      "enabled": "GAMEOPTION_MAP_PERSONALIZED"
     }
    ],
-   "civicAnger": {
-    "percent": -20
-   },
    "buildings": {
     "BUILDING_BUNKER": {
      "flat": 1

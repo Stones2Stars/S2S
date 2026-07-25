@@ -68,11 +68,6 @@
    "flat": 3
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 50
-  }
- },
  "religion": {
   "city": {
    "RELIGION_HELLENISM": {
@@ -94,7 +89,8 @@
   "production": 1458,
   "sizeModifier": 1,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 50
  },
  "ai": {
   "flavours": [

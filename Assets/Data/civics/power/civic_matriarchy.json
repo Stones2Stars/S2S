@@ -18,10 +18,7 @@
  },
  "commerce": {
   "empire": {
-   "percent": 1,
-   "tradeRoute": {
-    "percent": 1
-   }
+   "percent": 1
   }
  },
  "gold": {
@@ -83,6 +80,13 @@
      "enabled": "!IS_HOME_AREA"
     }
    ]
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": 1
+   }
   }
  },
  "diplomacy": {

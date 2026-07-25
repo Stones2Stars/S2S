@@ -32,9 +32,6 @@
    },
    "freeMilitary": {
     "perPopulation": -15
-   },
-   "upgradePrice": {
-    "percent": 30
    }
   }
  },
@@ -118,5 +115,12 @@
   "strategy": "TXT_KEY_TRAIT_PACIFIST_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": 30
+   }
+  }
  }
 }

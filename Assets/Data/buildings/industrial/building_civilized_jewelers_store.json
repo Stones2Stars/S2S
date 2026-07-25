@@ -61,18 +61,16 @@
    ]
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "tradeRoutes": {
   "city": {
    "modifier": {
-    "percent": 7
-   },
-   "foreignModifier": {
-    "percent": 5
+    "percent": [
+     7,
+     {
+      "value": 5,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
    }
   }
  },
@@ -81,7 +79,8 @@
   "sizeModifier": 1,
   "countModifier": 1,
   "materialsModifier": 2,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

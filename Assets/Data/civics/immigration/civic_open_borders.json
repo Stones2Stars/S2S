@@ -20,13 +20,6 @@
    }
   }
  },
- "commerce": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 4
-   }
-  }
- },
  "happiness": {
   "empire": {
    "buildings": {
@@ -47,7 +40,12 @@
  },
  "tradeRoutes": {
   "empire": {
-   "flat": 2
+   "routes": {
+    "flat": 2
+   },
+   "modifier": {
+    "percent": 4
+   }
   }
  },
  "PROPERTY_CRIME": {

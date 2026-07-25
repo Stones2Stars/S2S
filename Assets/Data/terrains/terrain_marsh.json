@@ -25,11 +25,6 @@
    "flat": 2
   }
  },
- "buildTime": {
-  "plot": {
-   "percent": 50
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -150,6 +145,7 @@
   "civilopedia": "TXT_KEY_TERRAIN_MARSH_PEDIA",
   "foundCoast": true,
   "foundFreshWater": true,
+  "buildTimeModifier": 50,
   "movementCost": 3,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

@@ -46,18 +46,14 @@
    "flat": 1
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "PROPERTY_DISEASE": {
   "city": {
    "flat": -2
   }
  },
  "cost": {
-  "production": 86
+  "production": 86,
+  "hurryModifier": 100
  },
  "world": {
   "art": {

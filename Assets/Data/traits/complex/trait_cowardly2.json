@@ -71,15 +71,14 @@
    },
    "unitCivilian": {
     "percent": 10
-   },
-   "upgradePrice": {
-    "percent": -10
    }
   }
  },
  "tradeRoutes": {
   "empire": {
-   "flat": 1
+   "routes": {
+    "flat": 1
+   }
   }
  },
  "workRate": {
@@ -239,5 +238,12 @@
   "civilopedia": "TXT_KEY_TRAIT_COWARDLY2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COWARDLY_STRATEGY",
   "negativeTrait": true
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": -10
+   }
+  }
  }
 }

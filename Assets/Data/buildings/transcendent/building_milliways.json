@@ -39,13 +39,9 @@
    "SPECIALIST_MERCHANT": 3
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "cost": {
-  "production": 7783
+  "production": 7783,
+  "hurryModifier": 10000
  },
  "ui": {
   "art": {

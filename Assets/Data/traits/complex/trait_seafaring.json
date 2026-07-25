@@ -396,8 +396,13 @@
  },
  "tradeRoutes": {
   "empire": {
-   "coastal": {
-    "flat": 1
+   "routes": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "HAS_COAST"
+     }
+    ]
    }
   }
  },

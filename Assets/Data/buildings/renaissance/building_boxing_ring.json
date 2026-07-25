@@ -48,15 +48,11 @@
    }
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "cost": {
   "production": 440,
   "sizeModifier": 1,
-  "countModifier": 1
+  "countModifier": 1,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

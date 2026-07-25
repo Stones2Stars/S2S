@@ -99,11 +99,6 @@
    "percent": -25
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 50
-  }
- },
  "religion": {
   "city": {
    "RELIGION_MESOPOTAMISM": {
@@ -120,7 +115,8 @@
   "production": 1008,
   "sizeModifier": 3,
   "materialsModifier": 2,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 50
  },
  "ai": {
   "flavours": [

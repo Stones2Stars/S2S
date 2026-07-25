@@ -44,10 +44,7 @@
      "value": 4,
      "enabled": "IS_CAPITAL"
     }
-   ],
-   "tradeRoute": {
-    "percent": 2
-   }
+   ]
   }
  },
  "gold": {
@@ -115,8 +112,14 @@
  },
  "tradeRoutes": {
   "empire": {
-   "foreign": {
-    "percent": 5
+   "modifier": {
+    "percent": [
+     2,
+     {
+      "value": 5,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
    }
   }
  },

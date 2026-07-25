@@ -43,9 +43,6 @@
  "commerce": {
   "empire": {
    "percent": 4,
-   "tradeRoute": {
-    "percent": 3
-   },
    "improvements": {
     "IMPROVEMENT_VERTICAL_FARM": {
      "flat": 1
@@ -112,7 +109,12 @@
  },
  "tradeRoutes": {
   "empire": {
-   "flat": 1
+   "routes": {
+    "flat": 1
+   },
+   "modifier": {
+    "percent": 3
+   }
   }
  },
  "revolution": {

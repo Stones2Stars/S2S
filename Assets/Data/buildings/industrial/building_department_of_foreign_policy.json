@@ -55,14 +55,11 @@
    "percent": -25
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "tradeRoutes": {
   "city": {
-   "flat": 2
+   "routes": {
+    "flat": 2
+   }
   }
  },
  "espionageDefense": {
@@ -79,7 +76,8 @@
   "production": 1660,
   "sizeModifier": 2,
   "materialsModifier": 1,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "attributes": {
   "destroyedOnCapture": true

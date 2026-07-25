@@ -20,11 +20,6 @@
    "flat": 2
   }
  },
- "buildTime": {
-  "plot": {
-   "percent": 75
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/baseterrain/DuneRugged.dds"
@@ -137,6 +132,7 @@
   "description": "TXT_KEY_TERRAIN_JAGGED",
   "civilopedia": "TXT_KEY_TERRAIN_ROCKY_PEDIA",
   "found": true,
+  "buildTimeModifier": 75,
   "movementCost": 2,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

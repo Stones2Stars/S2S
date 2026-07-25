@@ -53,15 +53,11 @@
    "flat": 4
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "cost": {
   "production": 12310,
   "sizeModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 100
  },
  "attributes": {
   "destroyedOnCapture": true

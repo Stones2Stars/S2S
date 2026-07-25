@@ -80,14 +80,11 @@
    "percent": 5
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "tradeRoutes": {
   "city": {
-   "flat": 2
+   "routes": {
+    "flat": 2
+   }
   }
  },
  "PROPERTY_EDUCATION": {
@@ -100,7 +97,8 @@
   "sizeModifier": 2,
   "countModifier": 1,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

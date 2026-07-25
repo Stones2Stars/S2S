@@ -38,10 +38,7 @@
      "value": 4,
      "enabled": "IS_CAPITAL"
     }
-   ],
-   "tradeRoute": {
-    "percent": 3
-   }
+   ]
   }
  },
  "gold": {
@@ -66,9 +63,16 @@
  },
  "happiness": {
   "empire": {
-   "civicAnger": {
-    "percent": 15
-   },
+   "flat": [
+    {
+     "value": -15,
+     "per": {
+      "type": "POPULATION",
+      "each": 100,
+      "scope": "city"
+     }
+    }
+   ],
    "buildings": {
     "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE": {
      "flat": -5
@@ -118,6 +122,13 @@
   "empire": {
    "freeCivilian": {
     "flat": 10
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": 3
    }
   }
  },

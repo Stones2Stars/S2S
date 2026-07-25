@@ -8,7 +8,7 @@
     "bCivVoting": {"scope": "game", "channel": "voteMode", "kind": "enabler"},
     "iMinVoters": {"scope": "game", "channel": "voteThreshold", "kind": "flat"},
     "iStateReligionVotePercent": {"scope": "game", "channel": "voteThreshold", "kind": "percent"},
-    "iTradeRoutes": {"scope": "game", "channel": "tradeRoutes", "kind": "flat"},
+    "iTradeRoutes": {"scope": "game", "channel": "tradeRoutes", "member": "routes", "kind": "flat"},
     "bSecretaryGeneral": {"scope": "game", "channel": "voteEffect", "kind": "enabler"},
     "bVictory": {"scope": "game", "channel": "voteEffect", "kind": "enabler"},
     "bFreeTrade": {"scope": "game", "channel": "voteEffect", "kind": "enabler"},

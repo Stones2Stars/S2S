@@ -29,9 +29,6 @@
  "commerce": {
   "empire": {
    "percent": 2,
-   "tradeRoute": {
-    "percent": 3
-   },
    "improvements": {
     "IMPROVEMENT_FARM": {
      "flat": -1
@@ -64,6 +61,13 @@
    },
    "numCities": {
     "percent": 15
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": 3
    }
   }
  },

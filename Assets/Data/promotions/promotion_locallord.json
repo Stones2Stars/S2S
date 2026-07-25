@@ -7,13 +7,6 @@
    ]
   }
  },
- "upkeep": {
-  "unit": {
-   "upgradeDiscount": {
-    "percent": 10
-   }
-  }
- },
  "combat": {
   "unit": {
    "cityDefense": {
@@ -30,6 +23,13 @@
   "unit": {
    "friendly": {
     "flat": 10
+   }
+  }
+ },
+ "costs": {
+  "unit": {
+   "upgrade": {
+    "percent": -10
    }
   }
  },

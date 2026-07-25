@@ -33,6 +33,9 @@
    "headquarters": {
     "flat": {
      "value": 4,
+     "enabled": {
+      "IS_HEADQUARTERS": "CORPORATION_MCDOWELLS"
+     },
      "per": "CORPORATION_LEVEL"
     }
    }

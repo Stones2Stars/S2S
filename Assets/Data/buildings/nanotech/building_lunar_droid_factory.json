@@ -55,18 +55,14 @@
    "flat": 200
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "allowedSpecialists": {
   "city": {
    "SPECIALIST_ENGINEER": 2
   }
  },
  "cost": {
-  "production": 1500
+  "production": 1500,
+  "hurryModifier": 10000
  },
  "ai": {
   "flavours": [

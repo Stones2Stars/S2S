@@ -98,11 +98,6 @@
    "flat": 20
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "underworld": {
   "city": {
    "insidiousness": {
@@ -133,7 +128,8 @@
  "cost": {
   "production": 830,
   "sizeModifier": 1,
-  "countModifier": 2
+  "countModifier": 2,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

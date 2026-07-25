@@ -91,11 +91,6 @@
    "percent": -10
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "underworld": {
   "city": {
    "investigation": {
@@ -123,7 +118,8 @@
   "sizeModifier": 2,
   "countModifier": 2,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

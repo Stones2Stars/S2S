@@ -26,11 +26,6 @@
    "flat": 3
   }
  },
- "buildTime": {
-  "plot": {
-   "percent": 75
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\feature_peak.dds"
@@ -44,6 +39,7 @@
  "identity": {
   "description": "TXT_KEY_TERRAIN_PEAK",
   "civilopedia": "TXT_KEY_TERRAIN_PEAK_PEDIA",
+  "buildTimeModifier": 75,
   "movementCost": 2
  }
 }

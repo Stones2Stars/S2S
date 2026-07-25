@@ -18,7 +18,7 @@ THE HUMAN/AI DUALITY (the core awkwardness — read this before touching the dat
   block (v3 audience qualifier) is the AI-ONLY value. Two cases occur:
     * DUAL field (e.g. unit upkeep): bare = base for everyone; `ai` = an EXTRA modifier stacked for AI players.
       At Deity an AI's unit upkeep is base 200% × the AI 50% modifier — AIs pay less, the human pays full.
-    * AI-ONLY field (e.g. buildCost/techCost/growth/supply/upgrade): NO bare value, only `ai` — these knobs
+    * AI-ONLY field (e.g. the costs kinds/growth/supply): NO bare value, only `ai` — these knobs
       exist solely to discount the AI; the human has no equivalent handicap lever for them.
 - SOURCING IS ENGINE FETCHING, NOT DATA (so it is NOT encoded here): a human reads the BASE off their OWN
   handicap; an AI reads the BASE off its own handicap AND the `ai` modifier off the derived GAME handicap
@@ -29,17 +29,17 @@ WHAT EACH FAMILY MEANS (current behaviour — the meanings that must survive the
 - `maintenance.empire.{distance,numCities,colony,corporation}.percent` — % scale on each gold city-maintenance
   COMPONENT (mirrors CvCity::calculateBaseMaintenance). `colony.cap` = a hard CAP on the colony component
   (iMaxColonyMaintenance), NOT a percent — a clamp carried in the family structure (modifier-spec §7).
-- `upkeep.empire.{unit,civic,inflation,supply,upgrade}.percent` — % scale on recurring gold upkeep costs.
-  unit/civic/inflation are DUAL (base + ai); supply/upgrade are AI-ONLY.
+- `upkeep.empire.{unit,civic,inflation,supply}.percent` — % scale on recurring gold upkeep costs.
+  unit/civic/inflation are DUAL (base + ai); supply is AI-ONLY.
 - `happiness.empire.flat` / `health.empire.flat` — flat happy/health bonus in every city of the owner.
 - `growth.empire.ai.percent` — AI city food-to-grow % (AI-only; lower = AI grows faster).
-- `techCost.empire.ai.percent` — AI tech-research COST % (renamed off `research` so it can't read as the
-  research commerce). AI-only.
 - `workRate.empire.ai.percent` — AI worker build-rate %. AI-only.
-- `buildCost.empire.{train,worldTrain,construct,worldConstruct,create,worldCreate}.ai.percent` — AI build-cost
-  % per produced kind (unit / world-unit / building / world-building / wonder|project / world-wonder). AI-only.
+- the ONE `costs` family (ruling 18, info-rebuild.md): `costs.empire.{research,train,construct,create,upgrade}
+  .ai.percent` + `costs.world.{train,construct,create}.ai.percent` (the retired world*-prefixed kinds on the
+  scope axis -- the engine applies them to world-class targets). All AI-only, raw 100-based knobs.
 - `perEra.empire.ai.percent` — META: a per-era ramp applied to the WHOLE AI-economy family (× current era). A
-  modifier-of-modifiers — the least-natural field; flagged for the rework. AI-only.
+  modifier-of-modifiers — LEFT AS-IS (ruling-14 verify: it ramps ~10 kinds across costs/upkeep/growth/
+  warWeariness and is SUBTRACTED from workRate — not the single-family per:"ERA" shape; reported). AI-only.
 - `revolution.empire.percent` — % into the Revolution index. INCOMPLETE mechanic (WIP, tracked), NOT dead — kept.
 - `diplomacy.empire.attitude.flat` (AI attitude shift, via the TARGET's handicap); `diplomacy.empire.declareWar`
   / `warWeariness` (AI behaviour); `diplomacy.team.{noTechTrade,techTradeKnown}.percent` (tech-trade thresholds).
@@ -56,8 +56,8 @@ WHAT EACH FAMILY MEANS (current behaviour — the meanings that must survive the
   modifier, poorly supported in the DLL → parked in identity pending an advanced-start review.
 
 Verified against Sources/Infos/CvHandicapInfo.h + docs/dev/reference/handicaps.md (read-sites, sourcing,
-the maintenance computation, the no-dead-fields verdict). PROVISIONAL family names: growth/techCost/workRate/
-buildCost/perEra (kept until the future rework). Manual renames logged in migration-renames.md.
+the maintenance computation, the no-dead-fields verdict). PROVISIONAL family names: growth/workRate/perEra
+(kept until the future rework). Manual renames logged in migration-renames.md.
 
   python3 curate_handicap.py --sample HANDICAP_CHIEFTAIN
   python3 curate_handicap.py --write
@@ -87,20 +87,31 @@ FAMILIES = {
     "iInflationPercent":              ("upkeep", "empire", "inflation", "percent", None),
     "iAIInflationPercent":            ("upkeep", "empire", "inflation", "percent", "ai"),
     "iAIUnitSupplyPercent":           ("upkeep", "empire", "supply",    "percent", "ai"),
-    "iAIUnitUpgradePercent":          ("upkeep", "empire", "upgrade",   "percent", "ai"),
+    # AI upgrade-price % -> the ONE `costs` family, kind `upgrade` (ruling 18; consumption CvUnit::upgradePrice
+    # CvUnit.cpp:10360, a percent modifier on the upgrade price -- 100-based raw value kept, like every AI knob).
+    "iAIUnitUpgradePercent":          ("costs", "empire", "upgrade",   "percent", "ai"),
     # --- wellbeing: single-concept families ---
     "iHealthBonus":                   ("health",    "empire", None, "flat", None),
     "iHappyBonus":                    ("happiness", "empire", None, "flat", None),
-    # --- AI economy rates (PROVISIONAL family names) ---
+    # --- AI economy rates ---
     "iAIGrowthPercent":               ("growth",        "empire", None, "percent", "ai"),
-    "iAIResearchPercent":             ("techCost",      "empire", None, "percent", "ai"),  # AI tech-cost % (NOT the research commerce)
+    # the ONE `costs` family (ruling 18): techCost -> costs.research; buildCost.{train,construct,create} ->
+    # costs.{train,construct,create}; the world*-prefixed kinds retire onto the WORLD scope axis (the engine
+    # applies them to world-class targets: isWorldWonder/isWorldProject, CvPlayer.cpp:7113/7176). Values stay
+    # the raw 100-based AI knobs (uniform with the era costs.world.* entries).
+    "iAIResearchPercent":             ("costs", "empire", "research", "percent", "ai"),  # AI tech-cost % (CvTeam.cpp:2654)
     "iAIWorkRateModifier":            ("workRate",      "empire", None, "percent", "ai"),
-    "iAITrainPercent":                ("buildCost", "empire", "train",          "percent", "ai"),
-    "iAIWorldTrainPercent":           ("buildCost", "empire", "worldTrain",     "percent", "ai"),
-    "iAIConstructPercent":            ("buildCost", "empire", "construct",      "percent", "ai"),
-    "iAIWorldConstructPercent":       ("buildCost", "empire", "worldConstruct", "percent", "ai"),
-    "iAICreatePercent":               ("buildCost", "empire", "create",         "percent", "ai"),
-    "iAIWorldCreatePercent":          ("buildCost", "empire", "worldCreate",    "percent", "ai"),
+    "iAITrainPercent":                ("costs", "empire", "train",     "percent", "ai"),
+    "iAIWorldTrainPercent":           ("costs", "world",  "train",     "percent", "ai"),
+    "iAIConstructPercent":            ("costs", "empire", "construct", "percent", "ai"),
+    "iAIWorldConstructPercent":       ("costs", "world",  "construct", "percent", "ai"),
+    "iAICreatePercent":               ("costs", "empire", "create",    "percent", "ai"),
+    "iAIWorldCreatePercent":          ("costs", "world",  "create",    "percent", "ai"),
+    # perEra: LEFT AS-IS (ruling 14 verify FAILED its premise: the ramp is NOT confined to the costs AI
+    # modifiers -- it also rides upkeep.unit/civic/inflation/supply (CvPlayer.cpp:10354/14244/7993/7934),
+    # growth (:24453), war weariness (:10955), the upgrade price (CvUnit.cpp:10362) and is SUBTRACTED from
+    # the AI work-rate bonus (CvPlayer.cpp:9860, CvUnit.cpp:27949). A per:"ERA" fan-out over ~10 kinds with a
+    # sign flip is not the ruling's single-family shape -- left unchanged and reported).
     "iAIPerEraModifier":              ("perEra",        "empire", None, "percent", "ai"),  # meta: ramps the AI family per era
     "iRevolutionIndexPercent":        ("revolution",    "empire", None, "percent", None),  # INCOMPLETE (WIP mechanic, tracked issue) — keep, NOT dead
     # --- diplomacy ---
@@ -145,7 +156,7 @@ HOIST_TEXT = {"Description": "description", "Help": "help"}
 GAMEOBJECT_SCOPE = {"GAMEOBJECT_CITY": "city", "GAMEOBJECT_PLOT": "plot", "GAMEOBJECT_UNIT": "unit"}
 SOURCE_UNIT = {"CONSTANT": "perTurn", "DECAY": "decay"}
 # output order of the family sections (those present)
-FAMILY_ORDER = ["maintenance", "upkeep", "happiness", "health", "growth", "techCost", "workRate", "buildCost",
+FAMILY_ORDER = ["maintenance", "upkeep", "happiness", "health", "growth", "costs", "workRate",
                 "perEra", "revolution", "diplomacy", "combat", "barbarians"]   # PROPERTY_* families fall in after
 
 

@@ -53,11 +53,6 @@
    "flat": 15
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "underworld": {
   "city": {
    "investigation": {
@@ -84,7 +79,8 @@
   "production": 1845,
   "sizeModifier": 2,
   "materialsModifier": 1,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "world": {
   "art": {

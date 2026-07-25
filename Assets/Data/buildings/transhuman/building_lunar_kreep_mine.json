@@ -42,13 +42,9 @@
    "flat": 250
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "cost": {
-  "production": 2500
+  "production": 2500,
+  "hurryModifier": 10000
  },
  "ai": {
   "flavours": [

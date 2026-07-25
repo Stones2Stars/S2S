@@ -42,11 +42,6 @@
    "flat": 2
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "PROPERTY_TOURISM": {
   "city": {
    "flat": 12
@@ -54,7 +49,8 @@
  },
  "cost": {
   "production": 7680,
-  "sizeModifier": 2
+  "sizeModifier": 2,
+  "hurryModifier": 100
  },
  "attributes": {
   "nukeImmune": true

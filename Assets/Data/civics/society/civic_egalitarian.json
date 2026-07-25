@@ -80,9 +80,16 @@
  },
  "happiness": {
   "empire": {
-   "civicAnger": {
-    "percent": -25
-   },
+   "flat": [
+    {
+     "value": 25,
+     "per": {
+      "type": "POPULATION",
+      "each": 100,
+      "scope": "city"
+     }
+    }
+   ],
    "nonStateReligion": {
     "flat": 1
    },
@@ -183,7 +190,9 @@
  },
  "tradeRoutes": {
   "empire": {
-   "flat": 1
+   "routes": {
+    "flat": 1
+   }
   }
  },
  "workRate": {

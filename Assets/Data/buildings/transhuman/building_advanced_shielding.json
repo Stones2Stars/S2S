@@ -48,11 +48,6 @@
    }
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "espionageDefense": {
   "city": {
    "flat": 60
@@ -68,7 +63,8 @@
   "sizeModifier": 2,
   "countModifier": 2,
   "materialsModifier": 1,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

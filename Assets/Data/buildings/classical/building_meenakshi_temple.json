@@ -76,11 +76,6 @@
    "percent": 50
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 50
-  }
- },
  "hurryAnger": {
   "city": {
    "percent": -50
@@ -102,7 +97,8 @@
   "production": 1566,
   "sizeModifier": 3,
   "materialsModifier": 2,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 50
  },
  "ai": {
   "flavours": [

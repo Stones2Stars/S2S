@@ -200,19 +200,19 @@
    }
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "tradeRoutes": {
   "city": {
-   "flat": 4,
-   "modifier": {
-    "percent": 25
+   "routes": {
+    "flat": 4
    },
-   "foreignModifier": {
-    "percent": 25
+   "modifier": {
+    "percent": [
+     25,
+     {
+      "value": 25,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
    }
   }
  },
@@ -230,7 +230,8 @@
   "sizeModifier": 1,
   "countModifier": 1,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 100
  },
  "world": {
   "art": {

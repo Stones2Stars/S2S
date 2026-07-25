@@ -42,9 +42,6 @@
    },
    "freeMilitary": {
     "perPopulation": 30
-   },
-   "upgradePrice": {
-    "percent": -30
    }
   }
  },
@@ -127,5 +124,12 @@
   "civilopedia": "TXT_KEY_TRAIT_WARMONGER2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_WARMONGER_STRATEGY",
   "impurePropertyManipulators": true
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": -30
+   }
+  }
  }
 }

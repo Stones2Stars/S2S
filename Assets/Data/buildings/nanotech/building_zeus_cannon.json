@@ -15,13 +15,9 @@
  "allowed": {
   "world": 1
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "cost": {
-  "production": 5116
+  "production": 5116,
+  "hurryModifier": 10000
  },
  "ui": {
   "art": {

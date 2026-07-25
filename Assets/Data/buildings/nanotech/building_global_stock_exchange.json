@@ -24,14 +24,11 @@
  "allowed": {
   "world": 1
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "tradeRoutes": {
   "empire": {
-   "flat": 3
+   "routes": {
+    "flat": 3
+   }
   }
  },
  "cost": {
@@ -39,7 +36,8 @@
   "sizeModifier": 3,
   "countModifier": 2,
   "materialsModifier": 1,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

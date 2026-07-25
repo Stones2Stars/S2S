@@ -51,27 +51,24 @@
    }
   }
  },
- "upkeep": {
-  "empire": {
-   "upgradePrice": {
-    "percent": 10
-   }
-  }
- },
  "tradeRoutes": {
   "empire": {
-   "flat": 1,
-   "foreign": {
-    "percent": 10
+   "routes": {
+    "flat": 1
+   },
+   "modifier": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
    }
   }
  },
  "hurry": {
   "empire": {
    "anger": {
-    "percent": 20
-   },
-   "cost": {
     "percent": 20
    }
   }
@@ -148,5 +145,15 @@
   "strategy": "TXT_KEY_TRAIT_COVETOUS_STRATEGY",
   "negativeTrait": true,
   "minAnarchy": 2
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": 20
+   },
+   "upgrade": {
+    "percent": 10
+   }
+  }
  }
 }

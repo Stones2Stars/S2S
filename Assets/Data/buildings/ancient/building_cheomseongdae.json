@@ -90,11 +90,6 @@
    "flat": 2
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 200
-  }
- },
  "goldenAge": {
   "empire": {
    "percent": 20
@@ -117,7 +112,8 @@
   "production": 1038,
   "sizeModifier": 2,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 200
  },
  "ai": {
   "flavours": [

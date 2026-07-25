@@ -12,10 +12,10 @@
    ]
   }
  },
- "upkeep": {
+ "costs": {
   "unit": {
-   "upgradeDiscount": {
-    "percent": 10
+   "upgrade": {
+    "percent": -10
    }
   }
  },

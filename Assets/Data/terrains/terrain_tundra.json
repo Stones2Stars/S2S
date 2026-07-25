@@ -15,11 +15,6 @@
    "flat": 2
   }
  },
- "buildTime": {
-  "plot": {
-   "percent": 45
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/baseterrain/DuneIce.dds"
@@ -132,6 +127,7 @@
   "description": "TXT_KEY_TERRAIN_TUNDRA",
   "civilopedia": "TXT_KEY_TERRAIN_TUNDRA_PEDIA",
   "found": true,
+  "buildTimeModifier": 45,
   "movementCost": 3,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

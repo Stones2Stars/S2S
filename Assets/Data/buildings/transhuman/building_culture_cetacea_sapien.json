@@ -34,16 +34,12 @@
    "flat": 1
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 200
-  }
- },
  "cost": {
   "production": 30330,
   "sizeModifier": 1,
   "materialsModifier": 1,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 200
  },
  "attributes": {
   "nukeImmune": true

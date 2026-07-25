@@ -12,13 +12,6 @@
    "percent": -5
   }
  },
- "commerce": {
-  "empire": {
-   "tradeRoute": {
-    "percent": -30
-   }
-  }
- },
  "extraYieldThreshold": {
   "empire": {
    "food": {
@@ -89,5 +82,12 @@
   "civilopedia": "TXT_KEY_TRAIT_POPULIST_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_POPULIST_SHORT",
   "negativeTrait": true
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": -30
+   }
+  }
  }
 }

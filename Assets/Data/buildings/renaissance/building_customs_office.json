@@ -24,15 +24,15 @@
    ]
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "tradeRoutes": {
   "city": {
-   "foreignModifier": {
-    "percent": 20
+   "modifier": {
+    "percent": [
+     {
+      "value": 20,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
    }
   }
  },
@@ -40,7 +40,8 @@
   "production": 535,
   "sizeModifier": 2,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

@@ -30,11 +30,6 @@
    "flat": 1
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 50
-  }
- },
  "allowedSpecialists": {
   "city": {
    "SPECIALIST_PRIEST": 1
@@ -48,7 +43,8 @@
  "cost": {
   "production": 240,
   "countModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 50
  },
  "ai": {
   "flavours": [

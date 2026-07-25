@@ -52,14 +52,11 @@
    ]
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "tradeRoutes": {
   "city": {
-   "flat": 1,
+   "routes": {
+    "flat": 1
+   },
    "modifier": {
     "percent": 3
    }
@@ -69,7 +66,8 @@
   "production": 300,
   "sizeModifier": 1,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 100
  },
  "world": {
   "art": {

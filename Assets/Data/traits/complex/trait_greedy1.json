@@ -348,13 +348,6 @@
    }
   }
  },
- "hurry": {
-  "empire": {
-   "cost": {
-    "percent": -25
-   }
-  }
- },
  "workRate": {
   "empire": {
    "percent": 15
@@ -426,5 +419,12 @@
   "civilopedia": "TXT_KEY_TRAIT_GREEDY1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_GREEDY_STRATEGY",
   "negativeTrait": true
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": -25
+   }
+  }
  }
 }

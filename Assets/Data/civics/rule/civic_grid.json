@@ -34,10 +34,17 @@
     "max": "TARGET_NUM_CITIES",
     "orderedByDescending": "CITY_SIZE"
    },
-   "flat": -1,
-   "civicAnger": {
-    "percent": 10
-   }
+   "flat": [
+    -1,
+    {
+     "value": -10,
+     "per": {
+      "type": "POPULATION",
+      "each": 100,
+      "scope": "city"
+     }
+    }
+   ]
   }
  },
  "maintenance": {

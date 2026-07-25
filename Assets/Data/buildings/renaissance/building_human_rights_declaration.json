@@ -34,11 +34,6 @@
    "percent": 100
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "grants": {
   "population": {
    "empire": 1
@@ -46,7 +41,8 @@
  },
  "cost": {
   "production": 3480,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

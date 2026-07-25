@@ -43,11 +43,6 @@
    "flat": -20
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "PROPERTY_WATER_POLLUTION": {
   "city": {
    "flat": -10
@@ -69,7 +64,8 @@
   }
  },
  "cost": {
-  "production": 11510
+  "production": 11510,
+  "hurryModifier": 10000
  },
  "world": {
   "art": {

@@ -87,11 +87,6 @@
    "SPECIALIST_PRIEST": 1
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 50
-  }
- },
  "religion": {
   "city": {
    "RELIGION_TAOISM": {
@@ -111,7 +106,8 @@
  },
  "cost": {
   "production": 1566,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 50
  },
  "ai": {
   "flavours": [

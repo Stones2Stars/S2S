@@ -151,7 +151,9 @@ TERRAIN_FAMILIES = {
     "Yields":           {"channel": "yield",           "scope": "plot", "kind": "flat", "valueKeys": engine.YIELDS},
     "iDefense":         {"channel": "defense",         "scope": "plot", "kind": "percent", "member": "amount"},
     "iCultureDistance": {"channel": "cultureDistance", "scope": "plot", "kind": "flat"},
-    "iBuildModifier":   {"channel": "buildTime",       "scope": "plot", "kind": "percent"},
+    # iBuildModifier is NOT a family (ruling 18 plane 1: buildTime -> substrate SELF-DATA): the % build-time
+    # slowdown for worker builds ON this terrain (CvPlot.cpp:3607) -> identity.buildTimeModifier via to_identity,
+    # the exact movementCost precedent below.
 }
 
 # ArtDefineTag (on-map terrain graphics) -> world.art.icon and Button -> ui.art.icon are now handled by the shared
@@ -165,7 +167,7 @@ TERRAIN_ID_RENAME = {"MapCategoryTypes": "mapCategories"}
 # iMovement -- the robust way to force it intrinsic (id_rename would be skipped if the mapping channels it).
 CFG = cc.EntityConfig("TerrainInfo", extra_drop=["iHealthPercent"],
                       families=TERRAIN_FAMILIES, id_rename=TERRAIN_ID_RENAME,
-                      to_identity={"iMovement": "movementCost"})
+                      to_identity={"iMovement": "movementCost", "iBuildModifier": "buildTimeModifier"})
 
 # NO inbound boosts: a terrain is never the deliveryguy for another entity's modifier (owner 2026-06-16).
 TERRAIN_BOOSTS = []

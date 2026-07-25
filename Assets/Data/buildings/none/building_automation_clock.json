@@ -51,18 +51,14 @@
    "percent": -2
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "allowedSpecialists": {
   "city": {
    "SPECIALIST_ENGINEER": 1
   }
  },
  "cost": {
-  "production": 380
+  "production": 380,
+  "hurryModifier": 100
  },
  "world": {
   "art": {

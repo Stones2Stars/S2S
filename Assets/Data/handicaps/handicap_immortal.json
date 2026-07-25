@@ -41,11 +41,6 @@
     "ai": {
      "percent": 60
     }
-   },
-   "upgrade": {
-    "ai": {
-     "percent": 60
-    }
    }
   }
  },
@@ -66,30 +61,11 @@
    }
   }
  },
- "techCost": {
-  "empire": {
-   "ai": {
-    "percent": 88
-   }
-  }
- },
- "workRate": {
-  "empire": {
-   "ai": {
-    "percent": 40
-   }
-  }
- },
- "buildCost": {
+ "costs": {
   "empire": {
    "train": {
     "ai": {
      "percent": 68
-    }
-   },
-   "worldTrain": {
-    "ai": {
-     "percent": 80
     }
    },
    "construct": {
@@ -97,7 +73,29 @@
      "percent": 76
     }
    },
-   "worldConstruct": {
+   "create": {
+    "ai": {
+     "percent": 80
+    }
+   },
+   "research": {
+    "ai": {
+     "percent": 88
+    }
+   },
+   "upgrade": {
+    "ai": {
+     "percent": 60
+    }
+   }
+  },
+  "world": {
+   "train": {
+    "ai": {
+     "percent": 80
+    }
+   },
+   "construct": {
     "ai": {
      "percent": 80
     }
@@ -106,11 +104,13 @@
     "ai": {
      "percent": 80
     }
-   },
-   "worldCreate": {
-    "ai": {
-     "percent": 80
-    }
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "ai": {
+    "percent": 40
    }
   }
  },

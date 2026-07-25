@@ -64,17 +64,13 @@
    "flat": -10
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "cost": {
   "production": 2005,
   "sizeModifier": 3,
   "countModifier": 2,
   "materialsModifier": 2,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "attributes": {
   "orbital": true

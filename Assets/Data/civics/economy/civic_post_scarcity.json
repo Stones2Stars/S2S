@@ -35,13 +35,6 @@
    }
   }
  },
- "hurry": {
-  "empire": {
-   "cost": {
-    "percent": 33
-   }
-  }
- },
  "revolution": {
   "empire": {
    "local": {
@@ -58,6 +51,13 @@
    },
    "democracyLevel": {
     "flat": -8
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": 33
    }
   }
  },

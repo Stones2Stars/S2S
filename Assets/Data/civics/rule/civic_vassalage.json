@@ -43,10 +43,7 @@
      "value": 5,
      "enabled": "IS_CAPITAL"
     }
-   ],
-   "tradeRoute": {
-    "percent": 3
-   }
+   ]
   }
  },
  "gold": {
@@ -95,10 +92,17 @@
  },
  "happiness": {
   "empire": {
-   "flat": -1,
-   "civicAnger": {
-    "percent": 20
-   },
+   "flat": [
+    -1,
+    {
+     "value": -20,
+     "per": {
+      "type": "POPULATION",
+      "each": 100,
+      "scope": "city"
+     }
+    }
+   ],
    "nonStateReligion": {
     "flat": -1
    }
@@ -155,6 +159,13 @@
    "freeCivilian": {
     "flat": 10,
     "perPopulation": 45
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": 3
    }
   }
  },

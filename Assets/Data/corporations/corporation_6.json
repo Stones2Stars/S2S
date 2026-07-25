@@ -10,6 +10,9 @@
    "headquarters": {
     "flat": {
      "value": 4,
+     "enabled": {
+      "IS_HEADQUARTERS": "CORPORATION_6"
+     },
      "per": "CORPORATION_LEVEL"
     }
    }

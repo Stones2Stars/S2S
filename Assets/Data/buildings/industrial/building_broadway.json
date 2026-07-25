@@ -46,11 +46,6 @@
    "flat": 2
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 200
-  }
- },
  "PROPERTY_TOURISM": {
   "city": {
    "flat": 10
@@ -60,7 +55,8 @@
   "production": 4800,
   "sizeModifier": 2,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 200
  },
  "ai": {
   "flavours": [

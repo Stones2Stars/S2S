@@ -84,11 +84,6 @@
    ]
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "religion": {
   "city": {
    "RELIGION_HINDUISM": {
@@ -110,7 +105,8 @@
   "production": 2208,
   "sizeModifier": 3,
   "materialsModifier": 2,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

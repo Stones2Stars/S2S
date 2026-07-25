@@ -10,11 +10,6 @@
    "flat": 2
   }
  },
- "buildTime": {
-  "plot": {
-   "percent": 25
-  }
- },
  "defense": {
   "plot": {
    "amount": {
@@ -40,6 +35,7 @@
   "civilopedia": "TXT_KEY_TERRAIN_MARTIAN_DESERT_PEDIA",
   "foundCoast": true,
   "foundFreshWater": true,
+  "buildTimeModifier": 25,
   "movementCost": 3,
   "mapCategories": [
    "MAPCATEGORY_MARTIAN"

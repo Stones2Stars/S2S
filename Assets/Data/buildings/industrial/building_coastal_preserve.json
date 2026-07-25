@@ -52,11 +52,6 @@
    "percent": 1
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "PROPERTY_AIR_POLLUTION": {
   "city": {
    "flat": -25
@@ -69,7 +64,8 @@
  },
  "cost": {
   "production": 680,
-  "sizeModifier": 3
+  "sizeModifier": 3,
+  "hurryModifier": 100
  },
  "world": {
   "art": {

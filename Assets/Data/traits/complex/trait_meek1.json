@@ -149,9 +149,6 @@
    },
    "unitMilitary": {
     "percent": 10
-   },
-   "upgradePrice": {
-    "percent": -5
    }
   }
  },
@@ -237,5 +234,12 @@
   "strategy": "TXT_KEY_TRAIT_MEEK_STRATEGY",
   "negativeTrait": true,
   "impurePropertyManipulators": true
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": -5
+   }
+  }
  }
 }

@@ -18,13 +18,6 @@
    "percent": 1
   }
  },
- "commerce": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 2
-   }
-  }
- },
  "gold": {
   "empire": {
    "percent": [
@@ -60,6 +53,13 @@
    ],
    "corporation": {
     "percent": 25
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": 2
    }
   }
  },

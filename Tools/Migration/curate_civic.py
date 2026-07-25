@@ -57,10 +57,10 @@ SCALAR = {
     "iFreeUnitUpkeepMilitaryPopPercent":("upkeep","empire", "freeMilitary","perPopulation"),
     "iFreeUnitUpkeepCivilian":         ("upkeep", "empire", "freeCivilian","flat"),
     "iFreeUnitUpkeepCivilianPopPercent":("upkeep","empire", "freeCivilian","perPopulation"),
-    "iTradeRoutes":                    ("tradeRoutes", "empire", "",           "flat"),
-    "iForeignTradeRouteModifier":      ("tradeRoutes", "empire", "foreign",    "percent"),
-    "iSharedCivicTradeRouteModifier":  ("tradeRoutes", "empire", "sharedCivic","percent"),
-    "iHurryCostModifier":              ("hurry", "empire", "cost",      "percent"),
+    # tradeRoutes is ONE family with conditions (ruling 11): kinds routes/modifier/max; the foreign/sharedCivic
+    # variants are CONDITIONS -> SCALAR_COND below.
+    "iTradeRoutes":                    ("tradeRoutes", "empire", "routes",     "flat"),
+    "iHurryCostModifier":              ("costs", "empire", "hurry",     "percent"),   # ruling 18: hurry.cost -> costs.hurry (CvCity::getHurryCostModifier leg)
     "iHurryInflationModifier":         ("hurry", "empire", "inflation", "percent"),
     "iWorkerSpeedModifier":            ("workRate", "empire", "", "percent"),
     "iImprovementUpgradeRateModifier": ("improvementUpgradeRate", "empire", "", "percent"),
@@ -85,9 +85,17 @@ SCALAR = {
     "iNonStateReligionHappiness":      ("happiness", "empire", "nonStateReligion", "flat"),
     "iCityLimit":                      ("happiness", "empire", "cityLimit",    "flat"),
     "iCityOverLimitUnhappy":           ("happiness", "empire", "cityOverLimit","flat"),
+    # foreignerUnhappy / taxRate / cityLimit / cityOverLimit / nonStateReligion: LEFT AS-IS (ruling-12 verify:
+    # their engine math does not map onto the existing condition/per vocabulary -- foreignerUnhappy is an
+    # INVERSE 100/V scaling on foreign-culture % (CvCity.cpp:5650-5654); taxRate scales by the gold-slider
+    # percent (CvPlayer.cpp:26526, needs a TAX_RATE counter token); cityLimit/cityOverLimit scale by the
+    # count of cities ABOVE the limit and carry a found-block interplay when the unhappy half is 0
+    # (CvCity.cpp:5665-5674, CvPlayer.cpp:6210); nonStateReligion is per NON-state religion present
+    # (CvCity.cpp:9407-9418). Reported, not re-shaped.)
     "iForeignerUnhappyPercent":        ("happiness", "empire", "foreignerUnhappy","percent"),
     "iTaxRateUnhappiness":             ("happiness", "empire", "taxRate",      "percent"),
-    "iCivicPercentAnger":              ("happiness", "empire", "civicAnger",   "percent"),
+    # iCivicPercentAnger IS convertible (ruling 12): unhappiness = V×10 × pop / 1000 = V per 100 city-pop
+    # (CvPlayer.cpp:8577 ×10, CvCity.cpp:5624 /PERCENT_ANGER_DIVISOR=1000) -> a per-scaler, handled in curate().
     "iExtraHealth":                    ("health", "empire", "", "flat"),
     "iPopulationgrowthratepercentage": ("growth", "empire", "", "percent"),
     "iWarWearinessModifier":           ("diplomacy", "empire", "warWeariness", "percent"),
@@ -125,7 +133,8 @@ STATE_RELIGION = {
 # --- flat (no-key) split arrays: tag -> (scope, member, unit, valueKeys). member "" => no condition. ---
 SPLIT_ARRAY = {
     "YieldModifiers":          ("empire", "",           "percent",      YIELDS),
-    "TradeYieldModifiers":     ("empire", "tradeRoute", "percent",      YIELDS),
+    # TradeYieldModifiers is NOT here: the commerce channel (the only one authored -- trade routes yield
+    # COMMERCE) merges into tradeRoutes.modifier (ruling 11); handled explicitly in curate().
     "CommerceModifiers":       ("empire", "",           "percent",      COMMERCES),
 }
 # --- per-scaler split arrays (ruling 4, info-rebuild.md + json.md §3.7): the value deposits flat, scaled by a
@@ -143,17 +152,24 @@ SPLIT_ARRAY_COND = {
     "CapitalYieldModifiers":    ("empire", "percent", YIELDS,    "IS_CAPITAL"),
     "CapitalCommerceModifiers": ("empire", "percent", COMMERCES, "IS_CAPITAL"),
 }
-# --- CONDITIONED scalar families: emit {family}.<scope>.<unit> as a conditioned {value, enabled:<predicate>} entry
-# ([DEC-conditions-are-predicates], owner 2026-06-28). tag -> (family, scope, unit, predicate). ---
+# --- CONDITIONED scalar families: emit {family}.<scope>[.<member>].<unit> as a conditioned
+# {value, enabled:<predicate>} entry ([DEC-conditions-are-predicates], owner 2026-06-28).
+# tag -> (family, scope, member|None, unit, predicate). ---
 SCALAR_COND = {
     # Landmark happiness: BOTH signs gated on GAMEOPTION_MAP_PERSONALIZED (engine CvCity.cpp:5718 happy + :5665-5671
     # unhappy, same option block) — signed-split handles +/-. Retires the bespoke `landmark` member.
-    "iLandmarkHappiness": ("happiness", "empire", "flat", "GAMEOPTION_MAP_PERSONALIZED"),
+    "iLandmarkHappiness": ("happiness", "empire", None, "flat", "GAMEOPTION_MAP_PERSONALIZED"),
     # Home/other-area maintenance (ruling 2, info-rebuild.md): IS_HOME_AREA = the city's area is the capital's
     # area (engine CvArea::getTotalAreaMaintenanceModifier gates on isHomeArea, CvArea.cpp:828-835); "other
     # areas" is the plain negation. Retires the homeArea/otherArea condition-as-member authoring.
-    "iHomeAreaMaintenanceModifier":  ("maintenance", "empire", "percent", "IS_HOME_AREA"),
-    "iOtherAreaMaintenanceModifier": ("maintenance", "empire", "percent", "!IS_HOME_AREA"),
+    "iHomeAreaMaintenanceModifier":  ("maintenance", "empire", None, "percent", "IS_HOME_AREA"),
+    "iOtherAreaMaintenanceModifier": ("maintenance", "empire", None, "percent", "!IS_HOME_AREA"),
+    # tradeRoutes variants are CONDITIONS on the `modifier` kind (rulings 11/17): foreign = the route partner
+    # is another TEAM (engine gate getTeam() != otherTeam, CvCity::totalTradeModifier CvCity.cpp:11539);
+    # sharedCivic = foreign AND the partner's owner runs this same civic (CvCity.cpp:11547-11552).
+    "iForeignTradeRouteModifier":     ("tradeRoutes", "empire", "modifier", "percent", "IS_FOREIGN"),
+    "iSharedCivicTradeRouteModifier": ("tradeRoutes", "empire", "modifier", "percent",
+                                       OrderedDict([("all", ["IS_FOREIGN", "SHARES_CIVIC"])])),
 }
 
 # --- entity-keyed (target-keyed) maps: tag -> (family, scope, targetType, unit, valueKeys|None). ---
@@ -231,12 +247,14 @@ def _put(fam, family, scope, member, unit, val):
         node[unit] = val
 
 
-def _put_cond(fam, family, scope, unit, value, enabled):
-    """Append a CONDITIONED deposit {value, enabled:<predicate>} to a scope-wide leaf, merging with any unconditioned
-    scalar already there into a list (json §3.9). The doc-covered shape for a state-gated modifier
+def _put_cond(fam, family, scope, unit, value, enabled, member=None):
+    """Append a CONDITIONED deposit {value, enabled:<predicate>} to a scope-wide (or member) leaf, merging with any
+    unconditioned scalar already there into a list (json §3.9). The doc-covered shape for a state-gated modifier
     ([DEC-conditions-are-predicates]): a capital-only modifier is empire.percent + enabled:"IS_CAPITAL", NOT a bespoke
     empire.capital member — the cascade's normal scope walk evaluates the predicate per-city."""
     node = fam.setdefault(family, {}).setdefault(scope, {})
+    if member:
+        node = node.setdefault(member, {})
     entry = OrderedDict([("value", value), ("enabled", enabled)])
     cur = node.get(unit)
     if cur is None:
@@ -333,6 +351,21 @@ def curate(typ, rec, store):
             if v not in (None, 0, 0.0):   # happiness in the empire's LARGEST cities -> ranked `cities` target (top-N by
                 node = fam.setdefault("happiness", {}).setdefault("empire", {}).setdefault("cities", {})  # population),
                 node["flat"] = v; node["max"] = "TARGET_NUM_CITIES"; node["orderedByDescending"] = "CITY_SIZE"  # json §3.3, retires the bespoke `largestCity` member ([DEC-conditions-are-predicates])
+        elif tag == "TradeYieldModifiers":
+            # ruling 11: the route-yield % merges into tradeRoutes.modifier (ALL routes -- the engine applies
+            # the player trade-yield modifier to every route). Trade routes produce the COMMERCE yield; a
+            # food/production authoring would be dead data -- keep it visible under the OLD member + warn.
+            for ident, v in engine.named_array(c, YIELDS).items():
+                if ident == "commerce":
+                    _put(fam, "tradeRoutes", "empire", "modifier", "percent", v)
+                else:
+                    leftover.append("TradeYieldModifiers." + ident)
+                    _put(fam, ident, "empire", "tradeRoute", "percent", v)
+        elif tag == "iCivicPercentAnger":
+            v = _num(t)
+            if v not in (None, 0, 0.0):   # V unhappiness per 100 CITY population (engine V×10×pop/1000) ->
+                _put_per(fam, "happiness", "empire", "flat", -v,   # a NEGATIVE happiness per-scaler (ruling 12);
+                         OrderedDict([("type", "POPULATION"), ("each", 100), ("scope", "city")]))  # count is city-local
         elif tag == "iHappyPerMilitaryUnit":
             v = _num(t)
             if v not in (None, 0, 0.0):   # per stationed MILITARY unit -> the SPEC form: a `unit: IS_MILITARY`-
@@ -343,8 +376,8 @@ def curate(typ, rec, store):
         elif tag in SCALAR_COND:
             v = _num(t)
             if v not in (None, 0, 0.0):
-                family, scope, unit, pred = SCALAR_COND[tag]
-                _put_cond(fam, family, scope, unit, v, pred)
+                family, scope, member, unit, pred = SCALAR_COND[tag]
+                _put_cond(fam, family, scope, unit, v, pred, member)
         elif tag in STATE_RELIGION:
             v = _num(t)
             if v not in (None, 0, 0.0):

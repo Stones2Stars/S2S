@@ -55,13 +55,6 @@
    }
   }
  },
- "upkeep": {
-  "empire": {
-   "upgradePrice": {
-    "percent": 10
-   }
-  }
- },
  "hurry": {
   "empire": {
    "anger": {
@@ -181,5 +174,12 @@
   "negativeTrait": true,
   "impurePromotions": true,
   "minAnarchy": 3
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": 10
+   }
+  }
  }
 }

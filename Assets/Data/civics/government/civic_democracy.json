@@ -29,10 +29,7 @@
  },
  "commerce": {
   "empire": {
-   "percent": 5,
-   "tradeRoute": {
-    "percent": 3
-   }
+   "percent": 5
   }
  },
  "gold": {
@@ -81,10 +78,17 @@
  },
  "happiness": {
   "empire": {
-   "flat": 1,
-   "civicAnger": {
-    "percent": -5
-   },
+   "flat": [
+    1,
+    {
+     "value": 5,
+     "per": {
+      "type": "POPULATION",
+      "each": 100,
+      "scope": "city"
+     }
+    }
+   ],
    "buildings": {
     "BUILDING_INDEPENDENCE_HALL": {
      "flat": 5
@@ -152,7 +156,12 @@
  },
  "tradeRoutes": {
   "empire": {
-   "flat": 1
+   "routes": {
+    "flat": 1
+   },
+   "modifier": {
+    "percent": 3
+   }
   }
  },
  "workRate": {

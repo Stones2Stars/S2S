@@ -27,10 +27,17 @@
  },
  "happiness": {
   "empire": {
-   "flat": -4,
-   "civicAnger": {
-    "percent": 10
-   }
+   "flat": [
+    -4,
+    {
+     "value": -10,
+     "per": {
+      "type": "POPULATION",
+      "each": 100,
+      "scope": "city"
+     }
+    }
+   ]
   }
  },
  "capture": {

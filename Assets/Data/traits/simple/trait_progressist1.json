@@ -55,9 +55,6 @@
   "empire": {
    "civic": {
     "percent": 30
-   },
-   "upgradePrice": {
-    "percent": -30
    }
   }
  },
@@ -192,5 +189,12 @@
   "description": "TXT_KEY_TRAIT_PROGRESSIST0",
   "civilopedia": "TXT_KEY_TRAIT_PROGRESSIST_PEDIA",
   "shortDescription": "TXT_KEY_TRAIT_PROGRESSIST_SHORT"
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": -30
+   }
+  }
  }
 }

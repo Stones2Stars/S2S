@@ -86,11 +86,6 @@
    "flat": 2
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 50
-  }
- },
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": 25
@@ -127,7 +122,8 @@
   "production": 1520,
   "sizeModifier": 3,
   "materialsModifier": 1,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 50
  },
  "ai": {
   "flavours": [

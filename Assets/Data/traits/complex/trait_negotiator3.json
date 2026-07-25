@@ -37,13 +37,6 @@
    }
   }
  },
- "commerce": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 20
-   }
-  }
- },
  "greatGeneralRate": {
   "empire": {
    "percent": -10
@@ -83,12 +76,22 @@
  },
  "tradeRoutes": {
   "empire": {
-   "flat": 1,
+   "routes": {
+    "flat": 1
+   },
    "max": {
     "flat": 3
    },
-   "foreign": {
-    "percent": 30
+   "modifier": {
+    "percent": [
+     {
+      "value": 30,
+      "enabled": "IS_FOREIGN"
+     },
+     {
+      "value": 20
+     }
+    ]
    }
   }
  },

@@ -68,11 +68,6 @@
    "flat": 2
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "allowedSpecialists": {
   "city": {
    "SPECIALIST_SCIENTIST": 2
@@ -80,7 +75,8 @@
  },
  "cost": {
   "production": 13830,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "ui": {
   "art": {

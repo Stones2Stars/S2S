@@ -29,13 +29,9 @@
    }
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "cost": {
-  "production": 10179
+  "production": 10179,
+  "hurryModifier": 10000
  },
  "ui": {
   "art": {

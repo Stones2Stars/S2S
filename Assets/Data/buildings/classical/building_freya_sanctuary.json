@@ -78,11 +78,6 @@
    "flat": 2
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 50
-  }
- },
  "religion": {
   "city": {
    "RELIGION_ASATRU": {
@@ -108,7 +103,8 @@
   "production": 1350,
   "sizeModifier": 2,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 50
  },
  "ai": {
   "flavours": [

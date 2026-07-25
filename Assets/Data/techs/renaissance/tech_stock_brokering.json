@@ -25,21 +25,6 @@
    ]
   }
  },
- "tradeRouteYield": {
-  "empire": {
-   "percent": 10
-  }
- },
- "corporationRevenue": {
-  "empire": {
-   "percent": 15
-  }
- },
- "corporationMaintenance": {
-  "empire": {
-   "percent": -5
-  }
- },
  "cost": {
   "research": 3074
  },
@@ -78,5 +63,26 @@
   "tradeable": true,
   "gridX": 55,
   "gridY": 15
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": 10
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "corporation": {
+    "percent": 15
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": -5
+   }
+  }
  }
 }

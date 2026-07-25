@@ -10,11 +10,6 @@
    "flat": 2
   }
  },
- "buildTime": {
-  "plot": {
-   "percent": 50
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/baseterrain/asteroid_surface.dds"
@@ -32,6 +27,7 @@
   "description": "TXT_KEY_TERRAIN_ASTEROID_SURFACE",
   "civilopedia": "TXT_KEY_TERRAIN_ASTEROID_SURFACE_PEDIA",
   "found": true,
+  "buildTimeModifier": 50,
   "movementCost": 3,
   "mapCategories": [
    "MAPCATEGORY_SOLAR_SYSTEM",

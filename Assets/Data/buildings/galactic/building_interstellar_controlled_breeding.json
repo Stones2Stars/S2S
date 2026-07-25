@@ -38,18 +38,14 @@
    "percent": -5
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": 5
   }
  },
  "cost": {
-  "production": 1757
+  "production": 1757,
+  "hurryModifier": 10000
  },
  "world": {
   "art": {

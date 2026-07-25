@@ -67,11 +67,6 @@
    "flat": 1
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "religion": {
   "city": {
    "RELIGION_JUDAISM": {
@@ -93,7 +88,8 @@
   "production": 1200,
   "sizeModifier": 3,
   "materialsModifier": 1,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

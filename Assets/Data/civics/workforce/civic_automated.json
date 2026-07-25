@@ -22,13 +22,6 @@
    }
   }
  },
- "commerce": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 1
-   }
-  }
- },
  "happiness": {
   "empire": {
    "flat": 1,
@@ -56,6 +49,13 @@
   "empire": {
    "freeCivilian": {
     "flat": 5
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": 1
    }
   }
  },

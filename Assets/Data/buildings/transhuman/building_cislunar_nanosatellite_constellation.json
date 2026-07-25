@@ -48,13 +48,9 @@
    "flat": 400
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "cost": {
-  "production": 5655
+  "production": 5655,
+  "hurryModifier": 100
  },
  "attributes": {
   "orbital": true

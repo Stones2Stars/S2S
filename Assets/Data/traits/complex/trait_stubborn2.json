@@ -164,13 +164,6 @@
    }
   }
  },
- "commerce": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 10
-   }
-  }
- },
  "freeSpecialists": {
   "empire": {
    "any": -1
@@ -185,16 +178,6 @@
   "empire": {
    "freeCivilian": {
     "perPopulation": 15
-   },
-   "upgradePrice": {
-    "percent": 15
-   }
-  }
- },
- "hurry": {
-  "empire": {
-   "cost": {
-    "percent": 30
    }
   }
  },
@@ -276,5 +259,22 @@
   "civilopedia": "TXT_KEY_TRAIT_STUBBORN2_PEDIA",
   "strategy": "TXT_KEY_TRAIT_STUBBORN_STRATEGY",
   "negativeTrait": true
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": 10
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": 30
+   },
+   "upgrade": {
+    "percent": 15
+   }
+  }
  }
 }

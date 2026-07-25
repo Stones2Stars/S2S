@@ -15,11 +15,6 @@
    "flat": 4
   }
  },
- "buildTime": {
-  "plot": {
-   "percent": 100
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Ice.dds"
@@ -133,6 +128,7 @@
   "civilopedia": "TXT_KEY_TERRAIN_ICE_PEDIA",
   "foundCoast": true,
   "foundFreshWater": true,
+  "buildTimeModifier": 100,
   "movementCost": 4,
   "mapCategories": [
    "MAPCATEGORY_EARTH"

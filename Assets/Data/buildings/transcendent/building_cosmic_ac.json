@@ -55,13 +55,9 @@
    "SPECIALIST_SCIENTIST": 3
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "cost": {
-  "production": 11658
+  "production": 11658,
+  "hurryModifier": 10000
  },
  "ui": {
   "art": {

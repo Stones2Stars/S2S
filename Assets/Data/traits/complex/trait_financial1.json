@@ -349,13 +349,6 @@
    }
   }
  },
- "hurry": {
-  "empire": {
-   "cost": {
-    "percent": -25
-   }
-  }
- },
  "workRate": {
   "empire": {
    "percent": -15
@@ -437,5 +430,12 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_FINANCIAL_STRATEGY",
   "impurePropertyManipulators": true
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": -25
+   }
+  }
  }
 }

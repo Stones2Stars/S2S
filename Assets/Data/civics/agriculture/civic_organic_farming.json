@@ -21,10 +21,7 @@
  },
  "commerce": {
   "empire": {
-   "percent": 4,
-   "tradeRoute": {
-    "percent": 5
-   }
+   "percent": 4
   }
  },
  "gold": {
@@ -60,6 +57,13 @@
  "growth": {
   "empire": {
    "percent": 20
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": 5
+   }
   }
  },
  "PROPERTY_AIR_POLLUTION": {

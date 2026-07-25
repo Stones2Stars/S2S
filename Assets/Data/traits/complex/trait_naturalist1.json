@@ -127,13 +127,6 @@
    }
   }
  },
- "hurry": {
-  "empire": {
-   "cost": {
-    "percent": 10
-   }
-  }
- },
  "workRate": {
   "empire": {
    "builds": {
@@ -296,5 +289,12 @@
   "description": "TXT_KEY_TRAIT_NATURALIST1",
   "civilopedia": "TXT_KEY_TRAIT_NATURALIST1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_NATURALIST_STRATEGY"
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": 10
+   }
+  }
  }
 }

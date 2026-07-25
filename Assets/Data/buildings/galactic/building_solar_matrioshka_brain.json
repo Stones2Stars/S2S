@@ -45,11 +45,6 @@
    ]
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": 50
@@ -59,7 +54,8 @@
   "freeTechs": 1
  },
  "cost": {
-  "production": 47590
+  "production": 47590,
+  "hurryModifier": 10000
  },
  "ui": {
   "art": {

@@ -150,9 +150,6 @@
   "empire": {
    "freeMilitary": {
     "perPopulation": 15
-   },
-   "upgradePrice": {
-    "percent": 5
    }
   }
  },
@@ -237,5 +234,12 @@
   "civilopedia": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_COMPLEX_IMPERIALIST_STRATEGY",
   "impurePropertyManipulators": true
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": 5
+   }
+  }
  }
 }

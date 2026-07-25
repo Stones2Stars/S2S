@@ -87,13 +87,9 @@
    }
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 200
-  }
- },
  "cost": {
-  "production": 1992
+  "production": 1992,
+  "hurryModifier": 200
  },
  "attributes": {
   "nukeImmune": true

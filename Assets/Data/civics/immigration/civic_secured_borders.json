@@ -23,10 +23,7 @@
  },
  "commerce": {
   "empire": {
-   "percent": 2,
-   "tradeRoute": {
-    "percent": 5
-   }
+   "percent": 2
   }
  },
  "happiness": {
@@ -41,8 +38,14 @@
  },
  "tradeRoutes": {
   "empire": {
-   "foreign": {
-    "percent": 20
+   "modifier": {
+    "percent": [
+     5,
+     {
+      "value": 20,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
    }
   }
  },

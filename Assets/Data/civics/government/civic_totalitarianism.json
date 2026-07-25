@@ -81,10 +81,17 @@
  },
  "happiness": {
   "empire": {
-   "flat": -1,
-   "civicAnger": {
-    "percent": 20
-   },
+   "flat": [
+    -1,
+    {
+     "value": -20,
+     "per": {
+      "type": "POPULATION",
+      "each": 100,
+      "scope": "city"
+     }
+    }
+   ],
    "buildings": {
     "BUILDING_INTELLIGENCE_AGENCY": {
      "flat": 1

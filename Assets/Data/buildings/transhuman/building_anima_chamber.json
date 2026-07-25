@@ -45,14 +45,9 @@
    "flat": 50
   }
  },
- "healing": {
+ "heal": {
   "city": {
    "flat": 10
-  }
- },
- "hurryCost": {
-  "city": {
-   "percent": 100
   }
  },
  "PROPERTY_DISEASE": {
@@ -93,7 +88,8 @@
   "sizeModifier": 1,
   "countModifier": 1,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 100
  },
  "world": {
   "art": {

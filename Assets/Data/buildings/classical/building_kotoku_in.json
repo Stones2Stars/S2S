@@ -67,11 +67,6 @@
    "flat": 2
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 200
-  }
- },
  "religion": {
   "city": {
    "RELIGION_BUDDHISM": {
@@ -88,7 +83,8 @@
   "production": 1566,
   "sizeModifier": 3,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 200
  },
  "ai": {
   "flavours": [

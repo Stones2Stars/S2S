@@ -68,13 +68,9 @@
    }
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 200
-  }
- },
  "cost": {
-  "production": 792
+  "production": 792,
+  "hurryModifier": 200
  },
  "attributes": {
   "nukeImmune": true

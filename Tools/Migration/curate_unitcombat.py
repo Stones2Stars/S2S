@@ -40,7 +40,7 @@ from store import Store, REPO
 from curate_common import (FAMILY_ORDER, put_art, emit_art, descale100, fold_text_to_identity, gate_entity,
                            emit_sizematters, SM_FLAT_CHANGE, SM_COMBATMOD_CHANGE, SM_CARGO_CHANGE)
 # REUSE the Promotion unit-stat vocabulary (the shared §5 definition) + helpers.
-from curate_promotion import (COMBAT_MODS, FAMILIES, CAP_BOOL, CAP_PAIR, CAP_COUNT, VISION_PAIRS,
+from curate_promotion import (COMBAT_MODS, FAMILIES, NEGATE_TAGS, CAP_BOOL, CAP_PAIR, CAP_COUNT, VISION_PAIRS,
                               VISION_STRUCTS, _txt, _int, _simple_list, _pairs)
 
 # UnitCombat-specific extensions to the shared tables.
@@ -112,6 +112,8 @@ def curate(typ, rec, store):
         v = _int(rec, tag)
         if tag.endswith("100"):                # one-time x100 -> human de-scale (cascade-fixed-point.md §2; iExtraUpkeep100)
             v = descale100(v) if v is not None else v
+        if v and tag in NEGATE_TAGS:           # sign-normalized (upgrade discount -> negative costs.upgrade)
+            v = -v
         if v:
             node = vision if family == "vision" else fam_unit(family)
             if member:

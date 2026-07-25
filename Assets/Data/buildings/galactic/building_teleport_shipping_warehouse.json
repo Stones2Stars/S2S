@@ -24,18 +24,16 @@
    ]
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "tradeRoutes": {
   "city": {
    "modifier": {
-    "percent": 60
-   },
-   "foreignModifier": {
-    "percent": 60
+    "percent": [
+     60,
+     {
+      "value": 60,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
    }
   }
  },
@@ -49,7 +47,8 @@
   "sizeModifier": 1,
   "countModifier": 1,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 100
  },
  "world": {
   "art": {

@@ -169,10 +169,15 @@ def curate(typ, rec, store):
                 text[TEXT[tag]] = t
         elif tag in FAMILIES:
             _apply_family(fam, FAMILIES[tag], c, typ, per_bonus)
-        elif tag == HQ_COMMERCE:                               # HQ revenue -> per-scaler (ruling 4; see HQ_COMMERCE note)
+        elif tag == HQ_COMMERCE:                               # HQ revenue -> conditioned per-scaler (rulings 4+10)
+            # WHERE it lands is a condition, not a member semantic: the revenue accrues in the corporation's
+            # HQ CITY only (the HQ building carries it, CvCity.cpp:12386-12391) -> the parameterized
+            # {IS_HEADQUARTERS: <own corp>} predicate (the {IS_HOLY_CITY: RELIGION_X} pattern, json.md §3.5).
             for ident, v in engine.named_array(c, engine.COMMERCES).items():
                 _put(fam, ident, "empire", "headquarters", "flat",
-                     OrderedDict([("value", v), ("per", "CORPORATION_LEVEL")]))
+                     OrderedDict([("value", v),
+                                  ("enabled", OrderedDict([("IS_HEADQUARTERS", typ)])),
+                                  ("per", "CORPORATION_LEVEL")]))
         elif tag == "iSpreadCost":
             if engine.is_int(t) and int(t) != 0:
                 cost["spread"] = int(t)

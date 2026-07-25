@@ -15,11 +15,6 @@
    "flat": 2
   }
  },
- "buildTime": {
-  "plot": {
-   "percent": 50
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Grass.dds"
@@ -37,6 +32,7 @@
   "description": "TXT_KEY_TERRAIN_GREEN_MARS",
   "civilopedia": "TXT_KEY_TERRAIN_GREEN_MARS_PEDIA",
   "found": true,
+  "buildTimeModifier": 50,
   "movementCost": 3,
   "mapCategories": [
    "MAPCATEGORY_MARTIAN"

@@ -22,17 +22,17 @@
    "PROMOTION_ZEN"
   ]
  },
- "upkeep": {
-  "unit": {
-   "upgradeDiscount": {
-    "percent": 50
-   }
-  }
- },
  "firstStrike": {
   "unit": {
    "strikes": {
     "flat": 1
+   }
+  }
+ },
+ "costs": {
+  "unit": {
+   "upgrade": {
+    "percent": -50
    }
   }
  },

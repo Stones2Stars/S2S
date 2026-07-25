@@ -44,10 +44,7 @@
      "value": 5,
      "enabled": "IS_CAPITAL"
     }
-   ],
-   "tradeRoute": {
-    "percent": 5
-   }
+   ]
   }
  },
  "gold": {
@@ -96,10 +93,17 @@
  },
  "happiness": {
   "empire": {
-   "flat": 1,
-   "civicAnger": {
-    "percent": -1
-   }
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "per": {
+      "type": "POPULATION",
+      "each": 100,
+      "scope": "city"
+     }
+    }
+   ]
   }
  },
  "health": {
@@ -116,9 +120,17 @@
  },
  "tradeRoutes": {
   "empire": {
-   "flat": 1,
-   "foreign": {
-    "percent": 10
+   "routes": {
+    "flat": 1
+   },
+   "modifier": {
+    "percent": [
+     5,
+     {
+      "value": 10,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
    }
   }
  },

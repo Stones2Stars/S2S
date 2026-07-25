@@ -39,11 +39,6 @@
    }
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "tradeRoutes": {
   "city": {
    "modifier": {
@@ -52,7 +47,8 @@
   }
  },
  "cost": {
-  "production": 13205
+  "production": 13205,
+  "hurryModifier": 10000
  },
  "ui": {
   "art": {

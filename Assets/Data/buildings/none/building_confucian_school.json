@@ -91,11 +91,6 @@
    "percent": 25
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 50
-  }
- },
  "religion": {
   "city": {
    "RELIGION_CONFUCIANISM": {
@@ -120,7 +115,8 @@
  },
  "cost": {
   "production": 1512,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 50
  },
  "ai": {
   "flavours": [

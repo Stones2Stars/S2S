@@ -98,13 +98,6 @@
    "percent": -20
   }
  },
- "upkeep": {
-  "empire": {
-   "upgradePrice": {
-    "percent": -20
-   }
-  }
- },
  "goldenAge": {
   "empire": {
    "percent": 25
@@ -152,5 +145,12 @@
   "civilopedia": "TXT_KEY_TRAIT_CARELESS3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_CARELESS_STRATEGY",
   "negativeTrait": true
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": -20
+   }
+  }
  }
 }

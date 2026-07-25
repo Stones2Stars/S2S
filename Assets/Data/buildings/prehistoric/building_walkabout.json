@@ -27,11 +27,6 @@
    "flat": 1
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "PROPERTY_EDUCATION": {
   "city": {
    "flat": 1
@@ -40,7 +35,8 @@
  "cost": {
   "production": 60,
   "sizeModifier": 1,
-  "countModifier": 1
+  "countModifier": 1,
+  "hurryModifier": 100
  },
  "attributes": {
   "nukeImmune": true

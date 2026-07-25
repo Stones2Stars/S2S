@@ -65,11 +65,6 @@
    ]
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 50
-  }
- },
  "religion": {
   "city": {
    "RELIGION_KEMETISM": {
@@ -86,7 +81,8 @@
   "production": 1056,
   "sizeModifier": 3,
   "materialsModifier": 2,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 50
  },
  "ai": {
   "flavours": [

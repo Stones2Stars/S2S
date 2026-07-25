@@ -48,13 +48,9 @@
    }
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "cost": {
-  "production": 8568
+  "production": 8568,
+  "hurryModifier": 10000
  },
  "attributes": {
   "destroyedOnCapture": true

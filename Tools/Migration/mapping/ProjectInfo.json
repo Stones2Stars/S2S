@@ -11,7 +11,7 @@
     "iGlobalHappiness": { "scope": "player", "channel": "happiness", "kind": "flat" },
     "iNumCitiesMaintenanceModifier": { "scope": "player", "channel": "maintenance", "kind": "percent" },
     "iWorldHealth": { "scope": "team", "channel": "health", "kind": "flat" },
-    "iWorldTradeRoutes": { "scope": "team", "channel": "tradeRoutes", "kind": "flat" },
+    "iWorldTradeRoutes": { "scope": "team", "channel": "tradeRoutes", "member": "routes", "kind": "flat" },
     "iTechShare": { "scope": "player", "channel": "techShare", "kind": "flat" },
     "iWorldHappiness": { "scope": "team", "channel": "happiness", "kind": "flat" }
   },

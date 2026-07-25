@@ -48,18 +48,14 @@
    "percent": -10
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "anarchy": {
   "city": {
    "percent": -25
   }
  },
  "cost": {
-  "production": 16224
+  "production": 16224,
+  "hurryModifier": 10000
  },
  "ui": {
   "art": {

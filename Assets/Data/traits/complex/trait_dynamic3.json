@@ -117,9 +117,6 @@
   "empire": {
    "freeCivilian": {
     "perPopulation": -15
-   },
-   "upgradePrice": {
-    "percent": -20
    }
   }
  },
@@ -127,9 +124,6 @@
   "empire": {
    "anger": {
     "percent": -25
-   },
-   "cost": {
-    "percent": -40
    }
   }
  },
@@ -210,5 +204,15 @@
   "description": "TXT_KEY_TRAIT_DYNAMIC3",
   "civilopedia": "TXT_KEY_TRAIT_DYNAMIC3_PEDIA",
   "strategy": "TXT_KEY_TRAIT_DYNAMIC_STRATEGY"
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": -40
+   },
+   "upgrade": {
+    "percent": -20
+   }
+  }
  }
 }

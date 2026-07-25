@@ -65,7 +65,7 @@ SCALAR_FAMILIES = {
     "iAreaHappiness": ("happiness", "area", None, "flat"),
     "iGlobalHappiness": ("happiness", "empire", None, "flat"),
     "iHappinessPercentPerPopulation": ("happiness", "city", None, "perPopulation"),   # per-scaler, see health above
-    "iHealRateChange": ("healing", "city", None, "flat"),
+    "iHealRateChange": ("heal", "city", None, "flat"),   # ruling 13: folds into the heal family (the engine's cityContribution term of the one heal calc) -- `healing` was a fresh-key rollerskate
     "iFoodKept": ("foodKept", "city", None, "percent"),
     # great people / great general
     "iGreatPeopleRateChange": ("greatPeopleRate", "city", None, "flat"),
@@ -88,22 +88,23 @@ SCALAR_FAMILIES = {
     "iWarWearinessModifier": ("warWeariness", "city", None, "percent"),
     "iGlobalWarWearinessModifier": ("warWeariness", "empire", None, "percent"),
     "iEnemyWarWearinessModifier": ("warWeariness", "city", "enemy", "percent"),
-    # hurry
-    "iHurryCostModifier": ("hurryCost", "city", None, "percent"),
-    "iGlobalHurryModifier": ("hurryCost", "empire", None, "percent"),
+    # hurry (ruling 18): iHurryCostModifier is the "hurrying ME" per-entity base modifier (CvCity.cpp:6047
+    # kBuilding.getHurryCostModifier() as iBaseModifier) -> the entity's own `cost` section, handled in curate();
+    # iGlobalHurryModifier is an empire hurry-cost % (CvPlayer.cpp:7389 changeHurryModifier -> CvCity.cpp:6058)
+    # -> the ONE costs family, kind hurry.
+    "iGlobalHurryModifier": ("costs", "empire", "hurry", "percent"),
     "iHurryAngerModifier": ("hurryAnger", "city", None, "percent"),
     # production specials
     "iMilitaryProductionModifier": ("buildRate", "city", "military", "percent"),
     "iSpaceProductionModifier": ("buildRate", "city", "space", "percent"),
     "iGlobalSpaceProductionModifier": ("buildRate", "empire", "space", "percent"),
     "iWorkerSpeedModifier": ("workRate", "empire", None, "percent"),
-    # trade routes
-    "iTradeRoutes": ("tradeRoutes", "city", None, "flat"),
-    "iCoastalTradeRoutes": ("tradeRoutes", "empire", "coastal", "flat"),
-    "iGlobalTradeRoutes": ("tradeRoutes", "empire", None, "flat"),
-    "iWorldTradeRoutes": ("tradeRoutes", "world", None, "flat"),
+    # trade routes -- ONE family with conditions (ruling 11): kinds routes (flat count) / modifier (route-yield %)
+    # / max (cap). The coastal/foreign variants are CONDITIONS -> handled in curate() as conditioned deposits.
+    "iTradeRoutes": ("tradeRoutes", "city", "routes", "flat"),
+    "iGlobalTradeRoutes": ("tradeRoutes", "empire", "routes", "flat"),
+    "iWorldTradeRoutes": ("tradeRoutes", "world", "routes", "flat"),
     "iTradeRouteModifier": ("tradeRoutes", "city", "modifier", "percent"),
-    "iForeignTradeRouteModifier": ("tradeRoutes", "city", "foreignModifier", "percent"),
     # experience / free specialists
     "iExperience": ("experience", "city", None, "flat"),
     "iGlobalExperience": ("experience", "empire", None, "flat"),
@@ -133,7 +134,9 @@ SCALAR_FAMILIES = {
     "iNationalCaptureResistanceModifier": ("cityCapture", "empire", "resistance", "percent"),
     "iLocalCaptureProbabilityModifier": ("cityCapture", "city", "probability", "percent"),
     "iLocalCaptureResistanceModifier": ("cityCapture", "city", "resistance", "percent"),
-    "iUnitUpgradePriceModifier": ("unitUpgradePrice", "empire", None, "percent"),
+    # ruling 18: unit-upgrade price % (CvPlayer changeUnitUpgradePriceModifier -> CvUnit::upgradePrice
+    # CvUnit.cpp:10356, a percent modifier on the price) -> the ONE costs family, kind upgrade.
+    "iUnitUpgradePriceModifier": ("costs", "empire", "upgrade", "percent"),
     # defense family (grouped; `min` floor clamp lives here, modifier-spec §7)
     "iDefense": ("defense", "city", "amount", "percent"),
     "iBombardDefense": ("defense", "city", "bombardDefense", "percent"),
@@ -400,8 +403,10 @@ def _enabled(ref_kind, ref, scope):
     return _atom(ref, scope)
 
 
-def _inject_cond(fams, family, scope, unit, value, enabled):
+def _inject_cond(fams, family, scope, unit, value, enabled, member=None):
     node = fams.setdefault(family, OrderedDict()).setdefault(scope, OrderedDict())
+    if member:
+        node = node.setdefault(member, OrderedDict())
     entry = OrderedDict([("value", value), ("enabled", enabled)])
     cur = node.get(unit)
     if cur is None:
@@ -1366,6 +1371,14 @@ def curate(typ, rec, store):
     oam = _int(rec, "iOtherAreaMaintenanceModifier")
     if oam:
         _inject_cond(fams, "maintenance", "empire", "percent", oam, "!IS_HOME_AREA")
+    # tradeRoutes conditioned variants (ruling 11): coastal routes -> routes kind gated HAS_COAST; the foreign
+    # route-yield % -> modifier kind gated IS_FOREIGN (engine: getTeam() != other team, CvCity.cpp:11539-11541).
+    ctr = _int(rec, "iCoastalTradeRoutes")
+    if ctr:
+        _inject_cond(fams, "tradeRoutes", "empire", "flat", ctr, "HAS_COAST", "routes")
+    ftr = _int(rec, "iForeignTradeRouteModifier")
+    if ftr:
+        _inject_cond(fams, "tradeRoutes", "city", "percent", ftr, "IS_FOREIGN", "modifier")
 
     # --- enables / obsoletes / replaces (store-derived; COPIED so pass2 can extend FoundsCorporation/ObsoletesToBuilding) ---
     enables = OrderedDict((k, list(v)) for k, v in (store.enabled_by(typ) or {}).items())
@@ -1433,6 +1446,12 @@ def curate(typ, rec, store):
         v = _int(rec, tag)
         if v is not None and v != -1 and v != 0:
             cost[key] = v
+    # iHurryCostModifier = "hurrying ME costs X% more/less" (CvCity.cpp:6047, the per-entity base modifier of
+    # the hurry-cost calc) -> the entity's OWN cost data (ruling 18 plane 1), key `hurryModifier` (curator-chosen;
+    # a percent modifier beside the flat production cost).
+    hcm = _int(rec, "iHurryCostModifier")
+    if hcm:
+        cost["hurryModifier"] = hcm
 
     # legacy iCost == -1 (or absent -> the XML read default is -1, CvBuildingInfo.cpp:1764) = NOT player-constructible
     # (the CvPlayer::canConstruct getProductionCost()==-1 gate, CvPlayer.cpp:6667). Such buildings are instantiated by
@@ -1579,7 +1598,10 @@ HANDLED = (set(SCALAR_FAMILIES) | set(YIELD_FAMILIES) | set(CAP_ATTRIBUTES) | se
            # freePromotions are end-turn-stay; owner 2026-07-01). SpecialistExtraCommerces + the otherArea
            # maintenance modifier are handled explicitly in curate() (rulings 4 + 2).
            | {"bNoHolyCity", "bApplyFreePromotionOnMove", "bDamageAllAttackers",
-              "SpecialistExtraCommerces", "iOtherAreaMaintenanceModifier"})
+              "SpecialistExtraCommerces", "iOtherAreaMaintenanceModifier",
+              # ruling 11/18 explicit routings in curate(): conditioned tradeRoutes variants + the per-entity
+              # hurry-cost modifier (cost.hurryModifier).
+              "iCoastalTradeRoutes", "iForeignTradeRouteModifier", "iHurryCostModifier"})
 
 
 # ============================ PROPERTY-BAND REALIGNMENT (owner 2026-06-23) ============================

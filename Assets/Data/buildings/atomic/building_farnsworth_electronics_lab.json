@@ -46,18 +46,14 @@
    "flat": 5
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "PROPERTY_FLAMMABILITY": {
   "city": {
    "flat": 1
   }
  },
  "cost": {
-  "production": 1080
+  "production": 1080,
+  "hurryModifier": 100
  },
  "world": {
   "art": {

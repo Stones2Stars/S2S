@@ -36,11 +36,6 @@
    "flat": 2
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "occupationTime": {
   "city": {
    "percent": 50
@@ -55,7 +50,8 @@
   "production": 2640,
   "sizeModifier": 3,
   "materialsModifier": 1,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 100
  },
  "attributes": {
   "nukeImmune": true,

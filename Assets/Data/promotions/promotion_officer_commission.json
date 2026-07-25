@@ -12,16 +12,16 @@
    "percent": 25
   }
  },
- "upkeep": {
-  "unit": {
-   "upgradeDiscount": {
-    "percent": 20
-   }
-  }
- },
  "combat": {
   "unit": {
    "percent": 10
+  }
+ },
+ "costs": {
+  "unit": {
+   "upgrade": {
+    "percent": -20
+   }
   }
  },
  "capture": {

@@ -33,19 +33,17 @@
    "percent": 50
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
- "unitUpgradePrice": {
+ "costs": {
   "empire": {
-   "percent": -50
+   "upgrade": {
+    "percent": -50
+   }
   }
  },
  "cost": {
   "production": 1296,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

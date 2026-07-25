@@ -47,12 +47,11 @@
    "flat": 2
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 200
-  },
+ "costs": {
   "empire": {
-   "percent": -33
+   "hurry": {
+    "percent": -33
+   }
   }
  },
  "allowedSpecialists": {
@@ -64,7 +63,8 @@
   "production": 5940,
   "sizeModifier": 3,
   "materialsModifier": 2,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 200
  },
  "ai": {
   "flavours": [

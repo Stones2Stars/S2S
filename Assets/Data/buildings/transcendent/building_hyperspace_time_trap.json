@@ -22,18 +22,14 @@
    }
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 10000
-  }
- },
  "espionageDefense": {
   "city": {
    "flat": 30
   }
  },
  "cost": {
-  "production": 2422
+  "production": 2422,
+  "hurryModifier": 10000
  },
  "world": {
   "art": {

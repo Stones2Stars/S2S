@@ -218,16 +218,6 @@
   "empire": {
    "freeCivilian": {
     "perPopulation": 15
-   },
-   "upgradePrice": {
-    "percent": 10
-   }
-  }
- },
- "hurry": {
-  "empire": {
-   "cost": {
-    "percent": 30
    }
   }
  },
@@ -295,5 +285,15 @@
   "civilopedia": "TXT_KEY_TRAIT_STUBBORN1_PEDIA",
   "strategy": "TXT_KEY_TRAIT_STUBBORN_STRATEGY",
   "negativeTrait": true
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": 30
+   },
+   "upgrade": {
+    "percent": 10
+   }
+  }
  }
 }

@@ -5,6 +5,9 @@
    "headquarters": {
     "flat": {
      "value": 4,
+     "enabled": {
+      "IS_HEADQUARTERS": "CORPORATION_MAPSTER"
+     },
      "per": "CORPORATION_LEVEL"
     }
    }

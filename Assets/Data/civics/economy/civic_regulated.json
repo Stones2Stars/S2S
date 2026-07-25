@@ -28,9 +28,6 @@
  "commerce": {
   "empire": {
    "percent": 2,
-   "tradeRoute": {
-    "percent": 4
-   },
    "improvements": {
     "IMPROVEMENT_COTTAGE": {
      "flat": 1
@@ -81,8 +78,19 @@
  },
  "tradeRoutes": {
   "empire": {
-   "sharedCivic": {
-    "percent": 5
+   "modifier": {
+    "percent": [
+     4,
+     {
+      "value": 5,
+      "enabled": {
+       "all": [
+        "IS_FOREIGN",
+        "SHARES_CIVIC"
+       ]
+      }
+     }
+    ]
    }
   }
  },

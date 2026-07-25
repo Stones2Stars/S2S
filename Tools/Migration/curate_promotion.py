@@ -118,7 +118,11 @@ FAMILIES = {
     "iCargoChange":                 ("cargo", "space", "flat"),
     "iUpkeepModifier":              ("upkeep", "modifier", "percent"),
     "iExtraUpkeep100":              ("upkeep", "extra", "flat"),       # x100 legacy (calcUpkeep100) -> de-scaled to human in the applier (tag endswith 100); member renamed off the 100 (cold-modder)
-    "iUpgradeDiscount":             ("upkeep", "upgradeDiscount", "percent"),
+    # ruling 18: the upgrade DISCOUNT folds into the ONE costs family, kind upgrade, at UNIT scope -- verified a
+    # percent of the upgrade price (CvUnit.cpp:10367 `iPrice -= iPrice × min(100, discount)/100`). The sign is
+    # NORMALIZED: a discount of 25 authors as costs.upgrade -25 (a cost modifier, uniform with the empire-scope
+    # price modifiers); the NEGATE_TAGS hook below flips it.
+    "iUpgradeDiscount":             ("costs", "upgrade", "percent"),
     "iVisibilityChange":            ("vision", "range", "flat"),
     "iCaptureProbabilityModifierChange":   ("capture", "probability", "flat"),
     "iCaptureResistanceModifierChange":    ("capture", "resistance", "flat"),
@@ -129,6 +133,8 @@ FAMILIES = {
     "iPillageChange":               ("pillage", None, "flat"),
     "iSurvivorChance":              ("survivor", None, "percent"),
 }
+# tags whose value is SIGN-NORMALIZED on emission (legacy positive-discount -> a negative cost modifier).
+NEGATE_TAGS = frozenset(("iUpgradeDiscount",))
 # vs-keyed pair-lists: tag -> (family, "<keyword>.{TYPE}.<member>", unit). member None => family.unit.<kw>.{TYPE}.<unit>.
 VS_KEYED = {
     "TerrainAttacks":   ("combat", "terrain", "attack", "percent"),
@@ -305,6 +311,8 @@ def curate(typ, rec, store):
         v = _int(rec, tag)
         if tag.endswith("100"):                # one-time x100 -> human de-scale (cascade-fixed-point.md §2; iExtraUpkeep100)
             v = descale100(v) if v is not None else v
+        if v and tag in NEGATE_TAGS:
+            v = -v
         if v:
             node = fam_unit(family)
             if family == "vision":

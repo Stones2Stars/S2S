@@ -91,11 +91,6 @@
    "percent": 10
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "religion": {
   "city": {
    "RELIGION_TAOISM": {
@@ -122,7 +117,8 @@
   "production": 2640,
   "sizeModifier": 3,
   "materialsModifier": 2,
-  "complexityModifier": 1
+  "complexityModifier": 1,
+  "hurryModifier": 100
  },
  "ai": {
   "flavours": [

@@ -19,13 +19,6 @@
    }
   }
  },
- "commerce": {
-  "empire": {
-   "tradeRoute": {
-    "percent": 2
-   }
-  }
- },
  "gold": {
   "empire": {
    "percent": [
@@ -123,6 +116,13 @@
   "empire": {
    "freeMilitary": {
     "perPopulation": 20
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": 2
    }
   }
  },

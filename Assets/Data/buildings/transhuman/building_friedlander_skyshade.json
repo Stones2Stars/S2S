@@ -25,9 +25,11 @@
    "flat": 1
   }
  },
- "unitUpgradePrice": {
+ "costs": {
   "empire": {
-   "percent": -5
+   "upgrade": {
+    "percent": -5
+   }
   }
  },
  "PROPERTY_FLAMMABILITY": {

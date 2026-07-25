@@ -15,11 +15,6 @@
    "flat": 3
   }
  },
- "buildTime": {
-  "plot": {
-   "percent": 55
-  }
- },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/baseterrain/DuneIce.dds"
@@ -135,6 +130,7 @@
    "MAPCATEGORY_EARTH"
   ],
   "found": true,
+  "buildTimeModifier": 55,
   "movementCost": 3
  }
 }

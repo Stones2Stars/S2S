@@ -70,11 +70,6 @@
    "flat": 5
   }
  },
- "hurryCost": {
-  "city": {
-   "percent": 100
-  }
- },
  "underworld": {
   "city": {
    "investigation": {
@@ -84,7 +79,8 @@
  },
  "cost": {
   "production": 2505,
-  "complexityModifier": 2
+  "complexityModifier": 2,
+  "hurryModifier": 100
  },
  "world": {
   "art": {

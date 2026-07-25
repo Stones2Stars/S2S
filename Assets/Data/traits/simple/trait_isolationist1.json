@@ -17,13 +17,6 @@
    "percent": 15
   }
  },
- "commerce": {
-  "empire": {
-   "tradeRoute": {
-    "percent": -20
-   }
-  }
- },
  "espionage": {
   "empire": {
    "percent": -15
@@ -38,7 +31,12 @@
  },
  "tradeRoutes": {
   "empire": {
-   "flat": -1
+   "routes": {
+    "flat": -1
+   },
+   "modifier": {
+    "percent": -20
+   }
   }
  },
  "revolution": {

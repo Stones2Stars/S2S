@@ -1,16 +1,16 @@
 {
  "type": "PROMOTION_IMPERIAL_GUARD",
- "upkeep": {
-  "unit": {
-   "upgradeDiscount": {
-    "percent": 40
-   }
-  }
- },
  "collateral": {
   "unit": {
    "protection": {
     "percent": 100
+   }
+  }
+ },
+ "costs": {
+  "unit": {
+   "upgrade": {
+    "percent": -40
    }
   }
  },
