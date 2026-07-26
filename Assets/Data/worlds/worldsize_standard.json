@@ -1,0 +1,18 @@
+{
+ "type": "WORLDSIZE_STANDARD",
+ "identity": {
+  "description": "TXT_KEY_WORLD_STANDARD",
+  "defaultPlayers": 8,
+  "targetNumCities": 6,
+  "gridWidth": 24,
+  "gridHeight": 16,
+  "oceanMinAreaSize": 14,
+  "tradeProfitPercent": 370,
+  "distanceMaintenancePercent": 100,
+  "colonyMaintenancePercent": 80,
+  "corporationMaintenancePercent": 100,
+  "numCitiesAnarchyPercent": 18,
+  "advancedStartPointsMod": 100,
+  "cityLimitsScalePercent": 100
+ }
+}

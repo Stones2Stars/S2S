@@ -1,0 +1,21 @@
+{
+ "type": "WORLDSIZE_SMALL",
+ "identity": {
+  "description": "TXT_KEY_WORLD_SMALL",
+  "defaultPlayers": 6,
+  "targetNumCities": 4,
+  "buildingPrereqModifier": -40,
+  "maxConscriptModifier": -25,
+  "warWearinessModifier": 10,
+  "gridWidth": 21,
+  "gridHeight": 14,
+  "oceanMinAreaSize": 10,
+  "tradeProfitPercent": 545,
+  "distanceMaintenancePercent": 103,
+  "colonyMaintenancePercent": 80,
+  "corporationMaintenancePercent": 150,
+  "numCitiesAnarchyPercent": 25,
+  "advancedStartPointsMod": 90,
+  "cityLimitsScalePercent": 90
+ }
+}

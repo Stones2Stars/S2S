@@ -66,6 +66,7 @@ ENTITIES = {
     "HandicapInfo":      "*CIV4HandicapInfo.xml",
     "GameSpeedInfo":     "*CIV4GameSpeedInfo.xml",
     "EraInfo":           "*CIV4EraInfos.xml",
+    "WorldInfo":         "*CIV4WorldInfo.xml",   # map-size config (#430 item 15); enables nothing
     # Config / category entities (the former "POCO" batch). The 2026-06-14 PM audit (plan doc "AUDIT DONE")
     # proved only CivicOption is a pure text+identity holder; BonusClass/Hurry/Victory/PromotionLine carry real
     # config/gameplay and get proper curators. Registered here for table access.

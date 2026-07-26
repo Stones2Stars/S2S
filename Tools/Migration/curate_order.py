@@ -69,6 +69,11 @@ FOLDERS = {
     "GameSpeedInfo": "gamespeeds",
     "EraInfo": "eras",
     "HandicapInfo": "handicaps",
+    # #430 item 15: WorldInfo is JSON-loaded too. The manifest is LOAD-BEARING here beyond UI order: the
+    # compiled WorldSizeTypes enum stops at HUGE (6 labels) while the data authors 8 sizes, so the engine
+    # ids are registration-driven -- the manifest is what keeps DUEL=0..GIGANTIC=7 aligned with the enum's
+    # first six values and the saves' stored world-size index.
+    "WorldInfo": "worlds",
     "CivilizationInfo": "civilizations",
     "VictoryInfo": "victories",
     "VoteInfo": "votes",

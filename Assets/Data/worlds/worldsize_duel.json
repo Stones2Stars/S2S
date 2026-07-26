@@ -1,0 +1,23 @@
+{
+ "type": "WORLDSIZE_DUEL",
+ "identity": {
+  "description": "TXT_KEY_WORLD_DUEL",
+  "defaultPlayers": 2,
+  "targetNumCities": 2,
+  "buildingPrereqModifier": -120,
+  "maxConscriptModifier": -75,
+  "warWearinessModifier": 30,
+  "gridWidth": 12,
+  "gridHeight": 8,
+  "terrainGrainChange": -1,
+  "featureGrainChange": -1,
+  "oceanMinAreaSize": 6,
+  "tradeProfitPercent": 1000,
+  "distanceMaintenancePercent": 106,
+  "colonyMaintenancePercent": 80,
+  "corporationMaintenancePercent": 500,
+  "numCitiesAnarchyPercent": 50,
+  "advancedStartPointsMod": 75,
+  "cityLimitsScalePercent": 50
+ }
+}

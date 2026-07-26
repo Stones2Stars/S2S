@@ -1,0 +1,23 @@
+{
+ "type": "WORLDSIZE_GIANT",
+ "identity": {
+  "description": "TXT_KEY_WORLD_GIANT",
+  "defaultPlayers": 14,
+  "targetNumCities": 14,
+  "buildingPrereqModifier": 120,
+  "maxConscriptModifier": 75,
+  "warWearinessModifier": -30,
+  "gridWidth": 33,
+  "gridHeight": 22,
+  "terrainGrainChange": 2,
+  "featureGrainChange": 2,
+  "oceanMinAreaSize": 26,
+  "tradeProfitPercent": 55,
+  "distanceMaintenancePercent": 85,
+  "colonyMaintenancePercent": 80,
+  "corporationMaintenancePercent": 25,
+  "numCitiesAnarchyPercent": 7,
+  "advancedStartPointsMod": 200,
+  "cityLimitsScalePercent": 150
+ }
+}
