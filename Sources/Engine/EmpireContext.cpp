@@ -58,10 +58,14 @@ void EmpireContext::fillEvalCtx(CvCascadeEvalCtx& ec) const
 }
 
 // Rebuild the enacted-policy UNION from the player's LIVE grantors -- adopted civics + held (active-set) traits --
-// exactly the grantor set the one policy read walks (CvConditionEval ev_playerHasPolicy). This is a WHOLE rebuild,
-// called on civic/trait change and at load (never per read); the union is then an O(1) `policies.has(pid)` for every
-// consumer. Keyed by the ClassificationRegistry domain-local POLICY id (CvClassificationBlock::hasId space).
-void EmpireContext::rebuildPolicies()
+// exactly the grantor set the one policy read walks (CvConditionEval ev_playerHasPolicy). A WHOLE rebuild from
+// source, never a per-read walk; the union is then an O(1) `policies.has(pid)` for every consumer. Keyed by the
+// ClassificationRegistry domain-local POLICY id (CvClassificationBlock::hasId space).
+//
+// THE ONLY CALLER is the contexts' spine consumer, driven by the civic / trait / player-init DOMAIN facts (at play
+// AND through the load reseed's in-read emits). It is deliberately NOT called from CvPlayer's choke points: an
+// event-maintained store with a direct hook beside the event has two maintenance surfaces for one fact.
+void EmpireContext::rebuildPolicies() const
 {
 	policies.clear();
 	if (m_player == NULL)

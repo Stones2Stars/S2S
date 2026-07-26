@@ -8,18 +8,41 @@
 //	values, owner). The CITY-scope half of the symmetric per-scope contexts (EmpireContext = empire scope), so a
 //	reader always knows where to go: city state here, empire state on the owner's EmpireContext.
 //
-//	⛔ It STORES only the uniquely-owned AGGREGATE -- `plotAttrs`, the per-predicate plot COUNTS (how many river /
-//	water / ... plots), which no CvCity accessor provides and which would otherwise be recomputed by every reader.
-//	Everything already O(1) on the game object is FORWARDED, never duplicated: population / power / religion /
-//	holy-city / corporation / vicinity read through the bound CvCity; state religion + policies through its owner.
-//	COUNTS not objects; a keyed/plots-target deposit's output = flat x count, a gate = has.
+//	A context is an EVENT-BUILT STORE, not a forwarding facade (contexts.md). The split is by DERIVED vs RAW:
+//	 - STORE every DERIVED fact evaluation reads -- a scan, a union, an aggregate, a multi-hop resolution -- computed
+//	   ONCE by the ONE derivation and maintained by the spine facts, never recomputed at read.
+//	 - FORWARD only the RAW data CvCity already holds O(1) (population, a presence flag, a single counter). Forwarding
+//	   raw data is not duplication; storing a second copy of it would be.
+//	A forwarded read that COMPUTES is the defect this rule exists to kill.
 //
 //	⚖ THE HAVE AXIS LIVES HERE (contexts.md): every evaluator atom / enabler gate read of a CITY-scope fact goes
-//	through these forwards -- the context is the ONE responsibility home for the city's changeable state; the
+//	through this surface -- the context is the ONE responsibility home for the city's changeable state; the
 //	evaluator never reaches into CvCity ad hoc.
+//
+//	MAINTENANCE IS EXTERNAL AND EVENT-DRIVEN -- a read NEVER recomputes, and NOTHING heals a missed fact. There is no
+//	periodic refresh, no recompute-on-read fallback, no staleness stamp: a fact that fails to fire leaves the stored
+//	value visibly wrong, which is how it gets found (DEC-no-self-heal; LOAD is the only full build). The refresh entry
+//	points are const with the stores `mutable` (the CvDerivedCache / PlotContext shape) so the maintainer can drive
+//	them through the bound city's const accessor without a second, mutable path onto the city.
+//
+//	NEVER SERIALIZED (DEC-derived-never-trusted): every store rebuilds from the save read's own in-read DOMAIN emits
+//	(DEC-spine-reseed).
+//
+//	⛔ THE VICINITY SPLIT -- the context holds the MAP half, the enabler holds the BUILDING half, neither duplicates
+//	the other (contexts.md: the enabler's precomputed sets stay the ENABLER's derived output, fed to the evaluator as
+//	ctx members, never per-scope live state). Concretely, the json par.5a in-vicinity supply is the union of two
+//	independently-owned halves:
+//	  - MAP providers (a bonus on a radius tile providing itself) -- per-scope live state with no other home, so it
+//	    lives HERE, tiered by the par.3.4 ownership discriminator.
+//	  - ACTIVE BUILDING providers (`provides.bonuses`) -- the operate/provides LEAST FIXPOINT, which only the enabler
+//	    can resolve (an operate condition may consume a bonus another active building provides). It stays
+//	    EnablerKernel's `OperatingBuildings::provided`, reached through CvCascadeEvalCtx::vicinityProvidedBonuses.
+//	The evaluator unions the two at the read. A second copy of the building half here would be the banned duplication
+//	AND would drift, since the enabler mutates its set in place while the fixpoint ripples.
 //
 
 #include "ContextDict.h"
+#include "CvCondition.h"   // CvCascVicinity -- the json par.3.4 ownership tiers the stored vicinity dicts key on
 
 class CvPlot;
 class CvCity;
@@ -28,55 +51,111 @@ struct CvCascadeEvalCtx;
 class CityContext
 {
 public:
-	CityContext() : m_city(NULL) {}
+	CityContext()
+		: m_city(NULL), m_areaId(-1), m_areaTileCount(0), m_maxAdjacentWaterTiles(0), m_holyCityCount(0) {}
 	void bind(const CvCity* c) { m_city = c; }   // set once by the owning CvCity; the pointer IS the owner (never dangles)
 
 	// --- STORED: the uniquely-owned aggregate -- the HAS_/IS_ plot-predicate COUNTS, event-maintained (onPlotChanged) ---
-	ContextDict plotAttrs;
+	// `mutable` like every other store here, so the const maintenance entry points can reach it.
+	mutable ContextDict plotAttrs;
 	// A plot ENTERED (sign +1) / LEFT (sign -1) the city's owned worked-radius set: fold its stable HAS_/IS_ attributes
 	// (+/-1) into plotAttrs. COUNTS only; the plot is never stored. Fired from the CvPlot::updateWorkingCity choke
 	// point at play; the load reseed folds the same fact from the in-read SEVT_WORKING_CITY_CHANGED DOMAIN events
 	// (Engine/ContextConsumer -- DEC-spine-reseed).
 	void onPlotChanged(const CvPlot* plot, int sign);
-	void clear() { plotAttrs.clear(); }   // m_city is a binding, not cleared
 
-	// --- FORWARDED: read through the bound CvCity / its owner -- no stored copy. Defined out-of-line (CityContext.cpp) ---
-	int  population() const;                  // CvCity::getPopulation
-	int  power() const;                       // CvCity::getPowerCount (the volumetric count; the engine on/off verdict is isPowered)
-	bool isPowered() const;                   // CvCity::isPower -- the HAS_POWER verdict (count OR area clean power, dirty-timer gated)
-	bool hasReligion(int eReligion) const;    // CvCity::isHasReligion
-	bool isHolyCityOf(int eReligion) const;   // CvCity::isHolyCity(eReligion)   ({IS_HOLY_CITY: R})
-	bool isHolyCityAny() const;               // CvCity::isHolyCity()            (bare IS_HOLY_CITY)
-	bool hasCorporation(int eCorp) const;     // CvCity::isHasCorporation (presence; spread state)
-	bool hasActiveCorporation(int eCorp) const;   // CvCity::isActiveCorporation ({HAS_CORPORATION: X} = ACTIVE, json §3.5)
-	bool isHeadquartersOf(int eCorp) const;   // CvCity::isHeadquarters(eCorp)   ({IS_HEADQUARTERS: X})
-	bool isHeadquartersAny() const;           // CvCity::isHeadquarters()        (bare IS_HEADQUARTERS)
-	bool hasVicinityBonus(int eBonus) const;  // CvCity::hasVicinityBonus (connection:"vicinity"; traded stays on CvPlotGroup)
-	// The city's TRADED bonus count -- CvCity::getNumBonuses, the plot-group-backed MAINTAINED number (tech-gate +
-	// minted + corp add-on applied; enabler.md the residency/counting rule). A forward of the city's own
-	// plot-group relay -- traded state is NEVER mirrored here (contexts.md).
+	// --- MAINTENANCE: called ONLY by the contexts' spine consumer (Engine/ContextConsumer) --------------------------
+	// Each re-derives its WHOLE store from the bound city through the SAME engine accessors a read used to call --
+	// ONCE per change instead of once per read, and one uniform derivation rather than a bespoke per-event delta.
+	// CONSTRAINT: no choke point may call these directly. Every mutation that moves a stored fact emits its own DOMAIN
+	// fact, so the consumer is the single trigger path; a direct call beside the event would be a second maintenance
+	// surface for the same state.
+	void refreshVicinityBonuses() const;   // the par.3.4-tiered MAP-provider presence over the workable radius
+	void refreshTradedBonuses() const;     // the gated network count (the TechCityTrade + minted relay)
+	void refreshAreaFacts() const;         // the city's area ID + the coastal water-body size
+	void refreshHolyCity() const;          // how many religions hold this city as their holy city
+
+	void clear() const;   // m_city is a binding, not cleared
+
+	// --- STORED READS: O(1) fetches of the blocks above; each replaces a per-check scan/union/multi-hop --------------
+	// The city's MAP-provided in-vicinity presence of a bonus at the json par.3.4 ownership tier. `CASC_VIC_NONE` is
+	// the DEFAULT tier (owned+neutral, NOT foreign). ⚠ This is the MAP half only -- a caller answering a
+	// `connection:"vicinity"` atom must ALSO consult the enabler's active-building supply
+	// (CvCascadeEvalCtx::vicinityProvidedBonuses); see the header note on the vicinity split.
+	bool hasVicinityBonusAt(int eBonus, CvCascVicinity eTier) const;
+	// The CONNECTED (json par.3.4 "obtained": owned + valid + connected) tier, the name/signature the evaluator's
+	// connected leg already calls. Semantics are unchanged; it is now a bare fetch instead of a radius scan.
+	bool hasVicinityBonus(int eBonus) const;
+	// The city's TRADED bonus count -- the plot-group-backed network count with the TechCityTrade + minted gates
+	// applied (enabler.md par.8 the residency/counting rule: "a maintained number, added and subtracted on spine
+	// events, never calculated per read"). Traded MEMBERSHIP still belongs to CvPlotGroup (contexts.md) -- what is
+	// held here is only this city's own gated COUNT, which no other object owns.
 	int  tradedBonusCount(int eBonus) const;
+	int  areaId() const;                      // the city's area ID -- never a CvArea* and never a per-read area() chase
+	int  areaSize() const;                    // the AREA_SIZE counter, served from the maintained area facts
+	bool isCoastal(int iMinWaterSize) const;  // the HAS_COAST minArea city form: the largest ADJACENT water body >= iMinWaterSize
+	bool isHolyCityAny() const;               // bare IS_HOLY_CITY -- this city is some religion's holy city
+
+	// --- FORWARDED: the RAW data CvCity already holds O(1) -- a stored copy would duplicate it. Out-of-line (.cpp) ---
+	int  population() const;                  // CvCity::getPopulation            (m_iPopulation)
+	int  power() const;                       // CvCity::getPowerCount            (m_iPowerCount)
+	bool isPowered() const;                   // CvCity::isPower -- the HAS_POWER verdict; see the CONTEXT GAP note below
+	bool hasReligion(int eReligion) const;    // CvCity::isHasReligion            (the presence array)
+	bool isHolyCityOf(int eReligion) const;   // CvCity::isHolyCity(eReligion)    ({IS_HOLY_CITY: R}; one game-level lookup)
+	bool hasCorporation(int eCorp) const;     // CvCity::isHasCorporation (presence; spread state)
+	bool hasActiveCorporation(int eCorp) const;   // CvCity::isActiveCorporation ({HAS_CORPORATION: X} = ACTIVE, json §3.5).
+	                                          // Engine-driven per-turn spread state -- an owner-ruled ENGINE-OWNED INPUT
+	                                          // the cascade reads, NOT a cascade-computed verdict.
+	bool isHeadquartersOf(int eCorp) const;   // CvCity::isHeadquarters(eCorp)    ({IS_HEADQUARTERS: X}; one game-level lookup)
+	bool isHeadquartersAny() const;           // CvCity::isHeadquarters() -- see the CONTEXT GAP note below
 	bool isCapital() const;                   // CvCity::isCapital (IS_CAPITAL)
-	bool isGovernmentCenter() const;          // CvCity::isGovernmentCenter (owner-sanctioned engine counter, IS_GOVERNMENT_CENTER)
-	bool hasFreshWaterAccess() const;         // CvCity::hasFreshWater -- the provider-building-fed ACCESS counter (HAS_FRESHWATER city leg)
-	bool isCoastal(int iMinWaterSize) const;  // CvCity::isCoastal (the HAS_COAST minArea city form)
+	bool isGovernmentCenter() const;          // CvCity::isGovernmentCenter (the owner-sanctioned engine counter)
+	bool hasFreshWaterAccess() const;         // CvCity::hasFreshWater -- the provider-building-fed ACCESS counter (m_iFreshWater)
 	int  propertyValue(int eProperty) const;  // CvProperties::getValueByProperty (the PROPERTY_ band read)
-	int  areaSize() const;                    // CvCity::area()->getNumTiles (the AREA_SIZE counter)
-	int  ownCulturePercent() const;           // plot()->calculateCulturePercent(owner) (the CULTURE_PERCENTAGE counter)
-	int  owner() const;                       // CvCity::getOwner (the vicinity scans' owned-plot test)
+	int  ownCulturePercent() const;           // CULTURE_PERCENTAGE -- see the CONTEXT GAP note below
+	int  owner() const;                       // CvCity::getOwner
 	int  team() const;                        // CvCity::getTeam (the plot-bonus reveal axis)
 	const CvPlot* cityPlot() const;           // CvCity::plot -- the centre tile
-	const CvPlot* radiusPlot(int iRingIndex) const;   // CvCity::getCityIndexPlot -- the workable-radius scan source
-	bool hasBuilding(int eBuilding) const;    // CvCity::hasBuilding -- the §7 raw-presence has-list (the gate's BUILDING_ atom)
+	const CvPlot* radiusPlot(int iRingIndex) const;   // CvCity::getCityIndexPlot -- O(1) coordinate arithmetic
+	bool hasBuilding(int eBuilding) const;    // CvCity::hasBuilding -- the §7 raw-presence has-list (m_bHasBuildings)
 	int  stateReligion() const;               // owner CvPlayer::getStateReligion  (STATE_RELIGION_IN_CITY = hasReligion(stateReligion()))
 	bool hasPolicy(int ePolicy) const;        // owner EmpireContext::policies.has  (empire aggregate, not mirrored here)
+
+	// ⚠ THREE FORWARDS STILL COMPUTE, each for want of a fact -- recorded rather than papered over, because a store
+	// with no trigger is permanently wrong, which is worse than a cheap forward (the PlotContext::isCity precedent):
+	//  - isPowered(): the power COUNT has SEVT_POWER_CHANGED, but the two other legs it ORs in -- the disabled-power
+	//    timer and the area clean-power flag -- have no fact of their own.
+	//  - isHeadquartersAny(): a corporation headquarters move announces nothing (CvGame::setHeadquarters).
+	//  - ownCulturePercent(): plot culture moves EVERY turn for every plot, so a store would be rewritten as often
+	//    as it is read; it is correctly a live read, not a missing fact.
 
 	// Fill the CITY half of a condition-eval context (ec.city + ec.plot) from the bound city -- the context IS the
 	// eval state (the evaluator reads through the ctx it fills). Paired with EmpireContext::fillEvalCtx (player/team).
 	void fillEvalCtx(CvCascadeEvalCtx& ec) const;
 
 private:
-	const CvCity* m_city;   // the bound game object; forwarding accessors read it -- never a value copy
+	// The ONE tier-dictionary selector, shared by the derivation and the read so the two cannot disagree about which
+	// tier a plot lands in (DEC-single-implementation).
+	const ContextDict& vicinityTier(CvCascVicinity eTier) const;
+
+	const CvCity* m_city;   // the bound game object; the derivation reads it -- never a value copy
+
+	// --- the stored blocks; derived state, so NEVER serialized ----------------------------------------------------
+	// The MAP-provider vicinity presence, one dictionary per json par.3.4 ownership tier, all folded by the ONE
+	// derivation (refreshVicinityBonuses). The tiers NEST -- owned ⊂ owned+neutral ⊂ crossBorder, worked ⊂ owned --
+	// so the read composes them rather than each carrying a redundant copy.
+	mutable ContextDict m_vicinityOwned;       // a radius tile this city owns (the centre tile included)
+	mutable ContextDict m_vicinityNeutral;     // an UNOWNED radius tile
+	mutable ContextDict m_vicinityForeign;     // a radius tile owned by another player (the crossBorder opt-in only)
+	mutable ContextDict m_vicinityWorked;      // a radius tile a citizen works this turn (the centre tile included)
+	mutable ContextDict m_vicinityConnected;   // owned + a valid bonus + connected to this city (the "obtained" tier)
+	mutable ContextDict m_tradedBonuses;       // the gated network count, per bonus
+	mutable int m_areaId;                      // the city's area ID (-1 = unassigned)
+	mutable int m_areaTileCount;               // that area's tile count -- AREA_SIZE served without dereferencing CvArea
+	// The largest ADJACENT water body, in tiles -- ONE int that answers isCoastal at EVERY threshold
+	// (isCoastal(N) == m_maxAdjacentWaterTiles >= N), so a new authored minArea needs no new store.
+	mutable int m_maxAdjacentWaterTiles;
+	mutable int m_holyCityCount;               // how many religions hold this city as their holy city
 };
 
 #endif // CV_CITY_CONTEXT_H

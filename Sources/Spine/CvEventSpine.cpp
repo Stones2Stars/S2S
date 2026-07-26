@@ -366,6 +366,7 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_PLOT_IRRIGATION_CHANGED: return "[SPINE] plotIrrigationChanged";
 	case SEVT_PLOT_LANDMARK_CHANGED:  return "[SPINE] plotLandmarkChanged";
 	case SEVT_PLOT_WORKED_CHANGED:    return "[SPINE] plotWorkedChanged";
+	case SEVT_AREAS_RECALCULATED:     return "[SPINE] areasRecalculated";
 	case SEVT_GAME_LOAD_STARTED:      return "[SPINE] gameLoadStarted";
 	case SEVT_GAME_LOAD_FINISHED:     return "[SPINE] gameLoadFinished";
 	case SEVT_CACHE_INVALIDATE:       return "[CASCADE] invalidate";
@@ -886,6 +887,14 @@ void emitPlotWorkedChanged(int iPlot, int iOwner, int iCity, bool bWorked)
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_WORKED_CHANGED, -1, bWorked ? 1 : 0, iCity, iOwner, iPlot);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_PLOT, iPlot).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_HAS, bWorked ? 1 : 0);
+	eventSpine().emit(e);
+}
+// The wholesale area-identity reassignment. No payload and no owner: every area id in the game is replaced at once,
+// so the fact cannot be attributed to a source and every holder re-reads.
+void emitAreasRecalculated()
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_AREAS_RECALCULATED, -1, 0, 0, -1, -1);
+	e.iDomainTag = SD_SPINE;
 	eventSpine().emit(e);
 }
 

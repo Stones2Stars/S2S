@@ -27,6 +27,7 @@
 #include "CvSelectionGroup.h"
 #include "CvUnitAI.h"
 #include "CvViewport.h"
+#include "Spine/CvEventSpine.h"   // emitAreasRecalculated -- the wholesale area-identity reassignment DOMAIN fact
 #include "CvDLLEngineIFaceBase.h"
 #include "CvDLLEntityIFaceBase.h"
 #include "CvDLLFAStarIFaceBase.h"
@@ -1196,6 +1197,10 @@ void CvMap::recalculateAreas()
 	m_areas.removeAll();
 
 	calculateAreas();
+
+	// #430 event spine: EVERY area id has just been reassigned, so announce the wholesale reassignment AFTER the new
+	// areas exist -- a holder re-reading on this fact must find the rebuilt map, not the emptied one.
+	emitAreasRecalculated();
 }
 
 

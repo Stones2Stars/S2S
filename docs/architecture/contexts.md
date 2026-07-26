@@ -68,8 +68,21 @@ event-driven — never a read-time scan, and never left on the old accessor as a
 
 | context | owner | STORES (unique aggregate) | FORWARDS (read through the bound object / its owner) |
 |---|---|---|---|
-| **CityContext** | `CvCity` | `plotAttrs` — per-predicate plot COUNTS (the fold of member plots' bits) · **the VICINITY BONUSES available in the city** (owner) — the §5a union over the radius of every provider's `provides.bonuses`, i.e. DERIVED by construction, so the context HOLDS it | population, power, religion presence, holy-city, corporation (raw, `CvCity`-owned, O(1)); state religion (→ owner `CvPlayer`) |
-| **EmpireContext** | `CvPlayer` | `policies` — the empire's enacted-policy set (the derived UNION over live civics'/traits' policy blocks, stored nowhere else) | state religion (single enum → `CvPlayer::getStateReligion`) |
+| **CityContext** | `CvCity` | `plotAttrs` — per-predicate plot COUNTS (the fold of member plots' bits) · **the VICINITY BONUSES available in the city** (owner) — the §5a radius union, MAP half (see the split below) · the **TRADED count** (the gated network number) · the **AREA facts** (area id, its tile count, the coastal water-body size) · the **holy-city count** | population, power, religion presence, holy-city-of, corporation, capital, government-centre, fresh-water access, property value (raw, `CvCity`-owned, O(1)); state religion (→ owner `CvPlayer`) |
+| **EmpireContext** | `CvPlayer` | `policies` — the empire's enacted-policy set (the derived UNION over live civics'/traits' policy blocks, stored nowhere else) | state religion (single enum → `CvPlayer::getStateReligion`), civics/traits/heritages presence, the team-held facts |
+
+⛔ **THE VICINITY SPLIT — the context holds the MAP half, the enabler holds the BUILDING half.** The §5a in-vicinity
+supply is a union of two independently-owned halves, and storing either one twice is the duplication the model bans:
+
+- **MAP providers** (a bonus on a radius tile providing itself) are per-scope live state with no other home, so
+  `CityContext` holds them — tiered by the §3.4 ownership discriminator (`owned` / owned+neutral / `crossBorder` /
+  `worked` / `connected`), since a `connection:"vicinity"` atom selects which tiles count.
+- **ACTIVE BUILDING providers** (`provides.bonuses`) are the operate/provides **least fixpoint**, which only the
+  enabler can resolve — an operate condition may consume a bonus another active building provides. They stay
+  `OperatingBuildings::provided`, reached through `CvCascadeEvalCtx::vicinityProvidedBonuses`.
+
+The reader unions the two. A mirror of the building half on the context would also *drift*, because the enabler
+mutates its set in place as the fixpoint ripples.
 | **PlotContext** | `CvPlot` | the `CASC_PRED_*` verdict **BITSET** — the OWN-PLOT block (water/land/relief/hills/peak/river/irrigation/feature-present/landmark/owned/**worked**) plus the ADJACENCY block (coast, fresh-water) | the RAW substrate a parameterized predicate keys on — terrain/feature/improvement/route/bonus ids, owner, latitude, nature yield — plus city-presence, the one verdict with no mutation event a bit could be maintained from (→ `CvPlot`) |
 
 **Pass by reference/pointer, never by value (owner).** Passing a bound context is far cheaper than snapshotting
@@ -135,6 +148,16 @@ The stored aggregate rides events, exactly like the rest of the spine; a missed 
 event spine's **baseline invariant** (plot-groups and vicinity drift the same way if events are incomplete), not a
 context-specific weakness. There is **no blanket per-turn rebuild** and no recompute-on-read.
 
+⛔ **AND NOTHING HEALS A MISS — that is what makes incomplete wiring safe to grow (owner).** No periodic or per-turn
+context refresh, no "rebuild if it looks stale", no lazy recompute-on-read when a store looks empty, no dirty-timer
+sweep, no validity/epoch stamp that triggers re-derivation, and no "recompute once per turn to be safe" backstop —
+not as a safety net, not transitionally, not "just for load". The reasoning is the point: a missing emit is *cheap to
+find* precisely because the wrong value stays wrong and visible, whereas a self-healing recompute converts a loud,
+findable bug into permanent invisible drift **and** reinstates exactly the per-read/per-turn work the stores exist to
+delete. If a store ever seems to need a "make sure it's current" call, that is a **missing fact to report**, never a
+recompute to add ([DEC-no-self-heal](decisions.md#dec-no-self-heal); [state-repositories.md](state-repositories.md)
+CAPSTONE — LOAD is the only full build).
+
 - **`PlotContext`'s verdict bitset** ← the plot-substrate DOMAIN facts — terrain / feature / improvement / route /
   bonus / owner / **plot type / river / irrigation / landmark / worked** — routed to the contexts' consumer
   (`Engine/ContextConsumer`), which re-derives the announcing plot's WHOLE block through the same `CvPlot` accessors
@@ -153,13 +176,40 @@ context-specific weakness. There is **no blanket per-turn rebuild** and no recom
   emits the `SEVT_WORKING_CITY_CHANGED` DOMAIN fact (every mutation emits; the contexts' consumer ignores play-time
   events, the choke-point fold having already applied). A MEMBER plot's bits moving reaches the counts through the
   same applier: the maintainer unfolds the old bits and refolds the new ones around every derivation.
-- **`EmpireContext.policies`** ← the civic/trait change choke points (`CvPlayer::setCivics` / `setHasTrait` →
-  `EmpireContext::rebuildPolicies`), which refills the WHOLE union over the player's live civics + held (active-set)
-  traits. It is the single source the one policy read (`ev_playerHasPolicy`) uses — reads never re-walk the grantors.
+- **`CityContext`'s other blocks** ← each has ONE derivation, re-run WHOLE on any fact that can move it (never a
+  bespoke per-event delta), routed through the same consumer:
+  - the **VICINITY tiers** ← the radius tiles' bonus / owner / improvement / route / worked facts, plus the
+    culture-level fact (the workable radius itself grows with culture, so that fact is also the vicinity-MEMBERSHIP
+    signal). The plot→cities direction is the radius inverse: the workable fat cross is symmetric, so the cities that
+    may hold a plot sit at the same offsets around it.
+  - the **TRADED count** ← the city-bonus / network-membership / plot-group-resource facts, plus the tech fact (a
+    tech opens or closes the `TechCityTrade` gate the stored count applies). Traded MEMBERSHIP still belongs to
+    `CvPlotGroup`; only this city's own gated COUNT is held here, which no other object owns.
+  - the **AREA facts** ← the plot-TYPE fact near the city, and the wholesale **areas-recalculated** fact below.
+  - the **holy-city count** ← the holy-city fact.
+- **`EmpireContext.policies`** ← the **civic / trait / player-init DOMAIN facts**, routed through the contexts'
+  consumer, which refills the WHOLE union over the player's live civics + held (active-set) traits. It is the single
+  source the one policy read (`ev_playerHasPolicy`) uses — reads never re-walk the grantors. The **player-init** fact
+  is load-bearing on its own: a player's INITIAL traits are written straight into the has-array rather than through
+  the trait setter, so that fact is the only announcement they ever make.
+  ⛔ It is deliberately **not** maintained from `CvPlayer::setCivics` / `setHasTrait`: a direct hook beside an event
+  is a second maintenance surface for one fact, and the fact already exists.
+- **AREAS are announced WHOLESALE.** `CvMap::recalculateAreas` clears every plot's area, empties the area list and
+  recalculates, so it emits **`SEVT_AREAS_RECALCULATED`** (no payload — the fact IS "all of them") and every holder
+  of an area id re-reads. Areas are virtually never recalculated (terrain levelled to sea level — the WMD mechanic —
+  plus map generation), so the blanket costs nothing at its real frequency, and it is **not** the banned self-heal: a
+  wholesale identity reassignment is not addressable per-source, so no finer route exists to derive
+  ([DEC-no-self-heal](decisions.md#dec-no-self-heal) bans papering over a MISSED invalidation, not announcing a
+  genuine wholesale one).
 - **Forwarded** fields need no maintenance — they read the live source.
-- **Load** — `EmpireContext.policies` rebuilds from the loaded civics/traits at the end of `CvPlayer::read` (a derived
-  aggregate recomputes from source on load, [DEC-derived-never-trusted](decisions.md#dec-derived-never-trusted), never
-  trusted from a save). `CityContext.plotAttrs` builds from the in-read DOMAIN events
+- **Load** — `EmpireContext.policies` rebuilds from the **in-read civic/trait/player-init emits** as they stream (a
+  derived aggregate recomputes from source on load, [DEC-derived-never-trusted](decisions.md#dec-derived-never-trusted),
+  never trusted from a save) — through the consumer, not a second build mechanism beside the event stream.
+  `CityContext`'s other blocks build once at `GAME_LOAD_FINISHED`, because each reads state that is only complete when
+  the whole stream has ended (the areas deserialize after the plots; the obtained-vicinity tier reads the plot-group
+  connectivity the load-end network rebuild establishes). That single pass IS the load build — the only full build
+  there is — after which the facts alone maintain them.
+  `CityContext.plotAttrs` builds from the in-read DOMAIN events
   ([DEC-spine-reseed](decisions.md#dec-spine-reseed)): each `CvPlot::read` announces its deserialized working-city
   fact (`SEVT_WORKING_CITY_CHANGED` — the genuine read site emits), and the contexts' OWN spine consumer
   (`Engine/ContextConsumer`, one consumer per system) buffers the load bracket's facts and folds them through the

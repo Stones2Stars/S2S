@@ -273,11 +273,15 @@ enum SpineDomainEvent
 	// predicates flip for the OLD city (loses) and the NEW city (gains); gates conditioned commerce/yields. Emitted
 	// per affected city. iType=religion, iC=cityOwner, iSrcLoc=cityId, iA=1 now holy / 0 no longer. DOMAIN.
 	SEVT_HOLY_CITY_CHANGED      = 38,
-	// a city's LOCAL (vicinity) supply of a bonus changed -- an improved radius tile or an active providing
-	// building appeared/vanished (CvCity::processBuilding at construction/destruction, the per-turn
-	// doVicinityBonus tile backstop). Vicinity supply never adds an owned COUNT (that lives on the plot
-	// group); the consumer re-gates the bonus's connection:vicinity dependents. iType=Bonus, iC=owner,
+	// a city's LOCAL (vicinity) supply of a bonus changed -- an active providing building appeared/vanished
+	// (CvCity::processBuilding at construction/destruction). Vicinity supply never adds an owned COUNT (that lives on
+	// the plot group); the consumer re-gates the bonus's connection:vicinity dependents. iType=Bonus, iC=owner,
 	// iSrcLoc=cityId, iB=the applied local delta (a city can hold several of a bonus locally). DOMAIN.
+	// ⚠ The BUILDING half is the only half this fact carries. The MAP half -- a bonus appearing/vanishing on a radius
+	// tile, or that tile changing hands -- is announced by the PLOT facts (SEVT_PLOT_BONUS_CHANGED /
+	// SEVT_PLOT_OWNER_CHANGED / SEVT_PLOT_WORKED_CHANGED) and by the radius growth on SEVT_CITY_CULTURE_LEVEL_CHANGED;
+	// a consumer holding a city-scope vicinity store folds both halves from those. There is deliberately no per-turn
+	// sweep behind this fact -- a missed emit must stay visibly wrong (DEC-no-self-heal).
 	SEVT_VICINITY_BONUS_CHANGED = 39,
 	// a present building's PROCESSED (operating-contribution) state flipped -- construction/destruction's
 	// processing leg AND a dormancy disable/enable flip (setDisabledBuilding -> processBuilding). DISTINCT from
@@ -349,7 +353,16 @@ enum SpineDomainEvent
 	// it. DISTINCT from SEVT_WORKING_CITY_CHANGED, which is the RADIUS-MEMBERSHIP fact (which city may work the
 	// plot) -- membership is the superset, working is the citizen actually assigned to it.
 	// iA = 1 worked / 0 no longer, iB = the working cityId, iC = owner, iSrcLoc = plotId. DOMAIN.
-	SEVT_PLOT_WORKED_CHANGED    = 53
+	SEVT_PLOT_WORKED_CHANGED    = 53,
+	// EVERY area identity was reassigned (CvMap::recalculateAreas: every plot's area is cleared, the area list is
+	// emptied, and the areas are recalculated from scratch). It is the ONE wholesale-reassignment fact, so it carries
+	// no id: after it, EVERY holder of an area id must re-read, rather than each inventing its own staleness test.
+	// Areas are virtually never recalculated -- terrain levelled to sea level (the WMD mechanic) plus map generation --
+	// so announcing the whole reassignment costs nothing at its real frequency. This is NOT the banned self-heal: a
+	// wholesale identity reassignment is not addressable per-source, so there is no finer route to derive
+	// (DEC-no-self-heal bans papering over a MISSED invalidation, not announcing a genuine wholesale one).
+	// No payload -- the fact IS "all of them". DOMAIN.
+	SEVT_AREAS_RECALCULATED     = 54
 };
 
 //	Which entity's display name changed (the iType of a SEVT_NAME_CHANGE event). The logging consumer resolves the
@@ -429,6 +442,9 @@ void emitPlotIrrigationChanged(int iPlot, int iOwner, bool bIrrigated);
 void emitPlotLandmarkChanged(int iPlot, int iOwner, int iOldLandmark, int iNewLandmark);
 // City-driven: the plot is WHERE it happened (iSrcLoc), the city is WHO assigned the citizen.
 void emitPlotWorkedChanged(int iPlot, int iOwner, int iCity, bool bWorked);
+// Every area identity was reassigned (CvMap::recalculateAreas). Carries no payload: the fact IS "all of them", so
+// every holder of an area id re-reads on it.
+void emitAreasRecalculated();
 
 // The empire-count observability events + the grant-trigger events -- distinct from the per-source state-change
 // endpoints above (these carry the whole-empire count / a game-start or first-discover trigger, iSrcLoc = -1). One

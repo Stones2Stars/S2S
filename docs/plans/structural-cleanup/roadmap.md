@@ -119,16 +119,20 @@ Everything above is settled. What is NOT defined is the boundary every consumer 
 - **The per-scope live-state CONTEXTS the getters + evaluator read** ([contexts.md](../../architecture/contexts.md),
   [DEC-scope-contexts](../../architecture/decisions.md#dec-scope-contexts)) — one per scope that needs it
   (plot / city / player; NO area — a bare id whose effects map to the player; units are a FUTURE role-specific
-  scope). Each STORES only its uniquely-owned aggregate (COUNTS via the shared `ContextDict` —
-  `CityContext.plotAttrs`, `EmpireContext.policies`) and FORWARDS everything already O(1) on the bound game object;
-  maintained EVENT-DRIVEN, no recompute. **BUILT:** `ContextDict` + `CityContext` (on `CvCity`, forwarding; its
-  `plotAttrs` wired via `CvPlot::updateWorkingCity` → `CvCity::onCityPlotChanged`) + `EmpireContext` (on `CvPlayer`,
-  forwarding `stateReligion`) + `PlotContext` (on `CvPlot`, pure-forwarding every HAS_/IS_ plot fact to the same
-  `CvPlot` accessors the evaluator reads — no stored aggregate yet), all bound in `reset()`; and
-  `EmpireContext.policies` maintained as the derived UNION over live civics + held traits (rebuilt on
-  `setCivics`/`setHasTrait` + at load via `CvPlayer::read`), now the single source the one policy read
-  (`ev_playerHasPolicy`) uses — the orphaned per-player version memo it replaced is deleted. **OPEN:** the unified
-  event-driven load reseed of `CityContext.plotAttrs`; and the `(cityContext, plotGroup)` getter bodies that read them.
+  scope). A context is an **EVENT-BUILT STORE, not a forwarding facade** (owner): it STORES every DERIVED fact the
+  evaluation reads — computed once, maintained by spine facts, never recomputed at read — and FORWARDS only the
+  object's own RAW O(1) data. Nothing is serialized; the reseed rebuilds it.
+  **BUILT:** `PlotContext` holds the `CASC_PRED_*` verdict BITSET (own-plot + adjacency blocks, an 8-neighbour
+  fan-out on the adjacency half); `CityContext` holds `plotAttrs` (the literal FOLD of member plots' bits), the
+  tiered VICINITY-bonus sets, the traded-bonus count, the area id + tile count, the largest-adjacent-water size
+  and the holy-city count; `EmpireContext` holds `policies`. All maintained solely by the contexts' own spine
+  consumer — no direct hooks anywhere — off the complete plot substrate surface (terrain / feature / improvement
+  / route / bonus / owner / type / river / irrigation / landmark / worked) plus `SEVT_AREAS_RECALCULATED`.
+  The payoff is the point: `hasVicinityBonus` was a full radius scan + a 5,202-building scan per check;
+  `isCoastalLand` an 8-neighbour scan per predicate; `getNumBonuses` the turn wall's hottest cluster — all now
+  bare fetches. **OPEN:** the id-keyed radius dictionaries that would collapse `ev_cityPlotHas`' remaining
+  per-check scan (terrain/feature/improvement/route prereqs), and the context gaps in the
+  [info-rebuild.md](info-rebuild.md) ledger.
 - **How the INFO side hands its data to the cascade — "make the infos sane" (active).** Today an info IS the legacy
   variable set (220 members on `CvBuildingInfo`, 247 on `CvUnitInfo`), with JSON force-fed into it and a
   ~300-getter surface mirroring the legacy `CvXInfo` contract. The target — **an info STYLED FOR THE JSON**:

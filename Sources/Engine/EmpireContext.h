@@ -31,10 +31,16 @@ public:
 
 	// --- STORED aggregate: POLICY id -> the empire ENACTS this policy (json §9), keyed by the ClassificationRegistry
 	// domain-local POLICY id (the CvClassificationBlock::hasId space). The derived UNION over the player's LIVE grantors --
-	// adopted civics + held (active-set) traits -- rebuilt WHOLE on civic/trait change + at load, never per read. ---
-	ContextDict policies;
-	void rebuildPolicies();   // walk m_player's live civics + traits, refill `policies` (out-of-line, EmpireContext.cpp)
-	void clear() { policies.clear(); }
+	// adopted civics + held (active-set) traits -- rebuilt WHOLE on the civic/trait/player-init DOMAIN facts, never per read. ---
+	// `mutable` + a const refresh (the CvDerivedCache / PlotContext shape) so the maintainer drives it through the
+	// bound player's CONST accessor -- there is no second, mutable path onto the player.
+	mutable ContextDict policies;
+	// THE ONE MAINTENANCE ENTRY -- called ONLY by the contexts' spine consumer (Engine/ContextConsumer). Walks
+	// m_player's live civics + held traits and refills `policies` whole (out-of-line, EmpireContext.cpp).
+	// CONSTRAINT: no choke point may call this directly. A civic/trait change emits its own DOMAIN fact, so the
+	// consumer is the single trigger path; a direct call beside the event would be a second maintenance surface.
+	void rebuildPolicies() const;
+	void clear() const { policies.clear(); }
 	bool hasPolicy(int ePolicy) const { return policies.has(ePolicy); }   // the O(1) enacted-policy read (ev_playerHasPolicy)
 
 	// --- FORWARDED: read through the bound player / its team. Out-of-line (.cpp). ---

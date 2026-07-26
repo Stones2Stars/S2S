@@ -8,9 +8,11 @@
 #include "Spine/CvEventSpine.h"     // IEventConsumer / SEVT_* / spineGameLoadInProgress
 #include "Engine/CvCity.h"          // onCityPlotChanged -- the ONE plotAttrs applier
 #include "Engine/CvPlot.h"          // getPlotContext -- the stored verdict bitset
+#include "Engine/CityContext.h"     // the city stores' refresh entry points
+#include "Engine/EmpireContext.h"   // rebuildPolicies -- the empire store's refresh entry point
 #include "AI/CvGameAI.h"            // GC.getGame() -- isFinalInitialized, the map-settled guard the adjacency derivation needs
 #include "Engine/CvMap.h"           // plotByIndex / numPlots -- the event's iSrcLoc resolution
-#include "Engine/CvGameCoreUtils.h" // plotDirection -- the 8-neighbour adjacency fan-out
+#include "Engine/CvGameCoreUtils.h" // plotDirection / plotCity -- the adjacency fan-out + the radius-city inverse
 #include "AI/CvPlayerAI.h"          // GET_PLAYER -- the (owner, cityId) resolution
 #include "Defines/CvGlobals.h"      // GC
 #include <vector>
@@ -53,19 +55,82 @@ public:
 			clearPlotMarks();
 			break;
 
-		// ---- the plot SUBSTRATE facts: re-derive the announcing plot's stored verdicts ----
+		// ---- the plot SUBSTRATE facts: re-derive the announcing plot's stored verdicts, then the CITY-scope blocks
+		// that read the same tile. Both halves ride the ONE case per fact -- a second switch over the same events
+		// would be a second maintenance surface for one announcement. ----
 		case SEVT_TERRAIN_CHANGED:
 		case SEVT_FEATURE_CHANGED:
-		case SEVT_IMPROVEMENT_CHANGED:
-		case SEVT_ROUTE_CHANGED:
-		case SEVT_PLOT_BONUS_CHANGED:
-		case SEVT_PLOT_OWNER_CHANGED:
-		case SEVT_PLOT_TYPE_CHANGED:
 		case SEVT_PLOT_RIVER_CHANGED:
 		case SEVT_PLOT_IRRIGATION_CHANGED:
 		case SEVT_PLOT_LANDMARK_CHANGED:
+			refreshPlotByIndex(kEvent.iSrcLoc);
+			break;
+		// A radius tile's RESOURCE or OWNERSHIP moved -- re-derive the vicinity tiers of every city that can see it.
+		// IMPROVEMENT and ROUTE ride the same leg: both feed CvPlot::isHasValidBonus / isConnectedTo, so the OBTAINED
+		// (connected) tier can flip without the bonus itself moving.
+		case SEVT_PLOT_BONUS_CHANGED:
+		case SEVT_PLOT_OWNER_CHANGED:
+		case SEVT_IMPROVEMENT_CHANGED:
+		case SEVT_ROUTE_CHANGED:
+			refreshPlotByIndex(kEvent.iSrcLoc);
+			refreshVicinityAroundPlot(kEvent.iSrcLoc);
+			break;
+		// A citizen took or left a tile. Only the WORKING city's worked tier can move -- a tile is worked by exactly
+		// one city -- so this hottest of the plot facts costs one city, not a neighbourhood.
 		case SEVT_PLOT_WORKED_CHANGED:
 			refreshPlotByIndex(kEvent.iSrcLoc);
+			refreshVicinityForCity(kEvent.iC, kEvent.iB);
+			break;
+		// A tile's TYPE changed (land <-> ocean): the neighbourhood's coastal water-body size can move, and with it
+		// which cities read as coastal.
+		case SEVT_PLOT_TYPE_CHANGED:
+			refreshPlotByIndex(kEvent.iSrcLoc);
+			refreshAreaFactsAroundPlot(kEvent.iSrcLoc);
+			break;
+
+		// ---- the EMPIRE store: the enacted-policy union over the player's live civics + held traits ----
+		// PLAYER_INIT matters in its own right: the initial trait assignment writes the has-array directly rather
+		// than going through the trait setter, so the init fact is the only announcement those traits ever make.
+		case SEVT_CIVIC_ADOPTED:
+		case SEVT_TRAIT_CHANGED:
+		case SEVT_PLAYER_INIT:
+			rebuildPoliciesFor(kEvent.iC);
+			break;
+
+		// ---- the CITY stores ----
+		// The city's workable RADIUS grew or shrank with its culture level -- the vicinity MEMBERSHIP fact.
+		case SEVT_CITY_CULTURE_LEVEL_CHANGED:
+			refreshVicinityForCity(kEvent.iC, kEvent.iSrcLoc);
+			break;
+		// An ACTIVE providing building appeared or vanished. The building half of the supply is the ENABLER's
+		// (vicinityProvidedBonuses), so nothing is folded here -- but the same construction/destruction moves this
+		// city's own network count, which IS this context's.
+		case SEVT_VICINITY_BONUS_CHANGED:
+		case SEVT_BONUS_CHANGED:
+		case SEVT_CITY_NETWORK_CHANGED:
+			refreshTradedForCity(kEvent.iC, kEvent.iSrcLoc);
+			break;
+		// A network resource entered or left a PLOT GROUP: every member city's gated count can move, and so can the
+		// obtained-vicinity tier (which requires connection to the city).
+		case SEVT_PLOTGROUP_BONUS_CHANGED:
+			refreshNetworkForPlayer(kEvent.iC);
+			break;
+		// A tech can open or close a bonus's TechCityTrade gate, which is the gate the stored count applies.
+		case SEVT_TECH_CHANGED:
+			refreshTradedForPlayer(kEvent.iC);
+			break;
+		// A religion's holy city moved: the bare IS_HOLY_CITY verdict flips for the city that gained or lost it.
+		case SEVT_HOLY_CITY_CHANGED:
+			refreshHolyCityFor(kEvent.iC, kEvent.iSrcLoc);
+			break;
+		// EVERY area id was reassigned, so every city re-reads its area facts. Rare by construction (terrain levelled
+		// to sea level, map generation), and not addressable per-source -- which is why it is announced wholesale.
+		case SEVT_AREAS_RECALCULATED:
+			refreshAreaFactsForAllCities();
+			break;
+		// A new city has no stored blocks yet: derive them all once, here.
+		case SEVT_CITY_FOUNDED:
+			refreshAllStoresForCity(kEvent.iC, kEvent.iSrcLoc);
 			break;
 
 		case SEVT_WORKING_CITY_CHANGED:
@@ -107,6 +172,12 @@ public:
 				}
 				pCity->onCityPlotChanged(pPlot, +1);
 			}
+			// THE LOAD BUILD of the city-scope blocks. LOAD is the only full build there is (state-repositories.md
+			// CAPSTONE) -- after this, the blocks are maintained purely by the facts above and NOTHING sweeps them
+			// again. It runs here rather than off each city's own in-read emits because the blocks read state that is
+			// only complete once the whole stream has ended: the areas deserialize after the plots, and the
+			// obtained-vicinity tier reads plot-group connectivity that the load-end network rebuild establishes.
+			refreshAllStoresForAllCities();
 			m_bufferedFacts.clear();
 			break;
 		}
@@ -116,6 +187,191 @@ public:
 	}
 
 private:
+	// ---- the CITY / EMPIRE store maintenance -------------------------------------------------------------------
+	// Every entry below is reached ONLY from onEvent. There is deliberately no periodic sweep, no staleness test and
+	// no recompute-on-read behind any of them: a fact that fails to fire leaves the block visibly wrong, which is how
+	// the missing emit gets found (DEC-no-self-heal).
+
+	static CvCity* cityFor(int iOwner, int iCityId)
+	{
+		if (iOwner < 0 || iOwner >= MAX_PLAYERS || iCityId < 0)
+		{
+			return NULL;
+		}
+		return GET_PLAYER((PlayerTypes)iOwner).getCity(iCityId);
+	}
+
+	static void rebuildPoliciesFor(int iPlayer)
+	{
+		if (iPlayer < 0 || iPlayer >= MAX_PLAYERS)
+		{
+			return;
+		}
+		GET_PLAYER((PlayerTypes)iPlayer).getEmpireContext().rebuildPolicies();
+	}
+
+	static void refreshVicinityForCity(int iOwner, int iCityId)
+	{
+		const CvCity* pCity = cityFor(iOwner, iCityId);
+		if (pCity != NULL)
+		{
+			pCity->getCityContext().refreshVicinityBonuses();
+		}
+	}
+
+	static void refreshTradedForCity(int iOwner, int iCityId)
+	{
+		const CvCity* pCity = cityFor(iOwner, iCityId);
+		if (pCity != NULL)
+		{
+			pCity->getCityContext().refreshTradedBonuses();
+		}
+	}
+
+	static void refreshHolyCityFor(int iOwner, int iCityId)
+	{
+		const CvCity* pCity = cityFor(iOwner, iCityId);
+		if (pCity != NULL)
+		{
+			pCity->getCityContext().refreshHolyCity();
+		}
+	}
+
+	static void refreshAllStoresForCity(int iOwner, int iCityId)
+	{
+		const CvCity* pCity = cityFor(iOwner, iCityId);
+		if (pCity == NULL)
+		{
+			return;
+		}
+		const CityContext& kContext = pCity->getCityContext();
+		kContext.refreshVicinityBonuses();
+		kContext.refreshTradedBonuses();
+		kContext.refreshAreaFacts();
+		kContext.refreshHolyCity();
+	}
+
+	// The RADIUS-CITY INVERSE: which cities can see this plot. The workable fat cross is symmetric, so the cities
+	// that may hold this plot in radius sit at exactly the same offsets around it. Deliberately over-inclusive --
+	// a candidate whose radius has since shrunk simply re-derives its own radius and finds nothing changed.
+	template <class TAction>
+	static void forEachRadiusCity(int iPlotIndex, TAction action)
+	{
+		if (iPlotIndex < 0)
+		{
+			return;
+		}
+		const CvPlot* pPlot = GC.getMap().plotByIndex(iPlotIndex);
+		if (pPlot == NULL)
+		{
+			return;
+		}
+		for (int iRingIndex = 0; iRingIndex < NUM_CITY_PLOTS; ++iRingIndex)
+		{
+			const CvPlot* pCandidatePlot = plotCity(pPlot->getX(), pPlot->getY(), iRingIndex);
+			if (pCandidatePlot == NULL)
+			{
+				continue;
+			}
+			const CvCity* pCity = pCandidatePlot->getPlotCity();
+			if (pCity != NULL)
+			{
+				action(pCity->getCityContext());
+			}
+		}
+	}
+
+	struct RefreshVicinity
+	{
+		void operator()(const CityContext& kContext) const { kContext.refreshVicinityBonuses(); }
+	};
+	struct RefreshAreaFacts
+	{
+		void operator()(const CityContext& kContext) const { kContext.refreshAreaFacts(); }
+	};
+
+	static void refreshVicinityAroundPlot(int iPlotIndex)
+	{
+		forEachRadiusCity(iPlotIndex, RefreshVicinity());
+	}
+
+	// A land/ocean flip moves the water-body size its NEIGHBOURS read, so the affected cities are those whose CENTRE
+	// is adjacent to the changed plot -- covered by the same radius sweep, which is a superset of adjacency.
+	static void refreshAreaFactsAroundPlot(int iPlotIndex)
+	{
+		forEachRadiusCity(iPlotIndex, RefreshAreaFacts());
+	}
+
+	// A plot-group resource move touches every city of that player, and it moves BOTH the gated network count and
+	// the obtained-vicinity tier (which requires connection to the city).
+	static void refreshNetworkForPlayer(int iPlayer)
+	{
+		if (iPlayer < 0 || iPlayer >= MAX_PLAYERS)
+		{
+			return;
+		}
+		int iLoop = 0;
+		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+		for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+		{
+			pCity->getCityContext().refreshTradedBonuses();
+			pCity->getCityContext().refreshVicinityBonuses();
+		}
+	}
+
+	static void refreshTradedForPlayer(int iPlayer)
+	{
+		if (iPlayer < 0 || iPlayer >= MAX_PLAYERS)
+		{
+			return;
+		}
+		int iLoop = 0;
+		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+		for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+		{
+			pCity->getCityContext().refreshTradedBonuses();
+		}
+	}
+
+	static void refreshAreaFactsForAllCities()
+	{
+		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+		{
+			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+			if (!kPlayer.isAlive())
+			{
+				continue;
+			}
+			int iLoop = 0;
+			for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+			{
+				pCity->getCityContext().refreshAreaFacts();
+			}
+		}
+	}
+
+	// The LOAD build -- the one full pass over every city's blocks, run once at the end of the load stream.
+	static void refreshAllStoresForAllCities()
+	{
+		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+		{
+			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+			if (!kPlayer.isAlive())
+			{
+				continue;
+			}
+			int iLoop = 0;
+			for (const CvCity* pCity = kPlayer.firstCity(&iLoop); pCity != NULL; pCity = kPlayer.nextCity(&iLoop))
+			{
+				const CityContext& kContext = pCity->getCityContext();
+				kContext.refreshVicinityBonuses();
+				kContext.refreshTradedBonuses();
+				kContext.refreshAreaFacts();
+				kContext.refreshHolyCity();
+			}
+		}
+	}
+
 	// The single implementation of "this plot changed, re-derive it". Reached ONLY from onEvent: every trigger is a
 	// spine DOMAIN fact, so there is one trigger path rather than an event surface beside a direct-call surface.
 	void refreshPlot(const CvPlot* pPlot)

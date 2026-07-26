@@ -112,26 +112,11 @@ static bool ev_vicinityHas(const CvCascadeEvalCtx& ctx, int eBonus, CvCascVicini
 	// owned+valid+`isConnectedTo(this)` radius plot OR a building-provided supply -- so defer to it wholesale
 	// (StoneBase's per-plot `BonusConnected` scan + VicinityBonuses fallback collapses to this one read;
 	// `isConnectedToCapital` was the WRONG read).
-	if (disc == CASC_VIC_CONNECTED) return cityContext->hasVicinityBonus(eBonus);
-	// The looser discriminators scan the workable radius directly; the centre tile always counts.
-	for (int i = 0; i < NUM_CITY_PLOTS; ++i)
-	{
-		const CvPlot* radiusPlot = cityContext->radiusPlot(i);
-		if (radiusPlot == NULL) continue;
-		const PlotContext& plotContext = radiusPlot->getPlotContext();
-		if (!plotContext.hasBonus(eBonus, cityContext->team())) continue;
-		const bool bCenter  = (radiusPlot == cityContext->cityPlot());
-		const bool bOwned   = plotContext.owner() == cityContext->owner();
-		const bool bNeutral = plotContext.owner() == (int)NO_PLAYER;
-		switch (disc)
-		{
-		case CASC_VIC_WORKED:    if (bCenter || plotContext.isWorked()) return true; break;
-		case CASC_VIC_OWNED:     if (bCenter || bOwned) return true; break;
-		case CASC_VIC_CROSSBORDER: return true;
-		default:                 if (bCenter || bOwned || bNeutral) return true; break;   // owned+neutral (the DEFAULT)
-		}
-	}
-	return false;   // the building-provided supply is handled up-front from vicinityProvidedBonuses (json §5a), NOT the engine
+	// Every tier is a stored, event-maintained set on the city context -- one O(1) read, never a radius scan
+	// (contexts.md: a predicate that walks plots per call is the efficiency defect this design removes).
+	// The building-provided supply is handled up-front from vicinityProvidedBonuses (json par.5a) -- the enabler
+	// owns that half of the union, the context owns the MAP half.
+	return cityContext->hasVicinityBonusAt(eBonus, disc);
 }
 
 // The TRADED leg (contexts.md: CvPlotGroup is the reserved explicit traded-bonus source; traded state is NEVER

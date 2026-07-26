@@ -8,8 +8,18 @@
 //	 - PlotContext's CASC_PRED_* verdict BITSET (contexts.md) -- re-derived from the plot substrate DOMAIN facts
 //	   (terrain / feature / improvement / route / bonus / owner), with the bounded one-hop ADJACENCY FAN-OUT.
 //	 - CityContext.plotAttrs -- the per-predicate COUNTS, which are the FOLD of the member plots' bitsets.
-//	Both are derived state: never serialized, rebuilt from the save read's own in-read emits (DEC-spine-reseed --
+//	 - CityContext's VICINITY tiers / TRADED counts / AREA facts / HOLY-CITY count -- each re-derived whole by its
+//	   own single derivation off the facts that can move it (below).
+//	 - EmpireContext.policies -- the enacted-policy union, rebuilt on the civic / trait / player-init facts.
+//	All are derived state: never serialized, rebuilt from the save read's own in-read emits (DEC-spine-reseed --
 //	the genuine read emits, never a post-deserialization walk that fabricates events).
+//
+//	⛔ NOTHING HERE HEALS A MISSED FACT. There is no periodic refresh, no turn-roll sweep, no staleness stamp and no
+//	recompute-on-read fallback anywhere in this consumer or in the stores it drives. That is deliberate and it is what
+//	makes the event wiring safe to grow incrementally: a fact that fails to fire leaves a visibly wrong value, which
+//	is cheap to find, whereas a self-healing recompute converts that into permanent invisible drift AND reinstates
+//	exactly the per-read/per-turn work the stores exist to delete (DEC-no-self-heal; state-repositories.md CAPSTONE --
+//	LOAD is the only full build).
 //
 //	THE PLOT BITSET
 //	 - Every plot substrate DOMAIN event -- terrain / feature / improvement / route / bonus / owner / plot TYPE /
@@ -37,8 +47,22 @@
 //	   SEVT_GAME_LOAD_FINISHED -- the "apply once after the stream ends" option of the enabler.md par.7.1 order
 //	   rule (never the mixed form). The plot bitsets drain FIRST, so the fold sees final bits.
 //
-//	EmpireContext.policies needs no consumer leg: a derived-from-source aggregate, rebuilt whole at the end of
-//	CvPlayer::read (DEC-derived-never-trusted).
+//	The CITY-scope blocks -- each has ONE derivation, re-run whole on any fact that can move it (never a bespoke
+//	per-event delta), and each is a bare fetch at read:
+//	 - VICINITY tiers (the json par.3.4 ownership tiers of the MAP-provided bonus presence) <- the radius tiles'
+//	   bonus / owner / improvement / route / worked facts, plus the culture-level fact (the radius itself grows).
+//	   ⛔ The BUILDING half of the json par.5a supply is NOT folded here -- it is the enabler's operate/provides
+//	   fixpoint (OperatingBuildings::provided, reached via CvCascadeEvalCtx::vicinityProvidedBonuses), and the reader
+//	   unions the two. Mirroring it here would be a second store of one union, drifting as the enabler ripples.
+//	 - TRADED counts <- the city bonus / network-membership / plot-group-resource facts, plus the tech fact (a tech
+//	   opens or closes the TechCityTrade gate the stored count applies).
+//	 - AREA facts (the area id, its tile count, the coastal water-body size) <- the plot-TYPE fact near the city and
+//	   the wholesale SEVT_AREAS_RECALCULATED reassignment.
+//	 - HOLY-CITY count <- the holy-city fact.
+//
+//	EmpireContext.policies <- SEVT_CIVIC_ADOPTED / SEVT_TRAIT_CHANGED / SEVT_PLAYER_INIT. The player-init fact is
+//	load-bearing on its own: a player's INITIAL traits are written straight into the has-array rather than through
+//	the trait setter, so that fact is the only announcement they ever make.
 //
 //	CONSTRAINT: the maintenance has NO entry point other than a spine event. Every plot mutation that moves a stored
 //	verdict emits its own DOMAIN fact, so the consumer is the single trigger path -- a direct call from a choke
