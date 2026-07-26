@@ -22,6 +22,7 @@
 #include "CvPopupInfo.h"
 #include "CvPython.h"
 #include "CvSelectionGroup.h"
+#include "Spine/CvEventSpine.h"   // emitUnitCreated / emitUnitEnteredCity / emitNameChange -- the DOMAIN emit surface
 #include "CvTeamAI.h"
 #include "CvUnit.h"
 #include "CvUnitSelectionCriteria.h"
@@ -364,6 +365,16 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 
 		doSetUnitCombats();
 		doSetFreePromotions(true);
+		// The unit's OWN grants.promotions are handed over by the GRANTS MACHINE off this emit. Its position is
+		// pinned between two neighbours and is wrong on either side of them:
+		//   AFTER doSetFreePromotions -- a promotion can grant UNIT-COMBATS, and doSetFreePromotions ends with
+		//     checkFreetoCombatClass() which reconciles them. Emitting before that let the machine mutate the
+		//     combat-class set outside its reconciliation; the outcome lists are merged from unit + combat classes,
+		//     which crashed as a wild CvTeam::isHasTech read out of CvOutcome::isPossibleSomewhere.
+		//   BEFORE doSetDefaultStatuses -- that calls statusUpdate(), establishing the unit's status/animation
+		//     state. Emitting after it left promotions landing on an already-computed visual state (units drawn
+		//     only after re-selection; a fortified unit stuck in its run animation).
+		emitUnitCreated((int)getUnitType(), getID(), (int)getOwner());
 		doSetDefaultStatuses();
 
 		// Cache initial healer values
@@ -14016,6 +14027,10 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 			else
 			{
 				pNewCity->noteUnitMoved(this);
+				// The unit entered a FRIENDLY city: the targeted trigger for what the city hands to units present
+				// in it (building free promotions). Emitted here rather than at CvPlot::addUnit so the stream
+				// carries a rare fact (a city entry) instead of every unit move.
+				emitUnitEnteredCity((int)getUnitType(), getID(), (int)getOwner(), pNewCity->getID());
 			}
 		}
 
@@ -17183,6 +17198,8 @@ void CvUnit::setName(CvWString szNewValue)
 	gDLL->stripSpecialCharacters(szNewValue);
 
 	m_szName = szNewValue;
+	// #430 event spine: a set-name choke point -- the consumer resolves the NEW name live, so emit AFTER the assign.
+	emitNameChange(NAMECHANGE_UNIT, getOwner(), getID());
 
 	if (IsSelected())
 	{

@@ -63,15 +63,21 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   `SFT_WSTR` name — the emit render is synchronous on the game thread, so the borrowed pointers outlive it). This is
   the one place a spine endpoint does resolution at emit rather than deferring to the gated render — justified because
   a rename is rare (four low-frequency choke points), not a hot-path firehose.
-- **Build status.** The spine primitive + KIND firewall + `IEventConsumer` = BUILT (`Spine/CvEventSpine.{h,cpp}`),
-  and every emit ENDPOINT exists. ⚠ On branch `cascade-rebuild` the emit CALL SITES are SEVERED (the clean-slate
-  revert removed them engine-wide; only `CvPlot::read` / `CvPlot::updateWorkingCity` are rewired so far, and the
-  **load-lifecycle bracket** `GAME_LOAD_STARTED` / `GAME_LOAD_FINISHED` is not yet emitted, so
-  `spineGameLoadInProgress()` currently never reports true). The DESIGN stands and the re-wiring is the green-up
-  Engine repair ([info-rebuild.md](../plans/structural-cleanup/info-rebuild.md) audit ledger): the in-read emits
-  fire from inside the save read (`CvPlayer::read` per held tech / project / civic / trait, `CvCity::read` per
-  building / religion / corp / bonus / culture, `CvPlot::read` substrate), wrapped by the bracket;
-  result-producers suppress inside it via `spineGameLoadInProgress()`.
+- **Build status.** The spine primitive + KIND firewall + `IEventConsumer` = BUILT (`Spine/CvEventSpine.{h,cpp}`).
+  The **DOMAIN emit surface = BUILT**: **90 call sites** across `CvPlayer` (31) · `CvCity` (22) · `CvPlot` (16) ·
+  `CvGame` (7) · `CvTeam` (4) · `CvUnit` (3) · `CvPlotGroup` (1) + the cascade's own diagnostics (6), restored
+  at the genuine mutation choke points after the clean-slate revert had stripped them. The **load-lifecycle
+  bracket** `GAME_LOAD_STARTED` / `GAME_LOAD_FINISHED` is emitted (`CvGame::read` / end of
+  `CvGame::onFinalInitialized`), so `spineGameLoadInProgress()` reports correctly and result-producers suppress
+  inside it. The **load reseed** = BUILT: the in-read emits fire from inside the save read (`CvPlayer::read` per
+  held tech / project / civic / trait / heritage + era / golden-age / state-religion / nukes, `CvCity::read` per
+  building / religion + holy-city / corp / specialist / population / power / culture-level, `CvPlot::read`
+  substrate + owner + working-city), wrapped by the bracket.
+  ⚠ **One endpoint is deliberately unwired: `emitLoadPipeline`** — every one of its arguments is produced by the
+  archived load-time warm-up/rebuild pass, which the CAPSTONE rule removed
+  ([state-repositories.md](../architecture/state-repositories.md)); the event reseed replaced that pass, so the
+  endpoint has no honest caller. Open follow-ups (the tile-driven vicinity backstop; the per-city enabler
+  priming that preceded the reseed emits): [info-rebuild.md](../plans/structural-cleanup/info-rebuild.md) ledger.
   **Registered consumers today:** the broad FILE logging consumer, the `/events` STREAM consumer, the **grants
   engine** (`Grants/CvGrantsEngine` -- resolver built, the apply-loop NOT built,
   [grants-machine.md](../plans/structural-cleanup/grants-machine.md)), the **enabler's own** consumer

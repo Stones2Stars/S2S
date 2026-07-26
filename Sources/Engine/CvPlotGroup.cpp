@@ -9,6 +9,7 @@
 #include "CvMap.h"
 #include "CvPlayerAI.h"
 #include "CvDLLFAStarIFaceBase.h"
+#include "Spine/CvEventSpine.h"   // emitPlotGroupBonusChanged -- the network (plot-group) resource-presence DOMAIN fact
 
 //#define VALIDATION_FOR_PLOT_GROUPS
 
@@ -502,7 +503,16 @@ void CvPlotGroup::changeNumBonuses(const BonusTypes eBonus, const int iChange)
 			memset(m_paiNumBonuses, 0, sizeof(int)*GC.getNumBonusInfos());
 		}
 
+		const int iOldTotal = getNumBonuses(eBonus);
 		m_paiNumBonuses[eBonus] += iChange;
+		const int iNewTotal = getNumBonuses(eBonus);
+		// #430 NETWORK bonus event: the plot-group IS the connectivity/network identity (a traded resource enters at
+		// the capital's group and reaches every connected city). On a PRESENCE transition, announce it (owner,
+		// plotGroupId) so the cache-invalidation consumer re-evals connection:trade deposits for the member cities.
+		if ((iOldTotal != 0) != (iNewTotal != 0))
+		{
+			emitPlotGroupBonusChanged((int)getOwner(), getID(), (int)eBonus, iChange > 0 ? 1 : -1);
+		}
 
 		foreach_(CvCity* pLoopCity, GET_PLAYER(getOwner()).cities())
 		{

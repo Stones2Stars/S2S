@@ -36,7 +36,7 @@
 #include "CvDLLUtilityIFaceBase.h"
 #include "Repos/BuildsRepo.h"
 #include "CvCascadeGather.h"
-#include "Spine/CvEventSpine.h"   // emitWorkingCityChanged -- the working-city DOMAIN fact (play choke point + the in-read reseed)
+#include "Spine/CvEventSpine.h"   // the plot DOMAIN facts -- owner/terrain/feature/bonus/improvement/route/working-city/network (play choke points + the in-read reseed)
 #include "FAStarNode.h"
 
 #define STANDARD_MINIMAP_ALPHA		(0.6f)
@@ -6445,6 +6445,8 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 	{
 		PROFILE("CvPlot::setOwner.changed");
 
+		const PlayerTypes eOldPlotOwner = getOwner(); // #430: capture BEFORE m_eOwner is committed (for the spine emit)
+
 		GC.getGame().addReplayMessage(REPLAY_MESSAGE_PLOT_OWNER_CHANGE, eNewValue, (char*)NULL, getX(), getY());
 
 		CvCity* pOldCity = getPlotCity();
@@ -6567,6 +6569,8 @@ void CvPlot::setOwner(PlayerTypes eNewValue, bool bCheckUnits, bool bUpdatePlotG
 			}
 
 			m_eOwner = eNewValue;
+			// #430 event spine: announce the plot owner change (past the no-change guard, after the field commit).
+			emitPlotOwnerChanged(GC.getMap().plotNum(getX(), getY()), (int)eOldPlotOwner, (int)eNewValue);
 
 			setWorkingCityOverride(NULL);
 			updateWorkingCity();
@@ -7047,6 +7051,8 @@ void CvPlot::setTerrainType(TerrainTypes eNewValue, bool bRecalculate, bool bReb
 	if (eOldTerrain != eNewValue)
 	{
 		m_eTerrainType = eNewValue;
+		// #430 event spine: announce the terrain change (past the no-change guard). plotId per /state/plots convention.
+		emitTerrainChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
 
 		if (eOldTerrain != NO_TERRAIN)
 		{
@@ -7176,6 +7182,11 @@ void CvPlot::setFeatureType(FeatureTypes eNewValue, int iVariety, bool bImprovem
 		}
 		m_eFeatureType = eNewValue;
 		m_iFeatureVariety = iVariety;
+		// #430 event spine: announce the feature change ONLY on a real feature-type change (not a variety-only reroll).
+		if (eOldFeature != eNewValue)
+		{
+			emitFeatureChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
+		}
 
 		if (bUpdateSight)
 		{
@@ -7314,6 +7325,7 @@ void CvPlot::setBonusType(BonusTypes eNewValue)
 {
 	if (getBonusType() != eNewValue)
 	{
+		const BonusTypes eOldBonus = getBonusType();   // #430: capture before m_eBonusType is set (getBonusType() returns new after)
 		setImprovementUpgradeCache(-1);
 
 		if (getBonusType() != NO_BONUS)
@@ -7351,6 +7363,14 @@ void CvPlot::setBonusType(BonusTypes eNewValue)
 		{
 			updatePlotGroupBonus(true);
 			GET_PLAYER(getOwner()).endDeferredPlotGroupBonusCalculation();
+		}
+		// #430 plot-substrate emit: the plot's RESOURCE changed (a Great-Farmer build / discovery event places or
+		// reveals it, or it is removed). The SAME event the reseed (CvPlot::read) fires. A plot holds at most one
+		// bonus, so a replace emits the old at -1 then the new at +1.
+		{
+			const int iPlotNum = GC.getMap().plotNum(getX(), getY());
+			if (eOldBonus != NO_BONUS) { emitPlotBonusChanged(iPlotNum, (int)getOwner(), (int)eOldBonus, -1); }
+			if (eNewValue != NO_BONUS) { emitPlotBonusChanged(iPlotNum, (int)getOwner(), (int)eNewValue, 1); }
 		}
 
 		if (getBonusType() != NO_BONUS)
@@ -7529,6 +7549,8 @@ void CvPlot::setImprovementType(ImprovementTypes eNewImprovement)
 			updatePlotGroupBonus(false);
 		}
 		m_eImprovementType = eNewImprovement;
+		// #430 event spine: announce the improvement change (past the no-change guard, after the field commit).
+		emitImprovementChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewImprovement);
 		if (isOwned())
 		{
 			updatePlotGroupBonus(true);
@@ -7672,6 +7694,8 @@ void CvPlot::setRouteType(RouteTypes eNewValue, bool bUpdatePlotGroups)
 	}
 
 	m_eRouteType = eNewValue;
+	// #430 event spine: announce the route change (past the no-change early-return guard, after the field commit).
+	emitRouteChanged(GC.getMap().plotNum(getX(), getY()), getOwner(), (int)eNewValue);
 
 	if (isOwned())
 	{
@@ -8854,6 +8878,13 @@ void CvPlot::setPlotGroup(PlayerTypes ePlayer, CvPlotGroup* pNewValue, bool bRec
 				{
 					pCity->changeNumBonuses((BonusTypes)iI, getPlotGroup(ePlayer)->getNumBonuses((BonusTypes)iI));
 				}
+			}
+			// #430 NETWORK MEMBERSHIP (trigger #3): this city's OWN center plot moved to a different plot-group
+			// (merge/split), so its whole network resource set changed. Owner-gated -- a group change for a NON-owner
+			// player over this plot doesn't touch the city's network access. Announce it so the cache re-evals connection:trade.
+			if (pCity != NULL && pCity->getOwner() == ePlayer)
+			{
+				emitCityNetworkChanged((int)pCity->getOwner(), pCity->getID());
 			}
 			if (ePlayer == getOwner())
 			{
@@ -11148,11 +11179,40 @@ void CvPlot::read(FDataStreamBase* pStream)
 	// TERRAIN is MANDATORY on every plot -- a plot with no terrain is an unrenderable hole in the map, so a
 	// missing TERRAIN_ Type is CORRUPTION, not a soft condition: this read stays fail-loud (save.md par.7).
 	WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_TERRAINS, &m_eTerrainType);
+	// THE RESEED EMIT (DEC-spine-reseed): the terrain DOMAIN event fires HERE, as the field deserializes off the
+	// stream, INSIDE the read -- never a later pass over already-populated plots (that pseudo-emit is banned,
+	// superseded-ideas). Coords (m_iX/m_iY) + owner (m_eOwner) are already read above.
+	emitTerrainChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eTerrainType);
+	// #430 reseed: plot OWNERSHIP as a change from unowned -> current (reseed change-shaped events as null -> current,
+	// exactly like a real acquisition). Only an OWNED plot has an ownership fact.
+	if (m_eOwner != NO_PLAYER)
+	{
+		emitPlotOwnerChanged(GC.getMap().plotNum(m_iX, m_iY), (int)NO_PLAYER, (int)m_eOwner);
+	}
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_FEATURES, &m_eFeatureType);
+	// #430 reseed: the remaining plot-substrate DOMAIN events fire HERE as each field deserializes, INSIDE the read --
+	// the same in-read pattern as the terrain fact above. Present-gated: a plot with no feature/bonus/improvement/route
+	// has no fact to reseed, so nothing fires (emitting NO_* for every empty plot would be noise, not a fact).
+	if (m_eFeatureType != NO_FEATURE)
+	{
+		emitFeatureChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eFeatureType);
+	}
 
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_BONUSES, &m_eBonusType);
+	if (m_eBonusType != NO_BONUS)
+	{
+		emitPlotBonusChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eBonusType, 1);   // plot RESOURCE present (+1)
+	}
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_IMPROVEMENTS, &m_eImprovementType);
+	if (m_eImprovementType != NO_IMPROVEMENT)
+	{
+		emitImprovementChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eImprovementType);
+	}
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_ROUTES, &m_eRouteType);
+	if (m_eRouteType != NO_ROUTE)
+	{
+		emitRouteChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_eOwner, (int)m_eRouteType);
+	}
 	WRAPPER_READ(wrapper, "CvPlot", &m_eRiverNSDirection);
 	WRAPPER_READ(wrapper, "CvPlot", &m_eRiverWEDirection);
 

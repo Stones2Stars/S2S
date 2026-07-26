@@ -22,6 +22,7 @@
 #include "CvPopupInfo.h"
 #include "CvPython.h"
 #include "CvSelectionGroup.h"
+#include "Spine/CvEventSpine.h"   // emitTechChanged / emitTechAcquired / emitProjectChanged -- the DOMAIN emit surface
 #include "CvTeamAI.h"
 #include "CvUnit.h"
 #include "CvDLLEngineIFaceBase.h"
@@ -4489,6 +4490,19 @@ void CvTeam::changeProjectCount(ProjectTypes eIndex, int iChange)
 
 		processProjectChange(eIndex, iChange, iOldProjectCount);
 
+		// #430 event spine: announce the project count change (inside the iChange != 0 guard, after commit + apply).
+		// PER-MEMBER emits -- one per alive member player (the tech-emit precedent): a project is TEAM state consumed
+		// per player (the enabler applies to the emitting player's domain; the modifier mark scopes per player), so a
+		// single leader-only emit under-reaches teammates. Emitted HERE (the count choke point), NOT in
+		// processProjectChange, whose other caller re-applies effects and is not a genuine state change.
+		for (int iMemberIndex = 0; iMemberIndex < MAX_PLAYERS; iMemberIndex++)
+		{
+			if (GET_PLAYER((PlayerTypes)iMemberIndex).isAlive() && GET_PLAYER((PlayerTypes)iMemberIndex).getTeam() == getID())
+			{
+				emitProjectChanged(iMemberIndex, (int)eIndex, iChange);
+			}
+		}
+
 		if (iChange > 0 && GC.getGame().isFinalInitialized() && !gDLL->GetWorldBuilderMode())
 		{
 			const CvProjectInfo& kProject = GC.getProjectInfo(eIndex);
@@ -5220,6 +5234,8 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 			setResearchProgress(eTech, 0, ePlayer);
 		}
 		processTech(eTech, iChange, bAnnounce);
+		// #430 event spine: broad tech-changed event on the repeat-tech (e.g. Future Tech) count change path.
+		emitTechChanged((int)ePlayer, (int)eTech, bNewValue);
 		return;
 	}
 
@@ -5243,6 +5259,9 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 	}
 
 	m_pabHasTech[eTech] = bNewValue;
+	// #430 event spine: broad tech-changed event (any set, gain or loss) -- past the no-change guard, after commit.
+	// This is the ADDITIONAL broad emit; the SEVT_TECH_ACQUIRED first-discoverer emit below stays separate.
+	emitTechChanged((int)ePlayer, (int)eTech, bNewValue);
 
 	for (int iI = 0; iI < GC.getMap().numPlots(); iI++)
 	{
@@ -5486,6 +5505,10 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 
 		if (bFirst && GC.getGame().countKnownTechNumTeams(eTech) == 1)
 		{
+			// #430 cascade: the tech's first-discoverer grants (firstFreeUnit / firstFreeProphet / freeTechs) fire in
+			// this block -> emit the DOMAIN trigger so the grants machine resolves them (synced, deterministic).
+			emitTechAcquired((int)ePlayer, (int)eTech);
+
 			const UnitTypes eFreeUnit = (UnitTypes)kTech.getFirstFreeUnit();
 			if (eFreeUnit != NO_UNIT)
 			{

@@ -3803,8 +3803,22 @@ bool CvGame::isNoNukes() const
 
 void CvGame::changeNoNukesCount(int iChange)
 {
+	const bool bWasNoNukes = isNoNukes();
 	m_iNoNukesCount += iChange;
 	FASSERT_NOT_NEGATIVE(m_iNoNukesCount);
+	// #430 event spine: the AP-UN no-nukes BAN is WORLD (isNoNukes = option || count>0) and flips EVERY player's nuke
+	// state to/from BANNED at once -- announce each alive player's new 3-state. (The cascade NO_NUKES predicate reads
+	// this ban half; the per-player ENABLED/DISABLED half is makeNukesValid.)
+	if (bWasNoNukes != isNoNukes())
+	{
+		for (int iPlayerIndex = 0; iPlayerIndex < MAX_PC_PLAYERS; ++iPlayerIndex)
+		{
+			if (GET_PLAYER((PlayerTypes)iPlayerIndex).isAlive())
+			{
+				emitNukesChanged(iPlayerIndex, GET_PLAYER((PlayerTypes)iPlayerIndex).getNukeState());
+			}
+		}
+	}
 }
 
 
@@ -5501,6 +5515,14 @@ CvCity* CvGame::getHolyCity(ReligionTypes eIndex) const
 	return getCity(m_paHolyCity[eIndex]);
 }
 
+// Compares the loaded holy-city IDInfo DIRECTLY, with no getCity() resolution, so it is safe inside
+// CvCity::read -- there the city is not yet resolvable back to itself and getHolyCity() == this cannot hold.
+bool CvGame::isHolyCityByOwnerId(ReligionTypes eIndex, PlayerTypes eOwner, int iID) const
+{
+	FASSERT_BOUNDS(0, GC.getNumReligionInfos(), eIndex);
+	return m_paHolyCity[eIndex].eOwner == eOwner && m_paHolyCity[eIndex].iID == iID;
+}
+
 
 void CvGame::setHolyCity(ReligionTypes eIndex, const CvCity* pNewValue, bool bAnnounce)
 {
@@ -5519,6 +5541,16 @@ void CvGame::setHolyCity(ReligionTypes eIndex, const CvCity* pNewValue, bool bAn
 	}
 	else m_paHolyCity[eIndex].reset();
 
+	// #430 event spine: the holy-city DESIGNATION moved -- IS_HOLY_CITY / IS_STATE_RELIGION_HOLY_CITY flip for the OLD
+	// city (loses) and the NEW city (gains), gating conditioned commerce/yields. Announce per affected city.
+	if (pOldValue != NULL)
+	{
+		emitHolyCityChanged(pOldValue->getID(), pOldValue->getOwner(), (int)eIndex, false);
+	}
+	if (pNewValue != NULL)
+	{
+		emitHolyCityChanged(pNewValue->getID(), pNewValue->getOwner(), (int)eIndex, true);
+	}
 
 	if (pOldValue != NULL)
 	{
@@ -6006,20 +6038,15 @@ void CvGame::doTurn()
 	}
 	{ PERF_SCOPE("game.py.endGameTurn", -1); CvEventReporter::getInstance().endGameTurn(getGameTurn()); }
 
-	// #407: turn-boundary events for the dev SSE stream. turnEnd carries the closing
-	// turn, turnStart the incremented one. isEnabled() guards the payload formatting
-	// too -- argument evaluation is not free, the off-state cost must stay one bool.
-	if (CvHttpServer::isEnabled())
-	{
-		CvHttpServer::publishEvent("turnEnd", CvString::format("{\"turn\":%d,\"gameId\":\"%s\"}", getGameTurn(), getGameId().c_str()).c_str());
-	}
+	// The GAME turn boundary, straddling the counter advance: ended carries the CLOSING turn, started the
+	// INCREMENTED one. iPlayer = -1 marks the game scope (a player boundary carries its player). These REPLACE
+	// the bespoke CvHttpServer::publishEvent("turnEnd"/"turnStart") side-channel -- a happening lives on the
+	// spine ONCE and the file + /events consumers carry it (event-spine.md: the server SERVES, never accumulates).
+	emitTurnEnded(getGameTurn(), -1);
 	incrementGameTurn();
 	incrementElapsedGameTurns();
 
-	if (CvHttpServer::isEnabled())
-	{
-		CvHttpServer::publishEvent("turnStart", CvString::format("{\"turn\":%d,\"gameId\":\"%s\"}", getGameTurn(), getGameId().c_str()).c_str());
-	}
+	emitTurnStarted(getGameTurn(), -1);
 
 	if (isMPOption(MPOPTION_SIMULTANEOUS_TURNS))
 	{

@@ -2369,6 +2369,7 @@ public:
 	bool canHaveBuilder(BuildTypes eBuild) const;
 	//TB Nukefix
 	bool isNukesValid() const;
+	int getNukeState() const;   // the spine 3-state: 0 disabled / 1 enabled / 2 banned
 	void makeNukesValid(bool bValid = true);
 
 	int getUpgradeRoundCount() const;
