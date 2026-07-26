@@ -79,7 +79,10 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   endpoint has no honest caller. Open follow-ups (the tile-driven vicinity backstop; the per-city enabler
   priming that preceded the reseed emits): [info-rebuild.md](../plans/structural-cleanup/info-rebuild.md) ledger.
   **Registered consumers today:** the broad FILE logging consumer, the `/events` STREAM consumer, the **grants
-  engine** (`Grants/CvGrantsEngine` -- resolver built, the apply-loop NOT built,
+  engine** (`Grants/CvGrantsEngine` -- resolver AND appliers built: `gr_applyTechFirstDiscover` /
+  `gr_applyBuildingFirstBuild` / `gr_applyPerTurn` / `gr_applyCityPerTurn` / `gr_applySpawn` / `gr_applyFullHeal`,
+  dispatched from `SEVT_TECH_ACQUIRED` / `RELIGION_FOUNDED` / `PLAYER_INIT` / `CITY_FOUNDED` / `CIVIC_ADOPTED` /
+  `TURN_STARTED` / `BUILDING_PROCESSED` / `UNIT_CREATED` / `CAPITAL_CHANGED`; the remaining increments are in
   [grants-machine.md](../plans/structural-cleanup/grants-machine.md)), the **enabler's own** consumer
   (`Enabler/CvEnablerConsumer`, load-active), and the **modifier's own** consumer
   (`Cascade/CvModifierConsumer`, load-active for cache building): DOMAIN events in, index-derived dirty marks

@@ -89,7 +89,7 @@ Authority: [state-repositories.md](../../architecture/state-repositories.md), [m
 | readJson + the two-pass loader + the full-registry re-map | `Sources/Data/` | BUILT |
 | Info pocos + repos (all 23 replaced types + the 11 uniformity types) | `Sources/Infos/`, `Sources/Repos/` | BUILT |
 | Tally (read-only accessor over object-owned counts) | `Sources/Tally/` | BUILT |
-| Grants engine | `Sources/Grants/` | Resolver BUILT · **apply-loop NOT built** |
+| Grants engine | `Sources/Grants/` | Resolver + APPLIERS built (tech first-discover, building first-build, per-turn, spawn, full-heal), consuming the restored DOMAIN emits and suppressed inside the load bracket so a reseed never re-grants; remaining increments: [grants-machine.md](grants-machine.md) |
 | Property feed + channel | `Sources/Property/` | BUILT (engine math is KEEP-legacy) |
 | Save soft-remove drain (`savemigration.txt` + `sm_isCut`) | `Sources/Infrastructure/` | BUILT |
 | Derived-cache component (`CvDerivedCache`/`Set`/`Vec`) | `Sources/Infrastructure/` | BUILT |

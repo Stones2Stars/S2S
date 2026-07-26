@@ -1874,16 +1874,11 @@ void CvPlayer::setupGraphical()
 
 void CvPlayer::initFreeState()
 {
-	setGold(0);
-	int iGold = GC.getHandicapInfo(getHandicapType()).getStartingGold() + GC.getEraInfo(GC.getGame().getStartEra()).getStartingGold();
-
-	iGold *= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
-	iGold /= 100;
-
-	changeGold(iGold);
-	// The game-start player fact. ⛔ The trigger belongs HERE, not in initFreeUnits: initFreeUnits early-returns on a
-	// null starting plot (so a player could be skipped entirely), while initFreeState is called for every alive
-	// player (CvGame::initFreeState) and has no early return.
+	// The game-start provisions (civ civics/techs/buildings + era/handicap startingGold) are handed over by the
+	// GRANTS MACHINE off this emit -- emit() dispatches synchronously, so the gold has landed by the time this
+	// returns. ⛔ The trigger belongs HERE, not in initFreeUnits: initFreeUnits early-returns on a null starting
+	// plot (so a player could be skipped entirely) and ran AFTER the gold was already applied, while initFreeState
+	// is called for every alive player (CvGame::initFreeState) and has no early return.
 	emitPlayerInit((int)getID());
 	clearResearchQueue();
 }
@@ -8884,21 +8879,10 @@ void CvPlayer::foundReligion(ReligionTypes eReligion, ReligionTypes eSlotReligio
 		GC.getGame().setHolyCity(eReligion, pBestCity, true);
 
 		// The founder fact. It carries what a founder-grant apply needs: the CHOSEN religion (sets the free-unit
-		// TYPE) and the SLOT being claimed (sets the free-unit COUNT) -- deliberately different values.
+		// TYPE) and the SLOT being claimed (sets the free-unit COUNT) -- deliberately different values. Those
+		// founder provisions are handed over by the GRANTS MACHINE off this emit -- emit() dispatches
+		// synchronously, so they land here.
 		emitReligionFounded((int)getID(), (int)eReligion, (int)eSlotReligion, pBestCity->getID(), bAward);
-
-		if (bAward && GC.getReligionInfo(eSlotReligion).getNumFreeUnits() > 0)
-		{
-			const UnitTypes eFreeUnit = (UnitTypes)GC.getReligionInfo(eReligion).getFreeUnit();
-
-			if (eFreeUnit != NO_UNIT)
-			{
-				for (int i = 0; i < GC.getReligionInfo(eSlotReligion).getNumFreeUnits(); ++i)
-				{
-					initUnit(eFreeUnit, pBestCity->getX(), pBestCity->getY(), NO_UNITAI, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
-				}
-			}
-		}
 	}
 }
 

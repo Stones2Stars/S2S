@@ -5509,49 +5509,18 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 			// this block -> emit the DOMAIN trigger so the grants machine resolves them (synced, deterministic).
 			emitTechAcquired((int)ePlayer, (int)eTech);
 
-			const UnitTypes eFreeUnit = (UnitTypes)kTech.getFirstFreeUnit();
-			if (eFreeUnit != NO_UNIT)
+			// The first-discoverer PROVISIONS (firstFreeUnit / firstFreeProphet / freeTechs) are handed over by the
+			// GRANTS MACHINE off the emit above -- emit() dispatches synchronously, so they have already landed by
+			// the time control reaches here. What stays is the non-grant residue: the AI research-queue rider (a
+			// free tech invalidates a queued research plan) and the "first to tech" announcements.
+			if (kTech.getFirstFreeUnit() != NO_UNIT || kTech.getFirstFreeTechs() > 0
+			|| (GC.getGame().isOption(GAMEOPTION_RELIGION_DIVINE_PROPHETS)
+				&& GET_PLAYER(ePlayer).getTechFreeProphet(eTech) != NO_UNIT))
 			{
 				bClearResearchQueueAI = true;
-				CvCity* pCapitalCity = GET_PLAYER(ePlayer).getCapitalCity();
-
-				if (pCapitalCity != NULL)
-				{
-					pCapitalCity->createGreatPeople(eFreeUnit, false, false);
-				}
 			}
-			//TB Prophet Mod begin
-			if (GC.getGame().isOption(GAMEOPTION_RELIGION_DIVINE_PROPHETS))
-			{
-				const UnitTypes eFreeProphet = GET_PLAYER(ePlayer).getTechFreeProphet(eTech);
-				if (eFreeProphet != NO_UNIT)
-				{
-					bClearResearchQueueAI = true;
-					CvCity* pCapitalCity = GET_PLAYER(ePlayer).getCapitalCity();
-
-					if (pCapitalCity != NULL)
-					{
-						pCapitalCity->createGreatPeople(eFreeProphet, false, false);
-					}
-				}
-			}
-			//TB Prophet Mod end
 			if (kTech.getFirstFreeTechs() > 0)
 			{
-				bClearResearchQueueAI = true;
-
-				if (!isHuman())
-				{
-					for (int iI = 0; iI < kTech.getFirstFreeTechs(); iI++)
-					{
-						GET_PLAYER(ePlayer).AI_chooseFreeTech();
-					}
-				}
-				else
-				{
-					GET_PLAYER(ePlayer).chooseTech(kTech.getFirstFreeTechs(), gDLL->getText("TXT_KEY_MISC_FIRST_TECH_CHOOSE_FREE", kTech.getTextKeyWide()));
-				}
-
 				CvWString szBuffer;
 				for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 				{
