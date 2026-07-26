@@ -434,6 +434,26 @@ core off the corp's SELF-collapsed id (`CvModifiers::resolvePerToken`, the resol
 Open hooks riding the spine plane: the `contextRegisterConsumer()` line in `spineRegisterConsumers`, and the
 load-bracket + choke-point emit rebuild the reseed drains on.
 
+## ⛔ THE ORDER: design surface → contexts → THEN the AI calls (owner)
+
+**Exactly ZERO AI calls have been re-wired, BY DESIGN** (owner): *"we nail the design surface, and contexts,
+then we wire the AI calls with the new data."* The AI is the LARGEST consumer of the info surface —
+`CvPlayerAI` / `CvUnitAI` / `CvCityAI` / `CvTeamAI` are the bulk of the ~4,000-site stage-4 debt — which is
+precisely why it goes LAST: wiring thousands of AI reads onto a surface that is still being settled would bake
+in a shape we are still deciding, and every later refinement would re-break them.
+
+⚠ **So a dangling AI call site is NOT a defect to fix on sight.** The purge deleted the legacy getters so the
+COMPILER would name every consumer ([DEC-playability-not-a-gate](../../architecture/decisions.md#dec-playability-not-a-gate):
+the compiler IS the census) — that census is a WORKLIST for a later stage, not a queue of bugs. Reaching into
+`Sources/AI/` to "repair" one is the rollerskate: it wires the AI to a moving target and quietly re-legitimises
+whatever getter shape happened to exist that day. Read the red as intended output.
+
+Order of operations, and what "done" means at each step:
+1. **The design surface** — the infos on the exemplar + the compiled read forms (stage 2, complete).
+2. **The contexts** — the live-state read surface the getters and the ONE evaluator ask (stage 3, complete).
+3. **THEN the AI calls**, rewired onto the settled surface with the new data — together with the rest of the
+   consumer cut below.
+
 ## The FINAL stage: Python + getters rewired onto it all (owner)
 
 Last, the consumer cut: the getter surface and the Python boundary move onto the structured backend — **the
