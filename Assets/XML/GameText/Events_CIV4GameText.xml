@@ -833,46 +833,6 @@
 		<Spanish>El imperio %s1:1_civ_adjective ha anunciado el primer Día Anual de la Tierra como forma de abogar por el Ecologismo.</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_EVENTTRIGGER_EARTHQUAKE_1</Tag>
-		<English>An earthquake near %s2_city has devastated the countryside. Fortunately, the %s1_civ_adjective city itself was spared.</English>
-		<French>Un Tremblement de Terre près de %s2_city a dévasté la campagne. Heureusement, la ville %s1:2_civ_adjective a été épargnée.</French>
-		<German>Ein Erdbeben in der Nähe von %s2_city hat das Land verheert. Zum Glück wurde die Stadt %s1_civ_adjective selbst ausgespart.</German>
-		<Italian>Un terremoto ha devastato la campagna intorno %s2_city. Fortunatamente, la città %s1:2_civ_adjective è stata risparmiata.</Italian>
-		<Polish>Trz&#234;sienie ziemi niedaleko miasta %s2_city zniszczy&#179;o okolic&#234;. Na szcz&#234;&#156;cie, miasto nale&#191;&#185;ce do cywilizacji %s1_civ_adjective nie ucierpia&#179;o.</Polish>
-		<Russian>Землетрясение около города %s2_city опустошило сельскую округу. К счастью, сам город %s1_civ_adjective при этом не пострадал.</Russian>
-		<Spanish>Un terremoto cerca de %s2_city ha devastado el paisaje a su alrededor. Afortunadamente, la ciudad %s1:2_civ_adjective se ha salvado.</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_EVENTTRIGGER_EARTHQUAKE_2</Tag>
-		<English>A very strong earthquake has shaken the %s1_civ_adjective city of %s2_city.</English>
-		<French>Un Tremblement de Terre très important a secoué la ville %s1:2_civ_adjective de %s2_city.</French>
-		<German>Ein sehr starkes Erdbeben hat die %s1_civ_adjective Stadt %s2_city erschüttert.</German>
-		<Italian>Un fortissimo terremoto ha colpito la città %s1:2_civ_adjective di %s2_city.</Italian>
-		<Polish>Bardzo silne trz&#234;sienie ziemi wstrz&#185;sn&#234;&#179;o miastem %s2_city nale&#191;&#185;cym do cywilizacji %s1_civ_adjective.</Polish>
-		<Russian>Очень сильное землетрясение разрушило город %s2_city в державе %s1_civ_adjective.</Russian>
-		<Spanish>Un fortísimo terremoto ha sacudido la ciudad %s1:2_civ_adjective de %s2_city.</Spanish>
-	</TEXT>
-    <TEXT>
-        <Tag>TXT_KEY_EVENTTRIGGER_EARTHQUAKE_SMALL</Tag>
-        <English>A small earthquake has shaken the %s1_civ_adjective city of %s2_city.</English>
-    </TEXT>
-    <TEXT>
-        <Tag>TXT_KEY_EVENTTRIGGER_EARTHQUAKE_MEDIUM</Tag>
-        <English>A medium earthquake has shaken the %s1_civ_adjective city of %s2_city.</English>
-    </TEXT>
-    <TEXT>
-        <Tag>TXT_KEY_EVENTTRIGGER_EARTHQUAKE_STRONG</Tag>
-        <English>A strong earthquake has shaken the %s1_civ_adjective city of %s2_city.</English>
-    </TEXT>
-    <TEXT>
-        <Tag>TXT_KEY_EVENTTRIGGER_EARTHQUAKE_HUGE</Tag>
-        <English>A huge earthquake has shaken the %s1_civ_adjective city of %s2_city.</English>
-    </TEXT>
-    <TEXT>
-        <Tag>TXT_KEY_EVENTTRIGGER_EARTHQUAKE_APOCALYPTIC</Tag>
-        <English>A apocalyptic earthquake has shaken the %s1_civ_adjective city of %s2_city.</English>
-    </TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_EVENTTRIGGER_ELECTRIC_COMPANY</Tag>
 		<English>Motivated by freedom and quality of life in the %s1_civ_adjective Empire, the power company workers restore electricity outages rapidly, making the citizens there even happier.</English>
 		<French>Motivés par la liberté et la qualité de vie dans l'empire %s1:1_civ_adjective, les ouvriers de la compagnie d'électricité réparent les coupures d'électricité plus rapidement, augmentant ainsi le bonheur des citoyens.</French>
@@ -2985,22 +2945,6 @@
 		<German>Die %s1:2_civ_adjective Wahlergebnisse waren so knapp, dass die Gerichte über die Stimmzählungsverfahren entscheiden mussten, um zu einem Ergebnis zu gelangen.</German>
 		<Italian>I risultati delle elezioni %s1:4_civ_adjective erano così incerti che i tribunali hanno dovuto pronunciarsi sulle procedure di conteggio dei voti per giungere a un risultato.</Italian>
 		<Spanish>Los resultados de las elecciones %s1:4_civ_adjective han sido tan similares entre sí, que los tribunales han tenido que pronunciarse sobre los procedimientos de recuento de votos para validar uno de los resultados.</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_EVENTTRIGGER_TORNADO_1</Tag>
-		<English>Vicious tornadoes carved a path of destruction through the %s1_civ_adjective Empire.</English>
-		<French>De violentes tornades ont semé le chaos à travers l'empire %s1:1_civ_adjective.</French>
-		<German>Schwere Wirbelstürme haben eine Schneise der Verwüstung im %s1:2_civ_adjective Reich hinterlassen.</German>
-		<Italian>Dei terribili tornado hanno lasciato una scia di distruzione nell'Impero %s1_civ_adjective.</Italian>
-		<Spanish>Unos tornados muy fuertes han dejado una estela de destrucción a su paso por el imperio %s1:1_civ_adjective.</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_EVENTTRIGGER_TORNADO_2</Tag>
-		<English>%s1_civ_adjective infrastructure was wiped out by a deadly thunderstorm and the violent twisters it spawned.</English>
-		<French>L'infrastructure %s1:2_civ_adjective a été balayée par une tempête destructrice accompagnée de violentes tornades.</French>
-		<German>Ein Tod bringender Gewittersturm und heftige Tornados haben die %s1:3_civ_adjective Infrastruktur ausgelöscht.</German>
-		<Italian>Un'infrastruttura %s1:2_civ_adjective è stata spazzata via da una letale tempesta e dai violenti tornado che ha generato.</Italian>
-		<Spanish>Las infraestructuras %s1:4_civ_adjective han sido arrasadas por una violenta tormenta y los huracanes que esta generó.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_EVENTTRIGGER_TOWER_SHIELD_1</Tag>
@@ -5863,46 +5807,6 @@
 		<Polish>[ICON_BULLET]Nale&#191;y przekona&#230; inne nacje by przyj&#234;&#179;y [COLOR_HIGHLIGHT_TEXT]Ochron&#234; &#156;rodowiska[COLOR_REVERT] (przynajmniej jedna cywilizacja musi posiada&#230; zdolno&#156;&#230; do przyj&#234;cia tej doktryny).</Polish>
 		<Russian>[ICON_BULLET]Persuade other nations to convert to [COLOR_HIGHLIGHT_TEXT]Environmentalism[COLOR_REVERT] (at least one civilization must have the ability to do so).</Russian>
 		<Spanish>[ICON_BULLET]Convence a otras naciones de que se conviertan al [COLOR_HIGHLIGHT_TEXT]Ecologismo[COLOR_REVERT] (al menos una civilización debe poseer la capacidad de hacerlo).</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_EVENT_EARTHQUAKE_1</Tag>
-		<English>Send what aid we can to the survivors.</English>
-		<French>Envoyez toute l'aide possible aux survivants.</French>
-		<German>Sende den Überlebende alle Hilfe, die wir bieten können.</German>
-		<Italian>Manda tutto l'aiuto possibile ai sopravvissuti.</Italian>
-		<Polish>Wy&#156;lij co tylko mo&#191;na, aby pom&#243;c ocala&#179;ym.</Polish>
-		<Russian>Пошлите помощь выжившим, какую мы только сможем.</Russian>
-		<Spanish>Enviad toda la ayuda posible a los supervivientes.</Spanish>
-	</TEXT>
-    <TEXT>
-        <Tag>TXT_KEY_EVENT_SMALL_EARTHQUAKE_1</Tag>
-        <English>Send what aid we can to the survivors.</English>
-    </TEXT>
-    <TEXT>
-        <Tag>TXT_KEY_EVENT_MEDIUM_EARTHQUAKE_1</Tag>
-        <English>Send what aid we can to the survivors.</English>
-    </TEXT>
-    <TEXT>
-        <Tag>TXT_KEY_EVENT_STRONG_EARTHQUAKE_1</Tag>
-        <English>Send what aid we can to the survivors.</English>
-    </TEXT>
-    <TEXT>
-        <Tag>TXT_KEY_EVENT_HUGE_EARTHQUAKE_1</Tag>
-        <English>Send what aid we can to the survivors.</English>
-    </TEXT>
-    <TEXT>
-        <Tag>TXT_KEY_EVENT_APOCALYPTIC_EARTHQUAKE_1</Tag>
-        <English>Send what aid we can to the survivors.</English>
-    </TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_EVENT_EARTHQUAKE_1_HELP</Tag>
-		<English>[ICON_BULLET]Suffer loss of plot improvements near the earthquake</English>
-		<French>[ICON_BULLET]Subir les pertes des aménagements autour de l'épicentre</French>
-		<German>[ICON_BULLET]Eine Geländemodernisierung in der Nähe des Erdbebens geht verloren</German>
-		<Italian>[ICON_BULLET]Subisci la perdita delle infrastrutture nei pressi dell'epicentro del terremoto</Italian>
-		<Spanish>[ICON_BULLET]Sufrirás la pérdida de mejoras de casilla en torno al epicentro del terremoto</Spanish>
-		<Polish>[ICON_BULLET]Niekt&#243;re ulepszenia, na polach niedaleko trz&#234;sienia ziemi, zosta&#179;y zniszczone</Polish>
-		<Russian>[ICON_BULLET]Будет разрушена часть улучшений вблизи очага бедствия</Russian>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_EVENT_ELECTRIC_COMPANY_1</Tag>
@@ -11686,14 +11590,6 @@
 		<Spanish>Nada de someterse a las leyes constitucionales: que se apliquen reinterpretaciones interesadas de la constitución basando la argumentación en la pasión y los principios. Debe llegarse al resultado deseado sin prestar atención a lo que realmente diga la constitución.</Spanish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_EVENT_TORNADO_1</Tag>
-		<English>Do what we can to aid the survivors.</English>
-		<French>Faire notre possible pour aider les survivants.</French>
-		<German>Lasst den Überlebenden jede nur mögliche Hilfe zukommen.</German>
-		<Italian>Fa' quello che puoi per aiutare i sopravvissuti.</Italian>
-		<Spanish>Haced cuanto podáis para ayudar a los supervivientes.</Spanish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_EVENT_TOWER_SHIELD_1</Tag>
 		<English>Issue shields to our troops as supplies permit.</English>
 		<French>Donner des boucliers à nos troupes, en fonction du matériel disponible.</French>
@@ -12552,46 +12448,6 @@
 		<German>Unsere Regierung ruft den ersten Tag der Erde aus, um das Bewusstsein für umweltpolitische Probleme unter der Bevölkerung zu steigern.</German>
 		<Italian>Il nostro governo annuncia la prima Festa annuale della Terra, per aumentare la consapevolezza della popolazione sui problemi ambientali.</Italian>
 		<Spanish>Nuestro gobierno anuncia el primer Día Anual de la Tierra para que la población sea más consciente de las cuestiones medioambientales.</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_EVENT_TRIGGER_EARTHQUAKE_1</Tag>
-		<English>An earthquake jolts the city of %s2_city, causing building collapses, landslides and floods.</English>
-		<French>Un Tremblement de Terre a secoué la ville de %s2_city, provoquant l'effondrement de bâtiments, des glissements de terrains et des inondations.</French>
-		<German>Ein Erdbeben erschüttert die Stadt %s2_city, dabei stürzen Gebäude ein und es kommt zu Erdrutschen und Überflutungen.</German>
-		<Italian>Un terremoto ha colpito la città di %s2_city causando collassi degli edifici, frane e inondazioni.</Italian>
-		<Spanish>Un terremoto ha sacudido la ciudad de %s2_city, causando colapses de edificios, desprendimientos de tierra e inundaciones.</Spanish>
-		<Polish>Miastem %s2_city wstrz&#185;sn&#234;&#179;o trz&#234;sienie ziemi, powoduj&#185;c zawalenie si&#234; wielu budynk&#243;w, obsuni&#234;cia ziemi oraz lokalne podtopienia.</Polish>
-		<Russian>Землетрясение обрушилось на город %s2_city, вызывая обвал зданий, оползни и наводнения.</Russian>
-	</TEXT>
-    <TEXT>
-        <Tag>TXT_KEY_EVENT_TRIGGER_SMALL_EARTHQUAKE_1</Tag>
-        <English>An small earthquake was felt in the city of %s2_city, we had luck the damage was minimal.</English>
-    </TEXT>
-    <TEXT>
-        <Tag>TXT_KEY_EVENT_TRIGGER_MEDIUM_EARTHQUAKE_1</Tag>
-        <English>An earthquake hit the city of %s2_city, causing some building collapses.</English>
-    </TEXT>
-    <TEXT>
-        <Tag>TXT_KEY_EVENT_TRIGGER_STRONG_EARTHQUAKE_1</Tag>
-        <English>An earthquake jolts the city of %s2_city, causing building collapses, there have been victims.</English>
-    </TEXT>
-    <TEXT>
-        <Tag>TXT_KEY_EVENT_TRIGGER_HUGE_EARTHQUAKE_1</Tag>
-        <English>An earthquake rattled the city of %s2_city, causing severe building collapses and civilian casualties.</English>
-    </TEXT>
-    <TEXT>
-        <Tag>TXT_KEY_EVENT_TRIGGER_APOCALYPTIC_EARTHQUAKE_1</Tag>
-        <English>An catastrophic earthquake shatered the city of %s2_city, the city is in ruins. The number of dead is terrifying</English>
-    </TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_EVENT_TRIGGER_EARTHQUAKE_2</Tag>
-		<English>An earthquake over 7.5 in Richter scale has shaken ground near %s2_city.</English>
-		<French>Un Tremblement de Terre de plus de 7.5 sur l'échelle de Richter a retenti près de %s2_city.</French>
-		<German>Ein Erdbeben von über 7,5 auf der Richter-Skala hat den Grund in der nähe von %s2_city erschüttert.</German>
-		<Italian>Un terremoto di magnitudo maggiore di 7.5 sulla scala Richter ha fatto tremare la terra vicino a %s2_city.</Italian>
-		<Spanish>Un terremoto de magnitud mayor a 7,5 en la escala de Richter ha sacudido el terreno cercano a %s2_city.</Spanish>
-		<Polish>Trz&#234;sienie ziemi o sile powy&#191;ej 7.5 stopnia w skali Richtera wstrz&#185;sn&#234;&#179;o l&#185;dem niedaleko miasta %s2_city.</Polish>
-		<Russian>Землетрясение силой более 7,5 баллов по шкале Рихтера сотрясло землю около %s2_city.</Russian>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_EVENT_TRIGGER_ELECTRIC_COMPANY_1</Tag>
@@ -14608,30 +14464,6 @@
 		<German>Die Wahlergebnisse sind so knapp, dass sie innerhalb der Fehlerspanne liegen, die normalerweise aufgrund von Systemmängeln wie verlorenen oder falsch angekreuzten Wahlzetteln, fehlerhaften Lochkarten oder Zählfehlern auftreten. Da es nun unmöglich ist, ein korrektes Wahlergebnis bekannt zu geben, wurde diese Entscheidung in die Hände der Gerichte gelegt.</German>
 		<Italian>I risultati delle elezioni sono così vicini che ricadono nei margini di errore tipicamente imputati alle inadeguatezze del sistema come schede perse o errori di conteggio. Senza un metodo sicuro per arrivare al vero conteggio, il risultato dell'elezione è stato posto nelle mani delle corti.</Italian>
 		<Spanish>Los resultados de las elecciones han sido tan similares entre sí, que la diferencia puede atribuirse al margen de error asociado a defectos del sistema como papeletas perdidas o ilegibles así como a errores en el escrutinio. Dado que no existe un método infalible para determinar el auténtico recuento de votos, el resultado de las elecciones dependerá de la decisión de los tribunales.</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_EVENT_TRIGGER_TORNADO_1</Tag>
-		<English>The heavens opened up and down came the fist of retribution. Terrible twisting rages of air wiped away our %s8_improvement.</English>
-		<French>Les cieux se sont ouverts et le poing du châtiment s'est abattu. D'effroyables volutes d'air ont anéanti notre %s8_improvement.</French>
-		<German>Der Himmel öffnete seine Schleusen und ließ die Faust der Vergeltung auf die Erde hinabfahren: Schreckliche Wirbelstürme haben unsere Modernisierung %s8_improvement zerstört.</German>
-		<Italian>I cieli si sono aperti e la giustizia divina ha colpito. Dei terribili tornado hanno spazzato via %s8_improvement.</Italian>
-		<Spanish>Los cielos se han abierto y un puño castigador ha caído sobre nosotros. Las terribles ráfagas de viento huracanado han derribado [NUM8:nuestro:nuestra:nuestros:nuestras] %s8_improvement.</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_EVENT_TRIGGER_TORNADO_2</Tag>
-		<English>An extremely violent weather system filled with powerful tornadoes wrecked our %s8_improvement.</English>
-		<French>Des conditions climatiques extrêmes et de puissantes tornades ont saccagé notre amélioration : %s8_improvement</French>
-		<German>Eine extreme Schlechtwetterfront mit heftigen Wirbelstürmen hat unsere Modernisierung %s8_improvement zerstört.</German>
-		<Italian>Condizioni atmosferiche estremamente violente, caratterizzate da potenti tornado, hanno distrutto %s8_improvement.</Italian>
-		<Spanish>Un tiempo de lo más adverso con fuertes tornados ha acabado con [NUM8:nuestro:nuestra:nuestros:nuestras] %s8_improvement.</Spanish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_EVENT_TRIGGER_TORNADO_3</Tag>
-		<English>A perfect storm spawned numerous F5 Class tornadoes, carving a path of destruction across our lands, smashing our %s8_improvement.</English>
-		<French>Une violente tempête a engendré de nombreuses tornades de classe F5, semant le chaos à travers nos terres et saccageant notre amélioration : %s8_improvement.</French>
-		<German>Ein höllischer Sturm mit zahlreichen Tornados der Klasse F5 hat eine Schneise der Verwüstung in unserem Land hinterlassen und unsere Modernisierung %s8_improvement in Trümmer gelegt.</German>
-		<Italian>Una vera tempesta ha creato numerosi tornado di classe F5, che hanno lasciato una scia di distruzione sui nostri territori, distruggendo %s8_improvement.</Italian>
-		<Spanish>Una tormenta perfecta ha generado diversos tornados de máxima potencia, que han sembrado la destrucción por estas tierras y han destrozado [NUM8:nuestro:nuestra:nuestros:nuestras] %s8_improvement.</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_EVENT_TRIGGER_TOWER_SHIELD_1</Tag>

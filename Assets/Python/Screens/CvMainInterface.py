@@ -97,12 +97,6 @@ class CvMainInterface:
 		self.iTimeTextCounter = 0
 		self.cityOptions = None
 
-	def pythonDebugToggle(self, bNewValue):
-		self.bDebugModePython = bNewValue
-		if bNewValue:
-			CyGInterfaceScreen("MainInterface", CvScreenEnums.MAIN_INTERFACE).show("DebugBtn0")
-		else: CyGInterfaceScreen("MainInterface", CvScreenEnums.MAIN_INTERFACE).hide("DebugBtn0")
-
 	def interfaceScreen(self):
 		if GAME.isPitbossHost(): return
 		# Cache Game Status
@@ -117,8 +111,6 @@ class CvMainInterface:
 		self.GO_ONE_CITY_CHALLENGE	= GAME.isOption(GameOptionTypes.GAMEOPTION_CHALLENGE_ONE_CITY)
 		# First pass initialization.
 		if self.bInitialize:
-			import DebugUtils
-			self.bDebugModePython = DebugUtils.bDebugMode
 			self.bDebugMode = GAME.isDebugMode()
 			# FOV
 			if MainOpt.isRememberFieldOfView():
@@ -925,13 +917,6 @@ class CvMainInterface:
 		screen.setStyle(btn, "Button_HUDSmall_Style")
 		screen.hide(btn)
 
-		btn = "DebugBtn0"
-		artPath = CyArtFileMgr().getInterfaceArtInfo("INTERFACE_DEBUG_SCREEN_BUTTON").getPath()
-		x += dx
-		screen.setImageButton(btn, artPath, x, y, iSize, iSize, eWidGen, -1, -1)
-		screen.setStyle(btn, "Button_HUDSmall_Style")
-		screen.hide(btn)
-
 		# Minimap Panel
 		panel = "MiniMapPanel"
 		screen.addPanel(panel, "", "", True, True, xMinimap - 6, yMinimap - 18, xRes - xMinimap + 8, yRes - yMinimap + 20, ePanelSTD)
@@ -1602,7 +1587,6 @@ class CvMainInterface:
 				screen.hide("VictoryAdvBtn")
 				screen.hide("InfoAdvBtn")
 				screen.hide("OptionsBtnBUG0")
-				screen.hide("DebugBtn0")
 				screen.hide("FoVSliderText")
 				screen.hide("FoVSlider")
 				screen.hide("BuildListBtn0")
@@ -1625,8 +1609,6 @@ class CvMainInterface:
 				screen.show("VictoryAdvBtn")
 				screen.show("InfoAdvBtn")
 				screen.show("OptionsBtnBUG0")
-				if self.bDebugModePython:
-					screen.show("DebugBtn0")
 
 				if MainOpt.isShowFieldOfView():
 					screen.show("FoVSliderText")
@@ -1665,7 +1647,6 @@ class CvMainInterface:
 			screen.hide("VictoryAdvBtn")
 			screen.hide("InfoAdvBtn")
 			screen.hide("OptionsBtnBUG0")
-			screen.hide("DebugBtn0")
 			screen.hide("FoVSliderText")
 			screen.hide("FoVSlider")
 			screen.hide("BuildListBtn0")
@@ -1715,7 +1696,6 @@ class CvMainInterface:
 			screen.hide("CityScrollMinus")
 			screen.hide("CityScrollPlus")
 			screen.hide("OptionsBtnBUG0")
-			screen.hide("DebugBtn0")
 			screen.hide("FoVSliderText")
 			screen.hide("FoVSlider")
 			screen.hide("BuildListBtn0")
@@ -1762,7 +1742,6 @@ class CvMainInterface:
 			screen.hide("CityScrollMinus")
 			screen.hide("CityScrollPlus")
 			screen.hide("OptionsBtnBUG0")
-			screen.hide("DebugBtn0")
 			screen.hide("BuildListBtn0")
 			screen.hide("ParallelMapsBtn")
 			if MainOpt.isShowFieldOfView():
@@ -5682,9 +5661,6 @@ class CvMainInterface:
 			elif NAME == "CivilizationFlag":
 				self.updateTooltip(screen, CyGTM.getFlagHelp(), -12, self.yBotBar + 8)
 
-			elif NAME == "DebugBtn":
-				self.updateTooltip(screen, "Debug screen")
-
 		elif not iCode: # click
 			if BASE == "WID":
 
@@ -6041,9 +6017,6 @@ class CvMainInterface:
 
 			elif NAME == "ParallelMapsBtn":
 				UP.showParallelMapsScreen()
-
-			elif NAME == "DebugBtn":
-				UP.showDebugScreen()
 
 			elif NAME == "GreatPersonBar":
 				# Zoom to next GP city
