@@ -36,7 +36,7 @@
 #include "CvDLLUtilityIFaceBase.h"
 #include "Repos/BuildsRepo.h"
 #include "CvCascadeGather.h"
-#include "Spine/CvEventSpine.h"   // the plot DOMAIN facts -- owner/terrain/feature/bonus/improvement/route/working-city/network (play choke points + the in-read reseed)
+#include "Spine/CvEventSpine.h"   // the plot DOMAIN facts -- owner/terrain/feature/bonus/improvement/route/type/river/irrigation/landmark/working-city/network (play choke points + the in-read reseed)
 #include "FAStarNode.h"
 
 #define STANDARD_MINIMAP_ALPHA		(0.6f)
@@ -6295,6 +6295,7 @@ void CvPlot::setIrrigated(bool bNewValue)
 			pLoopPlot->updateYield();
 			pLoopPlot->setLayoutDirty(true);
 		}
+		emitPlotIrrigationChanged(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), bNewValue);
 	}
 }
 
@@ -7015,6 +7016,9 @@ void CvPlot::setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGr
 		updateRouteSymbol(false, true);
 		updateRiverSymbol(false, true);
 	}
+	// Emitted at the END of the setter, not at the field write: the areas are resettled above, and a consumer whose
+	// derivation reads this plot's neighbourhood (the adjacency leg) requires that.
+	emitPlotTypeChanged(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), (int)eOldPlotType, (int)eNewValue);
 }
 
 
@@ -8069,6 +8073,8 @@ void CvPlot::changeRiverCrossingCount(int iChange)
 			}
 		}
 		changeBaseYield(yieldChange);
+		// The PRESENCE transition is the fact; the running crossing count is not (only crossing zero changes state).
+		emitPlotRiverChanged(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), bNewRiverPlot, m_iRiverCrossingCount);
 	}
 }
 
@@ -13130,7 +13136,17 @@ LandmarkTypes CvPlot::getLandmarkType() const
 }
 void CvPlot::setLandmarkType(LandmarkTypes eLandmark)
 {
+	// CONSTRAINT: the emit below is a FACT, so the setter needs the change guard every other substrate setter
+	// carries -- the landmark sweeps re-assert NO_LANDMARK over whole regions, and an unguarded emit would
+	// announce a state change on every no-op write.
+	const LandmarkTypes eOldLandmark = m_eLandmarkType;
+
+	if (eOldLandmark == eLandmark)
+	{
+		return;
+	}
 	m_eLandmarkType = eLandmark;
+	emitPlotLandmarkChanged(GC.getMap().plotNum(getX(), getY()), (int)getOwner(), (int)eOldLandmark, (int)eLandmark);
 }
 CvWString CvPlot::getLandmarkName() const
 {

@@ -13,27 +13,18 @@ void CityContext::onPlotChanged(const CvPlot* plot, int sign)
 {
 	if (plot == NULL)
 		return;
-	// Fold each stable HAS_/IS_ attribute the plot carries into plotAttrs (+1 on enter, -1 on leave). COUNTS only --
-	// the plot itself is never stored. Folded: HAS_RIVER / HAS_HILLS / HAS_PEAK / HAS_FRESHWATER / HAS_COAST /
-	// IS_WATER / IS_LAND / IS_FLATLANDS / IS_OWNED -- attributes stable across a plot's membership. Excluded because
-	// MUTABLE mid-membership (each needs its own change event before it can fold): HAS_FEATURE / HAS_IRRIGATION /
-	// IS_WORKED (per-plot state churn) and HAS_LANDMARK (CvPlot::setLandmarkType is a bare write with no event, and
-	// the personalized-map generation pass can assign landmarks after early-founded cities' plots have folded).
-	const bool bWater = plot->isWater();
-	const bool bHills = plot->isHills();
-	const bool bPeak  = plot->isPeak();
-	if (plot->isRiver())        plotAttrs.add(CASC_PRED_HAS_RIVER,      sign);
-	if (bHills)                 plotAttrs.add(CASC_PRED_HAS_HILLS,      sign);
-	if (bPeak)                  plotAttrs.add(CASC_PRED_HAS_PEAK,       sign);
-	if (plot->isFreshWater())   plotAttrs.add(CASC_PRED_HAS_FRESHWATER, sign);
-	if (plot->isCoastalLand())  plotAttrs.add(CASC_PRED_HAS_COAST,      sign);   // the evaluator's plot leg source (PlotContext::hasCoast)
-	if (bWater)                 plotAttrs.add(CASC_PRED_IS_WATER,       sign);
-	else                        plotAttrs.add(CASC_PRED_IS_LAND,        sign);
-	if (!bHills && !bPeak)      plotAttrs.add(CASC_PRED_IS_FLATLANDS,   sign);   // relief-free (water is relief-free too, json §3.5)
-	// IS_OWNED is unconditional: membership implies owned-by-the-city's-owner (CvPlot::updateWorkingCity assigns
-	// only plots owned by the city's owner, and CvPlot::setOwner re-runs it, so an ownership change folds the plot
-	// out before it can be member-and-unowned).
-	plotAttrs.add(CASC_PRED_IS_OWNED, sign);
+	// Fold the plot's STORED CASC_PRED_* verdict bitset into plotAttrs (+1 on enter, -1 on leave). COUNTS only --
+	// the plot itself is never stored. The bitset IS the fold's only source, so plotAttrs is literally the sum of
+	// the member plots' bits: one vocabulary at two granularities, which therefore cannot drift and needs no second
+	// derivation here (the plot's own maintainer keeps the bits current, Engine/ContextConsumer).
+	const unsigned int attributeBits = plot->getPlotContext().attributeBits();
+	for (int predicateId = 0; predicateId < 32; ++predicateId)
+	{
+		if ((attributeBits & (1u << predicateId)) != 0)
+		{
+			plotAttrs.add(predicateId, sign);
+		}
+	}
 }
 
 // --- forwarding accessors: read the bound CvCity / its owner; no stored copy (owner: don't duplicate available state) ---

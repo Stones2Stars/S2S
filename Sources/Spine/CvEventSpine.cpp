@@ -300,6 +300,9 @@ enum SpineDomainField
 	SPF_OWNER, SPF_OLD_OWNER, SPF_NEW_OWNER,
 	SPF_CITY, SPF_PLOT, SPF_OLD_CITY, SPF_NEW_CITY,
 	SPF_DELTA, SPF_HAS, SPF_VALUE, SPF_COUNT, SPF_ON,
+	// The generic old->new pair, for a fact whose value is a bare engine enum with no info table to resolve
+	// (PlotTypes, LandmarkTypes): the event PREFIX already names WHICH value it is, so the field stays generic.
+	SPF_OLD_VALUE, SPF_NEW_VALUE,
 	SPF_NAME_KIND, SPF_ENTITY_ID, SPF_NAME,
 	// the [CASCADE] invalidate observability fields
 	SPF_SCOPE, SPF_ID, SPF_PKG, SPF_SRC,
@@ -358,6 +361,11 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_CITY_OWNER_CHANGED:     return "[SPINE] cityOwnerChanged";
 	case SEVT_PLOT_OWNER_CHANGED:     return "[SPINE] plotOwnerChanged";
 	case SEVT_WORKING_CITY_CHANGED:   return "[SPINE] workingCityChanged";
+	case SEVT_PLOT_TYPE_CHANGED:      return "[SPINE] plotTypeChanged";
+	case SEVT_PLOT_RIVER_CHANGED:     return "[SPINE] plotRiverChanged";
+	case SEVT_PLOT_IRRIGATION_CHANGED: return "[SPINE] plotIrrigationChanged";
+	case SEVT_PLOT_LANDMARK_CHANGED:  return "[SPINE] plotLandmarkChanged";
+	case SEVT_PLOT_WORKED_CHANGED:    return "[SPINE] plotWorkedChanged";
 	case SEVT_GAME_LOAD_STARTED:      return "[SPINE] gameLoadStarted";
 	case SEVT_GAME_LOAD_FINISHED:     return "[SPINE] gameLoadFinished";
 	case SEVT_CACHE_INVALIDATE:       return "[CASCADE] invalidate";
@@ -397,6 +405,8 @@ static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
 	case SPF_VALUE:       *peType = SFT_INT;         return "value";
 	case SPF_COUNT:       *peType = SFT_INT;         return "count";
 	case SPF_ON:          *peType = SFT_INT;         return "on";
+	case SPF_OLD_VALUE:   *peType = SFT_INT;         return "oldValue";
+	case SPF_NEW_VALUE:   *peType = SFT_INT;         return "newValue";
 	case SPF_NAME_KIND:   *peType = SFT_STR;         return "kind";
 	case SPF_ENTITY_ID:   *peType = SFT_INT;         return "id";
 	case SPF_NAME:        *peType = SFT_WSTR;        return "name";
@@ -841,6 +851,41 @@ void emitWorkingCityChanged(int iPlot, int iOwner, int iOldCity, int iNewCity)
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_WORKING_CITY_CHANGED, -1, iOldCity, iNewCity, iOwner, iPlot);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_PLOT, iPlot).addI(SPF_OWNER, iOwner).addI(SPF_OLD_CITY, iOldCity).addI(SPF_NEW_CITY, iNewCity);
+	eventSpine().emit(e);
+}
+void emitPlotTypeChanged(int iPlot, int iOwner, int iOldPlotType, int iNewPlotType)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_TYPE_CHANGED, iNewPlotType, iOldPlotType, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PLOT, iPlot).addI(SPF_OWNER, iOwner).addI(SPF_OLD_VALUE, iOldPlotType).addI(SPF_NEW_VALUE, iNewPlotType);
+	eventSpine().emit(e);
+}
+void emitPlotRiverChanged(int iPlot, int iOwner, bool bHasRiver, int iCrossingCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_RIVER_CHANGED, -1, bHasRiver ? 1 : 0, iCrossingCount, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PLOT, iPlot).addI(SPF_OWNER, iOwner).addI(SPF_HAS, bHasRiver ? 1 : 0).addI(SPF_COUNT, iCrossingCount);
+	eventSpine().emit(e);
+}
+void emitPlotIrrigationChanged(int iPlot, int iOwner, bool bIrrigated)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_IRRIGATION_CHANGED, -1, bIrrigated ? 1 : 0, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PLOT, iPlot).addI(SPF_OWNER, iOwner).addI(SPF_HAS, bIrrigated ? 1 : 0);
+	eventSpine().emit(e);
+}
+void emitPlotLandmarkChanged(int iPlot, int iOwner, int iOldLandmark, int iNewLandmark)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_LANDMARK_CHANGED, iNewLandmark, iOldLandmark, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PLOT, iPlot).addI(SPF_OWNER, iOwner).addI(SPF_OLD_VALUE, iOldLandmark).addI(SPF_NEW_VALUE, iNewLandmark);
+	eventSpine().emit(e);
+}
+void emitPlotWorkedChanged(int iPlot, int iOwner, int iCity, bool bWorked)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_WORKED_CHANGED, -1, bWorked ? 1 : 0, iCity, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_PLOT, iPlot).addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_HAS, bWorked ? 1 : 0);
 	eventSpine().emit(e);
 }
 

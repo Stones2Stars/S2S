@@ -325,7 +325,31 @@ enum SpineDomainEvent
 	// The empire's CAPITAL changed -- relocation after the old capital was lost (CvPlayer::findNewCapital, once it
 	// has PICKED the replacement), or a capital being established. The spine carried no capital fact at all, so
 	// nothing could react to a capital moving. iC = owner, iSrcLoc = the new capital city (-1 = none left).
-	SEVT_CAPITAL_CHANGED        = 48
+	SEVT_CAPITAL_CHANGED        = 48,
+	// plot SUBSTRATE, the remaining five (siblings of terrain/feature/improvement/route/bonus, par.15-18 + 29). Each
+	// is a genuine plot state change that carried no DOMAIN fact, so its consumers had to be wired from the setter.
+	// The plot's TYPE (CvPlot::setPlotType): flat / hills / peak / OCEAN. Load-bearing well beyond relief, because
+	// CvPlot::isWater() IS getPlotType() == PLOT_OCEAN -- the whole water/land axis (and every neighbour's coast
+	// verdict) hangs off this fact, not off terrain. iType = the NEW PlotTypes, iA = the OLD one (a consumer acting
+	// on the delta needs both, as with plotOwnerChanged), iC = owner, iSrcLoc = plotId. DOMAIN.
+	SEVT_PLOT_TYPE_CHANGED      = 49,
+	// The plot's RIVER presence flipped (CvPlot::changeRiverCrossingCount crossing zero) -- the count is a running
+	// tally of river-carrying edges, and only the PRESENCE transition is a fact worth announcing. iA = 1 has river /
+	// 0 no longer, iB = the new crossing count, iC = owner, iSrcLoc = plotId. DOMAIN.
+	SEVT_PLOT_RIVER_CHANGED     = 50,
+	// The plot's IRRIGATION flipped (CvPlot::setIrrigated) -- the spread of irrigation water, distinct from the
+	// improvement that carries it. iA = 1 irrigated / 0 not, iC = owner, iSrcLoc = plotId. DOMAIN.
+	SEVT_PLOT_IRRIGATION_CHANGED = 51,
+	// The plot's LANDMARK designation changed (CvPlot::setLandmarkType) -- the named natural feature (peak range,
+	// bay, lake, ...) the map generator and the landmark events assign. iType = the NEW LandmarkTypes, iA = the OLD
+	// one, iC = owner, iSrcLoc = plotId. DOMAIN.
+	SEVT_PLOT_LANDMARK_CHANGED  = 52,
+	// A citizen started / stopped WORKING the plot (CvCity::setWorkingPlot). CITY-driven, so it carries the city as
+	// well as the plot: the fact belongs to the plot (its IS_WORKED verdict flips) but only the city can attribute
+	// it. DISTINCT from SEVT_WORKING_CITY_CHANGED, which is the RADIUS-MEMBERSHIP fact (which city may work the
+	// plot) -- membership is the superset, working is the citizen actually assigned to it.
+	// iA = 1 worked / 0 no longer, iB = the working cityId, iC = owner, iSrcLoc = plotId. DOMAIN.
+	SEVT_PLOT_WORKED_CHANGED    = 53
 };
 
 //	Which entity's display name changed (the iType of a SEVT_NAME_CHANGE event). The logging consumer resolves the
@@ -397,6 +421,14 @@ void emitCityFounded(int iOwner, int iCity, int iFounderType, int iFounderId);
 void emitCapitalChanged(int iOwner, int iCity);
 void emitPlotOwnerChanged(int iPlot, int iOldOwner, int iNewOwner);
 void emitWorkingCityChanged(int iPlot, int iOwner, int iOldCity, int iNewCity);
+// The remaining plot-substrate facts. Each carries what a consumer needs to act on the DELTA, so a type/landmark
+// change carries the OLD value alongside the new (the plotOwnerChanged shape) and a flip carries the new state.
+void emitPlotTypeChanged(int iPlot, int iOwner, int iOldPlotType, int iNewPlotType);
+void emitPlotRiverChanged(int iPlot, int iOwner, bool bHasRiver, int iCrossingCount);
+void emitPlotIrrigationChanged(int iPlot, int iOwner, bool bIrrigated);
+void emitPlotLandmarkChanged(int iPlot, int iOwner, int iOldLandmark, int iNewLandmark);
+// City-driven: the plot is WHERE it happened (iSrcLoc), the city is WHO assigned the citizen.
+void emitPlotWorkedChanged(int iPlot, int iOwner, int iCity, bool bWorked);
 
 // The empire-count observability events + the grant-trigger events -- distinct from the per-source state-change
 // endpoints above (these carry the whole-empire count / a game-start or first-discover trigger, iSrcLoc = -1). One

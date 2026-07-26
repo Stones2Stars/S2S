@@ -14349,10 +14349,18 @@ void CvCity::setWorkingPlot(int iIndex, bool bNewValue)
 		m_pabWorkingPlot[iIndex] = bNewValue;
 
 		processWorkingPlot(iIndex, bNewValue ? 1 : -1);
+
+		CvPlot* pPlot = getCityIndexPlot(iIndex);
 		if (bNewValue)
 		{
-			CvPlot* pPlot = getCityIndexPlot(iIndex);
 			FAssertMsg(pPlot != NULL, CvString::format("pPlot was null for iIndex %d", iIndex).c_str());
+		}
+		// The plot's IS_WORKED verdict flipped. The fact belongs to the PLOT (iSrcLoc) but only the city can
+		// attribute it, so both ride. A city-radius index off the map edge resolves to no plot -- there is then
+		// no plot whose state changed, so there is no fact to announce.
+		if (pPlot != NULL)
+		{
+			emitPlotWorkedChanged(GC.getMap().plotNum(pPlot->getX(), pPlot->getY()), (int)getOwner(), getID(), bNewValue);
 		}
 	}
 }

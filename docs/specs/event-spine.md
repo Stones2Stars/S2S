@@ -64,15 +64,21 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   the one place a spine endpoint does resolution at emit rather than deferring to the gated render — justified because
   a rename is rare (four low-frequency choke points), not a hot-path firehose.
 - **Build status.** The spine primitive + KIND firewall + `IEventConsumer` = BUILT (`Spine/CvEventSpine.{h,cpp}`).
-  The **DOMAIN emit surface = BUILT**: **90 call sites** across `CvPlayer` (31) · `CvCity` (22) · `CvPlot` (16) ·
+  The **DOMAIN emit surface = BUILT**: **95 call sites** across `CvPlayer` (31) · `CvCity` (23) · `CvPlot` (20) ·
   `CvGame` (7) · `CvTeam` (4) · `CvUnit` (3) · `CvPlotGroup` (1) + the cascade's own diagnostics (6), restored
-  at the genuine mutation choke points after the clean-slate revert had stripped them. The **load-lifecycle
+  at the genuine mutation choke points after the clean-slate revert had stripped them. The PLOT substrate is
+  complete: terrain / feature / improvement / route / bonus / owner / **type / river / irrigation / landmark /
+  worked**, so the per-scope contexts are maintained purely by facts, with no choke point driving a derivation
+  directly ([contexts.md](../architecture/contexts.md)). The **load-lifecycle
   bracket** `GAME_LOAD_STARTED` / `GAME_LOAD_FINISHED` is emitted (`CvGame::read` / end of
   `CvGame::onFinalInitialized`), so `spineGameLoadInProgress()` reports correctly and result-producers suppress
   inside it. The **load reseed** = BUILT: the in-read emits fire from inside the save read (`CvPlayer::read` per
   held tech / project / civic / trait / heritage + era / golden-age / state-religion / nukes, `CvCity::read` per
   building / religion + holy-city / corp / specialist / population / power / culture-level, `CvPlot::read`
-  substrate + owner + working-city), wrapped by the bracket.
+  substrate + owner + working-city), wrapped by the bracket. ⚠ A plot fact whose field deserializes with no emit of
+  its own (type / river / irrigation / landmark / worked) needs **none**: `CvPlot::read`'s terrain emit is
+  UNCONDITIONAL, and a substrate fact re-derives the plot's WHOLE verdict block — so every plot is already covered
+  exactly once, and adding a second in-read emit would only re-derive the same block.
   ⚠ **One endpoint is deliberately unwired: `emitLoadPipeline`** — every one of its arguments is produced by the
   archived load-time warm-up/rebuild pass, which the CAPSTONE rule removed
   ([state-repositories.md](../architecture/state-repositories.md)); the event reseed replaced that pass, so the

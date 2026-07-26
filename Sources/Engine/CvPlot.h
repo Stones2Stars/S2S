@@ -1130,7 +1130,8 @@ private:
 	//	Koshling - add Zobrist hashing of plotGroups to reduce recalculation.
 	//	Each plot has a contribution value to any hash it is included in
 private:
-	// per-plot ISOLATED live-state read surface (see getPlotContext); forwards plot facts, stores no aggregate yet
+	// per-plot ISOLATED live-state read surface (see getPlotContext): STORES the plot's CASC_PRED_* verdict bitset,
+	// maintained by the spine's plot DOMAIN facts; forwards only the raw substrate ids a read keys on
 	PlotContext m_plotContext;
 	// the PLOT-scope cascade package (see getCascadePackage); recompute-only, never serialized
 	CvCascadePackage<CvPlot> m_cascadePackage;

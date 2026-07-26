@@ -70,7 +70,7 @@ event-driven — never a read-time scan, and never left on the old accessor as a
 |---|---|---|---|
 | **CityContext** | `CvCity` | `plotAttrs` — per-predicate plot COUNTS (the fold of member plots' bits) · **the VICINITY BONUSES available in the city** (owner) — the §5a union over the radius of every provider's `provides.bonuses`, i.e. DERIVED by construction, so the context HOLDS it | population, power, religion presence, holy-city, corporation (raw, `CvCity`-owned, O(1)); state religion (→ owner `CvPlayer`) |
 | **EmpireContext** | `CvPlayer` | `policies` — the empire's enacted-policy set (the derived UNION over live civics'/traits' policy blocks, stored nowhere else) | state religion (single enum → `CvPlayer::getStateReligion`) |
-| **PlotContext** | `CvPlot` | the `CASC_PRED_*` verdict **BITSET** — the OWN-PLOT block (water/land/relief/hills/peak/river/irrigation/feature-present/landmark/owned) plus the ADJACENCY block (coast, fresh-water) | the RAW substrate a parameterized predicate keys on — terrain/feature/improvement/route/bonus ids, owner, latitude, nature yield — plus worked/city, which carry no mutation event a bit could be maintained from (→ `CvPlot`) |
+| **PlotContext** | `CvPlot` | the `CASC_PRED_*` verdict **BITSET** — the OWN-PLOT block (water/land/relief/hills/peak/river/irrigation/feature-present/landmark/owned/**worked**) plus the ADJACENCY block (coast, fresh-water) | the RAW substrate a parameterized predicate keys on — terrain/feature/improvement/route/bonus ids, owner, latitude, nature yield — plus city-presence, the one verdict with no mutation event a bit could be maintained from (→ `CvPlot`) |
 
 **Pass by reference/pointer, never by value (owner).** Passing a bound context is far cheaper than snapshotting
 values; a context is never a value copy — that is *why* it forwards rather than mirrors.
@@ -135,17 +135,18 @@ The stored aggregate rides events, exactly like the rest of the spine; a missed 
 event spine's **baseline invariant** (plot-groups and vicinity drift the same way if events are incomplete), not a
 context-specific weakness. There is **no blanket per-turn rebuild** and no recompute-on-read.
 
-- **`PlotContext`'s verdict bitset** ← the plot-substrate DOMAIN facts (terrain / feature / improvement / route /
-  bonus / owner), routed to the contexts' consumer (`Engine/ContextConsumer`), which re-derives the announcing
-  plot's WHOLE block through the same `CvPlot` accessors a read used to call — one uniform derivation, never a
-  bespoke per-event bit mask — and then, **only if a bit moved**, the ADJACENCY block of the 8 neighbours. That gate
-  is exact: a neighbour's coast / fresh-water verdict reads nothing but facts held in this plot's own block, so the
-  fan-out is one hop and cannot cascade. The plot mutations that carry **no** DOMAIN fact today (plot type, river
-  crossings, irrigation, landmark) drive the same one maintenance entry directly from their choke point, the shape
-  `updateWorkingCity` already uses for the fold below; promoting them to genuine emits is the spine's own gap to
-  close, not a second derivation. Derivation is DEFERRED while the map is unsettled (world generation, mid-save-read,
-  a `recalculateAreas` window) — the adjacency leg dereferences an adjacent water plot's `CvArea` — and the deferred
-  plots drain on the first event after the game reports final-initialized.
+- **`PlotContext`'s verdict bitset** ← the plot-substrate DOMAIN facts — terrain / feature / improvement / route /
+  bonus / owner / **plot type / river / irrigation / landmark / worked** — routed to the contexts' consumer
+  (`Engine/ContextConsumer`), which re-derives the announcing plot's WHOLE block through the same `CvPlot` accessors
+  a read used to call — one uniform derivation, never a bespoke per-event bit mask — and then, **only if a bit the
+  neighbours read moved**, the ADJACENCY block of the 8 neighbours. That gate is exact: a neighbour's coast /
+  fresh-water verdict reads nothing but facts held in this plot's own block, so the fan-out is one hop and cannot
+  cascade; `IS_WORKED` is excluded from it outright, since a citizen taking a plot can move no neighbour's verdict
+  and flips at citizen-reassignment cadence. **The consumer is the ONLY maintenance entry** — every plot mutation
+  that moves a stored verdict emits its own DOMAIN fact, so no choke point calls the derivation directly
+  ([DEC-single-implementation](decisions.md)). Derivation is DEFERRED while the map is unsettled (world generation,
+  mid-save-read, a `recalculateAreas` window) — the adjacency leg dereferences an adjacent water plot's `CvArea` —
+  and the deferred plots drain on the first event after the game reports final-initialized.
 - **`CityContext.plotAttrs`** ← `CvPlot::updateWorkingCity`: a plot entering/leaving the city's owned worked-radius
   set fires `CvCity::onCityPlotChanged(plot, ±1)` — the ONE applier, folding the plot's stored BITSET, so `plotAttrs`
   is literally the sum of the member plots' bits and the two granularities of one vocabulary cannot drift — and
