@@ -17,17 +17,60 @@ go (city state → `CityContext`, empire state → `EmpireContext`, plot state �
 freely reaches into it — coupling is fine when the structure is ironclad. The goal is a clean responsibility line
 (this object is THE state surface for its scope), never running detached from the live object.
 
-## What a context STORES vs FORWARDS — ⛔ don't duplicate (owner)
+## What a context STORES vs FORWARDS — ⛔ a context is an EVENT-BUILT STORE, not a forwarding facade (owner)
 
-A context **STORES only its uniquely-owned AGGREGATE** — state that has no home elsewhere and would otherwise be
-recomputed by every reader. Everything already O(1) on the game object is **FORWARDED** (read through the bound
-pointer), never copied. Duplicating already-available state is the exact anti-pattern this avoids.
+**"Context should be built on events — that is the design of it."** And the purpose of storing is that the state
+becomes DISTINGUISHABLE: *"so that an info can say 'yes, I will actually deliver this, based on this state.'"*
+A context that merely forwards to its bound object delivers none of that — it is the same pointer hop with an
+extra name, so the design collapses into "pass the god-object like always."
+
+The split is by **DERIVED vs RAW**, not by convenience:
+
+- **STORE — every DERIVED fact the evaluation reads.** Predicate verdicts, aggregates, unions: computed ONCE by
+  the ONE derivation for that fact and maintained by the spine events, never recomputed at read. This is the
+  context's substance. It is derived state, so it is **never serialized** and is rebuilt at load by the reseed
+  ([DEC-derived-never-trusted](decisions.md#dec-derived-never-trusted), [DEC-spine-reseed](decisions.md#dec-spine-reseed)).
+- **FORWARD — only the object's OWN RAW data** that it already maintains O(1) (the substrate ids a parameterized
+  predicate keys on, population, …). Forwarding raw data is not duplication; storing a second copy of it would be.
+
+⚑ **THE PAYOFF — this is why the design earns its cost (owner): once contexts are PURELY event-updated, an
+enormous class of per-read CALCULATION becomes obsolete.** Not "gets faster" — ceases to exist. Every read-time
+scan/union/walk collapses into a stored value some event already maintained, and reads become bare fetches
+([state-repositories.md](state-repositories.md); [DEC-turn-time-is-king](decisions.md#dec-turn-time-is-king)).
+The in-tree exhibits are not hypothetical: `isCoastalLand()` is an 8-neighbour scan **per predicate
+evaluation**; the §5a vicinity check is a radius union **per check**; and `getNumBonuses` is recorded in
+[enabler.md §8](../specs/enabler.md) as *"the turn wall's hottest cluster under the governor's read volume"* —
+a tech gate → two-hop plot-group resolution → group sum → minted gate → corp add-on, **re-executed on every
+call**. The `(scope,channel)` calc-count gate ([DEC-calc-count-gate](decisions.md#dec-calc-count-gate)) is how
+the win is observed: steady-state cost must track EVENT volume (thousands), never read volume (millions).
+
+⛔ **A forwarded read that COMPUTES is the defect this rule exists to kill.** `PlotContext::hasCoast()` forwarding
+to `CvPlot::isCoastalLand()` — an 8-neighbour scan with an `area()->getNumTiles()` call per neighbour, on every
+predicate evaluation — is the worked example, and it directly contradicts
+[patterns.md](patterns.md): *"every evaluator predicate is an O(1) CONTEXT fetch … a predicate that walks
+plots/units per call is the efficiency defect to reject in review."*
+
+**The storage is keyed by the CONDITION VOCABULARY** — that is what makes the state distinguishable. One key
+space (`CASC_PRED_*` / the classification ids), three granularities of the same design:
+
+| context | stores | granularity |
+|---|---|---|
+| **PlotContext** | the plot's own predicate verdicts | a `CASC_PRED_*` BITSET |
+| **CityContext** | `plotAttrs` | per-predicate COUNTS over the same keys — the FOLD of its member plots' bits |
+| **EmpireContext** | `policies` | the `POLICY_*` id set (the union over live civics + held traits) |
+
+So the city aggregate is not a second derivation: `CvCity::onCityPlotChanged(plot, ±1)` folds the plot's bits,
+and the two granularities cannot drift.
+
+⚠ **Adjacency-derived predicates fan out.** `HAS_COAST` / fresh-water depend on NEIGHBOURS, so the event that
+changes a plot re-derives that plot's own bits AND its adjacent plots' adjacency bits. Bounded (8 neighbours) and
+event-driven — never a read-time scan, and never left on the old accessor as an interim.
 
 | context | owner | STORES (unique aggregate) | FORWARDS (read through the bound object / its owner) |
 |---|---|---|---|
-| **CityContext** | `CvCity` | `plotAttrs` — per-predicate plot COUNTS (how many river/water/hills/… plots); no `CvCity` accessor provides it | population, power, religion presence, holy-city, corporation, vicinity bonus (→ `CvCity`); state religion, policies (→ owner `CvPlayer`) |
+| **CityContext** | `CvCity` | `plotAttrs` — per-predicate plot COUNTS (the fold of member plots' bits) · **the VICINITY BONUSES available in the city** (owner) — the §5a union over the radius of every provider's `provides.bonuses`, i.e. DERIVED by construction, so the context HOLDS it | population, power, religion presence, holy-city, corporation (raw, `CvCity`-owned, O(1)); state religion (→ owner `CvPlayer`) |
 | **EmpireContext** | `CvPlayer` | `policies` — the empire's enacted-policy set (the derived UNION over live civics'/traits' policy blocks, stored nowhere else) | state religion (single enum → `CvPlayer::getStateReligion`) |
-| **PlotContext** | `CvPlot` | *(none yet — a plot owns no state lacking a `CvPlot` home; the aggregate slot is defined WHEN one appears)* | every HAS_/IS_ plot fact — water/land/relief/river/coast/freshwater/irrigation/landmark/feature/terrain/improvement/bonus/worked/city (→ `CvPlot`) |
+| **PlotContext** | `CvPlot` | the `CASC_PRED_*` verdict **BITSET** — the OWN-PLOT block (water/land/relief/hills/peak/river/irrigation/feature-present/landmark/owned) plus the ADJACENCY block (coast, fresh-water) | the RAW substrate a parameterized predicate keys on — terrain/feature/improvement/route/bonus ids, owner, latitude, nature yield — plus worked/city, which carry no mutation event a bit could be maintained from (→ `CvPlot`) |
 
 **Pass by reference/pointer, never by value (owner).** Passing a bound context is far cheaper than snapshotting
 values; a context is never a value copy — that is *why* it forwards rather than mirrors.
@@ -39,6 +82,30 @@ enabler's build/operate gate incl. the operating-set fixpoint, re-run at HAVE-ch
 candidates. Both go through the ONE evaluator over the eval ctx the contexts fill. Every other read on every
 surface is a straight compiled fetch and NEVER takes a context parameter — a context in any other signature is
 the mechanical smell that condition evaluation (or an ad-hoc state reach) is happening where it doesn't belong.
+
+## ⛔ THE EVAL CTX CARRIES CONTEXTS, NOT GAME OBJECTS (owner) — the contract must be STRUCTURAL
+
+**"Otherwise we can just pass the full player, city, and whatever other objects again, without any
+distinguishing."** That is the whole test, and it is a CONTRACT, not a prohibition: if the evaluation context
+holds a `CvCity*`/`CvPlayer*`, then "the reader goes through the context" is enforced only by reviewer memory —
+the god-object is right there, and reaching past the context is one `->` away (a derived
+`&ctx.city->getCityContext()` is the tell: the ctx never held a context at all). The isolation must be
+**unsayable to violate**, exactly as [patterns.md](patterns.md) states the info DATA-OUT contract: there is no
+member to reach through.
+
+So `CvCascadeEvalCtx` carries **`const CityContext*` / `const EmpireContext*` / `const PlotContext*`** — never
+the bound game objects. Consequences, each already implied by the model above:
+
+- **TEAM facts route through `EmpireContext`** (team is deliberately not a context; team-held techs are read
+  through the player) — the ctx carries no `CvTeam*`.
+- **`CvPlotGroup` STAYS a first-class ctx member** — it is the reserved explicit traded-bonus source (§ the
+  read, above), not a scope whose state a context owns.
+- **`CvUnit` stays raw FOR NOW** — units are the deliberate FUTURE role-specific scope; when that context
+  lands it replaces the pointer, and until then this is the one acknowledged hole, not a licence for others.
+- **The enabler's precomputed sets** (operating/active/obsolete buildings, vicinity-provided bonuses) stay ctx
+  members: they are the ENABLER's derived output fed to the evaluator, never per-scope live state.
+- **A context that cannot answer a needed fact is a CONTEXT GAP to close** (add the forward), never a reason to
+  re-add an object pointer. That is the forcing function the structural form buys.
 
 **⚖ THE HAVE AXIS LIVES IN THE CONTEXTS (owner).** What a scope POSSESSES — the city's buildings-present /
 religions / corporations / bonuses, the empire's civics / traits / heritages, the team-held techs (read through
@@ -68,10 +135,23 @@ The stored aggregate rides events, exactly like the rest of the spine; a missed 
 event spine's **baseline invariant** (plot-groups and vicinity drift the same way if events are incomplete), not a
 context-specific weakness. There is **no blanket per-turn rebuild** and no recompute-on-read.
 
+- **`PlotContext`'s verdict bitset** ← the plot-substrate DOMAIN facts (terrain / feature / improvement / route /
+  bonus / owner), routed to the contexts' consumer (`Engine/ContextConsumer`), which re-derives the announcing
+  plot's WHOLE block through the same `CvPlot` accessors a read used to call — one uniform derivation, never a
+  bespoke per-event bit mask — and then, **only if a bit moved**, the ADJACENCY block of the 8 neighbours. That gate
+  is exact: a neighbour's coast / fresh-water verdict reads nothing but facts held in this plot's own block, so the
+  fan-out is one hop and cannot cascade. The plot mutations that carry **no** DOMAIN fact today (plot type, river
+  crossings, irrigation, landmark) drive the same one maintenance entry directly from their choke point, the shape
+  `updateWorkingCity` already uses for the fold below; promoting them to genuine emits is the spine's own gap to
+  close, not a second derivation. Derivation is DEFERRED while the map is unsettled (world generation, mid-save-read,
+  a `recalculateAreas` window) — the adjacency leg dereferences an adjacent water plot's `CvArea` — and the deferred
+  plots drain on the first event after the game reports final-initialized.
 - **`CityContext.plotAttrs`** ← `CvPlot::updateWorkingCity`: a plot entering/leaving the city's owned worked-radius
-  set fires `CvCity::onCityPlotChanged(plot, ±1)` — the ONE applier, folding the plot's stable HAS_/IS_ attributes —
-  and emits the `SEVT_WORKING_CITY_CHANGED` DOMAIN fact (every mutation emits; the contexts' consumer ignores
-  play-time events, the choke-point fold having already applied).
+  set fires `CvCity::onCityPlotChanged(plot, ±1)` — the ONE applier, folding the plot's stored BITSET, so `plotAttrs`
+  is literally the sum of the member plots' bits and the two granularities of one vocabulary cannot drift — and
+  emits the `SEVT_WORKING_CITY_CHANGED` DOMAIN fact (every mutation emits; the contexts' consumer ignores play-time
+  events, the choke-point fold having already applied). A MEMBER plot's bits moving reaches the counts through the
+  same applier: the maintainer unfolds the old bits and refolds the new ones around every derivation.
 - **`EmpireContext.policies`** ← the civic/trait change choke points (`CvPlayer::setCivics` / `setHasTrait` →
   `EmpireContext::rebuildPolicies`), which refills the WHOLE union over the player's live civics + held (active-set)
   traits. It is the single source the one policy read (`ev_playerHasPolicy`) uses — reads never re-walk the grantors.

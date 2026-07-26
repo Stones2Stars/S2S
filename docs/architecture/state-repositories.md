@@ -188,6 +188,26 @@ public:
   *Area and team being THREE channels each is also why they never got packages: as a bespoke struct each was a
   project; as three keys each is trivial.*
 
+  **⚖ HOW AN AREA-SCOPE DEPOSIT RESOLVES — the (area × player) slot, read by area ID (owner).** An AREA is the
+  wrong thing to hold state: *"it knows no borders"* — one landmass spans several empires, so there is no single
+  owner for an area-scoped value (hence no `AreaContext`, [contexts.md](contexts.md)). The player axis does the
+  bordering: **a city belongs to exactly ONE area**, so *"when the wonder gives power to the area, you check
+  which cities of YOURS have that area id."* The deposit lands in the `(area, player)` slot
+  (`CvCascadeAreaSlot`) and each city reads the slot for ITS OWN area id — an O(1) fetch and a filter, never a
+  walk of the area's plots or cities.
+  ⛔ **So the city carries its area ID, and never a `CvArea*` or a per-read `area()` chase.** The reason is the
+  READ cost, not fear of churn: a per-read `area()->getNumTiles()` dereferences a whole object to answer a
+  counter an int already holds.
+  **⚑ Areas are VIRTUALLY NEVER recalculated (owner)** — `CvMap::recalculateAreas` exists for the extreme case
+  of terrain levelled to sea level (the WMD mechanic), plus map generation; a landmass does not otherwise split
+  or merge in play. Treat a rebuild as RARE-but-real: it does `m_areas.removeAll()` and reassigns every id.
+  **So the rebuild announces itself as a DOMAIN fact (owner): emit "areas recalculated" and force the recheck** —
+  every holder of an area id re-reads, rather than each cache inventing its own staleness test. Being rare, the
+  blanket costs nothing; and it is not the banned self-heal: a wholesale identity reassignment is not
+  addressable per-source, so no finer route exists to derive ([DEC-no-self-heal](decisions.md#dec-no-self-heal)
+  bans papering over a
+  MISSED invalidation, not announcing a genuine wholesale one).
+
   **⛔ TWO SCOPES ARE DELIBERATELY NOT PACKAGES (owner):**
   - **WORLD is CONFIG** — cost multipliers and the like, carried by eras / gamespeeds / handicaps. It changes
     essentially never and is read from its sources, not cached behind a dirty protocol. A project granting
