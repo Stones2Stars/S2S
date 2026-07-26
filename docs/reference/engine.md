@@ -66,11 +66,14 @@ save-break); derived data serializes nothing; deleting a changer means auditing 
 ## Gamespeed & calendar — all derived, no stored table
 
 - Pacing lives in **`CvEraInfo`** (per-era historical start/end year, normal-speed turns) + **`CvGameSpeedInfo`**
-  (speed %, unit-yield-scale %). **No stored turn→date table** — `CvDate::getDate(turn, speed)` interpolates over the
-  era year-span / turn-count. The legacy `GameTurnInfos` tables, `iStartPercent`, and the separate historical-range
-  defines are GONE; both calendars now share the `CvEraInfo` year fields.
-- **`<Adapt>` XML tags** dispatch by tag name to a channel (`<Adapt>`→`getSpeedPercent`, `<AdaptHammerCost>`,
-  `<AdaptUnitYield>`), single evaluator `CvGameObject::adaptValueToGame()`.
+  (speed %, unit-yield-scale % — served as `getScalar` reads on the exemplar surface; no `100` suffix per the
+  scale-naming ruling, [fixed-point-and-scales.md](../specs/curators/fixed-point-and-scales.md)). **No stored turn→date
+  table** — `CvDate::getDate(turn, speed)` interpolates over the era year-span / turn-count. The legacy
+  `GameTurnInfos` tables, `iStartPercent`, and the separate historical-range defines are GONE; both calendars now
+  share the `CvEraInfo` year fields.
+- **`<Adapt>` XML tags** dispatch by tag name to a channel (`<Adapt>`→the speed scalar, `<AdaptHammerCost>`,
+  `<AdaptUnitYield>`), single evaluator `CvGameObject::adaptValueToGame()`. The option-composed hammer-cost
+  derivation is a consuming-system calc (json.md §9 — never an info getter).
 
 ## Handicaps — two "handicaps", asymmetric
 

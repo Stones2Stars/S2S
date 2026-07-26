@@ -550,10 +550,8 @@ declare the number. Enforcement reads the [tally](tally.md) count.
   (`CvPlayer::found`, gated on `isNewCityFree()`) is a DIFFERENT, now-dead mechanic that merely sits at the same
   call site. This lands with the grants machine's apply-loop
   ([grants-machine.md](../plans/structural-cleanup/grants-machine.md) increment 5); the data is authored and
-  waiting. **Curator follow-up:** `BUILDING_PALACE` (+ the other founder buildings) is currently *also* in
-  ~48 **civilizations'** `grants.buildings` — the **wrong/redundant** placement; the settler already carries it,
-  so the civ-grant duplicate should be dropped. (Does NOT affect the enabler: the engine realizes the palace into
-  the capital regardless, so the cascade's HAVE sees it either way.)
+  waiting. The settler ALONE carries the founder buildings — no civilization authors a duplicate in its own
+  `grants.buildings`.
 - **Recurring / chance-rolled / state-conditioned handouts are NOT grants — they are `triggers` entries**
   (trigger → chance → `action.grant`): the old `repeatable` wrapper and its `interval` field dissolve into the
   trigger; the old building `freePromotions` (promotions to every unit present at end-turn — one mechanism, no

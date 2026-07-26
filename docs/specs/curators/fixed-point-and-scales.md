@@ -36,6 +36,12 @@ Human numbers exist at exactly **two boundaries** — nobody in between guesses 
 > reduces internally hands every consumer a pre-rounded number whether or not it wants one, and a consumer needing
 > precision cannot get it back — which is the same shoehorn as a `getX`+`getX100` pair, just spelled differently.
 > Discreteness is a property of a USE (the game unassigns whole citizens), not of a getter.
+>
+> **⛔ And the NAME never carries the scale (owner ruling): no `100` suffix on any internal getter / function /
+> member.** Every value is ×100 by the universal rule above, so a `100` in the name is redundant noise —
+> `getScalar` / `sum` / `expectedModifier`, never `getScalar100`. The one algebra rule universal ×100 brings:
+> **never multiply two ×100 values together without rescaling** — the product is ×10000, so a `÷100` belongs at
+> the multiply. No site is believed to do this today; any found is a defect to flag, never a silent rescale.
 
 **Why ×100 out to the consumers, not reduced at the getter** ([DEC-fixedpoint-x100](../../architecture/decisions.md#dec-fixedpoint-x100)):
 reducing at the getter forces a human-variant getter (a `getX`+`getX100` split) the moment anything internal needs

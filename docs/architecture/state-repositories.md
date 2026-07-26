@@ -5,9 +5,14 @@ computed and kept coherent. `CvPlot` and `CvCity` are **domain objects** — the
 **stay**. This is not about dissolving them (that's `CvCityAI`'s eventual job); it is about the derived layer.
 
 This is the **design the cascade plane is built to**, stated independently of any one implementation of it. The
-component (`CvDerivedCache`, `Sources/Infrastructure/`) is live; the game-object caches that were grafted onto
-`CvCity`/`CvPlot`/`CvPlayer` are not currently present — the cascade plane is being rebuilt against this design
-rather than patched back onto the shapes it drifted into ([superseded-ideas](superseded-ideas.md) #14).
+component (`CvDerivedCache`, `Sources/Infrastructure/`) is live, and the value-cache plane is built on it: the ONE
+uniform package (`Sources/Cascade/CvCascadePackage.h`, channel-indexed Σflat100/Σpercent100 slots + receiver sums
+on the 64-bit `CvDerivedCacheSet`) is a data member on team / player / area / city / plot (area per
+(area × player), `CvCascadeAreaSlot`); the per-scope channel sets are minted from the compiled deposits at load
+(`CvCascadeChannelRegistry`, the ClassificationRegistry precedent); the mark derivation lives on the DepositIndex
+(`routeFor` + the condition-dependency routes); the modifier's own spine consumer (`CvModifierConsumer`,
+load-active) applies the derived masks; the gather (`CvCascadeGather`) is the one rebuild implementation and the
+combine lives on the calc surface (`InfoValuation::cityRate100` / `groupSum100At`).
 
 ## The problem: no unified `dataChanged` trigger
 

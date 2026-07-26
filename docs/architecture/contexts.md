@@ -69,16 +69,22 @@ event spine's **baseline invariant** (plot-groups and vicinity drift the same wa
 context-specific weakness. There is **no blanket per-turn rebuild** and no recompute-on-read.
 
 - **`CityContext.plotAttrs`** ← `CvPlot::updateWorkingCity`: a plot entering/leaving the city's owned worked-radius
-  set fires `CvCity::onCityPlotChanged(plot, ±1)`, which folds the plot's stable HAS_/IS_ attributes.
+  set fires `CvCity::onCityPlotChanged(plot, ±1)` — the ONE applier, folding the plot's stable HAS_/IS_ attributes —
+  and emits the `SEVT_WORKING_CITY_CHANGED` DOMAIN fact (every mutation emits; the contexts' consumer ignores
+  play-time events, the choke-point fold having already applied).
 - **`EmpireContext.policies`** ← the civic/trait change choke points (`CvPlayer::setCivics` / `setHasTrait` →
   `EmpireContext::rebuildPolicies`), which refills the WHOLE union over the player's live civics + held (active-set)
   traits. It is the single source the one policy read (`ev_playerHasPolicy`) uses — reads never re-walk the grantors.
 - **Forwarded** fields need no maintenance — they read the live source.
 - **Load** — `EmpireContext.policies` rebuilds from the loaded civics/traits at the end of `CvPlayer::read` (a derived
   aggregate recomputes from source on load, [DEC-derived-never-trusted](decisions.md#dec-derived-never-trusted), never
-  trusted from a save). The unified event-driven reseed of the remaining stored aggregate (`CityContext.plotAttrs`) —
-  the same DOMAIN events firing from inside the save read ([DEC-spine-reseed](decisions.md#dec-spine-reseed)) — is the
-  tracked next step; there is never a blanket per-turn recompute.
+  trusted from a save). `CityContext.plotAttrs` builds from the in-read DOMAIN events
+  ([DEC-spine-reseed](decisions.md#dec-spine-reseed)): each `CvPlot::read` announces its deserialized working-city
+  fact (`SEVT_WORKING_CITY_CHANGED` — the genuine read site emits), and the contexts' OWN spine consumer
+  (`Engine/ContextConsumer`, one consumer per system) buffers the load bracket's facts and folds them through the
+  same applier (`CvCity::onCityPlotChanged`) at `GAME_LOAD_FINISHED` — the cities stream AFTER the map, so the fold
+  applies once after the stream ends (the [enabler §7.1](../specs/enabler.md) order rule's second option, never the
+  mixed form). There is never a blanket per-turn recompute.
 
 ## Scope set — plot / city / player now; units FUTURE (role-specific); no AreaContext (owner)
 
@@ -103,7 +109,10 @@ expected values out**:
   city context. It also answers the city's **traded** bonuses (through the city's own plot-group-backed reads).
 - **EmpireContext** — the empire-scope state (civics/traits/policies/state religion).
 - **CvPlotGroup** — the trade-network object; the reserved explicit **traded**-bonus source (`connection:"trade"` vs
-  `"vicinity"`, [json.md §3.4](../specs/json.md)). Traded state is **NEVER mirrored into `CityContext`**.
+  `"vicinity"`, [json.md §3.4](../specs/json.md)). Traded state is **NEVER mirrored into `CityContext`**. The
+  valuation seam fills it into the eval ctx (`CvCascadeEvalCtx::plotGroup`): a `connection:"trade"` atom reads the
+  city's own plot-group-backed maintained count when a city is bound (`CityContext::tradedBonusCount` — the
+  tech-gate/minted/corp relay), and the passed group directly for the city-less what-if.
 
 Each endpoint returns the UNCONDITIONED ×100 base PLUS every conditioned `m_cond` deposit whose condition holds — summed
 via the **one** evaluator (`MMKernel::applies`) over a `CvCascadeEvalCtx` the contexts fill (`CityContext::fillEvalCtx`

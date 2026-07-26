@@ -215,6 +215,14 @@ group's natural index** — never N individual getters for a groupable set. This
        from the enabler. This IS the AI's *"what do I gain from building this?"* read.
   4. **Intrinsic** — bare typed reads (`getAirlift`, the shrine/corpHQ FKs, flavours), plus `getScalar(SCALAR_X)`
      for the 1–2-entry stragglers (genuinely lone unconditioned values).
+  5. **The per-entry TEXT render (owner: "so that tooltips work properly")** — every compiled entry renders
+     itself as ONE localized detail line (`+25% Production — while Coal connected`), the `detailLines` pattern
+     of the combat calculator (`CvCombatModel::computeCombatPreview`'s itemised per-modifier breakdown),
+     through ONE shared renderer ([DEC-single-implementation](decisions.md#dec-single-implementation)) — the
+     tooltip/pedia composers consume rendered entry lines, never hand-assemble from getters. Cold path:
+     spell-back segments + TXT keys are the honest cost there. **Structural consequence: the compiled entry
+     list is COMPLETE — unconditioned entries are RETAINED as entries** (the folded sums are the derived fast
+     plane beside them, never a replacement) — per-entry text and per-entry attribution both require the list.
 
   ```cpp
   // SECTIONS — whole typed objects

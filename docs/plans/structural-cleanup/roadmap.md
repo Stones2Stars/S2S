@@ -82,7 +82,7 @@ Authority: [state-repositories.md](../../architecture/state-repositories.md), [m
 | Machine | Home | State |
 |---|---|---|
 | Event spine + KIND firewall + `IEventConsumer` | `Sources/Spine/` | BUILT |
-| DOMAIN emit surface + the in-read load reseed + the load bracket | `Sources/Spine/` + the engine read paths | BUILT |
+| DOMAIN emit surface + the in-read load reseed + the load bracket | `Sources/Spine/` + the engine read paths | ENDPOINTS BUILT — CALL SITES SEVERED by the revert (2 rewired; the bracket unemitted at BOTH ends): [info-rebuild.md](info-rebuild.md) audit ledger |
 | Enabler (8 domains, kernel, own consumer, operating-buildings) | `Sources/Enabler/` | BUILT — **hostless**, see below |
 | Condition evaluator (`cascadeEvalCondition`, eval ctx, predicates) | `Sources/Conditions/` | BUILT |
 | Deposit index + deposit-read calcs (`MMKernel`/`PercentStack`/…) | `Sources/Data/` | BUILT |
@@ -165,9 +165,12 @@ Everything above is settled. What is NOT defined is the boundary every consumer 
   **The cut is FULL (owner): the new coherent surface is built and every consumer rewired onto it in the same
   pass, the legacy getter names disconnected — never a thin-compat layer left breathing.** The red tree makes the
   blast radius free to absorb; a change that left consumers untouched would be the half-migration tell.
-- **The new Python surface** — built from the cascade/JSON model, with the legacy `Cy*` surface CUT AWAY
-  ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)). Not a widened binding, not a shim
-  beside it, not two live surfaces.
+- **The new Python surface — ONE COMPLETE DATA-FETCHING LIBRARY (owner), built as its own STEP** before the
+  legacy `Cy*` surface is CUT AWAY ([DEC-cy-not-fixed](../../architecture/decisions.md#dec-cy-not-fixed)): ONE
+  surface replacing the scattered per-type `Cy*` interfaces, COMPLETE against the census (screens + pedia +
+  the Python-authoritative systems) so no read is left needing a reach-around into legacy — a gap re-creates
+  the two live surfaces the ruling forbids. Data fetching only; Python gameplay stays Python and consumes it.
+  Not a widened binding, not a shim beside it. Detail + acceptance: [info-rebuild.md](info-rebuild.md).
 - **The endpoint route table**, which reads the same uniform getters as everything else.
 
 ⛔ **Do not start re-attaching machines to the game objects before this is defined.** A per-site rewire is exactly
@@ -221,6 +224,13 @@ Unchanged in principle, but note the surface it depends on is currently purged:
 
 1. **Backlog scope = the #430 critical path only.** The `docs/plans/parked/` forward-FEATURE backlog is OUT.
 2. **Python = boundary redesign + fix values.** Do NOT pull Python-authoritative gameplay into the DLL.
-3. **NOT failures — deliberate, owner-ruled permanent carve-outs:** the golden-age YIELD-EFFECT member-mirror
+3. **⛔ ART IS OUT OF SCOPE — leave it alone (owner).** The art defines (`CIV4ArtDefines_*`), their `ART_`/
+   `EFFECT_` tag ids, and the asset files are UNTOUCHED by this rework: JSON carries only the tag id, the
+   definitions stay in the ART XML, and `ARTFILEMGR` keeps resolving them ([json.md §7](../../specs/json.md),
+   [naming.md](../../specs/naming.md)). This includes **not** cleaning up art that becomes orphaned when a
+   consumer is removed — an unreferenced define is inert, and pruning it is neither this rework's job nor a
+   tidiness licence. Same standing as TXT: an unmigrated system boundary, not a gap
+   ([info-rebuild.md](info-rebuild.md) § the Python library).
+4. **NOT failures — deliberate, owner-ruled permanent carve-outs:** the golden-age YIELD-EFFECT member-mirror
    ([golden-age.md](../../reference/golden-age.md)); the mission-CONCEPT unification and the Python-authoritative
    outcome hooks; random EVENTS; Revolution. *(The `CvOutcome` DATA itself IS migrated to JSON.)*

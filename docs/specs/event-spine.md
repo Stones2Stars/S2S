@@ -63,20 +63,25 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   `SFT_WSTR` name — the emit render is synchronous on the game thread, so the borrowed pointers outlive it). This is
   the one place a spine endpoint does resolution at emit rather than deferring to the gated render — justified because
   a rename is rare (four low-frequency choke points), not a hot-path firehose.
-- **Build status.** The spine primitive + KIND firewall + `IEventConsumer` = BUILT (`Spine/CvEventSpine.{h,cpp}`).
-  The **DOMAIN emit surface** (source-carrying endpoints + every mutation choke point wired) = BUILT. The **load
-  reseed** = BUILT: the in-read emits fire from inside the save read (`CvPlayer::read` per held tech / project /
-  civic / trait, `CvCity::read` per building / religion / corp / bonus / culture, `CvPlot::read` substrate),
-  wrapped by the **load-lifecycle bracket** `GAME_LOAD_STARTED` / `GAME_LOAD_FINISHED`; result-producers suppress
-  inside it via `spineGameLoadInProgress()`.
+- **Build status.** The spine primitive + KIND firewall + `IEventConsumer` = BUILT (`Spine/CvEventSpine.{h,cpp}`),
+  and every emit ENDPOINT exists. ⚠ On branch `cascade-rebuild` the emit CALL SITES are SEVERED (the clean-slate
+  revert removed them engine-wide; only `CvPlot::read` / `CvPlot::updateWorkingCity` are rewired so far, and the
+  **load-lifecycle bracket** `GAME_LOAD_STARTED` / `GAME_LOAD_FINISHED` is not yet emitted, so
+  `spineGameLoadInProgress()` currently never reports true). The DESIGN stands and the re-wiring is the green-up
+  Engine repair ([info-rebuild.md](../plans/structural-cleanup/info-rebuild.md) audit ledger): the in-read emits
+  fire from inside the save read (`CvPlayer::read` per held tech / project / civic / trait, `CvCity::read` per
+  building / religion / corp / bonus / culture, `CvPlot::read` substrate), wrapped by the bracket;
+  result-producers suppress inside it via `spineGameLoadInProgress()`.
   **Registered consumers today:** the broad FILE logging consumer, the `/events` STREAM consumer, the **grants
   engine** (`Grants/CvGrantsEngine` -- resolver built, the apply-loop NOT built,
-  [grants-machine.md](../plans/structural-cleanup/grants-machine.md)), and the **enabler's own** consumer
-  (`Enabler/CvEnablerConsumer`, load-active).
+  [grants-machine.md](../plans/structural-cleanup/grants-machine.md)), the **enabler's own** consumer
+  (`Enabler/CvEnablerConsumer`, load-active), and the **modifier's own** consumer
+  (`Cascade/CvModifierConsumer`, load-active for cache building): DOMAIN events in, index-derived dirty marks
+  out (`DepositIndex::routeFor` + the condition-dependency routes --
+  [state-repositories.md](../architecture/state-repositories.md)).
   The **tally** is NOT a consumer -- it reads the object-owned counts (`Tally/CvTally.{h,cpp}`).
-  **The MODIFIER has no consumer**: the shared one that routed BOTH machines is dead
-  ([superseded-ideas](../architecture/superseded-ideas.md) #16); the modifier gets its OWN when it is rebuilt.
-  ⛔ **One consumer per system** -- never re-merge them.
+  ⛔ **One consumer per system** -- the shared consumer that routed BOTH machines is dead
+  ([superseded-ideas](../architecture/superseded-ideas.md) #16); never re-merge them.
 
 ## The DOMAIN emit surface + the load RESEED
 

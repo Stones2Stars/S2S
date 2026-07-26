@@ -56,6 +56,7 @@ not yet ported (still authored in `Assets/XML`, referenced from JSON by id). Ver
 | `UNITCOMBAT_` | a unit-combat class | ✅ `unitcombats/` |
 | `VICTORY_` | a victory condition | ✅ `victories/` |
 | `VOTE_` | a diplomatic proposal (vote) | ✅ `votes/` |
+| `WORLDSIZE_` | a world size (map dimensions + per-size config) | ✅ `worlds/` |
 | `SKILL_` | a unit skill (`SKILL_BLITZ`) | ⚙ runtime-GENERATED — minted at load from the union of authored `skills` block keys (json.md §8, `ClassificationRegistry`); no data folder |
 | `TAG_` | a unit tag (`TAG_MILITARY`) | ⚙ runtime-GENERATED (from `tags` block keys) |
 | `ATTRIBUTE_` | a building attribute (`ATTRIBUTE_NUKE_IMMUNE`) | ⚙ runtime-GENERATED (from `attributes` block keys) |

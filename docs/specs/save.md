@@ -39,6 +39,12 @@ The field is then FULLY GONE from the object: no member, no read, no write.
   `savemigration.txt` line) makes `Expect()` treat the mismatch as "code ahead of stream," never consume the element,
   and **desync every subsequent read in that object** into silent defaults — the load guts wholesale (proven live:
   empty tech lists, buildingless cities). List the tag and it is soft; forget it and the object is corrupt.
+- **⚑ THE FILE IS ALSO THE REPLACEMENT-OBLIGATION LEDGER — read it that way, never as history.** An entry's note
+  records WHY the field could be cut: the value is now served by a NAMED replacement (a cascade gather, a computed
+  accessor). If that replacement is later archived, renamed, or never built, the field is already gone from every
+  save and the value has **no source at all** — a silent hole no compiler catches. So: when you retire or replace a
+  gatherer, grep `savemigration.txt` for it and re-home every obligation it carries; and never "clean up" an entry —
+  the drain is live forever, and the note is the only record of what owes a value.
 
 The tag name is the **normalized** `"ClassName::memberName"` (what the stream dictionary stored, via `NormalizeName`)
 and `sm_isCut` is an **exact string match**. ⛔ **A BRACKETED decorated per-element tag (`m_ppaai…[iI]` /
@@ -93,20 +99,98 @@ An apply-site audit alone misses non-obvious riders. Legacy changers carry them:
 `changeBridgeBuildingCount` marks bridges dirty; others fire UI dirty bits. Post-cut, the surviving trigger site
 (`setHasTech` / `processTech` / …) must still fire those effects, or derived engine state goes progressively stale.
 
-## 7. The genuinely HARD cases (the only things left that break a save)
+## 7. Removing a TYPE is SOFT — every class read allows missing ⭐
 
-Enum/Type drift is name-remapped on load (`getInfoTypeForString`); XML reorder/insert is free; a removed **Type** is
-soft only if its read uses `WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING` (else HARD: message box + throw). The five real
-save-breaks:
+> **Owner ruling: `_ALLOW_MISSING` on ALL class reads.** Every `WRAPPER_READ_CLASS_{ENUM,ARRAY,ENUM_ARRAY}`
+> (including the `_DECORATED` forms) uses its `_ALLOW_MISSING` variant, so **deleting an XML Type never breaks a
+> save**: an ARRAY read drops the removed Type's slot on remap; an ENUM read resolves it to `-1`/`NO_<X>`.
+> **Why it is a blanket rule, not a per-case choice:** a hard-throw on a missing Type is what makes content
+> undeletable — and *"it has happened numerous times that things have been named savebreak, by modders, without
+> being savebreak"*, so features sit parked behind a `@SAVEBREAK` label forever for a break that was never real.
+>
+> ⚠ **The obligation this creates.** Allow-missing turns a LOUD failure into a silent `-1`. That is correct
+> wherever `NO_<X>` is a valid state (features, bonuses, improvements, routes, civics — the engine's normal
+> sentinels). It is NOT sufficient where the enum is a **record's IDENTITY** (e.g.
+> `EventTriggeredData::m_eTrigger`): there the read loop must DROP the orphaned record, never keep one pointing
+> at nothing. Apply that same test to every class read you add.
+>
+> ### The THREE classes of Type removal — the decision procedure
+>
+> Do not memorize a list; run the two questions. **(1) Is `NO_<X>` a valid state for the owner? (2) If not, is
+> there a sane substitute?**
+>
+> | class | answer | handling | examples |
+> |---|---|---|---|
+> | **SOFT** | `NO_<X>` is normal | allow-missing, nothing more (drop the record if the enum is its IDENTITY) | features · bonuses · improvements · routes |
+> | **FALLBACK** | not valid, but any valid entry serves | allow-missing **+ substitute a default at load** | **civics** (worked example below) |
+> | **FAIL-LOUD** | not valid, and NO substitute exists | read stays hard; the Type is UNDELETABLE | terrain · gamespeed · mapcategory |
+>
+> **The FALLBACK class, worked (civics).** A player must hold *a* civic per option slot, but any valid one will
+> do — *"you can just replace with whatever is first in the list"* (owner). The substitute only has to be
+> VALID, never optimal.
+>
+> ⚑ **Why first-in-list is ALWAYS a legal substitute — it is structural, not luck (owner).** Category id order
+> comes from the curator's `_order.json` manifest, which reproduces the legacy XML document order
+> ([engine.md § Info loading](../reference/engine.md)), so the FIRST civic in an option slot is that slot's BASE
+> civic — and the base civics are exactly what `TECH_GAME_START`'s `enables` unlocks, the synthetic root node
+> **every player always holds** ([enabler.md §2](enabler.md)). So the head of the list is available by
+> construction, in every game, at every point. Do not "improve" this into a cleverer selection.
+>
+> Both layers already implement it: `CvPlayer::read` (~:18694) re-checks every slot after the allow-missing read
+> and replaces a `NO_CIVIC` **or wrong-category** civic with the civ's initial civic;
+> `cvInternalGlobals::checkInitialCivics` repairs that initial table in turn, taking the first civic in the
+> option **with no tech prereq** — which selects precisely the start-enabled civic described above. When you add
+> a FALLBACK-class Type, copy that shape: repair at load, immediately after the read, in the same loop that
+> knows the slot's meaning.
+>
+> ⛔ **The FAIL-LOUD class — the DO-NOT-DELETE list (owner).** Here allow-missing is the WORST outcome: it loads
+> `-1` and yields a silent black hole / a broken game, where a throw would have named the problem at once.
+>
+> | Type | Why it breaks the game | Where it is protected |
+> |---|---|---|
+> | **`TERRAIN_`** | every plot must have one — *"if you remove plot terrain, you get a black hole there"* | `CvPlot::m_eTerrainType` read stays `WRAPPER_READ_CLASS_ENUM` (hard) |
+> | **`GAMESPEED_`** | the save's every scaled cost/threshold/turn was accumulated against it — *"changing gamespeed literally breaks the game"* | `CvInitCore::m_eGameSpeed` read stays hard |
+> | **`MAPCATEGORY_`** | gates building placement / feature spread / bonus placement | ⚠ **NOT a save-path concern — a DATA-integrity one** (below) |
+>
+> ⛔ **THE TABLE IS KNOWN-INCOMPLETE (owner): *"there may be more that will completely break the game, but those
+> are the ones I could think of."*** Treat it as the members identified so far, NEVER as a cleared list — the
+> absence of a Type from it is not evidence that deleting that Type is safe. **The mechanical tell of a missing
+> member is an UNGUARDED dereference of a possibly-absent id** — `GC.get<X>Info(getX())` with no `NO_<X>` check
+> (exactly the shape of `CvPlot::getMapCategories()`'s `GC.getTerrainInfo(getTerrainType())`), or a consumer for
+> which `NO_<X>` is not a modelled state. Before deleting ANY Type, run that test on its consumers rather than
+> trusting this table; when you find a new member, add it here with its failure mode.
+>
+> ⚠ **`MAPCATEGORY_` has no save read to harden.** A plot does not store its categories: `CvPlot::getMapCategories()`
+> delegates to `GC.getTerrainInfo(getTerrainType()).getMapCategories()`, so they are DERIVED from terrain info and
+> never serialized. Deleting one therefore breaks the game through the DATA path — and **silently permissively**,
+> because `CvPlot::isMapCategoryType` returns true when the plot's list is EMPTY (`plotMapCategories.empty() ||
+> …`), i.e. a lost list reads as "everything is allowed" rather than as an error. It is also the same dependency
+> chain as terrain (categories hang off terrain), so removing a terrain takes both out at once.
+>
+> ⛔ **The four identity reads that are NOT yet allow-missing** — `EventTriggeredData::m_eTrigger`,
+> `VoteSelectionData::eVoteSource`, `VoteTriggeredData::eVoteSource`, `VoteTriggeredData::kVoteOption.eVote`
+> (all in `Sources/Defines/CvStructs.cpp`). Each is the identity of an object owned by an
+> `FFreeListTrashArray`, whose `ReadStreamableFFreeListTrashArray` does `new T; pData->read(); flist.load(pData)`
+> — **the per-object `read()` has no way to drop its own record**, so flipping them alone would register a live
+> object pointing at nothing. Removing an `EVENT_TRIGGER`, `VOTE_SOURCE` or `VOTE` Type is therefore still HARD
+> until that drop exists (a two-phase read that can reject, or a post-load sweep). Every other class read in the
+> tree is allow-missing.
+
+⛔ **A `@SAVEBREAK` comment is a CLAIM TO VERIFY, not a fact (owner).** Check it against the list below before
+believing it — several in-tree labels do not survive that check — and never park work behind an unverified one.
+
+Enum/Type drift is name-remapped on load (`getInfoTypeForString`); XML reorder/insert is free. The real
+save-breaks that remain:
 
 1. a same-tag field whose **meaning** changed (silent wrong load);
-2. a deleted **Type** read without `_ALLOW_MISSING`;
-3. a legacy raw enum-indexed int array that **shrinks**;
-4. a **type-code** change under a reused name;
-5. a deleted field with **no** `savemigration.txt` entry (the §3 stale-tag desync).
+2. a legacy raw enum-indexed int array that **shrinks**;
+3. a **type-code** change under a reused name;
+4. a deleted field with **no** `savemigration.txt` entry (the §3 stale-tag desync);
+5. removing an **`EVENT_TRIGGER` / `VOTE_SOURCE` / `VOTE`** Type — the four `FFreeListTrashArray` identity reads
+   above, hard until the drop mechanism exists. **This one is a REAL `@SAVEBREAK`** (so the `EVENTTRIGGER_*`
+   entries in the `@SAVEBREAK - Delete` block are correctly labelled — verify, don't assume, in both directions).
 
-*Hardening path:* flip a Type's read to `_ALLOW_MISSING`, then delete. Everything else — field add, field remove,
-rename, reorder — is soft.
+Everything else — field add, field remove, rename, reorder, and **every other** Type removal — is soft.
 
 ## See also
 

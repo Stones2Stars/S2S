@@ -328,7 +328,8 @@ consumer deaf to the reseed and defeats the missed-emit tripwire). The load life
 `GAME_LOAD_STARTED` / `GAME_LOAD_FINISHED` spine events; result-producers (grants) rely PURELY on the spine and
 suppress between them (a grant is a RESULT of a genuine in-play acquisition; a load is not one), while the
 cache-build consumer stays load-active. New game builds the same way (real init fires the same events, grants
-active). **The reseed emits + the bracket are BUILT and live** (verified in `Cascade.log`).
+active). **The reseed emit ENDPOINTS + the bracket exist; on `cascade-rebuild` their CALL SITES are severed and being
+re-wired** ([event-spine.md](../specs/event-spine.md) build status).
 **Home:** [event-spine.md](../specs/event-spine.md).
 
 ### DEC-verify-in-game-not-reshadow

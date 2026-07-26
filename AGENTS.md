@@ -88,6 +88,11 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   - **⛔ The `Profile`/`ProfileExtra` configs are BROKEN and purposeless (owner ruling): never use them, and never
     add `PROFILE()`/FProfiler scopes as instrumentation — they report to nothing.** The ONE instrument is the
     gated `[PERF]` logging (`logPerf`/`gPerfLogLevel`, `Autolog__LogLevelPerf`), which ships in every build.
+    **The macros compile to NOTHING outside those configs, so the scopes already in the tree are INERT** — not a
+    defect, not a purge backlog. What binds is the DIRECTION: **we never build TOWARD using the profiler.** So a
+    broken/stale FProfiler include or reference is **DELETED as irrelevant code, never repaired** — "the build
+    can't find `FProfiler.h`" is never a reason to restore it (and never a reason to do anything: the branch is
+    deliberately red, [DEC-playability-not-a-gate](docs/architecture/decisions.md#dec-playability-not-a-gate)).
   - **Which config for in-game testing:** for ordinary interactive testing — exercising a feature, pulling state
     from the HTTP endpoints, watching `/events` — a normal **`Release`** build suffices and is far faster than
     `FinalRelease` (a clean `FinalRelease` is a ~7-minute full rebuild). **Reserve `FinalRelease` for turn-lag /
