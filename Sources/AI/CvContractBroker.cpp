@@ -647,7 +647,7 @@ void CvContractBroker::advertiseWork(int iPriority, unitCapabilities eUnitFlags,
 						.addI(CTBF_group, pLoopSelectionGroup->getID()));
 					return;
 				}
-				const int iMissionGroupStrengthTimes100 = pLoopSelectionGroup->AI_getGenericValueTimes100(unitCapabilities2UnitValueFlags(eUnitFlags));
+				const int iMissionGroupStrengthTimes100 = pLoopSelectionGroup->AI_getGenericValue(unitCapabilities2UnitValueFlags(eUnitFlags));
 				if (iMissionGroupStrengthTimes100 >= iUnitStrengthTimes100)
 				{
 					// Request is entirely fulfilled by existing mission
@@ -1244,7 +1244,7 @@ bool CvContractBroker::makeContract(CvUnit* pUnit, int& iAtX, int& iAtY, CvUnit*
 							.addI(CTBF_unit, suitableUnit->iUnitId)
 							.addI(CTBF_workRequest, m_workRequests[iI].iWorkRequestId));
 
-						const int iUnitStrengthTimes100 = std::max(1, unitX->AI_genericUnitValueTimes100(unitCapabilities2UnitValueFlags(m_workRequests[iI].eUnitFlags)));
+						const int iUnitStrengthTimes100 = std::max(1, unitX->AI_genericUnitValue(unitCapabilities2UnitValueFlags(m_workRequests[iI].eUnitFlags)));
 						if (m_workRequests[iI].iRequiredStrengthTimes100 == -1 || iUnitStrengthTimes100 >= m_workRequests[iI].iRequiredStrengthTimes100)
 						{
 							//	Request is entirely fulfilled by this unit

@@ -26,8 +26,8 @@ public:
 	// --- mirrored legacy CvPropertyInfo getters (live consumer surface across Sources/) ---
 	int getAIWeight() const { return m_iAIWeight; }                   // ai.weight (raw, AI-native; not x100)
 	AIScaleTypes getAIScaleType() const { return m_eAIScaleType; }    // ai.scale ("city"/"area"/"player"/"team")
-	CvWString getPrereqMinDisplayText() const { return m_szPrereqMinDisplayText; }   // text.prereqMin (TXT_KEY)
-	CvWString getPrereqMaxDisplayText() const { return m_szPrereqMaxDisplayText; }   // text.prereqMax (TXT_KEY)
+	CvWString getPrereqMinDisplayText() const { return m_szPrereqMinDisplayText; }   // identity.text.prereqMin (TXT_KEY)
+	CvWString getPrereqMaxDisplayText() const { return m_szPrereqMaxDisplayText; }   // identity.text.prereqMax (TXT_KEY)
 	// The change-propagation table (properties.changePropagation[]): a VALUE change on `eFrom` propagates
 	// percent-scaled onto every related `eTo` object (CvProperties::propagateChange). FLAMMABILITY's
 	// City->Player 100% rollup is the one authored row.
@@ -85,8 +85,8 @@ private:
 	bool m_bSourceDrain;                                    // identity.sourceDrain
 	int  m_iChar;                                          // runtime GameFont glyph (assigned by the symbol pass via setChar)
 	std::map<int,int> m_aTargetLevelbyEraTypes;            // eraId -> level (targetLevel.byEra)
-	CvWString m_szPrereqMinDisplayText;                    // text.prereqMin
-	CvWString m_szPrereqMaxDisplayText;                    // text.prereqMax
+	CvWString m_szPrereqMinDisplayText;                    // identity.text.prereqMin
+	CvWString m_szPrereqMaxDisplayText;                    // identity.text.prereqMax
 	std::vector<PropertyPromotion> m_aPropertyPromotions;   // CURATOR-GAP (not migrated) -- see getter
 	std::vector<PropertyBuilding>  m_aPropertyBuildings;    // CURATOR-GAP (bands at Building pass) -- see getter
 	CvPropertyManipulators m_PropertyManipulators;          // the property's own sources/propagators (fed from JSON in mapFrom)

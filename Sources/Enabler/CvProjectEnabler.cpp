@@ -19,7 +19,7 @@
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
 
-static const CvInfo* pj_techJson(int iTech)
+static const CvInfo* pj_techInfo(int iTech)
 {
 	if (iTech == GC.getInfoTypeForString("TECH_GAME_START", true)) return &cascadeStartNode();
 	return InfoRepo<CvTechInfo>::get().get(iTech);
@@ -41,8 +41,7 @@ static void pj_gate(const CvPlayer& kPlayer, EnablerDomain& d, int iProject)
 {
 	const CvInfo* j = InfoRepo<CvProjectInfo>::get().get(iProject);
 	CvCascadeEvalCtx ec;
-	ec.player = &kPlayer;
-	ec.team = &GET_TEAM(kPlayer.getTeam());
+	kPlayer.getEmpireContext().fillEvalCtx(ec);   // player+team -- the contexts fill the eval state (contexts.md)
 	CvCascadeEvalFlags gateFlags;
 	d.setGateFailed(iProject, (j != NULL && !cascadeGateOk(j->getGate(), ec, gateFlags))   // entity-level enabled/disabled (DEC-entity-gate)
 	                       || !EnablerKernel::requiresMet(j, ec)
@@ -71,7 +70,7 @@ static void pj_gateSet(const CvPlayer& kPlayer, EnablerDomain& d, const std::set
 void ProjectEnabler::onTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 {
 	if (eTeam == NO_TEAM || eTech == NO_TECH) return;
-	const CvInfo* jt = pj_techJson((int)eTech);
+	const CvInfo* jt = pj_techInfo((int)eTech);
 	std::set<int> touched;
 	pj_touched(jt, touched);
 	for (int iP = 0; iP < MAX_PLAYERS; iP++)
@@ -108,7 +107,7 @@ void ProjectEnabler::onProjectChanged(PlayerTypes ePlayer, ProjectTypes eProject
 	pj_gateSet(kPlayer, d, touched);
 	// the WORLD-cap crossing reaches RIVALS too (getProjectCreatedCount is game-wide): a capped project
 	// completed by any team re-gates on every seeded player's domain (Encyclopedia vanishes everywhere).
-	if (jp != NULL && jp->getAllowed() != NULL)
+	if (jp != NULL && jp->getAllowed() != NULL && !jp->getAllowed()->isEmpty())
 	{
 		for (int iP = 0; iP < MAX_PLAYERS; iP++)
 		{

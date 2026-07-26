@@ -1,63 +1,49 @@
-//------------------------------------------------------------------------------------------------
-//  FILE:    CvGameSpeedInfo.cpp
-//------------------------------------------------------------------------------------------------
+//
+//	CvGameSpeedInfo -- the gamespeed poco's exemplar reads (see the header). The legacy scalar MIRRORS are
+//	DEAD (wave D): the base dispatch compiles the two authored world percents into m_modifiers and every read
+//	is a compiled-slot fetch through the base getScalar ([DEC-materialize-at-mapfrom] -- no raw-JSON family
+//	walker survives). The derived era-pacing reads below consume ONLY info data (this speed percent +
+//	CvEraInfo's year span / Normal-speed turn count).
+//
+
 #include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
 #include "CvInfos.h"              // umbrella: keeps the unity batch's info-type defs whole (leakage guard)
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "CvEraInfo.h"
 #include "CvGameSpeedInfo.h"
-#include "CvJsonParse.h"          // jsonFamVal (raw human value; the ×100 lives only in the cascade deposit tree)
 
-
-//======================================================================================================
-//					CvGameSpeedInfo
-//======================================================================================================
 
 CvGameSpeedInfo::CvGameSpeedInfo()
-	: m_iSpeedPercent(0)
-	, m_iUnitYieldScalePercent(100)
 {
 }
 
 
-int CvGameSpeedInfo::getSpeedPercent() const
+namespace
 {
-	return m_iSpeedPercent;
-}
-
-
-int CvGameSpeedInfo::getHammerCostPercent() const
-{
-	if (GC.getGame().isOption(GAMEOPTION_EXP_UPSCALED_BUILDING_AND_UNIT_COSTS))
+	// The speed percent as the HUMAN percent (÷100 at this internal boundary; the getter surface itself
+	// stays ×100 -- [DEC-fixedpoint-x100]). Normal = 100.
+	int gs_speedPercent(const CvGameSpeedInfo& kSpeed)
 	{
-		return getModifiedIntValue(m_iSpeedPercent, GC.getUPSCALED_HAMMER_COST_MODIFIER());
+		return kSpeed.getScalar(SCALAR_SPEED, CASC_SCOPE_WORLD, CASC_UNIT_PERCENT) / 100;
 	}
-	return m_iSpeedPercent;
-}
-
-
-int CvGameSpeedInfo::getUnitYieldScalePercent() const
-{
-	return m_iUnitYieldScalePercent;
 }
 
 
 int CvGameSpeedInfo::getTurnsInEra(int iEra) const
 {
 	FASSERT_BOUNDS(0, GC.getNumEraInfos(), iEra);
-	return std::max(1, (GC.getEraInfo((EraTypes)iEra).getNormalSpeedTurns() * m_iSpeedPercent + 50) / 100);
+	return std::max(1, (GC.getEraInfo((EraTypes)iEra).getNormalSpeedTurns() * gs_speedPercent(*this) + 50) / 100);
 }
 
 
 int CvGameSpeedInfo::getEraStartTurn(int iEra) const
 {
-	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, GC.getNumEraInfos(), iEra);
 	int iTurn = 0;
-	for (int i = 0; i < iEra; i++)
+	for (int iPriorEra = 0; iPriorEra < iEra; iPriorEra++)
 	{
-		iTurn += getTurnsInEra(i);
+		iTurn += getTurnsInEra(iPriorEra);
 	}
 	return iTurn;
 }
@@ -65,11 +51,10 @@ int CvGameSpeedInfo::getEraStartTurn(int iEra) const
 
 int CvGameSpeedInfo::getTotalTurns() const
 {
-	PROFILE_EXTRA_FUNC();
 	int iTurns = 0;
-	for (int i = 0; i < GC.getNumEraInfos(); i++)
+	for (int iEra = 0; iEra < GC.getNumEraInfos(); iEra++)
 	{
-		iTurns += getTurnsInEra(i);
+		iTurns += getTurnsInEra(iEra);
 	}
 	return iTurns;
 }
@@ -86,18 +71,9 @@ int CvGameSpeedInfo::getTicksPerTurnInEra(int iEra) const
 }
 
 
-// #430: the JSON load hook. speed.world.percent -> iSpeedPercent (raw percent, Normal=100);
-// missionYieldMultiplier.world.percent -> iUnitYieldScalePercent (raw percent, curator elides the
-// 100-default). jsonFamVal returns the RAW human value -- the ×100 fixed-point lives only in the
-// cascade deposit tree, never on these engine-getter members.
+// #430: the JSON load hook. The §6 families (speed.world.percent + missionYieldMultiplier.world.percent)
+// compile into m_modifiers via the base section dispatch -- nothing type-specific to materialize here.
 void CvGameSpeedInfo::mapFrom(const picojson::value& entity)
 {
-	CvInfo::mapFrom(entity);   // core reading (type / text keys / button) + availability
-	if (!entity.is<picojson::object>()) return;
-	const picojson::object& o = entity.get<picojson::object>();
-
-	m_iSpeedPercent = jsonFamVal(o, "speed", "world", "percent");
-	// legacy default 100 when the key is absent (curator elides values equal to the legacy load default).
-	const int iUnitYield = jsonFamVal(o, "missionYieldMultiplier", "world", "percent");
-	m_iUnitYieldScalePercent = (iUnitYield != 0) ? iUnitYield : 100;
+	CvInfo::mapFrom(entity);   // core reading (type / text keys / button) + the section dispatch (compiles m_modifiers)
 }

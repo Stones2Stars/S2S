@@ -3,14 +3,13 @@
 #define CV_JSON_CULTURE_LEVEL_INFO_H
 
 //
-//	CvCultureLevelInfo -- the JSON real poco for CULTURE LEVELS (a city's culture tier). Carries the tier's own
-//	city-scope values + the per-city wonder-category caps (which ride the composed `allowed` unit, json.md §4.4). The
-//	prereq game option is the composed entity-level `enabled`/`disabled` gate (CvGate); the alternate-Info swap
-//	rides the composed `edges`. HUMAN-native. No cascade here.
-//
-//	Live callers (verified 2026-07-07): getCityDefenseModifier -> CvCity defense; getCityRadius -> CvCity workable
-//	radius; getMax{World,Team,National}Wonders -> CvCity wonder gating + pedia; getSpeedThreshold -> CvGame culture
-//	threshold; getLevel -> the runtime tier ordinal.
+//	CvCultureLevelInfo -- the CULTURE-LEVEL poco rebuilt to the exemplar surface (patterns.md § THE GETTER
+//	SETUP: the four read categories, nothing else). A city's culture tier: the tier's own city-scope defense
+//	(the one census modifier family, read as a compiled point fetch -- [DEC-scope-is-an-axis]), the per-city
+//	wonder-category caps (json.md §4.4, riding the composed `allowed`), the culture threshold + radius
+//	intrinsics, and the entity-level game-option gate (the composed CvGate). The alternate-Info swap
+//	(replacedBy) + the tier's enables ride the composed edges. No legacy getter name returns
+//	([DEC-new-getter-surface]).
 //
 
 #include "CvInfo.h"
@@ -18,37 +17,42 @@
 class CvCultureLevelInfo : public CvInfo
 {
 public:
-	CvCultureLevelInfo() : m_iCityDefenseModifier(0), m_iCityRadius(1), m_iCultureThreshold(0), m_iLevel(0),
-		m_iMaxWorldWonders(0), m_iMaxTeamWonders(0), m_iMaxNationalWonders(0) {}
-
-	int getCityDefenseModifier() const { return m_iCityDefenseModifier; }   // defense.city.amount.percent (human %)
-	int getCityRadius() const { return m_iCityRadius; }                     // identity.cityRadius (override, not additive)
-
-	// per-city wonder-category caps (json.md §4.4) -- materialized at mapFrom (0-for-absent legacy convention).
-	int getMaxWorldWonders() const    { return m_iMaxWorldWonders; }
-	int getMaxTeamWonders() const     { return m_iMaxTeamWonders; }
-	int getMaxNationalWonders() const { return m_iMaxNationalWonders; }
-	// NB getMaxNationalWondersOCC DROPPED (One-City-Challenge not feasible in this mod, owner 2026-07-01; curator drops it).
-
-	// The legacy per-GameSpeed threshold TABLE was a REDUNDANT precompute of base(Normal) × GameSpeed.speedPercent/100
-	// (curator COLLAPSE, verified identical): the poco carries only the base culture-point threshold, and the per-speed
-	// value is derived here by re-applying the gamespeed's speedPercent -- "the multiplier lives on the gamespeed"
-	// (owner 2026-07-11). See the .cpp (needs GC.getGameSpeedInfo).
-	int getSpeedThreshold(int iSpeed) const;   // base identity.cultureThreshold × GameSpeed.speedPercent / 100
-
-	int getLevel() const { return m_iLevel; }        // RUNTIME ordinal -- set at load, NOT JSON-mapped
-	void setLevel(int i) { m_iLevel = i; }
-
-	int getPrereqGameOption() const;                            // the entity-level `enabled` GAMEOPTION gate (DEC-entity-gate); see .cpp
-	int getMaxNationalWondersOCC() const { return 0; }          // STUB One-City-Challenge cap (curator drops it; OCC infeasible)
+	CvCultureLevelInfo();
 
 	virtual void mapFrom(const picojson::value& entity);
 
-	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
+	// ======================= 1. SECTIONS -- whole typed objects =======================
 	virtual const CvEdges*     getEdges()     const { return &m_edges; }
 	virtual const CvAllowed*   getAllowed()   const { return &m_allowed; }
 	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 	virtual const CvGate*      getGate()      const { return &m_gate; }
+
+	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums ========================
+	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. The census
+	// participation is ONE family: defense.city.amount.percent -- unconditioned, so the point read serves.)
+	int getDefense(DefenseKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_DEFENSE, eKind, eScope, infoDefenseUnit(eKind)); }
+
+	// ======================= 4. INTRINSIC -- bare typed reads (the census identity set) ======================
+	int getCityRadius() const { return m_iCityRadius; }              // identity.cityRadius (override, not additive)
+	// The BASE culture-point threshold (identity.cultureThreshold). The legacy per-GameSpeed threshold TABLE
+	// was a REDUNDANT precompute of base × GameSpeed.speedPercent/100 (curator COLLAPSE, verified identical) --
+	// "the multiplier lives on the gamespeed" (owner): the per-speed value is derived at read (see the .cpp).
+	int getCultureThreshold() const { return m_iCultureThreshold; }
+	int getSpeedThreshold(int iSpeed) const;                         // base × GameSpeed.speedPercent / 100
+	// The per-city wonder-category caps (json §4.4), materialized from the composed `allowed` at mapFrom with
+	// the legacy 0-for-absent convention (the base allowedCap convention is -1 = absent).
+	int getMaxWorldWonders() const    { return m_iMaxWorldWonders; }
+	int getMaxTeamWonders() const     { return m_iMaxTeamWonders; }
+	int getMaxNationalWonders() const { return m_iMaxNationalWonders; }
+	// The entity-level `enabled` GAMEOPTION gate, extracted for the one consumer that asks for the single
+	// option id (CvGlobals::cacheGameSpecificValues); the gate itself is the composed CvGate. Materialized at
+	// mapFrom ([DEC-materialize-at-mapfrom]) -- the getter is a bare read (see the .cpp).
+	int getPrereqGameOption() const { return m_iPrereqGameOption; }
+
+	// --- RUNTIME member (set at load by the tier-ordering pass, NOT JSON) ---
+	int getLevel() const { return m_iLevel; }
+	void setLevel(int iLevel) { m_iLevel = iLevel; }
 
 protected:
 	virtual CvEdges*     mutEdges()     { return &m_edges; }
@@ -57,19 +61,20 @@ protected:
 	virtual CvGate*      mutGate()      { return &m_gate; }
 
 private:
-	// mapFrom-time wonder-cap read with the legacy 0-for-absent convention (the base allowedCap returns -1 = absent).
-	int wonderCap(const char* key) const
-	{ std::map<std::string, int>::const_iterator it = m_allowed.all().find(key); return it != m_allowed.all().end() ? it->second : 0; }
-
-	int m_iCityDefenseModifier;   // defense.city.amount.percent
-	int m_iCityRadius;            // identity.cityRadius
-	int m_iCultureThreshold;      // identity.cultureThreshold (raw culture points)
-	int m_iLevel;                 // runtime tier ordinal (not JSON)
-	int m_iMaxWorldWonders, m_iMaxTeamWonders, m_iMaxNationalWonders;   // §4.4 category caps, materialized at mapFrom
+	// --- the composed section units ---
 	CvEdges     m_edges;
 	CvAllowed   m_allowed;
 	CvModifiers m_modifiers;
 	CvGate      m_gate;
+
+	// --- the intrinsic identity members (materialized once at mapFrom) ---
+	int m_iCityRadius;
+	int m_iCultureThreshold;
+	int m_iMaxWorldWonders;
+	int m_iMaxTeamWonders;
+	int m_iMaxNationalWonders;
+	int m_iPrereqGameOption;
+	int m_iLevel;   // runtime tier ordinal
 };
 
 #endif // CV_JSON_CULTURE_LEVEL_INFO_H

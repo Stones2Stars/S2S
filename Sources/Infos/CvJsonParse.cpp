@@ -79,26 +79,6 @@ const picojson::object* jsonWorldArt(const picojson::object& o)
 	return w ? jsonChildObj(*w, "art") : NULL;
 }
 
-double jsonFamDbl(const picojson::object& o, const char* family, const char* scope, const char* unit)
-{
-	const picojson::object* fo = jsonChildObj(o, family);  if (!fo) return 0.0;
-	const picojson::object* so = jsonChildObj(*fo, scope); if (!so) return 0.0;
-	picojson::object::const_iterator u = so->find(unit);
-	return (u != so->end() && u->second.is<double>()) ? u->second.get<double>() : 0.0;
-}
-
-int jsonFamVal(const picojson::object& o, const char* family, const char* scope, const char* unit)
-{ return (int)jsonFamDbl(o, family, scope, unit); }
-
-int jsonFamMemberVal(const picojson::object& o, const char* family, const char* scope, const char* member, const char* unit)
-{
-	const picojson::object* fo = jsonChildObj(o, family);   if (!fo) return 0;
-	const picojson::object* so = jsonChildObj(*fo, scope);  if (!so) return 0;
-	const picojson::object* mo = jsonChildObj(*so, member); if (!mo) return 0;
-	picojson::object::const_iterator u = mo->find(unit);
-	return (u != mo->end() && u->second.is<double>()) ? (int)u->second.get<double>() : 0;
-}
-
 int jsonIdInt(const picojson::object& io, const char* key, int iDefault)
 {
 	picojson::object::const_iterator it = io.find(key);
@@ -145,6 +125,49 @@ void jsonReadFlavours(const picojson::object& aiObj, std::map<int, int>& out)
 			for (picojson::object::const_iterator e = fo.begin(); e != fo.end(); ++e)
 				if (e->second.is<double>()) { const int id = jsonResolveId(e->first); if (id >= 0) out[id] = (int)e->second.get<double>(); }
 		}
+}
+
+void jsonReadIdList(const picojson::object& parent, const char* key, std::vector<int>& out)
+{
+	picojson::object::const_iterator iter = parent.find(key);
+	if (iter == parent.end() || !iter->second.is<picojson::array>())
+	{
+		return;
+	}
+	const picojson::array& entries = iter->second.get<picojson::array>();
+	for (size_t i = 0; i < entries.size(); ++i)
+	{
+		if (!entries[i].is<std::string>())
+		{
+			continue;
+		}
+		const int iResolved = jsonResolveId(entries[i].get<std::string>());
+		if (iResolved >= 0)
+		{
+			out.push_back(iResolved);
+		}
+	}
+}
+
+void jsonReadKeyedBoolIdList(const picojson::object& parent, const char* key, std::vector<int>& out)
+{
+	const picojson::object* pChild = jsonChildObj(parent, key);
+	if (pChild == NULL)
+	{
+		return;
+	}
+	for (picojson::object::const_iterator iter = pChild->begin(); iter != pChild->end(); ++iter)
+	{
+		if (!iter->second.is<bool>() || !iter->second.get<bool>())
+		{
+			continue;
+		}
+		const int iResolved = jsonResolveId(iter->first);
+		if (iResolved >= 0)
+		{
+			out.push_back(iResolved);
+		}
+	}
 }
 
 CvCascScope jsonParseScope(const std::string& s, CvCascScope defaultScope)
@@ -198,12 +221,12 @@ static const char* CJK_INTRINSIC_KEYS[] = {
 // a LOUD load error, never a silently-minted family.
 static const char* CJK_FAMILY_KEYS[] = {
 	"air", "allowedSpecialists", "anarchy", "barbarians", "bombard", "buildRate", "capture", "cargo",
-	"cityCapture", "collateral", "combat", "commerce", "commerceHappiness", "conscript", "costs", "culture",
+	"cityCapture", "collateral", "combat", "commerce", "conscript", "costs", "culture",
 	"cultureDistance", "defense", "diplomacy", "domainMoves", "durations", "espionage", "espionageDefense",
 	"eventChance", "experience", "extraYieldThreshold", "featureProduction", "firstStrike", "food", "foodKept",
 	"freeSpecialists", "gold", "goldenAge", "greatGeneralRate", "greatPeopleRate", "growth", "happiness",
 	"heal", "health", "hurry", "hurryAnger", "improvementUpgradeRate", "inflation", "lessYieldThreshold",
-	"maintenance", "missionYieldMultiplier", "movement", "occupationTime", "odds", "perEra", "pillage",
+	"maintenance", "missionYieldMultiplier", "movement", "occupationTime", "odds", "pillage",
 	"populationGrowthRate", "production", "range", "religion", "research", "researchRate", "revoltProtection",
 	"revolution", "spawnRate", "speed", "stateReligion", "strength", "survivor", "tradeMission", "tradeRoutes",
 	"underworld", "upkeep", "warWeariness", "withdrawal", "workRate",
@@ -211,8 +234,10 @@ static const char* CJK_FAMILY_KEYS[] = {
 };
 // Purged vocabulary -- keys that must NEVER be parsed again; a straggler in the data surfaces in the unconsumed
 // census (superseded-ideas.md). "loadPrune" was a curator-era invention (owner ruling 2026-07-08): its payload
-// re-homed to the entity-level `enabled`/`disabled` gate.
-static const char* CJK_RETIRED_KEYS[] = { "loadPrune", 0 };
+// re-homed to the entity-level `enabled`/`disabled` gate. "perEra" dissolved to per-site `per:"ERA"` deposits +
+// the handicap `ai.unitUpkeepEraModifier` config (rulings 14/24); "commerceHappiness" dissolved to `happiness`
+// deposits per-scaled on the slider-rate tokens (ruling 20). Both are zero-authoring in the census.
+static const char* CJK_RETIRED_KEYS[] = { "loadPrune", "perEra", "commerceHappiness", 0 };
 
 bool jsonInList(const char** list, const std::string& key)
 {

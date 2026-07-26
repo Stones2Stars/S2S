@@ -8,7 +8,7 @@
 #include "CvGameCoreDLL.h"          // PCH umbrella
 #include "Grants/CvGrantsEngine.h"
 #include "Spine/CvEventSpine.h"
-#include "CvInfo.h"             // CvInfo::grantList / grantPulse100 / grantFlag (the CvGrants unit's read-throughs)
+#include "CvInfo.h"             // CvInfo::grantList / grantPulse / grantFlag (the CvGrants unit's read-throughs)
 #include "Repos/InfoRepo.h"        // InfoRepo<CvXInfo>::get().get(id) -> the mapped CvInfo*
 #include "CvBuildingInfo.h"        // InfoRepo<CvBuildingInfo>
 #include "CvUnitInfo.h"            // InfoRepo<CvUnitInfo>
@@ -19,9 +19,10 @@
 #include "Infos/CvEraInfo.h"      // InfoRepo<CvEraInfo> (game-start era grants)
 #include "Infos/CvHandicapInfo.h" // InfoRepo<CvHandicapInfo> (game-start handicap grants)
 #include "AI/CvPlayerAI.h"        // GET_PLAYER -- the player's civ/era/handicap for the game-start resolve
-#include "AI/CvTeamAI.h"          // GET_TEAM -- the eval context's team scope
 #include "Engine/CvGame.h"        // GC.getGame().getStartEra() -- the era the game-start grants key on
 #include "Engine/CvCity.h"        // the per-turn apply walks the player's cities
+#include "Engine/CityContext.h"   // fillEvalCtx (city/plot) -- the contexts fill the eval state (contexts.md)
+#include "Engine/EmpireContext.h" // fillEvalCtx (player/team)
 #include "Engine/CvUnit.h"        // the spawned unit + the full-heal targets
 #include "Engine/CvPlot.h"        // the city plot's units (full heal) + the criminal count (crime spawn odds)
 #include "Infos/CvPropertyInfo.h" // getAIWeight -- the positive/negative property split (spawn owner)
@@ -121,26 +122,46 @@ static bool s_bSuppressed = false;
 // firstAcquire=0 is "conquest/restore", with firstAcquire=1 is "the load bracket was open".
 static bool s_bFirstAcquire = true;
 
+// ===================== the grant-key handles =====================
+// Minted ONCE off the CvGrants LOCAL intern table (every runtime grant read is int-keyed; the authored strings
+// live on the parse surface only, [DEC-materialize-at-mapfrom]). Mint-on-first-ask makes static-init order safe.
+static const int gr_keyPromotions       = CvGrants::key("promotions");
+static const int gr_keyBuildings        = CvGrants::key("buildings");
+static const int gr_keyUnits            = CvGrants::key("units");
+static const int gr_keyTechs            = CvGrants::key("techs");
+static const int gr_keyCivics           = CvGrants::key("civics");
+static const int gr_keyFreeTechs        = CvGrants::key("freeTechs");
+static const int gr_keyGoldenAge        = CvGrants::key("goldenAge");
+static const int gr_keyPopulation       = CvGrants::key("population");
+static const int gr_keyScopeCity        = CvGrants::key("city");
+static const int gr_keyScopeEmpire      = CvGrants::key("empire");
+static const int gr_keyFirstFreeUnit    = CvGrants::key("firstFreeUnit");
+static const int gr_keyFirstFreeProphet = CvGrants::key("firstFreeProphet");
+static const int gr_keyNumFreeUnits     = CvGrants::key("numFreeUnits");
+static const int gr_keyFreeUnit         = CvGrants::key("freeUnit");
+static const int gr_keyRevolution       = CvGrants::key("revolution");
+static const int gr_keyStartingGold     = CvGrants::key("startingGold");
+
 // ===================== resolution off the mapped CvInfo =====================
 // A grantList bucket's id-count (0 if absent). GENUINE buckets only -- the deferred mission-keys (unit `buildings`/
 // `greatPeople`/`greatPersonAction`/`goldenAge`) are simply not read here (they migrate in the missions pass).
-static int gr_listCount(const CvInfo* j, const char* szBucket)
+static int gr_listCount(const CvInfo* j, int iBucketKey)
 {
-	const std::vector<int>* l = j->grantList(szBucket);
+	const std::vector<int>* l = j->grantList(iBucketKey);
 	return (l != NULL) ? (int)l->size() : 0;
 }
-static int gr_pulse(const CvInfo* j, const char* szChannel)   // pulses are stored ×100 -> /100 to the human count/amount
+static int gr_pulse(const CvInfo* j, int iChannelKey)   // pulses are stored ×100 -> /100 to the human count/amount
 {
-	return j->grantPulse100(szChannel) / 100;
+	return j->grantPulse(iChannelKey) / 100;
 }
-static int gr_flag(const CvInfo* j, const char* szFlag)   // a bool grant present? (goldenAge)
+static int gr_flag(const CvInfo* j, int iFlagKey)   // a bool grant present? (goldenAge)
 {
-	return j->grantFlag(szFlag) ? 1 : 0;
+	return j->grantFlag(iFlagKey) ? 1 : 0;
 }
-static int gr_scopedPulseSum(const CvInfo* j, const char* szChannel)   // sum a scoped pulse over its scopes (×100 -> /100)
+static int gr_scopedPulseSum(const CvInfo* j, int iChannelKey)   // sum a scoped pulse over its scopes (×100 -> /100)
 {
 	const CvGrants* g = j->getGrants();
-	return g ? g->scopedPulseSumAllScopes100(szChannel) / 100 : 0;
+	return g ? g->scopedPulseSumAllScopes(iChannelKey) / 100 : 0;
 }
 static int gr_promoteEntryCount(const CvInfo* j)   // `triggers` promote entries (the end-turn free-promotion plane)
 {
@@ -215,7 +236,7 @@ static void gr_applyBuildingFirstBuild(const CvInfo* j, int iBuilding, int iPlay
 
 
 	// LOCAL population -- legacy applied this OUTSIDE the isFinalInitialized/WorldBuilder guard, so it does too.
-	const int iPopCity = j->getGrants()->scopedPulse100("population", "city") / 100;
+	const int iPopCity = j->getGrants()->scopedPulse(gr_keyPopulation, gr_keyScopeCity) / 100;
 	if (iPopCity != 0)
 	{
 		if (iPopCity > 0)
@@ -228,12 +249,12 @@ static void gr_applyBuildingFirstBuild(const CvInfo* j, int iBuilding, int iPlay
 	// The rest are gated exactly as legacy gated them.
 	if (!GC.getGame().isFinalInitialized() || gDLL->GetWorldBuilderMode()) return;
 
-	if (j->getGrants()->flag("goldenAge"))
+	if (j->getGrants()->flag(gr_keyGoldenAge))
 	{
 		player.changeGoldenAgeTurns(1 + player.getGoldenAgeLength());
 	}
 
-	const int iPopEmpire = j->getGrants()->scopedPulse100("population", "empire") / 100;
+	const int iPopEmpire = j->getGrants()->scopedPulse(gr_keyPopulation, gr_keyScopeEmpire) / 100;
 	if (iPopEmpire > 0)
 	{
 		const CvBuildingInfo& kB = GC.getBuildingInfo((BuildingTypes)iBuilding);
@@ -249,7 +270,7 @@ static void gr_applyBuildingFirstBuild(const CvInfo* j, int iBuilding, int iPlay
 		}
 	}
 
-	const int iFreeTechs = j->getGrants()->pulse100("freeTechs") / 100;
+	const int iFreeTechs = j->getGrants()->pulse(gr_keyFreeTechs) / 100;
 	if (iFreeTechs > 0)
 	{
 		if (pCity->isHuman())
@@ -267,13 +288,13 @@ static void gr_resolveBuilding(int iBuilding, int iPlayer, int iCity)
 	if (j == NULL) return;
 	const int nRepeat    = (j->getTriggers() != NULL) ? (int)j->getTriggers()->entries().size() : 0;   // the `triggers` entries (per-turn spawn/heal/promote)
 	const int nFreePromo = gr_promoteEntryCount(j);   // end-turn promotions to units in the city (triggers promote entries)
-	const int nFreeTech  = gr_pulse(j, "freeTechs");            // one-shot on first build
-	const int nGoldenAge = gr_flag(j, "goldenAge");            // one-shot golden age (bool grant, increment 2)
-	const int nPop       = gr_scopedPulseSum(j, "population");  // one-shot population boost (scoped pulse, increment 2)
+	const int nFreeTech  = gr_pulse(j, gr_keyFreeTechs);            // one-shot on first build
+	const int nGoldenAge = gr_flag(j, gr_keyGoldenAge);             // one-shot golden age (bool grant, increment 2)
+	const int nPop       = gr_scopedPulseSum(j, gr_keyPopulation);  // one-shot population boost (scoped pulse, increment 2)
 	if (nRepeat == 0 && nFreePromo == 0 && nFreeTech == 0 && nGoldenAge == 0 && nPop == 0) return;
 	// The two population scopes SEPARATELY (nPop is their sum) -- the apply and the tripwire need them apart.
-	const int nPopCity   = (j->getGrants() != NULL) ? j->getGrants()->scopedPulse100("population", "city")   / 100 : 0;
-	const int nPopEmpire = (j->getGrants() != NULL) ? j->getGrants()->scopedPulse100("population", "empire") / 100 : 0;
+	const int nPopCity   = (j->getGrants() != NULL) ? j->getGrants()->scopedPulse(gr_keyPopulation, gr_keyScopeCity)   / 100 : 0;
+	const int nPopEmpire = (j->getGrants() != NULL) ? j->getGrants()->scopedPulse(gr_keyPopulation, gr_keyScopeEmpire) / 100 : 0;
 	// The MATERIALIZATION tripwire: the mapFrom-materialized getters must agree with the composed grants read they
 	// were materialized FROM. They are otherwise unobservable (grants are not on /state/info), so a silent zeroing
 	// -- the real hazard of moving a live read to load time -- would never surface. 1 = they diverged.
@@ -304,15 +325,15 @@ static void gr_resolveUnit(int iUnit, int iPlayer, int iUnitId)
 {
 	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(iUnit);
 	if (j == NULL) return;
-	const int nPromos = gr_listCount(j, "promotions");   // free promotions on creation
-	const int nFound  = gr_listCount(j, "buildings");    // settle-time building seeds (grants.buildings on the settler)
+	const int nPromos = gr_listCount(j, gr_keyPromotions);   // free promotions on creation
+	const int nFound  = gr_listCount(j, gr_keyBuildings);    // settle-time building seeds (grants.buildings on the settler)
 	if (nPromos == 0 && nFound == 0) return;
 
 	int nApplied = 0;
 	if (!s_bSuppressed && iUnitId >= 0 && iPlayer >= 0 && nPromos > 0)
 	{
 		CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnitId);
-		const std::vector<int>* promos = (j->getGrants() != NULL) ? j->getGrants()->list("promotions") : NULL;
+		const std::vector<int>* promos = (j->getGrants() != NULL) ? j->getGrants()->list(gr_keyPromotions) : NULL;
 		if (pUnit != NULL && promos != NULL)
 		{
 			for (size_t i = 0; i < promos->size(); ++i)
@@ -328,9 +349,9 @@ static void gr_resolveUnit(int iUnit, int iPlayer, int iUnitId)
 		.addI(GF_PROMOTIONS, nPromos).addI(GF_GRANTBUILDINGS, nFound));
 }
 
-static int gr_firstId(const CvInfo* j, const char* szBucket)   // a single-id grant bucket's id (-1 if absent)
+static int gr_firstId(const CvInfo* j, int iBucketKey)   // a single-id grant bucket's id (-1 if absent)
 {
-	return (j->getGrants() != NULL) ? j->getGrants()->firstListId(szBucket) : -1;
+	return (j->getGrants() != NULL) ? j->getGrants()->firstListId(iBucketKey) : -1;
 }
 
 // The TECH first-discoverer provisions. Mirrors the CvTeam::setHasTech first-discover block, whose apply legs are
@@ -360,9 +381,9 @@ static void gr_resolveTech(int iTech, int iPlayer)
 {
 	const CvInfo* j = InfoRepo<CvTechInfo>::get().get(iTech);
 	if (j == NULL) return;
-	const int iFirstUnit    = gr_firstId(j, "firstFreeUnit");     // first-discover free unit id (-1 none)
-	const int iFirstProphet = gr_firstId(j, "firstFreeProphet");  // first-discover free prophet id (option-gated)
-	const int nFreeTechs    = gr_pulse(j, "freeTechs");          // first-discover free tech picks (count)
+	const int iFirstUnit    = gr_firstId(j, gr_keyFirstFreeUnit);     // first-discover free unit id (-1 none)
+	const int iFirstProphet = gr_firstId(j, gr_keyFirstFreeProphet);  // first-discover free prophet id (option-gated)
+	const int nFreeTechs    = gr_pulse(j, gr_keyFreeTechs);           // first-discover free tech picks (count)
 	if (iFirstUnit < 0 && iFirstProphet < 0 && nFreeTechs == 0) return;
 	const bool bApplied = !s_bSuppressed && iPlayer >= 0;
 	if (bApplied) gr_applyTechFirstDiscover(iTech, iPlayer, iFirstUnit, iFirstProphet, nFreeTechs);
@@ -381,8 +402,8 @@ static void gr_resolveReligion(int iReligion, int iSlotReligion, int iPlayer, in
 	const CvInfo* jChosen = InfoRepo<CvReligionInfo>::get().get(iReligion);
 	const CvInfo* jSlot   = InfoRepo<CvReligionInfo>::get().get(iSlotReligion);
 	if (jChosen == NULL || jSlot == NULL) return;
-	const int nNumFree  = gr_pulse(jSlot, "numFreeUnits");   // count of founder units -- from the SLOT
-	const int iFreeUnit = gr_firstId(jChosen, "freeUnit");    // the founder unit type -- from the CHOSEN religion
+	const int nNumFree  = gr_pulse(jSlot, gr_keyNumFreeUnits);   // count of founder units -- from the SLOT
+	const int iFreeUnit = gr_firstId(jChosen, gr_keyFreeUnit);   // the founder unit type -- from the CHOSEN religion
 	if (nNumFree == 0 && iFreeUnit < 0) return;
 
 	const bool bApplied = !s_bSuppressed && bAward && iFreeUnit >= 0 && nNumFree > 0 && iPlayer >= 0;
@@ -407,7 +428,7 @@ static void gr_resolveCivic(int iCivic, int iPlayer)
 {
 	const CvInfo* j = InfoRepo<CvCivicInfo>::get().get(iCivic);
 	if (j == NULL) return;
-	const int nRev = gr_pulse(j, "revolution");   // rev-index pulse on adopt (signed; Python-applied in legacy)
+	const int nRev = gr_pulse(j, gr_keyRevolution);   // rev-index pulse on adopt (signed; Python-applied in legacy)
 	if (nRev == 0) return;
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_CIVIC, 1)
 		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0)
@@ -427,10 +448,10 @@ static void gr_resolvePlayerInit(int iPlayer)
 	// for a start era with no prior-era techs. Reading it resolves the wrong era's gold/units for every player.
 	const CvInfo* je = InfoRepo<CvEraInfo>::get().get((int)GC.getGame().getStartEra());
 	const CvInfo* jh = InfoRepo<CvHandicapInfo>::get().get(p.getHandicapType());
-	const int nCivics = (jc != NULL) ? gr_listCount(jc, "civics")    : 0;
-	const int nTechs  = (jc != NULL) ? gr_listCount(jc, "techs")     : 0;
-	const int nBuild  = (jc != NULL) ? gr_listCount(jc, "buildings") : 0;
-	const int nGold   = ((je != NULL) ? gr_pulse(je, "startingGold") : 0) + ((jh != NULL) ? gr_pulse(jh, "startingGold") : 0);
+	const int nCivics = (jc != NULL) ? gr_listCount(jc, gr_keyCivics)    : 0;
+	const int nTechs  = (jc != NULL) ? gr_listCount(jc, gr_keyTechs)     : 0;
+	const int nBuild  = (jc != NULL) ? gr_listCount(jc, gr_keyBuildings) : 0;
+	const int nGold   = ((je != NULL) ? gr_pulse(je, gr_keyStartingGold) : 0) + ((jh != NULL) ? gr_pulse(jh, gr_keyStartingGold) : 0);
 	if (nCivics == 0 && nTechs == 0 && nBuild == 0 && nGold == 0) return;
 
 	// STARTING GOLD is the machine's: (handicap + era startingGold) x gamespeed, replacing CvPlayer::initFreeState's
@@ -543,8 +564,11 @@ static void gr_applyCityPerTurn(CvCity* pCity)
 {
 	const CvInfo* pAny = NULL;
 	const CvPlayer& player = GET_PLAYER(pCity->getOwner());
+	// the contexts ARE the eval state (contexts.md): city/plot + player/team through the fill seams, never a
+	// hand-assembled raw-pointer ctx beside them
 	CvCascadeEvalCtx ec;
-	ec.city = pCity; ec.plot = pCity->plot(); ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
+	pCity->getCityContext().fillEvalCtx(ec);
+	player.getEmpireContext().fillEvalCtx(ec);
 	EnablerKernel::wireOperatingBuildings(pCity, ec);
 	const CvCascadeEvalFlags kFlags;
 
@@ -572,7 +596,7 @@ static void gr_applyCityPerTurn(CvCity* pCity)
 			if (pEntry->healUnitCombatId >= 0) continue;   // the heal-RATE term -- the modifier plane's, not a grant
 			if (pEntry->grant != NULL)
 			{
-				const std::vector<int>* pSpawnUnits = pEntry->grant->list("units");
+				const std::vector<int>* pSpawnUnits = pEntry->grant->list(gr_keyUnits);
 				if (pSpawnUnits != NULL && !pSpawnUnits->empty())
 				{
 					const int iUnit = gr_applySpawn(pCity, pEntry->chancePerTypeId, (*pSpawnUnits)[0]);
@@ -625,7 +649,7 @@ static void gr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 	if (iOwner < 0 || iFounderType < 0) return;
 	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(iFounderType);
 	if (j == NULL || j->getGrants() == NULL) return;
-	const std::vector<int>* pSeeds = j->getGrants()->list("buildings");
+	const std::vector<int>* pSeeds = j->getGrants()->list(gr_keyBuildings);
 	if (pSeeds == NULL || pSeeds->empty()) return;
 
 	CvPlayer& player = GET_PLAYER((PlayerTypes)iOwner);
@@ -633,15 +657,17 @@ static void gr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 	int nPlaced = 0;
 	if (!s_bSuppressed && pCity != NULL)
 	{
+		// the contexts ARE the eval state (contexts.md): the fill seams, never a hand-assembled raw ctx
 		CvCascadeEvalCtx ec;
-		ec.city = pCity; ec.plot = pCity->plot(); ec.player = &player; ec.team = &GET_TEAM(player.getTeam());
+		pCity->getCityContext().fillEvalCtx(ec);
+		player.getEmpireContext().fillEvalCtx(ec);
 		const CvCascadeEvalFlags kFlags;
 		for (size_t i = 0; i < pSeeds->size(); ++i)
 		{
 			const int iBuilding = (*pSeeds)[i];
 			if (iBuilding < 0) continue;
 			// the entry's own `enabled` condition (the §3.9 conditioned object form), index-parallel to the ids
-			const CvCondition* pEnabled = j->getGrants()->listCond("buildings", i);
+			const CvCondition* pEnabled = j->getGrants()->listCond(gr_keyBuildings, i);
 			if (pEnabled != NULL && !cascadeEvalCondition(pEnabled, ec, kFlags)) continue;
 			if (pCity->hasBuilding((BuildingTypes)iBuilding)) continue;
 			pCity->changeHasBuilding((BuildingTypes)iBuilding, true);

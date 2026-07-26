@@ -101,7 +101,7 @@ void CvPythonMiscLoader::CyGamePythonInterface()
 		.def("calculateReligionPercent", &CyGame::calculateReligionPercent, "int (int eReligion)")
 		.def("countCorporationLevels", &CyGame::countCorporationLevels, "int (int eCorporation)")
 
-		.def("goldenAgeLength100", &CyGame::goldenAgeLength100, "int ()")
+		.def("goldenAgeLength100", &CyGame::goldenAgeLength, "int ()")
 		.def("victoryDelay", &CyGame::victoryDelay, "int (int /*VictoryTypes*/ eVictory)")
 		.def("getImprovementUpgradeTime", &CyGame::getImprovementUpgradeTime, "int (int /*ImprovementTypes*/ eImprovement)")
 		.def("canTrainNukes", &CyGame::canTrainNukes, "bool ()")

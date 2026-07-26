@@ -339,7 +339,7 @@ void CvUnitAI::AI_init(UnitAITypes eUnitAI, int iBirthmark)
 
 	FAssertMsg(AI_getUnitAIType() != NO_UNITAI, "AI_getUnitAIType() is not expected to be equal with NO_UNITAI");
 	GET_PLAYER(getOwner()).AI_changeNumAIUnits(AI_getUnitAIType(), 1);
-	GET_PLAYER(getOwner()).AI_changeEffNumAIUnitsTimes100(AI_getUnitAIType(), SMeffectiveCountTimes100());
+	GET_PLAYER(getOwner()).AI_changeEffNumAIUnitsTimes100(AI_getUnitAIType(), SMeffectiveCount());
 }
 
 
@@ -1708,9 +1708,9 @@ UnitAITypes CvUnitAI::AI_getUnitAIType() const
 		((CvUnitAI*)this)->m_eUnitAIType = m_pUnitInfo->getDefaultUnitAIType();
 
 		area()->changeNumAIUnits(getOwner(), m_eUnitAIType, 1);
-		area()->changeEffNumAIUnitsTimes100(getOwner(), m_eUnitAIType, SMeffectiveCountTimes100());
+		area()->changeEffNumAIUnitsTimes100(getOwner(), m_eUnitAIType, SMeffectiveCount());
 		GET_PLAYER(getOwner()).AI_changeNumAIUnits(m_eUnitAIType, 1);
-		GET_PLAYER(getOwner()).AI_changeEffNumAIUnitsTimes100(m_eUnitAIType, SMeffectiveCountTimes100());
+		GET_PLAYER(getOwner()).AI_changeEffNumAIUnitsTimes100(m_eUnitAIType, SMeffectiveCount());
 	}
 	return m_eUnitAIType;
 }
@@ -1730,7 +1730,7 @@ void CvUnitAI::AI_setUnitAIType(UnitAITypes eNewValue)
 			.addI(UNTF_owner, (int)getOwner()).addI(UNTF_unit, getID())
 			.addI(UNTF_roleFrom, (int)AI_getUnitAIType()).addI(UNTF_roleTo, (int)eNewValue));
 
-		const int iEffCount = SMeffectiveCountTimes100();
+		const int iEffCount = SMeffectiveCount();
 
 		area()->changeNumAIUnits(getOwner(), AI_getUnitAIType(), -1);
 		area()->changeEffNumAIUnitsTimes100(getOwner(), AI_getUnitAIType(), -iEffCount);
@@ -2342,7 +2342,7 @@ void CvUnitAI::AI_workerMove()
 	// Afforess - worker financial trouble check
 	if (!isHuman() && AI_getUnitAIType() == UNITAI_WORKER
 	&& GET_PLAYER(getOwner()).AI_isFinancialTrouble()
-	&& GET_PLAYER(getOwner()).getUnitUpkeepNet(isMilitaryBranch(), getUpkeep100()) > 0)
+	&& GET_PLAYER(getOwner()).getUnitUpkeepNet(isMilitaryBranch(), getUpkeep()) > 0)
 	{
 		const int iWorkers = GET_PLAYER(getOwner()).AI_totalUnitAIs(UNITAI_WORKER);
 
@@ -2523,7 +2523,7 @@ void CvUnitAI::AI_workerMove()
 
 		if (iWorkers > 5 && iWorkers > 5 * GET_PLAYER(getOwner()).getNumCities()
 		&& GET_PLAYER(getOwner()).AI_isFinancialTrouble()
-		&& GET_PLAYER(getOwner()).getUnitUpkeepNet(isMilitaryBranch(), getUpkeep100()) > 0)
+		&& GET_PLAYER(getOwner()).getUnitUpkeepNet(isMilitaryBranch(), getUpkeep()) > 0)
 		{
 			scrap();
 			return;
@@ -3512,7 +3512,7 @@ void CvUnitAI::AI_attackCityMove()
 			{
 				iHealerCount++;
 			}
-			iStackMass100 += pLoopUnit->SMeffectiveCountTimes100();
+			iStackMass100 += pLoopUnit->SMeffectiveCount();
 		}
 
 		//	Special case - if we have no attackers at all advertise for one urgently
@@ -3953,10 +3953,10 @@ void CvUnitAI::AI_attackCityMove()
 					int dummy;
 					CvUnit * pOurAttacker = getGroup()->AI_getBestGroupAttacker(pOurPlot, true, dummy);
 					if (pOurAttacker == NULL) pOurAttacker = this;
-					int iOurBestAttackValue = pOurAttacker->AI_genericUnitValueTimes100(UNITVALUE_FLAGS_DEFENSIVE | UNITVALUE_FLAGS_OFFENSIVE);
+					int iOurBestAttackValue = pOurAttacker->AI_genericUnitValue(UNITVALUE_FLAGS_DEFENSIVE | UNITVALUE_FLAGS_OFFENSIVE);
 					CvUnit* pLoopAttacker = pGroup->AI_getBestGroupAttacker(pOurPlot, true, dummy);
 					if (pLoopAttacker == NULL) pLoopAttacker = pHead;
-					int iLoopBestAttackValue = pLoopAttacker->AI_genericUnitValueTimes100(UNITVALUE_FLAGS_DEFENSIVE | UNITVALUE_FLAGS_OFFENSIVE);
+					int iLoopBestAttackValue = pLoopAttacker->AI_genericUnitValue(UNITVALUE_FLAGS_DEFENSIVE | UNITVALUE_FLAGS_OFFENSIVE);
 
 					if (iLoopBestAttackValue >= iOurBestAttackValue || pGroup->getNumUnits() >= getGroup()->getNumUnits())
 					{   //Interesting to group with
@@ -7293,7 +7293,7 @@ void CvUnitAI::AI_workerSeaMove()
 		if (pCity && pCity->getOwner() == getOwner()
 		&& (pCity->AI_neededSeaWorkers() == 0
 			|| GET_PLAYER(getOwner()).AI_isFinancialTrouble()
-			&& GET_PLAYER(getOwner()).getUnitUpkeepNet(isMilitaryBranch(), getUpkeep100()) > 0))
+			&& GET_PLAYER(getOwner()).getUnitUpkeepNet(isMilitaryBranch(), getUpkeep()) > 0))
 		{
 			//Probably icelocked since it can't perform actions.
 			scrap();
@@ -12352,7 +12352,7 @@ bool CvUnitAI::AI_guardCity(bool bLeave, bool bSearch, int iMaxPath)
 				}
 				//	Check if it is adequately defended (allowing for this group leaving if it is thinking of doing so)
 				//	and also that we don't need the units to maintain happiness
-				else if (!(pCity->AI_isDefended((bGarrisonMember ? -getGroup()->AI_getGenericValueTimes100(UNITVALUE_FLAGS_DEFENSIVE) / 100 : 0) + iExtra, true, bGarrisonMember ? GARRISON_RELEASE_MARGIN_PERCENT : 100)) ||
+				else if (!(pCity->AI_isDefended((bGarrisonMember ? -getGroup()->AI_getGenericValue(UNITVALUE_FLAGS_DEFENSIVE) / 100 : 0) + iExtra, true, bGarrisonMember ? GARRISON_RELEASE_MARGIN_PERCENT : 100)) ||
 						 (atPlot(pPlot) && isMilitaryHappiness() && !(pCity->AI_isAdequateHappinessMilitary(-getGroup()->getNumUnits()))))
 				{
 					bDefend = true;
@@ -17286,7 +17286,7 @@ bool CvUnitAI::exposedToDanger(const CvPlot* pPlot, int acceptableOdds, bool bCo
 				//	We cannot attack here
 				return true;
 			}
-			iOurValue += pOurAttacker->AI_genericUnitValueTimes100(UNITVALUE_FLAGS_DEFENSIVE | UNITVALUE_FLAGS_OFFENSIVE);
+			iOurValue += pOurAttacker->AI_genericUnitValue(UNITVALUE_FLAGS_DEFENSIVE | UNITVALUE_FLAGS_OFFENSIVE);
 
 			while (getThreateningUnit(pPlot, threateningUnit, pPlot, iIndex, bConsiderOnlyWorstThreat))
 			{
@@ -17305,7 +17305,7 @@ bool CvUnitAI::exposedToDanger(const CvPlot* pPlot, int acceptableOdds, bool bCo
 
 				if (iOurOdds > 50)
 				{
-					int iEnemyValue = threateningUnit->AI_genericUnitValueTimes100(UNITVALUE_FLAGS_DEFENSIVE | UNITVALUE_FLAGS_OFFENSIVE);
+					int iEnemyValue = threateningUnit->AI_genericUnitValue(UNITVALUE_FLAGS_DEFENSIVE | UNITVALUE_FLAGS_OFFENSIVE);
 
 					//	Only count one kill - this routine is mostly geared towards single unit stacks so we'll
 					//	only normally be actually attacking once
@@ -17328,7 +17328,7 @@ bool CvUnitAI::exposedToDanger(const CvPlot* pPlot, int acceptableOdds, bool bCo
 		{
 			if (pOurAttacker != pOurDefender)
 			{
-				iOurValue += pOurDefender->AI_genericUnitValueTimes100(UNITVALUE_FLAGS_DEFENSIVE | UNITVALUE_FLAGS_OFFENSIVE);
+				iOurValue += pOurDefender->AI_genericUnitValue(UNITVALUE_FLAGS_DEFENSIVE | UNITVALUE_FLAGS_OFFENSIVE);
 			}
 		}
 
@@ -17388,7 +17388,7 @@ bool CvUnitAI::exposedToDanger(const CvPlot* pPlot, int acceptableOdds, bool bCo
 								//	Since all enemies can attack us, count them all
 								if (iOurOdds > 50)
 								{
-									iEnemyTotalValueExpectedLoss += pUnit->AI_genericUnitValueTimes100(UNITVALUE_FLAGS_DEFENSIVE | UNITVALUE_FLAGS_OFFENSIVE);
+									iEnemyTotalValueExpectedLoss += pUnit->AI_genericUnitValue(UNITVALUE_FLAGS_DEFENSIVE | UNITVALUE_FLAGS_OFFENSIVE);
 								}
 							}
 						}
@@ -28160,7 +28160,7 @@ void CvUnitAI::AI_flushValueCache()
 
 //	Assess the value of a unit without the context of any specific battle/scenario
 //	This is its max strength, modified by promotions
-int	CvUnitAI::AI_genericUnitValueTimes100(UnitValueFlags eFlags) const
+int	CvUnitAI::AI_genericUnitValue(UnitValueFlags eFlags) const
 {
 	PROFILE_FUNC();
 

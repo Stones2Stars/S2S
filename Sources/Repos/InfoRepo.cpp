@@ -8,7 +8,7 @@
 //	[MODIFIER/repo] probeFiles=13444 probeEntities=13444 mapped=0, which silently zeroed the whole modifier building
 //	tier and the dormancy derivation. Explicit per-tag specializations in this single TU guarantee ONE instance per
 //	tag process-wide; the header only DECLARES get(), so a NEW tag use without a row here fails at LINK -- add its
-//	CASCADE_INFOREPO_DEFINE line below (and, if it carries type-specific data, a JsonPayload specialization in the header).
+//	CASCADE_INFOREPO_DEFINE line below (and, if it carries type-specific data, a RepoPayload specialization in the header).
 //
 
 #include "CvGameCoreDLL.h"
@@ -77,6 +77,7 @@ CASCADE_INFOREPO_ALIAS(CvVictoryInfo,       m_paVictoryInfo)       // #430: cons
 CASCADE_INFOREPO_ALIAS(CvVoteInfo,          m_paVoteInfo)         // #430: consolidated onto the JSON-fed engine class
 CASCADE_INFOREPO_ALIAS(CvHurryInfo,         m_paHurryInfo)        // #430: consolidated onto the JSON-fed engine class
 CASCADE_INFOREPO_ALIAS(CvBonusClassInfo,    m_paBonusClassInfo)   // #430: consolidated onto the JSON-fed engine class
+CASCADE_INFOREPO_ALIAS(CvWorldInfo,         m_paWorldInfo)        // #430 item 15: consolidated onto the JSON-fed engine class
 CASCADE_INFOREPO_OWNED(CvSkillClsTag)        // the five generated classification categories (ClassificationRegistry)
 CASCADE_INFOREPO_OWNED(CvTagClsTag)
 CASCADE_INFOREPO_OWNED(CvAttributeClsTag)

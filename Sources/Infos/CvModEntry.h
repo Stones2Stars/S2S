@@ -54,14 +54,34 @@ public:
 	int seg[MOD_ENTRY_SEGS];      // the authored segments, interned, in order -- the spell-back address source
 
 	// --- the payload ---
-	int value100;                 // ×100 at load
+	int value;                 // ×100 at load
 	CvCascUnit unit;
+	// --- the §3.9 `ai` AUDIENCE axis: the entry applies to AI PLAYERS ONLY (json §3.9 -- the optional `ai`
+	// sibling block, same inner shape). Compiled as THIS FLAG, never an address segment: the authored `ai` hop
+	// (upkeep.empire.unit.ai.percent -- the handicap human/AI dual-leaf pattern) is consumed by the walk, so
+	// the member path kind-resolves cleanly and the audience rides the entry. Point sums stay HUMAN-audience by
+	// default (an aiOnly entry folds into the SEPARATE ai slot table); an aiOnly-inclusive read is an explicit
+	// parameter (CvModifiers::sum), and every gated record read audience-filters via the asking player. ---
+	bool aiOnly;
 	CvCondition* enabled;         // NULL = always-on (owned)
 	CvCondition* disabled;        // NULL = never-suppressed (owned)
 	// --- the §3.7 `unit:` predicate qualifier (cargo.space.{unit: IS_AIR}; happiness.empire.cities.{unit:
 	// IS_MILITARY}) -- evaluated at the CONSUMER against each candidate unit (live-on-top per
 	// [DEC-unit-modifiers-on-top]); NULL = unqualified. Owned. ---
 	CvCondition* unitQual;
+	// --- the §3.7 counted-kind RELIGION filter (`religion: "!IS_STATE_RELIGION"`, ruling 23): the value scales
+	// by the count of the city's religions matching this predicate (each religion tested via ctx.religion --
+	// cascadeCountCityReligions); NULL = unfiltered. Owned. ---
+	CvCondition* religionQual;
+	// --- the §3.3/§3.9 ranked-selection qualifiers (max:/orderedBy/orderedByDescending -- ruling 25: they ride
+	// individual entries; node-level spelling is shorthand). PARSE-CARRIED ONLY: the ranked SELECTION evaluation
+	// is the parked plan (plans/parked/ranked-target-selection.md) -- until it lands a ranked entry applies
+	// unranked, exactly as the pre-parse data did. ---
+	bool hasRankQual;             // any ranked qualifier present on this entry
+	int rankMax;                  // literal `max:` N; -1 = token-carried (rankMaxToken) or absent
+	std::string rankMaxToken;     // `max:` token spelling (TARGET_NUM_CITIES); empty = literal/none
+	int orderedBySeg;             // interned metric segment id (CITY_SIZE); -1 = none
+	bool orderedDescending;       // orderedByDescending vs orderedBy
 	// --- the §3.7 `per` count-scaler (value × count(type)/each) ---
 	bool hasPer;                  // the entry carries a per
 	std::string perType;          // the per's type/token string (POPULATION / PROPERTY_X / ...) -- a catch-all
@@ -73,8 +93,16 @@ public:
 	int perScope;                 // the AUTHORED per scope (a CvCascScope value); -1 = absent -> the deposit's
 	                              // own scope (json §3.7: cross-city scopes resolve via the tally, city/plot local)
 	std::vector<int> perAnyOf;    // per.anyOf summed-count FK ids (json §3.7)
+	// --- the §3.7 `per.above` over-threshold scaler (ruling 26): value × max(0, count − above), composing with
+	// `each` ((count − above) / each). Threshold literal or TOKEN: `above: "CITY_LIMIT"` reads the depositing
+	// civic's base-limit config (resolved into perAbove by CvCivicInfo::mapFrom via resolveAboveToken -- the
+	// SELF-collapse precedent), × the world-size scale percent at EVAL (MMKernel::perScale). ---
+	bool hasAbove;                // the per carries an `above:`
+	int perAbove;                 // resolved threshold BASE (literal, or the source-resolved config); -1 = unresolved
+	std::string perAboveToken;    // the token spelling (CITY_LIMIT = base × world scale at eval); empty = literal
 
-	bool isConditioned() const { return enabled != NULL || disabled != NULL || unitQual != NULL || hasPer; }
+	bool isConditioned() const
+	{ return enabled != NULL || disabled != NULL || unitQual != NULL || religionQual != NULL || hasPer || hasRankQual; }
 	// Folds into its group's compiled unconditioned sum: unconditioned, untargeted, and inside the kind
 	// vocabulary. Everything else stays an entry-list read (keyed walks, conditioned lists, unkinded members).
 	bool isPointFoldable() const { return !isConditioned() && targetSeg < 0 && targetFk < 0 && kind >= 0; }
@@ -85,15 +113,17 @@ public:
 	CvModEntry()
 		: family(MODFAM_NONE), propertyFk(-1), scope(CASC_SCOPE_CITY), kind(-1), memberSeg(-1), targetSeg(-1),
 		  targetFk(-1), nSeg(0),
-		  value100(0), unit(CASC_UNIT_FLAT), enabled(NULL), disabled(NULL), unitQual(NULL),
-		  hasPer(false), perTypeId(-1), perEach(1), perScope(-1)
+		  value(0), unit(CASC_UNIT_FLAT), aiOnly(false), enabled(NULL), disabled(NULL), unitQual(NULL), religionQual(NULL),
+		  hasRankQual(false), rankMax(-1), orderedBySeg(-1), orderedDescending(false),
+		  hasPer(false), perTypeId(-1), perEach(1), perScope(-1),
+		  hasAbove(false), perAbove(-1)
 	{
 		for (int i = 0; i < MOD_ENTRY_SEGS; ++i)
 		{
 			seg[i] = -1;
 		}
 	}
-	~CvModEntry() { delete enabled; delete disabled; delete unitQual; }
+	~CvModEntry() { delete enabled; delete disabled; delete unitQual; delete religionQual; }
 
 private:
 	CvModEntry(const CvModEntry&);            // noncopyable -- owns the condition trees

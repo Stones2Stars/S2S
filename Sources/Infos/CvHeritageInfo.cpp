@@ -1,50 +1,103 @@
 //
-//	CvHeritageInfo::mapFrom -- base core reading + availability (tech enables.heritages + this heritage's
-//	enables.heritages succession ride the base), then the era-threshold-gated empire commerce + the language gate.
-//	Commerce is HUMAN (÷100-descaled by the curator). PropertyManipulators are deferred to the property subsystem.
-//	See header.
+//	CvHeritageInfo -- the heritage poco's own typed reading on top of the base section dispatch (see the
+//	header). mapFrom materializes the identity set + the property bridge ONCE ([DEC-materialize-at-mapfrom]);
+//	the ERA-banded empire commerce lives on the compiled conditioned entries (base surface), never as a
+//	mirrored band table. The acquisition prereqs resolve lazily from THIS info's own load-populated reverse
+//	view (EDGEF_RELATED), the exact enables-predicate confirmed against each related source's forward edge.
 //
 
-#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson, GC
+#include "CvGameCoreDLL.h"
 #include "CvHeritageInfo.h"
-#include "CvTechInfo.h"       // getPrereqTech reverse scan reads GC.getTechInfo(i).getEdges() -- needs the full type (C2027)
-#include "CvJsonParse.h"          // the shared walkers (jsonChildObj/jsonIdBool)
+#include "CvTechInfo.h"                // the forward-edge confirm (GC.getTechInfo(...).getEdges())
+#include "CvJsonParse.h"               // jsonChildObj / jsonIdBool
 #include "Property/CvPropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 
-// Reverse-scan the FORWARD enables.heritages edges the curator store-inverts the two acquisition prereqs onto
-// (curate_heritage.py DROP + store inversion): the tech that lists THIS heritage in enables.heritages is its
-// PrereqTech (legacy single); every OTHER heritage that lists THIS heritage in enables.heritages is one of its
-// PrereqOrHeritage predecessors (the folklore->taxon succession). Lazy + memoized -- the scan needs every tech/
-// heritage poco loaded, which holds at every runtime/UI caller (canAddHeritage, CvGameTextMgr) but not during load.
+CvHeritageInfo::CvHeritageInfo()
+	: m_bNeedsLanguage(false)
+	, m_iMissionType(-1)
+	, m_bPrereqsResolved(false)
+	, m_iPrereqTech(NO_TECH)
+{
+}
+
+// The prereq read-back (see the header): iterate THIS info's own EDGEF_RELATED lists (the load-populated
+// reverse view -- a candidate SUPERSET of everything referencing this heritage) and keep exactly the sources
+// whose FORWARD enables.heritages edge lists this heritage -- the consumer-kept exact predicate over the
+// RELATED superset. Bounded by the related lists; no repo-wide scan. Lazy + memoized (all pocos and the
+// reverse pass are complete at every runtime caller; never called during load).
 void CvHeritageInfo::resolvePrereqs() const
 {
-	if (m_bPrereqsResolved) return;
+	if (m_bPrereqsResolved)
+	{
+		return;
+	}
 	m_bPrereqsResolved = true;
 
 	const int iThis = GC.getInfoTypeForString(getType(), true);   // this heritage's own registered id
-	if (iThis < 0) return;
-
-	// PrereqTech: the (single, legacy) tech whose enables.heritages includes this heritage.
-	for (int t = 0; t < GC.getNumTechInfos() && m_iPrereqTech == NO_TECH; ++t)
+	if (iThis < 0)
 	{
-		const CvEdges* pEdges = GC.getTechInfo((TechTypes)t).getEdges();
-		if (pEdges == NULL) continue;
-		const std::vector<int>* pList = pEdges->find(EDGEF_ENABLES, EDGEB_HERITAGES);
-		if (pList == NULL) continue;
-		for (size_t k = 0; k < pList->size(); ++k)
-			if ((*pList)[k] == iThis) { m_iPrereqTech = t; break; }
+		return;
 	}
 
-	// PrereqOrHeritage: every heritage whose enables.heritages includes this heritage (its predecessor succession).
-	for (int h = 0; h < GC.getNumHeritageInfos(); ++h)
+	// PrereqTech: the (single, legacy) related tech whose enables.heritages includes this heritage.
+	const std::vector<int>* pRelatedTechs = edge(EDGEF_RELATED, EDGEB_TECHS);
+	if (pRelatedTechs != NULL)
 	{
-		if (h == iThis) continue;
-		const CvEdges* pEdges = GC.getHeritageInfo((HeritageTypes)h).getEdges();
-		if (pEdges == NULL) continue;
-		const std::vector<int>* pList = pEdges->find(EDGEF_ENABLES, EDGEB_HERITAGES);
-		if (pList == NULL) continue;
-		for (size_t k = 0; k < pList->size(); ++k)
-			if ((*pList)[k] == iThis) { m_prereqOrHeritage.push_back((HeritageTypes)h); break; }
+		for (size_t iRelated = 0; iRelated < pRelatedTechs->size() && m_iPrereqTech == NO_TECH; ++iRelated)
+		{
+			const int iTech = (*pRelatedTechs)[iRelated];
+			const CvEdges* pTechEdges = GC.getTechInfo((TechTypes)iTech).getEdges();
+			if (pTechEdges == NULL)
+			{
+				continue;
+			}
+			const std::vector<int>* pEnabled = pTechEdges->find(EDGEF_ENABLES, EDGEB_HERITAGES);
+			if (pEnabled == NULL)
+			{
+				continue;
+			}
+			for (size_t iEnabled = 0; iEnabled < pEnabled->size(); ++iEnabled)
+			{
+				if ((*pEnabled)[iEnabled] == iThis)
+				{
+					m_iPrereqTech = iTech;
+					break;
+				}
+			}
+		}
+	}
+
+	// PrereqOrHeritage: every related heritage whose enables.heritages includes this heritage (the
+	// folklore->taxon predecessor succession).
+	const std::vector<int>* pRelatedHeritages = edge(EDGEF_RELATED, EDGEB_HERITAGES);
+	if (pRelatedHeritages != NULL)
+	{
+		for (size_t iRelated = 0; iRelated < pRelatedHeritages->size(); ++iRelated)
+		{
+			const int iHeritage = (*pRelatedHeritages)[iRelated];
+			if (iHeritage == iThis)
+			{
+				continue;
+			}
+			const CvEdges* pHeritageEdges = GC.getHeritageInfo((HeritageTypes)iHeritage).getEdges();
+			if (pHeritageEdges == NULL)
+			{
+				continue;
+			}
+			const std::vector<int>* pEnabled = pHeritageEdges->find(EDGEF_ENABLES, EDGEB_HERITAGES);
+			if (pEnabled == NULL)
+			{
+				continue;
+			}
+			for (size_t iEnabled = 0; iEnabled < pEnabled->size(); ++iEnabled)
+			{
+				if ((*pEnabled)[iEnabled] == iThis)
+				{
+					m_prereqOrHeritage.push_back((HeritageTypes)iHeritage);
+					break;
+				}
+			}
+		}
 	}
 }
 
@@ -62,66 +115,27 @@ const std::vector<HeritageTypes>& CvHeritageInfo::getPrereqOrHeritage() const
 
 void CvHeritageInfo::mapFrom(const picojson::value& entity)
 {
-	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom
-	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) m_aEraCommerce[c].clear();
-	CvInfo::mapFrom(entity);   // core + availability (tech enables.heritages, this heritage's enables.heritages)
-	if (!entity.is<picojson::object>()) return;
-	const picojson::object& o = entity.get<picojson::object>();
+	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers, fills edges)
+
+	// idempotency (CvInfo.h): the full-registry re-run fully redefines every materialized member (and the
+	// lazy memo restarts clean -- it is only ever read post-load).
+	m_bNeedsLanguage = false;
+	m_bPrereqsResolved = false;
+	m_iPrereqTech = NO_TECH;
+	m_prereqOrHeritage.clear();
 
 	// PROPERTY_* per-turn SOURCES: a heritage's <PROPERTY_X>.city.flat (the tech-gated folklore education)
-	// deposits in EVERY city while held -- the player gather walks heritages; RELATION_ASSOCIATED fans each
-	// source to every owner city per the curated `city` scope. (The legacy XML carried NO GameObjectType, so
-	// legacy deposited into the PLAYER's own property bag, which nothing reads -- the curated city scope is the
-	// evident intent and the delivery here; property-audit.md carriers note.)
+	// deposits in EVERY owner city while held -- RELATION_ASSOCIATED fans each source to every owner city per
+	// the curated `city` scope. The ONE shared walk over the compiled entries.
 	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_ASSOCIATED);
 
-	// era-gated empire commerce -- {gold/research/culture/espionage}.empire.flat, each a bare number (one always-on
-	// band, eraMin 0) OR a list of { value, enabled:{type:"ERA", min:N} } era-threshold bands.
-	static const char* fam[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };   // COMMERCE_* order
-	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
+	if (!entity.is<picojson::object>())
 	{
-		const picojson::object* fo = jsonChildObj(o, fam[c]);       if (!fo) continue;
-		const picojson::object* so = jsonChildObj(*fo, "empire");   if (!so) continue;
-		picojson::object::const_iterator fl = so->find("flat");     if (fl == so->end()) continue;
-		if (fl->second.is<double>())
-		{
-			EraBand b; b.eraMin = 0; b.value = jsonX100(fl->second.get<double>());   // human -> ×100 (was (int)h: truncated fractional heritage commerce to 0)
-			m_aEraCommerce[c].push_back(b);
-		}
-		else if (fl->second.is<picojson::array>())
-		{
-			const picojson::array& a = fl->second.get<picojson::array>();
-			for (size_t i = 0; i < a.size(); ++i)
-			{
-				EraBand b; b.eraMin = 0; b.value = 0;
-				if (a[i].is<double>()) { b.value = jsonX100(a[i].get<double>()); m_aEraCommerce[c].push_back(b); continue; }
-				if (!a[i].is<picojson::object>()) continue;
-				const picojson::object& e = a[i].get<picojson::object>();
-				picojson::object::const_iterator ve = e.find("value");
-				if (ve == e.end() || !ve->second.is<double>()) continue;
-				b.value = jsonX100(ve->second.get<double>());
-				const picojson::object* en = jsonChildObj(e, "enabled");
-				if (en) { picojson::object::const_iterator mn = en->find("min"); if (mn != en->end() && mn->second.is<double>()) b.eraMin = (int)mn->second.get<double>(); }
-				m_aEraCommerce[c].push_back(b);
-			}
-		}
+		return;
 	}
-
-	if (const picojson::object* io = jsonChildObj(o, "identity"))
-		m_bNeedsLanguage = jsonIdBool(*io, "needsLanguage");
-
-	// archived getEraCommerceChanges100 reconstruction -- REAL: same bands just parsed above, ×100 (CentiCommerce),
-	// keyed by the actual EraTypes (ordinal-1; see header comment). eraMin==0 is the "always-on" sentinel (bare/
-	// unconditioned flat entries above) -> era 0, which an `>=`/`==` era-threshold consumer treats correctly.
-	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
+	const picojson::object& entityObj = entity.get<picojson::object>();
+	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
 	{
-		const std::vector<EraBand>& bands = m_aEraCommerce[c];
-		for (size_t i = 0; i < bands.size(); ++i)
-		{
-			const EraTypes eEra = (bands[i].eraMin > 0) ? (EraTypes)(bands[i].eraMin - 1) : (EraTypes)0;
-			CommerceArray kArr; kArr.fill(0);
-			kArr[c] = bands[i].value;   // value is already ×100 (jsonX100 at parse); no re-scale (was *100 over a truncated int -> 0)
-			m_eraCommerceChanges100.addArrayValue(eEra, kArr);
-		}
+		m_bNeedsLanguage = jsonIdBool(*pIdentity, "needsLanguage");
 	}
 }

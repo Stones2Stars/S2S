@@ -22,10 +22,10 @@
 
 CvTriggerEntry::CvTriggerEntry()
 	: happeningInterval(1), condition(NULL),
-	  chanceValue100(0), chancePerTypeId(-1), chancePerEach(1), chancePerScope(-1),
+	  chanceValue(0), chancePerTypeId(-1), chancePerEach(1), chancePerScope(-1),
 	  grant(NULL),
-	  heal100(0), healFull(false), healUnitCombatId(-1), healCount(0),
-	  propertyId(-1), propertyAmount100(0), spatialDistance(0)
+	  heal(0), healFull(false), healUnitCombatId(-1), healCount(0),
+	  propertyId(-1), propertyAmount(0), spatialDistance(0)
 {
 }
 
@@ -90,7 +90,7 @@ static void triggersParseChance(CvTriggerEntry* pEntry, const picojson::value& v
 {
 	if (v.is<double>())
 	{
-		pEntry->chanceValue100 = jsonX100(v.get<double>());
+		pEntry->chanceValue = jsonX100(v.get<double>());
 		return;
 	}
 	if (!v.is<picojson::object>())
@@ -101,7 +101,7 @@ static void triggersParseChance(CvTriggerEntry* pEntry, const picojson::value& v
 	picojson::object::const_iterator valueIt = o.find("value");
 	if (valueIt != o.end() && valueIt->second.is<double>())
 	{
-		pEntry->chanceValue100 = jsonX100(valueIt->second.get<double>());
+		pEntry->chanceValue = jsonX100(valueIt->second.get<double>());
 	}
 	picojson::object::const_iterator perIt = o.find("per");
 	if (perIt != o.end())
@@ -172,7 +172,7 @@ static void triggersParseAction(CvTriggerEntry* pEntry, const picojson::value& v
 			}
 			else if (val.is<double>())
 			{
-				pEntry->heal100 = jsonX100(val.get<double>());
+				pEntry->heal = jsonX100(val.get<double>());
 			}
 		}
 		else if (szKey == "unitCombat" && val.is<std::string>())
@@ -198,7 +198,7 @@ static void triggersParseAction(CvTriggerEntry* pEntry, const picojson::value& v
 		else if (szKey.compare(0, 9, "PROPERTY_") == 0 && val.is<double>())
 		{
 			pEntry->propertyId = jsonResolveId(szKey);
-			pEntry->propertyAmount100 = jsonX100(val.get<double>());
+			pEntry->propertyAmount = jsonX100(val.get<double>());
 		}
 		else
 		{

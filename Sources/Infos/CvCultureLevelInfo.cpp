@@ -1,60 +1,89 @@
 //
-//	CvCultureLevelInfo::mapFrom -- base (availability: the entity-level `enabled`/`disabled` gate + the
-//	replacedBy edge + the `allowed` wonder caps, all composed units the base dispatch fills), then the tier's city
-//	defense + radius + culture threshold. HUMAN-native. See header.
+//	CvCultureLevelInfo -- the culture-level poco's own typed reading on top of the base section dispatch (see
+//	the header). mapFrom materializes the census identity set + the §4.4 wonder caps ONCE
+//	([DEC-materialize-at-mapfrom]); the tier defense is a compiled point read (header), never a mirrored
+//	scalar. Idempotent by contract (unconditional assigns).
 //
 
-#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
+#include "CvGameCoreDLL.h"
 #include "CvCultureLevelInfo.h"
-#include "CvJsonParse.h"          // the shared walkers (jsonChildObj/jsonFamMemberVal/jsonIdInt)
+#include "CvJsonParse.h"           // jsonChildObj / jsonIdInt
 #include "Infos/CvGameSpeedInfo.h" // getSpeedPercent -- the per-speed culture-threshold multiplier
 
-// The legacy scalar PrereqGameOption is now the entity-level `enabled` gate (DEC-entity-gate): the curator emits a
-// bare `"enabled": "GAMEOPTION_CULTURE_REALISTIC_SPREAD"`, which parses to a PRESENCE atom on m_gate.enabled. The live
-// consumer (CvGlobals::cacheGameSpecificValues) still asks for the single option id, so extract it here. A stub
-// NO_GAMEOPTION made the 12 gated tiers apply unconditionally regardless of the option.
-int CvCultureLevelInfo::getPrereqGameOption() const
+CvCultureLevelInfo::CvCultureLevelInfo()
+	: m_iCityRadius(1)
+	, m_iCultureThreshold(0)
+	, m_iMaxWorldWonders(0)
+	, m_iMaxTeamWonders(0)
+	, m_iMaxNationalWonders(0)
+	, m_iPrereqGameOption(NO_GAMEOPTION)
+	, m_iLevel(0)
 {
-	const CvCondition* e = m_gate.enabled;
-	if (e != NULL && e->kind == CASC_COND_PRESENCE && e->type.compare(0, 11, "GAMEOPTION_") == 0)
-		return GC.getInfoTypeForString(e->type.c_str(), true);
-	return NO_GAMEOPTION;
 }
 
-// The per-GameSpeed culture threshold = base(Normal) × GameSpeed.speedPercent / 100 (the legacy SpeedThresholds
-// table was this exact precompute; curator COLLAPSE kept only the base). The multiplier lives ON the gamespeed
-// (owner 2026-07-11) -- re-apply it here, mirroring CvGame::getGoldenAgeLength / getVictoryDelay (× speedPercent).
+// The per-GameSpeed culture threshold = base × the gamespeed's speed percent / 100 (the legacy SpeedThresholds
+// table was this exact precompute; curator COLLAPSE kept only the base -- the multiplier lives ON the
+// gamespeed). The speed percent is the gamespeed's 1-kind straggler read (speed.world.percent via the base
+// getScalar -- a ×100 percent, hence the /10000).
 int CvCultureLevelInfo::getSpeedThreshold(int iSpeed) const
 {
-	return m_iCultureThreshold * GC.getGameSpeedInfo((GameSpeedTypes)iSpeed).getSpeedPercent() / 100;
+	const int iSpeedPercent = GC.getGameSpeedInfo((GameSpeedTypes)iSpeed).getScalar(SCALAR_SPEED, CASC_SCOPE_WORLD, CASC_UNIT_PERCENT);
+	return m_iCultureThreshold * iSpeedPercent / 10000;
 }
 
 void CvCultureLevelInfo::mapFrom(const picojson::value& entity)
 {
-	CvInfo::mapFrom(entity);   // core + availability (the entity-level gate, replacedBy edge, the allowed caps)
-	// materialized wonder-category caps (json §4.4; the getters are bare member reads)
-	m_iMaxWorldWonders    = wonderCap("worldWonders");
-	m_iMaxTeamWonders     = wonderCap("teamWonders");
-	m_iMaxNationalWonders = wonderCap("nationalWonders");
-	if (!entity.is<picojson::object>()) return;
-	const picojson::object& o = entity.get<picojson::object>();
+	CvInfo::mapFrom(entity);   // core + the section dispatch (the entity-level gate, replacedBy/enables edges, the allowed caps, m_modifiers)
 
-	m_iCityDefenseModifier = jsonFamMemberVal(o, "defense", "city", "amount", "percent");
+	// materialized §4.4 wonder-category caps -- legacy 0-for-absent convention (base cap() returns -1 = absent)
+	const int iWorldCap = m_allowed.cap(ALLOWEDCAP_WORLD_WONDERS);
+	const int iTeamCap = m_allowed.cap(ALLOWEDCAP_TEAM_WONDERS);
+	const int iNationalCap = m_allowed.cap(ALLOWEDCAP_NATIONAL_WONDERS);
+	m_iMaxWorldWonders = iWorldCap >= 0 ? iWorldCap : 0;
+	m_iMaxTeamWonders = iTeamCap >= 0 ? iTeamCap : 0;
+	m_iMaxNationalWonders = iNationalCap >= 0 ? iNationalCap : 0;
 
-	if (const picojson::object* io = jsonChildObj(o, "identity"))
+	// The legacy scalar PrereqGameOption is the entity-level `enabled` gate (DEC-entity-gate): the curator emits
+	// a bare `"enabled": "GAMEOPTION_..."`, which parses to a PRESENCE atom on m_gate.enabled (dispatched by
+	// CvInfo::mapFrom above). The live consumer (CvGlobals::cacheGameSpecificValues) asks for the single option
+	// id -- materialized here ONCE ([DEC-materialize-at-mapfrom]; GameOptionInfos register in LoadPreMenuGlobals
+	// before either loadJson pass, so the id resolves at every mapFrom).
+	m_iPrereqGameOption = NO_GAMEOPTION;
+	const CvCondition* pEnabled = m_gate.enabled;
+	if (pEnabled != NULL && pEnabled->kind == CASC_COND_PRESENCE && pEnabled->type.compare(0, 11, "GAMEOPTION_") == 0)
 	{
-		m_iCityRadius = jsonIdInt(*io, "cityRadius", 1);  // legacy load default 1 (archive .add)
-		// cultureThreshold: a bare scalar, OR (if a game speed breaks the geometric ratio) a {base, overrides} object --
-		// read the base; the per-speed overrides are STUB deferred (the consumer derives per-speed by ×gamespeed%).
-		picojson::object::const_iterator ct = io->find("cultureThreshold");
-		if (ct != io->end())
+		m_iPrereqGameOption = GC.getInfoTypeForString(pEnabled->type.c_str(), true);
+	}
+
+	// idempotency (CvInfo.h): unconditional redefinition of the identity members
+	m_iCityRadius = 1;   // legacy load default 1
+	m_iCultureThreshold = 0;
+
+	if (!entity.is<picojson::object>())
+	{
+		return;
+	}
+	const picojson::object& entityObj = entity.get<picojson::object>();
+	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
+	{
+		m_iCityRadius = jsonIdInt(*pIdentity, "cityRadius", 1);
+		// cultureThreshold: a bare scalar, OR (if a game speed breaks the geometric ratio) a {base, overrides}
+		// object -- read the base; the per-speed value derives by × gamespeed% (getSpeedThreshold).
+		picojson::object::const_iterator thresholdIt = pIdentity->find("cultureThreshold");
+		if (thresholdIt != pIdentity->end())
 		{
-			if (ct->second.is<double>()) m_iCultureThreshold = (int)ct->second.get<double>();
-			else if (ct->second.is<picojson::object>())
+			if (thresholdIt->second.is<double>())
 			{
-				const picojson::object& cto = ct->second.get<picojson::object>();
-				picojson::object::const_iterator b = cto.find("base");
-				if (b != cto.end() && b->second.is<double>()) m_iCultureThreshold = (int)b->second.get<double>();
+				m_iCultureThreshold = (int)thresholdIt->second.get<double>();
+			}
+			else if (thresholdIt->second.is<picojson::object>())
+			{
+				const picojson::object& thresholdObj = thresholdIt->second.get<picojson::object>();
+				picojson::object::const_iterator baseIt = thresholdObj.find("base");
+				if (baseIt != thresholdObj.end() && baseIt->second.is<double>())
+				{
+					m_iCultureThreshold = (int)baseIt->second.get<double>();
+				}
 			}
 		}
 	}

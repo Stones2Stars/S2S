@@ -17,32 +17,35 @@
 #include "Engine/CvPlot.h"
 #include "Engine/CvTeam.h"
 #include "Engine/CvGame.h"
-#include "Engine/CvArea.h"
-#include "Engine/CvProperties.h"
 #include "Engine/CvUnit.h"           // ctx.unit->getUnitInfo() (the IS_<TAG> predicate)
 #include "CvUnitInfo.h"              // getTags() (the unit tag bitset)
 #include "CvClassificationBlock.h"         // hasId (the classification bitset O(1) test)
-#include "Data/CvDepositRead.h"        // traitData -- the active-set trait resolver (the L1 policy read)
-#include "CvCivicInfo.h"          // the civic §9 policies block (the L1 policy read)
-#include "CvTraitInfo.h"          // the trait §9 policies block
-#include "Repos/InfoRepo.h"
-#include "CvCivicInfo.h"
 #include "CvClassificationRegistry.h"   // cachedKeyId(CLSD_POLICY) -- resolve a policy key to its minted id
-#include "Engine/EmpireContext.h"       // the prebuilt enacted-policy union (getEmpireContext().policies)
+#include "Engine/CityContext.h"         // the city-scope HAVE read surface (contexts.md -- the evaluator's atoms ask it)
+#include "Engine/EmpireContext.h"       // the empire/team-scope HAVE read surface (incl. the prebuilt policy union)
+#include "Engine/PlotContext.h"         // the plot-fact read surface (every HAS_/IS_ plot predicate)
+#include "Engine/CvPlotGroup.h"         // the reserved TRADED-bonus source (the ctx.plotGroup connection:"trade" leg)
 #include <string>
 
 static bool ev_playerHasPolicy(const CvPlayer* pPlayer, const char* szKey);   // defined below (the L1 policy read)
 
 static bool en_starts(const std::string& s, const char* pfx) { return s.compare(0, strlen(pfx), pfx) == 0; }
 
-// ---- small live-engine helpers (the EvalState set-membership reads) ----------------------------------------------
+// ---- the context derivations (contexts.md HAVE axis): the ctx's bound pointers ARE the context bindings --
+// city state reads through CvCity's CityContext, empire/team state through CvPlayer's EmpireContext, plot facts
+// through CvPlot's PlotContext. NULL object => NULL context => the not-present verdict, unchanged. ------------
 
-static bool ev_hasCivic(const CvPlayer* pl, int eCivic)
+static const CityContext* ev_cityContext(const CvCascadeEvalCtx& ctx)
 {
-	if (pl == NULL || eCivic < 0) return false;
-	for (int iCO = 0; iCO < GC.getNumCivicOptionInfos(); ++iCO)
-		if ((int)pl->getCivics((CivicOptionTypes)iCO) == eCivic) return true;
-	return false;
+	return ctx.city != NULL ? &ctx.city->getCityContext() : NULL;
+}
+static const EmpireContext* ev_empireContext(const CvCascadeEvalCtx& ctx)
+{
+	return ctx.player != NULL ? &ctx.player->getEmpireContext() : NULL;
+}
+static const PlotContext* ev_plotContext(const CvPlot* plot)
+{
+	return plot != NULL ? &plot->getPlotContext() : NULL;
 }
 
 // A BUILDING prereq must be ACTIVE -- present AND not dormant. Dormancy is CASCADE-COMPUTED (governed 100% by operate
@@ -52,73 +55,77 @@ static bool ev_hasActiveBuilding(const CvCascadeEvalCtx& ctx, int eBuilding)
 	return cascadeIsBuildingActive(eBuilding, ctx);
 }
 
-// VICINITY scan helper: walk the city's workable plots and test `pred`. (Mirrors StoneBase PlotHas over s.Plots.)
-typedef bool (*EvPlotPred)(const CvPlot*, const CvCondition*, const CvCity*);
-static bool ev_cityPlotHas(const CvCity* c, EvPlotPred pred, const CvCondition* a)
+// VICINITY scan helper: walk the city's workable plots (through the city context's radius forward) and test
+// `pred` against each plot's PlotContext. (Mirrors StoneBase PlotHas over s.Plots.)
+typedef bool (*EvPlotPred)(const PlotContext&, const CvCondition*, const CityContext&);
+static bool ev_cityPlotHas(const CityContext* cityContext, EvPlotPred pred, const CvCondition* a)
 {
-	if (c == NULL) return false;
+	if (cityContext == NULL) return false;
 	for (int i = 0; i < NUM_CITY_PLOTS; ++i)
 	{
-		const CvPlot* pl = c->getCityIndexPlot(i);
-		if (pl != NULL && pred(pl, a, c)) return true;
+		const CvPlot* radiusPlot = cityContext->radiusPlot(i);
+		if (radiusPlot != NULL && pred(radiusPlot->getPlotContext(), a, *cityContext)) return true;
 	}
 	return false;
 }
 
 // the workable-plot predicates used by Present (terrain/feature/improvement/route prereqs -- OWNED vicinity; a FEATURE
 // also accepts a NEUTRAL tile unless EXP_STRICT_VICINITY).
-static bool evp_feature(const CvPlot* pl, const CvCondition* a, const CvCity* c)
+static bool evp_feature(const PlotContext& plotContext, const CvCondition* a, const CityContext& cityContext)
 {
-	if ((int)pl->getFeatureType() != a->id) return false;
-	const bool bOwned = pl->getOwner() == c->getOwner();
-	const bool bNeutral = pl->getOwner() == NO_PLAYER;
+	if (!plotContext.hasFeature(a->id)) return false;
+	const bool bOwned = plotContext.owner() == cityContext.owner();
+	const bool bNeutral = plotContext.owner() == (int)NO_PLAYER;
 	return bOwned || (bNeutral && !GC.getGame().isOption((GameOptionTypes)GC.getInfoTypeForString("GAMEOPTION_EXP_STRICT_VICINITY")));
 }
-static bool evp_peak(const CvPlot* pl, const CvCondition*, const CvCity* c)
-{ return pl->getOwner() == c->getOwner() && pl->isPeak(); }
-static bool evp_hill(const CvPlot* pl, const CvCondition*, const CvCity* c)
-{ return pl->getOwner() == c->getOwner() && pl->isHills(); }
-static bool evp_terrain(const CvPlot* pl, const CvCondition* a, const CvCity* c)
-{ return pl->getOwner() == c->getOwner() && (int)pl->getTerrainType() == a->id; }
-static bool evp_improvement(const CvPlot* pl, const CvCondition* a, const CvCity* c)
-{ return pl->getOwner() == c->getOwner() && (int)pl->getImprovementType() == a->id; }
-static bool evp_route(const CvPlot* pl, const CvCondition* a, const CvCity* c)
-{ return pl->getOwner() == c->getOwner() && (int)pl->getRouteType() == a->id; }
+static bool evp_peak(const PlotContext& plotContext, const CvCondition*, const CityContext& cityContext)
+{ return plotContext.owner() == cityContext.owner() && plotContext.hasPeak(); }
+static bool evp_hill(const PlotContext& plotContext, const CvCondition*, const CityContext& cityContext)
+{ return plotContext.owner() == cityContext.owner() && plotContext.hasHills(); }
+static bool evp_terrain(const PlotContext& plotContext, const CvCondition* a, const CityContext& cityContext)
+{ return plotContext.owner() == cityContext.owner() && plotContext.hasTerrain(a->id); }
+static bool evp_improvement(const PlotContext& plotContext, const CvCondition* a, const CityContext& cityContext)
+{ return plotContext.owner() == cityContext.owner() && plotContext.hasImprovement(a->id); }
+static bool evp_route(const PlotContext& plotContext, const CvCondition* a, const CityContext& cityContext)
+{ return plotContext.owner() == cityContext.owner() && plotContext.hasRoute(a->id); }
 // worked-tile GOM predicates ({HAS_TERRAIN|FEATURE|IMPROVEMENT:X})
-static bool evp_workedTerrain(const CvPlot* pl, const CvCondition* a, const CvCity*)
-{ return pl->isBeingWorked() && (int)pl->getTerrainType() == a->id; }
-static bool evp_workedFeatureAny(const CvPlot* pl, const CvCondition*, const CvCity*)
-{ return pl->isBeingWorked() && pl->getFeatureType() != NO_FEATURE; }
-static bool evp_workedFeature(const CvPlot* pl, const CvCondition* a, const CvCity*)
-{ return pl->isBeingWorked() && (int)pl->getFeatureType() == a->id; }
-static bool evp_workedImprovement(const CvPlot* pl, const CvCondition* a, const CvCity*)
-{ return pl->isBeingWorked() && (int)pl->getImprovementType() == a->id; }
+static bool evp_workedTerrain(const PlotContext& plotContext, const CvCondition* a, const CityContext&)
+{ return plotContext.isWorked() && plotContext.hasTerrain(a->id); }
+static bool evp_workedFeatureAny(const PlotContext& plotContext, const CvCondition*, const CityContext&)
+{ return plotContext.isWorked() && plotContext.hasFeatureAny(); }
+static bool evp_workedFeature(const PlotContext& plotContext, const CvCondition* a, const CityContext&)
+{ return plotContext.isWorked() && plotContext.hasFeature(a->id); }
+static bool evp_workedImprovement(const PlotContext& plotContext, const CvCondition* a, const CityContext&)
+{ return plotContext.isWorked() && plotContext.hasImprovement(a->id); }
 
 // ---- BonusPresent / VicinityHas (StoneBase) ---------------------------------------------------------------------
 
 static bool ev_vicinityHas(const CvCascadeEvalCtx& ctx, int eBonus, CvCascVicinity disc)
 {
-	const CvCity* c = ctx.city;
-	if (c == NULL) return false;
+	const CityContext* cityContext = ev_cityContext(ctx);
+	if (cityContext == NULL) return false;
 	// An ACTIVE building in this city that `provides` eBonus supplies it IN-VICINITY (json §5a) -- computed from JSON
 	// (the enabler's vicinityProvidedBonuses set), NEVER read from the engine's hasVicinityBonus (DEC-calc-zero-ride-in).
 	if (ctx.vicinityProvidedBonuses != NULL && ctx.vicinityProvidedBonuses->count(eBonus) != 0) return true;
 	// CONNECTED = the engine's OBTAINED-in-vicinity (json §3.4: owned+valid+connected). CvCity::hasVicinityBonus
-	// (CvCity.cpp:21353) encodes EXACTLY that -- hasBonus-gated, then centre OR an owned+valid+`isConnectedTo(this)`
-	// radius plot OR a building-provided supply -- so defer to it wholesale (StoneBase's per-plot `BonusConnected`
-	// scan + VicinityBonuses fallback collapses to this one engine method; `isConnectedToCapital` was the WRONG read).
-	if (disc == CASC_VIC_CONNECTED) return c->hasVicinityBonus((BonusTypes)eBonus);
+	// (read through the city context) encodes EXACTLY that -- hasBonus-gated, then centre OR an
+	// owned+valid+`isConnectedTo(this)` radius plot OR a building-provided supply -- so defer to it wholesale
+	// (StoneBase's per-plot `BonusConnected` scan + VicinityBonuses fallback collapses to this one read;
+	// `isConnectedToCapital` was the WRONG read).
+	if (disc == CASC_VIC_CONNECTED) return cityContext->hasVicinityBonus(eBonus);
 	// The looser discriminators scan the workable radius directly; the centre tile always counts.
 	for (int i = 0; i < NUM_CITY_PLOTS; ++i)
 	{
-		const CvPlot* pl = c->getCityIndexPlot(i);
-		if (pl == NULL || (int)pl->getBonusType(c->getTeam()) != eBonus) continue;
-		const bool bCenter  = (pl == c->plot());
-		const bool bOwned   = pl->getOwner() == c->getOwner();
-		const bool bNeutral = pl->getOwner() == NO_PLAYER;
+		const CvPlot* radiusPlot = cityContext->radiusPlot(i);
+		if (radiusPlot == NULL) continue;
+		const PlotContext& plotContext = radiusPlot->getPlotContext();
+		if (!plotContext.hasBonus(eBonus, cityContext->team())) continue;
+		const bool bCenter  = (radiusPlot == cityContext->cityPlot());
+		const bool bOwned   = plotContext.owner() == cityContext->owner();
+		const bool bNeutral = plotContext.owner() == (int)NO_PLAYER;
 		switch (disc)
 		{
-		case CASC_VIC_WORKED:    if (bCenter || pl->isBeingWorked()) return true; break;
+		case CASC_VIC_WORKED:    if (bCenter || plotContext.isWorked()) return true; break;
 		case CASC_VIC_OWNED:     if (bCenter || bOwned) return true; break;
 		case CASC_VIC_CROSSBORDER: return true;
 		default:                 if (bCenter || bOwned || bNeutral) return true; break;   // owned+neutral (the DEFAULT)
@@ -127,21 +134,31 @@ static bool ev_vicinityHas(const CvCascadeEvalCtx& ctx, int eBonus, CvCascVicini
 	return false;   // the building-provided supply is handled up-front from vicinityProvidedBonuses (json §5a), NOT the engine
 }
 
+// The TRADED leg (contexts.md: CvPlotGroup is the reserved explicit traded-bonus source; traded state is NEVER
+// mirrored into CityContext). A city-bound ctx answers through the city's own plot-group-backed MAINTAINED count
+// (CityContext::tradedBonusCount -- the tech-gate/minted/corp relay over the network count); a city-less ctx
+// with an explicit plotGroup pass-in (the valuation's third context) reads the network object directly.
+static bool ev_tradedBonus(const CvCascadeEvalCtx& ctx, int eBonus)
+{
+	const CityContext* cityContext = ev_cityContext(ctx);
+	if (cityContext != NULL) return cityContext->tradedBonusCount(eBonus) > 0;
+	return ctx.plotGroup != NULL && eBonus >= 0 && ctx.plotGroup->hasBonus((BonusTypes)eBonus);
+}
+
 static bool ev_bonusPresent(const CvCascadeEvalCtx& ctx, int eBonus, CvCascConnection conn, CvCascVicinity vic)
 {
-	const CvCity* c = ctx.city;
 	switch (conn)
 	{
 	case CASC_CONN_VICINITY:          return ev_vicinityHas(ctx, eBonus, vic);
-	case CASC_CONN_TRADE:             return c != NULL && c->hasBonus((BonusTypes)eBonus);
+	case CASC_CONN_TRADE:             return ev_tradedBonus(ctx, eBonus);
 	// "trade|vicinity" = trade-network OR in-vicinity (json §3.4). The vicinity leg is REQUIRED here: a
 	// MANUFACTURED bonus is supplied by an active building's `provides.bonuses` (json §5a) into
-	// vicinityProvidedBonuses, NOT the trade network -- so a hasBonus-only check misses every building-supplied
+	// vicinityProvidedBonuses, NOT the trade network -- so a trade-only check misses every building-supplied
 	// bonus (the "manufactured bonus buildings can't be built" bug). Matches StoneBase's TradeOrVicinity.
-	case CASC_CONN_TRADE_OR_VICINITY: return (c != NULL && c->hasBonus((BonusTypes)eBonus)) || ev_vicinityHas(ctx, eBonus, vic);
+	case CASC_CONN_TRADE_OR_VICINITY: return ev_tradedBonus(ctx, eBonus) || ev_vicinityHas(ctx, eBonus, vic);
 	default:
-		if (ctx.plot != NULL) return (int)ctx.plot->getBonusType(ctx.team ? ctx.team->getID() : NO_TEAM) == eBonus;
-		return c != NULL && c->hasBonus((BonusTypes)eBonus);
+		if (ctx.plot != NULL) return ctx.plot->getPlotContext().hasBonus(eBonus, ctx.team ? (int)ctx.team->getID() : (int)NO_TEAM);
+		return ev_tradedBonus(ctx, eBonus);
 	}
 }
 
@@ -151,31 +168,36 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvCondition* a)
 {
 	const std::string& t = a->type;
 	const int id = a->id;
-	if (en_starts(t, "TECH_"))     return ctx.team != NULL && id >= 0 && ctx.team->isHasTech((TechTypes)id);
-	if (en_starts(t, "CIVIC_"))    return ev_hasCivic(ctx.player, id);
-	if (en_starts(t, "TRAIT_"))    return ctx.player != NULL && id >= 0 && ctx.player->hasTrait((TraitTypes)id);
-	if (en_starts(t, "RELIGION_")) return ctx.city != NULL && id >= 0 && ctx.city->isHasReligion((ReligionTypes)id);
-	if (en_starts(t, "HERITAGE_")) return ctx.player != NULL && id >= 0 && ctx.player->hasHeritage((HeritageTypes)id);
-	if (en_starts(t, "PROJECT_"))  return ctx.team != NULL && id >= 0 && ctx.team->getProjectCount((ProjectTypes)id) > 0;
-	// the promotion-chain requires.build atoms (unit context -- the enPromotionValid level-up gate): held check
+	const CityContext* cityContext = ev_cityContext(ctx);
+	const EmpireContext* empireContext = ev_empireContext(ctx);
+	// team-held facts read through the player's EmpireContext (team is deliberately not a context, contexts.md)
+	if (en_starts(t, "TECH_"))     return empireContext != NULL && empireContext->teamHasTech(id);
+	if (en_starts(t, "CIVIC_"))    return empireContext != NULL && empireContext->hasCivic(id);
+	if (en_starts(t, "TRAIT_"))    return empireContext != NULL && empireContext->hasTrait(id);
+	if (en_starts(t, "RELIGION_")) return cityContext != NULL && id >= 0 && cityContext->hasReligion(id);
+	if (en_starts(t, "HERITAGE_")) return empireContext != NULL && empireContext->hasHeritage(id);
+	if (en_starts(t, "PROJECT_"))  return empireContext != NULL && empireContext->teamProjectCount(id) > 0;
+	// the promotion-chain requires.build atoms (unit context -- the enPromotionValid level-up gate): held check.
+	// Units are the deliberate FUTURE context scope (contexts.md), so this stays a raw unit read until it exists.
 	if (en_starts(t, "PROMOTION_")) return ctx.unit != NULL && id >= 0 && ctx.unit->isHasPromotion((PromotionTypes)id);
 	// the enabler GATE reads raw PRESENCE (ctx.buildingAtomsPresence -- the §7 has-list / engine PrereqInCity
 	// mirror, exclusions included); deposits + the operate fixpoint read the cascade-computed ACTIVE set
 	if (en_starts(t, "BUILDING_")) return ctx.buildingAtomsPresence
-		? (ctx.city != NULL && id >= 0 && ctx.city->hasBuilding((BuildingTypes)id))
+		? (cityContext != NULL && cityContext->hasBuilding(id))
 		: ev_hasActiveBuilding(ctx, id);
-	if (en_starts(t, "CORPORATION_")) return ctx.city != NULL && id >= 0 && ctx.city->isHasCorporation((CorporationTypes)id);
+	if (en_starts(t, "CORPORATION_")) return cityContext != NULL && id >= 0 && cityContext->hasCorporation(id);
+	// game/world-scope facts have no context by design (the scope set is plot/city/player, contexts.md)
 	if (en_starts(t, "VICTORY_"))  return id >= 0 && GC.getGame().isVictoryValid((VictoryTypes)id);
 	if (en_starts(t, "GAMEOPTION_")) return id >= 0 && GC.getGame().isOption((GameOptionTypes)id);
 	if (en_starts(t, "BONUS_"))    return ev_bonusPresent(ctx, id, a->connection, a->vicinity);
 	if (en_starts(t, "MAPCATEGORY_")) return true;   // map-category gate: not modelled (json §3.5 in-flight) -> ignored
 	// plot-substrate vicinity scans (owned, culture-grown radius)
-	if (en_starts(t, "FEATURE_"))     return ev_cityPlotHas(ctx.city, evp_feature, a);
-	if (t == "TERRAIN_PEAK")          return ev_cityPlotHas(ctx.city, evp_peak, a);
-	if (t == "TERRAIN_HILL")          return ev_cityPlotHas(ctx.city, evp_hill, a);
-	if (en_starts(t, "TERRAIN_"))     return ev_cityPlotHas(ctx.city, evp_terrain, a);
-	if (en_starts(t, "IMPROVEMENT_")) return ev_cityPlotHas(ctx.city, evp_improvement, a);
-	if (en_starts(t, "ROUTE_"))       return ev_cityPlotHas(ctx.city, evp_route, a);
+	if (en_starts(t, "FEATURE_"))     return ev_cityPlotHas(cityContext, evp_feature, a);
+	if (t == "TERRAIN_PEAK")          return ev_cityPlotHas(cityContext, evp_peak, a);
+	if (t == "TERRAIN_HILL")          return ev_cityPlotHas(cityContext, evp_hill, a);
+	if (en_starts(t, "TERRAIN_"))     return ev_cityPlotHas(cityContext, evp_terrain, a);
+	if (en_starts(t, "IMPROVEMENT_")) return ev_cityPlotHas(cityContext, evp_improvement, a);
+	if (en_starts(t, "ROUTE_"))       return ev_cityPlotHas(cityContext, evp_route, a);
 	return false;
 }
 
@@ -190,26 +212,50 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvCondition* a)
 // the UnitEnabler world-cap read: "born once, still consumes its slot").
 static bool ev_countCore(const CvCascadeEvalCtx& ctx, const std::string& t, int id, CvCascScope eScope, int& iOut)
 {
+	const CityContext* cityContext = ev_cityContext(ctx);
+	const EmpireContext* empireContext = ev_empireContext(ctx);
 	if (en_starts(t, "PROPERTY_"))
 	{
-		iOut = (ctx.city != NULL && id >= 0) ? ctx.city->getPropertiesConst()->getValueByProperty((PropertyTypes)id) : 0;
+		iOut = (cityContext != NULL && id >= 0) ? cityContext->propertyValue(id) : 0;
 		return true;
 	}
-	if (t == "POPULATION") { iOut = ctx.city != NULL ? ctx.city->getPopulation() : 0; return true; }
+	if (t == "POPULATION") { iOut = cityContext != NULL ? cityContext->population() : 0; return true; }
 	// BONUS_ counts are VOLUMETRIC at city scope (json.md par.3.4: presence = min:1 of the same count; the network
-	// count lives on the plot group, read via the city relay). Without this branch every `per`-scaled bonus
-	// deposit (the legacy per-instance BonusYieldChanges class) fell to the 0/1 presence fallback and undercounted
-	// by the whole network count. Presence-shaped atoms (min<=1 with a connection) never reach here -- the
-	// evalPresence order routes them to ev_bonusPresent first.
-	if (en_starts(t, "BONUS_") && id >= 0 && eScope == CASC_SCOPE_CITY && ctx.city != NULL)
+	// count lives on the plot group, read via the city relay -- CityContext::tradedBonusCount). Without this branch
+	// every `per`-scaled bonus deposit (the legacy per-instance BonusYieldChanges class) fell to the 0/1 presence
+	// fallback and undercounted by the whole network count. Presence-shaped atoms (min<=1 with a connection) never
+	// reach here -- the evalPresence order routes them to ev_bonusPresent first.
+	if (en_starts(t, "BONUS_") && id >= 0 && eScope == CASC_SCOPE_CITY && cityContext != NULL)
 	{
-		iOut = ctx.city->getNumBonuses((BonusTypes)id);
+		iOut = cityContext->tradedBonusCount(id);
 		return true;
 	}
-	if (t == "CITY")       { iOut = ctx.player != NULL ? ctx.player->getNumCities() : 0; return true; }
-	if (t == "TEAM")       { iOut = ctx.team != NULL ? ctx.team->getNumMembers() : 0; return true; }
-	if (t == "AREA_SIZE")  { iOut = (ctx.city != NULL && ctx.city->area() != NULL) ? ctx.city->area()->getNumTiles() : 0; return true; }
-	if (t == "ERA")        { iOut = ctx.player != NULL ? (int)ctx.player->getCurrentEra() + 1 : 0; return true; }   // 1..X counter
+	// the §3.1 CORPORATION_LEVEL counter (rulings 4+10 -- the corp HQ-revenue per-scaler): the game-wide corp
+	// level count. `id` is the SOURCE corp, SELF-collapsed onto the entry at mapFrom
+	// (CvModifiers::resolvePerToken from CvCorporationInfo); an unresolved id counts 0 (fail-visible).
+	if (t == "CORPORATION_LEVEL")
+	{
+		iOut = id >= 0 ? GC.getGame().countCorporationLevels((CorporationTypes)id) : 0;
+		return true;
+	}
+	if (t == "CITY")       { iOut = empireContext != NULL ? empireContext->numCities() : 0; return true; }
+	if (t == "TEAM")       { iOut = empireContext != NULL ? empireContext->teamMemberCount() : 0; return true; }
+	if (t == "AREA_SIZE")  { iOut = cityContext != NULL ? cityContext->areaSize() : 0; return true; }
+	if (t == "ERA")        { iOut = empireContext != NULL ? empireContext->currentEra() + 1 : 0; return true; }   // 1..X counter
+	// the §3.1 commerce SLIDER-RATE counters (ruling 20: the player's current slider percents as plain counters
+	// -- "happiness per 10% culture rate" / "anger per gold rate" author as ordinary per-scaled deposits)
+	if (t == "GOLD_RATE")      { iOut = empireContext != NULL ? empireContext->commerceRate((int)COMMERCE_GOLD) : 0; return true; }
+	if (t == "RESEARCH_RATE")  { iOut = empireContext != NULL ? empireContext->commerceRate((int)COMMERCE_RESEARCH) : 0; return true; }
+	if (t == "CULTURE_RATE")   { iOut = empireContext != NULL ? empireContext->commerceRate((int)COMMERCE_CULTURE) : 0; return true; }
+	if (t == "ESPIONAGE_RATE") { iOut = empireContext != NULL ? empireContext->commerceRate((int)COMMERCE_ESPIONAGE) : 0; return true; }
+	// the §3.1 CULTURE_PERCENTAGE city counter (ruling 22: the city's OWN-culture percent of its plot -- the
+	// engine formula CvCity.cpp:5650-5654, forwarded by CityContext::ownCulturePercent; foreign share is the
+	// authored `100 −` telescoping pair, never an inverse unit here)
+	if (t == "CULTURE_PERCENTAGE")
+	{
+		iOut = cityContext != NULL ? cityContext->ownCulturePercent() : 0;
+		return true;
+	}
 	// cross-scope RELIGION_X reads the world religion-level count; a CITY-scope RELIGION_X is a PRESENCE check (Present).
 	if (en_starts(t, "RELIGION_") && eScope != CASC_SCOPE_CITY && id >= 0)
 	{
@@ -283,9 +329,9 @@ static bool ev_evalPresence(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlag
 		if (en_starts(t, "BONUS_") && (a->min < 0 || a->min <= 1) && a->max < 0)
 		{
 			if (a->connection != CASC_CONN_NONE) return ev_bonusPresent(ctx, a->id, a->connection, a->vicinity);
-			if (f.bonusFromPlot && ctx.plot != NULL) return (int)ctx.plot->getBonusType(ctx.team ? ctx.team->getID() : NO_TEAM) == a->id;
-			if (a->scope == CASC_SCOPE_PLOT) return ctx.plot != NULL && (int)ctx.plot->getBonusType(ctx.team ? ctx.team->getID() : NO_TEAM) == a->id;
-			return ctx.city != NULL && ctx.city->hasBonus((BonusTypes)a->id);
+			if (f.bonusFromPlot && ctx.plot != NULL) return ctx.plot->getPlotContext().hasBonus(a->id, ctx.team ? (int)ctx.team->getID() : (int)NO_TEAM);
+			if (a->scope == CASC_SCOPE_PLOT) return ctx.plot != NULL && ctx.plot->getPlotContext().hasBonus(a->id, ctx.team ? (int)ctx.team->getID() : (int)NO_TEAM);
+			return ev_tradedBonus(ctx, a->id);
 		}
 		const int n = ev_countOf(ctx, a);
 		return (a->min < 0 || n >= a->min) && (a->max < 0 || n <= a->max);
@@ -301,74 +347,100 @@ static bool ev_evalPresence(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlag
 static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& f, const CvCondition* pr)
 {
 	const CvPlot* p = ctx.plot;
+	const PlotContext* plotContext = ev_plotContext(p);
+	const CityContext* cityContext = ev_cityContext(ctx);
+	const EmpireContext* empireContext = ev_empireContext(ctx);
 	switch (pr->predKind)
 	{
-	case CASC_PRED_HAS_RIVER:       return p != NULL && p->isRiver();
-	case CASC_PRED_HAS_IRRIGATION:  return p != NULL && p->isIrrigated();
-	case CASC_PRED_HAS_LANDMARK:    return p != NULL && p->getLandmarkType() != NO_LANDMARK;
-	case CASC_PRED_HAS_HILLS:       return p != NULL && p->isHills();
-	case CASC_PRED_HAS_PEAK:        return p != NULL && p->isPeak();
-	case CASC_PRED_IS_FLATLANDS:    return !(p != NULL && p->isHills()) && !(p != NULL && p->isPeak());
-	case CASC_PRED_IS_WATER:        return p != NULL && p->isWater();
-	case CASC_PRED_IS_LAND:         return !(p != NULL && p->isWater());
-	case CASC_PRED_HAS_COAST:       return pr->min >= 0 ? (ctx.city != NULL && ctx.city->isCoastal(pr->min))
-	                                                     : (p != NULL && p->isCoastalLand());
+	case CASC_PRED_HAS_RIVER:       return plotContext != NULL && plotContext->hasRiver();
+	case CASC_PRED_HAS_IRRIGATION:  return plotContext != NULL && plotContext->hasIrrigation();
+	case CASC_PRED_HAS_LANDMARK:    return plotContext != NULL && plotContext->hasLandmark();
+	case CASC_PRED_HAS_HILLS:       return plotContext != NULL && plotContext->hasHills();
+	case CASC_PRED_HAS_PEAK:        return plotContext != NULL && plotContext->hasPeak();
+	case CASC_PRED_IS_FLATLANDS:    return plotContext == NULL || plotContext->isFlatlands();
+	case CASC_PRED_IS_WATER:        return plotContext != NULL && plotContext->isWater();
+	case CASC_PRED_IS_LAND:         return plotContext == NULL || plotContext->isLand();
+	case CASC_PRED_HAS_COAST:       return pr->min >= 0 ? (cityContext != NULL && cityContext->isCoastal(pr->min))
+	                                                     : (plotContext != NULL && plotContext->hasCoast());
 	// Fresh water is target-relative (json §3.5): on a PLOT target the tile's own access; with a CITY in
 	// context ALSO the city's fresh-water ACCESS counter (providesFreshWater buildings feed it via
 	// changeFreshWater) -- the engine's own dormancy leg is plot()->isFreshWater() || hasFreshWater()
 	// (checkBuildings), so a plot-only read wrongly dorms every city fed by a provider building (the
 	// AQUEDUCT/WATER_TOWER chain -- the worked-plot yield collapse).
-	case CASC_PRED_HAS_FRESHWATER:  return (p != NULL && (p->isFreshWater() || p->isRiver()))
-	                                     || (ctx.city != NULL && ctx.city->hasFreshWater());
-	case CASC_PRED_HAS_TERRAIN:     return ev_cityPlotHas(ctx.city, evp_workedTerrain, pr);
-	case CASC_PRED_HAS_FEATURE:     return pr->id < 0 ? ev_cityPlotHas(ctx.city, evp_workedFeatureAny, pr)
-	                                                   : ev_cityPlotHas(ctx.city, evp_workedFeature, pr);
-	case CASC_PRED_HAS_IMPROVEMENT: return ev_cityPlotHas(ctx.city, evp_workedImprovement, pr);
-	case CASC_PRED_IS_CAPITAL:            return ctx.city != NULL && ctx.city->isCapital();
+	case CASC_PRED_HAS_FRESHWATER:  return (plotContext != NULL && plotContext->hasFreshWater())
+	                                     || (cityContext != NULL && cityContext->hasFreshWaterAccess());
+	case CASC_PRED_HAS_TERRAIN:     return ev_cityPlotHas(cityContext, evp_workedTerrain, pr);
+	case CASC_PRED_HAS_FEATURE:     return pr->id < 0 ? ev_cityPlotHas(cityContext, evp_workedFeatureAny, pr)
+	                                                   : ev_cityPlotHas(cityContext, evp_workedFeature, pr);
+	case CASC_PRED_HAS_IMPROVEMENT: return ev_cityPlotHas(cityContext, evp_workedImprovement, pr);
+	case CASC_PRED_IS_CAPITAL:            return cityContext != NULL && cityContext->isCapital();
 	// The two engine-counter reads below are OWNER-RULED SANCTIONED (2026-07-05, cutover.md Rulings #4):
 	// isGovernmentCenter -> the counter is KEEP until the Gate-3 building-attributes lane wires (then this
 	// predicate derives from the cascade operating buildings); isPower -> the power machinery is KEEP wholesale ("a city
 	// either has power or does not"), revisited at the later power pass. Neither is a self-containment
-	// violation to re-flag.
-	case CASC_PRED_IS_GOVERNMENT_CENTER:  return ctx.city != NULL && ctx.city->isGovernmentCenter();
-	case CASC_PRED_HAS_POWER:             return ctx.city != NULL && ctx.city->isPower();
-	case CASC_PRED_IS_GOLDEN_AGE:         return ctx.player != NULL && ctx.player->isGoldenAge();
-	case CASC_PRED_IS_ANARCHY:            return ctx.player != NULL && ctx.player->isAnarchy();       // #430 outcome gate
-	case CASC_PRED_IS_OWNED:              return ctx.plot   != NULL && ctx.plot->isOwned();           // #430 outcome gate (plot in owned territory)
+	// violation to re-flag. Both read through the city context's forwards.
+	case CASC_PRED_IS_GOVERNMENT_CENTER:  return cityContext != NULL && cityContext->isGovernmentCenter();
+	case CASC_PRED_HAS_POWER:             return cityContext != NULL && cityContext->isPowered();
+	case CASC_PRED_IS_GOLDEN_AGE:         return empireContext != NULL && empireContext->isGoldenAge();
+	case CASC_PRED_IS_ANARCHY:            return empireContext != NULL && empireContext->isAnarchy();   // #430 outcome gate
+	case CASC_PRED_IS_OWNED:              return plotContext != NULL && plotContext->isOwned();         // #430 outcome gate (plot in owned territory)
 	case CASC_PRED_NO_NUKES:              return GC.getGame().isNoNukes();
-	case CASC_PRED_HAS_STATE_RELIGION:    return ctx.player != NULL && ctx.player->getStateReligion() != NO_RELIGION;
+	case CASC_PRED_HAS_STATE_RELIGION:    return empireContext != NULL && empireContext->stateReligion() >= 0;
 	case CASC_PRED_STATE_RELIGION_IN_CITY:
-		return ctx.player != NULL && ctx.player->getStateReligion() != NO_RELIGION
-		    && ctx.city != NULL && ctx.city->isHasReligion(ctx.player->getStateReligion());
-	case CASC_PRED_HAS_RELIGION:          return ctx.city != NULL && pr->id >= 0 && ctx.city->isHasReligion((ReligionTypes)pr->id);
+		return empireContext != NULL && empireContext->stateReligion() >= 0
+		    && cityContext != NULL && cityContext->hasReligion(empireContext->stateReligion());
+	case CASC_PRED_HAS_RELIGION:          return cityContext != NULL && pr->id >= 0 && cityContext->hasReligion(pr->id);
 	// {HAS_CORPORATION:X} = corp ACTIVE (json §3.5 / enabler §3), distinct from a bare CORPORATION_ presence atom.
 	// isActiveCorporation is a SANCTIONED engine-owned input (engine-driven spread state like religion), NOT a ride-in.
-	case CASC_PRED_HAS_CORPORATION:       return ctx.city != NULL && pr->id >= 0 && ctx.city->isActiveCorporation((CorporationTypes)pr->id);
+	case CASC_PRED_HAS_CORPORATION:       return cityContext != NULL && pr->id >= 0 && cityContext->hasActiveCorporation(pr->id);
+	// {IS_HEADQUARTERS: CORPORATION_X} -- the corp HQ-revenue gate (ruling 10): this city IS the corp's HQ city.
+	// Bare form = HQ of any corporation.
+	case CASC_PRED_IS_HEADQUARTERS:
+		return cityContext != NULL && (pr->id < 0 ? cityContext->isHeadquartersAny() : cityContext->isHeadquartersOf(pr->id));
 	case CASC_PRED_IS_HOLY_CITY:
-		return ctx.city != NULL && (pr->id < 0 ? ctx.city->isHolyCity() : ctx.city->isHolyCity((ReligionTypes)pr->id));
+		return cityContext != NULL && (pr->id < 0 ? cityContext->isHolyCityAny() : cityContext->isHolyCityOf(pr->id));
 	case CASC_PRED_IS_STATE_RELIGION_HOLY_CITY:
-		return ctx.player != NULL && ctx.player->getStateReligion() != NO_RELIGION
-		    && ctx.city != NULL && ctx.city->isHolyCity(ctx.player->getStateReligion());
+		return empireContext != NULL && empireContext->stateReligion() >= 0
+		    && cityContext != NULL && cityContext->isHolyCityOf(empireContext->stateReligion());
+	// the counted-religion test (ruling 23; the §3.7 `religion:` filter): true iff the religion under test
+	// (ctx.religion, set by cascadeCountCityReligions) IS the owner's state religion. No religion in context
+	// -> not-present (false), the NULL-object convention of this evaluator.
+	case CASC_PRED_IS_STATE_RELIGION:
+		return empireContext != NULL && ctx.religion >= 0 && empireContext->stateReligion() == ctx.religion;
 	case CASC_PRED_STATE_RELIGION:
 	{
-		const ReligionTypes sr = ctx.player != NULL ? ctx.player->getStateReligion() : NO_RELIGION;
-		if (f.strictStateReligionForBuild) return (int)sr == pr->id;
+		const int iStateReligion = empireContext != NULL ? empireContext->stateReligion() : -1;
+		if (f.strictStateReligionForBuild) return iStateReligion == pr->id;
 		// lenient (modifier) + the L1 POLICY read (2026-07-05, the ruled Free-Church shape): a present
 		// religion's SR-gated commerce pays under the nonStateReligionCommerce POLICY -- the legacy
 		// getReligionCommerceByReligion OR-gate, derived from the civic/trait grantors' §9 policies
 		// blocks, NEVER the legacy m_iNonStateReligionCommerceCount counter
-		return (int)sr == pr->id || sr == NO_RELIGION
+		return iStateReligion == pr->id || iStateReligion < 0
 		    || ev_playerHasPolicy(ctx.player, "nonStateReligionCommerce");
 	}
 	case CASC_PRED_LATITUDE:
 	{
-		int lat = ctx.plot != NULL ? ctx.plot->getLatitude()
-		        : (ctx.city != NULL && ctx.city->plot() != NULL ? ctx.city->plot()->getLatitude() : 0);
+		int lat = 0;
+		if (plotContext != NULL)
+		{
+			lat = plotContext->latitude();
+		}
+		else if (cityContext != NULL && cityContext->cityPlot() != NULL)
+		{
+			lat = cityContext->cityPlot()->getPlotContext().latitude();
+		}
 		return (pr->min < 0 || lat >= pr->min) && (pr->max < 0 || lat <= pr->max);
 	}
+	// {natureYield:{<channel>:N}} -- the improvement PLACEMENT threshold (json §3.5): the target plot's
+	// PRE-improvement nature yield of the channel (`id` = YieldTypes) must be >= `min`. Transcribes the engine
+	// gate (CvPlot::canHaveImprovement: calculateNatureYield(channel, eTeam) < prereq -> invalid) -- the same
+	// team-relative read, no improvement applied. A plot predicate: no plot in context -> not-present (false).
+	case CASC_PRED_NATURE_YIELD:
+		return plotContext != NULL && pr->id >= 0 && pr->min >= 0
+		    && plotContext->natureYield(pr->id, ctx.team != NULL ? (int)ctx.team->getID() : (int)NO_TEAM) >= pr->min;
 	case CASC_PRED_VICINITY:   return p != NULL;
-	case CASC_PRED_WORKABLE:   return p != NULL && ctx.city != NULL && p->getOwner() == ctx.city->getOwner();
-	case CASC_PRED_IS_WORKED:  return p != NULL && p->isBeingWorked();
+	case CASC_PRED_WORKABLE:   return plotContext != NULL && cityContext != NULL && plotContext->owner() == cityContext->owner();
+	case CASC_PRED_IS_WORKED:  return plotContext != NULL && plotContext->isWorked();
 	// IS_<TAG> -- classification-tag membership against the UNIT target (json §8). The tag id resolves lazily: the
 	// TAG_* infotypes are minted after condition parse, so `param` carries the TAG_<SUFFIX> type name. An UNMINTED
 	// tag (undefined/retired) is an unknown predicate -> IGNORED (true, json §3.5); a minted tag the unit lacks -> false.
@@ -407,7 +479,7 @@ static bool ev_playerHasPolicy(const CvPlayer* pPlayer, const char* szKey)
 	// ONE call site, one literal key -> a per-call-site memoized id (the CLS_HAS idiom; a second key would need its own).
 	static int s_pid = -1;
 	const int iPolicy = ClassificationRegistry::cachedKeyId(s_pid, CLSD_POLICY, szKey);
-	return iPolicy >= 0 && pPlayer->getEmpireContext().policies.has(iPolicy);
+	return iPolicy >= 0 && pPlayer->getEmpireContext().hasPolicy(iPolicy);
 }
 
 // Reads the cascade-computed ACTIVE set, or -- absent it -- falls back to raw PRESENCE (hasBuilding, a raw
@@ -415,7 +487,7 @@ static bool ev_playerHasPolicy(const CvPlayer* pPlayer, const char* szKey)
 bool cascadeIsBuildingActive(int eBuilding, const CvCascadeEvalCtx& ec)
 {
 	return ec.activeBuildings != NULL ? (ec.activeBuildings->count(eBuilding) != 0)
-	                                  : (ec.city != NULL && eBuilding >= 0 && ec.city->hasBuilding((BuildingTypes)eBuilding));
+	                                  : (ec.city != NULL && ec.city->getCityContext().hasBuilding(eBuilding));
 }
 
 // The obsolete set the SAME obsoletion process maintains (present ∧ obsoleted-by-held-tech, json §4.2): an obsolete
@@ -424,6 +496,34 @@ bool cascadeIsBuildingActive(int eBuilding, const CvCascadeEvalCtx& ec)
 bool cascadeIsBuildingObsolete(int eBuilding, const CvCascadeEvalCtx& ec)
 {
 	return ec.obsoleteBuildings != NULL && eBuilding >= 0 && ec.obsoleteBuildings->count(eBuilding) != 0;
+}
+
+// The §3.7 counted-kind RELIGION filter's count leg (see the header): Σ over the city's PRESENT religions of
+// the filter verdict, each religion evaluated with ctx.religion set (the IS_STATE_RELIGION predicate's input).
+// The lenient default flags -- a deposit-side count, never a build gate.
+int cascadeCountCityReligions(const CvCondition* filter, const CvCascadeEvalCtx& ec)
+{
+	if (ec.city == NULL)
+	{
+		return 0;
+	}
+	static const CvCascadeEvalFlags kFlags;
+	CvCascadeEvalCtx perReligionCtx = ec;
+	int iCount = 0;
+	const CityContext& cityContext = ec.city->getCityContext();
+	for (int iReligion = 0; iReligion < GC.getNumReligionInfos(); ++iReligion)
+	{
+		if (!cityContext.hasReligion(iReligion))
+		{
+			continue;
+		}
+		perReligionCtx.religion = iReligion;
+		if (cascadeEvalCondition(filter, perReligionCtx, kFlags))
+		{
+			++iCount;
+		}
+	}
+	return iCount;
 }
 
 bool cascadeEvalCondition(const CvCondition* c, const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& flags)

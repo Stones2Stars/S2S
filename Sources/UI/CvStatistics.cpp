@@ -277,13 +277,13 @@ void CvPlayerRecord::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvPlayerRecord", &m_iTime);
 
 	WRAPPER_READ(wrapper, "CvPlayerRecord", (int*)&m_eVictory);
-	WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlayerRecord", REMAPPED_CLASS_TYPE_LEADERHEADS, (int*)&m_eLeader);
+	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlayerRecord", REMAPPED_CLASS_TYPE_LEADERHEADS, (int*)&m_eLeader);
 
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayerRecord", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_piNumUnitsBuilt);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayerRecord", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_piNumUnitsKilled);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayerRecord", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_piNumUnitsWasKilled);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayerRecord", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_piNumBuildingsBuilt);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayerRecord", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_pbReligionFounded);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayerRecord", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_piNumUnitsBuilt);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayerRecord", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_piNumUnitsKilled);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayerRecord", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_piNumUnitsWasKilled);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayerRecord", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_piNumBuildingsBuilt);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayerRecord", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_pbReligionFounded);
 
 	WRAPPER_READ(wrapper, "CvPlayerRecord", &m_iNumCitiesBuilt);
 	WRAPPER_READ(wrapper, "CvPlayerRecord", &m_iNumCitiesRazed);

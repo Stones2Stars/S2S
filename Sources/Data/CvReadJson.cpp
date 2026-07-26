@@ -20,6 +20,7 @@
 #include "CvJsonParse.h"               // jsonClassifyKey / jsonUnresolvedIds -- shared vocabulary + FK diag
 #include "CvInfo.h"                // CvInfo (+ cascadeStartNode) -- the mapped info data + the TECH_GAME_START root
 #include "Data/CvDepositIndex.h"     // DepositIndex::pushInfo/clearCompiled -- the compiled deposit index (push-time interning)
+#include "UI/CvEntryText.h"          // entryDetailLine -- the ruling-29 per-entry renderer (the [READJSON/mod] sample proof)
 #include "CvClassificationRegistry.h"  // the §8/§9 generated classification categories -- minted + resolved post-map
 #include "CvTechInfo.h"            // CvTechInfo -- for the capabilities read-back survey (+ cascadeStartNode)
 #include "CvImprovementInfo.h"     // complete type for the RJ_REPO_TYPES dispatch
@@ -76,11 +77,12 @@ enum RjFld
 	RJF_TYPE = 1, RJF_ADDR, RJF_UNIT, RJF_VAL, RJF_COND, RJF_PER, RJF_EDGE, RJF_BUCKET, RJF_ID, RJF_STATUS, RJF_DIR,
 	RJF_FILES, RJF_PARSED, RJF_FAILED, RJF_ENTITIES, RJF_RESOLVED, RJF_UNRESOLVED, RJF_FAMILYKINDS, RJF_FLAGKINDS,
 	RJF_REQCLAUSES, RJF_FAMILIES, RJF_MAGNITUDES, RJF_FLAT, RJF_PERCENT, RJF_MULT, RJF_OTHER, RJF_CONDITIONED,
-	RJF_PERSCALED, RJF_BAREVALUES, RJF_EDGES, RJF_BUCKETENTRIES, RJF_BUCKETKINDS, RJF_ALLOWEDCLAUSES, RJF_CAPKINDS,
+	RJF_PERSCALED, RJF_AIONLY, RJF_BAREVALUES, RJF_EDGES, RJF_BUCKETENTRIES, RJF_BUCKETKINDS, RJF_ALLOWEDCLAUSES, RJF_CAPKINDS,
 	RJF_LISTENTRIES, RJF_LISTKINDS, RJF_PULSES, RJF_PULSECHANNELS, RJF_FLAGS, RJF_ENTRYARRAYS, RJF_OBJECTS,
 	RJF_KEY, RJF_COUNT, RJF_CLASS, RJF_DEPOSITS, RJF_REQBUILD, RJF_REQOPERATE, RJF_ALLOWED, RJF_GRANTLISTS,
 	RJF_GRANTPULSES, RJF_GRANTING, RJF_CAPGRANTS, RJF_DISTINCTNAMES, RJF_NAME, RJF_WITHDATA,
-	RJF_MS, RJF_REMAPPED, RJF_RELATED, RJF_REQUIREDBY, RJF_OWNOUTPUT
+	RJF_MS, RJF_REMAPPED, RJF_RELATED, RJF_REQUIREDBY, RJF_OWNOUTPUT,
+	RJF_RENDERED   // the ruling-29 per-entry detail line (UI/CvEntryText) -- the renderer's observability proof
 };
 
 static const char* rj_prefix(int evt)
@@ -146,6 +148,7 @@ static const char* rj_field(int tag, SpineFieldType* peType)
 	case RJF_OTHER:         return "other";
 	case RJF_CONDITIONED:   return "conditioned";
 	case RJF_PERSCALED:     return "perScaled";
+	case RJF_AIONLY:        return "aiOnly";
 	case RJF_BAREVALUES:    return "bareValues";
 	case RJF_EDGES:         return "edges";
 	case RJF_BUCKETENTRIES: return "bucketEntries";
@@ -178,6 +181,7 @@ static const char* rj_field(int tag, SpineFieldType* peType)
 	case RJF_RELATED:       return "relatedIds";
 	case RJF_REQUIREDBY:    return "requiredByIds";
 	case RJF_OWNOUTPUT:     return "ownOutputLanded";
+	case RJF_RENDERED:      *peType = SFT_WSTR; return "rendered";
 	default:                return NULL;
 	}
 }
@@ -261,6 +265,7 @@ static void rj_find(const std::string& dir, std::vector<std::string>& out)
 	X("HERITAGE_",      CvHeritageInfo)       \
 	X("CULTURELEVEL_",  CvCultureLevelInfo)   \
 	X("BUILD_",         CvBuildInfo)          \
+	X("WORLDSIZE_",     CvWorldInfo)          \
 	X("PROPERTY_",      CvPropertyInfo)
 
 // get-or-create the entity's CvInfo (the reader calls mapFrom on it); NULL for types with no repo home.
@@ -627,7 +632,7 @@ void loadJson(JsonLoadPhase eLoadPhase)
 	// home) -- the compiled §6 entries on getModifiers(), the spec model ([DEC-json-not-cascade]) -- proving the
 	// compile round-trips (values ×100'd, addresses interned, requires/edges/allowed/grants populated).
 	int iAttached = 0, iMapSample = 0, iModSample = 0;
-	int mMag = 0, mFlat = 0, mPercent = 0, mMult = 0, mOther = 0, mCond = 0, mPer = 0;
+	int mMag = 0, mFlat = 0, mPercent = 0, mMult = 0, mOther = 0, mCond = 0, mPer = 0, mAiOnly = 0;
 	for (size_t s = 0; s < store.size(); ++s)
 	{
 		const CvInfo* cd = store[s].data;
@@ -646,11 +651,17 @@ void loadJson(JsonLoadPhase eLoadPhase)
 				else if (en->unit == CASC_UNIT_MULTIPLIER) ++mMult; else ++mOther;
 				if (en->enabled != NULL || en->disabled != NULL) ++mCond;
 				if (en->hasPer) ++mPer;   // the §3.7 per count-scaler
+				if (en->aiOnly) ++mAiOnly;   // the §3.9 `ai` audience flag (the Orwell census keeps the axis visible)
 				if (iModSample < 10)   // concrete value samples -- proves the single human->×100 conversion at the leaf
 				{
+					// the ruling-29 renderer's observability proof (the ONE demonstration consumer): each sample
+					// carries its per-entry detail line through UI/CvEntryText, end to end through the spine
+					const CvWString szRendered = entryDetailLine(*en);
 					eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MOD, 1)
 						.addStr(RJF_TYPE, store[s].type.c_str()).addStr(RJF_ADDR, en->address().c_str())
-						.addStr(RJF_UNIT, DepositIndex::unitSegment(en->unit)).addI(RJF_VAL, en->value100));
+						.addStr(RJF_UNIT, DepositIndex::unitSegment(en->unit)).addI(RJF_VAL, en->value)
+							.addI(RJF_AIONLY, en->aiOnly ? 1 : 0)   // the audience flag (never an address segment)
+							.addWStr(RJF_RENDERED, szRendered.c_str()));
 					++iModSample;
 				}
 			}
@@ -661,7 +672,7 @@ void loadJson(JsonLoadPhase eLoadPhase)
 				.addStr(RJF_TYPE, store[s].type.c_str()).addI(RJF_DEPOSITS, cd->getModifiers() ? (int)cd->getModifiers()->entries().size() : 0)
 				.addI(RJF_REQBUILD, cd->requiresBuild() ? 1 : 0).addI(RJF_REQOPERATE, cd->requiresOperate() ? 1 : 0)
 				.addI(RJF_EDGES, cd->getEdges() ? cd->getEdges()->count() : 0)
-				.addI(RJF_ALLOWED, cd->getAllowed() ? (int)cd->getAllowed()->all().size() : 0)
+				.addI(RJF_ALLOWED, cd->getAllowed() ? cd->getAllowed()->authoredCount() : 0)
 				.addI(RJF_GRANTLISTS, cd->getGrants() ? (int)cd->getGrants()->lists().size() : 0)
 				.addI(RJF_GRANTPULSES, cd->getGrants() ? cd->getGrants()->pulseCount() : 0));
 			++iMapSample;
@@ -669,7 +680,8 @@ void loadJson(JsonLoadPhase eLoadPhase)
 	}
 	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_MOD_SURVEY, 1)
 		.addI(RJF_MAGNITUDES, mMag).addI(RJF_FLAT, mFlat).addI(RJF_PERCENT, mPercent).addI(RJF_MULT, mMult)
-		.addI(RJF_OTHER, mOther).addI(RJF_CONDITIONED, mCond).addI(RJF_PERSCALED, mPer).addI(RJF_FAMILYKINDS, (int)familyKinds.size()));
+		.addI(RJF_OTHER, mOther).addI(RJF_CONDITIONED, mCond).addI(RJF_PERSCALED, mPer)
+		.addI(RJF_AIONLY, mAiOnly).addI(RJF_FAMILYKINDS, (int)familyKinds.size()));
 
 	// §8 capabilities read-back survey (now on CvTechInfo -- techs are the only grantor). Verifies the block maps.
 	int capEntities = 0, capGrants = 0;

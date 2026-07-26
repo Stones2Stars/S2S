@@ -372,7 +372,7 @@ public:
 
 	// Strength-weighted unit ledger (times-100; #395) -- transient, never serialized:
 	// rebuilt at the end of read() and in AI_recalculateUnitCounts. A unit counts as
-	// CvUnit::SMeffectiveCountTimes100 (100 at type base rank, x1.5 per merge rank).
+	// CvUnit::SMeffectiveCount (100 at type base rank, x1.5 per merge rank).
 	int AI_getEffNumAIUnits(UnitAITypes eIndex) const;
 	int AI_getEffNumAIUnitsTimes100(UnitAITypes eIndex) const;
 	void AI_changeEffNumAIUnitsTimes100(UnitAITypes eIndex, int iChange);

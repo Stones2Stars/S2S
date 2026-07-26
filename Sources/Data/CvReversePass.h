@@ -8,10 +8,12 @@
 //	its sections/deposits are compiled, and produces the complete reverse view in four sub-passes:
 //
 //	  (1) FORWARD COMPAT RECONSTRUCTIONS -- the store-inverted authored views un-inverted back onto the legacy
-//	      forward getters the consumers still read (route<-bonus prereqs, improvement<-route yield rows, the
+//	      forward getters the consumers still read (route<-bonus prereqs, the
 //	      tech-FK un-inversions onto bonus/build/corp/religion/process/promotion/promotionLine/project,
 //	      special-building techPrereq, project<-project needs), plus the tech-side forward obsoletion views
-//	      (EDGEF_OBSOLETES onto the techs for buildings/processes -- the enabler's O(delta) tech application).
+//	      (EDGEF_OBSOLETES onto the techs for buildings/processes -- the enabler's O(delta) tech application),
+//	      plus the religion SHRINE-BUILDING registry feed (each building's §9 `shrine` FK ->
+//	      CvReligionInfo::addShrineBuilding; the legacy self-register path died in the cutover).
 //	  (2) EDGEF_RELATED -- the display/pedia candidate SUPERSET: every FK an info's compiled surface references
 //	      (edge buckets, requires-tree atoms/predicates, deposit target FKs + condition trees + per-scalers,
 //	      grants lists, provides, triggers) lands the referencing info on the referenced info's RELATED bucket.
@@ -32,11 +34,18 @@
 //	      target BUILDING at CITY scope (§2a building output / §2b wellbeing), presence-gated at the AUTHORED
 //	      deposit's scope axis, an authored condition composed in (info-rebuild.md ruling 19).
 //	      Governing-deliverer keyed maps STAY source-side (buildRate keyed targets; every TRAIT keyed deposit
-//	      per the §4 per-set carve-out; route<-improvement yields per the §4 exemplar -- served by (1)'s compat
-//	      rows instead; civic<-features happiness per the §2b one-term bundling).
+//	      per the §4 per-set carve-out; route-keyed improvement yields per the §4 exemplar -- the ROUTE's own
+//	      compiled keyed entries ARE the data, no improvement-side row is written (the wave-B improvement mirror
+//	      is deleted); civic<-features happiness per the §2b one-term bundling).
+//	  (5) THE UNIT-PLANE POST-MAP DERIVATION (json.md §9 sizeMatters: the unit's quality/group/size RANK is
+//	      DERIVED at load, never stored): once the full registry is mapped, every CvUnitInfo recompute-assigns
+//	      its load-derived members -- the SM base-rank/strength/cargo sums over its combat classes, the first
+//	      prereq TECH atom's era (classified by the resolved atom id through the ONE type dispatch), the
+//	      can-acquire-experience verdict, and the succession.upgradesTo transitive closure (the upgrade chain).
 //
-//	After this pass every info ALREADY CARRIES its reverse lookups; no consumer builds its own scan or side
-//	index. LOAD-ONLY: called by loadJson only, inside the write-once-at-load window.
+//	After this pass every info ALREADY CARRIES its reverse lookups + load-derived values; no consumer builds its
+//	own scan or side index, and no getter derives lazily. LOAD-ONLY: called by loadJson only, inside the
+//	write-once-at-load window.
 //
 
 // The pass's observability counters (emitted by loadJson as RJE_REVERSE_DONE + the Loading.log reverse-view line).

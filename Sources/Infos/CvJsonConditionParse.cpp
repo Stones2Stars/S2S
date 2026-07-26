@@ -7,7 +7,8 @@
 #include "CvGameCoreDLL.h"
 #include "CvJsonConditionParse.h"
 #include "CvCondition.h"
-#include "CvJsonParse.h"   // jsonResolveId (FK diagnostics) + jsonParseScope (the ONE scope-token vocabulary)
+#include "CvJsonParse.h"        // jsonResolveId (FK diagnostics) + jsonParseScope (the ONE scope-token vocabulary)
+#include "Defines/CvEnums.h"    // YieldTypes -- the natureYield atom's channel axis
 #include <string>
 
 // ---- the closed string->typed maps (the ONE place a name/scope/connection is recognized) -----------------------
@@ -31,7 +32,60 @@ static CvCascPredKind cp_predKind(const std::string& s)
 	if (s == "STATE_RELIGION_IN_CITY") return CASC_PRED_STATE_RELIGION_IN_CITY; if (s == "IS_GOLDEN_AGE") return CASC_PRED_IS_GOLDEN_AGE;
 	if (s == "IS_ANARCHY") return CASC_PRED_IS_ANARCHY;   if (s == "IS_OWNED") return CASC_PRED_IS_OWNED;
 	if (s == "IS_HOLY_CITY") return CASC_PRED_IS_HOLY_CITY; if (s == "IS_STATE_RELIGION_HOLY_CITY") return CASC_PRED_IS_STATE_RELIGION_HOLY_CITY;
+	if (s == "IS_STATE_RELIGION") return CASC_PRED_IS_STATE_RELIGION;   // the counted-religion test (ruling 23)
+	if (s == "IS_HEADQUARTERS") return CASC_PRED_IS_HEADQUARTERS;   // corp HQ city (ruling 10; bare = any corp's HQ)
 	return CASC_PRED_UNKNOWN;
+}
+
+const char* cascadeSpellPredKind(CvCascPredKind ePredKind)
+{
+	// The reverse of cp_predKind above -- one row per recognized spelling, same order, so a vocabulary edit
+	// touches the two tables side by side. The parameterized-only kinds spell their key form.
+	switch (ePredKind)
+	{
+	case CASC_PRED_IS_WATER:                   return "IS_WATER";
+	case CASC_PRED_IS_LAND:                    return "IS_LAND";
+	case CASC_PRED_IS_FLATLANDS:               return "IS_FLATLANDS";
+	case CASC_PRED_IS_AIR:                     return "IS_AIR";
+	case CASC_PRED_IS_SPACE:                   return "IS_SPACE";
+	case CASC_PRED_IS_LUNAR:                   return "IS_LUNAR";
+	case CASC_PRED_IS_MARS:                    return "IS_MARS";
+	case CASC_PRED_HAS_PEAK:                   return "HAS_PEAK";
+	case CASC_PRED_HAS_HILLS:                  return "HAS_HILLS";
+	case CASC_PRED_HAS_COAST:                  return "HAS_COAST";
+	case CASC_PRED_HAS_RIVER:                  return "HAS_RIVER";
+	case CASC_PRED_HAS_FRESHWATER:             return "HAS_FRESHWATER";
+	case CASC_PRED_HAS_IRRIGATION:             return "HAS_IRRIGATION";
+	case CASC_PRED_HAS_FEATURE:                return "HAS_FEATURE";
+	case CASC_PRED_HAS_LANDMARK:               return "HAS_LANDMARK";
+	case CASC_PRED_VICINITY:                   return "VICINITY";
+	case CASC_PRED_WORKABLE:                   return "WORKABLE";
+	case CASC_PRED_IS_WORKED:                  return "IS_WORKED";
+	case CASC_PRED_NO_NUKES:                   return "NO_NUKES";
+	case CASC_PRED_IS_CAPITAL:                 return "IS_CAPITAL";
+	case CASC_PRED_IS_GOVERNMENT_CENTER:       return "IS_GOVERNMENT_CENTER";
+	case CASC_PRED_HAS_POWER:                  return "HAS_POWER";
+	case CASC_PRED_HAS_STATE_RELIGION:         return "HAS_STATE_RELIGION";
+	case CASC_PRED_STATE_RELIGION_IN_CITY:     return "STATE_RELIGION_IN_CITY";
+	case CASC_PRED_IS_GOLDEN_AGE:              return "IS_GOLDEN_AGE";
+	case CASC_PRED_IS_ANARCHY:                 return "IS_ANARCHY";
+	case CASC_PRED_IS_OWNED:                   return "IS_OWNED";
+	case CASC_PRED_IS_HOLY_CITY:               return "IS_HOLY_CITY";
+	case CASC_PRED_IS_STATE_RELIGION_HOLY_CITY: return "IS_STATE_RELIGION_HOLY_CITY";
+	case CASC_PRED_IS_STATE_RELIGION:          return "IS_STATE_RELIGION";
+	case CASC_PRED_HAS_TERRAIN:                return "HAS_TERRAIN";
+	case CASC_PRED_HAS_IMPROVEMENT:            return "HAS_IMPROVEMENT";
+	case CASC_PRED_HAS_BONUS:                  return "HAS_BONUS";
+	case CASC_PRED_HAS_RELIGION:               return "HAS_RELIGION";
+	case CASC_PRED_STATE_RELIGION:             return "STATE_RELIGION";
+	case CASC_PRED_HAS_CORPORATION:            return "HAS_CORPORATION";
+	case CASC_PRED_IS_HEADQUARTERS:            return "IS_HEADQUARTERS";
+	case CASC_PRED_LATITUDE:                   return "latitude";
+	case CASC_PRED_EXISTED_FOR:                return "existedFor";
+	case CASC_PRED_NATURE_YIELD:               return "natureYield";
+	case CASC_PRED_IS_TAG:                     return "IS_TAG";
+	default:                                   return "";
+	}
 }
 
 // Scope IMPLIED from the type's domain (json §3.4): TECH->team, civic/heritage->empire, else->city.
@@ -166,6 +220,44 @@ static CvCondition* cp_parseObject(const picojson::object& o)
 		if (ef && ef->is<picojson::object>()) { const picojson::object& l = ef->get<picojson::object>(); return cp_predicate(CASC_PRED_EXISTED_FOR, "", po_int(l, "min", -1), -1); }
 		const picojson::value* hc = po_get(o, "HAS_COAST");
 		if (hc && hc->is<picojson::object>()) { const picojson::object& l = hc->get<picojson::object>(); return cp_predicate(CASC_PRED_HAS_COAST, "", po_int(l, "minArea", -1), -1); }
+		// {natureYield:{food:N,...}} -- the improvement PLACEMENT threshold atom (requires.build.all): the plot's
+		// PRE-improvement nature yield per channel must be >= N (the CvPlot::canHaveImprovement gate). One
+		// predicate node per authored channel (a multi-channel object ANDs as a group); the YieldTypes channel
+		// rides `id` (param stays empty -- no Type to FK-route), the threshold rides `min`.
+		const picojson::value* ny = po_get(o, "natureYield");
+		if (ny && ny->is<picojson::object>())
+		{
+			const picojson::object& l = ny->get<picojson::object>();
+			const char* aszChannels[3] = { "food", "production", "commerce" };
+			const int aiYields[3] = { (int)YIELD_FOOD, (int)YIELD_PRODUCTION, (int)YIELD_COMMERCE };
+			CvCondition* pGroup = 0;
+			CvCondition* pSingle = 0;
+			for (int iChannel = 0; iChannel < 3; ++iChannel)
+			{
+				const int iThreshold = po_int(l, aszChannels[iChannel], -1);
+				if (iThreshold < 0)
+				{
+					continue;
+				}
+				CvCondition* pNode = cp_predicate(CASC_PRED_NATURE_YIELD, "", iThreshold, -1);
+				pNode->id = aiYields[iChannel];
+				if (pSingle == 0 && pGroup == 0)
+				{
+					pSingle = pNode;
+					continue;
+				}
+				if (pGroup == 0)
+				{
+					pGroup = cp_group();
+					pGroup->all.push_back(pSingle);
+					pSingle = 0;
+				}
+				pGroup->all.push_back(pNode);
+			}
+			if (pGroup != 0) { return pGroup; }
+			if (pSingle != 0) { return pSingle; }
+			return cp_predicate(CASC_PRED_UNKNOWN, "", -1, -1);   // an empty/malformed natureYield object
+		}
 	}
 
 	// 5) single-key type-parameterized predicate: {HAS_BONUS:X} / {HAS_TERRAIN:X} / {IS_HOLY_CITY:RELIGION_X} / …
@@ -183,6 +275,7 @@ static CvCondition* cp_parseObject(const picojson::object& o)
 		if (k == "HAS_RELIGION")    return cp_predicate(CASC_PRED_HAS_RELIGION, pv, -1, -1);
 		if (k == "HAS_CORPORATION") return cp_predicate(CASC_PRED_HAS_CORPORATION, pv, -1, -1);
 		if (k == "IS_HOLY_CITY")    return cp_predicate(CASC_PRED_IS_HOLY_CITY, pv, -1, -1);
+		if (k == "IS_HEADQUARTERS") return cp_predicate(CASC_PRED_IS_HEADQUARTERS, pv, -1, -1);
 		if (k == "STATE_RELIGION")  return cp_predicate(CASC_PRED_STATE_RELIGION, pv, -1, -1);
 		const CvCascPredKind bk = cp_predKind(k);
 		if (bk != CASC_PRED_UNKNOWN) return cp_predicate(bk, "", -1, -1);   // bare-kind keyed object

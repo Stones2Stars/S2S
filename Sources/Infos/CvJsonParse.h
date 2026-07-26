@@ -21,6 +21,7 @@
 #include <string>
 #include <set>
 #include <map>
+#include <vector>
 
 // The single human -> ×100 fixed-point conversion (round half away from zero). 7 -> 700, 1.5 -> 150, -10 -> -1000.
 // The ONE place the human->int×100 conversion happens (determinism; DEC-fixedpoint-x100). The reader has ZERO
@@ -42,16 +43,27 @@ void jsonCommerceMap(const picojson::value& v, std::map<std::string, int>& out);
 // Is `key` in the NULL-terminated `list`? (the shared "in this vocabulary?" test; external so callers pass a LOCAL table.)
 bool jsonInList(const char** list, const std::string& key);
 
+// Is `iNeedle` in `haystack`? The ONE id-vector membership scan the info getters' has*/is* reads share
+// (runtime-callable, allocation-free -- a per-poco private copy is the file-hidden DRY hazard patterns.md bans).
+inline bool vectorHas(const std::vector<int>& haystack, int iNeedle)
+{
+	for (size_t i = 0; i < haystack.size(); ++i)
+	{
+		if (haystack[i] == iNeedle)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 // --- the shared JSON walkers -- the ONE canonical copy every mapFrom draws (never re-hand-rolled per type) ---
 // o[key] as an object child, or NULL.
 const picojson::object* jsonChildObj(const picojson::object& o, const char* key);
 // the o[world][art] sub-object, or NULL -- the EXE-bound map-gen art block (define = ART_DEF_* tag; entityEvent).
 const picojson::object* jsonWorldArt(const picojson::object& o);
-// entity[family][scope][unit] as a human value (0 if any hop is missing); the int form truncates the double form.
-double jsonFamDbl(const picojson::object& o, const char* family, const char* scope, const char* unit);
-int jsonFamVal(const picojson::object& o, const char* family, const char* scope, const char* unit);
-// entity[family][scope][member][unit] (the grouped-family case, e.g. defense.plot.amount.percent).
-int jsonFamMemberVal(const picojson::object& o, const char* family, const char* scope, const char* member, const char* unit);
+// (the former jsonFamDbl/jsonFamVal/jsonFamMemberVal raw family-address probes are DELETED -- the compiled
+// CvModifiers entries/sums are the ONE post-parse read surface, and the waves left the probes caller-less)
 // identity-block scalar reads: int (0 if absent), bool (false if absent), FK (-1 if absent; via jsonResolveId),
 // string (out untouched if absent; returns whether the key was present as a string).
 // iDefault = the value an ABSENT key restores. The curator elides values equal to the LEGACY LOAD DEFAULT
@@ -63,8 +75,42 @@ int jsonIdFk(const picojson::object& io, const char* key);
 bool jsonIdStr(const picojson::object& io, const char* key, std::string& out);
 // FK-keyed int map: parent[key] = {"SPECIALIST_X"/"VICTORY_X": n} -> out[id] = n (unresolved keys surface via jsonResolveId).
 void jsonReadFkMap(const picojson::object& parent, const char* key, std::map<int, int>& out);
+// FK-id ARRAY: parent[key] = ["TYPE_A", ...] -> resolved ids APPENDED to out in authored order (non-strings
+// skipped; unresolved ids surface via jsonResolveId and are not appended).
+void jsonReadIdList(const picojson::object& parent, const char* key, std::vector<int>& out);
+// Keyed-bool FK object: parent[key] = {"TYPE_A": true, ...} -> resolved ids of the TRUE entries APPENDED to out
+// (the par.8 keyed-skill FK shape -- skills.terrainDoubleMove / featureDoubleMove; false/non-bool entries skipped).
+void jsonReadKeyedBoolIdList(const picojson::object& parent, const char* key, std::vector<int>& out);
+// Raw STRING array: parent[key] = ["str", ...] -> the strings APPENDED to out in authored order (non-strings
+// skipped). NOT FK-resolved -- the TEXT-KEY / unique-name pools (civilization cityNames, unit uniqueNames).
+// Templated over the element type so std::string and CvString containers share the ONE walker.
+template <class StringType>
+inline void jsonReadStrList(const picojson::object& parent, const char* szKey, std::vector<StringType>& out)
+{
+	picojson::object::const_iterator listIter = parent.find(szKey);
+	if (listIter == parent.end() || !listIter->second.is<picojson::array>())
+	{
+		return;
+	}
+	const picojson::array& entries = listIter->second.get<picojson::array>();
+	for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
+	{
+		if (entries[iEntry].is<std::string>())
+		{
+			out.push_back(StringType(entries[iEntry].get<std::string>().c_str()));
+		}
+	}
+}
 // ai.flavours -- an ARRAY of single-key { FLAVOR_X: n } objects (NOT a map) -> out[flavorId] = n.
 void jsonReadFlavours(const picojson::object& aiObj, std::map<int, int>& out);
+// The sparse id-map POINT read (the read-twin of the map fills above: flavours / keyed weights / era tables).
+// Runtime-callable and allocation-free -- the vectorHas precedent: a per-poco private find is the file-hidden
+// DRY hazard patterns.md bans. iAbsent = the value an absent key reads (0 for the flavour/weight getters).
+inline int mapValueOrDefault(const std::map<int, int>& valueMap, int iKey, int iAbsent = 0)
+{
+	std::map<int, int>::const_iterator valueIter = valueMap.find(iKey);
+	return valueIter != valueMap.end() ? valueIter->second : iAbsent;
+}
 // The §3.2 scope-token vocabulary -> CvCascScope; an unknown token falls back to the CALLER's default.
 CvCascScope jsonParseScope(const std::string& s, CvCascScope defaultScope);
 // Is `s` one of the §3.2 scope tokens? (the address-decode discriminator: a second segment that is NOT a scope

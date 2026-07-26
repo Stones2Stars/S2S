@@ -41,6 +41,8 @@
 #include "CvDLLUtilityIFaceBase.h"
 #include "Repos/BuildingsRepo.h"
 #include "CvTraitInfo.h"
+#include "Data/CvInfoValuation.h"   // resolvedCityLimit -- the ruling-26 engine-side city-limit read
+#include "CvCascadeGather.h"
 #include <boost/scoped_ptr.hpp>
 
 //	Koshling - save flag indicating this player has no data in the save as they have never been alive
@@ -751,6 +753,13 @@ void CvPlayer::uninit()
 }
 
 
+// The EMPIRE-scope cascade package's refresh delegate -- the one-line delegation to the ONE gather
+// ([DEC-single-implementation]; see CvCascadeGather).
+void CvPlayer::refreshCascadePackage(int64_t iMask) const
+{
+	CascadeGather::refreshEmpire(*this, iMask);
+}
+
 // FUNCTION: reset()
 // Initializes data members that are serialized.
 void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
@@ -760,6 +769,8 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 
 	m_dataRepository.reset();
 	m_empireContext.bind(this);   // bind the per-player empire context to its owner (forwarding reads it)
+	// bind the EMPIRE-scope cascade package (all-dirty from bind: a loaded/new player recomputes on first read)
+	m_cascadePackage.bind(CASC_SCOPE_EMPIRE, this, &CvPlayer::refreshCascadePackage);
 
 	//--------------------------------
 	// Uninit class
@@ -2969,7 +2980,7 @@ CvUnit* CvPlayer::getTempUnit(UnitTypes eUnit, int iX, int iY)
 	{
 		m_pTempUnit = initUnit(eUnit, iX, iY, NO_UNITAI, NO_DIRECTION, UNIT_BIRTHMARK_TEMP_UNIT);
 		((CvPlayerAI*)this)->AI_changeNumAIUnits(m_pTempUnit->AI_getUnitAIType(), -1); // This one doesn't count
-		((CvPlayerAI*)this)->AI_changeEffNumAIUnitsTimes100(m_pTempUnit->AI_getUnitAIType(), -m_pTempUnit->SMeffectiveCountTimes100());
+		((CvPlayerAI*)this)->AI_changeEffNumAIUnitsTimes100(m_pTempUnit->AI_getUnitAIType(), -m_pTempUnit->SMeffectiveCount());
 		removeGroupCycle(m_pTempUnit->getGroup()->getID());
 	}
 	// Set an arbitrary automation type - just need it to be flagged as automated
@@ -6942,7 +6953,7 @@ bool CvPlayer::isProductionMaxedProject(ProjectTypes eProject) const
 }
 
 
-int64_t CvPlayer::getBaseUnitCost100(const UnitTypes eUnit) const
+int64_t CvPlayer::getBaseUnitCost(const UnitTypes eUnit) const
 {
 	int64_t iBaseCost = GC.getUnitInfo(eUnit).getProductionCost();
 
@@ -7005,7 +7016,7 @@ int64_t CvPlayer::getBaseUnitCost100(const UnitTypes eUnit) const
 
 int CvPlayer::getProductionNeeded(UnitTypes eUnit) const
 {
-	int64_t iProductionNeeded = getBaseUnitCost100(eUnit);
+	int64_t iProductionNeeded = getBaseUnitCost(eUnit);
 	if (iProductionNeeded < 1)
 	{
 		if (iProductionNeeded < 0)
@@ -8459,12 +8470,18 @@ bool CvPlayer::canDoCivics(CivicTypes eCivic) const
 		return GC.getGame().isForceCivic(eCivic);
 	}
 
+	// #430 ruling 26: the civic's RESOLVED limit = base config × world-size scale, option-gated
+	// (InfoValuation::resolvedCityLimit -- the ONE engine-side read); a limit WITHOUT the over-limit-anger
+	// deposit (hasCityOverLimitAnger, derived from the compiled CITY_LIMIT per.above entries) is a HARD cap --
+	// the civic cannot be adopted while the empire already exceeds it. The anger-carrying form allows adoption;
+	// the cascade's deposit carries the anger.
+	const int iResolvedCityLimit = InfoValuation::resolvedCityLimit(GC.getCivicInfo(eCivic).getCityLimit());
 	if (!isNPC()
 	&& (
 		(
-			GC.getCivicInfo(eCivic).getCityLimit(getID()) > 0
-			&& GC.getCivicInfo(eCivic).getCityOverLimitUnhappy() == 0
-			&& GC.getCivicInfo(eCivic).getCityLimit(getID()) < getNumCities()
+			iResolvedCityLimit > 0
+			&& !GC.getCivicInfo(eCivic).hasCityOverLimitAnger()
+			&& iResolvedCityLimit < getNumCities()
 		)
 		||
 		(
@@ -9459,7 +9476,7 @@ void CvPlayer::changeGoldenAgeTurns(int iChange)
 
 int CvPlayer::getGoldenAgeLength() const
 {
-	return std::max(1, getModifiedIntValue(GC.getGame().goldenAgeLength100(), getGoldenAgeModifier()) / 100);
+	return std::max(1, getModifiedIntValue(GC.getGame().goldenAgeLength(), getGoldenAgeModifier()) / 100);
 }
 
 int CvPlayer::getNumUnitGoldenAges() const
@@ -12423,7 +12440,7 @@ void CvPlayer::setCurrentEra(EraTypes eNewValue)
 		// Toffer - Heritage may change commerce output with era.
 		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 		{
-			changeExtraCommerce100((CommerceTypes)iI, getHeritageCommerceEraChange((CommerceTypes)iI, eNewValue));
+			changeExtraCommerce((CommerceTypes)iI, getHeritageCommerceEraChange((CommerceTypes)iI, eNewValue));
 		}
 
 		if (GC.getGame().getActiveTeam() != NO_TEAM)
@@ -12928,7 +12945,7 @@ void CvPlayer::changeTradeYieldModifier(YieldTypes eIndex, int iChange)
 }
 
 
-int CvPlayer::getExtraCommerce100(const CommerceTypes eIndex) const
+int CvPlayer::getExtraCommerce(const CommerceTypes eIndex) const
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
 
@@ -12936,7 +12953,7 @@ int CvPlayer::getExtraCommerce100(const CommerceTypes eIndex) const
 }
 
 
-void CvPlayer::changeExtraCommerce100(const CommerceTypes eIndex, const int iChange)
+void CvPlayer::changeExtraCommerce(const CommerceTypes eIndex, const int iChange)
 {
 	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
 
@@ -13676,7 +13693,15 @@ int CvPlayer::getUnitCountSM(const UnitTypes eUnit) const
 {
 	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eUnit);
 	std::map<short, uint32_t>::const_iterator itr = m_unitCountSM.find((short)eUnit);
-	return itr != m_unitCountSM.end() ? itr->second / intPow(3, GC.getUnitInfo(eUnit).getBaseGroupRank() - 1) : 0;
+	if (itr == m_unitCountSM.end())
+	{
+		return 0;
+	}
+	// intPow returns 0 for a negative exponent, so a rank below 1 would integer-divide by zero -- floor the
+	// rank term at 1. A sub-1 derived rank is a data/derivation defect, not a valid divisor.
+	const int iBaseGroupRank = GC.getUnitInfo(eUnit).getBaseGroupRank();
+	FAssertMsg(iBaseGroupRank >= 1, CvString::format("SM base group rank %d < 1 for %s -- derivation/data defect", iBaseGroupRank, GC.getUnitInfo(eUnit).getType()).c_str());
+	return itr->second / intPow(3, std::max(1, iBaseGroupRank) - 1);
 }
 
 
@@ -18213,8 +18238,12 @@ void CvPlayer::processCivics(const CivicTypes eCivic, const int iChange, const b
 	changeRevIdxNational(kCivic.getRevIdxNational() * iChange);
 	changeRevIdxDistanceModifier(kCivic.getRevIdxDistanceModifier() * iChange);
 
-	changeCityLimit(kCivic.getCityLimit(getID()) * iChange);
-	changeCityOverLimitUnhappy(kCivic.getCityOverLimitUnhappy() * iChange);
+	// #430 ruling 26: the limit accumulator takes the RESOLVED limit (base config × world-size scale, option-
+	// gated -- InfoValuation::resolvedCityLimit); the over-limit accumulator becomes a PRESENCE COUNT of
+	// in-force civics carrying the over-limit-anger deposit (the anger MAGNITUDE now lives in the cascade's
+	// CITY_LIMIT per.above deposits, never here) -- its consumers test ==0 / >0, exactly the presence question.
+	changeCityLimit(InfoValuation::resolvedCityLimit(kCivic.getCityLimit()) * iChange);
+	changeCityOverLimitUnhappy((kCivic.hasCityOverLimitAnger() ? 1 : 0) * iChange);
 	changeForeignUnhappyPercent(kCivic.getForeignerUnhappyPercent() * iChange);
 
 	changeWarWearinessModifier(kCivic.getWarWearinessModifier() * iChange, bLimited);
@@ -18433,7 +18462,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		// SAVEBREAK@
 
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eCurrentEra);
-		WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_RELIGIONS, (int*)&m_eLastStateReligion);
+		WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_RELIGIONS, (int*)&m_eLastStateReligion);
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eParent);
 		updateTeamType(); //m_eTeamType not saved
 		updateHuman();
@@ -18459,18 +18488,18 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		WRAPPER_READ_STRING(wrapper, "CvPlayer", m_szScriptData);
 
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementCount);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_FEATURES, GC.getNumFeatureInfos(), m_paiFeatureHappiness);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiBuildingCount);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementCount);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_FEATURES, GC.getNumFeatureInfos(), m_paiFeatureHappiness);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiBuildingCount);
 
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_HURRIES, GC.getNumHurryInfos(), m_paiHurryCount);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIAL_BUILDINGS, GC.getNumSpecialBuildingInfos(), m_paiSpecialBuildingNotRequiredCount);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CIVIC_OPTIONS, GC.getNumCivicOptionInfos(), m_paiHasCivicOptionCount);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CIVIC_OPTIONS, GC.getNumCivicOptionInfos(), m_paiNoCivicUpkeepCount);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_paiHasReligionCount);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CORPORATIONS, GC.getNumCorporationInfos(), m_paiHasCorporationCount);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_UPKEEPS, GC.getNumUpkeepInfos(), m_paiUpkeepCount);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistValidCount);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_HURRIES, GC.getNumHurryInfos(), m_paiHurryCount);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIAL_BUILDINGS, GC.getNumSpecialBuildingInfos(), m_paiSpecialBuildingNotRequiredCount);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CIVIC_OPTIONS, GC.getNumCivicOptionInfos(), m_paiHasCivicOptionCount);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CIVIC_OPTIONS, GC.getNumCivicOptionInfos(), m_paiNoCivicUpkeepCount);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_paiHasReligionCount);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CORPORATIONS, GC.getNumCorporationInfos(), m_paiHasCorporationCount);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_UPKEEPS, GC.getNumUpkeepInfos(), m_paiUpkeepCount);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistValidCount);
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iForeignTradeRouteModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iTaxRateUnhappiness);
@@ -18535,8 +18564,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BUILDS, GC.getNumBuildInfos(), m_pabAutomatedCanBuild);
 
 		FAssertMsg(0 < GC.getNumBonusInfos(), "GC.getNumBonusInfos() is not greater than zero but it is expected to be in CvPlayer::read");
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiResourceConsumption);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCount);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiResourceConsumption);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCount);
 
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_ePledgedVote);
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eSecretaryGeneralVote);
@@ -18550,8 +18579,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 			if ( switchInstance.iTurn != -1 )
 			{
-				WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CIVICS, &switchInstance.eFromCivic);
-				WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CIVICS, &switchInstance.eToCivic);
+				WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CIVICS, &switchInstance.eFromCivic);
+				WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_CIVICS, &switchInstance.eToCivic);
 				WRAPPER_READ(wrapper, "CvPlayer", &switchInstance.bNoAnarchy);
 
 				m_civicSwitchHistory.push_back(switchInstance);
@@ -18634,9 +18663,9 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		}
 
 		FAssertMsg((0 < GC.getNumTechInfos()), "GC.getNumTechInfos() is not greater than zero but it is expected to be in CvPlayer::read");
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_pabResearchingTech);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_pabResearchingTech);
 
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_VOTE_SOURCES, GC.getNumVoteSourceInfos(), m_pabLoyalMember);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_VOTE_SOURCES, GC.getNumVoteSourceInfos(), m_pabLoyalMember);
 
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_CIVIC_OPTIONS); ++i)
 		{
@@ -18672,10 +18701,13 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				//	that it processes as a cumulative number, which makes no sense if limits are defined on multiple
 				//	civicOptions.  As such we ASSUME only one civivOption can be defining a limit and therefore it has
 				//	a single source, so we can directly set its value from the currently in-use civic that has a limit (if any)
-				if ( GC.getCivicInfo(m_paeCivics[i]).getCityLimit(getID()) != 0 )
+				//	#430 ruling 26: the resolved limit is base config × world scale (InfoValuation::resolvedCityLimit);
+				//	the over-limit accumulator is the anger-deposit PRESENCE count (hasCityOverLimitAnger).
+				const int iResolvedCityLimit = InfoValuation::resolvedCityLimit(GC.getCivicInfo(m_paeCivics[i]).getCityLimit());
+				if (iResolvedCityLimit != 0)
 				{
-					m_iCityLimit = GC.getCivicInfo(m_paeCivics[i]).getCityLimit(getID());
-					m_iCityOverLimitUnhappy = GC.getCivicInfo(m_paeCivics[i]).getCityOverLimitUnhappy();
+					m_iCityLimit = iResolvedCityLimit;
+					m_iCityOverLimitUnhappy = GC.getCivicInfo(m_paeCivics[i]).hasCityOverLimitAnger() ? 1 : 0;
 				}
 			}
 		}
@@ -19032,11 +19064,15 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numFreeCombatPromotions");
 			for (uint i = 0; i < iSize; i++)
 			{
-				int iUnitCombat;
-				int iPromotion;
-				WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_COMBATINFOS, &iUnitCombat);
-				WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_PROMOTIONS, &iPromotion);
-				m_aFreeUnitCombatPromotions.push_back(std::make_pair((UnitCombatTypes)iUnitCombat, (PromotionTypes)iPromotion));
+				int iUnitCombat = NO_UNITCOMBAT;
+				int iPromotion = NO_PROMOTION;
+				WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_COMBATINFOS, &iUnitCombat);
+				WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_PROMOTIONS, &iPromotion);
+
+				if (iUnitCombat != NO_UNITCOMBAT && iPromotion != NO_PROMOTION)
+				{
+					m_aFreeUnitCombatPromotions.push_back(std::make_pair((UnitCombatTypes)iUnitCombat, (PromotionTypes)iPromotion));
+				}
 			}
 		}
 
@@ -19046,11 +19082,15 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numFreeUnitPromotions");
 			for (uint i = 0; i < iSize; i++)
 			{
-				int iUnit;
-				int iPromotion;
-				WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_UNITS, &iUnit);
-				WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_PROMOTIONS, &iPromotion);
-				m_aFreeUnitPromotions.push_back(std::make_pair((UnitTypes)iUnit, (PromotionTypes)iPromotion));
+				int iUnit = NO_UNIT;
+				int iPromotion = NO_PROMOTION;
+				WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_UNITS, &iUnit);
+				WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_PROMOTIONS, &iPromotion);
+
+				if (iUnit != NO_UNIT && iPromotion != NO_PROMOTION)
+				{
+					m_aFreeUnitPromotions.push_back(std::make_pair((UnitTypes)iUnit, (PromotionTypes)iPromotion));
+				}
 			}
 		}
 
@@ -19063,7 +19103,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				int iId;
 				PlayerVoteTypes eVote;
 				WRAPPER_READ(wrapper, "CvPlayer", &iId);
-				WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_VOTES, (int*)&eVote);
+				WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_VOTES, (int*)&eVote);
 				m_aVote.push_back(std::make_pair(iId, eVote));
 			}
 		}
@@ -19075,10 +19115,14 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			for (uint i = 0; i < iSize; i++)
 			{
 				int iCost;
-				UnitTypes eUnit;
-				WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_UNITS, (int*)&eUnit);
+				UnitTypes eUnit = NO_UNIT;
+				WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_UNITS, (int*)&eUnit);
 				WRAPPER_READ(wrapper, "CvPlayer", &iCost);
-				m_aUnitExtraCosts.push_back(std::make_pair(eUnit, iCost));
+
+				if (eUnit != NO_UNIT)
+				{
+					m_aUnitExtraCosts.push_back(std::make_pair(eUnit, iCost));
+				}
 			}
 		}
 
@@ -19188,8 +19232,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		//TB Traits begin
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCivicAnarchyModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iReligiousAnarchyModifier);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementUpgradeRateModifierSpecific);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiBuildWorkerSpeedModifierSpecific);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementUpgradeRateModifierSpecific);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiBuildWorkerSpeedModifierSpecific);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iAIAttitudeModifier);
 
 		for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
@@ -19209,7 +19253,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiFreeCityYield);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_YIELD_TYPES, m_aiSpecialistExtraYield);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iTraitExtraCityDefense);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TRAITS, GC.getNumTraitInfos(), m_pabHasTrait);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TRAITS, GC.getNumTraitInfos(), m_pabHasTrait);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iLeaderHeadLevel);
 		// @SAVEBREAK - Delete
 		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_iTraitDisplayCount, SAVE_VALUE_ANY);
@@ -19223,7 +19267,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalBombardDefenseModifier);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_DOMAIN_TYPES, m_paiNationalDomainFreeExperience);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayer", NUM_DOMAIN_TYPES, m_paiNationalDomainProductionModifier);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiNationalTechResearchModifier);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiNationalTechResearchModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFixedBordersCount);
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraNationalCaptureProbabilityModifier);
@@ -19233,7 +19277,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraStateReligionSpreadModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraNonStateReligionSpreadModifier);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiEraAdvanceFreeSpecialistCount);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiEraAdvanceFreeSpecialistCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalCityStartCulture);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNationalAirUnitCapacity);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iCapitalXPModifier);
@@ -19269,8 +19313,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFocusPlotX);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iFocusPlotY);
 
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIAL_BUILDINGS, GC.getNumSpecialBuildingInfos(), m_paiBuildingGroupCount);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIAL_BUILDINGS, GC.getNumSpecialBuildingInfos(), m_paiBuildingGroupMaking);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIAL_BUILDINGS, GC.getNumSpecialBuildingInfos(), m_paiBuildingGroupCount);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_SPECIAL_BUILDINGS, GC.getNumSpecialBuildingInfos(), m_paiBuildingGroupMaking);
 
 		// @SAVEBREAK - remove
 		WRAPPER_SKIP_ELEMENT(wrapper, "CvPlayer", m_iArrestingUnit, SAVE_VALUE_ANY);
@@ -26142,7 +26186,7 @@ DenialTypes CvPlayer::AI_workerTrade(const CvUnit* pUnit, PlayerTypes ePlayer) c
 	}
 
 	if (GET_PLAYER(ePlayer).AI_totalUnitAIs(UNITAI_WORKER) > GET_PLAYER(ePlayer).getNumCities()
-	|| getUnitUpkeepNet(pUnit->isMilitaryBranch(), pUnit->getUpkeep100()) < 1)
+	|| getUnitUpkeepNet(pUnit->isMilitaryBranch(), pUnit->getUpkeep()) < 1)
 	{
 		return DENIAL_NO_GAIN;
 	}
@@ -26195,7 +26239,7 @@ DenialTypes CvPlayer::AI_militaryUnitTrade(const CvUnit* pUnit, PlayerTypes ePla
 		return DENIAL_NO_GAIN;
 	}
 
-	if (getUnitUpkeepNet(pUnit->isMilitaryBranch(), pUnit->getUpkeep100()) < 1)
+	if (getUnitUpkeepNet(pUnit->isMilitaryBranch(), pUnit->getUpkeep()) < 1)
 	{
 		return DENIAL_NO_GAIN;
 	}
@@ -28450,7 +28494,7 @@ void CvPlayer::processTrait(TraitTypes eTrait, int iChange)
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		changeExtraCommerce100((CommerceTypes)iI, 100*iChange*GC.getTraitInfo(eTrait).getCommerceChange(iI));
+		changeExtraCommerce((CommerceTypes)iI, 100*iChange*GC.getTraitInfo(eTrait).getCommerceChange(iI));
 		changeCommerceRateModifier((CommerceTypes)iI, iChange*GC.getTraitInfo(eTrait).getCommerceModifier(iI));
 	}
 
@@ -30985,7 +31029,7 @@ void CvPlayer::processHeritage(const HeritageTypes eType, const int iChange)
 	const CvHeritageInfo& heritage = GC.getHeritageInfo(eType);
 	const EraTypes eEra = getCurrentEra();
 
-	const IDValueMap<EraTypes, CommerceArray>& kEraChanges = heritage.getEraCommerceChanges100();
+	const IDValueMap<EraTypes, CommerceArray>& kEraChanges = heritage.getEraCommerceChanges();
 	for (IDValueMap<EraTypes, CommerceArray>::const_iterator itEra = kEraChanges.begin(), itEraEnd = kEraChanges.end(); itEra != itEraEnd; ++itEra)
 	{
 		const EraCommerceArray& pair = *itEra;
@@ -30993,7 +31037,7 @@ void CvPlayer::processHeritage(const HeritageTypes eType, const int iChange)
 		{
 			for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 			{
-				changeExtraCommerce100((CommerceTypes)iI, iChange * pair.second[(CommerceTypes)iI]);
+				changeExtraCommerce((CommerceTypes)iI, iChange * pair.second[(CommerceTypes)iI]);
 			}
 		}
 	}
@@ -31005,7 +31049,7 @@ int CvPlayer::getHeritageCommerceEraChange(const CommerceTypes eType, const EraT
 	int iCommerce100 = 0;
 	foreach_(const HeritageTypes eTypeX, getHeritage())
 	{
-		const IDValueMap<EraTypes, CommerceArray>& kEraChanges = GC.getHeritageInfo(eTypeX).getEraCommerceChanges100();
+		const IDValueMap<EraTypes, CommerceArray>& kEraChanges = GC.getHeritageInfo(eTypeX).getEraCommerceChanges();
 		for (IDValueMap<EraTypes, CommerceArray>::const_iterator itEra = kEraChanges.begin(), itEraEnd = kEraChanges.end(); itEra != itEraEnd; ++itEra)
 		{
 			const EraCommerceArray& pair = *itEra;

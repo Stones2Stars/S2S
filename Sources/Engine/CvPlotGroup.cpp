@@ -676,7 +676,7 @@ void CvPlotGroup::read(FDataStreamBase* pStream)
 		{
 			m_paiNumBonuses = new int[GC.getNumBonusInfos()];
 		}
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlotGroup", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiNumBonuses);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlotGroup", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiNumBonuses);
 	}
 	else
 	{

@@ -2529,7 +2529,7 @@ void CvTeamAI::AI_getWarThresholds( int &iTotalWarThreshold, int &iLimitedWarThr
 }
 
 // Returns odds of player declaring total war times 100
-int CvTeamAI::AI_getTotalWarOddsTimes100( ) const
+int CvTeamAI::AI_getTotalWarOdds( ) const
 {
 	int iTotalWarRand;
 	int iLimitedWarRand;

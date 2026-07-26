@@ -50,7 +50,7 @@ int CascadeProperty::citySourceFlat(int eProp, const CvCity* pCity, const CvCasc
 			const CascadeDeposit& dep = deps[i];
 			if (dep.seg[0] != famId || dep.seg[1] != scopeCity || dep.nSeg != 2 || dep.unitId != unitFlat) continue;
 			if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
-			int v = dep.value100 / 100;
+			int v = dep.value / 100;
 			if (dep.hasPer) v *= pCity->getPopulation();   // per:{POPULATION} is the only authored building form today
 			iSum += v;
 		}
@@ -69,7 +69,7 @@ int CascadeProperty::citySourceFlat(int eProp, const CvCity* pCity, const CvCasc
 				const CascadeDeposit& dep = pdeps[i];
 				if (dep.seg[0] != famId || dep.seg[1] != scopeCity || dep.nSeg != 2 || dep.unitId != unitFlat) continue;
 				if (!MMKernel::applies(dep.enabled, dep.disabled, ec)) continue;
-				int v = dep.value100 / 100;
+				int v = dep.value / 100;
 				// the per count-scaler (the legacy ATTRIBUTE_CONSTANT: ×population is the only authored form today)
 				if (dep.hasPer) v *= pCity->getPopulation();
 				iSum += v;
@@ -100,7 +100,7 @@ int CascadeProperty::cityUnitFlat(int eProp, const CvCity* pCity, const CvCascad
 			const CascadeDeposit& dep = deps[i];
 			if (dep.seg[0] != famId || (dep.seg[1] != scopeCity && dep.seg[1] != scopePlot)
 				|| dep.nSeg != 2 || dep.unitId != unitFlat) continue;
-			if (MMKernel::applies(dep.enabled, dep.disabled, ec)) iSum += dep.value100 / 100;
+			if (MMKernel::applies(dep.enabled, dep.disabled, ec)) iSum += dep.value / 100;
 		}
 	}
 	return iSum;

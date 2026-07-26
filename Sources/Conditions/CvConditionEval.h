@@ -18,11 +18,17 @@ class CvPlayer;
 class CvPlot;
 class CvUnit;
 class CvTeam;
+class CvPlotGroup;
 
-// The eval context = the live engine objects (StoneBase's `(EvalState s, PlotContext? p)`). `player`+`team` are
-// always set; `city` for city-scope gates AND as the vicinity-scan source; `plot` is the deposit's/build's TARGET plot
-// (the C# `PlotContext? p`) for per-plot predicates; `unit` for unit-scope. A predicate whose object is NULL here is
-// treated as not-present (false) -- the cascade asks a city question only at a city scope.
+// The eval context = the live engine objects (StoneBase's `(EvalState s, PlotContext? p)`), FILLED BY THE
+// CONTEXTS (CityContext::fillEvalCtx = city/plot, EmpireContext::fillEvalCtx = player/team -- contexts.md: the
+// contexts ARE the eval state, never a raw-pointer ctx built beside them). The bound pointers are the BINDING
+// handles; the evaluator's atom/count reads go through each object's bound context (city->getCityContext(),
+// player->getEmpireContext(), plot->getPlotContext() -- the HAVE axis), never an ad-hoc game-object reach.
+// `player`+`team` are always set; `city` for city-scope gates AND as the vicinity-scan source; `plot` is the
+// deposit's/build's TARGET plot (the C# `PlotContext? p`) for per-plot predicates; `unit` for unit-scope (units
+// are the deliberate FUTURE context scope -- unit reads stay raw until it exists). A predicate whose object is
+// NULL here is treated as not-present (false) -- the cascade asks a city question only at a city scope.
 struct CvCascadeEvalCtx
 {
 	const CvCity*   city;
@@ -30,6 +36,11 @@ struct CvCascadeEvalCtx
 	const CvTeam*   team;
 	const CvPlot*   plot;
 	const CvUnit*   unit;
+	// The trade-network object -- the reserved explicit TRADED-bonus source (contexts.md; traded state is NEVER
+	// mirrored into CityContext). Filled by the valuation seam's plotGroup pass-in (InfoValuation::fillEvalCtx).
+	// A city-bound ctx answers connection:"trade" through the city's own plot-group-backed maintained count
+	// (CityContext::tradedBonusCount); this slot serves the city-less explicit pass-in.
+	const CvPlotGroup* plotGroup;
 	// The precomputed WAIVED-prereq BUILDING ids (StoneBase EvalState.ObsoleteBuildings ∪ PrereqWaivedBuildings):
 	// a BUILDING prereq atom in this set is SKIPPED by EvalGroup (the engine PrereqInCity/OrBuilding waiver). Computed by
 	// the cascade's AugmentState and pointed-to here; NULL = no waivers (the evaluator stays decoupled from InfoRepo).
@@ -55,7 +66,11 @@ struct CvCascadeEvalCtx
 	// tradition case). Deposits and the operate fixpoint keep the ACTIVE read (a dormant building deposits
 	// nothing, json §3.2).
 	bool buildingAtomsPresence;
-	CvCascadeEvalCtx() : city(NULL), player(NULL), team(NULL), plot(NULL), unit(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL), obsoleteBuildings(NULL), vicinityProvidedBonuses(NULL), buildingAtomsPresence(false) {}
+	// The COUNTED RELIGION under test (the §3.7 `religion:` counted-kind filter, ruling 23): set per religion
+	// by cascadeCountCityReligions while it evaluates the filter predicate; -1 outside that loop. The
+	// IS_STATE_RELIGION predicate reads it against the player's state religion.
+	int religion;
+	CvCascadeEvalCtx() : city(NULL), player(NULL), team(NULL), plot(NULL), unit(NULL), plotGroup(NULL), waivedPrereqBuildings(NULL), activeBuildings(NULL), obsoleteBuildings(NULL), vicinityProvidedBonuses(NULL), buildingAtomsPresence(false), religion(-1) {}
 };
 
 // Evaluator flags (StoneBase's init-only props). For a `requires.build` gate set strictStateReligionForBuild=true.
@@ -91,6 +106,12 @@ int cascadeCountOf(int iTypeId, const std::string& sType, CvCascScope eScope, co
 
 // Evaluate the condition tree against the live engine. `c == NULL` -> true (vacuous).
 bool cascadeEvalCondition(const CvCondition* c, const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlags& flags);
+
+// The §3.7 counted-kind RELIGION filter's count leg (ruling 23): how many of ec.city's present religions match
+// `filter` (each religion tested with ctx.religion set -- the IS_STATE_RELIGION predicate's input). A NULL
+// filter counts every present religion; no city -> 0. The ONE religion-count implementation -- the `religion:`
+// qualifier's resolver (MMKernel::perScale) and any future consumer share it (DEC-single-implementation).
+int cascadeCountCityReligions(const CvCondition* filter, const CvCascadeEvalCtx& ec);
 
 // The ENTITY-LEVEL applicability gate (json.md §2 Applicability; owner 2026-07-08): the entity applies only
 // while `enabled` holds (NULL = always) and `disabled` does not (NULL = never). Same evaluator, §3.9 order.

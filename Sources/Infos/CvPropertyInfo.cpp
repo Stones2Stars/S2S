@@ -94,10 +94,11 @@ void CvPropertyInfo::mapFrom(const picojson::value& entity)
 			m_iFontButtonIndex = jsonIdInt(*io, "fontButtonIndex");               // identity.fontButtonIndex (keep -1 when absent)
 	}
 
-	// text.prereqMin / text.prereqMax -- the prereq display TXT_KEYs. The curator nests these under `text` (NOT
-	// identity): fold_text_to_identity folds only the top-level TEXT_KEYS set (description/adjective/...), and these
-	// live in the nested text block, so they stay there (verified vs shipped property JSON + curate_common.py).
-	if (const picojson::object* txt = jsonChildObj(o, "text"))
+	// identity.text.prereqMin / prereqMax -- the prereq display TXT_KEYs. Ruling 6: `text` is NOT a family --
+	// the TXT_KEY references re-homed under `identity` with the rest of the TEXT (verified vs shipped property
+	// JSON: identity.text.{value,change,changeAllCities,prereqMin,prereqMax}).
+	const picojson::object* pIdentity = jsonChildObj(o, "identity");
+	if (const picojson::object* txt = pIdentity != NULL ? jsonChildObj(*pIdentity, "text") : NULL)
 	{
 		std::string szMin;
 		if (jsonIdStr(*txt, "prereqMin", szMin) && !szMin.empty()) m_szPrereqMinDisplayText = CvWString(szMin.c_str());
@@ -127,11 +128,11 @@ void CvPropertyInfo::mapFrom(const picojson::value& entity)
 			if (e->enabled != NULL || e->disabled != NULL) continue;   // no property authors a conditioned own-source; fail-closed skip
 			const GameObjectTypes eObj = (e->scope == CASC_SCOPE_PLOT) ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
 			if (e->unit == CASC_UNIT_PERCENT)
-				m_PropertyManipulators.addDecaySource(eSelf, e->value100 / 100, iTarget, eObj);
+				m_PropertyManipulators.addDecaySource(eSelf, e->value / 100, iTarget, eObj);
 			else if (e->unit == CASC_UNIT_FLAT && e->hasPer && e->perType == "POPULATION")
-				m_PropertyManipulators.addAttributeConstantSource(eSelf, ATTRIBUTE_POPULATION, e->value100 / 100, eObj);
+				m_PropertyManipulators.addAttributeConstantSource(eSelf, ATTRIBUTE_POPULATION, e->value / 100, eObj);
 			else if (e->unit == CASC_UNIT_FLAT && !e->hasPer)
-				m_PropertyManipulators.addConstantSource(eSelf, e->value100 / 100, eObj);
+				m_PropertyManipulators.addConstantSource(eSelf, e->value / 100, eObj);
 		}
 		if (const picojson::object* po = jsonChildObj(o, "properties"))
 		{

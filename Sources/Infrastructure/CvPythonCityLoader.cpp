@@ -401,7 +401,7 @@ void CvPythonCityLoader::CyCityPythonInterface2(boost::python::class_<CyCity>& i
 		.def("getNumPopulationEmployed", &CyCity::getNumPopulationEmployed, "int ()")
 
 		.def("getBonusCommercePercentChanges", &CyCity::getBonusCommercePercentChanges, "int (eCommerce, eBuilding)")
-		.def("getBaseYieldRateFromBuilding100", &CyCity::getBaseYieldRateFromBuilding100, "int (iYield, iBuilding)")
+		.def("getBaseYieldRateFromBuilding100", &CyCity::getBaseYieldRateFromBuilding, "int (iYield, iBuilding)")
 
 		.def("isAutomatedCanBuild", &CyCity::isAutomatedCanBuild, "bool ()")
 		.def("setAutomatedCanBuild", &CyCity::setAutomatedCanBuild, "void ()")

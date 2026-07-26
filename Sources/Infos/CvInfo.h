@@ -37,6 +37,9 @@
 #include <vector>
 
 namespace picojson { class value; }   // mapFrom's input -- full definition via the PCH umbrella in the .cpp
+class CityContext;    // the per-scope live-state contexts the expected* what-if endpoints take (contexts.md)
+class EmpireContext;
+class CvPlotGroup;    // the trade-network object -- the reserved explicit traded-bonus source (json §3.4)
 
 // Base = CvHotkeyInfo (owner ruling 2026-07-08: "A is fine, we dont care if everything can have a hotkey"). CvHotkeyInfo
 // : CvInfoBase, so every poco is still a CvInfoBase (getType/getDescription/...); the 8 action types (Building/Corporation/
@@ -116,25 +119,56 @@ public:
 			delete pEntry;
 		}
 	}
-	int allowedCap(const std::string& szKind) const                           // -1 = uncapped/absent
-	{ const CvAllowed* a = getAllowed(); return a ? a->cap(szKind) : -1; }
-	const std::vector<int>* grantList(const std::string& szBucket) const      // NULL when absent
-	{ const CvGrants* g = getGrants(); return g ? g->list(szBucket) : NULL; }
-	int grantPulse100(const std::string& szChannel) const { const CvGrants* g = getGrants(); return g ? g->pulse100(szChannel) : 0; }
-	bool grantFlag(const std::string& szName) const       { const CvGrants* g = getGrants(); return g ? g->flag(szName) : false; }
+	int allowedCap(EnAllowedCap eKind) const                                  // -1 = uncapped/absent
+	{ const CvAllowed* a = getAllowed(); return a ? a->cap(eKind) : -1; }
+	const std::vector<int>* grantList(int iBucketKey) const                   // NULL when absent; CvGrants::key handle
+	{ const CvGrants* g = getGrants(); return g ? g->list(iBucketKey) : NULL; }
+	int grantPulse(int iChannelKey) const { const CvGrants* g = getGrants(); return g ? g->pulse(iChannelKey) : 0; }
+	bool grantFlag(int iFlagKey) const       { const CvGrants* g = getGrants(); return g ? g->flag(iFlagKey) : false; }
 
 	// --- the compiled modifier point reads (patterns.md § THE GETTER SETUP; kind and scope are separate
-	// arguments per [DEC-scope-is-an-axis]; the unit picks the Σflat vs Σpercent slot, modifier.md §2) ---
-	int modifier100(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit) const
-	{ const CvModifiers* pMods = getModifiers(); return pMods ? pMods->sum100(eFamily, iKind, eScope, eUnit) : 0; }
+	// arguments per [DEC-scope-is-an-axis]; the unit picks the Σflat vs Σpercent slot, modifier.md §2).
+	// AUDIENCE (json §3.9 `ai`): the default read is HUMAN; bIncludeAiOnly=true adds the ai-sibling sums
+	// (the value an AI player experiences) -- always an explicit ask, never a silent default. ---
+	int modifier(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit, bool bIncludeAiOnly = false) const
+	{ const CvModifiers* pMods = getModifiers(); return pMods ? pMods->sum(eFamily, iKind, eScope, eUnit, bIncludeAiOnly) : 0; }
 	// The straggler scalars (patterns.md getScalar) -- the same compiled-sum fetch through the InfoScalar table.
-	int getScalar100(InfoScalar eScalar, CvCascScope eScope, CvCascUnit eUnit) const
+	int getScalar(InfoScalar eScalar, CvCascScope eScope, CvCascUnit eUnit, bool bIncludeAiOnly = false) const
 	{
 		ModifierFamily eFamily = MODFAM_NONE;
 		int iKind = -1;
 		infoScalarSlot(eScalar, eFamily, iKind);
-		return modifier100(eFamily, iKind, eScope, eUnit);
+		return modifier(eFamily, iKind, eScope, eUnit, bIncludeAiOnly);
 	}
+	// The compiled conditioned list + its per-family range (patterns.md § THE GETTER SETUP read 2: the typed
+	// entries with prebuilt trees -- what the package rebuild, the pedia, and the valuation walk). Empty/0-range
+	// when the type composes no modifiers.
+	const std::vector<const CvModEntry*>& modifierConditioned() const;
+	void modifierConditionedRange(ModifierFamily eFamily, size_t& iBeginOut, size_t& iEndOut) const;
+
+	// --- THE PER-GROUP WHAT-IF VALUATION (patterns.md § THE GETTER SETUP read 3; contexts.md § The read):
+	// pass the live contexts in, get the group's expected ×100 values out -- the compiled unconditioned sums
+	// fetched straight + the conditioned tail through the ONE evaluator over the ctx the CONTEXTS fill, scopes
+	// folded into the experienced-here answer, plots-targets scaled by cityContext.plotAttrs, the audience
+	// resolved from the asking player, the entity active/dormant verdict FED IN via the enabler's operating set
+	// (a what-if NEVER evaluates requires). One-line delegations onto the ONE calc unit (InfoValuation,
+	// [DEC-single-implementation]) -- declared on the base so EVERY rebuilt info serves the same read. ---
+	void expectedFlatYields(const CityContext& cityContext, const EmpireContext& empireContext,
+		const CvPlotGroup* plotGroup, int (&flatYields)[NUM_YIELD_TYPES]) const;
+	void expectedYieldModifiers(const CityContext& cityContext, const EmpireContext& empireContext,
+		const CvPlotGroup* plotGroup, int (&yieldModifiers)[NUM_YIELD_TYPES]) const;
+	void expectedPlotYields(const CityContext& cityContext, const EmpireContext& empireContext,
+		const CvPlotGroup* plotGroup, int (&plotYields)[NUM_YIELD_TYPES]) const;
+	void expectedFlatCommerce(const CityContext& cityContext, const EmpireContext& empireContext,
+		const CvPlotGroup* plotGroup, int (&flatCommerce)[NUM_COMMERCE_TYPES]) const;
+	void expectedWellbeing(const CityContext& cityContext, const EmpireContext& empireContext,
+		const CvPlotGroup* plotGroup, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
+	// The grouped/scalar-family analogues -- the same walk for one vocabulary slot (a defense kind, a
+	// maintenance modifier, an InfoScalar straggler), axes spelled out exactly as the point reads'.
+	int expectedModifier(ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
+		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup) const;
+	int expectedScalar(InfoScalar eScalar, CvCascUnit eUnit,
+		const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup) const;
 
 protected:
 	// --- the load-time WRITE targets (mapFrom-only; the composition declaration). A derived info composes a unit

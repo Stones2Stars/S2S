@@ -174,13 +174,20 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 	if (a == NULL) return true;
 	if (eBucket == EDGEB_PROJECTS)
 	{
-		for (std::map<std::string, int>::const_iterator it = a->all().begin(); it != a->all().end(); ++it)
+		for (int iKind = 0; iKind < NUM_ALLOWEDCAP; ++iKind)
 		{
+			const int iCap = a->cap((EnAllowedCap)iKind);
+			if (iCap < 0) continue;
 			int iCount = -1;
-			if (it->first == "world")      iCount = GC.getGame().getProjectCreatedCount((ProjectTypes)iId);
-			else if (it->first == "team")  iCount = GET_TEAM(kPlayer.getTeam()).getProjectCount((ProjectTypes)iId);
-			else if (it->first == "empire") iCount = GET_TEAM(kPlayer.getTeam()).getProjectCount((ProjectTypes)iId);
-			if (iCount >= 0 && iCount >= it->second) return false;
+			if (iKind == ALLOWEDCAP_WORLD)
+			{
+				iCount = GC.getGame().getProjectCreatedCount((ProjectTypes)iId);
+			}
+			else if (iKind == ALLOWEDCAP_TEAM || iKind == ALLOWEDCAP_EMPIRE)
+			{
+				iCount = GET_TEAM(kPlayer.getTeam()).getProjectCount((ProjectTypes)iId);
+			}
+			if (iCount >= 0 && iCount >= iCap) return false;
 		}
 		return true;
 	}
@@ -190,25 +197,49 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 		// above): world = ever-alive teams holding it (countKnownTechNumTeams -- techs are monotonic, so held
 		// == ever-held); team/empire = the own team's held flag. The live authoring is the 29 world-unique
 		// founder techs (allowed:{world:1}).
-		for (std::map<std::string, int>::const_iterator it = a->all().begin(); it != a->all().end(); ++it)
+		for (int iKind = 0; iKind < NUM_ALLOWEDCAP; ++iKind)
 		{
+			const int iCap = a->cap((EnAllowedCap)iKind);
+			if (iCap < 0) continue;
 			int iCount = -1;
-			if (it->first == "world")       iCount = GC.getGame().countKnownTechNumTeams((TechTypes)iId);
-			else if (it->first == "team"
-			      || it->first == "empire")  iCount = GET_TEAM(kPlayer.getTeam()).isHasTech((TechTypes)iId) ? 1 : 0;
-			if (iCount >= 0 && iCount >= it->second) return false;
+			if (iKind == ALLOWEDCAP_WORLD)
+			{
+				iCount = GC.getGame().countKnownTechNumTeams((TechTypes)iId);
+			}
+			else if (iKind == ALLOWEDCAP_TEAM || iKind == ALLOWEDCAP_EMPIRE)
+			{
+				iCount = GET_TEAM(kPlayer.getTeam()).isHasTech((TechTypes)iId) ? 1 : 0;
+			}
+			if (iCount >= 0 && iCount >= iCap) return false;
 		}
 		return true;
 	}
-	for (std::map<std::string, int>::const_iterator it = a->all().begin(); it != a->all().end(); ++it)
+	for (int iKind = 0; iKind < NUM_ALLOWEDCAP; ++iKind)
 	{
-		const std::string& k = it->first;
-		CascadeCountScope eScope; int iEntity;
-		if (k == "world")       { eScope = CASCADE_COUNT_WORLD;  iEntity = 0; }
-		else if (k == "team")   { eScope = CASCADE_COUNT_TEAM;   iEntity = (int)kPlayer.getTeam(); }
-		else if (k == "empire") { eScope = CASCADE_COUNT_EMPIRE; iEntity = (int)kPlayer.getID(); }
-		else continue;   // category cap -> first-cut TODO
-		if (!bUnit && k == "empire"
+		const int iCap = a->cap((EnAllowedCap)iKind);
+		if (iCap < 0) continue;
+		CascadeCountScope eScope;
+		int iEntity;
+		if (iKind == ALLOWEDCAP_WORLD)
+		{
+			eScope = CASCADE_COUNT_WORLD;
+			iEntity = 0;
+		}
+		else if (iKind == ALLOWEDCAP_TEAM)
+		{
+			eScope = CASCADE_COUNT_TEAM;
+			iEntity = (int)kPlayer.getTeam();
+		}
+		else if (iKind == ALLOWEDCAP_EMPIRE)
+		{
+			eScope = CASCADE_COUNT_EMPIRE;
+			iEntity = (int)kPlayer.getID();
+		}
+		else
+		{
+			continue;   // wonder-category caps -> the per-city category gate (enabler.md §8 open item)
+		}
+		if (!bUnit && iKind == ALLOWEDCAP_EMPIRE
 		// identity.noInstanceLimit waives ONLY the empire (national-wonder) enforcement -- the cap stays
 		// authored (it IS the wonder category); the PALACE relocate case (CvPlayer::isBuildingMaxedOut mirror)
 		&& GC.getBuildingInfo((BuildingTypes)iId).isNoLimit())
@@ -217,7 +248,7 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 		}
 		const int iCount = bUnit ? cascadeTally().unitCount(iEntity, iId, eScope)
 		                         : cascadeTally().buildingCount(iEntity, iId, eScope);
-		if (iCount >= it->second) return false;
+		if (iCount >= iCap) return false;
 	}
 	return true;
 }
@@ -288,7 +319,7 @@ static EkBuildingVerdict ek_classifyBuilding(int b, const CvCity* pCity, CvCasca
 	if (j->requiresOperate() != NULL && !cascadeEvalCondition(j->requiresOperate(), ecOp, flags)) return EK_DORMANT_OPERATE;
 	const std::vector<int>& dorm = j->dormantTriggers();
 	for (size_t i = 0; i < dorm.size(); ++i)
-		if (pCity->hasBuilding((BuildingTypes)dorm[i])) return EK_DORMANT_TRIGGER;
+		if (pCity->getCityContext().hasBuilding(dorm[i])) return EK_DORMANT_TRIGGER;   // the §7 has-list, through the context
 	return EK_ACTIVE;
 }
 
@@ -312,7 +343,8 @@ void EnablerKernel::recomputeOperatingBuildingsInto(const CvCity* pCity, std::se
 	if (pCity == NULL) return;
 	const CvPlayer& kOwner = GET_PLAYER(pCity->getOwner());
 	CvCascadeEvalCtx ecOp;
-	ecOp.city = pCity; ecOp.plot = pCity->plot(); ecOp.player = &kOwner; ecOp.team = &GET_TEAM(kOwner.getTeam());
+	pCity->getCityContext().fillEvalCtx(ecOp);      // city+plot -- the contexts fill the eval state (contexts.md)
+	kOwner.getEmpireContext().fillEvalCtx(ecOp);    // player+team
 	ecOp.activeBuildings = NULL;   // break recursion: operate's own BUILDING_ atoms resolve via raw presence
 	CvCascadeEvalFlags flags;      // default flags
 	// enabler-frontier-perf.md Part D (safe subset): iterate the city's PRESENT buildings, not a 0..NumBuildingInfos
@@ -388,7 +420,8 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 	OperatingBuildings& f = pCity->m_operatingBuildings;   // AUTHORITATIVE
 	const CvPlayer& kOwner = GET_PLAYER(pCity->getOwner());
 	CvCascadeEvalCtx ecOp;
-	ecOp.city = pCity; ecOp.plot = pCity->plot(); ecOp.player = &kOwner; ecOp.team = &GET_TEAM(kOwner.getTeam());
+	pCity->getCityContext().fillEvalCtx(ecOp);      // city+plot -- the contexts fill the eval state (contexts.md)
+	kOwner.getEmpireContext().fillEvalCtx(ecOp);    // player+team
 	ecOp.activeBuildings = NULL;                    // break recursion (operate BUILDING_ atoms -> raw presence)
 	ecOp.vicinityProvidedBonuses = &f.provided;     // the LIVE authoritative supply (mutated as the ripple runs)
 	CvCascadeEvalFlags flags;
@@ -407,7 +440,7 @@ static void ek_recheckActiveSet(const CvCity* pCity, const std::vector<int>& see
 		const bool wasObs = (f.obsolete.count(b) != 0);
 		const bool was = (f.active.count(b) != 0);
 		bool nowObs = false, now = false;
-		if (pCity->hasBuilding((BuildingTypes)b))
+		if (pCity->getCityContext().hasBuilding(b))   // present at all -- the §7 has-list, through the context
 		{
 			const EkBuildingVerdict v = ek_classifyBuilding(b, pCity, ecOp, flags);
 			nowObs = (v == EK_OBSOLETE);

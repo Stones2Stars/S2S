@@ -3,20 +3,19 @@
 #define CV_JSON_IMPROVEMENT_INFO_H
 
 //
-//	CvImprovementInfo -- the JSON real poco for tile IMPROVEMENTS (the CvXInfo replacement). Live-caller surface,
-//	mapped from the curator's real shapes. The terrain/feature/irrigation VALIDITY prereqs live in `requires.build`
-//	on the CvInfo base (store-inverted by the curator, like routes) -- the cascade GENERATE gate reads that tree
-//	directly, but the legacy placement/validity getters (isWaterImprovement/getTerrainMakesValid/...) ALSO walk it
-//	on demand (below) so the EXE-shim consumer surface keeps working. HUMAN-native values (the cascade ×100s on its
-//	side). No cascade here.
-//
-//	Live callers (verified 2026-07-07): getYieldChange/getDefenseModifier -> CvPlot; getHealthPercent/getHappiness ->
-//	CvCity; getCulture -> BuildsRepo; getUpgradeTime/getImprovementUpgrade -> upgrade chain; isActsAsCity/
-//	isImprovementBonusTrade/isWaterImprovement/isMilitaryStructure -> worker+unit AI; getPillageGold -> pillage.
+//	CvImprovementInfo -- the IMPROVEMENT poco rebuilt to the exemplar surface (patterns.md § THE GETTER SETUP).
+//	Styled for the JSON anatomy (json.md §2): the improvement's OWN tile output (modifier.md §5 plot-substrate
+//	own-output -- base flats PLUS every conditioned entry: HAS_IRRIGATION / HAS_RIVER / HAS_BONUS / tech-gated,
+//	and the reverse-landed building/civic/tech conditioned entries) lives on the compiled modifier surface; the
+//	point reads fetch the unconditioned sums, the conditioned tail is the base conditioned-list access. The
+//	placement/validity verdicts are MATERIALIZED at mapFrom from the composed requires.build tree
+//	([DEC-materialize-at-mapfrom] -- the getters are bare member reads, never per-call tree walks). The upgrade
+//	chain and the identity.bonuses discovery/depletion/trade data are genuine bespoke build/upgrade data. No
+//	legacy-mirror modifier member survives ([DEC-new-getter-surface]).
 //
 
 #include "CvInfo.h"
-#include "Defines/CvEnums.h"   // NUM_YIELD_TYPES / ImprovementTypes / BonusTypes / MapCategoryTypes / NO_*
+#include "Defines/CvEnums.h"   // NUM_YIELD_TYPES / ImprovementTypes / BonusTypes / MapCategoryTypes / BuildTypes
 #include <vector>
 #include <map>
 #include <set>
@@ -28,136 +27,112 @@ class CvImprovementInfo : public CvInfo
 public:
 	CvImprovementInfo();
 
-	int getYieldChange(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiYieldChange[i] : 0; }
-	int* getYieldChangeArray() const { return const_cast<int*>(m_aiYieldChange); }   // real member row (base plot yield)
-	int getDefenseModifier() const { return m_iDefenseModifier; }
-	int getAirBombDefense() const { return m_iAirBombDefense; }
-	int getHealthPercent() const { return m_iHealthPercent; }
-	int getHappiness() const { return m_iHappiness; }
-	int getCulture() const { return m_iCulture; }
-	int getPillageGold() const { return m_iPillageGold; }
-	int getUniqueRange() const { return m_iUniqueRange; }
-	int getCultureRange() const { return m_iCultureRange; }
-	int getFeatureGrowthProbability() const { return m_iFeatureGrowthProbability; }
-	int getUpgradeTime() const { return m_iUpgradeTime; }
-	int getGoodyUniqueRange() const { return m_iGoodyUniqueRange; }   // mapGeneration.goodyRange
-	int getTilesPerGoody() const { return m_iTilesPerGoody; }        // mapGeneration.tilesPerGoody
-	int getSeeFrom() const { return m_iSeeFrom; }                    // vision.plot.seeFrom.flat
-	int getVisibilityChange() const { return m_iVisibilityChange; }  // vision.plot.visibilityRange.flat
-	int getAdvancedStartCost() const { return m_iAdvancedStartCost; }// identity.advancedStart.cost
-	// sound.soundscape -> the runtime audio-manager index, resolved at info-load (mapFrom) via the SAME
-	// gDLL->getAudioTagIndex(tag, AUDIOTAG_SOUNDSCAPE) the archived CvImprovementInfo::read used. -1 == "no sound"
-	// (legacy's absent-tag read default) for the improvements that author no soundscape.
+	virtual void mapFrom(const picojson::value& entity);
+
+	// ======================= 1. SECTIONS -- whole typed objects =======================
+	virtual const CvRequires*  getRequires()  const { return &m_requires; }
+	virtual const CvEdges*     getEdges()     const { return &m_edges; }
+	virtual const CvGrants*    getGrants()    const { return &m_grants; }
+	virtual const CvTriggers*  getTriggers()  const { return &m_triggers; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
+
+	// ======================= 2. MODIFIER GROUPS -- point reads over the compiled sums ========================
+	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. Census
+	// participation: food/production/commerce plot flats (own tile output); culture.plot.flat -- the Super
+	// Forts plot culture, a CommerceTypes channel; defense.plot.{amount.percent, air.flat}. The conditioned
+	// yield entries -- irrigated / riverside / per-bonus / tech-gated + the reverse-landed cross-entity
+	// boosts -- are the compiled conditioned list, walked by the plot package rebuild and the pedia.)
+	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
+	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	int getFlatCommerce(CommerceTypes eCommerce, CvCascScope eScope) const
+	{ return m_modifiers.sum(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	// Scope-aware unit axis: DEFENSE_AIR is the one scope-split defense kind (plot = the FLAT rolled air-defense
+	// magnitude the improvements author; city = the PERCENT damage modifier) -- the scope-blind overload would
+	// answer the city plane for the plot air read.
+	int getDefense(DefenseKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_DEFENSE, eKind, eScope, infoDefenseUnit(eKind, eScope)); }
+
+	// ======================= 3. INTRINSIC -- bare typed reads (the census identity set) ======================
+	int getPillageGold() const { return m_iPillageGold; }                       // identity.pillageGold
+	int getCultureRange() const { return m_iCultureRange; }                     // identity.cultureRange
+	int getFeatureGrowthProbability() const { return m_iFeatureGrowthProbability; } // identity.featureGrowth
+	int getUpgradeTime() const { return m_iUpgradeTime; }                       // identity.upgradeTime
+	int getAdvancedStartCost() const { return m_iAdvancedStartCost; }           // identity.advancedStart.cost
+	bool isUpgradeRequiresFortify() const { return m_bUpgradeRequiresFortify; } // identity.upgradeRequiresFortify
+	// vision -- the §9 bespoke line-of-sight block (vision.plot.{seeFrom,visibilityRange}.flat)
+	int getSeeFrom() const { return m_iSeeFrom; }
+	int getVisibilityChange() const { return m_iVisibilityChange; }
+	// sound.soundscape -> the runtime audio-manager index, resolved at info-load via gDLL->getAudioTagIndex;
+	// -1 == "no sound" (the legacy absent-tag read default).
 	int getWorldSoundscapeScriptId() const { return m_iWorldSoundscapeScriptId; }
-	bool isUpgradeRequiresFortify() const { return m_bUpgradeRequiresFortify; }   // identity.upgradeRequiresFortify
-	// EXE-bound surface (mapscript/EXE map gen -- served by the CvImprovementInfo shim leaf, cascade-engine-430.md §3)
+	// mapGeneration
+	int getUniqueRange() const { return m_iUniqueRange; }         // mapGeneration.uniqueRange
+	int getGoodyUniqueRange() const { return m_iGoodyUniqueRange; } // mapGeneration.goodyRange
+	int getTilesPerGoody() const { return m_iTilesPerGoody; }     // mapGeneration.tilesPerGoody
+	// EXE-bound surface (mapscript/EXE map gen)
 	const char* getArtDefineTag() const { return m_szArtDefineTag.c_str(); }
 	DllExport bool isGoody() const { return m_bGoody; }
 	DllExport bool isRequiresRiverSide() const { return m_bRequiresRiverSide; }
-	DllExport const CvArtInfoImprovement* getArtInfo() const;   // EXE map-gen art (merged from the removed shim leaf)
-	const char* getButton() const;                              // art-define button (else CvInfoBase's empty m_szButton)
+	DllExport const CvArtInfoImprovement* getArtInfo() const;
+	const char* getButton() const;   // art-define button (else CvInfoBase's empty m_szButton)
 
-	ImprovementTypes getImprovementUpgrade() const { return m_eImprovementUpgrade; }
-	ImprovementTypes getImprovementPillage() const { return m_eImprovementPillage; }
-	BonusTypes getBonusChange() const { return m_eBonusChange; }
+	// --- the UPGRADE CHAIN + placement-transform outcomes (genuine bespoke build/upgrade data) ---
+	ImprovementTypes getImprovementUpgrade() const { return m_eImprovementUpgrade; }   // identity.upgradesTo (FK)
+	ImprovementTypes getImprovementPillage() const { return m_eImprovementPillage; }   // identity.pillageTo (FK)
+	BonusTypes getBonusChange() const { return m_eBonusChange; }                       // identity.bonusChange (FK)
+	const std::vector<int>& getAlternativeImprovementUpgradeTypes() const { return m_aiAlternativeImprovementUpgradeTypes; }
+	bool isAlternativeImprovementUpgradeType(int iImprovement) const;   // membership (an IMPROVEMENT_ engine id)
+	const std::vector<int>& getFeatureChangeTypes() const { return m_aiFeatureChangeTypes; }
+	bool isFeatureChangeType(int iFeature) const;                       // membership (a FEATURE_ engine id)
 
 	bool isActsAsCity() const { return m_bActsAsCity; }
 	bool isMilitaryStructure() const { return m_bMilitaryStructure; }
-	bool isCarriesIrrigation() const { return m_bCarriesIrrigation; }   // KEPT in identity (propagation is live code)
+	bool isCarriesIrrigation() const { return m_bCarriesIrrigation; }
 	bool isOutsideBorders() const { return m_bOutsideBorders; }
 	bool isBombardable() const { return m_bBombardable; }
 	bool isZOCSource() const { return m_bZOCSource; }
 	bool isExtraterresial() const { return m_bExtraterrestrial; }
-	// OR the universal provider flag with the per-bonus `identity.bonuses.{BONUS}.trade` set (archive:
-	// m_bIsUniversalTradeBonusProvider || m_paImprovementBonus[iBonus].m_bBonusTrade). Feeds CvGlobals'
+	bool isPlacesBonus() const { return m_bPlacesBonus; }         // identity placement-transform outcome flags
+	bool isPlacesFeature() const { return m_bPlacesFeature; }
+	bool isPlacesTerrain() const { return m_bPlacesTerrain; }
+	bool isChangeRemove() const { return m_bChangeRemove; }
+	// OR the universal provider flag with the per-bonus `identity.bonuses.{BONUS}.trade` set. Feeds CvGlobals'
 	// getProvidedByImprovementType / getTradeProvidingImprovements reverse-scans, so it must be per-bonus.
 	bool isImprovementBonusTrade(int iBonus = -1) const
 	{ return m_bUniversalBonusTrade || (iBonus >= 0 && m_bonusTradeIds.find(iBonus) != m_bonusTradeIds.end()); }
-	bool isPlacesBonus() const { return m_bPlacesBonus; }         // identity.placesBonus (placement-transform outcome; KEPT on identity)
-	bool isPlacesFeature() const { return m_bPlacesFeature; }     // identity.placesFeature
-	bool isPlacesTerrain() const { return m_bPlacesTerrain; }     // identity.placesTerrain
-	bool isChangeRemove() const { return m_bChangeRemove; }       // identity.changeRemove
-	bool isNational() const { return false; }                    // CURATOR-GAP (verified): bNational authored by 0 improvements (grep CIV4ImprovementInfos.xml)
-	bool isGlobal() const { return false; }                      // CURATOR-GAP (verified): bGlobal  authored by 0 improvements (grep CIV4ImprovementInfos.xml)
+	int getImprovementBonusDiscoverRand(int iBonus) const { return mapGet(m_bonusDiscoverRand, iBonus); }  // identity.bonuses.{B}.discoverRand
+	int getImprovementBonusDepletionRand(int iBonus) const { return mapGet(m_bonusDepletionRand, iBonus); } // identity.bonuses.{B}.depletionRand
 
-	// --- placement/validity predicates -- PLACEMENT DOMAIN (curate_improvement.py requires_fn), real data walked
-	// from `requires.build` (the CvCondition tree the base already parses via mutRequires()/CJK_REQUIRES
-	// dispatch). A length-1 "MakesValid" OR-alternative collapses to a bare token sitting DIRECTLY in `all` --
-	// indistinguishable by shape alone from the true AND-mandatory token of the same name (HAS_PEAK, HAS_RIVER); the
-	// .cpp tree-walk disambiguates these two using a direct-vs-nested occurrence count, verified against the live
-	// CIV4ImprovementInfos.xml (every record where the OR-side flag is set, the AND-side flag is ALSO set, so the
-	// occurrence count alone recovers both booleans correctly for every real record -- see .cpp for the citations).
-	TechTypes getPrereqTech() const;              // requires.build's own PrereqTech PRESENCE atom (TECH_* id)
-	bool isRequiresFeature() const;
-	bool isRequiresFlatlands() const;
-	bool isRequiresIrrigation() const;
-	bool isWaterImprovement() const;
-	bool isCanMoveSeaUnits() const;                // IS_LAND && HAS_COAST (coastal-land domain)
-	bool isPeakImprovement() const;
-	bool isNoFreshWater() const;                   // requires.build.noneOf HAS_FRESHWATER
+	// --- the PLACEMENT/VALIDITY verdicts -- MATERIALIZED at mapFrom from the composed requires.build tree
+	// (curate_improvement.py requires_fn store-inverts the legacy placement fields into requires.build; the
+	// one walk in mapFrom recovers them into typed members, disambiguating the collapsed length-1 MakesValid
+	// OR-alternative by the direct-vs-nested occurrence count -- see the .cpp). Getters are bare reads. ---
+	TechTypes getPrereqTech() const { return m_ePrereqTech; }
+	bool isRequiresFeature() const { return m_bRequiresFeature; }
+	bool isRequiresFlatlands() const { return m_bRequiresFlatlands; }
+	bool isRequiresIrrigation() const { return m_bRequiresIrrigation; }
+	bool isWaterImprovement() const { return m_bWaterImprovement; }
+	bool isCanMoveSeaUnits() const { return m_bCanMoveSeaUnits; }   // IS_LAND && HAS_COAST (coastal-land domain)
+	bool isPeakImprovement() const { return m_bPeakImprovement; }
+	bool isNoFreshWater() const { return m_bNoFreshWater; }         // requires.build.noneOf HAS_FRESHWATER
+	bool isHillsMakesValid() const { return m_bHillsMakesValid; }
+	bool isFreshWaterMakesValid() const { return m_bFreshWaterMakesValid; }
+	bool isRiverSideMakesValid() const { return m_bRiverSideMakesValid; }
+	bool isPeakMakesValid() const { return m_bPeakMakesValid; }
+	bool getTerrainMakesValid(int iTerrain) const { return m_terrainMakesValid.count(iTerrain) != 0; }
+	bool getFeatureMakesValid(int iFeature) const { return m_featureMakesValid.count(iFeature) != 0; }
+	bool isImprovementBonusMakesValid(int iBonus) const { return m_bonusMakesValid.count(iBonus) != 0; }
+	// PrereqNatureYield -- the placement `{natureYield:{food:..}}` min-threshold atoms in requires.build,
+	// parsed by the shared condition parser as CASC_PRED_NATURE_YIELD predicate nodes (channel in `id`,
+	// threshold in `min`) and MATERIALIZED at mapFrom from the composed tree (the materializeValidity walk).
+	int getPrereqNatureYield(int iYield) const
+	{ return (iYield >= 0 && iYield < NUM_YIELD_TYPES) ? m_aiPrereqNatureYield[iYield] : 0; }
 
-	bool isHillsMakesValid() const;
-	bool isFreshWaterMakesValid() const;
-	bool isRiverSideMakesValid() const;
-	bool isPeakMakesValid() const;
-	bool getTerrainMakesValid(int i) const;        // requires.build.any {terrain:[...]} membership
-	bool getFeatureMakesValid(int i) const;        // requires.build.any {feature:[...]} membership
-	bool isImprovementBonusMakesValid(int i) const;// requires.build.any {bonus:[...]} membership (PRESENCE atom)
-
-	int getImprovementBonusDiscoverRand(int i) const { return mapGet(m_bonusDiscoverRand, i); }   // identity.bonuses.{BONUS}.discoverRand
-	int getImprovementBonusDepletionRand(int i) const { return mapGet(m_bonusDepletionRand, i); }  // identity.bonuses.{BONUS}.depletionRand
-
-	int getAlternativeImprovementUpgradeType(int i) const
-	{ return (i >= 0 && i < (int)m_aiAlternativeImprovementUpgradeTypes.size()) ? m_aiAlternativeImprovementUpgradeTypes[i] : -1; }
-	int getNumAlternativeImprovementUpgradeTypes() const { return (int)m_aiAlternativeImprovementUpgradeTypes.size(); }
-	bool isAlternativeImprovementUpgradeType(int i) const;   // membership test (i = an IMPROVEMENT_ engine id, not an index)
-
-	// FeatureChangeTypes -> identity.featureChanges (placement-transform outcome list; KEPT on identity by the curator).
-	// getFeatureChangeType(i) indexes the list (i = index); isFeatureChangeType(i) is a membership test (i = a FEATURE_ id).
-	int getFeatureChangeType(int i) const
-	{ return (i >= 0 && i < (int)m_aiFeatureChangeTypes.size()) ? m_aiFeatureChangeTypes[i] : -1; }
-	int getNumFeatureChangeTypes() const { return (int)m_aiFeatureChangeTypes.size(); }
-	bool isFeatureChangeType(int i) const;
-
-	// CURATOR-GAP (by design): Categories are dropped by the curator (curate_improvement.py EXTRA_DROP: "Categories
-	// ... -> drop") -- no source. Always-empty surface (num 0; getCategory never validly indexed -> -1; isCategory false).
-	int getCategory(int /*i*/) const { return -1; }
-	int getNumCategories() const { return 0; }
-	bool isCategory(int /*i*/) const { return false; }
-
-	// Conditional plot-yield deposits -- read from the yield families' `flat` ARRAYS (food/production/commerce ->
-	// plot.flat), where the curator folds base + condition-gated bumps together (curate_improvement.py post_process
-	// _inject): a bare number is the base YieldChange; a {value,enabled} entry is a conditional whose gate selects the
-	// legacy getter -- "HAS_IRRIGATION"->Irrigated, "HAS_RIVER"->RiverSide, {HAS_BONUS:B}->ImprovementBonusYield,
-	// {type:TECH,scope:team}->TechYieldChanges. mapFrom's readConditionalYields extracts all of them in one pass
-	// (which also FIXES the base getYieldChange -- jsonFamVal reads only a bare scalar, so it returned 0 for arrays).
-	int getRiverSideYieldChange(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiRiverSideYieldChange[i] : 0; }
-	int getIrrigatedYieldChange(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiIrrigatedYieldChange[i] : 0; }
-	int getImprovementBonusYield(int i, int j) const;   // per-bonus (i = BONUS id, j = yield); {HAS_BONUS:B}-gated entry
-	int getTechYieldChanges(int i, int j) const;        // per-tech  (i = TECH id,  j = yield); {type:TECH,scope:team}-gated
-	int* getRiverSideYieldChangeArray() const { return const_cast<int*>(m_aiRiverSideYieldChange); }
-	int* getIrrigatedYieldChangeArray() const { return const_cast<int*>(m_aiIrrigatedYieldChange); }
-	int* getTechYieldChangesArray(int i) const;         // row for TECH i, or NULL when it deposits none (legacy NULL semantics)
-	// PrereqNatureYield -- the placement `{natureYield:{food:..}}` min-threshold atom in requires.build.all. The shared
-	// condition parser drops it (CvJsonConditionParse.cpp has no natureYield case -> CASC_PRED_UNKNOWN, value lost), so
-	// mapFrom reads it DIRECTLY from the raw requires.build.all JSON (readPrereqNatureYield).
-	int getPrereqNatureYield(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiPrereqNatureYield[i] : 0; }
-	// RouteYieldChanges live ROUTE-side in the data (deliveryguy, modifier.md §4: the route governs the
-	// improvements it upgrades -- curate_route.py authors {food|production|commerce}.plot.improvements.{IMP});
-	// the legacy improvement-side readers (CvPlot::calculateImprovementYieldChange + the widget help) still ask
-	// the IMPROVEMENT, so the rows are RECONSTRUCTED at load by the loadJson reverse pass (the
-	// route<-bonus prereq pattern). Same row/NULL semantics as TechYieldChanges above.
-	int getRouteYieldChanges(int i, int j) const;       // per-route (i = ROUTE id, j = yield)
-	int* getRouteYieldChangesArray(int i) const;        // row for ROUTE i, or NULL when it deposits none
-	void addRouteYieldChange(int iRoute, int iYield, int iValue);   // the load reverse-pass writer
-	// CURATOR-GAP (verified): bObsoleteBonusMakesValid and bNotOnAnyBonus are authored by ZERO improvements (grep
-	// CIV4ImprovementInfos.xml -> 0 matches each), so nothing is emitted and there is no data to serve.
-	bool isImprovementObsoleteBonusMakesValid(int /*i*/) const { return false; }
-	bool isNotOnAnyBonus() const { return false; }
-	// RUNTIME cross-reference cache (not a curated field): the doPostLoadCaching scan of every BuildInfo for
-	// getImprovement()==this rebuilds it at load (mirrors the legacy cache). Worker AI reads it.
+	// --- RUNTIME cross-reference (not curated): doPostLoadCaching scans every BuildInfo for
+	// getImprovement()==this and rebuilds this list at load. Worker AI reads it. ---
 	const std::vector<BuildTypes>& getBuildTypes() const { return m_aeBuildTypes; }
-	void addBuildType(BuildTypes eBuild) { m_aeBuildTypes.push_back(eBuild); }   // load-time reverse-index writer (doPostLoadCaching)
+	void addBuildType(BuildTypes eBuild) { m_aeBuildTypes.push_back(eBuild); }   // load-window writer
+
 	// The improvement's property sources are authored as `triggers` property-delta entries (json.md §5) and
 	// BRIDGED back into this object in mapFrom (CascadePropertyBridge::bridgePulses) so the KEEP-legacy plot
 	// gather delivers them.
@@ -165,77 +140,88 @@ public:
 
 	const std::vector<MapCategoryTypes>& getMapCategories() const { return m_aeMapCategories; }
 
-	virtual void mapFrom(const picojson::value& entity);
-
-private:
-	// mapFrom helpers (defined in the .cpp where the full picojson type is available):
-	void readConditionalYields(const picojson::value& entity);   // base + gated deposits from the yield-family `flat` arrays
-	void readPrereqNatureYield(const picojson::value& entity);   // requires.build.all {natureYield:{...}} thresholds (raw JSON)
-
-public:
-	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvRequires*  getRequires()  const { return &m_requires; }
-	virtual const CvGrants*    getGrants()    const { return &m_grants; }
-	virtual const CvTriggers*      getTriggers()  const { return &m_triggers; }
-	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
-
 protected:
 	virtual CvRequires*  mutRequires()  { return &m_requires; }
+	virtual CvEdges*     mutEdges()     { return &m_edges; }
 	virtual CvGrants*    mutGrants()    { return &m_grants; }
-	virtual CvTriggers*      mutTriggers()  { return &m_triggers; }
+	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
-	static int mapGet(const std::map<int, int>& m, int k) { std::map<int, int>::const_iterator it = m.find(k); return it != m.end() ? it->second : 0; }
+	// mapFrom helper (defined in the .cpp):
+	void materializeValidity();   // the ONE requires.build walk -> typed members (incl. the natureYield thresholds)
 
+	static int mapGet(const std::map<int, int>& valueMap, int iKey)
+	{
+		std::map<int, int>::const_iterator valueIter = valueMap.find(iKey);
+		return valueIter != valueMap.end() ? valueIter->second : 0;
+	}
+
+	// --- the composed section units ---
 	CvRequires  m_requires;
+	CvEdges     m_edges;
 	CvGrants    m_grants;
-	CvTriggers      m_triggers;
+	CvTriggers  m_triggers;
 	CvModifiers m_modifiers;
-	int m_aiYieldChange[NUM_YIELD_TYPES];  // food/production/commerce .plot.flat
-	int m_iDefenseModifier;                // defense.plot.amount.percent
-	int m_iAirBombDefense;                 // defense.plot.air.flat (data-migration ruling)
-	int m_iHealthPercent;                  // BALANCE-CUT: iHealthPercent dropped from improvements (curate_improvement.py:59) -> always 0
-	int m_iHappiness;                      // identity.happiness (leftover -> identity)
-	int m_iCulture;                        // culture.plot.flat (Super Forts plot culture)
-	int m_iPillageGold;                    // identity.pillageGold
-	int m_iUniqueRange;                    // mapGeneration.uniqueRange
-	int m_iCultureRange;                   // identity.cultureRange (stays identity)
-	int m_iFeatureGrowthProbability;       // identity.featureGrowth (stays identity)
-	int m_iUpgradeTime;                    // identity.upgradeTime
-	ImprovementTypes m_eImprovementUpgrade;// identity.upgradesTo (FK; self-FKs resolve fully at the full-registry re-run)
-	ImprovementTypes m_eImprovementPillage;// identity.pillageTo (FK)
-	BonusTypes m_eBonusChange;             // identity.bonusChange (FK)
-	bool m_bActsAsCity, m_bMilitaryStructure, m_bCarriesIrrigation;
-	bool m_bOutsideBorders, m_bBombardable, m_bZOCSource, m_bExtraterrestrial, m_bUniversalBonusTrade;
-	bool m_bGoody;                         // mapGeneration.goody (EXE-bound isGoody)
-	bool m_bRequiresRiverSide;             // mapGeneration.requiresRiverSide (EXE-bound isRequiresRiverSide; also a HAS_RIVER requires.build predicate)
-	std::string m_szArtDefineTag;          // world.art.icon (ART_DEF_* tag; the EXE map-gen art lookup key)
-	int m_iWorldSoundscapeScriptId;        // sound.soundscape -> audio-manager index (AUDIOTAG_SOUNDSCAPE); -1 when absent (legacy read default)
-	std::vector<MapCategoryTypes> m_aeMapCategories;
 
-	int m_iGoodyUniqueRange;               // mapGeneration.goodyRange
-	int m_iTilesPerGoody;                  // mapGeneration.tilesPerGoody
-	int m_iSeeFrom;                        // vision.plot.seeFrom.flat
-	int m_iVisibilityChange;               // vision.plot.visibilityRange.flat
-	int m_iAdvancedStartCost;              // identity.advancedStart.cost
-	bool m_bUpgradeRequiresFortify;        // identity.upgradeRequiresFortify
-	bool m_bPlacesBonus, m_bPlacesFeature, m_bPlacesTerrain, m_bChangeRemove;   // identity placement-transform flags
+	// --- the intrinsic identity members (materialized once at mapFrom; getters are bare reads) ---
+	int m_iPillageGold;
+	int m_iCultureRange;
+	int m_iFeatureGrowthProbability;
+	int m_iUpgradeTime;
+	int m_iAdvancedStartCost;
+	int m_iSeeFrom;
+	int m_iVisibilityChange;
+	int m_iWorldSoundscapeScriptId;
+	int m_iUniqueRange;
+	int m_iGoodyUniqueRange;
+	int m_iTilesPerGoody;
+	ImprovementTypes m_eImprovementUpgrade;   // identity.upgradesTo (FK; self-FKs resolve at the full-registry re-run)
+	ImprovementTypes m_eImprovementPillage;   // identity.pillageTo (FK)
+	BonusTypes m_eBonusChange;                // identity.bonusChange (FK)
+	bool m_bActsAsCity;
+	bool m_bMilitaryStructure;
+	bool m_bCarriesIrrigation;
+	bool m_bOutsideBorders;
+	bool m_bBombardable;
+	bool m_bZOCSource;
+	bool m_bExtraterrestrial;
+	bool m_bUniversalBonusTrade;
+	bool m_bUpgradeRequiresFortify;
+	bool m_bPlacesBonus;
+	bool m_bPlacesFeature;
+	bool m_bPlacesTerrain;
+	bool m_bChangeRemove;
+	bool m_bGoody;                 // mapGeneration.goody (EXE-bound isGoody)
+	bool m_bRequiresRiverSide;     // mapGeneration.requiresRiverSide (EXE-bound; also a HAS_RIVER requires.build predicate)
+	std::string m_szArtDefineTag;  // world.art.icon (ART_DEF_* tag; the EXE map-gen art lookup key)
+	std::vector<MapCategoryTypes> m_aeMapCategories;
 	std::vector<int> m_aiAlternativeImprovementUpgradeTypes;   // identity.alternativeUpgrades (FK-resolved IMPROVEMENT_ ids)
 	std::vector<int> m_aiFeatureChangeTypes;                   // identity.featureChanges (FK-resolved FEATURE_ ids)
 	std::map<int, int> m_bonusDiscoverRand;    // identity.bonuses.{BONUS}.discoverRand
 	std::map<int, int> m_bonusDepletionRand;   // identity.bonuses.{BONUS}.depletionRand
-	std::set<int> m_bonusTradeIds;             // identity.bonuses.{BONUS}.trade -- per-bonus tradeable set (OR'd w/ universal flag)
+	std::set<int> m_bonusTradeIds;             // identity.bonuses.{BONUS}.trade (OR'd with the universal flag)
 
-	int m_aiRiverSideYieldChange[NUM_YIELD_TYPES];   // <yield>.plot.flat "HAS_RIVER"-gated entries (RiverSideYieldChange)
-	int m_aiIrrigatedYieldChange[NUM_YIELD_TYPES];   // <yield>.plot.flat "HAS_IRRIGATION"-gated entries (IrrigatedYieldChange)
-	int m_aiPrereqNatureYield[NUM_YIELD_TYPES];      // requires.build.all {natureYield:{...}} min thresholds
-	std::map<int, std::vector<int> > m_techYieldChanges;   // TECH id -> NUM_YIELD_TYPES row ({type:TECH,scope:team}-gated)
-	std::map<int, std::vector<int> > m_routeYieldChanges;  // ROUTE id -> NUM_YIELD_TYPES row (load reverse-pass, see getRouteYieldChanges)
-	std::map<int, std::vector<int> > m_bonusYieldChanges;  // BONUS id -> NUM_YIELD_TYPES row ({HAS_BONUS:B}-gated)
+	// --- the materialized placement/validity verdicts (the mapFrom requires.build walk) ---
+	TechTypes m_ePrereqTech;
+	bool m_bRequiresFeature;
+	bool m_bRequiresFlatlands;
+	bool m_bRequiresIrrigation;
+	bool m_bWaterImprovement;
+	bool m_bCanMoveSeaUnits;
+	bool m_bPeakImprovement;
+	bool m_bNoFreshWater;
+	bool m_bHillsMakesValid;
+	bool m_bFreshWaterMakesValid;
+	bool m_bRiverSideMakesValid;
+	bool m_bPeakMakesValid;
+	std::set<int> m_terrainMakesValid;   // requires.build.any {terrain:[...]} membership (TERRAIN_ ids)
+	std::set<int> m_featureMakesValid;   // requires.build.any {feature:[...]} membership (FEATURE_ ids)
+	std::set<int> m_bonusMakesValid;     // requires.build.any {bonus:[...]} membership (BONUS_ presence atoms)
+	int m_aiPrereqNatureYield[NUM_YIELD_TYPES];   // requires.build {natureYield:{...}} min thresholds (CASC_PRED_NATURE_YIELD atoms)
 
-	std::vector<BuildTypes> m_aeBuildTypes;          // CURATOR-GAP always empty -- see getBuildTypes
-	CvPropertyManipulators m_PropertyManipulators;   // fed from the triggers PROPERTY pulses (CascadePropertyBridge::bridgePulses)
+	std::vector<BuildTypes> m_aeBuildTypes;          // runtime cross-reference (doPostLoadCaching)
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the triggers PROPERTY pulses (CascadePropertyBridge)
 };
 
 #endif // CV_JSON_IMPROVEMENT_INFO_H

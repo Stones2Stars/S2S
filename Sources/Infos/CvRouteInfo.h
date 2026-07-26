@@ -3,17 +3,20 @@
 #define CV_JSON_ROUTE_INFO_H
 
 //
-//	CvRouteInfo -- the JSON real poco for ROUTES (the CvXInfo replacement). LIVE surface only (owner ruling
-//	2026-07-07): the getters a getRouteInfo(...) caller actually reads. Base traversal cost is intrinsic
-//	(identity.movementCost / flatMovementCost -- the established curator pattern, curate_route.py:10); the tech-gated
-//	move DELTAS are the `movement` family on the route (curate_route.py:13), reconstructed here into getTechMovementChange.
-//	The route's improvement-keyed yield boost (production.plot.improvements.{X}) has NO getRouteInfo getter -> it is
-//	cascade-only, NOT a poco member. Values human-native; the cascade ×100s on its side.
+//	CvRouteInfo -- the ROUTE poco rebuilt to the exemplar surface (patterns.md § THE GETTER SETUP).
+//	Styled for the JSON anatomy (json.md §2): the route's OWN tile output (modifier.md §5 plot-substrate
+//	own-output) lives on the compiled modifier surface -- the point reads fetch the unconditioned plot flats;
+//	the improvement-keyed yield boosts (the governing-deliverer shape, modifier.md §4: the route governs the
+//	improvements it upgrades, {yield}.plot.improvements.{IMP}) and the tech-conditioned move deltas
+//	(movement.plot.flat, enabled:{tech}) are compiled keyed/conditioned entries -- entry-list reads by design.
+//	Base traversal cost is intrinsic self-data (identity.movementCost / flatMovementCost). The bonus
+//	prerequisites are the LOAD-reconstructed forward FKs (store-inverted onto the bonus's enables.routes /
+//	enables.routesAnd, un-inverted by CvReversePass). No legacy-mirror modifier member survives
+//	([DEC-new-getter-surface]).
 //
 
 #include "CvInfo.h"
-#include "Defines/CvEnums.h"   // NUM_YIELD_TYPES / BonusTypes / NO_BONUS
-#include <map>
+#include "Defines/CvEnums.h"   // BonusTypes / NO_BONUS
 #include <vector>
 
 class CvRouteInfo : public CvInfo
@@ -21,55 +24,54 @@ class CvRouteInfo : public CvInfo
 public:
 	CvRouteInfo();
 
-	int getValue() const { return m_iValue; }
-	int getAdvancedStartCost() const { return m_iAdvancedStartCost; }
-	int getMovementCost() const { return m_iMovementCost; }
-	int getFlatMovementCost() const { return m_iFlatMovementCost; }
-	int getYieldChange(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiYieldChange[i] : 0; }
-	int getTechMovementChange(int iTech) const;   // per-tech route move delta (from the `movement.plot.flat` family)
-	bool isSeaTunnel() const { return m_bSeaTunnel; }
-	int getZobristValue() const { return m_iZobristValue; }
-
-	int* getYieldChangeArray() const { return const_cast<int*>(m_aiYieldChange); }   // real (food/production/commerce .plot.flat)
-
-	// property engine (self-contained, #429); XML-era manipulator data deferred -- empty for now.
-	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
-
-	// Route<-bonus prerequisite (compat surface for the getRouteInfo(...) callers -- CvPlot route validity,
-	// CvPlayerAI/CvDLLWidgetData). Both relationships are stored INVERTED onto the bonus and reverse-mapped at load
-	// (loadJson): the single AND-prereq via the bonus's `enables.routesAnd` (-> getPrereqBonus, the CvPlot.cpp
-	// build gate), the OR-list via `enables.routes` (-> getPrereqOrBonuses). The two buckets keep AND vs OR distinct
-	// (a route needs its single AND bonus AND one of its OR bonuses -- e.g. railroad needs steel-wares AND coal/oil).
-	int getPrereqBonus() const { return m_ePrereqBonus; }
-	void setPrereqBonus(BonusTypes eBonus) { m_ePrereqBonus = eBonus; }   // load-time reverse-index writer (single AND)
-	const std::vector<BonusTypes>& getPrereqOrBonuses() const { return m_aePrereqOrBonuses; }
-	void addPrereqOrBonus(BonusTypes eBonus) { m_aePrereqOrBonuses.push_back(eBonus); }   // load-time reverse-index writer (OR-list)
-
-	// NB the route's bonus prerequisite is NOT here: it is a `requires`-type relationship, modelled as the BONUS's
-	// `enables.routes` (curate_route.py:25/56 store-inversion). The cascade reads that off the bonus info and gates
-	// buildability via GENERATE. It is availability data on the info side, never a stubbed getter on the route.
-
 	virtual void mapFrom(const picojson::value& entity);
 
-	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
+	// ======================= 1. SECTIONS -- whole typed objects =======================
+	virtual const CvEdges*     getEdges()     const { return &m_edges; }
 	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
+	// ======================= 2. MODIFIER GROUPS -- point reads over the compiled sums ========================
+	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. Census
+	// participation: food/production/commerce plot flats -- the route's own tile output; the
+	// plot.improvements.{IMP} keyed rows and the tech-conditioned movement deltas stay entry-list reads.)
+	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
+	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+
+	// ======================= 3. INTRINSIC -- bare typed reads (the census identity set) ======================
+	int getValue() const { return m_iValue; }                       // identity.value (route quality rank)
+	int getAdvancedStartCost() const { return m_iAdvancedStartCost; } // identity.advancedStart.cost
+	int getMovementCost() const { return m_iMovementCost; }         // identity.movementCost (base traversal)
+	int getFlatMovementCost() const { return m_iFlatMovementCost; } // identity.flatMovementCost
+	bool isSeaTunnel() const { return m_bSeaTunnel; }               // identity.seaTunnel
+	int getZobristValue() const { return m_iZobristValue; }
+
+	// --- the LOAD-reconstructed bonus-prerequisite forward FKs (CvReversePass::
+	// rp_reconstructRouteBonusPrereqs: the single AND prereq from the bonus's enables.routesAnd, the OR-list
+	// from enables.routes -- the two buckets keep AND vs OR distinct, e.g. railroad needs steel-wares AND
+	// coal/oil). The writers are the reverse pass's load-window setters. ---
+	int getPrereqBonus() const { return m_ePrereqBonus; }
+	void setPrereqBonus(BonusTypes eBonus) { m_ePrereqBonus = eBonus; }
+	const std::vector<BonusTypes>& getPrereqOrBonuses() const { return m_aePrereqOrBonuses; }
+	void addPrereqOrBonus(BonusTypes eBonus) { m_aePrereqOrBonuses.push_back(eBonus); }
+
 protected:
+	virtual CvEdges*     mutEdges()     { return &m_edges; }
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
+	// --- the composed section units ---
+	CvEdges     m_edges;
 	CvModifiers m_modifiers;
-	int m_iValue;                        // identity.value
-	int m_iAdvancedStartCost;            // identity.advancedStart.cost
-	int m_iMovementCost;                 // identity.movementCost
-	int m_iFlatMovementCost;             // identity.flatMovementCost
-	int m_iZobristValue;                 // map-hash drawn from the synced RNG in the ctor (exact legacy CvRouteInfo behavior, OOS); CvPlot XORs it into m_movementCharacteristicsHash
-	int m_aiYieldChange[NUM_YIELD_TYPES];// food/production/commerce .plot.flat
-	bool m_bSeaTunnel;                   // identity.seaTunnel
-	std::map<int, int> m_techMovementChange;   // techId -> move-cost delta (movement.plot.flat enabled:{tech})
-	BonusTypes m_ePrereqBonus;                 // single AND prereq bonus (reverse index from bonuses' enables.routesAnd)
-	std::vector<BonusTypes> m_aePrereqOrBonuses;   // OR-list reverse index (from bonuses' enables.routes; built at load)
-	CvPropertyManipulators m_PropertyManipulators;   // STUB empty -- property engine, XML-era manipulator data deferred
+
+	// --- the intrinsic identity members (materialized once at mapFrom; getters are bare reads) ---
+	int m_iValue;
+	int m_iAdvancedStartCost;
+	int m_iMovementCost;
+	int m_iFlatMovementCost;
+	int m_iZobristValue;               // map-hash drawn from the synced RNG in the ctor (OOS-load-bearing)
+	bool m_bSeaTunnel;
+	BonusTypes m_ePrereqBonus;                     // load-reconstructed single AND prereq (CvReversePass)
+	std::vector<BonusTypes> m_aePrereqOrBonuses;   // load-reconstructed OR-list (CvReversePass)
 };
 
 #endif // CV_JSON_ROUTE_INFO_H

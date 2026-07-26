@@ -2182,9 +2182,9 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 				szString.append(gDLL->getText("TXT_KEY_UNITHELP_BRANCH_CIVILIAN"));
 			}
 
-			if (pUnit->getUpkeep100() > 0)
+			if (pUnit->getUpkeep() > 0)
 			{
-				szTempBuffer = CvWString::format(L"%.2f", pUnit->getUpkeep100() / 100.0);
+				szTempBuffer = CvWString::format(L"%.2f", pUnit->getUpkeep() / 100.0);
 				szString.append(NEWLINE);
 				szString.append(gDLL->getText("TXT_KEY_UNITHELP_UPKEEP", szTempBuffer.GetCString()));
 			}
@@ -6027,8 +6027,8 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 		{
 			if (GET_PLAYER(eCulturalOwner).getTeam() != pCity->getTeam())
 			{
-				int iNetRevoltRisk100 = pCity->netRevoltRisk100(eCulturalOwner);
-				int iOriginal100 = pCity->baseRevoltRisk100(eCulturalOwner);
+				int iNetRevoltRisk100 = pCity->netRevoltRisk(eCulturalOwner);
+				int iOriginal100 = pCity->baseRevoltRisk(eCulturalOwner);
 				int iSpeedAdjustment = GC.getREVOLT_TEST_PROB() * 100 /
 					GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
 				int iGarrison = pCity->unitRevoltRiskModifier(eCulturalOwner);
@@ -8049,7 +8049,7 @@ void CvGameTextMgr::parseSpecialistHelpActual(CvWStringBuffer &szHelpString, Spe
 		int aiCommerces[NUM_COMMERCE_TYPES];
 		for (int iI = 0; iI < NUM_COMMERCE_TYPES; ++iI)
 		{
-			aiCommerces[iI] = pCity->getAdditionalCommerceTimes100BySpecialist((CommerceTypes)iI, eSpecialist, iChange);
+			aiCommerces[iI] = pCity->getAdditionalCommerceBySpecialist((CommerceTypes)iI, eSpecialist, iChange);
 		}
 		bStarted = setResumableCommerceTimes100ChangeHelp(szHelpString, szStart, L": ", L"", aiCommerces, true, bStarted);
 
@@ -8803,7 +8803,7 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 		iReligiousCombatModifierChange += promoX.getReligiousCombatModifierChange();
 		iDamageModifierChange += promoX.getDamageModifierChange();
 		iUpkeepModifier += promoX.getUpkeepModifier();
-		iExtraUpkeep100 += promoX.getExtraUpkeep100();
+		iExtraUpkeep100 += promoX.getExtraUpkeep();
 		iPoisonProbabilityModifierChange += promoX.getPoisonProbabilityModifierChange();
 		if (GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY))
 		{
@@ -10436,7 +10436,7 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 			int iSaved = 0;
 			foreach_(const CvCity* pLoopCity, GET_PLAYER(GC.getGame().getActivePlayer()).cities())
 			{
-				iSaved += pLoopCity->getDistanceMaintenanceSavedTimes100ByCivic(eCivic);
+				iSaved += pLoopCity->getDistanceMaintenanceSavedByCivic(eCivic);
 			}
 			if (iSaved != 0)
 			{
@@ -10459,7 +10459,7 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 			int iSaved = 0;
 			foreach_(const CvCity* pLoopCity, GET_PLAYER(GC.getGame().getActivePlayer()).cities())
 			{
-				iSaved += pLoopCity->getNumCitiesMaintenanceSavedTimes100ByCivic(eCivic);
+				iSaved += pLoopCity->getNumCitiesMaintenanceSavedByCivic(eCivic);
 			}
 			if (iSaved != 0)
 			{
@@ -10494,7 +10494,7 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 			int iSaved = 0;
 			foreach_(const CvCity* pLoopCity, GET_PLAYER(GC.getGame().getActivePlayer()).cities())
 			{
-				iSaved += pLoopCity->getHomeAreaMaintenanceSavedTimes100ByCivic(eCivic);
+				iSaved += pLoopCity->getHomeAreaMaintenanceSavedByCivic(eCivic);
 			}
 			if (iSaved != 0)
 			{
@@ -10521,7 +10521,7 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 			int iSaved = 0;
 			foreach_(const CvCity* pLoopCity, GET_PLAYER(GC.getGame().getActivePlayer()).cities())
 			{
-				iSaved += pLoopCity->getOtherAreaMaintenanceSavedTimes100ByCivic(eCivic);
+				iSaved += pLoopCity->getOtherAreaMaintenanceSavedByCivic(eCivic);
 			}
 			if (iSaved != 0)
 			{
@@ -12209,7 +12209,7 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 			const CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iI);
 
 			bool bFirst = true;
-			foreach_(const TechArray& pair, kBuilding.getTechYieldChanges100())
+			foreach_(const TechArray& pair, kBuilding.getTechYieldChanges())
 			{
 				if (pair.first == eTech)
 				{
@@ -12238,7 +12238,7 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 					break;
 				}
 			}
-			foreach_(const TechCommerceArray& pair, kBuilding.getTechCommerceChanges100())
+			foreach_(const TechCommerceArray& pair, kBuilding.getTechCommerceChanges())
 			{
 				if (pair.first == eTech)
 				{
@@ -12714,7 +12714,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 
 		if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
 		{
-			const float fCombat = kUnit.getTotalModifiedCombatStrength100(true) / 100.0f;
+			const float fCombat = kUnit.getTotalModifiedCombatStrength(true) / 100.0f;
 
 			if (fCombat > 0)
 			{
@@ -12724,7 +12724,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 		}
 		else
 		{
-			const int iCombat = kUnit.getTotalModifiedCombatStrength100(false) / 100;
+			const int iCombat = kUnit.getTotalModifiedCombatStrength(false) / 100;
 
 			if (iCombat > 0)
 			{
@@ -13804,7 +13804,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 	if (bNormalView)
 	{
 		//Max HP
-		if (kUnit.getTotalModifiedCombatStrength100(false) > 0 && kUnit.getMaxHP() != 100)
+		if (kUnit.getTotalModifiedCombatStrength(false) > 0 && kUnit.getMaxHP() != 100)
 		{
 			szBuffer.append(NEWLINE);
 			szBuffer.append(gDLL->getText("TXT_KEY_UNITHELP_MAX_HP", kUnit.getMaxHP()));
@@ -13840,7 +13840,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 				}
 				if (game.isValidByGameOption(GC.getUnitCombatInfo(eUnitCombat)))
 				{
-					iExtra += GC.getUnitCombatInfo(eUnitCombat).getExtraUpkeep100();
+					iExtra += GC.getUnitCombatInfo(eUnitCombat).getExtraUpkeep();
 					iMod += GC.getUnitCombatInfo(eUnitCombat).getUpkeepModifier();
 				}
 			}
@@ -15377,7 +15377,7 @@ void CvGameTextMgr::setBuildingActualEffects(CvWStringBuffer &szBuffer, const Cv
 		int aiCommerces[NUM_COMMERCE_TYPES];
 		for (int iI = 0; iI < NUM_COMMERCE_TYPES; ++iI)
 		{
-			aiCommerces[iI] = pCity->getAdditionalCommerceTimes100ByBuilding((CommerceTypes)iI, eBuilding);
+			aiCommerces[iI] = pCity->getAdditionalCommerceByBuilding((CommerceTypes)iI, eBuilding);
 
 			aiCommerces[iI] += iCommerce * GET_PLAYER(pCity->getOwner()).getCommercePercent((CommerceTypes)iI);
 		}
@@ -15533,7 +15533,7 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 			{
 				YieldArray aiYields100;
 				aiYields100.fill(0);
-				foreach_(const TechArray& pair, kBuilding.getTechYieldChanges100())
+				foreach_(const TechArray& pair, kBuilding.getTechYieldChanges())
 				{
 					if (GET_TEAM(eTeam).isHasTech(pair.first))
 					{
@@ -17016,11 +17016,11 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 		{
 			std::map<TechTypes, const int*> tempMap;
 
-			foreach_(const TechCommerceArray& pair, kBuilding.getTechCommerceChanges100())
+			foreach_(const TechCommerceArray& pair, kBuilding.getTechCommerceChanges())
 			{
 				tempMap[pair.first] = pair.second.data();
 			}
-			foreach_(const TechArray& pair, kBuilding.getTechYieldChanges100())
+			foreach_(const TechArray& pair, kBuilding.getTechYieldChanges())
 			{
 				bFirst = true;
 				for (int iJ = 0; iJ < NUM_YIELD_TYPES; ++iJ)
@@ -18245,7 +18245,7 @@ void CvGameTextMgr::setHeritageHelp(CvWStringBuffer &szBuffer, const HeritageTyp
 		}
 	}
 
-	const IDValueMap<EraTypes, CommerceArray>& kEraChanges = heritage.getEraCommerceChanges100();
+	const IDValueMap<EraTypes, CommerceArray>& kEraChanges = heritage.getEraCommerceChanges();
 	for (IDValueMap<EraTypes, CommerceArray>::const_iterator itEra = kEraChanges.begin(), itEraEnd = kEraChanges.end(); itEra != itEraEnd; ++itEra)
 	{
 		const EraCommerceArray& pair = *itEra;
@@ -22948,10 +22948,10 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 		szBuffer.append(gDLL->getText("TXT_KEY_HELPTEXT_UNIT_UPKEEP_MODIFIER_BASE", info.getUpkeepModifier()));
 	}
 
-	if (info.getExtraUpkeep100() != 0)
+	if (info.getExtraUpkeep() != 0)
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_HELPTEXT_UNIT_UPKEEP_EXTRA", CvWString::format(L"%.2f", info.getExtraUpkeep100() / 100.0).GetCString()));
+		szBuffer.append(gDLL->getText("TXT_KEY_HELPTEXT_UNIT_UPKEEP_EXTRA", CvWString::format(L"%.2f", info.getExtraUpkeep() / 100.0).GetCString()));
 	}
 
 
@@ -25298,7 +25298,7 @@ bool CvGameTextMgr::setBuildingAdditionalCommerceHelp(CvWStringBuffer &szBuffer,
 
 		if (city.canConstruct(eBuilding, false, false, false))
 		{
-			int iChange = city.getAdditionalCommerceTimes100ByBuilding(eIndex, eBuilding);
+			int iChange = city.getAdditionalCommerceByBuilding(eIndex, eBuilding);
 			const int iCommerce = city.getAdditionalYieldByBuilding(YIELD_COMMERCE, eBuilding);
 			iChange += iCommerce * GET_PLAYER(city.getOwner()).getCommercePercent(eIndex);
 
@@ -25753,7 +25753,7 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 	}
 	//STEP 6 : Free City Commerce (player tallied from civics/traits a change value to all cities commerce output)
 	{
-		const int iExtraCommerce100 = owner.getExtraCommerce100(eCommerceType);
+		const int iExtraCommerce100 = owner.getExtraCommerce(eCommerceType);
 		if (0 != iExtraCommerce100)
 		{
 			makeValueString(szValue, iExtraCommerce100, true);
@@ -25765,7 +25765,7 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 	//STEP 7 : Minted Commerce
 	if (eCommerceType == COMMERCE_GOLD)
 	{
-		const int iMintedCommerce100 = city.getMintedCommerceTimes100();
+		const int iMintedCommerce100 = city.getMintedCommerce();
 		if (0 != iMintedCommerce100)
 		{
 			szBuffer.append(NEWLINE);
@@ -26176,7 +26176,7 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 	}
 	// Buildings
 	{
-		const int iBuildingYield100 = city.getBuildingExtraYield100(eYieldType);   // #430 cut: per-pop rate accumulator gone
+		const int iBuildingYield100 = city.getBuildingExtraYield(eYieldType);   // #430 cut: per-pop rate accumulator gone
 		if (0 != iBuildingYield100)
 		{
 			CvWString szValue;

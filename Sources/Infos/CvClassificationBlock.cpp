@@ -70,3 +70,15 @@ int CvClassificationBlock::countKey(int& iIdCache, int eDomain, const char* szKe
 	if (m_falseNames.count(szKey) != 0) return -1;
 	return 0;
 }
+
+bool deriveChangesMoveThroughPlots(const CvClassificationBlock& skills,
+	const std::vector<int>& terrainDoubleMoves,
+	const std::vector<int>& featureDoubleMoves)
+{
+	return skills.has("amphib")
+		|| skills.has("canPassPeaks")
+		|| skills.has("canLeadThroughPeaks")
+		|| skills.has("hillsDoubleMove")
+		|| !terrainDoubleMoves.empty()
+		|| !featureDoubleMoves.empty();
+}

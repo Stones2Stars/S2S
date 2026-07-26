@@ -244,8 +244,8 @@ enum SpineDomainEvent
 	// DIAGNOSTIC: the complement -- a package was REBUILT (recomputed from dirty). invalidate = max work queued;
 	// rebuilt = work actually done. Carries scope + owner + id + the package-bit names (no src).
 	SEVT_CACHE_REBUILT          = 31,
-	// a player HERITAGE was acquired/removed (CvPlayer::setHeritage) -- feeds PSC_CFLAT (heritage empire commerce
-	// flats, era-stacked). Acquired mid-game via MISSION_HERITAGE. iType=Heritage, iC=player, iA=add. DOMAIN.
+	// a player HERITAGE was acquired/removed (CvPlayer::setHeritage) -- feeds the empire package's commerce
+	// flats (era-stacked). Acquired mid-game via MISSION_HERITAGE. iType=Heritage, iC=player, iA=add. DOMAIN.
 	SEVT_HERITAGE_CHANGED       = 32,
 	// a plot-group (the connectivity / trade-NETWORK identity) gained/lost access to a resource --
 	// CvPlotGroup::changeNumBonuses on a presence transition. A traded resource enters at the capital's group and
@@ -257,7 +257,7 @@ enum SpineDomainEvent
 	// resource-set twin). iC=owner, iSrcLoc=cityId. DOMAIN.
 	SEVT_CITY_NETWORK_CHANGED   = 34,
 	// a player's ERA advanced (CvPlayer::setCurrentEra) -- a BROAD player-scope cascade input: heritage era-stacked
-	// commerce (PSC_CFLAT), every ERA-counter-threshold deposit, and ERA requires atoms (frontier). iC=player,
+	// commerce (the empire package), every ERA-counter-threshold deposit, and ERA requires atoms (frontier). iC=player,
 	// iA=newEra. DOMAIN. (Cache-masked today via setHasTech's tech mark, but the state change is its own fact.)
 	SEVT_ERA_CHANGED            = 35,
 	// a player's NUKE STATE changed -- one of THREE: 0 DISABLED (no nuke-enabling building) / 1 ENABLED (built +
@@ -420,11 +420,12 @@ void emitGameLoadFinished();
 bool spineGameLoadInProgress();
 
 // The cache-invalidation OBSERVABILITY (SEVT_CACHE_INVALIDATE): announce a package dirty-mark so the invalidation
-// flow is verifiable in Cascade.log ("[CASCADE] invalidate scope=<city|empire|world> id=<n> pkg=<NAMES> src=<why>").
-// iScopeKind 0=city / 1=empire / 2=world; iMask = the CPK_*/PSC_*/WSC_* bits (decoded to names per scope); szSrc = the
-// reason (the source event name, or "sliceRebuild"/"worldRebuild" for the load warm-up + self-heal). DIAGNOSTIC kind.
-void emitCacheInvalidate(int iScopeKind, int iOwner, int iId, int iMask, const char* szSource);   // iOwner: the empire (city ids are unique only within a player); -1 = none
-void emitCacheRebuilt(int iScopeKind, int iOwner, int iId, int iMask);   // the complement: a package was recomputed
+// flow is verifiable in Cascade.log ("[CASCADE] invalidate scope=<team|empire|area|city|plot> id=<n> pkg=<NAMES>
+// src=<why>"). iScope = the package's CvCascScope; iMask = the scope's 64-bit dirty mask (channel + receiver-sum
+// bits, decoded to channel names via the CascadeChannelRegistry); szSource = the DOMAIN event that derived the
+// mark (spineEventName). DIAGNOSTIC kind.
+void emitCacheInvalidate(int iScope, int iOwner, int iId, int64_t iMask, const char* szSource);   // iOwner: the empire (city ids are unique only within a player); -1 = none
+void emitCacheRebuilt(int iScope, int iOwner, int iId, int64_t iMask);   // the complement: a package was recomputed
 // The short human name of a spine event id (e.g. "religionChanged") -- the invalidate observability's `src`.
 const char* spineEventName(int iEventId);
 

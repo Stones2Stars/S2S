@@ -5966,7 +5966,7 @@ int CvSelectionGroup::getStrength() const
 
 	foreach_(const CvUnit* pLoopUnit, units())
 	{
-		iStrength += pLoopUnit->AI_genericUnitValueTimes100(UNITVALUE_FLAGS_DEFENSIVE | UNITVALUE_FLAGS_OFFENSIVE);
+		iStrength += pLoopUnit->AI_genericUnitValue(UNITVALUE_FLAGS_DEFENSIVE | UNITVALUE_FLAGS_OFFENSIVE);
 	}
 
 	return iStrength/100;

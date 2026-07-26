@@ -32,10 +32,13 @@
 //	   built 2026-07-05 at first need): the recompute receives the vector and must fully (re)size + define it
 //	   (rule 2 falls out naturally -- an assign(n,0) then fill). Exemplar: the player building-commerce ledger
 //	   (NumBuildingInfos x NUM_COMMERCE_TYPES, flat-indexed).
-//	 - CvDerivedCacheSet<TOwner>    -- the PARTIAL-DIRTY form (owner ruling 2026-07-03): a value composed of
+//	 - CvDerivedCacheSet<TOwner,TMask> -- the PARTIAL-DIRTY form (owner ruling 2026-07-03): a value composed of
 //	   several isolated "plugin number" components carries a dirty BITMASK, one bit per component, and ONE
 //	   shared refresh pass receives the mask (component storage stays owner-side -- the components are
-//	   heterogeneous; this class owns only the dirty protocol). Exemplar: the modifier scope accumulator.
+//	   heterogeneous; this class owns only the dirty protocol). TMask is the mask WIDTH (default int): the
+//	   cascade scope packages instantiate the 64-bit form (state-repositories.md KEYS-ONLY-WHERE-NEEDED: the
+//	   city/empire channel sets exceed a 32-bit mask); every few-bit user keeps the int default untouched.
+//	   Exemplar: the modifier scope package (CvCascadePackage).
 //
 
 #include <vector>
@@ -124,33 +127,33 @@ private:
 	mutable bool m_bDirty;
 };
 
-template <class TOwner>
+template <class TOwner, class TMask = int>
 class CvDerivedCacheSet
 {
 public:
-	CvDerivedCacheSet() : m_pOwner(NULL), m_pfnRefresh(NULL), m_iDirty(~0) {}
+	CvDerivedCacheSet() : m_pOwner(NULL), m_pfnRefresh(NULL), m_iDirty(TMask(-1)) {}
 
 	// Wire the owner + its refresh (recomputes the MASKED components from CURRENT state). All-dirty from the start.
-	void bind(const TOwner* pOwner, void (TOwner::*pfnRefresh)(int) const)
+	void bind(const TOwner* pOwner, void (TOwner::*pfnRefresh)(TMask) const)
 	{
 		m_pOwner = pOwner;
 		m_pfnRefresh = pfnRefresh;
-		m_iDirty = ~0;
+		m_iDirty = TMask(-1);
 	}
 
 	// The TRIGGER -- mark only the components this event feeds ("the rest of the pipe stays the same").
-	void markDirty(int iMask) const { m_iDirty |= iMask; }
-	void markAllDirty() const { m_iDirty = ~0; }
+	void markDirty(TMask iMask) const { m_iDirty |= iMask; }
+	void markAllDirty() const { m_iDirty = TMask(-1); }
 	// Is any component in `iMask` dirty (pending rebuild)? Lets a caller do a TARGETED incremental update only on
 	// a currently-BUILT component (a dirty one gets its full rebuild on next ensure, so skip the targeted work).
-	bool isDirty(int iMask) const { return (m_iDirty & iMask) != 0; }
+	bool isDirty(TMask iMask) const { return (m_iDirty & iMask) != 0; }
 
 	// Pull-on-read: refresh the dirty components once, then reads are pure arithmetic owner-side.
 	void ensure() const
 	{
 		if (m_iDirty != 0 && m_pOwner != NULL)
 		{
-			const int iMask = m_iDirty;
+			const TMask iMask = m_iDirty;
 			m_iDirty = 0;   // clear FIRST: a refresh that reads back through ensure() must not recurse
 			(m_pOwner->*m_pfnRefresh)(iMask);
 		}
@@ -159,9 +162,9 @@ public:
 	// The MASKED pull: refresh only the WANTED dirty components; the rest STAY dirty for their own readers.
 	// Decouples read paths with disjoint components (a hot rate read must never pay a cold component's
 	// recompute -- the ACCD_WB lesson: unit moves dirtied WB and every yield read paid the wellbeing walk).
-	void ensure(int iWantMask) const
+	void ensure(TMask iWantMask) const
 	{
-		const int iMask = m_iDirty & iWantMask;
+		const TMask iMask = m_iDirty & iWantMask;
 		if (iMask != 0 && m_pOwner != NULL)
 		{
 			m_iDirty &= ~iMask;   // clear FIRST (only the refreshed bits)
@@ -173,8 +176,8 @@ private:
 	CvDerivedCacheSet(const CvDerivedCacheSet&);              // noncopyable (see CvDerivedCache)
 	CvDerivedCacheSet& operator=(const CvDerivedCacheSet&);
 	const TOwner* m_pOwner;
-	void (TOwner::*m_pfnRefresh)(int iMask) const;
-	mutable int m_iDirty;
+	void (TOwner::*m_pfnRefresh)(TMask iMask) const;
+	mutable TMask m_iDirty;
 };
 
 #endif // CV_DERIVED_CACHE_H

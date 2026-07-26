@@ -1,28 +1,48 @@
 //
-//	CvProcessInfo::mapFrom -- base core reading + availability (the tech prereq rides the base as tech.enables.
-//	processes; the only-latest supersession as this process's obsoletedBy.techs), then the per-commerce production->
-//	commerce conversion percents. Natural human %, NO ×100. See header.
+//	CvProcessInfo -- the process poco (see the header). The §9 `conversion` block (item 18: hammers->commerce
+//	conversion, hurry's bespoke-block home) materializes ONCE at mapFrom into the typed per-channel plane
+//	([DEC-materialize-at-mapfrom]); the getter is a bare member read.
 //
 
-#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
+#include "CvGameCoreDLL.h"
 #include "CvProcessInfo.h"
-#include "CvJsonParse.h"          // the shared walkers (jsonFamVal)
+#include "CvJsonParse.h"   // jsonChildObj + jsonX100 -- the shared parse primitives (never re-hand-rolled)
 
 CvProcessInfo::CvProcessInfo()
 	: m_eTechPrereq(NO_TECH)
 {
-	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i) m_aiProductionToCommerce[i] = 0;
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		m_aiProductionToCommerce[iCommerce] = 0;
+	}
 }
 
 void CvProcessInfo::mapFrom(const picojson::value& entity)
 {
-	CvInfo::mapFrom(entity);   // core reading + availability (tech enables.processes / obsoletedBy.techs)
-	if (!entity.is<picojson::object>()) return;
-	const picojson::object& o = entity.get<picojson::object>();
+	CvInfo::mapFrom(entity);   // core reading + the section dispatch (fills edges: obsoletedBy.techs)
 
-	// split-commerce production->commerce conversion (the process's whole point) -- natural %, NOT ×100
-	m_aiProductionToCommerce[COMMERCE_GOLD]      = jsonFamVal(o, "gold", "city", "percent");
-	m_aiProductionToCommerce[COMMERCE_RESEARCH]  = jsonFamVal(o, "research", "city", "percent");
-	m_aiProductionToCommerce[COMMERCE_CULTURE]   = jsonFamVal(o, "culture", "city", "percent");
-	m_aiProductionToCommerce[COMMERCE_ESPIONAGE] = jsonFamVal(o, "espionage", "city", "percent");
+	// the §9 `conversion` block -- {gold|research|culture|espionage: humanPercent}, CommerceTypes order below.
+	// Idempotent: the plane is fully redefined on every (re-)map (zero-fill first).
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		m_aiProductionToCommerce[iCommerce] = 0;
+	}
+	if (!entity.is<picojson::object>())
+	{
+		return;
+	}
+	const picojson::object* pConversion = jsonChildObj(entity.get<picojson::object>(), "conversion");
+	if (pConversion == NULL)
+	{
+		return;
+	}
+	const char* aszChannels[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		picojson::object::const_iterator channelIt = pConversion->find(aszChannels[iCommerce]);
+		if (channelIt != pConversion->end() && channelIt->second.is<double>())
+		{
+			m_aiProductionToCommerce[iCommerce] = jsonX100(channelIt->second.get<double>());
+		}
+	}
 }

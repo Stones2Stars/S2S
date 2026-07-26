@@ -5157,8 +5157,8 @@ void CvDLLWidgetData::parseNationalityHelp(CvWidgetDataStruct &widgetDataStruct,
 		{
 			if (GET_PLAYER(eCulturalOwner).getTeam() != pHeadSelectedCity->getTeam())
 			{
-				const int iNetRevoltRisk100 = pHeadSelectedCity->netRevoltRisk100(eCulturalOwner);
-				const int iOriginal100 = pHeadSelectedCity->baseRevoltRisk100(eCulturalOwner);
+				const int iNetRevoltRisk100 = pHeadSelectedCity->netRevoltRisk(eCulturalOwner);
+				const int iOriginal100 = pHeadSelectedCity->baseRevoltRisk(eCulturalOwner);
 				const int iSpeedAdjustment = GC.getREVOLT_TEST_PROB() * 100 /
 					GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent();
 				const int iGarrison = pHeadSelectedCity->unitRevoltRiskModifier(eCulturalOwner);

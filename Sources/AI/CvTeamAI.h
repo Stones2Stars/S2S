@@ -374,7 +374,7 @@ public:
      *   1. Get war randoms and thresholds.
      *   2. Calculate odds as threshold divided by random value.
      */
-    int AI_getTotalWarOddsTimes100() const;
+    int AI_getTotalWarOdds() const;
 
     /**
      * Calculates the value of making peace between two teams.

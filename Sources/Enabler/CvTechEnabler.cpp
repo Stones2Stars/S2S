@@ -20,7 +20,7 @@
 // The tech's cascade info: the synthetic TECH_GAME_START root lives OFF the InfoRepo (cascadeStartNode) --
 // but it IS a held engine tech (the guaranteed root, enabler.md par.2), so its edges apply through the same
 // delta path as every other held tech, exactly once.
-static const CvInfo* te_json(int iTech)
+static const CvInfo* te_techInfo(int iTech)
 {
 	const int iGameStart = GC.getInfoTypeForString("TECH_GAME_START", true);
 	if (iTech == iGameStart) return &cascadeStartNode();
@@ -32,7 +32,7 @@ static const CvInfo* te_json(int iTech)
 // (removal wins), so root-last / root-first / any event order converges to the same vector.
 static void te_applyDelta(EnablerDomain& d, int iTech, int iDelta)
 {
-	const CvInfo* j = te_json(iTech);
+	const CvInfo* j = te_techInfo(iTech);
 	if (j == NULL) return;
 	const std::vector<int>* p = j->edge(EDGEF_ENABLES, EDGEB_TECHS);
 	if (p != NULL)
@@ -64,12 +64,11 @@ void TechEnabler::initDomain(const CvPlayer& kPlayer)
 // (EnablerKernel::allowedOk's tech branch -- the engine-owned counts, e.g. the 29 world-unique founder techs).
 // Either failing sets the domain's gate verdict: a tree member is GREYED (in the tree, unattainable now),
 // never removed.
-static void te_gate(const CvPlayer& kPlayer, const CvTeam& kTeam, EnablerDomain& d, int iTech)
+static void te_gate(const CvPlayer& kPlayer, EnablerDomain& d, int iTech)
 {
-	const CvInfo* j = te_json(iTech);
+	const CvInfo* j = te_techInfo(iTech);
 	CvCascadeEvalCtx ec;
-	ec.player = &kPlayer;
-	ec.team = &kTeam;
+	kPlayer.getEmpireContext().fillEvalCtx(ec);   // player+team -- the contexts fill the eval state (contexts.md)
 	CvCascadeEvalFlags gateFlags;
 	d.setGateFailed(iTech, (j != NULL && !cascadeGateOk(j->getGate(), ec, gateFlags))   // entity-level enabled/disabled (DEC-entity-gate)
 	                    || !EnablerKernel::requiresMet(j, ec)
@@ -82,7 +81,7 @@ static void te_gate(const CvPlayer& kPlayer, const CvTeam& kTeam, EnablerDomain&
 // gate references H).
 static void te_touched(int iTech, std::set<int>& touched)
 {
-	const CvInfo* j = te_json(iTech);
+	const CvInfo* j = te_techInfo(iTech);
 	if (j == NULL) return;
 	static const EnEdgeFamily FAMS[] = { EDGEF_ENABLES, EDGEF_OBSOLETES, EDGEF_REPLACES, EDGEF_DISABLES, EDGEF_REQUIRED_BY, NUM_EDGEF };
 	for (int f = 0; FAMS[f] != NUM_EDGEF; ++f)
@@ -97,7 +96,6 @@ void TechEnabler::onTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 	if (eTeam == NO_TEAM || eTech == NO_TECH) return;
 	std::set<int> touched;
 	te_touched((int)eTech, touched);
-	const CvTeam& kTeam = GET_TEAM(eTeam);
 	for (int iP = 0; iP < MAX_PLAYERS; iP++)
 	{
 		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iP);
@@ -111,21 +109,21 @@ void TechEnabler::onTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 		// reseed this runs per event as it arrives (the pure per-event option of the par.7.1 order rule); the
 		// gate's atoms are team techs, final before any player reads, so every evaluation is stable.
 		for (std::set<int>::const_iterator it = touched.begin(); it != touched.end(); ++it)
-			te_gate(kPlayer, kTeam, d, *it);
+			te_gate(kPlayer, d, *it);
 	}
 	// the CAP crossing (par.7.1 step 3 -- "a count event re-checks allowed for that one type"): eTech's world
 	// count changed for EVERY team, so a capped eTech re-gates on ALL seeded players' domains, not just the
 	// acquiring team's (the founder techs vanish from every rival's researchable list the moment one team
 	// takes them).
-	const CvInfo* jT = te_json((int)eTech);
-	if (jT != NULL && jT->getAllowed() != NULL)
+	const CvInfo* jT = te_techInfo((int)eTech);
+	if (jT != NULL && jT->getAllowed() != NULL && !jT->getAllowed()->isEmpty())
 	{
 		for (int iP = 0; iP < MAX_PLAYERS; iP++)
 		{
 			const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iP);
 			EnablerDomain& d = kPlayer.m_enabler.techs;
 			if (!d.isSeeded()) continue;
-			te_gate(kPlayer, GET_TEAM(kPlayer.getTeam()), d, (int)eTech);
+			te_gate(kPlayer, d, (int)eTech);
 		}
 	}
 }

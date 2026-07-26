@@ -35,6 +35,8 @@
 #include "CvDLLPlotBuilderIFaceBase.h"
 #include "CvDLLUtilityIFaceBase.h"
 #include "Repos/BuildsRepo.h"
+#include "CvCascadeGather.h"
+#include "Spine/CvEventSpine.h"   // emitWorkingCityChanged -- the working-city DOMAIN fact (play choke point + the in-read reseed)
 #include "FAStarNode.h"
 
 #define STANDARD_MINIMAP_ALPHA		(0.6f)
@@ -57,6 +59,13 @@ stdext::hash_map<int,int>* CvPlot::m_resultHashMap = NULL;
 static const CvPlot* g_bestDefenderCachePlot = NULL;
 typedef stdext::hash_map<int, unitDefenderInfo> DefenderScoreCache;
 static DefenderScoreCache* g_bestDefenderCache = NULL;
+
+// The PLOT-scope cascade package's refresh delegate -- the one-line delegation to the ONE gather
+// ([DEC-single-implementation]; see CvCascadeGather).
+void CvPlot::refreshCascadePackage(int64_t iMask) const
+{
+	CascadeGather::refreshPlot(*this, iMask);
+}
 
 // Public Functions...
 
@@ -234,6 +243,8 @@ void CvPlot::reset(int iX, int iY, bool bConstructorCall)
 	m_iX = iX;
 	m_iY = iY;
 	m_plotContext.bind(this);   // bind the per-plot context to its owner (the pointer IS this plot; forwarding reads it)
+	// bind the PLOT-scope cascade package (all-dirty from bind: a loaded/new plot recomputes on first read)
+	m_cascadePackage.bind(CASC_SCOPE_PLOT, this, &CvPlot::refreshCascadePackage);
 	m_iArea = FFreeList::INVALID_INDEX;
 	m_pPlotArea = NULL;
 	m_iFeatureVariety = 0;
@@ -1051,7 +1062,7 @@ void CvPlot::checkCityRevolt()
 	if (GC.getGame().getSorenRandNum(100, "Revolt #1") < iRevoltTestProb)
 	{
 		// iCityStrength100 is 100x % chance of revolt
-		const int iCityStrength100 = pCity->netRevoltRisk100(eCulturalOwner);
+		const int iCityStrength100 = pCity->netRevoltRisk(eCulturalOwner);
 		const int iRevoltRoll = GC.getGame().getSorenRandNum(10000, "Revolt #2");
 
 		// Successful revolt
@@ -4999,7 +5010,7 @@ int CvPlot::plotCount(ConstPlotUnitFunc funcA, int iData1A, int iData2A, const C
 }
 
 // Strength-weighted plotCount (#395): each matching unit contributes its
-// SMeffectiveCountTimes100 (100 at type base group rank, x1.5 per merge rank) instead
+// SMeffectiveCount (100 at type base group rank, x1.5 per merge rank) instead
 // of 1, so count-based gates can see merged force honestly. Floored on /100 conversion.
 int CvPlot::plotCountSM(ConstPlotUnitFunc funcA, int iData1A, int iData2A, const CvUnit* pUnit, PlayerTypes eOwner, TeamTypes eTeam, ConstPlotUnitFunc funcB, int iData1B, int iData2B, int iRange) const
 {
@@ -5023,7 +5034,7 @@ int CvPlot::plotCountSMTimes100(ConstPlotUnitFunc funcA, int iData1A, int iData2
 			&& (funcA == NULL || funcA(unitX, iData1A, iData2A, pUnit))
 			&& (funcB == NULL || funcB(unitX, iData1B, iData2B, NULL)))
 			{
-				iCount += unitX->SMeffectiveCountTimes100();
+				iCount += unitX->SMeffectiveCount();
 			}
 		}
 	}
@@ -5060,7 +5071,7 @@ int CvPlot::plotStrengthTimes100(UnitValueFlags eFlags, ConstPlotUnitFunc funcA,
 					{
 						if ((funcB == NULL) || funcB(pLoopUnit, iData1B, iData2B, NULL))
 						{
-							iStrength += pLoopUnit->AI_genericUnitValueTimes100(eFlags);
+							iStrength += pLoopUnit->AI_genericUnitValue(eFlags);
 						}
 					}
 				}
@@ -7889,6 +7900,13 @@ void CvPlot::updateWorkingCity()
 		// joined pBestCity's -- fold its HAS_/IS_ attributes out of the old city's context and into the new one's.
 		if (pOldWorkingCity != NULL) pOldWorkingCity->onCityPlotChanged(this, -1);
 		if (pBestCity != NULL)       pBestCity->onCityPlotChanged(this, +1);
+		// the spine DOMAIN fact (every mutation emits): the working-city assignment moved. The contexts'
+		// consumer ignores this at play (the folds above ARE the applier); the load reseed's twin fires from
+		// CvPlot::read (Engine/ContextConsumer -- DEC-spine-reseed).
+		emitWorkingCityChanged(GC.getMap().plotNum(getX(), getY()),
+			(int)(pBestCity != NULL ? pBestCity->getOwner() : pOldWorkingCity->getOwner()),
+			pOldWorkingCity != NULL ? pOldWorkingCity->getID() : -1,
+			pBestCity != NULL ? pBestCity->getID() : -1);
 
 		if (pOldWorkingCity != NULL)
 		{
@@ -10957,7 +10975,7 @@ void CvPlot::processArea(CvArea* pArea, int iChange)
 	{
 		if (pLoopUnit->AI_getUnitAIType() != NO_UNITAI)
 		{
-			pArea->changeEffNumAIUnitsTimes100(pLoopUnit->getOwner(), pLoopUnit->AI_getUnitAIType(), pLoopUnit->SMeffectiveCountTimes100() * iChange);
+			pArea->changeEffNumAIUnitsTimes100(pLoopUnit->getOwner(), pLoopUnit->AI_getUnitAIType(), pLoopUnit->SMeffectiveCount() * iChange);
 		}
 	}
 
@@ -11127,6 +11145,8 @@ void CvPlot::read(FDataStreamBase* pStream)
 
 	WRAPPER_READ(wrapper, "CvPlot", &m_eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_ePlotType);
+	// TERRAIN is MANDATORY on every plot -- a plot with no terrain is an unrenderable hole in the map, so a
+	// missing TERRAIN_ Type is CORRUPTION, not a soft condition: this read stays fail-loud (save.md par.7).
 	WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_TERRAINS, &m_eTerrainType);
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlot", REMAPPED_CLASS_TYPE_FEATURES, &m_eFeatureType);
 
@@ -11140,6 +11160,14 @@ void CvPlot::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvPlot", &m_plotCity.iID);
 	WRAPPER_READ(wrapper, "CvPlot", (int*)&m_workingCity.eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_workingCity.iID);
+	// THE RESEED EMIT (DEC-spine-reseed): reading the working-city fact off the stream is what announces it --
+	// the genuine in-read DOMAIN event the contexts' consumer buffers and folds into the city's
+	// CityContext.plotAttrs at the load-finish drain (the cities stream AFTER the map, so the fold cannot apply
+	// here). Old city is -1: a deserializing plot has no prior assignment to unfold.
+	if (m_workingCity.eOwner >= 0 && m_workingCity.eOwner < MAX_PLAYERS && m_workingCity.iID >= 0)
+	{
+		emitWorkingCityChanged(GC.getMap().plotNum(m_iX, m_iY), (int)m_workingCity.eOwner, -1, m_workingCity.iID);
+	}
 	WRAPPER_READ(wrapper, "CvPlot", (int*)&m_workingCityOverride.eOwner);
 	WRAPPER_READ(wrapper, "CvPlot", &m_workingCityOverride.iID);
 

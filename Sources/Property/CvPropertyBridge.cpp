@@ -184,12 +184,12 @@ void CascadePropertyBridge::bridgeFamilies(const CvModifiers* pMods, CvPropertyM
 		{
 			if (e->perType != "POPULATION") { delete pActive; continue; }   // no non-POPULATION per authored
 			if (e->perEach <= 1 && pActive == NULL)
-				manip.addAttributeConstantSource((PropertyTypes)e->propertyFk, ATTRIBUTE_POPULATION, e->value100 / 100, eObj);
+				manip.addAttributeConstantSource((PropertyTypes)e->propertyFk, ATTRIBUTE_POPULATION, e->value / 100, eObj);
 			else
 				manip.addConstantSource((PropertyTypes)e->propertyFk,
-					perPopulationAmount(e->value100 / 100, e->perEach), eObj, eRelation, iRelationData, pActive);
+					perPopulationAmount(e->value / 100, e->perEach), eObj, eRelation, iRelationData, pActive);
 		}
-		else manip.addConstantSource((PropertyTypes)e->propertyFk, e->value100 / 100, eObj, eRelation, iRelationData, pActive);
+		else manip.addConstantSource((PropertyTypes)e->propertyFk, e->value / 100, eObj, eRelation, iRelationData, pActive);
 	}
 }
 
@@ -206,7 +206,7 @@ void CascadePropertyBridge::bridgePulses(const CvTriggers* pTriggers, CvProperty
 		// plain per-turn pulses only -- a chance-rolled, interval>1, or non-turn entry is not a constant
 		// source (none authored on features/improvements); fail closed.
 		if (pEntry->happening != "onTurn" || pEntry->happeningInterval != 1) continue;
-		if (pEntry->chanceValue100 != 0 || pEntry->chancePerTypeId >= 0 || !pEntry->chancePerToken.empty()) continue;
+		if (pEntry->chanceValue != 0 || pEntry->chancePerTypeId >= 0 || !pEntry->chancePerToken.empty()) continue;
 		const BoolExpr* pActive = NULL;
 		if (pEntry->condition != NULL)
 		{
@@ -216,6 +216,6 @@ void CascadePropertyBridge::bridgePulses(const CvTriggers* pTriggers, CvProperty
 		const GameObjectTypes eObj = (pEntry->spatialOn == "plot") ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
 		const RelationTypes eRel = (pEntry->spatialRelation == "near") ? RELATION_NEAR
 			: (pEntry->spatialRelation == "same" || pEntry->spatialRelation == "samePlot") ? RELATION_SAME_PLOT : NO_RELATION;
-		kTarget.addConstantSource((PropertyTypes)pEntry->propertyId, pEntry->propertyAmount100 / 100, eObj, eRel, pEntry->spatialDistance, pActive);
+		kTarget.addConstantSource((PropertyTypes)pEntry->propertyId, pEntry->propertyAmount / 100, eObj, eRel, pEntry->spatialDistance, pActive);
 	}
 }

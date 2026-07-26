@@ -26,7 +26,6 @@ namespace
 		"collateral",               // MODFAM_COLLATERAL
 		"combat",                   // MODFAM_COMBAT
 		"commerce",                 // MODFAM_COMMERCE
-		"commerceHappiness",        // MODFAM_COMMERCE_HAPPINESS
 		"conscript",                // MODFAM_CONSCRIPT
 		"costs",                    // MODFAM_COSTS
 		"culture",                  // MODFAM_CULTURE
@@ -63,7 +62,6 @@ namespace
 		"movement",                 // MODFAM_MOVEMENT
 		"occupationTime",           // MODFAM_OCCUPATION_TIME
 		"odds",                     // MODFAM_ODDS
-		"perEra",                   // MODFAM_PER_ERA
 		"pillage",                  // MODFAM_PILLAGE
 		"populationGrowthRate",     // MODFAM_POPULATION_GROWTH_RATE
 		"production",               // MODFAM_PRODUCTION
@@ -103,7 +101,6 @@ namespace
 		INFO_SCOPE_BIT(CASC_SCOPE_UNIT) | INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_TEAM)
 			| INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_WORLD),                               // combat
 		INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_PLOT),    // commerce
-		INFO_SCOPE_BIT(CASC_SCOPE_CITY),                                                                          // commerceHappiness
 		INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE),                                                                        // conscript
 		INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_WORLD) | INFO_SCOPE_BIT(CASC_SCOPE_UNIT),   // costs
 		INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_UNIT)
@@ -144,7 +141,6 @@ namespace
 		INFO_SCOPE_BIT(CASC_SCOPE_UNIT) | INFO_SCOPE_BIT(CASC_SCOPE_PLOT),                                        // movement
 		INFO_SCOPE_BIT(CASC_SCOPE_CITY),                                                                          // occupationTime
 		0,                                                                                                        // odds (outcome-plane data, ruling 7)
-		INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE),                                                                        // perEra (pending a real model, ruling 14)
 		INFO_SCOPE_BIT(CASC_SCOPE_UNIT),                                                                          // pillage
 		INFO_SCOPE_BIT(CASC_SCOPE_CITY),                                                                          // populationGrowthRate
 		INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_PLOT),    // production
@@ -179,6 +175,13 @@ namespace
 	// The ruling-1 channel families share the ChannelKind pair.
 	const InfoMemberRow MEMBERS_CHANNEL[] = { { "goldenAge", CHANNEL_GOLDEN_AGE }, { 0, 0 } };
 
+	// COMMERCE alone adds the ruling-15 corporation source-component kind (legacy corporationRevenue --
+	// authored `commerce.empire.corporation`, tech_stock_brokering); the other channel families never carry it.
+	const InfoMemberRow MEMBERS_COMMERCE[] = {
+		{ "goldenAge", CHANNEL_GOLDEN_AGE },
+		{ "corporation", CHANNEL_CORPORATION },
+		{ 0, 0 } };
+
 	const InfoMemberRow MEMBERS_ESPIONAGE[] = {
 		{ "goldenAge", ESPIONAGE_GOLDEN_AGE },
 		{ "insidiousness", ESPIONAGE_INSIDIOUSNESS },
@@ -208,7 +211,9 @@ namespace
 		{ "distance", MAINTENANCE_DISTANCE },
 		{ "corporation", MAINTENANCE_CORPORATION },
 		{ "colony", MAINTENANCE_COLONY },
-		{ "cap", MAINTENANCE_CAP },
+		{ "colony.cap", MAINTENANCE_CAP },   // the authored nesting (12 handicaps: colony:{cap:N, percent:M} --
+		                                     // cap is a bare-number leaf under colony, dotted by the walk; no
+		                                     // bare `cap` member exists in the census)
 		{ 0, 0 } };
 
 	const InfoMemberRow MEMBERS_COSTS[] = {
@@ -232,7 +237,6 @@ namespace
 		{ "hillsDefense", COMBAT_HILLS_DEFENSE },
 		{ "stealth", COMBAT_STEALTH },
 		{ "stealthStrikes", COMBAT_STEALTH_STRIKES },
-		{ "flanking", COMBAT_FLANKING },
 		{ "lunge", COMBAT_LUNGE },
 		{ "unnerve", COMBAT_UNNERVE },
 		{ "enclose", COMBAT_ENCLOSE },
@@ -278,8 +282,13 @@ namespace
 		{ 0, 0 } };
 
 	const InfoMemberRow MEMBERS_TRADE_ROUTES[] = {
-		{ "modifier", TRADE_ROUTE_MODIFIER },
+		{ "modifier", TRADE_ROUTE_MODIFIER },   // channel-agnostic route-PROFIT % (totalTradeModifier stage)
 		{ "max", TRADE_ROUTE_MAX },
+		// ruling 27: the channel axis on `modifier` (YieldTypes reuse) -- authored
+		// tradeRoutes.<scope>.modifier.<channel>.<unit>, decoded as the dotted member path
+		{ "modifier.food", TRADE_ROUTE_MODIFIER_FOOD },
+		{ "modifier.production", TRADE_ROUTE_MODIFIER_PRODUCTION },
+		{ "modifier.commerce", TRADE_ROUTE_MODIFIER_COMMERCE },
 		{ 0, 0 } };
 
 	const InfoMemberRow MEMBERS_MOVEMENT[] = {
@@ -396,7 +405,7 @@ namespace
 	const InfoMemberRow MEMBERS_WAR_WEARINESS[] = { { "enemy", 1 }, { 0, 0 } };
 	const InfoMemberRow MEMBERS_HURRY[] = { { "anger", 1 }, { "inflation", 2 }, { 0, 0 } };
 	const InfoMemberRow MEMBERS_GREAT_GENERAL_RATE[] = { { "domestic", 1 }, { 0, 0 } };
-	const InfoMemberRow MEMBERS_FIRST_STRIKE[] = { { "strikes", 1 }, { 0, 0 } };
+	const InfoMemberRow MEMBERS_FIRST_STRIKE[] = { { "strikes", 1 }, { "chance", 2 }, { 0, 0 } };
 	const InfoMemberRow MEMBERS_SPAWN_RATE[] = { { "npcPeace", 1 }, { 0, 0 } };
 	const InfoMemberRow MEMBERS_WORK_RATE[] = { { "hills", 1 }, { 0, 0 } };
 
@@ -414,8 +423,7 @@ namespace
 		0,                          // cityCapture (trigger-plane data, ruling 16 -- no kinds minted)
 		MEMBERS_COLLATERAL,         // collateral
 		MEMBERS_COMBAT,             // combat
-		MEMBERS_CHANNEL,            // commerce
-		0,                          // commerceHappiness (CommerceTypes axis, infoResolveKind)
+		MEMBERS_COMMERCE,           // commerce (ChannelKind pair + the ruling-15 corporation kind)
 		0,                          // conscript
 		MEMBERS_COSTS,              // costs
 		MEMBERS_CHANNEL,            // culture
@@ -452,7 +460,6 @@ namespace
 		MEMBERS_MOVEMENT,           // movement
 		0,                          // occupationTime
 		0,                          // odds (outcome-plane data, ruling 7)
-		0,                          // perEra (pending a real model, ruling 14)
 		0,                          // pillage
 		0,                          // populationGrowthRate
 		MEMBERS_CHANNEL,            // production
@@ -488,6 +495,23 @@ namespace
 		0
 	};
 
+	// FAMILY-SCOPED keyed-container tokens (see the header): the combat §8 targeting/immunity membership maps
+	// (json §8: keyed targeting/immunity -> the combat family) -- `targets`/`unitTargets` (UNITCOMBAT_*/UNIT_*
+	// bool maps, 452/83 authored) + `defenders` (25 authored). NOT in the global table: `defenders` is also the
+	// barbarians.world.defenders KIND, so the container reading is combat-only.
+	struct InfoFamilyTokenRow
+	{
+		ModifierFamily family;
+		const char* segment;
+	};
+	const InfoFamilyTokenRow INFO_FAMILY_TARGET_TOKENS[] = {
+		{ MODFAM_COMBAT, "targets" },
+		{ MODFAM_COMBAT, "unitTargets" },
+		{ MODFAM_COMBAT, "defenders" },
+		{ MODFAM_COMBAT, "flanking" },
+		{ MODFAM_NONE, 0 }
+	};
+
 	// The straggler-scalar slot table (InfoScalar order).
 	struct InfoScalarRow
 	{
@@ -501,7 +525,7 @@ namespace
 		{ MODFAM_ESPIONAGE_DEFENSE, 0 },          // SCALAR_ESPIONAGE_DEFENSE
 		{ MODFAM_EVENT_CHANCE, 0 },               // SCALAR_EVENT_CHANCE
 		{ MODFAM_FEATURE_PRODUCTION, 0 },         // SCALAR_FEATURE_PRODUCTION
-		{ MODFAM_FIRST_STRIKE, 0 },               // SCALAR_FIRST_STRIKE_CHANCES
+		{ MODFAM_FIRST_STRIKE, 2 },               // SCALAR_FIRST_STRIKE_CHANCES (the `chance` member row; slot 0 is unauthored)
 		{ MODFAM_FIRST_STRIKE, 1 },               // SCALAR_FIRST_STRIKES
 		{ MODFAM_FOOD_KEPT, 0 },                  // SCALAR_FOOD_KEPT
 		{ MODFAM_GOLDEN_AGE, 0 },                 // SCALAR_GOLDEN_AGE_LENGTH
@@ -586,14 +610,6 @@ int infoResolveKind(ModifierFamily eFamily, const std::string& szMemberPath)
 		if (szMemberPath == "commerce")    return (int)YIELD_COMMERCE;
 		return -1;
 	}
-	if (eFamily == MODFAM_COMMERCE_HAPPINESS)
-	{
-		if (szMemberPath == "gold")       return (int)COMMERCE_GOLD;
-		if (szMemberPath == "research")   return (int)COMMERCE_RESEARCH;
-		if (szMemberPath == "culture")    return (int)COMMERCE_CULTURE;
-		if (szMemberPath == "espionage")  return (int)COMMERCE_ESPIONAGE;
-		return -1;
-	}
 	const InfoMemberRow* pRow = INFO_FAMILY_MEMBERS[(int)eFamily];
 	if (pRow == 0)
 	{
@@ -626,6 +642,40 @@ int infoFamilyCommerce(ModifierFamily eFamily)
 	return -1;
 }
 
+ModifierFamily infoYieldFamily(int iYield)
+{
+	if (iYield == (int)YIELD_FOOD)        return MODFAM_FOOD;
+	if (iYield == (int)YIELD_PRODUCTION)  return MODFAM_PRODUCTION;
+	if (iYield == (int)YIELD_COMMERCE)    return MODFAM_COMMERCE;
+	return MODFAM_NONE;
+}
+
+ModifierFamily infoCommerceFamily(int iCommerce)
+{
+	if (iCommerce == (int)COMMERCE_GOLD)      return MODFAM_GOLD;
+	if (iCommerce == (int)COMMERCE_RESEARCH)  return MODFAM_RESEARCH;
+	if (iCommerce == (int)COMMERCE_CULTURE)   return MODFAM_CULTURE;
+	if (iCommerce == (int)COMMERCE_ESPIONAGE) return MODFAM_ESPIONAGE;
+	return MODFAM_NONE;
+}
+
+// The wellbeing channel's AUTHORED family (modifier.md §2b): the opposing channels share one authored family;
+// the deposit's SIGN routes between them at fill/valuation (never a storage shape).
+ModifierFamily infoWellbeingFamily(WellbeingChannel eChannel)
+{
+	switch (eChannel)
+	{
+	case WELLBEING_HAPPINESS:
+	case WELLBEING_ANGER:
+		return MODFAM_HAPPINESS;
+	case WELLBEING_HEALTH:
+	case WELLBEING_UNHEALTH:
+		return MODFAM_HEALTH;
+	default:
+		return MODFAM_NONE;
+	}
+}
+
 void infoScalarSlot(InfoScalar eScalar, ModifierFamily& eFamilyOut, int& iKindOut)
 {
 	if (eScalar < 0 || eScalar >= NUM_INFO_SCALARS)
@@ -638,7 +688,7 @@ void infoScalarSlot(InfoScalar eScalar, ModifierFamily& eFamilyOut, int& iKindOu
 	iKindOut = INFO_SCALAR_SLOTS[(int)eScalar].kind;
 }
 
-CvCascUnit infoDefenseUnit(DefenseKind eKind)
+CvCascUnit infoDefenseUnit(DefenseKind eKind, CvCascScope eScope)
 {
 	switch (eKind)
 	{
@@ -650,9 +700,202 @@ CvCascUnit infoDefenseUnit(DefenseKind eKind)
 	case DEFENSE_COUNTER_DAMAGE:
 	case DEFENSE_COUNTER_DAMAGE_CHANCE:
 		return CASC_UNIT_COUNT;   // authored as bare numbers inside the nested counterDamage block
+	case DEFENSE_AIR:
+		// the SCOPE-SPLIT kind (reconciliation item 7): plot = the FLAT rolled magnitude (101 improvement
+		// `air` flats; the opposed getSorenRandNum(airBombCurrRate) vs getSorenRandNum(defense) dice,
+		// CvUnit.cpp:7126) -- never a percent, never a compensating multiplier; city = the PERCENT air-damage
+		// modifier (17 building `airDefense` percents)
+		return (eScope == CASC_SCOPE_PLOT) ? CASC_UNIT_FLAT : CASC_UNIT_PERCENT;
 	default:
 		return CASC_UNIT_PERCENT;
 	}
+}
+
+// The scope-blind transitional overload (see the header): answers with the CITY plane -- the dominant consumer
+// class and the pre-split behaviour everywhere except the plot AIR read, whose wave-B call site moves to the
+// scope-aware overload (reported follow-up).
+CvCascUnit infoDefenseUnit(DefenseKind eKind)
+{
+	return infoDefenseUnit(eKind, CASC_SCOPE_CITY);
+}
+
+// The canonical AUTHORED unit of any (family, kind, scope) slot (see the header). Grounded in the live census
+// (family_census.py + the per-(scope, member, unit) refinement over Assets/Data): each row states what the data
+// actually authors on that (kind, scope). The engine-enum channel families carry both units on one kind and
+// keep the split in the getter NAME -- they never route through here. Dual slots (both units authored at ONE
+// (kind, scope)) answer the DOMINANT plane and are called out inline -- the minority plane reads through the
+// name-split getters.
+CvCascUnit infoKindUnit(ModifierFamily eFamily, int iKind, CvCascScope eScope)
+{
+	switch (eFamily)
+	{
+	case MODFAM_DEFENSE:
+		return infoDefenseUnit((DefenseKind)iKind, eScope);
+	case MODFAM_COSTS:
+	case MODFAM_DURATIONS:
+	case MODFAM_BUILD_RATE:
+	// the percent straggler families (census: every authored kind is a percent modifier -- greatGeneralRate 218,
+	// hurry 63, spawnRate.npcPeace 6, warWeariness 108, workRate 990, anarchy 36, foodKept 21, goldenAge 83,
+	// growth 75, improvementUpgradeRate 370, inflation 14, missionYieldMultiplier 9, occupationTime 11,
+	// populationGrowthRate 40, researchRate 3275, revoltProtection 92, speed 9, survivor 1, tradeMission 1,
+	// withdrawal 933, featureProduction 2, hurryAnger 13; their getScalar callers pass the unit explicitly,
+	// this table is the one documentation-truth home)
+	case MODFAM_GREAT_GENERAL_RATE:
+	case MODFAM_HURRY:
+	case MODFAM_SPAWN_RATE:
+	case MODFAM_WAR_WEARINESS:
+	case MODFAM_WORK_RATE:
+	case MODFAM_ANARCHY:
+	case MODFAM_FOOD_KEPT:
+	case MODFAM_GOLDEN_AGE:
+	case MODFAM_GROWTH:
+	case MODFAM_IMPROVEMENT_UPGRADE_RATE:
+	case MODFAM_INFLATION:
+	case MODFAM_MISSION_YIELD_MULTIPLIER:
+	case MODFAM_OCCUPATION_TIME:
+	case MODFAM_POPULATION_GROWTH_RATE:
+	case MODFAM_RESEARCH_RATE:
+	case MODFAM_REVOLT_PROTECTION:
+	case MODFAM_SPEED:
+	case MODFAM_SURVIVOR:
+	case MODFAM_TRADE_MISSION:
+	case MODFAM_WITHDRAWAL:
+	case MODFAM_FEATURE_PRODUCTION:
+	case MODFAM_HURRY_ANGER:
+		return CASC_UNIT_PERCENT;
+	case MODFAM_ESPIONAGE_DEFENSE:
+		// SCOPE-SPLIT (census): city = the building flat amount (61); empire = the trait percent modifier (78)
+		return (eScope == CASC_SCOPE_CITY) ? CASC_UNIT_FLAT : CASC_UNIT_PERCENT;
+	case MODFAM_MAINTENANCE:
+		// corporation is SCOPE-SPLIT (city flat 23 -- the corp's own per-city gold amount; empire percent 120 --
+		// the civic corp-maintenance modifier). The scope-wide amount at city is DUAL (flat 597 building gold
+		// amounts / percent 125 city modifiers) -- the table answers the dominant FLAT plane; empire is percent.
+		if (iKind == (int)MAINTENANCE_CORPORATION || iKind == (int)MAINTENANCE_AMOUNT)
+		{
+			return (eScope == CASC_SCOPE_CITY) ? CASC_UNIT_FLAT : CASC_UNIT_PERCENT;
+		}
+		if (iKind == (int)MAINTENANCE_CAP)
+		{
+			// authored as a bare-number leaf under colony (colony:{cap:N}) -- the walk synthesizes COUNT, so
+			// the compiled slot's unit axis IS COUNT (the engine gold cap, never a percent)
+			return CASC_UNIT_COUNT;
+		}
+		return CASC_UNIT_PERCENT;
+	case MODFAM_CAPTURE:
+		// SCOPE-SPLIT (reconciliation item 1): the unit plane authors FLAT percentage-point chances
+		// (probability 240 + resistance 188 = 428 entries); the empire plane authors PERCENT modifiers (158).
+		return (eScope == CASC_SCOPE_UNIT) ? CASC_UNIT_FLAT : CASC_UNIT_PERCENT;
+	case MODFAM_COMBAT:
+		// the census flat-authoring kinds (reconciliation item 1); everything else is a percent modifier.
+		switch (iKind)
+		{
+		case COMBAT_AMOUNT:            // memberless: DUAL at unit scope (flat 13 strengthChange / percent 167
+		                               // combat%) -- the name-split getters carry both planes; dominant-plane
+		                               // answer here is FLAT (the strengthChange-as-AMOUNT authoring class)
+		case COMBAT_STEALTH_STRIKES:   // flat strike count (111)
+		case COMBAT_BREAKDOWN_CHANCE:  // flat chance points (17)
+		case COMBAT_BREAKDOWN_DAMAGE:  // flat damage (16)
+		case COMBAT_TAUNT:             // flat (11)
+		case COMBAT_FREE_WINS_VS_BARBS: // flat win count (8, handicap empire scope)
+			return CASC_UNIT_FLAT;
+		default:
+			return CASC_UNIT_PERCENT;
+		}
+	case MODFAM_UNDERWORLD:
+	case MODFAM_CARGO:
+		return CASC_UNIT_FLAT;
+	case MODFAM_HEAL:
+		// selfModifier is the one percent kind (30); every other heal kind is a flat amount
+		return (iKind == (int)HEAL_SELF_MODIFIER) ? CASC_UNIT_PERCENT : CASC_UNIT_FLAT;
+	case MODFAM_COLLATERAL:
+		// damage (125) / protection (21) are percent modifiers; limit / maxUnits (231 each) are flat counts
+		return (iKind == (int)COLLATERAL_DAMAGE || iKind == (int)COLLATERAL_PROTECTION) ? CASC_UNIT_PERCENT : CASC_UNIT_FLAT;
+	case MODFAM_BOMBARD:
+		// rate is a percent modifier (143); airBombRate is a flat rate (33)
+		return (iKind == (int)BOMBARD_RATE) ? CASC_UNIT_PERCENT : CASC_UNIT_FLAT;
+	case MODFAM_AIR:
+		// intercept/evasion are percent modifiers; the range kinds are flat counts (census: trait air.range flat)
+		return (iKind == (int)AIR_RANGE || iKind == (int)AIR_NUKE_RANGE) ? CASC_UNIT_FLAT : CASC_UNIT_PERCENT;
+	case MODFAM_EXPERIENCE:
+		// the scope-wide amount is SCOPE-SPLIT (reconciliation item 1): unit = the PERCENT XP-gain modifier
+		// (42, promotions); city/empire = flat free XP (7 + 61). NB empire is DUAL (percent 43 -- the trait
+		// XP-gain modifier plane) -- dominant-plane answer FLAT; the percent plane needs the name-split getter
+		// on the consuming types (reported follow-up). inBorder/levelModifier are percent modifiers.
+		if (iKind == (int)EXPERIENCE_AMOUNT)
+		{
+			return (eScope == CASC_SCOPE_UNIT) ? CASC_UNIT_PERCENT : CASC_UNIT_FLAT;
+		}
+		return CASC_UNIT_PERCENT;
+	case MODFAM_DIPLOMACY:
+		// attitude values + techShare (1, project_encyclopedia) are flat deltas; the rest are percent modifiers
+		return (iKind == (int)DIPLOMACY_ATTITUDE || iKind == (int)DIPLOMACY_ATTITUDE_SHARE
+		     || iKind == (int)DIPLOMACY_TECH_SHARE) ? CASC_UNIT_FLAT : CASC_UNIT_PERCENT;
+	case MODFAM_STATE_RELIGION:
+		return (iKind == (int)STATE_RELIGION_HAPPINESS || iKind == (int)STATE_RELIGION_FREE_EXPERIENCE) ? CASC_UNIT_FLAT : CASC_UNIT_PERCENT;
+	case MODFAM_REVOLUTION:
+		switch (iKind)
+		{
+		case REVOLUTION_AMOUNT:
+			// SCOPE-SPLIT: city = flat index deltas (210 buildings); empire = the handicap PERCENT modifier
+			// plane (11 authorings, e.g. handicap_chieftain revolution.empire.percent). NB empire is DUAL --
+			// 6 building empire flats (berlin-wall class) ride the flat slot through the name-split getters.
+			return (eScope == CASC_SCOPE_CITY) ? CASC_UNIT_FLAT : CASC_UNIT_PERCENT;
+		case REVOLUTION_DISTANCE_MODIFIER:
+		case REVOLUTION_GOOD_RELIGION:
+		case REVOLUTION_BAD_RELIGION:
+		case REVOLUTION_NATIONALITY:
+		case REVOLUTION_VIOLENT:
+			return CASC_UNIT_PERCENT;
+		default:
+			return CASC_UNIT_FLAT;   // local/national/holyCity*/democracyLevel/religiousFreedom/... are flat index deltas
+		}
+	case MODFAM_UPKEEP:
+		// the free-allowance kinds are flat amounts (ruling 28); `extra` is a flat surcharge (7, unitcombat
+		// sea-animal tale); every other kind is a percent modifier
+		return (iKind == (int)UPKEEP_FREE_MILITARY || iKind == (int)UPKEEP_FREE_CIVILIAN
+		     || iKind == (int)UPKEEP_EXTRA) ? CASC_UNIT_FLAT : CASC_UNIT_PERCENT;
+	case MODFAM_TRADE_ROUTES:
+		// the route count (kind 0, memberless) + max are flat counts; the modifier kinds (channel-agnostic +
+		// per-channel, ruling 27) are percents
+		return (iKind == (int)TRADE_ROUTE_AMOUNT || iKind == (int)TRADE_ROUTE_MAX) ? CASC_UNIT_FLAT : CASC_UNIT_PERCENT;
+	case MODFAM_BARBARIANS:
+		// the two probability kinds are percent; turns/tiles/defenders counts are flat (handicap census)
+		return (iKind == (int)BARBARIANS_ANIMAL_ATTACK_PROB || iKind == (int)BARBARIANS_CITY_CREATION_PROB)
+			? CASC_UNIT_PERCENT : CASC_UNIT_FLAT;
+	case MODFAM_ESPIONAGE:
+		// the unit-plane spy stats are flat; the channel amount rides the named commerce getters, not here
+		return CASC_UNIT_FLAT;
+	default:
+		return CASC_UNIT_FLAT;
+	}
+}
+
+// The scope-blind transitional overload (see the header): delegates with the family's DOMINANT authored scope,
+// preserving the pre-split answers for the existing (family, kind)-only call sites; those sites move to the
+// scope-aware overload as the consuming getters gain the spelled-out scope (reported follow-up).
+CvCascUnit infoKindUnit(ModifierFamily eFamily, int iKind)
+{
+	switch (eFamily)
+	{
+	case MODFAM_CAPTURE:
+		return infoKindUnit(eFamily, iKind, CASC_SCOPE_UNIT);      // 428 of 586 authorings are unit-plane
+	case MODFAM_MAINTENANCE:
+		return infoKindUnit(eFamily, iKind, CASC_SCOPE_EMPIRE);    // the modifier plane (the pre-split blanket answer)
+	default:
+		return infoKindUnit(eFamily, iKind, CASC_SCOPE_CITY);      // scope-independent rows + the city-plane defaults
+	}
+}
+
+// Family-combine FLOOR metadata (modifier.md §2; see the header). The table is deliberately minimal -- one row
+// per ruled floor, extended only by an owner-ruled combine mode, never inferred from data shape.
+bool infoCombineFloorAtZero(ModifierFamily eFamily, int iKind)
+{
+	if (eFamily == MODFAM_UPKEEP)
+	{
+		// ruling 28: the free-upkeep kinds sum signed free-amount entries, floored at zero as a GROUP
+		return iKind == (int)UPKEEP_FREE_MILITARY || iKind == (int)UPKEEP_FREE_CIVILIAN;
+	}
+	return false;
 }
 
 bool infoIsTargetToken(const std::string& szSegment)
@@ -660,6 +903,18 @@ bool infoIsTargetToken(const std::string& szSegment)
 	for (int i = 0; INFO_TARGET_TOKENS[i] != 0; ++i)
 	{
 		if (szSegment == INFO_TARGET_TOKENS[i])
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool infoIsFamilyTargetToken(ModifierFamily eFamily, const std::string& szSegment)
+{
+	for (int i = 0; INFO_FAMILY_TARGET_TOKENS[i].segment != 0; ++i)
+	{
+		if (INFO_FAMILY_TARGET_TOKENS[i].family == eFamily && szSegment == INFO_FAMILY_TARGET_TOKENS[i].segment)
 		{
 			return true;
 		}

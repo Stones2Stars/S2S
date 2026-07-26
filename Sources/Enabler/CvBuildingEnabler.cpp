@@ -68,7 +68,7 @@ void BuildingEnabler::augmentWaived(const CvPlayer& kPlayer, const CvTeam& kTeam
 // (flip-guarded) plus the held-flag guards where an emit is documented broad (tech).
 
 // the source's cascade info per axis (the tech axis redirects the TECH_GAME_START root to cascadeStartNode)
-static const CvInfo* bd_sourceJson(int eAxis, int iId)
+static const CvInfo* bd_sourceInfo(int eAxis, int iId)
 {
 	switch (eAxis)
 	{
@@ -87,7 +87,7 @@ static const CvInfo* bd_sourceJson(int eAxis, int iId)
 
 static void bd_applyAxis(EnablerDomain& d, int eAxis, int iId, int iDelta)
 {
-	if (iId >= 0) EnablerKernel::applyEdges(d, bd_sourceJson(eAxis, iId), EDGEB_BUILDINGS, iDelta);
+	if (iId >= 0) EnablerKernel::applyEdges(d, bd_sourceInfo(eAxis, iId), EDGEB_BUILDINGS, iDelta);
 }
 
 // THE ORACLE CORE (never a lifecycle path): the pure full build from current state -- replay the +1 appliers
@@ -187,16 +187,37 @@ static bool bd_groupCapOk(int iB, const CvPlayer& kPlayer)
 	const CvAllowed* a = (jg != NULL) ? jg->getAllowed() : NULL;
 	if (a == NULL) return true;
 	const std::vector<int>& mem = bd_sbMembers((int)sb);
-	for (std::map<std::string, int>::const_iterator it = a->all().begin(); it != a->all().end(); ++it)
+	for (int iKind = 0; iKind < NUM_ALLOWEDCAP; ++iKind)
 	{
-		CascadeCountScope eScope; int iEntity;
-		if (it->first == "world")       { eScope = CASCADE_COUNT_WORLD;  iEntity = 0; }
-		else if (it->first == "team")   { eScope = CASCADE_COUNT_TEAM;   iEntity = (int)kPlayer.getTeam(); }
-		else if (it->first == "empire") { eScope = CASCADE_COUNT_EMPIRE; iEntity = (int)kPlayer.getID(); }
-		else continue;
+		const int iCap = a->cap((EnAllowedCap)iKind);
+		if (iCap < 0) continue;
+		CascadeCountScope eScope;
+		int iEntity;
+		if (iKind == ALLOWEDCAP_WORLD)
+		{
+			eScope = CASCADE_COUNT_WORLD;
+			iEntity = 0;
+		}
+		else if (iKind == ALLOWEDCAP_TEAM)
+		{
+			eScope = CASCADE_COUNT_TEAM;
+			iEntity = (int)kPlayer.getTeam();
+		}
+		else if (iKind == ALLOWEDCAP_EMPIRE)
+		{
+			eScope = CASCADE_COUNT_EMPIRE;
+			iEntity = (int)kPlayer.getID();
+		}
+		else
+		{
+			continue;
+		}
 		int iCount = 0;
-		for (size_t m = 0; m < mem.size(); ++m) iCount += cascadeTally().buildingCount(iEntity, mem[m], eScope);
-		if (iCount >= it->second) return false;
+		for (size_t iMember = 0; iMember < mem.size(); ++iMember)
+		{
+			iCount += cascadeTally().buildingCount(iEntity, mem[iMember], eScope);
+		}
+		if (iCount >= iCap) return false;
 	}
 	return true;
 }
@@ -217,7 +238,7 @@ static void bd_gate(const CvCity& kCity, const CvPlayer& kPlayer, const std::set
 	{
 		const std::vector<int>& dorm = j->dormantTriggers();
 		for (size_t i = 0; i < dorm.size(); ++i)
-			if (kCity.hasBuilding((BuildingTypes)dorm[i])) { bDormant = true; break; }
+			if (kCity.getCityContext().hasBuilding(dorm[i])) { bDormant = true; break; }   // the §7 has-list, through the context (contexts.md HAVE axis)
 		// the HIDE-REPLACED interface option (the legacy canConstruct replacement leg, post-flip): with the
 		// option on, a candidate whose dormancy successor is REACHABLE hides from the offer -- inTree is the
 		// two-mode read the legacy recursive canConstruct(replacement, bTestVisible=true) maps onto. Freshness:
@@ -230,10 +251,8 @@ static void bd_gate(const CvCity& kCity, const CvPlayer& kPlayer, const std::set
 		}
 	}
 	CvCascadeEvalCtx ec;
-	ec.city = &kCity;
-	ec.player = &kPlayer;
-	ec.team = &GET_TEAM(kPlayer.getTeam());
-	ec.plot = kCity.plot();
+	kCity.getCityContext().fillEvalCtx(ec);       // city+plot -- the contexts fill the eval state (contexts.md)
+	kPlayer.getEmpireContext().fillEvalCtx(ec);   // player+team
 	ec.waivedPrereqBuildings = &waived;
 	EnablerKernel::wireOperatingBuildings(&kCity, ec);
 	CvCascadeEvalFlags gateFlags;
@@ -367,7 +386,7 @@ void BuildingEnabler::onCityTurn(const CvCity& kCity)
 void BuildingEnabler::onCityTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 {
 	if (eTeam == NO_TEAM || eTech == NO_TECH) return;
-	const CvInfo* jt = bd_sourceJson(AX_TECH, (int)eTech);
+	const CvInfo* jt = bd_sourceInfo(AX_TECH, (int)eTech);
 	const std::vector<int>* obsB = jt ? jt->edge(EDGEF_OBSOLETES, EDGEB_BUILDINGS) : NULL;
 	const CvTeam& kTeam = GET_TEAM(eTeam);
 	const bool bGate = !spineGameLoadInProgress();   // load gates once at GAME_LOAD_FINISHED
@@ -449,7 +468,7 @@ static void bd_applyAxisGated(const CvCity& kCity, EnablerDomain& d, int eAxis, 
 	bd_applyAxis(d, eAxis, iId, iDelta);
 	if (spineGameLoadInProgress()) return;
 	std::set<int> touched;
-	bd_touched(bd_sourceJson(eAxis, iId), touched);
+	bd_touched(bd_sourceInfo(eAxis, iId), touched);
 	bd_gateSet(kCity, touched);
 }
 
@@ -491,7 +510,7 @@ void BuildingEnabler::onCityBonusChanged(const CvCity& kCity, int iBonus, int iC
 	if ((iOld > 0) == (iNew > 0)) return;   // HAVE = count > 0: re-gate only on a presence crossing
 	if (spineGameLoadInProgress()) return;  // load: the one GAME_LOAD_FINISHED gate pass covers it
 	std::set<int> touched;
-	bd_touched(bd_sourceJson(AX_BONUS, iBonus), touched);
+	bd_touched(bd_sourceInfo(AX_BONUS, iBonus), touched);
 	bd_gateSet(kCity, touched);
 }
 
@@ -503,7 +522,7 @@ void BuildingEnabler::onCityVicinityBonusChanged(const CvCity& kCity, int iBonus
 	if (!d.isSeeded() || iBonus < 0) return;
 	if (spineGameLoadInProgress()) return;  // load: the one GAME_LOAD_FINISHED gate pass covers it
 	std::set<int> touched;
-	bd_touched(bd_sourceJson(AX_BONUS, iBonus), touched);
+	bd_touched(bd_sourceInfo(AX_BONUS, iBonus), touched);
 	bd_gateSet(kCity, touched);
 }
 
@@ -516,7 +535,7 @@ void BuildingEnabler::onCityCultureLevelChanged(const CvCity& kCity, int iOldLev
 	if (!spineGameLoadInProgress())
 	{
 		std::set<int> touched;
-		bd_touched(bd_sourceJson(AX_CULTURE, iOldLevel), touched);
+		bd_touched(bd_sourceInfo(AX_CULTURE, iOldLevel), touched);
 		bd_gateSet(kCity, touched);
 	}
 }
@@ -529,8 +548,8 @@ void BuildingEnabler::onPlayerCivicsChanged(PlayerTypes ePlayer, int iOldCivic, 
 	std::set<int> touched;
 	if (bGate)
 	{
-		bd_touched(bd_sourceJson(AX_CIVIC, iOldCivic), touched);   // both swap halves' dependents re-gate
-		bd_touched(bd_sourceJson(AX_CIVIC, iNewCivic), touched);
+		bd_touched(bd_sourceInfo(AX_CIVIC, iOldCivic), touched);   // both swap halves' dependents re-gate
+		bd_touched(bd_sourceInfo(AX_CIVIC, iNewCivic), touched);
 	}
 	foreach_(CvCity* pCity, kPlayer.cities())
 	{

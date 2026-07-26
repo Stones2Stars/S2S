@@ -77,7 +77,7 @@ int BuildingSortCommerce::getBuildingValue(const CvPlayer* pPlayer, CvCity* pCit
 	if (pCity)
 	{
 		int iYieldCommerce = pCity->getAdditionalYieldByBuilding(YIELD_COMMERCE, eBuilding);
-		int iCommerce = pCity->getAdditionalCommerceTimes100ByBuilding(m_eCommerce, eBuilding);
+		int iCommerce = pCity->getAdditionalCommerceByBuilding(m_eCommerce, eBuilding);
 		iCommerce += iYieldCommerce * pPlayer->getCommercePercent(m_eCommerce);
 		if (m_eCommerce == COMMERCE_GOLD)
 			iCommerce += pCity->getSavedMaintenanceTimes100ByBuilding(eBuilding);

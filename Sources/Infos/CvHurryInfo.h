@@ -1,39 +1,50 @@
 #pragma once
-
 #ifndef CV_HURRY_INFO_H
 #define CV_HURRY_INFO_H
 
-#include "CvInfo.h"   // JSON-info base (mapFrom); on /I -> bare include
+//
+//	CvHurryInfo -- the HURRY poco rebuilt to the exemplar surface (patterns.md § THE GETTER SETUP: the four
+//	read categories, nothing else). A rush type (gold-rush / population-rush): the bespoke §9 `conversion`
+//	block (json.md §9) held as ONE typed unit mirroring the authored keys -- the two rush rates are mutually
+//	exclusive in the data, each hurry authors exactly one -- plus the top-level `causesAnger` flag intrinsic.
+//	JSON-fed (Assets/Data/hurries/*.json via mapFrom); no XML read (DEC-no-xml-into-game). A hurry authors no
+//	availability/classification/modifier sections; type + identity text + the ui.art.icon button ride the base
+//	CvInfo reading.
+//
 
-namespace picojson { class value; }
+#include "CvInfo.h"   // the JSON-info base (mapFrom); on /I -> bare include
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
-//  class : CvHurryInfo
-//
-//  DESC:   A rush type (gold-rush / population-rush). #430: JSON-fed
-//          (Assets/Data/hurries/*.json via mapFrom); no XML read.
-//
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class CvHurryInfo : public CvInfo
 {
-	//---------------------------PUBLIC INTERFACE---------------------------------
 public:
 
 	CvHurryInfo();
 
-	int getGoldPerProduction() const { return m_iGoldPerProduction; }
-	int getProductionPerPopulation() const { return m_iProductionPerPopulation; }
-	bool isAnger() const { return m_bAnger; }
-
 	virtual void mapFrom(const picojson::value& entity);
 
-	//---------------------------PROTECTED MEMBER VARIABLES-----------------------
-protected:
+	// The bespoke §9 `conversion` block as ONE typed unit mirroring the authored keys.
+	struct Conversion
+	{
+		Conversion();
+		void reset();
 
-	int m_iGoldPerProduction;
-	int m_iProductionPerPopulation;
-	bool m_bAnger;
+		int goldPerProduction;        // conversion.goldPerProduction -- gold cost per hammer of remaining production
+		int productionPerPopulation;  // conversion.productionPerPopulation -- hammers yielded per population point
+	};
+
+	// ======================= 1. SECTIONS -- the whole typed `conversion` unit (json.md §9) ===================
+	// (categories 2/3 are absent by the data: hurries author no §8 classification and no §6 modifier families)
+	const Conversion& getConversion() const { return m_conversion; }
+
+	// ======================= 4. INTRINSIC -- bare typed reads (genuine lone values) ==========================
+	int getGoldPerProduction() const { return m_conversion.goldPerProduction; }
+	int getProductionPerPopulation() const { return m_conversion.productionPerPopulation; }
+	bool causesAnger() const { return m_bCausesAnger; }   // causesAnger -- the population-rush anger flag
+
+private:
+	// --- the bespoke §9 unit + the intrinsic members (materialized once at mapFrom) ---
+	Conversion m_conversion;
+	bool m_bCausesAnger;
 };
 
 #endif // CV_HURRY_INFO_H

@@ -1,6 +1,9 @@
-//------------------------------------------------------------------------------------------------
-//  FILE:    CvHurryInfo.cpp
-//------------------------------------------------------------------------------------------------
+//
+//	CvHurryInfo -- the hurry poco's own typed reading on top of the base section dispatch (see the header).
+//	mapFrom materializes the bespoke §9 `conversion` unit + the causesAnger flag ONCE
+//	([DEC-materialize-at-mapfrom]). Idempotent by contract (reset-first unit, unconditional assigns).
+//
+
 #include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
 #include "CvInfos.h"              // umbrella: keeps the unity batch's info-type defs whole (leakage guard)
 #include "AI/CvGameAI.h"
@@ -8,26 +11,46 @@
 #include "CvJsonParse.h"          // jsonChildObj / jsonIdInt / jsonIdBool
 
 
+CvHurryInfo::Conversion::Conversion()
+{
+	reset();
+}
+
+
+// The unit's full redefinition (the mapFrom idempotency contract, CvInfo.h).
+void CvHurryInfo::Conversion::reset()
+{
+	goldPerProduction = 0;
+	productionPerPopulation = 0;
+}
+
+
 CvHurryInfo::CvHurryInfo()
-	: m_iGoldPerProduction(0)
-	, m_iProductionPerPopulation(0)
-	, m_bAnger(false)
+	: m_bCausesAnger(false)
 {
 }
 
 
-// #430: conversion.{goldPerProduction,productionPerPopulation} (mutually exclusive rush rates, raw ints,
-// each absent -> 0); causesAnger top-level flag -> bAnger.
+// conversion.{goldPerProduction, productionPerPopulation} -> the typed unit (mutually exclusive rush rates,
+// raw ints, each absent -> 0); the top-level causesAnger flag -> the anger intrinsic.
 void CvHurryInfo::mapFrom(const picojson::value& entity)
 {
-	CvInfo::mapFrom(entity);   // core reading (type / text keys) + availability
-	if (!entity.is<picojson::object>()) return;
-	const picojson::object& o = entity.get<picojson::object>();
+	CvInfo::mapFrom(entity);   // core reading (type / text keys / button) + the section dispatch
 
-	if (const picojson::object* c = jsonChildObj(o, "conversion"))
+	// idempotency (CvInfo.h): the full-registry re-run fully redefines every materialized member
+	m_conversion.reset();
+	m_bCausesAnger = false;
+
+	if (!entity.is<picojson::object>())
 	{
-		m_iGoldPerProduction       = jsonIdInt(*c, "goldPerProduction");
-		m_iProductionPerPopulation = jsonIdInt(*c, "productionPerPopulation");
+		return;
 	}
-	m_bAnger = jsonIdBool(o, "causesAnger");
+	const picojson::object& entityObj = entity.get<picojson::object>();
+
+	if (const picojson::object* pConversion = jsonChildObj(entityObj, "conversion"))
+	{
+		m_conversion.goldPerProduction = jsonIdInt(*pConversion, "goldPerProduction");
+		m_conversion.productionPerPopulation = jsonIdInt(*pConversion, "productionPerPopulation");
+	}
+	m_bCausesAnger = jsonIdBool(entityObj, "causesAnger");
 }

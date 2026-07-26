@@ -8,7 +8,7 @@
 #include "CvInfo.h"
 #include "Repos/InfoRepo.h"
 
-// The five generated-domain repo tags (phantom discriminators; payload = the JsonPayload default, plain CvInfo).
+// The five generated-domain repo tags (phantom discriminators; payload = the RepoPayload default, plain CvInfo).
 // Their InfoRepo singletons are OWNED rows in InfoRepo.cpp.
 class CvSkillClsTag; class CvTagClsTag; class CvAttributeClsTag; class CvCapabilityClsTag; class CvPolicyClsTag;
 

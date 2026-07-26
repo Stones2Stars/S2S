@@ -106,9 +106,9 @@ void EventTriggeredData::read(FDataStreamBase* pStream)
 	m_bExpired = false;
 	WRAPPER_READ(wrapper, "EventTriggeredData",&m_bExpired);
 
-	WRAPPER_READ_CLASS_ENUM(wrapper, "EventTriggeredData",REMAPPED_CLASS_TYPE_RELIGIONS,(int*)&m_eReligion);
-	WRAPPER_READ_CLASS_ENUM(wrapper, "EventTriggeredData",REMAPPED_CLASS_TYPE_CORPORATIONS,(int*)&m_eCorporation);
-	WRAPPER_READ_CLASS_ENUM(wrapper, "EventTriggeredData",REMAPPED_CLASS_TYPE_BUILDINGS,(int*)&m_eBuilding);
+	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "EventTriggeredData",REMAPPED_CLASS_TYPE_RELIGIONS,(int*)&m_eReligion);
+	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "EventTriggeredData",REMAPPED_CLASS_TYPE_CORPORATIONS,(int*)&m_eCorporation);
+	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "EventTriggeredData",REMAPPED_CLASS_TYPE_BUILDINGS,(int*)&m_eBuilding);
 	WRAPPER_READ_STRING(wrapper, "EventTriggeredData",m_szText);
 	WRAPPER_READ_STRING(wrapper, "EventTriggeredData",m_szGlobalText);
 
@@ -172,12 +172,16 @@ void VoteSelectionData::read(FDataStreamBase* pStream)
 		for (int i = 0; i < iSize; ++i)
 		{
 			VoteSelectionSubData kData;
-			WRAPPER_READ_CLASS_ENUM_DECORATED(wrapper, "VoteSelectionData",REMAPPED_CLASS_TYPE_VOTES,(int*)&kData.eVote, "voteOption.eVote");
+			WRAPPER_READ_CLASS_ENUM_DECORATED_ALLOW_MISSING(wrapper, "VoteSelectionData",REMAPPED_CLASS_TYPE_VOTES,(int*)&kData.eVote, "voteOption.eVote");
 			WRAPPER_READ_DECORATED(wrapper, "VoteSelectionData",(int*)&kData.ePlayer, "voteOption.ePlayer");
 			WRAPPER_READ_DECORATED(wrapper, "VoteSelectionData",&kData.iCityId, "voteOption.iCityId");
 			WRAPPER_READ_DECORATED(wrapper, "VoteSelectionData",(int*)&kData.eOtherPlayer, "voteOption.eOtherPlayer");
 			WRAPPER_READ_STRING_DECORATED(wrapper, "VoteSelectionData",kData.szText, "voteOption.szText");
-			aVoteOptions.push_back(kData);
+
+			if (kData.eVote != NO_VOTE)
+			{
+				aVoteOptions.push_back(kData);
+			}
 		}
 	}
 
@@ -307,7 +311,7 @@ void BuildingYieldChange::read(FDataStreamBase* pStream)
 
 	WRAPPER_READ_OBJECT_START(wrapper);
 
-	WRAPPER_READ_CLASS_ENUM(wrapper, "BuildingYieldChange", REMAPPED_CLASS_TYPE_BUILDINGS,(int*)&eBuilding);
+	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "BuildingYieldChange", REMAPPED_CLASS_TYPE_BUILDINGS,(int*)&eBuilding);
 	WRAPPER_READ(wrapper, "BuildingYieldChange",(int*)&eYield);
 	WRAPPER_READ(wrapper, "BuildingYieldChange",&iChange);
 
@@ -337,7 +341,7 @@ void BuildingCommerceChange::read(FDataStreamBase* pStream)
 
 	WRAPPER_READ_OBJECT_START(wrapper);
 
-	WRAPPER_READ_CLASS_ENUM(wrapper, "BuildingCommerceChange",REMAPPED_CLASS_TYPE_BUILDINGS,(int*)&eBuilding);
+	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "BuildingCommerceChange",REMAPPED_CLASS_TYPE_BUILDINGS,(int*)&eBuilding);
 	WRAPPER_READ(wrapper, "BuildingCommerceChange",(int*)&eCommerce);
 	WRAPPER_READ(wrapper, "BuildingCommerceChange",&iChange);
 
@@ -351,8 +355,8 @@ void PropertySpawns::read(FDataStreamBase* pStream)
 	wrapper.AttachToStream(pStream);
 
 	WRAPPER_READ_OBJECT_START(wrapper);
-	WRAPPER_READ_CLASS_ENUM(wrapper, "PropertySpawns", REMAPPED_CLASS_TYPE_PROPERTIES, (int*)& eProperty);
-	WRAPPER_READ_CLASS_ENUM(wrapper, "PropertySpawns", REMAPPED_CLASS_TYPE_UNITS, (int*)& eUnit);
+	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "PropertySpawns", REMAPPED_CLASS_TYPE_PROPERTIES, (int*)& eProperty);
+	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "PropertySpawns", REMAPPED_CLASS_TYPE_UNITS, (int*)& eUnit);
 	WRAPPER_READ_OBJECT_END(wrapper);
 }
 

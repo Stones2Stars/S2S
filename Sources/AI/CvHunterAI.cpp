@@ -492,7 +492,7 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 	// Toffer - Should change this to scrap the lowest level hunters first, perhaps in the player objects doTurn() routine.
 	if (!bWithCommander && !unit->isHuman()
 	&& player.AI_isFinancialTrouble()
-	&& player.getUnitUpkeepNet(unit->isMilitaryBranch(), unit->getUpkeep100()) > 0)
+	&& player.getUnitUpkeepNet(unit->isMilitaryBranch(), unit->getUpkeep()) > 0)
 	{
 		const int iNeededHunters = player.AI_neededHunters(unit->area());
 		// Capacity-based (#395): merged hunters count as their strength equivalent.

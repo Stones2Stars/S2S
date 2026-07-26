@@ -1727,6 +1727,8 @@ void CvInitCore::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvInitCore", (int*)&m_eEra);
 
 	m_eGameSpeed = NO_GAMESPEED;
+	// GAMESPEED is MANDATORY and fixed for the save -- every scaled cost/threshold/turn count was accumulated
+	// against it, so losing or changing it breaks the game outright: this read stays fail-loud (save.md par.7).
 	WRAPPER_READ_CLASS_ENUM(wrapper, "CvInitCore", REMAPPED_CLASS_TYPE_GAMESPEEDS, (int*)&m_eGameSpeed);
 
 	WRAPPER_READ(wrapper, "CvInitCore", (int*)&m_eTurnTimer);
@@ -1769,7 +1771,7 @@ void CvInitCore::read(FDataStreamBase* pStream)
 /************************************************************************************************/
 /* MODULAR_LOADING_CONTROL                 END                                                  */
 /************************************************************************************************/
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvInitCore", REMAPPED_CLASS_TYPE_MPOPTIONS, NUM_MPOPTION_TYPES, m_abMPOptions);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvInitCore", REMAPPED_CLASS_TYPE_MPOPTIONS, NUM_MPOPTION_TYPES, m_abMPOptions);
 
 	WRAPPER_READ(wrapper, "CvInitCore", &m_bStatReporting);
 

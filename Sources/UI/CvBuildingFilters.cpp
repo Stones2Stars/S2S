@@ -81,7 +81,7 @@ bool BuildingFilterIsCommerce::isFilteredBuilding(const CvPlayer *pPlayer, CvCit
 {
 	if (pCity)
 	{
-		return pCity->getAdditionalCommerceTimes100ByBuilding(m_eCommerce, eBuilding) > 0;
+		return pCity->getAdditionalCommerceByBuilding(m_eCommerce, eBuilding) > 0;
 	}
 	const CvBuildingInfo& buildingInfo = GC.getBuildingInfo(eBuilding);
 	return buildingInfo.getCommerceChange(m_eCommerce) > 0
@@ -139,7 +139,7 @@ bool BuildingFilterIsYieldAndCommerce::isFilteredBuilding(const CvPlayer *pPlaye
 	bool bHasCommerce = false;
 	if (pCity)
 	{
-		bHasCommerce = pCity->getAdditionalCommerceTimes100ByBuilding(m_eCommerce, eBuilding) > 0;
+		bHasCommerce = pCity->getAdditionalCommerceByBuilding(m_eCommerce, eBuilding) > 0;
 	}
 	else
 	{

@@ -343,6 +343,7 @@ private:
 #define WRAPPER_READ_CLASS_ENUM_DECORATED_ALLOW_MISSING(wrapper,className,classType,name,saveName)		wrapper.ReadClassEnum(className "::" saveName, classType, name, true);
 #define WRAPPER_READ_CLASS_ARRAY(wrapper,className,classType,count,name)								wrapper.ReadClassArray(className "::" #name, classType, count, name);
 #define WRAPPER_READ_CLASS_ARRAY_DECORATED(wrapper,className,classType,count,name,saveName)				wrapper.ReadClassArray(className "::" saveName, classType, count, name);
+#define WRAPPER_READ_CLASS_ARRAY_DECORATED_ALLOW_MISSING(wrapper,className,classType,count,name,saveName)	wrapper.ReadClassArray(className "::" saveName, classType, count, name, true);
 #define WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,className,classType,count,name)					wrapper.ReadClassArray(className "::" #name, classType, count, name, true);
 #define WRAPPER_READ_CLASS_ARRAY_OF_CLASS_ENUM(wrapper,className,classType,valueClassType,count,name)	wrapper.ReadClassArrayOfClassEnum(className "::" #name, classType, valueClassType, count, name);
 #define WRAPPER_READ_CLASS_ENUM_ARRAY(wrapper,className,classType,count,name)							wrapper.ReadClassEnumArray(className "::" #name, classType, count, name);

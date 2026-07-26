@@ -9,9 +9,78 @@
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson, CvString/CvWString
 #include "CvInfo.h"
 #include "CvJsonParse.h"            // jsonClassifyKey / jsonNoteUnconsumed + the shared walkers (jsonChildObj/jsonIdStr)
+#include "Data/CvInfoValuation.h"   // InfoValuation -- the ONE per-group what-if calc unit the expected* delegate to
 
 CvInfo::CvInfo() {}
 CvInfo::~CvInfo() {}
+
+// --- the compiled conditioned list + range (empty when the type composes no modifiers) ---
+const std::vector<const CvModEntry*>& CvInfo::modifierConditioned() const
+{
+	static const std::vector<const CvModEntry*> s_empty;
+	const CvModifiers* pModifiers = getModifiers();
+	return pModifiers != NULL ? pModifiers->conditioned() : s_empty;
+}
+
+void CvInfo::modifierConditionedRange(ModifierFamily eFamily, size_t& iBeginOut, size_t& iEndOut) const
+{
+	const CvModifiers* pModifiers = getModifiers();
+	if (pModifiers != NULL)
+	{
+		pModifiers->conditionedRange(eFamily, iBeginOut, iEndOut);
+	}
+	else
+	{
+		iBeginOut = 0;
+		iEndOut = 0;
+	}
+}
+
+// --- the per-group what-if endpoints: one-line delegations onto the ONE calc unit (InfoValuation) ---
+void CvInfo::expectedFlatYields(const CityContext& cityContext, const EmpireContext& empireContext,
+	const CvPlotGroup* plotGroup, int (&flatYields)[NUM_YIELD_TYPES]) const
+{
+	InfoValuation::expectedFlatYields(getModifiers(), cityContext, empireContext, plotGroup, flatYields);
+}
+
+void CvInfo::expectedYieldModifiers(const CityContext& cityContext, const EmpireContext& empireContext,
+	const CvPlotGroup* plotGroup, int (&yieldModifiers)[NUM_YIELD_TYPES]) const
+{
+	InfoValuation::expectedYieldModifiers(getModifiers(), cityContext, empireContext, plotGroup, yieldModifiers);
+}
+
+void CvInfo::expectedPlotYields(const CityContext& cityContext, const EmpireContext& empireContext,
+	const CvPlotGroup* plotGroup, int (&plotYields)[NUM_YIELD_TYPES]) const
+{
+	InfoValuation::expectedPlotYields(getModifiers(), cityContext, empireContext, plotGroup, plotYields);
+}
+
+void CvInfo::expectedFlatCommerce(const CityContext& cityContext, const EmpireContext& empireContext,
+	const CvPlotGroup* plotGroup, int (&flatCommerce)[NUM_COMMERCE_TYPES]) const
+{
+	InfoValuation::expectedFlatCommerce(getModifiers(), cityContext, empireContext, plotGroup, flatCommerce);
+}
+
+void CvInfo::expectedWellbeing(const CityContext& cityContext, const EmpireContext& empireContext,
+	const CvPlotGroup* plotGroup, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const
+{
+	InfoValuation::expectedWellbeing(getModifiers(), cityContext, empireContext, plotGroup, wellbeing);
+}
+
+int CvInfo::expectedModifier(ModifierFamily eFamily, int iKind, CvCascUnit eUnit,
+	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup) const
+{
+	return InfoValuation::expectedSum(getModifiers(), eFamily, iKind, eUnit, cityContext, empireContext, plotGroup);
+}
+
+int CvInfo::expectedScalar(InfoScalar eScalar, CvCascUnit eUnit,
+	const CityContext& cityContext, const EmpireContext& empireContext, const CvPlotGroup* plotGroup) const
+{
+	ModifierFamily eFamily = MODFAM_NONE;
+	int iKind = -1;
+	infoScalarSlot(eScalar, eFamily, iKind);
+	return InfoValuation::expectedSum(getModifiers(), eFamily, iKind, eUnit, cityContext, empireContext, plotGroup);
+}
 
 // #430: the 23 replaced infos load via LoadGlobalClassInfoJson (CvXMLLoadUtilitySet) -> mapFrom(json) directly; there
 // is no XML read() on this path (reading a replaced info's XML into the game is HARD BANNED -- DEC-no-xml-into-game).

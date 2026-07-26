@@ -1385,14 +1385,14 @@ bool CvSelectionGroupAI::AI_isFull() const
 	return true;
 }
 
-int CvSelectionGroupAI::AI_getGenericValueTimes100(UnitValueFlags eFlags) const
+int CvSelectionGroupAI::AI_getGenericValue(UnitValueFlags eFlags) const
 {
 	PROFILE_EXTRA_FUNC();
 	int iResult = 0;
 
 	foreach_(const CvUnit* pLoopUnit, units())
 	{
-		iResult += pLoopUnit->AI_genericUnitValueTimes100(eFlags);
+		iResult += pLoopUnit->AI_genericUnitValue(eFlags);
 	}
 
 	return iResult;

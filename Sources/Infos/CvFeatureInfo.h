@@ -3,18 +3,17 @@
 #define CV_JSON_FEATURE_INFO_H
 
 //
-//	CvFeatureInfo -- the JSON real poco for terrain FEATURES (the CvXInfo replacement). Live-caller surface only,
-//	mapped from the curator's real shapes: the plot yield/health/defense/culture/vision families, and the `identity`
-//	placement fields. HUMAN-native values (the cascade ×100s on its side). Availability (requires/enables/…) rides the
-//	CvInfo base. No cascade here.
-//
-//	Live callers (verified 2026-07-07): getYieldChange -> CvCity/CvPlot yields; getHealthPercent -> CvCity health;
-//	getDefenseModifier -> CvPlot combat; getMovementCost -> unit move cost; getCultureDistance -> CvCity; validTerrains/
-//	isTerrain -> feature placement; popDestroys/the placement flags -> CvPlot/CvGame worldgen; seeThroughChange -> vision.
+//	CvFeatureInfo -- the FEATURE poco rebuilt to the exemplar surface (patterns.md § THE GETTER SETUP).
+//	Styled for the JSON anatomy (json.md §2): the feature's OWN tile output (modifier.md §5 plot-substrate
+//	own-output -- the base flats PLUS the HAS_RIVER-conditioned entries and the reverse-landed cross-entity
+//	boosts) lives on the compiled modifier surface; the point reads fetch the unconditioned sums, the
+//	conditioned tail is the base conditioned-list access. The identity placement/growth fields, the on-map
+//	art/audio, and the grants/triggers provisions are the genuine bespoke set. No legacy-mirror modifier
+//	member survives ([DEC-new-getter-surface]).
 //
 
 #include "CvInfo.h"
-#include "Defines/CvEnums.h"   // NUM_YIELD_TYPES / TerrainTypes / MapCategoryTypes
+#include "Defines/CvEnums.h"   // TerrainTypes / MapCategoryTypes
 #include <vector>
 
 class CvArtInfoFeature;
@@ -24,19 +23,44 @@ class CvFeatureInfo : public CvInfo
 public:
 	CvFeatureInfo();
 
-	int getYieldChange(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiYieldChange[i] : 0; }
-	int getMovementCost() const { return m_iMovementCost; }
-	int getDefenseModifier() const { return m_iDefenseModifier; }
-	int getHealthPercent() const { return m_iHealthPercent; }
-	int getCultureDistance() const { return m_iCultureDistance; }
-	int getSeeThroughChange() const { return m_iSeeThroughChange; }
-	int getPopDestroys() const { return m_iPopDestroys; }
-	int getAppearanceProbability() const { return m_iAppearanceProbability; }         // identity.appearance
-	int getDisappearanceProbability() const { return m_iDisappearanceProbability; }   // identity.disappearance
-	int getGrowthProbability() const { return m_iGrowthProbability; }                 // identity.growth
-	int getSpreadProbability() const { return m_iSpreadProbability; }                 // identity.spread
-	int getAdvancedStartRemoveCost() const { return m_iAdvancedStartRemoveCost; }     // cost.advancedStartRemoveCost
-	int getWarmingDefense() const { return 0; }   // CURATOR-GAP: curate_feature DROPs iWarmingDefense (dead field -- GLOBAL_WARMING is #defined out)
+	virtual void mapFrom(const picojson::value& entity);
+
+	// ======================= 1. SECTIONS -- whole typed objects =======================
+	virtual const CvEdges*     getEdges()     const { return &m_edges; }
+	virtual const CvGrants*    getGrants()    const { return &m_grants; }
+	virtual const CvTriggers*  getTriggers()  const { return &m_triggers; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
+
+	// ======================= 2. MODIFIER GROUPS -- point reads over the compiled sums ========================
+	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. Census
+	// participation: food/production/commerce plot flats (own tile output; the HAS_RIVER extras are
+	// conditioned entries); defense.plot.amount.percent; health.plot.percent -- the fallout class, summed
+	// over radius plots ÷100 by the wellbeing calc (modifier.md §2b); cultureDistance.plot.flat is the
+	// getScalar(SCALAR_CULTURE_DISTANCE) straggler.)
+	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
+	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	int getDefense(DefenseKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_DEFENSE, eKind, eScope, infoDefenseUnit(eKind)); }
+	// The authored wellbeing families' signed PERCENT sums (the feature class authors health.plot.percent);
+	// the four-channel sign ROUTING is a fill/valuation rule, so ANGER/UNHEALTH hold no slot and read 0.
+	int getWellbeingModifier(WellbeingChannel eChannel, CvCascScope eScope) const
+	{
+		if (eChannel == WELLBEING_ANGER || eChannel == WELLBEING_UNHEALTH)
+		{
+			return 0;
+		}
+		return m_modifiers.sum(infoWellbeingFamily(eChannel), CHANNEL_AMOUNT, eScope, CASC_UNIT_PERCENT);
+	}
+
+	// ======================= 3. INTRINSIC -- bare typed reads (the census identity set) ======================
+	int getMovementCost() const { return m_iMovementCost; }                          // identity.movementCost
+	int getSeeThroughChange() const { return m_iSeeThroughChange; }                  // vision.plot.seeThrough.flat (§9 bespoke)
+	int getPopDestroys() const { return m_iPopDestroys; }                            // identity.popDestroys (-1 = never)
+	int getAppearanceProbability() const { return m_iAppearanceProbability; }        // identity.appearance
+	int getDisappearanceProbability() const { return m_iDisappearanceProbability; }  // identity.disappearance
+	int getGrowthProbability() const { return m_iGrowthProbability; }                // identity.growth
+	int getSpreadProbability() const { return m_iSpreadProbability; }                // identity.spread
+	int getAdvancedStartRemoveCost() const { return m_iAdvancedStartRemoveCost; }    // cost.advancedStartRemoveCost
 
 	bool isImpassable() const { return m_bImpassable; }
 	bool isNoCity() const { return m_bNoCity; }
@@ -44,108 +68,109 @@ public:
 	bool isNoBonus() const { return m_bNoBonus; }
 	bool isCountsAsPeak() const { return m_bCountsAsPeak; }
 	bool isRequiresFlatlands() const { return m_bRequiresFlatlands; }
-	bool isRequiresRiver() const { return m_bRequiresRiver; }                   // identity.requiresRiver
-	bool isNoCoast() const { return m_bNoCoast; }                              // identity.noCoast
-	bool isNoRiver() const { return m_bNoRiver; }                              // identity.noRiver
-	bool isNoAdjacent() const { return m_bNoAdjacent; }                        // identity.noAdjacent
-	bool isCoastalOnly() const { return m_bCoastalOnly; }                      // identity.coastalOnly
-	bool isVisibleAlways() const { return m_bVisibleAlways; }                  // identity.visibleAlways
-	bool isIgnoreTerrainCulture() const { return m_bIgnoreTerrainCulture; }    // identity.ignoreTerrainCulture
-	bool isCanGrowAnywhere() const { return m_bCanGrowAnywhere; }              // identity.canGrowAnywhere
+	bool isRequiresRiver() const { return m_bRequiresRiver; }
+	bool isNoCoast() const { return m_bNoCoast; }
+	bool isNoRiver() const { return m_bNoRiver; }
+	bool isNoAdjacent() const { return m_bNoAdjacent; }
+	bool isCoastalOnly() const { return m_bCoastalOnly; }
+	bool isVisibleAlways() const { return m_bVisibleAlways; }
+	bool isIgnoreTerrainCulture() const { return m_bIgnoreTerrainCulture; }
+	bool isCanGrowAnywhere() const { return m_bCanGrowAnywhere; }
 	bool isAddsFreshWater() const { return m_bAddsFreshWater; }
 	bool isNukeImmune() const { return m_bNukeImmune; }
-	// isOnlyBad -- COMPUTED (mirrors the archived CvFeatureInfo::isOnlyBad, BUG city-plot-status): no positive health,
-	// no fresh water, and no positive yield.
+	// isOnlyBad -- COMPUTED over the compiled reads (the BUG city-plot-status test): no positive health, no
+	// fresh water, no positive tile yield.
 	bool isOnlyBad() const;
 
-	// valid terrains (the feature may appear on these) -- getNumVarieties()/isTerrain() consumers
+	// valid terrains (the feature may appear on these)
 	bool isTerrain(int iTerrain) const;
 	const std::vector<TerrainTypes>& getValidTerrains() const { return m_aeValidTerrains; }
 	const std::vector<MapCategoryTypes>& getMapCategories() const { return m_aeMapCategories; }
 	int getZobristValue() const { return m_iZobristValue; }
-	// EXE-bound art surface (mapscript/EXE map gen -- served by the CvFeatureInfo shim leaf, cascade-engine-430.md §3)
+	// EXE-bound art surface (mapscript/EXE map gen)
 	const char* getArtDefineTag() const { return m_szArtDefineTag.c_str(); }
-	DllExport const CvArtInfoFeature* getArtInfo() const;   // EXE map-gen art (merged from the removed shim leaf)
-	const char* getButton() const;                          // art-define button (else CvInfoBase's empty m_szButton)
+	DllExport const CvArtInfoFeature* getArtInfo() const;
+	const char* getButton() const;   // art-define button (else CvInfoBase's empty m_szButton)
 
-	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }   // fed from the triggers PROPERTY pulses in mapFrom (plot gather)
+	// fed from the triggers PROPERTY pulses in mapFrom (the KEEP-legacy plot gather)
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
 
-	// --- arrays / art / audio wired to their real curator addresses (see mapFrom for the reads) ---
-	int getRiverYieldChange(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiRiverYieldChange[i] : 0; }  // the HAS_RIVER-gated yield.plot.flat entries
-	const char* getEffectType() const { return m_szEffectType.c_str(); }          // world.art.effect.type (EFFECT_BIRDSCATTER)
+	// --- on-map art/audio (world.art effect + the sound block) ---
+	const char* getEffectType() const { return m_szEffectType.c_str(); }          // world.art.effect.type
 	int getEffectProbability() const { return m_iEffectProbability; }             // world.art.effect.probability
 	const char* getGrowthSound() const { return m_szGrowthSound.c_str(); }        // sound.growth
-	const char* getOnUnitChangeTo() const { return m_szOnUnitChangeTo.c_str(); }  // grants.onUnitChangeTo (module-only; no base feature authors it)
-
-	// On-map AUDIO -- resolved to the runtime audio-manager index at info-load (mapFrom), EXACTLY as the archived
-	// CvFeatureInfo::read did: gDLL->getAudioTagIndex. The curator ships the source string tags (sound.soundscape;
-	// sound.footsteps[{FOOTSTEP_AUDIO_*: AS3D_*}]) -- 63 features author a soundscape, 44 author footsteps -- and
-	// mapFrom resolves each and stores the index (see the .cpp). CvPlot reads the FEATURE footstep index in preference
-	// to the terrain's when a feature is present (CvPlot::get3DAudioScriptFootstepIndex), so this is a live surface.
+	const char* getOnUnitChangeTo() const { return m_szOnUnitChangeTo.c_str(); }  // grants.onUnitChangeTo (module-only)
+	// On-map AUDIO -- resolved to the runtime audio-manager index at info-load (gDLL->getAudioTagIndex).
+	// CvPlot reads the FEATURE footstep index in preference to the terrain's when a feature is present.
 	int getWorldSoundscapeScriptId() const { return m_iWorldSoundscapeScriptId; }
-	int get3DAudioScriptFootstepIndex(int i) const
+	int get3DAudioScriptFootstepIndex(int iFootstepType) const
 	{
-		// Byte-faithful to the archived CvFeatureInfo::get3DAudioScriptFootstepIndex: NULL array (no footsteps
-		// authored) -> -1 (NB: feature's NULL default is -1, NOT terrain's 0); else the per-footstep-type slot.
-		if (m_ai3DAudioScriptFootstepIndex.empty()) return -1;
-		return (i >= 0 && i < (int)m_ai3DAudioScriptFootstepIndex.size()) ? m_ai3DAudioScriptFootstepIndex[i] : -1;
+		// Byte-faithful to the archived read: NULL array (no footsteps authored) -> -1 (NB the feature's
+		// NULL default is -1, NOT the terrain's 0); else the per-footstep-type slot.
+		if (m_ai3DAudioScriptFootstepIndex.empty())
+		{
+			return -1;
+		}
+		if (iFootstepType >= 0 && iFootstepType < (int)m_ai3DAudioScriptFootstepIndex.size())
+		{
+			return m_ai3DAudioScriptFootstepIndex[iFootstepType];
+		}
+		return -1;
 	}
-	// Art-DEFINE tier (CvArtInfoFeature via ARTFILEMGR): the variety count + secondary-art test live in the art define
-	// files, served by the shim's DllExport getArtInfo() at runtime -- NOT feature-curator output, so delegate to the
-	// art define exactly as the on-map callers / the archived CvFeatureInfo did (defined in the .cpp, where
-	// CvArtInfoFeature is a complete type). getNumVarieties has a live Python-pedia consumer (CyInfoInterface2).
+	// Art-DEFINE tier (CvArtInfoFeature via ARTFILEMGR): the variety count + secondary-art test live in the
+	// art-define files -- delegate exactly as the on-map callers do (defined in the .cpp).
 	int getNumVarieties() const;
 	bool canBeSecondary() const;
-	// Feature <Categories>: absent from CIV4FeatureInfos.xml entirely (no feature authors it), so the curator emits
-	// nothing and m_aiCategories was always empty in legacy too.
-	int getCategory(int /*i*/) const { return -1; }
-	int getNumCategories() const { return 0; }
-	bool isCategory(int /*i*/) const { return false; }
-
-	virtual void mapFrom(const picojson::value& entity);
-
-	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvGrants*    getGrants()    const { return &m_grants; }
-	virtual const CvTriggers*      getTriggers()  const { return &m_triggers; }
-	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
 protected:
+	virtual CvEdges*     mutEdges()     { return &m_edges; }
 	virtual CvGrants*    mutGrants()    { return &m_grants; }
-	virtual CvTriggers*      mutTriggers()  { return &m_triggers; }
+	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
+	// --- the composed section units ---
+	CvEdges     m_edges;
 	CvGrants    m_grants;
-	CvTriggers      m_triggers;
+	CvTriggers  m_triggers;
 	CvModifiers m_modifiers;
-	int m_aiYieldChange[NUM_YIELD_TYPES];       // food/production/commerce .plot.flat (unconditional entries)
-	int m_aiRiverYieldChange[NUM_YIELD_TYPES];  // the same families' HAS_RIVER-gated entries (legacy RiverYieldChange)
-	int m_iMovementCost;                   // identity.movementCost
-	int m_iDefenseModifier;                // defense.plot.amount.percent
-	int m_iHealthPercent;                  // health.plot.percent
-	int m_iCultureDistance;                // cultureDistance.plot.flat
-	int m_iSeeThroughChange;               // vision.plot.seeThrough.flat
-	int m_iPopDestroys;                    // identity.popDestroys
-	int m_iAppearanceProbability;          // identity.appearance
-	int m_iDisappearanceProbability;       // identity.disappearance
-	int m_iGrowthProbability;              // identity.growth
-	int m_iSpreadProbability;              // identity.spread
-	int m_iAdvancedStartRemoveCost;        // cost.advancedStartRemoveCost
-	int m_iEffectProbability;              // world.art.effect.probability
-	int m_iZobristValue;                   // CURATOR-GAP: map-hash; needs the exact legacy zobrist computation (OOS -- out of scope)
-	int m_iWorldSoundscapeScriptId;        // sound.soundscape -> audio-manager index (AUDIOTAG_SOUNDSCAPE); -1 when absent (legacy read default)
-	std::vector<int> m_ai3DAudioScriptFootstepIndex;   // sound.footsteps: FootstepAudioType index -> AS3D_ script index (empty = none authored)
-	bool m_bImpassable, m_bNoCity, m_bNoImprovement, m_bNoBonus, m_bCountsAsPeak;   // identity placement flags
-	bool m_bRequiresFlatlands, m_bRequiresRiver, m_bAddsFreshWater, m_bNukeImmune;  // identity placement flags
-	bool m_bNoCoast, m_bNoRiver, m_bNoAdjacent, m_bCoastalOnly, m_bVisibleAlways;   // identity placement flags
-	bool m_bIgnoreTerrainCulture, m_bCanGrowAnywhere;                               // identity growth/culture flags
-	std::string m_szArtDefineTag;          // world.art.icon (ART_DEF_* tag; the EXE map-gen art lookup key)
-	std::string m_szEffectType;            // world.art.effect.type
-	std::string m_szGrowthSound;           // sound.growth
-	std::string m_szOnUnitChangeTo;        // grants.onUnitChangeTo
+
+	// --- the intrinsic identity members (materialized once at mapFrom; getters are bare reads) ---
+	int m_iMovementCost;
+	int m_iSeeThroughChange;
+	int m_iPopDestroys;
+	int m_iAppearanceProbability;
+	int m_iDisappearanceProbability;
+	int m_iGrowthProbability;
+	int m_iSpreadProbability;
+	int m_iAdvancedStartRemoveCost;
+	int m_iEffectProbability;
+	int m_iZobristValue;               // map-hash drawn from the synced RNG in the ctor (OOS-load-bearing)
+	int m_iWorldSoundscapeScriptId;    // sound.soundscape -> audio-manager index; -1 when absent
+	std::vector<int> m_ai3DAudioScriptFootstepIndex;   // sound.footsteps: FootstepAudioType index -> AS3D_ script index
+	bool m_bImpassable;
+	bool m_bNoCity;
+	bool m_bNoImprovement;
+	bool m_bNoBonus;
+	bool m_bCountsAsPeak;
+	bool m_bRequiresFlatlands;
+	bool m_bRequiresRiver;
+	bool m_bAddsFreshWater;
+	bool m_bNukeImmune;
+	bool m_bNoCoast;
+	bool m_bNoRiver;
+	bool m_bNoAdjacent;
+	bool m_bCoastalOnly;
+	bool m_bVisibleAlways;
+	bool m_bIgnoreTerrainCulture;
+	bool m_bCanGrowAnywhere;
+	std::string m_szArtDefineTag;      // world.art.icon (ART_DEF_* tag)
+	std::string m_szEffectType;        // world.art.effect.type
+	std::string m_szGrowthSound;       // sound.growth
+	std::string m_szOnUnitChangeTo;    // grants.onUnitChangeTo
 	std::vector<TerrainTypes> m_aeValidTerrains;   // identity.validTerrains (resolved TERRAIN_ ids)
 	std::vector<MapCategoryTypes> m_aeMapCategories;
-	CvPropertyManipulators m_PropertyManipulators;   // fed from the triggers PROPERTY pulses (CascadePropertyBridge::bridgePulses)
+	CvPropertyManipulators m_PropertyManipulators; // fed from the triggers PROPERTY pulses (CascadePropertyBridge)
 };
 
 #endif // CV_JSON_FEATURE_INFO_H

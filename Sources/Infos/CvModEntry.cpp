@@ -95,6 +95,21 @@ void jsonParsePer(CvModEntry* entry, const picojson::value& v)
 	{
 		entry->perEach = (int)it->second.get<double>();
 	}
+	// the §3.7 `above:` over-threshold scaler (ruling 26): a LITERAL threshold, or a TOKEN kept as its spelling
+	// (CITY_LIMIT resolves source-side at load -- CvModifiers::resolveAboveToken -- and scales at eval)
+	if ((it = o.find("above")) != o.end())
+	{
+		if (it->second.is<double>())
+		{
+			entry->hasAbove = true;
+			entry->perAbove = (int)it->second.get<double>();
+		}
+		else if (it->second.is<std::string>())
+		{
+			entry->hasAbove = true;
+			entry->perAboveToken = it->second.get<std::string>();
+		}
+	}
 	// the optional §3.7 `scope` -- where the count is taken (json §3.7: defaults to the deposit's own scope, so an
 	// unknown token falls back to exactly that); absent stays -1 (= the deposit's own scope).
 	if ((it = o.find("scope")) != o.end() && it->second.is<std::string>())

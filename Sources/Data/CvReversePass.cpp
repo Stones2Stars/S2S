@@ -37,6 +37,7 @@
 #include "CvTerrainInfo.h"
 #include "CvFeatureInfo.h"
 #include <cstring>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -175,10 +176,22 @@ namespace
 		{
 			return;
 		}
-		const std::map<std::string, std::vector<int> >& grantLists = pGrants->lists();
-		for (std::map<std::string, std::vector<int> >::const_iterator it = grantLists.begin(); it != grantLists.end(); ++it)
+		const std::map<int, std::vector<int> >& grantLists = pGrants->lists();
+		for (std::map<int, std::vector<int> >::const_iterator it = grantLists.begin(); it != grantLists.end(); ++it)
 		{
-			const EnEdgeBucket eGrantBucket = CvEdges::bucketFromString(it->first);
+			// Load-window bucket classification: the grants key table is local to CvGrants, so the bucket is
+			// recovered by matching the minted key against each edge-bucket spelling (strings are sanctioned
+			// here -- this pass IS the load window; a non-bucket list key classifies NO_EDGEB and only its
+			// per-entry conditions walk).
+			EnEdgeBucket eGrantBucket = NO_EDGEB;
+			for (int iBucket = 0; iBucket < NUM_EDGEB; ++iBucket)
+			{
+				if (CvGrants::findKey(CvEdges::bucketName((EnEdgeBucket)iBucket)) == it->first)
+				{
+					eGrantBucket = (EnEdgeBucket)iBucket;
+					break;
+				}
+			}
 			for (size_t iEntry = 0; iEntry < it->second.size(); ++iEntry)
 			{
 				if (eGrantBucket != NO_EDGEB)
@@ -228,6 +241,7 @@ namespace
 			rp_relatedConditionWalk(pEntry->enabled, eSourceBucket, iSourceId);
 			rp_relatedConditionWalk(pEntry->disabled, eSourceBucket, iSourceId);
 			rp_relatedConditionWalk(pEntry->unitQual, eSourceBucket, iSourceId);
+			rp_relatedConditionWalk(pEntry->religionQual, eSourceBucket, iSourceId);
 			if (pEntry->perTypeId >= 0 && !pEntry->perType.empty())
 			{
 				rp_landRelated(rjInfoForType(pEntry->perType, pEntry->perTypeId), eSourceBucket, iSourceId);
@@ -565,8 +579,8 @@ namespace
 	//       keyed targets: a build-cost discount is delivered, not the target's output);
 	//     - EVERY TRAIT-sourced keyed deposit (the §4 per-set carve-out: simple/complex values differ per set
 	//       and the target is one shared file -- the cascade reads the ACTIVE set source-side);
-	//     - route × improvements yields (the §4 governing-deliverer exemplar; the improvement-side legacy
-	//       readers are fed by sub-pass (1)'s compat rows instead);
+	//     - route × improvements yields (the §4 governing-deliverer exemplar -- read off the ROUTE's compiled
+	//       keyed entries; the improvement-side consumers rewire onto them at the stage-4 cut);
 	//     - source × units/domains/unitCombats/specialists/techs/builds keyed values, + non-output-channel
 	//       families keyed to buildings (delivered effects: XP, research-rate, work-rate, great-people,
 	//       diplomacy -- the deliverer brings them);
@@ -658,7 +672,7 @@ namespace
 
 	// Land ONE buildings-keyed output-channel deposit on its TARGET building (info-rebuild.md ruling 19).
 	// The landed entry is the target building's own CITY-scope output (§2a building output / §2b wellbeing):
-	// same family/value100/unit, kind 0, gated on the SOURCE's presence at the AUTHORED deposit's scope --
+	// same family/value/unit, kind 0, gated on the SOURCE's presence at the AUTHORED deposit's scope --
 	// derived from the compiled entry's scope axis (an empire-authored keyed deposit gates on empire-scope
 	// presence; city-authored on city; team-authored on team), never hardcoded per source kind. An authored
 	// condition/per-scaler is PRESERVED by composing: the presence atom ANDs with a deep clone of the authored
@@ -677,7 +691,8 @@ namespace
 		pLanded->scope = CASC_SCOPE_CITY;
 		pLanded->kind = 0;
 		pLanded->unit = pEntry->unit;
-		pLanded->value100 = pEntry->value100;
+		pLanded->value = pEntry->value;
+		pLanded->aiOnly = pEntry->aiOnly;   // the §3.9 audience flag rides the landing whole
 		pLanded->seg[0] = modSegmentIntern(infoFamilyKey(pEntry->family));
 		pLanded->seg[1] = modSegmentIntern("city");
 		pLanded->nSeg = 2;
@@ -701,6 +716,13 @@ namespace
 		}
 		pLanded->disabled = rp_cloneCondition(pEntry->disabled);
 		pLanded->unitQual = rp_cloneCondition(pEntry->unitQual);
+		pLanded->religionQual = rp_cloneCondition(pEntry->religionQual);
+		// the ranked-selection carry (ruling 25) rides the landing whole -- parse-carried, evaluation parked
+		pLanded->hasRankQual = pEntry->hasRankQual;
+		pLanded->rankMax = pEntry->rankMax;
+		pLanded->rankMaxToken = pEntry->rankMaxToken;
+		pLanded->orderedBySeg = pEntry->orderedBySeg;
+		pLanded->orderedDescending = pEntry->orderedDescending;
 		if (pEntry->hasPer)
 		{
 			pLanded->hasPer = true;
@@ -710,6 +732,10 @@ namespace
 			pLanded->perEach = pEntry->perEach;
 			pLanded->perScope = (pEntry->perScope >= 0) ? pEntry->perScope : (int)pEntry->scope;
 			pLanded->perAnyOf = pEntry->perAnyOf;
+			// per.above (ruling 26): the source-resolved base + token travel with the per whole
+			pLanded->hasAbove = pEntry->hasAbove;
+			pLanded->perAbove = pEntry->perAbove;
+			pLanded->perAboveToken = pEntry->perAboveToken;
 		}
 		pTargetInfo->landOwnOutputEntry(pLanded);
 		++s_counts.ownOutputLanded;
@@ -797,7 +823,8 @@ namespace
 				pLanded->scope = CASC_SCOPE_PLOT;
 				pLanded->kind = 0;
 				pLanded->unit = CASC_UNIT_FLAT;
-				pLanded->value100 = pEntry->value100;
+				pLanded->value = pEntry->value;
+				pLanded->aiOnly = pEntry->aiOnly;   // the §3.9 audience flag rides the landing whole
 				pLanded->seg[0] = modSegmentIntern(infoFamilyKey(pEntry->family));
 				pLanded->seg[1] = modSegmentIntern("plot");
 				pLanded->nSeg = 2;
@@ -820,7 +847,7 @@ namespace
 		rp_landOwnOutputKind<CvCivicInfo>(GC.getNumCivicInfos(), CASC_SCOPE_EMPIRE);
 		rp_landOwnOutputKind<CvTechInfo>(GC.getNumTechInfos(), CASC_SCOPE_TEAM);
 		// traits: NEVER landed (the §4 per-set carve-out); routes: governing-deliverer (§4 exemplar) -- the
-		// improvement-side legacy readers are fed by the compat rows in sub-pass (1).
+		// route-keyed improvement yields stay on the ROUTE's compiled entries (source-side).
 	}
 
 	// ==================== sub-pass (1): the forward compat reconstructions ====================
@@ -863,46 +890,12 @@ namespace
 		}
 	}
 
-	// Improvement<-route YIELD REVERSE INDEX. RouteYieldChanges live ROUTE-side (deliveryguy, modifier.md §4:
-	// "a route upgrading improvements -> on the route, keyed by improvement" -- curate_route.py authors
-	// {food|production|commerce}.plot.improvements.{IMP}.flat), but the legacy improvement-side readers
-	// (CvPlot::calculateImprovementYieldChange + the CvDLLWidgetData help) still ask the IMPROVEMENT "what does
-	// route R add on me?" -- a stub 0 under-yielded every improved+routed plot and fed the AI wrong tile values.
-	// Reconstruct each improvement's route rows here (flat unconditioned entries only -- the data authors
-	// nothing else on this address).
-	void rp_reconstructImprovementRouteYields()
-	{
-		const int iImprovementsToken = modSegmentLookup("improvements");
-		const int iNumRoutes = GC.getNumRouteInfos();
-		for (int iRoute = 0; iRoute < iNumRoutes; ++iRoute)
-		{
-			const CvInfo* pRoute = InfoRepo<CvRouteInfo>::get().get(iRoute);
-			if (pRoute == NULL || pRoute->getModifiers() == NULL)
-			{
-				continue;
-			}
-			const std::vector<CvModEntry*>& routeEntries = pRoute->getModifiers()->entries();
-			for (size_t iEntry = 0; iEntry < routeEntries.size(); ++iEntry)
-			{
-				const CvModEntry* pEntry = routeEntries[iEntry];
-				const int iYield = infoFamilyYield(pEntry->family);
-				if (iYield < 0)
-				{
-					continue;
-				}
-				if (pEntry->scope != CASC_SCOPE_PLOT || pEntry->targetSeg != iImprovementsToken || pEntry->targetFk < 0)
-				{
-					continue;
-				}
-				if (pEntry->unit != CASC_UNIT_FLAT || pEntry->isConditioned())
-				{
-					continue;
-				}
-				static_cast<CvImprovementInfo*>(InfoRepo<CvImprovementInfo>::get().editPtr(pEntry->targetFk))
-					->addRouteYieldChange(iRoute, iYield, pEntry->value100 / 100);
-			}
-		}
-	}
+	// (The former improvement<-route YIELD reconstruction is GONE with the wave-B improvement rebuild: it wrote
+	// the deleted improvement route-yield mirror (addRouteYieldChange). RouteYieldChanges are governing-deliverer
+	// SOURCE-SIDE data (modifier.md §4: "a route upgrading improvements -> on the route, keyed by improvement" --
+	// curate_route.py authors {food|production|commerce}.plot.improvements.{IMP}.flat); the improvement-side
+	// consumers (CvPlot::calculateImprovementYieldChange + the CvDLLWidgetData help) rewire onto the ROUTE's
+	// compiled keyed entries with the stage-4 consumer cut.)
 
 	// STORE-INVERTED TECH-FK REVERSE INDEX -- the Route<-bonus pattern, generalized. curate_*.py DROP each
 	// entity's tech prereq/obsolete FK and store-invert it onto the TECH's enables/obsoletes buckets (bonus
@@ -1043,6 +1036,37 @@ namespace
 		}
 	}
 
+	// SHRINE-BUILDING REGISTRY FEED. The building authors the relationship as its §9 `shrine` FK
+	// (CvBuildingInfo::getShrineReligion -- json.md §9: the building declares only the FK; the per-commerce
+	// values live on the RELIGION); the consumers (CvCityAI:958 / CvCity:19016 foreach getShrineBuildings)
+	// ask the RELIGION for its shrine buildings. The legacy buildings-self-register path died in the cutover
+	// (addShrineBuilding had ZERO callers), so feed the registry here from the compiled FK. Idempotent like
+	// the sibling sub-passes: the repos are cleared and re-mapped before each full pass, so the vector starts
+	// empty. (No corporation analog exists: no HQ-building registry lives on CvCorporationInfo and no consumer
+	// asks for one -- the corp HQ CITY is CvGame state; verified, nothing to feed.)
+	void rp_feedShrineBuildings()
+	{
+		const int iNumBuildings = GC.getNumBuildingInfos();
+		for (int iBuilding = 0; iBuilding < iNumBuildings; ++iBuilding)
+		{
+			const CvBuildingInfo* pBuilding = static_cast<const CvBuildingInfo*>(InfoRepo<CvBuildingInfo>::get().get(iBuilding));
+			if (pBuilding == NULL)
+			{
+				continue;
+			}
+			const int iReligion = pBuilding->getShrineReligion();
+			if (iReligion < 0)
+			{
+				continue;
+			}
+			CvReligionInfo* pReligion = static_cast<CvReligionInfo*>(InfoRepo<CvReligionInfo>::get().editPtr(iReligion));
+			if (pReligion != NULL)
+			{
+				pReligion->addShrineBuilding(iBuilding);
+			}
+		}
+	}
+
 	// The tech-side FORWARD obsoletion views (building/process obsoletion is authored TARGET-side,
 	// obsoletedBy.techs; nothing authors tech.obsoletes.buildings) -- reconstructed so the enabler's O(delta)
 	// tech application can find "which buildings/processes does this tech obsolete" without a candidate scan.
@@ -1110,6 +1134,71 @@ namespace
 		rp_sortUniqueKind<CvComplexTraitTag>(GC.getNumTraitInfos());
 		cascadeStartNode().sortUniqueEdges();
 	}
+
+	// ==================== sub-pass (5): the unit-plane post-map derivation (json.md §9) ====================
+
+	// The unit's era = its FIRST prereq TECH atom's era (the top-level requires.build AND list, in authored
+	// order). The atom's kind is classified by its RESOLVED id through the ONE type dispatch: the routed info
+	// is a tech iff it IS the tech repo's object at that id (repos are disjoint object sets, so pointer
+	// identity is exact; TECH_GAME_START resolves id -1 and never qualifies). NO_ERA when tech-free.
+	int rp_firstPrereqTechEra(const CvInfo* pUnitData)
+	{
+		const CvCondition* pBuild = pUnitData->requiresBuild();
+		if (pBuild == NULL)
+		{
+			return NO_ERA;
+		}
+		for (size_t iChild = 0; iChild < pBuild->all.size(); ++iChild)
+		{
+			const CvCondition* pAtom = pBuild->all[iChild];
+			if (pAtom == NULL || pAtom->kind != CASC_COND_PRESENCE || pAtom->id < 0)
+			{
+				continue;
+			}
+			const CvInfo* pReferenced = rjInfoForType(pAtom->type, pAtom->id);
+			if (pReferenced != NULL && pReferenced == InfoRepo<CvTechInfo>::get().get(pAtom->id))
+			{
+				return static_cast<const CvTechInfo*>(pReferenced)->getEra();
+			}
+		}
+		return NO_ERA;
+	}
+
+	// Walk the unit repo and recompute-assign every CvUnitInfo's load-derived members (the SM base sums, the
+	// derived era, the can-acquire-experience verdict, the upgrade chain) -- runnable only HERE, after every
+	// mapFrom, because the sums span OTHER registries (unitcombats / techs / promotions / units). Idempotent
+	// like the sibling sub-passes. The promotion-applicability union is the one cross-registry precompute,
+	// built once and shared by every unit's verdict.
+	void rp_deriveUnitPlane()
+	{
+		std::set<int> combatClassesWithPromotions;
+		const int iNumPromotions = GC.getNumPromotionInfos();
+		for (int iPromotion = 0; iPromotion < iNumPromotions; ++iPromotion)
+		{
+			const CvInfo* pPromotionData = InfoRepo<CvPromotionInfo>::get().get(iPromotion);
+			if (pPromotionData == NULL)
+			{
+				continue;
+			}
+			const CvPromotionInfo* pPromotion = static_cast<const CvPromotionInfo*>(pPromotionData);
+			const std::vector<int>& applicableClasses = pPromotion->getUnitCombats();
+			for (size_t iEntry = 0; iEntry < applicableClasses.size(); ++iEntry)
+			{
+				combatClassesWithPromotions.insert(applicableClasses[iEntry]);
+			}
+		}
+		const int iNumUnits = GC.getNumUnitInfos();
+		for (int iUnit = 0; iUnit < iNumUnits; ++iUnit)
+		{
+			CvInfo* pUnitData = const_cast<CvInfo*>(InfoRepo<CvUnitInfo>::get().get(iUnit));
+			if (pUnitData == NULL)
+			{
+				continue;
+			}
+			CvUnitInfo* pUnit = static_cast<CvUnitInfo*>(pUnitData);
+			pUnit->deriveAtRegistryComplete(rp_firstPrereqTechEra(pUnitData), combatClassesWithPromotions);
+		}
+	}
 }
 
 void reversePassRun()
@@ -1117,7 +1206,7 @@ void reversePassRun()
 	const DWORD iStartTick = GetTickCount();
 	s_counts = ReversePassCounts();
 	rp_reconstructRouteBonusPrereqs();
-	rp_reconstructImprovementRouteYields();
+	rp_feedShrineBuildings();
 	rp_reconstructTechForeignKeys();
 	rp_reconstructTechObsoletionViews();
 	// the own-output landing runs BEFORE the RELATED walk, so a landed entry's source-presence condition feeds
@@ -1127,6 +1216,7 @@ void reversePassRun()
 	rp_buildRelated();
 	rp_buildRequiredBy();
 	rp_sortUniqueAll();
+	rp_deriveUnitPlane();
 	s_counts.milliseconds = (unsigned int)(GetTickCount() - iStartTick);
 }
 

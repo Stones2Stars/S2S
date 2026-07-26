@@ -1,78 +1,56 @@
 //
-//	CvRouteInfo::mapFrom -- base core reading, then the route's LIVE members from the current JSON shapes: the plot
-//	yields (food/production/commerce.plot.flat), the intrinsic identity stats (value / advancedStart.cost / movementCost /
-//	flatMovementCost / seaTunnel), and the tech-gated move deltas reconstructed from the `movement.plot.flat` family
-//	(each entry {value, enabled:{type:TECH_X}} -> m_techMovementChange[TECH_X] = value). See the header.
+//	CvRouteInfo -- the route poco's own typed reading on top of the base section dispatch (see the header).
+//	The yield and movement families compile into m_modifiers via the base dispatch -- no per-family raw read
+//	survives here ([DEC-new-getter-surface]); the improvement-keyed rows and the tech-conditioned move deltas
+//	are compiled keyed/conditioned entries. mapFrom materializes the identity census set ONCE into typed
+//	members ([DEC-materialize-at-mapfrom]); idempotent by contract. The bonus-prereq forward FKs reset here
+//	and are re-landed by CvReversePass after every re-map.
 //
 
 #include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
 #include "CvRouteInfo.h"
-#include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonFamVal/...)
+#include "CvJsonParse.h"          // the shared walkers (jsonChildObj/jsonIdInt/jsonIdBool)
 #include "AI/CvGameAI.h"          // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 
 CvRouteInfo::CvRouteInfo()
-	: m_iValue(0), m_iAdvancedStartCost(100), m_iMovementCost(0), m_iFlatMovementCost(0), m_iZobristValue(0),
-	  m_ePrereqBonus(NO_BONUS), m_bSeaTunnel(false)
+	: m_iValue(0)
+	, m_iAdvancedStartCost(100)
+	, m_iMovementCost(0)
+	, m_iFlatMovementCost(0)
+	, m_iZobristValue(0)
+	, m_bSeaTunnel(false)
+	, m_ePrereqBonus(NO_BONUS)
 {
-	for (int i = 0; i < NUM_YIELD_TYPES; ++i) m_aiYieldChange[i] = 0;
 	// Non-XML runtime map-hash value, drawn from the synced RNG at info construction EXACTLY as the archived
-	// CvRouteInfo ctor did (SourceArchive/Infos/CvRouteInfo.cpp:41). CvPlot XORs it into m_movementCharacteristicsHash.
+	// CvRouteInfo ctor did. CvPlot XORs it into m_movementCharacteristicsHash.
 	m_iZobristValue = GC.getGame().getSorenRand().getInt();
-}
-
-int CvRouteInfo::getTechMovementChange(int iTech) const
-{
-	std::map<int, int>::const_iterator it = m_techMovementChange.find(iTech);
-	return it != m_techMovementChange.end() ? it->second : 0;
 }
 
 void CvRouteInfo::mapFrom(const picojson::value& entity)
 {
-	CvInfo::mapFrom(entity);   // core reading: type + identity text + button
-	if (!entity.is<picojson::object>()) return;
-	const picojson::object& o = entity.get<picojson::object>();
+	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom. The bonus-prereq forward FKs
+	// reset here because CvReversePass re-lands them AFTER every re-map (the OR-list would double otherwise).
+	m_ePrereqBonus = NO_BONUS;
+	m_aePrereqOrBonuses.clear();
 
-	// plot yields
-	m_aiYieldChange[YIELD_FOOD]       = jsonFamVal(o, "food", "plot", "flat");
-	m_aiYieldChange[YIELD_PRODUCTION] = jsonFamVal(o, "production", "plot", "flat");
-	m_aiYieldChange[YIELD_COMMERCE]   = jsonFamVal(o, "commerce", "plot", "flat");
-
-	// tech-gated move deltas: the `movement.plot.flat` list ({value, enabled:{type:TECH_X}}) -> per-tech map
-	if (const picojson::object* mv = jsonChildObj(o, "movement"))
-		if (const picojson::object* pl = jsonChildObj(*mv, "plot"))
-		{
-			picojson::object::const_iterator fl = pl->find("flat");
-			if (fl != pl->end() && fl->second.is<picojson::array>())
-			{
-				const picojson::array& a = fl->second.get<picojson::array>();
-				for (size_t i = 0; i < a.size(); ++i)
-				{
-					if (!a[i].is<picojson::object>()) continue;
-					const picojson::object& e = a[i].get<picojson::object>();
-					picojson::object::const_iterator vv = e.find("value");
-					const int value = (vv != e.end() && vv->second.is<double>()) ? (int)vv->second.get<double>() : 0;
-					const picojson::object* en = jsonChildObj(e, "enabled");
-					if (!en) continue;
-					picojson::object::const_iterator ty = en->find("type");
-					if (ty == en->end() || !ty->second.is<std::string>()) continue;
-					const int techId = jsonResolveId(ty->second.get<std::string>());
-					if (techId >= 0) m_techMovementChange[techId] = value;
-				}
-			}
-		}
+	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers)
+	if (!entity.is<picojson::object>())
+	{
+		return;
+	}
+	const picojson::object& entityObj = entity.get<picojson::object>();
 
 	// identity: the intrinsic route stats
-	if (const picojson::object* io = jsonChildObj(o, "identity"))
+	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
 	{
-		m_iValue            = jsonIdInt(*io, "value");
-		m_iMovementCost     = jsonIdInt(*io, "movementCost");
-		m_iFlatMovementCost = jsonIdInt(*io, "flatMovementCost");
-		m_bSeaTunnel        = jsonIdBool(*io, "seaTunnel");
-		if (const picojson::object* as = jsonChildObj(*io, "advancedStart"))
-			m_iAdvancedStartCost = jsonIdInt(*as, "cost", 100);  // legacy load default 100 (archive .add)
+		m_iValue = jsonIdInt(*pIdentity, "value");
+		m_iMovementCost = jsonIdInt(*pIdentity, "movementCost");
+		m_iFlatMovementCost = jsonIdInt(*pIdentity, "flatMovementCost");
+		m_bSeaTunnel = jsonIdBool(*pIdentity, "seaTunnel");
+		if (const picojson::object* pAdvancedStart = jsonChildObj(*pIdentity, "advancedStart"))
+		{
+			m_iAdvancedStartCost = jsonIdInt(*pAdvancedStart, "cost", 100);   // legacy load default 100
+		}
 	}
-
-	// (the route's bonus prerequisite is NOT read here -- it is modelled as the BONUS's enables.routes availability
-	//  relationship, read off the bonus info by the cascade GENERATE pass; see the header.)
 	// (m_iZobristValue is drawn in the ctor -- non-XML runtime value, see there.)
 }

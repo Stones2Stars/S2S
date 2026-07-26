@@ -32,7 +32,7 @@ public:
 	int happeningInterval;         // {"onTurn": N} = every N turns (1 = every turn)
 	CvCondition* condition;    // a §3 state condition (NULL = none); a state-only trigger evaluates each turn
 	// --- chance: the odds (0 = no roll -> the action always lands when the trigger fires) ---
-	int chanceValue100;            // percent ×100
+	int chanceValue;            // percent ×100
 	int chancePerTypeId;           // the §3.7 per count-scaler type FK (-1 = none/token)
 	std::string chancePerToken;    // the catch-all token when the per type is no FK (POPULATION / ...)
 	int chancePerEach;             // the per quantum (default 1)
@@ -44,13 +44,13 @@ public:
 	// --- action: grant (the §5 payload vocabulary nested whole) ---
 	CvGrants* grant;           // owned (NULL = none)
 	// --- action: heal ---
-	int heal100;                   // action.heal: N (×100; 0 = none)
+	int heal;                   // action.heal: N (×100; 0 = none)
 	bool healFull;                 // action.heal: "full"
 	int healUnitCombatId;          // action.unitCombat FK -- the healed class (-1 = any)
 	int healCount;                 // action.count -- the full-heal unit cap (raw count)
 	// --- action: property delta (+ the #429 spatial intent the distribution reads) ---
 	int propertyId;                // action.PROPERTY_* FK (-1 = none)
-	int propertyAmount100;         // its per-fire amount (×100, signed)
+	int propertyAmount;         // its per-fire amount (×100, signed)
 	std::string spatialOn;         // action.on ("plot" / "" = the emitting object)
 	std::string spatialRelation;   // action.relation ("near" / "same" / "")
 	int spatialDistance;           // action.distance -- the radius for "near"

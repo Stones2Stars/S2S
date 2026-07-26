@@ -1,481 +1,245 @@
 //
-//	CvPromotionInfo::mapFrom -- the base dispatch fills the composed units (modifiers / section-8 `skills` bool block /
-//	entity-level gate / `grants`); this subclass then reads its own typed values straight off the raw entity, per
-//	curate_promotion.py's family/member vocabulary (see the header). The strength/family scalars, the vs-keyed
-//	percent maps, the identity availability gates, the vision LOS resolver, the ai weights and heal struct rows are
-//	all subclass-parsed here.
+//	CvPromotionInfo -- the base dispatch fills the composed units (the par.6 modifier families compile into
+//	CvModifiers; the par.8 `skills` bool block; the entity-level gate; the edges/requires chain halves); this
+//	subclass parses ONLY what the type genuinely owns: the identity set, the par.9 vision + sizeMatters +
+//	promotionLine sections, the par.8 keyed-skill FK lists, the ai weight rows, and the sound asset. NO
+//	family-address read survives here ([DEC-materialize-at-mapfrom]).
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson + GC
 #include "CvPromotionInfo.h"
-#include "CvPromotionLineInfo.h"  // GC.getPromotionLineInfo(...) -> the line's unitcombat-prereq / notOnUnitCombat getters
-#include "CvJsonParse.h"            // jsonResolveId + jsonFamVal/jsonFamMemberVal + jsonIdInt/Bool/Fk/Str + jsonChildObj + jsonX100
+#include "CvPromotionLineInfo.h"    // GC.getPromotionLineInfo(...) -> the line's unitcombat lists (qualified-set build)
+#include "CvJsonParse.h"            // jsonResolveId / jsonIdInt / jsonIdBool / jsonIdFk / jsonIdStr / jsonChildObj / jsonReadIdList / jsonReadKeyedBoolIdList
 #include "Property/CvPropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
-#include "AI/CvGameAI.h"            // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
+#include "AI/CvGameAI.h"            // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, archive mirror)
+
+namespace
+{
+	// identity numeric-or-FK scalar: a plain number stays as-is; a string FK-resolves; absent -> iAbsent (the
+	// legacy "unset" sentinel -- an absent era BAND is NO_ERA, never era 0).
+	int pr_numOrFk(const picojson::object& identity, const char* szKey, int iAbsent)
+	{
+		picojson::object::const_iterator iter = identity.find(szKey);
+		if (iter == identity.end())
+		{
+			return iAbsent;
+		}
+		if (iter->second.is<double>())
+		{
+			return (int)iter->second.get<double>();
+		}
+		if (iter->second.is<std::string>())
+		{
+			return jsonResolveId(iter->second.get<std::string>());
+		}
+		return iAbsent;
+	}
+}
 
 CvPromotionInfo::CvPromotionInfo()
-	: m_iCombatPercent(0), m_iStrengthChange(0), m_iStrengthModifier(0), m_iAttackCombatModifierChange(0), m_iDefenseCombatModifierChange(0),
-	  m_iVSBarbsChange(0), m_iReligiousCombatModifierChange(0), m_iStealthCombatModifierChange(0), m_iDamageModifierChange(0), m_iMaxHPChange(0),
-	  m_iEnduranceChange(0), m_iTauntChange(0), m_iBreakdownChanceChange(0), m_iBreakdownDamageChange(0),
-	  m_iUnnerveChange(0), m_iEncloseChange(0), m_iLungeChange(0), m_iDynamicDefenseChange(0),
-	  m_iCombatModifierPerSizeMoreChange(0), m_iCombatModifierPerSizeLessChange(0), m_iCombatModifierPerVolumeMoreChange(0), m_iCombatModifierPerVolumeLessChange(0),
-	  m_iCityAttackPercent(0), m_iCityDefensePercent(0), m_iHillsAttackPercent(0), m_iHillsDefensePercent(0),
-	  m_iKamikazePercent(0), m_iCombatLimitChange(0), m_iStealthStrikesChange(0), m_iQualityChange(0), m_iGroupChange(0),
-	  m_iWithdrawalChange(0), m_iFirstStrikesChange(0), m_iChanceFirstStrikesChange(0),
-	  m_iBombardRateChange(0), m_iRBombardDamageChange(0), m_iRBombardDamageLimitChange(0), m_iRBombardDamageMaxUnitsChange(0), m_iDCMBombRangeChange(0), m_iDCMBombAccuracyChange(0),
-	  m_iCollateralDamageChange(0), m_iCollateralDamageLimitChange(0), m_iCollateralDamageMaxUnitsChange(0), m_iCollateralDamageProtection(0),
-	  m_iAirRangeChange(0), m_iInterceptChange(0), m_iEvasionChange(0), m_iAirCombatLimitChange(0),
-	  m_iEnemyHealChange(0), m_iNeutralHealChange(0), m_iFriendlyHealChange(0), m_iSameTileHealChange(0), m_iAdjacentTileHealChange(0),
-	  m_iSelfHealModifier(0), m_iNumHealSupport(0), m_iVictoryHeal(0), m_iVictoryAdjacentHeal(0), m_iVictoryStackHeal(0),
-	  m_iMovesChange(0), m_iMoveDiscountChange(0), m_iExtraDropRange(0), m_iExperiencePercent(0),
-	  m_iWorkRatePercent(0), m_iHillsWorkPercent(0), m_iPeaksWorkPercent(0),
-	  m_iCargoChange(0), m_iSMCargoChange(0), m_iSMCargoVolumeChange(0), m_iSMCargoVolumeModifierChange(0),
-	  m_iUpkeepModifier(0), m_iExtraUpkeep100(0), m_iUpgradeDiscount(0), m_iVisibilityChange(0),
-	  m_iCaptureProbabilityModifierChange(0), m_iCaptureResistanceModifierChange(0), m_iPoisonProbabilityModifierChange(0),
-	  m_iInsidiousnessChange(0), m_iInvestigationChange(0), m_iRevoltProtection(0), m_iPillageChange(0), m_iSurvivorChance(0),
-	  m_iLayerAnimationPath(-1) /* legacy addEnumAsInt default -1 = no layer -- 0 attached AnimationPath-0 render layers to every promoted unit */,
-	  m_iMinEraType(NO_ERA), m_iMaxEraType(NO_ERA), m_iStateReligionPrereq(-1), m_iControlPoints(0), m_iCommandRange(0), m_iLevelPrereq(0), m_iLinePriority(0),
-	  m_iCommandType(NO_COMMAND), m_ePromotionLine(NO_PROMOTIONLINE),
-	  m_iReplacesUnitCombat(-1), m_iDomainCargoChange(-1), m_iSpecialCargoChange(-1), m_iSpecialCargoPrereq(-1), m_iSMNotSpecialCargoChange(-1), m_iSMNotSpecialCargoPrereq(-1),
-	  m_bLeader(false), m_bStatus(false), m_bQuick(false), m_bStarsign(false), m_bZeroesXP(false), m_bForOffset(false), m_bCargoPrereq(false), m_bRBombardPrereq(false),
-	  m_bSetOnHNCapture(false), m_bSetOnInvestigated(false), m_bPrereqNormInvisible(false), m_bPlotPrereqsKeepAfter(false), m_bRemoveAfterSet(false),
-	  m_eTechPrereq(NO_TECH), m_eObsoleteTech(NO_TECH), m_iSetSpecialUnit(-1), m_iZobristValue(0)
+	: m_bLeader(false)
+	, m_bStatus(false)
+	, m_bQuick(false)
+	, m_bStarsign(false)
+	, m_bZeroesXP(false)
+	, m_bForOffset(false)
+	, m_bCargoPrereq(false)
+	, m_bSetOnInvestigated(false)
+	, m_bPrereqNormInvisible(false)
+	, m_bRemoveAfterSet(false)
+	, m_iStateReligionPrereq(-1)
+	, m_iControlPoints(0)
+	, m_iCommandRange(0)
+	, m_iLevelPrereq(0)
+	, m_iMinEra(NO_ERA)
+	, m_iReplacesUnitCombat(-1)
+	, m_iDomainCargoChange(-1)
+	, m_iSpecialCargoChange(-1)
+	, m_iSMNotSpecialCargoChange(-1)
+	, m_ePromotionLine(NO_PROMOTIONLINE)
+	, m_iLinePriority(0)
+	, m_bChangesMoveThroughPlots(false)
+	, m_bNegativeEffects(false)
+	, m_iZobristValue(0)
+	, m_iCommandType(NO_COMMAND)
+	, m_eTechPrereq(NO_TECH)
+	, m_eObsoleteTech(NO_TECH)
 {
 	// Non-XML runtime state-hash value, drawn from the synced RNG at info construction EXACTLY as the archived
-	// CvPromotionInfo ctor did (SourceArchive/Infos/CvPromotionInfo.cpp:52). CvUnit XORs it into m_movementCharacteristicsHash.
+	// ctor did (never in mapFrom: a full-registry re-map must not redraw the synced RNG).
 	m_iZobristValue = GC.getGame().getSorenRand().getInt();
-}
-
-// --- shared local walkers ------------------------------------------------------------------------------------
-
-// entity[family][scope][member][unit] as a DOUBLE (for the x100 re-scale of upkeep.extra). 0 if any hop missing.
-static double famMemberDbl(const picojson::object& o, const char* family, const char* scope, const char* member, const char* unit)
-{
-	const picojson::object* fo = jsonChildObj(o, family);   if (!fo) return 0.0;
-	const picojson::object* so = jsonChildObj(*fo, scope);  if (!so) return 0.0;
-	const picojson::object* mo = jsonChildObj(*so, member); if (!mo) return 0.0;
-	picojson::object::const_iterator u = mo->find(unit);
-	return (u != mo->end() && u->second.is<double>()) ? u->second.get<double>() : 0.0;
-}
-
-// a keyed percent map under a scope: scope[kind].{TYPE}[.member].percent -> out[FK id] = (int)percent.
-static void readKeyedPercent(const picojson::object& scope, const char* kind, const char* member, std::map<int, int>& out)
-{
-	const picojson::object* kd = jsonChildObj(scope, kind); if (!kd) return;
-	for (picojson::object::const_iterator it = kd->begin(); it != kd->end(); ++it)
-	{
-		if (!it->second.is<picojson::object>()) continue;
-		const picojson::object* leaf = &it->second.get<picojson::object>();
-		if (member) { leaf = jsonChildObj(*leaf, member); if (!leaf) continue; }
-		picojson::object::const_iterator p = leaf->find("percent");
-		if (p == leaf->end() || !p->second.is<double>()) continue;
-		const int id = jsonResolveId(it->first);
-		if (id >= 0) out[id] = (int)p->second.get<double>();
-	}
-}
-
-// a bare-int keyed map: obj.{TYPE} = int -> out[FK id] = int (vision intensity pair-lists).
-static void readIntMap(const picojson::object& parent, const char* key, std::map<int, int>& out)
-{
-	const picojson::object* o = jsonChildObj(parent, key); if (!o) return;
-	for (picojson::object::const_iterator it = o->begin(); it != o->end(); ++it)
-		if (it->second.is<double>()) { const int id = jsonResolveId(it->first); if (id >= 0) out[id] = (int)it->second.get<double>(); }
-}
-
-// a string array -> FK id vector (identity prereq/notOn/negates lists + skills unitcombat lists).
-static void readIdList(const picojson::object& parent, const char* key, std::vector<int>& out)
-{
-	picojson::object::const_iterator it = parent.find(key);
-	if (it == parent.end() || !it->second.is<picojson::array>()) return;
-	const picojson::array& a = it->second.get<picojson::array>();
-	for (size_t i = 0; i < a.size(); ++i)
-		if (a[i].is<std::string>()) { const int id = jsonResolveId(a[i].get<std::string>()); if (id >= 0) out.push_back(id); }
-}
-
-// a {TYPE:true} keyed-bool object -> FK id set (skills.terrainDoubleMove / featureDoubleMove).
-static void readIdSet(const picojson::object& parent, const char* key, std::set<int>& out)
-{
-	const picojson::object* o = jsonChildObj(parent, key); if (!o) return;
-	for (picojson::object::const_iterator it = o->begin(); it != o->end(); ++it)
-		if (it->second.is<bool>() && it->second.get<bool>()) { const int id = jsonResolveId(it->first); if (id >= 0) out.insert(id); }
-}
-
-// identity numeric-or-FK scalar: a plain number stays as-is; a string FK-resolves; absent -> iAbsent
-// (the caller supplies the legacy "unset" sentinel -- an absent era BAND is NO_ERA, never era 0; a 0-default
-// there read as "max era = ancient" and refused every promotion for every post-ancient unit).
-static int idNumOrFk(const picojson::object& io, const char* key, int iAbsent = 0)
-{
-	picojson::object::const_iterator it = io.find(key);
-	if (it == io.end()) return iAbsent;
-	if (it->second.is<double>()) return (int)it->second.get<double>();
-	if (it->second.is<std::string>()) return jsonResolveId(it->second.get<std::string>());
-	return iAbsent;
-}
-
-// vision struct rows: [{invisible, <slotKey>, intensity}] -> parallel FK ids + intensity into the caller's fields.
-static void readTerrainChanges(const picojson::object& vision, const char* name, std::vector<InvisibleTerrainChanges>& out)
-{
-	picojson::object::const_iterator ai = vision.find(name);
-	if (ai == vision.end() || !ai->second.is<picojson::array>()) return;
-	const picojson::array& a = ai->second.get<picojson::array>();
-	for (size_t i = 0; i < a.size(); ++i)
-	{
-		if (!a[i].is<picojson::object>()) continue;
-		const picojson::object& e = a[i].get<picojson::object>();
-		InvisibleTerrainChanges r;
-		r.eInvisible = static_cast<InvisibleTypes>(jsonIdFk(e, "invisible"));
-		r.eTerrain   = static_cast<TerrainTypes>(jsonIdFk(e, "terrain"));
-		r.iIntensity = jsonIdInt(e, "intensity");
-		out.push_back(r);
-	}
-}
-static void readFeatureChanges(const picojson::object& vision, const char* name, std::vector<InvisibleFeatureChanges>& out)
-{
-	picojson::object::const_iterator ai = vision.find(name);
-	if (ai == vision.end() || !ai->second.is<picojson::array>()) return;
-	const picojson::array& a = ai->second.get<picojson::array>();
-	for (size_t i = 0; i < a.size(); ++i)
-	{
-		if (!a[i].is<picojson::object>()) continue;
-		const picojson::object& e = a[i].get<picojson::object>();
-		InvisibleFeatureChanges r;
-		r.eInvisible = static_cast<InvisibleTypes>(jsonIdFk(e, "invisible"));
-		r.eFeature   = static_cast<FeatureTypes>(jsonIdFk(e, "feature"));
-		r.iIntensity = jsonIdInt(e, "intensity");
-		out.push_back(r);
-	}
-}
-static void readImprovementChanges(const picojson::object& vision, const char* name, std::vector<InvisibleImprovementChanges>& out)
-{
-	picojson::object::const_iterator ai = vision.find(name);
-	if (ai == vision.end() || !ai->second.is<picojson::array>()) return;
-	const picojson::array& a = ai->second.get<picojson::array>();
-	for (size_t i = 0; i < a.size(); ++i)
-	{
-		if (!a[i].is<picojson::object>()) continue;
-		const picojson::object& e = a[i].get<picojson::object>();
-		InvisibleImprovementChanges r;
-		r.eInvisible    = static_cast<InvisibleTypes>(jsonIdFk(e, "invisible"));
-		r.eImprovement  = static_cast<ImprovementTypes>(jsonIdFk(e, "improvement"));
-		r.iIntensity    = jsonIdInt(e, "intensity");
-		out.push_back(r);
-	}
-}
-
-// flatten the entity-level gate condition into the flat GAMEOPTION id list the legacy On/NotOnGameOption getters
-// expose. The curator authors a single option as a bare GAMEOPTION_ string (-> PRESENCE atom) and several as an
-// {all}/{anyOf} tree (-> GROUP); recurse the group vectors and collect the resolved GAMEOPTION_ presence ids.
-static void collectGameOptions(const CvCondition* c, std::vector<int>& out)
-{
-	if (!c) return;
-	if (c->kind == CASC_COND_PRESENCE)
-	{
-		if (c->id >= 0 && c->type.compare(0, 11, "GAMEOPTION_") == 0) out.push_back(c->id);
-		return;
-	}
-	if (c->kind == CASC_COND_GROUP)
-	{
-		for (size_t i = 0; i < c->all.size(); ++i)    collectGameOptions(c->all[i], out);
-		for (size_t i = 0; i < c->anyOf.size(); ++i)  collectGameOptions(c->anyOf[i], out);
-		for (size_t i = 0; i < c->noneOf.size(); ++i) collectGameOptions(c->noneOf[i], out);
-		collectGameOptions(c->enabled, out);
-		collectGameOptions(c->disabled, out);
-	}
 }
 
 void CvPromotionInfo::mapFrom(const picojson::value& entity)
 {
-	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom -- fully define every appending vector
-	// (the readIdSet std::sets re-insert identical elements and need no clear).
-	m_aiOnGameOptions.clear(); m_aiNotOnGameOptions.clear(); m_aHealUnitCombat.clear(); m_aAIWeight.clear();
-	m_aiSubCombat.clear(); m_aiRemoves.clear(); m_aeUnitCombat.clear(); m_aiNotOnUnitCombats.clear();
-	m_aiNotOnDomains.clear(); m_aiPrereqTerrains.clear(); m_aiPrereqFeatures.clear(); m_aiPrereqImprovements.clear();
-	m_aiPrereqPlotBonuses.clear(); m_aiPrereqLocalBuildings.clear(); m_aiPrereqBonuses.clear(); m_aiNegatesInvisibility.clear();
-	m_aInvisibleTerrainChanges.clear(); m_aVisibleTerrainChanges.clear(); m_aVisibleTerrainRangeChanges.clear();
-	m_aInvisibleFeatureChanges.clear(); m_aVisibleFeatureChanges.clear(); m_aVisibleFeatureRangeChanges.clear();
-	m_aInvisibleImprovementChanges.clear(); m_aVisibleImprovementChanges.clear(); m_aVisibleImprovementRangeChanges.clear();
-	m_aiAddsBuilds.clear(); m_aiFreeToUnitCombats.clear(); m_iSetSpecialUnit = -1;
+	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom -- fully define every appending vector.
+	m_aiUnitCombats.clear();
+	m_aiNotOnUnitCombats.clear();
+	m_aiNotOnDomains.clear();
+	m_aiProvidesUnitCombats.clear();
+	m_aiRemovesUnitCombats.clear();
+	m_aiTerrainDoubleMove.clear();
+	m_aiFeatureDoubleMove.clear();
+	m_aAIWeights.clear();
+	m_szSound.clear();
+	m_ePromotionLine = NO_PROMOTIONLINE;
+	m_iLinePriority = 0;
 
-	CvInfo::mapFrom(entity);   // core reading + the section dispatch into the composed units (modifiers/skills/gate/grants)
-	if (!entity.is<picojson::object>()) return;
-	const picojson::object& o = entity.get<picojson::object>();
+	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers; fills skills/gate/edges/requires)
 
-	// grants materialization (bucket-string reads are load-time only; the getters are bare member reads)
-	if (const std::vector<int>* l = grantList("builds")) m_aiAddsBuilds = *l;
-	if (const std::vector<int>* l = grantList("freeToUnitCombats")) m_aiFreeToUnitCombats = *l;
-	m_iSetSpecialUnit = m_grants.firstListId("specialUnit");
+	// par.9 typed sections (clear-first inside their own parse). NB the 4 identity.negatesInvisibility
+	// authorings duplicate vision.negates value-for-value -- the vision section is the served home (the
+	// double-authoring is a reported curator seam, not parsed twice).
+	m_vision.parse(entity);
+	m_sizeMatters.parse(entity);
+
+	if (!entity.is<picojson::object>())
+	{
+		return;
+	}
+	const picojson::object& entityObj = entity.get<picojson::object>();
 
 	// PROPERTY_* per-turn SOURCES: a promotion's <PROPERTY_X>.{city|plot}.flat (the crime-fighting /
-	// law-enforcement lines) emits into the holding unit's same-plot city / plot -- the unit gather walks held
-	// promotions; RELATION_SAME_PLOT mirrors the legacy shape. The ONE shared walk.
+	// law-enforcement lines) emits into the holding unit's same-plot city / plot -- the ONE shared walk.
 	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_SAME_PLOT);
 
-	// entity-level gate (populated by the base dispatch) -> the flat OnGameOptions/NotOnGameOptions lists
-	collectGameOptions(m_gate.enabled, m_aiOnGameOptions);
-	collectGameOptions(m_gate.disabled, m_aiNotOnGameOptions);
-
-	// --- strength family (general % + named members + vs-keyed maps) ---
-	m_iCombatPercent                    = jsonFamVal(o, "strength", "unit", "percent");
-	m_iStrengthChange                   = jsonFamVal(o, "strength", "unit", "flat");
-	m_iAttackCombatModifierChange       = jsonFamMemberVal(o, "strength", "unit", "attack", "percent");
-	m_iDefenseCombatModifierChange      = jsonFamMemberVal(o, "strength", "unit", "defense", "percent");
-	m_iVSBarbsChange                    = jsonFamMemberVal(o, "strength", "unit", "vsBarbs", "percent");
-	m_iReligiousCombatModifierChange    = jsonFamMemberVal(o, "strength", "unit", "religious", "percent");
-	m_iStealthCombatModifierChange      = jsonFamMemberVal(o, "strength", "unit", "stealth", "percent");
-	m_iDamageModifierChange             = jsonFamMemberVal(o, "strength", "unit", "damageModifier", "percent");
-	m_iEnduranceChange                  = jsonFamMemberVal(o, "strength", "unit", "endurance", "flat");
-	m_iTauntChange                      = jsonFamMemberVal(o, "strength", "unit", "taunt", "flat");
-	m_iBreakdownChanceChange            = jsonFamMemberVal(o, "strength", "unit", "breakdownChance", "flat");
-	m_iBreakdownDamageChange            = jsonFamMemberVal(o, "strength", "unit", "breakdownDamage", "flat");
-	m_iUnnerveChange                    = jsonFamMemberVal(o, "strength", "unit", "unnerve", "percent");
-	m_iEncloseChange                    = jsonFamMemberVal(o, "strength", "unit", "enclose", "percent");
-	m_iLungeChange                      = jsonFamMemberVal(o, "strength", "unit", "lunge", "percent");
-	m_iDynamicDefenseChange             = jsonFamMemberVal(o, "strength", "unit", "dynamicDefense", "percent");
-	m_iCityAttackPercent                = jsonFamMemberVal(o, "strength", "unit", "cityAttack", "percent");
-	m_iCityDefensePercent               = jsonFamMemberVal(o, "strength", "unit", "cityDefense", "percent");
-	m_iHillsAttackPercent               = jsonFamMemberVal(o, "strength", "unit", "hillsAttack", "percent");
-	m_iHillsDefensePercent              = jsonFamMemberVal(o, "strength", "unit", "hillsDefense", "percent");
-	m_iKamikazePercent                  = jsonFamMemberVal(o, "strength", "unit", "kamikaze", "percent");
-	m_iCombatLimitChange                = jsonFamMemberVal(o, "strength", "unit", "combatLimit", "flat");
-	m_iStealthStrikesChange             = jsonFamMemberVal(o, "strength", "unit", "stealthStrikes", "flat");
-	// --- sizeMatters block (json.md §9): the SM deltas moved off the strength/cargo families ---
-	if (const picojson::object* sm = jsonChildObj(o, "sizeMatters"))
+	// --- par.8 keyed-skill extras (the flat bools live on the composed m_skills block via the base dispatch) ---
+	if (const picojson::object* pSkills = jsonChildObj(entityObj, "skills"))
 	{
-		m_iStrengthModifier = jsonIdInt(*sm, "sizeModifier");
-		m_iMaxHPChange      = jsonIdInt(*sm, "maxHP");
-		m_iQualityChange    = jsonIdInt(*sm, "quality");
-		m_iGroupChange      = jsonIdInt(*sm, "group");
-		if (const picojson::object* cm = jsonChildObj(*sm, "combatModifier"))
-		{
-			m_iCombatModifierPerSizeMoreChange   = jsonIdInt(*cm, "perSizeMore");
-			m_iCombatModifierPerSizeLessChange   = jsonIdInt(*cm, "perSizeLess");
-			m_iCombatModifierPerVolumeMoreChange = jsonIdInt(*cm, "perVolumeMore");
-			m_iCombatModifierPerVolumeLessChange = jsonIdInt(*cm, "perVolumeLess");
-		}
-		if (const picojson::object* cg = jsonChildObj(*sm, "cargo"))
-		{
-			m_iSMCargoChange               = jsonIdInt(*cg, "smSpace");
-			m_iSMCargoVolumeChange         = jsonIdInt(*cg, "volume");
-			m_iSMCargoVolumeModifierChange = jsonIdInt(*cg, "volumeModifier");
-		}
-	}
-	if (const picojson::object* st = jsonChildObj(o, "strength"))
-		if (const picojson::object* un = jsonChildObj(*st, "unit"))
-		{
-			readKeyedPercent(*un, "terrain",    "attack",  m_aiTerrainAttackPercent);
-			readKeyedPercent(*un, "terrain",    "defense", m_aiTerrainDefensePercent);
-			readKeyedPercent(*un, "feature",    "attack",  m_aiFeatureAttackPercent);
-			readKeyedPercent(*un, "feature",    "defense", m_aiFeatureDefensePercent);
-			readKeyedPercent(*un, "unitCombat", NULL,      m_aiUnitCombatModifierPercent);
-			readKeyedPercent(*un, "domain",     NULL,      m_aiDomainModifierPercent);
-			readKeyedPercent(*un, "flanking",   NULL,      m_aiFlanking);
-		}
-
-	// --- other own-families ---
-	m_iWithdrawalChange           = jsonFamVal(o, "withdrawal", "unit", "percent");
-	m_iFirstStrikesChange         = jsonFamMemberVal(o, "firstStrike", "unit", "strikes", "flat");
-	m_iChanceFirstStrikesChange   = jsonFamMemberVal(o, "firstStrike", "unit", "chance", "flat");
-	m_iBombardRateChange          = jsonFamMemberVal(o, "bombard", "unit", "rate", "percent");
-	m_iRBombardDamageChange       = jsonFamMemberVal(o, "bombard", "unit", "rangedDamage", "flat");
-	m_iRBombardDamageLimitChange  = jsonFamMemberVal(o, "bombard", "unit", "rangedDamageLimit", "flat");
-	m_iRBombardDamageMaxUnitsChange = jsonFamMemberVal(o, "bombard", "unit", "rangedDamageMaxUnits", "flat");
-	m_iDCMBombRangeChange         = jsonFamMemberVal(o, "bombard", "unit", "dcmRange", "flat");
-	m_iDCMBombAccuracyChange      = jsonFamMemberVal(o, "bombard", "unit", "dcmAccuracy", "flat");
-	m_iCollateralDamageChange     = jsonFamMemberVal(o, "collateral", "unit", "damage", "percent");
-	m_iCollateralDamageLimitChange = jsonFamMemberVal(o, "collateral", "unit", "limit", "flat");
-	m_iCollateralDamageMaxUnitsChange = jsonFamMemberVal(o, "collateral", "unit", "maxUnits", "flat");
-	m_iCollateralDamageProtection = jsonFamMemberVal(o, "collateral", "unit", "protection", "percent");
-	m_iAirRangeChange             = jsonFamMemberVal(o, "air", "unit", "range", "flat");
-	m_iInterceptChange            = jsonFamMemberVal(o, "air", "unit", "intercept", "percent");
-	m_iEvasionChange              = jsonFamMemberVal(o, "air", "unit", "evasion", "percent");
-	m_iAirCombatLimitChange       = jsonFamMemberVal(o, "air", "unit", "combatLimit", "flat");
-	m_iEnemyHealChange            = jsonFamMemberVal(o, "heal", "unit", "enemy", "flat");
-	m_iNeutralHealChange          = jsonFamMemberVal(o, "heal", "unit", "neutral", "flat");
-	m_iFriendlyHealChange         = jsonFamMemberVal(o, "heal", "unit", "friendly", "flat");
-	m_iSameTileHealChange         = jsonFamMemberVal(o, "heal", "unit", "sameTile", "flat");
-	m_iAdjacentTileHealChange     = jsonFamMemberVal(o, "heal", "unit", "adjacentTile", "flat");
-	m_iSelfHealModifier           = jsonFamMemberVal(o, "heal", "unit", "selfModifier", "percent");
-	m_iNumHealSupport             = jsonFamMemberVal(o, "heal", "unit", "support", "flat");
-	m_iVictoryHeal                = jsonFamMemberVal(o, "heal", "unit", "victory", "flat");
-	m_iVictoryAdjacentHeal        = jsonFamMemberVal(o, "heal", "unit", "victoryAdjacent", "flat");
-	m_iVictoryStackHeal           = jsonFamMemberVal(o, "heal", "unit", "victoryStack", "flat");
-	m_iMovesChange                = jsonFamMemberVal(o, "movement", "unit", "moves", "flat");
-	m_iMoveDiscountChange         = jsonFamMemberVal(o, "movement", "unit", "moveDiscount", "flat");
-	m_iExtraDropRange             = jsonFamMemberVal(o, "movement", "unit", "dropRange", "flat");
-	m_iExperiencePercent          = jsonFamVal(o, "experience", "unit", "percent");
-	m_iWorkRatePercent            = jsonFamMemberVal(o, "workRate", "unit", "rate", "percent");
-	m_iHillsWorkPercent           = jsonFamMemberVal(o, "workRate", "unit", "hills", "percent");
-	m_iPeaksWorkPercent           = jsonFamMemberVal(o, "workRate", "unit", "peaks", "percent");
-	m_iCargoChange                = jsonFamMemberVal(o, "cargo", "unit", "space", "flat");   // SM cargo -> sizeMatters (above)
-	m_iUpkeepModifier             = jsonFamMemberVal(o, "upkeep", "unit", "modifier", "percent");
-	m_iExtraUpkeep100             = jsonX100(famMemberDbl(o, "upkeep", "unit", "extra", "flat"));   // legacy accessor is x100; JSON is de-scaled human
-	m_iUpgradeDiscount            = jsonFamMemberVal(o, "upkeep", "unit", "upgradeDiscount", "percent");
-	m_iVisibilityChange           = jsonFamVal(o, "vision", "range", "flat");
-	m_iCaptureProbabilityModifierChange = jsonFamMemberVal(o, "capture", "unit", "probability", "flat");
-	m_iCaptureResistanceModifierChange  = jsonFamMemberVal(o, "capture", "unit", "resistance", "flat");
-	m_iPoisonProbabilityModifierChange  = jsonFamMemberVal(o, "poison", "unit", "probability", "flat");
-	m_iInsidiousnessChange        = jsonFamMemberVal(o, "espionage", "unit", "insidiousness", "flat");
-	m_iInvestigationChange        = jsonFamMemberVal(o, "espionage", "unit", "investigation", "flat");
-	m_iRevoltProtection           = jsonFamVal(o, "revoltProtection", "unit", "percent");
-	m_iPillageChange              = jsonFamVal(o, "pillage", "unit", "flat");
-	m_iSurvivorChance             = jsonFamVal(o, "survivor", "unit", "percent");
-	if (const picojson::object* wr = jsonChildObj(o, "workRate"))
-		if (const picojson::object* un = jsonChildObj(*wr, "unit"))
-		{
-			readKeyedPercent(*un, "terrain", NULL, m_aiTerrainWorkPercent);
-			readKeyedPercent(*un, "feature", NULL, m_aiFeatureWorkPercent);
-			readKeyedPercent(*un, "build",   NULL, m_aiBuildWorkRate);
-		}
-
-	// heal.unit.unitCombat.{UC} = {heal, adjacentHeal} -> HealUnitCombat rows
-	if (const picojson::object* hl = jsonChildObj(o, "heal"))
-		if (const picojson::object* un = jsonChildObj(*hl, "unit"))
-			if (const picojson::object* uc = jsonChildObj(*un, "unitCombat"))
-				for (picojson::object::const_iterator it = uc->begin(); it != uc->end(); ++it)
-					if (it->second.is<picojson::object>())
-					{
-						const int id = jsonResolveId(it->first);
-						if (id < 0) continue;
-						const picojson::object& e = it->second.get<picojson::object>();
-						HealUnitCombat r;
-						r.eUnitCombat  = static_cast<UnitCombatTypes>(id);
-						r.iHeal        = jsonIdInt(e, "heal");
-						r.iAdjacentHeal = jsonIdInt(e, "adjacentHeal");
-						m_aHealUnitCombat.push_back(r);
-					}
-
-	// --- skills: the flat bools live on the composed m_skills block (both planes -- base dispatch); only the
-	// KEYED extras are subclass-parsed here ---
-	if (const picojson::object* sk = jsonChildObj(o, "skills"))
-	{
-		readIdSet(*sk, "terrainDoubleMove", m_aiTerrainDoubleMove);
-		readIdSet(*sk, "featureDoubleMove", m_aiFeatureDoubleMove);
-		readIdList(*sk, "unitCombats", m_aiSubCombat);          // SubCombatChangeTypes
-		readIdList(*sk, "removesUnitCombats", m_aiRemoves);     // RemovesUnitCombatTypes
+		jsonReadKeyedBoolIdList(*pSkills, "terrainDoubleMove", m_aiTerrainDoubleMove);
+		jsonReadKeyedBoolIdList(*pSkills, "featureDoubleMove", m_aiFeatureDoubleMove);
+		jsonReadIdList(*pSkills, "unitCombats", m_aiProvidesUnitCombats);
+		jsonReadIdList(*pSkills, "removesUnitCombats", m_aiRemovesUnitCombats);
 	}
 
-	// --- identity: flags, FKs, era/command scalars, availability lists ---
-	if (const picojson::object* io = jsonChildObj(o, "identity"))
+	// --- identity: the census-authored set, each key one typed member ---
+	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
 	{
-		m_bLeader             = jsonIdBool(*io, "leader");
-		m_bStatus             = jsonIdBool(*io, "status");
-		m_bQuick              = jsonIdBool(*io, "quick");
-		m_bStarsign           = jsonIdBool(*io, "starsign");
-		m_bZeroesXP           = jsonIdBool(*io, "zeroesXP");
-		m_bForOffset          = jsonIdBool(*io, "forOffset");
-		m_bCargoPrereq        = jsonIdBool(*io, "cargoPrereq");
-		m_bRBombardPrereq     = jsonIdBool(*io, "rBombardPrereq");
-		m_bSetOnHNCapture     = jsonIdBool(*io, "setOnHNCapture");
-		m_bSetOnInvestigated  = jsonIdBool(*io, "setOnInvestigated");
-		m_bPrereqNormInvisible = jsonIdBool(*io, "prereqNormInvisible");
-		m_bPlotPrereqsKeepAfter = jsonIdBool(*io, "plotPrereqsKeepAfter");
-		m_bRemoveAfterSet     = jsonIdBool(*io, "removeAfterSet");
-
-		m_iStateReligionPrereq = jsonIdFk(*io, "stateReligionPrereq");
-		m_iControlPoints      = jsonIdInt(*io, "controlPoints");
-		m_iCommandRange       = jsonIdInt(*io, "commandRange");
-		m_iLevelPrereq        = jsonIdInt(*io, "levelPrereq");
-		{ picojson::object::const_iterator ct = io->find("commandType");   // default NO_COMMAND unless authored (runtime setter may override)
-		  if (ct != io->end() && ct->second.is<double>()) m_iCommandType = (int)ct->second.get<double>(); }
-		m_iLayerAnimationPath = idNumOrFk(*io, "layerAnimationPath", -1);   // legacy default -1 = no layer (see ctor note)
-		m_iMinEraType         = idNumOrFk(*io, "minEra", NO_ERA);
-		m_iMaxEraType         = idNumOrFk(*io, "maxEra", NO_ERA);
-		m_iReplacesUnitCombat  = jsonIdFk(*io, "replacesUnitCombat");
-		m_iDomainCargoChange   = jsonIdFk(*io, "domainCargoChange");
-		m_iSpecialCargoChange  = jsonIdFk(*io, "specialCargoChange");
-		m_iSpecialCargoPrereq  = jsonIdFk(*io, "specialCargoPrereq");
-		m_iSMNotSpecialCargoChange = jsonIdFk(*io, "smNotSpecialCargoChange");
-		m_iSMNotSpecialCargoPrereq = jsonIdFk(*io, "smNotSpecialCargoPrereq");
-
-		std::string r; if (jsonIdStr(*io, "renamesUnitTo", r) && !r.empty()) m_szRenamesUnitTo = CvWString(r.c_str());
-
-		readIdList(*io, "unitCombats", m_aeUnitCombat);
-		readIdList(*io, "notOnUnitCombats", m_aiNotOnUnitCombats);
-		readIdList(*io, "notOnDomains", m_aiNotOnDomains);
-		readIdList(*io, "prereqTerrains", m_aiPrereqTerrains);
-		readIdList(*io, "prereqFeatures", m_aiPrereqFeatures);
-		readIdList(*io, "prereqImprovements", m_aiPrereqImprovements);
-		readIdList(*io, "prereqPlotBonuses", m_aiPrereqPlotBonuses);
-		readIdList(*io, "prereqLocalBuildings", m_aiPrereqLocalBuildings);
-		readIdList(*io, "prereqBonuses", m_aiPrereqBonuses);
-		readIdList(*io, "negatesInvisibility", m_aiNegatesInvisibility);
+		m_bLeader = jsonIdBool(*pIdentity, "leader");
+		m_bStatus = jsonIdBool(*pIdentity, "status");
+		m_bQuick = jsonIdBool(*pIdentity, "quick");
+		m_bStarsign = jsonIdBool(*pIdentity, "starsign");
+		m_bZeroesXP = jsonIdBool(*pIdentity, "zeroesXP");
+		m_bForOffset = jsonIdBool(*pIdentity, "forOffset");
+		m_bCargoPrereq = jsonIdBool(*pIdentity, "cargoPrereq");
+		m_bSetOnInvestigated = jsonIdBool(*pIdentity, "setOnInvestigated");
+		m_bPrereqNormInvisible = jsonIdBool(*pIdentity, "prereqNormInvisible");
+		m_bRemoveAfterSet = jsonIdBool(*pIdentity, "removeAfterSet");
+		m_iStateReligionPrereq = jsonIdFk(*pIdentity, "stateReligionPrereq");
+		m_iControlPoints = jsonIdInt(*pIdentity, "controlPoints");
+		m_iCommandRange = jsonIdInt(*pIdentity, "commandRange");
+		m_iLevelPrereq = jsonIdInt(*pIdentity, "levelPrereq");
+		m_iMinEra = pr_numOrFk(*pIdentity, "minEra", NO_ERA);
+		m_iReplacesUnitCombat = jsonIdFk(*pIdentity, "replacesUnitCombat");
+		m_iDomainCargoChange = jsonIdFk(*pIdentity, "domainCargoChange");
+		m_iSpecialCargoChange = jsonIdFk(*pIdentity, "specialCargoChange");
+		m_iSMNotSpecialCargoChange = jsonIdFk(*pIdentity, "smNotSpecialCargoChange");
+		jsonReadIdList(*pIdentity, "unitCombats", m_aiUnitCombats);
+		jsonReadIdList(*pIdentity, "notOnUnitCombats", m_aiNotOnUnitCombats);
+		jsonReadIdList(*pIdentity, "notOnDomains", m_aiNotOnDomains);
 	}
 
-	// --- promotionLine: top-level {LINE: rank} object (owner 2026-06-16) ---
-	if (const picojson::object* pl = jsonChildObj(o, "promotionLine"))
-		if (!pl->empty())
-		{
-			const int id = jsonResolveId(pl->begin()->first);
-			if (id >= 0) m_ePromotionLine = static_cast<PromotionLineTypes>(id);
-			if (pl->begin()->second.is<double>()) m_iLinePriority = (int)pl->begin()->second.get<double>();
-		}
-
-	// --- vision LOS resolver: intensity pair-maps + the invisible/visible struct rows ---
-	if (const picojson::object* vs = jsonChildObj(o, "vision"))
+	// --- par.9 promotionLine link: the top-level {LINE: rank} object ---
+	if (const picojson::object* pLine = jsonChildObj(entityObj, "promotionLine"))
 	{
-		readIntMap(*vs, "visibilityIntensity",      m_aiVisibilityIntensity);
-		readIntMap(*vs, "invisibilityIntensity",    m_aiInvisibilityIntensity);
-		readIntMap(*vs, "visibilityIntensityRange", m_aiVisibilityIntensityRange);
-		readTerrainChanges(*vs, "invisibleTerrain",       m_aInvisibleTerrainChanges);
-		readTerrainChanges(*vs, "visibleTerrain",         m_aVisibleTerrainChanges);
-		readTerrainChanges(*vs, "visibleTerrainRange",    m_aVisibleTerrainRangeChanges);
-		readFeatureChanges(*vs, "invisibleFeature",       m_aInvisibleFeatureChanges);
-		readFeatureChanges(*vs, "visibleFeature",         m_aVisibleFeatureChanges);
-		readFeatureChanges(*vs, "visibleFeatureRange",    m_aVisibleFeatureRangeChanges);
-		readImprovementChanges(*vs, "invisibleImprovement",    m_aInvisibleImprovementChanges);
-		readImprovementChanges(*vs, "visibleImprovement",      m_aVisibleImprovementChanges);
-		readImprovementChanges(*vs, "visibleImprovementRange", m_aVisibleImprovementRangeChanges);
+		if (!pLine->empty())
+		{
+			const int iLine = jsonResolveId(pLine->begin()->first);
+			if (iLine >= 0)
+			{
+				m_ePromotionLine = static_cast<PromotionLineTypes>(iLine);
+			}
+			if (pLine->begin()->second.is<double>())
+			{
+				m_iLinePriority = (int)pLine->begin()->second.get<double>();
+			}
+		}
 	}
 
 	// --- ai.unitCombatWeights {UC:int} -> UnitCombatModifier rows ---
-	if (const picojson::object* ai = jsonChildObj(o, "ai"))
-		if (const picojson::object* w = jsonChildObj(*ai, "unitCombatWeights"))
-			for (picojson::object::const_iterator it = w->begin(); it != w->end(); ++it)
-				if (it->second.is<double>())
+	if (const picojson::object* pAi = jsonChildObj(entityObj, "ai"))
+	{
+		if (const picojson::object* pWeights = jsonChildObj(*pAi, "unitCombatWeights"))
+		{
+			for (picojson::object::const_iterator iter = pWeights->begin(); iter != pWeights->end(); ++iter)
+			{
+				if (!iter->second.is<double>())
 				{
-					const int id = jsonResolveId(it->first);
-					if (id < 0) continue;
-					UnitCombatModifier r;
-					r.eUnitCombat = static_cast<UnitCombatTypes>(id);
-					r.iModifier   = (int)it->second.get<double>();
-					m_aAIWeight.push_back(r);
+					continue;
 				}
+				const int iUnitCombat = jsonResolveId(iter->first);
+				if (iUnitCombat < 0)
+				{
+					continue;
+				}
+				UnitCombatModifier row;
+				row.eUnitCombat = static_cast<UnitCombatTypes>(iUnitCombat);
+				row.iModifier = (int)iter->second.get<double>();
+				m_aAIWeights.push_back(row);
+			}
+		}
+	}
 
 	// --- sound.sound ---
-	if (const picojson::object* so = jsonChildObj(o, "sound")) jsonIdStr(*so, "sound", m_szSound);
+	if (const picojson::object* pSound = jsonChildObj(entityObj, "sound"))
+	{
+		jsonIdStr(*pSound, "sound", m_szSound);
+	}
+
+	// --- the derived verdicts, materialized over the promotion's own data (string-plane skill reads are
+	// load-time only; the getters are bare member reads; move-through-plots is the ONE shared derivation) ---
+	m_bChangesMoveThroughPlots = deriveChangesMoveThroughPlots(m_skills, m_aiTerrainDoubleMove, m_aiFeatureDoubleMove);
+	// The archived negative-effects test mapped onto the surviving planes (the endurance leg is dead --
+	// unauthored; the chance-first-strikes leg waits on the firstStrike.chance vocabulary row -- reported).
+	m_bNegativeEffects = getCombatModifier(COMBAT_LUNGE, CASC_SCOPE_UNIT) < 0
+		|| getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) < 0
+		|| getCombatModifier(COMBAT_VS_BARBS, CASC_SCOPE_UNIT) < 0
+		|| getFlatCombat(COMBAT_AMOUNT, CASC_SCOPE_UNIT) < 0
+		|| getCombatModifier(COMBAT_ATTACK, CASC_SCOPE_UNIT) < 0
+		|| getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) < 0
+		|| m_skills.has("defenseOnly")
+		|| m_skills.has("noInvisibility")
+		|| m_skills.has("hiddenNationality")
+		|| m_skills.hasFalse("hiddenNationality");
 }
 
-// remove the FIRST occurrence of `val` from `v` (the archived find+erase, without pulling in <algorithm>).
-static void eraseValue(std::vector<int>& v, int val)
+// remove the FIRST occurrence of iValue from the vector (the archived find+erase, without <algorithm>).
+static void pr_eraseValue(std::vector<int>& values, int iValue)
 {
-	for (std::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
-		if (*it == val) { v.erase(it); return; }
+	for (std::vector<int>::iterator iter = values.begin(); iter != values.end(); ++iter)
+	{
+		if (*iter == iValue)
+		{
+			values.erase(iter);
+			return;
+		}
+	}
 }
 
-// Pedia caches, computed post-load -- a FAITHFUL transcription of the archived CvPromotionInfo doPostLoadCaching
-// (SourceArchive/Infos/CvPromotionInfo.cpp): the qualified set = the unitcombats this promotion applies to
-// (identity.unitCombats via getUnitCombat) UNION the promotion line's unitcombat prereqs; the disqualified set =
-// this promotion's notOnUnitCombats UNION the line's notOnUnitCombats, each removed from the qualified set.
+// Pedia caches, computed post-load (the archived doPostLoadCaching semantic): the qualified set = the
+// unitcombats this promotion applies to (identity.unitCombats) UNION the promotion line's unitcombat list;
+// the disqualified set = this promotion's notOnUnitCombats UNION the line's, each removed from the
+// qualified set.
 void CvPromotionInfo::setQualifiedUnitCombatTypes()
 {
-	m_aiQualifiedUnitCombat.clear();
-	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+	m_aiQualifiedUnitCombats.clear();
+	for (int iUnitCombat = 0; iUnitCombat < GC.getNumUnitCombatInfos(); iUnitCombat++)
 	{
-		if (getUnitCombat(iI))
+		if (appliesToUnitCombat(iUnitCombat))
 		{
-			m_aiQualifiedUnitCombat.push_back(iI);
+			m_aiQualifiedUnitCombats.push_back(iUnitCombat);
 		}
 	}
 	const PromotionLineTypes ePromotionLine = getPromotionLine();
 	if (ePromotionLine > -1)
 	{
-		const CvPromotionLineInfo& kLine = GC.getPromotionLineInfo(ePromotionLine);
-		for (int iI = 0; iI < kLine.getNumUnitCombatPrereqTypes(); iI++)
+		const CvPromotionLineInfo& lineInfo = GC.getPromotionLineInfo(ePromotionLine);
+		const std::vector<int>& lineCombats = lineInfo.getUnitCombats();
+		for (size_t i = 0; i < lineCombats.size(); ++i)
 		{
-			const int iUnitCombat = kLine.getUnitCombatPrereqType(iI);
-			if (!isQualifiedUnitCombatType(iUnitCombat))
+			if (!isQualifiedUnitCombat(lineCombats[i]))
 			{
-				m_aiQualifiedUnitCombat.push_back(iUnitCombat);
+				m_aiQualifiedUnitCombats.push_back(lineCombats[i]);
 			}
 		}
 	}
@@ -483,64 +247,34 @@ void CvPromotionInfo::setQualifiedUnitCombatTypes()
 
 void CvPromotionInfo::setDisqualifiedUnitCombatTypes()
 {
-	m_aiDisqualifiedUnitCombat.clear();
-	for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+	m_aiDisqualifiedUnitCombats.clear();
+	for (int iUnitCombat = 0; iUnitCombat < GC.getNumUnitCombatInfos(); iUnitCombat++)
 	{
-		if (isNotOnUnitCombatType(iI))
+		if (isNotOnUnitCombat(iUnitCombat))
 		{
-			if (isQualifiedUnitCombatType(iI))
+			if (isQualifiedUnitCombat(iUnitCombat))
 			{
-				eraseValue(m_aiQualifiedUnitCombat, iI);
+				pr_eraseValue(m_aiQualifiedUnitCombats, iUnitCombat);
 			}
-			m_aiDisqualifiedUnitCombat.push_back(iI);
+			m_aiDisqualifiedUnitCombats.push_back(iUnitCombat);
 		}
 	}
 	const PromotionLineTypes ePromotionLine = getPromotionLine();
 	if (ePromotionLine > -1)
 	{
-		const CvPromotionLineInfo& kLine = GC.getPromotionLineInfo(ePromotionLine);
-		for (int iI = 0; iI < kLine.getNumNotOnUnitCombatTypes(); iI++)
+		const CvPromotionLineInfo& lineInfo = GC.getPromotionLineInfo(ePromotionLine);
+		const std::vector<int>& lineNotOn = lineInfo.getNotOnUnitCombats();
+		for (size_t i = 0; i < lineNotOn.size(); ++i)
 		{
-			const int iUnitCombat = kLine.getNotOnUnitCombatType(iI);
-			if (!isNotOnUnitCombatType(iUnitCombat))
+			const int iUnitCombat = lineNotOn[i];
+			if (!isNotOnUnitCombat(iUnitCombat))
 			{
-				if (isQualifiedUnitCombatType(iUnitCombat))
+				if (isQualifiedUnitCombat(iUnitCombat))
 				{
-					eraseValue(m_aiQualifiedUnitCombat, iI);   // faithful to the archived: it searches iI (the loop index), not iUnitCombat
+					pr_eraseValue(m_aiQualifiedUnitCombats, iUnitCombat);
 				}
-				m_aiDisqualifiedUnitCombat.push_back(iUnitCombat);
+				m_aiDisqualifiedUnitCombats.push_back(iUnitCombat);
 			}
 		}
 	}
-}
-
-// ===================== game-option-gated getters (archive mirror -- SourceArchive/Infos/CvPromotionInfo.cpp
-// :758-:1090; owner ruling: IS_GAME_OPTION covers the combat-mod fields). The VALUE is real curated data; the
-// OPTION decides whether the system consuming it is on, exactly as legacy gated it at the getter. When the
-// unit-plane modifier machine lands these become data-conditioned deposits; until then the getter is the gate. =====
-int CvPromotionInfo::getUnnerveChange() const
-{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) ? m_iUnnerveChange : 0; }
-int CvPromotionInfo::getEncloseChange() const
-{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) ? m_iEncloseChange : 0; }
-int CvPromotionInfo::getLungeChange() const
-{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) ? m_iLungeChange : 0; }
-int CvPromotionInfo::getDynamicDefenseChange() const
-{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SURROUND_DESTROY) ? m_iDynamicDefenseChange : 0; }
-int CvPromotionInfo::getCombatModifierPerSizeMoreChange() const
-{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iCombatModifierPerSizeMoreChange : 0; }
-int CvPromotionInfo::getCombatModifierPerSizeLessChange() const
-{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iCombatModifierPerSizeLessChange : 0; }
-int CvPromotionInfo::getCombatModifierPerVolumeMoreChange() const
-{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iCombatModifierPerVolumeMoreChange : 0; }
-int CvPromotionInfo::getCombatModifierPerVolumeLessChange() const
-{ return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? m_iCombatModifierPerVolumeLessChange : 0; }
-int CvPromotionInfo::getStealthStrikesChange() const
-{ return GC.getGame().isOption(GAMEOPTION_COMBAT_WITHOUT_WARNING) ? m_iStealthStrikesChange : 0; }
-int CvPromotionInfo::getStealthCombatModifierChange() const
-{ return GC.getGame().isOption(GAMEOPTION_COMBAT_WITHOUT_WARNING) ? m_iStealthCombatModifierChange : 0; }
-int CvPromotionInfo::getStealthDefenseChange() const
-{
-	if (!GC.getGame().isOption(GAMEOPTION_COMBAT_WITHOUT_WARNING)) return 0;
-	static int s_clsId = -1;
-	return m_skills.countKey(s_clsId, CLSD_SKILL, "stealthDefense");
 }

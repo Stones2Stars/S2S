@@ -4,7 +4,10 @@
 //
 
 #include "CvGameCoreDLL.h"
-#include "Enabler/CvEnablerConsumer.h"   // the enabler registers its OWN consumer (one per system)
+#include "Enabler/CvEnablerConsumer.h"     // the enabler registers its OWN consumer (one per system)
+#include "CvModifierConsumer.h"            // the modifier cascade's OWN consumer (one per system)
+#include "Engine/ContextConsumer.h"        // the contexts' OWN consumer (the plotAttrs load reseed)
+#include "CvCascadeChannelRegistry.h"      // the [CASCADE] mask decode (channel names per scope)
 #include "Spine/CvEventSpine.h"
 #include "Tools/CvHttpServer.h"   // the /events STREAM consumer (isEnabled + publishEvent)
 #include "Infrastructure/CvLogWriter.h"   // the off-thread log file writer (the FILE consumer's sink)
@@ -419,37 +422,27 @@ static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
 }
 
 // ===================== the [CASCADE] invalidate OBSERVABILITY =====================
-// Decode a package dirty-mask to a "|"-joined HUMAN-READABLE name string, per scope. The cryptic CPK_*/PSC_* enum
-// spellings never reach the log -- the reader sees "yieldPercent|wellbeing|buildRate", not "YPCT|WB|BR".
-static void invDecodePackageNames(int iScopeKind, int iMask, char* szOut, int iOutSize)
+// Decode a package dirty-mask to a "|"-joined HUMAN-READABLE channel-name string, per scope -- the registry
+// owns the per-scope bit contract (channel bits + the trailing receiver-sum bits, rendered "sum:<channel>"),
+// so the log reads "production|sum:culture", never a raw bit number.
+static void invDecodePackageNames(int iScope, int64_t iMask, char* szOut, int iOutSize)
 {
-	szOut[0] = '\0';
-	if (iScopeKind == 2) { _snprintf(szOut, iOutSize, "all"); szOut[iOutSize - 1] = '\0'; return; }
-	struct PackageName { int iBit; const char* szName; };
-	static const PackageName kCityPackages[] = {
-		{ CPK_YPCT, "yieldPercent" }, { CPK_YSPEC, "yieldSpecialist" }, { CPK_YEXTRA, "yieldBuildingFlat" },
-		{ CPK_CSPEC, "commerceSpecialist" }, { CPK_CPCT, "commercePercent" }, { CPK_CBASE, "commerceBase" },
-		{ CPK_WB, "wellbeing" }, { CPK_SCFLAT, "scalarFlat" }, { CPK_SCPCT, "scalarPercent" },
-		{ CPK_SCSPEC, "scalarSpecialist" }, { CPK_BR, "buildRate" } };
-	static const PackageName kEmpirePackages[] = {
-		{ PSC_YFLAT, "yieldFlat" }, { PSC_CFLAT, "commerceFlat" }, { PSC_WB, "wellbeing" }, { PSC_SC, "scalar" },
-		{ PSC_BR, "buildRate" }, { PSC_FRONT_P, "frontier" } };
-	const PackageName* pTable = (iScopeKind == 1) ? kEmpirePackages : kCityPackages;
-	const int iTableSize = (iScopeKind == 1) ? (int)(sizeof(kEmpirePackages) / sizeof(PackageName))
-	                                         : (int)(sizeof(kCityPackages) / sizeof(PackageName));
-	bool bWroteAny = false;
-	for (int i = 0; i < iTableSize; ++i)
+	CascadeChannelRegistry::decodeMask((CvCascScope)iScope, iMask, szOut, iOutSize);
+}
+
+// The package scope's log spelling (the CvCascScope containment spine).
+static const char* invScopeName(int iScope)
+{
+	switch (iScope)
 	{
-		if ((iMask & pTable[i].iBit) != 0)
-		{
-			int iRemaining = iOutSize - (int)strlen(szOut) - 1;
-			if (iRemaining <= 0) break;
-			if (bWroteAny) { strncat(szOut, "|", iRemaining); iRemaining = iOutSize - (int)strlen(szOut) - 1; }
-			if (iRemaining > 0) strncat(szOut, pTable[i].szName, iRemaining);
-			bWroteAny = true;
-		}
+	case CASC_SCOPE_WORLD:  return "world";
+	case CASC_SCOPE_TEAM:   return "team";
+	case CASC_SCOPE_EMPIRE: return "empire";
+	case CASC_SCOPE_AREA:   return "area";
+	case CASC_SCOPE_CITY:   return "city";
+	case CASC_SCOPE_PLOT:   return "plot";
+	default:                return "?";
 	}
-	if (!bWroteAny) strncat(szOut, "none", iOutSize - (int)strlen(szOut) - 1);
 }
 
 // The short name of a spine event id (strips the "[SPINE] " render prefix) -- the invalidate observability's `src`.
@@ -461,29 +454,27 @@ const char* spineEventName(int iEventId)
 }
 
 // Announce a package dirty-mark (DIAGNOSTIC -- logging only, gated at level 1). Renders via the registered SD_SPINE
-// path as "[CASCADE] invalidate scope=<> id=<> pkg=<NAMES> src=<why>". Called by the R3 consumer (play-time,
-// szSource = the source event name) and the load warm-up / self-heal (szSource = "sliceRebuild"/"worldRebuild") so
-// the whole invalidation flow is visible in Cascade.log.
+// path as "[CASCADE] invalidate scope=<> id=<> pkg=<NAMES> src=<why>". Called by the modifier consumer's derived
+// marks (szSource = the DOMAIN event that derived them) -- the whole invalidation flow is visible in Cascade.log.
 // Shared render for the [CASCADE] invalidate/rebuilt observability (DIAGNOSTIC -- logging only, gated at level 1).
 // scope + owner (the empire; the (owner,id) tuple is the unambiguous handle since city ids repeat across empires) +
-// id (city scope only) + the human-readable package names + an optional src (the reason -- invalidate only).
-static void emitCacheEvent(int iEventId, int iScopeKind, int iOwner, int iId, int iMask, const char* szSource)
+// id (the scoped object: cityId / plotId / areaId / teamId) + the channel names + an optional src (invalidate only).
+static void emitCacheEvent(int iEventId, int iScope, int iOwner, int iId, int64_t iMask, const char* szSource)
 {
-	char szPackages[256];
-	invDecodePackageNames(iScopeKind, iMask, szPackages, sizeof(szPackages));
-	const char* szScope = (iScopeKind == 0) ? "city" : (iScopeKind == 1) ? "empire" : "world";
+	char szPackages[512];
+	invDecodePackageNames(iScope, iMask, szPackages, sizeof(szPackages));
 	CvSpineEvent kEvent(EVENTKIND_DIAGNOSTIC, SD_SPINE, iEventId, 1);
-	kEvent.addStr(SPF_SCOPE, szScope);
+	kEvent.addStr(SPF_SCOPE, invScopeName(iScope));
 	if (iOwner >= 0) kEvent.addI(SPF_OWNER, iOwner);
-	if (iScopeKind == 0) kEvent.addI(SPF_ID, iId);
+	if (iScope != CASC_SCOPE_EMPIRE) kEvent.addI(SPF_ID, iId);
 	kEvent.addStr(SPF_PKG, szPackages);
 	if (szSource != NULL) kEvent.addStr(SPF_SRC, szSource);
 	eventSpine().emit(kEvent);   // synchronous render -> szPackages / szSource still in scope
 }
-void emitCacheInvalidate(int iScopeKind, int iOwner, int iId, int iMask, const char* szSource)
-{ emitCacheEvent(SEVT_CACHE_INVALIDATE, iScopeKind, iOwner, iId, iMask, (szSource != NULL) ? szSource : "?"); }
-void emitCacheRebuilt(int iScopeKind, int iOwner, int iId, int iMask)
-{ emitCacheEvent(SEVT_CACHE_REBUILT, iScopeKind, iOwner, iId, iMask, NULL); }
+void emitCacheInvalidate(int iScope, int iOwner, int iId, int64_t iMask, const char* szSource)
+{ emitCacheEvent(SEVT_CACHE_INVALIDATE, iScope, iOwner, iId, iMask, (szSource != NULL) ? szSource : "?"); }
+void emitCacheRebuilt(int iScope, int iOwner, int iId, int64_t iMask)
+{ emitCacheEvent(SEVT_CACHE_REBUILT, iScope, iOwner, iId, iMask, NULL); }
 
 // The load-end pipeline diagnostic (once per load): stage timings + fixpoint depth, through the ONE registered
 // render path -- never an inline log call at the site.
@@ -521,13 +512,16 @@ void spineRegisterConsumers()
 	// source entity's genuine grants off the mapped CvInfo and emits a [GRANTS] shadow diagnostic (resolution only,
 	// un-run parity). The tally stays a non-consumer (reads object-owned counts).
 	cascadeRegisterGrants();
-	// The #430 F0 cache-invalidation consumer (R3, CvCascadeInvalidation.cpp): the spine-driven package invalidation
-	// front door + the ENABLER's build/maintenance path. Two halves by load behaviour (DEC-spine-reseed): the enabler
-	// deltas are LOAD-ACTIVE (the reseed's in-read emits BUILD the domains); the modifier marks are load-inert (the
-	// modifier warm-up builds at load). The hand-wired mutation-site marks still run alongside the mark half (the
-	// CRUTCH) while the routing is verified live; removal is gated on the completeness audit
-	// (f0-eventspine-invalidation.md).
-	enablerRegisterConsumer();   // the ENABLER's own consumer (one consumer per system)
+	// ONE consumer PER SYSTEM ([DEC-enabler-not-cascade]): the ENABLER's own consumer (load-active -- the
+	// reseed's in-read emits BUILD its domains) and the MODIFIER cascade's own consumer (load-active for
+	// cache building -- the reseed's emits derive the dirty marks; the first reads after load recompute from
+	// current state). Both derive their reactions from their own compiled surfaces; no shared consumer, no
+	// hand-wired mutation-site marks.
+	enablerRegisterConsumer();
+	modifierRegisterConsumer();
+	// The CONTEXTS' own consumer (contexts.md): buffers the load bracket's working-city facts and drains them
+	// once at GAME_LOAD_FINISHED through CvCity::onCityPlotChanged -- the plotAttrs reseed.
+	contextRegisterConsumer();
 }
 
 void emitNameChange(int iKind, int iOwner, int iEntityId)

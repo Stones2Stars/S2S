@@ -967,7 +967,7 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 				}
 			}
 			// Kill off units
-			if (!bNoDisband && unitX->canFight() && !unitX->isAnimal() && getUnitUpkeepNet(unitX->isMilitaryBranch(), unitX->getUpkeep100()) > 0)
+			if (!bNoDisband && unitX->canFight() && !unitX->isAnimal() && getUnitUpkeepNet(unitX->isMilitaryBranch(), unitX->getUpkeep()) > 0)
 			{
 				CvCity* pPlotCity = unitPlot->getPlotCity();
 				if (pPlotCity && pPlotCity->getOwner() == getID())
@@ -5817,7 +5817,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 				{
 					int iTempValue = 0;
 
-					foreach_(const TechCommerceArray & pair, kLoopBuilding.getTechCommerceChanges100())
+					foreach_(const TechCommerceArray & pair, kLoopBuilding.getTechCommerceChanges())
 					{
 						if (eTech == pair.first)
 						{
@@ -5828,7 +5828,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 							break;
 						}
 					}
-					foreach_(const TechArray & pair, kLoopBuilding.getTechYieldChanges100())
+					foreach_(const TechArray & pair, kLoopBuilding.getTechYieldChanges())
 					{
 						if (eTech == pair.first)
 						{
@@ -5918,7 +5918,7 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 		(
 			GET_TEAM(getTeam()).hasWarPlan(true)
 			|| // or aggressive personality
-			GET_TEAM(getTeam()).AI_getTotalWarOddsTimes100() > 400
+			GET_TEAM(getTeam()).AI_getTotalWarOdds() > 400
 		);
 	const bool bCapitalAlone = (GC.getGame().getElapsedGameTurns() > 0) ? AI_isCapitalAreaAlone() : false;
 	const int iNumCities = getNumCities();
@@ -16216,7 +16216,7 @@ void CvPlayerAI::AI_changeNumAIUnits(UnitAITypes eIndex, int iChange)
 }
 
 
-// Strength-weighted ledger (#395): a unit counts as its SMeffectiveCountTimes100 (100 at
+// Strength-weighted ledger (#395): a unit counts as its SMeffectiveCount (100 at
 // type base group rank, x1.5 per merge rank), so force-sufficiency reads see aggregate
 // strength-equivalents rather than raw bodies. Floored on conversion to whole units --
 // never round merged force up (owner ruling).
@@ -20227,12 +20227,12 @@ void CvPlayerAI::read(FDataStreamBase* pStream)
 				m_aiAICitySites.push_back(iCitySite);
 			}
 		}
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayerAI", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_aiUnitWeights);
-		WRAPPER_READ_CLASS_ARRAY(wrapper, "CvPlayerAI", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_aiUnitCombatWeights);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayerAI", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_aiUnitWeights);
+		WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvPlayerAI", REMAPPED_CLASS_TYPE_COMBATINFOS, GC.getNumUnitCombatInfos(), m_aiUnitCombatWeights);
 		WRAPPER_READ_ARRAY(wrapper, "CvPlayerAI", MAX_PLAYERS, m_aiCloseBordersAttitudeCache);
 
 		m_eBestResearchTarget = NO_TECH;
-		WRAPPER_READ_CLASS_ENUM(wrapper, "CvPlayerAI", REMAPPED_CLASS_TYPE_TECHS, (int*)&m_eBestResearchTarget);
+		WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlayerAI", REMAPPED_CLASS_TYPE_TECHS, (int*)&m_eBestResearchTarget);
 
 		AI_updateBonusValue();
 	}
@@ -21113,7 +21113,7 @@ bool CvPlayerAI::AI_disbandUnit(int iExpThreshold)
 
 	foreach_(CvUnit * unitX, units())
 	{
-		if (unitX->getUpkeep100() < 1
+		if (unitX->getUpkeep() < 1
 		|| !unitX->isMilitaryBranch()
 		|| unitX->hasCargo()
 		|| unitX->isGoldenAge()
@@ -33318,10 +33318,10 @@ void CvPlayerAI::AI_recalculateUnitCounts()
 		if (NO_UNITAI != eAIType)
 		{
 			AI_changeNumAIUnits(eAIType, 1);
-			AI_changeEffNumAIUnitsTimes100(eAIType, pLoopUnit->SMeffectiveCountTimes100());
+			AI_changeEffNumAIUnitsTimes100(eAIType, pLoopUnit->SMeffectiveCount());
 
 			pLoopUnit->area()->changeNumAIUnits(m_eID, eAIType, 1);
-			pLoopUnit->area()->changeEffNumAIUnitsTimes100(m_eID, eAIType, pLoopUnit->SMeffectiveCountTimes100());
+			pLoopUnit->area()->changeEffNumAIUnitsTimes100(m_eID, eAIType, pLoopUnit->SMeffectiveCount());
 		}
 	}
 
@@ -33351,11 +33351,11 @@ void CvPlayerAI::AI_rebuildEffUnitLedgers()
 
 		if (NO_UNITAI != eAIType)
 		{
-			AI_changeEffNumAIUnitsTimes100(eAIType, pLoopUnit->SMeffectiveCountTimes100());
+			AI_changeEffNumAIUnitsTimes100(eAIType, pLoopUnit->SMeffectiveCount());
 
 			if (pLoopUnit->plot() != NULL)
 			{
-				pLoopUnit->area()->changeEffNumAIUnitsTimes100(m_eID, eAIType, pLoopUnit->SMeffectiveCountTimes100());
+				pLoopUnit->area()->changeEffNumAIUnitsTimes100(m_eID, eAIType, pLoopUnit->SMeffectiveCount());
 			}
 		}
 	}
@@ -33476,7 +33476,7 @@ int CvPlayerAI::AI_heritageValue(const HeritageTypes eType) const
 	{
 		const EraTypes eEra = getCurrentEra();
 
-		const IDValueMap<EraTypes, CommerceArray>& kEraChanges = heritage.getEraCommerceChanges100();
+		const IDValueMap<EraTypes, CommerceArray>& kEraChanges = heritage.getEraCommerceChanges();
 		for (IDValueMap<EraTypes, CommerceArray>::const_iterator itEra = kEraChanges.begin(), itEraEnd = kEraChanges.end(); itEra != itEraEnd; ++itEra)
 		{
 			const EraCommerceArray& pair = *itEra;

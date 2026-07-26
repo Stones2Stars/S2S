@@ -3,20 +3,23 @@
 #define CV_JSON_SPECIALIST_INFO_H
 
 //
-//	CvSpecialistInfo -- the JSON real poco for SPECIALISTS. Live-caller surface; the specialist's own output is
-//	CITY-scope (production.city.flat, greatPeopleRate.city.flat, …) -- note the scope differs from plot-substrate types.
-//	No hotkey base (no getSpecialistInfo(...) hotkey caller). HUMAN-native values. No cascade here.
+//	CvSpecialistInfo -- the SPECIALIST poco rebuilt to the exemplar surface (patterns.md § THE GETTER SETUP:
+//	the four read categories, nothing else). The specialist's own output is CITY-scope own-output
+//	(modifier.md §2a: the specialist carries its OWN percent layer -- the civic-conditioned percent entries --
+//	applied to its intrinsic output BEFORE it joins the city BASE; the empire-scope wonder-conditioned entries
+//	are the own-output inversions of the legacy building SpecialistYieldChanges). Every magnitude read is a
+//	load-compiled fetch ([DEC-materialize-at-mapfrom]); kind and scope are separate parameters
+//	([DEC-scope-is-an-axis]); every magnitude getter IS ×100 ([DEC-fixedpoint-x100] -- NB the wellbeing values
+//	are the curator's ÷100 de-scale of the legacy latent-×100, so the compiled ×100 sum IS the legacy-scale
+//	number); no legacy getter name returns ([DEC-new-getter-surface]).
 //
-//	Live callers (verified 2026-07-07): getYieldChange/getCommerceChange -> city yields; getGreatPeopleRateChange/
-//	getGreatPeopleUnitType -> GP; getHealthPercent/getHappinessPercent -> CvCity wellbeing; getExperience/
-//	getInsidiousness/getInvestigation -> unit/crime; isSlave/isVisible -> assignment.
+//	The expected* what-if on this type means the SPECIALIST'S OWN OUTPUT LAYER per §2a (what one assigned
+//	specialist of this type yields under the passed contexts) -- its own percent stack resolves inside that
+//	layer, distinct from the city percent stack the output later takes.
 //
 
 #include "CvInfo.h"
-#include "Defines/CvEnums.h"   // NUM_YIELD_TYPES / NUM_COMMERCE_TYPES / TechTypes / UnitCombatTypes / NO_UNITCOMBAT / NO_MISSION
-#include "Defines/CvStructs.h" // UnitCombatModifier
 #include <map>
-#include <string>
 #include <vector>
 
 class CvSpecialistInfo : public CvInfo
@@ -24,66 +27,70 @@ class CvSpecialistInfo : public CvInfo
 public:
 	CvSpecialistInfo();
 
-	int getYieldChange(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiYieldChange[i] : 0; }
-	int getCommerceChange(int i) const { return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_aiCommerceChange[i] : 0; }
-	int getGreatPeopleRateChange() const { return m_iGreatPeopleRateChange; }
-	int getGreatPeopleUnitType() const { return m_iGreatPeopleUnitType; }
-	int getExperience() const { return m_iExperience; }
-	int getHealthPercent() const { return m_iHealthPercent; }
-	int getHappinessPercent() const { return m_iHappinessPercent; }
-	int getInsidiousness() const { return m_iInsidiousness; }
-	int getInvestigation() const { return m_iInvestigation; }
-	bool isSlave() const { return m_bSlave; }
-	bool isVisible() const { return m_bVisible; }
-
-	int getFlavorValue(int i) const { return mapGet(m_flavours, i); }               // ai.flavours {FLAVOR:int}
-
-	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }  // fed from the PROPERTY_* families in mapFrom (city gather, per assigned specialist)
-
-	const char* getTexture() const { return m_szTexture.c_str(); }   // ui.art.texture (the specialist's city-screen glyph)
-
-	int getNumUnitCombatExperienceTypes() const { return (int)m_aUnitCombatExperienceTypes.size(); }
-	const UnitCombatModifier& getUnitCombatExperienceType(int iIndex) const;         // experience.city.unitCombats.{UNITCOMBAT}.flat
-
-	// tech-gated KEEP-ON-SELF wellbeing: happiness/health.city.flat conditioned entries {value, enabled:{TECH, scope:team}}
-	// (curate_specialist.py:34-36/210-216). ×1 RAW -- CvCity::getExtraTechSpecialist{Happiness,Health} reads un-scaled.
-	int getTechHappiness(TechTypes eTech) const { return mapGet(m_techHappiness, eTech); }
-	int getTechHealth(TechTypes eTech) const    { return mapGet(m_techHealth, eTech); }
-
-	// RUNTIME (set post-load, NOT JSON; mirrors CvCorporationInfo/CvBuildInfo's runtime mission type)
-	int getMissionType() const { return m_iMissionType; }
-	void setMissionType(int iNewType) { m_iMissionType = iNewType; }
-
 	virtual void mapFrom(const picojson::value& entity);
 
-	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
+	// ======================= 1. SECTIONS -- whole typed objects =======================
 	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
+
+	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums ========================
+	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. The census
+	// participation: unconditioned CITY flats = the intrinsic own output (the point reads below); the civic-
+	// conditioned percents (the §2a own percent layer), the wonder-conditioned empire flats, and the tech
+	// keep-on-self wellbeing entries are ALL conditioned -- conditioned-list/valuation reads by design.)
+	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
+	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	int getFlatCommerce(CommerceTypes eCommerce, CvCascScope eScope) const
+	{ return m_modifiers.sum(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	// The authored wellbeing families' signed sums; the four-channel sign ROUTING is a fill/valuation rule
+	// (modifier.md §2b -- expectedWellbeing), so ANGER/UNHEALTH hold no slot and read 0 here.
+	int getFlatWellbeing(WellbeingChannel eChannel, CvCascScope eScope) const
+	{
+		if (eChannel == WELLBEING_ANGER || eChannel == WELLBEING_UNHEALTH)
+		{
+			return 0;
+		}
+		return m_modifiers.sum(infoWellbeingFamily(eChannel), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT);
+	}
+	int getExperience(ExperienceKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_EXPERIENCE, eKind, eScope, infoKindUnit(MODFAM_EXPERIENCE, eKind, eScope)); }
+	int getUnderworld(UnderworldKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_UNDERWORLD, eKind, eScope, CASC_UNIT_FLAT); }
+	// (greatPeopleRate is a 1-kind straggler: the base getScalar(SCALAR_GREAT_PEOPLE_RATE) covers it. The
+	// experience.city.unitCombats.{UNITCOMBAT_*} keyed entries are entry-list reads by design -- and their
+	// GAMEOPTION_UNIT_XP_FROM_SPECIALISTS gate belongs to the CONSUMING system, never inside an info read,
+	// json §9: an info serves ungated data.)
+
+	// ======================= 4. INTRINSIC -- bare typed reads (the census identity set) ======================
+	int getGreatPeopleUnitType() const { return m_iGreatPeopleUnitType; }   // identity.greatPeopleUnit (UNIT_* FK)
+	bool isSlave() const { return m_bSlave; }                               // identity.slave
+	bool isVisible() const { return m_bVisible; }                           // identity.visible (assignable on the city screen)
+	const std::vector<int>& getCategories() const { return m_aiCategories; }   // identity.categories (CATEGORY_* FKs)
+	const char* getTexture() const { return m_szTexture.c_str(); }          // ui.art.texture (the city-screen glyph)
+	int getFlavorValue(int iFlavor) const;                                  // ai.flavours [{FLAVOR_X: n}]
+
+	// Fed from the PROPERTY_* families in mapFrom (city gather, per assigned specialist, RELATION_SAME_PLOT).
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
+
+	// --- RUNTIME member (set post-load, NOT JSON) ---
+	int getMissionType() const { return m_iMissionType; }
+	void setMissionType(int iMission) { m_iMissionType = iMission; }
 
 protected:
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
-	static int mapGet(const std::map<int, int>& m, int k) { std::map<int, int>::const_iterator it = m.find(k); return it != m.end() ? it->second : 0; }
-
+	// --- the composed section unit ---
 	CvModifiers m_modifiers;
-	int m_aiYieldChange[NUM_YIELD_TYPES];       // food/production/commerce .city.flat
-	int m_aiCommerceChange[NUM_COMMERCE_TYPES]; // gold/research/culture/espionage .city.flat
-	int m_iGreatPeopleRateChange;               // greatPeopleRate.city.flat
-	int m_iGreatPeopleUnitType;                 // identity.greatPeopleUnit (FK; the GP unit this specialist produces)
-	int m_iExperience;                          // experience.city.flat (free unit XP; module-rare, absent in current data)
-	int m_iHealthPercent;                       // health.city.flat base (÷100 human -> ×100 re-applied; latent /100 consumer, §4c)
-	int m_iHappinessPercent;                    // happiness.city.flat base (÷100 human -> ×100 re-applied)
-	int m_iInsidiousness, m_iInvestigation;     // identity (TB tags)
-	bool m_bSlave, m_bVisible;                  // identity flags
-	std::string m_szTexture;                    // ui.art.texture
-	std::map<int, int> m_flavours;              // FlavorTypes -> weight (ai.flavours)
-	std::map<int, int> m_techHappiness;         // TechTypes -> ×1 keep-on-self happiness (happiness.city.flat conditioned entries)
-	std::map<int, int> m_techHealth;            // TechTypes -> ×1 keep-on-self health   (health.city.flat conditioned entries)
-	// PROPERTY_* families ARE curator-emitted (PROPERTY_CRIME/DISEASE/...), but the JSON->CvPropertySource reader is
-	// unbuilt -- a cross-type deferral (CvCorporationInfo/CvHeritageInfo identical); returns a real empty object.
+
+	// --- the intrinsic identity members (materialized once at mapFrom) ---
+	int m_iGreatPeopleUnitType;
+	bool m_bSlave;
+	bool m_bVisible;
+	std::vector<int> m_aiCategories;
+	std::string m_szTexture;
+	std::map<int, int> m_flavours;
 	CvPropertyManipulators m_PropertyManipulators;
-	std::vector<UnitCombatModifier> m_aUnitCombatExperienceTypes;   // experience.city.unitCombats.{UNITCOMBAT}.flat
-	int m_iMissionType;                         // RUNTIME-assigned via setMissionType (default NO_MISSION), never serialized/JSON
+	int m_iMissionType;   // runtime
 };
 
 #endif // CV_JSON_SPECIALIST_INFO_H

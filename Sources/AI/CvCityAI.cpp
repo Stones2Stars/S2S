@@ -602,9 +602,9 @@ void CvCityAI::AI_doGarrisonConsolidation()
 		// The merge keeps half the triple's aggregate defensive value; stop when the next
 		// merge would dip below the keep margin.
 		const int iLoss100 = (
-			apTriple[0]->AI_genericUnitValueTimes100(UNITVALUE_FLAGS_DEFENSIVE)
-			+ apTriple[1]->AI_genericUnitValueTimes100(UNITVALUE_FLAGS_DEFENSIVE)
-			+ apTriple[2]->AI_genericUnitValueTimes100(UNITVALUE_FLAGS_DEFENSIVE)) / 2;
+			apTriple[0]->AI_genericUnitValue(UNITVALUE_FLAGS_DEFENSIVE)
+			+ apTriple[1]->AI_genericUnitValue(UNITVALUE_FLAGS_DEFENSIVE)
+			+ apTriple[2]->AI_genericUnitValue(UNITVALUE_FLAGS_DEFENSIVE)) / 2;
 
 		if (iHave100 - iLoss100 < iKeep100)
 		{
@@ -5227,7 +5227,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 	// Population is expendable if angry, working a bad tile, or running a not-so-good specialist
 	int iAllowedShrinkRate =
 	(
-		getFoodConsumedPerPopulation100()
+		getFoodConsumedPerPopulation()
 		*
 		(
 			std::max(0, -iBaseHappinessLevel - getPopulation() * getAngerPercent() / GC.getPERCENT_ANGER_DIVISOR())
@@ -6795,7 +6795,7 @@ int CvCityAI::AI_buildingYieldValue(YieldTypes eYield, BuildingTypes eBuilding, 
 	}
 
 	{
-		const int iYield = 8 * (100 * iFreeSpecialistYield + getBaseYieldRateFromBuilding100(eYield, eBuilding));
+		const int iYield = 8 * (100 * iFreeSpecialistYield + getBaseYieldRateFromBuilding(eYield, eBuilding));
 		if (iYield > 0)
 		{
 			iValue += std::max(1, iYield / 100);
@@ -8246,7 +8246,7 @@ void CvCityAI::AI_getYieldMultipliers(int& iFoodMultiplier, int& iProductionMult
 		iExtraFoodForGrowth++;
 	}
 
-	const int iFoodDifference = iFoodTotal - iExtraFoodForGrowth - iTargetSize * getFoodConsumedPerPopulation100() / 100;
+	const int iFoodDifference = iFoodTotal - iExtraFoodForGrowth - iTargetSize * getFoodConsumedPerPopulation() / 100;
 
 	iDesiredFoodChange = -iFoodDifference + std::max(0, badHealth() / 100 - goodHealth() / 100);
 	if (iDesiredFoodChange > 3 && iTargetSize > getPopulation())
@@ -11228,7 +11228,7 @@ int CvCityAI::AI_getPlotMagicValue(const CvPlot* pPlot, bool bHealthy, bool bWor
 	const int iReductant = (
 		100 *
 		std::min(
-			getFoodConsumedPerPopulation100(!bHealthy),
+			getFoodConsumedPerPopulation(!bHealthy),
 			2 *
 			std::max(
 				std::max(
@@ -12134,10 +12134,10 @@ void CvCityAI::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvCityAI", NUM_COMMERCE_TYPES, m_aiEmphasizeCommerceCount);
 	WRAPPER_READ(wrapper, "CvCityAI", &m_bForceEmphasizeCulture);
 	WRAPPER_READ_ARRAY(wrapper, "CvCityAI", NUM_CITY_PLOTS, m_aiBestBuildValue);
-	WRAPPER_READ_CLASS_ENUM_ARRAY(wrapper, "CvCityAI", REMAPPED_CLASS_TYPE_BUILDS, NUM_CITY_PLOTS, (int*)m_aeBestBuild);
+	WRAPPER_READ_CLASS_ENUM_ARRAY_ALLOW_MISSING(wrapper, "CvCityAI", REMAPPED_CLASS_TYPE_BUILDS, NUM_CITY_PLOTS, (int*)m_aeBestBuild);
 	WRAPPER_READ_ARRAY(wrapper, "CvCityAI", GC.getNumEmphasizeInfos(), m_pbEmphasize);
 
-	WRAPPER_READ_CLASS_ARRAY_DECORATED(wrapper, "CvCityAI", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_pbEmphasizeSpecialist, "EmphasizeSpecialist");
+	WRAPPER_READ_CLASS_ARRAY_DECORATED_ALLOW_MISSING(wrapper, "CvCityAI", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_pbEmphasizeSpecialist, "EmphasizeSpecialist");
 
 	WRAPPER_READ_ARRAY(wrapper, "CvCityAI", NUM_YIELD_TYPES, m_aiSpecialYieldMultiplier);
 	WRAPPER_READ(wrapper, "CvCityAI", &m_iCachePlayerClosenessTurn);
@@ -12652,7 +12652,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			|| GET_TEAM(getTeam()).getBuildingYieldTechModifier(YIELD_COMMERCE, eBuilding) > 0
 			|| kBuilding.getPowerYieldModifier(YIELD_COMMERCE) > 0
 			|| kBuilding.getRiverPlotYieldChange(YIELD_COMMERCE) > 0
-			|| getBaseYieldRateFromBuilding100(YIELD_COMMERCE, eBuilding) > 0
+			|| getBaseYieldRateFromBuilding(YIELD_COMMERCE, eBuilding) > 0
 			);
 
 	const bool bHasTradeRouteValue = buildingHasTradeRouteValue(eBuilding);
@@ -12665,7 +12665,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			|| GET_TEAM(getTeam()).getBuildingYieldTechModifier(YIELD_FOOD, eBuilding) > 0
 			|| kBuilding.getYieldModifier(YIELD_FOOD) > 0
 			|| kBuilding.getRiverPlotYieldChange(YIELD_FOOD) > 0
-			|| getBaseYieldRateFromBuilding100(YIELD_FOOD, eBuilding) > 0)
+			|| getBaseYieldRateFromBuilding(YIELD_FOOD, eBuilding) > 0)
 		{
 			return true;
 		}
@@ -12684,7 +12684,7 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 			|| kBuilding.getGlobalSpaceProductionModifier() > 0
 			|| kBuilding.getDomainProductionModifier(NO_DOMAIN) > 0
 			|| kBuilding.getNumUnitCombatProdModifiers() > 0
-			|| getBaseYieldRateFromBuilding100(YIELD_PRODUCTION, eBuilding) > 0)
+			|| getBaseYieldRateFromBuilding(YIELD_PRODUCTION, eBuilding) > 0)
 		{
 			return true;
 		}
@@ -12989,7 +12989,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 	const int iCulturalVictoryNumCultureCities = GC.getGame().culturalVictoryNumCultureCities();
 	const int iAllowedShrinkRate =
 		(
-			getFoodConsumedPerPopulation100() *
+			getFoodConsumedPerPopulation() *
 			(
 				std::max(0, -iBaseHappinessLevel - getAngerPercent() * iPopulation / GC.getPERCENT_ANGER_DIVISOR())
 				+
@@ -14424,7 +14424,7 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	bool bCulturalVictory1 = kOwner.AI_isDoVictoryStrategy(AI_VICTORY_CULTURE1);
 	bool bCulturalVictory3 = kOwner.AI_isDoVictoryStrategy(AI_VICTORY_CULTURE3);
 
-	int iBaseCommerceChange = getBaseCommerceRateFromBuilding100((CommerceTypes)iI, eBuilding);
+	int iBaseCommerceChange = getBaseCommerceRateFromBuilding((CommerceTypes)iI, eBuilding);
 
 	int iResult = 4 * (iBaseCommerceChange + 100 * aiFreeSpecialistCommerce[iI]); // iResult is scaled by 100 at this point
 
@@ -14472,7 +14472,7 @@ int CvCityAI::getBuildingCommerceValue(BuildingTypes eBuilding, int iI, int* aiF
 	iTempValue = (
 		(iSemiModifiedBase + aiFreeSpecialistYield[YIELD_COMMERCE]) / 8
 		+
-		getBaseYieldRateFromBuilding100(YIELD_COMMERCE, eBuilding) * 8 / 100
+		getBaseYieldRateFromBuilding(YIELD_COMMERCE, eBuilding) * 8 / 100
 	);
 
 	for (int iJ = 0; iJ < GC.getNumBonusInfos(); iJ++)

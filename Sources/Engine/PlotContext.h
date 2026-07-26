@@ -11,8 +11,8 @@
 //	⛔ It STORES nothing yet: a plot's facts are all already O(1) on CvPlot, so every read FORWARDS through the bound
 //	pointer, never duplicated (the store-only-the-unique-aggregate rule -- a plot has no aggregate lacking a CvPlot
 //	home today, so the ContextDict slot CityContext/EmpireContext carry has no plot analog; it is defined WHEN one
-//	appears). The forwards delegate to the SAME CvPlot accessors the one condition evaluator reads
-//	(CvConditionEval.cpp), so each HAS_/IS_ plot fact has a single source (DEC-single-implementation).
+//	appears). The one condition evaluator (CvConditionEval.cpp) reads every HAS_/IS_ plot fact THROUGH these
+//	forwards, so each fact has a single home (DEC-single-implementation; the contexts.md HAVE axis).
 //
 
 class CvPlot;
@@ -39,9 +39,15 @@ public:
 	bool hasFeature(int eFeature) const;         // {HAS_FEATURE: F}
 	bool hasTerrain(int eTerrain) const;         // {HAS_TERRAIN: T}
 	bool hasImprovement(int eImprovement) const; // {HAS_IMPROVEMENT: I}
+	bool hasRoute(int eRoute) const;             // the plot carries this route (the route-prereq vicinity scan)
 	bool hasBonus(int eBonus, int eTeam) const;  // {HAS_BONUS: B} (a plot bonus is revealed per team)
 	bool isWorked() const;                       // IS_WORKED (a citizen works it this turn)
 	bool isCity() const;                         // the plot holds a city
+	bool isOwned() const;                        // IS_OWNED (the plot lies in owned territory)
+	int  owner() const;                          // CvPlot::getOwner (the vicinity scans' owned-plot test; NO_PLAYER = unowned)
+	int  latitude() const;                       // CvPlot::getLatitude (the latitude band predicate)
+	int  natureYield(int eYield, int eTeam) const;   // CvPlot::calculateNatureYield -- the plot's own PRE-improvement
+	                                             // nature yield of a channel (the natureYield placement-threshold atom)
 
 private:
 	const CvPlot* m_plot;   // the bound game object; forwarding accessors read it -- never a value copy

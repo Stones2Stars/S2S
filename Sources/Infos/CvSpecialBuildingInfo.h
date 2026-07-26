@@ -1,69 +1,63 @@
 #pragma once
-
 #ifndef CV_SPECIAL_BUILDING_INFO_H
 #define CV_SPECIAL_BUILDING_INFO_H
 
-#include "CvInfo.h"   // JSON-info base (mapFrom); on /I -> bare include
+//
+//	CvSpecialBuildingInfo -- the SPECIAL-BUILDING poco on the exemplar surface (patterns.md § THE GETTER
+//	SETUP). A special-building GROUP (cathedral / monastery / ...): the member building authors
+//	identity.specialBuildingType, the GROUP holds the cap (json.md §4.4 `allowed:{empire:N}`, riding the
+//	composed `allowed` so the enabler's group gate and this read share ONE representation). getTechPrereq is
+//	RECONSTRUCTED at load from the tech-side inversion (tech.enables.specialBuildings -- the readJson reverse
+//	pass calls setTechPrereq); getObsoleteTech reads the `obsoletedBy.techs` edge off the base dispatch (the
+//	group's obsoleting tech is ALSO curator-inherited onto its member buildings, which is what retires them --
+//	this group-level read serves the consumers that ask the GROUP: the pedia line + the reverse edge).
+//	No legacy getter name returns ([DEC-new-getter-surface]).
+//
+
+#include "CvInfo.h"
 
 namespace picojson { class value; }
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
-//  class : CvSpecialBuildingInfo
-//
-//  DESC:   A special-building class (cathedral / monastery / corporation / ...).
-//          #430: JSON-fed (Assets/Data/specialbuildings/*.json via mapFrom); no XML read.
-//          getTechPrereq is RECONSTRUCTED at load from the tech-side inversion
-//          (tech.enables.specialBuildings; loadJson) via setTechPrereq -- the curator
-//          stores it there (store.py), not on the special building.
-//          getObsoleteTech reads the `obsoletedBy.techs` EDGE (the CvBuildingInfo shape, off the
-//          base dispatch). The group's obsoleting tech is ALSO inherited onto its member buildings
-//          by the curator (store._inherit_group_obsoletes), and THAT is what retires them in
-//          CvTeam::setHasTech; this group-level read serves the consumers that ask the GROUP --
-//          the pedia's "Obsolete with <tech>" line (CvGameTextMgr) and the EDGEB_SPECIAL_BUILDINGS
-//          reverse edge. getTechPrereqAnyone stays NO_TECH (no authoring exists in the XML).
-//
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class CvSpecialBuildingInfo : public CvInfo
 {
-	//---------------------------PUBLIC INTERFACE---------------------------------
 public:
-
 	CvSpecialBuildingInfo();
-
-	TechTypes getObsoleteTech() const   // obsoletedBy.techs -- the same edge read as CvBuildingInfo
-	{ const std::vector<int>* v = edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS); return (TechTypes)((v != NULL && !v->empty()) ? (*v)[0] : NO_TECH); }
-	TechTypes getTechPrereq() const { return m_iTechPrereq; }
-	void setTechPrereq(TechTypes eTech) { m_iTechPrereq = eTech; }   // #430: un-inversion from tech.enables.specialBuildings (loadJson, LOAD-ONLY)
-	int getTechPrereqAnyone() const { return m_iTechPrereqAnyone; }
-	// The GROUP cap (json §4.4: the member authors identity.specialBuildingType, the GROUP holds allowed:{empire:N}).
-	// Reads the COMPOSED allowed unit -- the CvBuildingInfo shape -- so the cap has ONE representation: the enabler's
-	// group gate gets it off getAllowed(), this getter off the same map. A hand-parsed private int instead left
-	// getAllowed() NULL, which silently disabled the group gate (every member offered at once).
-	int getMaxPlayerInstances() const { return m_allowed.cap("empire"); }
-
-	bool isValid() const { return m_bValid; }
-
-	virtual const CvAllowed* getAllowed() const { return &m_allowed; }
-	virtual CvAllowed*       mutAllowed()       { return &m_allowed; }
-
-	// §4.1/§4.2 edge storage -- without it the base dispatch has nowhere to put an authored
-	// `obsoletedBy`/`enables` and routes the key to jsonNoteUnconsumed instead.
-	virtual const CvEdges*   getEdges() const   { return &m_edges; }
-	virtual CvEdges*         mutEdges()         { return &m_edges; }
 
 	virtual void mapFrom(const picojson::value& entity);
 
-	//----------------------PROTECTED MEMBER VARIABLES----------------------------
+	// ======================= 1. SECTIONS -- whole typed objects =======================
+	virtual const CvAllowed* getAllowed() const { return &m_allowed; }   // §4.4 the group cap
+	virtual const CvEdges*   getEdges()   const { return &m_edges; }     // §4.1/§4.2 (obsoletedBy.techs)
+
+	// ======================= 4. INTRINSIC -- bare typed reads (the census identity set) ======================
+	bool isValid() const { return m_bValid; }   // identity.valid (default TRUE; a project unlock flips the false ones)
+	// The GROUP cap (-1 = uncapped) -- materialized at mapFrom from the composed `allowed` unit
+	// ([DEC-materialize-at-mapfrom]: this read sits under per-candidate hot loops), so the getter is a bare
+	// member read; the enabler's group gate still reads the SAME composed unit via getAllowed() (ONE representation).
+	int getMaxPlayerInstances() const { return m_iMaxPlayerInstances; }
+	TechTypes getObsoleteTech() const   // obsoletedBy.techs -- the same edge read as CvBuildingInfo
+	{
+		const std::vector<int>* pTechs = edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS);
+		return (TechTypes)((pTechs != NULL && !pTechs->empty()) ? (*pTechs)[0] : NO_TECH);
+	}
+	// --- store-inverted tech FK (tech.enables.specialBuildings), reconstructed at LOAD by the readJson
+	// reverse pass (CvReversePass), which calls the setter below. LOAD-ONLY writer. ---
+	TechTypes getTechPrereq() const { return m_iTechPrereq; }
+	void setTechPrereq(TechTypes eTech) { m_iTechPrereq = eTech; }
+
 protected:
+	virtual CvAllowed* mutAllowed() { return &m_allowed; }
+	virtual CvEdges*   mutEdges()   { return &m_edges; }
 
+private:
+	// --- the composed section units ---
+	CvAllowed m_allowed;
+	CvEdges   m_edges;
+
+	// --- the reverse-pass-fed FK + the intrinsic identity members (materialized once at mapFrom) ---
 	TechTypes m_iTechPrereq;
-	int m_iTechPrereqAnyone;
-
-	CvAllowed m_allowed;   // §4.4 -- the composed section unit (parsed by the base dispatch)
-	CvEdges   m_edges;     // §4.1/§4.2 -- ditto
-
 	bool m_bValid;
+	int m_iMaxPlayerInstances;
 };
 
 #endif // CV_SPECIAL_BUILDING_INFO_H

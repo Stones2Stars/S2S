@@ -2755,7 +2755,7 @@ public:
      */
 	bool AI_isPlotWellDefended(const CvPlot* pPlot, bool bIncludeAdjacent, int iOddsOfDefeat) const;
 
-	int	AI_genericUnitValueTimes100(UnitValueFlags eFlags) const;
+	int	AI_genericUnitValue(UnitValueFlags eFlags) const;
 
 
 public:

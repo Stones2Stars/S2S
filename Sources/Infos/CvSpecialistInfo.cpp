@@ -1,139 +1,94 @@
 //
-//	CvSpecialistInfo::mapFrom -- base core reading + availability, then the specialist's CITY-scope output +
-//	identity tags. Every field maps a real curator address (see header). FK resolution via the kept type registry.
+//	CvSpecialistInfo -- the specialist poco's own typed reading on top of the base section dispatch (see the
+//	header). mapFrom materializes the census identity set + the property bridge ONCE
+//	([DEC-materialize-at-mapfrom]); every output magnitude is a compiled point/conditioned read (header), never
+//	a mirrored array. Idempotent by contract (unconditional assigns, clear-first containers).
 //
 
-#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
-#include "AI/CvGameAI.h"   // #430 folder-consolidation: self-sufficient (unity batch changed on the move to Infos/)
+#include "CvGameCoreDLL.h"
+#include "AI/CvGameAI.h"   // folder-consolidation: keeps the unity batch self-sufficient (unchanged from the poco era)
 #include "CvSpecialistInfo.h"
-#include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonFamVal/...) + jsonX100
+#include "CvJsonParse.h"               // jsonChildObj / jsonIdBool / jsonIdStr / jsonReadFlavours / jsonResolveId
 #include "Property/CvPropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 
 CvSpecialistInfo::CvSpecialistInfo()
-	: m_iGreatPeopleRateChange(0), m_iGreatPeopleUnitType(-1), m_iExperience(0), m_iHealthPercent(0),
-	  m_iHappinessPercent(0), m_iInsidiousness(0), m_iInvestigation(0), m_bSlave(false), m_bVisible(false),
-	  m_iMissionType(NO_MISSION)
+	: m_iGreatPeopleUnitType(-1)
+	, m_bSlave(false)
+	, m_bVisible(false)
+	, m_iMissionType(NO_MISSION)
 {
-	for (int i = 0; i < NUM_YIELD_TYPES; ++i) m_aiYieldChange[i] = 0;
-	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i) m_aiCommerceChange[i] = 0;
 }
 
-const UnitCombatModifier& CvSpecialistInfo::getUnitCombatExperienceType(int iIndex) const
+int CvSpecialistInfo::getFlavorValue(int iFlavor) const
 {
-	static const UnitCombatModifier s_default = { NO_UNITCOMBAT, 0 };
-	if (iIndex < 0 || iIndex >= (int)m_aUnitCombatExperienceTypes.size()) return s_default;
-	// GAMEOPTION_UNIT_XP_FROM_SPECIALISTS-gated (archive mirror -- SourceArchive/Infos/CvSpecialistInfo.cpp:224):
-	// with the option OFF, a VISIBLE specialist serves the zero-modifier twin (same combat type, 0 XP) -- the
-	// archived parallel "Null" vector, reproduced as a per-call zeroed copy (game-thread only, consumed immediately).
-	if (!GC.getGame().isOption(GAMEOPTION_UNIT_XP_FROM_SPECIALISTS) && isVisible())
-	{
-		static UnitCombatModifier s_nullRow;
-		s_nullRow.eUnitCombat = m_aUnitCombatExperienceTypes[iIndex].eUnitCombat;
-		s_nullRow.iModifier = 0;
-		return s_nullRow;
-	}
-	return m_aUnitCombatExperienceTypes[iIndex];
-}
-
-// <family>.city.flat may be a scalar (base only) OR an array mixing the base scalar with tech KEEP-ON-SELF entries
-// {value, enabled:{type:TECH_X, scope:team}} (curate_specialist.py _inject_cond). The base is ÷100 human -> re-apply
-// ×100 for the latent-/100 consumer (happyLevel/goodHealth); the tech values are ×1 RAW (CvCity::getExtraTechSpecialist*
-// reads them un-scaled) -> stored keyed by the resolved tech id. Returns the ×100 base; fills techOut with the raw adds.
-static int readWellbeing(const picojson::object& o, const char* family, std::map<int, int>& techOut)
-{
-	const picojson::object* fo = jsonChildObj(o, family);   if (!fo) return 0;
-	const picojson::object* so = jsonChildObj(*fo, "city");  if (!so) return 0;
-	picojson::object::const_iterator it = so->find("flat");
-	if (it == so->end()) return 0;
-	const picojson::value& flat = it->second;
-	if (flat.is<double>()) return jsonX100(flat.get<double>());   // scalar base only
-	if (!flat.is<picojson::array>()) return 0;
-	int base = 0;
-	const picojson::array& a = flat.get<picojson::array>();
-	for (size_t i = 0; i < a.size(); ++i)
-	{
-		if (a[i].is<double>()) { base += jsonX100(a[i].get<double>()); continue; }   // base scalar element (÷100 human)
-		if (!a[i].is<picojson::object>()) continue;
-		const picojson::object& e = a[i].get<picojson::object>();
-		picojson::object::const_iterator ve = e.find("value");
-		if (ve == e.end() || !ve->second.is<double>()) continue;
-		const picojson::object* en = jsonChildObj(e, "enabled");
-		if (!en) { base += jsonX100(ve->second.get<double>()); continue; }           // unconditioned {value} -> base
-		picojson::object::const_iterator ty = en->find("type");                      // tech keep-on-self (enabled.type = TECH)
-		if (ty != en->end() && ty->second.is<std::string>())
-		{
-			const int tid = jsonResolveId(ty->second.get<std::string>());
-			if (tid >= 0) techOut[tid] += (int)ve->second.get<double>();             // ×1 RAW (NOT ×100)
-		}
-	}
-	return base;
+	return mapValueOrDefault(m_flavours, iFlavor);
 }
 
 void CvSpecialistInfo::mapFrom(const picojson::value& entity)
 {
-	// remap-idempotency (CvInfo.h): readWellbeing ACCUMULATES (+=) into the tech maps; the XP vector appends.
-	m_techHealth.clear(); m_techHappiness.clear(); m_aUnitCombatExperienceTypes.clear();
-	CvInfo::mapFrom(entity);   // core reading + availability
-	if (!entity.is<picojson::object>()) return;
-	const picojson::object& o = entity.get<picojson::object>();
+	// idempotency (CvInfo.h): the full-registry re-run fully redefines every materialized member (clear-first,
+	// before the base map -- the sibling ordering)
+	m_iGreatPeopleUnitType = -1;
+	m_bSlave = false;
+	m_bVisible = false;
+	m_aiCategories.clear();
+	m_flavours.clear();
+	m_szTexture.clear();
+
+	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers)
 
 	// PROPERTY_* per-turn SOURCES: a specialist's <PROPERTY_X>.city.flat (the doctor's disease cut, the
-	// law-keeper crime cuts) deposits in ITS city, once per assigned specialist (the city gather count-scales) --
-	// RELATION_SAME_PLOT mirrors the legacy CITY+SAME_PLOT shape. The ONE shared walk.
+	// law-keeper crime cuts) deposits in ITS city, once per assigned specialist (the city gather count-scales)
+	// -- RELATION_SAME_PLOT mirrors the legacy CITY+SAME_PLOT shape. The ONE shared walk over the compiled entries.
 	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_SAME_PLOT);
 
-	// city-scope yields + commerce (the specialist's own output)
-	m_aiYieldChange[YIELD_FOOD]       = jsonFamVal(o, "food", "city", "flat");
-	m_aiYieldChange[YIELD_PRODUCTION] = jsonFamVal(o, "production", "city", "flat");
-	m_aiYieldChange[YIELD_COMMERCE]   = jsonFamVal(o, "commerce", "city", "flat");
-	m_aiCommerceChange[COMMERCE_GOLD]      = jsonFamVal(o, "gold", "city", "flat");
-	m_aiCommerceChange[COMMERCE_RESEARCH]  = jsonFamVal(o, "research", "city", "flat");
-	m_aiCommerceChange[COMMERCE_CULTURE]   = jsonFamVal(o, "culture", "city", "flat");
-	m_aiCommerceChange[COMMERCE_ESPIONAGE] = jsonFamVal(o, "espionage", "city", "flat");
-
-	m_iGreatPeopleRateChange = jsonFamVal(o, "greatPeopleRate", "city", "flat");
-	// investigation/insidiousness/experience are FAMILIES at city.flat (×1) -- NOT identity (curate_specialist.py:26-28).
-	m_iInvestigation = jsonFamVal(o, "investigation", "city", "flat");
-	m_iInsidiousness = jsonFamVal(o, "insidiousness", "city", "flat");
-	m_iExperience    = jsonFamVal(o, "experience", "city", "flat");
-	// health/happiness: the base at .city.flat carries the ÷100 human value (re-apply ×100 for the latent-/100
-	// consumers goodHealth/happyLevel, §4c). The SAME leaf may also carry tech keep-on-self entries (slaves), split
-	// out into m_techHappiness/m_techHealth (×1 RAW) by readWellbeing -- a plain jsonFamDbl would drop the array base.
-	m_iHealthPercent    = readWellbeing(o, "health", m_techHealth);
-	m_iHappinessPercent = readWellbeing(o, "happiness", m_techHappiness);
-
-	if (const picojson::object* io = jsonChildObj(o, "identity"))
+	if (!entity.is<picojson::object>())
 	{
-		m_bSlave   = jsonIdBool(*io, "slave");
-		m_bVisible = jsonIdBool(*io, "visible");
-		picojson::object::const_iterator gp = io->find("greatPeopleUnit");   // curate_specialist.py IDENTITY map
-		if (gp != io->end() && gp->second.is<std::string>())
-			m_iGreatPeopleUnitType = jsonResolveId(gp->second.get<std::string>());
+		return;
+	}
+	const picojson::object& entityObj = entity.get<picojson::object>();
+
+	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
+	{
+		m_bSlave = jsonIdBool(*pIdentity, "slave");
+		m_bVisible = jsonIdBool(*pIdentity, "visible");
+		picojson::object::const_iterator unitIt = pIdentity->find("greatPeopleUnit");
+		if (unitIt != pIdentity->end() && unitIt->second.is<std::string>())
+		{
+			m_iGreatPeopleUnitType = jsonResolveId(unitIt->second.get<std::string>());
+		}
+		// identity.categories -- CATEGORY_* FK list (assignability/grouping classification; authored on every
+		// shipped specialist)
+		picojson::object::const_iterator categoriesIt = pIdentity->find("categories");
+		if (categoriesIt != pIdentity->end() && categoriesIt->second.is<picojson::array>())
+		{
+			const picojson::array& categories = categoriesIt->second.get<picojson::array>();
+			for (size_t iCategory = 0; iCategory < categories.size(); ++iCategory)
+			{
+				if (categories[iCategory].is<std::string>())
+				{
+					const int iCategoryId = jsonResolveId(categories[iCategory].get<std::string>());
+					if (iCategoryId >= 0)
+					{
+						m_aiCategories.push_back(iCategoryId);
+					}
+				}
+			}
+		}
 	}
 
-	// ui.art.texture -- the specialist's city-screen glyph (curate_specialist.py ART: Texture -> ui.art.texture)
-	if (const picojson::object* ui = jsonChildObj(o, "ui"))
-		if (const picojson::object* art = jsonChildObj(*ui, "art"))
-			jsonIdStr(*art, "texture", m_szTexture);
+	// ui.art.texture -- the specialist's city-screen glyph
+	if (const picojson::object* pUi = jsonChildObj(entityObj, "ui"))
+	{
+		if (const picojson::object* pArt = jsonChildObj(*pUi, "art"))
+		{
+			jsonIdStr(*pArt, "texture", m_szTexture);
+		}
+	}
 
-	// ai.flavours -- an ARRAY of single-key { FLAVOR_X: n } objects (curate_specialist.py:196 ai["flavours"] = v)
-	if (const picojson::object* ai = jsonChildObj(o, "ai"))
-		jsonReadFlavours(*ai, m_flavours);
-
-	// experience.city.unitCombats.{UNITCOMBAT}.flat -- target-keyed per-unit-combat XP modifiers (curate_specialist.py _unit_combat_xp)
-	if (const picojson::object* eo = jsonChildObj(o, "experience"))
-		if (const picojson::object* co = jsonChildObj(*eo, "city"))
-			if (const picojson::object* uco = jsonChildObj(*co, "unitCombats"))
-				for (picojson::object::const_iterator uc = uco->begin(); uc != uco->end(); ++uc)
-					if (uc->second.is<picojson::object>())
-					{
-						const int id = jsonResolveId(uc->first);
-						if (id >= 0)
-						{
-							UnitCombatModifier mod;
-							mod.eUnitCombat = (UnitCombatTypes)id;
-							mod.iModifier = jsonIdInt(uc->second.get<picojson::object>(), "flat");
-							m_aUnitCombatExperienceTypes.push_back(mod);
-						}
-					}
+	// ai.flavours -- an ARRAY of single-key { FLAVOR_X: n } objects (NOT a map)
+	if (const picojson::object* pAi = jsonChildObj(entityObj, "ai"))
+	{
+		jsonReadFlavours(*pAi, m_flavours);
+	}
 }

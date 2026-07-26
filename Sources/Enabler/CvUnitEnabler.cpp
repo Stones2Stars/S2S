@@ -31,7 +31,7 @@
 
 // the source's cascade info per axis (the tech axis redirects the TECH_GAME_START root to cascadeStartNode).
 // Units' HAVE axes per the store's enables.units inversion sources: techs, buildings, bonuses, religions, civics.
-static const CvInfo* ud_techJson(int iTech)
+static const CvInfo* ud_techInfo(int iTech)
 {
 	if (iTech == GC.getInfoTypeForString("TECH_GAME_START", true)) return &cascadeStartNode();
 	return InfoRepo<CvTechInfo>::get().get(iTech);
@@ -58,7 +58,7 @@ void UnitEnabler::onCityCreated(const CvCity& kCity)
 		if (ju != NULL && ju->spawnOnly) d.setStaticExcluded(u, true);   // never trainable (placed by systems)
 	}
 	for (int t = 0; t < GC.getNumTechInfos(); ++t)   // the root IS a held tech (the load backfill guarantees it)
-		if (kTeam.isHasTech((TechTypes)t)) EnablerKernel::applyEdges(d, ud_techJson(t), EDGEB_UNITS, +1);
+		if (kTeam.isHasTech((TechTypes)t)) EnablerKernel::applyEdges(d, ud_techInfo(t), EDGEB_UNITS, +1);
 	for (int co = 0; co < GC.getNumCivicOptionInfos(); ++co)
 	{
 		const CivicTypes c = kPlayer.getCivics((CivicOptionTypes)co);
@@ -74,7 +74,7 @@ void UnitEnabler::onCityCreated(const CvCity& kCity)
 void UnitEnabler::onCityTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 {
 	if (eTeam == NO_TEAM || eTech == NO_TECH) return;
-	const CvInfo* jt = ud_techJson((int)eTech);
+	const CvInfo* jt = ud_techInfo((int)eTech);
 	const std::vector<int>* obsB = jt ? jt->edge(EDGEF_OBSOLETES, EDGEB_BUILDINGS) : NULL;
 	const CvTeam& kTeam = GET_TEAM(eTeam);
 	const bool bGate = !spineGameLoadInProgress();   // load gates once at GAME_LOAD_FINISHED
@@ -215,9 +215,9 @@ static bool ud_capped(const CvInfo* j, int eU, const CvPlayer& kPlayer, bool noN
 {
 	if (j == NULL) return false;
 	const int making = kPlayer.getUnitMaking((UnitTypes)eU);
-	const int wcap = j->allowedCap("world");
+	const int wcap = j->allowedCap(ALLOWEDCAP_WORLD);
 	if (wcap >= 0 && GC.getGame().getUnitCreatedCount((UnitTypes)eU) + making >= wcap) return true;
-	const int ecap = j->allowedCap("empire");
+	const int ecap = j->allowedCap(ALLOWEDCAP_EMPIRE);
 	if (ecap >= 0 && !(noNationalLimit && !GC.getUnitInfo((UnitTypes)eU).isUnlimitedException()))
 	{
 		const int era = (int)kPlayer.getCurrentEra();
@@ -319,7 +319,8 @@ static void ud_setupCtx(const CvCity& kCity, const CvPlayer& kPlayer, const CvTe
 	std::set<int>& waived, CvCascadeEvalCtx& ec, CvCascadeEvalFlags& flags, UdGateCtx& x)
 {
 	BuildingEnabler::augmentWaived(kPlayer, kTeam, waived);
-	ec.city = &kCity; ec.plot = kCity.plot(); ec.player = &kPlayer; ec.team = &kTeam;
+	kCity.getCityContext().fillEvalCtx(ec);       // city+plot -- the contexts fill the eval state (contexts.md)
+	kPlayer.getEmpireContext().fillEvalCtx(ec);   // player+team (kTeam IS the player's team at every caller)
 	ec.waivedPrereqBuildings = &waived;
 	EnablerKernel::wireOperatingBuildings(&kCity, ec);
 	flags.strictStateReligionForBuild = true;
@@ -466,7 +467,7 @@ void UnitEnabler::onUnitCountChanged(PlayerTypes ePlayer, int eUnit)
 	if (spineGameLoadInProgress() || ePlayer == NO_PLAYER || eUnit < 0) return;
 	ud_buildClasses();
 	const CvInfo* jU = InfoRepo<CvUnitInfo>::get().get(eUnit);
-	const bool bCapped = (jU != NULL && jU->getAllowed() != NULL);
+	const bool bCapped = (jU != NULL && jU->getAllowed() != NULL && !jU->getAllowed()->isEmpty());
 	const bool bReferenced = (s_udUnitDeps.find(eUnit) != s_udUnitDeps.end());
 	const bool bUpgrade = (s_udUpgradePred.find(eUnit) != s_udUpgradePred.end());
 	if (!bCapped && !bReferenced && !bUpgrade) return;
@@ -478,7 +479,7 @@ void UnitEnabler::onUnitCountChanged(PlayerTypes ePlayer, int eUnit)
 		it = s_udUpgradePred.find(eUnit);
 		if (it != s_udUpgradePred.end()) affected.insert(it->second.begin(), it->second.end());
 	}
-	const bool bWorldCap = (jU != NULL && jU->allowedCap("world") >= 0);
+	const bool bWorldCap = (jU != NULL && jU->allowedCap(ALLOWEDCAP_WORLD) >= 0);
 	for (int iP = 0; iP < MAX_PLAYERS; iP++)
 	{
 		if (!bWorldCap && (PlayerTypes)iP != ePlayer) continue;   // empire caps reach the owner only

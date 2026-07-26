@@ -348,7 +348,7 @@ public:
 	virtual void AI_separateImpassable() = 0;
 	virtual void AI_separateEmptyTransports() = 0;
 	virtual bool AI_isFull() const = 0;
-	virtual int AI_getGenericValueTimes100(UnitValueFlags eFlags) const = 0;
+	virtual int AI_getGenericValue(UnitValueFlags eFlags) const = 0;
 
 	int defensiveModifierAtPlot(const CvPlot* pPlot) const;
 	bool meetsUnitSelectionCriteria(const CvUnitSelectionCriteria* criteria) const;

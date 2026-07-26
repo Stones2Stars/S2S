@@ -2,9 +2,10 @@
 //	CvModifiers -- the load COMPILE pass over an entity's §6 modifier families (see the header). The walk
 //	recurses the family tree exactly as authored (a unit keyword ends the address; a bare-number/array
 //	non-unit key is the count-by-type leaf; any other key recurses one segment deeper), decodes every leaf's
-//	address ONCE to typed ids (family / scope / kind / target -- [DEC-materialize-at-mapfrom]), and folds each
-//	unconditioned untargeted entry straight into its (family, kind, scope, unit) slot sum. Strings exist only
-//	inside this load-time walk.
+//	address ONCE to typed ids (family / scope / kind / target -- [DEC-materialize-at-mapfrom]), and RETAINS
+//	every §3.9 deposit as a typed entry (the COMPLETE list -- unconditioned entries included, ruling 29).
+//	finalizeCompiled then derives the (family, kind, scope, unit) slot sums FROM that list at compile end --
+//	one derivation, list -> sums. Strings exist only inside this load-time walk.
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson
@@ -28,6 +29,8 @@ void CvModifiers::clearParsed()
 	m_conditioned.clear();
 	m_slots.clear();
 	m_propertySlots.clear();
+	m_slotsAiOnly.clear();
+	m_propertySlotsAiOnly.clear();
 }
 
 // ============================ the compiled slot table ============================
@@ -45,17 +48,17 @@ static int mod_propertySlotKey(int iPropertyFk, CvCascScope eScope, CvCascUnit e
 	return ((iPropertyFk & 0x7FFFFF) << 9) | (((int)eScope & 0x1F) << 4) | ((int)eUnit & 0xF);
 }
 
-static void mod_foldSlot(std::vector<std::pair<int, int> >& slots, int iKey, int iValue100)
+static void mod_foldSlot(std::vector<std::pair<int, int> >& slots, int iKey, int iValue)
 {
 	for (size_t i = 0; i < slots.size(); ++i)
 	{
 		if (slots[i].first == iKey)
 		{
-			slots[i].second += iValue100;
+			slots[i].second += iValue;
 			return;
 		}
 	}
-	slots.push_back(std::make_pair(iKey, iValue100));
+	slots.push_back(std::make_pair(iKey, iValue));
 }
 
 static int mod_readSlot(const std::vector<std::pair<int, int> >& slots, int iKey)
@@ -78,18 +81,48 @@ static int mod_readSlot(const std::vector<std::pair<int, int> >& slots, int iKey
 	return (iLow < slots.size() && slots[iLow].first == iKey) ? slots[iLow].second : 0;
 }
 
-int CvModifiers::sum100(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit) const
+int CvModifiers::sum(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit, CvModAudience eAudience) const
 {
-	return mod_readSlot(m_slots, mod_slotKey(eFamily, iKind, eScope, eUnit));
+	const int iKey = mod_slotKey(eFamily, iKind, eScope, eUnit);
+	int iSum = 0;
+	if (eAudience != MOD_AUDIENCE_AI_ONLY)
+	{
+		iSum += mod_readSlot(m_slots, iKey);
+	}
+	if (eAudience != MOD_AUDIENCE_HUMAN)
+	{
+		iSum += mod_readSlot(m_slotsAiOnly, iKey);   // the §3.9 ai audience rides ON TOP of the base for AI players
+	}
+	return iSum;
 }
 
-int CvModifiers::propertySum100(int iPropertyFk, CvCascScope eScope, CvCascUnit eUnit) const
+int CvModifiers::sum(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit, bool bIncludeAiOnly) const
+{
+	return sum(eFamily, iKind, eScope, eUnit, bIncludeAiOnly ? MOD_AUDIENCE_INCLUSIVE : MOD_AUDIENCE_HUMAN);
+}
+
+int CvModifiers::propertySum(int iPropertyFk, CvCascScope eScope, CvCascUnit eUnit, CvModAudience eAudience) const
 {
 	if (iPropertyFk < 0)
 	{
 		return 0;
 	}
-	return mod_readSlot(m_propertySlots, mod_propertySlotKey(iPropertyFk, eScope, eUnit));
+	const int iKey = mod_propertySlotKey(iPropertyFk, eScope, eUnit);
+	int iSum = 0;
+	if (eAudience != MOD_AUDIENCE_AI_ONLY)
+	{
+		iSum += mod_readSlot(m_propertySlots, iKey);
+	}
+	if (eAudience != MOD_AUDIENCE_HUMAN)
+	{
+		iSum += mod_readSlot(m_propertySlotsAiOnly, iKey);
+	}
+	return iSum;
+}
+
+int CvModifiers::propertySum(int iPropertyFk, CvCascScope eScope, CvCascUnit eUnit, bool bIncludeAiOnly) const
+{
+	return propertySum(iPropertyFk, eScope, eUnit, bIncludeAiOnly ? MOD_AUDIENCE_INCLUSIVE : MOD_AUDIENCE_HUMAN);
 }
 
 void CvModifiers::conditionedRange(ModifierFamily eFamily, size_t& iBeginOut, size_t& iEndOut) const
@@ -110,8 +143,50 @@ void CvModifiers::conditionedRange(ModifierFamily eFamily, size_t& iBeginOut, si
 
 // ============================ the load-time compile walk ============================
 
+//
+//	The node-level §3.9 qualifier shorthand (json §3.9: "a qualifier written at the target-node level is
+//	shorthand applying to every entry that carries none of its own"): the counted-kind filters (`unit:` /
+//	`religion:`) + the ranked-selection pair (`max:` / `orderedBy(Descending):`, ruling 25). Gathered per walk
+//	node, consumed as qualifiers -- never address segments, never count-by-type leaves. Value-shape
+//	discriminated: an OBJECT-valued `max` stays a MEMBER segment (tradeRoutes.<scope>.max.{unit}); only a
+//	number/token `max` is the ranked qualifier.
+//
+struct ModNodeQuals
+{
+	const picojson::value* unitQual;       // string predicate
+	const picojson::value* religionQual;   // string predicate
+	const picojson::value* maxQual;        // number, or a token string (TARGET_NUM_CITIES)
+	const picojson::value* orderedQual;    // string metric (CITY_SIZE)
+	bool orderedDescending;
+	ModNodeQuals() : unitQual(NULL), religionQual(NULL), maxQual(NULL), orderedQual(NULL), orderedDescending(false) {}
+};
+
 namespace
 {
+	// Stamp the ranked-selection qualifiers onto an entry from raw picojson values (entry-form and node-form
+	// share this). CARRY-only: the ranked SELECTION evaluation is the parked ranked-target-selection plan.
+	void mod_stampRankQuals(CvModEntry* pEntry, const picojson::value* pMax, const picojson::value* pOrdered, bool bDescending)
+	{
+		if (pMax != NULL)
+		{
+			pEntry->hasRankQual = true;
+			if (pMax->is<double>())
+			{
+				pEntry->rankMax = (int)pMax->get<double>();
+			}
+			else if (pMax->is<std::string>())
+			{
+				pEntry->rankMaxToken = pMax->get<std::string>();
+			}
+		}
+		if (pOrdered != NULL && pOrdered->is<std::string>())
+		{
+			pEntry->hasRankQual = true;
+			pEntry->orderedBySeg = modSegmentIntern(pOrdered->get<std::string>());
+			pEntry->orderedDescending = bDescending;
+		}
+	}
+
 	// The per-LEAF address decode -- computed once, stamped on every entry the leaf produces.
 	struct ModLeafDecode
 	{
@@ -161,7 +236,7 @@ namespace
 		for (size_t i = iTailStart; i < segments.size(); ++i)
 		{
 			const std::string& szSegment = segments[i];
-			if (infoIsTargetToken(szSegment))
+			if (infoIsTargetToken(szSegment) || infoIsFamilyTargetToken(decode.family, szSegment))
 			{
 				decode.targetSeg = modSegmentIntern(szSegment);
 				continue;
@@ -210,7 +285,9 @@ namespace
 		}
 	}
 
-	// One `{value, unit?, per?, enabled?, disabled?}` entry object (§3.9; `unit:` = the §3.7 predicate qualifier).
+	// One `{value, unit?, religion?, max?, orderedBy(Descending)?, per?, enabled?, disabled?}` entry object
+	// (§3.9; `unit:`/`religion:` = the §3.7 counted-kind filters; max/orderedBy* = the §3.3 ranked qualifiers,
+	// parse-CARRIED per ruling 25).
 	CvModEntry* mod_parseEntryObject(const picojson::object& o, CvCascUnit eUnit, CvCascScope eScope)
 	{
 		picojson::object::const_iterator valueIt = o.find("value");
@@ -219,13 +296,35 @@ namespace
 			return NULL;   // not an entry object
 		}
 		CvModEntry* pEntry = new CvModEntry();
-		pEntry->value100 = jsonX100(valueIt->second.get<double>());
+		pEntry->value = jsonX100(valueIt->second.get<double>());
 		pEntry->unit = eUnit;
 		pEntry->scope = eScope;
 		picojson::object::const_iterator it;
 		if ((it = o.find("unit")) != o.end())
 		{
 			pEntry->unitQual = cascadeParseCondition(it->second);
+		}
+		if ((it = o.find("religion")) != o.end())
+		{
+			pEntry->religionQual = cascadeParseCondition(it->second);
+		}
+		{
+			picojson::object::const_iterator maxIt = o.find("max");
+			const picojson::value* pMax = (maxIt != o.end() && !maxIt->second.is<picojson::object>()) ? &maxIt->second : NULL;
+			picojson::object::const_iterator ordAscIt = o.find("orderedBy");
+			picojson::object::const_iterator ordDescIt = o.find("orderedByDescending");
+			const picojson::value* pOrdered = NULL;
+			bool bDescending = false;
+			if (ordDescIt != o.end())
+			{
+				pOrdered = &ordDescIt->second;
+				bDescending = true;
+			}
+			else if (ordAscIt != o.end())
+			{
+				pOrdered = &ordAscIt->second;
+			}
+			mod_stampRankQuals(pEntry, pMax, pOrdered, bDescending);
 		}
 		if ((it = o.find("per")) != o.end())
 		{
@@ -242,13 +341,43 @@ namespace
 		return pEntry;
 	}
 
-	CvModEntry* mod_makeBareEntry(int iValue100, CvCascUnit eUnit, CvCascScope eScope)
+	// The §3.9 ENTRY-FORM `ai` sibling ({ <payload>, ..., "ai"? } -- same inner shape, AI audience): a bare
+	// number or a nested entry object riding beside the payload INSIDE one entry object. Parsed into its OWN
+	// aiOnly-flagged entry -- the audience is a FLAG on the compiled entry, never an address segment. (The
+	// node-level `ai` hop -- the handicap dual-leaf shape -- is the walk's bAiOnly recursion; this covers the
+	// entry-internal spelling so the §3.9 mechanism is UNREDUCED.)
+	CvModEntry* mod_parseEntryAiSibling(const picojson::object& o, CvCascUnit eUnit, CvCascScope eScope);
+
+	CvModEntry* mod_makeBareEntry(int iValue, CvCascUnit eUnit, CvCascScope eScope)
 	{
 		CvModEntry* pEntry = new CvModEntry();
-		pEntry->value100 = iValue100;
+		pEntry->value = iValue;
 		pEntry->unit = eUnit;
 		pEntry->scope = eScope;
 		return pEntry;
+	}
+
+	CvModEntry* mod_parseEntryAiSibling(const picojson::object& o, CvCascUnit eUnit, CvCascScope eScope)
+	{
+		picojson::object::const_iterator aiIt = o.find("ai");
+		if (aiIt == o.end())
+		{
+			return NULL;
+		}
+		CvModEntry* pAiEntry = NULL;
+		if (aiIt->second.is<double>())
+		{
+			pAiEntry = mod_makeBareEntry(jsonX100(aiIt->second.get<double>()), eUnit, eScope);
+		}
+		else if (aiIt->second.is<picojson::object>())
+		{
+			pAiEntry = mod_parseEntryObject(aiIt->second.get<picojson::object>(), eUnit, eScope);
+		}
+		if (pAiEntry != NULL)
+		{
+			pAiEntry->aiOnly = true;
+		}
+		return pAiEntry;
 	}
 
 	bool mod_conditionedFamilyBefore(const CvModEntry* pLeft, const CvModEntry* pRight)
@@ -262,8 +391,27 @@ namespace
 	}
 }
 
+// Route a point-foldable entry into its AUDIENCE's slot table (json §3.9 `ai`: the aiOnly twin tables keep the
+// human point sums audience-clean; sum's explicit bIncludeAiOnly adds the twin back for an AI-player read).
+void CvModifiers::foldPointEntry(const CvModEntry* pEntry)
+{
+	std::vector<std::pair<int, int> >& slots = pEntry->aiOnly ? m_slotsAiOnly : m_slots;
+	std::vector<std::pair<int, int> >& propertySlots = pEntry->aiOnly ? m_propertySlotsAiOnly : m_propertySlots;
+	if (pEntry->family == MODFAM_PROPERTY)
+	{
+		if (pEntry->propertyFk >= 0)
+		{
+			mod_foldSlot(propertySlots, mod_propertySlotKey(pEntry->propertyFk, pEntry->scope, pEntry->unit), pEntry->value);
+		}
+	}
+	else
+	{
+		mod_foldSlot(slots, mod_slotKey(pEntry->family, pEntry->kind, pEntry->scope, pEntry->unit), pEntry->value);
+	}
+}
+
 void CvModifiers::parseLeaf(const std::vector<std::string>& segments, const picojson::value& leaf,
-                            CvCascUnit eUnit, const picojson::value* pNodeQual)
+                            CvCascUnit eUnit, const ModNodeQuals& nodeQuals, bool bAiOnly)
 {
 	ModLeafDecode decode;
 	mod_decodeLeaf(segments, decode);
@@ -273,12 +421,30 @@ void CvModifiers::parseLeaf(const std::vector<std::string>& segments, const pico
 	{
 		m_entries.push_back(mod_makeBareEntry(jsonX100(leaf.get<double>()), eUnit, decode.scope));
 	}
-	else if (leaf.is<picojson::object>())   // a single `{value, unit?, per?, enabled?, disabled?}` entry (§3.9)
+	else if (leaf.is<bool>())
+	{
+		// a §8 keyed-container MEMBERSHIP flag (the combat targets/unitTargets/defenders {UNITCOMBAT_X: true}
+		// maps -- json §8: keyed targeting/immunity rides the combat family): compiles as a TARGETED entry
+		// (value 1 ×100, synthesized COUNT unit -- never point-foldable, an entry-list read) ONLY under a
+		// recognized keyed-container token. `true` asserts membership, the jsonBoolSet convention (a false is
+		// no entry); a bool OUTSIDE a keyed container stays uncompiled -- its unkinded member path already
+		// surfaced through mod_decodeLeaf's diagnostic, never silently dropped.
+		if (decode.targetSeg >= 0 && leaf.get<bool>())
+		{
+			m_entries.push_back(mod_makeBareEntry(jsonX100(1), eUnit, decode.scope));
+		}
+	}
+	else if (leaf.is<picojson::object>())   // a single `{value, unit?, per?, enabled?, disabled?, ai?}` entry (§3.9)
 	{
 		CvModEntry* pSingle = mod_parseEntryObject(leaf.get<picojson::object>(), eUnit, decode.scope);
 		if (pSingle != NULL)
 		{
 			m_entries.push_back(pSingle);
+		}
+		CvModEntry* pAiSibling = mod_parseEntryAiSibling(leaf.get<picojson::object>(), eUnit, decode.scope);
+		if (pAiSibling != NULL)
+		{
+			m_entries.push_back(pAiSibling);
 		}
 	}
 	else if (leaf.is<picojson::array>())
@@ -300,71 +466,113 @@ void CvModifiers::parseLeaf(const std::vector<std::string>& segments, const pico
 			{
 				m_entries.push_back(pListed);
 			}
+			CvModEntry* pListedAiSibling = mod_parseEntryAiSibling(entryList[i].get<picojson::object>(), eUnit, decode.scope);
+			if (pListedAiSibling != NULL)
+			{
+				m_entries.push_back(pListedAiSibling);
+			}
 		}
 	}
 	for (size_t i = iFirst; i < m_entries.size(); ++i)
 	{
 		CvModEntry* pEntry = m_entries[i];
-		// the NODE-form `unit:` qualifier (json §3.7 -- a sibling of the magnitude leaves, e.g. cargo.space.
-		// {unit: IS_AIR, flat: N}): applies to every entry this leaf produced that carries no entry-form
-		// qualifier of its own.
-		if (pNodeQual != NULL && pEntry->unitQual == NULL)
+		// the §3.9 AUDIENCE flag: inherited from the walk's `ai` hop -- every entry this leaf produced under an
+		// `ai` node is AI-players-only (mod_parseEntryObject's entry-form `ai` sibling stamps its own).
+		if (bAiOnly)
 		{
-			pEntry->unitQual = cascadeParseCondition(*pNodeQual);
+			pEntry->aiOnly = true;
+		}
+		// the NODE-form §3.9 qualifier shorthand (unit:/religion: filters + the ranked pair): applies to every
+		// entry this leaf produced that carries no entry-form qualifier of its own kind.
+		if (nodeQuals.unitQual != NULL && pEntry->unitQual == NULL)
+		{
+			pEntry->unitQual = cascadeParseCondition(*nodeQuals.unitQual);
+		}
+		if (nodeQuals.religionQual != NULL && pEntry->religionQual == NULL)
+		{
+			pEntry->religionQual = cascadeParseCondition(*nodeQuals.religionQual);
+		}
+		if (!pEntry->hasRankQual && (nodeQuals.maxQual != NULL || nodeQuals.orderedQual != NULL))
+		{
+			mod_stampRankQuals(pEntry, nodeQuals.maxQual, nodeQuals.orderedQual, nodeQuals.orderedDescending);
 		}
 		mod_stampDecode(pEntry, decode);
-		// fold the point-foldable entries straight into their compiled slot sums
-		if (pEntry->isPointFoldable())
-		{
-			if (pEntry->family == MODFAM_PROPERTY)
-			{
-				if (pEntry->propertyFk >= 0)
-				{
-					mod_foldSlot(m_propertySlots, mod_propertySlotKey(pEntry->propertyFk, pEntry->scope, pEntry->unit), pEntry->value100);
-				}
-			}
-			else
-			{
-				mod_foldSlot(m_slots, mod_slotKey(pEntry->family, pEntry->kind, pEntry->scope, pEntry->unit), pEntry->value100);
-			}
-		}
+		// the slot sums are NOT folded here: finalizeCompiled derives them from the retained entry list at
+		// compile end -- ONE derivation (list -> sums), never a second fill beside the list that can drift
 	}
 }
 
-void CvModifiers::walk(std::vector<std::string>& segments, const picojson::value& node)
+void CvModifiers::walk(std::vector<std::string>& segments, const picojson::value& node, bool bAiOnly)
 {
 	if (!node.is<picojson::object>())
 	{
 		return;   // a family/segment node is always object-valued (json §1/§6)
 	}
 	const picojson::object& o = node.get<picojson::object>();
-	// the NODE-form `unit:` predicate qualifier (json §3.7 -- a sibling of the magnitude leaves: cargo.space.
-	// {unit: IS_AIR, ...}); consumed here, applied to this node's leaves, never an address segment.
-	picojson::object::const_iterator nodeQualIt = o.find("unit");
-	const picojson::value* pNodeQual = (nodeQualIt != o.end() && nodeQualIt->second.is<std::string>()) ? &nodeQualIt->second : NULL;
+	// gather the NODE-form §3.9 qualifier shorthand -- siblings of the magnitude leaves, consumed as
+	// qualifiers, never address segments / count-by-type leaves. Shape-discriminated: an OBJECT-valued `max`
+	// stays a member segment (tradeRoutes.<scope>.max.{unit}); string-valued unit/religion/orderedBy* only.
+	ModNodeQuals nodeQuals;
+	for (picojson::object::const_iterator qualIt = o.begin(); qualIt != o.end(); ++qualIt)
+	{
+		if (qualIt->first == "unit" && qualIt->second.is<std::string>())
+		{
+			nodeQuals.unitQual = &qualIt->second;
+		}
+		else if (qualIt->first == "religion" && qualIt->second.is<std::string>())
+		{
+			nodeQuals.religionQual = &qualIt->second;
+		}
+		else if (qualIt->first == "max" && !qualIt->second.is<picojson::object>())
+		{
+			nodeQuals.maxQual = &qualIt->second;
+		}
+		else if (qualIt->first == "orderedByDescending" && qualIt->second.is<std::string>())
+		{
+			nodeQuals.orderedQual = &qualIt->second;
+			nodeQuals.orderedDescending = true;
+		}
+		else if (qualIt->first == "orderedBy" && qualIt->second.is<std::string>())
+		{
+			nodeQuals.orderedQual = &qualIt->second;
+			nodeQuals.orderedDescending = false;
+		}
+	}
 	for (picojson::object::const_iterator it = o.begin(); it != o.end(); ++it)
 	{
-		if (pNodeQual != NULL && it == nodeQualIt)
+		if (&it->second == nodeQuals.unitQual || &it->second == nodeQuals.religionQual
+		 || &it->second == nodeQuals.maxQual || &it->second == nodeQuals.orderedQual)
 		{
-			continue;   // the qualifier key itself
+			continue;   // a qualifier key itself
+		}
+		if (it->first == "ai" && it->second.is<picojson::object>())
+		{
+			// the §3.9 AUDIENCE HOP (the ai sibling block, same inner shape -- the handicap human/AI dual-leaf
+			// pattern: upkeep.empire.unit.{percent, ai:{percent}}): recurse WITHOUT pushing a segment, so the
+			// member path below kind-resolves cleanly and the audience compiles as the entries' aiOnly FLAG --
+			// never an address segment.
+			walk(segments, it->second, true);
+			continue;
 		}
 		const CvCascUnit eUnit = cascadeUnitFromString(it->first);
 		if (eUnit != CASC_UNIT_UNKNOWN)   // a unit keyword ends the address -- this is a magnitude LEAF
 		{
-			parseLeaf(segments, it->second, eUnit, pNodeQual);
+			parseLeaf(segments, it->second, eUnit, nodeQuals, bAiOnly);
 		}
-		else if (it->second.is<double>() || it->second.is<picojson::array>())
+		else if (it->second.is<double>() || it->second.is<picojson::array>() || it->second.is<bool>())
 		{
 			// the modifier.md §6 COUNT-BY-TYPE leaf (freeSpecialists/allowedSpecialists: the key IS the type/`any`
-			// and the value the count) -- the one sanctioned non-unit leaf; synthesized unit COUNT, key in the address.
+			// and the value the count) -- the one sanctioned non-unit leaf; synthesized unit COUNT, key in the
+			// address. A BOOL value is the §8 keyed-container MEMBERSHIP flag (combat targets/unitTargets/
+			// defenders) -- parseLeaf compiles it only under a recognized keyed-container token.
 			segments.push_back(it->first);
-			parseLeaf(segments, it->second, CASC_UNIT_COUNT, pNodeQual);
+			parseLeaf(segments, it->second, CASC_UNIT_COUNT, nodeQuals, bAiOnly);
 			segments.pop_back();
 		}
 		else
 		{
 			segments.push_back(it->first);
-			walk(segments, it->second);   // a scope/target/member segment -- one level deeper
+			walk(segments, it->second, bAiOnly);   // a scope/target/member segment -- one level deeper
 			segments.pop_back();
 		}
 	}
@@ -377,30 +585,62 @@ void CvModifiers::landReverseEntry(CvModEntry* pEntry)
 		return;
 	}
 	m_entries.push_back(pEntry);
-	// A landed entry always carries the source-presence condition, so it never point-folds; the point-foldable
-	// branch stays for structural completeness (a fold-eligible entry would belong in the slot sums like any
-	// authored one).
-	if (pEntry->isPointFoldable())
+	// finalizeCompiled re-derives the compiled forms from the (now grown) entry list, so a landed entry is
+	// indistinguishable from an authored one to every reader -- incl. the slot fold, should a landed entry
+	// ever be point-foldable (today every landing carries the source-presence condition).
+	finalizeCompiled();
+}
+
+void CvModifiers::resolveAboveToken(const char* szToken, int iBase)
+{
+	// LOAD-TIME ONLY (see the header): stamp the SOURCE-resolved base onto every entry carrying the token.
+	// The token spelling stays -- it is the eval-time scaling marker (MMKernel::perScale). An entry left at
+	// perAbove -1 (the source authored no config) is the unresolved case perScale skips, never zeroes.
+	for (size_t i = 0; i < m_entries.size(); ++i)
 	{
-		if (pEntry->family == MODFAM_PROPERTY)
+		CvModEntry* pEntry = m_entries[i];
+		if (pEntry->hasAbove && pEntry->perAbove < 0 && pEntry->perAboveToken == szToken)
 		{
-			if (pEntry->propertyFk >= 0)
-			{
-				mod_foldSlot(m_propertySlots, mod_propertySlotKey(pEntry->propertyFk, pEntry->scope, pEntry->unit), pEntry->value100);
-			}
-		}
-		else
-		{
-			mod_foldSlot(m_slots, mod_slotKey(pEntry->family, pEntry->kind, pEntry->scope, pEntry->unit), pEntry->value100);
+			pEntry->perAbove = iBase;
 		}
 	}
-	finalizeCompiled();
+}
+
+void CvModifiers::resolvePerToken(const char* szToken, int iId)
+{
+	// LOAD-TIME ONLY (see the header): stamp the SOURCE's own engine id onto every entry counting the token.
+	// An entry left at perTypeId -1 (no source resolution ran) is the count core's fail-visible 0 case.
+	for (size_t i = 0; i < m_entries.size(); ++i)
+	{
+		CvModEntry* pEntry = m_entries[i];
+		if (pEntry->hasPer && pEntry->perTypeId < 0 && pEntry->perType == szToken)
+		{
+			pEntry->perTypeId = iId;
+		}
+	}
 }
 
 void CvModifiers::finalizeCompiled()
 {
+	// THE ONE DERIVATION (patterns.md getter-setup category 5 / info-rebuild.md ruling 29): the retained
+	// COMPLETE entry list is the single compiled source; the folded (family, kind, scope, unit) slot sums are
+	// re-derived FROM it here, at compile end -- never a second parallel fill that can drift. Idempotent
+	// (clear-first), so parseEntity and every landReverseEntry may re-finalize freely inside the load window.
+	m_slots.clear();
+	m_propertySlots.clear();
+	m_slotsAiOnly.clear();
+	m_propertySlotsAiOnly.clear();
+	for (size_t i = 0; i < m_entries.size(); ++i)
+	{
+		if (m_entries[i]->isPointFoldable())
+		{
+			foldPointEntry(m_entries[i]);
+		}
+	}
 	std::sort(m_slots.begin(), m_slots.end(), mod_slotKeyBefore);
 	std::sort(m_propertySlots.begin(), m_propertySlots.end(), mod_slotKeyBefore);
+	std::sort(m_slotsAiOnly.begin(), m_slotsAiOnly.end(), mod_slotKeyBefore);
+	std::sort(m_propertySlotsAiOnly.begin(), m_propertySlotsAiOnly.end(), mod_slotKeyBefore);
 	m_conditioned.clear();
 	for (size_t i = 0; i < m_entries.size(); ++i)
 	{
@@ -420,7 +660,7 @@ void CvModifiers::parseEntity(const picojson::object& entity)
 		if (jsonClassifyKey(it->first, it->second.is<picojson::object>()) == CJK_FAMILY)
 		{
 			segments.push_back(it->first);
-			walk(segments, it->second);
+			walk(segments, it->second, false);   // human audience until an `ai` hop flips it (json §3.9)
 			segments.pop_back();
 		}
 	}

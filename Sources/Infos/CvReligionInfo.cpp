@@ -1,30 +1,39 @@
 //
-//	CvReligionInfo::mapFrom -- base (text + availability: enables.buildings/units + grants.freeUnit/numFreeUnits)
-//	+ the shrine block, the STATE/HOLY per-commerce split (demuxed by the enabled predicate), spread factor, art/
-//	sound/adjective, and AI flavours. HUMAN-native (no ×100). See the header.
+//	CvReligionInfo -- the religion poco's own typed reading on top of the base section dispatch (see the
+//	header). mapFrom materializes the census identity set + the §9 shrine value plane ONCE
+//	([DEC-materialize-at-mapfrom]); the conditioned per-commerce bonuses live on the compiled entries (base
+//	surface), never as mirrored arrays. Idempotent by contract (unconditional assigns, clear-first containers).
 //
 
-#include "CvGameCoreDLL.h"          // PCH umbrella -- picojson
+#include "CvGameCoreDLL.h"
 #include "CvReligionInfo.h"
-#include "CvJsonParse.h"            // jsonCommerceMap (shrine) + jsonReadFlavours + the shared walkers
-
-static const char* COMMERCE_NAME[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
+#include "CvJsonParse.h"   // jsonChildObj / jsonIdInt / jsonIdStr / jsonReadFlavours + infoFamily* (via CvInfoKinds)
 
 CvReligionInfo::CvReligionInfo()
-	: m_iSpreadFactor(0), m_iTGAIndex(-1), m_iFreeUnit(-1), m_iNumFreeUnits(0),   // TGAIndex -1 = the TGA-filler sentinel (RemoveTGAFiller erases fillers whose index stayed -1; real religions override from JSON)
-	  m_iMissionType(-1), m_iChar(-1), m_iHolyCityChar(-1),
-	  m_eTechPrereq(NO_TECH)
+	: m_iSpreadFactor(0)
+	, m_iTGAIndex(-1)   // -1 = the TGA-filler sentinel (RemoveTGAFiller erases fillers whose index stayed -1)
+	, m_iFreeUnit(-1)
+	, m_iNumFreeUnits(0)
+	, m_eTechPrereq(NO_TECH)
+	, m_iMissionType(-1)
+	, m_iChar(-1)
+	, m_iHolyCityChar(-1)
 {
-	for (int i = 0; i < NUM_COMMERCE_TYPES; ++i) { m_aiStateReligionCommerce[i] = 0; m_aiHolyCityCommerce[i] = 0; m_aiGlobalReligionCommerce[i] = 0; }
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		m_aiShrineCommerce[iCommerce] = 0;
+	}
 }
 
-int CvReligionInfo::getGlobalReligionCommerce(int i) const
-{ return (i >= 0 && i < NUM_COMMERCE_TYPES) ? m_aiGlobalReligionCommerce[i] : 0; }
+int CvReligionInfo::getFlavorValue(int iFlavor) const
+{
+	return mapValueOrDefault(m_flavours, iFlavor);
+}
 
 const char* CvReligionInfo::getButtonDisabled() const
 {
-	// Mirror the legacy derivation (SourceArchive/Infos/CvReligionInfo.cpp): the base button (ui.art.icon) with its
-	// ".dds" extension replaced by the "_D.dds" disabled variant. Empty base button -> empty disabled path.
+	// Mirror the legacy derivation: the base button (ui.art.icon) with its ".dds" extension replaced by the
+	// "_D.dds" disabled variant. Empty base button -> empty disabled path. Game-thread only (static buffer).
 	static char szDisabled[512];
 	szDisabled[0] = '\0';
 	const char* szButton = getButton();
@@ -37,73 +46,89 @@ const char* CvReligionInfo::getButtonDisabled() const
 	}
 	return szDisabled;
 }
-int CvReligionInfo::getFlavorValue(int i) const
-{ std::map<int, int>::const_iterator it = m_flavours.find(i); return it != m_flavours.end() ? it->second : 0; }
-int CvReligionInfo::getFreeUnit() const { return m_iFreeUnit; }          // grants.freeUnit (materialized at mapFrom)
-int CvReligionInfo::getNumFreeUnits() const { return m_iNumFreeUnits; }  // grants.numFreeUnits pulse (materialized at mapFrom)
 
 void CvReligionInfo::mapFrom(const picojson::value& entity)
 {
-	// remap-idempotency (CvInfo.h): the state-religion/holy-city demux below ACCUMULATES (+=) -- start from zero.
-	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c) { m_aiStateReligionCommerce[c] = 0; m_aiHolyCityCommerce[c] = 0; }
-	shrineCommerce.clear();
-	CvInfo::mapFrom(entity);   // base: text + availability (enables.buildings/units, grants.freeUnit/numFreeUnits)
-	// materialized grants reads (bucket-string reads are load-time only; pulses store ×100, /100 = the human count)
+	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers, fills edges/grants)
+
+	// idempotency (CvInfo.h): the full-registry re-run fully redefines every materialized member
+	// (the reverse-pass-fed tech FK + the runtime glyph/registry members are NOT reset here)
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		m_aiShrineCommerce[iCommerce] = 0;
+	}
+	m_flavours.clear();
+	m_iSpreadFactor = 0;
+	m_iTGAIndex = -1;
+	m_szAdjectiveKey.clear();
+	m_szSound.clear();
+	m_szTechButton.clear();
+	m_szGenericTechButton.clear();
+	m_szMovieFile.clear();
+	m_szMovieSound.clear();
+
+	// grants-materialized reads (bucket-string reads are load-time only; pulses store ×100, /100 = human count)
 	m_iFreeUnit = m_grants.firstListId("freeUnit");
-	m_iNumFreeUnits = m_grants.pulse100("numFreeUnits") / 100;
-	if (!entity.is<picojson::object>()) return;
-	const picojson::object& o = entity.get<picojson::object>();
+	m_iNumFreeUnits = m_grants.pulse("numFreeUnits") / 100;
 
-	picojson::object::const_iterator sh = o.find("shrine");
-	if (sh != o.end()) jsonCommerceMap(sh->second, shrineCommerce);
-	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)   // materialize the int-indexed shrine array from the by-name map
+	if (!entity.is<picojson::object>())
 	{
-		std::map<std::string, int>::const_iterator gi = shrineCommerce.find(COMMERCE_NAME[c]);
-		m_aiGlobalReligionCommerce[c] = (gi != shrineCommerce.end()) ? gi->second : 0;
+		return;
 	}
+	const picojson::object& entityObj = entity.get<picojson::object>();
 
-	// STATE-religion / HOLY-city commerce: {commerce}.city.flat is a LIST of { value, enabled:{PRED:self} } -- demux by PRED.
-	for (int c = 0; c < NUM_COMMERCE_TYPES; ++c)
+	// --- the §9 `shrine` block: {<channel word>: N} -- the per-commerce shrine values, a MAGNITUDE plane
+	// (×100). The channel word resolves through the ONE vocabulary (infoFamilyFromKey -> infoFamilyCommerce),
+	// never a local table. ---
+	if (const picojson::object* pShrine = jsonChildObj(entityObj, "shrine"))
 	{
-		const picojson::object* fo = jsonChildObj(o, COMMERCE_NAME[c]);   if (!fo) continue;
-		const picojson::object* so = jsonChildObj(*fo, "city");           if (!so) continue;
-		picojson::object::const_iterator fl = so->find("flat");           if (fl == so->end() || !fl->second.is<picojson::array>()) continue;
-		const picojson::array& a = fl->second.get<picojson::array>();
-		for (size_t i = 0; i < a.size(); ++i)
+		for (picojson::object::const_iterator shrineIt = pShrine->begin(); shrineIt != pShrine->end(); ++shrineIt)
 		{
-			if (!a[i].is<picojson::object>()) continue;
-			const picojson::object& e = a[i].get<picojson::object>();
-			picojson::object::const_iterator ve = e.find("value");
-			const picojson::object* en = jsonChildObj(e, "enabled");
-			if (ve == e.end() || !ve->second.is<double>() || !en) continue;
-			const int val = (int)ve->second.get<double>();
-			if (en->find("STATE_RELIGION") != en->end())      m_aiStateReligionCommerce[c] += val;
-			else if (en->find("IS_HOLY_CITY") != en->end())   m_aiHolyCityCommerce[c] += val;
-		}
-	}
-
-	if (const picojson::object* io = jsonChildObj(o, "identity"))
-	{
-		m_iSpreadFactor = jsonIdInt(*io, "spreadFactor");
-		std::string adj; jsonIdStr(*io, "adjective", adj); if (!adj.empty()) m_szAdjectiveKey = CvWString(adj.c_str());
-	}
-
-	if (const picojson::object* ui = jsonChildObj(o, "ui"))
-		if (const picojson::object* art = jsonChildObj(*ui, "art"))
-		{
-			jsonIdStr(*art, "techButton", m_szTechButton);
-			jsonIdStr(*art, "genericTechButton", m_szGenericTechButton);
-			m_iTGAIndex = jsonIdInt(*art, "tgaIndex");
-			if (const picojson::object* mov = jsonChildObj(*art, "movie"))
+			if (!shrineIt->second.is<double>())
 			{
-				jsonIdStr(*mov, "file", m_szMovieFile);
-				jsonIdStr(*mov, "sound", m_szMovieSound);
+				continue;
+			}
+			const int iCommerce = infoFamilyCommerce(infoFamilyFromKey(shrineIt->first));
+			if (iCommerce >= 0 && iCommerce < NUM_COMMERCE_TYPES)
+			{
+				m_aiShrineCommerce[iCommerce] = jsonX100(shrineIt->second.get<double>());
 			}
 		}
+	}
 
-	if (const picojson::object* so2 = jsonChildObj(o, "sound")) jsonIdStr(*so2, "sound", m_szSound);
+	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
+	{
+		m_iSpreadFactor = jsonIdInt(*pIdentity, "spreadFactor");
+		std::string szAdjective;
+		if (jsonIdStr(*pIdentity, "adjective", szAdjective))
+		{
+			m_szAdjectiveKey = CvWString(szAdjective.c_str());
+		}
+	}
 
-	// ai.flavours -- an ARRAY of single-key { FLAVOR_X: n } objects (NOT a map).
-	if (const picojson::object* ai = jsonChildObj(o, "ai"))
-		jsonReadFlavours(*ai, m_flavours);
+	if (const picojson::object* pUi = jsonChildObj(entityObj, "ui"))
+	{
+		if (const picojson::object* pArt = jsonChildObj(*pUi, "art"))
+		{
+			jsonIdStr(*pArt, "techButton", m_szTechButton);
+			jsonIdStr(*pArt, "genericTechButton", m_szGenericTechButton);
+			m_iTGAIndex = jsonIdInt(*pArt, "tgaIndex");
+			if (const picojson::object* pMovie = jsonChildObj(*pArt, "movie"))
+			{
+				jsonIdStr(*pMovie, "file", m_szMovieFile);
+				jsonIdStr(*pMovie, "sound", m_szMovieSound);
+			}
+		}
+	}
+
+	if (const picojson::object* pSound = jsonChildObj(entityObj, "sound"))
+	{
+		jsonIdStr(*pSound, "sound", m_szSound);
+	}
+
+	// ai.flavours -- an ARRAY of single-key { FLAVOR_X: n } objects (NOT a map)
+	if (const picojson::object* pAi = jsonChildObj(entityObj, "ai"))
+	{
+		jsonReadFlavours(*pAi, m_flavours);
+	}
 }

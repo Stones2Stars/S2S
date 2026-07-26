@@ -1693,9 +1693,9 @@ int CyCity::getBonusCommercePercentChanges(int eIndex, int eBuilding) const
 	return m_pCity->getBonusCommercePercentChanges((CommerceTypes)eIndex, (BuildingTypes)eBuilding);
 }
 
-int CyCity::getBaseYieldRateFromBuilding100(int iYield, int iBuilding) const
+int CyCity::getBaseYieldRateFromBuilding(int iYield, int iBuilding) const
 {
-	return m_pCity->getBaseYieldRateFromBuilding100((YieldTypes)iYield, (BuildingTypes)iBuilding);
+	return m_pCity->getBaseYieldRateFromBuilding((YieldTypes)iYield, (BuildingTypes)iBuilding);
 }
 
 bool CyCity::isAutomatedCanBuild(int /*BuildTypes*/ eIndex) const

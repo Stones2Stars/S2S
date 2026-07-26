@@ -29,9 +29,18 @@ struct DiCompiledSet
 static std::map<const CvInfo*, DiCompiledSet> s_compiled;
 static const std::vector<CascadeDeposit> s_noDeposits;   // the shared empty answer (NULL / family-less infos)
 
-// The lazy reverse-route cache (F0 R2): source info -> its compiled cross-scope route. Filled on first routeFor
-// query, dropped with s_compiled by clearCompiled() (its keys are the about-to-be-freed infos).
+// The lazy reverse-route cache: source info -> its compiled per-scope package masks + receiver fan. Filled on
+// first routeFor query (post-load -- the registry layouts are complete by then), dropped with s_compiled by
+// clearCompiled() (its keys are the about-to-be-freed infos).
 static std::map<const CvInfo*, SourceRoute> s_routes;
+
+// The lazy CONDITION-DEPENDENCY routes (see the header): one global pass over every compiled record's gates,
+// per scalers, and religion filters -- keyed by the state the gate reads. Dropped by clearCompiled().
+static std::map<std::string, SourceRoute> s_depByType;    // presence atoms / parameterized predicates / typed pers
+static std::map<std::string, SourceRoute> s_depByToken;   // per counter tokens (POPULATION / CITY / ERA / *_RATE ...)
+static std::map<int, SourceRoute> s_depByPredicate;       // bare predicates (IS_GOLDEN_AGE / IS_CAPITAL / ...)
+static SourceRoute s_depReligionCounts;                   // the counted-religion filter class (`religion:` qualifiers)
+static bool s_bDepsCompiled = false;
 
 
 int DepositIndex::internSegment(const std::string& s)
@@ -90,7 +99,6 @@ void DepositIndex::compile(CascadeDeposit& d)
 	d.nSeg = 0;
 	for (int i = 0; i < CascadeDeposit::CASC_DEP_SEGS; ++i) d.seg[i] = -1;
 	std::string last;
-	std::string segStrs[3];   // family / scope / member -- kept for the one-time channel resolution below
 	size_t start = 0;
 	for (;;)
 	{
@@ -100,27 +108,16 @@ void DepositIndex::compile(CascadeDeposit& d)
 		if (!segStr.empty())
 		{
 			if (d.nSeg < CascadeDeposit::CASC_DEP_SEGS) d.seg[d.nSeg] = internSegment(segStr);
-			if (d.nSeg < 3) segStrs[d.nSeg] = segStr;
 			++d.nSeg;
 			last = segStr;
 		}
 		if (dot == std::string::npos) break;
 		start = dot + 1;
 	}
-	// THE ONE-TIME SLOT RESOLUTION: (family, member, unit) -> channel + which dictionary, and the scope
-	// segment -> its index. Done HERE so no runtime path ever interprets an address string. An address that is
-	// not a cascade channel leaves chan = -1 and the gather skips it -- how the unit-plane families and any
-	// retired system drop out with no special-casing.
-	{
-		CascadeChannel ch;
-		bool bPct = false;
-		if (cascadeResolveAddress(segStrs[0].c_str(), segStrs[2].c_str(), d.unit.c_str(), ch, bPct))
-		{
-			d.chan = (short)ch;
-			d.isPercent = bPct;
-		}
-		d.scopeIdx = (short)cascadeScopeFromSegment(segStrs[1].c_str());
-	}
+	// The slot axes (family/kind/scope/channel/dictionary) are COPIED from the compiled CvModEntry at push --
+	// the parse typed every axis once ([DEC-materialize-at-mapfrom]); nothing here re-interprets an address
+	// string. An entry outside the vocabulary leaves channel = -1 and every slot consumer skips it -- how the
+	// unit-plane families and any batch-pending member drop out with no special-casing.
 
 	// FK-resolve the LAST segment when it is a keyed deposit's INFOTYPE target ("<chan>.<scope>.<member>.<KEY>").
 	// Hide-assert: a non-key tail (a member name like "goldenAge"/"distance") simply doesn't resolve. Deliberately
@@ -130,7 +127,7 @@ void DepositIndex::compile(CascadeDeposit& d)
 }
 
 // One CvModifiers unit's compiled entries -> compiled records: per entry, the record carries the entry's
-// payload (value100 / enabled / disabled, borrowed) + the authored address spelled back from the entry's
+// payload (value / enabled / disabled, borrowed) + the authored address spelled back from the entry's
 // interned segments (render/diagnostics only) + the entry's unit spelled as the unit segment; compile()
 // interns + FK-resolves into THIS index's own id space. Entry order is the authored walk order -- every
 // consumer sums commutatively, so order carries no semantics. `j` = the SOURCE info (the SELF per token
@@ -149,10 +146,24 @@ static void di_pushFamilies(const CvInfo* j, const CvModifiers* mods, std::vecto
 		CascadeDeposit& d = out.back();
 		d.address = e->address();
 		d.unit = szUnit;
-		d.value100 = e->value100;
+		d.value = e->value;
+		d.aiOnly = e->aiOnly;   // the §3.9 audience flag rides the record (the address carries NO ai segment)
+		// the typed slot axes, copied straight off the compiled entry (parse typed them once); the channel is
+		// minted through the registry, which also derives the per-scope channel SETS from this same push
+		// (state-repositories.md KEYS ONLY WHERE NEEDED -- the layout falls out of the data).
+		d.family = (short)e->family;
+		d.kind = (short)e->kind;
+		d.propertyFk = e->propertyFk;
+		d.scopeIdx = (short)e->scope;
+		d.isPercent = (e->unit == CASC_UNIT_PERCENT || e->unit == CASC_UNIT_RAW_PERCENT);
+		if ((int)e->scope < CASCADE_PACKAGE_SCOPES)
+		{
+			d.channel = CascadeChannelRegistry::registerDeposit(e->scope, e->family, e->kind, e->propertyFk);
+		}
 		d.enabled = e->enabled;
 		d.disabled = e->disabled;
 		d.unitQual = e->unitQual;
+		d.religionQual = e->religionQual;
 		d.hasPer = e->hasPer;
 		d.perType = e->perType;
 		d.perTypeId = e->perTypeId;
@@ -175,6 +186,12 @@ static void di_pushFamilies(const CvInfo* j, const CvModifiers* mods, std::vecto
 		// compares ints, never strings (append-only interner; ids survive a re-map).
 		if (d.hasPer && d.perTypeId < 0 && !d.perType.empty())
 			d.perTokenSeg = DepositIndex::internSegment(d.perType);
+		// the §3.7 `per.above` threshold (ruling 26): the base was source-resolved at mapFrom
+		// (CvModifiers::resolveAboveToken); a token spelling interns so perScale's scaling leg compares ints.
+		d.hasAbove = e->hasAbove;
+		d.perAbove = e->perAbove;
+		if (e->hasAbove && !e->perAboveToken.empty())
+			d.perAboveSeg = DepositIndex::internSegment(e->perAboveToken);
 		DepositIndex::compile(d);
 	}
 }
@@ -196,14 +213,64 @@ void DepositIndex::clearCompiled()
 {
 	s_compiled.clear();
 	s_routes.clear();
+	s_depByType.clear();
+	s_depByToken.clear();
+	s_depByPredicate.clear();
+	s_depReligionCounts = SourceRoute();
+	s_bDepsCompiled = false;
 }
 
-// THE REVERSE ROUTE (F0 R2). The body is a VERBATIM transcription of CascadeAccumulator::buildingProcessed's former
-// inline per-deposit loop -- generalized to any source info and computed once (cached) instead of re-derived every
-// event. So it is derivation-IDENTICAL to the proven building path: a percent empire/area deposit fans to every
-// city's percent stacks (+ the player gp/maint/buildRate sums); a flat one to the player flat/wb/keyed sums (+ the
-// sibling CBASE/WB keyed realization, or the specialist packages); a world deposit sets the world flag. The
-// per-CHANNEL narrowing (which yield) is the R2b follow-on; this is the scope x unit x member level.
+// ===================== the ONE mark derivation (state-repositories.md: derive, never hand-wire) =====================
+
+// Fold ONE compiled record's reach into a route: its package bit at its own scope, plus the receiver-sum bits
+// the channel feeds (city rates / empire sums -- the spec'd consuming scopes; culture the dual-consumer falls
+// out of both receiver tables carrying it). Unit-qualified records never dirty a cache
+// ([DEC-unit-modifiers-on-top]); world-scope records only flag the census (world is CONFIG, no package).
+static void di_addRecordReach(SourceRoute& route, const CascadeDeposit& record)
+{
+	if (record.unitQual != NULL)
+	{
+		return;
+	}
+	if (record.channel < 0)
+	{
+		return;
+	}
+	const CvCascScope eScope = (CvCascScope)record.scopeIdx;
+	if ((int)eScope < 0 || (int)eScope >= CASCADE_PACKAGE_SCOPES)
+	{
+		return;
+	}
+	if (eScope == CASC_SCOPE_WORLD)
+	{
+		route.world = true;   // mis-scoped world authorings are curator debt -- visible, never a mark target
+		return;
+	}
+	route.packageMask[(int)eScope] |= CascadeChannelRegistry::scopeChannelBit(eScope, record.channel);
+	// the wellbeing sign twin shares the fill (a signed deposit can land either side) -- mark both slots
+	const int iTwin = CascadeChannelRegistry::wellbeingTwin(record.channel);
+	if (iTwin >= 0)
+	{
+		route.packageMask[(int)eScope] |= CascadeChannelRegistry::scopeChannelBit(eScope, iTwin);
+	}
+	// ONE derivation marks BOTH levels: the packages AND the sum slots they feed. An above-city deposit rolls
+	// DOWN to every owner city's realized rates; a city/plot deposit feeds only the event's own city.
+	const int64_t iCitySumBit = CascadeChannelRegistry::scopeReceiverBit(CASC_SCOPE_CITY, record.channel);
+	if (iCitySumBit != 0)
+	{
+		route.citySumMask |= iCitySumBit;
+		if (eScope != CASC_SCOPE_CITY && eScope != CASC_SCOPE_PLOT)
+		{
+			route.cityFanAll = true;
+		}
+	}
+	route.empireSumMask |= CascadeChannelRegistry::scopeReceiverBit(CASC_SCOPE_EMPIRE, record.channel);
+}
+
+// THE REVERSE ROUTE: a source's compiled deposits name exactly the channels x scopes they touch -- the union
+// IS the event's dirty mask ("the dirty flags fall out of the deposit addresses"). Computed once per source
+// info, lazily (post-load), and cached. An obsolete building's whenObsolete tree folds into the SAME route:
+// the route must cover the source's reach in EITHER state (the obsoletion flip itself re-marks both sides).
 const SourceRoute& DepositIndex::routeFor(const CvInfo* j)
 {
 	static const SourceRoute s_empty;
@@ -211,60 +278,155 @@ const SourceRoute& DepositIndex::routeFor(const CvInfo* j)
 	const std::map<const CvInfo*, SourceRoute>::const_iterator cit = s_routes.find(j);
 	if (cit != s_routes.end()) return cit->second;
 
-	// The interned segment ids the routing compares against (all authored in any loaded game; a real deposit's
-	// address is always >= 2 segments, so seg[1] is never -1 and an unauthored id can never false-match).
-	const int segArea       = lookupSegment("area");
-	const int segEmpire     = lookupSegment("empire");
-	const int segWorld      = lookupSegment("world");
-	const int segPercent    = lookupSegment("percent");
-	const int segBuildings  = lookupSegment("buildings");
-	const int segSpecialist = lookupSegment("specialist");
-	// R2b PER-CHANNEL narrowing (the family segment seg[0], grounded from the fills' channel strings:
-	// BuildingPackage/PercentStack yields = {food,production,commerce}, CommerceCalc = {gold,research,culture,
-	// espionage}, ScalarChannels = greatPeopleRate/maintenance/buildRate). A yield/commerce empire PERCENT is
-	// purely CITY-realized (yPctCity/cPct) -- the player scope holds NO yield/commerce percent (verified against
-	// CascadePlayerScope), so it marks ONE city bit and NO player bit. gp/maint keep their player scalar half
-	// (gpModPlayer/maintPlayerAll = PSC_SC); buildRate keeps PSC_BR. The GROUPED families (defense, stateReligion --
-	// seg[0] not a plain channel) + any unrecognized family fall to the COARSE-SAFE percent mask (never under-mark).
-	const int segFood = lookupSegment("food"), segProd = lookupSegment("production"), segCommY = lookupSegment("commerce");
-	const int segGold = lookupSegment("gold"), segResearch = lookupSegment("research"),
-	          segCulture = lookupSegment("culture"), segEsp = lookupSegment("espionage");
-	const int segGp = lookupSegment("greatPeopleRate"), segMaint = lookupSegment("maintenance"), segBr = lookupSegment("buildRate");
-
-	SourceRoute r;
-	const std::vector<CascadeDeposit>& deps = depositsFor(j);
-	for (size_t i = 0; i < deps.size(); ++i)
+	SourceRoute route;
+	const std::vector<CascadeDeposit>& deposits = depositsFor(j);
+	for (size_t i = 0; i < deposits.size(); ++i)
 	{
-		const CascadeDeposit& dep = deps[i];
-		if (dep.seg[1] == segWorld) { r.world = true; r.playerBits |= PSC_SC; continue; }
-		if (dep.seg[1] != segEmpire && dep.seg[1] != segArea) continue;
-		if (dep.unitId == segPercent)
+		di_addRecordReach(route, deposits[i]);
+	}
+	const std::vector<CascadeDeposit>& obsoleteDeposits = whenObsoleteFor(j);
+	for (size_t i = 0; i < obsoleteDeposits.size(); ++i)
+	{
+		di_addRecordReach(route, obsoleteDeposits[i]);
+	}
+	return s_routes[j] = route;
+}
+
+// ---- the condition-dependency compile: ONE global pass over every compiled record's gates (modifier.md §3:
+// ---- conditions re-evaluate on every recompute, so the state a gate reads must mark the carrying package).
+
+// Classify one condition-tree node's state reads into the dependency tables, crediting them with the carrying
+// record's reach. GROUP nodes recurse; PRESENCE atoms key their TYPE string; parameterized predicates key the
+// param TYPE; bare predicates key their kind.
+static void di_scanConditionTree(const CvCondition* node, const CascadeDeposit& record)
+{
+	if (node == NULL)
+	{
+		return;
+	}
+	if (node->kind == CASC_COND_GROUP)
+	{
+		for (size_t i = 0; i < node->all.size(); ++i)
 		{
-			// empire/area PERCENTS enter the CITY-REALIZED stacks (the owned-type walk); the player half is only the
-			// scalar sums (gp/maint = PSC_SC, buildRate = PSC_BR) -- NOT the yield/commerce percents (city-only).
-			const int f = dep.seg[0];
-			if (f == segFood || f == segProd || f == segCommY)                            r.cityBits |= CPK_YPCT;
-			else if (f == segGold || f == segResearch || f == segCulture || f == segEsp)  r.cityBits |= CPK_CPCT;
-			else if (f == segGp)    { r.cityBits |= CPK_SCPCT; r.playerBits |= PSC_SC; }
-			else if (f == segMaint) { r.cityBits |= CPK_SCPCT; r.playerBits |= PSC_SC; }
-			else if (f == segBr)    { r.cityBits |= CPK_BR;    r.playerBits |= PSC_BR; }
-			else   // defense / stateReligion (grouped) / unrecognized -> coarse-safe (never under-mark)
-			{
-				r.cityBits   |= CPK_YPCT | CPK_CPCT | CPK_SCPCT | CPK_BR;
-				r.playerBits |= PSC_SC | PSC_BR;
-			}
+			di_scanConditionTree(node->all[i], record);
+		}
+		for (size_t i = 0; i < node->anyOf.size(); ++i)
+		{
+			di_scanConditionTree(node->anyOf[i], record);
+		}
+		for (size_t i = 0; i < node->noneOf.size(); ++i)
+		{
+			di_scanConditionTree(node->noneOf[i], record);
+		}
+		di_scanConditionTree(node->enabled, record);
+		di_scanConditionTree(node->disabled, record);
+		return;
+	}
+	if (node->kind == CASC_COND_PRESENCE)
+	{
+		if (!node->type.empty())
+		{
+			di_addRecordReach(s_depByType[node->type], record);
+		}
+		return;
+	}
+	// PREDICATE: a parameterized predicate depends on the named INFOTYPE's state; a bare one on its own fact.
+	if (!node->param.empty())
+	{
+		di_addRecordReach(s_depByType[node->param], record);
+	}
+	if (node->predKind != CASC_PRED_UNKNOWN)
+	{
+		di_addRecordReach(s_depByPredicate[(int)node->predKind], record);
+	}
+}
+
+static void di_scanRecordDependencies(const CascadeDeposit& record)
+{
+	di_scanConditionTree(record.enabled, record);
+	di_scanConditionTree(record.disabled, record);
+	// the §3.7 per count-scaler: the counted state's changes rescale the deposit
+	if (record.hasPer && !record.perType.empty())
+	{
+		if (record.perTypeId >= 0)
+		{
+			di_addRecordReach(s_depByType[record.perType], record);
 		}
 		else
 		{
-			// empire/area FLATS feed the player building sums (trade) + the wb fold maps + the keyed ledgers
-			r.playerBits |= PSC_SC | PSC_CFLAT | PSC_WB;
-			if (dep.nSeg == 4 && dep.seg[2] == segBuildings)
-				r.cityBits |= CPK_CBASE | CPK_WB;   // the guild-grant + Royal-Tomb classes: every city's keyed realization re-fills
-			else if (dep.nSeg >= 3 && dep.seg[2] == segSpecialist)
-				r.cityBits |= CPK_YSPEC | CPK_CSPEC;   // <ch>.empire.specialist.perSpecialist -> every city's specialist package (G4)
+			di_addRecordReach(s_depByToken[record.perType], record);
 		}
 	}
-	return s_routes[j] = r;
+	if (record.perAnyOfTypes != NULL)
+	{
+		for (size_t i = 0; i < record.perAnyOfTypes->size(); ++i)
+		{
+			di_addRecordReach(s_depByType[(*record.perAnyOfTypes)[i]], record);
+		}
+	}
+	// the legacy per-unit spellings are population/specialist-count dependencies by construction
+	if (record.unit == "perPopulation")
+	{
+		di_addRecordReach(s_depByToken["POPULATION"], record);
+	}
+	// the §3.7 religion: counted-kind filter re-counts on any city religion change
+	if (record.religionQual != NULL)
+	{
+		di_addRecordReach(s_depReligionCounts, record);
+		di_scanConditionTree(record.religionQual, record);
+	}
+}
+
+static void di_ensureDependencies()
+{
+	if (s_bDepsCompiled)
+	{
+		return;
+	}
+	s_bDepsCompiled = true;
+	for (std::map<const CvInfo*, DiCompiledSet>::const_iterator it = s_compiled.begin(); it != s_compiled.end(); ++it)
+	{
+		const DiCompiledSet& set = it->second;
+		for (size_t i = 0; i < set.main.size(); ++i)
+		{
+			di_scanRecordDependencies(set.main[i]);
+		}
+		for (size_t i = 0; i < set.whenObsolete.size(); ++i)
+		{
+			di_scanRecordDependencies(set.whenObsolete[i]);
+		}
+	}
+}
+
+const SourceRoute* DepositIndex::dependencyForType(const std::string& szType)
+{
+	di_ensureDependencies();
+	const std::map<std::string, SourceRoute>::const_iterator found = s_depByType.find(szType);
+	return found == s_depByType.end() ? NULL : &found->second;
+}
+
+const SourceRoute* DepositIndex::dependencyForToken(const char* szToken)
+{
+	if (szToken == NULL)
+	{
+		return NULL;
+	}
+	di_ensureDependencies();
+	const std::map<std::string, SourceRoute>::const_iterator found = s_depByToken.find(std::string(szToken));
+	return found == s_depByToken.end() ? NULL : &found->second;
+}
+
+const SourceRoute* DepositIndex::dependencyForPredicate(CvCascPredKind ePredicate)
+{
+	di_ensureDependencies();
+	const std::map<int, SourceRoute>::const_iterator found = s_depByPredicate.find((int)ePredicate);
+	return found == s_depByPredicate.end() ? NULL : &found->second;
+}
+
+const SourceRoute* DepositIndex::dependencyForReligionCounts()
+{
+	di_ensureDependencies();
+	return s_depReligionCounts.empty() ? NULL : &s_depReligionCounts;
 }
 
 const std::vector<CascadeDeposit>& DepositIndex::depositsFor(const CvInfo* j)

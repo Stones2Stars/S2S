@@ -47,11 +47,22 @@ enum CvCascPredKind
 	// city / player
 	CASC_PRED_IS_CAPITAL, CASC_PRED_IS_GOVERNMENT_CENTER, CASC_PRED_HAS_POWER, CASC_PRED_HAS_STATE_RELIGION, CASC_PRED_STATE_RELIGION_IN_CITY, CASC_PRED_IS_GOLDEN_AGE, CASC_PRED_IS_STATE_RELIGION_HOLY_CITY,
 	CASC_PRED_IS_ANARCHY, CASC_PRED_IS_OWNED,   // #430 outcome gates: player in anarchy; plot is in owned territory
+	// the §3.7 counted-kind RELIGION filter's per-religion test (ruling 23: `religion: "!IS_STATE_RELIGION"`):
+	// evaluated against the COUNTED religion (ctx.religion) -- true iff it is the owner's state religion
+	CASC_PRED_IS_STATE_RELIGION,
 
 	// parameterized (Type param in `param`)
 	CASC_PRED_HAS_TERRAIN, CASC_PRED_HAS_IMPROVEMENT, CASC_PRED_HAS_BONUS, CASC_PRED_HAS_RELIGION, CASC_PRED_STATE_RELIGION, CASC_PRED_IS_HOLY_CITY, CASC_PRED_HAS_CORPORATION,
+	// {IS_HEADQUARTERS: CORPORATION_X} -- the city is the corp's HQ city (ruling 10, the {IS_HOLY_CITY: R}
+	// pattern; the corp HQ-revenue entries' gate). Bare form = HQ of ANY corporation.
+	CASC_PRED_IS_HEADQUARTERS,
 	// numeric-parameterized
 	CASC_PRED_LATITUDE, CASC_PRED_EXISTED_FOR,
+	// {natureYield:{food:N,...}} -- the improvement PLACEMENT threshold (one node per channel): the target
+	// plot's PRE-improvement nature yield of the channel must be >= `min` (the engine gate: CvPlot.cpp
+	// canHaveImprovement, calculateNatureYield(channel, team) < prereq -> invalid). `id` carries the
+	// YieldTypes channel (no Type param -- `param` stays empty so the reverse walks never FK-route it).
+	CASC_PRED_NATURE_YIELD,
 	// classification-TAG membership: IS_<TAG> against a UNIT target (json §8/§3.5). `param` holds the full
 	// TAG_<SUFFIX> type name; the id is resolved lazily at eval (the TAG_* infotypes are minted AFTER condition parse).
 	CASC_PRED_IS_TAG

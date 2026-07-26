@@ -47,9 +47,9 @@ static void ccap_union(const CvTechInfo* j, CascadeTeamCaps& c)
 	if (j == NULL) return;
 	const CvClassificationBlock* caps = j->getCapabilities();
 	if (caps != NULL) c.caps.insert(caps->all().begin(), caps->all().end());
-	c.trade.insert(j->canTrade.begin(), j->canTrade.end());
-	c.tradeTerrains.insert(j->canTradeOnTerrains.begin(), j->canTradeOnTerrains.end());
-	c.work.insert(j->canWorkOn.begin(), j->canWorkOn.end());
+	c.trade.insert(j->getCanTrade().begin(), j->getCanTrade().end());
+	c.tradeTerrains.insert(j->getCanTradeOnTerrains().begin(), j->getCanTradeOnTerrains().end());
+	c.work.insert(j->getCanWorkOn().begin(), j->getCanWorkOn().end());
 }
 
 void CascadeCapabilities::refreshInto(const CvTeam& kTeam, CascadeTeamCaps& c)
@@ -64,8 +64,10 @@ void CascadeCapabilities::refreshInto(const CvTeam& kTeam, CascadeTeamCaps& c)
 		if (kTeam.isHasTech((TechTypes)t))
 		{
 			ccap_union(static_cast<const CvTechInfo*>(InfoRepo<CvTechInfo>::get().get(t)), c);
-			// the derived corp revenue modifier (the header note: interim static-Info read, JSON plug later)
-			c.corpRevenueMod += GC.getTechInfo((TechTypes)t).getCorporationRevenueModifier();
+			// the derived corp revenue modifier (ruling 15: commerce.empire.corporation) -- the compiled point
+			// read is ×100 ([DEC-fixedpoint-x100]); this aggregate stays the human percent its CvTeam/CvCity
+			// consumers combine, so the ÷100 sits here at the boundary.
+			c.corpRevenueMod += GC.getTechInfo((TechTypes)t).getCorporationCommerceModifier(CASC_SCOPE_EMPIRE) / 100;
 		}
 	// Precompute the HOT-PATH reads: the named flags + the per-terrain bit vector. All string/set work
 	// happens HERE, once per (team, tech-change) -- the queries below are plain array reads (the pathfinder

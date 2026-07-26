@@ -11,8 +11,44 @@
 #include "CvClassificationRegistry.h"   // count(CLSD_POLICY) -- the minted POLICY id space
 #include "CvClassificationBlock.h"            // CLSD_POLICY + hasId (the O(1) policy bitset)
 
-// forwarding accessor: the empire's state religion is already O(1) on CvPlayer -- read it through, no stored copy.
+// --- forwarding accessors: read the bound player / its team; no stored copy (owner: don't duplicate available
+// state). These are the HAVE-axis reads of the empire scope (contexts.md) -- the evaluator's atoms and the
+// enabler's gates ask HERE, never CvPlayer/CvTeam directly.
 int EmpireContext::stateReligion() const { return m_player != NULL ? (int)m_player->getStateReligion() : -1; }
+
+bool EmpireContext::hasCivic(int eCivic) const
+{
+	if (m_player == NULL || eCivic < 0)
+		return false;
+	for (int iOption = 0; iOption < GC.getNumCivicOptionInfos(); ++iOption)
+	{
+		if ((int)m_player->getCivics((CivicOptionTypes)iOption) == eCivic)
+			return true;
+	}
+	return false;
+}
+
+bool EmpireContext::hasTrait(int eTrait) const     { return m_player != NULL && eTrait >= 0 && m_player->hasTrait((TraitTypes)eTrait); }
+bool EmpireContext::hasHeritage(int eHeritage) const { return m_player != NULL && eHeritage >= 0 && m_player->hasHeritage((HeritageTypes)eHeritage); }
+bool EmpireContext::isGoldenAge() const            { return m_player != NULL && m_player->isGoldenAge(); }
+bool EmpireContext::isAnarchy() const              { return m_player != NULL && m_player->isAnarchy(); }
+int  EmpireContext::numCities() const              { return m_player != NULL ? m_player->getNumCities() : 0; }
+int  EmpireContext::currentEra() const             { return m_player != NULL ? (int)m_player->getCurrentEra() : 0; }
+int  EmpireContext::commerceRate(int eCommerce) const { return m_player != NULL ? m_player->getCommercePercent((CommerceTypes)eCommerce) : 0; }
+bool EmpireContext::teamHasTech(int eTech) const
+{
+	return m_player != NULL && eTech >= 0 && GET_TEAM(m_player->getTeam()).isHasTech((TechTypes)eTech);
+}
+int  EmpireContext::teamProjectCount(int eProject) const
+{
+	if (m_player == NULL || eProject < 0)
+		return 0;
+	return GET_TEAM(m_player->getTeam()).getProjectCount((ProjectTypes)eProject);
+}
+int  EmpireContext::teamMemberCount() const
+{
+	return m_player != NULL ? GET_TEAM(m_player->getTeam()).getNumMembers() : 0;
+}
 
 // Fill the EMPIRE half of the eval ctx (player/team) from the bound player; CityContext::fillEvalCtx fills city/plot.
 void EmpireContext::fillEvalCtx(CvCascadeEvalCtx& ec) const

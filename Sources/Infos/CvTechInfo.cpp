@@ -1,197 +1,258 @@
 //
-//	CvTechInfo::mapFrom -- base common sections + the empire-ability blocks (§8: capabilities / canTrade /
-//	canTradeOn / canWorkOn) + the tech's OWN typed values (empire modifiers, flags, AI, art/sound/quote). The whole
-//	forward-unlock surface is store-inverted onto other entities' `enables.*` (base) -- never a getter here.
-//	HUMAN-native (assetValue/powerValue re-apply the latent ×100). See the header.
+//	CvTechInfo -- the tech poco's own typed reading on top of the base section dispatch (see the header).
+//	mapFrom materializes the capability-plane sibling blocks + the census identity set ONCE into typed members
+//	([DEC-materialize-at-mapfrom]) and walks the composed requires.build tree into the forward prereq views
+//	(enabler.md §2). Idempotent by contract (unconditional scalar assigns, clear-first containers). Every
+//	modifier family the tech authors compiles into m_modifiers via the base dispatch -- no per-family raw read
+//	survives here ([DEC-new-getter-surface]).
 //
 
 #include "CvGameCoreDLL.h"          // PCH umbrella -- picojson
 #include "CvTechInfo.h"
-#include "CvJsonParse.h"            // jsonBoolSet + jsonResolveId + the shared walkers (jsonChildObj/jsonFamVal/...)
+#include "CvJsonParse.h"            // jsonBoolSet / jsonResolveId / jsonChildObj / jsonIdInt / jsonIdBool / jsonIdFk / jsonIdStr / jsonX100 / jsonReadFlavours
 
 CvTechInfo::CvTechInfo()
-	: m_iResearchCost(0), m_iEra(-1), m_iAdvisorType(-1), m_iTradeRoutes(0),
-	  m_iFeatureProductionModifier(0), m_iWorkerSpeedModifier(0), m_iHealth(0), m_iHappiness(0),
-	  m_iGlobalTradeModifier(0), m_iGlobalForeignTradeModifier(0), m_iTradeMissionModifier(0),
-	  m_iCorporationRevenueModifier(0), m_iCorporationMaintenanceModifier(0), m_iInflationModifier(0), m_iAssetValue(0), m_iPowerValue(0),
-	  m_iGridX(0), m_iGridY(0), m_iAIWeight(0), m_iAITradeModifier(0),
-	  m_bRepeat(false), m_bTrade(false), m_bDisable(false), m_bGoodyTech(false),
-	  m_bTradeTechs(false), m_bTradeGold(false), m_bTradeMaps(false), m_bTradeOpenBorders(false),
-	  m_bTradeDefensivePact(false), m_bTradePermanentAlliance(false), m_bTradeVassals(false), m_bTradeEmbassy(false),
-	  m_bWorkWater(false), m_bGlobal(false),
-	  m_iFirstFreeProphet(-1), m_iFirstFreeUnit(-1), m_iFirstFreeTechs(0)
-{}
+	: m_iResearchCost(0)
+	, m_iEra(-1)
+	, m_iAdvisor(-1)
+	, m_iGridX(0)
+	, m_iGridY(0)
+	, m_iWorth(0)
+	, m_iMilitaryWorth(0)
+	, m_bRepeat(false)
+	, m_bTradeable(false)
+	, m_bDisable(false)
+	, m_bGoodyTech(false)
+	, m_iAIWeight(0)
+	, m_iAITradeModifier(0)
+{
+}
 
-// identity.quote -- RESOLVE the loaded TXT_KEY to display text, mirroring the archived CvTechInfo::getQuote. Returning
-// the raw m_szQuoteKey showed the literal "TXT_KEY_..._QUOTE" in the tech splash. std::wstring: Boost.Python 1.32 has a
-// std::wstring to_python converter, none for CvWString (the TechWindow.getQuote() TypeError).
+// identity.quote -- RESOLVE the loaded TXT_KEY to display text (see the header).
 std::wstring CvTechInfo::getQuote() const
 {
 	return gDLL->getText(m_szQuoteKey);
 }
 
-// identity double (the ×100-re-applied worth fields read a fractional human value).
-static double id_dbl(const picojson::object& io, const char* k)
-{ picojson::object::const_iterator it = io.find(k); return (it != io.end() && it->second.is<double>()) ? it->second.get<double>() : 0.0; }
+namespace
+{
+	// identity double (the ×100 worth fields author fractional human values).
+	double ti_identityDouble(const picojson::object& identity, const char* szKey)
+	{
+		picojson::object::const_iterator valueIter = identity.find(szKey);
+		if (valueIter == identity.end())
+		{
+			return 0.0;
+		}
+		if (!valueIter->second.is<double>())
+		{
+			return 0.0;
+		}
+		return valueIter->second.get<double>();
+	}
+}
 
 void CvTechInfo::mapFrom(const picojson::value& entity)
 {
-	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom -- fully define the accumulating members
-	// (the ability SETS re-insert identical elements and need no clear; the prereq vectors would double).
-	m_aePrereqAndTechs.clear(); m_aePrereqOrTechs.clear(); m_aPrereqOrBuildings.clear();
-	CvInfo::mapFrom(entity);    // the common cascade sections (text + availability) first
-	if (!entity.is<picojson::object>()) return;
-	const picojson::object& o = entity.get<picojson::object>();
+	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom -- fully define every accumulating
+	// member (the ability sets clear-first; the prereq vectors would double).
+	// NB m_leadsTo is NOT cleared here -- CvGlobals::doPostLoadCaching populates it, not this parse
+	// (addLeadsToTech is a std::set insert, so a re-populate cannot double).
+	m_canTrade.clear();
+	m_canTradeOnTerrains.clear();
+	m_canWorkOn.clear();
+	m_flavours.clear();
+	m_aePrereqAndTechs.clear();
+	m_aePrereqOrTechs.clear();
+	m_aPrereqOrBuildings.clear();
 
-	// (1) empire-ability grantor blocks (§8): the flat `capabilities` block rides the base dispatch into the
-	// composed m_capabilities unit; the bespoke siblings stay subclass-parsed here.
-	picojson::object::const_iterator it;
-	if ((it = o.find("canTrade")) != o.end()) jsonBoolSet(it->second, canTrade);
-	if ((it = o.find("canWorkOn")) != o.end()) jsonBoolSet(it->second, canWorkOn);
-	// materialized getter members (the per-call set/grants/allowed string reads retire to bare member reads)
-	m_bTradeTechs             = canTrade.count("techs") != 0;
-	m_bTradeGold              = canTrade.count("gold") != 0;
-	m_bTradeMaps              = canTrade.count("maps") != 0;
-	m_bTradeOpenBorders       = canTrade.count("openBorders") != 0;
-	m_bTradeDefensivePact     = canTrade.count("defensivePact") != 0;
-	m_bTradePermanentAlliance = canTrade.count("permanentAlliance") != 0;
-	m_bTradeVassals           = canTrade.count("vassals") != 0;
-	m_bTradeEmbassy           = canTrade.count("embassy") != 0;
-	m_bWorkWater              = canWorkOn.count("water") != 0;
-	m_bGlobal                 = m_allowed.cap("world") == 1;
-	m_iFirstFreeProphet       = m_grants.firstListId("firstFreeProphet");
-	m_iFirstFreeUnit          = m_grants.firstListId("firstFreeUnit");
-	m_iFirstFreeTechs         = m_grants.pulse100("freeTechs") / 100;
-	if ((it = o.find("canTradeOn")) != o.end() && it->second.is<picojson::object>())
+	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers, parses the sections)
+	if (!entity.is<picojson::object>())
 	{
-		picojson::object::const_iterator tt = it->second.get<picojson::object>().find("terrains");
-		if (tt != it->second.get<picojson::object>().end() && tt->second.is<picojson::array>())
+		return;
+	}
+	const picojson::object& entityObj = entity.get<picojson::object>();
+
+	// --- the capability-plane sibling blocks (json §8 / capabilities.md): the flat `capabilities` block rides
+	// the base dispatch into the composed m_capabilities unit; the bespoke siblings parse here. ---
+	picojson::object::const_iterator blockIter = entityObj.find("canTrade");
+	if (blockIter != entityObj.end())
+	{
+		jsonBoolSet(blockIter->second, m_canTrade);
+	}
+	blockIter = entityObj.find("canWorkOn");
+	if (blockIter != entityObj.end())
+	{
+		jsonBoolSet(blockIter->second, m_canWorkOn);
+	}
+	blockIter = entityObj.find("canTradeOn");
+	if (blockIter != entityObj.end() && blockIter->second.is<picojson::object>())
+	{
+		const picojson::object& canTradeOnObj = blockIter->second.get<picojson::object>();
+		picojson::object::const_iterator terrainsIter = canTradeOnObj.find("terrains");
+		if (terrainsIter != canTradeOnObj.end() && terrainsIter->second.is<picojson::array>())
 		{
-			const picojson::array& a = tt->second.get<picojson::array>();
-			for (size_t i = 0; i < a.size(); ++i)
-				if (a[i].is<std::string>()) { const int id = jsonResolveId(a[i].get<std::string>()); if (id >= 0) canTradeOnTerrains.insert(id); }
-		}
-	}
-
-	// (2) the tech's own typed values -- empire-scope modifier families (×1 human)
-	if (const picojson::object* co = jsonChildObj(o, "cost")) m_iResearchCost = jsonIdInt(*co, "research");
-	// domainMoves.empire.domains.{DOMAIN}.flat -> m_domainExtraMoves (DomainExtraMoves; getDomainExtraMoves)
-	if (const picojson::object* dm = jsonChildObj(o, "domainMoves"))
-		if (const picojson::object* emp = jsonChildObj(*dm, "empire"))
-			if (const picojson::object* dom = jsonChildObj(*emp, "domains"))
-				for (picojson::object::const_iterator it = dom->begin(); it != dom->end(); ++it)
-				{
-					const int id = jsonResolveId(it->first);
-					if (id < 0 || !it->second.is<picojson::object>()) continue;
-					const picojson::object& to = it->second.get<picojson::object>();
-					picojson::object::const_iterator fl = to.find("flat");
-					if (fl != to.end() && fl->second.is<double>()) m_domainExtraMoves[id] = (int)fl->second.get<double>();
-				}
-	m_iTradeRoutes                     = jsonFamVal(o, "tradeRoutes", "city", "flat");
-	m_iFeatureProductionModifier       = jsonFamVal(o, "featureProduction", "empire", "percent");
-	m_iWorkerSpeedModifier             = jsonFamVal(o, "workRate", "empire", "percent");
-	m_iHealth                          = jsonFamVal(o, "health", "empire", "flat");
-	m_iHappiness                       = jsonFamVal(o, "happiness", "empire", "flat");
-	m_iGlobalTradeModifier             = jsonFamVal(o, "tradeRouteYield", "empire", "percent");
-	m_iGlobalForeignTradeModifier      = jsonFamVal(o, "foreignTradeRouteYield", "empire", "percent");
-	m_iTradeMissionModifier            = jsonFamVal(o, "tradeMission", "empire", "percent");
-	m_iCorporationRevenueModifier      = jsonFamVal(o, "corporationRevenue", "empire", "percent");
-	m_iCorporationMaintenanceModifier  = jsonFamVal(o, "corporationMaintenance", "empire", "percent");
-	m_iInflationModifier               = jsonFamVal(o, "inflation", "empire", "percent");   // legacy iInflationModifier -> CvPlayer::changeTechInflation (getInflationMod10000). Inflation is its OWN family (DEC-maintenance-bookkeeping), matching CvBuildingInfo
-
-	// identity: scalars / flags / FK / the ×100-re-applied worth fields / the quote key
-	if (const picojson::object* io = jsonChildObj(o, "identity"))
-	{
-		m_iEra        = jsonIdFk(*io, "era");
-		m_iGridX      = jsonIdInt(*io, "gridX");
-		m_iGridY      = jsonIdInt(*io, "gridY");
-		m_iAssetValue = jsonX100(id_dbl(*io, "worth"));           // legacy getAssetValue returns ×100; JSON worth is human
-		m_iPowerValue = jsonX100(id_dbl(*io, "militaryWorth"));   // legacy getPowerValue returns ×100
-		m_bRepeat     = jsonIdBool(*io, "repeat");
-		m_bTrade      = jsonIdBool(*io, "tradeable");
-		m_bDisable    = jsonIdBool(*io, "disable");
-		m_bGoodyTech  = jsonIdBool(*io, "goodyTech");
-		std::string q; jsonIdStr(*io, "quote", q); if (!q.empty()) m_szQuoteKey = CvWString(q.c_str());
-	}
-
-	// ui.art.advisor (FK) -- NB under ui.art, not identity
-	if (const picojson::object* ui = jsonChildObj(o, "ui"))
-		if (const picojson::object* art = jsonChildObj(*ui, "art"))
-			m_iAdvisorType = jsonIdFk(*art, "advisor");
-
-	// sound.{sound,soundMP} -- sound is the tech-completed jingle; soundMP the MP variant (distinct keys)
-	if (const picojson::object* so = jsonChildObj(o, "sound"))
-	{
-		jsonIdStr(*so, "sound", m_szSound);
-		jsonIdStr(*so, "soundMP", m_szSoundMP);
-	}
-
-	// ai.behaviour.{weight,tradeModifier} + ai.flavours {FLAVOR:int}
-	if (const picojson::object* ai = jsonChildObj(o, "ai"))
-	{
-		if (const picojson::object* be = jsonChildObj(*ai, "behaviour"))
-		{
-			m_iAIWeight        = jsonIdInt(*be, "weight");
-			m_iAITradeModifier = jsonIdInt(*be, "tradeModifier");
-		}
-		// ai.flavours -- an ARRAY of single-key { FLAVOR_X: n } objects (NOT a map, unlike freeSpecialists.team)
-		jsonReadFlavours(*ai, m_flavours);
-	}
-
-	// freeSpecialists.team.{SPECIALIST} (inert -- no tech write-path today; carried faithfully)
-	if (const picojson::object* fs = jsonChildObj(o, "freeSpecialists"))
-		jsonReadFkMap(*fs, "team", m_freeSpecialists);
-
-	// --- requires-tree prereqs: walk the composed requires.build the base just parsed (mirrors CvUnitInfo /
-	// CvBuildInfo). curate_tech.requires_fn builds ONE `all` list holding: team-scope TECH_ presence atoms
-	// (AND prereqs -- AndPreReqs + folded 1-member OrPreReqs), empire-scope BUILDING_ AND atoms (no tech data today),
-	// and nested {any} OR-groups (each homogeneous: a multi-member tech OR-group, or the building OR-group with min).
-	const CvRequires* r = getRequires();
-	if (r != NULL && r->build != NULL)
-	{
-		const CvCondition* b = r->build;
-		for (size_t i = 0; i < b->all.size(); ++i)
-		{
-			const CvCondition* c = b->all[i];
-			if (c == NULL) continue;
-			if (c->kind == CASC_COND_PRESENCE)
+			const picojson::array& terrainList = terrainsIter->second.get<picojson::array>();
+			for (size_t iTerrain = 0; iTerrain < terrainList.size(); ++iTerrain)
 			{
-				if (c->id >= 0 && c->type.compare(0, 5, "TECH_") == 0)
-					m_aePrereqAndTechs.push_back((TechTypes)c->id);   // AND tech prereq (incl. folded 1-member OR)
-			}
-			else if (c->kind == CASC_COND_GROUP && !c->anyOf.empty())
-			{
-				const CvCondition* first = c->anyOf[0];
-				if (first == NULL || first->kind != CASC_COND_PRESENCE) continue;
-				const bool bTech     = first->type.compare(0, 5, "TECH_") == 0;
-				const bool bBuilding = first->type.compare(0, 9, "BUILDING_") == 0;
-				if (c->anyOf.size() == 1)   // a single-member OR is logically a hard AND (defensive: curator pre-folds these)
+				if (!terrainList[iTerrain].is<std::string>())
 				{
-					if (bTech && first->id >= 0) m_aePrereqAndTechs.push_back((TechTypes)first->id);
 					continue;
 				}
-				if (bTech && m_aePrereqOrTechs.empty())        // FIRST multi-member TECH OR-group (mirrors legacy single Or-list)
+				const int iTerrainId = jsonResolveId(terrainList[iTerrain].get<std::string>());
+				if (iTerrainId >= 0)
 				{
-					for (size_t j = 0; j < c->anyOf.size(); ++j)
-					{
-						const CvCondition* m = c->anyOf[j];
-						if (m != NULL && m->kind == CASC_COND_PRESENCE && m->id >= 0 && m->type.compare(0, 5, "TECH_") == 0)
-							m_aePrereqOrTechs.push_back((TechTypes)m->id);
-					}
+					m_canTradeOnTerrains.insert(iTerrainId);
 				}
-				else if (bBuilding && m_aPrereqOrBuildings.empty())   // the BUILDING_ OR-group ((building, min) count atoms)
+			}
+		}
+	}
+
+	// --- cost.research (plane-1 actual cost, ruling 18) ---
+	if (const picojson::object* pCost = jsonChildObj(entityObj, "cost"))
+	{
+		m_iResearchCost = jsonIdInt(*pCost, "research");
+	}
+
+	// --- identity: scalars / flags / FK / the ×100 worth magnitudes / the quote key ---
+	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
+	{
+		m_iEra = jsonIdFk(*pIdentity, "era");
+		m_iGridX = jsonIdInt(*pIdentity, "gridX");
+		m_iGridY = jsonIdInt(*pIdentity, "gridY");
+		m_iWorth = jsonX100(ti_identityDouble(*pIdentity, "worth"));
+		m_iMilitaryWorth = jsonX100(ti_identityDouble(*pIdentity, "militaryWorth"));
+		m_bRepeat = jsonIdBool(*pIdentity, "repeat");
+		m_bTradeable = jsonIdBool(*pIdentity, "tradeable");
+		m_bDisable = jsonIdBool(*pIdentity, "disable");
+		m_bGoodyTech = jsonIdBool(*pIdentity, "goodyTech");
+		std::string szQuote;
+		jsonIdStr(*pIdentity, "quote", szQuote);
+		if (!szQuote.empty())
+		{
+			m_szQuoteKey = CvWString(szQuote.c_str());
+		}
+	}
+
+	// --- ui.art.advisor (FK) -- NB under ui.art, not identity ---
+	if (const picojson::object* pUi = jsonChildObj(entityObj, "ui"))
+	{
+		if (const picojson::object* pArt = jsonChildObj(*pUi, "art"))
+		{
+			m_iAdvisor = jsonIdFk(*pArt, "advisor");
+		}
+	}
+
+	// --- sound.{sound,soundMP} -- the tech-completed jingle + the MP variant (distinct keys) ---
+	if (const picojson::object* pSound = jsonChildObj(entityObj, "sound"))
+	{
+		jsonIdStr(*pSound, "sound", m_szSound);
+		jsonIdStr(*pSound, "soundMP", m_szSoundMP);
+	}
+
+	// --- ai.behaviour.{weight,tradeModifier} + ai.flavours ---
+	if (const picojson::object* pAi = jsonChildObj(entityObj, "ai"))
+	{
+		if (const picojson::object* pBehaviour = jsonChildObj(*pAi, "behaviour"))
+		{
+			m_iAIWeight = jsonIdInt(*pBehaviour, "weight");
+			m_iAITradeModifier = jsonIdInt(*pBehaviour, "tradeModifier");
+		}
+		jsonReadFlavours(*pAi, m_flavours);
+	}
+
+	// --- the forward prereq views: walk the composed requires.build the base just parsed (enabler.md §2 --
+	// the tech case reconstructs from the child's RETAINED requires.build.all/.any). curate_tech.requires_fn
+	// builds ONE `all` list holding: team-scope TECH_ presence atoms (AND prereqs, incl. folded 1-member ORs),
+	// and nested {any} OR-groups (each homogeneous: a multi-member tech OR-group, or the building OR-group
+	// with min counts). ---
+	const CvRequires* pRequires = getRequires();
+	if (pRequires == NULL || pRequires->build == NULL)
+	{
+		return;
+	}
+	const CvCondition* pBuild = pRequires->build;
+	for (size_t iChild = 0; iChild < pBuild->all.size(); ++iChild)
+	{
+		const CvCondition* pChild = pBuild->all[iChild];
+		if (pChild == NULL)
+		{
+			continue;
+		}
+		if (pChild->kind == CASC_COND_PRESENCE)
+		{
+			if (pChild->id >= 0 && pChild->type.compare(0, 5, "TECH_") == 0)
+			{
+				m_aePrereqAndTechs.push_back((TechTypes)pChild->id);   // AND tech prereq (incl. folded 1-member OR)
+			}
+			continue;
+		}
+		if (pChild->kind != CASC_COND_GROUP || pChild->anyOf.empty())
+		{
+			continue;
+		}
+		const CvCondition* pFirst = pChild->anyOf[0];
+		if (pFirst == NULL || pFirst->kind != CASC_COND_PRESENCE)
+		{
+			continue;
+		}
+		const bool bTech = pFirst->type.compare(0, 5, "TECH_") == 0;
+		const bool bBuilding = pFirst->type.compare(0, 9, "BUILDING_") == 0;
+		if (pChild->anyOf.size() == 1)   // a single-member OR is logically a hard AND (defensive: curator pre-folds)
+		{
+			if (bTech && pFirst->id >= 0)
+			{
+				m_aePrereqAndTechs.push_back((TechTypes)pFirst->id);
+			}
+			continue;
+		}
+		if (bTech)   // FIRST multi-member TECH OR-group (mirrors the legacy single Or-list)
+		{
+			if (!m_aePrereqOrTechs.empty())
+			{
+				// the single-Or-list forward view holds ONE TECH OR-group; a further group stays gated by
+				// requires.build itself but cannot appear in this view -- surfaced, never silent
+				FErrorMsg(CvString::format("CvTechInfo::mapFrom(%s) -- a second multi-member TECH_ OR-group in "
+					"requires.build.all exceeds the single-Or-list forward view", getType()).c_str());
+				gDLL->logMsg("Loading.log", CvString::format(
+					"[READJSON] ERROR or-group-skipped tech=%s class=TECH_ members=%d",
+					getType(), (int)pChild->anyOf.size()).c_str(), true, false);
+				continue;
+			}
+			for (size_t iMember = 0; iMember < pChild->anyOf.size(); ++iMember)
+			{
+				const CvCondition* pMember = pChild->anyOf[iMember];
+				if (pMember != NULL && pMember->kind == CASC_COND_PRESENCE && pMember->id >= 0
+					&& pMember->type.compare(0, 5, "TECH_") == 0)
 				{
-					for (size_t j = 0; j < c->anyOf.size(); ++j)
-					{
-						const CvCondition* m = c->anyOf[j];
-						if (m != NULL && m->kind == CASC_COND_PRESENCE && m->id >= 0 && m->type.compare(0, 9, "BUILDING_") == 0)
-						{
-							PrereqBuilding pb;
-							pb.eBuilding = (BuildingTypes)m->id;
-							pb.iMinimumRequired = (m->min > 0) ? m->min : 1;
-							m_aPrereqOrBuildings.push_back(pb);
-						}
-					}
+					m_aePrereqOrTechs.push_back((TechTypes)pMember->id);
+				}
+			}
+			continue;
+		}
+		if (bBuilding)   // the BUILDING_ OR-group ((building, min) count atoms)
+		{
+			if (!m_aPrereqOrBuildings.empty())
+			{
+				// the single-Or-list forward view holds ONE BUILDING OR-group; a further group stays gated by
+				// requires.build itself but cannot appear in this view -- surfaced, never silent
+				FErrorMsg(CvString::format("CvTechInfo::mapFrom(%s) -- a second multi-member BUILDING_ OR-group in "
+					"requires.build.all exceeds the single-Or-list forward view", getType()).c_str());
+				gDLL->logMsg("Loading.log", CvString::format(
+					"[READJSON] ERROR or-group-skipped tech=%s class=BUILDING_ members=%d",
+					getType(), (int)pChild->anyOf.size()).c_str(), true, false);
+				continue;
+			}
+			for (size_t iMember = 0; iMember < pChild->anyOf.size(); ++iMember)
+			{
+				const CvCondition* pMember = pChild->anyOf[iMember];
+				if (pMember != NULL && pMember->kind == CASC_COND_PRESENCE && pMember->id >= 0
+					&& pMember->type.compare(0, 9, "BUILDING_") == 0)
+				{
+					PrereqBuilding prereqBuilding;
+					prereqBuilding.eBuilding = (BuildingTypes)pMember->id;
+					prereqBuilding.iMinimumRequired = (pMember->min > 0) ? pMember->min : 1;
+					m_aPrereqOrBuildings.push_back(prereqBuilding);
 				}
 			}
 		}
@@ -205,7 +266,10 @@ static CvTechInfo* s_pStartNode = NULL;
 
 CvTechInfo& cascadeStartNode()
 {
-	if (s_pStartNode == NULL) s_pStartNode = new CvTechInfo();
+	if (s_pStartNode == NULL)
+	{
+		s_pStartNode = new CvTechInfo();
+	}
 	return *s_pStartNode;
 }
 

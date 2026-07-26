@@ -17,7 +17,7 @@
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
 
-static const CvInfo* ce_techJson(int iTech)
+static const CvInfo* ce_techInfo(int iTech)
 {
 	if (iTech == GC.getInfoTypeForString("TECH_GAME_START", true)) return &cascadeStartNode();
 	return InfoRepo<CvTechInfo>::get().get(iTech);
@@ -33,7 +33,7 @@ void CivicEnabler::initDomain(const CvPlayer& kPlayer)
 void CivicEnabler::onTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 {
 	if (eTeam == NO_TEAM || eTech == NO_TECH) return;
-	const CvInfo* jt = ce_techJson((int)eTech);
+	const CvInfo* jt = ce_techInfo((int)eTech);
 	for (int iP = 0; iP < MAX_PLAYERS; iP++)
 	{
 		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iP);

@@ -1117,15 +1117,15 @@ public:
 	int getExtraDamageModifier (bool bIgnoreCommanders = false, bool bIgnoreCommodores = false) const;
 	void changeExtraDamageModifier (int iChange);
 
-	void changeExtraUpkeep100(const int iChange);
+	void changeExtraUpkeep(const int iChange);
 	void changeUpkeepModifier(const int iChange);
 	void calcUpkeepMultiplierSM(const int iGroupOffset);
-	void calcUpkeep100();
+	void calcUpkeep();
 	void recalculateUnitUpkeep();
-	int getExtraUpkeep100() const;
+	int getExtraUpkeep() const;
 	int getUpkeepModifier() const;
 	int getUpkeepMultiplierSM() const;
-	int getUpkeep100() const;
+	int getUpkeep() const;
 
 	int getStampedeCount() const;
 	bool cannotStampede() const;
@@ -1453,7 +1453,7 @@ public:
 	virtual void AI_setAsGarrison(const CvCity* pCity) = 0;
 	virtual bool AI_load(UnitAITypes eUnitAI, MissionAITypes eMissionAI, UnitAITypes eTransportedUnitAI = NO_UNITAI, int iMinCargo = -1, int iMinCargoSpace = -1, int iMaxCargoSpace = -1, int iMaxCargoOurUnitAI = -1, int iFlags = 0, int iMaxPath = MAX_INT, int iMaxTransportPath = MAX_INT) = 0;
 	virtual void AI_flushValueCache() = 0;
-	virtual int	AI_genericUnitValueTimes100(UnitValueFlags eFlags) const = 0;
+	virtual int	AI_genericUnitValue(UnitValueFlags eFlags) const = 0;
 	virtual int AI_getBirthmark() const = 0;
 	virtual void setToWaitOnUnitAI(UnitAITypes eUnitAI, bool bAdd) = 0;
 	virtual bool isWaitingOnUnitAI(int iIndex) const = 0;
@@ -1945,7 +1945,7 @@ public:
 	int qualityRank() const;
 	int groupRank() const;
 	int sizeRank() const;
-	int SMeffectiveCountTimes100() const;
+	int SMeffectiveCount() const;
 
 	// Functions for evaluating upgrades when splitting and merging
 	bool isGroupUpgradePromotion(PromotionTypes promotion) const;

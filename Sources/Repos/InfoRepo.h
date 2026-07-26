@@ -3,7 +3,7 @@
 #define INFO_REPO_H
 
 #include "CvInfo.h"   // the payload base (the JSON-parsed info data); the Cascade layer is on /I -> bare include
-#include "CvSimpleTraitInfo.h"    // the per-type payload subclasses (referenced by JsonPayload below); each pulls its base
+#include "CvSimpleTraitInfo.h"    // the per-type payload subclasses (referenced by RepoPayload below); each pulls its base
 #include "CvComplexTraitInfo.h"   // + CvComplexTraitTag (the complex-set repo discriminator)
 #include "CvBuildingInfo.h"
 #include "CvReligionInfo.h"
@@ -13,7 +13,7 @@
 #include "CvPromotionInfo.h"
 #include "CvUnitCombatInfo.h"
 #include "CvCivicInfo.h"
-#include "CvTerrainInfo.h"        // plot-substrate + small/mid per-type payload subclasses (JsonPayload below)
+#include "CvTerrainInfo.h"        // plot-substrate + small/mid per-type payload subclasses (RepoPayload below)
 #include "CvFeatureInfo.h"
 #include "CvRouteInfo.h"
 #include "CvBuildInfo.h"
@@ -38,6 +38,7 @@
 #include "CvVoteInfo.h"         // #430: consolidated onto the engine class (Infos/), JSON-fed; poco retired
 #include "CvHurryInfo.h"        // #430: consolidated onto the engine class (Infos/), JSON-fed; poco retired
 #include "CvBonusClassInfo.h"   // #430: consolidated onto the engine class (Infos/), JSON-fed; poco retired
+#include "CvWorldInfo.h"        // #430 item 15: consolidated onto the engine class (Infos/), JSON-fed; pure config
 // The FIVE EXE-bound shim leaves (cascade-engine-430.md §3): the payload IS the shim so the engine getters return
 // it directly. The shim headers are thin (just their CvJson<X>Info poco, already included above + the art-info fwd decl).
 #include "CvBonusInfo.h"
@@ -65,7 +66,7 @@
 //
 //	C++03 / VC7.1: a header-only template; the per-`TTag` `static` in `get()` gives one instance per info type.
 //
-// The engine info TAGS (phantom per-type discriminators) -- forward-declared for the JsonPayload map below.
+// The engine info TAGS (phantom per-type discriminators) -- forward-declared for the RepoPayload map below.
 class CvTraitInfo; class CvBuildingInfo; class CvReligionInfo; class CvCorporationInfo; class CvUnitInfo;
 class CvTechInfo; class CvPromotionInfo; class CvUnitCombatInfo; class CvCivicInfo;
 class CvTerrainInfo; class CvFeatureInfo; class CvRouteInfo; class CvBuildInfo; class CvImprovementInfo;
@@ -73,49 +74,50 @@ class CvBonusInfo; class CvSpecialistInfo; class CvProcessInfo; class CvCivicOpt
 class CvProjectInfo; class CvHeritageInfo; class CvPromotionLineInfo;
 class CvCivilizationInfo; class CvEraInfo; class CvHandicapInfo; class CvGameSpeedInfo; class CvSpecialBuildingInfo;
 class CvPropertyInfo; class CvLeaderHeadInfo; class CvSpecialUnitInfo; class CvVictoryInfo; class CvVoteInfo;
-class CvHurryInfo; class CvBonusClassInfo;
+class CvHurryInfo; class CvBonusClassInfo; class CvWorldInfo;
 
-// JsonPayload<TTag> -- the type-specific CvJson*Info subclass each repo creates (owner ruling 2026-06-30, mirroring
+// RepoPayload<TTag> -- the type-specific CvInfo subclass each repo creates (owner ruling 2026-06-30, mirroring
 // StoneBase's per-type Domain/Infos). Default = the generic CvInfo; specialized for the types carrying type-specific
 // data. Keeps creation CONSISTENT: InfoRepo<CvTraitInfo> ALWAYS makes a CvSimpleTraitInfo regardless of the caller,
 // so readJson + the machines never disagree about the concrete type they delete/read.
-template <class TTag> struct JsonPayload { typedef CvInfo type; };
-template <> struct JsonPayload<CvTraitInfo>       { typedef CvSimpleTraitInfo  type; };
-template <> struct JsonPayload<CvComplexTraitTag> { typedef CvComplexTraitInfo type; };
-template <> struct JsonPayload<CvBuildingInfo>    { typedef CvBuildingInfo     type; };
-template <> struct JsonPayload<CvReligionInfo>    { typedef CvReligionInfo     type; };
-template <> struct JsonPayload<CvCorporationInfo> { typedef CvCorporationInfo  type; };
-template <> struct JsonPayload<CvUnitInfo>         { typedef CvUnitInfo         type; };
-template <> struct JsonPayload<CvTechInfo>         { typedef CvTechInfo         type; };
-template <> struct JsonPayload<CvPromotionInfo>    { typedef CvPromotionInfo    type; };
-template <> struct JsonPayload<CvUnitCombatInfo>   { typedef CvUnitCombatInfo   type; };
-template <> struct JsonPayload<CvCivicInfo>        { typedef CvCivicInfo        type; };
-// The five EXE-bound types: the payload IS the shim leaf (Cv<X>Info : public CvJson<X>Info) so getBonusInfo/… return it.
-template <> struct JsonPayload<CvTerrainInfo>      { typedef CvTerrainInfo          type; };
-template <> struct JsonPayload<CvFeatureInfo>      { typedef CvFeatureInfo          type; };
-template <> struct JsonPayload<CvRouteInfo>        { typedef CvRouteInfo        type; };
-template <> struct JsonPayload<CvBuildInfo>        { typedef CvBuildInfo            type; };
-template <> struct JsonPayload<CvImprovementInfo>  { typedef CvImprovementInfo      type; };
-template <> struct JsonPayload<CvBonusInfo>        { typedef CvBonusInfo            type; };
-template <> struct JsonPayload<CvSpecialistInfo>   { typedef CvSpecialistInfo   type; };
-template <> struct JsonPayload<CvProcessInfo>      { typedef CvProcessInfo      type; };
-template <> struct JsonPayload<CvCivicOptionInfo>  { typedef CvCivicOptionInfo  type; };
-template <> struct JsonPayload<CvCultureLevelInfo> { typedef CvCultureLevelInfo type; };
-template <> struct JsonPayload<CvProjectInfo>      { typedef CvProjectInfo      type; };
-template <> struct JsonPayload<CvHeritageInfo>     { typedef CvHeritageInfo     type; };
-template <> struct JsonPayload<CvPromotionLineInfo>{ typedef CvPromotionLineInfo type; };
-template <> struct JsonPayload<CvCivilizationInfo> { typedef CvCivilizationInfo     type; };
-template <> struct JsonPayload<CvEraInfo>          { typedef CvEraInfo              type; };
-template <> struct JsonPayload<CvHandicapInfo>     { typedef CvHandicapInfo         type; };
-template <> struct JsonPayload<CvGameSpeedInfo>    { typedef CvGameSpeedInfo        type; };
-template <> struct JsonPayload<CvSpecialBuildingInfo> { typedef CvSpecialBuildingInfo type; };
-template <> struct JsonPayload<CvPropertyInfo>     { typedef CvPropertyInfo     type; };
-template <> struct JsonPayload<CvLeaderHeadInfo>   { typedef CvLeaderHeadInfo       type; };
-template <> struct JsonPayload<CvSpecialUnitInfo>  { typedef CvSpecialUnitInfo      type; };
-template <> struct JsonPayload<CvVictoryInfo>      { typedef CvVictoryInfo          type; };
-template <> struct JsonPayload<CvVoteInfo>         { typedef CvVoteInfo             type; };
-template <> struct JsonPayload<CvHurryInfo>        { typedef CvHurryInfo            type; };
-template <> struct JsonPayload<CvBonusClassInfo>   { typedef CvBonusClassInfo       type; };
+template <class TTag> struct RepoPayload { typedef CvInfo type; };
+template <> struct RepoPayload<CvTraitInfo>       { typedef CvSimpleTraitInfo  type; };
+template <> struct RepoPayload<CvComplexTraitTag> { typedef CvComplexTraitInfo type; };
+template <> struct RepoPayload<CvBuildingInfo>    { typedef CvBuildingInfo     type; };
+template <> struct RepoPayload<CvReligionInfo>    { typedef CvReligionInfo     type; };
+template <> struct RepoPayload<CvCorporationInfo> { typedef CvCorporationInfo  type; };
+template <> struct RepoPayload<CvUnitInfo>         { typedef CvUnitInfo         type; };
+template <> struct RepoPayload<CvTechInfo>         { typedef CvTechInfo         type; };
+template <> struct RepoPayload<CvPromotionInfo>    { typedef CvPromotionInfo    type; };
+template <> struct RepoPayload<CvUnitCombatInfo>   { typedef CvUnitCombatInfo   type; };
+template <> struct RepoPayload<CvCivicInfo>        { typedef CvCivicInfo        type; };
+// The five EXE-bound types: the payload IS the concrete Cv<X>Info leaf, so getBonusInfo/… return it directly.
+template <> struct RepoPayload<CvTerrainInfo>      { typedef CvTerrainInfo          type; };
+template <> struct RepoPayload<CvFeatureInfo>      { typedef CvFeatureInfo          type; };
+template <> struct RepoPayload<CvRouteInfo>        { typedef CvRouteInfo        type; };
+template <> struct RepoPayload<CvBuildInfo>        { typedef CvBuildInfo            type; };
+template <> struct RepoPayload<CvImprovementInfo>  { typedef CvImprovementInfo      type; };
+template <> struct RepoPayload<CvBonusInfo>        { typedef CvBonusInfo            type; };
+template <> struct RepoPayload<CvSpecialistInfo>   { typedef CvSpecialistInfo   type; };
+template <> struct RepoPayload<CvProcessInfo>      { typedef CvProcessInfo      type; };
+template <> struct RepoPayload<CvCivicOptionInfo>  { typedef CvCivicOptionInfo  type; };
+template <> struct RepoPayload<CvCultureLevelInfo> { typedef CvCultureLevelInfo type; };
+template <> struct RepoPayload<CvProjectInfo>      { typedef CvProjectInfo      type; };
+template <> struct RepoPayload<CvHeritageInfo>     { typedef CvHeritageInfo     type; };
+template <> struct RepoPayload<CvPromotionLineInfo>{ typedef CvPromotionLineInfo type; };
+template <> struct RepoPayload<CvCivilizationInfo> { typedef CvCivilizationInfo     type; };
+template <> struct RepoPayload<CvEraInfo>          { typedef CvEraInfo              type; };
+template <> struct RepoPayload<CvHandicapInfo>     { typedef CvHandicapInfo         type; };
+template <> struct RepoPayload<CvGameSpeedInfo>    { typedef CvGameSpeedInfo        type; };
+template <> struct RepoPayload<CvSpecialBuildingInfo> { typedef CvSpecialBuildingInfo type; };
+template <> struct RepoPayload<CvPropertyInfo>     { typedef CvPropertyInfo     type; };
+template <> struct RepoPayload<CvLeaderHeadInfo>   { typedef CvLeaderHeadInfo       type; };
+template <> struct RepoPayload<CvSpecialUnitInfo>  { typedef CvSpecialUnitInfo      type; };
+template <> struct RepoPayload<CvVictoryInfo>      { typedef CvVictoryInfo          type; };
+template <> struct RepoPayload<CvVoteInfo>         { typedef CvVoteInfo             type; };
+template <> struct RepoPayload<CvHurryInfo>        { typedef CvHurryInfo            type; };
+template <> struct RepoPayload<CvBonusClassInfo>   { typedef CvBonusClassInfo       type; };
+template <> struct RepoPayload<CvWorldInfo>        { typedef CvWorldInfo            type; };
 
 template <class TTag>
 class InfoRepo
@@ -148,7 +150,7 @@ public:
 		}
 		if (vec[iId] == NULL)
 		{
-			vec[iId] = new typename JsonPayload<TTag>::type();   // the per-type subclass (StoneBase-mirrored), upcast to base
+			vec[iId] = new typename RepoPayload<TTag>::type();   // the per-type subclass (StoneBase-mirrored), upcast to base
 		}
 		return *vec[iId];
 	}

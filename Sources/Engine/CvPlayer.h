@@ -17,6 +17,7 @@
 #include "CvPlotGroup.h"
 #include "CvProperties.h"
 #include "EmpireContext.h"
+#include "CvCascadePackage.h"   // the EMPIRE-scope cascade package + receiver sums (state-repositories.md)
 #include "CvSelectionGroupAI.h"
 #include "CvTalkingHeadMessage.h"
 #include "CvUnitList.h"
@@ -324,7 +325,7 @@ public:
 	int getProductionModifier(BuildingTypes eBuilding) const;
 	int getProductionModifier(ProjectTypes eProject) const;
 
-	int64_t getBaseUnitCost100(const UnitTypes eUnit) const;
+	int64_t getBaseUnitCost(const UnitTypes eUnit) const;
 
 	int getBuildingPrereqBuilding(BuildingTypes eBuilding, BuildingTypes ePrereqBuilding, int iExtra = 0) const;
 	void removeBuilding(BuildingTypes building);
@@ -882,6 +883,15 @@ public:
 	// The per-player ISOLATED empire-scope live state (EmpireContext) -- state religion, policies. The city eval reaches
 	// it up the scope chain for empire facts (not mirrored per city). Maintained event-driven.
 	const EmpireContext& getEmpireContext() const { return m_empireContext; }
+
+	// The EMPIRE-scope cascade package -- the percent/flat sums this player's sources author at empire scope,
+	// PLUS the empire RECEIVER sums (gold/research/culture/espionage -- the realized totals the empire
+	// consumes) riding the same cache beside the packages ([DEC-uniform-cache-shape]). Marked ONLY by the
+	// modifier consumer's derived masks; recompute-only, never serialized.
+	const CvCascadePackage<CvPlayer>& getCascadePackage() const { return m_cascadePackage; }
+	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
+	void refreshCascadePackage(int64_t iMask) const;
+
 	void setLastStateReligion(const ReligionTypes eNewReligion);
 
 	PlayerTypes getParent() const;
@@ -923,8 +933,8 @@ public:
 	int getTradeYieldModifier(YieldTypes eIndex) const;
 	void changeTradeYieldModifier(YieldTypes eIndex, int iChange);
 
-	int getExtraCommerce100(const CommerceTypes eIndex) const;
-	void changeExtraCommerce100(const CommerceTypes eIndex, const int iChange);
+	int getExtraCommerce(const CommerceTypes eIndex) const;
+	void changeExtraCommerce(const CommerceTypes eIndex, const int iChange);
 
 	int getCommercePercent(CommerceTypes eIndex) const;
 	void setCommercePercent(CommerceTypes eIndex, int iNewValue);
@@ -1960,6 +1970,8 @@ protected:
 	EraTypes m_eCurrentEra;
 	ReligionTypes m_eLastStateReligion;
 	EmpireContext m_empireContext;   // per-player empire-scope live state (see getEmpireContext); maintained event-driven
+	// the EMPIRE-scope cascade package + receiver sums (see getCascadePackage); recompute-only, never serialized
+	CvCascadePackage<CvPlayer> m_cascadePackage;
 	PlayerTypes m_eParent;
 	TeamTypes m_eTeamType;
 

@@ -131,6 +131,7 @@ void CvArea::reset(int iID, bool bWater, bool bConstructorCall)
 
 	for (int iI = 0; iI < MAX_PLAYERS; iI++)
 	{
+		m_cascadeSlots[iI].bind(this, (PlayerTypes)iI);   // the (area x player) cascade package (all-dirty from bind)
 		m_aiUnitsPerPlayer[iI] = 0;
 		m_aiAnimalsPerPlayer[iI] = 0;
 		m_aiCitiesPerPlayer[iI] = 0;
@@ -279,8 +280,8 @@ void CvArea::read(FDataStreamBase* pStream)
 		WRAPPER_READ_OPTIONAL_CLASS_ARRAY(wrapper, "CvArea", REMAPPED_CLASS_TYPE_UNITAIS, NUM_UNITAI_TYPES, m_aaiNumAIUnits[iI]);
 	}
 
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvArea", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiNumBonuses);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvArea", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiNumImprovements);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvArea", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiNumBonuses);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvArea", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiNumImprovements);
 
 	WRAPPER_READ(wrapper, "CvArea", &m_iLastGameTurnRecorded); FASSERT_BOUNDS(-1, (GC.getGame().getGameTurn() + 1), m_iLastGameTurnRecorded);
 
@@ -296,8 +297,8 @@ void CvArea::read(FDataStreamBase* pStream)
 			CombatResultRecord record;
 
 			WRAPPER_READ(wrapper, "CvArea", (int*)&record.eLoser);
-			WRAPPER_READ_CLASS_ENUM(wrapper, "CvArea", REMAPPED_CLASS_TYPE_UNITS, (int*)&record.eDefeatedUnitType);
-			WRAPPER_READ_CLASS_ENUM(wrapper, "CvArea", REMAPPED_CLASS_TYPE_UNITS, (int*)&record.eVictoriousEnemyUnitType);
+			WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvArea", REMAPPED_CLASS_TYPE_UNITS, (int*)&record.eDefeatedUnitType);
+			WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvArea", REMAPPED_CLASS_TYPE_UNITS, (int*)&record.eVictoriousEnemyUnitType);
 
 			turnRecord.push_back(record);
 		}
@@ -1085,7 +1086,7 @@ void CvArea::changeNumAIUnits(PlayerTypes eIndex1, UnitAITypes eIndex2, int iCha
 }
 
 
-// Strength-weighted ledger (#395): a unit counts as its SMeffectiveCountTimes100 here
+// Strength-weighted ledger (#395): a unit counts as its SMeffectiveCount here
 // (100 at type base group rank, x1.5 per merge rank), so force-sufficiency reads see
 // aggregate strength-equivalents rather than raw bodies. Floored on conversion to whole
 // units -- never round merged force up.

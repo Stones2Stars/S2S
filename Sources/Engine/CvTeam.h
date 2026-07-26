@@ -8,6 +8,7 @@
 #include "CvGameObject.h"
 #include "CvProperties.h"
 #include "CvDerivedData.h"
+#include "CvCascadePackage.h"   // the TEAM-scope cascade package (state-repositories.md)
 
 class CvArea;
 
@@ -27,9 +28,18 @@ public:
 	CvTeamDataRepository&       dataRepository()       { return m_dataRepository; }
 	const CvTeamDataRepository& dataRepository() const { return m_dataRepository; }
 
+	// The TEAM-scope cascade package -- the uniform CvCascadePackage on every scoped item
+	// ([DEC-uniform-cache-shape]; three channels measured at team scope -- trivial as keyed slots).
+	// Marked ONLY by the modifier consumer's derived masks; recompute-only, never serialized.
+	const CvCascadePackage<CvTeam>& getCascadePackage() const { return m_cascadePackage; }
+	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
+	void refreshCascadePackage(int64_t iMask) const;
+
 protected:
 	CvGameObjectTeam m_GameObject;
 	CvTeamDataRepository m_dataRepository;
+	// the TEAM-scope cascade package (see getCascadePackage); recompute-only, never serialized
+	CvCascadePackage<CvTeam> m_cascadePackage;
 	void uninit();
 
 public:

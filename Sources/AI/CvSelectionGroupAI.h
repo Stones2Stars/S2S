@@ -73,7 +73,7 @@ public:
 	CvUnit* AI_ejectBestDefender(const CvPlot* pTargetPlot, bool allowAllDefenders);
 	virtual bool AI_hasBeneficialPropertyEffectForCity(const CvCity* pCity, PropertyTypes pProperty) const;
 	virtual CvUnit* AI_ejectBestPropertyManipulator(const CvCity* pTargetCity);
-	virtual int AI_getGenericValueTimes100(UnitValueFlags eFlags) const;
+	virtual int AI_getGenericValue(UnitValueFlags eFlags) const;
 
 	CvUnit* AI_getMissionAIUnit() const;
 

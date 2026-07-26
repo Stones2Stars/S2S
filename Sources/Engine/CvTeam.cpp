@@ -27,6 +27,14 @@
 #include "CvDLLEngineIFaceBase.h"
 #include "CvDLLInterfaceIFaceBase.h"
 #include "CvDLLUtilityIFaceBase.h"
+#include "CvCascadeGather.h"
+
+// The TEAM-scope cascade package's refresh delegate -- the one-line delegation to the ONE gather
+// ([DEC-single-implementation]; see CvCascadeGather).
+void CvTeam::refreshCascadePackage(int64_t iMask) const
+{
+	CascadeGather::refreshTeam(*this, iMask);
+}
 
 // Public Functions...
 #pragma warning( disable : 4355 )
@@ -191,6 +199,8 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	int iI, iJ;
 
 	m_dataRepository.reset();
+	// bind the TEAM-scope cascade package (all-dirty from bind: a loaded/new team recomputes on first read)
+	m_cascadePackage.bind(CASC_SCOPE_TEAM, this, &CvTeam::refreshCascadePackage);
 
 	//--------------------------------
 	// Uninit class
@@ -5271,7 +5281,7 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 				}
 				for (int iJ = 0; iJ < NUM_YIELD_TYPES; iJ++)
 				{
-					cityX->changeBuildingExtraYield100((YieldTypes)iJ, iChange * cityX->getBuildingYieldTechChange((YieldTypes)iJ, eTech));
+					cityX->changeBuildingExtraYield((YieldTypes)iJ, iChange * cityX->getBuildingYieldTechChange((YieldTypes)iJ, eTech));
 					cityX->changeBuildingYieldModifier((YieldTypes)iJ, iChange * cityX->getBuildingYieldTechModifier((YieldTypes)iJ, eTech));
 				}
 				// A new tech can effect best plot build decisions so mark stale in all cities
@@ -5710,7 +5720,7 @@ int CvTeam::getBuildingYieldTechChange(const YieldTypes eYield, const BuildingTy
 {
 	PROFILE_EXTRA_FUNC();
 	int iYield100 = 0;
-	foreach_(const TechArray & pair, GC.getBuildingInfo(eBuilding).getTechYieldChanges100())
+	foreach_(const TechArray & pair, GC.getBuildingInfo(eBuilding).getTechYieldChanges())
 	{
 		if (isHasTech(pair.first))
 		{
@@ -5740,7 +5750,7 @@ int CvTeam::getBuildingCommerceTechChange(const CommerceTypes eIndex, const Buil
 {
 	PROFILE_EXTRA_FUNC();
 	int iCommerce100 = 0;
-	foreach_(const TechCommerceArray & pair, GC.getBuildingInfo(eBuilding).getTechCommerceChanges100())
+	foreach_(const TechCommerceArray & pair, GC.getBuildingInfo(eBuilding).getTechCommerceChanges())
 	{
 		if (isHasTech(pair.first))
 		{
@@ -6561,7 +6571,7 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiCounterespionageModAgainstTeam);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", NUM_COMMERCE_TYPES, m_aiCommerceFlexibleCount);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", NUM_DOMAIN_TYPES, m_aiExtraMoves);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VOTE_SOURCES, GC.getNumVoteSourceInfos(), m_aiForceTeamVoteEligibilityCount);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VOTE_SOURCES, GC.getNumVoteSourceInfos(), m_aiForceTeamVoteEligibilityCount);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abHasMet);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abAtWar);
 	//	Koshling - fix bugged state where the ganme thinks a team is at war with itself!
@@ -6575,11 +6585,11 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abDefensivePact);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abForcePeace);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abVassal);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VICTORIES, GC.getNumVictoryInfos(), m_abCanLaunch);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VICTORIES, GC.getNumVictoryInfos(), m_abCanLaunch);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abIsRebelAgainst);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_ROUTES, GC.getNumRouteInfos(), m_paiRouteChange);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectCount);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectDefaultArtTypes);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_ROUTES, GC.getNumRouteInfos(), m_paiRouteChange);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectCount);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectDefaultArtTypes);
 
 	//project art types
 	for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_PROJECTS); i++)
@@ -6598,14 +6608,14 @@ void CvTeam::read(FDataStreamBase* pStream)
 		}
 	}
 
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectMaking);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiBuildingCount);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiObsoleteBuildingCount);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiResearchProgress);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiTechCount);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TERRAINS, GC.getNumTerrainInfos(), m_paiTerrainTradeCount);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VICTORIES, GC.getNumVictoryInfos(), m_aiVictoryCountdown);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_pabHasTech);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectMaking);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiBuildingCount);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiObsoleteBuildingCount);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiResearchProgress);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiTechCount);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TERRAINS, GC.getNumTerrainInfos(), m_paiTerrainTradeCount);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_VICTORIES, GC.getNumVictoryInfos(), m_aiVictoryCountdown);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_pabHasTech);
 
 	for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_IMPROVEMENTS); ++i)
 	{
@@ -6664,9 +6674,13 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvTeam", &iSize);
 	for (uint32_t i = 0; i < iSize; ++i)
 	{
-		BonusTypes eBonus;
-		WRAPPER_READ_CLASS_ENUM(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BONUSES, (int*)&eBonus);
-		m_aeRevealedBonuses.push_back(eBonus);
+		BonusTypes eBonus = NO_BONUS;
+		WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_BONUSES, (int*)&eBonus);
+
+		if (eBonus != NO_BONUS)
+		{
+			m_aeRevealedBonuses.push_back(eBonus);
+		}
 	}
 	WRAPPER_READ(wrapper, "CvTeam", &m_iCanPassPeaksCount);
 	WRAPPER_READ(wrapper, "CvTeam", &m_iMoveFastPeaksCount);
@@ -6686,7 +6700,7 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abEmbassy);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abLimitedBorders);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_abFreeTrade);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCount);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiFreeSpecialistCount);
 
 	for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_BUILDINGS); ++i)
 	{
@@ -6694,7 +6708,7 @@ void CvTeam::read(FDataStreamBase* pStream)
 
 		if (newIndex != -1)
 		{
-			WRAPPER_READ_CLASS_ARRAY(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_ppiBuildingSpecialistChange[newIndex]);
+			WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_ppiBuildingSpecialistChange[newIndex]);
 			WRAPPER_READ_ARRAY(wrapper, "CvTeam", NUM_COMMERCE_TYPES, m_ppiBuildingCommerceModifier[newIndex]);
 		}
 		else

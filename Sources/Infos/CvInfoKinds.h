@@ -62,11 +62,11 @@ enum ModifierFamily
 	MODFAM_BUILD_RATE,
 	MODFAM_CAPTURE,
 	MODFAM_CARGO,
-	MODFAM_CITY_CAPTURE,
+	MODFAM_CITY_CAPTURE,   // ruling 16: onCapture trigger-plane chance data -- stays in the vocabulary (1 authored
+	                       // entity would otherwise become an unknown-key ERROR) until the trigger-plane re-home
 	MODFAM_COLLATERAL,
 	MODFAM_COMBAT,
 	MODFAM_COMMERCE,
-	MODFAM_COMMERCE_HAPPINESS,
 	MODFAM_CONSCRIPT,
 	MODFAM_COSTS,
 	MODFAM_CULTURE,
@@ -103,7 +103,6 @@ enum ModifierFamily
 	MODFAM_MOVEMENT,
 	MODFAM_OCCUPATION_TIME,
 	MODFAM_ODDS,
-	MODFAM_PER_ERA,
 	MODFAM_PILLAGE,
 	MODFAM_POPULATION_GROWTH_RATE,
 	MODFAM_PRODUCTION,
@@ -117,7 +116,8 @@ enum ModifierFamily
 	MODFAM_SPEED,
 	MODFAM_STATE_RELIGION,
 	MODFAM_STRENGTH,
-	MODFAM_SURVIVOR,
+	MODFAM_SURVIVOR,   // ruling 16: onDeath survive-chance trigger-plane data -- stays in the vocabulary (1 authored
+	                   // entity would otherwise become an unknown-key ERROR) until the trigger-plane re-home
 	MODFAM_TRADE_MISSION,
 	MODFAM_TRADE_ROUTES,
 	MODFAM_UNDERWORLD,
@@ -135,17 +135,38 @@ enum ModifierFamily
 // WHERE the census authors the family. Entry 0 is always the scope-wide amount.
 //
 
+// The FOUR wellbeing channels (modifier.md §2b -- owner: FOUR ORDINARY CHANNELS, no polarity mode). The AUTHORED
+// families are happiness/health only (wellbeing mints ZERO kinds, ruling 12); a negative deposit ROUTES to the
+// opposing channel at fill/valuation -- a routing rule, never a storage shape -- so ANGER/UNHEALTH mint no family
+// and no slot. This enum keys the per-group wellbeing OUT-array (expectedWellbeing) and every four-channel read.
+enum WellbeingChannel
+{
+	WELLBEING_HAPPINESS = 0,
+	WELLBEING_ANGER,
+	WELLBEING_HEALTH,
+	WELLBEING_UNHEALTH,
+	NUM_WELLBEING_CHANNELS
+};
+
 // The engine-enum channel families (food/production/commerce -> YieldTypes; gold/research/culture/espionage ->
 // CommerceTypes) share ONE kind pair: the channel amount, plus the ledgered PERMANENT golden-age member-mirror
 // (modifier.md §3 -- golden-age yield/commerce is engine-applied, effect-only, never retired to a predicate).
+// CHANNEL_CORPORATION is authored by the COMMERCE family only (ruling 15: legacy corporationRevenue lands as
+// the `corporation` source-component kind on the commerce side, the R11 pattern) -- the member table gives the
+// row to MODFAM_COMMERCE alone, so the yield/split-commerce families never resolve it.
 enum ChannelKind
 {
 	CHANNEL_AMOUNT = 0,
 	CHANNEL_GOLDEN_AGE,
+	CHANNEL_CORPORATION,
 	NUM_CHANNEL_KINDS
 };
 const int YIELD_FAMILY_SCOPES    = INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_PLOT);
-const int COMMERCE_FAMILY_SCOPES = INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE);
+// PLOT rides the commerce-channel class for culture alone (census: 29 improvement culture.plot flats); gold/
+// research author city|empire only, espionage carries its own ESPIONAGE_SCOPES. Culture's unit-scope garrison
+// authoring (46 units, the ruling-2 condition-as-member triage pending) rides the per-family census mask
+// (infoFamilyScopeMask), not this class-wide const.
+const int COMMERCE_FAMILY_SCOPES = INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_PLOT);
 
 // espionage is BOTH a commerce channel and the unit-plane spy-stat family (the scope axis separates them:
 // city/empire = the commerce channel, unit = the spy stats).
@@ -164,7 +185,11 @@ enum DefenseKind
 	DEFENSE_AMOUNT = 0,             // the additive defense % (member `amount`)
 	DEFENSE_MIN,                    // the defense floor
 	DEFENSE_AIR,                    // defense against air attack (authored `air` at plot, `airDefense` at city --
-	                                // one concept, two census spellings; the scope axis separates the consumers)
+	                                // one concept, two census spellings; the scope axis separates the consumers).
+	                                // SCOPE-SPLIT UNIT (census + engine): plot = FLAT rolled magnitude (101
+	                                // improvement flats; the opposed getSorenRandNum dice, CvUnit.cpp:7126),
+	                                // city = PERCENT damage modifier (17 building percents) -- infoDefenseUnit's
+	                                // scope-aware overload carries the split
 	DEFENSE_BOMBARD,                // bombard-damage resistance
 	DEFENSE_NUKE,                   // nuke-damage resistance
 	DEFENSE_DYNAMIC,                // the dynamic-defense contribution
@@ -210,8 +235,11 @@ enum CostsKind
 const int COSTS_SCOPES = INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_WORLD) | INFO_SCOPE_BIT(CASC_SCOPE_UNIT);
 
 // Ruling 5: combat = everything that MODIFIES the base strength. The type-keyed vs-entries
-// (unitCombat/flankingUnit/vsUnit/feature/terrain/domain containers) are interned data ids; subdueAnimal and
-// nukeInterception are trigger-plane chance data (ruling 16), never kinds here.
+// (unitCombat/flankingUnit/vsUnit/feature/terrain/domain containers) are interned data ids. Ruling 16
+// (trigger-plane chance data, pending the trigger-plane re-home): `combat.world.subdueAnimal` (8 handicaps)
+// and `combat.team.nukeInterception` (4 projects) are NEVER kinds here -- they flow through as unkinded
+// members (kept parseable so the authored data never becomes an unknown-key error), exactly like the
+// survivor/cityCapture family rows.
 enum CombatKind
 {
 	COMBAT_AMOUNT = 0,
@@ -223,7 +251,6 @@ enum CombatKind
 	COMBAT_HILLS_DEFENSE,
 	COMBAT_STEALTH,
 	COMBAT_STEALTH_STRIKES,
-	COMBAT_FLANKING,
 	COMBAT_LUNGE,
 	COMBAT_UNNERVE,
 	COMBAT_ENCLOSE,
@@ -285,11 +312,21 @@ const int UPKEEP_SCOPES = INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CAS
 
 // Ruling 11: ONE tradeRoutes family; the variant members (foreign/coastal/sharedCivic/...) are CONDITIONS,
 // re-authored as predicates on the curator batch -- never kinds. Entry 0 is the flat route count.
+// Ruling 27: `modifier` carries the CHANNEL axis (YieldTypes reuse) for the §2a tradeYield input fold --
+// authored `tradeRoutes.<scope>.modifier.<channel>.<unit>`. The three channel kinds sit CONTIGUOUS in
+// YieldTypes order (FOOD, PRODUCTION, COMMERCE), so the parameterized read is
+// TRADE_ROUTE_MODIFIER_FOOD + eYield. The bare TRADE_ROUTE_MODIFIER stays the channel-AGNOSTIC route-PROFIT
+// stage (building iTradeRouteModifier + the IS_FOREIGN/SHARES_CIVIC conditioned entries -- totalTradeModifier).
 enum TradeRouteKind
 {
-	TRADE_ROUTE_ROUTES = 0,   // flat route count (the memberless deposit)
-	TRADE_ROUTE_MODIFIER,     // route-yield %
-	TRADE_ROUTE_MAX,          // the cap
+	TRADE_ROUTE_AMOUNT = 0,        // the scope-wide flat ROUTE COUNT (the memberless deposit -- kind 0 IS the
+	                               // count, ruling 11; the transient `routes` member spelling died with the
+	                               // reconciliation curator fix, so no member row exists for slot 0)
+	TRADE_ROUTE_MODIFIER,          // channel-agnostic route-PROFIT %
+	TRADE_ROUTE_MAX,               // the cap
+	TRADE_ROUTE_MODIFIER_FOOD,     // per-channel route-yield % (YieldTypes order from here)
+	TRADE_ROUTE_MODIFIER_PRODUCTION,
+	TRADE_ROUTE_MODIFIER_COMMERCE,
 	NUM_TRADE_ROUTE_KINDS
 };
 const int TRADE_ROUTES_SCOPES = INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(CASC_SCOPE_EMPIRE) | INFO_SCOPE_BIT(CASC_SCOPE_WORLD);
@@ -370,6 +407,10 @@ const int EXPERIENCE_SCOPES = INFO_SCOPE_BIT(CASC_SCOPE_CITY) | INFO_SCOPE_BIT(C
 enum RevolutionKind
 {
 	REVOLUTION_AMOUNT = 0,
+	// local and national are DISTINCT MECHANICS, not scope variants (owner): LOCAL tracks a single city
+	// rising in revolt; NATIONAL tracks the country fracturing (multiple cities seceding together). Two
+	// indices, two outcomes -- never collapse them onto the scope axis. Revolutions is Python-authoritative
+	// and due its own rework; this vocabulary only carries the data faithfully.
 	REVOLUTION_LOCAL,
 	REVOLUTION_NATIONAL,
 	REVOLUTION_DISTANCE_MODIFIER,
@@ -480,7 +521,8 @@ enum InfoScalar
 	SCALAR_ESPIONAGE_DEFENSE,         // espionageDefense (city flat / empire %)
 	SCALAR_EVENT_CHANCE,              // eventChance.world flat
 	SCALAR_FEATURE_PRODUCTION,        // featureProduction.empire %
-	SCALAR_FIRST_STRIKE_CHANCES,      // firstStrike.unit flat (memberless)
+	SCALAR_FIRST_STRIKE_CHANCES,      // firstStrike.unit.chance flat (member `chance`, 115 authored; the memberless
+	                                  // slot 0 is unauthored -- census, reconciliation item 2)
 	SCALAR_FIRST_STRIKES,             // firstStrike.unit.strikes flat
 	SCALAR_FOOD_KEPT,                 // foodKept.city %
 	SCALAR_GOLDEN_AGE_LENGTH,         // goldenAge.empire % (length modifier; the grant is grants.goldenAge)
@@ -503,7 +545,7 @@ enum InfoScalar
 	SCALAR_SPAWN_RATE_NPC_PEACE,      // spawnRate.npcPeace %
 	SCALAR_SPEED,                     // speed.world %
 	SCALAR_STRENGTH,                  // strength.unit flat (ruling 5: the unit's BASE value only)
-	SCALAR_SURVIVOR,                  // survivor.unit %
+	SCALAR_SURVIVOR,                  // survivor.unit % (ruling 16: trigger-plane chance data -- row stays until the re-home)
 	SCALAR_TRADE_MISSION,             // tradeMission.empire %
 	SCALAR_WAR_WEARINESS,             // warWeariness %
 	SCALAR_ENEMY_WAR_WEARINESS,       // warWeariness.enemy %
@@ -530,13 +572,49 @@ int infoResolveKind(ModifierFamily eFamily, const std::string& szMemberPath);
 // Ruling 1 engine reuse: the YieldTypes / CommerceTypes value a channel family keys (-1 = not that class).
 int infoFamilyYield(ModifierFamily eFamily);
 int infoFamilyCommerce(ModifierFamily eFamily);
+// The ruling-1 REVERSE lookups: the channel family a YieldTypes / CommerceTypes value authors under
+// (MODFAM_NONE for an out-of-range index). The parameterized channel getters (getFlatYield(eYield, eScope) et
+// al.) and the per-group valuation endpoints key their family axis through these.
+ModifierFamily infoYieldFamily(int iYield);
+ModifierFamily infoCommerceFamily(int iCommerce);
+// The wellbeing channel's AUTHORED family (modifier.md §2b): HAPPINESS/ANGER -> MODFAM_HAPPINESS,
+// HEALTH/UNHEALTH -> MODFAM_HEALTH -- the opposing channels share one authored family; the SIGN routes.
+ModifierFamily infoWellbeingFamily(WellbeingChannel eChannel);
 // A straggler scalar's (family, kind) slot.
 void infoScalarSlot(InfoScalar eScalar, ModifierFamily& eFamilyOut, int& iKindOut);
-// The canonical authored unit of a defense kind (the typed point getter's unit axis).
+// The canonical AUTHORED unit of a defense kind (the typed point getter's unit axis). SCOPE-AWARE: DEFENSE_AIR
+// is the one scope-split defense kind (plot = FLAT rolled magnitude, city = PERCENT damage modifier -- see the
+// enum row). The scope-blind overload answers with the CITY plane (the dominant consumer class) and is the
+// transitional form the wave getters still call -- their move to the scope-aware call is the reported follow-up.
+CvCascUnit infoDefenseUnit(DefenseKind eKind, CvCascScope eScope);
 CvCascUnit infoDefenseUnit(DefenseKind eKind);
+// The canonical AUTHORED unit of any (family, kind, scope) slot -- the generalization infoDefenseUnit
+// specializes: the per-group typed point getters (getMaintenanceModifier / getUpkeep / getRevolution / ...)
+// resolve their unit axis here, so the census's flat-vs-percent verdict lives ONCE beside the vocabulary, never
+// re-decided per getter. THE SCOPE AXIS IS PART OF THE ANSWER where the census authors one kind at different
+// units per scope (capture: unit flat / empire percent; experience amount: unit percent / city+empire flat;
+// maintenance corporation: city flat / empire percent; defense air: plot flat / city percent). A kind that
+// carries BOTH units at ONE (kind, scope) slot keeps the split in the getter NAME instead (getFlatYield vs
+// getYieldModifier -- [DEC-fixedpoint-x100]); for those dual slots this table answers the DOMINANT authored
+// plane (each documented at its row). The scope-blind overload delegates with the family's dominant authored
+// scope -- the transitional form for call sites that predate the scope axis.
+CvCascUnit infoKindUnit(ModifierFamily eFamily, int iKind, CvCascScope eScope);
+CvCascUnit infoKindUnit(ModifierFamily eFamily, int iKind);
+// Family-combine FLOOR metadata (modifier.md §2: non-additive combine modes are FAMILY metadata, never
+// per-deposit): true = the (family, kind) slot's COMBINED total floors at zero -- max(0, Σ). Declared here
+// beside the vocabulary because the mode belongs to the kind, not to any value. Current rows: the pop-scaled
+// free-unit-upkeep pair upkeep.freeMilitary / upkeep.freeCivilian (ruling 28: entries are free-amount
+// semantics, positive grants / negative shrinks, summed then floored -- free >= 0; the engine's SECOND floor,
+// net = max(0, upkeep - free) per class, stays in the engine formula at the combine site, CvPlayer.cpp:10295/:10315).
+bool infoCombineFloorAtZero(ModifierFamily eFamily, int iKind);
 // Is this address segment a deposit-target token (a §3.3 plural target, a keyed-target container, or a
 // targeting-config block)? Target tokens carry data ids below them, never kind vocabulary.
 bool infoIsTargetToken(const std::string& szSegment);
+// FAMILY-SCOPED keyed-container tokens -- container spellings that are target tokens ONLY inside one family,
+// because the same word is a MEMBER of another (combat `targets`/`unitTargets`/`defenders` are the §8 keyed
+// targeting/immunity membership maps, while `defenders` is also the barbarians.world.defenders KIND). The
+// address decode consults this beside the global table; the global table stays family-agnostic.
+bool infoIsFamilyTargetToken(ModifierFamily eFamily, const std::string& szSegment);
 
 // Load-time kind-coverage diagnostic (the Orwell bar): every member the vocabulary does not carry is recorded
 // as "<familyKey>.<memberPath>" and surfaced by the reader's coverage summary -- flowed through, never dropped.

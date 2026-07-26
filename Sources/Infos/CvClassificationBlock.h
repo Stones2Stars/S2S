@@ -85,4 +85,12 @@ private:
 	CvClassificationBlock& operator=(const CvClassificationBlock&);
 };
 
+// The unit-plane derived move-through-plots verdict (the ONE implementation, DEC-single-implementation --
+// promotion + unitcombat both materialize it at mapFrom over their skill block + par.8 keyed doubleMove FK
+// lists; string-plane skill reads are LOAD-TIME ONLY, the poco getters stay bare member reads): does holding
+// this data change which plots the holder can move through?
+bool deriveChangesMoveThroughPlots(const CvClassificationBlock& skills,
+	const std::vector<int>& terrainDoubleMoves,
+	const std::vector<int>& featureDoubleMoves);
+
 #endif // CV_CLASSIFICATION_BLOCK_H

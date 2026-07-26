@@ -342,7 +342,7 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 			}
 		}
 		setGameTurnCreated(GC.getGame().getGameTurn());
-		calcUpkeep100(); // This updates total upkeep on the player level too
+		calcUpkeep(); // This updates total upkeep on the player level too
 
 		GC.getGame().incrementUnitCreatedCount(eUnit);
 		GET_PLAYER(eOwner).changeUnitCount(eUnit, 1);
@@ -1509,7 +1509,7 @@ void CvUnit::killUnconditional(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 		FAssertMsg(!getCombatUnit(), "The current unit instance's combat unit is expected to be NULL");
 	}
 
-	owner.changeUnitUpkeep(-getUpkeep100(), isMilitaryBranch());
+	owner.changeUnitUpkeep(-getUpkeep(), isMilitaryBranch());
 
 	owner.changeUnitCount(m_eUnitType, -1);
 	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS)
@@ -1537,7 +1537,7 @@ void CvUnit::killUnconditional(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 		OutputDebugString(CvString::format("Unit %S of player %S killed\n", getName().GetCString(), owner.getCivilizationDescription(0)).c_str());
 
 		owner.AI_changeNumAIUnits(AI_getUnitAIType(), -1);
-		owner.AI_changeEffNumAIUnitsTimes100(AI_getUnitAIType(), -SMeffectiveCountTimes100());
+		owner.AI_changeEffNumAIUnitsTimes100(AI_getUnitAIType(), -SMeffectiveCount());
 		AI_killed(); // Update AI counts for this unit
 
 		setCommander(false);
@@ -10345,7 +10345,7 @@ int CvUnit::upgradePrice(UnitTypes eUnit) const
 		* (
 			GET_PLAYER(getOwner()).getProductionNeeded(eUnit)
 			-
-			GET_PLAYER(getOwner()).getBaseUnitCost100(getUnitType()) / 100
+			GET_PLAYER(getOwner()).getBaseUnitCost(getUnitType()) / 100
 		)
 	);
 	if (iPrice < 1)
@@ -13866,7 +13866,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 		if (AI_getUnitAIType() != NO_UNITAI)
 		{
 			pNewPlot->area()->changeNumAIUnits(eMyPlayer, AI_getUnitAIType(), 1);
-			pNewPlot->area()->changeEffNumAIUnitsTimes100(eMyPlayer, AI_getUnitAIType(), SMeffectiveCountTimes100());
+			pNewPlot->area()->changeEffNumAIUnitsTimes100(eMyPlayer, AI_getUnitAIType(), SMeffectiveCount());
 		}
 
 		if (isAnimal())
@@ -13897,7 +13897,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 		if (AI_getUnitAIType() != NO_UNITAI)
 		{
 			pOldPlot->area()->changeNumAIUnits(eMyPlayer, AI_getUnitAIType(), -1);
-			pOldPlot->area()->changeEffNumAIUnitsTimes100(eMyPlayer, AI_getUnitAIType(), -SMeffectiveCountTimes100());
+			pOldPlot->area()->changeEffNumAIUnitsTimes100(eMyPlayer, AI_getUnitAIType(), -SMeffectiveCount());
 		}
 
 		if (isAnimal())
@@ -15738,16 +15738,16 @@ void CvUnit::changeExtraDamageModifier(int iChange)
 }
 
 // Toffer - Upkeep
-void CvUnit::changeExtraUpkeep100(const int iChange)
+void CvUnit::changeExtraUpkeep(const int iChange)
 {
 	if (iChange != 0)
 	{
 		m_iExtraUpkeep100 += iChange;
-		calcUpkeep100();
+		calcUpkeep();
 	}
 }
 
-int CvUnit::getExtraUpkeep100() const
+int CvUnit::getExtraUpkeep() const
 {
 	return m_iExtraUpkeep100;
 }
@@ -15757,7 +15757,7 @@ void CvUnit::changeUpkeepModifier(const int iChange)
 	if (iChange != 0)
 	{
 		m_iUpkeepModifier += iChange;
-		calcUpkeep100();
+		calcUpkeep();
 	}
 }
 
@@ -15791,10 +15791,10 @@ void CvUnit::calcUpkeepMultiplierSM(const int iGroupOffset)
 		}
 		m_iUpkeepMultiplierSM = -m_iUpkeepMultiplierSM;
 	}
-	calcUpkeep100();
+	calcUpkeep();
 }
 
-void CvUnit::calcUpkeep100()
+void CvUnit::calcUpkeep()
 {
 	if (isNPC())
 	{
@@ -15818,7 +15818,7 @@ void CvUnit::calcUpkeep100()
 	}
 }
 
-int CvUnit::getUpkeep100() const
+int CvUnit::getUpkeep() const
 {
 	return m_iUpkeep100;
 }
@@ -15826,7 +15826,7 @@ int CvUnit::getUpkeep100() const
 void CvUnit::recalculateUnitUpkeep()
 {
 	m_iUpkeep100 = 0;
-	calcUpkeep100();
+	calcUpkeep();
 }
 // ! Upkeep
 
@@ -18291,22 +18291,16 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 	{
 		if (!bByPromo)
 		{
-			if (kUnitCombat.getQualityBase() > -10)
-			{
-				setQualityBaseTotal(kUnitCombat.getQualityBase());
-			}
-			if (kUnitCombat.getSizeBase() > -10)
-			{
-				setSizeBaseTotal(kUnitCombat.getSizeBase());
-			}
-			if (kUnitCombat.getGroupBase() > -10)
-			{
-				setGroupBaseTotal(kUnitCombat.getGroupBase());
-			}
+			// ONE group-rank derivation (json.md par.9 sizeMatters): the instance's base ranks ARE the info's
+			// load-derived sums over its combat classes -- never re-derived from the single class in hand here.
+			setQualityBaseTotal(m_pUnitInfo->getBaseQualityRank());
+			setSizeBaseTotal(m_pUnitInfo->getBaseSizeRank());
+			setGroupBaseTotal(m_pUnitInfo->getBaseGroupRank());
 		}
-		if (bAdding && kUnitCombat.getGroupBase() > -10)
+		const int iClassGroupBase = kUnitCombat.getSizeMatters().groupBase;
+		if (bAdding && iClassGroupBase > -10)
 		{
-			calcUpkeepMultiplierSM(kUnitCombat.getGroupBase() - getGroupBaseTotal());
+			calcUpkeepMultiplierSM(iClassGroupBase - getGroupBaseTotal());
 		}
 	}
 
@@ -18608,7 +18602,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 		defineReligion();
 	}
 
-	changeExtraUpkeep100(kUnitCombat.getExtraUpkeep100() * iChange);
+	changeExtraUpkeep(kUnitCombat.getExtraUpkeep() * iChange);
 	changeUpkeepModifier(kUnitCombat.getUpkeepModifier() * iChange);
 
 	establishBuildups();
@@ -18808,7 +18802,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeExtraReligiousCombatModifier(kPromotion.getReligiousCombatModifierChange() * iChange);
 	changeExtraDamageModifier(kPromotion.getDamageModifierChange() * iChange);
 
-	changeExtraUpkeep100(kPromotion.getExtraUpkeep100() * iChange);
+	changeExtraUpkeep(kPromotion.getExtraUpkeep() * iChange);
 	changeUpkeepModifier(kPromotion.getUpkeepModifier() * iChange);
 
 	changeStampedeCount((kPromotion.isStampedeChange()) ? iChange : 0);
@@ -18959,14 +18953,16 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeTriggerBeforeAttackCount(kPromotion.getTriggerBeforeAttackChange() * iChange);
 	changeHiddenNationalityCount(kPromotion.getHiddenNationalityChange() * iChange);
 
-	if (kPromotion.getQualityChange() != 0)
+	// the promotion's SM rank deltas live in its sizeMatters section (json.md par.9: Promotion carries the
+	// runtime deltas), applied to the engine extra-accumulators on top of the info-derived base ranks
+	if (kPromotion.getSizeMatters().quality != 0)
 	{
-		changeExtraQuality(kPromotion.getQualityChange() * iChange);
+		changeExtraQuality(kPromotion.getSizeMatters().quality * iChange);
 		bSMrecalc = true;
 	}
-	if (kPromotion.getGroupChange() != 0)
+	if (kPromotion.getSizeMatters().group != 0)
 	{
-		changeExtraGroup(kPromotion.getGroupChange() * iChange);
+		changeExtraGroup(kPromotion.getSizeMatters().group * iChange);
 		bSMrecalc = true;
 	}
 
@@ -19481,7 +19477,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 
 	WRAPPER_READ(wrapper, "CvUnit", (int*)&m_eOwner);
 	WRAPPER_READ(wrapper, "CvUnit", (int*)&m_eCapturingPlayer);
-	WRAPPER_READ_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, (int*)&m_eUnitType);
+	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, (int*)&m_eUnitType);
 	bool bKill = false;
 	if (NO_UNIT == m_eUnitType)
 	{
@@ -19501,7 +19497,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	m_pUnitInfo = &GC.getUnitInfo(m_eUnitType);
 	m_movementCharacteristicsHash = m_pUnitInfo->getZobristValue();
 
-	WRAPPER_READ_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, (int*)&m_eLeaderUnitType);
+	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, (int*)&m_eLeaderUnitType);
 
 	WRAPPER_READ(wrapper, "CvUnit", (int*)&m_combatUnit.eOwner);
 	WRAPPER_READ(wrapper, "CvUnit", &m_combatUnit.iID);
@@ -19855,7 +19851,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraStrengthModifier);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraDamageModifier);
 
-	WRAPPER_READ_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, (int*)&m_eGGExperienceEarnedTowardsType);
+	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, (int*)&m_eGGExperienceEarnedTowardsType);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iSMCargo);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iSMCargoCapacity);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iSMCargoVolume);
@@ -19932,7 +19928,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iHealSupportUsed);
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_MISSIONS, (int*)&m_eSleepType);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bHasBuildUp);
-	WRAPPER_READ_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_PROMOTIONLINES, (int*)&m_eCurrentBuildUpType);
+	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_PROMOTIONLINES, (int*)&m_eCurrentBuildUpType);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iZoneOfControlCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bInhibitMerge);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bInhibitSplit);
@@ -20199,7 +20195,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraNoDefensiveBonusCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraGatherHerdCount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraReligiousCombatModifier);
-	WRAPPER_READ_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_RELIGIONS, (int*)&m_eReligionType);
+	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_RELIGIONS, (int*)&m_eReligionType);
 	WRAPPER_READ(wrapper, "CvUnit", &m_bIsReligionLocked);
 
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraUpkeep100);
@@ -20310,7 +20306,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 			WRAPPER_READ_DECORATED(wrapper, "CvUnit", &iSize, "ExtraBuildsSize");
 			for (short i = 0; i < iSize; ++i)
 			{
-				WRAPPER_READ_CLASS_ENUM_DECORATED(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_BUILDS, &iBuild, "ExtraBuildType");
+				WRAPPER_READ_CLASS_ENUM_DECORATED_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_BUILDS, &iBuild, "ExtraBuildType");
 
 				if (iBuild != -1)
 				{
@@ -20322,7 +20318,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 			while (iSize-- > 0)
 			{
 				short iMod = 0;
-				WRAPPER_READ_CLASS_ENUM_DECORATED(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_BUILDS, &iBuild, "ExtraWorkModForBuildType");
+				WRAPPER_READ_CLASS_ENUM_DECORATED_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_BUILDS, &iBuild, "ExtraWorkModForBuildType");
 				WRAPPER_READ_DECORATED(wrapper, "CvUnit", &iMod, "ExtraWorkModForBuild");
 
 				if (iBuild != NO_BUILD)
@@ -26792,7 +26788,7 @@ int CvUnit::getExtraGroup() const
 
 void CvUnit::changeExtraGroup(int iChange)
 {
-	const int iOldEffCount = SMeffectiveCountTimes100();
+	const int iOldEffCount = SMeffectiveCount();
 
 	GET_PLAYER(getOwner()).changeUnitCountSM(m_eUnitType, -intPow(3, groupRank()-1));
 	m_iExtraGroup += iChange;
@@ -26802,7 +26798,7 @@ void CvUnit::changeExtraGroup(int iChange)
 	// units were already removed from the ledgers by the kill path.
 	if (!isDead())
 	{
-		const int iEffChange = SMeffectiveCountTimes100() - iOldEffCount;
+		const int iEffChange = SMeffectiveCount() - iOldEffCount;
 
 		if (iEffChange != 0 && AI_getUnitAIType() != NO_UNITAI)
 		{
@@ -26851,7 +26847,7 @@ int CvUnit::sizeRank() const
 // unit must never be credited as its constituent count (x3 would tell the AI it has force
 // it does not have). Quality/size ranks are deliberately excluded: they exist without
 // merging, and the pre-SM demand constants never weighted promotions either.
-int CvUnit::SMeffectiveCountTimes100() const
+int CvUnit::SMeffectiveCount() const
 {
 	if (getExtraGroup() == 0 || !GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
 	{

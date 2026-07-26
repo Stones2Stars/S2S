@@ -1321,8 +1321,8 @@ void CvMap::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvMap", &m_bWrapX);
 	WRAPPER_READ(wrapper, "CvMap", &m_bWrapY);
 
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvMap", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiNumBonus);
-	WRAPPER_READ_CLASS_ARRAY(wrapper, "CvMap", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiNumBonusOnLand);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvMap", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiNumBonus);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvMap", REMAPPED_CLASS_TYPE_BONUSES, GC.getNumBonusInfos(), m_paiNumBonusOnLand);
 
 	if (numPlots() > 0)
 	{

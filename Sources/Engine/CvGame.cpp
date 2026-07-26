@@ -30,6 +30,7 @@
 #include "CvReplayInfo.h"
 #include "CvReplayMessage.h"
 #include "CvSelectionGroup.h"
+#include "Spine/CvEventSpine.h"   // emitGameLoadStarted / emitGameLoadFinished -- the load-lifecycle bracket
 #include "CvTeamAI.h"
 #include "CvUnit.h"
 #include "CvDLLEngineIFaceBase.h"
@@ -618,6 +619,12 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 			}
 		}
 	}
+
+	// The load-lifecycle bracket CLOSE (event-spine.md): the per-object read()s and every load-end rebuild in this
+	// function are complete, so the on-FINISHED consumers (the ContextConsumer plotAttrs drain, the enabler's
+	// load-end gate pass) run against fully-final state -- the bracket is still open during the FINISHED dispatch
+	// (the flag clears after the emit). No-op on a new game: no GAME_LOAD_STARTED fired, so the endpoint returns.
+	emitGameLoadFinished();
 
 	OutputDebugString("onFinalInitialized: End\n");
 }
@@ -3248,7 +3255,7 @@ int CvGame::calculateReligionPercent(ReligionTypes eReligion) const
 }
 
 
-int CvGame::goldenAgeLength100() const
+int CvGame::goldenAgeLength() const
 {
 	return GC.getGOLDEN_AGE_LENGTH() * GC.getGameSpeedInfo(getGameSpeedType()).getSpeedPercent();
 }
@@ -8454,6 +8461,13 @@ void CvGame::read(FDataStreamBase* pStream)
 
 	WRAPPER_READ_OBJECT_START(wrapper);
 
+	// The load-lifecycle bracket OPEN (event-spine.md, the load RESEED): CvGame::read is the earliest DLL load hook
+	// and runs ONLY on load (a new game inits, never deserializes -- the bracket must not wrap new-game init, where
+	// grants stay active), so every in-read DOMAIN emit (CvPlayer::read / CvCity::read / CvPlot::read) lands inside
+	// the bracket. GAME_LOAD_FINISHED closes it at the end of onFinalInitialized. The spine consumers are registered
+	// at the postmenu data load (CvXMLLoadUtilitySet -> spineRegisterConsumers), which always precedes a save read.
+	emitGameLoadStarted();
+
 	WRAPPER_READ_STRING(wrapper, "CvGame", m_gameId);	// flags for expansion
 
 	uint uiFlag=0;
@@ -8544,20 +8558,20 @@ void CvGame::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper,"CvGame",MAX_PLAYERS, m_iAIAutoPlay);
 	WRAPPER_READ_ARRAY(wrapper,"CvGame",MAX_PLAYERS, m_iForcedAIAutoPlay);
 
-	WRAPPER_READ_CLASS_ARRAY(wrapper,"CvGame", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_paiUnitCreatedCount);
-	WRAPPER_READ_CLASS_ARRAY(wrapper,"CvGame", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiBuildingCreatedCount);
-	WRAPPER_READ_CLASS_ARRAY(wrapper,"CvGame", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectCreatedCount);
-	WRAPPER_READ_CLASS_ARRAY(wrapper,"CvGame", REMAPPED_CLASS_TYPE_CIVICS, GC.getNumCivicInfos(), m_paiForceCivicCount);
-	WRAPPER_READ_CLASS_ARRAY(wrapper,"CvGame", REMAPPED_CLASS_TYPE_VOTES, GC.getNumVoteInfos(), (int*)m_paiVoteOutcome);
-	WRAPPER_READ_CLASS_ARRAY(wrapper,"CvGame", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_paiReligionGameTurnFounded);
-	WRAPPER_READ_CLASS_ARRAY(wrapper,"CvGame", REMAPPED_CLASS_TYPE_CORPORATIONS, GC.getNumCorporationInfos(), m_paiCorporationGameTurnFounded);
-	WRAPPER_READ_CLASS_ARRAY(wrapper,"CvGame", REMAPPED_CLASS_TYPE_VOTE_SOURCES, GC.getNumVoteSourceInfos(), m_aiSecretaryGeneralTimer);
-	WRAPPER_READ_CLASS_ARRAY(wrapper,"CvGame", REMAPPED_CLASS_TYPE_VOTE_SOURCES, GC.getNumVoteSourceInfos(), m_aiVoteTimer);
-	WRAPPER_READ_CLASS_ARRAY(wrapper,"CvGame", REMAPPED_CLASS_TYPE_VOTE_SOURCES, GC.getNumVoteSourceInfos(), m_aiDiploVote);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_paiUnitCreatedCount);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_BUILDINGS, GC.getNumBuildingInfos(), m_paiBuildingCreatedCount);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectCreatedCount);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_CIVICS, GC.getNumCivicInfos(), m_paiForceCivicCount);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_VOTES, GC.getNumVoteInfos(), (int*)m_paiVoteOutcome);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_paiReligionGameTurnFounded);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_CORPORATIONS, GC.getNumCorporationInfos(), m_paiCorporationGameTurnFounded);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_VOTE_SOURCES, GC.getNumVoteSourceInfos(), m_aiSecretaryGeneralTimer);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_VOTE_SOURCES, GC.getNumVoteSourceInfos(), m_aiVoteTimer);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_VOTE_SOURCES, GC.getNumVoteSourceInfos(), m_aiDiploVote);
 
-	WRAPPER_READ_CLASS_ARRAY(wrapper,"CvGame", REMAPPED_CLASS_TYPE_SPECIAL_UNITS, GC.getNumSpecialUnitInfos(), m_pabSpecialUnitValid);
-	WRAPPER_READ_CLASS_ARRAY(wrapper,"CvGame", REMAPPED_CLASS_TYPE_SPECIAL_BUILDINGS, GC.getNumSpecialBuildingInfos(), m_pabSpecialBuildingValid);
-	WRAPPER_READ_CLASS_ARRAY(wrapper,"CvGame", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_abReligionSlotTaken);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_SPECIAL_UNITS, GC.getNumSpecialUnitInfos(), m_pabSpecialUnitValid);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_SPECIAL_BUILDINGS, GC.getNumSpecialBuildingInfos(), m_pabSpecialBuildingValid);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_RELIGIONS, GC.getNumReligionInfos(), m_abReligionSlotTaken);
 
 	WRAPPER_READ(wrapper,"CvGame",&m_bGameStart);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame",REMAPPED_CLASS_TYPE_TECHS,GC.getNumTechInfos(), m_abTechCanFoundReligion);
@@ -8690,11 +8704,15 @@ void CvGame::read(FDataStreamBase* pStream)
 		WRAPPER_READ_DECORATED(wrapper,"CvGame",&iSize,"VoteSourceReligionsCount");
 		for (unsigned int i = 0; i < iSize; ++i)
 		{
-			VoteSourceTypes eVoteSource;
-			ReligionTypes eReligion;
-			WRAPPER_READ_CLASS_ENUM_DECORATED(wrapper,"CvGame",REMAPPED_CLASS_TYPE_VOTE_SOURCES,(int*)&eVoteSource, "VoteSourceReligionMapSource");
-			WRAPPER_READ_CLASS_ENUM_DECORATED(wrapper,"CvGame",REMAPPED_CLASS_TYPE_RELIGIONS,(int*)&eReligion, "VoteSourceReligionMapReligion");
-			m_mapVoteSourceReligions[eVoteSource] = eReligion;
+			VoteSourceTypes eVoteSource = NO_VOTESOURCE;
+			ReligionTypes eReligion = NO_RELIGION;
+			WRAPPER_READ_CLASS_ENUM_DECORATED_ALLOW_MISSING(wrapper,"CvGame",REMAPPED_CLASS_TYPE_VOTE_SOURCES,(int*)&eVoteSource, "VoteSourceReligionMapSource");
+			WRAPPER_READ_CLASS_ENUM_DECORATED_ALLOW_MISSING(wrapper,"CvGame",REMAPPED_CLASS_TYPE_RELIGIONS,(int*)&eReligion, "VoteSourceReligionMapReligion");
+
+			if (eVoteSource != NO_VOTESOURCE)
+			{
+				m_mapVoteSourceReligions[eVoteSource] = eReligion;
+			}
 		}
 	}
 
@@ -8705,7 +8723,7 @@ void CvGame::read(FDataStreamBase* pStream)
 		for (unsigned int i = 0; i < iSize; ++i)
 		{
 			int iTrigger = -1;
-			WRAPPER_READ_CLASS_ENUM_DECORATED(wrapper, "CvGame", REMAPPED_CLASS_TYPE_EVENT_TRIGGERS, &iTrigger, "InactiveTrigger");
+			WRAPPER_READ_CLASS_ENUM_DECORATED_ALLOW_MISSING(wrapper, "CvGame", REMAPPED_CLASS_TYPE_EVENT_TRIGGERS, &iTrigger, "InactiveTrigger");
 
 			if (iTrigger > -1)
 			{
@@ -8740,8 +8758,8 @@ void CvGame::read(FDataStreamBase* pStream)
 
 	//Example of how to skip element
 	//WRAPPER_SKIP_ELEMENT(wrapper,"CvGame",m_bCircumnavigated, SAVE_VALUE_ANY);
-	WRAPPER_READ_CLASS_ARRAY(wrapper,"CvGame", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementCount);
-	WRAPPER_READ_CLASS_ARRAY(wrapper,"CvGame", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiTechGameTurnDiscovered);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_IMPROVEMENTS, GC.getNumImprovementInfos(), m_paiImprovementCount);
+	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper,"CvGame", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_paiTechGameTurnDiscovered);
 	WRAPPER_READ_OBJECT_END(wrapper);
 
 	//establish improvement costs

@@ -33,7 +33,10 @@ struct OperatingBuildings
 	                                    // targeted-ripple bookkeeping so removing one provider only un-provides at 0
 	// ONE freshness philosophy (scope-packages.md): events mark the Set directly (building/religion/corp
 	// flips; tech/civic/GA via markPlayerScopeAndCities; the slice boundary is the self-heal) -- no stamps.
-	CvDerivedCacheSet<CvCity> set;   // the dirty protocol (bind in CvCity's ctor); noncopyable via this member
+	// the dirty protocol (bind in CvCity's ctor); noncopyable via this member. Mask width EXPLICIT (the
+	// CvDerivedCacheSet TMask axis): this set is a whole-cache dirty/clean user, so the int form is its
+	// declared shape -- the 64-bit form is the cascade packages' (CvCascadePackage), never a default ridden.
+	CvDerivedCacheSet<CvCity, int> set;
 };
 
 #endif // CV_CASCADE_OPERATING_BUILDINGS_H

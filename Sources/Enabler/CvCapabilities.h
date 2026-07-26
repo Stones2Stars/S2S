@@ -70,7 +70,10 @@ struct CascadeTeamCaps
 	// is the curated JSON plug when the corp-system rework ports its data.
 	int corpRevenueMod;
 
-	CvDerivedCacheSet<CvTeam> set;       // the ONE dirty protocol (bind in CvTeam's ctor)
+	// the ONE dirty protocol (bind in CvTeam's ctor). Mask width EXPLICIT (the CvDerivedCacheSet TMask axis):
+	// the capability union is a whole-cache dirty/clean user, so the int form is its declared shape -- the
+	// 64-bit form is the cascade packages' (CvCascadePackage), never a default ridden.
+	CvDerivedCacheSet<CvTeam, int> set;
 
 	CascadeTeamCaps() : corpRevenueMod(0) { for (int i = 0; i < CCF_COUNT; ++i) aFlag[i] = false; }
 };

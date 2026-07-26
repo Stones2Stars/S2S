@@ -1,466 +1,529 @@
 //
-//	CvImprovementInfo::mapFrom -- base core reading + availability (the terrain/feature/irrigation VALIDITY
-//	prereqs ride requires.build, store-inverted by the curator), then the improvement's real members from the
-//	curator's family/identity/mapGeneration shapes. HUMAN-native values. FK resolution via the kept type registry.
-//	Shapes nailed against curate_improvement.py (2026-07-07). See header.
+//	CvImprovementInfo -- the improvement poco's own typed reading on top of the base section dispatch (see the
+//	header). The yield/culture/defense families compile into m_modifiers via the base dispatch -- no per-family
+//	raw read survives here ([DEC-new-getter-surface]); the conditioned tile-output entries (irrigated /
+//	riverside / per-bonus / tech-gated + the reverse-landed cross-entity boosts) live on the compiled
+//	conditioned list. mapFrom materializes the identity/mapGeneration census set AND the placement/validity
+//	verdicts (ONE walk of the composed requires.build tree) into typed members ([DEC-materialize-at-mapfrom]);
+//	idempotent by contract.
 //
 
 #include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
 #include "CvImprovementInfo.h"
 #include "UI/CvArtFileMgr.h"      // ARTFILEMGR -- the EXE-shim-merge getArtInfo()
 #include "Infos/CvArtInfoImprovement.h"   // complete CvArtInfoImprovement -- getButton() needs the full definition
-#include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonFamVal/...)
+#include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonIdInt/jsonIdBool/jsonIdFk/jsonIdStr/jsonWorldArt)
 #include "Property/CvPropertyBridge.h" // the shared `triggers` PROPERTY pulse -> manipulator walk
 
 CvImprovementInfo::CvImprovementInfo()
-	: m_iDefenseModifier(0), m_iAirBombDefense(0), m_iHealthPercent(0), m_iHappiness(0), m_iCulture(0),
-	  m_iPillageGold(0), m_iUniqueRange(0), m_iCultureRange(0), m_iFeatureGrowthProbability(0), m_iUpgradeTime(0),
-	  m_eImprovementUpgrade(NO_IMPROVEMENT), m_eImprovementPillage(NO_IMPROVEMENT), m_eBonusChange(NO_BONUS),
-	  m_bActsAsCity(false), m_bMilitaryStructure(false), m_bCarriesIrrigation(false),
-	  m_bOutsideBorders(false), m_bBombardable(false), m_bZOCSource(false), m_bExtraterrestrial(false),
-	  m_bUniversalBonusTrade(false), m_bGoody(false), m_bRequiresRiverSide(false),
-	  m_iGoodyUniqueRange(0), m_iTilesPerGoody(0), m_iSeeFrom(0), m_iVisibilityChange(0), m_iAdvancedStartCost(100),
-	  m_bUpgradeRequiresFortify(false),
-	  m_bPlacesBonus(false), m_bPlacesFeature(false), m_bPlacesTerrain(false), m_bChangeRemove(false),
-	  m_iWorldSoundscapeScriptId(-1)
+	: m_iPillageGold(0)
+	, m_iCultureRange(0)
+	, m_iFeatureGrowthProbability(0)
+	, m_iUpgradeTime(0)
+	, m_iAdvancedStartCost(100)
+	, m_iSeeFrom(0)
+	, m_iVisibilityChange(0)
+	, m_iWorldSoundscapeScriptId(-1)
+	, m_iUniqueRange(0)
+	, m_iGoodyUniqueRange(0)
+	, m_iTilesPerGoody(0)
+	, m_eImprovementUpgrade(NO_IMPROVEMENT)
+	, m_eImprovementPillage(NO_IMPROVEMENT)
+	, m_eBonusChange(NO_BONUS)
+	, m_bActsAsCity(false)
+	, m_bMilitaryStructure(false)
+	, m_bCarriesIrrigation(false)
+	, m_bOutsideBorders(false)
+	, m_bBombardable(false)
+	, m_bZOCSource(false)
+	, m_bExtraterrestrial(false)
+	, m_bUniversalBonusTrade(false)
+	, m_bUpgradeRequiresFortify(false)
+	, m_bPlacesBonus(false)
+	, m_bPlacesFeature(false)
+	, m_bPlacesTerrain(false)
+	, m_bChangeRemove(false)
+	, m_bGoody(false)
+	, m_bRequiresRiverSide(false)
+	, m_ePrereqTech(NO_TECH)
+	, m_bRequiresFeature(false)
+	, m_bRequiresFlatlands(false)
+	, m_bRequiresIrrigation(false)
+	, m_bWaterImprovement(false)
+	, m_bCanMoveSeaUnits(false)
+	, m_bPeakImprovement(false)
+	, m_bNoFreshWater(false)
+	, m_bHillsMakesValid(false)
+	, m_bFreshWaterMakesValid(false)
+	, m_bRiverSideMakesValid(false)
+	, m_bPeakMakesValid(false)
 {
-	for (int i = 0; i < NUM_YIELD_TYPES; ++i)
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
-		m_aiYieldChange[i] = 0;
-		m_aiRiverSideYieldChange[i] = 0;
-		m_aiIrrigatedYieldChange[i] = 0;
-		m_aiPrereqNatureYield[i] = 0;
+		m_aiPrereqNatureYield[iYield] = 0;
 	}
+}
+
+//
+//	The placement/validity tree walk -- curate_improvement.py's requires_improvement() shapes:
+//	  - a bare token (IS_WATER/HAS_PEAK/HAS_IRRIGATION/IS_FLATLANDS/HAS_FEATURE/IS_LAND/HAS_COAST/HAS_RIVER/
+//	    HAS_HILLS/HAS_FRESHWATER) -> a PREDICATE node (id == -1, unparameterized).
+//	  - {terrain|feature:[...]} membership sugar -> a GROUP node whose anyOf holds per-item HAS_TERRAIN/
+//	    HAS_FEATURE PREDICATE nodes (id == the resolved TERRAIN_/FEATURE_ engine id).
+//	  - {bonus:[...]} membership sugar -> a GROUP node whose anyOf holds per-item PRESENCE nodes (id == the
+//	    resolved BONUS_ engine id, `type` retains the "BONUS_..." string).
+//	  - the improvement's PrereqTech -> a PRESENCE node directly in `all` (`type` == "TECH_...").
+//	A length-1 "MakesValid" OR-alternative COLLAPSES to a bare token sitting DIRECTLY in `all` --
+//	indistinguishable BY SHAPE ALONE from the true AND-mandatory token of the same name. Verified against the
+//	live CIV4ImprovementInfos.xml (the only two collision-capable pairs in the whole file): every record with
+//	bPeakMakesValid=1 ALSO has bPeakImprovement=1 (mountain_mine/radio_tower/machu_picchu); the one
+//	bPeakImprovement-only record (early_mountain_mine) produces a single, non-duplicated direct token. So
+//	counting DIRECT (an `all`-chain member) vs NESTED (reached via at least one anyOf hop) occurrences recovers
+//	both booleans for every real record: isPeakImprovement = "direct count >= 1"; isPeakMakesValid = "nested,
+//	OR a SECOND direct occurrence". isRiverSideMakesValid nets out the one guaranteed direct hit
+//	m_bRequiresRiverSide contributes when true.
+//
+
+namespace
+{
+	bool ii_condHasPredicate(const CvCondition* pCondition, CvCascPredKind ePredicate, int iId)
+	{
+		if (pCondition == NULL)
+		{
+			return false;
+		}
+		if (pCondition->kind == CASC_COND_PREDICATE && pCondition->predKind == ePredicate && pCondition->id == iId)
+		{
+			return true;
+		}
+		if (pCondition->kind == CASC_COND_GROUP)
+		{
+			for (size_t iChild = 0; iChild < pCondition->all.size(); ++iChild)
+			{
+				if (ii_condHasPredicate(pCondition->all[iChild], ePredicate, iId))
+				{
+					return true;
+				}
+			}
+			for (size_t iChild = 0; iChild < pCondition->anyOf.size(); ++iChild)
+			{
+				if (ii_condHasPredicate(pCondition->anyOf[iChild], ePredicate, iId))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	// Collect every parameterized occurrence of a predicate kind into an id set (the {terrain|feature:[...]}
+	// membership sugar), and every BONUS_ presence atom (the {bonus:[...]} sugar -- PRESENCE nodes, filtered on
+	// the retained `type` string so a numerically-coincident id from another FK space cannot collide).
+	void ii_collectPredicateIds(const CvCondition* pCondition, CvCascPredKind ePredicate, std::set<int>& idsOut)
+	{
+		if (pCondition == NULL)
+		{
+			return;
+		}
+		if (pCondition->kind == CASC_COND_PREDICATE && pCondition->predKind == ePredicate && pCondition->id >= 0)
+		{
+			idsOut.insert(pCondition->id);
+		}
+		if (pCondition->kind == CASC_COND_GROUP)
+		{
+			for (size_t iChild = 0; iChild < pCondition->all.size(); ++iChild)
+			{
+				ii_collectPredicateIds(pCondition->all[iChild], ePredicate, idsOut);
+			}
+			for (size_t iChild = 0; iChild < pCondition->anyOf.size(); ++iChild)
+			{
+				ii_collectPredicateIds(pCondition->anyOf[iChild], ePredicate, idsOut);
+			}
+		}
+	}
+
+	void ii_collectBonusPresenceIds(const CvCondition* pCondition, std::set<int>& idsOut)
+	{
+		if (pCondition == NULL)
+		{
+			return;
+		}
+		if (pCondition->kind == CASC_COND_PRESENCE && pCondition->id >= 0
+			&& pCondition->type.compare(0, 6, "BONUS_") == 0)
+		{
+			idsOut.insert(pCondition->id);
+		}
+		if (pCondition->kind == CASC_COND_GROUP)
+		{
+			for (size_t iChild = 0; iChild < pCondition->all.size(); ++iChild)
+			{
+				ii_collectBonusPresenceIds(pCondition->all[iChild], idsOut);
+			}
+			for (size_t iChild = 0; iChild < pCondition->anyOf.size(); ++iChild)
+			{
+				ii_collectBonusPresenceIds(pCondition->anyOf[iChild], idsOut);
+			}
+		}
+	}
+
+	// The {natureYield:{<channel>:N}} placement thresholds -- CASC_PRED_NATURE_YIELD predicate nodes on the
+	// MANDATORY chain (`all`, incl. a multi-channel object's own all-group; the channel rides `id`, the
+	// threshold `min`). anyOf alternatives are never walked: a threshold is an AND gate (the engine's
+	// CvPlot::canHaveImprovement calculateNatureYield >= prereq test), and the curator authors it only in
+	// requires.build.all.
+	void ii_collectNatureYieldMins(const CvCondition* pCondition, int* aiMinsOut)
+	{
+		if (pCondition == NULL)
+		{
+			return;
+		}
+		if (pCondition->kind == CASC_COND_PREDICATE && pCondition->predKind == CASC_PRED_NATURE_YIELD
+			&& pCondition->id >= 0 && pCondition->id < NUM_YIELD_TYPES && pCondition->min >= 0)
+		{
+			aiMinsOut[pCondition->id] = pCondition->min;
+		}
+		if (pCondition->kind == CASC_COND_GROUP)
+		{
+			for (size_t iChild = 0; iChild < pCondition->all.size(); ++iChild)
+			{
+				ii_collectNatureYieldMins(pCondition->all[iChild], aiMinsOut);
+			}
+		}
+	}
+
+	// direct = occurrences of the bare predicate reached WITHOUT crossing an anyOf hop; nested = occurrences
+	// through at least one anyOf hop (the "MakesValid" OR-alternative position). See the block comment above.
+	void ii_countPredicate(const CvCondition* pCondition, CvCascPredKind ePredicate, bool bViaAny,
+		int& iDirect, int& iNested)
+	{
+		if (pCondition == NULL)
+		{
+			return;
+		}
+		if (pCondition->kind == CASC_COND_PREDICATE && pCondition->predKind == ePredicate)
+		{
+			if (bViaAny)
+			{
+				++iNested;
+			}
+			else
+			{
+				++iDirect;
+			}
+			return;
+		}
+		if (pCondition->kind == CASC_COND_GROUP)
+		{
+			for (size_t iChild = 0; iChild < pCondition->all.size(); ++iChild)
+			{
+				ii_countPredicate(pCondition->all[iChild], ePredicate, bViaAny, iDirect, iNested);
+			}
+			for (size_t iChild = 0; iChild < pCondition->anyOf.size(); ++iChild)
+			{
+				ii_countPredicate(pCondition->anyOf[iChild], ePredicate, true, iDirect, iNested);
+			}
+		}
+	}
+}
+
+// The ONE requires.build walk -> the typed placement/validity members (getters are bare reads). Runs after
+// the base section dispatch each mapFrom, so the full-registry re-map re-materializes against fully-resolved
+// FK ids. Clear-first/assign-all -- idempotent.
+void CvImprovementInfo::materializeValidity()
+{
+	m_ePrereqTech = NO_TECH;
+	m_bRequiresFeature = false;
+	m_bRequiresFlatlands = false;
+	m_bRequiresIrrigation = false;
+	m_bWaterImprovement = false;
+	m_bCanMoveSeaUnits = false;
+	m_bPeakImprovement = false;
+	m_bNoFreshWater = false;
+	m_bHillsMakesValid = false;
+	m_bFreshWaterMakesValid = false;
+	m_bRiverSideMakesValid = false;
+	m_bPeakMakesValid = false;
+	m_terrainMakesValid.clear();
+	m_featureMakesValid.clear();
+	m_bonusMakesValid.clear();
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		m_aiPrereqNatureYield[iYield] = 0;
+	}
+
+	const CvCondition* pBuild = m_requires.build;
+	if (pBuild == NULL)
+	{
+		return;
+	}
+	// the improvement's PrereqTech: a TECH_ PRESENCE node directly in `all`
+	for (size_t iChild = 0; iChild < pBuild->all.size(); ++iChild)
+	{
+		const CvCondition* pChild = pBuild->all[iChild];
+		if (pChild != NULL && pChild->kind == CASC_COND_PRESENCE && pChild->type.compare(0, 5, "TECH_") == 0)
+		{
+			m_ePrereqTech = (TechTypes)pChild->id;
+			break;
+		}
+	}
+	m_bRequiresFeature = ii_condHasPredicate(pBuild, CASC_PRED_HAS_FEATURE, -1);
+	m_bRequiresFlatlands = ii_condHasPredicate(pBuild, CASC_PRED_IS_FLATLANDS, -1);
+	m_bRequiresIrrigation = ii_condHasPredicate(pBuild, CASC_PRED_HAS_IRRIGATION, -1);
+	m_bWaterImprovement = ii_condHasPredicate(pBuild, CASC_PRED_IS_WATER, -1);
+	m_bCanMoveSeaUnits = ii_condHasPredicate(pBuild, CASC_PRED_IS_LAND, -1)
+		&& ii_condHasPredicate(pBuild, CASC_PRED_HAS_COAST, -1);
+	m_bHillsMakesValid = ii_condHasPredicate(pBuild, CASC_PRED_HAS_HILLS, -1);
+	m_bFreshWaterMakesValid = ii_condHasPredicate(pBuild, CASC_PRED_HAS_FRESHWATER, -1);
+	// the direct-vs-nested disambiguation pair (peak; riverside nets out the mapGeneration flag's direct hit)
+	int iDirect = 0;
+	int iNested = 0;
+	ii_countPredicate(pBuild, CASC_PRED_HAS_PEAK, false, iDirect, iNested);
+	m_bPeakImprovement = iDirect >= 1;
+	m_bPeakMakesValid = iNested > 0 || iDirect >= 2;
+	iDirect = 0;
+	iNested = 0;
+	ii_countPredicate(pBuild, CASC_PRED_HAS_RIVER, false, iDirect, iNested);
+	m_bRiverSideMakesValid = iNested > 0 || iDirect > (m_bRequiresRiverSide ? 1 : 0);
+	// requires.build.noneOf HAS_FRESHWATER -> the no-fresh-water exclusion
+	for (size_t iChild = 0; iChild < pBuild->noneOf.size(); ++iChild)
+	{
+		const CvCondition* pChild = pBuild->noneOf[iChild];
+		if (pChild != NULL && pChild->kind == CASC_COND_PREDICATE && pChild->predKind == CASC_PRED_HAS_FRESHWATER)
+		{
+			m_bNoFreshWater = true;
+			break;
+		}
+	}
+	// the keyed membership sets
+	ii_collectPredicateIds(pBuild, CASC_PRED_HAS_TERRAIN, m_terrainMakesValid);
+	ii_collectPredicateIds(pBuild, CASC_PRED_HAS_FEATURE, m_featureMakesValid);
+	ii_collectBonusPresenceIds(pBuild, m_bonusMakesValid);
+	// the {natureYield} placement thresholds (CASC_PRED_NATURE_YIELD atoms on the mandatory chain)
+	ii_collectNatureYieldMins(pBuild, m_aiPrereqNatureYield);
 }
 
 void CvImprovementInfo::mapFrom(const picojson::value& entity)
 {
-	// remap-idempotency (CvInfo.h contract): fully define every accumulating member -- the full-registry pass re-runs mapFrom.
-	m_aeMapCategories.clear(); m_aiAlternativeImprovementUpgradeTypes.clear(); m_aiFeatureChangeTypes.clear();
-	m_bonusTradeIds.clear(); m_bonusDiscoverRand.clear(); m_bonusDepletionRand.clear();
+	// remap-idempotency (CvInfo.h contract): fully define every accumulating member.
+	// NB m_aeBuildTypes is NOT cleared here -- doPostLoadCaching populates it, not this parse.
+	m_aeMapCategories.clear();
+	m_aiAlternativeImprovementUpgradeTypes.clear();
+	m_aiFeatureChangeTypes.clear();
+	m_bonusTradeIds.clear();
+	m_bonusDiscoverRand.clear();
+	m_bonusDepletionRand.clear();
 
-	CvInfo::mapFrom(entity);   // core reading + availability (requires.build carries the placement/validity prereqs)
-	if (!entity.is<picojson::object>()) return;
-	const picojson::object& o = entity.get<picojson::object>();
+	CvInfo::mapFrom(entity);   // core reading + the section dispatch (requires tree + the modifier compile)
+	if (!entity.is<picojson::object>())
+	{
+		return;
+	}
+	const picojson::object& entityObj = entity.get<picojson::object>();
 
-	// PROPERTY_* per-turn SOURCES: the improvement's `triggers` property pulses (polluting mines/wells --
-	// authored per json §5) feed the KEEP-legacy solver via the plot gather, mirroring the legacy PLOT+NEAR
-	// shape. The ONE shared pulse walk (clear-and-refill inside).
+	// PROPERTY_* per-turn SOURCES: the improvement's `triggers` property pulses feed the KEEP-legacy solver
+	// via the plot gather. The ONE shared pulse walk (clear-and-refill inside).
 	CascadePropertyBridge::bridgePulses(getTriggers(), m_PropertyManipulators);
 
-	// plot yield families (the improvement's own tile output): base + condition-gated deposits, all folded into the
-	// `<yield>.plot.flat` arrays by the curator. readConditionalYields sets m_aiYieldChange (base) AND the RiverSide/
-	// Irrigated/Tech/Bonus buckets from one walk -- it REPLACES the old jsonFamVal reads, which returned 0 for the
-	// array-shaped families (jsonFamVal reads a bare scalar only).
-	readConditionalYields(entity);
-	readPrereqNatureYield(entity);
-	m_iDefenseModifier = jsonFamMemberVal(o, "defense", "plot", "amount", "percent");   // iDefenseModifier -> defense.plot.amount.percent
-	m_iAirBombDefense  = jsonFamMemberVal(o, "defense", "plot", "air", "flat");         // iAirBombDefense -> defense.plot.air.flat
-	m_iCulture         = jsonFamVal(o, "culture", "plot", "flat");                      // iCulture -> culture.plot.flat (Super Forts)
-	m_iSeeFrom         = jsonFamMemberVal(o, "vision", "plot", "seeFrom", "flat");         // iSeeFrom -> vision.plot.seeFrom.flat
-	m_iVisibilityChange = jsonFamMemberVal(o, "vision", "plot", "visibilityRange", "flat"); // iVisibilityChange -> vision.plot.visibilityRange.flat
-	// m_iHealthPercent stays 0: iHealthPercent is a BALANCE-CUT source from improvements (curate_improvement.py
-	//   EXTRA_DROP). The getter survives (live UI/CvCity callers) reading the cut-to-0 member.
-
 	// mapGeneration
-	if (const picojson::object* mg = jsonChildObj(o, "mapGeneration"))
+	if (const picojson::object* pMapGen = jsonChildObj(entityObj, "mapGeneration"))
 	{
-		m_iUniqueRange      = jsonIdInt(*mg, "uniqueRange");    // iUniqueRange -> mapGeneration.uniqueRange
-		m_iGoodyUniqueRange = jsonIdInt(*mg, "goodyRange");     // iGoodyRange -> mapGeneration.goodyRange (id_rename: XML tag != member name)
-		m_iTilesPerGoody    = jsonIdInt(*mg, "tilesPerGoody");  // iTilesPerGoody -> mapGeneration.tilesPerGoody
+		m_iUniqueRange = jsonIdInt(*pMapGen, "uniqueRange");
+		m_iGoodyUniqueRange = jsonIdInt(*pMapGen, "goodyRange");
+		m_iTilesPerGoody = jsonIdInt(*pMapGen, "tilesPerGoody");
+		m_bGoody = jsonIdBool(*pMapGen, "goody");
+		m_bRequiresRiverSide = jsonIdBool(*pMapGen, "requiresRiverSide");
 	}
 
-	// identity: scalars, FKs, held-capability flags (the moved placement-domain flags are NOT here -- see below)
-	if (const picojson::object* io = jsonChildObj(o, "identity"))
+	// identity: scalars, FKs, held flags (the store-inverted placement prereqs are NOT here -- they ride
+	// requires.build and materialize below)
+	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
 	{
-		m_iHappiness                = jsonIdInt(*io, "happiness");            // iHappiness -> identity (default path)
-		m_iPillageGold              = jsonIdInt(*io, "pillageGold");          // iPillageGold -> pillageGold (id_rename)
-		m_iCultureRange             = jsonIdInt(*io, "cultureRange");         // iCultureRange -> identity (owner: leave)
-		m_iFeatureGrowthProbability = jsonIdInt(*io, "featureGrowth");        // iFeatureGrowth -> identity (owner: leave)
-		m_iUpgradeTime              = jsonIdInt(*io, "upgradeTime");          // iUpgradeTime -> identity
-		// upgradesTo/pillageTo are improvement->improvement self-FKs -- direct resolution: LoadGlobalClassInfoJson
-		// registers the whole category BEFORE any mapFrom (two-pass, engine.md), and the full-registry re-run
-		// (loadJson PASS 2) re-resolves against the complete id space regardless.
-		m_eImprovementUpgrade = (ImprovementTypes)jsonIdFk(*io, "upgradesTo");
-		m_eImprovementPillage = (ImprovementTypes)jsonIdFk(*io, "pillageTo");
-		m_eBonusChange              = (BonusTypes)jsonIdFk(*io, "bonusChange");         // BonusChange -> identity.bonusChange
+		m_iPillageGold = jsonIdInt(*pIdentity, "pillageGold");
+		m_iCultureRange = jsonIdInt(*pIdentity, "cultureRange");
+		m_iFeatureGrowthProbability = jsonIdInt(*pIdentity, "featureGrowth");
+		m_iUpgradeTime = jsonIdInt(*pIdentity, "upgradeTime");
+		// upgradesTo/pillageTo are improvement->improvement self-FKs -- the full-registry re-run re-resolves
+		// against the complete id space regardless of first-pass ordering.
+		m_eImprovementUpgrade = (ImprovementTypes)jsonIdFk(*pIdentity, "upgradesTo");
+		m_eImprovementPillage = (ImprovementTypes)jsonIdFk(*pIdentity, "pillageTo");
+		m_eBonusChange = (BonusTypes)jsonIdFk(*pIdentity, "bonusChange");
 
-		m_bActsAsCity            = jsonIdBool(*io, "actsAsCity");
-		m_bMilitaryStructure     = jsonIdBool(*io, "militaryStructure");
-		m_bCarriesIrrigation     = jsonIdBool(*io, "carriesIrrigation");     // KEPT in identity (propagation is live code)
-		m_bOutsideBorders        = jsonIdBool(*io, "outsideBorders");
-		m_bBombardable           = jsonIdBool(*io, "bombardable");
-		m_bZOCSource             = jsonIdBool(*io, "zoneOfControl");         // bIsZOCSource -> zoneOfControl (id_rename)
-		m_bExtraterrestrial      = jsonIdBool(*io, "extraterrestrial");      // bExtraterresial -> extraterrestrial (id_rename)
-		m_bUniversalBonusTrade   = jsonIdBool(*io, "universalBonusTrade");   // bIsUniversalTradeBonusProvider (LIVE lynchpin)
-		m_bUpgradeRequiresFortify = jsonIdBool(*io, "upgradeRequiresFortify");
-		m_bPlacesBonus           = jsonIdBool(*io, "placesBonus");           // placement-transform outcome flags (KEPT on identity)
-		m_bPlacesFeature         = jsonIdBool(*io, "placesFeature");
-		m_bPlacesTerrain         = jsonIdBool(*io, "placesTerrain");
-		m_bChangeRemove          = jsonIdBool(*io, "changeRemove");
-		if (const picojson::object* as = jsonChildObj(*io, "advancedStart"))
-			m_iAdvancedStartCost = jsonIdInt(*as, "cost", 100);              // iAdvancedStartCost -> identity.advancedStart.cost; legacy load default 100
-		// NB waterImprovement / requiresIrrigation / peakImprovement / requiresFeature / requiresFlatlands / the
-		//    MakesValid family are NOT cached into their OWN members here: the curator store-inverts them into
-		//    requires.build (IS_WATER / HAS_IRRIGATION / HAS_PEAK / HAS_FEATURE / IS_FLATLANDS / HAS_TERRAIN /
-		//    HAS_HILLS / ...), so their getters (below) walk the already-parsed m_requires.build tree on demand.
-
-		picojson::object::const_iterator mc = io->find("mapCategories");
-		if (mc != io->end() && mc->second.is<picojson::array>())
+		m_bActsAsCity = jsonIdBool(*pIdentity, "actsAsCity");
+		m_bMilitaryStructure = jsonIdBool(*pIdentity, "militaryStructure");
+		m_bCarriesIrrigation = jsonIdBool(*pIdentity, "carriesIrrigation");
+		m_bOutsideBorders = jsonIdBool(*pIdentity, "outsideBorders");
+		m_bBombardable = jsonIdBool(*pIdentity, "bombardable");
+		m_bZOCSource = jsonIdBool(*pIdentity, "zoneOfControl");
+		m_bExtraterrestrial = jsonIdBool(*pIdentity, "extraterrestrial");
+		m_bUniversalBonusTrade = jsonIdBool(*pIdentity, "universalBonusTrade");
+		m_bUpgradeRequiresFortify = jsonIdBool(*pIdentity, "upgradeRequiresFortify");
+		m_bPlacesBonus = jsonIdBool(*pIdentity, "placesBonus");
+		m_bPlacesFeature = jsonIdBool(*pIdentity, "placesFeature");
+		m_bPlacesTerrain = jsonIdBool(*pIdentity, "placesTerrain");
+		m_bChangeRemove = jsonIdBool(*pIdentity, "changeRemove");
+		if (const picojson::object* pAdvancedStart = jsonChildObj(*pIdentity, "advancedStart"))
 		{
-			const picojson::array& a = mc->second.get<picojson::array>();
-			for (size_t i = 0; i < a.size(); ++i)
-				if (a[i].is<std::string>()) { const int id = jsonResolveId(a[i].get<std::string>()); if (id >= 0) m_aeMapCategories.push_back((MapCategoryTypes)id); }
+			m_iAdvancedStartCost = jsonIdInt(*pAdvancedStart, "cost", 100);   // legacy load default 100
 		}
 
-		picojson::object::const_iterator au = io->find("alternativeUpgrades");   // AlternativeImprovementUpgradeTypes (id_rename)
-		if (au != io->end() && au->second.is<picojson::array>())
+		picojson::object::const_iterator categoriesIter = pIdentity->find("mapCategories");
+		if (categoriesIter != pIdentity->end() && categoriesIter->second.is<picojson::array>())
 		{
-			const picojson::array& a = au->second.get<picojson::array>();
-			for (size_t i = 0; i < a.size(); ++i)
-				if (a[i].is<std::string>()) { const int id = jsonResolveId(a[i].get<std::string>()); if (id >= 0) m_aiAlternativeImprovementUpgradeTypes.push_back(id); }
-		}
-
-		picojson::object::const_iterator fc = io->find("featureChanges");   // FeatureChangeTypes (id_rename) -> FEATURE_ ids
-		if (fc != io->end() && fc->second.is<picojson::array>())
-		{
-			const picojson::array& a = fc->second.get<picojson::array>();
-			for (size_t i = 0; i < a.size(); ++i)
-				if (a[i].is<std::string>()) { const int id = jsonResolveId(a[i].get<std::string>()); if (id >= 0) m_aiFeatureChangeTypes.push_back(id); }
-		}
-
-		// identity.bonuses.{BONUS}: {trade, discoverRand, depletionRand} (BonusTypeStructs post_process nest).
-		// BONUS_ loads before IMPROVEMENT_ (:802 < :807), so these cross-class FKs resolve at read() time.
-		// `trade` -> the per-bonus tradeable set read by isImprovementBonusTrade (was dropped -- collapsed to the universal flag).
-		if (const picojson::object* bonuses = jsonChildObj(*io, "bonuses"))
-		{
-			for (picojson::object::const_iterator b = bonuses->begin(); b != bonuses->end(); ++b)
+			const picojson::array& categoryList = categoriesIter->second.get<picojson::array>();
+			for (size_t iEntry = 0; iEntry < categoryList.size(); ++iEntry)
 			{
-				if (!b->second.is<picojson::object>()) continue;
-				const int id = jsonResolveId(b->first);
-				if (id < 0) continue;
-				const picojson::object& rb = b->second.get<picojson::object>();
-				picojson::object::const_iterator tr = rb.find("trade");
-				if (tr != rb.end() && tr->second.is<bool>() && tr->second.get<bool>()) m_bonusTradeIds.insert(id);
-				picojson::object::const_iterator dr = rb.find("discoverRand");
-				if (dr != rb.end() && dr->second.is<double>()) m_bonusDiscoverRand[id] = (int)dr->second.get<double>();
-				picojson::object::const_iterator dp = rb.find("depletionRand");
-				if (dp != rb.end() && dp->second.is<double>()) m_bonusDepletionRand[id] = (int)dp->second.get<double>();
-			}
-		}
-	}
-
-	// world.art.icon -- the ART_DEF_* tag (EXE map-gen art lookup, via the CvImprovementInfo shim's getArtInfo)
-	if (const picojson::object* art = jsonWorldArt(o)) jsonIdStr(*art, "define", m_szArtDefineTag);
-
-	// sound.soundscape -> runtime audio-manager index, resolved at info-load EXACTLY as the archived
-	// CvImprovementInfo::read did (gDLL->getAudioTagIndex(tag, AUDIOTAG_SOUNDSCAPE)); absent/empty tag leaves the
-	// legacy -1 default. (Only 2 improvements author a soundscape; the rest keep -1, matching legacy.)
-	if (const picojson::object* snd = jsonChildObj(o, "sound"))
-	{
-		picojson::object::const_iterator ss = snd->find("soundscape");
-		if (ss != snd->end() && ss->second.is<std::string>() && ss->second.get<std::string>().length() > 0)
-			m_iWorldSoundscapeScriptId = gDLL->getAudioTagIndex(ss->second.get<std::string>().c_str(), AUDIOTAG_SOUNDSCAPE);
-	}
-
-	// mapGeneration.goody / .requiresRiverSide -- the EXE-bound isGoody() / isRequiresRiverSide()
-	if (const picojson::object* mg = jsonChildObj(o, "mapGeneration"))
-	{
-		m_bGoody            = jsonIdBool(*mg, "goody");
-		m_bRequiresRiverSide = jsonIdBool(*mg, "requiresRiverSide");
-	}
-}
-
-//
-//	Placement/validity condition-tree helpers -- read-only walks of `requires.build` (the CvCondition tree the
-//	base already parses via mutRequires()/CJK_REQUIRES; CvJsonConditionParse.cpp). curate_improvement.py's
-//	requires_improvement() shapes:
-//	  - a bare token (IS_WATER/HAS_PEAK/HAS_IRRIGATION/IS_FLATLANDS/HAS_FEATURE/IS_LAND/HAS_COAST/HAS_RIVER/
-//	    HAS_HILLS/HAS_FRESHWATER) -> a PREDICATE node (id == -1, unparameterized).
-//	  - {terrain|feature:[...]} membership sugar -> a GROUP node whose anyOf holds per-item HAS_TERRAIN/HAS_FEATURE
-//	    PREDICATE nodes (id == the resolved TERRAIN_/FEATURE_ engine id).
-//	  - {bonus:[...]} membership sugar -> a GROUP node whose anyOf holds per-item PRESENCE nodes (not predicates;
-//	    id == the resolved BONUS_ engine id, `type` retains the original "BONUS_..." string).
-//	  - the improvement's PrereqTech -> a PRESENCE node directly in `all` (`type` == "TECH_...").
-//	A length-1 "MakesValid" OR-alternative (bHillsMakesValid/bFreshWaterMakesValid/bRiverSideMakesValid/
-//	bPeakMakesValid -- requires_improvement's `anyset`) COLLAPSES to a bare token sitting DIRECTLY in `all` when it is
-//	the improvement's only alternative -- indistinguishable BY SHAPE ALONE from the true AND-mandatory token of the
-//	same name (bPeakImprovement's HAS_PEAK; bRequiresRiverSide's HAS_RIVER, already read separately into
-//	m_bRequiresRiverSide from mapGeneration). Verified against the live CIV4ImprovementInfos.xml (the only two
-//	collision-capable pairs in the whole file): every record with bPeakMakesValid=1 ALSO has bPeakImprovement=1
-//	(mountain_mine/radio_tower/machu_picchu); the one bPeakImprovement-only record (early_mountain_mine) produces a
-//	single, non-duplicated direct token. So counting DIRECT (an `all`-chain member) vs NESTED (reached via at least
-//	one anyOf hop) occurrences recovers both booleans correctly for every real record: isPeakImprovement is "direct
-//	count >= 1"; isPeakMakesValid is "nested, OR a SECOND direct occurrence" (the collapsed-and-duplicated case).
-//	isRiverSideMakesValid uses the same count, netting out the one guaranteed direct hit m_bRequiresRiverSide
-//	already contributes when true.
-//
-
-static bool condHasPredicate(const CvCondition* c, CvCascPredKind k, int id)
-{
-	if (!c) return false;
-	if (c->kind == CASC_COND_PREDICATE && c->predKind == k && c->id == id) return true;
-	if (c->kind == CASC_COND_GROUP)
-	{
-		for (size_t i = 0; i < c->all.size(); ++i)   if (condHasPredicate(c->all[i], k, id))   return true;
-		for (size_t i = 0; i < c->anyOf.size(); ++i) if (condHasPredicate(c->anyOf[i], k, id)) return true;
-	}
-	return false;
-}
-
-// The {bonus:[...]} membership atom is a PRESENCE node, not a predicate; filter on the retained `type` string
-// (BONUS_ prefix) so a numerically-coincident id from another FK space (e.g. the PrereqTech PRESENCE) can't collide.
-static bool condHasBonusPresence(const CvCondition* c, int id)
-{
-	if (!c) return false;
-	if (c->kind == CASC_COND_PRESENCE && c->id == id && c->type.compare(0, 6, "BONUS_") == 0) return true;
-	if (c->kind == CASC_COND_GROUP)
-	{
-		for (size_t i = 0; i < c->all.size(); ++i)   if (condHasBonusPresence(c->all[i], id))   return true;
-		for (size_t i = 0; i < c->anyOf.size(); ++i) if (condHasBonusPresence(c->anyOf[i], id)) return true;
-	}
-	return false;
-}
-
-// direct = occurrences of the bare predicate `k` reached WITHOUT ever crossing an anyOf hop; nested = occurrences
-// reached through at least one anyOf hop (the "MakesValid" OR-alternative position). See the block comment above.
-static void condCountPred(const CvCondition* c, CvCascPredKind k, bool viaAny, int& direct, int& nested)
-{
-	if (!c) return;
-	if (c->kind == CASC_COND_PREDICATE && c->predKind == k) { if (viaAny) ++nested; else ++direct; return; }
-	if (c->kind == CASC_COND_GROUP)
-	{
-		for (size_t i = 0; i < c->all.size(); ++i)   condCountPred(c->all[i], k, viaAny, direct, nested);
-		for (size_t i = 0; i < c->anyOf.size(); ++i) condCountPred(c->anyOf[i], k, true, direct, nested);
-	}
-}
-
-TechTypes CvImprovementInfo::getPrereqTech() const
-{
-	if (m_requires.build)
-		for (size_t i = 0; i < m_requires.build->all.size(); ++i)
-		{
-			const CvCondition* c = m_requires.build->all[i];
-			if (c && c->kind == CASC_COND_PRESENCE && c->type.compare(0, 5, "TECH_") == 0) return (TechTypes)c->id;
-		}
-	return NO_TECH;
-}
-
-bool CvImprovementInfo::isRequiresFeature() const    { return condHasPredicate(m_requires.build, CASC_PRED_HAS_FEATURE, -1); }
-bool CvImprovementInfo::isRequiresFlatlands() const  { return condHasPredicate(m_requires.build, CASC_PRED_IS_FLATLANDS, -1); }
-bool CvImprovementInfo::isRequiresIrrigation() const { return condHasPredicate(m_requires.build, CASC_PRED_HAS_IRRIGATION, -1); }
-bool CvImprovementInfo::isWaterImprovement() const   { return condHasPredicate(m_requires.build, CASC_PRED_IS_WATER, -1); }
-
-bool CvImprovementInfo::isCanMoveSeaUnits() const
-{
-	return condHasPredicate(m_requires.build, CASC_PRED_IS_LAND, -1) && condHasPredicate(m_requires.build, CASC_PRED_HAS_COAST, -1);
-}
-
-bool CvImprovementInfo::isPeakImprovement() const
-{
-	int d = 0, n = 0; condCountPred(m_requires.build, CASC_PRED_HAS_PEAK, false, d, n);
-	return d >= 1;
-}
-
-bool CvImprovementInfo::isPeakMakesValid() const
-{
-	int d = 0, n = 0; condCountPred(m_requires.build, CASC_PRED_HAS_PEAK, false, d, n);
-	return n > 0 || d >= 2;
-}
-
-bool CvImprovementInfo::isRiverSideMakesValid() const
-{
-	int d = 0, n = 0; condCountPred(m_requires.build, CASC_PRED_HAS_RIVER, false, d, n);
-	return n > 0 || d > (m_bRequiresRiverSide ? 1 : 0);
-}
-
-bool CvImprovementInfo::isNoFreshWater() const
-{
-	if (!m_requires.build) return false;
-	for (size_t i = 0; i < m_requires.build->noneOf.size(); ++i)
-	{
-		const CvCondition* c = m_requires.build->noneOf[i];
-		if (c && c->kind == CASC_COND_PREDICATE && c->predKind == CASC_PRED_HAS_FRESHWATER) return true;
-	}
-	return false;
-}
-
-bool CvImprovementInfo::isHillsMakesValid() const      { return condHasPredicate(m_requires.build, CASC_PRED_HAS_HILLS, -1); }
-bool CvImprovementInfo::isFreshWaterMakesValid() const { return condHasPredicate(m_requires.build, CASC_PRED_HAS_FRESHWATER, -1); }
-bool CvImprovementInfo::getTerrainMakesValid(int i) const { return condHasPredicate(m_requires.build, CASC_PRED_HAS_TERRAIN, i); }
-bool CvImprovementInfo::getFeatureMakesValid(int i) const { return condHasPredicate(m_requires.build, CASC_PRED_HAS_FEATURE, i); }
-bool CvImprovementInfo::isImprovementBonusMakesValid(int i) const { return condHasBonusPresence(m_requires.build, i); }
-
-bool CvImprovementInfo::isAlternativeImprovementUpgradeType(int i) const
-{
-	for (size_t k = 0; k < m_aiAlternativeImprovementUpgradeTypes.size(); ++k)
-		if (m_aiAlternativeImprovementUpgradeTypes[k] == i) return true;
-	return false;
-}
-
-bool CvImprovementInfo::isFeatureChangeType(int i) const
-{
-	for (size_t k = 0; k < m_aiFeatureChangeTypes.size(); ++k)
-		if (m_aiFeatureChangeTypes[k] == i) return true;
-	return false;
-}
-
-// A NUM_YIELD_TYPES-sized, zero-initialised row for a keyed (tech/bonus) yield map, created on first touch.
-static std::vector<int>& yieldBucket(std::map<int, std::vector<int> >& m, int key)
-{
-	std::vector<int>& r = m[key];
-	if ((int)r.size() != NUM_YIELD_TYPES) r.assign(NUM_YIELD_TYPES, 0);
-	return r;
-}
-
-// readConditionalYields -- walk food/production/commerce -> plot.flat, folding the curator's base + condition-gated
-// deposits (curate_improvement.py post_process _inject) into the right member: a bare number is the base YieldChange;
-// a {value,enabled} entry's gate routes to Irrigated/RiverSide/per-bonus/per-tech (see the header block comment).
-void CvImprovementInfo::readConditionalYields(const picojson::value& entity)
-{
-	// fully define the output (remap-idempotency, CvInfo.h): this walk ACCUMULATES (+=) into the yield buckets,
-	// so a full-registry re-run must start from zero or every improvement yield doubles.
-	for (int i = 0; i < NUM_YIELD_TYPES; ++i)
-	{
-		m_aiYieldChange[i] = 0;
-		m_aiRiverSideYieldChange[i] = 0;
-		m_aiIrrigatedYieldChange[i] = 0;
-	}
-	m_bonusYieldChanges.clear();
-	m_techYieldChanges.clear();
-	m_routeYieldChanges.clear();   // refilled by the loadJson reverse pass, which runs after every re-map
-
-	if (!entity.is<picojson::object>()) return;
-	const picojson::object& o = entity.get<picojson::object>();
-	const char* fam[3] = { "food", "production", "commerce" };
-	const int   yidx[3] = { YIELD_FOOD, YIELD_PRODUCTION, YIELD_COMMERCE };
-	for (int f = 0; f < 3; ++f)
-	{
-		const int iYield = yidx[f];
-		const picojson::object* fo = jsonChildObj(o, fam[f]);      if (!fo) continue;
-		const picojson::object* so = jsonChildObj(*fo, "plot");    if (!so) continue;
-		picojson::object::const_iterator u = so->find("flat");     if (u == so->end()) continue;
-		const picojson::value& flat = u->second;
-		if (flat.is<double>()) { m_aiYieldChange[iYield] += (int)flat.get<double>(); continue; }   // bare scalar base
-		if (!flat.is<picojson::array>()) continue;
-		const picojson::array& a = flat.get<picojson::array>();
-		for (size_t i = 0; i < a.size(); ++i)
-		{
-			const picojson::value& e = a[i];
-			if (e.is<double>()) { m_aiYieldChange[iYield] += (int)e.get<double>(); continue; }     // bare base element
-			if (!e.is<picojson::object>()) continue;
-			const picojson::object& eo = e.get<picojson::object>();
-			picojson::object::const_iterator vv = eo.find("value");
-			if (vv == eo.end() || !vv->second.is<double>()) continue;
-			const int val = (int)vv->second.get<double>();
-			picojson::object::const_iterator en = eo.find("enabled");
-			if (en == eo.end()) { m_aiYieldChange[iYield] += val; continue; }                       // ungated -> base (defensive)
-			const picojson::value& gate = en->second;
-			if (gate.is<std::string>())
-			{
-				const std::string& s = gate.get<std::string>();
-				if (s == "HAS_IRRIGATION")    m_aiIrrigatedYieldChange[iYield] += val;
-				else if (s == "HAS_RIVER")    m_aiRiverSideYieldChange[iYield] += val;
-				// any other bare-string gate has no legacy improvement getter -> not bucketed
-			}
-			else if (gate.is<picojson::object>())
-			{
-				const picojson::object& go = gate.get<picojson::object>();
-				picojson::object::const_iterator hb = go.find("HAS_BONUS");
-				if (hb != go.end() && hb->second.is<std::string>())
+				if (!categoryList[iEntry].is<std::string>())
 				{
-					const int id = jsonResolveId(hb->second.get<std::string>());
-					if (id >= 0) yieldBucket(m_bonusYieldChanges, id)[iYield] += val;
 					continue;
 				}
-				picojson::object::const_iterator ty = go.find("type");
-				if (ty != go.end() && ty->second.is<std::string>()
-				    && ty->second.get<std::string>().compare(0, 5, "TECH_") == 0)
+				const int iResolved = jsonResolveId(categoryList[iEntry].get<std::string>());
+				if (iResolved >= 0)
 				{
-					const int id = jsonResolveId(ty->second.get<std::string>());
-					if (id >= 0) yieldBucket(m_techYieldChanges, id)[iYield] += val;
+					m_aeMapCategories.push_back((MapCategoryTypes)iResolved);
+				}
+			}
+		}
+
+		picojson::object::const_iterator alternativesIter = pIdentity->find("alternativeUpgrades");
+		if (alternativesIter != pIdentity->end() && alternativesIter->second.is<picojson::array>())
+		{
+			const picojson::array& alternativeList = alternativesIter->second.get<picojson::array>();
+			for (size_t iEntry = 0; iEntry < alternativeList.size(); ++iEntry)
+			{
+				if (!alternativeList[iEntry].is<std::string>())
+				{
+					continue;
+				}
+				const int iResolved = jsonResolveId(alternativeList[iEntry].get<std::string>());
+				if (iResolved >= 0)
+				{
+					m_aiAlternativeImprovementUpgradeTypes.push_back(iResolved);
+				}
+			}
+		}
+
+		picojson::object::const_iterator featureChangesIter = pIdentity->find("featureChanges");
+		if (featureChangesIter != pIdentity->end() && featureChangesIter->second.is<picojson::array>())
+		{
+			const picojson::array& featureChangeList = featureChangesIter->second.get<picojson::array>();
+			for (size_t iEntry = 0; iEntry < featureChangeList.size(); ++iEntry)
+			{
+				if (!featureChangeList[iEntry].is<std::string>())
+				{
+					continue;
+				}
+				const int iResolved = jsonResolveId(featureChangeList[iEntry].get<std::string>());
+				if (iResolved >= 0)
+				{
+					m_aiFeatureChangeTypes.push_back(iResolved);
+				}
+			}
+		}
+
+		// identity.bonuses.{BONUS}: {trade, discoverRand, depletionRand}
+		if (const picojson::object* pBonuses = jsonChildObj(*pIdentity, "bonuses"))
+		{
+			for (picojson::object::const_iterator bonusIter = pBonuses->begin(); bonusIter != pBonuses->end(); ++bonusIter)
+			{
+				if (!bonusIter->second.is<picojson::object>())
+				{
+					continue;
+				}
+				const int iBonusId = jsonResolveId(bonusIter->first);
+				if (iBonusId < 0)
+				{
+					continue;
+				}
+				const picojson::object& bonusObj = bonusIter->second.get<picojson::object>();
+				picojson::object::const_iterator tradeIter = bonusObj.find("trade");
+				if (tradeIter != bonusObj.end() && tradeIter->second.is<bool>() && tradeIter->second.get<bool>())
+				{
+					m_bonusTradeIds.insert(iBonusId);
+				}
+				picojson::object::const_iterator discoverIter = bonusObj.find("discoverRand");
+				if (discoverIter != bonusObj.end() && discoverIter->second.is<double>())
+				{
+					m_bonusDiscoverRand[iBonusId] = (int)discoverIter->second.get<double>();
+				}
+				picojson::object::const_iterator depletionIter = bonusObj.find("depletionRand");
+				if (depletionIter != bonusObj.end() && depletionIter->second.is<double>())
+				{
+					m_bonusDepletionRand[iBonusId] = (int)depletionIter->second.get<double>();
 				}
 			}
 		}
 	}
-}
 
-// readPrereqNatureYield -- the placement `{natureYield:{food:..}}` atom sits in requires.build.all; the shared
-// condition parser has no natureYield case (drops it as CASC_PRED_UNKNOWN), so read the threshold straight off the
-// raw JSON here (the only place the value survives).
-void CvImprovementInfo::readPrereqNatureYield(const picojson::value& entity)
-{
-	if (!entity.is<picojson::object>()) return;
-	const picojson::object& o = entity.get<picojson::object>();
-	const picojson::object* rq = jsonChildObj(o, "requires");   if (!rq) return;
-	const picojson::object* bd = jsonChildObj(*rq, "build");    if (!bd) return;
-	picojson::object::const_iterator al = bd->find("all");
-	if (al == bd->end() || !al->second.is<picojson::array>()) return;
-	const picojson::array& a = al->second.get<picojson::array>();
-	const char* fam[3] = { "food", "production", "commerce" };
-	const int   yidx[3] = { YIELD_FOOD, YIELD_PRODUCTION, YIELD_COMMERCE };
-	for (size_t i = 0; i < a.size(); ++i)
+	// vision -- the §9 bespoke line-of-sight block (vision.plot.{seeFrom,visibilityRange}.flat)
+	if (const picojson::object* pVision = jsonChildObj(entityObj, "vision"))
 	{
-		if (!a[i].is<picojson::object>()) continue;
-		const picojson::object& eo = a[i].get<picojson::object>();
-		picojson::object::const_iterator ny = eo.find("natureYield");
-		if (ny == eo.end() || !ny->second.is<picojson::object>()) continue;
-		const picojson::object& nyo = ny->second.get<picojson::object>();
-		for (int f = 0; f < 3; ++f)
+		if (const picojson::object* pPlot = jsonChildObj(*pVision, "plot"))
 		{
-			picojson::object::const_iterator v = nyo.find(fam[f]);
-			if (v != nyo.end() && v->second.is<double>()) m_aiPrereqNatureYield[yidx[f]] = (int)v->second.get<double>();
+			if (const picojson::object* pSeeFrom = jsonChildObj(*pPlot, "seeFrom"))
+			{
+				m_iSeeFrom = jsonIdInt(*pSeeFrom, "flat");
+			}
+			if (const picojson::object* pVisibility = jsonChildObj(*pPlot, "visibilityRange"))
+			{
+				m_iVisibilityChange = jsonIdInt(*pVisibility, "flat");
+			}
 		}
 	}
+
+	// world.art.icon -- the ART_DEF_* tag (EXE map-gen art lookup)
+	if (const picojson::object* pArt = jsonWorldArt(entityObj))
+	{
+		jsonIdStr(*pArt, "define", m_szArtDefineTag);
+	}
+
+	// sound.soundscape -> runtime audio-manager index, resolved at info-load exactly as the archived read did
+	// (gDLL->getAudioTagIndex); absent/empty tag leaves the legacy -1 default.
+	m_iWorldSoundscapeScriptId = -1;
+	if (const picojson::object* pSound = jsonChildObj(entityObj, "sound"))
+	{
+		picojson::object::const_iterator soundscapeIter = pSound->find("soundscape");
+		if (soundscapeIter != pSound->end() && soundscapeIter->second.is<std::string>()
+			&& soundscapeIter->second.get<std::string>().length() > 0)
+		{
+			m_iWorldSoundscapeScriptId = gDLL->getAudioTagIndex(soundscapeIter->second.get<std::string>().c_str(), AUDIOTAG_SOUNDSCAPE);
+		}
+	}
+
+	// the placement/validity verdicts -- the ONE walk of the composed requires.build tree the base just parsed
+	materializeValidity();
 }
 
-int CvImprovementInfo::getImprovementBonusYield(int i, int j) const
+bool CvImprovementInfo::isAlternativeImprovementUpgradeType(int iImprovement) const
 {
-	if (j < 0 || j >= NUM_YIELD_TYPES) return 0;
-	std::map<int, std::vector<int> >::const_iterator it = m_bonusYieldChanges.find(i);
-	return it != m_bonusYieldChanges.end() ? it->second[j] : 0;
+	for (size_t iEntry = 0; iEntry < m_aiAlternativeImprovementUpgradeTypes.size(); ++iEntry)
+	{
+		if (m_aiAlternativeImprovementUpgradeTypes[iEntry] == iImprovement)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
-int CvImprovementInfo::getTechYieldChanges(int i, int j) const
+bool CvImprovementInfo::isFeatureChangeType(int iFeature) const
 {
-	if (j < 0 || j >= NUM_YIELD_TYPES) return 0;
-	std::map<int, std::vector<int> >::const_iterator it = m_techYieldChanges.find(i);
-	return it != m_techYieldChanges.end() ? it->second[j] : 0;
-}
-
-int* CvImprovementInfo::getTechYieldChangesArray(int i) const
-{
-	std::map<int, std::vector<int> >::const_iterator it = m_techYieldChanges.find(i);
-	return it != m_techYieldChanges.end() ? const_cast<int*>(&it->second[0]) : NULL;   // legacy: NULL when the tech deposits none
-}
-
-int CvImprovementInfo::getRouteYieldChanges(int i, int j) const
-{
-	if (j < 0 || j >= NUM_YIELD_TYPES) return 0;
-	std::map<int, std::vector<int> >::const_iterator it = m_routeYieldChanges.find(i);
-	return it != m_routeYieldChanges.end() ? it->second[j] : 0;
-}
-
-int* CvImprovementInfo::getRouteYieldChangesArray(int i) const
-{
-	std::map<int, std::vector<int> >::const_iterator it = m_routeYieldChanges.find(i);
-	return it != m_routeYieldChanges.end() ? const_cast<int*>(&it->second[0]) : NULL;   // legacy: NULL when the route deposits none
-}
-
-void CvImprovementInfo::addRouteYieldChange(int iRoute, int iYield, int iValue)
-{
-	if (iYield < 0 || iYield >= NUM_YIELD_TYPES || iValue == 0) return;
-	std::vector<int>& row = m_routeYieldChanges[iRoute];
-	if (row.empty()) row.resize(NUM_YIELD_TYPES, 0);
-	row[iYield] += iValue;
+	for (size_t iEntry = 0; iEntry < m_aiFeatureChangeTypes.size(); ++iEntry)
+	{
+		if (m_aiFeatureChangeTypes[iEntry] == iFeature)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 const CvArtInfoImprovement* CvImprovementInfo::getArtInfo() const
 {
 	return ARTFILEMGR.getImprovementArtInfo(getArtDefineTag());
 }
+
 const char* CvImprovementInfo::getButton() const
 {
-	const CvArtInfoImprovement* p = getArtInfo();
-	return p != NULL ? p->getButton() : "";
+	const CvArtInfoImprovement* pArtInfo = getArtInfo();
+	return pArtInfo != NULL ? pArtInfo->getButton() : "";
 }

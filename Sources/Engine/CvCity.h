@@ -15,6 +15,7 @@
 #include "CityOutputHistory.h"
 #include "CvGameObject.h"
 #include "CityContext.h"
+#include "CvCascadePackage.h"   // the CITY-scope cascade package + receiver sums (state-repositories.md)
 
 class CvArea;
 class CvArtInfoBuilding;
@@ -361,8 +362,8 @@ public:
 	int goodHealth() const;
 	int badHealth(bool bNoAngry = false, int iExtra = 0) const;
 	int healthRate(bool bNoAngry = false, int iExtra = 0) const;
-	int getPopulationPlusProgress100(const int iExtra) const;
-	int getFoodConsumedPerPopulation100(const int iExtra = 0) const;
+	int getPopulationPlusProgress(const int iExtra) const;
+	int getFoodConsumedPerPopulation(const int iExtra = 0) const;
 	int getFoodConsumedByPopulation(const int iExtra = 0) const;
 	int foodConsumption(const bool bNoAngry=false, const int iExtra=0, const bool bIncludeWastage=true) const;
 	int foodDifference(const bool bBottom=true, const bool bIncludeWastage=true, const bool bIgnoreFoodBuildOrRev=false) const;
@@ -378,8 +379,8 @@ public:
 	int hurryAngerLength(HurryTypes eHurry) const;
 	int maxHurryPopulation() const;
 
-	int netRevoltRisk100(PlayerTypes cultureAttacker) const;
-	int baseRevoltRisk100(PlayerTypes eCultureAttacker) const;
+	int netRevoltRisk(PlayerTypes cultureAttacker) const;
+	int baseRevoltRisk(PlayerTypes eCultureAttacker) const;
 	int unitRevoltRiskModifier(PlayerTypes eCultureAttacker) const;
 
 	//	Note arrival or leaving of a unit
@@ -742,8 +743,19 @@ public:
 	// Vicinity/local only -- traded stays on CvPlotGroup.
 	const CityContext& getCityContext() const { return m_cityContext; }
 	// Plot ENTER (+1) / LEAVE (-1) -- fold the plot's HAS_/IS_ attributes into this city's context (plotAttrs, the one
-	// stored aggregate). Fired from CvPlot::updateWorkingCity as a plot joins/leaves the city's worked set.
+	// stored aggregate). THE ONE APPLIER: fired from CvPlot::updateWorkingCity as a plot joins/leaves the city's
+	// worked set at play, and by the contexts' spine consumer draining the in-read working-city facts at the
+	// load-finish reseed (Engine/ContextConsumer -- DEC-spine-reseed).
 	void onCityPlotChanged(const CvPlot* pPlot, int iSign) { m_cityContext.onPlotChanged(pPlot, iSign); }
+
+	// The CITY-scope cascade package -- the one scope carrying BOTH sides of the origin rule (yield flats from
+	// buildings + the percent stacks), PLUS this city's RECEIVER sums (the realized rates it consumes:
+	// food/production/commerce/culture) riding the same cache beside the packages ([DEC-uniform-cache-shape]).
+	// Marked ONLY by the modifier consumer's derived masks; recompute-only, never serialized.
+	const CvCascadePackage<CvCity>& getCascadePackage() const { return m_cascadePackage; }
+	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
+	void refreshCascadePackage(int64_t iMask) const;
+
 	bool isAreaCleanPower() const;
 	void changePowerCount(int iChange);
 
@@ -833,7 +845,7 @@ public:
 
 	int getYieldChangeAt(const CvPlot* pPlot, const YieldTypes eYield) const;
 
-	int getBaseYieldRateFromBuilding100(const YieldTypes eIndex, const BuildingTypes eType) const;
+	int getBaseYieldRateFromBuilding(const YieldTypes eIndex, const BuildingTypes eType) const;
 	int getAdditionalYieldByBuilding(YieldTypes eIndex, BuildingTypes eType, bool bFilter = false) const;
 	int getAdditionalExtraYieldByBuilding(YieldTypes eIndex, BuildingTypes eType) const;
 	int getAdditionalBaseYieldByBuilding(YieldTypes eIndex, BuildingTypes eType) const;
@@ -856,8 +868,8 @@ public:
 	// city yield modifier like worked tiles do (#317); the rest of the extra bucket stays flat.
 	int getSpecialistYieldTotal(YieldTypes eYield) const;
 	void changeSpecialistYieldTotal(YieldTypes eYield, int iChange);
-	void changeBuildingExtraYield100(YieldTypes eYield, int iChange);
-	int getBuildingExtraYield100(YieldTypes eYield) const;
+	void changeBuildingExtraYield(YieldTypes eYield, int iChange);
+	int getBuildingExtraYield(YieldTypes eYield) const;
 
 	void changeBuildingYieldModifier(YieldTypes eYield, int iChange);
 	int getBuildingYieldModifier(YieldTypes eYield) const;
@@ -922,14 +934,14 @@ public:
 	int getBuildingCommerce(CommerceTypes eIndex) const;
 	int getBuildingCommerce100(CommerceTypes eIndex) const;
 	int getBuildingCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eType, const bool bFull = false, const bool bTestVisible = false) const;
-	int getAdditionalCommerceTimes100ByBuilding(CommerceTypes eIndex, BuildingTypes eType) const;
-	int getBaseCommerceRateFromBuilding100(CommerceTypes eIndex, BuildingTypes eType) const;
+	int getAdditionalCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eType) const;
+	int getBaseCommerceRateFromBuilding(CommerceTypes eIndex, BuildingTypes eType) const;
 	int getAdditionalCommerceRateModifierByBuilding(CommerceTypes eIndex, BuildingTypes eType) const;
 	void updateBuildingCommerce();
 
 	int getSpecialistCommerce(CommerceTypes eIndex) const;
 	void changeSpecialistCommerceTimes100(CommerceTypes eIndex, int iChange);
-	int getAdditionalCommerceTimes100BySpecialist(CommerceTypes eIndex, SpecialistTypes eSpecialist, int iChange) const;
+	int getAdditionalCommerceBySpecialist(CommerceTypes eIndex, SpecialistTypes eSpecialist, int iChange) const;
 	int getAdditionalBaseCommerceRateBySpecialist(CommerceTypes eIndex, SpecialistTypes eSpecialist, int iChange) const;
 
 	int getReligionCommerce(CommerceTypes eIndex) const;
@@ -1273,7 +1285,7 @@ public:
 	void doVicinityBonus();
 	bool isDevelopingCity() const;
 
-	int getMintedCommerceTimes100() const;
+	int getMintedCommerce() const;
 
 	int getUnitCombatExtraStrength(UnitCombatTypes eIndex) const;
 	void changeUnitCombatExtraStrength(UnitCombatTypes eIndex, int iChange);
@@ -1368,10 +1380,10 @@ public:
 	virtual bool AI_isNavalMilitaryProductionCity() const = 0;
 	virtual void AI_setNavalMilitaryProductionCity(bool bNewVal) = 0;
 
-	int getDistanceMaintenanceSavedTimes100ByCivic(CivicTypes eCivic) const;
-	int getNumCitiesMaintenanceSavedTimes100ByCivic(CivicTypes eCivic) const;
-	int getHomeAreaMaintenanceSavedTimes100ByCivic(CivicTypes eCivic) const;
-	int getOtherAreaMaintenanceSavedTimes100ByCivic(CivicTypes eCivic) const;
+	int getDistanceMaintenanceSavedByCivic(CivicTypes eCivic) const;
+	int getNumCitiesMaintenanceSavedByCivic(CivicTypes eCivic) const;
+	int getHomeAreaMaintenanceSavedByCivic(CivicTypes eCivic) const;
+	int getOtherAreaMaintenanceSavedByCivic(CivicTypes eCivic) const;
 
 	void read(FDataStreamBase* pStream);
 	void write(FDataStreamBase* pStream);
@@ -1538,7 +1550,9 @@ protected:
 	int m_iGameTurnFounded;
 	int m_iGameTurnAcquired;
 	int m_iPopulation;
-	CityContext m_cityContext;   // per-city isolated live state (see getCityContext); recomputed each turn from live state
+	CityContext m_cityContext;   // per-city isolated live state (see getCityContext); event-maintained, never a per-turn recompute
+	// the CITY-scope cascade package + receiver sums (see getCascadePackage); recompute-only, never serialized
+	CvCascadePackage<CvCity> m_cascadePackage;
 	int m_iHighestPopulation;
 	int m_iWorkingPopulation;
 	int m_iSpecialistPopulation;

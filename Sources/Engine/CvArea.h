@@ -5,6 +5,8 @@
 
 //#include "CvEnums.h"
 
+#include "CvCascadeAreaSlot.h"   // the (area x player) cascade package slot (state-repositories.md)
+
 class CvCity;
 class CvPlot;
 
@@ -52,6 +54,10 @@ public:
 
 	int getID() const;
 	void setID(int iID);
+
+	// The (area x player) modifier-cascade package slot -- the AREA scope's value cache
+	// (state-repositories.md per-scope package model; the uniform CvCascadePackage on every scoped item).
+	const CvCascadeAreaSlot& getCascadeSlot(PlayerTypes ePlayer) const { return m_cascadeSlots[ePlayer]; }
 
 	int getNumTiles() const;
 	void changeNumTiles(int iChange);
@@ -210,6 +216,10 @@ protected:
 	int** m_aaiNumTrainAIUnits;
 	int** m_aaiNumAIUnits;
 	int** m_aaiEffNumAIUnitsTimes100; // transient (#395)
+
+	// the AREA-scope cascade packages, one slot per player (area effects realize per (area x player));
+	// recompute-only, never serialized -- all-dirty from bind (reset), first read recomputes
+	CvCascadeAreaSlot m_cascadeSlots[MAX_PLAYERS];
 
 	mutable TeamTypes m_eCachedTeamPlotTypeCounts;
 	mutable int m_iCachedTurnPlotTypeCounts;

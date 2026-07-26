@@ -12,6 +12,7 @@
 #include "CvPlotPaging.h"
 #include "idinfo_iterator_base.h"
 #include "PlotContext.h"
+#include "CvCascadePackage.h"   // the PLOT-scope cascade package (state-repositories.md)
 
 #pragma warning( disable: 4251 )		// needs to have dll-interface to be used by clients of class
 
@@ -163,6 +164,13 @@ public:
 	// CvPlayer::getEmpireContext (plot state here; city state on CityContext; empire state on EmpireContext). Forwards
 	// the HAS_/IS_ plot facts to this plot; stores no aggregate yet (a plot has no state lacking a CvPlot home today).
 	const PlotContext& getPlotContext() const { return m_plotContext; }
+
+	// The PLOT-scope cascade package -- this plot's ISOLATED base-value cache (modifier.md §2: one base
+	// package per plot, resolved in isolation; the origin rule's yield side). The uniform CvCascadePackage
+	// on every scoped item ([DEC-uniform-cache-shape]); marked ONLY by the modifier consumer's derived masks.
+	const CvCascadePackage<CvPlot>& getCascadePackage() const { return m_cascadePackage; }
+	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
+	void refreshCascadePackage(int64_t iMask) const;
 
 /*********************************/
 /***** Parallel Maps - Begin *****/
@@ -1124,6 +1132,8 @@ private:
 private:
 	// per-plot ISOLATED live-state read surface (see getPlotContext); forwards plot facts, stores no aggregate yet
 	PlotContext m_plotContext;
+	// the PLOT-scope cascade package (see getCascadePackage); recompute-only, never serialized
+	CvCascadePackage<CvPlot> m_cascadePackage;
 	int	m_zobristContribution;
 	int m_movementCharacteristicsHash;
 	bool m_bPlotGroupsDirty;

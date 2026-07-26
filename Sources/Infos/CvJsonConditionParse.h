@@ -10,9 +10,15 @@
 //	ruling 2026-06-26). Caller OWNS the returned tree (delete it). Returns NULL only for a JSON null.
 //
 
+#include "CvCondition.h"   // CvCascPredKind -- the predicate vocabulary the spell-back mirrors
+
 namespace picojson { class value; }
-class CvCondition;
 
 CvCondition* cascadeParseCondition(const picojson::value& v);
+
+// The REVERSE of the predicate recognizer (kept HERE so parse and spell-back stay in lockstep in the one
+// vocabulary home): the authored spelling of a predicate kind ("IS_WATER", ...). "" for UNKNOWN. Cold-path
+// consumers only (the per-entry text renderer, diagnostics) -- never a runtime comparison.
+const char* cascadeSpellPredKind(CvCascPredKind ePredKind);
 
 #endif // CV_JSON_CONDITION_PARSE_H

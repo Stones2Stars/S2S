@@ -15,7 +15,7 @@
 #include "Defines/CvGlobals.h"
 #include "Engine/CvPlayer.h"
 
-static const CvInfo* bl_techJson(int iTech)
+static const CvInfo* bl_techInfo(int iTech)
 {
 	if (iTech == GC.getInfoTypeForString("TECH_GAME_START", true)) return &cascadeStartNode();
 	return InfoRepo<CvTechInfo>::get().get(iTech);
@@ -31,7 +31,7 @@ void BuildEnabler::initDomain(const CvPlayer& kPlayer)
 void BuildEnabler::onTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 {
 	if (eTeam == NO_TEAM || eTech == NO_TECH) return;
-	const CvInfo* jt = bl_techJson((int)eTech);
+	const CvInfo* jt = bl_techInfo((int)eTech);
 	for (int iP = 0; iP < MAX_PLAYERS; iP++)
 	{
 		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iP);

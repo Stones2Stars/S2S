@@ -7,11 +7,15 @@
 //	(patterns.md § coherent surface; info-rebuild.md toolkit item 2). The anatomy walk is LOAD-ONLY: parseEntity
 //	walks every §6 family key of the entity's JSON ONCE, interning every string key to a typed id (family /
 //	kind / scope / unit / FK targets -- [DEC-materialize-at-mapfrom]) and producing:
-//	  - the compiled ENTRY LIST (every §3.9 deposit as a typed CvModEntry, condition trees prebuilt);
-//	  - the per-group UNCONDITIONED ×100 SUMS under the packed (family, kind, scope, unit) slot key
-//	    (Σflat vs Σpercent stay SEPARATE slots -- the unit is part of the key, modifier.md §2);
-//	  - the per-family CONDITIONED ranges over the entry list (what the package rebuild, the pedia, and the
-//	    what-if valuation walk).
+//	  - the compiled ENTRY LIST -- COMPLETE (ruling 29): every §3.9 deposit as a typed CvModEntry, condition
+//	    trees prebuilt, UNCONDITIONED entries retained as entries (per-entry text + per-entry attribution both
+//	    require the full list); this list is the ONE compiled source;
+//	  - the per-group UNCONDITIONED ×100 SUMS under the packed (family, kind, scope, unit) slot key, DERIVED
+//	    from the retained list at compile end (finalizeCompiled -- one derivation, list -> sums, never two
+//	    parallel fills that can drift; Σflat vs Σpercent stay SEPARATE slots -- the unit is part of the key,
+//	    modifier.md §2);
+//	  - the per-family CONDITIONED ranges -- a family-sorted view over the CONDITIONED SUBSET of the list
+//	    (what the package rebuild, the pedia, and the what-if valuation walk).
 //	After load every read is a compiled-structure fetch; nothing string-shaped survives into any runtime read
 //	path. Pure data, ZERO cascade runtime ([DEC-json-not-cascade]); the DepositIndex push reads entries().
 //
@@ -22,6 +26,18 @@
 #include <string>
 #include <utility>
 #include <vector>
+
+struct ModNodeQuals;   // the node-level §3.9 qualifier shorthand carrier (defined in the .cpp; load-time only)
+
+// The §3.9 `ai` AUDIENCE axis of a point read, spelled out (the three askable planes): HUMAN = the base slot
+// table alone (what a human player experiences); AI_ONLY = the aiOnly twin table alone (the `ai` sibling leaf
+// by itself -- never computed as inclusive − human); INCLUSIVE = base + twin (what an AI player experiences).
+enum CvModAudience
+{
+	MOD_AUDIENCE_HUMAN = 0,
+	MOD_AUDIENCE_AI_ONLY,
+	MOD_AUDIENCE_INCLUSIVE
+};
 
 class CvModifiers
 {
@@ -41,6 +57,18 @@ public:
 	// from an authored conditioned entry to every reader. Part of the write-once-at-load window.
 	void landReverseEntry(CvModEntry* pEntry);
 
+	// LOAD-TIME ONLY (the source subclass's mapFrom -- the SELF-collapse precedent, json §3.1): resolve every
+	// entry whose `per.above` carries szToken to the SOURCE's own config value (CITY_LIMIT = the depositing
+	// civic's identity.cityLimit base). The token spelling STAYS on the entry -- it marks the eval-time
+	// world-size scaling leg (MMKernel::perScale multiplies the base by getCityLimitsScalePercent()/100).
+	void resolveAboveToken(const char* szToken, int iBase);
+
+	// LOAD-TIME ONLY (the same SELF-collapse precedent, applied to the `per` COUNT axis): resolve every entry
+	// whose per.type carries szToken to the SOURCE's own engine id (CORPORATION_LEVEL = the depositing corp's
+	// id -- CvCorporationInfo::mapFrom; the count core reads countCorporationLevels(id)). The token spelling
+	// STAYS as perType -- it names WHAT is counted; the id names WHOSE.
+	void resolvePerToken(const char* szToken, int iId);
+
 	bool empty() const { return m_entries.empty(); }
 
 	// --- the compiled read surface (typed ids only; no runtime string read) ---
@@ -52,23 +80,42 @@ public:
 	// THE POINT READ: the load-compiled unconditioned ×100 sum of the (family, kind, scope, unit) slot --
 	// one lookup over the packed sorted slot table, 0 calculation ([DEC-scope-is-an-axis]: kind and scope are
 	// separate arguments, exactly as the JSON's own <family>.<scope>.<member> separates them).
-	int sum100(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit) const;
+	// THE AUDIENCE AXIS (json §3.9 `ai`): the default read is HUMAN-audience -- aiOnly entries fold into a
+	// SEPARATE slot table and never leak into it. The CvModAudience overload is THE spelled-out read (HUMAN /
+	// AI_ONLY / INCLUSIVE -- the ai leaf is directly askable, never derived as inclusive − human); the bool
+	// form (bIncludeAiOnly: false = HUMAN, true = INCLUSIVE) is the transitional delegate the pre-enum call
+	// sites still use -- they move to the enum with their next touch (reported follow-up).
+	int sum(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit, CvModAudience eAudience) const;
+	int sum(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit, bool bIncludeAiOnly = false) const;
 	// The per-property point read (the open MODFAM_PROPERTY plane is keyed by the property's FK id).
-	int propertySum100(int iPropertyFk, CvCascScope eScope, CvCascUnit eUnit) const;
+	int propertySum(int iPropertyFk, CvCascScope eScope, CvCascUnit eUnit, CvModAudience eAudience) const;
+	int propertySum(int iPropertyFk, CvCascScope eScope, CvCascUnit eUnit, bool bIncludeAiOnly = false) const;
 
 private:
 	// The load-time recursive family walk (strings live only here): a unit key ends the address (a §3.9 leaf);
-	// a bare-number/array non-unit key is the count-by-type leaf; any other key recurses one segment deeper.
-	void walk(std::vector<std::string>& segments, const picojson::value& node);
+	// a bare-number/array non-unit key is the count-by-type leaf; a BOOL value is the §8 keyed-container
+	// MEMBERSHIP flag (combat targets/unitTargets/defenders {UNITCOMBAT_X: true}) -- compiled as a targeted
+	// COUNT entry only under a recognized keyed-container token; a node-level §3.9 qualifier key (`unit:` /
+	// `religion:` / a non-object `max:` / `orderedBy(Descending):`) is gathered into ModNodeQuals -- shorthand
+	// applying to every entry of the node's leaves that carries none of its own; an object-valued `ai` key is
+	// the §3.9 AUDIENCE HOP (recursed with bAiOnly=true, NEVER pushed as an address segment -- the entries
+	// below it compile with the aiOnly flag and the member path kind-resolves cleanly); any other key recurses
+	// one segment deeper.
+	void walk(std::vector<std::string>& segments, const picojson::value& node, bool bAiOnly);
 	void parseLeaf(const std::vector<std::string>& segments, const picojson::value& leaf, CvCascUnit eUnit,
-	               const picojson::value* pNodeQual);
+	               const ModNodeQuals& nodeQuals, bool bAiOnly);
 	void compileEntry(CvModEntry* pEntry, const std::vector<std::string>& segments);
-	void finalizeCompiled();   // sorts the slot table + builds the conditioned per-family ranges
+	void foldPointEntry(const CvModEntry* pEntry);   // route a point-foldable entry into its audience's slot table
+	// THE ONE DERIVATION at compile end: clears + re-derives the slot tables FROM the retained entry list
+	// (fold every point-foldable entry, sort), then rebuilds the conditioned per-family view. Idempotent.
+	void finalizeCompiled();
 
 	std::vector<CvModEntry*> m_entries;                  // owned
 	std::vector<const CvModEntry*> m_conditioned;        // borrowed views into m_entries, sorted by family
-	std::vector<std::pair<int, int> > m_slots;           // packed slot key -> unconditioned ×100 sum, sorted
-	std::vector<std::pair<int, int> > m_propertySlots;   // packed (propertyFk, scope, unit) -> ×100 sum, sorted
+	std::vector<std::pair<int, int> > m_slots;           // packed slot key -> unconditioned ×100 sum, sorted (HUMAN audience)
+	std::vector<std::pair<int, int> > m_propertySlots;   // packed (propertyFk, scope, unit) -> ×100 sum, sorted (HUMAN audience)
+	std::vector<std::pair<int, int> > m_slotsAiOnly;           // the aiOnly twin of m_slots (the §3.9 `ai` audience)
+	std::vector<std::pair<int, int> > m_propertySlotsAiOnly;   // the aiOnly twin of m_propertySlots
 
 	CvModifiers(const CvModifiers&);              // noncopyable -- owns the entries
 	CvModifiers& operator=(const CvModifiers&);

@@ -3,16 +3,17 @@
 #define CV_JSON_BONUS_INFO_H
 
 //
-//	CvBonusInfo -- the JSON real poco for resources (BONUS_*). Live-caller surface. The units/buildings a bonus
-//	ENABLES ride the CvInfo base availability model (enables.*); this poco holds the bonus's own values +
-//	map-generation placement. No cascade here. HUMAN-native values.
-//
-//	Live callers (verified 2026-07-07): getYieldChange -> plot yield; getHealth/getHappiness -> CvCity; getTechReveal
-//	-> reveal state; getBonusClassType -> resource grouping; the placement fields -> CvGame worldgen.
+//	CvBonusInfo -- the BONUS (resource) poco rebuilt to the exemplar surface (patterns.md § THE GETTER SETUP).
+//	Styled for the JSON anatomy (json.md §2): the bonus's own plot output and its empire wellbeing flats are
+//	compiled modifier reads ([DEC-materialize-at-mapfrom], [DEC-scope-is-an-axis]); the intrinsic set is
+//	identity/ai/mapGeneration self-description; the tech relationships are the LOAD-reconstructed forward FKs
+//	(store-inverted onto the tech's enables/obsoletes buckets, un-inverted by CvReversePass). What a bonus
+//	ENABLES rides the CvInfo base availability model (enables.* edges). No legacy getter name returns
+//	([DEC-new-getter-surface]).
 //
 
 #include "CvInfo.h"
-#include "Defines/CvEnums.h"   // NUM_YIELD_TYPES / MapCategoryTypes / ImprovementTypes / BuildTypes
+#include "Defines/CvEnums.h"   // MapCategoryTypes / ImprovementTypes / BuildTypes / TechTypes
 #include <vector>
 #include <set>
 #include <utility>     // std::pair (getTradeProvidingImprovements)
@@ -25,49 +26,51 @@ class CvBonusInfo : public CvInfo
 public:
 	CvBonusInfo();
 
-	int getYieldChange(int i) const { return (i >= 0 && i < NUM_YIELD_TYPES) ? m_aiYieldChange[i] : 0; }
-	int* getYieldChangeArray() const { return const_cast<int*>(m_aiYieldChange); }  // legacy int* accessor (setYieldChangeHelp; const_cast mirrors the archived non-const-array return)
-	int getBonusClassType() const { return m_iBonusClassType; }
-	int getHealth() const { return m_iHealth; }
-	int getHappiness() const { return m_iHappiness; }
-	int getAIObjective() const { return m_iAIObjective; }        // ai.behaviour.objective (real; e.g. BONUS_CHEMICALS=10).
-	                                                             // -1 sentinel when absent (curator emits ai.behaviour only when nonzero -- curate_common AI_BEHAVIOUR).
-	int getAITradeModifier() const { return m_iAITradeModifier; } // ai.behaviour.tradeModifier (real; e.g. BONUS_OIL=20)
-	int getPercentPerPlayer() const { return m_iPercentPerPlayer; } // identity.player (de_i of legacy iPlayer); wired in mapFrom. 0 today -- NO bonus authors iPlayer (0 across all source XML + JSON).
-	int getMinLandPercent() const { return m_iMinLandPercent; }   // mapGeneration.minLandPercent (real; e.g. BONUS_OIL=62)
-	int getRandAppearance() const;                                // mapGeneration.constAppearance + RNG over rands (map-gen placement roll)
-	bool isMapBonus() const { return m_iConstAppearance > 0 || m_iRandAppearance1 > 0 || m_iRandAppearance2 > 0
-	                              || m_iRandAppearance3 > 0 || m_iRandAppearance4 > 0; }  // "spawns on the map" = has any appearance weight
+	virtual void mapFrom(const picojson::value& entity);
 
-	// runtime GameFont glyph (assigned post-load by CvGameTextMgr's symbol pass -- NOT JSON; mirrors CvReligionInfo)
-	int getChar() const { return m_iChar; }   void setChar(int i) { m_iChar = i; }
+	// ======================= 1. SECTIONS -- whole typed objects =======================
+	virtual const CvEdges*     getEdges()     const { return &m_edges; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
-	// DEAD legacy field: the archive never read m_piImprovementChange from XML either (always NULL -> 0), and 0 bonuses
-	// author an ImprovementChange element (0 across source XML + JSON) -- no curator address exists. Faithful 0.
-	int getImprovementChange(int /*i*/) const { return 0; }
-	// Categories: authored by NO bonus (0 across source XML + JSON). If ever authored, the curator's generic pass lands
-	// it at identity.categories; NOT parse-wired here because the array shape can't be verified against any real
-	// instance (no-guessing). Real empty member keeps get/num/is self-consistent (and live if a later pass fills it).
-	int getCategory(int i) const { return (i >= 0 && i < (int)m_aiCategories.size()) ? m_aiCategories[i] : -1; }
-	int getNumCategories() const { return (int)m_aiCategories.size(); }
-	bool isCategory(int i) const { return std::find(m_aiCategories.begin(), m_aiCategories.end(), i) != m_aiCategories.end(); }
-	// EXE-bound art surface (mapscript/EXE map gen -- served by the CvBonusInfo shim leaf, cascade-engine-430.md §3)
+	// ======================= 2. MODIFIER GROUPS -- point reads over the compiled sums ========================
+	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. Census
+	// participation: food/production/commerce plot flats -- the bonus's OWN tile output, modifier.md §5
+	// plot-substrate own-output -- and health/happiness empire flats, the connected-resource benefit.)
+	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
+	{ return m_modifiers.sum(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT); }
+	int getFlatWellbeing(WellbeingChannel eChannel, CvCascScope eScope) const
+	{
+		if (eChannel == WELLBEING_ANGER || eChannel == WELLBEING_UNHEALTH)
+		{
+			return 0;
+		}
+		return m_modifiers.sum(infoWellbeingFamily(eChannel), CHANNEL_AMOUNT, eScope, CASC_UNIT_FLAT);
+	}
+
+	// ======================= 3. INTRINSIC -- bare typed reads (the census identity set) ======================
+	int getBonusClassType() const { return m_iBonusClassType; }    // identity.bonusClassType (BONUSCLASS_* FK)
+	int getAIObjective() const { return m_iAIObjective; }          // ai.behaviour.objective (-1 sentinel when absent)
+	int getAITradeModifier() const { return m_iAITradeModifier; }  // ai.behaviour.tradeModifier
+	int getPercentPerPlayer() const { return m_iPercentPerPlayer; }// identity.player (0 today -- no bonus authors it)
+	// runtime GameFont glyph (assigned post-load by CvGameTextMgr's symbol pass -- NOT JSON)
+	int getChar() const { return m_iChar; }
+	void setChar(int iChar) { m_iChar = iChar; }
+	// EXE-bound art surface (mapscript/EXE map gen)
 	const char* getArtDefineTag() const { return m_szArtDefineTag.c_str(); }
-	DllExport const CvArtInfoBonus* getArtInfo() const;   // EXE map-gen art (merged from the removed shim leaf)
-	const char* getButton() const;                        // art-define button (else CvInfoBase's empty m_szButton)
-	// techReveal/techCityTrade/techObsolete are DROPPED from the bonus and STORE-INVERTED onto the tech: reveal +
-	// cityTrade both -> tech.enables.bonuses (deliberately merged, curate_bonus.py:26 -- indistinguishable, so both
-	// read the SAME reconstructed tech), obsolete -> tech.obsoletes.bonuses (verified e.g.
-	// TECH_SIMULATION_AWARENESS.enables.bonuses = [BONUS_UNOBTAINIUM]). Reconstructed at LOAD by the loadJson
-	// tech-FK reverse-index pass (the Route<-bonus pattern), which walks every tech's edges and calls the setters below.
+	DllExport const CvArtInfoBonus* getArtInfo() const;
+	const char* getButton() const;   // art-define button (else CvInfoBase's empty m_szButton)
+
+	// --- the LOAD-reconstructed tech forward FKs (CvReversePass::rp_reconstructTechForeignKeys: reveal +
+	// cityTrade both from the tech's enables.bonuses -- deliberately merged/indistinguishable, first tech
+	// wins -- obsolete from obsoletes.bonuses). The setters are the reverse pass's load-window writers. ---
 	int getTechReveal() const { return m_eTechReveal; }
 	int getTechCityTrade() const { return m_eTechCityTrade; }
 	int getTechObsolete() const { return m_eTechObsolete; }
-	void setTechReveal(TechTypes e) { m_eTechReveal = e; }         // load-time reverse-index writers (loadJson)
-	void setTechCityTrade(TechTypes e) { m_eTechCityTrade = e; }
-	void setTechObsolete(TechTypes e) { m_eTechObsolete = e; }
+	void setTechReveal(TechTypes eTech) { m_eTechReveal = eTech; }
+	void setTechCityTrade(TechTypes eTech) { m_eTechCityTrade = eTech; }
+	void setTechObsolete(TechTypes eTech) { m_eTechObsolete = eTech; }
 
-	// map-generation placement (CvGame worldgen)
+	// --- map-generation placement (CvGame worldgen) ---
 	int getMinAreaSize() const { return m_iMinAreaSize; }
 	int getMinLatitude() const { return m_iMinLatitude; }
 	int getMaxLatitude() const { return m_iMaxLatitude; }
@@ -76,6 +79,13 @@ public:
 	int getUniqueRange() const { return m_iUniqueRange; }
 	int getGroupRange() const { return m_iGroupRange; }
 	int getGroupRand() const { return m_iGroupRand; }
+	int getMinLandPercent() const { return m_iMinLandPercent; }
+	int getRandAppearance() const;   // mapGeneration.constAppearance + one RNG draw per rand band
+	bool isMapBonus() const
+	{
+		return m_iConstAppearance > 0 || m_iRandAppearance1 > 0 || m_iRandAppearance2 > 0
+			|| m_iRandAppearance3 > 0 || m_iRandAppearance4 > 0;   // "spawns on the map" = any appearance weight
+	}
 	bool isOneArea() const { return m_bOneArea; }
 	bool isHills() const { return m_bHills; }
 	bool isPeaks() const { return m_bPeaks; }
@@ -83,70 +93,73 @@ public:
 	bool isBonusCoastalOnly() const { return m_bBonusCoastalOnly; }
 	bool isNoRiverSide() const { return m_bNoRiverSide; }
 	bool isNormalize() const { return m_bNormalize; }
-
 	// map-gen placement predicates -- mapGeneration.{validTerrains,validFeatures,validPlacementOn}
-	// (legacy XML TerrainBooleans/FeatureBooleans/FeatureTerrainBooleans; engine.py's rename table).
-	bool isTerrain(int i) const { return m_terrainSet.count(i) != 0; }
-	bool isFeature(int i) const { return m_featureSet.count(i) != 0; }
-	bool isFeatureTerrain(int i) const { return m_featureTerrainSet.count(i) != 0; }
+	bool isTerrain(int iTerrain) const { return m_terrainSet.count(iTerrain) != 0; }
+	bool isFeature(int iFeature) const { return m_featureSet.count(iFeature) != 0; }
+	bool isFeatureTerrain(int iTerrain) const { return m_featureTerrainSet.count(iTerrain) != 0; }
 
 	const std::vector<MapCategoryTypes>& getMapCategories() const { return m_aeMapCategories; }
 
-	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }  // no bonus authors a PropertyManipulators element (0 across source XML + JSON); empty is faithful. Property-engine migration is a separate deferred pass (mirrors CvCorporationInfo).
-
-	// RUNTIME "which improvements trade this bonus" -- populated post-load by CvGlobals's derived-caching pass, one
-	// setProvidedByImprovementTypes() per ImprovementInfo::isImprovementBonusTrade hit (CvGlobals.cpp ~L3200). NOT
-	// JSON; real backing member kept so the set/get/num/is family is self-consistent (mirrors the archived class).
-	void setProvidedByImprovementTypes(const ImprovementTypes eType);   // push_back (non-const setter)
+	// --- RUNTIME "which improvements trade this bonus" -- populated post-load by CvGlobals's derived-caching
+	// pass (one setProvidedByImprovementTypes per ImprovementInfo::isImprovementBonusTrade hit). NOT JSON. ---
+	void setProvidedByImprovementTypes(const ImprovementTypes eType);
 	const std::vector<ImprovementTypes>& getProvidedByImprovementTypes() const { return m_providedByImprovementTypes; }
-	ImprovementTypes getProvidedByImprovementType(const int i) const { return m_providedByImprovementTypes[i]; }
+	ImprovementTypes getProvidedByImprovementType(const int iIndex) const { return m_providedByImprovementTypes[iIndex]; }
 	int getNumProvidedByImprovementTypes() const { return (int)m_providedByImprovementTypes.size(); }
-	bool isProvidedByImprovementType(const ImprovementTypes i) const
-	{ return std::find(m_providedByImprovementTypes.begin(), m_providedByImprovementTypes.end(), i) != m_providedByImprovementTypes.end(); }
-
-	// NOT a curator field: the (improvement,build) trade pairs are a RUNTIME cross-index built from the Build/Improvement
-	// infos (archived class built it lazily from GC.getBuildInfo/getImprovementInfo.isImprovementBonusTrade). Returns a
-	// real, empty member so the caller's begin()/end() iteration is safe (never NULL-derefs); reconstruct the lazy build
-	// once the Build/Improvement JSON getter surface (getImprovement/isImprovementBonusTrade) is wired.
+	bool isProvidedByImprovementType(const ImprovementTypes eType) const
+	{ return std::find(m_providedByImprovementTypes.begin(), m_providedByImprovementTypes.end(), eType) != m_providedByImprovementTypes.end(); }
+	// The (improvement, build) trade pairs -- a RUNTIME cross-index built eagerly at load by the CvGlobals
+	// derived-cache pass from the Build/Improvement infos. NOT a curated field.
 	const std::vector<std::pair<ImprovementTypes, BuildTypes> >* getTradeProvidingImprovements() { return &m_tradeProvidingImprovements; }
-	void addTradeProvidingImprovement(ImprovementTypes eImp, BuildTypes eBuild) { m_tradeProvidingImprovements.push_back(std::make_pair(eImp, eBuild)); }  // populated eagerly at load (CvGlobals derived-cache pass), replacing the archived lazy build
-
-	virtual void mapFrom(const picojson::value& entity);
-
-	// --- the composed section units (by value; the base's mapFrom dispatch writes them via mut*) ---
-	virtual const CvEdges*     getEdges()     const { return &m_edges; }
-	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
+	void addTradeProvidingImprovement(ImprovementTypes eImprovement, BuildTypes eBuild)
+	{ m_tradeProvidingImprovements.push_back(std::make_pair(eImprovement, eBuild)); }
 
 protected:
 	virtual CvEdges*     mutEdges()     { return &m_edges; }
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
+	// --- the composed section units ---
 	CvEdges     m_edges;
 	CvModifiers m_modifiers;
-	CvPropertyManipulators m_PropertyManipulators;   // empty -- no bonus authors PropertyManipulators (0 across source XML + JSON); property-engine migration deferred (mirrors CvCorporationInfo)
-	int m_aiYieldChange[NUM_YIELD_TYPES];  // food/production/commerce .plot.flat
-	int m_iBonusClassType;                 // identity.bonusClassType (BONUSCLASS_ id)
-	int m_iAIObjective;                    // ai.behaviour.objective (-1 sentinel when the block is absent)
-	int m_iAITradeModifier;                // ai.behaviour.tradeModifier
-	int m_iHealth;                         // health.empire.flat (connected-resource benefit, curate_bonus.py:64)
-	int m_iHappiness;                      // happiness.empire.flat
-	int m_iChar;                           // runtime GameFont glyph (setChar; not JSON)
-	std::string m_szArtDefineTag;          // world.art.icon (ART_DEF_* tag; the EXE map-gen art lookup key)
-	int m_iMinAreaSize, m_iMinLatitude, m_iMaxLatitude, m_iPlacementOrder, m_iTilesPer;
-	int m_iUniqueRange, m_iGroupRange, m_iGroupRand;   // mapGeneration.*
-	int m_iConstAppearance, m_iRandAppearance1, m_iRandAppearance2, m_iRandAppearance3, m_iRandAppearance4;  // mapGeneration.constAppearance + rands.iRandApp1-4 (randAppearance/isMapBonus)
-	int m_iMinLandPercent;                 // mapGeneration.minLandPercent
-	int m_iPercentPerPlayer;               // identity.player (legacy iPlayer); 0 -- no bonus authors it
-	TechTypes m_eTechReveal, m_eTechCityTrade, m_eTechObsolete;   // store-inverted tech FKs, reconstructed at load (loadJson)
-	std::vector<int> m_aiCategories;       // identity.categories -- empty (no bonus authors Categories); see getCategory
-	bool m_bOneArea, m_bHills, m_bPeaks, m_bFlatlands, m_bBonusCoastalOnly, m_bNoRiverSide, m_bNormalize;
+
+	// --- the intrinsic identity members (materialized once at mapFrom; getters are bare reads) ---
+	int m_iBonusClassType;
+	int m_iAIObjective;
+	int m_iAITradeModifier;
+	int m_iPercentPerPlayer;
+	int m_iChar;                        // runtime GameFont glyph (setChar; not JSON)
+	std::string m_szArtDefineTag;       // world.art.icon (ART_DEF_* tag; the EXE map-gen art lookup key)
+	int m_iMinAreaSize;
+	int m_iMinLatitude;
+	int m_iMaxLatitude;
+	int m_iPlacementOrder;
+	int m_iTilesPer;
+	int m_iUniqueRange;
+	int m_iGroupRange;
+	int m_iGroupRand;
+	int m_iConstAppearance;
+	int m_iRandAppearance1;
+	int m_iRandAppearance2;
+	int m_iRandAppearance3;
+	int m_iRandAppearance4;
+	int m_iMinLandPercent;
+	bool m_bOneArea;
+	bool m_bHills;
+	bool m_bPeaks;
+	bool m_bFlatlands;
+	bool m_bBonusCoastalOnly;
+	bool m_bNoRiverSide;
+	bool m_bNormalize;
+	TechTypes m_eTechReveal;            // load-reconstructed tech forward FKs (CvReversePass)
+	TechTypes m_eTechCityTrade;
+	TechTypes m_eTechObsolete;
 	std::vector<MapCategoryTypes> m_aeMapCategories;
-	std::set<int> m_terrainSet;         // mapGeneration.validTerrains (TerrainBooleans) -- isTerrain
-	std::set<int> m_featureSet;         // mapGeneration.validFeatures (FeatureBooleans) -- isFeature
-	std::set<int> m_featureTerrainSet;  // mapGeneration.validPlacementOn (FeatureTerrainBooleans) -- isFeatureTerrain
+	std::set<int> m_terrainSet;         // mapGeneration.validTerrains
+	std::set<int> m_featureSet;         // mapGeneration.validFeatures
+	std::set<int> m_featureTerrainSet;  // mapGeneration.validPlacementOn
 	std::vector<ImprovementTypes> m_providedByImprovementTypes;  // runtime (CvGlobals derived-cache pass); NOT JSON
-	std::vector<std::pair<ImprovementTypes, BuildTypes> > m_tradeProvidingImprovements;  // empty -- runtime cross-index, not a curator field (see getter)
+	std::vector<std::pair<ImprovementTypes, BuildTypes> > m_tradeProvidingImprovements;  // runtime cross-index; NOT JSON
 };
 
 #endif // CV_JSON_BONUS_INFO_H
