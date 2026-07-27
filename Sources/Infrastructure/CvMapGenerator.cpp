@@ -1005,7 +1005,16 @@ int CvMapGenerator::calculateNumBonusesToAdd(BonusTypes eBonusType)
 	PROFILE_EXTRA_FUNC();
 	const CvBonusInfo& pBonusInfo = GC.getBonusInfo(eBonusType);
 
-	int iBaseCount = pBonusInfo.getRandAppearance();
+	// The appearance roll lives HERE, at the consumption site, not behind an info getter: the info serves the
+	// authored weights and the map generator draws against them, so the number of RNG draws is a property of
+	// map generation rather than of how often a getter happened to be called (deterministic-lockstep safety).
+	static const char* const szRandBandLogTags[CvBonusInfo::NUM_RAND_APPEARANCE_BANDS] =
+	{ "random1", "random2", "random3", "random4" };
+	int iBaseCount = pBonusInfo.getConstAppearance();
+	for (int iBand = 0; iBand < CvBonusInfo::NUM_RAND_APPEARANCE_BANDS; ++iBand)
+	{
+		iBaseCount += GC.getGame().getMapRandNum(pBonusInfo.getRandAppearance(iBand), szRandBandLogTags[iBand]);
+	}
 
 	iBaseCount += GC.getGame().countCivPlayersAlive() * pBonusInfo.getPercentPerPlayer(); // Toffer: Should imo be removed.
 

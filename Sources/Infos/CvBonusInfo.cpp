@@ -56,10 +56,6 @@ CvBonusInfo::CvBonusInfo()
 	, m_iGroupRange(0)
 	, m_iGroupRand(0)
 	, m_iConstAppearance(0)
-	, m_iRandAppearance1(0)
-	, m_iRandAppearance2(0)
-	, m_iRandAppearance3(0)
-	, m_iRandAppearance4(0)
 	, m_iMinLandPercent(0)
 	, m_bOneArea(false)
 	, m_bHills(false)
@@ -72,14 +68,18 @@ CvBonusInfo::CvBonusInfo()
 	, m_eTechCityTrade(NO_TECH)
 	, m_eTechObsolete(NO_TECH)
 {
+	for (int iBand = 0; iBand < NUM_RAND_APPEARANCE_BANDS; ++iBand)
+	{
+		m_aiRandAppearance[iBand] = 0;
+	}
 }
 
 void CvBonusInfo::mapFrom(const picojson::value& entity)
 {
 	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom. The tech forward FKs reset here
 	// because CvReversePass re-lands them AFTER every re-map (its first-tech-wins check reads NO_TECH).
-	// NB m_providedByImprovementTypes / m_tradeProvidingImprovements are NOT cleared here -- they are populated
-	// by the separate CvGlobals derived-cache pass, not by this parse.
+	// NB m_providedByImprovementTypes / m_tradeProvidingImprovements are NOT cleared here -- the general
+	// reverse pass owns them (clear-first), not this parse.
 	m_aeMapCategories.clear();
 	m_eTechReveal = NO_TECH;
 	m_eTechCityTrade = NO_TECH;
@@ -120,14 +120,20 @@ void CvBonusInfo::mapFrom(const picojson::value& entity)
 		m_iGroupRange = jsonIdInt(*pMapGen, "groupRange");
 		m_iGroupRand = jsonIdInt(*pMapGen, "groupRand");
 
-		// mapGeneration.rands.{iRandApp1..4} -- the per-pass appearance dice (summed with constAppearance by
-		// getRandAppearance). Absent -> the 0 constructor defaults hold.
+		// mapGeneration.rands.{iRandApp1..4} -- the per-pass appearance band CEILINGS the map generator rolls
+		// against. Absent -> the 0 defaults below hold (fully redefined every map, mapFrom being idempotent).
+		for (int iBand = 0; iBand < NUM_RAND_APPEARANCE_BANDS; ++iBand)
+		{
+			m_aiRandAppearance[iBand] = 0;
+		}
 		if (const picojson::object* pRands = jsonChildObj(*pMapGen, "rands"))
 		{
-			m_iRandAppearance1 = jsonIdInt(*pRands, "iRandApp1");
-			m_iRandAppearance2 = jsonIdInt(*pRands, "iRandApp2");
-			m_iRandAppearance3 = jsonIdInt(*pRands, "iRandApp3");
-			m_iRandAppearance4 = jsonIdInt(*pRands, "iRandApp4");
+			static const char* const szRandBandKeys[NUM_RAND_APPEARANCE_BANDS] =
+			{ "iRandApp1", "iRandApp2", "iRandApp3", "iRandApp4" };
+			for (int iBand = 0; iBand < NUM_RAND_APPEARANCE_BANDS; ++iBand)
+			{
+				m_aiRandAppearance[iBand] = jsonIdInt(*pRands, szRandBandKeys[iBand]);
+			}
 		}
 		m_bOneArea = jsonIdBool(*pMapGen, "area");
 		m_bHills = jsonIdBool(*pMapGen, "hills");
@@ -175,20 +181,9 @@ void CvBonusInfo::mapFrom(const picojson::value& entity)
 
 void CvBonusInfo::setProvidedByImprovementTypes(const ImprovementTypes eType)
 {
-	// Populated post-load by CvGlobals's derived-caching pass, once per improvement whose
+	// Populated post-load by the general reverse pass, once per improvement whose
 	// isImprovementBonusTrade flags this bonus. Real runtime data -- feeds the get/num/is read surface.
 	m_providedByImprovementTypes.push_back(eType);
-}
-
-int CvBonusInfo::getRandAppearance() const
-{
-	// Map-gen placement roll (faithful mirror of the archived class): the flat constAppearance plus one RNG
-	// draw per rand band. GC.getGame().getMapRandNum(n, tag) returns [0,n) off the deterministic map RNG.
-	return m_iConstAppearance
-		+ GC.getGame().getMapRandNum(m_iRandAppearance1, "random1")
-		+ GC.getGame().getMapRandNum(m_iRandAppearance2, "random2")
-		+ GC.getGame().getMapRandNum(m_iRandAppearance3, "random3")
-		+ GC.getGame().getMapRandNum(m_iRandAppearance4, "random4");
 }
 
 const CvArtInfoBonus* CvBonusInfo::getArtInfo() const

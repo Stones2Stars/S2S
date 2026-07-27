@@ -24,6 +24,8 @@ class CvArtInfoBonus;
 class CvBonusInfo : public CvInfo
 {
 public:
+	enum { NUM_RAND_APPEARANCE_BANDS = 4 };   // mapGeneration.rands.iRandApp1..4
+
 	CvBonusInfo();
 
 	virtual void mapFrom(const picojson::value& entity);
@@ -80,11 +82,27 @@ public:
 	int getGroupRange() const { return m_iGroupRange; }
 	int getGroupRand() const { return m_iGroupRand; }
 	int getMinLandPercent() const { return m_iMinLandPercent; }
-	int getRandAppearance() const;   // mapGeneration.constAppearance + one RNG draw per rand band
+	// The map-placement appearance WEIGHTS -- authored data, nothing rolled. ⛔ The dice belong to the map
+	// generator, not here: an info is a pure data source that never reads or moves game state, and a getter
+	// that silently drew from the map RNG made the number of draws depend on how often it was CALLED -- an
+	// OOS hazard under deterministic lockstep, since any extra caller (pedia, Python) shifts the stream.
+	int getConstAppearance() const { return m_iConstAppearance; }
+	int getRandAppearance(int iBand) const                      // the band's roll CEILING; the roll is the consumer's
+	{ return (iBand >= 0 && iBand < NUM_RAND_APPEARANCE_BANDS) ? m_aiRandAppearance[iBand] : 0; }
 	bool isMapBonus() const
 	{
-		return m_iConstAppearance > 0 || m_iRandAppearance1 > 0 || m_iRandAppearance2 > 0
-			|| m_iRandAppearance3 > 0 || m_iRandAppearance4 > 0;   // "spawns on the map" = any appearance weight
+		if (m_iConstAppearance > 0)
+		{
+			return true;   // "spawns on the map" = any appearance weight
+		}
+		for (int iBand = 0; iBand < NUM_RAND_APPEARANCE_BANDS; ++iBand)
+		{
+			if (m_aiRandAppearance[iBand] > 0)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	bool isOneArea() const { return m_bOneArea; }
 	bool isHills() const { return m_bHills; }
@@ -142,10 +160,7 @@ private:
 	int m_iGroupRange;
 	int m_iGroupRand;
 	int m_iConstAppearance;
-	int m_iRandAppearance1;
-	int m_iRandAppearance2;
-	int m_iRandAppearance3;
-	int m_iRandAppearance4;
+	int m_aiRandAppearance[NUM_RAND_APPEARANCE_BANDS];   // mapGeneration.rands.iRandApp1..4
 	int m_iMinLandPercent;
 	bool m_bOneArea;
 	bool m_bHills;
