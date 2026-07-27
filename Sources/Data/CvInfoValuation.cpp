@@ -316,6 +316,12 @@ long InfoValuation::cityRate(long base, long specialists, int iPercentSum, long 
 	// modifier.md §2a: ONE additive percent stack applied once, floored at zero; the EXTRA tier truncates to
 	// whole units before re-scaling (the engine's getExtraYield100 order -- a documented integer-truncation
 	// gotcha mirrored verbatim, never "fixed").
+	//
+	// ⛔ SCALE CONTRACT: iPercentSum is a PLAIN percent (25 = +25%), NOT the ×100 stored sum -- the caller
+	// divides before calling. It differs deliberately from realizedChannel below, which takes the ×100 sum and
+	// de-scales internally, so the two neighbours on this surface do NOT share a convention: stated here because
+	// passing the stored sum instead would read +25% as +2500% and the signature alone cannot say which is
+	// wanted (no name carries a scale, [DEC-fixedpoint-x100]).
 	long iModifier = 100 + (long)iPercentSum;
 	if (iModifier < 0)
 	{
@@ -637,7 +643,16 @@ long InfoValuation::tradeRouteChannelYield(long routeYield, int iChannelBasePerc
 	// modifier.md §2a (the tradeYield BASE input fold), ruling 27: the per-channel modifier rides ON TOP of the
 	// engine's incoming route yield -- profit × (base% + Σmod) / 100, the channel identity on the base percent
 	// (commerce 100, food/production 0 -- CvYieldInfo::getTradeModifier; engine CvCity::calculateTradeYield).
-	return routeYield * (long)(iChannelBasePercent + iChannelModifierPercentSum) / 100;
+	//
+	// ⛔ THE TWO PERCENTS ARRIVE ON DIFFERENT SCALES, and reconciling them is THIS function's job rather than
+	// each caller's. iChannelBasePercent is the engine's PLAIN identity (100 / 0); iChannelModifierPercentSum is
+	// the deposit sum straight off the info surface (getTradeRouteYieldModifier), which is ×100 like every stored
+	// magnitude. Adding them raw would read a +50% modifier as +5000% -- so the base is lifted to ×100 and the
+	// single ÷10000 takes both back down. Doing it here means a caller passes what it HAS and cannot get the
+	// scale wrong; the alternative (demanding a pre-divided argument) is an unstated contract on a function
+	// designed to be called from two different consumers.
+	const long iCombinedPercent100 = (long)iChannelBasePercent * 100 + (long)iChannelModifierPercentSum;
+	return routeYield * iCombinedPercent100 / 10000;
 }
 
 long InfoValuation::combinedGroupSum(ModifierFamily eFamily, int iKind, long sum)
