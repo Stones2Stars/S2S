@@ -150,8 +150,13 @@ rebuilds it — the same shape the contexts use — with the batched turn-end sw
   value would then stand forever. Each system drains its OWN banked marks at `GAME_LOAD_FINISHED`
   (`CvModifierConsumer::mc_drainLoadMarks`) — this is the reseed's eager load build, **not** a blanket: only bits
   an in-read event actually marked rebuild, and a package no event reached stays unbuilt and visibly wrong.
-  ⚠ **Consumer registration order is therefore a contract**: the modifier consumer registers AFTER the contexts'
-  consumer, because its drain reads the context stores that consumer builds on the same event.
+  ⚠ **Consumer registration order is therefore a contract, and it binds BOTH state-building machines** (consumers
+  dispatch in registration order): **contexts → enabler → modifier**. The contexts' consumer BUILDS the stores on
+  `GAME_LOAD_FINISHED`; the enabler's load-end gate pass evaluates its conditions THROUGH those stores
+  (`BuildingEnabler` → `getCityContext().fillEvalCtx`), and the modifier's drain does the same for every package
+  the reseed marked. Either machine registered ahead of the contexts evaluates against EMPTY stores — and with a
+  read being a bare fetch and no self-heal existing, nothing re-derives it afterwards. **Anything that reads a
+  context store registers after the contexts.**
 - **TWO read surfaces, and only one of them is a read path.** `CvCascadePackage::readFlat/readPercent/readSum`
   are the CONSUMER read path — bare fetches. `sourceFlat/sourcePercent/sourceSum` are the **rebuild-path input
   reads**, called only from `CascadeGather`: a combine runs inside a rebuild, so it reads a cross-scope input

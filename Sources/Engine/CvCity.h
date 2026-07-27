@@ -16,6 +16,8 @@
 #include "CvGameObject.h"
 #include "CityContext.h"
 #include "CvCascadePackage.h"   // the CITY-scope cascade package + receiver sums (state-repositories.md)
+#include "Enabler/CvEnabler.h"              // CityEnabler -- the per-city buildings/units tri-state domains
+#include "Enabler/CvOperatingBuildings.h"   // the ACTIVE-building set the modifier reads (enabler.md §3.2)
 
 class CvArea;
 class CvArtInfoBuilding;
@@ -755,6 +757,20 @@ public:
 	const CvCascadePackage<CvCity>& getCascadePackage() const { return m_cascadePackage; }
 	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
 	void refreshCascadePackage(int64_t iMask) const;
+
+	// ---- THE ENABLER'S PER-CITY STATE (enabler.md §7.1) -- the "can I?" machine's host on this scope owner.
+	// ⛔ NOT a value cache and carrying NO dirty protocol: there is no dirty->recompute path at all. Both are
+	// built by the load reseed's events through the same O(delta) appliers play uses ([DEC-spine-reseed]) and
+	// maintained by TARGETED PROPAGATION in place; a read is a bare O(1) fetch, so a propagation that fails to
+	// fire leaves the set VISIBLY WRONG rather than silently healed ([DEC-no-self-heal]). Neither is serialized
+	// -- empty from birth, so a loaded game is populated by the events, never from the save.
+	// They are PUBLIC and MUTABLE by requirement, not laxity: the domain enablers reach them for write through a
+	// `const CvCity&` (EnablerKernel / BuildingEnabler / UnitEnabler), the city being the owner of the storage
+	// and not of the delta LOGIC.
+	mutable CityEnabler m_enabler;                     // the constructible + trainable tri-state domains
+	mutable OperatingBuildings m_operatingBuildings;   // the ACTIVE (non-dormant) set + its provided bonuses, at the
+	                                                   // operate/provides least fixpoint -- what the MODIFIER reads
+	                                                   // to decide which buildings deposit (enabler.md §3.2)
 
 	// THE REALIZED YIELD GROUP -- the GAME-OBJECT read role's answer to "what do I HAVE, right now?" (patterns.md
 	// § THE TWO READ ROLES). It is NOT the INFO role's authored what-do-I-CARRY answer and must never look like it.

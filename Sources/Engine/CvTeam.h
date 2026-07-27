@@ -8,7 +8,8 @@
 #include "CvGameObject.h"
 #include "CvProperties.h"
 #include "CvDerivedData.h"
-#include "CvCascadePackage.h"   // the TEAM-scope cascade package (state-repositories.md)
+#include "CvCascadePackage.h"      // the TEAM-scope cascade package (state-repositories.md)
+#include "Enabler/CvCapabilities.h"   // CascadeTeamCaps -- the derived-on-query capability union (capabilities.md)
 
 class CvArea;
 
@@ -34,6 +35,17 @@ public:
 	const CvCascadePackage<CvTeam>& getCascadePackage() const { return m_cascadePackage; }
 	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
 	void refreshCascadePackage(int64_t iMask) const;
+
+	// ---- THE EMPIRE-CAPABILITY UNION (capabilities.md; json.md §8) -- the team's active capability set, derived
+	// on query as the UNION over its live HAVE sources rather than granted or stored: nothing is handed out, so a
+	// capability lapses with its last live source. It is CACHED because the queries are hot (isTerrainTrade rides
+	// the pathing/trade-network loops), on the ONE CvDerivedCacheSet protocol -- setHasTech/reset MARK, and THE
+	// MARK IS WHAT REBUILDS; a query is a BARE FETCH. Never serialized.
+	// PUBLIC + MUTABLE by the same requirement as the enabler domains: CascadeCapabilities is the query surface
+	// and owns the derivation; the team owns only the storage.
+	mutable CascadeTeamCaps m_cascadeTeamCaps;
+	// The union's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE derivation.
+	void cascadeRefreshCaps(int iMask) const;
 
 	// THE TEAM'S GROUP READ SURFACE -- the GAME-OBJECT read role's answer to "what do I HAVE, right now?"
 	// (patterns.md § THE TWO READ ROLES), one getter per modifier FAMILY the TEAM scope carries channels of --

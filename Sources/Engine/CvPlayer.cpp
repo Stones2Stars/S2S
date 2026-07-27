@@ -43,6 +43,12 @@
 #include "CvTraitInfo.h"
 #include "Data/CvInfoValuation.h"   // resolvedCityLimit + realizedAtEmpire -- the ONE cross-scope roll-up
 #include "CvCascadeGather.h"
+#include "Enabler/CvTechEnabler.h"        // initDomain x6 -- the per-player domain lifecycle start (enabler.md 7.1)
+#include "Enabler/CvCivicEnabler.h"
+#include "Enabler/CvProjectEnabler.h"
+#include "Enabler/CvProcessEnabler.h"
+#include "Enabler/CvBuildEnabler.h"
+#include "Enabler/CvPromotionEnabler.h"
 #include "CvCascadeChannelRegistry.h"   // channelLookup / wellbeingTwin -- the group reads' channel identity
 #include "CvInfoKinds.h"                // the family + kind vocabulary the group reads walk
 #include "Spine/CvEventSpine.h"   // the DOMAIN emit endpoints -- every state-change choke point below announces through these
@@ -763,6 +769,22 @@ void CvPlayer::refreshCascadePackage(int64_t iMask) const
 	CascadeGather::refreshEmpire(*this, iMask);
 }
 
+// The ENABLER's per-player lifecycle start (enabler.md 7.1): size every player-held domain and apply its static
+// exclusions. SIZING ONLY -- the domains' CONTENT is built by the DOMAIN events through the same appliers load
+// and play share ([DEC-spine-reseed]); nothing here reads deserialized state, which is why the load path can
+// call it before its reseed emits. It exists as ONE helper because both lifecycle paths (new game via
+// initFreeState, load via read) must prime identically -- the appliers SKIP an un-init'd domain, so a path that
+// forgot it would leave that player's frontier permanently empty.
+void CvPlayer::primeEnablerDomains() const
+{
+	TechEnabler::initDomain(*this);
+	CivicEnabler::initDomain(*this);
+	ProjectEnabler::initDomain(*this);
+	ProcessEnabler::initDomain(*this);
+	BuildEnabler::initDomain(*this);
+	PromotionEnabler::initDomain(*this);
+}
+
 // The empire's group reads (see CvPlayer.h for the role + the grammar). Each walks its group's own enum,
 // resolves that entry's CHANNEL by identity -- never by a slot order -- and folds it through the ONE cross-scope
 // roll-up, which answers a consumed channel from its maintained receiver sum and every other channel from the
@@ -979,6 +1001,10 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 	m_empireContext.bind(this);   // bind the per-player empire context to its owner (forwarding reads it)
 	// bind the EMPIRE-scope cascade package (all-dirty from bind: a loaded/new player recomputes on first read)
 	m_cascadePackage.bind(CASC_SCOPE_EMPIRE, this, &CvPlayer::refreshCascadePackage, (int)eID, -1);
+	// The enabler's domains start EMPTY and UN-READY -- init'd by their domain enablers at this player's
+	// lifecycle start, then filled by DOMAIN events ([DEC-spine-reseed]); never read from the save. Cleared here
+	// because a player slot is REUSED across games.
+	m_enabler.reset();
 
 	//--------------------------------
 	// Uninit class
@@ -2084,6 +2110,11 @@ void CvPlayer::initFreeState()
 	// returns. ⛔ The trigger belongs HERE, not in initFreeUnits: initFreeUnits early-returns on a null starting
 	// plot (so a player could be skipped entirely) and ran AFTER the gold was already applied, while initFreeState
 	// is called for every alive player (CvGame::initFreeState) and has no early return.
+	// THE ENABLER'S PER-PLAYER LIFECYCLE START (enabler.md §7.1), ahead of the fact that begins this player's
+	// event stream: size each domain and apply its static exclusions. The appliers SKIP an un-init'd domain, so
+	// a player primed after its first HAVE-event would drop that event's edges permanently. Content is NOT built
+	// here -- the events build it ([DEC-spine-reseed]).
+	primeEnablerDomains();
 	emitPlayerInit((int)getID());
 	clearResearchQueue();
 }
@@ -18727,6 +18758,11 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", (int*)&m_eParent);
 		updateTeamType(); //m_eTeamType not saved
 		updateHuman();
+
+		// The load twin of initFreeState's priming: a loaded player never runs that path, so without this its
+		// domains are never sized and every reseed emit below lands on an un-init'd domain the appliers SKIP.
+		// Sizing only -- it reads no deserialized state, so it is safe this early.
+		primeEnablerDomains();
 
 		// The in-read reseed, emitted HERE: getID() is valid only after m_eID was read above, and getTeam() only
 		// after updateTeamType() just ran (m_eTeamType is NOT saved; reset() cleared it). m_iGoldenAgeTurns and

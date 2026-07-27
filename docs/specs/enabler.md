@@ -464,15 +464,33 @@ The enabler machine is built and lives in **`Sources/Enabler/`** — its own tre
 - **`CascadeCapabilities`** (`CvCapabilities.{h,cpp}`) — the per-team derived-on-query capability union
   ([capabilities.md](capabilities.md)).
 
-### What is NOT wired
+### The host — GRAFTED
 
-**The enabler has no host on the game objects.** `CvCity` / `CvPlayer` carry no enabler member, so nothing
-instantiates a domain, no availability getter reads one, and the consumer's appliers have no owner to write into.
-The machine is complete and hostless — it is waiting on the access surface, not on enabler work.
+The machine's state now lives on its scope owners, as plain DATA MEMBERS (the guardrail bars adding vtable *bases*
+to EXE-bound classes, never members — [state-repositories.md](../architecture/state-repositories.md)):
 
-That is the deliberate state: the graft onto the game objects, the getters that read it, and the Python surface
-are all being defined together rather than re-grown per site ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)).
-⛔ Do not re-attach it ad hoc — a per-site `can*` rewire is the half-migration this rebuild exists to avoid.
+| owner | member | what it holds |
+|---|---|---|
+| `CvCity` | `m_enabler` (`CityEnabler`) | the constructible + trainable tri-state domains |
+| `CvCity` | `m_operatingBuildings` | the ACTIVE set + provided bonuses at the operate/provides fixpoint (§3.2) |
+| `CvPlayer` | `m_enabler` (`PlayerEnabler`) | techs / civics / projects / processes / builds / promotions |
+| `CvTeam` | `m_cascadeTeamCaps` | the capability union, on the `CvDerivedCacheSet` mark protocol ([capabilities.md](capabilities.md)) |
+
+All are **public and mutable** by requirement rather than laxity: the domain enablers write through a
+`const CvCity&` / `const CvPlayer&` — the owner holds the STORAGE, the enabler owns the delta LOGIC. **None is
+serialized**: every one starts empty and un-ready and is filled by the reseed's events through the same appliers
+play uses ([DEC-spine-reseed](../architecture/decisions.md#dec-spine-reseed)). Each owner's `reset()` clears them,
+which is load-bearing because a `CvCity` is RECYCLED out of an `FFreeListTrashArray` — without it a new city
+inherits the previous occupant's frontier.
+
+⛔ **REGISTRATION ORDER IS A CONTRACT: contexts → enabler → modifier.** The enabler's load-end gate pass evaluates
+through the CityContext / EmpireContext stores, which the contexts' consumer builds on the SAME
+`GAME_LOAD_FINISHED` event; gating ahead of it evaluates against empty stores and every verdict is silently wrong,
+with no self-heal to re-derive it ([state-repositories.md](../architecture/state-repositories.md)).
+
+⛔ Still do not re-attach the machine ad hoc — a per-site `can*` rewire is the half-migration this rebuild exists
+to avoid ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)). What remains is the
+availability GETTERS reading these sets, landing with the legacy getter-surface disconnect.
 
 ### The gate stages, by domain
 

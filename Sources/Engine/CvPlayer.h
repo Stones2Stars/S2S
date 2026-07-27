@@ -18,6 +18,7 @@
 #include "CvProperties.h"
 #include "EmpireContext.h"
 #include "CvCascadePackage.h"   // the EMPIRE-scope cascade package + receiver sums (state-repositories.md)
+#include "Enabler/CvEnabler.h"  // PlayerEnabler -- the per-player tri-state domains (enabler.md §7.1)
 #include "CvSelectionGroupAI.h"
 #include "CvTalkingHeadMessage.h"
 #include "CvUnitList.h"
@@ -890,6 +891,19 @@ public:
 	const CvCascadePackage<CvPlayer>& getCascadePackage() const { return m_cascadePackage; }
 	// The package's refresh delegate (the CvDerivedCacheSet contract) -- delegates to the ONE gather.
 	void refreshCascadePackage(int64_t iMask) const;
+
+	// ---- THE ENABLER'S PER-PLAYER DOMAINS (enabler.md §7.1) -- techs / civics / projects / processes / builds /
+	// promotions. The owner is where the domain's HAVE AXES live, NOT where the gate is asked: projects and
+	// processes are chosen on a CITY's production list but their axes are team-scope, so the domain is
+	// PLAYER-held and the city gate reads through its owner -- per-city copies would be byte-identical state
+	// that must never drift.
+	// ⛔ NO dirty->recompute path: built by the reseed's events through the same appliers play uses
+	// ([DEC-spine-reseed]), maintained by targeted propagation, never serialized. PUBLIC + MUTABLE because the
+	// domain enablers write through a `const CvPlayer&` -- the player owns the storage, not the delta logic.
+	mutable PlayerEnabler m_enabler;
+	// Size every player-held domain + apply its static exclusions, at BOTH lifecycle starts (new game and load).
+	// Sizing only; the events build the content.
+	void primeEnablerDomains() const;
 
 	// THE EMPIRE'S GROUP READ SURFACE -- the GAME-OBJECT read role's answer to "what do I HAVE, right now?"
 	// (patterns.md § THE TWO READ ROLES). It is NOT the INFO role's authored what-do-I-CARRY answer and must

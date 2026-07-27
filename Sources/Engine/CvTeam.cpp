@@ -40,6 +40,15 @@ void CvTeam::refreshCascadePackage(int64_t iMask) const
 	CascadeGather::refreshTeam(*this, iMask);
 }
 
+// The capability union's refresh delegate -- the one-line delegation to the ONE derivation
+// ([DEC-single-implementation]; see CascadeCapabilities::refreshInto, which is also the endpoint oracle).
+// iMask is unused: the union is a whole-cache dirty/clean user, so a rebuild always redefines every field
+// (the CvDerivedCache contract rule 2).
+void CvTeam::cascadeRefreshCaps(int /*iMask*/) const
+{
+	CascadeCapabilities::refreshInto(*this, m_cascadeTeamCaps);
+}
+
 // The team's group reads (see CvTeam.h for the role + the grammar). Same shape as every other owner's: walk the
 // group's own enum, resolve the entry's CHANNEL by identity, fold it through the ONE roll-up.
 void CvTeam::getCombatKinds(int (&combats)[NUM_COMBAT_KINDS]) const
@@ -225,6 +234,8 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	m_dataRepository.reset();
 	// bind the TEAM-scope cascade package (all-dirty from bind: a loaded/new team recomputes on first read)
 	m_cascadePackage.bind(CASC_SCOPE_TEAM, this, &CvTeam::refreshCascadePackage, -1, (int)eID);
+	// bind the capability union (all-dirty from bind: the first query derives it from current HAVE)
+	m_cascadeTeamCaps.set.bind(this, &CvTeam::cascadeRefreshCaps);
 
 	//--------------------------------
 	// Uninit class

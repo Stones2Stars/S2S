@@ -573,14 +573,20 @@ void spineRegisterConsumers()
 	// cache building -- the reseed's emits derive the dirty marks; the first reads after load recompute from
 	// current state). Both derive their reactions from their own compiled surfaces; no shared consumer, no
 	// hand-wired mutation-site marks.
-	enablerRegisterConsumer();
-	// The CONTEXTS' own consumer (contexts.md): buffers the load bracket's working-city facts and drains them
-	// once at GAME_LOAD_FINISHED through CvCity::onCityPlotChanged -- the plotAttrs reseed.
+	// ⛔ REGISTRATION ORDER IS A CONTRACT HERE, not tidiness, and it binds BOTH state-building machines.
+	// Consumers are dispatched in registration order, and GAME_LOAD_FINISHED is where the dependency bites:
+	//   - the CONTEXTS' consumer BUILDS the CityContext / EmpireContext stores on that event (it buffers the
+	//     load bracket's working-city facts and drains them through CvCity::onCityPlotChanged -- the plotAttrs
+	//     reseed), so it must go FIRST;
+	//   - the ENABLER's load-end pass gates every city, and each gate evaluates its conditions THROUGH those
+	//     stores (BuildingEnabler -> getCityContext().fillEvalCtx). Gating ahead of the contexts would evaluate
+	//     against EMPTY plotAttrs and empty vicinity sets -- every verdict silently wrong, with nothing to
+	//     re-derive it later because a read is a bare fetch and no self-heal exists;
+	//   - the MODIFIER's drain rebuilds every package the reseed marked, and a package rebuild evaluates its
+	//     conditions against the same stores, so it goes LAST.
+	// Contexts -> enabler -> modifier. Anything reading a context store registers AFTER the contexts.
 	contextRegisterConsumer();
-	// ⛔ REGISTRATION ORDER IS A CONTRACT HERE, not tidiness: the modifier's GAME_LOAD_FINISHED drain rebuilds
-	// every package the reseed marked, and a package rebuild evaluates its conditions against the CityContext /
-	// EmpireContext stores -- which the contexts' own consumer BUILDS on that same event. Registering the
-	// modifier last is what makes the drain read finished stores instead of empty ones.
+	enablerRegisterConsumer();
 	modifierRegisterConsumer();
 }
 

@@ -34,6 +34,8 @@
 #include "Repos/BuildingsRepo.h"
 #include "Spine/CvEventSpine.h"
 #include "CvCascadeGather.h"
+#include "Enabler/CvBuildingEnabler.h"   // onCityCreated -- the per-city domain lifecycle start (enabler.md 7.1)
+#include "Enabler/CvUnitEnabler.h"
 #include "CvCascadeChannelRegistry.h"   // channelLookup -- the realized-yield group read's channel identity
 #include "CvInfoKinds.h"                // infoYieldFamily / CHANNEL_AMOUNT -- the YieldTypes -> channel family axis
 #include "Data/CvInfoValuation.h"       // realizedAtCity -- the ONE cross-scope roll-up the group reads fold through
@@ -424,6 +426,13 @@ void CvCity::init(int iID, PlayerTypes eOwner, int iX, int iY, bool bBumpUnits, 
 	// Init saved data
 	reset(iID, eOwner, pPlot->getX(), pPlot->getY());
 
+	// THE ENABLER'S PER-CITY LIFECYCLE START (enabler.md §7.1): size the domains, apply the static exclusions, and
+	// fold the CROSS-SCOPE HAVEs no event can carry to a city that did not exist when they were acquired (the
+	// team's techs, the player's civics). It must run BEFORE any of this city's own facts emit, because the
+	// appliers SKIP an un-init'd domain -- a city whose domains were never init'd stays permanently empty.
+	BuildingEnabler::onCityCreated(*this);
+	UnitEnabler::onCityCreated(*this);
+
 	CvPlayer& player = GET_PLAYER(eOwner);
 	if (player.isHumanPlayer(true))
 	{
@@ -652,6 +661,12 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_cityContext.bind(this);   // bind the per-city context to its owner (the pointer IS this city; forwarding reads it)
 	// bind the CITY-scope cascade package (all-dirty from bind: a loaded/new city recomputes on first read)
 	m_cascadePackage.bind(CASC_SCOPE_CITY, this, &CvCity::refreshCascadePackage, (int)eOwner, iID);
+	// The enabler's per-city state starts EMPTY and UN-READY: the domains are init'd by their domain enabler at
+	// this city's lifecycle start and filled by DOMAIN events thereafter ([DEC-spine-reseed]) -- never from the
+	// save. Clearing here is load-bearing because a CvCity is RECYCLED out of an FFreeListTrashArray: without it
+	// a new city would inherit the previous occupant's frontier and operating set.
+	m_enabler.reset();
+	m_operatingBuildings = OperatingBuildings();
 
 	//--------------------------------
 	// Uninit class
@@ -17375,6 +17390,13 @@ void CvCity::read(FDataStreamBase* pStream)
 		const int iCityId = m_iID;
 		const int iCityOwner = (int)m_eOwner;
 		int iI;
+		// THE ENABLER'S PER-CITY LIFECYCLE START, ahead of the facts (enabler.md §7.1) -- the load twin of the
+		// same call in init(). A loaded city never runs init(), so without this its domains are never sized and
+		// every reseed emit below lands on an un-init'd domain the appliers SKIP, leaving the city's frontier
+		// permanently empty. It also folds the cross-scope HAVEs (team techs, player civics) that no per-city
+		// event carries.
+		BuildingEnabler::onCityCreated(*this);
+		UnitEnabler::onCityCreated(*this);
 		// #430 reseed: the city's OWNERSHIP first (null -> current, owner ruling) -- establishes the city belongs to
 		// its owner before its contents (population/buildings/religion/...) reseed.
 		emitCityOwnerChanged(iCityId, (int)NO_PLAYER, iCityOwner);

@@ -82,7 +82,7 @@ Authority: [state-repositories.md](../../architecture/state-repositories.md), [m
 |---|---|---|
 | Event spine + KIND firewall + `IEventConsumer` | `Sources/Spine/` | BUILT |
 | DOMAIN emit surface + the in-read load reseed + the load bracket | `Sources/Spine/` + the engine read paths | BUILT — **127 emit call sites**, the bracket emitted at BOTH ends, the in-read reseed live ([event-spine.md](../../specs/event-spine.md)). The remaining Tier-2 facts + the three routes that could not be derived are the [info-rebuild.md](info-rebuild.md) audit ledger |
-| Enabler (8 domains, kernel, own consumer, operating-buildings) | `Sources/Enabler/` | BUILT — **hostless**, see below |
+| Enabler (8 domains, kernel, own consumer, operating-buildings) | `Sources/Enabler/` | BUILT + **GRAFTED** onto city / player / team; consumer registered after the contexts (the load-order contract). The availability getters are what remain |
 | Condition evaluator (`cascadeEvalCondition`, eval ctx, predicates) | `Sources/Conditions/` | BUILT |
 | Deposit index + deposit-read calcs (`MMKernel`/`PercentStack`/…) | `Sources/Data/` | BUILT |
 | readJson + the two-pass loader + the full-registry re-map | `Sources/Data/` | BUILT |
@@ -97,10 +97,11 @@ Authority: [state-repositories.md](../../architecture/state-repositories.md), [m
 
 ## What does NOT exist (the deliberate gap)
 
-- **The ENABLER's graft onto the game objects.** `CvCity` carries no `m_operatingBuildings` and `CvTeam` no
-  `m_cascadeTeamCaps`, so `CvCapabilities` / `CvEnablerKernel` reference members that do not exist. **The enabler is
-  complete and hostless.** It is the one machine still waiting on its host — the MODIFIER half of the same graft has
-  landed (the packages above, bound in each owner's `reset()`, alongside the three contexts).
+- **The availability GETTERS.** The enabler machine is now GRAFTED (`CvCity::m_enabler` +
+  `m_operatingBuildings`, `CvPlayer::m_enabler`, `CvTeam::m_cascadeTeamCaps` — [enabler.md §8](../../specs/enabler.md)),
+  so its state has a host and its consumer builds it from the reseed. What is missing is the read surface on top:
+  `canConstruct` / `canTrain` / `canResearch` reading those sets. It lands with the legacy getter disconnect, never
+  as a per-site rewire.
 - **The endpoint route table** beyond the six stored-vs-oracle documents — and it stays empty until the access
   surface can be read through, never restored to reach around it ([http-endpoints.md](../../specs/http-endpoints.md)).
 - **The Python data-fetching library** that replaces the `Cy*` info surface — built as ONE surface, with the old
