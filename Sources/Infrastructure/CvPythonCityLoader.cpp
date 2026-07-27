@@ -23,6 +23,13 @@ void CvPythonCityLoader::CyCityPythonInterface1(boost::python::class_<CyCity>& i
 
 		.def("canTrain", &CyCity::canTrain, "bool (int eUnit, bool bContinue, bool bTestVisible)")
 		.def("canConstruct", &CyCity::canConstruct, "bool (int eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost)")
+
+		// ---- the NEW availability surface (enabler.md §8): tri-state verdicts + the frontier as a list
+		.def("getUnitAvailability", &CyCity::getUnitAvailability, "int (int eUnit) - EnablerState tri-state")
+		.def("getBuildingAvailability", &CyCity::getBuildingAvailability, "int (int eBuilding) - EnablerState tri-state")
+		.def("isBuildingContinuable", &CyCity::isBuildingContinuable, "bool (int eBuilding)")
+		.def("getAvailableUnits", &CyCity::getAvailableUnits, "list () - the city's LISTED unit frontier")
+		.def("getAvailableBuildings", &CyCity::getAvailableBuildings, "list () - the city's LISTED building frontier")
 		.def("canCreate", &CyCity::canCreate, "bool (int eProject, bool bContinue, bool bTestVisible)")
 		.def("canMaintain", &CyCity::canMaintain, "bool (int eProcess)")
 		.def("getFoodTurnsLeft", &CyCity::getFoodTurnsLeft, "int () - how many food turns remain?")

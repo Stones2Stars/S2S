@@ -149,6 +149,48 @@ bool CyCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVis
 	return m_pCity->canConstruct(eBuilding, bContinue, bTestVisible, bIgnoreCost);
 }
 
+// The new availability surface (see CyCity.h). Bare relays of the enabler's maintained reads -- no gate runs
+// here and no calculator is called, exactly as on the C++ side.
+int CyCity::getUnitAvailability(int eUnit) const
+{
+	return m_pCity ? (int)m_pCity->getUnitAvailability((UnitTypes)eUnit) : (int)EnablerDomain::STATE_HIDDEN;
+}
+
+int CyCity::getBuildingAvailability(int eBuilding) const
+{
+	return m_pCity ? (int)m_pCity->getBuildingAvailability((BuildingTypes)eBuilding) : (int)EnablerDomain::STATE_HIDDEN;
+}
+
+bool CyCity::isBuildingContinuable(int eBuilding) const
+{
+	return m_pCity ? m_pCity->isBuildingContinuable((BuildingTypes)eBuilding) : false;
+}
+
+python::list CyCity::getAvailableUnits() const
+{
+	python::list list = python::list();
+	if (m_pCity)
+	{
+		std::vector<int> ids;
+		m_pCity->getAvailableUnits(ids);
+		for (size_t i = 0; i < ids.size(); ++i) list.append(ids[i]);
+	}
+	return list;
+}
+
+python::list CyCity::getAvailableBuildings() const
+{
+	python::list list = python::list();
+	if (m_pCity)
+	{
+		std::vector<int> ids;
+		m_pCity->getAvailableBuildings(ids);
+		for (size_t i = 0; i < ids.size(); ++i) list.append(ids[i]);
+	}
+	return list;
+}
+
+
 bool CyCity::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisible) const
 {
 	return m_pCity->canCreate(eProject, bContinue, bTestVisible);

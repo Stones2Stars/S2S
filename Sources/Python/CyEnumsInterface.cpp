@@ -1,4 +1,5 @@
 #include "CvGameCoreDLL.h"
+#include "Enabler/CvEnabler.h"   // EnablerDomain::State -- the availability tri-state
 #include "UI/CvBuildingFilters.h"
 #include "UI/CvBuildingGrouping.h"
 #include "UI/CvBuildingSort.h"
@@ -14,6 +15,14 @@
 void CyEnumsPythonInterface()
 {
 	OutputDebugString("Python Extension Module - CyEnumsPythonInterface\n");
+
+	// The ENABLER's availability tri-state (enabler.md §6) -- HIDDEN is "not in the tree at all", GREYED is
+	// "in the tree, requirements unmet". A script that only wants a boolean tests == LISTED.
+	python::enum_<EnablerDomain::State>("EnablerState")
+		.value("ENABLER_HIDDEN", EnablerDomain::STATE_HIDDEN)
+		.value("ENABLER_GREYED", EnablerDomain::STATE_GREYED)
+		.value("ENABLER_LISTED", EnablerDomain::STATE_LISTED)
+		;
 
 	python::enum_<GameStateTypes>("GameStateTypes")
 		.value("GAMESTATE_ON", GAMESTATE_ON)

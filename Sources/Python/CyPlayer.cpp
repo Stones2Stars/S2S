@@ -375,6 +375,87 @@ bool CyPlayer::canTrain(int /*UnitTypes*/ eUnit, bool bContinue, bool bTestVisib
 	return m_pPlayer->canTrain((UnitTypes)eUnit, bContinue, bTestVisible);
 }
 
+// The new availability surface (see CyPlayer.h) -- bare relays of the enabler's maintained reads.
+int CyPlayer::getTechAvailability(int e) const
+{
+	return m_pPlayer ? (int)m_pPlayer->getTechAvailability((TechTypes)e) : (int)EnablerDomain::STATE_HIDDEN;
+}
+
+int CyPlayer::getCivicAvailability(int e) const
+{
+	return m_pPlayer ? (int)m_pPlayer->getCivicAvailability((CivicTypes)e) : (int)EnablerDomain::STATE_HIDDEN;
+}
+
+int CyPlayer::getProjectAvailability(int e) const
+{
+	return m_pPlayer ? (int)m_pPlayer->getProjectAvailability((ProjectTypes)e) : (int)EnablerDomain::STATE_HIDDEN;
+}
+
+int CyPlayer::getProcessAvailability(int e) const
+{
+	return m_pPlayer ? (int)m_pPlayer->getProcessAvailability((ProcessTypes)e) : (int)EnablerDomain::STATE_HIDDEN;
+}
+
+python::list CyPlayer::getAvailableTechs() const
+{
+	python::list list = python::list();
+	if (m_pPlayer)
+	{
+		std::vector<int> ids;
+		m_pPlayer->getAvailableTechs(ids);
+		for (size_t i = 0; i < ids.size(); ++i) list.append(ids[i]);
+	}
+	return list;
+}
+
+python::list CyPlayer::getAvailableCivics() const
+{
+	python::list list = python::list();
+	if (m_pPlayer)
+	{
+		std::vector<int> ids;
+		m_pPlayer->getAvailableCivics(ids);
+		for (size_t i = 0; i < ids.size(); ++i) list.append(ids[i]);
+	}
+	return list;
+}
+
+python::list CyPlayer::getAvailableProjects() const
+{
+	python::list list = python::list();
+	if (m_pPlayer)
+	{
+		std::vector<int> ids;
+		m_pPlayer->getAvailableProjects(ids);
+		for (size_t i = 0; i < ids.size(); ++i) list.append(ids[i]);
+	}
+	return list;
+}
+
+python::list CyPlayer::getAvailableProcesses() const
+{
+	python::list list = python::list();
+	if (m_pPlayer)
+	{
+		std::vector<int> ids;
+		m_pPlayer->getAvailableProcesses(ids);
+		for (size_t i = 0; i < ids.size(); ++i) list.append(ids[i]);
+	}
+	return list;
+}
+
+// The empire-wide fan -- walks the cities; NOT a player-level verdict (there is none).
+bool CyPlayer::canAnyCityTrain(int eUnit) const
+{
+	return m_pPlayer ? m_pPlayer->canAnyCityTrain((UnitTypes)eUnit) : false;
+}
+
+bool CyPlayer::canAnyCityConstruct(int eBuilding) const
+{
+	return m_pPlayer ? m_pPlayer->canAnyCityConstruct((BuildingTypes)eBuilding) : false;
+}
+
+
 bool CyPlayer::canConstruct(int /*BuildingTypes*/eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost) const
 {
 	return m_pPlayer->canConstruct((BuildingTypes)eBuilding, bContinue, bTestVisible, bIgnoreCost);
