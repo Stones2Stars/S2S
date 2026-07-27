@@ -53,11 +53,14 @@ BuildingFilterBase::~BuildingFilterBase()
 
 bool BuildingFilterCanBuild::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *pCity, BuildingTypes eBuilding) const
 {
+	// The build-list filter's two modes ARE the two tri-state thresholds: normally only what is offered
+	// (== LISTED), and in show-unbuildable mode everything in the tree including the greyed (>= GREYED).
+	const EnablerDomain::State eFloor = m_bShowSomeUnconstructable ? EnablerDomain::STATE_GREYED : EnablerDomain::STATE_LISTED;
 	if (pCity)
 	{
-		return pCity->canConstruct(eBuilding, false, m_bShowSomeUnconstructable);
+		return pCity->getBuildingAvailability(eBuilding) >= eFloor;
 	}
-	return pPlayer->canConstruct(eBuilding, false, m_bShowSomeUnconstructable);
+	return pPlayer->getBuildingAvailabilityAnywhere(eBuilding) >= eFloor;
 }
 
 bool BuildingFilterIsWonder::isFilteredBuilding(const CvPlayer *pPlayer, CvCity *pCity, BuildingTypes eBuilding) const

@@ -4679,7 +4679,7 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 				// (GC.getBuildingsEnabledBy, O(dependents)) instead of the legacy O(buildings)
 				// re-scan -- this was the last surviving copy of the pattern the CABV PreLoop
 				// migrated off. The original trigger triple (construct-condition BECOMES_TRUE /
-				// PrereqInCity / PrereqOr) and the canConstructInternal(..., eExtraBuilding)
+				// PrereqInCity / PrereqOr) and the couldConstructWith(..., eExtraBuilding) overlay
 				// confirm are kept verbatim, just evaluated over the index's few dependents,
 				// so the scored value is unchanged.
 				const std::vector<BuildingTypes>& aDependents = GC.getBuildingsEnabledBy(eBuilding);
@@ -4710,7 +4710,7 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 						}
 
 						if ((bEnablesCondition || GC.getBuildingInfo(eDependent).isPrereqInCityBuilding(eBuilding) || GC.getBuildingInfo(eDependent).isPrereqOrBuilding(eBuilding))
-						&& canConstructInternal(eDependent, false, false, false, true, eBuilding))
+						&& couldConstructWith(eDependent, eBuilding))
 						{
 							PROFILE("AI_bestBuildingThreshold.Enablement");
 
@@ -6400,7 +6400,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				foreach_(const BuildingModifier2 & modifier, kBuilding.getGlobalBuildingProductionModifiers())
 				{
 					const BuildingTypes eLoopBuilding = modifier.first;
-					if (kOwner.canAnyCityConstruct(eLoopBuilding))
+					if (kOwner.getBuildingAvailabilityAnywhere(eLoopBuilding) == EnablerDomain::STATE_LISTED)
 					{
 						const int iModifier = modifier.second;
 
@@ -6421,7 +6421,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				foreach_(const BuildingModifier2 & modifier, kBuilding.getGlobalBuildingCostModifiers())
 				{
 					const BuildingTypes eLoopBuilding = modifier.first;
-					if (kOwner.canAnyCityConstruct(eLoopBuilding))
+					if (kOwner.getBuildingAvailabilityAnywhere(eLoopBuilding) == EnablerDomain::STATE_LISTED)
 					{
 						const int iOriginalCost = kOwner.getProductionNeeded(eLoopBuilding);
 						int iPlayerMod = kOwner.getBuildingCostModifier(eLoopBuilding);
@@ -12326,7 +12326,7 @@ bool CvCityAI::AI_buildCaravan()
 		{
 			if (GC.getUnitInfo((UnitTypes)iI).getBaseHurry() > iBestHurry)
 			{
-				if (canTrain((UnitTypes)iI, false, true, false))
+				if (getUnitAvailability((UnitTypes)iI) >= EnablerDomain::STATE_GREYED)
 				{
 					iBestHurry = GC.getUnitInfo((UnitTypes)iI).getBaseHurry();
 					eBestUnit = (UnitTypes)iI;
@@ -12594,7 +12594,10 @@ bool CvCityAI::buildingMayHaveAnyValue(BuildingTypes eBuilding, int iFocusFlags)
 
 	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
-	if (kBuilding.isAutoBuild() || kBuilding.getProductionCost() <= 0)
+	// Queue-excluded => the AI never chooses it: it is placed by a system, not built (json §7). The one flag covers
+	// what the autobuild + no-cost-sentinel pair used to test between them -- autoBuild ⊂ notConstructible, and the
+	// sentinel IS what notConstructible was curated from.
+	if (kBuilding.isNotConstructible())
 	{
 		return false;
 	}
@@ -13033,7 +13036,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 		// buildings an enabler would unlock. The enabler relationship is static, so the
 		// candidate dependents come from the precomputed reverse-index (GC.getBuildingsEnabledBy)
 		// -- an O(dependents) lookup -- instead of the old O(buildings^2) inner re-scan. The
-		// same canConstructInternal(...,eExtraBuilding) confirm gates each candidate, so the
+		// same couldConstructWith(...,eExtraBuilding) confirm gates each candidate, so the
 		// resulting set is identical (verified: zero [PERF/cabvset] MISMATCH across a game).
 		// [PERF/cabvset] diagnostics: iConstructible = directly buildable, iEnablers = those
 		// with a non-empty dependent list. Growth turn-over-turn (reset on reload) would mean
@@ -13043,7 +13046,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 		// #430 F2b (enabler.md par.6): the directly-constructible outer set is the enabler's LISTED frontier
 		// -- getAvailableBuildings fills the city's LISTED building frontier,
 		// so iterating listedIds yields the identical constructible set without the whole-database scan. The inner
-		// dependent-augmentation below is UNCHANGED: it stays a genuine what-if (canConstructInternal with
+		// dependent-augmentation below is UNCHANGED: it stays a genuine what-if (the overlay with
 		// withExtraBuilding=eBuilding -- "could I build eType if I also had eBuilding") over the precomputed
 		// reverse-index, which the frontier cannot answer and enabler.md par.8 keeps on legacy.
 		std::vector<int> vecConstructible;
@@ -13061,7 +13064,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 				foreach_(const BuildingTypes eType, aDependents)
 				{
 					if (algo::none_of_equal(buildingsToCalculate, eType) && !hasBuilding(eType)
-					&&  canConstructInternal(eType, false, false, false, true, eBuilding))
+					&&  couldConstructWith(eType, eBuilding))
 					{
 						buildingsToCalculate.insert(eType);
 					}
@@ -14190,7 +14193,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 				foreach_(const BuildingModifier2 & modifier, kBuilding.getGlobalBuildingCostModifiers())
 				{
 					const BuildingTypes eLoopBuilding = modifier.first;
-					if (kOwner.canAnyCityConstruct(eLoopBuilding))
+					if (kOwner.getBuildingAvailabilityAnywhere(eLoopBuilding) == EnablerDomain::STATE_LISTED)
 					{
 						const int iOriginalCost = kOwner.getProductionNeeded(eLoopBuilding);
 						int iPlayerMod = kOwner.getBuildingCostModifier(eLoopBuilding);

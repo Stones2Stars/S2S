@@ -49,11 +49,13 @@ UnitFilterBase::~UnitFilterBase()
 
 bool UnitFilterCanBuild::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const
 {
+	// The two filter modes ARE the two tri-state thresholds (see BuildingFilterCanBuild -- one plane, enabler.md §8).
+	const EnablerDomain::State eFloor = m_bShowSomeUnconstructable ? EnablerDomain::STATE_GREYED : EnablerDomain::STATE_LISTED;
 	if (pCity)
 	{
-		return pCity->canTrain(eUnit, false, m_bShowSomeUnconstructable);
+		return pCity->getUnitAvailability(eUnit) >= eFloor;
 	}
-	return pPlayer->canTrain(eUnit, false, m_bShowSomeUnconstructable);
+	return pPlayer->getUnitAvailabilityAnywhere(eUnit) >= eFloor;
 }
 
 bool UnitFilterIsLimited::isFilteredUnit(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const

@@ -5,6 +5,7 @@
 #include "FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate (barbarian fielding)
 #include "BetterBTSAI.h"
 #include "CvArea.h"
 #include "CvBuildingInfo.h"
@@ -613,6 +614,31 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 					GC.getLeaderHeadInfo(kP.getLeaderType()).getType(),
 					GC.getCivilizationInfo(kP.getCivilizationType()).getType());
 			}
+		}
+	}
+
+	// THE QUEUE-EXCLUDED BACKFILL -- every `identity.notConstructible` building is present in every city by ruling
+	// (CvCity::placeSystemBuildings), but a save taken before that has none of them, so they are placed here. This
+	// is the `TECH_GAME_START` backfill shape (enabler.md §2): the one engine special case a "it is always there"
+	// rule needs, rather than a migration pass.
+	//
+	// ⛔ It runs BEFORE the bracket closes, deliberately. The placement fires the ordinary building fact, so inside
+	// the bracket it streams through the same appliers the reseed uses -- the enabler applies its edges and the
+	// modifier banks its marks -- and the load-end gate pass that `emitGameLoadFinished` triggers then computes
+	// each one's dormancy in the same fixpoint as everything else. Placed after the close, they would sit present
+	// with no operate verdict and nothing would re-derive one ([DEC-no-self-heal]).
+	// Idempotent, so it is a no-op on a new game (founding already placed them) and on an already-migrated save.
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
+	{
+		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+		if (!kPlayer.isAlive())
+		{
+			continue;
+		}
+		int iLoop = 0;
+		for (CvCity* pLoopCity = kPlayer.firstCity(&iLoop); pLoopCity != NULL; pLoopCity = kPlayer.nextCity(&iLoop))
+		{
+			pLoopCity->placeSystemBuildings();
 		}
 	}
 
@@ -7162,7 +7188,9 @@ namespace {
 			&& GET_TEAM(BARBARIAN_TEAM).isUnitBonusEnabledByTech(unitInfo, true) // "true" to invalidate units that require cultural bonuses
 			&& !unitInfo.isCivilizationUnit() // Invalidates Neanderthal units and units that require the palace.
 			// General requirements that must be fulfilled, also invalidates World Units for NPC
-			&& GET_PLAYER(BARBARIAN_PLAYER).canTrain(unitType, false, false, false, true);
+			// A barbarian spawn PLACES a unit; it does not shop a city's queue, so it asks the `requires` gate and
+			// not the availability tri-state (which caps and city-local supply would wrongly bind).
+			&& EnablerKernel::requiresMetForPlayer(GET_PLAYER(BARBARIAN_PLAYER), EDGEB_UNITS, (int)unitType);
 	}
 
 	bool barbarianCityShouldSpawnWorker(CvGame* game, CvCity* city)
@@ -11589,7 +11617,9 @@ namespace {
 			&& unitInfo.getDomainType() == DOMAIN_LAND
 			&& GET_TEAM(BARBARIAN_TEAM).isUnitBonusEnabledByTech(unitInfo, true)
 			&& !unitInfo.isCivilizationUnit()
-			&& GET_PLAYER(BARBARIAN_PLAYER).canTrain(unitType, false, false, false, true);
+			// A barbarian spawn PLACES a unit; it does not shop a city's queue, so it asks the `requires` gate and
+			// not the availability tri-state (which caps and city-local supply would wrongly bind).
+			&& EnablerKernel::requiresMetForPlayer(GET_PLAYER(BARBARIAN_PLAYER), EDGEB_UNITS, (int)unitType);
 	}
 }
 

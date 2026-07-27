@@ -62,9 +62,12 @@ public:
 	int getBuildUnlocked(int iPlayer, int /*BuildTypes*/ eBuild) const;
 	int getPromotionUnlocked(int iPlayer, int /*PromotionTypes*/ ePromotion) const;
 
-	// ---- the empire-wide FAN: walks the player's cities. NOT a verdict (there is none at this scope).
-	bool canAnyCityTrain(int iPlayer, int /*UnitTypes*/ eUnit) const;
-	bool canAnyCityConstruct(int iPlayer, int /*BuildingTypes*/ eBuilding) const;
+	// ---- the empire-wide FAN: walks the player's cities and returns the BEST state any of them holds, as an
+	// EnablerState. It is not a player-scope verdict (there is none -- construction and training are city
+	// concerns) and it is deliberately not reduced to a bool: a script wanting "offered somewhere" compares
+	// == ENABLER_LISTED, one wanting "in the tree somewhere" compares >= ENABLER_GREYED.
+	int getUnitAvailabilityAnywhere(int iPlayer, int /*UnitTypes*/ eUnit) const;
+	int getBuildingAvailabilityAnywhere(int iPlayer, int /*BuildingTypes*/ eBuilding) const;
 };
 
 #endif // CyEnabler_h__

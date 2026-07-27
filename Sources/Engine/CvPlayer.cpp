@@ -4,6 +4,7 @@
 #include "FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Enabler/CvEnablerKernel.h"   // requiresMetForPlayer -- the system-placement gate
 #include "BetterBTSAI.h"
 #include "CvArea.h"
 #include "CvArtFileMgr.h"
@@ -782,28 +783,36 @@ void CvPlayer::primeEnablerDomains() const
 
 // The "anywhere" fan (see CvPlayer.h). Deliberately a WALK, not a stored union: the per-city verdicts it reads
 // are themselves bare fetches, so the cost is one cheap read per city and nothing has to be kept in sync.
-bool CvPlayer::canAnyCityTrain(UnitTypes eUnit) const
+EnablerDomain::State CvPlayer::getUnitAvailabilityAnywhere(UnitTypes eUnit) const
 {
+	EnablerDomain::State eBest = EnablerDomain::STATE_HIDDEN;
 	for (CvPlayer::city_iterator it = beginCities(); it != endCities(); ++it)
 	{
-		if ((*it) != NULL && (*it)->getUnitAvailability(eUnit) == EnablerDomain::STATE_LISTED)
+		if ((*it) == NULL) continue;
+		const EnablerDomain::State eHere = (*it)->getUnitAvailability(eUnit);
+		if (eHere > eBest)
 		{
-			return true;
+			eBest = eHere;
+			if (eBest == EnablerDomain::STATE_LISTED) break;   // nothing can beat it -- stop walking
 		}
 	}
-	return false;
+	return eBest;
 }
 
-bool CvPlayer::canAnyCityConstruct(BuildingTypes eBuilding) const
+EnablerDomain::State CvPlayer::getBuildingAvailabilityAnywhere(BuildingTypes eBuilding) const
 {
+	EnablerDomain::State eBest = EnablerDomain::STATE_HIDDEN;
 	for (CvPlayer::city_iterator it = beginCities(); it != endCities(); ++it)
 	{
-		if ((*it) != NULL && (*it)->getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
+		if ((*it) == NULL) continue;
+		const EnablerDomain::State eHere = (*it)->getBuildingAvailability(eBuilding);
+		if (eHere > eBest)
 		{
-			return true;
+			eBest = eHere;
+			if (eBest == EnablerDomain::STATE_LISTED) break;   // nothing can beat it -- stop walking
 		}
 	}
-	return false;
+	return eBest;
 }
 
 // The frontier UNION (see CvPlayer.h): ask each city for its small LISTED set once, instead of asking every city
@@ -2312,7 +2321,7 @@ bool CvPlayer::addStartUnitAI(const UnitAITypes eUnitAI, const int iCount)
 		{
 			continue; // is a Civ unit, but not for this player.
 		}
-		if (canTrain((UnitTypes) iI, false, false, false, true))
+		if (EnablerKernel::requiresMetForPlayer(*this, EDGEB_UNITS, iI))
 		{
 			int iValue = AI_unitValue((UnitTypes) iI, eUnitAI, NULL);
 			if (iValue > 0 && kUnit.getDefaultUnitAIType() != eUnitAI)
@@ -6627,15 +6636,6 @@ void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 			(pUnit != NULL) ? (int)pUnit->getUnitType() : -1, (pUnit != NULL) ? pUnit->getID() : -1);
 	}
 
-	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
-	{
-		if (GC.getBuildingInfo((BuildingTypes)iI).isNewCityFree(pCity->getGameObject())
-		&& pCity->canConstruct((BuildingTypes)iI, false, false, false, false, true))
-		{
-			pCity->changeHasBuilding((BuildingTypes)iI, true);
-		}
-	}
-
 	if (isNPC())
 	{
 		int iDummyValue;
@@ -6705,7 +6705,7 @@ void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 		}
 	}
 
-	pCity->doAutobuild();
+	pCity->placeSystemBuildings();   // the queue-excluded class, placed once at founding; dormancy does the rest
 
 	if (!isHumanPlayer() || getAdvancedStartPoints() > -1)
 	{
@@ -6715,384 +6715,6 @@ void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 	CvEventReporter::getInstance().cityBuilt(pCity, pUnit);
 }
 
-
-bool CvPlayer::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bPropertySpawn) const
-{
-	PROFILE_FUNC();
-
-	if (eUnit == NO_UNIT) return false;
-
-	if (isNPC() && (isWorldUnit(eUnit) || !GC.getGame().canNPCFieldUnit(eUnit)))
-	{
-		return false;
-	}
-	if (!GC.getGame().canEverTrain(eUnit))
-	{
-		return false;
-	}
-	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
-
-	if (!bIgnoreCost && kUnit.getProductionCost() == -1)
-	{
-		return false;
-	}
-
-	if (!GET_TEAM(getTeam()).isHasTech((TechTypes)kUnit.getPrereqAndTech()))
-	{
-		return false;
-	}
-
-	if (kUnit.getMaxStartEra() != NO_ERA && GC.getGame().getStartEra() > kUnit.getMaxStartEra())
-	{
-		return false;
-	}
-
-	if (kUnit.getObsoleteTech() != NO_TECH && GET_TEAM(getTeam()).isHasTech((TechTypes)kUnit.getObsoleteTech()))
-	{
-		return false;
-	}
-
-	foreach_(const TechTypes ePrereqTech, kUnit.getPrereqAndTechs())
-	{
-		if (!GET_TEAM(getTeam()).isHasTech(ePrereqTech))
-		{
-			return false;
-		}
-	}
-
-	if (kUnit.getStateReligion() != NO_RELIGION && getStateReligion() != kUnit.getStateReligion())
-	{
-		return false;
-	}
-
-	if (!bPropertySpawn)
-	{
-		if (GC.getGame().isOption(GAMEOPTION_CHALLENGE_ONE_CITY) && kUnit.isFound())
-		{
-			return false;
-		}
-
-		if (kUnit.isPrereqOrCivics((int)NO_CIVIC))
-		{
-			bool bValid = false;
-			for (int iI = 0; iI < GC.getNumCivicInfos(); iI++)
-			{
-				if (kUnit.isPrereqOrCivics(iI) && isCivic(CivicTypes(iI)))
-				{
-					bValid = true;
-					break;
-				}
-			}
-			if (!bValid)
-			{
-				return false;
-			}
-		}
-
-		if (GC.getGame().isUnitMaxedOut(eUnit) || isUnitMaxedOut(eUnit))
-		{
-			return false;
-		}
-	}
-
-	if (!bTestVisible)
-	{
-		foreach_(const HeritageTypes eTypeX, kUnit.getPrereqAndHeritage())
-		{
-			if (!hasHeritage(eTypeX))
-			{
-				return false;
-			}
-		}
-		{
-			bool bValid = true;
-			foreach_(const HeritageTypes eTypeX, kUnit.getPrereqOrHeritage())
-			{
-				bValid = false;
-
-				if (hasHeritage(eTypeX))
-				{
-					bValid = true;
-					break;
-				}
-			}
-			if (!bValid)
-			{
-				return false;
-			}
-		}
-
-		if (!bPropertySpawn)
-		{
-			if (GC.getGame().isUnitMaxedOut(eUnit, GET_TEAM(getTeam()).getUnitMaking(eUnit) - bContinue)
-			|| isUnitMaxedOut(eUnit, getUnitMaking(eUnit) - bContinue))
-			{
-				return false;
-			}
-		}
-
-		if (!isNukesValid() && kUnit.getNukeRange() != -1)
-		{
-			return false;
-		}
-
-		if (kUnit.getSpecialUnitType() != NO_SPECIALUNIT && !GC.getGame().isSpecialUnitValid((SpecialUnitTypes)(kUnit.getSpecialUnitType())))
-		{
-			return false;
-		}
-
-		if (kUnit.isStateReligion() && getStateReligion() == NO_RELIGION)
-		{
-			return false;
-		}
-
-		if (kUnit.isInquisitor() && !isInquisitionConditions())
-		{
-			return false;
-		}
-	}
-	return true;
-}
-
-
-bool CvPlayer::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost, TechTypes eIgnoreTechReq, int* probabilityEverConstructable, bool bExposed) const
-{
-	return canConstructInternal(eBuilding, bContinue, bTestVisible, bIgnoreCost, eIgnoreTechReq,
-		probabilityEverConstructable, bExposed);
-}
-
-
-bool CvPlayer::canConstructInternal(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost, TechTypes eIgnoreTechReq, int* probabilityEverConstructable, bool bExposed) const
-{
-	PROFILE_FUNC();
-
-	const CvTeamAI& currentTeam = GET_TEAM(getTeam());
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
-
-	if ( probabilityEverConstructable )
-	{
-		*probabilityEverConstructable = 0;
-	}
-
-	const SpecialBuildingTypes eSpecialBuilding = kBuilding.getSpecialBuilding();
-	if (!bExposed)
-	{
-		if (eIgnoreTechReq != kBuilding.getPrereqAndTech() && !currentTeam.isHasTech((TechTypes)kBuilding.getPrereqAndTech()))
-		{
-			return false;
-		}
-
-		foreach_(const TechTypes ePrereqTech, kBuilding.getPrereqAndTechs())
-		{
-			if (eIgnoreTechReq != ePrereqTech && !currentTeam.isHasTech(ePrereqTech))
-			{
-				return false;
-			}
-		}
-
-		if (eSpecialBuilding != NO_SPECIALBUILDING)
-		{
-			const TechTypes eRequiredTech = GC.getSpecialBuildingInfo(eSpecialBuilding).getTechPrereq();
-			if (eIgnoreTechReq != eRequiredTech && !currentTeam.isHasTech(eRequiredTech))
-			{
-				return false;
-			}
-		}
-
-		if (!bTestVisible)
-		{
-			bool bValid = false;
-			bool bRequires = false;
-			foreach_(const HeritageTypes eTypeX, kBuilding.getPrereqOrHeritage())
-			{
-				bRequires = true;
-
-				if (hasHeritage(eTypeX))
-				{
-					bValid = true;
-					break;
-				}
-			}
-			if (bRequires && !bValid)
-			{
-				return false;
-			}
-		}
-	}
-
-	if (currentTeam.isObsoleteBuilding(eBuilding))
-	{
-		return false;
-	}
-
-	if (isBuildingMaxedOut(eBuilding)
-	|| currentTeam.isBuildingMaxedOut(eBuilding)
-	|| GC.getGame().isBuildingMaxedOut(eBuilding))
-	{
-		return false;
-	}
-
-	if (eSpecialBuilding != NO_SPECIALBUILDING && isBuildingGroupMaxedOut(eSpecialBuilding))
-	{
-		return false;
-	}
-
-	if (!hasValidCivics(eBuilding))
-	{
-		if (probabilityEverConstructable)
-		{
-			*probabilityEverConstructable = 20;
-		}
-		return false;
-	}
-
-	if (kBuilding.isPrereqWar() && !bExposed && !currentTeam.isAtWar())
-	{
-		if (probabilityEverConstructable)
-		{
-			*probabilityEverConstructable = 10;
-		}
-		return false;
-	}
-
-	if (!GC.getGame().canEverConstruct(eBuilding))
-	{
-		return false;
-	}
-
-	if (!bIgnoreCost && kBuilding.getProductionCost() == -1)
-	{
-		return false;
-	}
-
-	if (!bExposed)
-	{
-		const ReligionTypes eType = (ReligionTypes) kBuilding.getPrereqStateReligion();
-
-		if (eType != NO_RELIGION && eType != getStateReligion())
-		{
-			if (probabilityEverConstructable)
-			{
-				*probabilityEverConstructable = algo::any_of(cities(), CvCity::fn::isHasReligion(eType)) ? 20 : 5;
-			}
-			return false;
-		}
-	}
-
-	if (GC.getGame().countCivTeamsEverAlive() < kBuilding.getNumTeamsPrereq())
-	{
-		return false;
-	}
-
-	if (kBuilding.getVictoryPrereq() != NO_VICTORY)
-	{
-		if (isMinorCiv()
-		|| !GC.getGame().isVictoryValid((VictoryTypes)kBuilding.getVictoryPrereq())
-		|| currentTeam.getVictoryCountdown((VictoryTypes)kBuilding.getVictoryPrereq()) >= 0)
-		{
-			return false;
-		}
-	}
-
-	if (kBuilding.getMaxStartEra() != NO_ERA && GC.getGame().getStartEra() > kBuilding.getMaxStartEra())
-	{
-		return false;
-	}
-
-	const int numBuildingInfos = GC.getNumBuildingInfos();
-
-	if (!kBuilding.getPrereqNumOfBuildings().empty())
-	{
-		for (int iI = 0; iI < numBuildingInfos; iI++)
-		{
-			const BuildingTypes eBuildingX = static_cast<BuildingTypes>(iI);
-
-			if (!currentTeam.isObsoleteBuilding(eBuildingX)
-			&& getBuildingCount(eBuildingX) < getBuildingPrereqBuilding(eBuilding, eBuildingX, 0))
-			{
-				return false;
-			}
-		}
-	}
-
-	if (!bTestVisible)
-	{
-		if (GC.getGame().isBuildingMaxedOut(eBuilding, (currentTeam.getBuildingMaking(eBuilding) + (bContinue ? -1 : 0))))
-		{
-			return false;
-		}
-
-		if (currentTeam.isBuildingMaxedOut(eBuilding, (currentTeam.getBuildingMaking(eBuilding) + (bContinue ? -1 : 0))))
-		{
-			return false;
-		}
-
-		if (isBuildingMaxedOut(eBuilding, (getBuildingMaking(eBuilding) + (bContinue ? -1 : 0))))
-		{
-			return false;
-		}
-
-		if (eSpecialBuilding != NO_SPECIALBUILDING && isBuildingGroupMaxedOut(eSpecialBuilding, getBuildingGroupMaking(eSpecialBuilding) + ((bContinue) ? -1 : 0)))
-		{
-			return false;
-		}
-
-		if (GC.getGame().isNoNukes() && kBuilding.isAllowsNukes())
-		{
-			return false;
-		}
-
-		if (eSpecialBuilding != NO_SPECIALBUILDING
-		&& !GC.getGame().isSpecialBuildingValid(kBuilding.getSpecialBuilding()))
-		{
-			return false;
-		}
-
-		if (getNumCities() < kBuilding.getNumCitiesPrereq())
-		{
-			if (probabilityEverConstructable)
-			{
-				*probabilityEverConstructable = 20;
-			}
-			return false;
-		}
-
-		if (getHighestUnitLevel() < kBuilding.getUnitLevelPrereq())
-		{
-			if (probabilityEverConstructable)
-			{
-				*probabilityEverConstructable = 20;
-			}
-			return false;
-		}
-
-		if (!kBuilding.getPrereqNumOfBuildings().empty())
-		{
-			for (int iI = 0; iI < numBuildingInfos; iI++)
-			{
-				const BuildingTypes eBuildingX = static_cast<BuildingTypes>(iI);
-
-				if (!currentTeam.isObsoleteBuilding(eBuildingX)
-				&& getBuildingCount(eBuildingX) < getBuildingPrereqBuilding(eBuilding, eBuildingX, bContinue ? 0 : getBuildingMaking(eBuilding)))
-				{
-					if (probabilityEverConstructable)
-					{
-						*probabilityEverConstructable = 20;
-					}
-					return false;
-				}
-			}
-		}
-
-		if (!(*getPropertiesConst() <= *(kBuilding.getPrereqPlayerMaxProperties())))
-			return false;
-
-		if (!(*getPropertiesConst() >= *(kBuilding.getPrereqPlayerMinProperties())))
-			return false;
-	}
-
-	return true;
-}
 
 bool CvPlayer::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisible) const
 {
@@ -10098,7 +9720,7 @@ int CvPlayer::getWorkRate(BuildTypes eBuild) const
 			{
 				iScore = iUnitRate*10;
 			}
-			else if (canAnyCityTrain((UnitTypes)iI))
+			else if (getUnitAvailabilityAnywhere((UnitTypes)iI) == EnablerDomain::STATE_LISTED)
 			{
 				iScore = iUnitRate;
 			}
@@ -17584,7 +17206,7 @@ int CvPlayer::getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, const CvPlot*
 
 	if (!pPlot)
 	{
-		if (bAdd && !canAnyCityTrain(eUnit))
+		if (bAdd && getUnitAvailabilityAnywhere(eUnit) != EnablerDomain::STATE_LISTED)
 		{
 			return -1;
 		}
@@ -17864,7 +17486,7 @@ int CvPlayer::getAdvancedStartBuildingCost(BuildingTypes eBuilding, bool bAdd, c
 		return -1;
 	}
 
-	if (!pCity && bAdd && !canAnyCityConstruct(eBuilding))
+	if (!pCity && bAdd && getBuildingAvailabilityAnywhere(eBuilding) != EnablerDomain::STATE_LISTED)
 	{
 		return -1;
 	}
@@ -17897,7 +17519,7 @@ int CvPlayer::getAdvancedStartBuildingCost(BuildingTypes eBuilding, bool bAdd, c
 				}
 			}
 		}
-		else if (!pCity->canConstruct(eBuilding, true, false, false))
+		else if (!pCity->isBuildingContinuable(eBuilding))
 		{
 			return -1;
 		}

@@ -3477,7 +3477,7 @@ void cvInternalGlobals::buildInvisibleSeerIndex()
 // it is identical on every client (lockstep/OOS safe) and never needs rebuilding during
 // play. It is a *superset* of the true become-constructible set: getInvolvedGOMs returns
 // every building/bonus a construct-condition references, which is a superset of those
-// that flip it true. The CABV PreLoop confirms each candidate with canConstructInternal,
+// that flip it true. The CABV PreLoop confirms each candidate against the gate,
 // so the resulting constructible set is identical to the old O(buildings^2) inner scan.
 void cvInternalGlobals::buildConstructibilityEnablerIndex()
 {

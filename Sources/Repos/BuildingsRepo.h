@@ -30,8 +30,9 @@ public:
 	// Buildings with getFreeStartEra() != NO_ERA.
 	const std::vector<BuildingTypes>& withFreeStartEra() const;
 
-	// Buildings with isAutoBuild().
-	const std::vector<BuildingTypes>& autoBuildings() const;
+	// The QUEUE-EXCLUDED class -- every `identity.notConstructible` building (bands, autobuilds, spawn-placed).
+	// These are placed in every city unconditionally and gated purely by dormancy (CvCity::placeSystemBuildings).
+	const std::vector<BuildingTypes>& systemPlacedBuildings() const;
 
 private:
 	BuildingsRepo();
@@ -41,7 +42,7 @@ private:
 	std::vector<std::vector<BuildingTypes> > m_byReligion;
 	std::vector<BuildingTypes> m_worldWonders;
 	std::vector<BuildingTypes> m_withFreeStartEra;
-	std::vector<BuildingTypes> m_autoBuildings;
+	std::vector<BuildingTypes> m_systemPlaced;
 	std::vector<BuildingTypes> m_emptyBucket;
 };
 

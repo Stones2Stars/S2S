@@ -134,6 +134,68 @@ resolved set is observable via `[GRANTS]`, and the apply-loop (increment 5) must
    > composed `getGrants()->repeatables()`, which carries the full structure. Never widen the legacy members to
    > carry the missing fields ([grant-apply-sites.md](grant-apply-sites.md) §0).
 
+## The trigger plane — coverage, measured against the DATA
+
+> **TRIGGER IS THE TOP-LEVEL CONCEPT; a grant is a trigger with a null condition** (owner,
+> [json.md §5](../../specs/json.md)) — one machine, one spine domain (`SD_TRIGGERS` / the `[TRIGGERS/*]` tags).
+>
+> ⛔ **Read this table before "fixing" anything here.** Judged from the CODE the applier looks full of holes — it
+> walks only `ob.active` buildings and only `onTurn`. Judged against what is actually AUTHORED, every live entry
+> has a home. The two are not the same audit, and the code-shaped one produces work that cannot fire.
+
+| carrier · happening · action | entries | where it is served |
+|---|--:|---|
+| building · `onTurn` · `grant` (unit spawn) | 26 | the per-turn applier |
+| building · `onTurn` · `heal` / `count`+`heal` | 153 | the per-turn applier (full-heal); the `unitCombat` heal-RATE leg is the MODIFIER plane's, deliberately skipped |
+| building · `onTurnEnd` · `promote` | 97 | the targeted-propagation free-promotion path (`SEVT_BUILDING_PROCESSED` / `SEVT_UNIT_ENTERED_CITY`) — never a per-turn rescan |
+| feature + improvement · `onTurn` · `PROPERTY_*` pulse | 49 | **`CascadePropertyBridge::bridgePulses`** → `CvPropertyManipulators` → the solver's ordered `propagators → interactions → sources` pass |
+| trait · `onTurnEnd` · `promote` | 167 | **nothing, correctly** — DEAD CONTENT: the traits and the promotions they depend on are killed, and no leaderhead references any trait |
+
+**Consequences, so they are not re-litigated:**
+
+- ⛔ **The per-turn applier must NOT apply property pulses.** Zero buildings author one; the only carriers bridge
+  theirs at load. Applying them again would double the value AND land it outside the solver's order, where spread
+  resolves against PRE-source values ([engine.md](../../reference/engine.md)) — and that engine's math is
+  owner-LOCKED ([property-audit.md](property-audit.md)).
+- ⛔ **`destroy` has ZERO authorings.** It is §5's first worked EXAMPLE, not live data. Parsing it is machinery for
+  a hypothetical, which json.md bars; it lands with `removes` if that direction is ever taken.
+- ⛔ **No happening beyond `onTurn`/`onTurnEnd` is authored**, so the open `on<Happening>` registry needs no further
+  entry point today.
+- ⚠ **A promotion that stops being valid is dropped by the PROMOTION SYSTEM itself** (owner). So a granted
+  promotion needs no take-away verb, and "the payload plane cannot revoke" is NOT an argument for re-homing
+  `freePromotions` — building-list and trait-dict alike stay `triggers` entries.
+
+**FIXED (do not re-report):** a flat `chance: N` now fires — the odds moved onto the trigger
+(`gr_triggerChance10000`), where §5 puts them, instead of being reachable only through a property lookup that
+returned early on an absent `per`, which made every plain-odds entry silently inert; and an entry granting several
+units now places **all** of them, one roll per entry, instead of silently keeping `[0]`.
+
+## ⛔ A DROPPED TRIGGER ANNOUNCES — every skip goes through the ONE census
+
+**If a trigger fails to parse or to land, say so** (owner). The plane is fail-closed by design in several places —
+the bridge refuses a source it cannot faithfully translate rather than applying it under a wrong condition, and the
+parser refuses malformed input — and being fail-closed is right. Being fail-closed *and silent* is not: authored
+data that loads, never applies, and reports nothing is invisible on both axes at once.
+
+Every drop now routes through **`jsonNoteUnconsumed`**, the ONE load-time census
+([DEC-single-implementation](../../architecture/decisions.md#dec-single-implementation)) — the same mechanism the
+parser already used for unknown verbs and keys, surfacing on readJson's `unconsumedSections` coverage count and its
+per-item events. ⛔ Do NOT add a second reporting path or a bespoke spine domain for this; the census is the path.
+
+| drop | reported as |
+|---|---|
+| unknown `action` verb | `triggers.action:<verb>` |
+| unknown entry key | `triggers:<key>` |
+| entry is not an object | `triggers:entryNotAnObject` |
+| a `promote` promotion that is not a string / does not resolve | `triggers.action.promote:*` |
+| pulse not a per-turn constant source | `triggers.pulse:notPerTurnConstant` |
+| pulse is chance-rolled (not a constant source) | `triggers.pulse:chanceRolled` |
+| **pulse condition the bridge cannot translate** | `triggers.pulse:conditionUntranslatable` |
+
+⚑ The last row is the one that was genuinely invisible: a conditioned pulse whose condition falls outside the
+bridge's known predicate set was dropped with nothing said. What the census now reports is a real question to ASK of
+a loaded game, not a hypothetical.
+
 ## See also
 
 - [start-packages.md](start-packages.md) — the GAME-START provisions as authored data (design, not yet built):

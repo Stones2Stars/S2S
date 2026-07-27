@@ -143,12 +143,19 @@ static void triggersParseAction(CvTriggerEntry* pEntry, const picojson::value& v
 				{
 					if (!promos[i].is<std::string>())
 					{
+						jsonNoteUnconsumed("triggers.action.promote", "promotionNotAString");   // never silent
 						continue;
 					}
 					const int iPromotion = jsonResolveId(promos[i].get<std::string>());
 					if (iPromotion >= 0)
 					{
 						pEntry->promotePromotions.push_back(iPromotion);
+					}
+					else
+					{
+						// An authored promotion that resolves to nothing -- the entry keeps parsing, but this
+						// promotion is GONE, so it has to announce rather than vanish into a shorter list.
+						jsonNoteUnconsumed("triggers.action.promote", promos[i].get<std::string>());
 					}
 				}
 			}
@@ -218,6 +225,7 @@ void CvTriggers::parse(const picojson::value& v)
 	{
 		if (!entries[i].is<picojson::object>())
 		{
+			jsonNoteUnconsumed("triggers", "entryNotAnObject");   // a malformed entry is DROPPED -- say so
 			continue;
 		}
 		const picojson::object& entryObj = entries[i].get<picojson::object>();

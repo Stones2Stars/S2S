@@ -57,9 +57,7 @@ public:
 	int getMaxNumWorldWonders() const;
 	int getMaxNumNationalWonders() const;
 
-	bool canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreUpgrades) const;
 
-	bool canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost) const;
 	bool canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisible) const;
 	bool canMaintain(ProcessTypes eProcess) const;
 	int getFoodTurnsLeft() const;

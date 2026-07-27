@@ -167,6 +167,23 @@ not findings to re-discover.
   `BuildEvaluation.log`, gated by `gPlayerLogLevel` (1=headline, 2=per-plot, 3=per-candidate).
   The class doc comment in `Sources/CvWorkerAI.h` is the authoritative tag reference.
 
+### AI valuation of ENABLEMENT
+
+- **⛔ The AI weighs "this unlocks X" WAY too hard, and has for a long time (owner) — relaxing it is only ever an
+  improvement.** The observed symptom is the shape to recognise: *the AI would happily beeline five techs deep for
+  a single unlock.* Treat any enablement-derived value as a candidate for reduction, never for strengthening.
+- **The mechanism was that enablement did not DECAY WITH DISTANCE.** `AI_techBuildingValue` receives `iPathLength`
+  and read it in exactly ONE narrow guard, so the whole building-enablement value — and the flat
+  `bEnablesWonder` bonus beside it — were added to a tech's value undecayed: a building unlocked five techs away
+  scored identically to one unlocked next turn. Both now divide by the path length. ⚠ If you add a new
+  enablement-derived term, it decays too; an undecayed one silently rebuilds the beeline.
+- **"What does this tech enable?" is a FORWARD EDGE FETCH, never a database scan.** The tech's own compiled
+  `enables.buildings` IS the answer ([patterns.md § THE WHAT-IF DRIVER](docs/architecture/patterns.md)). Asking it
+  backwards — scanning every building and testing `isTechRequiredForBuilding` — is both the whole-database scan
+  [enabler.md §6](docs/specs/enabler.md) exists to delete and the reason the question looked like it needed a
+  what-if at all. It does not: tech drives MEMBERSHIP via `enables` and never the gate
+  ([enabler.md §2](docs/specs/enabler.md)), so once the edge names the unlock, only the per-city gate remains.
+
 ### City garrison tiers
 
 - **City defense runs on two ledgers — do not conflate them (#384).** Garrison

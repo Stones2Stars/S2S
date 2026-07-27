@@ -152,14 +152,14 @@ int CyEnabler::getPromotionUnlocked(int iPlayer, int ePromotion) const
 
 // ---- the empire-wide fan ----
 
-bool CyEnabler::canAnyCityTrain(int iPlayer, int eUnit) const
+int CyEnabler::getUnitAvailabilityAnywhere(int iPlayer, int eUnit) const
 {
 	const CvPlayer* p = cye_player(iPlayer);
-	return p ? p->canAnyCityTrain((UnitTypes)eUnit) : false;
+	return p ? (int)p->getUnitAvailabilityAnywhere((UnitTypes)eUnit) : (int)EnablerDomain::STATE_HIDDEN;
 }
 
-bool CyEnabler::canAnyCityConstruct(int iPlayer, int eBuilding) const
+int CyEnabler::getBuildingAvailabilityAnywhere(int iPlayer, int eBuilding) const
 {
 	const CvPlayer* p = cye_player(iPlayer);
-	return p ? p->canAnyCityConstruct((BuildingTypes)eBuilding) : false;
+	return p ? (int)p->getBuildingAvailabilityAnywhere((BuildingTypes)eBuilding) : (int)EnablerDomain::STATE_HIDDEN;
 }

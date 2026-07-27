@@ -1,6 +1,7 @@
 // playerAI.cpp
 
 #include "CvGameCoreDLL.h"
+#include "Enabler/CvEnablerKernel.h"   // the compiled enables edges + the one gate (tech valuation)
 #include "Engine/CvArea.h"
 #include "CvBonusInfo.h"
 #include "CvBuildingInfo.h"
@@ -5193,16 +5194,19 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 	bool bEnablesWonder;
 	int iBuildingValue = AI_techBuildingValue(eTech, iPathLength, bEnablesWonder);
 
-	
-
-	iValue += iBuildingValue;
+	// ⛔ ENABLEMENT DECAYS WITH DISTANCE. It previously did not: iPathLength reached AI_techBuildingValue and was
+	// read by exactly one narrow guard inside it, so a building unlocked FIVE techs away was worth precisely as
+	// much as one unlocked next turn -- which is how the AI came to beeline deep for a single unlock. What you can
+	// build now is worth more than what you could build after four more techs, and the value is divided by the
+	// distance to say so.
+	iValue += iBuildingValue / std::max(1, iPathLength);
 
 
 	// if it gives at least one wonder
 	if (bEnablesWonder)
 	{
 		int iWonderRandom = ((bAsync) ? GC.getASyncRand().get(800, "AI Research Wonder Building ASYNC") : GC.getGame().getSorenRandNum(800, "AI Research Wonder Building"));
-		iValue += (500 + iWonderRandom) / (bAdvancedStart ? 5 : 1);
+		iValue += (500 + iWonderRandom) / ((bAdvancedStart ? 5 : 1) * std::max(1, iPathLength));
 
 		iRandomMax += 800;
 	}
@@ -5564,15 +5568,22 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 
 	bEnablesWonder = false;
 
-	for (int iJ = 0; iJ < GC.getNumBuildingInfos(); iJ++)
+	// WHAT DOES THIS TECH ENABLE? -- asked FORWARD, off the tech's own load-compiled `enables` edge family, which
+	// IS the answer (patterns.md § THE WHAT-IF DRIVER: the fundamental enabler-tree read is a pure list fetch).
+	// ⛔ It replaces a scan of ALL ~5,180 buildings that asked each one the REVERSE question
+	// (isTechRequiredForBuilding) -- the whole-database scan enabler.md §6 exists to delete, run per tech valued.
+	std::set<int> unlockedBuildings;
+	EnablerKernel::addEdge(EnablerKernel::jsonFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_BUILDINGS, unlockedBuildings);
+
+	for (std::set<int>::const_iterator itUnlocked = unlockedBuildings.begin(); itUnlocked != unlockedBuildings.end(); ++itUnlocked)
 	{
-		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(iJ);
+		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(*itUnlocked);
 
 		if (GC.getGame().canEverConstruct(eLoopBuilding))
 		{
 			const CvBuildingInfo& kLoopBuilding = GC.getBuildingInfo(eLoopBuilding);
-			if (isTechRequiredForBuilding(eTech, eLoopBuilding))
-			{
+			{   // membership IS the edge -- being in this set is exactly "the tech unlocks it"
+
 				if (isWorldWonder(eLoopBuilding))
 				{
 					if (!GC.getGame().isBuildingMaxedOut(eLoopBuilding))
@@ -5759,9 +5770,19 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 						pRepresentativeCity = pLoopCity;
 					}
 
-					if (pLoopCity->canConstruct(eLoopBuilding, false, false, true, false, false, eTech, &iWillGetProbability))
+					// The tech drives MEMBERSHIP via `enables`, never the gate (enabler.md §2: tech is authored in
+					// `enables`, never as a generation driver in `requires`) -- so once the edge above says the
+					// tech unlocks it, the only per-city question left is whether the GATE holds there, and that
+					// needs no tech hypothetical at all.
+					// The weight is the enabler's own distinction rather than a hand-tuned ladder: satisfied HERE,
+					// versus satisfiable here once a greyable clause is met (a connectable resource, an unadopted
+					// civic -- enabler.md §6).
+					iWillGetProbability =
+						EnablerKernel::requiresMetInCity(*pLoopCity, EDGEB_BUILDINGS, (int)eLoopBuilding) ? 100
+						: (EnablerKernel::requiresMetInCity(*pLoopCity, EDGEB_BUILDINGS, (int)eLoopBuilding, /*bVisible*/ true) ? 50 : 0);
+
+					if (iWillGetProbability == 100)
 					{
-						iWillGetProbability = 100;
 
 						if (!bCanConstructCityFound)
 						{
@@ -5803,7 +5824,7 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 
 				iValue += iBuildingValue;
 			}
-			else if (canAnyCityConstruct(eLoopBuilding))
+			else if (getBuildingAvailabilityAnywhere(eLoopBuilding) == EnablerDomain::STATE_LISTED)
 			{
 				if (!isLimitedWonder(eLoopBuilding)
 				&& (kLoopBuilding.getCommerceChange(COMMERCE_CULTURE) > 0 || kLoopBuilding.getCommercePerPopChange(COMMERCE_CULTURE) > 0))
@@ -9150,12 +9171,13 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 
 								iTempTradeValue = iTempValue;
 							}
-							else if (canAnyCityTrain((UnitTypes)iI))
+							else if (getUnitAvailabilityAnywhere((UnitTypes)iI) == EnablerDomain::STATE_LISTED)
 							{
 								// is it a water unit and no coastal cities or our coastal city cannot build because its obsolete
-								if ((bIsWater && (pCoastalCity->allUpgradesAvailable((UnitTypes)iI) != NO_UNIT)) ||
-									// or our capital cannot build because its obsolete (we can already build all its upgrades)
-									(pCapital != NULL && pCapital->allUpgradesAvailable((UnitTypes)iI) != NO_UNIT))
+								// Obsolete here = the city does not OFFER it, which the upgrade-tree dormancy already folds
+								// into the verdict (enabler.md §8: a LISTED unit is one whose upgrade chain does not dorm it).
+								if ((bIsWater && pCoastalCity->getUnitAvailability((UnitTypes)iI) != EnablerDomain::STATE_LISTED) ||
+									(pCapital != NULL && pCapital->getUnitAvailability((UnitTypes)iI) != EnablerDomain::STATE_LISTED))
 								{
 									// its worthless
 									iTempValue = 2;
@@ -9223,7 +9245,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 
 						if (bJustNonTradeBuildings || bForTrade)
 						{
-							bCanConstruct = canConstruct(eBuildingX, false, /*bTestVisible*/ true, /*bIgnoreCost*/ true);
+							bCanConstruct = getBuildingAvailabilityAnywhere(eBuildingX) >= EnablerDomain::STATE_GREYED;
 
 							if (bCanConstruct == bJustNonTradeBuildings)
 							{
@@ -9246,7 +9268,7 @@ int CvPlayerAI::AI_baseBonusVal(BonusTypes eBonus, bool bForTrade) const
 						{
 							if (!bJustNonTradeBuildings && !bForTrade)
 							{
-								bCanConstruct = canConstruct(eBuildingX, false, /*bTestVisible*/ true, /*bIgnoreCost*/ true);
+								bCanConstruct = getBuildingAvailabilityAnywhere(eBuildingX) >= EnablerDomain::STATE_GREYED;
 							}
 							bool bCouldConstruct = false;
 							bool bCanConstructAnyway = true;
@@ -9689,7 +9711,7 @@ DenialTypes CvPlayerAI::AI_bonusTrade(BonusTypes eBonus, PlayerTypes ePlayer) co
 	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 	{
 		if (!GC.getGame().canEverTrain((UnitTypes)iI)
-		|| pCapitalCity->allUpgradesAvailable((UnitTypes)iI) != NO_UNIT)
+		|| pCapitalCity->getUnitAvailability((UnitTypes)iI) != EnablerDomain::STATE_LISTED)
 		{
 			continue;
 		}
@@ -24844,7 +24866,7 @@ int CvPlayerAI::AI_bestCityUnitAIValue(UnitAITypes eUnitAI, const CvCity* pCity,
 			const int iValue = AI_unitValue(eLoopUnit, eUnitAI, (pCity == NULL) ? NULL : pCity->area(), criteria);
 			if (iValue > iBestValue)
 			{
-				if (NULL == pCity ? canAnyCityTrain(eLoopUnit) : (pCity->getUnitAvailability(eLoopUnit) == EnablerDomain::STATE_LISTED))
+				if (NULL == pCity ? getUnitAvailabilityAnywhere(eLoopUnit) == EnablerDomain::STATE_LISTED : (pCity->getUnitAvailability(eLoopUnit) == EnablerDomain::STATE_LISTED))
 				{
 					iBestValue = iValue;
 					if (peBestUnitType != NULL)
@@ -26425,7 +26447,7 @@ int CvPlayerAI::AI_militaryUnitTradeVal(const CvUnit* pUnit) const
 			{
 				const BuildingTypes eBuilding = (BuildingTypes)kUnit.getBuildings(iI);
 
-				if (canConstruct(eBuilding, false, false, true)
+				if (getBuildingAvailabilityAnywhere(eBuilding) == EnablerDomain::STATE_LISTED
 				&& AI_getNumBuildingsNeeded(eBuilding, pUnit->getDomainType() == DOMAIN_SEA) > 0)
 				{
 					foreach_(CvCity * pLoopCity, cities())

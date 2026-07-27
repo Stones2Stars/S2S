@@ -370,16 +370,8 @@ void CyPlayer::found(int x, int y)
 	m_pPlayer->found(x,y);
 }
 
-bool CyPlayer::canTrain(int /*UnitTypes*/ eUnit, bool bContinue, bool bTestVisible) const
-{
-	return m_pPlayer->canTrain((UnitTypes)eUnit, bContinue, bTestVisible);
-}
 
 
-bool CyPlayer::canConstruct(int /*BuildingTypes*/eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost) const
-{
-	return m_pPlayer->canConstruct((BuildingTypes)eBuilding, bContinue, bTestVisible, bIgnoreCost);
-}
 
 bool CyPlayer::canCreate(int /*ProjectTypes*/ eProject, bool bContinue, bool bTestVisible) const
 {

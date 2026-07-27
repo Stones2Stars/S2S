@@ -477,6 +477,16 @@ declare the number. Enforcement reads the [tally](tally.md) count.
 
 ## 5. `grants` — pure payload on the considered action · `triggers` — when/why → odds → effect
 
+> **⚖ TRIGGER IS THE TOP-LEVEL CONCEPT — A GRANT IS A TRIGGER WITH A NULL CONDITION (owner).** The two are one
+> plane in the MACHINE: `triggers` is the general form (a happening, odds, an action) and `grants` is its
+> **degenerate case** — the happening is implicit (the source's own considered action), there is no condition and
+> no roll, so the action simply applies. That is why one engine and one spine domain (`SD_TRIGGERS`, the
+> `[TRIGGERS/*]` tags) serve both, and why nothing about a grant needs its own machinery.
+> ⚑ **`grants` remains a first-class AUTHORING shape** — *"we allow grants directly, but it works out of
+> triggers"*. A modder writes the plain `grants` block below for the overwhelmingly common "acquiring me gives
+> this" case and never spells out a trigger; the split that follows is therefore about AUTHORING, not about two
+> runtime mechanisms.
+>
 > **The split (owner).** **`grants` holds ONLY what is given on the CONSIDERED ACTION** — the source's own
 > realization moment, whatever that is: a building's construction, a tech's research, a civic's adoption, a
 > settler's FOUNDING, a mission's execution. No trigger field, no odds, no recurrence — "acquiring/doing me

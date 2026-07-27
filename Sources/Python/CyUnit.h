@@ -32,7 +32,6 @@ public:
 	bool canHeal(const CyPlot& kPlot) const;
 	bool IsSelected() const;
 	bool canFound(const CyPlot& kPlot, bool bTestVisible) const;
-	bool canConstruct(const CyPlot& kPlot, int /*BuildingTypes*/ eBuilding) const;
 
 	int /*TechTypes*/ getDiscoveryTech() const;
 	int getDiscoverResearch(int /*TechTypes*/ eTech) const;

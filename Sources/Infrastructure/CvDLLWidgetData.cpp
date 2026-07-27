@@ -2422,7 +2422,7 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 				{
 					BuildingTypes eBuilding = (BuildingTypes)GC.getActionInfo(widgetDataStruct.m_iData1).getMissionData();
 
-					if (pMissionCity->canConstruct(eBuilding, false, false, true))
+					if (pMissionCity->getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
 					{
 						szBuffer.append(NEWLINE);
 						GAMETEXT.setBuildingHelp(szBuffer, (BuildingTypes)GC.getActionInfo(widgetDataStruct.m_iData1).getMissionData(), true, pMissionCity);

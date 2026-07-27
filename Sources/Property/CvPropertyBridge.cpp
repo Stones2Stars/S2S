@@ -205,13 +205,13 @@ void CascadePropertyBridge::bridgePulses(const CvTriggers* pTriggers, CvProperty
 		if (pEntry->propertyId < 0) continue;
 		// plain per-turn pulses only -- a chance-rolled, interval>1, or non-turn entry is not a constant
 		// source (none authored on features/improvements); fail closed.
-		if (pEntry->happening != "onTurn" || pEntry->happeningInterval != 1) continue;
-		if (pEntry->chanceValue != 0 || pEntry->chancePerTypeId >= 0 || !pEntry->chancePerToken.empty()) continue;
+		if (pEntry->happening != "onTurn" || pEntry->happeningInterval != 1) { jsonNoteUnconsumed("triggers.pulse", "notPerTurnConstant"); continue; }
+		if (pEntry->chanceValue != 0 || pEntry->chancePerTypeId >= 0 || !pEntry->chancePerToken.empty()) { jsonNoteUnconsumed("triggers.pulse", "chanceRolled"); continue; }
 		const BoolExpr* pActive = NULL;
 		if (pEntry->condition != NULL)
 		{
 			pActive = condToBoolExpr(pEntry->condition);
-			if (pActive == NULL) continue;
+			if (pActive == NULL) { jsonNoteUnconsumed("triggers.pulse", "conditionUntranslatable"); continue; }
 		}
 		const GameObjectTypes eObj = (pEntry->spatialOn == "plot") ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
 		const RelationTypes eRel = (pEntry->spatialRelation == "near") ? RELATION_NEAR

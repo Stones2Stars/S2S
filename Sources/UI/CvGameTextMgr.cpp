@@ -12368,7 +12368,7 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 			if (GC.getGame().canEverTrain((UnitTypes) iI)
 			&& (!bPlayerContext ||
 					!playerAct->isProductionMaxedUnit((UnitTypes) iI)
-				&&	!playerAct->canAnyCityTrain((UnitTypes) iI)))
+				&&	playerAct->getUnitAvailabilityAnywhere((UnitTypes) iI) != EnablerDomain::STATE_LISTED))
 			{
 				const CvUnitInfo& kUnit = GC.getUnitInfo((UnitTypes) iI);
 				if (kUnit.getPrereqAndTech() == eTech)
@@ -12419,7 +12419,10 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 			{
 				if (GC.getGame().canEverConstruct(eLoopBuilding))
 				{
-					if (!bPlayerContext || !(playerAct->canConstruct(eLoopBuilding, false, true)))
+					// "this tech lets you construct X" -- so list it only while it is NOT already in the tree
+					// somewhere (>= GREYED, not merely offered: a building sitting greyed on a missing resource
+					// is already unlocked, and advertising it as a tech reward would be a lie).
+					if (!bPlayerContext || playerAct->getBuildingAvailabilityAnywhere(eLoopBuilding) < EnablerDomain::STATE_GREYED)
 					{
 						if (GC.getBuildingInfo(eLoopBuilding).getPrereqAndTech() == eTech
 						|| algo::any_of_equal(GC.getBuildingInfo(eLoopBuilding).getPrereqAndTechs(), eTech))
@@ -14464,7 +14467,7 @@ void CvGameTextMgr::setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitType
 					}
 					iExperience += kBuilding.getDomainFreeExperience(eDomainType);
 
-					if (iExperience != 0 && pCity->canConstruct((BuildingTypes)iI, false, true))
+					if (iExperience != 0 && pCity->getBuildingAvailability((BuildingTypes)iI) >= EnablerDomain::STATE_GREYED)
 					{
 						if (bFirst)
 						{
@@ -15848,7 +15851,7 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(iI);
 
 		if (GC.getBuildingInfo(eLoopBuilding).getFreeBuilding() == eBuilding
-		&& (!bCity || pCity->canConstruct(eLoopBuilding, false, true)))
+		&& (!bCity || pCity->getBuildingAvailability(eLoopBuilding) >= EnablerDomain::STATE_GREYED))
 		{
 			szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_BUILDINGHELP_GIVEN_FREE").c_str());
 			szTempBuffer.Format(SETCOLR L"<link=%s>%s</link>" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), CvWString(GC.getBuildingInfo(eLoopBuilding).getType()).GetCString(), GC.getBuildingInfo(eLoopBuilding).getDescription());
@@ -15870,7 +15873,7 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(iI);
 
 		if (GC.getBuildingInfo(eLoopBuilding).getFreeAreaBuilding() == eBuilding
-		&& (!bCity || pCity->canConstruct(eLoopBuilding, false, true)))
+		&& (!bCity || pCity->getBuildingAvailability(eLoopBuilding) >= EnablerDomain::STATE_GREYED))
 		{
 			szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_BUILDINGHELP_GIVEN_FREE_AREA").c_str());
 			szTempBuffer.Format(SETCOLR L"<link=%s>%s</link>" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), CvWString(GC.getBuildingInfo(eLoopBuilding).getType()).GetCString(), GC.getBuildingInfo(eLoopBuilding).getDescription());
@@ -17601,7 +17604,7 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 	{
 		const BuildingTypes eBuildingX = static_cast<BuildingTypes>(kBuilding.getReplacedBuilding(iI));
 
-		if (!bCity || pCity->isActiveBuilding(eBuildingX) || pCity->canConstruct(eBuildingX, false, true))
+		if (!bCity || pCity->isActiveBuilding(eBuildingX) || pCity->getBuildingAvailability(eBuildingX) >= EnablerDomain::STATE_GREYED)
 		{
 			szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_BUILDINGHELP_REPLACED_BY_BUILDING").c_str());
 			szTempBuffer.Format(SETCOLR L"<link=%s>%s</link>" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), CvWString(GC.getBuildingInfo(eBuildingX).getType()).GetCString(), GC.getBuildingInfo(eBuildingX).getDescription());
@@ -17750,7 +17753,7 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(iI);
 
 		if (GC.getBuildingInfo(eLoopBuilding).isPrereqInCityBuilding(eBuilding)
-		&& (!bCity || pCity->canConstruct(eLoopBuilding, false, true)))
+		&& (!bCity || pCity->getBuildingAvailability(eLoopBuilding) >= EnablerDomain::STATE_GREYED))
 		{
 			szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_BUILDINGHELP_REQUIRED_TO_BUILD").c_str());
 			szTempBuffer.Format(SETCOLR L"<link=%s>%s</link>" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), CvWString(GC.getBuildingInfo(eLoopBuilding).getType()).GetCString(), GC.getBuildingInfo(eLoopBuilding).getDescription());
@@ -17765,7 +17768,7 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(iI);
 
 		if (GC.getBuildingInfo(eLoopBuilding).isPrereqOrBuilding(eBuilding)
-		&& (!bCity || pCity->canConstruct(eLoopBuilding, false, true)))
+		&& (!bCity || pCity->getBuildingAvailability(eLoopBuilding) >= EnablerDomain::STATE_GREYED))
 		{
 			szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_BUILDINGHELP_NEEDED_TO_BUILD").c_str());
 			szTempBuffer.Format(SETCOLR L"<link=%s>%s</link>" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), CvWString(GC.getBuildingInfo(eLoopBuilding).getType()).GetCString(), GC.getBuildingInfo(eLoopBuilding).getDescription());
@@ -17780,7 +17783,7 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 		const BuildingTypes eLoopBuilding = static_cast<BuildingTypes>(iI);
 
 		if (GC.getBuildingInfo(eLoopBuilding).getPrereqNumOfBuildings().getValue(eBuilding)
-		&& (!bCity || pCity->canConstruct(eLoopBuilding, false, true)))
+		&& (!bCity || pCity->getBuildingAvailability(eLoopBuilding) >= EnablerDomain::STATE_GREYED))
 		{
 			szFirstBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_BUILDINGHELP_NEEDED_TO_BUILD_ANYWHERE").c_str());
 			szTempBuffer.Format(SETCOLR L"<link=%s>%s</link>" ENDCOLR, TEXT_COLOR("COLOR_BUILDING_TEXT"), CvWString(GC.getBuildingInfo(eLoopBuilding).getType()).GetCString(), GC.getBuildingInfo(eLoopBuilding).getDescription());
@@ -18455,7 +18458,7 @@ void CvGameTextMgr::buildBuildingRequiresString(CvWStringBuffer& szBuffer, Build
 
 	const PlayerTypes ePlayer = pCity ? pCity->getOwner() : GC.getGame().getActivePlayer();
 
-	const bool bCanConstruct = pCity && pCity->canConstruct(eBuilding);
+	const bool bCanConstruct = pCity && pCity->getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED;
 
 	//	Future - do the green/red text thing with all of this - for now just civics do it
 	//	so can skip the rest of teh code for constructable buildings
@@ -19681,7 +19684,7 @@ bool CvGameTextMgr::setBuildingAdditionalHealthHelp(CvWStringBuffer &szBuffer, C
 	{
 		const BuildingTypes eBuilding = static_cast<BuildingTypes>(iI);
 
-		if (city.canConstruct(eBuilding, false, false, false))
+		if (city.getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
 		{
 			int iGood = 0, iBad = 0, iSpoiledFood = 0, iStarvation = 0;
 			city.getAdditionalHealthByBuilding(eBuilding, iGood, iBad, iSpoiledFood, iStarvation);
@@ -20284,7 +20287,7 @@ bool CvGameTextMgr::setBuildingAdditionalHappinessHelp(CvWStringBuffer &szBuffer
 	{
 		const BuildingTypes eBuilding = static_cast<BuildingTypes>(i);
 
-		if (city.canConstruct(eBuilding, false, false, false))
+		if (city.getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
 		{
 			int iGood = 0, iBad = 0, iAngryPop = 0;
 			city.getAdditionalHappinessByBuilding(eBuilding, iGood, iBad, iAngryPop);
@@ -25263,7 +25266,7 @@ bool CvGameTextMgr::setBuildingAdditionalYieldHelp(CvWStringBuffer &szBuffer, Cv
 	{
 		const BuildingTypes eBuilding = static_cast<BuildingTypes>(i);
 
-		if (city.canConstruct(eBuilding, false, false, false))
+		if (city.getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
 		{
 			const int iChange = city.getAdditionalYieldByBuilding(eIndex, eBuilding);
 
@@ -25296,7 +25299,7 @@ bool CvGameTextMgr::setBuildingAdditionalCommerceHelp(CvWStringBuffer &szBuffer,
 	{
 		const BuildingTypes eBuilding = static_cast<BuildingTypes>(i);
 
-		if (city.canConstruct(eBuilding, false, false, false))
+		if (city.getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
 		{
 			int iChange = city.getAdditionalCommerceByBuilding(eIndex, eBuilding);
 			const int iCommerce = city.getAdditionalYieldByBuilding(YIELD_COMMERCE, eBuilding);
@@ -25332,7 +25335,7 @@ bool CvGameTextMgr::setBuildingSavedMaintenanceHelp(CvWStringBuffer &szBuffer, c
 	{
 		const BuildingTypes eBuilding = static_cast<BuildingTypes>(i);
 
-		if (city.canConstruct(eBuilding, false, false, false))
+		if (city.getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
 		{
 			const int iChange = -city.getSavedMaintenanceTimes100ByBuilding(eBuilding); //Afforess: saved maintenance is displayed as negative in hover
 
@@ -26580,7 +26583,7 @@ bool CvGameTextMgr::setBuildingAdditionalGreatPeopleHelp(CvWStringBuffer &szBuff
 	{
 		const BuildingTypes eBuilding = static_cast<BuildingTypes>(i);
 
-		if (city.canConstruct(eBuilding, false, false, false))
+		if (city.getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
 		{
 			const int iChange = city.getAdditionalGreatPeopleRateByBuilding(eBuilding);
 
@@ -29973,7 +29976,7 @@ bool CvGameTextMgr::setBuildingAdditionalDefenseHelp(CvWStringBuffer &szBuffer, 
 	for (int i = 0; i < GC.getNumBuildingInfos(); i++)
 	{
 		const BuildingTypes eBuilding = static_cast<BuildingTypes>(i);
-		if (city.canConstruct(eBuilding, false, false, false))
+		if (city.getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
 		{
 			const int iChange = city.getAdditionalDefenseByBuilding(eBuilding);
 			if (iChange != 0)

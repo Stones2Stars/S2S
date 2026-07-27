@@ -100,7 +100,8 @@ enum SpineDomainTag
 	SD_READJSON,   // [READJSON] the JSON->InfoRepo load census (CvReadJson)
 	SD_ENABLER,    // [ENABLER] reserved (historical tag; no live registrant)
 	SD_MODIFIER,   // [MODIFIER] the per-scope channel-set census (CvCascadeChannelRegistry)
-	SD_GRANTS,     // [GRANTS] the "provisions" consumer (CvCascadeGrants) -- resolves an entity's genuine grants on a DOMAIN event
+	SD_TRIGGERS,     // [TRIGGERS] the payload plane: a `triggers` entry is the general form, and a `grants` block
+	                 // is its degenerate case (implicit happening, no condition, no roll) -- json.md §5
 	SD_SPINE,      // [SPINE] spine lifecycle signals (game-load started/finished) -- rendered via the registered prefix, not inline
 	NUM_SPINE_DOMAINS
 };
@@ -299,7 +300,7 @@ enum SpineDomainEvent
 	SEVT_LOAD_PIPELINE          = 41,
 	// a city's production QUEUE gained/lost an order (CvCity::pushOrder / popOrder). The enabler's queue leg
 	// (enabler.md par.7.1 step 3 -- "queueing/completion is the targeted single-id erase"): a QUEUED building
-	// leaves the fresh offer (the legacy !bContinue getFirstBuildingOrder exclusion, canConstructInternal), and
+	// leaves the fresh offer (a queued candidate is excluded from a FRESH offer by definition), and
 	// a dequeue restores it -- the event triggers the one-id re-gate; the gate itself reads the live queue
 	// (object-owned state, the resolved-fork rule). iType = the ordered item id, iA = OrderTypes,
 	// iB = +1 push / -1 pop, iC = owner, iSrcLoc = cityId. DOMAIN.

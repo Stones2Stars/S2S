@@ -8940,7 +8940,7 @@ bool CvUnit::canConstruct(const CvPlot* pPlot, BuildingTypes eBuilding, bool bTe
 		return false;
 	}
 
-	if (!pCity->canConstruct(eBuilding, false, bTestVisible, true))
+	if (pCity->getBuildingAvailability(eBuilding) < (bTestVisible ? EnablerDomain::STATE_GREYED : EnablerDomain::STATE_LISTED))
 	{
 		return false;
 	}
@@ -10568,7 +10568,7 @@ CvCity* CvUnit::getUpgradeCity(bool bSearch) const
 	{
 		const UnitTypes eUnitX = (UnitTypes)iUnitX;
 
-		if (upgradeAvailable(m_eUnitType, eUnitX) && kPlayer.canAnyCityTrain(eUnitX)
+		if (upgradeAvailable(m_eUnitType, eUnitX) && kPlayer.getUnitAvailabilityAnywhere(eUnitX) == EnablerDomain::STATE_LISTED
 		&& kPlayer.AI_unitValue(eUnitX, eUnitAI, pArea) > iCurrentValue)
 		{
 			int iSearchValue;
@@ -10602,7 +10602,7 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 {
 	PROFILE_FUNC();
 
-	if (eUnit == NO_UNIT || !upgradeAvailable(m_eUnitType, eUnit) || !GET_PLAYER(getOwner()).canTrain(eUnit, false, false, true))
+	if (eUnit == NO_UNIT || !upgradeAvailable(m_eUnitType, eUnit) || GET_PLAYER(getOwner()).getUnitAvailabilityAnywhere(eUnit) != EnablerDomain::STATE_LISTED)
 	{
 		return NULL;
 	}
@@ -10668,7 +10668,7 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 					CvArea* pCityArea = bCoastalOnly ? pLoopCity->waterArea() : pLoopCity->area();
 
 					// Toffer, units should not be compelled to travel between areas just to get an upgrade.
-					if ((bIgnoreDistance || pMyArea == pCityArea) && pLoopCity->canTrain(eUnit, false, false, true))
+					if ((bIgnoreDistance || pMyArea == pCityArea) && pLoopCity->getUnitAvailability(eUnit) == EnablerDomain::STATE_LISTED)
 					{
 						// if we do not care about distance, then the first match will do
 						if (bIgnoreDistance)
@@ -10703,7 +10703,7 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 		CvCity* pClosestCity = GC.getMap().findCity(getX(), getY(), NO_PLAYER, getTeam(), true, bCoastalOnly);
 
 		// If we can train, then return this city (otherwise it will return NULL)
-		if (pClosestCity != NULL && pClosestCity->canTrain(eUnit, false, false, true))
+		if (pClosestCity != NULL && pClosestCity->getUnitAvailability(eUnit) == EnablerDomain::STATE_LISTED)
 		{
 			// did not search, always return 1 for search value
 			iBestValue = 1;

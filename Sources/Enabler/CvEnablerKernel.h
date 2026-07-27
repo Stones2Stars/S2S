@@ -90,6 +90,30 @@ public:
 	// bVisible=true relaxes the GREYABLE clauses (connectable resource / unadopted civic) for the visible frontier (enabler.md §6).
 	static bool requiresMet(const CvInfo* j, const CvCascadeEvalCtx& ec, bool bVisible = false);
 
+	// THE SYSTEM-PLACEMENT GATE -- `requires` for a caller that PLACES an entity rather than offering it through a
+	// city's production queue: the trigger plane's spawns, the barbarian fielding filter, event/WB placements.
+	//
+	// It is a different question from availability, not a variant of it. The tri-state answers what the QUEUE
+	// offers -- membership AND `requires` AND the `allowed` cap -- and a placing system is none of those: it is not
+	// choosing from a queue, so the cap it would compete for does not bind it (enabler.md §4 keeps `allowed` a
+	// SEPARATE gate: "how many of ME may exist", not "what I need"). Nor can it read the tri-state at all, since a
+	// system-placed entity is statically excluded and therefore permanently HIDDEN (`identity.spawnOnly` /
+	// `identity.notConstructible`, json.md §7) -- which is exactly why this exists.
+	//
+	// PLAYER scope: it answers "may this player have this at all", which is what a spawn asks. A caller needing
+	// city-local supply (vicinity / plot group) is asking an availability question and must ask the CITY.
+	// It routes to the ONE evaluator over a ctx the contexts fill ([DEC-single-implementation]); this is the single
+	// home of that fill for placement callers, so no site assembles its own.
+	static bool requiresMetForPlayer(const CvPlayer& kPlayer, EnEdgeBucket eBucket, int iId);
+
+	// The CITY twin: `requires` (plus the entity gate) for a candidate in ONE city, evaluated regardless of whether
+	// the candidate is currently in that city's tree. That independence is the point -- it answers "COULD this city
+	// host it", which is what a valuation of a not-yet-held unlock needs, and which the tri-state cannot say because
+	// the candidate is HIDDEN until the unlock lands.
+	// bVisible relaxes the GREYABLE clauses (a connectable resource, an unadopted civic -- enabler.md §6), so a
+	// caller can tell "satisfied here" from "satisfiable here" without inventing a heuristic for the difference.
+	static bool requiresMetInCity(const CvCity& kCity, EnEdgeBucket eBucket, int iId, bool bVisible = false);
+
 	// allowed cap gate: current tally count vs each scope cap (world/team/empire).
 	static bool allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit, EnEdgeBucket eBucket = NO_EDGEB);
 

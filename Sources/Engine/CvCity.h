@@ -115,8 +115,22 @@ public:
 	void killTestCheap(); // For testing, do not call in a game situation
 
 	void doTurn();
-	void doAutobuild();
-	void checkPropertyBuildings();
+
+	// PLACE the queue-excluded buildings -- every `identity.notConstructible` building is placed in EVERY city,
+	// UNCONDITIONALLY, and its `requires.operate` then decides whether it is active or dormant (owner ruling;
+	// enabler.md §3, the band model generalized to the whole class). There is no placement gate to evaluate and
+	// nothing is ever auto-removed: dormancy is reversible and removal is not, so a band leaving its range goes
+	// DORMANT rather than being torn down and rebuilt.
+	//
+	// ⛔ It replaces the per-turn add/remove churn wholesale -- the property-band sweep AND the autobuild pass,
+	// which between them re-evaluated a placement gate for every band in every city every turn and could remove a
+	// building it had just placed. Nothing calls this per turn: placement is idempotent and permanent, so it runs
+	// ONCE per city.
+	//
+	// Idempotent by construction (it places only what is absent), which is what lets it double as the LOAD
+	// BACKFILL for a save taken before the ruling -- the same shape as the `TECH_GAME_START` backfill
+	// (enabler.md §2), and the reason no migration pass is needed.
+	void placeSystemBuildings();
 
 	bool isCitySelected() const;
 	DllExport bool canBeSelected() const;
@@ -195,9 +209,21 @@ public:
 	int findYieldRateRank(YieldTypes eYield) const;
 	int findCommerceRateRank(CommerceTypes eCommerce) const;
 
-	bool isSupersedingUnitAvailable(UnitTypes eUnit) const;
 
-	UnitTypes allUpgradesAvailable(UnitTypes eUnit, int iUpgradeCount = 0) const;
+	// WHICH upgrade this city can train instead of eUnit -- the resolution behind carrying COMMITTED PRODUCTION
+	// across when a queued unit stops being offered. It is not an availability question and not a second upgrade
+	// closure: the tri-state has already folded the upgrade-tree dormancy that made eUnit un-offered
+	// (enabler.md §8), so the answer is the NEAREST of its upgrades this city actually LISTS. Breadth-first, so
+	// a chain resolves to the closest trainable rung, and cycle-safe by construction (a visited set).
+	UnitTypes trainableUpgradeFor(UnitTypes eUnit) const;
+
+	// THE HYPOTHETICAL -- "could this city construct eCandidate if it ALSO had eExtraBuilding?", the AI's
+	// what-would-this-unlock valuation. It is the enabler.md §8 overlay pattern, not a what-if flag on a read:
+	// the maintained operating set is COPIED into the caller's own scratch, the hypothetical building added to
+	// the copy, and the ONE gate re-evaluated over it. ⛔ It never writes the maintained planes -- a hypothetical
+	// that mutated them would leave the real frontier describing a game state that never happened.
+	// ⚠ It EVALUATES (unlike every read above), so it is a per-decision call and never an inner-loop one.
+	bool couldConstructWith(BuildingTypes eCandidate, BuildingTypes eExtraBuilding) const;
 	bool isWorldWondersMaxed() const;
 	bool isTeamWondersMaxed() const;
 	bool isNationalWondersMaxed() const;
@@ -205,14 +231,9 @@ public:
 	int getMaxNumTeamWonders() const;
 	int getMaxNumNationalWonders() const;
 
-	bool canTrain(UnitTypes eUnit, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreUpgrades = false, bool bPropertySpawn = false) const;
-	bool canTrainInternal(UnitTypes eUnit, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreUpgrades = false) const;
-	bool canTrain(UnitCombatTypes eUnitCombat) const;
 
-	bool canConstruct(BuildingTypes eType, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bIgnoreAmount = false, bool bIgnoreBuildings = false, TechTypes eIgnoreTechReq = NO_TECH, int* probabilityEverConstructable = NULL, bool bExposed = false) const;
 
 	//	KOSHLING - cache can build results
-	bool canConstructInternal(BuildingTypes eType, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreAmount, BuildingTypes withExtraBuilding = NO_BUILDING, bool bIgnoreBuildings = false, TechTypes eIgnoreTechReq = NO_TECH, int* probabilityEverConstructable = NULL, bool bExposed = false) const;
 
 	bool canCreate(ProjectTypes eProject, bool bContinue = false, bool bTestVisible = false) const;
 	bool canMaintain(ProcessTypes eProcess) const;
@@ -1747,7 +1768,6 @@ protected:
 	int* m_paiUnitCombatExtraStrength;
 	bool* m_pabAutomatedCanBuild;
 
-	std::vector<PropertySpawns> m_aPropertySpawns;
 	std::vector<BuildingTypes> m_hasBuildings;
 
 	std::vector<short> m_vFreeBuildings;
@@ -2089,10 +2109,6 @@ public:
 	void changeSpecialistInvestigation(int iChange);
 
 	int getPropertyNeed(PropertyTypes eProperty) const;
-	int getNumPropertySpawns() const;
-	PropertySpawns& getPropertySpawn(int iIndex);
-	void changePropertySpawn(int iChange, PropertyTypes eProperty, UnitTypes eUnit);
-	void doPropertyUnitSpawn();
 
 	void AI_setPropertyControlBuildingQueued(bool bSet);
 	bool AI_isPropertyControlBuildingQueued() const;
@@ -2113,7 +2129,7 @@ private:
 
 
 
-	// The UPGRADE cache (allUpgradesAvailable's memo) -- distinct from any trainability memo: it caches the
+	// The UPGRADE cache (the AI's upgrade-resolution memo) -- distinct from any trainability memo: it caches the
 	// upgrade-chain resolution, not an availability verdict, so it stands on its own.
 public:
 	void clearUpgradeCache(UnitTypes eUnit) const;
@@ -2191,8 +2207,6 @@ public:
 		DECLARE_MAP_FUNCTOR_CONST(CvCity, const CvPlot*, plot);
 
 		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, bool, hasFullyActiveBuilding, BuildingTypes);
-		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, bool, canConstruct, BuildingTypes);
-		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, bool, canTrain, UnitTypes);
 		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, bool, isHasReligion, ReligionTypes);
 		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, bool, isHasCorporation, CorporationTypes);
 		DECLARE_MAP_FUNCTOR_CONST_1(CvCity, bool, hasBonus, BonusTypes);

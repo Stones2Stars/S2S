@@ -19,7 +19,6 @@ void CvPythonUnitLoader::CyUnitPythonInterface1(boost::python::class_<CyUnit>& i
 		.def("canEnterPlot", &CyUnit::canEnterPlot, "bool (CyPlot* pPlot, bool bAttack, bool bDeclareWar, bool bIgnoreLoad)")
 		.def("canHeal", &CyUnit::canHeal, "bool (CyPlot* pPlot)")
 		.def("canFound", &CyUnit::canFound, "bool (CyPlot* pPlot, bool bTestVisible)")
-		.def("canConstruct", &CyUnit::canConstruct, "bool (CyPlot* pPlot, int (BuildingTypes) eBuilding)")
 
 		.def("getDiscoveryTech", &CyUnit::getDiscoveryTech, "int /*TechTypes*/ ()")
 		.def("getDiscoverResearch", &CyUnit::getDiscoverResearch, "int (int /*TechTypes*/ eTech)")

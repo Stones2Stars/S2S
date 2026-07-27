@@ -165,6 +165,33 @@ bool EnablerKernel::requiresMet(const CvInfo* j, const CvCascadeEvalCtx& ec, boo
 	return true;
 }
 
+// The system-placement gate (see the header for the role it plays and why it is not the availability read).
+bool EnablerKernel::requiresMetForPlayer(const CvPlayer& kPlayer, EnEdgeBucket eBucket, int iId)
+{
+	const CvInfo* j = jsonFor(eBucket, iId);
+	if (j == NULL) return false;
+	CvCascadeEvalCtx ec;
+	kPlayer.getEmpireContext().fillEvalCtx(ec);   // player+team -- the contexts fill the eval state (contexts.md)
+	CvCascadeEvalFlags gateFlags;
+	if (!cascadeGateOk(j->getGate(), ec, gateFlags)) return false;   // entity-level enabled/disabled ([DEC-entity-gate])
+	return requiresMet(j, ec);
+}
+
+// The city twin (see the header). Same ONE evaluator, over a ctx the city + empire contexts fill.
+bool EnablerKernel::requiresMetInCity(const CvCity& kCity, EnEdgeBucket eBucket, int iId, bool bVisible)
+{
+	const CvInfo* j = jsonFor(eBucket, iId);
+	if (j == NULL) return false;
+	CvCascadeEvalCtx ec;
+	kCity.getCityContext().fillEvalCtx(ec);                                  // city+plot
+	GET_PLAYER(kCity.getOwner()).getEmpireContext().fillEvalCtx(ec);         // player+team
+	wireOperatingBuildings(&kCity, ec);
+	CvCascadeEvalFlags gateFlags;
+	gateFlags.strictStateReligionForBuild = true;
+	if (!cascadeGateOk(j->getGate(), ec, gateFlags)) return false;
+	return requiresMet(j, ec, bVisible);
+}
+
 bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit, EnEdgeBucket eBucket)
 {
 	if (j == NULL) return true;

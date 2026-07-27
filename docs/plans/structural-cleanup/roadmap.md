@@ -144,6 +144,19 @@ deliberately red, so there is nothing to protect
 | `CvCity`'s **hand-rolled dirty caches** (`m_aiCommerceRate`, `m_aiCommerceRateModifier`, …) | `CvCity.h` | DEMOLITION FODDER, never conversion targets ([state-repositories.md](../../architecture/state-repositories.md)) — cut when the channel that replaces them lands |
 | the direct **`gDLL->logMsg` / BetterBTSAI log-helper** call sites + the four log-level globals they gate | `Sources/AI/`, engine files | RETIRE WHOLESALE as each domain migrates onto the spine ([observability.md](../../reference/observability.md)) — never tidied in place |
 
+⛔ **THE WORST OFFENDERS ARE THE ONES OFF THE CORE LOOP (owner) — prioritize them, do not discount them.** A legacy
+path that runs every turn is exercised constantly, so a defect in it surfaces fast. One that fires occasionally —
+a property spawn on a dice roll, in some cities, some turns — is **never exercised hard enough to fail visibly**,
+so it sits there doing a wrong or duplicate thing indefinitely. It is invisible on BOTH axes at once: unexercised,
+**and uninstrumented** — the replacement announces itself on the spine, while the legacy path rolls its dice in
+silence, so *"we can track with eventspine that a propertyspawn is being evaluated; we have no idea if legacy does
+it"*. The worked case: the property-unit spawn existed TWICE, both live, both rolling the same RNG — detectable
+only by noticing a doubled spawn rate that nobody watches.
+⚑ **So "the replacement is not fully in place" is NOT a reason to keep one** — it is the reason to cut: while
+legacy answers, the replacement's gaps are masked and nothing forces them out
+([DEC-no-legacy-masking](../../architecture/decisions.md#dec-no-legacy-masking)). Delete it, let the hole show,
+then fill the hole.
+
 ⚠ **The list is KNOWN-INCOMPLETE and is not a completeness gate.** Legacy found anywhere else is killed on the
 same terms; add it here when you find it. ⛔ What is NOT allowed is discovering a legacy surface and recording it
 as acceptable, scheduled, or "kept until X" — that reframing is the failure this section exists to prevent.

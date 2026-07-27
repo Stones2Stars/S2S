@@ -35,7 +35,7 @@
 #include <vector>
 
 // ===================== [GRANTS] spine domain (logging.md §4: logging is a spine CONSUMER) =====================
-enum GrEvt { GRE_BUILDING = 1, GRE_UNIT, GRE_TECH, GRE_RELIGION, GRE_CIVIC, GRE_GAMESTART, GRE_REPEAT, GRE_FOUND };
+enum TrEvt { TRE_BUILDING = 1, TRE_UNIT, TRE_TECH, TRE_RELIGION, TRE_CIVIC, TRE_GAMESTART, TRE_REPEAT, TRE_FOUND };
 enum GrFld
 {
 	GF_PLAYER = 1, GF_BUILDING, GF_UNIT, GF_TECH, GF_RELIGION, GF_CIVIC,
@@ -51,18 +51,18 @@ enum GrFld
 	GF_APPLIED,                                              // 1 = the machine ran the FIRST-BUILD apply (NOT a claim about every grant on the line)
 	GF_MATMISMATCH                                           // 1 = a mapFrom-materialized getter disagrees with its composed grants read
 };
-static const char* gr_prefix(int evt)
+static const char* tr_prefix(int evt)
 {
 	switch (evt)
 	{
-	case GRE_BUILDING: return "[GRANTS/building]";
-	case GRE_UNIT:     return "[GRANTS/unit]";
-	case GRE_TECH:     return "[GRANTS/tech]";
-	case GRE_RELIGION: return "[GRANTS/religion]";
-	case GRE_CIVIC:    return "[GRANTS/civic]";
-	case GRE_GAMESTART: return "[GRANTS/gameStart]";
-	case GRE_REPEAT:   return "[GRANTS/repeat]";
-	case GRE_FOUND:    return "[GRANTS/cityFounded]";
+	case TRE_BUILDING: return "[TRIGGERS/building]";
+	case TRE_UNIT:     return "[TRIGGERS/unit]";
+	case TRE_TECH:     return "[TRIGGERS/tech]";
+	case TRE_RELIGION: return "[TRIGGERS/religion]";
+	case TRE_CIVIC:    return "[TRIGGERS/civic]";
+	case TRE_GAMESTART: return "[TRIGGERS/gameStart]";
+	case TRE_REPEAT:   return "[TRIGGERS/repeat]";
+	case TRE_FOUND:    return "[TRIGGERS/cityFounded]";
 	default:           return "[GRANTS]";
 	}
 }
@@ -106,7 +106,7 @@ static const char* gr_field(int tag, SpineFieldType* peType)
 static void gr_registerDomain()
 {
 	static bool s_reg = false;
-	if (!s_reg) { spineRegisterDomain(SD_GRANTS, gr_prefix, "Cascade.log", gr_field); s_reg = true; }
+	if (!s_reg) { spineRegisterDomain(SD_TRIGGERS, tr_prefix, "Cascade.log", gr_field); s_reg = true; }
 }
 
 // The LOAD-BRACKET flag (event-spine.md / DEC-spine-reseed). A grant is the RESULT of a genuine in-play
@@ -309,7 +309,7 @@ static void gr_resolveBuilding(int iBuilding, int iPlayer, int iCity)
 	const bool bApplied = !s_bSuppressed && (iCity >= 0);
 	if (bApplied) gr_applyBuildingFirstBuild(j, iBuilding, iPlayer, iCity);
 
-	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_BUILDING, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_BUILDING, 1)
 		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_FIRSTACQUIRE, s_bFirstAcquire ? 1 : 0)
 		.addI(GF_APPLIED, bApplied ? 1 : 0).addI(GF_MATMISMATCH, bMatMismatch ? 1 : 0)
 		.addI(GF_PLAYER, iPlayer).addI(GF_BUILDING, iBuilding)
@@ -343,7 +343,7 @@ static void gr_resolveUnit(int iUnit, int iPlayer, int iUnitId)
 			}
 		}
 	}
-	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_UNIT, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_UNIT, 1)
 		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, nApplied)
 		.addI(GF_PLAYER, iPlayer).addI(GF_UNIT, iUnit)
 		.addI(GF_PROMOTIONS, nPromos).addI(GF_GRANTBUILDINGS, nFound));
@@ -387,7 +387,7 @@ static void gr_resolveTech(int iTech, int iPlayer)
 	if (iFirstUnit < 0 && iFirstProphet < 0 && nFreeTechs == 0) return;
 	const bool bApplied = !s_bSuppressed && iPlayer >= 0;
 	if (bApplied) gr_applyTechFirstDiscover(iTech, iPlayer, iFirstUnit, iFirstProphet, nFreeTechs);
-	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_TECH, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_TECH, 1)
 		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, bApplied ? 1 : 0)
 		.addI(GF_PLAYER, iPlayer).addI(GF_TECH, iTech)
 		.addI(GF_FIRSTUNIT, iFirstUnit).addI(GF_FIRSTPROPHET, iFirstProphet).addI(GF_FREETECHS, nFreeTechs));
@@ -418,7 +418,7 @@ static void gr_resolveReligion(int iReligion, int iSlotReligion, int iPlayer, in
 					GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
 		}
 	}
-	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_RELIGION, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_RELIGION, 1)
 		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, bApplied ? 1 : 0)
 		.addI(GF_PLAYER, iPlayer).addI(GF_RELIGION, iReligion).addI(GF_CITY, iCity)
 		.addI(GF_NUMFREEUNITS, nNumFree).addI(GF_FREEUNIT, iFreeUnit));
@@ -430,7 +430,7 @@ static void gr_resolveCivic(int iCivic, int iPlayer)
 	if (j == NULL) return;
 	const int nRev = gr_pulse(j, gr_keyRevolution);   // rev-index pulse on adopt (signed; Python-applied in legacy)
 	if (nRev == 0) return;
-	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_CIVIC, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_CIVIC, 1)
 		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0)
 		.addI(GF_PLAYER, iPlayer).addI(GF_CIVIC, iCivic).addI(GF_REVOLUTION, nRev));
 }
@@ -464,7 +464,7 @@ static void gr_resolvePlayerInit(int iPlayer)
 		player.setGold(0);
 		player.changeGold(nGold * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent() / 100);
 	}
-	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_GAMESTART, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_GAMESTART, 1)
 		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, bApplied ? 1 : 0)
 		.addI(GF_PLAYER, iPlayer).addI(GF_CIVICS, nCivics).addI(GF_TECHS, nTechs)
 		.addI(GF_BUILDINGS, nBuild).addI(GF_STARTINGGOLD, nGold));
@@ -485,9 +485,10 @@ static void gr_resolvePlayerInit(int iPlayer)
 // The machine's per-turn work arrives on the PLAYER-scoped SEVT_TURN_STARTED. The machine is an IEventConsumer and
 // the spine is its ONLY way in: a bespoke CvCity::doTurn entry point would give ONE machine TWO front doors -- the
 // scattered-endpoint disease the machine exists to cure ("the eventSpine is the ONLY place any 'happening' lives",
-// observability.md). It REPLACES the legacy per-turn sites outright -- CvCity::doPropertyUnitSpawn and CvCity::doHeal
-// are DELETED with the serialized ledgers that fed them (m_aPropertySpawns / m_iNumUnitFullHeal: pure sums over the
-// city's buildings, so DERIVED -- soft-removed via Assets/savemigration.txt, save.md §3, NOT a save break).
+// observability.md). It is the ONLY per-turn spawn/heal path in the engine, and being on the spine is the point:
+// every evaluation ANNOUNCES itself (the TRE_REPEAT line below), so a spawn that fires -- or fails to -- is
+// visible. An off-loop path that rolls dice silently is invisible on both axes at once, unexercised AND
+// uninstrumented, which is what makes that class the worst legacy to leave standing.
 //
 // It reads the COMPOSED getTriggers() entries (json.md §5 trigger -> chance -> action), never any legacy collapse
 // member. Gated on the enabler's operating-building set: a DORMANT building grants nothing.
@@ -513,29 +514,47 @@ static int gr_applyFullHeal(CvCity* pCity, int iCount)
 	return iHealed;
 }
 
-// The property-scaled unit spawn -- mirrors the legacy CvCity::doPropertyUnitSpawn odds EXACTLY: the city's current
+// The property-scaled unit spawn -- the city's current
 // property value, halved, is the per-10000 chance; PROPERTY index 0 (crime) additionally backs off by the plot's
 // criminal count and bails once criminals reach half the population. A NEGATIVE-weight property spawns for the
 // BARBARIAN player (the crime/disease case), a positive one for the city owner.
-static int gr_applySpawn(CvCity* pCity, int iChancePerProperty, int iSpawnUnit)
+// THE TRIGGER'S ODDS, as a per-10000 chance. json.md §5: the odds live ON THE TRIGGER, never inside a payload,
+// so this is the entry's business and the action below merely places what the roll allows. Two authored shapes:
+//   - `chance: { per: PROPERTY_X }` -- a chance carrying ONLY a per means the SCALED COUNT *is* the odds (§5).
+//     The city's property value, halved, per-10000; PROPERTY index 0 (crime) additionally backs off by the plot's
+//     criminal count and yields nothing once criminals reach half the population.
+//   - `chance: N` -- a flat percent. Parsed ×100, and a percent ×100 IS its own per-10000 figure (5% -> 500).
+// ⛔ The flat form previously could not fire at all: the spawn was reached through a property lookup that
+// returned early on the absent per, so every entry authored with plain odds was silently inert.
+static int gr_triggerChance10000(const CvCity* pCity, const CvTriggerEntry* pEntry)
 {
-	const PropertyTypes eProperty = (PropertyTypes)iChancePerProperty;
-	if (eProperty < 0 || eProperty >= GC.getNumPropertyInfos()) return -1;
-
-	int iCurrentValue = std::max(0, pCity->getPropertiesConst()->getValueByProperty(eProperty));
+	const PropertyTypes eProperty = (PropertyTypes)pEntry->chancePerTypeId;
+	if (eProperty < 0 || eProperty >= GC.getNumPropertyInfos())
+	{
+		return std::max(0, pEntry->chanceValue);
+	}
+	int iValue = std::max(0, pCity->getPropertiesConst()->getValueByProperty(eProperty));
 	if (eProperty == 0)
 	{
 		const int iNumCriminals = pCity->plot()->getNumCriminals();
-		if (iNumCriminals >= pCity->getPopulation() / 2) return -1;
-		iCurrentValue -= iNumCriminals * iCurrentValue / 10;
+		if (iNumCriminals >= pCity->getPopulation() / 2) return 0;
+		iValue -= iNumCriminals * iValue / 10;
 	}
-	const bool bPositiveProperty = GC.getPropertyInfo(eProperty).getAIWeight() >= 0;
-	iCurrentValue = std::max(0, iCurrentValue) / 2;
+	return std::max(0, iValue) / 2;
+}
 
-	if (GC.getGame().getSorenRandNum(10000, "Property Unit Spawn Check") >= iCurrentValue) return -1;
+// PLACE one spawned unit. The odds were already decided by the caller (above); this only performs the action.
+// The spawn OWNER is the property's sign: a negative-weight property (crime, disease) spawns hostile for the
+// BARBARIAN player, a positive one -- and a flat-chance entry, which has no property to ask -- for the city owner.
+static int gr_applySpawn(CvCity* pCity, int iChancePerProperty, int iSpawnUnit)
+{
+	const PropertyTypes eProperty = (PropertyTypes)iChancePerProperty;
+	const bool bPositiveProperty =
+		(eProperty >= 0 && eProperty < GC.getNumPropertyInfos()) ? (GC.getPropertyInfo(eProperty).getAIWeight() >= 0) : true;
 
 	const UnitTypes eUnit = (UnitTypes)iSpawnUnit;
-	if (!GET_PLAYER(pCity->getOwner()).canTrain(eUnit, false, false, true, true)) return -1;
+	// A TRIGGER spawn places the unit -- the queue's offer (and its `allowed` cap) is not the question here.
+	if (!EnablerKernel::requiresMetForPlayer(GET_PLAYER(pCity->getOwner()), EDGEB_UNITS, (int)eUnit)) return -1;
 
 	const PlayerTypes eSpawnOwner = bPositiveProperty ? pCity->getOwner() : (PlayerTypes)BARBARIAN_PLAYER;
 	CvUnit* pUnit = GET_PLAYER(eSpawnOwner).initUnit(eUnit, pCity->getX(), pCity->getY(), UNITAI_BARB_CRIMINAL,
@@ -599,10 +618,21 @@ static void gr_applyCityPerTurn(CvCity* pCity)
 				const std::vector<int>* pSpawnUnits = pEntry->grant->list(gr_keyUnits);
 				if (pSpawnUnits != NULL && !pSpawnUnits->empty())
 				{
-					const int iUnit = gr_applySpawn(pCity, pEntry->chancePerTypeId, (*pSpawnUnits)[0]);
-					if (iUnit >= 0) { iSpawned = iUnit; ++iSpawnCount; }
+					// ONE roll per ENTRY -- the odds belong to the trigger (json.md §5), not to each unit --
+					// and then the action places EVERY unit the entry grants. ⛔ Taking only [0] silently
+					// dropped the rest of an authored list, which no compiler or runtime could have caught.
+					const int iChance = gr_triggerChance10000(pCity, pEntry);
+					if (iChance > 0 && GC.getGame().getSorenRandNum(10000, "Trigger Spawn Check") < iChance)
+					{
+						for (size_t u = 0; u < pSpawnUnits->size(); ++u)
+						{
+							const int iUnit = gr_applySpawn(pCity, pEntry->chancePerTypeId, (*pSpawnUnits)[u]);
+							if (iUnit >= 0) { iSpawned = iUnit; ++iSpawnCount; }
+						}
+					}
 				}
 			}
+
 		}
 
 	}
@@ -613,7 +643,7 @@ static void gr_applyCityPerTurn(CvCity* pCity)
 		// The SPAWNED field is added ONLY when a unit actually landed: a sentinel -1 through the SFT_UNIT index
 		// formatter renders "spawned=?", which cannot be told apart from "a spawn was attempted and failed" --
 		// an ambiguous line defeats the point of a surface you reconstruct state from.
-		CvSpineEvent ev(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_REPEAT, 1);
+		CvSpineEvent ev(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_REPEAT, 1);
 		ev.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0)
 		  .addI(GF_PLAYER, pCity->getOwner()).addI(GF_CITY, pCity->getID())
 		  .addI(GF_HEALED, iHealed);
@@ -674,7 +704,7 @@ static void gr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 			++nPlaced;
 		}
 	}
-	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_FOUND, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_FOUND, 1)
 		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, nPlaced)
 		.addI(GF_PLAYER, iOwner).addI(GF_CITY, iCity).addI(GF_UNIT, iFounderType)
 		.addI(GF_GRANTBUILDINGS, (int)pSeeds->size()));
@@ -708,7 +738,7 @@ static void gr_resolveCapitalChanged(int iOwner, int iCity)
 	const bool bApplied = !s_bSuppressed && nHave == 0 && !pCity->hasBuilding((BuildingTypes)s_iCapitalBuilding);
 	if (bApplied) pCity->changeHasBuilding((BuildingTypes)s_iCapitalBuilding, true);
 
-	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_FOUND, 1)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_FOUND, 1)
 		.addI(GF_SUPPRESSED, s_bSuppressed ? 1 : 0).addI(GF_APPLIED, bApplied ? 1 : 0)
 		.addI(GF_PLAYER, iOwner).addI(GF_CITY, iCity).addI(GF_BUILDING, s_iCapitalBuilding));
 }
@@ -764,7 +794,7 @@ void CvCascadeGrants::onEvent(const CvSpineEvent& e)
 			const int n = (pC != NULL) ? gr_promoteCityUnits(pC, GC.getBuildingInfo((BuildingTypes)e.iType)) : 0;
 			if (n > 0)
 			{
-				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_REPEAT, 1)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_REPEAT, 1)
 					.addI(GF_SUPPRESSED, 0).addI(GF_PLAYER, e.iC).addI(GF_CITY, e.iSrcLoc)
 					.addI(GF_BUILDING, e.iType).addI(GF_FREEPROMOS, n));
 			}
@@ -780,7 +810,7 @@ void CvCascadeGrants::onEvent(const CvSpineEvent& e)
 			const int n = gr_promoteOneUnit(pC, pU);
 			if (n > 0)
 			{
-				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRANTS, GRE_REPEAT, 1)
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_REPEAT, 1)
 					.addI(GF_SUPPRESSED, 0).addI(GF_PLAYER, e.iC).addI(GF_CITY, e.iSrcLoc)
 					.addI(GF_UNIT, e.iType).addI(GF_FREEPROMOS, n));
 			}

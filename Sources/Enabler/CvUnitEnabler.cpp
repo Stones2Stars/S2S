@@ -204,7 +204,7 @@ void UnitEnabler::onPlayerCivicsChanged(PlayerTypes ePlayer, int iOldCivic, int 
 // waiver + the standing operating-buildings wiring -- vicinity `provides` supply included), the SUPERSEDER
 // removal (replacedBy.units: HIDDEN the moment any superseder is AVAILABLE -- read from the poco's
 // m_superseding, NOT j->edge("replacedBy") which returns NULL, the inert-read trap; mirrors
-// isSupersedingUnitAvailable), and the UPGRADE-TREE dormancy (requires.build.dormant.all -- uc_reachable, the
+// the engine's superseder rule), and the UPGRADE-TREE dormancy (requires.build.dormant.all -- uc_reachable, the
 // spec'd cycle-guarded closure, enabler.md par.3: a unit hides only when EVERY direct upgrade resolves to a
 // reachable-trainable unit; one dead branch keeps it buildable. Do NOT replace with a one-level scheme).
 // LOAD follows the par.7.1 order rule's "gate once after the stream ends" option (GAME_LOAD_FINISHED gates

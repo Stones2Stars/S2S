@@ -58,10 +58,6 @@ bool CyUnit::canFound(const CyPlot& kPlot, bool bTestVisible) const
 	return m_pUnit->canFound(kPlot.getPlot(), bTestVisible);
 }
 
-bool CyUnit::canConstruct(const CyPlot& kPlot, int /*BuildingTypes*/ eBuilding) const
-{
-	return m_pUnit->canConstruct(kPlot.getPlot(), (BuildingTypes)eBuilding);
-}
 
 int /*TechTypes*/ CyUnit::getDiscoveryTech() const
 {

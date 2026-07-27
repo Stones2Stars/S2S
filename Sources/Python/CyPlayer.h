@@ -103,9 +103,7 @@ public:
 	void doGoody(const CyPlot* pPlot, const CyUnit* pUnit);
 	bool canFound(int iX, int iY) const;
 	void found(int iX, int iY);
-	bool canTrain(int /*UnitTypes*/ eUnit, bool bContinue, bool bTestVisible) const;
 
-	bool canConstruct(int /*BuildingTypes*/eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost) const;
 	bool canCreate(int /*ProjectTypes*/ eProject, bool bContinue, bool bTestVisible) const;
 	int getUnitProductionNeeded(int /*UnitTypes*/ iIndex) const;
 	int getBuildingProductionNeeded(int /*BuildingTypes*/ iIndex) const;

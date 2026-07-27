@@ -310,9 +310,6 @@ public:
 	DllExport bool canFound(int iX, int iY, bool bTestVisible = false) const;
 	void found(int iX, int iY, CvUnit* pUnit = NULL);
 
-	bool canTrain(UnitTypes eUnit, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, bool bPropertySpawn = false) const;
-	bool canConstruct(BuildingTypes eBuilding, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, TechTypes eIgnoreTechReq = NO_TECH, int* probabilityEverConstructable = NULL, bool bExposed = false) const;
-	bool canConstructInternal(BuildingTypes eBuilding, bool bContinue = false, bool bTestVisible = false, bool bIgnoreCost = false, TechTypes eIgnoreTechReq = NO_TECH, int* probabilityEverConstructable = NULL, bool bExposed = false) const;
 	bool canCreate(ProjectTypes eProject, bool bContinue = false, bool bTestVisible = false) const;
 	bool canMaintain(ProcessTypes eProcess) const;
 	bool isProductionMaxedBuilding(BuildingTypes building, bool bAcquireCity = false) const;
@@ -924,8 +921,13 @@ public:
 	// ANYWHERE in my empire?".
 	// ⛔ And do NOT replace them with a maintained player-level union: that is duplicated state which must never
 	// drift -- the same argument that keeps projects/processes player-held rather than copied per city (§7.1).
-	bool canAnyCityTrain(UnitTypes eUnit) const;
-	bool canAnyCityConstruct(BuildingTypes eBuilding) const;
+	// ⛔ The verdict comes back WHOLE, exactly as the city read does (enabler.md §8) -- the BEST state any of the
+	// player's cities holds. Reducing it to a bool here would be the same defect one scope up: a caller wanting
+	// "offered anywhere" tests == LISTED, one wanting "in the tree anywhere" (the pedia's did-this-tech-unlock-it
+	// question, the build-list filters' show-unbuildable mode) tests >= GREYED, and a bool would force a second
+	// read to recover the difference it threw away.
+	EnablerDomain::State getUnitAvailabilityAnywhere(UnitTypes eUnit) const;
+	EnablerDomain::State getBuildingAvailabilityAnywhere(BuildingTypes eBuilding) const;
 
 	// ⚑ THE UNION -- hoist this OUT of a loop over the whole database; do not call the single-id fan inside one.
 	// The fan is cheap per call (one bare read per city) but multiplies: asked for every unit type it is

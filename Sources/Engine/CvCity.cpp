@@ -946,7 +946,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 	m_plotYieldChanges.clear();
 	m_improvementYieldChanges.clear();
 	m_Properties.clear();
-	m_aPropertySpawns.clear();
 	m_buildingHappinessFromTech.clear();
 	m_buildingHealthFromTech.clear();
 	m_progressOnBuilding.clear();
@@ -1565,9 +1564,6 @@ void CvCity::doTurn()
 	//	Force deferred plot group recalculation to happen now before we assess production
 	{ PERF_SCOPE("city.plotGroupRecalc", getOwner()); CvPlot::setDeferredPlotGroupRecalculationMode(false); }
 
-	//	Auto-build any auto-build buildings we can
-	{ PERF_SCOPE("city.doAutobuild", getOwner()); doAutobuild(); }
-
 	{ PERF_SCOPE("city.doProduction", getOwner()); doProduction(bAllowNoProduction); }
 
 	{ PERF_SCOPE("city.advertiseTender", getOwner()); GET_PLAYER(getOwner()).getContractBroker().advertiseTender(this, AI_getBuildPriority()); }
@@ -1584,7 +1580,6 @@ void CvCity::doTurn()
 
 	setCurrAirlift(0);
 
-	doPropertyUnitSpawn();
 
 
 	//TB Combat Mod (Buildings) end
@@ -1672,71 +1667,24 @@ void CvCity::doTurn()
 	{ PERF_SCOPE("city.py.cityDoTurn", getOwner()); CvEventReporter::getInstance().cityDoTurn(this, getOwner()); }
 }
 
-void CvCity::doAutobuild()
+// PLACE the queue-excluded buildings (see CvCity.h for the ruling this implements). Every notConstructible
+// building is placed here, unconditionally, and DORMANCY decides everything afterwards -- so this evaluates no
+// placement gate, and it removes nothing.
+//
+// The two per-turn passes it replaces did the opposite of both: the property-band sweep re-derived every band's
+// range and its full construct gate for every property in every city EVERY TURN, adding and removing buildings as
+// values crossed thresholds; the autobuild pass re-ran a construct gate per autobuild and could tear one back out.
+// Both are now one operate condition the enabler already maintains (the PROPERTY band atom and the dormant
+// successor list the curator authors) -- re-checked by targeted propagation when a value actually moves, never by
+// a per-turn scan.
+void CvCity::placeSystemBuildings()
 {
 	PROFILE_EXTRA_FUNC();
-	// Toffer - Property buildings should be checked each turn.
-	if (!GET_PLAYER(getOwner()).isNPC())
+	foreach_(const BuildingTypes eBuilding, BuildingsRepo::get().systemPlacedBuildings())
 	{
-		checkPropertyBuildings();
-	}
-	// Auto-build any auto-build buildings we can
-	foreach_(const BuildingTypes eBuilding, BuildingsRepo::get().autoBuildings())
-	{
-		const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 		if (!hasBuilding(eBuilding))
 		{
-			if (canConstruct(eBuilding, false, false, true))
-			{
-				changeHasBuilding(eBuilding, true);
-				const CvWString szBuffer = gDLL->getText("TXT_KEY_COMPLETED_AUTO_BUILD", kBuilding.getTextKeyWide(), getName().GetCString());
-				AddDLLMessage(getOwner(), true, 10, szBuffer, NULL, MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_GREEN());
-			}
-		}
-		// Toffer - World wonder autobuilds should never be auto-removed.
-		else if (kBuilding.getMaxGlobalInstances() == -1)
-		{
-			// Special rule meant for adopted cultures, hopefully it won't affect other autobuilds in an irrational way.
-			foreach_(const BuildingModifier2& modifier, kBuilding.getPrereqNumOfBuildings())
-			{
-				if (GET_PLAYER(getOwner()).getBuildingCount(modifier.first) < GET_PLAYER(getOwner()).getBuildingPrereqBuilding(eBuilding, modifier.first, 0))
-				{
-					changeHasBuilding(eBuilding, false);
-					const CvWString szBuffer = gDLL->getText("TXT_KEY_COMPLETED_AUTO_BUILD_NOT", kBuilding.getTextKeyWide(), getName().GetCString());
-					AddDLLMessage(getOwner(), true, 10, szBuffer, NULL, MESSAGE_TYPE_INFO, NULL, GC.getCOLOR_RED());
-					break;
-				}
-			}
-		}
-	}
-}
-
-void CvCity::checkPropertyBuildings()
-{
-	PROFILE_EXTRA_FUNC();
-
-	for (int iI = GC.getNumPropertyInfos() - 1; iI > -1; iI--)
-	{
-		const PropertyTypes eProperty = static_cast<PropertyTypes>(iI);
-		const int iValue = getProperties()->getValueByProperty(eProperty);
-
-		{
-			foreach_(const PropertyBuilding& kBuilding, GC.getPropertyInfo(eProperty).getPropertyBuildings())
-			{
-				const bool bInRange = (iValue >= kBuilding.iMinValue) && (iValue <= kBuilding.iMaxValue);
-
-				if (isActiveBuilding(kBuilding.eBuilding))
-				{
-					if (!bInRange || !canConstruct(kBuilding.eBuilding, false, false, true, true))
-					{
-						changeHasBuilding(kBuilding.eBuilding, false);
-					}
-				}
-				else if (bInRange && canConstruct(kBuilding.eBuilding, false, false, true, true))
-				{
-					changeHasBuilding(kBuilding.eBuilding, true);
-				}
-			}
+			changeHasBuilding(eBuilding, true);   // present; the operate fixpoint decides active vs dormant
 		}
 	}
 }
@@ -2193,129 +2141,50 @@ bool CvCity::isPlotTrainable(UnitTypes eUnit, bool bTestVisible) const
 	return true;
 }
 
-// Returns true if the city can train a unit that force obsoletes eUnit
-bool CvCity::isSupersedingUnitAvailable(UnitTypes eUnit) const
+// Returns one of the upgrades...
+UnitTypes CvCity::trainableUpgradeFor(UnitTypes eUnit) const
 {
-	PROFILE_FUNC();
-	FAssertMsg(eUnit != NO_UNIT, "eUnit is expected to be assigned (not NO_UNIT)");
-
-	for (int iI = 0; iI < GC.getUnitInfo(eUnit).getNumSupersedingUnits(); ++iI)
+	std::set<int> seen;
+	std::vector<int> frontier;
+	frontier.push_back((int)eUnit);
+	seen.insert((int)eUnit);
+	for (size_t iHead = 0; iHead < frontier.size(); ++iHead)
 	{
-		if (canTrain((UnitTypes) GC.getUnitInfo(eUnit).getSupersedingUnit(iI), false, false, false, true, true))
+		const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(frontier[iHead]);
+		if (j == NULL) continue;
+		const std::vector<int>& dorm = j->dormantTriggers();   // the unit's direct upgrades (requires.build.dormant)
+		for (size_t i = 0; i < dorm.size(); ++i)
 		{
-			return true;
+			if (!seen.insert(dorm[i]).second) continue;
+			if (getUnitAvailability((UnitTypes)dorm[i]) == EnablerDomain::STATE_LISTED)
+			{
+				return (UnitTypes)dorm[i];
+			}
+			frontier.push_back(dorm[i]);   // not trainable here, but its own upgrades may be
 		}
 	}
-	return false;
+	return NO_UNIT;
 }
 
-
-// Returns one of the upgrades...
-UnitTypes CvCity::allUpgradesAvailable(UnitTypes eUnit, int iUpgradeCount) const
+// The hypothetical (see CvCity.h for the pattern it implements).
+bool CvCity::couldConstructWith(BuildingTypes eCandidate, BuildingTypes eExtraBuilding) const
 {
-	PROFILE_FUNC();
+	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get((int)eCandidate);
+	if (j == NULL) return false;
 
-	UnitTypes eResult = NO_UNIT;
-	bool bHasCachedResult = false;
+	CvCascadeEvalCtx ec;
+	getCityContext().fillEvalCtx(ec);                      // city+plot -- the contexts fill the eval state
+	GET_PLAYER(getOwner()).getEmpireContext().fillEvalCtx(ec);   // player+team
+	EnablerKernel::wireOperatingBuildings(this, ec);
 
-	//OutputDebugString(CvString::format("allUpgradesAvailable for %d (recursion depth %d)\n", eUnit, iUpgradeCount).c_str());
-	if (iUpgradeCount == 0)
-	{
-		stdext::hash_map<UnitTypes, UnitTypes>::const_iterator itr = m_eCachedAllUpgradesResultsRoot.find(eUnit);
-		if (itr != m_eCachedAllUpgradesResultsRoot.end())
-		{
-			//OutputDebugString(CvString::format("\t...cached result %d\n", itr->second).c_str());
-			eResult = itr->second;
-			bHasCachedResult = true;
-		}
-	}
-	else
-	{
-		stdext::hash_map<UnitTypes, UnitTypes>::const_iterator itr = m_eCachedAllUpgradesResults.find(eUnit);
-		if (itr != m_eCachedAllUpgradesResults.end())
-		{
-			//OutputDebugString(CvString::format("\t...cached result %d\n", itr->second).c_str());
-			eResult = itr->second;
-			bHasCachedResult = true;
-		}
-	}
+	std::set<int> withExtra;                               // the OVERLAY, owned here and discarded here
+	if (ec.activeBuildings != NULL) withExtra = *ec.activeBuildings;
+	withExtra.insert((int)eExtraBuilding);
+	ec.activeBuildings = &withExtra;
 
-	if (!bHasCachedResult)
-	{
-		/************************************************************************************************/
-		/* REVDCM                                 04/16/10                                phungus420    */
-		/*                                                                                              */
-		/* CanTrain Performance                                                                         */
-		/************************************************************************************************/
-		const int iNumUnitInfos = GC.getNumUnitInfos();
-
-		FAssertMsg(eUnit != NO_UNIT, "eUnit is expected to be assigned (not NO_UNIT)");
-
-		if (iUpgradeCount <= iNumUnitInfos)
-		{
-			const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
-
-			UnitTypes eUpgradeUnit = NO_UNIT;
-
-			bool bUpgradeFound = false;
-			bool bUpgradeAvailable = false;
-			bool bUpgradeUnavailable = false;
-
-			for (int iI = 0; iI < kUnit.getNumUnitUpgrades(); iI++)
-			{
-				bUpgradeFound = true;
-
-				UnitTypes eTempUnit = (UnitTypes) kUnit.getUnitUpgrade(iI);
-				if (kUnit.isSupersedingUnit(eTempUnit))
-				{
-					// if this is avaliable then the unit won't be buildable anyhow, so it makes little sense to consider it here.
-					continue;
-				}
-
-				eTempUnit = allUpgradesAvailable(eTempUnit, (iUpgradeCount + 1));
-
-				if (eTempUnit != NO_UNIT)
-				{
-					eUpgradeUnit = eTempUnit;
-					bUpgradeAvailable = true;
-				}
-				else
-				{
-					bUpgradeUnavailable = true;
-				}
-			}
-
-			if (iUpgradeCount > 0)
-			{
-				if (bUpgradeFound && bUpgradeAvailable)
-				{
-					FAssertMsg(eUpgradeUnit != NO_UNIT, "eUpgradeUnit is expected to be assigned (not NO_UNIT)");
-					eResult = eUpgradeUnit;
-				}
-				else if (canTrain(eUnit, false, false, false, true))
-				{
-					eResult = eUnit;
-				}
-
-				//	Cache the result so that we don't have to recalculate it multiple times
-				//OutputDebugString(CvString::format("\t...caching result %d\n", eResult).c_str());
-				m_eCachedAllUpgradesResults[eUnit] = eResult;
-			}
-			else
-			{
-				if (bUpgradeFound && !bUpgradeUnavailable)
-				{
-					eResult = eUpgradeUnit;
-				}
-
-				//	Cache the result so that we don't have to recalculate it multiple times
-				//OutputDebugString(CvString::format("\t...caching result %d\n", eResult).c_str());
-				m_eCachedAllUpgradesResultsRoot[eUnit] = eResult;
-			}
-		}
-	}
-
-	return eResult;
+	CvCascadeEvalFlags gateFlags;
+	gateFlags.strictStateReligionForBuild = true;
+	return cascadeGateOk(j->getGate(), ec, gateFlags) && EnablerKernel::requiresMet(j, ec);
 }
 
 
@@ -2383,116 +2252,6 @@ bool CvCity::isNationalWondersMaxed() const
 	return false;
 }
 
-bool CvCity::canTrainInternal(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreUpgrades) const
-{
-	PROFILE("CvCity::canTrainInternal (units)");
-
-	if (eUnit == NO_UNIT)
-	{
-		return false;
-	}
-	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
-
-	if (kUnit.getPrereqReligion() != NO_RELIGION && !isHasReligion((ReligionTypes)kUnit.getPrereqReligion()))
-	{
-		return false;
-	}
-	if (kUnit.getPrereqCorporation() != NO_CORPORATION && !isActiveCorporation((CorporationTypes)kUnit.getPrereqCorporation()))
-	{
-		return false;
-	}
-	if (kUnit.getHolyCity() != NO_RELIGION && !isHolyCity((ReligionTypes)kUnit.getHolyCity()))
-	{
-		return false;
-	}
-
-	if (!plot()->canTrain(eUnit, bTestVisible))
-	{
-		return false;
-	}
-
-	if (!bIgnoreUpgrades && isSupersedingUnitAvailable(eUnit))
-	{
-		return false;
-	}
-
-	if (!isPlotTrainable(eUnit, bTestVisible))
-	{
-		return false;
-	}
-
-	if (kUnit.isForceUpgrade() && canUpgradeUnit(eUnit))
-	{
-		return false;
-	}
-
-	if (isNPC() && GC.getCivilizationInfo(getCivilizationType()).isStronglyRestricted())
-	{
-		bool bValid = false;
-		for (int iI = 0; iI < kUnit.getNumEnabledCivilizationTypes(); iI++)
-		{
-			if (getCivilizationType() == kUnit.getEnabledCivilizationType(iI).eCivilization)
-			{
-				bValid = true;
-				break;
-			}
-		}
-		if (!bValid)
-		{
-			return false;
-		}
-	}
-
-	if (!bTestVisible && kUnit.isRequiresStateReligionInCity())
-	{
-		const ReligionTypes eStateReligion = GET_PLAYER(getOwner()).getStateReligion();
-		if (NO_RELIGION == eStateReligion || !isHasReligion(eStateReligion))
-		{
-			return false;
-		}
-	}
-
-	if (kUnit.getPrereqVicinityBonus() != NO_BONUS && !hasVicinityBonus((BonusTypes)kUnit.getPrereqVicinityBonus()))
-	{
-		return false;
-	}
-
-	if (!bTestVisible)
-	{
-		bool bHasAnyVicinityBonus = false;
-		bool bRequiresAnyVicinityBonus = false;
-		foreach_(const BonusTypes ePreReqBonus, kUnit.getPrereqOrVicinityBonuses())
-		{
-			bRequiresAnyVicinityBonus = true;
-			if (hasVicinityBonus(ePreReqBonus))
-			{
-				bHasAnyVicinityBonus = true;
-				break;
-			}
-		}
-		if (bRequiresAnyVicinityBonus && !bHasAnyVicinityBonus)
-		{
-			return false;
-		}
-	}
-	if (GC.getGame().isOption(GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS) && GET_PLAYER(getOwner()).isNoForeignCorporations())
-	{
-		for (int iI = 0; iI < GC.getNumCorporationInfos(); iI++)
-		{
-			if (kUnit.getCorporationSpreads(iI) > 0)
-			{
-				return false;
-			}
-		}
-	}
-
-	if (!bIgnoreUpgrades && allUpgradesAvailable(eUnit) != NO_UNIT)
-	{
-		return false;
-	}
-	return true;
-}
-
 void CvCity::clearUpgradeCache(UnitTypes eUnit) const
 {
 	if (eUnit == NO_UNIT)
@@ -2507,34 +2266,10 @@ void CvCity::clearUpgradeCache(UnitTypes eUnit) const
 	}
 }
 
-bool CvCity::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreUpgrades, bool bPropertySpawn) const
-{
-	if (!GET_PLAYER(getOwner()).canTrain(eUnit, bContinue, bTestVisible, bIgnoreCost, bPropertySpawn))
-	{
-		return false;
-	}
-	return canTrainInternal(eUnit, bContinue, bTestVisible, bIgnoreCost, bIgnoreUpgrades);
-}
-
 void CvCity::invalidateCachedCanTrainForUnit(UnitTypes eUnit) const
 {
 	PROFILE_FUNC();
 	clearUpgradeCache(eUnit);
-}
-
-bool CvCity::canTrain(UnitCombatTypes eUnitCombat) const
-{
-	PROFILE_FUNC();
-	const int num = GC.getNumUnitInfos();
-
-	for (int i = 0; i < num; i++)
-	{
-		if (GC.getUnitInfo((UnitTypes) i).hasUnitCombat(eUnitCombat) && (getUnitAvailability((UnitTypes) i) == EnablerDomain::STATE_LISTED))
-		{
-			return true;
-		}
-	}
-	return false;
 }
 
 //	KOSHLING - cache can construct values
@@ -2542,496 +2277,6 @@ bool CvCity::canTrain(UnitCombatTypes eUnitCombat) const
 //	Uncomment to add runtime results checking
 //#define VALIDATE_CAN_CONSTRUCT_CACHE
 #endif
-
-bool CvCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreAmount, bool bIgnoreBuildings, TechTypes eIgnoreTechReq, int* probabilityEverConstructable, bool bExposed) const
-{
-	PROFILE_FUNC();
-
-	if (eBuilding == NO_BUILDING)
-	{
-		return false;
-	}
-	return canConstructInternal(eBuilding, bContinue, bTestVisible, bIgnoreCost, bIgnoreAmount, NO_BUILDING,
-		bIgnoreBuildings, eIgnoreTechReq, probabilityEverConstructable, bExposed);
-}
-
-
-bool CvCity::canConstructInternal(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreAmount, BuildingTypes withExtraBuilding, bool bIgnoreBuildings, TechTypes eIgnoreTechReq, int* probabilityEverConstructable, bool bExposed) const
-{
-	PROFILE_FUNC();
-
-	if (probabilityEverConstructable != NULL)
-	{
-		*probabilityEverConstructable = 0;
-	}
-
-	if (eBuilding == NO_BUILDING)
-	{
-		return false;
-	}
-
-	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
-
-	if (GC.getCivilizationInfo(getCivilizationType()).isStronglyRestricted() && isNPC())
-	{
-		bool bQual = false;
-		for (int iI = 0; iI < kBuilding.getNumEnabledCivilizationTypes(); iI++)
-		{
-			if (getCivilizationType() == kBuilding.getEnabledCivilizationType(iI).eCivilization)
-			{
-				bQual = true;
-				break;
-			}
-		}
-		if (!bQual)
-		{
-			return false;
-		}
-	}
-
-	//ls612: No Holy City Tag
-	if (!bExposed && kBuilding.isNoHolyCity() && isHolyCity())
-	{
-		return false;
-	}
-
-	// Toffer - An extension can't exist without that which it extends.
-	if (kBuilding.getExtendsBuilding() > NO_BUILDING && !hasBuilding(kBuilding.getExtendsBuilding()))
-	{
-		return false;
-	}
-
-	if (
-		!GET_PLAYER(getOwner()).canConstruct(
-			eBuilding, bContinue, bTestVisible, bIgnoreCost, eIgnoreTechReq,
-			probabilityEverConstructable, bExposed
-		)
-	) return false;
-
-	if (!bIgnoreAmount && hasBuilding(eBuilding))
-	{
-		return false;
-	}
-	if (isDisabledBuilding(eBuilding))
-	{
-		return false;
-	}
-
-	if (!bExposed)
-	{
-		if (kBuilding.needStateReligionInCity())
-		{
-			const ReligionTypes eStateReligion = GET_PLAYER(getOwner()).getStateReligion();
-
-			if (NO_RELIGION == eStateReligion || !isHasReligion(eStateReligion))
-			{
-				if (probabilityEverConstructable != NULL)
-				{
-					*probabilityEverConstructable = 80;
-				}
-				return false;
-			}
-		}
-
-		const ReligionTypes eReligion = (ReligionTypes)kBuilding.getPrereqReligion();
-
-		if (eReligion != NO_RELIGION && !isHasReligion(eReligion))
-		{
-			if (probabilityEverConstructable != NULL)
-			{
-				*probabilityEverConstructable = 50;
-			}
-			return false;
-		}
-
-		const CorporationTypes prereqCorp = (CorporationTypes)kBuilding.getPrereqCorporation();
-
-		if (prereqCorp != NO_CORPORATION && !isHasCorporation(prereqCorp))
-		{
-			if (probabilityEverConstructable != NULL)
-			{
-				*probabilityEverConstructable = 30;
-			}
-			return false;
-		}
-
-		const CorporationTypes foundsCorp = (CorporationTypes)kBuilding.getFoundsCorporation();
-
-		if (foundsCorp != NO_CORPORATION)
-		{
-			if (GC.getGame().isCorporationFounded(foundsCorp))
-			{
-				return false;
-			}
-
-			for (int iCorporation = 0; iCorporation < GC.getNumCorporationInfos(); ++iCorporation)
-			{
-				if (isHeadquarters((CorporationTypes)iCorporation)
-				&& GC.getGame().isCompetingCorporation((CorporationTypes)iCorporation, foundsCorp))
-				{
-					return false;
-				}
-			}
-		}
-
-		if (!isValidBuildingLocation(eBuilding))
-		{
-			return false;
-		}
-
-		if (kBuilding.isGovernmentCenter() && isGovernmentCenter())
-		{
-			if (probabilityEverConstructable != NULL)
-			{
-				*probabilityEverConstructable = 10;
-			}
-			return false;
-		}
-	}
-
-	if (!bTestVisible && !bExposed)
-	{
-		{
-			if (!bContinue && getFirstBuildingOrder(eBuilding) != -1)
-			{
-				return false;
-			}
-
-			if (isLimitedWonder(eBuilding))
-			{
-				if (isNPC())
-				{
-					return false;
-				}
-				if (!kBuilding.isNoLimit())
-				{
-					if (isWorldWonder(eBuilding))
-					{
-						if (isWorldWondersMaxed())
-						{
-							return false;
-						}
-					}
-					else if (isTeamWonder(eBuilding))
-					{
-						if (isTeamWondersMaxed())
-						{
-							return false;
-						}
-					}
-					else if (isNationalWonder(eBuilding) && isNationalWondersMaxed())
-					{
-						return false;
-					}
-				}
-			}
-		}
-
-		if (kBuilding.getHolyCity() != NO_RELIGION
-		&& !isHolyCity((ReligionTypes)kBuilding.getHolyCity()))
-		{
-			return false;
-		}
-
-		if (kBuilding.getPrereqAndBonus() != NO_BONUS
-		&& !hasBonus((BonusTypes)kBuilding.getPrereqAndBonus()))
-		{
-			if (probabilityEverConstructable != NULL)
-			{
-				*probabilityEverConstructable = 50;
-			}
-			return false;
-		}
-
-		const CorporationTypes foundsCorp = (CorporationTypes)kBuilding.getFoundsCorporation();
-
-		if (foundsCorp != NO_CORPORATION)
-		{
-			if (GC.getGame().isCorporationFounded(foundsCorp)
-			|| GET_PLAYER(getOwner()).isNoCorporations())
-			{
-				return false;
-			}
-			bool bHasBonus = false;
-			bool bRequiresBonus = false;
-			foreach_(const BonusTypes eBonus, GC.getCorporationInfo(foundsCorp).getPrereqBonuses())
-			{
-				bRequiresBonus = true;
-				if (hasBonus(eBonus))
-				{
-					bHasBonus = true;
-					break;
-				}
-			}
-
-			if (bRequiresBonus && !bHasBonus)
-			{
-				if (probabilityEverConstructable != NULL)
-				{
-					*probabilityEverConstructable = 30;
-				}
-				return false;
-			}
-		}
-
-		{
-			if (!(*getPropertiesConst() <= *(kBuilding.getPrereqMaxProperties()))
-			|| !(*getPropertiesConst() >= *(kBuilding.getPrereqMinProperties())))
-			{
-				return false;
-			}
-		}
-
-		if (plot()->getLatitude() > kBuilding.getMaxLatitude()
-		||  plot()->getLatitude() < kBuilding.getMinLatitude())
-		{
-			return false;
-		}
-
-		const int iPrereqPopulation = (
-			std::max(
-				kBuilding.getPrereqPopulation(),
-				1 + getNumPopulationEmployed() + kBuilding.getNumPopulationEmployed()
-			)
-		);
-		if (iPrereqPopulation > 1 && getPopulation() < iPrereqPopulation)
-		{
-			if (probabilityEverConstructable != NULL)
-			{
-				*probabilityEverConstructable = 50;
-			}
-			return false;
-		}
-
-		if (kBuilding.getPrereqCultureLevel() != NO_CULTURELEVEL
-		&& getCultureLevel() < kBuilding.getPrereqCultureLevel())
-		{
-			if (probabilityEverConstructable != NULL)
-			{
-				*probabilityEverConstructable = 50;
-			}
-			return false;
-		}
-
-		const BuildingTypes ePrereqBuilding = kBuilding.getPrereqAnyoneBuilding();
-
-		if (ePrereqBuilding != NO_BUILDING && GC.getGame().getBuildingCreatedCount(ePrereqBuilding) == 0)
-		{
-			return false;
-		}
-
-		bool bRequiresBonus = false;
-		bool bNeedsBonus = true;
-		foreach_(const BonusTypes ePrereqBonus, kBuilding.getPrereqOrBonuses())
-		{
-			bRequiresBonus = true;
-
-			if (hasBonus(ePrereqBonus))
-			{
-				bNeedsBonus = false;
-				break;
-			}
-		}
-		if (bRequiresBonus && bNeedsBonus)
-		{
-			if (probabilityEverConstructable != NULL)
-			{
-				*probabilityEverConstructable = 50;
-			}
-			return false;
-		}
-	}
-
-	/************************************************************************************************/
-	/* Koshling - moved this so non-met vicinity required buildings get hidden in city screen even	*/
-	/* when not ordinarily hiding uncosntructable (since you cannot influence your vicinity bonuses	*/
-	/* so its not useful information for the most part												*/
-	/************************************************************************************************/
-	// Blaze - Might be useful in some situations - is in radius, tile not owned - but that's a TODO
-	if (!bExposed)
-	{
-		if (kBuilding.getPrereqVicinityBonus() != NO_BONUS
-		&& !hasVicinityBonus((BonusTypes)kBuilding.getPrereqVicinityBonus()))
-		{
-			if (probabilityEverConstructable != NULL)
-			{
-				*probabilityEverConstructable = 5;
-			}
-			return false;
-		}
-		if (kBuilding.getPrereqRawVicinityBonus() != NO_BONUS
-		&& !hasRawVicinityBonus((BonusTypes)kBuilding.getPrereqRawVicinityBonus()))
-		{
-			if (probabilityEverConstructable != NULL)
-			{
-				*probabilityEverConstructable = 5;
-			}
-			return false;
-		}
-		//Hide Buildings that shouldn't appear in the early game and require other buildings
-		const bool bTest = (
-			(
-				kBuilding.getPrereqAndTech() == NO_TECH &&
-				kBuilding.getObsoleteTech() == NO_TECH
-			)
-			? true : !bTestVisible
-		);
-		if (bTest && !bIgnoreBuildings)
-		{
-			for (int iI = 0; iI < kBuilding.getNumPrereqInCityBuildings(); iI++)
-			{
-				const BuildingTypes ePrereqBuilding = static_cast<BuildingTypes>(kBuilding.getPrereqInCityBuilding(iI));
-
-				if (ePrereqBuilding != withExtraBuilding 
-				&& !GET_TEAM(getTeam()).isObsoleteBuilding(ePrereqBuilding)
-				&& !isActiveBuilding(ePrereqBuilding))
-				{
-					if (probabilityEverConstructable)
-					{
-						*probabilityEverConstructable = 25;
-					}
-					return false;
-				}
-			}
-		}
-	}
-
-	if (!bTestVisible && !bIgnoreBuildings)
-	{
-		for (int iI = 0; iI < kBuilding.getNumPrereqNotInCityBuildings(); ++iI)
-		{
-			if (hasBuilding(static_cast<BuildingTypes>(kBuilding.getPrereqNotInCityBuilding(iI))))
-			{
-				return false;
-			}
-		}
-
-		bool bValid = false;
-		bool bRequires = false;
-		for (int iI = 0; iI < kBuilding.getNumPrereqOrBuilding(); ++iI)
-		{
-			const BuildingTypes ePrereqBuilding = static_cast<BuildingTypes>(kBuilding.getPrereqOrBuilding(iI));
-			if (!GET_TEAM(getTeam()).isObsoleteBuilding(ePrereqBuilding))
-			{
-				bRequires = true;
-				if (withExtraBuilding == ePrereqBuilding || isActiveBuilding(ePrereqBuilding))
-				{
-					bValid = true;
-					break;
-				}
-			}
-		}
-
-		if (bRequires && !bValid)
-		{
-			if (probabilityEverConstructable != NULL)
-			{
-				*probabilityEverConstructable = 25;
-			}
-			return false;
-		}
-		if (kBuilding.isPrereqPower() && !isPower())
-		{
-			if (probabilityEverConstructable != NULL)
-			{
-				*probabilityEverConstructable = 25;
-			}
-			return false;
-		}
-	}
-
-	{
-		//Can not construct replaced buildings.
-		for (int iI = 0; iI < kBuilding.getNumReplacementBuilding(); ++iI)
-		{
-			const BuildingTypes eReplacement = (BuildingTypes)kBuilding.getReplacementBuilding(iI);
-
-			if (isActiveBuilding(eReplacement)
-			// Toffer - This is not the right place to do HIDE_REPLACED_BUILDINGS...
-			//	Should be an interface only thing.
-			|| GET_PLAYER(getOwner()).isModderOption(MODDEROPTION_HIDE_REPLACED_BUILDINGS)
-			&& canConstruct(eReplacement, true, false, false, true))
-			{
-				return false;
-			}
-		}
-	}
-
-	// Koshling - Always hide unbuildable due to vicinity bonuses, it's not really useful to see them
-	// Blaze - Might be useful in some situations - is in radius, tile not owned - but that's a TODO
-	if (!bExposed)
-	{
-		bool bHasAnyVicinityBonus = false;
-		bool bRequiresAnyVicinityBonus = false;
-		foreach_(const BonusTypes ePrereqBonus, kBuilding.getPrereqOrVicinityBonuses())
-		{
-			bRequiresAnyVicinityBonus = true;
-			if (hasVicinityBonus(ePrereqBonus))
-			{
-				bHasAnyVicinityBonus = true;
-				break;
-			}
-		}
-		if (bRequiresAnyVicinityBonus && !bHasAnyVicinityBonus)
-		{
-			if (probabilityEverConstructable != NULL)
-			{
-				*probabilityEverConstructable = 5;
-			}
-			return false;
-		}
-		bool bHasAnyRawVicinityBonus = false;
-		bool bRequiresAnyRawVicinityBonus = false;
-		foreach_(const BonusTypes bonus, kBuilding.getPrereqOrRawVicinityBonuses())
-		{
-			bRequiresAnyRawVicinityBonus = true;
-			if (hasRawVicinityBonus(bonus))
-			{
-				bHasAnyRawVicinityBonus = true;
-				break;
-			}
-		}
-		if (bRequiresAnyRawVicinityBonus && !bHasAnyRawVicinityBonus)
-		{
-			if (probabilityEverConstructable != NULL)
-			{
-				*probabilityEverConstructable = 5;
-			}
-			return false;
-		}
-	}
-
-	if (!bTestVisible && kBuilding.getConstructCondition() && !bExposed)
-	{
-		const CvGameObjectCity* pObject = getGameObject();
-		if (withExtraBuilding != NO_BUILDING)
-		{
-			// add the extra building and its bonuses to the override to see if they influence the construct condition of this building
-			std::vector<GOMOverride> queries;
-			GOMOverride query = { pObject, GOM_BUILDING, withExtraBuilding, true };
-			queries.push_back(query);
-
-			query.GOM = GOM_BONUS;
-			foreach_(const BonusModifier& pair, GC.getBuildingInfo(withExtraBuilding).getFreeBonuses())
-			{
-				query.id = pair.first;
-				queries.push_back(query);
-			}
-
-			const BoolExprChange result = kBuilding.getConstructCondition()->evaluateChange(pObject, queries);
-			if ((result == BOOLEXPR_CHANGE_REMAINS_FALSE) || (result == BOOLEXPR_CHANGE_BECOMES_FALSE))
-			{
-				return false;
-			}
-		}
-		else if (!kBuilding.getConstructCondition()->evaluate(pObject))
-		{
-			return false;
-		}
-	}
-	return true;
-}
-
 
 bool CvCity::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisible) const
 {
@@ -3180,9 +2425,9 @@ bool CvCity::canContinueProduction(const OrderData& order) const
 	switch (order.eOrderType)
 	{
 	case ORDER_TRAIN:
-		return canTrain(order.getUnitType(), true);
+		return m_enabler.units.listedForContinue((int)order.getUnitType());
 	case ORDER_CONSTRUCT:
-		return canConstruct(order.getBuildingType(), true);
+		return isBuildingContinuable(order.getBuildingType());
 	case ORDER_CREATE:
 		return canCreate(order.getProjectType(), true);
 	case ORDER_MAINTAIN:
@@ -4634,14 +3879,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 			emitVicinityBonusChanged(getID(), getOwner(), (int)pair.first, pair.second * iChange);
 		}
 
-		if (kBuilding.getPropertySpawnProperty() != NO_PROPERTY && kBuilding.getPropertySpawnUnit() != NO_UNIT)
-		{
-			FAssertMsg(GC.getUnitInfo(kBuilding.getPropertySpawnUnit()).isBlendIntoCity(),
-				CvString::format("Building %s wants to add property spawner with unit class %s, but this unit doesn't have bBlendIntoCity enabled, which is a requirement",
-					kBuilding.getType(), GC.getUnitInfo(kBuilding.getPropertySpawnUnit()).getType()).c_str());
-
-			changePropertySpawn(iChange, kBuilding.getPropertySpawnProperty(), kBuilding.getPropertySpawnUnit());
-		}
 
 		changeEspionageDefenseModifier(kBuilding.getEspionageDefenseModifier() * iChange);
 
@@ -16048,7 +15285,7 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 			else if (!(getBuildingAvailability(eConstructBuilding) == EnablerDomain::STATE_LISTED))
 			{
 				const BuildingTypes eBuilding = GC.getBuildingInfo(eConstructBuilding).getProductionContinueBuilding();
-				if (eBuilding != NO_BUILDING && canConstruct(eBuilding, true, false, false, false))
+				if (eBuilding != NO_BUILDING && isBuildingContinuable(eBuilding))
 				{
 					if (m_iLostProduction == 0)
 					{
@@ -16536,7 +15773,7 @@ bool CvCity::doCheckProduction()
 		const UnitTypes unitType = static_cast<UnitTypes>(iI);
 		if (getFirstUnitOrder(unitType) != -1)
 		{
-			const UnitTypes eUpgradeUnit = allUpgradesAvailable(unitType);
+			const UnitTypes eUpgradeUnit = trainableUpgradeFor(unitType);
 
 			if (eUpgradeUnit != NO_UNIT)
 			{
@@ -17495,17 +16732,17 @@ void CvCity::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iExtraInvestigation);
 	WRAPPER_READ(wrapper, "CvCity", &m_iSpecialistInsidiousness);
 	WRAPPER_READ(wrapper, "CvCity", &m_iSpecialistInvestigation);
+	iNumElts = 0;   // a post-cut save writes no count; pre-zero so a missing tag leaves the drain a no-op
 	WRAPPER_READ(wrapper, "CvCity", &iNumElts);
-	m_aPropertySpawns.clear();
+	// DRAIN the retired property-spawn store. The spawns are `triggers` entries now (json.md §5); the
+	// store is gone, but its bytes must still be consumed or every later read in this object desyncs.
+	// ⛔ It CANNOT be soft-removed via savemigration.txt: the count rides the SHARED `CvCity::iNumElts`
+	// tag that five other vectors above also use, and the drain eats consecutive same-named tags
+	// (save.md §3) -- listing it would swallow theirs. So the loop stays and discards (save.md §4).
 	for (unsigned int i = 0; i < iNumElts; ++i)
 	{
-		PropertySpawns kChange;
-		kChange.read(pStream);
-
-		if (kChange.eProperty != NO_PROPERTY && kChange.eUnit != NO_UNIT)
-		{
-			m_aPropertySpawns.push_back(kChange);
-		}
+		PropertySpawns kDrain;
+		kDrain.read(pStream);
 	}
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiExtraSpecialistCommerce);
 	for (int i = 0; i < wrapper.getNumClassEnumValues(REMAPPED_CLASS_TYPE_SPECIALISTS); ++i)
@@ -18146,11 +17383,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iSpecialistInsidiousness);
 	WRAPPER_WRITE(wrapper, "CvCity", m_iSpecialistInvestigation);
 
-	WRAPPER_WRITE_DECORATED(wrapper, "CvCity", m_aPropertySpawns.size(), "iNumElts");
-	foreach_(PropertySpawns& kPropertySpawn, m_aPropertySpawns)
-	{
-		kPropertySpawn.write(pStream);
-	}
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiExtraSpecialistCommerce);
 	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
 	{
@@ -23215,142 +22447,6 @@ int CvCity::getPropertyNeed(PropertyTypes eProperty) const
 	return (m_cachedPropertyNeeds[iIndex]);
 }
 
-int CvCity::getNumPropertySpawns() const
-{
-	return (int)m_aPropertySpawns.size();
-}
-
-PropertySpawns& CvCity::getPropertySpawn(int iIndex)
-{
-	FASSERT_BOUNDS(0, getNumPropertySpawns(), iIndex);
-	return m_aPropertySpawns[iIndex];
-}
-
-void CvCity::changePropertySpawn(int iChange, PropertyTypes eProperty, UnitTypes eUnit)
-{
-	PROFILE_EXTRA_FUNC();
-	const bool bAdding = (iChange > 0);
-	if (bAdding)
-	{
-		if (NO_PROPERTY != eProperty && NO_UNIT != eUnit)
-		{
-			PropertySpawns kChange;
-			kChange.eProperty = eProperty;
-			kChange.eUnit = eUnit;
-			m_aPropertySpawns.push_back(kChange);
-		}
-	}
-	else
-	{
-		std::vector<PropertySpawns> m_aTempPropertySpawns;
-		foreach_(const PropertySpawns& it, m_aPropertySpawns)
-		{
-			if (it.eProperty != eProperty || it.eUnit != eUnit)
-			{
-				PropertySpawns kChange;
-				kChange.eProperty = it.eProperty;
-				kChange.eUnit = it.eUnit;
-				m_aTempPropertySpawns.push_back(kChange);
-			}
-		}
-		m_aPropertySpawns.clear();
-		foreach_(const PropertySpawns& it, m_aTempPropertySpawns)
-		{
-			PropertySpawns kChange;
-			kChange.eProperty = it.eProperty;
-			kChange.eUnit = it.eUnit;
-			m_aPropertySpawns.push_back(kChange);
-		}
-		m_aTempPropertySpawns.clear();
-	}
-}
-
-void CvCity::doPropertyUnitSpawn()
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < GC.getNumPropertyInfos(); iI++)
-	{
-		const PropertyTypes eProperty = (PropertyTypes)iI;
-		int iCurrentValue = std::max(0, getPropertiesConst()->getValueByProperty(eProperty));
-		if (eProperty == 0)
-		{
-			// TB - SHOULD be crime, but this is subject to flaw if the first property type ever changes.
-			//	There's a faster way than getvisual but it takes some setup.
-			//	If it becomes necessary to move off of hard coding, use the examples for peaks and hills.
-			const int iNumCriminals = plot()->getNumCriminals();
-			if (iNumCriminals >= getPopulation() / 2)
-			{
-				continue;
-			}
-			iCurrentValue -= iNumCriminals * iCurrentValue / 10;
-		}
-		const bool bPositiveProperty = GC.getPropertyInfo(eProperty).getAIWeight() >= 0;
-
-		iCurrentValue = std::max(0, iCurrentValue);
-		iCurrentValue /= 2;
-		const PlayerTypes eSpawnOwner = bPositiveProperty ? getOwner() : (PlayerTypes)BARBARIAN_PLAYER;
-
-		foreach_(const PropertySpawns& it, m_aPropertySpawns)
-		{
-			if (it.eProperty == eProperty
-			&& GC.getGame().getSorenRandNum(10000, "Property Unit Spawn Check") < iCurrentValue)
-			{
-				const UnitTypes eUnit = it.eUnit;
-				if (!GET_PLAYER(getOwner()).canTrain(eUnit, false, false, true, true))
-				{
-					continue;
-				}
-				//TBNote:Saving this brilliant example...
-				//std::vector<int> aiUnitAIIndex;
-				//for (int iJ = 0; iJ < NUM_UNITAI_TYPES; iJ++)
-				//{
-				//	if (GC.getUnitInfo(eUnit).getUnitAIType(iJ))
-				//	{
-				//		aiUnitAIIndex.push_back(iJ);
-				//	}
-				//}
-				//int iAIRoll = GC.getGame().getSorenRandNum(aiUnitAIIndex.size(), "Property Unit Spawn AI Check");
-				//UnitAITypes eUnitAI = (UnitAITypes)aiUnitAIIndex[iAIRoll];
-
-				FAssertMsg(bPositiveProperty || GC.getUnitInfo(eUnit).isBlendIntoCity(), CvString::format("Trying to spawn %s from property spawn, but it doesn't have bBlendIntoCity enabled, which is a requirement", GC.getUnitInfo(eUnit).getType()).c_str());
-
-				CvUnit* pUnit = GET_PLAYER(eSpawnOwner).initUnit(eUnit, getX(), getY(), UNITAI_BARB_CRIMINAL, NO_DIRECTION, GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark"));
-
-				if (pUnit != NULL)
-				{
-					FAssertMsg(pUnit != NULL, "pUnit is expected to be assigned a valid unit object");
-					if (pUnit->isExcile())
-					{
-						pUnit->jumpToNearestValidPlot(false);
-					}
-					pUnit->finishMoves();
-
-					addProductionExperience(pUnit);
-
-					if (!GET_PLAYER(getOwner()).isModderOption(MODDEROPTION_IGNORE_DISABLED_ALERTS))
-					{
-						if (bPositiveProperty)
-						{
-							AddDLLMessage(
-								getOwner(), false, GC.getEVENT_MESSAGE_TIME(),
-								gDLL->getText("TXT_KEY_CITY_PROPERTY_SPAWN_FRIENDLY", GC.getUnitInfo(eUnit).getDescription(), getNameKey()),
-								NULL, MESSAGE_TYPE_MINOR_EVENT, GC.getUnitInfo(eUnit).getButton(), GC.getCOLOR_HIGHLIGHT_TEXT(), getX(), getY(), true, true
-							);
-						}
-						else
-						{
-							AddDLLMessage(
-								getOwner(), false, GC.getEVENT_MESSAGE_TIME(),
-								gDLL->getText("TXT_KEY_CITY_PROPERTY_SPAWN_BARB", GC.getUnitInfo(eUnit).getDescription(), getNameKey()),
-								NULL, MESSAGE_TYPE_MINOR_EVENT, GC.getUnitInfo(eUnit).getButton(), GC.getCOLOR_WARNING_TEXT(), getX(), getY(), true, true
-							);
-						}
-					}
-				}
-			}
-		}
-	}
-}
 
 bool CvCity::isQuarantined() const
 {

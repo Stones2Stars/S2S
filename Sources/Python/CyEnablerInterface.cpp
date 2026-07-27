@@ -35,7 +35,7 @@ void CyEnablerPythonInterface()
 		.def("getBuildUnlocked", &CyEnabler::getBuildUnlocked, "int (int iPlayer, int eBuild) - unlocked half ONLY; plot validity is a live per-plot gate")
 		.def("getPromotionUnlocked", &CyEnabler::getPromotionUnlocked, "int (int iPlayer, int ePromotion) - unlocked half ONLY; unit applicability is evaluated at level-up")
 		// the empire-wide fan -- walks the cities; there is no player-level construct/train verdict
-		.def("canAnyCityTrain", &CyEnabler::canAnyCityTrain, "bool (int iPlayer, int eUnit) - fans over the player's cities")
-		.def("canAnyCityConstruct", &CyEnabler::canAnyCityConstruct, "bool (int iPlayer, int eBuilding) - fans over the player's cities")
+		.def("getUnitAvailabilityAnywhere", &CyEnabler::getUnitAvailabilityAnywhere, "EnablerState (int iPlayer, int eUnit) - the best state any of the player's cities holds")
+		.def("getBuildingAvailabilityAnywhere", &CyEnabler::getBuildingAvailabilityAnywhere, "EnablerState (int iPlayer, int eBuilding) - the best state any of the player's cities holds")
 		;
 }

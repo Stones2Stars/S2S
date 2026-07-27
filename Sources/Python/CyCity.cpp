@@ -139,15 +139,7 @@ int CyCity::findCommerceRateRank(CommerceTypes eCommerce) const
 	return m_pCity->findCommerceRateRank(eCommerce);
 }
 
-bool CyCity::canTrain(UnitTypes eUnit, bool bContinue, bool bTestVisible, bool bIgnoreCost, bool bIgnoreUpgrades) const
-{
-	return m_pCity->canTrain(eUnit, bContinue, bTestVisible, bIgnoreCost, bIgnoreUpgrades);
-}
 
-bool CyCity::canConstruct(BuildingTypes eBuilding, bool bContinue, bool bTestVisible, bool bIgnoreCost) const
-{
-	return m_pCity->canConstruct(eBuilding, bContinue, bTestVisible, bIgnoreCost);
-}
 
 
 bool CyCity::canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisible) const
