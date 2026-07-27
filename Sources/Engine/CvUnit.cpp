@@ -19893,9 +19893,17 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraMaxHP);
 
 	WRAPPER_READ(wrapper, "CvUnit", &m_iFliesToMoveCount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iQualityBaseTotal);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iGroupBaseTotal);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iSizeBaseTotal);
+	// The three SM base totals are DERIVED, so they are not read from the save ([DEC-derived-never-trusted]).
+	// Each is a pure copy of this unit TYPE's load-derived rank (the info's Sigma over its combat classes,
+	// json.md par.9) whose only writer is the assignment in processUnitCombat -- and that never runs on a load,
+	// because the combat-class set is written straight into the keyed map above. Trusting the stored copy meant
+	// a save pinned the ranks forever: re-curate a unitcombat *Base and every existing save kept the STALE
+	// value, silently mis-dividing the SM unit count (smGroupMultiplier) for every unit of that type. Re-derived
+	// here instead; the runtime deltas that ride ON TOP (m_iExtraQuality/Group/Size) stay serialized, being
+	// genuine per-unit state.
+	m_iQualityBaseTotal = m_pUnitInfo->getBaseQualityRank();
+	m_iGroupBaseTotal = m_pUnitInfo->getBaseGroupRank();
+	m_iSizeBaseTotal = m_pUnitInfo->getBaseSizeRank();
 	WRAPPER_READ(wrapper, "CvUnit", &m_iCannotMergeSplitCount);
 
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, (int*)&m_eGGExperienceEarnedTowardsType);
@@ -20634,9 +20642,7 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraMaxHP);
 
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iFliesToMoveCount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iQualityBaseTotal);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iGroupBaseTotal);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iSizeBaseTotal);
+	// the three SM base totals are derived from the unit's info and re-derived at read -- never written
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iCannotMergeSplitCount);
 	WRAPPER_WRITE_CLASS_ENUM(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, m_eGGExperienceEarnedTowardsType);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iSMCargo);

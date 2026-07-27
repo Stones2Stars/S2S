@@ -584,3 +584,16 @@ the city's buildings (maintained only by processBuilding), so it is DERIVED -- t
 grants.repeatable[] off the operating buildings instead. Plain named scalar, drained by exact name.
 CvCity::m_iNumUnitFullHeal
 ========================
+
+The SM BASE-RANK cut (DEC-derived-never-trusted): quality/group/size base totals are pure copies of the unit
+TYPE's load-derived rank -- the info's sum over its combat classes (json.md par.9) -- whose only writer is the
+assignment in processUnitCombat, which never runs on a load (CvUnit::read writes the combat-class set straight
+into the keyed map). Trusting the stored copy pinned the ranks to whatever the save was taken with: re-curate a
+unitcombat *Base and every existing save kept the stale value, silently mis-dividing the SM unit count for every
+unit of that type. Now re-derived from the info in CvUnit::read. The runtime deltas that ride on top
+(m_iExtraQuality/Group/Size) are genuine per-unit state and STAY serialized. Plain named scalars, drained by
+exact name.
+CvUnit::m_iQualityBaseTotal
+CvUnit::m_iGroupBaseTotal
+CvUnit::m_iSizeBaseTotal
+========================
