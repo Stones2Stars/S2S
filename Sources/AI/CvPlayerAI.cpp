@@ -5898,9 +5898,13 @@ int CvPlayerAI::AI_techBuildingValue(TechTypes eTech, int iPathLength, bool& bEn
 bool CvPlayerAI::AI_canTrainSettler() {
 	PROFILE_EXTRA_FUNC();
 	if (!m_canTrainSettler) {
-		for (int iI = GC.getNumUnitInfos() - 1; iI > -1; iI--)
+		// the trainable-anywhere UNION, not a per-id fan over the whole database (types x cities). The verdict is
+		// a plain boolean with a break, so the union's ascending order is immaterial to the answer.
+		std::vector<int> vecTrainable;
+		getTrainableAnywhere(vecTrainable);
+		for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 		{
-			if (GC.getUnitInfo((UnitTypes)iI).getDefaultUnitAIType() == UNITAI_SETTLE && canAnyCityTrain((UnitTypes)iI))
+			if (GC.getUnitInfo((UnitTypes)*it).getDefaultUnitAIType() == UNITAI_SETTLE)
 			{
 				m_canTrainSettler = true;
 				break;
@@ -26858,10 +26862,14 @@ int CvPlayerAI::AI_militaryBonusVal(BonusTypes eBonus)
 	PROFILE_EXTRA_FUNC();
 	int iValue = 0;
 
-	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+	// the trainable-anywhere UNION, not a per-id fan over the whole database (types x cities). The accumulation
+	// below is commutative, so iteration order does not affect the total.
+	std::vector<int> vecTrainable;
+	getTrainableAnywhere(vecTrainable);
+	for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 	{
-		if (canAnyCityTrain((UnitTypes)iI))
 		{
+			const int iI = *it;
 			if (GC.getUnitInfo((UnitTypes)iI).getPrereqAndBonus() == eBonus)
 			{
 				iValue += 1000;

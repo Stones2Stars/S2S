@@ -927,6 +927,20 @@ public:
 	bool canAnyCityTrain(UnitTypes eUnit) const;
 	bool canAnyCityConstruct(BuildingTypes eBuilding) const;
 
+	// ⚑ THE UNION -- hoist this OUT of a loop over the whole database; do not call the single-id fan inside one.
+	// The fan is cheap per call (one bare read per city) but multiplies: asked for every unit type it is
+	// types x cities -- ~2,073 x 185 on the standing late-game save, ~383k reads for one question. Unioning the
+	// cities' LISTED frontiers ONCE answers every type at once, at cities x frontier (~9k), because a frontier
+	// is the small offered set rather than the database (enabler.md §6 -- iterate the frontier, never the
+	// database; the same inversion the AI's own decision loops use).
+	// ⛔ Still NOT cached state: it is computed per call and discarded. A maintained union would be an OR across
+	// cities, so keeping it correct needs a per-(player x type) REFCOUNT touched by every building built, tech
+	// researched, resource connected and city founded/conquered -- duplicated state that must never drift, to
+	// save a walk that is already cheap once hoisted.
+	// Filled ASCENDING and deduplicated, so a caller's id-ordered tie-break is unchanged.
+	void getTrainableAnywhere(std::vector<int>& units) const;
+	void getConstructableAnywhere(std::vector<int>& buildings) const;
+
 	EnablerDomain::State getTechAvailability(TechTypes eTech) const;
 	EnablerDomain::State getCivicAvailability(CivicTypes eCivic) const;
 	EnablerDomain::State getProjectAvailability(ProjectTypes eProject) const;

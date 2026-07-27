@@ -814,6 +814,35 @@ bool CvPlayer::canAnyCityConstruct(BuildingTypes eBuilding) const
 	return false;
 }
 
+// The frontier UNION (see CvPlayer.h): ask each city for its small LISTED set once, instead of asking every city
+// about every id. std::set gives ascending order + dedup for free, so a caller's id-ordered tie-break is
+// unchanged. Computed per call and discarded -- there is no union state to keep in sync.
+void CvPlayer::getTrainableAnywhere(std::vector<int>& units) const
+{
+	std::set<int> kUnion;
+	std::vector<int> kCityFrontier;
+	for (CvPlayer::city_iterator it = beginCities(); it != endCities(); ++it)
+	{
+		if ((*it) == NULL) continue;
+		(*it)->getAvailableUnits(kCityFrontier);
+		kUnion.insert(kCityFrontier.begin(), kCityFrontier.end());
+	}
+	units.assign(kUnion.begin(), kUnion.end());
+}
+
+void CvPlayer::getConstructableAnywhere(std::vector<int>& buildings) const
+{
+	std::set<int> kUnion;
+	std::vector<int> kCityFrontier;
+	for (CvPlayer::city_iterator it = beginCities(); it != endCities(); ++it)
+	{
+		if ((*it) == NULL) continue;
+		(*it)->getAvailableBuildings(kCityFrontier);
+		kUnion.insert(kCityFrontier.begin(), kCityFrontier.end());
+	}
+	buildings.assign(kUnion.begin(), kUnion.end());
+}
+
 EnablerDomain::State CvPlayer::getTechAvailability(TechTypes eTech) const
 {
 	return (EnablerDomain::State)m_enabler.techs.state((int)eTech);
@@ -2343,11 +2372,13 @@ UnitTypes CvPlayer::getBestUnitType(UnitAITypes eUnitAI) const
 	UnitTypes eBestUnit = NO_UNIT;
 	int iBestValue = 0;
 
-	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+	// Iterate the UNION of the cities' trainable frontiers, not the whole unit database: the per-id fan would be
+	// types x cities. Ascending + deduped, so the strict-> tie-break below keeps the same winner.
+	std::vector<int> vecTrainable;
+	getTrainableAnywhere(vecTrainable);
+	for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 	{
-		if (!canAnyCityTrain((UnitTypes) iI))
-			continue;
-
+		const int iI = *it;
 		const int iValue = AI_unitValue((UnitTypes) iI, eUnitAI, NULL);
 
 		if (iValue > iBestValue)
@@ -28985,9 +29016,12 @@ bool CvPlayer::canHaveBuilder(BuildTypes eBuild) const
 	if (!hasSuitableUnit)
 	{
 		// Could we build one?
-		for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+		// the trainable-anywhere UNION, not a per-id fan over the whole database (types x cities)
+		std::vector<int> vecTrainable;
+		getTrainableAnywhere(vecTrainable);
+		for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 		{
-			if (GC.getUnitInfo((UnitTypes)iI).hasBuild(eBuild) && canAnyCityTrain((UnitTypes)iI))
+			if (GC.getUnitInfo((UnitTypes)*it).hasBuild(eBuild))
 			{
 				hasSuitableUnit = true;
 				break;
@@ -30542,9 +30576,13 @@ int CvPlayer::getTypicalUnitValue(UnitAITypes eUnitAI) const
 	PROFILE_EXTRA_FUNC();
 	int iHighestValue = 0;
 
-	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+	// the trainable-anywhere UNION, not a per-id fan over the whole database (types x cities)
+	std::vector<int> vecTrainable;
+	getTrainableAnywhere(vecTrainable);
+	for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 	{
-		if (GC.getUnitInfo((UnitTypes)iI).getUnitAIType(eUnitAI) && canAnyCityTrain((UnitTypes)iI))
+		const int iI = *it;
+		if (GC.getUnitInfo((UnitTypes)iI).getUnitAIType(eUnitAI))
 		{
 			const int iValue = GC.getGame().AI_combatValue((UnitTypes)iI);
 			if (iValue > iHighestValue)

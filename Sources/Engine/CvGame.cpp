@@ -3288,9 +3288,12 @@ bool CvGame::canTrainNukes() const
 		const CvPlayer& player = GET_PLAYER((PlayerTypes)iI);
 		if (player.isAlive())
 		{
-			for (int iJ = 0; iJ < GC.getNumUnitInfos(); iJ++)
+			// the trainable-anywhere UNION, not a per-id fan over the whole database (types x cities)
+			std::vector<int> vecTrainable;
+			player.getTrainableAnywhere(vecTrainable);
+			for (std::vector<int>::const_iterator it = vecTrainable.begin(), itEnd = vecTrainable.end(); it != itEnd; ++it)
 			{
-				if (GC.getUnitInfo((UnitTypes)iJ).getNukeRange() != -1 && player.canAnyCityTrain((UnitTypes)iJ))
+				if (GC.getUnitInfo((UnitTypes)*it).getNukeRange() != -1)
 				{
 					return true;
 				}
