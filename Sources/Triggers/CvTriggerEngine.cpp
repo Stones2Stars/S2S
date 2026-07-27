@@ -208,6 +208,11 @@ static int tr_promoteFromEntries(CvCity* pCity, CvUnit* pUnit, const CvInfo* j)
 	CvCascadeEvalCtx ec;
 	pCity->getCityContext().fillEvalCtx(ec);
 	GET_PLAYER(pCity->getOwner()).getEmpireContext().fillEvalCtx(ec);
+	// The ENABLER's precomputed sets are the third leg of the eval state, fed in rather than re-derived
+	// (patterns.md: the active/dormant verdict is the enabler's and the modifier READS it). Without this the
+	// operating-set legs are EMPTY, so an entry condition asking an active-building or vicinity-provides
+	// question evaluates against nothing and quietly answers false.
+	EnablerKernel::wireOperatingBuildings(pCity, ec);
 	ec.unit = pUnit;                                  // the entry's condition may ask about the unit being promoted
 	CvCascadeEvalFlags kFlags;
 
@@ -732,6 +737,7 @@ static void tr_resolveCityFounded(int iOwner, int iCity, int iFounderType)
 		CvCascadeEvalCtx ec;
 		pCity->getCityContext().fillEvalCtx(ec);
 		player.getEmpireContext().fillEvalCtx(ec);
+		EnablerKernel::wireOperatingBuildings(pCity, ec);   // the enabler's sets are the third leg (see above)
 		const CvCascadeEvalFlags kFlags;
 		for (size_t i = 0; i < pSeeds->size(); ++i)
 		{
