@@ -343,8 +343,9 @@ The whitelist completeness sweep found exactly two, both now ruled and landed:
   inflation, `CvUnit.cpp:8687`), `iSpreadCost`→`cost.spread`, `CompetingCorporations`→**`excludes`** (json §9 same-tier
   mutual exclusion; empty in base XML, so the MAPPING migrates but shipped output is unchanged) — all executing.
   **NB: the corporation SYSTEM deserves a principle-level rework later** (owner 2026-07-01: "don't like how corporations
-  work in principle") — that is a PERMANENT carve-out (owner-ruled) ([DEC-mirror-then-redesign]: migrate faithfully now, redesign the corp
-  model after); the corp-HQ revenue (`HeadquarterCommerces`) rides that rework.
+  work in principle") — that is a PERMANENT owner-ruled carve-out — a
+  principle-level rework of the corp MODEL, held as its own deliberate piece of work rather than folded into the
+  data migration; the corp-HQ revenue (`HeadquarterCommerces`) rides that rework.
 - **improvement — DONE (owner rulings 2026-07-01):** `iAirBombDefense` → **`defense.plot.air.flat`** (101 improvements;
   the air-bomb defense magnitude, `CvUnit.cpp:7127`). `iFeatureGrowth` / `iCultureRange` / per-bonus `depletionRand` →
   **STAY in `identity`** (owner: "leave them in identity") — improvement-INTRINSIC mechanics read by their own `CvPlot`

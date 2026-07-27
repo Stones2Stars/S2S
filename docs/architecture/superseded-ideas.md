@@ -137,3 +137,14 @@
     nothing — not OOS, not loading ([engine.md](../reference/engine.md)) — so a mismatch has no action to take.
     **Never re-add a recalculate-everything entry point, a wipe-the-totals helper, an "are you sure you want to
     recalculate" prompt, or an in-recalc suppression flag that makes ordinary mutators skip their work.**
+22. **MIRROR-THEN-REDESIGN** — *"the migration reproduces the engine's existing behaviour exactly; behavioural
+    redesign is deferred to post-migration"* *(dead — retired as `DEC-mirror-then-redesign`)*. It was **dead by its
+    own construction (owner)**: it presupposed (a) a legacy implementation worth faithfully mirroring and (b) a LATER
+    phase in which redesign unlocks. Neither exists — the legacy surface is being **NUKED, not mirrored** (the ~622
+    channel-shaped getters are a DELETION list, [DEC-new-getter-surface](decisions.md#dec-new-getter-surface)),
+    parity and shadow are closed, and there is no post-migration phase to hand work to
+    ([DEC-no-deferred](decisions.md#dec-no-deferred)). **The SPEC leads, now:** where code and spec disagree the
+    spec is right and the code is the defect. ⛔ Never re-argue that a shape must be preserved because it is what
+    the engine does today — "this is how it works" carries no weight without a live named reason (a spec
+    requirement, the EXE calling in, save state, a real ordering dependency). A behaviour change is a fact to state
+    and weigh, never a thing to defer.

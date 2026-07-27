@@ -79,15 +79,16 @@ source the engine uses — the job is to FIND it (map it to a named legacy sourc
 change the legacy/curator/numbers to make it reconcile. "It doesn't reconcile, so I'll change the numbers" is the
 banned shortcut — 99% of the time the value DOES reconcile once the missing source is found by reading ALL the writers.
 
-> **Mirror, don't redesign ([DEC-mirror-then-redesign](../architecture/decisions.md#dec-mirror-then-redesign)).** The
-> migration reproduces the engine's *existing* behaviour exactly. Behavioural redesign — *should this behave this way
-> at all?* — is deferred to **post-migration**, never done during it. **Why it matters now:** the port must introduce
-> zero side-effects. Once the migration is over the ground truth FLIPS: the **JSON spec** (not the legacy engine)
-> becomes authoritative, and *that* is when we — and modders — deliberately diverge from C2C. Mirror the engine to
-> get here; thereafter the spec leads.
+> **⛔ THE SPEC LEADS — NOW, not after some later flip (owner).** The ground truth is the **JSON spec**, not the
+> legacy engine: where the current code and the spec disagree, the spec is right and the code is the defect. There
+> is no "mirror the engine faithfully now, diverge later" phase — that framing died with the thing it described.
+> **We are not mirroring the legacy surface, we are NUKING it** (owner): the legacy getters are a DELETION list,
+> not a contract to reproduce ([DEC-new-getter-surface](../architecture/decisions.md#dec-new-getter-surface)), and
+> "this is how it works today" carries no weight by itself — only a live, named reason does (a spec requirement,
+> the EXE calling in, save state, an ordering the engine genuinely depends on). A change that alters observable
+> behaviour is a FACT to state plainly and weigh, never a thing to defer.
 >
-> **⛔ Data migration is NEVER deferred ([DEC-data-first](../architecture/decisions.md#dec-data-first)).** The strict
-> complement of mirror-then-redesign: you defer *redesign*, you **never** defer *data migration*. ANY known
+> **⛔ Data migration is NEVER deferred ([DEC-data-first](../architecture/decisions.md#dec-data-first)).** ANY known
 > curator/JSON item not yet updated — a legacy field not converted, a reclassification not applied, a legacy shape
 > still emitted — is the highest-priority task, handled BEFORE any downstream work. A deferred data item forces every
 > downstream consumer to ASSUME its eventual shape, and an assumption in this codebase is the kraken's shortcut

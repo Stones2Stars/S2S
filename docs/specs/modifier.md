@@ -298,7 +298,8 @@ term, so a divergence localises to a single source.
   population term — a state-derived input (it reads the happiness verdict; the calc computes it from its own
   happiness result, never reads the engine's).
 
-⚠ Two engine quirks the calc mirrors verbatim (never "fixes" — [DEC-mirror-then-redesign]):
+⚠ Two engine quirks the calc reproduces verbatim — named here so the reproduction is DELIBERATE and visible rather
+than accidental. Whether they survive is a SPEC decision (the spec leads), never a silent "fix" at a call site:
 `badHealth` adds `min(0, extraBuildingBadHealth)` **twice** (once inside `totalBadBuildingHealth`, once
 directly); and the anger percents scale by `pop/PERCENT_ANGER_DIVISOR` with truncating integer division.
 

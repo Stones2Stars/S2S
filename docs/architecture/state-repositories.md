@@ -77,7 +77,7 @@ is dead. ⛔ The pull must be a CACHE at EVERY level, never a per-read walk: re-
 `getPlotYield` call turns the game's hottest read O(radius) — measured at 913M plot reads in one turn inside the
 governor's valuation, the cost class this whole doc exists to prevent. The engine's actual base yield thereby equals the build-order-independent value the cascade computes —
 stale-cache divergences resolved **at the source**, behaviour-preserving
-([DEC-parity](decisions.md#dec-parity), [DEC-mirror-then-redesign](decisions.md#dec-mirror-then-redesign)).
+([DEC-parity](decisions.md#dec-parity)).
 
 **Incremental-accumulate ledgers convert to recompute-from-source.** The serialized player ledger
 `m_ppiBuildingCommerceChange` double-counted by build order (the accumulator replayed onto the loaded value); it is

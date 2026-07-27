@@ -82,11 +82,6 @@ grading of acceptability; a divergence is a data-collection gap (a missing sourc
 tweak away. Parity/shadow as an ACTIVE validation phase is CLOSED ([DEC-verify-in-game-not-reshadow](#dec-verify-in-game-not-reshadow));
 what survives is this completeness bar, now verified live via the endpoints. **Home:** [validation.md](../specs/validation.md).
 
-### DEC-mirror-then-redesign
-
-The migration reproduces the engine's existing behaviour exactly; behavioural redesign ("should it behave this way at
-all?") is deferred to post-migration, never done during it. **Home:** [validation.md](../specs/validation.md).
-
 ### DEC-no-parity-results-in-docs
 
 Parity-pass results (divergence counts, checklists, pilot numbers) stay out of the durable docs. **Home:** [validation.md](../specs/validation.md).
@@ -194,7 +189,7 @@ alongside legacy, has ended.
 
 Data migration (curators + JSON) is NEVER deferred: any known un-migrated field / reclassification / still-emitted
 legacy shape is the #1 priority, handled BEFORE any downstream cascade / shadow / observability / parity work. The
-strict complement of [DEC-mirror-then-redesign](#dec-mirror-then-redesign) (defer redesign, never data). **Home:**
+complement of [DEC-no-deferred](#dec-no-deferred) — data is never deferred, and neither is anything else. **Home:**
 [validation.md](../specs/validation.md).
 
 ### DEC-recurate-on-decision

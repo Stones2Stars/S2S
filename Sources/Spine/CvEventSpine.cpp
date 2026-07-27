@@ -387,6 +387,7 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_UNIT_PROMOTION_CHANGED:  return "[SPINE] unitPromotionChanged";
 	case SEVT_UNIT_COMBAT_CHANGED:     return "[SPINE] unitCombatChanged";
 	case SEVT_UNIT_KILLED:             return "[SPINE] unitKilled";
+	case SEVT_UNIT_DEATH_SCHEDULED:    return "[SPINE] unitDeathScheduled";
 	case SEVT_UNIT_LEFT_CITY:          return "[SPINE] unitLeftCity";
 	case SEVT_UNIT_CREATED_COUNT_CHANGED: return "[SPINE] unitCreatedCountChanged";
 	case SEVT_TEAM_MEMBERS_CHANGED:    return "[SPINE] teamMembersChanged";
@@ -897,6 +898,15 @@ void emitUnitKilled(int iUnitType, int iUnitId, int iOwner, int iPlot)
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_KILLED, iUnitType, iUnitId, 0, iOwner, iPlot);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_UNIT, iUnitType).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
+	eventSpine().emit(e);
+}
+// The unit is ALIVE at both transitions, so a play-time emit always has a plot to name; the in-read half
+// passes -1, its coordinates not having deserialized yet.
+void emitUnitDeathScheduled(int iUnitType, int iUnitId, int iOwner, int iPlot, bool bScheduled)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_DEATH_SCHEDULED, iUnitType, iUnitId, bScheduled ? 1 : 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_UNIT, iUnitType).addI(SPF_UNIT_ID, iUnitId).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_ON, bScheduled ? 1 : 0);
 	eventSpine().emit(e);
 }
 void emitUnitLeftCity(int iUnitType, int iUnitId, int iOwner, int iCity)

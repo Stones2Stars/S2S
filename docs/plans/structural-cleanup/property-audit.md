@@ -38,7 +38,8 @@
 > Why: the ORIGINAL property design made all pollution-class `<Properties>` one-shots, but building designers
 > after the original design authored against the same block ASSUMING per-turn — the shipped XML is mixed-intent
 > data sharing one shape, and the one-shot semantic "makes no sense whatsoever". A sanctioned intentional
-> divergence from legacy behaviour (an owner-ruled [DEC-mirror-then-redesign] carve-out).
+> divergence from legacy behaviour — the DECIDED model, needing no carve-out: the spec leads, so conforming to it
+> is the default and legacy behaviour is not a thing to preserve for its own sake.
 > Consequences:
 > - The curator's fold of `<Properties>` (city) into the `PROPERTY_X.city.flat` families **IS the decided model**
 >   (`curate_building.py` — NO curator change), and the bridge feeding them to the per-turn solver is CORRECT —

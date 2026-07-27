@@ -414,8 +414,21 @@ public:
 	void setupGraphical();
 
 	void convert(CvUnit* pUnit, const bool bKillOriginal=true);
+	//	The death sequence's two entry points. kill() is the dispatcher every caller uses; it refuses to
+	//	re-schedule a death that is already scheduled. killUnconditional() skips only that refusal -- it is what
+	//	the delayed-death pass calls to reap a unit whose death is already on the books.
 	void kill(bool bDelay, PlayerTypes ePlayer = NO_PLAYER, bool bMessaged = false);
-	void killUnconditional(bool bDelay, PlayerTypes ePlayer, bool bMessaged = false); // Used internally
+	void killUnconditional(bool bDelay, PlayerTypes ePlayer, bool bMessaged = false);
+
+private:
+	//	The death sequence, one job per operation. Only die() ends a life.
+	bool scheduleDeath(bool bDelay, PlayerTypes ePlayer, bool bMessaged);
+	void resolveScheduledDeath();
+	void evacuateToCapital(const CvCity& kCapitalCity);
+	void surviveLastStand();
+	void die();
+
+public:
 
 
 	void doTurn();

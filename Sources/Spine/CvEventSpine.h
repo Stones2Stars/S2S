@@ -437,10 +437,12 @@ enum SpineDomainEvent
 	// iType = UnitCombat, iA = unit id, iB = +1 gained / -1 lost, iC = owner, iSrcLoc = -1. DOMAIN.
 	SEVT_UNIT_COMBAT_CHANGED = 65,
 	// A unit INSTANCE died -- the DEATH TWIN of SEVT_UNIT_CREATED, without which grants and the out-of-process
-	// replay see units born and never die. Emitted from CvUnit::killUnconditional at the point every non-death
-	// early return has been taken (delayed death, respawn-at-capital, survivor), so it fires exactly once per
-	// genuine death; CvUnit::kill is a PASS-THROUGH of that function.
-	// iType = unit TYPE, iA = unit id, iC = owner, iSrcLoc = the plot it died on (-1 = none). DOMAIN.
+	// replay see units born and never die. Emitted on the FIRST line of CvUnit::die, the one function that ends
+	// a unit's life: die() carries no early return and no conditional deletion, so the fact is true BY
+	// CONSTRUCTION rather than by sitting past a run of survival branches. The outcomes that leave the unit
+	// alive (evacuate-to-capital, last-stand survival) are decided BEFORE die() is entered and never reach it.
+	// iType = unit TYPE, iA = unit id, iC = owner, iSrcLoc = the plot it died on (-1 = the unit held none).
+	// DOMAIN.
 	SEVT_UNIT_KILLED = 66,
 	// A unit LEFT a city's plot (CvUnit::setXY's old-city branch) -- the leave twin of SEVT_UNIT_ENTERED_CITY.
 	// ⚠ The leave is announced for EVERY city plot a unit vacates, while the entry's conquest branch resolves
@@ -462,7 +464,15 @@ enum SpineDomainEvent
 	// An AREA's tile count changed (CvArea::changeNumTiles) -- feeds CityContext's AREA_SIZE and its
 	// max-adjacent-water store (the isCoastal(minArea) form). An area has no owning player, so iC stays -1.
 	// iA = the new tile count, iB = the change, iC = -1, iSrcLoc = areaId. DOMAIN.
-	SEVT_AREA_TILES_CHANGED = 70
+	SEVT_AREA_TILES_CHANGED = 70,
+	// A unit's DEATH SCHEDULE flipped (CvUnit::m_bDeathDelay) -- the state a delayed kill leaves behind so the
+	// object outlives combat resolution, save-carried and read by isDead()/isDelayedDeath() across the engine.
+	// NOT a duplicate of SEVT_UNIT_KILLED: a scheduled death is an INTENTION whose outcome can still flip to
+	// survival (evacuate-to-capital, last stand), and a consumer that treated the schedule as a death would
+	// bury units that walk away. Both transitions announce, so a consumer never keeps a survivor marked dying.
+	// iType = unit TYPE, iA = unit id, iB = 1 scheduled / 0 cleared, iC = owner, iSrcLoc = the plot it stands
+	// on (-1 = none). DOMAIN.
+	SEVT_UNIT_DEATH_SCHEDULED = 71
 };
 
 //	Which entity's display name changed (the iType of a SEVT_NAME_CHANGE event). The logging consumer resolves the
@@ -537,9 +547,12 @@ void emitCityFreshWaterChanged(int iCity, int iOwner, bool bHasFreshWater, int i
 //	CvUnit::processUnitCombat), never from the setter overloads that pass through them.
 void emitUnitPromotionChanged(int iUnitId, int iOwner, int iPromotion, int iDelta);
 void emitUnitCombatChanged(int iUnitId, int iOwner, int iUnitCombat, int iDelta);
-//	A unit instance died -- the twin of emitUnitCreated. Call once the death is unconditional (past the delayed,
-//	respawn and survivor returns). iPlot = -1 where the unit held no plot.
+//	A unit instance died -- the twin of emitUnitCreated. Call from CvUnit::die and nowhere else: that function is
+//	the only unconditional end of a unit's life. iPlot = -1 where the unit held no plot.
 void emitUnitKilled(int iUnitType, int iUnitId, int iOwner, int iPlot);
+//	A unit's death SCHEDULE flipped. Call AFTER m_bDeathDelay is written, at both transitions: bScheduled = true
+//	where a delayed kill deferred the death, false where an outcome brought the unit back.
+void emitUnitDeathScheduled(int iUnitType, int iUnitId, int iOwner, int iPlot, bool bScheduled);
 //	A unit left a city's plot -- the twin of emitUnitEnteredCity. Call from the old-city branch, before the move.
 void emitUnitLeftCity(int iUnitType, int iUnitId, int iOwner, int iCity);
 //	The world's cumulative created-count of a unit type advanced (the world-instance cap's input).

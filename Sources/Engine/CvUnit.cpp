@@ -1311,9 +1311,12 @@ void CvUnit::convert(CvUnit* pUnit, const bool bKillOriginal)
 }
 
 
+//	THE DISPATCHER every caller uses. It owns ONE decision -- the RECURSION BRAKE -- and delegates the rest.
+//	The brake is load-bearing, not defensive: both survival outcomes call setDamage while the death is still
+//	scheduled, and setDamage re-enters kill(true) whenever isDead() reports true (which isDelayedDeath() alone
+//	makes true). Without the brake that is unbounded recursion.
 void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 {
-	// If it's already dead (but delayed death in process) don't try to re-kill it.
 	if (bDelay && m_bDeathDelay)
 	{
 		return;
@@ -1321,10 +1324,27 @@ void CvUnit::kill(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 	killUnconditional(bDelay, ePlayer, bMessaged);
 }
 
+//	Past the brake: run the pre-death sequence, then either hand the unit to the delayed-death pass or resolve
+//	its fate now.
 void CvUnit::killUnconditional(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 {
 	PROFILE_FUNC();
 
+	if (scheduleDeath(bDelay, ePlayer, bMessaged))
+	{
+		return;
+	}
+	resolveScheduledDeath();
+}
+
+//	Every effect a death has on the world BEFORE its outcome is known -- deselection, worker-claim release,
+//	the cargo's fate, the death report to Python and the players, the worker's city assignment. These run for
+//	a unit that goes on to survive, because the engine treats them as consequences of the KILLING BLOW rather
+//	than of the death.
+//	NEVER kills. Returns true when the death has been DEFERRED to the delayed-death pass, false when the
+//	caller must resolve it in this call.
+bool CvUnit::scheduleDeath(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
+{
 	deselect(!bDelay);
 
 	/* Toffer - Evaluate if double messaging actually take place...
@@ -1446,41 +1466,100 @@ void CvUnit::killUnconditional(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 		if (bDelay)
 		{
 			m_bDeathDelay = true;
-			return;
+			emitUnitDeathScheduled((int)getUnitType(), getID(), (int)eOwner,
+				GC.getMap().plotNum(pPlot->getX(), pPlot->getY()), true);
+			return true;
 		}
+	}
+	// An off-map unit is never scheduled. The delayed-death pass reaps units through the selection groups
+	// standing on the map, so a deferral it cannot see would strand the unit alive forever.
+	return false;
+}
+
+//	THE REAPER. Asks the survival question once and dispatches to exactly one outcome. It decides; it does not
+//	perform -- each outcome below is a whole operation named for what it does to the unit.
+void CvUnit::resolveScheduledDeath()
+{
+	// Both survival outcomes are asked only of a unit still on the map: an off-map unit has no position to
+	// evacuate from, and the survivor roll belongs to a battle fought on a plot.
+	if (plot() != NULL)
+	{
+		// Both outcomes sit under the capital: the evacuation needs it as a destination, and the survivor
+		// roll shares that nesting, so a player without a capital has neither available.
+		const CvCity* pCapitalCity = GET_PLAYER(getOwner()).getCapitalCity();
+		if (pCapitalCity != NULL)
 		{
-			const CvCity* pCapitalCity = owner.getCapitalCity();
-			if (pCapitalCity)
+			if (isCanRespawn() && pCapitalCity->plot() != plot())
 			{
-				if (isCanRespawn() && pCapitalCity->plot() != plot())
-				{
-					//GC.getGame().logOOSSpecial(14, getID(), pCapitalCity->getX(), pCapitalCity->getY());
-					setXY(pCapitalCity->getX(), pCapitalCity->getY(), false, false, false);
-					setDamage(getMaxHP() * 9/10);
-					changeOneUpCount(-1);
-					AddDLLMessage(
-						eOwner, true, GC.getEVENT_MESSAGE_TIME(),
-						gDLL->getText("TXT_KEY_MISC_BATTLEFIELD_EVAC", getNameKey()),
-						"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), getX(), getY()
-					);
-					m_bDeathDelay = false;
-					return;
-				}
-				if (isSurvivor())
-				{
-					setDamage(getMaxHP() - std::max(1,(getSurvivorChance() / 1000)));
-					AddDLLMessage(
-						eOwner, true, GC.getEVENT_MESSAGE_TIME(),
-						gDLL->getText("TXT_KEY_MISC_YOUR_UNIT_IS_HARDCORE", getNameKey()),
-						"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), getX(), getY()
-					);
-					m_bDeathDelay = false;
-					//	Only applies to THIS combat - it might be attacked again the same turn
-					setSurvivor(false);
-					return;
-				}
+				evacuateToCapital(*pCapitalCity);
+				return;
+			}
+			if (isSurvivor())
+			{
+				surviveLastStand();
+				return;
 			}
 		}
+	}
+	die();
+}
+
+//	NOT a death: a relocation plus a damage set. The unit leaves the battlefield and reappears at the capital,
+//	so nothing announces it dead.
+void CvUnit::evacuateToCapital(const CvCity& kCapitalCity)
+{
+	//GC.getGame().logOOSSpecial(14, getID(), kCapitalCity.getX(), kCapitalCity.getY());
+	setXY(kCapitalCity.getX(), kCapitalCity.getY(), false, false, false);
+	// The death is still scheduled here, so isDead() is true and setDamage re-enters kill(true). The
+	// dispatcher's brake is what absorbs that.
+	setDamage(getMaxHP() * 9/10);
+	changeOneUpCount(-1);
+	AddDLLMessage(
+		getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
+		gDLL->getText("TXT_KEY_MISC_BATTLEFIELD_EVAC", getNameKey()),
+		"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), getX(), getY()
+	);
+	m_bDeathDelay = false;
+	emitUnitDeathScheduled((int)getUnitType(), getID(), (int)getOwner(),
+		GC.getMap().plotNum(getX(), getY()), false);
+}
+
+//	NOT a death: a damage set. The unit is left one hit from dying and stays exactly where it stood.
+void CvUnit::surviveLastStand()
+{
+	// As in evacuateToCapital, this setDamage re-enters kill(true) against a still-scheduled death.
+	setDamage(getMaxHP() - std::max(1,(getSurvivorChance() / 1000)));
+	AddDLLMessage(
+		getOwner(), true, GC.getEVENT_MESSAGE_TIME(),
+		gDLL->getText("TXT_KEY_MISC_YOUR_UNIT_IS_HARDCORE", getNameKey()),
+		"AS2D_POSITIVE_DINK", MESSAGE_TYPE_INFO, getButton(), GC.getCOLOR_GREEN(), getX(), getY()
+	);
+	m_bDeathDelay = false;
+	//	Only applies to THIS combat - it might be attacked again the same turn
+	setSurvivor(false);
+	emitUnitDeathScheduled((int)getUnitType(), getID(), (int)getOwner(),
+		GC.getMap().plotNum(getX(), getY()), false);
+}
+
+//	⛔ THE ONE TERMINAL -- the only function that ends a unit's life, and the only caller of emitUnitKilled. It
+//	takes NO arguments and asks NO survival question: whatever reaches here dies. Two invariants make that
+//	structural rather than a promise, and nothing may be added that breaks either:
+//	  - the death fact is emitted on the FIRST line, so no outcome added later can slip in ahead of it;
+//	  - owner.deleteUnit is the LAST line and is unconditional, so the unit is always removed.
+//	A new outcome that leaves a unit alive belongs in resolveScheduledDeath, NEVER as an early return here.
+//	The plot guards below govern what the unit is DETACHED FROM, never whether it dies: a unit holding no plot
+//	has nothing to detach, and still dies.
+void CvUnit::die()
+{
+	CvPlot* pDeathPlot = plot();
+	const PlayerTypes eOwner = getOwner();
+	CvPlayerAI& owner = GET_PLAYER(eOwner);
+
+	emitUnitKilled((int)getUnitType(), getID(), (int)eOwner,
+		(pDeathPlot != NULL) ? GC.getMap().plotNum(pDeathPlot->getX(), pDeathPlot->getY()) : -1);
+
+	if (pDeathPlot != NULL)
+	{
 		if (isMadeAttack() && nukeRange() != -1)
 		{
 			CvPlot* pTarget = getAttackPlot();
@@ -1520,14 +1599,7 @@ void CvUnit::killUnconditional(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 		FAssertMsg(!getCombatUnit(), "The current unit instance's combat unit is expected to be NULL");
 	}
 
-	// #430 event spine: the DEATH TWIN of emitUnitCreated. Placed HERE because this is the first point every
-	// non-death early return above has been taken -- the delayed death (bDelay), the respawn-at-capital and the
-	// survivor branches all return before it, and each of those leaves the unit ALIVE. CvUnit::kill is a
-	// pass-through of this function, so the fact is emitted once per genuine death from either entry point.
-	// The plot is -1 where the unit held none; the tail below deletes the unit only when it did.
-	emitUnitKilled((int)getUnitType(), getID(), (int)eOwner,
-		(pPlot != NULL) ? GC.getMap().plotNum(pPlot->getX(), pPlot->getY()) : -1);
-
+	// The owner's totals count the unit itself, not its position, so they settle for an off-map death too.
 	owner.changeUnitUpkeep(-getUpkeep(), isMilitaryBranch());
 
 	owner.changeUnitCount(m_eUnitType, -1);
@@ -1551,7 +1623,7 @@ void CvUnit::killUnconditional(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 	owner.changeAssets(-assetValueTotal());
 	owner.changeUnitPower(-getPowerValueTotal());
 
-	if (pPlot)
+	if (pDeathPlot != NULL)
 	{
 		OutputDebugString(CvString::format("Unit %S of player %S killed\n", getName().GetCString(), owner.getCivilizationDescription(0)).c_str());
 
@@ -1561,9 +1633,17 @@ void CvUnit::killUnconditional(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 
 		setCommander(false);
 		setCommodore(false);
+		// ⚠ From this statement until deleteUnit the unit is LIVE but off the map: it is gone from the plot's
+		// unit list and plot() reports NULL, while CvPlayer::units() still yields it. Anything that re-enters
+		// the death path on it inside that window takes die()'s off-map route, which deletes.
 		setXY(INVALID_PLOT_COORD, INVALID_PLOT_COORD, true);
-		joinGroup(NULL, false, false);
+	}
 
+	// Group membership is not a map position, so an off-map unit leaves its group the same way.
+	joinGroup(NULL, false, false);
+
+	if (pDeathPlot != NULL)
+	{
 		const PlayerTypes eCapturingPlayer = getCapturingPlayer();
 		const UnitTypes eCaptureUnitType = getCaptureUnitType();
 
@@ -1571,7 +1651,7 @@ void CvUnit::killUnconditional(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 		{
 			CvUnit* pkCapturedUnit = (
 				GET_PLAYER(eCapturingPlayer).initUnit(
-					eCaptureUnitType, pPlot->getX(), pPlot->getY(),
+					eCaptureUnitType, pDeathPlot->getX(), pDeathPlot->getY(),
 					NO_UNITAI, NO_DIRECTION,
 					GC.getGame().getSorenRandNum(10000, "AI Unit Birthmark")
 				)
@@ -1587,26 +1667,27 @@ void CvUnit::killUnconditional(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 				AddDLLMessage(
 					eCapturingPlayer, true, GC.getEVENT_MESSAGE_TIME(),
 					gDLL->getText("TXT_KEY_MISC_YOU_CAPTURED_UNIT", GC.getUnitInfo(eCaptureUnitType).getTextKeyWide()),
-					"AS2D_UNITCAPTURE", MESSAGE_TYPE_INFO, pkCapturedUnit->getButton(), GC.getCOLOR_GREEN(), pPlot->getX(), pPlot->getY()
+					"AS2D_UNITCAPTURE", MESSAGE_TYPE_INFO, pkCapturedUnit->getButton(), GC.getCOLOR_GREEN(), pDeathPlot->getX(), pDeathPlot->getY()
 				);
 				// Add a captured mission
-				addMission(CvMissionDefinition(MISSION_CAPTURED, pPlot, pkCapturedUnit));
+				addMission(CvMissionDefinition(MISSION_CAPTURED, pDeathPlot, pkCapturedUnit));
 
 				pkCapturedUnit->finishMoves();
 
 				if (!GET_PLAYER(eCapturingPlayer).isHumanPlayer())
 				{
-					pPlot = pkCapturedUnit->plot();
-					if (pPlot && !pPlot->isCity(false)
-					&& GC.getDefineINT("AI_CAN_DISBAND_UNITS") && GET_PLAYER(eCapturingPlayer).AI_getPlotDanger(pPlot))
+					const CvPlot* pCapturedUnitPlot = pkCapturedUnit->plot();
+					if (pCapturedUnitPlot && !pCapturedUnitPlot->isCity(false)
+					&& GC.getDefineINT("AI_CAN_DISBAND_UNITS") && GET_PLAYER(eCapturingPlayer).AI_getPlotDanger(pCapturedUnitPlot))
 					{
 						pkCapturedUnit->kill(false, NO_PLAYER, true);
 					}
 				}
 			}
 		}
-		owner.deleteUnit(getID());
 	}
+
+	owner.deleteUnit(getID());
 }
 
 
@@ -19540,6 +19621,14 @@ void CvUnit::read(FDataStreamBase* pStream)
 	// m_eUnitType have all deserialized. Result-producers suppress inside the load bracket, so this restores the
 	// instance without re-granting anything -- the emitBuildingChanged(bFirst = false) contract.
 	emitUnitCreated((int)m_eUnitType, m_iID, (int)m_eOwner);
+	// The matching in-read half for the death SCHEDULE: a save can be taken with a kill already deferred, and
+	// no setter runs on a load to announce it. A cleared schedule is the reset() default and announces nothing,
+	// for the same reason a stored 0 property value is skipped. The unit's coordinates deserialize later, so
+	// the plot is not yet knowable here -- the id is what a consumer keys on.
+	if (m_bDeathDelay)
+	{
+		emitUnitDeathScheduled((int)m_eUnitType, m_iID, (int)m_eOwner, -1, true);
+	}
 
 	WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvUnit", REMAPPED_CLASS_TYPE_UNITS, (int*)&m_eLeaderUnitType);
 
@@ -21362,6 +21451,11 @@ void CvUnit::flankingStrikeCombat(const CvPlot* pPlot, int iAttackerStrength, in
 		pUnit->setDamage(iDamage, getOwner());
 		//TB Combat Mod begin
 		//TB Combat mod end
+// BUG - Combat Events - start
+		// The flanked unit is handed to Python BEFORE the kill below, which is an immediate kill and therefore
+		// frees it. The damage is already applied at this point, so the event reports the same hit either way.
+		CvEventReporter::getInstance().combatLogFlanking(this, pUnit, iDamageDone);
+// BUG - Combat Events - end
 		if (pUnit->isDead())
 		{
 			{
@@ -21374,9 +21468,6 @@ void CvUnit::flankingStrikeCombat(const CvPlot* pPlot, int iAttackerStrength, in
 
 			pUnit->kill(false, NO_PLAYER, true);
 		}
-// BUG - Combat Events - start
-		CvEventReporter::getInstance().combatLogFlanking(this, pUnit, iDamageDone);
-// BUG - Combat Events - end
 
 		listFlankedUnits.erase(std::remove(listFlankedUnits.begin(), listFlankedUnits.end(), listFlankedUnits[iIndexHit]));
 	}

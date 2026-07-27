@@ -19129,8 +19129,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 
 		std::map<CvUnit*,bool> unitsPresent;
 
-		std::vector<CvUnit*> plotlessUnits;
-
 		foreach_(CvSelectionGroup* groupX, groups())
 		{
 #ifdef _DEBUG
@@ -19162,8 +19160,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 					groupX->removeUnit(pUnit); // Duplicate
 				}
 				else unitsPresent.insert(std::make_pair(pUnit,true));
-
-				if (!pUnit->plot()) plotlessUnits.push_back(pUnit);
 			}
 
 			if (!isNPC())
@@ -19485,22 +19481,15 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			FAssert(m_pTempUnit);
 		}
 		{
-			int iCount = 0;
-			foreach_(CvUnit* plotlessUnit, plotlessUnits)
-			{
-				if (plotlessUnit != m_pTempUnit)
-				{
-					plotlessUnit->kill(true);
-					iCount++;
-				}
-			}
-			FAssertMsg(iCount == 0, CvString::format("%d plotless units somehow got into the save!", iCount).c_str());
-		}
-		{
-			// Handle units with invalid plots that somehow get into saves!
+			// Units that come back from a save with nowhere to stand. Two shapes reach this: no plot at all, and
+			// coordinates outside the map -- which plot() does NOT report as NULL, since it only does so for
+			// INVALID_PLOT_COORD. m_pTempUnit is exempt: it is a permanently off-map pathing anchor, not a unit
+			// in the game.
+			// Collect first, remove second: the death path deletes the unit, which mutates the list being walked.
 			const int iMaxX = GC.getMap().getGridWidth();
 			const int iMaxY = GC.getMap().getGridHeight();
-			int iCount = 0;
+			std::vector<CvUnit*> unplaceableUnits;
+
 			foreach_(CvUnit* unitX, units())
 			{
 				if (unitX == m_pTempUnit)
@@ -19509,22 +19498,27 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 				if (!unitX->plot() || unitX->getX() < 0 || unitX->getX() >= iMaxX || unitX->getY() < 0 || unitX->getY() >= iMaxY)
 				{
-					CvSelectionGroup* pGroup = unitX->getGroup();
-
-					// Toffer - X and Y can for some reason be stored as -1,
-					//	and plot() will not return NULL unless they are INVALID_PLOT_COORD which cause problems.
-					unitX->forceInvalidCoordinates();
-					unitX->joinGroup(NULL, false, false);
-
-					deleteUnit(unitX->getID());
-					iCount++;
-					if (pGroup->getNumUnits() == 0)
-					{
-						pGroup->kill();
-					}
+					unplaceableUnits.push_back(unitX);
 				}
 			}
-			FAssertMsg(iCount == 0, CvString::format("%d dead/plotless units somehow got into the save!", iCount).c_str());
+
+			foreach_(CvUnit* unplaceableUnit, unplaceableUnits)
+			{
+				CvSelectionGroup* pGroup = unplaceableUnit->getGroup();
+
+				// Toffer - X and Y can for some reason be stored as -1,
+				//	and plot() will not return NULL unless they are INVALID_PLOT_COORD which cause problems.
+				// Forcing them makes the unit genuinely off-map, so the death path takes its off-map route
+				// rather than detaching the unit from a plot it was never really standing on.
+				unplaceableUnit->forceInvalidCoordinates();
+				unplaceableUnit->kill(false);
+
+				if (pGroup != NULL && pGroup->getNumUnits() == 0)
+				{
+					pGroup->kill();
+				}
+			}
+			FAssertMsg(unplaceableUnits.empty(), CvString::format("%d dead/plotless units somehow got into the save!", (int)unplaceableUnits.size()).c_str());
 		}
 		CLLNode<int>* pCurrUnitNode;
 		CLLNode<int>* pNextUnitNode;

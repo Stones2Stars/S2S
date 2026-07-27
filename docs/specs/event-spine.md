@@ -132,9 +132,19 @@ reads objects). **Build order:** spine + the modifier scope accumulator → logg
   existed: `SEVT_UNIT_PROMOTION_CHANGED` (`CvUnit::processPromotion`, the ONE funnel both `setHasPromotion`
   overloads reach) and `SEVT_UNIT_COMBAT_CHANGED` (`CvUnit::processUnitCombat`, reached once past
   `setHasUnitCombat`'s change guard AND its game-option/spy validity gate). **`SEVT_UNIT_KILLED`** is the DEATH
-  TWIN `SEVT_UNIT_CREATED` lacked — without it grants and the out-of-process replay see units born and never die;
-  it is emitted from `CvUnit::killUnconditional` at the first point past every non-death early return (delayed
-  death, respawn-at-capital, survivor), each of which leaves the unit ALIVE, so it fires once per genuine death.
+  TWIN `SEVT_UNIT_CREATED` lacked — without it grants and the out-of-process replay see units born and never die.
+  ⛔ Its correctness is **STRUCTURAL, not positional**: it is emitted on the FIRST line of **`CvUnit::die`**, the
+  one function that ends a unit's life, which carries no early return and no conditional deletion and always ends
+  in `deleteUnit` ([unit-lifecycle.md](../reference/unit-lifecycle.md)). The outcomes that leave a unit ALIVE
+  (evacuate-to-capital, last-stand survival) are decided BEFORE `die()` is entered and never reach it, so a new
+  outcome cannot silently slip in ahead of the fact — the shape a placement "past every early return" could not
+  guarantee. An OFF-MAP death is a real outcome of that function, not a skipped one: `iSrcLoc` is -1 and the unit
+  is deleted exactly as an on-map one is. Beside it, **`SEVT_UNIT_DEATH_SCHEDULED`** carries `m_bDeathDelay`, the
+  save-carried state a DELAYED kill leaves behind so the object outlives combat resolution, read across the engine
+  through `isDelayedDeath()`/`isDead()`. It is **not** a duplicate of KILLED: a scheduled death is an INTENTION
+  whose outcome can still flip to survival, so a consumer treating it as a death would bury units that walk away.
+  ⚠ Both TRANSITIONS announce (scheduled, and cleared by either survival outcome) — a one-way fact would leave a
+  survivor permanently marked dying — and `CvUnit::read` carries the in-read half for a save taken mid-schedule.
   **`SEVT_UNIT_LEFT_CITY`** is the leave twin of `SEVT_UNIT_ENTERED_CITY`; ⚠ it is announced for EVERY city plot
   a unit vacates while the ENTRY's conquest branch resolves into an acquisition instead of an entry, so the two
   do NOT net to occupancy — a consumer needing occupancy reads the unit's live plot.
