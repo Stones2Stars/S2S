@@ -6645,7 +6645,7 @@ void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 	foreach_(const BuildingTypes eBuildingX, BuildingsRepo::get().withFreeStartEra())
 	{
 		if (GC.getGame().getStartEra() >= GC.getBuildingInfo(eBuildingX).getFreeStartEra()
-		&& pCity->canConstruct(eBuildingX))
+		&& (pCity->getBuildingAvailability(eBuildingX) == EnablerDomain::STATE_LISTED))
 		{
 			pCity->changeHasBuilding(eBuildingX, true);
 		}
@@ -17650,7 +17650,7 @@ int CvPlayer::getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, const CvPlot*
 
 		if (pCity)
 		{
-			if (!pCity->canTrain(eUnit))
+			if (!(pCity->getUnitAvailability(eUnit) == EnablerDomain::STATE_LISTED))
 			{
 				return -1;
 			}

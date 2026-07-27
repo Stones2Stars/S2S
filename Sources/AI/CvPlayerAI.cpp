@@ -975,7 +975,7 @@ void CvPlayerAI::AI_doTurnUnitsPost()
 					if ((unitX->getDomainType() != DOMAIN_LAND || unitPlot->plotCount(PUF_isMilitaryHappiness, -1, -1, NULL, getID()) > 1)
 					// Strength-weighted surplus test (#395): merged defenders count as x1.5 per rank.
 					&& unitPlot->plotCountSM(PUF_canDefend, -1, -1, NULL, getID()) > pPlotCity->AI_neededDefenders()
-					&& pPlotCity->canTrain(unitX->getUnitType())
+					&& (pPlotCity->getUnitAvailability(unitX->getUnitType()) == EnablerDomain::STATE_LISTED)
 					&& (!unitX->canDefend() || !AI_getAnyPlotDanger(unitPlot, 2, false)))
 					{
 						int iCityExp = 0;
@@ -24840,7 +24840,7 @@ int CvPlayerAI::AI_bestCityUnitAIValue(UnitAITypes eUnitAI, const CvCity* pCity,
 			const int iValue = AI_unitValue(eLoopUnit, eUnitAI, (pCity == NULL) ? NULL : pCity->area(), criteria);
 			if (iValue > iBestValue)
 			{
-				if (NULL == pCity ? canTrain(eLoopUnit) : pCity->canTrain(eLoopUnit))
+				if (NULL == pCity ? canTrain(eLoopUnit) : (pCity->getUnitAvailability(eLoopUnit) == EnablerDomain::STATE_LISTED))
 				{
 					iBestValue = iValue;
 					if (peBestUnitType != NULL)

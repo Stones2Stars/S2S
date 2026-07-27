@@ -2524,7 +2524,7 @@ void CvCity::populateCanTrainCache(bool bUnconditional) const
 		const int numUnitInfos = GC.getNumUnitInfos();
 		for (int iI = 0; iI < numUnitInfos; iI++)
 		{
-			if (canTrain((UnitTypes)iI))
+			if ((getUnitAvailability((UnitTypes)iI) == EnablerDomain::STATE_LISTED))
 			{
 				m_canTrainCacheUnits[(UnitTypes)iI] = true;
 				iCount++;
@@ -2668,7 +2668,7 @@ bool CvCity::canTrain(UnitCombatTypes eUnitCombat) const
 
 	for (int i = 0; i < num; i++)
 	{
-		if (GC.getUnitInfo((UnitTypes) i).hasUnitCombat(eUnitCombat) && canTrain((UnitTypes) i))
+		if (GC.getUnitInfo((UnitTypes) i).hasUnitCombat(eUnitCombat) && (getUnitAvailability((UnitTypes) i) == EnablerDomain::STATE_LISTED))
 		{
 			return true;
 		}
@@ -4418,7 +4418,7 @@ UnitTypes CvCity::getConscriptUnit() const
 	int iBestValue = 0;
 	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 	{
-		if (canTrain((UnitTypes) iI))
+		if ((getUnitAvailability((UnitTypes) iI) == EnablerDomain::STATE_LISTED))
 		{
 			int iValue = GC.getUnitInfo((UnitTypes) iI).getConscriptionValue();
 			if (iValue > iBestValue)
@@ -15792,7 +15792,7 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 		case ORDER_TRAIN:
 		{
 			const UnitTypes unitType = static_cast<UnitTypes>(iData1);
-			if (canTrain(unitType) || bForce)
+			if ((getUnitAvailability(unitType) == EnablerDomain::STATE_LISTED) || bForce)
 			{
 				const uint16_t iAIType = EXTERNAL_ORDER_IDATA(iData2);
 				const UnitAITypes AIType = (iAIType == 0xFFFF) ?
@@ -15847,7 +15847,7 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 		case ORDER_CONSTRUCT:
 		{
 			const BuildingTypes buildingType = static_cast<BuildingTypes>(iData1);
-			if (canConstruct(buildingType) || bForce)
+			if ((getBuildingAvailability(buildingType) == EnablerDomain::STATE_LISTED) || bForce)
 			{
 				order = OrderData::createBuildingOrder(buildingType, bSave);
 
@@ -16266,7 +16266,7 @@ void CvCity::popOrder(int orderIndex, bool bFinish, bool bChoose, bool bResolveL
 
 				CvEventReporter::getInstance().buildingBuilt(this, eConstructBuilding);
 			}
-			else if (!canConstruct(eConstructBuilding))
+			else if (!(getBuildingAvailability(eConstructBuilding) == EnablerDomain::STATE_LISTED))
 			{
 				const BuildingTypes eBuilding = GC.getBuildingInfo(eConstructBuilding).getProductionContinueBuilding();
 				if (eBuilding != NO_BUILDING && canConstruct(eBuilding, true, false, false, false))
@@ -16693,7 +16693,7 @@ bool CvCity::doCheckProduction()
 			{
 				const int iProgress = (*it).second;
 
-				if (GC.getBuildingInfo(eTypeX).getProductionContinueBuilding() != NO_BUILDING && canConstruct(eTypeX))
+				if (GC.getBuildingInfo(eTypeX).getProductionContinueBuilding() != NO_BUILDING && (getBuildingAvailability(eTypeX) == EnablerDomain::STATE_LISTED))
 				{
 					m_iLostProduction = iProgress;
 				}

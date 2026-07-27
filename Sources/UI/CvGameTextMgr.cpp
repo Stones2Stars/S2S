@@ -4045,7 +4045,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 							szString.append(CvWString::format(L"\n  %s  ", szTempString.GetCString()));
 							for (int iJ = 0; iJ < GC.getNumUnitInfos(); iJ++)
 							{
-								if (pCloseCity->canTrain((UnitTypes)iJ))
+								if ((pCloseCity->getUnitAvailability((UnitTypes)iJ) == EnablerDomain::STATE_LISTED))
 								{
 									const int iValue = GET_PLAYER(ePlotOwner).AI_unitValue((UnitTypes)iJ, unitAI, pPlot->area());
 									if (iValue > 0)
@@ -14925,7 +14925,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool
 			}
 		}
 
-		if (!pCity || !pCity->canTrain(eUnit))
+		if (!pCity || !(pCity->getUnitAvailability(eUnit) == EnablerDomain::STATE_LISTED))
 		{
 			if (pCity && GC.getGame().isNoNukes() && unitInfo.getNukeRange() != -1)
 			{
@@ -15004,7 +15004,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool
 			// Afforess	Vicinity Bonus 07/29/09
 			if (unitInfo.getPrereqVicinityBonus() != NO_BONUS)
 			{
-				if (!pCity || !pCity->canTrain(eUnit))
+				if (!pCity || !(pCity->getUnitAvailability(eUnit) == EnablerDomain::STATE_LISTED))
 				{
 					szBuffer.append(NEWLINE);
 					szBuffer.append(gDLL->getText("TXT_KEY_REQUIRES_BONUS_VICINITY", GC.getBonusInfo((BonusTypes)(unitInfo.getPrereqVicinityBonus())).getTextKeyWide(), CvWString(GC.getBonusInfo((BonusTypes)(unitInfo.getPrereqVicinityBonus())).getType()).GetCString()));
@@ -15015,7 +15015,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool
 
 			foreach_(const BonusTypes ePreReqBonus, unitInfo.getPrereqOrVicinityBonuses())
 			{
-				if (!pCity || !pCity->canTrain(eUnit))
+				if (!pCity || !(pCity->getUnitAvailability(eUnit) == EnablerDomain::STATE_LISTED))
 				{
 					szTempBuffer.Format(L"%s%s", NEWLINE, gDLL->getText("TXT_KEY_REQUIRES_BONUS_VICINITY_ONEOF").c_str());
 					setListHelp(szBuffer, szTempBuffer, gDLL->getText("TXT_KEY_LINK", CvWString(GC.getBonusInfo(ePreReqBonus).getType()).GetCString(), GC.getBonusInfo(ePreReqBonus).getDescription()), gDLL->getText("TXT_KEY_OR").c_str(), bFirst);

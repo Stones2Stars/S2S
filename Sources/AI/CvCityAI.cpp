@@ -4366,7 +4366,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, int& iBestValue, bool bAs
 	{
 		// Have to recheck canTrain as we may hit a unit limit mid-turn
 		if ((itr->second.eUnit == NO_UNIT || !bGrowMore || !isFoodProduction(itr->second.eUnit))
-		&& AI_meetsUnitSelectionCriteria(itr->second.eUnit, &tempCriteria) && canTrain(itr->second.eUnit))
+		&& AI_meetsUnitSelectionCriteria(itr->second.eUnit, &tempCriteria) && (getUnitAvailability(itr->second.eUnit) == EnablerDomain::STATE_LISTED))
 		{
 			iBestValue = itr->second.iValue;
 			eBestUnit = itr->second.eUnit;
@@ -4380,7 +4380,7 @@ UnitTypes CvCityAI::AI_bestUnitAI(UnitAITypes eUnitAI, int& iBestValue, bool bAs
 	}
 
 	// #430 F2b (enabler.md par.6): scan the LISTED unit frontier, not the whole unit database -- getAvailableUnits fills the
-	// city's LISTED unit frontier, so the dropped !canTrain(eUnitX) skip below is exactly its complement. REVERSE iteration: the original scanned DESCENDING (highest
+	// city's LISTED unit frontier, so the dropped !(getUnitAvailability(eUnitX) == EnablerDomain::STATE_LISTED) skip below is exactly its complement. REVERSE iteration: the original scanned DESCENDING (highest
 	// id first) and the winner is chosen by strict > (first-seen highest value wins ties) with a per-unit SorenRand
 	// draw, so id order is load-bearing for BOTH the tie-break AND the RNG-to-unit mapping; rbegin/rend over the
 	// ascending listedIds reproduces the identical descending visit order over the identical (canTrain-true) set.
@@ -4539,7 +4539,7 @@ const std::vector<CvCity::ScoredBuilding> CvCityAI::AI_bestBuildingsThreshold(in
 
 	// #430 F2b (enabler.md par.6): iterate the enabler's LISTED frontier, not the whole ~5200-building
 	// database. getAvailableBuildings fills the city's LISTED building frontier
-	// (CvCity.cpp:2489), so {idx : canConstruct(idx)} == the listedIds set -- the identical membership, minus the
+	// (CvCity.cpp:2489), so {idx : (getBuildingAvailability(idx) == EnablerDomain::STATE_LISTED)} == the listedIds set -- the identical membership, minus the
 	// per-turn 5200-probe scan (this loop ran ~7x/city/turn via AI_chooseProduction's focus ladder). isBuildingMaxedOut
 	// stays the per-candidate cap filter (the per-player extra-instances allowance the enabler allowedOk does not yet
 	// fully model); it now runs only over the small offered set. Order preserved: listedIds fills ascending id.
@@ -4629,7 +4629,7 @@ bool CvCityAI::AI_scoreBuildingsFromListThreshold(std::vector<ScoredBuilding>& s
 		// adviser is not one we are ignoring
 		&&	(eIgnoreAdvisor == NO_ADVISOR || buildingInfo.getAdvisorType() != eIgnoreAdvisor)
 		// We can actually build the building
-		&&	canConstruct(eBuilding)
+		&&	(getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED)
 		// Automated production doesn't look at buildings with prerequisites?
 		&&	(!isProductionAutomated() || buildingInfo.getPrereqNumOfBuildings().empty()))
 		{
@@ -5092,7 +5092,7 @@ int CvCityAI::AI_buildingValueThreshold(BuildingTypes eBuilding, int iFocusFlags
 	PROFILE_FUNC();
 
 	// Other requests (with 0 flags) can occur occassionally from other areas (such as civic evaluation) without implying a lot of locality of reference that makes the caching worthwhile.
-	if (!bIgnoreCanConstruct && !canConstruct(eBuilding) || cachedBuildingValues == NULL && iFocusFlags == 0)
+	if (!bIgnoreCanConstruct && !(getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED) || cachedBuildingValues == NULL && iFocusFlags == 0)
 	{
 		PROFILE("AI_buildingValueThreshold.CacheMiss");
 
@@ -5376,7 +5376,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 			for (int iI = 0; iI < kBuilding.getNumReplacementBuilding(); ++iI)
 			{
-				if (canConstruct((BuildingTypes)kBuilding.getReplacementBuilding(iI)))
+				if ((getBuildingAvailability((BuildingTypes)kBuilding.getReplacementBuilding(iI)) == EnablerDomain::STATE_LISTED))
 				{
 					return 0;
 				}
@@ -5666,7 +5666,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 
 				foreach_(const UnitCombatModifier2 & modifier, kBuilding.getUnitCombatFreeExperience())
 				{
-					if (canTrain(modifier.first))
+					if ((getUnitAvailability(modifier.first) == EnablerDomain::STATE_LISTED))
 					{
 						iValue += modifier.second * (bMetAnyCiv ? 6 : 3);
 					}
@@ -6304,7 +6304,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 					int unitProductionModifierValue = 0;
 					const UnitTypes eLoopUnit = modifier.first;
 
-					if (canTrain(eLoopUnit))
+					if ((getUnitAvailability(eLoopUnit) == EnablerDomain::STATE_LISTED))
 					{
 						const int iModifier = modifier.second;
 						const UnitAITypes eUnitAI = GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType();
@@ -6381,7 +6381,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 				foreach_(const BuildingModifier2 & modifier, kBuilding.getBuildingProductionModifiers())
 				{
 					const BuildingTypes eLoopBuilding = modifier.first;
-					if (canConstruct(eLoopBuilding))
+					if ((getBuildingAvailability(eLoopBuilding) == EnablerDomain::STATE_LISTED))
 					{
 						const int iModifier = modifier.second;
 						if (iModifier > -100)
@@ -6708,7 +6708,7 @@ int CvCityAI::AI_buildingValueThresholdOriginalUncached(BuildingTypes eBuilding,
 		}
 
 		// If wonder is being constructed in some special way, reduce the value for small cities.
-		if (!bForTech && bIsLimitedWonder && iValue > 0 && getPopulation() < 7 && !canConstruct(eBuilding))
+		if (!bForTech && bIsLimitedWonder && iValue > 0 && getPopulation() < 7 && !(getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED))
 		{
 			iValue = std::max(1, iValue / (8 - getPopulation()));
 		}
@@ -13120,7 +13120,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 
 			for (int iI = 0; iI < kBuilding.getNumReplacementBuilding(); ++iI)
 			{
-				if (canConstruct((BuildingTypes)kBuilding.getReplacementBuilding(iI)))
+				if ((getBuildingAvailability((BuildingTypes)kBuilding.getReplacementBuilding(iI)) == EnablerDomain::STATE_LISTED))
 				{
 					bSkipBuilding = true;
 					break;
@@ -13436,7 +13436,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 
 				foreach_(const UnitCombatModifier2 & modifier, kBuilding.getUnitCombatFreeExperience())
 				{
-					if (canTrain(modifier.first))
+					if ((getUnitAvailability(modifier.first) == EnablerDomain::STATE_LISTED))
 					{
 						iValue += modifier.second * (bMetAnyCiv ? 6 : 3);
 					}
@@ -14080,7 +14080,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 				{
 					int unitProductionModifierValue = 0;
 					const UnitTypes eLoopUnit = modifier.first;
-					if (canTrain(eLoopUnit))
+					if ((getUnitAvailability(eLoopUnit) == EnablerDomain::STATE_LISTED))
 					{
 						const int iModifier = modifier.second;
 						const UnitAITypes eUnitAI = GC.getUnitInfo(eLoopUnit).getDefaultUnitAIType();
@@ -14150,7 +14150,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 				foreach_(const BuildingModifier2 & modifier, kBuilding.getBuildingProductionModifiers())
 				{
 					const BuildingTypes eLoopBuilding = modifier.first;
-					if (canConstruct(eLoopBuilding))
+					if ((getBuildingAvailability(eLoopBuilding) == EnablerDomain::STATE_LISTED))
 					{
 						const int iModifier = modifier.second;
 						if (iModifier > -100)
@@ -14169,7 +14169,7 @@ void CvCityAI::CalculateAllBuildingValues(int iFocusFlags)
 				foreach_(const BuildingModifier2 & modifier, kBuilding.getGlobalBuildingProductionModifiers())
 				{
 					const BuildingTypes eLoopBuilding = modifier.first;
-					if (canConstruct(eLoopBuilding))
+					if ((getBuildingAvailability(eLoopBuilding) == EnablerDomain::STATE_LISTED))
 					{
 						const int iModifier = modifier.second;
 						const int iOriginalCost = getHurryCost(eLoopBuilding);
@@ -15726,7 +15726,7 @@ const {
 			// if this is a limited wonder, and we are not one of the top 4 in this category, subtract the value
 			// we do _not_ want to build this here (unless the value was small anyway)
 			// Exempt unit build from this test however
-			if (bIsLimitedWonder && canConstruct(eBuilding) && (aiYieldRank[iI] > (3 + iLimitedWonderLimit)))
+			if (bIsLimitedWonder && (getBuildingAvailability(eBuilding) == EnablerDomain::STATE_LISTED) && (aiYieldRank[iI] > (3 + iLimitedWonderLimit)))
 			{
 				iYieldValue *= -1;
 			}

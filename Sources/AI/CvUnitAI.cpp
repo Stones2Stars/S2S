@@ -15310,9 +15310,8 @@ bool CvUnitAI::AI_switchHurry()
 	BuildingTypes eBestBuilding = NO_BUILDING;
 
 	// #430 F2b (enabler.md par.6): iterate this city's LISTED building frontier instead of scanning the whole
-	// ~5200-building database. pCity->canConstruct(eBuilding) with default args IS the bare read
-	// the city's LISTED building frontier, so {iI : canConstruct(iI)} == listedIds --
-	// identical membership, minus the per-candidate DB probe. pCity is fixed for the whole loop (one frontier).
+	// ~5200-building database. getAvailableBuildings fills that frontier, so the set it yields is exactly the
+	// ids whose verdict is LISTED -- identical membership, minus the per-candidate DB probe. pCity is fixed for the whole loop (one frontier).
 	// isWorldWonder stays as the per-candidate body filter. Order preserved: listedIds fills ascending id, and
 	// the best-by-strict-> selection keeps the first winner on a tie exactly as the ascending scan did.
 	std::vector<int> vecConstructible;

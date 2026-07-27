@@ -494,6 +494,15 @@ with no self-heal to re-derive it ([state-repositories.md](../architecture/state
 disconnected, add the new."* The disconnect is its own sweep; gating the replacement on it is what leaves the
 machine unreachable indefinitely. Build the new surface as if the legacy one were already gone.
 
+**⚖ BUILDING CONSTRUCTION AND UNIT TRAINING ARE THE SAME PLANE (owner)** — one design, two domains, never two
+designs. Both are **CITY** concerns for the same concrete reason: the gate needs *"what resources are in VICINITY,
+and in the PLOT GROUP"* — city-local supply that no other scope can answer. ⛔ **There is therefore no
+player-level construct/train verdict**, and a player-scope `canTrain`/`canConstruct` is not merely redundant, it
+is asking at a scope that cannot know. A caller with a city in hand asks that city; a caller genuinely meaning
+"anywhere" fans over the player's cities. ⛔ Do NOT mint a maintained player-level union to make the old shape
+work: it is duplicated state that must never drift — the same argument that keeps projects/processes player-held
+rather than copied per city (§7.1), running the other way.
+
 **ONE READ PAIR PER DOMAIN** — the domain IS the group, and the existing engine enum
 (`BuildingTypes`/`TechTypes`/…) is the consumer's vocabulary. The domain set is fixed and small, so the surface
 grows by DOMAIN, never by candidate; there is no per-candidate getter and no what-if argument.
