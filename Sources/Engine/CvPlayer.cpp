@@ -793,6 +793,13 @@ EnablerDomain::State CvPlayer::getTechAvailability(TechTypes eTech) const
 	return (EnablerDomain::State)m_enabler.techs.state((int)eTech);
 }
 
+bool CvPlayer::isTechEverReachable(TechTypes eTech) const
+{
+	const EnablerDomain& d = m_enabler.techs;
+	const int iId = (int)eTech;
+	return !d.isHeld(iId) && !d.isStaticExcluded(iId) && d.removeCount(iId) == 0;
+}
+
 EnablerDomain::State CvPlayer::getCivicAvailability(CivicTypes eCivic) const
 {
 	return (EnablerDomain::State)m_enabler.civics.state((int)eCivic);
@@ -5440,7 +5447,7 @@ bool CvPlayer::canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial
 			&& !GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isHasTech((TechTypes)item.m_iData)
 			&& GET_TEAM(getTeam()).isTechTrading()
 			&& GET_TEAM(GET_PLAYER(eWhoTo).getTeam()).isTechTrading()
-			&& GET_PLAYER(eWhoTo).canResearch((TechTypes)item.m_iData))
+			&& (GET_PLAYER(eWhoTo).getTechAvailability((TechTypes)item.m_iData) == EnablerDomain::STATE_LISTED))
 			{
 				bResult = true;
 			}
@@ -6228,7 +6235,7 @@ bool CvPlayer::canReceiveGoody(const CvPlot* pPlot, GoodyTypes eGoody, const CvU
 	{
 		foreach_(const TechTypes eTechX, GET_TEAM(getTeam()).getAdjacentResearch())
 		{
-			if (GC.getTechInfo(eTechX).isGoodyTech() && canResearch(eTechX))
+			if (GC.getTechInfo(eTechX).isGoodyTech() && (getTechAvailability(eTechX) == EnablerDomain::STATE_LISTED))
 			{
 				bFound = true;
 				break;
@@ -6401,7 +6408,7 @@ void CvPlayer::receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit)
 
 		foreach_(const TechTypes eTechX, GET_TEAM(getTeam()).getAdjacentResearch())
 		{
-			if (GC.getTechInfo(eTechX).isGoodyTech() && canResearch(eTechX))
+			if (GC.getTechInfo(eTechX).isGoodyTech() && (getTechAvailability(eTechX) == EnablerDomain::STATE_LISTED))
 			{
 				const int iValue = (1 + GC.getGame().getSorenRandNum(10000, "Goody Tech"));
 
@@ -8612,47 +8619,6 @@ bool CvPlayer::canEverResearch(TechTypes eTech) const
 }
 
 
-bool CvPlayer::canResearch(const TechTypes eTech, const bool bRightNow, const bool bSpecialRequirements) const
-{
-	PROFILE_EXTRA_FUNC();
-	if (GET_TEAM(getTeam()).isHasTech(eTech) || !canEverResearch(eTech))
-	{
-		return false;
-	}
-
-	if (bSpecialRequirements && !hasValidBuildings(eTech))
-	{
-		return false;
-	}
-
-	if (bRightNow)
-	{
-		bool bOk = true;
-		foreach_(const TechTypes ePrereq, GC.getTechInfo(eTech).getPrereqOrTechs())
-		{
-			bOk = false;
-
-			if (GET_TEAM(getTeam()).isHasTech(ePrereq))
-			{
-				bOk = true;
-				break;
-			}
-		}
-		if (!bOk)
-		{
-			return false;
-		}
-
-		foreach_(const TechTypes ePrereq, GC.getTechInfo(eTech).getPrereqAndTechs())
-		{
-			if (canEverResearch(ePrereq) && !GET_TEAM(getTeam()).isHasTech(ePrereq))
-			{
-				return false;
-			}
-		}
-	}
-	return true;
-}
 
 
 TechTypes CvPlayer::getCurrentResearch() const
@@ -8688,7 +8654,7 @@ bool CvPlayer::isNoResearchAvailable() const
 	}
 	foreach_(const TechTypes eTechX, GET_TEAM(getTeam()).getAdjacentResearch())
 	{
-		if (canResearch(eTechX))
+		if ((getTechAvailability(eTechX) == EnablerDomain::STATE_LISTED))
 		{
 			return false;
 		}
@@ -15143,7 +15109,7 @@ bool CvPlayer::pushResearch(TechTypes eTech, bool bClear)
 		return true;
 	}
 
-	if (!canResearch(eTech, false))
+	if (!(isTechEverReachable(eTech)))
 	{
 		return false;
 	}
@@ -15178,7 +15144,7 @@ bool CvPlayer::pushResearch(TechTypes eTech, bool bClear)
 			break;
 		}
 
-		if (canResearch(ePreReq, false))
+		if ((isTechEverReachable(ePreReq)))
 		{
 			// Find the length of the path to this pre-req
 			const int iNumSteps = findPathLength(ePreReq);
@@ -18203,7 +18169,7 @@ int CvPlayer::getAdvancedStartTechCost(TechTypes eTech, bool bAdd) const
 			}
 		}
 	}
-	else if (!canResearch(eTech))
+	else if (!(getTechAvailability(eTech) == EnablerDomain::STATE_LISTED))
 	{
 		return -1;
 	}
@@ -22821,7 +22787,7 @@ bool CvPlayer::isValidEventTech(TechTypes eTech, EventTypes eEvent, PlayerTypes 
 		return false;
 	}
 
-	if (!canResearch(eTech))
+	if (!(getTechAvailability(eTech) == EnablerDomain::STATE_LISTED))
 	{
 		return false;
 	}
@@ -24711,7 +24677,7 @@ bool CvPlayer::canStealTech(PlayerTypes eTarget, TechTypes eTech) const
 {
 	if (GET_TEAM(GET_PLAYER(eTarget).getTeam()).isHasTech(eTech))
 	{
-		if (canResearch(eTech))
+		if ((getTechAvailability(eTech) == EnablerDomain::STATE_LISTED))
 		{
 			return true;
 		}

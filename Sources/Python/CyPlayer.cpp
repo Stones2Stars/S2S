@@ -486,10 +486,6 @@ int CyPlayer::calculateBaseNetResearch() const
 }
 
 
-bool CyPlayer::canResearch(const int iTech, const bool bRightNow, const bool bSpecialRequirements) const
-{
-	return m_pPlayer->canResearch((TechTypes)iTech, bRightNow, bSpecialRequirements);
-}
 
 int /*TechTypes*/ CyPlayer::getCurrentResearch() const
 {

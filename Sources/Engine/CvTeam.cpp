@@ -1071,7 +1071,7 @@ void CvTeam::doTurn()
 	{
 		foreach_(const TechTypes eTechX, getAdjacentResearch())
 		{
-			if (GET_PLAYER(getLeaderID()).canResearch(eTechX))
+			if (GET_PLAYER(getLeaderID()).getTechAvailability(eTechX) == EnablerDomain::STATE_LISTED)
 			{
 				int iPossibleCount = 0;
 				int iCount = 0;
@@ -5178,7 +5178,7 @@ void CvTeam::cacheAdjacentResearch()
 
 	for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
 	{
-		if (leader.canResearch((TechTypes)iI, true, false))
+		if ((leader.getTechAvailability((TechTypes)iI) >= EnablerDomain::STATE_GREYED))
 		{
 			m_adjacentResearch.push_back((TechTypes)iI);
 			//OutputDebugString(CvString::format("\tcacheAdjacentResearch tech=%d\n", iI).c_str());
@@ -5360,7 +5360,7 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 
 			foreach_(const TechTypes eTechX, kTech.getLeadsToTechs())
 			{
-				if (GET_PLAYER(getLeaderID()).canResearch(eTechX, true, false))
+				if (GET_PLAYER(getLeaderID()).getTechAvailability(eTechX) >= EnablerDomain::STATE_GREYED)
 				{
 					setAdjacentResearch(eTechX, true);
 				}

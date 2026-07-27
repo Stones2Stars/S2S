@@ -516,6 +516,13 @@ destroy that and misreport why it is not offered. The overlay rides only the two
 (fresh offer, queued excluded) and `CvCity::isBuildingContinuable` (reads past it, so the production-check sweep
 does not cancel every in-progress build).
 
+**⚖ THE "EVER" QUESTION IS ITS OWN READ — the tri-state cannot answer it.** HIDDEN conflates *"nothing enables it
+YET"* with *"it can never be offered"*, and a **queue** asks precisely the difference: a research target is chosen
+now and researched later, so "not currently offerable" is not a refusal. `CvPlayer::isTechEverReachable` answers
+it off the membership planes directly — not held, not statically barred (`identity.disable`), nothing held
+removes it. It exposes the EXISTING `FLAG_STATIC_EXCLUDED` plane as a bare read (`EnablerDomain::isStaticExcluded`)
+rather than minting a fourth state: the tri-state vocabulary is unchanged.
+
 ⚠ The two **carve-out** domains answer the UNLOCKED half only, and a consumer treating either as the whole verdict
 over-offers: a BUILD's plot-validity half and a PROMOTION's per-unit applicability are evaluated LIVE at their
 decision points (§7.1). The TEAM's capability reads are not here — `CascadeCapabilities` is already that query

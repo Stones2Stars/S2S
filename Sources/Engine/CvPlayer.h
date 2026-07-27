@@ -371,7 +371,6 @@ public:
 	int calculateTotalCommerce() const;
 
 	bool canEverResearch(TechTypes eTech) const;
-	bool canResearch(const TechTypes eTech, const bool bRightNow = true, const bool bSpecialRequirements = true) const;
 	TechTypes getCurrentResearch() const;
 	bool isCurrentResearchRepeat() const;
 	bool isNoResearchAvailable() const;
@@ -917,6 +916,11 @@ public:
 	// per-city copies would be byte-identical state that must never drift, and the city gate reads through its
 	// owner (enabler.md §7.1).
 	EnablerDomain::State getTechAvailability(TechTypes eTech) const;
+	// THE "EVER" QUESTION -- "is this a legitimate FUTURE target?", which the tri-state alone cannot answer:
+	// HIDDEN conflates "nothing enables it YET" with "it can never be offered". A research QUEUE asks exactly
+	// this (the target is chosen now and researched later), so it reads the membership planes directly: not
+	// already held, not statically barred, and nothing held removes it.
+	bool isTechEverReachable(TechTypes eTech) const;
 	EnablerDomain::State getCivicAvailability(CivicTypes eCivic) const;
 	EnablerDomain::State getProjectAvailability(ProjectTypes eProject) const;
 	EnablerDomain::State getProcessAvailability(ProcessTypes eProcess) const;

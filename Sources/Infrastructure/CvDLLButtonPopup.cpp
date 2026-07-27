@@ -1497,9 +1497,9 @@ bool CvDLLButtonPopup::launchChooseTechPopup(CvPopup* pPopup, CvPopupInfo &info)
 	{
 		foreach_(const TechTypes eTechX, team.getAdjacentResearch())
 		{
-			FAssertMsg(player.canResearch(eTechX, true, false), CvString::format("tech = %S (%d)", GC.getTechInfo(eTechX).getDescription(), (int)eTechX).c_str());
+			FAssertMsg((player.getTechAvailability(eTechX) >= EnablerDomain::STATE_GREYED), CvString::format("tech = %S (%d)", GC.getTechInfo(eTechX).getDescription(), (int)eTechX).c_str());
 
-			if ((eTechX == eBestTech || eTechX == eNextBestTech) == (iPass == 0) && player.canResearch(eTechX))
+			if ((eTechX == eBestTech || eTechX == eNextBestTech) == (iPass == 0) && (player.getTechAvailability(eTechX) == EnablerDomain::STATE_LISTED))
 			{
 				CvWString szBuffer;
 				szBuffer.Format(L"%s (%d)", GC.getTechInfo(eTechX).getDescription(), ((iDiscover > 0) ? 0 : player.getResearchTurnsLeft(eTechX, true)));
@@ -2710,7 +2710,7 @@ bool CvDLLButtonPopup::launchSelectDiscoveryTechPopup(CvPopup* pPopup, CvPopupIn
 
 	foreach_(const TechTypes eTechX, team.getAdjacentResearch())
 	{
-		if (eTechX != eTechAI && player.canResearch(eTechX))
+		if (eTechX != eTechAI && (player.getTechAvailability(eTechX) == EnablerDomain::STATE_LISTED))
 		{
 			for (int iJ = GC.getNumFlavorTypes() - 1; iJ > -1; iJ--)
 			{

@@ -4196,7 +4196,7 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 	// If we had already decided to beeline previously, stick with it
 	if (m_eBestResearchTarget != NO_TECH && iMaxPathLength > 1)
 	{
-		if (canResearch(m_eBestResearchTarget, false))
+		if ((isTechEverReachable(m_eBestResearchTarget)))
 		{
 			techPath* path = findBestPath(m_eBestResearchTarget, iValue, bIgnoreCost, bAsync);
 
@@ -4223,7 +4223,7 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 				const TechTypes eTechX = static_cast<TechTypes>(iI);
 
 				if ((eIgnoreAdvisor == NO_ADVISOR || GC.getTechInfo(eTechX).getAdvisorType() != eIgnoreAdvisor)
-				&& canResearch(eTechX, false)
+				&& (isTechEverReachable(eTechX))
 				&& GC.getTechInfo(eTechX).getEra() <= getCurrentEra() + 1)
 				{
 					iPathLength = findPathLength(eTechX, false);
@@ -4316,8 +4316,8 @@ int CvPlayerAI::AI_averageCurrentTechValue(TechTypes eRelativeTo, bool bAsync)
 	std::vector<TechResearchDist> researchCosts;
 	foreach_(const TechTypes eTechX, team.getAdjacentResearch())
 	{
-		FAssertMsg(canResearch(eTechX, true, false), CvString::format("team %d - tech: %S (%d)", getTeam(), GC.getTechInfo(eTechX).getDescription(), (int)eTechX).c_str());
-		if (eTechX != eRelativeTo && canResearch(eTechX))
+		FAssertMsg((getTechAvailability(eTechX) >= EnablerDomain::STATE_GREYED), CvString::format("team %d - tech: %S (%d)", getTeam(), GC.getTechInfo(eTechX).getDescription(), (int)eTechX).c_str());
+		if (eTechX != eRelativeTo && (getTechAvailability(eTechX) == EnablerDomain::STATE_LISTED))
 		{
 			researchCosts.push_back(TechResearchDist(eTechX, std::abs(team.getResearchCost(eTechX) - iCost)));
 		}
@@ -4521,7 +4521,7 @@ TechTypes CvPlayerAI::findStartTech(techPath* path) const
 	PROFILE_EXTRA_FUNC();
 	foreach_(const TechTypes & tech, *path)
 	{
-		if (canResearch(tech))
+		if ((getTechAvailability(tech) == EnablerDomain::STATE_LISTED))
 		{
 			return tech;
 		}
@@ -6412,7 +6412,7 @@ void CvPlayerAI::AI_chooseResearch()
 		{
 			if (iI != getID() && GET_PLAYER((PlayerTypes)iI).isAliveAndTeam(getTeam())
 			&& GET_PLAYER((PlayerTypes)iI).getCurrentResearch() != NO_TECH
-			&& canResearch(GET_PLAYER((PlayerTypes)iI).getCurrentResearch()))
+			&& (getTechAvailability(GET_PLAYER((PlayerTypes)iI).getCurrentResearch()) == EnablerDomain::STATE_LISTED))
 			{
 				pushResearch(GET_PLAYER((PlayerTypes)iI).getCurrentResearch());
 			}
@@ -20496,7 +20496,7 @@ int CvPlayerAI::AI_eventValue(EventTypes eEvent, const EventTriggeredData& kTrig
 	TechTypes eBestTech = NO_TECH;
 	int iBestValue = 0;
 	// #430 F2b (enabler.md): iterate the enabler's LISTED tech frontier instead of scanning every tech info and
-	// calling canResearch per id -- canResearch(i) default-args IS m_enabler.techs.listed(i) (CvPlayer.cpp). The
+	// probing each id -- getTechAvailability(i) == STATE_LISTED IS m_enabler.techs.listed(i) (CvPlayer.cpp). The
 	// whole loop body sits inside the gate; the best pick uses strict '>', so ascending (forward) order keeps the
 	// original lowest-id-wins result.
 	std::vector<int> vecResearchable;
@@ -33105,7 +33105,7 @@ TechTypes CvPlayerAI::AI_bestReligiousTech(int iMaxPathLength, TechTypes eIgnore
 
 		if ((eIgnoreTech == NO_TECH || eTechX != eIgnoreTech)
 		&& (eIgnoreAdvisor == NO_ADVISOR || GC.getTechInfo(eTechX).getAdvisorType() != eIgnoreAdvisor)
-		&& canResearch(eTechX, false)
+		&& (isTechEverReachable(eTechX))
 		&& GC.getTechInfo(eTechX).getEra() <= getCurrentEra())
 		{
 			const int iPathLength = findPathLength(eTechX, false);

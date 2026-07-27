@@ -482,7 +482,7 @@ TechTypes getDiscoveryTech(const UnitTypes eUnit, const PlayerTypes ePlayer)
 
 	foreach_(const TechTypes eTechX, team.getAdjacentResearch())
 	{
-		if (player.canResearch(eTechX))
+		if ((player.getTechAvailability(eTechX) == EnablerDomain::STATE_LISTED))
 		{
 			int iValue = 0;
 

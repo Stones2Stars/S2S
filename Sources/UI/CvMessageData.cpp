@@ -474,7 +474,7 @@ void CvNetResearch::Execute()
 		else if (m_eTech != NO_TECH)
 		{
 			CvPlayer& kPlayer = GET_PLAYER(m_ePlayer);
-			if (kPlayer.canResearch(m_eTech, false))
+			if ((kPlayer.isTechEverReachable(m_eTech)))
 			{
 				if (!m_bShift && kPlayer.isResearchingTech(m_eTech))
 				{

@@ -5103,7 +5103,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot)
 									}
 									break;
 								}
-								if (GET_PLAYER(eActivePlayer).canResearch(eTechPrereq, false) && iClosestX > GC.getTechInfo(eTechPrereq).getGridX())
+								if (GET_PLAYER(eActivePlayer).isTechEverReachable(eTechPrereq) && iClosestX > GC.getTechInfo(eTechPrereq).getGridX())
 								{
 									iClosestX = GC.getTechInfo(eTechPrereq).getGridX();
 									eClosestUnlockingTech = eTechPrereq;
@@ -12531,7 +12531,7 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 		szBuffer.append(CvWString::format(L"%s%s", NEWLINE, GC.getTechInfo(eTech).getHelp()).c_str());
 	}
 
-	if (bCivilopediaText || ePlayerAct == NO_PLAYER || !playerAct->canResearch(eTech))
+	if (bCivilopediaText || ePlayerAct == NO_PLAYER || !(playerAct->getTechAvailability(eTech) == EnablerDomain::STATE_LISTED))
 	{
 		for (int iI = 0; iI < GC.getTechInfo(eTech).getNumPrereqBuildings(); iI++)
 		{
@@ -12613,7 +12613,7 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 		}
 	}
 
-	if (ePlayerAct != NO_PLAYER && playerAct->canResearch(eTech))
+	if (ePlayerAct != NO_PLAYER && (playerAct->getTechAvailability(eTech) == EnablerDomain::STATE_LISTED))
 	{
 		for (int iI = 0; iI < GC.getNumUnitInfos(); ++iI)
 		{
@@ -22173,7 +22173,7 @@ void CvGameTextMgr::buildSingleLineTechTreeString(CvWStringBuffer &szBuffer, Tec
 		bool bTechAlreadyAccessible = false;
 		if (bPlayerContext)
 		{
-			bTechAlreadyAccessible = (GET_TEAM(GC.getGame().getActiveTeam()).isHasTech((TechTypes)iI) || GET_PLAYER(GC.getGame().getActivePlayer()).canResearch((TechTypes)iI));
+			bTechAlreadyAccessible = (GET_TEAM(GC.getGame().getActiveTeam()).isHasTech((TechTypes)iI) || (GET_PLAYER(GC.getGame().getActivePlayer()).getTechAvailability((TechTypes)iI) == EnablerDomain::STATE_LISTED));
 		}
 		if (!bTechAlreadyAccessible)
 		{

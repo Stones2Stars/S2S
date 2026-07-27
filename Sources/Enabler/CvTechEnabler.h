@@ -8,7 +8,7 @@
 //	mechanism for load and play -- the load reseed's in-read emits ARE the same events, DEC-spine-reseed).
 //	initDomain() is the lifecycle sizing (arrays + static exclusions, NO content); onTechChanged() is the
 //	O(delta) applier the spine consumer routes (play emits + the reseed's per-held-tech emits alike); the read
-//	is the owner's bare member lookup (canResearch reads m_enabler.techs.listed directly).
+//	is the owner's bare member lookup (CvPlayer::getTechAvailability reads m_enabler.techs directly).
 //
 //	available() is the PURE FUNCTION -- the VALIDATION ORACLE ONLY, never the read path (enabler.md par.7:
 //	a static is a pure calculator; the read path never calls one). Its diff against the maintained vector is

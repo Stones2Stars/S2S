@@ -105,7 +105,6 @@ void CvPythonPlayerLoader::CyPlayerPythonInterface1(boost::python::class_<CyPlay
 		.def("calculateResearchRate", &CyPlayer::calculateResearchRate, "int (int /*TechTypes*/ eTech)")
 		.def("calculateBaseNetResearch", &CyPlayer::calculateBaseNetResearch, "int ()")
 		.def("calculateResearchModifier", &CyPlayer::calculateResearchModifier, "int (int /*TechTypes*/ eTech)")
-		.def("canResearch", &CyPlayer::canResearch, "bool (int iTech, bool bRightNow, bool bSpecialRequirements)")
 		.def("getCurrentResearch", &CyPlayer::getCurrentResearch, "int ()")
 		.def("isCurrentResearchRepeat", &CyPlayer::isCurrentResearchRepeat, "bool ()")
 		.def("getResearchTurnsLeft", &CyPlayer::getResearchTurnsLeft, "int (int /*TechTypes*/ eTech, bool bOverflow)")
